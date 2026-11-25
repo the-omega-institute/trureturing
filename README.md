@@ -7,7 +7,7 @@
 [Spacetime](#toward-holographic-spacetime) · [Information escape](#information-escape) ·
 [Evidence](#what-is-proved-and-what-is-open) · [First run](#first-run) ·
 [Lean source](D5/) · [Theory and literature reader](https://the-omega-institute.github.io/trureturing-source-theories/) · [Book](https://the-omega-institute.github.io/trureturing-mdbook/) ·
-[Contribute](#take-part) · [Licensing](#license-and-foundations)
+[Omega mathematics](src/OmegaMath/) · [Contribute](#take-part) · [Licensing](#license-and-foundations)
 
 trureturing develops a scientific method for AI to turn gaps in knowledge into
 questions, test conjectures, expose limits in its representations, and return
