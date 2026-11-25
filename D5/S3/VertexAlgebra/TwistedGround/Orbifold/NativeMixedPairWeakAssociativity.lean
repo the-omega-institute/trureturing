@@ -19,7 +19,7 @@ namespace D5.S3.VertexAlgebra.TwistedGround.Orbifold.NativeMixedPairWeakAssociat
 open ActualLeechHyperbolic (leechData)
 open NativeOddTwistedIntertwiner (Twisted OddCarrier leechUnit paritySign oddMode)
 open NativeMixedPairField (mu mu_coeff_of_grade)
-open NativeMixedPairBorcherds (mu_true_commutator mu_true_borcherds)
+open NativeMixedPairBorcherds (mu_true_commutator mu_true_borcherds pair_tail)
 open NativeMixedPairState (mixedPairWeight mixedPairState_grade mixedPairState_nonintegral_zero)
 open HalfFock.LatticeHalfFockParityField (fixedParitySlice)
 open LatticeHalfFockGradedTrace (actualGrade actualTensorL0)
@@ -38,7 +38,7 @@ open private projected_basis_grade from
   D5.S3.VertexAlgebra.TwistedGround.Orbifold.NativeMixedPairSkew
 open private sum_projectedBasis from
   D5.S3.VertexAlgebra.TwistedGround.Orbifold.NativeMixedPairField
-open private pairMap pair_tail mode_tail from
+open private pairMap mode_tail from
   D5.S3.VertexAlgebra.TwistedGround.Orbifold.NativeMixedPairBorcherds
 open private divided_succ_right from
   D5.S3.VertexAlgebra.TwistedGround.Orbifold.OriginalOrbifoldJacobi
