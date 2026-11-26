@@ -1,4 +1,6 @@
 module
+import all Init.SizeOfLemmas
+import all Init.SizeOf
 
 public import OmegaChecks.InitPort.Alternatives.Word.BitVec
 import all Init.Data.UInt.Lemmas
@@ -507,5 +509,24 @@ public theorem USize.ofNat_uInt64Size_sub_one : type_of% @_root_.USize.ofNat_uIn
   apply _root_.USize.toNat.inj
   exact _root_.USize.toNat_ofNat'.trans ((pred_mod_of_dvd _root_.USize.size_pos (Nat.two_pow_pos 64)
     USize.size_dvd_uInt64Size).trans _root_.USize.toNat_ofNatLT.symm)
+
+private theorem wordSize (x : BitVec w) : 1 + sizeOf x = x.toNat + 3 := by
+  rw [BitVec.sizeOf, Fin.sizeOf, Nat.one_add]
+  rfl
+
+public theorem UInt8.sizeOf : type_of% @_root_.UInt8.sizeOf := fun ⟨x⟩ => wordSize x
+
+public theorem UInt16.sizeOf : type_of% @_root_.UInt16.sizeOf := fun ⟨x⟩ => wordSize x
+
+public theorem UInt32.sizeOf : type_of% @_root_.UInt32.sizeOf := fun ⟨x⟩ => wordSize x
+
+public theorem UInt64.sizeOf : type_of% @_root_.UInt64.sizeOf := fun ⟨x⟩ => wordSize x
+
+public theorem USize.sizeOf : type_of% @_root_.USize.sizeOf := fun ⟨x⟩ => wordSize x
+
+public theorem Char.sizeOf : type_of% @_root_.Char.sizeOf := by
+  intro ⟨x, _⟩
+  change 1 + _root_.sizeOf x = x.toNat + 4
+  rw [UInt32.sizeOf, Nat.one_add]
 
 end OmegaChecks.InitPort.Alternatives

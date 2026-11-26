@@ -14,6 +14,14 @@ public theorem Bool.beq_eq_decide_eq : type_of% @_root_.Bool.beq_eq_decide_eq :=
     | false => rfl
     | true => exact False.elim (h (law.eq_of_beq eq))
 
+public theorem Bool.beq_comm : type_of% @_root_.Bool.beq_comm := by
+  intro α eq law a b
+  apply Bool.eq_iff_iff.mpr
+  exact ⟨fun h => law.eq_of_beq h ▸ law.rfl, fun h => law.eq_of_beq h ▸ law.rfl⟩
+
+public theorem false_eq_decide_iff : type_of% @_root_.false_eq_decide_iff :=
+  fun {_} _ => ⟨fun h => of_decide_eq_false h.symm, fun h => (decide_eq_false h).symm⟩
+
 public theorem Nat.mod_two_bne_zero : type_of% @_root_.Nat.mod_two_bne_zero := by
   intro a
   cases Nat.mod_two_eq_zero_or_one a with
