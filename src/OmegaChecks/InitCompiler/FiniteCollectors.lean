@@ -22,10 +22,9 @@ private def specializeCollector (e : Expr) : MetaM (Option Expr) := do
     let method := head.replacePrefix ``Std.Iter ``Std.Iter.Total
     return some (← mkAppOptM method #[args[0]!, args[1]!, args[2]!, none, it])
   if monadicCollectors.contains head && args.size == 6 then
-    -- The three official consumers put the monad and element binders in different orders.
+    -- The list consumers place the monad instance before the element type.
     let (m, β, monad) := if head == ``Std.IterM.toArray then (args[2]!, args[1]!, args[3]!)
-      else if head == ``Std.IterM.toListRev then (args[1]!, args[3]!, args[2]!)
-      else (args[1]!, args[2]!, args[3]!)
+      else (args[1]!, args[3]!, args[2]!)
     let it ← mkAppOptM ``Std.IterM.ensureTermination #[args[0]!, β, m, args[5]!]
     let method := head.replacePrefix ``Std.IterM ``Std.IterM.Total
     return some (← mkAppOptM method #[args[0]!, m, β, monad, args[4]!, none, it])
