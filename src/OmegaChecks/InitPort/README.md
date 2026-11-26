@@ -34,3 +34,13 @@ example (a : α) (b : β) : Eq (Prod.fst (Prod.mk a b)) a := Omega.rfl
 `init-public-reductions.tsv` 列出已移植声明到严格库封装实现的一条最短定义体依赖路径。`officialReductionMechanism` 记录钉版 Lean 的官方机制，包括公开定义体、自然数内建运算、归纳类型、构造子和递归器。盘点 JSON 同时保存路径 `publicReductionBoundary` 与机制。`Nat.Coprime` 的路径通向内建运算 `Nat.gcd`。`And.rec` 和 `Iff.rec` 在官方环境中使用递归器计算规则。具体输入是否需要走到路径终点取决于归约过程。
 
 例如，普通导入 `OmegaInit.Data.Nat.Div.Basic` 后可用 `Omega.Nat.div_zero` 证明除数为零的等式。若需直接归约严格实现，可 `import all OmegaInit.Prelude`，并在证明所在节设置 `attribute [local semireducible] Omega.Nat.div Omega.Nat.ble Omega.Nat.sub Omega.Nat.pred`。
+
+完整性验收从安装的钉版 Lean 和待验制品重新读取每个官方公开定义点。运行以下命令，退出码 0 表示全部非公理定义点已通过实际接口审计，或已在源码中逐项登记官方原类型推出公理的证明。遇到尚未解决的定义点，命令写出当前清单和缺口数，然后以退出码 1 结束。
+
+```sh
+python3 src/OmegaChecks/InitPort/report.py .lake/init-port-all --require-complete
+```
+
+逐项登记位于 `src/OmegaChecks/InitInventory.lean` 的 `OmegaChecks.InitBoundaries.reductions`。条目包含官方定义模块、声明、目标公理和见证。Lean 核对指定模块内保存的声明类型，并检查见证可将该类型的任意实现转为目标公理的同类型实现，并从空内核重放见证及其传递依赖。受理的结论为任意类型的选择、命题外延性，或由任意类型的无条件取值推出矛盾。编译器公理中也有可构造的类型，例如可以用任意已有类型实现 `lcAny : Type`。例如，对两个等价命题分别应用 `Classical.propComplete`，在同真或同假两种情形下得到命题相等。将 `WellFounded.extrinsicFix` 用于自关联的单位类型，令递归分支直接自调用，原接口就必须从 `Nonempty α` 返回 `α`。给定 `unsafeCast` 原类型的任意实现，可以将单位类型的元素送到任意类型，得到 `sorryAx`。报告中的 `reductionWitness` 指向对应 Lean 声明。原证明的公理闭包、未支持原语和编译器限制保留在缺口明细中，完整性验收只接受有见证的缺口。
+
+公开定义点全部结清时，验收命令还逐模块复查实际公开公理记录，从空内核重放整个严格 Init，并以 `omegaAudit` 核验官方名称、定义模块、类型及计算接口。

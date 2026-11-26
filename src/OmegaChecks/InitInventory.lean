@@ -1,5 +1,6 @@
 module
 public import Lean
+import Lean.Replay
 import all Lean.Util.CollectAxioms
 
 public section
@@ -50,29 +51,165 @@ theorem propextFromEqIffIff (equiv : type_of% (@eq_iff_iff)) : type_of% (@propex
 theorem propextFromPropIntro (intro : type_of% (@Eq.propIntro)) : type_of% (@propext) :=
   fun {a b} h => @intro a b h.mp h.mpr
 
+def choiceFromOfNonempty (select : type_of% (@Classical.ofNonempty.{u})) :
+    type_of% (@Classical.choice.{u}) :=
+  fun {α} inhabited => @select α inhabited
 
-def reductions : List (Name × Name × Name) := [
-  (`Classical.choose, `Classical.choice, ``choiceFromChoose),
-  (`Exists.choose, `Classical.choice, ``choiceFromExistsChoose),
-  (`Classical.epsilon, `Classical.choice, ``choiceFromEpsilon),
-  (`Classical.indefiniteDescription, `Classical.choice, ``choiceFromDescription),
-  (`Classical.inhabited_of_nonempty, `Classical.choice, ``choiceFromInhabited),
-  (`iff_iff_eq, `propext, ``propextFromIffIffEq),
-  (`eq_iff_iff, `propext, ``propextFromEqIffIff),
-  (`Eq.propIntro, `propext, ``propextFromPropIntro)]
+def choiceFromInhabitedOfExists (select : type_of% (@Classical.inhabited_of_exists.{u})) :
+    type_of% (@Classical.choice.{u}) :=
+  fun {α} inhabited => (@select α (fun _ => True) (inhabited.elim fun x => ⟨x, trivial⟩)).default
+
+def choiceFromStrongDescription (select : type_of% (@Classical.strongIndefiniteDescription.{u})) :
+    type_of% (@Classical.choice.{u}) :=
+  fun {α} inhabited => (@select α (fun _ => True) inhabited).val
+
+def choiceFromTypeDecidable (decideType : type_of% (@Classical.typeDecidable.{u})) :
+    type_of% (@Classical.choice.{u}) :=
+  fun {α} inhabited => match decideType α with
+    | .inl value => value
+    | .inr empty => False.elim (inhabited.elim empty)
+
+theorem propextFromIffSubst (subst : type_of% (@Iff.subst)) : type_of% (@propext) :=
+  fun {a b} eqv => @subst a b (Eq a) eqv rfl
+
+theorem propextFromPropextIff (equiv : type_of% (@propext_iff)) : type_of% (@propext) :=
+  fun {a b} h => (@equiv a b).mpr h
+
+theorem propextFromPropComplete (complete : type_of% (@Classical.propComplete)) : type_of% (@propext) := by
+  intro a b hab
+  rcases complete a with ha | ha <;> rcases complete b with hb | hb
+  · exact ha.trans hb.symm
+  · exact False.elim (hb.mp (hab.mp (ha.mpr trivial)))
+  · exact False.elim (ha.mp (hab.mpr (hb.mpr trivial)))
+  · exact ha.trans hb.symm
+
+theorem propextFromIteIffLeft (h : type_of% (@ite_iff_left_iff)) : type_of% (@propext) :=
+  fun {a b} eqv => (@h False (.isFalse id) b a).mp eqv id
+
+theorem propextFromIteIffRight (h : type_of% (@ite_iff_right_iff)) : type_of% (@propext) :=
+  fun {a b} eqv => (@h True (.isTrue trivial) a b).mp eqv trivial
+
+theorem propextFromLeftIffIte (h : type_of% (@left_iff_ite_iff)) : type_of% (@propext) :=
+  fun {a b} eqv => (@h False (.isFalse id) a b).mp eqv id
+
+theorem propextFromRightIffIte (h : type_of% (@right_iff_ite_iff)) : type_of% (@propext) :=
+  fun {a b} eqv => (@h True (.isTrue trivial) b a).mp eqv trivial
+
+theorem propextFromGrindIffEq (h : type_of% (@Lean.Grind.iff_eq)) : type_of% (@propext) :=
+  fun {a b} eqv => (h a b).mp eqv
+
+universe v w z
+
+def choiceFromFix (fix : type_of% (@WellFounded.extrinsicFix.{u,v})) : type_of% (@Classical.choice.{v}) :=
+  fun {α} inhabited => @fix PUnit.{u} (fun _ => α) (fun _ => inhabited) (fun _ _ => True)
+    (fun x next => next x trivial) PUnit.unit
+
+def choiceFromFix₂ (fix : type_of% (@WellFounded.extrinsicFix₂.{u,v,w})) : type_of% (@Classical.choice.{w}) :=
+  fun {α} inhabited => @fix PUnit.{u} (fun _ => PUnit.{v}) (fun _ _ => α) (fun _ _ => inhabited)
+    (fun _ _ => True) (fun x y next => next x y trivial) PUnit.unit PUnit.unit
+
+def choiceFromFix₃ (fix : type_of% (@WellFounded.extrinsicFix₃.{u,v,w,z})) : type_of% (@Classical.choice.{z}) :=
+  fun {α} inhabited => @fix PUnit.{u} (fun _ => PUnit.{v}) (fun _ _ => PUnit.{w}) (fun _ _ _ => α)
+    (fun _ _ _ => inhabited) (fun _ _ => True) (fun x y z next => next x y z trivial)
+    PUnit.unit PUnit.unit PUnit.unit
+
+def sorryAxFromUnsafeCast (castAny : type_of% (@unsafeCast.{u,v})) : type_of% (@sorryAx.{v}) :=
+  fun α _ => @castAny PUnit.{u} α PUnit.unit
+
+def choiceFromLeftInv (leftInv : type_of% (@Lean.Grind.leftInv.{u,u+1})) : type_of% (@Classical.choice.{u}) :=
+  fun {α} inhabited => @leftInv α (Option (PLift α)) (fun a => some ⟨a⟩)
+    (fun _ _ h => congrArg PLift.down (Option.some.inj h)) inhabited none
+
+def choiceFromRepeatM (loop : type_of% (@repeatM.{u,u})) : type_of% (@Classical.choice.{u}) :=
+  fun {α} inhabited =>
+    let wrapped : Nonempty (PLift α) := inhabited.elim (fun a => ⟨⟨a⟩⟩)
+    (@loop (PLift (PUnit.{u})) Id inferInstance (PLift α) wrapped (fun x => Sum.inl x) ⟨PUnit.unit⟩).down
+
+/-- Physical public definition sites with a checked reduction from the original type.
+The target universe parameters are a suffix of the witness parameters. -/
+def reductions : List (Name × Name × Name × Name) := [
+  (`Init.Classical, `Classical.choose, `Classical.choice, ``choiceFromChoose),
+  (`Init.Classical, `Exists.choose, `Classical.choice, ``choiceFromExistsChoose),
+  (`Init.Classical, `Classical.epsilon, `Classical.choice, ``choiceFromEpsilon),
+  (`Init.Classical, `Classical.indefiniteDescription, `Classical.choice, ``choiceFromDescription),
+  (`Init.Classical, `Classical.inhabited_of_nonempty, `Classical.choice, ``choiceFromInhabited),
+  (`Init.Classical, `Classical.inhabited_of_exists, `Classical.choice, ``choiceFromInhabitedOfExists),
+  (`Init.Classical, `Classical.strongIndefiniteDescription, `Classical.choice, ``choiceFromStrongDescription),
+  (`Init.Classical, `Classical.typeDecidable, `Classical.choice, ``choiceFromTypeDecidable),
+  (`Init.Prelude, `Classical.ofNonempty, `Classical.choice, ``choiceFromOfNonempty),
+  (`Init.Core, `iff_iff_eq, `propext, ``propextFromIffIffEq),
+  (`Init.Core, `eq_iff_iff, `propext, ``propextFromEqIffIff),
+  (`Init.Core, `Iff.subst, `propext, ``propextFromIffSubst),
+  (`Init.Core, `Eq.propIntro, `propext, ``propextFromPropIntro),
+  (`Init.Ext, `propext_iff, `propext, ``propextFromPropextIff),
+  (`Init.Classical, `Classical.propComplete, `propext, ``propextFromPropComplete),
+  (`Init.PropLemmas, `ite_iff_left_iff, `propext, ``propextFromIteIffLeft),
+  (`Init.PropLemmas, `ite_iff_right_iff, `propext, ``propextFromIteIffRight),
+  (`Init.PropLemmas, `left_iff_ite_iff, `propext, ``propextFromLeftIffIte),
+  (`Init.PropLemmas, `right_iff_ite_iff, `propext, ``propextFromRightIffIte),
+  (`Init.Grind.Norm, `Lean.Grind.iff_eq, `propext, ``propextFromGrindIffEq),
+  (`Init.WFExtrinsicFix, `WellFounded.extrinsicFix, `Classical.choice, ``choiceFromFix),
+  (`Init.WFExtrinsicFix, `WellFounded.partialExtrinsicFix, `Classical.choice, ``choiceFromFix),
+  (`Init.WFExtrinsicFix, `WellFounded.extrinsicFix₂, `Classical.choice, ``choiceFromFix₂),
+  (`Init.WFExtrinsicFix, `WellFounded.partialExtrinsicFix₂, `Classical.choice, ``choiceFromFix₂),
+  (`Init.WFExtrinsicFix, `WellFounded.extrinsicFix₃, `Classical.choice, ``choiceFromFix₃),
+  (`Init.WFExtrinsicFix, `WellFounded.partialExtrinsicFix₃, `Classical.choice, ``choiceFromFix₃),
+  (`Init.Grind.Injective, `Lean.Grind.leftInv, `Classical.choice, ``choiceFromLeftInv),
+  (`Init.While, `repeatM, `Classical.choice, ``choiceFromRepeatM),
+  (`Init.Prelude, `unsafeCast, `sorryAx, ``sorryAxFromUnsafeCast)]
+
+/-- Recheck the transitive kernel terms of each witness with all forbidden declarations absent.
+Include complete inductive families so that replay can regenerate their primitive rules. -/
+private def replayWitnesses (env : Environment) : IO Unit := do
+  let official ← importModules #[{module := `Lean}] {} (level := .private)
+  let mut terms : Std.HashMap Name ConstantInfo := {}
+  let mut todo := reductions.map fun (_, _, _, witness) => witness
+  while let n :: more := todo do
+    todo := more
+    if terms.contains n then continue
+    let some ci := (official.find? n).orElse fun _ => env.find? n
+      | throw <| IO.userError s!"missing witness dependency {n}"
+    if ci.isAxiom || ci.isUnsafe || ci.isPartial || ci matches .quotInfo _ then
+      throw <| IO.userError s!"forbidden dependency in an axiom reduction: {n}"
+    terms := terms.insert n ci
+    todo := ci.getUsedConstantsAsSet.toList ++ todo
+    if let .inductInfo ind := ci then todo := ind.all ++ todo
+    if let .ctorInfo ctor := ci then todo := ctor.induct :: todo
+  discard <| (← mkEmptyEnvironment).toKernelEnv.replay terms
 
 run_cmd
   let env ← getEnv
-  for (name, axiomName, witness) in reductions do
+  let mut seen := Std.HashSet.emptyWithCapacity
+  for (owner, name, axiomName, witness) in reductions do
+    unless !seen.contains (owner, name) do throwError "duplicate axiom reduction for {owner}/{name}"
+    seen := seen.insert (owner, name)
+    let some idx := env.getModuleIdx? owner | throwError "missing module {owner}"
+    let some source := env.header.moduleData[idx]!.constants.find? (·.name == name)
+      | throwError "missing definition site {owner}/{name}"
+    -- Several compiler axioms have constructively inhabited types (e.g. lcAny : Type).
+    -- A reduction to one of those cannot exclude a source declaration.
+    unless [`Classical.choice, `propext, `sorryAx].contains axiomName do
+      throwError "unsupported impossibility target {axiomName} for {owner}/{name}"
     let proof ← getConstInfo witness
-    let source ← getConstInfo name
     let target ← getConstInfo axiomName
     let levels := proof.levelParams.map Level.param
-    let expected := Expr.forallE .anonymous (source.type.instantiateLevelParams source.levelParams levels)
-      (target.type.instantiateLevelParams target.levelParams levels) .default
-    unless target.isAxiom && source.numLevelParams == levels.length && target.numLevelParams == levels.length &&
+    -- The source may be specialized to a particular universe tuple when constructing the axiom.
+    let .forallE _ input _ _ := proof.type | throwError "missing argument of {witness}"
+    let sourceLevels ← Elab.Command.liftCoreM <| Meta.MetaM.run' do
+      let fresh ← Meta.mkFreshLevelMVarsFor source
+      unless ← Meta.isDefEq input (source.type.instantiateLevelParams source.levelParams fresh) do
+        throwError "incorrect source type in {witness}"
+      let found ← fresh.mapM instantiateLevelMVars
+      if found.any Level.hasMVar then throwError "unresolved source universe in {witness}"
+      return found
+    let targetLevels := levels.drop (levels.length - target.numLevelParams)
+    let expected := Expr.forallE .anonymous (source.type.instantiateLevelParams source.levelParams sourceLevels)
+      (target.type.instantiateLevelParams target.levelParams targetLevels) .default
+    unless target.isAxiom && target.numLevelParams == targetLevels.length &&
+        !proof.isUnsafe && !proof.isPartial && (proof.value? (allowOpaque := true)).isSome &&
         Kernel.isDefEqGuarded env {} proof.type expected && (← collectAxioms witness).isEmpty do
-      throwError "invalid axiom reduction for {name}"
+      throwError "invalid axiom reduction for {owner}/{name}"
+  replayWitnesses env
 
 end OmegaChecks.InitBoundaries
 
@@ -138,8 +275,8 @@ private def inventory (lib : System.FilePath) (visible strict full : Environment
     (gaps : Option IO.FS.Handle) : CoreM Json := do
   let official ← getEnv
   let reductions := reductionPaths visible strict full
-  let boundaries : NameMap Name := OmegaChecks.InitBoundaries.reductions.foldl
-    (init := {}) fun acc (name, target, _) => acc.insert name target
+  let boundaries : Std.HashMap (Name × Name) (Name × Name) := OmegaChecks.InitBoundaries.reductions.foldl
+    (init := {}) fun acc (owner, name, target, witness) => acc.insert (owner, name) (target, witness)
   let mut names : NameSet := {}
   let mut duplicateNames : NameSet := {}
   let publicName := fun (n : Name) => !isPrivateName n && !n.isInternalOrNum && !n.hasMacroScopes
@@ -148,6 +285,7 @@ private def inventory (lib : System.FilePath) (visible strict full : Environment
       if publicName n then
         if names.contains n then duplicateNames := duplicateNames.insert n
         names := names.insert n
+  let mut certifiedSites := 0
   let mut matchedUnique : NameSet := {}
   let mut axiomUnique : NameSet := {}
   let mut withAxiomsUnique : NameSet := {}
@@ -156,7 +294,7 @@ private def inventory (lib : System.FilePath) (visible strict full : Environment
   let mut directAxioms := 0
   let mut withAxioms := 0
   if let some file := gaps then
-    file.putStrLn "module\tdeclaration\tkind\tunsafe\tpartial\tupstreamAxioms\timpliesAxiom"
+    file.putStrLn "module\tdeclaration\tkind\tunsafe\tpartial\tupstreamAxioms\timpliesAxiom\treductionWitness"
   for owner in modules do
     let some idx := visible.getModuleIdx? owner | throwError "missing official module {owner}"
     let publicNames := visible.header.moduleData[idx]!.constNames.filter publicName
@@ -177,6 +315,8 @@ private def inventory (lib : System.FilePath) (visible strict full : Environment
       let some info := localDecls.find? name | throwError "missing declaration {owner}/{name}"
       let some (_, axioms) := localAxioms.binSearch (name, #[]) (fun a b => Name.quickLt a.1 b.1)
         | throwError "missing official axiom closure for {owner}/{name}"
+      let boundary := boundaries[(owner, name)]?
+      if boundary.isSome then certifiedSites := certifiedSites + 1
       let strictName := `Omega ++ name
       let matched := strictNames.any (·.contains strictName)
       let strictOwner := if matched then some expected else none
@@ -188,7 +328,7 @@ private def inventory (lib : System.FilePath) (visible strict full : Environment
           file.putStrLn <| String.intercalate "\t" [owner.toString, name.toString,
             declarationKind info, toString info.isUnsafe, toString info.isPartial,
             String.intercalate "," (axioms.toList.map Name.toString),
-            ((boundaries.get? name).map Name.toString).getD ""]
+            (boundary.map (·.1.toString)).getD "", (boundary.map (·.2.toString)).getD ""]
       if info.isAxiom then
         directAxioms := directAxioms + 1
         axiomUnique := axiomUnique.insert name
@@ -203,13 +343,15 @@ private def inventory (lib : System.FilePath) (visible strict full : Environment
         ("publicReductionBoundary", toJson ((reduction.map Prod.fst).getD []).toArray),
         ("officialReductionMechanism", toJson (reduction.map Prod.snd)),
         ("axioms", toJson (axioms.map Name.toString)),
-        ("impliesAxiom", toJson ((boundaries.get? name).map Name.toString)),
+        ("impliesAxiom", toJson (boundary.map (·.1.toString))),
+        ("reductionWitness", toJson (boundary.map (·.2.toString))),
         ("strictModule", toJson (strictOwner.map Name.toString))]
+  unless certifiedSites == boundaries.size do throwError "missing registered public definition site"
   let summary := Json.mkObj [("declarations", toJson rows.size), ("directAxioms", toJson directAxioms),
     ("withAxioms", toJson withAxioms), ("matchingNameAndModule", toJson matchingNames)]
   let unique := Json.mkObj [("declarations",toJson names.size), ("directAxioms",toJson axiomUnique.size),
     ("withAxioms",toJson withAxiomsUnique.size), ("matchingNameAndModule",toJson matchedUnique.size)]
-  return Json.mkObj [("schemaVersion", toJson 2), ("uniqueNames", unique), ("leanVersion", toJson Lean.versionString), ("leanCommit", toJson Lean.githash),
+  return Json.mkObj [("schemaVersion", toJson 3), ("uniqueNames", unique), ("leanVersion", toJson Lean.versionString), ("leanCommit", toJson Lean.githash),
     ("modules", toJson (modules.map Name.toString)), ("summary", summary), ("declarations", .arr rows)]
 
 def main (args : List String) : IO Unit := do

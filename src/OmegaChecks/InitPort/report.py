@@ -11,13 +11,65 @@ HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[2]
 
 
-def report(product):
+def check_coverage(official):
+    """Count physical sites from the fresh Lean inventory, including repeated names."""
+    modules = set(official["modules"])
+    sites = set()
+    direct = 0
+    matched = 0
+    reductions = 0
+    unresolved = []
+    for row in official["declarations"]:
+        owner, name = site = (row["module"], row["name"])
+        if owner not in modules or site in sites:
+            raise ValueError(f"invalid or repeated official definition site {owner}/{name}")
+        sites.add(site)
+        port = row["matchingNameAndModule"]
+        axiom = row["kind"] == "axiom"
+        witness, target = row["reductionWitness"], row["impliesAxiom"]
+        if bool(witness) != bool(target):
+            raise ValueError(f"incomplete axiom reduction for {owner}/{name}")
+        if port:
+            if axiom or witness or row["strictModule"] != "Omega" + owner:
+                raise ValueError(f"inconsistent strict match for {owner}/{name}")
+            matched += 1
+        elif axiom:
+            direct += 1
+        elif witness:
+            reductions += 1
+        else:
+            unresolved.append(site)
+    summary = official["summary"]
+    if (not sites or not modules or len(sites) != summary["declarations"] or
+            matched != summary["matchingNameAndModule"] or direct != summary["directAxioms"]):
+        raise ValueError("official inventory counts do not agree with its definition sites")
+    return reductions, unresolved
+
+
+def verify_complete(official, product, reductions, unresolved):
+    if unresolved:
+        examples = ", ".join(f"{owner}/{name}" for owner, name in unresolved[:3])
+        raise ValueError(f"{len(unresolved)} unresolved public non-axiom definition sites; "
+                         f"{reductions} checked axiom reductions. Examples: {examples}. See init-gaps.tsv.")
+    # Never accept an old audit log or a same-name strict declaration as a certificate.
+    # Audit the product actually being presented, against all installed official module roots.
+    lib = product / "lib"
+    roots = ["Omega" + module for module in official["modules"]]
+    subprocess.run(["lean", "--run", HERE / "ExportAxioms.lean", "--check", lib, *roots],
+                   cwd=ROOT, check=True)
+    subprocess.run(["lake", "build", "omegaAudit", "+OmegaChecks.Interface.Equations"], cwd=ROOT, check=True)
+    subprocess.run(["lake", "env", ROOT / ".lake/build/bin/omegaAudit",
+                    "--exact-roots", lib, *roots, "--", *roots], cwd=ROOT, check=True)
+
+
+def report(product, require_complete=False):
     with tempfile.TemporaryDirectory(dir=product) as work:
         stage = Path(work)
         inventory = stage / "init-inventory.json"
         subprocess.run(["lean", "--run", HERE.parent / "InitInventory.lean", product / "lib", inventory],
                        cwd=ROOT, check=True)
         official = json.loads(inventory.read_text())
+        reduction_count, unresolved = check_coverage(official)
         with (product / "inventory.jsonl").open() as f:
             attempts = {}
             owners = defaultdict(list)
@@ -37,7 +89,7 @@ def report(product):
         with output.open("w", newline="") as f:
             writer = csv.writer(f, delimiter="\t", lineterminator="\n")
             writer.writerow(["module", "declaration", "kind", "unsafe", "partial", "upstreamAxioms",
-                             "impliesAxiom", "firstDependencyPath", "reason"])
+                             "impliesAxiom", "firstDependencyPath", "reason", "reductionWitness"])
             for row in official["declarations"]:
                 if row["matchingNameAndModule"] or row["kind"] == "axiom":
                     continue
@@ -68,7 +120,7 @@ def report(product):
                     reason = f"dependency cycle through {dep}"
                 writer.writerow([row["module"], name, row["kind"], str(row["unsafe"]).lower(),
                                  str(row["partial"]).lower(), ",".join(row["axioms"]), row["impliesAxiom"],
-                                 " -> ".join(path), " ".join(reason.splitlines())])
+                                 " -> ".join(path), " ".join(reason.splitlines()), row["reductionWitness"]])
         reductions = stage / "init-public-reductions.tsv"
         with reductions.open("w", newline="") as f:
             writer = csv.writer(f, delimiter="\t", lineterminator="\n")
@@ -82,9 +134,17 @@ def report(product):
         reductions.replace(product / reductions.name)
         inventory.replace(product / inventory.name)
         output.replace(product / output.name)
+    if require_complete:
+        verify_complete(official, product, reduction_count, unresolved)
 
 
 if __name__ == "__main__":
     cli = argparse.ArgumentParser(description=__doc__)
     cli.add_argument("product", type=Path, help="audited output from build.py")
-    report(cli.parse_args().product.resolve())
+    cli.add_argument("--require-complete", action="store_true",
+                     help="fail unless every official non-axiom site is ported or implies an axiom by a checked witness")
+    args = cli.parse_args()
+    try:
+        report(args.product.resolve(), require_complete=args.require_complete)
+    except ValueError as error:
+        cli.exit(1, f"{error}\n")
