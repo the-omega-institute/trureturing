@@ -580,4 +580,15 @@ public theorem String.utf8EncodeChar_eq_cons_cons_cons_cons : type_of% @_root_.S
   · exact maskedByte c.val 6 2 (by decide) (by decide)
   rfl
 
+public theorem ByteArray.isValidUTF8_utf8Encode_singleton_append_iff :
+    type_of% @_root_.ByteArray.isValidUTF8_utf8Encode_singleton_append_iff := by
+  intro b c
+  constructor
+  · rintro ⟨l, eq⟩
+    have lays := congrArg bytes eq
+    rw [bytes_append] at lays
+    obtain ⟨t, ht⟩ := remove_prefix [c] l (bytes b) lays
+    exact ⟨t, ByteArray.ext (Array.ext' ht)⟩
+  · exact fun valid => ByteArray.IsValidUTF8.append ByteArray.isValidUTF8_utf8Encode valid
+
 end OmegaChecks.InitPort.Alternatives
