@@ -19,6 +19,7 @@ public import OmegaChecks.InitPort.Alternatives.GrindLinear
 public import OmegaChecks.InitPort.Alternatives.GrindNatModule
 public import OmegaChecks.InitPort.Alternatives.GrindOrder
 public import OmegaChecks.InitPort.Alternatives.GrindRing
+public import OmegaChecks.InitPort.Alternatives.Indexing
 public import OmegaChecks.InitPort.Alternatives.Integer
 public import OmegaChecks.InitPort.Alternatives.List
 public import OmegaChecks.InitPort.Alternatives.ListRange
