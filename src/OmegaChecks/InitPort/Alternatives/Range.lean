@@ -3,6 +3,8 @@ public import Init.Data.Range.Polymorphic.Nat
 public import Init.Data.Range.Polymorphic.Int
 public import Init.Data.Range.Polymorphic.Fin
 public import Init.Data.Range.Polymorphic.UInt
+import all Init.Data.Range.Polymorphic.Internal.SignedBitVec
+import all Init.Data.Range.Polymorphic.SInt
 import Init.Data.BitVec.Lemmas
 
 /-! Successor and size laws for ranges of naturals, integers, and finite indices. -/
@@ -450,5 +452,96 @@ public theorem USize.instLawfulUpwardEnumerable : LawfulUpwardEnumerable USize :
 public theorem USize.instLawfulHasSize : Rxc.LawfulHasSize USize :=
   closedSizeImage USize.ofBitVec USize.toBitVec (fun _ => rfl) (fun _ => rfl)
     (fun _ => USize.succ?_ofBitVec) (fun _ _ => Iff.rfl) (fun _ _ => rfl)
+
+public theorem BitVec.Signed.rotate_map_eq_iff :
+    type_of% (private_decl% @_root_.BitVec.Signed.rotate_map_eq_iff) := by
+  intro n x y
+  cases x <;> cases y
+  · exact Iff.rfl
+  · exact ⟨(fun h => nomatch h), fun h => nomatch h⟩
+  · exact ⟨(fun h => nomatch h), fun h => nomatch h⟩
+  · exact ⟨fun h => congrArg some (_root_.BitVec.Signed.rotate_eq_iff.mp (Option.some.inj h)),
+      fun h => congrArg some (_root_.BitVec.Signed.rotate_eq_iff.mpr (Option.some.inj h))⟩
+
+public theorem BitVec.Signed.instLawfulUpwardEnumerable :
+    type_of% (private_decl% @_root_.BitVec.Signed.instLawfulUpwardEnumerable) := by
+  intro w
+  exact @enumerableImage (BitVec w) (BitVec w) _root_.BitVec.instUpwardEnumerable
+    _root_.BitVec.Signed.instUpwardEnumerable BitVec.instLawfulUpwardEnumerable
+    _root_.BitVec.Signed.rotate _root_.BitVec.Signed.rotate (fun _ => _root_.BitVec.Signed.rotate_rotate)
+    (fun _ => _root_.BitVec.Signed.rotate_rotate) (fun _ => _root_.BitVec.Signed.succ?_rotate)
+    (fun _ _ => _root_.BitVec.Signed.succMany?_rotate)
+
+private theorem closedOfFiniteEnumeration {α : Type u} [UpwardEnumerable α] [LE α]
+    (finite : Rxi.IsAlwaysFinite α) : Rxc.IsAlwaysFinite α where
+  finite lo _ := by
+    obtain ⟨n, stop⟩ := finite.finite lo
+    exact ⟨n, by rw [stop]; exact True.intro⟩
+
+private theorem openOfFiniteEnumeration {α : Type u} [UpwardEnumerable α] [LT α]
+    (finite : Rxi.IsAlwaysFinite α) : Rxo.IsAlwaysFinite α where
+  finite lo _ := by
+    obtain ⟨n, stop⟩ := finite.finite lo
+    exact ⟨n, by rw [stop]; exact True.intro⟩
+
+public theorem Int8.instRxiIsAlwaysFinite : Rxi.IsAlwaysFinite Int8 where
+  finite a := by
+    refine ⟨(_root_.Int8.maxValueSealed.toInt - a.toInt).toNat + 1, ?_⟩
+    apply dite_eq_right
+    omega
+
+public theorem Int8.instIsAlwaysFinite : Rxc.IsAlwaysFinite Int8 :=
+  closedOfFiniteEnumeration Int8.instRxiIsAlwaysFinite
+
+public theorem Int8.instRxoIsAlwaysFinite : Rxo.IsAlwaysFinite Int8 :=
+  openOfFiniteEnumeration Int8.instRxiIsAlwaysFinite
+
+public theorem Int16.instRxiIsAlwaysFinite : Rxi.IsAlwaysFinite Int16 where
+  finite a := by
+    refine ⟨(_root_.Int16.maxValueSealed.toInt - a.toInt).toNat + 1, ?_⟩
+    apply dite_eq_right
+    omega
+
+public theorem Int16.instIsAlwaysFinite : Rxc.IsAlwaysFinite Int16 :=
+  closedOfFiniteEnumeration Int16.instRxiIsAlwaysFinite
+
+public theorem Int16.instRxoIsAlwaysFinite : Rxo.IsAlwaysFinite Int16 :=
+  openOfFiniteEnumeration Int16.instRxiIsAlwaysFinite
+
+public theorem Int32.instRxiIsAlwaysFinite : Rxi.IsAlwaysFinite Int32 where
+  finite a := by
+    refine ⟨(_root_.Int32.maxValueSealed.toInt - a.toInt).toNat + 1, ?_⟩
+    apply dite_eq_right
+    omega
+
+public theorem Int32.instIsAlwaysFinite : Rxc.IsAlwaysFinite Int32 :=
+  closedOfFiniteEnumeration Int32.instRxiIsAlwaysFinite
+
+public theorem Int32.instRxoIsAlwaysFinite : Rxo.IsAlwaysFinite Int32 :=
+  openOfFiniteEnumeration Int32.instRxiIsAlwaysFinite
+
+public theorem Int64.instRxiIsAlwaysFinite : Rxi.IsAlwaysFinite Int64 where
+  finite a := by
+    refine ⟨(_root_.Int64.maxValueSealed.toInt - a.toInt).toNat + 1, ?_⟩
+    apply dite_eq_right
+    omega
+
+public theorem Int64.instIsAlwaysFinite : Rxc.IsAlwaysFinite Int64 :=
+  closedOfFiniteEnumeration Int64.instRxiIsAlwaysFinite
+
+public theorem Int64.instRxoIsAlwaysFinite : Rxo.IsAlwaysFinite Int64 :=
+  openOfFiniteEnumeration Int64.instRxiIsAlwaysFinite
+
+public theorem ISize.instRxiIsAlwaysFinite : Rxi.IsAlwaysFinite ISize where
+  finite a := by
+    refine ⟨(_root_.ISize.maxValueSealed.toInt - a.toInt).toNat + 1, ?_⟩
+    apply dite_eq_right
+    omega
+
+public theorem ISize.instIsAlwaysFinite : Rxc.IsAlwaysFinite ISize :=
+  closedOfFiniteEnumeration ISize.instRxiIsAlwaysFinite
+
+public theorem ISize.instRxoIsAlwaysFinite : Rxo.IsAlwaysFinite ISize :=
+  openOfFiniteEnumeration ISize.instRxiIsAlwaysFinite
 
 end OmegaChecks.InitPort.Alternatives
