@@ -262,6 +262,40 @@ theorem excludedMiddleOfLawfulLT
   exact (law.mpr ⟨fun h => Bool.noConfusion h.1,
     fun denied => nn fun hq => denied ⟨rfl,rfl,hq⟩⟩).2.2
 
+/-- Opposite comparisons of distinct Boolean values test a proposition and its negation. -/
+private def signed (p : Prop) (a b : Bool) : Prop :=
+  Bool.rec (motive := fun _ => Prop)
+    (Bool.rec (motive := fun _ => Prop) False p b)
+    (Bool.rec (motive := fun _ => Prop) (¬p) False b) a
+
+private theorem signedAsymm (p : Prop) : Std.Asymm (signed p) := by
+  refine ⟨fun a b f r => ?_⟩
+  cases a <;> cases b <;> first | exact (f : False) | exact (r : ¬p) f | exact (f : ¬p) r
+
+@[instance_reducible] private def signedNegTrans (p : Prop) :
+    Trans (fun a b => ¬signed p a b) (fun a b => ¬signed p a b) (fun a b => ¬signed p a b) := by
+  constructor
+  intro a b c ab bc
+  cases a <;> cases b <;> cases c <;> first | exact ab | exact bc | exact id
+
+private theorem signedTri (p : Prop) : Std.Trichotomous (signed p) := by
+  refine ⟨fun a b f r => ?_⟩
+  cases a <;> cases b <;> first | rfl | exact (r f).elim | exact (f r).elim
+
+theorem weakMiddleOfTotalNot (total : type_of% (@Std.Asymm.total_not.{1})) (p : Prop) :
+    ¬p ∨ ¬¬p :=
+  (@total Bool (signed p) (signedAsymm p)).total false true
+
+theorem weakMiddleOfLinearPreorder (order : type_of% (@Std.IsLinearPreorder.of_lt.{0})) (p : Prop) :
+    ¬p ∨ ¬¬p := by
+  letI : LT Bool := ⟨signed p⟩
+  exact ((@order Bool _ (signedAsymm p) (signedNegTrans p)).le_total false true).symm
+
+theorem weakMiddleOfLinearOrder (order : type_of% (@Std.IsLinearOrder.of_lt.{0})) (p : Prop) :
+    ¬p ∨ ¬¬p := by
+  letI : LT Bool := ⟨signed p⟩
+  exact ((@order Bool _ (signedAsymm p) (signedNegTrans p) (signedTri p)).le_total false true).symm
+
 end AbstractOrder
 
 namespace TwoWorlds
@@ -332,7 +366,8 @@ private def replayWitnesses (env : Environment) : IO Unit := do
       ``GrindOrder.excludedMiddleFromNotNot, ``GrindOrder.excludedMiddleFromLookahead,
       ``AbstractOrder.excludedMiddleOfTrichotomy, ``AbstractOrder.excludedMiddleOfLTTrichotomy,
       ``AbstractOrder.excludedMiddleOfTrichotomousTotal, ``AbstractOrder.excludedMiddleOfNegationTotal,
-      ``AbstractOrder.excludedMiddleOfLawfulLT, ``TwoWorlds.countermodel]
+      ``AbstractOrder.excludedMiddleOfLawfulLT, ``AbstractOrder.weakMiddleOfTotalNot,
+      ``AbstractOrder.weakMiddleOfLinearPreorder, ``AbstractOrder.weakMiddleOfLinearOrder, ``TwoWorlds.countermodel]
   while let n :: more := todo do
     todo := more
     if terms.contains n then continue
@@ -1198,6 +1233,12 @@ private def logicalConsequence? (owner name : Name) : Option (Name × Name) := d
   | `Init.Core, ``Quotient.sound => return (``funext, ``OmegaChecks.InitBoundaries.funextFromQuotientSound)
   | `Init.Core, ``Pi.instSubsingleton => return (``funext, ``OmegaChecks.InitBoundaries.funextFromPiSubsingleton)
   | `Init.Core, ``instSubsingletonSquash => return (``funext, ``OmegaChecks.InitBoundaries.funextFromSquashSubsingleton)
+  | `Init.Data.Order.Lemmas, ``Std.Asymm.total_not =>
+    return (`OmegaChecks.InitInventory.StringPatterns.WeakExcludedMiddle, ``OmegaChecks.InitBoundaries.AbstractOrder.weakMiddleOfTotalNot)
+  | `Init.Data.Order.Factories, ``Std.IsLinearPreorder.of_lt =>
+    return (`OmegaChecks.InitInventory.StringPatterns.WeakExcludedMiddle, ``OmegaChecks.InitBoundaries.AbstractOrder.weakMiddleOfLinearPreorder)
+  | `Init.Data.Order.Factories, ``Std.IsLinearOrder.of_lt =>
+    return (`OmegaChecks.InitInventory.StringPatterns.WeakExcludedMiddle, ``OmegaChecks.InitBoundaries.AbstractOrder.weakMiddleOfLinearOrder)
   | `Init.Data.String.Lemmas.Pattern.Basic, ``String.Slice.Pattern.Model.matchAt?_eq_none_iff =>
     return (`OmegaChecks.InitInventory.StringPatterns.WeakExcludedMiddle,
       `OmegaChecks.InitInventory.StringPatterns.weakExcludedMiddleOfMatchAtNone)
