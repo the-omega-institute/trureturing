@@ -34,8 +34,7 @@ internal sealed class StrictTwoSumfreePreperiodRefutationDocument : IScribeDocum
                     + "is certified through 288 and by strict-sum residue arguments from 288 onward. "
                     + "The least-next-entry rule gives uniqueness. At zero-based gap index 14, "
                     + "the difference from 51 to 61 is 10. Every later difference is at most 9, "
-                    + "so any positive shift of gap 14 violates the proposed periodicity. "
-                    + "The source and independent certificate are recorded under issue #34312."))),
+                    + "so any positive shift of gap 14 violates the proposed periodicity."))),
                 DescribeRole.Theorem,
                 openProblemResolutionClaim: new OpenProblemResolutionClaim(
                     ProblemSlugRef.Create("van-berkel-bosma-2026-conjecture-9"),
