@@ -796,6 +796,68 @@ run_cmd
       ``funextFromLeftInverseId, ``funextFromRightInverseId, ``funextFromForInEq] do
     unless (← collectAxioms n).isEmpty do throwError "reader congruence witness {n} uses axioms"
 
+namespace MonadicTraversal
+
+private def action {T : Type w} (k : T → T) (b : Option T) (flag : Bool) : ReaderM T (Option T) :=
+  match flag with
+  | false => fun x => some x
+  | true => fun _ => b.map k
+
+private theorem agree {T : Type w} {f g : T → T} (h : ∀ x, f x = g x)
+    (b : Option T) (flag : Bool) : action f b flag = action g b flag := by
+  cases flag with
+  | false => rfl
+  | true =>
+    cases b with
+    | none => rfl
+    | some x => exact congrArg (fun y (_ : T) => some y) (h x)
+
+private def extract {T : Type w} (r : ReaderM T (Option T)) (x : T) : T := (r x).getD x
+
+private abbrev marked := { _b : Bool // True }
+
+private def forward : List marked := [⟨false, trivial⟩, ⟨true, trivial⟩]
+private def backward : List marked := [⟨true, trivial⟩, ⟨false, trivial⟩]
+
+private theorem lawful (T : Type w) : LawfulMonad (ReaderM T) where
+  id_map := by intros; rfl
+  comp_map := by intros; rfl
+  seq_pure := by intros; rfl
+  seq_assoc := by intros; rfl
+  map_pure := by intros; rfl
+  map_const := by intros; rfl
+  seqLeft_eq := by intros; rfl
+  seqRight_eq := by intros; rfl
+  pure_seq := by intros; rfl
+  bind_pure_comp := by intros; rfl
+  bind_map := by intros; rfl
+  pure_bind := by intros; rfl
+  bind_assoc := by intros; rfl
+
+/-- A two-element left fold observes the callback on every reader input. -/
+public theorem fromListFoldl (law : type_of% @List.foldlM_subtype.{max 1 u v,max 1 u v,0}) :
+    type_of% @funext.{u,v} := by
+  apply funextFromEndomorphisms
+  intro T f g h
+  have eq := @law (ReaderM T) Bool (Option T) _ _ forward
+    (fun b a => action f b a.val) (action g) none (fun b a _ => agree h b a)
+  exact congrArg extract eq
+
+public theorem fromListFoldr (law : type_of% @List.foldrM_subtype.{max 1 u v,max 1 u v,0}) :
+    type_of% @funext.{u,v} := by
+  apply funextFromEndomorphisms
+  intro T f g h
+  have eq := @law (ReaderM T) Bool (Option T) _ (lawful T) _ backward
+    (fun a b => action f b a.val) (fun a b => action g b a) none (fun a _ b => agree h b a)
+  exact congrArg extract eq
+
+open Lean in
+run_cmd
+  for n in [``fromListFoldl, ``fromListFoldr] do
+    unless (← collectAxioms n).isEmpty do throwError "monadic traversal witness {n} uses axioms"
+
+end MonadicTraversal
+
 namespace RangeMap
 
 open Std.PRange
@@ -1437,6 +1499,10 @@ private def logicalConsequence? (owner name : Name) : Option (Name × Name) := d
   | `Init.Control.Lawful.Instances, ``StateT.ext_iff => return (``funext, ``OmegaChecks.InitBoundaries.funextFromStateExtIff)
   | `Init.Data.Function, ``Function.LeftInverse.id => return (``funext, ``OmegaChecks.InitBoundaries.funextFromLeftInverseId)
   | `Init.Data.Function, ``Function.RightInverse.id => return (``funext, ``OmegaChecks.InitBoundaries.funextFromRightInverseId)
+  | `Init.Data.List.Monadic, ``List.foldlM_subtype =>
+    return (``funext, ``OmegaChecks.InitBoundaries.MonadicTraversal.fromListFoldl)
+  | `Init.Data.List.Monadic, ``List.foldrM_subtype =>
+    return (``funext, ``OmegaChecks.InitBoundaries.MonadicTraversal.fromListFoldr)
   | `Init.Data.Iterators.Lemmas.Consumers.Loop, ``Std.Iter.forIn_congr =>
     return (``funext, ``OmegaChecks.InitBoundaries.IteratorLoopCongruence.funextFromCongr)
   | `Init.Data.Iterators.Lemmas.Consumers.Loop, ``Std.Iter.forIn'_congr =>
