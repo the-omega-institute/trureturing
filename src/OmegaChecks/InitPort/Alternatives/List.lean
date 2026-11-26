@@ -1,4 +1,5 @@
 module
+public import OmegaChecks.InitPort.Alternatives.MonadicLists
 public import OmegaChecks.InitPort.Alternatives.ListPairwise
 public import OmegaChecks.InitPort.Alternatives.ListReplace
 public import Init.Data.List.Lemmas
