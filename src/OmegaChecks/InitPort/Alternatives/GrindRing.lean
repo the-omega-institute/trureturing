@@ -1,10 +1,21 @@
 module
 import all Init.Grind.Ring.CommSolver
+import all Init.Grind.Ring.Envelope
 
 /-! Constructive proofs for the polynomial normalizer and its ring certificates. -/
 
 open Lean.Grind Lean.Grind.CommRing
 namespace OmegaChecks.InitPort.Alternatives
+
+open _root_.Lean.Grind.Ring.OfSemiring in
+public theorem Lean.Grind.Ring.OfSemiring.toQ_zero {α : Type u} [Semiring α] :
+    toQ (0 : α) = natCast (α := α) 0 :=
+  congrArg (fun x : α => Q.mk (x, 0)) (Semiring.natCast_zero (α := α)).symm
+
+open _root_.Lean.Grind.Ring.OfSemiring in
+public theorem Lean.Grind.Ring.OfSemiring.toQ_ofNat {α : Type u} [Semiring α] (n : Nat) :
+    toQ (OfNat.ofNat (α := α) n) = natCast (α := α) n :=
+  congrArg (fun x : α => Q.mk (x, 0)) (Semiring.ofNat_eq_natCast n)
 
 private theorem smallerTail (p : Power) (m : Mon) : sizeOf m < sizeOf (Mon.mult p m) :=
   Nat.lt_add_of_pos_left (Nat.lt_of_lt_of_le Nat.zero_lt_one (Nat.le_add_right 1 (sizeOf p)))

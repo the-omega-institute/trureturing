@@ -1,10 +1,17 @@
 module
 import all Init.Grind.Module.NatModuleNorm
+import all Init.Grind.Module.Envelope
 
 /-! Interpret normalized polynomials with nonnegative coefficients in a natural module. -/
 
 open Lean.Grind Lean.Grind.Linarith
 namespace OmegaChecks.InitPort.Alternatives
+
+open _root_.Lean.Grind.IntModule.OfNatModule in
+public theorem Lean.Grind.IntModule.OfNatModule.toQ_zero {α : Type u} [NatModule α] :
+    toQ (0 : α) = zero := by
+  unfold toQ zero
+  rfl
 
 public theorem Lean.Grind.Linarith.Poly.denoteN_add : type_of% @_root_.Lean.Grind.Linarith.Poly.denoteN_add := by
   intro α _ ctx k x p h
