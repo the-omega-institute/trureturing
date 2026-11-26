@@ -127,6 +127,7 @@ jobs:
     if: needs.plan.outputs.parallel == 'true'
     strategy:
       fail-fast: false
+      max-parallel: 6
       matrix: ${{ fromJSON(needs.plan.outputs.matrix) }}
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 360
