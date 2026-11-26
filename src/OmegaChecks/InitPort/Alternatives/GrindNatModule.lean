@@ -7,6 +7,24 @@ import all Init.Grind.Module.Envelope
 open Lean.Grind Lean.Grind.Linarith
 namespace OmegaChecks.InitPort.Alternatives
 
+section
+open Std
+
+public theorem Lean.Grind.IntModule.OfNatModule.mk_le_mk {α : Type u} [NatModule α] [LE α] [IsPreorder α] [OrderedAdd α]
+    {a₁ a₂ b₁ b₂ : α} : (a₁ + b₂ ≤ a₂ + b₁) ↔ a₁ + b₂ ≤ a₂ + b₁ := Iff.rfl
+
+public theorem Lean.Grind.IntModule.OfNatModule.toQ_le {α : Type u} [NatModule α] [LE α] [IsPreorder α] [OrderedAdd α]
+    {a b : α} : (a + 0 ≤ 0 + b) ↔ a ≤ b := by
+  rw [AddCommMonoid.add_zero, AddCommMonoid.zero_add]
+
+public theorem Lean.Grind.IntModule.OfNatModule.toQ_lt {α : Type u} [NatModule α] [LE α] [LT α] [LawfulOrderLT α]
+    [IsPreorder α] [OrderedAdd α] {a b : α} :
+    ((a + 0 ≤ 0 + b) ∧ ¬(b + 0 ≤ 0 + a)) ↔ a < b := by
+  rw [AddCommMonoid.add_zero, AddCommMonoid.zero_add, AddCommMonoid.add_zero, AddCommMonoid.zero_add,
+    LawfulOrderLT.lt_iff]
+
+end
+
 open _root_.Lean.Grind.IntModule.OfNatModule in
 public theorem Lean.Grind.IntModule.OfNatModule.toQ_zero {α : Type u} [NatModule α] :
     toQ (0 : α) = zero := by

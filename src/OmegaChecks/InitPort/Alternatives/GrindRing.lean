@@ -7,6 +7,24 @@ import all Init.Grind.Ring.Envelope
 open Lean.Grind Lean.Grind.CommRing
 namespace OmegaChecks.InitPort.Alternatives
 
+section
+open Std
+
+public theorem Lean.Grind.Ring.OfSemiring.mk_le_mk {α : Type u} [Semiring α] [LE α] [IsPreorder α] [OrderedAdd α]
+    {a₁ a₂ b₁ b₂ : α} : (a₁ + b₂ ≤ a₂ + b₁) ↔ a₁ + b₂ ≤ a₂ + b₁ := Iff.rfl
+
+public theorem Lean.Grind.Ring.OfSemiring.toQ_le {α : Type u} [Semiring α] [LE α] [IsPreorder α] [OrderedAdd α]
+    {a b : α} : (a + 0 ≤ 0 + b) ↔ a ≤ b := by
+  rw [Semiring.add_zero, AddCommMonoid.zero_add]
+
+public theorem Lean.Grind.Ring.OfSemiring.toQ_lt {α : Type u} [Semiring α] [LE α] [LT α] [LawfulOrderLT α]
+    [IsPreorder α] [OrderedAdd α] {a b : α} :
+    ((a + 0 ≤ 0 + b) ∧ ¬(b + 0 ≤ 0 + a)) ↔ a < b := by
+  rw [Semiring.add_zero, AddCommMonoid.zero_add, Semiring.add_zero, AddCommMonoid.zero_add,
+    LawfulOrderLT.lt_iff]
+
+end
+
 open _root_.Lean.Grind.Ring.OfSemiring in
 @[instance_reducible] public def Lean.Grind.CommRing.OfCommSemiring.instIntCastQ :
     type_of% @_root_.Lean.Grind.CommRing.OfCommSemiring.instIntCastQ :=
