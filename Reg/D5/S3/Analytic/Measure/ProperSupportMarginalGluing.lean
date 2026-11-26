@@ -136,7 +136,7 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   familyRecord := none
   options := #[]
 
-abbrev equalityArena : Arena where
+abbrev equalityArena.{w,u,v} : Arena where
   signature := signature.{u,v}
   Law R := ∀ {I : Type u} [Fintype I] {X : I → Type v} [∀ i, MeasurableSpace (X i)]
     (μ : ∀ i, MeasureTheory.Measure (X i)) [∀ i, IsProbabilityMeasure (μ i)]
@@ -156,11 +156,11 @@ abbrev equalityArena : Arena where
         (fun x => (∫⁻ y, f j y ∂MeasureTheory.Measure.pi μ) *
           ∏ i ∈ S j, h i (x i)))
 
-theorem equality_source_bridge :
+theorem equality_source_bridge.{w,u,v} :
     (type_of% @finner_equality_iff_common_profiles.{w,u,v}) ↔
-      equalityArena.{u,v,w}.Law actual := Iff.rfl
+      equalityArena.{w,u,v}.Law actual := Iff.rfl
 
-private theorem equalityRejectedLaw : ¬ equalityArena.{u,v,w}.Law rejected := by
+private theorem equalityRejectedLaw.{w,u,v} : ¬ equalityArena.{w,u,v}.Law rejected := by
   classical
   intro law
   let I := ULift.{u} Empty
@@ -176,32 +176,32 @@ private theorem equalityRejectedLaw : ¬ equalityArena.{u,v,w}.Law rejected := b
   have hr := he (⟨()⟩ : J)
   simpa [rejected, realize] using hr
 
-def equalityFamily : Registration equalityArena.{u,v,w}
+def equalityFamily.{w,u,v} : Registration equalityArena.{w,u,v}
     (type_of% @finner_equality_iff_common_profiles.{w,u,v}) where
   actual := actual
-  bridge := equality_source_bridge
-  variation := ⟨@finner_equality_iff_common_profiles.{w,u,v}, rejected, equalityRejectedLaw⟩
+  bridge := equality_source_bridge.{w,u,v}
+  variation := ⟨@finner_equality_iff_common_profiles.{w,u,v}, rejected, equalityRejectedLaw.{w,u,v}⟩
   sensitivity := by
     constructor
     · intro role
-      refine ⟨rejected, ?_, rfl, equalityRejectedLaw⟩
+      refine ⟨rejected, ?_, rfl, equalityRejectedLaw.{w,u,v}⟩
       intro other hne
       exact (hne (Subsingleton.elim _ _)).elim
     · intro e; exact nomatch e
   dependence := dependence
 
-def equalityRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+def equalityRegistration.{w,u,v} : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@finner_equality_iff_common_profiles.{w,u,v})
     (Realization signature.{u,v}) Unit Unit where
   unitName := `D5.S3.Analytic.Measure.ProperSupportMarginalGluing.finner_equality_iff_common_profiles.__information_unit
   realizationName := `Reg.D5.S3.Analytic.Measure.ProperSupportMarginalGluing.equalityFamily
   realizationSource := none
   generated := false
-  arena := .source ⟨equalityArena.{u,v,w}⟩
-  objectArena := .source ⟨equalityArena.{u,v,w}⟩
+  arena := .source ⟨equalityArena.{w,u,v}⟩
+  objectArena := .source ⟨equalityArena.{w,u,v}⟩
   catalog := Lean.Name.anonymous
   localNames := false
-  realization := .source equalityArena.{u,v,w} ⟨equalityFamily.{u,v,w}⟩
+  realization := .source equalityArena.{w,u,v} ⟨equalityFamily.{w,u,v}⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize signature.{u,v} (fun _ _ f => f) (fun e => nomatch e))
