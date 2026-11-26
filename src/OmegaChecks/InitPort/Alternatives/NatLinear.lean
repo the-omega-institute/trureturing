@@ -162,4 +162,37 @@ public theorem Nat.Internal.Linear.ExprCnstr.denote_toPoly :
     change (lhs.toPoly.denote ctx = rhs.toPoly.denote ctx) = (lhs.denote ctx = rhs.denote ctx)
     rw [Expr.denote_toPoly, Expr.denote_toPoly]
 
+-- The recursive proposition used by the strict natural order.
+local macro "compareProp" : term =>
+  `(fun a b : Nat => Nat.rec (motive := fun _ => Nat → Prop) (fun _ => True)
+    (fun _ smaller b => Nat.rec (motive := fun _ => Prop) False (fun k _ => smaller k) b) a b)
+
+private theorem compareTrue (a b : Nat) (h : a ≤ b) : compareProp a b = True := by
+  induction a generalizing b with
+  | zero => rfl
+  | succ a ih =>
+    cases b with
+    | zero => exact (Nat.not_succ_le_zero _ h).elim
+    | succ b => exact ih b (Nat.le_of_succ_le_succ h)
+
+private theorem compareFalse (a b : Nat) (h : ¬a ≤ b) : compareProp a b = False := by
+  induction a generalizing b with
+  | zero => exact (h (Nat.zero_le b)).elim
+  | succ a ih =>
+    cases b with
+    | zero => rfl
+    | succ b => exact ih b fun le => h (Nat.succ_le_succ le)
+
+private theorem compareOfIff {a b c d : Nat} (equiv : a ≤ b ↔ c ≤ d) :
+    compareProp a b = compareProp c d := by
+  by_cases h : a ≤ b
+  · exact (compareTrue _ _ h).trans (compareTrue _ _ (equiv.mp h)).symm
+  · exact (compareFalse _ _ h).trans (compareFalse _ _ (fun le => h (equiv.mpr le))).symm
+
+public theorem Nat.Internal.Linear.Poly.denote_le_cancel_eq (ctx : Context) (p q : Poly) :
+    compareProp ((Poly.cancel p q).1.denote ctx) ((Poly.cancel p q).2.denote ctx) =
+    compareProp (p.denote ctx) (q.denote ctx) :=
+  compareOfIff ⟨_root_.Nat.Internal.Linear.Poly.of_denote_le_cancel,
+    _root_.Nat.Internal.Linear.Poly.denote_le_cancel⟩
+
 end OmegaChecks.InitPort.Alternatives
