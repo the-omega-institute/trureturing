@@ -7,6 +7,7 @@
    digest: Signed principal minors imply coefficient positivity of matrix power traces. -/
 
 import D5.S3.FluidDynamics.Solitons.CamassaHolmPeakonTransferExpansion
+import D5.S3.Weil.ZetaLinear.Inertia
 import Batteries.Tactic.OpenPrivate
 import Mathlib.Algebra.MvPolynomial.Funext
 import Mathlib.LinearAlgebra.Matrix.Charpoly.Coeff
@@ -83,8 +84,7 @@ private theorem coeffPower_bounded {σ : Type*}
   | zero =>
     intro k hk d
     by_cases h : k = 0 <;> by_cases hd : (0 : σ →₀ ℕ) = d <;>
-      simp [pow_zero, Polynomial.coeff_one, h, hd, MvPolynomial.coeff_one,
-        Complex.nonneg_iff]
+      simp [pow_zero, Polynomial.coeff_one, h, hd, MvPolynomial.coeff_one]
   | succ j ih =>
     intro k hk d
     rw [pow_succ, Polynomial.coeff_mul, MvPolynomial.coeff_sum]
@@ -198,6 +198,89 @@ theorem trace_pow_coeff_nonneg_of_signed_minors {σ : Type*} {n : ℕ}
   split
   · exact hsign
   · exact le_rfl
+
+private theorem signed_det_nonneg_of_trace_and_posIndex {ι : Type*}
+    [Fintype ι] [DecidableEq ι] [Nonempty ι] {B : Matrix ι ι ℂ}
+    (hB : B.IsHermitian) (hIndex : RHLinalg.posIndex hB ≤ 1) (hTrace : 0 ≤ trace B) :
+    0 ≤ (-1 : ℂ) ^ (Fintype.card ι + 1) * B.det := by
+  classical
+  let ev (i : ι) := hB.eigenvalues i
+  have hTraceReal : 0 ≤ ∑ i, ev i := by
+    have hcast : ((∑ i, ev i : ℝ) : ℂ) = ∑ i, (ev i : ℂ) := by simp
+    rw [hB.trace_eq_sum_eigenvalues] at hTrace
+    change 0 ≤ ∑ i, (ev i : ℂ) at hTrace
+    rwa [← hcast, Complex.zero_le_real] at hTrace
+  rw [hB.det_eq_prod_eigenvalues]
+  change 0 ≤ (-1 : ℂ) ^ (Fintype.card ι + 1) * ∏ i, (ev i : ℂ)
+  have hcast : ((-1 : ℝ) : ℂ) = -1 := by norm_num
+  rw [← Complex.ofReal_prod, ← hcast, ← Complex.ofReal_pow, ← Complex.ofReal_mul,
+    Complex.zero_le_real]
+  by_cases hzero : ∃ i, ev i = 0
+  · obtain ⟨i, hi⟩ := hzero
+    rw [Finset.prod_eq_zero (Finset.mem_univ i) hi, mul_zero]
+  push Not at hzero
+  have hp : ∃ i, 0 < ev i := by
+    by_contra! h
+    let j : ι := Classical.choice ‹Nonempty ι›
+    have hlt : ∑ i, ev i < ∑ _ : ι, (0 : ℝ) :=
+      Finset.sum_lt_sum (fun i _ ↦ h i)
+        ⟨j, Finset.mem_univ _, lt_of_le_of_ne (h j) (hzero j)⟩
+    exact (not_lt_of_ge hTraceReal) (by simpa using hlt)
+  obtain ⟨j, hj⟩ := hp
+  have hothers : ∀ i ∈ (Finset.univ.erase j), 0 ≤ -ev i := by
+    intro i hi
+    apply neg_nonneg.mpr
+    by_contra! hii
+    have hji : j = i := Finset.card_le_one_iff.mp hIndex
+      (Finset.mem_filter.mpr ⟨Finset.mem_univ j, hj⟩)
+      (Finset.mem_filter.mpr ⟨Finset.mem_univ i, hii⟩)
+    exact (Finset.mem_erase.mp hi).1 hji.symm
+  have hSize : 0 < Fintype.card ι := Fintype.card_pos
+  have hparity : (-1 : ℝ) ^ (Fintype.card ι + 1) =
+      (-1) ^ (Fintype.card ι - 1) := by
+    rw [show Fintype.card ι + 1 = Fintype.card ι - 1 + 2 by omega, pow_add]
+    norm_num
+  rw [hparity, ← Finset.prod_erase_mul Finset.univ ev (Finset.mem_univ j)]
+  have hprod := Finset.prod_nonneg hothers
+  rw [Finset.prod_neg, Finset.card_erase_of_mem (Finset.mem_univ j), Finset.card_univ] at hprod
+  rw [← mul_assoc]
+  exact mul_nonneg hprod hj.le
+
+/-- One positive eigenvalue and nonnegative diagonal force the sign of
+every nonempty principal determinant. -/
+theorem signed_principal_minors_nonneg_of_posIndex {ι : Type*}
+    [Fintype ι] [DecidableEq ι] {B : Matrix ι ι ℂ}
+    (hB : B.IsHermitian) (hIndex : RHLinalg.posIndex hB ≤ 1)
+    (hDiag : ∀ i, 0 ≤ B i i) (s : Finset ι) (hs : 0 < s.card) :
+    0 ≤ (-1 : ℂ) ^ (s.card + 1) *
+      (B.submatrix (Subtype.val : s → ι) (Subtype.val : s → ι)).det := by
+  let e : s → ι := Subtype.val
+  let E : Matrix ι s ℂ := (1 : Matrix ι ι ℂ).submatrix id e
+  let P : Matrix s s ℂ := B.submatrix e e
+  let hP : P.IsHermitian := hB.submatrix e
+  have hcomp : Eᴴ * B * E = P := by
+    simp only [E, P, Matrix.conjTranspose_submatrix, Matrix.conjTranspose_one]
+    change (1 : Matrix ι ι ℂ).submatrix e (Equiv.refl ι) * B *
+      (1 : Matrix ι ι ℂ).submatrix (Equiv.refl ι) e = B.submatrix e e
+    rw [Matrix.one_submatrix_mul e (Equiv.refl ι),
+      Matrix.mul_submatrix_one (Equiv.refl ι) e, Matrix.submatrix_submatrix]
+    rfl
+  have hPIndex : RHLinalg.posIndex hP ≤ 1 := by
+    have h := RHLinalg.posIndex_conj_le hB E
+    have hPair :
+        (⟨Eᴴ * B * E, isHermitian_conjTranspose_mul_mul E hB⟩ :
+          {M : Matrix s s ℂ // M.IsHermitian}) = ⟨P, hP⟩ := Subtype.ext hcomp
+    have heq := congrArg (fun M : {M : Matrix s s ℂ // M.IsHermitian} ↦
+      RHLinalg.posIndex M.2) hPair
+    exact heq ▸ h.trans hIndex
+  have hPTrace : 0 ≤ trace P :=
+    complex_sum_nonneg _ _ (fun i _ ↦ hDiag (e i))
+  obtain ⟨i, hi⟩ := Finset.card_pos.mp hs
+  let : Nonempty s := ⟨⟨i, hi⟩⟩
+  simpa only [Fintype.card_coe] using
+    signed_det_nonneg_of_trace_and_posIndex hP hPIndex hPTrace
+
+#print axioms signed_principal_minors_nonneg_of_posIndex
 
 #print axioms trace_pow_coeff_nonneg_of_charpolyRev
 #print axioms trace_pow_coeff_nonneg_of_signed_minors
