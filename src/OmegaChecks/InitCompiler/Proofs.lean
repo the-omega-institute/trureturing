@@ -410,31 +410,59 @@ public def elementaryProof? (env : Environment) (type : Expr) : Option Expr :=
 or a decision procedure. Every branch uses the motive of the original theorem. -/
 public partial def finiteProof? (source : Environment) (type : Expr) : IO (Option Expr) := do
   let enums := [`Bool, `Ordering]
-  unless (type.find? fun e => e.isForall && e.bindingDomain!.constName?.any enums.contains).isSome do
+  let hasDecision := (type.find? fun e =>
+    e.isForall && e.bindingDomain!.isAppOfArity `Decidable 1).isSome
+  let conditional := hasDecision && (type.getUsedConstants.any [`ite, `dite, `Decidable.decide].contains)
+  unless conditional || (type.find? fun e => e.isForall && e.bindingDomain!.constName?.any enums.contains).isSome do
     return none
   try
-    let proof ← (go type 3).run' |>.toIO'
+    let proof ← (go type 3 conditional).run' |>.toIO'
       {fileName := "<finite proof>", fileMap := default, options := maxHeartbeats.set {} 2000}
       {env := source}
     return if proof.hasMVar || proof.hasFVar || proof.hasLooseBVars then none else some proof
   catch _ => return none
 where
-  go (goal : Expr) (splits : Nat) : MetaM Expr := do
+  go (goal : Expr) (splits : Nat) (conditional : Bool) : MetaM Expr := do
     if let .forallE n dom body bi := goal then
       return ← Meta.withLocalDecl n bi dom fun x => do
         if splits > 0 && (dom.isConstOf `Bool || dom.isConstOf `Ordering) then
           let ind ← getConstInfoInduct dom.constName!
-          let branches ← ind.ctors.mapM fun ctor => go (body.instantiate1 (mkConst ctor)) (splits - 1)
+          let branches ← ind.ctors.mapM fun ctor => go (body.instantiate1 (mkConst ctor)) (splits - 1) conditional
           let motive := Expr.lam n dom body .default
           let term := mkAppN (mkConst (ind.name ++ `rec) [.zero]) (#[motive] ++ branches.toArray ++ #[x])
           return ← Meta.mkLambdaFVars #[x] term
-        Meta.mkLambdaFVars #[x] (← go (body.instantiate1 x) splits)
+        if conditional && splits > 0 && dom.isAppOfArity `Decidable 1 then
+          let p := dom.appArg!
+          let branch := fun (ctor : Name) witness =>
+            Meta.withLocalDeclD `h witness fun h => do
+              let result ← go (body.instantiate1 (mkApp2 (mkConst ctor) p h)) (splits - 1) conditional
+              Meta.mkLambdaFVars #[h] result
+          let motive := Expr.lam n dom body .default
+          let no ← branch `Decidable.isFalse (mkApp (mkConst `Not) p)
+          let yes ← branch `Decidable.isTrue p
+          return ← Meta.mkLambdaFVars #[x] (mkApp5 (mkConst `Decidable.falseTrueCases [.zero]) p motive no yes x)
+        Meta.mkLambdaFVars #[x] (← go (body.instantiate1 x) splits conditional)
     for decl in ← getLCtx do
       if !decl.isImplementationDetail && (← Meta.isDefEq decl.type goal) then return decl.toExpr
     if let some (_, a, b) := goal.eq? then
       if ← Meta.isDefEq a b then return ← Meta.mkEqRefl a
     if let some (a, b) := goal.iff? then
       if ← Meta.isDefEq a b then return mkApp (mkConst `Iff.rfl) a
+      if conditional then
+        try
+          let forward ← go (← mkArrow a b) splits conditional
+          let reverse ← go (← mkArrow b a) splits conditional
+          return mkApp4 (mkConst `Iff.intro) a b forward reverse
+        catch _ => pure ()
+    if conditional then
+      try
+        let hole ← Meta.mkFreshExprSyntheticOpaqueMVar goal
+        let rules := [`Iff.intro, `True.intro, `Eq.refl, `False.elim]
+        let remaining ← Meta.SolveByElim.solveByElim {maxDepth := 5, symm := false}
+          (rules.map fun name => Meta.mkConstWithFreshMVarLevels name)
+          (fun _ => return (← getLocalHyps).toList) [hole.mvarId!]
+        if remaining.isEmpty then return ← instantiateMVars hole
+      catch _ => pure ()
     Meta.mkDecideProof goal
 
 end OmegaChecks.InitCompiler
