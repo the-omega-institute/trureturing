@@ -644,11 +644,25 @@ public theorem Nat.shiftLeft_or_distrib : type_of% @_root_.Nat.shiftLeft_or_dist
   rw [Nat.shiftLeft_eq, Nat.shiftLeft_eq, Nat.shiftLeft_eq, Nat.mul_comm _ (2^i), Nat.mul_comm a, Nat.mul_comm b]
   exact parts
 
+private def appendBits (bit : Bool) : Nat → Nat → Nat
+  | 0, high => high
+  | n + 1, high =>
+    let prev := appendBits bit n high * 2
+    if bit then prev.succ else prev
+
+private theorem incrementTrailingOnes (n high : Nat) :
+    (appendBits true n high).succ = appendBits false n high.succ := by
+  induction n with
+  | zero => rfl
+  | succ n ih =>
+    change ((appendBits true n high * 2).succ).succ = appendBits false n high.succ * 2
+    rw [← ih, Nat.succ_mul]
 public theorem Char.toNat_le : type_of% (private_decl% @_root_.Char.toNat_le) := by
   intro c
   rcases c.valid with below | ⟨_, upper⟩
   · exact Nat.le_trans (Nat.le_of_lt below) (by decide : 0xd800 ≤ 0x10ffff)
-  · exact Nat.le_of_lt_succ upper
+  · have carry : (0x10ffff : Nat).succ = 0x110000 := incrementTrailingOnes 16 16
+    exact Nat.le_of_lt_succ (carry.symm ▸ upper)
 
 public theorem BitVec.extractLsb'_append_extractLsb'_eq_extractLsb' : type_of% @_root_.BitVec.extractLsb'_append_extractLsb'_eq_extractLsb' := by
   intro w s₂ s₁ l₁ l₂ x eq
