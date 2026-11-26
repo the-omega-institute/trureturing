@@ -320,8 +320,10 @@ jobs:
         run: |
           # Lake schedules independent modules. Each project compiler uses -j1.
           LEAN_NUM_THREADS="$(nproc)"
+          if (( LEAN_NUM_THREADS > 2 )); then LEAN_NUM_THREADS=2; fi
           export LEAN_NUM_THREADS
-          python3 tools/scripts/workflow/ci_checks.py current pr-lean --scope-file "$RUNNER_TEMP/current-lean-plan.json"
+          bash .github/actions/lean-compile-layer/measure.sh --compile \
+            python3 tools/scripts/workflow/ci_checks.py current pr-lean --scope-file "$RUNNER_TEMP/current-lean-plan.json"
       - id: checked
         name: Confirm selected current checks succeeded
         run: echo 'unit=current' >> "$GITHUB_OUTPUT"
