@@ -48,10 +48,15 @@ private theorem phaseFactor_align (q : ℂ) :
     norm_num [zeta, Complex.sub_re, Complex.sub_im]
     nlinarith
   rw [mul_assoc, show q * (zeta - 1) = z by rfl, hs]
-  conv_lhs => rw [← Complex.norm_mul_exp_arg_mul_I z, mul_left_comm,
-    ← Complex.exp_add, neg_add_cancel, Complex.exp_zero, mul_one]
-  congr 1
-  rw [show ‖z‖ = ‖q‖ * ‖zeta - 1‖ by exact norm_mul _ _, hz, mul_comm]
+  let θ : ℂ := ↑(Complex.arg z) * Complex.I
+  calc
+    Complex.exp (-θ) * z = Complex.exp (-θ) * (↑‖z‖ * Complex.exp θ) :=
+      congrArg (fun v => Complex.exp (-θ) * v) (Complex.norm_mul_exp_arg_mul_I z).symm
+    _ = (↑‖z‖ : ℂ) := by
+      rw [mul_left_comm, ← Complex.exp_add, neg_add_cancel, Complex.exp_zero, mul_one]
+    _ = (↑(√3 * ‖q‖) : ℂ) := by
+      congr 1
+      rw [show ‖z‖ = ‖q‖ * ‖zeta - 1‖ by exact norm_mul _ _, hz, mul_comm]
 
 private def axisConjugator (l : ℂ) (hl : ‖l‖ = 1) : U :=
   asUnit (quatPair l 0) (by simp [local_normSq_pair, hl])
@@ -69,8 +74,10 @@ private theorem phase_coords (l z w : ℂ) (hl : ‖l‖ = 1) (a : U)
     Quaternion.imJ_mul, Quaternion.imK_mul, Quaternion.re_star,
     Quaternion.imI_star, Quaternion.imJ_star, Quaternion.imK_star,
     Complex.zero_re, Complex.zero_im, Complex.mul_re, Complex.mul_im, pow_two] <;>
-    first | linear_combination (norm := ring) z.re * h
-          | linear_combination (norm := ring) z.im * h | ring
+    first
+    | (ring; done)
+    | (linear_combination z.re * h; done)
+    | (linear_combination z.im * h; done)
 
 /-- The explicit rim potential uses the Fourier modes after phase normalization and then
 transports the result back to the original quaternion coordinates. -/
@@ -98,7 +105,7 @@ private theorem zero_parameters {p q : ℂ} {η : Fin 3 → ℝ} :
     have hp : ‖p‖ ^ 2 = 0 := by nlinarith [norm_nonneg q, sq_nonneg ‖p‖]
     have hq : ‖q‖ = 0 := by nlinarith [norm_nonneg q, sq_nonneg ‖p‖]
     have hη : etaMax η = 0 := by nlinarith [norm_nonneg q, sq_nonneg ‖p‖]
-    refine ⟨pow_eq_zero hp |> norm_eq_zero.mp, norm_eq_zero.mp hq, funext fun j => ?_⟩
+    refine ⟨norm_eq_zero.mp (by nlinarith [norm_nonneg p]), norm_eq_zero.mp hq, funext fun j => ?_⟩
     exact abs_eq_zero.mp (le_antisymm ((local_abs_eta η j).trans_eq hη) (abs_nonneg _))
   · rintro ⟨rfl, rfl, rfl⟩
     norm_num [etaMax]
@@ -173,7 +180,7 @@ theorem quarterLocal_strictFit (A : Fin 3 → U) (p q : ℂ) (η γ : Fin 3 → 
         simpa [quarterLocalPotential, Function.comp_apply, inv_inv] using
           (conj_cancel C⁻¹ (φ' j)).symm,
       ← conj_inv, ← conj_mul, conj_inner] at hb
-    rw [hubMaxDefect_eq_asin A η (fun j => congrArg Quaternion.re (hA j))]
+    rw [hubMaxDefect_eq_asin A η (fun j => congrArg (fun x : ℍ[ℝ] => x.re) (hA j))]
     have hb' := hb
     rw [pure_score_estimates.constant_values.1, pure_score_estimates.constant_values.2.2] at hb'
     simpa only [δ, add_assoc] using localMargin
@@ -212,9 +219,11 @@ private theorem chartDir_re (u v w : ℝ) (j : Fin 3) : (chartDir u v w j).re = 
 
 private theorem chartDir_norm (u v w : ℝ) (j : Fin 3) : ‖chartDir u v w j‖ = 1 := by
   have h : normSq (chartDir u v w j) = 1 := by
-    fin_cases j <;> simp [chartDir, normSq_def']
-    · nlinarith [sin_sq_add_cos_sq u]
-    · linear_combination (sin v)^2 * sin_sq_add_cos_sq w + sin_sq_add_cos_sq v
+    fin_cases j
+    · norm_num [chartDir, normSq_def']
+    · simp [chartDir, normSq_def'] <;> nlinarith [sin_sq_add_cos_sq u]
+    · simp [chartDir, normSq_def'] <;>
+        linear_combination (sin v)^2 * sin_sq_add_cos_sq w + sin_sq_add_cos_sq v
   rw [normSq_eq_norm_mul_self] at h
   nlinarith [norm_nonneg (chartDir u v w j)]
 
@@ -264,16 +273,18 @@ private theorem chart_chord (u v w : ℝ) (hu : 0 ≤ u) (hv : 0 ≤ v) :
     rw [he]
     linarith [one_sub_sq_div_two_le_cos (x := v)]
   refine ⟨h₁, h₂, ?_⟩
-  have h := norm_sub_le (d 1) (d 0) (d 2)
-  rw [norm_sub_rev (d 1) (d 0)] at h
-  exact h.trans (add_le_add h₁ h₂)
+  calc
+    ‖d 1 - d 2‖ = ‖(d 1 - d 0) + (d 0 - d 2)‖ := by rw [sub_add_sub_cancel]
+    _ ≤ ‖d 1 - d 0‖ + ‖d 0 - d 2‖ := norm_add_le _ _
+    _ ≤ u + v := by
+      rw [norm_sub_rev (d 1) (d 0)]
+      exact add_le_add h₁ h₂
 
 private def chartRotate (C : U) : ℍ[ℝ] →ₗᵢ[ℝ] ℍ[ℝ] where
   toLinearMap := (LinearMap.mulRight ℝ (↑(C⁻¹) : ℍ[ℝ])).comp
     (LinearMap.mulLeft ℝ (↑C : ℍ[ℝ]))
   norm_map' := fun x => by
-    simp [LinearMap.comp_apply, LinearMap.mulRight_apply, LinearMap.mulLeft_apply,
-      norm_mul, unit_norm]
+    simp [LinearMap.comp_apply, LinearMap.mulRight_apply, LinearMap.mulLeft_apply, norm_mul]
 
 /-- The normalized imaginary sum gives an explicit quaternion aligning its axis with I. -/
 private theorem chartRotate_axis (x : ℍ[ℝ]) (hx : x.re = 0)
@@ -283,7 +294,7 @@ private theorem chartRotate_axis (x : ℍ[ℝ]) (hx : x.re = 0)
   let y := I + x
   have hne : y ≠ 0 := by
     intro h
-    have hh := congrArg Quaternion.imI h
+    have hh := congrArg (fun z : ℍ[ℝ] => z.imI) h
     change 1 + x.imI = 0 at hh
     linarith
   have hnp : 0 < ‖y‖ := norm_pos_iff.mpr hne
@@ -297,7 +308,7 @@ private theorem chartRotate_axis (x : ℍ[ℝ]) (hx : x.re = 0)
     rw [add_mul, mul_add, hx2, hi2, add_comm]
   let z : ℍ[ℝ] := ‖y‖⁻¹ • y
   have hz : ‖z‖ = 1 := by
-    simp [z, norm_smul, Real.norm_eq_abs, abs_inv, abs_of_pos hnp, hnp.ne']
+    simp [z, norm_smul, hnp.ne']
   let C := asUnit z (by rw [normSq_eq_norm_mul_self, hz, mul_one])
   have hzmul : z * x = I * z := by
     simp only [z, smul_mul_assoc, mul_smul_comm, hmul]
@@ -410,7 +421,7 @@ private theorem chartFourier (x : Fin 3 → ℂ) (h : x 0 + x 1 + x 2 = 0) :
   · intro j
     fin_cases j <;> apply Complex.ext <;>
       simp [p, q, transverse, rimPhase, zeta, t, hx,
-        Complex.star_def, Complex.mul_re, Complex.mul_im, a, b, c, d] <;>
+        Complex.mul_re, Complex.mul_im, a, b, c, d] <;>
       ring_nf <;> norm_num [Real.sq_sqrt] <;> ring
   · simp only [p, q, Complex.sq_norm, Complex.normSq_apply, hx, Complex.neg_re,
       Complex.neg_im, Complex.add_re, Complex.add_im]
@@ -466,10 +477,22 @@ private theorem chartAlignment (a b c u v w : ℝ)
     norm_num [localR] at hsize
     nlinarith only [hsize, hh, sq_nonneg u, sq_nonneg v]
   have hd (i j : Fin 3) : ‖d i - d j‖ ≤ 1 := by
-    fin_cases i <;> fin_cases j <;>
-      first | simp | exact h01.trans (by linarith) | exact h02.trans (by linarith)
-      | exact h12.trans hsmall.le | (rw [norm_sub_rev]; first
-        | exact h01.trans (by linarith) | exact h02.trans (by linarith) | exact h12.trans hsmall.le)
+    have h₁ := h01.trans (show u ≤ 1 by linarith)
+    have h₂ := h02.trans (show v ≤ 1 by linarith)
+    have h₃ := h12.trans hsmall.le
+    fin_cases i <;> fin_cases j
+    · simp
+    · exact h₁
+    · exact h₂
+    · rw [norm_sub_rev]
+      exact h₁
+    · simp
+    · exact h₃
+    · rw [norm_sub_rev]
+      exact h₂
+    · rw [norm_sub_rev]
+      exact h₃
+    · simp
   have hdot (i j : Fin 3) : 0 < ⟪d i, d j⟫_ℝ := by
     have hq := pow_le_pow_left₀ (norm_nonneg (d i - d j)) (hd i j) 2
     have hn (k) : ‖d k‖ = 1 := chartDir_norm u v w k
@@ -502,8 +525,8 @@ private theorem chartAlignment (a b c u v w : ℝ)
     simpa [rot, m, f, map_smul, map_add] using hM
   have hsum : s 0 • x 0 + s 1 • x 1 + s 2 • x 2 = 0 := by
     apply Complex.ext
-    · simpa [x, chartTransverse, unitI] using congrArg Quaternion.imJ hmcoord
-    · simpa [x, chartTransverse, unitI] using congrArg Quaternion.imK hmcoord
+    · simpa [x, chartTransverse, unitI] using congrArg (fun z : ℍ[ℝ] => z.imJ) hmcoord
+    · simpa [x, chartTransverse, unitI] using congrArg (fun z : ℍ[ℝ] => z.imK) hmcoord
   have hfpos (j : Fin 3) : 0 < (f j).imI := by
     have hdot := hm j
     rw [← (chartRotate C).inner_map_map, show chartRotate C m = ‖m‖ • (unitI : ℍ[ℝ])
@@ -579,10 +602,10 @@ private theorem chartAlignment (a b c u v w : ℝ)
       ext <;> simp [unitI, hre, hrj, hri, hi]
     have hsame (j : Fin 3) : d j = d 0 := by
       exact (chartRotate C).injective ((hfI j).trans (hfI 0).symm)
-    have hsinU : sin u = 0 := congrArg Quaternion.imJ (hsame 1)
+    have hsinU : sin u = 0 := congrArg (fun z : ℍ[ℝ] => z.imJ) (hsame 1)
     have hsinV : sin v = 0 := by
-      have hj : sin v * cos w = 0 := congrArg Quaternion.imJ (hsame 2)
-      have hk : sin v * sin w = 0 := congrArg Quaternion.imK (hsame 2)
+      have hj : sin v * cos w = 0 := congrArg (fun z : ℍ[ℝ] => z.imJ) (hsame 2)
+      have hk : sin v * sin w = 0 := congrArg (fun z : ℍ[ℝ] => z.imK) (hsame 2)
       by_contra hne
       rcases mul_eq_zero.mp hj with h | h
       · exact hne h
@@ -616,17 +639,20 @@ theorem quarterLocal_angularRegion (a b c u v w : ℝ)
     chartAlignment a b c u v w ha hb hc hu hv huv hsize
   obtain ⟨_, _, _, hf, hs, _⟩ := quarterLocal_strictFit (conjugate C ∘ A) p q η
     (fun j => √(1-(η j)^2-‖transverse p q j‖^2)) hA (fun _ => rfl) hγpos hp hq he
-  dsimp only at hf hs
   rw [conjugate_hubMaxDefect] at hf hs
   let φ := conjugate C⁻¹ ∘ quarterLocalPotential p q
   have transport (R : ℝ) (h : Fits (hubGaugedGains (conjugate C ∘ A))
       (quarterLocalPotential p q) R) : Fits (hubGaugedGains A) φ R := by
     apply (conjugate_fits C (hubGaugedGains A) φ R).mp
-    convert h using 2
-    · funext i j
+    have hg : (fun i j => conjugate C (hubGaugedGains A i j)) =
+        hubGaugedGains (conjugate C ∘ A) := by
+      funext i j
       exact (conjugate_hub C A i j).symm
-    · funext i
+    have hφ : conjugate C ∘ φ = quarterLocalPotential p q := by
+      funext i
       simpa [φ, Function.comp_apply] using conj_cancel C⁻¹ (quarterLocalPotential p q i)
+    rw [hg, hφ]
+    exact h
   have faces := hub_faces A
   refine ⟨faces.1, faces.2, ⟨φ, transport _ hf, ?_⟩, ?_⟩
   · intro hn

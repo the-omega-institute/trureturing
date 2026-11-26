@@ -8,12 +8,16 @@
 
 import D5.S3.Combinatorics.Graph.Chordal.Reconstruction.RoundQuaternionLocalPureScore
 
+/-! The axial, scalar and transverse perturbations of the pure Fourier rim score. -/
+
 noncomputable section
 
 open Real Quaternion
 open scoped Quaternion InnerProductSpace
 
 namespace RoundQuaternionLocalSharpness
+
+open D5.S3.Quantum.AURICOmega.QuaternionComparisonModel (inner_eq_components)
 
 local notation "U" => unitary ℍ[ℝ]
 
@@ -48,7 +52,8 @@ private theorem local_q_displacement (p q : ℂ) (hp : ‖p‖ ≤ localR) (hq :
     obtain ⟨h₀', h₁'⟩ := (show h₀^2 = localRadicand p 0 j ∧ h₁^2 = localRadicand p q j by
       constructor <;> apply Real.sq_sqrt <;>
       linarith [pure_score_estimates.radicand_bound p 0 hp h0 j, pure_score_estimates.radicand_bound p q hp hq j])
-    rw [R, ← mul_div_assoc, eq_div_iff hden.ne']
+    dsimp only [R]
+    rw [← mul_div_assoc, eq_div_iff hden.ne']
     unfold localRadicand at h₀' h₁'
     rw [ha₁] at h₁'
     linear_combination h₁' - h₀'
@@ -77,7 +82,7 @@ private theorem local_q_displacement (p q : ℂ) (hp : ‖p‖ ≤ localR) (hq :
   constructor
   · rw [heq]
     apply (sq_le_sq₀ (norm_nonneg _) (by positivity)).1
-    rw [pure_score_estimates.real_fibre_norm, mul_pow, neg_sq]
+    rw [pure_score_estimates.real_fibre_norm]
     have hRs := (sq_le_sq₀ hr.1 (by norm_num : 0 ≤ (3/4:ℝ))).2 hr.2
     have hd' : d^2 ≤ ((409/1000)*‖q‖)^2 := (sq_le_sq₀ hnon (by positivity)).2 hd
     nlinarith only [hd', mul_le_mul_of_nonneg_left hRs (sq_nonneg d), sq_nonneg ‖q‖]
@@ -91,19 +96,20 @@ private theorem local_q_displacement (p q : ℂ) (hp : ‖p‖ ≤ localR) (hq :
     have hDiff : |R-Real.sqrt 2/2| ≤ (12/25)*localR := by
       have hEq : R-Real.sqrt 2/2 =
           ((2*a+d-2*localT)-(Real.sqrt 2/2)*(h₀+h₁-2*localS))/(h₀+h₁) := by
-        rw [R]
-        field_simp
-        linear_combination 2*hcf
+        dsimp only [R]
+        field_simp [hden.ne']
+        linear_combination -4*hcf
       have hA : |2*a+d-2*localT| ≤ d + (29/100)*‖p‖^2 := by
         rw [ha₀, show 2*(localT-localAlpha*‖p‖^2)+d-2*localT =
           d - 2*localAlpha*‖p‖^2 by ring]
         refine (abs_sub _ _).trans ?_
         rw [abs_of_nonneg hnon, abs_of_nonneg (by unfold localAlpha; positivity)]
-        gcongr
-        exact pure_score_estimates.constant_bounds.2.2.2.2.2.1.le
+        have hc : 2*localAlpha ≤ (29/100:ℝ) := by
+          linarith [pure_score_estimates.constant_bounds.2.2.2.2.2.1]
+        exact add_le_add (le_refl d) (mul_le_mul_of_nonneg_right hc (sq_nonneg ‖p‖))
       have hB : |h₀+h₁-2*localS| ≤ (426/1000)*‖p‖^2+(3/4)*d := by
         rw [show h₀+h₁-2*localS = (h₁-h₀) + 2*(h₀-localS) by ring, hΔ]
-        refine (abs_add _ _).trans ?_
+        refine (abs_add_le _ _).trans ?_
         rw [abs_mul, abs_mul, abs_neg, abs_of_nonneg hnon, abs_of_nonneg hr.1]
         norm_num
         nlinarith only [(pure_score_estimates.pure_radical p hp j).2, mul_le_mul_of_nonneg_left hr.2 hnon]
@@ -120,7 +126,7 @@ private theorem local_q_displacement (p q : ℂ) (hp : ‖p‖ ≤ localR) (hq :
         linarith only [hA, hbnd, hp', hd', h0lo, h1lo]
       rw [hEq, abs_div, abs_of_nonneg hden.le]
       exact (div_le_iff₀ hden).2 hNum
-    have hprod := mul_le_mul hDiff hd (abs_nonneg _) (by unfold localR; positivity :
+    have hprod := mul_le_mul hDiff hd hnon (by unfold localR; positivity :
       0 ≤ (12/25)*localR)
     apply (sq_le_sq₀ (norm_nonneg _) (by unfold localR; positivity)).1
     change ‖quatPair ⟨0, 0⟩ _‖^2 ≤ _
@@ -140,10 +146,10 @@ private theorem local_score_change (x x' g g' y y' : ℍ[ℝ]) :
     simp only [localScore, sub_mul, mul_sub, inner_sub_left, inner_sub_right]
     ring
   rw [h]
-  exact (abs_add _ _).trans <| add_le_add ((abs_add _ _).trans <|
+  exact (abs_add_le _ _).trans <| add_le_add ((abs_add_le _ _).trans <|
     add_le_add (pure_score_estimates.abs_score _ _ _) (pure_score_estimates.abs_score _ _ _)) (pure_score_estimates.abs_score _ _ _)
 
-private theorem local_gain_q_diff (p q : ℂ) (j : Fin 3) :
+private theorem local_gain_q_diff (q : ℂ) (j : Fin 3) :
     ‖quatPair 0 (q * rimPhase j)‖ = ‖q‖ := by
   apply (sq_eq_sq₀ (norm_nonneg _) (norm_nonneg _)).1
   simp [local_norm_pair, norm_mul, local_phase_norm]
@@ -166,35 +172,36 @@ private theorem local_gain_axis_diff (p q : ℂ) (η : Fin 3 → ℝ)
       (abs_norm_sub_norm_le (p*star (rimPhase j)+q*rimPhase j) (p*star (rimPhase j)))
   have hη : (η j)^2 ≤ localR*E := by
     rw [← sq_abs, pow_two]
-    gcongr
-    · exact (local_abs_eta η j).trans he
-    · exact local_abs_eta η j
-  have hW² : W^2 ≤ (2*localR)^2 := by
+    exact mul_le_mul ((local_abs_eta η j).trans he) (local_abs_eta η j)
+      (abs_nonneg _) (by norm_num [localR])
+  have hWSq : W^2 ≤ (2*localR)^2 := by
     gcongr
     linarith
-  have hη² : (η j)^2 ≤ localR^2 := hη.trans (by gcongr)
-  have hP² : P^2 ≤ localR^2 := by gcongr
-  have ha : a^2 = 1-(η j)^2-W^2 := Real.sq_sqrt (by norm_num [localR] at hη² hW²; linarith)
-  have hb : b^2 = 1-P^2 := Real.sq_sqrt (by norm_num [localR] at hP²; linarith)
+  have hEtaSq : (η j)^2 ≤ localR^2 := hη.trans (by
+    rw [pow_two]; exact mul_le_mul_of_nonneg_left he (by norm_num [localR]))
+  have hPSq : P^2 ≤ localR^2 := by gcongr
+  have ha : a^2 = 1-(η j)^2-W^2 := Real.sq_sqrt (by norm_num [localR] at hEtaSq hWSq; linarith)
+  have hb : b^2 = 1-P^2 := Real.sq_sqrt (by norm_num [localR] at hPSq; linarith)
   have ha' : (99/100:ℝ) < a := by
     apply (sq_lt_sq₀ (by norm_num) (Real.sqrt_nonneg _)).1
-    norm_num [localR] at hη² hW²
+    norm_num [localR] at hEtaSq hWSq
     linarith
   have hb' : (99/100:ℝ) < b := by
     apply (sq_lt_sq₀ (by norm_num) (Real.sqrt_nonneg _)).1
-    norm_num [localR] at hP²
+    norm_num [localR] at hPSq
     linarith
   have hpos : 0 < a+b := by linarith
   have hdiff : (a-b)*(a+b) = -((η j)^2+(W-P)*(W+P)) := by nlinarith only [ha,hb]
   change |a-b| ≤ _
   rw [show a-b = -((η j)^2+(W-P)*(W+P))/(a+b) by
     exact (eq_div_iff hpos.ne').2 hdiff, abs_div, abs_neg, abs_of_nonneg hpos.le]
+  have hEnonneg : 0 ≤ E := local_eta_nonneg η
   apply div_le_div₀ (by unfold localR; positivity) _ (by norm_num) (by linarith)
-  refine (abs_add _ _).trans ?_
-  rw [abs_of_nonneg (sq_nonneg _), abs_mul, abs_of_nonneg (by unfold W P; positivity)]
+  refine (abs_add_le _ _).trans ?_
+  have hWsum : 0 ≤ W+P := add_nonneg (norm_nonneg _) (norm_nonneg _)
+  rw [abs_of_nonneg (sq_nonneg _), abs_mul, abs_of_nonneg hWsum]
   have hwp : W+P ≤ 3*localR := by linarith
-  linarith only [hη, mul_le_mul hW' hwp (by unfold W P; positivity : 0 ≤ W+P)
-    (by unfold Q; positivity : 0 ≤ Q)]
+  linarith only [hη, mul_le_mul hW' hwp hWsum (show 0 ≤ Q from norm_nonneg q)]
 
 
 private theorem local_scalar_bound (p q : ℂ) (hp : ‖p‖ ≤ localR) (hq : ‖q‖ ≤ localR) (j : Fin 3) :
@@ -227,9 +234,9 @@ private theorem local_scalar_bound (p q : ℂ) (hp : ‖p‖ ≤ localR) (hq : �
     obtain ⟨h0,h1⟩ := pure_score_estimates.scalar_linear p q j
     change localScore x 1 y = 0 at h0
     change localScore ξ 1 y+localScore x 1 υ = _ at h1
-    rw [← h1,← add_zero (localScore ξ 1 y+localScore x 1 υ),← h0]
-    simp only [localScore,sub_mul,inner_sub_left,inner_sub_right]
-    ring
+    rw [← h1]
+    simp only [localScore, sub_mul, inner_sub_left, inner_sub_right] at h0 ⊢
+    linarith only [h0]
   have hx := pure_score_estimates.abs_score (X-x-ξ) (1:ℍ[ℝ]) y
   have hy := pure_score_estimates.abs_score x (1:ℍ[ℝ]) (Y-y-υ)
   have hxy := pure_score_estimates.abs_score (X-x) (1:ℍ[ℝ]) (Y-y)
@@ -242,7 +249,7 @@ private theorem local_scalar_bound (p q : ℂ) (hp : ‖p‖ ≤ localR) (hq : �
   have hxy' : |localScore (X-x) 1 (Y-y)| ≤ ((1241/1000)*localR)^2 := by
     refine hxy.trans ?_
     rw [norm_one,mul_one,pow_two]
-    gcongr <;> first | exact hnear j | exact hnear k
+    exact mul_le_mul (hnear j) (hnear k) (norm_nonneg _) (by unfold localR; positivity)
   have hLin : |Real.sqrt 3*(localLinear*‖q‖)+localB p k-localB p j| ≤
       (71/100)*(‖p‖+‖q‖) := by
     have h3 : Real.sqrt 3 ^2 = 3 := Real.sq_sqrt (by norm_num)
@@ -252,15 +259,19 @@ private theorem local_scalar_bound (p q : ℂ) (hp : ‖p‖ ≤ localR) (hq : �
       nlinarith only [hs,show 0 ≤ Real.sqrt 3*localLinear by unfold localLinear; positivity]
     rw [show Real.sqrt 3*(localLinear*‖q‖)+localB p k-localB p j =
       (Real.sqrt 3*localLinear)*‖q‖+(localB p k-localB p j) by ring]
-    refine (abs_add _ _).trans ?_
+    refine (abs_add_le _ _).trans ?_
     rw [abs_of_nonneg (by unfold localLinear; positivity)]
     linarith [mul_le_mul_of_nonneg_right hC (norm_nonneg q),pure_score_estimates.b_diff p j]
   rw [hex]
-  refine (abs_add _ _).trans (add_le_add hLin ((abs_add _ _).trans
-    (add_le_add ((abs_add _ _).trans (add_le_add hx' hy')) hxy')) |>.trans ?_
+  have hSum := (abs_add_le _ _).trans (add_le_add
+    ((abs_add_le _ _).trans (add_le_add hx' hy')) hxy')
+  refine ((abs_add_le _ _).trans (add_le_add hLin hSum)).trans ?_
   have hp₂ : ‖p‖^2 ≤ localR^2 := by gcongr
-  norm_num [localR] at *
-  linarith only [hp,hq,hp₂]
+  have hq₂ : localR*‖q‖ ≤ localR^2 := by
+    rw [pow_two]
+    exact mul_le_mul_of_nonneg_left hq (by norm_num [localR])
+  norm_num [localR] at hp hq hp₂ hq₂ ⊢
+  linarith only [hp,hq,hp₂,hq₂]
 
 
 private theorem local_rim_score (A : Fin 3 → U) (p q : ℂ) (η γ : Fin 3 → ℝ)
@@ -286,6 +297,7 @@ private theorem local_rim_score (A : Fin 3 → U) (p q : ℂ) (η γ : Fin 3 →
   let W := quatPair 0 (q*rimPhase j)
   let da := γ j - Real.sqrt (1-‖p‖^2)
   have hzero : ‖(0:ℂ)‖ ≤ localR := by norm_num [localR]
+  have hRnonneg : 0 ≤ localR := by norm_num [localR]
   have nx : ‖x‖ = 1 := pure_score_estimates.base_unit p j
   have ny : ‖y‖ = 1 := pure_score_estimates.base_unit p k
   have nx₀ : ‖X₀‖ = 1 := pure_score_estimates.rim_unit p 0 hp hzero j
@@ -325,31 +337,33 @@ private theorem local_rim_score (A : Fin 3 → U) (p q : ℂ) (η γ : Fin 3 →
     rw [nx,nG,pure_score_estimates.axis_unit]
     calc
       _ ≤ ((726/1000)*localR)*1*((515/1000)*‖q‖) +
-          1*((1031/1000)*localR)*((515/1000)*‖q‖) + 1*1*((1/5)*localR*‖q‖) := by gcongr
+          1*((1031/1000)*localR)*((515/1000)*‖q‖) + 1*1*((1/5)*localR*‖q‖) := by
+        gcongr <;> positivity
       _ = _ := by ring
   have h₃ : |localScore DX G DY| ≤ (515/1000)^2*localR*‖q‖ := by
     refine (pure_score_estimates.abs_score _ _ _).trans ?_
     rw [nG]
+    have hdx' : ‖DX‖ ≤ (515/1000)*localR := hdx.trans (by gcongr)
     calc
-      _ ≤ ((515/1000)*localR)*1*((515/1000)*‖q‖) := by
-        gcongr
-        exact hdx.trans (by gcongr)
+      _ ≤ ((515/1000)*localR)*1*((515/1000)*‖q‖) := by gcongr <;> positivity
       _ = _ := by ring
   have h₄ : |localScore X W Y-localScore x W y| ≤ 2*(1241/1000)*localR*‖q‖ := by
     refine (local_score_change _ _ _ _ _ _).trans ?_
-    rw [sub_self,norm_zero,nY,nx,show ‖W‖ = ‖q‖ from local_gain_q_diff p q j]
+    rw [sub_self,norm_zero,nY,nx,show ‖W‖ = ‖q‖ from local_gain_q_diff q j]
     calc
       _ ≤ ((1241/1000)*localR)*‖q‖*1 + 1*0*1 + 1*‖q‖*((1241/1000)*localR) := by gcongr
       _ = _ := by ring
   have hA' : |localScore X localAxis Y| ≤ 73/100 := by
     have h := local_score_change X x localAxis localAxis Y y
-    rw [sub_self,norm_zero,pure_score_estimates.axis_unit,nY,nx,zero_mul,mul_zero,add_zero,mul_one,mul_one,one_mul,
+    simp only [sub_self, norm_zero, pure_score_estimates.axis_unit, nY, nx, zero_mul, mul_zero,
+      add_zero, mul_one, one_mul,
       show localScore x localAxis y = localT from pure_score_estimates.axis_base p j] at h
     calc
       _ ≤ |localScore X localAxis Y-localT|+|localT| := by
-        simpa using abs_add (localScore X localAxis Y-localT) localT
+        simpa only [sub_add_cancel] using abs_add_le (localScore X localAxis Y-localT) localT
       _ ≤ _ := by
-        rw [abs_of_pos (by unfold localT; positivity)]
+        have hTpos : 0 < localT := by unfold localT; positivity
+        rw [abs_of_pos hTpos]
         norm_num [localR] at hX hY
         linarith only [h,hX,hY,pure_score_estimates.constant_bounds.2.1]
   have hax : |da * localScore X localAxis Y| ≤
@@ -359,9 +373,8 @@ private theorem local_rim_score (A : Fin 3 → U) (p q : ℂ) (η γ : Fin 3 →
     simpa [da,hγ] using local_gain_axis_diff p q η hp hq he j
   have hsc : |η j * localScore X 1 Y| ≤ (161/100)*localR*etaMax η := by
     rw [abs_mul,mul_comm]
-    gcongr
-    · exact local_scalar_bound p q hp hq j
-    · exact local_abs_eta η j
+    exact mul_le_mul (local_scalar_bound p q hp hq j) (local_abs_eta η j)
+      (abs_nonneg _) (by positivity)
   have hDecomp : (A j : ℍ[ℝ]) = G+W+da • localAxis-(η j) • (1:ℍ[ℝ]) := by
     rw [hA]
     ext <;> simp [G,W,da,localGainPure,localAxis,transverse,quatPair] <;> ring
@@ -392,10 +405,16 @@ private theorem local_edge_pairing (a g b : U) :
 private theorem local_reverse_pairing (A : Fin 3 → U) (φ : Fin 4 → U) (i j : Fin 4) :
     ⟪(hubGaugedGains A j i : ℍ[ℝ]), (↑((φ j)⁻¹*φ i) : ℍ[ℝ])⟫_ℝ =
       ⟪(hubGaugedGains A i j : ℍ[ℝ]), (↑((φ i)⁻¹*φ j) : ℍ[ℝ])⟫_ℝ := by
-  have h : (φ j)⁻¹*φ i = ((φ i)⁻¹*φ j)⁻¹ := by simp
+  let a := hubGaugedGains A i j
+  let b := (φ i)⁻¹*φ j
+  have h : (φ j)⁻¹*φ i = b⁻¹ := by simp [b]
   rw [hub_reverse A i j, h]
+  change ⟪(a⁻¹ : U).val, (b⁻¹ : U).val⟫_ℝ = ⟪a.val, b.val⟫_ℝ
   simp only [Quaternion.inner_def, ← Unitary.star_eq_inv, Unitary.coe_star, star_star]
-  rw [re_comm, ← star_mul, Quaternion.re_star]
+  calc
+    _ = ((b : ℍ[ℝ]) * star (a : ℍ[ℝ])).re := re_comm _ _
+    _ = (star ((a : ℍ[ℝ]) * star (b : ℍ[ℝ]))).re := by rw [star_mul, star_star]
+    _ = _ := Quaternion.re_star _
 
 theorem local_minScore {A : Fin 3 → U} {p q : ℂ} {η γ : Fin 3 → ℝ}
     (hp : ‖p‖ ≤ localR) (hq : ‖q‖ ≤ localR) (he : etaMax η ≤ localR)
@@ -403,10 +422,12 @@ theorem local_minScore {A : Fin 3 → U} {p q : ℂ} {η γ : Fin 3 → ℝ}
     (hA : ∀ j, (A j : ℍ[ℝ]) = quatPair ⟨-η j,γ j⟩ (transverse p q j))
     (hphase : q*(zeta-1) = ((Real.sqrt 3*‖q‖ : ℝ) : ℂ))
     (i j : Fin 4) (hij : i ≠ j) :
+    let φ := phasedPotential p q
     localT + localLinear*‖q‖ - localAlpha*‖p‖^2 - (2/5)*‖p‖^3 - 3*‖p‖^4 -
       (627/100)*localR*‖q‖ - 2*localR*etaMax η ≤
       ⟪(hubGaugedGains A i j : ℍ[ℝ]),
-        (↑((phasedPotential p q i)⁻¹ * phasedPotential p q j) : ℍ[ℝ])⟫_ℝ := by
+        (↑((φ i)⁻¹ * φ j) : ℍ[ℝ])⟫_ℝ := by
+  dsimp only
   let φ := phasedPotential p q
   let B := localT + localLinear*‖q‖ - localAlpha*‖p‖^2 - (2/5)*‖p‖^3 - 3*‖p‖^4 -
     (627/100)*localR*‖q‖ - 2*localR*etaMax η
@@ -419,26 +440,35 @@ theorem local_minScore {A : Fin 3 → U} {p q : ℂ} {η γ : Fin 3 → ℝ}
       show 0 ≤ localR*‖q‖ by unfold localR; positivity,
       mul_nonneg (by norm_num [localR] : 0 ≤ localR) (local_eta_nonneg η)]
   have hF₀ : B ≤ ⟪(hubGaugedGains A 0 1 : ℍ[ℝ]), (↑((φ 0)⁻¹*φ 1) : ℍ[ℝ])⟫_ℝ := by
-    simpa [local_edge_pairing,φ,phasedPotential,hubGaugedGains,pure_score_estimates.rim_coe p q hp hq]
+    rw [local_edge_pairing]
+    simpa [localScore,φ,phasedPotential,hubGaugedGains,pure_score_estimates.rim_coe p q hp hq]
       using hSpoke 0
   have hF₁ : B ≤ ⟪(hubGaugedGains A 0 2 : ℍ[ℝ]), (↑((φ 0)⁻¹*φ 2) : ℍ[ℝ])⟫_ℝ := by
-    simpa [local_edge_pairing,φ,phasedPotential,hubGaugedGains,pure_score_estimates.rim_coe p q hp hq]
+    rw [local_edge_pairing]
+    simpa [localScore,φ,phasedPotential,hubGaugedGains,pure_score_estimates.rim_coe p q hp hq]
       using hSpoke 1
   have hF₂ : B ≤ ⟪(hubGaugedGains A 0 3 : ℍ[ℝ]), (↑((φ 0)⁻¹*φ 3) : ℍ[ℝ])⟫_ℝ := by
-    simpa [local_edge_pairing,φ,phasedPotential,hubGaugedGains,pure_score_estimates.rim_coe p q hp hq]
+    rw [local_edge_pairing]
+    simpa [localScore,φ,phasedPotential,hubGaugedGains,pure_score_estimates.rim_coe p q hp hq]
       using hSpoke 2
   have hR₀ : B ≤ ⟪(hubGaugedGains A 1 2 : ℍ[ℝ]), (↑((φ 1)⁻¹*φ 2) : ℍ[ℝ])⟫_ℝ := by
-    simpa [local_edge_pairing,φ,phasedPotential,hubGaugedGains,pure_score_estimates.rim_coe p q hp hq,
+    rw [local_edge_pairing]
+    simpa [B,φ,phasedPotential,hubGaugedGains,pure_score_estimates.rim_coe p q hp hq,
       rimNext] using local_rim_score A p q η γ hp hq he hγ hA hphase 0
   have hR₁ : B ≤ ⟪(hubGaugedGains A 2 3 : ℍ[ℝ]), (↑((φ 2)⁻¹*φ 3) : ℍ[ℝ])⟫_ℝ := by
-    simpa [local_edge_pairing,φ,phasedPotential,hubGaugedGains,pure_score_estimates.rim_coe p q hp hq,
+    rw [local_edge_pairing]
+    simpa [B,φ,phasedPotential,hubGaugedGains,pure_score_estimates.rim_coe p q hp hq,
       rimNext] using local_rim_score A p q η γ hp hq he hγ hA hphase 1
   have hR₂ : B ≤ ⟪(hubGaugedGains A 3 1 : ℍ[ℝ]), (↑((φ 3)⁻¹*φ 1) : ℍ[ℝ])⟫_ℝ := by
-    simpa [local_edge_pairing,φ,phasedPotential,hubGaugedGains,pure_score_estimates.rim_coe p q hp hq,
+    rw [local_edge_pairing]
+    simpa [B,φ,phasedPotential,hubGaugedGains,pure_score_estimates.rim_coe p q hp hq,
       rimNext] using local_rim_score A p q η γ hp hq he hγ hA hphase 2
   change B ≤ ⟪(hubGaugedGains A i j : ℍ[ℝ]), (↑((φ i)⁻¹*φ j) : ℍ[ℝ])⟫_ℝ
   fin_cases i <;> fin_cases j
-  all_goals first | exact (hij rfl).elim | exacts [hF₀,hF₁,hF₂,hR₀,hR₁,hR₂] |
-    (rw [local_reverse_pairing A φ]; exacts [hF₀,hF₁,hF₂,hR₀,hR₁,hR₂])
+  all_goals first
+    | exact (hij rfl).elim
+    | exact hF₀ | exact hF₁ | exact hF₂ | exact hR₀ | exact hR₁ | exact hR₂
+    | (rw [local_reverse_pairing A φ]
+       first | exact hF₀ | exact hF₁ | exact hF₂ | exact hR₀ | exact hR₁ | exact hR₂)
 
 end RoundQuaternionLocalSharpness

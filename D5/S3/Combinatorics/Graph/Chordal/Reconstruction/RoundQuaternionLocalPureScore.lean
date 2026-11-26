@@ -8,12 +8,16 @@
 
 import D5.S3.Combinatorics.Graph.Chordal.Reconstruction.RoundQuaternionLocalGeometry
 
+/-! The pure Fourier score and the norm estimates for its cubic expansion. -/
+
 noncomputable section
 
 open Real Quaternion
 open scoped Quaternion InnerProductSpace
 
 namespace RoundQuaternionLocalSharpness
+
+open D5.S3.Quantum.AURICOmega.QuaternionComparisonModel (inner_eq_components)
 
 local notation "U" => unitary ℍ[ℝ]
 
@@ -83,7 +87,8 @@ def localRim (p q : ℂ) (j : Fin 3) : ℍ[ℝ] :=
 private theorem local_rim_unit (p q : ℂ) (j : Fin 3) (h : 0 ≤ localRadicand p q j) :
     normSq (localRim p q j) = 1 := by
   simp only [localRim, local_normSq_pair, norm_mul, local_phase_norm, one_mul,
-    local_sq_complex, Real.sq_sqrt h, localRadicand]
+    local_sq_complex]
+  rw [Real.sq_sqrt h, localRadicand]
   ring
 
 def localUnitRim (p q : ℂ) (j : Fin 3) : U :=
@@ -120,7 +125,6 @@ private theorem local_psi_bound (p : ℂ) (j : Fin 3) : |localPsi p j| ≤ ‖p�
     congr 1
     norm_num [localPsi, localF, rimPrev, a, b, x, y]
     ring
-
   · convert bound 0 (-1/16) (by norm_num) using 1
     congr 1
     norm_num [localPsi, localF, rimPrev, a, b, x, y]
@@ -190,7 +194,7 @@ private theorem local_real_bounds (p q : ℂ) (hp : ‖p‖ ≤ localR) (hq : �
   have hprod : localLinear * ‖q‖ ≤ (409/1000) * localR := by gcongr
   have hprod' : localAlpha * ‖p‖^2 ≤ (145/1000) * localR^2 := by gcongr
   unfold localReal localR at *
-  exact ⟨by linarith [mul_nonneg hll.le (norm_nonneg q)],
+  exact ⟨by linarith [mul_nonneg (by linarith : 0 ≤ localLinear) (norm_nonneg q)],
     by linarith [mul_nonneg hα.le (sq_nonneg ‖p‖)]⟩
 
 private theorem local_radicand_bound (p q : ℂ) (hp : ‖p‖ ≤ localR) (hq : ‖q‖ ≤ localR)
@@ -205,7 +209,7 @@ private theorem local_radicand_bound (p q : ℂ) (hp : ‖p‖ ≤ localR) (hq :
 
 private theorem local_unit_rim_coe (p q : ℂ) (hp : ‖p‖ ≤ localR) (hq : ‖q‖ ≤ localR)
     (j : Fin 3) : ((localUnitRim p q j : U) : ℍ[ℝ]) = localRim p q j := by
-  rw [localUnitRim, dif_pos ((by norm_num : (0:ℝ) ≤ (795/1000)^2).trans
+  rw [localUnitRim, dite_eq_left ((by norm_num : (0:ℝ) ≤ (795/1000)^2).trans
     (local_radicand_bound p q hp hq j).le)]
   rfl
 
@@ -223,7 +227,7 @@ def localGainPure (p : ℂ) (j : Fin 3) : ℍ[ℝ] :=
   quatPair ⟨0, Real.sqrt (1-‖p‖^2)⟩ (p * star (rimPhase j))
 
 private def localGainTerm (p : ℂ) (j : Fin 3) (i : Fin 4) : ℍ[ℝ] :=
-  ![localAxis, quatPair 0 (p * star (rimPhase j)), (-‖p‖^2/2) • localAxis, 0] i
+  ![localAxis, quatPair 0 (p * star (rimPhase j)), quatPair ⟨0,-‖p‖^2/2⟩ 0, quatPair 0 0] i
 
 private def localPureCubic (p : ℂ) (j : Fin 3) : ℝ :=
   let x := p.re
@@ -248,28 +252,25 @@ private theorem local_abs_score (x g y : ℍ[ℝ]) :
 private theorem local_root_powers (n : ℕ) (k : ℝ) (hk : 0 ≤ k) :
     Real.sqrt k ^ (2*n) = k ^ n := by rw [pow_mul, Real.sq_sqrt hk]
 
+private theorem local_reduce_root_pow (k : ℝ) (hk : 0 ≤ k) (n : ℕ) (_ : 2 ≤ n) :
+    Real.sqrt k ^ n = k ^ (n / 2) * Real.sqrt k ^ (n % 2) := by
+  calc
+    _ = Real.sqrt k ^ (2 * (n / 2) + n % 2) := by congr 1; omega
+    _ = _ := by rw [pow_add, local_root_powers _ _ hk]
+
 private theorem local_pure_terms (p : ℂ) (j : Fin 3) :
     (∑ a : Fin 4, ∑ b : Fin 4, ∑ c : Fin 4, if a.val+b.val+c.val < 4 then
       localScore (localRimTerm p j a) (localGainTerm p j b) (localRimTerm p (rimNext j) c)
        else 0) = localT - localAlpha*‖p‖^2 + localPureCubic p j := by
-  have h2 : Real.sqrt 2 ^ 2 = 2 := Real.sq_sqrt (by norm_num)
-  have h3 : Real.sqrt 3 ^ 2 = 3 := Real.sq_sqrt (by norm_num)
-  have hs : (-‖p‖^2/2) • localAxis = quatPair ⟨0,-‖p‖^2/2⟩ 0 := by
-    ext <;> simp [localAxis, quatPair, Quaternion.re_smul]
   fin_cases j <;>
-    norm_num [Fin.sum_univ_succ, localRimTerm, localGainTerm, hs, local_pair_score, localAxis,
-      localPureCubic, show (0 : ℍ[ℝ]) = quatPair 0 0 by rfl,
+    norm_num [Fin.sum_univ_succ, localRimTerm, localGainTerm, local_pair_score, localAxis,
+      localPureCubic,
       localT, localS, localAlpha, localLinear, localInvS, localB, localTau, localPsi, localF,
       rimNext, rimPrev, rimPhase, zeta, Complex.mul_re, Complex.mul_im, Complex.star_def,
       Complex.sq_norm, Complex.normSq_apply] <;>
     ring_nf <;>
-    simp only [show Real.sqrt 2 ^ 3 = 2*Real.sqrt 2 by rw [pow_succ, h2],
-      show Real.sqrt 3 ^ 3 = 3*Real.sqrt 3 by rw [pow_succ, h3],
-      show Real.sqrt 2 ^ 4 = 4 by simpa using local_root_powers 2 2 (by norm_num),
-      show Real.sqrt 3 ^ 4 = 9 by simpa using local_root_powers 2 3 (by norm_num),
-      show Real.sqrt 2 ^ 5 = 4*Real.sqrt 2 by rw [pow_succ]; norm_num [local_root_powers 2 2 (by norm_num)],
-      show Real.sqrt 3 ^ 5 = 9*Real.sqrt 3 by rw [pow_succ]; norm_num [local_root_powers 2 3 (by norm_num)],
-      show Real.sqrt 3 ^ 6 = 27 by simpa using local_root_powers 3 3 (by norm_num), h2, h3] <;> ring
+    simp (disch := omega) [local_reduce_root_pow 2 (by norm_num),
+      local_reduce_root_pow 3 (by norm_num)] <;> ring
 
 private theorem local_cubic_monomial (p : ℂ) : |p.re ^ 2 * p.im| ≤ (2/5)*‖p‖^3 := by
   let x := p.re
@@ -294,9 +295,8 @@ private theorem local_cubic_bound (p : ℂ) (j : Fin 3) :
     have h : (Real.sqrt 2 * Real.sqrt 3)^2 = 6 := by rw [mul_pow, h2, h3]; norm_num
     nlinarith [show 0 ≤ Real.sqrt 2 * Real.sqrt 3 by positivity]
   have hx : |p.re*‖p‖^2| ≤ ‖p‖^3 := by
-    rw [abs_mul, abs_of_nonneg (sq_nonneg ‖p‖), pow_succ']
-    gcongr
-    exact Complex.abs_re_le_norm p
+    rw [abs_mul, abs_of_nonneg (sq_nonneg ‖p‖), show ‖p‖^3 = ‖p‖*‖p‖^2 by ring]
+    exact mul_le_mul_of_nonneg_right (Complex.abs_re_le_norm p) (sq_nonneg _)
   have hy : |p.im^3| ≤ ‖p‖^3 := by
     rw [abs_pow]
     gcongr
@@ -331,19 +331,21 @@ private theorem local_cubic_bound (p : ℂ) (j : Fin 3) :
   let Y := (Real.sqrt 2*Real.sqrt 3)*(23*p.re^2*p.im-9*p.im^3)
   let Z := (Real.sqrt 2*Real.sqrt 3)*(13*p.re^2*p.im-3*p.im^3)
   fin_cases j
-  · rw [show localPureCubic p 0 = (-X+Y)/128 by simp [localPureCubic,X,Y]; ring]
-    have h := abs_add (-X) Y
+  · change |localPureCubic p 0| ≤ _
+    rw [show localPureCubic p 0 = (-X+Y)/128 by simp [localPureCubic,X,Y]; ring]
+    have h := abs_add_le (-X) Y
     rw [abs_neg] at h
     change |X| ≤ _ at hX
     change |Y| ≤ _ at hY
     norm_num [abs_div]
     linarith only [h, hX, hY, show 0 ≤ ‖p‖^3 by positivity]
-  · rw [show localPureCubic p 1 = (X+Y)/128 by simp [localPureCubic,X,Y]; ring]
+  · change |localPureCubic p 1| ≤ _
+    rw [show localPureCubic p 1 = (X+Y)/128 by simp [localPureCubic,X,Y]; ring]
     change |X| ≤ _ at hX
     change |Y| ≤ _ at hY
     norm_num [abs_div]
-    linarith only [abs_add X Y, hX, hY, show 0 ≤ ‖p‖^3 by positivity]
-  · rw [show localPureCubic p 2 = Z/64 by rfl]
+    linarith only [abs_add_le X Y, hX, hY, show 0 ≤ ‖p‖^3 by positivity]
+  · change |Z/64| ≤ _
     change |Z| ≤ _ at hZ
     norm_num [abs_div]
     linarith only [hZ, show 0 ≤ ‖p‖^3 by positivity]
@@ -388,16 +390,18 @@ private theorem local_pure_radical (p : ℂ) (hp : ‖p‖ ≤ localR) (j : Fin 
     nlinarith only [h]
   have hh : h^2 = localS^2 + H := by
     dsimp only [h, H, H₂, H₃, H₄, P]
-    rw [Real.sq_sqrt (by linarith [local_radicand_bound p 0 hp (by simp [localR]) j])]
+    rw [Real.sq_sqrt (by linarith [local_radicand_bound p 0 hp (by norm_num [localR]) j])]
     simp only [localRadicand, localFibre, localReal, norm_zero, mul_zero, add_zero, mul_pow]
     rw [show (localTau p j + localPsi p j)^2 = 3*localB p j^2 +
       2*localTau p j*localPsi p j + localPsi p j^2 by rw [add_sq, hτα]]
     linear_combination -htsq - hssq + ‖p‖^2*hα - 3*localB p j^2*hssq
   have h₄ : |H₄| ≤ P^4/40 := by
     dsimp only [H₄]
-    rw [hasq, hssq, abs_of_nonpos (by linarith only [show 0 ≤ P^4 by positivity,
-      sq_nonneg (localPsi p j)])]
-    linarith only [local_psi_sq p j, show 0 ≤ P^4 by positivity]
+    rw [hasq, hssq, abs_le]
+    have hP : 0 ≤ P^4 := by positivity
+    have hψ := sq_nonneg (localPsi p j)
+    have hψ' : localPsi p j ^ 2 ≤ P^4/256 := local_psi_sq p j
+    constructor <;> linarith only [hP, hψ, hψ']
   have h₂ := local_second_bound p j
   have h₃ : |H₃| ≤ (3/50)*P^3 := by
     dsimp only [H₃, P]
@@ -406,7 +410,7 @@ private theorem local_pure_radical (p : ℂ) (hp : ‖p‖ ≤ localR) (j : Fin 
     exact local_cross p j
   obtain ⟨hp3, hp4⟩ := local_higher_powers P (norm_nonneg p) hp
   have hH : |H| ≤ (34/100)*P^2 := by
-    have hh' := (abs_add (H₂+H₃) H₄).trans (add_le_add_right (abs_add H₂ H₃) _)
+    have hh' := (abs_add_le (H₂+H₃) H₄).trans (add_le_add_left (abs_add_le H₂ H₃) |H₄|)
     norm_num [localR] at hp3 hp4
     nlinarith only [hh', h₂, h₃, h₄, hp3, hp4, sq_nonneg P]
   have hs : (4/5:ℝ) < localS := lt_trans (by norm_num) local_constant_bounds.2.2.1
@@ -419,7 +423,7 @@ private theorem local_pure_radical (p : ℂ) (hp : ‖p‖ ≤ localR) (j : Fin 
   refine ⟨hh', ?_, ?_⟩
   · change |h-localS| ≤ _
     have ht : (h-localS)*(h+localS) = H := by nlinarith only [hh]
-    rw [← (eq_div_iff (by positivity : h+localS ≠ 0)).2 ht, abs_div,
+    rw [(eq_div_iff (by positivity : h+localS ≠ 0)).2 ht, abs_div,
       abs_of_nonneg (by positivity : 0 ≤ h+localS)]
     calc
       _ ≤ ((34/100)*P^2)/(8/5) := div_le_div₀ (by positivity) hH (by norm_num) (by linarith)
@@ -452,11 +456,12 @@ private theorem local_pure_radical (p : ℂ) (hp : ‖p‖ ≤ localR) (j : Fin 
   have hquot : H^2/(2*localS*(h+localS)^2) ≤ (34/100)^2*P^4/(8/5)^3 := by
     apply div_le_div₀ (by positivity) hsq (by norm_num)
     calc
-      _ = (2*(4/5)) * ((4/5)+(4/5))^2 := by norm_num
-      _ ≤ _ := by gcongr
+      ((8/5) : ℝ)^3 = (2*(4/5)) * ((4/5)+(4/5))^2 := by norm_num
+      _ ≤ 2*localS*(h+localS)^2 := by gcongr <;> linarith only [hs, hh']
   refine (abs_sub _ _).trans ?_
   rw [abs_of_nonneg (by positivity : 0 ≤ H^2/(2*localS*(h+localS)^2))]
-  nlinarith only [hab4, hquot, show 0 ≤ P^4 by positivity]
+  norm_num at hquot hab4 ⊢
+  linarith only [hab4, hquot, show 0 ≤ P^4 by positivity]
 
 private theorem local_axis_remainder (P : ℝ) (hP : 0 ≤ P) (hp : P ≤ localR) :
     |Real.sqrt (1-P^2) - (1-P^2/2)| ≤ (14/100)*P^4 := by
@@ -467,15 +472,17 @@ private theorem local_axis_remainder (P : ℝ) (hP : 0 ≤ P) (hp : P ≤ localR
   have ha' : (99/100:ℝ) < a := by nlinarith only [ha, p₂, Real.sqrt_nonneg (1-P^2)]
   have he : a - (1-P^2/2) = -P^4/(2*(a+1)^2) := by
     have hf : -(P^2) = (a-1)*(a+1) := by nlinarith only [ha]
-    have hff : P^4 = ((a-1)*(a+1))^2 := by rw [← hf, neg_sq, ← pow_mul]; norm_num
+    have hff : P^4 = ((a-1)*(a+1))^2 := by rw [← hf, neg_sq, ← pow_mul]
     rw [hff, mul_pow, ← neg_mul, mul_div_mul_right _ _ (by positivity : (a+1)^2 ≠ 0)]
     nlinarith only [ha]
   change |a - _| ≤ _
   rw [he, abs_div, abs_neg, abs_of_nonneg (by positivity : 0 ≤ P^4),
     abs_of_nonneg (by positivity : 0 ≤ 2*(a+1)^2)]
   calc
-    _ ≤ P^4 / (2*(199/100)^2) := by gcongr
-    _ ≤ _ := by nlinarith only [show 0 ≤ P^4 by positivity]
+    _ ≤ P^4 / (2*(199/100)^2) := by gcongr; linarith only [ha']
+    _ ≤ _ := by
+      norm_num
+      linarith only [show 0 ≤ P^4 by positivity]
 
 
 private def localRimTerms (p : ℂ) (j : Fin 3) : Fin 5 → ℍ[ℝ] :=
@@ -512,16 +519,21 @@ private theorem local_rim_terms_bound (p : ℂ) (hp : ‖p‖ ≤ localR) (j : F
   intro i
   fin_cases i
   all_goals apply (sq_le_sq₀ (norm_nonneg _) (by norm_num [localRimMajorant] <;> positivity)).1
-  all_goals first | rw [hExpand] | skip
+  case «4» =>
+    change ‖localRimTerms p j 4‖ ^ 2 ≤ _
+    rw [hExpand]
+    norm_num [localRimMajorant, local_norm_pair, norm_mul, local_phase_norm,
+      local_sq_complex, mul_pow]
+    have hr := (local_pure_radical p hp j).2.2
+    have h := (sq_le_sq₀ (abs_nonneg _) (by positivity)).2 hr
+    rw [sq_abs] at h
+    nlinarith only [h]
   all_goals norm_num [localRimTerms, localRimTerm, localRimMajorant, local_norm_pair, norm_mul,
     local_phase_norm, local_sq_complex, mul_pow, ht, hs, ha, hi, hτ]
   · nlinarith only [hb, sq_nonneg ‖p‖]
   · nlinarith only [h₂, hψ, show 0 ≤ ‖p‖^4 by positivity]
-  · nlinarith only [h₃, show 0 ≤ ‖p‖^6 by positivity]
-  · have hr := (local_pure_radical p hp j).2.2
-    have h := (sq_le_sq₀ (abs_nonneg _) (by positivity)).2 hr
-    rw [sq_abs] at h
-    nlinarith only [h]
+  · rw [hτ] at h₃
+    nlinarith only [h₃, show 0 ≤ ‖p‖^6 by positivity]
 
 private theorem local_gain_terms_bound (p : ℂ) (hp : ‖p‖ ≤ localR) (j : Fin 3) :
     ∀ i : Fin 5, ‖localGainTerms p j i‖ ≤ localGainMajorant i * ‖p‖^i.val := by
@@ -535,13 +547,16 @@ private theorem local_gain_terms_bound (p : ℂ) (hp : ‖p‖ ≤ localR) (j : 
   intro i
   fin_cases i
   · simpa [localGainTerms, localGainTerm, localGainMajorant] using hAxis.le
-  · change ‖quatPair 0 (p * star (rimPhase j))‖ ≤ ‖p‖
-    apply (sq_le_sq₀ (norm_nonneg _) (norm_nonneg p)).1
-    simp [local_norm_pair, norm_mul, Complex.star_def, Complex.norm_conj, local_phase_norm]
-  · change ‖(-‖p‖^2/2) • localAxis‖ ≤ (1/2)*‖p‖^2
-    rw [norm_smul, hAxis, mul_one, Real.norm_eq_abs, abs_of_nonpos (by linarith [sq_nonneg ‖p‖])]
-    ring_nf
-  · simp [localGainTerms, localGainTerm, localGainMajorant]
+  · have h : ‖quatPair 0 (p * star (rimPhase j))‖ ≤ ‖p‖ := by
+      apply (sq_le_sq₀ (norm_nonneg _) (norm_nonneg p)).1
+      simp [local_norm_pair, local_phase_norm]
+    simpa [localGainTerms, localGainTerm, localGainMajorant] using h
+  · have h : ‖quatPair ⟨0,-‖p‖^2/2⟩ 0‖ ≤ (1/2)*‖p‖^2 := by
+      apply (sq_le_sq₀ (norm_nonneg _) (by positivity)).1
+      simp [local_norm_pair, local_sq_complex] <;> ring_nf <;> exact le_rfl
+    simpa [localGainTerms, localGainTerm, localGainMajorant] using h
+  · have h : quatPair 0 0 = (0 : ℍ[ℝ]) := rfl
+    simp [localGainTerms, localGainTerm, localGainMajorant, h]
   · change ‖localGainTerms p j 4‖ ≤ (14/100)*‖p‖^4
     rw [hExpand, norm_smul, hAxis, mul_one, Real.norm_eq_abs]
     exact local_axis_remainder ‖p‖ (norm_nonneg p) hp
@@ -549,8 +564,22 @@ private theorem local_gain_terms_bound (p : ℂ) (hp : ‖p‖ ≤ localR) (j : 
 private theorem local_score_sum (x g y : Fin 5 → ℍ[ℝ]) :
     localScore (∑ i, x i) (∑ j, g j) (∑ k, y k) =
       ∑ i, ∑ j, ∑ k, localScore (x i) (g j) (y k) := by
-  simp [localScore, Finset.sum_mul, Finset.mul_sum, sum_inner, inner_sum]
+  simp only [localScore, Finset.sum_mul, Finset.mul_sum, sum_inner, inner_sum]
+  calc
+    _ = ∑ k, ∑ i, ∑ j, ⟪x i*g j, y k⟫_ℝ :=
+      Finset.sum_congr rfl fun _ _ => Finset.sum_comm
+    _ = ∑ i, ∑ k, ∑ j, ⟪x i*g j, y k⟫_ℝ := Finset.sum_comm
+    _ = _ := Finset.sum_congr rfl fun _ _ => Finset.sum_comm
 
+private def localTailCoeff (a b c : Fin 5) : ℝ :=
+  if 4 ≤ a.val+b.val+c.val then
+    localRimMajorant a * localGainMajorant b * localRimMajorant c *
+      localR^(a.val+b.val+c.val-4) else 0
+
+private theorem local_tail_majorant : (∑ a, ∑ b, ∑ c, localTailCoeff a b c) ≤ 3 := by
+  norm_num [Fin.sum_univ_succ, localTailCoeff, localRimMajorant, localGainMajorant, localR]
+
+set_option maxHeartbeats 500000 in
 private theorem local_pure_score (p : ℂ) (hp : ‖p‖ ≤ localR) (j : Fin 3) :
     localT-localAlpha*‖p‖^2-(2/5)*‖p‖^3-3*‖p‖^4 ≤
       localScore (localRim p 0 j) (localGainPure p j) (localRim p 0 (rimNext j)) := by
@@ -577,45 +606,40 @@ private theorem local_pure_score (p : ℂ) (hp : ‖p‖ ≤ localR) (j : Fin 3)
     by_cases h : a.val+b.val+c.val < 4
     · simp [low, tail, h, Nat.not_le.mpr h]
     · simp [low, tail, h, Nat.le_of_not_gt h]
-  have hT a b c : |tail a b c| ≤ P^4 *
-      (if 4 ≤ a.val+b.val+c.val then
-        localRimMajorant a * localGainMajorant b * localRimMajorant c *
-          localR^(a.val+b.val+c.val-4) else 0) := by
+  have hT a b c : |tail a b c| ≤ P^4 * localTailCoeff a b c := by
     by_cases h : 4 ≤ a.val+b.val+c.val
-    · rw [tail, if_pos h, if_pos h]
+    · simp only [tail, localTailCoeff, ite_eq_left h]
       have ha : 0 ≤ localRimMajorant a := by fin_cases a <;> norm_num [localRimMajorant]
       have hb : 0 ≤ localGainMajorant b := by fin_cases b <;> norm_num [localGainMajorant]
       have hc : 0 ≤ localRimMajorant c := by fin_cases c <;> norm_num [localRimMajorant]
+      have ha' := local_rim_terms_bound p hp j a
+      have hb' := local_gain_terms_bound p hp j b
+      have hc' := local_rim_terms_bound p hp k c
       calc
         _ ≤ (localRimMajorant a * P^a.val) * (localGainMajorant b * P^b.val) *
             (localRimMajorant c * P^c.val) := by
           refine (local_abs_score _ _ _).trans ?_
-          gcongr <;> exacts [local_rim_terms_bound p hp j _, local_gain_terms_bound p hp j _,
-            local_rim_terms_bound p hp k _]
+          gcongr
         _ = localRimMajorant a * localGainMajorant b * localRimMajorant c *
             (P^4 * P^(a.val+b.val+c.val-4)) := by
           rw [← pow_add, Nat.add_sub_of_le h, pow_add, pow_add]
           ring
-        _ ≤ _ := by
-          rw [show P^4 * (_*_*_ * localR^_) =
-            _*_*_ * (P^4*localR^(a.val+b.val+c.val-4)) by ring]
-          gcongr
-    · simp [tail, h]
+        _ ≤ localRimMajorant a * localGainMajorant b * localRimMajorant c *
+            (P^4 * localR^(a.val+b.val+c.val-4)) := by gcongr
+        _ = _ := by ring
+    · simp [tail, localTailCoeff, h]
   have hTail : |∑ a, ∑ b, ∑ c, tail a b c| ≤ 3*P^4 := by
     calc
       _ ≤ ∑ a, ∑ b, ∑ c, |tail a b c| := by
         refine (Finset.abs_sum_le_sum_abs _ _).trans ?_
         refine Finset.sum_le_sum fun a _ => (Finset.abs_sum_le_sum_abs _ _).trans ?_
         exact Finset.sum_le_sum fun b _ => Finset.abs_sum_le_sum_abs _ _
-      _ ≤ ∑ a, ∑ b, ∑ c, P^4 * (if 4 ≤ a.val+b.val+c.val then
-        localRimMajorant a * localGainMajorant b * localRimMajorant c *
-          localR^(a.val+b.val+c.val-4) else 0) := by
-        gcongr with a _ b _ c _
-        exact hT a b c
-      _ ≤ _ := by
-        simp_rw [← Finset.mul_sum]
-        norm_num [Fin.sum_univ_succ, localRimMajorant, localGainMajorant, localR]
-        nlinarith only [show 0 ≤ P^4 by positivity]
+      _ ≤ ∑ a, ∑ b, ∑ c, P^4 * localTailCoeff a b c :=
+        Finset.sum_le_sum fun a _ => Finset.sum_le_sum fun b _ =>
+          Finset.sum_le_sum fun c _ => hT a b c
+      _ = P^4 * (∑ a, ∑ b, ∑ c, localTailCoeff a b c) := by simp_rw [Finset.mul_sum]
+      _ ≤ _ := (mul_le_mul_of_nonneg_left local_tail_majorant
+        (show 0 ≤ P^4 by positivity)).trans_eq (mul_comm (P^4) 3)
   rw [← hX j, ← hX k, ← hG, local_score_sum]
   change _ ≤ ∑ a, ∑ b, ∑ c, term a b c
   rw [hSplit]
@@ -672,7 +696,8 @@ private theorem local_pure_gain_near (p : ℂ) (hp : ‖p‖ ≤ localR) (j : Fi
   have hs : localGainPure p j-localAxis =
       localGainTerms p j 1 + localGainTerms p j 2 + localGainTerms p j 4 := by
     rw [← he]
-    simp [Fin.sum_univ_succ, localGainTerms, localGainTerm]
+    have hz : quatPair 0 0 = (0 : ℍ[ℝ]) := rfl
+    simp [Fin.sum_univ_succ, localGainTerms, localGainTerm, hz]
     abel
   have h := local_gain_terms_bound p hp j
   have h1 := h 1
@@ -702,7 +727,7 @@ private theorem local_raw_unit (p q : ℂ) (hp : ‖p‖ ≤ localR) (hq : ‖q�
 
 private theorem local_base_unit (p : ℂ) (j : Fin 3) : ‖localRimTerm p j 0‖ = 1 := by
   apply (sq_eq_sq₀ (norm_nonneg _) (by norm_num)).1
-  simp [localRimTerm, local_norm_pair, norm_mul, local_phase_norm, local_sq_complex,
+  norm_num [localRimTerm, local_norm_pair, local_phase_norm, local_sq_complex,
     local_constant_squares.1, local_constant_squares.2.1]
 
 private theorem local_b_diff (p : ℂ) (j : Fin 3) :
@@ -714,16 +739,15 @@ private theorem local_b_diff (p : ℂ) (j : Fin 3) :
       Complex.star_def,h3] <;> nlinarith only [h3]
   have he : localB p (rimNext j) - localB p j =
       localLinear * (p*(rimPhase (rimPrev (rimNext j))-rimPhase (rimPrev j))).re := by
-    simp [localB, mul_sub, Complex.sub_re]
-    ring
+    simp [localB, mul_sub, Complex.sub_re] <;> ring
   have hc : localLinear * Real.sqrt 3 ≤ (71/100:ℝ) := by
     have h := local_constant_squares.2.2.2.1
     have hs : (localLinear*Real.sqrt 3)^2 = 1/2 := by rw [mul_pow,h,h3]; norm_num
     nlinarith only [hs, show 0 ≤ localLinear*Real.sqrt 3 by unfold localLinear; positivity]
   rw [he,abs_mul,abs_of_nonneg (by unfold localLinear; positivity)]
   refine (mul_le_mul_of_nonneg_left (Complex.abs_re_le_norm _) (by unfold localLinear; positivity)).trans ?_
-  rw [norm_mul,h,← mul_left_comm]
-  gcongr
+  rw [norm_mul, h, mul_comm ‖p‖, ← mul_assoc]
+  exact mul_le_mul_of_nonneg_right hc (norm_nonneg p)
 
 private theorem local_scalar_linear (p q : ℂ) (j : Fin 3) :
     let k := rimNext j
@@ -734,16 +758,13 @@ private theorem local_scalar_linear (p q : ℂ) (j : Fin 3) :
     localScore x 1 y = 0 ∧
     localScore ξ 1 y+localScore x 1 υ =
       Real.sqrt 3*(localLinear*‖q‖)+localB p k-localB p j := by
-  have h2 : Real.sqrt 2 ^2 = 2 := Real.sq_sqrt (by norm_num)
-  have h3 : Real.sqrt 3 ^2 = 3 := Real.sq_sqrt (by norm_num)
   fin_cases j <;>
     norm_num [localRimTerm,localQLinear,localScore,localT,localS,localLinear,localB,localTau,
       rimNext,rimPrev,rimPhase,zeta,quatPair,inner_eq_components,Complex.mul_re,Complex.mul_im,
       Complex.star_def] <;>
     constructor <;> ring_nf <;>
-    simp only [show Real.sqrt 2 ^3 = 2*Real.sqrt 2 by rw [pow_succ,h2],
-      show Real.sqrt 3 ^3 = 3*Real.sqrt 3 by rw [pow_succ,h3],
-      show Real.sqrt 3 ^4 = 9 by simpa using local_root_powers 2 3 (by norm_num), h2,h3] <;> ring
+    simp (disch := omega) [local_reduce_root_pow 2 (by norm_num),
+      local_reduce_root_pow 3 (by norm_num)] <;> ring
 
 private theorem local_q_base_identities (q : ℂ) (j : Fin 3)
     (hq : q * (zeta - 1) = ((Real.sqrt 3 * ‖q‖ : ℝ) : ℂ)) :
@@ -752,8 +773,6 @@ private theorem local_q_base_identities (q : ℂ) (j : Fin 3)
     localScore (localQLinear q j) localAxis y + localScore x localAxis (localQLinear q (rimNext j)) =
       -(localLinear*‖q‖) ∧
     localScore x (quatPair 0 (q*rimPhase j)) y = 2*localLinear*‖q‖ := by
-  have h2 : Real.sqrt 2 ^ 2 = 2 := Real.sq_sqrt (by norm_num)
-  have h3 : Real.sqrt 3 ^ 2 = 3 := Real.sq_sqrt (by norm_num)
   have hre := congrArg Complex.re hq
   have him := congrArg Complex.im hq
   fin_cases j <;>
@@ -761,9 +780,10 @@ private theorem local_q_base_identities (q : ℂ) (j : Fin 3)
       rimNext, rimPhase, zeta, quatPair, inner_eq_components, Complex.mul_re, Complex.mul_im,
       Complex.star_def, Quaternion.re_mul, Quaternion.imI_mul, Quaternion.imJ_mul, Quaternion.imK_mul] at hre him ⊢ <;>
     constructor <;> ring_nf at * <;>
-    simp only [show Real.sqrt 2 ^ 3 = 2 * Real.sqrt 2 by rw [pow_succ, h2],
-      show Real.sqrt 3 ^ 3 = 3 * Real.sqrt 3 by rw [pow_succ, h3], h2,h3] at * <;>
-    first | ring | linear_combination (Real.sqrt 2/3)*hre
+    simp (disch := omega) [local_reduce_root_pow 2 (by norm_num),
+      local_reduce_root_pow 3 (by norm_num)] at * <;>
+    try (solve | ring)
+  all_goals linear_combination (Real.sqrt 2/3)*hre
 
 private theorem local_linear_norm (q : ℂ) (j : Fin 3) :
     ‖localQLinear q j‖ = ‖q‖/2 := by
