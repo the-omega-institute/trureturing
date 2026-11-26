@@ -4,6 +4,7 @@ public import Init.Data.Range.Polymorphic.Iterators
 public import Init.Data.Iterators.Combinators.Monadic.Take
 public import Init.Data.Iterators.Lemmas.Consumers.Loop
 import Init.Data.Iterators.Lemmas.Basic
+public import Init.Data.Iterators.Lemmas.Combinators.Append
 public import Init.Data.Iterators.Lemmas.Combinators.FilterMap
 import all Init.Data.Iterators.Combinators.Monadic.FilterMap
 import all Init.Data.Iterators.Consumers.Monadic.Total
@@ -748,5 +749,55 @@ public theorem Std.Iter.toList_eq_of_atIdxSlow?_eq {α₁ α₂ β : Type u}
   intro k
   exact (Std.Iter.getElem?_toList_eq_atIdxSlow? (it := it₁)).trans
     ((h k).trans (Std.Iter.getElem?_toList_eq_atIdxSlow? (it := it₂)).symm)
+
+section IndexCombinators
+
+attribute [local simp] PlausibleIterStep.yield PlausibleIterStep.skip PlausibleIterStep.done
+
+local macro "getAt" it:term:max n:term:max : term =>
+  `(Std.Iter.Total.atIdxSlow? $n (Iter.ensureTermination $it))
+
+public theorem Std.Iter.atIdxSlow?_appendSnd {α₁ α₂ β : Type w}
+    [Iterator α₁ Id β] [Iterator α₂ Id β] [Productive α₁ Id] [Productive α₂ Id]
+    {it₂ : Iter (α := α₂) β} {n : Nat} :
+    getAt (Iter.Intermediate.appendSnd α₁ it₂) n = getAt it₂ n := by
+  induction n, it₂ using Std.Iter.atIdxSlow?.induct_unfolding with
+  | yield_zero it it' out h h' =>
+    simp only [Std.Iter.atIdxSlow?_eq_match (it := Iter.Intermediate.appendSnd α₁ it),
+      Iter.Intermediate.step_appendSnd, h']
+    rfl
+  | yield_succ it it' out h h' n ih =>
+    simp only [Std.Iter.atIdxSlow?_eq_match (it := Iter.Intermediate.appendSnd α₁ it),
+      Iter.Intermediate.step_appendSnd, h']
+    exact ih
+  | skip_case n it it' h h' ih =>
+    simp only [Std.Iter.atIdxSlow?_eq_match (it := Iter.Intermediate.appendSnd α₁ it),
+      Iter.Intermediate.step_appendSnd, h']
+    exact ih
+  | done_case n it h h' =>
+    simp only [Std.Iter.atIdxSlow?_eq_match (it := Iter.Intermediate.appendSnd α₁ it),
+      Iter.Intermediate.step_appendSnd, h']
+    rfl
+
+public theorem Std.Iter.atIdxSlow?_append_of_eq_some {α₁ α₂ β : Type w}
+    [Iterator α₁ Id β] [Iterator α₂ Id β] [Productive α₁ Id] [Productive α₂ Id]
+    {it₁ : Iter (α := α₁) β} {it₂ : Iter (α := α₂) β} {n : Nat} {b : β}
+    (h : getAt it₁ n = some b) :
+    getAt (it₁.append it₂) n = some b := by
+  induction n, it₁ using Std.Iter.atIdxSlow?.induct_unfolding generalizing it₂ with
+  | yield_zero it it' out hp h' =>
+    rw [Std.Iter.atIdxSlow?_eq_match (it := it.append it₂)]
+    cases h
+    simp [Iter.step_append, h'] <;> rfl
+  | yield_succ it it' out hp h' n ih =>
+    rw [Std.Iter.atIdxSlow?_eq_match (it := it.append it₂)]
+    simp [Iter.step_append, h', ih h]
+  | skip_case n it it' hp h' ih =>
+    rw [Std.Iter.atIdxSlow?_eq_match (it := it.append it₂)]
+    simp [Iter.step_append, h', ih h]
+  | done_case n it hp h' =>
+    cases h
+
+end IndexCombinators
 
 end OmegaChecks.InitPort.Alternatives
