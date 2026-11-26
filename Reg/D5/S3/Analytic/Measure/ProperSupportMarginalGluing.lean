@@ -14,6 +14,7 @@ open _root_.D5.S3.Analytic.Measure.ProperSupportMarginalGluing
 open scoped ENNReal BigOperators Classical
 
 namespace Reg.D5.S3.Analytic.Measure.ProperSupportMarginalGluing
+section Proper
 universe u v w
 
 abbrev signature : Signature where
@@ -135,6 +136,8 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   continuation := .unknown
   familyRecord := none
   options := #[]
+
+end Proper
 
 abbrev equalityArena.{w,u,v} : Arena where
   signature := signature.{u,v}
