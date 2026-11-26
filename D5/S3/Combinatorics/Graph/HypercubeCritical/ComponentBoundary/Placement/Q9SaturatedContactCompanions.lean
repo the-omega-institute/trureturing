@@ -1,6 +1,6 @@
-/- GID: D5/S3/Combinatorics/Graph/HypercubeCritical/ComponentBoundary/Q9SaturatedContactCompanions
+/- GID: D5/S3/Combinatorics/Graph/HypercubeCritical/ComponentBoundary/Placement/Q9SaturatedContactCompanions
    generality: G
-   mirror-B: D5/B/S3/Combinatorics/Graph/HypercubeCritical/ComponentBoundary/Q9SaturatedContactCompanions
+   mirror-B: D5/B/S3/Combinatorics/Graph/HypercubeCritical/ComponentBoundary/Placement/Q9SaturatedContactCompanions
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Archive.Sensitivity]
    utility: none
@@ -12,7 +12,7 @@ import D5.S3.Combinatorics.Graph.HypercubeCritical.Translation.Q9TranslationAper
 
 set_option autoImplicit false
 
-namespace D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Q9SaturatedContactCompanions
+namespace D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Placement.Q9SaturatedContactCompanions
 
 open scoped BigOperators Matrix
 open D5.S3.Combinatorics.Graph.Hypercube (hypercube)
@@ -351,4 +351,4 @@ theorem exists_two_components_with_two_flip_companions
 
 #print axioms exists_two_components_with_two_flip_companions
 
-end D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Q9SaturatedContactCompanions
+end D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Placement.Q9SaturatedContactCompanions

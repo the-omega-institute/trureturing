@@ -6,9 +6,9 @@ Coordinate restrictions on contacts between saturated cube components.
 
 **Definition 1.1 (Two-axis contact).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/HypercubeCritical/ComponentBoundary/Q9SaturatedContactCompanions.TwoFlipContact`
+Lean statement: `D5/S3/Combinatorics/Graph/HypercubeCritical/ComponentBoundary/Placement/Q9SaturatedContactCompanions.TwoFlipContact`
 
-*Formalization.* `D5/S3/Combinatorics/Graph/HypercubeCritical/ComponentBoundary/Q9SaturatedContactCompanions.TwoFlipContact` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/Graph/HypercubeCritical/ComponentBoundary/Placement/Q9SaturatedContactCompanions.TwoFlipContact` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -18,9 +18,9 @@ A point of the selected parity of the first support is a contact if flipping two
 
 **Definition 1.2 (Active contact axis).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/HypercubeCritical/ComponentBoundary/Q9SaturatedContactCompanions.ActiveAxis`
+Lean statement: `D5/S3/Combinatorics/Graph/HypercubeCritical/ComponentBoundary/Placement/Q9SaturatedContactCompanions.ActiveAxis`
 
-*Formalization.* `D5/S3/Combinatorics/Graph/HypercubeCritical/ComponentBoundary/Q9SaturatedContactCompanions.ActiveAxis` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/Graph/HypercubeCritical/ComponentBoundary/Placement/Q9SaturatedContactCompanions.ActiveAxis` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -30,9 +30,9 @@ With one axis fixed, another axis is active if some point on the selected parity
 
 **Theorem 1.3 (A companion in the same coordinate cell).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/HypercubeCritical/ComponentBoundary/Q9SaturatedContactCompanions.two_flip_contact_has_companion`
+Lean statement: `D5/S3/Combinatorics/Graph/HypercubeCritical/ComponentBoundary/Placement/Q9SaturatedContactCompanions.two_flip_contact_has_companion`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/HypercubeCritical/ComponentBoundary/Q9SaturatedContactCompanions.two_flip_contact_has_companion` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/HypercubeCritical/ComponentBoundary/Placement/Q9SaturatedContactCompanions.two_flip_contact_has_companion` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -44,9 +44,9 @@ Freeze the coordinates outside the other active axes and project onto one cell. 
 
 **Theorem 1.4 (At least three partners for an active axis).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/HypercubeCritical/ComponentBoundary/Q9SaturatedContactCompanions.exists_two_components_with_two_flip_companions`
+Lean statement: `D5/S3/Combinatorics/Graph/HypercubeCritical/ComponentBoundary/Placement/Q9SaturatedContactCompanions.exists_two_components_with_two_flip_companions`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/HypercubeCritical/ComponentBoundary/Q9SaturatedContactCompanions.exists_two_components_with_two_flip_companions` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/HypercubeCritical/ComponentBoundary/Placement/Q9SaturatedContactCompanions.exists_two_components_with_two_flip_companions` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -58,10 +58,10 @@ The positive internal Gram vector for each chosen weight has zero crossing to th
 
 ## References
 
-- Truth anchor: `D5/S3/Combinatorics/Graph/HypercubeCritical/ComponentBoundary/Q9SaturatedContactCompanions.ActiveAxis`
-- Truth anchor: `D5/S3/Combinatorics/Graph/HypercubeCritical/ComponentBoundary/Q9SaturatedContactCompanions.TwoFlipContact`
-- Truth anchor: `D5/S3/Combinatorics/Graph/HypercubeCritical/ComponentBoundary/Q9SaturatedContactCompanions.exists_two_components_with_two_flip_companions`
-- Truth anchor: `D5/S3/Combinatorics/Graph/HypercubeCritical/ComponentBoundary/Q9SaturatedContactCompanions.two_flip_contact_has_companion`
-- Dependency: [D5/S3/Combinatorics/Graph/HypercubeCritical/ComponentBoundary/Q9SignedContactCells](Q9SignedContactCells.md)
-- Dependency: [D5/S3/Combinatorics/Graph/HypercubeCritical/ComponentBoundary/Q9WeightedBoundaryGram](Q9WeightedBoundaryGram.md)
-- Dependency: [D5/S3/Combinatorics/Graph/HypercubeCritical/Translation/Q9TranslationAperiodicity](../Translation/Q9TranslationAperiodicity.md)
+- Truth anchor: `D5/S3/Combinatorics/Graph/HypercubeCritical/ComponentBoundary/Placement/Q9SaturatedContactCompanions.ActiveAxis`
+- Truth anchor: `D5/S3/Combinatorics/Graph/HypercubeCritical/ComponentBoundary/Placement/Q9SaturatedContactCompanions.TwoFlipContact`
+- Truth anchor: `D5/S3/Combinatorics/Graph/HypercubeCritical/ComponentBoundary/Placement/Q9SaturatedContactCompanions.exists_two_components_with_two_flip_companions`
+- Truth anchor: `D5/S3/Combinatorics/Graph/HypercubeCritical/ComponentBoundary/Placement/Q9SaturatedContactCompanions.two_flip_contact_has_companion`
+- Dependency: [D5/S3/Combinatorics/Graph/HypercubeCritical/ComponentBoundary/Q9SignedContactCells](../Q9SignedContactCells.md)
+- Dependency: [D5/S3/Combinatorics/Graph/HypercubeCritical/ComponentBoundary/Q9WeightedBoundaryGram](../Q9WeightedBoundaryGram.md)
+- Dependency: [D5/S3/Combinatorics/Graph/HypercubeCritical/Translation/Q9TranslationAperiodicity](../../Translation/Q9TranslationAperiodicity.md)

@@ -1,12 +1,12 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Placement;
 
 internal sealed class Q9SaturatedContactCompanionsDocument : IScribeDocumentDefinition
 {
     private const string Boundary =
         "D5/S3/Combinatorics/Graph/HypercubeCritical/ComponentBoundary/";
-    private const string Owner = Boundary + "Q9SaturatedContactCompanions.";
+    private const string Owner = Boundary + "Placement/Q9SaturatedContactCompanions.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Coordinate restrictions on contacts between saturated cube components.",
