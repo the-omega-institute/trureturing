@@ -55,13 +55,3 @@ srcDir = "src"
 name = "omegaAudit"
 root = "OmegaChecks.Audit"
 srcDir = "src"
-
-[[lean_lib]]
-name = "GRH"
-srcDir = "src"
-moreLeanArgs = ["--tstack=400000"]
-
-[lean_lib.leanOptions]
-autoImplicit = false
-maxHeartbeats = 4000000
-weak.linter.mathlibStandardSet = false

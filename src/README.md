@@ -32,10 +32,6 @@ example (n : Omega.Nat) : Nat := Nat.factorial n
 
 本仓定向核验使用 `python3 src/OmegaChecks/portable.py --backend both <消费模块名>`。结果列出只在官方端编译的模块，并给出到显式标记的 import 链。CI 按相同规则选择严格目标。下游 Lake 包中的两个例子由[集成测试](OmegaChecks/test_backend_plan.py)编译。
 
-## 官方 Mathlib 上的独立证明库
-
-`import GRH` 提供 Dirichlet L 函数的广义黎曼猜想和经典黎曼猜想。五个入口定理都依赖 `propext`、`Classical.choice` 和 `Quot.sound`。可用 `make lean LEAN_TARGETS=GRH` 定向构建。[GRH 模块指南](GRH/README.md)
-
 ## 六卷与模块树
 
 | 卷 | 内容 | 定义与定理的入口 |
