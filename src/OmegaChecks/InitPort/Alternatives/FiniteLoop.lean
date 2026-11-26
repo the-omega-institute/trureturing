@@ -1,4 +1,5 @@
 module
+public import Init.Data.Iterators.Consumers.Access
 import all Init.Data.Iterators.Consumers.Monadic.Loop
 public import Init.Data.Slice.Array.Iterator
 public import Init.Data.Iterators.Producers.Monadic.List
@@ -38,5 +39,26 @@ private noncomputable def finiteForIn {α β : Type w} {m : Type w → Type w'} 
 @[instance_reducible] public noncomputable def Std.Iterators.Types.ListIterator.instIteratorLoop :
     type_of% @_root_.Std.Iterators.Types.ListIterator.instIteratorLoop :=
   fun {_ _} _ {_} _ => finiteIteratorLoop
+
+private theorem indexWF {α β : Type u} [Iterator α Id β] [Productive α Id] :
+    WellFounded (InvImage (Prod.Lex WellFoundedRelation.rel IterM.TerminationMeasures.Productive.Rel)
+      (fun p : (_ : Iter (α := α) β) ×' Nat => (p.2, p.1.finitelyManySkips!))) :=
+  InvImage.wf _ WellFoundedRelation.wf
+
+public noncomputable def Std.Iter.Total.atIdxSlow? {α β : Type u} [Iterator α Id β] [Productive α Id]
+    (n : Nat) (it : Iter.Total (α := α) β) : Option β :=
+  (indexWF (α := α) (β := β)).fix (C := fun _ => Option β) (fun p recur =>
+    match p.1.step with
+    | .yield next out h =>
+      match hIndex : p.2 with
+      | 0 => some out
+      | k + 1 => recur ⟨next, k⟩ (by
+        apply Prod.Lex.left
+        change k < p.2
+        exact hIndex ▸ Nat.lt_succ_self k)
+    | .skip next h => recur ⟨next, p.2⟩ (by
+      apply Prod.Lex.right
+      exact IterM.TerminationMeasures.Productive.rel_of_skip h)
+    | .done _ => none) ⟨it.it, n⟩
 
 end OmegaChecks.InitPort.Alternatives

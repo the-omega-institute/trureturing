@@ -1,4 +1,5 @@
 module
+import all Init.Data.Iterators.Consumers.Access
 
 public import OmegaChecks.InitPort.Alternatives.Collect
 import all OmegaChecks.InitPort.Alternatives.Collect
@@ -158,5 +159,15 @@ public theorem Std.Iterators.Types.ListIterator.instIteratorLoop {m : Type w →
     @OmegaChecks.InitPort.Alternatives.Std.Iterators.Types.ListIterator.instIteratorLoop m α _ n _ =
       @_root_.Std.Iterators.Types.ListIterator.instIteratorLoop m α _ n _ :=
   finiteIteratorLoop_eq
+
+public theorem Std.Iter.Total.atIdxSlow? {α β : Type u} [Iterator α Id β] [Productive α Id]
+    (n : Nat) (it : Iter.Total (α := α) β) :
+    OmegaChecks.InitPort.Alternatives.Std.Iter.Total.atIdxSlow? n it = it.atIdxSlow? n := by
+  unfold OmegaChecks.InitPort.Alternatives.Std.Iter.Total.atIdxSlow? _root_.Std.Iter.Total.atIdxSlow? Iter.atIdxSlow?
+  rw [WellFounded.extrinsicFix₂_eq_fix (OmegaChecks.InitPort.Alternatives.indexWF (α := α) (β := β))]
+  congr 1
+  funext p recur
+  rcases p with ⟨i, k⟩
+  cases i.step using PlausibleIterStep.casesOn <;> cases k <;> rfl
 
 end OmegaChecks.Interface.Equations
