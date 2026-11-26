@@ -1,4 +1,4 @@
-name: Compile Lean module shards
+name: Build Lean module shards
 
 on:
   workflow_call:
@@ -69,7 +69,7 @@ jobs:
         run: |
           python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --layers dependency --dependency-key "$DEPENDENCY_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME"
           bash .github/actions/lean-compile-layer/prepare-dependencies.sh
-      - name: Compile and save each finished shard
+      - name: Build and save each module shard with its reports
         env:
           GH_TOKEN: ${{ github.token }}
           STRATALINT_CACHE_WRITES: 'true'

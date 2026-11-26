@@ -49,3 +49,10 @@ current state give the mode law $[L_j,h_{(m)}]=-m h_{(j+m)}$.
   equations (4.12)–(4.16), Theorem 4.1, §4.2 equation (4.23), and §3.2
   equation (3.12).
 - Published bibliographic identity: https://doi.org/10.1142/9789812702562_0001.
+
+## Order-three charge formulas
+
+In arXiv:math/0402315v3, equation (4.37) (p. 11) gives the product factor
+$B_{\alpha,\beta}$ used at period three. Equation (4.42) (p. 13) gives
+$\varepsilon(\alpha,\beta)B_{\alpha,\beta}^{-1}$ as the coefficient of
+$U_{\alpha+\beta}$ in $U_\alpha U_\beta$. [arXiv v3 PDF](https://arxiv.org/pdf/math/0402315v3)
