@@ -36,9 +36,7 @@ internal sealed class HardinA235301RecurrenceDocument : IScribeDocumentDefinitio
                     + "R2 = −3R1 − 2R0, and the first two residual weights sum to zero at every mask. "
                     + "Linearity propagates these equalities to every subsequent residual. "
                     + "This gives one axis, and transposition gives the other."))),
-            DescribeRole.Theorem,
-            new OpenProblemResolutionClaim(
-                ProblemSlugRef.Create("hardin-a235301-common-recurrence"), ResolutionKind.Proved)))));
+            DescribeRole.Theorem))));
 
     private static Formula Statement()
     {
