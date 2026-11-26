@@ -26,8 +26,10 @@ public import OmegaChecks.InitPort.Alternatives.Logic
 public import OmegaChecks.InitPort.Alternatives.NatBits
 public import OmegaChecks.InitPort.Alternatives.NatDigits
 public import OmegaChecks.InitPort.Alternatives.NatLinear
+public import OmegaChecks.InitPort.Alternatives.NatSOM
 public import OmegaChecks.InitPort.Alternatives.NatOrder
 public import OmegaChecks.InitPort.Alternatives.OmegaIntList
+public import OmegaChecks.InitPort.Alternatives.Option
 public import OmegaChecks.InitPort.Alternatives.Powers
 public import OmegaChecks.InitPort.Alternatives.Range
 public import OmegaChecks.InitPort.Alternatives.RangeFinite
