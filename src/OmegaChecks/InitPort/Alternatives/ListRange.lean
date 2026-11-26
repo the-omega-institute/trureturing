@@ -1,4 +1,5 @@
 module
+import Init.Data.Array.Range
 public import Init.Data.List.Nat.Range
 
 /-! Constructive membership, order and counting proofs for finite arithmetic progressions. -/
@@ -327,5 +328,44 @@ public theorem List.erase_range : type_of% @_root_.List.erase_range := by
   intros
   simp only [_root_.List.range_eq_range', List.erase_range', Nat.sub_zero, Nat.zero_max,
     Nat.zero_min, Nat.zero_add]
+
+
+public theorem Array.range_eq_range' : type_of% @_root_.Array.range_eq_range' := by
+  intro n
+  exact _root_.Array.ext' (_root_.Array.toList_range.trans
+    (_root_.List.range_eq_range'.trans _root_.Array.toList_range'.symm))
+
+public theorem Array.mem_range : type_of% @_root_.Array.mem_range := by
+  intros
+  exact _root_.Array.mem_toList_iff.symm.trans (_root_.Array.toList_range ▸ _root_.List.mem_range)
+
+
+public theorem Array.range_ne_empty_iff : type_of% @_root_.Array.range_ne_empty_iff := by
+  intros
+  exact not_congr _root_.Array.range_eq_empty_iff
+
+public theorem Array.range'_ne_empty_iff : type_of% @_root_.Array.range'_ne_empty_iff := by
+  intros
+  exact not_congr _root_.Array.range'_eq_empty_iff
+
+public theorem Array.map_sub_range' : type_of% @_root_.Array.map_sub_range' := by
+  intros
+  apply _root_.Array.ext'
+  rw [_root_.Array.toList_map, _root_.Array.toList_range', _root_.Array.toList_range']
+  exact _root_.List.map_sub_range' ‹_› _
+
+public theorem List.map_snd_add_zipIdx_eq_zipIdx : type_of% @_root_.List.map_snd_add_zipIdx_eq_zipIdx := by
+  intro α xs n k
+  induction xs generalizing k with
+  | nil => rfl
+  | cons a xs ih =>
+    rw [_root_.List.zipIdx_cons, _root_.List.map_cons, _root_.List.zipIdx_cons, ih]
+    exact congrArg (fun i => (a, i) :: xs.zipIdx (n + (k + 1))) (Nat.add_comm k n)
+
+public theorem Array.map_snd_add_zipIdx_eq_zipIdx : type_of% @_root_.Array.map_snd_add_zipIdx_eq_zipIdx := by
+  intros
+  apply _root_.Array.ext'
+  rw [_root_.Array.toList_map, _root_.Array.toList_zipIdx, _root_.Array.toList_zipIdx]
+  exact List.map_snd_add_zipIdx_eq_zipIdx
 
 end OmegaChecks.InitPort.Alternatives

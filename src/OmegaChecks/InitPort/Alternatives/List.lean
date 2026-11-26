@@ -1,4 +1,5 @@
 module
+public import OmegaChecks.InitPort.Alternatives.ListPairwise
 public import Init.Data.List.Lemmas
 public import OmegaChecks.InitPort.Alternatives.ListAttach
 public import OmegaChecks.InitPort.Alternatives.ListCount
@@ -665,5 +666,15 @@ public theorem List.append_eq_append_iff : type_of% @_root_.List.append_eq_appen
   · rintro (⟨as, rfl, rfl⟩ | ⟨cs, rfl, rfl⟩)
     · exact (_root_.List.append_assoc ..).symm
     · exact _root_.List.append_assoc ..
+
+
+public theorem List.getLast?_flatMap : type_of% @_root_.List.getLast?_flatMap := by
+  intro α β xs f
+  induction xs with
+  | nil => rfl
+  | cons x xs ih =>
+    rw [_root_.List.flatMap_cons, _root_.List.getLast?_append, ih,
+      _root_.List.reverse_cons, _root_.List.findSome?_append, _root_.List.findSome?_cons]
+    cases (f x).getLast? <;> rfl
 
 end OmegaChecks.InitPort.Alternatives
