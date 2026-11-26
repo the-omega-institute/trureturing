@@ -648,6 +648,39 @@ def limitedOmniscienceFromAppendLoop (loop : type_of% (@Append.instIteratorLoop.
   rw [correct]
   simp only [← Iter.length_toList_eq_length, Iter.toList_append, List.toList_iter, List.append_nil]
 
+/-- Flattening singleton list iterators preserves the full output sequence. -/
+def limitedOmniscienceFromFlattenLoop (loop : type_of% (@Flatten.instIteratorLoop.{0,0,0,0}))
+    (correct : ∀ {α α₂ β : Type} [out : Iterator α Id (IterM (α := α₂) Id β)]
+      [inner : Iterator α₂ Id β] [Finite α Id] [Finite α₂ Id],
+      @loop α α₂ β Id Id _ _ out inner = @Flatten.instIteratorLoop α α₂ β Id Id _ _ out inner)
+    (f : Nat → Bool) : Decidable (∃ n, f n = true) := by
+  apply limitedOmniscienceFromLength (f := f) (fun {α β} [inst : Iterator α Id β] it =>
+    letI := @loop (Map α Id Id (fun _ => monadLift) (fun b : β => pure ([b].iter.toIterM))) (ListIterator β)
+      β Id Id _ _ inferInstance inferInstance
+    (it.flatMap (fun b => [b].iter)).length)
+  intro α β inst finite it
+  rw [correct]
+  letI := @Flatten.instIteratorLoop (Map α Id Id (fun _ => monadLift) (fun b : β => pure ([b].iter.toIterM)))
+    (ListIterator β) β Id Id _ _ inferInstance inferInstance
+  have eq := Iter.length_toList_eq_length (it := it.flatMap fun b => [b].iter)
+  rw [Iter.toList_flatMap, Iter.toList_map] at eq
+  simpa [List.toList_iter, ← List.flatMap_def] using eq.symm
+
+/-- Taking one output suffices to implement lookup at index zero when searching for a signal. -/
+def limitedOmniscienceFromTakeLoop (loop : type_of% (@Take.instIteratorLoop.{0,0,0,0}))
+    (correct : ∀ {α β : Type} [inst : Iterator α Id β] [Finite α Id],
+      @loop α Id β Id _ _ inst = @Take.instIteratorLoop α Id β Id _ _ inst)
+    (f : Nat → Bool) : Decidable (∃ n, f n = true) := by
+  apply limitedOmniscienceFromLookup (f := f) (fun {α β} [inst : Iterator α Id β] n it =>
+    letI := @loop α Id β Id _ _ inst
+    ((it.take (n+1)).fold (init := ([] : List β)) fun xs b => b :: xs).reverse[n]?)
+  intro α β inst finite n it
+  rw [correct]
+  letI := @Take.instIteratorLoop α Id β Id _ _ inst
+  rw [← Iter.foldl_toList, List.foldl_flip_cons_eq_append', List.append_nil, List.reverse_reverse,
+    Iter.toList_take_of_finite, List.getElem?_take, ite_eq_left (Nat.lt_succ_self _)]
+  exact Iter.getElem?_toList_eq_atIdxSlow?
+
 end Collector
 
 end OmegaChecks.InitBoundaries
