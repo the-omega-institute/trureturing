@@ -16,7 +16,7 @@ Lean statement: `D5/S3/Weil/ZetaExplicit/LandauUniformCutoff.actual_cutoff_landa
 
 Assume the Riemann hypothesis. For real V>1 and t nonzero, sum exp(i*t*Im(rho)) with analytic multiplicity over the zeros with 0<Im(rho)<=V. An absolute positive constant times V+exp(|t|/2)*(1+|t|)^2+log(V)/|t| bounds the norm.
 
-At a nearby zero-free height use the rectangle with bottom at 1, left edge at -1/4 and right edge at 1+1/log(3x), where x=exp(|t|). The argument principle counts the zeros with their multiplicities. Reflection extends the square-logarithmic top bound to the full edge. The bottom is bounded on a compact zero-free segment, and the two vertical integrals have uniform bounds.
+The cutoff is empty for 1<V<=6. For V>6 choose a nearby zero-free height and use the rectangle with bottom at 1, left edge at -1/4 and right edge at 1+1/log(3x), where x=exp(|t|). The argument principle counts the zeros with their multiplicities. Reflection extends the square-logarithmic top bound to the full edge. The bottom is bounded on a compact zero-free segment, and the two vertical integrals have uniform bounds.
 
 After division by sqrt(x), the top-edge term sqrt(x)*log(V+9)^2 is controlled by V+sqrt(x)*(1+log(x))^2. Split at x=V. The zeros crossed between the chosen height and V lie in a bounded window and their total multiplicity is O(log(V+9)). Conjugation supplies negative frequencies.
 

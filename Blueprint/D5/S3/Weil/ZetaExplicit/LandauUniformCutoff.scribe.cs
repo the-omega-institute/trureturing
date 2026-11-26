@@ -23,7 +23,8 @@ internal sealed class LandauUniformCutoffDocument : IScribeDocumentDefinition
                         + "0<Im(rho)<=V. An absolute positive constant times "
                         + "V+exp(|t|/2)*(1+|t|)^2+log(V)/|t| bounds the norm.")),
                     Paragraph(Text(
-                        "At a nearby zero-free height use the rectangle with bottom at 1, "
+                        "The cutoff is empty for 1<V<=6. For V>6 choose a nearby zero-free "
+                        + "height and use the rectangle with bottom at 1, "
                         + "left edge at -1/4 and right edge at 1+1/log(3x), where x=exp(|t|). "
                         + "The argument principle counts the zeros with their multiplicities. "
                         + "Reflection extends the square-logarithmic top bound to the full edge. "
