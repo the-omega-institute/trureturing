@@ -3,6 +3,7 @@ import Lean.Replay
 import OmegaChecks.InitCompiler.Proofs
 import OmegaChecks.InitCompiler.Recursion
 import OmegaChecks.InitPort.Alternatives
+import OmegaChecks.InitPort.Arithmetic
 
 open Lean
 
@@ -469,6 +470,12 @@ partial def visit (n : Name) : M Bool := do
   if ci.isTheorem then
     if let some term ← OmegaChecks.InitCompiler.finiteProof? c.source ci.type then
       if (← attempt term) matches .added then return ← record n .added
+    let checked := (← get).env
+    if (checked.find? (portName `Lean.Omega.Constraint.not_sat'_of_isImpossible)).isSome then
+      if let some term ← OmegaChecks.InitPort.arithmeticProof? c.source ci.type then
+        -- Avoid introducing a recursive dependency on a solver lemma still being proved.
+        if (usedConstants term).all (fun dep => (checked.find? (portName dep)).isSome) then
+          if (← attempt term) matches .added then return ← record n .added
   return ← record n result
 
 def modulesIn (root : System.FilePath) : IO (Array Name) := do
