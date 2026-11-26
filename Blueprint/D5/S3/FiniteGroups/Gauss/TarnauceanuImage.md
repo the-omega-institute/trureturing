@@ -6,7 +6,7 @@ The exact Gauss values on C_(2^n) × C₂ rule out simultaneous closedness and d
 
 **Definition 1.1 (The group-theoretical Gauss invariant).**
 
-$$\forall G \in Type,\; [Group\left(G\right)] f\left(G\right) = \frac{\sum_{H \le G} \Vert \operatorname{Aut}\left(H\right) \Vert}{\Vert G \Vert}$$
+$$\forall G \in \operatorname{FiniteGroup},\; f\left(G\right) = \frac{\sum_{H \le G} \Vert \operatorname{Aut}\left(H\right) \Vert}{\Vert G \Vert}$$
 
 *Formalization.* `D5/S3/FiniteGroups/Gauss/TarnauceanuImage.gauss` (`✓ std3`).
 

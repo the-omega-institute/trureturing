@@ -130,9 +130,9 @@ internal sealed class TarnauceanuImageDocument : IScribeDocumentDefinition
         var h = F.Id("H");
         var subgroup = Seq(h, Sp, Le, Sp, g);
         var sum = Seq(Sum, Underscore, Grp(subgroup), Sp, Cardinality(Named("Aut", h)));
-        var group = Seq(OpenBracket, Call("Group", g), CloseBracket);
-        return Disp(All("G", F.Id("Type"), Seq(group, Sp,
-            Equals(Call("f", g), new Formula.Fraction(sum, Cardinality(g))))));
+        var finiteGroups = Seq(Operatorname, Grp(F.Id("FiniteGroup")));
+        return Disp(All("G", finiteGroups,
+            Equals(Call("f", g), new Formula.Fraction(sum, Cardinality(g)))));
     }
 
     private static Formula FamilyDefinition()
