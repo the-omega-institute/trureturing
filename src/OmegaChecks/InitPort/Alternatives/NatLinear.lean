@@ -105,4 +105,61 @@ public theorem Nat.Internal.Linear.Poly.of_denote_le_cancelAux :
     type_of% @_root_.Nat.Internal.Linear.Poly.of_denote_le_cancelAux :=
   fun ctx fuel a b l r => (cancelDenotation ctx fuel a b l r).2.mpr
 
+public theorem Nat.Internal.Linear.Expr.denote_toPoly_go :
+    type_of% @_root_.Nat.Internal.Linear.Expr.denote_toPoly_go := by
+  intro k p ctx e
+  apply Expr.toPoly.go.induct
+    (fun k e => ∀ p, (Expr.toPoly.go k e p).denote ctx = k * e.denote ctx + p.denote ctx)
+    _ _ _ _ _ _ _ _ k e p
+  · intro k l zero p
+    simp only [Expr.toPoly.go, zero, Bool.cond_true, id_eq]
+    change p.denote ctx = k*l + p.denote ctx
+    rw [eq_of_beq zero, Nat.mul_zero, Nat.zero_add]
+  · intro k l nonzero p
+    simp only [Expr.toPoly.go, nonzero, Bool.cond_false]
+    change (k*l) * (Var.denote ctx fixedVar) + p.denote ctx = k*l + p.denote ctx
+    have unit (v : Var) (matchVar : Nat.beq v fixedVar = true) : Var.denote ctx v = 1 :=
+      congrArg (Bool.rec (motive := fun _ => Nat) (ctx.get v) 1) matchVar
+    have fixed := unit fixedVar (Nat.beq_refl fixedVar)
+    exact congrArg (· + p.denote ctx) ((congrArg (k*l * ·) fixed).trans (Nat.mul_one _))
+  · exact fun _ _ _ => rfl
+  · intro k a b ia ib p
+    change (Expr.toPoly.go k a (Expr.toPoly.go k b p)).denote ctx = k * (a.denote ctx + b.denote ctx) + p.denote ctx
+    rw [ia, ib, Nat.mul_add, Nat.add_assoc]
+  · intro k l a zero p
+    simp only [Expr.toPoly.go, zero, Bool.cond_true, id_eq]
+    change p.denote ctx = k*(l*a.denote ctx) + p.denote ctx
+    rw [eq_of_beq zero, Nat.zero_mul, Nat.mul_zero, Nat.zero_add]
+  · intro k l a nonzero ih p
+    simp only [Expr.toPoly.go, nonzero, Bool.cond_false]
+    change _ = k*(l*a.denote ctx) + p.denote ctx
+    rw [ih, Nat.mul_assoc]
+  · intro k a l zero p
+    simp only [Expr.toPoly.go, zero, Bool.cond_true, id_eq]
+    change p.denote ctx = k*(a.denote ctx*l) + p.denote ctx
+    rw [eq_of_beq zero, Nat.mul_zero, Nat.mul_zero, Nat.zero_add]
+  · intro k a l nonzero ih p
+    simp only [Expr.toPoly.go, nonzero, Bool.cond_false]
+    change _ = k*(a.denote ctx*l) + p.denote ctx
+    rw [ih, Nat.mul_assoc, Nat.mul_comm l (a.denote ctx)]
+
+public theorem Nat.Internal.Linear.Expr.denote_toPoly :
+    type_of% @_root_.Nat.Internal.Linear.Expr.denote_toPoly := by
+  intro ctx e
+  change (Expr.toPoly.go 1 e []).denote ctx = _
+  rw [Expr.denote_toPoly_go, Nat.one_mul]
+  exact Nat.add_zero _
+
+public theorem Nat.Internal.Linear.ExprCnstr.denote_toPoly :
+    type_of% @_root_.Nat.Internal.Linear.ExprCnstr.denote_toPoly := by
+  intro ctx c
+  obtain ⟨kind, lhs, rhs⟩ := c
+  cases kind with
+  | false =>
+    change (lhs.toPoly.denote ctx ≤ rhs.toPoly.denote ctx) = (lhs.denote ctx ≤ rhs.denote ctx)
+    rw [Expr.denote_toPoly, Expr.denote_toPoly]
+  | true =>
+    change (lhs.toPoly.denote ctx = rhs.toPoly.denote ctx) = (lhs.denote ctx = rhs.denote ctx)
+    rw [Expr.denote_toPoly, Expr.denote_toPoly]
+
 end OmegaChecks.InitPort.Alternatives
