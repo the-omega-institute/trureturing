@@ -38,7 +38,8 @@ internal sealed class ProperSupportMarginalGluingDocument : IScribeDocumentDefin
                         "No coordinate coverage, incidence weights, positive conditional " +
                         "masses, finite alphabets, topologies or countable-generation " +
                         "assumptions are imposed. Empty supports and index types are retained " +
-                        "whenever the displayed hypotheses hold. Zeros on positive-measure " +
+                        "whenever the displayed hypotheses hold. If J is infinite, each row may " +
+                        "have its own exceptional null set. Zeros on positive-measure " +
                         "sets and infinite values on null sets are allowed.")),
                     Paragraph(Text(
                         "First normalize f_j by its positive finite original mass. For each " +
