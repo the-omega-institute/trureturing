@@ -1,4 +1,5 @@
 module
+import OmegaChecks.InitPort.Alternatives.ByteArray
 import all Init.Data.String.Decode
 import all Init.Data.String.Basic
 import all Init.Data.ByteArray.Lemmas
