@@ -184,4 +184,125 @@ public theorem ByteArray.extract_append : type_of% @_root_.ByteArray.extract_app
     _root_.ByteArray.data_extract, _root_.ByteArray.data_extract]
   exact _root_.Array.extract_append
 
+public theorem List.takeWhile_filterMap : type_of% @_root_.List.takeWhile_filterMap := by
+  intro α β f p xs
+  induction xs with
+  | nil => rfl
+  | cons x xs ih =>
+    cases h : f x with
+    | none => simpa only [List.filterMap_cons, h, List.takeWhile_cons, Option.all_none, ite_true] using ih
+    | some y => cases e : p y <;>
+        simp only [List.filterMap_cons, h, List.takeWhile_cons, Option.all_some, e, Bool.false_eq_true,
+          ite_true, ite_false, List.filterMap_nil, ih]
+
+public theorem List.dropWhile_filterMap : type_of% @_root_.List.dropWhile_filterMap := by
+  intro α β f p xs
+  induction xs with
+  | nil => rfl
+  | cons x xs ih =>
+    cases h : f x with
+    | none => simpa only [List.filterMap_cons, h, List.dropWhile_cons, Option.all_none, ite_true] using ih
+    | some y => cases e : p y <;>
+        simp only [List.filterMap_cons, h, List.dropWhile_cons, Option.all_some, e, Bool.false_eq_true,
+          ite_true, ite_false, ih]
+
+public theorem List.takeWhile_filter : type_of% @_root_.List.takeWhile_filter := by
+  intro α p q xs
+  induction xs with
+  | nil => rfl
+  | cons x xs ih =>
+    cases hp : p x <;> cases hq : q x <;>
+      simp only [List.filter_cons, List.takeWhile_cons, hp, hq, Bool.not_true, Bool.not_false,
+        Bool.true_or, Bool.false_or, Bool.false_eq_true, ite_true, ite_false, List.filter_nil, ih]
+
+public theorem List.dropWhile_filter : type_of% @_root_.List.dropWhile_filter := by
+  intro α p q xs
+  induction xs with
+  | nil => rfl
+  | cons x xs ih =>
+    cases hp : p x <;> cases hq : q x <;>
+      simp only [List.filter_cons, List.dropWhile_cons, hp, hq, Bool.not_true, Bool.not_false,
+        Bool.true_or, Bool.false_or, Bool.false_eq_true, ite_true, ite_false, ih]
+
+public theorem List.head_takeWhile : type_of% @_root_.List.head_takeWhile := by
+  intro α p xs present
+  cases xs with
+  | nil => exact (present rfl).elim
+  | cons x xs =>
+    cases head : p x with
+    | false => exact (present (by simp only [List.takeWhile_cons, head, Bool.false_eq_true, ite_false])).elim
+    | true => simp only [List.takeWhile_cons, head, ite_true, List.head_cons]
+
+public theorem List.dropWhile_replicate : type_of% @_root_.List.dropWhile_replicate := by
+  intro α n a p
+  rw [List.dropWhile_replicate_eq_filter_not, List.filter_replicate]
+  cases p a <;> rfl
+
+public theorem List.replace_takeWhile : type_of% @_root_.List.replace_takeWhile := by
+  intro α a b _ _ xs p hp
+  induction xs with
+  | nil => rfl
+  | cons x xs ih =>
+    by_cases eq : a == x
+    · have same := eq_of_beq eq
+      subst x
+      cases test : p a <;> simp only [List.replace_cons, List.takeWhile_cons, beq_self_eq_true, ite_true,
+        ← hp, test, Bool.false_eq_true, ite_false, List.replace_nil]
+    · cases test : p x <;> simp only [List.replace_cons, List.takeWhile_cons, eq, test, ite_false, ite_true,
+        Bool.false_eq_true, List.replace_nil, ih]
+
+public theorem Array.getElem?_extract_of_succ : type_of% @_root_.Array.getElem?_extract_of_succ := by
+  intro α as j
+  rw [Array.getElem?_extract, Nat.sub_zero, Nat.zero_add]
+  by_cases inside : j < as.size
+  · exact ite_eq_left (Nat.lt_min.mpr ⟨Nat.lt_succ_self _, inside⟩)
+  · rw [ite_eq_right (fun lt => inside (Nat.lt_of_lt_of_le lt (Nat.min_le_right ..)))]
+    exact (Array.getElem?_eq_none (Nat.le_of_not_gt inside)).symm
+
+public theorem Array.popWhile_replicate : type_of% @_root_.Array.popWhile_replicate := by
+  intro α n a p
+  rw [Array.popWhile_replicate_eq_filter_not, Array.filter_replicate Array.size_replicate]
+  cases p a <;> rfl
+
+public theorem Array.extract_push : type_of% @_root_.Array.extract_push := by
+  intro α as b start stop
+  rw [_root_.Array.push_eq_append, _root_.Array.extract_append]
+  by_cases before : stop ≤ as.size
+  · rw [ite_eq_left before, Nat.sub_eq_zero_of_le before,
+      Array.extract_empty_of_stop_le_start (Nat.zero_le _), Array.append_empty]
+  · have past := Nat.lt_of_not_ge before
+    rw [ite_eq_right before, Array.extract_of_size_lt past]
+    by_cases begin : start ≤ as.size
+    · have full : #[b].size ≤ stop - as.size := Nat.sub_pos_of_lt past
+      rw [ite_eq_left begin, Nat.sub_eq_zero_of_le begin, Array.extract_eq_self_of_le full,
+        _root_.Array.push_eq_append]
+    · have skip : #[b].size ≤ start - as.size := Nat.sub_pos_of_lt (Nat.lt_of_not_ge begin)
+      rw [ite_eq_right begin, Array.extract_empty_of_size_le_start skip,
+        Array.extract_empty_of_size_le_start (Nat.le_of_not_ge begin), Array.append_empty]
+
+public theorem Array.extract_set : type_of% @_root_.Array.extract_set := by
+  intro α as i j k valid a
+  by_cases before : k < i
+  · rw [dite_eq_left before]
+    apply Array.ext
+    · simp only [Array.size_extract, Array.size_set]
+    · intro t h₁ h₂
+      rw [Array.getElem_extract, Array.getElem_extract, Array.getElem_set_ne]
+      omega
+  · rw [dite_eq_right before]
+    by_cases inside : k < min j as.size
+    · rw [dite_eq_left inside]
+      have bound : k - i < (as.extract i j).size := by rw [Array.size_extract]; omega
+      have index : i + (k - i) = k := Nat.add_sub_cancel' (Nat.le_of_not_gt before)
+      rw [Array.set_extract bound]
+      congr 1
+      simp only [index]
+    · rw [dite_eq_right inside]
+      apply Array.ext
+      · simp only [Array.size_extract, Array.size_set]
+      · intro t h₁ h₂
+        rw [Array.getElem_extract, Array.getElem_extract, Array.getElem_set_ne]
+        rw [Array.size_extract] at h₂
+        omega
+
 end OmegaChecks.InitPort.Alternatives
