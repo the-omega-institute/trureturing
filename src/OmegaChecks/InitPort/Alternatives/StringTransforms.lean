@@ -1,4 +1,12 @@
 module
+import all Init.Data.String.Pattern.Char
+import all Init.Data.String.Lemmas.Pattern.Split.Char
+import all Init.Data.Iterators.Consumers.Monadic.Collect
+import all Init.Data.Iterators.Consumers.Total
+import all Init.Data.Iterators.Consumers.Collect
+import all Init.Data.String.Pattern.Basic
+import all Init.Data.String.Pattern.Pred
+import all Init.Data.String.Lemmas.Pattern.Split.Pred
 import all Init.Data.String.Lemmas.Pattern.Split.Basic
 import all OmegaChecks.InitPort.Alternatives.FiniteLoop
 import all Init.Data.String.Iterate
@@ -258,5 +266,122 @@ public theorem toList_splitToSubslice_of_isEmpty :
   rw [private_decl% _root_.String.Slice.Pattern.Model.toList_splitToSubslice_eq_splitFromSteps,
     noSteps terminal valid, terminal]
   rfl
+
+end OmegaChecks.InitPort.Alternatives.String.Slice
+
+namespace OmegaChecks.InitPort.Alternatives.String.Slice
+open _root_.String.Slice _root_.String.Slice.Pattern _root_.String.Slice.Pattern.Model
+
+private abbrev predSteps {s : String.Slice} (p : Char → Bool) (pos : s.Pos) :=
+  (_root_.Std.Iter.mk (α := ToForwardSearcher.DefaultForwardSearcher p s) ⟨pos⟩).ensureTermination.toList
+
+private theorem predSteps_end {s : String.Slice} {p : Char → Bool} :
+    predSteps p s.endPos = [] := by
+  unfold predSteps
+  rw [_root_.Std.Iter.toList_ensureTermination_eq_match_step]
+  dsimp only [_root_.Std.Iter.step, _root_.Std.IterM.step, _root_.Std.Iterator.step,
+    _root_.Std.Iter.toIterM, _root_.Std.IterM.internalState_mk]
+  rw [dite_eq_left rfl, Id.run_pure, Std.Shrink.inflate_deflate]
+  rfl
+
+private theorem predSteps_next {s : String.Slice} {p : Char → Bool} {pos : s.Pos} (h : pos ≠ s.endPos) :
+    predSteps p pos = (if p (pos.get h) then .matched pos (pos.next h) else .rejected pos (pos.next h)) ::
+      predSteps p (pos.next h) := by
+  unfold predSteps
+  rw [_root_.Std.Iter.toList_ensureTermination_eq_match_step]
+  dsimp only [_root_.Std.Iter.step, _root_.Std.IterM.step, _root_.Std.Iterator.step,
+    _root_.Std.Iter.toIterM, _root_.Std.IterM.internalState_mk]
+  rw [dite_eq_right h]
+  have getEq (hs : (s.sliceFrom pos).startPos ≠ (s.sliceFrom pos).endPos) :
+      (s.sliceFrom pos).startPos.get hs = pos.get h := by
+    rw [Pos.get_eq_get_ofSliceFrom]
+    simp only [Pos.ofSliceFrom_startPos]
+  split <;> rename_i stepEq
+  · split at stepEq <;> rename_i outcome
+    all_goals rw [Id.run_pure, Std.Shrink.inflate_deflate] at stepEq
+    all_goals cases stepEq
+    all_goals dsimp only [ForwardPattern.skipPrefixOfNonempty?] at outcome
+    all_goals rw [getEq] at outcome
+    · split at outcome <;> rename_i accepted
+      · cases outcome
+        rw [ite_eq_left accepted, Pos.ofSliceFrom_next]
+        simp only [Pos.ofSliceFrom_startPos]
+        rfl
+      · cases outcome
+    · split at outcome <;> rename_i accepted
+      · cases outcome
+      · rw [ite_eq_right accepted]
+        rfl
+  · split at stepEq <;> rw [Id.run_pure, Std.Shrink.inflate_deflate] at stepEq <;> cases stepEq
+  · split at stepEq <;> rw [Id.run_pure, Std.Shrink.inflate_deflate] at stepEq <;> cases stepEq
+
+public theorem toList_splitToSubslice_bool :
+    type_of% @_root_.String.Slice.toList_splitToSubslice_bool := by
+  intro s p
+  let splitAt (f pos : s.Pos) :=
+    (private_decl% _root_.String.Slice.Pattern.Model.splitFromSteps) f (predSteps p pos)
+  have splitList (f pos : s.Pos) (le : f ≤ pos) (a b : String) (hp : pos.Splits a b) :
+      (splitAt f pos).map (String.Slice.copy ∘ String.Slice.Subslice.toSlice) =
+      (b.toList.splitOnPPrepend p (s.subslice f pos le).copy.toList.reverse).map String.ofList := by
+    induction pos using Pos.next_induction generalizing f a b with
+    | endPos =>
+      obtain rfl := hp.eq_right (s.splits_endPos)
+      simp only [splitAt, predSteps_end, splitFromSteps, List.map_cons, Function.comp_apply, toSlice_subsliceFrom,
+        List.map_nil, String.toList_empty, subslice_endPos, Subslice.copy_eq, List.splitOnPPrepend_nil,
+        List.reverse_reverse, String.ofList_toList]
+    | next pos h ih =>
+      obtain ⟨rest, rfl⟩ := hp.exists_eq_singleton_append h
+      have next := hp.next
+      by_cases accepted : p (pos.get h) = true
+      · unfold splitAt
+        rw [predSteps_next h, ite_eq_left accepted]
+        simp only [splitFromSteps, List.map_cons]
+        rw [subslice!_eq_subslice le]
+        have tail := ih (pos.next h) (Nat.le_refl _) _ _ next
+        simp only [String.toList_append, String.toList_singleton, List.singleton_append,
+          List.splitOnPPrepend_cons_pos (p := p) accepted, List.map_cons]
+        simp only [Subslice.copy_eq, Function.comp_apply, toSlice_subslice, copy_slice_self, String.toList_empty,
+          List.reverse_nil, List.splitOnPPrepend_nil_right, splitAt] at tail
+        simp only [Function.comp_apply, toSlice_subslice, tail, Subslice.copy_eq, List.reverse_reverse,
+          String.ofList_toList]
+      · unfold splitAt
+        rw [predSteps_next h, ite_eq_right accepted]
+        simp only [splitFromSteps]
+        have tail := ih f (Nat.le_trans le Pos.le_next) _ _ next
+        simp only [String.toList_append, String.toList_singleton, List.singleton_append,
+          List.splitOnPPrepend_cons_neg (p := p) (Bool.eq_false_iff.mpr accepted)]
+        rw [show _ = _ from tail]
+        have parts := (splits_slice (Nat.le_trans le Pos.le_next) (pos.slice f (pos.next h) le Pos.le_next)).eq_append
+        simp only [Pos.ofSlice_slice, copy_slice_next, String.append_singleton] at parts
+        simp only [Subslice.copy_eq, Function.comp_apply, toSlice_subslice, parts, String.toList_push, List.reverse_append, List.reverse_cons,
+          List.reverse_nil, List.nil_append, List.cons_append]
+  rw [private_decl% _root_.String.Slice.Pattern.Model.toList_splitToSubslice_eq_splitFromSteps]
+  have atStart := splitList s.startPos s.startPos (Nat.le_refl _) "" s.copy s.splits_startPos
+  change List.map (copy ∘ Subslice.toSlice) (splitFromSteps s.startPos (predSteps p s.startPos)) = _ at atStart
+  have steps : predSteps p s.startPos = (ToForwardSearcher.toSearcher p s).toList := by
+    exact _root_.Std.Iter.toList_ensureTermination
+  rw [steps] at atStart
+  simpa only [Subslice.copy_eq, Function.comp_apply, toSlice_subslice, slice_startPos, copy_sliceTo_startPos,
+    String.toList_empty, List.reverse_nil, List.splitOnPPrepend_nil_right] using atStart
+
+public theorem toList_splitToSubslice_prop :
+    type_of% @_root_.String.Slice.toList_splitToSubslice_prop := by
+  intro s p _
+  have same : (s.splitToSubslice p).toList = (s.splitToSubslice (fun c => decide (p c))).toList := by
+    rw [private_decl% _root_.String.Slice.Pattern.Model.toList_splitToSubslice_eq_splitFromSteps,
+      private_decl% _root_.String.Slice.Pattern.Model.toList_splitToSubslice_eq_splitFromSteps]
+    rfl
+  rw [same]
+  exact _root_.String.Slice.toList_splitToSubslice_bool
+
+public theorem toList_splitToSubslice_char :
+    type_of% @_root_.String.Slice.toList_splitToSubslice_char := by
+  intro s c
+  have same : (s.splitToSubslice c).toList = (s.splitToSubslice (· == c)).toList := by
+    rw [private_decl% _root_.String.Slice.Pattern.Model.toList_splitToSubslice_eq_splitFromSteps,
+      private_decl% _root_.String.Slice.Pattern.Model.toList_splitToSubslice_eq_splitFromSteps]
+    rfl
+  rw [same, List.splitOn_eq_splitOnP]
+  exact _root_.String.Slice.toList_splitToSubslice_bool
 
 end OmegaChecks.InitPort.Alternatives.String.Slice
