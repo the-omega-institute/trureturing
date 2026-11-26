@@ -10,6 +10,10 @@ module
 
 public import D5.S1.Words.Powers.CyclicCentralizer
 public import Mathlib.Data.Set.Finite.Basic
+public import Mathlib.Data.Set.Card
+public import OmegaBuild.Commands
+
+compile_only_with_mathlib
 
 /-!
 For a relation of word pairs, an inner witness solves `a ++ z = z ++ b` and an
@@ -341,5 +345,194 @@ theorem commonWitness_iff_finite
         · exact ⟨z, fun p hp => hzO p (Set.mem_union_left T₀ hp)⟩
       obtain ⟨z, hz⟩ := outer_finite_character G hOF
       exact ⟨z, Or.inr hz⟩
+
+/- A signed word has only one empty representative. -/
+private abbrev SignedWord (α : Type u) := List α ⊕ {z : List α // z ≠ []}
+
+private def SignedHolds (p : List α × List α) : SignedWord α → Prop
+  | .inl z => Inner p z
+  | .inr z => Outer p z.1
+
+private theorem signed_of_common {G : Set (List α × List α)}
+    (h : CommonWitness G) : ∃ s : SignedWord α, ∀ p ∈ G, SignedHolds p s := by
+  classical
+  obtain ⟨z, hz | hz⟩ := h
+  · exact ⟨.inl z, hz⟩
+  · by_cases hne : z = []
+    · refine ⟨.inl [], ?_⟩
+      intro p hp
+      simpa [SignedHolds, Inner, Outer, hne] using (hz p hp).symm
+    · exact ⟨.inr ⟨z, hne⟩, hz⟩
+
+private theorem common_of_signed {G : Set (List α × List α)}
+    (h : ∃ s : SignedWord α, ∀ p ∈ G, SignedHolds p s) : CommonWitness G := by
+  obtain ⟨s, hs⟩ := h
+  cases s with
+  | inl z => exact ⟨z, .inl hs⟩
+  | inr z => exact ⟨z.1, .inr hs⟩
+
+private theorem sandwich_inner {p : List α × List α} {x y : List α}
+    (hx : Inner p x) (hy : Outer p y) : Inner p (x ++ y ++ x) := by
+  change p.1 ++ (x ++ y ++ x) = (x ++ y ++ x) ++ p.2
+  change p.1 ++ x = x ++ p.2 at hx
+  change y ++ p.1 = p.2 ++ y at hy
+  calc
+    p.1 ++ (x ++ y ++ x) = (p.1 ++ x) ++ y ++ x := by simp [List.append_assoc]
+    _ = (x ++ p.2) ++ y ++ x := by rw [hx]
+    _ = x ++ (p.2 ++ y) ++ x := by simp [List.append_assoc]
+    _ = x ++ (y ++ p.1) ++ x := by rw [hy]
+    _ = (x ++ y) ++ (p.1 ++ x) := by simp [List.append_assoc]
+    _ = (x ++ y) ++ (x ++ p.2) := by rw [hx]
+    _ = (x ++ y ++ x) ++ p.2 := by simp [List.append_assoc]
+
+private theorem outer_of_sandwich {p : List α × List α} {x y : List α}
+    (hx : Inner p x) (hxyx : Inner p (x ++ y ++ x)) : Outer p y := by
+  change p.1 ++ x = x ++ p.2 at hx
+  change p.1 ++ (x ++ y ++ x) = (x ++ y ++ x) ++ p.2 at hxyx
+  have heq : x ++ ((p.2 ++ y) ++ x) = x ++ ((y ++ p.1) ++ x) := by
+    calc
+      x ++ ((p.2 ++ y) ++ x) = (p.1 ++ x) ++ y ++ x := by
+        rw [hx]; simp [List.append_assoc]
+      _ = (x ++ y ++ x) ++ p.2 := by simpa [List.append_assoc] using hxyx
+      _ = x ++ ((y ++ p.1) ++ x) := by rw [hx]; simp [List.append_assoc]
+  exact (List.append_cancel_right (List.append_cancel_left heq)).symm
+
+private theorem signed_transport_of_two_inner
+    {p q : List α × List α} {x y : List α} (hp : p.1 ≠ [])
+    (hpx : Inner p x) (hpy : Inner p y)
+    (hqx : Inner q x) (hqy : Inner q y) (hne : x ≠ y) :
+    ∀ s : SignedWord α, SignedHolds p s → SignedHolds q s := by
+  have htransport : ∀ z, Inner p z → Inner q z :=
+    transport_inner_witness hp hpx hpy hqx hqy hne
+  intro s hs
+  cases s with
+  | inl z => exact htransport z hs
+  | inr z =>
+      exact outer_of_sandwich hqx (htransport _ (sandwich_inner hpx hs))
+
+private theorem signed_transport_of_two_outer
+    {p q : List α × List α} {x y : List α} (hp : p.1 ≠ [])
+    (hpx : Outer p x) (hpy : Outer p y)
+    (hqx : Outer q x) (hqy : Outer q y) (hne : x ≠ y) :
+    ∀ s : SignedWord α, SignedHolds p s → SignedHolds q s := by
+  have hp' : p.2 ≠ [] := nonempty_right_of_inner hp hpx.symm
+  have htransport : ∀ z, Outer p z → Outer q z := by
+    intro z hz
+    exact (transport_inner_witness hp' hpx.symm hpy.symm hqx.symm hqy.symm hne
+      z hz.symm).symm
+  intro s hs
+  cases s with
+  | inr z => exact htransport z.1 hs
+  | inl z =>
+      have hpx' : Inner (swapPair p) x := hpx.symm
+      have hpz' : Outer (swapPair p) z := hs.symm
+      have hsand : Outer p (x ++ z ++ x) := (sandwich_inner hpx' hpz').symm
+      have hqx' : Inner (swapPair q) x := hqx.symm
+      have hqs' : Inner (swapPair q) (x ++ z ++ x) := (htransport _ hsand).symm
+      exact (outer_of_sandwich hqx' hqs').symm
+
+private theorem signed_transport_of_two
+    {p q : List α × List α} (hp : p.1 ≠ [])
+    {s t : SignedWord α} (hps : SignedHolds p s) (hpt : SignedHolds p t)
+    (hqs : SignedHolds q s) (hqt : SignedHolds q t) (hne : s ≠ t) :
+    ∀ r : SignedWord α, SignedHolds p r → SignedHolds q r := by
+  have mixed : ∀ (x : List α) (y : {z : List α // z ≠ []}),
+      Inner p x → Outer p y.1 → Inner q x → Outer q y.1 →
+      ∀ r : SignedWord α, SignedHolds p r → SignedHolds q r := by
+    intro x y hpx hpy hqx hqy
+    apply signed_transport_of_two_inner hp hpx (sandwich_inner hpx hpy)
+      hqx (sandwich_inner hqx hqy)
+    intro heq
+    have hlen := congrArg List.length heq
+    simp only [List.length_append] at hlen
+    have hyzero : y.1.length = 0 := by omega
+    exact y.2 (List.eq_nil_of_length_eq_zero hyzero)
+  cases s with
+  | inl x =>
+      cases t with
+      | inl y =>
+          exact signed_transport_of_two_inner hp hps hpt hqs hqt
+            (fun h => hne (congrArg Sum.inl h))
+      | inr y => exact mixed x y hps hpt hqs hqt
+  | inr x =>
+      cases t with
+      | inl y => exact mixed y x hpt hps hqt hqs
+      | inr y =>
+          apply signed_transport_of_two_outer hp hps hpt hqs hqt
+          intro h
+          exact hne (congrArg Sum.inr (Subtype.ext h))
+
+/-- Three-row finite character, with independently chosen local orientations. -/
+theorem commonWitness_iff_three
+    (G : Set (List α × List α)) :
+    CommonWitness G ↔
+      ∀ T : Set (List α × List α), T ⊆ G → T.Finite → T.ncard ≤ 3 →
+        CommonWitness T := by
+  constructor
+  · intro h T hTG _ _
+    obtain ⟨z, hz | hz⟩ := h
+    · exact ⟨z, .inl (fun p hp => hz p (hTG hp))⟩
+    · exact ⟨z, .inr (fun p hp => hz p (hTG hp))⟩
+  · intro hthree
+    classical
+    have hlocal : ∀ p ∈ G, ∀ q ∈ G, ∀ r ∈ G,
+        ∃ s : SignedWord α,
+          SignedHolds p s ∧ SignedHolds q s ∧ SignedHolds r s := by
+      intro p hp q hq r hr
+      have hsub : insert p (insert q {r}) ⊆ G := by
+        intro v hv
+        simp only [Set.mem_insert_iff, Set.mem_singleton_iff] at hv
+        rcases hv with rfl | rfl | rfl
+        · exact hp
+        · exact hq
+        · exact hr
+      have hcard : (insert p (insert q {r})).ncard ≤ 3 := by
+        have h₁ := Set.ncard_insert_le p (insert q {r})
+        have h₂ := Set.ncard_insert_le q {r}
+        have h₃ := Set.ncard_singleton r
+        omega
+      obtain ⟨s, hs⟩ := signed_of_common (hthree _ hsub
+        ((Set.finite_singleton r).insert q |>.insert p) hcard)
+      exact ⟨s, hs p (by simp), hs q (by simp), hs r (by simp)⟩
+    by_cases hanchor : ∃ p, p ∈ G ∧ p.1 ≠ []
+    · obtain ⟨p, hp, hpne⟩ := hanchor
+      by_cases hmany : ∀ q, q ∈ G → ∃ s t : SignedWord α,
+          SignedHolds p s ∧ SignedHolds q s ∧
+          SignedHolds p t ∧ SignedHolds q t ∧ s ≠ t
+      · obtain ⟨s, hps, _, _⟩ := hlocal p hp p hp p hp
+        apply common_of_signed
+        refine ⟨s, ?_⟩
+        intro q hq
+        obtain ⟨t, r, hpt, hqt, hpr, hqr, hne⟩ := hmany q hq
+        exact signed_transport_of_two hpne hpt hpr hqt hqr hne s hps
+      · push Not at hmany
+        obtain ⟨q, hq, huniq⟩ := hmany
+        obtain ⟨s, hps, hqs, _⟩ := hlocal p hp q hq q hq
+        apply common_of_signed
+        refine ⟨s, ?_⟩
+        intro r hr
+        obtain ⟨t, hpt, hqt, hrt⟩ := hlocal p hp q hq r hr
+        have heq : t = s := huniq t s hpt hqt hps hqs
+        exact heq ▸ hrt
+    · have hfirst : ∀ p ∈ G, p.1 = [] := by
+        intro p hp
+        by_contra hne
+        exact hanchor ⟨p, hp, hne⟩
+      refine ⟨[], .inl ?_⟩
+      intro p hp
+      obtain ⟨s, hs, _, _⟩ := hlocal p hp p hp p hp
+      have hsecond : p.2 = [] := by
+        cases s with
+        | inl z =>
+            have hlen := congrArg List.length hs
+            simp only [SignedHolds, Inner, hfirst p hp, List.nil_append,
+              List.length_append] at hlen
+            exact List.eq_nil_of_length_eq_zero (by omega)
+        | inr z =>
+            have hlen := congrArg List.length hs
+            simp only [SignedHolds, Outer, hfirst p hp, List.append_nil,
+              List.length_append] at hlen
+            exact List.eq_nil_of_length_eq_zero (by omega)
+      simp [Inner, hfirst p hp, hsecond]
 
 end D5.S1.Words.Powers.CommonWitnessCompactness
