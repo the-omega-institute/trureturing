@@ -447,4 +447,26 @@ public theorem ByteArray.utf8DecodeChar?.isInvalidContinuationByte_getElem_utf8E
   intro c size
   apply tailBytes_encodeChar c 3 _ (by decide)
 
+public theorem String.Pos.Raw.IsValid.append_right : type_of% @_root_.String.Pos.Raw.IsValid.append_right := by
+  intro s p valid t
+  apply String.Pos.Raw.isValid_iff_isValidUTF8_extract_zero.mpr
+  constructor
+  · change p.byteIdx ≤ (s ++ t).utf8ByteSize
+    rw [String.utf8ByteSize_append]
+    exact Nat.le_trans valid.le_utf8ByteSize (Nat.le_add_right ..)
+  · have cut : (s.toByteArray ++ t.toByteArray).extract 0 p.byteIdx = s.toByteArray.extract 0 p.byteIdx := by
+      apply ByteArray.ext
+      apply Array.ext'
+      rw [ByteArray.data_extract, ByteArray.data_append, Array.toList_extract, ByteArray.data_extract,
+        Array.toList_extract, Array.toList_append]
+      unfold List.extract
+      rw [List.drop_zero, List.drop_zero, Nat.sub_zero, List.take_append_of_le_length]
+      exact valid.le_utf8ByteSize
+    exact cut ▸ valid.isValidUTF8_extract_zero
+
+public theorem ByteArray.lt_size_of_isSome_utf8DecodeChar? : type_of% @_root_.ByteArray.lt_size_of_isSome_utf8DecodeChar? := by
+  intro b i ok
+  obtain ⟨c, eq⟩ := Option.isSome_iff_exists.mp ok
+  exact Nat.lt_of_lt_of_le (Nat.lt_add_of_pos_right c.utf8Size_pos) (ByteArray.le_size_of_utf8DecodeChar?_eq_some eq)
+
 end OmegaChecks.InitPort.Alternatives
