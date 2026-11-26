@@ -72,6 +72,10 @@ jobs:
           key: ${{ steps.keys.outputs.elan_key }}
       - name: Ensure the pinned Lean header parser is on PATH
         run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
+      - uses: actions/setup-dotnet@v5
+        with:
+          global-json-file: global.json
+          cache: false
       - name: Plan changes by module prefix
         id: shards
         env:
@@ -127,3 +131,14 @@ jobs:
         uses: ./.github/actions/lean-cache-shards
         with:
           operation: module-finish
+
+  verify:
+    needs: [pin, publish]
+    if: ${{ !cancelled() && needs.publish.result == 'success' }}
+    permissions:
+      contents: read
+      actions: read
+    uses: ./.github/workflows/ci-lean-module-verify.yml
+    with:
+      source: ${{ needs.pin.outputs.source }}
+      published: true

@@ -72,6 +72,12 @@ internal sealed class HardinA235289RecurrenceDocument : IScribeDocumentDefinitio
                 TransposeStatement(),
                 "Transposition swaps the grid dimensions and preserves the contiguous block condition. "
                 + "The count identity holds at all natural indices.",
+                DescribeRole.Lemma),
+            PublicSurface("original-eq-twice-low", "original_eq_twice_low", "The sum-two rectangular count",
+                OriginalEqTwiceLowStatement(),
+                "The n+2 by k+2 arrays use the alphabet 0 through 3. The four entry values in every "
+                + "contiguous block sum to two in the naturals. The natural cardinality is cast to an "
+                + "integer before multiplication by two.",
                 DescribeRole.Lemma))));
 
     private static DocumentBlock Definition(string name, string title, Formula formula, string text) =>
@@ -251,6 +257,29 @@ internal sealed class HardinA235289RecurrenceDocument : IScribeDocumentDefinitio
         var count = Parenthesized(Seq(Call("profileCount", p, PlusOf(n, D(2))), Colon, Sp, V("Int")));
         var sum = Over(Sum, "p", profiles, TimesOf(D(2), count));
         return Dimensions(Eq(Call("T", PlusOf(n, D(1)), PlusOf(k, D(1))), sum));
+    }
+
+    private static Formula OriginalEqTwiceLowStatement()
+    {
+        var n = PlusOf(V("n"), D(1));
+        var k = PlusOf(V("k"), D(1));
+        var a = V("A");
+        var i = V("i");
+        var j = V("j");
+        var grid = Arrow(Call("Fin", PlusOf(n, D(1))),
+            Arrow(Call("Fin", PlusOf(k, D(1))), Call("Fin", D(4))));
+        var top = App(Qualified("Fin", "castSucc"), i);
+        var bottom = App(Qualified("Fin", "succ"), i);
+        var left = App(Qualified("Fin", "castSucc"), j);
+        var right = App(Qualified("Fin", "succ"), j);
+        Formula Entry(Formula row, Formula col) => App(Qualified("Fin", "val"), App(a, row, col));
+        var blockSum = PlusOf(PlusOf(PlusOf(Entry(top, left), Entry(top, right)),
+            Entry(bottom, left)), Entry(bottom, right));
+        var sumTwo = All("i", Call("Fin", n), All("j", Call("Fin", k), Eq(blockSum, D(2))));
+        var arrays = Seq(OpenBrace, a, Colon, Sp, grid, Sp, Mid, Sp, sumTwo, CloseBrace);
+        var count = Parenthesized(Seq(App(Qualified("Nat", "card"), arrays),
+            Colon, Sp, Mathbb, Grp(V("Z"))));
+        return Dimensions(Eq(Call("T", n, k), TimesOf(D(2), count)));
     }
 
     private static Formula TransposeStatement()
