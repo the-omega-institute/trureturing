@@ -1,6 +1,7 @@
 module
 
 public import Init.Data.SInt.Lemmas
+import all Init.Data.UInt.Lemmas
 
 namespace OmegaChecks.InitPort.Alternatives
 
@@ -1219,5 +1220,193 @@ public theorem UInt64.toUInt32_lt : type_of% @_root_.UInt64.toUInt32_lt := by
   apply Iff.trans _ _root_.UInt64.lt_iff_toNat_lt.symm
   rw [_root_.UInt64.toNat_toUInt32, _root_.UInt64.toNat_toUInt32, _root_.UInt64.toNat_mod, _root_.UInt64.toNat_mod,
     _root_.UInt64.toNat_ofNat_of_lt (Nat.pow_lt_pow_right (by decide : 1 < 2) (by decide : 32 < 64))]
+
+public theorem UInt32.toFin_ofNatClamp_of_le._proof_1 :
+    type_of% @_root_.UInt32.toFin_ofNatClamp_of_le._proof_1 :=
+  (Nat.sub_one_lt_of_lt (Nat.two_pow_pos 32))
+
+public theorem UInt64.toUSize_ofNatClamp_of_le._proof_1 :
+    type_of% @_root_.UInt64.toUSize_ofNatClamp_of_le._proof_1 :=
+  (Nat.sub_one_lt_of_lt (Nat.two_pow_pos System.Platform.numBits))
+
+public theorem UInt32.toBitVec_ofNatClamp_of_le._proof_1 :
+    type_of% @_root_.UInt32.toBitVec_ofNatClamp_of_le._proof_1 :=
+  (Nat.sub_one_lt_of_lt (Nat.two_pow_pos 32))
+
+public theorem UInt32.toUInt64_ofNatClamp_of_le._proof_1 :
+    type_of% @_root_.UInt32.toUInt64_ofNatClamp_of_le._proof_1 :=
+  Nat.lt_of_lt_of_le (Nat.sub_one_lt_of_lt (Nat.two_pow_pos 32)) (Nat.pow_le_pow_right Nat.zero_lt_two (by decide : 32 ≤ 64))
+
+public theorem UInt16.toBitVec_ofNatClamp_of_le._proof_1 :
+    type_of% @_root_.UInt16.toBitVec_ofNatClamp_of_le._proof_1 :=
+  (Nat.sub_one_lt_of_lt (Nat.two_pow_pos 16))
+
+public theorem USize.toFin_ofNatClamp_of_le._proof_1 :
+    type_of% @_root_.USize.toFin_ofNatClamp_of_le._proof_1 :=
+  (Nat.sub_one_lt_of_lt (Nat.two_pow_pos System.Platform.numBits))
+
+public theorem UInt64.toBitVec_ofNatClamp_of_le._proof_1 :
+    type_of% @_root_.UInt64.toBitVec_ofNatClamp_of_le._proof_1 :=
+  (Nat.sub_one_lt_of_lt (Nat.two_pow_pos 64))
+
+public theorem UInt64.toFin_ofNatClamp_of_le._proof_1 :
+    type_of% @_root_.UInt64.toFin_ofNatClamp_of_le._proof_1 :=
+  (Nat.sub_one_lt_of_lt (Nat.two_pow_pos 64))
+
+public theorem UInt32.toUInt16_ofNatClamp_of_le._proof_1 :
+    type_of% @_root_.UInt32.toUInt16_ofNatClamp_of_le._proof_1 :=
+  (Nat.sub_one_lt_of_lt (Nat.two_pow_pos 16))
+
+public theorem UInt64.toUInt32_ofNatClamp_of_le._proof_1 :
+    type_of% @_root_.UInt64.toUInt32_ofNatClamp_of_le._proof_1 :=
+  (Nat.sub_one_lt_of_lt (Nat.two_pow_pos 32))
+
+public theorem UInt16.toUInt64_ofNatClamp_of_le._proof_1 :
+    type_of% @_root_.UInt16.toUInt64_ofNatClamp_of_le._proof_1 :=
+  Nat.lt_of_lt_of_le (Nat.sub_one_lt_of_lt (Nat.two_pow_pos 16)) (Nat.pow_le_pow_right Nat.zero_lt_two (by decide : 16 ≤ 64))
+
+public theorem USize.toBitVec_ofNatClamp_of_le._proof_1 :
+    type_of% @_root_.USize.toBitVec_ofNatClamp_of_le._proof_1 :=
+  (Nat.sub_one_lt_of_lt (Nat.two_pow_pos System.Platform.numBits))
+
+public theorem UInt16.toFin_ofNatClamp_of_le._proof_1 :
+    type_of% @_root_.UInt16.toFin_ofNatClamp_of_le._proof_1 :=
+  (Nat.sub_one_lt_of_lt (Nat.two_pow_pos 16))
+
+public theorem USize.toUInt64_ofNatClamp_of_le._proof_1 :
+    type_of% @_root_.USize.toUInt64_ofNatClamp_of_le._proof_1 :=
+  Nat.lt_of_lt_of_le (Nat.sub_one_lt_of_lt (Nat.two_pow_pos System.Platform.numBits)) _root_.USize.size_le_uint64Size
+
+public theorem UInt16.toUInt32_ofNatClamp_of_le._proof_1 :
+    type_of% @_root_.UInt16.toUInt32_ofNatClamp_of_le._proof_1 :=
+  Nat.lt_of_lt_of_le (Nat.sub_one_lt_of_lt (Nat.two_pow_pos 16)) (Nat.pow_le_pow_right Nat.zero_lt_two (by decide : 16 ≤ 32))
+
+public theorem UInt16.ofNat_size : type_of% @_root_.UInt16.ofNat_size := by
+  apply _root_.UInt16.toNat.inj
+  rw [_root_.UInt16.toNat_ofNat', _root_.UInt16.toNat_zero]
+  exact Nat.mod_self _
+
+public theorem UInt32.ofNat_size : type_of% @_root_.UInt32.ofNat_size := by
+  apply _root_.UInt32.toNat.inj
+  rw [_root_.UInt32.toNat_ofNat', _root_.UInt32.toNat_zero]
+  exact Nat.mod_self _
+
+public theorem UInt64.ofNat_size : type_of% @_root_.UInt64.ofNat_size := by
+  apply _root_.UInt64.toNat.inj
+  rw [_root_.UInt64.toNat_ofNat', _root_.UInt64.toNat_zero]
+  exact Nat.mod_self _
+
+public theorem UInt32.toUInt16_div : type_of% @_root_.UInt32.toUInt16_div := by
+  intro a b ha hb
+  have bound (z : UInt32) (h : z < 65536) : z.toNat < 2 ^ 16 := by
+    have aux := _root_.UInt32.lt_iff_toNat_lt.mp h
+    rw [_root_.UInt32.toNat_ofNat_of_lt (Nat.pow_lt_pow_right (by decide : 1 < 2) (by decide : 16 < 32))] at aux
+    exact aux
+  apply _root_.UInt16.toNat.inj
+  rw [_root_.UInt32.toNat_toUInt16, _root_.UInt32.toNat_div, _root_.UInt16.toNat_div,
+    _root_.UInt32.toNat_toUInt16, _root_.UInt32.toNat_toUInt16]
+  exact Nat.div_mod_eq_mod_div_mod (bound a ha) (bound b hb)
+
+public theorem UInt32.toUInt16_mod : type_of% @_root_.UInt32.toUInt16_mod := by
+  intro a b ha hb
+  have bound (z : UInt32) (h : z < 65536) : z.toNat < 2 ^ 16 := by
+    have aux := _root_.UInt32.lt_iff_toNat_lt.mp h
+    rw [_root_.UInt32.toNat_ofNat_of_lt (Nat.pow_lt_pow_right (by decide : 1 < 2) (by decide : 16 < 32))] at aux
+    exact aux
+  apply _root_.UInt16.toNat.inj
+  rw [_root_.UInt32.toNat_toUInt16, _root_.UInt32.toNat_mod, _root_.UInt16.toNat_mod,
+    _root_.UInt32.toNat_toUInt16, _root_.UInt32.toNat_toUInt16]
+  exact Nat.mod_mod_eq_mod_mod_mod (bound a ha) (bound b hb)
+
+public theorem UInt64.toUInt16_div : type_of% @_root_.UInt64.toUInt16_div := by
+  intro a b ha hb
+  have bound (z : UInt64) (h : z < 65536) : z.toNat < 2 ^ 16 := by
+    have aux := _root_.UInt64.lt_iff_toNat_lt.mp h
+    rw [_root_.UInt64.toNat_ofNat_of_lt (Nat.pow_lt_pow_right (by decide : 1 < 2) (by decide : 16 < 64))] at aux
+    exact aux
+  apply _root_.UInt16.toNat.inj
+  rw [_root_.UInt64.toNat_toUInt16, _root_.UInt64.toNat_div, _root_.UInt16.toNat_div,
+    _root_.UInt64.toNat_toUInt16, _root_.UInt64.toNat_toUInt16]
+  exact Nat.div_mod_eq_mod_div_mod (bound a ha) (bound b hb)
+
+public theorem UInt64.toUInt16_mod : type_of% @_root_.UInt64.toUInt16_mod := by
+  intro a b ha hb
+  have bound (z : UInt64) (h : z < 65536) : z.toNat < 2 ^ 16 := by
+    have aux := _root_.UInt64.lt_iff_toNat_lt.mp h
+    rw [_root_.UInt64.toNat_ofNat_of_lt (Nat.pow_lt_pow_right (by decide : 1 < 2) (by decide : 16 < 64))] at aux
+    exact aux
+  apply _root_.UInt16.toNat.inj
+  rw [_root_.UInt64.toNat_toUInt16, _root_.UInt64.toNat_mod, _root_.UInt16.toNat_mod,
+    _root_.UInt64.toNat_toUInt16, _root_.UInt64.toNat_toUInt16]
+  exact Nat.mod_mod_eq_mod_mod_mod (bound a ha) (bound b hb)
+
+public theorem UInt64.toUInt32_div : type_of% @_root_.UInt64.toUInt32_div := by
+  intro a b ha hb
+  have bound (z : UInt64) (h : z < 4294967296) : z.toNat < 2 ^ 32 := by
+    have aux := _root_.UInt64.lt_iff_toNat_lt.mp h
+    rw [_root_.UInt64.toNat_ofNat_of_lt (Nat.pow_lt_pow_right (by decide : 1 < 2) (by decide : 32 < 64))] at aux
+    exact aux
+  apply _root_.UInt32.toNat.inj
+  rw [_root_.UInt64.toNat_toUInt32, _root_.UInt64.toNat_div, _root_.UInt32.toNat_div,
+    _root_.UInt64.toNat_toUInt32, _root_.UInt64.toNat_toUInt32]
+  exact Nat.div_mod_eq_mod_div_mod (bound a ha) (bound b hb)
+
+public theorem UInt64.toUInt32_mod : type_of% @_root_.UInt64.toUInt32_mod := by
+  intro a b ha hb
+  have bound (z : UInt64) (h : z < 4294967296) : z.toNat < 2 ^ 32 := by
+    have aux := _root_.UInt64.lt_iff_toNat_lt.mp h
+    rw [_root_.UInt64.toNat_ofNat_of_lt (Nat.pow_lt_pow_right (by decide : 1 < 2) (by decide : 32 < 64))] at aux
+    exact aux
+  apply _root_.UInt32.toNat.inj
+  rw [_root_.UInt64.toNat_toUInt32, _root_.UInt64.toNat_mod, _root_.UInt32.toNat_mod,
+    _root_.UInt64.toNat_toUInt32, _root_.UInt64.toNat_toUInt32]
+  exact Nat.mod_mod_eq_mod_mod_mod (bound a ha) (bound b hb)
+
+public theorem UInt64.toUSize_div : type_of% @_root_.UInt64.toUSize_div := by
+  intro a b ha hb
+  have bound (z : UInt64) (h : z < 4294967296) : z.toNat < 2 ^ 32 := by
+    have aux := _root_.UInt64.lt_iff_toNat_lt.mp h
+    rw [_root_.UInt64.toNat_ofNat_of_lt (Nat.pow_lt_pow_right (by decide : 1 < 2) (by decide : 32 < 64))] at aux
+    exact aux
+  exact _root_.UInt64.toUSize_div_of_toNat_lt a b (Nat.lt_of_lt_of_le (bound a ha) _root_.UInt32.size_le_usizeSize)
+    (Nat.lt_of_lt_of_le (bound b hb) _root_.UInt32.size_le_usizeSize)
+
+public theorem UInt64.toUSize_mod : type_of% @_root_.UInt64.toUSize_mod := by
+  intro a b ha hb
+  have bound (z : UInt64) (h : z < 4294967296) : z.toNat < 2 ^ 32 := by
+    have aux := _root_.UInt64.lt_iff_toNat_lt.mp h
+    rw [_root_.UInt64.toNat_ofNat_of_lt (Nat.pow_lt_pow_right (by decide : 1 < 2) (by decide : 32 < 64))] at aux
+    exact aux
+  exact _root_.UInt64.toUSize_mod_of_toNat_lt a b (Nat.lt_of_lt_of_le (bound a ha) _root_.UInt32.size_le_usizeSize)
+    (Nat.lt_of_lt_of_le (bound b hb) _root_.UInt32.size_le_usizeSize)
+
+public theorem UInt16.ofInt_neg_one : type_of% @_root_.UInt16.ofInt_neg_one := by
+  apply _root_.UInt16.toBitVec_inj.mp
+  rw [uint16_toBitVec_ofInt, _root_.UInt16.toBitVec_neg, _root_.BitVec.ofInt_neg]
+  exact congrArg Neg.neg ((uint16_toBitVec_ofInt 1).symm.trans
+    (congrArg _root_.UInt16.toBitVec _root_.UInt16.ofInt_one))
+
+public theorem UInt32.ofInt_neg_one : type_of% @_root_.UInt32.ofInt_neg_one := by
+  apply _root_.UInt32.toBitVec_inj.mp
+  rw [uint32_toBitVec_ofInt, _root_.UInt32.toBitVec_neg, _root_.BitVec.ofInt_neg]
+  exact congrArg Neg.neg ((uint32_toBitVec_ofInt 1).symm.trans
+    (congrArg _root_.UInt32.toBitVec _root_.UInt32.ofInt_one))
+
+public theorem UInt64.ofInt_neg_one : type_of% @_root_.UInt64.ofInt_neg_one := by
+  apply _root_.UInt64.toBitVec_inj.mp
+  rw [uint64_toBitVec_ofInt, _root_.UInt64.toBitVec_neg, _root_.BitVec.ofInt_neg]
+  exact congrArg Neg.neg ((uint64_toBitVec_ofInt 1).symm.trans
+    (congrArg _root_.UInt64.toBitVec _root_.UInt64.ofInt_one))
+
+public theorem USize.ofInt_one : type_of% @_root_.USize.ofInt_one := by
+  apply _root_.USize.toBitVec_inj.mp
+  rw [usize_toBitVec_ofInt, _root_.USize.toBitVec_ofNat 1]
+  exact _root_.BitVec.ofInt_natCast _ 1
+
+public theorem USize.ofInt_neg_one : type_of% @_root_.USize.ofInt_neg_one := by
+  apply _root_.USize.toBitVec_inj.mp
+  rw [usize_toBitVec_ofInt, _root_.USize.toBitVec_neg, _root_.BitVec.ofInt_neg]
+  exact congrArg Neg.neg ((usize_toBitVec_ofInt 1).symm.trans
+    (congrArg _root_.USize.toBitVec USize.ofInt_one))
 
 end OmegaChecks.InitPort.Alternatives
