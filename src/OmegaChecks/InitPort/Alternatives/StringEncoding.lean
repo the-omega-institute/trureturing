@@ -3,6 +3,8 @@ import all Init.Data.String.Decode
 import all Init.Data.String.Basic
 import all Init.Data.ByteArray.Lemmas
 import all Init.Data.BitVec.Lemmas
+import all Init.Data.Nat.Bitwise.Lemmas
+import all Init.Data.Nat.Mod
 
 /-! The leading and continuation byte ranges of UTF-8 code points. -/
 
@@ -17,6 +19,28 @@ public theorem BitVec.extractLsb'_append_eq_left : type_of% @_root_.BitVec.extra
   apply BitVec.toNat_inj.mp
   rw [BitVec.extractLsb'_toNat, BitVec.toNat_append, Nat.shiftRight_or_distrib,
     Nat.shiftLeft_shiftRight, Nat.shiftRight_eq_zero _ _ b.isLt, Nat.or_zero, Nat.mod_eq_of_lt a.isLt]
+
+public theorem Nat.testBit_mod_two_pow : type_of% @_root_.Nat.testBit_mod_two_pow := by
+  intro x j i
+  by_cases lt : i < j
+  · rw [decide_eq_true lt, Bool.true_and, Nat.testBit_eq_decide_div_mod_eq, Nat.testBit_eq_decide_div_mod_eq]
+    have power : 2 ^ j = 2 ^ i * 2 ^ (j - i) := by
+      rw [← Nat.pow_add, Nat.add_sub_of_le (Nat.le_of_lt lt)]
+    have dvd : 2 ∣ 2 ^ (j - i) := Nat.pow_dvd_pow 2 (Nat.sub_pos_of_lt lt)
+    rw [power, Nat.mod_mul_right_div_self, Nat.mod_mod_of_dvd _ dvd]
+  · rw [decide_eq_false lt, Bool.false_and]
+    exact Nat.testBit_lt_two_pow (Nat.lt_of_lt_of_le (Nat.mod_lt _ (Nat.two_pow_pos _))
+      (Nat.pow_le_pow_right (by decide) (Nat.le_of_not_lt lt)))
+
+public theorem Nat.bitwise_mod_two_pow : type_of% @_root_.Nat.bitwise_mod_two_pow := by
+  intro f x y n zero
+  apply Nat.eq_of_testBit_eq
+  intro i
+  rw [Nat.testBit_mod_two_pow, Nat.testBit_bitwise zero, Nat.testBit_bitwise zero,
+    Nat.testBit_mod_two_pow, Nat.testBit_mod_two_pow]
+  cases decide (i < n) with
+  | false => exact zero.symm
+  | true => rfl
 
 private theorem highestBits {i k tag mask : Nat} (low : i < 2 ^ k)
     (zero : mask % (2 ^ k) = 0) :
