@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/FiniteGroups/Gauss/TarnauceanuImage
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [tarnauceanu2026gauss, fasolatarnauceanu2023gauss]
+   anchors: [mathlib/module/Mathlib.Analysis.SpecificLimits.Basic, mathlib/module/Mathlib.Data.SetLike.Fintype, mathlib/module/Mathlib.Tactic.Positivity]
    utility: none
    digest: Cyclic-product Gauss values disprove simultaneous closedness and discreteness. -/
 
