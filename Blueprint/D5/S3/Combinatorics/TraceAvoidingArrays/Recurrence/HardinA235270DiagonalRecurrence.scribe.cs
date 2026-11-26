@@ -36,7 +36,9 @@ internal sealed class HardinA235270DiagonalRecurrenceDocument : IScribeDocumentD
                     + "and terms multiplied by 2, 3, 4, 6 or 8 under a two-index advance. The polynomial "
                     + "(X−1)(X²−2)(X²−3)(X²−4)(X²−6)(X²−8) annihilates the sum for the forward shift X. "
                     + "Its expansion gives the signed recurrence."))),
-            DescribeRole.Theorem);
+            DescribeRole.Theorem,
+            new OpenProblemResolutionClaim(
+                ProblemSlugRef.Create("hardin-a235270-diagonal-recurrence"), ResolutionKind.Proved));
     }
 
     private static Formula SignedRecurrence(Formula index, int[] coefficients)

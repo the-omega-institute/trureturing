@@ -10,6 +10,10 @@ $$\begin{aligned}&\forall n: \mathbb{N}, 1 \le n \implies\\(\operatorname{C}\lef
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinA235270DiagonalRecurrence.a235270_order11` (`✓ std3`). ∎
 
+*Resolves.* `Problems/hardin-a235270-diagonal-recurrence` (proved) by `D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinA235270DiagonalRecurrence.a235270_order11`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hardin-a235270-diagonal-recurrence","declaration_gid":"D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinA235270DiagonalRecurrence.a235270_order11","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* R. H. Hardin (2014). *OEIS A235270 — Constant-stress square arrays*. URL: <https://oeis.org/A235270>.
