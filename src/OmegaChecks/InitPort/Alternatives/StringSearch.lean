@@ -588,3 +588,30 @@ public theorem String.Slice.Pattern.ToBackwardSearcher.DefaultBackwardSearcher.f
   s.toSlice?.get!.copy.toList.any p
 
 end OmegaChecks.InitPort.Alternatives
+
+namespace OmegaChecks.InitPort.Alternatives
+
+public theorem String.contains_char_eq {c : Char} {s : String} :
+    String.Internal.containsImpl s c = decide (c ∈ s.toList) := rfl
+
+public theorem String.contains_bool_eq {p : Char → Bool} {s : String} :
+    String.Internal.anyImpl s p = s.toList.any p := rfl
+
+public theorem String.contains_prop_eq {p : Char → Prop} [DecidablePred p] {s : String} :
+    String.Internal.anyImpl s (fun c => decide (p c)) = s.toList.any (fun c => decide (p c)) := rfl
+
+public theorem String.contains_char_eq_contains_beq {c : Char} {s : String} :
+    String.Internal.containsImpl s c = String.Internal.anyImpl s (fun x => x == c) := by
+  change decide (c ∈ s.toList) = s.toList.any (fun x => x == c)
+  apply Bool.eq_iff_iff.mpr
+  apply decide_eq_true_iff.trans
+  refine (Iff.intro ?_ ?_).trans List.any_eq_true.symm
+  · intro h
+    exact ⟨c, h, decide_eq_true (Eq.refl c)⟩
+  · rintro ⟨x, hx, eq⟩
+    exact (of_decide_eq_true eq : x = c) ▸ hx
+
+public theorem String.contains_prop_eq_contains_decide {p : Char → Prop} [DecidablePred p] {s : String} :
+    String.Internal.anyImpl s p = String.Internal.anyImpl s (fun c => decide (p c)) := rfl
+
+end OmegaChecks.InitPort.Alternatives
