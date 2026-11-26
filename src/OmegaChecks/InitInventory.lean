@@ -792,6 +792,15 @@ def limitedOmniscienceOfSearch (search : type_of% @Example.find)
       rw [hit] at eq
       cases eq
 
+abbrev FamilyChoice := ∀ {α : Sort u} {β : α → Type}, (∀ x, Nonempty (β x)) → Nonempty (∀ x, β x)
+
+theorem familyChoiceOfStateBottom (bot : type_of% @Lean.Order.EST.bot) : FamilyChoice.{u} :=
+  fun {_} {β} inh =>
+    (Void.instNonempty (σ := Unit)).elim fun token => ⟨fun x =>
+      match @bot (β x) Unit Empty (inh x) token with
+      | .ok impossible _ => impossible.elim
+      | .error element _ => element⟩
+
 end InternalOrder
 
 namespace TwoWorlds
@@ -866,7 +875,7 @@ private def replayWitnesses (env : Environment) : IO Unit := do
       ``GrindOrder.excludedMiddleFromNotNot, ``GrindOrder.excludedMiddleFromLookahead,
       ``AbstractOrder.excludedMiddleOfTrichotomy, ``AbstractOrder.excludedMiddleOfLTTrichotomy,
       ``AbstractOrder.excludedMiddleOfTrichotomousTotal, ``AbstractOrder.excludedMiddleOfNegationTotal,
-      ``InternalOrder.limitedOmniscienceOfSearch,
+      ``InternalOrder.familyChoiceOfStateBottom, ``InternalOrder.limitedOmniscienceOfSearch,
       ``InternalOrder.funextOfCompletePointwiseOrder, ``InternalOrder.funextOfChainCompletePointwiseOrder,
       ``InternalOrder.funextOfPointwiseOrder, ``InternalOrder.propextOfImplicationOrder,
       ``InternalOrder.propextOfReverseImplicationOrder, ``InternalOrder.excludedMiddleOfFlatSuprema,
@@ -2128,6 +2137,9 @@ private def logicalConsequence? (owner name : Name) : Option (Name × Name) := d
   | `Init.Internal.Order.Basic, ``Lean.Order.fun_sup =>
     return (``OmegaChecks.InitBoundaries.InternalOrder.UniqueChoice,
       ``OmegaChecks.InitBoundaries.InternalOrder.uniqueChoiceOfFunSup)
+  | `Init.Internal.Order.Basic, ``Lean.Order.EST.bot =>
+    return (``OmegaChecks.InitBoundaries.InternalOrder.FamilyChoice,
+      ``OmegaChecks.InitBoundaries.InternalOrder.familyChoiceOfStateBottom)
   | `Init.Internal.Order.Basic, ``Lean.Order.CompleteLattice.sup =>
     return (``OmegaChecks.InitBoundaries.InternalOrder.UniqueChoice,
       ``OmegaChecks.InitBoundaries.InternalOrder.uniqueChoiceOfSup)
