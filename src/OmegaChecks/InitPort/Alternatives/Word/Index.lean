@@ -385,4 +385,57 @@ public theorem BitVec.getElem_rotateRight : type_of% @_root_.BitVec.getElem_rota
   if head : i < w - r % w then rw [ite_eq_left head, dite_eq_left head]; rfl
   else rw [ite_eq_right head, dite_eq_right head]; rfl
 
+public theorem BitVec.getMsbD_twoPow : type_of% @_root_.BitVec.getMsbD_twoPow := by
+  intro i j w
+  rw [_root_.BitVec.getMsbD_eq_getLsbD, BitVec.getLsbD_twoPow]
+  if supported : i < w then
+    rw [decide_eq_true supported, Bool.true_and, Bool.true_and]
+    apply Bool.eq_iff_iff.mpr
+    exact Bool.and_eq_true_iff.trans ((and_congr decide_eq_true_iff decide_eq_true_iff).trans
+      ((show (j < w ∧ i = w-1-j) ↔ j = w-i-1 by omega).trans decide_eq_true_iff.symm))
+  else rw [decide_eq_false supported, Bool.false_and, Bool.false_and, Bool.and_false]
+
+public theorem BitVec.and_twoPow : type_of% @_root_.BitVec.and_twoPow := by
+  intro w x i
+  apply _root_.BitVec.eq_of_getElem_eq
+  intro j hj
+  rw [_root_.BitVec.getElem_and, _root_.BitVec.getElem_twoPow]
+  if pick : x.getLsbD i = true then
+    rw [ite_eq_left pick, _root_.BitVec.getElem_twoPow]
+    if eq : j = i then
+      subst j
+      rw [← _root_.BitVec.getLsbD_eq_getElem hj, pick, Bool.true_and]
+    else rw [decide_eq_false eq, Bool.and_false]
+  else
+    rw [ite_eq_right pick, _root_.BitVec.getElem_zero]
+    if eq : j = i then
+      subst j
+      rw [← _root_.BitVec.getLsbD_eq_getElem hj, Bool.eq_false_iff.mpr pick, Bool.false_and]
+    else rw [decide_eq_false eq, Bool.and_false]
+
+public theorem BitVec.cpopNatRec_setWidth_of_le : type_of% @_root_.BitVec.cpopNatRec_setWidth_of_le := by
+  intro w pos v acc x bound
+  induction pos generalizing acc with
+  | zero => rfl
+  | succ i ih =>
+    rw [_root_.BitVec.cpopNatRec_succ, _root_.BitVec.cpopNatRec_succ, _root_.BitVec.getLsbD_setWidth,
+      decide_eq_true (show i < v from bound), Bool.true_and, ih (Nat.le_of_succ_le bound)]
+
+public theorem BitVec.toNat_cpop_setWidth_le_of_le : type_of% @_root_.BitVec.toNat_cpop_setWidth_le_of_le := by
+  intro w x n bound
+  rw [_root_.BitVec.toNat_cpop, _root_.BitVec.toNat_cpop, BitVec.cpopNatRec_setWidth_of_le _ (Nat.le_refl n)]
+  exact _root_.BitVec.cpopNatRec_le_of_pos_le bound
+
+public theorem BitVec.append_extractLsb'_of_lt : type_of% @_root_.BitVec.append_extractLsb'_of_lt := by
+  intro len w castEq x
+  apply _root_.BitVec.eq_of_getElem_eq
+  intro i hi
+  rw [_root_.BitVec.getElem_cast, BitVec.getElem_append]
+  if low : i < (len-1)*w then
+    rw [dite_eq_left low, _root_.BitVec.getElem_extractLsb', Nat.zero_add]
+    rfl
+  else
+    rw [dite_eq_right low, _root_.BitVec.getElem_extractLsb', Nat.add_sub_of_le (Nat.le_of_not_gt low)]
+    rfl
+
 end OmegaChecks.InitPort.Alternatives

@@ -164,4 +164,85 @@ public theorem BitVec.toFin_append : type_of% @_root_.BitVec.toFin_append := by
   intro m n x y
   exact Fin.eq_of_val_eq (_root_.BitVec.toNat_append ..)
 
+public theorem BitVec.toNat_signExtend : type_of% @_root_.BitVec.toNat_signExtend := by
+  intro w x v
+  if narrower : v ≤ w then
+    rw [_root_.BitVec.signExtend_eq_setWidth_of_le _ narrower,
+      Nat.sub_eq_zero_of_le (Nat.pow_le_pow_right Nat.zero_lt_two narrower)]
+    cases x.msb <;> exact (Nat.add_zero _).symm
+  else
+    have bound := Nat.pow_le_pow_right (n := 2) Nat.zero_lt_two (Nat.le_of_not_ge narrower)
+    cases sign : x.msb with
+    | false =>
+      rw [_root_.BitVec.signExtend_eq_setWidth_of_msb_false sign]
+      exact (Nat.add_zero _).symm
+    | true =>
+      rw [_root_.BitVec.signExtend_eq_not_setWidth_not_of_msb_true sign, _root_.BitVec.toNat_not,
+        _root_.BitVec.toNat_setWidth, Nat.mod_eq_of_lt (Nat.lt_of_lt_of_le (~~~x).isLt bound),
+        _root_.BitVec.toNat_not, _root_.BitVec.toNat_setWidth, Nat.mod_eq_of_lt (Nat.lt_of_lt_of_le x.isLt bound)]
+      have fit := x.isLt
+      change 2^v-1-(2^w-1-x.toNat) = x.toNat+(2^v-2^w)
+      omega
+
+public theorem BitVec.toFin_signExtend : type_of% @_root_.BitVec.toFin_signExtend := by
+  intro w v x
+  apply Fin.eq_of_val_eq
+  rw [_root_.BitVec.val_toFin, BitVec.toNat_signExtend, _root_.BitVec.toNat_setWidth, Fin.val_ofNat]
+  if narrower : v ≤ w then
+    rw [Nat.sub_eq_zero_of_le (Nat.pow_le_pow_right Nat.zero_lt_two narrower)]
+    cases x.msb <;> simp only [ite_self, Nat.add_zero]
+  else
+    have le := Nat.pow_le_pow_right (n := 2) Nat.zero_lt_two (Nat.le_of_not_ge narrower)
+    have fit := x.isLt
+    have bounded := Nat.lt_of_lt_of_le fit le
+    rw [Nat.mod_eq_of_lt bounded]
+    cases x.msb with
+    | false => exact (Nat.mod_eq_of_lt (show x.toNat+0 < 2^v by omega)).symm
+    | true => exact (Nat.mod_eq_of_lt (show x.toNat+(2^v-2^w) < 2^v by omega)).symm
+
+public theorem BitVec.toInt_append : type_of% @_root_.BitVec.toInt_append := by
+  intro n m x y
+  if nz : n = 0 then
+    subst n
+    rw [ite_eq_left (beq_iff_eq.mpr rfl), _root_.BitVec.append_of_zero_width x y rfl]
+    have castInt {a b : Nat} (h : a = b) (v : BitVec a) : (v.cast h).toInt = v.toInt := by cases h; rfl
+    exact castInt _ _
+  else
+    rw [ite_eq_right (fun h => nz (eq_of_beq h))]
+    have val : ((x ++ y).toNat : Int) = 2^m*(x.toNat : Int)+y.toNat := by
+      rw [_root_.BitVec.toNat_append, ← Nat.shiftLeft_add_eq_or_of_lt y.isLt, Nat.shiftLeft_eq,
+        Int.natCast_add, Int.natCast_mul, Int.natCast_pow, Int.mul_comm]
+      rfl
+    rw [_root_.BitVec.toInt_eq_msb_cond, BitVec.msb_append, ite_eq_right nz, val, _root_.BitVec.toInt_eq_msb_cond]
+    cases x.msb with
+    | false => rfl
+    | true =>
+      change _ - ((2^(n+m) : Nat) : Int) = _ * (_ - ((2^n : Nat) : Int)) + _
+      rw [Nat.pow_add, Int.natCast_mul, Int.natCast_pow, Int.natCast_pow, Int.mul_sub]
+      change _ - (2 : Int)^n * 2^m = 2^m * (x.toNat : Int) - 2^m * 2^n + y.toNat
+      rw [Int.mul_comm ((2 : Int)^n) (2^m)]
+      omega
+
+public theorem BitVec.toInt_append_zero : type_of% @_root_.BitVec.toInt_append_zero := by
+  intro n m x
+  rw [BitVec.toInt_append, _root_.BitVec.toNat_zero, Int.ofNat_zero, Int.add_zero]
+  if empty : n = 0 then
+    rw [ite_eq_left (beq_iff_eq.mpr empty), _root_.BitVec.toInt_zero, _root_.BitVec.toInt_of_zero_length empty,
+      Int.mul_zero]
+  else rw [ite_eq_right (fun h => empty (eq_of_beq h))]
+
+public theorem BitVec.toInt_zero_append : type_of% @_root_.BitVec.toInt_zero_append := by
+  intro n m x
+  rw [BitVec.toInt_append, _root_.BitVec.toInt_zero, Int.mul_zero, Int.zero_add]
+  if empty : m = 0 then rw [ite_eq_left empty, ite_eq_left (beq_iff_eq.mpr empty)]
+  else rw [ite_eq_right empty, ite_eq_right (fun h => empty (eq_of_beq h))]
+
+public theorem BitVec.toInt_shiftLeftZeroExtend : type_of% @_root_.BitVec.toInt_shiftLeftZeroExtend := by
+  intro w n x
+  have equals : x.shiftLeftZeroExtend n = x ++ 0#n := by
+    apply _root_.BitVec.eq_of_toNat_eq
+    rw [_root_.BitVec.toNat_shiftLeftZeroExtend, _root_.BitVec.toNat_append, _root_.BitVec.toNat_zero,
+      Nat.or_zero]
+  rw [equals, BitVec.toInt_append_zero, Int.mul_comm]
+
 end OmegaChecks.InitPort.Alternatives
