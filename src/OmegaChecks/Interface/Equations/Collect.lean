@@ -2,6 +2,7 @@ module
 
 public import OmegaChecks.InitPort.Alternatives.Collect
 import all OmegaChecks.InitPort.Alternatives.Collect
+import all OmegaChecks.InitPort.Alternatives.IteratorSlice
 import all Init.Data.Iterators.Consumers.Monadic.Collect
 import all Init.Data.Iterators.Combinators.Monadic.Take
 
@@ -60,5 +61,16 @@ public theorem Std.Iterators.Types.Take.Rel {α β : Type w} (m : Type w → Typ
     · rintro (hlt | ⟨heq, hp⟩)
       · exact Or.inl hlt
       · exact Or.inr ⟨heq, Or.inl hp⟩
+
+public theorem instSliceSizeListSliceData (α : Type u) :
+    @OmegaChecks.InitPort.Alternatives.instSliceSizeListSliceData α = @_root_.instSliceSizeListSliceData α := by
+  change Std.Slice.SliceSize.mk _ = Std.Slice.SliceSize.mk _
+  congr 1
+  funext s
+  change (match s.internalRepresentation.stop with
+    | none => s.internalRepresentation.list.length
+    | some n => min n s.internalRepresentation.list.length) = s.size
+  rw [ListSlice.size_eq_length_toList, ListSlice.toList_eq]
+  cases s.internalRepresentation.stop <;> simp [List.length_take]
 
 end OmegaChecks.Interface.Equations
