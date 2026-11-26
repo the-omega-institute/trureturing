@@ -540,6 +540,21 @@ private theorem funextFromEndomorphisms
   exact congrArg unpack (Subtype.ext (a1 := ⟨graph f, fun _ => rfl⟩)
     (a2 := ⟨graph g, fun _ => rfl⟩) graphEq)
 
+/-- Congruence under binding in the identity reader entails dependent function extensionality. -/
+theorem dependentFunextFromBindCongr (combine : type_of% @bind_congr.{max 1 u v,max 1 u v}) :
+    type_of% @funext.{u,v} :=
+  funextFromEndomorphisms (fun {_ _ _} h => funextFromBindCongr combine h)
+
+/-- Congruence of mapping over a reader entails dependent function extensionality. -/
+theorem dependentFunextFromMapCongr (combine : type_of% @map_congr.{max 1 u v,max 1 u v}) :
+    type_of% @funext.{u,v} :=
+  funextFromEndomorphisms (fun {_ _ _} h => funextFromMapCongr combine h)
+
+open Lean in
+run_cmd
+  for n in [``dependentFunextFromBindCongr, ``dependentFunextFromMapCongr] do
+    unless (← collectAxioms n).isEmpty do throwError "reader congruence witness {n} uses axioms"
+
 namespace RangeMap
 
 open Std.PRange
@@ -1170,6 +1185,10 @@ private def reductionPaths (official strict full : Environment) : NameMap (List 
 missing official interface in the completeness check. -/
 private def logicalConsequence? (owner name : Name) : Option (Name × Name) := do
   match owner, name with
+  | `Init.Control.Lawful.Basic, ``bind_congr =>
+    return (``funext, ``OmegaChecks.InitBoundaries.dependentFunextFromBindCongr)
+  | `Init.Control.Lawful.Basic, ``map_congr =>
+    return (``funext, ``OmegaChecks.InitBoundaries.dependentFunextFromMapCongr)
   | `Init.Data.Iterators.Lemmas.Consumers.Loop, ``Std.Iter.forIn_congr =>
     return (``funext, ``OmegaChecks.InitBoundaries.IteratorLoopCongruence.funextFromCongr)
   | `Init.Data.Iterators.Lemmas.Consumers.Loop, ``Std.Iter.forIn'_congr =>
