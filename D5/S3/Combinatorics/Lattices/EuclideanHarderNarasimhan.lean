@@ -181,7 +181,7 @@ open Module Submodule
 variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
 
 /-- An integral submodule of a lattice, regarded in the ambient real vector space. -/
-private def ambient (L : Submodule ℤ E) (M : Submodule ℤ L) : Submodule ℤ E :=
+def ambient (L : Submodule ℤ E) (M : Submodule ℤ L) : Submodule ℤ E :=
   M.map L.subtype
 
 /-- The real span of an integral submodule of a lattice. -/
@@ -189,7 +189,7 @@ def realSpan (L : Submodule ℤ E) (M : Submodule ℤ L) : Submodule ℝ E :=
   Submodule.span ℝ (ambient L M : Set E)
 
 /-- Saturation consists exactly of lattice points in the real span. -/
-private def saturation (L : Submodule ℤ E) (M : Submodule ℤ L) : Submodule ℤ L :=
+def saturation (L : Submodule ℤ E) (M : Submodule ℤ L) : Submodule ℤ L :=
   ((realSpan L M).restrictScalars ℤ).comap L.subtype
 
 /-- Real span is left adjoint to taking lattice points in a real subspace. -/
@@ -215,7 +215,7 @@ private theorem realSpan_saturation (L : Submodule ℤ E) (M : Submodule ℤ L) 
   (spanAdjunction L).l_u_l_eq_l M
 
 /-- Taking lattice points in a real span is an idempotent closure operation. -/
-private def closure (L : Submodule ℤ E) : ClosureOperator (Submodule ℤ L) :=
+def closure (L : Submodule ℤ E) : ClosureOperator (Submodule ℤ L) :=
   (spanAdjunction L).closureOperator
 
 /-- The saturated integral sublattices of the fixed ambient lattice. -/

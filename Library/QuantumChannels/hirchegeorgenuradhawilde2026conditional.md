@@ -10,6 +10,7 @@ strata_touched:
   - D5/S3/Quantum/Divergence/ConditionalHockeyStickOrthogonalReduction
   - D5/S3/Quantum/Divergence/CompleteHockeyStickRefutation
   - D5/S3/Quantum/Divergence/CompleteHockeyStickBasisSupport
+  - D5/S3/Quantum/Divergence/CompleteHockeyStickChoiSupport
   - D5/S3/Quantum/Divergence/FaithfulConditionalGap
   - D5/S3/Quantum/Divergence/UmegakiChannelSupportedExtension
   - D5/S3/Quantum/Divergence/UmegakiSupportedMoorePenrose
@@ -84,7 +85,33 @@ at least two computational basis states, intersect the supports of their
 outputs. If the intersection is zero, equal-marginal witnesses approach
 retention one with a reference of input dimension. The simplex uses Eriksson's
 common-support construction in §6 with input blocks calibrated directly for
-the fixed hockey-stick parameter. [Eriksson, v3](https://airr.science/papers/ARR-2026-564FZ70CSN83KACD/versions/v3/)
+the fixed hockey-stick parameter. A fixed-parameter CQ saturation
+statement also follows from Eriksson’s §§6.2–6.3 estimates. For $t>1$,
+completing the square in the two active input coordinates gives
+$E_t(\rho\Vert\sigma)\le4nt\beta/(t-1)$. His graph effect has
+$p\sim4n\beta$ and $q=o(\beta)$, so $p-tq$ gives a limiting ratio
+of at least $(t-1)/t$. For any fixed $\gamma>1$, mixing the first
+input toward the second by weight $(\gamma-1)/(t-1)$ on the first
+input preserves the ratio for $t\ge\gamma$. Sending $t$ to infinity
+gives the saturation statement. [Eriksson, v3](https://airr.science/papers/ARR-2026-564FZ70CSN83KACD/versions/v3/)
+
+`CompleteHockeyStickChoiSupport.result` proves unit complete contraction for
+each fixed $\gamma>1$ when the normalized Choi support of a finite channel
+contains no full reference factor over a nonzero output vector. A finite
+family of reference-unitary translates of the Choi state has zero common
+support. Computational-basis preparation of the corresponding Bell states
+transfers the ratios from the fixed-parameter simplex theorem while
+preserving the common reference marginal. Eriksson v3, Theorem 6.1, gives
+the Umegaki criterion for finite classical-input channels and provides the
+simplex mechanism used in the basis-support step.
+[Eriksson, v3](https://airr.science/papers/ARR-2026-564FZ70CSN83KACD/versions/v3/)
+
+The positive Doeblin bound in George, Hirche, Nuradha and Wilde,
+*Quantum Doeblin Coefficients: Interpretations and Applications*, v3,
+Definition 7 and Proposition 31, supplies the complementary literature
+bound for channels with a positive replacement component. Their §9.2
+Question 1 concerns the bound using the Hermitian Doeblin coefficient.
+[arXiv:2503.22823v3](https://arxiv.org/abs/2503.22823v3)
 
 ## Faithful-divergence separation
 
