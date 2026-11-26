@@ -2,6 +2,7 @@ module
 
 public import Init.Data.Range.Polymorphic.Iterators
 public import Init.Data.Iterators.Combinators.Monadic.Take
+public import Init.Data.Iterators.Lemmas.Consumers.Loop
 public import Init.Data.Range.Polymorphic.Instances
 public import Init.Data.Range.Polymorphic.Map
 
@@ -108,6 +109,22 @@ public theorem Std.Iterators.Types.Take.instFinite {α : Type u} {m : Type u →
   cases h with
   | inl hp => exact positive n hp inner
   | inr hf => exact finiteInner hf inner n (Or.inr hf)
+
+public theorem Std.Iter.isPlausibleStep_iff_step_eq : type_of% @_root_.Std.Iter.isPlausibleStep_iff_step_eq := by
+  intro α β _ _ _ it step
+  obtain ⟨actual, eqStep⟩ := LawfulDeterministicIterator.isPlausibleStep_eq_eq it.toIterM
+  constructor
+  · intro h
+    have chosen := it.step.property
+    change it.toIterM.IsPlausibleStep _ at chosen h
+    rw [eqStep] at chosen h
+    have eq : it.step.val.mapIterator Iter.toIterM = step.mapIterator Iter.toIterM := chosen.trans h.symm
+    have cancel (s : IterStep (Iter (α := α) β) β) :
+        (s.mapIterator Iter.toIterM).mapIterator IterM.toIter = s := by
+      cases s <;> rfl
+    exact (cancel _).symm.trans ((congrArg (IterStep.mapIterator IterM.toIter) eq).trans (cancel _))
+  · intro h
+    exact h ▸ it.step.property
 
 public theorem Std.IteratorLoop.wellFounded_of_productive.{w, v, x} :
     type_of% @_root_.Std.IteratorLoop.wellFounded_of_productive.{w, v, x} := by
