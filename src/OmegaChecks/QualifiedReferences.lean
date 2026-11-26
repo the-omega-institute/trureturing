@@ -1,0 +1,524 @@
+import Lean.Elab.Frontend
+import OmegaBuild.Commands.Origin
+
+/-! Correlate explicitly qualified source references with the compiler's indexed resolutions. -/
+
+open Lean
+
+namespace OmegaChecks.QualifiedReferences
+
+private def standardName? (stx : Syntax) : Option Name := do
+  let raw ← match stx with
+    | .ident _ _ n _ => some n
+    | .atom _ text => some text.toName -- A notation token may shadow an identifier.
+    | _ => none
+  let name := raw.eraseMacroScopes.replacePrefix `_root_ .anonymous
+  guard (name.getRoot == `OmegaMathlib && name != `OmegaMathlib)
+  return name
+
+private partial def declarationNames (stx : Syntax) (inSignature := false) (inValue := false)
+    (fromValue := false)
+    (acc : Array (Syntax × Bool) := #[]) : Array (Syntax × Bool) := Id.run do
+  let kind := stx.getKind
+  let signature := inSignature || [``Parser.Command.declSig, ``Parser.Command.optDeclSig,
+    ``Parser.Command.structFields, ``Parser.Command.ctor, ``Parser.Command.variable].contains kind
+  let value := inValue || [``Parser.Command.declValSimple, ``Parser.Command.declValEqns,
+    ``Parser.Command.whereStructInst].contains kind
+  if (signature || value) && (stx.isIdent || (standardName? stx).isSome) then
+    return acc.push (stx, signature || fromValue)
+  let inferred := stx.getArgs.any fun child =>
+    child.isOfKind ``Parser.Command.optDeclSig && child[1].isNone
+  return stx.getArgs.foldl (fun a c => declarationNames c signature value (fromValue || inferred) a) acc
+
+/-- `resolveName'` indexes a qualified constant and any trailing field projections at separate
+source ranges. Recover those same prefixes, longest first, without splitting escaped names. -/
+private def prefixes (stx : Syntax) : List Syntax :=
+  if stx.isIdent then
+    (List.range stx.getId.getNumParts).filterMap fun n => (stx.identComponents (some n)).head?
+  else [stx]
+
+private structure Port where
+  alias : Name
+  target : Name
+  owner : Name
+  upstreamOwner : Name
+
+private structure Ports where
+  aliases : NameMap Port := {}
+  objects : NameMap Port := {}
+  byLeaf : Std.HashMap String (Array Port) := {}
+  equivalents : NameMap Name := {}
+  allowNative : Bool := false
+
+private def Port.upstream (port : Port) : Port :=
+  {port with target := port.alias.replacePrefix `OmegaMathlib .anonymous, owner := port.upstreamOwner}
+
+private def Port.active (port : Port) (env : Environment) : Bool :=
+  (env.getModuleIdxFor? port.target).any (fun i => env.header.moduleNames[i]! == port.owner) &&
+    OmegaBuild.declaredIn env port.target port.owner
+
+/-- The source must import the port that actually exported this alias, even when
+a sibling in the catalog imports it or another module adds an alias of its own. -/
+private def Port.exportedBy (port : Port) (env : Environment) (provider : Name) : Bool :=
+  (env.getModuleIdx? provider).any fun idx =>
+    (aliasExtension.getModuleEntries env idx).any (fun (a, t) => a == port.alias && t == port.target)
+
+/-- Only alias entries owned by compiled, admitted port modules can confer standard identity. -/
+private def admittedPorts (env : Environment) (official : Bool) : IO Ports := do
+  let mut ports : Ports := {}
+  for mod in env.header.modules do
+    unless mod.module.getRoot == `OmegaMathlib do continue
+    let some idx := env.getModuleIdx? mod.module | continue
+    for (alias, target) in aliasExtension.getModuleEntries env idx do
+      unless alias.getRoot == `OmegaMathlib do continue
+      let some idx := env.getModuleIdxFor? target | throw <| IO.userError s!"unknown port target {target}"
+      let owner := env.header.moduleNames[idx]!
+      let expected := alias.replacePrefix `OmegaMathlib (if official then .anonymous else `Omega)
+      let expectedOwner := if official then mod.module.replacePrefix `OmegaMathlib `Mathlib else mod.module
+      unless owner == expectedOwner && target == expected do
+        throw <| IO.userError s!"{alias} in {mod.module} exports {target} from {owner}, expected {expected} from {expectedOwner}"
+      let port := { alias, target, owner, upstreamOwner := mod.module.replacePrefix `OmegaMathlib `Mathlib : Port }
+      ports := { ports with aliases := ports.aliases.insert alias port }
+      let .str _ leaf := alias | continue
+      -- Raw uses of an admitted object have the same identity under a sibling catalog
+      -- and an isolated replay. Source permission to use an overload is checked below.
+      let candidates := if official then [port] else [port, port.upstream]
+      for candidate in candidates do
+        if !candidate.active env || !(env.find? candidate.target).any (!·.isTheorem) then continue
+        ports := { ports with
+          objects := ports.objects.insert candidate.target candidate
+          byLeaf := ports.byLeaf.alter leaf fun entries => some ((entries.getD #[]).push candidate) }
+  return ports
+
+private def matchingPort? (env catalog : Environment) (ports : Ports) (spelling actual : Name) : Option Name := do
+  let .str _ leaf := spelling | none
+  let project ← env.find? actual
+  (ports.byLeaf.getD leaf #[]).findSome? fun port => do
+    let standard ← catalog.find? port.target
+    guard (project.levelParams.length == standard.levelParams.length)
+    let type := standard.type.instantiateLevelParams standard.levelParams (project.levelParams.map Level.param)
+    guard (Kernel.isDefEqGuarded env {} project.type type)
+    return port.alias
+
+/-- An independently implemented representation may reduce to the same expression on
+one backend. A port alias also has a transparent definition dependency on that port. -/
+private def usesPort (env : Environment) (value : Expr) (target : Name) : Bool := Id.run do
+  let mut pending := value.getUsedConstants
+  let mut seen : NameSet := {}
+  while !pending.isEmpty do
+    let name := pending.back!
+    pending := pending.pop
+    if name == target then return true
+    if seen.contains name then continue
+    seen := seen.insert name
+    if let some (.defnInfo info) := env.find? name then
+      pending := pending ++ info.value.getUsedConstants
+  return false
+
+/-- Instantiate universes from the compiled type, then let the kernel decide whether the
+transparent project definition and the admitted constant are definitionally equal. -/
+private def indexEquivalentObjects (env : Environment) (ports : Ports) (project : NameSet) : MetaM Ports := do
+  let mut equivalents := ports.objects.foldl (init := ({} : NameMap Name)) fun map name port => map.insert name port.alias
+  let mut byType : Std.HashMap Expr (Array (Expr × Name)) := {}
+  for owner in env.header.moduleNames, data in env.header.moduleData do
+    unless project.contains owner || [`OmegaMath, `D5].contains owner.getRoot do continue
+    for name in data.constNames do
+      let some (.defnInfo info) := env.find? name | continue
+      unless byType.contains info.type do
+        let mut candidates := #[]
+        for (_, port) in ports.objects.toList do
+          let candidate? ← withoutModifyingState do
+            let candidate ← Meta.mkConstWithFreshMVarLevels port.target
+            unless ← Meta.withTransparency .all <| Meta.isDefEq info.type (← Meta.inferType candidate) do return none
+            let candidate ← instantiateMVars candidate
+            if candidate.hasMVar then return none
+            return some candidate
+          if let some candidate := candidate? then candidates := candidates.push (candidate, port.alias)
+        byType := byType.insert info.type candidates
+      for (candidate, alias) in byType[info.type]! do
+        if Kernel.isDefEqGuarded env {} info.value candidate && usesPort env info.value candidate.constName! then
+          equivalents := equivalents.insert name alias
+          break
+  return {ports with equivalents}
+
+private def sensitive? (catalog : Environment) (ports : Ports) (project : NameSet)
+    (name : Name) : Option Name := do
+  guard (!(ports.allowNative && ports.objects.contains name))
+  if let some port := ports.equivalents.find? name then return port
+  let idx ← catalog.getModuleIdxFor? name
+  guard (project.contains catalog.header.moduleNames[idx]!)
+  matchingPort? catalog catalog ports name name
+
+/-- Proof definitions are governed by their statements. Inspect the complete value of data and predicates. -/
+private def objectValue? (env : Environment) (info : ConstantInfo) : Option Expr := do
+  guard (!info.isTheorem && !(Kernel.check env {} info.type).toOption.any (Kernel.isDefEqGuarded env {} (mkSort .zero)))
+  info.value? (allowOpaque := true)
+
+/-- Proof arguments do not make their private implementation dependencies observable. -/
+private def computationalRefs (value : Expr) : MetaM (Array Name) := do
+  let (_, refs) ← StateT.run (s := #[]) <| Meta.transform (m := StateT (Array Name) MetaM) value
+    (pre := fun e => do
+      if ← Meta.isProof e then return .done e
+      match e with
+      | .const n _ | .proj n .. => modify (·.push n)
+      | _ => pure ()
+      return .continue)
+  return refs
+
+/-- The source declaration for a public computation can be private or compiler-generated.
+Follow non-proof implementations in this module once, including hidden opaque bodies. -/
+private def publicUses (moduleName : Name) (data : ModuleData) (catalog : Environment) (ports : Ports)
+    (project : NameSet) : MetaM (Array Name × NameSet) := do
+  let mut pending := data.constNames.filter fun n => !isPrivateName n && !n.isInternalOrNum && !n.hasMacroScopes
+  let roots := pending.foldl (init := ({} : NameSet)) fun names n => names.insert n
+  let hiddenLocal := fun n => !roots.contains n &&
+    (catalog.getModuleIdxFor? n).any (fun idx => catalog.header.moduleNames[idx]! == moduleName)
+  let mut reachable : NameSet := {}
+  let mut sensitive := #[]
+  while !pending.isEmpty do
+    let name := pending.back!
+    pending := pending.pop
+    if reachable.contains name then continue
+    reachable := reachable.insert name
+    let some info := catalog.find? name | continue
+    let mut refs := info.type.getUsedConstants
+    if let some value := objectValue? catalog info then refs := refs ++ value.getUsedConstants
+    if refs.any (fun n => (sensitive? catalog ports project n).isSome) then
+      sensitive := sensitive.push name
+    unless refs.any hiddenLocal do continue
+    let mut deps := info.type.getUsedConstants
+    if let some value := objectValue? catalog info then
+      if value.getUsedConstants.any hiddenLocal then deps := deps ++ (← computationalRefs value)
+    for n in deps do
+      if !hiddenLocal n || reachable.contains n then continue
+      let some dep := catalog.find? n | continue
+      if (objectValue? catalog dep).isSome then pending := pending.push n
+  return (sensitive, reachable)
+
+/-- The index locates the constant at the head of a proof. Preserve the whole application
+(including dot receivers, inferred arguments and universe annotations) when marking it. -/
+private partial def proofApplications (stx : Syntax) (out : Std.HashMap Nat Lean.Syntax.Range := {})
+    (application : Option Lean.Syntax.Range := none) : Std.HashMap Nat Lean.Syntax.Range := Id.run do
+  let kind := stx.getKind
+  let span := application.orElse fun _ => stx.getRange?
+  if stx.isIdent then
+    let some span := span | return out
+    return (prefixes stx ++ stx.identComponents.tail).foldl (init := out) fun m part =>
+      if let some r := part.getRange? then m.insert r.stop.byteIdx span else m
+  let head := if kind == ``Parser.Term.app || kind == ``Parser.Term.explicitUniv then some 0
+              else if kind == ``Parser.Term.explicit || kind == ``Parser.Term.paren then some 1
+              else if kind == ``Parser.Term.proj then some 2 else none
+  let mut out := out
+  for i in [:stx.getNumArgs] do
+    out := proofApplications stx[i] out (if head == some i then span else none)
+  return out
+
+/-- A proposition introduced by the replay is authenticated only for the actual
+application of its indexed theorem. The proof arguments remain independently visible. -/
+private def reflectedApplication? (env : Environment) (reflected : NameMap Name) (e : Expr) : Option (Name × Expr × Expr) := do
+  let .const marker _ := e.getAppFn | none
+  let target ← reflected.find? marker
+  let #[p, proof] := e.getAppArgs | none
+  if proof.getAppFn.isConstOf target then return (marker, p, proof)
+  -- The frontend can lift the actual theorem application into a private auxiliary proof.
+  let .const aux levels := proof.getAppFn | none
+  guard (isPrivateName aux && (env.getModuleIdxFor? aux).isNone)
+  let .thmInfo info ← env.find? aux | none
+  let app := (info.value.instantiateLevelParams info.levelParams levels).beta proof.getAppArgs
+  guard (app.getAppFn.isConstOf target)
+  return (marker, p, app)
+
+private partial def visibleConstants (env : Environment) (reflected : NameMap Name) (e : Expr) : Array Name :=
+  if reflected.isEmpty then e.getUsedConstants else
+  let stripped := e.replace fun sub => do
+    let (_, _, proof) ← reflectedApplication? env reflected sub
+    return proof
+  if stripped == e then e.getUsedConstants else visibleConstants env reflected stripped
+
+/-- Restore exactly the marked reference positions. A theorem can contribute its type through
+implicit arguments. The kernel may also extract proofs in the enclosing data body differently. -/
+private partial def restoreReplay (env originalEnv : Environment) (markers : NameMap Name)
+    (reflected : NameMap Name) (value : Bool) (e old : Expr) : Expr := Id.run do
+  if e == old then return e
+  if let some (marker, p, proof) := reflectedApplication? env reflected e then
+    let direct := if markers.contains marker then proof else p
+    let recovered := restoreReplay env originalEnv markers reflected value direct old
+    if recovered == old then return old
+    if !recovered.hasLooseBVars && !old.hasLooseBVars &&
+        Kernel.isDefEqGuarded originalEnv {} recovered old then return old
+  if let .const n ls := e then
+    if !reflected.contains n then
+      if let some target := markers.find? n then return mkConst target ls
+  if value && !reflected.isEmpty && !e.hasLooseBVars && !old.hasLooseBVars then
+    if let .ok p := Kernel.check env {} e then
+      if let .ok q := Kernel.check originalEnv {} old then
+        if (Kernel.check originalEnv {} q).toOption == some (mkSort .zero) then
+          if Kernel.isDefEqGuarded env {} p q then return old
+  let visit := restoreReplay env originalEnv markers reflected value
+  match e, old with
+  | .app f a, .app g b => return e.updateApp! (visit f g) (visit a b)
+  | .lam _ d b _, .lam _ d' b' _ => return e.updateLambdaE! (visit d d') (visit b b')
+  | .forallE _ d b _, .forallE _ d' b' _ => return e.updateForallE! (visit d d') (visit b b')
+  | .letE _ t v b _, .letE _ t' v' b' _ => return e.updateLetE! (visit t t') (visit v v') (visit b b')
+  | .proj _ _ b, .proj _ _ b' => return e.updateProj! (visit b b')
+  | .mdata _ b, .mdata _ b' => return e.updateMData! (visit b b')
+  | _, _ => return e
+
+/-- Replace only authenticated identifier tokens with fresh references to the same objects.
+A named reference preserves Lean's explicit application, universe and projection syntax. -/
+private def checkElaborated (source : System.FilePath) (text : String)
+    (commands : Array Syntax) (env : Environment) (opts : Options) (names : Array Name) (isModule : Bool)
+    (marks proofs : Array (Lean.Syntax.Range × Name)) (catalog : Environment) (ports : Ports) (project : NameSet) : IO Unit := do
+  let prefixName := s!"OmegaCheckedReference{← IO.rand 1 4294967295}".toName
+  if text.contains prefixName.toString then throw <| IO.userError "fresh reference marker collision"
+  let mut edits : Array (Lean.Syntax.Range × String) := #[]
+  let mut markers : NameMap Name := {}
+  let mut targets : NameMap Name := {}
+  let mut reflected : NameMap Name := {}
+  for (span, target) in marks.toList.eraseDups.mergeSort (fun a b => a.1.start.byteIdx ≤ b.1.start.byteIdx) do
+    let marker := (targets.find? target).getD (.str prefixName s!"ref{markers.toList.length}")
+    unless targets.contains target do
+      if env.contains marker || catalog.contains marker then throw <| IO.userError "fresh reference marker collision"
+      let some cmd := commands.find? (fun c => c.getRange?.any fun r => r.start ≤ span.start && span.stop ≤ r.stop)
+        | throw <| IO.userError s!"unlocated source reference to {target}"
+      let some pos := cmd.getPos? | throw <| IO.userError s!"unlocated declaration for {target}"
+      let some obj := catalog.find? target | throw <| IO.userError s!"missing compiled object {target}"
+      let levels := (List.range obj.numLevelParams).map fun i => s!"omegaLevel{i}"
+      let univs := if levels.isEmpty then "" else ".{" ++ String.intercalate "," levels ++ "}"
+      let vis := if isModule then "public " else ""
+      let comp := if isNoncomputable catalog target then "noncomputable " else ""
+      let decl := s!"\n{vis}{comp}abbrev _root_.{marker}{univs} := @_root_.{target}{univs}\n"
+      edits := edits.push (⟨pos, pos⟩, decl)
+      markers := markers.insert marker target
+      targets := targets.insert target marker
+    edits := edits.push (span, s!"_root_.{marker}")
+  for (span, target) in proofs.toList.eraseDups do
+    let marker := .str prefixName s!"proof{reflected.toList.length}"
+    let typeName := marker ++ `proposition
+    let vis := if isModule then "public " else ""
+    let decl := s!"\n{vis}abbrev _root_.{typeName} (p : Prop) (_ : p) : Prop := p\n" ++
+                s!"{vis}theorem _root_.{marker} " ++ "{p : Prop} " ++ s!"(h : p) : _root_.{typeName} p h := h\n"
+    let some cmd := commands.find? (fun c => c.getRange?.any fun r => r.start ≤ span.start && span.stop ≤ r.stop)
+      | throw <| IO.userError s!"unlocated theorem reference to {target}"
+    let some pos := cmd.getPos? | throw <| IO.userError s!"unlocated theorem reference to {target}"
+    edits := edits.push (⟨pos, pos⟩, decl)
+    edits := edits.push (⟨span.start, span.start⟩, s!"(@_root_.{marker} _ (")
+    edits := edits.push (⟨span.stop, span.stop⟩, "))")
+    markers := markers.insert marker target
+    reflected := (reflected.insert marker target).insert typeName target
+  let mut marked := text
+  for (span, replacement) in edits.toList.mergeSort (fun a b => b.1.start.byteIdx ≤ a.1.start.byteIdx) do
+    marked := (0 : String.Pos.Raw).extract marked span.start ++ replacement ++ span.stop.extract marked marked.rawEndPos
+  let ictx := Parser.mkInputContext marked source.toString
+  let (_, parserState, messages) ← Parser.parseHeader ictx
+  let state ← Elab.IO.processCommands ictx parserState (Elab.Command.mkState env messages opts)
+  for msg in state.commandState.messages.toList do
+    if msg.severity == .error then throw <| IO.userError s!"cannot verify source identity in {source}: {← msg.toString}"
+  for name in names do
+    let some info := state.commandState.env.find? name | throw <| IO.userError s!"missing source declaration {name}"
+    let check (expr original : Expr) (value := false) := do
+      unless restoreReplay state.commandState.env catalog markers reflected value expr original == original do
+        throw <| IO.userError s!"{source}: could not recover the compiled expression of {name} after checking its reference positions"
+      for n in visibleConstants state.commandState.env reflected expr do
+        if let some standard := sensitive? catalog ports project n then
+          throw <| IO.userError s!"{source}: {name} exposes {n} without an explicit source reference to {standard} or its qualified project identity at that occurrence"
+    let some original := catalog.find? name | throw <| IO.userError s!"missing compiled declaration {name}"
+    check info.type original.type
+    if let some value := objectValue? catalog original then
+      let some markedValue := info.value? (allowOpaque := true) | throw <| IO.userError s!"missing marked value for {name}"
+      check markedValue value true
+
+/-- The parsed declaration syntax excludes imports, comments and string contents.
+The trace-verified .ilean supplies the resolution at this exact source token on this backend. -/
+private def checkFile (moduleName : Name) (source index : System.FilePath)
+    (catalog : Environment) (ports : Ports) (project : NameSet) (scanOnly : Bool) : IO (Option Nat) := do
+  let text ← IO.FS.readFile source
+  let ictx := Parser.mkInputContext text source.toString
+  let (header, parserState, messages) ← Parser.parseHeader ictx
+  let refs ← Server.Ilean.load index
+  unless refs.module == moduleName do throw <| IO.userError s!"{index} is for {refs.module}, expected {moduleName}"
+  let relevantRefs := refs.references.toList.any fun (id, info) => Id.run do
+    let .const owner name := id | return false
+    if info.usages.isEmpty then return false
+    if !ports.allowNative && ports.objects.contains name.toName then return true
+    unless project.contains owner.toName do return false
+    if let .str _ leaf := name.toName then
+      if ports.byLeaf.contains leaf then return true
+    return info.usages.any fun loc => Id.run do
+      let range := ictx.fileMap.lspRangeToUtf8Range loc.range
+      let raw := range.start.extract text range.stop
+      let .str _ leaf := raw.toName | return false
+      return ports.byLeaf.contains leaf
+  let (data, _) ← readModuleData (← findOLean moduleName)
+  let (published, reachable) ← (publicUses moduleName data catalog ports project).run' |>.toIO'
+    {fileName := source.toString, fileMap := ictx.fileMap} {env := catalog}
+  if published.isEmpty && !relevantRefs && !(parserState.pos.extract text text.rawEndPos).contains "OmegaMathlib" then
+    return none
+  if scanOnly then return some 0
+  let opts := ({} : Options).setBool `relaxedAutoImplicit false
+  let (env, messages) ← Elab.processHeader header opts messages ictx (mainModule := moduleName) (leakEnv := true)
+  for msg in messages.toList do
+    if msg.severity == .error then throw <| IO.userError (← msg.toString)
+  let state ← Elab.IO.processCommands ictx parserState (Elab.Command.mkState env messages opts)
+  if state.commandState.messages.hasErrors then
+    for msg in state.commandState.messages.toList do
+      if msg.severity == .error then throw <| IO.userError (← msg.toString)
+    throw <| IO.userError s!"failed to recover declaration syntax for {moduleName}"
+  let tokens := state.commands.foldl (fun acc c => declarationNames c false false false acc) #[]
+  let key := fun (r : Lsp.Range) => (r.start.line, r.start.character, r.end.line, r.end.character)
+  let mut locations : Std.HashMap (Nat × Nat × Nat × Nat) (List (Lsp.RefIdent × String)) := {}
+  for (id, info) in refs.references.toList do
+    for loc in info.usages do
+      locations := locations.alter (key loc.range) (fun entries => some ((id, loc.parentDecl) :: entries.getD []))
+  let mut count := 0
+  let mut marks := #[]
+  let mut proofs := #[]
+  let applications := state.commands.foldl (fun m cmd => proofApplications cmd m) {}
+  let mut markedParents : NameSet := {}
+  let sourceEnv := env
+  let env := state.commandState.env
+  for (token, signature) in tokens do
+    -- The compiler indexes dot notation at the field token as well as the receiver.
+    let spans := prefixes token ++ (if token.isIdent then token.identComponents.tail else [])
+    let parts := spans.filterMap fun stx =>
+      stx.getRange?.map fun r => (stx, ictx.fileMap.utf8RangeToLspRange r)
+    let some alias := standardName? token | do
+      for (part, pos) in parts do
+        for (id, parent) in locations.getD (key pos) [] do
+          let .const owner name := id | continue
+          if isPrivateName parent.toName && !reachable.contains parent.toName then continue
+          unless signature || (env.find? parent.toName).any (fun info => (objectValue? env info).isSome) do continue
+          let actual := name.toName
+          if project.contains owner.toName && owner.toName != moduleName &&
+              published.contains parent.toName then
+            if let some (.thmInfo theoremInfo) := catalog.find? actual then
+              if theoremInfo.type.getUsedConstants.any (fun n => (sensitive? catalog ports project n).isSome) &&
+                  OmegaBuild.declaredIn env actual owner.toName && (locations.getD (key pos) []).map Prod.fst == [.const owner name] then
+                if let some r := part.getRange? then
+                  if let some app := applications[r.stop.byteIdx]? then proofs := proofs.push (app, actual)
+          if let some port := ports.objects.find? actual then
+            if port.owner == owner.toName then
+              if ports.allowNative then continue
+              throw <| IO.userError s!"{source}:{pos.start.line+1}:{pos.start.character+1}: {parent} uses {actual} from {owner}; qualify this identifier as {port.alias}"
+          let spelling := part.getId.eraseMacroScopes
+          if project.contains owner.toName &&
+              (spelling == `_root_ ++ actual || (spelling == actual && !actual.getPrefix.isAnonymous)) &&
+              (matchingPort? env catalog ports spelling actual).isSome &&
+              !ports.equivalents.contains actual then
+            if let some span := part.getRange? then marks := marks.push (span, actual)
+          if project.contains owner.toName && spelling != `_root_ ++ actual &&
+              !(spelling == actual && !actual.getPrefix.isAnonymous) then
+            if let some candidate := matchingPort? env catalog ports spelling actual then
+              throw <| IO.userError s!"{source}:{pos.start.line+1}:{pos.start.character+1}: {parent} uses {actual} from {owner}; qualify the project reference as _root_.{actual} or use the admitted {candidate}"
+      continue
+    count := count + 1
+    let resolved := parts.findSome? fun (stx, pos) => do
+      let name ← standardName? stx
+      return (← ports.aliases.find? name, pos, stx)
+    let some (port, pos, id) := resolved | throw <| IO.userError s!"unknown standard reference {alias} in {moduleName}"
+    let entries := locations.getD (key pos) []
+    let standard := port.upstream
+    let mixed := port.target != standard.target && standard.exportedBy env `OmegaBuild.Mathlib
+    let candidates := if mixed then [port, standard] else [port]
+    let provider := port.upstreamOwner.replacePrefix `Mathlib `OmegaMathlib
+    let endpoint := candidates.find? fun candidate =>
+      entries.map Prod.fst == [.const candidate.owner.toString candidate.target.toString] && candidate.active env
+    let some endpoint := endpoint.filter (fun _ => port.exportedBy env provider && port.active env) | do
+      let other := if mixed then s!" or {standard.target} in {standard.owner}" else ""
+      throw <| IO.userError s!"{source}:{pos.start.line+1}:{pos.start.character+1}: {alias} requires {port.target} in {port.owner}{other} at this occurrence"
+    let some span := id.getRange? | throw <| IO.userError s!"missing source range for {alias}"
+    for (_, parent) in entries do
+      let some info := env.find? parent.toName | continue
+      unless reachable.contains info.name && (signature || (objectValue? env info).isSome) do continue
+      markedParents := markedParents.insert info.name
+      if (env.find? endpoint.target).any (·.isTheorem) then
+        if let some app := applications[span.stop.byteIdx]? then proofs := proofs.push (app, endpoint.target)
+      else
+        marks := marks.push (span, endpoint.target)
+  let published := markedParents.foldl (fun names n => if names.contains n then names else names.push n) published
+  unless published.isEmpty do
+    checkElaborated source text state.commands sourceEnv opts published data.isModule marks proofs catalog ports project
+  return some count
+
+private structure ReferenceFile where
+  moduleName : String
+  source : String
+  index : String
+  mathlibOnly : Bool
+  deriving FromJson
+
+private structure ReplayPlan where
+  files : Array String
+  portModules : Array String
+  deriving FromJson, ToJson
+
+/-- The scan uses exactly the same compiled declarations and identifier test as a replay. -/
+private unsafe def runChecks (backend path : String) (files : Array ReferenceFile)
+    (portModules : List String) (scanOnly : Bool) (only : Option String := none) : IO (Nat × ReplayPlan) := do
+  searchPathRef.set (System.SearchPath.parse path)
+  let mut count := 0
+  let mut replay := #[]
+  enableInitializersExecution
+  let selected := files.filter fun file => only.all (· == file.moduleName)
+  if only.isSome && selected.size != 1 then throw <| IO.userError s!"expected one manifest entry for {only}"
+  let modules := (portModules ++ selected.toList.map (·.moduleName)).eraseDups
+  let catalog ← importModules (modules.toArray.map fun name => {module := name.toName, importAll := true}) {}
+  let ports ← admittedPorts catalog (backend == "official")
+  let project := files.foldl (init := ({} : NameSet)) fun names file => names.insert file.moduleName.toName
+  let ports ← (indexEquivalentObjects catalog ports project).run' |>.toIO'
+    {fileName := "<standard object identity>", fileMap := default} {env := catalog}
+  for file in selected do
+    let name := file.moduleName
+    if file.mathlibOnly && backend != "official" then
+      throw <| IO.userError s!"Mathlib-only module {name} cannot have strict references"
+    enableInitializersExecution
+    let some n ← checkFile name.toName file.source file.index catalog
+        { ports with allowNative := file.mathlibOnly } project scanOnly | do
+      if only.isSome then throw <| IO.userError s!"compiled replay selection changed for {name}"
+      continue
+    if scanOnly then replay := replay.push name else count := count + n
+  let portOwners := catalog.header.moduleNames.filter (·.getRoot == `OmegaMathlib)
+  return (count, { files := replay, portModules := portOwners.map (·.toString) })
+
+local elab "checkerSourcePath%" : term => return toExpr (← getFileName)
+
+/-- Every replay imports just its compiled module and the admitted ports. The catalog used to
+select the full worklist has already exited before the first replay starts. -/
+private def worker {α : Type} [FromJson α] (stage : String) (args : List String) : IO α :=
+  IO.FS.withTempFile fun _ resultFile => do
+    let result ← try IO.Process.output {
+        cmd := (← IO.appPath).toString
+        args := #["--run", checkerSourcePath%, "--result", resultFile.toString] ++ args.toArray }
+      catch err => throw <| IO.userError s!"{stage} could not start: {err}"
+    let status := s!"{stage} (exit {result.exitCode})"
+    unless result.exitCode == 0 do throw <| IO.userError s!"{status}: {result.stderr}{result.stdout}"
+    let text ← try IO.FS.readFile resultFile
+      catch err => throw <| IO.userError s!"{status}: cannot read worker result: {err}"
+    IO.ofExcept <| (Json.parse text >>= fromJson?).mapError fun err => s!"{status}: invalid worker result: {err}"
+
+end OmegaChecks.QualifiedReferences
+
+open OmegaChecks.QualifiedReferences in
+unsafe def main (args : List String) : IO Unit := do
+  let (resultFile, only, input) := match args with
+    | "--result" :: file :: "--scan" :: rest => (some file, none, rest)
+    | "--result" :: file :: "--replay" :: name :: rest => (some file, some name, rest)
+    | _ => (none, none, args)
+  let backend :: path :: request :: portModules := input | throw <| IO.userError "expected backend, search path and input manifest"
+  unless backend == "strict" || backend == "official" do throw <| IO.userError s!"unknown backend {backend}"
+  let files : Array ReferenceFile ← IO.ofExcept (Json.parse (← IO.FS.readFile request) >>= fromJson?)
+  if let some file := resultFile then
+    let (count, selected) ← runChecks backend path files portModules only.isNone only
+    IO.FS.writeFile file (if only.isNone then toJson selected else toJson count).compress
+    return
+  let mut count := 0
+  if files.size ≤ 1 then
+    count := (← runChecks backend path files portModules false).1
+  else
+    let plan : ReplayPlan ← worker s!"{backend} scan" ("--scan" :: args)
+    -- Sibling manifest entries may introduce ports absent from this file's imports.
+    let replayArgs := backend :: path :: request :: (portModules ++ plan.portModules.toList).eraseDups
+    for name in plan.files do
+      let n : Nat ← worker s!"{backend} replay {name}" ("--replay" :: name :: replayArgs)
+      count := count + n
+  IO.println s!"Verified {count} qualified standard references on the {backend} backend."

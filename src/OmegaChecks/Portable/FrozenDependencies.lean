@@ -8,11 +8,11 @@ public import Init.Classical
 namespace OmegaChecks.Portable.FrozenDependencies
 
 private theorem privateFib :
-    Omega.Eq (Omega.Nat.fib Omega.Nat.zero) Omega.Nat.zero :=
-  Omega.Nat.fib_zero
+    Omega.Eq (OmegaMathlib.Nat.fib Omega.Nat.zero) Omega.Nat.zero :=
+  OmegaMathlib.Nat.fib_zero
 
 public theorem mixedFib :
-    Omega.Eq (Omega.Nat.fib Omega.Nat.zero) Omega.Nat.zero :=
+    Omega.Eq (OmegaMathlib.Nat.fib Omega.Nat.zero) Omega.Nat.zero :=
   Classical.choice (Nonempty.intro privateFib)
 
 end OmegaChecks.Portable.FrozenDependencies

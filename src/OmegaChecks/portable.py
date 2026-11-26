@@ -254,7 +254,7 @@ def regenerate_facades():
 
 
 def backend_artifacts(strict, with_reg, sources, stage, packages, lean, environment,
-                      common_dir=None, *, snapshots=None):
+                      common_dir=None, *, snapshots=None, reference_files=()):
     lake, libraries = lake_layout(strict, with_reg, common_dir)
     paths = [Path(path).resolve() for path in
              output(*lake, "env", "printenv", "LEAN_PATH", env=environment).strip().split(os.pathsep)]
@@ -279,9 +279,11 @@ def backend_artifacts(strict, with_reg, sources, stage, packages, lean, environm
             raise RuntimeError(f"dependency shadows project module {name}")
         trace = json.loads((lib / base.with_suffix(".trace")).read_text())["outputs"]
         parts = [*trace["o"], *(trace[key] for key in ("rs", "r") if key in trace)]
+        if name in reference_files:
+            parts.append(trace["i"])
         for part in parts:
             digest, suffix = part.split(".", 1)
-            if suffix not in {"olean", "olean.server", "olean.private", "ir", "ir.sig"}:
+            if suffix not in {"olean", "olean.server", "olean.private", "ir", "ir.sig", "ilean"}:
                 raise ValueError(f"unexpected import artifact {part} for {name}")
             relative = base.with_suffix("." + suffix)
             staged = stage / relative
@@ -306,6 +308,15 @@ def backend_artifacts(strict, with_reg, sources, stage, packages, lean, environm
     if snapshots is not None and artifact_snapshot(stage) != snapshots[stage]:
         raise RuntimeError(f"staged compiler artifacts changed during trace verification: {stage}")
     return os.pathsep.join(map(str, [stage, *(path for path in paths if path not in libraries.values())]))
+
+
+def check_references(lean, label, search, stage, request, names, sources, skipped, catalog, environment):
+    records = [dict(moduleName=name, source=str(sources[name]), mathlibOnly=name in skipped,
+                    index=str(stage.joinpath(*name.split(".")).with_suffix(".ilean")))
+               for name in names]
+    request.write_text(json.dumps(records))
+    subprocess.run([lean, "--run", SRC / "OmegaChecks/QualifiedReferences.lean", label, search, request, *catalog],
+                   cwd=ROOT, env={**environment, "LEAN_PATH": str(ROOT / ".lake/build/lib/lean")}, check=True)
 
 
 def publish(tree, destination):
@@ -505,6 +516,7 @@ def check(only, backend="mathlib", destination=None, *, frozen=None, discovered=
                 or any(root(name) == "Reg" for name in only))
     sources, graph = discovered if discovered is not None else import_graph(lean, with_reg=with_reg)
     selected = consumers(graph)
+    omega_consumers = set(selected)
     portable_clients = [name for name in selected if name.startswith("OmegaChecks.Portable.")]
     if only or scoped:
         if set(only) - set(selected):
@@ -528,7 +540,10 @@ def check(only, backend="mathlib", destination=None, *, frozen=None, discovered=
     if not scoped and backend == "both" and frozen is None:
         common_roots = [*all_basis, *portable_clients]
     common_modules = closure(graph, common_roots)
-    compiled = dict.fromkeys([*modules, *common_modules])
+    checked_refs = [n for n in downstream if backend == "both" and n in omega_consumers]
+    # A public statement can use a local homonym without importing the standard object.
+    catalog = sorted(n for n in all_basis if root(n) == "OmegaMathlib") if checked_refs else []
+    compiled = dict.fromkeys([*modules, *common_modules, *closure(graph, catalog)])
     with_reg = any(root(n) in {"Reg", "LeanInformationAuditInterface"} for n in compiled)
     strict_sources = {name: sources[name] for name in compiled}
     official_sources = {name: facades[name] if root(name) in BASIS else sources[name]
@@ -552,6 +567,8 @@ def check(only, backend="mathlib", destination=None, *, frozen=None, discovered=
         tracked.update((SRC / "OmegaBuild/Commands.lean", SRC / "OmegaBuild/Plan.lean"))
     if backend == "both":
         tracked.add(SRC / "OmegaChecks/Portable/Exports.lean")
+    if checked_refs:
+        tracked.update(sources[name] for name in closure(graph, ["OmegaChecks.QualifiedReferences"]))
     if frozen is not None:
         tracked.update(sources[name] for name in closure(graph, ["OmegaChecks.Audit"]))
         tracked.add(frozen[1])
@@ -569,7 +586,7 @@ def check(only, backend="mathlib", destination=None, *, frozen=None, discovered=
         strict, official = (Path(temp) / x for x in ("strict", "standard"))
         snapshots = {} if frozen is not None else None
         official_path = backend_artifacts(False, with_reg, official_sources, official, packages,
-                                          lean, environment, snapshots=snapshots)
+                                          lean, environment, snapshots=snapshots, reference_files=set(checked_refs))
         skipped = {}
         if backend != "mathlib":
             plan = backend_plan(official_path, list(compiled), environment)
@@ -580,7 +597,7 @@ def check(only, backend="mathlib", destination=None, *, frozen=None, discovered=
             strict.mkdir()
             if strict_sources:
                 strict_path = backend_artifacts(True, with_reg, strict_sources, strict, packages, lean,
-                                                environment, snapshots=snapshots)
+                                                environment, snapshots=snapshots, reference_files=set(checked_refs))
         if common_modules:
             common_basis = [name for name in common_modules if root(name) in BASIS]
             normal, common = derived_facades(lean, strict, common_basis, official_path)
@@ -602,6 +619,14 @@ def check(only, backend="mathlib", destination=None, *, frozen=None, discovered=
             common_reg = any(root(name) in {"Reg", "LeanInformationAuditInterface"} for name in common_sources)
             common_path = backend_artifacts(False, common_reg, common_sources, Path(temp) / "common", packages,
                                             lean, environment, COMMON_SRC)
+        if checked_refs:
+            subprocess.run(["lake", "build", "+OmegaBuild.Commands.Origin"], cwd=ROOT, env=environment, check=True)
+            strict_refs = [name for name in checked_refs if name not in skipped]
+            if strict_refs:
+                check_references(lean, "strict", strict_path, strict, Path(temp) / "strict-references.json",
+                                 strict_refs, sources, skipped, catalog, environment)
+            check_references(lean, "official", official_path, official, Path(temp) / "official-references.json",
+                             checked_refs, sources, skipped, catalog, environment)
         if backend == "both" and frozen is None:
             subprocess.run(["lake", "build", "omegaAudit"], cwd=ROOT, env=environment, check=True)
         if common_modules:
