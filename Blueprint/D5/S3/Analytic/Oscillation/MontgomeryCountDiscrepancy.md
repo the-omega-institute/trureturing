@@ -36,9 +36,9 @@ Use the positive spectrum with integer multiplicities, the inclusive cutoff, and
 
 For each real H0 and D there is a real H at least H0 with abs(N(H) - F(H)) greater than D. Here F(H) is H/(2 pi) times (log(H/(2 pi)) - 1).
 
-Against a fixed bounded integrable Fourier test p, the integrated error is bounded by B times the supremum norm of p divided by log(H), plus e(H) times the integral of abs(p). The exponential kernel supplies the same unit mass at zero. Thus the profile gives the test limits required by the autocorrelation and variance argument.
+Write L = log(H) > 0. For a fixed bounded integrable test p that vanishes outside [-1,1], the integrated error is bounded by B times the supremum norm of p divided by log(H), plus e(H) times the integral of abs(p). The normalized peak L exp(-2 L abs(alpha)) has mass one and converges against p to p(0). Taking p = abs(fourier(g))^2 for a real Schwartz test with Fourier support in [-1,1] gives the limit required by the autocorrelation and variance argument.
 
-For zeta, using a corresponding formula stated for complex zero differences additionally requires the equality of that statistic with the ordinate statistic. This theorem uses frequencies through the unit band and gives an unboundedness conclusion on every real tail.
+For zeta, the formula of Baluyot, Goldston, Suriajaya and Turnage-Butterbaugh for complex zero differences uses the same cutoff, multiplicities and normalization. On the critical line, swapping the ordered pairs gives the ordinate cosine sum. Evenness extends the estimate from [0,1] to [-1,1]. This theorem uses frequencies through the unit band and gives an unboundedness conclusion on every real tail.
 
 ## References
 

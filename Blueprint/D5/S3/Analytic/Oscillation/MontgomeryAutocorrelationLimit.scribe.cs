@@ -26,7 +26,7 @@ internal sealed class MontgomeryAutocorrelationLimitDocument : IScribeDocumentDe
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(
-                    Paragraph(Text("For each real Schwartz test supported in Fourier space on the unit band, assume the integral of the Montgomery profile against its squared Fourier modulus tends to the square of the test integral plus the Fourier energy weighted by absolute frequency. Under bounded two-term counting discrepancy, the normalized unweighted autocorrelation of that test has the same limit.")),
+                    Paragraph(Text("For the same spectrum, assume that for every fixed real Schwartz test with Fourier support on the unit band, integrating the Montgomery profile against its squared Fourier modulus tends to the square of the test integral plus the Fourier energy weighted by absolute frequency. If a single bound controls the two-term counting discrepancy at every real height at least two pi, the unweighted autocorrelation sum of that test has the same limit after division by H log H over two pi.")),
                     Paragraph(Text("The Fourier integral equals the normalized Lorentz-weighted autocorrelation at the same cutoff. The bound on the number of ordinates per scaled distance shell makes the normalized cost of removing the Lorentz weight tend to zero."))),
                 DescribeRole.Theorem))));
 }
