@@ -327,4 +327,135 @@ private theorem ring_not_mono {C : Coloring n} (hC : Good C) (r : Ring n) (b : B
       have hne := corner_opposite hC p rfl (by change r.width - 0 = 0; omega)
       exact hne ((h.1 false 0 (Nat.zero_le _)).trans (h.1 true 0 (Nat.zero_le _)).symm)
 
+private def Ring.cut (r : Ring n) : Cut n :=
+  (.x, ⟨r.level, by have := r.size; omega⟩)
+
+private theorem edge_axis (p : Point n 1) (a : Axis) (s : Bool) :
+    (edge p a s).val.2.1 = a := rfl
+
+private theorem edge_sheet (p : Point n 1) (a : Axis) (s : Bool) :
+    (edge p a s).val.2.2 = if p.coord a = 0 then false else s := rfl
+
+private def xTraversal (e : Edge n) : Face n × Face n :=
+  if (decide (e.val.2.1 = .z) != e.val.2.2) then edgeFaces e
+  else (edgeFaces e).swap
+
+private theorem ring_edge_z {r : Ring n} {j : ℕ} (hj : j < r.width) (s : Bool) :
+    edgeFaces (edge (r.U j (by omega)) .z s) =
+      (up s (r.U j (by omega)), down s (r.D j hj)) := by
+  rw [edgeFaces_inside _ _ (by change r.width - j ≠ 0; omega)]
+  congr 2
+
+private theorem ring_edge_y {r : Ring n} {j : ℕ} (hj : j < r.width) (s : Bool) :
+    edgeFaces (edge (r.U (j+1) (by omega)) .y s) =
+      (up s (r.U (j+1) (by omega)), down s (r.D j hj)) := by
+  rw [edgeFaces_inside _ _ (by change j+1 ≠ 0; omega)]
+  congr 2
+
+private theorem ring_crosses {r : Ring n} {j : ℕ} (hj : j ≤ r.width)
+    {a : Axis} (ha : a ≠ .x) (s : Bool) : Crosses (edge (r.U j hj) a s) r.cut :=
+  ⟨ha, rfl⟩
+
+private theorem ring_mono_of_monotone (r : Ring n) (F : Face n → ℕ)
+    (h : ∀ e, Crosses e r.cut → F (xTraversal e).1 ≤ F (xTraversal e).2) :
+    ∃ m, (∀ (s : Bool) j (hj : j ≤ r.width), F (up s (r.U j hj)) = m) ∧
+      (∀ (s : Bool) j (hj : j < r.width), F (down s (r.D j hj)) = m) := by
+  let u (s : Bool) (j : ℕ) (hj : j ≤ r.width) := F (up s (r.U j hj))
+  let d (s : Bool) (j : ℕ) (hj : j < r.width) := F (down s (r.D j hj))
+  have front (j : ℕ) (hj : j < r.width) :
+      u false j (by omega) ≤ d false j hj ∧ d false j hj ≤ u false (j+1) (by omega) := by
+    have hz : (r.U j (by omega)).coord .z ≠ 0 := by change r.width - j ≠ 0; omega
+    have hy : (r.U (j+1) (by omega)).coord .y ≠ 0 := by change j+1 ≠ 0; omega
+    constructor
+    · simpa [xTraversal, edge_axis, edge_sheet, hz, ring_edge_z hj false, u, d] using
+        h (edge (r.U j (by omega)) .z false) (ring_crosses _ (by decide) _)
+    · simpa [xTraversal, edge_axis, edge_sheet, hy, ring_edge_y hj false, u, d] using
+        h (edge (r.U (j+1) (by omega)) .y false) (ring_crosses _ (by decide) _)
+  have back (j : ℕ) (hj : j < r.width) :
+      u true (j+1) (by omega) ≤ d true j hj ∧ d true j hj ≤ u true j (by omega) := by
+    have hz : (r.U j (by omega)).coord .z ≠ 0 := by change r.width - j ≠ 0; omega
+    have hy : (r.U (j+1) (by omega)).coord .y ≠ 0 := by change j+1 ≠ 0; omega
+    constructor
+    · simpa [xTraversal, edge_axis, edge_sheet, hy, ring_edge_y hj true, u, d] using
+        h (edge (r.U (j+1) (by omega)) .y true) (ring_crosses _ (by decide) _)
+    · simpa [xTraversal, edge_axis, edge_sheet, hz, ring_edge_z hj true, u, d] using
+        h (edge (r.U j (by omega)) .z true) (ring_crosses _ (by decide) _)
+  have first : u true 0 (Nat.zero_le _) ≤ u false 0 (Nat.zero_le _) := by
+    have hy : (r.U 0 (Nat.zero_le _)).coord .y = 0 := rfl
+    simpa [xTraversal, edge_axis, edge_sheet, hy, edgeFaces_seam _ .y hy, u] using
+      h (edge (r.U 0 (Nat.zero_le _)) .y false) (ring_crosses _ (by decide) _)
+  have last : u false r.width (le_refl _) ≤ u true r.width (le_refl _) := by
+    have hz : (r.U r.width (le_refl _)).coord .z = 0 := Nat.sub_self _
+    simpa [xTraversal, edge_axis, edge_sheet, hz, edgeFaces_seam _ .z hz, u] using
+      h (edge (r.U r.width (le_refl _)) .z false) (ring_crosses _ (by decide) _)
+  have order (i j : ℕ) (hij : i ≤ j) (hj : j ≤ r.width) :
+      u false i (hij.trans hj) ≤ u false j hj ∧
+      u true j hj ≤ u true i (hij.trans hj) := by
+    induction hij with
+    | refl => exact ⟨le_refl _, le_refl _⟩
+    | @step j hij ih =>
+      have h₁ := ih (by omega)
+      have hf := front j (by omega)
+      have hb := back j (by omega)
+      exact ⟨h₁.1.trans (hf.1.trans hf.2), hb.1.trans (hb.2.trans h₁.2)⟩
+  have allU (s : Bool) (j : ℕ) (hj : j ≤ r.width) :
+      u s j hj = u false 0 (Nat.zero_le _) := by
+    have h₁ := order 0 j (Nat.zero_le _) hj
+    have h₂ := order j r.width hj (le_refl _)
+    have h₃ := order 0 r.width (Nat.zero_le _) (le_refl _)
+    cases s
+    · exact le_antisymm (h₂.1.trans (last.trans (h₃.2.trans first))) h₁.1
+    · exact le_antisymm (h₁.2.trans first) (h₃.1.trans (last.trans h₂.2))
+  refine ⟨u false 0 (Nat.zero_le _), allU, ?_⟩
+  intro s j hj
+  cases s
+  · have hf := front j hj
+    exact le_antisymm (hf.2.trans (allU false (j+1) (by omega)).le)
+      ((allU false j (by omega)).ge.trans hf.1)
+  · have hb := back j hj
+    exact le_antisymm (hb.2.trans (allU true j (by omega)).le)
+      ((allU true (j+1) (by omega)).ge.trans hb.1)
+
+private theorem ring_has_descent {C : Coloring n} (r : Ring n) (h : ∀ b, ¬ r.Mono C b) :
+    ∃ e, Crosses e r.cut ∧ (C (xTraversal e).2).toNat < (C (xTraversal e).1).toNat := by
+  by_contra! h'
+  obtain ⟨m, hu, hd⟩ := ring_mono_of_monotone r (fun f => (C f).toNat) h'
+  let p := r.U 0 (Nat.zero_le _)
+  have hm : (C (up false p)).toNat = m := hu false 0 (Nat.zero_le _)
+  apply h (C (up false p))
+  have injective : Function.Injective Bool.toNat := by
+    intro a b hab
+    cases a <;> cases b <;> simp_all
+  exact ⟨fun s j hj => injective ((hu s j hj).trans hm.symm),
+    fun s j hj => injective ((hd s j hj).trans hm.symm)⟩
+
+private theorem ring_two_folds {C : Coloring n} (hC : Good C) (r : Ring n) :
+    2 ≤ (cutFolds C r.cut).card := by
+  obtain ⟨e, he, hdec⟩ := ring_has_descent r (ring_not_mono hC r)
+  let opposite : Coloring n := fun f => !C f
+  have hOpp (b : Bool) : ¬ r.Mono opposite b := by
+    intro h
+    apply ring_not_mono hC r (!b)
+    constructor
+    · intro s j hj
+      have hc := h.1 s j hj
+      exact (Bool.not_not _).symm.trans (congrArg Bool.not hc)
+    · intro s j hj
+      have hc := h.2 s j hj
+      exact (Bool.not_not _).symm.trans (congrArg Bool.not hc)
+  obtain ⟨f, hf, hinc'⟩ := ring_has_descent r hOpp
+  have hinc : (C (xTraversal f).1).toNat < (C (xTraversal f).2).toNat := by
+    dsimp [opposite] at hinc'
+    cases h₁ : C (xTraversal f).1 <;> cases h₂ : C (xTraversal f).2 <;>
+      simp [h₁, h₂] at hinc' ⊢
+  have fold_of_ne (g : Edge n) (hneq : C (xTraversal g).1 ≠ C (xTraversal g).2) :
+      Fold C g := by
+    unfold xTraversal at hneq
+    split at hneq
+    · exact hneq
+    · exact Ne.symm hneq
+  have he' := mem_cutFolds.mpr ⟨fold_of_ne e (fun heq => by rw [heq] at hdec; omega), he⟩
+  have hf' := mem_cutFolds.mpr ⟨fold_of_ne f (fun hfq => by rw [hfq] at hinc; omega), hf⟩
+  exact Finset.one_lt_card.mpr ⟨e, he', f, hf', fun hEq => by rw [hEq] at hdec; omega⟩
+
 end D5.S0.FiniteGeometry.DoubledTriangleFolds
