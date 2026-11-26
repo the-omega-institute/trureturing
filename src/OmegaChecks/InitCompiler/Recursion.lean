@@ -45,6 +45,20 @@ public def loadRule : IO ConstantInfo := do
 
 private partial def solveBranch (g : MVarId) (agree : FVarId) (depth : Nat) : MetaM Unit := g.withContext do
   if (← observing? g.refl).isSome then return
+  if let some (_, lhs, rhs) := (← instantiateMVars (← g.getType)).eq? then
+    if lhs.getAppFn.isFVar && lhs.getAppNumArgs == 2 then
+      -- Splitting the state can reintroduce its dependent recursive-call hypothesis.
+      -- Recover it from the two functions, including the concrete decrease proof.
+      let bound := (← getLCtx).findDecl? fun decl => do
+        let .forallE _ _ (.forallE _ _ conclusion _) _ := decl.type | none
+        let some (_, l, r) := conclusion.eq? | none
+        guard (l.getAppFn == lhs.getAppFn && r.getAppFn == rhs.getAppFn)
+        return decl
+      if let some decl := bound then
+        let term := mkAppN decl.toExpr lhs.getAppArgs
+        if ← isDefEq (← inferType term) (← g.getType) then
+          g.assign term
+          return
   if (← observing? do
     let rest ← g.apply (mkFVar agree)
     guard rest.isEmpty).isSome then return
@@ -54,8 +68,10 @@ private partial def solveBranch (g : MVarId) (agree : FVarId) (depth : Nat) : Me
     guard result.mvarIds.isEmpty
     let next ← g.replaceTargetEq result.eNew result.eqProof
     solveBranch next agree (depth - 1)).isSome then return
-  let some branches ← splitTarget? g (useNewSemantics := true) | throwError "step branches do not match"
-  for branch in branches do solveBranch branch agree (depth - 1)
+  if let some branches ← splitTarget? g (useNewSemantics := true) then
+    for branch in branches do solveBranch branch agree (depth - 1)
+    return
+  for subgoal in ← g.congrCore do solveBranch subgoal agree (depth - 1)
 
 private partial def openState (g : MVarId) (vars : List FVarId) : MetaM (List MVarId) := g.withContext do
   let x :: rest := vars | return [g]
@@ -103,16 +119,16 @@ private def unfoldingEquation (rule : ConstantInfo) (type : Expr) : MetaM Expr :
       let ci ← getConstInfo name
       let some value := ci.value? | throwError "expected a recursive definition"
       let rhs := (value.instantiateLevelParams ci.levelParams levels).beta lhs.getAppArgs
-      if rhs.isAppOfArity `WellFounded.fix 6 then
-        let eq := mkAppN (mkConst `WellFounded.fix_eq rhs.getAppFn.constLevels!) rhs.getAppArgs
-        let some (_, _, unfolded) := (← inferType eq).eq? | throwError "missing fixed point equation"
-        let some (_, _, target) := (← branch.getType).eq? | throwError "missing equation target"
-        let rest ← mkFreshExprSyntheticOpaqueMVar (← mkEq unfolded target)
-        closeEquation rest.mvarId! 6
-        branch.assign (← mkEqTrans eq rest)
-      else
-        unless rhs.isAppOfArity `WellFounded.Nat.fix 5 do throwError "unexpected fixed point"
-        branch.assign (← pointwiseApplication rule rhs.getAppFn.constLevels! rhs.getAppArgs)
+      let eq ← if rhs.isAppOfArity `WellFounded.fix 6 then
+        pure (mkAppN (mkConst `WellFounded.fix_eq rhs.getAppFn.constLevels!) rhs.getAppArgs)
+      else if rhs.isAppOfArity `WellFounded.Nat.fix 5 then
+        pointwiseApplication rule rhs.getAppFn.constLevels! rhs.getAppArgs
+      else throwError "unexpected fixed point"
+      let some (_, _, unfolded) := (← inferType eq).eq? | throwError "missing fixed point equation"
+      let some (_, _, target) := (← branch.getType).eq? | throwError "missing equation target"
+      let rest ← mkFreshExprSyntheticOpaqueMVar (← mkEq unfolded target)
+      closeEquation rest.mvarId! 6
+      branch.assign (← mkEqTrans eq rest)
   instantiateMVars proof
 
 /-- Inline the fixed point law after proving congruence for the actual recursive step. -/
