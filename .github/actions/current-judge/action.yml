@@ -1,0 +1,69 @@
+name: Prepare the current judge
+description: Verify the candidate and restore the pinned judge and its NuGet packages.
+inputs:
+  base:
+    required: true
+    description: Protected base verified by detection.
+  judge-key:
+    required: true
+    description: Cache key for this SDK and judge source.
+  nuget-key:
+    required: true
+    description: Cache key for the candidate's locked NuGet packages.
+  needs-judge:
+    required: false
+    default: 'true'
+    description: Restore the judge for a scoped check or a failed prerequisite.
+outputs:
+  judge-hit:
+    description: Whether the judge bundle was restored.
+    value: ${{ steps.judge.outputs.cache-hit }}
+runs:
+  using: composite
+  steps:
+    - name: Install the pinned tools release
+      shell: bash
+      run: python3 .github/scripts/install-tools.py
+    - name: Verify the candidate and list the changed paths
+      shell: bash
+      env:
+        CI_HIT_PATHS: '*'
+        CI_PR_HEAD: ${{ github.event.pull_request.head.sha }}
+        CI_PUSH_BEFORE: ${{ github.event.before }}
+        CI_EXPECTED_BASE: ${{ inputs.base }}
+        CI_CHANGED_PATHS_FILE: ${{ runner.temp }}/changed-paths
+      run: bash tools/scripts/workflow/ci-entry.sh
+    - name: Cache the tools used by the protected base snapshot
+      shell: bash
+      env:
+        BASE: ${{ inputs.base }}
+      run: python3 .github/scripts/install-tools.py --cache-revision "$BASE"
+    - uses: actions/setup-dotnet@v5
+      with:
+        global-json-file: global.json
+        cache: false
+    - id: nuget
+      shell: bash
+      run: |
+        packages="$(dotnet nuget locals global-packages --list --force-english-output)"
+        echo "path=${packages#global-packages: }" >> "$GITHUB_OUTPUT"
+    - name: Restore the NuGet packages read-only
+      uses: actions/cache/restore@v5
+      with:
+        path: ${{ steps.nuget.outputs.path }}
+        key: ${{ inputs.nuget-key }}
+    - id: judge
+      if: inputs.needs-judge == 'true'
+      continue-on-error: true
+      uses: actions/cache/restore@v5
+      with:
+        path: |
+          tools/StrataLint.Cli/bin/Release/net10.0
+          tools/StrataLint.Scribe/bin/Release/net10.0
+        key: ${{ inputs.judge-key }}
+    - name: Prepare judge dependencies
+      if: inputs.needs-judge == 'true'
+      shell: bash
+      env:
+        JUDGE_HIT: ${{ steps.judge.outputs.cache-hit }}
+      run: python3 tools/scripts/workflow/ci_checks.py current prepare
