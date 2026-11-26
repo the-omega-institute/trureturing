@@ -413,11 +413,11 @@ private partial def equationCases? (type : Expr) (fuel := 2) (depth := 0) : Opti
 
 /-- Search only theorem interfaces with all referenced constants present. Share one kernel
 heartbeat limit across all attempted proofs and keep the original rejection on failure. -/
-private def alternateProof (ci : ConstantInfo) : M Bool := do
+private def alternateProof (ci : ConstantInfo) (sourceType : Expr) : M Bool := do
   let .thmInfo th := ci | return false
   let c ← read
   let rename := portName
-  let type := translate rename th.type
+  let type := translate rename sourceType
   let state ← get
   if invalidExpr type || type.getUsedConstants.any (fun n => (state.env.find? n).isNone) then return false
   let base := {th with name := rename th.name, type, all := [rename th.name]}
@@ -593,7 +593,7 @@ partial def visit (n : Name) : M Bool := do
       if thm.numLevelParams == ci.numLevelParams then
         if (← attempt (mkConst previous (ci.levelParams.map Level.param))) matches .added then
           return ← record n .added
-  if ← alternateProof ci then return true
+  if ← alternateProof ci type then return true
   if ci.isTheorem then
     if let some term ← OmegaChecks.InitCompiler.finiteProof? c.source ci.type then
       if (← attempt term) matches .added then return ← record n .added

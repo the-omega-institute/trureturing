@@ -2,23 +2,51 @@ module
 public import Lean
 import Init.Data.Iterators.Consumers.Collect
 import Init.Data.Iterators.Consumers.Total
+import Init.Data.Slice.Operations
 
-/-! Specialize a list collection only when its finite instance is available and the
-pinned source kernel accepts the complete replacement by definitional equality. -/
+/-! Use the terminating consumer at collection sites with an available finite instance.
+The source kernel checks the complete replacement by definitional equality. -/
 
 namespace OmegaChecks.InitCompiler
 open Lean Meta
 
+private def pureCollectors := [``Std.Iter.toArray, ``Std.Iter.toList, ``Std.Iter.toListRev]
+private def monadicCollectors := [``Std.IterM.toArray, ``Std.IterM.toList, ``Std.IterM.toListRev]
+private def sliceCollectors := [``Std.Slice.toArray, ``Std.Slice.toList, ``Std.Slice.toListRev]
+
+private def specializeCollector (e : Expr) : MetaM (Option Expr) := do
+  let some head := e.getAppFn.constName? | return none
+  let args := e.getAppArgs
+  if pureCollectors.contains head && args.size == 4 then
+    let it ← mkAppOptM ``Std.Iter.ensureTermination #[args[0]!, args[1]!, args[3]!]
+    let method := head.replacePrefix ``Std.Iter ``Std.Iter.Total
+    return some (← mkAppOptM method #[args[0]!, args[1]!, args[2]!, none, it])
+  if monadicCollectors.contains head && args.size == 6 then
+    -- The three official consumers put the monad and element binders in different orders.
+    let (m, β, monad) := if head == ``Std.IterM.toArray then (args[2]!, args[1]!, args[3]!)
+      else if head == ``Std.IterM.toListRev then (args[1]!, args[3]!, args[2]!)
+      else (args[1]!, args[2]!, args[3]!)
+    let it ← mkAppOptM ``Std.IterM.ensureTermination #[args[0]!, β, m, args[5]!]
+    let method := head.replacePrefix ``Std.IterM ``Std.IterM.Total
+    return some (← mkAppOptM method #[args[0]!, m, β, monad, args[4]!, none, it])
+  return none
+
 public def finiteCollectors (env : Environment) (input : Expr) : IO Expr := do
-  unless input.getUsedConstants.contains ``Std.Iter.toList do return input
+  unless input.getUsedConstants.any (fun n =>
+    pureCollectors.contains n || monadicCollectors.contains n || sliceCollectors.contains n) do return input
   let rewrite : MetaM Expr := Meta.transform input (pre := fun sub => do
-    unless sub.isAppOfArity ``Std.Iter.toList 4 do return .continue
-    let args := sub.getAppArgs
-    let total := mkAppN (.const ``Std.Iter.ensureTermination sub.getAppFn.constLevels!)
-      #[args[0]!, args[1]!, args[3]!]
+    let some head := sub.getAppFn.constName? | return .continue
+    let isSlice := sliceCollectors.contains head
+    unless isSlice || pureCollectors.contains head || monadicCollectors.contains head do return .continue
+    let arity := if pureCollectors.contains head then 4 else 6
+    -- Rewrites under congrArg often pass the collection function without its final argument.
+    unless sub.getAppNumArgs == arity || sub.getAppNumArgs + 1 == arity do return .continue
     try
-      let value ← mkAppOptM ``Std.Iter.Total.toList #[args[0]!, args[1]!, args[2]!, none, total]
-      return .done (← instantiateMVars value)
+      forallBoundedTelescope (← inferType sub) (some (arity - sub.getAppNumArgs)) fun xs _ => do
+        let call := mkAppN sub xs
+        let some core ← (if isSlice then unfoldDefinition? call else pure (some call)) | return .continue
+        let some result ← specializeCollector core | return .continue
+        return .done (← mkLambdaFVars xs (← instantiateMVars result))
     catch _ => return .continue)
   let .ok result ← (rewrite.run' |>.toIO' {fileName := "<finite collector>", fileMap := default} {env}).toBaseIO
     | return input
