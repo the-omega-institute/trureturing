@@ -1,5 +1,6 @@
 module
 public import Init.Data.Order.Lemmas
+public import OmegaChecks.InitPort.Alternatives.Compare
 
 namespace OmegaChecks.InitPort.Alternatives
 
