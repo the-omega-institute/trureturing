@@ -817,7 +817,8 @@ private theorem mem_seams {e : Edge n} : e ∈ seams ↔ e.val.1.coord e.val.2.1
     rw [hk, hr]
 
 private theorem folds_eq_seams {C : Coloring n} (hC : Good C) (hn : 0 < n)
-    (hcount : foldCount C = 3 * n) : folds C = seams := by
+    (hupper : foldCount C ≤ 3 * n) : folds C = seams := by
+  have hcount := le_antisymm hupper (minimum_bound hC)
   apply (Finset.eq_of_subset_of_card_le _ _).symm
   · intro e he
     have h := mem_seams.mp he
@@ -829,5 +830,108 @@ private theorem folds_eq_seams {C : Coloring n} (hC : Good C) (hn : 0 < n)
     simpa [folds] using hf
   · rw [card_seams, ← hcount]
     exact le_rfl
+
+private def cornerUp (hn : 0 < n) : Point n 1 := ⟨n-1, 0, 0, by omega⟩
+
+private theorem colors_of_unfolded_interior (C : Coloring n) (hn : 0 < n)
+    (h : ∀ e : Edge n, e.val.1.coord e.val.2.1 ≠ 0 → ¬ Fold C e)
+    (s : Bool) (t : Cell n) : C (s, t) = C (up s (cornerUp hn)) := by
+  have adjacent (p : Point n 1) (a : Axis) (hp : p.coord a ≠ 0) :
+      C (up s p) = C (down s (below p a hp)) := by
+    have hf := h (edge p a s) hp
+    exact not_not.mp (by simpa only [Fold, edgeFaces_inside _ _ hp] using hf)
+  have allUp (p : Point n 1) : C (up s p) = C (up s (cornerUp hn)) := by
+    induction heq : p.y + p.z using Nat.strong_induction_on generalizing p with
+    | h dist ih =>
+      have htotal := p.total
+      by_cases hy : p.y = 0
+      · by_cases hz : p.z = 0
+        · have he : p = cornerUp hn := Point.ext (by change p.x = n-1; omega) hy hz
+          rw [he]
+        · let q : Point n 1 := ⟨p.x + 1, p.y, p.z - 1, by omega⟩
+          have hq : q.coord .x ≠ 0 := by change p.x+1 ≠ 0; omega
+          have hd : below p .z hz = below q .x hq := by
+            apply Point.ext <;> simp [below, bump, q]
+          exact (adjacent p .z hz).trans
+            ((congrArg (fun a => C (down s a)) hd).trans
+              ((adjacent q .x hq).symm.trans (ih _ (by change p.y + (p.z-1) < dist; omega) q rfl)))
+      · let q : Point n 1 := ⟨p.x + 1, p.y - 1, p.z, by omega⟩
+        have hq : q.coord .x ≠ 0 := by change p.x+1 ≠ 0; omega
+        have hd : below p .y hy = below q .x hq := by
+          apply Point.ext <;> simp [below, bump, q]
+        exact (adjacent p .y hy).trans
+          ((congrArg (fun a => C (down s a)) hd).trans
+            ((adjacent q .x hq).symm.trans (ih _ (by change p.y - 1 + p.z < dist; omega) q rfl)))
+  cases t with
+  | inl p => exact allUp p
+  | inr p =>
+    let q : Point n 1 := ⟨p.x + 1, p.y, p.z, by have := p.total; omega⟩
+    have hq : q.coord .x ≠ 0 := by change p.x+1 ≠ 0; omega
+    have hd : below q .x hq = p := by apply Point.ext <;> simp [below, bump, q]
+    exact (congrArg (fun a => C (down s a)) hd).symm.trans
+      ((adjacent q .x hq).symm.trans (allUp q))
+
+/-- Uniform color on the front sheet and the other color on the back sheet. -/
+def twoSided (front : Bool) : Coloring n :=
+  fun f => if f.1 then !front else front
+
+private theorem twoSided_good (front : Bool) : Good (twoSided (n := n) front) := by
+  intro v s
+  rw [signed_balance]
+  by_cases hx : v.x = 0 <;> by_cases hy : v.y = 0 <;> by_cases hz : v.z = 0 <;>
+    have hx' : 0 < v.x ↔ v.x ≠ 0 := Nat.pos_iff_ne_zero <;>
+    have hy' : 0 < v.y ↔ v.y ≠ 0 := Nat.pos_iff_ne_zero <;>
+    have hz' : 0 < v.z ↔ v.z ≠ 0 := Nat.pos_iff_ne_zero <;>
+    cases s <;> cases front <;>
+    simp [incidentCorners, Point.boundary, sheetCorners, atUp, atDown, bump, bumpPair,
+      Point.coord, hx, hy, hz, hx', hy', hz', Nat.succ_le_iff, signed, twoSided]
+
+private theorem twoSided_folds (front : Bool) :
+    foldCount (twoSided (n := n) front) = 3 * n := by
+  have hset : folds (twoSided (n := n) front) = seams := by
+    ext e
+    rw [mem_seams]
+    simp only [folds, Finset.mem_filter, Finset.mem_univ, true_and]
+    rw [← edge_eta e]
+    by_cases h : e.val.1.coord e.val.2.1 = 0
+    · rw [Fold, edgeFaces_seam _ _ h]
+      cases front <;> simp [twoSided, h, edge]
+    · rw [Fold, edgeFaces_inside _ _ h]
+      simp [twoSided, h, edge]
+  rw [foldCount, hset, card_seams]
+
+/-- A good coloring of minimum fold count is precisely one of the two
+sheetwise uniform, opposite colorings. This gives the representative
+with the identity triangulation symmetry and at most a global color swap. -/
+theorem minimum_fold_uniqueness (hn : 0 < n) (C : Coloring n) :
+    (Good C ∧ foldCount C = 3 * n) ↔
+      ∃ front : Bool, (∀ t : Cell n, C (false, t) = front) ∧
+        (∀ t : Cell n, C (true, t) = !front) := by
+  constructor
+  · rintro ⟨hC, hfold⟩
+    have hs := folds_eq_seams hC hn (le_of_eq hfold)
+    have hinside (e : Edge n) (h : e.val.1.coord e.val.2.1 ≠ 0) : ¬ Fold C e := by
+      intro hf
+      have he : e ∈ folds C := by simpa [folds] using hf
+      rw [hs] at he
+      exact h (mem_seams.mp he)
+    let p := cornerUp hn
+    have hcorner : C (up false p) ≠ C (up true p) := corner_opposite hC p rfl rfl
+    have hcolors : C (up true p) = !C (up false p) := by
+      cases ha : C (up false p) <;> cases hb : C (up true p) <;>
+        simp [ha, hb] at hcorner ⊢
+    refine ⟨C (up false p), ?_, ?_⟩
+    · exact colors_of_unfolded_interior C hn hinside false
+    · intro t
+      exact (colors_of_unfolded_interior C hn hinside true t).trans hcolors
+  · rintro ⟨front, hf, hb⟩
+    have h : C = twoSided front := by
+      funext f
+      obtain ⟨s,t⟩ := f
+      cases s
+      · exact hf t
+      · exact hb t
+    rw [h]
+    exact ⟨twoSided_good front, twoSided_folds front⟩
 
 end D5.S0.FiniteGeometry.DoubledTriangleFolds
