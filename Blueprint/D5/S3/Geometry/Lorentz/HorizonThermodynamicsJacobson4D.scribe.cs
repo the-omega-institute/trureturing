@@ -30,7 +30,7 @@ internal sealed class HorizonThermodynamicsJacobson4DDocument : IScribeDocumentD
                 + "Σₐ ηₐₐ ∂ₐ in the first slot of each matrix field. "
                 + "The Bianchi and conservation equations force each coordinate derivative of p + trη(R)/2 to vanish. "
                 + "That scalar is locally constant and hence constant on U. This is the flat-chart form of "
-                + "the algebraic closure in Jacobson's Thermodynamics of Spacetime (1995), following his Eq. (6).",
+                + "the algebraic closure in Jacobson's Thermodynamics of Spacetime (1995), culminating in his Eq. (6).",
                 Bianchi()),
             Result("vacuum-indeterminacy", "cosmological_constant_indeterminacy_counterexample",
                 "Vacuum cosmological-constant indeterminacy",
@@ -65,7 +65,7 @@ internal sealed class HorizonThermodynamicsJacobson4DDocument : IScribeDocumentD
                 + "With A(t)>0 and G>0, the sign of the second generalized entropy variation gives the "
                 + "single-generator stationary bound. The normalized quantum expansion has the same derivative sign "
                 + "at this point since A′(t)=0. The positive factor 8πG converts the Ricci flux to null stress. "
-                + "This is the stationary diagonal relation considered by Bousso et al. in Quantum Focusing (2016), §3.2.",
+                + "This is the stationary diagonal relation considered by Bousso et al. in Quantum Focusing (2016), §5.2.",
                 Quantum()),
             Result("clausius-pinching", "clausius_area_monotonicity_from_record_pinching",
                 "Area assigned to basis pinching",
@@ -115,9 +115,9 @@ internal sealed class HorizonThermodynamicsJacobson4DDocument : IScribeDocumentD
                 All("k", Chart, If(Equal(NullNorm(k), D(0)),
                     Equal(Contract(k, Sub(r, Mul(coupling, t))), D(0)))),
                 All("b", Index, And(Equal(Call("div", F.Id("E"), x, F.Id("b")), D(0)),
-                    Equal(Call("div", F.Id("T"), x, F.Id("b")), D(0))))));
-        var derivative = On("x", Chart, u, Equal(Call("D", Seq(F.Id("y"), Sp, Mapsto, Sp,
-            Add(At(F.Id("p"), F.Id("y")), Div(Call("tr", At(F.Id("R"), F.Id("y"))), D(2)))), x), D(0)));
+                    Equal(Call("div", F.Id("T"), x, F.Id("b")), D(0)))))));
+        var derivative = On("x", Chart, u, Call("HasFDerivAt", Seq(F.Id("y"), Sp, Mapsto, Sp,
+            Add(At(F.Id("p"), F.Id("y")), Div(Call("tr", At(F.Id("R"), F.Id("y"))), D(2)))), D(0), x));
         return All("U", Call("Set", Chart), All("R", Arrow(Chart, Mat(R)),
             All("T", Arrow(Chart, Mat(R)), All("c", R,
                 If(hypotheses, And(derivative, Ex("l", R, On("x", Chart, u,
@@ -165,7 +165,7 @@ internal sealed class HorizonThermodynamicsJacobson4DDocument : IScribeDocumentD
         return All("f", Arrow(R, R), All("L", R,
             If(And(Rel(D(0), Le, l), Rel(fzero, Lt, D(0)), Call("ContinuousOn", f, closed),
                     Call("DifferentiableOn", f, open),
-                    On("t", R, open, Rel(At(Prime(f), t), Le, Negate(Div(Square(ft), D(2))))),
+                    On("t", R, open, Rel(At(Prime(f), t), Le, Negate(Div(Square(ft), D(2)))))),
                 And(On("t", R, closed, And(Rel(ft, Lt, D(0)),
                         Rel(Div(t, D(2)), Le, Sub(Div(D(1), ft), Div(D(1), fzero))),
                         Rel(ft, Le, Div(fzero, Add(D(1), Mul(Div(fzero, D(2)), t)))))),
@@ -184,7 +184,7 @@ internal sealed class HorizonThermodynamicsJacobson4DDocument : IScribeDocumentD
                 And(Rel(fzero, Lt, D(0)), Equal(pole, Div(Negate(D(2)), fzero)),
                     All("t", R, If(Rel(t, Lt, pole), And(
                         HasDerivative(f, Negate(Div(Square(ft), D(2))), t),
-                        Equal(Sub(Div(D(1), ft), Div(D(1), fzero)), Div(t, D(2))))))))));
+                        Equal(Sub(Div(D(1), ft), Div(D(1), fzero)), Div(t, D(2)))))))))));
     }
 
     private static Formula Stationary()
@@ -199,7 +199,7 @@ internal sealed class HorizonThermodynamicsJacobson4DDocument : IScribeDocumentD
             If(On("t", R, interval, And(HasDerivative(F.Id("f"), Ray(f, s, p), t),
                 HasDerivative(F.Id("s"), Sub(Negate(Mul(Call("ofReal", f), s)), w), t),
                 Rel(D(0), Le, p), Equal(f, D(0)))),
-                On("t", R, interval, And(Equal(p, D(0)), Equal(s, D(0)), Equal(w, D(0))))))));
+                On("t", R, interval, And(Equal(p, D(0)), Equal(s, D(0)), Equal(w, D(0)))))))));
     }
 
     private static Formula Quantum()
@@ -263,8 +263,13 @@ internal sealed class HorizonThermodynamicsJacobson4DDocument : IScribeDocumentD
     private static Formula Contract(Formula k, Formula s) =>
         Mul(Mul(Transpose(k), s), k);
     private static Formula Summed(string a, Formula value) => Seq(Sum, Underscore, Grp(F.Id(a)), Sp, value);
-    private static Formula Near(string name, Formula t, Formula body) =>
-        All(name, R, If(Call("near", F.Id(name), t), body));
+    private static Formula Near(string name, Formula t, Formula body)
+    {
+        var radius = F.Id("r");
+        var displacement = Seq(Vert, Sp, Sub(F.Id(name), t), Sp, Vert);
+        return Ex("r", R, And(Rel(D(0), Lt, radius),
+            All(name, R, If(Rel(displacement, Lt, radius), body))));
+    }
     private static Formula On(string name, Formula type, Formula set, Formula body) =>
         All(name, type, If(Rel(F.Id(name), InMacro, set), body));
     private static Formula NumberField(string name) => Seq(Mathbb, Grp(F.Id(name)));

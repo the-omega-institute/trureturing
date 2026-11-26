@@ -46,7 +46,7 @@ private theorem eta_diag_sq (a : Fin 4) : eta ℝ a a ^ 2 = 1 := by
 
 private theorem eta_square_value {K : Type*} [CommRing K] (k : Fin 4 → K) :
     (∑ a, eta K a a * k a * k a) = WeylNullScreen.minkowski k k := by
-  simp [eta, WeylNullScreen.minkowski, Fin.sum_univ_succ]
+  simp [eta, WeylNullScreen.minkowski, Fin.sum_univ_succ, add_assoc]
 
 /-- Nine explicit null directions suffice to recover the metric multiple over any
 characteristic-zero field. The three spatial pairs use the integer triple 3, 4, 5. -/
@@ -91,23 +91,34 @@ theorem symmetric_null_vanishing_iff_smul_eta {K : Type*} [Field K] [CharZero K]
       (mul_eq_zero.mp (show (24 : K) * S 2 3 = 0 by linear_combination p23)).resolve_left coefficient_ne
     refine ⟨-S 0 0, Matrix.ext fun a b => ?_⟩
     fin_cases a <;> fin_cases b <;>
-      norm_num [eta, smul_apply, smul_eq_mul, diagonal_apply, diag1, diag2, diag3,
+      norm_num [eta, Matrix.smul_apply, smul_eq_mul, diagonal_apply, diag1, diag2, diag3,
         symm 0 1, symm 0 2, symm 0 3, symm 1 2, symm 1 3, symm 2 3,
         off01, off02, off03, off12, off13, off23]
   · rintro ⟨c, rfl⟩ k hk
-    simp_rw [smul_apply, smul_eq_mul, ← mul_assoc, mul_left_comm (k _), mul_assoc c]
-    rw [← Finset.mul_sum]
-    have hdiag (a : Fin 4) : ∑ b, k a * (eta K a b * k b) =
-        eta K a a * k a * k a := by
-      rw [← Finset.mul_sum]
-      simp only [eta, ← mulVec_diagonal, mul_comm (k a), mul_assoc]
-    simp_rw [hdiag, hk, mul_zero]
+    simp only [Matrix.smul_apply, smul_eq_mul]
+    calc
+      _ = ∑ a, c * (∑ b, k a * (eta K a b * k b)) := by
+        apply Finset.sum_congr rfl
+        intro a _
+        rw [Finset.mul_sum]
+        apply Finset.sum_congr rfl
+        intro b _
+        ring
+      _ = c * (∑ a, eta K a a * k a * k a) := by
+        rw [Finset.mul_sum]
+        apply Finset.sum_congr rfl
+        intro a _
+        rw [← Finset.mul_sum]
+        change c * (k a * ((eta K) *ᵥ k) a) = _
+        simp only [eta, mulVec_diagonal, diagonal_apply_eq]
+        ring
+      _ = 0 := by rw [hk, mul_zero]
 
 private theorem null_pairing (k : Chart) :
     k ⬝ᵥ (eta ℝ *ᵥ k) = WeylNullScreen.minkowski k k := by
   rw [← eta_square_value]
   unfold dotProduct
-  simp_rw [eta, mulVec_diagonal]
+  simp_rw [eta, mulVec_diagonal, diagonal_apply_eq]
   apply Finset.sum_congr rfl
   intro a _
   ring
@@ -120,7 +131,7 @@ private theorem null_residual (S : Tensor) (hs : Sᵀ = S)
     simpa only [dotProduct, mulVec, Finset.mul_sum, mul_assoc] using h)
   have h00 := congrFun (congrFun hc (0 : Fin 4)) (0 : Fin 4)
   have hf : -S 0 0 = c := by
-    simp [eta, smul_apply, smul_eq_mul] at h00
+    simp [eta, Matrix.smul_apply, smul_eq_mul] at h00
     rw [h00, neg_neg]
   rw [hf, hc]
 
@@ -136,12 +147,14 @@ private theorem divergence_smul_eta {f : Chart → ℝ} {x : Chart}
     divergence (fun y => f y • eta ℝ) x b = fderiv ℝ f x (Pi.single b 1) := by
   unfold divergence
   rw [Finset.sum_eq_single b]
-  · simp only [smul_apply, smul_eq_mul, fderiv_mul_const hf,
-      ContinuousLinearMap.smul_apply, smul_eq_mul]
-    rw [← mul_assoc, mul_comm (eta ℝ b b) _, mul_assoc, ← pow_two, eta_diag_sq, mul_one]
+  · simp only [Matrix.smul_apply, smul_eq_mul, fderiv_mul_const hf,
+      _root_.smul_apply, smul_eq_mul]
+    calc
+      _ = eta ℝ b b ^ 2 * fderiv ℝ f x (Pi.single b 1) := by ring
+      _ = _ := by rw [eta_diag_sq, one_mul]
   · intro a _ hab
     have hz : eta ℝ a b = 0 := diagonal_apply_ne _ hab
-    simp [smul_apply, hz, fderiv_const]
+    simp [Matrix.smul_apply, hz]
   · simp
 
 /-- The null relation determines the metric multiple pointwise. Contracted
@@ -158,7 +171,7 @@ theorem jacobson_bianchi_einstein_equation
       divergence (fun y => R y - (minkowskiTrace (R y) / 2) • eta ℝ) x b = 0)
     (hConservation : ∀ x ∈ U, ∀ b, divergence T x b = 0) :
     let φ : Chart → ℝ := fun x => (R x - κ • T x) 0 0
-    (∀ x ∈ U, HasFDerivAt (fun y => φ y + minkowskiTrace (R y) / 2) 0 x) ∧
+    (∀ x ∈ U, HasFDerivAt (fun y => φ y + minkowskiTrace (R y) / 2) (0 : Chart →L[ℝ] ℝ) x) ∧
       ∃ Λ : ℝ, ∀ x ∈ U, R x - (minkowskiTrace (R x) / 2) • eta ℝ + Λ • eta ℝ = κ • T x := by
   let φ : Chart → ℝ := fun x => (R x - κ • T x) 0 0
   have residual (x : Chart) (hx : x ∈ U) : R x - κ • T x = (-φ x) • eta ℝ := by
@@ -166,16 +179,17 @@ theorem jacobson_bianchi_einstein_equation
     · rw [transpose_sub, transpose_smul, hsR x hx, hsT x hx]
     · exact hnull x hx
   let g : Chart → ℝ := fun x => -φ x - minkowskiTrace (R x) / 2
-  have hg (x : Chart) (hx : x ∈ U) : DifferentiableAt ℝ g x :=
-    (((hR x hx 0 0).sub ((hT x hx 0 0).const_mul κ)).neg).sub
-      ((trace_differentiable (hR x hx)).div_const 2)
+  have hg (x : Chart) (hx : x ∈ U) : DifferentiableAt ℝ g x := by
+    have htrace := trace_differentiable (R := R) (x := x) (hR x hx)
+    have hhalf : DifferentiableAt ℝ (fun y : Chart => minkowskiTrace (R y) / 2) x := by
+      simpa only [div_eq_mul_inv] using htrace.mul_const ((2 : ℝ)⁻¹)
+    exact (((hR x hx 0 0).sub ((hT x hx 0 0).const_mul κ)).neg).sub hhalf
   have split (x : Chart) (hx : x ∈ U) :
       R x - (minkowskiTrace (R x) / 2) • eta ℝ = κ • T x + g x • eta ℝ := by
-    rw [show R x = κ • T x + (-φ x) • eta ℝ by
-      rw [← residual x hx]
-      abel, show g x = -φ x - minkowskiTrace (R x) / 2 by rfl, sub_smul]
-    abel
-  have zeroDerivative (x : Chart) (hx : x ∈ U) : HasFDerivAt g 0 x := by
+    calc
+      _ = κ • T x + ((R x - κ • T x) - (minkowskiTrace (R x) / 2) • eta ℝ) := by abel
+      _ = _ := by rw [residual x hx, show g x = -φ x - minkowskiTrace (R x) / 2 by rfl, sub_smul]
+  have zeroDerivative (x : Chart) (hx : x ∈ U) : HasFDerivAt g (0 : Chart →L[ℝ] ℝ) x := by
     have hcoord (b : Fin 4) : fderiv ℝ g x (Pi.single b 1) = 0 := by
       have hSum : divergence (fun y => κ • T y + g y • eta ℝ) x b =
           κ * divergence T x b + divergence (fun y => g y • eta ℝ) x b := by
@@ -187,10 +201,9 @@ theorem jacobson_bianchi_einstein_equation
         have hg' := (hg x hx).hasFDerivAt.mul_const (eta ℝ a b)
         have hpair := (hT'.add hg').fderiv
         change fderiv ℝ (fun y => κ * T y a b + g y * eta ℝ a b) x = _ at hpair
-        simp only [add_apply, smul_apply, smul_eq_mul, hpair, ContinuousLinearMap.add_apply,
-          ContinuousLinearMap.smul_apply]
-        rw [fderiv_mul_const (hg x hx)]
-        simp only [ContinuousLinearMap.smul_apply, smul_eq_mul]
+        simp only [Matrix.add_apply, Matrix.smul_apply, smul_eq_mul]
+        rw [hpair, fderiv_mul_const (hg x hx)]
+        simp only [_root_.add_apply, _root_.smul_apply, smul_eq_mul]
         ring
       have hEq : divergence (fun y => R y - (minkowskiTrace (R y) / 2) • eta ℝ) x b =
           divergence (fun y => κ • T y + g y • eta ℝ) x b := by
@@ -210,9 +223,9 @@ theorem jacobson_bianchi_einstein_equation
       rw [← Finset.univ_sum_single v, map_sum]
       have hsingle (b : Fin 4) : Pi.single b (v b) = v b • (Pi.single b 1 : Chart) := by
         ext a
-        by_cases h : a = b <;> simp [Pi.single_apply, h]
+        by_cases h : a = b <;> simp [h]
       simp_rw [hsingle, map_smul, hcoord, smul_zero, Finset.sum_const_zero,
-        ContinuousLinearMap.zero_apply]
+        _root_.zero_apply]
     simpa only [hzero] using (hg x hx).hasFDerivAt
   obtain ⟨c, hc⟩ := hU.exists_is_const_of_fderiv_eq_zero hconn
     (fun x hx => (zeroDerivative x hx).differentiableAt.differentiableWithinAt)
@@ -221,7 +234,7 @@ theorem jacobson_bianchi_einstein_equation
   · intro x hx
     convert (zeroDerivative x hx).neg using 1
     · funext y
-      dsimp [g]
+      change φ y + minkowskiTrace (R y) / 2 = -(-φ y - minkowskiTrace (R y) / 2)
       ring
     · simp
   · rw [split x hx, hc x hx, neg_smul]
@@ -240,14 +253,14 @@ theorem cosmological_constant_indeterminacy_counterexample
   dsimp only
   refine ⟨?_, ?_, ?_, ?_, ?_⟩
   · intro Λ x k hk
-    rw [smul_zero, sub_zero, smul_mulVec_assoc, dotProduct_smul, null_pairing, hk, smul_zero]
+    rw [smul_zero, sub_zero, Matrix.smul_mulVec, dotProduct_smul, null_pairing, hk, smul_zero]
   · intro Λ x b
     simp [divergence]
   · intro x b
     simp [divergence]
   · intro Λ x
     have htrace : minkowskiTrace (Λ • eta ℝ) = 4 * Λ := by
-      simp only [minkowskiTrace, smul_apply, smul_eq_mul,
+      simp only [minkowskiTrace, Matrix.smul_apply, smul_eq_mul,
         show ∀ a : Fin 4, eta ℝ a a * (Λ * eta ℝ a a) = Λ by
           intro a
           linear_combination Λ * eta_diag_sq a]
@@ -256,7 +269,7 @@ theorem cosmological_constant_indeterminacy_counterexample
     abel
   · intro h
     have h00 := congrFun (congrFun (congrFun h (0 : Chart)) (0 : Fin 4)) (0 : Fin 4)
-    exact hne (by simpa [eta, smul_apply, smul_eq_mul] using h00)
+    exact hne (by simpa [eta, Matrix.smul_apply, smul_eq_mul] using h00)
 
 /-- The null Ricci and shear terms each reinforce focusing. Nonzero shear gives
 strict focusing beyond the expansion term, including at vanishing Ricci flux. -/
@@ -313,7 +326,7 @@ theorem hawking_penrose_caustic_bound
   have hbound : L < -2 / θ 0 := by
     have h := hrecip L ⟨hL, le_rfl⟩
     have hnegative := one_div_neg.mpr (hneg L ⟨hL, le_rfl⟩)
-    rw [neg_div]
+    rw [show -2 / θ 0 = -2 * (1 / θ 0) by ring]
     linarith
   refine ⟨fun t ht => ⟨hneg t ht, hrecip t ht, ?_⟩, hbound⟩
   have hdenom : 0 < 1 + (θ 0 / 2) * t := by
@@ -322,7 +335,7 @@ theorem hawking_penrose_caustic_bound
     nlinarith
   rw [le_div_iff₀ hdenom]
   have htneg := hneg t ht
-  have hleft := (le_div_iff_of_neg hinit).mp (show 1 / θ t - t / 2 ≥ 1 / θ 0 by
+  have hleft := (div_le_iff_of_neg hinit).mp (show 1 / θ 0 ≤ 1 / θ t - t / 2 by
     linarith [hrecip t ht])
   have hright := mul_le_mul_of_nonpos_right hleft htneg.le
   have hcancel : (1 / θ t) * θ t = 1 := by field_simp [htneg.ne]
@@ -345,8 +358,9 @@ theorem hawking_penrose_caustic_sharpness (T : ℝ) (hT : 0 < T) :
     refine ⟨?_, by field_simp; ring⟩
     convert hd.const_mul (-2 : ℝ) using 1
     · funext x
-      rw [div_eq_mul_inv]
-    · field_simp
+      simp [div_eq_mul_inv, Pi.inv_apply, Pi.sub_apply]
+    · simp only [Pi.sub_apply, id_eq]
+      field_simp
       ring
 
 /-- On an open stationary interval, Raychaudhuri first removes Ricci flux
@@ -398,7 +412,7 @@ theorem qfc_iff_qnec_at_stationary_horizon
     rw [show (4 * G / A t₀) * S'' = (4 * G * S'') / A t₀ by ring, div_le_iff₀ hA]
     have hRewrite : (A t₀ / (4 * G)) * Φ t₀ = (Φ t₀ * A t₀) / (4 * G) := by ring
     rw [neg_mul, hRewrite, neg_add_eq_sub, sub_nonpos, le_div_iff₀ hG']
-    exact Iff.intro (by simpa [mul_comm]) (by simpa [mul_comm])
+    simp [mul_comm]
   refine ⟨?_, ?_, hThreshold, ?_⟩
   · filter_upwards [hArea, hEntropy] with t hAt hSt
     exact (hAt.div_const (4 * G)).add hSt
@@ -412,13 +426,15 @@ theorem qfc_iff_qnec_at_stationary_horizon
       div_le_iff₀ hA, div_le_iff₀ hnorm]
     constructor <;> intro h
     · have hh : (4 * G) * S'' ≤ (4 * G) * (Tkk * (2 * Real.pi * A t₀)) := by
-        convert h using 1 <;> ring
-      exact (mul_le_mul_left hG').mp hh
-    · convert mul_le_mul_of_nonneg_left h hG'.le using 1 <;> ring
+        convert h using 1
+        ring
+      exact (mul_le_mul_iff_right₀ hG').mp hh
+    · convert mul_le_mul_of_nonneg_left h hG'.le using 1
+      ring
 
 section Pinching
 
-open scoped ComplexOrder MatrixOrder
+open scoped ComplexOrder MatrixOrder Matrix.Norms.L2Operator
 open D5.S3.Quantum.Decoherence.ProjectedUnistochasticDynamics
 open D5.S3.Quantum.Divergence.QuantumRelativeEntropyDefectComposition
 open D5.S3.Quantum.Divergence.SpectralCeilingRelativeEntropy
@@ -427,18 +443,6 @@ open D5.S3.Quantum.Dynamics.EntropyProductionCoherenceDeletionIdentity
 open D5.S3.Quantum.Dynamics.ProjectionProbabilityFlow
 
 variable {n : Type*} [Fintype n] [DecidableEq n]
-
-local instance (priority := 2000) : NormedAddCommGroup (Matrix n n ℂ) :=
-  Matrix.instL2OpNormedAddCommGroup
-
-local instance (priority := 2000) : NormedSpace ℂ (Matrix n n ℂ) :=
-  Matrix.instL2OpNormedSpace
-
-local instance (priority := 2000) : NormedRing (Matrix n n ℂ) :=
-  Matrix.instL2OpNormedRing
-
-local instance (priority := 2000) : NormedAlgebra ℂ (Matrix n n ℂ) :=
-  Matrix.instL2OpNormedAlgebra
 
 private theorem pinching_support (A : Matrix n n ℂ) (hA : A.PosSemidef)
     (v : n → ℂ) (hv : projectiveReadout A *ᵥ v = 0) : A *ᵥ v = 0 := by
@@ -449,10 +453,10 @@ private theorem pinching_support (A : Matrix n n ℂ) (hA : A.PosSemidef)
   apply Finset.sum_eq_zero
   intro j _
   rcases mul_eq_zero.mp (hv' j) with hdiag | hzero
-  · have hstar : star (Pi.single j (1 : ℂ)) = Pi.single j 1 := by
+  · have hstar : star (Pi.single j 1 : n → ℂ) = Pi.single j 1 := by
       ext k
-      by_cases h : k = j <;> simp [Pi.star_apply, Pi.single_apply, h]
-    have hcol : A *ᵥ Pi.single j 1 = 0 :=
+      by_cases h : k = j <;> simp [Pi.star_apply, h]
+    have hcol : A *ᵥ (Pi.single j 1 : n → ℂ) = 0 :=
       hA.dotProduct_mulVec_zero_iff.mp (by
         rw [hstar, single_one_dotProduct, mulVec_single_one]
         exact hdiag)
@@ -460,8 +464,8 @@ private theorem pinching_support (A : Matrix n n ℂ) (hA : A.PosSemidef)
     simp [hEntry]
   · simp [hzero]
 
-/-- The Clausius area assignment for a record pinching has a positive
-Hilbert–Schmidt lower bound whenever the pinching changes the state. -/
+/-- The Clausius area assignment for a record pinching is nonnegative
+and is strictly positive exactly when the pinching changes the state. -/
 theorem clausius_area_monotonicity_from_record_pinching (G : ℝ) (hG : 0 < G)
     (rho : DensityState n) :
     let P := basisPinchingState rho
@@ -476,7 +480,7 @@ theorem clausius_area_monotonicity_from_record_pinching (G : ℝ) (hG : 0 < G)
   let A := densityMatrix rho
   let B := densityMatrix P
   have hBform : B = projectiveReadout A := rfl
-  have hU : (1 : Matrix n n ℂ) ∈ unitaryGroup n ℂ := Subgroup.one_mem _
+  have hU : (1 : Matrix n n ℂ) ∈ unitaryGroup n ℂ := one_mem _
   have hid (r : DensityState n) : unitaryConjugateState 1 hU r = r := by
     apply Subtype.ext
     change CStarMatrix.ofMatrix (unitaryEvolution 1 (densityMatrix r)) = r.1
@@ -487,7 +491,9 @@ theorem clausius_area_monotonicity_from_record_pinching (G : ℝ) (hG : 0 < G)
   have hEntropy := (entropy_production_coherence_deletion_identity 1 hU r hStep).1 0
   change vonNeumannEntropy (basisPinchingState (unitaryConjugateState 1 hU rho)) -
       vonNeumannEntropy rho = quantumRelativeEntropy (unitaryConjugateState 1 hU rho)
-        (basisPinchingState (unitaryConjugateState 1 hU rho)) ∧ _ at hEntropy
+        (basisPinchingState (unitaryConjugateState 1 hU rho)) ∧
+      0 ≤ quantumRelativeEntropy (unitaryConjugateState 1 hU rho)
+        (basisPinchingState (unitaryConjugateState 1 hU rho)) at hEntropy
   rw [hid] at hEntropy
   have hp (s : DensityState n) : (densityMatrix s).PosSemidef := by
     rw [← Matrix.nonneg_iff_posSemidef]
@@ -500,21 +506,24 @@ theorem clausius_area_monotonicity_from_record_pinching (G : ℝ) (hG : 0 < G)
       simp [Algebra.algebraMap_eq_smul_one]
     rw [← he]
     exact (CStarAlgebra.norm_le_iff_le_algebraMap X hM.le hX.nonneg).mp hx
+  have hsupport (v : n → ℂ) (hv : B *ᵥ v = 0) : A *ᵥ v = 0 :=
+    pinching_support A (hp rho) v (hBform ▸ hv)
   have hKlein := actual_matrix_spectral_ceiling_strong_klein A B (hp rho) (hp P) M hM
     (ceiling A (hp rho) (by dsimp [M]; linarith [norm_nonneg B]))
     (ceiling B (hp P) (by dsimp [M]; linarith [norm_nonneg A]))
-    (fun v hv => pinching_support A (hp rho) v (by simpa only [hBform] using hv))
+    hsupport
   have htrA : A.trace = 1 := rho.2.2
   have htrB : B.trace = 1 := P.2.2
   have hquant : ((A - B)ᴴ * (A - B)).trace.re / (2 * M) ≤ quantumRelativeEntropy rho P := by
     rw [htrA, htrB, sub_add_cancel] at hKlein
+    change _ ≤ (A * (cfc Real.log A - cfc Real.log B)).trace.re
     exact hKlein
   have hstrict (hne : B ≠ A) : 0 < quantumRelativeEntropy rho P := by
     have hn := (Complex.nonneg_iff.mp
       (Matrix.posSemidef_conjTranspose_mul_self (A - B)).trace_nonneg)
     have hz : ((A - B)ᴴ * (A - B)).trace.re ≠ 0 := by
       intro h
-      have htrace : ((A - B)ᴴ * (A - B)).trace = 0 := Complex.ext h hn.2
+      have htrace : ((A - B)ᴴ * (A - B)).trace = 0 := Complex.ext h hn.2.symm
       exact hne (sub_eq_zero.mp (Matrix.trace_conjTranspose_mul_self_eq_zero_iff.mp htrace)).symm
     exact (div_pos (lt_of_le_of_ne hn.1 hz.symm) (by positivity)).trans_le hquant
   have h' : 0 < 4 * G := by positivity
@@ -532,7 +541,9 @@ theorem clausius_area_monotonicity_from_record_pinching (G : ℝ) (hG : 0 < G)
       exact (mul_pos h' (hstrict hn)).ne' hz
     · intro he
       have hr : P = rho := Subtype.ext (CStarMatrix.ofMatrix.symm.injective he)
-      simpa [← hEntropy.1, hr]
+      change basisPinchingState rho = rho at hr
+      change 4 * G * quantumRelativeEntropy rho P = 0
+      rw [← hEntropy.1, hr, sub_self, mul_zero]
 
 end Pinching
 
