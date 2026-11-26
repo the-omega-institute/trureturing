@@ -288,4 +288,66 @@ public theorem ByteArray.utf8DecodeChar?_eq_utf8DecodeChar?_extract :
     have h : (b.extract i b.size)[0 + k]'right = b[i + (0 + k)] :=
       ByteArray.getElem_extract right
     simpa only [Nat.zero_add] using h.symm
+
+
+private theorem width_value (c : Char) :
+    c.utf8Size = if c.val.toNat ≤ 127 then 1 else if c.val.toNat ≤ 2047 then 2 else
+      if c.val.toNat ≤ 65535 then 3 else 4 := by
+  dsimp only [Char.utf8Size]
+  rfl
+
+public theorem Char.utf8Size_eq_two_iff : type_of% @_root_.Char.utf8Size_eq_two_iff := by
+  intro c
+  rw [width_value]
+  have bounds : (127 < c.val ∧ c.val ≤ 2047) ↔ (127 < c.val.toNat ∧ c.val.toNat ≤ 2047) :=
+    and_congr (UInt32.ofNat_lt_iff (by decide : 127 < 2 ^ 32)) (UInt32.le_ofNat_iff (by decide : 2047 < 2 ^ 32))
+  apply Iff.trans _ bounds.symm
+  split
+  · rename_i lo
+    exact ⟨(fun h => nomatch h), fun h => False.elim (Nat.not_lt_of_ge lo h.1)⟩
+  · rename_i lo
+    split
+    · rename_i hi
+      exact ⟨fun _ => ⟨Nat.lt_of_not_ge lo, hi⟩, fun _ => rfl⟩
+    · rename_i hi
+      split <;> exact ⟨(fun h => nomatch h), fun h => False.elim (hi h.2)⟩
+
+public theorem Char.utf8Size_eq_three_iff : type_of% @_root_.Char.utf8Size_eq_three_iff := by
+  intro c
+  rw [width_value]
+  have bounds : (2047 < c.val ∧ c.val ≤ 65535) ↔ (2047 < c.val.toNat ∧ c.val.toNat ≤ 65535) :=
+    and_congr (UInt32.ofNat_lt_iff (by decide : 2047 < 2 ^ 32)) (UInt32.le_ofNat_iff (by decide : 65535 < 2 ^ 32))
+  apply Iff.trans _ bounds.symm
+  split
+  · rename_i lo
+    exact ⟨(fun h => nomatch h), fun h => False.elim
+      (Nat.not_lt_of_ge (Nat.le_trans lo (by decide : 127 ≤ 2047)) h.1)⟩
+  · split
+    · rename_i lo
+      exact ⟨(fun h => nomatch h), fun h => False.elim (Nat.not_lt_of_ge lo h.1)⟩
+    · rename_i lo
+      split
+      · rename_i hi
+        exact ⟨fun _ => ⟨Nat.lt_of_not_ge lo, hi⟩, fun _ => rfl⟩
+      · rename_i hi
+        exact ⟨(fun h => nomatch h), fun h => False.elim (hi h.2)⟩
+
+public theorem Char.utf8Size_eq_four_iff : type_of% @_root_.Char.utf8Size_eq_four_iff := by
+  intro c
+  rw [width_value]
+  apply Iff.trans _ (UInt32.ofNat_lt_iff (by decide : 65535 < 2 ^ 32)).symm
+  split
+  · rename_i lo
+    exact ⟨(fun h => nomatch h), fun h => False.elim
+      (Nat.not_lt_of_ge (Nat.le_trans lo (by decide : 127 ≤ 65535)) h)⟩
+  · split
+    · rename_i lo
+      exact ⟨(fun h => nomatch h), fun h => False.elim
+        (Nat.not_lt_of_ge (Nat.le_trans lo (by decide : 2047 ≤ 65535)) h)⟩
+    · split
+      · rename_i lo
+        exact ⟨(fun h => nomatch h), fun h => False.elim (Nat.not_lt_of_ge lo h)⟩
+      · rename_i lo
+        exact ⟨fun _ => Nat.lt_of_not_ge lo, fun _ => rfl⟩
+
 end OmegaChecks.InitPort.Alternatives
