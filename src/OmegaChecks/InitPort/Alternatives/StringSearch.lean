@@ -1,4 +1,5 @@
 module
+import all Init.Data.String.Basic
 import all Init.Data.String.Lemmas.Slice
 import all Init.Data.String.Lemmas.Pattern.Basic
 import all Init.Data.ByteArray.Lemmas
@@ -169,5 +170,56 @@ public theorem String.Slice.back?_eq : type_of% @_root_.String.Slice.back?_eq :=
   · obtain ⟨pre, eq⟩ := s.splits_endPos.exists_eq_append_singleton_of_ne_startPos ends
     rw [_root_.String.Slice.Pos.prev?_eq_some_prev ends, eq, String.toList_append, String.toList_singleton, List.getLast?_concat]
     exact _root_.String.Slice.Pos.get?_eq_some_get _root_.String.Slice.Pos.prev_ne_endPos
+
+namespace String.Slice.Pattern.Model
+
+private theorem position_eq {s : String.Slice} {p q : s.Pos} (pq : p ≤ q) (qp : q ≤ p) : p = q :=
+  String.Slice.Pos.ext (String.Pos.Raw.ext (Nat.le_antisymm pq qp))
+
+public theorem IsLongestMatch.le_of_isMatch : type_of% @_root_.String.Slice.Pattern.Model.IsLongestMatch.le_of_isMatch :=
+  fun h match' => Nat.le_of_not_gt (fun lt => h.not_isMatch _ lt match')
+
+public theorem IsLongestRevMatch.le_of_isRevMatch : type_of% @_root_.String.Slice.Pattern.Model.IsLongestRevMatch.le_of_isRevMatch :=
+  fun h match' => Nat.le_of_not_gt (fun lt => h.not_isRevMatch _ lt match')
+
+public theorem IsLongestMatch.eq : type_of% @_root_.String.Slice.Pattern.Model.IsLongestMatch.eq :=
+  fun hp hq => position_eq (IsLongestMatch.le_of_isMatch hq hp.isMatch) (IsLongestMatch.le_of_isMatch hp hq.isMatch)
+
+public theorem IsLongestRevMatch.eq : type_of% @_root_.String.Slice.Pattern.Model.IsLongestRevMatch.eq :=
+  fun hp hq => position_eq (IsLongestRevMatch.le_of_isRevMatch hp hq.isRevMatch) (IsLongestRevMatch.le_of_isRevMatch hq hp.isRevMatch)
+
+public theorem isLongestMatch_cast_iff : type_of% @_root_.String.Slice.Pattern.Model.isLongestMatch_cast_iff := by
+  intro ρ pat i s t eq p
+  constructor
+  · intro h
+    exact ⟨(_root_.String.Slice.Pattern.Model.isMatch_cast_iff eq).mp h.isMatch,
+      fun q lt hq => h.not_isMatch (q.cast eq) lt ((_root_.String.Slice.Pattern.Model.isMatch_cast_iff eq).mpr hq)⟩
+  · intro h
+    exact ⟨(_root_.String.Slice.Pattern.Model.isMatch_cast_iff eq).mpr h.isMatch,
+      fun q lt hq => h.not_isMatch (q.cast eq.symm) lt ((_root_.String.Slice.Pattern.Model.isMatch_cast_iff eq.symm).mpr hq)⟩
+
+public theorem isLongestRevMatch_cast_iff : type_of% @_root_.String.Slice.Pattern.Model.isLongestRevMatch_cast_iff := by
+  intro ρ pat i s t eq p
+  constructor
+  · intro h
+    exact ⟨(_root_.String.Slice.Pattern.Model.isRevMatch_cast_iff eq).mp h.isRevMatch,
+      fun q lt hq => h.not_isRevMatch (q.cast eq) lt ((_root_.String.Slice.Pattern.Model.isRevMatch_cast_iff eq).mpr hq)⟩
+  · intro h
+    exact ⟨(_root_.String.Slice.Pattern.Model.isRevMatch_cast_iff eq).mpr h.isRevMatch,
+      fun q lt hq => h.not_isRevMatch (q.cast eq.symm) lt ((_root_.String.Slice.Pattern.Model.isRevMatch_cast_iff eq.symm).mpr hq)⟩
+
+public theorem IsLongestMatchAtChain.le : type_of% @_root_.String.Slice.Pattern.Model.IsLongestMatchAtChain.le := by
+  intro ρ pat i s start stop chain
+  induction chain with
+  | nil => exact Nat.le_refl _
+  | cons _ _ _ first _ tail => exact Nat.le_trans first.le tail
+
+public theorem IsLongestRevMatchAtChain.le : type_of% @_root_.String.Slice.Pattern.Model.IsLongestRevMatchAtChain.le := by
+  intro ρ pat i s start stop chain
+  induction chain with
+  | nil => exact Nat.le_refl _
+  | cons _ _ _ last head => exact Nat.le_trans head last.le
+
+end String.Slice.Pattern.Model
 
 end OmegaChecks.InitPort.Alternatives
