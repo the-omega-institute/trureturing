@@ -10,6 +10,9 @@ strata_touched:
   - D5/S3/VertexAlgebra/TwistedGround/BarnesWall/Q8TraceSign
   - D5/S3/VertexAlgebra/TwistedGround/BarnesWall/OddGaussSum
   - D5/S3/VertexAlgebra/TwistedGround/BarnesWall/TensorIntertwiners
+  - D5/S3/VertexAlgebra/TwistedGround/BarnesWall/OddCoherentTraceSign
+  - D5/S3/VertexAlgebra/TwistedGround/BarnesWall/TensorDefectDet
+  - D5/S3/Fourier/CyclicFluxChargeExchange
   - D5/S3/VertexAlgebra/TwistedGround/BarnesWall/Rank128Lattice
   - D5/S3/VertexAlgebra/TwistedGround/BarnesWall/Q8GroundTrace
   - D5/S3/VertexAlgebra/TwistedGround/BarnesWall/PauliRows
@@ -18,6 +21,7 @@ strata_touched:
   - D5/S3/VertexAlgebra/TwistedGround/BarnesWall/FixedWordPhase
   - D5/S3/HomologicalAlgebra/BarnesWallQ8CohomologyDetector
   - D5/S3/HomologicalAlgebra/BarnesWallQ8CyclicGauge
+  - D5/S3/HomologicalAlgebra/CentralCocycleTransport
   - D5/S3/HomologicalAlgebra/InflatedCubicCandidate
   - D5/S3/HomologicalAlgebra/QuaternionCandidateRestriction
 license: citation-only
@@ -139,3 +143,32 @@ such rank. Its even-row displacement subspace is the common image and
 kernel of the two quaternion deviations. The literal lift exponent
 vanishes on that subspace. This supplies nonzero covariant intertwiners
 and identifies their normalized product trace with the Gauss sum above.
+
+## The modular comparison in every odd tensor rank
+
+For each order-four quaternion word, its square is negative identity on the
+tensor lattice. Its defect transforms the unimodular Gram into twice that
+Gram, so the defect has absolute determinant $2^{2^{m-1}}$. The square-root
+defect rule gives multiplicity $2^{2^{m-2}}$.
+
+The phase-free cyclic modular matrix becomes the exchange $(r,h)\mapsto
+(h,-r)$ after summing over charges with the insertion character. This sends
+the order-four character with central insertion to the reflection character
+with inverse insertion. The paired reflection oscillators contribute a
+factor tending to one at the cusp, and the transformed eta quotient gives
+the stated multiplicity as the reflection ground trace.
+
+A normalized inflated cocycle has trivial centralizer multiplier at the
+reflection, which maps to the identity in the quotient. The two-cochain
+used to change gauge supplies the explicit scalar correction in any
+cohomologous representative. Scalar-related linear actions differ by
+one global character, which the normalized tensor trace ratio cancels
+by multiplicativity on $ij=k$. The extracted coefficient fixes the
+remaining sign and forces the anomaly bit to vanish. The Lean comparison
+takes the modular character matrix, the lattice twisted-character
+formulas, and transport from the physical centralizer action as inputs.
+In the VOA argument, the last transport is fixed by the trivial
+self-monodromy of the charge-zero generator flux and its trivial mutual
+monodromy with the charge-zero reflection flux.
+[van Ekeren–Möller–Scheithauer, Theorem 5.13](https://arxiv.org/abs/1507.08142v3) ·
+[McRae, Theorem 4.17](https://arxiv.org/abs/1910.13226v2)
