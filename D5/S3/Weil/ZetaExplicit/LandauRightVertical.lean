@@ -235,7 +235,7 @@ private lemma reciprocalSum {x : ℝ} {k N : ℕ} {s : Finset ℕ} (hk : k ≤ N
   linarith [harmonic_le_one_add_log N]
 
 open Real in
-private lemma movingLineBounds {x : ℝ} (hx : 1 < x) :
+lemma movingLineBounds {x : ℝ} (hx : 1 < x) :
     let c := 1 + (Real.log (3 * x))⁻¹
     1 < c ∧ c ≤ 2 ∧ x ^ c ≤ 3 * x ∧ 1 / 2 ≤ Real.log (2 * x) ∧ Real.log (3 * x) ≤ 2 * Real.log (2 * x) := by
   have hx0 : 0 < x := by linarith
