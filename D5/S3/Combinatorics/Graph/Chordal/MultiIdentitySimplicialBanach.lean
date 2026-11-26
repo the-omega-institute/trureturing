@@ -215,7 +215,6 @@ private theorem direct_step [DecidableEq V] {G : SimpleGraph V} {O : Predecessor
       (O.clique v hc (Finset.mem_of_mem_erase hx) (Finset.ne_of_mem_erase hx).symm))
   rw [eq_sub_of_add_eq hm] at hn
   nlinarith only [hn, mul_le_mul_of_nonneg_right hb hε]
-
 /-- Match the positive and negative masses. An auxiliary vector may have an
 additional one-sided distance cost to the negative support. -/
 private theorem balanced_norm {A : Finset V} {h e : V → ℝ} {C : V → E} {D : ℝ}
@@ -365,7 +364,7 @@ private theorem second_identity [DecidableEq V] {G : SimpleGraph V} {O : Predece
     intro x _
     by_cases hx : x ∈ Q
     · simp [f, hx]
-    · rw [hfext x hx, if_neg hx, max_eq_right (neg_nonpos.mpr (mul_nonneg hcharge (hbn x)))]
+    · rw [hfext x hx, ite_eq_right hx, max_eq_right (neg_nonpos.mpr (mul_nonneg hcharge (hbn x)))]
   have hextra (x : V) : max (f x) 0 * e x = charge' * b x * e x := by
     by_cases hx : x ∈ Q
     · simp [e, hx]
@@ -380,7 +379,7 @@ private theorem second_identity [DecidableEq V] {G : SimpleGraph V} {O : Predece
       exact Finset.sum_congr rfl fun x _ => by by_cases hx : x ∈ B <;> simp [b, hx]
   have hsplit : ∑ x ∈ Q, h x • C x = (∑ x ∈ Q, u x • C x) + charge' • C a := by
     rw [← Q.sum_erase_add _ ha, ← Q.sum_erase_add (fun x => u x • C x) ha]
-    simp only [u, if_pos rfl, zero_smul, add_zero]
+    simp only [u, ite_eq_left rfl, zero_smul, add_zero]
     exact congrArg (· + charge' • C a) (Finset.sum_congr rfl fun x hx => by simp [Finset.ne_of_mem_erase hx])
   have hδeq : ∑ x ∈ B, (charge' * β x) • δ x =
       charge' • C a - ∑ x ∈ B, (charge' * β x) • X x := by
@@ -600,9 +599,6 @@ private theorem profile_total {G : SimpleGraph V} (O : Predecessors G) {P : Fins
     rw [split]
     norm_num [Finset.sum_range_succ, profile, hd]
     linarith
-private theorem profile_of_large {s t : ℝ} {d : ℕ} (hd : 3 < d) (i : ℕ) :
-    profile s t d i = if i < 3 then s else if i = 3 then t else 0 := by
-  simp [profile, show ¬ d ≤ 3 by omega]
 private theorem profile_antitone {s t : ℝ} (ht : 0 ≤ t) (hts : t ≤ s) (d : ℕ) :
     Antitone (profile s t d) := by
   intro i j h
@@ -626,8 +622,7 @@ private noncomputable def remaining (s t : ℝ) (d j : ℕ) (T : Finset ℕ) (i 
   if i = d-1 then 0 else coefficient s t d j T i +
     coefficient s t d j T (d-1) * profile s t d (i+1)
 
-set_option maxRecDepth 2048 in
-set_option maxHeartbeats 2500000 in
+set_option maxHeartbeats 6000000 in
 /-- The finite cases concern only the ranks in a predecessor clique. In an
 elimination case, every mandatory predecessor can shift by one position. -/
 private theorem profile_budget {k d j : ℕ} (hk : k = 5 ∨ k = 6)
@@ -638,18 +633,17 @@ private theorem profile_budget {k d j : ℕ} (hk : k = 5 ∨ k = 6)
     (hseven : k = 6 → 9*s^2 - 10*s + 2 = 0 ∧ s ≤ 5/19) :
     let t := 1 - 3*s
     let e := if j = 3 then 3*s else 1
-    let a := d-1
     if eliminate k d j T then
-      0 ≤ coefficient s t d j T a ∧
+      0 ≤ coefficient s t d j T (d-1) ∧
       (∑ i ∈ Finset.range d, max (-(remaining s t d j T i)) 0) +
-        s * (e + coefficient s t d j T a) ≤ 1-s
+        s * (e + coefficient s t d j T (d-1)) ≤ 1-s
     else (∑ i ∈ Finset.range d, max (-(coefficient s t d j T i)) 0) + s*e ≤ 1-s := by
   classical
-  let T' := (Finset.range d).filter (· ∈ T)
-  have he : T' = T := by
+  have he : (Finset.range d).filter (· ∈ T) = T := by
     ext i
     exact ⟨fun h => (Finset.mem_filter.mp h).2, fun h => Finset.mem_filter.mpr ⟨hT h, h⟩⟩
   rw [← he] at hTcard ⊢
+  clear he
   have hp : (k = 5 ∧ 12*s^2 = 1 ∧ 2/7 ≤ s ∧ s ≤ 3/10) ∨
       (k = 6 ∧ 9*s^2 - 10*s + 2 = 0 ∧ 1/4 ≤ s ∧ s ≤ 5/19) := by
     rcases hk with hk | hk
@@ -658,18 +652,18 @@ private theorem profile_budget {k d j : ℕ} (hk : k = 5 ∨ k = 6)
   have hd : 3 ≤ d := hj.trans hjd
   rcases hp with ⟨rfl, hq, hlow, hhigh⟩ | ⟨rfl, hq, hlow, hhigh⟩ <;> interval_cases d <;>
     by_cases h0 : 0 ∈ T <;> by_cases h1 : 1 ∈ T <;> by_cases h2 : 2 ∈ T <;>
-    by_cases h3 : 3 ∈ T <;> by_cases h4 : 4 ∈ T <;> by_cases h5 : 5 ∈ T <;>
-    norm_num [T', Finset.range_add_one, Finset.filter_insert, h0, h1, h2, h3, h4, h5,
+    by_cases h3 : 3 ∈ T <;> by_cases h4 : 4 ∈ T <;>
+    (first | have h5 : 5 ∉ T := fun h => by have := Finset.mem_range.mp (hT h); omega
+           | by_cases h5 : 5 ∈ T) <;>
+    norm_num [Finset.range_add_one, Finset.filter_insert, Finset.filter_singleton, h0, h1, h2, h3, h4, h5,
       Finset.card_insert_of_notMem] at hTcard
   all_goals
-    subst j
-    norm_num at hj hjd hjk
-    simp only [Finset.sum_range_succ, Finset.sum_range_zero]
-    norm_num [T', Finset.range_add_one, Finset.filter_insert, h0, h1, h2, h3, h4, h5,
-      Finset.card_insert_of_notMem, eliminate, remaining, coefficient, selectedWeight, profile]
-    try simp (disch := nlinarith only [hs, hst, hq, hlow, hhigh]) only [max_eq_left, max_eq_right]
-    try constructor
-    all_goals nlinarith only [hs, hst, hq, hlow, hhigh]
+    subst j <;> norm_num at hj <;> norm_num at hjd <;> norm_num at hjk <;>
+      simp only [Finset.sum_range_succ, Finset.sum_range_zero] <;>
+      norm_num [Finset.range_add_one, Finset.filter_insert, Finset.filter_singleton, h0, h1, h2, h3,
+        h4, h5, Finset.card_insert_of_notMem, eliminate, remaining, coefficient, selectedWeight,
+        profile] <;> ring_nf <;> try simp (disch := nlinarith only [hs, hst, hq, hlow, hhigh]) [max_def]
+  all_goals (try constructor) <;> (try split_ifs) <;> nlinarith
 private theorem position_image {G : SimpleGraph V} (O : Predecessors G)
     {S Q : Finset V} (hSQ : S ⊆ Q) {x : V} (hx : x ∈ Q) :
     ((Finset.range (position O Q x)).filter (· ∈ S.image (position O Q))).card =
@@ -707,6 +701,15 @@ private theorem position_one_insertion [DecidableEq V] {G : SimpleGraph V} (O : 
   exact (Finset.card_le_card hsub).trans ((Finset.card_union_le _ _).trans (by
     change position O Q x + (B \ (Q.erase a)).card ≤ _
     omega))
+private theorem align_sum {F : Type*} [AddCommMonoid F] [DecidableEq V]
+    {S P Q : Finset V} (hSP : S ⊆ P) (hSQ : S ⊆ Q) {w b : V → ℝ}
+    (hw : ∀ x ∈ P, x ∉ S → w x = 0) (hb : ∀ x ∈ Q, b x = if x ∈ S then w x else 0)
+    (f : V → ℝ → F) (hf : ∀ x, f x 0 = 0) :
+    ∑ x ∈ P, f x (w x) = ∑ x ∈ Q, f x (b x) := by
+  rw [← Finset.sum_subset hSP (f := fun x => f x (w x)), ← sum_extend hSQ]
+  · exact Finset.sum_congr rfl fun x hx => by rw [hb x hx]; by_cases h : x ∈ S <;> simp [h, hf]
+  · intro x hx hnot
+    rw [hw x hx hnot, hf]
 private theorem profile_fit {G : SimpleGraph V} (O : Predecessors G) {k : ℕ}
     (hk : k = 5 ∨ k = 6) (hcard : ∀ v, (O.set v).card ≤ k) {R s ε : ℝ}
     (hε : 0 ≤ ε) (hR : 2 ≤ R) (hsD : s * (R+1) = 1) (hs : 1/4 ≤ s) (hst : s ≤ 1/3)
@@ -771,8 +774,10 @@ private theorem profile_fit {G : SimpleGraph V} (O : Predecessors G) {k : ℕ}
     · have hxold := (Finset.mem_filter.mp hxS).2
       change selectedWeight s t T (position O Q x) =
         (if x ∈ S then profile s t P.card (position O P x) else 0)
-      simp [selectedWeight, he.mpr hxS, hxS, T, position_image O hSQ hx,
-        position_prefix O P hxold, profile_of_large (by omega : 3 < P.card), profile]
+      rw [selectedWeight, ite_eq_left (he.mpr hxS), ite_eq_left hxS]
+      rw [show ((Finset.range (position O Q x)).filter (· ∈ T)).card =
+        position O S x from position_image O hSQ hx, position_prefix O P hxold]
+      simp [profile, hP]
     · simp only [b, selectedWeight, not_congr he |>.mpr hxS, ite_false, hxS]
   have hSE : S ⊆ P.erase c := fun x hx =>
     let h := Finset.mem_filter.mp hx
@@ -785,15 +790,6 @@ private theorem profile_fit {G : SimpleGraph V} (O : Predecessors G) {k : ℕ}
     have hp : j < position O P x := position_strict O hc hr
     change profile s t P.card (position O P x) = 0
     simp [profile, hP, show ¬ position O P x < 3 by omega, show position O P x ≠ 3 by omega]
-  have align {F : Type*} [AddCommMonoid F] (f : V → ℝ → F) (hf : ∀ x, f x 0 = 0) :
-      ∑ x ∈ P.erase c, f x (w v x) = ∑ x ∈ Q, f x (b x) := by
-    rw [← Finset.sum_subset hSE (f := fun x => f x (w v x)), ← sum_extend hSQ]
-    · apply Finset.sum_congr rfl
-      intro x hx
-      rw [hb x hx]
-      by_cases h : x ∈ S <;> simp [h, hf]
-    · intro x hx hxS
-      rw [hw0 x hx hxS, hf]
   let μ : ℝ := if j = 3 then 3*s else 1
   have hμ : 1 - w v c = μ := by
     change 1 - profile s t P.card j = μ
@@ -805,20 +801,21 @@ private theorem profile_fit {G : SimpleGraph V} (O : Predecessors G) {k : ℕ}
     simp only [hformula, sub_smul, Finset.sum_sub_distrib, ← smul_smul, ← Finset.smul_sum,
       show (∑ x ∈ Q, w c x • r c x) = 0 from hz c hQ, smul_zero, sub_zero]
   have hmassV : ∑ x ∈ Q, b x = μ := by
-    have ha : (∑ x ∈ P.erase c, w v x) = ∑ x ∈ Q, b x := align (fun _ z => z) (fun _ => rfl)
+    have ha : (∑ x ∈ P.erase c, w v x) = ∑ x ∈ Q, b x :=
+      align_sum hSE hSQ hw0 hb (fun _ z => z) (fun _ => rfl)
     rw [← ha]
     have h := P.sum_erase_add (w v) hc
     rw [htotal v ⟨c, hc⟩] at h
     linarith only [h, hμ]
   have hh : ∑ x ∈ Q, h x = 0 := by
-    simp only [hformula, Finset.sum_sub_distrib, ← Finset.mul_sum, htotal c hQ, mul_one,
-      hmassV, sub_self]
+    simp only [hformula, Finset.sum_sub_distrib, ← Finset.mul_sum, hmassV]
+    rw [show (∑ x ∈ Q, w c x) = 1 from htotal c hQ, mul_one, sub_self]
   have hD : 0 ≤ (R+1)*ε := mul_nonneg (by linarith) hε
   have hcold := ((O.mem _ _).mp hc).1
   have hbudget := profile_budget hk (by omega : 3 ≤ j) hjd hjk (hcard c) T hT hTcard hs hst hsix hseven
   change ‖∑ x ∈ P.erase c, w v x • r c x‖ + (1 - w v c)*ε ≤ _
   have ha : (∑ x ∈ P.erase c, w v x • r c x) = ∑ x ∈ Q, b x • r c x :=
-    align (fun x z => z • r c x) (fun _ => zero_smul _ _)
+    align_sum hSE hSQ hw0 hb (fun x z => z • r c x) (fun _ => zero_smul _ _)
   rw [ha, ← hz', hμ]
   have hclose {M charge : ℝ} (hb : M + s*(μ+charge) ≤ 1-s)
       (hn : ‖∑ x ∈ Q, h x • r c x‖ ≤ M*((R+1)*ε) + charge*ε) :
@@ -852,8 +849,8 @@ private theorem profile_fit {G : SimpleGraph V} (O : Predecessors G) {k : ℕ}
       (charge := h a) (by simpa only [h, hpa] using hbudget.2) ?_
     refine (second_identity hold (by linarith) hε hcold ha hh hala
       (fun x _ => hnonneg a x) (htotal a haNonempty) (hz a haNonempty)
-      (fun x hx hn => hQa (Finset.mem_erase.mpr ⟨fun e => e ▸ hn.not_ge hala, hx⟩))).trans ?_
-    apply add_le_add_right
+      (fun x hx hn => hQa (Finset.mem_erase.mpr ⟨fun e => hn.not_ge (by simpa only [e] using hala), hx⟩))).trans ?_
+    apply add_le_add_left
     apply mul_le_mul_of_nonneg_right _ hD
     rw [← positions O Q, Finset.sum_image (position_injective O Q)]
     apply Finset.sum_le_sum
@@ -868,18 +865,20 @@ private theorem profile_fit {G : SimpleGraph V} (O : Predecessors G) {k : ℕ}
         have he' := Finset.card_erase_add_one ha
         change 5 ≤ Q.card at hd
         omega
-      have hp := position_one_insertion O ha hQa (hek ▸ hcard a) (x := x)
+      have hp := position_one_insertion O ha hQa (show (O.set a).card ≤ d from hek ▸ hcard a) (x := x)
       have hw : profile s t d (position O Q x + 1) ≤ w a x := by
-        unfold w
-        rw [profile_of_large hdim, profile_of_large (by omega : 3 < d)]
-        simpa only [profile_of_large hdim] using profile_antitone ht hts (O.set a).card hp
+        simpa only [w, profile, Nat.not_le.mpr hdim, show ¬ d ≤ 3 by omega, ite_false] using
+          profile_antitone ht hts (O.set a).card hp
       have hdne : position O Q x ≠ d-1 := fun e =>
         hxa (position_injective O Q hx ha (e.trans hpa.symm))
-      simp only [if_neg hxa, if_pos hxB, remaining, if_neg hdne, ← hpa, ← h]
-      exact max_le_max_right _ (neg_le_neg (add_le_add_left (mul_le_mul_of_nonneg_left hw hala) _))
+      simp only [ite_eq_right hxa, ite_eq_left hxB, remaining, ite_eq_right hdne]
+      rw [← hpa]
+      change max (-(h x + h a * w a x)) 0 ≤
+        max (-(h x + h a * profile s t d (position O Q x + 1))) 0
+      exact max_le_max_right _ (neg_le_neg (add_le_add le_rfl (mul_le_mul_of_nonneg_left hw hala)))
   · simp only [he, ite_false] at hbudget
     refine hclose (M := ∑ i ∈ Finset.range d, max (-(coefficient s t d j T i)) 0) (charge := 0)
-      (by simpa using hbudget) ?_
+      (by simpa only [zero_add, add_zero] using hbudget) ?_
     rw [← positions O Q, Finset.sum_image (position_injective O Q), zero_mul, add_zero]
     simpa using balanced_norm (e := fun _ => 0) hh hD (fun _ _ => le_rfl)
       (fun x hx y hy _ _ => by simpa using hold.diameter hε (by linarith) hcold hx hy)

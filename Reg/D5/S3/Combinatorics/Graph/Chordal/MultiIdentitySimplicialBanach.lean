@@ -73,16 +73,14 @@ variable {V : Type u} [Finite V] {G : SimpleGraph V} (hG : G.IsChordal)
 example (hclique : ∀ C : Set V, G.IsClique C → C.ncard ≤ 4) :
     ∃ p : V → E, ∀ x y, G.Adj x y →
       ‖g x y - (p y - p x)‖ ≤ ((Real.sqrt 17 - 1) / 2) * ε := by
-  apply hG.exists_regrouped_simplicial_banach_gain_potential 3 (by decide) hclique
+  refine hG.exists_regrouped_simplicial_banach_gain_potential 3 (by decide) hclique
+    ((Real.sqrt 17 - 1) / 2) ?_ ?_ ?_ g ε hε hskew htri
   · norm_num [max_eq_left (by norm_num : (3 : ℝ) - 2 ≤ 1)]
     linarith [sqrt17_lower]
   · norm_num
     linarith [sqrt17_upper]
   · norm_num
     nlinarith [Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 17)]
-  · exact hε
-  · exact hskew
-  · exact htri
 
 example (hclique : ∀ C : Set V, G.IsClique C → C.ncard ≤ 5) :
     ∃ p : V → E, ∀ x y, G.Adj x y → ‖g x y - (p y - p x)‖ ≤ 2 * ε :=
