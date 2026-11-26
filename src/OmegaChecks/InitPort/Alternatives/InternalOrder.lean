@@ -142,6 +142,18 @@ public theorem Seq.monotone_seq : type_of% @_root_.Lean.Order.Seq.monotone_seq :
   rw [← bind_map, ← bind_map]
   exact bindSteps (hg x y xy) fun z => Functor.monotone_map f z hf x y xy
 
+public theorem SeqLeft.monotone_seqLeft : type_of% @_root_.Lean.Order.SeqLeft.monotone_seqLeft := by
+  intro m _ _ _ α β γ _ _ g f hf hg x y xy
+  change (f x <* g x) ⊑ (f y <* g y)
+  rw [seqLeft_eq, seqLeft_eq]
+  exact Seq.monotone_seq g _ (Functor.monotone_map f _ hf) hg x y xy
+
+public theorem SeqRight.monotone_seqRight : type_of% @_root_.Lean.Order.SeqRight.monotone_seqRight := by
+  intro m _ _ _ α β γ _ _ g f hf hg x y xy
+  change (f x *> g x) ⊑ (f y *> g y)
+  rw [seqRight_eq, seqRight_eq]
+  exact Seq.monotone_seq g _ (Functor.monotone_map f _ hf) hg x y xy
+
 public theorem Array.monotone_modifyM :
     pointwise_type% (type_of% @_root_.Lean.Order.Array.monotone_modifyM) := by
   intro m _ _ _ α γ _ xs i f hf x y xy
