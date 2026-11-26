@@ -106,4 +106,119 @@ public theorem Array.find?_eq_bind_findIdx?_getElem? : type_of% @_root_.Array.fi
     | none => rfl
     | some i => exact List.getElem?_toArray.symm
 
+private theorem findSomePointwise {xs : List α} {f g : α → Option β} (h : ∀ x, f x = g x) :
+    xs.findSome? f = xs.findSome? g := by
+  induction xs with
+  | nil => rfl
+  | cons x xs ih => rw [List.findSome?_cons, List.findSome?_cons, h]; cases g x <;> first | rfl | exact ih
+
+public theorem Array.getElem?_zero_flatten : type_of% @_root_.Array.getElem?_zero_flatten := by
+  intro α xss
+  rw [← Array.getElem?_toList, Array.toList_flatten, ← List.head?_eq_getElem?, List.head?_flatten,
+    List.findSome?_map, ← Array.findSome?_toList]
+  apply findSomePointwise
+  intro xs
+  exact List.head?_eq_getElem?.trans Array.getElem?_toList
+
+public theorem Array.getElem_zero_flatten.proof : type_of% @_root_.Array.getElem_zero_flatten.proof := by
+  intro α xss h
+  rw [← _root_.Array.getElem?_zero_flatten, _root_.Array.getElem?_eq_getElem h]
+  rfl
+
+public theorem Array.getElem_zero_flatten : type_of% @_root_.Array.getElem_zero_flatten := by
+  intro α xss h
+  apply Option.some.inj
+  exact (_root_.Array.getElem?_eq_getElem h).symm.trans ((_root_.Array.getElem?_zero_flatten xss).trans (Option.some_get _).symm)
+
+public theorem Array.find?_flatten : type_of% @_root_.Array.find?_flatten := by
+  intro α xss p
+  rw [← Array.find?_toList, Array.toList_flatten, List.find?_flatten, List.findSome?_map, ← Array.findSome?_toList]
+  exact findSomePointwise (fun xs => _root_.Array.find?_toList (xs := xs))
+
+public theorem Array.find?_flatMap : type_of% @_root_.Array.find?_flatMap := by
+  intro α β xs f p
+  rw [← Array.find?_toList, Array.toList_flatMap, List.find?_flatMap, ← Array.findSome?_toList]
+  exact findSomePointwise (fun x => _root_.Array.find?_toList (xs := f x))
+
+private theorem flipped {b : Bool} : (!b = true) ↔ ¬ (b = true) := by
+  cases b <;> decide
+
+public theorem Array.find?_flatten_eq_none_iff : type_of% @_root_.Array.find?_flatten_eq_none_iff := by
+  intro α xss p
+  rw [_root_.Array.find?_flatten, _root_.Array.findSome?_eq_none_iff]
+  exact ⟨fun h a m y hy => flipped.mpr (_root_.Array.find?_eq_none.mp (h a m) y hy),
+    fun h a m => _root_.Array.find?_eq_none.mpr (fun y hy => flipped.mp (h a m y hy))⟩
+
+public theorem Array.find?_flatMap_eq_none_iff : type_of% @_root_.Array.find?_flatMap_eq_none_iff := by
+  intro α β xs f p
+  rw [_root_.Array.find?_flatMap, _root_.Array.findSome?_eq_none_iff]
+  exact ⟨fun h a m y hy => flipped.mpr (_root_.Array.find?_eq_none.mp (h a m) y hy),
+    fun h a m => _root_.Array.find?_eq_none.mpr (fun y hy => flipped.mp (h a m y hy))⟩
+
+public theorem Array.findIdx_push : type_of% @_root_.Array.findIdx_push := by
+  intro α xs a p
+  rw [Array.push_eq_append, Array.findIdx_append, Array.findIdx_singleton]
+  split
+  · rfl
+  · exact Nat.add_comm ..
+
+public theorem Array.findIdx?_push : type_of% @_root_.Array.findIdx?_push := by
+  intro α xs a p
+  rw [Array.push_eq_append, Array.findIdx?_append, Array.findIdx?_singleton]
+  cases p a <;> simp only [ite_true, Bool.false_eq_true, ite_false, Option.map_some, Option.map_none, Nat.zero_add]
+
+public theorem Array.findIdx?_eq_guard_findIdx_lt : type_of% @_root_.Array.findIdx?_eq_guard_findIdx_lt := by
+  intro α xs p
+  cases hit : xs.findIdx? p with
+  | none =>
+    have eq := _root_.Array.findIdx?_eq_none_iff_findIdx_eq.mp hit
+    rw [eq]; simp only [Option.guard, decide_eq_false (Nat.lt_irrefl _), Bool.false_eq_true, ite_false]
+  | some i =>
+    have ⟨hi, eq⟩ := _root_.Array.findIdx?_eq_some_iff_findIdx_eq.mp hit
+    subst i
+    simp only [Option.guard, decide_eq_true hi, ite_true]
+
+public theorem Array.of_findIdx?_eq_some : type_of% @_root_.Array.of_findIdx?_eq_some := by
+  intro i α xs p hit
+  obtain ⟨hi, pass, _⟩ := _root_.Array.findIdx?_eq_some_iff_getElem.mp hit
+  rw [Array.getElem?_eq_getElem hi]
+  exact pass
+
+public theorem Array.of_findIdx?_eq_none : type_of% @_root_.Array.of_findIdx?_eq_none := by
+  intro α xs p empty i
+  by_cases hi : i < xs.size
+  · rw [Array.getElem?_eq_getElem hi]
+    exact fun pass => Bool.noConfusion ((_root_.Array.findIdx?_eq_none_iff.mp empty _ (Array.getElem_mem hi)).symm.trans pass)
+  · rw [Array.getElem?_eq_none (Nat.le_of_not_gt hi)]
+
+public theorem List.findIdx?_take : type_of% @_root_.List.findIdx?_take := by
+  intro α xs i p
+  induction xs generalizing i with
+  | nil => rw [List.take_nil]; rfl
+  | cons x xs ih =>
+    cases i with
+    | zero => cases (x :: xs).findIdx? p with
+      | none => rfl
+      | some n => simp only [List.take_zero, List.findIdx?_nil, Option.bind_some, Option.guard, decide_eq_false (Nat.not_lt_zero n), Bool.false_eq_true, ite_false]
+    | succ i =>
+      rw [List.take_succ_cons, List.findIdx?_cons, List.findIdx?_cons]
+      cases test : p x with
+      | true => simp only [ite_true, Option.bind_some, Option.guard, decide_eq_true (Nat.zero_lt_succ i)]
+      | false =>
+        change (List.findIdx? p (xs.take i)).map Nat.succ = ((xs.findIdx? p).map Nat.succ).bind _
+        rw [ih]
+        cases xs.findIdx? p with
+        | none => rfl
+        | some n =>
+          by_cases inside : n < i
+          · have next := Nat.succ_lt_succ inside
+            simp only [Option.bind_some, Option.map_some, Option.guard, decide_eq_true inside, decide_eq_true next, ite_true]
+          · have outside : ¬ n.succ < i.succ := fun h => inside (Nat.lt_of_succ_lt_succ h)
+            simp only [Option.bind_some, Option.map_some, Option.guard, decide_eq_false inside, decide_eq_false outside, Bool.false_eq_true, ite_false, Option.map_none]
+
+public theorem Array.findIdx?_take : type_of% @_root_.Array.findIdx?_take := by
+  intro α xs i p
+  cases xs with
+  | mk xs => rw [List.take_toArray, List.findIdx?_toArray, List.findIdx?_toArray]; exact List.findIdx?_take
+
 end OmegaChecks.InitPort.Alternatives

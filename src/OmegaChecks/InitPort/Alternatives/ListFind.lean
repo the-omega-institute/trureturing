@@ -88,4 +88,117 @@ public theorem List.idxOf?_eq_none_iff : type_of% @_root_.List.idxOf?_eq_none_if
     exact _root_.List.findIdx?_eq_none_iff.mpr fun x mem =>
       Bool.eq_false_iff.mpr (fun eq => absent ((eq_of_beq eq : x = a) ▸ mem))
 
+public theorem List.find?_replicate_eq_some_iff : type_of% @_root_.List.find?_replicate_eq_some_iff := by
+  intro α n a b p
+  cases n with
+  | zero => exact ⟨fun h => (nomatch h), fun ⟨ne, _⟩ => (ne rfl).elim⟩
+  | succ n =>
+    rw [List.find?_replicate_of_length_pos (Nat.zero_lt_succ n)]
+    cases h : p a with
+    | true => exact ⟨fun eq => ⟨Nat.succ_ne_zero n, rfl, Option.some.inj eq⟩, fun ands => congrArg some ands.2.2⟩
+    | false => exact ⟨fun h => (nomatch h), fun ands => Bool.noConfusion ands.2.1⟩
+
+public theorem List.find?_replicate_eq_none_iff : type_of% @_root_.List.find?_replicate_eq_none_iff := by
+  intro α n a p
+  cases n with
+  | zero => exact ⟨fun _ => .inl rfl, fun _ => rfl⟩
+  | succ n =>
+    rw [List.find?_replicate_of_length_pos (Nat.zero_lt_succ n)]
+    cases h : p a with
+    | false => exact ⟨fun _ => .inr rfl, fun _ => rfl⟩
+    | true => exact ⟨fun h => (nomatch h), fun h => h.elim (fun eq => (Nat.succ_ne_zero n eq).elim) Bool.noConfusion⟩
+
+public theorem List.find?_filter : type_of% @_root_.List.find?_filter := by
+  intro α xs p q
+  induction xs with
+  | nil => rfl
+  | cons a xs ih =>
+    rw [List.filter_cons, List.find?_cons]
+    cases hp : p a <;> cases hq : q a <;> simp only [hq, ite_true, Bool.false_eq_true, ite_false, List.find?_cons, ih] <;> first | rfl | exact ih
+
+public theorem List.findIdx_subtype : type_of% @_root_.List.findIdx_subtype := by
+  intro α pred xs f g agrees
+  induction xs with
+  | nil => rfl
+  | cons x xs ih =>
+    rw [List.findIdx_cons]
+    change _ = (x.val :: xs.unattach).findIdx g
+    rw [List.findIdx_cons, agrees x.val x.property]
+    cases g x.val <;> first | rfl | exact congrArg Nat.succ ih
+
+public theorem List.findIdx?_subtype : type_of% @_root_.List.findIdx?_subtype := by
+  intro α pred xs f g agrees
+  induction xs with
+  | nil => rfl
+  | cons x xs ih =>
+    rw [List.findIdx?_cons]
+    change _ = (x.val :: xs.unattach).findIdx? g
+    rw [List.findIdx?_cons, agrees x.val x.property]
+    cases g x.val <;> first | rfl | exact congrArg (Option.map Nat.succ) ih
+
+public theorem List.findIdx?_eq_bind_find?_idxOf? : type_of% @_root_.List.findIdx?_eq_bind_find?_idxOf? := by
+  intro α _ _ xs p
+  induction xs with
+  | nil => rfl
+  | cons x xs ih =>
+    rw [List.findIdx?_cons, List.find?_cons]
+    cases hit : p x with
+    | true =>
+      change some 0 = (x :: xs).idxOf? x
+      rw [List.idxOf?_cons, beq_self_eq_true]
+      rfl
+    | false =>
+      change (xs.findIdx? p).map Nat.succ = (xs.find? p).bind _
+      rw [ih]
+      cases found : xs.find? p with
+      | none => rfl
+      | some y =>
+        change ((xs.idxOf? y).map Nat.succ) = (x :: xs).idxOf? y
+        have neq : ¬ (x == y) := fun eq =>
+          Bool.noConfusion (hit.symm.trans ((eq_of_beq eq) ▸ List.find?_some found))
+        rw [List.idxOf?_cons, ite_eq_right neq]
+
+private theorem sameFinOption {i j : Option (Fin n)} (eq : i.map Fin.val = j.map Fin.val) : i = j := by
+  cases i <;> cases j
+  · rfl
+  · cases eq
+  · cases eq
+  · exact congrArg some (Fin.ext (Option.some.inj eq))
+
+public theorem List.findFinIdx?_eq_bind_find?_finIdxOf? : type_of% @_root_.List.findFinIdx?_eq_bind_find?_finIdxOf? := by
+  intro α _ _ xs p
+  apply sameFinOption
+  rw [← List.findIdx?_eq_map_findFinIdx?_val, _root_.List.findIdx?_eq_bind_find?_idxOf?]
+  cases xs.find? p with
+  | none => rfl
+  | some a => exact _root_.List.idxOf?_eq_map_finIdxOf?_val
+
+public theorem List.head_filterMap._proof_2 : type_of% (private_decl% @_root_.List.head_filterMap._proof_2) := by
+  intros
+  exact Option.isSome_of_eq_some (_root_.List.head?_filterMap.symm.trans (_root_.List.head?_eq_some_head ‹_›))
+
+public theorem List.head_filterMap : type_of% @_root_.List.head_filterMap := by
+  intros
+  exact Option.some.inj ((_root_.List.head?_eq_some_head ‹_›).symm.trans
+    (_root_.List.head?_filterMap.trans (Option.some_get _).symm))
+
+public theorem List.head_filter._proof_1 : type_of% (private_decl% @_root_.List.head_filter._proof_1) := by
+  intros
+  exact Option.isSome_of_eq_some (_root_.List.head?_filter.symm.trans (_root_.List.head?_eq_some_head ‹_›))
+
+public theorem List.head_filter : type_of% @_root_.List.head_filter := by
+  intros
+  exact Option.some.inj ((_root_.List.head?_eq_some_head ‹_›).symm.trans
+    (_root_.List.head?_filter.trans (Option.some_get _).symm))
+
+public theorem List.getLast_filter._proof_1 : type_of% (private_decl% @_root_.List.getLast_filter._proof_1) := by
+  intros
+  exact Option.isSome_of_eq_some (_root_.List.getLast?_filter.symm.trans (_root_.List.getLast?_eq_some_getLast ‹_›))
+
+public theorem List.getLast_filter : type_of% @_root_.List.getLast_filter := by
+  intros
+  exact Option.some.inj ((_root_.List.getLast?_eq_some_getLast ‹_›).symm.trans
+    (_root_.List.getLast?_filter.trans (Option.some_get _).symm))
+
+
 end OmegaChecks.InitPort.Alternatives
