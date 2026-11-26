@@ -241,4 +241,45 @@ public theorem Int.trailingZeros_two_mul_add_one : type_of% @_root_.Int.trailing
   apply Int.trailingZeros_eq_zero_of_mod_eq
   exact Int.mul_add_emod_self_left 2 i 1
 
+public theorem Int.trailingZeros_two_mul : type_of% @_root_.Int.trailingZeros_two_mul := by
+  intro i hi
+  have nz : (2 : Int) ≠ 0 := by decide
+  have twice : 2*i ≠ 0 := Int.mul_ne_zero nz hi
+  have even : (2*i) % 2 = 0 := Int.mul_emod_right _ _
+  have div : (2*i) / 2 = i := Int.mul_ediv_cancel_left i nz
+  rw [_root_.Int.trailingZeros, dite_eq_right twice, _root_.Int.trailingZeros, dite_eq_right hi]
+  have step (k : Nat) (hk : (2*i).natAbs ≤ k) :
+      _root_.Int.trailingZeros.aux k (2*i) twice hk 0 =
+      _root_.Int.trailingZeros.aux i.natAbs i hi (Nat.le_refl _) 0 + 1 := by
+    cases k with
+    | zero => exact False.elim (twice (Int.natAbs_eq_zero.mp (Nat.eq_zero_of_le_zero hk)))
+    | succ k =>
+      rw [_root_.Int.trailingZeros.aux.eq_1 (2*i) twice 0 k (Nat.succ_ne_zero k), dite_eq_left even]
+      have normalize (j : Int) (eq : j = i) (hn : j ≠ 0) (hb : j.natAbs ≤ k) :
+          _root_.Int.trailingZeros.aux k j hn hb 1 =
+          _root_.Int.trailingZeros.aux i.natAbs i hi (Nat.le_refl _) 0 + 1 := by
+        subst j
+        exact (_root_.Int.trailingZeros_aux_succ (i := i) (k := k) (hi := hn) (hk := hb) (acc := 0)).trans
+          (congrArg Nat.succ (_root_.Int.trailingZeros_aux_irrel hi hb (Nat.le_refl _)))
+      exact normalize _ div _ _
+  exact step _ (Nat.le_refl _)
+
+public theorem Int.two_pow_trailingZeros_dvd : type_of% @_root_.Int.two_pow_trailingZeros_dvd := by
+  intro a ha
+  have factor (k : Nat) (i : Int) (hi : i ≠ 0) (hk : i.natAbs ≤ k) (acc : Nat)
+      (split : a = 2^acc * i) : 2 ^ _root_.Int.trailingZeros.aux k i hi hk acc ∣ a := by
+    induction k generalizing i acc with
+    | zero => exact False.elim (hi (Int.natAbs_eq_zero.mp (Nat.eq_zero_of_le_zero hk)))
+    | succ k ih =>
+      rw [_root_.Int.trailingZeros.aux.eq_1 i hi acc k (Nat.succ_ne_zero k)]
+      by_cases even : i % 2 = 0
+      · rw [dite_eq_left even]
+        apply ih
+        rw [Int.pow_succ, Int.mul_assoc, Int.mul_ediv_cancel_of_emod_eq_zero even]
+        exact split
+      · rw [dite_eq_right even]
+        exact ⟨i, split⟩
+  rw [_root_.Int.trailingZeros, dite_eq_right ha]
+  exact factor _ a ha (Nat.le_refl _) 0 (Int.one_mul a).symm
+
 end OmegaChecks.InitPort.Alternatives
