@@ -9,6 +9,7 @@ claim: Theorem 3.5 constructs the extraspecial lift and Conjecture 5.2 proposes 
 strata_touched:
   - D5/S3/VertexAlgebra/TwistedGround/BarnesWall/Q8TraceSign
   - D5/S3/VertexAlgebra/TwistedGround/BarnesWall/OddGaussSum
+  - D5/S3/VertexAlgebra/TwistedGround/BarnesWall/TensorIntertwiners
   - D5/S3/VertexAlgebra/TwistedGround/BarnesWall/Rank128Lattice
   - D5/S3/VertexAlgebra/TwistedGround/BarnesWall/Q8GroundTrace
   - D5/S3/VertexAlgebra/TwistedGround/BarnesWall/PauliRows
@@ -130,3 +131,11 @@ has zero basis values. Splitting by a spectator slot makes the cross
 pairing a complement permutation and a square-zero shear. The resulting
 finite Gauss sum is $+2^{2^{m-2}}$. The rank-128 value is $+2^{32}$.
 [Keller–Roberts–Roberts, §2.2 and Appendix A](https://arxiv.org/abs/2411.13646v2)
+
+The complement bijection balances the row exponents and makes the
+normalized tensor Gram unimodular. The same lower cocycle on the actual
+reflection quotient therefore has a Weyl ground representation in every
+such rank. Its even-row displacement subspace is the common image and
+kernel of the two quaternion deviations. The literal lift exponent
+vanishes on that subspace. This supplies nonzero covariant intertwiners
+and identifies their normalized product trace with the Gauss sum above.
