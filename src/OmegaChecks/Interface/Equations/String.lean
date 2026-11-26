@@ -1,8 +1,10 @@
 module
 import all OmegaChecks.Interface.Equations.Collect
+import all OmegaChecks.InitPort.Alternatives.FiniteLoop
 public import OmegaChecks.InitPort.Alternatives.StringTransforms
 import all OmegaChecks.InitPort.Alternatives.StringTransforms
 import all Init.Data.String.Iterate
+import all Init.Data.String.Extra
 public import Init.Data.String.Lemmas.Iterate
 public import Init.Data.String.Lemmas.Pattern.Find.Char
 public import Init.Data.String.Lemmas.Pattern.Find.Pred
@@ -125,5 +127,19 @@ public theorem String.Slice.Pattern.ForwardSliceSearcher.instIteratorLoopIdSearc
     @OmegaChecks.InitPort.Alternatives.String.Slice.Pattern.ForwardSliceSearcher.instIteratorLoopIdSearchStep s =
       @_root_.String.Slice.Pattern.ForwardSliceSearcher.instIteratorLoopIdSearchStep s :=
   finiteIteratorLoop_eq
+
+public theorem String.removeLeadingSpaces (s : String) :
+    OmegaChecks.InitPort.Alternatives.String.removeLeadingSpaces s = _root_.String.removeLeadingSpaces s := by
+  unfold OmegaChecks.InitPort.Alternatives.String.removeLeadingSpaces _root_.String.removeLeadingSpaces
+  unfold _root_.String.findLeadingSpacesSize
+  let p := fun c : Char => c == '\n'
+  let σ := _root_.String.Slice.Pattern.ToForwardSearcher.DefaultForwardSearcher p
+  have loops :
+      (fun s : String.Slice => OmegaChecks.InitPort.Alternatives.finiteIteratorLoop (α := σ s) (m := Id) (n := Id)) =
+      (fun s => @_root_.String.Slice.Pattern.ToForwardSearcher.DefaultForwardSearcher.instIteratorLoopIdSearchStep
+        _ p s _) := funext (fun _ => finiteIteratorLoop_eq)
+  dsimp only
+  rw [loops]
+  cases (s.startPos.find? p).bind _root_.String.Pos.next? <;> rfl
 
 end OmegaChecks.Interface.Equations

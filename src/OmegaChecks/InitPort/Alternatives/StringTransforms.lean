@@ -3,6 +3,7 @@ import all OmegaChecks.InitPort.Alternatives.FiniteLoop
 import all Init.Data.String.Iterate
 import all Init.Data.String.Lemmas.Iterate
 import all Init.Data.String.Termination
+import all Init.Data.String.Extra
 import Init.Data.String.Lemmas.StringOrder
 import Init.Data.List.BasicAux
 import all Init.Data.Char.Basic
@@ -191,5 +192,14 @@ public theorem String.instLawfulOrderLT : type_of% @_root_.String.instLawfulOrde
   intro a b
   exact ⟨fun h => ⟨_root_.String.lt_asymm h, fun notLT => notLT h⟩,
     fun h => Decidable.byContradiction h.2⟩
+
+public noncomputable def String.removeLeadingSpaces (s : String) : String :=
+  let newline := fun c : Char => c == '\n'
+  let found := @_root_.String.Pos.find? _ (_root_.String.Slice.Pattern.ToForwardSearcher.DefaultForwardSearcher newline)
+    inferInstance (fun _ => finiteIteratorLoop) s s.startPos newline inferInstance
+  let width := match found.bind _root_.String.Pos.next? with
+    | some pos => (private_decl% _root_.String.findLeadingSpacesSize.consumeSpaces) pos 0 s.utf8ByteSize
+    | none => 0
+  if width == 0 then s else (private_decl% _root_.String.removeNumLeadingSpaces) width s
 
 end OmegaChecks.InitPort.Alternatives
