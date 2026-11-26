@@ -52,7 +52,9 @@ internal sealed class OneJoinedPathTreesDocument : IScribeDocumentDefinition
                         + "After deleting them the residual degree is the intrablock path degree. The original "
                         + "degree is exactly residual degree plus cut incidence. Reverse, order the residual "
                         + "components along the projected path and assign the joining labels in each component."))),
-                DescribeRole.Theorem),
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("pinzon-et-al-2026-one-joined-path-trees"), ResolutionKind.Proved)),
             Describe.Lean(DescribeId.Create("one-joined-forward-certificate"),
                 DeclarationHandle.Create(Owner + "joinEdges_certificate"),
                 H("The actual joins certify a spine cut"),
