@@ -725,7 +725,7 @@ theorem cliqueTree_occurrenceCenter_banach_potential
     (hsep : ∀ a b, T.Adj a b → (K a ∩ K b).Nonempty)
     (π : I → V → ℝ) (hπ : ∀ a x, 0 ≤ π a x)
     (hsupp : ∀ a x, x ∉ K a → π a x = 0) (htotal : ∀ a, ∑ x, π a x = 1)
-    (α d : ℝ) (_hα₀ : 0 ≤ α) (hd₀ : 0 ≤ d)
+    (α d : ℝ) (hd₀ : 0 ≤ d)
     (hα : ∀ a u v, u ∈ K a → v ∈ K a → G.Adj u v → 1 - π a u - π a v ≤ α)
     (hd : ∀ a b, T.Adj a b →
       (1 - 1 / ((K a ∩ K b).ncard : ℝ)) *

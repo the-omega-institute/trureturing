@@ -118,7 +118,7 @@ internal sealed class WeightedSimplicialBanachPotentialDocument : IScribeDocumen
         Formula body = All("D", N, Imp(diam, Gains(Add(alpha, Mul(Mul(D(4), radius), d)),
             diameter, Add(alpha, Mul(D(2), d)))));
         body = All("alpha", R, All("d", R,
-            Imp(Le(D(0), alpha), Imp(Le(D(0), d), Imp(local, Imp(boundary, body))))));
+            Imp(Le(D(0), d), Imp(local, Imp(boundary, body)))));
         body = All("pi", Arrow(indices, Arrow(vertices, R)), Imp(nonneg, Imp(support, Imp(total, body))));
         body = All("K", Arrow(indices, Call("Set", vertices)),
             Imp(Call("IsCliqueTree", tree, graph, V("K")), Imp(separators, body)));

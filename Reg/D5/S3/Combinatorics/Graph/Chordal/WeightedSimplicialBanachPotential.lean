@@ -75,8 +75,8 @@ example : radius 3 = (1 + Real.sqrt 5)/2 ∧ (1 + Real.sqrt 5)/2 < 5/3 ∧ (5/3 
     nlinarith
   refine ⟨?_, by linarith, by norm_num⟩
   norm_num [radius, h20]
-  apply max_eq_right
-  linarith
+  rw [max_eq_right (show (1 : ℝ) ≤ (2 + 2 * Real.sqrt 5) / 4 by linarith)]
+  ring
 
 example :
     radius 4 = (3 + Real.sqrt 33)/4 ∧ (3 + Real.sqrt 33)/4 < 7/3 ∧ (7/3 : ℝ) < 20/7 := by
@@ -180,18 +180,18 @@ def rejected : Realization signature :=
 
 abbrev arena : Arena where
   signature := signature
-  Law R := ∀ {V : Type u} [Fintype V] {I : Type w} [Finite I]
+  Law R := ∀ {V : Type u} [Fintype V] {I : Type v} [Finite I]
     {T : SimpleGraph I} {G : SimpleGraph V} {K : I → Set V}
     (_hK : IsCliqueTree T G K) (_hsep : ∀ a b, T.Adj a b → (K a ∩ K b).Nonempty)
     (π : I → V → ℝ) (_hπ : ∀ a x, 0 ≤ π a x)
     (_hsupp : ∀ a x, x ∉ K a → π a x = 0) (_htotal : ∀ a, ∑ x, π a x = 1)
-    (α d : ℝ) (_hα₀ : 0 ≤ α) (_hd₀ : 0 ≤ d)
+    (α d : ℝ) (_hd₀ : 0 ≤ d)
     (_hα : ∀ a u v, u ∈ K a → v ∈ K a → G.Adj u v → 1 - π a u - π a v ≤ α)
     (_hd : ∀ a b, T.Adj a b →
       (1 - 1 / ((K a ∩ K b).ncard : ℝ)) *
         (1 - ∑ x ∈ (K a ∩ K b).toFinite.toFinset, min (π a x) (π b x)) ≤ d)
     (D : ℕ) (_hD : ∀ x a b, x ∈ K a → x ∈ K b → T.dist a b ≤ D)
-    {E : Type v} [SeminormedAddCommGroup E] [NormedSpace ℝ E]
+    {E : Type w} [SeminormedAddCommGroup E] [NormedSpace ℝ E]
     (g : V → V → E) (ε : ℝ) (_hε : 0 ≤ ε) (_hskew : ∀ u v, g v u = -g u v)
     (_htri : ∀ u v w, G.Adj u v → G.Adj v w → G.Adj u w → ‖g u v + g v w - g u w‖ ≤ ε),
     ∃ φ : V → E, ∀ u v, G.Adj u v →
@@ -203,18 +203,18 @@ private theorem rejected_law : ¬ arena.{u,v,w}.Law rejected := by
   obtain ⟨φ, hf⟩ := h one_bag (fun i j h => False.elim h)
     pairProbability (fun _ _ => by norm_num [pairProbability])
     (fun _ x h => (h (Set.mem_univ x)).elim) pairProbability_total
-    1 0 (by norm_num) le_rfl (fun _ _ _ _ _ _ => by norm_num [pairProbability])
+    1 0 le_rfl (fun _ _ _ _ _ _ => by norm_num [pairProbability])
     (fun _ _ h => False.elim h) 0 (fun _ i j _ _ => by simp [Subsingleton.elim j i])
-    (E := ULift.{v} ℝ) (fun _ _ => 0) 0 le_rfl (by simp) (by simp)
+    (E := ULift.{w} ℝ) (fun _ _ => 0) 0 le_rfl (by simp) (by simp)
   have hn := (hf a b pair_adj).1
-  change ‖(0 : ULift.{v} ℝ) - (φ b - φ a)‖ ≤ -1 at hn
-  linarith [norm_nonneg ((0 : ULift.{v} ℝ) - (φ b - φ a))]
+  change ‖(0 : ULift.{w} ℝ) - (φ b - φ a)‖ ≤ -1 at hn
+  linarith [norm_nonneg ((0 : ULift.{w} ℝ) - (φ b - φ a))]
 
 def family : Registration arena.{u,v,w}
-    (type_of% (@cliqueTree_occurrenceCenter_banach_potential.{u,w,v})) where
+    (type_of% (@cliqueTree_occurrenceCenter_banach_potential.{u,v,w})) where
   actual := actual
   bridge := Iff.rfl
-  variation := ⟨@cliqueTree_occurrenceCenter_banach_potential.{u,w,v}, rejected, rejected_law⟩
+  variation := ⟨@cliqueTree_occurrenceCenter_banach_potential.{u,v,w}, rejected, rejected_law⟩
   sensitivity := SingleDependentReadout.sensitivity arena.Law actual rejected rejected_law
   dependence := by
     intro _
@@ -222,7 +222,7 @@ def family : Registration arena.{u,v,w}
     norm_num [actual, realize]
 
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-    (@cliqueTree_occurrenceCenter_banach_potential.{u,w,v})
+    (@cliqueTree_occurrenceCenter_banach_potential.{u,v,w})
     (Realization signature) Unit Unit where
   unitName := `SimpleGraph.cliqueTree_occurrenceCenter_banach_potential.__information_unit
   realizationName := `Reg.D5.S3.Combinatorics.Graph.Chordal.WeightedSimplicialBanachPotential.Occurrence.family
@@ -243,13 +243,13 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   sourceSelection := some {
     owner := `D5.S3.Combinatorics.Graph.Chordal.WeightedSimplicialBanachPotential
     definition := none
-    coordinates := #[13,14,19]
+    coordinates := #[13,14,18]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body",
         "body", "body", "body", "body", "body", "body", "body", "body", "body", "body",
-        "body", "body", "body", "body", "body", "body", "body", "body", "arg", "body",
-        "body", "body", "body", "fn", "arg", "arg"]
-      stateBinder := 25
+        "body", "body", "body", "body", "body", "body", "body", "arg", "body", "body",
+        "body", "body", "fn", "arg", "arg"]
+      stateBinder := 24
       functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }
@@ -296,7 +296,7 @@ private theorem separator_mass_uniform (hK₀ : ∀ a, (K a).Nonempty)
     1/c ≤ ((K a ∩ K b).ncard : ℝ) / M :=
       (div_le_div_iff₀ (by linarith) hM).2 (by simpa [M, mul_comm] using hsize)
     _ = ∑ x ∈ (K a ∩ K b).toFinite.toFinset, 1/M := by
-      simp only [Finset.sum_const, nsmul_eq_mul, ← Set.ncard_eq_toFinset_card, div_eq_mul_inv]
+      simp only [Finset.sum_const, nsmul_eq_mul, ← Set.ncard_eq_toFinset_card, div_eq_mul_inv, one_mul]
     _ ≤ _ := Finset.sum_le_sum fun x hx => by
       have hx' : x ∈ K a ∩ K b := by simpa using hx
       simp only [uniform, hx'.1, hx'.2, ite_true, le_min_iff]
@@ -327,7 +327,7 @@ private theorem reconstruct_from_probabilities (hK : IsCliqueTree T G K)
     ∃ φ : V → E, ∀ x y, G.Adj x y →
       ‖g x y - (φ y - φ x)‖ ≤ (1 + 4*(((D+1)/2 : ℕ) : ℝ)*d)*ε ∧
       (D ≤ 1 → ‖g x y - (φ y - φ x)‖ ≤ (1+2*d)*ε) :=
-  cliqueTree_occurrenceCenter_banach_potential hK hsep π hπ hsupp htotal 1 d zero_le_one hd₀
+  cliqueTree_occurrenceCenter_banach_potential hK hsep π hπ hsupp htotal 1 d hd₀
     (fun a x y _ _ _ => by linarith [hπ a x, hπ a y]) hd D hD g ε hε hskew htri
 
 example (hK : IsCliqueTree T G K) (hsep : ∀ a b, T.Adj a b → (K a ∩ K b).Nonempty)
