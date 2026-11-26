@@ -132,29 +132,3 @@ def registration :
   options := #[]
 
 end Reg.D5.S3.HilbertOperators.FiniteCyclicProjectionStrong
-
-namespace SupplierAudit
-open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
-open _root_.D5.S3.HilbertOperators.FiniteCyclicProjectionStrong
-open Reg.D5.S3.HilbertOperators.FiniteCyclicProjectionStrong
-noncomputable section
-
-private abbrev norm_cycle_le_arena : Arena where
-  signature := signature.{u,v}
-  Law R := ∀ {k : Type u} [RCLike k] {H : Type v} [NormedAddCommGroup H]
-    [InnerProductSpace k H] [CompleteSpace H] (Us : List (ClosedSubmodule k H)) (z : H), ‖R.readout () (@Parameters.mk k inferInstance H inferInstance inferInstance inferInstance Us) z 1‖ ≤ ‖z‖
-private theorem norm_cycle_le_actual : norm_cycle_le_arena.{u,v}.Law actual := @norm_cycle_le.{u,v}
-def norm_cycle_le_attempt : Registration norm_cycle_le_arena.{u,v} (type_of% (@norm_cycle_le.{u,v})) where
-  actual := actual
-  bridge := Iff.rfl
-
-private abbrev cycle_fixed_iff_arena : Arena where
-  signature := signature.{u,v}
-  Law R := ∀ {k : Type u} [RCLike k] {H : Type v} [NormedAddCommGroup H]
-    [InnerProductSpace k H] [CompleteSpace H] (Us : List (ClosedSubmodule k H)) (z : H), (R.readout () (@Parameters.mk k inferInstance H inferInstance inferInstance inferInstance Us) z 1 = z ↔ ∀ U ∈ Us, z ∈ U)
-private theorem cycle_fixed_iff_actual : cycle_fixed_iff_arena.{u,v}.Law actual := @cycle_fixed_iff.{u,v}
-def cycle_fixed_iff_attempt : Registration cycle_fixed_iff_arena.{u,v} (type_of% (@cycle_fixed_iff.{u,v})) where
-  actual := actual
-  bridge := Iff.rfl
-
-end SupplierAudit

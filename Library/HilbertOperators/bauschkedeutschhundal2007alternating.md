@@ -40,23 +40,3 @@ publication is not the source of a direct quotation here.
 https://arxiv.org/pdf/0710.2387v1, printed page 1, Theorem 1.1: the
 classical von Neumann two-subspace strong convergence theorem for closed
 linear subspaces of a real or complex Hilbert space.
-
-## Finite-family inclination and geometric rates
-
-Badea, Grivaux and Müller, arXiv:1006.2047, Section 4.1,
-Theorem 4.1, identifies vanishing inclination with failure of uniform
-convergence for products of at least two orthogonal projections in a
-complex Hilbert space. The quantitative remark in Section 4.2 proves
-that a product visiting all members in m steps has norm on the common
-orthogonal complement at most sqrt(1-ell²/m²), for the inclination ell.
-
-The cyclic-rate formalization uses an explicit positive residual
-observation constant, without defining the inclination infimum. Its
-energy proof gives the squared-error factor (1-ell²/m²)^n for the actual
-ordered product and its actual common-intersection projection. A
-maximal member residual and the one-cycle displacement bound prove the
-converse. The formal statements include real scalars, singleton lists,
-repetitions, zero spaces, and top and bottom subspaces. These cases are
-proved directly and are not attributed to the paper's complex N≥2
-statement. The results are established mathematics; no novelty claim
-is made.
