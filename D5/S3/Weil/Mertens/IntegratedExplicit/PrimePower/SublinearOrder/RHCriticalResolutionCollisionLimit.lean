@@ -7,6 +7,7 @@
    digest: A uniform upper pair-correlation bound yields the harmonic zeta collision limit at critical resolution. -/
 
 import D5.S3.Analytic.Oscillation.MontgomeryWindow
+import D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower.SublinearOrder.OmittedSpectrumCutoff
 import D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower.SublinearOrder.RHLogarithmicCollisionLimit
 import D5.S3.Weil.ZetaExplicit.LandauUniformCutoff
 
@@ -24,7 +25,6 @@ open D5.S3.Fourier.Concentration.FiniteTailMomentMissingWindow (complexScore com
 open scoped BigOperators
 open D5.S3.Fourier.Concentration.FiniteTailMomentMissingWindow (character_add)
 open D5.S3.Fourier.Concentration.FiniteSincCollisionMoment (phase_re)
-open D5.S3.Fourier.Concentration.FiniteTailMomentMissingWindow (score_conj)
 open D5.S3.Analytic.Oscillation.MontgomeryWindow
   (exponentialWeight exponentialWeight_integrable exponentialWeight_cosine
     exponentialWeight_mul_cos_integrable)
@@ -43,8 +43,9 @@ open D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower.SublinearOrder.RHLandauWin
 open D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower.SublinearOrder.RHLogarithmicCollisionLimit
   (harmonicOrdinate harmonicProbability)
 open D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower.SublinearOrder.RHLogarithmicCollisionLimit
-  (harmonicScale centralIntegral_scale annulusIntegral_le logarithmic_window_decay
-    score_power_le_exp whole_log_window_deficit ramp_eq_fejer normalized_collision_eq_div_mass)
+  (harmonicScale harmonic_central_window_limit harmonic_multiple_log_annulus_limit
+    harmonic_fejer_relative_control normalized_harmonic_collision_limit_of_fejer
+    whole_log_window_deficit normalized_collision_eq_div_mass)
 open D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower.SublinearOrder.RHHarmonicPairMoment
 open D5.S3.Fourier.Concentration.FejerRelativeLocalization
 open D5.S3.Fourier.Concentration.FejerCollisionVariance
@@ -52,7 +53,7 @@ open D5.S3.Fourier.Concentration.FejerCollisionLimit
 open D5.S3.Fourier.Concentration.FiniteTailMomentMissingWindow
 open D5.S3.Fourier.Concentration.FiniteSincCollisionMoment
 open D5.S3.Fourier.Asymptotics.MovingFejerGaussianPrincipal
-open D5.S3.Fourier.Asymptotics.FinitePairGaussianLimit
+open D5.S3.Fourier.Asymptotics.FinitePairGaussianLimit (score_square_cosine)
 open D5.S3.Analytic.Fourier.AngularFejerKernel
 open D5.S3.Weil.ZetaExplicit.LandauUniformCutoff (actual_cutoff_landau_envelope)
 open Finset
@@ -110,15 +111,8 @@ private theorem peak_cube_le_energy
 
 private lemma phase_change (g t u : ℝ) :
     ‖phase g t - phase g (t - u)‖ ≤ |g| * |u| := by
-  have hphase : phase g t = phase g (t - u) * Complex.exp (Complex.I * ((g * u : ℝ) : ℂ)) := by
-    unfold phase
-    rw [← Complex.exp_add]
-    congr 1
-    push_cast
-    ring
-  rw [hphase, ← mul_sub_one, norm_mul, norm_phase, one_mul]
-  simpa only [Real.norm_eq_abs, abs_mul] using
-    (Real.norm_exp_I_mul_ofReal_sub_one_le (x := g * u))
+  simpa only [phase, sub_sub_cancel, mul_comm, mul_left_comm, mul_assoc] using
+    (unit_phase_diff g t (t - u))
 
 private theorem score_cube_le_energy {J : Type*} [Fintype J]
     (g w : J → ℝ) (Y t : ℝ) (hY : 1 ≤ Y)
@@ -164,29 +158,6 @@ private theorem score_cube_le_energy {J : Type*} [Fintype J]
       (peak_cube_le_energy f M Y hM hY hf (fun _ => norm_nonneg _) (by simpa [f] using hbound t)
         hshift hi)
 
-private theorem square_eq_cos_sum {J : Type*} [Fintype J]
-    (g w : J → ℝ) (t : ℝ) :
-    ‖complexScore g w t‖ ^ 2 =
-      ∑ j, ∑ k, w j * w k * Real.cos ((g j - g k) * t) := by
-  have hprod :
-      complexScore g w t * star (complexScore g w t) =
-        ∑ j, ∑ k, ((w j * w k : ℝ) : ℂ) * phase (g j - g k) t := by
-    rw [score_conj]
-    unfold complexScore
-    rw [Finset.sum_mul]
-    apply Finset.sum_congr rfl
-    intro j _
-    rw [Finset.mul_sum]
-    apply Finset.sum_congr rfl
-    intro k _
-    rw [sub_eq_add_neg, character_add, Complex.ofReal_mul]
-    ring
-  change complexScore g w t * (starRingEnd ℂ (complexScore g w t)) = _ at hprod
-  rw [Complex.mul_conj'] at hprod
-  simpa only [← Complex.ofReal_pow, Complex.ofReal_re, Complex.re_sum,
-    Complex.re_ofReal_mul, phase_re] using
-    congrArg Complex.re hprod
-
 private theorem energy_eq_cos_sum {J : Type*} [Fintype J]
     (g w : J → ℝ) (t : ℝ) :
     (∫ u : ℝ, exponentialWeight u * ‖complexScore g w (t-u)‖ ^ 2) =
@@ -196,7 +167,7 @@ private theorem energy_eq_cos_sum {J : Type*} [Fintype J]
       Integrable (fun u : ℝ => (w j * w k) *
         (exponentialWeight u * Real.cos ((g j - g k) * (t - u)))) :=
     (exponentialWeight_mul_cos_integrable _ _).const_mul _
-  simp_rw [square_eq_cos_sum g w, Finset.mul_sum,
+  simp_rw [score_square_cosine g w, Finset.mul_sum,
     show ∀ a b c : ℝ, a * (b * c) = b * (a * c) from fun a b c => by ring]
   rw [integral_finsetSum _ (fun j _ => integrable_finsetSum _ (fun k _ => hi j k))]
   simp_rw [integral_finsetSum _ (fun k _ => hi _ k), integral_const_mul, exponentialWeight_cosine]
@@ -377,181 +348,6 @@ private theorem critical_window_deficit (rh : RiemannHypothesis)
         (mul_le_mul_of_nonneg_right (by norm_num) (Real.log_pos hH).le)).trans
       (hlong t (le_of_not_ge hb) hhi)
 
-private theorem harmonic_central_window_limit (rh : RiemannHypothesis) (T η : ℕ → ℝ)
-    (hT : Tendsto T atTop atTop)
-    (hη : ∀ᶠ n : ℕ in atTop, 0 < η n)
-    (hh : Tendsto (fun n : ℕ => (Real.log (T n))^2 / (n : ℝ)) atTop (𝓝 0))
-    (hr : Tendsto (fun n : ℕ => η n / harmonicScale rh T n) atTop (𝓝 0))
-    :
-    Tendsto (fun n : ℕ => harmonicScale rh T n / η n *
-      ∫ t in -(1 / T n)..1 / T n, K (η n) t *
-        ‖complexScore (harmonicOrdinate rh (T n)) (harmonicProbability rh (T n)) t‖^(2*n))
-      atTop (𝓝 (1 / (2 * Real.sqrt Real.pi))) := by
-  let g (n : ℕ) := harmonicOrdinate rh (T n)
-  let w (n : ℕ) := harmonicProbability rh (T n)
-  let P (n k : ℕ) := pairMoment (g n) (w n) k
-  let s := harmonicScale rh T
-  let A (n : ℕ) := s n / T n
-  have hlog := Real.tendsto_log_atTop.comp hT
-  have hn : ∀ᶠ n : ℕ in atTop, 0 < (n : ℝ) :=
-    (eventually_gt_atTop (0 : ℕ)).mono fun n h => by exact_mod_cast h
-  have hPair := hT.eventually (harmonic_pair_bounds rh)
-  have hw : ∀ᶠ n : ℕ in atTop, ∀ j, 0 ≤ w n j :=
-    hPair.mono fun _ h => h.2.1
-  have hw1 : ∀ᶠ n : ℕ in atTop, ∑ j, w n j = 1 :=
-    hPair.mono fun _ h => h.2.2.1
-  have hM : ∀ᶠ n : ℕ in atTop, 0 < P n 2 := by
-    filter_upwards [hPair, hT.eventually_gt_atTop 1] with n hp hTn
-    exact (div_pos (sq_pos_of_pos (zero_lt_one.trans hTn))
-      (mul_pos (by norm_num) (Real.log_pos hTn))).trans_le hp.2.2.2.2.2.1
-  have hscale : ∀ᶠ n : ℕ in atTop, 0 < s n ∧ s n ^ 2 = (n : ℝ) * P n 2 / 2 := by
-    filter_upwards [hn, hM] with n hn hP
-    refine ⟨Real.sqrt_pos.2 ?_, Real.sq_sqrt ?_⟩ <;> positivity
-  have hA : Tendsto A atTop atTop := by
-    refine tendsto_atTop.2 fun B => ?_
-    let B' := max 1 B
-    have hB : 0 < B' := zero_lt_one.trans_le (le_max_left _ _)
-    have hE : 0 < 1 / (8192 * B'^2) := by positivity
-    filter_upwards [hT.eventually_gt_atTop 1, hlog.eventually_ge_atTop 1, hn, hPair, hscale,
-      hh.eventually_lt_const hE] with n hTn hLog hn hPair hs hq
-    have hTpos := zero_lt_one.trans hTn
-    change 1 ≤ Real.log (T n) at hLog
-    have hLogpos := zero_lt_one.trans_le hLog
-    have hq' : (8192 * B'^2) * Real.log (T n)^2 ≤ (n : ℝ) := by
-      have h := (div_lt_iff₀ hn).1 hq
-      rw [one_div, inv_mul_eq_div] at h
-      have hh := (lt_div_iff₀ (by positivity : 0 < 8192 * B'^2)).1 h
-      simpa only [mul_comm (Real.log (T n)^2)] using hh.le
-    have hlogSq : Real.log (T n) ≤ Real.log (T n)^2 := by
-      nlinarith only [mul_nonneg (sub_nonneg.mpr hLog) hLogpos.le]
-    have hq'' := (mul_le_mul_of_nonneg_left hlogSq
-      (show 0 ≤ 8192 * B'^2 by positivity)).trans hq'
-    have hLow : (T n)^2 / (4096 * Real.log (T n)) ≤ P n 2 := hPair.2.2.2.2.2.1
-    have hLow' := (div_le_iff₀ (by positivity : 0 < 4096 * Real.log (T n))).1 hLow
-    have hp := mul_le_mul_of_nonneg_left hq'' (show 0 ≤ P n 2 from
-      ((div_nonneg (sq_nonneg _) (by positivity)).trans hLow))
-    have hb := mul_le_mul_of_nonneg_left hLow' (show 0 ≤ B'^2 from sq_nonneg _)
-    have hs' : (B' * T n)^2 ≤ s n ^ 2 := by
-      rw [hs.2, mul_pow]
-      nlinarith only [hp, hb]
-    exact (le_max_right 1 B).trans ((le_div_iff₀ hTpos).2
-      ((sq_le_sq₀ (mul_nonneg hB.le hTpos.le) hs.1.le).1 hs'))
-  have hwin : ∀ᶠ n : ℕ in atTop, A n ^ 2 * P n 4 ≤ 6 * (n : ℝ) * P n 2 ^ 2 := by
-    filter_upwards [hT.eventually_gt_atTop 1, hn, hPair, hscale] with n hTn hn hp hs
-    have hb : P n 4 ≤ (T n)^2 * P n 2 := hp.2.2.2.2.2.2
-    calc
-      A n ^ 2 * P n 4 ≤ A n ^ 2 * ((T n)^2 * P n 2) :=
-        mul_le_mul_of_nonneg_left hb (sq_nonneg _)
-      _ = s n ^ 2 * P n 2 := by dsimp [A]; field_simp
-      _ ≤ _ := by
-        rw [hs.2]
-        nlinarith only [mul_nonneg hn.le (sq_nonneg (P n 2))]
-  have hcenter := central_fejer_gaussian_limit g w
-    (hw.mono fun _ hn i j => mul_nonneg (hn i) (hn j)) hw1 hM
-    (fun n : ℕ => η n / s n) A hr hA hwin
-  apply hcenter.congr'
-  filter_upwards [hscale, hη, hT.eventually_gt_atTop 1] with n hs he hTn
-  have hEq : A n / s n = 1 / T n := by dsimp [A]; field_simp [hs.1.ne']
-  have hsc := (centralIntegral_scale (g n) (w n) n (A := A n) hs.1 he).symm
-  rw [hEq] at hsc
-  exact hsc
-
-private theorem harmonic_multiple_log_annulus_limit (rh : RiemannHypothesis) (T η : ℕ → ℝ)
-    (B : ℝ) (hB : 1 < B)
-    (hT : Tendsto T atTop atTop)
-    (hη : ∀ᶠ n : ℕ in atTop, 0 < η n)
-    (hh : Tendsto (fun n : ℕ => (Real.log (T n))^2 / (n : ℝ)) atTop (𝓝 0))
-    (hd : ∀ᶠ H : ℝ in atTop, ∀ t : ℝ, 1 / H ≤ |t| → |t| ≤ B * Real.log H →
-      1 / (1048576 * Real.log H) ≤
-        1 - ‖complexScore (harmonicOrdinate rh H) (harmonicProbability rh H) t‖) :
-    let F (n : ℕ) (t : ℝ) := K (η n) t *
-      ‖complexScore (harmonicOrdinate rh (T n)) (harmonicProbability rh (T n)) t‖^(2*n)
-    Tendsto (fun n : ℕ => harmonicScale rh T n / η n *
-      ((∫ t in -(B * Real.log (T n))..B * Real.log (T n), F n t) -
-      (∫ t in -(1 / T n)..1 / T n, F n t))) atTop (𝓝 0) := by
-  intro F
-  let c : ℝ := 1 / 1048576
-  have hc : 0 < c := by norm_num [c]
-  have hdecay := (logarithmic_window_decay T hT hh hc).div_const Real.pi
-  rw [zero_div] at hdecay
-  have hdecay := hdecay.const_mul B
-  rw [mul_zero] at hdecay
-  apply tendsto_of_tendsto_of_tendsto_of_le_of_le' tendsto_const_nhds hdecay
-  · filter_upwards [hη, hT.eventually_ge_atTop (Real.exp 1)] with n hηn hTn
-    have hTpos : 0 < T n := (Real.exp_pos _).trans_le hTn
-    have hTL : 1 ≤ Real.log (T n) := by
-      simpa using Real.log_le_log (Real.exp_pos 1) hTn
-    have hwin₀ : 1 / T n ≤ Real.log (T n) :=
-      ((div_le_one hTpos).2 (Real.one_le_exp_iff.2 zero_le_one |>.trans hTn)).trans hTL
-    have hwin : 1 / T n ≤ B * Real.log (T n) := hwin₀.trans (by
-      nlinarith only [mul_nonneg (show 0 ≤ B-1 by linarith) (show 0 ≤ Real.log (T n) by linarith)])
-    have hf : Continuous (F n) :=
-      (K_continuous _).mul ((complexScore_continuous _ _).norm.pow _)
-    have hF0 (t : ℝ) : 0 ≤ F n t := mul_nonneg ((fejer_law hηn).1 t) (by positivity)
-    apply mul_nonneg (by dsimp [harmonicScale]; positivity)
-    apply sub_nonneg.2
-    exact intervalIntegral.integral_mono_interval (neg_le_neg hwin)
-      (by linarith [one_div_pos.mpr hTpos]) hwin (ae_of_all _ hF0) (hf.intervalIntegrable _ _)
-  · filter_upwards [hη, hT.eventually hd, hT.eventually (harmonic_pair_bounds rh),
-      hT.eventually_ge_atTop (Real.exp 1)] with n hηn hdn hpair hTn
-    have hTpos : 0 < T n := (Real.exp_pos _).trans_le hTn
-    have hTL : 1 ≤ Real.log (T n) := by
-      simpa using Real.log_le_log (Real.exp_pos 1) hTn
-    have hwin₀ : 1 / T n ≤ Real.log (T n) :=
-      ((div_le_one hTpos).2 (Real.one_le_exp_iff.2 zero_le_one |>.trans hTn)).trans hTL
-    have hwin : 1 / T n ≤ B * Real.log (T n) := hwin₀.trans (by
-      nlinarith only [mul_nonneg (show 0 ≤ B-1 by linarith) (show 0 ≤ Real.log (T n) by linarith)])
-    obtain ⟨_, hw, hw1, _, _, _, _⟩ := hpair
-    change (∑ j, harmonicProbability rh (T n) j) = 1 at hw1
-    let m := pairMoment (harmonicOrdinate rh (T n)) (harmonicProbability rh (T n)) 2
-    have hm2 : m ≤ (T n)^2 := by
-      change ∑ i, ∑ j, harmonicProbability rh (T n) i * harmonicProbability rh (T n) j *
-        (ordinate i.1 - ordinate j.1) ^ 2 ≤ (T n)^2
-      have hsp (j : ↥(positiveCutoff rh (T n))) : 0 < ordinate j.1 ∧ ordinate j.1 ≤ T n :=
-        ⟨j.1.property.2, (cutoff_mem rh _ _).1 j.2⟩
-      calc
-        _ ≤ ∑ i, ∑ j, harmonicProbability rh (T n) i * harmonicProbability rh (T n) j *
-            (T n)^2 := by
-          refine sum_le_sum fun i _ => sum_le_sum fun j _ => ?_
-          apply mul_le_mul_of_nonneg_left _ (mul_nonneg (hw i) (hw j))
-          apply sq_le_sq.mpr
-          rw [abs_of_pos hTpos]
-          exact abs_le.2 ⟨by linarith [(hsp i).1, (hsp j).2], by linarith [(hsp j).1, (hsp i).2]⟩
-        _ = _ := by
-          simp_rw [mul_assoc, ← Finset.mul_sum, ← Finset.sum_mul]
-          change (∑ j, harmonicProbability rh (T n) j) *
-            ((∑ j, harmonicProbability rh (T n) j) * (T n)^2) = _
-          rw [hw1, one_mul, one_mul]
-    have hscale : harmonicScale rh T n ≤ Real.sqrt (n : ℝ) * T n := by
-      unfold harmonicScale
-      have hs := Real.sqrt_le_sqrt (show (n : ℝ) * m / 2 ≤ (n : ℝ) * (T n)^2 from by
-        nlinarith only [mul_le_mul_of_nonneg_left hm2 (Nat.cast_nonneg n),
-          mul_nonneg (Nat.cast_nonneg n : (0 : ℝ) ≤ n) (sq_nonneg (T n))])
-      simpa only [Real.sqrt_mul (Nat.cast_nonneg n : (0 : ℝ) ≤ n), Real.sqrt_sq hTpos.le] using hs
-    let E := Real.exp (-(2 * c * (n : ℝ) / Real.log (T n)))
-    have hE : 0 ≤ E := (Real.exp_pos _).le
-    have hf : Continuous (F n) :=
-      (K_continuous _).mul ((complexScore_continuous _ _).norm.pow _)
-    have hann := annulusIntegral_le (F n) hf (one_div_pos.mpr hTpos).le hwin
-      (D := η n / (2 * Real.pi) * E) (fun t hlo hhi => by
-        apply mul_le_mul (K_cap hηn t) _ (by positivity) (by positivity)
-        have h := score_power_le_exp _ _ (norm_nonneg _) (hdn t hlo hhi) n
-        convert h using 2
-        dsimp [E, c]
-        ring)
-    have hr : 0 ≤ harmonicScale rh T n / η n := by dsimp [harmonicScale]; positivity
-    calc
-      _ ≤ harmonicScale rh T n / η n * (2 * (B * Real.log (T n) - 1 / T n) *
-          (η n / (2 * Real.pi) * E)) := mul_le_mul_of_nonneg_left hann hr
-      _ = harmonicScale rh T n * (B * Real.log (T n) - 1 / T n) * E / Real.pi := by
-        field_simp [hηn.ne', Real.pi_ne_zero]
-      _ ≤ (Real.sqrt (n : ℝ) * T n * (B * Real.log (T n)) * E) / Real.pi := by
-        apply div_le_div_of_nonneg_right _ Real.pi_pos.le
-        apply mul_le_mul_of_nonneg_right _ hE
-        refine mul_le_mul hscale (by linarith [one_div_pos.mpr hTpos]) (sub_nonneg.mpr hwin) ?_
-        exact mul_nonneg (Real.sqrt_nonneg _) hTpos.le
-      _ = B * (Real.sqrt (n : ℝ) * T n * Real.log (T n) * E / Real.pi) := by ring
-
 private theorem tendsto_of_relative_windows {F : ℕ → ℝ} {c : ℝ} (hc : 0 ≤ c)
     (happrox : ∀ ε > (0 : ℝ), ∃ I : ℕ → ℝ, Tendsto I atTop (𝓝 c) ∧
       ∀ᶠ n in atTop, I n ≤ F n ∧ F n - I n ≤ ε * F n) :
@@ -605,7 +401,7 @@ private theorem critical_harmonic_full_fejer_limit (rh : RiemannHypothesis)
     linarith
   let I (n : ℕ) := s n / η n * (∫ t in -(A * Real.log (T n))..A * Real.log (T n), F n t)
   have hψ := harmonic_central_window_limit rh T η hT hη hh hr
-  have hz := harmonic_multiple_log_annulus_limit rh T η A hA hT hη hh
+  have hz := harmonic_multiple_log_annulus_limit rh T η A hA.le hT hη hh
     (critical_window_deficit rh hcorr A hA)
   refine ⟨I, ?_, ?_⟩
   · simpa only [add_zero] using (hψ.add hz).congr (fun n : ℕ => by dsimp [F, I, s]; ring)
@@ -630,25 +426,11 @@ private theorem critical_harmonic_full_fejer_limit (rh : RiemannHypothesis)
       have hu := (div_le_iff₀ (mul_pos ha hε)).1 hAr
       apply (div_le_iff₀ (mul_pos hηn hRpos)).2
       nlinarith only [hu, mul_le_mul_of_nonneg_left haR hε.le]
-    have hg : Integrable (F n) := by
-      dsimp [F]
-      simp_rw [moment_eq_pair]
-      exact kernel_pair_integrable _ _ _ hηn
-    have hn : ∀ t, 0 ≤ F n t := fun t => mul_nonneg ((fejer_law hηn).1 t) (by positivity)
-    have hleft : (∫ t in -R..R, F n t) ≤ ∫ t : ℝ, F n t := by
-      rw [intervalIntegral.integral_of_le (by linarith [hRpos])]
-      exact setIntegral_le_integral hg (ae_of_all _ hn)
-    have hscale : 0 ≤ s n / η n := by dsimp [s, harmonicScale]; positivity
-    have he := relative_fejer_truncation (harmonicOrdinate rh (T n))
-      (harmonicProbability rh (T n)) hpair.2.1 n hηn hR
-    change (∫ t : ℝ, F n t) - (∫ t in -R..R, F n t) ≤
-      (64 / (η n * R)) * ∫ t : ℝ, F n t at he
-    have hright := he.trans (mul_le_mul_of_nonneg_right hcoef
-      (integral_nonneg hn))
-    refine ⟨mul_le_mul_of_nonneg_left hleft hscale, ?_⟩
-    dsimp only [I]
-    rw [← mul_sub]
-    convert mul_le_mul_of_nonneg_left hright hscale using 1; ring
+    have hrel := harmonic_fejer_relative_control rh T η hηn hR hpair.2.1
+    have hwhole : 0 ≤ s n / η n * ∫ t : ℝ, F n t := by
+      exact mul_nonneg (by dsimp [s, harmonicScale]; positivity)
+        (integral_nonneg fun t => mul_nonneg ((fejer_law hηn).1 t) (by positivity))
+    exact ⟨hrel.1, hrel.2.trans (mul_le_mul_of_nonneg_right hcoef hwhole)⟩
 
 private theorem normalized_critical_harmonic_collision_limit (rh : RiemannHypothesis)
     (hcorr : MontgomeryUpperBoundOnLogBands (zetaSpectrum rh)) (T η : ℕ → ℝ)
@@ -660,62 +442,18 @@ private theorem normalized_critical_harmonic_collision_limit (rh : RiemannHypoth
     Tendsto (fun n : ℕ => harmonicScale rh T n / η n *
       tailCollisionMass (harmonicOrdinate rh (T n)) (harmonicProbability rh (T n)) n (η n))
       atTop (𝓝 (1 / Real.sqrt Real.pi)) := by
-  let s := harmonicScale rh T
-  let g (n : ℕ) := harmonicOrdinate rh (T n)
-  let w (n : ℕ) := harmonicProbability rh (T n)
-  let S (n : ℕ) := piAntidiag (univ : Finset ↥(positiveCutoff rh (T n))) n
-  let X (n : ℕ) := monomialFrequency (g n)
-  let W (n : ℕ) := monomialWeight (w n)
-  let B (n : ℕ) := s n / η n ^ 2
-  let c := 1 / (2 * Real.sqrt Real.pi)
-  have hB : ∀ᶠ n : ℕ in atTop, 0 ≤ B n := by
-    filter_upwards with n
-    dsimp [B, s, harmonicScale]
-    positivity
-  have hw : ∀ᶠ n : ℕ in atTop, ∀ j, 0 ≤ w n j :=
-    (hT.eventually (harmonic_pair_bounds rh)).mono fun _ h => h.2.1
-  have hW : ∀ᶠ n : ℕ in atTop, ∀ i ∈ S n, ∀ j ∈ S n, 0 ≤ W n i * W n j :=
-    hw.mono fun n hw i _ j _ =>
-      mul_nonneg (monomialWeight_nonneg (w n) hw i) (monomialWeight_nonneg (w n) hw j)
-  have hπ := Real.sqrt_pos.2 Real.pi_pos
-  have hder : HasDerivAt (fun x : ℝ => c * x ^ 2) (1 / Real.sqrt Real.pi) 1 := by
-    convert (hasDerivAt_pow 2 (1 : ℝ)).const_mul c using 1
-    dsimp [c]
-    norm_num
-    field_simp
-  have hlimit := collision_ramp_tendsto_hard S X W hW B η hB (fun x => c * x^2) 1
-    (1 / Real.sqrt Real.pi) (1/2) (by norm_num) hder
-  have hlocal : ∀ x : ℝ, |x - 1| < 1/2 →
-      Tendsto (fun n : ℕ => B n * rampCollisionMass (S n) (X n) (W n) (x * η n))
-        atTop (𝓝 (c * x^2)) := by
-    intro x hx
-    have hxpos : 0 < x := by linarith [(abs_lt.mp hx).1]
-    let ε (n : ℕ) := x * η n
-    have hε : ∀ᶠ n : ℕ in atTop, 0 < ε n := hη.mono fun _ he => mul_pos hxpos he
-    have hεr : Tendsto (fun n : ℕ => ε n / s n) atTop (𝓝 0) := by
-      simpa only [ε, s, mul_div_assoc, mul_zero] using hr.const_mul x
-    have hεresolution : ∃ a > (0 : ℝ), ∀ᶠ n in atTop, a ≤ ε n * Real.log (T n) := by
-      obtain ⟨a, ha, hbound⟩ := hresolution
-      refine ⟨x*a, mul_pos hxpos ha, hbound.mono ?_⟩
-      intro n hn
-      simpa only [ε, mul_assoc] using mul_le_mul_of_nonneg_left hn hxpos.le
-    have hF := (critical_harmonic_full_fejer_limit rh hcorr T ε hT hε hh hεr hεresolution).const_mul (x^2)
-    rw [mul_comm (x^2) c] at hF
-    apply hF.congr'
-    filter_upwards [hε, hη] with n he hn
-    change _ = B n * rampCollisionMass (piAntidiag univ n)
-      (monomialFrequency (g n)) (monomialWeight (w n)) (ε n)
-    rw [ramp_eq_fejer (g n) (w n) n he]
-    dsimp [B, ε]
-    field_simp
-    ring
-  have hout := hlimit hlocal
-  apply hout.congr'
-  filter_upwards [hη] with n hn
-  simp only [one_mul]
-  change (B n * η n) * _ = (s n / η n) * _
-  rw [show B n * η n = s n / η n by dsimp [B]; field_simp]
-  rfl
+  apply normalized_harmonic_collision_limit_of_fejer rh T η hT hη
+  intro x hx
+  let ε (n : ℕ) := x * η n
+  have hε : ∀ᶠ n : ℕ in atTop, 0 < ε n := hη.mono fun _ he => mul_pos hx he
+  have hεr : Tendsto (fun n : ℕ => ε n / harmonicScale rh T n) atTop (𝓝 0) := by
+    simpa only [ε, mul_div_assoc, mul_zero] using hr.const_mul x
+  have hεresolution : ∃ a > (0 : ℝ), ∀ᶠ n in atTop, a ≤ ε n * Real.log (T n) := by
+    obtain ⟨a, ha, hbound⟩ := hresolution
+    refine ⟨x*a, mul_pos hx ha, hbound.mono ?_⟩
+    intro n hn
+    simpa only [ε, mul_assoc] using mul_le_mul_of_nonneg_left hn hx.le
+  exact critical_harmonic_full_fejer_limit rh hcorr T ε hT hε hh hεr hεresolution
 
 /-- At positive critical resolution, the uniform upper pair-correlation bound
 suffices for the Gaussian hard-band limit of actual harmonic zeta collisions. -/

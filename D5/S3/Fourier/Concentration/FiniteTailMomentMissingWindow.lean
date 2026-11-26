@@ -101,7 +101,7 @@ private theorem score_pow {J : Type*} [Fintype J] [DecidableEq J]
   rw [mul_assoc, character_sum]
   simp_rw [mul_pow, character_nat_mul, prod_mul_distrib]
 
-theorem score_conj {J : Type*} [Fintype J] (g w : J → ℝ) (t : ℝ) :
+private theorem score_conj {J : Type*} [Fintype J] (g w : J → ℝ) (t : ℝ) :
     star (complexScore g w t) = complexScore (fun j => -g j) w t := by
   unfold complexScore
   change starRingEnd ℂ (∑ j, (w j : ℂ) * phase (g j) t) = _

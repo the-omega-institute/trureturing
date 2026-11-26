@@ -53,7 +53,7 @@ def normalizedMode (q : ℕ) (u : ℝ) (n i : ℕ) : ℂ :=
   (Real.exp (-(2*u/(q : ℝ)-u/(n : ℝ))/2) : ℂ) *
     (rootCoeff n i * Complex.exp (Complex.I * (occurrenceFrequency i : ℂ) * ((u/(n : ℝ) : ℝ) : ℂ)))
 
-private theorem unit_phase_diff (γ v w : ℝ) :
+theorem unit_phase_diff (γ v w : ℝ) :
     ‖Complex.exp (Complex.I * (γ : ℂ) * (v : ℂ)) -
       Complex.exp (Complex.I * (γ : ℂ) * (w : ℂ))‖ ≤ |γ| *|v-w| := by
   let f (x : ℝ) := Complex.exp (Complex.I * (γ : ℂ) * (x : ℂ))
