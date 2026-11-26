@@ -383,4 +383,36 @@ public theorem List.maxIdxOn?.congr_simp : type_of% @_root_.List.maxIdxOn?.congr
     (@Std.OppositeOrderInstances.instDecidableLEOpposite _ le d₂)
     f f rfl xs xs rfl
 
+public theorem List.minOn?_append : type_of% @_root_.List.minOn?_append := by
+  intro β α _ _ _ xs ys f
+  cases xs with
+  | nil => cases ys <;> rfl
+  | cons x xs =>
+    cases ys with
+    | nil => rw [List.append_nil]; rfl
+    | cons y ys =>
+      rw [List.minOn?_eq_some_minOn (xs := (x :: xs) ++ y :: ys) (fun h => nomatch h),
+        List.minOn?_eq_some_minOn (List.cons_ne_nil _ _), List.minOn?_eq_some_minOn (List.cons_ne_nil _ _)]
+      exact congrArg some (List.minOn_append (List.cons_ne_nil _ _) (List.cons_ne_nil _ _))
+
+public theorem List.maxOn?_append : type_of% @_root_.List.maxOn?_append := by
+  intro β α _ _ _ xs ys f
+  cases xs with
+  | nil => cases ys <;> rfl
+  | cons x xs =>
+    cases ys with
+    | nil => rw [List.append_nil]; rfl
+    | cons y ys =>
+      rw [List.maxOn?_eq_some_maxOn (xs := (x :: xs) ++ y :: ys) (fun h => nomatch h),
+        List.maxOn?_eq_some_maxOn (List.cons_ne_nil _ _), List.maxOn?_eq_some_maxOn (List.cons_ne_nil _ _)]
+      exact congrArg some (List.maxOn_append (List.cons_ne_nil _ _) (List.cons_ne_nil _ _))
+
+public theorem List.maxOn?_cons : type_of% @_root_.List.maxOn?_cons := by
+  intro β α _ _ _ f x xs
+  cases xs with
+  | nil => rfl
+  | cons y ys =>
+    rw [List.maxOn?_cons_eq_some_maxOn, List.maxOn?_cons_eq_some_maxOn]
+    exact congrArg some (List.maxOn_cons ..)
+
 end OmegaChecks.InitPort.Alternatives

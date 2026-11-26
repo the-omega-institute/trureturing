@@ -15,6 +15,7 @@ public import OmegaChecks.InitPort.Alternatives.ListScan
 public import OmegaChecks.InitPort.Alternatives.ListSort
 public import OmegaChecks.InitPort.Alternatives.ListSublist
 public import OmegaChecks.InitPort.Alternatives.ListModify
+public import OmegaChecks.InitPort.Alternatives.ListNat
 public import OmegaChecks.InitPort.Alternatives.ListMinMax
 import Init.Data.List.Impl
 import all Init.Data.List.Control
