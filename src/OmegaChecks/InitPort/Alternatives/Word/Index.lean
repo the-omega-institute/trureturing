@@ -438,4 +438,32 @@ public theorem BitVec.append_extractLsb'_of_lt : type_of% @_root_.BitVec.append_
     rw [dite_eq_right low, _root_.BitVec.getElem_extractLsb', Nat.add_sub_of_le (Nat.le_of_not_gt low)]
     rfl
 
+public theorem BitVec.setWidth_setWidth_succ_eq_setWidth_setWidth_of_getLsbD_false :
+    type_of% @_root_.BitVec.setWidth_setWidth_succ_eq_setWidth_setWidth_of_getLsbD_false := by
+  intro w x i hx
+  apply _root_.BitVec.eq_of_getElem_eq
+  intro k hk
+  simp only [_root_.BitVec.getElem_setWidth, _root_.BitVec.getLsbD_setWidth]
+  if eq : k = i then
+    subst k
+    rw [hx, Bool.and_false, Bool.and_false]
+  else
+    rw [show decide (k < i+1) = decide (k < i) from
+      Bool.eq_iff_iff.mpr (decide_eq_true_iff.trans ((show k < i+1 ↔ k < i by omega).trans decide_eq_true_iff.symm))]
+
+public theorem BitVec.setWidth_setWidth_succ_eq_setWidth_setWidth_or_twoPow_of_getLsbD_true :
+    type_of% @_root_.BitVec.setWidth_setWidth_succ_eq_setWidth_setWidth_or_twoPow_of_getLsbD_true := by
+  intro w x i hx
+  apply _root_.BitVec.eq_of_getElem_eq
+  intro k hk
+  simp only [_root_.BitVec.getElem_setWidth, _root_.BitVec.getLsbD_setWidth, _root_.BitVec.getElem_or,
+    _root_.BitVec.getElem_twoPow]
+  if eq : k = i then
+    subst k
+    rw [hx, decide_eq_true (Nat.lt_succ_self i), decide_eq_false (Nat.lt_irrefl i), decide_eq_true rfl]
+    rfl
+  else
+    rw [decide_eq_false eq, Bool.or_false, show decide (k < i+1) = decide (k < i) from
+      Bool.eq_iff_iff.mpr (decide_eq_true_iff.trans ((show k < i+1 ↔ k < i by omega).trans decide_eq_true_iff.symm))]
+
 end OmegaChecks.InitPort.Alternatives

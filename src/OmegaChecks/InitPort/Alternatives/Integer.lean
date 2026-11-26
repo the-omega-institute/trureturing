@@ -643,4 +643,18 @@ public theorem Int.Internal.Linear.Poly.denote_combine_mul_k : type_of% @_root_.
       exact (congrArg (Poly.denote ctx) (Int.Internal.Linear.Poly.mul_k_eq_mul ..)).trans (Poly.denote_mul ..)
     | false => exact combineScaled ..
 
+public theorem Int.ediv_eq_neg_one_of_neg_of_le : type_of% @_root_.Int.ediv_eq_neg_one_of_neg_of_le := by
+  intro a b neg le
+  obtain ⟨n, rfl⟩ := Int.eq_negSucc_of_lt_zero neg
+  obtain ⟨m, rfl⟩ := Int.eq_succ_of_zero_lt (a := b) (by omega)
+  change Int.negSucc (n / (m+1)) = Int.negSucc 0
+  exact congrArg Int.negSucc (Nat.div_eq_of_lt (by omega))
+
+public theorem Int.ediv_eq_one_of_neg_of_le : type_of% @_root_.Int.ediv_eq_one_of_neg_of_le := by
+  intro a b neg le
+  obtain ⟨n, rfl⟩ := Int.eq_negSucc_of_lt_zero neg
+  obtain ⟨m, rfl⟩ := Int.eq_negSucc_of_lt_zero (Int.lt_of_le_of_lt le neg)
+  change Int.ofNat (n / (m+1) + 1) = Int.ofNat 1
+  rw [Nat.div_eq_of_lt (show n < m+1 by omega)]
+
 end OmegaChecks.InitPort.Alternatives

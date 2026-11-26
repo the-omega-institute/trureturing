@@ -245,4 +245,27 @@ public theorem BitVec.toInt_shiftLeftZeroExtend : type_of% @_root_.BitVec.toInt_
       Nat.or_zero]
   rw [equals, BitVec.toInt_append_zero, Int.mul_comm]
 
+public theorem BitVec.neg_one_ediv_toInt_eq : type_of% @_root_.BitVec.neg_one_ediv_toInt_eq := by
+  intro w y
+  rw [Int.neg_one_ediv]
+  if zero : y.toInt = 0 then rw [ite_eq_left zero, zero]; rfl
+  else
+    rw [ite_eq_right zero]
+    if pos : 0 < y.toInt then rw [ite_eq_left pos, Int.sign_eq_one_of_pos pos]
+    else rw [ite_eq_right pos, Int.sign_eq_neg_one_of_neg (show y.toInt < 0 by omega)]; rfl
+
+public theorem BitVec.toInt_ediv_toInt_lt_of_nonpos_of_lt_neg_one :
+    type_of% @_root_.BitVec.toInt_ediv_toInt_lt_of_nonpos_of_lt_neg_one := by
+  intro w x y hx hy
+  have lower := _root_.BitVec.le_toInt x
+  have denominator := _root_.BitVec.le_toInt y
+  if zero : x.toInt = 0 then rw [zero, Int.zero_ediv]; omega
+  else if negOne : x.toInt = -1 then
+    rw [negOne, BitVec.neg_one_ediv_toInt_eq, ite_eq_right (show y.toInt ≠ 0 by omega),
+      ite_eq_right (show ¬ 0 < y.toInt by omega)]
+    omega
+  else
+    have bound := Int.ediv_lt_natAbs_self_of_lt_neg_one_of_lt_neg_one (show x.toInt < -1 by omega) hy
+    omega
+
 end OmegaChecks.InitPort.Alternatives
