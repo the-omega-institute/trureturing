@@ -7,13 +7,14 @@
    digest: Four-cycle comparison of an inverse arithmetic mean with the product of inverses. -/
 
 import D5.S3.Quantum.Analysis.RefinedBMV.Tracial.LaplaceWord
+import Mathlib.Analysis.SpecialFunctions.ImproperIntegrals
 
 /-! The radial Gamma identity gives a cyclic Jensen comparison for the
 fourth power of the reciprocal on a positive diagonal spectrum. -/
 
 namespace RefinedBMV.Tracial
 
-open Matrix MeasureTheory Set FourCopyGap
+open Matrix MeasureTheory Set FourCopyGap Filter Topology
 
 open private contract eigenDiagonal gapTrace gapTrace_diagonal monomial
   from D5.S3.Quantum.Analysis.RefinedBMV.SingularFourth.FourCopyGap
@@ -126,6 +127,124 @@ theorem fourth_cycle_inv_mean_le_product_inverse (a : ι → ℝ) (ha : ∀ i, 0
   simp only [Nat.cast_zero, zero_add, fourth_laplace_gamma_eq_inverse_mean a ha B,
     fourth_orthant_zero_eq_product_inverse a ha B] at h
   exact (mul_le_mul_iff_right₀ (show (0 : ℝ) < 6 by norm_num)).mp h
+
+/-- The density for the positive mixture of shifted fourth resolvent powers. -/
+def resolventDensity (a b c d u : ℝ) : ℝ :=
+  3 * u ^ 2 * ((a + u)⁻¹ * (b + u)⁻¹ * (c + u)⁻¹ * (d + u)⁻¹)
+
+private theorem integrable_resolventDensity {a b c d : ℝ}
+    (ha : 0 < a) (hb : 0 < b) (hc : 0 < c) (hd : 0 < d) :
+    IntegrableOn (resolventDensity a b c d) (Ioi 0) := by
+  let m := min (min a b) (min c d)
+  have hm : 0 < m := lt_min (lt_min ha hb) (lt_min hc hd)
+  have hbound : IntegrableOn (fun u : ℝ ↦ 3 * (u + m) ^ (-2 : ℝ)) (Ioi 0) :=
+    (integrableOn_add_rpow_Ioi_of_lt (by norm_num) (by linarith : -m < 0)).const_mul 3
+  refine hbound.mono' (by unfold resolventDensity; fun_prop) ?_
+  filter_upwards [ae_restrict_mem measurableSet_Ioi] with u hu
+  have hu' : 0 < u := hu
+  have hmu : 0 < m + u := add_pos hm hu'
+  have hma : m ≤ a := (min_le_left _ _).trans (min_le_left _ _)
+  have hmb : m ≤ b := (min_le_left _ _).trans (min_le_right _ _)
+  have hmc : m ≤ c := (min_le_right _ _).trans (min_le_left _ _)
+  have hmd : m ≤ d := (min_le_right _ _).trans (min_le_right _ _)
+  rw [Real.norm_eq_abs, abs_of_nonneg (by unfold resolventDensity; positivity)]
+  calc
+    resolventDensity a b c d u ≤ resolventDensity m m m m u := by
+      unfold resolventDensity
+      gcongr
+    _ ≤ 3 * (u + m) ^ (-2 : ℝ) := by
+      rw [show (-2 : ℝ) = -(2 : ℕ) by norm_num, Real.rpow_neg (by positivity),
+        Real.rpow_natCast, add_comm u m]
+      unfold resolventDensity
+      have hsq : u ^ 2 ≤ (m + u) ^ 2 := by gcongr; linarith
+      field_simp [hmu.ne']
+      nlinarith only [hsq]
+
+private theorem integral_resolventDensity_same {a : ℝ} (ha : 0 < a) :
+    (∫ u in Ioi (0 : ℝ), resolventDensity a a a a u) = a⁻¹ := by
+  let primitive (u : ℝ) := (u / (a + u)) ^ 3 / a
+  have hderiv (u : ℝ) (hu : u ∈ Ici (0 : ℝ)) :
+      HasDerivAt primitive (resolventDensity a a a a u) u := by
+    have hau : a + u ≠ 0 := (add_pos_of_pos_of_nonneg ha hu).ne'
+    have h := (((hasDerivAt_id u).div ((hasDerivAt_id u).const_add a) hau).pow 3).div_const a
+    convert h using 1
+    · rfl
+    · unfold resolventDensity
+      dsimp
+      field_simp [ha.ne', hau]
+      <;> ring
+  have hinv : Filter.Tendsto (fun u : ℝ ↦ (a + u)⁻¹) Filter.atTop (𝓝 0) :=
+    tendsto_inv_atTop_zero.comp (tendsto_atTop_add_const_left _ a tendsto_id)
+  have hratio : Filter.Tendsto (fun u : ℝ ↦ u / (a + u)) Filter.atTop (𝓝 1) := by
+    have h := (tendsto_const_nhds (x := (1 : ℝ))).sub (hinv.const_mul a)
+    rw [mul_zero, sub_zero] at h
+    apply h.congr' _
+    filter_upwards [Filter.eventually_gt_atTop (0 : ℝ)] with u hu
+    field_simp [(add_pos ha hu).ne']
+    <;> ring
+  have hlim : Filter.Tendsto primitive Filter.atTop (𝓝 a⁻¹) := by
+    simpa only [primitive, one_pow, one_div] using (hratio.pow 3).div_const a
+  rw [integral_Ioi_of_hasDerivAt_of_tendsto' hderiv
+    (integrable_resolventDensity ha ha ha ha) hlim]
+  simp [primitive]
+
+/-- The ordinary resolvent kernel is a positive mixture of the shifted
+inverse-fourth-power kernels. The cyclic inequality holds for arbitrary
+Hermitian `B` and arbitrary positive spectral data. -/
+theorem fourth_cycle_inv_mean_le_resolvent_integral (a : ι → ℝ) (ha : ∀ i, 0 < a i)
+    (B : Matrix ι ι ℂ) (hB : B.IsHermitian) :
+    (∑ i, ∑ j, ∑ k, ∑ l, ((a i + a j + a k + a l) / 4)⁻¹ *
+      (cycleTrace (spectralBlock id B) i j k l).re) ≤
+      ∑ i, ∑ j, ∑ k, ∑ l, (∫ u in Ioi (0 : ℝ),
+        resolventDensity (a i) (a j) (a k) (a l) u) *
+        (cycleTrace (spectralBlock id B) i j k l).re := by
+  let q (i j k l : ι) := (a i + a j + a k + a l) / 4
+  let c (i j k l : ι) := (cycleTrace (spectralBlock id B) i j k l).re
+  have hq (i j k l : ι) : 0 < q i j k l := by
+    exact div_pos (add_pos (add_pos (add_pos (ha i) (ha j)) (ha k)) (ha l)) (by norm_num)
+  have h_integral (p r s t : ι → ι → ι → ι → ℝ)
+      (hp : ∀ i j k l, 0 < p i j k l) (hr : ∀ i j k l, 0 < r i j k l)
+      (hs : ∀ i j k l, 0 < s i j k l) (ht : ∀ i j k l, 0 < t i j k l) :
+      IntegrableOn (fun u ↦ ∑ i, ∑ j, ∑ k, ∑ l,
+        resolventDensity (p i j k l) (r i j k l) (s i j k l) (t i j k l) u * c i j k l)
+        (Ioi 0) ∧
+      (∫ u in Ioi (0 : ℝ), ∑ i, ∑ j, ∑ k, ∑ l,
+        resolventDensity (p i j k l) (r i j k l) (s i j k l) (t i j k l) u * c i j k l) =
+        ∑ i, ∑ j, ∑ k, ∑ l, (∫ u in Ioi (0 : ℝ),
+          resolventDensity (p i j k l) (r i j k l) (s i j k l) (t i j k l) u) * c i j k l := by
+    have hterm (i j k l : ι) := (integrable_resolventDensity
+      (hp i j k l) (hr i j k l) (hs i j k l) (ht i j k l)).mul_const (c i j k l)
+    refine ⟨integrable_finsetSum _ fun i _ ↦ integrable_finsetSum _ fun j _ ↦
+      integrable_finsetSum _ fun k _ ↦ integrable_finsetSum _ fun l _ ↦ hterm i j k l, ?_⟩
+    rw [integral_finsetSum _ (fun i _ ↦ integrable_finsetSum _ fun j _ ↦
+      integrable_finsetSum _ fun k _ ↦ integrable_finsetSum _ fun l _ ↦ hterm i j k l)]
+    refine Finset.sum_congr rfl fun i _ ↦ ?_
+    rw [integral_finsetSum _ (fun j _ ↦ integrable_finsetSum _ fun k _ ↦
+      integrable_finsetSum _ fun l _ ↦ hterm i j k l)]
+    refine Finset.sum_congr rfl fun j _ ↦ ?_
+    rw [integral_finsetSum _ (fun k _ ↦ integrable_finsetSum _ fun l _ ↦ hterm i j k l)]
+    refine Finset.sum_congr rfl fun k _ ↦ ?_
+    rw [integral_finsetSum _ (fun l _ ↦ hterm i j k l)]
+    exact Finset.sum_congr rfl fun l _ ↦ integral_mul_const _ _
+  have hleft := h_integral q q q q hq hq hq hq
+  have hright := h_integral (fun i _ _ _ ↦ a i) (fun _ j _ _ ↦ a j)
+    (fun _ _ k _ ↦ a k) (fun _ _ _ l ↦ a l)
+    (fun i _ _ _ ↦ ha i) (fun _ j _ _ ↦ ha j) (fun _ _ k _ ↦ ha k) (fun _ _ _ l ↦ ha l)
+  simp_rw [integral_resolventDensity_same (hq _ _ _ _)] at hleft
+  rw [← hleft.2, ← hright.2]
+  refine integral_mono_ae hleft.1 hright.1 ?_
+  filter_upwards [ae_restrict_mem measurableSet_Ioi] with u hu
+  have hu' : 0 < u := hu
+  have h := fourth_cycle_inv_mean_le_product_inverse (fun i ↦ a i + u)
+    (fun i ↦ add_pos (ha i) hu') B hB
+  have hq_shift (i j k l : ι) :
+      (a i + u + (a j + u) + (a k + u) + (a l + u)) / 4 = q i j k l + u := by
+    dsimp [q]
+    ring
+  simp_rw [hq_shift] at h
+  have hmul := mul_le_mul_of_nonneg_left h (show 0 ≤ 3 * u ^ 2 by positivity)
+  simpa only [Finset.mul_sum, resolventDensity, c, pow_succ, pow_zero, one_mul, mul_assoc]
+    using hmul
 
 end
 
