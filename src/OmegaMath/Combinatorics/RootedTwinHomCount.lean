@@ -2,6 +2,7 @@ module
 
 public import OmegaBuild.Commands
 public import Mathlib.Combinatorics.Digraph.Basic
+public import Mathlib.Logic.Embedding.Set
 public import Mathlib.Order.RelIso.Basic
 public import Mathlib.SetTheory.Cardinal.Finite
 public import Mathlib.Algebra.Order.Ring.Unbundled.Basic
@@ -112,25 +113,11 @@ def rootFiberEquiv (H : Digraph A) (w : A) (R : B → B → Prop) (t : B) :
 def rootClassInjection (H : Digraph A) (w : A) {R : B → B → Prop}
     (hR : ∀ x y, R x y → ¬ R y x) (t : B) :
     ({g : RelHom H.Adj R // R (g w) t} ⊕ {g : RelHom H.Adj R // R t (g w)}) ↪
-      RelHom H.Adj R where
-  toFun := Sum.elim Subtype.val Subtype.val
-  inj' := by
-    intro x y eq
-    cases x with
-    | inl x =>
-      cases y with
-      | inl y => exact congrArg Sum.inl (Subtype.ext eq)
-      | inr y =>
-        change x.val = y.val at eq
-        have hy : R t (x.val w) := by rw [eq]; exact y.property
-        exact False.elim (hR (x.val w) t x.property hy)
-    | inr x =>
-      cases y with
-      | inl y =>
-        change x.val = y.val at eq
-        have hx : R t (y.val w) := by rw [← eq]; exact x.property
-        exact False.elim (hR (y.val w) t y.property hx)
-      | inr y => exact congrArg Sum.inr (Subtype.ext eq)
+      RelHom H.Adj R :=
+  Function.Embedding.sumSet
+    (s := {g : RelHom H.Adj R | R (g w) t})
+    (t := {g : RelHom H.Adj R | R t (g w)})
+    (Set.disjoint_left.mpr fun g hg hh => hR (g w) t hg hh)
 
 /-- The general quarter bound counts all homomorphisms, allowing image collisions. -/
 theorem quarter_bound [Finite A] [Finite B] (H : Digraph A) (w : A)
