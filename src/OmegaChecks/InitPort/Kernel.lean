@@ -421,6 +421,8 @@ partial def visit (n : Name) : M Bool := do
       return .added
   if let some alt := OmegaChecks.InitPort.alternativeBody? c.alternatives ci then
     if (← attempt alt) matches .added then return ← record n .added
+    if let some certified := comparisonProofs c.source c.literalProofs alt n then
+      if (← attempt certified (40 * c.maxHeartbeats)) matches .added then return ← record n .added
   let result ← attempt body
   if result matches .added then return ← record n result
   let rewritten := OmegaChecks.InitCompiler.constructiveCasts c.source body c.proofRules
