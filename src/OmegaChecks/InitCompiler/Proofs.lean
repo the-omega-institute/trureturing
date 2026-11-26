@@ -59,6 +59,172 @@ private partial def translateTerm (env : Environment) (visiting : NameSet) (term
 public def translateProofTerm (env : Environment) (term : Expr) : Except String Expr :=
   (translateTerm env {} term).run' {}
 
+private def castProof (back : Bool) (p q eq input : Expr) : Expr :=
+  mkApp4 (mkConst (if back then `Eq.mpr else `Eq.mp) [.zero]) p q eq input
+
+/-- Lift a logical equivalence through the connectives in a simp congruence. -/
+private partial def congrIff? (p q iff a b : Expr) : Option Expr := do
+  if a == b then return mkApp (mkConst `Iff.rfl) a
+  if a == p && b == q then return iff
+  if a.isArrow && b.isArrow then
+    let (a₁, a₂) := (a.bindingDomain!, a.bindingBody!.lowerLooseBVars 1 1)
+    let (b₁, b₂) := (b.bindingDomain!, b.bindingBody!.lowerLooseBVars 1 1)
+    return mkApp6 (mkConst `imp_congr) a₁ a₂ b₁ b₂
+      (← congrIff? p q iff a₁ b₁) (← congrIff? p q iff a₂ b₂)
+  let some n := a.getAppFn.constName? | none
+  guard (b.getAppFn.isConstOf n)
+  match n, a.getAppArgs, b.getAppArgs with
+  | `Not, #[x], #[y] => return mkApp3 (mkConst `not_congr) x y (← congrIff? p q iff x y)
+  | _, #[x, y], #[z, w] =>
+    let rule ← match n with
+      | `And => some `and_congr
+      | `Or => some `or_congr
+      | `Iff => some `iff_congr
+      | _ => none
+    return mkApp6 (mkConst rule) x z y w (← congrIff? p q iff x z) (← congrIff? p q iff y w)
+  | _, _, _ => none
+
+private def propositionChange? (h : Expr) (fuel : Nat) : Option (Expr × Expr × Expr) := do
+  let fuel + 1 := fuel | none
+  match h.getAppFn.constName?, h.getAppArgs with
+  | some `congrArg, #[.sort .zero, _, p, q, _, eq] => return (p, q, eq)
+  | some `congrArg, #[_, _, _, _, _, eq]
+  | some `congrFun, #[_, _, _, _, eq, _]
+  | some `congrFun', #[_, _, _, _, eq, _]
+  | some `id, #[_, eq] => propositionChange? eq fuel
+  | _, _ => none
+
+/-- A simp proof sometimes builds an equality of propositions only to transport a
+proof along it. Compose the underlying implications when the equality is consumed. -/
+private def transport? (source : Environment) (back : Bool) (p q eq input : Expr)
+    (fuel : Nat) : Option Expr := do
+  let fuel + 1 := fuel | none
+  let .const n us := eq.getAppFn | none
+  let xs := eq.getAppArgs
+  match n, xs with
+  | `id, #[_, h] => transport? source back p q h input fuel
+  | `propext, #[_, _, iff] =>
+    if iff.isAppOfArity `Iff.intro 4 then
+      return iff.getAppArgs[if back then 3 else 2]!.beta #[input]
+    return mkApp4 (mkConst (if back then `Iff.mpr else `Iff.mp)) p q iff input
+  | `Eq.refl, _ | `rfl, _ => return input
+  | `Eq.symm, #[_, a, b, h] => transport? source (!back) a b h input fuel
+  | `Eq.trans, #[_, a, b, c, h, k] =>
+    let through := fun p q h input => (transport? source back p q h input fuel).getD
+      (castProof back p q h input)
+    return if back then through a b h (through b c k input) else through b c k (through a b h input)
+  | `eq_true, #[_, h] => return if back then h else mkConst `True.intro
+  | `congrArg, _ | `congrFun, _ | `congrFun', _ =>
+    let (a, b, h) ← propositionChange? eq fuel
+    let localMap := fun (rev : Bool) (dom : Expr) => do
+      let under := fun (e : Expr) => e.liftLooseBVars 0 1
+      let term ← transport? source rev (under a) (under b) (under h) (mkBVar 0) fuel
+      return Expr.lam `hp dom term .default
+    let equiv := mkApp4 (mkConst `Iff.intro) a b (← localMap false a) (← localMap true b)
+    let lifted ← congrIff? a b equiv p q
+    return mkApp4 (mkConst (if back then `Iff.mpr else `Iff.mp)) p q lifted input
+  | _, _ =>
+    -- Unfold wrappers like eq_self and generated simp lemmas only at a cast.
+    -- A first-class result of type p = q must still prove the original equality.
+    let some ci := source.find? n | none
+    let some value := ci.value? (allowOpaque := true) | none
+    let rhs := (value.instantiateLevelParams ci.levelParams us).beta xs
+    guard <| [`propext, `Eq.propIntro, `eq_true, `eq_false, `eq_false', `Eq.symm, `Eq.trans].any rhs.isAppOf
+    transport? source back p q rhs input fuel
+
+/-- Specialize fully applied casts in the official proof term before translating
+its constants. Every resulting term still goes through the destination kernel. -/
+public def constructiveCasts (source : Environment) (body : Expr) : Expr := Id.run do
+  let rewrite := fun (e : Expr) => do
+    let .const n us := e.getAppFn | none
+    match n, us, e.getAppArgs with
+    | `congrFun, _, #[_, _, _, _, h, a] | `congrFun', _, #[_, _, _, _, h, a] =>
+      guard (h.isAppOfArity `funext 5)
+      return h.getAppArgs[4]!.beta #[a]
+    | `Eq.mp, [.zero], #[p, q, h, x] | `Eq.mpr, [.zero], #[p, q, h, x]
+    | `cast, [.zero], #[p, q, h, x] =>
+      transport? source (n == `Eq.mpr) p q h x 32
+    | `of_eq_true, _, #[p, h] =>
+      transport? source true p (mkConst `True) h (mkConst `True.intro) 32
+    | `Eq.ndrec, _, #[.sort .zero, p, motive, x, q, h] =>
+      guard (motive.beta #[p] == p && motive.beta #[q] == q)
+      transport? source false p q h x 32
+    | `of_eq_false, _, #[p, h] =>
+      let hp := mkBVar 0
+      let proof ← transport? source false (p.liftLooseBVars 0 1) (mkConst `False)
+        (h.liftLooseBVars 0 1) hp 32
+      return Expr.lam `hp p proof .default
+    | _, _, _ => none
+  let mut term := body
+  for _ in [:8] do
+    let next := term.replace rewrite
+    if next == term then break
+    term := next
+  return term
+
+private def eliminateChoice (e : Expr) : MetaM Expr := do
+  unless e.isApp do return e
+  let some chosen := e.find? (fun expr => !expr.hasLooseBVars &&
+    (expr.isAppOfArity `Classical.choose 3 || expr.isAppOfArity `Classical.choose_spec 3 ||
+     expr.isAppOfArity `Classical.choice 2 || expr.isAppOfArity `Classical.indefiniteDescription 3)) | return e
+  let conclusion ← Meta.inferType e
+  unless ← Meta.isProp conclusion do return e
+  let .const name us := chosen.getAppFn | return e
+  let args := chosen.getAppArgs
+  let α := args[0]!
+  if name == `Classical.choice then
+    if chosen.occurs conclusion then return e
+    let branch ← Meta.withLocalDeclD `w α fun x => Meta.mkLambdaFVars #[x] (e.replace fun sub =>
+      if sub == chosen then some x else none)
+    return mkApp4 (mkConst `Nonempty.elim us) α conclusion args[1]! branch
+  let p := args[1]!
+  let witness := mkAppN (mkConst `Classical.choose us) args
+  let spec := mkAppN (mkConst `Classical.choose_spec us) args
+  let desc := mkAppN (mkConst `Classical.indefiniteDescription us) args
+  if [witness, spec, desc].any (·.occurs conclusion) then return e
+  let branch ← Meta.withLocalDeclD `w α fun x =>
+    Meta.withLocalDeclD `hw (p.beta #[x]) fun hx => do
+      let term := e.replace fun sub =>
+        if sub == witness then some x
+        else if sub == spec then some hx
+        else if sub == desc then some (mkApp4 (mkConst `Subtype.mk us) α p x hx)
+        else none
+      Meta.mkLambdaFVars #[x, hx] term
+  return mkApp5 (mkConst `Exists.elim us) α p conclusion args[2]! branch
+
+/-- Recover decidable case splits and eliminate a chosen witness directly into a
+proposition when the conclusion is independent of that witness. -/
+public def decidableProof (source : Environment) (body : Expr) : IO Expr := do
+  let classical := [`Classical.em, `Classical.byCases, `Classical.byContradiction, `Classical.propDecidable]
+  let deps := body.getUsedConstants
+  let usesChoice := deps.any [`Classical.choose, `Classical.choose_spec, `Classical.choice,
+    `Classical.indefiniteDescription].contains
+  unless usesChoice || deps.any classical.contains do return body
+  let action : MetaM Expr := Meta.transform body (post := fun e => do
+    if usesChoice then
+      let without ← eliminateChoice e
+      if without != e then return .done without
+    let .const name _ := e.getAppFn | return .done e
+    unless classical.contains name do return .done e
+    let args := e.getAppArgs
+    let some p := args[0]? | return .done e
+    let some dec ← Meta.synthInstance? (mkApp (mkConst `Decidable) p) | return .done e
+    let mapArgs (term : Expr) (consumed : Nat) := mkAppN term (args.extract consumed args.size)
+    match name with
+    | `Classical.propDecidable => return .done (mapArgs dec 1)
+    | `Classical.em => return .done (mapArgs (mkApp2 (mkConst `Decidable.em) p dec) 1)
+    | `Classical.byContradiction => return .done (mapArgs (mkApp2 (mkConst `Decidable.byContradiction) p dec) 1)
+    | _ =>
+      let some q := args[1]? | return .done e
+      return .done (mapArgs (mkApp3 (mkConst `Decidable.byCases [.zero]) p q dec) 2))
+  try
+    let result ← action.run' |>.toIO' {fileName := "<constructive decision>", fileMap := default}
+      {env := source}
+    if result.hasFVar || result.hasMVar || result.hasLooseBVars then return body
+    return result
+  catch _ =>
+    return body
+
 /-- Candidate terms for assumptions and reflexive propositions in a telescope. -/
 public partial def elementaryCandidates (type : Expr) : List Expr :=
   let rec terms (goal : Expr) (depth : Nat) : List Expr := Id.run do

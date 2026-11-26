@@ -188,14 +188,18 @@ where
         if hidden && getReducibilityStatusCore strict src.name != .irreducible then
           throw <| IO.userError s!"legacy importer can unfold the hidden implementation of {src.name}"
 
-/-- Compare every binding and every strict foundation dependency exposed by its interface. -/
-def check (strict publicStrict reference : Environment) (bindings : Array (Name × Name)) : IO Unit := do
+abbrev CheckedSites := Std.HashSet (Name × Name)
+
+/-- Reuse checked dependencies across batches in the same three environments.
+The owning module is part of the key for independently generated declarations. -/
+def checkSites (strict publicStrict reference : Environment) (bindings : Array (Name × Name))
+    (checked : CheckedSites) : IO CheckedSites := do
   let mut pending := bindings
-  let mut seen : NameSet := {}
+  let mut seen := checked
   while let some (name, owner) := pending.back? do
     pending := pending.pop
-    unless seen.contains name do
-      seen := seen.insert name
+    unless seen.contains (name, owner) do
+      seen := seen.insert (name, owner)
       let dst := official strict name
       unless declaredIn reference dst owner do
         throw <| IO.userError s!"upstream module mismatch for {name}"
@@ -210,6 +214,12 @@ def check (strict publicStrict reference : Environment) (bindings : Array (Name 
         if target.isAnonymous || (privateToUserName dep).getRoot != `Omega then
           throw <| IO.userError s!"dependency outside the standard interface: {name} uses {dep} in {owner}"
         pending := pending.push (dep, target)
+  return seen
+
+/-- Compare every binding and every strict foundation dependency exposed by its interface. -/
+def check (strict publicStrict reference : Environment) (bindings : Array (Name × Name)) : IO Unit := do
+  let sites ← checkSites strict publicStrict reference bindings {}
+  let seen := NameSet.ofList (sites.toList.map Prod.fst)
   let roots := NameSet.ofList (bindings.toList.map Prod.fst)
   IO.println s!"Verified the mathematical interfaces of {roots.size} roots and {seen.size} distinct declarations in their closure."
 

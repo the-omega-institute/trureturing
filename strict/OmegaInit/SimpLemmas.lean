@@ -9,6 +9,15 @@ module
 prelude
 public import OmegaInit.Core
 
+namespace Omega
+
+public theorem iff_congr {p₁ p₂ q₁ q₂ : Prop} (h₁ : Iff p₁ p₂) (h₂ : Iff q₁ q₂) :
+    Iff (Iff p₁ q₁) (Iff p₂ q₂) :=
+  Iff.intro (fun h => h₁.symm.trans (h.trans h₂))
+    (fun h => h₁.trans (h.trans h₂.symm))
+
+end Omega
+
 port_proof and_assoc
 port_proof and_congr_right
 port_proof and_congr_left
