@@ -4,7 +4,7 @@
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
    utility: none
-   digest: The common nine- and fourteen-lag recurrences for Hardin's constant-stress rectangles. -/
+   digest: The common recurrences of orders 9, 14, and 18 for Hardin's constant-stress rectangles. -/
 
 import D5.S3.Combinatorics.TraceAvoidingArrays.Recurrence.HardinA235280A235310Alphabet
 import Mathlib.Algebra.BigOperators.Fin
@@ -18,7 +18,8 @@ import Mathlib.Tactic.Ring
 
 namespace D5.S3.Combinatorics.TraceAvoidingArrays.Recurrence.HardinA235280A235310Recurrence
 
-open D5.S3.Combinatorics.TraceAvoidingArrays.Recurrence.HardinA235280A235310Alphabet (C fixedDeficitEquiv)
+open D5.S3.Combinatorics.TraceAvoidingArrays.Recurrence.HardinA235280A235310Alphabet
+  (C Grid block Low count_eq)
 open Polynomial hiding C
 open scoped BigOperators
 
@@ -76,15 +77,6 @@ private theorem kills_step {d : ℕ} {a : ℤ} {f : Sequence}
     shift_pow_apply, aeval_C, Algebra.algebraMap_eq_smul_one, LinearMap.smul_apply,
     Module.End.one_apply, Pi.smul_apply, zsmul_eq_mul, Int.cast_id, h, sub_self]
   rfl
-
-private abbrev Grid (M n k : ℕ) := Fin (n + 1) × Fin (k + 1) → Fin (M + 1)
-
-private def block {M n k : ℕ} (a : Grid M n k) (r : Fin n) (c : Fin k) : ℕ :=
-  (a (r.castSucc, c.castSucc)).val + (a (r.castSucc, c.succ)).val +
-    (a (r.succ, c.castSucc)).val + (a (r.succ, c.succ)).val
-
-private def Low {M n k : ℕ} (d : ℕ) (a : Grid M n k) : Prop :=
-  ∀ r c, block a r c = d
 
 private abbrev Row (d k : ℕ) := Fin (k + 1) → Fin (d + 1)
 private abbrev Profile (d k : ℕ) := Fin k → Fin (d + 1)
@@ -261,18 +253,11 @@ private theorem profileCount_eq_pow {d k : ℕ} (p : Profile d k) (c : ℕ)
   simp_rw [he]
   simp
 
-private theorem literal_eq_twice_low (M d n k : ℕ) (hd : d < M) :
-    C M (2 * M - d) (n + 1) (k + 1) =
-      2 * Nat.card {a : Grid d (n + 1) (k + 1) // Low d a} := by
-  unfold C
-  rw [Nat.card_congr (fixedDeficitEquiv M d n k hd), Nat.card_sum, two_mul]
-  rfl
-
 /-- Positive-index literal cardinality as a sum of shifted profile counts. -/
 private theorem literal_sum (M d n k : ℕ) (hd : d < M) :
     C M (2 * M - d) (n + 1) (k + 1) =
       2 * ∑ p : Profile d (k + 1), profileCount p (n + 2) := by
-  rw [literal_eq_twice_low M d n k hd, low_count]
+  rw [count_eq M d (n + 1) (k + 1) hd (Nat.succ_pos _) (Nat.succ_pos _), low_count]
 
 private def transpose {M n k : ℕ} (a : Grid M n k) : Grid M k n :=
   fun (i, j) => a (j, i)
@@ -296,7 +281,8 @@ private theorem C_transpose (M d n k : ℕ) (hd : d < M) (hn : 0 < n) (hk : 0 < 
       invFun := fun a => ⟨transpose a.1, (transpose_low a.1).mpr a.2⟩
       left_inv := fun _ => rfl
       right_inv := fun _ => rfl }
-  rw [literal_eq_twice_low M d n k hd, literal_eq_twice_low M d k n hd, Nat.card_congr e]
+  rw [count_eq M d (n + 1) (k + 1) hd (Nat.succ_pos _) (Nat.succ_pos _),
+    count_eq M d (k + 1) (n + 1) hd (Nat.succ_pos _) (Nat.succ_pos _), Nat.card_congr e]
 
 /-- The polynomial for the descending lag list published in A235279. -/
 private def P9 : ℤ[X] :=

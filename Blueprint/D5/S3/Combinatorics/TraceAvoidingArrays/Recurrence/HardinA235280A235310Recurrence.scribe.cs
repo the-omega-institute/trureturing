@@ -19,7 +19,8 @@ internal sealed class HardinA235280A235310RecurrenceDocument : IScribeDocumentDe
                 + "Their entries range from 0 to M, and every contiguous 2×2 block has absolute "
                 + "difference S between its diagonal and antidiagonal sums. See "), Ref(Alphabet + ".C"), Text(".")),
             Paragraph(Text("The equivalence "), Ref(Alphabet + ".fixedDeficitEquiv"),
-                Text(" gives two copies of the grids with block sum d = 2M−S when 0 ≤ d < M and S = 2M−d. In each copy the "
+                Text(" gives two copies of the grids with block sum d = 2M−S when 1 ≤ n, 1 ≤ k, "
+                + "0 ≤ d < M, and S = 2M−d. In each copy the "
                 + "horizontal edge sums in successive rows alternate between a profile and its "
                 + "complement in d. An initial entry determines a row from its edge sums. If the "
                 + "first edge sum is s, the two complementary row fibers have at most s+1 and "

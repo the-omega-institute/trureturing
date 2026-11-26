@@ -2,18 +2,17 @@ import D5.S3.Combinatorics.TraceAvoidingArrays.Recurrence.HardinA235280A235310Re
 import D5.S3.Combinatorics.TraceAvoidingArrays.Recurrence.HardinA235280A235310Alphabet
 import Reg.Support.SingleDependentReadout
 import LeanInformationAuditInterface.Contract.Registration
-import Batteries.Tactic.OpenPrivate
 import Mathlib.Tactic.FinCases
 
-/-! Source-bound readouts for the two literal rectangle recurrences. -/
+/-! Source-bound readouts for the literal rectangle recurrences of orders 9, 14, and 18. -/
 
 namespace Reg.D5.S3.Combinatorics.TraceAvoidingArrays.Recurrence.HardinA235280A235310Recurrence
 
 open _root_.D5.S3.Combinatorics.TraceAvoidingArrays.Recurrence.HardinA235280A235310Recurrence
-open _root_.D5.S3.Combinatorics.TraceAvoidingArrays.Recurrence.HardinA235280A235310Alphabet (C fixedDeficitEquiv)
+open _root_.D5.S3.Combinatorics.TraceAvoidingArrays.Recurrence.HardinA235280A235310Alphabet
+  (C Grid Low count_eq)
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
-open private Grid Low from D5.S3.Combinatorics.TraceAvoidingArrays.Recurrence.HardinA235280A235310Alphabet
 
 noncomputable section
 
@@ -32,8 +31,8 @@ private theorem count_eq_twice_lowCard (M d n k : ℕ) (hd : d < M) :
     C M (2 * M - d) (n + 1) (k + 1) = 2 * lowCard d (n + 1) (k + 1) := by
   let _ : DecidablePred (Low (M := d) (n := n + 1) (k := k + 1) d) :=
     lowDecidable d (n + 1) (k + 1)
-  unfold C lowCard
-  rw [Nat.card_congr (fixedDeficitEquiv M d n k hd), Nat.card_sum, two_mul,
+  unfold lowCard
+  rw [count_eq M d (n + 1) (k + 1) hd (Nat.succ_pos _) (Nat.succ_pos _),
     Nat.card_eq_fintype_card, Fintype.card_subtype]
 
 namespace A235280

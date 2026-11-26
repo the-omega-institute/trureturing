@@ -20,7 +20,8 @@ namespace D5.S3.Combinatorics.TraceAvoidingArrays.Recurrence.HardinA235280A23531
 
 noncomputable section
 
-private abbrev Grid (M n k : ℕ) := Fin (n + 1) × Fin (k + 1) → Fin (M + 1)
+/-- Indexed grids with `n + 1` rows, `k + 1` columns, and entries from zero through `M`. -/
+abbrev Grid (M n k : ℕ) := Fin (n + 1) × Fin (k + 1) → Fin (M + 1)
 
 private def Legal {M n k : ℕ} (S : ℕ) (a : Grid M n k) : Prop :=
   ∀ (r : Fin n) (c : Fin k),
@@ -30,14 +31,16 @@ private def Legal {M n k : ℕ} (S : ℕ) (a : Grid M n k) : Prop :=
 /-- The number of literal indexed grids with stress S in every contiguous block. -/
 def C (M S n k : ℕ) : ℕ := Nat.card {a : Grid M n k // Legal S a}
 
-private def block {M n k : ℕ} (a : Grid M n k) (r : Fin n) (c : Fin k) : ℕ :=
+/-- The sum of the four entries in the contiguous block starting at `(r, c)`. -/
+def block {M n k : ℕ} (a : Grid M n k) (r : Fin n) (c : Fin k) : ℕ :=
   (a (r.castSucc, c.castSucc)).val + (a (r.castSucc, c.succ)).val +
     (a (r.succ, c.castSucc)).val + (a (r.succ, c.succ)).val
 
 private def Mixed {M n k : ℕ} (d : ℕ) (a : Grid M n k) : Prop :=
   ∀ r c, block a r c = d ∨ block a r c = 4 * M - d
 
-private def Low {M n k : ℕ} (d : ℕ) (a : Grid M n k) : Prop := ∀ r c, block a r c = d
+/-- Every contiguous block in the grid has sum `d`. -/
+def Low {M n k : ℕ} (d : ℕ) (a : Grid M n k) : Prop := ∀ r c, block a r c = d
 
 private def High {M n k : ℕ} (d : ℕ) (a : Grid M n k) : Prop :=
   ∀ r c, block a r c = 4 * M - d
@@ -209,7 +212,7 @@ def fixedDeficitEquiv (M d n k : ℕ) (hd : d < M) :
         ((complementEquiv M d _ _ hd).symm.trans (lowEquiv M d n k (Nat.le_of_lt hd)))
 
 /-- At fixed deficit d, the count is twice the count of sum-d grids over Fin (d+1). -/
-private theorem count_eq (M d n k : ℕ) (hd : d < M) (hn : 1 ≤ n) (hk : 1 ≤ k) :
+theorem count_eq (M d n k : ℕ) (hd : d < M) (hn : 1 ≤ n) (hk : 1 ≤ k) :
     C M (2 * M - d) n k = 2 * Nat.card {a : Grid d n k // Low d a} := by
   obtain ⟨n, rfl⟩ := Nat.exists_eq_succ_of_ne_zero (by omega : n ≠ 0)
   obtain ⟨k, rfl⟩ := Nat.exists_eq_succ_of_ne_zero (by omega : k ≠ 0)
