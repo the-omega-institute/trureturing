@@ -178,6 +178,9 @@ public def constructiveCasts (source : Environment) (body : Expr) (rules : NameM
   let rewrite := fun (e : Expr) => do
     let .const n us := e.getAppFn | none
     match n, us, e.getAppArgs with
+    | `Decidable.decide.congr_simp, _, #[p, q, eq, dp, dq] =>
+      let rule ← rules.find? `decideCongr
+      return (← rule.value? (allowOpaque := true)).beta #[p, q, dp, dq, ← equiv p q eq]
     | `ite_congr, _, #[α, b, c, x, y, s, t, db, dc, h, yes, no]
     | `dite_congr, _, #[b, c, α, db, dc, x, s, y, t, h, yes, no] =>
       let eqv ← equiv b c h

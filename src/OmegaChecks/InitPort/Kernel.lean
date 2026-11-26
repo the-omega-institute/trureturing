@@ -503,7 +503,7 @@ def run (strictPath artifacts : System.FilePath) (outPath : String) (exclude : S
   let ruleModule := `OmegaChecks.InitCompiler.ProofRules
   let ruleEnv ← importModules #[{module := ruleModule}] {} (level := .private)
   let mut proofRules := {}
-  for name in #[`iteCongr, `diteCongr, `forallDomain] do
+  for name in #[`iteCongr, `diteCongr, `forallDomain, `decideCongr] do
     let some info := ruleEnv.find? (ruleModule ++ name) | throw <| IO.userError s!"missing proof rule {name}"
     proofRules := proofRules.insert name info
   let lib ← getLibDir (← findSysroot)

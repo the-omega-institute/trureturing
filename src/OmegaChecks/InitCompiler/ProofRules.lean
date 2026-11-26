@@ -24,4 +24,11 @@ public theorem forallDomain {a c : Prop} {b : a → Prop} {d : c → Prop}
     (ac : a ↔ c) (step : ∀ hc, b (ac.mpr hc) ↔ d hc) : (∀ ha, b ha) ↔ ∀ hc, d hc :=
   ⟨fun f hc => (step hc).mp (f (ac.mpr hc)), fun g ha => (step (ac.mp ha)).mpr (g (ac.mp ha))⟩
 
+/-- Equivalent guards compute the same Boolean for every pair of decision instances. -/
+public theorem decideCongr {p q : Prop} [Decidable p] [Decidable q] (h : p ↔ q) :
+    decide p = decide q :=
+  Decidable.byCases (p := p)
+    (fun hp => (decide_eq_true hp).trans (decide_eq_true (h.mp hp)).symm)
+    (fun hp => (decide_eq_false hp).trans (decide_eq_false (fun hq => hp (h.mpr hq))).symm)
+
 end OmegaChecks.InitCompiler.ProofRules
