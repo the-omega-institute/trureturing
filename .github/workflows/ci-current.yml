@@ -41,6 +41,7 @@ jobs:
       tools_pin_changed: ${{ steps.detect.outputs.tools_pin_changed }}
       hits: ${{ steps.detect.outputs.hits }}
       report: ${{ steps.detect.outputs.report }}
+      delta: ${{ steps.detect.outputs.delta }}
     steps:
       # Check out only the release bootstrap and CI selection contract.
       - uses: actions/checkout@v5
@@ -84,6 +85,7 @@ jobs:
       source_status: ${{ steps.prefix.outputs.source_status }}
       continuation: ${{ steps.prefix.outputs.continuation }}
       judge_key: ${{ steps.judge_key.outputs.key }}
+      nuget_key: ${{ steps.nuget.outputs.key }}
       compute_remaining: ${{ steps.remainder.outputs.compute_remaining }}
     steps:
       - uses: actions/checkout@v5
@@ -126,11 +128,12 @@ jobs:
         run: |
           packages="$(dotnet nuget locals global-packages --list --force-english-output)"
           echo "path=${packages#global-packages: }" >> "$GITHUB_OUTPUT"
+          echo "key=dotnet-cache-${RUNNER_OS}-${{ hashFiles(env.JUDGE_LOCKFILES) }}" >> "$GITHUB_OUTPUT"
       - name: Restore the NuGet packages read-only
         uses: actions/cache/restore@v5
         with:
           path: ${{ steps.nuget.outputs.path }}
-          key: dotnet-cache-${{ runner.os }}-${{ hashFiles(env.JUDGE_LOCKFILES) }}
+          key: ${{ steps.nuget.outputs.key }}
       - id: judge_key
         env:
           JUDGE_INPUTS: |
@@ -183,146 +186,15 @@ jobs:
   current:
     needs: [detect, source]
     if: ${{ !cancelled() && needs.detect.result == 'success' && fromJSON(needs.detect.outputs.hits || '{}').current && needs.source.outputs.continuation == 'true' }}
-    runs-on: ubuntu-24.04-arm
-    # Platform wall-clock cap, separate from the shared 120-minute compute allowance.
-    timeout-minutes: 360
-    outputs:
-      unit: ${{ steps.checked.outputs.unit }}
-    env:
-      STRATALINT_ACCEPT_COLD_BUILD: '1'
-    steps:
-      - uses: actions/checkout@v5
-        with:
-          ref: ${{ github.sha }}
-          fetch-depth: 2
-          persist-credentials: false
-      - name: Install the pinned tools release
-        run: python3 .github/scripts/install-tools.py
-      - id: entry
-        name: Verify the candidate and list the changed paths
-        env:
-          CI_HIT_PATHS: '*'
-          CI_PR_HEAD: ${{ github.event.pull_request.head.sha }}
-          CI_PUSH_BEFORE: ${{ github.event.before }}
-          CI_EXPECTED_BASE: ${{ needs.detect.outputs.base }}
-          CI_CHANGED_PATHS_FILE: ${{ runner.temp }}/changed-paths
-        run: bash tools/scripts/workflow/ci-entry.sh
-      - name: Cache the tools used by the protected base snapshot
-        env:
-          BASE: ${{ needs.detect.outputs.base }}
-        run: python3 .github/scripts/install-tools.py --cache-revision "$BASE"
-      - name: Read the pinned .NET SDK version
-        id: dotnet-sdk
-        run: |
-          version="$(jq -er '.sdk.version' global.json)"
-          echo "version=$version" >> "$GITHUB_OUTPUT"
-      - uses: actions/setup-dotnet@v5
-        with:
-          dotnet-version: ${{ steps.dotnet-sdk.outputs.version }}
-          cache: false
-      - id: nuget
-        run: |
-          packages="$(dotnet nuget locals global-packages --list --force-english-output)"
-          echo "path=${packages#global-packages: }" >> "$GITHUB_OUTPUT"
-      - name: Restore the NuGet packages read-only
-        uses: actions/cache/restore@v5
-        with:
-          path: ${{ steps.nuget.outputs.path }}
-          key: dotnet-cache-${{ runner.os }}-${{ hashFiles(env.JUDGE_LOCKFILES) }}
-      - id: judge
-        if: needs.detect.outputs.report == 'true' || needs.source.outputs.source_status != 'accepted'
-        continue-on-error: true
-        uses: actions/cache/restore@v5
-        with:
-          path: |
-            tools/StrataLint.Cli/bin/Release/net10.0
-            tools/StrataLint.Scribe/bin/Release/net10.0
-          key: ${{ needs.source.outputs.judge_key }}
-      - id: compute_budget
-        name: Resume the cumulative current compute allowance
-        env:
-          COMPUTE_REMAINING: ${{ needs.source.outputs.compute_remaining }}
-        run: |
-          budget="$RUNNER_TEMP/current-compute-seconds"
-          python3 tools/scripts/workflow/ci_compute.py resume-current "$budget" "$COMPUTE_REMAINING"
-          echo "STRATALINT_CI_COMPUTE_BUDGET=$budget" >> "$GITHUB_ENV"
-      - id: current_prepare
-        name: Prepare judge dependencies
-        if: needs.detect.outputs.report == 'true' || needs.source.outputs.source_status != 'accepted'
-        env:
-          JUDGE_HIT: ${{ steps.judge.outputs.cache-hit }}
-        run: python3 tools/scripts/workflow/ci_checks.py current prepare
-      - id: build_judge
-        name: Build the judge
-        if: ${{ !cancelled() && (needs.detect.outputs.report == 'true' || needs.source.outputs.source_status != 'accepted') && steps.compute_budget.outcome == 'success' && steps.judge.outputs.cache-hit != 'true' }}
-        run: python3 tools/scripts/workflow/ci_checks.py current build-judge
-      - id: lean_plan
-        name: Select affected Lean inputs
-        if: ${{ !cancelled() && needs.detect.outputs.report == 'true' && steps.compute_budget.outcome == 'success' }}
-        env:
-          CI_BASE: ${{ steps.entry.outputs.base }}
-        run: python3 tools/scripts/workflow/ci_checks.py current lean-plan --scope-file "$RUNNER_TEMP/current-lean-plan.json"
-      - id: keys
-        if: ${{ !cancelled() && steps.lean_plan.outputs.needs_lean == 'true' }}
-        run: python3 tools/scripts/worktree/lean_actions.py keys --repository "$GITHUB_WORKSPACE" --layers dependency
-      - id: elan
-        if: ${{ !cancelled() && steps.keys.outputs.elan_key != '' }}
-        continue-on-error: true
-        uses: actions/cache/restore@v5
-        with:
-          path: ~/.elan
-          key: ${{ steps.keys.outputs.elan_key }}
-      - id: toolchain
-        if: ${{ !cancelled() && steps.keys.outcome == 'success' }}
-        run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
-      - id: dependency
-        if: ${{ !cancelled() && steps.toolchain.outcome == 'success' && steps.keys.outputs.dependency_key != '' }}
-        continue-on-error: true
-        uses: actions/cache/restore@v5
-        with:
-          path: ${{ steps.keys.outputs.dependency_archive_path }}
-          key: ${{ steps.keys.outputs.dependency_key }}
-          restore-keys: ${{ steps.keys.outputs.dependency_restore_prefix }}
-      - id: lean_seeds
-        if: ${{ !cancelled() && steps.toolchain.outcome == 'success' }}
-        name: Install the restored Lean dependencies
-        env:
-          DEPENDENCY_KEY: ${{ steps.dependency.outputs.cache-matched-key }}
-          DEPENDENCY_OUTCOME: ${{ steps.dependency.outcome }}
-        run: python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --layers dependency --dependency-key "$DEPENDENCY_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME"
-      - id: cache_scope
-        name: Select cached modules from the Lean build plan
-        if: steps.toolchain.outcome == 'success' && steps.lean_plan.outputs.needs_lean == 'true'
-        run: |
-          targets="$RUNNER_TEMP/lean-cache-targets"
-          python3 tools/scripts/workflow/ci_pr_lean.py "$RUNNER_TEMP/changed-paths" --cache-targets --read-plan "$RUNNER_TEMP/current-lean-plan.json" > "$targets"
-          if [[ -s "$targets" ]]; then
-            echo "targets-file=$targets" >> "$GITHUB_OUTPUT"
-          fi
-      - name: Restore the published shards for the selected modules
-        if: steps.cache_scope.outputs.targets-file != ''
-        continue-on-error: true
-        uses: ./.github/actions/lean-cache-shards
-        env:
-          GH_TOKEN: ${{ github.token }}
-        with:
-          operation: restore-published
-          targets-file: ${{ steps.cache_scope.outputs.targets-file }}
-      - name: Theory-only file and capacity checks
-        if: needs.detect.outputs.report == 'false' && needs.source.outputs.source_status != 'accepted'
-        env:
-          CI_BASE: ${{ steps.entry.outputs.base }}
-        run: python3 tools/scripts/workflow/ci_checks.py current check-delta
-      - id: pr_lean
-        name: Check current and delta with affected Lean and Scribe inputs
-        if: ${{ !cancelled() && steps.lean_plan.outcome == 'success' && (steps.lean_plan.outputs.builds_lean == 'false' || steps.lean_seeds.outcome == 'success') }}
-        env:
-          LEAN_NUM_THREADS: '1'
-          CI_BASE: ${{ steps.entry.outputs.base }}
-        run: python3 tools/scripts/workflow/ci_checks.py current pr-lean --scope-file "$RUNNER_TEMP/current-lean-plan.json"
-      - id: checked
-        name: Confirm selected current checks succeeded
-        run: echo 'unit=current' >> "$GITHUB_OUTPUT"
+    uses: ./.github/workflows/ci-scoped-current.yml
+    with:
+      base: ${{ needs.detect.outputs.base }}
+      report: ${{ needs.detect.outputs.report == 'true' }}
+      delta: ${{ needs.detect.outputs.delta == 'true' }}
+      source-status: ${{ needs.source.outputs.source_status }}
+      judge-key: ${{ needs.source.outputs.judge_key }}
+      nuget-key: ${{ needs.source.outputs.nuget_key }}
+      compute-remaining: ${{ needs.source.outputs.compute_remaining }}
 
   filemap:
     needs: [detect, source]
