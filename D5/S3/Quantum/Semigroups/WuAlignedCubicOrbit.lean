@@ -141,15 +141,6 @@ private theorem cross_rowDet (U : Block) (hU : Uᴴ * U = 1) (k l : Fin 2 → �
       push_cast
       ring
 
-/-- The complex lowering and raising determinants retain the same phase `det U`. -/
-private theorem directed_cross_determinants (U : Block) (hU : Uᴴ * U = 1) (M N : AlignedData) :
-    let p := Complex.normSq (U 0 0)
-    rowDet (crossBlock U N.cross 0) (crossBlock U M.cross 1) =
-      U.det * ((p * (N.cross 0 * M.cross 1) + (1 - p) * (N.cross 1 * M.cross 0) : ℝ) : ℂ) ∧
-    rowDet (crossBlock U M.cross 0) (crossBlock U N.cross 1) =
-      U.det * ((p * (M.cross 0 * N.cross 1) + (1 - p) * (M.cross 1 * N.cross 0) : ℝ) : ℂ) :=
-  ⟨cross_rowDet U hU N.cross M.cross, cross_rowDet U hU M.cross N.cross⟩
-
 set_option maxHeartbeats 2000000 in
 -- Expanding both signed jump sandwiches and the trace into entries needs extra heartbeats.
 private theorem trace_mul_phi_entries (M N : Mat) :
@@ -189,7 +180,7 @@ private theorem trace_phi_eval (U : Block) (hU : Uᴴ * U = 1) (M N : AlignedDat
       loweringValue (Complex.normSq (U 0 0)) U.det M N := by
   simp only [orbitMatrix]
   rw [trace_phi_of_blocks, (even_diagonal_moments U hU N.even).1,
-    (even_diagonal_moments U hU M.even).2, (directed_cross_determinants U hU M N).1]
+    (even_diagonal_moments U hU M.even).2, cross_rowDet U hU N.cross M.cross]
   simp only [loweringValue, Complex.add_re, Complex.re_ofReal_mul, Complex.ofReal_re,
     Complex.star_def, Complex.conj_re]
   ring
