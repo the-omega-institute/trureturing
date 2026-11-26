@@ -137,6 +137,12 @@ private def transport? (source : Environment) (back : Bool) (p q eq input : Expr
 /-- Specialize fully applied casts in the official proof term before translating
 its constants. Every resulting term still goes through the destination kernel. -/
 public def constructiveCasts (source : Environment) (body : Expr) : Expr := Id.run do
+  let equiv := fun (a b h : Expr) => do
+    let direction := fun rev dom => do
+      let lift := fun (e : Expr) => e.liftLooseBVars 0 1
+      let proof ← transport? source rev (lift a) (lift b) (lift h) (mkBVar 0) 32
+      return Expr.lam `hp dom proof .default
+    return mkApp4 (mkConst `Iff.intro) a b (← direction false a) (← direction true b)
   let rewrite := fun (e : Expr) => do
     let .const n us := e.getAppFn | none
     match n, us, e.getAppArgs with
@@ -159,9 +165,16 @@ public def constructiveCasts (source : Environment) (body : Expr) : Expr := Id.r
       transport? source (n == `Eq.mpr) p q h x 32
     | `of_eq_true, _, #[p, h] =>
       transport? source true p (mkConst `True) h (mkConst `True.intro) 32
-    | `Eq.ndrec, _, #[.sort .zero, p, motive, x, q, h] =>
-      guard (motive.beta #[p] == p && motive.beta #[q] == q)
-      transport? source false p q h x 32
+    | `Iff.of_eq, _, #[p, q, h] => equiv p q h
+    | `Eq.ndrec, .zero :: _, #[.sort .zero, p, motive, x, q, h]
+    | `Eq.rec, .zero :: _, #[.sort .zero, p, motive, x, q, h] =>
+      let left := if n == `Eq.rec then motive.beta #[p, mkApp2 (mkConst `Eq.refl [.succ .zero]) (.sort .zero) p]
+        else motive.beta #[p]
+      let right := if n == `Eq.rec then motive.beta #[q, h] else motive.beta #[q]
+      if left == p && right == q then transport? source false p q h x 32
+      else
+        let lifted ← congrIff? p q (← equiv p q h) left right
+        return mkApp4 (mkConst `Iff.mp) left right lifted x
     | `of_eq_false, _, #[p, h] =>
       let hp := mkBVar 0
       let proof ← transport? source false (p.liftLooseBVars 0 1) (mkConst `False)

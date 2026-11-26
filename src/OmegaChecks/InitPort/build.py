@@ -117,12 +117,16 @@ def main():
     parser.add_argument("--seed", type=Path, default=DEFAULT_SEED, help="compiled strict OmegaInit seed")
     parser.add_argument("--exclude", action="append", default=[],
                         help="omit a generated candidate; declarations already in the seed cannot be excluded")
+    parser.add_argument("--require-complete", action="store_true",
+                        help="require checked implementations or impossibility evidence at all official sites")
     parser.add_argument("-j", type=int, default=4, help="parallel jobs for the full OmegaMath consumer build")
     args = parser.parse_args()
     seed = args.seed.resolve()
     target = args.output.resolve()
     if args.j < 1:
         parser.error("the job count must be positive")
+    if args.require_complete and args.modules:
+        parser.error("--require-complete must scan the entire pinned Init")
     if target.exists():
         parser.error(f"output directory already exists: {target}")
     if any(name != "Init" and not name.startswith("Init.") for name in args.modules):
@@ -138,7 +142,7 @@ def main():
         product.mkdir()
         generate(stage, product, stage / "seed", roots, args.exclude)
         if not args.modules:
-            report(product)
+            report(product, require_complete=args.require_complete)
             omegamath.build(product, product / "lib", args.j, product / "omegamath-audit.txt")
         product.rename(target)
 

@@ -62,7 +62,7 @@ private def checkUmbrella (env : Environment) (port : Name) (idx : ModuleIdx) : 
 extension kinds therefore require a correspondence before a port can expose them. -/
 private def supportedExtension (name : Name) : Bool :=
   [-- Compiled interface registrations checked by the port and kernel-interface audits.
-   aliasExtension.name, classExtension.name, Meta.simpExtension.ext.name, auxRecExt.name,
+   aliasExtension.name, classExtension.name, Meta.instanceExtension.ext.name, Meta.simpExtension.ext.name, auxRecExt.name,
    protectedExt.name, matchPatternAttr.ext.name, Elab.Term.elabAsElim.ext.name, reducibilityCoreExt.name,
    -- Module provenance, compiled representation and kernel bookkeeping in the pinned toolchain.
    `Lean.namespacesExt, `Lean.noncomputableExt, `Lean.Compiler.inlineAttrs, `Lean.exportedAxiomsExt,
@@ -80,8 +80,7 @@ private def checkElaboration (env : Environment) (owner : Name) (idx : ModuleIdx
   let extensions := #[
     ("parser", (Parser.parserExtension.ext.getModuleEntries env idx).size),
     ("macro", (Elab.macroAttribute.ext.ext.getModuleEntries env idx).size),
-    ("term elaborator", (Elab.Term.termElabAttribute.ext.ext.getModuleEntries env idx).size),
-    ("instance", (Meta.instanceExtension.ext.getModuleEntries env idx).size)]
+    ("term elaborator", (Elab.Term.termElabAttribute.ext.ext.getModuleEntries env idx).size)]
   for (kind, count) in extensions do
     if count != 0 then
       throw <| IO.userError s!"no elaboration correspondence for public {kind} entries in {owner}"
@@ -90,6 +89,37 @@ private def checkElaboration (env : Environment) (owner : Name) (idx : ModuleIdx
       throw <| IO.userError s!"no elaboration correspondence for public environment extension {ext} in {owner}"
 
 private abbrev ClassParameters := Array Nat × Array Nat
+
+private def checkInstances (env reference : Environment) (owner : Name) (idx : ModuleIdx) : IO Unit := do
+  let installed := Meta.instanceExtension.ext.getModuleEntries env idx
+  if installed.isEmpty then return
+  let rename := fun (n : Name) => n.replacePrefix `Omega .anonymous
+  let key := fun (k : Meta.DiscrTree.Key) => match k with
+    | .const n a => .const (rename n) a
+    | .proj n i a => .proj (rename n) i a
+    | k => k
+  let load := fun (e : ScopedEnvExtension.Entry Meta.InstanceEntry) => match e with
+    | .global v => (none, v)
+    | .scoped ns v => (some ns, v)
+  let some upstream := reference.getModuleIdx? (counterpart owner)
+    | throw <| IO.userError s!"missing official owner for instances in {owner}"
+  let actual := (Meta.instanceExtension.ext.getModuleEntries reference upstream).map load
+  let mut last := 0
+  for e in installed do
+    let (scope, v) := load e
+    let some name := v.globalName? | throw <| IO.userError s!"unnamed public instance in {owner}"
+    let .const n us := v.val | throw <| IO.userError s!"invalid public instance term in {owner}"
+    unless name == n && name.getRoot == `Omega && env.contains name && reference.contains (rename name) do
+      throw <| IO.userError s!"no elaboration correspondence for public instance {name} in {owner}"
+    -- Preserve the relative order of registered candidates, including priority ties.
+    let mut found := false
+    while last < actual.size && !found do
+      let (targetScope, target) := actual[last]!
+      last := last + 1
+      found := targetScope == scope.map rename && target.globalName? == some (rename name) &&
+        target.val.equal (.const (rename name) us) && target.priority == v.priority &&
+        target.keys == v.keys.map key && target.synthOrder == v.synthOrder && target.attrKind == v.attrKind
+    unless found do throw <| IO.userError s!"unmatched public instance registration for {name} in {owner}"
 
 private def classParameters (env : Environment) (modules : Array ModuleIdx) : NameMap ClassParameters :=
   modules.foldl (init := {}) fun classes idx =>
@@ -132,6 +162,8 @@ def check (strict : Environment) : IO (Array (Name × Name)) := do
     let some idx := strict.getModuleIdx? port | throw <| IO.userError s!"missing module {port}"
     checkElaboration strict port idx
     if port == port.getRoot then
+      unless (Meta.instanceExtension.ext.getModuleEntries strict idx).isEmpty do
+        throw <| IO.userError s!"unmatched instance registration in the {port} umbrella"
       unless (Meta.simpExtension.ext.getModuleEntries strict idx).isEmpty do
         throw <| IO.userError s!"unmatched simp registration in the {port} umbrella"
       checkUmbrella strict port idx
@@ -147,6 +179,7 @@ def check (strict : Environment) : IO (Array (Name × Name)) := do
       let some idx := strict.getModuleIdx? owner | throw <| IO.userError s!"missing module {owner}"
       if owner != port then checkElaboration strict owner idx
       let data := strict.header.moduleData[idx]!
+      checkInstances strict reference owner idx
       checkClasses strict reference owner idx strictClasses officialClasses
       checkSimp strict reference owner idx
       if data.imports.any (fun dep => dep.isExported && dep.importAll) then

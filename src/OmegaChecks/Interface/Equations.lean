@@ -1,6 +1,7 @@
 module
 
 public import OmegaChecks.Interface.Equations.Logic
+public import OmegaChecks.Interface.Equations.Array
 public import Mathlib.Data.Nat.Fib.Basic
 public import Mathlib.Data.Nat.Choose.Basic
 public import Mathlib.Data.Nat.Prime.Defs
@@ -178,6 +179,9 @@ public theorem Nat.mod (x y : Nat) :
     cases y with
     | zero => exact (Nat.mod_zero k.succ).symm
     | succ d => exact remainderSteps_eq d _ _ (Nat.lt_succ_self k.succ)
+
+public theorem Nat.modCore (x y : Nat) : _root_.Nat.mod x y = _root_.Nat.modCore x y :=
+  (_root_.Nat.modCore_eq_mod x y).symm
 
 @[expose] public noncomputable def euclideanSteps : Nat → Nat → Nat → Nat :=
   Nat.rec (motive := fun _ => Nat → Nat → Nat) (fun _ n => n)

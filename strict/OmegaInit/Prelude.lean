@@ -482,7 +482,11 @@ theorem mod_lt (x : Nat) {y : Nat} (hy : Nat.lt zero y) : Nat.lt (Nat.mod x y) y
       (fun h => False.elim (Nat.not_succ_le_zero zero h))
       (fun d _ _ => remainder_lt d (succ (succ k)) (succ k)) y) x) y hy
 
-attribute [irreducible] beq ble Nat.div Nat.mod
+@[no_expose] protected def modCore (x y : Nat) : Nat := Nat.mod x y
+
+theorem modCore_lt {x y : Nat} (hy : Nat.lt zero y) : Nat.lt (Nat.modCore x y) y := mod_lt x hy
+
+attribute [irreducible] beq ble Nat.div Nat.mod Nat.modCore
 
 end Omega.Nat
 
@@ -539,3 +543,72 @@ def lengthTR {α : Type u} (as : List α) : Nat := lengthTRAux as Nat.zero
 end Omega.List
 
 port_definition List.flatMap
+
+port_inductive OfNat
+port_definition OfNat.ofNat
+port_definition instOfNatNat
+
+port_inductive LE
+port_definition LE.le
+port_inductive LT
+port_definition LT.lt
+
+port_inductive Decidable
+port_definition Decidable.decide
+port_proof Decidable.reflects_decide
+port_definition Decidable.isFalse
+port_definition Decidable.isTrue
+port_definition dite
+port_definition ite
+
+namespace Omega
+
+theorem instDecidableAnd._proof_1 {p q : Prop} [dp : Decidable p] [dq : Decidable q] :
+    Bool.Reflects (Bool.and (@Decidable.decide p dp) (@Decidable.decide q dq)) (And p q) :=
+  have reflect : ∀ a b : Bool, Bool.Reflects a p → Bool.Reflects b q → Bool.Reflects (Bool.and a b) (And p q) :=
+    fun a => Bool.casesOn (motive := fun a => ∀ b : Bool, Bool.Reflects a p → Bool.Reflects b q →
+        Bool.Reflects (Bool.and a b) (And p q)) a
+      (fun _ hp _ both => hp (And.left both))
+      (fun b => Bool.casesOn (motive := fun b => p → Bool.Reflects b q → Bool.Reflects b (And p q))
+        b (fun _ hq both => hq (And.right both)) And.intro)
+  reflect _ _ (@Decidable.reflects_decide p dp) (@Decidable.reflects_decide q dq)
+
+instance instDecidableAnd {p q : Prop} [dp : Decidable p] [dq : Decidable q] : Decidable (And p q) :=
+  Decidable.intro (Bool.and (@Decidable.decide p dp) (@Decidable.decide q dq)) instDecidableAnd._proof_1
+
+instance instLENat : LE Nat := LE.mk Nat.le
+instance instLTNat : LT Nat := LT.mk Nat.lt
+
+instance Nat.decLe (n m : Nat) : Decidable (@LE.le Nat instLENat n m) :=
+  Decidable.intro (Nat.ble n m)
+    (Bool.casesOn (motive := fun b => Eq (Nat.ble n m) b → Bool.Reflects b (Nat.le n m)) (Nat.ble n m)
+      (fun e h => Bool.ne_false_of_eq_true (Nat.ble_eq_true_of_le h) e) Nat.le_of_ble_eq_true Omega.rfl)
+
+instance Nat.decLt (n m : Nat) : Decidable (@LT.lt Nat instLTNat n m) := Nat.decLe (Nat.succ n) m
+
+end Omega
+
+port_inductive Array
+port_definition Array.toList
+port_definition List.toArray
+port_definition Array.size
+port_definition Array.push
+port_definition Array.emptyWithCapacity
+port_definition Array.mkEmpty
+
+namespace Omega
+def Array.empty {α : Type u} : Array α := Array.emptyWithCapacity Nat.zero
+end Omega
+
+port_inductive Append
+port_definition Append.append
+port_inductive HAppend
+port_definition HAppend.hAppend
+port_definition instHAppendOfAppend
+
+port_inductive Sub
+port_definition Sub.sub
+port_inductive HSub
+port_definition HSub.hSub
+port_definition instHSub
+port_definition instSubNat
