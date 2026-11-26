@@ -211,6 +211,38 @@ theorem excludedMiddleFromLookahead (look : type_of% @Lean.Grind.of_lookahead) (
 
 end GrindOrder
 
+namespace OptionalIndex
+
+/-- Equivalent decidable propositions are equal. -/
+def DecidablePropExt : Prop :=
+  ∀ {p q : Prop}, [Decidable p] → [Decidable q] → (p ↔ q) → p = q
+
+private theorem represented (read : type_of% (@isSome_getElem?.{0,0,0}))
+    (p : Prop) (d : Decidable p) : (@decide p d = true) = p := by
+  let dom (_ _ : Unit) := p
+  let answer := @ite (Option Unit) p d (some ()) none
+  letI : GetElem? Unit Unit Unit dom := {
+    getElem := fun _ _ _ => ()
+    getElem? := fun _ _ => answer
+    getElem! := fun {_} _ _ => answer.getD default }
+  letI : LawfulGetElem Unit Unit Unit dom := {
+    getElem?_def := by
+      intro c i other
+      cases d <;> cases other <;> first | rfl | contradiction
+    getElem!_def := by intro inhabited c i; cases d <;> rfl }
+  have h := @read Unit Unit Unit dom inferInstance inferInstance () () d
+  cases d <;> exact h
+
+theorem decidablePropExtOfIsSome (read : type_of% (@isSome_getElem?.{0,0,0})) :
+    DecidablePropExt := by
+  intro p q dp dq eqv
+  refine (represented read p dp).symm.trans ((congrArg (fun b : Bool => b = true) ?_).trans (represented read q dq))
+  cases dp with
+  | isTrue hp => exact (decide_eq_true (eqv.mp hp)).symm
+  | isFalse hp => exact (decide_eq_false (fun hq => hp (eqv.mpr hq))).symm
+
+end OptionalIndex
+
 namespace AbstractOrder
 
 private theorem notNotEM (p : Prop) : ¬ ¬ (p ∨ ¬p) :=
@@ -367,7 +399,8 @@ private def replayWitnesses (env : Environment) : IO Unit := do
       ``AbstractOrder.excludedMiddleOfTrichotomy, ``AbstractOrder.excludedMiddleOfLTTrichotomy,
       ``AbstractOrder.excludedMiddleOfTrichotomousTotal, ``AbstractOrder.excludedMiddleOfNegationTotal,
       ``AbstractOrder.excludedMiddleOfLawfulLT, ``AbstractOrder.weakMiddleOfTotalNot,
-      ``AbstractOrder.weakMiddleOfLinearPreorder, ``AbstractOrder.weakMiddleOfLinearOrder, ``TwoWorlds.countermodel]
+      ``AbstractOrder.weakMiddleOfLinearPreorder, ``AbstractOrder.weakMiddleOfLinearOrder,
+      ``OptionalIndex.decidablePropExtOfIsSome, ``TwoWorlds.countermodel]
   while let n :: more := todo do
     todo := more
     if terms.contains n then continue
@@ -1233,6 +1266,8 @@ private def logicalConsequence? (owner name : Name) : Option (Name × Name) := d
   | `Init.Core, ``Quotient.sound => return (``funext, ``OmegaChecks.InitBoundaries.funextFromQuotientSound)
   | `Init.Core, ``Pi.instSubsingleton => return (``funext, ``OmegaChecks.InitBoundaries.funextFromPiSubsingleton)
   | `Init.Core, ``instSubsingletonSquash => return (``funext, ``OmegaChecks.InitBoundaries.funextFromSquashSubsingleton)
+  | `Init.GetElem, ``isSome_getElem? =>
+    return (``OmegaChecks.InitBoundaries.OptionalIndex.DecidablePropExt, ``OmegaChecks.InitBoundaries.OptionalIndex.decidablePropExtOfIsSome)
   | `Init.Data.Order.Lemmas, ``Std.Asymm.total_not =>
     return (`OmegaChecks.InitInventory.StringPatterns.WeakExcludedMiddle, ``OmegaChecks.InitBoundaries.AbstractOrder.weakMiddleOfTotalNot)
   | `Init.Data.Order.Factories, ``Std.IsLinearPreorder.of_lt =>
