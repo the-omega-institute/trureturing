@@ -1,4 +1,5 @@
 module
+public import OmegaChecks.InitPort.Alternatives.ArrayAppend
 public import OmegaChecks.InitPort.Alternatives.ArrayErase
 public import OmegaChecks.InitPort.Alternatives.ArrayFind
 public import OmegaChecks.InitPort.Alternatives.ArrayMapIdx

@@ -647,4 +647,22 @@ public theorem List.getElem_insertIdx_of_lt : type_of% @_root_.List.getElem_inse
       | zero => rfl
       | succ j => exact ih (Nat.lt_of_succ_lt_succ before) (Nat.lt_of_succ_lt_succ bound)
 
+public theorem List.append_eq_append_iff : type_of% @_root_.List.append_eq_append_iff := by
+  intro α ws xs ys zs
+  constructor
+  · induction ws generalizing ys with
+    | nil => intro eq; exact .inl ⟨ys, rfl, eq⟩
+    | cons w ws ih =>
+      intro eq
+      cases ys with
+      | nil => exact .inr ⟨w :: ws, rfl, eq.symm⟩
+      | cons y ys =>
+        obtain ⟨rfl, rest⟩ := _root_.List.cons.inj eq
+        obtain (⟨as, rfl, right⟩ | ⟨cs, rfl, right⟩) := ih rest
+        · exact .inl ⟨as, rfl, right⟩
+        · exact .inr ⟨cs, rfl, right⟩
+  · rintro (⟨as, rfl, rfl⟩ | ⟨cs, rfl, rfl⟩)
+    · exact (_root_.List.append_assoc ..).symm
+    · exact _root_.List.append_assoc ..
+
 end OmegaChecks.InitPort.Alternatives
