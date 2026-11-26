@@ -608,6 +608,140 @@ theorem decidablePropExtOfIsSome (read : type_of% (@isSome_getElem?.{0,0,0})) :
 
 end OptionalIndex
 
+namespace BooleanReflection
+
+/-- The truth of a successful Boolean test, expressed as equality of propositions. -/
+def TrueBit := (true = true) = True
+
+/-- The falsity of an unsuccessful Boolean test, expressed as equality of propositions. -/
+def FalseBit := (false = true) = False
+
+/-- Simultaneously negating both sides preserves Boolean identity propositions. -/
+def Mirror := ((false = false) = (true = true)) ∧ ((true = false) = (false = true))
+
+theorem mirrorOfNotTrue (rule : type_of% @Bool.not_eq_true') : Mirror :=
+  ⟨(rule false).symm, (rule true).symm⟩
+
+theorem mirrorOfNotFalse (rule : type_of% @Bool.not_eq_false') : Mirror :=
+  ⟨rule true, rule false⟩
+
+theorem mirrorOfBEq (rule : type_of% @Bool.beq_to_eq) : Mirror :=
+  ⟨(rule false false).symm, (rule true false).symm⟩
+
+private theorem matched {b : Bool} (h : b = true) : ((b = true) = True) ↔ TrueBit := by
+  cases h
+  exact Iff.rfl
+
+private theorem mismatched {b : Bool} (h : ¬ b = true) : ((b = true) = False) ↔ FalseBit := by
+  cases b with
+  | false => exact Iff.rfl
+  | true => exact (h rfl).elim
+
+theorem int8LTTrue (rule : type_of% @Lean.Sym.Int8.lt_eq_true) : TrueBit :=
+  (matched (show (0 : Int8) < 1 from by decide)).mp (rule (0 : Int8) 1 (by decide))
+
+theorem int8LTFalse (rule : type_of% @Lean.Sym.Int8.lt_eq_false) : FalseBit :=
+  (mismatched (show ¬ (0 : Int8) < 0 from by decide)).mp (rule (0 : Int8) 0 (by decide))
+
+theorem int8LETrue (rule : type_of% @Lean.Sym.Int8.le_eq_true) : TrueBit :=
+  (matched (show (0 : Int8) ≤ 0 from by decide)).mp (rule (0 : Int8) 0 (by decide))
+
+theorem int8LEFalse (rule : type_of% @Lean.Sym.Int8.le_eq_false) : FalseBit :=
+  (mismatched (show ¬ (1 : Int8) ≤ 0 from by decide)).mp (rule (1 : Int8) 0 (by decide))
+
+theorem int16LTTrue (rule : type_of% @Lean.Sym.Int16.lt_eq_true) : TrueBit :=
+  (matched (show (0 : Int16) < 1 from by decide)).mp (rule (0 : Int16) 1 (by decide))
+
+theorem int16LTFalse (rule : type_of% @Lean.Sym.Int16.lt_eq_false) : FalseBit :=
+  (mismatched (show ¬ (0 : Int16) < 0 from by decide)).mp (rule (0 : Int16) 0 (by decide))
+
+theorem int16LETrue (rule : type_of% @Lean.Sym.Int16.le_eq_true) : TrueBit :=
+  (matched (show (0 : Int16) ≤ 0 from by decide)).mp (rule (0 : Int16) 0 (by decide))
+
+theorem int16LEFalse (rule : type_of% @Lean.Sym.Int16.le_eq_false) : FalseBit :=
+  (mismatched (show ¬ (1 : Int16) ≤ 0 from by decide)).mp (rule (1 : Int16) 0 (by decide))
+
+theorem int32LTTrue (rule : type_of% @Lean.Sym.Int32.lt_eq_true) : TrueBit :=
+  (matched (show (0 : Int32) < 1 from by decide)).mp (rule (0 : Int32) 1 (by decide))
+
+theorem int32LTFalse (rule : type_of% @Lean.Sym.Int32.lt_eq_false) : FalseBit :=
+  (mismatched (show ¬ (0 : Int32) < 0 from by decide)).mp (rule (0 : Int32) 0 (by decide))
+
+theorem int32LETrue (rule : type_of% @Lean.Sym.Int32.le_eq_true) : TrueBit :=
+  (matched (show (0 : Int32) ≤ 0 from by decide)).mp (rule (0 : Int32) 0 (by decide))
+
+theorem int32LEFalse (rule : type_of% @Lean.Sym.Int32.le_eq_false) : FalseBit :=
+  (mismatched (show ¬ (1 : Int32) ≤ 0 from by decide)).mp (rule (1 : Int32) 0 (by decide))
+
+theorem int64LTTrue (rule : type_of% @Lean.Sym.Int64.lt_eq_true) : TrueBit :=
+  (matched (show (0 : Int64) < 1 from by decide)).mp (rule (0 : Int64) 1 (by decide))
+
+theorem int64LTFalse (rule : type_of% @Lean.Sym.Int64.lt_eq_false) : FalseBit :=
+  (mismatched (show ¬ (0 : Int64) < 0 from by decide)).mp (rule (0 : Int64) 0 (by decide))
+
+theorem int64LETrue (rule : type_of% @Lean.Sym.Int64.le_eq_true) : TrueBit :=
+  (matched (show (0 : Int64) ≤ 0 from by decide)).mp (rule (0 : Int64) 0 (by decide))
+
+theorem int64LEFalse (rule : type_of% @Lean.Sym.Int64.le_eq_false) : FalseBit :=
+  (mismatched (show ¬ (1 : Int64) ≤ 0 from by decide)).mp (rule (1 : Int64) 0 (by decide))
+
+private def ratZero : Rat := ⟨0, 1, by decide, rfl⟩
+private def ratOne : Rat := ⟨1, 1, by decide, rfl⟩
+
+theorem ratLTTrue (rule : type_of% @Lean.Sym.Rat.lt_eq_true) : TrueBit :=
+  (matched (show ratZero < ratOne from by decide)).mp (rule ratZero ratOne (by decide))
+
+theorem ratLTFalse (rule : type_of% @Lean.Sym.Rat.lt_eq_false) : FalseBit :=
+  (mismatched (show ¬ ratZero < ratZero from by decide)).mp (rule ratZero ratZero (by decide))
+
+/-- The rational non-strict order tests whether the reverse comparison is false. -/
+def FalseEqualsFalse := (false = false) = True
+
+def TrueEqualsFalse := (true = false) = False
+
+theorem ratLETrue (rule : type_of% @Lean.Sym.Rat.le_eq_true) : FalseEqualsFalse :=
+  rule ratZero ratZero (by decide)
+
+theorem ratLEFalse (rule : type_of% @Lean.Sym.Rat.le_eq_false) : TrueEqualsFalse :=
+  rule ratOne ratZero (by decide)
+
+theorem decidablePropExtOfReflection (rule : type_of% @decide_eq_true_eq)
+    : OptionalIndex.DecidablePropExt := by
+  intro p q dp dq equiv
+  have agree : decide p = decide q := by
+    cases dp with
+    | isTrue hp => exact (decide_eq_true (equiv.mp hp)).symm
+    | isFalse hn => exact (decide_eq_false (fun hq => hn (equiv.mpr hq))).symm
+  exact (rule (p := p)).symm.trans ((congrArg (fun b : Bool => b = true) agree).trans (rule (p := q)))
+
+def witnesses : List (Name × (Name × Name)) := [
+  (``Lean.Sym.Int8.lt_eq_true, ``TrueBit, ``int8LTTrue),
+  (``Lean.Sym.Int8.lt_eq_false, ``FalseBit, ``int8LTFalse),
+  (``Lean.Sym.Int8.le_eq_true, ``TrueBit, ``int8LETrue),
+  (``Lean.Sym.Int8.le_eq_false, ``FalseBit, ``int8LEFalse),
+  (``Lean.Sym.Int16.lt_eq_true, ``TrueBit, ``int16LTTrue),
+  (``Lean.Sym.Int16.lt_eq_false, ``FalseBit, ``int16LTFalse),
+  (``Lean.Sym.Int16.le_eq_true, ``TrueBit, ``int16LETrue),
+  (``Lean.Sym.Int16.le_eq_false, ``FalseBit, ``int16LEFalse),
+  (``Lean.Sym.Int32.lt_eq_true, ``TrueBit, ``int32LTTrue),
+  (``Lean.Sym.Int32.lt_eq_false, ``FalseBit, ``int32LTFalse),
+  (``Lean.Sym.Int32.le_eq_true, ``TrueBit, ``int32LETrue),
+  (``Lean.Sym.Int32.le_eq_false, ``FalseBit, ``int32LEFalse),
+  (``Lean.Sym.Int64.lt_eq_true, ``TrueBit, ``int64LTTrue),
+  (``Lean.Sym.Int64.lt_eq_false, ``FalseBit, ``int64LTFalse),
+  (``Lean.Sym.Int64.le_eq_true, ``TrueBit, ``int64LETrue),
+  (``Lean.Sym.Int64.le_eq_false, ``FalseBit, ``int64LEFalse),
+  (``Lean.Sym.Rat.lt_eq_true, ``TrueBit, ``ratLTTrue),
+  (``Lean.Sym.Rat.lt_eq_false, ``FalseBit, ``ratLTFalse),
+  (``Lean.Sym.Rat.le_eq_true, ``FalseEqualsFalse, ``ratLETrue),
+  (``Lean.Sym.Rat.le_eq_false, ``TrueEqualsFalse, ``ratLEFalse),
+  (``Bool.not_eq_true', ``Mirror, ``mirrorOfNotTrue),
+  (``Bool.not_eq_false', ``Mirror, ``mirrorOfNotFalse),
+  (``Bool.beq_to_eq, ``Mirror, ``mirrorOfBEq),
+  (``decide_eq_true_eq, ``OptionalIndex.DecidablePropExt, ``decidablePropExtOfReflection)]
+
+end BooleanReflection
+
 namespace NaturalCancellation
 
 open Nat.Internal.Linear
@@ -1042,6 +1176,7 @@ private def replayWitnesses (env : Environment) : IO Unit := do
   let mut terms : Std.HashMap Name ConstantInfo := {}
   let mut todo := (reductions.map fun (_, _, _, witness) => witness) ++
     ClassicalConsequences.witnesses.map Prod.snd ++
+    BooleanReflection.witnesses.map (fun row => row.2.2) ++
     [``EmbeddingRange.ofExists, ``EmbeddingRange.ofLeftInverse,
       ``LexicographicOrder.ofListNotLE, ``LexicographicOrder.ofArrayNotLE, ``LexicographicOrder.ofVectorNotLE,
       ``FiniteMembership.ofRunDecomposition, ``FiniteMembership.ofRunInduction,
@@ -2647,6 +2782,9 @@ private def logicalConsequence? (owner name : Name) : Option (Name × Name) := d
     return (`OmegaChecks.InitInventory.StringPatterns.WeakExcludedMiddle,
       `OmegaChecks.InitInventory.StringPatterns.weakExcludedMiddleOfRevMatchAtNone)
   | _, _ => pure ()
+  if owner == `Init.SimpLemmas || owner == `Init.Sym.Lemmas then
+    if let some reduction := OmegaChecks.InitBoundaries.BooleanReflection.witnesses.lookup name then
+      return reduction
   if owner == `Init.Classical then
     if let some witness := OmegaChecks.InitBoundaries.ClassicalConsequences.witnesses.lookup name then
       return (``Classical.em, witness)
