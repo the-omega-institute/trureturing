@@ -4,7 +4,7 @@
 
 For every family of symmetric hypercube walks, a common weak limit exists exactly when all fixed-order CT–DT Walsh gaps vanish and all corresponding CT collision coefficients converge.
 
-Section 5, printed p. 14, asks for a necessary and sufficient condition for coincidence of the scaling limits. At each dimension d choose nonnegative weights w_d(h) for 0 ≤ h ≤ d whose sum is one. The increment law is w_d(|y|)/choose(d,|y|). Both walks start at the origin. Take their respective Cesàro limits at fixed d, then push the position laws forward by normalized Hamming weight |x|/d. Write ν_{C,d} and ν_{D,d} for the resulting probability laws on [0,1]. All displayed arrows are along the full sequence d → ∞ and denote weak convergence for laws. The source starts at d ≥ 3. Extending the weights at the finitely many smaller dimensions has no effect on these limits.
+In arXiv:2611.31635v1, Section 5, printed p. 14, Ide, Konno and Mano write, “It is therefore an open problem to find a necessary and sufficient condition for the coincidence of the scaling limits.” At each dimension d choose nonnegative weights w_d(h) for 0 ≤ h ≤ d whose sum is one. The increment law is w_d(|y|)/choose(d,|y|). Both walks start at the origin. Take their respective Cesàro limits at fixed d, then push the position laws forward by normalized Hamming weight |x|/d. Write ν_{C,d} and ν_{D,d} for the resulting probability laws on [0,1]. All displayed arrows are along the full sequence d → ∞ and denote weak convergence for laws. The source starts at d ≥ 3. Extending the weights at the finitely many smaller dimensions has no effect on these limits.
 
 **Theorem 1.1 (Existence of a common weak limit).**
 
@@ -18,7 +18,7 @@ $$(\exists \pi, (\nu_{C,d} \to \pi \land \nu_{D,d} \to \pi)) \iff \forall k>0, (
 
 *Commentary.*
 
-B_{d,k} is the CT coefficient and Δ_{d,k} is CT minus DT. For fixed k and d ≥ k their normalized double sums use binomial weights choose(d−k,i) choose(k,j)/2^d. The CT coefficient counts equal numerical eigenvalues at shells i+j and i+k−j. The gap uses (1−ρ_k)/(2(1−ρ_{i+j}²)) at equal interior eigenvalues and zero otherwise. Both equal endpoints contribute one to the CT and DT coefficients and zero to the gap.
+B_{d,k} is the CT coefficient and Δ_{d,k} is CT minus DT. For fixed k and d ≥ k their normalized double sums use binomial weights choose(d−k,i) choose(k,j)/2^d. The CT coefficient counts equal numerical eigenvalues at shells i+j and i+k−j. The gap uses (1−ρ_k)/(2(1−ρ_{i+j}²)) at equal interior eigenvalues and zero otherwise. Both equal endpoints contribute one to the CT and DT coefficients and zero to the gap. At k = 0, B_{d,0} = 1 and Δ_{d,0} = 0.
 
 Coordinate permutations preserve both time-averaged laws. Sampling bounds compare their Walsh coefficients with their shifted radial moments, with error at most k(k−1)/d per law. Compactness of the probability measures on [0,1] and the shifted moment criterion produce CT convergence from convergence of all B_{d,k}. The gap condition transfers this limit to DT. Conversely, both laws converging to π gives the same shifted moments, so every gap vanishes and every CT coefficient converges.
 
@@ -27,6 +27,10 @@ Coordinate permutations preserve both time-averaged laws. Sampling bounds compar
 $$(\nu_{C,d} \to \pi \lor \nu_{D,d} \to \pi) \implies ((\nu_{C,d} \to \pi \land \nu_{D,d} \to \pi) \iff \forall k>0, \Delta_{d,k} \to 0)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Dynamics/SymmetricHypercubeWalk/Criterion.common_shell_weakLimit_iff_gap` (`✓ std3`). ∎
+
+*Resolves.* `Problems/ide-konno-mano-2026-hypercube-walk-limit-coincidence` (proved) by `D5/S3/Quantum/Dynamics/SymmetricHypercubeWalk/Criterion.common_shell_weakLimit_iff_gap`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"ide-konno-mano-2026-hypercube-walk-limit-coincidence","declaration_gid":"D5/S3/Quantum/Dynamics/SymmetricHypercubeWalk/Criterion.common_shell_weakLimit_iff_gap","resolution_kind":"proved"} -->
 
 *Source.* Repository-derived.
 

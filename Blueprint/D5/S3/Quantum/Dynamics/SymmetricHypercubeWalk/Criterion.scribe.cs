@@ -31,14 +31,25 @@ internal sealed class CriterionDocument : IScribeDocumentDefinition
             StatementSource.FromAuthor(Disp(statement)), AssessedProvenance.FromRepo(Source),
             Blocks(notes), DescribeRole.Theorem);
 
+    private static DocumentBlock CoincidenceResolution(Formula statement,
+        params DocumentBlock[] notes) =>
+        Describe.Lean(DescribeId.Create("conditional-coincidence"),
+            DeclarationHandle.Create(Prefix + "common_shell_weakLimit_iff_gap"),
+            H("Coincidence when one law converges"), StatementSource.FromAuthor(Disp(statement)),
+            AssessedProvenance.FromRepo(Source), Blocks(notes), DescribeRole.Theorem,
+            openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                ProblemSlugRef.Create("ide-konno-mano-2026-hypercube-walk-limit-coincidence"),
+                ResolutionKind.Proved));
+
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "For every family of symmetric hypercube walks, a common weak limit exists exactly "
         + "when all fixed-order CT–DT Walsh gaps vanish and all corresponding CT collision coefficients converge.",
         H("Coincidence of symmetric hypercube quantum-walk limits"),
         Blocks(
             Paragraph(Text(
-                "Section 5, printed p. 14, asks for a necessary and sufficient condition for coincidence "
-                + "of the scaling limits. At each dimension d choose nonnegative weights w_d(h) for "
+                "In arXiv:2611.31635v1, Section 5, printed p. 14, Ide, Konno and Mano write, "
+                + "“It is therefore an open problem to find a necessary and sufficient condition "
+                + "for the coincidence of the scaling limits.” At each dimension d choose nonnegative weights w_d(h) for "
                 + "0 ≤ h ≤ d whose sum is one. The increment law is w_d(|y|)/choose(d,|y|). "
                 + "Both walks start at the origin. Take their respective Cesàro limits at fixed d, "
                 + "then push the position laws forward by normalized Hamming weight |x|/d. "
@@ -56,7 +67,7 @@ internal sealed class CriterionDocument : IScribeDocumentDefinition
                     + "their normalized double sums use binomial weights choose(d−k,i) choose(k,j)/2^d. "
                     + "The CT coefficient counts equal numerical eigenvalues at shells i+j and i+k−j. "
                     + "The gap uses (1−ρ_k)/(2(1−ρ_{i+j}²)) at equal interior eigenvalues and zero otherwise. "
-                    + "Both equal endpoints contribute one to the CT and DT coefficients and zero to the gap.")),
+                    + "Both equal endpoints contribute one to the CT and DT coefficients and zero to the gap. At k = 0, B_{d,0} = 1 and Δ_{d,0} = 0.")),
                 Paragraph(Text(
                     "Coordinate permutations preserve both time-averaged laws. Sampling bounds compare "
                     + "their Walsh coefficients with their shifted radial moments, with error at most k(k−1)/d "
@@ -64,8 +75,7 @@ internal sealed class CriterionDocument : IScribeDocumentDefinition
                     + "criterion produce CT convergence from convergence of all B_{d,k}. The gap condition "
                     + "transfers this limit to DT. Conversely, both laws converging to π gives the same "
                     + "shifted moments, so every gap vanishes and every CT coefficient converges."))),
-            Theorem("conditional-coincidence", "common_shell_weakLimit_iff_gap",
-                "Coincidence when one law converges",
+            CoincidenceResolution(
                 Seq(Open, ToLimit("C"), Sp, Lor, Sp, ToLimit("D"), Close, Sp, Implies, Sp,
                     Open, BothLimits(), Sp, Iff, Sp, PositiveOrder(), GapLimit(), Close),
                 Paragraph(Text(
