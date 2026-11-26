@@ -1495,6 +1495,183 @@ theorem adjustedResidue_ground_first_eigenWord {d : ℕ} {b : NativeStates}
 #check adjustedResidue_ground_first_eigenWord
 #print axioms adjustedResidue_ground_first_eigenWord
 
+open private eigenWords eigenWordSpan eigenWordSpan_eq_top root_cube from
+  D5.S3.VertexAlgebra.Lattice.Orbifold.P48qNativePairwiseLocality
+open private deltaCoverEnd coverOrder_mono from
+  D5.S3.VertexAlgebra.Lattice.Orbifold.P48qNativeCurrentLocality
+open P48qNativeResidueProduct
+  (adjustedResidue_strip_left_add_three adjustedResidue_strip_right_add_three)
+open P48qNativeCurrentLocality (restoreResidue)
+
+private theorem zeta_zpow_eq_iff (s t : ℤ) : ζ ^ s = ζ ^ t ↔ s % 3 = t % 3 := by
+  have hz : IsPrimitiveRoot ζ 3 :=
+    IsPrimitiveRoot.coe_units_iff.mpr ThirdTwistedChargeCocycle.zeta_primitive
+  have hne := Units.ne_zero ThirdTwistedChargeCocycle.zeta
+  rw [← div_eq_one_iff_eq (zpow_ne_zero t hne), ← zpow_sub₀ hne, hz.zpow_eq_one_iff_dvd]
+  change (3 : ℤ) ∣ s - t ↔ _
+  omega
+
+private theorem periodThree {D : Type*} {F : ℤ → D} (h : Function.Periodic F 3)
+    (a b : ℤ) (hab : a % 3 = b % 3) : F a = F b := by
+  have he : b + ((a - b) / 3) * 3 = a := by omega
+  simpa only [Int.cast_id, he] using (h.int_mul ((a - b) / 3)) b
+
+private theorem adjusted_strip_representatives (s s' t t' : ℤ) (A B : Field) (N : ℕ) (n : ℤ)
+    (hs : s % 3 = s' % 3) (ht : t % 3 = t' % 3) (hA : InResidue s A) (hB : InResidue t B)
+    (hN : coverDelta^[N] (coverComm A B) = 0) :
+    adjustedResidue s t A B N n = adjustedResidue s' t' A B N n := by
+  let left (k : ℤ) := if k % 3 = s % 3 then adjustedResidue k t A B N n else 0
+  have hleft : Function.Periodic left 3 := by
+    intro k
+    have hmod : (k + 3) % 3 = k % 3 := by omega
+    by_cases hk : k % 3 = s % 3
+    · simp only [left, hmod, ite_eq_left hk]
+      exact adjustedResidue_strip_left_add_three _ _ A B
+        (fun l hl => hA l (by simpa only [hk] using hl)) hB N hN n
+    · simp only [left, hmod, ite_eq_right hk]
+  have hfirst : adjustedResidue s t A B N n = adjustedResidue s' t A B N n := by
+    simpa only [left, ite_eq_left rfl, ite_eq_left hs.symm] using periodThree hleft s s' hs
+  exact hfirst.trans (periodThree (F := fun k => adjustedResidue s' k A B N n)
+    (fun k => adjustedResidue_strip_right_add_three s' k A B N n) t t' ht)
+
+private theorem liftProject_eigenstate (r : Fin 3) (v : NativeStates) (t : ℤ)
+    (hv : σ v = ζ ^ t • v) :
+    liftProject r v = if ζ ^ t = (ζ ^ r.val) ^ 2 then v else 0 := by
+  by_cases h : ζ ^ t = (ζ ^ r.val) ^ 2
+  · rw [ite_eq_left h]
+    have hv' := hv
+    rw [h] at hv'
+    have hc : (ζ ^ r.val) ^ 3 = 1 := root_cube _
+    have hm : ζ ^ r.val * (ζ ^ r.val) ^ 2 = 1 := by rw [← pow_succ', hc]
+    have hσ₂ : σ (σ v) = ((ζ ^ r.val) ^ 2) ^ 2 • v := by
+      rw [hv', map_smul, hv', smul_smul, ← pow_two ((ζ ^ r.val) ^ 2)]
+    have hm₂ : (ζ ^ r.val) ^ 2 * ((ζ ^ r.val) ^ 2) ^ 2 = 1 := by
+      rw [← pow_succ', pow_right_comm, hc, one_pow]
+    rw [liftProject, hσ₂, hv', smul_smul, hm, smul_smul, hm₂, one_smul]
+    calc
+      (3 : ℂ)⁻¹ • (v + v + v) = (3 : ℂ)⁻¹ • ((3 : ℂ) • v) := by module
+      _ = v := by rw [smul_smul, inv_mul_cancel₀ (by norm_num), one_smul]
+  · rw [ite_eq_right h]
+    have hm : σ (liftProject r v) = ζ ^ t • liftProject r v := by
+      have hσ₂ : σ (σ v) = (ζ ^ t * ζ ^ t) • v := by
+        rw [hv, map_smul, hv, smul_smul]
+      have hform : liftProject r v =
+          ((3 : ℂ)⁻¹ * (1 + ζ ^ r.val * ζ ^ t + (ζ ^ r.val) ^ 2 * (ζ ^ t * ζ ^ t))) • v := by
+        rw [liftProject, hσ₂, hv]
+        simp only [mul_smul, add_smul, one_smul]
+      rw [hform, map_smul, hv, smul_comm]
+    have hzero : (ζ ^ t - (ζ ^ r.val) ^ 2) • liftProject r v = 0 := by
+      rw [sub_smul, ← hm, ← liftProject_eigen, sub_self]
+    exact (smul_eq_zero.mp hzero).resolve_left (sub_ne_zero.mpr h)
+
+private theorem liftProject_sum {I : Type*} (r : Fin 3) (S : Finset I)
+    (c : I → ℂ) (v : I → NativeStates) :
+    liftProject r (∑ i ∈ S, c i • v i) = ∑ i ∈ S, c i • liftProject r (v i) := by
+  simp only [liftProject, map_sum, map_smul, Finset.smul_sum]
+  simp_rw [← Finset.sum_add_distrib]
+  rw [Finset.smul_sum]
+  apply Finset.sum_congr rfl
+  intro i _
+  module
+
+private theorem adjustedResidue_right_sum {I : Type*} (S : Finset I)
+    (c : I → ℂ) (B : I → Field) (s t : ℤ) (A : Field) (N : ℕ) (n : ℤ) :
+    adjustedResidue s t A (∑ i ∈ S, c i • B i) N n =
+      ∑ i ∈ S, c i • adjustedResidue s t A (B i) N n := by
+  have strip_sum (k : ℤ) (F : I → Field) :
+      stripResidue k (∑ i ∈ S, c i • F i) = ∑ i ∈ S, c i • stripResidue k (F i) := by
+    apply HVertexOperator.coeff_inj
+    funext l
+    simp only [stripResidue_coeff, map_sum, map_smul, Finset.sum_apply, Pi.smul_apply]
+  have hsum : InResidue (s + t) (∑ i ∈ S, c i • adjustedResidue s t A (B i) N n) := by
+    intro k hk
+    simp only [map_sum, map_smul, Finset.sum_apply, Pi.smul_apply,
+      fun i => adjusted_inResidue s t A (B i) N n k hk, smul_zero, Finset.sum_const_zero]
+  rw [← restoreResidue_stripResidue _ _ (adjusted_inResidue s t A _ N n),
+    ← restoreResidue_stripResidue _ _ hsum]
+  congr 1
+  simp only [strip_sum, strip_adjusted, integralAdjusted, R_sum, R_smul, Z_sum, Z_smul]
+  simp_rw [Finset.smul_sum, smul_smul]
+  rw [Finset.sum_comm]
+  exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by
+    rw [mul_comm]
+
+set_option maxHeartbeats 1000000 in
+-- Elaboration aligns the projected states, locality orders, and finite field sums.
+/-- Charged-ground lift eigenstates act compatibly on every actual lift
+eigenstate, at every integer product label and every cutoff for the cleared residues. -/
+theorem adjustedResidue_ground_first_eigenstate (a b : NativeStates) (s t : ℤ)
+    (ha : a ∈ groundSpan) (hae : σ a = ζ ^ s • a) (hbe : σ b = ζ ^ t • b)
+    (N : ℕ) (hN : ∀ q ≥ (N : ℤ), clearedResidue s t (nativeField a) (nativeField b) q = 0)
+    (n : ℤ) :
+    adjustedResidue s t (nativeField a) (nativeField b) N n =
+      nativeField (mu lattice a n b) := by
+  classical
+  let r : Fin 3 := ⟨((2 * t) % 3).toNat, by omega⟩
+  have hr : ζ ^ t = (ζ ^ r.val) ^ 2 := by
+    rw [← pow_mul, ← zpow_natCast, zeta_zpow_eq_iff]
+    dsimp [r]
+    omega
+  have hmem : b ∈ Submodule.span ℂ eigenWords := by
+    change b ∈ eigenWordSpan
+    rw [eigenWordSpan_eq_top]
+    trivial
+  obtain ⟨c, hc⟩ := (Finsupp.mem_span_iff_linearCombination ℂ eigenWords b).mp hmem
+  rw [Finsupp.linearCombination_apply] at hc
+  let v (i : eigenWords) := liftProject r i.val
+  have hsum : (∑ i ∈ c.support, c i • v i) = b := by
+    have hp := congrArg (liftProject r) hc
+    rw [liftProject_eigenstate r b t hbe, ite_eq_left hr] at hp
+    exact (liftProject_sum r c.support c Subtype.val).symm.trans hp
+  have he (i : eigenWords) : σ (v i) = ζ ^ t • v i := by
+    rw [hr]
+    exact liftProject_eigen r i.val
+  choose order horder using fun i : eigenWords => nativeField_pairwise_locality a (v i)
+  let M := max N (c.support.sup order)
+  have hM (i : eigenWords) (hi : i ∈ c.support) :
+      coverDelta^[M] (coverComm (nativeField a) (nativeField (v i))) = 0 := by
+    have horder' :
+        (deltaCoverEnd ^ order i) (coverComm (nativeField a) (nativeField (v i))) = 0 := by
+      rw [Module.End.pow_apply]
+      exact horder i
+    have hM' := coverOrder_mono (le_trans (Finset.le_sup (f := order) hi) (le_max_right N _))
+      horder'
+    rw [Module.End.pow_apply] at hM'
+    exact hM'
+  have term (i : eigenWords) (hi : i ∈ c.support) :
+      adjustedResidue s t (nativeField a) (nativeField (v i)) M n =
+        nativeField (mu lattice a n (v i)) := by
+    obtain ⟨d, hd⟩ := i.property
+    obtain ⟨t', he', hcomp⟩ := adjustedResidue_ground_first_eigenWord hd
+    by_cases hm : ζ ^ t = ζ ^ t'
+    · have hv : v i = i.val := by
+        dsimp [v]
+        rw [liftProject_eigenstate r i.val t' he', ite_eq_left (hm.symm.trans hr)]
+      have ht' := (zeta_zpow_eq_iff t t').mp hm
+      have hs := nativeField_inResidue a s hae
+      have ht := nativeField_inResidue (v i) t (he i)
+      have ha' : σ a = ζ ^ (s % 3) • a := by
+        rw [hae, (zeta_zpow_eq_iff s (s % 3)).mpr (by omega)]
+      calc
+        _ = adjustedResidue (s % 3) t' (nativeField a) (nativeField (v i)) M n :=
+          adjusted_strip_representatives s (s % 3) t t' _ _ M n (by omega) ht' hs ht (hM i hi)
+        _ = _ := by
+          simpa only [hv] using hcomp a (s % 3) ha ha' M (by simpa only [hv] using hM i hi) n
+    · have hv : v i = 0 := by
+        exact (liftProject_eigenstate r i.val t' he').trans
+          (ite_eq_right (fun hh => hm (hr.trans hh.symm)))
+      simp only [hv, mu, map_zero]
+      simpa only [Finset.sum_empty] using adjustedResidue_right_sum
+        (∅ : Finset Unit) (fun _ => 0) (fun _ => 0) s t (nativeField a) M n
+  have hcut := adjustedResidue_cutoff_mono s t _ _ N M (le_max_left _ _) hN n
+  rw [hcut, ← hsum]
+  simp only [mu, map_sum, map_smul]
+  rw [adjustedResidue_right_sum]
+  exact Finset.sum_congr rfl fun i hi => congrArg (fun F : Field => c i • F) (term i hi)
+
+#check adjustedResidue_ground_first_eigenstate
+#print axioms adjustedResidue_ground_first_eigenstate
+
 #check adjustedResidue_native_projected_chargedGround
 #check exists_adjustedResidue_native_projected_chargedGround
 #print axioms adjustedResidue_native_projected_chargedGround
