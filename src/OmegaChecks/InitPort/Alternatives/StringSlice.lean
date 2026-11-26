@@ -259,4 +259,24 @@ public theorem String.Pos.Raw.isValid_copy_iff : type_of% @_root_.String.Pos.Raw
       rw [String.Slice.getUTF8Byte_copy]
       exact first
 
+public theorem String.Slice.Pos.utf8ByteSize_byte : type_of% @_root_.String.Slice.Pos.utf8ByteSize_byte := by
+  intro s p h
+  rw [String.Slice.Pos.get_eq_utf8DecodeChar]
+  exact ByteArray.utf8Size_utf8DecodeChar.symm
+
+public theorem String.Slice.Pos.copy_eq_append_get : type_of% @_root_.String.Slice.Pos.copy_eq_append_get := by
+  intro s p h
+  have ne : (s.sliceFrom p).copy.startPos ≠ (s.sliceFrom p).copy.endPos := by
+    intro eq
+    rw [String.Slice.startPos_copy, String.Slice.endPos_copy] at eq
+    have bounds := congrArg (fun q => String.Slice.Pos.ofSliceFrom (String.Pos.ofCopy q)) eq
+    rw [String.Slice.Pos.ofCopy_copy, String.Slice.Pos.ofCopy_copy,
+      String.Slice.Pos.ofSliceFrom_startPos, String.Slice.Pos.ofSliceFrom_endPos] at bounds
+    exact h bounds
+  obtain ⟨suffix, factor⟩ := String.eq_singleton_append ne
+  refine ⟨(s.sliceTo p).copy, suffix, ?_, String.Slice.utf8ByteSize_copy.trans String.Slice.utf8ByteSize_sliceTo⟩
+  simp only [String.Slice.startPos_copy, String.Slice.Pos.get_copy, String.Slice.Pos.get_eq_get_ofSliceFrom,
+    String.Slice.Pos.ofSliceFrom_startPos] at factor
+  rw [String.append_assoc, ← factor, ← String.Slice.copy_eq_copy_sliceTo]
+
 end OmegaChecks.InitPort.Alternatives
