@@ -142,4 +142,20 @@ public theorem ByteArray.utf8DecodeChar?.assemble₃._proof_7 :
     · exact Nat.lt_of_lt_of_le (UInt8.toNat_lt_size (y &&& 63))
         (Nat.pow_le_pow_right (Nat.zero_lt_succ 1) (by decide : 8 ≤ 20))
 
+
+public theorem ByteArray.utf8DecodeChar?.assemble₁._proof_3 :
+    type_of% (private_decl% @ByteArray.utf8DecodeChar?.assemble₁._proof_3) := by
+  intro w _
+  rw [UInt8.toNat_toUInt32]
+  exact Or.inl (Nat.lt_trans w.toNat_lt_size (by decide : 2 ^ 8 < 55296))
+
+public theorem ByteArray.utf8DecodeChar?.assemble₂._proof_3 :
+    type_of% (private_decl% @ByteArray.utf8DecodeChar?.assemble₂._proof_3) := by
+  intro w x
+  refine Or.inl (Nat.lt_trans ?_ (by decide : 2 ^ 14 < 55296))
+  rw [_root_.ByteArray.utf8DecodeChar?.assemble₂Unchecked, UInt32.toNat_or, UInt8.toNat_toUInt32]
+  exact Nat.or_lt_two_pow (shifted_byte_lt (w &&& 31) 6 (by decide))
+    (Nat.lt_of_lt_of_le (UInt8.toNat_lt_size (x &&& 63))
+      (Nat.pow_le_pow_right (Nat.zero_lt_succ 1) (by decide : 8 ≤ 14)))
+
 end OmegaChecks.InitPort.Alternatives
