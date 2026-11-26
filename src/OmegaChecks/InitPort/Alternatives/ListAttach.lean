@@ -106,4 +106,45 @@ public theorem List.flatMap_unattach : type_of% @_root_.List.flatMap_unattach :=
   intros
   exact (List.flatMap_subtype (fun _ _ => rfl)).symm
 
+public theorem List.filterMap_attachWith : type_of% @_root_.List.filterMap_attachWith := by
+  intros
+  rw [List.attachWith_eq_map_attach, _root_.List.filterMap_map]
+  rfl
+
+public theorem List.filter_attachWith : type_of% @_root_.List.filter_attachWith := by
+  intros
+  rw [List.attachWith_eq_map_attach, _root_.List.filter_map]
+  rfl
+
+private theorem countValues {p : α → Prop} (xs : _root_.List α) (H : ∀ x ∈ xs, p x)
+    (f : α → Bool) : (xs.attachWith p H).countP (fun a => f a.val) = xs.countP f := by
+  exact (_root_.List.countP_map (f := Subtype.val) (p := f) (l := xs.attachWith p H)).symm.trans
+    (congrArg (_root_.List.countP f) (_root_.List.attachWith_map_subtype_val H))
+
+public theorem List.countP_attach : type_of% @_root_.List.countP_attach := by
+  intros
+  apply countValues
+
+public theorem List.countP_attachWith : type_of% @_root_.List.countP_attachWith := by
+  intros
+  apply countValues
+
+public theorem List.count_attach : type_of% @_root_.List.count_attach := by
+  intro α inst xs a
+  exact (_root_.List.countP_congr (fun x _ => by cases x; cases a; rfl)).trans
+    (countValues xs (p := fun x => x ∈ xs) (fun _ h => h) (fun x => x == a.val))
+
+public theorem List.count_attachWith : type_of% @_root_.List.count_attachWith := by
+  intro α inst p xs H a
+  exact (_root_.List.countP_congr (fun x _ => by cases x; cases a; rfl)).trans
+    (countValues xs H (fun x => x == a.val))
+
+public theorem List.unattach_flatten : type_of% @_root_.List.unattach_flatten := by
+  intro α p xs
+  induction xs with
+  | nil => rfl
+  | cons a as ih =>
+    change (a ++ as.flatten).map Subtype.val = a.unattach ++ (as.map _root_.List.unattach).flatten
+    exact (_root_.List.map_append ..).trans (congrArg (a.unattach ++ ·) ih)
+
 end OmegaChecks.InitPort.Alternatives
