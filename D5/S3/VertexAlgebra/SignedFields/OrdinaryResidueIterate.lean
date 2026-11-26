@@ -4,7 +4,7 @@
    mirror-E: none(waiver:algebraic-signed-field-calculus)
    anchors: []
    utility: none
-   digest: Ordinary local-field residue iterates at negative first indices. -/
+   digest: Ordinary local-field residue iterates at all integer indices. -/
 
 import D5.S3.VertexAlgebra.SignedFields.SignedFieldResidueLocality
 import D5.S3.VertexAlgebra.Analysis.IntegerNewton
@@ -806,9 +806,330 @@ theorem residue_iterate_negative (J A B : VertexOperator ℂ V) (K L k : ℕ)
       show k+i-k = i by omega, R_smul, weight_negative, Nat.cast_add,
       show n-1-((k : ℤ)+i) = n-k-1-i by omega]
 
+open private R_add R_Z from D5.S3.VertexAlgebra.GroundRightCurrentTransport.Residue
+
+private theorem R_sub_first (A C B : VertexOperator ℂ V) (r : ℤ) :
+    R (A - C) B r = R A B r - R C B r := by
+  apply ext_modes
+  intro b
+  apply LinearMap.ext
+  intro v
+  have hA := (forward_finite A B r b v).smul_right (chooseSign r)
+  have hC := (forward_finite C B r b v).smul_right (chooseSign r)
+  have hAr := (reverse_finite B A (r+b) v).smul_right (chooseSign r)
+  have hCr := (reverse_finite B C (r+b) v).smul_right (chooseSign r)
+  simp only [Pi.smul_def'] at hA hC hAr hCr
+  simp only [map_sub, Pi.sub_apply, LinearMap.sub_apply, ordinary_mode, smul_sub]
+  rw [finsum_sub_distrib hA hC, finsum_sub_distrib hAr hCr]
+  module
+
+private theorem R_sub_second (A B C : VertexOperator ℂ V) (r : ℤ) :
+    R A (B - C) r = R A B r - R A C r := by
+  rw [sub_eq_add_neg B C, ← neg_one_smul ℂ C, R_add, R_smul, neg_one_smul, ← sub_eq_add_neg]
+
+private theorem R_zero_mode (A B : VertexOperator ℂ V) (b : ℤ) :
+    (R A B 0)[[b]] = modeComm A B 0 b := by
+  apply LinearMap.ext
+  intro v
+  simpa only [Nat.cast_zero, pow_zero, Module.End.one_apply] using R_nat A B 0 b v
+
+private theorem shifted_residue_succ (J A : VertexOperator ℂ V) (r a : ℤ) :
+    R (Z (-a) J) A (r+1) =
+      R (Z (-(a+1)) J) A r - Z (-1) (R (Z (-a) J) A r) := by
+  apply ext_modes
+  intro b
+  simpa only [delta, residueDistribution, ← ordinary_residue, map_sub, Pi.sub_apply,
+    Z_mode, sub_neg_eq_add, Int.reduceNeg, zero_add] using
+      (congrFun (congrFun (distribution_delta 1 J A r) a) b).symm
+
+private theorem R_shift_first (A B : VertexOperator ℂ V) (n : ℤ) :
+    R (Z (-1) A) B n = R A B (n+1) + Z (-1) (R A B n) := by
+  have h : Z 0 A = A := by
+    apply ext_modes
+    intro b
+    rw [Z_mode, sub_zero]
+  have step := shifted_residue_succ A B n 0
+  rw [neg_zero, h, zero_add] at step
+  exact eq_add_of_sub_eq step.symm
+
+/-- The ordinary commutator derivation rule on one ordered kernel.
+The support conditions are on the rightmost mode in each composed word. -/
+private theorem ordered_leibniz (T : Module.End ℂ V) (w : ℕ → ℂ)
+    (P Q : ℕ → Module.End ℂ V) (v : V)
+    (hv : Function.HasFiniteSupport (fun j => Q j v))
+    (hTv : Function.HasFiniteSupport (fun j => Q j (T v))) :
+    T (∑ᶠ j, w j • P j (Q j v)) - (∑ᶠ j, w j • P j (Q j (T v))) =
+      (∑ᶠ j, w j • (T (P j (Q j v)) - P j (T (Q j v)))) +
+      (∑ᶠ j, w j • P j (T (Q j v) - Q j (T v))) := by
+  have finite (u : V) (h : Function.HasFiniteSupport (fun j => Q j u)) :
+      Function.HasFiniteSupport (fun j => w j • P j (Q j u)) := by
+    have hp : Function.HasFiniteSupport (fun j => P j (Q j u)) :=
+      h.subset (by intro j hj hz; exact hj (by simp [hz]))
+    exact hp.smul_right w
+  have middle : Function.HasFiniteSupport (fun j => w j • P j (T (Q j v))) := by
+    have hp : Function.HasFiniteSupport (fun j => P j (T (Q j v))) :=
+      hv.subset (by intro j hj hz; exact hj (by simp [hz]))
+    exact hp.smul_right w
+  have outside : Function.HasFiniteSupport (fun j => w j • T (P j (Q j v))) := by
+    simpa only [map_smul] using (finite v hv).fun_comp (map_zero T)
+  rw [map_finsum T (finite v hv)]
+  simp only [map_smul, map_sub, smul_sub]
+  rw [finsum_sub_distrib outside middle, finsum_sub_distrib middle (finite (T v) hTv)]
+  abel
+
+private theorem residue_zero_leibniz (J A B : VertexOperator ℂ V) (n b : ℤ) :
+    (R (R J A 0) B n)[[b]] =
+      (R J (R A B n) 0)[[b]] - (R A (R J B 0) n)[[b]] := by
+  apply LinearMap.ext
+  intro v
+  let T := J[[0]]
+  have forward := ordered_leibniz T (chooseSign n)
+    (fun j => A[[n-j]]) (fun j => B[[b+j]]) v
+    (mode_tail_finite B b v) (mode_tail_finite B b (T v))
+  have reverse := ordered_leibniz T (chooseSign n)
+    (fun j => B[[n+b-j]]) (fun j => A[[j]]) v
+    (by simpa only [zero_add] using mode_tail_finite A 0 v)
+    (by simpa only [zero_add] using mode_tail_finite A 0 (T v))
+  simp only [LinearMap.sub_apply, R_zero_mode, FieldNormalProductLocality.commutator,
+    Module.End.mul_apply]
+  simp only [ordinary_mode, R_zero_mode, FieldNormalProductLocality.commutator,
+    LinearMap.sub_apply, Module.End.mul_apply, map_sub, map_smul]
+  dsimp only [T] at forward reverse
+  rw [eq_sub_iff_add_eq]
+  have h := congrArg₂ (fun f r : V => f - epsilon n • r) forward reverse
+  simp only [map_sub] at h
+  convert h.symm using 1 <;> module
+
+private abbrev IterateCoefficients (V : Type*) [AddCommGroup V] [Module ℂ V] :=
+  ℤ → ℤ → ℤ → Module.End ℂ V
+
+-- The arguments are the outer exponent, the first mode shift, and the final mode.
+private def differenceXZ : Module.End ℂ (IterateCoefficients V) where
+  toFun f n := deltaEnd (f n)
+  map_add' _ _ := by ext n a b v; simp
+  map_smul' _ _ := by ext n a b v; simp
+
+private def raiseExponent : Module.End ℂ (IterateCoefficients V) where
+  toFun f n := f (n+1)
+  map_add' _ _ := rfl
+  map_smul' _ _ := rfl
+
+private theorem raiseExponent_pow (i : ℕ) (f : IterateCoefficients V) (n : ℤ) :
+    (raiseExponent ^ i) f n = f (n+i) := by
+  induction i generalizing n with
+  | zero => simp
+  | succ i ih =>
+    rw [pow_succ', Module.End.mul_apply]
+    change (raiseExponent ^ i) f (n+1) = _
+    rw [ih, Nat.cast_succ]
+    congr 1
+    omega
+
+private theorem coefficient_powers (D : Module.End ℂ (IterateCoefficients V))
+    (f : ℕ → IterateCoefficients V) (step : ∀ m, f (m + 1) = D (f m)) (m : ℕ) :
+    (D ^ m) (f 0) = f m := by
+  induction m with
+  | zero => simp
+  | succ m ih => rw [pow_succ', Module.End.mul_apply, ih, step]
+
+private theorem chooseSign_nat (m i : ℕ) :
+    chooseSign (m : ℤ) i = (-1 : ℂ)^i * (m.choose i : ℂ) := by
+  simp [chooseSign, Ring.choose_natCast]
+
+private theorem nonnegative_expansion (J A B : VertexOperator ℂ V) (m : ℕ) (n : ℤ) :
+    R (R J A m) B n =
+      ∑ i ∈ Finset.range (m+1), chooseSign (m : ℤ) i •
+        (R J (R A B (n+i)) ((m-i : ℕ) : ℤ) -
+          R A (R J B ((m-i : ℕ) : ℤ)) (n+i)) := by
+  let first (k : ℕ) : IterateCoefficients V := fun n a b =>
+    (R (Z (-a) J) (R A B n) k)[[b]]
+  let second (k : ℕ) : IterateCoefficients V := fun n a b =>
+    (R A (R (Z (-a) J) B k) n)[[b]]
+  let nested (k : ℕ) : IterateCoefficients V := fun n a b =>
+    (R (R (Z (-a) J) A k) B n)[[b]]
+  have firstStep (k : ℕ) : first (k+1) = differenceXZ (first k) := by
+    funext n a b
+    simp only [first, Nat.cast_succ, shifted_residue_succ, differenceXZ, LinearMap.coe_mk,
+      AddHom.coe_mk, deltaEnd, delta, map_sub, Pi.sub_apply, Z_mode, sub_neg_eq_add]
+  have secondStep (k : ℕ) : second (k+1) = differenceXZ (second k) := by
+    funext n a b
+    simp only [second, Nat.cast_succ, shifted_residue_succ, R_sub_second, R_Z, differenceXZ,
+      LinearMap.coe_mk, AddHom.coe_mk, deltaEnd, delta, map_sub, Pi.sub_apply,
+      Z_mode, sub_neg_eq_add]
+  have nestedStep (k : ℕ) : nested (k+1) =
+      (differenceXZ - raiseExponent : Module.End ℂ (IterateCoefficients V)) (nested k) := by
+    funext n a b
+    simp only [nested, Nat.cast_succ, shifted_residue_succ, R_sub_first, R_shift_first,
+      LinearMap.sub_apply, differenceXZ, raiseExponent, LinearMap.coe_mk, AddHom.coe_mk,
+      deltaEnd, delta, map_add, Pi.add_apply, map_sub, Pi.sub_apply, Z_mode, sub_neg_eq_add]
+    abel
+  have base : nested 0 = first 0 - second 0 := by
+    funext n a b
+    exact residue_zero_leibniz (Z (-a) J) A B n b
+  have commute : Commute (-raiseExponent : Module.End ℂ (IterateCoefficients V)) differenceXZ := by
+    ext f n a b v
+    simp only [Module.End.mul_apply, LinearMap.neg_apply, differenceXZ, raiseExponent,
+      LinearMap.coe_mk, AddHom.coe_mk, deltaEnd, delta, Pi.neg_apply, LinearMap.sub_apply]
+    abel
+  -- Binomial expansion of (x-y)^m = ((x-z) - (y-z))^m.
+  have binomial :=
+    congrArg (fun E : Module.End ℂ (IterateCoefficients V) => E (nested 0))
+      (commute.add_pow m)
+  rw [← sub_eq_neg_add, coefficient_powers _ nested nestedStep] at binomial
+  have hZ : Z 0 J = J := by
+    apply ext_modes
+    intro b
+    rw [Z_mode, sub_zero]
+  apply ext_modes
+  intro b
+  have h := congrFun (congrFun (congrFun binomial n) 0) b
+  change (nested m) n 0 b = _ at h
+  simp only [Finset.sum_apply, LinearMap.sum_apply] at h
+  have hleft : (nested m) n 0 b = (R (R J A m) B n)[[b]] := by
+    simp only [nested, neg_zero, hZ]
+  rw [hleft] at h
+  rw [h]
+  simp only [map_sum, Finset.sum_apply, map_smul, Pi.smul_apply, map_sub, Pi.sub_apply]
+  apply Finset.sum_congr rfl
+  intro i _
+  simp only [Module.End.mul_apply, Module.End.natCast_apply, map_nsmul]
+  rw [← neg_one_smul ℂ (raiseExponent : Module.End ℂ (IterateCoefficients V)),
+    smul_pow, LinearMap.smul_apply]
+  simp only [Pi.smul_apply, raiseExponent_pow, ← Nat.cast_smul_eq_nsmul ℂ]
+  rw [base, map_sub, coefficient_powers _ first firstStep,
+    coefficient_powers _ second secondStep]
+  simp only [first, second, neg_zero, hZ, Pi.sub_apply, chooseSign_nat, mul_smul]
+  exact smul_comm _ _ _
+
+private theorem residue_vanishes (A B : VertexOperator ℂ V) (K : ℕ)
+    (locality : delta^[K] (signedComm 1 A B) = 0) (r : ℤ) (hr : (K : ℤ) ≤ r) :
+    R A B r = 0 := by
+  apply ext_modes
+  intro b
+  simpa only [shifted_zero_mode, ← ordinary_residue, map_zero, Pi.zero_apply,
+    show ((K : ℤ)-r).toNat = 0 by omega, Finset.range_zero, Finset.sum_empty] using
+    residueDistribution_newton 1 A B K locality r 0 b
+
+private theorem sum_range_change {M : Type*} [AddCommMonoid M] (f : ℕ → M)
+    (c d : ℕ) (hc : ∀ i, c ≤ i → f i = 0) (hd : ∀ i, d ≤ i → f i = 0) :
+    (∑ i ∈ Finset.range c, f i) = ∑ i ∈ Finset.range d, f i := by
+  trans ∑ i ∈ Finset.range (max c d), f i
+  · exact Finset.sum_subset (Finset.range_mono (le_max_left _ _))
+      (fun i _ hi => hc i (by simpa only [Finset.mem_range, not_lt] using hi))
+  · symm
+    exact Finset.sum_subset (Finset.range_mono (le_max_right _ _))
+      (fun i _ hi => hd i (by simpa only [Finset.mem_range, not_lt] using hi))
+
+private theorem epsilon_nat (m : ℕ) : epsilon (m : ℤ) = (-1 : ℂ)^m := by
+  simp [epsilon]
+
+private theorem reflected_weight (m i : ℕ) (hi : i ≤ m) :
+    chooseSign (m : ℤ) (m-i) = epsilon (m : ℤ) * chooseSign (m : ℤ) i := by
+  have hs : (-1 : ℂ)^i * (-1 : ℂ)^i = 1 := by rw [← mul_pow]; norm_num
+  have hp : (-1 : ℂ)^m * (-1 : ℂ)^i = (-1 : ℂ)^(m-i) := by
+    calc
+      _ = ((-1 : ℂ)^((m-i)+i)) * (-1 : ℂ)^i := by rw [Nat.sub_add_cancel hi]
+      _ = _ := by rw [pow_add, mul_assoc, hs, mul_one]
+  rw [chooseSign_nat, chooseSign_nat, ← Nat.choose_symm hi, epsilon_nat, ← mul_assoc, hp]
+
+/-- Ordinary local-field iteration at every integer first and outer exponent.
+The two finite sums are bounded by the locality orders of the inner pairs. -/
+theorem residue_iterate (J A B : VertexOperator ℂ V) (K L : ℕ)
+    (localityAB : delta^[K] (signedComm 1 A B) = 0)
+    (localityJB : delta^[L] (signedComm 1 J B) = 0) (m n : ℤ) :
+    R (R J A m) B n =
+      (∑ i ∈ Finset.range ((K : ℤ)-n).toNat,
+        chooseSign m i • R J (R A B (n+i)) (m-i)) +
+      (∑ i ∈ Finset.range L,
+        (-epsilon m * chooseSign m i) • R A (R J B i) (m+n-i)) := by
+  cases m with
+  | ofNat m =>
+    simp only [Int.ofNat_eq_natCast]
+    rw [nonnegative_expansion]
+    simp only [smul_sub, Finset.sum_sub_distrib]
+    rw [sub_eq_add_neg]
+    congr 1
+    · let f (i : ℕ) :=
+        chooseSign (m : ℤ) i • R J (R A B (n+i)) ((m : ℤ)-i)
+      calc
+        _ = ∑ i ∈ Finset.range (m+1), f i := by
+          apply Finset.sum_congr rfl
+          intro i hi
+          simp only [f, Int.natCast_sub (Nat.le_of_lt_succ (Finset.mem_range.mp hi))]
+        _ = _ := sum_range_change f _ _
+          (fun i hi => by simp [f, chooseSign_nat, Nat.choose_eq_zero_of_lt (by omega : m < i)])
+          (fun i hi => by
+            simp only [f, residue_vanishes A B K localityAB (n+i) (by omega), R_zero, smul_zero])
+    · let f (i : ℕ) :=
+        (-epsilon (m : ℤ) * chooseSign (m : ℤ) i) • R A (R J B i) ((m : ℤ)+n-i)
+      calc
+        _ = ∑ i ∈ Finset.range (m+1), f i := by
+          rw [← Finset.sum_neg_distrib, ← Finset.sum_range_reflect _ (m+1)]
+          apply Finset.sum_congr rfl
+          intro i hi
+          have hi' := Nat.le_of_lt_succ (Finset.mem_range.mp hi)
+          simp only [Nat.add_sub_cancel, Nat.sub_sub_self hi', f, reflected_weight m i hi',
+            Int.natCast_sub hi', neg_mul, neg_smul]
+          rw [show n+((m : ℤ)-i) = (m : ℤ)+n-i by omega]
+        _ = _ := sum_range_change f _ _
+          (fun i hi => by simp [f, chooseSign_nat, Nat.choose_eq_zero_of_lt (by omega : m < i)])
+          (fun i hi => by
+            simp only [f, residue_vanishes J B L localityJB i (by omega), R_zero, smul_zero])
+  | negSucc k =>
+    simp only [Int.negSucc_eq, show -((k : ℤ)+1) = -(k : ℤ)-1 by omega]
+    have hs : -epsilon (-(k : ℤ)-1) = (-1 : ℂ)^k := by
+      rw [epsilon, show -(k : ℤ)-1 = -((k+1 : ℕ) : ℤ) by omega,
+        zpow_neg, zpow_natCast, ← inv_pow]
+      norm_num [pow_succ]
+    simpa only [hs, show -(k : ℤ)-1+n = n-(k : ℤ)-1 by omega] using
+      residue_iterate_negative J A B K L k localityAB localityJB n
+
+/-- At fixed total strip degree, the alternating binomial sum on the second
+ordered term lowers the coefficient index by the strip index `k`. -/
+theorem alternating_iterate_weight (a : ℂ) (k j : ℕ) :
+    (∑ p ∈ Finset.range (k+1),
+      ((-1 : ℂ)^p * (k.choose p : ℂ)) * Ring.choose (a+p) j) =
+      (-1 : ℂ)^k * (if k ≤ j then Ring.choose a (j-k) else 0) := by
+  let C (j : ℤ) (x : ℂ) := if 0 ≤ j then Ring.choose x j.toNat else 0
+  have step (j : ℤ) (x : ℂ) : C j (x+1) - C j x = C (j-1) x := by
+    by_cases h : 0 ≤ j
+    · obtain ⟨l, rfl⟩ := Int.eq_ofNat_of_zero_le h
+      cases l with
+      | zero => simp [C]
+      | succ l =>
+        simp [C, show 0 ≤ (l : ℤ)+1 by omega, Ring.choose_succ_succ]
+    · simp [C, h, show ¬ 1 ≤ j by omega]
+  have iter (d q : ℕ) :
+      (fwdDiff (1 : ℕ))^[d] (fun p : ℕ => C j (a+p)) q = C ((j : ℤ)-d) (a+q) := by
+    induction d generalizing q with
+    | zero => simp
+    | succ d ih =>
+      rw [Function.iterate_succ_apply', fwdDiff, ih, ih, Nat.cast_add, Nat.cast_one,
+        ← add_assoc, step, Nat.cast_succ, sub_add_eq_sub_sub]
+  have sum := fwdDiff_iter_eq_sum_shift (1 : ℕ) (fun p : ℕ => C j (a+p)) k 0
+  rw [iter] at sum
+  have hsum :
+      (∑ p ∈ Finset.range (k+1),
+        ((-1 : ℂ)^(k-p) * (k.choose p : ℂ)) * Ring.choose (a+p) j) =
+        if k ≤ j then Ring.choose a (j-k) else 0 := by
+    simpa only [C, Nat.cast_zero, zero_add, add_zero, nsmul_eq_mul, mul_one,
+      ← Int.cast_smul_eq_zsmul ℂ, smul_eq_mul, Int.cast_mul, Int.cast_pow,
+      Int.cast_neg, Int.cast_one, Int.cast_natCast, Int.natCast_nonneg, ite_true,
+      Int.toNat_natCast, show 0 ≤ (j : ℤ)-k ↔ k ≤ j by omega,
+      show ((j : ℤ)-k).toNat = j-k by omega] using sum.symm
+  rw [← hsum, Finset.mul_sum]
+  apply Finset.sum_congr rfl
+  intro p hp
+  have hp' := Nat.le_of_lt_succ (Finset.mem_range.mp hp)
+  have weight := reflected_weight k (k-p) (by omega)
+  rw [Nat.sub_sub_self hp', epsilon_nat, chooseSign_nat, chooseSign_nat, Nat.choose_symm hp']
+    at weight
+  rw [← mul_assoc, ← weight]
+
 run_cmd do
   for name in [``residueDistribution_newton, ``ordinary_residue, ``normal_contraction,
-      ``split_commutator_contraction, ``residue_iterate_minus_one, ``residue_iterate_negative] do
+      ``split_commutator_contraction, ``residue_iterate_minus_one, ``residue_iterate_negative,
+      ``residue_iterate, ``alternating_iterate_weight] do
     let axioms ← Lean.collectAxioms name
     unless axioms.size == 3 && axioms.contains ``propext &&
         axioms.contains ``Classical.choice && axioms.contains ``Quot.sound do
@@ -820,6 +1141,8 @@ run_cmd do
 #print axioms split_commutator_contraction
 #print axioms residue_iterate_minus_one
 #print axioms residue_iterate_negative
+#print axioms residue_iterate
+#print axioms alternating_iterate_weight
 
 end
 end D5.S3.VertexAlgebra.OrdinaryResidueIterate
