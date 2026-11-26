@@ -410,4 +410,29 @@ public theorem String.Slice.posLE_lt_iff : type_of% @_root_.String.Slice.posLE_l
   exact ⟨fun lt => Nat.lt_of_not_ge (fun ge => Nat.not_le_of_lt lt (greatest.mpr ge)),
     fun lt => Nat.lt_of_not_ge (fun ge => Nat.not_le_of_lt lt (greatest.mp ge))⟩
 
+public theorem String.Pos.le_startPos : type_of% @_root_.String.Pos.le_startPos := by
+  intro s p
+  exact ⟨fun le => String.Pos.ext (String.Pos.Raw.ext (Nat.eq_zero_of_le_zero le)),
+    fun eq => eq ▸ Nat.le_refl _⟩
+public theorem String.Pos.endPos_le : type_of% @_root_.String.Pos.endPos_le := by
+  intro s p
+  exact ⟨fun le => String.Pos.ext (String.Pos.Raw.ext (Nat.le_antisymm p.isValid.le_utf8ByteSize le)),
+    fun eq => eq ▸ Nat.le_refl _⟩
+public theorem String.Slice.Pos.le_startPos : type_of% @_root_.String.Slice.Pos.le_startPos := by
+  intro s p
+  exact ⟨fun le => String.Slice.Pos.ext (String.Pos.Raw.ext (Nat.eq_zero_of_le_zero le)),
+    fun eq => eq ▸ Nat.le_refl _⟩
+public theorem String.Slice.Pos.endPos_le : type_of% @_root_.String.Slice.Pos.endPos_le := by
+  intro s p
+  exact ⟨fun le => String.Slice.Pos.ext (String.Pos.Raw.ext (Nat.le_antisymm p.isValidForSlice.le_utf8ByteSize le)),
+    fun eq => eq ▸ Nat.le_refl _⟩
+public theorem String.Pos.startPos_lt_iff : type_of% @_root_.String.Pos.startPos_lt_iff := by
+  intro s p
+  exact ⟨fun lt eq => Nat.ne_of_lt lt (congrArg (fun q : s.Pos => q.offset.byteIdx) eq.symm),
+    fun ne => Nat.pos_of_ne_zero (fun eq => ne (String.Pos.ext (String.Pos.Raw.ext eq)))⟩
+public theorem String.Pos.lt_endPos_iff : type_of% @_root_.String.Pos.lt_endPos_iff := by
+  intro s p
+  exact ⟨fun lt eq => Nat.ne_of_lt lt (congrArg (fun q : s.Pos => q.offset.byteIdx) eq),
+    fun ne => Nat.lt_of_le_of_ne p.isValid.le_utf8ByteSize (fun eq => ne (String.Pos.ext (String.Pos.Raw.ext eq)))⟩
+
 end OmegaChecks.InitPort.Alternatives
