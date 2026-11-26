@@ -834,3 +834,30 @@ public theorem prefixFunctionRecurrence_eq_prefixFunction :
       · exact (hp.partialMatch_iff.mp (partialMatch_prefixFunction_sub_one (Nat.pos_of_ne_zero zero))).2
 
 end OmegaChecks.InitPort.Alternatives.String.Slice.Pattern.Model.ForwardSliceSearcher
+
+namespace OmegaChecks.InitPort.Alternatives.String.Slice.Pattern.Model.ForwardSliceSearcher
+open _root_.String _root_.String.Slice _root_.String.Slice.Pattern.Model _root_.String.Slice.Pattern.Model.ForwardSliceSearcher
+
+public theorem Invariants.not_matchesAt_of_prefixFunction_eq :
+    type_of% (private_decl% @_root_.String.Slice.Pattern.Model.ForwardSliceSearcher.Invariants.not_matchesAt_of_prefixFunction_eq) := by
+  intro pat s stack needle h k hki hk pos lower upper hs hp different found
+  have full := (matchesAt_iff_partialMatch h.isEmpty_eq_false).mp found
+  change stack.byteIdx - needle.byteIdx ≤ pos.offset.byteIdx at lower
+  change pos.offset.byteIdx < stack.byteIdx - k at upper
+  by_cases inside : stack.byteIdx - pos.offset.byteIdx ≤ needle.byteIdx - 1
+  · have truncated := full.partialMatch_of_le stack.byteIdx (by omega) (by omega)
+    have inner := h.partialMatch.partialMatch_iff.mpr ⟨by omega, truncated⟩
+    have bounded := inner.le_prefixFunction (by omega) (by omega)
+    rw [hk] at bounded
+    omega
+  · have eq : stack = needle.offsetBy pos.offset := String.Pos.Raw.ext (by
+      change stack.byteIdx = pos.offset.byteIdx + needle.byteIdx
+      omega)
+    subst stack
+    have eqByte := full.getElem_eq needle.byteIdx (by simpa only [String.Pos.Raw.lt_iff,
+      _root_.String.Slice.byteIdx_rawEndPos, _root_.String.Slice.utf8ByteSize_eq_size_toByteArray_copy] using hp)
+    apply different
+    simp only [getUTF8Byte_eq_getUTF8Byte_copy, String.getUTF8Byte]
+    simpa only [Nat.add_sub_cancel, String.Pos.Raw.byteIdx_offsetBy, Nat.add_comm] using eqByte.symm
+
+end OmegaChecks.InitPort.Alternatives.String.Slice.Pattern.Model.ForwardSliceSearcher
