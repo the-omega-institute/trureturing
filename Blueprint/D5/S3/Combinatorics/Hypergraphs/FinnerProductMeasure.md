@@ -4,7 +4,19 @@
 
 Fractional incidence budgets control products of local measurable factors under one product probability law.
 
-**Theorem 1.1 (Fractional hypergraph inequality).**
+**Theorem 1.1 (Product integrals of separate coordinate functions).**
+
+Lean statement: `D5/S3/Combinatorics/Hypergraphs/FinnerProductMeasure.lintegral_fin_prod`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Hypergraphs/FinnerProductMeasure.lintegral_fin_prod` (`✓ std3`). ∎
+
+*Citation.* Helmut Finner (1992). *A Generalization of Holder's Inequality and Some Probability Inequalities*. DOI: [10.1214/aop/1176989534](https://doi.org/10.1214/aop/1176989534).
+
+*Commentary.*
+
+For any natural n, measurable spaces E_i indexed by Fin n, sigma-finite measures mu_i and measurable ENNReal functions a_i on E_i, the integral of product_i a_i(x_i) under Measure.pi(mu_i) equals the product of their separate integrals. No probability, positivity or finiteness of those integrals is required. The empty product is included. The proof uses the measure-preserving finite-Pi decomposition and binary Tonelli, including the ENNReal convention zero times infinity equal to zero. This same product-integral statement supports coordinate density products and the identification of normalized coordinate profiles by marginal integration.
+
+**Theorem 1.2 (Fractional hypergraph inequality).**
 
 Lean statement: `D5/S3/Combinatorics/Hypergraphs/FinnerProductMeasure.finner_product_measure`
 
@@ -37,3 +49,4 @@ For the converse implication, the finite intersection of the rowwise full-measur
 ## References
 
 - Truth anchor: `D5/S3/Combinatorics/Hypergraphs/FinnerProductMeasure.finner_product_measure`
+- Truth anchor: `D5/S3/Combinatorics/Hypergraphs/FinnerProductMeasure.lintegral_fin_prod`
