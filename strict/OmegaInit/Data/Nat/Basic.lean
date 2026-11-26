@@ -515,4 +515,14 @@ protected theorem mul_lt_mul_of_pos_right {n m k : Nat} (h : Nat.lt n m) (hk : N
   Eq.subst (motive := fun z => Nat.lt z (Nat.mul m k)) (Nat.mul_comm k n)
     (Eq.subst (motive := Nat.lt (Nat.mul k n)) (Nat.mul_comm k m) (Nat.mul_lt_mul_of_pos_left h hk))
 
+protected theorem pow_le_pow_right {n : Nat} (hx : Nat.lt zero n) {i : Nat} :
+    ∀ {j}, Nat.le i j → Nat.le (Nat.pow n i) (Nat.pow n j) := fun {_} h =>
+  Nat.le.rec (motive := fun j _ => Nat.le (Nat.pow n i) (Nat.pow n j))
+    (Nat.le_refl _) (fun {j} _ ih => Nat.le_trans ih
+      (Eq.subst (motive := fun z => Nat.le z (Nat.pow n (succ j))) (Nat.mul_one (Nat.pow n j))
+        (mul_le_mul_left (Nat.pow n j) hx))) h
+
+protected theorem two_pow_pos (w : Nat) : Nat.lt zero (Nat.pow (succ (succ zero)) w) :=
+  Nat.pow_le_pow_right (i := zero) Nat.zero_lt_two (zero_le w)
+
 end Omega.Nat

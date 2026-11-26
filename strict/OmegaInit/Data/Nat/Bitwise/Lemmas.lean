@@ -152,4 +152,32 @@ theorem lt_pow_two_of_testBit {n : Nat} (x : Nat)
   Nat.lt_of_not_ge (fun h => (exists_ge_and_testBit_of_ge_two_pow h).elim fun i b =>
     Bool.ne_false_of_eq_true b.right (p i b.left))
 
+theorem zero_testBit (i : Nat) : Eq (testBit zero i) Bool.false :=
+  Nat.rec (motive := fun i => Eq (testBit zero i) Bool.false) Omega.rfl
+    (fun j ih => (testBit_succ zero j).trans
+      ((congrArg (fun q => testBit q j) (Nat.zero_div (succ (succ zero)))).trans ih)) i
+
+theorem ge_two_pow_of_testBit {i x : Nat} (p : Eq (testBit x i) Bool.true) :
+    Nat.le (Nat.pow (succ (succ zero)) i) x :=
+  (Nat.rec (motive := fun i => ∀ x, Eq (testBit x i) Bool.true → Nat.le (Nat.pow (succ (succ zero)) i) x)
+    (fun x => Nat.casesOn (motive := fun x => Eq (testBit x zero) Bool.true → Nat.le (succ zero) x) x
+      (fun h => False.elim (Bool.ne_false_of_eq_true h (zero_testBit zero)))
+      (fun k _ => succ_le_succ (zero_le k)))
+    (fun i ih x h => (le_div_iff_mul_le Nat.zero_lt_two).mp
+      (ih (Nat.div x (succ (succ zero))) ((testBit_succ x i).symm.trans h))) i) x p
+
+theorem testBit_lt_two_pow {x i : Nat} (lt : Nat.lt x (Nat.pow (succ (succ zero)) i)) :
+    Eq (testBit x i) Bool.false :=
+  Bool.casesOn (motive := fun bit => Eq (testBit x i) bit → Eq bit Bool.false) (testBit x i)
+    (fun _ => Omega.rfl) (fun h => False.elim (Nat.not_le_of_lt lt (ge_two_pow_of_testBit h))) Omega.rfl
+
+theorem testBit_of_two_pow_le_and_two_pow_add_one_gt {n i : Nat}
+    (hle : Nat.le (Nat.pow (succ (succ zero)) i) n)
+    (hgt : Nat.lt n (Nat.pow (succ (succ zero)) (Nat.add i (succ zero)))) : Eq (testBit n i) Bool.true :=
+  (exists_ge_and_testBit_of_ge_two_pow hle).elim fun j witness =>
+    have atMost : Nat.le j i := Nat.lt_succ_iff.mp (Nat.lt_of_not_ge (fun higher =>
+      Nat.not_le_of_lt hgt (Nat.le_trans (Nat.pow_le_pow_right Nat.zero_lt_two higher)
+        (ge_two_pow_of_testBit witness.right))))
+    (congrArg (testBit n) (Nat.le_antisymm witness.left atMost)).trans witness.right
+
 end Omega.Nat
