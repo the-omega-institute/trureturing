@@ -1,6 +1,7 @@
 import Lean
 import OmegaChecks.FieldMethods
 import OmegaChecks.InitPort.NativeQuot
+import OmegaChecks.InitPort.Address
 
 /-! Compare compiled public interfaces in independent Lean environments. -/
 
@@ -169,6 +170,9 @@ private def compare (reference : Environment) (rename : Name → Name) (src dst 
     unless (Kernel.check reference {} dst.type).toOption.any (same reference (.sort .zero)) do
       throw <| IO.userError s!"official declaration is not a proof for {src.name}"
   | .defnInfo x, .defnInfo y =>
+    if foundation.isSome && x.safety == .safe && y.name == `withPtrAddrUnsafe then
+      OmegaChecks.InitPort.Address.check reference y (liftTerm x.value)
+      return deps ++ x.value.getUsedConstants
     unless x.safety == y.safety do
       throw <| IO.userError s!"definition safety mismatch for {src.name}"
     if x.safety != .safe then

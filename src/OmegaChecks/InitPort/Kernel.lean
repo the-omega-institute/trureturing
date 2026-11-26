@@ -6,6 +6,7 @@ import OmegaChecks.InitCompiler.FiniteCollectors
 import OmegaChecks.InitPort.Alternatives
 import OmegaChecks.InitPort.Arithmetic
 import OmegaChecks.InitPort.NativeQuot
+import OmegaChecks.InitPort.Address
 
 open Lean
 
@@ -465,6 +466,18 @@ partial def visit (n : Name) : M Bool := do
       if missing.isSome then return ← record n (.blocked "smart unfolding requires unavailable matcher metadata")
   if let some reason := c.excluded.find? n then return ← record n (.blocked reason)
   if ci.isAxiom then return ← record n (.blocked "axiom")
+  if n == `withPtrAddrUnsafe then
+    let .defnInfo native := ci | return ← record n (.blocked "missing pointer continuation implementation")
+    let reference := mkConst `withPtrAddr (native.levelParams.map Level.param)
+    OmegaChecks.InitPort.Address.check c.source native reference
+    if !(← visit `withPtrAddr) then
+      return ← record n (.blocked "unavailable address continuation" (some `withPtrAddr))
+    let safe := ConstantInfo.defnInfo {native with safety := .safe}
+    let .ok decl := translateDecl safe ci.type reference | return ← record n (.blocked "invalid address continuation")
+    let .ok env ← checkWithRetry (← get).env decl c.maxHeartbeats
+      | return ← record n (.blocked "kernel rejected address continuation")
+    modify fun s => {s with env}
+    return ← record n .added
   if (ci.isUnsafe && !boundedBorrowedRead ci) || ci.isPartial then return ← record n (.blocked "unsafe/partial")
   if let .inductInfo i := ci then
     let .ok f ← (family c.source i).run | return ← record n (.blocked "malformed family")
