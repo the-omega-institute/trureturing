@@ -167,4 +167,40 @@ public theorem Vector.back?_flatten : type_of% @_root_.Vector.back?_flatten := b
   rw [← _root_.Vector.flatMap_id]
   exact _root_.Vector.back?_flatMap
 
+private theorem lastRow {xss : Array (Array α)} {ys : Array α} {y : α}
+    (eq : xss.flatten = ys.push y) :
+    ∃ (as : Array (Array α)) (bs : Array α) (cs : Array (Array α)),
+      xss = as.push (bs.push y) ++ cs ∧ (∀ row ∈ cs, row = #[]) ∧ ys = as.flatten ++ bs := by
+  let P (rows : Array (Array α)) := rows.flatten = ys.push y →
+    ∃ (as : Array (Array α)) (bs : Array α) (cs : Array (Array α)),
+      rows = as.push (bs.push y) ++ cs ∧ (∀ row ∈ cs, row = #[]) ∧ ys = as.flatten ++ bs
+  have empty : P #[] := fun bad => (_root_.Array.push_ne_empty bad.symm).elim
+  have step (rows : Array (Array α)) (row : Array α) (ih : P rows) : P (rows.push row) := by
+    intro eq
+    rw [_root_.Array.flatten_push] at eq
+    rcases _root_.Array.append_eq_push_iff.mp eq with ⟨rfl, prev⟩ | ⟨bs, rfl, prev⟩
+    · obtain ⟨as, bs, cs, rfl, noElems, lastEq⟩ := ih prev
+      refine ⟨as, bs, cs.push #[], _root_.Array.push_append, ?_, lastEq⟩
+      intro v hv
+      exact (_root_.Array.mem_push.mp hv).elim (noElems v) id
+    · exact ⟨rows, bs, #[], _root_.Array.append_empty.symm, _root_.Array.forall_mem_empty _, prev⟩
+  have folded := _root_.Array.foldl_induction (as := xss) (f := _root_.Array.push)
+    (fun _ rows => P rows) empty (fun i rows h => step rows xss[i] h)
+  have allRows : xss.foldl _root_.Array.push #[] = xss :=
+    (_root_.Array.foldl_push_eq_append (f := id) rfl).trans
+      (_root_.Array.empty_append.trans (_root_.Array.map_id xss))
+  exact (allRows ▸ folded : P xss) eq
+
+public theorem Array.flatten_eq_push_iff : type_of% @_root_.Array.flatten_eq_push_iff := by
+  intro α xss ys y
+  constructor
+  · exact lastRow
+  · rintro ⟨as, bs, cs, rfl, emptyRows, rfl⟩
+    rw [_root_.Array.flatten_append, _root_.Array.flatten_push,
+      _root_.Array.flatten_eq_empty_iff.mpr emptyRows, _root_.Array.append_empty, _root_.Array.append_push]
+
+public theorem Array.push_eq_flatten_iff : type_of% @_root_.Array.push_eq_flatten_iff := by
+  intros
+  exact Eq.comm.trans _root_.Array.flatten_eq_push_iff
+
 end OmegaChecks.InitPort.Alternatives
