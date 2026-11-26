@@ -21,6 +21,7 @@ strata_touched:
   - D5/S3/VertexAlgebra/TwistedGround/BarnesWall/FixedWordPhase
   - D5/S3/HomologicalAlgebra/BarnesWallQ8CohomologyDetector
   - D5/S3/HomologicalAlgebra/BarnesWallQ8CyclicGauge
+  - D5/S3/HomologicalAlgebra/CentralCocycleTransport
   - D5/S3/HomologicalAlgebra/InflatedCubicCandidate
   - D5/S3/HomologicalAlgebra/QuaternionCandidateRestriction
 license: citation-only
@@ -157,7 +158,11 @@ with inverse insertion. The paired reflection oscillators contribute a
 factor tending to one at the cusp, and the transformed eta quotient gives
 the stated multiplicity as the reflection ground trace.
 
-The normalized tensor trace ratio cancels a single quaternion character
+A normalized inflated cocycle has trivial centralizer multiplier at the
+reflection, which maps to the identity in the quotient. The two-cochain
+used to change gauge supplies the explicit scalar correction in any
+cohomologous representative. Scalar-related linear actions differ by
+one global character, which the normalized tensor trace ratio cancels
 by multiplicativity on $ij=k$. The extracted coefficient fixes the
 remaining sign and forces the anomaly bit to vanish. The Lean comparison
 takes the modular character matrix, the lattice twisted-character

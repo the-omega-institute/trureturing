@@ -16,12 +16,13 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/BarnesWall/OddCoherentTraceSi
 
 *Commentary.*
 
-Two traces on an order-four subgroup enter through a finite Fourier exchange of the normalized modular matrix. The order-four tensor defect determines the ground multiplicity, and the reflection oscillator product contributes one at the cusp. Comparing the resulting cyclic coefficient with the literal quaternion trace ratio cancels the single global character. The statement uses the normalized cyclic character matrix, the twisted oscillator formulas, and the transport of the physical operators as inputs.
+Two traces on an order-four subgroup enter through a finite Fourier exchange of the normalized modular matrix. The order-four tensor defect determines the ground multiplicity, and the reflection oscillator product contributes one at the cusp. Scalar-related quaternion actions differ by one global character, which cancels in the literal trace ratio. The statement uses the normalized cyclic character matrix, the twisted oscillator formulas, and the identification of the reference action with the cyclic trace as inputs.
 
 ## References
 
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/BarnesWall/OddCoherentTraceSign.zero_candidate_of_uniform_modular_identity`
 - Dependency: [D5/S3/Fourier/CyclicFluxChargeExchange](../../../Fourier/CyclicFluxChargeExchange.md)
 - Dependency: [D5/S3/HomologicalAlgebra/BarnesWallQ8CyclicGauge](../../../HomologicalAlgebra/BarnesWallQ8CyclicGauge.md)
+- Dependency: [D5/S3/HomologicalAlgebra/CentralCocycleTransport](../../../HomologicalAlgebra/CentralCocycleTransport.md)
 - Dependency: [D5/S3/VertexAlgebra/TwistedGround/BarnesWall/CyclicEtaTrace](CyclicEtaTrace.md)
 - Dependency: [D5/S3/VertexAlgebra/TwistedGround/BarnesWall/TensorDefectDet](TensorDefectDet.md)

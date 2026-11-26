@@ -17,7 +17,7 @@ internal sealed class BarnesWallOddCoherentTraceSignDocument : IScribeDocumentDe
             Blocks(Paragraph(Text(
                 "Two traces on an order-four subgroup enter through a finite Fourier exchange of the normalized modular matrix. " +
                 "The order-four tensor defect determines the ground multiplicity, and the reflection oscillator product contributes one at the cusp. " +
-                "Comparing the resulting cyclic coefficient with the literal quaternion trace ratio cancels the single global character. " +
-                "The statement uses the normalized cyclic character matrix, the twisted oscillator formulas, and the transport of the physical operators as inputs."))),
+                "Scalar-related quaternion actions differ by one global character, which cancels in the literal trace ratio. " +
+                "The statement uses the normalized cyclic character matrix, the twisted oscillator formulas, and the identification of the reference action with the cyclic trace as inputs."))),
             DescribeRole.Theorem))));
 }
