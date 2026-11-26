@@ -820,4 +820,41 @@ public theorem String.Pos.ofSlice_prev : type_of% @_root_.String.Pos.ofSlice_pre
   exact _root_.String.Pos.le_ofSlice_iff.mpr ⟨upper, fun lower =>
     _root_.String.Slice.Pos.le_prev_iff_lt.mpr (small lower)⟩
 
+public theorem String.Slice.isEmpty_eq_false_of_lt : type_of% @_root_.String.Slice.isEmpty_eq_false_of_lt := by
+  intro s p q lt
+  apply String.Slice.startPos_ne_endPos_iff.mp
+  intro ends
+  have zero := congrArg (fun x : s.Pos => x.offset.byteIdx) ends
+  exact Nat.not_lt_zero _ (Nat.lt_of_lt_of_le lt (Nat.le_trans q.isValidForSlice.le_utf8ByteSize (Nat.le_of_eq zero.symm)))
+
+public theorem String.ne_empty_of_lt : type_of% @_root_.String.ne_empty_of_lt := by
+  intro s p q lt eq
+  have same := _root_.String.eq_empty_iff_forall_eq.mp eq p q
+  exact Nat.ne_of_lt lt (congrArg (fun x : s.Pos => x.offset.byteIdx) same)
+
+public theorem String.isEmpty_sliceTo : type_of% @_root_.String.isEmpty_sliceTo := by
+  intro s p
+  exact (String.Slice.isEmpty_sliceTo (p := p.toSlice)).trans
+    ⟨fun eq => String.Pos.ext (congrArg (fun q : s.toSlice.Pos => q.offset) eq), fun eq => eq ▸ rfl⟩
+
+public theorem String.isEmpty_sliceTo_eq_false_iff : type_of% @_root_.String.isEmpty_sliceTo_eq_false_iff := by
+  intro s p
+  exact booleanComplement String.isEmpty_sliceTo
+
+public theorem String.isEmpty_sliceFrom_eq_false_iff : type_of% @_root_.String.isEmpty_sliceFrom_eq_false_iff := by
+  intro s p
+  exact booleanComplement _root_.String.isEmpty_sliceFrom
+
+public theorem String.copy_sliceTo_startPos : type_of% @_root_.String.copy_sliceTo_startPos := by
+  intro s
+  exact _root_.String.Slice.copy_eq_empty_iff.mpr (String.isEmpty_sliceTo.mpr rfl)
+
+public theorem String.Slice.isEmpty_slice_eq_false_iff : type_of% @_root_.String.Slice.isEmpty_slice_eq_false_iff := by
+  intro s p q h
+  exact booleanComplement (_root_.String.Slice.isEmpty_slice (h := h))
+
+public theorem String.isEmpty_slice_eq_false_iff : type_of% @_root_.String.isEmpty_slice_eq_false_iff := by
+  intro s p q h
+  exact booleanComplement (_root_.String.isEmpty_slice (h := h))
+
 end OmegaChecks.InitPort.Alternatives
