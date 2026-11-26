@@ -469,6 +469,37 @@ public theorem List.findIdx?_eq_none_iff : type_of% @_root_.List.findIdx?_eq_non
         · exact ih.mp miss x tail
       · exact fun every => ih.mpr (fun x hx => every x (List.mem_cons_of_mem _ hx))
 
+public theorem List.findFinIdx?_cons : type_of% @_root_.List.findFinIdx?_cons := by
+  intro α p x xs
+  apply (Option.map_inj_right (f := Fin.val) (fun _ _ => Fin.eq_of_val_eq)).mp
+  rw [← _root_.List.findIdx?_eq_map_findFinIdx?_val, List.findIdx?_cons]
+  cases h : p x with
+  | true => rfl
+  | false =>
+    rw [_root_.List.findIdx?_eq_map_findFinIdx?_val]
+    cases xs.findFinIdx? p <;> rfl
+
+public theorem List.findFinIdx?_eq_some_iff : type_of% @_root_.List.findFinIdx?_eq_some_iff := by
+  intro α xs p i
+  have atIndex : xs.findFinIdx? p = some i ↔ xs.findIdx? p = some i.val := by
+    rw [_root_.List.findIdx?_eq_map_findFinIdx?_val]
+    exact (Option.map_inj_right (o' := some i) (f := Fin.val) (fun _ _ => Fin.eq_of_val_eq)).symm
+  constructor
+  · intro hit
+    obtain ⟨_, here, before⟩ := List.findIdx?_eq_some_iff_getElem.mp (atIndex.mp hit)
+    exact ⟨here, fun j hj => before j.val hj⟩
+  · rintro ⟨here, before⟩
+    exact atIndex.mpr (List.findIdx?_eq_some_iff_getElem.mpr
+      ⟨i.isLt, here, fun j hj => before ⟨j, Nat.lt_trans hj i.isLt⟩ hj⟩)
+
+public theorem List.findFinIdx?_eq_none_iff : type_of% @_root_.List.findFinIdx?_eq_none_iff := by
+  intro α xs p
+  have missing : xs.findFinIdx? p = none ↔ xs.findIdx? p = none := by
+    rw [_root_.List.findIdx?_eq_map_findFinIdx?_val]
+    exact Option.map_eq_none_iff.symm
+  exact ⟨fun h x hx => Bool.eq_false_iff.mp (List.findIdx?_eq_none_iff.mp (missing.mp h) x hx),
+    fun h => missing.mpr (List.findIdx?_eq_none_iff.mpr (fun x hx => Bool.eq_false_iff.mpr (h x hx)))⟩
+
 public theorem List.findIdx?_isSome : type_of% @_root_.List.findIdx?_isSome := by
   intro α xs p
   induction xs with
