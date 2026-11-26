@@ -229,7 +229,10 @@ private theorem positive (T : SimpleGraph Root.{w}) :
     apply Finset.mem_insert_of_mem
     refine Finset.mem_image.mpr ⟨r, ?_, rfl⟩
     change r ∈ ({a : Root.{w} | 2 ≤ (K a).ncard} : Set Root.{w}).toFinite.toFinset
-    simp [K, Set.ncard_univ, Nat.card_eq_fintype_card]
+    rw [Set.Finite.mem_toFinset]
+    change 2 ≤ (K r).ncard
+    rw [hcard]
+    decide
   rw [hcard] at hle
   linarith
 
