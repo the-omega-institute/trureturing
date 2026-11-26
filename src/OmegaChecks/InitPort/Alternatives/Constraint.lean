@@ -227,4 +227,44 @@ public theorem Lean.Omega.IntList.combo_eq_smul_add_smul :
     | cons y ys =>
       exact congrArg ((a * x + b * y) :: ·) (ih ys)
 
+public theorem Lean.Omega.Constraint.translate_sat : type_of% @_root_.Lean.Omega.Constraint.translate_sat := by
+  intro t c v w
+  have a : c.lowerBound.sat v ∧ c.upperBound.sat v := of_decide_eq_true w
+  apply decide_eq_true
+  constructor
+  · exact all_map (· + t) (fun x => decide (x ≤ v)) (fun x => decide (x ≤ v + t))
+      (fun _ hx => decide_eq_true (Int.add_le_add_right (of_decide_eq_true hx) t)) _ a.1
+  · exact all_map (· + t) (fun x => decide (v ≤ x)) (fun x => decide (v + t ≤ x))
+      (fun _ hx => decide_eq_true (Int.add_le_add_right (of_decide_eq_true hx) t)) _ a.2
+
+public theorem Lean.Omega.Constraint.exact_sat : type_of% @_root_.Lean.Omega.Constraint.exact_sat := by
+  intro r t
+  apply Bool.eq_iff_iff.mpr
+  constructor
+  · intro h
+    have pair : decide (r ≤ t) = true ∧ decide (t ≤ r) = true := of_decide_eq_true h
+    exact decide_eq_true (Int.le_antisymm (of_decide_eq_true pair.1) (of_decide_eq_true pair.2))
+  · intro h
+    have eq : r = t := of_decide_eq_true h
+    subst t
+    exact decide_eq_true ⟨decide_eq_true (Int.le_refl _), decide_eq_true (Int.le_refl _)⟩
+
+public theorem Lean.Omega.Constraint.addInequality_sat :
+    type_of% @_root_.Lean.Omega.Constraint.addInequality_sat := by
+  intro c x y w
+  apply decide_eq_true
+  constructor
+  · apply decide_eq_true
+    rw [← Int.zero_sub c]
+    exact Int.sub_left_le_of_le_add w
+  · rfl
+
+public theorem Lean.Omega.Constraint.addEquality_sat :
+    type_of% @_root_.Lean.Omega.Constraint.addEquality_sat := by
+  intro c x y w
+  have eq : -(c : Int) = Coeffs.dot x y := by
+    rw [← Int.zero_sub, ← w, Int.add_comm, Int.add_sub_cancel]
+  apply decide_eq_true
+  exact ⟨decide_eq_true (Int.le_of_eq eq), decide_eq_true (Int.le_of_eq eq.symm)⟩
+
 end OmegaChecks.InitPort.Alternatives
