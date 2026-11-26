@@ -45,6 +45,7 @@ public import OmegaChecks.InitPort.Alternatives.Range
 public import OmegaChecks.InitPort.Alternatives.RangeFinite
 public import OmegaChecks.InitPort.Alternatives.Rational
 public import OmegaChecks.InitPort.Alternatives.UTF8
+public import OmegaChecks.InitPort.Alternatives.Uri
 public import OmegaChecks.InitPort.Alternatives.StringSlice
 public import OmegaChecks.InitPort.Alternatives.SubarrayFold
 public import OmegaChecks.InitPort.Alternatives.Word

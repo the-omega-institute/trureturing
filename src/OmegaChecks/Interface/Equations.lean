@@ -5,6 +5,7 @@ public import OmegaChecks.Interface.Equations.Array
 public import OmegaChecks.Interface.Equations.Collect
 public import OmegaChecks.Interface.Equations.FilePath
 public import OmegaChecks.Interface.Equations.String
+public import OmegaChecks.Interface.Equations.Uri
 public import OmegaChecks.Interface.Equations.Bitwise
 public import Mathlib.Data.Nat.Fib.Basic
 public import Mathlib.Data.Nat.Choose.Basic
