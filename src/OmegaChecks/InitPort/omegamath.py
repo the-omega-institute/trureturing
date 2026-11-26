@@ -11,6 +11,7 @@ import tempfile
 import tomllib
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from check import library_mathlib_only
 from portable import ROOT, closure, import_graph, root, source_fingerprint
 
 
@@ -27,11 +28,15 @@ def lean_options(options, prefix=""):
 def build(basis, output, workers, audit_log):
     lean = subprocess.check_output(["lake", "env", "printenv", "LEAN"], cwd=ROOT, text=True).strip()
     sources, graph = import_graph(lean, ("strict/*.lean", "src/*.lean"))
-    graph.update(dict(json.loads((basis / "modules.json").read_text())))
+    graph.update((name, set(deps)) for name, deps in json.loads((basis / "modules.json").read_text()))
     clients = sorted(name for name in sources if root(name) in {"OmegaMath", "OmegaMathlib"})
+    if not {"OmegaMath", "OmegaMathlib"}.issubset(clients):
+        raise RuntimeError("missing tracked OmegaMath or OmegaMathlib library sources")
+    official_only = library_mathlib_only(graph, clients)
+    clients = [name for name in clients if name not in official_only]
     imported = {dep for name in clients for dep in graph[name]}
     roots = [name for name in clients if name not in imported]
-    modules = closure({name: set(deps) for name, deps in graph.items()}, roots)
+    modules = closure(graph, roots)
     schedule = TopologicalSorter({name: set(graph[name]).intersection(clients) for name in clients})
     schedule.prepare()
     options = tomllib.loads((ROOT / "lakefile.toml").read_text())["leanOptions"]
