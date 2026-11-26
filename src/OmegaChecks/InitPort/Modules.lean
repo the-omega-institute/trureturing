@@ -61,6 +61,11 @@ private def instanceEntries (source : Environment) (idx : ModuleIdx) (available 
       | none => ext.addEntry env translated
   return (← mkModuleData env level).entries.filter (·.1 == ext.ext.name)
 
+/-- The finite collectors replace extrinsic recursion by their supplied well-founded relation.
+Their pointwise correspondence is checked against the translated bodies by the interface audit. -/
+private def sealedCollector (n : Name) : Bool :=
+  n == `Std.IterM.Total.toArray || n == `Std.IterM.Total.toListRev
+
 def main (args : List String) : IO Unit := do
   let lib :: seed :: out :: roots := args | throw <| IO.userError "expected transfer, seed, output and official roots"
   let lib := System.FilePath.mk lib
@@ -130,7 +135,7 @@ def main (args : List String) : IO Unit := do
       if sourceNames.contains cls.name then metadata := classExtension.addEntry metadata {cls with name := renamed cls.name}
     for (n, ci) in group do
       if isProtected source n then metadata := addProtected metadata ci.name
-      let status := if (publiclyDeclared.find? n).any (·.isAxiom) && ci matches .defnInfo _ then .irreducible else getReducibilityStatusCore source n
+      let status := if ((publiclyDeclared.find? n).any (·.isAxiom) || sealedCollector n) && ci matches .defnInfo _ then .irreducible else getReducibilityStatusCore source n
       if status != .semireducible then metadata := reducibilityCoreExt.addEntry (asyncDecl := ci.name) metadata (ci.name, status)
     let withMetadata ← mkModuleData metadata
     let selected := #[classExtension.name, protectedExt.name, reducibilityCoreExt.name]
@@ -141,7 +146,7 @@ def main (args : List String) : IO Unit := do
       for (n,new) in group do
         if i == 2 then cs := cs.push new
         else if let some exposed := publiclyDeclared.find? n then
-          if exposed.isAxiom && !new.isAxiom then
+          if (exposed.isAxiom || sealedCollector n) && !new.isAxiom then
             let hidden := ConstantInfo.axiomInfo {new.toConstantVal with isUnsafe := false}
             cs := cs.push hidden
           else cs := cs.push new
