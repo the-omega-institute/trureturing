@@ -171,6 +171,22 @@ public theorem String.Slice.back?_eq : type_of% @_root_.String.Slice.back?_eq :=
     rw [_root_.String.Slice.Pos.prev?_eq_some_prev ends, eq, String.toList_append, String.toList_singleton, List.getLast?_concat]
     exact _root_.String.Slice.Pos.get?_eq_some_get _root_.String.Slice.Pos.prev_ne_endPos
 
+public theorem String.Slice.Pos.Splits.lt_iff_exists_eq_append :
+    type_of% @_root_.String.Slice.Pos.Splits.lt_iff_exists_eq_append := by
+  intro s p q a b c d hp hq
+  constructor
+  · intro lt
+    obtain ⟨mid, left, right⟩ := (hp.le_iff_exists_eq_append hq).mp (Nat.le_of_lt lt)
+    refine ⟨mid, fun empty => ?_, left, right⟩
+    have eq : c = a := left.trans ((congrArg (a ++ ·) empty).trans String.append_empty)
+    exact Nat.ne_of_lt lt (congrArg String.Pos.Raw.byteIdx
+      (hp.offset_eq_rawEndPos.trans ((congrArg String.rawEndPos eq.symm).trans hq.offset_eq_rawEndPos.symm)))
+  · rintro ⟨mid, nonempty, left, right⟩
+    refine Nat.lt_of_le_of_ne ((hp.le_iff_exists_eq_append hq).mpr ⟨mid, left, right⟩) (fun same => ?_)
+    have posEq : p = q := String.Slice.Pos.ext (String.Pos.Raw.ext same)
+    have ac := hp.eq_left (posEq ▸ hq)
+    exact nonempty (String.append_eq_left_iff.mp (left.symm.trans ac.symm))
+
 namespace String.Slice.Pattern.Model
 
 private theorem position_eq {s : String.Slice} {p q : s.Pos} (pq : p ≤ q) (qp : q ≤ p) : p = q :=
