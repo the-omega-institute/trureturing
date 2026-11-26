@@ -1376,4 +1376,40 @@ public theorem Std.Roi.toList_succ_succ_eq_map : type_of% @_root_.Std.Roi.toList
     exact _root_.Std.Roi.mem_toList_iff_mem.mpr (_root_.Std.Roi.mem_succ_iff.mpr
       ⟨x, eq, _root_.Std.Roi.mem_toList_iff_mem.mp mem⟩)
 
+public theorem Std.Rco.toList_eq_ite_rco : type_of% @_root_.Std.Rco.toList_eq_ite_rco := by
+  intro α r _ _ _ _ _ _
+  rw [_root_.Std.Rco.toList_eq_ite_roo]
+  by_cases inside : r.lower < r.upper
+  · rw [ite_eq_left inside, ite_eq_left inside, _root_.Std.Roo.toList_eq_match_rco]
+    cases UpwardEnumerable.succ? r.lower <;> rfl
+  · rw [ite_eq_right inside, ite_eq_right inside]
+
+public theorem Std.Ric.toList_ne_nil : type_of% @_root_.Std.Ric.toList_ne_nil := by
+  intro α r _ _ _ _ _ _ _ _ empty
+  have member := (_root_.Std.Ric.mem_toList_iff_mem (r := r)).mpr
+    (UpwardEnumerable.le_iff.mpr (UpwardEnumerable.le_refl r.upper))
+  rw [empty] at member
+  cases member
+
+public theorem Std.Ric.toArray_ne_empty : type_of% @_root_.Std.Ric.toArray_ne_empty := by
+  intro α r _ _ _ _ _ _ _ _ empty
+  exact _root_.Std.Ric.toList_ne_nil ((_root_.Std.Ric.toList_toArray (r := r)).symm.trans (congrArg Array.toList empty))
+
+public theorem Std.Rii.toList_eq_nil_iff : type_of% @_root_.Std.Rii.toList_eq_nil_iff := by
+  intro α r _ _ _ _ _ _ _ _
+  constructor
+  · intro empty ⟨a⟩
+    have member := _root_.Std.Rii.mem_toList (r := r) (a := a)
+    rw [empty] at member
+    cases member
+  · intro absent
+    cases h : r.toList with
+    | nil => rfl
+    | cons a _ => exact (absent ⟨a⟩).elim
+
+public theorem Std.Rii.toArray_eq_empty_iff : type_of% @_root_.Std.Rii.toArray_eq_empty_iff := by
+  intro α r _ _ _ _ _ _ _ _
+  rw [← _root_.Std.Rii.toArray_toList]
+  exact (arrayNilOfList _).trans _root_.Std.Rii.toList_eq_nil_iff
+
 end OmegaChecks.InitPort.Alternatives
