@@ -336,15 +336,14 @@ public theorem ByteArray.utf8DecodeChar?_utf8EncodeChar_append :
     rw [utf8DecodeChar?_append_eq_assemble₂ size (parseFirstByte_utf8EncodeChar_eq_oneMore hc)]
     apply assemble₂_eq_some_of_toBitVec
     · apply isInvalidContinuationByte_getElem_utf8EncodeChar_one_of_utf8Size_eq_two hc
-    · rw [Char.utf8Size_eq_two_iff] at hc
-      exact hc.1
+    · exact (Char.utf8Size_eq_two_iff.mp hc).1
     · rw [String.toBitVec_getElem_utf8EncodeChar_zero_of_utf8Size_eq_two hc,
         String.toBitVec_getElem_utf8EncodeChar_one_of_utf8Size_eq_two hc,
         BitVec.setWidth_append_eq_right, BitVec.setWidth_append_eq_right,
         BitVec.extractLsb'_append_extractLsb'_eq_extractLsb' (by decide),
         ← BitVec.setWidth_eq_extractLsb' (by decide),
         BitVec.setWidth_setWidth_eq_self]
-      simpa [BitVec.lt_def, UInt32.le_iff_toNat_le] using Nat.lt_succ_iff.2 (Char.utf8Size_eq_two_iff.1 hc).2
+      exact Nat.lt_succ_of_le ((UInt32.le_ofNat_iff (by decide : 2047 < 2 ^ 32)).mp (Char.utf8Size_eq_two_iff.mp hc).2)
   | 3, _, _ =>
     have size : (String.utf8EncodeChar c).length = 3 := (String.length_utf8EncodeChar c).trans hc
     rw [utf8DecodeChar?_append_eq_assemble₃ size (parseFirstByte_utf8EncodeChar_eq_twoMore hc)]
@@ -359,7 +358,7 @@ public theorem ByteArray.utf8DecodeChar?_utf8EncodeChar_append :
         BitVec.extractLsb'_append_extractLsb'_eq_extractLsb' (by decide),
         BitVec.extractLsb'_append_extractLsb'_eq_extractLsb' (by decide),
         ← BitVec.setWidth_eq_extractLsb' (by decide), BitVec.setWidth_setWidth_eq_self]
-      simpa [BitVec.lt_def, UInt32.le_iff_toNat_le] using Nat.lt_succ_iff.2 (Char.utf8Size_eq_three_iff.1 hc).2
+      exact Nat.lt_succ_of_le ((UInt32.le_ofNat_iff (by decide : 65535 < 2 ^ 32)).mp (Char.utf8Size_eq_three_iff.mp hc).2)
   | 4, _, _ =>
     have size : (String.utf8EncodeChar c).length = 4 := (String.length_utf8EncodeChar c).trans hc
     rw [utf8DecodeChar?_append_eq_assemble₄ size (parseFirstByte_utf8EncodeChar_eq_threeMore hc)]
@@ -648,7 +647,25 @@ public theorem Nat.shiftLeft_or_distrib : type_of% @_root_.Nat.shiftLeft_or_dist
 public theorem Char.toNat_le : type_of% (private_decl% @_root_.Char.toNat_le) := by
   intro c
   rcases c.valid with below | ⟨_, upper⟩
-  · exact Nat.le_trans (Nat.le_of_lt below) (Nat.le_add_right 0xd800 0x1027ff)
+  · exact Nat.le_trans (Nat.le_of_lt below) (by decide : 0xd800 ≤ 0x10ffff)
   · exact Nat.le_of_lt_succ upper
+
+public theorem BitVec.extractLsb'_append_extractLsb'_eq_extractLsb' : type_of% @_root_.BitVec.extractLsb'_append_extractLsb'_eq_extractLsb' := by
+  intro w s₂ s₁ l₁ l₂ x eq
+  subst s₂
+  apply BitVec.toNat_inj.mp
+  rw [BitVec.toNat_append, BitVec.extractLsb'_toNat, BitVec.extractLsb'_toNat, BitVec.extractLsb'_toNat,
+    Nat.shiftRight_eq_div_pow, Nat.shiftRight_eq_div_pow, Nat.shiftLeft_eq, Nat.mul_comm _ (2 ^ l₁)]
+  rw [← Nat.two_pow_add_eq_or_of_lt (Nat.mod_lt _ (Nat.two_pow_pos l₁)), Nat.add_comm,
+    Nat.pow_add 2 s₁, ← Nat.div_div_eq_div_mul, Nat.add_comm l₂ l₁, Nat.pow_add, Nat.mod_mul]
+public theorem BitVec.setWidth_append_eq_right : type_of% @_root_.BitVec.setWidth_append_eq_right := by
+  intro w v a b
+  apply BitVec.toNat_inj.mp
+  rw [BitVec.toNat_setWidth, BitVec.toNat_append, Nat.or_mod_two_pow,
+    Nat.shiftLeft_eq, Nat.mul_mod_left, Nat.zero_or, Nat.mod_eq_of_lt b.isLt]
+public theorem BitVec.setWidth_eq_extractLsb' : type_of% @_root_.BitVec.setWidth_eq_extractLsb' := by
+  intro v x w h
+  apply BitVec.toNat_inj.mp
+  rw [BitVec.toNat_setWidth, BitVec.extractLsb'_toNat, Nat.shiftRight_zero]
 
 end OmegaChecks.InitPort.Alternatives
