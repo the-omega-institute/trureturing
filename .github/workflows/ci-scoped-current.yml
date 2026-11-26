@@ -51,14 +51,12 @@ jobs:
       remaining: ${{ steps.remaining.outputs.compute_remaining }}
       epoch: ${{ steps.remaining.outputs.epoch }}
     steps:
-      - &checkout
-        uses: actions/checkout@v5
+      - uses: actions/checkout@v5
         with:
           ref: ${{ github.sha }}
           fetch-depth: 2
           persist-credentials: false
-      - &judge
-        id: judge
+      - id: judge
         uses: ./.github/actions/current-judge
         with:
           base: ${{ inputs.base }}
@@ -134,11 +132,21 @@ jobs:
     env:
       BATCH: ${{ matrix.batch }}
     steps:
-      - *checkout
-      - *judge
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 2
+          persist-credentials: false
+      - id: judge
+        uses: ./.github/actions/current-judge
+        with:
+          base: ${{ inputs.base }}
+          judge-key: ${{ inputs.judge-key }}
+          nuget-key: ${{ inputs.nuget-key }}
+          needs-judge: ${{ inputs.report || inputs.source-status != 'accepted' }}
       - name: Build the batch judge
         if: steps.judge.outputs.judge-hit != 'true'
-        env: &parallel_budget
+        env:
           GH_TOKEN: ${{ github.token }}
           STRATALINT_CI_COMPUTE_BUDGET: ${{ runner.temp }}/current-compute-seconds
           PLANNER_REMAINING: ${{ needs.plan.outputs.remaining }}
@@ -147,15 +155,13 @@ jobs:
         run: |
           python3 tools/scripts/workflow/ci_parallel_compute.py run --remaining "$PLANNER_REMAINING" --epoch "$PLANNER_EPOCH" --count "$BATCH_COUNT" -- \
             python3 tools/scripts/workflow/ci_checks.py current build-judge
-      - &download_plan
-        name: Download the selected scope
+      - name: Download the selected scope
         uses: actions/download-artifact@v8
         with:
           name: current-lean-plan
           path: ${{ runner.temp }}/current-plan
           digest-mismatch: error
-      - &verify_plan
-        name: Verify the distributed scope uses the same changed paths
+      - name: Verify the distributed scope uses the same changed paths
         run: |
           cmp "$RUNNER_TEMP/changed-paths" "$RUNNER_TEMP/current-plan/changed-paths"
           mv "$RUNNER_TEMP/current-plan/current-lean-plan.json" "$RUNNER_TEMP/current-lean-plan.json"
@@ -163,7 +169,12 @@ jobs:
         with:
           batch: ${{ matrix.batch }}
       - name: Check the Lean batch
-        env: *parallel_budget
+        env:
+          GH_TOKEN: ${{ github.token }}
+          STRATALINT_CI_COMPUTE_BUDGET: ${{ runner.temp }}/current-compute-seconds
+          PLANNER_REMAINING: ${{ needs.plan.outputs.remaining }}
+          PLANNER_EPOCH: ${{ needs.plan.outputs.epoch }}
+          BATCH_COUNT: ${{ needs.plan.outputs.count }}
         run: |
           LEAN_NUM_THREADS="$(nproc)"
           if (( LEAN_NUM_THREADS > 2 )); then LEAN_NUM_THREADS=2; fi
@@ -186,10 +197,28 @@ jobs:
     outputs:
       unit: ${{ steps.checked.outputs.unit }}
     steps:
-      - *checkout
-      - *judge
-      - *download_plan
-      - *verify_plan
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 2
+          persist-credentials: false
+      - id: judge
+        uses: ./.github/actions/current-judge
+        with:
+          base: ${{ inputs.base }}
+          judge-key: ${{ inputs.judge-key }}
+          nuget-key: ${{ inputs.nuget-key }}
+          needs-judge: ${{ inputs.report || inputs.source-status != 'accepted' }}
+      - name: Download the selected scope
+        uses: actions/download-artifact@v8
+        with:
+          name: current-lean-plan
+          path: ${{ runner.temp }}/current-plan
+          digest-mismatch: error
+      - name: Verify the distributed scope uses the same changed paths
+        run: |
+          cmp "$RUNNER_TEMP/changed-paths" "$RUNNER_TEMP/current-plan/changed-paths"
+          mv "$RUNNER_TEMP/current-plan/current-lean-plan.json" "$RUNNER_TEMP/current-lean-plan.json"
       - name: Download the checked report bundles
         uses: actions/download-artifact@v8
         with:
@@ -197,7 +226,12 @@ jobs:
           path: ${{ runner.temp }}/current-reports
           digest-mismatch: error
       - name: Resume the cumulative allowance after the report batches
-        env: *parallel_budget
+        env:
+          GH_TOKEN: ${{ github.token }}
+          STRATALINT_CI_COMPUTE_BUDGET: ${{ runner.temp }}/current-compute-seconds
+          PLANNER_REMAINING: ${{ needs.plan.outputs.remaining }}
+          PLANNER_EPOCH: ${{ needs.plan.outputs.epoch }}
+          BATCH_COUNT: ${{ needs.plan.outputs.count }}
         run: |
           budget="$RUNNER_TEMP/current-compute-seconds"
           python3 tools/scripts/workflow/ci_parallel_compute.py resume --remaining "$PLANNER_REMAINING" --epoch "$PLANNER_EPOCH" --count "$BATCH_COUNT" --budget-file "$budget"
