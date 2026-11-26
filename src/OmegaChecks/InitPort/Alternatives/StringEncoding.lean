@@ -613,4 +613,27 @@ public theorem ByteArray.isUTF8FirstByte_of_isSome_utf8DecodeChar? :
   all_goals rename_i tag
   all_goals cases tag.symm.trans invalid
 
+public theorem Nat.mod_two_pow_shiftLeft_mod_two_pow : type_of% @_root_.Nat.mod_two_pow_shiftLeft_mod_two_pow := by
+  intro a b c
+  rw [Nat.shiftLeft_eq, Nat.shiftLeft_eq, Nat.mod_mul_mod]
+
+public theorem BitVec.setWidth_append_eq_shiftLeft_setWidth_or :
+    type_of% @_root_.BitVec.setWidth_append_eq_shiftLeft_setWidth_or := by
+  intro w v k b c
+  apply BitVec.toNat_inj.mp
+  rw [BitVec.toNat_setWidth, BitVec.toNat_or, BitVec.toNat_shiftLeft, BitVec.toNat_setWidth,
+    BitVec.toNat_setWidth, BitVec.toNat_append, Nat.or_mod_two_pow, Nat.mod_two_pow_shiftLeft_mod_two_pow]
+
+public theorem BitVec.shiftLeft_or_distrib : type_of% @_root_.BitVec.shiftLeft_or_distrib := by
+  intro w a b s
+  apply BitVec.toNat_inj.mp
+  rw [BitVec.toNat_shiftLeft, BitVec.toNat_or, BitVec.toNat_or,
+    BitVec.toNat_shiftLeft, BitVec.toNat_shiftLeft, Nat.shiftLeft_or_distrib, Nat.or_mod_two_pow]
+
+public theorem BitVec.shiftLeft_add : type_of% @_root_.BitVec.shiftLeft_add := by
+  intro w b s t
+  apply BitVec.toNat_inj.mp
+  rw [BitVec.toNat_shiftLeft, BitVec.toNat_shiftLeft, BitVec.toNat_shiftLeft,
+    Nat.mod_two_pow_shiftLeft_mod_two_pow, Nat.shiftLeft_add]
+
 end OmegaChecks.InitPort.Alternatives
