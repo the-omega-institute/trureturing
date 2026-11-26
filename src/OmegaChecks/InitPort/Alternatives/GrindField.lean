@@ -2,6 +2,7 @@ module
 import all Init.Grind.Ring.Basic
 import all Init.Grind.Ring.Field
 import all Init.Grind.Ordered.Ring
+import all Init.Grind.Ordered.Field
 
 /-! Field inverses, integer casts, and signs derived from the algebraic structure. -/
 
@@ -239,5 +240,32 @@ public theorem Lean.Grind.Field.zpow_sub_one : type_of% @_root_.Lean.Grind.Field
   have e := congrArg (fun t : α => t * a⁻¹) (Field.zpow_add_one nz (n-1))
   rw [Int.sub_add_cancel, Semiring.mul_assoc, Field.mul_inv_cancel nz, Semiring.mul_one] at e
   exact e.symm
+
+private theorem signOfInverse {α : Type u} [Field α] [LE α] [LT α] [Std.LawfulOrderLT α]
+    [Std.IsLinearOrder α] [OrderedRing α] {a : α} (nz : a⁻¹ ≠ 0) :
+    (0 < a ∧ 0 < a⁻¹) ∨ (a < 0 ∧ a⁻¹ < 0) := by
+  have ne : a ≠ 0 := fun h => nz (Field.inv_eq_zero_iff.mpr h)
+  have positive : 0 < a * a⁻¹ := by rw [Field.mul_inv_cancel ne]; exact OrderedRing.zero_lt_one
+  exact OrderedRing.mul_pos_iff.mp positive
+
+public theorem Lean.Grind.Field.IsOrdered.pos_of_inv_pos :
+    type_of% @_root_.Lean.Grind.Field.IsOrdered.pos_of_inv_pos := by
+  intro α _ _ _ _ _ _ a pos
+  cases signOfInverse (Preorder.ne_of_gt pos) with
+  | inl same => exact same.1
+  | inr opp => exact False.elim ((Preorder.not_gt_of_lt pos) opp.2)
+
+public theorem Lean.Grind.Field.IsOrdered.inv_neg_iff :
+    type_of% @_root_.Lean.Grind.Field.IsOrdered.inv_neg_iff := by
+  intro α _ _ _ _ _ _ a
+  have forward {t : α} (neg : t⁻¹ < 0) : t < 0 := by
+    cases signOfInverse (Preorder.ne_of_lt neg) with
+    | inl opp => exact False.elim ((Preorder.not_gt_of_lt neg) opp.2)
+    | inr same => exact same.1
+  constructor
+  · exact forward
+  · intro neg
+    apply forward
+    rwa [Field.inv_inv]
 
 end OmegaChecks.InitPort.Alternatives
