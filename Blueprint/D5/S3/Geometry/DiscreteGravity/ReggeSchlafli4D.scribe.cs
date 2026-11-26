@@ -28,15 +28,15 @@ internal sealed class ReggeSchlafli4DDocument : IScribeDocumentDefinition
             Theorem("four-dimensional-schlafli", "regge_schlafli_4d", "The ten triangle hinges",
                 "In dimension four the five opposite-vertex labels give ten increasing pairs. Each area is one half of the square root of the two-edge Gram determinant. The sum of triangle areas times the corresponding angle derivatives vanishes."),
             Theorem("palatini-variation", "regge_action_palatini_variation", "Regge action variation",
-                "A hinge deficit is two pi minus the sum of its incident simplex angles. The action sums area times deficit over the included hinges. The product rule generates an angle variation. Changing the order of the incidence sum gives a sum of local Schläfli terms over the included incidences, each zero by hypothesis. The derivative is the sum of area derivatives times the original deficits."),
+                "A hinge deficit is two pi minus the sum of its incident simplex angles. The action sums area times deficit over the included hinges. The product rule generates an angle variation. Changing the order of the incidence sum gives a sum of local Schläfli terms over the included incidences, each zero by hypothesis. The derivative is the sum of area derivatives times the original deficits. When boundary hinges are omitted, the local cancellation hypothesis applies to the retained incidences of each simplex."),
             Theorem("cosmological-variation", "regge_action_lambda_variation", "Cosmological volume variation",
                 "Subtracting a constant cosmological coefficient times the sum of differentiable simplex volumes adds the negative coefficient times the sum of volume derivatives."),
             Theorem("flat-stationarity", "flat_regge_stationarity", "Stationarity at zero deficit",
                 "At a configuration with zero deficit at every included hinge, any differentiable variation satisfying the local angle cancellation has zero action derivative."),
             Theorem("holonomy-derivative", "discrete_bianchi_edge_holonomy", "First-order edge holonomy",
-                "Write the generators in one common frame and multiply the exponentials in the chosen list order. Every factor is the identity at zero, so the derivative there is the list sum of the deficit-weighted generators. First-order triviality is equivalent to the vanishing of that sum."),
+                "Write the generators in one common frame and multiply the exponentials in the chosen list order. Every factor is the identity at zero, so the derivative there is the list sum of the deficit-weighted generators. First-order triviality is equivalent to the vanishing of that sum. A simplicial application requires a geometric transport relation that yields first-order triviality in the common frame."),
             Theorem("spherical-triangle", "spherical_triangle_schlafli_counterexample", "Spherical triangle area variation",
-                "At parameters between pi over three and pi, the equal-distance unit vertices have three angles equal to the parameter. Each angle derivative is one. Girard's formula gives the unit-sphere area as three times the parameter minus pi. The sum of angle derivatives thus equals the nonzero area derivative, with unit weights at the vertices.")),
+                "At parameters between pi over three and pi, the equal-distance unit vertices have three angles equal to the parameter. Each angle derivative is one. The area function in the identity is three times the parameter minus pi. Girard's theorem identifies this spherical excess with the intrinsic area of the triangle. The sum of angle derivatives equals the nonzero derivative of spherical excess, with unit weights at the vertices.")),
         []));
 
     private static DocumentBlock Theorem(string id, string name, string title, string prose) =>
@@ -70,7 +70,7 @@ internal sealed class ReggeSchlafli4DDocument : IScribeDocumentDefinition
     private static Formula Negate(Formula arg) => Seq(Minus, arg);
     private static Formula Abs(Formula arg) => Seq(Lvert, Sp, arg, Rvert, Sp);
     private static Formula Inner(Formula x, Formula y) => Seq(Langle, Sp, x, Comma, Sp, y, Rangle, Sp);
-    private static Formula Norm(Formula arg) => Seq(Vert, Vert, Sp, arg, Vert, Vert, Sp);
+    private static Formula Norm(Formula arg) => Seq(Vert, Sp, arg, Vert, Sp);
     private static Formula Real => Seq(Mathbb, Grp(F.Id("R")));
     private static Formula Nat => Seq(Mathbb, Grp(F.Id("N")));
     private static Formula Zero => D(0);
@@ -155,8 +155,8 @@ internal sealed class ReggeSchlafli4DDocument : IScribeDocumentDefinition
         Formula ui = Fn("u", i, t), uj = Fn("u", j, t);
         Formula vi = Fn("V", i), vj = Fn("V", j);
         Formula dui = Fn("du", i), duj = Fn("du", j);
-        Formula angle = Slice("s", Fn("theta", i, j, s));
-        Formula sine = Seq(Sin, Sp, Open, Fn("theta", i, j, t), Close);
+        Formula angle = Slice("s", Fn("arccos", Negate(Inner(Fn("u", i, s), Fn("u", j, s)))));
+        Formula sine = Seq(Sin, Sp, Open, Fn("arccos", Negate(Inner(ui, uj))), Close);
         Formula slope = NumDiv(Seq(Inner(ui, duj), Plus, Inner(uj, dui)), sine);
         Formula strict = Rel(Rel(i, Neq, j), Implies, Rel(Abs(Inner(ui, uj)), Lt, One));
         Formula assumptions = Both(
