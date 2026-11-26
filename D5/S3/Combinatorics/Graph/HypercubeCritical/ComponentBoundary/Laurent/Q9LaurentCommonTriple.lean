@@ -1,6 +1,6 @@
-/- GID: D5/S3/Combinatorics/Graph/HypercubeCritical/ComponentBoundary/Q9LaurentCommonTriple
+/- GID: D5/S3/Combinatorics/Graph/HypercubeCritical/ComponentBoundary/Laurent/Q9LaurentCommonTriple
    generality: G
-   mirror-B: D5/B/S3/Combinatorics/Graph/HypercubeCritical/ComponentBoundary/Q9LaurentCommonTriple
+   mirror-B: D5/B/S3/Combinatorics/Graph/HypercubeCritical/ComponentBoundary/Laurent/Q9LaurentCommonTriple
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.Algebra.BigOperators.Group.Finset.Basic]
    utility: none

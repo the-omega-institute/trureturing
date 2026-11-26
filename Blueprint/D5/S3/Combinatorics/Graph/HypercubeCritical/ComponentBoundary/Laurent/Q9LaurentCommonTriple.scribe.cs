@@ -1,12 +1,12 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Laurent;
 
 internal sealed class Q9LaurentCommonTripleDocument : IScribeDocumentDefinition
 {
     private const string Boundary =
         "D5/S3/Combinatorics/Graph/HypercubeCritical/ComponentBoundary/";
-    private const string Owner = Boundary + "Q9LaurentCommonTriple.";
+    private const string Owner = Boundary + "Laurent/Q9LaurentCommonTriple.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "A common direction triple gives threefold fibers and a descended integer height.",
