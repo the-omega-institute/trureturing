@@ -76,4 +76,8 @@ all eleven lagged side parameters are positive.
 ## Triage
 
 The result applies at every admissible left index. It uses the
-listed eleven-lag recurrence and leaves minimal recurrence order open.
+listed eleven-lag recurrence.
+
+## ASSUMED-UNVERIFIED
+
+Global proof priority and minimal recurrence order remain unverified.

@@ -90,8 +90,9 @@ the theorem in Lean.
 
 The result covers every positive fixed side. The two axes share the
 same coefficients. Restricting the recurrence to the square diagonal
-changes both dimensions simultaneously, and the separate diagonal
-conjecture A235290 remains a separate obligation (#34377).
+changes both dimensions simultaneously. The A235290 proof uses the two
+axial recurrences and a checked initial window for the simultaneous
+shift residual. [A235290 dossier](hardin-a235290-diagonal-recurrence.md)
 
 ## ASSUMED-UNVERIFIED
 
