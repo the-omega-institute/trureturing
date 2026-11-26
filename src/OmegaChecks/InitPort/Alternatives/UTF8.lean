@@ -519,4 +519,65 @@ public theorem String.toBitVec_getElem_utf8EncodeChar_three_of_utf8Size_eq_four 
     (Nat.lt_of_lt_of_eq (by decide : 3 < 4) ((_root_.String.length_utf8EncodeChar c).trans h).symm))).trans
     (packedByte (s := 0) (w := 6) c 2#2 rfl _ (by rw [Nat.div_one]; rfl))
 
+private theorem consBytes {a b : UInt8} {xs ys : List UInt8} (h : a = b) (t : xs = ys) : a :: xs = b :: ys := h ▸ t ▸ rfl
+
+private theorem maskedByte (x : UInt32) (w tag : Nat) (width : w ≤ 8)
+    (fits : 2^w + 2^w * tag ≤ 256) :
+    UInt8.ofNat (x.toNat % 2^w + 2^w * tag) =
+      x.toUInt8 &&& UInt8.ofNat (2^w - 1) ||| UInt8.ofNat (2^w * tag) := by
+  have small := Nat.mod_lt x.toNat (Nat.two_pow_pos w)
+  have data := Nat.lt_of_lt_of_le (Nat.add_lt_add_right small (2^w * tag)) fits
+  have tagBound : 2^w * tag < 256 := Nat.lt_of_lt_of_le (Nat.lt_add_of_pos_left (Nat.two_pow_pos w)) fits
+  have maskBound : 2^w - 1 < 256 := Nat.lt_of_lt_of_le (Nat.pred_lt (Nat.ne_of_gt (Nat.two_pow_pos w)))
+    (Nat.pow_le_pow_right (Nat.zero_lt_succ 1) width)
+  apply UInt8.toNat_inj.mp
+  rw [UInt8.toNat_ofNat_of_lt' data, UInt8.toNat_or, UInt8.toNat_and, UInt8.toNat_ofNat_of_lt' maskBound,
+    UInt8.toNat_ofNat_of_lt' tagBound, UInt32.toNat_toUInt8, Nat.and_two_pow_sub_one_eq_mod,
+    Nat.mod_mod_of_dvd _ (Nat.pow_dvd_pow 2 width), Nat.or_comm, ← _root_.Nat.two_pow_add_eq_or_of_lt small,
+    Nat.add_comm]
+
+private theorem maskedShiftByte (x : UInt32) (s : UInt32) (w tag : Nat) (width : w ≤ 8)
+    (fits : 2^w + 2^w * tag ≤ 256) :
+    UInt8.ofNat (x.toNat / 2^(s.toNat % 32) % 2^w + 2^w * tag) =
+      (x >>> s).toUInt8 &&& UInt8.ofNat (2^w - 1) ||| UInt8.ofNat (2^w * tag) := by
+  have eq := maskedByte (x >>> s) w tag width fits
+  rw [UInt32.toNat_shiftRight, Nat.shiftRight_eq_div_pow] at eq
+  exact eq
+
+public theorem String.utf8EncodeChar_eq_cons_cons : type_of% @_root_.String.utf8EncodeChar_eq_cons_cons := by
+  intro c h
+  rw [encodedBytes_of_size h]
+  unfold encodedBytes
+  apply consBytes
+  · exact maskedShiftByte c.val 6 5 6 (by decide) (by decide)
+  apply consBytes
+  · exact maskedByte c.val 6 2 (by decide) (by decide)
+  rfl
+
+public theorem String.utf8EncodeChar_eq_cons_cons_cons : type_of% @_root_.String.utf8EncodeChar_eq_cons_cons_cons := by
+  intro c h
+  rw [encodedBytes_of_size h]
+  unfold encodedBytes
+  apply consBytes
+  · exact maskedShiftByte c.val 12 4 14 (by decide) (by decide)
+  apply consBytes
+  · exact maskedShiftByte c.val 6 6 2 (by decide) (by decide)
+  apply consBytes
+  · exact maskedByte c.val 6 2 (by decide) (by decide)
+  rfl
+
+public theorem String.utf8EncodeChar_eq_cons_cons_cons_cons : type_of% @_root_.String.utf8EncodeChar_eq_cons_cons_cons_cons := by
+  intro c h
+  rw [encodedBytes_of_size h]
+  unfold encodedBytes
+  apply consBytes
+  · exact maskedShiftByte c.val 18 3 30 (by decide) (by decide)
+  apply consBytes
+  · exact maskedShiftByte c.val 12 6 2 (by decide) (by decide)
+  apply consBytes
+  · exact maskedShiftByte c.val 6 6 2 (by decide) (by decide)
+  apply consBytes
+  · exact maskedByte c.val 6 2 (by decide) (by decide)
+  rfl
+
 end OmegaChecks.InitPort.Alternatives
