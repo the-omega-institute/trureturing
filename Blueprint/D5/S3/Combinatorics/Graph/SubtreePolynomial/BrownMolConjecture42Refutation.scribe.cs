@@ -22,8 +22,9 @@ internal sealed class BrownMolConjecture42RefutationDocument : IScribeDocumentDe
                 StatementSource.FromAuthor(PolynomialFormula()),
                 AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text(
-                    "The sum ranges over nonempty vertex sets S for which the induced graph T[S] is connected. "
-                    + "Each set contributes once. For a tree these are exactly its subtrees."))),
+                    "In Lean, P_G(z) evaluates subtreePolynomial G at z. ConnectedSubsets(G) consists of "
+                    + "the nonempty vertex sets S for which the induced graph G[S] is connected. Each set "
+                    + "contributes once. For a tree these are exactly its subtrees."))),
                 DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("brown-mol-conjecture-42"),
                 DeclarationHandle.Create(Prefix + "Conjecture42"),
@@ -31,10 +32,12 @@ internal sealed class BrownMolConjecture42RefutationDocument : IScribeDocumentDe
                 StatementSource.FromAuthor(ClaimFormula()),
                 AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text(
-                    "Brown and Mol, arXiv:1810.08655v1, p. 14, Conjecture 4.2, quantify over every finite tree T "
-                    + "of order n ≥ 2 and every complex root of its subtree polynomial. Both annulus endpoints "
-                    + "are inclusive. Here n(T) is the vertex cardinality. Lean takes the natural predecessor "
-                    + "before casting to the reals and uses real division and real exponentiation."))),
+                    "Brown and Mol state Conjecture 4.2 on p. 14 of arXiv:1810.08655v1. "
+                    + "“If T is a tree of order n ≥ 2, then the subtree roots of T are contained in the annulus” "
+                    + "shown above. Both endpoints are inclusive. FiniteTree ranges over simple graphs with "
+                    + "a Fintype vertex instance and the IsTree property. Here n(T) is the vertex cardinality. "
+                    + "Lean takes the natural predecessor before casting to the reals and uses real division "
+                    + "and real exponentiation."))),
                 DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("brown-mol-inner-bound-refutation"),
                 DeclarationHandle.Create(Prefix + "conjecture42_false"),
@@ -43,7 +46,7 @@ internal sealed class BrownMolConjecture42RefutationDocument : IScribeDocumentDe
                 AssessedProvenance.FromRepo(Source),
                 Blocks(
                     Paragraph(Text(
-                        "The witness has a hub and 41 branch "
+                        "The witness tree T has a hub and 41 branch "
                         + "centers, each with four private leaves. The connected sets comprise those containing "
                         + "the hub, those in one branch containing its center, and singleton leaves. Their "
                         + "contributions give the factorization P_T(z) = zF(z).")),
@@ -71,7 +74,10 @@ internal sealed class BrownMolConjecture42RefutationDocument : IScribeDocumentDe
     private static Formula Named(string name) => Seq(Operatorname, Grp(F.Id(name)));
     private static Formula Call(Formula name, params Formula[] args) => new Formula.Apply(name, [.. args]);
     private static Formula P(Formula t, Formula z) => Call(new Formula.Subscript(F.Id("P"), t), z);
-    private static Formula Group(Formula value) => Seq(Open, value, Close);
+    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
+    private static Formula ForAllTyped(Formula variable, Formula type, Formula body) =>
+        Seq(Forall, Sp, Parenthesized(Seq(variable, Colon, Sp, type)), Comma, Sp, body);
+    private static Formula ComplexNumbers => Seq(Mathbb, Grp(F.Id("C")));
     private static Formula Add(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Add, b);
     private static Formula Subtract(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Subtract, b);
     private static Formula Mul(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Multiply, b);
@@ -83,9 +89,13 @@ internal sealed class BrownMolConjecture42RefutationDocument : IScribeDocumentDe
 
     private static Formula PolynomialFormula()
     {
-        Formula t = F.Id("T"), s = F.Id("S"), z = F.Id("z");
-        Formula connected = new Formula.Relation(s, FormulaRelationOperator.MemberOf, Call(Named("Conn"), t));
-        return Disp(Eq(P(t, z), Seq(new Formula.Subscript(Sum, connected), Sp, Pow(z, new Formula.Absolute(s)))));
+        Formula v = F.Id("V"), g = F.Id("G"), s = F.Id("S"), z = F.Id("z");
+        Formula connected =
+            new Formula.Relation(s, FormulaRelationOperator.MemberOf, Call(Named("ConnectedSubsets"), g));
+        Formula sum = Seq(new Formula.Subscript(Sum, connected), Sp, Pow(z, new Formula.Absolute(s)));
+        return Disp(ForAllTyped(v, Named("Type"),
+            Seq(Forall, Sp, OpenBracket, Call(Named("Finite"), v), CloseBracket, Comma, Sp,
+                ForAllTyped(g, Call(Named("SimpleGraph"), v), ForAllTyped(z, ComplexNumbers, Eq(P(g, z), sum))))));
     }
 
     private static Formula ClaimFormula()
@@ -95,19 +105,20 @@ internal sealed class BrownMolConjecture42RefutationDocument : IScribeDocumentDe
         Formula m = Subtract(n, one);
         Formula distance = new Formula.Absolute(Add(z, Half));
         Formula bounds = new Formula.Logic(Le(Half, distance), FormulaLogicOperator.And,
-            Le(distance, Add(Half, Pow(Group(m), new Formula.Fraction(one, m)))));
+            Le(distance, Add(Half, Pow(Parenthesized(m), new Formula.Fraction(one, m)))));
         Formula premises = new Formula.Logic(Le(D(2), n), FormulaLogicOperator.And, Eq(P(t, z), D(0)));
         return Disp(new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create("T"), Named("FiniteTree"),
-            new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create("z"), Seq(Mathbb, Grp(F.Id("C"))),
-                new Formula.Logic(Group(premises), FormulaLogicOperator.Implies, Group(bounds)))));
+            new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create("z"), ComplexNumbers,
+                new Formula.Logic(Parenthesized(premises), FormulaLogicOperator.Implies, Parenthesized(bounds)))));
     }
 
     private static Formula WitnessFactorization()
     {
         Formula z = F.Id("z");
-        Formula leafChoices = Pow(Group(Add(D(1), z)), D(4));
-        Formula rootChoices = Pow(Group(Add(D(1), Mul(z, leafChoices))), D(4, 1));
-        Formula branchChoices = Mul(D(4, 1), Group(Add(D(4), leafChoices)));
-        return Disp(Eq(P(F.Id("T"), z), Mul(z, Group(Add(rootChoices, branchChoices)))));
+        Formula leafChoices = Pow(Parenthesized(Add(D(1), z)), D(4));
+        Formula rootChoices = Pow(Parenthesized(Add(D(1), Mul(z, leafChoices))), D(4, 1));
+        Formula branchChoices = Mul(D(4, 1), Parenthesized(Add(D(4), leafChoices)));
+        Formula factorization = Eq(P(F.Id("T"), z), Mul(z, Parenthesized(Add(rootChoices, branchChoices))));
+        return Disp(ForAllTyped(z, ComplexNumbers, factorization));
     }
 }
