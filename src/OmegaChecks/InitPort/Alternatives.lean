@@ -11,6 +11,7 @@ public import OmegaChecks.InitPort.Alternatives.ArrayZip
 public import OmegaChecks.InitPort.Alternatives.Collect
 public import OmegaChecks.InitPort.Alternatives.Constraint
 public import OmegaChecks.InitPort.Alternatives.Extract
+public import OmegaChecks.InitPort.Alternatives.FilePath
 public import OmegaChecks.InitPort.Alternatives.Fin
 public import OmegaChecks.InitPort.Alternatives.Float
 public import OmegaChecks.InitPort.Alternatives.GeneratedProofs

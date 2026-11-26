@@ -3,6 +3,7 @@ module
 public import OmegaChecks.Interface.Equations.Logic
 public import OmegaChecks.Interface.Equations.Array
 public import OmegaChecks.Interface.Equations.Collect
+public import OmegaChecks.Interface.Equations.FilePath
 public import OmegaChecks.Interface.Equations.String
 public import OmegaChecks.Interface.Equations.Bitwise
 public import Mathlib.Data.Nat.Fib.Basic
