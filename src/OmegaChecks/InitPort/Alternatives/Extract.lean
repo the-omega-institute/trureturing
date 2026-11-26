@@ -81,6 +81,22 @@ public theorem Array.toList_extract : type_of% @_root_.Array.toList_extract := b
     exact (List.take_of_length_le (Nat.le_of_eq len)).trans
       (List.take_of_length_le (Nat.le_trans (Nat.le_of_eq len) (Nat.sub_le_sub_right past start))).symm
 
+public theorem Array.getElem_extract : type_of% @_root_.Array.getElem_extract := by
+  intro α i xs start stop h
+  have same := List.getElem_of_eq (Array.toList_extract (xs := xs) (start := start) (stop := stop)) h
+  exact same.trans (List.getElem_take.trans List.getElem_drop)
+
+public theorem Array.push_eq_append : type_of% @_root_.Array.push_eq_append := by
+  intro α a xs
+  exact Array.ext' (Array.toList_push.trans Array.toList_append.symm)
+
+public theorem Array.append_singleton : type_of% @_root_.Array.append_singleton := by
+  intro α a xs
+  exact Array.push_eq_append.symm
+
+public theorem Array.push_eq_append_singleton {α : Type u} {xs : _root_.Array α} {x : α} :
+    xs.push x = xs ++ #[x] := Array.push_eq_append
+
 public theorem Array.extract_size : type_of% @_root_.Array.extract_size := by
   intro α xs
   apply Array.ext'
@@ -120,5 +136,25 @@ public theorem ByteArray.extract_eq_empty_iff : type_of% @_root_.ByteArray.extra
   exact Iff.trans ByteArray.size_eq_zero_iff.symm
     ⟨fun h => Nat.le_of_sub_eq_zero (ByteArray.size_extract.symm.trans h),
       fun h => ByteArray.size_extract.trans (Nat.sub_eq_zero_of_le h)⟩
+
+public theorem ByteArray.extract_append_eq_right : type_of% @_root_.ByteArray.extract_append_eq_right := by
+  intro a b i j hi hj
+  subst i
+  subst j
+  apply ByteArray.ext
+  apply Array.ext'
+  rw [ByteArray.data_extract, ByteArray.data_append, Array.toList_extract, Array.toList_append]
+  change ((a.data.toList ++ b.data.toList).drop a.data.toList.length).take
+    (a.size + b.size - a.size) = b.data.toList
+  rw [List.drop_left, Nat.add_sub_cancel_left]
+  exact List.take_length
+
+public theorem ByteArray.extract_append_eq_left : type_of% @_root_.ByteArray.extract_append_eq_left := by
+  intro a b i hi
+  subst i
+  apply ByteArray.ext
+  apply Array.ext'
+  rw [ByteArray.data_extract, ByteArray.data_append, Array.toList_extract, Array.toList_append]
+  exact List.take_left
 
 end OmegaChecks.InitPort.Alternatives
