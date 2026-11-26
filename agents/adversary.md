@@ -24,7 +24,7 @@ Output: echoed statement, attacks run, findings, verdict, and permanent case IDs
 出处对账须覆盖三处,缺一不可:**结论叶 + 全部前提字段 + 结论谓词的定义体**。
 两个方向都查:源卷没有的不得加,**源卷有的也不得省**。
 
-审 OmegaMath 的书面引用时，沿调用方向尝试一个会区分原命题与推广的输入。比如绕坐标轴的有理 90° 旋转是否有有理单位旋量原像？核对覆盖证明后，再检查同一结论在译文、图注与交互读数中的范围。[后端与数学陈述的发布规则](../docs/develop/spec/golden-ledger-repo-spec.md#omega-claim-fidelity)
+审 OmegaMath 的引用、手推公式和模型算例时，按声明的定义和输入复算，沿调用方向尝试一个会区分原命题与推广的输入。比如绕坐标轴的有理 90° 旋转是否有有理单位旋量原像？核对所用参数化或延拓的前提后，再检查同一结论在译文、图注与交互读数中的范围。[后端与数学陈述的发布规则](../docs/develop/spec/golden-ledger-repo-spec.md#omega-claim-fidelity)
 
 ### 一、载体条件(实测最高频)
 
