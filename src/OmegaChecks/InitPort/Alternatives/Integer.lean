@@ -1,5 +1,5 @@
 module
-public import Init.Data.Int.DivMod.Lemmas
+public import OmegaChecks.InitPort.Alternatives.Integer.Division
 public import Init.Data.Int.Pow
 import all Init.Data.Dyadic.Basic
 import all Init.Data.Int.Linear
@@ -642,72 +642,5 @@ public theorem Int.Internal.Linear.Poly.denote_combine_mul_k : type_of% @_root_.
       rw [Int.zero_mul, Int.add_zero]
       exact (congrArg (Poly.denote ctx) (Int.Internal.Linear.Poly.mul_k_eq_mul ..)).trans (Poly.denote_mul ..)
     | false => exact combineScaled ..
-
-public theorem Int.ediv_eq_neg_one_of_neg_of_le : type_of% @_root_.Int.ediv_eq_neg_one_of_neg_of_le := by
-  intro a b neg le
-  obtain ⟨n, rfl⟩ := Int.eq_negSucc_of_lt_zero neg
-  obtain ⟨m, rfl⟩ := Int.eq_succ_of_zero_lt (a := b) (by omega)
-  change Int.negSucc (n / (m+1)) = Int.negSucc 0
-  exact congrArg Int.negSucc (Nat.div_eq_of_lt (by omega))
-
-public theorem Int.ediv_eq_one_of_neg_of_le : type_of% @_root_.Int.ediv_eq_one_of_neg_of_le := by
-  intro a b neg le
-  obtain ⟨n, rfl⟩ := Int.eq_negSucc_of_lt_zero neg
-  obtain ⟨m, rfl⟩ := Int.eq_negSucc_of_lt_zero (Int.lt_of_le_of_lt le neg)
-  change Int.ofNat (n / (m+1) + 1) = Int.ofNat 1
-  rw [Nat.div_eq_of_lt (show n < m+1 by omega)]
-
-public theorem Int.neg_ediv : type_of% @_root_.Int.neg_ediv := by
-  intro a b
-  if zero : b = 0 then
-    subst b
-    rw [Int.ediv_zero, Int.ediv_zero, Int.sign_zero, ite_self]
-    rfl
-  else
-    conv => lhs; rw [← Int.mul_ediv_add_emod a b]
-    rw [Int.neg_add, ← Int.mul_neg, Int.mul_add_ediv_left _ _ zero, Int.add_comm]
-    if divides : b ∣ a then
-      rw [ite_eq_left divides, Int.emod_eq_zero_of_dvd divides, Int.neg_zero, Int.zero_ediv]
-      omega
-    else
-      rw [ite_eq_right divides]
-      have positive := (Int.emod_pos_of_not_dvd divides).resolve_left zero
-      if sign : 0 < b then
-        have limit := Int.emod_lt_of_pos a sign
-        rw [Int.sign_eq_one_of_pos sign, Int.ediv_eq_neg_one_of_neg_of_le (by omega) (by omega)]
-        omega
-      else
-        have negative : b < 0 := by omega
-        have limit := Int.emod_lt_of_neg a negative
-        rw [Int.sign_eq_neg_one_of_neg negative, Int.ediv_eq_one_of_neg_of_le (by omega) (by omega)]
-        omega
-
-public theorem Int.neg_emod : type_of% @_root_.Int.neg_emod := by
-  intro a b
-  if divides : b ∣ a then
-    rw [ite_eq_left divides, Int.emod_eq_zero_of_dvd (Int.dvd_neg.mpr divides)]
-  else
-    rw [ite_eq_right divides, Int.emod_def, Int.emod_def, Int.neg_ediv, ite_eq_right divides,
-      Int.mul_sub, Int.mul_neg, Int.mul_sign_self]
-    omega
-
-public theorem Int.fmod_eq_emod : type_of% @_root_.Int.fmod_eq_emod := by
-  intro a b
-  if pos : 0 ≤ b then
-    rw [ite_eq_left (Or.inl pos), Int.add_zero, Int.fmod_eq_emod_of_nonneg _ pos]
-  else if divides : b ∣ a then
-    rw [ite_eq_left (Or.inr divides), Int.fmod_eq_zero_of_dvd divides, Int.emod_eq_zero_of_dvd divides]
-    rfl
-  else
-    have neg : 0 ≤ -b := by omega
-    rw [ite_eq_right (fun h => h.elim pos divides)]
-    calc
-      a.fmod b = -((-a).fmod (-b)) := by rw [Int.neg_fmod_neg, Int.neg_neg]
-      _ = -((-a) % b) := by rw [Int.fmod_eq_emod_of_nonneg _ neg, Int.emod_neg]
-      _ = a % b + b := by
-        rw [Int.neg_emod, ite_eq_right divides]
-        have abs := Int.natAbs_of_nonneg neg
-        rw [Int.natAbs_neg] at abs
-        omega
 
 end OmegaChecks.InitPort.Alternatives
