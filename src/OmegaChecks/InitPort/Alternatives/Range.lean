@@ -5,6 +5,7 @@ public import Init.Data.Range.Polymorphic.Fin
 public import Init.Data.Range.Polymorphic.UInt
 import all Init.Data.Range.Polymorphic.Internal.SignedBitVec
 import all Init.Data.Range.Polymorphic.SInt
+import all Init.Data.Char.Ordinal
 import Init.Data.BitVec.Lemmas
 
 /-! Successor and size laws for ranges of naturals, integers, and finite indices. -/
@@ -716,5 +717,108 @@ private theorem ISizeSizeLaws : Rxc.LawfulHasSize ISize ∧ Rxo.LawfulHasSize IS
 public theorem ISize.instRxcLawfulHasSize : Rxc.LawfulHasSize ISize := ISizeSizeLaws.1
 public theorem ISize.instRxoLawfulHasSize : Rxo.LawfulHasSize ISize := ISizeSizeLaws.2.1
 public theorem ISize.instRxiLawfulHasSize : Rxi.LawfulHasSize ISize := ISizeSizeLaws.2.2
+
+private def doubleBits (value : Nat) (bits : Nat) : Nat :=
+  Nat.rec value (fun _ n => n * 2) bits
+
+private theorem doubleBitsAdd (a b k : Nat) : doubleBits a k + doubleBits b k = doubleBits (a + b) k := by
+  induction k with
+  | zero => rfl
+  | succ k ih =>
+    change doubleBits a k * 2 + doubleBits b k * 2 = doubleBits (a + b) k * 2
+    rw [← Nat.add_mul, ih]
+
+private theorem packedSize : Char.numCodePoints + Char.numSurrogates = 0x110000 :=
+  doubleBitsAdd 543 1 11
+
+private def lowOnes (leading bits : Nat) : Nat :=
+  Nat.rec leading (fun _ v => v * 2 + 1) bits
+
+private theorem lowOnesSucc (leading bits : Nat) : lowOnes leading bits + 1 = doubleBits (leading + 1) bits := by
+  induction bits with
+  | zero => rfl
+  | succ bits ih =>
+    change lowOnes leading bits * 2 + 1 + 1 = doubleBits (leading + 1) bits * 2
+    rw [← ih, Nat.add_mul, Nat.one_mul]
+
+public theorem Char.ordinal._proof_1 :
+    type_of% (private_decl% @_root_.Char.ordinal._proof_1) := by
+  intro c h
+  have limit : (0xd800 : UInt32).toNat = 0xd800 := UInt32.toNat_ofNat_of_lt (by decide)
+  exact Nat.lt_trans (limit ▸ UInt32.lt_iff_toNat_lt.mp h) (show 0xd800 < 1112064 by decide)
+
+public theorem Char.ofOrdinal._proof_1 :
+    type_of% (private_decl% @_root_.Char.ofOrdinal._proof_1) := by
+  intro _ below
+  exact Nat.lt_trans below (show 0xd800 < 4294967296 by decide)
+
+public theorem Char.ofOrdinal._proof_2 :
+    type_of% (private_decl% @_root_.Char.ofOrdinal._proof_2) := by
+  intro f below
+  exact Or.inl ((UInt32.toNat_ofNatLT (n := f.val)).symm ▸ below)
+
+public theorem Char.ofOrdinal._proof_3 :
+    type_of% (private_decl% @_root_.Char.ofOrdinal._proof_3) := by
+  intro f
+  have below : f.val + Char.numSurrogates < 0x110000 := packedSize ▸ Nat.add_lt_add_right f.isLt _
+  exact Nat.lt_trans below (show 0x110000 < 4294967296 by decide)
+
+public theorem Char.ofOrdinal._proof_4 :
+    type_of% (private_decl% @_root_.Char.ofOrdinal._proof_4) := by
+  intro f above
+  have low : 0xd800 ≤ f.val := Nat.le_of_not_lt above
+  have boundary : 0xdfff < 0xd800 + 2048 := by
+    have align : (0xd800 : Nat) + 2048 = 0xe000 := doubleBitsAdd 27 1 11
+    exact align.symm ▸ (show 0xdfff < (0xe000 : Nat) by decide)
+  exact Or.inr ⟨Nat.lt_of_lt_of_le boundary (Nat.add_le_add_right low _),
+    packedSize ▸ Nat.add_lt_add_right f.isLt _⟩
+
+public theorem Char.succ?._proof_2 :
+    type_of% (private_decl% @_root_.Char.succ?._proof_2) := by
+  have point : (0xe000 : UInt32).toNat = 0xe000 := UInt32.toNat_ofNat_of_lt (by decide)
+  change (UInt32.toNat 0xe000).isValidChar
+  exact point.symm ▸ (show (0xe000 : Nat).isValidChar from Or.inr ⟨by decide, by decide⟩)
+
+public theorem Char.succ?._proof_1 :
+    type_of% (private_decl% @_root_.Char.succ?._proof_1) := by
+  intro c h
+  have pre : (0xd7ff : UInt32).toNat = 0xd7ff := UInt32.toNat_ofNat_of_lt (by decide)
+  have gap : 0xd7ff + 1 = (0xd800 : Nat) := lowOnesSucc 26 11
+  have below : c.val.toNat < 0xd7ff := pre ▸ UInt32.lt_iff_toNat_lt.mp h
+  have valid : (c.val.toNat + 1).isValidChar := Or.inl (gap ▸ Nat.succ_lt_succ below)
+  have inc : (c.val + 1).toNat = c.val.toNat + 1 :=
+    (UInt32.toNat_add _ _).trans (Nat.mod_eq_of_lt (Char.isValidUInt32 _ valid))
+  exact inc.symm ▸ valid
+
+public theorem Char.ordinal._proof_2 :
+    type_of% (private_decl% @_root_.Char.ordinal._proof_2) := by
+  intro c _
+  obtain small | ⟨large, hi⟩ := c.valid
+  · exact Nat.lt_of_le_of_lt (Nat.sub_le _ _) (Nat.lt_trans small (show 0xd800 < 1112064 by decide))
+  · have enough := Nat.le_trans (show 2048 ≤ 0xdfff by decide) (Nat.le_of_lt large)
+    apply Nat.lt_of_add_lt_add_right (n := Char.numSurrogates)
+    rw [Nat.sub_add_cancel enough, packedSize]
+    exact hi
+
+public theorem Char.succ?._proof_3 :
+    type_of% (private_decl% @_root_.Char.succ?._proof_3) := by
+  intro c lower different upper
+  have pre : (0xd7ff : UInt32).toNat = 0xd7ff := UInt32.toNat_ofNat_of_lt (by decide)
+  have limit : (0x10ffff : UInt32).toNat = 0x10ffff := UInt32.toNat_ofNat_of_lt (by decide)
+  have lo : 0xd7ff ≤ c.val.toNat :=
+    Nat.le_of_not_lt fun h => lower (UInt32.lt_iff_toNat_lt.mpr (pre.symm ▸ h))
+  have hi : c.val.toNat < 0x10ffff := limit ▸ UInt32.lt_iff_toNat_lt.mp upper
+  have valid : (c.val.toNat + 1).isValidChar := by
+    obtain small | ⟨large, _⟩ := c.valid
+    · have gap : 0xd7ff + 1 = (0xd800 : Nat) := lowOnesSucc 26 11
+      have below : c.val.toNat < 0xd7ff + 1 := gap.symm ▸ small
+      have val := Nat.le_antisymm (Nat.le_of_lt_succ below) lo
+      exact (different (UInt32.toNat.inj (val.trans pre.symm))).elim
+    · have gap : 0x10ffff + 1 = (0x110000 : Nat) := lowOnesSucc 16 16
+      exact Or.inr ⟨Nat.lt_succ_of_lt large, gap ▸ Nat.succ_lt_succ hi⟩
+  change (c.val + 1).toNat.isValidChar
+  have inc : (c.val + 1).toNat = c.val.toNat + 1 :=
+    (UInt32.toNat_add _ _).trans (Nat.mod_eq_of_lt (Char.isValidUInt32 _ valid))
+  exact inc.symm ▸ valid
 
 end OmegaChecks.InitPort.Alternatives
