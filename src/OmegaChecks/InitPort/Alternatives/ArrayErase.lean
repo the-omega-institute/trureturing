@@ -207,4 +207,26 @@ public theorem Vector.set_getElem_succ_eraseIdx_succ : type_of% @_root_.Vector.s
   apply Vector.toArray_inj.mp
   exact Array.set_getElem_succ_eraseIdx_succ hi
 
+public theorem Array.size_erase : type_of% @_root_.Array.size_erase := by
+  intro α _ _ a xs
+  by_cases h : a ∈ xs
+  · rw [ite_eq_left h]
+    exact Array.size_erase_of_mem h
+  · rw [ite_eq_right h, Array.erase_of_not_mem h]
+
+public theorem Array.eraseIdxIfInBounds_eq : type_of% @_root_.Array.eraseIdxIfInBounds_eq := by
+  intro α xs i
+  by_cases h : i < xs.size
+  · rw [dite_eq_left h]
+    exact (_root_.Array.eraseIdx_eq_eraseIdxIfInBounds h).symm
+  · rw [dite_eq_right h]
+    apply _root_.Array.toList_inj.mp
+    rw [_root_.Array.toList_eraseIdxIfInBounds]
+    exact _root_.List.eraseIdx_of_length_le (Nat.le_of_not_gt h)
+
+public theorem Array.eraseIdx_ne_empty_iff : type_of% @_root_.Array.eraseIdx_ne_empty_iff := by
+  intro α xs i h
+  rw [← Array.size_pos_iff, Array.size_eraseIdx]
+  omega
+
 end OmegaChecks.InitPort.Alternatives
