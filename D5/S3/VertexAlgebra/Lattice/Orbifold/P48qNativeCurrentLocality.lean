@@ -821,4 +821,25 @@ depends on axioms: [propext, Classical.choice, Quot.sound]
 #guard_msgs (whitespace := lax) in
 #print axioms native_negativeCurrent_local
 
+/-- Every residue eigen-current is local against the actual field of any native state. -/
+theorem native_current_local (u : Cartan) (r : ℕ) (hr : r < 3)
+    (hu : p48qAction u = (ζ ^ r) ^ 2 • u) (v : NativeStates) :
+    CoverLocal (nativeField (currentAlong lattice u)) (nativeField v) := by
+  rw [P48qNativeMonodromy.nativeField_current, coverLocal_right_components]
+  have hcurrent : InResidue (-(r : ℤ)) (currentField u) := by
+    intro k hk
+    rw [currentField_coeff]
+    exact mode_offResidue u r hr hu _ (by omega)
+  intro t
+  let N := vectorFrequencyBound lattice v + 1
+  refine ⟨N, (coverDelta_comm_eq_zero_iff _ _ _ _ hcurrent
+    (restoreResidue_inResidue _ _) N).mpr ?_⟩
+  funext i j
+  rw [stripResidue_restoreResidue, delta_alignedComm,
+    alignedComm_differences u r hr hu]
+  exact Finset.sum_eq_zero fun n hn => by
+    rw [ite_eq_right (not_le.mpr (Finset.mem_range.mp hn)), zero_smul]
+
+#print axioms native_current_local
+
 end D5.S3.VertexAlgebra.Lattice.Orbifold.P48qNativeCurrentLocality
