@@ -1,5 +1,6 @@
 import Lean
 import Lean.Replay
+import OmegaBuild.Commands
 import OmegaChecks.Interface
 import OmegaChecks.ProtectedObjects
 import OmegaChecks.ModuleSurface
@@ -9,11 +10,14 @@ open Lean
 private def isStrict (name : Name) : Bool :=
   [`OmegaInit, `OmegaMathlib, `OmegaMath].contains name.getRoot
 
-/-- Lean loads imports before importers. Propagate a D5 path along every compiled import,
-including private imports, while allowing D5 modules to consume the publication. -/
+/-- Enforce publication dependencies and backend eligibility through private and transitive imports. -/
 private def checkPublicationLayers (env : Environment) : IO Unit := do
+  let mathlibOnly := OmegaBuild.mathlibOnlyPaths env
   let mut paths : NameMap (List Name) := {}
   for (owner, data) in env.header.moduleNames.zip env.header.moduleData do
+    if isStrict owner then
+      if let some path := mathlibOnly.find? owner then
+        throw <| IO.userError s!"Omega publication requires both backends: {String.intercalate " -> " (path.map Name.toString)}"
     if owner.getRoot == `D5 then
       paths := paths.insert owner [owner]
     else

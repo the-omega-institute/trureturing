@@ -3,26 +3,13 @@ import OmegaBuild.Commands
 
 open Lean
 
-/-- Imported modules are in dependency order. Keep one import path to the explicit selection. -/
-private def mathlibOnlyPaths (env : Environment) : NameMap (List Name) := Id.run do
-  let mut paths : NameMap (List Name) := {}
-  for owner in env.header.moduleNames, data in env.header.moduleData, i in [:env.header.moduleNames.size] do
-    if OmegaBuild.isMathlibOnly env i then
-      paths := paths.insert owner [owner]
-    else
-      for dep in data.imports do
-        if let some path := paths.find? dep.module then
-          paths := paths.insert owner (owner :: path)
-          break
-  return paths
-
 /-- Report selection and the published declarations of requested Mathlib-only modules. -/
 def main (args : List String) : IO Unit := do
   let path :: first :: rest := args | throw <| IO.userError "expected official search path and module names"
   let names := (first :: rest).map String.toName
   searchPathRef.set (System.SearchPath.parse path)
   let env ← importModules (names.toArray.map fun name => { module := name }) {}
-  let paths := mathlibOnlyPaths env
+  let paths := OmegaBuild.mathlibOnlyPaths env
   let mut reasons := []
   let mut declarations := #[]
   for name in names do
