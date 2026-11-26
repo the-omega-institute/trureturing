@@ -798,6 +798,135 @@ public theorem Std.Iter.atIdxSlow?_append_of_eq_some {α₁ α₂ β : Type w}
   | done_case n it hp h' =>
     cases h
 
+public theorem Std.Iter.atIdxSlow?_append {α₁ α₂ β : Type w}
+    [Iterator α₁ Id β] [Iterator α₂ Id β] [Finite α₁ Id] [Productive α₂ Id]
+    {it₁ : Iter (α := α₁) β} {it₂ : Iter (α := α₂) β} {n : Nat} :
+    getAt (it₁.append it₂) n =
+      if n < (Std.Iter.Total.toList it₁.ensureTermination).length then getAt it₁ n
+      else getAt it₂ (n - (Std.Iter.Total.toList it₁.ensureTermination).length) := by
+  induction n, it₁ using Std.Iter.atIdxSlow?.induct_unfolding generalizing it₂ with
+  | yield_zero it it' out h hs =>
+    rw [Std.Iter.atIdxSlow?_eq_match (it := it.append it₂), Iter.step_append, hs,
+      Std.Iter.toList_eq_match_step (it := it), hs]
+    exact (if_pos (Nat.zero_lt_succ _)).symm
+  | yield_succ it it' out h hs n ih =>
+    rw [Std.Iter.atIdxSlow?_eq_match (it := it.append it₂), Iter.step_append, hs,
+      Std.Iter.toList_eq_match_step (it := it), hs]
+    let len := (Std.Iter.Total.toList it'.ensureTermination).length
+    change getAt (it'.append it₂) n = if n.succ < len.succ then getAt it' n else getAt it₂ (n.succ - len.succ)
+    rw [ih (it₂ := it₂), Nat.succ_sub_succ]
+    by_cases hn : n < len
+    · rw [if_pos hn, if_pos (Nat.succ_lt_succ hn)]
+    · rw [if_neg hn, if_neg (fun h => hn (Nat.lt_of_succ_lt_succ h))]
+  | skip_case n it it' h hs ih =>
+    rw [Std.Iter.atIdxSlow?_eq_match (it := it.append it₂), Iter.step_append, hs,
+      Std.Iter.toList_eq_match_step (it := it), hs]
+    exact ih
+  | done_case n it h hs =>
+    rw [Std.Iter.atIdxSlow?_eq_match (it := it.append it₂), Iter.step_append, hs,
+      Std.Iter.toList_eq_match_step (it := it), hs]
+    change getAt (Iter.Intermediate.appendSnd α₁ it₂) n = if n < 0 then none else getAt it₂ (n - 0)
+    rw [if_neg (Nat.not_lt_zero n), Nat.sub_zero]
+    exact Std.Iter.atIdxSlow?_appendSnd
+
+public theorem Std.Iter.atIdxSlow?_append_of_productive {α₁ α₂ β : Type w}
+    [Iterator α₁ Id β] [Iterator α₂ Id β] [Productive α₁ Id] [Productive α₂ Id]
+    {it₁ : Iter (α := α₁) β} {it₂ : Iter (α := α₂) β} {n k : Nat}
+    (hk : getAt it₁ k = none)
+    (hmin : ∀ j, j < k → (getAt it₁ j).isSome)
+    (hle : k ≤ n) :
+    getAt (it₁.append it₂) n = getAt it₂ (n - k) := by
+  induction n, it₁ using Std.Iter.atIdxSlow?.induct_unfolding generalizing k it₂ with
+  | yield_zero it it' out hp h' =>
+    exfalso
+    have : k = 0 := Nat.eq_zero_of_le_zero hle
+    subst this
+    rw [Std.Iter.atIdxSlow?_eq_match (it := it)] at hk
+    rw [h'] at hk
+    cases hk
+  | yield_succ it it' out hp h' n ih =>
+    rw [Std.Iter.atIdxSlow?_eq_match (it := it.append it₂)]
+    rw [Iter.step_append, h']
+    match k with
+    | 0 =>
+      rw [Std.Iter.atIdxSlow?_eq_match (it := it)] at hk
+      rw [h'] at hk
+      cases hk
+    | k + 1 =>
+      rw [Std.Iter.atIdxSlow?_eq_match (it := it)] at hk
+      rw [h'] at hk
+      have hmin' : ∀ j, j < k → (getAt it' j).isSome := by
+        intro j hj
+        have h := hmin (j + 1) (by omega)
+        rw [Std.Iter.atIdxSlow?_eq_match (it := it)] at h
+        rw [h'] at h
+        exact h
+      change getAt (it'.append it₂) n = getAt it₂ (n.succ - (k + 1))
+      rw [Nat.succ_sub_succ]
+      exact (ih (it₂ := it₂) hk hmin' (Nat.le_of_succ_le_succ hle))
+  | skip_case n it it' hp h' ih =>
+    rw [Std.Iter.atIdxSlow?_eq_match (it := it.append it₂)]
+    rw [Iter.step_append, h']
+    rw [Std.Iter.atIdxSlow?_eq_match (it := it), h'] at hk
+    have hmin' : ∀ j, j < k → (getAt it' j).isSome := by
+      intro j hj
+      have h := hmin j hj
+      rw [Std.Iter.atIdxSlow?_eq_match (it := it)] at h
+      rw [h'] at h
+      exact h
+    exact ih hk hmin' hle
+  | done_case n it hp h' =>
+    rw [Std.Iter.atIdxSlow?_eq_match (it := it.append it₂)]
+    rw [Iter.step_append, h']
+    have hk0 : k = 0 := by
+      cases k with
+      | zero => rfl
+      | succ k =>
+        have h := hmin 0 (Nat.zero_lt_succ k)
+        rw [Std.Iter.atIdxSlow?_eq_match (it := it), h'] at h
+        cases h
+    change getAt (Iter.Intermediate.appendSnd α₁ it₂) n = getAt it₂ (n - k)
+    rw [hk0, Nat.sub_zero]
+    exact (Std.Iter.atIdxSlow?_appendSnd (α₁ := α₁) (it₂ := it₂) (n := n))
+
+public theorem Std.Iter.atIdxSlow?_take {α β}
+    [Iterator α Id β] [Productive α Id] {k l : Nat}
+    {it : Iter (α := α) β} :
+    getAt (it.take k) l = if l < k then getAt it l else none := by
+  induction l, it using Std.Iter.atIdxSlow?.induct_unfolding generalizing k
+  case yield_zero it next out h hs =>
+    rw [Std.Iter.atIdxSlow?_eq_match (it := it.take k), Iter.step_take]
+    cases k with
+    | zero => rfl
+    | succ k =>
+      rw [hs]
+      exact (if_pos (Nat.zero_lt_succ k)).symm
+  case yield_succ it next out h hs l ih =>
+    rw [Std.Iter.atIdxSlow?_eq_match (it := it.take k), Iter.step_take]
+    cases k with
+    | zero => rfl
+    | succ k =>
+      rw [hs]
+      change getAt (next.take k) l = if l.succ < k.succ then getAt next l else none
+      rw [ih]
+      by_cases hl : l < k
+      · rw [if_pos hl, if_pos (Nat.succ_lt_succ hl)]
+      · rw [if_neg hl, if_neg (fun h => hl (Nat.lt_of_succ_lt_succ h))]
+  case skip_case l it next h hs ih =>
+    rw [Std.Iter.atIdxSlow?_eq_match (it := it.take k), Iter.step_take]
+    cases k with
+    | zero => rw [if_neg (Nat.not_lt_zero l)]; rfl
+    | succ k => rw [hs]; exact ih
+  case done_case l it h hs =>
+    rw [Std.Iter.atIdxSlow?_eq_match (it := it.take k), Iter.step_take]
+    cases k with
+    | zero => rw [if_neg (Nat.not_lt_zero l)]; rfl
+    | succ k =>
+      rw [hs]
+      by_cases hl : l < k.succ
+      · rw [if_pos hl]; rfl
+      · rw [if_neg hl]; rfl
+
 end IndexCombinators
 
 end OmegaChecks.InitPort.Alternatives
