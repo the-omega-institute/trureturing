@@ -8,7 +8,6 @@
 
 import D5.S3.Quantum.Information.PartialTraceMutualInformation
 import D5.S3.Quantum.QuantumChannels.IptPptSquaredEquivalence
-import D5.S3.Quantum.Recovery.BKMObservableRigidity
 import D5.S3.Quantum.Semigroups.WuModularEdgeSpectral
 import Mathlib.Analysis.SpecialFunctions.Log.Deriv
 import Mathlib.Tactic.FinCases
@@ -38,7 +37,6 @@ open scoped BigOperators ComplexOrder MatrixOrder Kronecker Matrix.Norms.L2Opera
 namespace D5.S3.Quantum.Semigroups.WuCompleteCubicRefutation
 
 open D5.S3.Quantum.Matrix.SpectralPower (mpow mpow_one)
-open D5.S3.Quantum.Recovery.BKMObservableRigidity (mpow_add)
 open D5.S3.Quantum.Recovery.BKMRelativeDensity (mpow_smul_of_nonneg)
 open D5.S3.Quantum.Information.PartialTraceMutualInformation
   (partialTraceLeft partialTraceRight)
@@ -49,6 +47,12 @@ open D5.S3.Quantum.Semigroups.WuModularEdgeSpectral (generatorTrace_eq_cosh pair
 
 private abbrev Q := Fin 2
 private abbrev Mat := Matrix (Fin 4) (Fin 4) ℂ
+
+private theorem mpow_add {X : Mat} (hX : X.PosDef) (p q : ℝ) :
+    mpow X p * mpow X q = mpow X (p + q) := by
+  unfold mpow
+  simp_rw [← CFC.rpow_eq_cfc_real hX.posSemidef.nonneg]
+  exact (CFC.rpow_add hX.isUnit).symm
 
 private def diagReal {n : Type*} [DecidableEq n] (v : n → ℝ) : Matrix n n ℂ :=
   diagonal (fun i => (v i : ℂ))

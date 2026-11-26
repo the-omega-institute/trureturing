@@ -46,5 +46,4 @@ For x = 2^(1/3) and y = 26^(1/3), the finite certificate gives 56 E(ρ) = (9/8)[
 - Truth anchor: `D5/S3/Quantum/Semigroups/WuCompleteCubicRefutation.result`
 - Dependency: [D5/S3/Quantum/Information/PartialTraceMutualInformation](../Information/PartialTraceMutualInformation.md)
 - Dependency: [D5/S3/Quantum/QuantumChannels/IptPptSquaredEquivalence](../QuantumChannels/IptPptSquaredEquivalence.md)
-- Dependency: [D5/S3/Quantum/Recovery/BKMObservableRigidity](../Recovery/BKMObservableRigidity.md)
 - Dependency: [D5/S3/Quantum/Semigroups/WuModularEdgeSpectral](WuModularEdgeSpectral.md)
