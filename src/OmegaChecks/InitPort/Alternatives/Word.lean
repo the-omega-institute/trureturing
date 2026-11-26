@@ -135,4 +135,54 @@ public theorem BitVec.toInt_intMax : type_of% @_root_.BitVec.toInt_intMax := by
     rw [_root_.BitVec.toInt, BitVec.toNat_intMax, Nat.add_one_sub_one, ite_eq_left fits, Int.ofNat_sub Nat.one_le_two_pow,
       Int.natCast_pow, Int.cast_ofNat_Int, Int.cast_ofNat_Int]
 
+public theorem Nat.two_pow_sub_two_pow_pred : type_of% @_root_.Nat.two_pow_sub_two_pow_pred := by
+  intro w h
+  rw [← Nat.two_pow_pred_add_two_pow_pred h, Nat.add_sub_cancel]
+
+public theorem BitVec.neg_intMin : type_of% @_root_.BitVec.neg_intMin := by
+  intro w
+  cases w with
+  | zero => rfl
+  | succ k =>
+    have h := Nat.zero_lt_succ k
+    apply _root_.BitVec.eq_of_toNat_eq
+    rw [_root_.BitVec.toNat_neg, BitVec.toNat_intMin_of_pos h, Nat.two_pow_sub_two_pow_pred h,
+      Nat.two_pow_pred_mod_two_pow h]
+
+public theorem Int16.toBitVec_minValue : type_of% @_root_.Int16.toBitVec_minValue := by
+  change -(32768#16) = _
+  have repr : 32768#16 = _root_.BitVec.intMin 16 := by
+    apply _root_.BitVec.eq_of_toNat_eq
+    rw [_root_.BitVec.toNat_ofNat, BitVec.toNat_intMin]
+  exact (congrArg Neg.neg repr).trans BitVec.neg_intMin
+
+public theorem Int16.toInt_minValue : type_of% @_root_.Int16.toInt_minValue :=
+  (_root_.Int16.toInt_toBitVec _).symm.trans
+    ((congrArg _root_.BitVec.toInt Int16.toBitVec_minValue).trans
+      (BitVec.toInt_intMin_of_pos (Nat.zero_lt_succ _)))
+
+public theorem Int32.toBitVec_minValue : type_of% @_root_.Int32.toBitVec_minValue := by
+  change -(2147483648#32) = _
+  have repr : 2147483648#32 = _root_.BitVec.intMin 32 := by
+    apply _root_.BitVec.eq_of_toNat_eq
+    rw [_root_.BitVec.toNat_ofNat, BitVec.toNat_intMin]
+  exact (congrArg Neg.neg repr).trans BitVec.neg_intMin
+
+public theorem Int32.toInt_minValue : type_of% @_root_.Int32.toInt_minValue :=
+  (_root_.Int32.toInt_toBitVec _).symm.trans
+    ((congrArg _root_.BitVec.toInt Int32.toBitVec_minValue).trans
+      (BitVec.toInt_intMin_of_pos (Nat.zero_lt_succ _)))
+
+public theorem Int64.toBitVec_minValue : type_of% @_root_.Int64.toBitVec_minValue := by
+  change -(9223372036854775808#64) = _
+  have repr : 9223372036854775808#64 = _root_.BitVec.intMin 64 := by
+    apply _root_.BitVec.eq_of_toNat_eq
+    rw [_root_.BitVec.toNat_ofNat, BitVec.toNat_intMin]
+  exact (congrArg Neg.neg repr).trans BitVec.neg_intMin
+
+public theorem Int64.toInt_minValue : type_of% @_root_.Int64.toInt_minValue :=
+  (_root_.Int64.toInt_toBitVec _).symm.trans
+    ((congrArg _root_.BitVec.toInt Int64.toBitVec_minValue).trans
+      (BitVec.toInt_intMin_of_pos (Nat.zero_lt_succ _)))
+
 end OmegaChecks.InitPort.Alternatives
