@@ -295,4 +295,92 @@ public theorem List.minIdxOn_le_of_apply_getElem_le_apply_minOn :
       rw [split, width] at before
       exact before
 
+/-- Each comparison is independent of which decision procedure supplied it. -/
+public theorem minOn.congr_simp : type_of% @_root_.minOn.congr_simp := by
+  intro β α le d₁ d₂ f g rfl x x' rfl y y' rfl
+  by_cases yes : f x ≤ f y
+  · exact (@_root_.minOn_eq_left β α le d₁ f x y yes).trans (@_root_.minOn_eq_left β α le d₂ f x y yes).symm
+  · exact (@_root_.minOn_eq_right β α le d₁ f x y yes).trans (@_root_.minOn_eq_right β α le d₂ f x y yes).symm
+
+public theorem maxOn.congr_simp : type_of% @_root_.maxOn.congr_simp := by
+  intro β α le d₁ d₂ f g rfl x x' rfl y y' rfl
+  by_cases yes : f y ≤ f x
+  · exact (@_root_.maxOn_eq_left β α le d₁ f x y yes).trans (@_root_.maxOn_eq_left β α le d₂ f x y yes).symm
+  · exact (@_root_.maxOn_eq_right β α le d₁ f x y yes).trans (@_root_.maxOn_eq_right β α le d₂ f x y yes).symm
+
+public theorem List.minOn.congr_simp : type_of% @_root_.List.minOn.congr_simp := by
+  intro β α le d₁ d₂ f g rfl xs ys rfl nonempty
+  cases xs with
+  | nil => exact (nonempty rfl).elim
+  | cons x xs =>
+    change xs.foldl (@_root_.minOn _ _ _ d₁ f) x = xs.foldl (@_root_.minOn _ _ _ d₂ f) x
+    clear nonempty
+    induction xs generalizing x with
+    | nil => rfl
+    | cons y ys ih =>
+      rw [_root_.List.foldl_cons, _root_.List.foldl_cons]
+      exact (ih _).trans (congrArg (ys.foldl (@_root_.minOn _ _ _ d₂ f))
+        (@OmegaChecks.InitPort.Alternatives.minOn.congr_simp _ _ _ d₁ d₂ f f rfl x x rfl y y rfl))
+
+public theorem List.maxOn.congr_simp : type_of% @_root_.List.maxOn.congr_simp := by
+  intro β α le d₁ d₂ f g rfl xs ys rfl nonempty
+  exact @List.minOn.congr_simp β α le.opposite
+    (@Std.OppositeOrderInstances.instDecidableLEOpposite _ le d₁)
+    (@Std.OppositeOrderInstances.instDecidableLEOpposite _ le d₂)
+    f f rfl xs xs rfl nonempty
+
+public theorem List.minOn?.congr_simp : type_of% @_root_.List.minOn?.congr_simp := by
+  intro β α le d₁ d₂ f g rfl xs ys rfl
+  cases xs with
+  | nil => rfl
+  | cons x xs =>
+    exact congrArg some (@List.minOn.congr_simp _ _ _ d₁ d₂ f f rfl _ _ rfl (_root_.List.cons_ne_nil x xs))
+
+public theorem List.maxOn?.congr_simp : type_of% @_root_.List.maxOn?.congr_simp := by
+  intro β α le d₁ d₂ f g rfl xs ys rfl
+  exact @List.minOn?.congr_simp β α le.opposite
+    (@Std.OppositeOrderInstances.instDecidableLEOpposite _ le d₁)
+    (@Std.OppositeOrderInstances.instDecidableLEOpposite _ le d₂)
+    f f rfl xs xs rfl
+
+private theorem indexDecisionCongr [le : LE β] (d₁ d₂ : DecidableLE β)
+    (f : α → β) (xs : _root_.List α) (x : α) (i j : Nat) :
+    @_root_.List.minIdxOn.go β α le d₁ f x i j xs =
+      @_root_.List.minIdxOn.go β α le d₂ f x i j xs := by
+  induction xs generalizing x i j with
+  | nil => rfl
+  | cons y ys ih =>
+    letI := d₁
+    by_cases keep : f x ≤ f y
+    · simp only [_root_.List.minIdxOn.go, ite_eq_left keep]
+      exact ih x i (j+1)
+    · simp only [_root_.List.minIdxOn.go, ite_eq_right keep]
+      exact ih y j (j+1)
+
+public theorem List.minIdxOn.congr_simp : type_of% @_root_.List.minIdxOn.congr_simp := by
+  intro β α le d₁ d₂ f g rfl xs ys rfl nonempty
+  cases xs with
+  | nil => exact (nonempty rfl).elim
+  | cons x xs => exact indexDecisionCongr d₁ d₂ f xs x 0 1
+
+public theorem List.minIdxOn?.congr_simp : type_of% @_root_.List.minIdxOn?.congr_simp := by
+  intro β α le d₁ d₂ f g rfl xs ys rfl
+  cases xs with
+  | nil => rfl
+  | cons x xs => exact congrArg some (indexDecisionCongr d₁ d₂ f xs x 0 1)
+
+public theorem List.maxIdxOn.congr_simp : type_of% @_root_.List.maxIdxOn.congr_simp := by
+  intro β α le d₁ d₂ f g rfl xs ys rfl nonempty
+  exact @List.minIdxOn.congr_simp β α le.opposite
+    (@Std.OppositeOrderInstances.instDecidableLEOpposite _ le d₁)
+    (@Std.OppositeOrderInstances.instDecidableLEOpposite _ le d₂)
+    f f rfl xs xs rfl nonempty
+
+public theorem List.maxIdxOn?.congr_simp : type_of% @_root_.List.maxIdxOn?.congr_simp := by
+  intro β α le d₁ d₂ f g rfl xs ys rfl
+  exact @List.minIdxOn?.congr_simp β α le.opposite
+    (@Std.OppositeOrderInstances.instDecidableLEOpposite _ le d₁)
+    (@Std.OppositeOrderInstances.instDecidableLEOpposite _ le d₂)
+    f f rfl xs xs rfl
+
 end OmegaChecks.InitPort.Alternatives
