@@ -23,6 +23,7 @@ public import OmegaChecks.InitPort.Alternatives.Indexing
 public import OmegaChecks.InitPort.Alternatives.Integer
 public import OmegaChecks.InitPort.Alternatives.List
 public import OmegaChecks.InitPort.Alternatives.ListRange
+public import OmegaChecks.InitPort.Alternatives.ListZip
 public import OmegaChecks.InitPort.Alternatives.Logic
 public import OmegaChecks.InitPort.Alternatives.Name
 public import OmegaChecks.InitPort.Alternatives.NatBits
