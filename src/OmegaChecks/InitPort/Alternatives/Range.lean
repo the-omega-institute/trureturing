@@ -8,6 +8,67 @@ open Std Std.PRange
 
 namespace OmegaChecks.InitPort.Alternatives
 
+/-- Split the intermediate result before applying the successor law. This establishes
+the bind equation at the given element without identifying two functions. -/
+public theorem Std.PRange.UpwardEnumerable.succMany?_add
+    [UpwardEnumerable α] [LawfulUpwardEnumerable α] {m n : Nat} {a : α} :
+    succMany? (m + n) a = (succMany? m a).bind (succMany? n ·) := by
+  induction n with
+  | zero =>
+    cases succMany? m a with
+    | none => rfl
+    | some b => exact (_root_.Std.PRange.UpwardEnumerable.succMany?_zero (a := b)).symm
+  | succ n ih =>
+    rw [← Nat.add_assoc, _root_.Std.PRange.UpwardEnumerable.succMany?_add_one, ih]
+    cases succMany? m a with
+    | none => rfl
+    | some b => exact (_root_.Std.PRange.UpwardEnumerable.succMany?_add_one (a := b)).symm
+
+public theorem Std.PRange.UpwardEnumerable.le_of_lt : type_of% @_root_.Std.PRange.UpwardEnumerable.le_of_lt :=
+  fun h => h.elim fun n eq => ⟨n + 1, eq⟩
+
+public theorem Std.PRange.UpwardEnumerable.le_trans : type_of% @_root_.Std.PRange.UpwardEnumerable.le_trans := by
+  intro α inst law a b c hab hbc
+  obtain ⟨m, hm⟩ := hab
+  obtain ⟨n, hn⟩ := hbc
+  exact ⟨m+n, (Std.PRange.UpwardEnumerable.succMany?_add.trans
+    (congrArg (fun o => o.bind (succMany? n ·)) hm)).trans hn⟩
+
+public theorem Std.PRange.UpwardEnumerable.lt_of_le_of_lt :
+    type_of% @_root_.Std.PRange.UpwardEnumerable.lt_of_le_of_lt := by
+  intro α inst law a b c hab hbc
+  obtain ⟨m, hm⟩ := hab
+  obtain ⟨n, hn⟩ := hbc
+  refine ⟨m+n, ?_⟩
+  rw [Nat.add_assoc, Std.PRange.UpwardEnumerable.succMany?_add (m := m) (n := n+1), hm]
+  exact hn
+
+public theorem Std.PRange.UpwardEnumerable.lt_of_lt_of_le :
+    type_of% @_root_.Std.PRange.UpwardEnumerable.lt_of_lt_of_le := by
+  intro α inst law a b c hab hbc
+  obtain ⟨m, hm⟩ := hab
+  obtain ⟨n, hn⟩ := hbc
+  refine ⟨m+n, ?_⟩
+  rw [Nat.add_right_comm m n 1, Std.PRange.UpwardEnumerable.succMany?_add, hm]
+  exact hn
+
+public theorem Std.PRange.UpwardEnumerable.lt_trans : type_of% @_root_.Std.PRange.UpwardEnumerable.lt_trans :=
+  fun hab hbc => Std.PRange.UpwardEnumerable.lt_of_le_of_lt (Std.PRange.UpwardEnumerable.le_of_lt hab) hbc
+
+public theorem Std.instLawfulUpwardEnumerableLTOfLawfulUpwardEnumerableOfLawfulUpwardEnumerableLEOfLawfulOrderLT :
+    type_of% @_root_.Std.instLawfulUpwardEnumerableLTOfLawfulUpwardEnumerableOfLawfulUpwardEnumerableLEOfLawfulOrderLT := by
+  intro α le lt enum lawful enumLe order
+  constructor
+  intro a b
+  constructor
+  · intro h
+    obtain ⟨hab, hba⟩ := (LawfulOrderLT.lt_iff a b).mp h
+    exact UpwardEnumerable.lt_of_le_of_ne (UpwardEnumerable.le_iff.mp hab)
+      (fun eq => hba (eq ▸ hab))
+  · intro h
+    exact (LawfulOrderLT.lt_iff a b).mpr ⟨UpwardEnumerable.le_iff.mpr (Std.PRange.UpwardEnumerable.le_of_lt h),
+      fun hba => UpwardEnumerable.lt_irrefl (Std.PRange.UpwardEnumerable.lt_of_lt_of_le h (UpwardEnumerable.le_iff.mp hba))⟩
+
 public theorem Std.PRange.instIsAlwaysFiniteNat : Rxc.IsAlwaysFinite Nat :=
   ⟨fun lo hi => ⟨hi.succ, Nat.not_le_of_gt
     (Nat.lt_of_lt_of_le (Nat.lt_succ_self hi) (Nat.le_add_left hi.succ lo))⟩⟩
