@@ -22,6 +22,24 @@ public theorem Bool.beq_comm : type_of% @_root_.Bool.beq_comm := by
 public theorem false_eq_decide_iff : type_of% @_root_.false_eq_decide_iff :=
   fun {_} _ => ⟨fun h => of_decide_eq_false h.symm, fun h => (decide_eq_false h).symm⟩
 
+public theorem Bool.not_ite_eq_false_eq_false : type_of% @_root_.Bool.not_ite_eq_false_eq_false := by
+  intro p dec b c
+  cases dec with
+  | isTrue _ => change (¬ b = false) ↔ b = true; cases b <;> decide
+  | isFalse _ => change (¬ c = false) ↔ c = true; cases c <;> decide
+
+public theorem Bool.not_ite_eq_true_eq_false : type_of% @_root_.Bool.not_ite_eq_true_eq_false := by
+  intro p dec b c
+  cases dec with
+  | isTrue _ => change (¬ b = true) ↔ b = false; cases b <;> decide
+  | isFalse _ => change (¬ c = false) ↔ c = true; cases c <;> decide
+
+public theorem Bool.not_ite_eq_false_eq_true : type_of% @_root_.Bool.not_ite_eq_false_eq_true := by
+  intro p dec b c
+  cases dec with
+  | isTrue _ => change (¬ b = false) ↔ b = true; cases b <;> decide
+  | isFalse _ => change (¬ c = true) ↔ c = false; cases c <;> decide
+
 public theorem Nat.mod_two_bne_zero : type_of% @_root_.Nat.mod_two_bne_zero := by
   intro a
   cases Nat.mod_two_eq_zero_or_one a with
