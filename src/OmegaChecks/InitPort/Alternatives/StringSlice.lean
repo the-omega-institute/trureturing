@@ -120,4 +120,40 @@ public theorem String.Pos.Raw.isValidForSlice_iff_isSome_utf8DecodeChar? :
     · exact s.endPos.isValidForSlice
     · exact ⟨Nat.le_of_lt lt, _root_.String.Pos.Raw.isValid_iff_isSome_utf8DecodeChar?.mpr (Or.inr decodes)⟩
 
+public theorem String.Slice.utf8ByteSize_slice :
+    type_of% @_root_.String.Slice.utf8ByteSize_slice := by
+  intro s p q h
+  exact Nat.add_sub_add_left _ _ _
+
+public theorem String.Pos.Raw.isValidForSlice_slice :
+    type_of% @_root_.String.Pos.Raw.isValidForSlice_slice := by
+  intro s p q ordered off
+  constructor
+  · intro valid
+    have bound := valid.le_utf8ByteSize
+    rw [String.Slice.utf8ByteSize_slice] at bound
+    have relative := Nat.add_le_of_le_sub (show p.offset.byteIdx ≤ q.offset.byteIdx from ordered) bound
+    rw [Nat.add_comm] at relative
+    refine ⟨relative, Nat.le_trans relative q.isValidForSlice.le_utf8ByteSize, ?_⟩
+    rw [String.Pos.Raw.offsetBy_assoc]
+    exact valid.isValid_offsetBy
+  · rintro ⟨bounded, valid⟩
+    constructor
+    · change off.byteIdx ≤ (s.slice p q ordered).utf8ByteSize
+      rw [String.Slice.utf8ByteSize_slice]
+      exact Nat.le_sub_of_add_le' bounded
+    · exact String.Pos.Raw.offsetBy_assoc ▸ valid.isValid_offsetBy
+
+public theorem String.Slice.Pos.prevAux._proof_6 :
+    type_of% @_root_.String.Slice.Pos.prevAux._proof_6 := by
+  intro s i h
+  exact Nat.lt_trans (Nat.lt_succ_self i) h
+
+public theorem String.Slice.Pos.prevAux._proof_8 :
+    type_of% @_root_.String.Slice.Pos.prevAux._proof_8 := by
+  intro s p ne
+  have pos : 0 < p.offset.byteIdx := Nat.pos_of_ne_zero
+    (fun eq => ne (String.Slice.Pos.ext (String.Pos.Raw.ext eq)))
+  exact Nat.lt_of_lt_of_le (Nat.sub_lt pos (by decide)) p.isValidForSlice.le_utf8ByteSize
+
 end OmegaChecks.InitPort.Alternatives
