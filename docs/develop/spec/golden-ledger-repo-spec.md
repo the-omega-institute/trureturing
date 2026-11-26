@@ -299,6 +299,12 @@ SL-008 检查当前树中的每个状态片:路径与 schema 合规,对应模块
 
 **A14.7 冻结状态的消费者。** 独立读取器须接受 A14.2 的历史与带注记记录。展示依赖信息的消费者依 A14.2 区分字段缺省与 `[]`。冻结读写器往返序列化历史规范文件时须逐字节相同。理论源仓按模块 pin 和声明身份核对覆盖目标并记录实际来源提交，须在发布带注记记录前具备读取兼容性。
 
+<a id="omega-claim-fidelity"></a>
+
+**OmegaMath 陈述与证据的忠实性（语义评审）。** 引用定理时，在所引版本核对实际类型和有关定义，保留载体、等价关系、量词、定义域、必要前提与结论。把有理参数的像扩大到整个空间、从标量特征标递推识别实际算子迹、或从射线等价得到规范代表元相等，均须给出相应的满射、表示对应或规范化依据。显式说明该步来自哪条 Lean 声明、书面推导或附加假设。若反例推翻推广，把引文用于其成立的范围，并同步修正依赖该推广的图表、译文和示例。
+
+发布者按 A14.2 读取同一声明的官方和严格测量。顶层 `axioms` 属于官方测量，`strict_omega.axioms` 属于已对照的严格声明；缺省按 A14.7 处理。报告空内核重放时给出实际入口、根及闭包，报告 D5 冻结证据时指出实际测量和对照范围。
+
 **A14.8 TOWER 引导边界。** TOWER 不保存或验证 `genesis_event` 的事件存在性见证。bootstrap 保留其 commit/PR 外部信任根边界及 `ASSUMED-UNVERIFIED` 状态,不以状态摘要替代事件见证。
 
 **A14.9 Inspector-owned report artifacts.** `lean-report-inputs.json` is the sole FILEMAP-registered report input manifest. Its strict JSON schema selects report modules, Inspector sources, configuration and the `lean-report` / `scribe-content` producer scopes through explicit include/exclude patterns. The optional `dependency_sources` path set registers additional local Lean sources that may occur in reported modules' native compiler dependencies; absence declares no additional local inputs. It is an allowed source inventory, not a producer compatibility fingerprint. Required registrations without files, malformed or duplicate fields, unsafe paths and unsupported schema identifiers fail with a named diagnostic. The manifest contains no judge semantic version. Module evidence and origins contain no global judge version. The report format identifier determines strict wire acceptance, input coordinates, all module report traces. Extraction semantics or report format changes update that identifier and re-extract every module. Judge implementation and rule changes retain historical reports; changed registration and contract inputs are reassessed through their compiler dependency closures. Missing required evidence or old wire shape rejects with no older-version reader. Neither judge source bytes nor a producer implementation digest defines evidence validity. The reader `tools/scripts/report/lean-report-selection.py` expands only those registrations, with no MSBuild evaluation or script/call-graph discovery. The existing Scribe projection and describe checks consume the registered scope, including deleted paths.
