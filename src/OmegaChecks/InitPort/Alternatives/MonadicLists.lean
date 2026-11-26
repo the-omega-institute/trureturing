@@ -564,4 +564,82 @@ public theorem List.idRun_ofFnM : type_of% @_root_.List.idRun_ofFnM := by
   change (_root_.List.ofFnM (m := Id) (pure ∘ f)) = _
   exact _root_.List.ofFnM_pure_comp (m := Id)
 
+private theorem forInArrayList [Monad m] (xs : Array α) (b : β)
+    (f : (a : α) → a ∈ xs → β → m (ForInStep β)) :
+    forIn' xs b f = forIn' xs.toList b (fun a h => f a (Array.mem_def.mpr h)) := by
+  cases xs with
+  | mk l => exact List.forIn'_toArray l b f
+
+public theorem Array.forIn'_map : type_of% @_root_.Array.forIn'_map := by
+  intro m α β γ init mon law xs g f
+  rw [forInArrayList, forInArrayList (xs := xs)]
+  exact congrFun (listForInReindex g _ _ (fun _ _ _ => rfl)
+    xs.toList (xs.map g).toList Array.toList_map.symm ⟨[], rfl⟩ ⟨[], rfl⟩).symm init
+
+private def mapListInto [Monad m] (f : α → m β) : List α → Array β → m (Array β)
+  | [], acc => pure acc
+  | a :: xs, acc => f a >>= fun b => mapListInto f xs (acc.push b)
+
+private theorem dependentBranch [d : Decidable p] (h : p) (yes : α → p → β) (no : α → ¬p → β) :
+    (fun a => dite p (yes a) (no a)) = fun a => yes a h := by
+  cases d with
+  | isTrue => rfl
+  | isFalse hn => exact False.elim (hn h)
+
+private theorem dependentElse [d : Decidable p] (h : ¬p) (yes : α → p → β) (no : α → ¬p → β) :
+    (fun a => dite p (yes a) (no a)) = fun a => no a h := by
+  cases d with
+  | isTrue hp => exact False.elim (h hp)
+  | isFalse => rfl
+
+private theorem mapArrayList [Monad m] (xs : Array α) (f : α → m β) :
+    xs.mapM f = mapListInto f xs.toList #[] := by
+  let measure (s : (_ : Nat) ×' Array β) : Nat := PSigma.casesOn s fun i _ => xs.size - i
+  let act (s : (_ : Nat) ×' Array β) (recur : ∀ t, measure t < measure s → m (Array β)) :=
+    PSigma.casesOn (motive := fun x => (∀ t, measure t < measure x → m (Array β)) → m (Array β))
+      s (fun i acc recur =>
+        if h : i < xs.size then
+          f xs[i] >>= fun b => recur ⟨i+1, acc.push b⟩ (Nat.sub_succ_lt_self _ _ h)
+        else pure acc) recur
+  have same (fuel i : Nat) (h : xs.size - i < fuel) :
+      (fun acc : Array β => WellFounded.Nat.fix.go measure act fuel ⟨i, acc⟩ h) =
+      mapListInto f (xs.toList.drop i) := by
+    induction fuel generalizing i with
+    | zero => exact False.elim (Nat.not_lt_zero _ h)
+    | succ fuel ih =>
+      dsimp only [WellFounded.Nat.fix.go, act]
+      by_cases bound : i < xs.size
+      · rw [List.drop_eq_getElem_cons (l := xs.toList) (i := i) bound]
+        apply (dependentBranch bound _ _).trans
+        exact congrArg (fun tail (acc : Array β) => f xs[i] >>= fun b => tail (acc.push b))
+          (ih (i+1) (Nat.lt_of_lt_of_le (Nat.sub_succ_lt_self _ _ bound) (Nat.le_of_lt_succ h)))
+      · rw [List.drop_of_length_le (Nat.le_of_not_gt bound)]
+        exact dependentElse bound _ _
+  delta Array.mapM Array.mapM.map Array.mapM.map._unary WellFounded.Nat.fix
+  have fuel : xs.size - 0 < WellFounded.Nat.eager (xs.size - 0 + 1) := by
+    unfold WellFounded.Nat.eager
+    split <;> exact Nat.lt_succ_self _
+  exact congrFun (same _ 0 fuel) #[]
+
+public theorem Array.mapM_map : type_of% @_root_.Array.mapM_map := by
+  intro m α β γ mon law f g xs
+  rw [mapArrayList, mapArrayList, Array.toList_map]
+  have same (l : List α) : mapListInto g (l.map f) = mapListInto (g ∘ f) l := by
+    induction l with
+    | nil => rfl
+    | cons a l ih => exact congrArg (fun tail (acc : Array γ) => g (f a) >>= fun b => tail (acc.push b)) ih
+  exact congrFun (same xs.toList) #[]
+
+public theorem Array.mapM_subtype : type_of% @_root_.Array.mapM_subtype := by
+  intro m α β mon law p xs f g h
+  rw [mapArrayList, mapArrayList, Array.toList_unattach]
+  have same (l : List (Subtype p)) : mapListInto f l = mapListInto g l.unattach := by
+    induction l with
+    | nil => rfl
+    | cons a l ih =>
+      let step (val : m β) (tail : Array β → m (Array β)) (acc : Array β) :=
+        val >>= fun b => tail (acc.push b)
+      exact (congrArg (step (f a)) ih).trans (congrArg (fun val => step val _) (h a.1 a.2))
+  exact congrFun (same xs.toList) #[]
+
 end OmegaChecks.InitPort.Alternatives
