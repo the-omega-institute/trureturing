@@ -214,6 +214,23 @@ end GrindOrder
 /-- Every inhabited proposition is equal to True. -/
 def InhabitedPropExt := ∀ p : Prop, p → p = True
 
+/-- Every refuted proposition is equal to False. -/
+def RefutedPropExt := ∀ p : Prop, (¬p) → p = False
+
+theorem inhabitedPropExtOfDecision (rule : type_of% @Lean.Grind.of_decide_eq_true) :
+    InhabitedPropExt :=
+  fun p hp => @rule p (.isTrue hp) rfl
+
+theorem refutedPropExtOfDecision (rule : type_of% @Lean.Grind.of_decide_eq_false) :
+    RefutedPropExt :=
+  fun p hn => @rule p (.isFalse hn) rfl
+
+theorem inhabitedPropExtOfEqTrueRule (rule : type_of% @eq_true) : InhabitedPropExt :=
+  fun _ hp => rule hp
+
+theorem refutedPropExtOfEqFalseRule (rule : type_of% @eq_false) : RefutedPropExt :=
+  fun _ hn => rule hn
+
 theorem inhabitedPropExtOfProofHEq (proofHEq : type_of% @proof_irrel_heq) :
     InhabitedPropExt :=
   fun _ hp => type_eq_of_heq (proofHEq hp True.intro)
@@ -227,6 +244,14 @@ namespace OptionalIndex
 /-- Equivalent decidable propositions are equal. -/
 def DecidablePropExt : Prop :=
   ∀ {p q : Prop}, [Decidable p] → [Decidable q] → (p ↔ q) → p = q
+
+theorem decidablePropExtOfIte (rule : type_of% @Lean.Grind.ite_true_false) : DecidablePropExt := by
+  intro p q dp dq iff
+  cases dp with
+  | isTrue hp =>
+    exact (@rule p (.isTrue hp)).symm.trans (@rule q (.isTrue (iff.mp hp)))
+  | isFalse hn =>
+    exact (@rule p (.isFalse hn)).symm.trans (@rule q (.isFalse (fun hq => hn (iff.mpr hq))))
 
 private theorem represented (read : type_of% (@isSome_getElem?.{0,0,0}))
     (p : Prop) (d : Decidable p) : (@decide p d = true) = p := by
@@ -412,6 +437,8 @@ private def replayWitnesses (env : Environment) : IO Unit := do
       ``AbstractOrder.excludedMiddleOfLawfulLT, ``AbstractOrder.weakMiddleOfTotalNot,
       ``AbstractOrder.weakMiddleOfLinearPreorder, ``AbstractOrder.weakMiddleOfLinearOrder,
       ``inhabitedPropExtOfProofHEq, ``inhabitedPropExtOfEqTrue,
+      ``inhabitedPropExtOfDecision, ``refutedPropExtOfDecision, ``inhabitedPropExtOfEqTrueRule,
+      ``refutedPropExtOfEqFalseRule, ``OptionalIndex.decidablePropExtOfIte,
       ``OptionalIndex.decidablePropExtOfIsSome, ``TwoWorlds.countermodel]
   while let n :: more := todo do
     todo := more
@@ -1344,6 +1371,16 @@ private def logicalConsequence? (owner name : Name) : Option (Name × Name) := d
     return (``OmegaChecks.InitBoundaries.InhabitedPropExt, ``OmegaChecks.InitBoundaries.inhabitedPropExtOfProofHEq)
   | `Init.PropLemmas, ``eq_true_eq_id =>
     return (``OmegaChecks.InitBoundaries.InhabitedPropExt, ``OmegaChecks.InitBoundaries.inhabitedPropExtOfEqTrue)
+  | `Init.Grind.Lemmas, ``Lean.Grind.of_decide_eq_true | `Init.SimpLemmas, ``eq_true_of_decide =>
+    return (``OmegaChecks.InitBoundaries.InhabitedPropExt, ``OmegaChecks.InitBoundaries.inhabitedPropExtOfDecision)
+  | `Init.Grind.Lemmas, ``Lean.Grind.of_decide_eq_false | `Init.SimpLemmas, ``eq_false_of_decide =>
+    return (``OmegaChecks.InitBoundaries.RefutedPropExt, ``OmegaChecks.InitBoundaries.refutedPropExtOfDecision)
+  | `Init.SimpLemmas, ``eq_true =>
+    return (``OmegaChecks.InitBoundaries.InhabitedPropExt, ``OmegaChecks.InitBoundaries.inhabitedPropExtOfEqTrueRule)
+  | `Init.SimpLemmas, ``eq_false | `Init.SimpLemmas, ``eq_false' =>
+    return (``OmegaChecks.InitBoundaries.RefutedPropExt, ``OmegaChecks.InitBoundaries.refutedPropExtOfEqFalseRule)
+  | `Init.Grind.Norm, ``Lean.Grind.ite_true_false =>
+    return (``OmegaChecks.InitBoundaries.OptionalIndex.DecidablePropExt, ``OmegaChecks.InitBoundaries.OptionalIndex.decidablePropExtOfIte)
   | `Init.GetElem, ``isSome_getElem? =>
     return (``OmegaChecks.InitBoundaries.OptionalIndex.DecidablePropExt, ``OmegaChecks.InitBoundaries.OptionalIndex.decidablePropExtOfIsSome)
   | `Init.Data.Order.Lemmas, ``Std.Asymm.total_not =>
