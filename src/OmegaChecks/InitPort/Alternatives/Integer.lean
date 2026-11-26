@@ -657,4 +657,38 @@ public theorem Int.ediv_eq_one_of_neg_of_le : type_of% @_root_.Int.ediv_eq_one_o
   change Int.ofNat (n / (m+1) + 1) = Int.ofNat 1
   rw [Nat.div_eq_of_lt (show n < m+1 by omega)]
 
+public theorem Int.neg_ediv : type_of% @_root_.Int.neg_ediv := by
+  intro a b
+  if zero : b = 0 then
+    subst b
+    rw [Int.ediv_zero, Int.ediv_zero, Int.sign_zero, ite_self]
+    rfl
+  else
+    conv => lhs; rw [← Int.mul_ediv_add_emod a b]
+    rw [Int.neg_add, ← Int.mul_neg, Int.mul_add_ediv_left _ _ zero, Int.add_comm]
+    if divides : b ∣ a then
+      rw [ite_eq_left divides, Int.emod_eq_zero_of_dvd divides, Int.neg_zero, Int.zero_ediv]
+      omega
+    else
+      rw [ite_eq_right divides]
+      have positive := (Int.emod_pos_of_not_dvd divides).resolve_left zero
+      if sign : 0 < b then
+        have limit := Int.emod_lt_of_pos a sign
+        rw [Int.sign_eq_one_of_pos sign, Int.ediv_eq_neg_one_of_neg_of_le (by omega) (by omega)]
+        omega
+      else
+        have negative : b < 0 := by omega
+        have limit := Int.emod_lt_of_neg a negative
+        rw [Int.sign_eq_neg_one_of_neg negative, Int.ediv_eq_one_of_neg_of_le (by omega) (by omega)]
+        omega
+
+public theorem Int.neg_emod : type_of% @_root_.Int.neg_emod := by
+  intro a b
+  if divides : b ∣ a then
+    rw [ite_eq_left divides, Int.emod_eq_zero_of_dvd (Int.dvd_neg.mpr divides)]
+  else
+    rw [ite_eq_right divides, Int.emod_def, Int.emod_def, Int.neg_ediv, ite_eq_right divides,
+      Int.mul_sub, Int.mul_neg, Int.mul_sign_self]
+    omega
+
 end OmegaChecks.InitPort.Alternatives
