@@ -114,6 +114,8 @@ private def transport? (source : Environment) (back : Bool) (p q eq input : Expr
       (castProof back p q h input)
     return if back then through a b h (through b c k input) else through b c k (through a b h input)
   | `eq_true, #[_, h] => return if back then h else mkConst `True.intro
+  | `eq_false, #[a, h] | `eq_false', #[a, h] =>
+    return if back then mkApp2 (mkConst `False.elim [.zero]) a input else h.beta #[input]
   | `congrArg, _ | `congrFun, _ | `congrFun', _ =>
     let (a, b, h) ← propositionChange? eq fuel
     let localMap := fun (rev : Bool) (dom : Expr) => do
@@ -138,6 +140,17 @@ public def constructiveCasts (source : Environment) (body : Expr) : Expr := Id.r
   let rewrite := fun (e : Expr) => do
     let .const n us := e.getAppFn | none
     match n, us, e.getAppArgs with
+    | `ite_eq_left_of_eq_true, _, #[α, p, dec, t, f, h]
+    | `dite_eq_left_of_eq_true, _, #[α, p, dec, t, f, h] =>
+      let hp ← transport? source true p (mkConst `True) h (mkConst `True.intro) 32
+      let lemma := if n == `ite_eq_left_of_eq_true then `if_pos else `dif_pos
+      return mkApp6 (mkConst lemma us) p dec hp α t f
+    | `ite_eq_right_of_eq_false, _, #[α, p, dec, t, f, h]
+    | `dite_eq_right_of_eq_false, _, #[α, p, dec, t, f, h] =>
+      let proof ← transport? source false (p.liftLooseBVars 0 1) (mkConst `False)
+        (h.liftLooseBVars 0 1) (mkBVar 0) 32
+      let lemma := if n == `ite_eq_right_of_eq_false then `if_neg else `dif_neg
+      return mkApp6 (mkConst lemma us) p dec (.lam `hp p proof .default) α t f
     | `congrFun, _, #[_, _, _, _, h, a] | `congrFun', _, #[_, _, _, _, h, a] =>
       guard (h.isAppOfArity `funext 5)
       return h.getAppArgs[4]!.beta #[a]
