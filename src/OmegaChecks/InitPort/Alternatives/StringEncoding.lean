@@ -236,4 +236,30 @@ public theorem String.Pos.Raw.isValid_iff_isUTF8FirstByte :
       rw [List.utf8Encode_append, ByteArray.extract_append_eq_left off]
       exact ⟨a, rfl⟩
 
+public theorem String.Pos.Raw.isValid_iff_isSome_utf8DecodeChar? :
+    type_of% @_root_.String.Pos.Raw.isValid_iff_isSome_utf8DecodeChar? := by
+  intro s p
+  constructor
+  · intro valid
+    obtain atEnd | ⟨bound, first⟩ := String.Pos.Raw.isValid_iff_isUTF8FirstByte.mp valid
+    · exact Or.inl atEnd
+    · apply Or.inr
+      obtain ⟨l, encode⟩ := s.isValidUTF8
+      have atPos : firstAt s.toByteArray p.byteIdx := ⟨bound, first⟩
+      rw [encode] at atPos ⊢
+      obtain ⟨lt, first⟩ := atPos
+      obtain ⟨a, b, rfl, off⟩ := splitAtFirst l p.byteIdx lt first
+      cases b with
+      | nil =>
+        rw [List.append_nil, off] at lt
+        exact (Nat.lt_irrefl _ lt).elim
+      | cons c cs =>
+        rw [List.utf8Encode_append, ByteArray.utf8DecodeChar?_eq_utf8DecodeChar?_extract,
+          ByteArray.extract_append_eq_right off ByteArray.size_append, List.utf8DecodeChar?_utf8Encode_cons]
+        rfl
+  · rintro (rfl | decodes)
+    · exact s.endPos.isValid
+    · exact String.Pos.Raw.isValid_iff_isUTF8FirstByte.mpr (Or.inr
+        ⟨ByteArray.lt_size_of_isSome_utf8DecodeChar? decodes, ByteArray.isUTF8FirstByte_of_isSome_utf8DecodeChar? decodes⟩)
+
 end OmegaChecks.InitPort.Alternatives
