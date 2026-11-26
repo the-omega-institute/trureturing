@@ -9,6 +9,30 @@ public import OmegaChecks.InitPort.Alternatives.StringEncoding
 
 /-! UTF-8 byte comparisons, search traces and character predicate patterns. -/
 
+namespace OmegaChecks.InitPort.Alternatives
+
+public theorem String.Slice.mem_toList_copy_iff_exists_get :
+    type_of% @_root_.String.Slice.mem_toList_copy_iff_exists_get := by
+  intro s c
+  constructor
+  · intro mem
+    obtain ⟨before, after, eq⟩ := List.mem_iff_append.mp mem
+    have split : s.copy = String.ofList before ++ (String.singleton c ++ String.ofList after) := by
+      apply _root_.String.toList_inj.mp
+      simpa only [String.toList_append, String.toList_ofList, String.toList_singleton, List.singleton_append] using eq
+    have valid := _root_.String.Pos.Raw.isValidForSlice_iff_exists_append.mpr
+      (show ∃ a b, s.copy = a ++ b ∧ (String.ofList before).rawEndPos = a.rawEndPos from ⟨_, _, split, rfl⟩)
+    let pos := s.pos (String.ofList before).rawEndPos valid
+    have parts : pos.Splits (String.ofList before) (String.singleton c ++ String.ofList after) := ⟨split, rfl⟩
+    exact ⟨pos, parts.ne_endPos_of_singleton, parts.next.get_eq_of_singleton⟩
+  · rintro ⟨pos, h, rfl⟩
+    apply List.mem_iff_append.mpr
+    refine ⟨(s.sliceTo pos).copy.toList, (s.sliceFrom (pos.next h)).copy.toList, ?_⟩
+    have eq := congrArg String.toList (pos.splits_next_right h).eq_append
+    simpa only [String.toList_append, String.toList_singleton, List.singleton_append] using eq
+
+end OmegaChecks.InitPort.Alternatives
+
 namespace OmegaChecks.InitPort.Alternatives.String.Slice.Pattern.Model
 
 open _root_.String.Slice.Pattern.Model
@@ -155,6 +179,98 @@ public theorem le_of_matchesAt :
 end ForwardStringSearcher
 
 namespace CharPred
+
+open _root_.String.Slice in
+public theorem isLongestMatchAtChain_iff :
+    type_of% @_root_.String.Slice.Pattern.Model.CharPred.isLongestMatchAtChain_iff := by
+  intro p s start stop
+  constructor
+  · intro chain
+    induction chain with
+    | nil => exact ⟨Nat.le_refl _, fun _ le lt => (Nat.not_lt_of_ge le lt).elim⟩
+    | cons a b z matched tail ih =>
+      obtain ⟨ne, rfl, accepted⟩ := _root_.String.Slice.Pattern.Model.CharPred.isLongestMatchAt_iff.mp matched
+      refine ⟨Nat.le_trans Pos.le_next ih.1, fun cursor lower upper => ?_⟩
+      obtain eq | lt := Nat.eq_or_lt_of_le lower
+      · obtain rfl : a = cursor := Pos.ext (String.Pos.Raw.ext eq)
+        exact accepted
+      · exact ih.2 cursor (Pos.next_le_iff_lt.mpr lt) upper
+  · induction start using WellFounded.induction Pos.wellFounded_gt with
+    | h start ih =>
+      rintro ⟨le, all⟩
+      obtain eq | lt := Nat.eq_or_lt_of_le le
+      · obtain rfl : start = stop := Pos.ext (String.Pos.Raw.ext eq)
+        exact .nil _
+      · have ne := Pos.ne_endPos_of_lt (show start < stop from lt)
+        exact .cons _ (start.next ne) _
+          (_root_.String.Slice.Pattern.Model.CharPred.isLongestMatchAt_iff.mpr ⟨ne, rfl, all start (Nat.le_refl _) lt⟩)
+          (ih _ Pos.lt_next ⟨Pos.next_le_iff_lt.mpr lt, fun cursor lo hi => all cursor (Nat.le_trans Pos.le_next lo) hi⟩)
+
+open _root_.String.Slice in
+public theorem isLongestRevMatchAtChain_iff :
+    type_of% @_root_.String.Slice.Pattern.Model.CharPred.isLongestRevMatchAtChain_iff := by
+  intro p s start stop
+  constructor
+  · intro chain
+    induction chain with
+    | nil => exact ⟨Nat.le_refl _, fun _ le lt => (Nat.not_lt_of_ge le lt).elim⟩
+    | cons b z tail matched ih =>
+      obtain ⟨ne, rfl, accepted⟩ := _root_.String.Slice.Pattern.Model.CharPred.isLongestRevMatchAt_iff.mp matched
+      refine ⟨Nat.le_trans ih.1 (Nat.le_of_lt Pos.prev_lt), fun cursor lower upper => ?_⟩
+      obtain eq | lt := Nat.eq_or_lt_of_le (show cursor ≤ z.prev ne from Pos.le_prev_iff_lt.mpr upper)
+      · obtain eq : cursor = z.prev ne := Pos.ext (String.Pos.Raw.ext eq)
+        subst cursor
+        exact accepted
+      · exact ih.2 cursor lower lt
+  · induction stop using WellFounded.induction Pos.wellFounded_lt with
+    | h stop ih =>
+      rintro ⟨le, all⟩
+      obtain eq | lt := Nat.eq_or_lt_of_le le
+      · obtain rfl : start = stop := Pos.ext (String.Pos.Raw.ext eq)
+        exact .nil _
+      · have ne := Pos.ne_startPos_of_lt (show start < stop from lt)
+        exact .cons _ (stop.prev ne) _
+          (ih _ Pos.prev_lt ⟨Pos.le_prev_iff_lt.mpr lt, fun cursor lo hi =>
+            all cursor lo (Nat.lt_trans hi Pos.prev_lt)⟩)
+          (_root_.String.Slice.Pattern.Model.CharPred.isLongestRevMatchAt_iff.mpr
+            ⟨ne, rfl, all _ (Pos.le_prev_iff_lt.mpr lt) Pos.prev_lt⟩)
+
+open _root_.String.Slice in
+public theorem isLongestMatchAtChain_iff_toList :
+    type_of% @_root_.String.Slice.Pattern.Model.CharPred.isLongestMatchAtChain_iff_toList := by
+  intro p s a b
+  apply isLongestMatchAtChain_iff.trans
+  constructor
+  · rintro ⟨le, all⟩
+    refine ⟨le, fun c mem => ?_⟩
+    obtain ⟨pos, ne, rfl⟩ := (Alternatives.String.Slice.mem_toList_copy_iff_exists_get).mp mem
+    have upper := (Pos.ofSlice_lt_ofSlice_iff ..).mpr ((Pos.lt_endPos_iff _).mpr ne)
+    rw [Pos.ofSlice_endPos] at upper
+    rw [Pos.get_eq_get_ofSlice]
+    exact all _ Pos.le_ofSlice upper
+  · rintro ⟨le, all⟩
+    refine ⟨le, fun cursor lo hi => ?_⟩
+    let pos := Pos.slice cursor a b lo (Nat.le_of_lt hi)
+    have ne : pos ≠ (s.slice a b le).endPos := by
+      intro eq
+      have same := congrArg Pos.ofSlice eq
+      change Pos.ofSlice (Pos.slice cursor a b lo _) = _ at same
+      rw [Pos.ofSlice_slice, Pos.ofSlice_endPos] at same
+      exact Nat.ne_of_lt hi (congrArg (fun q : s.Pos => q.offset.byteIdx) same)
+    exact all _ (Alternatives.String.Slice.mem_toList_copy_iff_exists_get.mpr ⟨pos, ne, Pos.get_slice⟩)
+
+public theorem isLongestMatchAtChain_startPos_endPos_iff_toList :
+    type_of% @_root_.String.Slice.Pattern.Model.CharPred.isLongestMatchAtChain_startPos_endPos_iff_toList := by
+  intro p s
+  apply isLongestMatchAtChain_iff_toList.trans
+  have le : s.startPos ≤ s.endPos := _root_.String.Slice.Pos.le_endPos _
+  have same := _root_.String.Slice.slice_eq_self_iff (s := s) (h := le) |>.mpr ⟨rfl, rfl⟩
+  exact ⟨fun ⟨_, all⟩ c mem => all c (same.symm ▸ mem), fun all => ⟨le, fun c mem => all c (same ▸ mem)⟩⟩
+
+public theorem isLongestRevMatchAtChain_startPos_endPos_iff_toList :
+    type_of% @_root_.String.Slice.Pattern.Model.CharPred.isLongestRevMatchAtChain_startPos_endPos_iff_toList := by
+  intro p s
+  exact isLongestRevMatchAtChain_iff.trans (isLongestMatchAtChain_iff.symm.trans isLongestMatchAtChain_startPos_endPos_iff_toList)
 
 private theorem selectPosition {α : Type} {condition : Prop} [Decidable condition]
     (next : ¬condition → α) (accepted : ¬condition → Bool) (pos : α) :
