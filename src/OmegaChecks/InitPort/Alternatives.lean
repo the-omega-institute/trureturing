@@ -61,6 +61,21 @@ public def loadAlternatives : IO (NameMap ConstantInfo) := do
       alternatives := alternatives.insert (ci.name.replacePrefix scope .anonymous) info
   return alternatives
 
+private def officialNames (expr : Expr) : Expr :=
+  expr.replace fun
+    | .const name levels =>
+      if (`OmegaChecks.InitPort.Alternatives).isPrefixOf name then
+        some (.const (name.replacePrefix `OmegaChecks.InitPort.Alternatives .anonymous) levels)
+      else none
+    | _ => none
+
+/-- A dependent interface can use different proofs of the same index bounds. The caller
+checks that this candidate is well typed and definitionally equal to the complete official type. -/
+public def alternativeType? (alternatives : NameMap ConstantInfo) (official : ConstantInfo) : Option Expr := do
+  let alt ← alternatives.find? official.name
+  guard (official.numLevelParams == alt.numLevelParams)
+  return officialNames (alt.type.instantiateLevelParams alt.levelParams (official.levelParams.map Level.param))
+
 /-- Names shared between alternatives refer to the implementations at their official sites.
 The caller checks each candidate against the full original type in the target kernel. -/
 public def alternativeBody? (alternatives : NameMap ConstantInfo) (official : ConstantInfo) : Option Expr := do
@@ -74,11 +89,6 @@ public def alternativeBody? (alternatives : NameMap ConstantInfo) (official : Co
   guard (ci.numLevelParams == official.numLevelParams)
   let body ← ci.value? (allowOpaque := true)
   let body := body.instantiateLevelParams ci.levelParams (official.levelParams.map Level.param)
-  return body.replace fun
-    | .const name levels =>
-      if (`OmegaChecks.InitPort.Alternatives).isPrefixOf name then
-        some (.const (name.replacePrefix `OmegaChecks.InitPort.Alternatives .anonymous) levels)
-      else none
-    | _ => none
+  return officialNames body
 
 end OmegaChecks.InitPort

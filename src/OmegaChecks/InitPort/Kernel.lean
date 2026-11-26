@@ -475,18 +475,26 @@ partial def visit (n : Name) : M Bool := do
   modify fun s => {s with visiting := s.visiting.insert n}
   -- A dependent type can contain a proof emitted by simp. Keep its official
   -- conversion class and let the target kernel check the replacement.
-  let compact := compactNonzeroPowers c.source ci.type
+  let compact ← OmegaChecks.InitCompiler.namedLogicalProjections c.source (compactNonzeroPowers c.source ci.type)
   let mut type := if !compact.equal ci.type && Kernel.isDefEqGuarded c.source {} ci.type compact then compact else ci.type
   for dep in usedConstants type do
     if !(← visit dep) then
       let rewritten := OmegaChecks.InitCompiler.constructiveCasts c.source ci.type c.proofRules true
       let rewritten ← OmegaChecks.InitCompiler.decidableProof c.source rewritten c.proofRules
-      if rewritten == ci.type || (Kernel.check c.source {} rewritten).toOption.isNone ||
-          !Kernel.isDefEqGuarded c.source {} ci.type rewritten then
-        return ← record n (.blocked "unavailable dependency" (some dep))
-      for required in usedConstants rewritten do
-        if !(← visit required) then return ← record n (.blocked "unavailable dependency" (some required))
-      type := rewritten
+      let mut blocker := dep
+      let mut found := false
+      let declared := OmegaChecks.InitPort.alternativeType? c.alternatives ci
+      for candidate in rewritten :: declared.toList do
+        let candidate ← OmegaChecks.InitCompiler.namedLogicalProjections c.source candidate
+        if candidate == ci.type || (Kernel.check c.source {} candidate).toOption.isNone ||
+            !Kernel.isDefEqGuarded c.source {} ci.type candidate then continue
+        if let some missing ← (usedConstants candidate).toList.findM? (fun name => return !(← visit name)) then
+          blocker := missing
+          continue
+        type := candidate
+        found := true
+        break
+      unless found do return ← record n (.blocked "unavailable dependency" (some blocker))
       break
   let some body := ci.value? (allowOpaque := true) | return ← record n (.blocked "no kernel body")
   let checkValue (value : Expr) (budget : Nat) : M Outcome := do
