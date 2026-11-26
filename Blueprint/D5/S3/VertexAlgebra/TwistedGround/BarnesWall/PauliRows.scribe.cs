@@ -10,13 +10,14 @@ internal sealed class BarnesWallPauliRowsDocument : IScribeDocumentDefinition
         Blocks(Describe.Lean(
             DescribeId.Create("barnes-wall-paulirows"),
             DeclarationHandle.Create("D5/S3/VertexAlgebra/TwistedGround/BarnesWall/PauliRows.defect_abs_det"),
-            H("Each quaternion generator has fixed-point-free defect order 2^64"),
+            H("Each quaternion generator has absolute displacement determinant 2^64"),
             StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo(
                 LibraryNoteRef.Create("D5/L/VertexAlgebra/keller2026barneswall")),
             Blocks(Paragraph(Text(
                 "The three ambient generators act by signed permutations of the tensor coordinates. " +
-                "Each generator squares to negative identity and is skew-symmetric. The determinant " +
-                "of the product of its displacement with its transpose gives the defect order."))),
+                "Each generator squares to negative identity and is skew-symmetric. The displacement times " +
+                "its transpose is twice the identity. Its determinant is the square of the absolute " +
+                "displacement determinant."))),
             DescribeRole.Theorem))));
 }

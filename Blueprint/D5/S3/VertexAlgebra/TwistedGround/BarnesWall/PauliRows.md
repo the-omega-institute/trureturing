@@ -4,7 +4,7 @@
 
 The ambient Pauli action at rank 128
 
-**Theorem 1.1 (Each quaternion generator has fixed-point-free defect order 2^64).**
+**Theorem 1.1 (Each quaternion generator has absolute displacement determinant 2^64).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/BarnesWall/PauliRows.defect_abs_det`
 
@@ -16,7 +16,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/BarnesWall/PauliRows.defect_a
 
 *Commentary.*
 
-The three ambient generators act by signed permutations of the tensor coordinates. Each generator squares to negative identity and is skew-symmetric. The determinant of the product of its displacement with its transpose gives the defect order.
+The three ambient generators act by signed permutations of the tensor coordinates. Each generator squares to negative identity and is skew-symmetric. The displacement times its transpose is twice the identity. Its determinant is the square of the absolute displacement determinant.
 
 ## References
 
