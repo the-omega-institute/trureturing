@@ -445,6 +445,10 @@ FILEMAP conformance 使用既有候选快照 reader 的当前路径和模式，�
 
 hosted 的 source 作业是 current 的前置 phase，由 detect 的 current 命中触发。其余命中作业按 source continuation 并行运行。源码检查已接受且报告阶段未选中时，current 直接确认执行身份。需要判官的 continuation 恢复已有种子，未命中时构建自己的判官。required 核对 source 的实际结果、accepted/continuation 输出和各命中单元的执行身份。source 与 current 共用累计 7200s。ci_compute 导出已扣除判官编译和源码执行的剩余秒数，continuation 接受 [0,7200] 范围内的余额并初始化新 job 的本地预算文件。缺失或非法输出导致失败。准备与下载在计算预算外，各 job 的平台上限为 360m。
 
+hosted current 按同一份计划分配报告。2 至 256 批时，最多六个标准 ARM runner 同时工作，其余批次排队。零批、单批或超过矩阵容量时走串行检查。每个批次验证所分配的 Lean 报告和 Scribe 路径，首批还执行选中的程序构建和测试。汇总作业核验所有报告包，再执行整个改动范围的 current 和适用的 delta 检查。
+
+7200 秒按计算阶段的挂钟时间累计。source、计划和终局检查按串行耗时逐项扣减。矩阵冷构建判官和实际批次检查，按 GitHub Actions 记录的步骤起止区间取并集，重叠部分只扣一次。服务时间戳的分辨率为一秒，计费结束边界向后扩一秒。队列、依赖准备、缓存恢复和报告包传输在计算预算外。汇总作业从扣除并行计算后的余额继续执行。
+
 current 在定向 Lean 和 Scribe 检查就绪后运行选中的 Fourier source evidence 和 compiled audit。每项检查按自己的前置条件执行并报告真实退出状态。
 
 确定性前置失败必须阻止由其成功守护的昂贵后继启动，最终 `required` 仍为失败；前置阻塞与未适用分列。成功前缀不认证余下检查，全部命中义务仍须成功。互无前置依赖的后续工作保留有效并行，不得按历史耗时排序将全部 hosted 作业串行化；YAML 文本顺序不建立执行依赖。本地串行次序与 hosted 依赖边可采用不同宿主布局，但保留共享的选中检查、前置关系和判词语义，不新增计时数据库或调度器。
