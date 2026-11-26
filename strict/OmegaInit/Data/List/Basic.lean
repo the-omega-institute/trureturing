@@ -94,4 +94,22 @@ def reverseAux {α : Type u} : List α → List α → List α := fun xs acc =>
 
 def reverse {α : Type u} (as : List α) : List α := reverseAux as nil
 
+theorem append_assoc {α : Type u} (as bs cs : List α) :
+    Eq (List.append (List.append as bs) cs) (List.append as (List.append bs cs)) :=
+  List.rec (motive := fun xs => Eq (List.append (List.append xs bs) cs) (List.append xs (List.append bs cs)))
+    Omega.rfl (fun a _ ih => congrArg (cons a) ih) as
+
+theorem reverseAux_eq_append {α : Type u} {as bs : List α} :
+    Eq (reverseAux as bs) (List.append (reverseAux as nil) bs) :=
+  List.rec (motive := fun xs => ∀ ys, Eq (reverseAux xs ys) (List.append (reverseAux xs nil) ys))
+    (fun _ => Omega.rfl)
+    (fun a xs ih ys => (ih (cons a ys)).trans
+      (((congrArg (fun ts => List.append ts ys) (ih (cons a nil))).trans
+        (append_assoc (reverseAux xs nil) (cons a nil) ys)).symm))
+    as bs
+
+theorem reverse_cons {α : Type u} {a : α} {as : List α} :
+    Eq (reverse (cons a as)) (List.append (reverse as) (cons a nil)) :=
+  reverseAux_eq_append (as := as) (bs := cons a nil)
+
 end Omega.List

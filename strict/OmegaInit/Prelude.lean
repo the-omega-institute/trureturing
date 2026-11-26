@@ -480,4 +480,10 @@ namespace Omega.List
     List.casesOn (motive := fun ys => List.below (motive := fun _ : List α => Nat) ys → Nat)
       ys (fun _ => Nat.zero) (fun _ _ prior => Nat.succ prior.fst) below)
 
+@[implicit_reducible] protected def append {α : Type u} : (xs ys : List α) → List α := fun xs ys =>
+  List.brecOn (motive := fun _ : List α => List α → List α) xs (fun l prior ys =>
+    List.casesOn (motive := fun l =>
+        List.below (motive := fun _ : List α => List α → List α) l → List α)
+      l (fun _ => ys) (fun a _ prev => cons a (prev.fst ys)) prior) ys
+
 end Omega.List
