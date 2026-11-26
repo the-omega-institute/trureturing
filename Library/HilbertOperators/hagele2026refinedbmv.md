@@ -18,6 +18,9 @@ strata_touched:
   - D5/S3/Quantum/Analysis/RefinedBMV44
   - D5/S3/Quantum/Analysis/RefinedBMV33
   - D5/S3/Quantum/Analysis/RefinedBMV/Tracial/Bound
+  - D5/S3/Quantum/Analysis/RefinedBMV/Tracial/TriangleGram
+  - D5/S3/Quantum/Analysis/RefinedBMV/Tracial/TriangleCycleAllocation
+  - D5/S3/Quantum/Analysis/RefinedBMV/Tracial/ResolventJensen
   - D5/S3/Quantum/Analysis/RefinedBMVLowerBound
   - D5/S3/Quantum/Analysis/RefinedBMV43
   - D5/S3/Quantum/Analysis/RefinedBMV43Kernel
@@ -174,6 +177,45 @@ product lower comparison. The related arXiv results 0802.1153,
 positive measures for fixed occurrences and a pinched comparison,
 respectively. Historical priority for the spectral result has not
 been established.
+
+## The continuum four-copy comparison for three spectral values
+
+If a finite Hermitian matrix `H` has at most three distinct eigenvalues,
+the fourth derivative at zero of `Tr exp(H + s B)` is at least
+`Tr((exp(H/4) B)^4)` for every Hermitian `B`. Equality holds exactly
+when `H` and `B` commute. The Duhamel expansion gives a trace over four
+uniform simplex weights. Three weighted binary Gram matrices then
+absorb the signed triangular terms with any spectral multiplicities.
+
+The three scalar determinant inequalities are proved on the whole
+positive quadrant of spectral gaps by exact exponential Newton
+recurrences. The trace reduction for signed `B` and the implication
+from the three scalar energy bounds to positive coefficient Grams
+are formalized as `triangle_cycle_sum_nonneg` and
+`allocation_of_triangleMatrix_mulVec`. The continuum scalar
+certificate is currently verified by exact integer replay.
+
+The same spectral trace method gives the reciprocal Jensen comparison
+for any positive diagonal spectrum and Hermitian `B`. The inverse
+fourth power of the simplex barycenter integrates to the product of
+the four reciprocal spectral values. A positive integral over scalar
+shifts transfers the trace inequality to the ordinary reciprocal.
+
+## Finite four-copy degrees with three spectral values
+
+For a positive semidefinite matrix with at most three distinct spectral
+values and a Hermitian second factor, the product lower bound holds with
+seventeen copies of the first factor and four copies of the second. The
+weighted three-edge allocation has an exact polynomial certificate for
+all two-gap parameters. Equality holds exactly at commuting pairs.
+
+The same spectral class satisfies the bound for every sufficiently large
+integer degree. The argument combines a compact spectral-width transfer
+with uniform estimates for a separated highest or lowest log eigenvalue.
+The resulting degree threshold is existential. These degree-specific
+results use the formal matrix reduction and have paper proofs for their
+scalar hypotheses. Hägele's Lemma 2 gives the corresponding exponential
+lower bounds.
 
 ## Sharp conditioning for four-copy Gram blocks
 
