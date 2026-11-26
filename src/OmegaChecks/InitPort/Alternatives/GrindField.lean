@@ -3,6 +3,7 @@ import all Init.Grind.Ring.Basic
 import all Init.Grind.Ring.Field
 import all Init.Grind.Ordered.Ring
 import all Init.Grind.Ordered.Field
+import all Init.GrindInstances.Ring.Int
 
 /-! Field inverses, integer casts, and signs derived from the algebraic structure. -/
 
@@ -267,5 +268,13 @@ public theorem Lean.Grind.Field.IsOrdered.inv_neg_iff :
   · intro neg
     apply forward
     rwa [Field.inv_inv]
+
+set_option linter.defProp false in
+@[instance_reducible] public def Lean.Grind.instIsCharPIntOfNatNat :
+    type_of% @_root_.Lean.Grind.instIsCharPIntOfNatNat := by
+  constructor
+  intro x y
+  rw [Nat.mod_zero, Nat.mod_zero]
+  exact Int.ofNat_inj
 
 end OmegaChecks.InitPort.Alternatives
