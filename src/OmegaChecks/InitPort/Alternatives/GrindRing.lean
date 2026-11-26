@@ -3,7 +3,7 @@ import all Init.Grind.Ring.CommSolver
 
 /-! Structural decrease in reverse lexicographic comparison of monomials. -/
 
-open Lean.Grind.CommRing
+open Lean.Grind Lean.Grind.CommRing
 namespace OmegaChecks.InitPort.Alternatives
 
 private theorem smallerTail (p : Power) (m : Mon) : sizeOf m < sizeOf (Mon.mult p m) :=
@@ -74,4 +74,78 @@ public theorem Lean.Grind.CommRing.Mon.eq_of_revlexFuel : type_of% @_root_.Lean.
   · exact fun _ _ _ _ _ hx ih h => matchingPowers hx ih h
   · exact fun _ _ _ _ _ _ _ _ h => nomatch (Ordering.then_eq_eq.mp h).2
   · exact fun _ _ _ _ _ _ _ _ h => nomatch (Ordering.then_eq_eq.mp h).2
+
+
+section
+attribute [local instance] Semiring.natCast Ring.intCast
+
+public theorem Lean.Grind.IsCharP.ofNat_eq_zero_iff : type_of% @_root_.Lean.Grind.IsCharP.ofNat_eq_zero_iff := by
+  intro α p ring char x
+  have h := @IsCharP.ofNat_ext_iff α ring p char x 0
+  exact h.trans ⟨fun e => e.trans (Nat.zero_mod _), fun e => e.trans (Nat.zero_mod _).symm⟩
+
+public theorem Lean.Grind.IsCharP.intCast_emod : type_of% @_root_.Lean.Grind.IsCharP.intCast_emod := by
+  intro p α ring char x
+  have hz : (Int.cast (R := α) (p : Int)) = 0 := (Ring.intCast_natCast ..).trans ((IsCharP.natCast_eq_zero_iff p _).mpr (Nat.mod_self _))
+  have h := congrArg (Int.cast (R := α)) (Int.emod_add_mul_ediv x p)
+  rwa [Ring.intCast_add, Ring.intCast_mul, hz, Semiring.zero_mul, Semiring.add_zero] at h
+
+public theorem Lean.Grind.IsCharP.intCast_eq_zero_iff : type_of% @_root_.Lean.Grind.IsCharP.intCast_eq_zero_iff := by
+  intro p α ring char x
+  cases x with
+  | ofNat n =>
+    change (Int.cast (R := α) (n : Int)) = 0 ↔ Int.ofNat (n % p) = 0
+    rw [Ring.intCast_natCast]
+    exact (IsCharP.natCast_eq_zero_iff p n).trans Int.ofNat_eq_zero.symm
+  | negSucc n =>
+    change (Int.cast (R := α) (-((n+1 : Nat) : Int))) = 0 ↔ (-((n+1 : Nat) : Int)) % p = 0
+    rw [Ring.intCast_neg, Ring.intCast_natCast]
+    exact ((_root_.Lean.Grind.AddCommGroup.neg_eq_zero _).trans (IsCharP.natCast_eq_zero_iff p (n+1))).trans
+      (Nat.dvd_iff_mod_eq_zero.symm.trans (Int.ofNat_dvd.symm.trans (Int.dvd_neg.symm.trans Int.dvd_iff_emod_eq_zero)))
+end
+
+public theorem Lean.Grind.CommRing.Poly.denote_addConstC :
+    type_of% @_root_.Lean.Grind.CommRing.Poly.denote_addConstC := by
+  intro α c ring char ctx p k
+  induction p with
+  | num l => exact (IsCharP.intCast_emod (α := α) (p := c) (l+k)).trans (Ring.intCast_add ..)
+  | add l m p ih =>
+    exact (congrArg (fun z : α => l • m.denote ctx + z) ih).trans (Semiring.add_assoc ..).symm
+
+private theorem coefficientSum {α : Type u} [Ring α] (c : Nat) [IsCharP α c]
+    (k l : Int) (x : α) : (((k+l) % c) : Int) • x = k • x + l • x := by
+  rw [Ring.zsmul_eq_intCast_mul, IsCharP.intCast_emod, Ring.intCast_add, Semiring.right_distrib,
+    Ring.zsmul_eq_intCast_mul (k := k), Ring.zsmul_eq_intCast_mul (k := l)]
+
+private theorem zeroTerms {α : Type u} [Ring α] (c : Nat) [IsCharP α c] (k l : Int) (x : α)
+    (zero : (k+l) % c = 0) : k • x + l • x = 0 := by
+  rw [← coefficientSum c, zero, Ring.zsmul_eq_intCast_mul, Ring.intCast_zero, Semiring.zero_mul]
+
+public theorem Lean.Grind.CommRing.Poly.denote_combineC :
+    type_of% @_root_.Lean.Grind.CommRing.Poly.denote_combineC := by
+  intro α c ring char ctx p q
+  apply Poly.combineC.induct_unfolding c (fun s t u => u.denote ctx = s.denote ctx + t.denote ctx) _ _ _ _ _ _ _ p q
+  · exact fun k l => (IsCharP.intCast_emod (α := α) c (k+l)).trans (Ring.intCast_add ..)
+  · intro k l n q
+    exact (Lean.Grind.CommRing.Poly.denote_addConstC ctx (.add l n q) k).trans (Semiring.add_comm ..)
+  · exact fun _ _ _ _ => Lean.Grind.CommRing.Poly.denote_addConstC ..
+  · intro k m p l n q same _ zero ih
+    cases _root_.Lean.Grind.CommRing.Mon.eq_of_grevlex same
+    have hz := zeroTerms (α := α) c k l (m.denote ctx) (eq_of_beq zero)
+    change _ = (k • m.denote ctx + p.denote ctx) + (l • m.denote ctx + q.denote ctx)
+    rw [ih]
+    calc
+      _ = (k • m.denote ctx + l • m.denote ctx) + (p.denote ctx + q.denote ctx) := by rw [hz, Semiring.add_comm 0, Semiring.add_zero]
+      _ = _ := by rw [Semiring.add_assoc, ← Semiring.add_assoc (l • _) _ _, Semiring.add_comm (l • _) (p.denote ctx),
+        Semiring.add_assoc, ← Semiring.add_assoc]
+  · intro k m p l n q same _ _ ih
+    cases _root_.Lean.Grind.CommRing.Mon.eq_of_grevlex same
+    change ((k+l) % c) • m.denote ctx + _ = (k • m.denote ctx + p.denote ctx) + (l • m.denote ctx + q.denote ctx)
+    rw [ih, coefficientSum, Semiring.add_assoc, ← Semiring.add_assoc (l • _) _ _, Semiring.add_comm (l • _) (p.denote ctx),
+      Semiring.add_assoc, ← Semiring.add_assoc]
+  · intro k m p l n q _ ih
+    exact (congrArg (k • m.denote ctx + ·) ih).trans (Semiring.add_assoc ..).symm
+  · intro k m p l n q _ ih
+    exact (congrArg (l • n.denote ctx + ·) ih).trans ((Semiring.add_assoc ..).symm.trans ((congrArg (· + q.denote ctx) (Semiring.add_comm ..)).trans (Semiring.add_assoc ..)))
+
 end OmegaChecks.InitPort.Alternatives
