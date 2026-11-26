@@ -9,8 +9,9 @@
 import OmegaBuild.Commands
 import D5.S3.Quantum.Matrix.Tensor.KroneckerSqrt
 import D5.S3.Quantum.Semigroups.TwistedTwoModeOUComparison
-import D5.S3.Quantum.Information.StrongSubadditivity.Physlib.ForMathlib.HermitianMat.LogExp
+import D5.S3.Quantum.Information.StrongSubadditivity.Physlib.ForMathlib.Isometry
 import Mathlib.Analysis.Convex.Deriv
+import Mathlib.Analysis.SpecialFunctions.ContinuousFunctionalCalculus.ExpLog.Basic
 import Mathlib.Analysis.SpecialFunctions.Log.NegMulLog
 import Mathlib.Analysis.SpecialFunctions.Sqrt
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
@@ -546,12 +547,55 @@ private theorem coherent_relativeEntropy {a b : ℝ} (ht : a + b = 1) (w : ℂ) 
 private theorem log_tensor {A B : Qubit} (hA : A.PosDef) (hB : B.PosDef) :
     CFC.log (A ⊗ₖ B) =
       CFC.log A ⊗ₖ (1 : Qubit) + (1 : Qubit) ⊗ₖ CFC.log B := by
-  let A' : HermitianMat (Fin 2) ℂ := ⟨A, hA.isHermitian⟩
-  let B' : HermitianMat (Fin 2) ℂ := ⟨B, hB.isHermitian⟩
-  let : HermitianMat.NonSingular A' := HermitianMat.nonSingular_of_posDef hA
-  let : HermitianMat.NonSingular B' := HermitianMat.nonSingular_of_posDef hB
-  have h := congrArg HermitianMat.mat (HermitianMat.log_kron (A := A') (B := B'))
-  exact h
+  let U := hA.isHermitian.eigenvectorUnitary
+  let V := hB.isHermitian.eigenvectorUnitary
+  let a := hA.isHermitian.eigenvalues
+  let b := hB.isHermitian.eigenvalues
+  let W : Matrix.unitaryGroup (Fin 2 × Fin 2) ℂ :=
+    ⟨(U : Qubit) ⊗ₖ (V : Qubit), Matrix.kronecker_mem_unitary U.2 V.2⟩
+  have hU : (U : Qubit) * (U : Qubit)ᴴ = 1 := Unitary.coe_mul_star_self U
+  have hV : (V : Qubit) * (V : Qubit)ᴴ = 1 := Unitary.coe_mul_star_self V
+  have ha : ∀ i, 0 < a i := hA.eigenvalues_pos
+  have hb : ∀ i, 0 < b i := hB.eigenvalues_pos
+  have hspecA : A = (U : Qubit) * diagonal (fun i => (a i : ℂ)) * (U : Qubit)ᴴ := by
+    simpa only [Unitary.conjStarAlgAut_apply, U, a, RCLike.ofReal_eq_complex_ofReal,
+      Function.comp_def, Matrix.star_eq_conjTranspose] using hA.isHermitian.spectral_theorem
+  have hspecB : B = (V : Qubit) * diagonal (fun i => (b i : ℂ)) * (V : Qubit)ᴴ := by
+    simpa only [Unitary.conjStarAlgAut_apply, V, b, RCLike.ofReal_eq_complex_ofReal,
+      Function.comp_def, Matrix.star_eq_conjTranspose] using hB.isHermitian.spectral_theorem
+  have hspecAB : A ⊗ₖ B = (W : TwoMode) *
+      diagonal (fun i => ((a i.1 * b i.2 : ℝ) : ℂ)) * (W : TwoMode)ᴴ := by
+    calc
+      _ = ((U : Qubit) * diagonal (fun i => (a i : ℂ)) * (U : Qubit)ᴴ) ⊗ₖ
+          ((V : Qubit) * diagonal (fun i => (b i : ℂ)) * (V : Qubit)ᴴ) :=
+        congrArg₂ (fun X Y : Qubit => X ⊗ₖ Y) hspecA hspecB
+      _ = _ := by
+        rw [Matrix.mul_kronecker_mul, Matrix.mul_kronecker_mul,
+          Matrix.diagonal_kronecker_diagonal]
+        simp only [W, Matrix.conjTranspose_kronecker, Complex.ofReal_mul]
+  have hlogA : CFC.log A = (U : Qubit) *
+      diagonal (fun i => (Real.log (a i) : ℂ)) * (U : Qubit)ᴴ := by
+    rw [CFC.log, hA.isHermitian.cfc_eq]
+    exact hA.isHermitian.cfc_eq_any_unitary (U := U) (D := a) hspecA Real.log
+  have hlogB : CFC.log B = (V : Qubit) *
+      diagonal (fun i => (Real.log (b i) : ℂ)) * (V : Qubit)ᴴ := by
+    rw [CFC.log, hB.isHermitian.cfc_eq]
+    exact hB.isHermitian.cfc_eq_any_unitary (U := V) (D := b) hspecB Real.log
+  have hAB := (hA.kronecker hB).isHermitian
+  have hlogAB : CFC.log (A ⊗ₖ B) = (W : TwoMode) *
+      diagonal (fun i => (Real.log (a i.1 * b i.2) : ℂ)) * (W : TwoMode)ᴴ := by
+    rw [CFC.log, hAB.cfc_eq]
+    exact hAB.cfc_eq_any_unitary (U := W) (D := fun i => a i.1 * b i.2) hspecAB Real.log
+  have hdiag : diagonal (fun i : Fin 2 × Fin 2 => (Real.log (a i.1 * b i.2) : ℂ)) =
+      diagonal (fun i => (Real.log (a i) : ℂ)) ⊗ₖ (1 : Qubit) +
+        (1 : Qubit) ⊗ₖ diagonal (fun i => (Real.log (b i) : ℂ)) := by
+    simp only [← Matrix.diagonal_one, Matrix.diagonal_kronecker_diagonal, mul_one, one_mul,
+      Matrix.diagonal_add, Matrix.diagonal_eq_diagonal_iff]
+    intro i
+    rw [Real.log_mul (ha i.1).ne' (hb i.2).ne', Complex.ofReal_add]
+  rw [hlogAB, hlogA, hlogB, hdiag, mul_add, add_mul]
+  simp only [W, Matrix.conjTranspose_kronecker, ← Matrix.mul_kronecker_mul,
+    Matrix.mul_one, hU, hV]
 
 private theorem witness_entropy {a b : ℝ} {w : ℂ} (ha : 0 < a) (hb : 0 < b)
     (ht : a + b = 1) (hw : Complex.normSq w < a * b) :
@@ -819,9 +863,5 @@ theorem amplitude_interval {h : ℝ} (hh : 0 < h) :
   exact ⟨w, hw, hp, htr, sub_pos.mp (hmargin.trans_le hgap)⟩
 
 end Physical
-
-#print axioms finite_amplitude_obstruction
-#print axioms matched_product_obstruction
-#print axioms amplitude_interval
 
 end D5.S3.Quantum.Semigroups.WuCubicOccupationEntropyObstruction
