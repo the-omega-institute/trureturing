@@ -88,7 +88,8 @@ internal sealed class CausalOrderWeylDeformation4DDocument : IScribeDocumentDefi
                 + "diagonal entries cancel in the complex tide. Quartic interpolation on the five rays detects the "
                 + "remaining Weyl component. For at most four rays, the Weyl quartic vanishing construction gives a "
                 + "nonzero curvature with zero tide at every sampled ray and zero volume reading in every direction. "
-                + "The observations are specified pointwise on the tangent space.",
+                + "The observations are specified pointwise on the tangent space. Applying the result to a discrete "
+                + "causal order requires a separate rule for obtaining the tidal observations from its comparisons.",
                 Rel(Rel(VolumeZero(F.Id("R")), Land, TideZero(F.Id("R"), D(5))), Iff, Equal(F.Id("R"), D(0)))),
             Node("volume_blind_nonzero_weyl_witness", "A polarized Ricci-flat wave",
                 "The Weyl tensor W has electric block diag(1,−1,0) and magnetic entries M_01 = M_10 = 1, "
