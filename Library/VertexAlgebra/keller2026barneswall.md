@@ -13,6 +13,7 @@ strata_touched:
   - D5/S3/VertexAlgebra/TwistedGround/BarnesWall/PauliRows
   - D5/S3/VertexAlgebra/TwistedGround/BarnesWall/CyclicEtaTrace
   - D5/S3/VertexAlgebra/TwistedGround/BarnesWall/CoherentTraceSign
+  - D5/S3/VertexAlgebra/TwistedGround/BarnesWall/FixedWordPhase
   - D5/S3/HomologicalAlgebra/BarnesWallQ8CohomologyDetector
   - D5/S3/HomologicalAlgebra/BarnesWallQ8CyclicGauge
   - D5/S3/HomologicalAlgebra/InflatedCubicCandidate
@@ -100,3 +101,15 @@ In the standard split extension, two coordinate slots support a
 quaternion subgroup. Restricting the trilinear representative to this
 subgroup gives the quaternion detector above. Its bar-cycle evaluation
 separates the two candidates, so the bit is unique.
+
+## Fixed-vector phases of the Pauli involutions
+
+For the odd-rank tensor construction, separate the first tensor slot.
+The two tail quotients carry complementary mod-two pairings. A Pauli word
+pulls back each quadratic form by the sign of its square. For a fixed
+integral vector this either kills one exceptional half-Gram correction,
+or makes the two corrections equal so that their sum is zero. The Lean
+theorem uses the two-block half-Gram hypotheses of Appendix A.1 and the
+actual signed ambient involution. It applies to words containing both X
+and Z factors in the same slot.
+[Keller–Roberts–Roberts, Appendix A.1](https://arxiv.org/abs/2411.13646v2)
