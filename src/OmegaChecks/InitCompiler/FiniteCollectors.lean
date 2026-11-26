@@ -31,7 +31,7 @@ private def specializeCollector (e : Expr) : MetaM (Option Expr) := do
     return some (← mkAppOptM method #[args[0]!, m, β, monad, args[4]!, none, it])
   return none
 
-public def finiteCollectors (env : Environment) (input : Expr) : IO Expr := do
+public def finiteCollectors (env : Environment) (input : Expr) (withinImplementation := false) : IO Expr := do
   unless input.getUsedConstants.any (fun n =>
     pureCollectors.contains n || monadicCollectors.contains n || sliceCollectors.contains n) do return input
   let rewrite : MetaM Expr := Meta.transform input (pre := fun sub => do
@@ -46,12 +46,22 @@ public def finiteCollectors (env : Environment) (input : Expr) : IO Expr := do
         let call := mkAppN sub xs
         let some core ← (if isSlice then unfoldDefinition? call else pure (some call)) | return .continue
         let some result ← specializeCollector core | return .continue
-        return .done (← mkLambdaFVars xs (← instantiateMVars result))
+        let result ← instantiateMVars result
+        if withinImplementation then
+          -- A constructive implementation can compute differently in the destination. Check
+          -- the collector in its source context even when the enclosing proof uses that computation.
+          let locals := (← getLCtx).getFVars
+          let old ← mkLambdaFVars locals call
+          let new ← mkLambdaFVars locals result
+          unless (Kernel.check env {} old).isOk && (Kernel.check env {} new).isOk &&
+              Kernel.isDefEqGuarded env {} old new do return .continue
+        return .done (← mkLambdaFVars xs result)
     catch _ => return .continue)
   let .ok result ← (rewrite.run' |>.toIO' {fileName := "<finite collector>", fileMap := default} {env}).toBaseIO
     | return input
-  unless !result.equal input && !result.hasMVar && (Kernel.check env {} result).isOk &&
-      Kernel.isDefEqGuarded env {} input result do return input
+  if result.equal input || result.hasMVar then return input
+  unless withinImplementation || ((Kernel.check env {} result).isOk &&
+      Kernel.isDefEqGuarded env {} input result) do return input
   return result
 
 end OmegaChecks.InitCompiler
