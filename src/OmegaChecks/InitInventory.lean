@@ -2473,6 +2473,69 @@ private theorem fromRight (fold : type_of% @Array.foldrM_congr.{0,u,u}) {T : Typ
     (start := 2) (stop := 0) rfl rfl
   exact congrArg readBack e
 
+private def sampleStep (f : T → T) (bit : Bool) (s : Option T) (x : T) : ForInStep (Option T) :=
+  .yield (sample f s bit x)
+
+private theorem stepCongr {f g : T → T} (h : ∀ x, f x = g x) (bit : Bool) (s : Option T) :
+    sampleStep f bit s = sampleStep g bit s :=
+  congrArg (fun k x => ForInStep.yield (k x)) (sampleCongr h s bit)
+
+/-- The pinned array loop using the membership proof from the underlying list. -/
+public def arrayLoop {α : Type u} {β : Type v} {m : Type v → Type w} [Monad m] (as : Array α) (b : β) (f : (a : α) → a ∈ as → β → m (ForInStep β)) : m β :=
+  let rec loop (i : Nat) (h : i ≤ as.size) (b : β) : m β := do
+    match i, h with
+    | 0,   _ => pure b
+    | i+1, h =>
+      have h' : i < as.size            := Nat.lt_of_lt_of_le (Nat.lt_succ_self i) h
+      have : as.size - 1 < as.size     := Nat.sub_lt (Nat.zero_lt_of_lt h') (by decide)
+      have : as.size - 1 - i < as.size := Nat.lt_of_le_of_lt (Nat.sub_le (as.size - 1) i) this
+      match (← f as[as.size - 1 - i] (Array.Mem.mk (List.getElem_mem this)) b) with
+      | ForInStep.done b  => pure b
+      | ForInStep.yield b => loop i (Nat.le_of_lt h') b
+  loop as.size (Nat.le_refl _) b
+
+public abbrev ArrayCongruence.{levelIn,levelOut} :=
+  ∀ {m : Type levelIn → Type levelOut} {α : Type} {β : Type levelIn} [Monad m] {as bs : Array α} (w : as = bs)
+    {b b' : β} (_hb : b = b') {f : (a : α) → a ∈ as → β → m (ForInStep β)}
+    {g : (a : α) → a ∈ bs → β → m (ForInStep β)},
+    (∀ a h s, f a (w.symm ▸ h) s = g a h s) → arrayLoop as b f = arrayLoop bs b' g
+
+public abbrev VectorCongruence.{levelIn,levelOut} :=
+  ∀ {m : Type levelIn → Type levelOut} {α : Type} {n : Nat} {β : Type levelIn} [Monad m] {xs ys : Vector α n} (w : xs = ys)
+    {b b' : β} (_hb : b = b') {f : (a : α) → a ∈ xs → β → m (ForInStep β)}
+    {g : (a : α) → a ∈ ys → β → m (ForInStep β)},
+    (∀ a h s, f a (w.symm ▸ h) s = g a h s) → arrayLoop xs.toArray b (fun a ha => f a ((Vector.mem_toArray_iff a xs).mp ha)) =
+      arrayLoop ys.toArray b' (fun a ha => g a ((Vector.mem_toArray_iff a ys).mp ha))
+
+private theorem arrayLoop_eq : @arrayLoop = @Array.forIn' := by
+  delta arrayLoop Array.forIn' Array.forIn'.loop Array.forIn'.loop._f arrayLoop.loop arrayLoop.loop._f
+  rfl
+example : ArrayCongruence.{u,u} := by
+  unfold ArrayCongruence
+  rw [arrayLoop_eq]
+  exact @Array.forIn'_congr.{u,u,0}
+example : VectorCongruence.{u,u} := by
+  unfold VectorCongruence
+  rw [arrayLoop_eq]
+  exact @Vector.forIn'_congr.{u,u,0}
+
+private theorem fromForIn (combine : ArrayCongruence.{u,u}) {T : Type u}
+    {f g : T → T} (h : ∀ x, f x = g x) : f = g := by
+  have e := combine (m := ReaderM T) (as := #[false,true]) (b := none) rfl rfl
+    (f := fun bit _ => sampleStep f bit) (g := fun bit _ => sampleStep g bit) (fun bit _ s => stepCongr h bit s)
+  exact congrArg readBack e
+
+private theorem fromVecForIn (combine : VectorCongruence.{u,u}) {T : Type u}
+    {f g : T → T} (h : ∀ x, f x = g x) : f = g := by
+  have e := combine (m := ReaderM T) (xs := #v[false,true]) (b := none) rfl rfl
+    (f := fun bit _ => sampleStep f bit) (g := fun bit _ => sampleStep g bit) (fun bit _ s => stepCongr h bit s)
+  exact congrArg readBack e
+public theorem forInCongr (combine : ArrayCongruence.{max 1 u v,max 1 u v}) :
+    type_of% @funext.{u,v} := funextFromEndomorphisms (fromForIn combine)
+
+public theorem vectorForInCongr (combine : VectorCongruence.{max 1 u v,max 1 u v}) :
+    type_of% @funext.{u,v} := funextFromEndomorphisms (fromVecForIn combine)
+
 public theorem foldlCongr (combine : type_of% @Array.foldlM_congr.{max 1 u v,0,max 1 u v}) :
     type_of% @funext.{u,v} := funextFromEndomorphisms (fromLeft combine)
 
@@ -2481,7 +2544,7 @@ public theorem foldrCongr (combine : type_of% @Array.foldrM_congr.{0,max 1 u v,m
 
 open Lean in
 run_cmd
-  for n in [``foldlCongr, ``foldrCongr] do
+  for n in [``foldlCongr, ``foldrCongr, ``forInCongr, ``vectorForInCongr] do
     unless (← collectAxioms n).isEmpty do throwError "array congruence witness {n} uses axioms"
 
 end ArrayLoopCongruence
@@ -3151,6 +3214,10 @@ private def logicalConsequence? (owner name : Name) : Option (Name × Name) := d
     return (``funext, ``OmegaChecks.InitBoundaries.MonadicTraversal.fromListFoldl)
   | `Init.Data.List.Monadic, ``List.foldrM_subtype =>
     return (``funext, ``OmegaChecks.InitBoundaries.MonadicTraversal.fromListFoldr)
+  | `Init.Data.Array.Monadic, ``Array.forIn'_congr =>
+    return (``funext, ``OmegaChecks.InitBoundaries.ArrayLoopCongruence.forInCongr)
+  | `Init.Data.Vector.Monadic, ``Vector.forIn'_congr =>
+    return (``funext, ``OmegaChecks.InitBoundaries.ArrayLoopCongruence.vectorForInCongr)
   | `Init.Data.Array.Lemmas, ``Array.foldlM_congr =>
     return (``funext, ``OmegaChecks.InitBoundaries.ArrayLoopCongruence.foldlCongr)
   | `Init.Data.Array.Lemmas, ``Array.foldrM_congr =>
