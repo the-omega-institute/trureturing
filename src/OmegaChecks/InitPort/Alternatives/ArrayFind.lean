@@ -1,5 +1,6 @@
 module
 import all Init.Data.Array.Basic
+import all Init.Data.Array.BinSearch
 public import Init.Data.Array.Lemmas
 public import Init.Data.Array.Find
 public import Init.Data.List.Find
@@ -321,4 +322,13 @@ public theorem Array.findIdx?_flatten : type_of% @_root_.Array.findIdx?_flatten 
       cases rows[i]? with
       | none => rfl
       | some row => simp only [Option.map_some, Option.getD_some, List.findIdx_toArray]
+
+public theorem Array.binInsertM._proof_8 : type_of% (private_decl% @_root_.Array.binInsertM._proof_8) := by
+  intro α lt xs k notEmpty notBefore
+  have zero : 0 < xs.size := Nat.pos_of_ne_zero notEmpty
+  change lt (xs[0]'zero) k = true
+  cases h : lt (xs[0]'zero) k with
+  | true => rfl
+  | false => exact (notBefore (congrArg Bool.not h)).elim
+
 end OmegaChecks.InitPort.Alternatives

@@ -1,4 +1,5 @@
 module
+public import Init.Data.Vector.Perm
 public import Init.Data.Array.Lemmas
 
 /-! Splitting an array append reduces to splitting its underlying list at the same position. -/
@@ -101,5 +102,15 @@ public theorem Array.back_append : type_of% @_root_.Array.back_append := by
     exact Array.back_append_left h (_root_.Array.isEmpty_iff_size_eq_zero.mp empty)
   · rw [dite_eq_right empty]
     exact Array.back_append_right (Nat.zero_lt_of_ne_zero (fun e => empty (_root_.Array.isEmpty_iff_size_eq_zero.mpr e)))
+
+public theorem Array.Perm.push : type_of% @_root_.Array.Perm.push := by
+  intro α x xs ys h
+  apply Array.Perm.of_toList_perm
+  rw [Array.toList_push, Array.toList_push]
+  exact h.toList.append List.Perm.rfl
+
+public theorem Vector.Perm.push : type_of% @_root_.Vector.Perm.push := by
+  intro α n x xs ys h
+  exact Vector.Perm.of_toArray_perm (_root_.Array.Perm.push x h.toArray)
 
 end OmegaChecks.InitPort.Alternatives

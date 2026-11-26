@@ -1,4 +1,5 @@
 module
+public import Init.Data.Array.Mem
 public import Init.Data.Array.Attach
 import all Init.Data.Array.Attach
 
@@ -94,5 +95,14 @@ public theorem Array.attach_filter : type_of% @_root_.Array.attach_filter := by
   apply filterMapValues
   intro ⟨a, ha⟩
   by_cases h : p a <;> simp only [Function.comp_def, Option.guard, h, Bool.false_eq_true, ite_false, ite_true, dite_true, dite_false, Option.map_some, Option.map_none]
+
+public theorem Array.sizeOf_get : type_of% @_root_.Array.sizeOf_get := by
+  intro α inst xs i h
+  cases xs with
+  | mk xs =>
+    apply Nat.lt_trans (List.sizeOf_get xs ⟨i, h⟩)
+    change sizeOf xs < 1 + sizeOf xs
+    rw [Nat.one_add]
+    exact Nat.lt_succ_self _
 
 end OmegaChecks.InitPort.Alternatives
