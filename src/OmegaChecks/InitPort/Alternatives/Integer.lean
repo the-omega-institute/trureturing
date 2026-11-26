@@ -1,6 +1,7 @@
 module
 public import OmegaChecks.InitPort.Alternatives.Integer.Division
 public import Init.Data.Int.Pow
+public import Init.Data.Int.Cooper
 import all Init.Data.Dyadic.Basic
 import all Init.Data.Int.Linear
 
@@ -642,5 +643,36 @@ public theorem Int.Internal.Linear.Poly.denote_combine_mul_k : type_of% @_root_.
       rw [Int.zero_mul, Int.add_zero]
       exact (congrArg (Poly.denote ctx) (Int.Internal.Linear.Poly.mul_k_eq_mul ..)).trans (Poly.denote_mul ..)
     | false => exact combineScaled ..
+
+public theorem Int.ofNat_add_negSucc_of_lt : type_of% @_root_.Int.ofNat_add_negSucc_of_lt := by
+  intro m n h
+  change (m : Int) + -((n : Int)+1) = -(((n-m : Nat) : Int)+1)
+  rw [Int.ofNat_sub (Nat.le_of_lt_succ h)]
+  omega
+
+public theorem Int.cooper_resolution_dvd_right : type_of% @_root_.Int.cooper_resolution_dvd_right := by
+  intro a b c d s p q ha hb hd
+  have left := _root_.Int.cooper_resolution_dvd_left (a := b) (b := a) (c := -c) (p := -q) (q := -p) (s := s) hb ha hd
+  constructor
+  · rintro ⟨x, lower, upper, divides⟩
+    have witness : ∃ y, -q ≤ b*y ∧ a*y ≤ -p ∧ d ∣ -c*y+s := by
+      refine ⟨-x, ?_, ?_, ?_⟩
+      · rw [Int.mul_neg]; exact Int.neg_le_neg upper
+      · rw [Int.mul_neg]; exact Int.neg_le_neg lower
+      · rw [Int.neg_mul_neg]; exact divides
+    obtain ⟨k, nonneg, bound, interval, divisor, residue⟩ := left.mp witness
+    rw [Int.gcd_neg] at bound
+    rw [Int.mul_neg, Int.mul_neg] at interval
+    rw [Int.neg_mul_neg] at residue
+    exact ⟨k, nonneg, bound, by omega, divisor, residue⟩
+  · rintro ⟨k, nonneg, bound, interval, divisor, residue⟩
+    rw [← @Int.gcd_neg (b*d) c] at bound
+    have reflected : a*k+a*(-q) ≤ b*(-p) := by rw [Int.mul_neg, Int.mul_neg]; omega
+    have reflectedResidue : b*d ∣ -c*k+(-c)*(-q)+b*s := by rw [Int.neg_mul_neg]; exact residue
+    obtain ⟨y, lo, hi, divides⟩ := left.mpr ⟨k, nonneg, bound, reflected, divisor, reflectedResidue⟩
+    refine ⟨-y, ?_, ?_, ?_⟩
+    · rw [Int.mul_neg]; omega
+    · rw [Int.mul_neg]; omega
+    · rw [Int.mul_neg, ← Int.neg_mul]; exact divides
 
 end OmegaChecks.InitPort.Alternatives
