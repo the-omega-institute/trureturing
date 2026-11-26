@@ -333,15 +333,17 @@ private theorem findSuffix (f : α → Option β) (l : List α)
       exact ih (Nat.le_of_succ_le bound)
     | some b => simp only [findStep, h]; rfl
 
+private theorem findArray (f : α → Option β) (l : List α)
+    (step : (a : α) → a ∈ l.toArray → Option (Option β) × Unit → Id (ForInStep (Option (Option β) × Unit)))
+    (compute : ∀ a m state, step a m state = findStep f a) :
+    (Array.forIn'.loop (m := Id) l.toArray step l.length (Nat.le_refl _) (none, ())).fst.join = l.findSome? f := by
+  have found := findSuffix f l step compute l.length (Nat.le_refl _)
+  rw [Nat.sub_self, List.drop_zero] at found
+  exact found
+
 set_option backward.isDefEq.respectTransparency false in
 public theorem List.findSome?_toArray : type_of% @_root_.List.findSome?_toArray := by
   intro α β f l
-  have whole (step : (a : α) → a ∈ l.toArray → Option (Option β) × Unit → Id (ForInStep (Option (Option β) × Unit)))
-      (compute : ∀ a m state, step a m state = findStep f a) :
-      (Array.forIn'.loop (m := Id) l.toArray step l.length (Nat.le_refl _) (none, ())).fst.join = l.findSome? f := by
-    have found := findSuffix f l step compute l.length (Nat.le_refl _)
-    rw [Nat.sub_self, List.drop_zero] at found
-    exact found
   unfold Array.findSome? Array.findSomeM?
   dsimp only [ForIn.forIn, instForInOfForIn', ForIn'.forIn', Array.forIn', Bind.bind, Pure.pure, Id.instMonad, Id.run]
   simp only [List.size_toArray]
@@ -349,10 +351,27 @@ public theorem List.findSome?_toArray : type_of% @_root_.List.findSome?_toArray 
     l.toArray _ l.length _ (none, ())) = v
   have result : v.join = l.findSome? f := by
     rw [← hx]
-    apply whole
+    apply findArray
     intro a _ state
     unfold findStep
     cases f a <;> rfl
+  cases v <;> exact result
+
+set_option backward.isDefEq.respectTransparency false in
+public theorem List.find?_toArray : type_of% @_root_.List.find?_toArray := by
+  intro α p l
+  rw [← _root_.List.findSome?_guard]
+  unfold Array.find?
+  dsimp only [ForIn.forIn, instForInOfForIn', ForIn'.forIn', Array.forIn', Bind.bind, Pure.pure, Id.instMonad, Id.run]
+  simp only [List.size_toArray]
+  generalize hx : Prod.fst (Array.forIn'.loop (m := Id) (β := Option (Option α) × Unit)
+    l.toArray _ l.length _ (none, ())) = v
+  have result : v.join = l.findSome? (Option.guard p) := by
+    rw [← hx]
+    apply findArray
+    intro a _ state
+    unfold findStep Option.guard
+    cases p a <;> rfl
   cases v <;> exact result
 
 end OmegaChecks.InitPort.Alternatives
