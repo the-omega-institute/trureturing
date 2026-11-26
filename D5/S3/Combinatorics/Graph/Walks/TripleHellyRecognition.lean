@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Graph/Walks/TripleHellyRecognition
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S3/Combinatorics/Graph/Walks/SubtreeHelly.inter_nonempty_of_pairwise]
+   anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Acyclic]
    utility: none
    digest: Recognition of trees by triple intersections of connected induced vertex sets. -/
 import D5.S3.Combinatorics.Graph.Walks.SubtreeHelly
