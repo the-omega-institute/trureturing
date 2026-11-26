@@ -256,4 +256,22 @@ public theorem List.getElem_mapIdx : type_of% @_root_.List.getElem_mapIdx := by
     _root_.List.getElem_mapFinIdx
 
 
+public theorem List.instLawfulBEq : type_of% @_root_.List.instLawfulBEq := by
+  intro α inst lawful
+  constructor
+  intro a
+  induction a with
+  | nil =>
+    intro b h
+    cases b with
+    | nil => rfl
+    | cons => exact nomatch h
+  | cons x xs ih =>
+    intro b h
+    cases b with
+    | nil => exact nomatch h
+    | cons y ys =>
+      obtain ⟨hx,ht⟩ := Bool.and_eq_true_iff.mp h
+      cases eq_of_beq hx
+      exact congrArg (_root_.List.cons x) (ih ht)
 end OmegaChecks.InitPort.Alternatives
