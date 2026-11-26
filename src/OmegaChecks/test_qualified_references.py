@@ -125,6 +125,30 @@ def cases():
         "OmegaMathlib.Nat.Prime requires", "at this occurrence"]
 
 
+def native_cases(backend):
+    header = ("module\npublic import OmegaBuild.Commands\npublic import " + PORTS[0] +
+              "\npublic import Mathlib.Data.Nat.Prime.Defs\n")
+    name = "D5.MixedReference"
+    ref = "native% OmegaMathlib.Nat.Prime"
+    yield name, header + (
+        f"public theorem observed (p : Nat) (h : ({ref}) p) : ({ref}) p := h\n"
+        f"public def predicate : Nat → Prop := {ref}\n"
+        "example : predicate = _root_.Nat.Prime := rfl\n"), []
+    yield name, header + (
+        f"public theorem mixed (p : Nat) (h : ({ref}) p) (hp : _root_.Nat.Prime p) : ({ref}) p := h\n"
+    ), ["qualify this identifier as OmegaMathlib.Nat.Prime"] if backend == "official" else []
+    # A replacement elaborator can emit an incorrect object at the genuine grammar node.
+    forged = (header + "public meta import Lean\n"
+              "public def Shadow.Prime (_ : Nat) : Prop := True\n"
+              "open Lean Elab Term in\n"
+              "@[term_elab OmegaBuild.nativePort] public meta def forgedNative : TermElab := fun _ _ => do\n"
+              "  return mkConst `Shadow.Prime\n")
+    for source in (forged, forged.replace("public import " + PORTS[0] + "\n", "")
+                                 .replace("mkConst `Shadow.Prime", "mkConst `Nat.Prime")):
+        yield name, source + f"public def forgedAtSamePosition : Nat → Prop := {ref}\n", [
+            "native% OmegaMathlib.Nat.Prime requires Nat.Prime in Mathlib.Data.Nat.Prime.Defs at this occurrence"]
+
+
 def computational_cases(backend):
     header = "module\npublic import OmegaMathlib.Data.Nat.Choose.Basic\n"
     if backend == "official":
@@ -158,7 +182,7 @@ def check_case(lean, label, path, sources, errors, *, ports=PORTS, expected_coun
                 record["mathlibOnly"] = record["moduleName"] in skipped
         request = directory / "request.json"
         request.write_text(json.dumps(records))
-        environment = os.environ.copy()
+        environment = {**os.environ, "LEAN_PATH": str(ROOT / ".lake/build/lib/lean")}
         if len(sources) > 1:
             environment["PATH"] = temp
             environment.pop("LEAN_SYSROOT", None)
@@ -192,12 +216,15 @@ def check_mathlib_only(lean, path):
 
 def check():
     lean = subprocess.check_output(["lake", "env", "printenv", "LEAN"], cwd=ROOT, text=True).strip()
+    subprocess.run(["lake", "build", "+OmegaBuild.Commands.Origin"], cwd=ROOT, check=True)
     for label, layout in [("strict", ["lake", "-f", strict_config()]), ("official", ["lake"])]:
-        subprocess.run([*layout, "build", *("+" + port for port in PORTS),
+        subprocess.run([*layout, "build", "+OmegaBuild.Commands", *("+" + port for port in PORTS),
                         "+OmegaMathlib.Data.Nat.Fib.Basic", "+D5.S3.Arith.Primes.DivisorCharacterization"],
                        cwd=ROOT, check=True)
         path = subprocess.check_output([*layout, "env", "printenv", "LEAN_PATH"], cwd=ROOT, text=True).strip()
         for module, source, errors in (*cases(), *computational_cases(label)):
+            check_case(lean, label, path, [(module, source)], errors)
+        for module, source, errors in native_cases(label):
             check_case(lean, label, path, [(module, source)], errors)
         owner = ("D5.RefOwner", "module\nprelude\npublic import OmegaInit.Prelude\n"
                  "@[expose] public def D5.RefOwner.Prime (_ : Omega.Nat) := Omega.True\n")

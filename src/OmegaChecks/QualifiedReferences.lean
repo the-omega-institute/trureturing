@@ -1,4 +1,5 @@
 import Lean.Elab.Frontend
+import OmegaBuild.Commands.Origin
 
 /-! Correlate explicitly qualified source references with the compiler's indexed resolutions. -/
 
@@ -23,7 +24,7 @@ private partial def declarationNames (stx : Syntax) (inSignature := false) (inVa
     ``Parser.Command.structFields, ``Parser.Command.ctor, ``Parser.Command.variable].contains kind
   let value := inValue || [``Parser.Command.declValSimple, ``Parser.Command.declValEqns,
     ``Parser.Command.whereStructInst].contains kind
-  if (signature || value) && (stx.isIdent || (standardName? stx).isSome) then
+  if (signature || value) && (stx.isIdent || (standardName? stx).isSome || kind == `OmegaBuild.nativePort) then
     return acc.push (stx, signature || fromValue)
   let inferred := stx.getArgs.any fun child =>
     child.isOfKind ``Parser.Command.optDeclSig && child[1].isNone
@@ -40,6 +41,7 @@ private structure Port where
   alias : Name
   target : Name
   owner : Name
+  upstreamOwner : Name
 
 private structure Ports where
   aliases : NameMap Port := {}
@@ -62,7 +64,7 @@ private def admittedPorts (env : Environment) (official : Bool) : IO Ports := do
       let expectedOwner := if official then mod.module.replacePrefix `OmegaMathlib `Mathlib else mod.module
       unless owner == expectedOwner && target == expected do
         throw <| IO.userError s!"{alias} in {mod.module} exports {target} from {owner}, expected {expected} from {expectedOwner}"
-      let port := { alias, target, owner : Port }
+      let port := { alias, target, owner, upstreamOwner := mod.module.replacePrefix `OmegaMathlib `Mathlib : Port }
       ports := { ports with aliases := ports.aliases.insert alias port }
       let .str _ leaf := alias | continue
       if (env.find? target).any (!·.isTheorem) then
@@ -272,9 +274,33 @@ private def checkFile (moduleName : Name) (source index : System.FilePath)
       locations := locations.alter (key loc.range) (fun entries => some ((id, loc.parentDecl) :: entries.getD []))
   let mut count := 0
   let mut marks := #[]
+  let mut nativeParents : NameSet := {}
   let sourceEnv := env
   let env := state.commandState.env
   for (token, signature) in tokens do
+    if token.isOfKind `OmegaBuild.nativePort then
+      let some alias := standardName? token[1] | throw <| IO.userError s!"expected an OmegaMathlib name in {moduleName}"
+      let some port := ports.aliases.find? alias | throw <| IO.userError s!"unknown standard reference {alias} in {moduleName}"
+      let native := alias.replacePrefix `OmegaMathlib .anonymous
+      let some span := token.getRange? | throw <| IO.userError s!"missing source position for native {alias}"
+      let pos := ictx.fileMap.utf8RangeToLspRange span
+      let entries := locations.getD (key pos) []
+      let provider := port.upstreamOwner.replacePrefix `Mathlib `OmegaMathlib
+      let importedPort := (env.getModuleIdx? provider).any fun idx =>
+        (aliasExtension.getModuleEntries env idx).any fun (a, t) => a == alias && t == port.target
+      unless importedPort && (env.getModuleIdxFor? native).any (fun i => env.header.moduleNames[i]! == port.upstreamOwner) &&
+          OmegaBuild.declaredIn env native port.upstreamOwner &&
+          entries.map Prod.fst == [.const port.upstreamOwner.toString native.toString] do
+        throw <| IO.userError s!"{source}:{pos.start.line+1}:{pos.start.character+1}: native% {alias} requires {native} in {port.upstreamOwner} at this occurrence"
+      count := count + 1
+      -- The native object can be distinct from its strict port. Include its declaration
+      -- in the expression replay even if it contains no strict object in the ordinary catalog.
+      for (_, parent) in entries do
+        if let some info := env.find? parent.toName then
+          if reachable.contains info.name && (signature || (objectValue? env info).isSome) then
+            nativeParents := nativeParents.insert info.name
+            marks := marks.push (span, native)
+      continue
     -- The compiler indexes dot notation at the field token as well as the receiver.
     let spans := prefixes token ++ (if token.isIdent then token.identComponents.tail else [])
     let parts := spans.filterMap fun stx =>
@@ -312,6 +338,7 @@ private def checkFile (moduleName : Name) (source index : System.FilePath)
       (env.find? p.toName).any (fun info => reachable.contains info.name && (objectValue? env info).isSome)
     if (signature || inObject) && ports.objects.contains port.target then
       if let some span := id.getRange? then marks := marks.push (span, port.target)
+  let published := nativeParents.foldl (fun names n => if names.contains n then names else names.push n) published
   unless published.isEmpty do
     checkElaborated source text state.commands sourceEnv opts published data.isModule marks catalog ports project
   return some count

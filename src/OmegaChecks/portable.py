@@ -613,7 +613,8 @@ def check(only, backend="mathlib", destination=None, *, frozen=None, discovered=
                 request = Path(temp) / f"{label}-references.json"
                 request.write_text(json.dumps(records))
                 subprocess.run([lean, "--run", SRC / "OmegaChecks/QualifiedReferences.lean",
-                                label, search, request, *catalog], cwd=ROOT, env=environment, check=True)
+                                label, search, request, *catalog], cwd=ROOT,
+                               env={**environment, "LEAN_PATH": str(ROOT / ".lake/build/lib/lean")}, check=True)
         if backend == "both" and frozen is None:
             subprocess.run(["lake", "build", "omegaAudit"], cwd=ROOT, env=environment, check=True)
         if common_modules:
