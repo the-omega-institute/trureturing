@@ -131,6 +131,15 @@ public theorem Std.Iterators.Types.Take.instFinite {α : Type u} {m : Type u →
   | inl hp => exact positive n hp inner
   | inr hf => exact finiteInner hf inner n (Or.inr hf)
 
+public theorem Std.Iter.step_filterMapWithPostcondition : type_of% @_root_.Std.Iter.step_filterMapWithPostcondition := by
+  intro α β γ inst it m n f mon law lift
+  dsimp only [Iter.filterMapWithPostcondition, IterM.filterMapWithPostcondition,
+    IterM.InternalCombinators.filterMap, FilterMap.instIterator,
+    Iter.step, IterM.step, Iterator.step, Iter.toIterM, monadLift, liftM, Id.run]
+  rw [pure_bind]
+  generalize Shrink.inflate (Iterator.step { internalState := it.internalState : IterM (α := α) Id β}) = q
+  cases q using PlausibleIterStep.casesOn <;> rfl
+
 public theorem Std.Iter.step_map : type_of% @_root_.Std.Iter.step_map := by
   intro α β γ _ it f
   apply Subtype.ext
