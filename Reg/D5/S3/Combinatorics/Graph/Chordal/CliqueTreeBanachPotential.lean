@@ -82,7 +82,7 @@ private theorem no_sep (i j : Root.{w}) (h : (⊥ : SimpleGraph Root.{w}).Adj i 
 
 namespace Center
 
-abbrev signature := SingleDependentReadout.signature (ℕ × ℕ) (fun _ => ℝ) (fun _ => ℝ)
+abbrev signature := SingleDependentReadout.signature (Σ _ : ℕ, ℕ) (fun _ => ℝ) (fun _ => ℝ)
 
 def actual : Realization signature :=
   realize signature (fun _ p ε => cliqueTreeRadius p.1 1 (p.2 / 2) * ε) (fun e => nomatch e)
@@ -101,7 +101,7 @@ abbrev arena : Arena where
     (g : V → V → E) (ε : ℝ) (_hε : 0 ≤ ε) (_hrev : ∀ i j, g j i = -g i j)
     (_htri : ∀ i j l, G.Adj i j → G.Adj j l → G.Adj i l →
       ‖g i j + g j l - g i l‖ ≤ ε),
-    ∃ φ : V → E, ∀ u v, G.Adj u v → ‖g u v - (φ v - φ u)‖ ≤ R.readout () (m, D) ε
+    ∃ φ : V → E, ∀ u v, G.Adj u v → ‖g u v - (φ v - φ u)‖ ≤ R.readout () ⟨m, D⟩ ε
 
 private theorem rejected_law : ¬ arena.{u, v, w}.Law rejected := by
   intro h
@@ -121,7 +121,7 @@ def family : Registration arena.{u, v, w}
   sensitivity := SingleDependentReadout.sensitivity arena.Law actual rejected rejected_law
   dependence := by
     intro _
-    refine ⟨(1, 0), 0, 1, ?_⟩
+    refine ⟨⟨1, 0⟩, 0, 1, ?_⟩
     norm_num [actual, realize, cliqueTreeRadius]
 
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
@@ -162,33 +162,17 @@ end Center
 
 namespace Midpoint
 
-structure Params where
-  vertices : Type u
-  bags : Type w
-  finiteBags : Finite bags
-  tree : SimpleGraph bags
-  clique : bags → Set vertices
+abbrev signature := SingleDependentReadout.signature ℝ (fun _ => ℝ) (fun _ => ℝ)
 
-abbrev signature : Signature where
-  Params := Params.{u, w}
-  State _ := ℝ
-  Role := Unit
-  finiteRole := inferInstance
-  nonemptyRole := inferInstance
-  Output _ _ := ℝ
-  Anchor := Empty
-  finiteAnchor := inferInstance
+def actual : Realization signature :=
+  realize signature (fun _ ε M => M * ε) (fun e => nomatch e)
 
-def actual : Realization signature.{u, w} :=
-  realize signature (fun _ p ε => @cliqueTreeMidpointCoeff _ _ p.finiteBags p.tree p.clique * ε)
-    (fun e => nomatch e)
-
-def rejected : Realization signature.{u, w} :=
+def rejected : Realization signature :=
   realize signature (fun _ _ _ => -1) (fun e => nomatch e)
 
 abbrev arena : Arena where
-  signature := signature.{u, w}
-  Law R := ∀ {V : Type u} [Finite V] {I : Type w} [fI : Finite I]
+  signature := signature
+  Law R := ∀ {V : Type u} [Finite V] {I : Type w} [Finite I]
     {T : SimpleGraph I} {G : SimpleGraph V} {K : I → Set V}
     (_hK : IsCliqueTree T G K) (_hs : ∀ a b, T.Adj a b → (K a ∩ K b).Nonempty)
     (_h₂ : ∀ x : V, {i : I | x ∈ K i}.ncard ≤ 2)
@@ -197,7 +181,7 @@ abbrev arena : Arena where
     (_htri : ∀ i j l, G.Adj i j → G.Adj j l → G.Adj i l →
       ‖g i j + g j l - g i l‖ ≤ ε),
     cliqueTreeMidpointCoeff T K < 3 ∧ ∃ φ : V → E, ∀ u v, G.Adj u v →
-      ‖g u v - (φ v - φ u)‖ ≤ R.readout () ⟨V, I, fI, T, K⟩ ε
+      ‖g u v - (φ v - φ u)‖ ≤ R.readout () ε (cliqueTreeMidpointCoeff T K)
 
 private theorem at_most_two (x : Pair.{u}) : {i : Root.{w} | x ∈ pairBag i}.ncard ≤ 2 := by
   have hs : {i : Root.{w} | x ∈ pairBag i} = Set.univ := by ext i; simp [pairBag]
@@ -212,52 +196,19 @@ private theorem rejected_law : ¬ arena.{u, v, w}.Law rejected := by
   change ‖(0 : ULift.{v} ℝ) - (φ b - φ a)‖ ≤ -1 at hn
   linarith [norm_nonneg ((0 : ULift.{v} ℝ) - (φ b - φ a))]
 
-private theorem positive (T : SimpleGraph Root.{w}) :
-    0 < cliqueTreeMidpointCoeff T (fun _ => (Set.univ : Set (ULift.{u} (Fin 3)))) := by
-  classical
-  let K : Root.{w} → Set (ULift.{u} (Fin 3)) := fun _ => Set.univ
-  have hcard : (K r).ncard = 3 := by
-    simp [K, Set.ncard_univ, Nat.card_eq_fintype_card]
-  have hpad : 0 ≤ CliqueTreeBanach.twoShifts T K r := by
-    unfold CliqueTreeBanach.twoShifts
-    apply Finset.le_max'
-    exact Finset.mem_insert_self ..
-  have hle : 1 - 2 / ((K r).ncard : ℝ) + CliqueTreeBanach.twoShifts T K r ≤
-      cliqueTreeMidpointCoeff T K := by
-    unfold cliqueTreeMidpointCoeff
-    apply Finset.le_max'
-    apply Finset.mem_insert_of_mem
-    refine Finset.mem_image.mpr ⟨r, ?_, rfl⟩
-    change r ∈ ({a : Root.{w} | 2 ≤ (K a).ncard} : Set Root.{w}).toFinite.toFinset
-    rw [Set.Finite.mem_toFinset]
-    change 2 ≤ (K r).ncard
-    rw [hcard]
-    decide
-  rw [hcard] at hle
-  linarith
-
 def family : Registration arena.{u, v, w}
     (type_of% (@cliqueTree_twoClique_midpoint_banach_potential.{u, v, w})) where
   actual := actual
   bridge := Iff.rfl
   variation := ⟨@cliqueTree_twoClique_midpoint_banach_potential.{u, v, w}, rejected, rejected_law⟩
-  sensitivity := by
-    constructor
-    · intro i
-      refine ⟨rejected, fun j hj => (hj (Subsingleton.elim j i)).elim, ?_, rejected_law⟩
-      funext e
-      exact nomatch e
-    · intro e
-      exact nomatch e
+  sensitivity := SingleDependentReadout.sensitivity arena.Law actual rejected rejected_law
   dependence := by
     intro _
-    refine ⟨⟨ULift.{u} (Fin 3), Root.{w}, inferInstance, ⊥, fun _ => Set.univ⟩, 0, 1, ?_⟩
-    simp only [actual, realize, mul_zero, mul_one]
-    exact (positive (⊥ : SimpleGraph Root.{w})).ne
+    exact ⟨1, 0, 1, by norm_num [actual, realize]⟩
 
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     (@cliqueTree_twoClique_midpoint_banach_potential.{u, v, w})
-    (Realization signature.{u, w}) Unit Unit where
+    (Realization signature) Unit Unit where
   unitName := `SimpleGraph.cliqueTree_twoClique_midpoint_banach_potential.__information_unit
   realizationName := `Reg.D5.S3.Combinatorics.Graph.Chordal.CliqueTreeBanachPotential.Midpoint.family
   realizationSource := none
@@ -277,13 +228,13 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   sourceSelection := some {
     owner := `D5.S3.Combinatorics.Graph.Chordal.CliqueTreeBanachPotential
     definition := none
-    coordinates := #[0, 2, 3, 4, 6]
+    coordinates := #[14]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body", "body",
         "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "arg", "body", "body", "body", "body", "arg"]
-      stateBinder := 14
+      stateBinder := 0
       functionOperand := false
-      stateOperand := none
+      stateOperand := some #["fn", "arg"]
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
