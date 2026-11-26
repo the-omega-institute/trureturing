@@ -1,6 +1,7 @@
 module
 import all Init.Data.String.Basic
 import all Init.Data.String.FindPos
+import all Init.Data.String.Lemmas.Order
 import all Init.Data.String.Lemmas.FindPos
 import all Init.Data.String.Pattern.Pred
 import all Init.Data.String.Defs
@@ -357,5 +358,25 @@ public theorem String.Slice.Pattern.CharPred.instLawfulBackwardPatternForallChar
     · rfl
     · rename_i ne
       exact isSomeWhen _ _
+
+public theorem String.Slice.posGE._unary._proof_1 : type_of% (private_decl% @_root_.String.Slice.posGE._unary._proof_1) := by
+  intro s p bound bad
+  exact Nat.lt_of_le_of_ne bound (fun eq => bad (String.Pos.Raw.ext eq ▸ s.endPos.isValidForSlice))
+
+public theorem String.Slice.posGE._unary._proof_2 : type_of% (private_decl% @_root_.String.Slice.posGE._unary._proof_2) := by
+  intro s p bound
+  exact bound
+
+public theorem String.Slice.posGE._unary._proof_3 : type_of% (private_decl% @_root_.String.Slice.posGE._unary._proof_3) := by
+  intro s p bound lt
+  exact Nat.sub_lt_sub_left lt (Nat.lt_succ_self p.byteIdx)
+
+public theorem String.Slice.posGE._unary._proof_4 : type_of% (private_decl% @_root_.String.Slice.posGE._unary._proof_4) :=
+  (private_decl% @_root_.String.Slice.posGE._unary._proof_1)
+
+public theorem String.Slice.Pos.startPos_lt_iff : type_of% @_root_.String.Slice.Pos.startPos_lt_iff := by
+  intro s p
+  exact ⟨fun lt eq => Nat.ne_of_lt lt (congrArg (fun q : s.Pos => q.offset.byteIdx) eq.symm),
+    fun ne => Nat.pos_of_ne_zero (fun eq => ne (String.Slice.Pos.ext (String.Pos.Raw.ext eq)))⟩
 
 end OmegaChecks.InitPort.Alternatives
