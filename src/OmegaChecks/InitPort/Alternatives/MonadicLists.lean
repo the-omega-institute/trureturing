@@ -474,4 +474,56 @@ public theorem Array.flatMapM_congr : type_of% @_root_.Array.flatMapM_congr := b
   rw [Array.flatMapM, Array.flatMapM, ← Array.foldlM_toList, ← Array.foldlM_toList]
   exact congrFun (foldActions (fun a => by rw [h a]) xs.toList) _
 
+
+public theorem Array.foldlM_map : type_of% @_root_.Array.foldlM_map := by
+  intro m β₁ β₂ α stop mon f g xs b w
+  subst stop
+  rw [← Array.foldlM_toList, ← Array.size_map (f := f) (xs := xs),
+    ← Array.foldlM_toList, Array.toList_map]
+  exact List.foldlM_map
+
+public theorem Array.foldrM_map : type_of% @_root_.Array.foldrM_map := by
+  intro m β₁ β₂ α start mon law f g xs b w
+  subst start
+  rw [← Array.foldrM_toList, ← Array.size_map (f := f) (xs := xs),
+    ← Array.foldrM_toList, Array.toList_map]
+  exact List.foldrM_map
+
+public theorem Array.foldlM_attachWith : type_of% @_root_.Array.foldlM_attachWith := by
+  intro m α β stop mon xs q h f b w
+  subst stop
+  rw [← Array.foldlM_toList, ← Array.size_attachWith (H := h), ← Array.foldlM_toList,
+    Array.toList_attachWith, Array.toList_attach, List.foldlM_attachWith, List.foldlM_attachWith]
+
+public theorem Array.foldrM_attachWith : type_of% @_root_.Array.foldrM_attachWith := by
+  intro m α β start mon law xs q h f b w
+  subst start
+  rw [← Array.foldrM_toList, ← Array.size_attachWith (H := h), ← Array.foldrM_toList,
+    Array.toList_attachWith, Array.toList_attach, List.foldrM_attachWith, List.foldrM_attachWith]
+
+public theorem Array.foldlM_unattach : type_of% @_root_.Array.foldlM_unattach := by
+  intros
+  rw [← Array.foldlM_toList, ← Array.foldlM_toList, Array.toList_unattach]
+  exact List.foldlM_unattach
+
+public theorem Array.foldrM_unattach : type_of% @_root_.Array.foldrM_unattach := by
+  intros
+  rw [← Array.foldrM_toList, ← Array.foldrM_toList, Array.toList_unattach]
+  exact List.foldrM_unattach
+
+public theorem Array.filterMapM_subtype : type_of% @_root_.Array.filterMapM_subtype := by
+  intro m α β stop mon law p xs f g h w
+  subst stop
+  rw [Array.filterMapM, Array.filterMapM, ← Array.foldlM_toList, ← Array.foldlM_toList, Array.toList_unattach]
+  unfold List.unattach
+  rw [List.foldlM_map]
+  exact congrFun (foldActions (fun a => by rw [h a.1 a.2]) xs.toList) _
+
+public theorem Array.flatMapM_subtype : type_of% @_root_.Array.flatMapM_subtype := by
+  intro m α β mon law p xs f g h
+  rw [Array.flatMapM, Array.flatMapM, ← Array.foldlM_toList, ← Array.foldlM_toList, Array.toList_unattach]
+  unfold List.unattach
+  rw [List.foldlM_map]
+  exact congrFun (foldActions (fun a => by rw [h a.1 a.2]) xs.toList) _
+
 end OmegaChecks.InitPort.Alternatives
