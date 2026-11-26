@@ -6,6 +6,7 @@ import all Init.Data.Array.Basic
 import all Init.Prelude
 import all Init.Data.Slice.Operations
 import all Init.Data.Iterators.Basic
+import all Init.Data.Iterators.Consumers.Monadic.Loop
 import all Init.Grind.Ring.Envelope
 
 public section
@@ -2289,6 +2290,26 @@ def limitedOmniscienceFromDefaultLoop (loop : type_of% (@Std.IteratorLoop.defaul
   letI : IteratorLoop α Id Id := .defaultImplementation
   exact Iter.length_toList_eq_length.symm
 
+/-- A default loop body that agrees on finite identity iterators can count all outputs
+before the first signal. -/
+def limitedOmniscienceFromDefaultForIn (run : type_of% @IterM.DefaultConsumers.forIn'.{0,0,0,0})
+    (correct : ∀ {α β : Type} [Iterator α Id β] [Finite α Id]
+      (lift : ∀ δ ε : Type, (δ → Id ε) → Id δ → Id ε) (γ : Type)
+      (Pl : β → γ → ForInStep γ → Prop) (it : IterM (α := α) Id β) (init : γ)
+      (step : (b : β) → it.IsPlausibleIndirectOutput b → (c : γ) → Id (Subtype (Pl b c))),
+      run lift γ Pl it init _ (fun _ => id) step =
+        IterM.DefaultConsumers.forIn' lift γ Pl it init _ (fun _ => id) step)
+    (f : Nat → Bool) : Decidable (∃ n, f n = true) := by
+  apply limitedOmniscienceFromLength (f := f) (fun {α β} [inst : Iterator α Id β] it =>
+    letI : IteratorLoop α Id Id :=
+      ⟨fun lift γ Pl it init => run lift γ Pl it init _ (fun _ => id)⟩
+    it.length)
+  intro α β inst finite it
+  letI : IteratorLoop α Id Id := .defaultImplementation
+  refine Eq.trans ?_ (Iter.length_toList_eq_length (it := it)).symm
+  apply congrArg ULift.down
+  apply correct
+
 /-- An array collector on unrestricted iterators also gives a list collector pointwise. -/
 def limitedOmniscienceFromArray (collect : type_of% (@Std.Iter.toArray.{0}))
     (correct : ∀ {α β : Type} [Iterator α Id β] [Finite α Id] (it : Iter (α := α) β),
@@ -2949,6 +2970,9 @@ private def conditionalConsequence? (owner name : Name) : Option (String × Name
     | `Init.Data.Iterators.Consumers.Access, ``Std.Iter.atIdxSlow? =>
       some (``OmegaChecks.InitBoundaries.Collector.limitedOmniscienceFromLookup,
         "the official result of the optional lookup at each natural index")
+    | `Init.Data.Iterators.Consumers.Monadic.Loop, ``Std.IterM.DefaultConsumers.forIn' =>
+      some (``OmegaChecks.InitBoundaries.Collector.limitedOmniscienceFromDefaultForIn,
+        "the official default for-in body on finite identity-monad iterators")
     | `Init.Data.Iterators.Consumers.Monadic.Loop, ``Std.IteratorLoop.defaultImplementation =>
       some (``OmegaChecks.InitBoundaries.Collector.limitedOmniscienceFromDefaultLoop,
         "the official result of the default identity-monad loop")
