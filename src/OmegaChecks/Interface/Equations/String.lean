@@ -79,10 +79,10 @@ public theorem String.Internal.anyImpl (s : String) (p : Char → Bool) :
 
 public theorem Substring.Raw.posOf (s : Substring.Raw) (c : Char) :
     OmegaChecks.InitPort.Alternatives.Substring.Raw.posOf s c = _root_.Substring.Raw.posOf s c := by
-  unfold OmegaChecks.InitPort.Alternatives.Substring.Raw.posOf _root_.Substring.Raw.posOf
-  cases s.toSlice? with
-  | none => rfl
-  | some t => exact firstCharOffset t c
+  have mapped : (s.toSlice?.map (fun t => OmegaChecks.InitPort.Alternatives.String.Internal.posOfImpl t.copy c)) =
+      s.toSlice?.map (fun t => (t.find c).offset) :=
+    Option.map_congr (fun t _ => firstCharOffset t c)
+  exact congrArg (fun out : Option String.Pos.Raw => out.getD ⟨s.bsize⟩) mapped
 
 public theorem Substring.Raw.any (s : Substring.Raw) (p : Char → Bool) :
     OmegaChecks.InitPort.Alternatives.Substring.Raw.any s p = _root_.Substring.Raw.any s p :=
