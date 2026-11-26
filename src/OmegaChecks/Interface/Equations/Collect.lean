@@ -3,6 +3,8 @@ module
 public import OmegaChecks.InitPort.Alternatives.Collect
 import all OmegaChecks.InitPort.Alternatives.Collect
 import all OmegaChecks.InitPort.Alternatives.IteratorSlice
+import all Init.Data.Slice.Array.Iterator
+import all Init.Data.Slice.List.Iterator
 import all Init.Data.Iterators.Consumers.Monadic.Collect
 import all Init.Data.Iterators.Combinators.Monadic.Take
 
@@ -72,5 +74,22 @@ public theorem instSliceSizeListSliceData (α : Type u) :
     | some n => min n s.internalRepresentation.list.length) = s.size
   rw [ListSlice.size_eq_length_toList, ListSlice.toList_eq]
   cases s.internalRepresentation.stop <;> simp [List.length_take]
+
+public theorem Array.instAppendSubarray {α : Type u} :
+    @OmegaChecks.InitPort.Alternatives.Array.instAppendSubarray α = @_root_.Array.instAppendSubarray α := by
+  change Append.mk _ = Append.mk _
+  congr 1
+
+public theorem List.instAppendListSlice {α : Type u} :
+    @OmegaChecks.InitPort.Alternatives.List.instAppendListSlice α = @_root_.List.instAppendListSlice α := by
+  change Append.mk _ = Append.mk _
+  congr 1
+  funext x y
+  change ((OmegaChecks.InitPort.Alternatives.listSliceContents x ++ OmegaChecks.InitPort.Alternatives.listSliceContents y).toSlice 0 _) =
+    (x.toList ++ y.toList).toSlice 0 _
+  rw [ListSlice.toList_eq (xs := x), ListSlice.toList_eq (xs := y)]
+  rcases x with ⟨⟨a, o⟩⟩
+  rcases y with ⟨⟨b, p⟩⟩
+  cases o <;> cases p <;> rfl
 
 end OmegaChecks.Interface.Equations

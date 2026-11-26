@@ -271,4 +271,19 @@ public theorem SubarrayIterator.instFinitelessRelation._proof_2 :
     omega
   · cases nextEq
 
+@[instance_reducible] public def Array.instAppendSubarray {α : Type u} : Append (Subarray α) where
+  append x y :=
+    let data := x.copy ++ y.copy
+    data.toSubarray 0 data.size
+
+private def listSliceContents {α : Type u} (s : ListSlice α) : List α :=
+  match s.internalRepresentation.stop with
+  | none => s.internalRepresentation.list
+  | some n => s.internalRepresentation.list.take n
+
+@[instance_reducible] public def List.instAppendListSlice {α : Type u} : Append (ListSlice α) where
+  append x y :=
+    let data := listSliceContents x ++ listSliceContents y
+    data.toSlice 0 data.length
+
 end OmegaChecks.InitPort.Alternatives
