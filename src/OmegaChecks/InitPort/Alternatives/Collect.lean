@@ -10,6 +10,8 @@ import all Init.Data.Iterators.Combinators.Monadic.Attach
 import Init.Data.Iterators.Lemmas.Combinators.Monadic.Attach
 public import Init.Data.Iterators.Lemmas.Combinators.Append
 public import Init.Data.Iterators.Lemmas.Combinators.FilterMap
+import all Init.Data.Iterators.Lemmas.Combinators.FilterMap
+import all Init.Data.Iterators.Lemmas.Combinators.Monadic.FilterMap
 import all Init.Data.Iterators.Combinators.Monadic.FilterMap
 import all Init.Data.Iterators.Consumers.Monadic.Total
 import all Init.Data.Iterators.Consumers.Total
@@ -144,6 +146,19 @@ public theorem Std.Iter.step_filterMapWithPostcondition : type_of% @_root_.Std.I
   rw [pure_bind]
   generalize Shrink.inflate (Iterator.step { internalState := it.internalState : IterM (α := α) Id β}) = q
   cases q using PlausibleIterStep.casesOn <;> rfl
+
+public theorem Std.Iter.step_filterMapM : type_of% @_root_.Std.Iter.step_filterMapM := by
+  intro α β inst it m n γ f mon att law lift
+  letI : MonadLift Id n := ⟨pure⟩
+  refine (_root_.Std.IterM.step_filterMapM (it := it.toIterM) (f := f)).trans ?_
+  dsimp only [Iter.step, liftM, monadLift, Id.run]
+  rw [pure_bind]
+  generalize it.toIterM.step.inflate = q
+  cases q using PlausibleIterStep.casesOn <;> try rfl
+  dsimp only [IterM.Step.toPure, IterStep.mapIterator]
+  congr 1
+  unfold _root_.Std.IterM.step_filterMapM.match_1 _root_.Std.Iter.step_filterMapM.match_1
+  rfl
 
 public theorem Std.Iter.step_map : type_of% @_root_.Std.Iter.step_map := by
   intro α β γ _ it f
