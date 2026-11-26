@@ -6,7 +6,6 @@
    utility: none
    digest: The actual inclusive positive zeta zero cutoff has a uniform Landau bound under RH. -/
 
-import OmegaBuild.Commands
 import D5.S3.Weil.ZetaExplicit.GoodHeights
 import D5.S3.Weil.Mertens.Cryptids.HorizontalBounds.Integral
 import D5.S3.Weil.ZetaExplicit.LandauLeftVertical
@@ -17,8 +16,6 @@ import D5.S3.Weil.Mertens.Cryptids.VonMangoldtCount.Foundation
 import D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower.SublinearOrder.RHHarmonicPairMoment
 
 /-! The finite Landau contour estimate for the actual multiplicity-weighted zeta spectrum. -/
-
-compile_only_with_mathlib
 
 namespace D5.S3.Weil.ZetaExplicit.LandauUniformCutoff
 
