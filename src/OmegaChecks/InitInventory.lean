@@ -1442,7 +1442,7 @@ public theorem fromStateTMonad
   funextFromEndomorphisms (viaState law)
 
 @[instance_reducible] private def attached {T : Type u} (f : T → T) : MonadAttach (ErrorM f) where
-  CanReturn {α} x a := match x with | .ok b => b = a | .error _ => False
+  CanReturn {_} x a := match x with | .ok b => b = a | .error _ => False
   attach x := match x with | .ok b => .ok ⟨b, rfl⟩ | .error e => .error e
 
 private theorem attachedLaw {T : Type u} (f : T → T) :
@@ -1710,6 +1710,53 @@ open Lean in
 run_cmd
   for n in [``fromMapInjectiveLeftInverse, ``fromMapInjectiveNonempty, ``fromMapInjectiveMonad] do
     unless (← collectAxioms n).isEmpty do throwError "map injectivity witness {n} uses axioms"
+
+/-- Shifting two witnesses makes consecutive applications of the pointwise identity observable. -/
+private def Window {T : Type u} (f : T → T) :=
+  (t : T) × {x : T // f t = x} × {x : T // f t = x}
+
+private def shift {T : Type u} {f : T → T} (w : Window f) : Window f :=
+  ⟨w.1, w.2.2, ⟨f w.1, rfl⟩⟩
+
+private theorem shift_eq {T : Type u} {f : T → T} (w : Window f) : shift w = w := by
+  rcases w with ⟨t, ⟨x, hx⟩, y, hy⟩
+  cases hx
+  cases hy
+  rfl
+
+private abbrev WindowM {T : Type u} (f : T → T) (α : Type u) := Except (Window f) α
+
+private def failure {T : Type u} {f g : T → T} (agree : ∀ t, f t = g t) :
+    StateT T (WindowM f) PUnit :=
+  fun t => .error ⟨t, ⟨g t, agree t⟩, ⟨g t, agree t⟩⟩
+
+private def readWindow {T : Type u} {f : T → T} (x : StateT T (WindowM f) PUnit) (t : T) : T :=
+  match x t with | .error w => w.2.1.val | .ok _ => t
+
+private theorem viaStateSeqLeft (law : type_of% @StateT.seqLeft_eq.{u,u})
+    {T : Type u} {f g : T → T} (agree : ∀ t, f t = g t) : f = g := by
+  letI := exceptionMonad (shift (f := f))
+  letI : LawfulMonad (WindowM f) := lawful shift shift_eq
+  exact (congrArg readWindow (law (failure agree) (failure agree))).symm
+
+private theorem viaStateSeqRight (law : type_of% @StateT.seqRight_eq.{u,u})
+    {T : Type u} {f g : T → T} (agree : ∀ t, f t = g t) : f = g := by
+  letI := exceptionMonad (shift (f := f))
+  letI : LawfulMonad (WindowM f) := lawful shift shift_eq
+  exact (congrArg readWindow (law (failure agree) (failure agree))).symm
+
+public theorem fromStateSeqLeft (law : type_of% @StateT.seqLeft_eq.{max 1 u v, max 1 u v}) :
+    type_of% @funext.{u,v} :=
+  funextFromEndomorphisms (viaStateSeqLeft law)
+
+public theorem fromStateSeqRight (law : type_of% @StateT.seqRight_eq.{max 1 u v, max 1 u v}) :
+    type_of% @funext.{u,v} :=
+  funextFromEndomorphisms (viaStateSeqRight law)
+
+open Lean in
+run_cmd
+  for n in [``fromStateSeqLeft, ``fromStateSeqRight] do
+    unless (← collectAxioms n).isEmpty do throwError "state sequencing witness {n} uses axioms"
 
 end TransformerLaws
 
@@ -2504,6 +2551,10 @@ private def logicalConsequence? (owner name : Name) : Option (Name × Name) := d
     return (``funext, ``OmegaChecks.InitBoundaries.TransformerLaws.fromStateCpsLift)
   | `Init.Control.Lawful.MonadLift.Instances, ``ExceptCpsT.instLawfulMonadLiftOfLawfulMonad =>
     return (``funext, ``OmegaChecks.InitBoundaries.TransformerLaws.fromExceptCpsLift)
+  | `Init.Control.Lawful.Instances, ``StateT.seqLeft_eq =>
+    return (``funext, ``OmegaChecks.InitBoundaries.TransformerLaws.fromStateSeqLeft)
+  | `Init.Control.Lawful.Instances, ``StateT.seqRight_eq =>
+    return (``funext, ``OmegaChecks.InitBoundaries.TransformerLaws.fromStateSeqRight)
   | `Init.Control.Lawful.Basic, ``LawfulMonad.mk' =>
     return (``funext, ``OmegaChecks.InitBoundaries.TransformerLaws.fromMonadConstructor)
   | `Init.Control.Lawful.Lemmas, ``map_inj_of_left_inverse =>
