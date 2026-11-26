@@ -8,6 +8,18 @@ import all Init.Data.Array.Attach
 /-! Membership and projection laws for arrays and vectors carrying proofs on their elements. -/
 namespace OmegaChecks.InitPort.Alternatives
 
+@[expose] public def List.pmapImpl : type_of% @_root_.List.pmapImpl := @_root_.List.pmap
+
+public theorem List.pmap_eq_pmapImpl : @_root_.List.pmap = @List.pmapImpl := rfl
+
+@[expose] public def Array.pmapImpl : type_of% @_root_.Array.pmapImpl := @_root_.Array.pmap
+
+public theorem Array.pmap_eq_pmapImpl : @_root_.Array.pmap = @Array.pmapImpl := rfl
+
+@[expose] public def Vector.pmapImpl : type_of% @_root_.Vector.pmapImpl := @_root_.Vector.pmap
+
+public theorem Vector.pmap_eq_pmapImpl : @_root_.Vector.pmap = @Vector.pmapImpl := rfl
+
 public theorem Array.attach_congr : type_of% @_root_.Array.attach_congr := by
   intro α xs ys h
   subst ys

@@ -2,6 +2,7 @@ module
 
 public import Init.Data.Array.Lemmas
 public import Init.Data.Vector.Lex
+public import Init.Data.Vector.Attach
 public import OmegaChecks.InitPort.Alternatives.ByteArray
 import all OmegaChecks.InitPort.Alternatives.ByteArray
 
@@ -12,6 +13,21 @@ namespace OmegaChecks.Interface.Equations
 public theorem ByteArray.fastAppend (a b : ByteArray) :
     OmegaChecks.InitPort.Alternatives.ByteArray.fastAppend a b = a.fastAppend b :=
   _root_.ByteArray.fastAppend_eq.symm
+
+public theorem List.pmapImpl {α : Type u} {β : Type v} {P : α → Prop}
+    (f : ∀ a, P a → β) (xs : List α) (h : ∀ a ∈ xs, P a) :
+    _root_.List.pmap f xs h = _root_.List.pmapImpl f xs h := by
+  rw [_root_.List.pmap_eq_pmapImpl]
+
+public theorem Array.pmapImpl {α : Type u} {β : Type v} {P : α → Prop}
+    (f : ∀ a, P a → β) (xs : Array α) (h : ∀ a ∈ xs, P a) :
+    _root_.Array.pmap f xs h = _root_.Array.pmapImpl f xs h := by
+  rw [_root_.Array.pmap_eq_pmapImpl]
+
+public theorem Vector.pmapImpl {α : Type u} {β : Type v} {n : Nat} {P : α → Prop}
+    (f : ∀ a, P a → β) (xs : Vector α n) (h : ∀ a ∈ xs, P a) :
+    _root_.Vector.pmap f xs h = _root_.Vector.pmapImpl f xs h := by
+  rw [_root_.Vector.pmap_eq_pmapImpl]
 
 public theorem Array.lex {α : Type u} [BEq α] (xs ys : Array α) (lt : α → α → Bool) :
     xs.toList.lex ys.toList lt = xs.lex ys lt := _root_.Array.lex_toList
