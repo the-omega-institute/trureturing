@@ -358,23 +358,18 @@ section Coefficients
 variable {A B X S : Type} [Fintype A] [DecidableEq A] [Fintype B] [DecidableEq B]
   [Fintype X] [DecidableEq X] [Fintype S] [DecidableEq S]
 
-private theorem preparation_coefficient_le (N : QuantumChannel A B)
+private theorem preparation_witness (N : QuantumChannel A B)
     (P : QuantumChannel X (S × A)) (C : QuantumChannel X (S × B))
     (β : X → DensityState (S × A))
     (hP : ∀ Z, act P Z = ∑ i, Z i i • pairMatrix (β i))
     (hC : ∀ Z, act C Z = ∑ i, Z i i • pairMatrix (referenceState N (β i)))
-    (ω : Matrix S S ℂ) (hω : ∀ i, ptr (pairMatrix (β i)) = ω) (γ : ℝ) :
-    completeCoefficient C γ false ≤ completeCoefficient N γ false := by
-  have hbdd : BddAbove (insert 0 (completeRatios N γ false)) :=
-    ⟨1, fun _ h => ratio_le_one N γ false h⟩
-  have hn : 0 ≤ completeCoefficient N γ false := le_csSup hbdd (Set.mem_insert _ _)
-  apply csSup_le ⟨0, Set.mem_insert _ _⟩
-  intro x hx
-  rcases Set.mem_insert_iff.mp hx with rfl | hx
-  · exact hn
-  rcases hx with ⟨R, fR, dR, ρ, σ, hρ, htρ, hσ, htσ, hm, _, ha, rfl⟩
-  let := fR
-  let := dR
+    (ω : Matrix S S ℂ) (hω : ∀ i, ptr (pairMatrix (β i)) = ω) (γ : ℝ)
+    {R : Type} [Fintype R] [DecidableEq R] {ρ σ : Matrix (R × X) (R × X) ℂ}
+    (hρ : ρ.PosSemidef) (htρ : ρ.trace = 1) (hσ : σ.PosSemidef) (htσ : σ.trace = 1)
+    (hm : ptr ρ = ptr σ) :
+    ∃ ρ' σ' : Matrix ((R × S) × A) ((R × S) × A) ℂ,
+      ρ'.PosSemidef ∧ ρ'.trace = 1 ∧ σ'.PosSemidef ∧ σ'.trace = 1 ∧ ptr ρ' = ptr σ' ∧
+      E γ ρ' σ' ≤ E γ ρ σ ∧ E γ (amp N ρ') (amp N σ') = E γ (amp C ρ) (amp C σ) := by
   let e := (Equiv.prodAssoc R S A).symm
   let f := (Equiv.prodAssoc R S B).symm
   let ρ' := (amp P ρ).reindex e e
@@ -392,28 +387,24 @@ private theorem preparation_coefficient_le (N : QuantumChannel A B)
     change E γ (amp N ((amp P ρ).reindex e e)) (amp N ((amp P σ).reindex e e)) = _
     rw [preparation_output N P C β hP hC, preparation_output N P C β hP hC]
     exact E_reindex_eq f γ (amp_psd C hρ) (amp_psd C hσ)
-  by_cases hc : 0 < E γ (amp C ρ) (amp C σ)
-  · have hb : 0 < E γ ρ' σ' :=
-      (he.symm ▸ hc).trans_le (E_contract N γ hρ' hσ')
-    have hratio : E γ (amp N ρ') (amp N σ') / E γ ρ' σ' ∈ completeRatios N γ false :=
-      ⟨R × S, inferInstance, inferInstance, ρ', σ', hρ', htρ', hσ', htσ', hm',
-        by simp, hb, rfl⟩
-    calc
-      _ ≤ E γ (amp C ρ) (amp C σ) / E γ ρ' σ' :=
-        div_le_div_of_nonneg_left hc.le hb hba
-      _ = E γ (amp N ρ') (amp N σ') / E γ ρ' σ' := by rw [he]
-      _ ≤ completeCoefficient N γ false := le_csSup hbdd (Set.mem_insert_of_mem _ hratio)
-  · exact (div_nonpos_of_nonpos_of_nonneg (le_of_not_gt hc) ha.le).trans hn
+  exact ⟨ρ', σ', hρ', htρ', hσ', htσ', hm', hba, he⟩
 
 set_option maxHeartbeats 600000 in
 -- The two factor orders and inferred finite product instances require extra elaboration.
-/-- At every fixed parameter strictly greater than one, a finite channel has complete
-hockey-stick coefficient one if its normalized Choi support contains no full reference
-factor over a nonzero output vector. -/
-theorem result [Nonempty A] (N : QuantumChannel A B) (γ : ℝ) (hγ : 1 < γ)
+/-- If the normalized Choi support contains no full reference factor over a nonzero output
+vector, a fixed finite reference admits equal-marginal witnesses at every sufficiently small
+positive input budget. -/
+theorem exists_budget_witness [Nonempty A] (N : QuantumChannel A B) (γ : ℝ) (hγ : 1 < γ)
     (hS : ∀ v : B → ℂ, (∀ i : A, (fun p : A × B => if p.1 = i then v p.2 else 0) ∈
       (pairMatrix (normalizedChoi N)).mulVecLin.range) → v = 0) :
-    completeCoefficient N γ false = 1 := by
+    ∃ (R : Type) (fR : Fintype R) (dR : DecidableEq R),
+      letI := fR
+      letI := dR
+      ∃ δ D : ℝ, 0 < δ ∧ 0 ≤ D ∧ ∀ a : ℝ, 0 < a → a ≤ δ →
+        ∃ ρ σ : Matrix (R × A) (R × A) ℂ,
+          ρ.PosSemidef ∧ ρ.trace = 1 ∧ σ.PosSemidef ∧ σ.trace = 1 ∧ ptr ρ = ptr σ ∧
+          0 < E γ ρ σ ∧ E γ ρ σ ≤ a ∧
+          a / (1 + D * a) ≤ E γ (amp N ρ) (amp N σ) := by
   classical
   let J := pairMatrix (normalizedChoi N)
   have hJ : J.trace = 1 := (normalizedChoi N).2.2
@@ -447,13 +438,54 @@ theorem result [Nonempty A] (N : QuantumChannel A B) (γ : ℝ) (hγ : 1 < γ)
     apply bot_unique
     rw [← ht]
     exact Finset.le_inf fun U hU => iInf_le _ (some (⟨U, hU⟩ : ↥t))
-  have hc := CompleteHockeyStickBasisSupport.result C ⟨U₀, hU₀⟩ γ hγ hs
-  have hle := preparation_coefficient_le (S := A) N P C β hP hC
-    ((Fintype.card A : ℂ)⁻¹ • (1 : Matrix A A ℂ))
-    (fun i => translatedBell_marginal (label i)) γ
-  rw [hc] at hle
-  apply le_antisymm _ hle
-  exact csSup_le ⟨0, Set.mem_insert _ _⟩ (fun _ h => ratio_le_one N γ false h)
+  obtain ⟨δ, D, hδ, hD, hWitness⟩ :=
+    CompleteHockeyStickBasisSupport.exists_budget_witness C ⟨U₀, hU₀⟩ γ hγ hs
+  refine ⟨Option (↥t) × A, inferInstance, inferInstance, δ, D, hδ, hD, ?_⟩
+  intro a ha hsmall
+  obtain ⟨ρ, σ, hρ, htρ, hσ, htσ, hm, hinput, hpay⟩ := hWitness a ha hsmall
+  obtain ⟨ρ', σ', hρ', htρ', hσ', htσ', hm', hba, he⟩ :=
+    preparation_witness (S := A) N P C β hP hC
+      ((Fintype.card A : ℂ)⁻¹ • (1 : Matrix A A ℂ))
+      (fun i => translatedBell_marginal (label i)) γ hρ htρ hσ htσ hm
+  have hpay' := hpay.trans he.symm.le
+  have hden : 0 < 1 + D * a := by positivity
+  have hpositive := ((div_pos ha hden).trans_le hpay').trans_le (E_contract N γ hρ' hσ')
+  exact ⟨ρ', σ', hρ', htρ', hσ', htσ', hm', hpositive, hba.trans hinput.le, hpay'⟩
+
+/-- At every fixed parameter strictly greater than one, a finite channel has complete
+hockey-stick coefficient one if its normalized Choi support contains no full reference
+factor over a nonzero output vector. -/
+theorem result [Nonempty A] (N : QuantumChannel A B) (γ : ℝ) (hγ : 1 < γ)
+    (hS : ∀ v : B → ℂ, (∀ i : A, (fun p : A × B => if p.1 = i then v p.2 else 0) ∈
+      (pairMatrix (normalizedChoi N)).mulVecLin.range) → v = 0) :
+    completeCoefficient N γ false = 1 := by
+  obtain ⟨R, fR, dR, δ, D, hδ, hD, hWitness⟩ := exists_budget_witness N γ hγ hS
+  letI := fR
+  letI := dR
+  have hBound : BddAbove (insert 0 (completeRatios N γ false)) :=
+    ⟨1, fun _ h => ratio_le_one N γ false h⟩
+  apply le_antisymm (csSup_le ⟨0, Set.mem_insert _ _⟩ fun _ h => ratio_le_one N γ false h)
+  apply le_of_forall_lt_imp_le_of_dense
+  intro t ht
+  have hD₁ : 0 < 1 + D := by positivity
+  let a := min δ ((1 - t) / (1 + D))
+  have ha : 0 < a := lt_min hδ (div_pos (sub_pos.mpr ht) hD₁)
+  have hscale : a * (1 + D) ≤ 1 - t :=
+    (le_div_iff₀ hD₁).mp (min_le_right _ _)
+  have hden : 0 < 1 + D * a := by positivity
+  have hfac : t ≤ (1 + D * a)⁻¹ := by
+    rw [← one_div, le_div_iff₀ hden]
+    have hDa : D * a ≤ 1 - t := by nlinarith only [hscale, ha.le]
+    nlinarith only [hDa, mul_nonneg (sub_nonneg.mpr ht.le) (mul_nonneg hD ha.le)]
+  obtain ⟨ρ, σ, hρ, htρ, hσ, htσ, hm, hx, hinput, hpay⟩ :=
+    hWitness a ha (min_le_left _ _)
+  have hratio : E γ (amp N ρ) (amp N σ) / E γ ρ σ ∈ completeRatios N γ false :=
+    ⟨R, fR, dR, ρ, σ, hρ, htρ, hσ, htσ, hm, by simp, hx, rfl⟩
+  refine hfac.trans ((le_div_iff₀ hx).mpr ?_) |>.trans
+    (le_csSup hBound (Set.mem_insert_of_mem _ hratio))
+  calc
+    _ ≤ (1 + D * a)⁻¹ * a := mul_le_mul_of_nonneg_left hinput (inv_nonneg.mpr hden.le)
+    _ ≤ _ := by simpa only [div_eq_mul_inv, mul_comm a] using hpay
 
 open private posTrace_mono from D5.S3.Quantum.Divergence.CompleteHockeyStickRefutation
 open private posTrace_smul from
