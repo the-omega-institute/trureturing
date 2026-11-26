@@ -6,7 +6,7 @@ internal sealed class ChiralAnomalyRigidity4DDocument : IScribeDocumentDefinitio
 {
     private const string Prefix = "D5/S3/Quantum/Gauge/ChiralAnomalyRigidity4D.";
     private static readonly AssessedProvenance MajoranaSource =
-        AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/LieTheory/babumohapatra1989majorana"));
+        AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/LieTheory/babumohapatra1989majorana"));
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Local anomaly cancellation, charge quantization, and Weyl traces for one generation.",
@@ -46,15 +46,14 @@ internal sealed class ChiralAnomalyRigidity4DDocument : IScribeDocumentDefinitio
                 "convention.", MajoranaSource),
             Node("majorana-quantization", "majorana_restores_charge_quantization", "Majorana quantization",
                 "For n ≥ 1, the anomalies, Dirac Yukawa equations, and Majorana equation " +
-                "2y_n = 0 hold exactly when y = Π₊(h/n, −h). The Majorana equation sets ε = 0.",
+                "2y_n = 0 hold exactly when y = Π₊(h/n, −h). The Majorana equation sets ε = 0. " +
+                "At h = 1/2 these give particle charges ((n + 1)/(2n), −(n − 1)/(2n), 0, −1) " +
+                "and generation sum zero.",
                 MajoranaSource),
             Node("dirac-electric-charges", "dirac_family_electric_charges", "The electric charges along the Dirac family",
                 "At h = 1/2 and n ≥ 1, the particle charges u, d, ν, e are " +
                 "((n + 1)/(2n) + ε/n, −(n − 1)/(2n) + ε/n, −ε, −1 − ε). " +
                 "The generation sum n(Q_u + Q_d) + Q_ν + Q_e vanishes for every ε."),
-            Node("quantized-electric-charges", "quantized_electric_charges", "The quantized electric charges",
-                "At h = 1/2 and n ≥ 1, Y₀ has particle charges " +
-                "((n + 1)/(2n), −(n − 1)/(2n), 0, −1) and generation sum zero."),
             Node("fixed-quark-rigidity", "quark_charges_uniquely_select_nc_three", "Three colors from fixed quark weights",
                 "For n ≥ 1, set (y_Q, y_u, y_d) = (1/6, −2/3, 1/3) and y_n = 0. " +
                 "The anomalies vanish exactly when n = 3, y_L = −1/2, and y_e = 1. " +
@@ -65,6 +64,7 @@ internal sealed class ChiralAnomalyRigidity4DDocument : IScribeDocumentDefinitio
                 "For n ≥ 1 and h = 1/2, the one-generation Weyl traces at Y₀ are " +
                 "Tr(T_c²) = 2, Tr(T₃²) = (n + 1)/2, Tr(T₃Y) = 0, " +
                 "Tr(Y²) = (n + 1)(n + 2)/(2n), and Tr(Q²) = (n + 1)²/n. " +
+                "The mixed trace vanishes for every hypercharge assignment. " +
                 "Use fundamental color normalization 1/2, continued algebraically to n = 1. " +
                 "The ratio Tr(T₃²)/(Tr(T₃²) + Tr(Y²)) gives the curve s_anom(n) = n/(2(n + 1))."),
             Node("equal-color-weak-traces", "weyl_arc_trace_nc_three_and_weinberg_angle",

@@ -8,8 +8,8 @@
 
 import OmegaBuild.Commands
 import D5.S3.Quantum.Gauge.FiniteSpectralTripleSM
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.LinearCombination
+
+/-! # Chiral anomalies and charge rigidity in four dimensions -/
 
 compile_only_with_mathlib
 
@@ -69,7 +69,7 @@ private theorem eq_linear_family (Nc : ℕ) (y : Hypercharges K)
   rcases y with ⟨a, u, d, l, e, n⟩
   simp only [suN_anomaly, su2_anomaly, grav_anomaly] at hc hw hg
   simp only [linearFamily, Hypercharges.mk.injEq]
-  refine ⟨rfl, by ring, ?_, ?_, by ring, ?_⟩
+  refine ⟨trivial, by ring, ?_, ?_, by ring, ?_⟩
   · linear_combination hc
   · linear_combination hw
   · linear_combination hg - (Nc : K) * hc - 2 * hw
@@ -147,7 +147,7 @@ theorem anomaly_free_lines_without_nuR_iff (Nc : ℕ) (hNc : 1 ≤ Nc) (y : Hype
       left
       refine ⟨a, ?_⟩
       simp only [ht, piPlus, Hypercharges.mk.injEq]
-      exact ⟨rfl, by ring, by ring, rfl, by ring, by ring⟩
+      exact ⟨trivial, by ring, by ring, trivial, by ring, by ring⟩
     · have ht : t = (Nc : K) * a := by
         change (Nc : K) * a - t = 0 at hn
         linear_combination -hn
@@ -155,7 +155,7 @@ theorem anomaly_free_lines_without_nuR_iff (Nc : ℕ) (hNc : 1 ≤ Nc) (y : Hype
       left
       refine ⟨a, ?_⟩
       simp only [ht, piMinus, linearFamily, Hypercharges.mk.injEq]
-      exact ⟨rfl, by ring, by ring, rfl, by ring, by ring⟩
+      exact ⟨trivial, by ring, by ring, trivial, by ring, by ring⟩
     · right
       right
       have hc : c = 0 := neg_eq_zero.mp hn
@@ -163,10 +163,10 @@ theorem anomaly_free_lines_without_nuR_iff (Nc : ℕ) (hNc : 1 ≤ Nc) (y : Hype
   · rintro (⟨a, rfl⟩ | ⟨a, rfl⟩ | ⟨b, rfl⟩)
     · refine ⟨Or.inl ⟨a, -(Nc : K) * a, ?_⟩, rfl⟩
       simp only [piPlus, Hypercharges.mk.injEq]
-      exact ⟨rfl, by ring, by ring, rfl, by ring, by ring⟩
+      exact ⟨trivial, by ring, by ring, trivial, by ring, by ring⟩
     · refine ⟨Or.inr (Or.inl ⟨a, (Nc : K) * a, ?_⟩), rfl⟩
       simp only [piMinus, linearFamily, Hypercharges.mk.injEq]
-      exact ⟨rfl, by ring, by ring, rfl, by ring, by ring⟩
+      exact ⟨trivial, by ring, by ring, trivial, by ring, by ring⟩
     · exact ⟨Or.inr (Or.inr ⟨b, 0, rfl⟩), neg_zero⟩
 
 def DiracYukawa (h : K) (y : Hypercharges K) : Prop :=
@@ -200,7 +200,7 @@ private theorem bl_family_eq_pi_plus (Nc : ℕ) (hNc : 1 ≤ Nc) (h eps : K) :
   have hn : (Nc : K) ≠ 0 := color_count_ne_zero hNc
   simp only [blFamily, quantized, piPlus, Hypercharges.mk.injEq, add_div,
     mul_add, mul_div_cancel₀ _ hn, neg_mul]
-  exact ⟨rfl, by ring, by ring, by ring, by ring, by ring⟩
+  exact ⟨trivial, by ring, by ring, by ring, by ring, by ring⟩
 
 theorem dirac_yukawa_bl_family_iff (Nc : ℕ) (hNc : 1 ≤ Nc) (h : K) (y : Hypercharges K) :
     AnomalyFree Nc y ∧ DiracYukawa h y ↔ ∃! eps : K, y = blFamily Nc h eps := by
@@ -213,14 +213,16 @@ theorem dirac_yukawa_bl_family_iff (Nc : ℕ) (hNc : 1 ≤ Nc) (h : K) (y : Hype
       rcases hy with ⟨hu, hd, he, hn'⟩
       simp only [su2_anomaly] at hw
       simp only [piPlus, Hypercharges.mk.injEq]
-      exact ⟨rfl, by linear_combination hu, by linear_combination hd,
+      exact ⟨trivial, by linear_combination hu, by linear_combination hd,
         by linear_combination hw, by linear_combination he - hw,
         by linear_combination hn' - hw⟩
     refine ⟨(Nc : K) * y.yQ - h, ?_, ?_⟩
-    · rw [bl_family_eq_pi_plus Nc hNc, show h + ((Nc : K) * y.yQ - h) = y.yQ * Nc by ring,
+    · change y = blFamily Nc h ((Nc : K) * y.yQ - h)
+      rw [bl_family_eq_pi_plus Nc hNc, show h + ((Nc : K) * y.yQ - h) = y.yQ * Nc by ring,
         mul_div_cancel_right₀ _ hn]
       exact hform
     · intro eps heps
+      change y = blFamily Nc h eps at heps
       have hq := congrArg Hypercharges.yQ heps
       rw [bl_family_eq_pi_plus Nc hNc] at hq
       change y.yQ = (h + eps) / (Nc : K) at hq
@@ -271,13 +273,6 @@ theorem dirac_family_electric_charges (Nc : ℕ) (hNc : 1 ≤ Nc) (eps : K) :
   refine ⟨⟨?_, ?_, by ring, by ring⟩, ?_⟩ <;>
     field_simp <;> ring
 
-theorem quantized_electric_charges (Nc : ℕ) (hNc : 1 ≤ Nc) :
-    electricCharges (quantized Nc (1 / 2 : K)) =
-      ⟨((Nc : K) + 1) / (2 * Nc), -((Nc : K) - 1) / (2 * Nc), 0, -1⟩ ∧
-    let q := electricCharges (quantized Nc (1 / 2 : K))
-    (Nc : K) * (q.up + q.down) + q.neutrino + q.electron = 0 := by
-  simpa [blFamily] using dirac_family_electric_charges Nc hNc (0 : K)
-
 def fixedQuarks (l e : K) : Hypercharges K := ⟨1 / 6, -2 / 3, 1 / 3, l, e, 0⟩
 
 theorem quark_charges_uniquely_select_nc_three (Nc : ℕ) (hNc : 1 ≤ Nc) (l e : K) :
@@ -314,11 +309,6 @@ def spectralHypercharges : Hypercharges ℚ :=
   let y := FiniteSpectralTripleSM.hypercharge
   ⟨y .QL, y .uc, y .dc, y .LL, y .ec, y .nuc⟩
 
-private theorem spectral_hypercharges_eq_fixed :
-    spectralHypercharges = fixedQuarks (-1 / 2) 1 := by
-  obtain ⟨hq, hu, hd, hl, he, hn⟩ := FiniteSpectralTripleSM.hypercharge_table
-  simp [spectralHypercharges, fixedQuarks, hq, hu, hd, hl, he, hn]
-
 /-- Four color copies of the trace of a normalized fundamental generator squared.
 At one color this formula is an algebraic extension of the trace normalization. -/
 def traceColorSq (K : Type*) [Field K] : K := 4 * (1 / 2)
@@ -348,7 +338,7 @@ def sinSqFixed (K : Type*) [Field K] (Nc : ℕ) : K :=
 theorem weyl_traces_quantized (Nc : ℕ) (hNc : 1 ≤ Nc) :
     let y := quantized Nc (1 / 2 : K)
     traceColorSq K = 2 ∧ traceWeakSq K Nc = ((Nc : K) + 1) / 2 ∧
-      traceWeakY Nc y = 0 ∧
+      (∀ z : Hypercharges K, traceWeakY Nc z = 0) ∧
       traceYSq Nc y = ((Nc : K) + 1) * ((Nc : K) + 2) / (2 * Nc) ∧
       traceElectricSq Nc y = ((Nc : K) + 1) ^ 2 / Nc ∧
       traceWeakSq K Nc / (traceWeakSq K Nc + traceYSq Nc y) = sinSqAnomaly K Nc := by
@@ -361,14 +351,14 @@ theorem weyl_traces_quantized (Nc : ℕ) (hNc : 1 ≤ Nc) :
     field_simp
     ring
   refine ⟨by norm_num [traceColorSq], hweak, ?_, hy, ?_, ?_⟩
-  · unfold traceWeakY
+  · intro z
+    unfold traceWeakY
     ring
-  · simp only [traceElectricSq, (quantized_electric_charges (K := K) Nc hNc).1,
-      quantized, piPlus, mul_div_cancel₀ _ hn]
+  · simp only [traceElectricSq, electricCharges, quantized, piPlus, neg_mul,
+      mul_div_cancel₀ _ hn]
     field_simp
     ring
-  · dsimp only
-    rw [hweak, hy]
+  · rw [hweak, hy]
     have hsum : ((Nc : K) + 1) / 2 +
         ((Nc : K) + 1) * ((Nc : K) + 2) / (2 * Nc) = ((Nc : K) + 1) ^ 2 / Nc := by
       field_simp
@@ -378,27 +368,31 @@ theorem weyl_traces_quantized (Nc : ℕ) (hNc : 1 ≤ Nc) :
     field_simp
 
 theorem weyl_arc_trace_nc_three_and_weinberg_angle (Nc : ℕ) :
-    traceWeakSq K Nc = traceColorSq K ↔
-      Nc = 3 ∧
+    (traceWeakSq K Nc = traceColorSq K ↔ Nc = 3) ∧
+    (Nc = 3 →
       traceYSq Nc (quantized Nc (1 / 2 : K)) / traceWeakSq K Nc = 5 / 3 ∧
-      sinSqAnomaly K Nc = 3 / 8 := by
+      sinSqAnomaly K Nc = 3 / 8) := by
   constructor
-  · intro h
-    have hcast : (Nc : K) = 3 := by
-      unfold traceWeakSq traceColorSq at h
-      linear_combination 2 * h
-    have hthree : Nc = 3 := by exact_mod_cast hcast
-    subst Nc
+  · constructor
+    · intro h
+      have hcast : (Nc : K) = 3 := by
+        unfold traceWeakSq traceColorSq at h
+        linear_combination 2 * h
+      exact_mod_cast hcast
+    · rintro rfl
+      norm_num [traceWeakSq, traceColorSq]
+  · rintro rfl
     norm_num [traceYSq, quantized, piPlus, traceWeakSq, sinSqAnomaly]
-  · rintro ⟨rfl, _, _⟩
-    norm_num [traceWeakSq, traceColorSq]
 
 /-- The fixed-charge benchmark keeps the standard quark and lepton weights while
 varying the number of quark colors. -/
 theorem fixed_charge_weak_mixing (Nc : ℕ) :
     traceWeakSq ℚ Nc / (traceWeakSq ℚ Nc + traceYSq Nc spectralHypercharges) =
       sinSqFixed ℚ Nc := by
-  rw [spectral_hypercharges_eq_fixed]
+  obtain ⟨hq, hu, hd, hl, he, hn⟩ := FiniteSpectralTripleSM.hypercharge_table
+  have htable : spectralHypercharges = fixedQuarks (-1 / 2) 1 := by
+    simp [spectralHypercharges, fixedQuarks, hq, hu, hd, hl, he, hn]
+  rw [htable]
   have hsum : traceWeakSq ℚ Nc + traceYSq Nc (fixedQuarks (-1 / 2) (1 : ℚ)) =
       (2 / 9) * (9 + 5 * (Nc : ℚ)) := by
     simp only [traceWeakSq, traceYSq, fixedQuarks]
@@ -407,7 +401,7 @@ theorem fixed_charge_weak_mixing (Nc : ℕ) :
   rw [hsum]
   unfold traceWeakSq sinSqFixed
   field_simp
-  <;> ring
+  ring
 
 theorem weinberg_angle_difference (Nc : ℕ) :
     sinSqAnomaly K Nc - sinSqFixed K Nc =
@@ -416,17 +410,30 @@ theorem weinberg_angle_difference (Nc : ℕ) :
   have hden : (9 + 5 * (Nc : K)) ≠ 0 := by
     exact_mod_cast (show 9 + 5 * Nc ≠ 0 by omega)
   unfold sinSqAnomaly sinSqFixed
-  field_simp
-  ring
+  have hleft : 2 * ((Nc : K) + 1) ≠ 0 := mul_ne_zero (by norm_num) hsucc
+  have hright : 4 * (9 + 5 * (Nc : K)) ≠ 0 := mul_ne_zero (by norm_num) hden
+  rw [div_sub_div _ _ hleft hright]
+  have hnum : (Nc : K) * (4 * (9 + 5 * Nc)) -
+      2 * ((Nc : K) + 1) * (9 * ((Nc : K) + 1)) =
+        2 * (((Nc : K) - 3) * ((Nc : K) + 3)) := by ring
+  rw [hnum, show 2 * ((Nc : K) + 1) * (4 * (9 + 5 * Nc)) =
+    2 * (4 * ((Nc : K) + 1) * (9 + 5 * Nc)) by ring]
+  rw [mul_div_mul_left _ _ (by norm_num : (2 : K) ≠ 0)]
 
 theorem weinberg_angle_intersection_iff (Nc : ℕ) :
-    sinSqAnomaly K Nc = sinSqFixed K Nc ↔ Nc = 3 := by
+    sinSqAnomaly K Nc = sinSqFixed K Nc ↔ Nc = 3 ∧ sinSqAnomaly K Nc = 3 / 8 := by
   rw [← sub_eq_zero, weinberg_angle_difference]
   have hsucc : (Nc : K) + 1 ≠ 0 := by exact_mod_cast Nat.succ_ne_zero Nc
   have hden : (9 + 5 * (Nc : K)) ≠ 0 := by exact_mod_cast (show 9 + 5 * Nc ≠ 0 by omega)
   have hplus : (Nc : K) + 3 ≠ 0 := by exact_mod_cast (show Nc + 3 ≠ 0 by omega)
   rw [div_eq_zero_iff, or_iff_left (mul_ne_zero (mul_ne_zero (by norm_num) hsucc) hden),
     mul_eq_zero, or_iff_left hplus, sub_eq_zero]
-  exact ⟨fun h => by exact_mod_cast h, fun h => by exact_mod_cast h⟩
+  constructor
+  · intro h
+    have hthree : Nc = 3 := by exact_mod_cast h
+    subst Nc
+    norm_num [sinSqAnomaly]
+  · rintro ⟨rfl, _⟩
+    norm_num
 
 end D5.S3.Quantum.Gauge.ChiralAnomalyRigidity4D
