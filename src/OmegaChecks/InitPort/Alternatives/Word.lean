@@ -424,4 +424,46 @@ public theorem BitVec.toInt_eq_msb_cond : type_of% @_root_.BitVec.toInt_eq_msb_c
     rw [_root_.BitVec.toInt, ite_eq_left (BitVec.msb_eq_false_iff_two_mul_lt.mp h)]
     rfl
 
+public theorem BitVec.toInt_eq_toNat_of_msb : type_of% @_root_.BitVec.toInt_eq_toNat_of_msb := by
+  intro w x h
+  rw [BitVec.toInt_eq_msb_cond, ite_eq_right (fun yes => Bool.noConfusion (h.symm.trans yes))]
+
+public theorem BitVec.pos_of_msb : type_of% @_root_.BitVec.pos_of_msb := by
+  intro w x hx
+  change 0 < x.toNat
+  exact Nat.lt_of_lt_of_le (Nat.two_pow_pos _) (of_decide_eq_true ((_root_.BitVec.msb_eq_decide x).symm.trans hx))
+
+public theorem BitVec.sub_toNat_mod_cancel_of_msb_true : type_of% @_root_.BitVec.sub_toNat_mod_cancel_of_msb_true :=
+  fun hx => Nat.mod_eq_of_lt (Nat.sub_lt (Nat.two_pow_pos _) (BitVec.pos_of_msb hx))
+
+public theorem BitVec.toInt_udiv_of_msb : type_of% @_root_.BitVec.toInt_udiv_of_msb := by
+  intro w x hx y
+  have small := BitVec.msb_eq_false_iff_two_mul_lt.mp hx
+  have divSmall := Nat.lt_of_le_of_lt (Nat.mul_le_mul_left 2 (Nat.div_le_self x.toNat y.toNat)) small
+  rw [_root_.BitVec.toInt_eq_toNat_of_lt (by rw [_root_.BitVec.toNat_udiv]; exact divSmall), _root_.BitVec.toNat_udiv]
+  rfl
+
+public theorem BitVec.toInt_sdiv : type_of% @_root_.BitVec.toInt_sdiv := by
+  intro w a b
+  have negative (x : BitVec w) (hx : x.msb = true) : x.toInt = -(((-x).toNat : Nat) : Int) := by
+    rw [BitVec.toInt_eq_msb_cond, ite_eq_left hx, _root_.BitVec.toNat_neg_of_pos (BitVec.pos_of_msb hx),
+      Int.natCast_sub (Nat.le_of_lt x.isLt), Int.neg_sub]
+  have div (x y : BitVec w) : x.udiv y = _root_.BitVec.ofInt w ((x.toNat : Int).tdiv (y.toNat : Int)) := by
+    apply _root_.BitVec.eq_of_toNat_eq
+    change (x / y).toNat = (_root_.BitVec.ofNat w (x.toNat / y.toNat)).toNat
+    exact _root_.BitVec.toNat_udiv.trans ((_root_.BitVec.toNat_ofNat _ _).trans
+      (Nat.mod_eq_of_lt (Nat.lt_of_le_of_lt (Nat.div_le_self ..) x.isLt))).symm
+  apply Eq.trans _ (_root_.BitVec.toInt_ofInt _)
+  apply congrArg _root_.BitVec.toInt
+  rw [_root_.BitVec.sdiv_eq]
+  cases ha : a.msb <;> cases hb : b.msb
+  · rw [BitVec.toInt_eq_toNat_of_msb ha, BitVec.toInt_eq_toNat_of_msb hb]
+    exact div a b
+  · rw [BitVec.toInt_eq_toNat_of_msb ha, negative b hb, Int.tdiv_neg, _root_.BitVec.ofInt_neg]
+    exact congrArg Neg.neg (div a (-b))
+  · rw [negative a ha, BitVec.toInt_eq_toNat_of_msb hb, Int.neg_tdiv, _root_.BitVec.ofInt_neg]
+    exact congrArg Neg.neg (div (-a) b)
+  · rw [negative a ha, negative b hb, Int.neg_tdiv, Int.tdiv_neg, Int.neg_neg]
+    exact div (-a) (-b)
+
 end OmegaChecks.InitPort.Alternatives
