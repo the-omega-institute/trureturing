@@ -1,0 +1,1 @@
+{"statement_id":"sha256:51d52109080dda8779aa154ff1fb36efbb5e8b565ddfb2e4336057ee1260c874","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),13:Combinatorics),15:ExtremalDensity),18:RootedTwinHomCount),13:quarter_bound)","kind":"theorem","libraries":["Batteries","Init","Mathlib","OmegaMath","Std"],"axioms":["Classical.choice","Quot.sound","propext"]}]}
