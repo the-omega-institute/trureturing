@@ -255,4 +255,74 @@ public theorem Rat.le_trans : type_of% @_root_.Rat.le_trans := by
   rw [Int.mul_right_comm a.num] at h₁
   exact Int.not_le_of_gt h₃ (Int.le_trans h₁ h₂)
 
+public theorem Rat.num_nonneg : type_of% @_root_.Rat.num_nonneg := by
+  intro q
+  apply Iff.symm
+  apply (Rat.le_iff _ _).trans
+  change (0 : Int) * q.den ≤ q.num * 1 ↔ 0 ≤ q.num
+  rw [Int.zero_mul, Int.mul_one]
+
+public theorem Rat.divInt_nonneg_iff_of_pos_right : type_of% @_root_.Rat.divInt_nonneg_iff_of_pos_right := by
+  intro a b hb
+  let q := Rat.divInt a b
+  have eq : Rat.divInt a b = q := rfl
+  obtain ⟨m, hm, hn, hd⟩ := _root_.Rat.divInt_num_den (Int.ne_of_gt hb) eq
+  have positive : 0 < m := by
+    apply Int.lt_of_not_ge
+    intro nonpos
+    exact (Int.not_le_of_gt hb) (hd ▸ Int.mul_nonpos_of_nonneg_of_nonpos (Int.natCast_nonneg _) nonpos)
+  apply Rat.num_nonneg.symm.trans
+  change 0 ≤ q.num ↔ 0 ≤ a
+  rw [hn]
+  constructor
+  · exact fun h => Int.mul_nonneg h (Int.le_of_lt positive)
+  · intro h
+    apply Int.le_of_not_gt
+    exact fun neg => (Int.not_le_of_gt (Int.mul_neg_of_neg_of_pos neg positive)) h
+
+public theorem Rat.mul_nonneg : type_of% @_root_.Rat.mul_nonneg := by
+  intro a b
+  refine _root_.Rat.numDenCasesOn' a fun n d hd => ?_
+  refine _root_.Rat.numDenCasesOn' b fun m e he => ?_
+  intro hn hm
+  have dp : (0 : Int) < d := Int.natCast_pos.mpr (Nat.pos_of_ne_zero hd)
+  have ep : (0 : Int) < e := Int.natCast_pos.mpr (Nat.pos_of_ne_zero he)
+  rw [Rat.divInt_mul_divInt]
+  exact (Rat.divInt_nonneg_iff_of_pos_right (Int.mul_pos dp ep)).mpr (Int.mul_nonneg
+    ((Rat.divInt_nonneg_iff_of_pos_right dp).mp hn) ((Rat.divInt_nonneg_iff_of_pos_right ep).mp hm))
+
+public theorem Rat.mul_pos : type_of% @_root_.Rat.mul_pos := by
+  intro a b ha hb
+  apply _root_.Rat.lt_of_le_of_ne (Rat.mul_nonneg (_root_.Rat.le_of_lt ha) (_root_.Rat.le_of_lt hb))
+  intro e
+  exact (_root_.Rat.mul_eq_zero.mp e.symm).elim (_root_.Rat.ne_of_gt ha) (_root_.Rat.ne_of_gt hb)
+
+public theorem Rat.pow_pos : type_of% @_root_.Rat.pow_pos := by
+  intro a n ha
+  induction n with
+  | zero => rw [Rat.pow_zero]; decide
+  | succ n ih => rw [Rat.pow_succ]; exact Rat.mul_pos ih ha
+
+public theorem Rat.inv_pos : type_of% @_root_.Rat.inv_pos := by
+  intro a
+  have positive (q : Rat) (hq : 0 < q) : 0 < q⁻¹ := by
+    have hnq := _root_.Rat.ne_of_gt hq
+    have npos : 0 < q.num := Int.lt_iff_le_and_ne.mpr
+      ⟨Rat.num_nonneg.mpr (_root_.Rat.le_of_lt hq), fun eq => hnq (_root_.Rat.num_eq_zero.mp eq.symm)⟩
+    have invNonneg : 0 ≤ q⁻¹ := by
+      rw [_root_.Rat.inv_def]
+      exact (Rat.divInt_nonneg_iff_of_pos_right npos).mpr (Int.natCast_nonneg _)
+    apply _root_.Rat.lt_of_le_of_ne invNonneg
+    intro eq
+    have inverse := _root_.Rat.mul_inv_cancel q hnq
+    rw [← eq, _root_.Rat.mul_zero] at inverse
+    exact (by decide : (0 : Rat) ≠ 1) inverse
+  exact ⟨fun h => _root_.Rat.inv_inv a ▸ positive a⁻¹ h, positive a⟩
+
+public theorem Rat.zpow_pos : type_of% @_root_.Rat.zpow_pos := by
+  intro a n ha
+  cases n with
+  | ofNat n => exact Rat.pow_pos ha
+  | negSucc n => exact Rat.inv_pos.mpr (Rat.pow_pos ha)
+
 end OmegaChecks.InitPort.Alternatives
