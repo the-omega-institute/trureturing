@@ -46,7 +46,9 @@ internal sealed class HardinA235280A235310RecurrenceDocument : IScribeDocumentDe
             AssessedProvenance.FromRepo(Note(slugPart), Note(coefficientSource)),
             Blocks(Paragraph(Text("The table proposes one recurrence for every row and every column. "
                 + detail + " The fixed index can be as small as one in both identities."))),
-            DescribeRole.Theorem);
+            DescribeRole.Theorem,
+            new OpenProblemResolutionClaim(
+                ProblemSlugRef.Create("hardin-" + slugPart + "-common-recurrence"), ResolutionKind.Proved));
 
     private static DocumentBlock A235319() =>
         Describe.Lean(DescribeId.Create("a235319-all-rows-and-columns"),
@@ -60,7 +62,9 @@ internal sealed class HardinA235280A235310RecurrenceDocument : IScribeDocumentDe
             Blocks(
                 Paragraph(Text("C(6,7,n,k) counts the literal indexed rectangles with alphabet 0 through 6 and absolute diagonal difference 7 in every contiguous block. Its integer cast appears in each signed term. The first full window uses indices 1 through 19 in either direction.")),
                 Paragraph(Text("At deficit five, complementary row fibers have sizes whose sum is at most seven. The two-step shifts multiply their profile contribution by the product of the fiber sizes. Equal sizes one and three give first-order factors. Expanding the annihilating polynomial gives the published lag coefficients, and transposition supplies the second axis."))),
-            DescribeRole.Theorem);
+            DescribeRole.Theorem,
+            new OpenProblemResolutionClaim(ProblemSlugRef.Create("hardin-a235319-common-recurrence"),
+                ResolutionKind.Proved));
 
     private static LibraryNoteRef Note(string sequence) =>
         LibraryNoteRef.Create("D5/L/Automata/hardin2014" + sequence);

@@ -14,6 +14,10 @@ $$\begin{aligned}&\forall n: \mathbb{N}, \forall k: \mathbb{N}, 0 < n \implies 0
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinA235280A235310Recurrence.a235280_all_rows_and_columns` (`✓ std3`). ∎
 
+*Resolves.* `Problems/hardin-a235280-common-recurrence` (proved) by `D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinA235280A235310Recurrence.a235280_all_rows_and_columns`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hardin-a235280-common-recurrence","declaration_gid":"D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinA235280A235310Recurrence.a235280_all_rows_and_columns","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* R. H. Hardin (2014). *OEIS A235280 — Constant-stress rectangular arrays*. URL: <https://oeis.org/A235280>.
@@ -30,6 +34,10 @@ $$\begin{aligned}&\forall n: \mathbb{N}, \forall k: \mathbb{N}, 0 < n \implies 0
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinA235280A235310Recurrence.a235310_all_rows_and_columns` (`✓ std3`). ∎
 
+*Resolves.* `Problems/hardin-a235310-common-recurrence` (proved) by `D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinA235280A235310Recurrence.a235310_all_rows_and_columns`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hardin-a235310-common-recurrence","declaration_gid":"D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinA235280A235310Recurrence.a235310_all_rows_and_columns","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* R. H. Hardin (2014). *OEIS A235310 — Constant-stress rectangular arrays*. URL: <https://oeis.org/A235310>.
@@ -45,6 +53,10 @@ The table proposes one recurrence for every row and every column. A235304 suppli
 $$\begin{aligned}&\forall n: \mathbb{N}, \forall k: \mathbb{N}, 0 < n \implies 0 < k \implies\\((C\left(6, 7, n + 18, k\right) : \mathbb{Z}) &=4\cdot(C\left(6, 7, n + 17, k\right) : \mathbb{Z})+47\cdot(C\left(6, 7, n + 16, k\right) : \mathbb{Z})-200\cdot(C\left(6, 7, n + 15, k\right) : \mathbb{Z})\\&\quad-901\cdot(C\left(6, 7, n + 14, k\right) : \mathbb{Z})+4204\cdot(C\left(6, 7, n + 13, k\right) : \mathbb{Z})+8957\cdot(C\left(6, 7, n + 12, k\right) : \mathbb{Z})\\&\quad-48440\cdot(C\left(6, 7, n + 11, k\right) : \mathbb{Z})-47194\cdot(C\left(6, 7, n + 10, k\right) : \mathbb{Z})+334096\cdot(C\left(6, 7, n + 9, k\right) : \mathbb{Z})\\&\quad+101948\cdot(C\left(6, 7, n + 8, k\right) : \mathbb{Z})-1410080\cdot(C\left(6, 7, n + 7, k\right) : \mathbb{Z})+170136\cdot(C\left(6, 7, n + 6, k\right) : \mathbb{Z})\\&\quad+3549696\cdot(C\left(6, 7, n + 5, k\right) : \mathbb{Z})-1446912\cdot(C\left(6, 7, n + 4, k\right) : \mathbb{Z})-4861440\cdot(C\left(6, 7, n + 3, k\right) : \mathbb{Z})\\&\quad+2954880\cdot(C\left(6, 7, n + 2, k\right) : \mathbb{Z})+2764800\cdot(C\left(6, 7, n + 1, k\right) : \mathbb{Z})-2073600\cdot(C\left(6, 7, n, k\right) : \mathbb{Z}))\\&\land\\((C\left(6, 7, n, k + 18\right) : \mathbb{Z}) &=4\cdot(C\left(6, 7, n, k + 17\right) : \mathbb{Z})+47\cdot(C\left(6, 7, n, k + 16\right) : \mathbb{Z})-200\cdot(C\left(6, 7, n, k + 15\right) : \mathbb{Z})\\&\quad-901\cdot(C\left(6, 7, n, k + 14\right) : \mathbb{Z})+4204\cdot(C\left(6, 7, n, k + 13\right) : \mathbb{Z})+8957\cdot(C\left(6, 7, n, k + 12\right) : \mathbb{Z})\\&\quad-48440\cdot(C\left(6, 7, n, k + 11\right) : \mathbb{Z})-47194\cdot(C\left(6, 7, n, k + 10\right) : \mathbb{Z})+334096\cdot(C\left(6, 7, n, k + 9\right) : \mathbb{Z})\\&\quad+101948\cdot(C\left(6, 7, n, k + 8\right) : \mathbb{Z})-1410080\cdot(C\left(6, 7, n, k + 7\right) : \mathbb{Z})+170136\cdot(C\left(6, 7, n, k + 6\right) : \mathbb{Z})\\&\quad+3549696\cdot(C\left(6, 7, n, k + 5\right) : \mathbb{Z})-1446912\cdot(C\left(6, 7, n, k + 4\right) : \mathbb{Z})-4861440\cdot(C\left(6, 7, n, k + 3\right) : \mathbb{Z})\\&\quad+2954880\cdot(C\left(6, 7, n, k + 2\right) : \mathbb{Z})+2764800\cdot(C\left(6, 7, n, k + 1\right) : \mathbb{Z})-2073600\cdot(C\left(6, 7, n, k\right) : \mathbb{Z}))\end{aligned}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinA235280A235310Recurrence.a235319_all_rows_and_columns` (`✓ std3`). ∎
+
+*Resolves.* `Problems/hardin-a235319-common-recurrence` (proved) by `D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinA235280A235310Recurrence.a235319_all_rows_and_columns`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hardin-a235319-common-recurrence","declaration_gid":"D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinA235280A235310Recurrence.a235319_all_rows_and_columns","resolution_kind":"proved"} -->
 
 *Source.* Repository-derived.
 
