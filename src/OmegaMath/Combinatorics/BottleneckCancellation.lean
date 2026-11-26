@@ -3,6 +3,7 @@ module
 public import OmegaBuild.Commands
 public import Mathlib.Topology.MetricSpace.Pseudo.Defs
 public import Mathlib.Logic.Equiv.Fintype
+public import Mathlib.Data.Fintype.BigOperators
 public import Mathlib.Algebra.Order.BigOperators.Group.Finset
 public import Mathlib.Algebra.BigOperators.Group.Finset.Piecewise
 public import Mathlib.Tactic.Linarith
@@ -22,7 +23,7 @@ namespace Omega.BottleneckCancellation
 
 open Finset
 
-private theorem indicator_budget {I : Type*} {X : Type*} [Fintype I]
+private theorem indicator_budget {I : Type*} {X : Type*} [Fintype I] [DecidableEq X]
     (p : I → X) (hp : Function.Injective p) (x z : X)
     (hx : x ∉ Set.range p) (C : ℝ) (hC : 0 ≤ C) :
     (if x = z then C else 0) + (∑ i, if p i = z then C else 0) ≤ C := by
@@ -30,11 +31,11 @@ private theorem indicator_budget {I : Type*} {X : Type*} [Fintype I]
   by_cases hz : z ∈ Set.range p
   · obtain ⟨i, rfl⟩ := hz
     have hxi : x ≠ p i := fun h => hx ⟨i, h.symm⟩
-    rw [if_neg hxi, zero_add]
+    rw [ite_eq_right hxi, zero_add]
     rw [Finset.sum_eq_single i]
     · simp
     · intro j _ hji
-      rw [if_neg (fun h => hji (hp h))]
+      rw [ite_eq_right (fun h => hji (hp h))]
     · simp
   · have hxi : ∀ i, p i ≠ z := fun i h => hz ⟨i, h⟩
     simp only [hxi, ↓reduceIte, Finset.sum_const_zero, add_zero]
@@ -44,13 +45,13 @@ private theorem weighted_cancel (n : ℕ) :
     ∀ {X : Type*} {Y : Type*} {I : Type*} [Fintype I], Fintype.card I = n →
     ∀ {M : Type*} [PseudoMetricSpace M] (a : X → M) (b : Y → M)
       (e : X ≃ Y) (p : I → X) (q : I → Y)
-      (hp : Function.Injective p) (hq : Function.Injective q)
+      (_hp : Function.Injective p) (_hq : Function.Injective q)
       (c : X → ℝ) (w : I → ℝ),
       (∀ x, 0 ≤ c x) → (∀ i, 0 ≤ w i) →
       (∀ x, dist (a x) (b (e x)) ≤ c x) →
       (∀ i, dist (a (p i)) (b (q i)) ≤ w i) →
       ∃ f : {x // x ∉ Set.range p} ≃ {y // y ∉ Set.range q},
-        ∀ x, dist (a x) (b (f x)) ≤ c x + ∑ i, (c (p i) + w i) := by
+        ∀ x : {x // x ∉ Set.range p}, dist (a x) (b (f x)) ≤ c x + ∑ i, (c (p i) + w i) := by
   classical
   induction n using Nat.strong_induction_on with
   | h n ih =>
@@ -81,7 +82,7 @@ private theorem weighted_cancel (n : ℕ) :
         change dist (a x) (b (E x)) ≤ c x + if (x : X) = z then C else 0
         by_cases hxz : (x : X) = z
         · have E_z : E z = e (p i) := by simp [E]
-          rw [hxz, E_z, if_pos rfl]
+          rw [hxz, E_z, ite_eq_left rfl]
           have hz : e z = q i := e.apply_symm_apply _
           have h1 := he z
           have h2 := hd i
@@ -94,7 +95,7 @@ private theorem weighted_cancel (n : ℕ) :
           linarith
         · have Ex : E x = e x := by
             simp [E, Equiv.swap_apply_of_ne_of_ne x.2 hxz]
-          rw [Ex, if_neg hxz, add_zero]
+          rw [Ex, ite_eq_right hxz, add_zero]
           exact he x
       have hJ : Fintype.card J < n := by
         rw [← hn]
@@ -146,7 +147,7 @@ private theorem weighted_cancel (n : ℕ) :
         exact Finset.sum_add_distrib
       rw [hsplit] at hb
       linarith
-    · haveI : IsEmpty I := not_nonempty_iff.mp hI
+    · have : IsEmpty I := not_nonempty_iff.mp hI
       let f := e.subtypeEquiv (p := fun x => x ∉ Set.range p)
         (q := fun y => y ∉ Set.range q) (by simp)
       refine ⟨f, fun x => ?_⟩
@@ -160,7 +161,7 @@ theorem complement_bound {X : Type*} {Y : Type*} {M : Type*} [PseudoMetricSpace 
     (he : ∀ x, dist (a x) (b (e x)) ≤ ε)
     (hd : ∀ u : U, dist (a u) (b (d u)) ≤ η) :
     ∃ f : {x // x ∉ U} ≃ {y // y ∉ V},
-      ∀ x, dist (a x) (b (f x)) ≤ (U.card + 1 : ℝ) * ε + U.card * η := by
+      ∀ x : {x // x ∉ U}, dist (a x) (b (f x)) ≤ (U.card + 1 : ℝ) * ε + U.card * η := by
   classical
   obtain ⟨f, hf⟩ := weighted_cancel (Fintype.card U) rfl a b e
     (fun u : U => (u : X)) (fun u : U => (d u : Y))
@@ -179,6 +180,40 @@ theorem complement_bound {X : Type*} {Y : Type*} {M : Type*} [PseudoMetricSpace 
   refine ⟨L.trans (f.trans R.symm), fun x => ?_⟩
   have h := hf (L x)
   change dist (a x) (b (f (L x))) ≤ _
-  convert h using 1 <;> simp [Fintype.card_coe, mul_add, add_mul] <;> ring
+  change dist (a x) (b (f (L x))) ≤ ε + ∑ _i : U, (ε + η) at h
+  simpa [mul_add, add_mul, add_assoc, add_comm, add_left_comm] using h
 
 end Omega.BottleneckCancellation
+
+-- Transient exact application and boundary checks.
+#print axioms Omega.BottleneckCancellation.complement_bound
+
+example : ∃ f : {x : Fin 2 // x ∉ ({1} : Finset (Fin 2))} ≃
+    {y : Fin 2 // y ∉ ({0} : Finset (Fin 2))},
+    ∀ x, dist ((2 : ℝ) * x.1.val) (1 + 2 * (f x).1.val) ≤ 3 := by
+  let d : ({1} : Finset (Fin 2)) ≃ ({0} : Finset (Fin 2)) := {
+    toFun := fun _ => ⟨0, by simp⟩
+    invFun := fun _ => ⟨1, by simp⟩
+    left_inv := by intro x; apply Subtype.ext; exact (Finset.mem_singleton.mp x.2).symm
+    right_inv := by intro x; apply Subtype.ext; exact (Finset.mem_singleton.mp x.2).symm }
+  have he : ∀ x : Fin 2, dist ((2 : ℝ) * x.val) (1 + 2 * x.val) ≤ 1 := by
+    intro x
+    rw [Real.dist_eq]
+    have : (2 : ℝ) * x.val - (1 + 2 * x.val) = -1 := by ring
+    rw [this]; norm_num
+  have hd : ∀ u : ({1} : Finset (Fin 2)),
+      dist ((2 : ℝ) * u.1.val) (1 + 2 * (d u).1.val) ≤ 1 := by
+    intro u
+    have hu : (u : Fin 2) = 1 := Finset.mem_singleton.mp u.2
+    norm_num [d, hu, Real.dist_eq]
+  convert Omega.BottleneckCancellation.complement_bound
+    (fun x : Fin 2 => (2 : ℝ) * x.val) (fun y : Fin 2 => 1 + (2 : ℝ) * y.val)
+    (Equiv.refl _) {1} {0} d 1 1 (by norm_num) (by norm_num) he hd using 1 <;> norm_num
+
+example {M : Type*} [PseudoMetricSpace M] (a b : Fin 0 → M) (ε η : ℝ)
+    (hε : 0 ≤ ε) (hη : 0 ≤ η) :
+    ∃ f : {x : Fin 0 // x ∉ (∅ : Finset (Fin 0))} ≃
+      {y : Fin 0 // y ∉ (∅ : Finset (Fin 0))},
+      ∀ x : {x : Fin 0 // x ∉ (∅ : Finset (Fin 0))}, dist (a x) (b (f x)) ≤ ε := by
+  simpa using Omega.BottleneckCancellation.complement_bound a b (Equiv.refl _)
+    ∅ ∅ (Equiv.refl _) ε η hε hη (fun x => Fin.elim0 x) (fun u => Fin.elim0 u)
