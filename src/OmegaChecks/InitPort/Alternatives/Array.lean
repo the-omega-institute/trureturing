@@ -255,4 +255,65 @@ public theorem Vector.insertIdx._proof_1 : type_of% @_root_.Vector.insertIdx._pr
   intro α n xs i x h
   exact (Array.size_insertIdx (xs.size_toArray.symm ▸ h)).trans (congrArg (· + 1) xs.size_toArray)
 
+
+private theorem fixInvariant {σ : Sort u} {β : σ → Sort v} (measure : σ → Nat)
+    (step : (x : σ) → ((y : σ) → measure y < measure x → β y) → β x)
+    (P : (x : σ) → β x → Prop)
+    (preserves : ∀ x cont, (∀ y hy, P y (cont y hy)) → P x (step x cont)) (x : σ) :
+    P x (WellFounded.Nat.fix measure step x) := by
+  have loop (fuel : Nat) (y : σ) (h : measure y < fuel) :
+      P y (WellFounded.Nat.fix.go measure step fuel y h) := by
+    induction fuel generalizing y with
+    | zero => exact (Nat.not_succ_le_zero _ h).elim
+    | succ k ih => exact preserves y _ fun z hz => ih z _
+  exact loop _ x _
+
+private theorem zipWithList {α : Type u} {β : Type v} {γ : Type w}
+    (as : Array α) (bs : Array β) (f : α → β → γ) (i : Nat) (acc : Array γ) :
+    (Array.zipWithMAux (m := Id) as bs (fun a b => pure (f a b)) i acc).run.toList =
+      acc.toList ++ List.zipWith f (as.toList.drop i) (bs.toList.drop i) := by
+  delta Array.zipWithMAux Array.zipWithMAux._unary
+  let P (p : (_ : Nat) ×' Array γ) (out : Array γ) :=
+    out.toList = p.2.toList ++ List.zipWith f (as.toList.drop p.1) (bs.toList.drop p.1)
+  apply fixInvariant (P := P)
+  rintro ⟨i, acc⟩ cont ih
+  dsimp only [P]
+  by_cases ha : i < as.size
+  · rw [dite_eq_left ha]
+    by_cases hb : i < bs.size
+    · rw [dite_eq_left hb]
+      have h := ih ⟨i+1, acc.push (f as[i] bs[i])⟩ (by exact Nat.sub_succ_lt_self as.size i ha)
+      apply h.trans
+      rw [List.drop_eq_getElem_cons (show i < as.toList.length from ha),
+        List.drop_eq_getElem_cons (show i < bs.toList.length from hb)]
+      exact (congrArg (· ++ _) Array.toList_push).trans (List.append_assoc ..)
+    · rw [dite_eq_right hb, List.drop_eq_nil_of_le (Nat.le_of_not_lt hb), List.zipWith_nil_right, List.append_nil]
+      rfl
+  · rw [dite_eq_right ha, List.drop_eq_nil_of_le (Nat.le_of_not_lt ha), List.zipWith_nil_left, List.append_nil]
+    rfl
+
+public theorem Array.toList_zipWith : type_of% @_root_.Array.toList_zipWith := by
+  intro α β γ f as bs
+  exact zipWithList as bs f 0 #[]
+
+public theorem List.zipWith_toArray : type_of% @_root_.List.zipWith_toArray := by
+  intro α β γ f xs ys
+  exact _root_.Array.ext' Array.toList_zipWith
+
+public theorem List.zip_toArray : type_of% @_root_.List.zip_toArray := by
+  intro α β xs ys
+  exact _root_.Array.ext' Array.toList_zipWith
+
+public theorem Array.size_zipWith : type_of% @_root_.Array.size_zipWith := by
+  intro α β γ as bs f
+  exact (congrArg List.length (Array.toList_zipWith (xs := as) (ys := bs) (f := f))).trans List.length_zipWith
+
+public theorem Vector.zip._proof_1 : type_of% @_root_.Vector.zip._proof_1 := by
+  intro α n β as bs
+  rw [_root_.Array.size_zip, as.size_toArray, bs.size_toArray, Nat.min_self]
+
+public theorem Vector.zipWith._proof_1 : type_of% @_root_.Vector.zipWith._proof_1 := by
+  intro α β γ n f as bs
+  rw [Array.size_zipWith, as.size_toArray, bs.size_toArray, Nat.min_self]
+
 end OmegaChecks.InitPort.Alternatives
