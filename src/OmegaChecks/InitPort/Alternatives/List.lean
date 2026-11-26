@@ -397,4 +397,58 @@ public theorem List.idxOf?_cons : type_of% @_root_.List.idxOf?_cons := by
   intro α inst a xs b
   exact List.findIdx?_cons
 
+public theorem List.findIdx_eq_getD_findIdx? : type_of% @_root_.List.findIdx_eq_getD_findIdx? := by
+  intro α xs p
+  induction xs with
+  | nil => rfl
+  | cons a xs ih =>
+    rw [List.findIdx_cons, List.findIdx?_cons, ih]
+    cases p a with
+    | true => rfl
+    | false => cases xs.findIdx? p <;> rfl
+
+public theorem List.findIdx?_eq_none_iff : type_of% @_root_.List.findIdx?_eq_none_iff := by
+  intro α xs p
+  induction xs with
+  | nil => exact ⟨fun _ x hx => (List.not_mem_nil hx).elim, fun _ => rfl⟩
+  | cons a xs ih =>
+    rw [List.findIdx?_cons]
+    cases h : p a with
+    | true =>
+      constructor
+      · intro bad
+        change some 0 = (none : Option Nat) at bad
+        cases bad
+      · intro every
+        exact (Bool.noConfusion (h.symm.trans (every a List.mem_cons_self)) : False).elim
+    | false =>
+      change (xs.findIdx? p).map (· + 1) = none ↔ _
+      rw [Option.map_eq_none_iff]
+      constructor
+      · intro miss x hx
+        obtain same | tail := List.mem_cons.mp hx
+        · exact same ▸ h
+        · exact ih.mp miss x tail
+      · exact fun every => ih.mpr (fun x hx => every x (List.mem_cons_of_mem _ hx))
+
+public theorem List.findIdx?_isSome : type_of% @_root_.List.findIdx?_isSome := by
+  intro α xs p
+  induction xs with
+  | nil => rfl
+  | cons x xs ih =>
+    rw [List.findIdx?_cons, List.any_cons]
+    cases p x with
+    | true => rfl
+    | false => rw [← ih]; cases xs.findIdx? p <;> rfl
+
+public theorem List.findIdx?_isNone : type_of% @_root_.List.findIdx?_isNone := by
+  intro α xs p
+  induction xs with
+  | nil => rfl
+  | cons x xs ih =>
+    rw [List.findIdx?_cons, List.all_cons]
+    cases h : p x with
+    | true => rfl
+    | false => rw [← ih]; cases xs.findIdx? p <;> rfl
+
 end OmegaChecks.InitPort.Alternatives
