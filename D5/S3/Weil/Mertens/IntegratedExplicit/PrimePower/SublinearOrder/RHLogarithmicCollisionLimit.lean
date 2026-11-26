@@ -27,7 +27,7 @@ noncomputable section
 
 namespace D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower.SublinearOrder.RHLogarithmicCollisionLimit
 
-private theorem annulusIntegral_le (f : ℝ → ℝ) (hf : Continuous f)
+theorem annulusIntegral_le (f : ℝ → ℝ) (hf : Continuous f)
     {a b D : ℝ} (ha : 0 ≤ a) (hab : a ≤ b)
     (h : ∀ t, a ≤ |t| → |t| ≤ b → f t ≤ D) :
     (∫ t in -b..b, f t) - (∫ t in -a..a, f t) ≤ 2 * (b - a) * D := by
@@ -52,7 +52,7 @@ private theorem annulusIntegral_le (f : ℝ → ℝ) (hf : Continuous f)
   simp only [intervalIntegral.integral_const, smul_eq_mul] at hleft hright
   linarith
 
-private theorem centralIntegral_scale {J : Type*} [Fintype J]
+theorem centralIntegral_scale {J : Type*} [Fintype J]
     (g w : J → ℝ) (n : ℕ) {s η A : ℝ} (hs : 0 < s) (hη : 0 < η) :
     s / η * (∫ t in -(A / s)..A / s, K η t * ‖complexScore g w t‖^(2*n)) =
       1 / (2 * Real.pi) * (∫ u in -A..A,
@@ -142,7 +142,7 @@ private theorem wholeFejerLimit
   rw [← mul_sub]
   nlinarith only [mul_le_mul_of_nonneg_left hrel (show 0 ≤ s n / η n by positivity)]
 
-private theorem logarithmic_window_decay (T : ℕ → ℝ)
+theorem logarithmic_window_decay (T : ℕ → ℝ)
     (hT : Tendsto T atTop atTop)
     (hg : Tendsto (fun n : ℕ => (Real.log (T n)) ^ 2 / (n : ℝ)) atTop (𝓝 0))
     {c : ℝ} (hc : 0 < c) :
@@ -200,16 +200,16 @@ open D5.S3.Weil.ZeroData.ZetaOrdinatePhaseStiffness (PositiveZetaZero ordinate)
 open D5.S3.Weil.DirichletPolynomialMeanSquare (phase)
 open D5.S3.Fourier.Concentration.FejerCollisionLimit
 
-private def harmonicOrdinate (rh : RiemannHypothesis) (T : ℝ) :
+def harmonicOrdinate (rh : RiemannHypothesis) (T : ℝ) :
     ↥(positiveCutoff rh T) → ℝ := fun j => ordinate j.1
 
-private def harmonicProbability (rh : RiemannHypothesis) (T : ℝ) :
+def harmonicProbability (rh : RiemannHypothesis) (T : ℝ) :
     ↥(positiveCutoff rh T) → ℝ := fun j => harmonicWeight j.1 / harmonicMass rh T
 
-private def harmonicScale (rh : RiemannHypothesis) (T : ℕ → ℝ) (n : ℕ) : ℝ :=
+def harmonicScale (rh : RiemannHypothesis) (T : ℕ → ℝ) (n : ℕ) : ℝ :=
   Real.sqrt ((n : ℝ) * pairMoment (harmonicOrdinate rh (T n)) (harmonicProbability rh (T n)) 2 / 2)
 
-private theorem whole_log_window_deficit (rh : RiemannHypothesis) (C : ℝ) (hC : 0 < C)
+theorem whole_log_window_deficit (rh : RiemannHypothesis) (C : ℝ) (hC : 0 < C)
     (hLandau : ∀ V t : ℝ, 1 < V → 0 < |t| →
       ‖∑ j ∈ positiveCutoff rh V, (Zeta23.zeroMult j.val : ℂ) * phase (ordinate j) t‖ ≤
         C * (V + Real.exp (|t| / 2) * (1 + |t|)^2 +
@@ -251,7 +251,7 @@ private theorem whole_log_window_deficit (rh : RiemannHypothesis) (C : ℝ) (hC 
         (mul_le_mul_of_nonneg_right (by norm_num) hp.le)).trans
         (hlong T t hT₃ (le_of_not_ge hmid) hhi)
 
-private theorem score_power_le_exp (x q : ℝ) (hx : 0 ≤ x) (h : q ≤ 1 - x) (n : ℕ) :
+theorem score_power_le_exp (x q : ℝ) (hx : 0 ≤ x) (h : q ≤ 1 - x) (n : ℕ) :
     x ^ (2 * n) ≤ Real.exp (-(2 * q * n)) := by
   have hx' : x ≤ Real.exp (-q) := (by linarith : x ≤ -q + 1).trans (Real.add_one_le_exp _)
   calc
@@ -434,7 +434,7 @@ private theorem harmonic_full_fejer_limit (rh : RiemannHypothesis) (T η : ℕ �
 
 open D5.S3.Fourier.Concentration.FejerCollisionSecants (rampCollisionMass)
 
-private theorem ramp_eq_fejer {J : Type*} [Fintype J] [DecidableEq J]
+theorem ramp_eq_fejer {J : Type*} [Fintype J] [DecidableEq J]
     (g w : J → ℝ) (n : ℕ) {η : ℝ} (hη : 0 < η) :
     rampCollisionMass (piAntidiag univ n) (monomialFrequency g) (monomialWeight w) η =
       η * (∫ t : ℝ, K η t * ‖complexScore g w t‖^(2*n)) := by
@@ -521,7 +521,7 @@ private theorem normalized_harmonic_collision_limit (rh : RiemannHypothesis) (T 
   rw [show B n * η n = s n / η n by dsimp [B]; field_simp]
   rfl
 
-private theorem normalized_collision_eq_div_mass {J : Type*} [Fintype J] [DecidableEq J]
+theorem normalized_collision_eq_div_mass {J : Type*} [Fintype J] [DecidableEq J]
     (g w : J → ℝ) (M : ℝ) (n : ℕ) (r : ℝ) :
     tailCollisionMass g (fun j => w j / M) n r =
       tailCollisionMass g w n r / M^(2*n) := by
