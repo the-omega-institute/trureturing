@@ -37,7 +37,10 @@ internal sealed class MannaMandalTuraDegreeMatrixRefutationDocument : IScribeDoc
                 + "Cancel the last vertex and undo the old-degree shift after a dominating addition to recover the sequence. "
                 + "This reconstruction is classical, due to Chvátal and Hammer (1977). "
                 + "On the connected three-vertex path, the leaf nonedge forces beta to vanish and a center-to-leaf edge forces alpha to vanish. The center and leaf diagonal entries then force incompatible values of gamma.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("manna-mandal-tura-2026-threshold-master-identity"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(string selector, string title, Formula formula, string prose,
         DescribeRole role, AssessedProvenance provenance, OpenProblemResolutionClaim? resolution = null) =>

@@ -62,6 +62,10 @@ $$\neg (((\forall V \in Type,\; [\operatorname{Fintype}\left(V\right)], [\operat
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/MannaMandalTuraDegreeMatrixRefutation.not_degreeMatrix_master_identity_criterion` (`✓ std3`). ∎
 
+*Resolves.* `Problems/manna-mandal-tura-2026-threshold-master-identity` (refuted) by `D5/S3/Combinatorics/SpectralGraph/MannaMandalTuraDegreeMatrixRefutation.not_degreeMatrix_master_identity_criterion`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"manna-mandal-tura-2026-threshold-master-identity","declaration_gid":"D5/S3/Combinatorics/SpectralGraph/MannaMandalTuraDegreeMatrixRefutation.not_degreeMatrix_master_identity_criterion","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Pallabi Manna; Santanu Mandal; Fernando C. Tura (2026). *The Spectral Theory of Threshold Graphs: A Survey*. URL: <https://arxiv.org/pdf/2610.22838v1#page=18>.
