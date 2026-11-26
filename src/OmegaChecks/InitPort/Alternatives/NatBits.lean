@@ -76,4 +76,18 @@ public theorem Nat.shiftLeft_eq_zero_iff : type_of% @_root_.Nat.shiftLeft_eq_zer
     subst a
     exact Nat.zero_mul _
 
+public theorem Nat.or_zero : type_of% @_root_.Nat.or_zero := by
+  intro x
+  apply _root_.Nat.eq_of_testBit_eq
+  intro i
+  rw [_root_.Nat.testBit_or, _root_.Nat.zero_testBit]
+  cases x.testBit i <;> rfl
+
+public theorem Nat.zero_or : type_of% @_root_.Nat.zero_or := by
+  intro x
+  apply _root_.Nat.eq_of_testBit_eq
+  intro i
+  rw [_root_.Nat.testBit_or, _root_.Nat.zero_testBit]
+  rfl
+
 end OmegaChecks.InitPort.Alternatives
