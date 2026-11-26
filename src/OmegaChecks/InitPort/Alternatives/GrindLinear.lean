@@ -166,4 +166,179 @@ public theorem Int.Internal.Linear.dvd_unsat :
   rw [_root_.Int.Internal.Linear.Poly.denote'_eq_denote] at divides
   exact (bne_iff_ne.mp cert) (Int.emod_eq_zero_of_dvd (_root_.Int.Internal.Linear.Poly.gcd_dvd_const divides))
 
+
+private theorem shiftCooperIneq {a b t : Int} (ineq : t + b ≤ a) : b + -a + t ≤ 0 := by
+  have shift := Int.add_le_add_right ineq (-a)
+  rw [Int.add_right_neg] at shift
+  rw [Int.add_comm (b + -a) t, ← Int.add_assoc]
+  exact shift
+
+private theorem mapOrOver {p q : Nat → Prop} (f : ∀ i, p i → q i) (n : Nat) :
+    OrOver n p → OrOver n q := by
+  induction n with
+  | zero => exact id
+  | succ k ih => exact fun h => h.elim (fun hit => Or.inl (f k hit)) (fun tail => Or.inr (ih tail))
+
+public theorem Int.Internal.Linear.cooper_dvd_left_core :
+    type_of% (private_decl% @_root_.Int.Internal.Linear.cooper_dvd_left_core) := by
+  intro a b c d s p q x aNeg bPos dPos hx hy hd
+  have lower : p ≤ (-a)*x := by
+    rw [Int.neg_mul]
+    exact Int.add_le_zero_iff_le_neg'.mp hx
+  have upper := Int.add_le_zero_iff_le_neg.mp hy
+  obtain ⟨k, nonneg, bound, ineq, div₁, div₂⟩ :=
+    (Int.cooper_resolution_dvd_left (Int.neg_pos_of_neg aNeg) bPos dPos).mp ⟨x, lower, upper, hd⟩
+  rw [Int.neg_mul_neg] at ineq
+  rw [Int.neg_mul, Int.neg_gcd, (private_decl% _root_.Int.Internal.Linear.lcm_neg_left), Int.neg_ediv_of_dvd (Int.gcd_dvd_left ..), (private_decl% _root_.Int.Internal.Linear.lcm_neg_right)] at bound
+  have first := Int.neg_dvd.mp div₁
+  rw [Int.add_comm k p] at first
+  rw [Int.neg_mul a d] at div₂
+  have second := Int.neg_dvd.mp div₂
+  rw [Int.add_assoc, Int.add_comm (c*k)] at second
+  apply (private_decl% _root_.Int.Internal.Linear.orOver_of_p) (ofNat_lt nonneg bound)
+  rw [cast_toNat nonneg, Int.neg_mul a q]
+  exact ⟨shiftCooperIneq ineq, first, second⟩
+
+public theorem Int.Internal.Linear.cooper_left_core :
+    type_of% (private_decl% @_root_.Int.Internal.Linear.cooper_left_core) := by
+  intro a b p q x aNeg bPos hx hy
+  have trivialDiv : (1 : Int) ∣ 0*x + 0 := Int.one_dvd _
+  have full := (private_decl% _root_.Int.Internal.Linear.cooper_dvd_left_core) aNeg bPos (by decide) hx hy trivialDiv
+  rw [Int.mul_one, (private_decl% _root_.Int.Internal.Linear.gcd_zero), Int.ofNat_natAbs_of_nonpos (Int.le_of_lt aNeg), Int.ediv_neg,
+      Int.ediv_self (Int.ne_of_lt aNeg), (private_decl% _root_.Int.Internal.Linear.lcm_neg_right), (private_decl% _root_.Int.Internal.Linear.lcm_one)] at full
+  exact mapOrOver (fun _ data => ⟨data.1, data.2.1⟩) _ full
+
+public theorem Int.Internal.Linear.cooper_dvd_right_core :
+    type_of% (private_decl% @_root_.Int.Internal.Linear.cooper_dvd_right_core) := by
+  intro a b c d s p q x aNeg bPos dPos hx hy hd
+  have lower : p ≤ (-a)*x := by
+    rw [Int.neg_mul]
+    exact Int.add_le_zero_iff_le_neg'.mp hx
+  have upper := Int.add_le_zero_iff_le_neg.mp hy
+  obtain ⟨k, nonneg, bound, ineq, div₁, div₂⟩ :=
+    (Int.cooper_resolution_dvd_right (Int.neg_pos_of_neg aNeg) bPos dPos).mp ⟨x, lower, upper, hd⟩
+  rw [Int.neg_mul_neg] at ineq
+  rw [Int.sub_neg, Int.add_comm k q] at div₁
+  rw [Int.mul_neg c q, ← Int.neg_mul c q, Int.add_assoc, Int.add_comm ((-c)*k)] at div₂
+  apply (private_decl% _root_.Int.Internal.Linear.orOver_of_p) (ofNat_lt nonneg bound)
+  rw [cast_toNat nonneg, Int.neg_mul a q]
+  exact ⟨shiftCooperIneq ineq, div₁, div₂⟩
+
+public theorem Int.Internal.Linear.cooper_right_core :
+    type_of% (private_decl% @_root_.Int.Internal.Linear.cooper_right_core) := by
+  intro a b p q x aNeg bPos hx hy
+  have trivialDiv : (1 : Int) ∣ 0*x + 0 := Int.one_dvd _
+  have full := (private_decl% _root_.Int.Internal.Linear.cooper_dvd_right_core) aNeg bPos (by decide) hx hy trivialDiv
+  rw [Int.mul_one, (private_decl% _root_.Int.Internal.Linear.gcd_zero), Int.natAbs_of_nonneg (Int.le_of_lt bPos),
+      Int.ediv_self (Int.ne_of_gt bPos), (private_decl% _root_.Int.Internal.Linear.lcm_one)] at full
+  exact mapOrOver (fun _ data => ⟨data.1, data.2.1⟩) _ full
+
+
+public theorem Int.Internal.Linear.cooper_left :
+    type_of% @_root_.Int.Internal.Linear.cooper_left := by
+  intro ctx p₁ p₂ n cert hp hq
+  cases p₁ with
+  | num => contradiction
+  | add a x p =>
+    cases p₂ with
+    | num => contradiction
+    | add b y q =>
+      have xy := Bool.and_eq_true_iff.mp (show (x.beq y && (decide (a < 0) && (decide (0 < b) && n.beq (a.natAbs)))) = true from cert)
+      cases Nat.eq_of_beq_eq_true xy.1
+      have neg := Bool.and_eq_true_iff.mp xy.2
+      have pos := Bool.and_eq_true_iff.mp neg.2
+      cases Nat.eq_of_beq_eq_true pos.2
+      rw [_root_.Int.Internal.Linear.Poly.denote'_add] at hp hq
+      have hit := (private_decl% _root_.Int.Internal.Linear.cooper_left_core)
+        (of_decide_eq_true neg.1) (of_decide_eq_true pos.1) hp hq
+      refine mapOrOver (fun k value => ?_) _ hit
+      dsimp only [cooper_left_split, _root_.Int.Internal.Linear.Poly.tail, _root_.Int.Internal.Linear.Poly.leadCoeff]
+      rw [(private_decl% _root_.Int.Internal.Linear.denote'_mul_combine_mul_addConst_eq),
+          (private_decl% _root_.Int.Internal.Linear.denote'_addConst_eq)]
+      exact value
+
+public theorem Int.Internal.Linear.cooper_right :
+    type_of% @_root_.Int.Internal.Linear.cooper_right := by
+  intro ctx p₁ p₂ n cert hp hq
+  cases p₁ with
+  | num => contradiction
+  | add a x p =>
+    cases p₂ with
+    | num => contradiction
+    | add b y q =>
+      have xy := Bool.and_eq_true_iff.mp (show (x.beq y && (decide (a < 0) && (decide (0 < b) && n.beq (b.natAbs)))) = true from cert)
+      cases Nat.eq_of_beq_eq_true xy.1
+      have neg := Bool.and_eq_true_iff.mp xy.2
+      have pos := Bool.and_eq_true_iff.mp neg.2
+      cases Nat.eq_of_beq_eq_true pos.2
+      rw [_root_.Int.Internal.Linear.Poly.denote'_add] at hp hq
+      have hit := (private_decl% _root_.Int.Internal.Linear.cooper_right_core)
+        (of_decide_eq_true neg.1) (of_decide_eq_true pos.1) hp hq
+      refine mapOrOver (fun k value => ?_) _ hit
+      dsimp only [cooper_right_split, _root_.Int.Internal.Linear.Poly.tail, _root_.Int.Internal.Linear.Poly.leadCoeff]
+      rw [_root_.Int.Internal.Linear.Poly.mul_k_eq_mul, _root_.Int.Internal.Linear.Poly.mul_k_eq_mul,
+          (private_decl% _root_.Int.Internal.Linear.denote'_mul_combine_mul_addConst_eq),
+          (private_decl% _root_.Int.Internal.Linear.denote'_addConst_eq)]
+      exact value
+
+public theorem Int.Internal.Linear.cooper_dvd_left :
+    type_of% @_root_.Int.Internal.Linear.cooper_dvd_left := by
+  intro ctx p₁ p₂ p₃ d n cert hp hq hs
+  cases p₁ with
+  | num => contradiction
+  | add a x p =>
+    cases p₂ with
+    | num => contradiction
+    | add b y q =>
+      cases p₃ with
+      | num => contradiction
+      | add c z s =>
+        have xy := Bool.and_eq_true_iff.mp (show (x.beq y && (x.beq z && (decide (a < 0) && (decide (0 < b) && (decide (0 < d) && n.beq (Int.lcm a (a*d / Int.gcd (a*d) c))))))) = true from cert)
+        cases Nat.eq_of_beq_eq_true xy.1
+        have xz := Bool.and_eq_true_iff.mp xy.2
+        cases Nat.eq_of_beq_eq_true xz.1
+        have neg := Bool.and_eq_true_iff.mp xz.2
+        have pos := Bool.and_eq_true_iff.mp neg.2
+        have divisor := Bool.and_eq_true_iff.mp pos.2
+        cases Nat.eq_of_beq_eq_true divisor.2
+        rw [_root_.Int.Internal.Linear.Poly.denote'_add] at hp hq hs
+        have hit := (private_decl% _root_.Int.Internal.Linear.cooper_dvd_left_core)
+          (of_decide_eq_true neg.1) (of_decide_eq_true pos.1) (of_decide_eq_true divisor.1) hp hq hs
+        refine mapOrOver (fun k value => ?_) _ hit
+        dsimp only [cooper_dvd_left_split, _root_.Int.Internal.Linear.Poly.tail, _root_.Int.Internal.Linear.Poly.leadCoeff]
+        rw [(private_decl% _root_.Int.Internal.Linear.denote'_mul_combine_mul_addConst_eq),
+            (private_decl% _root_.Int.Internal.Linear.denote'_addConst_eq),
+            (private_decl% _root_.Int.Internal.Linear.denote'_mul_combine_mul_addConst_eq)]
+        exact value
+
+public theorem Int.Internal.Linear.cooper_dvd_right :
+    type_of% @_root_.Int.Internal.Linear.cooper_dvd_right := by
+  intro ctx p₁ p₂ p₃ d n cert hp hq hs
+  cases p₁ with
+  | num => contradiction
+  | add a x p =>
+    cases p₂ with
+    | num => contradiction
+    | add b y q =>
+      cases p₃ with
+      | num => contradiction
+      | add c z s =>
+        have xy := Bool.and_eq_true_iff.mp (show (x.beq y && (x.beq z && (decide (a < 0) && (decide (0 < b) && (decide (0 < d) && n.beq (Int.lcm b (b*d / Int.gcd (b*d) c))))))) = true from cert)
+        cases Nat.eq_of_beq_eq_true xy.1
+        have xz := Bool.and_eq_true_iff.mp xy.2
+        cases Nat.eq_of_beq_eq_true xz.1
+        have neg := Bool.and_eq_true_iff.mp xz.2
+        have pos := Bool.and_eq_true_iff.mp neg.2
+        have divisor := Bool.and_eq_true_iff.mp pos.2
+        cases Nat.eq_of_beq_eq_true divisor.2
+        rw [_root_.Int.Internal.Linear.Poly.denote'_add] at hp hq hs
+        have hit := (private_decl% _root_.Int.Internal.Linear.cooper_dvd_right_core)
+          (of_decide_eq_true neg.1) (of_decide_eq_true pos.1) (of_decide_eq_true divisor.1) hp hq hs
+        refine mapOrOver (fun k value => ?_) _ hit
+        dsimp only [cooper_dvd_right_split, _root_.Int.Internal.Linear.Poly.tail, _root_.Int.Internal.Linear.Poly.leadCoeff]
+        rw [(private_decl% _root_.Int.Internal.Linear.denote'_mul_combine_mul_addConst_eq),
+            (private_decl% _root_.Int.Internal.Linear.denote'_addConst_eq),
+            (private_decl% _root_.Int.Internal.Linear.denote'_mul_combine_mul_addConst_eq)]
+        exact value
+
 end OmegaChecks.InitPort.Alternatives
