@@ -77,4 +77,180 @@ private lemma integral_coordinate_product (s : Finset I) (h : ∀ i, X i → ℝ
   intro i _
   exact (measurePreserving_eval μ i).lintegral_comp (hm i).aemeasurable
 
+private lemma marginal_coordinate_product [DecidableEq I] (s : Finset I)
+    (h : ∀ i, X i → ℝ≥0∞) (hm : ∀ i, Measurable (h i))
+    (hi : ∀ i, ∫⁻ t, h i t ∂μ i = 1) (k : I) :
+    lmarginal μ (univ.erase k) (fun x => ∏ i ∈ s, h i (x i)) =
+      fun x => if k ∈ s then h k (x k) else 1 := by
+  classical
+  let g : ∀ i, X i → ℝ≥0∞ := fun i t => if i ∈ s then h i t else 1
+  have gm (i : I) : Measurable (g i) := by
+    dsimp [g]
+    split_ifs <;> fun_prop
+  have gi (i : I) : ∫⁻ t, g i t ∂μ i = 1 := by
+    dsimp [g]
+    split_ifs <;> simp [hi]
+  have hp (x : ∀ i, X i) : (∏ i, g i (x i)) = ∏ i ∈ s, h i (x i) := by
+    exact prod_ite_mem_eq s (fun i => h i (x i))
+  ext x
+  rw [← funext hp]
+  let u : Finset I := univ.erase k
+  have he (y : ∀ i : u, X i) :
+      (∏ i, g i (updateFinset x u y i)) =
+        g k (x k) * ∏ i : u, g i (y i) := by
+    rw [← prod_erase_mul _ _ (mem_univ k), mul_comm]
+    have hk : updateFinset x u y k = x k := by simp [u, updateFinset]
+    rw [hk]
+    congr 1
+    rw [prod_coe_sort]
+    apply prod_congr rfl
+    intro i hiu
+    simp only [u] at hiu
+    simp [updateFinset, hiu]
+  change (∫⁻ y : ∀ i : u, X i, ∏ i, g i (updateFinset x u y i)
+    ∂MeasureTheory.Measure.pi (fun i : u => μ i)) = _
+  simp_rw [he]
+  rw [lintegral_const_mul _ (Finset.measurable_fun_prod _
+    (fun i _ => (gm i).comp (measurable_pi_apply i)))]
+  have hi' : (∫⁻ y : ∀ i : u, X i, ∏ i : u, g i (y i)
+      ∂MeasureTheory.Measure.pi (fun i : u => μ i)) = 1 := by
+    rw [integral_coordinate_product (fun i : u => μ i) univ
+      (fun i : u => g i) (fun i => gm i)]
+    simp [gi]
+  rw [hi', mul_one]
+  rfl
+
+private lemma normalized_marginal_saturation [DecidableEq I]
+    {J : Type*} [Fintype J] (S : J → Set I)
+    (f : J → (∀ i, X i) → ℝ≥0∞) (w : J → ℝ)
+    (hf : ∀ j, Measurable (f j)) (hd : ∀ j, DependsOn (f j) (S j))
+    (hw : ∀ j, 0 ≤ w j)
+    (hb : ∀ i, ∑ j ∈ univ.filter (fun j => i ∈ S j), w j ≤ 1)
+    (hi : ∀ j, ∫⁻ x, f j x ∂MeasureTheory.Measure.pi μ = 1)
+    (he : ∫⁻ x, ∏ j, f j x ^ w j ∂MeasureTheory.Measure.pi μ = 1)
+    (u : Finset I) :
+    (∫⁻ x, ∏ j, lmarginal μ u (f j) x ^ w j ∂MeasureTheory.Measure.pi μ) = 1 ∧
+    lmarginal μ u (fun x => ∏ j, f j x ^ w j) =ᵐ[MeasureTheory.Measure.pi μ]
+      (fun x => ∏ j, lmarginal μ u (f j) x ^ w j) := by
+  have hF : Measurable (fun x => ∏ j, f j x ^ w j) :=
+    Finset.measurable_fun_prod _ (fun j _ => (hf j).pow_const _)
+  have hG : Measurable (fun x => ∏ j, lmarginal μ u (f j) x ^ w j) :=
+    Finset.measurable_fun_prod _ (fun j _ => ((hf j).lmarginal μ).pow_const _)
+  have hm := FinnerProductMeasure.marginal_estimate μ S f w hf hd hw hb u
+  have hm' : (∫⁻ x, lmarginal μ u (fun x => ∏ j, f j x ^ w j) x
+      ∂MeasureTheory.Measure.pi μ) = 1 := (integral_marginal μ u hF).trans he
+  have hu := FinnerProductMeasure.finner_product_measure μ
+    (fun j => S j \ (u : Set I)) (fun j => lmarginal μ u (f j)) w
+    (fun j => (hf j).lmarginal μ)
+    (fun j => D5.S3.Analytic.Measure.ProductSupportIntersection.marginal_depends μ u (hd j))
+    hw
+  have hub : ∀ i, ∑ j ∈ univ.filter (fun j => i ∈ S j \ (u : Set I)), w j ≤ 1 := by
+    intro i
+    by_cases h : i ∈ u
+    · simp [h]
+    · simpa [h] using hb i
+  have hi' (j : J) : ∫⁻ x, lmarginal μ u (f j) x ∂MeasureTheory.Measure.pi μ = 1 :=
+    (integral_marginal μ u (hf j)).trans (hi j)
+  have he' : (∫⁻ x, ∏ j, lmarginal μ u (f j) x ^ w j
+      ∂MeasureTheory.Measure.pi μ) = 1 := by
+    apply le_antisymm
+    · simpa [hi'] using hu hub
+    · rw [← hm']
+      exact lintegral_mono hm
+  refine ⟨he', ?_⟩
+  apply (lintegral_eq_iff_ae_eq_of_ae_le (by rw [hm']; exact ENNReal.one_ne_top)
+    hG.aemeasurable (Eventually.of_forall hm)).mp
+  rw [hm', he']
+
+private lemma profile_integral [DecidableEq I]
+    {f : (∀ i, X i) → ℝ≥0∞} (hf : Measurable f)
+    (hi : ∫⁻ x, f x ∂MeasureTheory.Measure.pi μ = 1)
+    (a : ∀ i, X i) (i : I) :
+    (∫⁻ t, lmarginal μ (univ.erase i) f (update a i t) ∂μ i) = 1 := by
+  rw [← lmarginal_insert _ hf (notMem_erase i univ), insert_erase (mem_univ i)]
+  simpa using hi
+
+private lemma profile_evaluation [DecidableEq I]
+    (f : (∀ i, X i) → ℝ≥0∞) (a x : ∀ i, X i) (i : I) :
+    lmarginal μ (univ.erase i) f (update a i (x i)) =
+      lmarginal μ (univ.erase i) f x := by
+  apply lmarginal_congr
+  intro k hk
+  have hki : k = i := by simpa using hk
+  subst k
+  simp
+
+private lemma canonical_factor [DecidableEq I] (S : Finset I)
+    {f : (∀ i, X i) → ℝ≥0∞} (hf : Measurable f)
+    (h : ∀ i, X i → ℝ≥0∞) (hm : ∀ i, Measurable (h i))
+    (hi : ∀ i, ∫⁻ t, h i t ∂μ i = 1)
+    (he : f =ᵐ[MeasureTheory.Measure.pi μ] (fun x => ∏ i ∈ S, h i (x i)))
+    {k : I} (hk : k ∈ S) :
+    lmarginal μ (univ.erase k) f =ᵐ[MeasureTheory.Measure.pi μ]
+      (fun x => h k (x k)) := by
+  have H := D5.S3.Analytic.Measure.ProductSupportIntersection.marginal_congr_ae μ
+    (univ.erase k) hf (Finset.measurable_fun_prod _
+      (fun i _ => (hm i).comp (measurable_pi_apply i))) he
+  simpa only [marginal_coordinate_product μ S h hm hi k, if_pos hk] using H
+
+private lemma proper_assembly [DecidableEq I] {J : Type*} [Fintype J]
+    (s : Finset I) (S : J → Finset I) (f : J → (∀ i, X i) → ℝ≥0∞)
+    (hf : ∀ j, Measurable (f j)) (hd : ∀ j, DependsOn (f j) (S j))
+    (hi : ∀ j, ∫⁻ x, f j x ∂MeasureTheory.Measure.pi μ = 1)
+    (hs : ∀ j, S j ⊆ s) (hp : ∀ j, S j ≠ s)
+    (hc : ∀ i ∈ s, ∃ j, i ∈ S j)
+    (hl : ∀ k ∈ s, ∃ h : ∀ i, X i → ℝ≥0∞,
+      (∀ i, Measurable (h i)) ∧ (∀ i, ∫⁻ t, h i t ∂μ i = 1) ∧
+      ∀ j, lmarginal μ {k} (f j) =ᵐ[MeasureTheory.Measure.pi μ]
+        (fun x => ∏ i ∈ (S j).erase k, h i (x i))) :
+    ∃ h : ∀ i, X i → ℝ≥0∞, (∀ i, Measurable (h i)) ∧
+      (∀ i, ∫⁻ t, h i t ∂μ i = 1) ∧
+      ∀ j, f j =ᵐ[MeasureTheory.Measure.pi μ] (fun x => ∏ i ∈ S j, h i (x i)) := by
+  classical
+  let a : ∀ i, X i := fun i => Classical.choice (nonempty_of_isProbabilityMeasure (μ i))
+  choose p hpm using hc
+  let h : ∀ i, X i → ℝ≥0∞ := fun i t =>
+    if his : i ∈ s then lmarginal μ (univ.erase i) (f (p i his)) (update a i t) else 1
+  have hm (i : I) : Measurable (h i) := by
+    dsimp [h]
+    split_ifs <;> fun_prop
+  have hu (i : I) : ∫⁻ t, h i t ∂μ i = 1 := by
+    dsimp [h]
+    split_ifs with his
+    · exact profile_integral μ (hf _) (hi _) a i
+    · simp
+  refine ⟨h, hm, hu, ?_⟩
+  intro j
+  have hn : ∃ k ∈ s, k ∉ S j := by
+    by_contra H
+    push_neg at H
+    exact hp j (Subset.antisymm (hs j) H)
+  obtain ⟨k, hks, hkj⟩ := hn
+  obtain ⟨g, gm, gu, ge⟩ := hl k hks
+  have hmatch : ∀ i ∈ S j, (fun x : ∀ i, X i => h i (x i)) =ᵐ[MeasureTheory.Measure.pi μ]
+      (fun x => g i (x i)) := by
+    intro i hij
+    have his := hs j hij
+    have hik : i ≠ k := ne_of_mem_of_not_mem hij hkj
+    have hip : i ∈ (S (p i his)).erase k := mem_erase.mpr ⟨hik, hpm i his⟩
+    have H := canonical_factor μ ((S (p i his)).erase k) ((hf _).lmarginal μ)
+      g gm gu (ge _) hip
+    have hki : k ∈ (univ : Finset I).erase i := by simp [hik.symm]
+    rw [marginal_absorb_singleton μ _ (hf _) hki] at H
+    filter_upwards [H] with x hx
+    dsimp [h]
+    rw [dif_pos his, profile_evaluation]
+    exact hx
+  have hprod : (fun x : ∀ i, X i => ∏ i ∈ S j, h i (x i)) =ᵐ[MeasureTheory.Measure.pi μ]
+      (fun x => ∏ i ∈ S j, g i (x i)) := by
+    have H := (eventually_all_finset (S j)).mpr hmatch
+    filter_upwards [H] with x hx
+    exact prod_congr rfl (fun i hi => hx i hi)
+  have hfix : lmarginal μ {k} (f j) = f j := by
+    apply marginal_fixed μ _ (hd j)
+    simpa using hkj
+  have H := ge j
+  rw [hfix, erase_eq_of_notMem hkj] at H
+  exact H.trans hprod.symm
+
 end D5.S3.Combinatorics.Hypergraphs.FinnerEquality
