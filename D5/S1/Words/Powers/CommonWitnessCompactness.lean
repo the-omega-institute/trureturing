@@ -13,8 +13,6 @@ public import Mathlib.Data.Set.Finite.Basic
 public import Mathlib.Data.Set.Card
 public import OmegaBuild.Commands
 
-compile_only_with_mathlib
-
 /-!
 For a relation of word pairs, an inner witness solves `a ++ z = z ++ b` and an
 outer witness solves the swapped equation.  The family theorem below keeps one
@@ -28,6 +26,8 @@ arXiv:2307.06777v4 (2026), Definition 5, p. 14, and Lemma 6, p. 25.  Their print
 lemma assumes a finite alphabet; this file proves the finite-word statement for
 an arbitrary alphabet and retains empty words and empty families.
 -/
+
+compile_only_with_mathlib
 
 public section
 
@@ -361,7 +361,7 @@ private theorem signed_of_common {G : Set (List α × List α)}
   · by_cases hne : z = []
     · refine ⟨.inl [], ?_⟩
       intro p hp
-      simpa [SignedHolds, Inner, Outer, hne] using (hz p hp).symm
+      simpa [SignedHolds, Inner, Outer, hne] using hz p hp
     · exact ⟨.inr ⟨z, hne⟩, hz⟩
 
 private theorem common_of_signed {G : Set (List α × List α)}
@@ -394,7 +394,7 @@ private theorem outer_of_sandwich {p : List α × List α} {x y : List α}
       x ++ ((p.2 ++ y) ++ x) = (p.1 ++ x) ++ y ++ x := by
         rw [hx]; simp [List.append_assoc]
       _ = (x ++ y ++ x) ++ p.2 := by simpa [List.append_assoc] using hxyx
-      _ = x ++ ((y ++ p.1) ++ x) := by rw [hx]; simp [List.append_assoc]
+      _ = x ++ ((y ++ p.1) ++ x) := by simp only [List.append_assoc]; rw [hx]
   exact (List.append_cancel_right (List.append_cancel_left heq)).symm
 
 private theorem signed_transport_of_two_inner
@@ -415,7 +415,11 @@ private theorem signed_transport_of_two_outer
     (hpx : Outer p x) (hpy : Outer p y)
     (hqx : Outer q x) (hqy : Outer q y) (hne : x ≠ y) :
     ∀ s : SignedWord α, SignedHolds p s → SignedHolds q s := by
-  have hp' : p.2 ≠ [] := nonempty_right_of_inner hp hpx.symm
+  have hp' : p.2 ≠ [] := by
+    intro hzero
+    have hlen := congrArg List.length hpx
+    simp only [List.length_append, hzero, List.length_nil, Nat.zero_add] at hlen
+    exact hp (List.eq_nil_of_length_eq_zero (by omega))
   have htransport : ∀ z, Outer p z → Outer q z := by
     intro z hz
     exact (transport_inner_witness hp' hpx.symm hpy.symm hqx.symm hqy.symm hne
@@ -486,7 +490,7 @@ theorem commonWitness_iff_three
         · exact hp
         · exact hq
         · exact hr
-      have hcard : (insert p (insert q {r})).ncard ≤ 3 := by
+      have hcard : (insert p (insert q {r}) : Set (List α × List α)).ncard ≤ 3 := by
         have h₁ := Set.ncard_insert_le p (insert q {r})
         have h₂ := Set.ncard_insert_le q {r}
         have h₃ := Set.ncard_singleton r
@@ -525,12 +529,12 @@ theorem commonWitness_iff_three
         cases s with
         | inl z =>
             have hlen := congrArg List.length hs
-            simp only [SignedHolds, Inner, hfirst p hp, List.nil_append,
+            simp only [hfirst p hp, List.nil_append,
               List.length_append] at hlen
             exact List.eq_nil_of_length_eq_zero (by omega)
         | inr z =>
             have hlen := congrArg List.length hs
-            simp only [SignedHolds, Outer, hfirst p hp, List.append_nil,
+            simp only [hfirst p hp, List.append_nil,
               List.length_append] at hlen
             exact List.eq_nil_of_length_eq_zero (by omega)
       simp [Inner, hfirst p hp, hsecond]
