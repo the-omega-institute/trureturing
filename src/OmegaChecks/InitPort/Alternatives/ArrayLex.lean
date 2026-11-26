@@ -41,4 +41,12 @@ public theorem Vector.lex_eq_false_iff_ge : type_of% @_root_.Vector.lex_eq_false
   rw [← _root_.Vector.lex_toArray]
   exact Array.lex_eq_false_iff_ge
 
+public theorem Array.le_trans : type_of% @_root_.Array.le_trans := by
+  intros
+  apply _root_.List.le_trans <;> assumption
+
+public theorem Vector.le_trans : type_of% @_root_.Vector.le_trans := by
+  intros
+  apply _root_.Array.le_trans <;> assumption
+
 end OmegaChecks.InitPort.Alternatives

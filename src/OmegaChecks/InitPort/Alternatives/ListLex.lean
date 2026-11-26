@@ -214,4 +214,43 @@ public theorem List.le_antisymm : type_of% @_root_.List.le_antisymm := by
       cases head
       exact congrArg (x :: ·) (ih (fun lt => xy (_root_.List.Lex.cons lt)) (fun lt => yx (_root_.List.Lex.cons lt)))
 
+open Std in
+private theorem compareHeads [LE α] [LT α] [IsLinearOrder α] [LawfulOrderLT α] (a b : α) :
+    ¬ ¬ (a < b ∨ a = b ∨ b < a) := by
+  intro deny
+  have ne : a ≠ b := fun e => deny (.inr (.inl e))
+  cases (le_total : a ≤ b ∨ b ≤ a) with
+  | inl le => exact deny (.inl (lt_of_le_of_ne le ne))
+  | inr le => exact deny (.inr (.inr (lt_of_le_of_ne le ne.symm)))
+
+open Std in
+private theorem compareLists [LE α] [LT α] [IsLinearOrder α] [LawfulOrderLT α] (xs ys : List α) :
+    ¬ ¬ (xs < ys ∨ xs = ys ∨ ys < xs) := by
+  induction xs generalizing ys with
+  | nil => cases ys with
+    | nil => exact fun deny => deny (.inr (.inl rfl))
+    | cons y ys => exact fun deny => deny (.inl (List.Lex.nil ..))
+  | cons x xs ih =>
+    cases ys with
+    | nil => exact fun deny => deny (.inr (.inr (List.Lex.nil ..)))
+    | cons y ys =>
+      intro deny
+      apply compareHeads x y
+      rintro (lt | rfl | gt)
+      · exact deny (.inl (List.Lex.rel lt))
+      · apply ih ys
+        rintro (lt | rfl | gt)
+        · exact deny (.inl (List.Lex.cons lt))
+        · exact deny (.inr (.inl rfl))
+        · exact deny (.inr (.inr (List.Lex.cons gt)))
+      · exact deny (.inr (.inr (List.Lex.rel gt)))
+
+public theorem List.le_trans : type_of% @_root_.List.le_trans := by
+  intro α _ _ _ _ xs ys zs xy yz zx
+  apply compareLists xs ys
+  rintro (lt | rfl | gt)
+  · exact yz (_root_.List.lt_trans zx lt)
+  · exact yz zx
+  · exact xy gt
+
 end OmegaChecks.InitPort.Alternatives
