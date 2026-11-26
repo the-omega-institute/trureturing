@@ -243,4 +243,20 @@ public theorem String.Slice.Pos.next._proof_1 : type_of% @_root_.String.Slice.Po
   apply String.Pos.Raw.IsValid.append_left _ t₁
   exact String.Pos.Raw.isValid_singleton.mpr (Or.inr rfl)
 
+public theorem String.Pos.Raw.isValid_copy_iff : type_of% @_root_.String.Pos.Raw.isValid_copy_iff := by
+  intro s p
+  apply String.Pos.Raw.isValid_iff_isUTF8FirstByte.trans
+  apply Iff.trans _ String.Pos.Raw.isValidForSlice_iff_isUTF8FirstByte.symm
+  constructor
+  · rintro (eq | ⟨lt, first⟩)
+    · exact Or.inl (eq.trans String.Slice.rawEndPos_copy)
+    · refine Or.inr ⟨String.Slice.rawEndPos_copy ▸ lt, ?_⟩
+      rw [String.Slice.getUTF8Byte_copy] at first
+      exact first
+  · rintro (eq | ⟨lt, first⟩)
+    · exact Or.inl (eq.trans String.Slice.rawEndPos_copy.symm)
+    · refine Or.inr ⟨String.Slice.rawEndPos_copy.symm ▸ lt, ?_⟩
+      rw [String.Slice.getUTF8Byte_copy]
+      exact first
+
 end OmegaChecks.InitPort.Alternatives

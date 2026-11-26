@@ -645,4 +645,10 @@ public theorem Nat.shiftLeft_or_distrib : type_of% @_root_.Nat.shiftLeft_or_dist
   rw [Nat.shiftLeft_eq, Nat.shiftLeft_eq, Nat.shiftLeft_eq, Nat.mul_comm _ (2^i), Nat.mul_comm a, Nat.mul_comm b]
   exact parts
 
+public theorem Char.toNat_le : type_of% (private_decl% @_root_.Char.toNat_le) := by
+  intro c
+  rcases c.valid with below | ⟨_, upper⟩
+  · exact Nat.le_trans (Nat.le_of_lt below) (Nat.le_add_right 0xd800 0x1027ff)
+  · exact Nat.le_of_lt_succ upper
+
 end OmegaChecks.InitPort.Alternatives
