@@ -10,7 +10,7 @@ permissions: {}
 
 # Inspector and Scribe follow the source pin. The publisher has its own revision.
 env:
-  TRUTH_TOOLS_COMMIT: 8cf1faf76a8769140f5ffe17ceacd2ccc9bacaf5
+  TRUTH_TOOLS_COMMIT: de3688f9bd17c65f7bce8759d9df345dc03bdb69
 
 concurrency:
   group: truth-release-publish-dev
@@ -53,6 +53,7 @@ jobs:
       contents: read
     outputs:
       artifact_id: ${{ steps.upload.outputs.artifact-id }}
+      existing: ${{ steps.reports.outputs.existing }}
     steps:
       - uses: actions/checkout@v5
         with:
@@ -66,7 +67,15 @@ jobs:
           sparse-checkout-cone-mode: false
           sparse-checkout: /.github/scripts/read-module-reports.py
           persist-credentials: false
+      - name: Select the previous Truth release
+        id: reports
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE: ${{ needs.pin.outputs.source }}
+        run: |
+          python3 -B truth-workflow/.github/scripts/read-module-reports.py select "$SOURCE" "$RUNNER_TEMP/truth-selection.json"
       - name: Check out the fixed truth release tools
+        if: steps.reports.outputs.existing == ''
         uses: actions/checkout@v5
         with:
           repository: the-omega-institute/trureturing-tools
@@ -74,20 +83,52 @@ jobs:
           path: truth-tools
           persist-credentials: false
       - name: Install the tools pinned by the source
+        if: steps.reports.outputs.existing == ''
         run: make install-tools
-      - uses: actions/setup-dotnet@v5
-        with:
-          global-json-file: global.json
-      - name: Read report ZIPs from the pinned module release
+      - name: Read compatible predecessor rows and current module ZIPs
+        if: steps.reports.outputs.existing == ''
         env:
           MODULE_RELEASE: ${{ format('lean-modules-{0}', needs.pin.outputs.source) }}
         run: |
           python3 -B truth-workflow/.github/scripts/read-module-reports.py \
             "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/releases/download" "$MODULE_RELEASE" \
-            "$GITHUB_WORKSPACE/.lake/build/lean-inspector/modules"
+            "$GITHUB_WORKSPACE/.lake/build/lean-inspector/modules" --previous-bundle "$RUNNER_TEMP/truth-base" \
+            --selection "$RUNNER_TEMP/truth-selection.json"
+          if [[ -f "$RUNNER_TEMP/truth-base/reuse.json" ]]; then
+            base=$(jq -er '.source_commit | select(test("^[0-9a-f]{40}$"))' "$RUNNER_TEMP/truth-base/truth-release-publication.v1.json")
+            if ! git cat-file -e "$base^{tree}" 2>/dev/null; then
+              git fetch --no-tags --depth=1 --filter=blob:none origin "$base"
+            fi
+          fi
+      - if: steps.reports.outputs.existing == ''
+        uses: actions/setup-dotnet@v5
+        with:
+          global-json-file: global.json
+      - name: Restore Scribe resource inputs
+        if: steps.reports.outputs.existing == ''
+        id: scribe-cache
+        continue-on-error: true
+        uses: actions/cache/restore@v5
+        with:
+          path: ${{ runner.temp }}/truth-scribe
+          key: truth-scribe-v1-${{ needs.pin.outputs.source }}
+          restore-keys: truth-scribe-v1-
       - name: Generate and package the DAG and truth release
+        id: generate
+        if: steps.reports.outputs.existing == ''
+        env:
+          TRUTH_RELEASE_BASE: ${{ runner.temp }}/truth-base
+          TRUTH_RELEASE_SCRIBE_CACHE: ${{ runner.temp }}/truth-scribe
         run: bash "$GITHUB_WORKSPACE/truth-tools/.github/scripts/truth_release/build.sh" "$RUNNER_TEMP/truth-assets"
+      - name: Save the prepared Scribe resources
+        if: steps.generate.outputs.scribe_cache_ready == 'true' && steps.scribe-cache.outputs.cache-hit != 'true'
+        continue-on-error: true
+        uses: actions/cache/save@v5
+        with:
+          path: ${{ runner.temp }}/truth-scribe
+          key: truth-scribe-v1-${{ needs.pin.outputs.source }}
       - id: upload
+        if: steps.reports.outputs.existing == ''
         uses: actions/upload-artifact@v6
         with:
           name: truth-release-${{ github.run_id }}-${{ github.run_attempt }}
@@ -98,6 +139,7 @@ jobs:
 
   publish:
     needs: build
+    if: needs.build.outputs.existing == ''
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 60
     permissions:
