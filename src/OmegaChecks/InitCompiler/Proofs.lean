@@ -247,6 +247,44 @@ public def constructiveCasts (source : Environment) (body : Expr) (rules : NameM
     term := next
   return term
 
+/-- Select a field of an official conjunction or equivalence before translating
+its proof. This avoids requiring an unused direction at a constructive use site. -/
+public def specializeProjections (source : Environment) (body : Expr) (unavailable : Name → Bool) : Expr := Id.run do
+  let reduce := fun (e : Expr) => do
+    let (kind, index, proof, args) ← match e.getAppFn with
+      | .proj kind i proof => some (kind, i, proof, e.getAppArgs)
+      | .const n _ => do
+        let args := e.getAppArgs
+        let proof ← args[2]?
+        let (kind, i) ← match n with
+          | `Iff.mp => some (`Iff, 0)
+          | `Iff.mpr => some (`Iff, 1)
+          | `And.left => some (`And, 0)
+          | `And.right => some (`And, 1)
+          | _ => none
+        pure (kind, i, proof, args.extract 3 args.size)
+      | _ => none
+    guard ((kind == `Iff || kind == `And) && index < 2)
+    let ctor := kind ++ `intro
+    let mut term := proof.consumeMData
+    guard (term.isAppOf ctor || term.getAppFn.constName?.any unavailable)
+    for _ in [:8] do
+      if term.isAppOfArity ctor 4 then return term.getAppArgs[index + 2]!.beta args
+      if let .letE _ _ val next _ := term then
+        term := (next.instantiate1 val).consumeMData
+      else
+        let .const name levels := term.getAppFn | none
+        let ci ← source.find? name
+        let val ← ci.value? (allowOpaque := true)
+        term := ((val.instantiateLevelParams ci.levelParams levels).beta term.getAppArgs).consumeMData
+    none
+  let mut term := body
+  for _ in [:4] do
+    let next := term.replace reduce
+    if next.equal term then break
+    term := next
+  return term
+
 private def eliminateChoice (e : Expr) : MetaM Expr := do
   unless e.isApp do return e
   let some chosen := e.find? (fun expr => !expr.hasLooseBVars &&
@@ -277,9 +315,27 @@ private def eliminateChoice (e : Expr) : MetaM Expr := do
       Meta.mkLambdaFVars #[x, hx] term
   return mkApp5 (mkConst `Exists.elim us) α p conclusion args[2]! branch
 
+/-- Some classical theorems are direct applications of a decidable theorem. Expose
+the instance argument at the use site, where its concrete proposition is known. -/
+private def exposeDecidableTheorems (source : Environment) (body : Expr) : Expr := Id.run do
+  let mut wrappers : NameMap ConstantInfo := {}
+  for name in body.getUsedConstants do
+    unless name.getRoot == `Classical do continue
+    let some (.thmInfo ci) := source.find? name | continue
+    let mut rhs := ci.value
+    while rhs.isLambda do rhs := rhs.bindingBody!
+    unless rhs.getAppFn.constName?.any (·.getRoot == `Decidable) do continue
+    wrappers := wrappers.insert name (.thmInfo ci)
+  if wrappers.isEmpty then return body
+  return body.replace fun e => do
+    let .const name levels := e.getAppFn | none
+    let ci ← wrappers.find? name
+    return ((← ci.value? (allowOpaque := true)).instantiateLevelParams ci.levelParams levels).beta e.getAppArgs
+
 /-- Recover decidable case splits and eliminate a chosen witness directly into a
 proposition when the conclusion is independent of that witness. -/
 public def decidableProof (source : Environment) (body : Expr) : IO Expr := do
+  let body := exposeDecidableTheorems source body
   let classical := [`Classical.em, `Classical.byCases, `Classical.byContradiction, `Classical.propDecidable]
   let deps := body.getUsedConstants
   let usesChoice := deps.any [`Classical.choose, `Classical.choose_spec, `Classical.choice,

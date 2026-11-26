@@ -427,6 +427,12 @@ partial def visit (n : Name) : M Bool := do
   if !decided.equal rewritten then
     if (← attempt (OmegaChecks.InitCompiler.constructiveCasts c.source decided c.proofRules)) matches .added then
       return ← record n .added
+  let current := (← get).env
+  let projected := OmegaChecks.InitCompiler.specializeProjections c.source body
+    (fun dep => (current.find? (portName dep)).isNone)
+  if !projected.equal body then
+    let simplified := OmegaChecks.InitCompiler.constructiveCasts c.source projected c.proofRules true
+    if (← attempt simplified) matches .added then return ← record n .added
   let recursive ← OmegaChecks.InitCompiler.Recursion.specialize c.source c.recursionRule ci decided
   if !recursive.equal decided then
     if (← attempt recursive) matches .added then return ← record n .added
