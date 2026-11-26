@@ -74,4 +74,33 @@ public theorem BitVec.toNat_sub_of_le : type_of% @_root_.BitVec.toNat_sub_of_le 
   rw [_root_.BitVec.toNat_sub, ← Nat.sub_add_comm (Nat.le_of_lt y.isLt), Nat.add_sub_assoc h,
     Nat.add_mod_left, Nat.mod_eq_of_lt (Nat.lt_of_le_of_lt (Nat.sub_le ..) x.isLt)]
 
+public theorem BitVec.toNat_intMin : type_of% @_root_.BitVec.toNat_intMin :=
+  fun {w} => BitVec.toNat_twoPow w (w - 1)
+
+public theorem BitVec.toNat_intMin_of_pos : type_of% @_root_.BitVec.toNat_intMin_of_pos :=
+  fun h => BitVec.toNat_intMin.trans (Nat.mod_eq_of_lt (Nat.two_pow_pred_lt_two_pow h))
+
+public theorem BitVec.toNat_intMax : type_of% @_root_.BitVec.toNat_intMax := by
+  intro w
+  cases w with
+  | zero => rfl
+  | succ k =>
+    have hi := _root_.BitVec.toNat_intMin_of_pos (Nat.zero_lt_succ k)
+    have one := BitVec.toNat_one (Nat.zero_lt_succ k)
+    change (_root_.BitVec.intMin (k + 1) - 1#(k + 1)).toNat = _
+    have le : 1#(k + 1) ≤ _root_.BitVec.intMin (k + 1) := by
+      change (1#(k + 1)).toNat ≤ (_root_.BitVec.intMin (k + 1)).toNat
+      rw [one, hi]
+      exact Nat.two_pow_pos _
+    rw [BitVec.toNat_sub_of_le le, one, hi]
+
+public theorem BitVec.toInt_intMin_of_pos : type_of% @_root_.BitVec.toInt_intMin_of_pos := by
+  intro w h
+  have half := _root_.BitVec.toNat_intMin_of_pos h
+  have boundary : ¬2 * 2 ^ (w - 1) < 2 ^ w := by
+    rw [Nat.two_mul, Nat.two_pow_pred_add_two_pow_pred h]
+    exact Nat.lt_irrefl _
+  rw [_root_.BitVec.toInt, half, ite_eq_right boundary, Int.two_pow_pred_sub_two_pow h,
+    Int.natCast_pow, Int.cast_ofNat_Int]
+
 end OmegaChecks.InitPort.Alternatives
