@@ -1,6 +1,7 @@
 module
 import all Init.Data.Array.Basic
 public import Init.Data.Array.Lemmas
+public import Init.Data.Array.Find
 public import Init.Data.List.Find
 
 namespace OmegaChecks.InitPort.Alternatives
@@ -36,5 +37,41 @@ public theorem Array.findRev?_eq_find?_reverse : type_of% @_root_.Array.findRev?
   | mk xs =>
     change xs.toArray.findSomeRev? (Option.guard p) = _
     rw [findRevArray, List.reverse_toArray, _root_.List.find?_toArray, List.findSome?_guard]
+
+public theorem Array.findFinIdx?_congr : type_of% @_root_.Array.findFinIdx?_congr := by
+  intro α p xs ys eq
+  subst ys
+  cases xs.findFinIdx? p <;> rfl
+
+public theorem Array.findFinIdx?_eq_none_iff : type_of% @_root_.Array.findFinIdx?_eq_none_iff := by
+  intro α xs p
+  have missing : xs.findFinIdx? p = none ↔ xs.findIdx? p = none := by
+    rw [Array.findIdx?_eq_map_findFinIdx?_val]
+    exact Option.map_eq_none_iff.symm
+  exact ⟨fun h x mem => Bool.eq_false_iff.mp (Array.findIdx?_eq_none_iff.mp (missing.mp h) x mem),
+    fun h => missing.mpr (Array.findIdx?_eq_none_iff.mpr (fun x mem => Bool.eq_false_iff.mpr (h x mem)))⟩
+
+public theorem Array.findFinIdx?_eq_some_iff : type_of% @_root_.Array.findFinIdx?_eq_some_iff := by
+  intro α xs p i
+  have atIndex : xs.findFinIdx? p = some i ↔ xs.findIdx? p = some i.val := by
+    rw [Array.findIdx?_eq_map_findFinIdx?_val]
+    exact (Option.map_inj_right (o' := some i) (f := Fin.val) (fun _ _ => Fin.eq_of_val_eq)).symm
+  constructor
+  · intro hit
+    obtain ⟨_, here, before⟩ := Array.findIdx?_eq_some_iff_getElem.mp (atIndex.mp hit)
+    exact ⟨here, fun j hj => before j.val hj⟩
+  · rintro ⟨here, before⟩
+    exact atIndex.mpr (Array.findIdx?_eq_some_iff_getElem.mpr
+      ⟨i.isLt, here, fun j hj => before ⟨j, Nat.lt_trans hj i.isLt⟩ hj⟩)
+
+public theorem Array.findIdx?_append : type_of% @_root_.Array.findIdx?_append := by
+  intro α xs ys p
+  cases xs with
+  | mk as =>
+    cases ys with
+    | mk bs =>
+      rw [List.append_toArray, List.findIdx?_toArray, List.findIdx?_toArray, List.findIdx?_toArray,
+        List.size_toArray]
+      exact List.findIdx?_append
 
 end OmegaChecks.InitPort.Alternatives
