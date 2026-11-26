@@ -67,6 +67,16 @@ public theorem Nat.testBit_two_pow_sub_one : type_of% @_root_.Nat.testBit_two_po
       · rw [decide_eq_true lt, decide_eq_true (Nat.succ_lt_succ lt)]
       · rw [decide_eq_false lt, decide_eq_false (fun h => lt (Nat.lt_of_succ_lt_succ h))]
 
+public theorem Nat.and_zero : type_of% @_root_.Nat.and_zero := by
+  intro n
+  apply Nat.eq_of_testBit_eq
+  intro i
+  rw [Nat.testBit_and, Nat.zero_testBit, Bool.and_false]
+
+public theorem Nat.zero_and : type_of% @_root_.Nat.zero_and := by
+  intro n
+  exact (Nat.and_comm 0 n).trans (Nat.and_zero n)
+
 private theorem highestBits {i k tag mask : Nat} (low : i < 2 ^ k)
     (zero : mask % (2 ^ k) = 0) :
     (i + 2 ^ k * tag) &&& mask = 2 ^ k * (tag &&& (mask / 2 ^ k)) := by
