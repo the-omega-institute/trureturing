@@ -1,7 +1,7 @@
 module
 import all Init.Grind.Ring.CommSolver
 
-/-! Structural decrease in reverse lexicographic comparison of monomials. -/
+/-! Constructive proofs for the polynomial normalizer and its ring certificates. -/
 
 open Lean.Grind Lean.Grind.CommRing
 namespace OmegaChecks.InitPort.Alternatives
@@ -265,7 +265,6 @@ public theorem Lean.Grind.CommRing.intCast_eq_denoteInt :
     type_of% @_root_.Lean.Grind.CommRing.intCast_eq_denoteInt :=
   fun {_} _ b => (_root_.Lean.Grind.CommRing.denoteInt_eq b).symm
 
-
 public theorem Lean.Grind.CommRing.Poly.mulConst_k_eq_mulConst :
     type_of% @_root_.Lean.Grind.CommRing.Poly.mulConst_k_eq_mulConst := by
   intro k p
@@ -374,7 +373,6 @@ public theorem Lean.Grind.CommRing.Power.eq_of_revlex :
         rfl
       | lt => rw [hw] at h; contradiction
       | gt => rw [hw] at h; contradiction
-
 
 public theorem Lean.Grind.CommRing.Poly.combine_k_eq_combine :
     type_of% @_root_.Lean.Grind.CommRing.Poly.combine_k_eq_combine := by
@@ -636,5 +634,159 @@ public theorem Lean.Grind.CommRing.Expr.denote_toPolyC_nc :
         rw [Poly.denote_ofMon, Mon.denote, Power.denote_eq, Mon.denote, mul_one]
       | intCast | natCast | neg | add | sub | mul | pow =>
         exact (Poly.denote_powC_nc ..).trans (congrArg (fun x : α => x ^ (k+1)) ih)
+
+
+public theorem Lean.Grind.NoNatZeroDivisors.eq_zero_of_mul_eq_zero :
+    type_of% @_root_.Lean.Grind.NoNatZeroDivisors.eq_zero_of_mul_eq_zero := by
+  intro α _ _ k a nonzero zero
+  exact no_nat_zero_divisors k a 0 nonzero (zero.trans (NatModule.nsmul_zero k).symm)
+
+public theorem Lean.Grind.no_int_zero_divisors :
+    type_of% @_root_.Lean.Grind.no_int_zero_divisors := by
+  intro α _ _ k a nonzero zero
+  cases k with
+  | ofNat n =>
+    change (↑n : Int) • a = 0 at zero
+    rw [IntModule.zsmul_natCast_eq_nsmul] at zero
+    exact NoNatZeroDivisors.eq_zero_of_mul_eq_zero (fun eq => nonzero (congrArg Int.ofNat eq)) zero
+  | negSucc n =>
+    change -(↑(n+1) : Int) • a = 0 at zero
+    rw [IntModule.neg_zsmul] at zero
+    have h := congrArg Neg.neg zero
+    rw [AddCommGroup.neg_neg, AddCommGroup.neg_zero, IntModule.zsmul_natCast_eq_nsmul] at h
+    exact NoNatZeroDivisors.eq_zero_of_mul_eq_zero (Nat.succ_ne_zero n) h
+
+public theorem Lean.Grind.OrderedAdd.zsmul_nonpos :
+    type_of% @_root_.Lean.Grind.OrderedAdd.zsmul_nonpos := by
+  intro α _ _ _ _ k a nonneg h
+  rw [Int.eq_natAbs_of_nonneg nonneg, IntModule.zsmul_natCast_eq_nsmul]
+  have zero := OrderedAdd.nsmul_le_nsmul (k := k.natAbs) h
+  rw [NatModule.nsmul_zero] at zero
+  exact zero
+
+private theorem neOfNotIntBeq {k : Int} (h : !(Int.beq' k 0)) : k ≠ 0 := by
+  intro eq
+  cases eq
+  contradiction
+
+private theorem subDenoteOfCert {α : Type u} [CommRing α] (ctx : Context α) {a b : Expr}
+    {p : Poly} (cert : (a.sub b).toPoly_k.beq' p) :
+    p.denote ctx = a.denote ctx - b.denote ctx := by
+  rw [← polyEqOfBeq cert, Expr.toPoly_k_eq_toPoly]
+  exact _root_.Lean.Grind.CommRing.Expr.denote_toPoly ..
+
+public theorem Lean.Grind.CommRing.Stepwise.div :
+    type_of% @_root_.Lean.Grind.CommRing.Stepwise.div := by
+  intro α _ ctx _ p₁ k p cert h
+  have both := Bool.and_eq_true_iff.mp (show (!(Int.beq' k 0) && (p.mulConst_k k).beq' p₁) = true from cert)
+  rw [← polyEqOfBeq both.2, Poly.mulConst_k_eq_mulConst, Poly.denote_mulConst, ← Ring.zsmul_eq_intCast_mul] at h
+  exact no_int_zero_divisors (neOfNotIntBeq both.1) h
+
+public theorem Lean.Grind.CommRing.Stepwise.core :
+    type_of% @_root_.Lean.Grind.CommRing.Stepwise.core := by
+  intro α _ ctx a b p cert h
+  rw [subDenoteOfCert ctx cert]
+  exact AddCommGroup.sub_eq_zero_iff.mpr h
+
+public theorem Lean.Grind.CommRing.Stepwise.imp_1eq :
+    type_of% @_root_.Lean.Grind.CommRing.Stepwise.imp_1eq := by
+  intro α _ ctx a b p q cert h
+  have both := Bool.and_eq_true_iff.mp (show (((a.sub b).toPoly_k).beq' p && q.beq' (.num 0)) = true from cert)
+  rw [subDenoteOfCert ctx both.1, polyEqOfBeq both.2, Poly.denote, Ring.intCast_zero, Ring.intCast_one, Semiring.one_mul] at h
+  exact AddCommGroup.sub_eq_zero_iff.mp h
+
+public theorem Lean.Grind.CommRing.Stepwise.imp_keq :
+    type_of% @_root_.Lean.Grind.CommRing.Stepwise.imp_keq := by
+  intro α _ ctx _ k a b p q cert h
+  have data := Bool.and_eq_true_iff.mp (show (!(Int.beq' k 0) && (((a.sub b).toPoly_k).beq' p && q.beq' (.num 0))) = true from cert)
+  have both := Bool.and_eq_true_iff.mp data.2
+  rw [subDenoteOfCert ctx both.1, polyEqOfBeq both.2, Poly.denote, Ring.intCast_zero, ← Ring.zsmul_eq_intCast_mul] at h
+  exact AddCommGroup.sub_eq_zero_iff.mp (no_int_zero_divisors (neOfNotIntBeq data.1) h)
+
+public theorem Lean.Grind.CommRing.Stepwise.divC :
+    type_of% @_root_.Lean.Grind.CommRing.Stepwise.divC := by
+  intro α c _ _ ctx _ p₁ k p cert h
+  have both := Bool.and_eq_true_iff.mp (show (!(Int.beq' k 0) && (p.mulConstC k c).beq' p₁) = true from cert)
+  rw [← polyEqOfBeq both.2, Poly.denote_mulConstC, ← Ring.zsmul_eq_intCast_mul] at h
+  exact no_int_zero_divisors (neOfNotIntBeq both.1) h
+
+public theorem Lean.Grind.CommRing.Stepwise.coreC :
+    type_of% @_root_.Lean.Grind.CommRing.Stepwise.coreC := by
+  intro α c _ _ ctx a b p cert h
+  rw [← polyEqOfBeq (p := (a.sub b).toPolyC c) (q := p) cert, Expr.denote_toPolyC]
+  change a.denote ctx - b.denote ctx = 0
+  exact AddCommGroup.sub_eq_zero_iff.mpr h
+
+public theorem Lean.Grind.CommRing.Stepwise.imp_1eqC :
+    type_of% @_root_.Lean.Grind.CommRing.Stepwise.imp_1eqC := by
+  intro α c _ _ ctx a b p q cert h
+  have both := Bool.and_eq_true_iff.mp (show (((a.sub b).toPolyC c).beq' p && q.beq' (.num 0)) = true from cert)
+  rw [← polyEqOfBeq both.1, Expr.denote_toPolyC, polyEqOfBeq both.2, Poly.denote, Ring.intCast_zero, Ring.intCast_one, Semiring.one_mul] at h
+  exact AddCommGroup.sub_eq_zero_iff.mp h
+
+public theorem Lean.Grind.CommRing.Stepwise.imp_keqC :
+    type_of% @_root_.Lean.Grind.CommRing.Stepwise.imp_keqC := by
+  intro α c _ _ ctx _ k a b p q cert h
+  have data := Bool.and_eq_true_iff.mp (show (!(Int.beq' k 0) && (((a.sub b).toPolyC c).beq' p && q.beq' (.num 0))) = true from cert)
+  have both := Bool.and_eq_true_iff.mp data.2
+  rw [← polyEqOfBeq both.1, Expr.denote_toPolyC, polyEqOfBeq both.2, Poly.denote, Ring.intCast_zero, ← Ring.zsmul_eq_intCast_mul] at h
+  exact AddCommGroup.sub_eq_zero_iff.mp (no_int_zero_divisors (neOfNotIntBeq data.1) h)
+
+public theorem Lean.Grind.CommRing.diseq_norm :
+    type_of% @_root_.Lean.Grind.CommRing.diseq_norm := by
+  intro α _ ctx a b p cert neq zero
+  rw [subDenoteOfCert ctx cert] at zero
+  exact neq (AddCommGroup.sub_eq_zero_iff.mp zero)
+
+public theorem Lean.Grind.CommRing.norm_int :
+    type_of% @_root_.Lean.Grind.CommRing.norm_int := by
+  intro ctx e p cert
+  rw [← polyEqOfBeq (p := e.toPoly_k) (q := p) cert, Expr.toPoly_k_eq_toPoly,
+      Poly.denote'_eq_denote, Expr.denote_toPoly]
+
+public theorem Lean.Grind.CommRing.Stepwise.diseq_mul :
+    type_of% @_root_.Lean.Grind.CommRing.Stepwise.diseq_mul := by
+  intro α _ _ ctx p₁ k p cert ne zero
+  have both := Bool.and_eq_true_iff.mp (show ((!(@BEq.beq Int (@instBEqOfDecidableEq Int Int.instDecidableEq) k 0)) && (p₁.mulConst_k k).beq' p) = true from cert)
+  rw [← polyEqOfBeq both.2, Poly.mulConst_k_eq_mulConst, Poly.denote_mulConst,
+      ← Ring.zsmul_eq_intCast_mul] at zero
+  exact ne (no_int_zero_divisors (bne_iff_ne.mp both.1) zero)
+
+public theorem Lean.Grind.CommRing.le_norm :
+    type_of% @_root_.Lean.Grind.CommRing.le_norm := by
+  intro α _ _ _ _ _ ctx a b p cert h
+  rw [subDenoteOfCert ctx cert]
+  have shift := OrderedAdd.add_le_left h (-(b.denote ctx))
+  rw [← AddCommGroup.sub_eq_add_neg, ← AddCommGroup.sub_eq_add_neg, AddCommGroup.sub_self] at shift
+  exact shift
+
+public theorem Lean.Grind.CommRing.le_mul :
+    type_of% @_root_.Lean.Grind.CommRing.le_mul := by
+  intro α _ _ _ _ _ ctx p₁ k p cert h
+  have both := Bool.and_eq_true_iff.mp (show (decide (k > 0) && (p₁.mulConst_k k).beq' p) = true from cert)
+  rw [← polyEqOfBeq both.2, Poly.mulConst_k_eq_mulConst, Poly.denote_mulConst,
+      ← Ring.zsmul_eq_intCast_mul]
+  exact OrderedAdd.zsmul_nonpos (Int.le_of_lt (of_decide_eq_true both.1)) h
+
+public theorem Lean.Grind.CommRing.lt_norm :
+    type_of% @_root_.Lean.Grind.CommRing.lt_norm := by
+  intro α _ _ _ _ _ _ ctx a b p cert h
+  rw [subDenoteOfCert ctx cert]
+  have shift := OrderedAdd.add_lt_left h (-(b.denote ctx))
+  rw [← AddCommGroup.sub_eq_add_neg, ← AddCommGroup.sub_eq_add_neg, AddCommGroup.sub_self] at shift
+  exact shift
+
+public theorem Lean.Grind.CommRing.lt_mul :
+    type_of% @_root_.Lean.Grind.CommRing.lt_mul := by
+  intro α _ _ _ _ _ _ ctx p₁ k p cert h
+  have both := Bool.and_eq_true_iff.mp (show (decide (k > 0) && (p₁.mulConst_k k).beq' p) = true from cert)
+  rw [← polyEqOfBeq both.2, Poly.mulConst_k_eq_mulConst, Poly.denote_mulConst,
+      ← Ring.zsmul_eq_intCast_mul]
+  have pos : 0 < k := of_decide_eq_true both.1
+  rw [Int.eq_natAbs_of_nonneg (Int.le_of_lt pos), IntModule.zsmul_natCast_eq_nsmul]
+  have posNat : 0 < k.natAbs := Int.natAbs_pos.mpr (Int.ne_of_gt pos)
+  have scaled := (OrderedAdd.nsmul_lt_nsmul_iff k.natAbs h).mpr posNat
+  rw [NatModule.nsmul_zero] at scaled
+  exact scaled
 
 end OmegaChecks.InitPort.Alternatives
