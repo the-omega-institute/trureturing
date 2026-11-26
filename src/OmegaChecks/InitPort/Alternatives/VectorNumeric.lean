@@ -1,4 +1,5 @@
 module
+public import OmegaChecks.InitPort.Alternatives.ListFinRange
 public import Init.Data.Vector.Int
 public import Init.Data.Vector.Nat
 public import Init.Data.Vector.Extract
