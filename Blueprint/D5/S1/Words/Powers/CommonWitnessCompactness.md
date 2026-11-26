@@ -18,11 +18,12 @@ For every universe level u, every alphabet A in Type u, and every set G of liter
 
 The statement includes empty and infinite relations, empty words, the neutral pair ([],[]), empty alphabets, infinite alphabets, and arbitrary universe levels. It assumes no Finite, Fintype, DecidableEq or Nonempty structure on A and does not bound witness length. It is a literal List and Set result, with no infinite-word or group-element endpoint.
 
-For the inner orientation, a nonempty first component is selected from G. The copied constructive short-cut normal form gives prefix comparability of any two anchor witnesses. Two distinct shared witnesses transport a third row through the cyclic centralizer: residuals commute with the anchor right word, and the frozen centralizer classification transfers commutation to the row under test. If a row has at most one shared anchor witness, a finite three-row union forces all such unique candidates to agree. Rows with empty first component are neutral by length cancellation. The outer case is the same proof after swapping each pair.
+For the inner orientation, a nonempty first component is selected from G. The single-equation theorem in ConjugacyNormalForm gives prefix comparability of any two anchor witnesses. Two distinct shared witnesses transport a third row through the cyclic centralizer: residuals commute with the anchor right word, and the cyclic centralizer classification transfers commutation to the row under test. If a row has at most one shared anchor witness, a finite three-row union forces all such unique candidates to agree. Rows with empty first component are neutral by length cancellation. The outer case follows after swapping each pair. For the global disjunction, either every finite subset admits an inner witness, or a finite inner obstruction exists. In the latter case adjoining that obstruction to any finite subset forces an outer witness, so outer finite character applies.
 
 Aiswarya, Manuel and Sunny, arXiv:2307.06777v4, Definition 5 and Lemma 6, p. 25, gives the finite-alphabet common-witness principle. The cited source is a literature boundary: its finite-alphabet scope is recorded, while the arbitrary-alphabet List statement, the global orientation disjunction and all degenerate cases are proved here.
 
 ## References
 
 - Truth anchor: `D5/S1/Words/Powers/CommonWitnessCompactness.commonWitness_iff_finite`
+- Dependency: [D5/S1/Words/Powers/ConjugacyNormalForm](ConjugacyNormalForm.md)
 - Dependency: [D5/S1/Words/Powers/CyclicCentralizer](CyclicCentralizer.md)
