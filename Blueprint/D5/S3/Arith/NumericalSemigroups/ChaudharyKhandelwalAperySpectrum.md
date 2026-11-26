@@ -192,6 +192,10 @@ $$\forall a \in \mathbb{N}, b \in \mathbb{N}, k \in \mathbb{N},\; \left(\left(\l
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/NumericalSemigroups/ChaudharyKhandelwalAperySpectrum.family_spectrum` (`✓ std3`). ∎
 
+*Resolves.* `Problems/chaudhary-khandelwal-2026-apery-spectrum-kb` (proved) by `D5/S3/Arith/NumericalSemigroups/ChaudharyKhandelwalAperySpectrum.family_spectrum`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"chaudhary-khandelwal-2026-apery-spectrum-kb","declaration_gid":"D5/S3/Arith/NumericalSemigroups/ChaudharyKhandelwalAperySpectrum.family_spectrum","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Commentary.*

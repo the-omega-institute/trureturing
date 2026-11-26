@@ -65,18 +65,20 @@ internal sealed class ChaudharyKhandelwalAperySpectrumDocument : IScribeDocument
                 "Let wL(r) and wR(r) be the least elements of the left and right closures in residue r. For each s in Fin(d), use u(s) = (s + wL(negRes(P,s))) / d and v(s) = (wR(s) − s) / d. For sourceLeftEntries, take, in increasing order, each i from 1 up to but excluding the maximum of u and count all nonempty intervals in {1 ≤ s < d : i < u(s)}. For sourceRightEntries, take each j from 0 up to but excluding the maximum of v and count the intervals in {1 ≤ s < d : j < v(s)}. Both maxima range over Fin(d). Each remaining block count is zero. Index n is the paper's λ at index n + 1.", literature: true),
             Node("family_spectrum", "Spectrum for every admissible a, b, k", DescribeRole.Theorem,
                 FamilySpectrum,
-                "Under the four displayed hypotheses, P(a,b,k) is the structure formed from a, b, k and their hypothesis proofs. SortedGE means decreasing in the weak sense. The spectrum has exactly b + k − 3 positive terms and is zero at every subsequent index. Count is list multiplicity and countP counts indices of the supplied range where its predicate holds. The two finite positive families decrease strictly within each family, so a value occurs at most twice in the sorted list."))));
+                "Under the four displayed hypotheses, P(a,b,k) is the structure formed from a, b, k and their hypothesis proofs. SortedGE means decreasing in the weak sense. The spectrum has exactly b + k − 3 positive terms and is zero at every subsequent index. Count is list multiplicity and countP counts indices of the supplied range where its predicate holds. The two finite positive families decrease strictly within each family, so a value occurs at most twice in the sorted list.",
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("chaudhary-khandelwal-2026-apery-spectrum-kb"), ResolutionKind.Proved)))));
 
     private static DocumentBlock Def(string name, string title, Formula body, string prose, bool literature = false) =>
         Node("Params." + name, title, DescribeRole.Definition, All(body, ("P", V("Params"))), prose, literature);
 
     private static DocumentBlock Node(string name, string title, DescribeRole role, Formula statement,
-        string prose, bool literature = false) =>
+        string prose, bool literature = false, OpenProblemResolutionClaim? openProblemResolutionClaim = null) =>
         Describe.Lean(DescribeId.Create(name.Replace('.', '-').Replace('_', '-').ToLowerInvariant()),
             DeclarationHandle.Create(Gid + "." + name[(name.LastIndexOf('.') + 1)..]), H(title),
             StatementSource.FromAuthor(F.Disp(statement)),
             literature ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(),
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, openProblemResolutionClaim);
 
     private static Formula N => F.Seq(F.Mathbb, F.Grp(V("N")));
     private static Formula A => V("a");
