@@ -282,4 +282,41 @@ public theorem Int.two_pow_trailingZeros_dvd : type_of% @_root_.Int.two_pow_trai
   rw [_root_.Int.trailingZeros, dite_eq_right ha]
   exact factor _ a ha (Nat.le_refl _) 0 (Int.one_mul a).symm
 
+public theorem Int.natCast_eq_zero : type_of% @_root_.Int.natCast_eq_zero :=
+  ⟨Int.ofNat.inj, congrArg Int.ofNat⟩
+
+public theorem Dyadic.toRat_eq_zero_iff : type_of% @_root_.Dyadic.toRat_eq_zero_iff := by
+  intro x
+  constructor
+  · intro eq
+    cases x with
+    | zero => rfl
+    | ofOdd n k odd =>
+      have nz : n ≠ 0 := by
+        intro h
+        subst n
+        exact (by decide : (0 : Int) ≠ 1) odd
+      cases k with
+      | ofNat k => exact False.elim (nz (congrArg Rat.num eq))
+      | negSucc k =>
+        have mul : n * ((2 ^ (k+1) : Nat) : Int) = 0 := congrArg Rat.num eq
+        exact False.elim (Int.mul_ne_zero nz
+          (fun h => Nat.ne_of_gt (Nat.pow_pos Nat.zero_lt_two) (Int.ofNat.inj h)) mul)
+  · intro eq
+    rw [eq]
+    rfl
+
+public theorem Dyadic.ofOdd_eq_ofIntWithPrec : type_of% @_root_.Dyadic.ofOdd_eq_ofIntWithPrec := by
+  intro n k hn
+  have ne : n ≠ 0 := by
+    intro h
+    subst n
+    exact (by decide : (0 : Int) ≠ 1) hn
+  rw [_root_.Dyadic.ofIntWithPrec, dite_eq_right ne]
+  have tz := Int.trailingZeros_eq_zero_of_mod_eq hn
+  congr 1
+  · rw [tz, Int.shiftRight_zero]
+  · rw [tz]
+    exact (Int.sub_zero k).symm
+
 end OmegaChecks.InitPort.Alternatives

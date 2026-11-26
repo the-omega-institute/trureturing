@@ -1,5 +1,6 @@
 module
 import all Init.Data.Rat.Basic
+import all Init.Data.Rat.Lemmas
 
 namespace OmegaChecks.InitPort.Alternatives
 
@@ -28,5 +29,8 @@ public theorem Nat.pow_lt_pow_left : type_of% @_root_.Nat.pow_lt_pow_left := by
 
 public theorem Rat.pow._proof_1 : type_of% @_root_.Rat.pow._proof_1 :=
   fun q _ => Nat.ne_of_gt (Nat.pow_pos (Nat.pos_of_ne_zero q.den_nz))
+
+public theorem Rat.pow_def._proof_1 : type_of% @_root_.Rat.pow_def._proof_1 :=
+  Rat.pow._proof_1
 
 end OmegaChecks.InitPort.Alternatives

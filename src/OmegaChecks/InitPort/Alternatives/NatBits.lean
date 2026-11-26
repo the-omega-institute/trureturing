@@ -64,4 +64,16 @@ public theorem Nat.eq_of_testBit_eq : type_of% @_root_.Nat.eq_of_testBit_eq := b
   · obtain ⟨i, hi⟩ := Nat.exists_testBit_ne_of_ne equal
     exact False.elim (hi (bits i))
 
+public theorem Nat.shiftLeft_eq_zero_iff : type_of% @_root_.Nat.shiftLeft_eq_zero_iff := by
+  intro a n
+  rw [Nat.shiftLeft_eq]
+  constructor
+  · intro zero
+    cases Nat.mul_eq_zero.mp zero with
+    | inl h => exact h
+    | inr h => exact False.elim (Nat.ne_of_gt (Nat.pow_pos Nat.zero_lt_two) h)
+  · intro h
+    subst a
+    exact Nat.zero_mul _
+
 end OmegaChecks.InitPort.Alternatives
