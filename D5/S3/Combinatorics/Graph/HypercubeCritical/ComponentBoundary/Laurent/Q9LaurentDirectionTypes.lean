@@ -420,8 +420,7 @@ open BalancedCriticalSpectrum (Q flip)
 open D5.S3.Combinatorics.Graph.Hypercube (hypercube)
 open BalancedCubeComponentBoundary (directions mem_directions)
 open Q9LaurentGainPartition (Side Exponent LaurentIdentity)
-open private adjacent_exists_flip from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeGirth
+open BalancedCubeGirth (adjacent_exists_flip)
 
 private theorem directions_mem_neighborPartition {C : Finset (Q 9)} {x v : ↥C}
     (h : ((hypercube 9).induce (C : Set (Q 9))).Adj x v) :

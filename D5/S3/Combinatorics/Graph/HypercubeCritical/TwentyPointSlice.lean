@@ -52,8 +52,6 @@ open private other_high_of_low_neighbor from
   D5.S3.Combinatorics.Graph.HypercubeCritical.SymmetricLowPartners
 open private degree_three_root_identity from
   D5.S3.Combinatorics.Graph.HypercubeCritical.SymmetricTwentyTwoLocal
-open private adjacent_exists_flip from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeGirth
 
 open private SideHigh compressed compressed_degree compressed_triangle_free
   nine_side_no_high_wedge nine_side_three_step_cover selected_three_hamming
