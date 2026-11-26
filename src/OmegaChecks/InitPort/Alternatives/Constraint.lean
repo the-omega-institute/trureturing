@@ -1,5 +1,6 @@
 module
 public import Init.Omega.Constraint
+public import Init.Omega.LinearCombo
 
 open Lean.Omega
 
@@ -266,5 +267,33 @@ public theorem Lean.Omega.Constraint.addEquality_sat :
     rw [← Int.zero_sub, ← w, Int.add_comm, Int.add_sub_cancel]
   apply decide_eq_true
   exact ⟨decide_eq_true (Int.le_of_eq eq), decide_eq_true (Int.le_of_eq eq.symm)⟩
+
+public theorem Lean.Omega.IntList.sub_eq_add_neg : type_of% @_root_.Lean.Omega.IntList.sub_eq_add_neg := by
+  intro xs ys
+  induction xs generalizing ys with
+  | nil =>
+    rw [Lean.Omega.IntList.nil_add]
+    exact map_coeffs (fun y => 0 - y) Neg.neg Int.zero_sub ys
+  | cons x xs ih =>
+    cases ys with
+    | nil =>
+      rw [IntList.neg_nil, Lean.Omega.IntList.add_nil]
+      have identity : ∀ l : List Int, l.map (fun x => x - 0) = l :=
+        fun l => l.recOn rfl (fun a _ step => cons_eq (Int.sub_zero a) step)
+      exact identity (x :: xs)
+    | cons y ys =>
+      exact cons_eq (@Int.sub_eq_add_neg x y) (ih ys)
+
+public theorem Lean.Omega.LinearCombo.sub_eq_add_neg :
+    type_of% @_root_.Lean.Omega.LinearCombo.sub_eq_add_neg := by
+  intro a b
+  apply _root_.Lean.Omega.LinearCombo.ext
+  · exact Int.sub_eq_add_neg
+  · exact _root_.Lean.Omega.Coeffs.sub_eq_add_neg ..
+
+public theorem Lean.Omega.LinearCombo.sub_eval : type_of% @_root_.Lean.Omega.LinearCombo.sub_eval := by
+  intro a b v
+  rw [Lean.Omega.LinearCombo.sub_eq_add_neg, _root_.Lean.Omega.LinearCombo.add_eval,
+    _root_.Lean.Omega.LinearCombo.neg_eval, Int.sub_eq_add_neg]
 
 end OmegaChecks.InitPort.Alternatives
