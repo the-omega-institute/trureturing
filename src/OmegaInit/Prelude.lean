@@ -4,13 +4,13 @@ public import Init.Prelude
 /-! Namespace aliases to the pinned public interface. -/
 public section
 namespace Omega
-export _root_ (And Bool Empty Eq False HEq List List.brecOn.go Nat Nonempty Not Option Or PEmpty PProd PUnit ReaderT ReaderT.adapt ReaderT.mk ReaderT.run True Unit Unit.unit absurd cast cond congr congrArg congrFun congrFun' eq_of_heq heq_of_eq id id_eq inferInstance namedPattern optParam outParam rfl semiOutParam «inferInstanceAs»)
+export _root_ (And Bool Empty Eq False HEq List List.brecOn.go Nat Nat.brecOn.go Nonempty Not Option Or PEmpty PProd PUnit ReaderT ReaderT.adapt ReaderT.mk ReaderT.run True Unit Unit.unit absurd cast cond congr congrArg congrFun congrFun' eq_of_heq heq_of_eq id id_eq inferInstance namedPattern optParam outParam rfl semiOutParam «inferInstanceAs»)
 end Omega
 namespace Omega.And
 export _root_.And (casesOn intro left rec recOn right)
 end Omega.And
 namespace Omega.Bool
-export _root_.Bool (Reflects and and_eq_internalAnd beq dcond eq_false_of_ne_true eq_true_of_ne_false false ne_false_of_eq_true ne_true_of_eq_false not not_eq_internalNot or or_eq_internalOr rec recOn true)
+export _root_.Bool (Reflects and and_eq_internalAnd beq casesOn dcond eq_false_of_ne_true eq_true_of_ne_false false ne_false_of_eq_true ne_true_of_eq_false not not_eq_internalNot or or_eq_internalOr rec recOn true)
 end Omega.Bool
 namespace Omega.Bool.Internal
 export _root_.Bool.Internal (and not or)
@@ -31,10 +31,10 @@ namespace Omega.HEq
 export _root_.HEq (casesOn rec recOn refl rfl)
 end Omega.HEq
 namespace Omega.List
-export _root_.List (append below brecOn casesOn cons length nil rec recOn)
+export _root_.List (append below brecOn casesOn concat cons flatMap flatten foldl length lengthTR lengthTRAux map nil rec recOn)
 end Omega.List
 namespace Omega.Nat
-export _root_.Nat (add beq ble div le le_antisymm le_of_succ_le_succ le_refl le_trans lt mod mod_lt mul not_succ_le_zero pow pred rec recOn sub succ succ_le_succ succ_sub_succ_eq_sub zero zero_le)
+export _root_.Nat (add below beq ble brecOn casesOn div le le_antisymm le_of_succ_le_succ le_refl le_trans lt mod mod_lt mul not_succ_le_zero pow pred rec recOn sub succ succ_le_succ succ_sub_succ_eq_sub zero zero_le)
 end Omega.Nat
 namespace Omega.Nat.le
 export _root_.Nat.le (casesOn rec recOn refl step)

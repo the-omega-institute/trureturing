@@ -469,6 +469,12 @@ attribute [irreducible] beq ble Nat.div Nat.mod
 
 end Omega.Nat
 
+port_definition Bool.casesOn
+port_definition Nat.casesOn
+port_definition Nat.below
+port_definition Nat.brecOn.go
+port_definition Nat.brecOn
+
 port_definition List.below
 port_definition List.brecOn.go
 port_definition List.brecOn
@@ -486,4 +492,33 @@ namespace Omega.List
         List.below (motive := fun _ : List α => List α → List α) l → List α)
       l (fun _ => ys) (fun a _ prev => cons a (prev.fst ys)) prior) ys
 
+@[implicit_reducible] def concat {α : Type u} : List α → α → List α := fun l b =>
+  List.brecOn (motive := fun _ : List α => α → List α) l (fun xs below b =>
+    List.casesOn (motive := fun xs => List.below (motive := fun _ : List α => α → List α) xs → List α)
+      xs (fun _ => cons b nil) (fun a _ prior => cons a (prior.fst b)) below) b
+
+@[implicit_reducible] def map {α : Type u} {β : Type v} (f : α → β) (l : List α) : List β :=
+  List.brecOn (motive := fun _ : List α => List β) l (fun xs below =>
+    List.casesOn (motive := fun xs => List.below (motive := fun _ : List α => List β) xs → List β)
+      xs (fun _ => nil) (fun a _ prior => cons (f a) prior.fst) below)
+
+def foldl {α : Type u} {β : Type v} (f : α → β → α) : (init : α) → List β → α := fun init l =>
+  List.brecOn (motive := fun _ : List β => α → α) l (fun xs below acc =>
+    List.casesOn (motive := fun xs => List.below (motive := fun _ : List β => α → α) xs → α)
+      xs (fun _ => acc) (fun b _ prior => prior.fst (f acc b)) below) init
+
+def lengthTRAux {α : Type u} : List α → Nat → Nat := fun xs n =>
+  List.brecOn (motive := fun _ : List α => Nat → Nat) xs (fun ys below acc =>
+    List.casesOn (motive := fun ys => List.below (motive := fun _ : List α => Nat → Nat) ys → Nat)
+      ys (fun _ => acc) (fun _ _ prior => prior.fst (Nat.succ acc)) below) n
+
+def lengthTR {α : Type u} (as : List α) : Nat := lengthTRAux as Nat.zero
+
+@[implicit_reducible] def flatten {α : Type u} : List (List α) → List α := fun l =>
+  List.brecOn (motive := fun _ : List (List α) => List α) l (fun xs below =>
+    List.casesOn (motive := fun xs => List.below (motive := fun _ : List (List α) => List α) xs → List α)
+      xs (fun _ => nil) (fun head _ prior => List.append head prior.fst) below)
+
 end Omega.List
+
+port_definition List.flatMap
