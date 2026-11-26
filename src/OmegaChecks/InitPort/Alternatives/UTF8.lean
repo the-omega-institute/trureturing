@@ -591,4 +591,136 @@ public theorem ByteArray.isValidUTF8_utf8Encode_singleton_append_iff :
     exact ⟨t, ByteArray.ext (Array.ext' ht)⟩
   · exact fun valid => ByteArray.IsValidUTF8.append ByteArray.isValidUTF8_utf8Encode valid
 
+private theorem splitMaskedByte (b mask val : UInt8) (w : Nat) (tag : BitVec k) (size : k + w = 8)
+    (maskTop : mask.toNat / 2^w = 2^k - 1) (tagTop : val.toNat / 2^w = tag.toNat)
+    (cls : b &&& mask = val) : b.toBitVec = (tag ++ b.toBitVec.setWidth w).cast size := by
+  have top := congrArg (fun x : UInt8 => x.toNat / 2^w) cls
+  change (b &&& mask).toNat / 2^w = val.toNat / 2^w at top
+  rw [UInt8.toNat_and, Nat.and_div_two_pow, maskTop, tagTop, Nat.and_two_pow_sub_one_eq_mod] at top
+  have hsize : b.toNat < 2^w * 2^k := by
+    rw [← Nat.pow_add, Nat.add_comm, size]
+    exact b.toNat_lt_size
+  have upper : b.toNat / 2^w < 2^k := (Nat.div_lt_iff_lt_mul (Nat.two_pow_pos _)).2
+    ((Nat.mul_comm ..) ▸ hsize)
+  rw [Nat.mod_eq_of_lt upper] at top
+  apply BitVec.eq_of_toNat_eq
+  change b.toNat = (tag ++ b.toBitVec.setWidth w).toNat
+  rw [BitVec.toNat_append, BitVec.toNat_setWidth, UInt8.toNat_toBitVec, Nat.shiftLeft_eq, Nat.mul_comm tag.toNat,
+    ← Nat.two_pow_add_eq_or_of_lt (Nat.mod_lt _ (Nat.two_pow_pos _)), ← top, Nat.add_comm, Nat.mod_add_div]
+
+open _root_.ByteArray.utf8DecodeChar? in
+public theorem ByteArray.utf8DecodeChar?.toBitVec_eq_of_parseFirstByte_eq_done :
+    type_of% (private_decl% @_root_.ByteArray.utf8DecodeChar?.toBitVec_eq_of_parseFirstByte_eq_done) := by
+  intro b h
+  apply splitMaskedByte b 128 0 7 0#1 rfl rfl rfl
+  unfold parseFirstByte at h
+  repeat' split at h
+  all_goals first | exact of_decide_eq_true (by assumption) | cases h
+
+open _root_.ByteArray.utf8DecodeChar? in
+public theorem ByteArray.utf8DecodeChar?.toBitVec_eq_of_parseFirstByte_eq_oneMore :
+    type_of% (private_decl% @_root_.ByteArray.utf8DecodeChar?.toBitVec_eq_of_parseFirstByte_eq_oneMore) := by
+  intro b h
+  apply splitMaskedByte b 224 192 5 6#3 rfl rfl rfl
+  unfold parseFirstByte at h
+  repeat' split at h
+  all_goals first | exact of_decide_eq_true (by assumption) | cases h
+
+open _root_.ByteArray.utf8DecodeChar? in
+public theorem ByteArray.utf8DecodeChar?.toBitVec_eq_of_parseFirstByte_eq_twoMore :
+    type_of% (private_decl% @_root_.ByteArray.utf8DecodeChar?.toBitVec_eq_of_parseFirstByte_eq_twoMore) := by
+  intro b h
+  apply splitMaskedByte b 240 224 4 14#4 rfl rfl rfl
+  unfold parseFirstByte at h
+  repeat' split at h
+  all_goals first | exact of_decide_eq_true (by assumption) | cases h
+
+open _root_.ByteArray.utf8DecodeChar? in
+public theorem ByteArray.utf8DecodeChar?.toBitVec_eq_of_parseFirstByte_eq_threeMore :
+    type_of% (private_decl% @_root_.ByteArray.utf8DecodeChar?.toBitVec_eq_of_parseFirstByte_eq_threeMore) := by
+  intro b h
+  apply splitMaskedByte b 248 240 3 30#5 rfl rfl rfl
+  unfold parseFirstByte at h
+  repeat' split at h
+  all_goals first | exact of_decide_eq_true (by assumption) | cases h
+
+open _root_.ByteArray.utf8DecodeChar? in
+public theorem ByteArray.utf8DecodeChar?.toBitVec_eq_of_isInvalidContinuationByte_eq_false :
+    type_of% (private_decl% @_root_.ByteArray.utf8DecodeChar?.toBitVec_eq_of_isInvalidContinuationByte_eq_false) := by
+  intro b h
+  apply splitMaskedByte b 192 128 6 2#2 rfl rfl rfl
+  exact bne_eq_false_iff_eq.1 h
+
+open _root_.ByteArray.utf8DecodeChar? in
+public theorem ByteArray.utf8DecodeChar?.isInvalidContinuationByte_eq_false_of_assemble₂_eq_some :
+    type_of% (private_decl% @_root_.ByteArray.utf8DecodeChar?.isInvalidContinuationByte_eq_false_of_assemble₂_eq_some) := by
+  intro w x c someEq
+  cases invalid : isInvalidContinuationByte x with
+  | false => rfl
+  | true =>
+    unfold assemble₂ at someEq
+    rw [invalid] at someEq
+    simp only [ite_true] at someEq
+    cases someEq
+
+open _root_.ByteArray.utf8DecodeChar? in
+public theorem ByteArray.utf8DecodeChar?.isInvalidContinuationByte_eq_false_of_assemble₃_eq_some_left :
+    type_of% (private_decl% @_root_.ByteArray.utf8DecodeChar?.isInvalidContinuationByte_eq_false_of_assemble₃_eq_some_left) := by
+  intro w x y c someEq
+  cases invalid : isInvalidContinuationByte x with
+  | false => rfl
+  | true =>
+    unfold assemble₃ at someEq
+    rw [invalid] at someEq
+    simp only [Bool.true_or, ite_true] at someEq
+    cases someEq
+
+open _root_.ByteArray.utf8DecodeChar? in
+public theorem ByteArray.utf8DecodeChar?.isInvalidContinuationByte_eq_false_of_assemble₃_eq_some_right :
+    type_of% (private_decl% @_root_.ByteArray.utf8DecodeChar?.isInvalidContinuationByte_eq_false_of_assemble₃_eq_some_right) := by
+  intro w x y c someEq
+  cases invalid : isInvalidContinuationByte y with
+  | false => rfl
+  | true =>
+    unfold assemble₃ at someEq
+    rw [invalid] at someEq
+    simp only [Bool.or_true, ite_true] at someEq
+    cases someEq
+
+open _root_.ByteArray.utf8DecodeChar? in
+public theorem ByteArray.utf8DecodeChar?.isInvalidContinuationByte_eq_false_of_assemble₄_eq_some_left :
+    type_of% (private_decl% @_root_.ByteArray.utf8DecodeChar?.isInvalidContinuationByte_eq_false_of_assemble₄_eq_some_left) := by
+  intro w x y z c someEq
+  cases invalid : isInvalidContinuationByte x with
+  | false => rfl
+  | true =>
+    unfold assemble₄ at someEq
+    rw [invalid] at someEq
+    simp only [Bool.true_or, ite_true] at someEq
+    cases someEq
+
+open _root_.ByteArray.utf8DecodeChar? in
+public theorem ByteArray.utf8DecodeChar?.isInvalidContinuationByte_eq_false_of_assemble₄_eq_some_middle :
+    type_of% (private_decl% @_root_.ByteArray.utf8DecodeChar?.isInvalidContinuationByte_eq_false_of_assemble₄_eq_some_middle) := by
+  intro w x y z c someEq
+  cases invalid : isInvalidContinuationByte y with
+  | false => rfl
+  | true =>
+    unfold assemble₄ at someEq
+    rw [invalid] at someEq
+    simp only [Bool.or_true, Bool.true_or, ite_true] at someEq
+    cases someEq
+
+open _root_.ByteArray.utf8DecodeChar? in
+public theorem ByteArray.utf8DecodeChar?.isInvalidContinuationByte_eq_false_of_assemble₄_eq_some_right :
+    type_of% (private_decl% @_root_.ByteArray.utf8DecodeChar?.isInvalidContinuationByte_eq_false_of_assemble₄_eq_some_right) := by
+  intro w x y z c someEq
+  cases invalid : isInvalidContinuationByte z with
+  | false => rfl
+  | true =>
+    unfold assemble₄ at someEq
+    rw [invalid] at someEq
+    simp only [Bool.or_true, ite_true] at someEq
+    cases someEq
+
 end OmegaChecks.InitPort.Alternatives

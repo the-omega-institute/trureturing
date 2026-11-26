@@ -454,9 +454,20 @@ partial def visit (n : Name) : M Bool := do
       modify fun s => {s with env := next}
       return .added
   if let some alt := OmegaChecks.InitPort.alternativeBody? c.alternatives ci then
-    if (← attempt alt) matches .added then return ← record n .added
+    let result ← attempt alt
+    if result matches .added then return ← record n .added
+    -- An alternative can contain index proofs inherited from the official statement.
+    let mut candidate := alt
+    if ci.isTheorem && (result matches .blocked _ (some _)) then
+      let simplified := OmegaChecks.InitCompiler.constructiveCasts c.source alt c.proofRules true
+      candidate ← OmegaChecks.InitCompiler.decidableProof c.source simplified
+      if !candidate.equal alt then
+        if (← attempt candidate) matches .added then return ← record n .added
     if let some certified := comparisonProofs c.source c.literalProofs alt n then
       if (← attempt certified (40 * c.maxHeartbeats)) matches .added then return ← record n .added
+    if !candidate.equal alt then
+      if let some certified := comparisonProofs c.source c.literalProofs candidate n then
+        if (← attempt certified (40 * c.maxHeartbeats)) matches .added then return ← record n .added
   let result ← attempt body
   if result matches .added then return ← record n result
   let rewritten := OmegaChecks.InitCompiler.constructiveCasts c.source body c.proofRules
