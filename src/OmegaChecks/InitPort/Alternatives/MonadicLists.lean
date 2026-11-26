@@ -102,4 +102,71 @@ public theorem Array.flatMapM_wfParam : type_of% @_root_.Array.flatMapM_wfParam 
   rw [Array.unattach_attach]
   rfl
 
+
+private theorem arrayAnyPure [Monad m] [LawfulMonad m] (xs : Array α)
+    (q : α → m Bool) (p : α → Bool) (h : ∀ a, q a = pure (p a)) :
+    xs.anyM q = pure (xs.toList.any p) := by
+  let spec (i : Nat) : m Bool := pure ((xs.toList.drop i).any p)
+  have run (i : Nat) : Array.anyM.loop q xs xs.size (Nat.le_refl _) i = spec i := by
+    delta Array.anyM.loop
+    apply fixInvariant _ spec
+    intro j recur ih
+    dsimp only
+    by_cases hj : j < xs.size
+    · rw [dite_eq_left hj, h, pure_bind]
+      dsimp only [spec]
+      rw [List.drop_eq_getElem_cons (l := xs.toList) (i := j) hj, List.any_cons]
+      change (if p xs[j] = true then _ else _) = pure (p xs[j] || _)
+      cases hp : p xs[j] with
+      | false => exact ih _ _
+      | true => rfl
+    · rw [dite_eq_right hj]
+      dsimp only [spec]
+      rw [List.drop_of_length_le (Nat.le_of_not_gt hj)]
+      rfl
+  rw [Array.anyM, dite_eq_left (Nat.le_refl _)]
+  exact run 0
+
+public theorem Array.anyM_pure : type_of% @_root_.Array.anyM_pure := by
+  intro m α mon law p xs
+  exact (arrayAnyPure xs _ p (fun _ => rfl)).trans (congrArg pure Array.any_toList)
+
+public theorem Array.allM_pure : type_of% @_root_.Array.allM_pure := by
+  intro m α mon law p xs
+  rw [Array.allM, arrayAnyPure xs (fun x => pure (f := m) (p x) >>= fun v => pure !v)
+    (fun x => !p x) (fun _ => pure_bind ..), pure_bind]
+  exact congrArg pure ((congrArg Bool.not Array.any_toList).trans Array.all_eq_not_any_not.symm)
+
+public theorem List.forIn_pure_yield_eq_foldl : type_of% @_root_.List.forIn_pure_yield_eq_foldl := by
+  intro m α β mon law l f init
+  let body (a : α) (_ : a ∈ l) (b : β) : m (ForInStep β) := pure (.yield (f a b))
+  have loop (xs : List α) (b : β) (h : ∃ ys, ys ++ xs = l) :
+      List.forIn'.loop l body xs b h = pure (xs.foldl (fun b a => f a b) b) := by
+    induction xs generalizing b with
+    | nil => rfl
+    | cons a xs ih =>
+      rw [List.forIn'.loop]
+      dsimp only [body]
+      rw [pure_bind]
+      exact ih _ _
+  exact loop l init ⟨[], rfl⟩
+
+public theorem List.forIn'_pure_yield_eq_foldl : type_of% @_root_.List.forIn'_pure_yield_eq_foldl := by
+  intro m α β mon law l f init
+  let body (a : α) (ha : a ∈ l) (b : β) : m (ForInStep β) := pure (.yield (f a ha b))
+  have mem (xs : List α) (h : ∃ ys, ys ++ xs = l) (a : α) (ha : a ∈ xs) : a ∈ l := by
+    obtain ⟨ys, rfl⟩ := h
+    exact List.mem_append_right ys ha
+  have loop (xs : List α) (b : β) (h : ∃ ys, ys ++ xs = l) :
+      List.forIn'.loop l body xs b h =
+        pure ((xs.attachWith (· ∈ l) (mem xs h)).foldl (fun b a => f a.1 a.2 b) b) := by
+    induction xs generalizing b with
+    | nil => rfl
+    | cons a xs ih =>
+      rw [List.forIn'.loop]
+      dsimp only [body]
+      rw [pure_bind, List.attachWith_cons]
+      exact ih _ _
+  exact loop l init ⟨[], rfl⟩
+
 end OmegaChecks.InitPort.Alternatives
