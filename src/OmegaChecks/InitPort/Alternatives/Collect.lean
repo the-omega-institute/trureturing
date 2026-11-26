@@ -634,4 +634,42 @@ public theorem Std.Rio.toList_eq_match_rco {α : Type u} {r : Rio α} [LT α] [D
     rfl
   | some next => rfl
 
+public theorem Std.Iter.mem_toList_iff_isPlausibleIndirectOutput :
+    type_of% @_root_.Std.Iter.mem_toList_iff_isPlausibleIndirectOutput := by
+  intro α β _ _ _ it out
+  induction it using _root_.Std.Iter.inductSteps with
+  | step it ihy ihs =>
+    rw [_root_.Std.Iter.toList_eq_match_step]
+    constructor
+    · intro member
+      cases heq : it.step using PlausibleIterStep.casesOn with
+      | yield next value plausible =>
+        rw [heq] at member
+        rcases List.mem_cons.mp member with rfl | tail
+        · exact .direct (Iter.isPlausibleOutput_iff_exists.mpr ⟨next, plausible⟩)
+        · exact .indirect (Iter.isPlausibleSuccessorOf_iff_exists.mpr ⟨_, rfl, plausible⟩) ((ihy plausible).mp tail)
+      | skip next plausible =>
+        rw [heq] at member
+        exact .indirect (Iter.isPlausibleSuccessorOf_iff_exists.mpr ⟨_, rfl, plausible⟩) ((ihs plausible).mp member)
+      | done _ =>
+        rw [heq] at member
+        cases member
+    · intro reachable
+      cases reachable with
+      | direct output =>
+        obtain ⟨next, step⟩ := Iter.isPlausibleOutput_iff_exists.mp output
+        rw [Iter.isPlausibleStep_iff_step_eq.mp step]
+        exact .head _
+      | indirect link tail =>
+        obtain ⟨step, toNext, plausible⟩ := Iter.isPlausibleSuccessorOf_iff_exists.mp link
+        rw [Iter.isPlausibleStep_iff_step_eq.mp plausible]
+        cases step with
+        | yield next value =>
+          cases Option.some.inj toNext
+          exact .tail _ ((ihy plausible).mpr tail)
+        | skip next =>
+          cases Option.some.inj toNext
+          exact (ihs plausible).mpr tail
+        | done => cases toNext
+
 end OmegaChecks.InitPort.Alternatives
