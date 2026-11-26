@@ -671,6 +671,41 @@ theorem propextOfReverseImplicationOrder (order : PartialOrder Prop)
   toPartialOrder := singletonOrder α
   has_csup {c} _ := (singletonLattice α inh).has_sup c
 
+private abbrev SingletonFunctionsEq :=
+  ∀ {α : Sort u} {β : α → Sort (max 1 v)} [∀ a, Subsingleton (β a)],
+    (∀ a, Nonempty (β a)) → ∀ (f g : ∀ a, β a), f = g
+
+private theorem funextOfSingletonFunctions (eq : SingletonFunctionsEq.{u,v}) :
+    type_of% @funext.{u,v} := by
+  intro α β f g same
+  let F (a : α) := {x : β a // x = f a}
+  letI fiber (a : α) : Subsingleton (F a) := ⟨fun x y => Subtype.ext (x.2.trans y.2.symm)⟩
+  have eq := @eq α F fiber (fun a => ⟨⟨f a, rfl⟩⟩)
+    (fun a => ⟨f a, rfl⟩) (fun a => ⟨g a, (same a).symm⟩)
+  exact congrArg (fun z : ∀ a, F a => fun a => (z a).val) eq
+
+theorem funextOfCompletePointwiseOrder
+    (order : type_of% @Lean.Order.instCompleteLatticePi.{u,max 1 v})
+    (pointwise : ∀ {α : Sort u} {β : α → Sort (max 1 v)} [inst : ∀ a, CompleteLattice (β a)]
+      (f g : ∀ a, β a), (∀ a, f a ⊑ g a) → (@order α β inst).rel f g) :
+    type_of% @funext.{u,v} := by
+  apply funextOfSingletonFunctions
+  intro α β fibers inhabited f g
+  letI components (a : α) := singletonLattice (β a) (inhabited a)
+  exact (@order α β components).rel_antisymm (pointwise f g (fun _ => trivial))
+    (pointwise g f (fun _ => trivial))
+
+theorem funextOfChainCompletePointwiseOrder
+    (order : type_of% @Lean.Order.instCCPOPi.{u,max 1 v})
+    (pointwise : ∀ {α : Sort u} {β : α → Sort (max 1 v)} [inst : ∀ a, CCPO (β a)]
+      (f g : ∀ a, β a), (∀ a, f a ⊑ g a) → (@order α β inst).rel f g) :
+    type_of% @funext.{u,v} := by
+  apply funextOfSingletonFunctions
+  intro α β fibers inhabited f g
+  letI components (a : α) := singletonCCPO (β a) (inhabited a)
+  exact (@order α β components).rel_antisymm (pointwise f g (fun _ => trivial))
+    (pointwise g f (fun _ => trivial))
+
 abbrev UniqueChoice := ∀ {α : Sort u} [Subsingleton α], Nonempty α → α
 
 def uniqueChoiceOfSup (select : type_of% @CompleteLattice.sup.{u}) : UniqueChoice.{u} :=
@@ -781,6 +816,7 @@ private def replayWitnesses (env : Environment) : IO Unit := do
       ``GrindOrder.excludedMiddleFromNotNot, ``GrindOrder.excludedMiddleFromLookahead,
       ``AbstractOrder.excludedMiddleOfTrichotomy, ``AbstractOrder.excludedMiddleOfLTTrichotomy,
       ``AbstractOrder.excludedMiddleOfTrichotomousTotal, ``AbstractOrder.excludedMiddleOfNegationTotal,
+      ``InternalOrder.funextOfCompletePointwiseOrder, ``InternalOrder.funextOfChainCompletePointwiseOrder,
       ``InternalOrder.funextOfPointwiseOrder, ``InternalOrder.propextOfImplicationOrder,
       ``InternalOrder.propextOfReverseImplicationOrder, ``InternalOrder.excludedMiddleOfFlatSuprema,
       ``InternalOrder.excludedMiddleOfOptionCCPO, ``InternalOrder.excludedMiddleOfFlatCCPO,
@@ -1961,6 +1997,12 @@ private def conditionalConsequence? (owner name : Name) : Option (String × Name
     return ((``Classical.choice).toString, ``OmegaChecks.InitBoundaries.choiceFromOptionPresence,
       "For every nonempty type, the selector returns some, as specified by Option.isSome_choice")
   if owner == `Init.Internal.Order.Basic then
+    if name == ``Lean.Order.instCompleteLatticePi then
+      return ((``funext).toString, ``OmegaChecks.InitBoundaries.InternalOrder.funextOfCompletePointwiseOrder,
+        "Pointwise comparison of functions implies comparison in the proposed complete lattice")
+    if name == ``Lean.Order.instCCPOPi then
+      return ((``funext).toString, ``OmegaChecks.InitBoundaries.InternalOrder.funextOfChainCompletePointwiseOrder,
+        "Pointwise comparison of functions implies comparison in the proposed chain-complete order")
     if name == ``Lean.Order.instOrderPi then
       return ((``funext).toString, ``OmegaChecks.InitBoundaries.InternalOrder.funextOfPointwiseOrder,
         "Pointwise comparison of functions implies comparison in the proposed order")
