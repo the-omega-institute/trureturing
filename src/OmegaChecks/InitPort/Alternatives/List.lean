@@ -13,6 +13,7 @@ public import OmegaChecks.InitPort.Alternatives.ListLex
 public import OmegaChecks.InitPort.Alternatives.ListMapIdx
 public import OmegaChecks.InitPort.Alternatives.ListScan
 public import OmegaChecks.InitPort.Alternatives.ListSort
+public import OmegaChecks.InitPort.Alternatives.ListSplitOn
 public import OmegaChecks.InitPort.Alternatives.ListSublist
 public import OmegaChecks.InitPort.Alternatives.ListModify
 public import OmegaChecks.InitPort.Alternatives.ListNat
