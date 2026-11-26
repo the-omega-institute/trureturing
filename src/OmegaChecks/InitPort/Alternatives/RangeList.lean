@@ -1107,4 +1107,74 @@ public theorem Std.Roi.mem_toList_iff_mem : type_of% @_root_.Std.Roi.mem_toList_
       rw [UpwardEnumerable.succMany?_add_one_eq_succ?_bind_succMany?, hs] at hit
       exact List.mem_iff_getElem?.mpr ⟨i, _root_.Std.Rci.getElem?_toList_eq.trans hit⟩
 
+public theorem Std.Ric.mem_toList_iff_mem : type_of% @_root_.Std.Ric.mem_toList_iff_mem := by
+  intro α r _ _ _ _ _ _ _ _ a
+  letI : Nonempty α := ⟨r.upper⟩
+  have mem := indexedRangeMem (a := a) (f := fun i => UpwardEnumerable.succMany? i UpwardEnumerable.least)
+    (fun x => decide (x ≤ r.upper)) (fun _ => _root_.Std.Ric.getElem?_toList_eq (r := r))
+  exact ⟨fun h => of_decide_eq_true (mem.mp h).2,
+    fun h => mem.mpr ⟨UpwardEnumerable.least_le, decide_eq_true h⟩⟩
+
+public theorem Std.Rio.mem_toList_iff_mem : type_of% @_root_.Std.Rio.mem_toList_iff_mem := by
+  intro α r _ _ _ _ _ _ _ _ a
+  letI : Nonempty α := ⟨r.upper⟩
+  have mem := indexedRangeMem (a := a) (f := fun i => UpwardEnumerable.succMany? i UpwardEnumerable.least)
+    (fun x => decide (x < r.upper)) (fun _ => _root_.Std.Rio.getElem?_toList_eq (r := r))
+  exact ⟨fun h => of_decide_eq_true (mem.mp h).2,
+    fun h => mem.mpr ⟨UpwardEnumerable.least_le, decide_eq_true h⟩⟩
+
+public theorem Std.Rii.mem_toList : type_of% @_root_.Std.Rii.mem_toList := by
+  intro α r _ _ _ _ _ a
+  letI : Nonempty α := ⟨a⟩
+  obtain ⟨i, hit⟩ := UpwardEnumerable.least_le (a := a)
+  apply List.mem_iff_getElem?.mpr
+  refine ⟨i, _root_.Std.Rii.getElem?_toList_eq.trans ?_⟩
+  rw [UpwardEnumerable.least?_eq_some]
+  exact hit
+
+public theorem Std.Rcc.mem_toArray_iff_mem : type_of% @_root_.Std.Rcc.mem_toArray_iff_mem := by
+  intro α r _ _ _ _ _ _ a
+  rw [Array.mem_def, _root_.Std.Rcc.toList_toArray]
+  exact _root_.Std.Rcc.mem_toList_iff_mem
+
+public theorem Std.Rco.mem_toArray_iff_mem : type_of% @_root_.Std.Rco.mem_toArray_iff_mem := by
+  intro α r _ _ _ _ _ _ _ _ a
+  rw [Array.mem_def, _root_.Std.Rco.toList_toArray]
+  exact _root_.Std.Rco.mem_toList_iff_mem
+
+public theorem Std.Roc.mem_toArray_iff_mem : type_of% @_root_.Std.Roc.mem_toArray_iff_mem := by
+  intro α r _ _ _ _ _ _ _ _ a
+  rw [Array.mem_def, _root_.Std.Roc.toList_toArray]
+  exact _root_.Std.Roc.mem_toList_iff_mem
+
+public theorem Std.Roo.mem_toArray_iff_mem : type_of% @_root_.Std.Roo.mem_toArray_iff_mem := by
+  intro α r _ _ _ _ _ _ a
+  rw [Array.mem_def, _root_.Std.Roo.toList_toArray]
+  exact _root_.Std.Roo.mem_toList_iff_mem
+
+public theorem Std.Rci.mem_toArray_iff_mem : type_of% @_root_.Std.Rci.mem_toArray_iff_mem := by
+  intro α r _ _ _ _ _ a
+  rw [Array.mem_def, _root_.Std.Rci.toList_toArray]
+  exact _root_.Std.Rci.mem_toList_iff_mem
+
+public theorem Std.Roi.mem_toArray_iff_mem : type_of% @_root_.Std.Roi.mem_toArray_iff_mem := by
+  intro α r _ _ _ _ _ a
+  rw [Array.mem_def, _root_.Std.Roi.toList_toArray]
+  exact _root_.Std.Roi.mem_toList_iff_mem
+
+public theorem Std.Ric.mem_toArray_iff_mem : type_of% @_root_.Std.Ric.mem_toArray_iff_mem := by
+  intro α r _ _ _ _ _ _ _ _ a
+  rw [Array.mem_def, _root_.Std.Ric.toList_toArray]
+  exact _root_.Std.Ric.mem_toList_iff_mem
+
+public theorem Std.Rio.mem_toArray_iff_mem : type_of% @_root_.Std.Rio.mem_toArray_iff_mem := by
+  intro α r _ _ _ _ _ _ _ _ a
+  rw [Array.mem_def, _root_.Std.Rio.toList_toArray]
+  exact _root_.Std.Rio.mem_toList_iff_mem
+
+public theorem Std.Rii.mem_toArray : type_of% @_root_.Std.Rii.mem_toArray := by
+  intro α r _ _ _ _ _ a
+  rw [Array.mem_def, _root_.Std.Rii.toList_toArray]
+  exact _root_.Std.Rii.mem_toList
+
 end OmegaChecks.InitPort.Alternatives
