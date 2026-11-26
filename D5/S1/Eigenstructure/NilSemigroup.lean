@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S1/Eigenstructure/NilSemigroup
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [Library/Eigenstructure/yahaghi2002operatorsemigroups.md]
+   anchors: [Library/Semigroups/yahaghi2002operatorsemigroups.md]
    utility: none
    digest: Nil semigroups of endomorphisms vanish after dimension many factors. -/
 

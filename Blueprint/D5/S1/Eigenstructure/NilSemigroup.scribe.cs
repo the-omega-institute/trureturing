@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S1.Eigenstructure;
 internal sealed class NilSemigroupDocument : IScribeDocumentDefinition
 {
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Eigenstructure/yahaghi2002operatorsemigroups");
+        LibraryNoteRef.Create("D5/L/Semigroups/yahaghi2002operatorsemigroups");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Multiplicative closure turns pointwise nilpotence into joint extinction in finite dimension.",
