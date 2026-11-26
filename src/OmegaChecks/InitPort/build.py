@@ -38,18 +38,32 @@ def snapshot_seed(installed, seed):
 
 def cyclic_declarations(path):
     graph = {}
+    official_imports = {}
     candidates = defaultdict(set)
     with path.open() as stream:
-        for owner, name, dependencies in map(json.loads, stream):
+        for owner, name, dependencies, *original in map(json.loads, stream):
             deps = json.loads(dependencies)
             if not name:
                 graph[owner] = set(deps)
+                official_imports[owner] = json.loads(original[0])
             else:
                 for dep in deps:
                     candidates[owner, dep].add(name)
     list(TopologicalSorter(graph).static_order())
+    ancestors = {}
+    for owner in TopologicalSorter(official_imports).static_order():
+        ancestors[owner] = set(official_imports.get(owner, []))
+        for dep in official_imports.get(owner, []):
+            ancestors[owner].update(ancestors[dep])
+
+    # A late convenience proof can introduce the reverse of a physical Init
+    # dependency. Keep the upstream direction before comparing candidate counts.
+    def priority(item):
+        (owner, dep), names = item
+        return (owner in ancestors[dep], dep not in ancestors[owner], -len(names), owner, dep)
+
     rejected = {}
-    for (owner, dep), names in sorted(candidates.items(), key=lambda row: (-len(row[1]), row[0])):
+    for (owner, dep), names in sorted(candidates.items(), key=priority):
         pending = [dep]
         seen = set()
         while pending and owner not in seen:

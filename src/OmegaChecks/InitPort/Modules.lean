@@ -133,7 +133,10 @@ def main (args : List String) : IO Unit := do
     let mut mappedImports := (source.header.moduleData[idx]!.imports.filter (·.isExported)).map fun i =>
       { i with module := i.module.replacePrefix `Init `OmegaInit }
     let baseImports := mergeImports orig[2]!.imports mappedImports
-    edgeInfo.putStrLn (toJson #[owner.toString, "",(toJson (baseImports.map (·.module.toString))).compress]).compress
+    let officialImports := source.header.moduleData[idx]!.imports.map fun i =>
+      (i.module.replacePrefix `Init `OmegaInit).toString
+    edgeInfo.putStrLn (toJson #[owner.toString, "", (toJson (baseImports.map (·.module.toString))).compress,
+      (toJson officialImports).compress]).compress
     let exported := surface.header.moduleData[(surface.getModuleIdx? official).get!]!
     let publiclyDeclared : NameMap ConstantInfo := exported.constants.foldl (fun acc ci => acc.insert ci.name ci) {}
     let mut group := groups.getD official #[]
