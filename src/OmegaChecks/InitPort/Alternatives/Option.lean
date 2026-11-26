@@ -262,10 +262,8 @@ public theorem toArray_pbind : type_of% @_root_.Option.toArray_pbind := by
     exact (@Array.flatMap_singleton _ _
       (fun x : {a' // some a = some a'} => (f x.val x.property).toArray) ⟨a, rfl⟩).symm
 
-public theorem attach_filter {o : Option α} {p : α → Bool} :
-    (o.filter p).attach =
-      o.attach.bind fun ⟨a, mem⟩ => if h : p a then
-        some ⟨a, by cases mem; exact ite_eq_left h⟩ else none := by
+public theorem attach_filter : type_of% @_root_.Option.attach_filter := by
+  intro α o p
   cases o with
   | none => rfl
   | some a =>
