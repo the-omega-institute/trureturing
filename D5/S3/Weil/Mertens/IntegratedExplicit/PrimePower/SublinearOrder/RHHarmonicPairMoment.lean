@@ -54,16 +54,17 @@ private theorem upper_weight (rh : RiemannHypothesis) {T : ℝ} (hT : 1 ≤ T)
   unfold harmonicWeight
   convert h using 1 <;> simp [zetaSpectrum,div_eq_mul_inv,mul_assoc]
 
-/-- For growing positive zeta cutoffs the normalized pair fourth-to-second
-moment ratio is bounded by a constant times the logarithm of the height. -/
-theorem harmonic_pair_ratio (rh : RiemannHypothesis) :
+private theorem harmonic_pair_bounds (rh : RiemannHypothesis) :
     ∀ᶠ T : ℝ in atTop,
       let logHeight := Real.log
       let W := harmonicMass rh T
       let g : ↥(positiveCutoff rh T) → ℝ := fun j => ordinate j.1
       let w : ↥(positiveCutoff rh T) → ℝ := fun j => harmonicWeight j.1/W
       let P := fun k => pairMoment g w k
-      0 < W ∧ (∀ j, 0 ≤ w j) ∧ (∑ j,w j=1) ∧ 0 < P 2 ∧ P 4/(P 2)^2 ≤ 4096*logHeight T := by
+      0 < W ∧ (∀ j, 0 ≤ w j) ∧ (∑ j,w j=1) ∧
+      (1/(2*Real.pi))*(Real.log T)^2/16 ≤ W ∧
+      W ≤ (1/(2*Real.pi))*(Real.log T)^2 ∧
+      T^2/(4096*logHeight T) ≤ P 2 ∧ P 4 ≤ T^2*P 2 := by
   classical
   let S := zetaSpectrum rh
   let c : ℝ := 1/(2*Real.pi)
@@ -182,7 +183,6 @@ theorem harmonic_pair_ratio (rh : RiemannHypothesis) :
     calc
       _ = (1/16)*(1/(16*Real.log T))*(T/4)^2 := by field_simp; ring
       _ ≤ _ := (mul_le_mul_of_nonneg_right (mul_le_mul ha' hb' (by positivity) (sum_nonneg fun i _ => hw i)) (sq_nonneg _)).trans hprod
-  have hP2pos : 0 < P 2 := (show 0 < T^2/(4096*Real.log T) by positivity).trans_le hP2low
   have hP4 : P 4 ≤ T^2*P 2 := by
     rw [hpairs,hpairs,mul_sum]
     refine sum_le_sum fun i hi => ?_
@@ -198,11 +198,157 @@ theorem harmonic_pair_ratio (rh : RiemannHypothesis) :
     have hh := mul_le_mul_of_nonneg_left hsq (sq_nonneg (ordinate i-ordinate j))
     have hh' := mul_le_mul_of_nonneg_left hh (mul_nonneg (hw i) (hw j))
     nlinarith only [hh']
-  refine ⟨hWpos,fun j => hw j.1,hWnorm,hP2pos,?_⟩
+  have hWlower : c*(Real.log T)^2/16 ≤ W := hAmass.trans
+    (sum_le_sum_of_subset_of_nonneg hAs (fun j _ _ => weight_nonneg j))
+  exact ⟨hWpos,fun j => hw j.1,hWnorm,hWlower,hWbound,hP2low,hP4⟩
+
+/-- For growing positive zeta cutoffs the normalized pair fourth-to-second
+moment ratio is bounded by a constant times the logarithm of the height. -/
+theorem harmonic_pair_ratio (rh : RiemannHypothesis) :
+    ∀ᶠ T : ℝ in atTop,
+      let logHeight := Real.log
+      let W := harmonicMass rh T
+      let g : ↥(positiveCutoff rh T) → ℝ := fun j => ordinate j.1
+      let w : ↥(positiveCutoff rh T) → ℝ := fun j => harmonicWeight j.1/W
+      let P := fun k => pairMoment g w k
+      0 < W ∧ (∀ j, 0 ≤ w j) ∧ (∑ j,w j=1) ∧ 0 < P 2 ∧ P 4/(P 2)^2 ≤ 4096*logHeight T := by
+  filter_upwards [harmonic_pair_bounds rh, eventually_gt_atTop (1:ℝ)] with T h hT
+  intro logHeight W g w P
+  obtain ⟨hWpos, hw, hw1, _, _, hP2low, hP4⟩ := h
+  have hlog : 0 < Real.log T := Real.log_pos hT
+  have hP2pos : 0 < P 2 := (show 0 < T^2/(4096*Real.log T) by positivity).trans_le hP2low
+  refine ⟨hWpos,hw,hw1,hP2pos,?_⟩
   apply (div_le_iff₀ (sq_pos_of_pos hP2pos)).mpr
   have h := (div_le_iff₀ (show 0 < 4096*Real.log T by positivity)).mp hP2low
   have h' := mul_le_mul_of_nonneg_right h hP2pos.le
   exact hP4.trans (by nlinarith only [h'])
+
+/-- A moving reciprocal-height cutoff gives a uniform score deficit on the
+short noncentral time range, with the original harmonic weights. -/
+theorem harmonic_reciprocal_time_deficit (rh : RiemannHypothesis) :
+    ∃ L : ℝ, 1 < L ∧ ∀ T t : ℝ, L ≤ T → 1/T ≤ |t| → |t| ≤ 1/L →
+      let g : ↥(positiveCutoff rh T) → ℝ := fun j => ordinate j.1
+      let w : ↥(positiveCutoff rh T) → ℝ := fun j => harmonicWeight j.1 / harmonicMass rh T
+      1 - ‖D5.S3.Fourier.Concentration.FiniteTailMomentMissingWindow.complexScore g w t‖
+        ≥ Real.log (|t|⁻¹) / (524288 * (Real.log T)^2) := by
+  classical
+  obtain ⟨A, hA⟩ := eventually_atTop.1 (harmonic_pair_bounds rh)
+  let L := max A 4
+  have hL : 1 < L := (by norm_num : (1:ℝ)<4).trans_le (le_max_right A 4)
+  refine ⟨L,hL,?_⟩
+  intro T t hLT htlo hthi g w
+  have hT : 1 < T := hL.trans_le hLT
+  have ht : 0 < |t| := (by positivity : 0 < 1/T).trans_le htlo
+  let X := |t|⁻¹
+  have hXpos : 0 < X := inv_pos.mpr ht
+  have hLX : L ≤ X := by
+    apply (le_inv_comm₀ (by linarith) ht).mpr
+    simpa only [one_div] using hthi
+  have hXT : X ≤ T := by
+    apply (inv_le_comm₀ ht (by linarith)).mpr
+    simpa only [one_div] using htlo
+  have hX : 1 < X := hL.trans_le hLX
+  have hlogX : 0 < Real.log X := Real.log_pos hX
+  have hlogT : 0 < Real.log T := Real.log_pos hT
+  let W := harmonicMass rh
+  let gU (U : ℝ) : ↥(positiveCutoff rh U) → ℝ := fun j => ordinate j.1
+  let wU (U : ℝ) : ↥(positiveCutoff rh U) → ℝ := fun j => harmonicWeight j.1 / W U
+  let P (U : ℝ) := pairMoment (gU U) (wU U)
+  let Z (U : ℝ) := D5.S3.Fourier.Concentration.FiniteTailMomentMissingWindow.complexScore
+    (gU U) (wU U) t
+  obtain ⟨hWX, hwX, hwX1, hWXlow, _, hP2, hP4⟩ :=
+    hA X ((le_max_left A 4).trans hLX)
+  obtain ⟨hWT, _, _, _, hWTup, _, _⟩ :=
+    hA T ((le_max_left A 4).trans hLT)
+  change 0 < W X at hWX
+  change 0 < W T at hWT
+  change (∀ j, 0 ≤ wU X j) at hwX
+  change (∑ j,wU X j)=1 at hwX1
+  change (1/(2*Real.pi))*(Real.log X)^2/16 ≤ W X at hWXlow
+  change W T ≤ (1/(2*Real.pi))*(Real.log T)^2 at hWTup
+  change X^2/(4096*Real.log X) ≤ P X 2 at hP2
+  change P X 4 ≤ X^2*P X 2 at hP4
+  have hquart := (score_quartic (gU X) (wU X)
+    (fun i j => mul_nonneg (hwX i) (hwX j)) t).2
+  change ‖Z X‖^2-((∑ j,wU X j)^2-P X 2*t^2/2) ≤ P X 4*t^4/24 at hquart
+  rw [hwX1,one_pow] at hquart
+  have hxt : X^2*t^2 = 1 := by
+    dsimp [X]
+    rw [inv_pow,← sq_abs t]
+    field_simp
+  have hp2scale : 1/(4096*Real.log X) ≤ P X 2*t^2 := by
+    have h := mul_le_mul_of_nonneg_right hP2 (sq_nonneg t)
+    calc
+      _ = X^2/(4096*Real.log X)*t^2 := by
+        rw [div_mul_eq_mul_div,hxt]
+      _ ≤ _ := h
+  have hquartScale : P X 4*t^4 ≤ P X 2*t^2 := by
+    calc
+      _ ≤ (X^2*P X 2)*t^4 := mul_le_mul_of_nonneg_right hP4 (by positivity)
+      _ = (X^2*t^2)*(P X 2*t^2) := by ring
+      _ = _ := by rw [hxt,one_mul]
+  have hdefX : 1/(32768*Real.log X) ≤ 1 - ‖Z X‖ := by
+    have he : 1/(32768*Real.log X) = (1/(4096*Real.log X))/8 := by ring
+    rw [he]
+    have hp2pos : 0 ≤ P X 2*t^2 :=
+      (by positivity : 0 ≤ 1/(4096*Real.log X)).trans hp2scale
+    have hweak : (1/(4096*Real.log X))/4 ≤ 1-‖Z X‖^2 := by
+      linarith only [hquart,hquartScale,hp2scale,hp2pos]
+    nlinarith only [hweak,sq_nonneg (1-‖Z X‖)]
+  let z (U : ℝ) : ℂ := ∑ j ∈ positiveCutoff rh U, (harmonicWeight j : ℂ) *
+    D5.S3.Weil.DirichletPolynomialMeanSquare.phase (ordinate j) t
+  have hz (U : ℝ) : Z U = z U / (W U : ℂ) := by
+    unfold Z D5.S3.Fourier.Concentration.FiniteTailMomentMissingWindow.complexScore
+    change (∑ j : ↥(positiveCutoff rh U), ((harmonicWeight j.1/W U : ℝ):ℂ) *
+      D5.S3.Weil.DirichletPolynomialMeanSquare.phase (ordinate j.1) t) = _
+    rw [Finset.sum_coe_sort (positiveCutoff rh U) (fun j =>
+      ((harmonicWeight j/W U : ℝ):ℂ) *
+        D5.S3.Weil.DirichletPolynomialMeanSquare.phase (ordinate j) t)]
+    dsimp [z]
+    simp_rw [Complex.ofReal_div, div_mul_eq_mul_div]
+    rw [Finset.sum_div]
+  have hnormz {U : ℝ} (hWU : 0 < W U) : ‖z U‖ = W U * ‖Z U‖ := by
+    rw [hz,Complex.norm_div,Complex.norm_real,Real.norm_eq_abs,abs_of_pos hWU]
+    field_simp
+  have hsub := cutoff_mono rh hXT
+  let tail := positiveCutoff rh T \ positiveCutoff rh X
+  let f (j : PositiveZetaZero) : ℂ := (harmonicWeight j : ℂ) *
+    D5.S3.Weil.DirichletPolynomialMeanSquare.phase (ordinate j) t
+  have hsplit : (∑ j ∈ tail,f j)+z X=z T := Finset.sum_sdiff hsub
+  have htailMass : (∑ j ∈ tail,harmonicWeight j)+W X=W T := Finset.sum_sdiff hsub
+  have htailBound : ‖∑ j ∈ tail,f j‖ ≤ ∑ j ∈ tail,harmonicWeight j := by
+    apply (norm_sum_le tail f).trans
+    apply sum_le_sum
+    intro j hj
+    simp [f, D5.S3.Weil.DirichletPolynomialMeanSquare.norm_phase,
+      Complex.norm_real, Real.norm_eq_abs, abs_of_nonneg (weight_nonneg j)]
+  have hwhole : ‖z T‖ ≤ W T-W X+‖z X‖ := by
+    rw [← hsplit]
+    have h := norm_add_le (∑ j ∈ tail,f j) (z X)
+    linarith
+  rw [hnormz hWT,hnormz hWX] at hwhole
+  have hhead : W X*(1 - ‖Z X‖) ≤ W T*(1 - ‖Z T‖) := by linarith
+  let c : ℝ := 1/(2*Real.pi)
+  have hc : 0 < c := by dsimp [c]; positivity
+  change c*(Real.log X)^2/16 ≤ W X at hWXlow
+  change W T ≤ c*(Real.log T)^2 at hWTup
+  have hmain : c*Real.log X/524288 ≤ W T*(1 - ‖Z T‖) := by
+    calc
+      _ = (c*(Real.log X)^2/16)*(1/(32768*Real.log X)) := by
+        field_simp; ring
+      _ ≤ W X*(1 - ‖Z X‖) := mul_le_mul hWXlow hdefX (by positivity) (by positivity)
+      _ ≤ _ := hhead
+  have hpos : 0 ≤ 1 - ‖Z T‖ := by
+    have h := (show 0 ≤ c*Real.log X/524288 by positivity).trans hmain
+    exact nonneg_of_mul_nonneg_right h hWT
+  have hfinal : c*Real.log X/524288 ≤ (c*(Real.log T)^2)*(1 - ‖Z T‖) :=
+    hmain.trans (mul_le_mul_of_nonneg_right hWTup hpos)
+  change Real.log X/(524288*(Real.log T)^2) ≤ 1 - ‖Z T‖
+  apply (div_le_iff₀ (by positivity)).mpr
+  apply (mul_le_mul_iff_left₀ hc).mp
+  nlinarith only [hfinal]
+
+#print axioms harmonic_reciprocal_time_deficit
 
 #print axioms harmonic_pair_ratio
 
