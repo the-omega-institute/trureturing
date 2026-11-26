@@ -26,7 +26,8 @@ open private diff diff_flip diff_of_adj_flip from
 open private diff_injective diff_self diff_symm diff_triangle_card inter_card low_not_three from
   D5.S3.Combinatorics.Graph.HypercubeCritical.TwentyPointGeometry
 open BalancedCubeGirth (flip_comm)
-open private adjacent_exists_flip switching_ne_zero from
+open BalancedCubeGirth (adjacent_exists_flip)
+open private switching_ne_zero from
   D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeGirth
 open private huangMatrix huangMatrix_symmetric from
   D5.S3.Combinatorics.Graph.HypercubeSubQuorum

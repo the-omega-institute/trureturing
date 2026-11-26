@@ -28,8 +28,7 @@ open CubeCoordinateNormalization (normalize origin)
 open HuangBalancedSymmetry (cube_action_regular_balanced)
 open private normalize_center normalize_flip from
   D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.CubeCoordinateNormalization
-open private adjacent_exists_flip from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeGirth
+open BalancedCubeGirth (adjacent_exists_flip)
 open private normalize_axis_order from
   D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9TwentyFourAxisOrder
 open private modelAt distance valid_model walk_of_distance from
