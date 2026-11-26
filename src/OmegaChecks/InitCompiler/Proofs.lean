@@ -96,7 +96,7 @@ private def propositionChange? (h : Expr) (fuel : Nat) : Option (Expr × Expr ×
 
 /-- A simp proof sometimes builds an equality of propositions only to transport a
 proof along it. Compose the underlying implications when the equality is consumed. -/
-private def transport? (source : Environment) (back : Bool) (p q eq input : Expr)
+private partial def transport? (source : Environment) (back : Bool) (p q eq input : Expr)
     (fuel : Nat) : Option Expr := do
   let fuel + 1 := fuel | none
   let .const n us := eq.getAppFn | none
@@ -110,7 +110,7 @@ private def transport? (source : Environment) (back : Bool) (p q eq input : Expr
   | `Eq.refl, _ | `rfl, _ => return input
   | `Eq.symm, #[_, a, b, h] => transport? source (!back) a b h input fuel
   | `Eq.trans, #[_, a, b, c, h, k] =>
-    let through := fun p q h input => (transport? source back p q h input fuel).getD
+    let through := fun p q h input => (transport? source back p q h input (fuel / 2)).getD
       (castProof back p q h input)
     return if back then through a b h (through b c k input) else through b c k (through a b h input)
   | `eq_true, #[_, h] => return if back then h else mkConst `True.intro
@@ -129,7 +129,7 @@ private def transport? (source : Environment) (back : Bool) (p q eq input : Expr
       if a == b then return mkApp (mkConst `Iff.rfl) a
       let dir := fun rev dom => do
         let lift := fun (e : Expr) => e.liftLooseBVars 0 1
-        let map ← transport? source rev (lift a) (lift b) (lift h) (mkBVar 0) fuel
+        let map ← transport? source rev (lift a) (lift b) (lift h) (mkBVar 0) (fuel / 4)
         return Expr.lam `hp dom map .default
       return mkApp4 (mkConst `Iff.intro) a b (← dir false a) (← dir true b)
     let ac ← if a == c then pure (mkApp (mkConst `Iff.rfl) a) else do
@@ -142,7 +142,7 @@ private def transport? (source : Environment) (back : Bool) (p q eq input : Expr
     let (a, b, h) ← propositionChange? eq fuel
     let localMap := fun (rev : Bool) (dom : Expr) => do
       let under := fun (e : Expr) => e.liftLooseBVars 0 1
-      let term ← transport? source rev (under a) (under b) (under h) (mkBVar 0) fuel
+      let term ← transport? source rev (under a) (under b) (under h) (mkBVar 0) (fuel / 2)
       return Expr.lam `hp dom term .default
     let equiv := mkApp4 (mkConst `Iff.intro) a b (← localMap false a) (← localMap true b)
     let lifted ← congrIff? a b equiv p q
