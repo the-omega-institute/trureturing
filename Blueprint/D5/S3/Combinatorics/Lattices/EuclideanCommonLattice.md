@@ -4,7 +4,21 @@
 
 Common integral Euclidean lattices and nearly orthogonal frames
 
-**Theorem 1.1 (The common-lattice frame slope inequality).**
+**Theorem 1.1 (The zero saturated sublattice has zero ambient carrier).**
+
+Lean statement: `D5/S3/Combinatorics/Lattices/EuclideanCommonLattice.bot_carrier`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Lattices/EuclideanCommonLattice.bot_carrier` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Daniel R. Grayson (1984). *Reduction theory using semistability*. DOI: [10.1007/BF02566369](https://doi.org/10.1007/BF02566369).
+
+*Commentary.*
+
+For any integral submodule of a finite-dimensional real inner product space, the least saturated sublattice has ambient carrier equal to the zero submodule. Indeed the real span of zero is zero, and intersecting it with the original lattice adds no nonzero points. No discreteness or full-span hypothesis on the original integral submodule is required.
+
+**Theorem 1.2 (The common-lattice frame slope inequality).**
 
 Lean statement: `D5/S3/Combinatorics/Lattices/EuclideanCommonLattice.common_lattice_slope`
 
@@ -28,7 +42,7 @@ If C has rank m in ambient dimension d, append d minus m auxiliary target slopes
 
 Grayson's semistability filtration supplies the classical HN setting. The concrete Gram lattice theory, the relative morphism proof, threshold multiplicity construction and real operator realization are proved in this library. The comparison source for the frame statement is Alpoge's TheoremFSharp and its proof frame_theorem_sharp. The full number-field theorem is not identified with an arbitrary real lattice.
 
-**Theorem 1.2 (A logarithmic slope bound from compatible spectral flags).**
+**Theorem 1.3 (A logarithmic slope bound from compatible spectral flags).**
 
 Lean statement: `D5/S3/Combinatorics/Lattices/EuclideanCommonLattice.spectral_frame_slope`
 
@@ -52,7 +66,7 @@ Compatibility of the flags is an explicit hypothesis. In an integral lattice app
 
 For a threshold parameter tau strictly below H, use the real span of the actual target high-slope prefix. At tau equal to H use the whole space W. The codimension of this flag equals the strict lower-level count in the augmented spectrum: below H, the additional floor entries count the dimensions outside the span of C; at H no entry lies below the floor. With a padded target, take the inverse image of this flag under the surjective coordinate projection, which preserves its codimension. The integral morphism comparison supplies image placement in the actual high-slope prefix. The whole target space supplies the endpoint flag.
 
-**Remark 1.3 (Relation to the common integral lattice estimate).**
+**Remark 1.4 (Relation to the common integral lattice estimate).**
 
 Lean statement: `D5/S3/Combinatorics/Lattices/EuclideanCommonLattice.spectral_frame_slope`
 
@@ -70,7 +84,7 @@ The number-field height is twice the average of the logarithmic operator norms o
 
 Realification of the complex frame operators doubles their dimensions, traces and squared Hilbert-Schmidt norms, preserving the normalized parameters e and eta. The real finite spectral result retains both constants four. Its error range e less than one contains the source range e at most one quarter: above one quarter, the full target dimension already bounds the image codimension by the stated error. The integral morphism comparison for real integer lattices requires its own proof; it is not a direct specialization of the number-field theorem.
 
-**Remark 1.4 (Why exact frame data do not replace common integrality).**
+**Remark 1.5 (Why exact frame data do not replace common integrality).**
 
 Lean statement: `D5/S3/Combinatorics/Lattices/EuclideanCommonLattice.spectral_frame_slope`
 
@@ -84,7 +98,7 @@ Lean statement: `D5/S3/Combinatorics/Lattices/EuclideanCommonLattice.spectral_fr
 
 In one real dimension take N to be the integers, C to be q times the integers for an integer q greater than one, and B, A and the frame weight all equal to one. The source slope and map height are zero, the target slope is minus log q, and both frame errors vanish. Set s, u, e, eta and delta to zero, and H to log q. Omitting integrality would give log q at most zero. The actual obstruction is that B does not carry N into C. The integral map given by multiplication by q has height log q, restoring the cost. This is the real integer-lattice counterpart of the Gaussian-integer example in the source discussion.
 
-**Remark 1.5 (The error endpoint needs a separate variance sign condition).**
+**Remark 1.6 (The error endpoint needs a separate variance sign condition).**
 
 Lean statement: `D5/S3/Combinatorics/Lattices/EuclideanCommonLattice.spectral_frame_slope`
 
@@ -98,7 +112,7 @@ Lean statement: `D5/S3/Combinatorics/Lattices/EuclideanCommonLattice.spectral_fr
 
 At e equal to one, take one-dimensional sources and target, a zero frame map, source spectrum zero, target spectrum minus one, s and u zero, H one, and delta zero. The source Gram error is one and the target frame operator is zero. Its moment inequality permits every eta, including eta equal to minus five. The compatible source flag is the whole source; the target flag is zero below threshold parameter one and the whole target at one. The proposed upper bound would then be minus one, whereas the slope deficit is one. Thus the endpoint cannot be included when eta has no separate nonnegativity hypothesis.
 
-**Remark 1.6 (Arithmetic spectra require the Euclidean filtration).**
+**Remark 1.7 (Arithmetic spectra require the Euclidean filtration).**
 
 Lean statement: `D5/S3/Combinatorics/Lattices/EuclideanCommonLattice.spectral_frame_slope`
 
@@ -112,6 +126,7 @@ Grayson's semistability filtration supplies the classical Euclidean-lattice sett
 
 ## References
 
+- Truth anchor: `D5/S3/Combinatorics/Lattices/EuclideanCommonLattice.bot_carrier`
 - Truth anchor: `D5/S3/Combinatorics/Lattices/EuclideanCommonLattice.common_lattice_slope`
 - Truth anchor: `D5/S3/Combinatorics/Lattices/EuclideanCommonLattice.spectral_frame_slope`
 - Truth anchor: `D5/S3/Combinatorics/Lattices/EuclideanCommonLattice.spectral_frame_slope`

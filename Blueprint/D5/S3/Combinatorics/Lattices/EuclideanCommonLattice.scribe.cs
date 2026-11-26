@@ -13,6 +13,18 @@ internal sealed class EuclideanCommonLatticeDocument : IScribeDocumentDefinition
         "Common integral Euclidean lattices and nearly orthogonal frames",
         H("A shared integral target controls the average slope"),
         Blocks(
+            Describe.Lean(DescribeId.Create("zero-saturated-carrier"),
+                DeclarationHandle.Create(
+                    "D5/S3/Combinatorics/Lattices/EuclideanCommonLattice.bot_carrier"),
+                H("The zero saturated sublattice has zero ambient carrier"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(HnSource),
+                Blocks(Paragraph(Text("For any integral submodule of a finite-dimensional "
+                    + "real inner product space, the least saturated sublattice has "
+                    + "ambient carrier equal to the zero submodule. Indeed the real "
+                    + "span of zero is zero, and intersecting it with the original "
+                    + "lattice adds no nonzero points. No discreteness or full-span "
+                    + "hypothesis on the original integral submodule is required."))),
+                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("common-integral-frame-slope"),
                 DeclarationHandle.Create(
                     "D5/S3/Combinatorics/Lattices/EuclideanCommonLattice."

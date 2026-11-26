@@ -344,3 +344,84 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   options := #[]
 
 end Reg.D5.S3.Combinatorics.Lattices.EuclideanCommonLattice.Spectral
+
+universe uBottom
+
+namespace Reg.D5.S3.Combinatorics.Lattices.EuclideanCommonLattice.Bottom
+
+abbrev Params := Σ E : Type uBottom, NormedAddCommGroup E
+
+abbrev signature : Signature :=
+  _root_.Reg.Support.UniverseSingleReadout.signature Params.{uBottom}
+    (fun p => letI := p.2; Submodule ℤ p.1)
+    (fun p => letI := p.2; Submodule ℤ p.1 → Prop)
+
+def actual : Realization signature.{uBottom} :=
+  realize signature (fun _ p M N => letI := p.2; M = N) (fun e => nomatch e)
+
+def rejected : Realization signature.{uBottom} :=
+  realize signature (fun _ _ _ _ => False) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature.{uBottom}
+  Law V := ∀ {E : Type uBottom} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+    [FiniteDimensional ℝ E] (L : Submodule ℤ E),
+    V.readout () ⟨E, inferInstance⟩ (integral L ⊥) ⊥
+
+private theorem rejected_fails : ¬ arena.{uBottom}.Law rejected := by
+  intro law
+  let E := EuclideanSpace ℝ (ULift.{uBottom} Empty)
+  let L : Submodule ℤ E := ⊥
+  exact law L
+
+private theorem dependence : ObservationalDependence signature.{uBottom} actual := by
+  intro _
+  let E := EuclideanSpace ℝ (ULift.{uBottom} Unit)
+  refine ⟨⟨E, inferInstance⟩, ⊥, ⊤, ?_⟩
+  intro h
+  have heq : (⊤ : Submodule ℤ E) = ⊥ := Eq.mp (congrFun h ⊥) rfl
+  exact top_ne_bot heq
+
+def family : Registration arena.{uBottom} (type_of% @bot_carrier.{uBottom}) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@bot_carrier.{uBottom}, rejected, rejected_fails⟩
+  sensitivity := _root_.Reg.Support.UniverseSingleReadout.sensitivity
+    arena.{uBottom}.Law actual rejected rejected_fails
+  dependence := dependence
+
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@bot_carrier.{uBottom}) (Realization signature.{uBottom}) Unit Unit where
+  unitName := .str `D5.S3.Combinatorics.Lattices.EuclideanCommonLattice.bot_carrier
+    "__information_unit"
+  realizationName := `Reg.D5.S3.Combinatorics.Lattices.EuclideanCommonLattice.Bottom.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena.{uBottom}⟩
+  objectArena := .source ⟨arena.{uBottom}⟩
+  catalog := .anonymous
+  localNames := false
+  realization := .source arena.{uBottom} ⟨family.{uBottom}⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature.{uBottom}
+    (fun _ p M N => letI := p.2; M = N) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Combinatorics.Lattices.EuclideanCommonLattice
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end Reg.D5.S3.Combinatorics.Lattices.EuclideanCommonLattice.Bottom
