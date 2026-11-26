@@ -414,7 +414,8 @@ private theorem map_transverse {e : Axes} {B : Block} (h : Disjoint B (commonAxe
     | inl j => exact (disjoint_left.mp h hi (mem_image.mpr ⟨j, mem_univ _, rfl⟩)).elim
     | inr j => exact mem_map.mpr ⟨j, mem_filter.mpr ⟨mem_univ _, hi⟩, rfl⟩
 
-private theorem exists_other {P : Partition} {S : Block} (hP : IsTriplePartition P) (hS : S ∈ P) :
+/-- A given block of a three-block partition has a distinct companion block. -/
+theorem exists_other {P : Partition} {S : Block} (hP : IsTriplePartition P) (hS : S ∈ P) :
     ∃ A ∈ P, A ≠ S := by
   have hlt : ({S} : Partition).card < P.card := by simp [hP.card_eq]
   obtain ⟨A, hA, hne⟩ := exists_mem_notMem_of_card_lt_card hlt
@@ -548,8 +549,6 @@ open D5.S3.Combinatorics.Graph.Hypercube (hypercube)
 open Q9LaurentGainPartition (Side Exponent LaurentIdentity)
 open Q9LaurentCommonTriple (Axes commonAxes inside outside outside_eq_iff_inside_of_partition)
 open Q9ProjectedHeightCompatibility
-open private exists_transverseSide_of_selected_mem from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Laurent.Q9LaurentTransverseFibers
 open Q9ProjectedHeightCompatibility (leftPart_get rightPart_get)
 open Q9ProjectedHeightCompatibility (left_xor right_xor parts_of_join)
 open private cubeParity from
