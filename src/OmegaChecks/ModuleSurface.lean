@@ -175,7 +175,8 @@ def check (strict : Environment) : IO (Array (Name × Name)) := do
     let visibleIndices := (Array.range strict.header.modules.size).filter fun i =>
       visible.contains strict.header.moduleNames[i]!
     let strictClasses := classParameters strict visibleIndices
-    for owner in visible do
+    -- Diagnose the port's own public registrations before those of a re-export.
+    for owner in port :: (visible.erase port).toList do
       let some idx := strict.getModuleIdx? owner | throw <| IO.userError s!"missing module {owner}"
       if owner != port then checkElaboration strict owner idx
       let data := strict.header.moduleData[idx]!
