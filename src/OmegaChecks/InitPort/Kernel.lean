@@ -501,6 +501,11 @@ partial def visit (n : Name) : M Bool := do
   let recursive ← OmegaChecks.InitCompiler.Recursion.specialize c.source c.recursionRule ci decided
   if !recursive.equal decided then
     if (← attempt recursive) matches .added then return ← record n .added
+    -- Some tuple recurrences need a proof connecting the unfolded branches to the
+    -- official equation. Try it only after the direct pointwise law fails in the kernel.
+    let aligned ← OmegaChecks.InitCompiler.Recursion.specialize c.source c.recursionRule ci decided true
+    if !aligned.equal recursive && !aligned.equal decided then
+      if (← attempt aligned) matches .added then return ← record n .added
   if let some certified := comparisonProofs c.source c.literalProofs decided n then
     -- Rechecking the closed proof of comparison costs proportionally more than
     -- applying the original opaque theorem; its bound remains deterministic.

@@ -108,7 +108,7 @@ private partial def closeEquation (goal : MVarId) (fuel : Nat) : MetaM Unit := g
 
 /-- Generated proofs may use function extensionality to unpack the recursion state.
 Case-analyze the actual tuple before applying the fixed point law to each constructor. -/
-private def unfoldingEquation (rule : ConstantInfo) (type : Expr) : MetaM Expr := do
+private def unfoldingEquation (rule : ConstantInfo) (type : Expr) (alignNatBranches : Bool) : MetaM Expr := do
   let proof ← mkFreshExprSyntheticOpaqueMVar type
   let (xs, g) ← proof.mvarId!.intros
   let some x := xs.back? | throwError "missing recursion state"
@@ -124,6 +124,9 @@ private def unfoldingEquation (rule : ConstantInfo) (type : Expr) : MetaM Expr :
       else if rhs.isAppOfArity `WellFounded.Nat.fix 5 then
         pointwiseApplication rule rhs.getAppFn.constLevels! rhs.getAppArgs
       else throwError "unexpected fixed point"
+      if rhs.isAppOfArity `WellFounded.Nat.fix 5 && !alignNatBranches then
+        branch.assign eq
+        return
       let some (_, _, unfolded) := (← inferType eq).eq? | throwError "missing fixed point equation"
       let some (_, _, target) := (← branch.getType).eq? | throwError "missing equation target"
       let rest ← mkFreshExprSyntheticOpaqueMVar (← mkEq unfolded target)
@@ -132,13 +135,14 @@ private def unfoldingEquation (rule : ConstantInfo) (type : Expr) : MetaM Expr :
   instantiateMVars proof
 
 /-- Inline the fixed point law after proving congruence for the actual recursive step. -/
-public def specialize (env : Environment) (rule official : ConstantInfo) (body : Expr) : IO Expr := do
+public def specialize (env : Environment) (rule official : ConstantInfo) (body : Expr)
+    (alignNatBranches := false) : IO Expr := do
   let used := body.getUsedConstantsAsSet
   unless used.contains `WellFounded.Nat.fix_eq ||
       (used.contains `WellFounded.fix_eq && used.contains `funext) do return body
   let action : MetaM Expr := do
     if used.contains `funext then
-      if let some result ← observing? (unfoldingEquation rule official.type) then return result
+      if let some result ← observing? (unfoldingEquation rule official.type alignNatBranches) then return result
     Meta.transform body (post := fun e => do
       unless e.isAppOfArity `WellFounded.Nat.fix_eq 5 do return .done e
       let some term ← observing? (pointwiseApplication rule e.getAppFn.constLevels! e.getAppArgs) | return .done e
