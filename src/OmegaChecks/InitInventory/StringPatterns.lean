@@ -107,4 +107,43 @@ public theorem excludedMiddleOfMatchAtSome (spec : type_of% @matchAt?_eq_some_if
 public theorem excludedMiddleOfRevMatchAtSome (spec : type_of% @revMatchAt?_eq_some_iff) :
     ∀ P : Prop, P ∨ ¬ P := excludedMiddleOfBackwardResult (@revMatchAt?) spec
 
+/-- Weak excluded middle decides the negation of each proposition. -/
+public def WeakExcludedMiddle : Prop := ∀ P : Prop, ¬ P ∨ ¬ ¬ P
+
+public theorem weakExcludedMiddleOfForwardFailure (find : type_of% @matchAt?)
+    (correct : ∀ {ρ : Type} {pat : ρ} [PatternModel pat] {s : String.Slice} {a : s.Pos},
+      find pat a = none ↔ ¬ MatchesAt pat a) : WeakExcludedMiddle := by
+  intro P
+  letI : PatternModel () := accepts P
+  cases result : find () sample.startPos with
+  | none => exact Or.inl fun yes => correct.mp result ⟨⟨_, matchesWhole P yes⟩⟩
+  | some q =>
+    right
+    intro no
+    have absent : ¬ MatchesAt () sample.startPos := by
+      rintro ⟨⟨_, hit⟩⟩
+      exact no hit.isLongestMatch_sliceFrom.isMatch.matches_copy
+    cases result.symm.trans (correct.mpr absent)
+
+public theorem weakExcludedMiddleOfBackwardFailure (find : type_of% @revMatchAt?)
+    (correct : ∀ {ρ : Type} {pat : ρ} [PatternModel pat] {s : String.Slice} {b : s.Pos},
+      find pat b = none ↔ ¬ RevMatchesAt pat b) : WeakExcludedMiddle := by
+  intro P
+  letI : PatternModel () := accepts P
+  cases result : find () sample.endPos with
+  | none => exact Or.inl fun yes => correct.mp result ⟨⟨_, revMatchesWhole P yes⟩⟩
+  | some q =>
+    right
+    intro no
+    have absent : ¬ RevMatchesAt () sample.endPos := by
+      rintro ⟨⟨_, hit⟩⟩
+      exact no hit.isLongestRevMatch_sliceTo.isRevMatch.matches_copy
+    cases result.symm.trans (correct.mpr absent)
+
+public theorem weakExcludedMiddleOfMatchAtNone (spec : type_of% @matchAt?_eq_none_iff) :
+    WeakExcludedMiddle := weakExcludedMiddleOfForwardFailure (@matchAt?) spec
+
+public theorem weakExcludedMiddleOfRevMatchAtNone (spec : type_of% @revMatchAt?_eq_none_iff) :
+    WeakExcludedMiddle := weakExcludedMiddleOfBackwardFailure (@revMatchAt?) spec
+
 end OmegaChecks.InitInventory.StringPatterns

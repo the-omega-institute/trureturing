@@ -892,6 +892,12 @@ private def logicalConsequence? (owner name : Name) : Option (Name × Name) := d
   | `Init.Core, ``Quotient.sound => return (``funext, ``OmegaChecks.InitBoundaries.funextFromQuotientSound)
   | `Init.Core, ``Pi.instSubsingleton => return (``funext, ``OmegaChecks.InitBoundaries.funextFromPiSubsingleton)
   | `Init.Core, ``instSubsingletonSquash => return (``funext, ``OmegaChecks.InitBoundaries.funextFromSquashSubsingleton)
+  | `Init.Data.String.Lemmas.Pattern.Basic, ``String.Slice.Pattern.Model.matchAt?_eq_none_iff =>
+    return (`OmegaChecks.InitInventory.StringPatterns.WeakExcludedMiddle,
+      `OmegaChecks.InitInventory.StringPatterns.weakExcludedMiddleOfMatchAtNone)
+  | `Init.Data.String.Lemmas.Pattern.Basic, ``String.Slice.Pattern.Model.revMatchAt?_eq_none_iff =>
+    return (`OmegaChecks.InitInventory.StringPatterns.WeakExcludedMiddle,
+      `OmegaChecks.InitInventory.StringPatterns.weakExcludedMiddleOfRevMatchAtNone)
   | _, _ => pure ()
   let witness ← match owner, name with
     | `Init.Data.Order.Lemmas, ``Std.not_lt => some ``OmegaChecks.InitBoundaries.excludedMiddleOfNotLT
