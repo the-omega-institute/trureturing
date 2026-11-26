@@ -1,5 +1,7 @@
 module
 public import Init.Data.Array.Erase
+public import Init.Data.Vector.Erase
+import all Init.Data.List.Nat.Erase
 
 /-! Transfer indexed erasure and update laws through the array's list representation. -/
 namespace OmegaChecks.InitPort.Alternatives
@@ -159,5 +161,50 @@ public theorem Array.mem_eraseIdx_iff_getElem : type_of% @_root_.Array.mem_erase
   have erase := _root_.Array.toList_eraseIdx (xs := xs) (i := k) (h := h)
   exact _root_.Array.mem_def.trans ((Iff.of_eq (congrArg (fun ys => x ∈ ys) erase)).trans
     List.mem_eraseIdx_iff_getElem)
+
+public theorem List.getElem?_eraseIdx_of_ge : type_of% @_root_.List.getElem?_eraseIdx_of_ge := by
+  intro α xs i j h
+  rw [List.getElem?_eraseIdx, ite_eq_right (Nat.not_lt_of_ge h)]
+
+public theorem List.getElem_eraseIdx_of_lt : type_of% @_root_.List.getElem_eraseIdx_of_lt := by
+  intro α xs i j inBounds h
+  rw [List.getElem_eraseIdx, dite_eq_left h]
+
+public theorem List.set_getElem_succ_eraseIdx_succ : type_of% @_root_.List.set_getElem_succ_eraseIdx_succ := by
+  intro α xs i h
+  induction xs generalizing i with
+  | nil => exact (Nat.not_lt_zero _ h).elim
+  | cons a xs ih =>
+    cases i with
+    | zero => cases xs with
+      | nil => exact (Nat.lt_irrefl 1 h).elim
+      | cons _ _ => rfl
+    | succ i =>
+      rw [List.eraseIdx_cons_succ, List.eraseIdx_cons_succ, List.set_cons_succ]
+      exact congrArg (a :: ·) (ih (Nat.lt_of_succ_lt_succ h))
+
+public theorem List.eraseIdx_length_sub_one : type_of% @_root_.List.eraseIdx_length_sub_one := by
+  intro α xs
+  induction xs with
+  | nil => rfl
+  | cons a xs ih => cases xs with
+    | nil => rfl
+    | cons b ys =>
+      rw [List.dropLast_cons_cons]
+      exact congrArg (a :: ·) ih
+
+public theorem Vector.getElem?_eraseIdx_of_ge : type_of% @_root_.Vector.getElem?_eraseIdx_of_ge := by
+  intro α n xs i hi j h
+  rw [Vector.getElem?_eraseIdx, ite_eq_right (Nat.not_lt_of_ge h)]
+
+public theorem Vector.getElem_eraseIdx_of_lt : type_of% @_root_.Vector.getElem_eraseIdx_of_lt := by
+  intro α n xs i hi j hj h
+  rw [Vector.getElem_eraseIdx, dite_eq_left h]
+
+public theorem Vector.set_getElem_succ_eraseIdx_succ : type_of% @_root_.Vector.set_getElem_succ_eraseIdx_succ := by
+  intro α n xs i hi
+  rcases xs with ⟨xs, rfl⟩
+  apply Vector.toArray_inj.mp
+  exact Array.set_getElem_succ_eraseIdx_succ hi
 
 end OmegaChecks.InitPort.Alternatives
