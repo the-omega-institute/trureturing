@@ -772,4 +772,8 @@ public theorem ByteArray.utf8DecodeChar?.parseFirstByte_utf8EncodeChar_eq_threeM
   rw [maskFromFields (tag := 30#5) (k := 3) rfl fields 248 240 rfl rfl]
   rfl
 
+public theorem BitVec.extractLsb'_append_eq_right : type_of% @_root_.BitVec.extractLsb'_append_eq_right := by
+  intro w v a b
+  rw [← BitVec.setWidth_eq_extractLsb' (Nat.le_add_left v w), BitVec.setWidth_append_eq_right]
+
 end OmegaChecks.InitPort.Alternatives

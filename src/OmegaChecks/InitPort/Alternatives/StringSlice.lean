@@ -279,4 +279,8 @@ public theorem String.Slice.Pos.copy_eq_append_get : type_of% @_root_.String.Sli
     String.Slice.Pos.ofSliceFrom_startPos] at factor
   rw [String.append_assoc, ← factor, ← String.Slice.copy_eq_copy_sliceTo]
 
+public theorem String.Slice.Pos.get_copy._proof_1 : type_of% @_root_.String.Slice.Pos.get_copy._proof_1 := by
+  intro s p ne eq
+  exact ne ((congrArg String.Slice.Pos.copy eq).trans String.Slice.endPos_copy.symm)
+
 end OmegaChecks.InitPort.Alternatives
