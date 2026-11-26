@@ -161,4 +161,70 @@ public theorem Lean.Omega.tidy_sat : type_of% @_root_.Lean.Omega.tidy_sat := by
     rcases _root_.Lean.Omega.positivize?_eq_some hp with ⟨rfl, rfl⟩
     exact Lean.Omega.normalize_sat (_root_.Lean.Omega.positivize_sat w)
 
+private theorem cons_eq {a b : Int} {as bs : List Int} (h : a = b) (t : as = bs) :
+    a :: as = b :: bs := (congrArg (· :: as) h).trans (congrArg (b :: ·) t)
+
+public theorem Lean.Omega.IntList.nil_add : type_of% @_root_.Lean.Omega.IntList.nil_add := by
+  intro xs
+  induction xs with
+  | nil => rfl
+  | cons x xs ih =>
+    exact cons_eq (Int.zero_add x) ih
+
+public theorem Lean.Omega.IntList.add_nil : type_of% @_root_.Lean.Omega.IntList.add_nil := by
+  intro xs
+  rw [_root_.Lean.Omega.IntList.add_def, List.zipWithAll_nil]
+  induction xs with
+  | nil => rfl
+  | cons x xs ih =>
+    exact cons_eq (Int.add_zero x) ih
+
+public theorem Lean.Omega.IntList.mul_distrib_left :
+    type_of% @_root_.Lean.Omega.IntList.mul_distrib_left := by
+  intro xs ys zs
+  induction xs generalizing ys zs with
+  | nil => rw [Lean.Omega.IntList.nil_add, IntList.mul_nil_left, Lean.Omega.IntList.nil_add]
+  | cons x xs ih =>
+    cases ys with
+    | nil => rw [Lean.Omega.IntList.add_nil, IntList.mul_nil_left, Lean.Omega.IntList.add_nil]
+    | cons y ys =>
+      cases zs with
+      | nil => rw [IntList.mul_nil_right, IntList.mul_nil_right, IntList.mul_nil_right, Lean.Omega.IntList.nil_add]
+      | cons z zs =>
+        rw [IntList.cons_add_cons, IntList.mul_cons_cons, IntList.mul_cons_cons, IntList.mul_cons_cons,
+          IntList.cons_add_cons]
+        exact cons_eq (Int.add_mul ..) (ih ys zs)
+
+public theorem Lean.Omega.IntList.sum_add : type_of% @_root_.Lean.Omega.IntList.sum_add := by
+  intro xs ys
+  induction xs generalizing ys with
+  | nil => rw [Lean.Omega.IntList.nil_add, IntList.sum_nil, Int.zero_add]
+  | cons x xs ih =>
+    cases ys with
+    | nil => rw [Lean.Omega.IntList.add_nil, IntList.sum_nil, Int.add_zero]
+    | cons y ys =>
+      rw [IntList.cons_add_cons, IntList.sum_cons, IntList.sum_cons, IntList.sum_cons, ih,
+        Int.add_assoc, Int.add_assoc, Int.add_left_comm y]
+
+private theorem map_coeffs (f g : Int → Int) (h : ∀ i, f i = g i) (xs : List Int) :
+    xs.map f = xs.map g :=
+  xs.recOn rfl (fun x _ ih => cons_eq (h x) ih)
+
+public theorem Lean.Omega.IntList.combo_eq_smul_add_smul :
+    type_of% @_root_.Lean.Omega.IntList.combo_eq_smul_add_smul := by
+  intro a xs b ys
+  induction xs generalizing ys with
+  | nil =>
+    rw [IntList.smul_nil, Lean.Omega.IntList.nil_add]
+    exact map_coeffs (fun y => a * 0 + b * y) (fun y => b * y)
+      (fun y => (congrArg (· + b * y) (Int.mul_zero a)).trans (Int.zero_add _)) ys
+  | cons x xs ih =>
+    cases ys with
+    | nil =>
+      rw [IntList.smul_nil, Lean.Omega.IntList.add_nil]
+      exact map_coeffs (fun x => a * x + b * 0) (fun x => a * x)
+        (fun x => (congrArg (a * x + ·) (Int.mul_zero b)).trans (Int.add_zero _)) (x :: xs)
+    | cons y ys =>
+      exact congrArg ((a * x + b * y) :: ·) (ih ys)
+
 end OmegaChecks.InitPort.Alternatives
