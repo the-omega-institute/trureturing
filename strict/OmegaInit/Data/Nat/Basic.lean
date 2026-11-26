@@ -14,6 +14,12 @@ attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Nat.sub Omega.
 
 namespace Omega.Nat
 
+attribute [local semireducible] Nat.beq
+
+theorem beq_refl (a : Nat) : Eq (Nat.beq a a) Bool.true :=
+  Nat.rec (motive := fun n => Eq (Nat.beq n n) Bool.true)
+    Omega.rfl (fun _ ih => ih) a
+
 protected theorem zero_add (n : Nat) : Eq (Nat.add zero n) n :=
   Nat.rec (motive := fun i => Eq (Nat.add zero i) i)
     rfl (fun _ h => congrArg succ h) n
