@@ -402,4 +402,21 @@ public theorem Int.Internal.Linear.le_of_le_diseq :
           _root_.Int.Internal.Linear.Poly.denote_mul, zero, Int.mul_zero]
   exact Int.add_one_le_iff.mpr ((Int.lt_or_gt_of_ne nz).resolve_right (fun gt => (Int.not_le_of_gt gt) nonpos))
 
+private theorem intNormDifference (ctx : _root_.Int.Internal.Linear.Context)
+    (lhs rhs : _root_.Int.Internal.Linear.Expr) (p : _root_.Int.Internal.Linear.Poly)
+    (cert : _root_.Int.Internal.Linear.norm_eq_cert lhs rhs p) :
+    p.denote' ctx = lhs.denote ctx - rhs.denote ctx := by
+  rw [linearPolyEqOfBeq cert, _root_.Int.Internal.Linear.Poly.denote'_eq_denote,
+    _root_.Int.Internal.Linear.Expr.denote_norm]
+  rfl
+
+public theorem Int.Internal.Linear.le_norm_expr : type_of% @_root_.Int.Internal.Linear.le_norm_expr := by
+  intro ctx lhs rhs p cert bound
+  rw [intNormDifference ctx lhs rhs p cert]
+  exact Int.sub_nonpos_of_le bound
+
+public theorem Int.Internal.Linear.eq_norm_expr : type_of% @_root_.Int.Internal.Linear.eq_norm_expr := by
+  intro ctx lhs rhs p cert eq
+  rw [intNormDifference ctx lhs rhs p cert, eq, Int.sub_self]
+
 end OmegaChecks.InitPort.Alternatives
