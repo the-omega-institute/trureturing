@@ -24,6 +24,7 @@ strata_touched:
   - D5/S3/Quantum/Divergence/ConditionalExpansion/DirectBellKrausRecovery
   - D5/S3/Quantum/Divergence/ConditionalExpansion/HeraldedRecoveryUpperBound
   - D5/S3/Quantum/Divergence/ConditionalExpansion/HeraldedRecoveryLowerBound
+  - D5/S3/Quantum/Divergence/ConditionalExpansion/SharpFilteredRecoveryFactor
 license: citation-only
 triage: anchor
 ---
@@ -325,3 +326,27 @@ the output retains a uniformly positive fraction of the conditional
 contrast exactly when it admits a heralded exact recovery with positive
 success probability. This characterizes recoverability from the channel
 output and its success flag in the finite-dimensional model.
+
+## Sharpness of the dimension-square factor
+
+`sharp_factor_witness` proves that, for every finite input dimension $d\ge2$
+and real $C<d^2$, there is an $a\in(0,1)$ and a channel $N$ given by the
+normalized filter action with $G=aP+b(I-P)$, where $P$ is the normalized
+Bell projector and $b=(d^2-a)/(d^2-1)$. This is the complementary
+depolarizing filter of Datta and Holevo, *Complementarity and additivity
+for depolarizing channels*, arXiv:quant-ph/0510145, §3, Eqs. (11) and (16).
+Every finite exact heralded Kraus recovery of this channel has weight
+$p\le a$, and every admissible conditional ratio is bounded below by
+$h=a(d^2-a)/(1+(d^2-2)a)$. The parameter $a$ is chosen so that $Ca<h$.
+The theorem gives strict inequalities $Ca<\eta$ for the orthogonal
+trace-distance infimum and every full hockey-stick infimum at $\gamma\ge1$,
+over arbitrary finite references. For $C\ge0$, $p_{\rm rec}\le a$ implies
+$Cp_{\rm rec}\le Ca<\eta$, establishing the sharpness of $d^2$ in the universal
+comparison. For $C<0$ the positive infimum also exceeds $Cp_{\rm rec}$.
+The sharpness argument applies the known filter family to the conditional
+expansion coefficient of Hirche, George, Nuradha and Wilde, Eq. (2.42).
+The related recovery duality is due to Bény and Oreshkov, Theorem 2.
+
+[Datta and Holevo, §3, Eqs. (11), (16)](https://arxiv.org/abs/quant-ph/0510145) ·
+[Hirche, George, Nuradha and Wilde, Eq. (2.42)](https://arxiv.org/html/2608.27171v1#S2.EGx43) ·
+[Bény and Oreshkov, Theorem 2](https://arxiv.org/abs/1103.0649v3)
