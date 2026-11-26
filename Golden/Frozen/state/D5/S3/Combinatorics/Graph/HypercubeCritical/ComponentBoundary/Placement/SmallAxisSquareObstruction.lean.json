@@ -1,0 +1,1 @@
+{"statement_id":"sha256:f9ddbba818850ce6e8c6ddbc269ff239b29bcbaa31175e1405cc6e77861fc1e1","declarations":[{"declaration_name_key":"ns(ns(n0,26:SmallAxisSquareObstruction),18:complete_bipartite)","kind":"theorem","libraries":["Batteries","Init","Lean","Mathlib"],"axioms":["Classical.choice","Quot.sound","propext"]}]}
