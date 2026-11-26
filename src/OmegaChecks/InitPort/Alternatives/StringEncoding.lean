@@ -530,4 +530,17 @@ public theorem ByteArray.utf8DecodeChar?.assemble₄_eq_some_of_toBitVec :
     · apply congrArg some
       exact Char.ext value.symm
 
+public theorem ByteArray.utf8DecodeChar?.helper₃ :
+    type_of% (private_decl% @_root_.ByteArray.utf8DecodeChar?.helper₃) := by
+  intro x n hn
+  apply BitVec.toNat_inj.mp
+  rw [UInt32.toNat_toBitVec, UInt8.toNat_toUInt32, BitVec.toNat_setWidth, BitVec.toNat_setWidth, UInt8.toNat_toBitVec]
+  have powLt : 2 ^ n < 2 ^ 8 := Nat.pow_lt_pow_right (by decide) hn
+  have maskLt : 2 ^ n - 1 < 2 ^ 8 := Nat.lt_of_le_of_lt (Nat.sub_le ..) powLt
+  rw [UInt8.toNat_and, UInt8.toNat_ofNat_of_lt' maskLt, Nat.and_two_pow_sub_one_eq_mod]
+  symm
+  apply Nat.mod_eq_of_lt
+  exact Nat.lt_trans (Nat.mod_lt _ (Nat.two_pow_pos _))
+    (Nat.lt_trans powLt (by decide : 2 ^ 8 < 2 ^ 32))
+
 end OmegaChecks.InitPort.Alternatives
