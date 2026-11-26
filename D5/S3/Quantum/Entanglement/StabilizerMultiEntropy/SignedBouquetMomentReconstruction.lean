@@ -97,7 +97,7 @@ noncomputable def signedCoeff [Fintype (Submodule K V)]
     ((Module.finrank K V : ℝ)+1) S
 
 omit [FiniteDimensional K V] in
-private theorem restriction_euler_from_labels
+theorem restriction_euler_from_labels
     (a b : E → D n) (t : E → Bool) (ell : E → V) (B : LinearMap.BilinForm K V)
     (ha : Function.Injective a) (hb : Function.Injective b) (hd : ∀ i j, a i ≠ b j)
     (hord : ∀ i, (a i).val < (b i).val)
@@ -187,7 +187,7 @@ noncomputable def signedBilin (a b : E → D n) (t : E → Bool) :
     (by intro x y y'; simp [add_mul, sum_add_distrib])
     (by intro c x y; simp [mul_assoc, Finset.mul_sum])
 
-private theorem signedBilin_port (a b : E → D n) (t : E → Bool) (i j : E) :
+theorem signedBilin_port (a b : E → D n) (t : E → Bool) (i j : E) :
     signedBilin a b t (Pi.single j 1) (Pi.single i 1) = signedEntry a b t i j := by
   classical
   change (∑ x, (Pi.single i (1:K) : E → K) x * ((interlacementMap a b + twistDiagonal t)
@@ -227,7 +227,7 @@ private theorem interlaces_swap (a b : E → D n)
     refine ⟨h, ?_⟩
     omega
 
-private theorem signedBilin_symmetric (a b : E → D n) (t : E → Bool)
+theorem signedBilin_symmetric (a b : E → D n) (t : E → Bool)
     (ha : Function.Injective a) (hb : Function.Injective b) (hd : ∀ i j, a i ≠ b j)
     (hord : ∀ i, (a i).val < (b i).val) :
     (signedBilin a b t).flip = signedBilin a b t := by
@@ -270,7 +270,7 @@ private theorem radical_second (hB : B.flip=B) : B.ker ≤ (radicalFirst B).flip
 noncomputable def radicalForm (hB : B.flip=B) : LinearMap.BilinForm F (X ⧸ B.ker) :=
   (B.ker.liftQ (radicalFirst B).flip (radical_second B hB)).flip
 
-private theorem radicalForm_apply (hB : B.flip=B) (x y : X) :
+theorem radicalForm_apply (hB : B.flip=B) (x y : X) :
     radicalForm B hB (B.ker.mkQ x) (B.ker.mkQ y) = B x y := rfl
 end Compression
 
