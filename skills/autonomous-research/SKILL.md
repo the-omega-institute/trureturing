@@ -37,6 +37,8 @@ For sharpness/boundary sources that need declaration-level users, use `make -s -
 
 For each serious candidate, identify its source, fully quantified statement, relation to existing work, the specific statements affected by a yes/no answer, intended consumers, missing inference or realization bridge, estimated cost and appropriate route. These are working inputs, not a new question-card schema or ledger. External candidates additionally need the verbatim published named question, tier and scoped literature readings required by §3.6. Internal candidates, including descendants of external settlements, cannot use `open-problem-resolution` merely because they have been written as a question or placed in a dossier.
 
+Plan a strict port under `strict/OmegaMathlib/` when the research needs the checked counterpart of a Mathlib result. Publish general theorems over verified objects in `src/OmegaMath/`. Put new project objects in D5. Consumers normally use the common interface on both backends. A consumer that needs the full official API can import `OmegaBuild.Commands`, declare `compile_only_with_mathlib` after its imports and use Mathlib directly. Its importers inherit that choice. [Backend examples and checks](../../src/README.md#选择编译后端)
+
 Use this research selection policy:
 
 - **Structural value:** seek both (i) a result difficult to obtain from the current library, or an answer that independent preregistered predictions cannot already settle, and (ii) concrete other statements made easier to obtain by that result. Distinguish value in discovering an object, choosing a model and proving model premises from novelty in the eventual proof term. These distinctions never change `proof_shape` or admission.

@@ -174,7 +174,7 @@ private def complementEquiv (i n k : ℕ) :
   right_inv a := Subtype.ext (complement_involutive a.1)
 
 /-- Every index on an axis of length at least two occurs in an adjacent pair. -/
-private theorem inPair {n : ℕ} (x : Fin (n + 2)) :
+theorem inPair {n : ℕ} (x : Fin (n + 2)) :
     ∃ j : Fin (n + 1), x = j.castSucc ∨ x = j.succ := by
   refine Fin.cases ?_ (fun j => ?_) x
   · exact ⟨0, Or.inl (Fin.ext rfl)⟩

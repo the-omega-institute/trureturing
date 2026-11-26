@@ -1,0 +1,113 @@
+using static StrataLint.Scribe.DefinitionDsl;
+
+namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Lattices;
+
+internal sealed class CyclotomicTraceCovolumeDocument : IScribeDocumentDefinition
+{
+    private static readonly LibraryNoteRef Source =
+        LibraryNoteRef.Create("D5/L/QuadraticForms/grayson1984semistability");
+
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Trace metrics and fractional ideal slopes",
+        H("The normalization at complex places"),
+        Blocks(
+            Paragraph(Text("Let K be a number field of degree d, with discriminant D "
+                + "and r complex places. Let I be a nonzero invertible fractional ideal "
+                + "of its full ring of integers, equipped with the standard Hermitian "
+                + "norm at each embedding. No cyclotomic or totally complex hypothesis "
+                + "is needed for the covolume calculation.")),
+            Describe.Lean(DescribeId.Create("trace-ideal-covolume-and-slope"),
+                DeclarationHandle.Create(
+                    "D5/S3/Combinatorics/Lattices/CyclotomicTraceCovolume.trace_ideal_formula"),
+                H("The discriminant translation of a fractional ideal slope"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
+                Blocks(
+                    Paragraph(Text("The mixed Minkowski space takes one real coordinate "
+                        + "at each real place and one complex coordinate at each complex "
+                        + "place. Its Euclidean realization carries the sum of squared "
+                        + "coordinate norms. Multiplying each complex coordinate by the "
+                        + "positive square root of two changes this squared norm to the "
+                        + "sum of real squares plus twice the sum of complex squared "
+                        + "norms. Thus both members of each conjugate pair are counted. "
+                        + "The trace ideal lattice is the actual inverse image of the "
+                        + "mixed Minkowski ideal lattice under the resulting linear "
+                        + "coordinate equivalence.")),
+                    Paragraph(Text("The real determinant of the complex-coordinate "
+                        + "rescaling is two to the power r. Applying Mathlib's "
+                        + "NumberField.mixedEmbedding.covolume_idealLattice gives "
+                        + "the mixed ideal covolume as the absolute ideal norm times "
+                        + "the positive "
+                        + "square root of the absolute discriminant, divided by two to "
+                        + "the power r. The coordinate determinant cancels precisely this "
+                        + "last factor. Consequently the trace lattice has covolume "
+                        + "the absolute ideal norm times the positive square root of "
+                        + "the absolute discriminant. Its measure-theoretic covolume "
+                        + "also agrees with the square root of the Gram determinant "
+                        + "used for Euclidean lattice slopes: expansion in an "
+                        + "orthonormal basis expresses that determinant as the square "
+                        + "of the coordinate determinant.")),
+                    Paragraph(Text("For the standard Hermitian ideal the Arakelov degree "
+                        + "is minus the logarithm of the absolute ideal norm. Dividing "
+                        + "minus the logarithm of the trace covolume by d therefore gives "
+                        + "the normalized ideal degree minus log of the absolute "
+                        + "discriminant divided by twice d. All quantities use real "
+                        + "logarithms and the integer lattice has rank d.")),
+                    Paragraph(Text("The metric realization and the translation formula "
+                        + "are derived here from the pinned Mathlib Minkowski "
+                        + "fractional-ideal covolume theorem and real determinant "
+                        + "change of variables. Grayson supplies the general Euclidean "
+                        + "slope context. Gaudron–Remond's restriction-of-scalars "
+                        + "formulas and Bost–Chen's extension-of-scalars theorem are "
+                        + "classical results; the latter is not a restriction-of-scalars "
+                        + "theorem. This statement concerns standard Hermitian ideals. "
+                        + "It does not identify arbitrary higher-rank Hermitian modules "
+                        + "with sums of these standard metrized ideals."))),
+                DescribeRole.Theorem),
+            Paragraph(Text("Assume now that K is a full cyclotomic field, with any "
+                + "positive cyclotomic order. The metric remains the standard trace-sum "
+                + "metric on the fractional ideal.")),
+            Describe.Lean(DescribeId.Create("cyclotomic-ideal-hn"),
+                DeclarationHandle.Create(
+                    "D5/S3/Combinatorics/Lattices/CyclotomicTraceCovolume.cyclotomic_ideal_hn"),
+                H("The fractional ideal is semistable over the integers"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
+                Blocks(
+                    Paragraph(Text("The cyclotomic-extension instance supplies a primitive "
+                        + "root through IsCyclotomicExtension.zeta_spec; no chosen root "
+                        + "is an additional hypothesis. Multiplication by this root "
+                        + "is an integral "
+                        + "isometry: each archimedean image of the root has absolute value "
+                        + "one. Uniqueness of the Euclidean HN filtration fixes every step "
+                        + "under this multiplication. The ring of integers is generated by "
+                        + "the root, so every step is an order submodule. Its integral "
+                        + "saturation also gives saturation for every nonzero order scalar: "
+                        + "an algebraic scalar divides a nonzero rational integer, which "
+                        + "reduces the assertion to integral saturation.")),
+                    Paragraph(Text("A fractional ideal has rank one over K. Given a "
+                        + "nonzero element in a saturated order submodule and any element "
+                        + "of the ideal, write their ratio with a nonzero denominator in "
+                        + "the ring of integers. Clearing that denominator places a "
+                        + "nonzero scalar multiple of the arbitrary element in the "
+                        + "submodule. Saturation therefore makes the submodule the whole "
+                        + "ideal. The first nonzero HN step is consequently the whole "
+                        + "lattice, and the unique HN endpoint list has exactly one term.")),
+                    Paragraph(Text("Write d for the degree of K and Delta for its "
+                        + "discriminant. The integral rank is d. The trace-sum covolume "
+                        + "is the square root of the absolute discriminant times the "
+                        + "absolute norm of I. In the normalization minus logarithmic "
+                        + "covolume divided by integral rank, the slope is therefore "
+                        + "minus log of the ideal norm divided by d, minus log of the "
+                        + "absolute discriminant divided by twice d. This is the "
+                        + "normalized Arakelov slope of the ideal minus the exact "
+                        + "discriminant shift.")),
+                    Paragraph(Text("The argument applies to every positive cyclotomic "
+                        + "order, including the rational cases. It uses the standard "
+                        + "trace-sum metric on a line. It does not identify HN filtrations "
+                        + "for arbitrary higher-rank Hermitian order lattices. The "
+                        + "cyclotomic application is derived from the Euclidean "
+                        + "uniqueness theorem and the fractional-ideal covolume formula. "
+                        + "Grayson's work supplies the classical Euclidean filtration "
+                        + "background; the particular combined statement is not "
+                        + "attributed verbatim to that article."))),
+                DescribeRole.Theorem))));
+}

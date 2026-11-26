@@ -11,6 +11,8 @@ description: 在 trureturing 的 fork 中贡献 Lean、Blueprint Scribe、逃逸
 
 无需准备主检出的项目缓存、下载项目 Release cache 或编译全库。首次执行仍需 Lean 工具链、钉版 Mathlib 源码与依赖缓存、`global.json` 指定的 .NET SDK、Python ≥3.12、Git、Make 和冻结命令所需的 jq。现有依赖准备执行 `lake exe cache get`，不保证只下载所选模块的 Mathlib 缓存，也不保证零下载。项目模块只编译所选目标及其 import/utility 闭包。
 
+默认消费模块用一份源码双编。`OmegaMathlib` 是钉版 Mathlib 已核对的严格子集，`OmegaMath` 提供通用定理和已核验对象的引用，新增项目对象归 D5。需要完整官方接口时，导入 `OmegaBuild.Commands`，在全部 import 后写 `compile_only_with_mathlib`，随后直接使用 Mathlib。直接或间接导入它的模块自动继承。只有目标要求扩展严格覆盖时才补 `strict/OmegaMathlib/` 移植。[两个可编译示例](../../src/README.md#选择编译后端)
+
 ## 准备 fork 和基线
 
 读取 fork 的 `CLAUDE.md`、`agents/CONTEXT.md` 以及与内容相关的现役规范。数学准入、先库后证、bind-only 禁令、用途和独立评审规则照常适用；本技能仅改变本地准备与验证范围。

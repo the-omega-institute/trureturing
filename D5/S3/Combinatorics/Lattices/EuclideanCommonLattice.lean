@@ -443,7 +443,7 @@ def latticeSlope (L : Submodule ℤ E) [DiscreteTopology L] : ℝ :=
   -Real.log (covolume L) / finrank ℤ L
 private def span (L : Submodule ℤ E) (a : Sublattice L) : Submodule ℝ E :=
   Submodule.span ℝ (integral L a : Set E)
-private theorem bot_carrier (L : Submodule ℤ E) : integral L ⊥ = ⊥ := by
+theorem bot_carrier (L : Submodule ℤ E) : integral L ⊥ = ⊥ := by
   change
     (((Submodule.span ℝ (((⊥ : Submodule ℤ L).map L.subtype) : Set E)).restrictScalars
       ℤ).comap L.subtype).map L.subtype = ⊥

@@ -23,20 +23,20 @@ noncomputable section
 
 namespace D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower.SublinearOrder.RHHarmonicPairMoment
 
-private theorem weight_nonneg (j : PositiveZetaZero) : 0 ≤ harmonicWeight j := by
+theorem weight_nonneg (j : PositiveZetaZero) : 0 ≤ harmonicWeight j := by
   have hp : 0 < ordinate j := j.property.2
   unfold harmonicWeight
   positivity
 
-private theorem cutoff_mem (rh : RiemannHypothesis) (T : ℝ) (j : PositiveZetaZero) :
+theorem cutoff_mem (rh : RiemannHypothesis) (T : ℝ) (j : PositiveZetaZero) :
     j ∈ positiveCutoff rh T ↔ ordinate j ≤ T := by
   simp [positiveCutoff,Spectrum.cut,zetaSpectrum,ordinate]
 
-private theorem cutoff_mono (rh : RiemannHypothesis) {T U : ℝ} (h : T ≤ U) :
+theorem cutoff_mono (rh : RiemannHypothesis) {T U : ℝ} (h : T ≤ U) :
     positiveCutoff rh T ⊆ positiveCutoff rh U := fun j hj =>
   (cutoff_mem rh U j).mpr (((cutoff_mem rh T j).mp hj).trans h)
 
-private theorem upper_weight (rh : RiemannHypothesis) {T : ℝ} (hT : 1 ≤ T)
+theorem upper_weight (rh : RiemannHypothesis) {T : ℝ} (hT : 1 ≤ T)
     {j : PositiveZetaZero} (hj : j ∈ positiveCutoff rh T \ positiveCutoff rh (T * (3 / 4))) :
     ((zetaSpectrum rh).mult j : ℝ)/(2*T) ≤ harmonicWeight j := by
   have hi := Finset.mem_sdiff.mp hj
@@ -54,7 +54,8 @@ private theorem upper_weight (rh : RiemannHypothesis) {T : ℝ} (hT : 1 ≤ T)
   unfold harmonicWeight
   convert h using 1 <;> simp [zetaSpectrum,div_eq_mul_inv,mul_assoc]
 
-private theorem harmonic_pair_bounds (rh : RiemannHypothesis) :
+/-- Eventual mass and pair-moment bounds on the inclusive harmonic zeta spectrum. -/
+theorem harmonic_pair_bounds (rh : RiemannHypothesis) :
     ∀ᶠ T : ℝ in atTop,
       let logHeight := Real.log
       let W := harmonicMass rh T

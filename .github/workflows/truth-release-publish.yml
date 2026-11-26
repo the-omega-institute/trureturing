@@ -17,8 +17,35 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  build:
+  pin:
     if: github.repository == 'the-omega-institute/trureturing' && github.ref == 'refs/heads/dev' && github.ref_protected
+    runs-on: ubuntu-24.04-arm
+    permissions:
+      actions: read
+      contents: read
+    outputs:
+      source: ${{ steps.pin.outputs.source }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.workflow_sha }}
+          sparse-checkout-cone-mode: false
+          sparse-checkout: /.github/actions/lean-cache-shards/pin-source.py
+          persist-credentials: false
+      - name: Pin the published source
+        id: pin
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 .github/actions/lean-cache-shards/pin-source.py --published
+      - if: steps.pin.outputs.upload == 'true'
+        uses: actions/upload-artifact@v6
+        with:
+          name: generation-pin-${{ github.run_id }}
+          path: ${{ runner.temp }}/pin/source
+          if-no-files-found: error
+
+  build:
+    needs: pin
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 360
     permissions:
@@ -26,13 +53,18 @@ jobs:
       contents: read
     outputs:
       artifact_id: ${{ steps.upload.outputs.artifact-id }}
-    env:
-      STRATALINT_CACHE_WRITES: 'false'
-      STRATALINT_ACCEPT_COLD_BUILD: '1'
     steps:
       - uses: actions/checkout@v5
         with:
-          ref: ${{ github.sha }}
+          ref: ${{ needs.pin.outputs.source }}
+          persist-credentials: false
+      - name: Check out the workflow's report reader
+        uses: actions/checkout@v5
+        with:
+          ref: ${{ github.workflow_sha }}
+          path: truth-workflow
+          sparse-checkout-cone-mode: false
+          sparse-checkout: /.github/scripts/read-module-reports.py
           persist-credentials: false
       - name: Check out the fixed truth release tools
         uses: actions/checkout@v5
@@ -46,37 +78,13 @@ jobs:
       - uses: actions/setup-dotnet@v5
         with:
           global-json-file: global.json
-      - name: Install the pinned Lean toolchain
-        run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
-      - name: Select the Lean dependency cache
-        id: keys
-        run: python3 tools/scripts/worktree/lean_actions.py keys --repository "$GITHUB_WORKSPACE" --layers dependency
-      - name: Restore the pinned Lean dependencies
-        id: dependencies
-        uses: actions/cache/restore@v5
-        with:
-          key: ${{ steps.keys.outputs.dependency_key }}
-          restore-keys: ${{ steps.keys.outputs.dependency_restore_prefix }}
-          path: ${{ steps.keys.outputs.dependency_archive_path }}
-      - name: Prepare the restored dependencies
+      - name: Read report ZIPs from the pinned module release
         env:
-          DEPENDENCY_KEY: ${{ steps.dependencies.outputs.cache-matched-key }}
-          DEPENDENCY_OUTCOME: ${{ steps.dependencies.outcome }}
+          MODULE_RELEASE: ${{ format('lean-modules-{0}', needs.pin.outputs.source) }}
         run: |
-          python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --layers dependency \
-            --dependency-key "$DEPENDENCY_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME"
-      - name: Restore published module shards with their Lean reports
-        continue-on-error: true
-        uses: ./.github/actions/lean-cache-shards
-        env:
-          GH_TOKEN: ${{ github.token }}
-          STRATALINT_LEAN_CACHE_RELEASE_TIMEOUT_SECONDS: '21600'
-        with:
-          operation: restore-published
-      - name: Prepare the source's Lean module reports
-        env:
-          LEAN_NUM_THREADS: '1'
-        run: bash .github/actions/lean-compile-layer/measure.sh --compile make lean-cache-prepare FULL_BUILD=1
+          python3 -B truth-workflow/.github/scripts/read-module-reports.py \
+            "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/releases/download" "$MODULE_RELEASE" \
+            "$GITHUB_WORKSPACE/.lake/build/lean-inspector/modules"
       - name: Generate and package the DAG and truth release
         run: bash "$GITHUB_WORKSPACE/truth-tools/.github/scripts/truth_release/build.sh" "$RUNNER_TEMP/truth-assets"
       - id: upload

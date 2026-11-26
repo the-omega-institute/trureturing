@@ -6,7 +6,7 @@ from pathlib import Path
 import subprocess
 import tempfile
 
-from portable import ROOT, consumers, root
+from portable import ROOT, backend_plan, consumers, root
 
 
 def module_name(path):
@@ -112,6 +112,7 @@ def compare(before, old_modules, new_modules, old_path, new_path, omega_modules=
             protected.add((declaration["module"], declaration["nameKey"], actual["position"],
                            previous["objectKey"], previous["owner"]))
             verified += 1
+    new_native_uses = {}
     for declaration in new:
         mod, key = declaration["module"], declaration["nameKey"]
         if mod not in active:
@@ -121,6 +122,13 @@ def compare(before, old_modules, new_modules, old_path, new_path, omega_modules=
             if owner.split(".", 1)[0] != "Mathlib" or use["ported"]:
                 continue
             if (mod, key, pos, use["objectKey"], owner) not in protected:
-                raise ValueError(f"{mod} {declaration['name']} at {pos}: new Mathlib object "
-                                 f"{use['object']} from {owner} requires a verified OmegaMathlib port")
+                new_native_uses.setdefault(mod, (declaration["name"], pos, use["object"], owner))
+    # Only a module whose compiled import closure selects the official backend may add
+    # native references without a port. Historical positions were checked above for every module.
+    if new_native_uses:
+        official_only = backend_plan(new_path, sorted(new_native_uses))["mathlibOnly"]
+        for mod, (name, pos, obj, owner) in new_native_uses.items():
+            if mod not in official_only:
+                raise ValueError(f"{mod} {name} at {pos}: new Mathlib object "
+                                 f"{obj} from {owner} requires a verified OmegaMathlib port")
     print(f"Verified {verified} protected Mathlib occurrences in {len(old_modules)} affected D5 modules.", flush=True)

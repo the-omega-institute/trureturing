@@ -164,9 +164,11 @@ def main (args : List String) : IO Unit := do
       for (alias, target) in aliasExtension.getModuleEntries env i do
         unless alias.getRoot == `OmegaMathlib do continue
         let some j := env.getModuleIdxFor? target | throw <| IO.userError s!"missing owner for {target}"
-        if target == alias.replacePrefix `OmegaMathlib .anonymous &&
-            env.header.moduleNames[j]! == owner.replacePrefix `OmegaMathlib `Mathlib then
-          admitted := admitted.insert target
+        let expected := alias.replacePrefix `OmegaMathlib .anonymous
+        let expectedOwner := owner.replacePrefix `OmegaMathlib `Mathlib
+        unless target == expected && env.header.moduleNames[j]! == expectedOwner do
+          throw <| IO.userError s!"{alias} in {owner} exports {target} from {env.header.moduleNames[j]!}, expected {expected} from {expectedOwner}"
+        admitted := admitted.insert target
   let selected := input.selected.map Std.HashSet.ofArray
   let selectedBodies := input.selectedBodies.map Std.HashSet.ofArray
   let mut omega : NameSet := {}

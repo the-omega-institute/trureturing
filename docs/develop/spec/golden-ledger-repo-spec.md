@@ -276,7 +276,7 @@ Registration bindings belong to their Reg occurrence owner. Delta selects change
 
 - `libraries` 是该声明最近一次测量得到的完整库根名称数组。缺省表示库来源未知，`[]` 表示测量所得的库根集合为空。测量从编译后的声明类型与定义值或证明项出发，递归遍历实际引用的声明及其编译依赖，涵盖私有、隐藏和其他未进入状态片的辅助声明，也涵盖仅在类型中出现的引用。库根取自所达声明的编译模块归属。测量穿过仓内 `D5`、`Reg`、`Trureturing` 和 `OmegaChecks` 根下的声明，将其依赖归入实际使用的数学库。`OmegaInit` 与 `OmegaMath` 虽与 D5 共用 Lake package，仍各以自身库根报告；来自其他库的可达声明也计入，包括官方 Lean 库和其他外部库。实际声明依赖决定库集合，源码 import 清单、声明命名空间和同一模块中的其他行均不提供库归属证据。
 - `axioms` 是该声明最近一次测量的实际传递公理闭包。许可集合恰为 `propext`、`Classical.choice`、`Quot.sound`。writer 写出测得的完整名称数组，包括全许可集合和代表实测零公理的 `[]`。历史行缺省时只提供三个标准公理的许可上界。超过许可集合的当前证据拒绝写入。两个可选数组使用规范排序且元素唯一。
-- `strict_omega` 记录同一数学源码在严格后端编译所得的 `declaration_name_key`、`kind`、`statement_type_address`、`libraries` 与 `axioms`，并以 `official_statement_type_address` 标识已通过导出对照的官方声明。两个陈述摘要分别取自各自的编译产物。严格对象缺省表示该行没有配对证据，严格对象内的两个依赖数组必填。对照器核验为官方编译器单独派生的辅助声明可仅保留官方测量。其余应有的严格声明缺失即拒绝更新。
+- `strict_omega` 记录同一数学源码在严格后端编译所得的 `declaration_name_key`、`kind`、`statement_type_address`、`libraries` 与 `axioms`，并以 `official_statement_type_address` 标识已通过导出对照的官方声明。两个陈述摘要分别取自各自的编译产物。严格对象缺省表示该行没有配对证据，严格对象内的两个依赖数组必填。显式或经导入链选择 `compile_only_with_mathlib` 的消费模块仅记录官方测量。双编模块中，对照器核验为官方编译器单独派生的辅助声明也可仅记录官方测量。其余应有的严格声明缺失即拒绝更新。
 
 可选字段记录写入时的测量。证明项、依赖或工具链变化后，陈述 pin 仍可相同，此时旧注记仍可读取。对当前编译结果的依赖断言须取当前证据。只有 `libraries` 明示非空且其全部成员属于 `{OmegaInit, OmegaMath}`，并且 `axioms` 明示为 `[]` 时，才可将该行描述为「仅依赖 Omega 库、零公理」（截至该次测量）。`libraries: []` 可支持空库依赖的读数，无 Omega 归属。严格模块审计的范围是整个编译导入闭包，包括未被该声明引用的模块和声明；其零公理及严格导入边界由独立的空内核重放与模块校验建立。
 
@@ -284,7 +284,7 @@ Registration bindings belong to their Reg occurrence owner. Delta selects change
 
 **A14.3 模块写入。** 对模块 M 的登记或重新钉定仅写 M 自己的状态片;规范内容相同即不写。writer 不改写其他模块的记录,不因 import 关系连带重钉下游,不要求整库报告,不做全账闭包检查。所需证据是 M 的当前范围报告,包括其编译 import 与 utility 输入;缺失或无效的所需证据仍拒绝写入。多模块请求逐模块遵守同一写集合边界。`--retire-registration` 的显式请求、源已移除、无残留 import、声明与证明保全及 Scribe/coverage 清理义务见 A5.6,不依赖事件依赖图。
 
-首次 deposit 从当前编译证据写出逐声明注记。对直接或经导入链使用 Omega 公共接口的 D5 模块，首次冻结与刷新都须编译对应源码、核对两个后端的产物归属与翻译后的导出，并将同一声明的两份闭包测量原子写入同一状态片。声明闭包实测零公理与空内核重放是两项证据，重放的结论只涵盖实际重放的闭包。重新钉定改变模块陈述 pin 时，该模块的逐声明注记须重新测量或清除。现有成员的全量重新测量由用户显式运行 `make frozen-refresh`。根 Makefile 经 `install-tools` 安装钉版工具，再从消费仓根目录无参数调用 `tools/scripts/agent/frozen-refresh.sh`。目标集合取全部已有状态片，编译检查覆盖这些模块的报告输入及其所需依赖。每个待写模块的现存陈述 pin 与声明身份须匹配当前报告，证据缺失、无效或不匹配时报错，该模块不得写入。刷新只更新可选注记，保持模块成员资格与陈述 pin。相同测量结果重复执行时零字节变化。采用读取器和 writer 本身无需迁移既有文件，普通读取和 CI 也无需重新测量。
+首次 deposit 从当前编译证据写出逐声明注记。对直接或经导入链使用 Omega 公共接口的 D5 模块，首次冻结与刷新均按当前工具链和官方编译产物中的模块元数据选择后端。模块声明 `compile_only_with_mathlib` 或导入闭包中有此声明时，记录官方端的实测依赖，刷新时移除已失去配对依据的 `strict_omega`。其余入选模块用同一份源码双编，核对两个后端的产物归属与翻译后的导出，再将同一声明的两份闭包测量原子写入同一状态片。声明闭包实测零公理与空内核重放是两项证据，重放的结论只涵盖实际重放的闭包。重新钉定改变模块陈述 pin 时，该模块的逐声明注记须重新测量或清除。现有成员的全量重新测量由用户显式运行 `make frozen-refresh`。根 Makefile 经 `install-tools` 安装钉版工具，再从消费仓根目录无参数调用 `tools/scripts/agent/frozen-refresh.sh`。目标集合取全部已有状态片，编译检查覆盖这些模块的报告输入及其所需依赖。每个待写模块的现存陈述 pin 与声明身份须匹配当前报告，证据缺失、无效或不匹配时报错，该模块不得写入。刷新只更新可选注记，保持模块成员资格与陈述 pin。相同测量结果重复执行时零字节变化。采用读取器和 writer 本身无需迁移既有文件，普通读取和 CI 也无需重新测量。
 
 writer 不提供事件追加、事件替换、`Reattest`、`Revoke`、`Supersede`、`EnvironmentRecoordinate` 动作,不提供 `ledger-append` 别名或 `--from-accepted` 物化入口。
 
@@ -298,6 +298,12 @@ SL-008 检查当前树中的每个状态片:路径与 schema 合规,对应模块
 **A14.6 并发合并。** 同一模块的两份不同规范记录位于同一路径的同一行,Git 三方合并报冲突;内容相同的并发写入正常合流。不同模块的记录更新写集合不相交,一个模块的重新钉定不写其他模块的记录。路径双射与严格 schema 保证每个冻结模块只有一份记录;记录不含前置记录地址,不存在悬空的前置记录引用。这些性质只约束冻结状态片,不承诺 PR 中其他源码改动之间无冲突。
 
 **A14.7 冻结状态的消费者。** 独立读取器须接受 A14.2 的历史与带注记记录。展示依赖信息的消费者依 A14.2 区分字段缺省与 `[]`。冻结读写器往返序列化历史规范文件时须逐字节相同。理论源仓按模块 pin 和声明身份核对覆盖目标并记录实际来源提交，须在发布带注记记录前具备读取兼容性。
+
+<a id="omega-claim-fidelity"></a>
+
+**OmegaMath 陈述与证据的忠实性（语义评审）。** 引用定理时，在所引版本核对实际类型和有关定义，保留载体、等价关系、量词、定义域、必要前提与结论。把有理参数的像扩大到整个空间、从标量特征标递推识别实际算子迹、或从射线等价得到规范代表元相等，均须给出相应的满射、表示对应或规范化依据。显式说明该步来自哪条 Lean 声明、书面推导或附加假设。若反例推翻推广，把引文用于其成立的范围，并同步修正依赖该推广的图表、译文和示例。
+
+发布者按 A14.2 读取同一声明的官方和严格测量。顶层 `axioms` 属于官方测量，`strict_omega.axioms` 属于已对照的严格声明；缺省按 A14.7 处理。报告空内核重放时给出实际入口、根及闭包，报告 D5 冻结证据时指出实际测量和对照范围。
 
 **A14.8 TOWER 引导边界。** TOWER 不保存或验证 `genesis_event` 的事件存在性见证。bootstrap 保留其 commit/PR 外部信任根边界及 `ASSUMED-UNVERIFIED` 状态,不以状态摘要替代事件见证。
 
@@ -333,7 +339,7 @@ Downstream projection tools cannot provide registration verdicts or replace prod
 
 **A17.1 Describe 公式溯源(v7.15)** 生产契约为 `StatementFormula: Formula?` 及构造期可判的 `FormulaProvenance∈{hand-authored,lean-derived}`;不存在 `LatexStatement` 类型。`StatementProjectionFixtureLoader.FromLean` 是 `lean-derived` 的唯一构造入口,由 `StatementProjector` 对 Lean declaration 的 kernel `Expr` 生成 Formula;普通 Formula 参数零仪式地标为 `hand-authored`。对每个 `{theorem,proposition,lemma}` 且 statement 为 `LeanDeclarationRef d` 的 Describe,机器执行 `Project(d.Expr)`:若 `Projected(f)`,则 `StatementFormula` 必由 `FromLean(d)` 生成并等于 `f`,否则 SL-023 `Block`;若 `Unprojectable(reason)`,允许手写 Formula,投影器记录该节点的 `open` 与具体原因。此 open 是机器能力边界,不得终止于人审。准入门必须对其已校验源哈希的 candidate Lean report 执行 projection fixture/live-report reconciliation;缺失、陈旧或不一致均 fail-closed。
 
-**Omega 标准对象。** 钉版 Mathlib 确定标准数学对象的含义。公开陈述在实际使用处显式引用经双端核验的 `OmegaMathlib.<上游全名>`。例如 `hp : OmegaMathlib.Nat.Prime p` 指定的是上游 `Nat.Prime`。D5 可消费 Omega 数学库。两个数学库的完整导入闭包均须独立于 D5。新增项目对象及其与标准对象的对应证明归 D5。[作者示例](../../../src/README.md#标准数学对象)
+**Omega 标准对象。** 钉版 Mathlib 确定标准数学对象的含义。公开陈述在实际使用处显式引用经双端核验的 `OmegaMathlib.<上游全名>`。例如 `hp : OmegaMathlib.Nat.Prime p` 指定的是上游 `Nat.Prime`。D5 可消费 Omega 数学库。两个数学库的每个发布模块及其完整导入闭包均须支持双后端并独立于 D5，私有导入和经其他模块转发的导入也在核验范围内。选择 `compile_only_with_mathlib` 的 D5 消费模块可以使用官方接口，按 A14.2 记录官方测量。新增项目对象及其与标准对象的对应证明归 D5。[作者示例](../../../src/README.md#标准数学对象)
 
 **A17.2 第三方 Lean 成果的两种准入形(v7.16 R3)** 精确命中的第三方 Lean 成果有且仅有两种合法准入形——**依赖**与**移植**;**重证禁止**(CLAUDE.md 第 11 条:重证已库有之定理=制造第二真源,与冒领同罪)。立本条之由:第 11 条有序路径的 ③ 指向「按 spec A17 可准入的第三方 Lean 生态」,而 A17 的三条准入谓词(public source、immutable rev、license compatibility)现役全为 `open`,故 ③ 事实上关闭;若不另立移植形,路径塌缩为 ②→④本地证明,恰是同条所禁之重证。**形式选择由机器判,不由偏好判**:Lake 每个包名只解析一次且 `lean-toolchain` 全局,故任一第三方包与本仓必须同意同一 toolchain 与同一 mathlib rev;比较候选上游的 `lean-toolchain` 及其 `lake-manifest.json` 中 mathlib `rev` 与本仓同名值,**不等即依赖形不可行**,无须再议;相等且 A17 三谓词已落地方可取依赖形;不等则只余移植形或放弃。此判据的实质是:依赖用于**与本仓同步演进的协调点**(mathlib 本身即此,故钉它而不移植它),移植用于**已冻结于某一 rev 的叶子成果**(论文交付物不会为本仓升级)。**移植形的义务**(逐条,机器可判优先):① 许可证随代码保留版权与许可全文,上游若带 NOTICE 链(Apache-2.0 §4 之类)则整链带入;② 入仓后即普通仓内内容,GID route、六行头、SL-001 import 偏序、SL-003 容量一律照常执法,不因「来自上游」豁免;③ 移植声明的 axiom/sorry 闭包不得扩张,须只含标准三条;④ **退役条件必须对本仓自己的钉版可判**,形如「本仓已升级到的某个 mathlib rev 中存在等价声明时删除本移植并改为直接引用」,**禁止**以「上游被 mathlib 接受」为到期条件——该事件不受本仓控制且已有反例(见判例),无可判到期条件的移植即第 6 条所禁之永久兼容层。**判例(读数,2026-08-13)**:`D5-T0019` 三距离——上游 `dkunert/three-gap-theorem-lean`(MIT,单文件 1486 行,sorry-free,无自定义 axiom)钉 `leanprover/lean4:v4.29.1`,本仓钉 `v4.31.0`,依赖形机器判否 ⇒ 取移植形;另 mathlib PR #40037(`feat(NumberTheory): the three-gap (Steinhaus) theorem`,+625 行)于 2026-06-09 以 mathlib AI 投稿规范关闭未合并,故上游收录无确定期,不得作到期条件。`D5-T0018-F` Weil 显式公式——上游 `anthropics/zeta-23-lean`(Apache-2.0)含 sorry-free `Zeta23.WeilEF.EF_lit_zetaZeroConfig`,钉 `v4.33.0-rc2`,依赖形机器判否;其 `Zeta23.WeilEF.Main` 的项目内 import 闭包实测 57 模块、893 KB、18,105 行,而该闭包直接 import 的 89 个 mathlib 模块在本仓钉版 `v4.31.0` 中缺 0 个,故移植形可行;本轮未执行,该事实记于 `D5-T0018-F`。
 
@@ -475,7 +481,11 @@ truth release bundle 的 manifest 以 schema 标签 `truth-release`（历史格�
 
 Truth Release 按 A14.2 发布冻结声明最近一次测量的库根与公理。消费方按来源快照、模块陈述 pin、声明名称键和种类对齐证据。DAG 与发布数据的「仅 Omega · 零公理」标记属于单条声明，判据为实测库根集合非空且包含于 `{OmegaInit, OmegaMath}`，同时 `axioms` 显式等于 `[]`。缺省字段保留其 A14.2 含义；同模块声明可得到不同结果。
 
-独占定时工作流 `truth-release-publish.yml` 每日从受保护的 `dev` 事件提交生成 DAG 和 truth bundle。逐模块报告和 Scribe 资源使用源码钉版的工具生成，发布器使用工作流独立钉住的 `trureturing-tools` 提交。发布清单的 `required_checks` 为空。归档发布到 GHCR，`truth-release-<digest>` GitHub Release 提供同一归档、发布坐标与 `DAG.md`。
+独占工作流 `truth-release-publish.yml` 在受保护的 `dev` 上运行。定时触发和未指定来源的手动触发从 `refs/heads/lean-modules-published` 固定最近一次完整发布的源码提交。该提交须位于当前受保护 `dev` 的第一父链上。源码检出和 `lean-modules-<提交>` 版本索引共用此提交。重跑沿用本次运行保存的 Actions 来源 pin。
+
+`publish-truth-release` 的 `repository_dispatch` 可在 `client_payload.source_commit` 指定 40 位小写十六进制提交字符串。工作流在检出前验证该提交位于受保护 `dev` 事件提交的第一父链上（含事件提交自身）。该提交须已有可读取的普通模块 Release。
+
+Truth Release 直接信任已发布的报告。读取器按索引指定的物理 Release 标签与资产名读取分片，仅复制逐模块报告 ZIP。源码钉版的 Inspector 和 Scribe 用于汇总报告与生成资源，工作流独立钉住的 `trureturing-tools` 发布器负责生成 DAG 与 truth bundle。发布阶段无需安装 Lean、恢复编译器产物、重新验证报告或编译 Lean 项目。发布清单的 `required_checks` 为空。归档发布到 GHCR，`truth-release-<digest>` GitHub Release 提供同一归档、发布坐标与 `DAG.md`。
 
 
 <a id="a22-ci-cache-flow"></a>
@@ -503,7 +513,7 @@ source 在 judge cache 恢复后初始化余额；judge 与命中测试的 NuGet
 
 内容检查与基础设施行为测试分责：Lean、Scribe 及既有可执行源码全集的复制策略 guard 由 architecture 单元消费；普通内容变更不选择重量级 worktree 行为测试。worktree 实现、夹具及实际构建依赖变更仍由 `CI_UNITS` 显式选择行为测试，不通过运行时推导测试影响范围。原生报告的编译与模块 trace 仍是唯一增量权威；模块注册只建立 Lake 依赖，不逐模块同步等待编译输入分类；分类完成后由依赖 continuation 准备对应模块。保留原有输入 trace 和失败传播，不把判官程序身份混入报告 trace。共享程序构建与被选中的审计执行分责，缓存复用不免除审计。一次构建同时包含 Inspector 与下游审计程序时，在既有下游 Lake workspace 中共同构建，避免对同一程序闭包重复注册与缓存准备；单独 Inspector 或 Reg 入口保持原职责。Release 传输契约按既有 transport、verification 与本地/旧名 case 所有者分别执行，各组保留完整用例并独立使用原有子进程 hang guard；CI 单元选择、累计计算预算和功能判据不随分组改变。
 
-每个 job 的本地 `.lake/build` 承载编译、模块报告、聚合报告与材料。Actions cache 传输的原生路径由 `Meta/ci-cache-paths.json` 声明。Cache Release Publish 将编译产物与受检模块的报告共同发布。普通检查按变更范围恢复模块，Truth Release 恢复全库范围，再由 Lake 核验和补建报告。required 同时核对 source、current 和各命中单元的真实结果。
+每个 job 的本地 `.lake/build` 承载编译、模块报告、聚合报告与材料。Actions cache 传输的原生路径由 `Meta/ci-cache-paths.json` 声明。Cache Release Publish 将编译产物与受检模块的报告共同发布。普通检查按变更范围恢复模块，Truth Release 直接读取已发布的报告 ZIP。required 同时核对 source、current 和各命中单元的真实结果。
 
 **触发、身份、读写与预算。** 表中写入资格还须满足下文工作量与成功条件；producer 不在 `required` 的 needs 中，不能替代实际选中的检查。
 
@@ -532,7 +542,7 @@ source 在 judge cache 恢复后初始化余额；judge 与命中测试的 NuGet
 
 模块报告的复用条件为 Lake trace、utility 和报告格式。judge 编译缓存绑定其构建输入与配方。
 
-**分片容量与报告。** 小模块按点号命名空间归并。根据压缩后的大小递归拆分超限分片，单模块超限时独立保存。手动发布的 `shard_mib` 和定时发布的仓库变量 `LEAN_MODULE_SHARD_MIB` 可调整 256 MiB 默认容量。每片独立保存，未变的分片继承已有版本的地址。每个受检模块在同一分片中带有一份 `lean-inspector/modules/<完整模块名>.zip` 及其 Lake `.hash` 和 `.trace`。消费者按所选模块安装这些文件，定向检查、冻结和发布均可复用与当前输入匹配的报告。
+**分片容量与报告。** 小模块按点号命名空间归并。根据压缩后的大小递归拆分超限分片，单模块超限时独立保存。手动发布的 `shard_mib` 和定时发布的仓库变量 `LEAN_MODULE_SHARD_MIB` 可调整 256 MiB 默认容量。每片独立保存，未变的分片继承已有版本的地址。每个受检模块在同一分片中带有一份 `lean-inspector/modules/<完整模块名>.zip` 及其 Lake `.hash` 和 `.trace`。定向检查和冻结可按所选模块安装这些文件并复用与当前输入匹配的报告。Truth Release 直接读取 ZIP。
 
 [普通 CI](../../../.github/workflows/ci-current.yml) · [并发分片](../../../.github/workflows/ci-lean-generation-compile.yml) · [手动与定时发布](../../../.github/workflows/cache-release-publish.yml)
 

@@ -5,6 +5,8 @@ description: Use when asked to formalize mathematics in this repository, using D
 
 # Codex Formalization Workflow
 
+Use the common interface to compile one source on both backends. `OmegaMathlib` is the checked strict subset of pinned Mathlib. If a consumer needs the full official API, import `OmegaBuild.Commands`, put `compile_only_with_mathlib` after the imports, and use Mathlib directly. All modules importing that consumer inherit the choice. [Two compilable examples](../../src/README.md#选择编译后端)
+
 ## Install
 
 This is a Codex skill package. Install it by copying the `skills/codex-formalize/` directory into `$CODEX_HOME/skills/` (default `~/.codex/skills`), or load it by naming this `SKILL.md` path directly in a dispatcher. This repository copy is the single source of truth; any installed copy is a projection of it.
@@ -102,7 +104,7 @@ Apply `CLAUDE.md` 11, "library before proof." Search the frozen D5 declarations 
 
 For an existing formalization migrating to strict Omega mathematics, use the [migration skill](../omega-math-migration/SKILL.md) to update the original owner and verify its dependencies. Keep consumer references on the consumer side.
 
-For a standard object, use its admitted OmegaMathlib reference at the occurrence in the statement. A prime hypothesis uses `OmegaMathlib.Nat.Prime p`. Port missing declarations from their pinned defining module in `strict/OmegaMathlib/`. New project objects and their bridges belong in D5. Existing callers can import `OmegaMath.Projective` to use the positive-scaling proof `Omega.Projective.kappa_scale`. [Library guide](../../src/README.md#标准数学对象)
+For a standard object, use its admitted OmegaMathlib reference at the occurrence in the statement. A prime hypothesis uses `OmegaMathlib.Nat.Prime p`. Port missing declarations from their pinned defining module in `strict/OmegaMathlib/`. New project objects and their bridges belong in D5. Existing callers can import `OmegaMath.Projective` to use the positive-scaling proof `Omega.Projective.kappa_scale`. [Library guide](../../src/README.md#标准数学对象) Determine axiom use from the actual backend record for the frozen declaration.
 
 Check the bind path first: the cheapest faithful discharge is an existing frozen theorem, and dozens of residues have been discharged with zero new Lean. If a frozen declaration already covers the residue leg verbatim, use the canonical coverage route naming that declaration and the evidence, not a new module or a recommendation for another worker. If the writer cannot run, name that blocker and its next command; do not claim the atom is processed.
 
@@ -338,6 +340,8 @@ Before Step 7, the producing seat must answer every item with concrete evidence.
 - Deposit substance: for a module introducing a new definition, name the theorem(s) that make the definition earn its freeze (instantiation against existing repository structures, an independent-sides characterization, or a citable property), and show the module's connection to the existing machinery its vocabulary names. Anonymous `example`s do not discharge this item; see the thin-deposit taxonomy above.
 - Duplicate search: cite the Step 3 trace showing this is not a renamed duplicate of a mathlib or `D5/` declaration.
 - Clause fidelity: place the authoritative atom clauses beside the Lean clauses one-to-one, mapping every clause to an exact Lean binder, hypothesis, or conclusion. The dropped-or-weakened set must be empty; any weakening, omission, or unresolved ambiguity forces `open` before deposit.
+- For an OmegaMath citation, expand the carrier and equality at the use site. Check the premise that would justify each change of domain or representation. A rational rotation matrix need not have a rational unit-spinor lift. When publishing a zero-axiom claim, identify the backend and read its declaration record. [OmegaMath publication rule](../../docs/develop/spec/golden-ledger-repo-spec.md#omega-claim-fidelity)
+
 - Rendered-statement fidelity: read the emitted Blueprint `.md` for this document and compare its displayed statement against the Lean declaration symbol by symbol; use a neighbouring landed mirror as a shape check.
   The formula DSL and writer own tokens that can be valid LaTeX and structurally accepted yet mean something different from the theorem, so `emit` exiting 0 is not evidence that the rendering is faithful.
   A mismatch blocks deposit; resolve it against `tools/StrataLint.Scribe/Ast/FormulaDsl.cs` and `tools/StrataLint.Scribe/Writers/LatexWriter.cs`, or end the task `open`.

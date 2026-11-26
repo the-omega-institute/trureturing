@@ -2,10 +2,12 @@
 import os
 from pathlib import Path
 import subprocess
+import shutil
 import tempfile
 
 from portable import AUDIT, ROOT, output
 from strict_lake import strict_config
+from protected_objects import compiled_path, strict_witnesses
 
 MODULE = "OmegaMath.StandaloneFixture"
 HEADER = "module\nprelude\npublic import OmegaInit.Prelude\n@[expose] public section\nnamespace Omega\n"
@@ -29,8 +31,55 @@ def check_client(lean, search, module, declaration, succeeds):
         raise RuntimeError(f"Unexpected client reduction: {result.stdout}{result.stderr}")
 
 
+def check_archive_build():
+    with tempfile.TemporaryDirectory(prefix="protected-archive-") as temporary:
+        archive = Path(temporary)
+        for folder in ("src/OmegaChecks", "src/OmegaMath", "strict/OmegaInit"):
+            (archive / folder).mkdir(parents=True)
+        (archive / "lakefile.toml").write_text(
+            'name = "fixture"\n' + "".join(
+                f'[[lean_lib]]\nname = "{name}"\nsrcDir = "src"\n'
+                for name in ("OmegaInit", "OmegaMathlib", "OmegaMath")))
+        shutil.copyfile(ROOT / "lean-toolchain", archive / "lean-toolchain")
+        shutil.copyfile(ROOT / "src/OmegaChecks/strict_lake.py", archive / "src/OmegaChecks/strict_lake.py")
+        (archive / "src/OmegaChecks/InitCompiler.lean").write_text("import Lean\n")
+        (archive / "strict/OmegaInit/Source.lean").write_text("def strictWitness := 1\n")
+        (archive / "src/OmegaMath/Consumer.lean").write_text(
+            "import OmegaInit.Source\nexample : strictWitness = 1 := rfl\n")
+        path = compiled_path(archive, ["OmegaMath.Consumer"], True)
+        assert any((Path(p) / "OmegaMath/Consumer.olean").is_file() for p in path.split(os.pathsep))
+
+
+def check_witness_backends(lean, search):
+    with tempfile.TemporaryDirectory(prefix="protected-witnesses-") as temporary:
+        directory = Path(temporary)
+        path = os.pathsep.join([str(directory), search])
+        for name, body in [
+            ("D5.StrictWitness", "def portableWitness := 1"),
+            ("D5.OfficialWitness", "import OmegaBuild.Commands\ncompile_only_with_mathlib"),
+            ("D5.InheritedWitness", "import D5.OfficialWitness"),
+            ("OmegaMath.RestrictedPublication", "import D5.OfficialWitness"),
+        ]:
+            source = directory.joinpath(*name.split(".")).with_suffix(".lean")
+            source.parent.mkdir(exist_ok=True)
+            source.write_text(body + "\n")
+            subprocess.run([lean, "-R", directory, "-o", source.with_suffix(".olean"), source],
+                           cwd=ROOT, env={**os.environ, "LEAN_PATH": path}, check=True)
+        owners = ["D5.StrictWitness", "D5.OfficialWitness", "D5.InheritedWitness"]
+        assert strict_witnesses(path, owners) == ["D5.StrictWitness"]
+        try:
+            strict_witnesses(path, ["OmegaMath.RestrictedPublication"])
+        except RuntimeError as error:
+            assert "Omega publication requires both backends" in str(error), error
+        else:
+            raise AssertionError("accepted an official-only protected publication")
+
+
 def check():
     lean = output("lake", "env", "printenv", "LEAN").strip()
+    check_archive_build()
+    subprocess.run(["lake", "build", "+OmegaBuild.Commands"], cwd=ROOT, check=True)
+    check_witness_backends(lean, output("lake", "env", "printenv", "LEAN_PATH").strip())
     for profile in (["-f", strict_config()], []):
         search = output("lake", *profile, "env", "printenv", "LEAN_PATH").strip()
         with tempfile.TemporaryDirectory(prefix="omega-protected-") as temp:

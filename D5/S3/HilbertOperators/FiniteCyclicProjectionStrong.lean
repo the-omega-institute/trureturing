@@ -38,7 +38,7 @@ def cycle : List (ClosedSubmodule k H) → H →L[k] H
   | [] => 1
   | U :: Us => cycle Us ∘L U.toSubmodule.starProjection
 
-private theorem norm_cycle_le (Us : List (ClosedSubmodule k H)) (z : H) :
+theorem norm_cycle_le (Us : List (ClosedSubmodule k H)) (z : H) :
     ‖cycle Us z‖ ≤ ‖z‖ := by
   induction Us generalizing z with
   | nil => simp [cycle]
@@ -46,7 +46,7 @@ private theorem norm_cycle_le (Us : List (ClosedSubmodule k H)) (z : H) :
     exact (ih (U.toSubmodule.starProjection z)).trans
       (U.toSubmodule.norm_starProjection_apply_le z)
 
-private theorem cycle_fixed_iff (Us : List (ClosedSubmodule k H)) (z : H) :
+theorem cycle_fixed_iff (Us : List (ClosedSubmodule k H)) (z : H) :
     cycle Us z = z ↔ ∀ U ∈ Us, z ∈ U := by
   induction Us with
   | nil => simp [cycle]

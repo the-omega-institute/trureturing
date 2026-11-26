@@ -7,6 +7,7 @@ import tarfile
 import tempfile
 
 import protected_uses
+from portable import backend_plan
 from strict_lake import ROOT
 
 
@@ -18,14 +19,27 @@ def publication_modules(repository):
 
 
 def compiled_path(repository, modules, strict):
-    lake = ([sys.executable, "-I", "-B", "src/OmegaChecks/strict_lake.py"] if strict else ["lake"])
     environment = {k: v for k, v in os.environ.items() if k not in {"LEAN_PATH", "LEAN_SRC_PATH"}}
+    lake = ["lake"]
+    if strict:
+        # The archived revision supplies its own foundation overlay. Its scheduling
+        # wrapper needs a Git checkout, while Lake can build these exact roots directly.
+        config = subprocess.check_output(
+            [sys.executable, "-I", "-B", "-c",
+             "import runpy; print(runpy.run_path('src/OmegaChecks/strict_lake.py')['strict_config']())"],
+            cwd=repository, env=environment, text=True).strip()
+        lake.extend(["-f", config])
     if modules:
         subprocess.run([*lake, "build", *("+" + name for name in modules)], cwd=repository,
                        env=environment, check=True)
     value = subprocess.check_output([*lake, "env", "printenv", "LEAN_PATH"], cwd=repository,
                                     env=environment, text=True).strip()
     return os.pathsep.join(str((repository / entry).resolve()) for entry in value.split(os.pathsep))
+
+
+def strict_witnesses(official_path, names):
+    excluded = backend_plan(official_path, names)["mathlibOnly"]
+    return [name for name in names if name not in excluded]
 
 
 def check(base):
@@ -51,27 +65,40 @@ def check(base):
             (before / ".lake/packages").symlink_to(ROOT / ".lake/packages", target_is_directory=True)
         subprocess.run(["lake", "build", "omegaAudit"], cwd=ROOT, check=True)
         audit = ROOT / ".lake/build/bin/omegaAudit"
-        for strict in (False, True):
-            protected_path = compiled_path(before, original if strict else [*original, *old_d5], strict)
-            candidate_roots = set(modules) | set(legacy_owners)
-            if not strict:
-                candidate_roots.update(new_d5)
-                if omega_d5:
-                    candidate_roots.add("OmegaMathlib")
-            candidate_path = compiled_path(ROOT, sorted(candidate_roots), strict)
-            if not strict:
-                protected_uses.compare(before, old_d5, new_d5, protected_path, candidate_path, omega_d5)
+        protected_official = compiled_path(before, [*original, *old_d5], False)
+        official_roots = set(modules) | set(legacy_owners) | set(new_d5)
+        if omega_d5:
+            official_roots.add("OmegaMathlib")
+        candidate_official = compiled_path(ROOT, sorted(official_roots), False)
+        protected_uses.compare(before, old_d5, new_d5, protected_official, candidate_official, omega_d5)
+
+        def compare_objects(strict, protected_path, candidate_path, owners):
             label = "strict" if strict else "official"
             print(f"Comparing {label} OmegaMath declarations against {commit}", flush=True)
             command = [audit, "--protected-objects", protected_path, candidate_path,
                        *original, "--", *modules, "--legacy"]
-            result = subprocess.run([*command, *legacy_owners], cwd=ROOT, stderr=subprocess.PIPE, text=True)
-            if result.returncode and legacy_owners != all_owners and (
+            result = subprocess.run([*command, *owners], cwd=ROOT, stderr=subprocess.PIPE, text=True)
+            if result.returncode and (
                     "missing observable D5 representation" in result.stderr or
                     "missing all-input correspondence in D5" in result.stderr):
-                # An unchanged frozen owner can already provide the old representation or theorem.
-                compiled_path(ROOT, sorted(set(all_owners) - set(legacy_owners)), strict)
-                subprocess.run([*command, *all_owners], cwd=ROOT, check=True)
-            else:
-                sys.stderr.write(result.stderr)
-                result.check_returncode()
+                # A frozen owner outside the changed set can already contain the required witness.
+                additional = sorted(set(all_owners) - set(legacy_owners))
+                if additional:
+                    compiled_path(ROOT, additional, False)
+                    if strict:
+                        additional = strict_witnesses(candidate_official, additional)
+                        compiled_path(ROOT, additional, True)
+                if additional:
+                    subprocess.run([*command, *owners, *additional], cwd=ROOT, check=True)
+                    return
+            sys.stderr.write(result.stderr)
+            result.check_returncode()
+
+        compare_objects(False, protected_official, candidate_official, legacy_owners)
+        # A restricted publication is invalid even when its source compiles in strict mode.
+        backend_plan(protected_official, original)
+        backend_plan(candidate_official, modules)
+        strict_owners = strict_witnesses(candidate_official, legacy_owners)
+        protected_strict = compiled_path(before, original, True)
+        candidate_strict = compiled_path(ROOT, sorted(set(modules) | set(strict_owners)), True)
+        compare_objects(True, protected_strict, candidate_strict, strict_owners)

@@ -1,0 +1,117 @@
+using static StrataLint.Scribe.DefinitionDsl;
+
+namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Lattices;
+
+internal sealed class CyclotomicHNRestrictionDocument : IScribeDocumentDefinition
+{
+    private static readonly LibraryNoteRef Source =
+        LibraryNoteRef.Create("D5/L/QuadraticForms/grayson1984semistability");
+
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Algebraic scalar actions on Euclidean HN sublattices",
+        H("Saturated modules over a monogenic order"),
+        Blocks(
+            Paragraph(Text("Let A be a commutative ring without zero divisors, algebraic over the "
+                + "integers and generated as an integer algebra by z. Let E be a "
+                + "finite-dimensional real inner product space with an A-module "
+                + "structure extending its integer scalar multiplication. Suppose "
+                + "multiplication by z agrees with a real linear isometry T, and "
+                + "T maps a discrete integral lattice L onto itself. The lattice "
+                + "need not span the ambient real space.")),
+            Describe.Lean(DescribeId.Create("algebraic-order-hn-saturation"),
+                DeclarationHandle.Create(
+                    "D5/S3/Combinatorics/Lattices/CyclotomicHNRestriction.hn_saturated"),
+                H("Every HN stage is a saturated order module"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
+                Blocks(
+                    Paragraph(Text("Every stage of any Euclidean HN filtration "
+                        + "from zero to L is the restriction of an A-submodule of E. "
+                        + "If x belongs to L, a is a nonzero element of A, and ax "
+                        + "belongs to that submodule, then x belongs to it. The same "
+                        + "assertion holds for the strict truncation above every "
+                        + "real slope threshold, including thresholds equal to a "
+                        + "factor slope. This is saturation inside L; no assertion "
+                        + "is made about points outside L.")),
+                    Paragraph(Text("Uniqueness of the Euclidean HN filtration fixes "
+                        + "each stage under T. Closure under z and under integer "
+                        + "linear combinations extends to closure under A by "
+                        + "induction on the generated algebra. For a nonzero a, "
+                        + "algebraicity supplies c in A and a nonzero integer m "
+                        + "with ac equal to m. Closure under c converts ax in the "
+                        + "stage to mx in the stage. Its real span is closed under "
+                        + "division by m, and integer saturation then gives x.")),
+                    Paragraph(Text("The result does not require that z have finite "
+                        + "order, that A be integrally closed, or that L have "
+                        + "positive rank. For a full cyclotomic field, take A to "
+                        + "be its ring of integers and z a primitive root of unity. "
+                        + "The cyclotomic generation theorem and an isometric "
+                        + "realization of multiplication by z supply the hypotheses. "
+                        + "The algebraic saturation argument is repo-derived; "
+                        + "Grayson's work supplies the classical Euclidean HN "
+                        + "background. This statement does not itself identify "
+                        + "Arakelov degrees or compute the multiplicities of "
+                        + "number-field slopes."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("order-subobject-semistability-equivalence"),
+                DeclarationHandle.Create(
+                    "D5/S3/Combinatorics/Lattices/"
+                    + "CyclotomicHNRestriction.semistable_restriction"),
+                H("Testing order subobjects is sufficient"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
+                Blocks(
+                    Paragraph(Text("For these two equivalences, A need only be a "
+                        + "commutative ring generated over the integers by z; "
+                        + "no algebraicity or absence of zero divisors is required. "
+                        + "The ambient finite-dimensional metric and integral "
+                        + "isometry assumptions remain. For any two order-stable "
+                        + "saturated sublattices "
+                        + "F and G, Euclidean semistability of their interval is "
+                        + "equivalent to testing its slope inequality only on "
+                        + "order-stable intermediate sublattices. A common additive "
+                        + "shift of all slopes has no effect on this equivalence. "
+                        + "In the number-field normalization this shift is the "
+                        + "logarithm of the absolute discriminant divided by twice "
+                        + "the field degree, once the corresponding degree formula "
+                        + "has been established for the subobjects.")),
+                    Paragraph(Text("Order stability implies invariance under T: "
+                        + "stability gives T(F) contained in F. The isometry "
+                        + "preserves rank, and rank is strictly increasing on "
+                        + "saturated sublattices, so this inclusion is equality. "
+                        + "Conversely, invariance under T "
+                        + "implies order stability by generation. The first HN "
+                        + "stage in the interval is therefore order-stable. Its "
+                        + "slope is maximal among all intermediate sublattices, so "
+                        + "testing that particular order subobject already bounds "
+                        + "every integral subobject. This supplies the converse "
+                        + "to the immediate restriction of the tests."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("order-hn-chain-equivalence"),
+                DeclarationHandle.Create(
+                    "D5/S3/Combinatorics/Lattices/"
+                    + "CyclotomicHNRestriction.filtration_restriction"),
+                H("The HN subobject chain is unchanged"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
+                Blocks(
+                    Paragraph(Text("For a commutative integer algebra generated by z, "
+                        + "between order-stable endpoints, a list of "
+                        + "saturated integral sublattices is a Euclidean HN chain "
+                        + "if and only if it is an order HN chain. The order chain "
+                        + "requires its stages to be order-stable, tests "
+                        + "semistability on order-stable intermediate subobjects, "
+                        + "and adds the same real constant to every factor slope. "
+                        + "Both directions include empty chains and arbitrary "
+                        + "intervals. Strict decrease is unchanged by the common "
+                        + "translation.")),
+                    Paragraph(Text("Induct on the endpoint list. In the forward "
+                        + "direction, invariance under T makes its first stage "
+                        + "order-stable, and the semistability equivalence applies "
+                        + "to the first factor. The induction treats the tail. In "
+                        + "the reverse direction the order chain already supplies "
+                        + "stage stability, so the same equivalence recovers each "
+                        + "Euclidean semistable factor. Identification with "
+                        + "Arakelov slopes still requires the discriminant degree "
+                        + "formula for each subobject and its rank over the field; "
+                        + "the order chain here uses the integral rank in its "
+                        + "normalized shifted slope."))),
+                DescribeRole.Theorem))));
+}

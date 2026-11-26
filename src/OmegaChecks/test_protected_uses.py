@@ -8,6 +8,57 @@ from portable import ROOT, output
 from protected_uses import affected, compare
 
 
+def check_backend_uses(compile_source, search, module):
+    subprocess.run(["lake", "build", "omegaBackendPlan"], cwd=ROOT, check=True)
+    marker_module = "D5.FixtureBackend"
+    header = ("module\npublic import OmegaBuild.Commands\n"
+              "public import OmegaMathlib.Data.Nat.Choose.Basic\n"
+              "public import Mathlib.Data.Nat.Factorial.Basic\n")
+    marker = "compile_only_with_mathlib\n"
+    original = "@[expose] public def D5.held (n : Nat) := OmegaMathlib.Nat.choose n 2\n"
+    native = "@[expose] public def D5.nativeFact (n : Nat) := Nat.factorial n\n"
+    old = compile_source("old", header + original)
+    marked_path = compile_source("inherited", header + marker, name=marker_module)
+    inherited_header = f"module\npublic import {marker_module}\n"
+    for label, imports, library in [("explicit", header + marker, search),
+                                     ("inherited", inherited_header, marked_path)]:
+        new = compile_source(label, imports + original + native, library)
+        compare(ROOT, [] if label == "explicit" else [module], [module], old, new)
+
+    dual = compile_source("dual", header + original + native)
+    try:
+        compare(ROOT, [module], [module], old, dual)
+    except ValueError as error:
+        assert "Nat.factorial from Mathlib." in str(error) and "requires a verified OmegaMathlib port" in str(error), error
+    else:
+        raise AssertionError("accepted an unported factorial in a dual-backend consumer")
+
+    replacement = original.replace("OmegaMathlib.Nat.choose n 2", "Nat.factorial n")
+    changed = compile_source("inherited", inherited_header + replacement, marked_path)
+    try:
+        compare(ROOT, [module], [module], old, changed)
+    except ValueError as error:
+        assert "D5.held at value." in str(error) and "expected Nat.choose from Mathlib." in str(error), error
+    else:
+        raise AssertionError("accepted replacement of a protected occurrence in an official-only consumer")
+
+    # A port still commits its reserved alias to the actual object and its owning Mathlib module.
+    fake_port = "OmegaMathlib.Data.Nat.Choose.Basic"
+    fake = compile_source("wrong-port", "module\npublic import Mathlib.Data.Nat.Factorial.Basic\n"
+                          "namespace Wrong\n@[expose] public def choose (n k : Nat) := n + k\nend Wrong\n"
+                          "public section\nnamespace OmegaMathlib.Nat\nexport Wrong (choose)\nend OmegaMathlib.Nat\n",
+                          name=fake_port)
+    compile_source("wrong-port", f"module\npublic import {fake_port}\n", fake, name="OmegaMathlib")
+    forged = compile_source("wrong-port", "module\npublic import OmegaBuild.Commands\n"
+                            f"public import {fake_port}\n" + marker + original + native, fake)
+    try:
+        compare(ROOT, [], [module], old, forged)
+    except subprocess.CalledProcessError:
+        pass
+    else:
+        raise AssertionError("accepted a reserved standard alias targeting a substitute in an official-only consumer")
+
+
 def check():
     before = {"OmegaMathlib.Port": set(), "OmegaMath.Helper": {"OmegaMathlib.Port"},
               "D5.Client": {"OmegaMath.Helper"}, "D5.Next": {"D5.Client"}, "D5.Unrelated": set()}
@@ -31,6 +82,8 @@ def check():
             subprocess.run([lean, "-R", directory, "-o", source.with_suffix(".olean"), source],
                            cwd=ROOT, env={**os.environ, "LEAN_PATH": library_path}, check=True)
             return os.pathsep.join([str(directory), library_path])
+
+        check_backend_uses(compile_source, search, module)
 
         for port, signature, hypotheses, actual in [
             ("Data.Nat.Prime.Defs", "Nat → Prop", "(p : Nat) (h : P p) (g : Q p) : True := True.intro", "Nat.Prime"),
