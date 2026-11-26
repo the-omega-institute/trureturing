@@ -22,6 +22,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/Sumfree/StrictTwoSumfreePreperiodRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/van-berkel-bosma-2026-conjecture-9` (refuted) by `D5/S1/Words/Sumfree/StrictTwoSumfreePreperiodRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"van-berkel-bosma-2026-conjecture-9","declaration_gid":"D5/S1/Words/Sumfree/StrictTwoSumfreePreperiodRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Daan van Berkel, Wieb Bosma (2026). *Periodicity conjectures for all 2-sumfree sequences*. DOI: [10.48550/arXiv.2609.18522](https://doi.org/10.48550/arXiv.2609.18522). URL: <https://arxiv.org/abs/2609.18522v1>.
