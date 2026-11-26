@@ -1,5 +1,6 @@
 module
 public import Init.Data.Range.Polymorphic.Nat
+public import Init.Data.Range.Polymorphic.Int
 
 /-! Direct witnesses for finite natural ranges and their successor law. -/
 
@@ -45,5 +46,31 @@ public theorem Std.PRange.instLawfulHasSizeNat_1 : Rxo.LawfulHasSize Nat where
     subst lo'
     rw [openSize, openSize, Nat.sub_succ]
     exact (Nat.succ_pred_eq_of_ne_zero (Nat.sub_ne_zero_of_lt h)).symm
+
+private theorem reachUpper (lo hi : Int) : hi ≤ lo + ((hi - lo).toNat : Int) := by
+  by_cases h : lo ≤ hi
+  · rw [Int.toNat_of_nonneg (Int.sub_nonneg_of_le h), Int.add_comm, Int.sub_add_cancel]
+    exact Int.le_refl _
+  · exact Int.le_trans (Int.le_of_lt (Int.lt_of_not_ge h)) (Int.le_add_of_nonneg_right (Int.natCast_nonneg _))
+
+public theorem Std.PRange.instLawfulHasSizeInt : Rxc.LawfulHasSize Int where
+  size_eq_zero_of_not_le lo hi h := by
+    have bound : hi + 1 ≤ lo := Int.lt_of_not_ge h
+    exact Int.toNat_of_nonpos (Int.sub_nonpos_of_le bound)
+  size_eq_one_of_succ?_eq_none lo _ _ h :=
+    False.elim (Option.noConfusion rfl (heq_of_eq (show some (lo + 1) = none from h)))
+  size_eq_succ_of_succ?_eq_some lo hi lo' h next := by
+    have eq : lo + 1 = lo' := Option.some.inj next
+    subst lo'
+    change (hi + 1 - lo).toNat = (hi + 1 - (lo + 1)).toNat + 1
+    have shift : hi + 1 - lo = (hi - lo) + 1 := Int.add_right_comm hi 1 (-lo)
+    rw [Int.add_sub_add_right, shift]
+    exact Int.toNat_add (Int.sub_nonneg_of_le h) (Int.le_of_lt (Int.zero_lt_one))
+
+public theorem Std.PRange.instIsAlwaysFiniteInt_1 : Rxo.IsAlwaysFinite Int :=
+  ⟨fun lo hi => ⟨(hi - lo).toNat, Int.not_lt_of_ge (reachUpper lo hi)⟩⟩
+
+public theorem Std.PRange.instIsAlwaysFiniteInt : Rxc.IsAlwaysFinite Int :=
+  ⟨fun lo hi => ⟨((hi + 1) - lo).toNat, Int.not_le_of_gt (reachUpper lo (hi + 1))⟩⟩
 
 end OmegaChecks.InitPort.Alternatives
