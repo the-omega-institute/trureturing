@@ -40,3 +40,4 @@ An edge with both endpoints in a single separator has the averaged residual of i
 
 - Truth anchor: `D5/S3/Combinatorics/Graph/Chordal/CliqueTreeBanachPotential.cliqueTree_center_extension_banach_potential`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Chordal/CliqueTreeBanachPotential.cliqueTree_twoClique_midpoint_banach_potential`
+- Dependency: [D5/S3/Combinatorics/Graph/Chordal/CompleteAndCliqueSumBanach](CompleteAndCliqueSumBanach.md)
