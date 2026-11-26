@@ -1,4 +1,5 @@
 module
+import all Init.Data.List.SplitOn.Lemmas
 import all Init.Data.String.Pattern.Char
 import all Init.Data.String.Lemmas.Pattern.Split.Char
 import all Init.Data.Iterators.Consumers.Monadic.Collect
@@ -385,3 +386,119 @@ public theorem toList_splitToSubslice_char :
   exact _root_.String.Slice.toList_splitToSubslice_bool
 
 end OmegaChecks.InitPort.Alternatives.String.Slice
+
+namespace OmegaChecks.InitPort.Alternatives
+
+public theorem List.splitOnP_eq_singleton :
+    type_of% @_root_.List.splitOnP_eq_singleton := by
+  intro α p xs misses
+  have collect (ys acc : List α) (noSep : ∀ x ∈ ys, p x = false) :
+      ys.splitOnPPrepend p acc = [acc.reverse ++ ys] := by
+    induction ys generalizing acc with
+    | nil => exact congrArg (fun l => [l]) (List.append_nil _).symm
+    | cons a ys ih =>
+      rw [List.splitOnPPrepend_cons_neg (noSep _ (.head _)),
+        ih (a :: acc) (fun x mem => noSep x (.tail _ mem))]
+      exact congrArg (fun l => [l]) ((congrArg (· ++ ys) (List.reverse_cons ..)).trans (List.append_assoc ..))
+  exact collect xs [] misses
+
+public theorem List.splitOnP_append_cons :
+    type_of% @_root_.List.splitOnP_append_cons := by
+  intro α p xs ys sep found
+  have collect (zs acc : List α) :
+      (zs ++ sep :: ys).splitOnPPrepend p acc = (zs.splitOnPPrepend p acc) ++ ys.splitOnP p := by
+    induction zs generalizing acc with
+    | nil => exact List.splitOnPPrepend_cons_pos found
+    | cons a zs ih =>
+      cases ha : p a with
+      | false =>
+        rw [List.cons_append, List.splitOnPPrepend_cons_neg ha, List.splitOnPPrepend_cons_neg ha]
+        exact ih _
+      | true =>
+        rw [List.cons_append, List.splitOnPPrepend_cons_pos ha, List.splitOnPPrepend_cons_pos ha]
+        exact congrArg (List.cons _) (ih [])
+  exact collect xs []
+
+public theorem List.splitOn_intercalate :
+    type_of% @_root_.List.splitOn_intercalate := by
+  intro α ls _ _ x absent nonempty
+  induction ls with
+  | nil => exact (nonempty rfl).elim
+  | cons a rest ih =>
+    have head := absent a (.head _)
+    cases rest with
+    | nil =>
+      rw [List.intercalate_singleton]
+      exact _root_.List.splitOn_eq_singleton head
+    | cons b bs =>
+      rw [List.intercalate_cons_cons, List.append_assoc, List.singleton_append,
+        List.splitOn_append_cons_self_of_not_mem head]
+      exact congrArg (List.cons a) (ih (fun l mem => absent l (.tail _ mem)) (List.cons_ne_nil b bs))
+
+end OmegaChecks.InitPort.Alternatives
+
+namespace OmegaChecks.InitPort.Alternatives.String
+
+private theorem ofListMapToList (l : List String) : (l.map String.toList).map String.ofList = l := by
+  induction l with
+  | nil => rfl
+  | cons a as ih =>
+    rw [List.map_cons, List.map_cons, String.ofList_toList, ih]
+
+public theorem toList_split_intercalate :
+    type_of% @_root_.String.toList_split_intercalate := by
+  intro c l absent
+  rw [_root_.String.toList_split_char, _root_.String.toList_intercalate, String.toList_singleton]
+  cases l with
+  | nil =>
+    rw [ite_eq_left (rfl : ([] : List String) = [])]
+    simp only [List.map_nil, List.intercalate_nil, List.splitOn_eq_splitOnP, List.splitOnP_nil,
+      List.map_cons, String.ofList_nil]
+  | cons a as =>
+    rw [ite_eq_right (List.cons_ne_nil a as), List.splitOn_intercalate c]
+    · exact ofListMapToList _
+    · intro chars mem
+      obtain ⟨str, hs, rfl⟩ := List.mem_map.mp mem
+      exact absent str hs
+    · exact List.cons_ne_nil _ _
+
+public theorem Slice.toList_split_intercalate :
+    type_of% @_root_.String.Slice.toList_split_intercalate := by
+  intro c l absent
+  rw [_root_.String.Slice.intercalate_eq, String.copy_toSlice, OmegaChecks.InitPort.Alternatives.String.toList_split_intercalate]
+  · cases l with
+    | nil => rfl
+    | cons a as => simp only [List.map_cons, ite_eq_right (List.cons_ne_nil a as), ite_eq_right (List.cons_ne_nil a.copy (as.map _))]
+  · intro s mem
+    obtain ⟨slice, hs, rfl⟩ := List.mem_map.mp mem
+    exact absent slice hs
+
+public theorem Slice.toList_split_intercalate_beq :
+    type_of% @_root_.String.Slice.toList_split_intercalate_beq := by
+  intro c l absent
+  apply _root_.String.Slice.beq_list_iff.mpr
+  rw [Slice.toList_split_intercalate absent]
+  cases l with
+  | nil =>
+    rw [ite_eq_left (rfl : ([] : List String.Slice) = []), ite_eq_left (rfl : ([] : List String.Slice) = [])]
+    exact congrArg (fun s => [s]) String.copy_toSlice.symm
+  | cons a as => simp only [ite_eq_right (List.cons_ne_nil a as), List.map_cons]
+
+public theorem toList_split_intercalate_beq :
+    type_of% @_root_.String.toList_split_intercalate_beq := by
+  intro c l absent
+  apply _root_.String.Slice.beq_list_iff.mpr
+  rw [toList_split_intercalate absent]
+  cases l with
+  | nil =>
+    rw [ite_eq_left (rfl : ([] : List String) = []), ite_eq_left (rfl : ([] : List String) = [])]
+    exact congrArg (fun s => [s]) String.copy_toSlice.symm
+  | cons a as =>
+    simp only [ite_eq_right (List.cons_ne_nil a as)]
+    have same (xs : List String) : (xs.map String.toSlice).map String.Slice.copy = xs := by
+      induction xs with
+      | nil => rfl
+      | cons x xs ih => rw [List.map_cons, List.map_cons, String.copy_toSlice, ih]
+    exact (same _).symm
+
+end OmegaChecks.InitPort.Alternatives.String
