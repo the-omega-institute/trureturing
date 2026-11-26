@@ -40,6 +40,68 @@ def choiceFromOptionPresence (select : type_of% (@Option.choice.{u}))
   have nonempty : Nonempty (PLift α) := h.elim fun a => ⟨⟨a⟩⟩
   exact ((select (PLift α)).get (present _ nonempty)).down
 
+namespace OptionSelector
+
+def fromSome (select : type_of% (@Option.choice.{u}))
+    (law : ∀ {α : Type u} [Nonempty α], (select α).isSome) :
+    type_of% (@Classical.choice.{u}) := choiceFromOptionPresence select fun α h => @law α h
+
+def fromSomeIff (select : type_of% (@Option.choice.{u}))
+    (law : ∀ {α : Type u}, (select α).isSome ↔ Nonempty α) :
+    type_of% (@Classical.choice.{u}) := choiceFromOptionPresence select fun _ => law.mpr
+
+def fromNoneEq (select : type_of% (@Option.choice.{u}))
+    (law : ∀ {α : Type u}, select α = none ↔ ¬Nonempty α) :
+    type_of% (@Classical.choice.{u}) := choiceFromOptionPresence select fun α h => by
+  cases e : select α with
+  | none => exact False.elim (law.mp e h)
+  | some a => rfl
+
+def fromNoneIff (select : type_of% (@Option.choice.{u}))
+    (law : ∀ {α : Type u}, (select α).isNone ↔ ¬Nonempty α) :
+    type_of% (@Classical.choice.{u}) := choiceFromOptionPresence select fun α h => by
+  cases e : select α with
+  | none => exact False.elim (law.mp (e ▸ rfl) h)
+  | some a => rfl
+
+def fromNoneFalse (select : type_of% (@Option.choice.{u}))
+    (law : ∀ {α : Type u} [Nonempty α], (select α).isNone = false) :
+    type_of% (@Classical.choice.{u}) := choiceFromOptionPresence select fun α h => by
+  have eq := @law α h
+  cases e : select α with
+  | none => rw [e] at eq; contradiction
+  | some a => rfl
+
+def fromListLength (select : type_of% (@Option.choice.{u}))
+    (law : ∀ {α : Type u} [Nonempty α], (select α).toList.length = 1) :
+    type_of% (@Classical.choice.{u}) := choiceFromOptionPresence select fun α h => by
+  have eq := @law α h
+  cases e : select α with
+  | none => rw [e] at eq; contradiction
+  | some a => rfl
+
+def fromArraySize (select : type_of% (@Option.choice.{u}))
+    (law : ∀ {α : Type u} [Nonempty α], (select α).toArray.size = 1) :
+    type_of% (@Classical.choice.{u}) := choiceFromOptionPresence select fun α h => by
+  have eq := @law α h
+  cases e : select α with
+  | none => rw [e] at eq; contradiction
+  | some a => rfl
+/-- For each law, every selector satisfying its exact public statement yields unrestricted choice. -/
+def laws : List (Name × Name × Name) := [
+  (`Init.Data.Option.Lemmas, ``Option.isSome_choice, ``fromSome),
+  (`Init.Data.Option.Lemmas, ``Option.isSome_choice_iff_nonempty, ``fromSomeIff),
+  (`Init.Data.Option.Lemmas, ``Option.choice_eq_none_iff_not_nonempty, ``fromNoneEq),
+  (`Init.Data.Option.Lemmas, ``Option.isNone_choice_iff_not_nonempty, ``fromNoneIff),
+  (`Init.Data.Option.Lemmas, ``Option.isNone_choice_eq_false, ``fromNoneFalse),
+  (`Init.Data.Option.List, ``Option.length_toList_choice_eq_one, ``fromListLength),
+  (`Init.Data.Option.Array, ``Option.size_toArray_choice_eq_one, ``fromArraySize)]
+
+def usesSelector (owner name : Name) : Bool :=
+  laws.any fun (m, n, _) => m == owner && n == name
+
+end OptionSelector
+
 def choiceFromChoose (select : type_of% (@Classical.choose.{u})) : type_of% (@Classical.choice.{u}) :=
   fun {α} inhabited => @select α (fun _ => True) (inhabited.elim fun x => ⟨x, trivial⟩)
 
@@ -1434,7 +1496,8 @@ def reductions : List (Name × Name × Name × Name) := [
   (`Init.WFExtrinsicFix, `WellFounded.opaqueFix₃, `Classical.choice, ``choiceFromFix₃),
   (`Init.Grind.Injective, `Lean.Grind.leftInv, `Classical.choice, ``choiceFromLeftInv),
   (`Init.While, `repeatM, `Classical.choice, ``choiceFromRepeatM),
-  (`Init.Prelude, `unsafeCast, `sorryAx, ``sorryAxFromUnsafeCast)]
+  (`Init.Prelude, `unsafeCast, `sorryAx, ``sorryAxFromUnsafeCast)] ++
+  OptionSelector.laws.map fun (owner, name, witness) => (owner, name, ``Classical.choice, witness)
 
 /-- Recheck the transitive kernel terms of each witness with all forbidden declarations absent.
 Include complete inductive families so that replay can regenerate their primitive rules. -/
@@ -1492,6 +1555,21 @@ private def replayWitnesses (env : Environment) : IO Unit := do
     if let .ctorInfo ctor := ci then todo := ctor.induct :: todo
   discard <| (← mkEmptyEnvironment).toKernelEnv.replay terms
 
+/-- Construct the law-to-axiom type with the public selector left arbitrary. -/
+private def optionLawReductionType (source target : ConstantInfo) (levels : List Level) :
+    MetaM Expr := do
+  let selector ← getConstInfo ``Option.choice
+  unless levels.length == 1 && source.numLevelParams == 1 && selector.numLevelParams == 1 do
+    throwError "unexpected universe arity for {source.name}"
+  let siteType := source.type.instantiateLevelParams source.levelParams levels
+  let selectorConst := mkConst selector.name levels
+  unless siteType.find? (· == selectorConst) |>.isSome do
+    throwError "missing selector in {source.name}"
+  Meta.withLocalDeclD `select (selector.type.instantiateLevelParams selector.levelParams levels) fun select => do
+    let law := siteType.replace fun e => if e == selectorConst then some select else none
+    let conclusion := target.type.instantiateLevelParams target.levelParams levels
+    Meta.mkForallFVars #[select] (.forallE .anonymous law conclusion .default)
+
 run_cmd
   let env ← getEnv
   let mut seen := Std.HashSet.emptyWithCapacity
@@ -1508,18 +1586,21 @@ run_cmd
     let proof ← getConstInfo witness
     let target ← getConstInfo axiomName
     let levels := proof.levelParams.map Level.param
-    -- The source may be specialized to a particular universe tuple when constructing the axiom.
-    let .forallE _ input _ _ := proof.type | throwError "missing argument of {witness}"
-    let sourceLevels ← Elab.Command.liftCoreM <| Meta.MetaM.run' do
-      let fresh ← Meta.mkFreshLevelMVarsFor source
-      unless ← Meta.isDefEq input (source.type.instantiateLevelParams source.levelParams fresh) do
-        throwError "incorrect source type in {witness}"
-      let found ← fresh.mapM instantiateLevelMVars
-      if found.any Level.hasMVar then throwError "unresolved source universe in {witness}"
-      return found
     let targetLevels := levels.drop (levels.length - target.numLevelParams)
-    let expected := Expr.forallE .anonymous (source.type.instantiateLevelParams source.levelParams sourceLevels)
-      (target.type.instantiateLevelParams target.levelParams targetLevels) .default
+    let expected ← if OptionSelector.usesSelector owner name then
+      Elab.Command.liftCoreM <| Meta.MetaM.run' <| optionLawReductionType source target levels
+    else do
+      -- The source may be specialized to a particular universe tuple when constructing the axiom.
+      let .forallE _ input _ _ := proof.type | throwError "missing argument of {witness}"
+      let sourceLevels ← Elab.Command.liftCoreM <| Meta.MetaM.run' do
+        let fresh ← Meta.mkFreshLevelMVarsFor source
+        unless ← Meta.isDefEq input (source.type.instantiateLevelParams source.levelParams fresh) do
+          throwError "incorrect source type in {witness}"
+        let found ← fresh.mapM instantiateLevelMVars
+        if found.any Level.hasMVar then throwError "unresolved source universe in {witness}"
+        return found
+      pure <| Expr.forallE .anonymous (source.type.instantiateLevelParams source.levelParams sourceLevels)
+        (target.type.instantiateLevelParams target.levelParams targetLevels) .default
     unless target.isAxiom && target.numLevelParams == targetLevels.length &&
         !proof.isUnsafe && !proof.isPartial && (proof.value? (allowOpaque := true)).isSome &&
         Kernel.isDefEqGuarded env {} proof.type expected && (← collectAxioms witness).isEmpty do
@@ -3341,7 +3422,7 @@ private def inventory (lib : System.FilePath) (visible strict full : Environment
   let mut directAxioms := 0
   let mut withAxioms := 0
   if let some file := gaps then
-    file.putStrLn "module\tdeclaration\tkind\tunsafe\tpartial\tupstreamAxioms\timpliesAxiom\treductionWitness\tlogicalConsequence\tlogicalConsequenceWitness\trequiredBehavior"
+    file.putStrLn "module\tdeclaration\tkind\tunsafe\tpartial\tupstreamAxioms\timpliesAxiom\treductionWitness\tlogicalConsequence\tlogicalConsequenceWitness\trequiredBehavior\tabstractedDependency"
   for owner in modules do
     let some idx := visible.getModuleIdx? owner | throwError "missing official module {owner}"
     let publicNames := visible.header.moduleData[idx]!.constNames.filter publicName
@@ -3367,6 +3448,8 @@ private def inventory (lib : System.FilePath) (visible strict full : Environment
         <|> conditional.map (fun (target, witness, _) => (target, witness))
       let behavior := conditional.map (fun (_, _, premise) => premise)
       let boundary := boundaries[(owner, name)]?
+      let selector := if boundary.isSome && OmegaChecks.InitBoundaries.OptionSelector.usesSelector owner name then
+        some (``Option.choice).toString else none
       if boundary.isSome then certifiedSites := certifiedSites + 1
       let strictName := `Omega ++ name
       let matched := strictNames.any (·.contains strictName)
@@ -3380,7 +3463,7 @@ private def inventory (lib : System.FilePath) (visible strict full : Environment
             declarationKind info, toString info.isUnsafe, toString info.isPartial,
             String.intercalate "," (axioms.toList.map Name.toString),
             (boundary.map (·.1.toString)).getD "", (boundary.map (·.2.toString)).getD "",
-            (consequence.map Prod.fst).getD "", (consequence.map (·.2.toString)).getD "", behavior.getD ""]
+            (consequence.map Prod.fst).getD "", (consequence.map (·.2.toString)).getD "", behavior.getD "", selector.getD ""]
       if info.isAxiom then
         directAxioms := directAxioms + 1
         axiomUnique := axiomUnique.insert name
@@ -3398,6 +3481,9 @@ private def inventory (lib : System.FilePath) (visible strict full : Environment
         ("impliesAxiom", toJson (boundary.map (·.1.toString))),
         ("reductionWitness", toJson (boundary.map (·.2.toString))),
         ("strictModule", toJson (strictOwner.map Name.toString))]
+      let row := match selector with
+        | some dep => row.setObjVal! "abstractedDependency" (toJson dep)
+        | none => row
       rows := rows.push <| match consequence with
         | some (target, witness) => row.mergeObj <| Json.mkObj [
             ("logicalConsequence", toJson target), ("logicalConsequenceWitness", toJson witness.toString),
