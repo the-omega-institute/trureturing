@@ -1,6 +1,7 @@
 module
 
 public import Init.Data.Nat.Lemmas
+public import Init.Data.Nat.Gcd
 import all Init.Data.Nat.Lemmas
 
 namespace OmegaChecks.InitPort.Alternatives
@@ -269,5 +270,34 @@ public def Nat.decidableExistsLT'TR : type_of% @_root_.Nat.decidableExistsLT'TR 
   fun {k p} _ => decidable_of_iff (_root_.Nat.anyLTTR k (fun i h => decide (p i h)) = true)
     (Nat.anyLTTR_eq_true.trans ⟨fun ⟨i,h,hp⟩ => ⟨i,h,of_decide_eq_true hp⟩,
       fun ⟨i,h,hp⟩ => ⟨i,h,decide_eq_true hp⟩⟩)
+
+public theorem Nat.succ_div_of_not_dvd : type_of% @_root_.Nat.succ_div_of_not_dvd :=
+  fun h => Nat.succ_div_of_mod_ne_zero (fun eq => h (Nat.dvd_of_mod_eq_zero eq))
+
+public theorem Nat.succ_div_of_dvd : type_of% @_root_.Nat.succ_div_of_dvd :=
+  fun h => Nat.succ_div_of_mod_eq_zero (Nat.mod_eq_zero_of_dvd h)
+
+public theorem Nat.succ_div : type_of% @_root_.Nat.succ_div := by
+  intro a b
+  if divides : b ∣ a+1 then rw [ite_eq_left divides, Nat.succ_div_of_dvd divides]
+  else rw [ite_eq_right divides, Nat.succ_div_of_not_dvd divides, Nat.add_zero]
+
+public theorem Nat.mod_eq_mod_iff : type_of% @_root_.Nat.mod_eq_mod_iff := by
+  intro x y z
+  constructor
+  · intro eq
+    refine ⟨y/z, x/z, ?_⟩
+    have xParts := Nat.mod_add_div' x z
+    have yParts := Nat.mod_add_div' y z
+    omega
+  · rintro ⟨m, n, eq⟩
+    have remainders := congrArg (fun a => a % z) eq
+    simpa only [Nat.add_mul_mod_self_right] using remainders
+
+public theorem Nat.pow_dvd_pow_iff : type_of% @_root_.Nat.pow_dvd_pow_iff := by
+  intro a b n nonzero
+  refine Nat.gcd_eq_left_iff_dvd.symm.trans ?_
+  rw [Nat.pow_gcd_pow]
+  exact (Nat.pow_left_inj nonzero).trans Nat.gcd_eq_left_iff_dvd
 
 end OmegaChecks.InitPort.Alternatives
