@@ -373,7 +373,9 @@ private def choiceWitness? (e : Expr) : Bool :=
     ([`Classical.choose, `Classical.choose_spec, `Exists.choose, `Exists.choose_spec,
       `Classical.indefiniteDescription].any fun n => e.isAppOfArity n 3)
 
-private def eliminateChoice (e : Expr) : MetaM Expr := do
+/-- Eliminate each selected witness in the proof of the same proposition. Each
+recursive call replaces the selected occurrences with fresh local variables. -/
+private partial def eliminateChoice (e : Expr) : MetaM Expr := do
   unless e.isApp do return e
   let some chosen := e.find? (fun expr => !expr.hasLooseBVars && choiceWitness? expr) | return e
   let conclusion ← Meta.inferType e
@@ -385,7 +387,8 @@ private def eliminateChoice (e : Expr) : MetaM Expr := do
     if chosen.occurs conclusion then return e
     let branch ← Meta.withLocalDeclD `w α fun x => do
       let value := if name == `Classical.inhabited_of_nonempty then mkApp2 (mkConst `Inhabited.mk us) α x else x
-      Meta.mkLambdaFVars #[x] (e.replace fun sub => if sub == chosen then some value else none)
+      let body := e.replace fun sub => if sub == chosen then some value else none
+      Meta.mkLambdaFVars #[x] (← eliminateChoice body)
     return mkApp4 (mkConst `Nonempty.elim us) α conclusion args[1]! branch
   let p := args[1]!
   let witnesses := [`Classical.choose, `Exists.choose].map fun n => mkAppN (mkConst n us) args
@@ -399,7 +402,7 @@ private def eliminateChoice (e : Expr) : MetaM Expr := do
         else if specs.contains sub then some hx
         else if sub == desc then some (mkApp4 (mkConst `Subtype.mk us) α p x hx)
         else none
-      Meta.mkLambdaFVars #[x, hx] term
+      Meta.mkLambdaFVars #[x, hx] (← eliminateChoice term)
   return mkApp5 (mkConst `Exists.elim us) α p conclusion args[2]! branch
 
 /-- Some classical theorems are direct applications of a decidable theorem. Expose
