@@ -15,8 +15,32 @@ internal sealed class MontgomeryCountDiscrepancyDocument : IScribeDocumentDefini
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(
-                    Paragraph(Text("For any positive locally finite spectrum with positive integer multiplicities, use the inclusive count and the Lorentz-weighted Montgomery cosine sum normalized by two pi over H log H. Assume its profile for all frequencies of absolute value at most one is a central exponential peak with coefficient tending to one plus the absolute frequency, with a uniform error tending to zero.")),
-                    Paragraph(Text("For every real threshold H0 and every real D there exists H at least H0 at which the absolute difference between the inclusive count and the two-term logarithmic main term exceeds D.")),
-                    Paragraph(Text("Under bounded discrepancy, compare the smoothed count to the truncated reference density and bound its centered variance by the common derivative bound for the test family. The autocorrelation limit identifies that variance with the weighted Fourier energy for each fixed test. The spatial mass outside the interval tends to zero after averaging, including the square needed for the variance. Increasing the window width forces the Fourier energy past the common bound. The height limit precedes the window-width choice in this comparison."))),
+                    Paragraph(Text(
+                        "Let S be a locally finite spectrum of positive ordinates with positive "
+                        + "integer multiplicities. Let N(H) count all copies through the inclusive "
+                        + "cutoff H. For each ordered pair through H let d be the first ordinate "
+                        + "minus the second. Define P_H(alpha) by summing "
+                        + "cos(alpha log(H) d) times 4/(4+d^2) times the product of the "
+                        + "two multiplicities, and multiply the sum by 2 pi/(H log(H)).")),
+                    Paragraph(Text(
+                        "Suppose c(H) tends to one and e(H) tends to zero. For every "
+                        + "sufficiently large real H and all real alpha with abs(alpha) at most one, "
+                        + "assume the absolute difference between P_H(alpha) and "
+                        + "c(H) log(H) exp(-2 log(H) abs(alpha)) + abs(alpha) is at most e(H).")),
+                    Paragraph(Text(
+                        "Write F(H) = H/(2 pi) times (log(H/(2 pi)) - 1). For every real "
+                        + "threshold H0 and every real D there exists a real H at least H0 "
+                        + "such that abs(N(H) - F(H)) exceeds D.")),
+                    Paragraph(Text(
+                        "Under bounded discrepancy, compare the smoothed count to the "
+                        + "truncated reference density. If U bounds the cumulative discrepancy "
+                        + "and A is the integral of the absolute derivative of the test, the "
+                        + "limiting centered variance is at most (U A)^2. The test family has "
+                        + "A at most a single constant K, giving the common bound (U K)^2. "
+                        + "For each fixed test, let H "
+                        + "tend to infinity. The autocorrelation limit identifies the centered "
+                        + "variance with the weighted Fourier energy after dropping the vanishing "
+                        + "exterior first and second moments. Choosing larger windows then forces "
+                        + "this energy past the bound shared by all windows."))),
                 DescribeRole.Theorem))));
 }

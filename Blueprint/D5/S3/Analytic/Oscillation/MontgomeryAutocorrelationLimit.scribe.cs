@@ -15,7 +15,7 @@ internal sealed class MontgomeryAutocorrelationLimitDocument : IScribeDocumentDe
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(
-                    Paragraph(Text("Assume bounded two-term counting discrepancy and a uniform Montgomery profile on the unit band. For a real Schwartz test with Fourier support in the unit band, form the sum of its autocorrelation over all ordered pairs of ordinates through H at the mean spacing scale. Include all multiplicities. Divide by H log H over two pi.")),
+                    Paragraph(Text("Assume bounded two-term counting discrepancy at every real height at least two pi and a uniform Montgomery profile on the unit band. For a real Schwartz test with Fourier support in the unit band, form the sum of its autocorrelation over all ordered pairs of ordinates through H at the mean spacing scale. Include all multiplicities. Divide by H log H over two pi.")),
                     Paragraph(Text("The quotient tends to the square of the integral of the test plus its Fourier energy weighted by absolute frequency. The Fourier transform of the autocorrelation is the squared modulus of the Fourier transform of the test. The exponential peak in the profile becomes an approximate identity of mass one, and the uniform remainder gives a vanishing integrated error.")),
                     Paragraph(Text("Bounded discrepancy bounds the number of atoms in each scaled distance shell. Rapid decay of the autocorrelation controls the shell sum of the change from the Lorentz pair weight to one. After counting normalization the cost tends to zero."))),
                 DescribeRole.Theorem))));
