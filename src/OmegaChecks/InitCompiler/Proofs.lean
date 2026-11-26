@@ -71,11 +71,12 @@ private def mapCongruence? (h xs : Expr) : Option Expr := do
   let #[_, _, f, g, map, eq] := h.getAppArgs | none
   guard (eq.isAppOfArity `funext 5)
   let .const mapName us := map.getAppFn | none
-  let #[α, β] := map.getAppArgs | none
   let (rule, container, inst) ← match mapName with
     | `List.map => some (`List.map_congr_left, `List, `List.instMembership)
     | `Array.map => some (`Array.map_congr_left, `Array, `Array.instMembership)
+    | `List.filter => some (`List.filter_congr, `List, `List.instMembership)
     | _ => none
+  let some α := map.getAppArgs[0]? | none
   let u :: _ := us | none
   let lift := fun (e : Expr) => e.liftLooseBVars 0 1
   let member := mkApp5 (mkConst `Membership.mem [u,u]) (lift α) (mkApp (mkConst container [u]) (lift α))
@@ -83,7 +84,23 @@ private def mapCongruence? (h xs : Expr) : Option Expr := do
   let pointwise := eq.getAppArgs[4]!
   let proof := Expr.lam `a α (.lam `mem member
     ((pointwise.liftLooseBVars 0 2).beta #[mkBVar 1]) .default) .default
+  if mapName == `List.filter then return mkApp5 (mkConst rule us) α f g xs proof
+  let #[_, β] := map.getAppArgs | none
   return mkApp6 (mkConst rule us) α xs β f g proof
+
+/-- The Boolean folds already have pointwise congruence under the predicate binder. -/
+private def predicateCongruence? (op eq : Expr) : Option Expr := do
+  guard (eq.isAppOfArity `funext 5)
+  let .const name us := op.getAppFn | none
+  let #[α, xs] := op.getAppArgs | none
+  let rule ← match name with
+    | `List.any => some `List.any_congr
+    | `List.all => some `List.all_congr
+    | _ => none
+  let u :: _ := us | none
+  let refl := mkApp2 (mkConst `Eq.refl [.succ u]) (mkApp (mkConst `List us) α) xs
+  let args := eq.getAppArgs
+  return mkAppN (mkConst rule us) #[α, xs, xs, refl, args[2]!, args[3]!, args[4]!]
 
 /-- Lift a logical equivalence through the connectives in a simp congruence. -/
 private partial def congrIff? (p q iff a b : Expr) : Option Expr := do
@@ -201,6 +218,7 @@ public def constructiveCasts (source : Environment) (body : Expr) (rules : NameM
   let rewrite := fun (e : Expr) => do
     let .const n us := e.getAppFn | none
     match n, us, e.getAppArgs with
+    | `congrArg, _, #[_, _, _, _, op, eq] => predicateCongruence? op eq
     | `Decidable.decide.congr_simp, _, #[p, q, eq, dp, dq] =>
       let rule ← rules.find? `decideCongr
       return (← rule.value? (allowOpaque := true)).beta #[p, q, dp, dq, ← equiv p q eq]
