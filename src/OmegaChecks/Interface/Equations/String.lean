@@ -14,6 +14,8 @@ import all Init.Data.String.Search
 import all Init.Data.String.Slice
 import all Init.Data.String.Pattern.Basic
 import all Init.Data.String.Substring
+public import OmegaChecks.InitPort.Alternatives.UTF8
+import all OmegaChecks.InitPort.Alternatives.UTF8
 public import OmegaChecks.InitPort.Alternatives.StringSearch
 import all OmegaChecks.InitPort.Alternatives.StringSearch
 public import OmegaChecks.InitPort.Alternatives.StringPattern
@@ -23,6 +25,10 @@ import all Init.Data.String.Pattern.String
 /-! Pointwise agreement of finite slice operations with the official iterator operations. -/
 
 namespace OmegaChecks.Interface.Equations
+
+public theorem String.utf8EncodeCharFast (c : Char) :
+    OmegaChecks.InitPort.Alternatives.String.utf8EncodeCharFast c = _root_.String.utf8EncodeCharFast c :=
+  congrFun _root_.String.utf8EncodeChar_eq_utf8EncodeCharFast c
 
 public theorem String.Slice.Pos.nextFast {s : String.Slice} (pos : s.Pos) (h : pos ≠ s.endPos) :
     OmegaChecks.InitPort.Alternatives.String.Slice.Pos.nextFast pos h = pos.nextFast h :=

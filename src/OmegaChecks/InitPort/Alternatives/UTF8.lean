@@ -176,6 +176,35 @@ public theorem String.utf8EncodeChar_eq_cons_cons_cons_cons : type_of% @_root_.S
   · exact maskedByte c.val 6 2 (by decide) (by decide)
   rfl
 
+public def String.utf8EncodeCharFast : type_of% @_root_.String.utf8EncodeCharFast :=
+  @_root_.String.utf8EncodeChar
+
+public theorem _root_.OmegaChecks.InitPort.AlternativeEquations.String.utf8EncodeCharFast.eq_1 (c : Char) :
+    String.utf8EncodeCharFast c =
+      (if c.val ≤ 0x7f then [c.val.toUInt8]
+       else if c.val ≤ 0x7ff then
+         [(c.val >>> 6).toUInt8 &&& 0x1f ||| 0xc0, c.val.toUInt8 &&& 0x3f ||| 0x80]
+       else if c.val ≤ 0xffff then
+         [(c.val >>> 12).toUInt8 &&& 0x0f ||| 0xe0, (c.val >>> 6).toUInt8 &&& 0x3f ||| 0x80,
+           c.val.toUInt8 &&& 0x3f ||| 0x80]
+       else
+         [(c.val >>> 18).toUInt8 &&& 0x07 ||| 0xf0, (c.val >>> 12).toUInt8 &&& 0x3f ||| 0x80,
+           (c.val >>> 6).toUInt8 &&& 0x3f ||| 0x80, c.val.toUInt8 &&& 0x3f ||| 0x80]) := by
+  split
+  · exact _root_.String.utf8EncodeChar_eq_singleton (Char.utf8Size_eq_one_iff.mpr ‹_›)
+  · split
+    · exact _root_.String.utf8EncodeChar_eq_cons_cons
+        (Char.utf8Size_eq_two_iff.mpr ⟨UInt32.not_le.mp ‹_›, ‹_›⟩)
+    · split
+      · exact _root_.String.utf8EncodeChar_eq_cons_cons_cons
+          (Char.utf8Size_eq_three_iff.mpr ⟨UInt32.not_le.mp ‹_›, ‹_›⟩)
+      · exact _root_.String.utf8EncodeChar_eq_cons_cons_cons_cons
+          (Char.utf8Size_eq_four_iff.mpr (UInt32.not_le.mp ‹_›))
+
+public theorem _root_.OmegaChecks.InitPort.AlternativeEquations.String.utf8EncodeCharFast.eq_def :
+    type_of% @_root_.OmegaChecks.InitPort.AlternativeEquations.String.utf8EncodeCharFast.eq_1 :=
+  @_root_.OmegaChecks.InitPort.AlternativeEquations.String.utf8EncodeCharFast.eq_1
+
 public theorem ByteArray.isValidUTF8_utf8Encode_singleton_append_iff :
     type_of% @_root_.ByteArray.isValidUTF8_utf8Encode_singleton_append_iff := by
   intro b c
