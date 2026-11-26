@@ -1,8 +1,9 @@
 module
 public import Init.Data.Range.Polymorphic.Nat
 public import Init.Data.Range.Polymorphic.Int
+public import Init.Data.Range.Polymorphic.Fin
 
-/-! Direct witnesses for finite natural ranges and their successor law. -/
+/-! Successor and size laws for ranges of naturals, integers, and finite indices. -/
 
 open Std Std.PRange
 
@@ -186,5 +187,50 @@ public theorem Std.PRange.UpwardEnumerable.le_iff_lt_or_eq :
   · rintro (lt | rfl)
     · exact Std.PRange.UpwardEnumerable.le_of_lt lt
     · exact ⟨0, _root_.Std.PRange.UpwardEnumerable.succMany?_zero⟩
+
+public theorem Fin.instLawfulUpwardEnumerableLE {n : Nat} : LawfulUpwardEnumerableLE (Fin n) where
+  le_iff a b := by
+    constructor
+    · intro le
+      have dist : a.val + (b.val - a.val) = b.val := Nat.add_sub_of_le le
+      exact ⟨b.val - a.val, _root_.Fin.addNat?_eq_some_iff.mpr ⟨dist.symm ▸ b.isLt, dist.symm⟩⟩
+    · rintro ⟨k, reached⟩
+      have eq := (_root_.Fin.addNat?_eq_some_iff.mp reached).2
+      change a.val ≤ b.val
+      rw [eq]
+      exact Nat.le_add_right a.val k
+
+public theorem Fin.instLawfulUpwardEnumerable {n : Nat} : LawfulUpwardEnumerable (Fin n) where
+  ne_of_lt a b := by
+    rintro ⟨k, reached⟩ rfl
+    have impossible := (_root_.Fin.addNat?_eq_some_iff.mp reached).2
+    omega
+  succMany?_zero _ := _root_.Fin.addNat?_zero
+  succMany?_add_one k a := by
+    change a.addNat? (k + 1) = (a.addNat? k).bind (fun b => b.addNat? 1)
+    cases mid : a.addNat? k with
+    | none =>
+      have limit := _root_.Fin.addNat?_eq_none_iff.mp mid
+      exact _root_.Fin.addNat?_eq_none_iff.mpr (by omega)
+    | some b =>
+      have eq := (_root_.Fin.addNat?_eq_some_iff.mp mid).2
+      by_cases last : b.val + 1 < n
+      · exact ((_root_.Fin.addNat?_eq_some_iff (j := ⟨b.val + 1, last⟩)).mpr
+          ⟨by omega, by change b.val + 1 = a.val + (k + 1); omega⟩).trans
+          (_root_.Fin.addNat?_eq_some last).symm
+      · exact (_root_.Fin.addNat?_eq_none_iff.mpr (by omega)).trans
+          (_root_.Fin.addNat?_eq_none_iff.mpr (by omega)).symm
+
+public theorem Fin.instLawfulHasSize_2 {n : Nat} : Rxi.LawfulHasSize (Fin n) where
+  size_eq_one_of_succ?_eq_none a h := by
+    have stop := _root_.Fin.addNat?_eq_none_iff.mp h
+    change n - a.val = 1
+    have below := a.isLt
+    omega
+  size_eq_succ_of_succ?_eq_some a b h := by
+    have eq := (_root_.Fin.addNat?_eq_some_iff.mp h).2
+    change n - a.val = n - b.val + 1
+    have below := b.isLt
+    omega
 
 end OmegaChecks.InitPort.Alternatives
