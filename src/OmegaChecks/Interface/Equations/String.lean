@@ -1,4 +1,8 @@
 module
+import all OmegaChecks.Interface.Equations.Collect
+public import OmegaChecks.InitPort.Alternatives.StringTransforms
+import all OmegaChecks.InitPort.Alternatives.StringTransforms
+import all Init.Data.String.Iterate
 public import Init.Data.String.Lemmas.Iterate
 public import Init.Data.String.Lemmas.Pattern.Find.Char
 public import Init.Data.String.Lemmas.Pattern.Find.Pred
@@ -80,5 +84,29 @@ public theorem Substring.Raw.posOf (s : Substring.Raw) (c : Char) :
 public theorem Substring.Raw.any (s : Substring.Raw) (p : Char → Bool) :
     OmegaChecks.InitPort.Alternatives.Substring.Raw.any s p = _root_.Substring.Raw.any s p :=
   _root_.String.Slice.contains_bool_eq.symm
+
+public theorem String.Slice.PosIterator.instIteratorLoopSubtypePosNeEndPosOfMonad
+    {m : Type → Type u} {n : Type v → Type w} {s : String.Slice} [Monad m] [Monad n] :
+    @OmegaChecks.InitPort.Alternatives.String.Slice.PosIterator.instIteratorLoopSubtypePosNeEndPosOfMonad m n s _ _ =
+      @_root_.String.Slice.PosIterator.instIteratorLoopSubtypePosNeEndPosOfMonad m n s _ _ :=
+  finiteIteratorLoop_eq
+
+public theorem String.Slice.RevPosIterator.instIteratorLoopSubtypePosNeEndPosOfMonad
+    {m : Type → Type u} {n : Type v → Type w} {s : String.Slice} [Monad m] [Monad n] :
+    @OmegaChecks.InitPort.Alternatives.String.Slice.RevPosIterator.instIteratorLoopSubtypePosNeEndPosOfMonad m n s _ _ =
+      @_root_.String.Slice.RevPosIterator.instIteratorLoopSubtypePosNeEndPosOfMonad m n s _ _ :=
+  finiteIteratorLoop_eq
+
+public theorem String.Slice.ByteIterator.instIteratorLoopUInt8OfMonad
+    {m : Type → Type u} {n : Type v → Type w} [Monad m] [Monad n] :
+    @OmegaChecks.InitPort.Alternatives.String.Slice.ByteIterator.instIteratorLoopUInt8OfMonad m n _ _ =
+      @_root_.String.Slice.ByteIterator.instIteratorLoopUInt8OfMonad m n _ _ :=
+  finiteIteratorLoop_eq
+
+public theorem String.Slice.RevByteIterator.instIteratorLoopUInt8OfMonad
+    {m : Type → Type u} {n : Type v → Type w} [Monad m] [Monad n] :
+    @OmegaChecks.InitPort.Alternatives.String.Slice.RevByteIterator.instIteratorLoopUInt8OfMonad m n _ _ =
+      @_root_.String.Slice.RevByteIterator.instIteratorLoopUInt8OfMonad m n _ _ :=
+  finiteIteratorLoop_eq
 
 end OmegaChecks.Interface.Equations

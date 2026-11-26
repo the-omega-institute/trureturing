@@ -1,4 +1,6 @@
 module
+import all OmegaChecks.InitPort.Alternatives.FiniteLoop
+import all Init.Data.String.Iterate
 import all Init.Data.Char.Basic
 import Init.Data.UInt.Lemmas
 import all Init.Data.String.Modify
@@ -59,5 +61,21 @@ public theorem String.intercalate_append_of_ne_nil :
       rw [_root_.String.intercalate_cons_cons, ih (List.cons_ne_nil b bs),
         _root_.String.intercalate_cons_cons]
       repeat rw [String.append_assoc]
+
+@[instance_reducible] public noncomputable def String.Slice.PosIterator.instIteratorLoopSubtypePosNeEndPosOfMonad :
+    type_of% @_root_.String.Slice.PosIterator.instIteratorLoopSubtypePosNeEndPosOfMonad :=
+  fun {_ _} {_} _ _ => finiteIteratorLoop
+
+@[instance_reducible] public noncomputable def String.Slice.RevPosIterator.instIteratorLoopSubtypePosNeEndPosOfMonad :
+    type_of% @_root_.String.Slice.RevPosIterator.instIteratorLoopSubtypePosNeEndPosOfMonad :=
+  fun {_ _} {_} _ _ => finiteIteratorLoop
+
+@[instance_reducible] public noncomputable def String.Slice.ByteIterator.instIteratorLoopUInt8OfMonad :
+    type_of% @_root_.String.Slice.ByteIterator.instIteratorLoopUInt8OfMonad :=
+  fun {_ _} _ _ => finiteIteratorLoop
+
+@[instance_reducible] public noncomputable def String.Slice.RevByteIterator.instIteratorLoopUInt8OfMonad :
+    type_of% @_root_.String.Slice.RevByteIterator.instIteratorLoopUInt8OfMonad :=
+  fun {_ _} _ _ => finiteIteratorLoop
 
 end OmegaChecks.InitPort.Alternatives
