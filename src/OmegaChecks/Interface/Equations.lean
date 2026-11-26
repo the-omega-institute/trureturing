@@ -7,6 +7,9 @@ public import OmegaChecks.Interface.Equations.FilePath
 public import OmegaChecks.Interface.Equations.String
 public import OmegaChecks.Interface.Equations.Uri
 public import OmegaChecks.Interface.Equations.Bitwise
+public import OmegaChecks.InitPort.Alternatives.NatFold
+import all OmegaChecks.InitPort.Alternatives.NatFold
+import all Init.Data.Nat.Basic
 public import Mathlib.Data.Nat.Fib.Basic
 public import Mathlib.Data.Nat.Choose.Basic
 public import Mathlib.Data.Nat.Prime.Defs
@@ -14,6 +17,14 @@ public import Mathlib.Data.Nat.Prime.Defs
 /-! Pointwise equations for strict arithmetic algorithms interpreted over official types. -/
 
 namespace OmegaChecks.Interface.Equations
+
+public theorem Nat.recCompiled {motive : Nat → Sort u} (zero : motive 0)
+    (step : (n : Nat) → motive n → motive (n + 1)) (n : Nat) :
+    OmegaChecks.InitPort.Alternatives.Nat.recCompiled zero step n =
+      _root_.Nat.recCompiled zero step n := by
+  induction n with
+  | zero => rfl
+  | succ n ih => exact congrArg (step n) ih
 
 @[expose] public def pair (n : Nat) : Bool → Nat :=
   Nat.rec (motive := fun _ => Bool → Nat) (Bool.rec 0 1)

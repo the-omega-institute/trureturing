@@ -7,6 +7,10 @@ open Nat
 
 namespace OmegaChecks.InitPort.Alternatives
 
+/-- The kernel recursor computes both constructor equations of the compiled recursor. -/
+public noncomputable def Nat.recCompiled : type_of% @_root_.Nat.recCompiled :=
+  @_root_.Nat.rec
+
 public theorem Nat.dfoldCast_eq_dfoldCast_iff :
     type_of% (private_decl% @_root_.Nat.dfoldCast_eq_dfoldCast_iff) := by
   intros
