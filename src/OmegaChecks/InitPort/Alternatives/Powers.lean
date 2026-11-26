@@ -199,4 +199,32 @@ public theorem Rat.intCast_le_intCast : type_of% @_root_.Rat.intCast_le_intCast 
   change a * 1 ≤ b * 1 ↔ a ≤ b
   rw [Int.mul_one, Int.mul_one]
 
+public theorem Rat.add_assoc : type_of% @_root_.Rat.add_assoc := by
+  intro a b c
+  refine _root_.Rat.numDenCasesOn' a fun n d hd => ?_
+  refine _root_.Rat.numDenCasesOn' b fun m e he => ?_
+  refine _root_.Rat.numDenCasesOn' c fun k f hf => ?_
+  change (mkRat n d + mkRat m e) + mkRat k f = mkRat n d + (mkRat m e + mkRat k f)
+  rw [Rat.mkRat_add_mkRat _ _ hd he, Rat.mkRat_add_mkRat _ _ he hf,
+    Rat.mkRat_add_mkRat _ _ (Nat.mul_ne_zero hd he) hf, Rat.mkRat_add_mkRat _ _ hd (Nat.mul_ne_zero he hf)]
+  rw [Nat.mul_assoc]
+  apply congrArg (fun v => mkRat v (d*(e*f)))
+  conv => lhs; simp only [Int.add_mul, Int.mul_add, Int.natCast_mul, Int.mul_assoc, Int.add_assoc, Int.mul_comm, Int.mul_left_comm]
+  conv => rhs; simp only [Int.add_mul, Int.mul_add, Int.natCast_mul, Int.mul_assoc, Int.add_assoc, Int.mul_comm, Int.mul_left_comm]
+
+public theorem Rat.add_mul : type_of% @_root_.Rat.add_mul := by
+  intro a b c
+  refine _root_.Rat.numDenCasesOn' a fun n d hd => ?_
+  refine _root_.Rat.numDenCasesOn' b fun m e he => ?_
+  refine _root_.Rat.numDenCasesOn' c fun k f hf => ?_
+  change (mkRat n d + mkRat m e) * mkRat k f = mkRat n d * mkRat k f + mkRat m e * mkRat k f
+  rw [Rat.mkRat_add_mkRat _ _ hd he, Rat.mkRat_mul_mkRat, Rat.mkRat_mul_mkRat, Rat.mkRat_mul_mkRat,
+    Rat.mkRat_add_mkRat _ _ (Nat.mul_ne_zero hd hf) (Nat.mul_ne_zero he hf)]
+  rw [← Rat.mkRat_mul_right (n := (n * (e : Int) + m * (d : Int)) * k) (d := d * e * f) hf]
+  congr 1
+  · conv => lhs; simp only [Int.add_mul, Int.mul_add, Int.natCast_mul, Int.mul_assoc, Int.mul_comm, Int.mul_left_comm]
+    conv => rhs; simp only [Int.add_mul, Int.mul_add, Int.natCast_mul, Int.mul_assoc, Int.mul_comm, Int.mul_left_comm]
+  · conv => lhs; simp only [Nat.mul_comm, Nat.mul_left_comm]
+    conv => rhs; simp only [Nat.mul_comm, Nat.mul_left_comm]
+
 end OmegaChecks.InitPort.Alternatives
