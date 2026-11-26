@@ -7,12 +7,14 @@ doi: 10.48550/arXiv.2609.39615
 url: https://arxiv.org/abs/2609.39615v1
 claim: Question 6.3 asks whether the stable category of every finite T₀-space is at most twice its weak category.
 strata_touched:
+  - D5/S3/Topology/RelativeConeRigidity
   - D5/S3/Topology/MatchedFaceIncidenceForest
   - D5/S3/Topology/DescendingClosureContiguity
   - D5/S3/Topology/RelativeDerivedContiguity
   - D5/S3/Topology/BarycentricGraphDistance
   - D5/S3/Topology/BarycentricNeighborhoodIteration
   - D5/S3/Topology/BarycentricBaseRigidity
+  - D5/S3/Topology/ConnectedCategoryGraft
 license: citation-only
 triage: anchor
 ---
@@ -29,8 +31,37 @@ the realization of the order complex. The paper uses unreduced category.
 ## Locator
 
 Section 2 and Question 6.3 of the cited preprint give the category invariants
-and the proposed inequality. DOI 10.48550/arXiv.2609.39615.
+and the proposed inequality. Proposition 5.2 and Question 6.2 give the
+height-one family and the connected realization problem. DOI
+10.48550/arXiv.2609.39615.
 [Preprint v1](https://arxiv.org/abs/2609.39615v1)
+
+## Connected realizations
+
+For a connected finite poset `X`, identify a minimal point with one of the
+minima of the height-one poset `B_m` with `m ≥ 2` common maxima. The graft has
+ordinary category `max(cat(X), m)`. The Lean theorem gives the exact criterion
+for a categorical lower cover of each size. The principal lower sets of `B_m`
+contract to the shared point while fixing it. In the lower bound, a piece
+containing two maxima would contract the four-point retract whose identity is
+isolated among pointwise-comparable maps.
+
+Subdivision preserves this union and its minimal shared point. At positive
+depth the subdivided `B_m` has a lower cover by the face posets of two
+subdivided tree stars. Leaf pruning gives the rooted contraction required at
+the common point. The same cover argument at positive depths yields stable
+category `max(cat_s(X), 2)`. The classical wedge formula gives weak category
+`max(cat_w(X), 2)`.
+
+For `a ≥ 2`, take the opposite face poset of the first barycentric subdivision
+of a triangulated `(a − 1)`-torus. For each face dimension, the open set of
+faces meeting that dimension color contracts through the projection onto its
+discrete color class. The torus cup-length gives weak category `a`, so all
+three categories equal `a`. Grafting `B_c` yields every connected triple
+`(a, a, c)` with `2 ≤ a ≤ c`. The Lean module proves the ordinary cover formula
+used in this construction. The stable and weak formulas and the torus argument
+are mathematical deductions using the subdivision and classical category
+comparisons.
 
 ## A coface bound on a collapse sequence
 
@@ -99,3 +130,19 @@ category equal to one more than the torus dimension. The Lean
 modules verify the subdivision and distance ingredients. The cone
 construction is a separate mathematical proof, and Question 6.3 on
 the eventual stable category remains open.
+
+## Rigidity for relative cones
+
+After any positive number of derived subdivisions fixing the base of a
+cone, every retained maximal base face has one strict coface and a
+distinct exterior tip. A further relative step sends each unique coface
+to the new tip indexed by that coface, so this incidence persists.
+
+Suppose the maximal faces through each original base vertex intersect
+in that vertex and at least two such faces meet there. The distinct tips
+exclude exterior vertices from the intersection of their coface
+neighborhoods. The maximal-face criterion then fixes every original base
+vertex through all same-depth contiguity chains of the base inclusion.
+The Lean theorem holds at every subsequent ordinary subdivision depth.
+Question 6.3 also requires deciding the existence of a categorical
+two-cover, whose members may meet only parts of the base.
