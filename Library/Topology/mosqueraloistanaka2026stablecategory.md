@@ -7,6 +7,7 @@ doi: 10.48550/arXiv.2609.39615
 url: https://arxiv.org/abs/2609.39615v1
 claim: Question 6.3 asks whether the stable category of every finite T₀-space is at most twice its weak category.
 strata_touched:
+  - D5/S3/Topology/RelativeConeRigidity
   - D5/S3/Topology/MatchedFaceIncidenceForest
   - D5/S3/Topology/DescendingClosureContiguity
   - D5/S3/Topology/RelativeDerivedContiguity
@@ -129,3 +130,19 @@ category equal to one more than the torus dimension. The Lean
 modules verify the subdivision and distance ingredients. The cone
 construction is a separate mathematical proof, and Question 6.3 on
 the eventual stable category remains open.
+
+## Rigidity for relative cones
+
+After any positive number of derived subdivisions fixing the base of a
+cone, every retained maximal base face has one strict coface and a
+distinct exterior tip. A further relative step sends each unique coface
+to the new tip indexed by that coface, so this incidence persists.
+
+Suppose the maximal faces through each original base vertex intersect
+in that vertex and at least two such faces meet there. The distinct tips
+exclude exterior vertices from the intersection of their coface
+neighborhoods. The maximal-face criterion then fixes every original base
+vertex through all same-depth contiguity chains of the base inclusion.
+The Lean theorem holds at every subsequent ordinary subdivision depth.
+Question 6.3 also requires deciding the existence of a categorical
+two-cover, whose members may meet only parts of the base.
