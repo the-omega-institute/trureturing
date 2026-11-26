@@ -182,6 +182,63 @@ public theorem Array.foldlM_start_stop : type_of% @_root_.Array.foldlM_start_sto
   · rename_i past
     simpa only [Nat.sub_zero, Array.size_extract, Nat.min_eq_right (Nat.le_of_not_ge past), Nat.add_zero] using point
 
+private theorem conditionalFunctions {p : Prop} [d : Decidable p] (yes no : β → γ) :
+    (fun b => if p then yes b else no b) = (if p then yes else no) := by cases d <;> rfl
+
+private theorem foldAtStop [Monad m] (f : α → β → m β) (xs : _root_.Array α)
+    (j : Nat) (bound : j ≤ xs.size) : _root_.Array.foldrM.fold f xs j j bound = pure := by
+  cases j with
+  | zero => rfl
+  | succ j =>
+    apply (conditionalFunctions ..).trans
+    exact ite_eq_left (Nat.beq_refl _)
+
+private theorem foldBefore [Monad m] (f : α → β → m β) (xs : _root_.Array α)
+    (stop j : Nat) (bound : j+1 ≤ xs.size) (advance : stop < j+1) :
+    _root_.Array.foldrM.fold f xs stop (j+1) bound =
+      fun b => f xs[j] b >>= _root_.Array.foldrM.fold f xs stop j (Nat.le_of_lt bound) := by
+  apply (conditionalFunctions ..).trans
+  exact ite_eq_right (fun h => (Nat.ne_of_gt advance) (Nat.eq_of_beq_eq_true h))
+
+private theorem foldRightExtract [Monad m] (f : α → β → m β) (xs : _root_.Array α)
+    (stop start i : Nat) (h : i ≤ (xs.extract stop start).size) (source : stop + i ≤ xs.size) :
+    _root_.Array.foldrM.fold f xs stop (stop + i) source =
+      _root_.Array.foldrM.fold f (xs.extract stop start) 0 i h := by
+  induction i with
+  | zero => exact (foldAtStop ..).trans (foldAtStop ..).symm
+  | succ i ih =>
+    simp only [Nat.add_succ] at source ⊢
+    rw [foldBefore f xs stop (stop + i) source (Nat.lt_succ_of_le (Nat.le_add_right ..)),
+      foldBefore _ _ _ _ _ (Nat.zero_lt_succ _), Array.getElem_extract,
+      ih (Nat.le_of_lt h) (Nat.le_of_lt source)]
+
+private theorem foldRightUntil [Monad m] (f : α → β → m β) (xs : _root_.Array α)
+    (start stop bound : Nat) (effective : min start xs.size = bound) (b : β) (hb : bound ≤ xs.size) :
+    (if stop < bound then _root_.Array.foldrM.fold f xs stop bound hb b else pure b) =
+      (xs.extract stop start).foldrM f b := by
+  let ys := xs.extract stop start
+  have size : ys.size = bound - stop := Array.size_extract.trans (congrArg (· - stop) effective)
+  unfold _root_.Array.foldrM
+  rw [dite_eq_left (Nat.le_refl ys.size)]
+  by_cases inside : stop < bound
+  · have pos : 0 < ys.size := size.symm ▸ Nat.sub_pos_of_lt inside
+    rw [ite_eq_left inside, ite_eq_left pos]
+    have endPos : stop + ys.size = bound := by rw [size]; omega
+    have point := congrFun (foldRightExtract f xs stop start ys.size (Nat.le_refl _)
+      (endPos ▸ hb)) b
+    simpa only [endPos] using point
+  · have zero : ys.size = 0 := size.trans (Nat.sub_eq_zero_of_le (Nat.le_of_not_gt inside))
+    rw [ite_eq_right inside, ite_eq_right (show ¬ 0 < ys.size from zero ▸ Nat.lt_irrefl 0)]
+
+public theorem Array.foldrM_start_stop : type_of% @_root_.Array.foldrM_start_stop := by
+  intro α β m monad xs f b start stop
+  conv => lhs; unfold _root_.Array.foldrM
+  split
+  · rename_i h
+    exact foldRightUntil f xs start stop start (Nat.min_eq_left h) b h
+  · rename_i h
+    exact foldRightUntil f xs start stop xs.size (Nat.min_eq_right (Nat.le_of_not_ge h)) b (Nat.le_refl _)
+
 private theorem takeNext {α : Type u} (xs : List α) (i : Nat) (h : i < xs.length) :
     xs.take i ++ [xs[i]] = xs.take (i+1) := by
   induction xs generalizing i with
