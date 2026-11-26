@@ -475,4 +475,59 @@ public theorem ByteArray.lt_size_of_isSome_utf8DecodeChar? : type_of% @_root_.By
   obtain ⟨c, eq⟩ := Option.isSome_iff_exists.mp ok
   exact Nat.lt_of_lt_of_le (Nat.lt_add_of_pos_right c.utf8Size_pos) (ByteArray.le_size_of_utf8DecodeChar?_eq_some eq)
 
+open _root_.ByteArray.utf8DecodeChar?
+
+public theorem ByteArray.utf8DecodeChar?.assemble₂_eq_some_of_toBitVec :
+    type_of% (private_decl% @_root_.ByteArray.utf8DecodeChar?.assemble₂_eq_some_of_toBitVec) := by
+  intro w x hx c lower bits
+  have value := UInt32.eq_of_toBitVec_eq (bits.trans toBitVec_assemble₂Unchecked.symm)
+  unfold assemble₂
+  rw [hx]
+  split <;> try (rename_i impossible; cases impossible; done)
+  dsimp only
+  split
+  · rename_i short
+    exact (Nat.not_lt_of_ge lower (value ▸ short)).elim
+  · apply congrArg some
+    exact Char.ext value.symm
+
+public theorem ByteArray.utf8DecodeChar?.assemble₃_eq_some_of_toBitVec :
+    type_of% (private_decl% @_root_.ByteArray.utf8DecodeChar?.assemble₃_eq_some_of_toBitVec) := by
+  intro w x y hx hy c lower bits
+  have value := UInt32.eq_of_toBitVec_eq (bits.trans toBitVec_assemble₃Unchecked.symm)
+  unfold assemble₃
+  rw [hx, hy]
+  first | rw [show (false || false || false) = false from rfl] | rw [show (false || false) = false from rfl]
+  split <;> try (rename_i impossible; cases impossible; done)
+  dsimp only
+  split
+  · rename_i short
+    exact (Nat.not_lt_of_ge lower (value ▸ short)).elim
+  · split
+    · rename_i surrogate
+      rcases c.valid with below | ⟨above, _⟩
+      · exact (Nat.not_le_of_gt below (value ▸ surrogate.1)).elim
+      · exact (Nat.not_le_of_gt above (value ▸ surrogate.2)).elim
+    · apply congrArg some
+      exact Char.ext value.symm
+
+public theorem ByteArray.utf8DecodeChar?.assemble₄_eq_some_of_toBitVec :
+    type_of% (private_decl% @_root_.ByteArray.utf8DecodeChar?.assemble₄_eq_some_of_toBitVec) := by
+  intro w x y z hx hy hz c lower bits
+  have value := UInt32.eq_of_toBitVec_eq (bits.trans toBitVec_assemble₄Unchecked.symm)
+  unfold assemble₄
+  rw [hx, hy, hz]
+  first | rw [show (false || false || false) = false from rfl] | rw [show (false || false) = false from rfl]
+  split <;> try (rename_i impossible; cases impossible; done)
+  dsimp only
+  split
+  · rename_i short
+    exact (Nat.not_lt_of_ge lower (value ▸ short)).elim
+  · split
+    · rename_i tooLarge
+      have out : (1114111 : UInt32) < c.val := value ▸ tooLarge
+      exact (Nat.not_lt_of_ge c.toNat_le out).elim
+    · apply congrArg some
+      exact Char.ext value.symm
+
 end OmegaChecks.InitPort.Alternatives
