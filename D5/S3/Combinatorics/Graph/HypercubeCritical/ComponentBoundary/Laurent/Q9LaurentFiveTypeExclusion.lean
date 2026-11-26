@@ -519,12 +519,6 @@ theorem card_selected_eq_twentySeven_of_uniform_partition {C : Finset (Q 9)} {b 
   change 3 * projected.card = 27
   rw [hcard]
 
-open private exists_third_block from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Laurent.Q9LaurentDirectionTypes
-
-open private exists_other from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Laurent.Q9LaurentNormalizedBoxes
-
 private theorem exists_companion_partition {P : Partition} {S : Block}
     (hP : IsTriplePartition P) (hS : S ∈ P) :
     ∃ R : Partition, IsTriplePartition R ∧ S ∈ R ∧ P ≠ R := by

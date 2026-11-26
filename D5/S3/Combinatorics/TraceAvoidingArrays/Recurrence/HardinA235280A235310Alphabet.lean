@@ -23,7 +23,7 @@ noncomputable section
 /-- Indexed grids with `n + 1` rows, `k + 1` columns, and entries from zero through `M`. -/
 abbrev Grid (M n k : ℕ) := Fin (n + 1) × Fin (k + 1) → Fin (M + 1)
 
-private def Legal {M n k : ℕ} (S : ℕ) (a : Grid M n k) : Prop :=
+def Legal {M n k : ℕ} (S : ℕ) (a : Grid M n k) : Prop :=
   ∀ (r : Fin n) (c : Fin k),
     Int.natAbs (((a (r.castSucc, c.castSucc)).val : ℤ) + ((a (r.succ, c.succ)).val : ℤ) -
       (((a (r.castSucc, c.succ)).val : ℤ) + ((a (r.succ, c.castSucc)).val : ℤ))) = S

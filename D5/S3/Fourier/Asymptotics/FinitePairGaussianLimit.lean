@@ -61,7 +61,7 @@ private theorem degree_one_sum {J : Type*} [Fintype J] [DecidableEq J] (f : (J �
       simp [mem_piAntidiag,Finset.sum_pi_single']
   rw [he, sum_image hinj.injOn]
 
-private theorem score_square_cosine {J : Type*} [Fintype J]
+theorem score_square_cosine {J : Type*} [Fintype J]
     (g w : J → ℝ) (t : ℝ) :
     ‖complexScore g w t‖^2 = ∑ i, ∑ j, w i*w j*Real.cos ((g i-g j)*t) := by
   classical

@@ -22,8 +22,23 @@ A simplex of reference vectors makes differences between the prepared supports i
 
 The simplex construction follows the common-support argument of Lluis Eriksson, Common support and complete contraction with quantum side information, v3, Section 6. The proof here uses an explicit hockey-stick difference at a fixed parameter and applies to any channel with the stated basis output supports.
 
+**Theorem 1.2 (Calibrated basis-output witnesses).**
+
+Lean statement: `D5/S3/Quantum/Divergence/CompleteHockeyStickBasisSupport.exists_budget_witness`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Divergence/CompleteHockeyStickBasisSupport.exists_budget_witness` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Christoph Hirche; Ian George; Theshani Nuradha; Mark M. Wilde (2026). *Conditional contraction coefficients and their applications to quantum networks*. URL: <https://arxiv.org/abs/2608.27171v1>.
+
+*Commentary.*
+
+For trivial common basis-output support, each sufficiently small positive budget is attained exactly by the input divergence on a fixed reference. Inverting the simplex normalization gives this calibration, and the graph effect gives output divergence at least a divided by (1 + D a) at budget a.
+
 ## References
 
+- Truth anchor: `D5/S3/Quantum/Divergence/CompleteHockeyStickBasisSupport.exists_budget_witness`
 - Truth anchor: `D5/S3/Quantum/Divergence/CompleteHockeyStickBasisSupport.result`
 - Dependency: [D5/S3/Quantum/Divergence/CompleteHockeyStickRefutation](CompleteHockeyStickRefutation.md)
 - Dependency: [D5/S3/Quantum/Measurement/FiniteDetectionDarkSpace](../Measurement/FiniteDetectionDarkSpace.md)

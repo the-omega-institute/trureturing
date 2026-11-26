@@ -10,6 +10,10 @@
 
 **默认 thinking 与回答技能**：所有 agent 开始处理用户请求时，默认读取并使用 [`skills/formal-thinking-and-answer/SKILL.md`](skills/formal-thinking-and-answer/SKILL.md)，无需用户显式点名。按该技能进行思考、核验证据与组织回答；具体形式化和编译范围遵守技能的适用条件，面向用户默认用普通语言回答，并保留影响结论的条件与未决边界。
 
+## OmegaMath 引文、推导与算例的忠实性
+
+引用者和评审者须在钉版源码中打开声明和定义，对齐载体、等价关系、量词、前提及结论。例如 `triad_left_absorption` 给出射线等价 `RayEquiv`；以原始代表元推导结构相等还需要规范化证明。从参数表示直接推到整个旋转群，须证明每个目标旋转均有原像；若另用延拓定理，则核对该定理的假设。对于手推公式及模型算例，按定义复算，核对输入范围、运算顺序与单位。发现范围有疑问时，用边界输入或反例检验，并将准确范围同步到正文、翻译、图注及复用该结论的示例。公理依赖按实际构建后端引用，空内核重放注明所选根和导入闭包。[冻结记录与发布口径](docs/develop/spec/golden-ledger-repo-spec.md#omega-claim-fidelity)
+
 ## 写 Lean 时怎样选择 Omega 与 Mathlib 后端
 
 默认用同一份源码在官方 Mathlib 和严格后端编译。普通发布使用钉版官方 Mathlib。`OmegaMathlib` 提供钉版 Mathlib 已移植、已核对的严格子集，项目自己的数学放在 `OmegaMath`。

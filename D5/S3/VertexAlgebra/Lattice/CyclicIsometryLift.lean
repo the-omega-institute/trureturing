@@ -67,6 +67,14 @@ private theorem phase_sign (D : LatticeData) (g : Charge D ≃+ Charge D)
   change liftPhase (defectMatrix D g) (reduceCharge D a) = _
   simp [liftPhase, diagonalPhase, defect_diagonal D g hg, fourthRoot, q]
 
+/-- The native phase of a lattice isometry squares to one in the complex units. -/
+theorem phase_square (D : LatticeData) (g : Charge D ≃+ Charge D)
+    (hg : ∀ a b, bilinear D (g a) (g b) = bilinear D a b) (a : Charge D) :
+    IsometryLift.phase D g a * IsometryLift.phase D g a = 1 := by
+  apply Units.ext
+  simp only [Units.val_mul, Units.val_one, phase_sign D g hg,
+    LatticeTwistedGroundRealization.sign_square]
+
 private theorem sign_injective : Function.Injective complexSign := by
   intro a b h
   have hh : complexSignEmbedding.val (Multiplicative.ofAdd a) =

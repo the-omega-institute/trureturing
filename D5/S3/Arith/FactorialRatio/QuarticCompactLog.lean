@@ -25,7 +25,7 @@ open Finset Nat
 open D5.S3.Arith.FactorialRatio.RankOneLCMGcd (tailLCM)
 
 /-- Finite summation by parts for weights with a linear prefix-sum bound. -/
-private theorem sum_div_sqrt_le {c : ℕ → ℝ} {C : ℝ} (hC : 0 ≤ C) (h0 : c 0 = 0)
+public theorem sum_div_sqrt_le {c : ℕ → ℝ} {C : ℝ} (hC : 0 ≤ C) (h0 : c 0 = 0)
     (hW : ∀ m : ℕ, (∑ k ∈ range (m + 1), c k) ≤ C * (m : ℝ)) (m : ℕ) :
     (∑ k ∈ range (m + 1), c k / Real.sqrt (k : ℝ)) ≤ 2 * C * Real.sqrt m := by
   let W : ℕ → ℝ := fun j => ∑ k ∈ range (j + 1), c k

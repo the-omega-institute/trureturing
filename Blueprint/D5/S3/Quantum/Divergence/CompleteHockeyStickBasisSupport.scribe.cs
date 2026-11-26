@@ -11,7 +11,8 @@ internal sealed class CompleteHockeyStickBasisSupportDocument : IScribeDocumentD
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "A condition on computational basis outputs forces unit complete hockey-stick contraction.",
         H("Complete hockey-stick contraction and basis output support"),
-        Blocks(Describe.Lean(
+        Blocks(
+          Describe.Lean(
             DescribeId.Create("complete-hockey-stick-basis-support"),
             DeclarationHandle.Create("D5/S3/Quantum/Divergence/CompleteHockeyStickBasisSupport.result"),
             H("Trivial intersection of the basis output supports"),
@@ -35,5 +36,14 @@ internal sealed class CompleteHockeyStickBasisSupportDocument : IScribeDocumentD
                     + "Common support and complete contraction with quantum side information, v3, "
                     + "Section 6. The proof here uses an explicit hockey-stick difference at a fixed "
                     + "parameter and applies to any channel with the stated basis output supports."))),
+            DescribeRole.Theorem),
+          Describe.Lean(
+            DescribeId.Create("basis-support-budget-witness"),
+            DeclarationHandle.Create("D5/S3/Quantum/Divergence/CompleteHockeyStickBasisSupport.exists_budget_witness"),
+            H("Calibrated basis-output witnesses"),
+            StatementSource.WithoutFormula(),
+            AssessedProvenance.FromRepo(Source),
+            Blocks(
+                Paragraph(Text("For trivial common basis-output support, each sufficiently small positive budget is attained exactly by the input divergence on a fixed reference. Inverting the simplex normalization gives this calibration, and the graph effect gives output divergence at least a divided by (1 + D a) at budget a."))),
             DescribeRole.Theorem))));
 }

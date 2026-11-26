@@ -69,7 +69,7 @@ private theorem column_overlap (W : Matrix n n ℂ) (hW : Wᴴ * W = 1) (j : n) 
     Matrix.conjTranspose_conjTranspose] using row_overlap Wᴴ
       (by rwa [Matrix.conjTranspose_conjTranspose]) j
 
-private theorem trace_diagonal_overlap (u v : n → ℝ) (W : Matrix n n ℂ) :
+theorem trace_diagonal_overlap (u v : n → ℝ) (W : Matrix n n ℂ) :
     (diagonal (fun i => (u i : ℂ)) * W *
       diagonal (fun i => (v i : ℂ)) * Wᴴ).trace.re =
       ∑ i, ∑ j, u i * v j * Complex.normSq (W i j) := by

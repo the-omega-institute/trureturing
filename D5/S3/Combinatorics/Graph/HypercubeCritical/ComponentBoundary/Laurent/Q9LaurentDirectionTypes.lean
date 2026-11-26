@@ -42,7 +42,8 @@ private theorem eq_complement_of_disjoint {D : Block}
   · rw [Finset.card_univ_sdiff, Fintype.card_fin, Finset.card_union_of_disjoint hAB,
       hA, hB, hD]
 
-private theorem exists_third_block (hP : IsTriplePartition P) (hAB : A ≠ B) :
+/-- A three-block partition contains a block distinct from any two given blocks. -/
+theorem exists_third_block (hP : IsTriplePartition P) (hAB : A ≠ B) :
     ∃ D ∈ P, D ≠ A ∧ D ≠ B := by
   have hcard : ({A, B} : Partition).card < P.card := by
     rw [Finset.card_pair hAB, hP.card_eq]

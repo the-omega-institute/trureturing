@@ -10,6 +10,8 @@ strata_touched:
   - D5/S3/Quantum/Analysis/RefinedBMV84
   - D5/S3/Quantum/Analysis/RefinedBMV/NineFour
   - D5/S3/Quantum/Analysis/RefinedBMV/TenFour
+  - D5/S3/Quantum/Analysis/RefinedBMV/ThirteenFour
+  - D5/S3/Quantum/Analysis/RefinedBMV/SeventeenFour
   - D5/S3/Quantum/Analysis/RefinedBMV/NearScalar/WordMean
   - D5/S3/Quantum/Analysis/RefinedBMV/SingularFourth/ZeroSpectrumProduct
   - D5/S3/Quantum/Analysis/RefinedBMV/BinaryGramConditioning
@@ -17,10 +19,10 @@ strata_touched:
   - D5/S3/Quantum/Analysis/RefinedBMV54
   - D5/S3/Quantum/Analysis/RefinedBMV44
   - D5/S3/Quantum/Analysis/RefinedBMV33
-  - D5/S3/Quantum/Analysis/RefinedBMV/LargeDegree
   - D5/S3/Quantum/Analysis/RefinedBMV/Tracial/Bound
   - D5/S3/Quantum/Analysis/RefinedBMVLowerBound
   - D5/S3/Quantum/Analysis/RefinedBMV43
+  - D5/S3/Quantum/Analysis/RefinedBMV/GroupedFourThree
   - D5/S3/Quantum/Analysis/RefinedBMV43Kernel
   - D5/S3/Quantum/Analysis/RefinedBMVDimThree
   - D5/S3/Quantum/Analysis/RefinedBMVDimThreeCertificate
@@ -56,6 +58,32 @@ Theorem 1 and Lemma 2 give the known low-dimensional cases and the reduction
 from a stronger trace-power comparison. Section 7(iii), page 8, identifies
 the higher-dimensional cases with word counts `(3,3)` and `(4,3)`. Sections 3–5 derive the
 closed-walk trace expansion and the three-dimensional comparison.
+
+## The grouped trace comparison at bidegree (4,3)
+
+For positive semidefinite complex matrices `C` and `R` of any common
+finite size, the mean trace of the 35 words with four copies of `C`
+and three of `R` is at least `Tr(R² C² R C²)`. After diagonalizing
+`C`, a cyclic polynomial identity expresses the gap using a kernel
+for each spectral value. Each kernel is a sum of a rank-one kernel
+and a weighted Cauchy kernel. The Schur product theorem gives the
+bound, including zero eigenvalues and arbitrary multiplicities.
+
+Hägele's 2007 sum-of-squares certificate gives the same grouped word
+with coefficient one fifth in the lower bound for the mean. See DOI
+[10.1007/s10955-007-9327-8](https://doi.org/10.1007/s10955-007-9327-8)
+and Klep and Schweighofer's reproduction in §3, equation (4),
+[arXiv:0710.1074v4](https://arxiv.org/abs/0710.1074v4).
+Heinävaara's commutation-measure moment, Lemma 2.5, equation (15),
+gives a different linear combination of the five cyclic classes.
+[arXiv:2602.10373v1](https://arxiv.org/abs/2602.10373v1)
+
+Hägele's 2026 Theorem 2 and §7(iii) concern the fractional-product
+comparator. Dinh, Le and Vuong's Theorem 4.2 concerns the pinched
+comparator. Both comparators can be strictly smaller than the grouped
+trace. A search of these sources and their citations found no prior
+proof of the unrestricted coefficient-one comparison.
+[arXiv:2610.31851v1](https://arxiv.org/abs/2610.31851v1)
 
 ## Four copies of each factor
 
@@ -101,24 +129,6 @@ The fourth trace of that Hermitian part bounds the trace of (A^2 B)^4.
 The proof treats singular A and B directly. The dyadic trace-power
 comparison from Lemma 2 gives the corresponding exponential bound.
 
-## All first degrees at least three
-
-Hägele formulates the product comparison (Eₚ,₃) and exponential lower
-bound (Lₚ,₃) in Section 1. Section 7(ii) describes the scalar certificate
-route in dimension three for larger first degrees, and Section 7(iii)
-identifies the obstruction to the triangle pairing in higher dimensions.
-For every integer p ≥ 3, the repository proof gives both bounds in every
-finite complex matrix space, with arbitrary spectra and singular PSD
-inputs allowed in the product comparison. The proof for p ≥ 11 uses the composition average
-and cubic walk expansion from Lemma 3 and Sections 3–4. For the original
-logarithmic kernel, the strip estimates, the short-gap quadrature certificates,
-the cleared middle-gap replay, and the gap-four estimate give a strictly
-negative mixed derivative. The two endpoint limits complete the interval
-Gram argument on arbitrary finite samples. Continuity includes zero
-centers, and the centered Schur walks give the product comparison. A dyadic
-trace-power comparison gives the exponential bound by the implication
-in Lemma 2. For 3 ≤ p ≤ 10 the theorem uses the existing finite-degree proofs.
-
 ## Nine copies of the first factor
 
 At (9,4), the mean of the 715 word traces dominates the trace of
@@ -150,6 +160,38 @@ Independent rational review checked all 73 cyclic coefficients and the
 three Gram factorizations. Historical priority remains unverified after
 bounded searches covering arXiv:2611.00129, 0802.1153, 2611.03208,
 2610.31851 and 2611.23122.
+
+## Thirteen copies of the first factor
+
+At (13,4), the mean of the real parts of the 2,380 ordered word traces
+dominates the real part of the trace of `(A^(13/4) B)^4` for PSD A and
+Hermitian B in every finite complex dimension, including singular A.
+Hägele formulates the product comparison for positive semidefinite
+factors in Section 1. The proof uses an A-weighted
+rational Gram matrix on 28 half-words with 18 positive factorization
+weights. The cyclic coefficient identity compares the mean with the
+trace of the word with gaps (4,3,3,3). Two trace Cauchy–Schwarz
+inequalities give the fractional-power bound. The dyadic comparison
+from Lemma 2 gives the lower bound by the real part of the trace of
+`exp(13H + 4K)` for the same word mean on `exp H` and `exp K`.
+
+## Seventeen copies of the first factor
+
+At (17,4), for positive semidefinite A and Hermitian B in every finite
+complex dimension, the mean of the real parts of the 5,985 ordered
+word traces dominates the real part of the trace of `(A^(17/4) B)^4`.
+The argument includes singular A. A rational Gram factorization on
+45 half-words with 28 positive weights compares the word mean with
+the trace of the cyclic word with gaps (5,4,4,4). The proof reuses the
+four-gap identity to check the cyclic coefficients. Two trace
+Cauchy–Schwarz inequalities give the fractional-power comparison.
+The dyadic argument in Hägele's Lemma 2 gives the corresponding
+lower bound by the trace of `exp(17H + 4K)`.
+
+The literature check found lower bounds with different hypotheses or
+comparators. Hägele's Theorem 1.2 treats smaller degrees and dimensions.
+Burgdorf's Theorem 1.5 proves four-copy coefficient positivity.
+Dinh, Le, and Vuong's Theorem 4.2 uses a spectrally pinched comparator.
 
 ## Four copies of the second factor near the identity
 
@@ -402,8 +444,8 @@ analytic tail estimate supplies the sign past that threshold.
 For first degrees at least eleven, the short-gap result extends to lower
 coordinate at least ten thirds and all positive gaps through two. The
 proof combines the certified curvature and slope of the short-gap profile
-with an analytic bound for the radical derivative. The fourth moment
-improves the marginal slope bound for gaps at least one.
+with a bound for the radical derivative. The fourth moment strengthens
+the marginal slope estimate for gaps at least one.
 
 ## Quantitative degree-three gap for finite traces
 
