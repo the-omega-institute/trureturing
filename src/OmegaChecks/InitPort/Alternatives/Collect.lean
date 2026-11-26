@@ -585,4 +585,28 @@ public theorem Std.Roc.toList_eq_match_rcc {α : Type u} {r : Roc α} [LE α] [D
     rfl
   | some next => rfl
 
+public theorem Std.Ric.toList_eq_match_rcc {α : Type u} {r : Ric α} [LE α] [DecidableLE α] [Least? α] [UpwardEnumerable α]
+    [LawfulUpwardEnumerable α] [LawfulUpwardEnumerableLE α] [Rxc.IsAlwaysFinite α] :
+    Std.Ric.toList r = (Least?.least? (α := α)).elim [] (fun next => Std.Rcc.toList ⟨next, r.upper⟩) := by
+  change (collectInto (_root_.Std.Ric.Internal.iter r).toIterM #[]).toList = _
+  dsimp only [_root_.Std.Ric.Internal.iter, Iter.toIterM]
+  cases hn : Least?.least? (α := α) with
+  | none =>
+    rw [collectList_eq]
+    rw [realStepRxc]
+    rfl
+  | some next => rfl
+
+public theorem Std.Rio.toList_eq_match_rco {α : Type u} {r : Rio α} [LT α] [DecidableLT α] [Least? α] [UpwardEnumerable α]
+    [LawfulUpwardEnumerable α] [LawfulUpwardEnumerableLT α] [Rxo.IsAlwaysFinite α] :
+    Std.Rio.toList r = (Least?.least? (α := α)).elim [] (fun next => Std.Rco.toList ⟨next, r.upper⟩) := by
+  change (collectInto (_root_.Std.Rio.Internal.iter r).toIterM #[]).toList = _
+  dsimp only [_root_.Std.Rio.Internal.iter, Iter.toIterM]
+  cases hn : Least?.least? (α := α) with
+  | none =>
+    rw [collectList_eq]
+    rw [realStepRxo]
+    rfl
+  | some next => rfl
+
 end OmegaChecks.InitPort.Alternatives
