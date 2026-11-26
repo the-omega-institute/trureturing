@@ -12,5 +12,6 @@ internal sealed class CharacterDefsDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create("D5/S3/Zeros/GRH/Lib/ClassField/HeckeCharacter/CharacterDefs.HasWeight"),
                 H("HasWeight"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Zeros/alpoge2026dirichletgrh")),
-                Blocks(Paragraph(Text("μ has weight e and tame part ψ: almost all residue characters ψ_w are trivial, and μ(u) = ∏_v u_v^{e(v)} · ∏_w ψ_w(u mod w) whenever u has integral finite part.")))))));
+                Blocks(Paragraph(Text("μ has weight e and tame part ψ: almost all residue characters ψ_w are trivial, and μ(u) = ∏_v u_v^{e(v)} · ∏_w ψ_w(u mod w) whenever u has integral finite part."))),
+                DescribeRole.Definition))));
 }

@@ -12,5 +12,6 @@ internal sealed class ModuliPointDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create("D5/S3/Zeros/GRH/Lib/Shimura/Uniformisation/ModuliPoint.IsLevelIso"),
                 H("IsLevelIso"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Zeros/alpoge2026dirichletgrh")),
-                Blocks(Paragraph(Text("z is an isomorphism from (x, ℓ, P) to (x', ℓ', P') at level K: x'⁻¹zx ∈ K, zℓz⁻¹ = ℓ' at v₀, zP_i ≡ P'_i modulo Eⁿ ∩ x'Ôⁿ.")))))));
+                Blocks(Paragraph(Text("z is an isomorphism from (x, ℓ, P) to (x', ℓ', P') at level K: x'⁻¹zx ∈ K, zℓz⁻¹ = ℓ' at v₀, zP_i ≡ P'_i modulo Eⁿ ∩ x'Ôⁿ."))),
+                DescribeRole.Definition))));
 }

@@ -12,5 +12,6 @@ internal sealed class BesselSystemDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create("D5/S3/Zeros/GRH/New/Filling/BesselSystem.BesselSystem"),
                 H("BesselSystem"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Zeros/alpoge2026dirichletgrh")),
-                Blocks(Paragraph(Text("A full and a cut Bessel function on G₁ for an irreducible rep, with IsCutPair, Schur bounds |I|/deg for derivatives (HasSchurBound), 8·rank ≤ b, and band limits HasBandLimits.")))))));
+                Blocks(Paragraph(Text("A full and a cut Bessel function on G₁ for an irreducible rep, with IsCutPair, Schur bounds |I|/deg for derivatives (HasSchurBound), 8·rank ≤ b, and band limits HasBandLimits."))),
+                DescribeRole.Definition))));
 }
