@@ -48,7 +48,63 @@ Lean statement: `D5/S3/Combinatorics/Lattices/EuclideanHarderNarasimhan.covolume
 
 Let M and N be integral submodules of a finite-dimensional real inner product space, with M contained in N, N discrete, and equal real spans. The smaller submodule is discrete by inclusion. The relative additive index n of M in N is positive; covolume(M) equals n times covolume(N). Their covolumes are equal exactly when M equals N. In particular, this applies to the ordinary sum of two saturated sublattices and their saturated join. The determinant of the integral inclusion matrix has absolute value n. This uses the pinned AddSubgroup.relIndex_eq_natAbs_det, including rank zero; no full-rank assumption in the ambient space is needed.
 
-**Theorem 1.4 (Covolume inequality and the Euclidean HN filtration).**
+**Theorem 1.4 (Integral carriers remain inside their lattice).**
+
+Lean statement: `D5/S3/Combinatorics/Lattices/EuclideanHarderNarasimhan.integral_le`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Lattices/EuclideanHarderNarasimhan.integral_le` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Daniel R. Grayson (1984). *Reduction theory using semistability*. DOI: [10.1007/BF02566369](https://doi.org/10.1007/BF02566369).
+
+*Commentary.*
+
+The integral carrier of every saturated sublattice A of L is contained in L. This inclusion requires no finite-dimensionality or discreteness.
+
+**Theorem 1.5 (Lattice points in the real span).**
+
+Lean statement: `D5/S3/Combinatorics/Lattices/EuclideanHarderNarasimhan.integral_saturated`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Lattices/EuclideanHarderNarasimhan.integral_saturated` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Daniel R. Grayson (1984). *Reduction theory using semistability*. DOI: [10.1007/BF02566369](https://doi.org/10.1007/BF02566369).
+
+*Commentary.*
+
+If x lies in L and in the real span of the integral carrier of A, then x lies in that integral carrier. No finite-dimensionality or discreteness is required.
+
+**Theorem 1.6 (Discrete integral covolumes are positive).**
+
+Lean statement: `D5/S3/Combinatorics/Lattices/EuclideanHarderNarasimhan.covolume_pos`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Lattices/EuclideanHarderNarasimhan.covolume_pos` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Daniel R. Grayson (1984). *Reduction theory using semistability*. DOI: [10.1007/BF02566369](https://doi.org/10.1007/BF02566369).
+
+*Commentary.*
+
+Every discrete integral submodule of a finite-dimensional real inner product space has strictly positive covolume, including rank zero.
+
+**Theorem 1.7 (Rectangular Gram change of coordinates).**
+
+Lean statement: `D5/S3/Combinatorics/Lattices/EuclideanHarderNarasimhan.gram_linear_combination`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Lattices/EuclideanHarderNarasimhan.gram_linear_combination` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Daniel R. Grayson (1984). *Reduction theory using semistability*. DOI: [10.1007/BF02566369](https://doi.org/10.1007/BF02566369).
+
+*Commentary.*
+
+For a finite family v and any rectangular real coefficient matrix T, the Gram matrix of the combinations sum_i T(i,j) v(i) is transpose(T) Gram(v) T. This identity holds in a seminormed real inner product space; neither linear independence nor finite dimension of the ambient space is needed.
+
+**Theorem 1.8 (Covolume inequality and the Euclidean HN filtration).**
 
 Lean statement: `D5/S3/Combinatorics/Lattices/EuclideanHarderNarasimhan.euclidean_hn`
 
@@ -68,14 +124,20 @@ Define the degree of a saturated sublattice as minus the logarithm of its positi
 
 For a nonempty filtration with first endpoint e and last lower endpoint q, A is contained in q and q is properly contained in B. The first slope is the attained greatest slope of all nonzero subobjects of the interval; the last slope is the attained least slope of all nonzero quotients. They equal the defined maximal and minimal slopes. The first endpoint is the largest destabilizer. Semistability is equivalent both to having one factor and to equality of the two extreme slopes. Otherwise the first slope is strictly larger than the last.
 
+The public EuclideanSublattices.integral_rank_eq identifies the integer rank of every integral submodule M of a discrete L with the dimension of its ambient real span; M need not be saturated, and a normed real space suffices. The public EuclideanHarderNarasimhan.integral_rank_eq gives the same identity for a discrete integral submodule of a finite-dimensional real inner product space. Both include rank zero and require no full-rank assumption.
+
 No covolume inequality or equivalent geometric comparison is assumed. Rank-zero sublattices have covolume one. The statement does not impose full rank on L in E and does not include a slope bound for linear maps.
 
 ## References
 
 - Truth anchor: `D5/S3/Combinatorics/Lattices/EuclideanHarderNarasimhan.covolume_eq_gram`
 - Truth anchor: `D5/S3/Combinatorics/Lattices/EuclideanHarderNarasimhan.covolume_index`
+- Truth anchor: `D5/S3/Combinatorics/Lattices/EuclideanHarderNarasimhan.covolume_pos`
 - Truth anchor: `D5/S3/Combinatorics/Lattices/EuclideanHarderNarasimhan.euclidean_hn`
 - Truth anchor: `D5/S3/Combinatorics/Lattices/EuclideanHarderNarasimhan.euclidean_hn`
+- Truth anchor: `D5/S3/Combinatorics/Lattices/EuclideanHarderNarasimhan.gram_linear_combination`
+- Truth anchor: `D5/S3/Combinatorics/Lattices/EuclideanHarderNarasimhan.integral_le`
+- Truth anchor: `D5/S3/Combinatorics/Lattices/EuclideanHarderNarasimhan.integral_saturated`
 - Dependency: [D5/S3/Arith/AbsoluteValues/Heights/Hadamard](../../Arith/AbsoluteValues/Heights/Hadamard.md)
 - Dependency: [D5/S3/Combinatorics/Lattices/EuclideanSaturation](EuclideanSaturation.md)
 - Dependency: [D5/S3/Combinatorics/Lattices/HarderNarasimhan](HarderNarasimhan.md)

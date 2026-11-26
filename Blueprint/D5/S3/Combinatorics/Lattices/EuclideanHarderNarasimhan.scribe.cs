@@ -69,6 +69,50 @@ internal sealed class EuclideanHarderNarasimhanDocument : IScribeDocumentDefinit
                     + "the pinned AddSubgroup.relIndex_eq_natAbs_det, including rank zero; "
                     + "no full-rank assumption in the ambient space is needed."))),
                 DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("integral-carrier-contained"),
+                DeclarationHandle.Create(
+                    "D5/S3/Combinatorics/Lattices/EuclideanHarderNarasimhan.integral_le"),
+                H("Integral carriers remain inside their lattice"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
+                Blocks(
+                    Paragraph(Text("The integral carrier of every saturated sublattice A of L is "
+                        + "contained in L. This inclusion requires no "
+                        + "finite-dimensionality or discreteness."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("integral-carrier-saturated"),
+                DeclarationHandle.Create(
+                    "D5/S3/Combinatorics/Lattices/EuclideanHarderNarasimhan.integral_saturated"),
+                H("Lattice points in the real span"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
+                Blocks(
+                    Paragraph(Text("If x lies in L and in the real span of the integral carrier "
+                        + "of A, then x lies in that integral carrier. No "
+                        + "finite-dimensionality or discreteness is required."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("discrete-covolume-positive"),
+                DeclarationHandle.Create(
+                    "D5/S3/Combinatorics/Lattices/EuclideanHarderNarasimhan.covolume_pos"),
+                H("Discrete integral covolumes are positive"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
+                Blocks(
+                    Paragraph(Text("Every discrete integral submodule of a finite-dimensional "
+                        + "real inner product space has strictly positive covolume, "
+                        + "including rank zero."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("gram-linear-combination"),
+                DeclarationHandle.Create(
+                    "D5/S3/Combinatorics/Lattices/"
+                    + "EuclideanHarderNarasimhan.gram_linear_combination"),
+                H("Rectangular Gram change of coordinates"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
+                Blocks(
+                    Paragraph(Text("For a finite family v and any rectangular real coefficient "
+                        + "matrix T, the Gram matrix of the combinations sum_i T(i,j) "
+                        + "v(i) is transpose(T) Gram(v) T. This identity holds in a "
+                        + "seminormed real inner product space; neither linear "
+                        + "independence nor finite dimension of the ambient space is "
+                        + "needed."))),
+                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("euclidean-covolume-hn"),
                 DeclarationHandle.Create(
                     "D5/S3/Combinatorics/Lattices/EuclideanHarderNarasimhan.euclidean_hn"),
@@ -120,6 +164,14 @@ internal sealed class EuclideanHarderNarasimhanDocument : IScribeDocumentDefinit
                         + "is equivalent both to having one factor and to equality "
                         + "of the two extreme slopes. Otherwise the first slope is "
                         + "strictly larger than the last.")),
+                    Paragraph(Text("The public EuclideanSublattices.integral_rank_eq "
+                        + "identifies the integer rank of every integral submodule M "
+                        + "of a discrete L with the dimension of its ambient real span; "
+                        + "M need not be saturated, and a normed real space suffices. "
+                        + "The public EuclideanHarderNarasimhan.integral_rank_eq gives "
+                        + "the same identity for a discrete integral submodule of a "
+                        + "finite-dimensional real inner product space. Both include "
+                        + "rank zero and require no full-rank assumption.")),
                     Paragraph(Text("No covolume inequality or equivalent geometric "
                         + "comparison is assumed. Rank-zero sublattices have covolume "
                         + "one. The statement does not impose full rank on L in E "
