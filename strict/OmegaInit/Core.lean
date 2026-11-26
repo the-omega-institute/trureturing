@@ -416,3 +416,22 @@ port_proof Sum.nonemptyRight
 port_proof flip.eq_1 by_reflexivity
 port_proof id.eq_1 by_reflexivity
 port_proof inline.eq_1 by_reflexivity
+
+namespace Omega
+
+theorem ite_eq_left {c : Prop} {h : Decidable c} (hc : c) {α : Sort u} {t e : α} : Eq (@ite α c h t e) t :=
+  Decidable.rec (motive := fun d => Eq (@ite α c d t e) t) (fun bit =>
+    Bool.casesOn (motive := fun bit => ∀ reflected : Bool.Reflects bit c,
+        Eq (@ite α c (Decidable.intro bit reflected) t e) t) bit
+      (fun no => False.elim (no hc)) (fun _ => Omega.rfl)) h
+
+theorem ite_eq_right {c : Prop} {h : Decidable c} (hnc : Not c) {α : Sort u} {t e : α} : Eq (@ite α c h t e) e :=
+  Decidable.rec (motive := fun d => Eq (@ite α c d t e) e) (fun bit =>
+    Bool.casesOn (motive := fun bit => ∀ reflected : Bool.Reflects bit c,
+        Eq (@ite α c (Decidable.intro bit reflected) t e) e) bit
+      (fun _ => Omega.rfl) (fun yes => False.elim (hnc yes))) h
+
+end Omega
+
+port_proof if_pos
+port_proof if_neg

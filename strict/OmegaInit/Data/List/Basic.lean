@@ -246,3 +246,10 @@ theorem mem_append_right {α : Type u} {b : α} (as : List α) {bs : List α} :
 end Omega.List
 
 port_inductive List.Perm
+
+namespace Omega.List
+instance instAppend {α : Type u} : Append (List α) := Append.mk List.append
+end Omega.List
+
+port_proof List.append_eq by_reflexivity
+port_proof List.flatten_cons by_reflexivity

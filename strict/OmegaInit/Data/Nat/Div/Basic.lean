@@ -11,7 +11,7 @@ import all OmegaInit.Prelude
 public section
 namespace Omega.Nat
 
-attribute [local semireducible] Nat.mod Nat.div Nat.ble
+attribute [local semireducible] Nat.mod Nat.div Nat.ble Nat.modCore
 
 theorem mod_zero (a : Nat) : Eq (Nat.mod a zero) a :=
   Nat.rec (motive := fun k => Eq (Nat.mod k zero) k) Omega.rfl (fun _ _ => Omega.rfl) a
@@ -139,5 +139,74 @@ theorem mod_eq_sub_mul_div {x k : Nat} : Eq (Nat.mod x k) (Nat.sub x (Nat.mul k 
 
 theorem mod_eq_sub_div_mul {x k : Nat} : Eq (Nat.mod x k) (Nat.sub x (Nat.mul (Nat.div x k) k)) :=
   (mod_def x k).trans (congrArg (Nat.sub x) (Nat.mul_comm k (Nat.div x k)))
+
+private theorem quotient_correct (d fuel n : Nat) (bound : Nat.lt n fuel) :
+    Eq (quotient d fuel n) (Nat.div n (succ d)) :=
+  let k := succ d
+  let q := quotient d fuel n
+  Nat.le_antisymm ((le_div_iff_mul_le (succ_le_succ (zero_le d))).mpr
+    ((quotient_bound d fuel n bound q).mp (Nat.le_refl q)))
+    ((quotient_bound d fuel n bound (Nat.div n k)).mpr (div_mul_le_self n k))
+
+private theorem remainder_correct (d fuel n : Nat) (bound : Nat.lt n fuel) :
+    Eq (remainder d fuel n) (Nat.mod n (succ d)) :=
+  let k := succ d
+  have qeq := quotient_correct d fuel n bound
+  Nat.add_right_cancel ((congrArg (fun x => Nat.add (remainder d fuel n) (Nat.mul k x)) qeq.symm).trans
+    ((division_decomposition d fuel n bound).trans (mod_add_div n k).symm))
+
+private theorem mod_step (d n : Nat) : Eq (Nat.mod n (succ d))
+    (Bool.rec (motive := fun _ => Nat) n (Nat.mod (Nat.sub n (succ d)) (succ d)) (Nat.ble (succ d) n)) :=
+  let k := succ d
+  let rest := Nat.sub n k
+  (remainder_correct d (succ n) n (Nat.le_refl (succ n))).symm.trans
+    (Bool.casesOn (motive := fun bit => Eq (Nat.ble k n) bit →
+        Eq (Bool.rec (motive := fun _ => Nat) n (remainder d n rest) bit)
+           (Bool.rec (motive := fun _ => Nat) n (Nat.mod rest k) bit))
+      (Nat.ble k n) (fun _ => Omega.rfl)
+      (fun e => remainder_correct d n rest (sub_lt_fuel (le_of_ble_eq_true e) (Nat.le_refl (succ n)))) Omega.rfl)
+
+protected theorem modCore_eq_mod (n m : Nat) : Eq (Nat.modCore n m) (Nat.mod n m) := Omega.rfl
+
+theorem mod_eq_ite (x y : Nat) : Eq (Nat.mod x y)
+    (Omega.ite (And (LT.lt zero y) (LE.le y x)) (Nat.mod (Nat.sub x y) y) x) :=
+  Nat.casesOn (motive := fun y => Eq (Nat.mod x y)
+      (Omega.ite (And (LT.lt zero y) (LE.le y x)) (Nat.mod (Nat.sub x y) y) x)) y
+    ((mod_zero x).trans (ite_eq_right (fun h => not_succ_le_zero zero h.left)).symm)
+    (fun d =>
+      let k := succ d
+      let next := Nat.mod (Nat.sub x k) k
+      (mod_step d x).trans
+        (Bool.casesOn (motive := fun bit => Eq (Nat.ble k x) bit →
+            Eq (Bool.rec (motive := fun _ => Nat) x next bit)
+              (Omega.ite (And (LT.lt zero k) (LE.le k x)) next x)) (Nat.ble k x)
+          (fun e => (ite_eq_right (fun h => Bool.ne_false_of_eq_true (ble_eq_true_of_le h.right) e)).symm)
+          (fun e => (ite_eq_left (And.intro (succ_le_succ (zero_le d)) (le_of_ble_eq_true e))).symm) Omega.rfl))
+
+protected theorem modCore_eq (x y : Nat) : Eq (Nat.modCore x y)
+    (Omega.ite (And (LT.lt zero y) (LE.le y x)) (Nat.modCore (Nat.sub x y) y) x) := mod_eq_ite x y
+
+theorem div_eq_ite (x y : Nat) : Eq (Nat.div x y)
+    (Omega.ite (And (LT.lt zero y) (LE.le y x)) (succ (Nat.div (Nat.sub x y) y)) zero) :=
+  Nat.casesOn (motive := fun y => Eq (Nat.div x y)
+      (Omega.ite (And (LT.lt zero y) (LE.le y x)) (succ (Nat.div (Nat.sub x y) y)) zero)) y
+    ((Nat.div_zero x).trans (ite_eq_right (fun h => not_succ_le_zero zero h.left)).symm)
+    (fun d =>
+      let k := succ d
+      let rest := Nat.sub x k
+      let next := succ (Nat.div rest k)
+      (quotient_correct d (succ x) x (Nat.le_refl (succ x))).symm.trans
+        (Bool.casesOn (motive := fun bit => Eq (Nat.ble k x) bit →
+            Eq (Bool.rec (motive := fun _ => Nat) zero (succ (quotient d x rest)) bit)
+              (Omega.ite (And (LT.lt zero k) (LE.le k x)) next zero)) (Nat.ble k x)
+          (fun e => (ite_eq_right (fun h => Bool.ne_false_of_eq_true (ble_eq_true_of_le h.right) e)).symm)
+          (fun e => (congrArg succ (quotient_correct d x rest (sub_lt_fuel (le_of_ble_eq_true e) (Nat.le_refl (succ x))))).trans
+            (ite_eq_left (And.intro (succ_le_succ (zero_le d)) (le_of_ble_eq_true e))).symm) Omega.rfl))
+
+theorem div_eq_sub_div {b a : Nat} (h₁ : Nat.lt zero b) (h₂ : Nat.le b a) :
+    Eq (Nat.div a b) (succ (Nat.div (Nat.sub a b) b)) := (div_eq_ite a b).trans (ite_eq_left (And.intro h₁ h₂))
+
+theorem div_eq_of_lt {a b : Nat} (h₀ : Nat.lt a b) : Eq (Nat.div a b) zero :=
+  (div_eq_ite a b).trans (ite_eq_right (fun h => Nat.not_le_of_lt h₀ h.right))
 
 end Omega.Nat
