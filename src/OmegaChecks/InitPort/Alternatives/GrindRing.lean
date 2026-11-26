@@ -325,4 +325,54 @@ public theorem Lean.Grind.CommRing.inv_zero_eqC :
   have h := (IsCharP.intCast_eq_zero_iff (α := α) c b).mpr (eq_of_beq zero)
   rw [_root_.Lean.Grind.CommRing.denoteInt_eq, h, Field.inv_zero]
 
+private theorem compareDegrees (x y : Nat) (tie : Ordering) :
+    Bool.rec (Bool.rec Ordering.gt Ordering.lt (x.blt y)) tie (x.beq y) =
+      (compare x y).then tie := by
+  cases eq : x.beq y with
+  | true =>
+    have same := Nat.eq_of_beq_eq_true eq
+    change tie = (compareOfLessAndEq x y).then tie
+    rw [compareOfLessAndEq, ite_eq_right (same ▸ Nat.lt_irrefl x), ite_eq_left same]
+    rfl
+  | false =>
+    cases lt : x.blt y with
+    | true =>
+      change Ordering.lt = (compareOfLessAndEq x y).then tie
+      rw [compareOfLessAndEq, ite_eq_left (show x < y from Nat.le_of_ble_eq_true lt)]
+      rfl
+    | false =>
+      have ne : x ≠ y := by
+        intro h
+        cases h
+        exact Bool.noConfusion ((Nat.beq_refl x).symm.trans eq)
+      have nlt : ¬ x < y := fun h => Bool.noConfusion ((Nat.ble_eq_true_of_le h).symm.trans lt)
+      change Ordering.gt = (compareOfLessAndEq x y).then tie
+      rw [compareOfLessAndEq, ite_eq_right nlt, ite_eq_right ne]
+      rfl
+
+public theorem Lean.Grind.CommRing.Mon.grevlex_k_eq_grevlex :
+    type_of% @_root_.Lean.Grind.CommRing.Mon.grevlex_k_eq_grevlex := by
+  intro m n
+  unfold Mon.grevlex_k Mon.grevlex
+  rw [Mon.degree_k_eq_degree, Mon.degree_k_eq_degree, Mon.revlex_k_eq_revlex]
+  exact compareDegrees ..
+
+public theorem Lean.Grind.CommRing.Power.eq_of_revlex :
+    type_of% @_root_.Lean.Grind.CommRing.Power.eq_of_revlex := by
+  intro p q
+  cases p with
+  | mk x k =>
+    cases q with
+    | mk y l =>
+      intro h
+      change ((Var.revlex x y).then (powerRevlex k l)) = .eq at h
+      cases hw : Var.revlex x y with
+      | eq =>
+        rw [hw] at h
+        cases Var.eq_of_revlex hw
+        cases eq_of_powerRevlex h
+        rfl
+      | lt => rw [hw] at h; contradiction
+      | gt => rw [hw] at h; contradiction
+
 end OmegaChecks.InitPort.Alternatives
