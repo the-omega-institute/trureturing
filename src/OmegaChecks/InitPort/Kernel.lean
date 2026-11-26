@@ -10,11 +10,14 @@ def moduleOf (env : Environment) (n : Name) : Option Name := do
   let i ← env.getModuleIdxFor? n
   return env.header.moduleNames[i]!
 
-/-- Keep generated private names tied to the translated owner. -/
-def portName (source : Environment) (n : Name) : Name :=
-  if let some u := privateToUserName? n then
-    if let some owner := moduleOf source n then
-      mkPrivateNameCore (owner.replacePrefix `Init `OmegaInit) (`Omega ++ u)
+/-- Preserve the private name's lexical prefix even when a later module emits
+an equation for a declaration originally defined in a different module. -/
+def portName (n : Name) : Name :=
+  if let some user := privateToUserName? n then
+    if let some lexical := privatePrefix? n then
+      if (`_private.Init).isPrefixOf lexical && isPrivatePrefix lexical then
+        lexical.replacePrefix `_private.Init `_private.OmegaInit ++ (`Omega ++ user)
+      else `Omega ++ n
     else `Omega ++ n
   else `Omega ++ n
 
@@ -24,9 +27,16 @@ partial def natTerm (n : Nat) : Expr :=
     n.fold (init := mkConst `Omega.Nat.zero) (fun _ _ x => mkApp (mkConst `Omega.Nat.succ) x)
   else
     let x := mkBVar 0
-    let twice := mkApp2 (mkConst `Omega.Nat.add) x x
+    let two := mkApp (mkConst `Omega.Nat.succ) (mkApp (mkConst `Omega.Nat.succ) (mkConst `Omega.Nat.zero))
+    let twice := mkApp2 (mkConst `Omega.Nat.mul) x two
     .letE `half (mkConst `Omega.Nat) (natTerm (n / 2))
       (if n % 2 == 0 then twice else mkApp (mkConst `Omega.Nat.succ) twice) false
+
+private def stringTerm (s : String) : Expr :=
+  let char := mkConst `Omega.Char
+  let chars := s.toList.foldr (init := mkApp (mkConst `Omega.List.nil [.zero]) char) fun ch tail =>
+    mkApp3 (mkConst `Omega.List.cons [.zero]) char (mkApp (mkConst `Omega.Char.ofNat) (natTerm ch.toNat)) tail
+  mkApp (mkConst `Omega.String.ofList) chars
 
 /-- Replace recursively inside projection subjects, preserving binder syntax and universe levels. -/
 partial def translate (rename : Name → Name) (e : Expr) : Expr :=
@@ -34,17 +44,25 @@ partial def translate (rename : Name → Name) (e : Expr) : Expr :=
     | .const n ls => some (.const (rename n) ls)
     | .proj owner field target => some (.proj (rename owner) field (translate rename target))
     | .lit (.natVal n) => some (natTerm n)
+    | .lit (.strVal s) => some (stringTerm s)
     | _ => none
 
 def invalidExpr (e : Expr) : Bool :=
-  e.hasFVar || e.hasMVar || e.hasLooseBVars ||
-    (e.find? fun x => x matches .lit (.strVal _)).isSome
+  e.hasFVar || e.hasMVar || e.hasLooseBVars
 
-def translateDecl (source : Environment) (info : ConstantInfo) : Except String Declaration := do
-  let rename := portName source
+/-- String literals introduce foundation declarations absent from the original constant set. -/
+private def usedConstants (e : Expr) : NameSet := Id.run do
+  let mut deps := e.getUsedConstantsAsSet
+  if (e.find? fun x => x matches .lit (.strVal _)).isSome then
+    deps := ((deps.insert `String.ofList).insert `List.nil).insert `Char
+    if (e.find? fun x => match x with | .lit (.strVal s) => !s.isEmpty | _ => false).isSome then
+      deps := (deps.insert `List.cons).insert `Char.ofNat
+  return deps
+
+def translateDecl (info : ConstantInfo) (body : Expr) : Except String Declaration := do
+  let rename := portName
   let val (v : ConstantVal) := { v with name := rename v.name, type := translate rename v.type }
   if info.isUnsafe || info.isPartial then throw "unsafe/partial"
-  let some body := info.value? (allowOpaque := true) | throw "no kernel body"
   if invalidExpr info.type || invalidExpr body then throw "open term or unsupported string literal"
   let body := translate rename body
   match info with
@@ -70,9 +88,95 @@ structure Context where
   maxHeartbeats : Nat
   excluded : NameMap String
   publicNames : NameSet
+  literalProofs : NameMap ConstantInfo
   output : IO.FS.Handle
 
 abbrev M := ReaderT Context (StateRefT State IO)
+
+private def loadLiteralProofs (strictPath : System.FilePath) : IO (NameMap ConstantInfo) :=
+  IO.FS.withTempDir fun temp => do
+    let dir := System.FilePath.mk "src/OmegaChecks/InitPort"
+    let lean := (← findSysroot) / "bin" / "lean"
+    let build ← IO.Process.output {
+      cmd := lean.toString
+      args := #["-R", dir.toString, "-o", (temp / "LiteralProofs.olean").toString,
+        (dir / "LiteralProofs.lean").toString]
+      env := #[("LEAN_PATH", some strictPath.toString)] }
+    unless build.exitCode == 0 do throw <| IO.userError (build.stdout ++ build.stderr)
+    searchPathRef.set [temp, strictPath]
+    let env ← importModules #[{module := `LiteralProofs}] {}
+    let mut proofs := {}
+    for ci in env.header.moduleData[(env.getModuleIdx? `LiteralProofs).get!]!.constants do
+      if ci.name.getRoot == `OmegaLiteralProofs then
+        proofs := proofs.insert ci.name ci
+    return proofs
+
+/-- Abstract each shared proof before substituting its implementation. The kernel
+checks each bound proof once and its uses retain the stated proposition. -/
+private def inlineLiteralProofs (proofs : NameMap ConstantInfo) (e : Expr) : Expr := Id.run do
+  let mut term := e
+  for leaf in [`raiseBound, `digitBounds, `bounds, `double_eq, `leftMono, `plusSucc, `rightMono] do
+    let name := `OmegaLiteralProofs ++ leaf
+    if !term.getUsedConstantsAsSet.contains name then continue
+    let ci := (proofs.find? name).get!
+    let x := mkFVar ⟨name⟩
+    let openBody := term.replace fun sub => if sub.isConstOf name then some x else none
+    term := mkApp (.lam leaf ci.type (openBody.abstract #[x]) .default) (ci.value! (allowOpaque := true))
+  let twice := ((proofs.find? `OmegaLiteralProofs.double).get!).value!
+  return term.replace fun sub => if sub.isConstOf `OmegaLiteralProofs.double then some twice else none
+
+private partial def binaryLt (a b : Nat) : Expr := Id.run do
+  if a < 32 || b < 32 then return mkConst `Omega.True.intro
+  let x := natTerm (a / 2)
+  let y := natTerm (b / 2)
+  let succ := mkApp (mkConst `Omega.Nat.succ)
+  let double := mkApp (mkConst `OmegaLiteralProofs.double)
+  if a / 2 == b / 2 then return mkApp (mkConst `Omega.Nat.lt_succ_self) (double x)
+  let rule := if a % 2 == 0 then `OmegaLiteralProofs.digitBounds else `OmegaLiteralProofs.bounds
+  let h := mkApp3 (mkConst rule) x y (binaryLt (a / 2) (b / 2))
+  if b % 2 == 0 then return h
+  let left := if a % 2 == 0 then double x else succ (double x)
+  return mkApp3 (mkConst `OmegaLiteralProofs.raiseBound) left (double y) h
+
+/-- Evaluate just the numeral expressions for which the resulting comparison proof
+can be independently checked. The cap bounds generated certificate size. -/
+private def numeral? (source : Environment) (expr : Expr) (fuel : Nat := 4) : Option Nat := do
+  let e := expr.consumeMData
+  if let some n := e.rawNatLit? then return n
+  if e.getAppFn.isConstOf `OfNat.ofNat then return ← e.getAppArgs[1]?.bind Expr.rawNatLit?
+  let fuel + 1 := fuel | none
+  if e.getAppFn.isConstOf `HPow.hPow then
+    let #[_, _, _, _, base, exponent] := e.getAppArgs | none
+    let b ← numeral? source base fuel
+    let k ← numeral? source exponent fuel
+    guard (b == 2 && k ≤ 256)
+    return 2 ^ k
+  let .const n _ := e | none
+  let ci ← source.find? n
+  let body ← ci.value?
+  numeral? source body fuel
+
+private def comparisonProofs (source : Environment) (proofs : NameMap ConstantInfo)
+    (body : Expr) : Option Expr := Id.run do
+  let result := body.replace fun e => Id.run do
+    unless e.getAppFn.isConstOf `of_decide_eq_true do return none
+    let some p := e.getAppArgs[0]? | return none
+    let strict := p.getAppFn.isConstOf `LT.lt
+    unless strict || p.getAppFn.isConstOf `LE.le do return none
+    let #[α, _, a, b] := p.getAppArgs | return none
+    unless α.consumeMData.isConstOf `Nat do return none
+    let some x := numeral? source a | return none
+    let some y := numeral? source b | return none
+    unless (if strict then x < y else x ≤ y) && y ≥ 32 do return none
+    let cert := if x == y then mkApp (mkConst `Omega.Nat.le_refl) (natTerm x)
+      else if strict then binaryLt x y
+      else mkApp5 (mkConst `Omega.Nat.le_trans) (natTerm x) (mkApp (mkConst `Omega.Nat.succ) (natTerm x))
+        (natTerm y) (mkApp (mkConst `Omega.Nat.le_succ) (natTerm x)) (binaryLt x y)
+    let cert := inlineLiteralProofs proofs cert
+    return some <| cert.replace fun
+      | .const n us => some (.const (n.replacePrefix `Omega .anonymous) us)
+      | _ => none
+  return if result.equal body then none else some result
 
 def describe : Outcome → String × Option Name
   | .existing => ("existing", none)
@@ -90,8 +194,8 @@ def record (name : Name) (outcome : Outcome) : M Bool := do
   return match outcome with | .blocked .. => false | _ => true
 
 /-- Compare the entire generated kernel entry, including the iota rules of recursors. -/
-def expectGenerated (source : Environment) (ci : ConstantInfo) : Option ConstantInfo := Id.run do
-  let ren := portName source
+def expectGenerated (ci : ConstantInfo) : Option ConstantInfo := Id.run do
+  let ren := portName
   let val (v : ConstantVal) := {v with name := ren v.name, type := translate ren v.type}
   match ci with
   | .inductInfo v => return some <| .inductInfo { v with toConstantVal := val v.toConstantVal, ctors := v.ctors.map ren, all := v.all.map ren }
@@ -119,7 +223,7 @@ structure Family where
   generated : Array Name
 
 def family (src : Environment) (i : InductiveVal) : Except String Family := do
-  let rename := portName src
+  let rename := portName
   let mut types := []
   let mut deps : NameSet := {}
   let mut names := #[]
@@ -127,13 +231,13 @@ def family (src : Environment) (i : InductiveVal) : Except String Family := do
     let some (.inductInfo v) := src.find? n | throw "missing family member"
     if v.isUnsafe || invalidExpr v.type then throw "inadmissible family"
     let mut ctors := []
-    deps := deps ++ v.type.getUsedConstantsAsSet
+    deps := deps ++ usedConstants v.type
     names := names.push n
     for k in v.ctors do
       let some (.ctorInfo cv) := src.find? k | throw "missing constructor"
       if cv.isUnsafe || invalidExpr cv.type then throw "inadmissible constructor"
       names := names.push k
-      deps := deps ++ cv.type.getUsedConstantsAsSet
+      deps := deps ++ usedConstants cv.type
       ctors := ctors ++ [{name := rename k, type := translate rename cv.type : Constructor}]
     let recn := n ++ `rec
     names := names.push recn
@@ -149,6 +253,13 @@ def checkDecl (env : Kernel.Environment) (decl : Declaration) (budget : Nat) :
     return env.addDeclCore (initial + budget).toUSize 1000 decl none
   let task ← work.asTask (prio := .dedicated)
   return task.get
+
+/-- Reserve a larger worker budget for declarations which exhaust the first one. -/
+private def checkWithRetry (env : Kernel.Environment) (decl : Declaration) (budget : Nat) :
+    BaseIO (Except Kernel.Exception Kernel.Environment) := do
+  let result ← checkDecl env decl budget
+  if result matches .error .deterministicTimeout then checkDecl env decl (20 * budget)
+  else return result
 
 /-- For equations compiled by the pattern matcher, expose at most two Nat or List arguments.
 Each leaf proposes reflexivity. The kernel checks the entire resulting elimination term. -/
@@ -185,7 +296,7 @@ heartbeat limit across all attempted proofs and keep the original rejection on f
 private def alternateProof (ci : ConstantInfo) : M Bool := do
   let .thmInfo th := ci | return false
   let c ← read
-  let rename := portName c.source
+  let rename := portName
   let type := translate rename th.type
   let state ← get
   if invalidExpr type || type.getUsedConstants.any (fun n => (state.env.find? n).isNone) then return false
@@ -214,23 +325,23 @@ partial def visit (n : Name) : M Bool := do
   let some owner := moduleOf c.source n | return ← record n (.blocked "unknown official module")
   if owner.getRoot != `Init then return ← record n (.blocked "outside Init")
   let some ci := c.source.find? n | return ← record n (.blocked "missing official constant")
-  let dest := portName c.source n
+  let dest := portName n
   if let some i := c.base.find? dest then
     if i.isAxiom || i.isUnsafe || i.isPartial || (i matches .quotInfo _) ||
         moduleOf c.base dest != some (owner.replacePrefix `Init `OmegaInit) then
       return ← record n (.blocked "unverified seed name or wrong seed owner")
     return ← record n .existing
   if let some generated := (← get).env.find? dest then
-    if agrees (← get).env (expectGenerated c.source ci) (some generated) then return ← record n .added
+    if agrees (← get).env (expectGenerated ci) (some generated) then return ← record n .added
     return ← record n (.blocked "target name collision")
   if n == Meta.mkSmartUnfoldingNameFor n.getPrefix then
-    if c.base.contains (portName c.source n.getPrefix) then
+    if c.base.contains (portName n.getPrefix) then
       return ← record n (.blocked "smart unfolding belongs to a different implementation" (some n.getPrefix))
     if let some body := ci.value? then
       let missing := body.find? fun expr => Id.run do
         let some m := Meta.smartUnfoldingMatch? expr | return false
         let some matcher := m.getAppFn.constName? | return true
-        return (Meta.getMatcherInfoCore? c.base (portName c.source matcher)).isNone
+        return (Meta.getMatcherInfoCore? c.base (portName matcher)).isNone
       if missing.isSome then return ← record n (.blocked "smart unfolding requires unavailable matcher metadata")
   if let some reason := c.excluded.find? n then return ← record n (.blocked reason)
   if ci.isAxiom then return ← record n (.blocked "axiom")
@@ -242,14 +353,14 @@ partial def visit (n : Name) : M Bool := do
     modify fun s => {s with visiting := s.visiting.insert n}
     for dep in f.externals do
       if !(← visit dep) then return ← record n (.blocked "unavailable family dependency" (some dep))
-    match ← checkDecl (← get).env f.decl c.maxHeartbeats with
+    match ← checkWithRetry (← get).env f.decl c.maxHeartbeats with
     | .error ex =>
       let msg ← ex.toMessageData {} |>.toString
       return ← record n (.blocked ("kernel family: " ++ (msg.take 1200).toString))
     | .ok env =>
       for orig in f.generated do
         let some spec := c.source.find? orig | return ← record n (.blocked "missing family result" (some orig))
-        if !agrees env (expectGenerated c.source spec) (env.find? (portName c.source orig)) then
+        if !agrees env (expectGenerated spec) (env.find? (portName orig)) then
           return ← record n (.blocked "generated kernel entry mismatch" (some orig))
       modify fun s => {s with env}
       return ← record n .added
@@ -257,28 +368,41 @@ partial def visit (n : Name) : M Bool := do
     let parent := match ci with | .ctorInfo v => v.induct | .recInfo v => v.all.head! | _ => Name.anonymous
     if !(← visit parent) then return ← record n (.blocked "unavailable family" (some parent))
     if let some generated := (← get).env.find? dest then
-      if agrees (← get).env (expectGenerated c.source ci) (some generated) then return ← record n .added
+      if agrees (← get).env (expectGenerated ci) (some generated) then return ← record n .added
     return ← record n (.blocked "generated kernel entry mismatch" (some parent))
   if !(ci matches .thmInfo _ | .defnInfo _ | .opaqueInfo _) then
     return ← record n (.blocked "requires inductive family or primitive")
   modify fun s => {s with visiting := s.visiting.insert n}
-  for dep in ci.type.getUsedConstantsAsSet do
+  for dep in usedConstants ci.type do
     if !(← visit dep) then return ← record n (.blocked "unavailable dependency" (some dep))
-  for dep in ci.getUsedConstantsAsSet do
-    if !(← visit dep) then
-      if ← alternateProof ci then return true
-      return ← record n (.blocked "unavailable dependency" (some dep))
-  let .ok decl := translateDecl c.source ci |
-    if ← alternateProof ci then return true
-    return ← record n (.blocked "open term or unsupported literal")
-  match ← checkDecl (← get).env decl c.maxHeartbeats with
-  | .error ex =>
-    if ← alternateProof ci then return true
-    let msg ← ex.toMessageData {} |>.toString
-    return ← record n (.blocked ("kernel: " ++ (msg.take 1200).toString))
-  | .ok next =>
-    modify fun s => {s with env := next}
-    return ← record n .added
+  let some body := ci.value? (allowOpaque := true) | return ← record n (.blocked "no kernel body")
+  let attempt (value : Expr) (budget := c.maxHeartbeats) : M Outcome := do
+    for dep in usedConstants value do
+      if !(← visit dep) then return .blocked "unavailable dependency" (some dep)
+    let .ok decl := translateDecl ci value | return .blocked "open term"
+    let check := if budget == c.maxHeartbeats then checkWithRetry else checkDecl
+    match ← check (← get).env decl budget with
+    | .error ex =>
+      let msg ← ex.toMessageData {} |>.toString
+      return .blocked ("kernel: " ++ (msg.take 1200).toString)
+    | .ok next =>
+      modify fun s => {s with env := next}
+      return .added
+  let result ← attempt body
+  if result matches .added then return ← record n result
+  let rewritten := OmegaChecks.InitCompiler.constructiveCasts c.source body
+  if !rewritten.equal body then
+    if (← attempt rewritten) matches .added then return ← record n .added
+  let decided ← OmegaChecks.InitCompiler.decidableProof c.source rewritten
+  if !decided.equal rewritten then
+    if (← attempt (OmegaChecks.InitCompiler.constructiveCasts c.source decided)) matches .added then
+      return ← record n .added
+  if let some certified := comparisonProofs c.source c.literalProofs decided then
+    -- Rechecking the closed proof of comparison costs proportionally more than
+    -- applying the original opaque theorem; its bound remains deterministic.
+    if (← attempt certified (40 * c.maxHeartbeats)) matches .added then return ← record n .added
+  if ← alternateProof ci then return true
+  return ← record n result
 
 def modulesIn (root : System.FilePath) : IO (Array Name) := do
   let mut names := #[`Init]
@@ -304,7 +428,8 @@ def run (strictPath artifacts : System.FilePath) (outPath : String) (exclude : S
   searchPathRef.set [lib]
   let allMods ← if modules.isEmpty then modulesIn lib else pure modules.toArray
   let imports := allMods.map fun n => {module := n : Import}
-  let source ← importModules imports {} (level := .private)
+  unsafe enableInitializersExecution
+  let source ← importModules imports {} (loadExts := true) (level := .private)
   let vis ← importModules imports {} (level := .exported)
   let mut publicNames : NameSet := {}
   for d in vis.header.moduleData do
@@ -327,11 +452,12 @@ def run (strictPath artifacts : System.FilePath) (outPath : String) (exclude : S
     if let .ok entries := fromJson? (α := Array (String × String)) config then return entries
     return (← fromJson? (α := Array String) config).map fun n => (n, "no computation correspondence")
   for (name, _) in exclusions do
-    if base.contains (portName source name.toName) then
+    if base.contains (portName name.toName) then
       throw <| IO.userError s!"cannot exclude {name}: already present in the source seed"
   let excluded := exclusions.foldl (init := ({} : NameMap String)) fun acc (n, r) => acc.insert n.toName r
   let maxHeartbeats := (← IO.getEnv "OMEGA_PORT_HEARTBEATS").bind String.toNat? |>.getD 5000
-  let ctx := {source,base,publicNames,excluded,output, maxHeartbeats : Context}
+  let literalProofs ← loadLiteralProofs strictPath
+  let ctx := {source,base,publicNames,excluded,output,maxHeartbeats,literalProofs : Context}
   let action : M Unit := do
     for owner in source.header.moduleNames, data in source.header.moduleData do
       if owner.getRoot == `Init then

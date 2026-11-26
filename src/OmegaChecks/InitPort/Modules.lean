@@ -5,10 +5,13 @@ def officialModuleName (env : Environment) (n : Name) : Option Name := do
   let i ← env.getModuleIdxFor? n
   return env.header.moduleNames[i]!
 
-def renamed (src : Environment) (n : Name) : Name :=
-  if let some usr := privateToUserName? n then
-    let m := (officialModuleName src n).getD .anonymous
-    mkPrivateNameCore (m.replacePrefix `Init `OmegaInit) (`Omega ++ usr)
+def renamed (n : Name) : Name :=
+  if let some user := privateToUserName? n then
+    if let some lexical := privatePrefix? n then
+      if (`_private.Init).isPrefixOf lexical && isPrivatePrefix lexical then
+        lexical.replacePrefix `_private.Init `_private.OmegaInit ++ (`Omega ++ user)
+      else `Omega ++ n
+    else `Omega ++ n
   else `Omega ++ n
 
 def declarationDependencies (ci : ConstantInfo) : NameSet := Id.run do
@@ -49,7 +52,7 @@ def main (args : List String) : IO Unit := do
   let monolith ← importModules #[{module := `OmegaImported}] {}
   let newDecls := monolith.header.moduleData[(monolith.getModuleIdx? `OmegaImported).get!]!
   let mut reverseNames : Std.HashMap Name Name := {}
-  for (n, _) in source.constants.toList do reverseNames := reverseNames.insert (renamed source n) n
+  for (n, _) in source.constants.toList do reverseNames := reverseNames.insert (renamed n) n
   let mut groups : NameMap (Array (Name × ConstantInfo)) := {}
   for ci in newDecls.constants do
     let some upstream := reverseNames[ci.name]? | throw <| IO.userError s!"no official name for {ci.name}"
@@ -99,7 +102,7 @@ def main (args : List String) : IO Unit := do
       for e in reducibilityCoreExt.getModuleEntries monolith old do metadata := reducibilityCoreExt.addEntry (asyncDecl := e.1) metadata e
     let sourceNames := NameSet.ofList (group.toList.map Prod.fst)
     for cls in classExtension.getModuleEntries surface (surface.getModuleIdx? official).get! do
-      if sourceNames.contains cls.name then metadata := classExtension.addEntry metadata {cls with name := renamed source cls.name}
+      if sourceNames.contains cls.name then metadata := classExtension.addEntry metadata {cls with name := renamed cls.name}
     for (n, ci) in group do
       if isProtected source n then metadata := addProtected metadata ci.name
       let status := if (publiclyDeclared.find? n).any (·.isAxiom) && ci matches .defnInfo _ then .irreducible else getReducibilityStatusCore source n

@@ -10,11 +10,11 @@ namespace OmegaChecks.Interface
 private def official (strict : Environment) (n : Name) : Name := Id.run do
   if let some user := privateToUserName? n then
     if let some idx := strict.getModuleIdxFor? n then
-      let owner := strict.header.moduleNames[idx]!
-      if owner.getRoot == `OmegaInit && user.getRoot == `Omega &&
-          mkPrivateNameCore owner user == n then
-        return mkPrivateNameCore (owner.replacePrefix `OmegaInit `Init)
-          (user.replacePrefix `Omega .anonymous)
+      if strict.header.moduleNames[idx]!.getRoot == `OmegaInit && user.getRoot == `Omega then
+        if let some lexical := privatePrefix? n then
+          if (`_private.OmegaInit).isPrefixOf lexical && isPrivatePrefix lexical then
+            return lexical.replacePrefix `_private.OmegaInit `_private.Init ++
+              user.replacePrefix `Omega .anonymous
   return n.replacePrefix `Omega .anonymous
 
 private partial def translate (rename : Name → Name) (e : Expr) : Expr := Id.run do
