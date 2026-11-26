@@ -902,4 +902,120 @@ public theorem Std.Roi.getElem?_toList_eq : type_of% @_root_.Std.Roi.getElem?_to
   | none => rfl
   | some a => exact _root_.Std.Rci.getElem?_toList_eq
 
+private theorem lookupPresent {o : Option α} {a : α} (eq : o = some a) : o.isSome := eq ▸ rfl
+
+private theorem filterLookupPresent {p : α → Bool} {o : Option α} {a : α}
+    (eq : o.filter p = some a) : o.isSome := by
+  cases o with
+  | none => cases eq
+  | some x => rfl
+
+public theorem Std.Rcc.isSome_succMany?_of_lt_length_toList :
+    type_of% @_root_.Std.Rcc.isSome_succMany?_of_lt_length_toList := by
+  intro α r _ _ _ _ _ _ i h
+  exact filterLookupPresent ((_root_.Std.Rcc.getElem?_toList_eq (r := r) (i := i)).symm.trans
+    (getElem?_pos r.toList i h))
+
+public theorem Std.Rcc.isSome_succMany?_of_lt_size_toArray :
+    type_of% @_root_.Std.Rcc.isSome_succMany?_of_lt_size_toArray := by
+  intro α r _ _ _ _ _ _ i h
+  exact filterLookupPresent ((_root_.Std.Rcc.getElem?_toArray_eq (r := r) (i := i)).symm.trans
+    (getElem?_pos r.toArray i h))
+
+public theorem Std.Roc.isSome_succMany?_of_lt_length_toList :
+    type_of% @_root_.Std.Roc.isSome_succMany?_of_lt_length_toList := by
+  intro α r _ _ _ _ _ _ i h
+  exact filterLookupPresent ((_root_.Std.Roc.getElem?_toList_eq (r := r) (i := i)).symm.trans
+    (getElem?_pos r.toList i h))
+
+public theorem Std.Roc.isSome_succMany?_of_lt_size_toArray :
+    type_of% @_root_.Std.Roc.isSome_succMany?_of_lt_size_toArray := by
+  intro α r _ _ _ _ _ _ i h
+  exact filterLookupPresent ((_root_.Std.Roc.getElem?_toArray_eq (r := r) (i := i)).symm.trans
+    (getElem?_pos r.toArray i h))
+
+public theorem Std.Ric.isSome_succMany?_of_lt_length_toList :
+    type_of% @_root_.Std.Ric.isSome_succMany?_of_lt_length_toList := by
+  intro α r _ _ _ _ _ _ _ _ i h
+  exact filterLookupPresent ((_root_.Std.Ric.getElem?_toList_eq (r := r) (i := i)).symm.trans
+    (getElem?_pos r.toList i h))
+
+public theorem Std.Ric.isSome_succMany?_of_lt_size_toArray :
+    type_of% @_root_.Std.Ric.isSome_succMany?_of_lt_size_toArray := by
+  intro α r _ _ _ _ _ _ _ _ i h
+  exact filterLookupPresent ((_root_.Std.Ric.getElem?_toArray_eq (r := r) (i := i)).symm.trans
+    (getElem?_pos r.toArray i h))
+
+public theorem Std.Rco.isSome_succMany?_of_lt_length_toList :
+    type_of% @_root_.Std.Rco.isSome_succMany?_of_lt_length_toList := by
+  intro α r _ _ _ _ _ _ i h
+  exact filterLookupPresent ((_root_.Std.Rco.getElem?_toList_eq (r := r) (i := i)).symm.trans
+    (getElem?_pos r.toList i h))
+
+public theorem Std.Rco.isSome_succMany?_of_lt_size_toArray :
+    type_of% @_root_.Std.Rco.isSome_succMany?_of_lt_size_toArray := by
+  intro α r _ _ _ _ _ _ i h
+  exact filterLookupPresent ((_root_.Std.Rco.getElem?_toArray_eq (r := r) (i := i)).symm.trans
+    (getElem?_pos r.toArray i h))
+
+public theorem Std.Roo.isSome_succMany?_of_lt_length_toList :
+    type_of% @_root_.Std.Roo.isSome_succMany?_of_lt_length_toList := by
+  intro α r _ _ _ _ _ _ i h
+  exact filterLookupPresent ((_root_.Std.Roo.getElem?_toList_eq (r := r) (i := i)).symm.trans
+    (getElem?_pos r.toList i h))
+
+public theorem Std.Roo.isSome_succMany?_of_lt_size_toArray :
+    type_of% @_root_.Std.Roo.isSome_succMany?_of_lt_size_toArray := by
+  intro α r _ _ _ _ _ _ i h
+  exact filterLookupPresent ((_root_.Std.Roo.getElem?_toArray_eq (r := r) (i := i)).symm.trans
+    (getElem?_pos r.toArray i h))
+
+public theorem Std.Rio.isSome_succMany?_of_lt_length_toList :
+    type_of% @_root_.Std.Rio.isSome_succMany?_of_lt_length_toList := by
+  intro α r _ _ _ _ _ _ _ _ i h
+  exact filterLookupPresent ((_root_.Std.Rio.getElem?_toList_eq (r := r) (i := i)).symm.trans
+    (getElem?_pos r.toList i h))
+
+public theorem Std.Rio.isSome_succMany?_of_lt_size_toArray :
+    type_of% @_root_.Std.Rio.isSome_succMany?_of_lt_size_toArray := by
+  intro α r _ _ _ _ _ _ _ _ i h
+  exact filterLookupPresent ((_root_.Std.Rio.getElem?_toArray_eq (r := r) (i := i)).symm.trans
+    (getElem?_pos r.toArray i h))
+
+public theorem Std.Rci.isSome_succMany?_of_lt_length_toList :
+    type_of% @_root_.Std.Rci.isSome_succMany?_of_lt_length_toList := by
+  intro α r _ _ _ _ _ _ i h
+  exact lookupPresent ((_root_.Std.Rci.getElem?_toList_eq (r := r) (i := i)).symm.trans
+    (getElem?_pos r.toList i h))
+
+public theorem Std.Rci.isSome_succMany?_of_lt_size_toArray :
+    type_of% @_root_.Std.Rci.isSome_succMany?_of_lt_size_toArray := by
+  intro α r _ _ _ _ _ _ i h
+  exact lookupPresent ((_root_.Std.Rci.getElem?_toArray_eq (r := r) (i := i)).symm.trans
+    (getElem?_pos r.toArray i h))
+
+public theorem Std.Roi.isSome_succMany?_of_lt_length_toList :
+    type_of% @_root_.Std.Roi.isSome_succMany?_of_lt_length_toList := by
+  intro α r _ _ _ _ _ _ i h
+  exact lookupPresent ((_root_.Std.Roi.getElem?_toList_eq (r := r) (i := i)).symm.trans
+    (getElem?_pos r.toList i h))
+
+public theorem Std.Roi.isSome_succMany?_of_lt_size_toArray :
+    type_of% @_root_.Std.Roi.isSome_succMany?_of_lt_size_toArray := by
+  intro α r _ _ _ _ _ _ i h
+  exact lookupPresent ((_root_.Std.Roi.getElem?_toArray_eq (r := r) (i := i)).symm.trans
+    (getElem?_pos r.toArray i h))
+
+public theorem Std.Rii.isSome_succMany?_of_lt_length_toList :
+    type_of% @_root_.Std.Rii.isSome_succMany?_of_lt_length_toList := by
+  intro α r _ _ _ _ _ i h
+  exact lookupPresent ((_root_.Std.Rii.getElem?_toList_eq (r := r) (i := i)).symm.trans
+    (getElem?_pos r.toList i h))
+
+public theorem Std.Rii.isSome_succMany?_of_lt_size_toArray :
+    type_of% @_root_.Std.Rii.isSome_succMany?_of_lt_size_toArray := by
+  intro α r _ _ _ _ _ i h
+  exact lookupPresent ((_root_.Std.Rii.getElem?_toArray_eq (r := r) (i := i)).symm.trans
+    (getElem?_pos r.toArray i h))
+
 end OmegaChecks.InitPort.Alternatives
