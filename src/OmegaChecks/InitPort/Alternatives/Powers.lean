@@ -112,4 +112,29 @@ public theorem Rat.zpow_add_one : type_of% @_root_.Rat.zpow_add_one := by
       rw [Rat.pow_succ q (n+1), Rat.inv_mul_rev, Rat.mul_comm q⁻¹,
         Rat.mul_assoc, Rat.inv_mul_cancel q hq, Rat.mul_one]
 
+public theorem Rat.divInt_num_den : type_of% @_root_.Rat.divInt_num_den := by
+  intro d n n' d' nz c hd eq
+  cases d with
+  | ofNat d =>
+    obtain ⟨k, hk, hn, hden⟩ := Rat.mkRat_num_den (fun h => hd (congrArg Int.ofNat h)) eq
+    exact ⟨k, fun h => hk (Int.ofNat.inj h), hn, congrArg Int.ofNat hden⟩
+  | negSucc d =>
+    change Rat.divInt n (-(Int.ofNat (d+1))) = _ at eq
+    rw [Rat.divInt_neg'] at eq
+    obtain ⟨k, hk, hn, hden⟩ := Rat.mkRat_num_den (Nat.succ_ne_zero d) eq
+    refine ⟨-(k : Int), fun h => hk (Int.ofNat.inj (Int.neg_eq_zero.mp h)), ?_, ?_⟩
+    · rw [Int.mul_neg]
+      exact (Int.neg_neg n).symm.trans (congrArg Neg.neg hn)
+    · change -(Int.ofNat (d+1)) = (d' : Int) * (-(k : Int))
+      rw [Int.mul_neg]
+      exact congrArg Neg.neg (congrArg Int.ofNat hden)
+
+public theorem Rat.divInt_mul_left : type_of% @_root_.Rat.divInt_mul_left := by
+  intro n d a ha
+  by_cases hz : d = 0
+  · subst d
+    rw [Int.mul_zero, Rat.divInt_zero, Rat.divInt_zero]
+  · apply (Rat.divInt_eq_divInt_iff (Int.mul_ne_zero ha hz) hz).mpr
+    rw [Int.mul_assoc, Int.mul_left_comm]
+
 end OmegaChecks.InitPort.Alternatives
