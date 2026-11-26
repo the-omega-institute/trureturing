@@ -8,12 +8,12 @@ internal sealed class KobayashiMaskawaJarlskogRigidityDocument : IScribeDocument
 {
     private const string Prefix = "D5/S3/Quantum/Gauge/KobayashiMaskawaJarlskogRigidity.";
     private static readonly LibraryNoteRef KobayashiMaskawa =
-        LibraryNoteRef.Create("D5/L/Quantum/kobayashimaskawa1973cpviolation");
+        LibraryNoteRef.Create("D5/L/LieTheory/kobayashimaskawa1973cpviolation");
     private static readonly LibraryNoteRef Jarlskog =
-        LibraryNoteRef.Create("D5/L/Quantum/jarlskog1985commutator");
+        LibraryNoteRef.Create("D5/L/LieTheory/jarlskog1985commutator");
 
     private static readonly LibraryNoteRef Unistochastic =
-        LibraryNoteRef.Create("D5/L/Quantum/dunklzyczkowski2009unistochastic");
+        LibraryNoteRef.Create("D5/L/LieTheory/dunklzyczkowski2009unistochastic");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Quark mixing phases and gauge beta coefficients constrain the generation count.",
