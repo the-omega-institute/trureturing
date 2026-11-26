@@ -25,3 +25,10 @@ Theorem 1.3, p. 3, proves the origin-centered upper bound
 $|z|\le 1+(n-1)^{1/(n-1)}$, which is Brown and Mol's Conjecture 4.1. The
 206-vertex witness violates the inner bound of the translated annulus.
 [Jin, Ma and Wang, Theorem 1.3](https://arxiv.org/pdf/2608.07898v2#page=3) · [Conjecture 5.1](https://arxiv.org/pdf/2608.07898v2#page=16) · [Preregistration #34339](https://github.com/the-omega-institute/trureturing/issues/34339)
+
+## Verified locator
+
+In arXiv:1810.08655v1, Conjecture 4.2 states the annulus bounds on printed
+p. 14. Section 1 defines the subtree polynomial on printed p. 1 by counting
+connected induced subgraphs of each positive order.
+[arXiv v1](https://arxiv.org/abs/1810.08655v1) · [Conjecture 4.2 (PDF p. 14)](https://arxiv.org/pdf/1810.08655v1#page=14) · [Definition (PDF p. 1)](https://arxiv.org/pdf/1810.08655v1#page=1)
