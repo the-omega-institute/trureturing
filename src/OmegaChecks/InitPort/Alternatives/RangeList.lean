@@ -865,4 +865,41 @@ public theorem Std.Rci.getElem?_toList_eq : type_of% @_root_.Std.Rci.getElem?_to
     | none => rfl
     | some next => exact ih (r := ⟨next⟩)
 
+public theorem Std.toList_roc_eq_toList_rcc_of_isSome_succ? :
+    type_of% @_root_.Std.toList_roc_eq_toList_rcc_of_isSome_succ? := by
+  intro α _ _ _ _ _ _ lo hi h
+  rw [_root_.Std.Roc.toList_eq_match_rcc]
+  dsimp only
+  generalize hs : UpwardEnumerable.succ? lo = start at h ⊢
+  cases start with
+  | none => cases h
+  | some next => rfl
+
+public theorem Std.toList_roo_eq_toList_rco_of_isSome_succ? :
+    type_of% @_root_.Std.toList_roo_eq_toList_rco_of_isSome_succ? := by
+  intro α _ _ _ _ _ _ lo hi h
+  rw [_root_.Std.Roo.toList_eq_match_rco]
+  dsimp only
+  generalize hs : UpwardEnumerable.succ? lo = start at h ⊢
+  cases start with
+  | none => cases h
+  | some next => rfl
+
+public theorem Std.toList_roi_eq_toList_rci_of_isSome_succ? :
+    type_of% @_root_.Std.toList_roi_eq_toList_rci_of_isSome_succ? := by
+  intro α _ _ _ lo h
+  rw [_root_.Std.Roi.toList_eq_match_rci]
+  dsimp only
+  generalize hs : UpwardEnumerable.succ? lo = start at h ⊢
+  cases start with
+  | none => cases h
+  | some next => rfl
+
+public theorem Std.Roi.getElem?_toList_eq : type_of% @_root_.Std.Roi.getElem?_toList_eq := by
+  intro α r _ _ _ _ _ _ i
+  rw [_root_.Std.Roi.toList_eq_match_rci, UpwardEnumerable.succMany?_add_one_eq_succ?_bind_succMany?]
+  cases UpwardEnumerable.succ? r.lower with
+  | none => rfl
+  | some a => exact _root_.Std.Rci.getElem?_toList_eq
+
 end OmegaChecks.InitPort.Alternatives
