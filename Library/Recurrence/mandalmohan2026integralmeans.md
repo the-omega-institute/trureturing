@@ -19,6 +19,7 @@ triage: anchor
 Sagar Mandal and Mohan, *Integral Means of Fibonacci Numbers: Divisibility,
 Density, and Arithmetic Structure*, arXiv:2611.32519v1 (24 November 2026),
 Conjecture 1.19. [Versioned source](https://arxiv.org/html/2611.32519v1#S1.Thmtheorem19)
+[DOI](https://doi.org/10.48550/arXiv.2611.32519)
 
 ## Statement and indexing
 
