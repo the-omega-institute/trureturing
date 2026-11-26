@@ -33,7 +33,8 @@ variable {ι : Type*} [Fintype ι] [DecidableEq ι]
 
 local notation "Mat" => Matrix ι ι ℂ
 
-/-- The PSD matrix recording the positive and negative Jordan mass on the two sectors. -/
+/-- The matrix of positive and negative Jordan mass on the two sectors.
+It is positive semidefinite when `Q` is Hermitian. -/
 def harmonicB (X Q : Mat) : Mat :=
   Q * X⁺ * Q + (1 - Q) * X⁻ * (1 - Q)
 

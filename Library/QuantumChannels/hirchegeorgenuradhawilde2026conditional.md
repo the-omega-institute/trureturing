@@ -9,6 +9,7 @@ claim: "For a quantum channel N and a generalized divergence D, the conditional 
 strata_touched:
   - D5/S3/Quantum/Divergence/ConditionalHockeyStickOrthogonalReduction
   - D5/S3/Quantum/Divergence/ConditionalExpansion/ReverseDoeblinRefutation
+  - D5/S3/Quantum/Divergence/ConditionalExpansion/DerivativeFreeHarmonicCongruence
   - D5/S3/Quantum/Divergence/CompleteHockeyStickRefutation
   - D5/S3/Quantum/Divergence/CompleteHockeyStickBasisSupport
   - D5/S3/Quantum/Divergence/CompleteHockeyStickChoiSupport
@@ -108,6 +109,16 @@ the remaining weight on a second reference flag. Place all of $\beta$ on the
 first flag of the other state. The joint trace distance minus the reference
 distance is $E_\gamma(\alpha\|\beta)/\gamma$, before and after the channel.
 [Hirche, Appendix B-B, Eqs. (B.10)–(B.16)](https://arxiv.org/abs/2405.00105v2)
+
+The repository's harmonic congruence inequality uses the effect formula in
+Eq. (5.2). For a Hermitian matrix $X$, a projection $Q$, and a positive
+definite matrix $W$ commuting with $Q$, set $S=W^{1/2}$ and
+$B=QX_+Q+(I-Q)X_-(I-Q)$. If $\delta=\operatorname{Tr} B>0$, the result bounds
+$\operatorname{Tr}(SXS)_-+\operatorname{Tr}(QSXS)$ below by
+$\delta^2/\operatorname{Tr}(W^{-1}B)$. Taking $Q$ from the negative spectrum
+of the reference marginal makes this a matrix estimate for the conditional
+gap in Eq. (2.42). The argument uses orthogonality of two modified ranges.
+[Eq. (5.2)](https://arxiv.org/html/2608.27171v1#S5.E2)
 
 ## Complete hockey-stick contraction
 
