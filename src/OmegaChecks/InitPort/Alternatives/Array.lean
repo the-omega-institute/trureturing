@@ -472,6 +472,56 @@ private theorem fixInvariant {σ : Sort u} {β : σ → Sort v} (measure : σ �
     | succ k ih => exact preserves y _ fun z hz => ih z _
   exact loop _ x _
 
+private theorem zipWithAllStep (f : Option α → Option β → γ) (xs : List α) (ys : List β)
+    (i : Nat) (h : i < max xs.length ys.length) :
+    List.zipWithAll f (xs.drop i) (ys.drop i) =
+      f xs[i]? ys[i]? :: List.zipWithAll f (xs.drop (i+1)) (ys.drop (i+1)) := by
+  by_cases hx : i < xs.length
+  · rw [List.drop_eq_getElem_cons hx, List.getElem?_eq_getElem hx]
+    by_cases hy : i < ys.length
+    · rw [List.drop_eq_getElem_cons hy, List.getElem?_eq_getElem hy]
+      rfl
+    · have over := Nat.le_of_not_lt hy
+      rw [List.drop_eq_nil_of_le over, List.drop_eq_nil_of_le (Nat.le_succ_of_le over),
+        List.getElem?_eq_none over, List.zipWithAll_nil, List.zipWithAll_nil]
+      rfl
+  · have over := Nat.le_of_not_lt hx
+    have hy : i < ys.length := by
+      apply Nat.lt_of_not_ge
+      intro le
+      exact (Nat.not_le_of_lt h) (Nat.max_le.mpr ⟨over, le⟩)
+    rw [List.drop_eq_nil_of_le over, List.drop_eq_nil_of_le (Nat.le_succ_of_le over),
+      List.getElem?_eq_none over, List.drop_eq_getElem_cons hy, List.getElem?_eq_getElem hy]
+    rfl
+
+private theorem zipWithAllList (f : Option α → Option β → γ) (xs : Array α) (ys : Array β)
+    (i : Nat) (acc : Array γ) :
+    (Array.zipWithAll.go f xs ys i acc).toList =
+      acc.toList ++ List.zipWithAll f (xs.toList.drop i) (ys.toList.drop i) := by
+  delta Array.zipWithAll.go Array.zipWithAll.go._unary
+  let P (p : (_ : Nat) ×' Array γ) (out : Array γ) :=
+    out.toList = p.2.toList ++ List.zipWithAll f (xs.toList.drop p.1) (ys.toList.drop p.1)
+  apply fixInvariant (P := P)
+  rintro ⟨i, acc⟩ cont ih
+  dsimp only [P]
+  by_cases h : i < max xs.size ys.size
+  · rw [dite_eq_left h]
+    apply (ih ⟨i+1, acc.push (f xs[i]? ys[i]?)⟩ (Nat.sub_succ_lt_self _ _ h)).trans
+    rw [zipWithAllStep f xs.toList ys.toList i h, Array.getElem?_toList, Array.getElem?_toList]
+    exact (congrArg (· ++ _) Array.toList_push).trans (List.append_assoc ..)
+  · have over := Nat.le_of_not_lt h
+    rw [dite_eq_right h, List.drop_eq_nil_of_le (Nat.le_trans (Nat.le_max_left ..) over : xs.toList.length ≤ i),
+      List.drop_eq_nil_of_le (Nat.le_trans (Nat.le_max_right ..) over : ys.toList.length ≤ i)]
+    exact (List.append_nil _).symm
+
+public theorem Array.toList_zipWithAll : type_of% @_root_.Array.toList_zipWithAll := by
+  intro α β γ f xs ys
+  exact zipWithAllList f xs ys 0 #[]
+
+public theorem List.zipWithAll_toArray : type_of% @_root_.List.zipWithAll_toArray := by
+  intro α β γ f xs ys
+  exact _root_.Array.ext' Array.toList_zipWithAll
+
 private theorem zipWithList {α : Type u} {β : Type v} {γ : Type w}
     (as : Array α) (bs : Array β) (f : α → β → γ) (i : Nat) (acc : Array γ) :
     (Array.zipWithMAux (m := Id) as bs (fun a b => pure (f a b)) i acc).run.toList =
