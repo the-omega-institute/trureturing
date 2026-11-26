@@ -1,10 +1,11 @@
 module
 
 public import Init.Data.Range.Polymorphic.Iterators
+public import Init.Data.Iterators.Combinators.Monadic.Take
 
 /-! Finite consumers have a well-founded relation in their own interface. -/
 
-open Std Std.PRange Std.Iterators
+open Std Std.PRange Std.Iterators Std.Iterators.Types
 
 namespace OmegaChecks.InitPort.Alternatives
 
@@ -37,6 +38,46 @@ public noncomputable def Std.IterM.Total.toListRev
 public def Std.IterM.Total.toList {α : Type u} {m : Type u → Type v} {β : Type u} [Monad m]
     [Iterator α m β] [Finite α m] (it : IterM.Total (α := α) m β) : m (List β) :=
   Array.toList <$> _root_.Std.IterM.Total.toArray it
+
+public theorem Std.Iterators.Types.Take.instFinite {α : Type u} {m : Type u → Type v} {β : Type u}
+    [Monad m] [Iterator α m β] [Productive α m] : Finite (Take α m) m := by
+  let T := IterM (α := Take α m) m β
+  let R := IterM.IsPlausibleSuccessorOf (α := Take α m) (m := m)
+  have finiteInner (hf : Finite α m) (inner : IterM (α := α) m β) :
+      ∀ (n : Nat) (h : 0 < n ∨ Finite α m), Acc R (⟨n, inner, h⟩ : T) := by
+    induction inner using hf.wf.induction with
+    | h it ih =>
+      intro n h
+      constructor
+      rintro _ ⟨_, heq, hs⟩
+      cases hs with
+      | yield hy _ => cases heq; exact ih _ (IterM.isPlausibleSuccessorOf_of_yield hy) _ _
+      | skip hs _ => cases heq; exact ih _ (IterM.isPlausibleSuccessorOf_of_skip hs) _ _
+      | done _ => cases heq
+      | depleted _ => cases heq
+  have positive (n : Nat) : ∀ (hp : 0 < n) (inner : IterM (α := α) m β),
+      Acc R (⟨n, inner, Or.inl hp⟩ : T) := by
+    induction n using Nat.strongRecOn with
+    | ind n smaller =>
+      intro hp inner
+      induction inner using (Productive.wf (α := α) (m := m) (β := β)).induction with
+      | h it fewerSkips =>
+        constructor
+        rintro _ ⟨_, heq, hs⟩
+        cases hs with
+        | yield _ hne =>
+          cases heq
+          change n ≠ 1 at hne
+          apply smaller (n - 1) (Nat.sub_lt hp (by decide))
+          exact Nat.sub_pos_of_lt (Nat.lt_of_le_of_ne hp (Ne.symm hne))
+        | skip hs _ => cases heq; exact fewerSkips _ hs
+        | done _ => cases heq
+        | depleted _ => cases heq
+  refine ⟨⟨?_⟩⟩
+  rintro ⟨n, inner, h⟩
+  cases h with
+  | inl hp => exact positive n hp inner
+  | inr hf => exact finiteInner hf inner n (Or.inr hf)
 
 variable {α β : Type u} [Iterator α Id β] [Finite α Id]
 
