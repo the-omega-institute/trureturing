@@ -49,7 +49,7 @@ private theorem mem_factors {q : ℕ} (hq : 0 < q) {f : P} :
     f ∈ factors q ↔ Irreducible f ∧ f.Monic ∧ f ∣ cycle q := by
   rw [factors, Multiset.mem_toFinset, Polynomial.mem_normalizedFactors_iff (cycle_ne_zero hq)]
 
-@[simp] theorem project_eq_zero {f p : P} : project f p = 0 ↔ f ∣ p :=
+@[simp] private theorem project_eq_zero {f p : P} : project f p = 0 ↔ f ∣ p :=
   Ideal.Quotient.eq_zero_iff_mem.trans Ideal.mem_span_singleton
 
 private theorem mem_nontrivialFactors {q : ℕ} (hq : 0 < q) {f : P} :
@@ -135,7 +135,7 @@ private theorem X_sub_one : (X : P) - 1 = X + 1 := by
   linear_combination -htwo
 
 /-- For odd part one the nontrivial factor set is empty. -/
-@[simp] theorem nontrivialFactors_one : nontrivialFactors 1 = ∅ := by
+@[simp] private theorem nontrivialFactors_one : nontrivialFactors 1 = ∅ := by
   have hcycle : cycle 1 = (X : P) - C 1 := by simp [cycle]
   have hi : Irreducible (cycle 1) := hcycle ▸ irreducible_X_sub_C (1 : ZMod 2)
   have hm : (cycle 1).Monic := hcycle ▸ monic_X_sub_C (1 : ZMod 2)
@@ -254,7 +254,7 @@ private theorem localIdeal_le_residueIdeal (f : P) (m : ℕ) :
 def reduce (f : P) (m : ℕ) : Local f m →+* Mod f :=
   Ideal.Quotient.factor (localIdeal_le_residueIdeal f m)
 
-@[simp] theorem reduce_project (f p : P) (m : ℕ) :
+@[simp] private theorem reduce_project (f p : P) (m : ℕ) :
     reduce f m (project (f ^ (2 ^ m)) p) = project f p :=
   Ideal.Quotient.factor_mk _ _
 
