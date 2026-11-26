@@ -368,4 +368,29 @@ public theorem Array.map_snd_add_zipIdx_eq_zipIdx : type_of% @_root_.Array.map_s
   rw [_root_.Array.toList_map, _root_.Array.toList_zipIdx, _root_.Array.toList_zipIdx]
   exact List.map_snd_add_zipIdx_eq_zipIdx
 
+public theorem List.range_ne_nil : type_of% @_root_.List.range_ne_nil := by
+  intro n
+  constructor
+  · intro h e; subst n; exact h rfl
+  · intro ne e; exact ne (List.length_range.symm.trans (congrArg List.length e))
+
+public theorem List.range_succ_eq_map : type_of% @_root_.List.range_succ_eq_map := by
+  intro n
+  rw [List.range_eq_range', List.range']
+  apply congrArg (0 :: ·)
+  rw [List.range'_eq_map_range]
+  exact List.map_congr_left (fun i _ => Nat.one_add i)
+
+public theorem List.head_range : type_of% @_root_.List.head_range := by
+  intro n h
+  have nz := _root_.List.range_ne_nil.mp h
+  apply Option.some.inj
+  rw [← List.head?_eq_some_head h, List.head?_range, ite_eq_right nz]
+
+public theorem List.getLast_range : type_of% @_root_.List.getLast_range := by
+  intro n h
+  have nz := _root_.List.range_ne_nil.mp h
+  apply Option.some.inj
+  rw [← List.getLast?_eq_some_getLast h, List.getLast?_range, ite_eq_right nz]
+
 end OmegaChecks.InitPort.Alternatives

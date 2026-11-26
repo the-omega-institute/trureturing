@@ -1,6 +1,7 @@
 module
 public import Init.Data.List.Nat.Count
 public import Init.Data.List.Nat.Prod
+public import Init.Data.List.Nat.Sum
 public import Init.Data.List.Nat.Pairwise
 public import Init.Data.List.Nat.Sublist
 
@@ -83,5 +84,23 @@ public theorem List.sublist_eq_map_getElem : type_of% @_root_.List.sublist_eq_ma
         obtain ⟨i, _, rfl⟩ := List.mem_map.mp mem
         exact Nat.zero_lt_succ i.val
       · exact List.pairwise_map.mpr (pairs.imp (fun h => Nat.succ_lt_succ h))
+
+public theorem List.sum_eq_foldl_nat : type_of% @_root_.List.sum_eq_foldl_nat := by
+  intros
+  exact List.sum_eq_foldl
+
+public theorem List.sum_eq_zero_iff_forall_eq_nat : type_of% @_root_.List.sum_eq_zero_iff_forall_eq_nat := by
+  intro xs
+  induction xs with
+  | nil => exact ⟨fun _ _ mem => (nomatch mem), fun _ => rfl⟩
+  | cons x xs ih =>
+    rw [List.sum_cons, Nat.add_eq_zero_iff]
+    constructor
+    · rintro ⟨head, rest⟩ a ha
+      cases ha with
+      | head => exact head
+      | tail _ mem => exact ih.mp rest _ mem
+    · intro all
+      exact ⟨all _ (.head _), ih.mpr (fun a ha => all a (.tail _ ha))⟩
 
 end OmegaChecks.InitPort.Alternatives

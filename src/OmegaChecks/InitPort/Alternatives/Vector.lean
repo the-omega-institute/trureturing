@@ -2,6 +2,7 @@ module
 public import OmegaChecks.InitPort.Alternatives.VectorDecisions
 public import OmegaChecks.InitPort.Alternatives.VectorFind
 public import OmegaChecks.InitPort.Alternatives.VectorNested
+public import OmegaChecks.InitPort.Alternatives.VectorNumeric
 import all Init.Data.Vector.Basic
 import Init.Data.Vector.Lemmas
 
