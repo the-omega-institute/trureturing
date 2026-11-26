@@ -3,6 +3,8 @@ import all OmegaChecks.InitPort.Alternatives.FiniteLoop
 import all Init.Data.String.Iterate
 import all Init.Data.String.Lemmas.Iterate
 import all Init.Data.String.Termination
+import Init.Data.String.Lemmas.StringOrder
+import Init.Data.List.BasicAux
 import all Init.Data.Char.Basic
 import Init.Data.UInt.Lemmas
 import all Init.Data.String.Modify
@@ -164,5 +166,30 @@ public theorem String.mem_toList_iff_exists_get : type_of% @_root_.String.mem_to
     exact ⟨pos.val, pos.property, got⟩
   · rintro ⟨pos, h, rfl⟩
     exact List.mem_map.mpr ⟨⟨pos, h⟩, String.Model.mem_positionsFrom_startPos, rfl⟩
+
+public theorem String.le_antisymm : type_of% @_root_.String.le_antisymm := by
+  intro a b le ge
+  apply _root_.String.ext
+  exact List.lex_trichotomous (r := (· < · : Char → Char → Prop))
+    (fun _ _ ab ba => _root_.Char.le_antisymm (Nat.le_of_not_gt ba) (Nat.le_of_not_gt ab)) le ge
+
+public theorem String.le_total : type_of% @_root_.String.le_total := by
+  intro a b
+  by_cases lt : b < a
+  · exact Or.inr (_root_.String.lt_asymm lt)
+  · exact Or.inl lt
+
+public theorem String.le_trans : type_of% @_root_.String.le_trans := by
+  intro a b c ab bc
+  by_cases lt : a < b
+  · exact fun ca => bc (_root_.String.lt_trans ca lt)
+  · obtain rfl := String.le_antisymm ab lt
+    exact bc
+
+public theorem String.instLawfulOrderLT : type_of% @_root_.String.instLawfulOrderLT := by
+  constructor
+  intro a b
+  exact ⟨fun h => ⟨_root_.String.lt_asymm h, fun notLT => notLT h⟩,
+    fun h => Decidable.byContradiction h.2⟩
 
 end OmegaChecks.InitPort.Alternatives
