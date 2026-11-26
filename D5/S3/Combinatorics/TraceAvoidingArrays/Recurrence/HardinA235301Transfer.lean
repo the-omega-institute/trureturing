@@ -182,10 +182,10 @@ private lemma eval_mergeRows {α : Type} (key : α → ℕ) (fuel : ℕ)
   | zero => exact eval_append _ _ _
   | succ fuel ih =>
     cases xs with
-    | nil => simp [mergeRows]
+    | nil => simp [mergeRows, evalHist]
     | cons pair xs =>
       cases ys with
-      | nil => simp [mergeRows]
+      | nil => simp [mergeRows, evalHist]
       | cons pair' ys =>
         obtain ⟨x, a⟩ := pair
         obtain ⟨y, b⟩ := pair'
