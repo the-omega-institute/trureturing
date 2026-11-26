@@ -452,7 +452,7 @@ partial def visit (n : Name) : M Bool := do
       type := rewritten
       break
   let some body := ci.value? (allowOpaque := true) | return ← record n (.blocked "no kernel body")
-  let attempt (value : Expr) (budget := c.maxHeartbeats) : M Outcome := do
+  let checkValue (value : Expr) (budget : Nat) : M Outcome := do
     let value ← OmegaChecks.InitCompiler.namedLogicalProjections c.source value
     for dep in usedConstants value do
       if !(← visit dep) then return .blocked "unavailable dependency" (some dep)
@@ -465,6 +465,13 @@ partial def visit (n : Name) : M Bool := do
     | .ok next =>
       modify fun s => {s with env := next}
       return .added
+  let attempt (value : Expr) (budget := c.maxHeartbeats) : M Outcome := do
+    let result ← checkValue value budget
+    if result matches .added then return result
+    let compact := compactNonzeroPowers c.source value
+    unless compact.equal value do
+      if (← checkValue compact budget) matches .added then return .added
+    return result
   if let some alt := OmegaChecks.InitPort.alternativeBody? c.alternatives ci then
     let result ← attempt alt
     if result matches .added then return ← record n .added
