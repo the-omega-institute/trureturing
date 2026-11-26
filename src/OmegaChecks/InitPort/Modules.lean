@@ -70,6 +70,7 @@ private def sealedImplementation (n : Name) : Bool :=
     `String.Slice.ByteIterator.instIteratorLoopUInt8OfMonad,
     `String.Slice.PosIterator.instIteratorLoopSubtypePosNeEndPosOfMonad,
     `String.Slice.RevByteIterator.instIteratorLoopUInt8OfMonad,
+    `String.Slice.RevByteIterator.instForInCharOfMonad,
     `String.Slice.RevPosIterator.instIteratorLoopSubtypePosNeEndPosOfMonad].contains n
 
 /-- Inline a later proof dependency locally, so module cycles do not discard checked
