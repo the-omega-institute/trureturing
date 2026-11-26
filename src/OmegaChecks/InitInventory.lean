@@ -261,6 +261,25 @@ run_cmd
       throwError "invalid axiom reduction for {owner}/{name}"
   replayWitnesses env
 
+/-- Reader binding exposes the entire continuation as its result. -/
+theorem funextFromBindCongr
+    (combine : type_of% (@bind_congr.{u,u})) {α β : Type u} {f g : α → β}
+    (pointwise : ∀ x, f x = g x) : f = g := by
+  let read (γ : Type u) := α → γ
+  letI : Bind read := ⟨fun x k a => k (x a) a⟩
+  have eq := @combine read α β _ (fun a => a)
+    (fun a _ => f a) (fun a _ => g a)
+    (fun a => congrArg (fun y _ => y) (pointwise a))
+  exact eq
+
+/-- Mapping over the identity reader exposes the mapped function itself. -/
+theorem funextFromMapCongr
+    (combine : type_of% (@map_congr.{u,u})) {α β : Type u} {f g : α → β}
+    (pointwise : ∀ x, f x = g x) : f = g := by
+  let read (γ : Type u) := α → γ
+  letI : Functor read := ⟨fun h x a => h (x a), fun c _ _ => c⟩
+  exact @combine read α β _ (fun a => a) f g pointwise
+
 namespace Collector
 
 open Std Std.Iterators
