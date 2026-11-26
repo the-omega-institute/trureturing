@@ -861,3 +861,133 @@ public theorem Invariants.not_matchesAt_of_prefixFunction_eq :
     simpa only [Nat.add_sub_cancel, String.Pos.Raw.byteIdx_offsetBy, Nat.add_comm] using eqByte.symm
 
 end OmegaChecks.InitPort.Alternatives.String.Slice.Pattern.Model.ForwardSliceSearcher
+
+namespace OmegaChecks.InitPort.Alternatives.String.Slice.Pattern.Model.ForwardSliceSearcher
+open _root_.String.Slice.Pattern _root_.String.Slice.Pattern.Model _root_.String.Slice.Pattern.Model.ForwardSliceSearcher
+open _root_.String.Slice.Pattern.ForwardSliceSearcher _root_.String.Slice
+open _root_.String.Slice.Pattern.Model.ForwardSliceSearcher.Invariants
+
+public theorem Invariants.isValidSearchFrom_toList :
+    type_of% (private_decl% @_root_.String.Slice.Pattern.Model.ForwardSliceSearcher.Invariants.isValidSearchFrom_toList) := by
+  intro pat s stackPos needlePos it h table ht hn heq p hp
+  induction it using Std.Iter.inductSteps generalizing p stackPos needlePos with | step it ihy ihs
+  cases heq
+  cases hp
+  rw [Std.Iter.toList_eq_match_step]
+  generalize hit' : (Std.Iter.mk (α := ForwardSliceSearcher s)
+    (.proper pat table ht stackPos needlePos hn)).step = it'
+
+  have hit'' := congrArg Subtype.val hit'
+  have plausible := it'.property
+  simp only [Std.Iter.step_eq, ne_eq, Std.Iter.toIterM] at hit''
+  split at hit'' <;> rename_i h₁
+  · split at hit'' <;> rename_i h₂
+    · split at hit'' <;> rename_i h₃
+      · -- Case 1: matched the full pattern
+        simp only [Id.run_pure, Std.Shrink.inflate_deflate, Std.IterM.Step.toPure_yield,
+          Std.PlausibleIterStep.yield, Std.IterM.toIter_mk] at hit''
+        have hinc := h.inc _ _ h₂.symm
+        have hzero := hinc.zero_of_eq h₃
+        rw [s.pos!_eq_pos hinc.isValidForSlice, s.pos!_eq_pos (hzero.isValidForSlice' rfl)] at hit''
+        simp only [← hit'', _root_.String.Pos.Raw.inc_unoffsetBy_inc] at ⊢ plausible
+        apply IsValidSearchFrom.matched_of_eq (ihy plausible hzero rfl rfl) _ rfl
+        simpa [base] using hinc.isLongestMatchAt h₃
+
+      · -- Case 2: matched the next character, but not yet the full pattern
+        simp only [Id.run_pure, Std.Shrink.inflate_deflate, Std.IterM.Step.toPure_skip,
+          Std.PlausibleIterStep.skip, Std.IterM.toIter_mk] at hit''
+        simp only [← hit''] at ⊢ plausible
+        exact ihs plausible (h.inc _ _ h₂.symm) rfl (by simp [base])
+
+    · split at hit'' <;> rename_i h₃
+      · -- Case 3: mismatch at the start of the pattern -> jump to next position
+        simp only [Id.run_pure, Std.Shrink.inflate_deflate, Std.IterM.Step.toPure_yield,
+          Std.PlausibleIterStep.yield, Std.IterM.toIter_mk] at hit''
+        cases h₃
+        rw [s.pos!_eq_pos (h.isValidForSlice' rfl)] at hit''
+        simp only [← hit''] at ⊢ plausible
+        apply IsValidSearchFrom.mismatched_of_eq _ (by simp [base]) _ (by simp [base])
+        · exact ihy plausible (.offset h.isEmpty_eq_false) rfl rfl
+        · simp only [base, _root_.String.Pos.Raw.unoffsetBy_zero, Pos.le_iff, offset_pos, lt_posGT_iff]
+          intro pos hp₁ hp₂
+          obtain rfl : stackPos = pos.offset := Std.le_antisymm hp₁ hp₂
+          intro found
+          obtain ⟨_, same⟩ := (matchesAt_iff_getElem h.isEmpty_eq_false).mp found
+          have nonempty : 0 < pat.utf8ByteSize := Nat.pos_of_ne_zero (fun z =>
+            Bool.noConfusion (h.isEmpty_eq_false.symm.trans (isEmpty_iff.mpr z)))
+          have inBounds := pat.utf8ByteSize_eq_size_toByteArray_copy ▸ nonempty
+          have atZero := same 0 inBounds
+          apply h₂
+          simpa only [getUTF8Byte_eq_getUTF8Byte_copy, String.getUTF8Byte, _root_.String.Pos.Raw.byteIdx_zero, Nat.add_zero] using atZero.symm
+
+      · cases ht
+        simp only [getElem_buildTable] at hit''
+
+        split at hit'' <;> rename_i h₄
+        · -- Case 4: mismatch in the middle of the pattern, and no common prefix ->
+          -- jump to next position if not at the start of the character
+          simp only [Id.run_pure, Std.Shrink.inflate_deflate, Std.IterM.Step.toPure_yield,
+            Std.PlausibleIterStep.yield, Std.IterM.toIter_mk] at hit''
+          rw [s.pos!_eq_pos h.isValidForSlice] at hit''
+          simp only [← hit''] at ⊢ plausible
+          apply IsValidSearchFrom.mismatched_of_eq _ _ _ (by simp [base])
+          · exact ihy plausible (.offset h.isEmpty_eq_false) rfl rfl
+          · have := h.partialMatch.needlePos_le_stackPos
+            simp only [_root_.String.Pos.Raw.ext_iff, _root_.String.Pos.Raw.byteIdx_zero, base, lt_posGE_iff, offset_pos,
+              _root_.String.Pos.Raw.lt_iff, _root_.String.Pos.Raw.byteIdx_unoffsetBy, gt_iff_lt] at ⊢ h₃
+            omega
+          · simp only [base, lt_posGE_iff]
+            exact fun p hp₁ hp₂ => (private_decl% _root_.String.Slice.Pattern.Model.ForwardSliceSearcher.Invariants.not_matchesAt_of_prefixFunction_eq) h h₄ _ hp₁ hp₂ h₂
+
+        · -- Case 5: mismatch in the middle of the pattern with a common prefix
+          simp only [Id.run_pure, Std.Shrink.inflate_deflate, Std.IterM.Step.toPure_yield,
+            Std.PlausibleIterStep.yield, Std.IterM.toIter_mk] at hit''
+          rw [s.pos!_eq_pos h.isValidForSlice,
+            s.pos!_eq_pos (h.of_prefixFunction_eq h₃ rfl (by omega)).isValidForSlice] at hit''
+          simp only [← hit''] at ⊢ plausible
+          apply IsValidSearchFrom.mismatched_of_eq _ _ _ (by simp [base])
+          · exact ihy plausible (h.of_prefixFunction_eq h₃ rfl (by omega)) rfl rfl
+          · have h₅ := h.partialMatch.needlePos_le_stackPos
+            simp [base, Pos.lt_iff, _root_.String.Pos.Raw.ext_iff] at ⊢ h₃ h₅
+            apply _root_.String.Pos.Raw.unoffsetBy_lt_unoffsetBy_of_le_of_lt
+            all_goals exact Std.lt_of_le_of_lt prefixFunction_le (by simp [_root_.String.Pos.Raw.lt_iff]; omega)
+          · exact fun p hp₁ hp₂ => (private_decl% _root_.String.Slice.Pattern.Model.ForwardSliceSearcher.Invariants.not_matchesAt_of_prefixFunction_eq) h rfl _ hp₁ hp₂ h₂
+
+  · split at hit'' <;> rename_i h₂
+    · -- Case 6: so close to the end that we cannot match anymore -> reject, then done
+      simp only [Id.run_pure, Std.Shrink.inflate_deflate, Std.IterM.Step.toPure_yield,
+        Std.PlausibleIterStep.yield, Std.IterM.toIter_mk] at hit''
+      rw [s.pos!_eq_pos h.isValidForSlice] at hit''
+      simp only [← hit''] at ⊢ plausible
+      apply IsValidSearchFrom.mismatched_of_eq _ _ _ (by simp [base])
+      · rw [Std.Iter.toList_eq_match_step, Std.Iter.step_eq]
+        simpa [Std.Iter.toIterM] using IsValidSearchFrom.endPos
+      · simp only [_root_.String.Pos.Raw.lt_iff, _root_.String.Pos.Raw.byteIdx_unoffsetBy, byteIdx_rawEndPos, base, Pos.lt_iff,
+          offset_pos, offset_endPos] at ⊢ h₂
+        omega
+      · refine fun p hp₁ hp₂ hm => ?_
+        have := le_of_matchesAt h.isEmpty_eq_false hm
+        simp only [base, Pos.le_iff, offset_pos, _root_.String.Pos.Raw.le_iff, _root_.String.Pos.Raw.byteIdx_unoffsetBy,
+          Nat.sub_le_iff_le_add, _root_.String.Pos.Raw.byteIdx_increaseBy, byteIdx_rawEndPos,
+          Nat.not_le] at hp₁ this h₁
+        omega
+
+    · --  Case 7: reached the end with empty partial match -> done
+      simp only [base, ← hit'', Id.run_pure, Std.Shrink.inflate_deflate, Std.IterM.Step.toPure_done,
+        Std.PlausibleIterStep.done, Std.IterM.toIter_mk]
+      apply IsValidSearchFrom.endPos_of_eq (Std.le_antisymm (Pos.le_endPos _) _) rfl
+      simpa [_root_.String.Pos.Raw.le_iff, Pos.le_iff, _root_.String.Pos.Raw.lt_iff] using h₂
+
+end OmegaChecks.InitPort.Alternatives.String.Slice.Pattern.Model.ForwardSliceSearcher
+
+namespace OmegaChecks.InitPort.Alternatives.String.Slice.Pattern.Model.ForwardStringSearcher
+
+public theorem lawfulToForwardSearcherModel :
+    type_of% @_root_.String.Slice.Pattern.Model.ForwardStringSearcher.lawfulToForwardSearcherModel := by
+  intro pat nonempty
+  refine ⟨fun s => ?_⟩
+  exact (_root_.String.Slice.Pattern.Model.ForwardStringSearcher.isValidSearchFrom_iff_isValidSearchFrom_toSlice).mpr
+    ((_root_.String.Slice.Pattern.Model.ForwardSliceSearcher.lawfulToForwardSearcherModel
+      (toSliceNonempty nonempty)).isValidSearchFrom_toList s)
+
+end OmegaChecks.InitPort.Alternatives.String.Slice.Pattern.Model.ForwardStringSearcher
