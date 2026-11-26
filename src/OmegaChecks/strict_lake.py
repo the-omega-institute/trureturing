@@ -129,7 +129,10 @@ def strict_build(args):
             del selections[target]
             selections.update((name, set()) for name in config["defaultTargets"])
     for target in selections:
-        base = target.partition(":")[0]
+        base, _, facet = target.partition(":")
+        # The :lean facet reads the source file. Lake validates it directly, including in mixed builds.
+        if facet == "lean":
+            continue
         name = base.rsplit("/", 1)[-1]
         if name in libraries:
             result = subprocess.check_output([*lake, "--json", "query", base + ":modules"], cwd=ROOT, text=True)
@@ -143,6 +146,8 @@ def strict_build(args):
                 if source.is_relative_to(ROOT) and (name := module_path(str(source.relative_to(ROOT)))):
                     selections[target].add(name)
     all_roots = set().union(*selections.values())
+    if not all_roots:
+        return subprocess.call([*lake, "build", *args], cwd=ROOT)
     graph = strict_import_graph("lean", all_roots)
     no_build = "--no-build" in options
     try:

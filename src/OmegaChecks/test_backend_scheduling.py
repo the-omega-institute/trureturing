@@ -37,6 +37,9 @@ class BackendScheduling(unittest.TestCase):
             official = build / "lib/lean/D5/Marked.olean"
             planner = build / "bin/omegaBackendPlan"
             strict = build / "omega-strict/lib/lean/D5"
+            run(["lake", "build", "--no-build", "+D5.Marked:lean"], 0)
+            run([*wrapper, "build", "--no-build", "+D5.Marked:lean"], 0)
+            run([*wrapper, "build", "--no-build", "D5/Marked.lean:lean", "+D5.Marked"], 3)
             run(["lake", "build", "--no-build", "+D5.Marked"], 3)
             run([*wrapper, "build", "--no-build", "+D5.Marked"], 3)
             self.assertFalse(official.exists())
@@ -55,6 +58,7 @@ class BackendScheduling(unittest.TestCase):
             run([*wrapper, "build", "+D5.Plain"], 0)
             run([*wrapper, "build", "--no-build", "+D5.Plain"], 0)
             marked.write_text(marked.read_text().replace("42", "43"))
+            run([*wrapper, "build", "--no-build", "@trureturing/+D5.Marked:lean", "+D5.Plain"], 0)
             run([*wrapper, "build", "--no-build", "+D5.Marked"], 3)
             self.assertEqual(stamp, official.stat().st_mtime_ns)
 
