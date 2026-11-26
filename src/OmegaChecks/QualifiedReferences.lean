@@ -229,7 +229,7 @@ private def checkElaborated (source : System.FilePath) (text : String)
 /-- The parsed declaration syntax excludes imports, comments and string contents.
 The trace-verified .ilean supplies the resolution at this exact source token on this backend. -/
 private def checkFile (moduleName : Name) (source index : System.FilePath)
-    (catalog : Environment) (ports : Ports) (project : NameSet) : IO Nat := do
+    (catalog : Environment) (ports : Ports) (project : NameSet) (scanOnly : Bool) : IO (Option Nat) := do
   let text ← IO.FS.readFile source
   let ictx := Parser.mkInputContext text source.toString
   let (header, parserState, messages) ← Parser.parseHeader ictx
@@ -251,7 +251,8 @@ private def checkFile (moduleName : Name) (source index : System.FilePath)
   let (published, reachable) ← (publicUses moduleName data catalog ports project).run' |>.toIO'
     {fileName := source.toString, fileMap := ictx.fileMap} {env := catalog}
   if published.isEmpty && !relevantRefs && !(parserState.pos.extract text text.rawEndPos).contains "OmegaMathlib" then
-    return 0
+    return none
+  if scanOnly then return some 0
   let opts := ({} : Options).setBool `relaxedAutoImplicit false
   let (env, messages) ← Elab.processHeader header opts messages ictx (mainModule := moduleName) (leakEnv := true)
   for msg in messages.toList do
@@ -310,27 +311,65 @@ private def checkFile (moduleName : Name) (source index : System.FilePath)
       if let some span := id.getRange? then marks := marks.push (span, port.target)
   unless published.isEmpty do
     checkElaborated source text state.commands sourceEnv opts published data.isModule marks catalog ports project
-  return count
+  return some count
 
-end OmegaChecks.QualifiedReferences
-
-open OmegaChecks.QualifiedReferences in
-unsafe def main (args : List String) : IO Unit := do
-  let backend :: path :: request :: portModules := args | throw <| IO.userError "expected backend, search path and input manifest"
-  unless backend == "strict" || backend == "official" do throw <| IO.userError s!"unknown backend {backend}"
+/-- The scan uses exactly the same compiled declarations and identifier test as a replay. -/
+private unsafe def runChecks (backend path : String) (files : Array (Array String))
+    (portModules : List String) (scanOnly : Bool) (only : Option String := none) : IO (Nat × Array String) := do
   searchPathRef.set (System.SearchPath.parse path)
-  let files : Array (Array String) ← IO.ofExcept (Json.parse (← IO.FS.readFile request) >>= fromJson?)
   let mut count := 0
+  let mut replay := #[]
   enableInitializersExecution
-  let modules := (portModules ++ files.toList.filterMap (·[0]?)).eraseDups
+  let selected := files.filter fun row => only.all (fun name => row[0]? == some name)
+  if only.isSome && selected.size != 1 then throw <| IO.userError s!"expected one manifest entry for {only}"
+  let modules := (portModules ++ selected.toList.filterMap (·[0]?)).eraseDups
   let catalog ← importModules (modules.toArray.map fun name => {module := name.toName, importAll := true}) {}
   let ports ← admittedPorts catalog (backend == "official")
   let project := files.foldl (init := ({} : NameSet)) fun names row =>
     if let some name := row[0]? then names.insert name.toName else names
   let ports ← (indexEquivalentObjects catalog ports project).run' |>.toIO'
     {fileName := "<standard object identity>", fileMap := default} {env := catalog}
-  for row in files do
+  for row in selected do
     let #[name, source, refs] := row | throw <| IO.userError "expected module, source and ilean paths"
     enableInitializersExecution
-    count := count + (← checkFile name.toName source refs catalog ports project)
+    let some n ← checkFile name.toName source refs catalog ports project scanOnly | do
+      if only.isSome then throw <| IO.userError s!"compiled replay selection changed for {name}"
+      continue
+    if scanOnly then replay := replay.push name else count := count + n
+  return (count, replay)
+
+local elab "checkerSourcePath%" : term => return toExpr (← getFileName)
+
+/-- Every replay imports just its compiled module and the admitted ports. The catalog used to
+select the full worklist has already exited before the first replay starts. -/
+private def worker (args : List String) : IO Json := IO.FS.withTempFile fun _ resultFile => do
+  let result ← IO.Process.output {
+    cmd := ((← findSysroot) / "bin" / "lean").toString
+    args := #["--run", checkerSourcePath%, "--result", resultFile.toString] ++ args.toArray }
+  unless result.exitCode == 0 do throw <| IO.userError s!"{result.stderr}{result.stdout}"
+  IO.ofExcept (Json.parse (← IO.FS.readFile resultFile))
+
+end OmegaChecks.QualifiedReferences
+
+open OmegaChecks.QualifiedReferences in
+unsafe def main (args : List String) : IO Unit := do
+  let (resultFile, only, input) := match args with
+    | "--result" :: file :: "--scan" :: rest => (some file, none, rest)
+    | "--result" :: file :: "--replay" :: name :: rest => (some file, some name, rest)
+    | _ => (none, none, args)
+  let backend :: path :: request :: portModules := input | throw <| IO.userError "expected backend, search path and input manifest"
+  unless backend == "strict" || backend == "official" do throw <| IO.userError s!"unknown backend {backend}"
+  let files : Array (Array String) ← IO.ofExcept (Json.parse (← IO.FS.readFile request) >>= fromJson?)
+  if let some file := resultFile then
+    let (count, selected) ← runChecks backend path files portModules only.isNone only
+    IO.FS.writeFile file (if only.isNone then toJson selected else toJson count).compress
+    return
+  let mut count := 0
+  if files.size ≤ 1 then
+    count := (← runChecks backend path files portModules false).1
+  else
+    let selected : Array String ← IO.ofExcept (fromJson? (← worker ("--scan" :: args)))
+    for name in selected do
+      let n : Nat ← IO.ofExcept (fromJson? (← worker ("--replay" :: name :: args)))
+      count := count + n
   IO.println s!"Verified {count} qualified standard references on the {backend} backend."

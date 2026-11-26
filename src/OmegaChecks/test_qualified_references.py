@@ -138,6 +138,28 @@ def computational_cases(backend):
                                  "public def D5.observed (n k : Omega.Nat) : Omega.Nat := helper n k\n"), []
 
 
+def check_case(lean, label, path, sources, errors):
+    with tempfile.TemporaryDirectory(prefix="omega-refs-") as temp:
+        directory = Path(temp)
+        search = os.pathsep.join([temp, path])
+        records = []
+        for module, source in sources:
+            file = directory.joinpath(*module.split(".")).with_suffix(".lean")
+            file.parent.mkdir(parents=True, exist_ok=True)
+            file.write_text(source)
+            index = file.with_suffix(".ilean")
+            subprocess.run([lean, "-R", temp, "-o", file.with_suffix(".olean"), "-i", index, file],
+                           cwd=ROOT, env={**os.environ, "LEAN_PATH": search}, check=True)
+            records.append([module, str(file), str(index)])
+        request = directory / "request.json"
+        request.write_text(json.dumps(records))
+        result = subprocess.run([lean, "--run", CHECKER, label, search, request, *PORTS],
+                                cwd=ROOT, capture_output=True, text=True)
+        message = result.stdout + result.stderr
+        if bool(result.returncode) != bool(errors) or any(error not in message for error in errors):
+            raise AssertionError(f"{label} expected {errors or 'success'} for {sources!r}\ngot {message}")
+
+
 def check():
     lean = subprocess.check_output(["lake", "env", "printenv", "LEAN"], cwd=ROOT, text=True).strip()
     for label, layout in [("strict", ["lake", "-f", strict_config()]), ("official", ["lake"])]:
@@ -145,22 +167,15 @@ def check():
                         "+D5.S3.Arith.Primes.DivisorCharacterization"], cwd=ROOT, check=True)
         path = subprocess.check_output([*layout, "env", "printenv", "LEAN_PATH"], cwd=ROOT, text=True).strip()
         for module, source, errors in (*cases(), *computational_cases(label)):
-            with tempfile.TemporaryDirectory(prefix="omega-refs-") as temp:
-                directory = Path(temp)
-                search = os.pathsep.join([temp, path])
-                file = directory.joinpath(*module.split(".")).with_suffix(".lean")
-                file.parent.mkdir(parents=True, exist_ok=True)
-                file.write_text(source)
-                index = file.with_suffix(".ilean")
-                subprocess.run([lean, "-R", temp, "-o", file.with_suffix(".olean"), "-i", index, file], cwd=ROOT,
-                               env={**os.environ, "LEAN_PATH": search}, check=True)
-                request = directory / "request.json"
-                request.write_text(json.dumps([[module, str(file), str(index)]]))
-                result = subprocess.run([lean, "--run", CHECKER, label, search, request, *PORTS],
-                                        cwd=ROOT, capture_output=True, text=True)
-                message = result.stdout + result.stderr
-                if bool(result.returncode) != bool(errors) or any(error not in message for error in errors):
-                    raise AssertionError(f"{label} expected {errors or 'success'} for\n{source}\ngot {message}")
+            check_case(lean, label, path, [(module, source)], errors)
+        owner = ("D5.RefOwner", "module\nprelude\npublic import OmegaInit.Prelude\n"
+                 "@[expose] public def D5.RefOwner.Prime (_ : Omega.Nat) := Omega.True\n")
+        consumer = ("module\nprelude\npublic import D5.RefOwner\npublic import " + PORTS[0] +
+                    "\nnamespace D5.RefOwner\npublic theorem use (n : Omega.Nat) "
+                    "(_ : OmegaMathlib.Nat.Prime n) : REF n := Omega.True.intro\nend D5.RefOwner\n")
+        for spelling, errors in [("Prime", ["uses D5.RefOwner.Prime", "OmegaMathlib.Nat.Prime"]),
+                                 ("_root_.D5.RefOwner.Prime", [])]:
+            check_case(lean, label, path, [owner, ("D5.RefUse", consumer.replace("REF", spelling))], errors)
         print(f"Checked occurrence fixtures on {label}", flush=True)
 
 
