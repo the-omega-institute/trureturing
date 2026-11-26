@@ -104,9 +104,9 @@ internal sealed class FinnerProductMeasureDocument : IScribeDocumentDefinition
                 "f_j=m_j times the product of those same h_i over S_j, mu-almost " +
                 "everywhere for every j. Empty index types, empty supports, repeated " +
                 "supports, zero values on sets of positive measure and infinity values " +
-                "on null sets are included. This classification is not a conclusion of " +
-                "the inequality declaration above; extracting the common family from " +
-                "saturation remains a formal obligation.")),
+                "on null sets are included. The declaration " +
+                "ProperSupportMarginalGluing.finner_equality_iff_common_profiles proves " +
+                "this classification by induction on the active coordinate set.")),
             Paragraph(Text(
                 "The directly read Bennett-Oh restatement in Section 1.1, after equation " +
                 "(1.6), attributes to Finner a common-profile equality representation " +
@@ -146,10 +146,11 @@ internal sealed class FinnerProductMeasureDocument : IScribeDocumentDefinition
                 "of f_{j(i)} over every coordinate other than i, evaluated at a " +
                 "with coordinate i replaced by t. These are measurable functions. " +
                 "Marginal insertion and full-product integration give each integral " +
-                "equal to one, using the positive finite original mass. The " +
-                "unclosed step is that Finner saturation forces every original " +
-                "row f_j to equal m_j times the product of this same candidate " +
-                "family over S_j, almost everywhere under the original mu.")),
+                "equal to one, using the positive finite original mass. The equality " +
+                "theorem in ProperSupportMarginalGluing constructs a common family " +
+                "by active-set induction and proper-support marginal gluing. Identifying " +
+                "every resulting profile with this particular anchored candidate is " +
+                "a separate canonical-choice correspondence question.")),
             Paragraph(Text(
                 "For the converse implication, the finite intersection of the rowwise " +
                 "full-measure sets permits substitution of every representation in the " +

@@ -26,8 +26,30 @@ To recover row j, choose k in A outside S_j. Its k-marginal is pointwise the ori
 
 Bennett and Oh, Section 2.1, use this proper-support assembly within an induction for Finner stability. The statement here is the exact marginal gluing implication for measurable ENNReal factors. It assumes the concrete deleted-marginal factorizations. Finner saturation alone is not a hypothesis from which this declaration derives those factorizations. The full balanced Finner equality classification additionally requires their derivation by dimension induction and a treatment of rows with full active support.
 
+**Theorem 1.2 (The complete balanced Finner equality criterion).**
+
+Lean statement: `D5/S3/Analytic/Measure/ProperSupportMarginalGluing.finner_equality_iff_common_profiles`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/Measure/ProperSupportMarginalGluing.finner_equality_iff_common_profiles` (`✓ std3`). ∎
+
+*Citation.* Helmut Finner (1992). *A Generalization of Holder's Inequality and Some Probability Inequalities*. DOI: [10.1214/aop/1176989534](https://doi.org/10.1214/aop/1176989534).
+
+*Commentary.*
+
+Let I and J be arbitrary finite types, X_i arbitrary measurable spaces, and mu_i probability measures. Every measurable ENNReal row f_j on the dependent product depends only on its finite support S_j. Its mass m_j under the original product measure mu is strictly positive and finite. The real weights w_j are strictly positive, and the sum of w_j over rows containing coordinate i equals one for every i. The coordinate incidence patterns are separated: if a and b belong to exactly the same row supports, then a=b.
+
+Then integral_mu(product_j f_j(x)^w_j)=product_j m_j^w_j if and only if there is one family of measurable ENNReal functions h_i on X_i, each of integral one under mu_i, such that for every row j, f_j(x)=m_j product_{i in S_j} h_i(x_i) mu-almost everywhere. The law in the hypothesis, every mass, and every row equality is the same original product law. There are no conditions on conditional slice masses, finite alphabets, pointwise positivity, distinct row supports, or coordinate topologies. Empty types and supports, repeated supports, weight-one rows, unrestricted positive weights on empty supports, positive-measure zeros and infinite values on null sets are retained.
+
+Normalize every row by its positive finite mass. Induct on a finite active coordinate set while keeping the ambient product law fixed. Marginal integration preserves unit mass. The marginal Finner estimate and Finner for the deleted rows sandwich the weighted-product integral of every coordinate-deleted family at one. Its supports lose exactly that coordinate; balance and incidence separation persist on the remaining active set. The smaller-set conclusion therefore supplies the concrete marginal factorizations required by proper-support gluing.
+
+At each active set, first obtain the proper-row implication from the smaller-set conclusions. For at least two active coordinates, remove the common full-support incidence mask. Separation and strictly positive weights force the remaining incidence budget r to be strictly positive. Divide proper-row weights by r and denote their weighted product by Q. Finner gives integral Q at most one; a global Holder bound and the original saturation give (integral Q)^r at least one. Thus integral Q is one. The proper-row implication reconstructs Q as the product of the common coordinate profiles. Normalized finite Holder applied to Q and the full rows identifies every full row with Q almost everywhere.
+
+For an empty active set, unit rows depending on no coordinates are constant one. For a singleton active set, discard those empty-support unit rows and use normalized Holder on the incident rows. A coordinate section of a supported representative gives the measurable unit profile; no almost-everywhere equality is restricted to a chosen anchor. For the converse, finite product interchange and balance combine the powered row representations into one product of the coordinate profiles. Tonelli and their unit integrals give saturation. Positive finite scalar normalization restores exactly the original masses in both directions. This is the classical equality classification with the stated ENNReal endpoints; no mathematical originality is claimed.
+
 ## References
 
 - Truth anchor: `D5/S3/Analytic/Measure/ProperSupportMarginalGluing.exists_common_profiles_of_deleted_marginal_factorizations`
+- Truth anchor: `D5/S3/Analytic/Measure/ProperSupportMarginalGluing.finner_equality_iff_common_profiles`
+- Dependency: [D5/S3/Analytic/Measure/NormalizedHolderEquality](NormalizedHolderEquality.md)
 - Dependency: [D5/S3/Analytic/Measure/ProductSupportIntersection](ProductSupportIntersection.md)
 - Dependency: [D5/S3/Combinatorics/Hypergraphs/FinnerProductMeasure](../../Combinatorics/Hypergraphs/FinnerProductMeasure.md)
