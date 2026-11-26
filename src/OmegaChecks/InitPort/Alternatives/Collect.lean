@@ -3,6 +3,7 @@ module
 public import Init.Data.Range.Polymorphic.Iterators
 public import Init.Data.Iterators.Combinators.Monadic.Take
 public import Init.Data.Range.Polymorphic.Instances
+public import Init.Data.Range.Polymorphic.Map
 
 /-! Finite consumers have a well-founded relation in their own interface. -/
 
@@ -221,6 +222,103 @@ public theorem Std.Rxo.LawfulHasSize.of_closed :
     have hpos := Nat.pos_of_ne_zero fun h => (_root_.Std.Rxc.size_eq_zero_iff_not_le.mp h) hnext
     rw [Rxc.LawfulHasSize.size_eq_succ_of_succ?_eq_some (h := hle) (h' := hs)]
     exact (Nat.sub_add_cancel hpos).symm
+
+section RangeMap
+
+open Std.PRange.UpwardEnumerable
+variable {α : Type u} {β : Type v} [UpwardEnumerable α] [UpwardEnumerable β]
+
+public theorem Std.PRange.LawfulUpwardEnumerable.ofMap.{b, a} {α : Type a} {β : Type b}
+    [UpwardEnumerable α] [UpwardEnumerable β] [LawfulUpwardEnumerable β] (f : Map α β) :
+    LawfulUpwardEnumerable α where
+  ne_of_lt a b h eq := LawfulUpwardEnumerable.ne_of_lt _ _ (f.lt_iff.mp h) (congrArg f.toFun eq)
+  succMany?_zero a := by
+    apply Option.map_injective f.injective
+    exact (f.succMany?_toFun _ _).symm.trans (LawfulUpwardEnumerable.succMany?_zero _)
+  succMany?_add_one n a := by
+    apply Option.map_injective f.injective
+    rw [← f.succMany?_toFun, LawfulUpwardEnumerable.succMany?_add_one, f.succMany?_toFun]
+    cases heq : succMany? n a with
+    | none => rfl
+    | some b => exact f.succ?_toFun b
+
+public theorem Std.PRange.instPreservesLTOfLawfulOrderLTOfPreservesLE
+    [LE α] [LT α] [LawfulOrderLT α] [LE β] [LT β] [LawfulOrderLT β] (f : Map α β)
+    [f.PreservesLE] : f.PreservesLT where
+  lt_iff := by
+    refine (LawfulOrderLT.lt_iff _ _).trans (Iff.trans ?_ (LawfulOrderLT.lt_iff _ _).symm)
+    exact ⟨fun ⟨hab, hnba⟩ => ⟨(Map.PreservesLE.le_iff (f := f)).mp hab,
+      fun h => hnba ((Map.PreservesLE.le_iff (f := f)).mpr h)⟩,
+      fun ⟨hab, hnba⟩ => ⟨(Map.PreservesLE.le_iff (f := f)).mpr hab,
+      fun h => hnba ((Map.PreservesLE.le_iff (f := f)).mp h)⟩⟩
+
+public theorem Std.PRange.LawfulUpwardEnumerableLE.ofMap [LE α] [LE β]
+    [LawfulUpwardEnumerableLE β] (f : Map α β) [f.PreservesLE] :
+    LawfulUpwardEnumerableLE α where
+  le_iff _ _ := (Map.PreservesLE.le_iff (f := f)).trans
+    ((LawfulUpwardEnumerableLE.le_iff _ _).trans f.le_iff.symm)
+
+public theorem Std.Rxc.LawfulHasSize.ofMap [LE α] [LE β] [Rxc.HasSize α] [Rxc.HasSize β]
+    [Rxc.LawfulHasSize β] (f : Map α β) [f.PreservesLE] [f.PreservesRxcSize] : Rxc.LawfulHasSize α where
+  size_eq_zero_of_not_le _ _ h := (Map.PreservesRxcSize.size_eq (f := f)).trans
+    (Rxc.LawfulHasSize.size_eq_zero_of_not_le _ _ (fun h' => h ((Map.PreservesLE.le_iff (f := f)).mpr h')))
+  size_eq_one_of_succ?_eq_none _ _ h hs := (Map.PreservesRxcSize.size_eq (f := f)).trans
+    (Rxc.LawfulHasSize.size_eq_one_of_succ?_eq_none _ _ ((Map.PreservesLE.le_iff (f := f)).mp h)
+      (f.succ?_eq_none_iff.mp hs))
+  size_eq_succ_of_succ?_eq_some _ _ _ h hs := (Map.PreservesRxcSize.size_eq (f := f)).trans
+    ((Rxc.LawfulHasSize.size_eq_succ_of_succ?_eq_some _ _ _ ((Map.PreservesLE.le_iff (f := f)).mp h)
+      (f.succ?_eq_some_iff.mp hs)).trans (congrArg Nat.succ (Map.PreservesRxcSize.size_eq (f := f)).symm))
+
+public theorem Std.Rxc.IsAlwaysFinite.ofMap [LE α] [LE β] [Rxc.IsAlwaysFinite β] (f : Map α β)
+    [f.PreservesLE] : Rxc.IsAlwaysFinite α where
+  finite lo hi := by
+    obtain ⟨n, hn⟩ := Rxc.IsAlwaysFinite.finite (f.toFun lo) (f.toFun hi)
+    refine ⟨n, ?_⟩
+    rw [f.succMany?_toFun] at hn
+    cases hs : succMany? n lo with
+    | none => exact True.intro
+    | some b =>
+      rw [hs] at hn
+      exact fun h => hn ((Map.PreservesLE.le_iff (f := f)).mp h)
+
+public theorem Std.PRange.LawfulUpwardEnumerableLT.ofMap [LT α] [LT β]
+    [LawfulUpwardEnumerableLT β] (f : Map α β) [f.PreservesLT] :
+    LawfulUpwardEnumerableLT α where
+  lt_iff _ _ := (Map.PreservesLT.lt_iff (f := f)).trans
+    ((LawfulUpwardEnumerableLT.lt_iff _ _).trans f.lt_iff.symm)
+
+public theorem Std.Rxo.LawfulHasSize.ofMap [LT α] [LT β] [Rxo.HasSize α] [Rxo.HasSize β]
+    [Rxo.LawfulHasSize β] (f : Map α β) [f.PreservesLT] [f.PreservesRxoSize] : Rxo.LawfulHasSize α where
+  size_eq_zero_of_not_le _ _ h := (Map.PreservesRxoSize.size_eq (f := f)).trans
+    (Rxo.LawfulHasSize.size_eq_zero_of_not_le _ _ (fun h' => h ((Map.PreservesLT.lt_iff (f := f)).mpr h')))
+  size_eq_one_of_succ?_eq_none _ _ h hs := (Map.PreservesRxoSize.size_eq (f := f)).trans
+    (Rxo.LawfulHasSize.size_eq_one_of_succ?_eq_none _ _ ((Map.PreservesLT.lt_iff (f := f)).mp h)
+      (f.succ?_eq_none_iff.mp hs))
+  size_eq_succ_of_succ?_eq_some _ _ _ h hs := (Map.PreservesRxoSize.size_eq (f := f)).trans
+    ((Rxo.LawfulHasSize.size_eq_succ_of_succ?_eq_some _ _ _ ((Map.PreservesLT.lt_iff (f := f)).mp h)
+      (f.succ?_eq_some_iff.mp hs)).trans (congrArg Nat.succ (Map.PreservesRxoSize.size_eq (f := f)).symm))
+
+public theorem Std.Rxo.IsAlwaysFinite.ofMap [LT α] [LT β] [Rxo.IsAlwaysFinite β] (f : Map α β)
+    [f.PreservesLT] : Rxo.IsAlwaysFinite α where
+  finite lo hi := by
+    obtain ⟨n, hn⟩ := Rxo.IsAlwaysFinite.finite (f.toFun lo) (f.toFun hi)
+    refine ⟨n, ?_⟩
+    rw [f.succMany?_toFun] at hn
+    cases hs : succMany? n lo with
+    | none => exact True.intro
+    | some b =>
+      rw [hs] at hn
+      exact fun h => hn ((Map.PreservesLT.lt_iff (f := f)).mp h)
+
+public theorem Std.Rxi.LawfulHasSize.ofMap [Rxi.HasSize α] [Rxi.HasSize β] [Rxi.LawfulHasSize β]
+    (f : Map α β) [f.PreservesRxiSize] : Rxi.LawfulHasSize α where
+  size_eq_one_of_succ?_eq_none _ hs := (Map.PreservesRxiSize.size_eq (f := f)).trans
+    (Rxi.LawfulHasSize.size_eq_one_of_succ?_eq_none _ (f.succ?_eq_none_iff.mp hs))
+  size_eq_succ_of_succ?_eq_some _ _ hs := (Map.PreservesRxiSize.size_eq (f := f)).trans
+    ((Rxi.LawfulHasSize.size_eq_succ_of_succ?_eq_some _ _ (f.succ?_eq_some_iff.mp hs)).trans
+      (congrArg Nat.succ (Map.PreservesRxiSize.size_eq (f := f)).symm))
+
+end RangeMap
 
 variable {α β : Type u} [Iterator α Id β] [Finite α Id]
 
