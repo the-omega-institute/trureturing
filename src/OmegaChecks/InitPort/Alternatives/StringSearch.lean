@@ -85,6 +85,28 @@ private theorem falseIffNot {b : Bool} {p : Prop} (h : b = true ↔ p) : b = fal
 public theorem String.Slice.beq_eq_false_iff : type_of% @_root_.String.Slice.beq_eq_false_iff :=
   falseIffNot String.Slice.beq_eq_true_iff
 
+public theorem ByteArray.validateUTF8_eq_false_iff :
+    type_of% @_root_.ByteArray.validateUTF8_eq_false_iff :=
+  falseIffNot _root_.ByteArray.validateUTF8_eq_true_iff
+
+public theorem String.Pos.Raw.isValid_eq_false_iff :
+    type_of% @_root_.String.Pos.Raw.isValid_eq_false_iff :=
+  falseIffNot _root_.String.Pos.Raw.isValid_eq_true_iff
+
+public theorem String.Pos.Raw.isValidForSlice_eq_false_iff :
+    type_of% @_root_.String.Pos.Raw.isValidForSlice_eq_false_iff :=
+  falseIffNot _root_.String.Pos.Raw.isValidForSlice_eq_true_iff
+
+public theorem List.utf8Encode_eq_empty : type_of% @_root_.List.utf8Encode_eq_empty := by
+  intro l
+  constructor
+  · intro empty
+    have eq : String.ofList l = "" :=
+      String.toByteArray_inj.mp (String.toByteArray_ofList.trans empty)
+    exact String.toList_ofList.symm.trans ((congrArg String.toList eq).trans String.toList_empty)
+  · rintro rfl
+    exact List.utf8Encode_nil
+
 public theorem String.Slice.beq_eq_decide : type_of% @_root_.String.Slice.beq_eq_decide :=
   Bool.eq_iff_iff.mpr (String.Slice.beq_eq_true_iff.trans ⟨fun h => decide_eq_true h, of_decide_eq_true⟩)
 
@@ -392,12 +414,12 @@ public theorem String.Slice.eqIgnoreAsciiCase.go._unary._proof_3 :
   exact Nat.sub_lt_sub_left bound.1 (Nat.lt_succ_self _)
 
 @[expose] public def String.Slice.Pattern.instBEqSearchStep.beq :
-    type_of% @_root_.String.Slice.Pattern.instBEqSearchStep.beq := by
-  intro s a b
-  match a, b with
-  | .matched p q, .matched r t | .rejected p q, .rejected r t =>
-    exact (p.offset.byteIdx == r.offset.byteIdx) && (q.offset.byteIdx == t.offset.byteIdx)
-  | .matched .., .rejected .. | .rejected .., .matched .. => exact false
+    type_of% @_root_.String.Slice.Pattern.instBEqSearchStep.beq := fun {s} a b =>
+  let same (p q r t : s.Pos) :=
+    (p.offset.byteIdx == r.offset.byteIdx) && (q.offset.byteIdx == t.offset.byteIdx)
+  _root_.String.Slice.Pattern.SearchStep.casesOn a
+    (fun p q => _root_.String.Slice.Pattern.SearchStep.casesOn b (same p q) (fun _ _ => false))
+    (fun p q => _root_.String.Slice.Pattern.SearchStep.casesOn b (fun _ _ => false) (same p q))
 
 public theorem String.Slice.Pattern.ToBackwardSearcher.DefaultBackwardSearcher.finitenessRelation._proof_2 :
     type_of% (private_decl% @_root_.String.Slice.Pattern.ToBackwardSearcher.DefaultBackwardSearcher.finitenessRelation._proof_2) := by
