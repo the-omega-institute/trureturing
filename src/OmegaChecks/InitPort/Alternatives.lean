@@ -34,7 +34,8 @@ public def loadAlternatives : IO (NameMap ConstantInfo) := do
   let mut alternatives := {}
   for (owner, data) in env.header.moduleNames.zip env.header.moduleData do
     unless owner != scope && scope.isPrefixOf owner do continue
-    let localMatcher := fun n => isPrivateName n && env.getModuleIdxFor? n == env.getModuleIdx? owner
+    let localMatcher := fun n => isPrivateName n && (env.getModuleIdxFor? n).any fun i =>
+      scope.isPrefixOf env.header.moduleNames[i]!
     for ci in data.constants do
       let namedProof := match ci.name with
         | .str _ component => ci.isTheorem && component.startsWith "_proof_"
