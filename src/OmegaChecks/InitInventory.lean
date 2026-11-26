@@ -2,6 +2,7 @@ module
 public import Lean
 import Lean.Replay
 import all Lean.Util.CollectAxioms
+import all Init.Data.Slice.Operations
 
 public section
 
@@ -416,6 +417,32 @@ def limitedOmniscienceFromCollector (collect : type_of% (@Std.Iter.toList.{0}))
       | false => exact congrArg Nat.succ (congrArg List.length (correct (search (k+1))).symm)
     have result := length_hits (seenSticky f) gHit len unroll 0
     exact Bool.noConfusion (h.symm.trans (by simpa only [Nat.zero_add] using result))
+
+/-- An array collector on unrestricted iterators also gives a list collector pointwise. -/
+def limitedOmniscienceFromArray (collect : type_of% (@Std.Iter.toArray.{0}))
+    (correct : ∀ {α β : Type} [Iterator α Id β] [Finite α Id] (it : Iter (α := α) β),
+      collect it = it.toArray) (f : Nat → Bool) : Decidable (∃ n, f n = true) :=
+  limitedOmniscienceFromCollector (fun it => (collect it).toList)
+    (fun it => (congrArg Array.toList (correct it)).trans Iter.toList_toArray) f
+
+/-- Reversing the reverse collector recovers the ordinary collector on every finite iterator. -/
+def limitedOmniscienceFromReverse (collect : type_of% (@Std.Iter.toListRev.{0}))
+    (correct : ∀ {α β : Type} [Iterator α Id β] [Finite α Id] (it : Iter (α := α) β),
+      collect it = it.toListRev) (f : Nat → Bool) : Decidable (∃ n, f n = true) :=
+  limitedOmniscienceFromCollector (fun it => (collect it).reverse)
+    (fun it => (congrArg List.reverse (correct it)).trans Iter.reverse_toListRev) f
+
+/-- A slice may use the iterator itself as its internal representation. -/
+def limitedOmniscienceFromSlice (collect : type_of% (@Std.Slice.toList.{0,0}))
+    (correct : ∀ {γ α β : Type} [ToIterator (Slice γ) Id α β] [Iterator α Id β]
+      [Finite α Id] (s : Slice γ), collect s = s.toList) (f : Nat → Bool) :
+    Decidable (∃ n, f n = true) := by
+  apply limitedOmniscienceFromCollector (f := f) (fun {α β} [Iterator α Id β] it =>
+    letI := ToIterator.of (γ := Slice (Iter (α := α) β)) α (fun s => s.internalRepresentation)
+    collect ⟨it⟩)
+  intro α β inst fin it
+  letI := ToIterator.of (γ := Slice (Iter (α := α) β)) α (fun s => s.internalRepresentation)
+  exact correct (Slice.mk it)
 
 end Collector
 
