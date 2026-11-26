@@ -7,7 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Factorization.Combinatorics;
 internal sealed class KarttunenParityDirichletConvolutionsDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Factorization/Combinatorics/KarttunenParityDirichletConvolutions.";
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Factorization/karttunen2024a369255");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/ArithUnits/karttunen2024a369255");
     private static readonly Formula N = F.Id("n");
     private static readonly Formula Dv = F.Id("d");
     private static readonly Formula P = F.Id("p");
@@ -61,6 +61,11 @@ internal sealed class KarttunenParityDirichletConvolutionsDocument : IScribeDocu
                             NatDiv(Add(Factorization(), D(1)), D(2)))))))),
                 "OEIS A355837, revision 25, FORMULA (unpaginated). “Multiplicative with a(p^e) = 2 * (e mod 2) * (-1)^((e+1)/2) for prime p and e>0.” "
                 + "The empty product gives C(1) = 1. Nat.div gives the integer exponent on odd e. On even positive e the remainder factor is zero."),
+            SourceDefinition("H", "The inverse Möbius transform",
+                AllN(Equal(Call("H", N), DivisorCountSum(N))),
+                "OEIS A140773, revision 51, FORMULA (unpaginated). "
+                + "“a(n) = Sum_{m|n} A038548(m) = Sum_{m|n} ceiling(d(m)/2), where d(m) = number of divisors of m (A000005). - _Manfred Boergens_, Feb 25 2021” "
+                + "Here g counts the divisors up to the square root and H sums this count over all positive divisors."),
             SourceDefinition("claim", "Both positive-index conjectures",
                 Equal(F.Id("claim"), Parenthesized(ClaimBody())), Conjectures),
             Node("result", "Both identities", ClaimBody(), AssessedProvenance.FromRepo(Source),
@@ -77,10 +82,10 @@ internal sealed class KarttunenParityDirichletConvolutionsDocument : IScribeDocu
 
     private static Formula ClaimBody()
     {
-        Formula parity = Cast(NatMod(DivisorCountSum(N), D(2)), "Int");
+        Formula parity = Cast(NatMod(Call("H", N), D(2)), "Int");
         Formula quotient = NatDiv(N, Dv);
         Formula first = Equal(parity, Sum(N, "d", Multiply(Cast(Call("A", Dv), "Int"), Call("B", quotient))));
-        Formula second = Equal(parity, Sum(N, "d", Multiply(Cast(DivisorCountSum(Dv), "Int"), Call("C", quotient))));
+        Formula second = Equal(parity, Sum(N, "d", Multiply(Cast(Call("H", Dv), "Int"), Call("C", quotient))));
         return AllN(new Formula.Logic(Parenthesized(Le(D(1), N)), FormulaLogicOperator.Implies,
             Parenthesized(And(Parenthesized(first), Parenthesized(second)))));
     }
