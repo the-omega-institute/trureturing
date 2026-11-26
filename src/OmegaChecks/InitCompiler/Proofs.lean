@@ -1,6 +1,7 @@
 module
 
 public import Lean
+import OmegaChecks.InitCompiler.ProofRules
 
 /-! Translate proof terms from the pinned Init environment into the strict namespace. -/
 
@@ -158,7 +159,8 @@ private partial def transport? (source : Environment) (back : Bool) (p q eq inpu
 
 /-- Specialize fully applied casts in the official proof term before translating
 its constants. Every resulting term still goes through the destination kernel. -/
-public def constructiveCasts (source : Environment) (body : Expr) : Expr := Id.run do
+public def constructiveCasts (source : Environment) (body : Expr) (rules : NameMap ConstantInfo := {}) :
+    Expr := Id.run do
   let equiv := fun (a b h : Expr) => do
     let direction := fun rev dom => do
       let lift := fun (e : Expr) => e.liftLooseBVars 0 1
@@ -168,6 +170,26 @@ public def constructiveCasts (source : Environment) (body : Expr) : Expr := Id.r
   let rewrite := fun (e : Expr) => do
     let .const n us := e.getAppFn | none
     match n, us, e.getAppArgs with
+    | `ite_congr, _, #[α, b, c, x, y, s, t, db, dc, h, yes, no]
+    | `dite_congr, _, #[b, c, α, db, dc, x, s, y, t, h, yes, no] =>
+      let eqv ← equiv b c h
+      let (name, args) := if n == `ite_congr then
+        (`iteCongr, #[α, b, c, x, y, s, t, db, dc, eqv, yes, no])
+      else (`diteCongr, #[b, c, α, db, dc, x, s, y, t, eqv, yes, no])
+      let rule ← rules.find? name
+      return ((← rule.value? (allowOpaque := true)).instantiateLevelParams rule.levelParams us).beta args
+    | `ite_cond_congr, _, #[α, b, c, db, dc, x, y, h] =>
+      let rule ← rules.find? `iteCongr
+      let sameBranch := fun (dom v : Expr) => Expr.lam `h dom
+        ((mkApp2 (mkConst `Eq.refl us) α v).liftLooseBVars 0 1) .default
+      let args := #[α, b, c, x, y, x, y, db, dc, ← equiv b c h,
+        sameBranch c x, sameBranch (mkApp (mkConst `Not) c) y]
+      return ((← rule.value? (allowOpaque := true)).instantiateLevelParams rule.levelParams us).beta args
+    | `Eq.mpr_prop, _, #[p, q, h, x] => transport? source true p q h x 32
+    | `Eq.mpr_not, _, #[p, q, h, x] =>
+      let lift := fun (e : Expr) => e.liftLooseBVars 0 1
+      let term ← transport? source false (lift p) (lift q) (lift h) (mkBVar 0) 32
+      return Expr.lam `hp p ((lift x).beta #[term]) .default
     | `ite_eq_left_of_eq_true, _, #[α, p, dec, t, f, h]
     | `dite_eq_left_of_eq_true, _, #[α, p, dec, t, f, h] =>
       let hp ← transport? source true p (mkConst `True) h (mkConst `True.intro) 32

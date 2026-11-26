@@ -91,6 +91,7 @@ structure Context where
   publicNames : NameSet
   literalProofs : NameMap ConstantInfo
   alternatives : NameMap ConstantInfo
+  proofRules : NameMap ConstantInfo
   output : IO.FS.Handle
 
 abbrev M := ReaderT Context (StateRefT State IO)
@@ -414,12 +415,12 @@ partial def visit (n : Name) : M Bool := do
     if (← attempt alt) matches .added then return ← record n .added
   let result ← attempt body
   if result matches .added then return ← record n result
-  let rewritten := OmegaChecks.InitCompiler.constructiveCasts c.source body
+  let rewritten := OmegaChecks.InitCompiler.constructiveCasts c.source body c.proofRules
   if !rewritten.equal body then
     if (← attempt rewritten) matches .added then return ← record n .added
   let decided ← OmegaChecks.InitCompiler.decidableProof c.source rewritten
   if !decided.equal rewritten then
-    if (← attempt (OmegaChecks.InitCompiler.constructiveCasts c.source decided)) matches .added then
+    if (← attempt (OmegaChecks.InitCompiler.constructiveCasts c.source decided c.proofRules)) matches .added then
       return ← record n .added
   if let some certified := comparisonProofs c.source c.literalProofs decided n then
     -- Rechecking the closed proof of comparison costs proportionally more than
@@ -452,6 +453,12 @@ def writeMonolithic (base : Environment) (final : Kernel.Environment)
 
 def run (strictPath artifacts : System.FilePath) (outPath : String) (exclude : System.FilePath) (modules : List Name) : IO Unit := do
   let alternatives ← OmegaChecks.InitPort.loadAlternatives
+  let ruleModule := `OmegaChecks.InitCompiler.ProofRules
+  let ruleEnv ← importModules #[{module := ruleModule}] {} (level := .private)
+  let mut proofRules := {}
+  for name in #[`iteCongr, `diteCongr] do
+    let some info := ruleEnv.find? (ruleModule ++ name) | throw <| IO.userError s!"missing proof rule {name}"
+    proofRules := proofRules.insert name info
   let lib ← getLibDir (← findSysroot)
   searchPathRef.set [lib]
   let allMods ← if modules.isEmpty then modulesIn lib else pure modules.toArray
@@ -485,7 +492,7 @@ def run (strictPath artifacts : System.FilePath) (outPath : String) (exclude : S
   let excluded := exclusions.foldl (init := ({} : NameMap String)) fun acc (n, r) => acc.insert n.toName r
   let maxHeartbeats := (← IO.getEnv "OMEGA_PORT_HEARTBEATS").bind String.toNat? |>.getD 5000
   let literalProofs ← loadLiteralProofs strictPath
-  let ctx := {source,base,publicNames,excluded,output,maxHeartbeats,literalProofs,alternatives : Context}
+  let ctx := {source,base,publicNames,excluded,output,maxHeartbeats,literalProofs,alternatives,proofRules : Context}
   let action : M Unit := do
     for owner in source.header.moduleNames, data in source.header.moduleData do
       if owner.getRoot == `Init then
