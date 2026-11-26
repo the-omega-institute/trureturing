@@ -2360,6 +2360,51 @@ run_cmd
 
 end IteratorLoopCongruence
 
+namespace ArrayLoopCongruence
+
+private def sample (f : T → T) : Option T → Bool → ReaderM T (Option T)
+  | _, false => fun x => some x
+  | none, true => fun _ => none
+  | some a, true => fun _ => some (f a)
+
+private theorem sampleCongr {f g : T → T} (h : ∀ x, f x = g x) :
+    ∀ s bit, sample f s bit = sample g s bit := by
+  intro s bit
+  cases bit with
+  | false => rfl
+  | true =>
+    cases s with
+    | none => rfl
+    | some x => exact congrArg (fun y _ => some y) (h x)
+
+private def readBack (k : ReaderM T (Option T)) (x : T) := (k x).getD x
+
+private theorem fromLeft (fold : type_of% @Array.foldlM_congr.{u,0,u}) {T : Type u}
+    {f g : T → T} (h : ∀ x, f x = g x) : f = g := by
+  have e := fold (m := ReaderM T) (xs := #[false,true]) (b := none) rfl (sampleCongr h)
+    (start := 0) (stop := 2) rfl rfl
+  exact congrArg readBack e
+
+private theorem fromRight (fold : type_of% @Array.foldrM_congr.{0,u,u}) {T : Type u}
+    {f g : T → T} (h : ∀ x, f x = g x) : f = g := by
+  have e := fold (m := ReaderM T) (xs := #[true,false]) (b := none) (f := fun bit s => sample f s bit)
+    (g := fun bit s => sample g s bit) rfl (fun bit s => sampleCongr h s bit)
+    (start := 2) (stop := 0) rfl rfl
+  exact congrArg readBack e
+
+public theorem foldlCongr (combine : type_of% @Array.foldlM_congr.{max 1 u v,0,max 1 u v}) :
+    type_of% @funext.{u,v} := funextFromEndomorphisms (fromLeft combine)
+
+public theorem foldrCongr (combine : type_of% @Array.foldrM_congr.{0,max 1 u v,max 1 u v}) :
+    type_of% @funext.{u,v} := funextFromEndomorphisms (fromRight combine)
+
+open Lean in
+run_cmd
+  for n in [``foldlCongr, ``foldrCongr] do
+    unless (← collectAxioms n).isEmpty do throwError "array congruence witness {n} uses axioms"
+
+end ArrayLoopCongruence
+
 namespace Collector
 
 open Std Std.Iterators
@@ -3025,6 +3070,10 @@ private def logicalConsequence? (owner name : Name) : Option (Name × Name) := d
     return (``funext, ``OmegaChecks.InitBoundaries.MonadicTraversal.fromListFoldl)
   | `Init.Data.List.Monadic, ``List.foldrM_subtype =>
     return (``funext, ``OmegaChecks.InitBoundaries.MonadicTraversal.fromListFoldr)
+  | `Init.Data.Array.Lemmas, ``Array.foldlM_congr =>
+    return (``funext, ``OmegaChecks.InitBoundaries.ArrayLoopCongruence.foldlCongr)
+  | `Init.Data.Array.Lemmas, ``Array.foldrM_congr =>
+    return (``funext, ``OmegaChecks.InitBoundaries.ArrayLoopCongruence.foldrCongr)
   | `Init.Data.Iterators.Lemmas.Consumers.Monadic.Loop, ``Std.IterM.forIn_congr =>
     return (``funext, ``OmegaChecks.InitBoundaries.IteratorLoopCongruence.funextFromMonadicCongr)
   | `Init.Data.Iterators.Lemmas.Consumers.Monadic.Loop, ``Std.IterM.forIn'_congr =>
