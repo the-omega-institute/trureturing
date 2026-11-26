@@ -1,0 +1,254 @@
+name: Check the selected current scope
+
+on:
+  workflow_call:
+    inputs:
+      base:
+        required: true
+        type: string
+      report:
+        required: true
+        type: boolean
+      delta:
+        required: true
+        type: boolean
+      source-status:
+        required: true
+        type: string
+      judge-key:
+        required: true
+        type: string
+      nuget-key:
+        required: true
+        type: string
+      compute-remaining:
+        required: true
+        type: string
+    outputs:
+      unit:
+        description: Current checks completed for the entire selected scope.
+        value: ${{ jobs.finalize.outputs.unit || jobs.plan.outputs.unit }}
+
+permissions:
+  contents: read
+  actions: read
+  pull-requests: read
+
+env:
+  CI_BASE: ${{ inputs.base }}
+  STRATALINT_ACCEPT_COLD_BUILD: '1'
+  STRATALINT_CACHE_WRITES: 'false'
+
+jobs:
+  plan:
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 360
+    outputs:
+      unit: ${{ steps.checked.outputs.unit }}
+      matrix: ${{ steps.batches.outputs.matrix }}
+      parallel: ${{ steps.batches.outputs.parallel }}
+      count: ${{ steps.batches.outputs.count }}
+      remaining: ${{ steps.remaining.outputs.compute_remaining }}
+      epoch: ${{ steps.remaining.outputs.epoch }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 2
+          persist-credentials: false
+      - id: judge
+        uses: ./.github/actions/current-judge
+        with:
+          base: ${{ inputs.base }}
+          judge-key: ${{ inputs.judge-key }}
+          nuget-key: ${{ inputs.nuget-key }}
+          needs-judge: ${{ inputs.report || inputs.source-status != 'accepted' }}
+      - id: budget
+        name: Resume the cumulative current compute allowance
+        env:
+          COMPUTE_REMAINING: ${{ inputs.compute-remaining }}
+        run: |
+          budget="$RUNNER_TEMP/current-compute-seconds"
+          python3 tools/scripts/workflow/ci_compute.py resume-current "$budget" "$COMPUTE_REMAINING"
+          echo "STRATALINT_CI_COMPUTE_BUDGET=$budget" >> "$GITHUB_ENV"
+      - name: Build the judge
+        if: ${{ !cancelled() && (inputs.report || inputs.source-status != 'accepted') && steps.budget.outcome == 'success' && steps.judge.outputs.judge-hit != 'true' }}
+        run: python3 tools/scripts/workflow/ci_checks.py current build-judge
+      - id: lean_plan
+        name: Select affected Lean inputs
+        if: ${{ !cancelled() && inputs.report && steps.budget.outcome == 'success' }}
+        run: python3 tools/scripts/workflow/ci_checks.py current lean-plan --scope-file "$RUNNER_TEMP/current-lean-plan.json"
+      - id: batches
+        if: steps.lean_plan.outcome == 'success'
+        run: |
+          matrix="$(python3 tools/scripts/workflow/ci_pr_lean.py "$RUNNER_TEMP/changed-paths" --read-plan "$RUNNER_TEMP/current-lean-plan.json" --batch-matrix)"
+          count="$(jq -e '.include | length' <<< "$matrix")"
+          echo "count=$count" >> "$GITHUB_OUTPUT"
+          if (( count > 1 && count <= 256 )); then
+            echo "parallel=true" >> "$GITHUB_OUTPUT"
+            echo "matrix=$(jq -c . <<< "$matrix")" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Share the plan with the report batches
+        if: steps.batches.outputs.parallel == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: current-lean-plan
+          path: |
+            ${{ runner.temp }}/current-lean-plan.json
+            ${{ runner.temp }}/changed-paths
+          if-no-files-found: error
+          overwrite: true
+      - id: remaining
+        if: steps.batches.outputs.parallel == 'true'
+        run: |
+          python3 tools/scripts/workflow/ci_compute.py export-current "$STRATALINT_CI_COMPUTE_BUDGET" >> "$GITHUB_OUTPUT"
+          echo "epoch=$(date -u +%s)" >> "$GITHUB_OUTPUT"
+      - id: lean
+        if: steps.batches.outputs.parallel != 'true' && steps.lean_plan.outputs.needs_lean == 'true'
+        uses: ./.github/actions/current-lean
+      - name: Theory-only file and capacity checks
+        if: ${{ !inputs.report && inputs.source-status != 'accepted' }}
+        run: python3 tools/scripts/workflow/ci_checks.py current check-delta
+      - name: Check current and delta with affected Lean and Scribe inputs
+        if: ${{ !cancelled() && steps.batches.outcome == 'success' && steps.batches.outputs.parallel != 'true' && (steps.lean_plan.outputs.builds_lean == 'false' || steps.lean.outcome == 'success') }}
+        env:
+          LEAN_NUM_THREADS: '1'
+        run: |
+          python3 tools/scripts/workflow/ci_checks.py current pr-lean --scope-file "$RUNNER_TEMP/current-lean-plan.json"
+      - id: checked
+        if: steps.batches.outputs.parallel != 'true'
+        run: echo 'unit=current' >> "$GITHUB_OUTPUT"
+
+  batch:
+    name: Lean report batch ${{ matrix.batch }}
+    needs: plan
+    if: needs.plan.outputs.parallel == 'true'
+    strategy:
+      fail-fast: false
+      max-parallel: 6
+      matrix: ${{ fromJSON(needs.plan.outputs.matrix) }}
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 360
+    env:
+      BATCH: ${{ matrix.batch }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 2
+          persist-credentials: false
+      - id: judge
+        uses: ./.github/actions/current-judge
+        with:
+          base: ${{ inputs.base }}
+          judge-key: ${{ inputs.judge-key }}
+          nuget-key: ${{ inputs.nuget-key }}
+          needs-judge: ${{ inputs.report || inputs.source-status != 'accepted' }}
+      - name: Build the batch judge
+        if: steps.judge.outputs.judge-hit != 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          STRATALINT_CI_COMPUTE_BUDGET: ${{ runner.temp }}/current-compute-seconds
+          PLANNER_REMAINING: ${{ needs.plan.outputs.remaining }}
+          PLANNER_EPOCH: ${{ needs.plan.outputs.epoch }}
+          BATCH_COUNT: ${{ needs.plan.outputs.count }}
+        run: |
+          python3 tools/scripts/workflow/ci_parallel_compute.py run --remaining "$PLANNER_REMAINING" --epoch "$PLANNER_EPOCH" --count "$BATCH_COUNT" -- \
+            python3 tools/scripts/workflow/ci_checks.py current build-judge
+      - name: Download the selected scope
+        uses: actions/download-artifact@v8
+        with:
+          name: current-lean-plan
+          path: ${{ runner.temp }}/current-plan
+          digest-mismatch: error
+      - name: Verify the distributed scope uses the same changed paths
+        run: |
+          cmp "$RUNNER_TEMP/changed-paths" "$RUNNER_TEMP/current-plan/changed-paths"
+          mv "$RUNNER_TEMP/current-plan/current-lean-plan.json" "$RUNNER_TEMP/current-lean-plan.json"
+      - uses: ./.github/actions/current-lean
+        with:
+          batch: ${{ matrix.batch }}
+      - name: Check the Lean batch
+        env:
+          GH_TOKEN: ${{ github.token }}
+          STRATALINT_CI_COMPUTE_BUDGET: ${{ runner.temp }}/current-compute-seconds
+          PLANNER_REMAINING: ${{ needs.plan.outputs.remaining }}
+          PLANNER_EPOCH: ${{ needs.plan.outputs.epoch }}
+          BATCH_COUNT: ${{ needs.plan.outputs.count }}
+        run: |
+          LEAN_NUM_THREADS="$(nproc)"
+          if (( LEAN_NUM_THREADS > 2 )); then LEAN_NUM_THREADS=2; fi
+          export LEAN_NUM_THREADS
+          python3 tools/scripts/workflow/ci_parallel_compute.py run --remaining "$PLANNER_REMAINING" --epoch "$PLANNER_EPOCH" --count "$BATCH_COUNT" -- \
+            bash .github/actions/lean-compile-layer/measure.sh --compile \
+            python3 tools/scripts/workflow/ci_pr_lean.py "$RUNNER_TEMP/changed-paths" --read-plan "$RUNNER_TEMP/current-lean-plan.json" --batch "$BATCH" --artifacts "$RUNNER_TEMP/current-reports"
+      - name: Upload the checked batch and its report bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: batch-${{ matrix.batch }}
+          path: ${{ runner.temp }}/current-reports/batch-${{ matrix.batch }}
+          if-no-files-found: error
+          overwrite: true
+
+  finalize:
+    needs: [plan, batch]
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 360
+    outputs:
+      unit: ${{ steps.checked.outputs.unit }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 2
+          persist-credentials: false
+      - id: judge
+        uses: ./.github/actions/current-judge
+        with:
+          base: ${{ inputs.base }}
+          judge-key: ${{ inputs.judge-key }}
+          nuget-key: ${{ inputs.nuget-key }}
+          needs-judge: ${{ inputs.report || inputs.source-status != 'accepted' }}
+      - name: Download the selected scope
+        uses: actions/download-artifact@v8
+        with:
+          name: current-lean-plan
+          path: ${{ runner.temp }}/current-plan
+          digest-mismatch: error
+      - name: Verify the distributed scope uses the same changed paths
+        run: |
+          cmp "$RUNNER_TEMP/changed-paths" "$RUNNER_TEMP/current-plan/changed-paths"
+          mv "$RUNNER_TEMP/current-plan/current-lean-plan.json" "$RUNNER_TEMP/current-lean-plan.json"
+      - name: Download the checked report bundles
+        uses: actions/download-artifact@v8
+        with:
+          pattern: batch-*
+          path: ${{ runner.temp }}/current-reports
+          digest-mismatch: error
+      - name: Resume the cumulative allowance after the report batches
+        env:
+          GH_TOKEN: ${{ github.token }}
+          STRATALINT_CI_COMPUTE_BUDGET: ${{ runner.temp }}/current-compute-seconds
+          PLANNER_REMAINING: ${{ needs.plan.outputs.remaining }}
+          PLANNER_EPOCH: ${{ needs.plan.outputs.epoch }}
+          BATCH_COUNT: ${{ needs.plan.outputs.count }}
+        run: |
+          budget="$RUNNER_TEMP/current-compute-seconds"
+          python3 tools/scripts/workflow/ci_parallel_compute.py resume --remaining "$PLANNER_REMAINING" --epoch "$PLANNER_EPOCH" --count "$BATCH_COUNT" --budget-file "$budget"
+          echo "STRATALINT_CI_COMPUTE_BUDGET=$budget" >> "$GITHUB_ENV"
+      - name: Build the judge
+        if: steps.judge.outputs.judge-hit != 'true'
+        run: python3 tools/scripts/workflow/ci_checks.py current build-judge
+      - uses: ./.github/actions/current-lean
+        with:
+          verify-bundles: 'true'
+      - name: Check current and delta with all report bundles
+        env:
+          CHECK_DELTA: ${{ inputs.delta }}
+        run: |
+          protected=()
+          if [[ "$CHECK_DELTA" == true ]]; then protected=(--protected-base "$CI_BASE"); fi
+          python3 tools/scripts/workflow/ci_compute.py run -- \
+            python3 tools/scripts/workflow/ci_pr_lean.py "$RUNNER_TEMP/changed-paths" --base "$CI_BASE" "${protected[@]}" --read-plan "$RUNNER_TEMP/current-lean-plan.json" --finalize --artifacts "$RUNNER_TEMP/current-reports"
+      - id: checked
+        run: echo 'unit=current' >> "$GITHUB_OUTPUT"
