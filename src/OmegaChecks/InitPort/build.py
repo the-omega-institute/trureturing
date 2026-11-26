@@ -61,7 +61,8 @@ def cyclic_declarations(path):
             rejected.update((n, f"cyclic module dependency from {owner} to {dep}") for n in names)
         else:
             graph[owner].add(dep)
-    return rejected
+    order = TopologicalSorter({key: sorted(deps) for key, deps in sorted(graph.items())})
+    return rejected, list(order.static_order())
 
 
 def generate(stage, product, seed, roots, excluded):
@@ -71,18 +72,31 @@ def generate(stage, product, seed, roots, excluded):
     omissions = dict.fromkeys(excluded, "explicit exclusion")
     selection = product / "interface-rejections.jsonl"
     run("lake", "build", "omegaAudit", "+OmegaChecks.Interface.Equations", "+OmegaChecks.InitPort.Kernel")
+    order_file = stage / "candidate-order.json"
+
+    def distribute():
+        options = ["--order", order_file] if order_file.exists() else []
+        run("lean", "--run", HERE / "Modules.lean", *options, transfer, seed, artifact, *roots)
+        return dict(json.loads((product / "modules.json").read_text()))
+
     with selection.open("w") as rejected:
         while True:
             exclusions = stage / "exclusions.json"
             exclusions.write_text(json.dumps(sorted(omissions.items())))
             run("lake", "env", "lean", "--run", HERE / "Kernel.lean", seed, transfer, inventory, exclusions,
                 *roots, env={**os.environ, "LEAN_ABORT_ON_PANIC": "1"})
-            run("lean", "--run", HERE / "Modules.lean", transfer, seed, artifact, *roots)
-            graph = dict(json.loads((product / "modules.json").read_text()))
+            graph = distribute()
+            if not order_file.exists():
+                try:
+                    list(TopologicalSorter(graph).static_order())
+                except CycleError:
+                    _, order = cyclic_declarations(stage / "candidate-edges.jsonl")
+                    order_file.write_text(json.dumps(order))
+                    graph = distribute()
             try:
                 closure = list(TopologicalSorter(graph).static_order())
             except CycleError:
-                new = cyclic_declarations(stage / "candidate-edges.jsonl")
+                new, _ = cyclic_declarations(stage / "candidate-edges.jsonl")
             else:
                 results = stage / "selection.jsonl"
                 run("lake", "env", "lean", "--run", HERE / "Select.lean", artifact, seed, transfer, results, *graph)

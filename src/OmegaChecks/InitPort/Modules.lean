@@ -66,7 +66,30 @@ Their pointwise correspondence is checked against the translated bodies by the i
 private def sealedCollector (n : Name) : Bool :=
   n == `Std.IterM.Total.toArray || n == `Std.IterM.Total.toListRev
 
+/-- Inline a later proof dependency locally, so module cycles do not discard checked
+theorems. Types, owners and computational declarations stay as translated by the kernel. -/
+private def localizeProof (env : Environment) (later : Name → Bool) (ci : ConstantInfo) :
+    IO ConstantInfo := do
+  let .thmInfo thm := ci | return ci
+  unless thm.value.getUsedConstantsAsSet.any later do return ci
+  if thm.type.getUsedConstantsAsSet.any later then return ci
+  let expand := fun n => later n && (env.find? n).any (fun c => c.isTheorem || c matches .defnInfo _)
+  let work := Meta.deltaExpand thm.value expand (allowOpaque := true)
+  let context : Core.Context := { fileName := "<module-local proof>", fileMap := default }
+  match ← (work.toIO {context with options := maxHeartbeats.set context.options 20000} {env}).toBaseIO with
+  | .ok (body, _) =>
+    if body.getUsedConstantsAsSet.any later then return ci
+    return .thmInfo {thm with value := body}
+  | .error _ => return ci
+
 def main (args : List String) : IO Unit := do
+  let (order, args) ← match args with
+    | "--order" :: path :: rest => do
+      let names : Array String ← IO.ofExcept <| fromJson? (← IO.ofExcept <| Json.parse (← IO.FS.readFile path))
+      let mut order : NameMap Nat := {}
+      for n in names, i in [:names.size] do order := order.insert n.toName i
+      pure (order, rest)
+    | _ => pure ({}, args)
   let lib :: seed :: out :: roots := args | throw <| IO.userError "expected transfer, seed, output and official roots"
   let lib := System.FilePath.mk lib
   let seed := System.FilePath.mk seed
@@ -105,7 +128,11 @@ def main (args : List String) : IO Unit := do
     edgeInfo.putStrLn (toJson #[owner.toString, "",(toJson (baseImports.map (·.module.toString))).compress]).compress
     let exported := surface.header.moduleData[(surface.getModuleIdx? official).get!]!
     let publiclyDeclared : NameMap ConstantInfo := exported.constants.foldl (fun acc ci => acc.insert ci.name ci) {}
-    let group := groups.getD official #[]
+    let mut group := groups.getD official #[]
+    if let some rank := order.find? owner then
+      let later := fun n => ((reverseNames[n]? >>= officialModuleName source).bind
+        fun m => order.find? (m.replacePrefix `Init `OmegaInit)).any (· > rank)
+      group ← group.mapM fun (n, ci) => return (n, ← localizeProof monolith later ci)
     kept := kept + group.size
     if !group.isEmpty then keptOwners := keptOwners + 1
     for (originalName, ci) in group do
