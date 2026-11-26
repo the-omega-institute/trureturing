@@ -172,7 +172,7 @@ private theorem integral_resolventDensity_same {a : ℝ} (ha : 0 < a) :
     · unfold resolventDensity
       dsimp
       field_simp [ha.ne', hau]
-      <;> ring
+      ring
   have hinv : Filter.Tendsto (fun u : ℝ ↦ (a + u)⁻¹) Filter.atTop (𝓝 0) :=
     tendsto_inv_atTop_zero.comp (tendsto_atTop_add_const_left _ a tendsto_id)
   have hratio : Filter.Tendsto (fun u : ℝ ↦ u / (a + u)) Filter.atTop (𝓝 1) := by
@@ -181,7 +181,7 @@ private theorem integral_resolventDensity_same {a : ℝ} (ha : 0 < a) :
     apply h.congr' _
     filter_upwards [Filter.eventually_gt_atTop (0 : ℝ)] with u hu
     field_simp [(add_pos ha hu).ne']
-    <;> ring
+    ring
   have hlim : Filter.Tendsto primitive Filter.atTop (𝓝 a⁻¹) := by
     simpa only [primitive, one_pow, one_div] using (hratio.pow 3).div_const a
   rw [integral_Ioi_of_hasDerivAt_of_tendsto' hderiv
@@ -267,19 +267,19 @@ private theorem integral_beta_resolvent (n : ℕ) {x y : ℝ} (hx : 0 < x) (hy :
   have hderiv (t : ℝ) (ht : t ∈ uIcc (0 : ℝ) 1) : HasDerivAt P
       (((n : ℝ) + 1) * t ^ n * (interpolate x y t)⁻¹ ^ (n + 2)) t := by
     have hI : HasDerivAt (interpolate x y) (x - y) t := by
-      simpa only [interpolate, id_eq, mul_one] using
-        (show HasDerivAt (fun u : ℝ ↦ y + (x - y) * id u) ((x - y) * 1) t from
-          (((hasDerivAt_id t).const_mul (x - y)).const_add y))
+      convert ((hasDerivAt_id t).const_mul (x - y)).const_add y using 1
+      · rfl
+      · ring
     have h := (((hasDerivAt_id t).div hI (hden t ht).ne').pow (n + 1)).const_mul y⁻¹
     convert h using 1
     · rfl
     · have hsub : 1 * interpolate x y t - t * (x - y) = y := by
         unfold interpolate
         ring
-      simp only [Nat.cast_add, Nat.cast_one, Nat.add_sub_cancel, id_eq, hsub, div_pow, inv_pow,
+      have hdiv : ((id : ℝ → ℝ) / interpolate x y) t = t / interpolate x y t := rfl
+      simp only [Nat.cast_add, Nat.cast_one, Nat.add_sub_cancel, id_eq, hsub, hdiv, div_pow, inv_pow,
         pow_succ _ (n + 1), pow_succ _ n]
       field_simp [(hden t ht).ne', hy.ne']
-      ring
   have hc : ContinuousOn
       (fun t : ℝ ↦ ((n : ℝ) + 1) * t ^ n * (interpolate x y t)⁻¹ ^ (n + 2)) (uIcc 0 1) := by
     have hI : Continuous (interpolate x y) := by unfold interpolate; fun_prop

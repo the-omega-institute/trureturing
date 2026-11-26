@@ -19,6 +19,9 @@ strata_touched:
   - D5/S3/Quantum/Analysis/RefinedBMV33
   - D5/S3/Quantum/Analysis/RefinedBMV/LargeDegree
   - D5/S3/Quantum/Analysis/RefinedBMV/Tracial/Bound
+  - D5/S3/Quantum/Analysis/RefinedBMV/Tracial/TriangleGram
+  - D5/S3/Quantum/Analysis/RefinedBMV/Tracial/TriangleCycleAllocation
+  - D5/S3/Quantum/Analysis/RefinedBMV/Tracial/ResolventJensen
   - D5/S3/Quantum/Analysis/RefinedBMV/Tracial/SingularFourCycle
   - D5/S3/Quantum/Analysis/RefinedBMVLowerBound
   - D5/S3/Quantum/Analysis/RefinedBMV43
@@ -196,6 +199,29 @@ product lower comparison. The related arXiv results 0802.1153,
 positive measures for fixed occurrences and a pinched comparison,
 respectively. Historical priority for the spectral result has not
 been established.
+
+## The continuum four-copy comparison for three spectral values
+
+If a finite Hermitian matrix `H` has at most three distinct eigenvalues,
+the fourth derivative at zero of `Tr exp(H + s B)` is at least
+`Tr((exp(H/4) B)^4)` for every Hermitian `B`. Equality holds exactly
+when `H` and `B` commute. The Duhamel expansion gives a trace over four
+uniform simplex weights. Three weighted binary Gram matrices then
+absorb the signed triangular terms with any spectral multiplicities.
+
+The three scalar determinant inequalities are proved on the whole
+positive quadrant of spectral gaps by exact exponential Newton
+recurrences. The trace reduction for signed `B` and the implication
+from the three scalar energy bounds to positive coefficient Grams
+are formalized as `triangle_cycle_sum_nonneg` and
+`allocation_of_triangleMatrix_mulVec`. The continuum scalar
+certificate is currently verified by exact integer replay.
+
+The same spectral trace method gives the reciprocal Jensen comparison
+for any positive diagonal spectrum and Hermitian `B`. The inverse
+fourth power of the simplex barycenter integrates to the product of
+the four reciprocal spectral values. A positive integral over scalar
+shifts transfers the trace inequality to the ordinary reciprocal.
 
 ## Four-cycle compensation with a zero spectral value
 
