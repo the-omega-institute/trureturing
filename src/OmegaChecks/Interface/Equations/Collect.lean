@@ -5,6 +5,8 @@ public import OmegaChecks.InitPort.Alternatives.Collect
 import all OmegaChecks.InitPort.Alternatives.Collect
 import all OmegaChecks.InitPort.Alternatives.IteratorSlice
 import all OmegaChecks.InitPort.Alternatives.FiniteLoop
+public import OmegaChecks.InitPort.Alternatives.Range
+import all OmegaChecks.InitPort.Alternatives.Range
 import all Init.Data.Iterators.Consumers.Monadic.Loop
 import all Init.Data.Iterators.Producers.Monadic.List
 import all Init.Data.Slice.Array.Iterator
@@ -169,5 +171,9 @@ public theorem Std.Iter.Total.atIdxSlow? {α β : Type u} [Iterator α Id β] [P
   funext p recur
   rcases p with ⟨i, k⟩
   cases i.step using PlausibleIterStep.casesOn <;> cases k <;> rfl
+
+public theorem Char.succ? (c : Char) :
+    OmegaChecks.InitPort.Alternatives.Char.succ? c = c.succ? :=
+  _root_.Char.succ?_eq.symm
 
 end OmegaChecks.Interface.Equations

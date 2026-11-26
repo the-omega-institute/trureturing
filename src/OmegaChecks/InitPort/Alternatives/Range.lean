@@ -917,4 +917,30 @@ public theorem Char.ofOrdinal_le_of_le : type_of% @_root_.Char.ofOrdinal_le_of_l
   rw [charUnpacked, charUnpacked]
   exact unpackMono h
 
+public theorem Char.val_ofOrdinal : type_of% @_root_.Char.val_ofOrdinal := by
+  intro i
+  unfold _root_.Char.ofOrdinal
+  split <;> rfl
+
+public def Char.succ? (c : Char) : Option Char := (c.ordinal.addNat? 1).map Char.ofOrdinal
+
+private theorem unpackMap (o : Option (Fin Char.numCodePoints)) :
+    (o.map Char.ofOrdinal).map Char.ordinal = o := by
+  cases o with
+  | none => rfl
+  | some f => exact congrArg some (Char.ordinal_ofOrdinal (f := f))
+
+public theorem Char.map_ordinal_succ? : type_of% @_root_.Char.map_ordinal_succ? := by
+  intro c
+  rw [_root_.Char.succ?_eq]
+  exact unpackMap _
+
+public theorem Char.map._proof_1 : type_of% (private_decl% @_root_.Char.map._proof_1) := by
+  intro c
+  exact (Char.map_ordinal_succ? (c := c)).symm
+
+public theorem Char.map._proof_2 : type_of% (private_decl% @_root_.Char.map._proof_2) := by
+  intro n c
+  exact (unpackMap (c.ordinal.addNat? n)).symm
+
 end OmegaChecks.InitPort.Alternatives
