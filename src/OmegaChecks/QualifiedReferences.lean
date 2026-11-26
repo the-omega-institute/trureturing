@@ -178,6 +178,30 @@ private def publicUses (moduleName : Name) (data : ModuleData) (catalog : Enviro
       if (objectValue? catalog dep).isSome then pending := pending.push n
   return (sensitive, reachable)
 
+/-- Restore exactly the marked reference positions. A theorem can contribute its type through
+implicit arguments. The kernel may also extract proofs in the enclosing data body differently. -/
+private partial def restoreReplay (env originalEnv : Environment) (markers : NameMap Name)
+    (reflected : NameMap ConstantInfo) (value : Bool) (e old : Expr) : Expr := Id.run do
+  if e == old then return e
+  if let .const n ls := e then
+    if let some obj := reflected.find? n then
+      if Kernel.isDefEqGuarded originalEnv {} (obj.type.instantiateLevelParams obj.levelParams ls) old then return old
+    if let some target := markers.find? n then return mkConst target ls
+  if value && !reflected.isEmpty && !e.hasLooseBVars && !old.hasLooseBVars then
+    if let .ok p := Kernel.check env {} e then
+      if let .ok q := Kernel.check originalEnv {} old then
+        if (Kernel.check originalEnv {} q).toOption == some (mkSort .zero) then
+          if Kernel.isDefEqGuarded env {} p q then return old
+  let visit := restoreReplay env originalEnv markers reflected value
+  match e, old with
+  | .app f a, .app g b => return e.updateApp! (visit f g) (visit a b)
+  | .lam _ d b _, .lam _ d' b' _ => return e.updateLambdaE! (visit d d') (visit b b')
+  | .forallE _ d b _, .forallE _ d' b' _ => return e.updateForallE! (visit d d') (visit b b')
+  | .letE _ t v b _, .letE _ t' v' b' _ => return e.updateLetE! (visit t t') (visit v v') (visit b b')
+  | .proj _ _ b, .proj _ _ b' => return e.updateProj! (visit b b')
+  | .mdata _ b, .mdata _ b' => return e.updateMData! (visit b b')
+  | _, _ => return e
+
 /-- Replace only authenticated identifier tokens with fresh references to the same objects.
 A named reference preserves Lean's explicit application, universe and projection syntax. -/
 private def checkElaborated (source : System.FilePath) (text : String)
@@ -188,6 +212,7 @@ private def checkElaborated (source : System.FilePath) (text : String)
   let mut edits : Array (Lean.Syntax.Range × String) := #[]
   let mut markers : NameMap Name := {}
   let mut targets : NameMap Name := {}
+  let mut reflected : NameMap ConstantInfo := {}
   for (span, target) in marks.toList.eraseDups.mergeSort (fun a b => a.1.start.byteIdx ≤ b.1.start.byteIdx) do
     let marker := (targets.find? target).getD (.str prefixName s!"ref{markers.toList.length}")
     unless targets.contains target do
@@ -200,7 +225,14 @@ private def checkElaborated (source : System.FilePath) (text : String)
       let univs := if levels.isEmpty then "" else ".{" ++ String.intercalate "," levels ++ "}"
       let vis := if isModule then "public " else ""
       let comp := if isNoncomputable catalog target then "noncomputable " else ""
-      let decl := s!"\n{vis}{comp}abbrev _root_.{marker}{univs} := @_root_.{target}{univs}\n"
+      let mut decl := s!"\n{vis}{comp}abbrev _root_.{marker}{univs} := @_root_.{target}{univs}\n"
+      if obj.isTheorem then
+        -- Its inferred proposition may be inserted at type_of% or an implicit argument.
+        -- Mark that proposition independently of the proof constant at this source token.
+        let typeName := marker ++ `proposition
+        decl := s!"\n{vis}abbrev _root_.{typeName}{univs} := type_of% @_root_.{target}{univs}\n" ++
+                s!"{vis}theorem _root_.{marker}{univs} : @_root_.{typeName}{univs} := @_root_.{target}{univs}\n"
+        reflected := reflected.insert typeName obj
       edits := edits.push (⟨pos, pos⟩, decl)
       markers := markers.insert marker target
       targets := targets.insert target marker
@@ -215,11 +247,8 @@ private def checkElaborated (source : System.FilePath) (text : String)
     if msg.severity == .error then throw <| IO.userError s!"cannot verify source identity in {source}: {← msg.toString}"
   for name in names do
     let some info := state.commandState.env.find? name | throw <| IO.userError s!"missing source declaration {name}"
-    let check (expr original : Expr) := do
-      let restored := expr.replace fun e => do
-        let .const n levels := e | none
-        return .const (← markers.find? n) levels
-      unless restored == original do
+    let check (expr original : Expr) (value := false) := do
+      unless restoreReplay state.commandState.env catalog markers reflected value expr original == original do
         throw <| IO.userError s!"{source}: could not recover the compiled expression of {name} after checking its reference positions"
       for n in expr.getUsedConstants do
         if let some standard := sensitive? catalog ports project n then
@@ -228,7 +257,7 @@ private def checkElaborated (source : System.FilePath) (text : String)
     check info.type original.type
     if let some value := objectValue? catalog original then
       let some markedValue := info.value? (allowOpaque := true) | throw <| IO.userError s!"missing marked value for {name}"
-      check markedValue value
+      check markedValue value true
 
 /-- The parsed declaration syntax excludes imports, comments and string contents.
 The trace-verified .ilean supplies the resolution at this exact source token on this backend. -/
@@ -312,6 +341,12 @@ private def checkFile (moduleName : Name) (source index : System.FilePath)
           if isPrivateName parent.toName && !reachable.contains parent.toName then continue
           unless signature || (env.find? parent.toName).any (fun info => (objectValue? env info).isSome) do continue
           let actual := name.toName
+          if project.contains owner.toName && owner.toName != moduleName &&
+              published.contains parent.toName then
+            if let some (.thmInfo theoremInfo) := catalog.find? actual then
+              if theoremInfo.type.getUsedConstants.any (fun n => (sensitive? catalog ports project n).isSome) &&
+                  OmegaBuild.declaredIn env actual owner.toName && (locations.getD (key pos) []).map Prod.fst == [.const owner name] then
+                if let some span := part.getRange? then marks := marks.push (span, actual)
           if let some port := ports.objects.find? actual then
             if port.owner == owner.toName then
               if ports.allowNative then continue

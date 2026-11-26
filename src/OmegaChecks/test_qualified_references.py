@@ -197,6 +197,24 @@ def check_case(lean, label, path, sources, errors, *, ports=PORTS, expected_coun
                 raise AssertionError(f"expected {summary!r}, got {message!r}")
 
 
+def check_reflected(lean, label, path):
+    header = f"module\npublic import {PORTS[0]}\n"
+    owner = ("D5.AuthenticatedTheorem", header +
+             "public theorem evidence (p : Omega.Nat) (h : OmegaMathlib.Nat.Prime p) : "
+             "OmegaMathlib.Nat.Prime p := h\n")
+    imported = (f"module\npublic import {owner[0]}\npublic import Lean\n"
+                "public def withProof {p : Prop} (_ : p) : Prop := p\n")
+    good = ("public def observed : Prop := type_of% @evidence\n"
+            "public def implicit : Prop := withProof (@evidence)\n")
+    check_case(lean, label, path, [owner, ("D5.Reflected", imported + good)], [])
+    # The genuine reflected type is independently checked at its occurrence.
+    # A hidden port introduced beside it still has no authenticated source position.
+    hidden = ('local notation "unmarked" n => Omega.Nat.Prime n\n'
+              'public def wrong (n : Omega.Nat) : Prop := (type_of% @evidence) ∧ unmarked n\n')
+    check_case(lean, label, path, [owner, ("D5.Reflected", imported + hidden)],
+               ["D5.Reflected", "without an explicit source reference", "OmegaMathlib.Nat.Prime"])
+
+
 def check_mathlib_only(lean, path):
     port = "OmegaMathlib.Data.Nat.Fib.Basic"
     marked = ("D5.OfficialOrigin", "module\npublic import OmegaBuild.Commands\n" +
@@ -224,6 +242,7 @@ def check():
         path = subprocess.check_output([*layout, "env", "printenv", "LEAN_PATH"], cwd=ROOT, text=True).strip()
         for module, source, errors in (*cases(), *computational_cases(label)):
             check_case(lean, label, path, [(module, source)], errors)
+        check_reflected(lean, label, path)
         for module, source, errors in native_cases(label):
             check_case(lean, label, path, [(module, source)], errors)
         owner = ("D5.RefOwner", "module\nprelude\npublic import OmegaInit.Prelude\n"
