@@ -4,6 +4,12 @@ public import Init.Data.Order.Ord
 
 namespace OmegaChecks.InitPort.Alternatives
 
+public theorem Ordering.then.eq_2 : type_of% @_root_.Ordering.then.eq_2 := by
+  intro a b different
+  cases a with
+  | lt | gt => rfl
+  | eq => exact (different rfl).elim
+
 public theorem Std.OrientedCmp.not_lt_of_isLE : type_of% @_root_.Std.OrientedCmp.not_lt_of_isLE := by
   intro α cmp oriented a b le lt
   exact Std.OrientedCmp.not_isLE_of_lt lt le
