@@ -54,7 +54,8 @@ theorem upper_weight (rh : RiemannHypothesis) {T : ℝ} (hT : 1 ≤ T)
   unfold harmonicWeight
   convert h using 1 <;> simp [zetaSpectrum,div_eq_mul_inv,mul_assoc]
 
-private theorem harmonic_pair_bounds (rh : RiemannHypothesis) :
+/-- Eventual mass and pair-moment bounds on the inclusive harmonic zeta spectrum. -/
+theorem harmonic_pair_bounds (rh : RiemannHypothesis) :
     ∀ᶠ T : ℝ in atTop,
       let logHeight := Real.log
       let W := harmonicMass rh T
