@@ -29,7 +29,9 @@ private theorem existsIffNotAll {n : Nat} (P : BitVec n → Prop) [DecidablePred
 
 @[instance_reducible] public def BitVec.instDecidableExistsBitVecSucc :
     type_of% @_root_.BitVec.instDecidableExistsBitVecSucc := by
-  intro n P _ _
+  intro n P dec all
+  letI : Decidable (∀ v, ¬P v) :=
+    @_root_.BitVec.instDecidableForallBitVecSucc n (fun v => ¬P v) (fun v => @instDecidableNot (P v) (dec v)) all
   exact decidable_of_iff (¬∀ v, ¬P v) (existsIffNotAll P)
 
 end OmegaChecks.InitPort.Alternatives
