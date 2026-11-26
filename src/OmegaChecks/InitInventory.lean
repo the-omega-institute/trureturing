@@ -444,6 +444,27 @@ def limitedOmniscienceFromSlice (collect : type_of% (@Std.Slice.toList.{0,0}))
   letI := ToIterator.of (γ := Slice (Iter (α := α) β)) α (fun s => s.internalRepresentation)
   exact correct (Slice.mk it)
 
+/-- Specializing monadic collection to the identity monad preserves the unrestricted pure interface. -/
+def limitedOmniscienceFromMonadicCollector (collect : type_of% (@Std.IterM.toList.{0,0}))
+    (correct : ∀ {α β : Type} [Iterator α Id β] [Finite α Id] (it : IterM (α := α) Id β),
+      collect it = it.toList) (f : Nat → Bool) : Decidable (∃ n, f n = true) :=
+  limitedOmniscienceFromCollector (fun it => (collect it.toIterM).run)
+    (fun it => (correct it.toIterM).trans Iter.toList_eq_toList_toIterM.symm) f
+
+/-- Only the identity-monad specialization is needed for the array collector. -/
+def limitedOmniscienceFromMonadicArray (collect : type_of% (@Std.IterM.toArray.{0,0}))
+    (correct : ∀ {α β : Type} [Iterator α Id β] [Finite α Id] (it : IterM (α := α) Id β),
+      collect it = it.toArray) (f : Nat → Bool) : Decidable (∃ n, f n = true) :=
+  limitedOmniscienceFromArray (fun it => (collect it.toIterM).run)
+    (fun it => (correct it.toIterM).trans Iter.toArray_eq_toArray_toIterM.symm) f
+
+/-- Only the identity-monad specialization is needed for the reverse collector. -/
+def limitedOmniscienceFromMonadicReverse (collect : type_of% (@Std.IterM.toListRev.{0,0}))
+    (correct : ∀ {α β : Type} [Iterator α Id β] [Finite α Id] (it : IterM (α := α) Id β),
+      collect it = it.toListRev) (f : Nat → Bool) : Decidable (∃ n, f n = true) :=
+  limitedOmniscienceFromReverse (fun it => (collect it.toIterM).run)
+    (fun it => (correct it.toIterM).trans Iter.toListRev_eq_toListRev_toIterM.symm) f
+
 end Collector
 
 end OmegaChecks.InitBoundaries
