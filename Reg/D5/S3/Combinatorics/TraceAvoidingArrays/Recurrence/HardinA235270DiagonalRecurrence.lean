@@ -7,10 +7,9 @@ import LeanInformationAuditInterface.Contract.Registration
 namespace Reg.D5.S3.Combinatorics.TraceAvoidingArrays.Recurrence.HardinA235270DiagonalRecurrence
 
 open _root_.D5.S3.Combinatorics.TraceAvoidingArrays.Recurrence.HardinA235270DiagonalRecurrence (a235270_order11)
-open _root_.D5.S3.Combinatorics.TraceAvoidingArrays.Recurrence.HardinA235280A235310Alphabet (C)
+open _root_.D5.S3.Combinatorics.TraceAvoidingArrays.Recurrence.HardinA235280A235310Alphabet (C Legal)
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
-open private Legal from D5.S3.Combinatorics.TraceAvoidingArrays.Recurrence.HardinA235280A235310Alphabet
 
 noncomputable section
 

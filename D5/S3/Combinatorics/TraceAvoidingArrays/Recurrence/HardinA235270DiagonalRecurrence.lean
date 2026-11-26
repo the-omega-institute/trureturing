@@ -7,7 +7,6 @@
    digest: The eleven-lag recurrence for Hardin's constant-stress squares. -/
 
 import D5.S3.Combinatorics.TraceAvoidingArrays.Recurrence.HardinA235280A235310Recurrence
-import Batteries.Tactic.OpenPrivate
 
 /-! Complementary row-fiber counts give the dependence on both dimensions of the square. -/
 
@@ -16,10 +15,10 @@ namespace D5.S3.Combinatorics.TraceAvoidingArrays.Recurrence.HardinA235270Diagon
 open D5.S3.Combinatorics.TraceAvoidingArrays.Recurrence.HardinA235280A235310Alphabet (C)
 open Polynomial hiding C
 open scoped BigOperators
-open private Sequence shift_pow_apply Kills kills_of_dvd kills_zero kills_sum kills_smul
-  eval_C_mul_X_pow kills_step linear quadratic from D5.S3.Combinatorics.TraceAvoidingArrays.Recurrence.HardinA235280A235310Recurrence
-open private Row Profile edge Fiber flip profileAt b profileCount fiber_bound literal_sum from
-  D5.S3.Combinatorics.TraceAvoidingArrays.Recurrence.HardinA235280A235310Recurrence
+open D5.S3.Combinatorics.TraceAvoidingArrays.Recurrence.HardinA235280A235310Recurrence
+  (Sequence shift_pow_apply Kills kills_of_dvd kills_zero kills_sum kills_smul
+    eval_C_mul_X_pow kills_step linear quadratic Row Profile edge Fiber flip profileAt
+    b profileCount fiber_bound literal_sum)
 
 noncomputable section
 
