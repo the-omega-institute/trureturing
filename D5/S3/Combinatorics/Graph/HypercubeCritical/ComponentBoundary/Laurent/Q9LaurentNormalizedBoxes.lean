@@ -548,7 +548,7 @@ open D5.S3.Combinatorics.Graph.Hypercube (hypercube)
 open Q9LaurentGainPartition (Side Exponent LaurentIdentity)
 open Q9LaurentCommonTriple (Axes commonAxes inside outside outside_eq_iff_inside_of_partition)
 open Q9ProjectedHeightCompatibility
-open private mem_transverseSide exists_transverseSide_of_selected_mem from
+open private exists_transverseSide_of_selected_mem from
   D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Laurent.Q9LaurentTransverseFibers
 open Q9ProjectedHeightCompatibility (leftPart_get rightPart_get)
 open Q9ProjectedHeightCompatibility (left_xor right_xor parts_of_join)
