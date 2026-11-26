@@ -6,7 +6,6 @@
    utility: none
    digest: The kernel of the Nebe P48q integral row norm equals the image of the integral row difference. -/
 
-import Batteries.Tactic.OpenPrivate
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qFixedRankCertificate
 import Mathlib.Data.List.OfFn
 import Mathlib.Tactic.Abel
@@ -25,8 +24,7 @@ namespace D5.S3.VertexAlgebra.Lattice.Orbifold.P48qMovingLatticeCertificate
 
 open scoped Matrix
 open P48qFixedRankCertificate (nebeOrderThree nebeOrderThree_cube)
-open private nebeSquare nebeSquare_eq dotOfFn_eq from
-  D5.S3.VertexAlgebra.Lattice.Orbifold.P48qFixedRankCertificate
+open P48qFixedRankCertificate (nebeSquare nebeSquare_eq dotOfFn_eq)
 
 local notation "Matrix48" => Matrix (Fin 48) (Fin 48) ℤ
 local notation "A" => nebeOrderThree
