@@ -408,6 +408,43 @@ public theorem List.findIdx_eq_getD_findIdx? : type_of% @_root_.List.findIdx_eq_
     | true => rfl
     | false => cases xs.findIdx? p <;> rfl
 
+public theorem List.findIdx?_eq_some_iff_findIdx_eq :
+    type_of% @_root_.List.findIdx?_eq_some_iff_findIdx_eq := by
+  intro α xs p i
+  induction xs generalizing i with
+  | nil =>
+    exact ⟨(fun h => by cases h), fun h => (Nat.not_lt_zero _ h.1).elim⟩
+  | cons x xs ih =>
+    rw [List.findIdx?_cons, List.findIdx_cons]
+    cases h : p x with
+    | true =>
+      change some 0 = some i ↔ i < xs.length + 1 ∧ 0 = i
+      exact ⟨fun hit => ⟨Option.some.inj hit ▸ Nat.zero_lt_succ _, Option.some.inj hit⟩,
+        fun hit => congrArg some hit.2⟩
+    | false =>
+      change (xs.findIdx? p).map (· + 1) = some i ↔ i < xs.length + 1 ∧ xs.findIdx p + 1 = i
+      constructor
+      · intro hit
+        obtain ⟨j, hj, rfl⟩ := Option.map_eq_some_iff.mp hit
+        obtain ⟨lt, found⟩ := ih.mp hj
+        exact ⟨Nat.succ_lt_succ lt, congrArg Nat.succ found⟩
+      · rintro ⟨lt, rfl⟩
+        rw [ih.mpr ⟨Nat.lt_of_succ_lt_succ lt, rfl⟩]
+        rfl
+
+public theorem List.findIdx?_eq_some_iff_getElem :
+    type_of% @_root_.List.findIdx?_eq_some_iff_getElem := by
+  intro α xs p i
+  constructor
+  · intro hit
+    obtain ⟨bound, found⟩ := List.findIdx?_eq_some_iff_findIdx_eq.mp hit
+    obtain ⟨here, before⟩ := (_root_.List.findIdx_eq bound).mp found
+    exact ⟨bound, here, fun j hj => Bool.eq_false_iff.mp (before j hj)⟩
+  · rintro ⟨bound, here, before⟩
+    apply List.findIdx?_eq_some_iff_findIdx_eq.mpr
+    exact ⟨bound, (_root_.List.findIdx_eq bound).mpr
+      ⟨here, fun j hj => Bool.eq_false_iff.mpr (before j hj)⟩⟩
+
 public theorem List.findIdx?_eq_none_iff : type_of% @_root_.List.findIdx?_eq_none_iff := by
   intro α xs p
   induction xs with
