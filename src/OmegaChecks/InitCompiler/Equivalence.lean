@@ -8,6 +8,13 @@ open Lean
 
 private def under (e : Expr) := e.liftLooseBVars 0 1
 
+private def binaryCongruence? (op : Expr) : Option Name :=
+  match op.constName? with
+  | some `And => some `and_congr
+  | some `Or => some `or_congr
+  | some `Iff => some `iff_congr
+  | _ => none
+
 /-- Interpret a simplifier's equality of propositions as a single equivalence.
 Both directions share the same subproofs, including under dependent binders. -/
 public partial def logicalEquivalence? (env : Environment) (p q proof : Expr) (rules : NameMap ConstantInfo) (fuel := 64) : Option Expr := do
@@ -27,6 +34,10 @@ public partial def logicalEquivalence? (env : Environment) (p q proof : Expr) (r
   | `Eq.propIntro, #[a, b, f, g] => return mkApp4 (mkConst `Iff.intro) a b f g
   | `eq_true, #[a, h] => return mkApp2 (mkConst `iff_true_intro) a h
   | `eq_false, #[a, h] | `eq_false', #[a, h] => return mkApp2 (mkConst `iff_false_intro) a h
+  | `Bool.false_eq_true, #[] =>
+    return mkApp2 (mkConst `iff_false_intro) p (mkConst `Bool.false_ne_true)
+  | `Bool.not_eq_true, #[b] =>
+    return mkApp3 (mkConst `Iff.symm) q p (mkApp (mkConst `Bool.eq_false_iff) b)
   | `Eq.symm, #[_, a, b, h] => return mkApp3 (mkConst `Iff.symm) a b (← again a b h)
   | `Eq.trans, #[_, a, b, c, h, k] =>
     return mkApp5 (mkConst `Iff.trans) a b c (liftEq a b h) (liftEq b c k)
@@ -52,15 +63,19 @@ public partial def logicalEquivalence? (env : Environment) (p q proof : Expr) (r
   | `congrArg, #[_, _, a, b, .app (.const `Exists ls) dom, h] =>
     guard (h.isAppOfArity `funext 5)
     return mkApp4 (mkConst `exists_congr ls) dom a b (pointwise dom a b h.getAppArgs[4]!)
+  | `congrArg, #[.sort .zero, _, a, b, f, h] =>
+    if f.isConstOf `Not then return mkApp3 (mkConst `not_congr) a b (liftEq a b h)
+    let .app op x := f | none
+    return mkApp6 (mkConst (← binaryCongruence? op)) x x a b (mkApp (mkConst `Iff.rfl) x) (liftEq a b h)
+  | `congrFun, #[_, _, _, _, h, x] | `congrFun', #[_, _, _, _, h, x] =>
+    guard (h.isAppOfArity `congrArg 6)
+    let #[.sort .zero, _, a, b, op, eq] := h.getAppArgs | none
+    return mkApp6 (mkConst (← binaryCongruence? op)) a b x x (liftEq a b eq) (mkApp (mkConst `Iff.rfl) x)
   | `congr, #[_, _, f, g, b, d, h, k] =>
     let .app op a := f | none
     let .app op' c := g | none
     guard (op == op')
-    let rule ← match op.constName? with
-      | some `And => some `and_congr
-      | some `Or => some `or_congr
-      | some `Iff => some `iff_congr
-      | _ => none
+    let rule ← binaryCongruence? op
     let ac ← if a == c then pure (mkApp (mkConst `Iff.rfl) a) else do
       guard (h.isAppOfArity `congrArg 6)
       let xs := h.getAppArgs
