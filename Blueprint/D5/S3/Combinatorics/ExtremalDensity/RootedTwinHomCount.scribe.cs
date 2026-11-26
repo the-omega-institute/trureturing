@@ -66,6 +66,6 @@ internal sealed class RootedTwinHomCountDocument : IScribeDocumentDefinition
             OpenBracket, Call("Finite",A), CloseBracket, Sp,
             OpenBracket, Call("Finite",B), CloseBracket, Sp,
             All("H",Call("Digraph",A),All("w",A,All("R",Arr(B,Arr(B,V("Prop"))),
-                new Formula.Logic(asym,FormulaLogicOperator.Implies,All("t",B,bound)))))));
+                new Formula.Logic(Seq(Open,asym,Close),FormulaLogicOperator.Implies,All("t",B,bound))))))));
     }
 }
