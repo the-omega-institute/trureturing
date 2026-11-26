@@ -35,8 +35,10 @@ internal sealed class CommonWitnessCompactnessDocument : IScribeDocumentDefiniti
                     + "Set result, with no infinite-word or group-element endpoint.")),
                 Paragraph(Text(
                     "For the inner orientation, a nonempty first component is selected from G. "
-                    + "The single-equation theorem in ConjugacyNormalForm gives prefix comparability "
-                    + "of any two anchor witnesses. Two distinct shared witnesses transport a "
+                    + "For a witness z of a ++ z = z ++ b, the word a ++ z has period length(a) "
+                    + "and starts with a. Reducing indices modulo this positive period shows "
+                    + "that the shorter of two such words is a prefix of the longer; cancelling "
+                    + "a gives prefix comparability of the witnesses. Two distinct shared witnesses transport a "
                     + "third row through the cyclic centralizer: residuals commute with the "
                     + "anchor right word, and the cyclic centralizer classification transfers "
                     + "commutation to the row under test. If a row has at most one shared anchor "
@@ -44,8 +46,8 @@ internal sealed class CommonWitnessCompactnessDocument : IScribeDocumentDefiniti
                     + "agree. Rows with empty first component are neutral by length cancellation. "
                     + "The outer case follows after swapping each pair. For the global disjunction, either every finite subset admits an inner witness, or a finite inner obstruction exists. In the latter case adjoining that obstruction to any finite subset forces an outer witness, so outer finite character applies.")),
                 Paragraph(Text(
-                    "Aiswarya, Manuel and Sunny, arXiv:2307.06777v4, Definition 5 and Lemma 6, "
-                    + "p. 25, gives the finite-alphabet common-witness principle. The cited "
+                    "Aiswarya, Manuel and Sunny, arXiv:2307.06777v4, Definition 5, p. 14, and "
+                    + "Lemma 6, p. 25, give the finite-alphabet common-witness principle. The cited "
                     + "source is a literature boundary: its finite-alphabet scope is recorded, "
                     + "while the arbitrary-alphabet List statement, the global orientation "
                     + "disjunction and all degenerate cases are proved here."))),

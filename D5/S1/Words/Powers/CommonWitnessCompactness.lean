@@ -4,25 +4,23 @@
    mirror-E: none(waiver:universal-word-family-compactness)
    anchors: []
    utility: none
-   digest: Finite-character compactness for globally oriented common word witnesses.
--/
+   digest: Finite-character compactness for globally oriented common word witnesses. -/
 
 module
 
 public import D5.S1.Words.Powers.CyclicCentralizer
-public import D5.S1.Words.Powers.ConjugacyNormalForm
 public import Mathlib.Data.Set.Finite.Basic
 
 /-!
 For a relation of word pairs, an inner witness solves `a ++ z = z ++ b` and an
 outer witness solves the swapped equation.  The family theorem below keeps one
-orientation for the whole relation.  The proof uses the finite cut normal form
-for one nonempty row, then transports a second row along the resulting centralizer.
+orientation for the whole relation.  Periodic overlaps make the witnesses of a
+nonempty row prefix-comparable, enabling transport along its cyclic centralizer.
 The empty row is neutral and is handled directly by cancellation.
 
 The literature source for the finite-family argument is C. Aiswarya, Amaldev
 Manuel and Saina Sunny, *Deciding Conjugacy of a Rational Relation*,
-arXiv:2307.06777v4 (2026), Definition 5 and Lemma 6, p. 25.  Their printed
+arXiv:2307.06777v4 (2026), Definition 5, p. 14, and Lemma 6, p. 25.  Their printed
 lemma assumes a finite alphabet; this file proves the finite-word statement for
 an arbitrary alphabet and retains empty words and empty families.
 -/
@@ -45,136 +43,42 @@ private def Outer (p : List α × List α) (z : List α) : Prop :=
 def CommonWitness (G : Set (List α × List α)) : Prop :=
   ∃ z : List α, (∀ p ∈ G, Inner p z) ∨ (∀ p ∈ G, Outer p z)
 
-private theorem wordPower_add (m n : Nat) (w : List α) :
-    wordPower (m + n) w = wordPower m w ++ wordPower n w := by
-  unfold wordPower
-  rw [List.replicate_add, List.flatten_append]
-
 private theorem inner_solution_prefix_or_prefix
     {a b z₁ z₂ : List α} (ha : a ≠ [])
     (h₁ : a ++ z₁ = z₁ ++ b) (h₂ : a ++ z₂ = z₂ ++ b) :
     z₁ <+: z₂ ∨ z₂ <+: z₁ := by
-  obtain ⟨⟨n₁, p₁, q₁⟩, ⟨ha₁, hb₁, hz₁, hcut₁⟩, _⟩ :=
-    (ConjugacyNormalForm.conjugacy_iff_exists_unique_short_cut a b z₁ ha).mp h₁
-  obtain ⟨⟨n₂, p₂, q₂⟩, ⟨ha₂, hb₂, hz₂, hcut₂⟩, _⟩ :=
-    (ConjugacyNormalForm.conjugacy_iff_exists_unique_short_cut a b z₂ ha).mp h₂
-  change a = p₁ ++ q₁ at ha₁
-  change b = q₁ ++ p₁ at hb₁
-  change z₁ = wordPower n₁ a ++ p₁ at hz₁
-  change p₁.length < a.length at hcut₁
-  change a = p₂ ++ q₂ at ha₂
-  change b = q₂ ++ p₂ at hb₂
-  change z₂ = wordPower n₂ a ++ p₂ at hz₂
-  change p₂.length < a.length at hcut₂
-  have hp₁ : p₁ <+: a := by
-    refine ⟨q₁, ?_⟩
-    exact ha₁.symm
-  have hp₂ : p₂ <+: a := by
-    refine ⟨q₂, ?_⟩
-    exact ha₂.symm
-  have hlen₁ : z₁.length = n₁ * a.length + p₁.length := by
-    rw [hz₁, List.length_append, length_wordPower]
-  have hlen₂ : z₂.length = n₂ * a.length + p₂.length := by
-    rw [hz₂, List.length_append, length_wordPower]
-  rcases Nat.le_total n₁ n₂ with hnn | hnn
-  · by_cases heq : n₁ = n₂
-    · subst n₂
-      rcases Nat.le_total p₁.length p₂.length with hple | hple
-      · rcases List.prefix_or_prefix_of_prefix hp₁ hp₂ with hp | hp
-        · left
-          rcases hp with ⟨r, hr⟩
-          refine ⟨r, ?_⟩
-          rw [hz₁, hz₂, List.append_assoc, hr]
-        · have heqP : p₁ = p₂ := by
-            rcases hp with ⟨r, hr⟩
-            have hpr := congrArg List.length hr
-            have hrlen : r.length = 0 := by
-              rw [List.length_append] at hpr
-              omega
-            have hrnil : r = [] := List.eq_nil_of_length_eq_zero hrlen
-            simpa [hrnil] using hr.symm
-          subst p₂
-          left
-          exact ⟨[], by simp [hz₁, hz₂]⟩
-      · rcases List.prefix_or_prefix_of_prefix hp₁ hp₂ with hp | hp
-        · have heqP : p₁ = p₂ := by
-            rcases hp with ⟨r, hr⟩
-            have hpr := congrArg List.length hr
-            have hrlen : r.length = 0 := by
-              rw [List.length_append] at hpr
-              omega
-            have hrnil : r = [] := List.eq_nil_of_length_eq_zero hrlen
-            simpa [hrnil] using hr
-          subst p₂
-          right
-          exact ⟨[], by simp [hz₁, hz₂]⟩
-        · right
-          rcases hp with ⟨r, hr⟩
-          refine ⟨r, ?_⟩
-          rw [hz₂, hz₁, List.append_assoc, hr]
-    · have hlt : n₁ < n₂ := Nat.lt_of_le_of_ne hnn heq
-      obtain ⟨k, hk⟩ : ∃ k, n₂ = n₁ + (k + 1) := by
-        refine ⟨n₂ - n₁ - 1, ?_⟩
-        omega
-      left
-      have hprefix : p₁ <+: wordPower (k + 1) a ++ p₂ := by
-        apply hp₁.trans
-        refine ⟨wordPower k a ++ p₂, ?_⟩
-        rw [wordPower_succ]
-        simp only [List.append_assoc]
-      rcases hprefix with ⟨r, hr⟩
-      refine ⟨r, ?_⟩
-      rw [hz₁, hz₂, hk, wordPower_add, List.append_assoc, hr]
-      simp only [List.append_assoc]
-  · by_cases heq : n₂ = n₁
-    · subst n₁
-      rcases Nat.le_total p₁.length p₂.length with hple | hple
-      · rcases List.prefix_or_prefix_of_prefix hp₁ hp₂ with hp | hp
-        · left
-          rcases hp with ⟨r, hr⟩
-          refine ⟨r, ?_⟩
-          rw [hz₁, hz₂, List.append_assoc, hr]
-        · have heqP : p₁ = p₂ := by
-            rcases hp with ⟨r, hr⟩
-            have hpr := congrArg List.length hr
-            have hrlen : r.length = 0 := by
-              rw [List.length_append] at hpr
-              omega
-            have hrnil : r = [] := List.eq_nil_of_length_eq_zero hrlen
-            simpa [hrnil] using hr.symm
-          subst p₂
-          left
-          exact ⟨[], by simp [hz₁, hz₂]⟩
-      · rcases List.prefix_or_prefix_of_prefix hp₁ hp₂ with hp | hp
-        · have heqP : p₁ = p₂ := by
-            rcases hp with ⟨r, hr⟩
-            have hpr := congrArg List.length hr
-            have hrlen : r.length = 0 := by
-              rw [List.length_append] at hpr
-              omega
-            have hrnil : r = [] := List.eq_nil_of_length_eq_zero hrlen
-            simpa [hrnil] using hr
-          subst p₂
-          right
-          exact ⟨[], by simp [hz₁, hz₂]⟩
-        · right
-          rcases hp with ⟨r, hr⟩
-          refine ⟨r, ?_⟩
-          rw [hz₂, hz₁, List.append_assoc, hr]
-    · have hlt : n₂ < n₁ := Nat.lt_of_le_of_ne hnn heq
-      obtain ⟨k, hk⟩ : ∃ k, n₁ = n₂ + (k + 1) := by
-        refine ⟨n₁ - n₂ - 1, ?_⟩
-        omega
-      right
-      have hprefix : p₂ <+: wordPower (k + 1) a ++ p₁ := by
-        apply hp₂.trans
-        refine ⟨wordPower k a ++ p₁, ?_⟩
-        rw [wordPower_succ]
-        simp only [List.append_assoc]
-      rcases hprefix with ⟨r, hr⟩
-      refine ⟨r, ?_⟩
-      rw [hz₂, hz₁, hk, wordPower_add, List.append_assoc, hr]
-      simp only [List.append_assoc]
+  have hapos : 0 < a.length := List.length_pos_of_ne_nil ha
+  have periodic : ∀ z : List α, a ++ z = z ++ b →
+      List.HasPeriod (a ++ z) a.length := by
+    intro z hz
+    change a ++ z <+: (a ++ z).take a.length ++ (a ++ z)
+    have htake : (a ++ z).take a.length = a := by simp
+    rw [htake]
+    refine ⟨b, ?_⟩
+    calc
+      (a ++ z) ++ b = a ++ (z ++ b) := List.append_assoc ..
+      _ = a ++ (a ++ z) := by rw [hz]
+  have prefix_of_length : ∀ (z z' : List α),
+      a ++ z = z ++ b → a ++ z' = z' ++ b → z.length ≤ z'.length →
+      z <+: z' := by
+    intro z z' hz hz' hlen
+    apply (List.prefix_append_right_inj a).mp
+    apply List.prefix_iff_getElem?.mpr
+    intro j hj
+    have hj' : j < (a ++ z').length := by
+      simp only [List.length_append] at hj ⊢
+      omega
+    have hmod : j % a.length < a.length := Nat.mod_lt _ hapos
+    calc
+      (a ++ z')[j]? = (a ++ z')[j % a.length]? :=
+        ((periodic z' hz').getElem?_mod a.length j (a ++ z') hj').symm
+      _ = a[j % a.length]? := List.getElem?_append_left hmod
+      _ = (a ++ z)[j % a.length]? := (List.getElem?_append_left hmod).symm
+      _ = (a ++ z)[j]? := (periodic z hz).getElem?_mod a.length j (a ++ z) hj
+      _ = some (a ++ z)[j] := List.getElem?_eq_getElem hj
+  rcases Nat.le_total z₁.length z₂.length with hlen | hlen
+  · exact Or.inl (prefix_of_length z₁ z₂ h₁ h₂ hlen)
+  · exact Or.inr (prefix_of_length z₂ z₁ h₂ h₁ hlen)
 
 private theorem residual_commutes_right
     {a b z t : List α} (h : a ++ z = z ++ b)

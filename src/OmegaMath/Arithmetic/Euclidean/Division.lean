@@ -2,11 +2,10 @@ module
 prelude
 import all OmegaInit.Prelude
 public import OmegaMath.Data.Nat
-public import OmegaMath.Data.Nat.Order
 
 /-! Omega original.
 
-Constructive natural divisibility and Euclidean division.
+Constructive natural order, divisibility, and Euclidean division.
 -/
 
 noncomputable section
@@ -39,12 +38,29 @@ theorem natEq_cases (a b : Nat) (P : Bool → Prop)
         (fun h => same (congrArg Nat.succ h)) (fun h => different (fun e => h (Nat.succ.inj e)))) b)
     a) b P same different
 
+theorem le_or_lt (a b : Nat) : Or (Nat.le a b) (Nat.lt b a) :=
+  (Nat.rec (motive := fun x => ∀ y, Or (Nat.le x y) (Nat.lt y x))
+    (fun b => Or.inl (Nat.zero_le b))
+    (fun a ih b => Nat.rec (motive := fun y => Or (Nat.le a.succ y) (Nat.lt y a.succ))
+      (Or.inr (Nat.succ_le_succ (Nat.zero_le a))) (fun b _ =>
+        (ih b).elim (fun h => Or.inl (Nat.succ_le_succ h))
+          (fun h => Or.inr (Nat.succ_le_succ h))) b) a) b
+
 theorem pos_of_ne_zero {n : Nat} (h : Not (Eq n Nat.zero)) : Nat.lt Nat.zero n :=
   (Nat.rec (motive := fun n => Not (Eq n Nat.zero) → Nat.lt Nat.zero n)
     (fun h => False.elim (h rfl)) (fun n _ _ => Nat.succ_le_succ (Nat.zero_le n)) n) h
 
+theorem le_of_lt {a b : Nat} (h : Nat.lt a b) : Nat.le a b :=
+  Nat.le_trans (Nat.le.step (Nat.le_refl a)) h
+
 theorem lt_of_le_of_lt {a b c : Nat} (h : Nat.le a b) (g : Nat.lt b c) : Nat.lt a c :=
   Nat.le_trans (Nat.succ_le_succ h) g
+
+theorem lt_of_lt_of_le {a b c : Nat} (h : Nat.lt a b) (g : Nat.le b c) : Nat.lt a c :=
+  Nat.le_trans h g
+
+theorem lt_irrefl (a : Nat) : Not (Nat.lt a a) :=
+  Nat.rec (motive := fun n => Not (Nat.lt n n)) (Nat.not_succ_le_zero Nat.zero) (fun _ ih h => ih (Nat.le_of_succ_le_succ h)) a
 
 theorem ne_of_lt {a b : Nat} (h : Nat.lt a b) : Not (Eq a b) :=
   fun e => lt_irrefl a (Eq.subst (motive := Nat.lt a) e.symm h)
@@ -52,9 +68,18 @@ theorem ne_of_lt {a b : Nat} (h : Nat.lt a b) : Not (Eq a b) :=
 theorem lt_of_le_of_ne {a b : Nat} (h : Nat.le a b) (hne : Not (Eq a b)) : Nat.lt a b :=
   (le_or_lt b a).elim (fun g => False.elim (hne (Nat.le_antisymm h g))) (fun g => g)
 
+theorem add_le_add_right {a b : Nat} (h : Nat.le a b) (c : Nat) :
+    Nat.le (a.add c) (b.add c) :=
+  Eq.subst (motive := fun x => Nat.le x (b.add c)) (Nat.add_comm c a)
+    (Eq.subst (motive := Nat.le (c.add a)) (Nat.add_comm c b) (Nat.add_le_add_left h c))
+
 theorem add_le_add {a b c d : Nat} (h : Nat.le a b) (g : Nat.le c d) :
     Nat.le (a.add c) (b.add d) :=
   Nat.le_trans (add_le_add_right h c) (Nat.add_le_add_left g b)
+
+theorem add_lt_add_right {a b : Nat} (h : Nat.lt a b) (c : Nat) :
+    Nat.lt (a.add c) (b.add c) :=
+  Eq.subst (motive := fun x => Nat.le x (b.add c)) (Nat.succ_add a c) (add_le_add_right h c)
 
 theorem add_lt_add_left {a b : Nat} (h : Nat.lt a b) (c : Nat) :
     Nat.lt (c.add a) (c.add b) :=
@@ -75,6 +100,14 @@ theorem mul_le_mul_left {a b : Nat} (h : Nat.le a b) (c : Nat) :
 theorem mul_pos {a b : Nat} (ha : Nat.lt Nat.zero a) (hb : Nat.lt Nat.zero b) :
     Nat.lt Nat.zero (a.mul b) :=
   Nat.le_trans ha (Eq.subst (motive := fun x => Nat.le x (a.mul b)) (Nat.mul_one a) (mul_le_mul_left hb a))
+
+/-- Strong induction using only the natural recursor. -/
+theorem strongInduction {P : Nat → Prop}
+    (step : ∀ n, (∀ m, Nat.lt m n → P m) → P n) (n : Nat) : P n :=
+  step n (fun m => Nat.rec (motive := fun n => ∀ m, Nat.lt m n → P m)
+    (fun m h => False.elim (Nat.not_succ_le_zero m h))
+    (fun n ih m h => (le_or_lt n m).elim
+      (fun g => Eq.subst (motive := P) (Nat.le_antisymm g (Nat.le_of_succ_le_succ h)) (step n ih)) (ih m)) n m)
 
 def Dvd (a b : Nat) : Prop := Exists (fun k : Nat => Eq b (a.mul k))
 

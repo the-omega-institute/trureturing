@@ -5,10 +5,9 @@ year: 2004
 title: "Combinatorics on Words: A New Challenging Topic"
 doi: null
 url: https://tucs.fi/publications/attachment.php?fname=TR645.pdf
-claim: "Theorem 1(i)-(ii) characterizes commuting words; Section 5 Example 5 gives the general solution of the conjugacy equation."
+claim: "Theorem 1(i)-(ii) characterizes commuting finite words as powers of a common word, including empty words."
 strata_touched:
   - D5/S1/Words/Powers/CommutingWords
-  - D5/S1/Words/Powers/ConjugacyNormalForm
 license: citation-only
 triage: anchor
 ---
@@ -47,31 +46,6 @@ the stated source scope; it carries no novelty assertion.
 The equivalence uses only clauses (i)-(ii). It makes no assertion about
 primitive-root uniqueness, a shortest common root, or clause (iii)'s
 nontrivial relations.
-
-## Conjugacy equation
-
-Section 5, Example 5, printed p. 12 / PDF p. 16, states the general solution
-of xz=zy as x=rs, y=sr, z=r(sr)^i, for i at least zero and arbitrary word
-parameters r and s. The example refers to Lothaire [Lo83]; that book is not
-used as a directly verified primary source here. The identity
-(rs)^i r=r(sr)^i relates this convention to powers of x followed by r.
-
-`ConjugacyNormalForm.conjugacy_iff_exists_unique_short_cut` fixes the actual
-words a, b and z, assumes only a nonempty, and gives equivalence with unique
-existence of the entire literal triple (n,p,q): a=pq, b=qp, z=a^n p and
-length(p)<length(a). The exponent may be zero, z and p may be empty, and a
-may be nonprimitive. The suffix q and the word b are nonempty consequences.
-All alphabet types in all universes remain quantified, including empty and
-infinite alphabets, without decidable equality or other alphabet structure.
-
-The report's parametrization supplies the classical mathematical context.
-It does not assert the arbitrary-alphabet extension or the fixed-z
-whole-triple uniqueness with a strict short-cut bound. Those clauses are
-proved by the carrier-parametric length descent and cancellation argument
-in `Omega.FreeMonoid.Conjugacy`, with every elementary law discharged for
-ordinary lists. The corresponding Blueprint entry is
-`unique-short-cut-normal-form`. This formal extension and normalization
-carry no original mathematical novelty claim.
 
 ## License
 
