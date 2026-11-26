@@ -11,6 +11,23 @@ namespace OmegaChecks.InitPort.Alternatives
 public noncomputable def Nat.recCompiled : type_of% @_root_.Nat.recCompiled :=
   @_root_.Nat.rec
 
+public def Nat.repeatTR : type_of% @_root_.Nat.repeatTR := @_root_.Nat.«repeat»
+
+public def Nat.foldTR : type_of% @_root_.Nat.foldTR := @_root_.Nat.fold
+
+public def Nat.anyTR : type_of% @_root_.Nat.anyTR := @_root_.Nat.any
+
+public def Nat.allTR : type_of% @_root_.Nat.allTR := @_root_.Nat.all
+
+public def Nat.decidableBallLT : type_of% @_root_.Nat.decidableBallLT :=
+  @_root_.Nat.decidableBallLTTR
+
+@[instance_reducible] public def Nat.decidableExistsLT : type_of% @_root_.Nat.decidableExistsLT :=
+  @_root_.Nat.decidableExistsLTTR
+
+public def Nat.decidableExistsLT' : type_of% @_root_.Nat.decidableExistsLT' :=
+  @_root_.Nat.decidableExistsLT'TR
+
 public theorem Nat.dfoldCast_eq_dfoldCast_iff :
     type_of% (private_decl% @_root_.Nat.dfoldCast_eq_dfoldCast_iff) := by
   intros
