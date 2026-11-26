@@ -44,7 +44,7 @@ $$\forall (n : \mathbb{N}), (0 < n) \Rightarrow (\exists (k : \mathbb{N}), \exis
 
 *Commentary.*
 
-The first label of shell k+1 is the odd square (2k+1) squared. The next start is greater by 8(k+1). Irwin’s two-leg layer lemma gives the cells on the four sides after reflection.
+The first label of shell k+1 is the odd square (2k+1) squared. The next start is greater by 8(k+1). Irwin’s two-leg layer lemma gives the cells on the four sides after reflection. Positivity of the index is necessary because the origin has index zero, while every displayed shell starts at an odd square at least one and has a nonnegative side offset.
 
 ## References
 

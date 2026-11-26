@@ -124,7 +124,7 @@ $$\forall (m : \mathbb{N}), (1 \le m) \Rightarrow (\forall (o : (\mathbb{Z} \tim
 
 *Commentary.*
 
-Starting at the indicated walk state, the next two legs follow the two displayed coordinate offsets in the appropriate signed frame.
+Starting at the indicated walk state, the next two legs follow the two displayed coordinate offsets in the appropriate signed frame. The square-start equality fixes the cell o and the leg and used counters immediately before the turn, so the next step starts leg 2m-1 in the claimed frame. Positivity of m is necessary. At m=0 and o=(0,0) the starting equality holds by truncated natural subtraction, yet the second formula at t=0 puts the origin at (1,0). On the first leg t<m is strict because at t=m the walk has turned to leg 2m and reset used to zero. The second leg has length m+1, so t=m is still in that leg and t=m+1 would already be on the next leg with used zero.
 
 **Definition 1.10 (Spiral diagrams).**
 

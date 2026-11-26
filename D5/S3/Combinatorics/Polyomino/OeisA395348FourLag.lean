@@ -673,12 +673,6 @@ private theorem offset_redTop {r : ℤ} (_hr : 3 ≤ r) :
   have h : redColumn r ≠ r := by unfold redColumn; omega
   simp [h]
 
-private theorem offset_redBottom {r : ℤ} (hr : 3 ≤ r) :
-    offset r (redBottom r) = 7*r - 1 + redColumn r := by
-  have h₁ : -r ≠ r := by omega
-  have h₂ : redColumn r ≠ -r := by unfold redColumn; omega
-  simp [offset, redBottom, h₁, h₂]
-
 private theorem earlier_black_right {r x y : ℤ} (hr : 5 ≤ r)
     (hl : label (x, y) < label (blackRight r)) : Forbidden r 0 0 (x, y) := by
   have hrad := radius_blackRight (by omega : 3 ≤ r)

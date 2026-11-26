@@ -54,7 +54,7 @@ $$(\operatorname{ExistsUnique}\left(((f : \mathbb{N} \to \mathbb{N}) \mapsto \op
 
 *Commentary.*
 
-The opening proof checks all fourteen turns inside a radius-four box. From shell five onward, the earlier opposing rows, columns and two diagonal projections exclude smaller labels on each of the four turns. Two shells preserve parity. The two Black slots give increments 16r+10 and 16r+18, with the n=2 case coming from the opening.
+The opening proof checks all fourteen turns inside a radius-four box. From shell five onward, the earlier opposing rows, columns and two diagonal projections exclude smaller labels on each of the four turns. Two shells preserve parity. The two Black slots give increments 16r+10 and 16r+18, with the n=2 case coming from the opening. The lower bound is necessary because in the unique least-label play a(0)=0 and a(4)=38, whereas the claimed increment would give 34. Also a(1)=2 and a(5)=52, whereas the claimed increment would give 44.
 
 ## References
 
