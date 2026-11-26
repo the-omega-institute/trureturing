@@ -548,9 +548,13 @@ def run (strictPath artifacts : System.FilePath) (outPath : String) (exclude : S
   let ruleModule := `OmegaChecks.InitCompiler.ProofRules
   let ruleEnv ← importModules #[{module := ruleModule}] {} (level := .private)
   let mut proofRules := {}
-  for name in #[`iteCongr, `diteCongr, `forallDomain, `decideCongr] do
+  for name in #[`iteCongr, `diteCongr, `forallDomain, `decideCongr, `natBEq, `intBEq, `intBNe, `polyBEq] do
     let some info := ruleEnv.find? (ruleModule ++ name) | throw <| IO.userError s!"missing proof rule {name}"
-    proofRules := proofRules.insert name info
+    let .thmInfo th := info | throw <| IO.userError s!"expected a theorem for {name}"
+    let localRule := fun n => ruleEnv.getModuleIdxFor? n == ruleEnv.getModuleIdx? ruleModule
+    let body ← (Meta.deltaExpand th.value localRule (allowOpaque := true)).toIO'
+      {fileName := "<constructive transport>", fileMap := default} {env := ruleEnv}
+    proofRules := proofRules.insert name (.thmInfo {th with value := body})
   let lib ← getLibDir (← findSysroot)
   searchPathRef.set [lib]
   let allMods ← if modules.isEmpty then modulesIn lib else pure modules.toArray

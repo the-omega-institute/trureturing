@@ -1,5 +1,6 @@
 module
 public import Init.Core
+import all Init.Data.Int.Linear
 
 namespace OmegaChecks.InitCompiler.ProofRules
 
@@ -31,4 +32,35 @@ public theorem decideCongr {p q : Prop} [Decidable p] [Decidable q] (h : p ↔ q
     (fun hp => (decide_eq_true hp).trans (decide_eq_true (h.mp hp)).symm)
     (fun hp => (decide_eq_false hp).trans (decide_eq_false (fun hq => hp (h.mpr hq))).symm)
 
+public theorem natBEq (a b : Nat) : a.beq b = true ↔ a = b :=
+  ⟨Nat.eq_of_beq_eq_true, fun h => h ▸ Nat.beq_refl _⟩
+
+public theorem intBEq (a b : Int) : a.beq' b = true ↔ a = b := by
+  rw [Int.beq'_eq_beq]
+  exact beq_iff_eq
+
+public theorem intBNe (a b : Int) : a.beq' b = false ↔ a ≠ b := by
+  rw [Int.beq'_eq_beq]
+  exact beq_eq_false_iff_ne
+
+public theorem polyBEq (p q : Int.Internal.Linear.Poly) : p.beq' q = true ↔ p = q := by
+  induction p generalizing q with
+  | num k =>
+    cases q with
+    | num l => exact ⟨fun h => congrArg _ ((intBEq ..).mp h), fun h => (intBEq ..).mpr (by cases h; rfl)⟩
+    | add => exact ⟨(fun h => nomatch h), (fun h => nomatch h)⟩
+  | add k x p ih =>
+    cases q with
+    | num => exact ⟨(fun h => nomatch h), (fun h => nomatch h)⟩
+    | add l y q =>
+      constructor
+      · intro h
+        obtain ⟨hk,tail⟩ := Bool.and_eq_true_iff.mp h
+        obtain ⟨hv,hp⟩ := Bool.and_eq_true_iff.mp tail
+        cases (intBEq ..).mp hk
+        cases Nat.eq_of_beq_eq_true hv
+        exact congrArg (Int.Internal.Linear.Poly.add k x) ((ih q).mp hp)
+      · intro h
+        cases h
+        exact Bool.and_eq_true_iff.mpr ⟨(intBEq ..).mpr rfl, Bool.and_eq_true_iff.mpr ⟨Nat.beq_refl _, (ih p).mpr rfl⟩⟩
 end OmegaChecks.InitCompiler.ProofRules
