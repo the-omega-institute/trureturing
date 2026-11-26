@@ -1,5 +1,6 @@
 module
 public import Init.Data.Range.Polymorphic.Lemmas
+import all Init.Data.Range.Polymorphic.Lemmas
 import Init.Data.Iterators.Lemmas.Basic
 import Init.Data.Iterators.Lemmas.Consumers.Loop
 import all Init.Data.Array.Basic
@@ -1249,5 +1250,130 @@ public theorem Std.Rxi.Iterator.pairwise_toList_upwardEnumerableLt :
         apply _root_.Std.Rxi.Iterator.isPlausibleStep_iff.mpr
         unfold _root_.Std.Rxi.Iterator.step
         rw [hn]
+
+private theorem orderedHeadAbsent {R : α → α → Prop} [Std.Asymm R] {x : α} {xs : List α}
+    (ordered : (x :: xs).Pairwise R) (mem : x ∈ xs) : False :=
+  let loop := List.rel_of_pairwise_cons ordered mem
+  Std.Asymm.asymm x x loop loop
+
+public theorem Std.eq_of_pairwise_lt_of_mem_iff_mem :
+    type_of% (private_decl% @_root_.Std.eq_of_pairwise_lt_of_mem_iff_mem) := by
+  intro α rel asymm l l' sorted sorted' same
+  induction l generalizing l' with
+  | nil =>
+    cases l' with
+    | nil => rfl
+    | cons y ys => cases (same y).mpr List.mem_cons_self
+  | cons x xs ih =>
+    cases l' with
+    | nil => cases (same x).mp List.mem_cons_self
+    | cons y ys =>
+      have heads : x = y := by
+        rcases List.mem_cons.mp ((same x).mp List.mem_cons_self) with eq | right
+        · exact eq
+        · rcases List.mem_cons.mp ((same y).mpr List.mem_cons_self) with eq | left
+          · exact eq.symm
+          · exact (Std.Asymm.asymm x y (List.rel_of_pairwise_cons sorted left)
+              (List.rel_of_pairwise_cons sorted' right)).elim
+      cases heads
+      apply congrArg (List.cons x)
+      apply ih sorted.tail sorted'.tail
+      intro a
+      constructor
+      · intro mem
+        rcases List.mem_cons.mp ((same a).mp (.tail x mem)) with rfl | found
+        · exact (orderedHeadAbsent sorted mem).elim
+        · exact found
+      · intro mem
+        rcases List.mem_cons.mp ((same a).mpr (.tail x mem)) with rfl | found
+        · exact (orderedHeadAbsent sorted' mem).elim
+        · exact found
+
+private theorem sortedRangeImage [UpwardEnumerable α] [LawfulUpwardEnumerable α]
+    [LinearlyUpwardEnumerable α] [InfinitelyUpwardEnumerable α]
+    (ys xs : List α) (left : ys.Pairwise UpwardEnumerable.LT) (right : xs.Pairwise UpwardEnumerable.LT)
+    (preimage : ∀ y, y ∈ ys ↔ ∃ x, y = succ x ∧ x ∈ xs) : ys = xs.map succ := by
+  apply (private_decl% _root_.Std.eq_of_pairwise_lt_of_mem_iff_mem) left
+    (right.map succ fun _ _ => UpwardEnumerable.succ_lt_succ_iff.mpr)
+  intro y
+  constructor
+  · intro hy
+    obtain ⟨x, eq, mem⟩ := (preimage y).mp hy
+    exact List.mem_map.mpr ⟨x, mem, eq.symm⟩
+  · intro hy
+    obtain ⟨x, mem, eq⟩ := List.mem_map.mp hy
+    exact (preimage y).mpr ⟨x, eq.symm, mem⟩
+
+public theorem Std.Rcc.toList_succ_succ_eq_map : type_of% @_root_.Std.Rcc.toList_succ_succ_eq_map := by
+  intro α _ _ _ _ _ _ _ _ lo hi
+  apply sortedRangeImage _ _ _root_.Std.Rcc.pairwise_toList_upwardEnumerableLt _root_.Std.Rcc.pairwise_toList_upwardEnumerableLt
+  intro y
+  constructor
+  · intro hy
+    obtain ⟨x, eq, mem⟩ := _root_.Std.Rcc.mem_succ_succ_iff.mp (_root_.Std.Rcc.mem_toList_iff_mem.mp hy)
+    exact ⟨x, eq, _root_.Std.Rcc.mem_toList_iff_mem.mpr mem⟩
+  · rintro ⟨x, eq, mem⟩
+    exact _root_.Std.Rcc.mem_toList_iff_mem.mpr (_root_.Std.Rcc.mem_succ_succ_iff.mpr
+      ⟨x, eq, _root_.Std.Rcc.mem_toList_iff_mem.mp mem⟩)
+
+public theorem Std.Rco.toList_succ_succ_eq_map : type_of% @_root_.Std.Rco.toList_succ_succ_eq_map := by
+  intro α _ _ _ _ _ _ _ _ _ _ _ lo hi
+  apply sortedRangeImage _ _ _root_.Std.Rco.pairwise_toList_upwardEnumerableLt _root_.Std.Rco.pairwise_toList_upwardEnumerableLt
+  intro y
+  constructor
+  · intro hy
+    obtain ⟨x, eq, mem⟩ := _root_.Std.Rco.mem_succ_succ_iff.mp (_root_.Std.Rco.mem_toList_iff_mem.mp hy)
+    exact ⟨x, eq, _root_.Std.Rco.mem_toList_iff_mem.mpr mem⟩
+  · rintro ⟨x, eq, mem⟩
+    exact _root_.Std.Rco.mem_toList_iff_mem.mpr (_root_.Std.Rco.mem_succ_succ_iff.mpr
+      ⟨x, eq, _root_.Std.Rco.mem_toList_iff_mem.mp mem⟩)
+
+public theorem Std.Rci.toList_succ_succ_eq_map : type_of% @_root_.Std.Rci.toList_succ_succ_eq_map := by
+  intro α _ _ _ _ _ _ _ _ lo
+  apply sortedRangeImage _ _ _root_.Std.Rci.pairwise_toList_upwardEnumerableLt _root_.Std.Rci.pairwise_toList_upwardEnumerableLt
+  intro y
+  constructor
+  · intro hy
+    obtain ⟨x, eq, mem⟩ := _root_.Std.Rci.mem_succ_iff.mp (_root_.Std.Rci.mem_toList_iff_mem.mp hy)
+    exact ⟨x, eq, _root_.Std.Rci.mem_toList_iff_mem.mpr mem⟩
+  · rintro ⟨x, eq, mem⟩
+    exact _root_.Std.Rci.mem_toList_iff_mem.mpr (_root_.Std.Rci.mem_succ_iff.mpr
+      ⟨x, eq, _root_.Std.Rci.mem_toList_iff_mem.mp mem⟩)
+
+public theorem Std.Roc.toList_succ_succ_eq_map : type_of% @_root_.Std.Roc.toList_succ_succ_eq_map := by
+  intro α _ _ _ _ _ _ _ _ _ _ _ lo hi
+  apply sortedRangeImage _ _ _root_.Std.Roc.pairwise_toList_upwardEnumerableLt _root_.Std.Roc.pairwise_toList_upwardEnumerableLt
+  intro y
+  constructor
+  · intro hy
+    obtain ⟨x, eq, mem⟩ := _root_.Std.Roc.mem_succ_succ_iff.mp (_root_.Std.Roc.mem_toList_iff_mem.mp hy)
+    exact ⟨x, eq, _root_.Std.Roc.mem_toList_iff_mem.mpr mem⟩
+  · rintro ⟨x, eq, mem⟩
+    exact _root_.Std.Roc.mem_toList_iff_mem.mpr (_root_.Std.Roc.mem_succ_succ_iff.mpr
+      ⟨x, eq, _root_.Std.Roc.mem_toList_iff_mem.mp mem⟩)
+
+public theorem Std.Roo.toList_succ_succ_eq_map : type_of% @_root_.Std.Roo.toList_succ_succ_eq_map := by
+  intro α _ _ _ _ _ _ _ _ lo hi
+  apply sortedRangeImage _ _ _root_.Std.Roo.pairwise_toList_upwardEnumerableLt _root_.Std.Roo.pairwise_toList_upwardEnumerableLt
+  intro y
+  constructor
+  · intro hy
+    obtain ⟨x, eq, mem⟩ := _root_.Std.Roo.mem_succ_succ_iff.mp (_root_.Std.Roo.mem_toList_iff_mem.mp hy)
+    exact ⟨x, eq, _root_.Std.Roo.mem_toList_iff_mem.mpr mem⟩
+  · rintro ⟨x, eq, mem⟩
+    exact _root_.Std.Roo.mem_toList_iff_mem.mpr (_root_.Std.Roo.mem_succ_succ_iff.mpr
+      ⟨x, eq, _root_.Std.Roo.mem_toList_iff_mem.mp mem⟩)
+
+public theorem Std.Roi.toList_succ_succ_eq_map : type_of% @_root_.Std.Roi.toList_succ_succ_eq_map := by
+  intro α _ _ _ _ _ _ _ _ lo
+  apply sortedRangeImage _ _ _root_.Std.Roi.pairwise_toList_upwardEnumerableLt _root_.Std.Roi.pairwise_toList_upwardEnumerableLt
+  intro y
+  constructor
+  · intro hy
+    obtain ⟨x, eq, mem⟩ := _root_.Std.Roi.mem_succ_iff.mp (_root_.Std.Roi.mem_toList_iff_mem.mp hy)
+    exact ⟨x, eq, _root_.Std.Roi.mem_toList_iff_mem.mpr mem⟩
+  · rintro ⟨x, eq, mem⟩
+    exact _root_.Std.Roi.mem_toList_iff_mem.mpr (_root_.Std.Roi.mem_succ_iff.mpr
+      ⟨x, eq, _root_.Std.Roi.mem_toList_iff_mem.mp mem⟩)
 
 end OmegaChecks.InitPort.Alternatives
