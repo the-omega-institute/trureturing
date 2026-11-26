@@ -68,14 +68,9 @@ private def sealedImplementation (n : Name) : Bool :=
     `List.instToStringListSlice, `instIteratorLoopSubarrayIteratorIdOfMonad,
     `Std.Iterators.Types.ListIterator.instIteratorLoop,
     `String.Slice.ByteIterator.instIteratorLoopUInt8OfMonad,
-    `String.Slice.Pattern.ToBackwardSearcher.DefaultBackwardSearcher.instIteratorLoopIdSearchStep,
-    `String.Slice.Pattern.ToForwardSearcher.DefaultForwardSearcher.instIteratorLoopIdSearchStep,
     `String.Slice.PosIterator.instIteratorLoopSubtypePosNeEndPosOfMonad,
     `String.Slice.RevByteIterator.instIteratorLoopUInt8OfMonad,
-    `String.Slice.RevPosIterator.instIteratorLoopSubtypePosNeEndPosOfMonad,
-    `String.Slice.RevSplitIterator.instIteratorLoopOfMonad,
-    `String.Slice.SplitInclusiveIterator.instIteratorLoopIdOfMonad,
-    `String.Slice.SplitIterator.instIteratorLoopIdSubsliceOfMonad].contains n
+    `String.Slice.RevPosIterator.instIteratorLoopSubtypePosNeEndPosOfMonad].contains n
 
 /-- Inline a later proof dependency locally, so module cycles do not discard checked
 theorems. Types, owners and computational declarations stay as translated by the kernel. -/
