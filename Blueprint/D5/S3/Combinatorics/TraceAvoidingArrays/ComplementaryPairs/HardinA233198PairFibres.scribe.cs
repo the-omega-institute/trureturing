@@ -55,7 +55,9 @@ internal sealed class HardinA233198PairFibresDocument : IScribeDocumentDefinitio
                 + "entire displayed polynomial identity. Its denominator has constant "
                 + "coefficient one, so formal inversion is valid. The coefficient "
                 + "definition of A retains exactly the literal positive-height arrays, "
-                + "including the height-one boundary and unused colours."))));
+                + "including the height-one boundary and unused colours.",
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("hardin233198"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Def(string id, string name, string title, Formula formula,
         string prose, bool literature = false) =>
@@ -66,10 +68,10 @@ internal sealed class HardinA233198PairFibresDocument : IScribeDocumentDefinitio
 
 
     private static DocumentBlock Thm(string id, string name, string title, Formula formula,
-        string prose) =>
+        string prose, OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + name), H(title),
             StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromRepo(Source),
-            Blocks(Paragraph(Text(prose))), DescribeRole.Theorem);
+            Blocks(Paragraph(Text(prose))), DescribeRole.Theorem, resolution);
 
     private const string LeanPrefix =
         "D5.S3.Combinatorics.TraceAvoidingArrays.ComplementaryPairs.HardinA233198PairFibres.";

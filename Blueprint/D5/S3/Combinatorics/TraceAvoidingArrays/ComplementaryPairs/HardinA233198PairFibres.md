@@ -66,6 +66,10 @@ $$\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/ComplementaryPairs/HardinA233198PairFibres.generating_function` (`✓ std3`). ∎
 
+*Resolves.* `Problems/hardin233198` (proved) by `D5/S3/Combinatorics/TraceAvoidingArrays/ComplementaryPairs/HardinA233198PairFibres.generating_function`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hardin233198","declaration_gid":"D5/S3/Combinatorics/TraceAvoidingArrays/ComplementaryPairs/HardinA233198PairFibres.generating_function","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* R. H. Hardin; Colin Barker; OEIS Foundation Inc. (2013). *OEIS A233198: normalized eight-colour arrays of width four*. URL: <https://oeis.org/A233198>.
