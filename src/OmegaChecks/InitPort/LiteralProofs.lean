@@ -50,17 +50,23 @@ public theorem digitBounds (a b : Nat) (h : Nat.lt a b) :
 
 public theorem raiseBound (a b : Nat) (h : Nat.lt a b) : Nat.lt a (Nat.succ b) := Nat.le.step h
 
+-- Spell out the strict comparison so both foundations can check the certificate.
+-- Its reduction agrees with Omega.Nat.le in the generated strict kernel.
+public abbrev computedLE : Nat → Nat → Prop :=
+  Nat.rec (motive := fun _ => Nat → Prop) (fun _ => True)
+    (fun _ smaller n => Nat.rec (motive := fun _ => Prop) False (fun k _ => smaller k) n)
+
 /-- The strict natural comparison reduces to True or False when its constructors are exposed. -/
-public theorem leTrue (a b : Nat) : Nat.le a b → Omega.Eq (Nat.le a b) True :=
-  Nat.rec (motive := fun a => ∀ b, Nat.le a b → Omega.Eq (Nat.le a b) True)
+public theorem leTrue (a b : Nat) : computedLE a b → Omega.Eq (computedLE a b) True :=
+  Nat.rec (motive := fun a => ∀ b, computedLE a b → Omega.Eq (computedLE a b) True)
     (fun _ _ => Omega.rfl)
-    (fun n ih => Nat.rec (motive := fun b => Nat.le n.succ b → Omega.Eq (Nat.le n.succ b) True)
+    (fun n ih => Nat.rec (motive := fun b => computedLE n.succ b → Omega.Eq (computedLE n.succ b) True)
       (fun h => False.elim h) (fun b _ => ih b)) a b
 
-public theorem leFalse (a b : Nat) : (Nat.le a b → False) → Omega.Eq (Nat.le a b) False :=
-  Nat.rec (motive := fun a => ∀ b, (Nat.le a b → False) → Omega.Eq (Nat.le a b) False)
+public theorem leFalse (a b : Nat) : (computedLE a b → False) → Omega.Eq (computedLE a b) False :=
+  Nat.rec (motive := fun a => ∀ b, (computedLE a b → False) → Omega.Eq (computedLE a b) False)
     (fun _ h => False.elim (h True.intro))
-    (fun n ih => Nat.rec (motive := fun b => (Nat.le n.succ b → False) → Omega.Eq (Nat.le n.succ b) False)
+    (fun n ih => Nat.rec (motive := fun b => (computedLE n.succ b → False) → Omega.Eq (computedLE n.succ b) False)
       (fun _ => Omega.rfl) (fun b _ => ih b)) a b
 
 end OmegaLiteralProofs

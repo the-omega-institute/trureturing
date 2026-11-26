@@ -224,7 +224,11 @@ private def orderTruthProof? (source : Environment) (proofs : NameMap ConstantIn
     let lo := if relation.isAppOf `LT.lt then mkApp (mkConst `Nat.succ) (asNat a) else asNat a
     let rule := if truth then `OmegaLiteralProofs.leTrue else `OmegaLiteralProofs.leFalse
     let extract := if truth then `of_decide_eq_true else `of_decide_eq_false
-    let induction := ((proofs.find? rule).get!.value! (allowOpaque := true)).replace fun
+    let computedLE := (proofs.find? `OmegaLiteralProofs.computedLE).get!.value!
+    let proof := (proofs.find? rule).get!.value! (allowOpaque := true)
+    let expanded := proof.replace fun e =>
+      if e.isConstOf `OmegaLiteralProofs.computedLE then some computedLE else none
+    let induction := expanded.replace fun
       | .const n ls => some (.const (n.replacePrefix `Omega .anonymous) ls)
       | _ => none
     let body := mkApp3 induction lo (asNat b) (mkApp3 (mkConst extract) p dec h)
