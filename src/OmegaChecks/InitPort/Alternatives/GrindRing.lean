@@ -219,4 +219,110 @@ public theorem Lean.Grind.CommRing.Poly.denote_mulConstC :
     | false => exact multiplyTerms c ctx k p
 end
 
+public theorem Lean.Grind.CommRing.Mon.revlex_k_eq_revlex :
+    type_of% @_root_.Lean.Grind.CommRing.Mon.revlex_k_eq_revlex := by
+  intro m n
+  unfold Mon.revlex_k Mon.revlex
+  generalize hugeFuel = fuel
+  induction fuel generalizing m n with
+  | zero => rfl
+  | succ f ih =>
+    cases m with
+    | unit => cases n <;> rfl
+    | mult p m =>
+      cases n with
+      | unit => rfl
+      | mult q n =>
+        simp only [Mon.revlexFuel]
+        cases h : Nat.beq p.x q.x <;> cases t : p.x.blt q.x <;>
+          simp only [show (p.x == q.x) = Nat.beq p.x q.x from rfl, h, cond, ih] <;> rw [Ordering.then'_eq_then] <;> try rw [powerRevlex_k_eq_powerRevlex]
+
+public theorem Lean.Grind.CommRing.Poly.addConst_k_eq_addConst :
+    type_of% @_root_.Lean.Grind.CommRing.Poly.addConst_k_eq_addConst := by
+  intro p k
+  unfold Poly.addConst_k Poly.addConst
+  rw [Int.beq'_eq_beq]
+  cases h : @BEq.beq Int (@instBEqOfDecidableEq Int Int.instDecidableEq) k 0 with
+  | true => rfl
+  | false =>
+    induction p with
+    | num => rfl
+    | add c m t ih => exact congrArg (Poly.add c m) ih
+
+public theorem Lean.Grind.CommRing.denoteInt_eq :
+    type_of% @_root_.Lean.Grind.CommRing.denoteInt_eq := by
+  intro α ring k
+  cases k with
+  | ofNat n =>
+    change OfNat.ofNat n = _
+    exact (Semiring.ofNat_eq_natCast (α := α) n).trans (Ring.intCast_natCast n).symm
+  | negSucc n =>
+    change -OfNat.ofNat (n+1) = _
+    rw [Semiring.ofNat_eq_natCast, ← Ring.intCast_natCast, ← Ring.intCast_neg]
+    rfl
+
+public theorem Lean.Grind.CommRing.intCast_eq_denoteInt :
+    type_of% @_root_.Lean.Grind.CommRing.intCast_eq_denoteInt :=
+  fun {_} _ b => (_root_.Lean.Grind.CommRing.denoteInt_eq b).symm
+
+
+public theorem Lean.Grind.CommRing.Poly.mulConst_k_eq_mulConst :
+    type_of% @_root_.Lean.Grind.CommRing.Poly.mulConst_k_eq_mulConst := by
+  intro k p
+  unfold Poly.mulConst_k Poly.mulConst
+  rw [Int.beq'_eq_beq, Int.beq'_eq_beq]
+  cases h : @BEq.beq Int (@instBEqOfDecidableEq Int Int.instDecidableEq) k 0 with
+  | true => rfl
+  | false =>
+    cases h' : @BEq.beq Int (@instBEqOfDecidableEq Int Int.instDecidableEq) k 1 with
+    | true => rfl
+    | false =>
+      induction p with
+      | num => rfl
+      | add c m t ih => exact congrArg (Poly.add (k*c) m) ih
+
+public theorem Lean.Grind.CommRing.Poly.mulMon_k_eq_mulMon :
+    type_of% @_root_.Lean.Grind.CommRing.Poly.mulMon_k_eq_mulMon := by
+  intro k m p
+  unfold Poly.mulMon_k Poly.mulMon
+  rw [Int.beq'_eq_beq]
+  cases hz : @BEq.beq Int (@instBEqOfDecidableEq Int Int.instDecidableEq) k 0 with
+  | true => rfl
+  | false =>
+    cases m with
+    | unit => exact _root_.Lean.Grind.CommRing.Poly.mulConst_k_eq_mulConst ..
+    | mult h m =>
+      induction p with
+      | num j =>
+        change (Bool.rec (motive := fun _ => Poly) (.add (k*j) (.mult h m) (.num 0)) (.num 0) (Int.beq' j 0)) =
+          (bif @BEq.beq Int (@instBEqOfDecidableEq Int Int.instDecidableEq) j 0 then .num 0 else
+            .add (k*j) (.mult h m) (.num 0))
+        rw [Int.beq'_eq_beq]
+        cases @BEq.beq Int (@instBEqOfDecidableEq Int Int.instDecidableEq) j 0 <;> rfl
+      | add j w p ih =>
+        change Poly.add _ _ _ = Poly.add _ _ _
+        rw [Mon.mul_k_eq_mul]
+        exact congrArg (Poly.add (k*j) ((Mon.mult h m).mul w)) ih
+
+public theorem Lean.Grind.CommRing.inv_int_eqC :
+    type_of% @_root_.Lean.Grind.CommRing.inv_int_eqC := by
+  intro α c _ _ b nonzero
+  apply Field.mul_inv_cancel
+  intro h
+  have zero := (IsCharP.intCast_eq_zero_iff (α := α) c b).mp ((_root_.Lean.Grind.CommRing.denoteInt_eq b).symm.trans h)
+  exact (bne_iff_ne.mp nonzero) zero
+
+public theorem Lean.Grind.CommRing.inv_int_eq :
+    type_of% @_root_.Lean.Grind.CommRing.inv_int_eq := by
+  intro α _ _ b nonzero
+  apply _root_.Lean.Grind.CommRing.inv_int_eqC (c := 0)
+  rw [Int.ofNat_zero, Int.emod_zero]
+  exact nonzero
+
+public theorem Lean.Grind.CommRing.inv_zero_eqC :
+    type_of% @_root_.Lean.Grind.CommRing.inv_zero_eqC := by
+  intro α c _ _ b zero
+  have h := (IsCharP.intCast_eq_zero_iff (α := α) c b).mpr (eq_of_beq zero)
+  rw [_root_.Lean.Grind.CommRing.denoteInt_eq, h, Field.inv_zero]
+
 end OmegaChecks.InitPort.Alternatives
