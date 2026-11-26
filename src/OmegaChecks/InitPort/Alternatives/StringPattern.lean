@@ -1,6 +1,8 @@
 module
+import all Init.Data.String.Lemmas.Pattern.Basic
 import all Init.Data.String.Lemmas.Pattern.String.Basic
 import all Init.Data.String.Lemmas.Pattern.String.ForwardPattern
+import all Init.Data.String.Lemmas.Pattern.String.ForwardSearcher
 import all Init.Data.String.Basic
 import all Init.Data.String.Lemmas.Pattern.Char
 import all Init.Data.String.Lemmas.Pattern.Pred
@@ -561,3 +563,151 @@ public theorem instLawfulBackwardPatternModel : type_of% @_root_.String.Slice.Pa
   exact _root_.String.Slice.Pattern.Model.ForwardStringSearcher.isLongestRevMatch_iff.symm
 
 end OmegaChecks.InitPort.Alternatives.String.Slice.Pattern.Model.BackwardStringSearcher
+
+namespace OmegaChecks.InitPort.Alternatives.String.Slice.Pattern.Model
+open _root_.String.Slice _root_.String.Slice.Pattern _root_.String.Slice.Pattern.Model
+
+public theorem LawfulToForwardSearcherModel.defaultImplementation :
+    type_of% @_root_.String.Slice.Pattern.Model.LawfulToForwardSearcherModel.defaultImplementation := by
+  intro ρ pat _ _ _ _
+  let inst : ToForwardSearcher pat (ToForwardSearcher.DefaultForwardSearcher pat) := .defaultImplementation
+  refine ⟨fun s => ?_⟩
+  suffices ∀ pos : s.Pos, IsValidSearchFrom pat pos
+      (_root_.Std.Iter.mk (α := ToForwardSearcher.DefaultForwardSearcher pat s) ⟨pos⟩).toList from
+    this s.startPos
+  intro pos
+  induction pos using WellFounded.induction Pos.wellFounded_gt with
+  | h pos ih =>
+    rw [_root_.Std.Iter.toList_eq_match_step]
+    dsimp only [_root_.Std.Iter.step, _root_.Std.IterM.step, _root_.Std.Iterator.step,
+      _root_.Std.Iter.toIterM, _root_.Std.IterM.internalState_mk]
+    by_cases stop : pos = s.endPos
+    · subst pos
+      rw [dite_eq_left rfl, Id.run_pure, Std.Shrink.inflate_deflate]
+      exact .endPos
+    · rw [dite_eq_right stop]
+      split <;> rename_i stepEq
+      · split at stepEq <;> rename_i found
+        · rw [Id.run_pure, Std.Shrink.inflate_deflate] at stepEq
+          cases stepEq
+          refine IsValidSearchFrom.matched ?_ (ih _ ?_)
+          · rw [LawfulForwardPattern.skipPrefixOfNonempty?_eq,
+              LawfulForwardPatternModel.skipPrefix?_eq_some_iff] at found
+            exact found.isLongestMatchAt_ofSliceFrom
+          · exact Nat.lt_of_le_of_lt (Pos.le_ofSliceFrom (pos := (s.sliceFrom pos).startPos))
+              (Pos.ofSliceFrom_lt_ofSliceFrom_iff.mpr
+                ((Pos.startPos_lt_iff _).mpr (StrictForwardPattern.ne_startPos _ _ found)))
+        · rw [Id.run_pure, Std.Shrink.inflate_deflate] at stepEq
+          cases stepEq
+          refine IsValidSearchFrom.mismatched Pos.lt_next ?_ (ih _ Pos.lt_next)
+          intro cursor lo hi
+          have same : pos = cursor := Pos.ext (String.Pos.Raw.ext
+            (Nat.le_antisymm lo (Pos.lt_next_iff_le.mp hi)))
+          subst cursor
+          rw [LawfulForwardPattern.skipPrefixOfNonempty?_eq] at found
+          exact LawfulForwardPatternModel.skipPrefix?_sliceFrom_eq_none_iff.mp found
+      · split at stepEq <;> rw [Id.run_pure, Std.Shrink.inflate_deflate] at stepEq <;> cases stepEq
+      · split at stepEq <;> rw [Id.run_pure, Std.Shrink.inflate_deflate] at stepEq <;> cases stepEq
+
+public theorem LawfulToBackwardSearcherModel.defaultImplementation :
+    type_of% @_root_.String.Slice.Pattern.Model.LawfulToBackwardSearcherModel.defaultImplementation := by
+  intro ρ pat _ _ _ _
+  let inst : ToBackwardSearcher pat (ToBackwardSearcher.DefaultBackwardSearcher pat) := .defaultImplementation
+  refine ⟨fun s => ?_⟩
+  suffices ∀ pos : s.Pos, IsValidRevSearchFrom pat pos
+      (_root_.Std.Iter.mk (α := ToBackwardSearcher.DefaultBackwardSearcher pat s) ⟨pos⟩).toList from
+    this s.endPos
+  intro pos
+  induction pos using WellFounded.induction Pos.wellFounded_lt with
+  | h pos ih =>
+    rw [_root_.Std.Iter.toList_eq_match_step]
+    dsimp only [_root_.Std.Iter.step, _root_.Std.IterM.step, _root_.Std.Iterator.step,
+      _root_.Std.Iter.toIterM, _root_.Std.IterM.internalState_mk]
+    by_cases stop : pos = s.startPos
+    · subst pos
+      rw [dite_eq_left rfl, Id.run_pure, Std.Shrink.inflate_deflate]
+      exact .startPos
+    · rw [dite_eq_right stop]
+      split <;> rename_i stepEq
+      · split at stepEq <;> rename_i found
+        · rw [Id.run_pure, Std.Shrink.inflate_deflate] at stepEq
+          cases stepEq
+          refine IsValidRevSearchFrom.matched ?_ (ih _ ?_)
+          · rw [LawfulBackwardPattern.skipSuffixOfNonempty?_eq,
+              LawfulBackwardPatternModel.skipSuffix?_eq_some_iff] at found
+            exact found.isLongestRevMatchAt_ofSliceTo
+          · exact Nat.lt_of_lt_of_le (Pos.ofSliceTo_lt_ofSliceTo_iff.mpr
+                ((Pos.lt_endPos_iff _).mpr (StrictBackwardPattern.ne_endPos _ _ found)))
+              (Pos.ofSliceTo_le (pos := (s.sliceTo pos).endPos))
+        · rw [Id.run_pure, Std.Shrink.inflate_deflate] at stepEq
+          cases stepEq
+          refine IsValidRevSearchFrom.mismatched Pos.prev_lt ?_ (ih _ Pos.prev_lt)
+          intro cursor lo hi
+          have same : pos = cursor := Pos.ext (String.Pos.Raw.ext
+            (Nat.le_antisymm (Pos.prev_lt_iff_le.mp lo) hi))
+          subst cursor
+          rw [LawfulBackwardPattern.skipSuffixOfNonempty?_eq] at found
+          exact LawfulBackwardPatternModel.skipSuffix?_sliceTo_eq_none_iff.mp found
+      · split at stepEq <;> rw [Id.run_pure, Std.Shrink.inflate_deflate] at stepEq <;> cases stepEq
+      · split at stepEq <;> rw [Id.run_pure, Std.Shrink.inflate_deflate] at stepEq <;> cases stepEq
+
+end OmegaChecks.InitPort.Alternatives.String.Slice.Pattern.Model
+
+namespace OmegaChecks.InitPort.Alternatives.String.Slice.Pattern.Model.ForwardSliceSearcher
+open _root_.String.Slice _root_.String.Slice.Pattern _root_.String.Slice.Pattern.Model.ForwardSliceSearcher
+
+public theorem toList_emptyBefore_eq :
+    type_of% @_root_.String.Slice.Pattern.Model.ForwardSliceSearcher.toList_emptyBefore_eq := by
+  intro s pos
+  rw [_root_.Std.Iter.toList_eq_match_step]
+  dsimp only [_root_.Std.Iter.step, _root_.Std.IterM.step, _root_.Std.Iterator.step,
+    _root_.Std.Iter.toIterM, _root_.Std.IterM.internalState_mk]
+  by_cases stop : pos = s.endPos
+  · rw [dite_eq_left stop, dite_eq_right (fun h => h stop), Id.run_pure, Std.Shrink.inflate_deflate]
+    exact congrArg (List.cons _) _root_.String.Slice.Pattern.Model.ForwardSliceSearcher.toList_atEnd_eq
+  · rw [dite_eq_right stop, dite_eq_left stop, Id.run_pure, Std.Shrink.inflate_deflate]
+    rfl
+
+end OmegaChecks.InitPort.Alternatives.String.Slice.Pattern.Model.ForwardSliceSearcher
+
+namespace OmegaChecks.InitPort.Alternatives.String.Slice.Pattern.Model.CharPred.Decidable
+
+public theorem instLawfulToBackwardSearcherModelForallCharPropDefaultBackwardSearcherForallBoolDecide :
+    type_of% @_root_.String.Slice.Pattern.Model.CharPred.Decidable.instLawfulToBackwardSearcherModelForallCharPropDefaultBackwardSearcherForallBoolDecide := by
+  intro p _
+  refine ⟨fun s => ?_⟩
+  exact (_root_.String.Slice.Pattern.Model.CharPred.Decidable.isValidRevSearchFrom_iff_isValidRevSearchFrom_decide).mpr
+    (_root_.String.Slice.Pattern.Model.LawfulToBackwardSearcherModel.isValidRevSearchFrom_toList
+      (pat := (fun c => decide (p c))) s)
+
+
+public theorem instLawfulToForwardSearcherModelForallCharPropDefaultForwardSearcherForallBoolDecide :
+    type_of% @_root_.String.Slice.Pattern.Model.CharPred.Decidable.instLawfulToForwardSearcherModelForallCharPropDefaultForwardSearcherForallBoolDecide := by
+  intro p _
+  refine ⟨fun s => ?_⟩
+  exact (_root_.String.Slice.Pattern.Model.CharPred.Decidable.isValidSearchFrom_iff_isValidSearchFrom_decide).mpr
+    (_root_.String.Slice.Pattern.Model.LawfulToForwardSearcherModel.isValidSearchFrom_toList
+      (pat := (fun c => decide (p c))) s)
+
+end OmegaChecks.InitPort.Alternatives.String.Slice.Pattern.Model.CharPred.Decidable
+
+namespace OmegaChecks.InitPort.Alternatives.String.Slice.Pattern.Model.Char
+
+public theorem instLawfulToForwardSearcherModelCharDefaultForwardSearcherForallBoolBeq :
+    type_of% @_root_.String.Slice.Pattern.Model.Char.instLawfulToForwardSearcherModelCharDefaultForwardSearcherForallBoolBeq := by
+  intro c
+  refine ⟨fun s => ?_⟩
+  exact (_root_.String.Slice.Pattern.Model.Char.isValidSearchFrom_iff_isValidSearchFrom_beq).mpr
+    (_root_.String.Slice.Pattern.Model.LawfulToForwardSearcherModel.isValidSearchFrom_toList
+      (pat := (· == c)) s)
+
+
+public theorem instLawfulToBackwardSearcherModelCharDefaultBackwardSearcherForallBoolBeq :
+    type_of% @_root_.String.Slice.Pattern.Model.Char.instLawfulToBackwardSearcherModelCharDefaultBackwardSearcherForallBoolBeq := by
+  intro c
+  refine ⟨fun s => ?_⟩
+  exact (_root_.String.Slice.Pattern.Model.Char.isValidRevSearchFrom_iff_isValidRevSearchFrom_beq).mpr
+    (_root_.String.Slice.Pattern.Model.LawfulToBackwardSearcherModel.isValidRevSearchFrom_toList
+      (pat := (· == c)) s)
+
+end OmegaChecks.InitPort.Alternatives.String.Slice.Pattern.Model.Char
