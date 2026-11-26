@@ -65,6 +65,26 @@ public def translateProofTerm (env : Environment) (term : Expr) : Except String 
 private def castProof (back : Bool) (p q eq input : Expr) : Expr :=
   mkApp4 (mkConst (if back then `Eq.mpr else `Eq.mp) [.zero]) p q eq input
 
+/-- Pointwise equality of mapped functions suffices at a particular container. -/
+private def mapCongruence? (h xs : Expr) : Option Expr := do
+  guard (h.isAppOfArity `congrArg 6)
+  let #[_, _, f, g, map, eq] := h.getAppArgs | none
+  guard (eq.isAppOfArity `funext 5)
+  let .const mapName us := map.getAppFn | none
+  let #[α, β] := map.getAppArgs | none
+  let (rule, container, inst) ← match mapName with
+    | `List.map => some (`List.map_congr_left, `List, `List.instMembership)
+    | `Array.map => some (`Array.map_congr_left, `Array, `Array.instMembership)
+    | _ => none
+  let u :: _ := us | none
+  let lift := fun (e : Expr) => e.liftLooseBVars 0 1
+  let member := mkApp5 (mkConst `Membership.mem [u,u]) (lift α) (mkApp (mkConst container [u]) (lift α))
+    (mkApp (mkConst inst [u]) (lift α)) (lift xs) (mkBVar 0)
+  let pointwise := eq.getAppArgs[4]!
+  let proof := Expr.lam `a α (.lam `mem member
+    ((pointwise.liftLooseBVars 0 2).beta #[mkBVar 1]) .default) .default
+  return mkApp6 (mkConst rule us) α xs β f g proof
+
 /-- Lift a logical equivalence through the connectives in a simp congruence. -/
 private partial def congrIff? (p q iff a b : Expr) : Option Expr := do
   if a == b then return mkApp (mkConst `Iff.rfl) a
@@ -223,6 +243,7 @@ public def constructiveCasts (source : Environment) (body : Expr) (rules : NameM
       let lemma := if n == `ite_eq_right_of_eq_false then `if_neg else `dif_neg
       return mkApp6 (mkConst lemma us) p dec (.lam `hp p proof .default) α t f
     | `congrFun, _, #[_, _, _, _, h, a] | `congrFun', _, #[_, _, _, _, h, a] =>
+      if let some term := mapCongruence? h a then return term
       guard (h.isAppOfArity `funext 5)
       return h.getAppArgs[4]!.beta #[a]
     | `Eq.mp, [.zero], #[p, q, h, x] | `Eq.mpr, [.zero], #[p, q, h, x]
