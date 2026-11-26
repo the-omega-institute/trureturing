@@ -473,9 +473,11 @@ truth release bundle 的 manifest 以 schema 标签 `truth-release`（历史格�
 
 Truth Release 按 A14.2 发布冻结声明最近一次测量的库根与公理。消费方按来源快照、模块陈述 pin、声明名称键和种类对齐证据。DAG 与发布数据的「仅 Omega · 零公理」标记属于单条声明，判据为实测库根集合非空且包含于 `{OmegaInit, OmegaMath}`，同时 `axioms` 显式等于 `[]`。缺省字段保留其 A14.2 含义；同模块声明可得到不同结果。
 
-独占定时工作流 `truth-release-publish.yml` 每日从受保护的 `dev` 事件提交生成 DAG 和 truth bundle。逐模块报告和 Scribe 资源使用源码钉版的工具生成，发布器使用工作流独立钉住的 `trureturing-tools` 提交。发布清单的 `required_checks` 为空。归档发布到 GHCR，`truth-release-<digest>` GitHub Release 提供同一归档、发布坐标与 `DAG.md`。
+独占工作流 `truth-release-publish.yml` 在受保护的 `dev` 上运行。定时触发和未指定来源的手动触发从 `refs/heads/lean-modules-published` 固定最近一次完整发布的源码提交。该提交须位于当前受保护 `dev` 的第一父链上。源码检出和 `lean-modules-<提交>` 版本索引共用此提交。重跑沿用本次运行保存的 Actions 来源 pin。
 
-`publish-truth-release` 的 `repository_dispatch` 可在 `client_payload.source_commit` 指定 40 位小写十六进制提交字符串。工作流在检出前验证该提交位于受保护 `dev` 事件提交的第一父链上（含事件提交自身），并将源码及普通模块缓存固定到该提交与 `lean-modules-<source_commit>`。显式恢复必须命中全部模块及其适用报告，输入无效、越出第一父链或恢复不全时工作流失败。重试使用同一事件的提交和版本标签。定时触发和省略该字段的手动触发使用事件提交，普通缓存未命中或恢复失败时由 Lake 全量准备补建。
+`publish-truth-release` 的 `repository_dispatch` 可在 `client_payload.source_commit` 指定 40 位小写十六进制提交字符串。工作流在检出前验证该提交位于受保护 `dev` 事件提交的第一父链上（含事件提交自身）。该提交须已有可读取的普通模块 Release。
+
+Truth Release 直接信任已发布的报告。读取器按索引指定的物理 Release 标签与资产名读取分片，仅复制逐模块报告 ZIP。源码钉版的 Inspector 和 Scribe 用于汇总报告与生成资源，工作流独立钉住的 `trureturing-tools` 发布器负责生成 DAG 与 truth bundle。发布阶段无需安装 Lean、恢复编译器产物、重新验证报告或编译 Lean 项目。发布清单的 `required_checks` 为空。归档发布到 GHCR，`truth-release-<digest>` GitHub Release 提供同一归档、发布坐标与 `DAG.md`。
 
 
 <a id="a22-ci-cache-flow"></a>
@@ -503,7 +505,7 @@ source 在 judge cache 恢复后初始化余额；judge 与命中测试的 NuGet
 
 内容检查与基础设施行为测试分责：Lean、Scribe 及既有可执行源码全集的复制策略 guard 由 architecture 单元消费；普通内容变更不选择重量级 worktree 行为测试。worktree 实现、夹具及实际构建依赖变更仍由 `CI_UNITS` 显式选择行为测试，不通过运行时推导测试影响范围。原生报告的编译与模块 trace 仍是唯一增量权威；模块注册只建立 Lake 依赖，不逐模块同步等待编译输入分类；分类完成后由依赖 continuation 准备对应模块。保留原有输入 trace 和失败传播，不把判官程序身份混入报告 trace。共享程序构建与被选中的审计执行分责，缓存复用不免除审计。一次构建同时包含 Inspector 与下游审计程序时，在既有下游 Lake workspace 中共同构建，避免对同一程序闭包重复注册与缓存准备；单独 Inspector 或 Reg 入口保持原职责。Release 传输契约按既有 transport、verification 与本地/旧名 case 所有者分别执行，各组保留完整用例并独立使用原有子进程 hang guard；CI 单元选择、累计计算预算和功能判据不随分组改变。
 
-每个 job 的本地 `.lake/build` 承载编译、模块报告、聚合报告与材料。Actions cache 传输的原生路径由 `Meta/ci-cache-paths.json` 声明。Cache Release Publish 将编译产物与受检模块的报告共同发布。普通检查按变更范围恢复模块，Truth Release 恢复全库范围，再由 Lake 核验和补建报告。required 同时核对 source、current 和各命中单元的真实结果。
+每个 job 的本地 `.lake/build` 承载编译、模块报告、聚合报告与材料。Actions cache 传输的原生路径由 `Meta/ci-cache-paths.json` 声明。Cache Release Publish 将编译产物与受检模块的报告共同发布。普通检查按变更范围恢复模块，Truth Release 直接读取已发布的报告 ZIP。required 同时核对 source、current 和各命中单元的真实结果。
 
 **触发、身份、读写与预算。** 表中写入资格还须满足下文工作量与成功条件；producer 不在 `required` 的 needs 中，不能替代实际选中的检查。
 
@@ -532,7 +534,7 @@ source 在 judge cache 恢复后初始化余额；judge 与命中测试的 NuGet
 
 模块报告的复用条件为 Lake trace、utility 和报告格式。judge 编译缓存绑定其构建输入与配方。
 
-**分片容量与报告。** 小模块按点号命名空间归并。根据压缩后的大小递归拆分超限分片，单模块超限时独立保存。手动发布的 `shard_mib` 和定时发布的仓库变量 `LEAN_MODULE_SHARD_MIB` 可调整 256 MiB 默认容量。每片独立保存，未变的分片继承已有版本的地址。每个受检模块在同一分片中带有一份 `lean-inspector/modules/<完整模块名>.zip` 及其 Lake `.hash` 和 `.trace`。消费者按所选模块安装这些文件，定向检查、冻结和发布均可复用与当前输入匹配的报告。
+**分片容量与报告。** 小模块按点号命名空间归并。根据压缩后的大小递归拆分超限分片，单模块超限时独立保存。手动发布的 `shard_mib` 和定时发布的仓库变量 `LEAN_MODULE_SHARD_MIB` 可调整 256 MiB 默认容量。每片独立保存，未变的分片继承已有版本的地址。每个受检模块在同一分片中带有一份 `lean-inspector/modules/<完整模块名>.zip` 及其 Lake `.hash` 和 `.trace`。定向检查和冻结可按所选模块安装这些文件并复用与当前输入匹配的报告。Truth Release 直接读取 ZIP。
 
 [普通 CI](../../../.github/workflows/ci-current.yml) · [并发分片](../../../.github/workflows/ci-lean-generation-compile.yml) · [手动与定时发布](../../../.github/workflows/cache-release-publish.yml)
 
