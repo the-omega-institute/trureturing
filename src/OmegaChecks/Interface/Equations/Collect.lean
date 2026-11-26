@@ -35,7 +35,7 @@ public theorem Std.IterM.Total.toArray {α : Type u} {m : Type u → Type v} {β
 public theorem Std.IterM.Total.toListRev {α : Type u} {m : Type u → Type v} {β : Type u} [Monad m]
     [Iterator α m β] [Finite α m] (it : IterM.Total (α := α) m β) :
     OmegaChecks.InitPort.Alternatives.Std.IterM.Total.toListRev it = it.toListRev := by
-  unfold OmegaChecks.InitPort.Alternatives.Std.IterM.Total.toListRev
+  unfold OmegaChecks.InitPort.Alternatives.Std.IterM.Total.toListRev OmegaChecks.InitPort.Alternatives.collectRevFrom
     _root_.Std.IterM.Total.toListRev IterM.toListRev IterM.toListRev.go
   rw [WellFounded.extrinsicFix₂_eq_fix (OmegaChecks.InitPort.Alternatives.collectorWF (σ := List β))]
   congr 1

@@ -53,4 +53,43 @@ public theorem Std.Iter.toArray_map : type_of% @_root_.Std.Iter.toArray_map := b
   apply Array.toList_inj.mp
   rw [Array.toList_map, _root_.Std.Iter.toList_toArray, _root_.Std.Iter.toList_toArray, _root_.Std.Iter.toList_map]
 
+public theorem Std.Iter.toListRev_filter : type_of% @_root_.Std.Iter.toListRev_filter := by
+  intros
+  rw [_root_.Std.Iter.toListRev_eq, _root_.Std.Iter.toListRev_eq, _root_.Std.Iter.toList_filter, List.filter_reverse]
+
+public theorem Std.Iter.toListRev_map : type_of% @_root_.Std.Iter.toListRev_map := by
+  intros
+  rw [_root_.Std.Iter.toListRev_eq, _root_.Std.Iter.toListRev_eq, _root_.Std.Iter.toList_map, List.map_reverse]
+
+public theorem Std.Iter.toListRev_filterMap : type_of% @_root_.Std.Iter.toListRev_filterMap := by
+  intros
+  rw [_root_.Std.Iter.toListRev_eq, _root_.Std.Iter.toListRev_eq, _root_.Std.Iter.toList_filterMap, List.filterMap_reverse]
+
+public theorem Std.Iter.reverse_toListRev : type_of% @_root_.Std.Iter.reverse_toListRev := by
+  intros
+  rw [_root_.Std.Iter.toListRev_eq, List.reverse_reverse]
+
+public theorem Std.Iter.toListRev_ensureTermination : type_of% @_root_.Std.Iter.toListRev_ensureTermination := by
+  intro α β _ _ it
+  exact _root_.Std.Iter.toListRev_ensureTermination_eq_toListRev.trans (_root_.Std.Iter.toListRev_eq (it := it))
+
+public theorem Std.Iter.toArray_eq_match_step : type_of% @_root_.Std.Iter.toArray_eq_match_step := by
+  intro α β _ _ it
+  apply Array.toList_inj.mp
+  rw [_root_.Std.Iter.toList_toArray, _root_.Std.Iter.toList_eq_match_step]
+  cases it.step.val with
+  | yield next out => rw [Array.toList_append, _root_.Std.Iter.toList_toArray]; rfl
+  | skip next => exact _root_.Std.Iter.toList_toArray.symm
+  | done => rfl
+
+public theorem Std.Iter.toListRev_eq_match_step : type_of% @_root_.Std.Iter.toListRev_eq_match_step := by
+  intro α β _ _ it
+  rw [_root_.Std.Iter.toListRev_eq, _root_.Std.Iter.toList_eq_match_step]
+  cases it.step.val with
+  | yield next out =>
+    dsimp only
+    rw [List.reverse_cons, _root_.Std.Iter.toListRev_eq]
+  | skip next => exact _root_.Std.Iter.toListRev_eq.symm
+  | done => rfl
+
 end OmegaChecks.InitPort.Alternatives

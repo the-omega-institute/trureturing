@@ -44,15 +44,20 @@ public noncomputable def Std.IterM.Total.toArray
     [Finite α m] (it : IterM.Total (α := α) m β) : m (Array β) :=
   collectArrayFrom it.it #[]
 
-public noncomputable def Std.IterM.Total.toListRev
+private noncomputable def collectRevFrom
     {α : Type u} {m : Type u → Type v} {β : Type u} [Monad m] [Iterator α m β]
-    [Finite α m] (it : IterM.Total (α := α) m β) : m (List β) :=
+    [Finite α m] (it : IterM (α := α) m β) (acc : List β) : m (List β) :=
   (collectorWF (α := α) (β := β) (m := m) (σ := List β)).fix (C := fun _ => m (List β))
     (fun p recur => do
       match (← p.1.step).inflate with
       | .yield next out h => recur ⟨next, out :: p.2⟩ (IterM.TerminationMeasures.Finite.rel_of_yield h)
       | .skip next h => recur ⟨next, p.2⟩ (IterM.TerminationMeasures.Finite.rel_of_skip h)
-      | .done _ => return p.2) ⟨it.it, []⟩
+      | .done _ => return p.2) ⟨it, acc⟩
+
+public noncomputable def Std.IterM.Total.toListRev
+    {α : Type u} {m : Type u → Type v} {β : Type u} [Monad m] [Iterator α m β]
+    [Finite α m] (it : IterM.Total (α := α) m β) : m (List β) :=
+  collectRevFrom it.it []
 
 public noncomputable def Std.IterM.Total.toList {α : Type u} {m : Type u → Type v} {β : Type u} [Monad m]
     [Iterator α m β] [Finite α m] (it : IterM.Total (α := α) m β) : m (List β) :=
@@ -535,6 +540,37 @@ private theorem collectList_eq {α β : Type u} [Iterator α Id β] [Finite α I
   | done _ => rfl
 
 
+private theorem collectRev_eq {α β : Type u} [Iterator α Id β] [Finite α Id]
+    (it : IterM (α := α) Id β) (acc : List β) :
+    collectRevFrom it acc = match it.step.run.inflate with
+      | .yield next out _ => collectRevFrom next (out :: acc)
+      | .skip next _ => collectRevFrom next acc
+      | .done _ => acc := by
+  unfold collectRevFrom
+  rw [WellFounded.fix_eq]
+  dsimp only [bind, Id.run]
+  cases it.step.inflate using PlausibleIterStep.casesOn <;> rfl
+
+private theorem collectRev_acc {α β : Type u} [Iterator α Id β] [Finite α Id]
+    (it : IterM (α := α) Id β) (acc : List β) :
+    collectRevFrom it acc = (collectInto it #[]).toList.reverse ++ acc := by
+  induction it using (Finite.wf (α := α) (m := Id) (β := β)).induction generalizing acc with
+  | h it ih =>
+    rw [collectRev_eq, collectList_eq]
+    cases it.step.run.inflate using PlausibleIterStep.casesOn with
+    | yield next out plausible =>
+      rw [List.reverse_cons, List.append_assoc]
+      exact ih next (IterM.isPlausibleSuccessorOf_of_yield plausible) _
+    | skip next plausible => exact ih next (IterM.isPlausibleSuccessorOf_of_skip plausible) _
+    | done _ => rfl
+
+public theorem Std.Iter.toListRev_eq {α β : Type u} [Iterator α Id β] [Finite α Id]
+    {it : Iter (α := α) β} :
+    Std.IterM.Total.toListRev it.toIterM.ensureTermination =
+      (Std.IterM.Total.toList it.toIterM.ensureTermination).run.reverse := by
+  change collectRevFrom it.toIterM [] = (collectInto it.toIterM #[]).toList.reverse
+  exact (collectRev_acc it.toIterM []).trans (List.append_nil _)
+
 public theorem Std.Iter.toList_eq_match_step {α β : Type u} [Iterator α Id β] [Finite α Id]
     {it : Iter (α := α) β} :
     Std.Iter.Total.toList it.ensureTermination =
@@ -545,6 +581,14 @@ public theorem Std.Iter.toList_eq_match_step {α β : Type u} [Iterator α Id β
   rw [collectList_eq]
   unfold _root_.Std.Iter.step
   cases it.toIterM.step.run.inflate using PlausibleIterStep.casesOn <;> rfl
+
+public theorem Std.Iter.toList_eq_toList_toIterM {α β : Type u} [Iterator α Id β] [Finite α Id]
+    {it : Iter (α := α) β} :
+    Std.Iter.Total.toList it.ensureTermination = (Std.IterM.Total.toList it.toIterM.ensureTermination).run := (rfl)
+
+public theorem Std.IterM.toList_toIter {α β : Type u} [Iterator α Id β] [Finite α Id]
+    {it : IterM (α := α) Id β} :
+    Std.Iter.Total.toList it.toIter.ensureTermination = (Std.IterM.Total.toList it.ensureTermination).run := (rfl)
 
 public theorem Std.Iter.toList_map : type_of% @_root_.Std.Iter.toList_map := by
   intro α β γ iterator it finite f
