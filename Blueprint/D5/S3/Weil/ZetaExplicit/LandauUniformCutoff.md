@@ -20,7 +20,7 @@ At a nearby zero-free height use the rectangle with bottom at 1, left edge at -1
 
 After division by sqrt(x), the top-edge term sqrt(x)*log(V+9)^2 is controlled by V+sqrt(x)*(1+log(x))^2. Split at x=V. The zeros crossed between the chosen height and V lie in a bounded window and their total multiplicity is O(log(V+9)). Conjugation supplies negative frequencies.
 
-The resulting bound supplies the uniform Landau premise of the harmonic collision theorem. Its cutoff and resolution assumptions still apply. This bound controls the whole sum; the prime-power main term of the Landau formula is a separate statement.
+For the harmonic collision theorem, take C from the inclusive cutoff bound and add exp(|t|/2)*(1+log(V)) to the right-hand side inside the factor C. This term is nonnegative for V>1. Both statements use the same positiveCutoff, analytic multiplicity and phase for every t with 0<|t|. Apply harmonic_zeta_collision_limit with that estimate and its stated cutoff and resolution hypotheses. Gonek's prime-power main term concerns the explicit formula.
 
 ## References
 
