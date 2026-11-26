@@ -1,25 +1,30 @@
 module
 import all Init.Meta.Defs
+public import OmegaChecks.InitPort.Alternatives.NameText
 
 /-! Equality of a hierarchical name compares its component and its parent. -/
 
 open Lean
 namespace OmegaChecks.InitPort.Alternatives
 
-private theorem nodeEquality {α : Type} [BEq α] [LawfulBEq α]
+private theorem bothTrue (a b : Bool) : (a && b) = true ↔ a = true ∧ b = true := by
+  cases a <;> cases b <;> decide
+
+private theorem nodeEquality {α : Type} [BEq α] [law : LawfulBEq α]
     (node : Name → α → Name) {p q : Name} {a b : α}
     (parent : p.beq q = true ↔ p = q)
     (inj : node p a = node q b → p = q ∧ a = b) :
     ((a == b) && p.beq q) = true ↔ node p a = node q b := by
   constructor
   · intro h
-    obtain ⟨label, parentEq⟩ := Bool.and_eq_true_iff.mp h
+    obtain ⟨label, parentEq⟩ := (bothTrue _ _).mp h
     cases parent.mp parentEq
-    cases eq_of_beq label
+    cases law.eq_of_beq label
     rfl
   · intro h
     obtain ⟨parentEq, label⟩ := inj h
-    exact Bool.and_eq_true_iff.mpr ⟨beq_of_eq label, parent.mpr parentEq⟩
+    cases label
+    exact (bothTrue _ _).mpr ⟨law.rfl, parent.mpr parentEq⟩
 
 public theorem Lean.Name.beq_iff_eq : type_of% @_root_.Lean.Name.beq_iff_eq := by
   intro m n
