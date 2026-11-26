@@ -3,6 +3,7 @@ public import Lean
 import Lean.Replay
 import all Lean.Util.CollectAxioms
 import all Init.Data.Slice.Operations
+import all Init.Grind.Ring.Envelope
 
 public section
 
@@ -319,6 +320,89 @@ theorem funextFromSquashSubsingleton (ss : type_of% (@instSubsingletonSquash.{ma
 run_cmd
   for n in [``funextFromQuotientSound, ``funextFromPiSubsingleton, ``funextFromSquashSubsingleton] do
     unless (← collectAxioms n).isEmpty do throwError "function extensionality witness {n} uses axioms"
+
+namespace Envelope
+
+open _root_.Lean.Grind _root_.Lean.Grind.Ring.OfSemiring
+
+/-- Equal quotient representatives distinguished by a Boolean observation imply function extensionality. -/
+private theorem quotientPointsGiveFunext {A : Sort w} {r : A → A → Prop} (pick : A → Bool)
+    {p q : A} (hp : pick p = false) (hq : pick q = true) (same : Quot.mk r p = Quot.mk r q) :
+    type_of% (@funext.{u,v}) := by
+  intro α β f g h
+  let F (x : A) (i : α) : β i := bif pick x then g i else f i
+  have stable (i : α) (x y : A) (_ : r x y) : F x i = F y i := by
+    dsimp only [F]
+    cases pick x <;> cases pick y <;> first | rfl | exact h i | exact (h i).symm
+  let app (z : Quot r) (i : α) : β i := Quot.lift (fun x => F x i) (stable i) z
+  have sides := congrArg app same
+  change (fun i => bif pick p then g i else f i) = (fun i => bif pick q then g i else f i) at sides
+  rw [hp, hq] at sides
+  exact sides
+
+@[expose] def natPositive : Nat → Bool
+  | 0 => false
+  | _ + 1 => true
+
+local instance boolSemiring : Semiring Bool where
+  add := Bool.or
+  mul := Bool.and
+  natCast := ⟨natPositive⟩
+  ofNat n := ⟨natPositive n⟩
+  nsmul := ⟨fun k a => natPositive k && a⟩
+  npow := ⟨fun a k => if natPositive k then a else true⟩
+  add_zero a := by cases a <;> rfl
+  add_comm a b := by cases a <;> cases b <;> rfl
+  add_assoc a b c := by cases a <;> cases b <;> cases c <;> rfl
+  mul_assoc a b c := by cases a <;> cases b <;> cases c <;> rfl
+  mul_one a := by cases a <;> rfl
+  one_mul a := by cases a <;> rfl
+  left_distrib a b c := by cases a <;> cases b <;> cases c <;> rfl
+  right_distrib a b c := by cases a <;> cases b <;> cases c <;> rfl
+  zero_mul a := rfl
+  mul_zero a := by cases a <;> rfl
+  pow_zero a := rfl
+  pow_succ a k := by cases a <;> cases k <;> rfl
+  ofNat_succ n := by cases n <;> rfl
+  ofNat_eq_natCast _ := rfl
+  nsmul_eq_natCast_mul _ _ := rfl
+
+/-- The Boolean semiring gives two related pairs with different first coordinates. -/
+private theorem envelopeFunext
+    (same : Q.mk (α := Bool) (false, false) = Q.mk (α := Bool) (true, true)) :
+    type_of% (@funext.{u,v}) :=
+  quotientPointsGiveFunext (fun p : Bool × Bool => p.1) (p := (false,false)) (q := (true,true)) rfl rfl same
+
+theorem funextFromNegRespect (respect : type_of% (@neg._proof_1.{0})) : type_of% (@funext.{u,v}) :=
+  envelopeFunext (@respect Bool _ (false,false) (true,true) ⟨false,rfl⟩)
+
+theorem funextFromAddRespect (respect : type_of% (@add._proof_1.{0})) : type_of% (@funext.{u,v}) :=
+  envelopeFunext (@respect Bool _ (false,false) (false,false) (true,true) (false,false) ⟨false,rfl⟩ ⟨false,rfl⟩)
+
+theorem funextFromSubRespect (respect : type_of% (@sub._proof_5.{0})) : type_of% (@funext.{u,v}) :=
+  envelopeFunext (@respect Bool _ (false,false) (false,false) (true,true) (false,false) ⟨false,rfl⟩ ⟨false,rfl⟩)
+
+theorem funextFromMulRespect (respect : type_of% (@mul._proof_1.{0})) : type_of% (@funext.{u,v}) :=
+  envelopeFunext (@respect Bool _ (false,false) (true,false) (true,true) (true,false) ⟨false,rfl⟩ ⟨false,rfl⟩)
+
+/-- Cancellation together with the representative computation rules at a single input suffices. -/
+theorem funextFromCancellation
+    (plus : Q Bool → Q Bool → Q Bool) (minus : Q Bool → Q Bool)
+    (negValue : minus (Q.mk (true, false)) = Q.mk (false, true))
+    (sumValue : plus (Q.mk (false, true)) (Q.mk (true, false)) = Q.mk (true, true))
+    (cancel : ∀ z, plus (minus z) z = Q.mk (false, false)) :
+    type_of% (@funext.{u,v}) := by
+  have eq := cancel (Q.mk (true, false))
+  rw [negValue, sumValue] at eq
+  intro α β f g h
+  exact envelopeFunext eq.symm h
+
+run_cmd
+  for n in [``funextFromNegRespect, ``funextFromAddRespect, ``funextFromSubRespect,
+      ``funextFromMulRespect, ``funextFromCancellation] do
+    unless (← collectAxioms n).isEmpty do throwError "ring envelope witness {n} uses axioms"
+
+end Envelope
 
 /-- Reader binding exposes the entire continuation as its result. -/
 theorem funextFromBindCongr
