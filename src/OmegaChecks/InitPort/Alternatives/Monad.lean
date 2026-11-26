@@ -1,5 +1,6 @@
 module
 public import Init.Control.Lawful.Instances
+public import Init.Control.Lawful.MonadAttach.Lemmas
 public import Init.Control.StateCps
 public import Init.Control.ExceptCps
 
@@ -84,5 +85,15 @@ public theorem ExceptCpsT.instLawfulMonad : type_of% @_root_.ExceptCpsT.instLawf
     pure_bind := by intros; rfl
     bind_assoc := by intros; rfl
   }
+
+public theorem LawfulMonadAttach.canReturn_map_imp' : type_of% @_root_.LawfulMonadAttach.canReturn_map_imp' := by
+  intro m α β b _ _ _ _ x f h
+  let P (b : β) := ∃ a, MonadAttach.CanReturn x a ∧ f a = b
+  let pack (w : Subtype (MonadAttach.CanReturn x)) : Subtype P := ⟨f w.val, w.val, w.property, rfl⟩
+  have same : Subtype.val <$> (pack <$> MonadAttach.attach x) = f <$> x := calc
+    _ = (Subtype.val ∘ pack) <$> MonadAttach.attach x := (comp_map ..).symm
+    _ = f <$> (Subtype.val <$> MonadAttach.attach x) := comp_map Subtype.val f _
+    _ = f <$> x := congrArg (f <$> ·) WeaklyLawfulMonadAttach.map_attach
+  exact LawfulMonadAttach.canReturn_map_imp (P := P) (same.symm ▸ h)
 
 end OmegaChecks.InitPort.Alternatives
