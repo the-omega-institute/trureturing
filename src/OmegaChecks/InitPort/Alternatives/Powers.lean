@@ -356,4 +356,12 @@ public theorem Rat.mul_neg_iff_of_pos_right : type_of% @_root_.Rat.mul_neg_iff_o
   rw [_root_.Rat.zero_mul] at h
   exact h
 
+public theorem Rat.le_of_mul_le_mul_right : type_of% @_root_.Rat.le_of_mul_le_mul_right := by
+  intro a b c product pos
+  exact Rat.not_lt.mp fun lt => Rat.not_lt.mpr product (Rat.mul_lt_mul_of_pos_right lt pos)
+
+public theorem Rat.lt_of_mul_lt_mul_right : type_of% @_root_.Rat.lt_of_mul_lt_mul_right := by
+  intro a b c product nonneg
+  exact Rat.not_le.mp fun le => Rat.not_le.mpr product (_root_.Rat.mul_le_mul_of_nonneg_right le nonneg)
+
 end OmegaChecks.InitPort.Alternatives

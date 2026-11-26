@@ -458,4 +458,44 @@ public theorem Dyadic.neg_ofIntWithPrec : type_of% @_root_.Dyadic.neg_ofIntWithP
   rw [_root_.Dyadic.toRat_neg, _root_.Dyadic.toRat_ofIntWithPrec_eq_mul_two_pow,
     _root_.Dyadic.toRat_ofIntWithPrec_eq_mul_two_pow, Rat.intCast_neg, Rat.neg_mul]
 
+public theorem Rat.floor_le : type_of% @_root_.Rat.floor_le := by
+  intro x
+  apply (Rat.le_iff _ _).mpr
+  change x.floor * (x.den : Int) ≤ x.num * 1
+  rw [_root_.Rat.floor_def, Int.mul_one]
+  exact Int.ediv_mul_le _ (fun h => x.den_nz (Int.ofNat.inj h))
+
+public theorem Rat.toRat_toDyadic : type_of% @_root_.Rat.toRat_toDyadic := by
+  intro x p
+  have floor_mk (n : Int) (d : Nat) (hd : d ≠ 0) : (mkRat n d).floor = n / (d : Int) := by
+    rcases h : mkRat n d with ⟨u,v,hv,r⟩
+    obtain ⟨m,hm,hn,he⟩ := _root_.Rat.mkRat_num_den hd h
+    rw [_root_.Rat.floor_def, hn, he, Int.natCast_mul]
+    exact (Int.mul_ediv_mul_of_pos_left _ _ (Int.natCast_pos.mpr (Nat.pos_of_ne_zero hm))).symm
+  have ratpow (k : Nat) : (2 : Rat)^k = mkRat (2^k : Int) 1 :=
+    (_root_.Rat.intCast_pow 2 k).symm.trans (_root_.Rat.mkRat_one _).symm
+  rw [_root_.Rat.toDyadic_eq_ofIntWithPrec, _root_.Dyadic.toRat_ofIntWithPrec_eq_mul_two_pow,
+    _root_.Rat.zpow_neg, _root_.Rat.div_def]
+  apply congrArg (fun n : Int => (n : Rat) * ((2 : Rat)^p)⁻¹)
+  have rep := _root_.Rat.mkRat_self x
+  cases p with
+  | ofNat p =>
+    change (x.num <<< p) / ((x.den <<< (-(Int.ofNat p)).toNat : Nat) : Int) = (x * (2 : Rat)^p).floor
+    have neg : (-(Int.ofNat p)).toNat = 0 := Int.toNat_neg_natCast p
+    rw [neg, Nat.shiftLeft_zero, _root_.Int.shiftLeft_eq, ratpow]
+    have prod := (congrArg (· * mkRat (2^p : Int) 1) rep).symm.trans
+      (_root_.Rat.mkRat_mul_mkRat x.num (2^p : Int) x.den 1)
+    rw [prod, Nat.mul_one, floor_mk _ _ x.den_nz]
+  | negSucc p =>
+    have positive : (2^(p+1) : Nat) ≠ 0 := Nat.ne_of_gt (Nat.pow_pos Nat.zero_lt_two)
+    have inv : ((2 : Rat)^(p+1))⁻¹ = mkRat 1 (2^(p+1)) := by
+      rw [ratpow]
+      change (Rat.divInt (2^(p+1):Int) 1)⁻¹ = Rat.divInt 1 (Int.ofNat (2^(p+1)))
+      exact _root_.Rat.inv_divInt _ _
+    change (x.num <<< 0) / ((x.den <<< (p+1) : Nat) : Int) = (x * ((2 : Rat)^(p+1))⁻¹).floor
+    rw [Int.shiftLeft_zero, Nat.shiftLeft_eq, inv]
+    have prod := (congrArg (· * mkRat 1 (2^(p+1))) rep).symm.trans
+      (_root_.Rat.mkRat_mul_mkRat x.num 1 x.den (2^(p+1)))
+    rw [prod, Int.mul_one, floor_mk _ _ (Nat.mul_ne_zero x.den_nz positive)]
+
 end OmegaChecks.InitPort.Alternatives
