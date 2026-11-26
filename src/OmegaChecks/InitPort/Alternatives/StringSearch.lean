@@ -173,6 +173,77 @@ public theorem String.Slice.Pos.splits_prev_right : type_of% @_root_.String.Slic
   rw [_root_.String.Slice.Pos.next_prev (p := p) (h := ne)] at step
   exact step
 
+public theorem String.Pos.prev_lt : type_of% @_root_.String.Pos.prev_lt := by
+  intro s p ne
+  exact _root_.String.Slice.Pos.prev_lt (p := p.toSlice) (h := fun eq => ne (congrArg String.Pos.ofToSlice eq))
+
+public theorem String.Pos.next_prev._proof_2 : type_of% @_root_.String.Pos.next_prev._proof_2 := by
+  intro s p h
+  exact _root_.String.Pos.prev_ne_endPos
+
+public theorem String.Pos.next_prev : type_of% @_root_.String.Pos.next_prev := by
+  intro s p ne
+  exact congrArg String.Pos.ofToSlice (_root_.String.Slice.Pos.next_prev (p := p.toSlice)
+    (h := fun eq => ne (congrArg String.Pos.ofToSlice eq)))
+
+public theorem String.Pos.splits_prev_right._proof_1 : type_of% @_root_.String.Pos.splits_prev_right._proof_1 := by
+  intro s p ne
+  exact _root_.String.Pos.prev_ne_endPos
+
+public theorem String.splits_singleton_right_iff._proof_1 : type_of% @_root_.String.splits_singleton_right_iff._proof_1 := by
+  intro s ne
+  exact _root_.String.Pos.prev_ne_endPos
+
+public theorem String.Pos.splits_prev_right : type_of% @_root_.String.Pos.splits_prev_right := by
+  intro s p ne
+  have step := _root_.String.Pos.splits_next (p.prev ne) _root_.String.Pos.prev_ne_endPos
+  rw [_root_.String.Pos.next_prev] at step
+  exact step
+
+public theorem String.Pos.splits_prev : type_of% @_root_.String.Pos.splits_prev := by
+  intro s p ne
+  have step := _root_.String.Pos.splits_next_right (p.prev ne) _root_.String.Pos.prev_ne_endPos
+  rw [_root_.String.Pos.next_prev] at step
+  exact step
+
+public theorem String.Slice.Pos.splits_prev : type_of% @_root_.String.Slice.Pos.splits_prev := by
+  intro s p ne
+  have step := _root_.String.Slice.Pos.splits_next_right (p.prev ne) _root_.String.Slice.Pos.prev_ne_endPos
+  rw [_root_.String.Slice.Pos.next_prev] at step
+  exact step
+
+public theorem String.Slice.Pos.Splits.prev : type_of% @_root_.String.Slice.Pos.Splits.prev := by
+  intro t c u s p h
+  generalize h.ne_startPos_of_singleton = hp
+  have both := h.eq (String.Slice.Pos.splits_prev_right p hp)
+  have parts := _root_.String.push_inj.mp both.1
+  obtain ⟨rfl, rfl⟩ := parts
+  rw [both.2]
+  exact String.Slice.Pos.splits_prev p _
+
+public theorem String.Pos.Splits.prev : type_of% @_root_.String.Pos.Splits.prev := by
+  intro t c u s p h
+  generalize h.ne_startPos_of_singleton = hp
+  have both := h.eq (String.Pos.splits_prev_right p hp)
+  have parts := _root_.String.push_inj.mp both.1
+  obtain ⟨rfl, rfl⟩ := parts
+  rw [both.2]
+  exact String.Pos.splits_prev p _
+
+public theorem String.Slice.Pos.Splits.of_prev : type_of% @_root_.String.Slice.Pos.Splits.of_prev := by
+  intro t c u s p hp h
+  have both := h.eq (String.Slice.Pos.splits_prev p hp)
+  obtain ⟨rfl, rfl⟩ := _root_.String.singleton_append_inj.mp both.2
+  rw [both.1]
+  exact String.Slice.Pos.splits_prev_right p hp
+
+public theorem String.Pos.Splits.of_prev : type_of% @_root_.String.Pos.Splits.of_prev := by
+  intro t c u s p hp h
+  have both := h.eq (String.Pos.splits_prev p hp)
+  obtain ⟨rfl, rfl⟩ := _root_.String.singleton_append_inj.mp both.2
+  rw [both.1]
+  exact String.Pos.splits_prev_right p hp
+
 public theorem String.Slice.front?_eq : type_of% @_root_.String.Slice.front?_eq := by
   intro s
   by_cases ends : s.startPos = s.endPos
