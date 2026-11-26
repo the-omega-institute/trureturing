@@ -82,7 +82,7 @@ private def checkerEquiv (n k : ℕ) : {a : Grid n k // Legal a} ≃ {a : Grid n
   left_inv a := Subtype.ext (checker_involutive a.1)
   right_inv a := Subtype.ext (checker_involutive a.1)
 
-private theorem fin_constant {n : ℕ} {α : Type} (f : Fin (n + 1) → α)
+theorem fin_constant {n : ℕ} {α : Type} (f : Fin (n + 1) → α)
     (adj : ∀ i : Fin n, f i.castSucc = f i.succ) (i : Fin (n + 1)) : f i = f 0 := by
   by_cases hi : i = 0
   · subst i
@@ -181,7 +181,7 @@ private def mixedEquiv (n k : ℕ) : {a : Grid (n + 1) (k + 1) // Mixed a} ≃
       simp [h]
 
 /-- The checkerboard transform and global complement give the exact count. -/
-private theorem original_eq_twice_low (n k : ℕ) :
+theorem original_eq_twice_low (n k : ℕ) :
     T (n + 1) (k + 1) = 2 * (Nat.card {a : Grid (n + 1) (k + 1) // Low a} : ℤ) := by
   unfold T
   rw [Nat.card_congr (checkerEquiv _ _), Nat.card_congr (mixedEquiv _ _), Nat.card_sum,
@@ -190,18 +190,18 @@ private theorem original_eq_twice_low (n k : ℕ) :
   ring
 
 private abbrev Row (k : ℕ) := Fin (k + 1) → Fin 4
-private abbrev Profile (k : ℕ) := Fin k → Fin 3
+abbrev Profile (k : ℕ) := Fin k → Fin 3
 
-private def edge {k : ℕ} (r : Row k) (j : Fin k) : ℕ :=
+def edge {k : ℕ} (r : Row k) (j : Fin k) : ℕ :=
   (r j.castSucc).val + (r j.succ).val
 
-private def Fiber {k : ℕ} (p : Profile k) := {r : Row k // ∀ j, edge r j = (p j).val}
+def Fiber {k : ℕ} (p : Profile k) := {r : Row k // ∀ j, edge r j = (p j).val}
 
 private instance {k : ℕ} (p : Profile k) : Finite (Fiber p) := by
   unfold Fiber
   infer_instance
 
-private def flip {k : ℕ} (p : Profile k) : Profile k := fun j => (p j).rev
+def flip {k : ℕ} (p : Profile k) : Profile k := fun j => (p j).rev
 
 private def profileAt {k : ℕ} (p : Profile k) (i : ℕ) : Profile k :=
   if i % 2 = 0 then p else flip p
@@ -293,9 +293,9 @@ private def lowEquiv (n k : ℕ) :
     (Σ p : Profile k, AltRows p (n + 2)) ≃ {a : Grid (n + 1) k // Low a} :=
   Equiv.ofBijective (rowsToLow n k) ⟨rowsToLow_injective n k, rowsToLow_surjective n k⟩
 
-private def b {k : ℕ} (p : Profile k) : ℕ := Nat.card (Fiber p)
+def b {k : ℕ} (p : Profile k) : ℕ := Nat.card (Fiber p)
 
-private def profileCount {k : ℕ} (p : Profile k) (h : ℕ) : ℕ :=
+def profileCount {k : ℕ} (p : Profile k) (h : ℕ) : ℕ :=
   ∏ i : Fin h, b (profileAt p i.val)
 
 private theorem card_altRows {k : ℕ} (p : Profile k) (h : ℕ) :
@@ -345,7 +345,7 @@ private theorem pair_bound {k : ℕ} (p : Profile (k + 1)) :
   simp only [flip, Fin.val_rev] at h2
   omega
 
-private theorem profileCount_two_step {k : ℕ} (p : Profile k) (h : ℕ) :
+theorem profileCount_two_step {k : ℕ} (p : Profile k) (h : ℕ) :
     profileCount p (h + 2) = b p * b (flip p) * profileCount p h := by
   unfold profileCount
   rw [Fin.prod_univ_succ, Fin.prod_univ_succ]
@@ -353,7 +353,7 @@ private theorem profileCount_two_step {k : ℕ} (p : Profile k) (h : ℕ) :
   rw [profileAt_one]
   ring
 
-private theorem profileCount_eq_pow {k : ℕ} (p : Profile k) (c : ℕ)
+theorem profileCount_eq_pow {k : ℕ} (p : Profile k) (c : ℕ)
     (h1 : b p = c) (h2 : b (flip p) = c) (h : ℕ) :
     profileCount p h = c ^ h := by
   unfold profileCount
@@ -421,7 +421,7 @@ private theorem profile_six {k : ℕ} (p : Profile (k + 1)) (n : ℕ) :
     intro m
     simp [profileCount_eq_pow p 2 h1 h2, pow_succ, mul_comm]
 
-private theorem literal_sum (n k : ℕ) :
+theorem literal_sum (n k : ℕ) :
     T (n + 1) (k + 1) = ∑ p : Profile (k + 1), 2 * (profileCount p (n + 2) : ℤ) := by
   rw [original_eq_twice_low, low_count]
   push_cast
@@ -463,7 +463,7 @@ private def transposeEquiv (n k : ℕ) : {a : Grid n k // Legal a} ≃ {a : Grid
   left_inv _ := rfl
   right_inv _ := rfl
 
-private theorem T_transpose (n k : ℕ) : T n k = T k n := by
+theorem T_transpose (n k : ℕ) : T n k = T k n := by
   unfold T
   rw [Nat.card_congr (transposeEquiv n k)]
 
