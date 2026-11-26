@@ -572,4 +572,20 @@ public theorem ByteArray.utf8DecodeChar?.toBitVec_assemble₄Unchecked :
     UInt32.toBitVec_shiftLeft, UInt32.toBitVec_shiftLeft, hw, hx, hy, hz, BitVec.setWidth_append_append_append_eq_shiftLeft_setWidth_or]
   rfl
 
+public theorem String.Pos.Raw.isValid_singleton : type_of% @_root_.String.Pos.Raw.isValid_singleton := by
+  intro c p
+  constructor
+  · intro valid
+    obtain atEnd | ⟨lt, first⟩ := String.Pos.Raw.isValid_iff_isUTF8FirstByte.mp valid
+    · exact Or.inr ((congrArg String.Pos.Raw.byteIdx atEnd).trans String.utf8ByteSize_singleton)
+    · apply Or.inl
+      apply String.Pos.Raw.ext
+      apply (List.isUTF8FirstByte_getElem_utf8Encode_singleton (c := c) (hi := lt)).mp
+      exact first
+  · rintro (rfl | eq)
+    · exact String.Pos.Raw.isValid_zero
+    · have atEnd : p = (String.singleton c).rawEndPos :=
+        String.Pos.Raw.ext (eq.trans String.utf8ByteSize_singleton.symm)
+      exact atEnd ▸ String.Pos.Raw.isValid_rawEndPos
+
 end OmegaChecks.InitPort.Alternatives
