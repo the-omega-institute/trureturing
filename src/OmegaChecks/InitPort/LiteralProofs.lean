@@ -6,7 +6,8 @@ import all OmegaInit.Prelude
 /-! Certificates for comparison of the strict binary expansion of numerals. -/
 
 noncomputable section
-attribute [local semireducible] Omega.Nat.le Omega.Nat.add Omega.Nat.mul
+set_option allowUnsafeReducibility true
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul
 
 namespace OmegaLiteralProofs
 open Omega
@@ -25,7 +26,7 @@ public theorem leftMono (k a b : Nat) (h : Nat.le a b) : Nat.le (Nat.add k a) (N
       (fun _ ih => Nat.le.step ih) b)
     (fun a step b => Nat.rec
       (motive := fun b => Nat.le (Nat.succ a) b → Nat.le (Nat.add k (Nat.succ a)) (Nat.add k b))
-      (fun h => False.elim h)
+      (fun h => False.elim (Nat.not_succ_le_zero a h))
       (fun b _ h => Nat.succ_le_succ (step b (Nat.le_of_succ_le_succ h))) b) a b h
 @[expose] public def double (a : Nat) : Nat := Nat.mul a (Nat.succ (Nat.succ Nat.zero))
 
