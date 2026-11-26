@@ -40,6 +40,17 @@ public theorem Lean.Grind.Ring.OfSemiring.toQ_ofNat {α : Type u} [Semiring α] 
     toQ (OfNat.ofNat (α := α) n) = natCast (α := α) n :=
   congrArg (fun x : α => Q.mk (x, 0)) (Semiring.ofNat_eq_natCast n)
 
+section
+open _root_.Lean.Grind.Ring.OfSemiring
+attribute [local instance] Semiring.natCast
+
+public theorem Lean.Grind.Ring.OfSemiring.ofNat_succ {α : Type u} [Semiring α] (n : Nat) :
+    natCast (α := α) (n + 1) = Q.mk ((n : α) + ((1 : Nat) : α), (0 : α) + 0) := by
+  rw [Semiring.add_zero]
+  exact congrArg (fun x : α => Q.mk (x, 0)) (Semiring.natCast_add n 1)
+
+end
+
 open _root_.Lean.Grind.Ring.OfSemiring in
 public theorem Lean.Grind.Ring.OfSemiring.toQ_add {α : Type u} [Semiring α] (a b : α) :
     toQ (a + b) = Q.mk (a + b, (0 : α) + 0) :=
