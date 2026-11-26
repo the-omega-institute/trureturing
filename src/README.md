@@ -48,6 +48,8 @@ example (p : Omega.Nat) (hp : OmegaMathlib.Nat.Prime p) :
 
 官方端把这个引用解析到钉版 Mathlib 的 `Nat.Prime`，严格端核验对应实现。自定义谓词即使也叫 `Prime`，也可能接受 1。在双端准入的 Omega 模块及其消费者中，编写公开陈述或公开数据定义时，引用标准 Mathlib 对象须写作 `OmegaMathlib.<上游全名>`。所需对象缺少端口时，先在 `strict/OmegaMathlib/` 的上游对应模块补齐并核验。新增项目对象在 D5 的相应专题中定义。要将该对象的结论用于标准对象，须在 D5 证明所需的对应关系。
 
+有些 D5 定理同时使用 Omega 的通用引理和 Mathlib 的原生类型。例如 `SharpLoss.local_prime_excess_bound` 的参数是原生 `p : ℕ`。导入 `OmegaBuild.Commands` 和 `OmegaMathlib.Data.Nat.Prime.Defs` 后，将假设写作 `hp : (native% OmegaMathlib.Nat.Prime) p`。这同时指定已核验的端口和原生类型所需的端点。两个后端都检查这处引用是否解析到 `Mathlib.Data.Nat.Prime.Defs` 的 `Nat.Prime`。参数为 `p : Omega.Nat` 时，使用上例中的 `OmegaMathlib.Nat.Prime p`。[原生自然数用例](../D5/S3/Arith/FactorialRatio/Compression/SharpLoss.lean)
+
 `OmegaMath` 新增的通用定理、证明和引用应建立在已核验的上游对象上。旧公开接口按受保护版本核对。例如 `OmegaMath.Projective` 的缩放定理 `Omega.Projective.kappa_scale` 使用已有的项目关系 `Ratio.Equivalent`，群减法定理 `Omega.sub_eq_zero` 显式接收群运算和群公理。[缩放定理](OmegaMath/Projective.lean) · [群减法定理](OmegaMath/Algebra/Group/Basic.lean)
 
 普通本地准入使用 `HEAD` 与 `origin/dev` 的共同祖先作为受保护版本。要重现某次 PR 的核验，可运行 `python3 -B src/OmegaChecks/check.py --protected-base <commit> --library OmegaMath.Arithmetic.Euclidean.Prime`。核验器独立编译受保护源码，在两个后端比较现有声明、新增对象、公开导出以及替换为标准引用时的对应证明。
