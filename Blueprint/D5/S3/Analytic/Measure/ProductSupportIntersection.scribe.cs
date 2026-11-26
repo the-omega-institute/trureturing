@@ -7,6 +7,19 @@ internal sealed class ProductSupportIntersectionDocument : IScribeDocumentDefini
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Almost-everywhere equal measurable nonnegative functions under a finite product probability law have a common measurable representative supported on the intersection of their coordinate sets.",
         H("Intersection of coordinate supports"), Blocks(
+            Describe.Lean(DescribeId.Create("marginal-coordinate-dependence"),
+                DeclarationHandle.Create("D5/S3/Analytic/Measure/ProductSupportIntersection.marginal_depends"),
+                H("Integrating coordinates removes their dependencies"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(
+                    "Let I be any coordinate type with decidable equality, X_i measurable spaces, " +
+                    "mu_i arbitrary measures, and u a finite coordinate set. If an ENNReal " +
+                    "function f on the dependent product depends only on S, then lmarginal(mu,u,f) " +
+                    "depends only on S with u removed. No measurability of f, probability, " +
+                    "sigma-finiteness, finite ambient index type or integral bound is assumed. " +
+                    "Coordinates outside u are compared directly; the integrated coordinates " +
+                    "are replaced by the same integration variable. This dependence statement " +
+                    "identifies the supports of deleted rows in the Finner equality induction."))),
+                DescribeRole.Lemma),
             Describe.Lean(DescribeId.Create("product-support-intersection-representative"),
                 DeclarationHandle.Create("D5/S3/Analytic/Measure/ProductSupportIntersection.exists_measurable_intersection_representative"),
                 H("A common representative on the intersection"), StatementSource.WithoutFormula(),

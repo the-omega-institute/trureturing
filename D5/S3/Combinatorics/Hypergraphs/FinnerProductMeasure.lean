@@ -103,7 +103,7 @@ private lemma marginal_update {I : Type*} [DecidableEq I] {X : I → Type*}
       exact update_of_ne (ne_of_mem_of_not_mem hk hi) y z
     rw [he]
 
-private lemma marginal_estimate {I J : Type*} [DecidableEq I] [Fintype J]
+lemma marginal_estimate {I J : Type*} [DecidableEq I] [Fintype J]
     {X : I → Type*} [∀ i, MeasurableSpace (X i)]
     (μ : ∀ i, Measure (X i)) [∀ i, IsProbabilityMeasure (μ i)]
     (S : J → Set I) (f : J → (∀ i, X i) → ℝ≥0∞) (w : J → ℝ)

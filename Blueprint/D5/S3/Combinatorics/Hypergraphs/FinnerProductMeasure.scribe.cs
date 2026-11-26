@@ -28,6 +28,21 @@ internal sealed class FinnerProductMeasureDocument : IScribeDocumentDefinition
                     "equal to zero. This same product-integral statement supports coordinate " +
                     "density products and the identification of normalized coordinate " +
                     "profiles by marginal integration."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("finner-marginal-estimate"),
+                DeclarationHandle.Create(Prefix + "marginal_estimate"),
+                H("Finner's estimate before all coordinates are integrated"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromLiterature(Source),
+                Blocks(Paragraph(Text(
+                    "For any coordinate type I with decidable equality and finite row type J, " +
+                    "take measurable ENNReal rows f_j supported on S_j under coordinate probability " +
+                    "laws mu_i. Let nonnegative real weights satisfy the incidence budget at " +
+                    "most one at every coordinate. For every finite coordinate set T, the " +
+                    "T-marginal of the product of f_j^w_j is pointwise at most the product " +
+                    "of the T-marginals of f_j raised to w_j. The ambient coordinate type " +
+                    "need not be finite, and masses may be zero or infinite. This estimate " +
+                    "is the coordinate induction used by the full inequality and supplies " +
+                    "the saturation sandwich for deleted rows in its equality classification."))),
+                DescribeRole.Lemma),
             Describe.Lean(DescribeId.Create("finner-product-measure"),
                 DeclarationHandle.Create(Prefix + "finner_product_measure"),
                 H("Fractional hypergraph inequality"),
