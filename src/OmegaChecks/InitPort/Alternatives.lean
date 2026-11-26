@@ -2,6 +2,7 @@ module
 
 public import Lean
 public import OmegaChecks.InitPort.Alternatives.Array
+public import OmegaChecks.InitPort.Alternatives.ArrayPredicates
 public import OmegaChecks.InitPort.Alternatives.Constraint
 public import OmegaChecks.InitPort.Alternatives.Extract
 public import OmegaChecks.InitPort.Alternatives.GeneratedProofs
