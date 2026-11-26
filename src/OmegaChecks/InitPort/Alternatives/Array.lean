@@ -155,6 +155,38 @@ private theorem foldLoopSucc [Monad m] (f : β → α → m β) (xs : _root_.Arr
         _root_.Array.foldlM.loop f xs limit bound i (j+1) := by
   apply liftTrueBranch (p := j < limit) inside
 
+private theorem liftFalseBranch {p : Prop} [d : Decidable p] (h : ¬p)
+    (yes : p → β → γ) (no : ¬p → β → γ) :
+    (fun b => if hp : p then yes hp b else no hp b) = no h := by
+  cases d with
+  | isTrue hp => exact (h hp).elim
+  | isFalse => rfl
+
+private theorem foldListTail [Monad m] (f : β → α → m β) (xs : _root_.Array α)
+    (i j : Nat) (room : xs.size ≤ i+j) :
+    _root_.Array.foldlM.loop f xs xs.size (Nat.le_refl _) i j =
+      fun b => (xs.toList.drop j).foldlM f b := by
+  induction i generalizing j with
+  | zero =>
+    rw [foldLoopZero, List.drop_eq_nil_of_le ((Nat.zero_add j) ▸ room)]
+    rfl
+  | succ i ih =>
+    by_cases bound : j < xs.size
+    · rw [foldLoopSucc f xs _ _ _ _ bound, ih (j+1) (Eq.subst (motive := (xs.size ≤ ·)) (Nat.succ_add i j) room)]
+      exact congrArg (fun l => fun b => l.foldlM f b) (List.getElem_cons_drop (as := xs.toList) bound)
+    · rw [List.drop_eq_nil_of_le (Nat.le_of_not_gt bound)]
+      apply liftFalseBranch (p := j < xs.size) bound
+
+public theorem Array.foldlM_toList.aux : type_of% @_root_.Array.foldlM_toList.aux := by
+  intro m β α monad f xs i j room b
+  exact congrFun (foldListTail f xs i j room) b
+
+public theorem Array.foldlM_toList : type_of% @_root_.Array.foldlM_toList := by
+  intro m β α monad f b xs
+  unfold _root_.Array.foldlM
+  rw [dite_eq_left (Nat.le_refl _)]
+  exact (congrFun (foldListTail f xs xs.size 0 (Nat.le_refl _)) b).symm
+
 private theorem foldExtractLoop [Monad m] (f : β → α → m β) (xs : _root_.Array α)
     (start stop : Nat) (i k : Nat) (w : i + k = (xs.extract start stop).size) :
     _root_.Array.foldlM.loop f xs (min stop xs.size) (Nat.min_le_right ..) i (start + k) =
