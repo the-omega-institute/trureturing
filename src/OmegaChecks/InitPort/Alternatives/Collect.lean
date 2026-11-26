@@ -1,5 +1,6 @@
 module
 
+public import Init.Data.Iterators.Lemmas.Producers.Monadic.List
 public import Init.Data.Range.Polymorphic.Iterators
 public import Init.Data.Iterators.Combinators.Monadic.Take
 public import Init.Data.Iterators.Lemmas.Consumers.Loop
@@ -955,5 +956,60 @@ public theorem Std.Iter.toArray_append {α₁ α₂ β : Type w}
   exact Std.Iter.toList_append (it₁ := it₁) (it₂ := it₂)
 
 end IndexCombinators
+
+private theorem arrayFromList {β : Type u} {m : Type u → Type v} [Monad m] [LawfulMonad m]
+    (xs : List β) (acc : Array β) :
+    collectArrayFrom (xs.iterM m) acc = pure (acc ++ xs.toArray) := by
+  induction xs generalizing acc with
+  | nil =>
+    unfold collectArrayFrom
+    rw [WellFounded.fix_eq]
+    dsimp only
+    rw [List.step_iterM_nil, pure_bind, Shrink.inflate_deflate]
+    rw [Array.append_empty]
+  | cons x xs ih =>
+    conv => lhs; unfold collectArrayFrom; rw [WellFounded.fix_eq]
+    dsimp only
+    rw [List.step_iterM_cons, pure_bind, Shrink.inflate_deflate]
+    change collectArrayFrom (xs.iterM m) (acc.push x) = _
+    rw [ih]
+    apply congrArg pure
+    apply Array.ext'
+    rw [Array.toList_append, Array.toList_append, Array.toList_push, List.toList_toArray,
+      List.toList_toArray, List.append_assoc]
+    rfl
+
+public theorem List.toArray_iterM {m : Type w → Type w'} [Monad m] [LawfulMonad m] {β : Type w} {l : List β} :
+    Std.IterM.Total.toArray (l.iterM m).ensureTermination = pure l.toArray := by
+  change collectArrayFrom (l.iterM m) #[] = _
+  rw [arrayFromList, Array.empty_append]
+
+public theorem List.toList_iterM {m : Type w → Type w'} [Monad m] {β : Type w} [LawfulMonad m] {l : List β} :
+    Std.IterM.Total.toList (l.iterM m).ensureTermination = pure l := by
+  unfold Std.IterM.Total.toList
+  rw [List.toArray_iterM, map_pure, List.toList_toArray]
+
+private theorem reverseFromList {β : Type u} {m : Type u → Type v} [Monad m] [LawfulMonad m]
+    (xs : List β) (acc : List β) :
+    collectRevFrom (xs.iterM m) acc = pure (xs.reverse ++ acc) := by
+  induction xs generalizing acc with
+  | nil =>
+    unfold collectRevFrom
+    rw [WellFounded.fix_eq]
+    dsimp only
+    rw [List.step_iterM_nil, pure_bind, Shrink.inflate_deflate]
+    rfl
+  | cons x xs ih =>
+    conv => lhs; unfold collectRevFrom; rw [WellFounded.fix_eq]
+    dsimp only
+    rw [List.step_iterM_cons, pure_bind, Shrink.inflate_deflate]
+    change collectRevFrom (xs.iterM m) (x :: acc) = _
+    rw [ih, List.reverse_cons, List.append_assoc]
+    rfl
+
+public theorem List.toListRev_iterM {m : Type w → Type w'} [Monad m] {β : Type w} [LawfulMonad m] {l : List β} :
+    Std.IterM.Total.toListRev (l.iterM m).ensureTermination = pure l.reverse := by
+  change collectRevFrom (l.iterM m) [] = _
+  rw [reverseFromList, List.append_nil]
 
 end OmegaChecks.InitPort.Alternatives
