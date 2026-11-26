@@ -18,35 +18,54 @@ public theorem BitVec.extractLsb'_append_eq_left : type_of% @_root_.BitVec.extra
   rw [BitVec.extractLsb'_toNat, BitVec.toNat_append, Nat.shiftRight_or_distrib,
     Nat.shiftLeft_shiftRight, Nat.shiftRight_eq_zero _ _ b.isLt, Nat.or_zero, Nat.mod_eq_of_lt a.isLt]
 
-private def checkBelow (p : Nat → Bool) : Nat → Bool
-  | 0 => true
-  | n + 1 => checkBelow p n && p n
+private theorem highestBits {i k tag mask : Nat} (low : i < 2 ^ k)
+    (zero : mask % (2 ^ k) = 0) :
+    (i + 2 ^ k * tag) &&& mask = 2 ^ k * (tag &&& (mask / 2 ^ k)) := by
+  let n := i + 2 ^ k * tag
+  calc
+    _ = (n &&& mask) % 2 ^ k + 2 ^ k * ((n &&& mask) / 2 ^ k) := (Nat.mod_add_div ..).symm
+    _ = _ := by
+      rw [Nat.and_mod_two_pow, zero, Nat.and_zero, Nat.zero_add, Nat.and_div_two_pow]
+      change _ * ((i + 2 ^ k * tag) / 2 ^ k &&& _) = _
+      rw [Nat.add_mul_div_left _ _ (Nat.two_pow_pos k), Nat.div_eq_of_lt low, Nat.zero_add]
 
-private theorem checkedBelow {p : Nat → Bool} {n : Nat} (check : checkBelow p n = true) :
-    ∀ x : Fin n, p x.val = true := by
-  induction n with
-  | zero => intro x; exact (Nat.not_lt_zero x.val x.isLt).elim
-  | succ n ih =>
-    intro x
-    have both := Bool.and_eq_true_iff.mp check
-    cases Nat.eq_or_lt_of_le (Nat.le_of_lt_succ x.isLt) with
-    | inl eq => exact (congrArg p eq).trans both.2
-    | inr lt => exact ih both.1 ⟨x.val, lt⟩
+private theorem firstAscii (x : Fin 128) : (UInt8.ofNat x.val).IsUTF8FirstByte := by
+  apply Or.inl
+  apply UInt8.toNat_inj.mp
+  rw [UInt8.toNat_and, UInt8.toNat_ofNat_of_lt' (Nat.lt_trans x.isLt (by decide))]
+  exact highestBits (tag := 0) (mask := 128) (k := 7) x.isLt rfl
 
-private theorem firstAscii (x : Fin 128) : (UInt8.ofNat x.val).IsUTF8FirstByte :=
-  of_decide_eq_true (checkedBelow (p := fun i => decide ((UInt8.ofNat i).IsUTF8FirstByte)) (by rfl) x)
+private theorem firstTwo (x : Fin 32) : (UInt8.ofNat (x.val + 192)).IsUTF8FirstByte := by
+  apply Or.inr ∘ Or.inl
+  apply UInt8.toNat_inj.mp
+  rw [UInt8.toNat_and, UInt8.toNat_ofNat_of_lt' (Nat.lt_of_lt_of_le (Nat.add_lt_add_right x.isLt 192) (by decide))]
+  exact highestBits (tag := 6) (mask := 224) (k := 5) x.isLt rfl
 
-private theorem firstTwo (x : Fin 32) : (UInt8.ofNat (x.val + 192)).IsUTF8FirstByte :=
-  of_decide_eq_true (checkedBelow (p := fun i => decide ((UInt8.ofNat (i + 192)).IsUTF8FirstByte)) (by rfl) x)
+private theorem firstThree (x : Fin 16) : (UInt8.ofNat (x.val + 224)).IsUTF8FirstByte := by
+  apply Or.inr ∘ Or.inr ∘ Or.inl
+  apply UInt8.toNat_inj.mp
+  rw [UInt8.toNat_and, UInt8.toNat_ofNat_of_lt' (Nat.lt_of_lt_of_le (Nat.add_lt_add_right x.isLt 224) (by decide))]
+  exact highestBits (tag := 14) (mask := 240) (k := 4) x.isLt rfl
 
-private theorem firstThree (x : Fin 16) : (UInt8.ofNat (x.val + 224)).IsUTF8FirstByte :=
-  of_decide_eq_true (checkedBelow (p := fun i => decide ((UInt8.ofNat (i + 224)).IsUTF8FirstByte)) (by rfl) x)
+private theorem firstFour (x : Fin 8) : (UInt8.ofNat (x.val + 240)).IsUTF8FirstByte := by
+  apply Or.inr ∘ Or.inr ∘ Or.inr
+  apply UInt8.toNat_inj.mp
+  rw [UInt8.toNat_and, UInt8.toNat_ofNat_of_lt' (Nat.lt_of_lt_of_le (Nat.add_lt_add_right x.isLt 240) (by decide))]
+  exact highestBits (tag := 30) (mask := 248) (k := 3) x.isLt rfl
 
-private theorem firstFour (x : Fin 8) : (UInt8.ofNat (x.val + 240)).IsUTF8FirstByte :=
-  of_decide_eq_true (checkedBelow (p := fun i => decide ((UInt8.ofNat (i + 240)).IsUTF8FirstByte)) (by rfl) x)
-
-private theorem continuation (x : Fin 64) : ¬ (UInt8.ofNat (x.val + 128)).IsUTF8FirstByte :=
-  of_decide_eq_true (checkedBelow (p := fun i => decide (¬ (UInt8.ofNat (i + 128)).IsUTF8FirstByte)) (by rfl) x)
+private theorem continuation (x : Fin 64) : ¬ (UInt8.ofNat (x.val + 128)).IsUTF8FirstByte := by
+  have high : (x.val + 128) / 2 ^ 6 = 2 := by
+    change (x.val + 2 ^ 6 * 2) / 2 ^ 6 = 2
+    rw [Nat.add_mul_div_left _ _ (Nat.two_pow_pos 6), Nat.div_eq_of_lt x.isLt]
+  have different {mask required : UInt8} (ne : 2 &&& (mask.toNat / 2 ^ 6) ≠ required.toNat / 2 ^ 6) :
+      UInt8.ofNat (x.val + 128) &&& mask ≠ required := by
+    intro eq
+    have top := congrArg (fun v : UInt8 => v.toNat / 2 ^ 6) eq
+    change ((UInt8.ofNat (x.val + 128) &&& mask).toNat / 2 ^ 6) = _ at top
+    rw [UInt8.toNat_and, UInt8.toNat_ofNat_of_lt' (Nat.lt_of_lt_of_le (Nat.add_lt_add_right x.isLt 128) (by decide)),
+      Nat.and_div_two_pow, high] at top
+    exact ne top
+  rintro (h | h | h | h) <;> exact different (by decide) h
 
 private def byteOffsets (bs : List UInt8) := ∀ (i : Nat) (h : i < bs.length), bs[i].IsUTF8FirstByte ↔ i = 0
 
