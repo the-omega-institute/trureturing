@@ -403,6 +403,15 @@ private theorem fourMark_defect_eq (s x y : ℝ) :
       max_eq_right (by linarith : (3 / 4 : ℝ) - s ≤ 0)]
     ring
 
+/-- The two affine pieces at each arc-count transition agree. -/
+theorem continuous_fourMarkPeriodicMean (x y : ℝ) :
+    Continuous fun s ↦ fourMarkPeriodicMean s x y := by
+  have h (s : ℝ) : fourMarkPeriodicMean s x y =
+      ((1 - s) * x + s * y) ^ 4 - (x - y) ^ 2 * fourMarkHingeDefect s x y := by
+    linarith only [fourMark_defect_eq s x y]
+  simp_rw [h, fourMarkHingeDefect]
+  fun_prop
+
 /-- The binomial arc-count mean dominates the periodic arc-count mean
 after integration with an exponential weight, including signed inputs. -/
 theorem integral_fourMarkSignedDefect_lower {r : ℝ} (hr : 0 ≤ r) (x y : ℝ) :
