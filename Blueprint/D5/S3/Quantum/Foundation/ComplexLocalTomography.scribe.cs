@@ -34,7 +34,7 @@ internal sealed class ComplexLocalTomographyDocument : IScribeDocumentDefinition
                 "The coordinate index types X and Y may be empty. Each complex local matrix is its Hermitian real part plus the imaginary unit times its Hermitian imaginary part. Bilinearity extends equality of traces to arbitrary product factors. Tensor products of transposed local matrix units then probe each individual matrix entry."),
             DescribeStatement("dark-product-extension", "darkProductExt",
                 "Normalized trace extension on the extra summand", DarkDefinition(),
-                "Here T denotes darkProductExt and card denotes the finite cardinality. The visible block is the product test. The dark block is the identity on Z scaled by the product of the two normalized traces.",
+                "Here T denotes darkProductExt and card denotes the finite cardinality. The visible block is the product test. The dark block is the identity on Z scaled by the product of the two normalized traces. Division by zero is zero here, as in the complex field operations in Lean. If either local carrier is empty, the extension is the zero matrix.",
                 DescribeRole.Definition),
             DescribeStatement("dark-indistinguishability", "dark_sector_product_indistinguishable",
                 "Orthogonal states with the same normalized trace readout", DarkSector(),
@@ -126,12 +126,13 @@ internal sealed class ComplexLocalTomographyDocument : IScribeDocumentDefinition
         var y = F.Id("y");
         Formula Skew(Formula d) => Fraction(Mul(d, Sub(d, D(1))), D(2));
         var gap = Gap(b, x, y);
+        var quaternionic = Mul(Mul(Mul(Mul(Negative(D(2)), x), y), Sub(x, D(1))), Sub(y, D(1)));
         return All("b", Scalar("R"), Sizes(Conj(
             Equivalent(Less(D(0), gap), And(Less(D(0), b), Less(b, D(2)))),
             Equivalent(Equal(gap, D(0)), Endpoints(b)),
             Equivalent(Less(gap, D(0)), Or(Less(b, D(0)), Less(D(2), b))),
             Equal(Gap(D(1), x, y), Mul(Skew(x), Skew(y))),
-            Equal(Gap(D(4), x, y), Mul(Mul(Mul(Mul(Negative(D(2)), x), y), Sub(x, D(1))), Sub(y, D(1))))));
+            Equal(Gap(D(4), x, y), quaternionic))));
     }
 
     private static Formula RealSkew()
