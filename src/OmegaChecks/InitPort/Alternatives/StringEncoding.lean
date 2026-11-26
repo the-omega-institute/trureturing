@@ -546,17 +546,17 @@ public theorem ByteArray.utf8DecodeChar?.helper₃ :
 public theorem ByteArray.utf8DecodeChar?.toBitVec_assemble₂Unchecked :
     type_of% (private_decl% @_root_.ByteArray.utf8DecodeChar?.toBitVec_assemble₂Unchecked) := by
   intro w x
-  have hw : (w &&& 31).toUInt32.toBitVec = (w.toBitVec.setWidth 5).setWidth 32 := (private_decl% @_root_.ByteArray.utf8DecodeChar?.helper₃) _ 5 (by decide)
-  have hx : (x &&& 63).toUInt32.toBitVec = (x.toBitVec.setWidth 6).setWidth 32 := (private_decl% @_root_.ByteArray.utf8DecodeChar?.helper₃) _ 6 (by decide)
+  have hw : (w &&& 31).toUInt32.toBitVec = (w.toBitVec.setWidth 5).setWidth 32 := (private_decl% @_root_.ByteArray.utf8DecodeChar?.helper₃) 5 (by decide)
+  have hx : (x &&& 63).toUInt32.toBitVec = (x.toBitVec.setWidth 6).setWidth 32 := (private_decl% @_root_.ByteArray.utf8DecodeChar?.helper₃) 6 (by decide)
   rw [assemble₂Unchecked, UInt32.toBitVec_or, UInt32.toBitVec_shiftLeft, hw, hx]
   exact BitVec.setWidth_append_eq_shiftLeft_setWidth_or.symm
 
 public theorem ByteArray.utf8DecodeChar?.toBitVec_assemble₃Unchecked :
     type_of% (private_decl% @_root_.ByteArray.utf8DecodeChar?.toBitVec_assemble₃Unchecked) := by
   intro w x y
-  have hw : (w &&& 15).toUInt32.toBitVec = (w.toBitVec.setWidth 4).setWidth 32 := (private_decl% @_root_.ByteArray.utf8DecodeChar?.helper₃) _ 4 (by decide)
-  have hx : (x &&& 63).toUInt32.toBitVec = (x.toBitVec.setWidth 6).setWidth 32 := (private_decl% @_root_.ByteArray.utf8DecodeChar?.helper₃) _ 6 (by decide)
-  have hy : (y &&& 63).toUInt32.toBitVec = (y.toBitVec.setWidth 6).setWidth 32 := (private_decl% @_root_.ByteArray.utf8DecodeChar?.helper₃) _ 6 (by decide)
+  have hw : (w &&& 15).toUInt32.toBitVec = (w.toBitVec.setWidth 4).setWidth 32 := (private_decl% @_root_.ByteArray.utf8DecodeChar?.helper₃) 4 (by decide)
+  have hx : (x &&& 63).toUInt32.toBitVec = (x.toBitVec.setWidth 6).setWidth 32 := (private_decl% @_root_.ByteArray.utf8DecodeChar?.helper₃) 6 (by decide)
+  have hy : (y &&& 63).toUInt32.toBitVec = (y.toBitVec.setWidth 6).setWidth 32 := (private_decl% @_root_.ByteArray.utf8DecodeChar?.helper₃) 6 (by decide)
   rw [assemble₃Unchecked, UInt32.toBitVec_or, UInt32.toBitVec_or, UInt32.toBitVec_shiftLeft, UInt32.toBitVec_shiftLeft,
     hw, hx, hy, BitVec.setWidth_append_append_eq_shiftLeft_setWidth_or]
   rfl
@@ -564,10 +564,10 @@ public theorem ByteArray.utf8DecodeChar?.toBitVec_assemble₃Unchecked :
 public theorem ByteArray.utf8DecodeChar?.toBitVec_assemble₄Unchecked :
     type_of% (private_decl% @_root_.ByteArray.utf8DecodeChar?.toBitVec_assemble₄Unchecked) := by
   intro w x y z
-  have hw : (w &&& 7).toUInt32.toBitVec = (w.toBitVec.setWidth 3).setWidth 32 := (private_decl% @_root_.ByteArray.utf8DecodeChar?.helper₃) _ 3 (by decide)
-  have hx : (x &&& 63).toUInt32.toBitVec = (x.toBitVec.setWidth 6).setWidth 32 := (private_decl% @_root_.ByteArray.utf8DecodeChar?.helper₃) _ 6 (by decide)
-  have hy : (y &&& 63).toUInt32.toBitVec = (y.toBitVec.setWidth 6).setWidth 32 := (private_decl% @_root_.ByteArray.utf8DecodeChar?.helper₃) _ 6 (by decide)
-  have hz : (z &&& 63).toUInt32.toBitVec = (z.toBitVec.setWidth 6).setWidth 32 := (private_decl% @_root_.ByteArray.utf8DecodeChar?.helper₃) _ 6 (by decide)
+  have hw : (w &&& 7).toUInt32.toBitVec = (w.toBitVec.setWidth 3).setWidth 32 := (private_decl% @_root_.ByteArray.utf8DecodeChar?.helper₃) 3 (by decide)
+  have hx : (x &&& 63).toUInt32.toBitVec = (x.toBitVec.setWidth 6).setWidth 32 := (private_decl% @_root_.ByteArray.utf8DecodeChar?.helper₃) 6 (by decide)
+  have hy : (y &&& 63).toUInt32.toBitVec = (y.toBitVec.setWidth 6).setWidth 32 := (private_decl% @_root_.ByteArray.utf8DecodeChar?.helper₃) 6 (by decide)
+  have hz : (z &&& 63).toUInt32.toBitVec = (z.toBitVec.setWidth 6).setWidth 32 := (private_decl% @_root_.ByteArray.utf8DecodeChar?.helper₃) 6 (by decide)
   rw [assemble₄Unchecked, UInt32.toBitVec_or, UInt32.toBitVec_or, UInt32.toBitVec_or, UInt32.toBitVec_shiftLeft,
     UInt32.toBitVec_shiftLeft, UInt32.toBitVec_shiftLeft, hw, hx, hy, hz, BitVec.setWidth_append_append_append_eq_shiftLeft_setWidth_or]
   rfl
