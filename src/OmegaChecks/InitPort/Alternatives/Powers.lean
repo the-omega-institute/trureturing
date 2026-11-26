@@ -137,4 +137,66 @@ public theorem Rat.divInt_mul_left : type_of% @_root_.Rat.divInt_mul_left := by
   · apply (Rat.divInt_eq_divInt_iff (Int.mul_ne_zero ha hz) hz).mpr
     rw [Int.mul_assoc, Int.mul_left_comm]
 
+public theorem Rat.lt_iff : type_of% @_root_.Rat.lt_iff := by
+  intro a b
+  have ap : (0 : Int) < a.den := Int.natCast_pos.mpr (Nat.pos_of_ne_zero a.den_nz)
+  have bp : (0 : Int) < b.den := Int.natCast_pos.mpr (Nat.pos_of_ne_zero b.den_nz)
+  change _root_.Rat.blt a b = true ↔ _
+  unfold _root_.Rat.blt
+  by_cases ltge : (decide (a.num < 0) && decide (0 ≤ b.num)) = true
+  · rw [ite_eq_left ltge]
+    have signs := Bool.and_eq_true_iff.mp ltge
+    exact ⟨fun _ => Int.lt_of_lt_of_le (Int.mul_neg_of_neg_of_pos (of_decide_eq_true signs.1) bp)
+      (Int.mul_nonneg (of_decide_eq_true signs.2) (Int.le_of_lt ap)), fun _ => rfl⟩
+  · rw [ite_eq_right ltge]
+    by_cases az : a.num = 0
+    · rw [ite_eq_left az, az, Int.zero_mul]
+      constructor
+      · intro lt
+        exact Int.mul_pos (of_decide_eq_true lt) ap
+      · intro lt
+        apply decide_eq_true
+        apply Int.lt_of_not_ge
+        intro nonpos
+        exact Int.not_le_of_gt lt (Int.mul_nonpos_of_nonpos_of_nonneg nonpos (Int.le_of_lt ap))
+    · rw [ite_eq_right az]
+      by_cases gtle : (decide (0 < a.num) && decide (b.num ≤ 0)) = true
+      · rw [ite_eq_left gtle]
+        have signs := Bool.and_eq_true_iff.mp gtle
+        have reversed := Int.le_trans (Int.mul_nonpos_of_nonpos_of_nonneg (of_decide_eq_true signs.2) (Int.le_of_lt ap))
+          (Int.le_of_lt (Int.mul_pos (of_decide_eq_true signs.1) bp))
+        exact ⟨fun e => Bool.noConfusion e, fun lt => False.elim (Int.not_le_of_gt lt reversed)⟩
+      · rw [ite_eq_right gtle]
+        exact ⟨of_decide_eq_true, decide_eq_true⟩
+
+public theorem Rat.not_lt : type_of% @_root_.Rat.not_lt := by
+  intro a b
+  change (¬ a.blt b = true) ↔ a.blt b = false
+  cases a.blt b with
+  | false => exact ⟨fun _ => rfl, fun _ => Bool.false_ne_true⟩
+  | true => exact ⟨fun h => False.elim (h rfl), fun e => Bool.noConfusion e⟩
+
+public theorem Rat.not_le : type_of% @_root_.Rat.not_le := by
+  intro a b
+  change (¬ b.blt a = false) ↔ b.blt a = true
+  cases b.blt a with
+  | false => exact ⟨fun h => False.elim (h rfl), fun e => Bool.noConfusion e⟩
+  | true => exact ⟨fun _ => rfl, fun _ h => Bool.noConfusion h⟩
+
+public theorem Rat.le_iff : type_of% @_root_.Rat.le_iff := by
+  intro a b
+  exact Rat.not_lt.symm.trans ((not_congr (Rat.lt_iff b a)).trans Int.not_lt)
+
+public theorem Rat.intCast_lt_intCast : type_of% @_root_.Rat.intCast_lt_intCast := by
+  intro a b
+  apply (Rat.lt_iff _ _).trans
+  change a * 1 < b * 1 ↔ a < b
+  rw [Int.mul_one, Int.mul_one]
+
+public theorem Rat.intCast_le_intCast : type_of% @_root_.Rat.intCast_le_intCast := by
+  intro a b
+  apply (Rat.le_iff _ _).trans
+  change a * 1 ≤ b * 1 ↔ a ≤ b
+  rw [Int.mul_one, Int.mul_one]
+
 end OmegaChecks.InitPort.Alternatives
