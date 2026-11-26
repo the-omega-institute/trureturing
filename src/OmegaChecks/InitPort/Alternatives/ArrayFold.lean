@@ -1,4 +1,5 @@
 module
+public import OmegaChecks.InitPort.Alternatives.VectorFold
 import all Init.Data.Array.Basic
 public import Init.Data.Array.Lemmas
 
