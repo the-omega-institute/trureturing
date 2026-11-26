@@ -1,6 +1,6 @@
 /- GID: D5/S3/Quantum/Analysis/RefinedBMV/Tracial/SingularFourCycle
    generality: G
-   mirror-B: none(waiver:internal-proof-component)
+   mirror-B: D5/B/S3/Quantum/Analysis/RefinedBMV/Tracial/SingularFourCycle
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
