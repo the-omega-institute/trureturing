@@ -41,8 +41,8 @@ class CoverageTest(unittest.TestCase):
         with patch("report.subprocess.run") as run:
             verify_complete(data, Path("product"), *check_coverage(data))
             commands = [call.args[0] for call in run.call_args_list]
-            self.assertIn("--check", commands[0])
-            self.assertIn("OmegaInit.Extra", commands[0])
+            axiom_check, = [command for command in commands if "--check" in command]
+            self.assertIn("OmegaInit.Extra", axiom_check)
             self.assertIn("--exact-roots", commands[-1])
             self.assertTrue(all(call.kwargs["check"] for call in run.call_args_list))
 

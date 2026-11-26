@@ -15,8 +15,10 @@ prelude
 import OmegaInit.Prelude
 open Omega
 
-example (a : α) (b : β) : Eq (Prod.fst (Prod.mk a b)) a := Omega.rfl
+example (a : α) (b : β) : Omega.Eq (Prod.fst (Prod.mk a b)) a := Omega.rfl
 ```
+
+生成的 `OmegaInit.Prelude` 提供 `Omega.Quot`、`Omega.Quot.mk`、`Omega.Quot.ind` 和 `Omega.Quot.lift`。普通导入支持两个消去子的构造子归约。Lean 内核按固定的根名称识别商类型和等式，在打开 `Omega` 命名空间的外部代码中可用 `Omega.Eq` 指定移植的等式。
 
 位置参数接受一个或多个官方模块名。省略这些参数会扫描钉版工具链的所有 `Init` 模块，包括需要单独导入的模块。构建整个库可运行 `python3 src/OmegaChecks/InitPort/build.py .lake/init-port-all`。加上 `--seed PATH` 可选择另一个已编译的严格种子，默认读取 `.lake/build/omega-strict/lib/lean`。工具把种子的编译文件复制到独立临时目录，随后从钉版官方模块逐个翻译依赖、证明项、定义、归纳族和递归器。每个候选声明都在 Lean 内核中检查。环境变量 `OMEGA_PORT_HEARTBEATS` 为每个候选声明指定原始心跳预算，默认 5000。
 

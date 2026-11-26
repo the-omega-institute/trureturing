@@ -157,6 +157,11 @@ def check_audits():
     build(["OmegaChecks.ModuleSurface"])
     with tempfile.TemporaryDirectory(prefix="omega-olean-") as tmp:
         tmp = Path(tmp)
+        other_quot = tmp / "OtherQuot.lean"
+        other_quot.write_text("module\nprelude\npublic inductive Eq {α : Sort u} : α → α → Prop where\n"
+                              "  | refl (a : α) : Eq a a\ninit_quot\n")
+        lean("-R", tmp, "-o", other_quot.with_suffix(".olean"), other_quot)
+        audit("OtherQuot", ["OtherQuot"], [tmp], "unexpected native quotient support OtherQuot/")
         for name, source, reason in [
             ("UnusedAxiom", "module\nprelude\nimport OmegaInit.Prelude\npublic axiom hiddenAssumption : Prop\n",
              "hiddenAssumption"),
@@ -563,6 +568,18 @@ def check_generated_init():
         run(sys.executable, "-B", SRC / "OmegaChecks/InitPort/build.py", product,
             "Init.Prelude", "Init.Data.List.Impl", "Init.Data.List.TakeDrop", "Init.Data.Nat.Coprime")
         environment = {**ENV, "LEAN_PATH": str(product / "lib")}
+        quotient = """module
+prelude
+import OmegaInit.Prelude
+example {α : Sort u} {r : α → α → Prop} {β : Sort v} (a : α) (f : α → β)
+    (h : ∀ a b, r a b → Omega.Eq (f a) (f b)) :
+    Omega.Eq (Omega.Quot.lift f h (Omega.Quot.mk r a)) (f a) := Omega.rfl
+example {α : Sort u} {r : α → α → Prop} {p : Omega.Quot r → Prop}
+    (f : ∀ a, p (Omega.Quot.mk r a)) (a : α) :
+    Omega.Eq (Omega.Quot.ind f (Omega.Quot.mk r a)) (f a) := Omega.rfl
+"""
+        subprocess.run([ENV["LEAN"], "--stdin"], cwd=ROOT, env=environment, text=True,
+                       input=quotient, check=True)
         # The upstream addition helper must preserve the strict seed's definitional reduction.
         source = ("module\nprelude\nimport all OmegaInit.Prelude\n"
                   "attribute [local semireducible] Omega.Nat.add\n"

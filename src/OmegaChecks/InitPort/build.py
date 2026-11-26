@@ -86,6 +86,7 @@ def generate(stage, product, seed, roots, excluded):
     omissions = dict.fromkeys(excluded, "explicit exclusion")
     selection = product / "interface-rejections.jsonl"
     run("lake", "build", "omegaAudit", "+OmegaChecks.Interface.Equations", "+OmegaChecks.InitPort.Kernel")
+    run("lake", "env", "lean", "--run", HERE / "Kernel.lean", "--prepare-quot", seed)
     order_file = stage / "candidate-order.json"
 
     def distribute():
@@ -128,7 +129,7 @@ def generate(stage, product, seed, roots, excluded):
     run("lake", "env", "lean", "--run", HERE / "DuplicateSites.lean", product)
     graph = dict(json.loads((product / "modules.json").read_text()))
     closure = list(TopologicalSorter(graph).static_order())
-    run("lean", "--run", HERE / "ExportAxioms.lean", artifact, *graph)
+    run("lake", "env", "lean", "--run", HERE / "ExportAxioms.lean", artifact, *graph)
     with (product / "audit.txt").open("w") as log:
         audit = ROOT / ".lake/build/bin/omegaAudit"
         checked = subprocess.run(["lake", "env", audit, "--exact-roots", artifact, *graph, "--", *closure],

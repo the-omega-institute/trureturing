@@ -29,6 +29,7 @@ private def checkUpstreamNames (strict publicStrict : Environment) : IO Unit := 
     let some idx := strict.getModuleIdxFor? name | continue
     let owner := strict.header.moduleNames[idx]!
     if !isStrict owner || isPrivateName name || name.isInternal then continue
+    if OmegaChecks.InitPort.NativeQuot.isSupport owner name then continue
     unless name.getRoot == `Omega do
       throw <| IO.userError s!"public name outside Omega: {name} in {owner}"
     if owner.getRoot == `OmegaMath then continue
@@ -72,6 +73,8 @@ private def audit (roots : List String) (path label : String)
   let basis := env.allImportedModuleNames.filter OmegaChecks.ModuleSurface.isBasis
   let publicStrict ← importModules (basis.map fun name => {module := name}) {} (level := .exported)
   checkLayers env
+  OmegaChecks.InitPort.NativeQuot.checkSupport env
+  OmegaChecks.InitPort.NativeQuot.checkSupport publicStrict
   let actual := env.allImportedModuleNames.toList.map Name.toString
   if let some modules := expected then
     unless actual.mergeSort == modules.mergeSort do
@@ -83,7 +86,7 @@ private def audit (roots : List String) (path label : String)
   let check : CoreM Nat := do
     let mut count := 0
     for (name, info) in env.constants.toList do
-      if info.isUnsafe || info matches .axiomInfo _ | .quotInfo _ then
+      if info.isUnsafe || info.isPartial || info.isAxiom then
         throwError "inadmissible declaration {name}"
       let axioms ← collectAxioms name
       unless axioms.isEmpty do

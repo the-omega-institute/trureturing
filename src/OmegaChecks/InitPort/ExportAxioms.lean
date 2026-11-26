@@ -1,6 +1,7 @@
 module
 import Lean
 import Lean.Replay
+import all OmegaChecks.InitPort.NativeQuot
 import all Lean.Util.CollectAxioms
 
 open Lean
@@ -9,8 +10,9 @@ open Lean
 Its writer sorts entries using the same name order as its import-time binary search. -/
 private def compilerAxiomEntries (full : Environment) :
     IO (Name × NameMap EnvExtensionEntry) := do
+  OmegaChecks.InitPort.NativeQuot.checkSupport full
   for (n, ci) in full.constants.toList do
-    if ci.isUnsafe || ci.isPartial || ci.isAxiom || ci matches .quotInfo _ then
+    if ci.isUnsafe || ci.isPartial || ci.isAxiom then
       throw <| IO.userError s!"inadmissible strict declaration {n}"
   let checked ← (← mkEmptyEnvironment).toKernelEnv.replay full.constants.map₁
   let env := Environment.ofKernelEnv checked
@@ -82,6 +84,7 @@ Read the persisted exported module level and ask the same API as `#print axioms`
 private def checkPublic (imports : Array Import) : IO Unit := do
   unsafe enableInitializersExecution
   let env ← importModules imports {} (loadExts := true) (level := .exported)
+  OmegaChecks.InitPort.NativeQuot.checkSupport env
   let check : CoreM Nat := do
     for mod in env.header.modules, data in env.header.moduleData, i in [:env.header.modules.size] do
       let entries := exportedAxiomsExt.getModuleEntries env i

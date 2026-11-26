@@ -1,5 +1,6 @@
 import Lean
 import OmegaChecks.FieldMethods
+import OmegaChecks.InitPort.NativeQuot
 
 /-! Compare compiled public interfaces in independent Lean environments. -/
 
@@ -181,6 +182,9 @@ private def compare (reference : Environment) (rename : Name → Name) (src dst 
   | .defnInfo _, _ | .opaqueInfo _, _ =>
     compareDefinitionBody
     deps := deps ++ (src.value! (allowOpaque := true)).getUsedConstants
+  | .quotInfo x, .quotInfo y =>
+    unless OmegaChecks.InitPort.NativeQuot.isSupport `OmegaInit.Prelude x.name && x == y do
+      throw <| IO.userError s!"invalid native quotient interface {src.name}"
   | .inductInfo x, .inductInfo y =>
     unless x.numParams == y.numParams && x.numIndices == y.numIndices &&
         x.numNested == y.numNested && x.all.map rename == y.all &&
@@ -262,7 +266,8 @@ def checkSites (strict publicStrict reference : Environment) (bindings : Array (
           | `OmegaInit => owner.replacePrefix `OmegaInit `Init
           | `OmegaMathlib => owner.replacePrefix `OmegaMathlib `Mathlib
           | _ => Name.anonymous
-        if target.isAnonymous || (privateToUserName dep).getRoot != `Omega then
+        if target.isAnonymous || ((privateToUserName dep).getRoot != `Omega &&
+            !OmegaChecks.InitPort.NativeQuot.isSupport owner dep) then
           throw <| IO.userError s!"dependency outside the standard interface: {name} uses {dep} in {owner}"
         pending := pending.push (dep, target)
   return seen

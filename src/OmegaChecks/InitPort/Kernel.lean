@@ -4,6 +4,7 @@ import OmegaChecks.InitCompiler.Proofs
 import OmegaChecks.InitCompiler.Recursion
 import OmegaChecks.InitPort.Alternatives
 import OmegaChecks.InitPort.Arithmetic
+import OmegaChecks.InitPort.NativeQuot
 
 open Lean
 
@@ -586,8 +587,9 @@ def run (strictPath artifacts : System.FilePath) (outPath : String) (exclude : S
     if file.extension == some "olean" then
       seedModules := seedModules.push {module := ← moduleNameOfFileName file strictPath}
   let base ← importModules seedModules {}
+  OmegaChecks.InitPort.NativeQuot.checkSupport base
   for (_, ci) in base.constants.toList do
-    if ci.isAxiom || ci.isUnsafe || ci.isPartial || ci matches .quotInfo _ then
+    if ci.isAxiom || ci.isUnsafe || ci.isPartial then
       throw <| IO.userError s!"invalid strict seed {ci.name}"
   let initial ← (← mkEmptyEnvironment).toKernelEnv.replay base.constants.map₁
   let output ← IO.FS.Handle.mk outPath .write
@@ -614,5 +616,7 @@ def run (strictPath artifacts : System.FilePath) (outPath : String) (exclude : S
 end InitKernelPort
 
 def main (args : List String) : IO Unit := do
+  if let ["--prepare-quot", dir] := args then
+    return ← OmegaChecks.InitPort.NativeQuot.prepareSeed dir
   let dir :: artifacts :: out :: exclusions :: mods := args | throw <| IO.userError "expected seed, artifacts, report, exclusions, and official roots"
   InitKernelPort.run dir artifacts out exclusions (mods.map String.toName)

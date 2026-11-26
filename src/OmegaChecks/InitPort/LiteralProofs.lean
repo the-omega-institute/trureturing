@@ -16,8 +16,8 @@ public theorem rightMono (k : Nat) (a b : Nat) (h : Nat.le a b) : Nat.le (Nat.ad
   Nat.rec (motive := fun k => Nat.le (Nat.add a k) (Nat.add b k)) h
     (fun _ ih => Nat.succ_le_succ ih) k
 
-public theorem plusSucc (a b : Nat) : Eq (Nat.add (Nat.succ a) b) (Nat.succ (Nat.add a b)) :=
-  Nat.rec (motive := fun b => Eq (Nat.add (Nat.succ a) b) (Nat.succ (Nat.add a b))) Omega.rfl
+public theorem plusSucc (a b : Nat) : Omega.Eq (Nat.add (Nat.succ a) b) (Nat.succ (Nat.add a b)) :=
+  Nat.rec (motive := fun b => Omega.Eq (Nat.add (Nat.succ a) b) (Nat.succ (Nat.add a b))) Omega.rfl
     (fun _ ih => congrArg Nat.succ ih) b
 
 public theorem leftMono (k a b : Nat) (h : Nat.le a b) : Nat.le (Nat.add k a) (Nat.add k b) :=
@@ -30,9 +30,9 @@ public theorem leftMono (k a b : Nat) (h : Nat.le a b) : Nat.le (Nat.add k a) (N
       (fun b _ h => Nat.succ_le_succ (step b (Nat.le_of_succ_le_succ h))) b) a b h
 @[expose] public def double (a : Nat) : Nat := Nat.mul a (Nat.succ (Nat.succ Nat.zero))
 
-public theorem double_eq (a : Nat) : Eq (double a) (Nat.add a a) :=
+public theorem double_eq (a : Nat) : Omega.Eq (double a) (Nat.add a a) :=
   congrArg (fun n => Nat.add n a)
-    (Nat.rec (motive := fun n => Eq (Nat.add Nat.zero n) n) Omega.rfl (fun _ ih => congrArg Nat.succ ih) a)
+    (Nat.rec (motive := fun n => Omega.Eq (Nat.add Nat.zero n) n) Omega.rfl (fun _ ih => congrArg Nat.succ ih) a)
 
 public theorem bounds (a b : Nat) (h : Nat.lt a b) : Nat.lt (Nat.succ (double a)) (double b) :=
   let x := Nat.succ a

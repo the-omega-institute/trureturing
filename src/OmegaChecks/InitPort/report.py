@@ -55,9 +55,9 @@ def verify_complete(official, product, reductions, unresolved):
     # Audit the product actually being presented, against all installed official module roots.
     lib = product / "lib"
     roots = ["Omega" + module for module in official["modules"]]
-    subprocess.run(["lean", "--run", HERE / "ExportAxioms.lean", "--check", lib, *roots],
-                   cwd=ROOT, check=True)
     subprocess.run(["lake", "build", "omegaAudit", "+OmegaChecks.Interface.Equations"], cwd=ROOT, check=True)
+    subprocess.run(["lake", "env", "lean", "--run", HERE / "ExportAxioms.lean", "--check", lib, *roots],
+                   cwd=ROOT, check=True)
     subprocess.run(["lake", "env", ROOT / ".lake/build/bin/omegaAudit",
                     "--exact-roots", lib, *roots, "--", *roots], cwd=ROOT, check=True)
 
