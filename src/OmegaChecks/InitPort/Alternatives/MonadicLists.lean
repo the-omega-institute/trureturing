@@ -169,4 +169,94 @@ public theorem List.forIn'_pure_yield_eq_foldl : type_of% @_root_.List.forIn'_pu
       exact ih _ _
   exact loop l init ⟨[], rfl⟩
 
+
+public theorem List.forM_map : type_of% @_root_.List.forM_map := by
+  intro m α β mon law xs g f
+  induction xs with
+  | nil => rfl
+  | cons a xs ih =>
+    exact congrArg (fun tail => f (g a) >>= fun _ => tail) ih
+
+public theorem List.forM_append : type_of% @_root_.List.forM_append := by
+  intro m α mon law xs ys f
+  induction xs with
+  | nil => rw [List.nil_append, List.forM_nil, pure_bind]
+  | cons a xs ih =>
+    rw [List.cons_append, List.forM_cons, List.forM_cons, bind_assoc]
+    exact congrArg (fun tail => f a >>= fun _ => tail) ih
+
+public theorem List.foldlM_map : type_of% @_root_.List.foldlM_map := by
+  intro m β₁ β₂ α mon f g xs init
+  have loop (xs : List β₁) :
+      (fun b => (xs.map f).foldlM g b) = fun b => xs.foldlM (fun b a => g b (f a)) b := by
+    induction xs with
+    | nil => rfl
+    | cons a xs ih => exact congrArg (fun tail b => g b (f a) >>= tail) ih
+  exact congrFun (loop xs) init
+
+public theorem List.foldrM_map : type_of% @_root_.List.foldrM_map := by
+  intros
+  rw [List.foldrM, ← List.map_reverse, List.foldlM_map]
+  rfl
+
+public theorem List.foldlM_attachWith : type_of% @_root_.List.foldlM_attachWith := by
+  intros
+  rw [List.attachWith_eq_map_attach, List.foldlM_map]
+
+public theorem List.foldrM_attachWith : type_of% @_root_.List.foldrM_attachWith := by
+  intros
+  rw [List.attachWith_eq_map_attach, List.foldrM_map]
+
+public theorem List.foldlM_unattach : type_of% @_root_.List.foldlM_unattach := by
+  intros
+  apply List.foldlM_map
+
+public theorem List.foldrM_unattach : type_of% @_root_.List.foldrM_unattach := by
+  intros
+  apply List.foldrM_map
+
+public theorem List.mapM_map : type_of% @_root_.List.mapM_map := by
+  intro m α β γ mon law f g xs
+  have loop (xs : List α) : List.mapM.loop g (xs.map f) = List.mapM.loop (g ∘ f) xs := by
+    induction xs with
+    | nil => rfl
+    | cons a xs ih => exact congrArg (fun tail acc => g (f a) >>= fun b => tail (b :: acc)) ih
+  exact congrFun (loop xs) []
+
+public theorem List.mapM_subtype : type_of% @_root_.List.mapM_subtype := by
+  intro m α β mon law p xs f g hf
+  have loop (xs : List (Subtype p)) : List.mapM.loop f xs = List.mapM.loop g xs.unattach := by
+    induction xs with
+    | nil => rfl
+    | cons a xs ih =>
+      calc
+        _ = (fun acc => f a >>= fun b => List.mapM.loop g xs.unattach (b :: acc)) :=
+          congrArg (fun tail acc => f a >>= fun b => tail (b :: acc)) ih
+        _ = _ := congrArg (fun v acc => v >>= fun b => List.mapM.loop g xs.unattach (b :: acc)) (hf a.1 a.2)
+  exact congrFun (loop xs) []
+
+public theorem List.filterMapM_subtype : type_of% @_root_.List.filterMapM_subtype := by
+  intro m α β mon law p xs f g hf
+  have loop (xs : List (Subtype p)) : List.filterMapM.loop f xs = List.filterMapM.loop g xs.unattach := by
+    induction xs with
+    | nil => rfl
+    | cons a xs ih =>
+      let step (v : m (Option β)) (tail : List β → m (List β)) (acc : List β) :=
+        v >>= fun | none => tail acc | some b => tail (b :: acc)
+      exact (congrArg (step (f a)) ih).trans
+        (congrArg (fun v => step v (List.filterMapM.loop g xs.unattach)) (hf a.1 a.2))
+  exact congrFun (loop xs) []
+
+public theorem List.flatMapM_subtype : type_of% @_root_.List.flatMapM_subtype := by
+  intro m α β mon law p xs f g hf
+  have loop (xs : List (Subtype p)) : List.flatMapM.loop f xs = List.flatMapM.loop g xs.unattach := by
+    induction xs with
+    | nil => rfl
+    | cons a xs ih =>
+      let step (v : m (List β)) (tail : List (List β) → m (List β)) (acc : List (List β)) :=
+        v >>= fun b => tail (b :: acc)
+      exact (congrArg (step (f a)) ih).trans
+        (congrArg (fun v => step v (List.flatMapM.loop g xs.unattach)) (hf a.1 a.2))
+  exact congrFun (loop xs) []
+
 end OmegaChecks.InitPort.Alternatives
