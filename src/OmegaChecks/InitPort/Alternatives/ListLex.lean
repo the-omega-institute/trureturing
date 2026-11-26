@@ -224,7 +224,8 @@ private theorem compareHeads [LE α] [LT α] [IsLinearOrder α] [LawfulOrderLT �
   | inr le => exact deny (.inr (.inr (lt_of_le_of_ne le ne.symm)))
 
 open Std in
-private theorem compareLists [LE α] [LT α] [IsLinearOrder α] [LawfulOrderLT α] (xs ys : List α) :
+private theorem compareLists [LT α]
+    (heads : ∀ x y : α, ¬ ¬ (x < y ∨ x = y ∨ y < x)) (xs ys : List α) :
     ¬ ¬ (xs < ys ∨ xs = ys ∨ ys < xs) := by
   induction xs generalizing ys with
   | nil => cases ys with
@@ -235,7 +236,7 @@ private theorem compareLists [LE α] [LT α] [IsLinearOrder α] [LawfulOrderLT �
     | nil => exact fun deny => deny (.inr (.inr (List.Lex.nil ..)))
     | cons y ys =>
       intro deny
-      apply compareHeads x y
+      apply heads x y
       rintro (lt | rfl | gt)
       · exact deny (.inl (List.Lex.rel lt))
       · apply ih ys
@@ -247,10 +248,21 @@ private theorem compareLists [LE α] [LT α] [IsLinearOrder α] [LawfulOrderLT �
 
 public theorem List.le_trans : type_of% @_root_.List.le_trans := by
   intro α _ _ _ _ xs ys zs xy yz zx
-  apply compareLists xs ys
+  apply compareLists compareHeads xs ys
   rintro (lt | rfl | gt)
   · exact yz (_root_.List.lt_trans zx lt)
   · exact yz zx
   · exact xy gt
+
+public theorem List.map_le : type_of% @_root_.List.map_le := by
+  intro α β _ _ _ tri _ _ xs ys f monotone xy backwards
+  apply compareLists (xs := xs) (ys := ys)
+  · intro a b deny
+    exact deny (.inr (.inl (tri.trichotomous a b
+      (fun lt => deny (.inl lt)) (fun gt => deny (.inr (.inr gt))))))
+  · rintro (lt | rfl | gt)
+    · exact _root_.List.lt_asymm (List.map_lt monotone lt) backwards
+    · exact _root_.List.lt_irrefl _ backwards
+    · exact xy gt
 
 end OmegaChecks.InitPort.Alternatives
