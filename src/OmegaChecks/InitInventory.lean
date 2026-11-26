@@ -286,6 +286,40 @@ run_cmd
       throwError "invalid axiom reduction for {owner}/{name}"
   replayWitnesses env
 
+/-- Evaluation factors through the setoid of pointwise-equal functions. -/
+theorem funextFromQuotientSound (sound : type_of% (@Quotient.sound.{imax u v})) :
+    type_of% (@funext.{u,v}) := by
+  intro α β f g h
+  let s : Setoid ((a : α) → β a) := ⟨fun f g => ∀ a, f a = g a,
+    ⟨fun _ _ => rfl, fun h a => (h a).symm, fun h₁ h₂ a => (h₁ a).trans (h₂ a)⟩⟩
+  let app (q : Quotient s) (a : α) : β a :=
+    Quot.lift (r := s.r) (fun t => t a) (fun _ _ eq => eq a) q
+  exact congrArg app (@sound _ s f g h)
+
+/-- Each fiber of values equal to a fixed value is a subsingleton. -/
+theorem funextFromPiSubsingleton (ss : type_of% (@Pi.instSubsingleton.{u, max 1 v})) :
+    type_of% (@funext.{u,v}) := by
+  intro α β f g h
+  let F (a : α) := {x : β a // x = f a}
+  let fibers (a : α) : Subsingleton (F a) := ⟨fun x y => Subtype.ext (x.2.trans y.2.symm)⟩
+  have eq := (@ss α F fibers).elim (fun a => ⟨f a, rfl⟩) (fun a => ⟨g a, (h a).symm⟩)
+  exact congrArg (fun z : ∀ a, F a => fun a => (z a).val) eq
+
+/-- Evaluate a squashed function by restricting to a single pointwise equality class. -/
+theorem funextFromSquashSubsingleton (ss : type_of% (@instSubsingletonSquash.{max 1 (imax u v)})) :
+    type_of% (@funext.{u,v}) := by
+  intro α β f g h
+  let F := {t : (a : α) → β a // ∀ a, t a = f a}
+  let app (s : Squash F) (a : α) : β a :=
+    Quot.lift (fun t : F => t.val a) (fun t t' _ => (t.2 a).trans (t'.2 a).symm) s
+  have eq := (@ss F).elim (Squash.mk (⟨f, fun _ => rfl⟩ : F))
+    (Squash.mk (⟨g, fun a => (h a).symm⟩ : F))
+  exact congrArg app eq
+
+run_cmd
+  for n in [``funextFromQuotientSound, ``funextFromPiSubsingleton, ``funextFromSquashSubsingleton] do
+    unless (← collectAxioms n).isEmpty do throwError "function extensionality witness {n} uses axioms"
+
 /-- Reader binding exposes the entire continuation as its result. -/
 theorem funextFromBindCongr
     (combine : type_of% (@bind_congr.{u,u})) {α β : Type u} {f g : α → β}
@@ -770,6 +804,11 @@ private def reductionPaths (official strict full : Environment) : NameMap (List 
 /-- Additional logical consequences with separate proof terms. These do not discharge a
 missing official interface in the completeness check. -/
 private def logicalConsequence? (owner name : Name) : Option (Name × Name) := do
+  match owner, name with
+  | `Init.Core, ``Quotient.sound => return (``funext, ``OmegaChecks.InitBoundaries.funextFromQuotientSound)
+  | `Init.Core, ``Pi.instSubsingleton => return (``funext, ``OmegaChecks.InitBoundaries.funextFromPiSubsingleton)
+  | `Init.Core, ``instSubsingletonSquash => return (``funext, ``OmegaChecks.InitBoundaries.funextFromSquashSubsingleton)
+  | _, _ => pure ()
   let witness ← match owner, name with
     | `Init.Data.Order.Lemmas, ``Std.not_lt => some ``OmegaChecks.InitBoundaries.excludedMiddleOfNotLT
     | `Init.Data.Order.Lemmas, ``Std.not_lt_iff_not_le_or_ge =>
