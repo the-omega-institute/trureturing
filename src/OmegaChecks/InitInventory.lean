@@ -2503,6 +2503,25 @@ def limitedOmniscienceFromLookup (lookup : type_of% (@Std.Iter.atIdxSlow?.{0}))
       cases Option.some.inj (h.symm.trans ((correct 0 it).trans hj))
       exact Bool.noConfusion (e.symm.trans sign)
 
+/-- The empty array accumulator suffices to recover the unrestricted array collector. -/
+def limitedOmniscienceFromArrayAccumulator (go : type_of% @IterM.toArray.go.{0,0})
+    (correct : ∀ {α β : Type} [Iterator α Id β] [Finite α Id] (it : IterM (α := α) Id β),
+      go it #[] = it.toArray) (f : Nat → Bool) : Decidable (∃ n, f n = true) :=
+  limitedOmniscienceFromMonadicArray (fun it => go it #[]) correct f
+
+/-- The empty list accumulator recovers the unrestricted reverse collector. -/
+def limitedOmniscienceFromReverseAccumulator (go : type_of% @IterM.toListRev.go.{0,0})
+    (correct : ∀ {α β : Type} [Iterator α Id β] [Finite α Id] (it : IterM (α := α) Id β),
+      go it [] = it.toListRev) (f : Nat → Bool) : Decidable (∃ n, f n = true) :=
+  limitedOmniscienceFromMonadicReverse (fun it => go it []) correct f
+
+set_option linter.deprecated false in
+/-- Every iterator has a partial view, including the search for a stream's first signal. -/
+def limitedOmniscienceFromPartialLookup (lookup : type_of% @Iter.Partial.atIdxSlow?.{0})
+    (correct : ∀ {α β : Type} [Iterator α Id β] [Finite α Id] (n : Nat) (it : Iter (α := α) β),
+      lookup n ⟨it⟩ = it.atIdxSlow? n) (f : Nat → Bool) : Decidable (∃ n, f n = true) :=
+  limitedOmniscienceFromLookup (fun n it => lookup n ⟨it⟩) correct f
+
 open Std.Iterators.Types
 
 /-- Identity mapping carries an arbitrary input iterator through the map loop without
@@ -2946,6 +2965,15 @@ private def conditionalConsequence? (owner name : Name) : Option (String × Name
       `OmegaChecks.InitInventory.StringPatterns.weakExcludedMiddleOfOfficialSplit,
       "Pointwise agreement with Model.split (split_endPos, split_eq_of_isLongestMatchAt, split_eq_of_not_matchesAt)")
   let (witness, behavior) ← match owner, name with
+    | `Init.Data.Iterators.Consumers.Monadic.Collect, ``Std.IterM.toArray.go =>
+      some (``OmegaChecks.InitBoundaries.Collector.limitedOmniscienceFromArrayAccumulator,
+        "the finite identity-monad array collector with an empty initial array")
+    | `Init.Data.Iterators.Consumers.Monadic.Collect, ``Std.IterM.toListRev.go =>
+      some (``OmegaChecks.InitBoundaries.Collector.limitedOmniscienceFromReverseAccumulator,
+        "the finite identity-monad reverse collector with an empty initial list")
+    | `Init.Data.Iterators.Consumers.Access, `Std.Iter.Partial.atIdxSlow? =>
+      some (``OmegaChecks.InitBoundaries.Collector.limitedOmniscienceFromPartialLookup,
+        "the optional index lookup on the partial view of each finite iterator")
     | `Init.Data.Iterators.Consumers.Collect, ``Std.Iter.toList =>
       some (``OmegaChecks.InitBoundaries.Collector.limitedOmniscienceFromCollector,
         "the official result of the ordinary list collector")
