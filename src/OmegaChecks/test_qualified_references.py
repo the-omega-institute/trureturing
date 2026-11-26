@@ -138,7 +138,7 @@ def computational_cases(backend):
                                  "public def D5.observed (n k : Omega.Nat) : Omega.Nat := helper n k\n"), []
 
 
-def check_case(lean, label, path, sources, errors):
+def check_case(lean, label, path, sources, errors, *, ports=PORTS, expected_count=None):
     with tempfile.TemporaryDirectory(prefix="omega-refs-") as temp:
         directory = Path(temp)
         search = os.pathsep.join([temp, path])
@@ -153,18 +153,27 @@ def check_case(lean, label, path, sources, errors):
             records.append([module, str(file), str(index)])
         request = directory / "request.json"
         request.write_text(json.dumps(records))
-        result = subprocess.run([lean, "--run", CHECKER, label, search, request, *PORTS],
-                                cwd=ROOT, capture_output=True, text=True)
+        environment = os.environ.copy()
+        if len(sources) > 1:
+            environment["PATH"] = temp
+            environment.pop("LEAN_SYSROOT", None)
+        result = subprocess.run([lean, "--run", CHECKER, label, search, request, *ports],
+                                cwd=directory, env=environment, capture_output=True, text=True)
         message = result.stdout + result.stderr
         if bool(result.returncode) != bool(errors) or any(error not in message for error in errors):
             raise AssertionError(f"{label} expected {errors or 'success'} for {sources!r}\ngot {message}")
+        if expected_count is not None:
+            summary = f"Verified {expected_count} qualified standard references on the {label} backend."
+            if result.stdout.strip() != summary:
+                raise AssertionError(f"expected {summary!r}, got {message!r}")
 
 
 def check():
     lean = subprocess.check_output(["lake", "env", "printenv", "LEAN"], cwd=ROOT, text=True).strip()
     for label, layout in [("strict", ["lake", "-f", strict_config()]), ("official", ["lake"])]:
         subprocess.run([*layout, "build", *("+" + port for port in PORTS),
-                        "+D5.S3.Arith.Primes.DivisorCharacterization"], cwd=ROOT, check=True)
+                        "+OmegaMathlib.Data.Nat.Fib.Basic", "+D5.S3.Arith.Primes.DivisorCharacterization"],
+                       cwd=ROOT, check=True)
         path = subprocess.check_output([*layout, "env", "printenv", "LEAN_PATH"], cwd=ROOT, text=True).strip()
         for module, source, errors in (*cases(), *computational_cases(label)):
             check_case(lean, label, path, [(module, source)], errors)
@@ -176,6 +185,24 @@ def check():
         for spelling, errors in [("Prime", ["uses D5.RefOwner.Prime", "OmegaMathlib.Nat.Prime"]),
                                  ("_root_.D5.RefOwner.Prime", [])]:
             check_case(lean, label, path, [owner, ("D5.RefUse", consumer.replace("REF", spelling))], errors)
+        fib_port = "OmegaMathlib.Data.Nat.Fib.Basic"
+        sibling = ("D5.OtherPort", f"module\nprelude\npublic import {fib_port}\n"
+                   "public noncomputable def D5.firstFib := OmegaMathlib.Nat.fib\n")
+        if label == "official":
+            # This consumer references native Fibonacci without importing its port.
+            use = ("module\npublic import Mathlib.Data.Nat.Fib.Basic\npublic import " + PORTS[0] +
+                   "\npublic def D5.observed (n : Nat) (_ : OmegaMathlib.Nat.Prime n) : Nat := Nat.fib n\n")
+            errors = ["official replay D5.FibConsumer (exit 1)", "qualify this identifier as OmegaMathlib.Nat.fib"]
+        else:
+            use = ("module\nprelude\npublic import " + PORTS[0] + "\nnamespace D5.FibConsumer\n"
+                   "public noncomputable def fib (n : Omega.Nat) := n\n"
+                   "public noncomputable def observed (n : Omega.Nat) (_ : OmegaMathlib.Nat.Prime n) := fib n\n"
+                   "end D5.FibConsumer\n")
+            errors = ["strict replay D5.FibConsumer (exit 1)", "uses D5.FibConsumer.fib", "OmegaMathlib.Nat.fib"]
+        check_case(lean, label, path, [sibling, ("D5.FibConsumer", use)], errors, ports=[PORTS[0]])
+        valid = ("D5.FibConsumer", f"module\nprelude\npublic import {PORTS[0]}\n"
+                 "public def D5.observed (n : Omega.Nat) := OmegaMathlib.Nat.Prime n\n")
+        check_case(lean, label, path, [sibling, valid], [], ports=[PORTS[0]], expected_count=2)
         print(f"Checked occurrence fixtures on {label}", flush=True)
 
 

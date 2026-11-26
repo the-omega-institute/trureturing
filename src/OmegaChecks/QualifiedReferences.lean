@@ -313,9 +313,14 @@ private def checkFile (moduleName : Name) (source index : System.FilePath)
     checkElaborated source text state.commands sourceEnv opts published data.isModule marks catalog ports project
   return some count
 
+private structure ReplayPlan where
+  files : Array String
+  portModules : Array String
+  deriving FromJson, ToJson
+
 /-- The scan uses exactly the same compiled declarations and identifier test as a replay. -/
 private unsafe def runChecks (backend path : String) (files : Array (Array String))
-    (portModules : List String) (scanOnly : Bool) (only : Option String := none) : IO (Nat × Array String) := do
+    (portModules : List String) (scanOnly : Bool) (only : Option String := none) : IO (Nat × ReplayPlan) := do
   searchPathRef.set (System.SearchPath.parse path)
   let mut count := 0
   let mut replay := #[]
@@ -336,18 +341,24 @@ private unsafe def runChecks (backend path : String) (files : Array (Array Strin
       if only.isSome then throw <| IO.userError s!"compiled replay selection changed for {name}"
       continue
     if scanOnly then replay := replay.push name else count := count + n
-  return (count, replay)
+  let portOwners := catalog.header.moduleNames.filter (·.getRoot == `OmegaMathlib)
+  return (count, { files := replay, portModules := portOwners.map (·.toString) })
 
 local elab "checkerSourcePath%" : term => return toExpr (← getFileName)
 
 /-- Every replay imports just its compiled module and the admitted ports. The catalog used to
 select the full worklist has already exited before the first replay starts. -/
-private def worker (args : List String) : IO Json := IO.FS.withTempFile fun _ resultFile => do
-  let result ← IO.Process.output {
-    cmd := ((← findSysroot) / "bin" / "lean").toString
-    args := #["--run", checkerSourcePath%, "--result", resultFile.toString] ++ args.toArray }
-  unless result.exitCode == 0 do throw <| IO.userError s!"{result.stderr}{result.stdout}"
-  IO.ofExcept (Json.parse (← IO.FS.readFile resultFile))
+private def worker {α : Type} [FromJson α] (stage : String) (args : List String) : IO α :=
+  IO.FS.withTempFile fun _ resultFile => do
+    let result ← try IO.Process.output {
+        cmd := (← IO.appPath).toString
+        args := #["--run", checkerSourcePath%, "--result", resultFile.toString] ++ args.toArray }
+      catch err => throw <| IO.userError s!"{stage} could not start: {err}"
+    let status := s!"{stage} (exit {result.exitCode})"
+    unless result.exitCode == 0 do throw <| IO.userError s!"{status}: {result.stderr}{result.stdout}"
+    let text ← try IO.FS.readFile resultFile
+      catch err => throw <| IO.userError s!"{status}: cannot read worker result: {err}"
+    IO.ofExcept <| (Json.parse text >>= fromJson?).mapError fun err => s!"{status}: invalid worker result: {err}"
 
 end OmegaChecks.QualifiedReferences
 
@@ -368,8 +379,10 @@ unsafe def main (args : List String) : IO Unit := do
   if files.size ≤ 1 then
     count := (← runChecks backend path files portModules false).1
   else
-    let selected : Array String ← IO.ofExcept (fromJson? (← worker ("--scan" :: args)))
-    for name in selected do
-      let n : Nat ← IO.ofExcept (fromJson? (← worker ("--replay" :: name :: args)))
+    let plan : ReplayPlan ← worker s!"{backend} scan" ("--scan" :: args)
+    -- Sibling manifest entries may introduce ports absent from this file's imports.
+    let replayArgs := backend :: path :: request :: (portModules ++ plan.portModules.toList).eraseDups
+    for name in plan.files do
+      let n : Nat ← worker s!"{backend} replay {name}" ("--replay" :: name :: replayArgs)
       count := count + n
   IO.println s!"Verified {count} qualified standard references on the {backend} backend."
