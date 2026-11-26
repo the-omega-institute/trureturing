@@ -101,9 +101,14 @@ public theorem List.utf8Encode_eq_empty : type_of% @_root_.List.utf8Encode_eq_em
   intro l
   constructor
   · intro empty
-    have eq : String.ofList l = "" :=
-      String.toByteArray_inj.mp (String.toByteArray_ofList.trans empty)
-    exact String.toList_ofList.symm.trans ((congrArg String.toList eq).trans String.toList_empty)
+    cases l with
+    | nil => rfl
+    | cons c cs =>
+      have size := congrArg ByteArray.size empty
+      rw [List.utf8Encode_cons, ByteArray.size_append, List.utf8Encode_singleton,
+        List.size_toByteArray, ByteArray.size_empty] at size
+      exact (String.utf8EncodeChar_ne_nil
+        (List.eq_nil_of_length_eq_zero (Nat.eq_zero_of_add_eq_zero_right size))).elim
   · rintro rfl
     exact List.utf8Encode_nil
 
