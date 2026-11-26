@@ -3,11 +3,14 @@
    mirror-B: D5/B/S0/History/ResidualLedger/Native
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
+   utility: none
    digest: A residual ledger entry is equivalent to its four typed components. -/
 
 import Mathlib.Logic.Equiv.Prod
 
-/-! Residual ledger entries and their product representation. -/
+/-! Residual ledger entries are equivalent to products for arbitrary source, detector, and
+next-action types. `SemanticLayerShift.residualEntryShiftEquiv` uses this equivalence to
+transport the four fields independently. -/
 
 namespace D5.S0.History.ResidualLedger
 
