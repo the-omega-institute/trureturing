@@ -857,4 +857,40 @@ public theorem String.isEmpty_slice_eq_false_iff : type_of% @_root_.String.isEmp
   intro s p q h
   exact booleanComplement (_root_.String.isEmpty_slice (h := h))
 
+public theorem String.Pos.wellFounded_lt : type_of% @_root_.String.Pos.wellFounded_lt := by
+  intro s
+  exact InvImage.wf (fun p : s.Pos => p.offset.byteIdx) Nat.lt_wfRel.wf
+
+public theorem String.Pos.wellFounded_gt : type_of% @_root_.String.Pos.wellFounded_gt := by
+  intro s
+  exact InvImage.wf (fun p : s.Pos => p.toSlice) _root_.String.Slice.Pos.wellFounded_gt
+
+public theorem String.Slice.Pos.ne_endPos_of_next?_eq_some :
+    type_of% @_root_.String.Slice.Pos.ne_endPos_of_next?_eq_some := by
+  intro s p q found atEnd
+  rw [_root_.String.Slice.Pos.next?, dite_eq_left atEnd] at found
+  cases found
+
+public theorem String.Slice.Pos.eq_next_of_next?_eq_some :
+    type_of% @_root_.String.Slice.Pos.eq_next_of_next?_eq_some := by
+  intro s p q found
+  have ne := String.Slice.Pos.ne_endPos_of_next?_eq_some found
+  have eq := found
+  rw [_root_.String.Slice.Pos.next?, dite_eq_right ne] at eq
+  exact (Option.some.inj eq).symm
+
+public theorem String.Slice.Pos.ne_startPos_of_prev?_eq_some :
+    type_of% @_root_.String.Slice.Pos.ne_startPos_of_prev?_eq_some := by
+  intro s p q found atEnd
+  rw [_root_.String.Slice.Pos.prev?_eq_dite, dite_eq_left atEnd] at found
+  cases found
+
+public theorem String.Slice.Pos.eq_prev_of_prev?_eq_some :
+    type_of% @_root_.String.Slice.Pos.eq_prev_of_prev?_eq_some := by
+  intro s p q found
+  have ne := String.Slice.Pos.ne_startPos_of_prev?_eq_some found
+  have eq := found
+  rw [_root_.String.Slice.Pos.prev?_eq_dite, dite_eq_right ne] at eq
+  exact (Option.some.inj eq).symm
+
 end OmegaChecks.InitPort.Alternatives
