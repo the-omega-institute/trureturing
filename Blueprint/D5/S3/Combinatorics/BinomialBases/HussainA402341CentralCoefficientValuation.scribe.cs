@@ -7,7 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.BinomialBases;
 internal sealed class HussainA402341CentralCoefficientValuationDocument : IScribeDocumentDefinition
 {
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/ArithSums/hussain2026a402341");
+        LibraryNoteRef.Create("D5/L/Digit/hussain2026a402341");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The binary digit sum gives the exact valuation of every even-indexed central coefficient.",
