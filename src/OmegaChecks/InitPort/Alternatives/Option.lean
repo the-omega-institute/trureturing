@@ -1,6 +1,8 @@
 module
 
 public import Init.Data.Option.Lemmas
+public import Init.Data.Option.Attach
+public import Init.Data.Option.Monadic
 
 /-! Constructive witnesses for optional values and finite cases for filters and order. -/
 
@@ -229,6 +231,53 @@ public theorem mem_ite_none_left : type_of% @_root_.Option.mem_ite_none_left := 
 public theorem mem_dite_none_left : type_of% @_root_.Option.mem_dite_none_left := by
   intros
   apply Option.dite_none_left_eq_some
+
+public theorem forIn'_congr [Monad m] [LawfulMonad m] {as bs : Option α} (w : as = bs)
+    {b b' : β} (hb : b = b') {f : (a : α) → a ∈ as → β → m (ForInStep β)}
+    {g : (a : α) → a ∈ bs → β → m (ForInStep β)}
+    (h : ∀ a h b, f a (w.symm ▸ h) b = g a h b) : forIn' as b f = forIn' bs b' g := by
+  cases w
+  cases hb
+  cases as with
+  | none => rfl
+  | some a => exact congrArg (fun x => x >>= _) (h a rfl b)
+
+public theorem forIn'_pure_yield_eq_pelim : type_of% @_root_.Option.forIn'_pure_yield_eq_pelim := by
+  intro m α β _ _ o f b
+  cases o with
+  | none => rfl
+  | some a => exact pure_bind _ _
+
+public theorem forIn_pure_yield_eq_elim : type_of% @_root_.Option.forIn_pure_yield_eq_elim := by
+  intro m α β _ _ o f b
+  cases o with
+  | none => rfl
+  | some a => exact pure_bind _ _
+
+public theorem toArray_pbind : type_of% @_root_.Option.toArray_pbind := by
+  intro α β o f
+  cases o with
+  | none => rfl
+  | some a =>
+    exact (@Array.flatMap_singleton _ _
+      (fun x : {a' // some a = some a'} => (f x.val x.property).toArray) ⟨a, rfl⟩).symm
+
+public theorem attach_filter {o : Option α} {p : α → Bool} :
+    (o.filter p).attach =
+      o.attach.bind fun ⟨a, mem⟩ => if h : p a then
+        some ⟨a, by cases mem; exact ite_eq_left h⟩ else none := by
+  cases o with
+  | none => rfl
+  | some a =>
+    apply (Option.map_inj_right (f := Subtype.val) (fun _ _ => Subtype.ext)).mp
+    rw [Option.attach_map_subtype_val]
+    simp only [Option.attach_some, Option.bind_some]
+    by_cases eq : p a = true
+    · rw [dite_eq_left eq]
+      change Option.filter p (some a) = some a
+      exact ite_eq_left eq
+    · rw [dite_eq_right eq]
+      exact ite_eq_right eq
 
 end Option
 end OmegaChecks.InitPort.Alternatives
