@@ -2,6 +2,7 @@ module
 public import Init.Data.List.Lemmas
 public import OmegaChecks.InitPort.Alternatives.ListAttach
 public import OmegaChecks.InitPort.Alternatives.ListCount
+public import OmegaChecks.InitPort.Alternatives.ListMapIdx
 public import OmegaChecks.InitPort.Alternatives.ListScan
 public import OmegaChecks.InitPort.Alternatives.ListMinMax
 import Init.Data.List.Impl
