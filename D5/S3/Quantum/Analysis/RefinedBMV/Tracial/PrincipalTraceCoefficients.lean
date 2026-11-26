@@ -7,7 +7,7 @@
    digest: Signed principal minors imply coefficient positivity of matrix power traces. -/
 
 import D5.S3.FluidDynamics.Solitons.CamassaHolmPeakonTransferExpansion
-import D5.S3.Weil.ZetaLinear.Inertia
+import D5.S3.Weil.Pick.DiagonalSignNegativeIndex
 import Batteries.Tactic.OpenPrivate
 import Mathlib.Algebra.MvPolynomial.Funext
 import Mathlib.LinearAlgebra.Matrix.Charpoly.Coeff
@@ -89,7 +89,7 @@ private theorem coeffPower_bounded {σ : Type*}
     intro k hk d
     rw [pow_succ, Polynomial.coeff_mul, MvPolynomial.coeff_sum]
     refine complex_sum_nonneg _ _ fun ab hab ↦ ?_
-    have hsum := Finset.mem_antidiagonal.mp hab
+    have hsum := Finset.HasAntidiagonal.mem_antidiagonal.mp hab
     exact coeffMul_nonneg (ih ab.1 (by omega)) (hF ab.2 (by omega)) d
 
 private theorem map_charpolyRev_eval {σ : Type*} {n : ℕ} (z : σ → ℂ)
@@ -279,6 +279,59 @@ theorem signed_principal_minors_nonneg_of_posIndex {ι : Type*}
   let : Nonempty s := ⟨⟨i, hi⟩⟩
   simpa only [Fintype.card_coe] using
     signed_det_nonneg_of_trace_and_posIndex hP hPIndex hPTrace
+
+/-- A scalar shift at least as large as an ordered eigenvalue leaves
+strictly positive index at most the number of preceding eigenvalues. -/
+theorem posIndex_sub_scalar_le_of_ordered_eigenvalue_le {ι : Type*}
+    [Fintype ι] [DecidableEq ι] {B : Matrix ι ι ℂ} (hB : B.IsHermitian)
+    (j : Fin (Fintype.card ι)) (t : ℝ) (ht : hB.eigenvalues₀ j ≤ t)
+    (hShift : (B - (t : ℂ) • (1 : Matrix ι ι ℂ)).IsHermitian) :
+    RHLinalg.posIndex hShift ≤ j.val := by
+  open D5.S3.Weil.Pick.DiagonalSignNegativeIndex in
+  let μ (i : ι) := hB.eigenvalues i - t
+  let D := realDiagonal μ
+  have hD : D.IsHermitian := real_diagonal_isHermitian μ
+  let U : Matrix ι ι ℂ := hB.eigenvectorUnitary
+  let f := Unitary.conjStarAlgAut ℂ _ hB.eigenvectorUnitary
+  have hconst : diagonal (fun _ : ι ↦ (t : ℂ)) = (t : ℂ) • (1 : Matrix ι ι ℂ) := by
+    ext i k
+    by_cases hik : i = k <;> simp [Matrix.diagonal, hik]
+  have hspec : f D = B - (t : ℂ) • (1 : Matrix ι ι ℂ) := by
+    have hsplit : D = diagonal (fun i ↦ (hB.eigenvalues i : ℂ)) -
+        diagonal (fun _ : ι ↦ (t : ℂ)) := by
+      simp [D, realDiagonal, μ, Matrix.diagonal_sub]
+    rw [hsplit, hconst, map_sub, map_smul, map_one]
+    exact congrArg (· - (t : ℂ) • (1 : Matrix ι ι ℂ)) hB.spectral_theorem.symm
+  have hinert : RHLinalg.posIndex hShift ≤ RHLinalg.posIndex hD := by
+    have h := RHLinalg.posIndex_conj_le hD Uᴴ
+    have hprod : (Uᴴ)ᴴ * D * Uᴴ = B - (t : ℂ) • (1 : Matrix ι ι ℂ) := by
+      rw [Matrix.conjTranspose_conjTranspose]
+      exact hspec
+    have hPair :
+        (⟨(Uᴴ)ᴴ * D * Uᴴ, isHermitian_conjTranspose_mul_mul Uᴴ hD⟩ :
+          {M : Matrix ι ι ℂ // M.IsHermitian}) = ⟨_, hShift⟩ := Subtype.ext hprod
+    exact (congrArg (fun M : {M : Matrix ι ι ℂ // M.IsHermitian} ↦
+      RHLinalg.posIndex M.2) hPair) ▸ h
+  have hcount : positiveWeightCount μ ≤ j.val := by
+    let e : Fin (Fintype.card ι) ≃ ι :=
+      Fintype.equivOfCardEq (Fintype.card_fin (Fintype.card ι))
+    unfold positiveWeightCount
+    rw [← Finset.card_range j.val]
+    apply Finset.card_le_card_of_injOn (fun i ↦ (e.symm i).val)
+    · intro i hi
+      have hpos := (Finset.mem_filter.mp hi).2
+      change 0 < hB.eigenvalues₀ (e.symm i) - t at hpos
+      apply Finset.mem_range.mpr
+      by_contra! hj
+      have hle := hB.eigenvalues₀_antitone (show j ≤ e.symm i from hj)
+      linarith
+    · intro a _ b _ hab
+      exact e.symm.injective (Fin.ext hab)
+  exact hinert.trans
+    ((show RHLinalg.posIndex hD = positiveWeightCount μ from
+      (real_diagonal_inertia_eq_sign_counts μ).1).le.trans hcount)
+
+#print axioms posIndex_sub_scalar_le_of_ordered_eigenvalue_le
 
 #print axioms signed_principal_minors_nonneg_of_posIndex
 
