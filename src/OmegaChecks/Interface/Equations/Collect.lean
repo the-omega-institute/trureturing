@@ -163,7 +163,7 @@ public theorem Std.Iterators.Types.ListIterator.instIteratorLoop {m : Type w →
       @_root_.Std.Iterators.Types.ListIterator.instIteratorLoop m α _ n _ :=
   finiteIteratorLoop_eq
 
-public theorem instForInListSliceOfMonad {α : Type u} {m : Type v → Type w} [Monad m] :
+public theorem instForInListSliceOfMonad.{v,w,u} {α : Type u} {m : Type v → Type w} [Monad m] :
     @OmegaChecks.InitPort.Alternatives.instForInListSliceOfMonad α m _ =
       @_root_.instForInListSliceOfMonad α m _ := by
   unfold OmegaChecks.InitPort.Alternatives.instForInListSliceOfMonad _root_.instForInListSliceOfMonad
