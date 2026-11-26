@@ -1,5 +1,6 @@
 module
 public import Init.Data.String.Lemmas.Pattern.Basic
+public import Init.Data.String.Lemmas.Pattern.Split.Basic
 import all Init.Data.String.Basic
 import all Init.Data.String.Slice
 
@@ -145,5 +146,55 @@ public theorem weakExcludedMiddleOfMatchAtNone (spec : type_of% @matchAt?_eq_non
 
 public theorem weakExcludedMiddleOfRevMatchAtNone (spec : type_of% @revMatchAt?_eq_none_iff) :
     WeakExcludedMiddle := weakExcludedMiddleOfBackwardFailure (@revMatchAt?) spec
+
+@[instance_reducible] private def nonemptyWhen (P : Prop) : PatternModel () :=
+  ⟨fun t => t ≠ "" ∧ P⟩
+
+/-- On a one-character slice, an arbitrary strict model can encode an undecided proposition.
+The three split equations distinguish a successful match from a completely rejected slice. -/
+public theorem weakExcludedMiddleOfSplit
+    (split : type_of% @String.Slice.Pattern.Model.split)
+    (atEnd : ∀ {ρ : Type} {pat : ρ} [PatternModel pat] [StrictPatternModel pat]
+      {s : String.Slice} {first : s.Pos}, split pat first s.endPos (String.Slice.Pos.le_endPos _) =
+        [s.subslice first s.endPos (String.Slice.Pos.le_endPos _)])
+    (onMatch : ∀ {ρ : Type} {pat : ρ} [PatternModel pat] [StrictPatternModel pat]
+      {s : String.Slice} {first start stop : s.Pos} {hle}, IsLongestMatchAt pat start stop →
+        split pat first start hle = s.subslice first start hle :: split pat stop stop (Nat.le_refl _))
+    (onMiss : ∀ {ρ : Type} {pat : ρ} [PatternModel pat] [StrictPatternModel pat]
+      {s : String.Slice} {first start : s.Pos} (stop : s.Pos) (hle : start ≤ stop) {hfirst}
+      (_ : ∀ p, start ≤ p → p < stop → ¬ MatchesAt pat p),
+        split pat first start hfirst = split pat first stop (Nat.le_trans hfirst hle)) :
+    WeakExcludedMiddle := by
+  intro P
+  letI : PatternModel () := nonemptyWhen P
+  letI : StrictPatternModel () := ⟨fun h => h.1 rfl⟩
+  let parts := split () sample.startPos sample.startPos (Nat.le_refl _)
+  have resultOnMatch (yes : P) : parts.length = 2 := by
+    have hit : IsLongestMatchAt () sample.startPos sample.endPos := by
+      apply isLongestMatchAt_startPos_iff.mpr
+      exact ⟨⟨⟨by decide, yes⟩⟩, fun q beyond _ =>
+        Nat.not_lt_of_ge q.isValidForSlice.le_utf8ByteSize beyond⟩
+    exact (congrArg List.length (onMatch (first := sample.startPos) hit)).trans
+      (congrArg (fun t : List sample.Subslice => t.length.succ) (atEnd (pat := ()) (first := sample.endPos)))
+  have resultOnMiss (no : ¬ P) : parts.length = 1 := by
+    have miss (q : sample.Pos) : ¬ MatchesAt () q := by
+      rintro ⟨⟨_, hit⟩⟩
+      exact no hit.isLongestMatch_sliceFrom.isMatch.matches_copy.2
+    exact congrArg List.length ((onMiss sample.endPos (String.Slice.Pos.startPos_le _) (fun q _ _ => miss q)).trans atEnd)
+  by_cases two : parts.length = 2
+  · exact Or.inr fun no => (by decide : (1 : Nat) ≠ 2) ((resultOnMiss no).symm.trans two)
+  · exact Or.inl fun yes => two (resultOnMatch yes)
+
+public theorem weakExcludedMiddleOfOfficialSplit
+    (split : type_of% @String.Slice.Pattern.Model.split)
+    (agreement : ∀ {ρ : Type} (pat : ρ) [PatternModel pat] [StrictPatternModel pat]
+      {s : String.Slice} (first start : s.Pos) (hle : first ≤ start),
+      split pat first start hle = String.Slice.Pattern.Model.split pat first start hle) :
+    WeakExcludedMiddle := by
+  apply weakExcludedMiddleOfSplit split
+  · intros; exact (agreement ..).trans split_endPos
+  · intros; exact (agreement ..).trans ((split_eq_of_isLongestMatchAt ‹_›).trans
+      (congrArg (List.cons _) (agreement ..).symm))
+  · intros; exact (agreement ..).trans ((split_eq_of_not_matchesAt _ ‹_› ‹_›).trans (agreement ..).symm)
 
 end OmegaChecks.InitInventory.StringPatterns
