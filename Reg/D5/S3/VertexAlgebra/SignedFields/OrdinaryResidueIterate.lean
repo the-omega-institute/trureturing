@@ -127,7 +127,7 @@ def arena : Arena where
     readout.readout () ()
       (∑ p ∈ Finset.range (k+1), ((-1 : ℂ)^p * (k.choose p : ℂ)) * Ring.choose (a+p) j)
       ((-1 : ℂ)^k *
-        @ite ℂ (k ≤ j) (Classical.propDecidable _) (Ring.choose a (j-k)) 0)
+        (if k ≤ j then Ring.choose a (j-k) else 0))
 
 private theorem rejected_law : ¬ arena.Law rejected := fun h => h 0 0 0
 
@@ -142,11 +142,10 @@ def family : Registration arena (type_of% @alternating_iterate_weight) where
   bridge := by
     dsimp only [arena, actual, realize]
     refine forall_congr' fun a => forall_congr' fun k => forall_congr' fun j => ?_
-    rw [show Classical.propDecidable (k ≤ j) = inferInstance from Subsingleton.elim _ _]
+    exact Iff.rfl
   variation := ⟨by
     dsimp only [arena, actual, realize]
     intro a k j
-    rw [show Classical.propDecidable (k ≤ j) = inferInstance from Subsingleton.elim _ _]
     exact alternating_iterate_weight a k j, rejected, rejected_law⟩
   sensitivity := sensitivity arena.Law actual rejected rejected_law
   dependence := dependence
