@@ -325,4 +325,35 @@ public theorem Rat.zpow_pos : type_of% @_root_.Rat.zpow_pos := by
   | ofNat n => exact Rat.pow_pos ha
   | negSucc n => exact Rat.inv_pos.mpr (Rat.pow_pos ha)
 
+public theorem Rat.mul_lt_mul_of_pos_right : type_of% @_root_.Rat.mul_lt_mul_of_pos_right := by
+  intro a b c lt pos
+  apply _root_.Rat.lt_of_le_of_ne (_root_.Rat.mul_le_mul_of_nonneg_right (_root_.Rat.le_of_lt lt) (_root_.Rat.le_of_lt pos))
+  intro e
+  have cancel := congrArg (· * c⁻¹) e
+  change (a*c)*c⁻¹ = (b*c)*c⁻¹ at cancel
+  rw [_root_.Rat.mul_assoc, _root_.Rat.mul_assoc, _root_.Rat.mul_inv_cancel c (_root_.Rat.ne_of_gt pos),
+    _root_.Rat.mul_one, _root_.Rat.mul_one] at cancel
+  exact _root_.Rat.ne_of_lt lt cancel
+
+public theorem Rat.mul_lt_mul_right : type_of% @_root_.Rat.mul_lt_mul_right := by
+  intro a b c pos
+  constructor
+  · intro lt
+    apply _root_.Rat.not_le.mp
+    intro reversed
+    exact _root_.Rat.not_le.mpr lt (_root_.Rat.mul_le_mul_of_nonneg_right reversed (_root_.Rat.le_of_lt pos))
+  · exact fun lt => Rat.mul_lt_mul_of_pos_right lt pos
+
+public theorem Rat.mul_pos_iff_of_pos_right : type_of% @_root_.Rat.mul_pos_iff_of_pos_right := by
+  intro a b pos
+  have h := Rat.mul_lt_mul_right (a := 0) (b := a) pos
+  rw [_root_.Rat.zero_mul] at h
+  exact h
+
+public theorem Rat.mul_neg_iff_of_pos_right : type_of% @_root_.Rat.mul_neg_iff_of_pos_right := by
+  intro a b pos
+  have h := Rat.mul_lt_mul_right (a := a) (b := 0) pos
+  rw [_root_.Rat.zero_mul] at h
+  exact h
+
 end OmegaChecks.InitPort.Alternatives
