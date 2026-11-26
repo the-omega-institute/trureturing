@@ -326,4 +326,25 @@ public theorem BitVec.toInt_signExtend_eq_toNat_bmod_of_le :
   rw [BitVec.toInt_signExtend_eq_toInt_bmod_of_le x hv, _root_.BitVec.toInt_eq_toNat_bmod,
     Int.bmod_bmod_of_dvd (Nat.pow_dvd_pow _ hv)]
 
+public theorem UInt16.toNat_toUInt32 : type_of% @_root_.UInt16.toNat_toUInt32 := by
+  intro x
+  exact (_root_.UInt32.toFin_val x.toUInt32).symm.trans ((congrArg Fin.val (_root_.UInt16.toFin_toUInt32 x)).trans
+    ((Fin.val_castLE _ _).trans (_root_.UInt16.toFin_val x)))
+
+public theorem UInt16.toNat_toUInt64 : type_of% @_root_.UInt16.toNat_toUInt64 := by
+  intro x
+  exact (_root_.UInt64.toFin_val x.toUInt64).symm.trans ((congrArg Fin.val (_root_.UInt16.toFin_toUInt64 x)).trans
+    ((Fin.val_castLE _ _).trans (_root_.UInt16.toFin_val x)))
+
+public theorem UInt32.toNat_toUInt64 : type_of% @_root_.UInt32.toNat_toUInt64 := by
+  intro x
+  exact (_root_.UInt64.toFin_val x.toUInt64).symm.trans ((congrArg Fin.val (_root_.UInt32.toFin_toUInt64 x)).trans
+    ((Fin.val_castLE _ _).trans (_root_.UInt32.toFin_val x)))
+
+public theorem BitVec.setWidth_neg_of_le : type_of% @_root_.BitVec.setWidth_neg_of_le := by
+  intro v w x h
+  apply (_root_.BitVec.add_right_inj (x.setWidth w)).mp
+  rw [← _root_.BitVec.setWidth_add x (-x) h, _root_.BitVec.add_right_neg, _root_.BitVec.setWidth_zero,
+    _root_.BitVec.add_right_neg]
+
 end OmegaChecks.InitPort.Alternatives
