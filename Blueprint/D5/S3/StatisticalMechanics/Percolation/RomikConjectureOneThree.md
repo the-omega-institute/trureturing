@@ -10,6 +10,10 @@ $$\forall R \in \mathbb{N} \to \operatorname{RatFunc}\left(\mathbb{Q}\right),\; 
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/Percolation/RomikConjectureOneThree.source_rationalCylinder_boundary` (`✓ std3`). ∎
 
+*Resolves.* `Problems/akyazi-zavadski-2026-romik-conjecture-1-3` (proved) by `D5/S3/StatisticalMechanics/Percolation/RomikConjectureOneThree.source_rationalCylinder_boundary`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"akyazi-zavadski-2026-romik-conjecture-1-3","declaration_gid":"D5/S3/StatisticalMechanics/Percolation/RomikConjectureOneThree.source_rationalCylinder_boundary","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Melda Akyazi-Zavadski, Nathanaël Berestycki, Sunil Chhita (2026). *On Romik’s rationality conjectures for critical percolation*. URL: <https://arxiv.org/html/2611.26570v1>.
