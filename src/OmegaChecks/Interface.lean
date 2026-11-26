@@ -51,6 +51,34 @@ private partial def sameLiterals (env : Environment) (lhs rhs : Expr) : Bool := 
   | .mdata x a, .mdata y b => return x == y && go a b
   | _, _ => return false
 
+/-- Compare implementations that differ in a closed proof argument. The two kernels
+check the proofs separately, since their foundations can implement a relation
+differently. Proof irrelevance applies only after comparing the propositions. -/
+private partial def sameClosedProofs (strict reference : Environment) (rename : Name → Name)
+    (raw lhs rhs : Expr) : Bool := Id.run do
+  if lhs.equal rhs then return true
+  let go := sameClosedProofs strict reference rename
+  let byStructure := match raw, lhs, rhs with
+    | _, _, .lit _ => sameLiterals reference lhs rhs
+    | .app f x, .app g y, .app h z => go f g h && go x y z
+    | .lam _ d b _, .lam n e c i, .lam m t v j
+    | .forallE _ d b _, .forallE n e c i, .forallE m t v j =>
+      n == m && i == j && go d e t && go b c v
+    | .letE _ d v b _, .letE n e w c i, .letE m t x y j =>
+      n == m && i == j && go d e t && go v w x && go b c y
+    | .proj _ _ a, .proj n i b, .proj m j c => n == m && i == j && go a b c
+    | .mdata _ a, .mdata x b, .mdata y c => x == y && go a b c
+    | _, _, _ => false
+  if byStructure then return true
+  if raw.hasLooseBVars || rhs.hasLooseBVars then return false
+  let .ok expected := Kernel.check reference {} rhs | return false
+  unless (Kernel.check reference {} expected).toOption.any (same reference (.sort .zero)) do return false
+  let .ok ported := Kernel.check strict {} raw | return false
+  unless (Kernel.check strict {} ported).toOption.any (same strict (.sort .zero)) do return false
+  let proposition := translate rename ported
+  return (Kernel.check reference {} proposition).toOption.any (same reference (.sort .zero)) &&
+    same reference proposition expected
+
 private def lookup (env : Environment) (name : Name) : IO ConstantInfo := do
   let some info := env.find? name | throw <| IO.userError s!"missing interface declaration {name}"
   return info
@@ -96,8 +124,8 @@ private partial def compatibleBinders (env : Environment) (ctx : LocalContext) (
 
 private def requireSame (env : Environment) (name : Name) (label : String) (lhs rhs : Expr) : IO Unit := do
   if lhs.equal rhs then return
-  if let .error _ := Kernel.check env {} lhs then
-    throw <| IO.userError s!"ill-typed translated {label} for {name}"
+  if let .error err := Kernel.check env {} lhs then
+    throw <| IO.userError s!"ill-typed translated {label} for {name}: {← (err.toMessageData {}).toString}"
   unless same env lhs rhs do
     throw <| IO.userError s!"{label} mismatch for {name}"
 
@@ -179,17 +207,19 @@ private def compare (reference : Environment) (rename : Name → Name) (src dst 
 where
   compareDefinitionBody : IO Unit := do
     let value := src.value! (allowOpaque := true)
-    let body := translate rename (value.instantiateLevelParams src.levelParams (dst.levelParams.map Level.param))
+    let raw := value.instantiateLevelParams src.levelParams (dst.levelParams.map Level.param)
+    let body := translate rename raw
     -- A copy of a checked official body already has its official type. Comparing
     -- it directly also avoids evaluating large closed computations on both sides.
     let original := match src, dst with
       | .defnInfo _, .defnInfo y => some y.value
       | .opaqueInfo x, .opaqueInfo y => if x.isUnsafe == y.isUnsafe then some y.value else none
       | _, _ => none
-    let identical := original.any (sameLiterals reference body ·)
-    unless identical do
-      if let .error _ := Kernel.check reference {} body then
-        throw <| IO.userError s!"ill-typed translated definition for {src.name}"
+    let identical : Bool := original.any (fun target => sameLiterals reference body target ||
+      foundation.any (fun pair => sameClosedProofs pair.1 reference rename raw body target))
+    if !identical then
+      if let .error err := Kernel.check reference {} body then
+        throw <| IO.userError s!"ill-typed translated definition for {src.name}: {← (err.toMessageData {}).toString}"
     let target := mkConst dst.name (dst.levelParams.map Level.param)
     let mut hidden := false
     if let some (_, publicStrict) := foundation then

@@ -36,6 +36,31 @@ def mergeImports (a b : Array Import) : Array Import := Id.run do
     if !(out.contains i) then out := out.push i
   return out
 
+/-- Replay the official candidate order, including scoped instances and priority ties.
+Only publish entries whose implementation is available at this definition site. -/
+private def instanceEntries (source : Environment) (idx : ModuleIdx) (available : NameSet)
+    (owner : Name) (level : OLeanLevel) : IO (Array (Name × Array EnvExtensionEntry)) := do
+  let mut env := (← mkEmptyEnvironment).setMainModule owner
+  let ext := Meta.instanceExtension
+  for entry in ext.ext.getModuleEntries source idx (level := level) do
+    let (scope, v) := match entry with
+      | .global v => (none, v)
+      | .scoped ns v => (some ns, v)
+    let some n := v.globalName? | throw <| IO.userError s!"unnamed exported instance in {owner}"
+    let port := renamed n
+    unless available.contains port do continue
+    let .const decl us := v.val | throw <| IO.userError s!"invalid instance {n}"
+    unless decl == n do throw <| IO.userError s!"inconsistent instance name {n}"
+    let keys := v.keys.map fun k => match k with
+      | .const name arity => .const (renamed name) arity
+      | .proj name i arity => .proj (renamed name) i arity
+      | k => k
+    let translated := {v with val := .const port us, keys, globalName? := some port}
+    env := match scope with
+      | some ns => ext.addScopedEntry env (renamed ns) translated
+      | none => ext.addEntry env translated
+  return (← mkModuleData env level).entries.filter (·.1 == ext.ext.name)
+
 def main (args : List String) : IO Unit := do
   let lib :: seed :: out :: roots := args | throw <| IO.userError "expected transfer, seed, output and official roots"
   let lib := System.FilePath.mk lib
@@ -121,7 +146,15 @@ def main (args : List String) : IO Unit := do
             cs := cs.push hidden
           else cs := cs.push new
       cs := cs.qsort fun a b => a.name.quickCmp b.name == .lt
-      let entries := (previous.entries.filter (fun e => !selected.contains e.1)) ++ replacement
+      let level : OLeanLevel := match i with | 0 => .exported | 1 => .server | _ => .private
+      let mut available := NameSet.ofList (cs.toList.map (·.name))
+      if let some old := monolith.getModuleIdx? owner then
+        for e in Meta.instanceExtension.ext.getModuleEntries monolith old (level := level) do
+          let v := match e with | .global v | .scoped _ v => v
+          if let some n := v.globalName? then available := available.insert n
+      let instances ← instanceEntries source idx available owner level
+      let entries := (previous.entries.filter (fun e =>
+        !selected.contains e.1 && e.1 != Meta.instanceExtension.ext.name)) ++ replacement ++ instances
       let data : ModuleData := { previous with entries, isModule := true, imports := mergeImports previous.imports mappedImports, constants := cs, constNames := cs.map (·.name) }
       parts := parts.push (#[path,path.addExtension "server",path.addExtension "private"][i]!,data)
     graph := graph.push (owner.toString, (mergeImports orig[2]!.imports mappedImports).map (·.module.toString))
