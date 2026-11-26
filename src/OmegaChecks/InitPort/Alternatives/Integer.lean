@@ -1,6 +1,7 @@
 module
 public import Init.Data.Int.DivMod.Lemmas
 public import Init.Data.Int.Pow
+import all Init.Data.Dyadic.Basic
 
 namespace OmegaChecks.InitPort.Alternatives
 
@@ -122,5 +123,22 @@ public theorem Int.pow_succ : type_of% @_root_.Int.pow_succ := by
       have odd : n % 2 ≠ 0 := fun e => Nat.noConfusion (h.symm.trans e)
       rw [ite_eq_left even, ite_eq_right odd, Nat.pow_succ]
       exact (Int.negOfNat_mul_negSucc _ _).symm
+
+public theorem Int.trailingZeros._proof_2 : type_of% @_root_.Int.trailingZeros._proof_2 :=
+  fun _ _ hi hk e => hi (Int.natAbs_eq_zero.mp (Nat.eq_zero_of_le_zero (e ▸ hk)))
+
+public theorem Int.trailingZeros._proof_4 : type_of% @_root_.Int.trailingZeros._proof_4 :=
+  fun _ hi _ _ remainder e =>
+    hi ((Int.ediv_mul_cancel_of_emod_eq_zero remainder).symm.trans
+        ((congrArg (fun x : Int => x * 2) e).trans (Int.zero_mul 2)))
+
+public theorem Int.trailingZeros._proof_6 : type_of% @_root_.Int.trailingZeros._proof_6 := by
+  intro i k bound remainder
+  rw [Int.natAbs_ediv_of_dvd (Int.dvd_of_emod_eq_zero remainder)]
+  change i.natAbs / 2 ≤ k
+  cases Nat.eq_zero_or_pos i.natAbs with
+  | inl e => rw [e, Nat.zero_div]; exact Nat.zero_le k
+  | inr p =>
+    exact Nat.le_of_lt_succ (Nat.lt_of_lt_of_le (Nat.div_lt_self p Nat.one_lt_two) bound)
 
 end OmegaChecks.InitPort.Alternatives
