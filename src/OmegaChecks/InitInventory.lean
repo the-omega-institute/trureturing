@@ -125,6 +125,53 @@ def choiceFromRepeatM (loop : type_of% (@repeatM.{u,u})) : type_of% (@Classical.
     let wrapped : Nonempty (PLift α) := inhabited.elim (fun a => ⟨⟨a⟩⟩)
     (@loop (PLift (PUnit.{u})) Id inferInstance (PLift α) wrapped (fun x => Sum.inl x) ⟨PUnit.unit⟩).down
 
+/- Specialize each range interface to a singleton. Its comparison expresses any proposition
+and its size is one. Double negation is exactly what the zero-size law needs. -/
+theorem dneFromClosedRange (range : type_of% (@Std.Rxc.size_pos_iff_le.{0}))
+    (p : Prop) (nn : ¬¬p) : p := by
+  letI : LE Unit := ⟨fun _ _ => p⟩
+  letI : Std.PRange.UpwardEnumerable Unit := ⟨fun _ => none, fun _ _ => none⟩
+  letI : Std.Rxc.HasSize Unit := ⟨fun _ _ => 1⟩
+  letI : Std.Rxc.LawfulHasSize Unit :=
+    ⟨fun _ _ denied => (nn denied).elim, fun _ _ _ _ => rfl,
+      fun _ _ _ _ impossible => nomatch impossible⟩
+  exact (@range Unit _ _ _ _ () ()).mp (Nat.lt_succ_self 0)
+
+theorem dneFromOpenRange (range : type_of% (@Std.Rxo.size_pos_iff_lt.{0}))
+    (p : Prop) (nn : ¬¬p) : p := by
+  letI : LT Unit := ⟨fun _ _ => p⟩
+  letI : Std.PRange.UpwardEnumerable Unit := ⟨fun _ => none, fun _ _ => none⟩
+  letI : Std.Rxo.HasSize Unit := ⟨fun _ _ => 1⟩
+  letI : Std.Rxo.LawfulHasSize Unit :=
+    ⟨fun _ _ denied => (nn denied).elim, fun _ _ _ _ => rfl,
+      fun _ _ _ _ impossible => nomatch impossible⟩
+  exact (@range Unit _ _ _ _ () ()).mp (Nat.lt_succ_self 0)
+
+theorem excludedMiddleFromDNE (dne : ∀ p : Prop, ¬¬p → p) (p : Prop) : p ∨ ¬p :=
+  dne _ fun neither => neither (.inr fun hp => neither (.inl hp))
+
+namespace TwoWorlds
+
+/-- Kripke implication on the chain `false ≤ true`. -/
+def imp (p q : Bool → Prop) (w : Bool) : Prop := ∀ v, w ≤ v → p v → q v
+
+def neg (p : Bool → Prop) : Bool → Prop := imp p (fun _ => False)
+
+/-- The atom holds only at the leaf. Its valuation is persistent, and both double-negation
+elimination and excluded middle fail at the root of this propositional Kripke model. -/
+theorem countermodel :
+    let p := fun w : Bool => w = true
+    (∀ u v : Bool, u ≤ v → p u → p v) ∧
+    ¬ imp (neg (neg p)) p false ∧ ¬ (p false ∨ neg p false) := by
+  let p := fun w : Bool => w = true
+  have reachesLeaf (w : Bool) : w ≤ true := fun _ => rfl
+  have absent : ¬p false := fun h => nomatch h
+  have nn : neg (neg p) false := fun v _ hn => hn true (reachesLeaf v) rfl
+  exact ⟨fun _ _ le => le, fun h => absent (h false id nn),
+    fun h => h.elim absent (fun hn => hn true (reachesLeaf false) rfl)⟩
+
+end TwoWorlds
+
 /-- Physical public definition sites with a checked reduction from the original type.
 The target universe parameters are a suffix of the witness parameters. -/
 def reductions : List (Name × Name × Name × Name) := [
@@ -165,14 +212,15 @@ Include complete inductive families so that replay can regenerate their primitiv
 private def replayWitnesses (env : Environment) : IO Unit := do
   let official ← importModules #[{module := `Lean}] {} (level := .private)
   let mut terms : Std.HashMap Name ConstantInfo := {}
-  let mut todo := reductions.map fun (_, _, _, witness) => witness
+  let mut todo := (reductions.map fun (_, _, _, witness) => witness) ++
+    [``dneFromClosedRange, ``dneFromOpenRange, ``excludedMiddleFromDNE, ``TwoWorlds.countermodel]
   while let n :: more := todo do
     todo := more
     if terms.contains n then continue
     let some ci := (official.find? n).orElse fun _ => env.find? n
       | throw <| IO.userError s!"missing witness dependency {n}"
     if ci.isAxiom || ci.isUnsafe || ci.isPartial || ci matches .quotInfo _ then
-      throw <| IO.userError s!"forbidden dependency in an axiom reduction: {n}"
+      throw <| IO.userError s!"forbidden dependency in a boundary witness: {n}"
     terms := terms.insert n ci
     todo := ci.getUsedConstantsAsSet.toList ++ todo
     if let .inductInfo ind := ci then todo := ind.all ++ todo
