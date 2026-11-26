@@ -3,8 +3,8 @@
    mirror-B: D5/B/S3/VertexAlgebra/Lattice/Orbifold/P48qGramPositivity
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   utility: kind=checker; basis=terminal=gid:D5/S3/VertexAlgebra/Lattice/Orbifold/P48qGramPositivity.nebeGram_posDef; instance=D5/S3/VertexAlgebra/Lattice/Orbifold/P48qGramCertificate.nebeGram; result=D5/S3/VertexAlgebra/Lattice/Orbifold/P48qGramPositivity.nebeGram_posDef
-   digest: Exact triangular congruence checks positivity of the P48q catalogue Gram matrix. -/
+   utility: kind=checker; basis=consumer=D5/S3/VertexAlgebra/Lattice/Orbifold/P48qGramPositivity.nebeGram_posDef; instance=D5/S3/VertexAlgebra/Lattice/Orbifold/P48qGramCertificate.nebeGram; result=D5/S3/VertexAlgebra/Lattice/Orbifold/P48qGramPositivity.nebeGram_posDef
+   digest: An integer triangular certificate implies real positive definiteness and applies to the P48q catalogue Gram matrix. -/
 
 /- Source: Library/VertexAlgebra/nebe2014extremal48.md. -/
 
@@ -36,6 +36,51 @@ set_option maxHeartbeats 6000000
 namespace D5.S3.VertexAlgebra.Lattice.Orbifold.P48qGramPositivity
 
 open scoped Matrix
+
+/-- An exact triangular certificate for positive definiteness of a symmetric integer matrix. -/
+theorem posDef_intCast_of_triangular {ι : Type*} [Fintype ι] [LinearOrder ι]
+    (G U : Matrix ι ι ℤ) (hSymm : G.IsSymm) (hUpper : U.IsUpperTriangular)
+    (hLower : (G * U).IsLowerTriangular) (hU : ∀ i, 0 < U i i)
+    (hGU : ∀ i, 0 < (G * U) i i) :
+    Matrix.PosDef (G.map (Int.cast : ℤ → ℝ)) := by
+  have hTranspose : Uᵀ.IsLowerTriangular := hUpper.transpose
+  have hCongruence : Uᵀ * G * U = Matrix.diagonal (fun i => U i i * (G * U) i i) := by
+    rw [mul_assoc]
+    have hTriangular := hTranspose.mul hLower
+    have hSymmetric : (Uᵀ * (G * U)).IsSymm := by
+      rw [Matrix.IsSymm, Matrix.transpose_mul, Matrix.transpose_mul, Matrix.transpose_transpose,
+        hSymm.eq, mul_assoc]
+    apply Matrix.ext
+    intro i j
+    rcases lt_trichotomy i j with hij | hij | hji
+    · rw [hTriangular hij, Matrix.diagonal_apply_ne _ hij.ne]
+    · subst j
+      rw [Matrix.diagonal_apply_eq, Matrix.mul_apply]
+      refine Finset.sum_eq_single i (fun k _ hki => ?_) (by simp)
+      rcases lt_or_gt_of_ne hki with hki | hik
+      · rw [hLower hki, mul_zero]
+      · rw [hTranspose hik, zero_mul]
+    · rw [← hSymmetric.apply i j, hTriangular hji, Matrix.diagonal_apply_ne _ hji.ne.symm]
+  let V := U.map (Int.cast : ℤ → ℝ)
+  have hVUpper : V.IsUpperTriangular := by
+    intro i j hij
+    change (U i j : ℝ) = 0
+    rw [hUpper hij, Int.cast_zero]
+  have hUnit : IsUnit V := by
+    apply (Matrix.isUnit_iff_isUnit_det V).mpr
+    apply isUnit_iff_ne_zero.mpr
+    exact hVUpper.det_ne_zero_iff.mpr fun i => (Int.cast_pos.mpr (hU i) : 0 < V i i).ne'
+  have hRealCongruence :
+      Vᵀ * G.map (Int.cast : ℤ → ℝ) * V =
+        Matrix.diagonal (fun i => ((U i i * (G * U) i i : ℤ) : ℝ)) := by
+    simpa only [Matrix.map_mul_intCast, Matrix.transpose_map,
+      Matrix.diagonal_map (Int.cast_zero : ((0 : ℤ) : ℝ) = 0), V] using
+      congrArg (fun M : Matrix ι ι ℤ => M.map (Int.cast : ℤ → ℝ)) hCongruence
+  apply (Matrix.IsUnit.posDef_star_left_conjugate_iff
+    (x := G.map (Int.cast : ℤ → ℝ)) hUnit).mp
+  rw [Matrix.star_eq_conjTranspose, Matrix.conjTranspose_eq_transpose_of_trivial, hRealCongruence]
+  exact Matrix.PosDef.diagonal fun i => Int.cast_pos.mpr (mul_pos (hU i) (hGU i))
+
 open P48qGramCertificate (nebeGram nebeLatticeData)
 
 private def changeOfBasisColumns : Array (Array ℤ) := #[
@@ -211,53 +256,14 @@ private theorem product_lower : (nebeGram * changeOfBasis).IsLowerTriangular := 
 private theorem product_diag_pos (i : Fin 48) : 0 < productEntry i i := by
   fin_cases i <;> decide +kernel
 
-private theorem gram_congruence :
-    changeOfBasisᵀ * nebeGram * changeOfBasis =
-      Matrix.diagonal (fun i => changeOfBasis i i * productEntry i i) := by
-  rw [mul_assoc]
-  have hTranspose : (changeOfBasisᵀ).IsLowerTriangular := changeOfBasis_upper.transpose
-  have hLower : (changeOfBasisᵀ * (nebeGram * changeOfBasis)).IsLowerTriangular :=
-    hTranspose.mul product_lower
-  have hSymm : (changeOfBasisᵀ * (nebeGram * changeOfBasis)).IsSymm := by
-    rw [Matrix.IsSymm, Matrix.transpose_mul, Matrix.transpose_mul, Matrix.transpose_transpose,
-      gram_symmetric.eq, mul_assoc]
-  apply Matrix.ext
-  intro i j
-  rcases lt_trichotomy i j with hij | hij | hji
-  · rw [hLower hij, Matrix.diagonal_apply_ne _ hij.ne]
-  · subst j
-    rw [Matrix.diagonal_apply_eq, productEntry_eq, Matrix.mul_apply]
-    refine Finset.sum_eq_single i (fun k _ hki => ?_) (by simp)
-    rcases lt_or_gt_of_ne hki with hki | hik
-    · rw [product_lower hki, mul_zero]
-    · rw [hTranspose hik, zero_mul]
-  · rw [← hSymm.apply i j, hLower hji, Matrix.diagonal_apply_ne _ hji.ne.symm]
-
 /-- Nebe's actual P48q Gram matrix is positive definite over the reals. -/
 theorem nebeGram_posDef : Matrix.PosDef (nebeGram.map (Int.cast : ℤ → ℝ)) := by
-  let U : Matrix (Fin 48) (Fin 48) ℝ := changeOfBasis.map (Int.cast : ℤ → ℝ)
-  have hUpper : U.IsUpperTriangular := by
-    intro i j hij
-    change (changeOfBasis i j : ℝ) = 0
-    rw [changeOfBasis_upper hij, Int.cast_zero]
-  have hUnit : IsUnit U := by
-    apply (Matrix.isUnit_iff_isUnit_det U).mpr
-    apply isUnit_iff_ne_zero.mpr
-    refine (Matrix.IsUpperTriangular.det_ne_zero_iff hUpper).mpr fun i => ?_
-    have hi : 0 < U i i := Int.cast_pos.mpr (changeOfBasis_diag_pos i)
-    exact hi.ne'
-  have hCongruence :
-      Uᵀ * nebeGram.map (Int.cast : ℤ → ℝ) * U =
-        Matrix.diagonal (fun i => ((changeOfBasis i i * productEntry i i : ℤ) : ℝ)) := by
-    simpa only [Matrix.map_mul_intCast, Matrix.transpose_map,
-      Matrix.diagonal_map (Int.cast_zero : ((0 : ℤ) : ℝ) = 0), U] using
-      congrArg (fun M : Matrix (Fin 48) (Fin 48) ℤ => M.map (Int.cast : ℤ → ℝ)) gram_congruence
-  apply (Matrix.IsUnit.posDef_star_left_conjugate_iff
-    (x := nebeGram.map (Int.cast : ℤ → ℝ)) hUnit).mp
-  rw [Matrix.star_eq_conjTranspose, Matrix.conjTranspose_eq_transpose_of_trivial, hCongruence]
-  exact Matrix.PosDef.diagonal fun i =>
-    Int.cast_pos.mpr (mul_pos (changeOfBasis_diag_pos i) (product_diag_pos i))
+  refine posDef_intCast_of_triangular nebeGram changeOfBasis gram_symmetric changeOfBasis_upper
+    product_lower changeOfBasis_diag_pos fun i => ?_
+  rw [← productEntry_eq]
+  exact product_diag_pos i
 
+#print axioms posDef_intCast_of_triangular
 #print axioms nebeGram_posDef
 
 end D5.S3.VertexAlgebra.Lattice.Orbifold.P48qGramPositivity

@@ -2,9 +2,23 @@
 
 ## Abstract
 
-The concrete P48q catalogue Gram matrix is positive definite over the reals.
+An exact triangular certificate proves positive definiteness of a symmetric integer matrix over the reals. The P48q catalogue Gram matrix satisfies the criterion.
 
-**Theorem 1.1 (The catalogue Gram matrix is positive definite).**
+**Theorem 1.1 (Soundness of the integer triangular certificate).**
+
+Lean statement: `D5/S3/VertexAlgebra/Lattice/Orbifold/P48qGramPositivity.posDef_intCast_of_triangular`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Lattice/Orbifold/P48qGramPositivity.posDef_intCast_of_triangular` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Let G and U be integer matrices indexed by any finite linearly ordered type. Suppose G is symmetric, U is upper triangular, GU is lower triangular, and the diagonals of U and GU are strictly positive.
+
+The matrix UᵀGU is lower triangular and symmetric, so it is diagonal. Only the diagonal summand contributes to its i-th diagonal entry, which is Uᵢᵢ(GU)ᵢᵢ > 0. Over the reals, U is invertible because its triangular determinant is nonzero. Mathlib's diagonal positivity and invertible congruence lemmas then give positive definiteness of the real cast of G.
+
+**Theorem 1.2 (The catalogue Gram matrix is positive definite).**
 
 Lean statement: `D5/S3/VertexAlgebra/Lattice/Orbifold/P48qGramPositivity.nebeGram_posDef`
 
@@ -16,13 +30,10 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/Orbifold/P48qGramPositivity.nebeGra
 
 *Commentary.*
 
-Let G be the rank-48 integer Gram matrix from P48qGramCertificate. Its existing lattice data supplies symmetry. The certificate gives an integral upper triangular matrix U with positive diagonal, and checks by exact rowwise integer dot products that GU is lower triangular with positive diagonal.
-
-Symmetry and triangularity give UᵀGU = diag(Uᵢᵢ(GU)ᵢᵢ). The diagonal is strictly positive. After casting to real matrices, U is invertible because its triangular determinant is nonzero, so positive definiteness transfers by congruence to the original real Gram matrix.
-
-This proves positivity of the actual form used in the P48q lattice data and supplies the positive form for the twisted construction.
+The rank-48 integer Gram matrix G comes from P48qGramCertificate, whose lattice data supplies symmetry. The stored columns give an integer upper triangular matrix U with positive diagonal. Exact rowwise integer dot products establish that GU is lower triangular with positive diagonal. Applying the triangular criterion proves positive definiteness of the real form used in the P48q lattice data.
 
 ## References
 
 - Truth anchor: `D5/S3/VertexAlgebra/Lattice/Orbifold/P48qGramPositivity.nebeGram_posDef`
+- Truth anchor: `D5/S3/VertexAlgebra/Lattice/Orbifold/P48qGramPositivity.posDef_intCast_of_triangular`
 - Dependency: [D5/S3/VertexAlgebra/Lattice/Orbifold/P48qGramCertificate](P48qGramCertificate.md)
