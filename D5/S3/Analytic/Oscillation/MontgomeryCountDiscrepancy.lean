@@ -391,12 +391,12 @@ private lemma normalized_smoothed_mean_limit (S : Spectrum) (g : 𝓢(ℝ, ℝ))
 
 private lemma normalized_smoothed_square_limit (S : Spectrum) (g : 𝓢(ℝ, ℝ)) (E : ℝ)
     (hg : ∀ u, 1 < |u| → 𝓕 ((fun x => (g x : ℂ))) u = 0)
-    (hS : UnitBandProfile S)
+    (hS : UnitBandTestLimit S)
     (hcount : ∀ t, 2 * Real.pi ≤ t →
       |(S.N t : ℝ) - CutDensity.countMain (2 * Real.pi) t| ≤ E) :
     Tendsto (fun H : ℝ => ∫ v in Ioo (0 : ℝ) 1, smoothCount S g H (H * v) ^ 2) atTop
       (𝓝 ((∫ x : ℝ, g x) ^ 2 + ∫ u : ℝ, |u| * spectralTest g u)) := by
-  have h := (spectral_unweighted_limit S g E hg hS hcount).sub
+  have h := (spectral_unweighted_limit_of_test_limit S g E hg hS hcount).sub
     (smooth_outer_square_limit S g E hcount)
   simp only [sub_zero] at h
   refine h.congr' ?_
@@ -416,7 +416,7 @@ private lemma normalized_smoothed_square_limit (S : Spectrum) (g : 𝓢(ℝ, ℝ
 
 private lemma normalized_centered_variance_limit (S : Spectrum) (g : 𝓢(ℝ, ℝ)) (E : ℝ)
     (hg : ∀ u, 1 < |u| → 𝓕 ((fun x => (g x : ℂ))) u = 0)
-    (hS : UnitBandProfile S)
+    (hS : UnitBandTestLimit S)
     (hcount : ∀ t, 2 * Real.pi ≤ t →
       |(S.N t : ℝ) - CutDensity.countMain (2 * Real.pi) t| ≤ E) :
     Tendsto (fun H : ℝ => ∫ v in Ioo (0 : ℝ) 1,
@@ -452,9 +452,9 @@ private lemma normalized_centered_variance_limit (S : Spectrum) (g : 𝓢(ℝ, �
   rw [setIntegral_const, measureReal_def, Real.volume_Ioo]
   simp [C]
 
-/-- The unit-band profile forces unbounded two-term count discrepancy on every real tail. -/
-theorem unit_band_profile_forces_unbounded_count_discrepancy (S : Spectrum)
-    (hS : UnitBandProfile S) (D H₀ : ℝ) :
+/-- A band-limited test limit forces unbounded two-term count discrepancy on every real tail. -/
+private lemma test_limit_forces_unbounded_count_discrepancy (S : Spectrum)
+    (hS : UnitBandTestLimit S) (D H₀ : ℝ) :
     ∃ H : ℝ, H₀ ≤ H ∧
       D < |(S.N H : ℝ) - H / (2 * Real.pi) * (Real.log (H / (2 * Real.pi)) - 1)| := by
   by_contra! h
@@ -480,6 +480,21 @@ theorem unit_band_profile_forces_unbounded_count_discrepancy (S : Spectrum)
     pow_le_pow_left₀ (mul_nonneg hU (integral_nonneg (fun _ => norm_nonneg _)))
       (mul_le_mul_of_nonneg_left hg' hU) 2
   exact (hupper.trans hp).not_gt hlarge'
+
+/-- The unit-band profile forces unbounded two-term count discrepancy on every real tail. -/
+theorem unit_band_profile_forces_unbounded_count_discrepancy (S : Spectrum)
+    (hS : UnitBandProfile S) (D H₀ : ℝ) :
+    ∃ H : ℝ, H₀ ≤ H ∧
+      D < |(S.N H : ℝ) - H / (2 * Real.pi) * (Real.log (H / (2 * Real.pi)) - 1)| :=
+  test_limit_forces_unbounded_count_discrepancy S (unitBandTestLimit_of_uniform S hS) D H₀
+
+/-- A bounded frequency-dependent correction to the exponential peak still forces unbounded
+two-term count discrepancy on every real tail. -/
+theorem concentrated_unit_band_profile_forces_unbounded_count_discrepancy
+    (S : Spectrum) (hS : ConcentratedUnitBandProfile S) (D H₀ : ℝ) :
+    ∃ H : ℝ, H₀ ≤ H ∧
+      D < |(S.N H : ℝ) - H / (2 * Real.pi) * (Real.log (H / (2 * Real.pi)) - 1)| :=
+  test_limit_forces_unbounded_count_discrepancy S (unitBandTestLimit_of_concentrated S hS) D H₀
 
 end
 end D5.S3.Analytic.Oscillation.MontgomeryCountDiscrepancy
