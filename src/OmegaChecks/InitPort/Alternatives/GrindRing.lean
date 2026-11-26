@@ -148,4 +148,75 @@ public theorem Lean.Grind.CommRing.Poly.denote_combineC :
   · intro k m p l n q _ ih
     exact (congrArg (l • n.denote ctx + ·) ih).trans ((Semiring.add_assoc ..).symm.trans ((congrArg (· + q.denote ctx) (Semiring.add_comm ..)).trans (Semiring.add_assoc ..)))
 
+private theorem insertTerm {α : Type u} [Ring α] (c : Nat) [IsCharP α c]
+    (ctx : Context α) (k : Int) (m : Mon) (p : Poly) :
+    (Poly.insertC.go m c k p).denote ctx = k • m.denote ctx + p.denote ctx := by
+  apply Poly.insertC.go.induct_unfolding m c k (fun s t => t.denote ctx = k • m.denote ctx + s.denote ctx) _ _ _ _ _ p
+  · exact fun _ => rfl
+  · intro l n p same _ zero
+    cases _root_.Lean.Grind.CommRing.Mon.eq_of_grevlex same
+    change _ = k • m.denote ctx + (l • m.denote ctx + p.denote ctx)
+    rw [← Semiring.add_assoc, zeroTerms c k l _ (eq_of_beq zero), Semiring.add_comm 0, Semiring.add_zero]
+  · intro l n p same _ _
+    cases _root_.Lean.Grind.CommRing.Mon.eq_of_grevlex same
+    exact (congrArg (· + p.denote ctx) (coefficientSum c k l (m.denote ctx))).trans (Semiring.add_assoc ..)
+  · exact fun _ _ _ _ => rfl
+  · intro l n p _ ih
+    change l • n.denote ctx + _ = k • m.denote ctx + (l • n.denote ctx + p.denote ctx)
+    rw [ih, ← Semiring.add_assoc, Semiring.add_comm (l • _) (k • _), Semiring.add_assoc]
+
+section
+attribute [local instance] Ring.intCast
+
+public theorem Lean.Grind.CommRing.Poly.denote_insertC :
+    type_of% @_root_.Lean.Grind.CommRing.Poly.denote_insertC := by
+  intro α c ring char ctx k m p
+  rw [Poly.insertC.eq_def]
+  dsimp only
+  cases h : (k % (c : Int) == 0) with
+  | false =>
+    change (Poly.insertC.go m c (k % c) p).denote ctx = _
+    rw [insertTerm, Ring.zsmul_eq_intCast_mul, IsCharP.intCast_emod]
+  | true =>
+    have hz : Int.cast (R := α) k = 0 :=
+      (IsCharP.intCast_emod (α := α) c k).symm.trans ((congrArg (Int.cast (R := α)) (eq_of_beq h)).trans Ring.intCast_zero)
+    change p.denote ctx = _
+    rw [hz, Semiring.zero_mul, Semiring.add_comm 0, Semiring.add_zero]
+
+private theorem coefficientProduct {α : Type u} [Ring α] (c : Nat) [IsCharP α c]
+    (k l : Int) (x : α) : ((k*l) % c) • x = (k : α) * (l • x) := by
+  rw [Ring.zsmul_eq_intCast_mul, IsCharP.intCast_emod, Ring.intCast_mul,
+    Semiring.mul_assoc, Ring.zsmul_eq_intCast_mul]
+
+private theorem multiplyTerms {α : Type u} [Ring α] (c : Nat) [IsCharP α c]
+    (ctx : Context α) (k : Int) (p : Poly) :
+    (Poly.mulConstC.go k c p).denote ctx = (k : α) * p.denote ctx := by
+  apply Poly.mulConstC.go.induct_unfolding k c (fun s t => t.denote ctx = (k : α) * s.denote ctx) _ _ _ p
+  · exact fun l => (IsCharP.intCast_emod (α := α) c (k*l)).trans (Ring.intCast_mul ..)
+  · intro l m p _ zero ih
+    have hz : (k*l) % c = 0 := eq_of_beq zero
+    change _ = (k : α) * (l • m.denote ctx + p.denote ctx)
+    rw [ih, Semiring.left_distrib, ← coefficientProduct c, hz, Ring.zsmul_eq_intCast_mul, Ring.intCast_zero,
+      Semiring.zero_mul, Semiring.add_comm 0, Semiring.add_zero]
+  · intro l m p _ _ ih
+    change _ • m.denote ctx + _ = (k : α) * (l • m.denote ctx + p.denote ctx)
+    rw [ih, coefficientProduct, Semiring.left_distrib]
+
+public theorem Lean.Grind.CommRing.Poly.denote_mulConstC :
+    type_of% @_root_.Lean.Grind.CommRing.Poly.denote_mulConstC := by
+  intro α c ring char ctx k p
+  rw [Poly.mulConstC.eq_def]
+  dsimp only
+  cases zero : (k % (c : Int) == 0) with
+  | true =>
+    change Int.cast (R := α) 0 = _
+    rw [← IsCharP.intCast_emod (p := c) (x := k), eq_of_beq zero, Ring.intCast_zero, Semiring.zero_mul]
+  | false =>
+    cases one : (k % (c : Int) == 1) with
+    | true =>
+      change p.denote ctx = _
+      rw [← IsCharP.intCast_emod (p := c) (x := k), eq_of_beq one, Ring.intCast_one, Semiring.one_mul]
+    | false => exact multiplyTerms c ctx k p
+end
+
 end OmegaChecks.InitPort.Alternatives
