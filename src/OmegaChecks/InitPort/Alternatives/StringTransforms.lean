@@ -1,4 +1,5 @@
 module
+import all Init.Data.String.Lemmas.Pattern.Split.Basic
 import all OmegaChecks.InitPort.Alternatives.FiniteLoop
 import all Init.Data.String.Iterate
 import all Init.Data.String.Lemmas.Iterate
@@ -239,3 +240,23 @@ public theorem String.Slice.toList_revPositionsFrom : type_of% @_root_.String.Sl
     exact congrArg (List.cons _) ih
 
 end OmegaChecks.InitPort.Alternatives
+
+namespace OmegaChecks.InitPort.Alternatives.String.Slice
+open _root_.String.Slice _root_.String.Slice.Pattern _root_.String.Slice.Pattern.Model
+
+public theorem toList_splitToSubslice_of_isEmpty :
+    type_of% @_root_.String.Slice.toList_splitToSubslice_of_isEmpty := by
+  intro ρ pat model strict σ searcher iter finite lawful s empty
+  have valid := @LawfulToForwardSearcherModel.isValidSearchFrom_toList ρ pat model σ searcher iter finite lawful s
+  have terminal := _root_.String.Slice.startPos_eq_endPos_iff.mpr empty
+  have noSteps {p : s.Pos} {steps : List (SearchStep s)}
+      (hp : p = s.endPos) (valid : IsValidSearchFrom pat p steps) : steps = [] := by
+    cases valid with
+    | endPos => rfl
+    | matched hit _ => exact (Pos.not_endPos_lt (hp ▸ hit.lt)).elim
+    | mismatched lt _ _ => exact (Pos.not_endPos_lt (hp ▸ lt)).elim
+  rw [private_decl% _root_.String.Slice.Pattern.Model.toList_splitToSubslice_eq_splitFromSteps,
+    noSteps terminal valid, terminal]
+  rfl
+
+end OmegaChecks.InitPort.Alternatives.String.Slice
