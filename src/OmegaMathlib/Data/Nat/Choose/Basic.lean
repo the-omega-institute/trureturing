@@ -7,3 +7,6 @@ public section
 namespace Omega.Nat
 export _root_.Nat (choose choose_succ_succ choose_zero_right choose_zero_succ)
 end Omega.Nat
+namespace OmegaMathlib.Nat
+export _root_.Nat (choose choose_succ_succ choose_zero_right choose_zero_succ)
+end OmegaMathlib.Nat

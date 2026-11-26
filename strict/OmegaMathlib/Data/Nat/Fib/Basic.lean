@@ -58,3 +58,11 @@ theorem fib_lt_fib_succ {n : Nat} (hn : Nat.le zero.succ.succ n) : Nat.lt (fib n
 attribute [irreducible] fib
 
 end Omega.Nat
+
+-- Generated standard references (portable.py --regenerate-facades).
+public section
+namespace OmegaMathlib.Nat
+export _root_.Omega.Nat (fib fib_add_two fib_le_fib_succ fib_lt_fib_succ fib_one fib_pos fib_two fib_zero)
+end OmegaMathlib.Nat
+end
+-- End generated standard references.

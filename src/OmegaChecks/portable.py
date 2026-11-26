@@ -10,7 +10,7 @@ from pathlib import Path
 import shutil
 import subprocess
 import tempfile
-from strict_lake import BUILD, COMMON_SRC, INSPECTOR, lake_layout, strict_config
+from strict_lake import BUILD, COMMON_SRC, INSPECTOR, foundation_config, lake_layout, strict_config
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -124,6 +124,37 @@ def alias_sections(exports):
     return lines
 
 
+# These namespace aliases are elaborated to their target constants. Neither backend
+# gains a second definition for a mathematical object.
+def standard_aliases(module, exports, *, strict):
+    if root(module) != "OmegaMathlib":
+        return {}
+    return {(namespace.replace("Omega", "OmegaMathlib", 1),
+             "_root_." + namespace if strict else original): leaves
+            for (namespace, original), leaves in exports.items()}
+
+
+STRICT_EXPORT_MARKER = "-- Generated standard references (portable.py --regenerate-facades)."
+STRICT_EXPORT_END = "-- End generated standard references."
+
+
+def strict_alias_source(module, content, exports):
+    before, marker, rest = content.partition(STRICT_EXPORT_MARKER + "\n")
+    if marker:
+        _, end, after = rest.partition(STRICT_EXPORT_END + "\n")
+        if not end or STRICT_EXPORT_MARKER in after or STRICT_EXPORT_END in after:
+            raise ValueError(f"invalid generated alias section in {module}")
+    else:
+        if STRICT_EXPORT_END in content:
+            raise ValueError(f"unmatched end of generated aliases in {module}")
+        after = ""
+    lines = alias_sections(standard_aliases(module, exports, strict=True))
+    if not lines:
+        return before + after
+    block = "\n".join([STRICT_EXPORT_MARKER, "public section", *lines, "end", STRICT_EXPORT_END])
+    return before.rstrip() + "\n\n" + block + "\n" + after
+
+
 def official_basis_source(module, deps, exports, seals):
     upstream = official_module(module)
     imports = set(deps)
@@ -131,7 +162,7 @@ def official_basis_source(module, deps, exports, seals):
         imports.add(upstream)
     lines = ["module", *("public import " + n for n in sorted(imports)), "",
              "/-! Namespace aliases to the pinned public interface. -/", "public section",
-             *alias_sections(exports)]
+             *alias_sections(exports), *alias_sections(standard_aliases(module, exports, strict=False))]
     if seals:
         lines.extend(["", "set_option allowUnsafeReducibility true in",
                       "attribute [irreducible] " + " ".join("_root_." + name for name in sorted(seals))])
@@ -145,36 +176,81 @@ def derived_facades(lean, strict, basis, official_path):
     return normal, common
 
 
+def mixed_facade_source(basis):
+    ports = sorted(n for n in basis if root(n) == "OmegaMathlib" and official_module(n))
+    imports = [*ports, *(official_module(n) for n in ports)]
+    return ("module\n\n" + "".join(f"public import {name}\n" for name in sorted(imports))
+            + "meta import OmegaBuild.Commands.Origin\n\n"
+            + "/-! Standard Mathlib names for mixed native and Omega consumers. -/\n\n"
+            + "run_cmd OmegaBuild.exportNativePorts\n")
+
+
 def regenerate_facades():
     lean = output("lake", "env", "printenv", "LEAN").strip()
     sources, graph = import_graph(lean, ("strict/*.lean",))
     basis = sorted(name for name in graph if root(name) in BASIS)
     if not BASIS.issubset(basis):
         raise RuntimeError("strict foundation roots are missing")
-    subprocess.run(["lake", "-f", strict_config(), "build", *("+" + name for name in basis)],
-                   cwd=ROOT, check=True)
-    generated, _ = derived_facades(lean, ROOT / BUILD / "lib/lean", basis,
-                                output("lake", "env", "printenv", "LEAN_PATH").strip())
-    changed = []
-    with tempfile.TemporaryDirectory(dir=ROOT / ".lake") as temporary:
-        for name, content in generated.items():
-            relative = sources[name].relative_to(ROOT / "strict")
-            target = SRC / relative
-            if target.resolve() != target:
-                raise ValueError(f"refusing to write a facade through a symlink: {target}")
-            if target.exists() and target.read_bytes() == content:
-                continue
-            staged = Path(temporary) / relative
-            staged.parent.mkdir(parents=True, exist_ok=True)
-            staged.write_bytes(content)
-            if target.exists():
-                staged.chmod(target.stat().st_mode)
-            changed.append((staged, target))
-        for staged, target in changed:
-            target.parent.mkdir(parents=True, exist_ok=True)
-            staged.replace(target)
-            print(f"Updated {target.relative_to(ROOT)}")
-    print(f"Updated {len(changed)} of {len(basis)} official facade modules")
+    official_path = output("lake", "env", "printenv", "LEAN_PATH").strip()
+    upstream = [official_module(n) for n in basis if root(n) == "OmegaMathlib" and official_module(n)]
+    subprocess.run(["lake", "build", *("+" + n + ":olean" for n in upstream)], cwd=ROOT, check=True)
+    # Build author sources without their previous generated exports. A removed or renamed
+    # declaration cannot leave a stale export that prevents the generator itself from running.
+    with tempfile.TemporaryDirectory(dir=ROOT / ".lake", prefix="port-exports-") as temporary:
+        stage = Path(temporary)
+        inputs, build_dir = stage / "sources", stage / "build"
+        config = foundation_config(str(inputs), str(build_dir), stage.name, use_init_compiler=True)
+        pending = {}
+        originals = {}
+        try:
+            for name in basis:
+                path = sources[name]
+                if path.resolve() != path:
+                    raise ValueError(f"refusing to regenerate a linked port: {path}")
+                original = path.read_text()
+                originals[path] = original
+                staged = inputs / path.relative_to(ROOT / "strict")
+                staged.parent.mkdir(parents=True, exist_ok=True)
+                staged.write_text(strict_alias_source(name, original, {}))
+            # Install prerequisite aliases before compiling the next level of strict imports.
+            sorter = TopologicalSorter({n: graph[n].intersection(basis) for n in basis})
+            sorter.prepare()
+            while sorter.is_active():
+                ready = sorted(sorter.get_ready())
+                subprocess.run(["lake", "-f", config, "build", *("+" + n for n in ready)],
+                               cwd=ROOT, check=True)
+                imports, exports, _ = namespace_exports(lean, str(build_dir / "lib/lean"), ready, official_path)
+                for name in ready:
+                    path = sources[name]
+                    relative = path.relative_to(ROOT / "strict")
+                    if root(name) == "OmegaMathlib":
+                        updated = strict_alias_source(name, originals[path], exports[name])
+                        (inputs / relative).write_text(updated)
+                        pending[path] = updated
+                    pending[SRC / relative] = official_basis_source(name, imports[name], exports[name], [])
+                sorter.done(*ready)
+            for path, original in originals.items():
+                if path.read_text() != original:
+                    raise RuntimeError(f"strict source changed during generation: {path}")
+            pending[SRC / "OmegaBuild/Mathlib.lean"] = mixed_facade_source(basis)
+            count = 0
+            for target, content in pending.items():
+                if target.resolve() != target:
+                    raise ValueError(f"refusing to update a linked facade: {target}")
+                if target.exists() and target.read_text() == content:
+                    continue
+                target.parent.mkdir(parents=True, exist_ok=True)
+                staged = stage / "output" / target.relative_to(ROOT)
+                staged.parent.mkdir(parents=True, exist_ok=True)
+                staged.write_text(content)
+                if target.exists():
+                    staged.chmod(target.stat().st_mode)
+                staged.replace(target)
+                count += 1
+                print(f"Updated {target.relative_to(ROOT)}")
+            print(f"Updated {count} port source files")
+        finally:
+            config.unlink(missing_ok=True)
 
 
 def backend_artifacts(strict, with_reg, sources, stage, packages, lean, environment,
@@ -440,6 +516,8 @@ def check(only, backend="mathlib", destination=None, *, frozen=None, discovered=
     all_basis = {name for name in graph if root(name) in BASIS}
     facades = {str(path.relative_to(SRC).with_suffix("")).replace(os.sep, "."): path
                for prefix in BASIS for path in (*SRC.glob(prefix + ".lean"), *(SRC / prefix).rglob("*.lean"))}
+    if (SRC / "OmegaBuild/Mathlib.lean").read_text() != mixed_facade_source(all_basis):
+        raise RuntimeError("mixed Mathlib imports differ from the admitted port tree; regenerate the facades")
     if all_basis != set(facades):
         raise RuntimeError(f"standard and strict module trees differ: {sorted(all_basis ^ set(facades))}")
     roots = [*selected, *basis_roots] if scoped else selected if only else [*selected, *all_basis]

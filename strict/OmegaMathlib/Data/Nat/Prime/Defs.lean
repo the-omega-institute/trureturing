@@ -37,3 +37,14 @@ theorem Prime.eq_one_or_self_of_dvd {p : Nat} (pp : Prime p) (m : Nat)
 attribute [irreducible] Prime
 
 end Omega.Nat
+
+-- Generated standard references (portable.py --regenerate-facades).
+public section
+namespace OmegaMathlib
+export _root_.Omega (Nat.Prime.eq_one_or_self_of_dvd Nat.Prime.one_lt Nat.Prime.two_le)
+end OmegaMathlib
+namespace OmegaMathlib.Nat
+export _root_.Omega.Nat (Prime prime_def)
+end OmegaMathlib.Nat
+end
+-- End generated standard references.

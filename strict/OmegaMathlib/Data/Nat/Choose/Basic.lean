@@ -36,3 +36,11 @@ theorem choose_succ_succ (n k : Nat) :
 attribute [irreducible] choose
 
 end Omega.Nat
+
+-- Generated standard references (portable.py --regenerate-facades).
+public section
+namespace OmegaMathlib.Nat
+export _root_.Omega.Nat (choose choose_succ_succ choose_zero_right choose_zero_succ)
+end OmegaMathlib.Nat
+end
+-- End generated standard references.

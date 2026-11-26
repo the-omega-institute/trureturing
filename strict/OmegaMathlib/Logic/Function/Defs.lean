@@ -16,3 +16,11 @@ def Bijective {α : Sort u} {β : Sort v} (f : α → β) : Prop :=
   And (Injective f) (Surjective f)
 
 end Omega.Function
+
+-- Generated standard references (portable.py --regenerate-facades).
+public section
+namespace OmegaMathlib.Function
+export _root_.Omega.Function (Bijective)
+end OmegaMathlib.Function
+end
+-- End generated standard references.

@@ -8,3 +8,6 @@ public section
 namespace Omega.Nat
 export _root_.Nat (fib fib_add_two fib_le_fib_succ fib_lt_fib_succ fib_one fib_pos fib_two fib_zero)
 end Omega.Nat
+namespace OmegaMathlib.Nat
+export _root_.Nat (fib fib_add_two fib_le_fib_succ fib_lt_fib_succ fib_one fib_pos fib_two fib_zero)
+end OmegaMathlib.Nat

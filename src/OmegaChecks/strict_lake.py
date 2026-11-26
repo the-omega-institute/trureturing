@@ -13,7 +13,7 @@ COMMON_SRC = ROOT / ".lake/omega-common-src"
 INSPECTOR = ROOT / "tools/lean-inspector-interface"
 
 
-def foundation_config(source_dir, build_dir, label):
+def foundation_config(source_dir, build_dir, label, *, use_init_compiler=False):
     source = (ROOT / "lakefile.toml").read_text()
     # Preserve the package, compiler options, manifest and all targets of the official build.
     # Verify the generated TOML against the intended configuration before using it.
@@ -30,7 +30,7 @@ def foundation_config(source_dir, build_dir, label):
         lib["srcDir"] = source_dir
         header = f'name = "{lib["name"]}"\nsrcDir = '
         source = source.replace(header + '"src"', header + json.dumps(source_dir))
-    if source_dir == "strict":
+    if use_init_compiler:
         # The elaborator is a build input. The compiled prelude has no Lean imports.
         compiler = {"name": "OmegaChecks.InitCompiler", "srcDir": "src"}
         expected["lean_lib"].append(compiler)
@@ -47,7 +47,7 @@ def foundation_config(source_dir, build_dir, label):
 
 
 def strict_config():
-    return foundation_config("strict", BUILD, "strict")
+    return foundation_config("strict", BUILD, "strict", use_init_compiler=True)
 
 
 def write_config(name, source):
