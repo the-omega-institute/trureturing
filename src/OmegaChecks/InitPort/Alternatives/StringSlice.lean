@@ -1,6 +1,7 @@
 module
 import all Init.Data.String.Basic
 import all Init.Data.String.FindPos
+import all Init.Data.String.Lemmas.IsEmpty
 import all Init.Data.String.Lemmas.Order
 import all Init.Data.String.Lemmas.FindPos
 import all Init.Data.String.Pattern.Pred
@@ -455,5 +456,44 @@ public theorem String.Slice.Pattern.ToBackwardSearcher.DefaultBackwardSearcher.i
     type_of% @_root_.String.Slice.Pattern.ToBackwardSearcher.DefaultBackwardSearcher.instIteratorIdSearchStepOfBackwardPattern._proof_10 := by
   intro ρ p s inst iter h miss
   exact ⟨h, miss, rfl, rfl, rfl⟩
+
+private theorem booleanComplement {flag : Bool} {p : Prop} (valid : flag = true ↔ p) : flag = false ↔ ¬ p := by
+  cases flag with
+  | false => exact ⟨fun _ h => Bool.noConfusion (valid.mpr h), fun _ => rfl⟩
+  | true => exact ⟨fun eq => Bool.noConfusion eq, fun invalid => (invalid (valid.mp rfl)).elim⟩
+
+public theorem String.Slice.isEmpty_sliceTo : type_of% @_root_.String.Slice.isEmpty_sliceTo := by
+  intro s p
+  change ((s.sliceTo p).utf8ByteSize == 0) = true ↔ _
+  rw [String.Slice.utf8ByteSize_sliceTo]
+  exact ⟨fun eq => String.Slice.Pos.ext (String.Pos.Raw.ext (eq_of_beq eq)), fun eq => eq ▸ rfl⟩
+
+public theorem String.Slice.isEmpty_sliceTo_eq_false_iff : type_of% @_root_.String.Slice.isEmpty_sliceTo_eq_false_iff := by
+  intro s p
+  exact booleanComplement String.Slice.isEmpty_sliceTo
+
+public theorem String.Slice.isEmpty_sliceFrom_eq_false_iff : type_of% @_root_.String.Slice.isEmpty_sliceFrom_eq_false_iff := by
+  intro s p
+  exact booleanComplement String.Slice.isEmpty_sliceFrom
+
+public theorem String.Slice.Pattern.ToForwardSearcher.DefaultForwardSearcher.instIteratorIdSearchStepOfForwardPattern._proof_5 :
+    type_of% @_root_.String.Slice.Pattern.ToForwardSearcher.DefaultForwardSearcher.instIteratorIdSearchStepOfForwardPattern._proof_5 := by
+  intro ρ pat s iter ne
+  exact String.Slice.isEmpty_sliceFrom_eq_false_iff.mpr ne
+
+public theorem String.Slice.Pattern.ToForwardSearcher.DefaultForwardSearcher.instIteratorIdSearchStepOfForwardPattern._proof_7 :
+    type_of% @_root_.String.Slice.Pattern.ToForwardSearcher.DefaultForwardSearcher.instIteratorIdSearchStepOfForwardPattern._proof_7 := by
+  intro ρ pat s iter ne
+  exact String.Slice.isEmpty_sliceFrom_eq_false_iff.mpr ne
+
+public theorem String.Slice.Pattern.ToBackwardSearcher.DefaultBackwardSearcher.instIteratorIdSearchStepOfBackwardPattern._proof_5 :
+    type_of% @_root_.String.Slice.Pattern.ToBackwardSearcher.DefaultBackwardSearcher.instIteratorIdSearchStepOfBackwardPattern._proof_5 := by
+  intro ρ pat s iter ne
+  exact String.Slice.isEmpty_sliceTo_eq_false_iff.mpr ne
+
+public theorem String.Slice.Pattern.ToBackwardSearcher.DefaultBackwardSearcher.instIteratorIdSearchStepOfBackwardPattern._proof_7 :
+    type_of% @_root_.String.Slice.Pattern.ToBackwardSearcher.DefaultBackwardSearcher.instIteratorIdSearchStepOfBackwardPattern._proof_7 := by
+  intro ρ pat s iter ne
+  exact String.Slice.isEmpty_sliceTo_eq_false_iff.mpr ne
 
 end OmegaChecks.InitPort.Alternatives
