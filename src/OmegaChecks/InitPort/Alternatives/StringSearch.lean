@@ -11,6 +11,10 @@ import all Init.Data.String.Substring
 
 namespace OmegaChecks.InitPort.Alternatives
 
+/-- Advance by the UTF-8 width at the current slice position. -/
+public def String.Slice.Pos.nextFast : type_of% @_root_.String.Slice.Pos.nextFast :=
+  @_root_.String.Slice.Pos.next
+
 private theorem windowSize {bs : ByteArray} {off len : Nat} (h : off + len ≤ bs.size) :
     (bs.extract off (off + len)).size = len :=
   ByteArray.size_extract.trans ((congrArg (· - off) (Nat.min_eq_left h)).trans (Nat.add_sub_cancel_left ..))

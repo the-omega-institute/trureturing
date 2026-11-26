@@ -15,6 +15,7 @@ import all Init.Data.String.Slice
 import all Init.Data.String.Pattern.Basic
 import all Init.Data.String.Substring
 public import OmegaChecks.InitPort.Alternatives.StringSearch
+import all OmegaChecks.InitPort.Alternatives.StringSearch
 public import OmegaChecks.InitPort.Alternatives.StringPattern
 import all OmegaChecks.InitPort.Alternatives.StringPattern.Searchers
 import all Init.Data.String.Pattern.String
@@ -22,6 +23,10 @@ import all Init.Data.String.Pattern.String
 /-! Pointwise agreement of finite slice operations with the official iterator operations. -/
 
 namespace OmegaChecks.Interface.Equations
+
+public theorem String.Slice.Pos.nextFast {s : String.Slice} (pos : s.Pos) (h : pos ≠ s.endPos) :
+    OmegaChecks.InitPort.Alternatives.String.Slice.Pos.nextFast pos h = pos.nextFast h :=
+  congrFun (congrFun (congrFun _root_.String.Slice.Pos.next_eq_nextFast s) pos) h
 
 public theorem String.Slice.Pattern.instBEqSearchStep.beq {s : String.Slice}
     (a b : _root_.String.Slice.Pattern.SearchStep s) :
