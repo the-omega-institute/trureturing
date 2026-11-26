@@ -457,17 +457,6 @@ theorem complete_curvature_reconstruction_volume_and_five_rays
     exact ⟨(alexandrov_o2_reconstructs_ricci_iff 0).mpr (by simp [ricciPart, scalarPart]),
       fun i => by simp [complexTide, pairBilinear]⟩
 
-/-- Even with all unit timelike readings, four or fewer null rays cannot
-reconstruct curvature. -/
-theorem volume_and_at_most_four_rays_noninjective {N : ℕ}
-    (rays : Fin N → FutureNullRay) (hN : N ≤ 4) :
-    ∃ R : AlgebraicCurvature4, R ≠ 0 ∧ (∀ u, alexandrovO2Deficit R u = 0) ∧
-      ∀ i, complexTide R (rays i) = 0 := by
-  let W := vanishingWeyl rays hN
-  obtain ⟨ht, hn⟩ := weyl_null_screen_vanishing rays hN
-  refine ⟨W.val, fun hz => hn (Subtype.ext hz), alexandrov_o2_weyl_blind W, fun i => ?_⟩
-  exact (weylQuarticEquiv_eval _ _).symm.trans (congrFun ht i)
-
 private def waveElectric : STF3 ℝ := ⟨!![1,0,0; 0,-1,0; 0,0,0], by
   constructor
   · intro i j
@@ -522,5 +511,43 @@ theorem screen_blind_nonzero_ricci_witness :
     rw [hS, hr, ZeroMemClass.coe_zero, zero_add] at h
     rw [alexandrovO2Deficit, h, q_eta_smul, hr]
     norm_num [minkowski]
+
+/-- The volume coefficient at rest and the five complex screen readings can
+be prescribed independently, even with the trace-free Ricci part fixed to zero. -/
+theorem rest_volume_and_five_tides_surjective
+    (rays : Fin 5 → FutureNullRay) (hr : Function.Injective rays)
+    (v : ℝ) (tides : Fin 5 → ℂ) :
+    ∃ R : AlgebraicCurvature4, ricciPart R = 0 ∧
+      alexandrovO2Deficit R ![1, 0, 0, 0] = v ∧
+      ∀ i, complexTide R (rays i) = tides i := by
+  let W := (weyl_null_screen_five rays hr).symm tides
+  let a := -72 * v
+  let R := curvature_ricci_split.symm (W, 0, a)
+  have hR : curvature_ricci_split R = (W, 0, a) := LinearEquiv.apply_symm_apply _ _
+  have hS : ricciPart R = 0 := congrArg (fun x => x.2.1) hR
+  have hscalar : scalarPart R = a := congrArg (fun x => x.2.2) hR
+  have hs : curvature_ricci_split screenBlindScalar = (0, 0, 1) :=
+    LinearEquiv.apply_symm_apply _ _
+  have hRic : ricci R = (a / 4) • eta := by
+    rw [ricci_parts R, hS, hscalar, ZeroMemClass.coe_zero, zero_add]
+  have hRicScalar : ricci screenBlindScalar = (1 / 4 : ℝ) • eta := by
+    rw [ricci_parts screenBlindScalar, show ricciPart screenBlindScalar = 0 from
+      congrArg (fun x => x.2.1) hs, show scalarPart screenBlindScalar = 1 from
+      congrArg (fun x => x.2.2) hs, ZeroMemClass.coe_zero, zero_add]
+  refine ⟨R, hS, ?_, ?_⟩
+  · have hvol := screen_blind_nonzero_ricci_witness.2.2.2
+    have he : alexandrovO2Deficit R ![1, 0, 0, 0] =
+        a * alexandrovO2Deficit screenBlindScalar ![1, 0, 0, 0] := by
+      simp only [alexandrovO2Deficit, hRic, hRicScalar, hscalar,
+        show scalarPart screenBlindScalar = 1 from congrArg (fun x => x.2.2) hs,
+        q_eta_smul]
+      ring
+    rw [he, hvol]
+    dsimp [a]
+    ring
+  · intro i
+    rw [complexTide_split, congrArg Prod.fst hR]
+    exact (weylQuarticEquiv_eval _ _).symm.trans
+      (congrFun ((weyl_null_screen_five rays hr).apply_symm_apply tides) i)
 
 end D5.S3.Geometry.Lorentz.CausalOrderWeylDeformation4D
