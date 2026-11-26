@@ -1018,4 +1018,93 @@ public theorem Std.Rii.isSome_succMany?_of_lt_size_toArray :
   exact lookupPresent ((_root_.Std.Rii.getElem?_toArray_eq (r := r) (i := i)).symm.trans
     (getElem?_pos r.toArray i h))
 
+private theorem rangeFilterEqSome {o : Option α} {a : α} (p : α → Bool) :
+    o.filter p = some a ↔ o = some a ∧ p a := by
+  constructor
+  · intro eq
+    cases o with
+    | none => cases eq
+    | some x =>
+      by_cases pass : p x = true
+      · rw [Option.filter_some_pos pass] at eq
+        cases eq
+        exact ⟨rfl, pass⟩
+      · rw [Option.filter_some, ite_eq_right pass] at eq
+        cases eq
+  · rintro ⟨rfl, pass⟩
+    exact Option.filter_some_pos pass
+
+private theorem indexedRangeMem {xs : List α} {f : Nat → Option α} {a : α} (p : α → Bool)
+    (lookup : ∀ i, xs[i]? = (f i).filter p) : a ∈ xs ↔ (∃ i, f i = some a) ∧ p a := by
+  constructor
+  · intro mem
+    obtain ⟨i, h⟩ := List.mem_iff_getElem?.mp mem
+    obtain ⟨someAt, pass⟩ := (rangeFilterEqSome p).mp ((lookup i).symm.trans h)
+    exact ⟨⟨i, someAt⟩, pass⟩
+  · rintro ⟨⟨i, hit⟩, pass⟩
+    exact List.mem_iff_getElem?.mpr ⟨i, (lookup i).trans ((rangeFilterEqSome p).mpr ⟨hit, pass⟩)⟩
+
+public theorem Std.Rcc.mem_toList_iff_mem : type_of% @_root_.Std.Rcc.mem_toList_iff_mem := by
+  intro α r _ _ _ _ _ _ a
+  exact (indexedRangeMem (f := fun i => UpwardEnumerable.succMany? i r.lower)
+    (fun x => decide (x ≤ r.upper)) (fun _ => _root_.Std.Rcc.getElem?_toList_eq)).trans
+      ⟨fun ⟨reach, above⟩ => ⟨UpwardEnumerable.le_iff.mpr reach, of_decide_eq_true above⟩,
+       fun h => ⟨UpwardEnumerable.le_iff.mp h.1, decide_eq_true h.2⟩⟩
+
+public theorem Std.Rco.mem_toList_iff_mem : type_of% @_root_.Std.Rco.mem_toList_iff_mem := by
+  intro α r _ _ _ _ _ _ _ _ a
+  exact (indexedRangeMem (f := fun i => UpwardEnumerable.succMany? i r.lower)
+    (fun x => decide (x < r.upper)) (fun _ => _root_.Std.Rco.getElem?_toList_eq)).trans
+      ⟨fun ⟨reach, above⟩ => ⟨UpwardEnumerable.le_iff.mpr reach, of_decide_eq_true above⟩,
+       fun h => ⟨UpwardEnumerable.le_iff.mp h.1, decide_eq_true h.2⟩⟩
+
+public theorem Std.Roc.mem_toList_iff_mem : type_of% @_root_.Std.Roc.mem_toList_iff_mem := by
+  intro α r _ _ _ _ _ _ _ _ a
+  exact (indexedRangeMem (f := fun i => UpwardEnumerable.succMany? (i + 1) r.lower)
+    (fun x => decide (x ≤ r.upper)) (fun _ => _root_.Std.Roc.getElem?_toList_eq)).trans
+      ⟨fun ⟨reach, above⟩ => ⟨UpwardEnumerable.lt_iff.mpr reach, of_decide_eq_true above⟩,
+       fun h => ⟨UpwardEnumerable.lt_iff.mp h.1, decide_eq_true h.2⟩⟩
+
+public theorem Std.Roo.mem_toList_iff_mem : type_of% @_root_.Std.Roo.mem_toList_iff_mem := by
+  intro α r _ _ _ _ _ _ a
+  exact (indexedRangeMem (f := fun i => UpwardEnumerable.succMany? (i + 1) r.lower)
+    (fun x => decide (x < r.upper)) (fun _ => _root_.Std.Roo.getElem?_toList_eq)).trans
+      ⟨fun ⟨reach, above⟩ => ⟨UpwardEnumerable.lt_iff.mpr reach, of_decide_eq_true above⟩,
+       fun h => ⟨UpwardEnumerable.lt_iff.mp h.1, decide_eq_true h.2⟩⟩
+
+public theorem Std.Rci.mem_toList_iff_mem : type_of% @_root_.Std.Rci.mem_toList_iff_mem := by
+  intro α r _ _ _ _ _ a
+  constructor
+  · intro h
+    obtain ⟨i, hit⟩ := List.mem_iff_getElem?.mp h
+    exact UpwardEnumerable.le_iff.mpr ⟨i, _root_.Std.Rci.getElem?_toList_eq.symm.trans hit⟩
+  · intro h
+    obtain ⟨i, hit⟩ := UpwardEnumerable.le_iff.mp h
+    exact List.mem_iff_getElem?.mpr ⟨i, _root_.Std.Rci.getElem?_toList_eq.trans hit⟩
+
+public theorem Std.Roi.mem_toList_iff_mem : type_of% @_root_.Std.Roi.mem_toList_iff_mem := by
+  intro α r _ _ _ _ _ a
+  rw [_root_.Std.Roi.toList_eq_match_rci]
+  cases hs : UpwardEnumerable.succ? r.lower with
+  | none =>
+    constructor
+    · intro h
+      cases h
+    · intro h
+      obtain ⟨i, hit⟩ := UpwardEnumerable.lt_iff.mp h
+      rw [UpwardEnumerable.succMany?_add_one_eq_succ?_bind_succMany?, hs] at hit
+      cases hit
+  | some next =>
+    constructor
+    · intro h
+      obtain ⟨i, hit⟩ := List.mem_iff_getElem?.mp h
+      apply UpwardEnumerable.lt_iff.mpr
+      refine ⟨i, ?_⟩
+      rw [UpwardEnumerable.succMany?_add_one_eq_succ?_bind_succMany?, hs]
+      exact _root_.Std.Rci.getElem?_toList_eq.symm.trans hit
+    · intro h
+      obtain ⟨i, hit⟩ := UpwardEnumerable.lt_iff.mp h
+      rw [UpwardEnumerable.succMany?_add_one_eq_succ?_bind_succMany?, hs] at hit
+      exact List.mem_iff_getElem?.mpr ⟨i, _root_.Std.Rci.getElem?_toList_eq.trans hit⟩
+
 end OmegaChecks.InitPort.Alternatives
