@@ -82,6 +82,14 @@ private def pointwiseApplication (rule : ConstantInfo) (levels : List Level) (ar
   let value := (rule.value! (allowOpaque := true)).instantiateLevelParams rule.levelParams levels
   return value.beta (args[:4].toArray ++ #[proof, args[4]!])
 
+private partial def closeEquation (goal : MVarId) (fuel : Nat) : MetaM Unit := goal.withContext do
+  if (← observing? goal.refl).isSome then return
+  let fuel + 1 := fuel | throwError "unfolded branches differ"
+  let (some reduced, _) ← dsimpGoal goal (← Simp.mkContext) | return
+  if (← observing? reduced.refl).isSome then return
+  let some branches ← splitTarget? reduced (useNewSemantics := true) | throwError "no matching branch"
+  for g in branches do closeEquation g fuel
+
 /-- Generated proofs may use function extensionality to unpack the recursion state.
 Case-analyze the actual tuple before applying the fixed point law to each constructor. -/
 private def unfoldingEquation (rule : ConstantInfo) (type : Expr) : MetaM Expr := do
@@ -95,15 +103,23 @@ private def unfoldingEquation (rule : ConstantInfo) (type : Expr) : MetaM Expr :
       let ci ← getConstInfo name
       let some value := ci.value? | throwError "expected a recursive definition"
       let rhs := (value.instantiateLevelParams ci.levelParams levels).beta lhs.getAppArgs
-      unless rhs.isAppOfArity `WellFounded.Nat.fix 5 do throwError "unexpected fixed point"
-      let term ← pointwiseApplication rule rhs.getAppFn.constLevels! rhs.getAppArgs
-      branch.assign term
+      if rhs.isAppOfArity `WellFounded.fix 6 then
+        let eq := mkAppN (mkConst `WellFounded.fix_eq rhs.getAppFn.constLevels!) rhs.getAppArgs
+        let some (_, _, unfolded) := (← inferType eq).eq? | throwError "missing fixed point equation"
+        let some (_, _, target) := (← branch.getType).eq? | throwError "missing equation target"
+        let rest ← mkFreshExprSyntheticOpaqueMVar (← mkEq unfolded target)
+        closeEquation rest.mvarId! 6
+        branch.assign (← mkEqTrans eq rest)
+      else
+        unless rhs.isAppOfArity `WellFounded.Nat.fix 5 do throwError "unexpected fixed point"
+        branch.assign (← pointwiseApplication rule rhs.getAppFn.constLevels! rhs.getAppArgs)
   instantiateMVars proof
 
 /-- Inline the fixed point law after proving congruence for the actual recursive step. -/
 public def specialize (env : Environment) (rule official : ConstantInfo) (body : Expr) : IO Expr := do
   let used := body.getUsedConstantsAsSet
-  unless used.contains `WellFounded.Nat.fix_eq do return body
+  unless used.contains `WellFounded.Nat.fix_eq ||
+      (used.contains `WellFounded.fix_eq && used.contains `funext) do return body
   let action : MetaM Expr := do
     if used.contains `funext then
       if let some result ← observing? (unfoldingEquation rule official.type) then return result
