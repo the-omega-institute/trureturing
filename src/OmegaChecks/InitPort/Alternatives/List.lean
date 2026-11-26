@@ -8,6 +8,7 @@ import all Init.Data.Array.Basic
 import Init.Data.Array.Lemmas
 import Init.Data.Array.Count
 import all Init.Data.List.Find
+import all Init.Data.List.ToArray
 
 /-! Structural proofs for boolean predicates and folds over strict lists. -/
 
@@ -450,5 +451,35 @@ public theorem List.findIdx?_isNone : type_of% @_root_.List.findIdx?_isNone := b
     cases h : p x with
     | true => rfl
     | false => rw [← ih]; cases xs.findIdx? p <;> rfl
+
+private theorem insertAtSplit (xs : List α) (i : Nat) (a : α) (h : i ≤ xs.length) :
+    xs.take i ++ a :: xs.drop i = xs.insertIdx i a := by
+  induction i generalizing xs with
+  | zero => rfl
+  | succ i ih =>
+    cases xs with
+    | nil => exact (Nat.not_succ_le_zero _ h).elim
+    | cons x xs => exact congrArg (x :: ·) (ih xs (Nat.le_of_succ_le_succ h))
+
+private theorem insertLoopCongr (i j : Nat) {s t : Array α} (same : s = t) (hs : j < s.size) (ht : j < t.size) :
+    Array.insertIdx.loop i s ⟨j, hs⟩ = Array.insertIdx.loop i t ⟨j, ht⟩ := by
+  cases same
+  rfl
+
+public theorem List.insertIdx_toArray : type_of% @_root_.List.insertIdx_toArray := by
+  intro α l i a h
+  have hi : i ≤ l.length := h
+  have hj : l.length < (l ++ [a]).toArray.size := by
+    rw [List.size_toArray, List.length_append]
+    exact Nat.lt_succ_self _
+  have loop := (private_decl% @List.insertIdx_loop_toArray) i (l ++ [a]) l.length hj hi
+  have dropEnd : (l ++ [a]).drop (l.length + 1) = [] := by
+    apply List.drop_eq_nil_of_le
+    rw [List.length_append]
+    exact Nat.le_refl _
+  rw [List.take_append_of_le_length hi, List.take_left, List.getElem_concat_length rfl, dropEnd, List.append_nil,
+    insertAtSplit l i a hi] at loop
+  unfold Array.insertIdx
+  exact (insertLoopCongr i l.length (List.push_toArray l a) (by rw [Array.size_push, List.size_toArray]; exact Nat.lt_succ_self _) hj).trans loop
 
 end OmegaChecks.InitPort.Alternatives
