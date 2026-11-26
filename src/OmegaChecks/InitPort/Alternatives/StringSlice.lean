@@ -745,4 +745,79 @@ public theorem String.Pos.prev_le : type_of% @_root_.String.Pos.prev_le := by
   intro s p h
   exact Nat.le_of_lt (_root_.String.Pos.prev_lt (h := h))
 
+public theorem String.Slice.Pos.prevn_le : type_of% @_root_.String.Slice.Pos.prevn_le := by
+  intro s p n
+  fun_induction _root_.String.Slice.Pos.prevn with
+  | case1 => exact Nat.le_refl _
+  | case2 p n h ih => exact Nat.le_trans ih (String.Slice.Pos.prev_le (h := h))
+  | case3 => exact Nat.le_refl _
+
+public theorem String.Pos.prevn_le : type_of% @_root_.String.Pos.prevn_le := by
+  intro s p n
+  exact String.Slice.Pos.prevn_le (p := p.toSlice) (n := n)
+
+public theorem String.Slice.Pos.ofSliceTo_prev : type_of% @_root_.String.Slice.Pos.ofSliceTo_prev := by
+  intro s base p h
+  apply Eq.symm
+  apply String.Slice.Pos.prev_eq_iff.mpr
+  refine ⟨_root_.String.Slice.Pos.ofSliceTo_lt_ofSliceTo_iff.mpr _root_.String.Slice.Pos.prev_lt, ?_⟩
+  intro q lt
+  obtain ⟨bound, small⟩ := _root_.String.Slice.Pos.lt_ofSliceTo_iff.mp lt
+  exact _root_.String.Slice.Pos.le_ofSliceTo_iff.mpr ⟨bound, _root_.String.Slice.Pos.le_prev_iff_lt.mpr small⟩
+
+public theorem String.Slice.Pos.prev_ofSliceTo : type_of% @_root_.String.Slice.Pos.prev_ofSliceTo := by
+  intro s base p h
+  exact String.Slice.Pos.ofSliceTo_prev.symm
+
+public theorem String.Slice.Pos.ofSliceFrom_prev : type_of% @_root_.String.Slice.Pos.ofSliceFrom_prev := by
+  intro s base p h
+  apply Eq.symm
+  apply String.Slice.Pos.prev_eq_iff.mpr
+  refine ⟨_root_.String.Slice.Pos.ofSliceFrom_lt_ofSliceFrom_iff.mpr _root_.String.Slice.Pos.prev_lt, ?_⟩
+  intro q lt
+  exact _root_.String.Slice.Pos.le_ofSliceFrom_iff.mpr fun bound =>
+    _root_.String.Slice.Pos.le_prev_iff_lt.mpr (_root_.String.Slice.Pos.lt_ofSliceFrom_iff.mp lt bound)
+
+public theorem String.Slice.Pos.ofSlice_prev : type_of% @_root_.String.Slice.Pos.ofSlice_prev := by
+  intro s lo hi le p h
+  apply Eq.symm
+  apply String.Slice.Pos.prev_eq_iff.mpr
+  refine ⟨_root_.String.Slice.Pos.ofSlice_lt_ofSlice_iff.mpr _root_.String.Slice.Pos.prev_lt, ?_⟩
+  intro q lt
+  obtain ⟨upper, small⟩ := _root_.String.Slice.Pos.lt_ofSlice_iff.mp lt
+  exact _root_.String.Slice.Pos.le_ofSlice_iff.mpr ⟨upper, fun lower =>
+    _root_.String.Slice.Pos.le_prev_iff_lt.mpr (small lower)⟩
+
+public theorem String.Pos.ofSliceTo_prev : type_of% @_root_.String.Pos.ofSliceTo_prev := by
+  intro s base p h
+  apply Eq.symm
+  apply String.Pos.prev_eq_iff.mpr
+  refine ⟨_root_.String.Pos.ofSliceTo_lt_ofSliceTo_iff.mpr _root_.String.Slice.Pos.prev_lt, ?_⟩
+  intro q lt
+  obtain ⟨bound, small⟩ := _root_.String.Pos.lt_ofSliceTo_iff.mp lt
+  exact _root_.String.Pos.le_ofSliceTo_iff.mpr ⟨bound, _root_.String.Slice.Pos.le_prev_iff_lt.mpr small⟩
+
+public theorem String.Pos.prev_ofSliceTo : type_of% @_root_.String.Pos.prev_ofSliceTo := by
+  intro s base p h
+  exact String.Pos.ofSliceTo_prev.symm
+
+public theorem String.Pos.ofSliceFrom_prev : type_of% @_root_.String.Pos.ofSliceFrom_prev := by
+  intro s base p h
+  apply Eq.symm
+  apply String.Pos.prev_eq_iff.mpr
+  refine ⟨_root_.String.Pos.ofSliceFrom_lt_ofSliceFrom_iff.mpr _root_.String.Slice.Pos.prev_lt, ?_⟩
+  intro q lt
+  exact _root_.String.Pos.le_ofSliceFrom_iff.mpr fun bound =>
+    _root_.String.Slice.Pos.le_prev_iff_lt.mpr (_root_.String.Pos.lt_ofSliceFrom_iff.mp lt bound)
+
+public theorem String.Pos.ofSlice_prev : type_of% @_root_.String.Pos.ofSlice_prev := by
+  intro s lo hi le p h
+  apply Eq.symm
+  apply String.Pos.prev_eq_iff.mpr
+  refine ⟨_root_.String.Pos.ofSlice_lt_ofSlice_iff.mpr _root_.String.Slice.Pos.prev_lt, ?_⟩
+  intro q lt
+  obtain ⟨upper, small⟩ := _root_.String.Pos.lt_ofSlice_iff.mp lt
+  exact _root_.String.Pos.le_ofSlice_iff.mpr ⟨upper, fun lower =>
+    _root_.String.Slice.Pos.le_prev_iff_lt.mpr (small lower)⟩
+
 end OmegaChecks.InitPort.Alternatives
