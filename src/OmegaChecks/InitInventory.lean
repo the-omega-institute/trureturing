@@ -1254,9 +1254,92 @@ public theorem fromStateTMonad
     (law : type_of% @StateT.instLawfulMonad.{max 1 u v, max 1 u v}) : type_of% @funext.{u,v} :=
   funextFromEndomorphisms (viaState law)
 
+@[instance_reducible] private def attached {T : Type u} (f : T → T) : MonadAttach (ErrorM f) where
+  CanReturn {α} x a := match x with | .ok b => b = a | .error _ => False
+  attach x := match x with | .ok b => .ok ⟨b, rfl⟩ | .error e => .error e
+
+private theorem attachedLaw {T : Type u} (f : T → T) :
+    letI := exceptionMonad (resetGraph f); letI := attached f; LawfulMonadAttach (ErrorM f) := by
+  letI := exceptionMonad (resetGraph f)
+  letI := attached f
+  exact {
+    map_attach := by
+      intro _ x
+      cases x with
+      | error e => exact congrArg Except.error (resetGraph_eq f e)
+      | ok _ => rfl
+    canReturn_map_imp := by
+      intro α P x a h
+      cases x with
+      | error e => exact False.elim h
+      | ok b => exact h ▸ b.property
+  }
+private theorem ReaderTAttach {T : Type u} {f g : T → T} (agree : ∀ x, f x = g x)
+    (law : letI := exceptionMonad (resetGraph f); letI := attached f;
+      WeaklyLawfulMonadAttach (ReaderT T (ErrorM f))) : f = g := by
+  letI := exceptionMonad (resetGraph f)
+  letI := attached f
+  letI : WeaklyLawfulMonadAttach (ReaderT T (ErrorM f)) := law
+  let input : ReaderT T (ErrorM f) PUnit := fun t => .error ⟨t, g t, agree t⟩
+  let output (a : ReaderT T (ErrorM f) PUnit) (t : T) :=
+    match a t with | .error e => e.2.val | .ok _ => t
+  exact congrArg output (WeaklyLawfulMonadAttach.map_attach (x := input))
+
+public theorem fromReaderTWeakAttach (law : type_of% @instWeaklyLawfulMonadAttachReaderTOfLawfulMonad.{max 1 u v, max 1 u v}) :
+    type_of% @funext.{u,v} := by
+  apply funextFromEndomorphisms
+  intro T f g agree
+  letI := exceptionMonad (resetGraph f)
+  letI : LawfulMonad (ErrorM f) := lawful (resetGraph f) (resetGraph_eq f)
+  letI := attached f
+  letI : LawfulMonadAttach (ErrorM f) := attachedLaw f
+  exact ReaderTAttach agree ((law (ρ := T) (m := ErrorM f)))
+
+public theorem fromReaderTAttach (law : type_of% @instLawfulMonadAttachReaderTOfLawfulMonad.{max 1 u v, max 1 u v}) :
+    type_of% @funext.{u,v} := by
+  apply funextFromEndomorphisms
+  intro T f g agree
+  letI := exceptionMonad (resetGraph f)
+  letI : LawfulMonad (ErrorM f) := lawful (resetGraph f) (resetGraph_eq f)
+  letI := attached f
+  letI : LawfulMonadAttach (ErrorM f) := attachedLaw f
+  exact ReaderTAttach agree ((law (ρ := T) (m := ErrorM f)).toWeaklyLawfulMonadAttach)
+
+private theorem StateTAttach {T : Type u} {f g : T → T} (agree : ∀ x, f x = g x)
+    (law : letI := exceptionMonad (resetGraph f); letI := attached f;
+      WeaklyLawfulMonadAttach (StateT T (ErrorM f))) : f = g := by
+  letI := exceptionMonad (resetGraph f)
+  letI := attached f
+  letI : WeaklyLawfulMonadAttach (StateT T (ErrorM f)) := law
+  let input : StateT T (ErrorM f) PUnit := fun t => .error ⟨t, g t, agree t⟩
+  let output (a : StateT T (ErrorM f) PUnit) (t : T) :=
+    match a t with | .error e => e.2.val | .ok _ => t
+  exact congrArg output (WeaklyLawfulMonadAttach.map_attach (x := input))
+
+public theorem fromStateTWeakAttach (law : type_of% @instWeaklyLawfulMonadAttachStateTOfLawfulMonad.{max 1 u v, max 1 u v}) :
+    type_of% @funext.{u,v} := by
+  apply funextFromEndomorphisms
+  intro T f g agree
+  letI := exceptionMonad (resetGraph f)
+  letI : LawfulMonad (ErrorM f) := lawful (resetGraph f) (resetGraph_eq f)
+  letI := attached f
+  letI : LawfulMonadAttach (ErrorM f) := attachedLaw f
+  exact StateTAttach agree ((law (σ := T) (m := ErrorM f)))
+
+public theorem fromStateTAttach (law : type_of% @instLawfulMonadAttachStateTOfLawfulMonad.{max 1 u v, max 1 u v}) :
+    type_of% @funext.{u,v} := by
+  apply funextFromEndomorphisms
+  intro T f g agree
+  letI := exceptionMonad (resetGraph f)
+  letI : LawfulMonad (ErrorM f) := lawful (resetGraph f) (resetGraph_eq f)
+  letI := attached f
+  letI : LawfulMonadAttach (ErrorM f) := attachedLaw f
+  exact StateTAttach agree ((law (σ := T) (m := ErrorM f)).toWeaklyLawfulMonadAttach)
+
 open Lean in
 run_cmd
-  for n in [``fromReaderTFunctor, ``fromReaderTApplicative, ``fromReaderTMonad, ``fromStateTMonad] do
+  for n in [``fromReaderTWeakAttach, ``fromReaderTAttach, ``fromStateTWeakAttach, ``fromStateTAttach,
+      ``fromReaderTFunctor, ``fromReaderTApplicative, ``fromReaderTMonad, ``fromStateTMonad] do
     unless (← collectAxioms n).isEmpty do throwError "transformer law witness {n} uses axioms"
 
 end TransformerLaws
@@ -2031,6 +2114,14 @@ private def logicalConsequence? (owner name : Name) : Option (Name × Name) := d
   | `Init.Control.Lawful.Basic, ``map_congr =>
     return (``funext, ``OmegaChecks.InitBoundaries.dependentFunextFromMapCongr)
   | `Init.Control.Basic, ``forIn'_eq_forIn => return (``funext, ``OmegaChecks.InitBoundaries.funextFromForInEq)
+  | `Init.Control.Lawful.MonadAttach.Instances, ``instWeaklyLawfulMonadAttachReaderTOfLawfulMonad =>
+    return (``funext, ``OmegaChecks.InitBoundaries.TransformerLaws.fromReaderTWeakAttach)
+  | `Init.Control.Lawful.MonadAttach.Instances, ``instLawfulMonadAttachReaderTOfLawfulMonad =>
+    return (``funext, ``OmegaChecks.InitBoundaries.TransformerLaws.fromReaderTAttach)
+  | `Init.Control.Lawful.MonadAttach.Instances, ``instWeaklyLawfulMonadAttachStateTOfLawfulMonad =>
+    return (``funext, ``OmegaChecks.InitBoundaries.TransformerLaws.fromStateTWeakAttach)
+  | `Init.Control.Lawful.MonadAttach.Instances, ``instLawfulMonadAttachStateTOfLawfulMonad =>
+    return (``funext, ``OmegaChecks.InitBoundaries.TransformerLaws.fromStateTAttach)
   | `Init.Control.Lawful.Instances, ``ReaderT.instLawfulFunctor =>
     return (``funext, ``OmegaChecks.InitBoundaries.TransformerLaws.fromReaderTFunctor)
   | `Init.Control.Lawful.Instances, ``ReaderT.instLawfulApplicative =>
