@@ -137,4 +137,34 @@ public theorem Vector.flatten_reverse : type_of% @_root_.Vector.flatten_reverse 
   rw [_root_.Array.map_reverse, _root_.Array.flatten_reverse, _root_.Array.map_map, _root_.Array.map_map]
   rfl
 
+private theorem findSomeCongr (xs : List α) {f g : α → Option β} (h : ∀ a, f a = g a) :
+    xs.findSome? f = xs.findSome? g := by
+  induction xs with
+  | nil => rfl
+  | cons a xs ih =>
+    rw [_root_.List.findSome?_cons, _root_.List.findSome?_cons, h a]
+    cases g a
+    · exact ih
+    · rfl
+
+public theorem Array.back?_flatMap : type_of% @_root_.Array.back?_flatMap := by
+  intro α β xs f
+  rw [_root_.List.back?_toArray (xs.flatMap f).toList, _root_.Array.toList_flatMap,
+    _root_.List.getLast?_flatMap, ← _root_.Array.findSome?_toList, _root_.Array.toList_reverse]
+  exact findSomeCongr _ (fun a => (_root_.List.back?_toArray (f a).toList).symm)
+
+public theorem Array.back?_flatten : type_of% @_root_.Array.back?_flatten := by
+  intros
+  rw [← _root_.Array.flatMap_id]
+  exact _root_.Array.back?_flatMap
+
+public theorem Vector.back?_flatMap : type_of% @_root_.Vector.back?_flatMap := by
+  intros
+  exact _root_.Array.back?_flatMap
+
+public theorem Vector.back?_flatten : type_of% @_root_.Vector.back?_flatten := by
+  intros
+  rw [← _root_.Vector.flatMap_id]
+  exact _root_.Vector.back?_flatMap
+
 end OmegaChecks.InitPort.Alternatives
