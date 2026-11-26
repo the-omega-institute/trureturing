@@ -121,4 +121,3 @@ theorem groundCoefficientModeClosure_eq_top : groundCoefficientModeClosure = ⊤
     (chargeZero_mem_of_currents S hcurr stable) stable).ge
 
 end D5.S3.VertexAlgebra.TwistedGround.Orbifold.NativeMixedPairWeightOne
-

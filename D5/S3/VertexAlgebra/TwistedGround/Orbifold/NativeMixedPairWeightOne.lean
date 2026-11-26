@@ -185,4 +185,3 @@ theorem exists_mu_true_negFive_ground_eq (a : OddCarrier ℒ) (ha : a.val ∈ gr
   exact congrArg (fun x : oddGrade 1 => x.val) hP
 
 end D5.S3.VertexAlgebra.TwistedGround.Orbifold.NativeMixedPairWeightOne
-
