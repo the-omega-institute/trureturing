@@ -1,5 +1,6 @@
 """Run from anywhere in this checkout. --incremental temporarily edits two clean sources."""
 import argparse
+import csv
 from functools import cache
 import hashlib
 import json
@@ -37,10 +38,25 @@ def build(targets):
     run("lake", "-f", strict_config(), "build", *("+" + target for target in targets))
 
 
+def strict_import_graph(lean, targets=()):
+    _, graph = import_graph(lean, ("strict/*.lean", "src/*.lean"))
+    # A witness can reach a marked project module through the public umbrella.
+    # Read the requested project branches without scanning every unrelated D5 source.
+    pending = set(targets).union(*graph.values())
+    while project := sorted(name for name in pending - graph.keys() if root(name) in {"D5", "Trureturing"}):
+        paths = [name.replace(".", "/") + ".lean" for name in project]
+        # Lake's default D5 library glob can expand beyond the OS argument limit.
+        if len(paths) > 1000:
+            paths = ["D5/*.lean", "Trureturing.lean"]
+        _, extra = import_graph(lean, paths)
+        graph.update(extra)
+        pending = set().union(*extra.values())
+    return graph
+
+
 @cache
 def library_graph():
-    # Lake's source roots agree in both configurations except for the basis facades.
-    return import_graph(ENV["LEAN"], ("strict/*.lean", "src/*.lean"))[1]
+    return strict_import_graph(ENV["LEAN"])
 
 
 def terminal_modules(graph, names):
@@ -48,23 +64,56 @@ def terminal_modules(graph, names):
     return sorted(set(names) - imported)
 
 
+def library_backend_candidates(graph, names):
+    # Mixed witnesses can use the concrete strict implementation. Only resolve
+    # their official artifacts if the command is reachable.
+    reachable = {"OmegaBuild.Commands"}
+    for name in names:
+        if graph[name] & reachable:
+            reachable.add(name)
+    return [name for name in names if name in reachable and root(name) != "OmegaBuild"]
+
+
+def library_mathlib_only(graph, targets):
+    candidates = library_backend_candidates(graph, closure(graph, targets))
+    if not candidates:
+        return {}
+    run("lake", "build", *("+" + name for name in terminal_modules(graph, candidates)))
+    official_path = portable.output("lake", "env", "printenv", "LEAN_PATH").strip()
+    return portable.backend_plan(official_path, candidates)["mathlibOnly"]
+
+
 def check_library(selected=()):
     graph = library_graph()
     for name in selected:
-        if name not in graph or root(name) not in STRICT | {"OmegaChecks"}:
+        if name not in graph or root(name) not in STRICT | {"OmegaChecks", "OmegaBuild"}:
             raise ValueError(f"unknown Omega module {name}")
+    # The current check passes every changed program under src to the Lake test
+    # driver. The command frontend and planner run in the official environment.
+    support = {name for name in selected if root(name) == "OmegaBuild"}
+    if support:
+        run("lake", "build", *("+" + name for name in terminal_modules(graph, support)))
+        selected = [name for name in selected if name not in support]
+        if not selected:
+            return
     # Imported-only modules and new modules outside an umbrella are both in scope.
     if not selected or "OmegaChecks.Audit" in selected:
         modules = sorted(name for name in graph if root(name) in STRICT)
     else:
         modules = [name for name in closure(graph, selected) if root(name) in STRICT]
-    roots = terminal_modules(graph, modules)
-    targets = set(roots) | set(selected)
+    targets = set(modules) | set(selected)
     if not selected:
         # Build every external witness against the actual strict implementation.
-        external = [name for name in graph if root(name) == "OmegaChecks"]
-        targets.update(terminal_modules(graph, external))
-    build(sorted(targets))
+        targets.update(name for name in graph if root(name) == "OmegaChecks")
+    dependencies = closure(graph, targets)
+    skipped = library_mathlib_only(graph, targets)
+    if skipped:
+        modules = [name for name in modules if name not in skipped]
+        targets.update(name for name in dependencies if root(name) != "OmegaBuild")
+        targets.difference_update(skipped)
+    if targets:
+        build(terminal_modules(graph, targets))
+    roots = terminal_modules(graph, modules)
     if roots:
         subprocess.run([AUDIT, "--exact-roots", LIB, *roots, "--", *modules],
                        cwd=ROOT, env=audit_environment(), check=True)
@@ -435,8 +484,10 @@ def versions(artifacts):
 def check_incremental():
     graph = library_graph()
     # Track the strict libraries and every mathematical check importing them.
-    imports = {name: set(closure(graph, [name])) for name in graph}
+    imports = {name: set(closure(graph, [name])) for name in graph if root(name) in STRICT | {"OmegaChecks"}}
     modules = sorted(name for name, deps in imports.items() if any(root(dep) in STRICT for dep in deps))
+    skipped = library_mathlib_only(graph, modules)
+    modules = [name for name in modules if name not in skipped]
     targets = terminal_modules(graph, modules)
     build(targets)
     artifacts = {name: LIB / (name.replace(".", "/") + ".olean") for name in modules}
@@ -506,6 +557,54 @@ example {p q : Prop} (h : p ∧ q) : p := OmegaChecks.Portable.Common.projectLef
 """)
 
 
+def check_generated_init():
+    with tempfile.TemporaryDirectory(prefix="omega-generated-init-") as directory:
+        product = Path(directory) / "port"
+        run(sys.executable, "-B", SRC / "OmegaChecks/InitPort/build.py", product,
+            "Init.Prelude", "Init.Data.List.Impl", "Init.Data.List.TakeDrop", "Init.Data.Nat.Coprime")
+        environment = {**ENV, "LEAN_PATH": str(product / "lib")}
+        # The upstream addition helper must preserve the strict seed's definitional reduction.
+        source = ("module\nprelude\nimport all OmegaInit.Prelude\n"
+                  "attribute [local semireducible] Omega.Nat.add\n"
+                  "example (x : Omega.Nat) : Omega.Eq (x.add .zero) x := Omega.rfl\n")
+        subprocess.run([ENV["LEAN"], "--stdin"], cwd=ROOT, text=True, input=source, check=True,
+                       env=environment)
+        subprocess.run([ENV["LEAN"], "--stdin"], cwd=ROOT, env=environment, text=True, check=True,
+                       input="""module
+prelude
+import OmegaInit.Data.List.Basic
+example {α : Type} (a : α) :
+    Omega.Eq (Omega.List.reverse (Omega.List.cons a .nil)) (Omega.List.cons a .nil) := Omega.rfl
+""")
+        # These two official modules prove the same public equations with different private helpers.
+        names = ("Omega.List.take.eq_def", "Omega.List.takeWhile.eq_def")
+        for module in ("OmegaInit.Data.List.Impl", "OmegaInit.Data.List.TakeDrop"):
+            probe = f"module\nprelude\nimport {module}\n" + "".join(f"#print axioms {n}\n" for n in names)
+            result = subprocess.run([ENV["LEAN"], "--stdin"], cwd=ROOT, env=environment,
+                                    text=True, input=probe, stdout=subprocess.PIPE, check=True)
+            for name in names:
+                if f"'{name}' does not depend on any axioms" not in result.stdout:
+                    raise RuntimeError(f"{module}: {result.stdout}")
+        # GCD has a builtin reduction even though its public official body is sealed.
+        coprime = "example : Nat.Coprime (.succ (.succ .zero)) (.succ (.succ (.succ .zero))) := rfl\n"
+        official_import = "module\nprelude\nimport Init.Data.Nat.Coprime\n"
+        subprocess.run([ENV["LEAN"], "--stdin"], cwd=ROOT, text=True, check=True,
+                       input=official_import + coprime, env={**ENV, "LEAN_PATH": ""})
+        strict_import = "module\nprelude\nimport OmegaInit.Data.Nat.Coprime\nopen Omega\n"
+        strict = subprocess.run([ENV["LEAN"], "--stdin"], cwd=ROOT, text=True, capture_output=True,
+                                input=strict_import + coprime, env=environment)
+        if strict.returncode:
+            if "Nat.gcd" not in strict.stdout or "not exposed" not in strict.stdout:
+                raise RuntimeError(strict.stdout + strict.stderr)
+            run(sys.executable, "-B", SRC / "OmegaChecks/InitPort/report.py", product)
+            with (product / "init-public-reductions.tsv").open() as stream:
+                boundaries = {row["declaration"]: row for row in csv.DictReader(stream, delimiter="\t")}
+            row = boundaries["Nat.Coprime"]
+            if (row["strictDependencyPath"] != "Omega.Nat.Coprime -> Omega.Nat.gcd" or
+                    row["officialReductionMechanism"] != "builtin natural-number reduction"):
+                raise RuntimeError(f"Unreported public reduction difference: {row}")
+
+
 def full_check(incremental=False):
     manifest = ROOT / "lake-manifest.json"
     initial = manifest.read_bytes()
@@ -513,7 +612,10 @@ def full_check(incremental=False):
     # The compiled driver runs the current Audit.lean without elaborating it for every audit.
     run("lake", "build", "omegaAudit")
     check_audits()
+    check_generated_init()
     run(sys.executable, "-B", SRC / "OmegaChecks/portable.py", "--backend", "both")
+    run(sys.executable, "-B", SRC / "OmegaChecks/test_backend_plan.py")
+    run(sys.executable, "-B", SRC / "OmegaChecks/test_backend_scheduling.py")
     check_fibonacci_reduction()
     if incremental:
         check_incremental()

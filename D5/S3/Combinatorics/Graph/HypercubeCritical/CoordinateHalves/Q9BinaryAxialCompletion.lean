@@ -24,7 +24,8 @@ open Finset
 open BalancedCriticalSpectrum (Q flip)
 open ComponentBoundary.Q9SignedAxialFold (transverse paritySign paritySign_flip)
 open ComponentBoundary.Q9IsotropicHuang (flipSign)
-open private transverse_square transverse_energy flipSign_unit from
+open D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9PairedGeometricObstruction (transverse_square flipSign_unit)
+open private transverse_energy from
   D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9PairedGeometricObstruction
 open private transverse_add transverse_sub from
   D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Q9SignedAxialFold
@@ -472,7 +473,7 @@ theorem completion_sizes {e v p q : Q 8 → ℤ} (he : UnitWord e) (hv : UnitWor
   rw [unit_energy hv] at hv32
   refine ⟨?_, ?_, hd12, ?_⟩ <;> omega
 
-private theorem sign_flip (x : Q 8) (i : Fin 8) :
+theorem sign_flip (x : Q 8) (i : Fin 8) :
     flipSign i (flip x i) = flipSign i x := by
   apply Int.cast_injective (α := ℝ)
   rw [flipSign_cast, flipSign_cast, BalancedCriticalSpectrum.flip_flip, huangMatrix_symmetric]

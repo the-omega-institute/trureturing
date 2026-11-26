@@ -29,7 +29,56 @@ internal sealed class HardinA235289RecurrenceDocument : IScribeDocumentDefinitio
                     Paragraph(Text("For a sum-two array, the horizontal adjacent sums in successive rows alternate between a profile and its complement in two. If the first edge sum is s, the initial entry can range from 0 to s, giving at most s+1 choices. The complement has first edge sum 2−s, giving at most 3−s initial choices. The initial entry determines the row from its adjacent sums, so the profile and its complement have at most four row choices in total. The nonzero contributions have one-step multiplier one or two, or two-step multiplier two or three. Each contribution satisfies the displayed recurrence, and summing the contributions proves the first identity. Transposition gives the second."))),
                 DescribeRole.Theorem,
                 new OpenProblemResolutionClaim(ProblemSlugRef.Create("hardin-a235289-common-recurrence"),
-                    ResolutionKind.Proved)))));
+                    ResolutionKind.Proved)),
+            PublicSurface("fin-constant", "fin_constant", "Adjacent equality on a finite interval",
+                FinConstantStatement(),
+                "If a function agrees at each adjacent pair, its value at every index is its value at zero.",
+                DescribeRole.Lemma),
+            PublicSurface("profile", "Profile", "Row profiles", ProfileDefinition(),
+                "A profile assigns one of 0, 1 or 2 to each of the k horizontal edges of a row with k+1 cells.",
+                DescribeRole.Definition),
+            PublicSurface("edge", "edge", "Adjacent entry sum", EdgeDefinition(),
+                "Every row uses the alphabet 0 through 3. The sum at an edge is a natural number and can be as large as six.",
+                DescribeRole.Definition),
+            PublicSurface("fiber", "Fiber", "Rows realizing a profile", FiberDefinition(),
+                "The subtype fixes the natural sum at every edge to the corresponding profile entry.",
+                DescribeRole.Definition),
+            PublicSurface("flip", "flip", "Complementary profiles", FlipDefinition(),
+                "Reversal in Fin 3 sends each profile value s to 2−s at the same edge.",
+                DescribeRole.Definition),
+            PublicSurface("b", "b", "Row multiplicity", MultiplicityDefinition(),
+                "The natural cardinality of the fiber counts individual rows with the prescribed edge sums.",
+                DescribeRole.Definition),
+            PublicSurface("profile-count", "profileCount", "Alternating row-profile count",
+                ProfileCountDefinition(),
+                "At an even row index choose the profile p, and at an odd index choose its complement. "
+                + "The three arguments of if give the condition, the even choice and the odd choice. "
+                + "The finite product is a natural number and the empty product is one.",
+                DescribeRole.Definition),
+            PublicSurface("profile-count-two-step", "profileCount_two_step", "Adding two rows",
+                ProfileCountTwoStepStatement(),
+                "Adding two rows multiplies the natural count by the two complementary fiber sizes.",
+                DescribeRole.Lemma),
+            PublicSurface("profile-count-eq-pow", "profileCount_eq_pow", "Equal row multiplicities",
+                ProfileCountPowerStatement(),
+                "If both complementary fibers have the same size c, every row gives c choices.",
+                DescribeRole.Lemma),
+            PublicSurface("literal-sum", "literal_sum", "Profile sum for the rectangular count",
+                LiteralSumStatement(),
+                "There are n+2 rows and k+2 columns here. The two uniform block-sum classes give the factor of two. "
+                + "Each natural alternating row-profile count is cast to an integer before the sum.",
+                DescribeRole.Lemma),
+            PublicSurface("t-transpose", "T_transpose", "Transposition of the literal count",
+                TransposeStatement(),
+                "Transposition swaps the grid dimensions and preserves the contiguous block condition. "
+                + "The count identity holds at all natural indices.",
+                DescribeRole.Lemma),
+            PublicSurface("original-eq-twice-low", "original_eq_twice_low", "The sum-two rectangular count",
+                OriginalEqTwiceLowStatement(),
+                "The n+2 by k+2 arrays use the alphabet 0 through 3. The four entry values in every "
+                + "contiguous block sum to two in the naturals. The natural cardinality is cast to an "
+                + "integer before multiplication by two.",
+                DescribeRole.Lemma))));
 
     private static DocumentBlock Definition(string name, string title, Formula formula, string text) =>
         Describe.Lean(DescribeId.Create(name.ToLowerInvariant()), DeclarationHandle.Create(Prefix + name),
@@ -101,6 +150,158 @@ internal sealed class HardinA235289RecurrenceDocument : IScribeDocumentDefinitio
         right = MinusOf(right, TimesOf(D(1, 2), count(index)));
         return Eq(At(6), right);
     }
+
+    private static DocumentBlock PublicSurface(
+        string id, string name, string title, Formula formula, string text, DescribeRole role) =>
+        Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + name),
+            H(title), StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text(text))), role);
+
+    private static Formula FinConstantStatement()
+    {
+        var n = V("n");
+        var i = V("i");
+        var j = V("j");
+        var f = V("f");
+        Formula At(string embedding) => App(f, App(Qualified("Fin", embedding), j));
+        var domain = Call("Fin", PlusOf(n, D(1)));
+        var adjacent = All("j", Call("Fin", n), Eq(At("castSucc"), At("succ")));
+        var conclusion = All("i", domain, Eq(App(f, i), App(f, D(0))));
+        return All("n", V("Nat"), All("A", V("Type"),
+            All("f", Arrow(domain, V("A")), ImpliesFrom(adjacent, conclusion))));
+    }
+
+    private static Formula ProfileDefinition()
+    {
+        var k = V("k");
+        return All("k", V("Nat"), Eq(Call("Profile", k),
+            Parenthesized(Arrow(Call("Fin", k), Call("Fin", D(3))))));
+    }
+
+    private static Formula EdgeDefinition()
+    {
+        var k = V("k");
+        var r = V("r");
+        var j = V("j");
+        Formula Entry(string embedding) => Call("val", App(r, App(Qualified("Fin", embedding), j)));
+        return All("k", V("Nat"), All("r", RowType(k), All("j", Call("Fin", k),
+            Eq(Call("edge", r, j), PlusOf(Entry("castSucc"), Entry("succ"))))));
+    }
+
+    private static Formula FiberDefinition()
+    {
+        var k = V("k");
+        var p = V("p");
+        var r = V("r");
+        var j = V("j");
+        var realizes = All("j", Call("Fin", k), Eq(Call("edge", r, j), Call("val", App(p, j))));
+        var rows = Seq(OpenBrace, r, Colon, Sp, Parenthesized(RowType(k)), Sp, Mid, Sp,
+            realizes, CloseBrace);
+        return ForProfile(k, Eq(Call("Fiber", p), rows));
+    }
+
+    private static Formula FlipDefinition()
+    {
+        var k = V("k");
+        var p = V("p");
+        var j = V("j");
+        return ForProfile(k, All("j", Call("Fin", k),
+            Eq(App(Call("flip", p), j), App(Qualified("Fin", "rev"), App(p, j)))));
+    }
+
+    private static Formula MultiplicityDefinition()
+    {
+        var k = V("k");
+        var p = V("p");
+        return ForProfile(k, Eq(Call("b", p), App(Qualified("Nat", "card"), Call("Fiber", p))));
+    }
+
+    private static Formula ProfileCountDefinition()
+    {
+        var k = V("k");
+        var p = V("p");
+        var h = V("h");
+        var even = Eq(new Formula.Modulo(Call("val", V("i")), D(2)), D(0));
+        var choice = Call("if", Parenthesized(even), p, Call("flip", p));
+        var product = Over(Prod, "i", Call("Fin", h), Call("b", choice));
+        return ForProfileHeight(k, Eq(Call("profileCount", p, h), product));
+    }
+
+    private static Formula ProfileCountTwoStepStatement()
+    {
+        var k = V("k");
+        var p = V("p");
+        var h = V("h");
+        var pair = TimesOf(Call("b", p), Call("b", Call("flip", p)));
+        return ForProfileHeight(k, Eq(Call("profileCount", p, PlusOf(h, D(2))),
+            TimesOf(pair, Call("profileCount", p, h))));
+    }
+
+    private static Formula ProfileCountPowerStatement()
+    {
+        var k = V("k");
+        var p = V("p");
+        var h = V("h");
+        var c = V("c");
+        return ForProfile(k, All("c", V("Nat"),
+            ImpliesFrom(Eq(Call("b", p), c), ImpliesFrom(Eq(Call("b", Call("flip", p)), c),
+                All("h", V("Nat"), Eq(Call("profileCount", p, h), new Formula.Power(c, h)))))));
+    }
+
+    private static Formula LiteralSumStatement()
+    {
+        var n = V("n");
+        var k = V("k");
+        var p = V("p");
+        var profiles = Call("Profile", PlusOf(k, D(1)));
+        var count = Parenthesized(Seq(Call("profileCount", p, PlusOf(n, D(2))), Colon, Sp, V("Int")));
+        var sum = Over(Sum, "p", profiles, TimesOf(D(2), count));
+        return Dimensions(Eq(Call("T", PlusOf(n, D(1)), PlusOf(k, D(1))), sum));
+    }
+
+    private static Formula OriginalEqTwiceLowStatement()
+    {
+        var n = PlusOf(V("n"), D(1));
+        var k = PlusOf(V("k"), D(1));
+        var a = V("A");
+        var i = V("i");
+        var j = V("j");
+        var grid = Arrow(Call("Fin", PlusOf(n, D(1))),
+            Arrow(Call("Fin", PlusOf(k, D(1))), Call("Fin", D(4))));
+        var top = App(Qualified("Fin", "castSucc"), i);
+        var bottom = App(Qualified("Fin", "succ"), i);
+        var left = App(Qualified("Fin", "castSucc"), j);
+        var right = App(Qualified("Fin", "succ"), j);
+        Formula Entry(Formula row, Formula col) => App(Qualified("Fin", "val"), App(a, row, col));
+        var blockSum = PlusOf(PlusOf(PlusOf(Entry(top, left), Entry(top, right)),
+            Entry(bottom, left)), Entry(bottom, right));
+        var sumTwo = All("i", Call("Fin", n), All("j", Call("Fin", k), Eq(blockSum, D(2))));
+        var arrays = Seq(OpenBrace, a, Colon, Sp, grid, Sp, Mid, Sp, sumTwo, CloseBrace);
+        var count = Parenthesized(Seq(App(Qualified("Nat", "card"), arrays),
+            Colon, Sp, Mathbb, Grp(V("Z"))));
+        return Dimensions(Eq(Call("T", n, k), TimesOf(D(2), count)));
+    }
+
+    private static Formula TransposeStatement()
+    {
+        var n = V("n");
+        var k = V("k");
+        return Dimensions(Eq(Call("T", n, k), Call("T", k, n)));
+    }
+
+    private static Formula RowType(Formula k) =>
+        Arrow(Call("Fin", PlusOf(k, D(1))), Call("Fin", D(4)));
+
+    private static Formula Arrow(Formula from, Formula to) => new Formula.TypeArrow(from, to);
+
+    private static Formula ForProfile(Formula k, Formula body) =>
+        All("k", V("Nat"), All("p", Call("Profile", k), body));
+
+    private static Formula ForProfileHeight(Formula k, Formula body) =>
+        ForProfile(k, All("h", V("Nat"), body));
+
+    private static Formula Over(Formula op, string variable, Formula type, Formula body) =>
+        Seq(new Formula.Subscript(op, Seq(V(variable), Colon, Sp, type)), Sp, Parenthesized(body));
 
     private static Formula Dimensions(Formula body) => All("n", V("Nat"), All("k", V("Nat"), body));
     private static Formula V(string name) => F.Id(name);

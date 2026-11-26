@@ -22,8 +22,7 @@ open Finset
 open scoped BigOperators symmDiff
 open BalancedCriticalSpectrum (Q flip)
 open D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.BinaryCubeHalfKernel (adjacency)
-open private adjacency_add from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.BinaryCubeHalfKernel
+open D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.BinaryCubeHalfKernel (adjacency_add)
 
 abbrev Vertex := Fin (2 ^ 8)
 
@@ -50,12 +49,16 @@ theorem toggle_injective (x : Vertex) : Function.Injective (toggle x) := by
   apply BalancedCubeComponentBoundary.flip_injective (cube x)
   simpa only [cube_toggle] using congrArg cube h
 
-@[simp] private theorem toggle_twice (x : Vertex) (i : Fin 8) :
+@[simp] theorem toggle_twice (x : Vertex) (i : Fin 8) :
     toggle (toggle x i) i = x := by
   apply cube.injective
   simp
 
 def shell (x : Vertex) : Word := univ.image (toggle x)
+
+/-- A vertex of the eight-cube has eight neighbors. -/
+theorem shell_card (x : Vertex) : (shell x).card = 8 := by
+  rw [shell, card_image_of_injective _ (toggle_injective x), card_univ, Fintype.card_fin]
 
 @[simp] private theorem toggle_mem_shell (x : Vertex) (i : Fin 8) :
     toggle x i ∈ shell x := mem_image.mpr ⟨i, mem_univ _, rfl⟩
@@ -118,7 +121,7 @@ private theorem toggle_distance (x : Vertex) (i : Fin 8) : distance x (toggle x 
   unfold distance hammingDist
   rw [hd, card_singleton]
 
-private theorem toggle_parity (x : Vertex) (i : Fin 8) :
+theorem toggle_parity (x : Vertex) (i : Fin 8) :
     parity (toggle x i) = 1 + parity x := by
   have h := distance_add_mod_two x (toggle x i) 0
   rw [toggle_distance, Nat.cast_one] at h
@@ -152,7 +155,7 @@ def relabel (σ : Equiv.Perm (Fin 8)) (r : Vertex) : Vertex ≃ Vertex :=
   change (BitVec.ofFin (w := 8) (0 : Vertex)).getLsbD i.val = false
   simp
 
-private theorem relabel_center (σ : Equiv.Perm (Fin 8)) (r : Vertex) :
+theorem relabel_center (σ : Equiv.Perm (Fin 8)) (r : Vertex) :
     relabel σ r r = 0 := by
   apply cube.injective
   funext i
@@ -190,7 +193,7 @@ theorem relabel_distance (σ : Equiv.Perm (Fin 8)) (r x y : Vertex) :
     refine ⟨σ i, mem_filter.mpr ⟨mem_univ _, ?_⟩, σ.symm_apply_apply i⟩
     simpa only [Equiv.symm_apply_apply] using (mem_filter.mp hi).2
 
-private theorem relabel_shell (σ : Equiv.Perm (Fin 8)) (r x : Vertex) :
+theorem relabel_shell (σ : Equiv.Perm (Fin 8)) (r x : Vertex) :
     (shell x).map (relabel σ r).toEmbedding = shell (relabel σ r x) := by
   ext z
   simp only [mem_map, shell, mem_image, mem_univ, true_and]
@@ -236,7 +239,7 @@ theorem row_singleton (x y : Vertex) : row {x} y = coeff (shell x) y := by
       exact h (shell_symm.mp hz)
     simp [he, coeff, h]
 
-private theorem shell_asFunction (x : Vertex) :
+theorem shell_asFunction (x : Vertex) :
     asFunction (shell x) = adjacency (asFunction {x}) := by
   funext y
   obtain ⟨r, rfl⟩ := cube.surjective y

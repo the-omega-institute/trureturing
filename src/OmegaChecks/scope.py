@@ -9,10 +9,12 @@ LIBRARIES = BASIS | {"OmegaMath"}
 CHECK_ROOTS = LIBRARIES | {"OmegaChecks"}
 AUDIT = "OmegaChecks.Audit"
 CERTIFICATE = "OmegaChecks.Interface.Equations"
-CHECK_INPUTS = {AUDIT, CERTIFICATE, "OmegaChecks.Portable.Exports", "OmegaChecks.Portable.ArtifactHashes"}
+CHECK_INPUTS = {AUDIT, CERTIFICATE, "OmegaChecks.Portable.Exports", "OmegaChecks.Portable.ArtifactHashes",
+                "OmegaBuild.Commands", "OmegaBuild.Plan"}
 SHARED = {"lean-toolchain", "lakefile.toml", "lake-manifest.json",
           "src/OmegaChecks/check.py", "src/OmegaChecks/portable.py",
-          "src/OmegaChecks/scope.py", "src/OmegaChecks/strict_lake.py"}
+          "src/OmegaChecks/scope.py", "src/OmegaChecks/strict_lake.py",
+          "src/OmegaChecks/test_backend_plan.py", "src/OmegaChecks/test_backend_scheduling.py"}
 REG_INPUTS = {"Reg/lakefile.toml", "Reg/lake-manifest.json", "Meta/tools-release.json"}
 FIBONACCI = "OmegaMathlib.Data.Nat.Fib.Basic"
 IMPORTER_INPUTS = {"OmegaMath", "OmegaChecks.Portable.Common"}
@@ -28,7 +30,7 @@ def module_path(path):
     if path.startswith(("src/", "strict/")):
         directory, _, relative = path.partition("/")
         name = relative.removesuffix(".lean").replace("/", ".")
-        if root(name) in (CHECK_ROOTS if directory == "src" else BASIS):
+        if root(name) in (CHECK_ROOTS | {"OmegaBuild"} if directory == "src" else BASIS):
             return name
     return None
 
@@ -72,12 +74,14 @@ def discover(changed_file):
         raise ValueError(f"invalid NUL-separated changed paths: {changed_file}")
     paths = set(raw.decode().split("\0")) - {""}
     changed = {path: name for path in paths if (name := module_path(path))}
-    shared = paths & SHARED
+    shared = (paths & SHARED) | {path for path in paths if path == "src/OmegaChecks/InitCompiler.lean"
+                                or path.startswith(("src/OmegaChecks/InitCompiler/", "src/OmegaChecks/InitPort/"))}
     reg_inputs = paths & REG_INPUTS
     if not (changed or shared or reg_inputs):
         return plan({}, {}, set(), set(), [], [])
     _, graph = import_graph("lean", with_reg=True)
-    _, official_basis = import_graph("lean", ("src/OmegaInit*.lean", "src/OmegaMathlib*.lean"),
+    _, official_basis = import_graph("lean", ("src/OmegaInit.lean", "src/OmegaInit/*.lean",
+                                             "src/OmegaMathlib.lean", "src/OmegaMathlib/*.lean"),
                                      official_basis=True)
     missing = {name for path, name in changed.items() if not (ROOT / path).is_file()}
     if missing:

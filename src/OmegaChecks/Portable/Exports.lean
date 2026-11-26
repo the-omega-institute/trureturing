@@ -12,7 +12,10 @@ def main (args : List String) : IO Unit := do
   let counterparts := selected.filterMap fun name =>
     if name == `OmegaMathlib then none else
       some ({module := name.replacePrefix name.getRoot (if name.getRoot == `OmegaInit then `Init else `Mathlib)} : Import)
-  let reference ← importModules counterparts {}
+  unsafe enableInitializersExecution
+  let reference ← importModules counterparts {} (loadExts := true)
+  let tokens := Parser.getTokenTable reference
+  let identifier := fun (n : Name) => n.toStringWithToken (isToken := fun s => (tokens.find? s).isSome)
   let mut publicImports := #[]
   let mut rows := #[]
   let mut seals := #[]
@@ -33,6 +36,11 @@ def main (args : List String) : IO Unit := do
       if data.constNames.contains name && (env.find? name).any (fun info => info.isAxiom || info matches .opaqueInfo _) &&
           (reference.find? upstream).any (· matches .defnInfo _) then
         seals := seals.push (owner.toString, upstream.toString)
-      let namespaceName := if original.isAnonymous then "_root_" else "_root_." ++ original.toString
-      rows := rows.push #[owner.toString, parent.toString, namespaceName, (Name.str .anonymous leaf).toString]
+      -- Generated lemmas such as id.eq_1 can have a declaration as prefix
+      -- without that prefix being an exportable namespace in its owning module.
+      if (reference.find? original).any (fun info => !info.isInductive) || !reference.isNamespace original then
+        rows := rows.push #[owner.toString, "Omega", "_root_", identifier upstream]
+      else
+        let namespaceName := if original.isAnonymous then "_root_" else identifier (`_root_ ++ original)
+        rows := rows.push #[owner.toString, identifier parent, namespaceName, identifier (.str .anonymous leaf)]
   IO.println (Json.mkObj [("imports", toJson publicImports), ("names", toJson rows), ("seals", toJson seals)]).compress

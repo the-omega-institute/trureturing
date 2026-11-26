@@ -5,6 +5,8 @@ description: Use when asked to formalize mathematics in this repository, using D
 
 # Codex Formalization Workflow
 
+Use the common interface to compile one source on both backends. `OmegaMathlib` is the checked strict subset of pinned Mathlib. If a consumer needs the full official API, import `OmegaBuild.Commands`, put `compile_only_with_mathlib` after the imports, and use Mathlib directly. All modules importing that consumer inherit the choice. [Two compilable examples](../../src/README.md#选择编译后端)
+
 ## Install
 
 This is a Codex skill package. Install it by copying the `skills/codex-formalize/` directory into `$CODEX_HOME/skills/` (default `~/.codex/skills`), or load it by naming this `SKILL.md` path directly in a dispatcher. This repository copy is the single source of truth; any installed copy is a projection of it.
@@ -102,7 +104,7 @@ Apply `CLAUDE.md` 11, "library before proof." Search the frozen D5 declarations 
 
 For an existing formalization migrating to strict Omega mathematics, use the [migration skill](../omega-math-migration/SKILL.md) to update the original owner and verify its dependencies. Keep consumer references on the consumer side.
 
-When OmegaMath lacks a reusable definition or theorem, add it to the library and import its narrowest module from D5. For a Mathlib port, replace the module root `Mathlib` with `OmegaMath`, preserve the rest of the defining path, and prefix the upstream declaration name with `Omega.`. Place original mathematics beside the relevant topic with `Omega original.` as the first line of the module documentation. Use the strict scoped audit from [the library guide](../../src/README.md). D5 owns problem-specific applications and their frozen book citations. For example, the general positive-scaling proof lives in `OmegaMath.Projective` as `Omega.Projective.kappa_scale`. A D5 citation can reuse it directly. Determine axiom use from the individual frozen declaration's measured closure.
+When strict support requires a Mathlib port, place it under `strict/OmegaMathlib/`, preserve the upstream defining path and prefix the declaration name with `Omega.`. Place original reusable mathematics under `src/OmegaMath/` beside the relevant topic with `Omega original.` as the first line of the module documentation. Import the narrowest applicable module from D5. Use the strict scoped audit from [the library guide](../../src/README.md). D5 owns problem-specific applications and their frozen book citations. For example, the general positive-scaling proof lives in `OmegaMath.Projective` as `Omega.Projective.kappa_scale`. A D5 citation can reuse it directly. Determine axiom use from the individual frozen declaration's measured closure.
 
 Check the bind path first: the cheapest faithful discharge is an existing frozen theorem, and dozens of residues have been discharged with zero new Lean. If a frozen declaration already covers the residue leg verbatim, use the canonical coverage route naming that declaration and the evidence, not a new module or a recommendation for another worker. If the writer cannot run, name that blocker and its next command; do not claim the atom is processed.
 

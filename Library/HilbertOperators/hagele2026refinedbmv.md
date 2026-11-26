@@ -30,7 +30,6 @@ strata_touched:
   - D5/S3/Quantum/Analysis/RefinedBMV/DimFourScalar
   - D5/S3/Quantum/Analysis/RefinedBMV/DimFourWalk
   - D5/S3/Quantum/Analysis/RefinedBMV/PositiveCenter/LeftStripGeometricIntervalSign
-  - D5/S3/Quantum/Analysis/RefinedBMV/PositiveCenter/LeftStripGeometricSign
   - D5/S3/Quantum/Analysis/RefinedBMV/PositiveCenter/LeftStripKernel
   - D5/S3/Quantum/Analysis/RefinedBMV/PositiveCenter/LeftStripLowSign
   - D5/S3/Quantum/Analysis/RefinedBMV/PositiveCenter/LeftStripWideSign

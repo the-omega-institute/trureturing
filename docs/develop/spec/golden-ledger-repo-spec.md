@@ -276,7 +276,7 @@ Registration bindings belong to their Reg occurrence owner. Delta selects change
 
 - `libraries` 是该声明最近一次测量得到的完整库根名称数组。缺省表示库来源未知，`[]` 表示测量所得的库根集合为空。测量从编译后的声明类型与定义值或证明项出发，递归遍历实际引用的声明及其编译依赖，涵盖私有、隐藏和其他未进入状态片的辅助声明，也涵盖仅在类型中出现的引用。库根取自所达声明的编译模块归属。测量穿过仓内 `D5`、`Reg`、`Trureturing` 和 `OmegaChecks` 根下的声明，将其依赖归入实际使用的数学库。`OmegaInit` 与 `OmegaMath` 虽与 D5 共用 Lake package，仍各以自身库根报告；来自其他库的可达声明也计入，包括官方 Lean 库和其他外部库。实际声明依赖决定库集合，源码 import 清单、声明命名空间和同一模块中的其他行均不提供库归属证据。
 - `axioms` 是该声明最近一次测量的实际传递公理闭包。许可集合恰为 `propext`、`Classical.choice`、`Quot.sound`。writer 写出测得的完整名称数组，包括全许可集合和代表实测零公理的 `[]`。历史行缺省时只提供三个标准公理的许可上界。超过许可集合的当前证据拒绝写入。两个可选数组使用规范排序且元素唯一。
-- `strict_omega` 记录同一数学源码在严格后端编译所得的 `declaration_name_key`、`kind`、`statement_type_address`、`libraries` 与 `axioms`，并以 `official_statement_type_address` 标识已通过导出对照的官方声明。两个陈述摘要分别取自各自的编译产物。严格对象缺省表示该行没有配对证据，严格对象内的两个依赖数组必填。对照器核验为官方编译器单独派生的辅助声明可仅保留官方测量。其余应有的严格声明缺失即拒绝更新。
+- `strict_omega` 记录同一数学源码在严格后端编译所得的 `declaration_name_key`、`kind`、`statement_type_address`、`libraries` 与 `axioms`，并以 `official_statement_type_address` 标识已通过导出对照的官方声明。两个陈述摘要分别取自各自的编译产物。严格对象缺省表示该行没有配对证据，严格对象内的两个依赖数组必填。显式或经导入链选择 `compile_only_with_mathlib` 的消费模块仅记录官方测量。双编模块中，对照器核验为官方编译器单独派生的辅助声明也可仅记录官方测量。其余应有的严格声明缺失即拒绝更新。
 
 可选字段记录写入时的测量。证明项、依赖或工具链变化后，陈述 pin 仍可相同，此时旧注记仍可读取。对当前编译结果的依赖断言须取当前证据。只有 `libraries` 明示非空且其全部成员属于 `{OmegaInit, OmegaMath}`，并且 `axioms` 明示为 `[]` 时，才可将该行描述为「仅依赖 Omega 库、零公理」（截至该次测量）。`libraries: []` 可支持空库依赖的读数，无 Omega 归属。严格模块审计的范围是整个编译导入闭包，包括未被该声明引用的模块和声明；其零公理及严格导入边界由独立的空内核重放与模块校验建立。
 
@@ -284,7 +284,7 @@ Registration bindings belong to their Reg occurrence owner. Delta selects change
 
 **A14.3 模块写入。** 对模块 M 的登记或重新钉定仅写 M 自己的状态片;规范内容相同即不写。writer 不改写其他模块的记录,不因 import 关系连带重钉下游,不要求整库报告,不做全账闭包检查。所需证据是 M 的当前范围报告,包括其编译 import 与 utility 输入;缺失或无效的所需证据仍拒绝写入。多模块请求逐模块遵守同一写集合边界。`--retire-registration` 的显式请求、源已移除、无残留 import、声明与证明保全及 Scribe/coverage 清理义务见 A5.6,不依赖事件依赖图。
 
-首次 deposit 从当前编译证据写出逐声明注记。对直接或经导入链使用 Omega 公共接口的 D5 模块，首次冻结与刷新都须编译对应源码、核对两个后端的产物归属与翻译后的导出，并将同一声明的两份闭包测量原子写入同一状态片。声明闭包实测零公理与空内核重放是两项证据，重放的结论只涵盖实际重放的闭包。重新钉定改变模块陈述 pin 时，该模块的逐声明注记须重新测量或清除。现有成员的全量重新测量由用户显式运行 `make frozen-refresh`。根 Makefile 经 `install-tools` 安装钉版工具，再从消费仓根目录无参数调用 `tools/scripts/agent/frozen-refresh.sh`。目标集合取全部已有状态片，编译检查覆盖这些模块的报告输入及其所需依赖。每个待写模块的现存陈述 pin 与声明身份须匹配当前报告，证据缺失、无效或不匹配时报错，该模块不得写入。刷新只更新可选注记，保持模块成员资格与陈述 pin。相同测量结果重复执行时零字节变化。采用读取器和 writer 本身无需迁移既有文件，普通读取和 CI 也无需重新测量。
+首次 deposit 从当前编译证据写出逐声明注记。对直接或经导入链使用 Omega 公共接口的 D5 模块，首次冻结与刷新均按当前工具链和官方编译产物中的模块元数据选择后端。模块声明 `compile_only_with_mathlib` 或导入闭包中有此声明时，记录官方端的实测依赖，刷新时移除已失去配对依据的 `strict_omega`。其余入选模块用同一份源码双编，核对两个后端的产物归属与翻译后的导出，再将同一声明的两份闭包测量原子写入同一状态片。声明闭包实测零公理与空内核重放是两项证据，重放的结论只涵盖实际重放的闭包。重新钉定改变模块陈述 pin 时，该模块的逐声明注记须重新测量或清除。现有成员的全量重新测量由用户显式运行 `make frozen-refresh`。根 Makefile 经 `install-tools` 安装钉版工具，再从消费仓根目录无参数调用 `tools/scripts/agent/frozen-refresh.sh`。目标集合取全部已有状态片，编译检查覆盖这些模块的报告输入及其所需依赖。每个待写模块的现存陈述 pin 与声明身份须匹配当前报告，证据缺失、无效或不匹配时报错，该模块不得写入。刷新只更新可选注记，保持模块成员资格与陈述 pin。相同测量结果重复执行时零字节变化。采用读取器和 writer 本身无需迁移既有文件，普通读取和 CI 也无需重新测量。
 
 writer 不提供事件追加、事件替换、`Reattest`、`Revoke`、`Supersede`、`EnvironmentRecoordinate` 动作,不提供 `ledger-append` 别名或 `--from-accepted` 物化入口。
 
@@ -477,9 +477,9 @@ Truth Release 按 A14.2 发布冻结声明最近一次测量的库根与公理�
 
 
 <a id="a22-ci-cache-flow"></a>
-**缓存角色与数据流。** 普通 push 在事件提交、PR 在 merge candidate 上计算模块的编译输入键。读者固定版本索引，按模块名和依赖闭包选择分片。Actions 缓存使用可读的 mathlib 修订与模块前缀作为键；缓存服务未命中时可从索引指定的 Release 取回同一分片。缺失的编译产物在当前作业按需构建。
+**缓存角色与数据流。** 普通 push 在事件提交、PR 在 merge candidate 上计算模块编译和适用报告的输入键。读者固定版本索引，按模块名和依赖闭包选择分片。Actions 缓存使用可读的 mathlib 修订与模块前缀作为键；缓存服务未命中时可从索引指定的 Release 取回同一分片。读者恢复命中模块的编译产物和适用的逐模块报告，Lake 按当前输入补建缺失或过期的产物。
 
-定时或授权手动触发的 Cache Release Publish 在共享并发组内固定受保护 dev 提交。编译范围包含 Trureturing、Reg 及其导入的接口模块，以及 Omega 库、检查模块和严格、common 后端的下游闭包。分片沿命名空间分配到独立 runner，成功分片可立即保存，后续运行按成员及编译输入继续使用。每一版的完整索引引用该版新产物和历史版本中的未变分片。发布器回读版本索引后向前更新共享引用。Actions 缓存驱逐时，读者沿相同索引从 Release 回读。
+定时或授权手动触发的 Cache Release Publish 在共享并发组内固定受保护 dev 提交。编译范围包含 Trureturing、Reg 及其导入的接口模块，以及 Omega 库、检查模块和严格、common 后端的下游闭包。分片沿命名空间分配到独立 runner，成功分片可立即保存，后续运行按成员及模块输入继续使用。每一版的完整索引引用该版新产物和历史版本中的未变分片。发布器回读版本索引后向前更新共享引用。Actions 缓存驱逐时，读者沿相同索引从 Release 回读。
 
 **本机 Lake 缓存与定向构建。** 干净的主 `dev` 经 `make warm-donor FULL_BUILD=1` 完成各 workspace 的预热。Lake 将可缓存的产物和输入映射写入本机原生 artifact cache，并在开发检出保留可供现有消费者使用的产物。定向构建和报告准备按各目标的依赖 trace 在本工作树中恢复或编译。定向报告只读取或恢复与 trace 相符的编译产物；Git 源码使用 manifest 钉版。定向入口在私有写锁下核对 pin 和探针，项目层为空时也可运行。独立全量缓存准备显式调用 `make lean-cache-ensure FULL_BUILD=1`，仅全量路径允许 donor clonefile。Release 与 Actions 恢复使用各自的入口。
 
@@ -501,7 +501,7 @@ source 在 judge cache 恢复后初始化余额；judge 与命中测试的 NuGet
 
 内容检查与基础设施行为测试分责：Lean、Scribe 及既有可执行源码全集的复制策略 guard 由 architecture 单元消费；普通内容变更不选择重量级 worktree 行为测试。worktree 实现、夹具及实际构建依赖变更仍由 `CI_UNITS` 显式选择行为测试，不通过运行时推导测试影响范围。原生报告的编译与模块 trace 仍是唯一增量权威；模块注册只建立 Lake 依赖，不逐模块同步等待编译输入分类；分类完成后由依赖 continuation 准备对应模块。保留原有输入 trace 和失败传播，不把判官程序身份混入报告 trace。共享程序构建与被选中的审计执行分责，缓存复用不免除审计。一次构建同时包含 Inspector 与下游审计程序时，在既有下游 Lake workspace 中共同构建，避免对同一程序闭包重复注册与缓存准备；单独 Inspector 或 Reg 入口保持原职责。Release 传输契约按既有 transport、verification 与本地/旧名 case 所有者分别执行，各组保留完整用例并独立使用原有子进程 hang guard；CI 单元选择、累计计算预算和功能判据不随分组改变。
 
-每个 job 的本地 `.lake/build` 承载编译、模块报告、聚合报告与材料。Actions cache 传输的原生路径由 `Meta/ci-cache-paths.json` 声明。Cache Release Publish 发布数学库的编译产物，消费者按检查范围生成模块报告。required 同时核对 source、current 和各命中单元的真实结果。
+每个 job 的本地 `.lake/build` 承载编译、模块报告、聚合报告与材料。Actions cache 传输的原生路径由 `Meta/ci-cache-paths.json` 声明。Cache Release Publish 将编译产物与受检模块的报告共同发布。普通检查按变更范围恢复模块，Truth Release 恢复全库范围，再由 Lake 核验和补建报告。required 同时核对 source、current 和各命中单元的真实结果。
 
 **触发、身份、读写与预算。** 表中写入资格还须满足下文工作量与成功条件；producer 不在 `required` 的 needs 中，不能替代实际选中的检查。
 
@@ -530,7 +530,7 @@ source 在 judge cache 恢复后初始化余额；judge 与命中测试的 NuGet
 
 模块报告的复用条件为 Lake trace、utility 和报告格式。judge 编译缓存绑定其构建输入与配方。
 
-**分片容量与报告。** 小模块按点号命名空间归并。根据压缩后的大小递归拆分超限分片，单模块超限时独立保存。手动发布的 `shard_mib` 和定时发布的仓库变量 `LEAN_MODULE_SHARD_MIB` 可调整 256 MiB 默认容量。每片独立保存，未变的分片继承已有版本的地址。模块报告由定向检查或冻结入口按需产生。
+**分片容量与报告。** 小模块按点号命名空间归并。根据压缩后的大小递归拆分超限分片，单模块超限时独立保存。手动发布的 `shard_mib` 和定时发布的仓库变量 `LEAN_MODULE_SHARD_MIB` 可调整 256 MiB 默认容量。每片独立保存，未变的分片继承已有版本的地址。每个受检模块在同一分片中带有一份 `lean-inspector/modules/<完整模块名>.zip` 及其 Lake `.hash` 和 `.trace`。消费者按所选模块安装这些文件，定向检查、冻结和发布均可复用与当前输入匹配的报告。
 
 [普通 CI](../../../.github/workflows/ci-current.yml) · [并发分片](../../../.github/workflows/ci-lean-generation-compile.yml) · [手动与定时发布](../../../.github/workflows/cache-release-publish.yml)
 

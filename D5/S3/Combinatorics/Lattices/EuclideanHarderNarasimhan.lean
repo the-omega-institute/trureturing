@@ -181,15 +181,15 @@ open Module Submodule
 variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
 
 /-- An integral submodule of a lattice, regarded in the ambient real vector space. -/
-private def ambient (L : Submodule ℤ E) (M : Submodule ℤ L) : Submodule ℤ E :=
+def ambient (L : Submodule ℤ E) (M : Submodule ℤ L) : Submodule ℤ E :=
   M.map L.subtype
 
 /-- The real span of an integral submodule of a lattice. -/
-private def realSpan (L : Submodule ℤ E) (M : Submodule ℤ L) : Submodule ℝ E :=
+def realSpan (L : Submodule ℤ E) (M : Submodule ℤ L) : Submodule ℝ E :=
   Submodule.span ℝ (ambient L M : Set E)
 
 /-- Saturation consists exactly of lattice points in the real span. -/
-private def saturation (L : Submodule ℤ E) (M : Submodule ℤ L) : Submodule ℤ L :=
+def saturation (L : Submodule ℤ E) (M : Submodule ℤ L) : Submodule ℤ L :=
   ((realSpan L M).restrictScalars ℤ).comap L.subtype
 
 /-- Real span is left adjoint to taking lattice points in a real subspace. -/
@@ -215,7 +215,7 @@ private theorem realSpan_saturation (L : Submodule ℤ E) (M : Submodule ℤ L) 
   (spanAdjunction L).l_u_l_eq_l M
 
 /-- Taking lattice points in a real span is an idempotent closure operation. -/
-private def closure (L : Submodule ℤ E) : ClosureOperator (Submodule ℤ L) :=
+def closure (L : Submodule ℤ E) : ClosureOperator (Submodule ℤ L) :=
   (spanAdjunction L).closureOperator
 
 /-- The saturated integral sublattices of the fixed ambient lattice. -/
@@ -267,7 +267,7 @@ private theorem ambient_rank_eq (L : Submodule ℤ E) (M : Submodule ℤ L) :
     Module.finrank ℤ M = Module.finrank ℤ (ambient L M) :=
   (Submodule.equivMapOfInjective L.subtype (Submodule.injective_subtype L) M).finrank_eq
 
-private theorem integral_rank_eq (L : Submodule ℤ E) [DiscreteTopology L]
+theorem integral_rank_eq (L : Submodule ℤ E) [DiscreteTopology L]
     (M : Submodule ℤ L) :
     Module.finrank ℤ M = Module.finrank ℝ (realSpan L M) := by
   rw [ambient_rank_eq L M, ← (spanLatticeEquiv (ambient L M)).finrank_eq]
@@ -340,7 +340,7 @@ section Gram
 
 variable {E : Type*} [SeminormedAddCommGroup E] [InnerProductSpace ℝ E]
 
-private theorem gram_linear_combination {ι κ : Type*} [Fintype ι]
+theorem gram_linear_combination {ι κ : Type*} [Fintype ι]
     (v : ι → E) (T : Matrix ι κ ℝ) :
     gram ℝ (fun j => ∑ i, T i j • v i) = T.transpose * gram ℝ v * T := by
   ext j k
@@ -444,7 +444,7 @@ section Discrete
 variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
   [FiniteDimensional ℝ E]
 
-private def realSpan (M : Submodule ℤ E) : Submodule ℝ E :=
+def realSpan (M : Submodule ℤ E) : Submodule ℝ E :=
   Submodule.span ℝ (M : Set E)
 
 set_option backward.isDefEq.respectTransparency false in
@@ -462,7 +462,7 @@ private theorem basis_real_linearIndependent {ι : Type*}
     rfl
   exact (congrArg (fun f : ι → E => LinearIndependent ℝ f) hfun).mp hb
 
-private theorem covolume_pos (M : Submodule ℤ E) [DiscreteTopology M] :
+theorem covolume_pos (M : Submodule ℤ E) [DiscreteTopology M] :
     0 < covolume M := by
   classical
   rw [covolume]
@@ -470,7 +470,7 @@ private theorem covolume_pos (M : Submodule ℤ E) [DiscreteTopology M] :
     (Matrix.posDef_gram_of_linearIndependent
       (basis_real_linearIndependent M (Module.Free.chooseBasis ℤ M))).det_pos
 
-private theorem integral_rank_eq (M : Submodule ℤ E) [DiscreteTopology M] :
+theorem integral_rank_eq (M : Submodule ℤ E) [DiscreteTopology M] :
     Module.finrank ℤ M = Module.finrank ℝ (realSpan M) := by
   rw [← (spanLatticeEquiv M).finrank_eq]
   exact ZLattice.rank ℝ (spanLattice M)
@@ -566,12 +566,12 @@ private theorem covolume_sum_le (L A B : Submodule ℤ E)
   exact EuclideanGram.shared_gram_volume_le cv av bv
 
 omit [FiniteDimensional ℝ E] in
-private theorem integral_le (L : Submodule ℤ E) (A : Sublattice L) : integral L A ≤ L := by
+theorem integral_le (L : Submodule ℤ E) (A : Sublattice L) : integral L A ≤ L := by
   rintro _ ⟨x, hx, rfl⟩
   exact x.property
 
 omit [FiniteDimensional ℝ E] in
-private theorem integral_saturated (L : Submodule ℤ E) (A : Sublattice L)
+theorem integral_saturated (L : Submodule ℤ E) (A : Sublattice L)
     (x : E) (hxL : x ∈ L) (hx : x ∈ realSpan (integral L A)) : x ∈ integral L A := by
   have hy : (⟨x, hxL⟩ : L) ∈ saturation L A.val := hx
   have hA := A.property.closure_eq
