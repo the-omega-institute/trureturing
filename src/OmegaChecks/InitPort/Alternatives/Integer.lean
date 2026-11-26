@@ -1,5 +1,6 @@
 module
 public import Init.Data.Int.DivMod.Lemmas
+public import Init.Data.Int.Pow
 
 namespace OmegaChecks.InitPort.Alternatives
 
@@ -99,5 +100,27 @@ public theorem Int.tdiv_eq_ediv : type_of% @_root_.Int.tdiv_eq_ediv := by
 public theorem Int.ediv_eq_tdiv : type_of% @_root_.Int.ediv_eq_tdiv := by
   intro a b
   rw [Int.tdiv_eq_ediv, Int.add_sub_cancel]
+
+public theorem Int.instLawfulBEq : type_of% @_root_.Int.instLawfulBEq where
+  rfl := decide_eq_true rfl
+  eq_of_beq h := of_decide_eq_true h
+
+public theorem Int.pow_succ : type_of% @_root_.Int.pow_succ := by
+  intro m n
+  cases m with
+  | ofNat a => rfl
+  | negSucc a =>
+    rw [Int.negSucc_pow, Int.negSucc_pow]
+    cases Nat.mod_two_eq_zero_or_one n with
+    | inl h =>
+      have odd : n.succ % 2 ≠ 0 := fun e =>
+        Nat.noConfusion (h.symm.trans (Nat.succ_mod_succ_eq_zero_iff.mp e))
+      rw [ite_eq_left h, ite_eq_right odd, Nat.pow_succ]
+      rfl
+    | inr h =>
+      have even : n.succ % 2 = 0 := Nat.succ_mod_succ_eq_zero_iff.mpr h
+      have odd : n % 2 ≠ 0 := fun e => Nat.noConfusion (h.symm.trans e)
+      rw [ite_eq_left even, ite_eq_right odd, Nat.pow_succ]
+      exact (Int.negOfNat_mul_negSucc _ _).symm
 
 end OmegaChecks.InitPort.Alternatives
