@@ -8,7 +8,7 @@ internal sealed class MandalMohanFibonacciPowerMeanDocument : IScribeDocumentDef
 {
     private const string Owner = "D5/S3/Arith/Recurrence/MandalMohanFibonacciPowerMean";
     private static readonly LibraryNoteRef Source = LibraryNoteRef.Create(
-        "D5/L/Recurrence/mandalmohan2026integralmeans");
+        "D5/L/RecurrenceAlgebraic/mandalmohan2026integralmeans");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Integrality of the quotient in Mandal and Mohan's Conjecture 1.19.",
