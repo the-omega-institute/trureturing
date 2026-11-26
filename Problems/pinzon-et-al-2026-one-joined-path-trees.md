@@ -2,7 +2,7 @@
 slug: pinzon-et-al-2026-one-joined-path-trees
 bibkey: pinzonetal2026onejoinedpaths
 doi: null
-url: https://arxiv.org/pdf/2611.34794v1#page=9
+url: https://arxiv.org/abs/2611.34794v1
 triage: theorem
 motivation_gids:
   - D5/S3/Combinatorics/Graph/LinearForests/OneJoinedPathTrees.oneJoined_iff_spineCut
