@@ -5,6 +5,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 module
 import all Init.Data.String.Lemmas.Pattern.TakeDrop.Basic
 import all Init.Data.String.Lemmas.Pattern.TakeDrop.Char
+import all Init.Data.String.Lemmas.Pattern.TakeDrop.Pred
 import all Init.Data.String.Lemmas.Pattern.TakeDrop.String
 import all Init.Data.String.Slice
 import all Init.Data.String.Basic
@@ -279,3 +280,53 @@ public theorem revAll_slice_iff : type_of% @_root_.String.Slice.revAll_slice_iff
     _root_.String.Slice.Pattern.Model.ForwardSliceSearcher.isLongestRevMatchAtChain_startPos_endPos_iff
 
 end OmegaChecks.InitPort.Alternatives.String.Slice
+
+namespace OmegaChecks.InitPort.Alternatives.String
+
+public theorem startsWith_char_eq_false_iff_forall_append : type_of% @_root_.String.startsWith_char_eq_false_iff_forall_append := by
+  intro c text
+  have h := Slice.startsWith_char_eq_false_iff_forall_append (c := c) (s := text.toSlice)
+  rwa [_root_.String.copy_toSlice] at h
+
+public theorem endsWith_char_eq_false_iff_forall_append : type_of% @_root_.String.endsWith_char_eq_false_iff_forall_append := by
+  intro c text
+  have h := Slice.endsWith_char_eq_false_iff_forall_append (c := c) (s := text.toSlice)
+  rwa [_root_.String.copy_toSlice] at h
+
+public theorem Slice.apply_skipSuffixWhile_prop : type_of% @_root_.String.Slice.apply_skipSuffixWhile_prop := by
+  intro pred decidable s ne
+  exact _root_.String.Slice.Pos.apply_revSkipWhile_prop (pos := s.endPos) (h := ne)
+
+public theorem apply_skipSuffixWhile_prop : type_of% @_root_.String.apply_skipSuffixWhile_prop := by
+  intro pred decidable s ne
+  exact _root_.String.Pos.apply_revSkipWhile_prop (pos := s.endPos) (h := ne)
+
+public theorem Slice.takeWhile_eq_self_iff : type_of% @_root_.String.Slice.takeWhile_eq_self_iff := by
+  intro ρ pat instancePattern s
+  exact _root_.String.Slice.sliceTo_eq_self_iff.trans
+    (Slice.Pattern.Model.positionBeq (s.skipPrefixWhile pat) s.endPos).symm
+
+public theorem Slice.isEmpty_dropWhile : type_of% @_root_.String.Slice.isEmpty_dropWhile := by
+  intro ρ pat instancePattern s
+  exact Bool.eq_iff_iff.mpr
+    (_root_.String.Slice.isEmpty_dropWhile_iff_takeWhile_eq_self.trans Slice.takeWhile_eq_self_iff)
+
+public theorem Slice.takeWhile_takeWhile : type_of% @_root_.String.Slice.takeWhile_takeWhile := by
+  intro ρ pat model instancePattern lawful s
+  exact Slice.takeWhile_eq_self_iff.mpr _root_.String.Slice.all_takeWhile
+
+public theorem Slice.takeEndWhile_eq_self_iff : type_of% @_root_.String.Slice.takeEndWhile_eq_self_iff := by
+  intro ρ pat instancePattern s
+  exact _root_.String.Slice.sliceFrom_eq_self_iff.trans
+    (Slice.Pattern.Model.positionBeq (s.skipSuffixWhile pat) s.startPos).symm
+
+public theorem Slice.isEmpty_dropEndWhile : type_of% @_root_.String.Slice.isEmpty_dropEndWhile := by
+  intro ρ pat instancePattern s
+  exact Bool.eq_iff_iff.mpr
+    (_root_.String.Slice.isEmpty_dropEndWhile_iff_takeEndWhile_eq_self.trans Slice.takeEndWhile_eq_self_iff)
+
+public theorem Slice.takeEndWhile_takeEndWhile : type_of% @_root_.String.Slice.takeEndWhile_takeEndWhile := by
+  intro ρ pat model instancePattern lawful s
+  exact Slice.takeEndWhile_eq_self_iff.mpr _root_.String.Slice.revAll_takeEndWhile
+
+end OmegaChecks.InitPort.Alternatives.String
