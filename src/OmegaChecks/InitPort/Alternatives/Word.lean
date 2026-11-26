@@ -48,4 +48,30 @@ public theorem BitVec.neg_one_eq_allOnes : type_of% @_root_.BitVec.neg_one_eq_al
     rw [_root_.BitVec.toNat_neg, _root_.BitVec.toNat_ofNat, Nat.mod_eq_of_lt (Nat.one_lt_two_pow k.succ_ne_zero),
       _root_.BitVec.toNat_allOnes, Nat.mod_eq_of_lt (Nat.sub_lt (Nat.two_pow_pos _) Nat.zero_lt_one)]
 
+public theorem BitVec.toNat_twoPow : type_of% @_root_.BitVec.toNat_twoPow := by
+  intro w i
+  rw [_root_.BitVec.twoPow, _root_.BitVec.toNat_shiftLeft, _root_.BitVec.toNat_ofNat,
+    Nat.shiftLeft_eq, Nat.mod_mul_mod, Nat.one_mul]
+
+public theorem Nat.pow_pred_lt_pow : type_of% @_root_.Nat.pow_pred_lt_pow :=
+  fun hx hw => Nat.pow_lt_pow_of_lt hx (Nat.sub_one_lt_of_lt hw)
+
+public theorem Nat.two_pow_pred_lt_two_pow : type_of% @_root_.Nat.two_pow_pred_lt_two_pow :=
+  fun h => Nat.pow_lt_pow_of_lt Nat.one_lt_two (Nat.sub_one_lt_of_lt h)
+
+public theorem Nat.two_pow_pred_mod_two_pow : type_of% @_root_.Nat.two_pow_pred_mod_two_pow :=
+  fun h => Nat.mod_eq_of_lt (Nat.pow_lt_pow_of_lt Nat.one_lt_two (Nat.sub_one_lt_of_lt h))
+
+public theorem Nat.two_pow_pred_add_two_pow_pred : type_of% @_root_.Nat.two_pow_pred_add_two_pow_pred :=
+  fun h => (Nat.mul_two _).symm.trans (Nat.two_pow_pred_mul_two h)
+
+public theorem Int.two_pow_pred_sub_two_pow : type_of% @_root_.Int.two_pow_pred_sub_two_pow := by
+  intro w h
+  rw [← Nat.two_pow_pred_add_two_pow_pred h, Int.natCast_add, ← Int.sub_sub, Int.sub_self, Int.zero_sub]
+
+public theorem BitVec.toNat_sub_of_le : type_of% @_root_.BitVec.toNat_sub_of_le := by
+  intro w x y h
+  rw [_root_.BitVec.toNat_sub, ← Nat.sub_add_comm (Nat.le_of_lt y.isLt), Nat.add_sub_assoc h,
+    Nat.add_mod_left, Nat.mod_eq_of_lt (Nat.lt_of_le_of_lt (Nat.sub_le ..) x.isLt)]
+
 end OmegaChecks.InitPort.Alternatives
