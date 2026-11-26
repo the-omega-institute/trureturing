@@ -310,11 +310,14 @@ public def namedLogicalProjections (source : Environment) (body : Expr) : IO Exp
     return ← action.run' |>.toIO' {fileName := "<logical projection>", fileMap := default} {env := source}
   catch _ => return body
 
+private def choiceWitness? (e : Expr) : Bool :=
+  e.isAppOfArity `Classical.choice 2 ||
+    ([`Classical.choose, `Classical.choose_spec, `Exists.choose, `Exists.choose_spec,
+      `Classical.indefiniteDescription].any fun n => e.isAppOfArity n 3)
+
 private def eliminateChoice (e : Expr) : MetaM Expr := do
   unless e.isApp do return e
-  let some chosen := e.find? (fun expr => !expr.hasLooseBVars &&
-    (expr.isAppOfArity `Classical.choose 3 || expr.isAppOfArity `Classical.choose_spec 3 ||
-     expr.isAppOfArity `Classical.choice 2 || expr.isAppOfArity `Classical.indefiniteDescription 3)) | return e
+  let some chosen := e.find? (fun expr => !expr.hasLooseBVars && choiceWitness? expr) | return e
   let conclusion ← Meta.inferType e
   unless ← Meta.isProp conclusion do return e
   let .const name us := chosen.getAppFn | return e
@@ -326,15 +329,15 @@ private def eliminateChoice (e : Expr) : MetaM Expr := do
       if sub == chosen then some x else none)
     return mkApp4 (mkConst `Nonempty.elim us) α conclusion args[1]! branch
   let p := args[1]!
-  let witness := mkAppN (mkConst `Classical.choose us) args
-  let spec := mkAppN (mkConst `Classical.choose_spec us) args
+  let witnesses := [`Classical.choose, `Exists.choose].map fun n => mkAppN (mkConst n us) args
+  let specs := [`Classical.choose_spec, `Exists.choose_spec].map fun n => mkAppN (mkConst n us) args
   let desc := mkAppN (mkConst `Classical.indefiniteDescription us) args
-  if [witness, spec, desc].any (·.occurs conclusion) then return e
+  if (desc :: witnesses ++ specs).any (·.occurs conclusion) then return e
   let branch ← Meta.withLocalDeclD `w α fun x =>
     Meta.withLocalDeclD `hw (p.beta #[x]) fun hx => do
       let term := e.replace fun sub =>
-        if sub == witness then some x
-        else if sub == spec then some hx
+        if witnesses.contains sub then some x
+        else if specs.contains sub then some hx
         else if sub == desc then some (mkApp4 (mkConst `Subtype.mk us) α p x hx)
         else none
       Meta.mkLambdaFVars #[x, hx] term
@@ -363,7 +366,7 @@ public def decidableProof (source : Environment) (body : Expr) : IO Expr := do
   let body := exposeDecidableTheorems source body
   let classical := [`Classical.em, `Classical.byCases, `Classical.byContradiction, `Classical.propDecidable]
   let deps := body.getUsedConstants
-  let usesChoice := deps.any [`Classical.choose, `Classical.choose_spec, `Classical.choice,
+  let usesChoice := deps.any [`Classical.choose, `Classical.choose_spec, `Exists.choose, `Exists.choose_spec, `Classical.choice,
     `Classical.indefiniteDescription].contains
   unless usesChoice || deps.any classical.contains do return body
   let action : MetaM Expr := Meta.transform body (post := fun e => do
