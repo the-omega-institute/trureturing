@@ -14,11 +14,11 @@ namespace D5.S3.Combinatorics.MonotoneIntervalReconstruction
 
 /-- Every interval contributes once, including coincident sums, with both endpoints included. -/
 theorem result (A B : List ℝ)
-    (hA : 3 ≤ A.length) (hB : 3 ≤ B.length)
+    (hA : 3 ≤ A.length)
     (ha : ∀ x ∈ A, 0 ≤ x) (hb : ∀ x ∈ B, 0 ≤ x)
     (hsA : A.Pairwise (· ≤ ·)) (hsB : B.Pairwise (· ≤ ·))
     (he : Omega.MonotoneIntervalReconstruction.listObservations A =
       Omega.MonotoneIntervalReconstruction.listObservations B) : A = B :=
-  Omega.MonotoneIntervalReconstruction.list_reconstruct A B hA hB ha hb hsA hsB he
+  Omega.MonotoneIntervalReconstruction.list_reconstruct A B hA ha hb hsA hsB he
 
 end D5.S3.Combinatorics.MonotoneIntervalReconstruction

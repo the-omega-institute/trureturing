@@ -262,13 +262,19 @@ theorem prefix_extension {a b : ℕ → ℝ} {n k : ℕ}
 
 /-- Reconstruction on arbitrary finite nonnegative weakly increasing real sequences. -/
 theorem reconstruct {a b : ℕ → ℝ} {n m : ℕ}
-    (hn : 3 ≤ n) (hm : 3 ≤ m)
+    (hn : 3 ≤ n)
     (ha : ∀ k < n, 0 ≤ a k) (hb : ∀ k < m, 0 ≤ b k)
     (hsa : ∀ u v, u ≤ v → v < n → a u ≤ a v)
     (hsb : ∀ u v, u ≤ v → v < m → b u ≤ b v)
     (he : observations a n = observations b m) :
     n = m ∧ ∀ k < n, a k = b k := by
-  have hnm := length_eq_of_observations_eq (by omega : 1 ≤ n) (by omega : 1 ≤ m) he
+  have hm : 1 ≤ m := by
+    have hz := total_mem a (by omega : 2 ≤ n)
+    rw [he] at hz
+    obtain ⟨⟨i,j⟩, hp, _⟩ := Multiset.mem_map.mp hz
+    have hij := mem_intervals.mp hp
+    omega
+  have hnm := length_eq_of_observations_eq (by omega : 1 ≤ n) hm he
   subst m
   refine ⟨rfl, ?_⟩
   have hinit := first_eq hn ha hb hsa hsb he
@@ -286,7 +292,7 @@ noncomputable def listObservations (L : List ℝ) : Multiset ℝ :=
 
 /-- Unordered inclusive interval sums of length at least two determine the full list. -/
 theorem list_reconstruct (A B : List ℝ)
-    (hA : 3 ≤ A.length) (hB : 3 ≤ B.length)
+    (hA : 3 ≤ A.length)
     (ha : ∀ x ∈ A, 0 ≤ x) (hb : ∀ x ∈ B, 0 ≤ x)
     (hsA : A.Pairwise (· ≤ ·)) (hsB : B.Pairwise (· ≤ ·))
     (he : listObservations A = listObservations B) : A = B := by
@@ -306,7 +312,7 @@ theorem list_reconstruct (A B : List ℝ)
     intro u v huv hv
     rw [List.getD_eq_getElem B 0 (by omega), List.getD_eq_getElem B 0 hv]
     exact hsB.rel_get_of_le (a := ⟨u, by omega⟩) (b := ⟨v,hv⟩) huv
-  have hr := reconstruct hA hB nonnegA nonnegB sortedA sortedB he
+  have hr := reconstruct hA nonnegA nonnegB sortedA sortedB he
   apply List.ext_getElem hr.1
   intro k hkA hkB
   simpa only [List.getD_eq_getElem A 0 hkA, List.getD_eq_getElem B 0 hkB]

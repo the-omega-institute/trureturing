@@ -23,9 +23,13 @@ minimum. This proof route belongs to Hegyvári, Pach and Tang.
 
 `Omega.MonotoneIntervalReconstruction.list_reconstruct` establishes the proposed
 extension to nonnegative nondecreasing real lists, including zeros, equal
-entries and repeated sums. Length equality follows from the observation
-cardinality and is not an assumption. The extension is a repository derivation;
-the cited proposition is not a supplier theorem for its enlarged scope.
+entries and repeated sums. For arbitrary such lists A and B, only length(A)≥3
+is assumed; B has no supplied length bound. The whole-list interval of A gives
+an observation, so equal data force B to contain an actual interval and hence
+to have positive length. Observation cardinality then forces length(B)=length(A),
+including length(B)≥3. Length equality is not an assumption. The extension is a
+repository derivation; the cited proposition is not a supplier theorem for its
+enlarged scope.
 
 The publication reports an O(n²) operation count. The formal result claims only
 unique reconstruction and does not certify sorting, deletion, bit complexity,

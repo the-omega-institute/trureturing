@@ -22,7 +22,8 @@ internal sealed class MonotoneIntervalReconstructionDocument : IScribeDocumentDe
                     + "Equal adjacent entries and zeros are allowed. C(L) is the multiset "
                     + "containing one occurrence of the inclusive sum from i through j for "
                     + "every 0≤i<j<length(L). All multiplicities are retained. The input "
-                    + "provides neither interval labels nor singleton sums. The two lengths "
+                    + "provides neither interval labels nor singleton sums. Only length(A)≥3 "
+                    + "is assumed; B has no supplied length bound, and the two lengths "
                     + "are not assumed equal.")),
                 Paragraph(Text("The mathematical source is Omega.MonotoneIntervalReconstruction.list_reconstruct "
                     + "in OmegaMath.Combinatorics.MonotoneIntervalReconstruction. The D5 result "
@@ -31,8 +32,11 @@ internal sealed class MonotoneIntervalReconstructionDocument : IScribeDocumentDe
                     + "to the sum over Finset.Icc. Thus each interval contributes once, even "
                     + "when many pairs have the same value. The list accessor getD is used "
                     + "only at indices inside the list; its default does not affect C.")),
-                Paragraph(Text("Cardinality of C first determines the positive length: increasing "
-                    + "n strictly enlarges the interval set. The maximum observation is the "
+                Paragraph(Text("A contributes its whole-list interval, so C(A) is nonempty. "
+                    + "Equality of observations gives an actual interval in B, forcing its "
+                    + "length to be positive. Cardinality of C then determines the length: "
+                    + "increasing a positive n strictly enlarges the interval set. Thus B "
+                    + "also has length at least three. The maximum observation is the "
                     + "whole-list sum T. After removing exactly the single occurrence indexed "
                     + "by the whole list, the maximum is the sum S from index 1 to n−1. "
                     + "Every other proper interval omits either the first or the last entry; "
@@ -75,10 +79,9 @@ internal sealed class MonotoneIntervalReconstructionDocument : IScribeDocumentDe
         var realList = Call("List", V("Real"));
         return All("A", realList, All("B", realList,
             Imp(Rel(D(3), FormulaRelationOperator.LessThanOrEqual, Call("length", A)),
-            Imp(Rel(D(3), FormulaRelationOperator.LessThanOrEqual, Call("length", B)),
             Imp(Call("Nonnegative", A), Imp(Call("Nonnegative", B),
             Imp(Call("Nondecreasing", A), Imp(Call("Nondecreasing", B),
             Imp(Rel(Call("C", A), FormulaRelationOperator.Equal, Call("C", B)),
-                Rel(A, FormulaRelationOperator.Equal, B))))))))));
+                Rel(A, FormulaRelationOperator.Equal, B)))))))));
     }
 }
