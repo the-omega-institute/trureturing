@@ -1,6 +1,6 @@
-/- GID: D5/S3/Arith/OeisA367865RadicalAverage
+/- GID: D5/S3/Arith/Divisors/OeisA367865RadicalAverage
    generality: G
-   mirror-B: D5/B/S3/Arith/OeisA367865RadicalAverage
+   mirror-B: D5/B/S3/Arith/Divisors/OeisA367865RadicalAverage
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: []
    utility: none
@@ -21,7 +21,7 @@ open scoped BigOperators ArithmeticFunction.Moebius
 open ArithmeticFunction
 open UniqueFactorizationMonoid
 
-namespace D5.S3.Arith.OeisA367865RadicalAverage
+namespace D5.S3.Arith.Divisors.OeisA367865RadicalAverage
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -217,4 +217,4 @@ theorem result (n : ℕ) (hn : 0 < n) :
   have hm : 0 < m := Nat.radical_pos n
   field_simp [show (n : ℚ) ≠ 0 by exact_mod_cast hn.ne', show (m : ℚ) ≠ 0 by exact_mod_cast hm.ne']
 
-end D5.S3.Arith.OeisA367865RadicalAverage
+end D5.S3.Arith.Divisors.OeisA367865RadicalAverage

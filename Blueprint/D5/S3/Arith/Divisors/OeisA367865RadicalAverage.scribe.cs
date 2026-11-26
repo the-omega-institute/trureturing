@@ -2,13 +2,13 @@ using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Arith;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.Divisors;
 
 internal sealed class OeisA367865RadicalAverageDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S3/Arith/OeisA367865RadicalAverage.";
+    private const string Prefix = "D5/S3/Arith/Divisors/OeisA367865RadicalAverage.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/ArithSums/oeis2026a367865");
+        LibraryNoteRef.Create("D5/L/PrimeForms/oeis2026a367865");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The radical-weighted divisor sum is the radical average over a complete positive interval.",

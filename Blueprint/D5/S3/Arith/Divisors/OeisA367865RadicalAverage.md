@@ -8,7 +8,7 @@ The radical-weighted divisor sum is the radical average over a complete positive
 
 $$\forall n\in \mathbb{N}, 1\le n \Rightarrow \sum_{d\in\operatorname{Nat}.\operatorname{divisors}\left(n\right)} d \cdot \phi(d) \cdot \mu(d)^{2} = \frac{rad\left(n\right)}{n} \cdot \sum_{k\in\operatorname{Finset}.\operatorname{Icc}\left(1, n\right)} \frac{rad\left(n \cdot k\right)}{rad\left(k\right)}$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/OeisA367865RadicalAverage.result` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Divisors/OeisA367865RadicalAverage.result` (`✓ std3`). ∎
 
 *Citation.* OEIS Foundation Inc. (2026). *OEIS A367865*. URL: <https://oeis.org/A367865>.
 
@@ -22,4 +22,4 @@ The squarefree radical m has exactly the squarefree divisors of n. Mathlib's Mö
 
 ## References
 
-- Truth anchor: `D5/S3/Arith/OeisA367865RadicalAverage.result`
+- Truth anchor: `D5/S3/Arith/Divisors/OeisA367865RadicalAverage.result`
