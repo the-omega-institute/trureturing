@@ -282,4 +282,14 @@ protected theorem lt_of_sub_lt_sub_right {a b c : Int} (h : (a.sub c).lt (b.sub 
 protected theorem sub_lt_sub_right_iff {a b c : Int} : Iff ((a.sub c).lt (b.sub c)) (a.lt b) :=
   Iff.intro Int.lt_of_sub_lt_sub_right (fun h => Int.sub_lt_sub_right h c)
 
+theorem natAbs_eq_natAbs_iff {a b : Int} : Iff (Eq a.natAbs b.natAbs) (Or (Eq a b) (Eq a b.neg)) :=
+  Iff.intro (fun h =>
+    have same := congrArg ofNat h
+    (natAbs_eq a).elim
+      (fun ha => (natAbs_eq b).elim (fun hb => Or.inl (ha.trans (same.trans hb.symm)))
+        (fun hb => Or.inr (ha.trans (same.trans ((Int.neg_neg (ofNat b.natAbs)).symm.trans (congrArg Int.neg hb.symm))))))
+      (fun ha => (natAbs_eq b).elim (fun hb => Or.inr (ha.trans (congrArg Int.neg (same.trans hb.symm))))
+        (fun hb => Or.inl (ha.trans ((congrArg Int.neg same).trans hb.symm)))))
+    (fun pair => pair.elim (congrArg natAbs) (fun e => (congrArg natAbs e).trans (natAbs_neg b)))
+
 end Omega.Int
