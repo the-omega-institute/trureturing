@@ -120,15 +120,17 @@ class ScopeTests(unittest.TestCase):
                     check.portable.backend_plan("test-path", [name])
                 self.assertIn(" -> ".join(chain), str(error.exception))
 
-    def test_strict_witnesses_are_resolved_officially_only_if_they_can_use_a_marker(self):
-        graph = {"OmegaBuild.Commands": set(), "OmegaMath.Base": set(),
+    def test_official_plan_includes_every_publication_and_witnesses_that_can_use_a_marker(self):
+        graph = {"OmegaBuild.Commands": set(), "OmegaInit.Base": set(), "OmegaMathlib.Base": set(),
+                 "OmegaMath.Base": set(),
                  "OmegaMath.Optional": {"OmegaBuild.Commands"},
                  "OmegaChecks.Mixed": {"OmegaMath.Base"},
                  "OmegaChecks.Optional": {"OmegaMath.Optional"},
                  "D5.Marked": {"OmegaBuild.Commands"},
                  "Trureturing": {"D5.Marked"}, "OmegaChecks.D5Witness": {"Trureturing"}}
         self.assertEqual(library_backend_candidates(graph, graph),
-                         ["OmegaMath.Optional", "OmegaChecks.Optional", "D5.Marked", "Trureturing", "OmegaChecks.D5Witness"])
+                         ["OmegaInit.Base", "OmegaMathlib.Base", "OmegaMath.Base", "OmegaMath.Optional",
+                          "OmegaChecks.Optional", "D5.Marked", "Trureturing", "OmegaChecks.D5Witness"])
 
     def test_full_and_incremental_probes_schedule_only_eligible_strict_roots(self):
         graph = {"OmegaMath.Base": set(), "OmegaChecks.Marked": {"OmegaMath.Base"},

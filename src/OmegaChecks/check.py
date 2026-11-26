@@ -65,20 +65,21 @@ def terminal_modules(graph, names):
 
 
 def library_backend_candidates(graph, names):
-    # Mixed witnesses can use the concrete strict implementation. Only resolve
-    # their official artifacts if the command is reachable.
+    # The official facade can acquire its own private imports or select a backend.
+    # Other mixed witnesses can rely on reductions available only in the strict foundation.
     reachable = {"OmegaBuild.Commands"}
     for name in names:
         if graph[name] & reachable:
             reachable.add(name)
-    return [name for name in names if name in reachable and root(name) != "OmegaBuild"]
+    return [name for name in names if root(name) in STRICT or (name in reachable and root(name) != "OmegaBuild")]
 
 
 def library_mathlib_only(graph, targets):
     candidates = library_backend_candidates(graph, closure(graph, targets))
     if not candidates:
         return {}
-    run("lake", "build", *("+" + name for name in terminal_modules(graph, candidates)))
+    # A strict import edge can be absent on the official side. Build every input to the planner.
+    run("lake", "build", *("+" + name for name in candidates))
     official_path = portable.output("lake", "env", "printenv", "LEAN_PATH").strip()
     return portable.backend_plan(official_path, candidates)["mathlibOnly"]
 
@@ -121,8 +122,6 @@ def check_library(selected=()):
     if roots:
         subprocess.run([AUDIT, "--exact-roots", LIB, *roots, "--", *modules],
                        cwd=ROOT, env=audit_environment(), check=True)
-        # Official facade imports may differ from the strict graph. Load every selected module.
-        run("lake", "build", *("+" + name for name in modules))
         official_path = portable.output("lake", "env", "printenv", "LEAN_PATH").strip()
         run(AUDIT, "--publication-layers", official_path, *modules)
     return requested
