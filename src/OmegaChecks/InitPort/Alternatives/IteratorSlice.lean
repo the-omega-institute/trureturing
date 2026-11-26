@@ -1,4 +1,5 @@
 module
+public import Init.Data.Iterators.Consumers.Monadic.Access
 public import OmegaChecks.InitPort.Alternatives.FiniteLoop
 public import Init.Data.Slice.Array.Lemmas
 import all Init.Data.Slice.Array.Iterator
@@ -307,5 +308,15 @@ public theorem Std.Iterators.Types.Flatten.IsPlausibleStep.outerYield_flatMapM_p
   · apply FilterMap.PlausibleStep.yieldSome h
     exact ⟨⟨out, rfl⟩, rfl⟩
   · exact returns
+
+public theorem Std.IterM.not_isPlausibleNthOutputStep_yield :
+    type_of% @_root_.Std.IterM.not_isPlausibleNthOutputStep_yield := by
+  intro α β m _ n it it' h
+  generalize eq : IterStep.skip it' = s at h
+  induction h with
+  | zero_yield => cases eq
+  | done => cases eq
+  | yield _ _ ih => exact ih eq
+  | skip _ _ ih => exact ih eq
 
 end OmegaChecks.InitPort.Alternatives
