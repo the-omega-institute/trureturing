@@ -1113,6 +1113,103 @@ run_cmd
       ``funextFromLeftInverseId, ``funextFromRightInverseId, ``funextFromForInEq] do
     unless (← collectAxioms n).isEmpty do throwError "reader congruence witness {n} uses axioms"
 
+namespace TransformerLaws
+
+/-- A pointwise identity can be applied in the error branch of both mapping and binding. -/
+@[instance_reducible] private def exceptionMonad {ε : Type u} (reset : ε → ε) : Monad (fun α : Type u => Except ε α) where
+  pure := Except.ok
+  bind x k := match x with | .ok a => k a | .error e => .error (reset e)
+  map f x := match x with | .ok a => .ok (f a) | .error e => .error (reset e)
+
+private theorem lawful {ε : Type u} (reset : ε → ε) (fixed : ∀ e, reset e = e) :
+    letI := exceptionMonad reset; LawfulMonad (fun α : Type u => Except ε α) := by
+  letI := exceptionMonad reset
+  exact {
+    map_const := rfl
+    id_map := by intro _ x; cases x <;> first | rfl | exact congrArg Except.error (fixed _) | exact congrArg Except.error (fixed _).symm
+    comp_map := by intro _ _ _ g h x; cases x <;> first | rfl | exact congrArg Except.error (fixed _) | exact congrArg Except.error (fixed _).symm
+    pure_seq := by intro _ _ f x; cases x <;> first | rfl | exact congrArg Except.error (fixed _) | exact congrArg Except.error (fixed _).symm
+    map_pure := by intros; rfl
+    seq_pure := by intro _ _ g x; cases g <;> first | rfl | exact congrArg Except.error (fixed _) | exact congrArg Except.error (fixed _).symm
+    seqLeft_eq := by intro _ _ x y; cases x <;> cases y <;> first | rfl | exact congrArg Except.error (fixed _) | exact congrArg Except.error (fixed _).symm
+    seqRight_eq := by intro _ _ x y; cases x <;> cases y <;> first | rfl | exact congrArg Except.error (fixed _) | exact congrArg Except.error (fixed _).symm
+    seq_assoc := by intro _ _ _ x g h; cases x <;> cases g <;> cases h <;> first | rfl | exact congrArg Except.error (fixed _) | exact congrArg Except.error (fixed _).symm
+    bind_pure_comp := by intro _ _ f x; cases x <;> first | rfl | exact congrArg Except.error (fixed _) | exact congrArg Except.error (fixed _).symm
+    bind_map := by intro _ _ f x; cases f <;> cases x <;> first | rfl | exact congrArg Except.error (fixed _) | exact congrArg Except.error (fixed _).symm
+    pure_bind := by intros; rfl
+    bind_assoc := by intro _ _ _ x f g; cases x <;> first | rfl | exact congrArg Except.error (fixed _)
+  }
+
+private def Graph {T : Type u} (f : T → T) := (x : T) × {y : T // f x = y}
+private def resetGraph {T : Type u} (f : T → T) (p : Graph f) : Graph f := ⟨p.1, f p.1, rfl⟩
+private theorem resetGraph_eq {T : Type u} (f : T → T) (p : Graph f) : resetGraph f p = p := by
+  rcases p with ⟨x,y,hy⟩
+  cases hy
+  rfl
+
+private abbrev ErrorM {T : Type u} (f : T → T) (α : Type u) := Except (Graph f) α
+
+private theorem readerIdentity {T : Type u} {f g : T → T} (agree : ∀ x, f x = g x)
+    (identityLaw : letI := exceptionMonad (resetGraph f); LawfulFunctor (ReaderT T (ErrorM f))) :
+    f = g := by
+  letI := exceptionMonad (resetGraph f)
+  letI : LawfulFunctor (ReaderT T (ErrorM f)) := identityLaw
+  let input : ReaderT T (ErrorM f) PUnit := fun t => .error ⟨t, g t, agree t⟩
+  let output (a : ReaderT T (ErrorM f) PUnit) (t : T) :=
+    match a t with | .error s => s.2.val | .ok _ => t
+  exact congrArg output (id_map input)
+
+private theorem viaFunctor (law : type_of% @ReaderT.instLawfulFunctor.{u,u})
+    {T : Type u} {f g : T → T} (agree : ∀ x, f x = g x) : f = g := by
+  letI := exceptionMonad (resetGraph f)
+  letI : LawfulMonad (ErrorM f) := lawful (resetGraph f) (resetGraph_eq f)
+  exact readerIdentity agree ((law (ρ := T) (m := ErrorM f)))
+
+private theorem viaApplicative (law : type_of% @ReaderT.instLawfulApplicative.{u,u})
+    {T : Type u} {f g : T → T} (agree : ∀ x, f x = g x) : f = g := by
+  letI := exceptionMonad (resetGraph f)
+  letI : LawfulMonad (ErrorM f) := lawful (resetGraph f) (resetGraph_eq f)
+  exact readerIdentity agree ((law (ρ := T) (m := ErrorM f)).toLawfulFunctor)
+
+private theorem viaMonad (law : type_of% @ReaderT.instLawfulMonad.{u,u})
+    {T : Type u} {f g : T → T} (agree : ∀ x, f x = g x) : f = g := by
+  letI := exceptionMonad (resetGraph f)
+  letI : LawfulMonad (ErrorM f) := lawful (resetGraph f) (resetGraph_eq f)
+  exact readerIdentity agree ((law (ρ := T) (m := ErrorM f)).toLawfulApplicative.toLawfulFunctor)
+
+private theorem viaState (law : type_of% @StateT.instLawfulMonad.{u,u})
+    {T : Type u} {f g : T → T} (agree : ∀ x, f x = g x) : f = g := by
+  letI := exceptionMonad (resetGraph f)
+  letI : LawfulMonad (ErrorM f) := lawful (resetGraph f) (resetGraph_eq f)
+  letI : LawfulFunctor (StateT T (ErrorM f)) := (law (σ := T) (m := ErrorM f)).toLawfulApplicative.toLawfulFunctor
+  let input : StateT T (ErrorM f) PUnit := fun t => .error ⟨t, g t, agree t⟩
+  let output (a : StateT T (ErrorM f) PUnit) (t : T) :=
+    match a t with | .error s => s.2.val | .ok _ => t
+  exact congrArg output (id_map input)
+
+public theorem fromReaderTFunctor
+    (law : type_of% @ReaderT.instLawfulFunctor.{max 1 u v, max 1 u v}) : type_of% @funext.{u,v} :=
+  funextFromEndomorphisms (viaFunctor law)
+
+public theorem fromReaderTApplicative
+    (law : type_of% @ReaderT.instLawfulApplicative.{max 1 u v, max 1 u v}) : type_of% @funext.{u,v} :=
+  funextFromEndomorphisms (viaApplicative law)
+
+public theorem fromReaderTMonad
+    (law : type_of% @ReaderT.instLawfulMonad.{max 1 u v, max 1 u v}) : type_of% @funext.{u,v} :=
+  funextFromEndomorphisms (viaMonad law)
+
+public theorem fromStateTMonad
+    (law : type_of% @StateT.instLawfulMonad.{max 1 u v, max 1 u v}) : type_of% @funext.{u,v} :=
+  funextFromEndomorphisms (viaState law)
+
+open Lean in
+run_cmd
+  for n in [``fromReaderTFunctor, ``fromReaderTApplicative, ``fromReaderTMonad, ``fromStateTMonad] do
+    unless (← collectAxioms n).isEmpty do throwError "transformer law witness {n} uses axioms"
+
+end TransformerLaws
+
 namespace MonadicTraversal
 
 private def action {T : Type w} (k : T → T) (b : Option T) (flag : Bool) : ReaderM T (Option T) :=
@@ -1883,6 +1980,14 @@ private def logicalConsequence? (owner name : Name) : Option (Name × Name) := d
   | `Init.Control.Lawful.Basic, ``map_congr =>
     return (``funext, ``OmegaChecks.InitBoundaries.dependentFunextFromMapCongr)
   | `Init.Control.Basic, ``forIn'_eq_forIn => return (``funext, ``OmegaChecks.InitBoundaries.funextFromForInEq)
+  | `Init.Control.Lawful.Instances, ``ReaderT.instLawfulFunctor =>
+    return (``funext, ``OmegaChecks.InitBoundaries.TransformerLaws.fromReaderTFunctor)
+  | `Init.Control.Lawful.Instances, ``ReaderT.instLawfulApplicative =>
+    return (``funext, ``OmegaChecks.InitBoundaries.TransformerLaws.fromReaderTApplicative)
+  | `Init.Control.Lawful.Instances, ``ReaderT.instLawfulMonad =>
+    return (``funext, ``OmegaChecks.InitBoundaries.TransformerLaws.fromReaderTMonad)
+  | `Init.Control.Lawful.Instances, ``StateT.instLawfulMonad =>
+    return (``funext, ``OmegaChecks.InitBoundaries.TransformerLaws.fromStateTMonad)
   | `Init.Control.Lawful.Instances, ``ReaderT.ext => return (``funext, ``OmegaChecks.InitBoundaries.funextFromReaderExt)
   | `Init.Control.Lawful.Instances, ``ReaderT.ext_iff => return (``funext, ``OmegaChecks.InitBoundaries.funextFromReaderExtIff)
   | `Init.Control.Lawful.Instances, ``StateT.ext => return (``funext, ``OmegaChecks.InitBoundaries.funextFromStateExt)
