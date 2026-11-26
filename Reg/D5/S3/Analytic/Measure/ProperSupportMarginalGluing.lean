@@ -83,7 +83,7 @@ private theorem rejected_law : ¬ arena.{u,v,w}.Law rejected := by
       simp
   obtain ⟨h, hm, hu, he⟩ := law μ (univ : Finset I) (fun _ : J => ∅)
     (fun _ _ => (1 : ℝ≥0∞)) (fun _ => measurable_const)
-    (fun _ => dependsOn_const (1 : ℝ≥0∞)) (by intro j; simp) (by intro j; simp)
+    (by intro j x y hxy; rfl) (by intro j; simp) (by intro j; simp)
     (by intro j; exact empty_subset _) (by intro j; exact Finset.univ_nonempty.ne_empty.symm) hl
   have H := he (⟨()⟩ : J)
   have hn : ¬ ((0 : ℝ≥0∞) = 1) := by norm_num
