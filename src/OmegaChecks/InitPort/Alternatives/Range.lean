@@ -922,6 +922,18 @@ public theorem Char.val_ofOrdinal : type_of% @_root_.Char.val_ofOrdinal := by
   unfold _root_.Char.ofOrdinal
   split <;> rfl
 
+private theorem charOfValidNat (n : Nat) (h : n.isValidChar) : (Char.ofNat n).val.toNat = n := by
+  unfold Char.ofNat
+  rw [dite_eq_left h]
+  rfl
+
+public theorem Char.ordinal_zero : type_of% @_root_.Char.ordinal_zero := by
+  apply Fin.ext
+  rw [charPacked, Fin.val_zero]
+  have below : (0 : Nat) < 0xd800 := by decide
+  rw [charOfValidNat 0 (Or.inl below)]
+  exact ite_eq_left below
+
 public def Char.succ? (c : Char) : Option Char := (c.ordinal.addNat? 1).map Char.ofOrdinal
 
 private theorem unpackMap (o : Option (Fin Char.numCodePoints)) :

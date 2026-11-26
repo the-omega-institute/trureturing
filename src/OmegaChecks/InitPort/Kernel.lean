@@ -169,14 +169,27 @@ private def numeral? (source : Environment) (expr : Expr) (fuel : Nat := 4) : Op
   let body ← ci.value?
   numeral? source body fuel
 
-/-- A word bound often elaborates to a successor instance at a large decimal literal.
-Use the power-of-two instance so the strict kernel can check the index by binary reduction. -/
-private def compactNonzeroPowers (source : Environment) (type : Expr) : Expr :=
+/-- Match the binary term used for wide even natural literals. -/
+private partial def binaryNonzero (size : Nat) : Expr :=
+  if size < 32 || size % 2 == 1 then
+    mkApp (mkConst `Nat.instNeZeroSucc) (mkNatLit (size - 1))
+  else
+    mkApp4 (mkConst `instNeZeroNatHMul) (mkNatLit (size / 2)) (mkNatLit 2)
+      (binaryNonzero (size / 2)) (mkApp (mkConst `Nat.instNeZeroSucc) (mkNatLit 1))
+
+/-- Give wide finite bounds a nonzero instance with a compact kernel conversion. -/
+private def compactNonzeroBounds (source : Environment) (owner : Name) (type : Expr) : Expr :=
   type.replace fun e => do
     guard (e.isAppOfArity `Nat.instNeZeroSucc 1)
     let n ← numeral? source e.getAppArgs[0]!
     let size := n + 1
-    guard (size ≥ 256 && size == 2 ^ size.log2)
+    guard (size ≥ 256)
+    if size != 2 ^ size.log2 then
+      guard (size % 2 == 0)
+      let provider ← source.getModuleIdxFor? `instNeZeroNatHMul
+      let current ← source.getModuleIdxFor? owner
+      guard (provider.toNat < current.toNat)
+      return binaryNonzero size
     let one := mkApp (mkConst `Nat.instNeZeroSucc) (mkNatLit 1)
     return mkApp3 (mkConst `Nat.instNeZeroHPow) (mkNatLit 2) (mkNatLit size.log2) one
 
@@ -475,7 +488,7 @@ partial def visit (n : Name) : M Bool := do
   modify fun s => {s with visiting := s.visiting.insert n}
   -- A dependent type can contain a proof emitted by simp. Keep its official
   -- conversion class and let the target kernel check the replacement.
-  let compact ← OmegaChecks.InitCompiler.namedLogicalProjections c.source (compactNonzeroPowers c.source ci.type)
+  let compact ← OmegaChecks.InitCompiler.namedLogicalProjections c.source (compactNonzeroBounds c.source n ci.type)
   let mut type := if !compact.equal ci.type && Kernel.isDefEqGuarded c.source {} ci.type compact then compact else ci.type
   for dep in usedConstants type do
     if !(← visit dep) then
@@ -513,7 +526,7 @@ partial def visit (n : Name) : M Bool := do
   let attempt (value : Expr) (budget := c.maxHeartbeats) : M Outcome := do
     let result ← checkValue value budget
     if result matches .added then return result
-    let compact := compactNonzeroPowers c.source value
+    let compact := compactNonzeroBounds c.source n value
     unless compact.equal value do
       if (← checkValue compact budget) matches .added then return .added
     return result
