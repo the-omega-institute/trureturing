@@ -2,7 +2,7 @@ module
 public import Init.Data.Range.Polymorphic.Nat
 public import Init.Data.Range.Polymorphic.Int
 public import Init.Data.Range.Polymorphic.Fin
-public import Init.Data.Range.Polymorphic.BitVec
+public import Init.Data.Range.Polymorphic.UInt
 import Init.Data.BitVec.Lemmas
 
 /-! Successor and size laws for ranges of naturals, integers, and finite indices. -/
@@ -355,5 +355,100 @@ public theorem BitVec.instRxiLawfulHasSize {w : Nat} : Rxi.LawfulHasSize (BitVec
     obtain ⟨bound, inc⟩ := BitVec.succ?_eq_some.mp h
     change 2^w - a.toNat = 2^w - b.toNat + 1
     omega
+
+private theorem enumerableImage {α β : Type u} [UpwardEnumerable α] [UpwardEnumerable β]
+    [LawfulUpwardEnumerable α] (f : α → β) (g : β → α)
+    (left : ∀ a, g (f a) = a) (right : ∀ b, f (g b) = b)
+    (next : ∀ a, succ? (f a) = (succ? a).map f)
+    (many : ∀ k a, succMany? k (f a) = (succMany? k a).map f) :
+    LawfulUpwardEnumerable β where
+  ne_of_lt a _ := by
+    rintro ⟨n, reaches⟩ rfl
+    generalize ha : g a = x
+    have eq : f x = a := ha ▸ right a
+    rw [← eq, many] at reaches
+    cases hs : succMany? (n + 1) x with
+    | none => rw [hs] at reaches; cases reaches
+    | some y =>
+      rw [hs] at reaches
+      have same := (left y).symm.trans ((congrArg g (Option.some.inj reaches)).trans (left x))
+      exact LawfulUpwardEnumerable.ne_of_lt _ _ ⟨n, hs⟩ same.symm
+  succMany?_zero b := by
+    rw [← right b, many, LawfulUpwardEnumerable.succMany?_zero]
+    rfl
+  succMany?_add_one k b := by
+    generalize h : g b = a
+    have eq : f a = b := h ▸ right b
+    rw [← eq, many, many, LawfulUpwardEnumerable.succMany?_add_one]
+    cases middle : succMany? k a with
+    | none => rfl
+    | some y => exact (next y).symm
+
+private theorem closedSizeImage {α β : Type u} [UpwardEnumerable α] [UpwardEnumerable β]
+    [LE α] [LE β] [Rxc.HasSize α] [Rxc.HasSize β] [Rxc.LawfulHasSize α]
+    (f : α → β) (g : β → α) (left : ∀ a, g (f a) = a) (right : ∀ b, f (g b) = b)
+    (next : ∀ a, succ? (f a) = (succ? a).map f)
+    (le : ∀ a b, a ≤ b ↔ g a ≤ g b)
+    (size : ∀ a b, Rxc.HasSize.size a b = Rxc.HasSize.size (g a) (g b)) :
+    Rxc.LawfulHasSize β where
+  size_eq_zero_of_not_le a b denied := (size a b).trans
+    (Rxc.LawfulHasSize.size_eq_zero_of_not_le _ _ fun h => denied ((le a b).mpr h))
+  size_eq_one_of_succ?_eq_none a b h stop := by
+    have eq := (next (g a)).symm.trans ((congrArg succ? (right a)).trans stop)
+    have noneEq : succ? (g a) = none := by
+      cases hs : succ? (g a) with
+      | none => rfl
+      | some x => rw [hs] at eq; cases eq
+    exact (size a b).trans (Rxc.LawfulHasSize.size_eq_one_of_succ?_eq_none _ _ ((le a b).mp h) noneEq)
+  size_eq_succ_of_succ?_eq_some a b c h step := by
+    have eq := (next (g a)).symm.trans ((congrArg succ? (right a)).trans step)
+    have someEq : succ? (g a) = some (g c) := by
+      cases hs : succ? (g a) with
+      | none => rw [hs] at eq; cases eq
+      | some x =>
+        rw [hs] at eq
+        exact congrArg some ((left x).symm.trans (congrArg g (Option.some.inj eq)))
+    exact (size a b).trans ((Rxc.LawfulHasSize.size_eq_succ_of_succ?_eq_some _ _ _ ((le a b).mp h) someEq).trans
+      (congrArg Nat.succ (size c b).symm))
+
+public theorem UInt8.instLawfulUpwardEnumerable : LawfulUpwardEnumerable UInt8 :=
+  enumerableImage UInt8.ofBitVec UInt8.toBitVec (fun _ => rfl) (fun _ => rfl)
+    (fun _ => UInt8.succ?_ofBitVec) (fun _ _ => UInt8.succMany?_ofBitVec)
+
+public theorem UInt8.instLawfulHasSize : Rxc.LawfulHasSize UInt8 :=
+  closedSizeImage UInt8.ofBitVec UInt8.toBitVec (fun _ => rfl) (fun _ => rfl)
+    (fun _ => UInt8.succ?_ofBitVec) (fun _ _ => Iff.rfl) (fun _ _ => rfl)
+
+public theorem UInt16.instLawfulUpwardEnumerable : LawfulUpwardEnumerable UInt16 :=
+  enumerableImage UInt16.ofBitVec UInt16.toBitVec (fun _ => rfl) (fun _ => rfl)
+    (fun _ => UInt16.succ?_ofBitVec) (fun _ _ => UInt16.succMany?_ofBitVec)
+
+public theorem UInt16.instLawfulHasSize : Rxc.LawfulHasSize UInt16 :=
+  closedSizeImage UInt16.ofBitVec UInt16.toBitVec (fun _ => rfl) (fun _ => rfl)
+    (fun _ => UInt16.succ?_ofBitVec) (fun _ _ => Iff.rfl) (fun _ _ => rfl)
+
+public theorem UInt32.instLawfulUpwardEnumerable : LawfulUpwardEnumerable UInt32 :=
+  enumerableImage UInt32.ofBitVec UInt32.toBitVec (fun _ => rfl) (fun _ => rfl)
+    (fun _ => UInt32.succ?_ofBitVec) (fun _ _ => UInt32.succMany?_ofBitVec)
+
+public theorem UInt32.instLawfulHasSize : Rxc.LawfulHasSize UInt32 :=
+  closedSizeImage UInt32.ofBitVec UInt32.toBitVec (fun _ => rfl) (fun _ => rfl)
+    (fun _ => UInt32.succ?_ofBitVec) (fun _ _ => Iff.rfl) (fun _ _ => rfl)
+
+public theorem UInt64.instLawfulUpwardEnumerable : LawfulUpwardEnumerable UInt64 :=
+  enumerableImage UInt64.ofBitVec UInt64.toBitVec (fun _ => rfl) (fun _ => rfl)
+    (fun _ => UInt64.succ?_ofBitVec) (fun _ _ => UInt64.succMany?_ofBitVec)
+
+public theorem UInt64.instLawfulHasSize : Rxc.LawfulHasSize UInt64 :=
+  closedSizeImage UInt64.ofBitVec UInt64.toBitVec (fun _ => rfl) (fun _ => rfl)
+    (fun _ => UInt64.succ?_ofBitVec) (fun _ _ => Iff.rfl) (fun _ _ => rfl)
+
+public theorem USize.instLawfulUpwardEnumerable : LawfulUpwardEnumerable USize :=
+  enumerableImage USize.ofBitVec USize.toBitVec (fun _ => rfl) (fun _ => rfl)
+    (fun _ => USize.succ?_ofBitVec) (fun _ _ => USize.succMany?_ofBitVec)
+
+public theorem USize.instLawfulHasSize : Rxc.LawfulHasSize USize :=
+  closedSizeImage USize.ofBitVec USize.toBitVec (fun _ => rfl) (fun _ => rfl)
+    (fun _ => USize.succ?_ofBitVec) (fun _ _ => Iff.rfl) (fun _ _ => rfl)
 
 end OmegaChecks.InitPort.Alternatives
