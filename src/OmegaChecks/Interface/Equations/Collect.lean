@@ -92,4 +92,32 @@ public theorem List.instAppendListSlice {α : Type u} :
   rcases y with ⟨⟨b, p⟩⟩
   cases o <;> cases p <;> rfl
 
+private theorem contents_eq {α : Type u} (s : ListSlice α) :
+    OmegaChecks.InitPort.Alternatives.listSliceContents s = s.toList := by
+  rw [ListSlice.toList_eq]
+  cases h : s.internalRepresentation.stop <;> simp [OmegaChecks.InitPort.Alternatives.listSliceContents, h]
+
+public theorem Array.Subarray.repr {α : Type u} [Repr α] (s : Subarray α) :
+    OmegaChecks.InitPort.Alternatives.Array.Subarray.repr s = _root_.Array.Subarray.repr s := by
+  unfold OmegaChecks.InitPort.Alternatives.Array.Subarray.repr _root_.Array.Subarray.repr
+  exact congrArg (fun a : Array α => _root_.repr a ++ ".toSubarray") Subarray.copy_eq_toArray
+
+public theorem Array.instToStringSubarray {α : Type u} [ToString α] :
+    @OmegaChecks.InitPort.Alternatives.Array.instToStringSubarray α _ = @_root_.Array.instToStringSubarray α _ := by
+  change ToString.mk _ = ToString.mk _
+  congr 1
+
+public theorem List.ListSlice.repr {α : Type u} [Repr α] (s : ListSlice α) :
+    OmegaChecks.InitPort.Alternatives.List.ListSlice.repr s = _root_.List.ListSlice.repr s := by
+  unfold OmegaChecks.InitPort.Alternatives.List.ListSlice.repr _root_.List.ListSlice.repr
+  rw [contents_eq]
+
+public theorem List.instToStringListSlice {α : Type u} [ToString α] :
+    @OmegaChecks.InitPort.Alternatives.List.instToStringListSlice α _ = @_root_.List.instToStringListSlice α _ := by
+  change ToString.mk _ = ToString.mk _
+  congr 1
+  funext s
+  change toString (OmegaChecks.InitPort.Alternatives.listSliceContents s).toArray = toString s.toArray
+  rw [contents_eq, ListSlice.toArray_toList]
+
 end OmegaChecks.Interface.Equations

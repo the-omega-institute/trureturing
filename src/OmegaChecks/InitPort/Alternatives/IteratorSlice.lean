@@ -286,4 +286,17 @@ private def listSliceContents {α : Type u} (s : ListSlice α) : List α :=
     let data := listSliceContents x ++ listSliceContents y
     data.toSlice 0 data.length
 
+public def Array.Subarray.repr {α : Type u} [Repr α] (s : Subarray α) : Std.Format :=
+  _root_.repr s.copy ++ ".toSubarray"
+
+@[instance_reducible] public def Array.instToStringSubarray {α : Type u} [ToString α] : ToString (Subarray α) :=
+  ⟨fun s => toString s.copy⟩
+
+public def List.ListSlice.repr {α : Type u} [Repr α] (s : ListSlice α) : Std.Format :=
+  let xs := listSliceContents s
+  _root_.repr xs ++ ".toSlice 0 " ++ toString xs.length
+
+@[instance_reducible] public def List.instToStringListSlice {α : Type u} [ToString α] : ToString (ListSlice α) :=
+  ⟨fun s => toString (listSliceContents s).toArray⟩
+
 end OmegaChecks.InitPort.Alternatives
