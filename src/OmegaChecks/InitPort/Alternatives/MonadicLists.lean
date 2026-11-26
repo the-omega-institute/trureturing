@@ -823,4 +823,22 @@ public theorem Array.zipWithMAux.eq_1 : type_of% @_root_.Array.zipWithMAux.eq_1 
   · rw [dite_eq_right ha, List.drop_of_length_le (Nat.le_of_not_gt ha)]
     rfl
 
+public theorem List.firstM_toArray : type_of% @_root_.List.firstM_toArray := by
+  intro m α β alt xs f
+  have loop (n j : Nat) (sum : j + n = xs.length) :
+      Array.firstM.go f xs.toArray j = List.firstM f (xs.drop j) := by
+    induction n generalizing j with
+    | zero =>
+      have e : j = xs.length := sum
+      subst j
+      have past : ¬ xs.length < xs.toArray.size := Nat.lt_irrefl _
+      rw [Array.firstM.go, dite_eq_right past, List.drop_length]
+      rfl
+    | succ n ih =>
+      have bound : j < xs.length := by omega
+      have inside : j < xs.toArray.size := bound
+      rw [Array.firstM.go, dite_eq_left inside, ← List.getElem_cons_drop bound, List.firstM]
+      exact congrArg (fun x => f xs[j] <|> x) (ih (j+1) (by omega))
+  exact loop xs.length 0 (Nat.zero_add _)
+
 end OmegaChecks.InitPort.Alternatives
