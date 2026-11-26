@@ -104,4 +104,18 @@ public theorem List.sum_eq_zero_iff_forall_eq_nat : type_of% @_root_.List.sum_eq
     · intro all
       exact ⟨all _ (.head _), ih.mpr (fun a ha => all a (.tail _ ha))⟩
 
+public theorem List.getElem?_intersperse_two_mul_add_one : type_of% @_root_.List.getElem?_intersperse_two_mul_add_one := by
+  intro α l sep i h
+  induction l generalizing i with
+  | nil => exact (Nat.not_lt_zero _ h).elim
+  | cons a tail ih =>
+    cases tail with
+    | nil => exact (Nat.not_lt_zero _ (Nat.lt_of_succ_lt_succ h)).elim
+    | cons b xs =>
+      cases i with
+      | zero => rfl
+      | succ i =>
+        rw [Nat.mul_succ]
+        exact ih (Nat.lt_of_succ_lt_succ h)
+
 end OmegaChecks.InitPort.Alternatives
