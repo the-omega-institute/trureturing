@@ -47,21 +47,21 @@ internal sealed class FerrersResultantDocument : IScribeDocumentDefinition
     private static Formula Criterion() => new Formula.Aligned([
         Seq(F.Id("p"), Eq, F.Id("P"), Land,
             Par(Seq(Forall, Sp, F.Id("j"), InMacro, Mathbb, Grp(F.Id("N")), Comma, Sp,
-                Coeff("X", F.Id("j"), "p"), Eq, Eval("N", "j"))), Land, Call(F.Id("N"), D(0)), Eq, D(1), Land),
+                Coeff("X", F.Id("j"), "p"), Eq, Eval("N", "j"))), Land, Sp, Call(F.Id("N"), D(0)), Eq, D(1), Land),
         Seq(Par(Seq(Forall, Sp, F.Id("j"), InMacro, Mathbb, Grp(F.Id("N")), Comma, Sp,
                 Call(F.Id("N"), Seq(F.Id("j"), Plus, D(1))), Eq,
                 Choose(F.Id("m"), Seq(F.Id("j"), Plus, D(1))), Plus,
                 Sum, Underscore, Grp(F.Id("i")), Choose(E(), F.Id("j")))), Land),
-        Seq(D(0), Lt, F.Id("d"), Land, Op("deg", "p"), Eq, F.Id("d"), Land,
+        Seq(D(0), Lt, Sp, F.Id("d"), Land, Op("deg", "p"), Eq, F.Id("d"), Land,
             D(0), Lt, Op("lc", "p"), Land, Op("deg", "r"), Eq, Pow(F.Id("d"), D(2)), Land,
             Op("lc", "r"), Eq, Pow(Par(Op("lc", "p")), Seq(D(2), F.Id("d"))), Land),
         Seq(Par(Seq(Par(Seq(Forall, Sp, F.Id("z"), InMacro, Complexes(), Comma, Sp,
-                Eval("p", "z"), Eq, D(0), Implies, Re, Sp, F.Id("z"), Le, D(0))), Iff, F.Id("S"))), Land),
+                Eval("p", "z"), Eq, D(0), Implies, Re, Sp, F.Id("z"), Le, D(0))), Iff, Sp, F.Id("S"))), Land),
         Seq(Par(Seq(F.Id("S"), Implies, Par(Seq(Coeff("T", D(0), "r"), Eq, D(0), Iff,
             Par(Seq(Exists, Sp, F.Id("z"), InMacro, Complexes(), Comma, Sp,
                 Eval("p", "z"), Eq, D(0), Land, Re, Sp, F.Id("z"), Eq, D(0))))))), Land,
             Coeff("X", D(0), "p"), Eq, D(1)),
-        Seq(F.Id("S"), Iff, Par(Seq(Forall, Sp, D(0), Le, F.Id("j"), Le, Pow(F.Id("d"), D(2)),
+        Seq(F.Id("S"), Iff, Par(Seq(Forall, Sp, D(0), Le, Sp, F.Id("j"), Le, Sp, Pow(F.Id("d"), D(2)),
             Comma, Sp, D(0), Le, Coeff("T", F.Id("j"), "r"))))
     ]);
 

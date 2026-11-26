@@ -20,7 +20,7 @@ internal sealed class PairSumStabilityDocument : IScribeDocumentDefinition
                 DescribeRole.Definition),
             Node("roots", "eval2_sumResultant_eq_zero_iff", "Roots are pair sums",
                 Seq(Val("r", "z"), Eq, D(0), Iff, Exists, Sp, F.Id("u"), Comma, F.Id("v"), Comma, Sp,
-                    Par(Seq(Val("p", "u"), Eq, D(0), Land, Val("p", "v"), Eq, D(0), Land,
+                    Par(Seq(Val("p", "u"), Eq, D(0), Land, Sp, Val("p", "v"), Eq, D(0), Land, Sp,
                         F.Id("u"), Plus, F.Id("v"), Eq, F.Id("z")))),
                 "For a nonzero polynomial and an injective coefficient map to the complex numbers, evaluation commutes with the Sylvester determinant. Its product formula permits equal roots in the pair.",
                 DescribeRole.Theorem),
@@ -54,5 +54,5 @@ internal sealed class PairSumStabilityDocument : IScribeDocumentDefinition
         Par(Seq(Forall, Sp, F.Id("z"), InMacro, Mathbb, Grp(F.Id("C")), Comma, Sp,
             Val("p", "z"), Eq, D(0), Implies, Re, Sp, F.Id("z"), relation, D(0)));
     private static Formula Scan() =>
-        Seq(Forall, Sp, D(0), Le, F.Id("j"), Le, Pow(Op("deg", "p"), D(2)), Comma, Sp, D(0), Le, Coeff(F.Id("j")));
+        Seq(Forall, Sp, D(0), Le, Sp, F.Id("j"), Le, Pow(Op("deg", "p"), D(2)), Comma, Sp, D(0), Le, Coeff(F.Id("j")));
 }

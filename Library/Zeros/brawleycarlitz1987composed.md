@@ -13,11 +13,15 @@ triage: anchor
 
 # Composed addition
 
+## Verified locator
+
 Brawley and Carlitz study composed products over finite fields. The indexed
 review explicitly identifies composed addition as the product of the linear
 factors indexed by all pairs of roots, with sums as the new roots.
 [Paper DOI](https://doi.org/10.1016/0012-365X(87)90135-X)
 · [zbMATH review](https://zbmath.org/?q=ti%3AIrreducibles+and+the+composed+product+for+polynomials+over+a+finite+field)
+
+## Resultant normalization
 
 For the integral polynomial used here, put $d=\deg p$ and let $a$ be its
 leading coefficient. The Sylvester resultant $\operatorname{Res}_Y(p(Y),p(T-Y))$
