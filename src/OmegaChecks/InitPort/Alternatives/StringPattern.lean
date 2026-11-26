@@ -4,10 +4,14 @@ import all Init.Data.String.Lemmas.Pattern.String.Basic
 import all Init.Data.String.Lemmas.Pattern.String.ForwardPattern
 import all Init.Data.String.Lemmas.Pattern.String.ForwardSearcher
 import all Init.Data.String.Basic
+import all Init.Data.String.Slice
 import all Init.Data.String.Lemmas.Pattern.Char
 import all Init.Data.String.Lemmas.Pattern.Pred
 import all Init.Data.String.Pattern.Pred
 import all Init.Data.String.Pattern.String
+import all Init.Data.String.Lemmas.Pattern.Find.String
+import all Init.Data.Iterators.Consumers.Loop
+import all Init.Data.Iterators.Consumers.Monadic.Loop
 import all OmegaChecks.InitPort.Alternatives.Array
 import all OmegaChecks.InitPort.Alternatives.FiniteLoop
 public import OmegaChecks.InitPort.Alternatives.StringEncoding
@@ -991,3 +995,136 @@ public theorem lawfulToForwardSearcherModel :
       (toSliceNonempty nonempty)).isValidSearchFrom_toList s)
 
 end OmegaChecks.InitPort.Alternatives.String.Slice.Pattern.Model.ForwardStringSearcher
+
+namespace OmegaChecks.InitPort.Alternatives
+open _root_.Std _root_.Std.Iterators
+private theorem anyFiniteAux {α β : Type u} [Iterator α Id β] [Finite α Id]
+    (p : β → Bool) (it : IterM (α := α) Id β) (P : β → Prop)
+    (hP : ∀ b, it.IsPlausibleIndirectOutput b → P b) :
+    it.toIter.toList.any p =
+      finiteForIn (n := Id) (fun _ _ f c => f c.run) Bool (fun _ _ _ => True)
+        it false P hP (fun out _ _ => ⟨if p out then .done true else .yield false, trivial⟩) := by
+  induction it using (Finite.wf (α := α) (m := Id) (β := β)).induction with
+  | h it ih =>
+    rw [_root_.Std.Iter.toList_eq_match_step]
+    unfold finiteForIn
+    rw [WellFounded.fix_eq]
+    unfold Iter.step
+    dsimp only [Id.run, IterM.toIter, Iter.toIterM]
+    cases it.step.inflate using PlausibleIterStep.casesOn with
+    | yield next out h =>
+      dsimp only [IterM.Step.toPure, IterStep.mapIterator, List.any_cons, bind, pure]
+      cases p out
+      · apply ih next (IterM.isPlausibleSuccessorOf_of_yield h)
+      · rfl
+    | skip next h => exact ih next (IterM.isPlausibleSuccessorOf_of_skip h) _
+    | done _ => rfl
+
+private theorem finiteAnyToList {α β : Type u} [Iterator α Id β] [Finite α Id]
+    (p : β → Bool) (it : Iter (α := α) β) :
+    it.toList.any p = @Iter.any α β _ finiteIteratorLoop p it :=
+  anyFiniteAux p it.toIterM _ (fun _ => id)
+
+open _root_.String.Slice _root_.String.Slice.Pattern _root_.String.Slice.Pattern.Model
+
+private theorem anyMatched {ρ : Type} {pat : ρ} [PatternModel pat] [StrictPatternModel pat]
+    {s : String.Slice} {pos : s.Pos} {steps : List (SearchStep s)}
+    (h : IsValidSearchFrom pat pos steps) :
+    steps.any (· matches .matched ..) = true ↔ ∃ q : s.Pos, pos ≤ q ∧ MatchesAt pat q := by
+  induction h with
+  | endPos =>
+    refine ⟨fun h => False.elim (Bool.noConfusion h), ?_⟩
+    rintro ⟨q, bound, m⟩
+    exact False.elim (not_matchesAt_endPos ((Std.le_antisymm (Pos.le_endPos q) bound) ▸ m))
+  | matched h _ _ =>
+    exact ⟨fun _ => ⟨_, Std.le_refl _, h.matchesAt⟩, fun _ => rfl⟩
+  | mismatched lt miss tail ih =>
+    rename_i start stop
+    refine ⟨fun a => ?_, fun ⟨q, bound, m⟩ => ?_⟩
+    · obtain ⟨q, b, m⟩ := ih.mp a
+      exact ⟨q, Std.le_trans (Std.le_of_lt lt) b, m⟩
+    · apply ih.mpr
+      by_cases hb : stop ≤ q
+      · exact ⟨q, hb, m⟩
+      · change ¬ stop.offset.byteIdx ≤ q.offset.byteIdx at hb
+        exact False.elim (miss q bound (Nat.lt_of_not_ge hb) m)
+
+public theorem String.Slice.contains_slice_iff {t s : String.Slice} :
+    @_root_.String.Slice.contains _ _ _
+      (fun _ => OmegaChecks.InitPort.Alternatives.String.Slice.Pattern.ForwardSliceSearcher.instIteratorLoopIdSearchStep) s t _ ↔ t.copy.toList <:+: s.copy.toList := by
+  unfold _root_.String.Slice.contains
+  change @Iter.any _ _ _ finiteIteratorLoop (fun (x : SearchStep s) => x matches .matched ..) (ToForwardSearcher.toSearcher t s) = true ↔ _
+  rw [← finiteAnyToList (it := ToForwardSearcher.toSearcher t s)]
+  cases ht : t.isEmpty with
+  | true =>
+    rw [_root_.String.Slice.Pattern.Model.ForwardSliceSearcher.toSearcher_of_isEmpty ht,
+      _root_.String.Slice.Pattern.Model.ForwardSliceSearcher.toList_emptyBefore_eq,
+      _root_.String.Slice.copy_eq_empty_iff.mpr ht]
+    split <;> exact ⟨fun _ => List.nil_infix, fun _ => rfl⟩
+  | false =>
+    letI := _root_.String.Slice.Pattern.Model.ForwardSliceSearcher.strictPatternModel ht
+    have valid := (_root_.String.Slice.Pattern.Model.ForwardSliceSearcher.lawfulToForwardSearcherModel ht).isValidSearchFrom_toList s
+    refine (anyMatched valid).trans (Iff.trans ?_ ((_root_.String.Slice.Pattern.Model.ForwardSliceSearcher.exists_matchesAt_iff_eq_append).trans
+      _root_.String.Slice.isInfix_toList_iff.symm))
+    exact ⟨fun ⟨q, _, m⟩ => ⟨q, m⟩, fun ⟨q, m⟩ => ⟨q, Pos.startPos_le _, m⟩⟩
+end OmegaChecks.InitPort.Alternatives
+
+namespace OmegaChecks.InitPort.Alternatives
+
+public theorem String.Slice.contains_string_iff :
+    type_of% @_root_.String.Slice.contains_string_iff := by
+  intro t s
+  rw [_root_.String.Slice.contains_string_eq_contains_toSlice]
+  have h := _root_.String.Slice.contains_slice_iff (t := t.toSlice) (s := s)
+  rw [_root_.String.copy_toSlice] at h
+  exact h
+
+public theorem String.contains_slice_iff :
+    type_of% @_root_.String.contains_slice_iff := by
+  intro t s
+  rw [_root_.String.contains_eq_contains_toSlice]
+  have h := _root_.String.Slice.contains_slice_iff (t := t) (s := s.toSlice)
+  rw [_root_.String.copy_toSlice] at h
+  exact h
+
+public theorem String.contains_string_iff :
+    type_of% @_root_.String.contains_string_iff := by
+  intro t s
+  rw [_root_.String.contains_eq_contains_toSlice]
+  have h := _root_.String.Slice.contains_string_iff (t := t) (s := s.toSlice)
+  rw [_root_.String.copy_toSlice] at h
+  exact h
+
+end OmegaChecks.InitPort.Alternatives
+
+namespace OmegaChecks.InitPort.Alternatives
+
+public theorem List.isPrefixOf_iff_prefix :
+    type_of% @_root_.List.isPrefixOf_iff_prefix := by
+  intro α _ _ needle haystack
+  induction needle generalizing haystack with
+  | nil => exact ⟨fun _ => List.nil_prefix, fun _ => rfl⟩
+  | cons a as ih =>
+    cases haystack with
+    | nil =>
+      exact ⟨fun h => False.elim (Bool.noConfusion h), fun h => nomatch List.eq_nil_of_prefix_nil h⟩
+    | cons b bs =>
+      change (_ && _) = true ↔ _
+      exact Bool.and_eq_true_iff.trans ((and_congr beq_iff_eq (ih (haystack := bs))).trans List.cons_prefix_cons.symm)
+
+public theorem List.isInfixOf_internal_iff_isInfix :
+    type_of% @_root_.List.isInfixOf_internal_iff_isInfix := by
+  intro α _ _ needle haystack
+  induction haystack with
+  | nil =>
+    cases needle with
+    | nil => exact ⟨fun _ => List.infix_rfl, fun _ => rfl⟩
+    | cons a as =>
+      exact ⟨fun h => False.elim (Bool.noConfusion h),
+        fun h => nomatch List.eq_nil_of_infix_nil h⟩
+  | cons a as ih =>
+    change (_ || _) = true ↔ _
+    exact Bool.or_eq_true_iff.trans ((or_congr _root_.List.isPrefixOf_iff_prefix ih).trans
+      List.infix_cons_iff.symm)
+
+end OmegaChecks.InitPort.Alternatives
