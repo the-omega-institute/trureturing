@@ -102,6 +102,10 @@ $$\neg Conjecture58$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/HardCore/IndependenceRootMultiplicity.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/bhardwaj-et-al-2026-question-5-8` (refuted) by `D5/S3/StatisticalMechanics/HardCore/IndependenceRootMultiplicity.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"bhardwaj-et-al-2026-question-5-8","declaration_gid":"D5/S3/StatisticalMechanics/HardCore/IndependenceRootMultiplicity.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Om Prakash Bhardwaj; Trung Chau; Sayeed Ikram; Gargi Lather; Vasudeva Nanjangud; Chitra Venugopal (2026). *Multiplicity of Negative One of Independence Polynomials of Graphs*. DOI: [10.48550/arXiv.2607.08480](https://doi.org/10.48550/arXiv.2607.08480). URL: <https://arxiv.org/abs/2607.08480v1>.

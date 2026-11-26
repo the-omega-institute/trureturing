@@ -95,7 +95,9 @@ internal sealed class IndependenceRootMultiplicityDocument : IScribeDocumentDefi
                     + "at each center. It has 3 + 3·3 = 12 vertices and is connected. Its polynomial is "
                     + "(1+X)^6((1+X)^3+3X), so the residual at −1 is −3 and the multiplicity is 6. "
                     + "The proposed bound is ⌈12/2⌉ − 1 = 5. The contradiction refutes Question 5.8."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("bhardwaj-et-al-2026-question-5-8"), ResolutionKind.Refuted)))));
 
     private static Formula Call(string name, params Formula[] parameters) =>
         new Formula.Apply(Seq(Operatorname, Grp(F.Id(name))), [.. parameters]);
