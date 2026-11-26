@@ -193,4 +193,100 @@ theorem one_and_eq_mod_two (n : Nat) : Eq (Nat.land (succ zero) n) (Nat.mod n (s
   Nat.casesOn (motive := fun n => Eq (Nat.land (succ zero) n) (Nat.mod n (succ (succ zero)))) n
     Omega.rfl (fun k => bool_of_binary _ (Nat.mod_lt (succ k) Nat.zero_lt_two))
 
+/-- Append a single low bit to the binary representation of the quotient. -/
+private def pack (r : Nat) (b : Bool) : Nat :=
+  Bool.casesOn (motive := fun _ => Nat) b (Nat.add r r) (succ (Nat.add r r))
+
+private def digit (b : Bool) : Nat := Bool.casesOn (motive := fun _ => Nat) b zero (succ zero)
+
+private theorem packed_bounds (r : Nat) (b : Bool) :
+    And (Nat.le (Nat.mul r (succ (succ zero))) (pack r b))
+      (Nat.lt (pack r b) (Nat.mul (succ r) (succ (succ zero)))) :=
+  let two := succ (succ zero)
+  let base := Nat.add r r
+  have upper : Eq (Nat.mul (succ r) two) (succ (succ base)) :=
+    (succ_mul r two).trans (congrArg (fun z => succ (succ z)) (Nat.mul_two r))
+  Bool.casesOn (motive := fun b => And (Nat.le (Nat.mul r two) (pack r b))
+      (Nat.lt (pack r b) (Nat.mul (succ r) two))) b
+    (And.intro (Eq.subst (motive := fun k => Nat.le k base) (Nat.mul_two r).symm (Nat.le_refl base))
+      (Eq.subst (motive := Nat.lt base) upper.symm (Nat.le.step (Nat.le_refl (succ base)))))
+    (And.intro (Eq.subst (motive := fun k => Nat.le k (succ base)) (Nat.mul_two r).symm (Nat.le.step (Nat.le_refl base)))
+      (Eq.subst (motive := Nat.lt (succ base)) upper.symm (Nat.le_refl (succ (succ base)))))
+
+private theorem packed_div (r : Nat) (b : Bool) : Eq (Nat.div (pack r b) (succ (succ zero))) r :=
+  let bounds := packed_bounds r b
+  Nat.le_antisymm (le_of_succ_le_succ ((div_lt_iff_lt_mul Nat.zero_lt_two).mpr bounds.right))
+    ((le_div_iff_mul_le Nat.zero_lt_two).mpr bounds.left)
+
+private theorem packed_mod (r : Nat) (b : Bool) : Eq (Nat.mod (pack r b) (succ (succ zero))) (digit b) :=
+  let two := succ (succ zero)
+  let p := pack r b
+  have split := div_add_mod p two
+  have canonical : Eq (Nat.add (Nat.mul two r) (digit b)) p :=
+    Bool.casesOn (motive := fun b => Eq (Nat.add (Nat.mul two r) (digit b)) (pack r b)) b
+      ((Nat.add_zero (Nat.mul two r)).trans (Nat.two_mul r)) (congrArg succ (Nat.two_mul r))
+  Nat.add_left_cancel ((congrArg (fun q => Nat.add (Nat.mul two q) (Nat.mod p two)) (packed_div r b).symm).trans
+    (split.trans canonical.symm))
+
+private theorem bit_as_parity (x : Nat) : Eq (testBit x zero) (Nat.beq (Nat.mod x (succ (succ zero))) (succ zero)) :=
+  let r := Nat.mod x (succ (succ zero))
+  let P := fun r => Eq (Bool.not (Nat.beq r zero)) (Nat.beq r (succ zero))
+  have parity : ∀ v, Nat.lt v (succ (succ zero)) → P v :=
+    fun v => Nat.casesOn (motive := fun v => Nat.lt v (succ (succ zero)) → P v) v (fun _ => Omega.rfl)
+      (fun d => Nat.casesOn (motive := fun d => Nat.lt (succ d) (succ (succ zero)) → P (succ d)) d
+        (fun _ => Omega.rfl) (fun k h => False.elim (not_succ_le_zero k (le_of_succ_le_succ (le_of_succ_le_succ h)))))
+  (congrArg (fun t => Bool.not (Nat.beq t zero)) (one_and_eq_mod_two x)).trans (parity r (Nat.mod_lt x Nat.zero_lt_two))
+
+private theorem packed_test_zero (r : Nat) (b : Bool) : Eq (testBit (pack r b) zero) b :=
+  (bit_as_parity (pack r b)).trans ((congrArg (fun t => Nat.beq t (succ zero)) (packed_mod r b)).trans
+    (Bool.casesOn (motive := fun b => Eq (Nat.beq (digit b) (succ zero)) b) b Omega.rfl Omega.rfl))
+
+private theorem packed_test_succ (r : Nat) (b : Bool) (i : Nat) : Eq (testBit (pack r b) (succ i)) (testBit r i) :=
+  (testBit_succ (pack r b) i).trans (congrArg (fun t => testBit t i) (packed_div r b))
+
+private theorem bit_congr (f : Bool → Bool → Bool) {a b c d : Bool} (left : Eq a b) (right : Eq c d) :
+    Eq (f a c) (f b d) := (congrArg (fun t => f t c) left).trans (congrArg (f b) right)
+
+private theorem test_zero_or (f : Bool → Bool) (h : Eq (f Bool.false) Bool.false) (x i : Nat) :
+    Eq (testBit (Bool.casesOn (motive := fun _ => Nat) (f Bool.true) zero x) i) (f (testBit x i)) :=
+  Bool.casesOn (motive := fun b => Eq (f Bool.true) b →
+      Eq (testBit (Bool.casesOn (motive := fun _ => Nat) b zero x) i) (f (testBit x i))) (f Bool.true)
+    (fun no => (zero_testBit i).trans (Bool.casesOn (motive := fun bit => Eq Bool.false (f bit))
+      (testBit x i) h.symm no.symm))
+    (fun yes => Bool.casesOn (motive := fun bit => Eq bit (f bit)) (testBit x i) h.symm yes.symm) Omega.rfl
+
+private theorem steps_test (f : Bool → Bool → Bool) (h : Eq (f Bool.false Bool.false) Bool.false) (fuel : Nat) :
+    ∀ x y i, Nat.lt x fuel → Eq (testBit (steps f fuel x y) i) (f (testBit x i) (testBit y i)) :=
+  Nat.rec (motive := fun fuel => ∀ x y i, Nat.lt x fuel →
+      Eq (testBit (steps f fuel x y) i) (f (testBit x i) (testBit y i)))
+    (fun x _ _ bound => False.elim (not_succ_le_zero x bound))
+    (fun fuel ih x y i => Nat.casesOn (motive := fun x => Nat.lt x (succ fuel) →
+        Eq (testBit (steps f (succ fuel) x y) i) (f (testBit x i) (testBit y i))) x
+      (fun _ => (test_zero_or (f Bool.false) h y i).trans (bit_congr f (zero_testBit i).symm Omega.rfl))
+      (fun a => Nat.casesOn (motive := fun y => Nat.lt (succ a) (succ fuel) →
+          Eq (testBit (steps f (succ fuel) (succ a) y) i) (f (testBit (succ a) i) (testBit y i))) y
+        (fun _ => (test_zero_or (fun b => f b Bool.false) h (succ a) i).trans (bit_congr f Omega.rfl (zero_testBit i).symm))
+        (fun b bound =>
+          let x := succ a
+          let y := succ b
+          let two := succ (succ zero)
+          let r := steps f fuel (Nat.div x two) (Nat.div y two)
+          let bit := f (Nat.beq (Nat.mod x two) (succ zero)) (Nat.beq (Nat.mod y two) (succ zero))
+          have smaller := Nat.le_trans (div_lt_self (succ_le_succ (zero_le a)) Nat.one_lt_two) (le_of_succ_le_succ bound)
+          Nat.casesOn (motive := fun i => Eq (testBit (pack r bit) i) (f (testBit x i) (testBit y i))) i
+            ((packed_test_zero r bit).trans (bit_congr f (bit_as_parity x).symm (bit_as_parity y).symm))
+            (fun j => (packed_test_succ r bit j).trans
+              ((ih (Nat.div x two) (Nat.div y two) j smaller).trans
+                (bit_congr f (testBit_succ x j).symm (testBit_succ y j).symm)))))) fuel
+
+theorem testBit_bitwise {f : Bool → Bool → Bool} (of_false_false : Eq (f Bool.false Bool.false) Bool.false)
+    (x y i : Nat) : Eq (testBit (bitwise f x y) i) (f (testBit x i) (testBit y i)) :=
+  steps_test f of_false_false (succ x) x y i (Nat.le_refl _)
+
+theorem testBit_and (x y i : Nat) : Eq (testBit (Nat.land x y) i) (Bool.and (testBit x i) (testBit y i)) :=
+  testBit_bitwise (f := Bool.and) Omega.rfl x y i
+
+theorem testBit_or (x y i : Nat) : Eq (testBit (Nat.lor x y) i) (Bool.or (testBit x i) (testBit y i)) :=
+  testBit_bitwise (f := Bool.or) Omega.rfl x y i
+
 end Omega.Nat
