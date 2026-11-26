@@ -2,15 +2,18 @@
    generality: G
    mirror-B: D5/B/S1/Eigenstructure/NilSemigroup
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [Library/Eigenstructure/ekblad2025quantumwielandt.md]
+   anchors: [Library/Eigenstructure/yahaghi2002operatorsemigroups.md]
    utility: none
    digest: Nil semigroups of endomorphisms vanish after dimension many factors. -/
 
 module
 
+public import OmegaBuild.Commands
 public import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
 public import Mathlib.LinearAlgebra.Quotient.Basic
 public import Mathlib.RingTheory.Nilpotent.Defs
+
+compile_only_with_mathlib
 
 /-! # Nil semigroups on finite-dimensional left vector spaces -/
 
