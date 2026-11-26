@@ -783,4 +783,41 @@ public theorem BitVec.append_assoc : type_of% @_root_.BitVec.append_assoc := by
     BitVec.toNat_append, Nat.shiftLeft_or_distrib, ← Nat.shiftLeft_add, Nat.or_assoc]
 
 
+public theorem ByteArray.utf8DecodeChar?_append_eq_some : type_of% @_root_.ByteArray.utf8DecodeChar?_append_eq_some := by
+  intro b i c success t
+  have widen {j : Nat} (h : j < b.size) : j < (b ++ t).size :=
+    Nat.lt_of_lt_of_le h (ByteArray.size_append.symm ▸ Nat.le_add_right b.size t.size)
+  unfold ByteArray.utf8DecodeChar? at success ⊢
+  split at success <;> try (cases success; done)
+  rename_i bounded
+  rw [dite_eq_left (widen bounded)]
+  simp only [ByteArray.getElem_append_left bounded]
+  split at success <;> try (cases success; done)
+  all_goals rename_i tag
+  all_goals
+    have agree := (congrArg ByteArray.utf8DecodeChar?.parseFirstByte
+      (ByteArray.getElem_append_left (b := t) (h := widen bounded) bounded)).trans tag
+    split <;> rename_i branch <;> try (cases branch.symm.trans agree; done)
+  · exact success
+  all_goals
+    split at success <;> try (cases success; done)
+    rename_i last
+    rw [dite_eq_left (widen last)]
+    simp only [ByteArray.getElem_append_left last]
+    first | exact success | skip
+    try (simp only [ByteArray.getElem_append_left (Nat.lt_trans (Nat.lt_succ_self _) last)])
+    first | exact success | skip
+    try (simp only [ByteArray.getElem_append_left (Nat.lt_trans (Nat.lt_succ_self _) (Nat.lt_trans (Nat.lt_succ_self _) last))])
+    all_goals exact success
+
+public theorem ByteArray.utf8DecodeChar_extract_congr_of_le : type_of% (private_decl% @_root_.ByteArray.utf8DecodeChar_extract_congr_of_le) := by
+  intro bytes i j k valid₁ valid₂ order
+  obtain ⟨c, first⟩ := Option.isSome_iff_exists.mp valid₁
+  have nonempty := ByteArray.lt_size_of_isSome_utf8DecodeChar? valid₁
+  rw [ByteArray.size_extract] at nonempty
+  have ij := Nat.le_of_lt (Nat.lt_of_lt_of_le (Nat.lt_of_sub_pos nonempty) (Nat.min_le_left ..))
+  have second := ByteArray.utf8DecodeChar?_append_eq_some first (bytes.extract j k)
+  rw [← ByteArray.extract_eq_extract_append_extract j ij order] at second
+  exact (Option.get_of_eq_some valid₁ first).trans (Option.get_of_eq_some valid₂ second).symm
+
 end OmegaChecks.InitPort.Alternatives
