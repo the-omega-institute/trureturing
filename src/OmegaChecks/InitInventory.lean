@@ -154,6 +154,8 @@ def reductions : List (Name × Name × Name × Name) := [
   (`Init.WFExtrinsicFix, `WellFounded.partialExtrinsicFix₂, `Classical.choice, ``choiceFromFix₂),
   (`Init.WFExtrinsicFix, `WellFounded.extrinsicFix₃, `Classical.choice, ``choiceFromFix₃),
   (`Init.WFExtrinsicFix, `WellFounded.partialExtrinsicFix₃, `Classical.choice, ``choiceFromFix₃),
+  -- Even the logically opaque loop must return an element when its three inputs are units.
+  (`Init.WFExtrinsicFix, `WellFounded.opaqueFix₃, `Classical.choice, ``choiceFromFix₃),
   (`Init.Grind.Injective, `Lean.Grind.leftInv, `Classical.choice, ``choiceFromLeftInv),
   (`Init.While, `repeatM, `Classical.choice, ``choiceFromRepeatM),
   (`Init.Prelude, `unsafeCast, `sorryAx, ``sorryAxFromUnsafeCast)]
