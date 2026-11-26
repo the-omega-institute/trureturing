@@ -18,4 +18,8 @@ public theorem Array.eraseIdxIfInBounds {α : Type u} (xs : Array α) (i : Nat) 
     _root_.Array.mk (List.eraseIdx xs.toList i) = _root_.Array.eraseIdxIfInBounds xs i :=
   _root_.Array.ext' _root_.Array.toList_eraseIdxIfInBounds.symm
 
+public theorem Array.eraseIdx {α : Type u} (xs : Array α) (i : Nat) (h : i < xs.size) :
+    _root_.Array.mk (List.eraseIdx xs.toList i) = _root_.Array.eraseIdx xs i h :=
+  _root_.Array.ext' _root_.Array.toList_eraseIdx.symm
+
 end OmegaChecks.Interface.Equations

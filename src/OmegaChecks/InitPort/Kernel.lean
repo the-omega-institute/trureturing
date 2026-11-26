@@ -1,6 +1,7 @@
 import Lean
 import Lean.Replay
 import OmegaChecks.InitCompiler.Proofs
+import OmegaChecks.InitPort.Alternatives
 
 open Lean
 
@@ -89,6 +90,7 @@ structure Context where
   excluded : NameMap String
   publicNames : NameSet
   literalProofs : NameMap ConstantInfo
+  alternatives : NameMap ConstantInfo
   output : IO.FS.Handle
 
 abbrev M := ReaderT Context (StateRefT State IO)
@@ -408,6 +410,8 @@ partial def visit (n : Name) : M Bool := do
     | .ok next =>
       modify fun s => {s with env := next}
       return .added
+  if let some alt := OmegaChecks.InitPort.alternativeBody? c.alternatives ci then
+    if (← attempt alt) matches .added then return ← record n .added
   let result ← attempt body
   if result matches .added then return ← record n result
   let rewritten := OmegaChecks.InitCompiler.constructiveCasts c.source body
@@ -422,6 +426,9 @@ partial def visit (n : Name) : M Bool := do
     -- applying the original opaque theorem; its bound remains deterministic.
     if (← attempt certified (40 * c.maxHeartbeats)) matches .added then return ← record n .added
   if ← alternateProof ci then return true
+  if ci.isTheorem then
+    if let some term ← OmegaChecks.InitCompiler.finiteProof? c.source ci.type then
+      if (← attempt term) matches .added then return ← record n .added
   return ← record n result
 
 def modulesIn (root : System.FilePath) : IO (Array Name) := do
@@ -444,6 +451,7 @@ def writeMonolithic (base : Environment) (final : Kernel.Environment)
   IO.println s!"Wrote {cs.size} kernel declarations to {output / "OmegaImported.olean"}"
 
 def run (strictPath artifacts : System.FilePath) (outPath : String) (exclude : System.FilePath) (modules : List Name) : IO Unit := do
+  let alternatives ← OmegaChecks.InitPort.loadAlternatives
   let lib ← getLibDir (← findSysroot)
   searchPathRef.set [lib]
   let allMods ← if modules.isEmpty then modulesIn lib else pure modules.toArray
@@ -477,7 +485,7 @@ def run (strictPath artifacts : System.FilePath) (outPath : String) (exclude : S
   let excluded := exclusions.foldl (init := ({} : NameMap String)) fun acc (n, r) => acc.insert n.toName r
   let maxHeartbeats := (← IO.getEnv "OMEGA_PORT_HEARTBEATS").bind String.toNat? |>.getD 5000
   let literalProofs ← loadLiteralProofs strictPath
-  let ctx := {source,base,publicNames,excluded,output,maxHeartbeats,literalProofs : Context}
+  let ctx := {source,base,publicNames,excluded,output,maxHeartbeats,literalProofs,alternatives : Context}
   let action : M Unit := do
     for owner in source.header.moduleNames, data in source.header.moduleData do
       if owner.getRoot == `Init then

@@ -69,7 +69,8 @@ def generate(stage, product, seed, roots, excluded):
     inventory = product / "inventory.jsonl"
     omissions = dict.fromkeys(excluded, "explicit exclusion")
     selection = product / "interface-rejections.jsonl"
-    run("lake", "build", "omegaAudit", "+OmegaChecks.Interface.Equations", "+OmegaChecks.InitCompiler.Proofs")
+    run("lake", "build", "omegaAudit", "+OmegaChecks.Interface.Equations", "+OmegaChecks.InitCompiler.Proofs",
+        "+OmegaChecks.InitPort.Alternatives")
     with selection.open("w") as rejected:
         while True:
             exclusions = stage / "exclusions.json"
