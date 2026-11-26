@@ -65,8 +65,9 @@ private lemma integral_coordinate_product (s : Finset I) (h : ∀ i, X i → ℝ
     (∫⁻ x, ∏ i ∈ s, h i (x i) ∂MeasureTheory.Measure.pi μ) =
       ∏ i ∈ s, ∫⁻ t, h i t ∂μ i := by
   classical
-  rw [ProbabilityTheory.lintegral_prod_eq_prod_lintegral_of_indepFun s
-    (fun i x => h i (x i))
+  rw [ProbabilityTheory.lintegral_prod_eq_prod_lintegral_of_indepFun
+    (μ := MeasureTheory.Measure.pi μ) s
+    (fun (i : I) (x : ∀ i, X i) => h i (x i))
     (ProbabilityTheory.iIndepFun_pi (fun i => (hm i).aemeasurable))
     (fun i => (hm i).comp (measurable_pi_apply i))]
   apply prod_congr rfl

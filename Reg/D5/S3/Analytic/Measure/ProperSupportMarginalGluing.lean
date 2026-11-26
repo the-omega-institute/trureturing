@@ -1,4 +1,5 @@
 import LeanInformationAuditInterface.Contract.Registration
+import Reg.Support.DependentFamily
 import D5.S3.Analytic.Measure.ProperSupportMarginalGluing
 import D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 
