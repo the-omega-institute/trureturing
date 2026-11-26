@@ -63,4 +63,34 @@ public theorem polyBEq (p q : Int.Internal.Linear.Poly) : p.beq' q = true ↔ p 
       · intro h
         cases h
         exact Bool.and_eq_true_iff.mpr ⟨(intBEq ..).mpr rfl, Bool.and_eq_true_iff.mpr ⟨Nat.beq_refl _, (ih p).mpr rfl⟩⟩
+
+private theorem negNatLe {a b : Nat} : Int.negSucc a ≤ Int.negSucc b ↔ b ≤ a :=
+  Int.neg_le_neg_iff.trans Int.ofNat_le |>.trans Nat.succ_le_succ_iff
+private theorem negNatLt {a b : Nat} : Int.negSucc a < Int.negSucc b ↔ b < a :=
+  Int.neg_lt_neg_iff.trans Int.ofNat_lt |>.trans Nat.succ_lt_succ_iff
+
+public theorem intBLt (a b : Int) : a.blt' b = true ↔ a < b := by
+  cases a with
+  | ofNat n =>
+    cases b with
+    | ofNat m => exact (Iff.intro Nat.le_of_ble_eq_true Nat.ble_eq_true_of_le).trans Int.ofNat_lt.symm
+    | negSucc m =>
+      exact ⟨(fun h => nomatch h), fun h => False.elim (Int.not_lt_of_ge (Int.le_trans (Int.negSucc_le_zero m) (Int.natCast_nonneg n)) h)⟩
+  | negSucc n =>
+    cases b with
+    | ofNat m => exact ⟨fun _ => Int.lt_of_lt_of_le (Int.negSucc_lt_zero n) (Int.natCast_nonneg m), fun _ => rfl⟩
+    | negSucc m => exact (Iff.intro Nat.le_of_ble_eq_true Nat.ble_eq_true_of_le).trans negNatLt.symm
+
+public theorem intBLe (a b : Int) : a.ble' b = true ↔ a ≤ b := by
+  cases a with
+  | ofNat n =>
+    cases b with
+    | ofNat m => exact (Iff.intro Nat.le_of_ble_eq_true Nat.ble_eq_true_of_le).trans Int.ofNat_le.symm
+    | negSucc m =>
+      exact ⟨(fun h => nomatch h), fun h => False.elim (Int.not_le_of_gt (Int.lt_of_lt_of_le (Int.negSucc_lt_zero m) (Int.natCast_nonneg n)) h)⟩
+  | negSucc n =>
+    cases b with
+    | ofNat m => exact ⟨fun _ => Int.le_trans (Int.negSucc_le_zero n) (Int.natCast_nonneg m), fun _ => rfl⟩
+    | negSucc m => exact (Iff.intro Nat.le_of_ble_eq_true Nat.ble_eq_true_of_le).trans negNatLe.symm
+
 end OmegaChecks.InitCompiler.ProofRules

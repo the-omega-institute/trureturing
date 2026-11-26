@@ -33,11 +33,14 @@ public partial def logicalEquivalence? (env : Environment) (p q proof : Expr) (r
   | `propext, #[_, _, h] => return h
   | `Bool.and_eq_true, #[a, b] => return mkApp2 (mkConst `Bool.and_eq_true_iff) a b
   | `Nat.beq_eq, #[a, b] | `Int.beq'_eq, #[a, b] | `Int.beq'_ne, #[a, b]
+  | `Int.blt'_eq_true, #[a, b] | `Int.ble'_eq_true, #[a, b]
   | `Int.Internal.Linear.Poly.beq'_eq, #[a, b] =>
     let name := match n with
       | `Nat.beq_eq => `natBEq
       | `Int.beq'_eq => `intBEq
       | `Int.beq'_ne => `intBNe
+      | `Int.blt'_eq_true => `intBLt
+      | `Int.ble'_eq_true => `intBLe
       | _ => `polyBEq
     let rule ← rules.find? name
     return (← rule.value? (allowOpaque := true)).beta #[a, b]
