@@ -313,4 +313,74 @@ public theorem String.Pos.Raw.IsValid.append_left : type_of% @_root_.String.Pos.
     obtain ⟨b, hb⟩ := h.isValidUTF8_extract_zero
     exact ⟨a ++ b, by rw [ha, hb, List.utf8Encode_append]⟩
 
+open _root_.ByteArray.utf8DecodeChar? in
+public theorem ByteArray.utf8DecodeChar?_utf8EncodeChar_append :
+    type_of% @_root_.ByteArray.utf8DecodeChar?_utf8EncodeChar_append := by
+  intro b c
+  match hc : c.utf8Size, c.utf8Size_pos, c.utf8Size_le_four with
+  | 1, _, _ =>
+    have size : (String.utf8EncodeChar c).length = 1 := (String.length_utf8EncodeChar c).trans hc
+    rw [utf8DecodeChar?_append_eq_assemble₁ size (parseFirstByte_utf8EncodeChar_eq_done hc)]
+    change some _ = some c
+    apply congrArg some
+    apply Char.ext
+    apply UInt32.toNat_inj.mp
+    rw [UInt8.toNat_toUInt32]
+    have bound : c.val.toNat < 256 := Nat.lt_of_le_of_lt (Char.utf8Size_eq_one_iff.mp hc) (by decide : 127 < 256)
+    have head : (String.utf8EncodeChar c)[0] = c.val.toUInt8 := by
+      have eq := List.eq_getElem_of_length_eq_one (String.utf8EncodeChar c) size
+      exact (List.cons.inj ((String.utf8EncodeChar_eq_singleton hc).symm.trans eq)).1.symm
+    rw [head, UInt32.toNat_toUInt8, Nat.mod_eq_of_lt bound]
+  | 2, _, _ =>
+    have size : (String.utf8EncodeChar c).length = 2 := (String.length_utf8EncodeChar c).trans hc
+    rw [utf8DecodeChar?_append_eq_assemble₂ size (parseFirstByte_utf8EncodeChar_eq_oneMore hc)]
+    apply assemble₂_eq_some_of_toBitVec
+    · apply isInvalidContinuationByte_getElem_utf8EncodeChar_one_of_utf8Size_eq_two hc
+    · rw [Char.utf8Size_eq_two_iff] at hc
+      exact hc.1
+    · rw [String.toBitVec_getElem_utf8EncodeChar_zero_of_utf8Size_eq_two hc,
+        String.toBitVec_getElem_utf8EncodeChar_one_of_utf8Size_eq_two hc,
+        BitVec.setWidth_append_eq_right, BitVec.setWidth_append_eq_right,
+        BitVec.extractLsb'_append_extractLsb'_eq_extractLsb' (by decide),
+        ← BitVec.setWidth_eq_extractLsb' (by decide),
+        BitVec.setWidth_setWidth_eq_self]
+      simpa [BitVec.lt_def, UInt32.le_iff_toNat_le] using Nat.lt_succ_iff.2 (Char.utf8Size_eq_two_iff.1 hc).2
+  | 3, _, _ =>
+    have size : (String.utf8EncodeChar c).length = 3 := (String.length_utf8EncodeChar c).trans hc
+    rw [utf8DecodeChar?_append_eq_assemble₃ size (parseFirstByte_utf8EncodeChar_eq_twoMore hc)]
+    apply assemble₃_eq_some_of_toBitVec
+    · apply isInvalidContinuationByte_getElem_utf8EncodeChar_one_of_utf8Size_eq_three hc
+    · apply isInvalidContinuationByte_getElem_utf8EncodeChar_two_of_utf8Size_eq_three hc
+    · exact (Char.utf8Size_eq_three_iff.mp hc).1
+    · rw [String.toBitVec_getElem_utf8EncodeChar_zero_of_utf8Size_eq_three hc,
+        String.toBitVec_getElem_utf8EncodeChar_one_of_utf8Size_eq_three hc,
+        String.toBitVec_getElem_utf8EncodeChar_two_of_utf8Size_eq_three hc,
+        BitVec.setWidth_append_eq_right, BitVec.setWidth_append_eq_right, BitVec.setWidth_append_eq_right,
+        BitVec.extractLsb'_append_extractLsb'_eq_extractLsb' (by decide),
+        BitVec.extractLsb'_append_extractLsb'_eq_extractLsb' (by decide),
+        ← BitVec.setWidth_eq_extractLsb' (by decide), BitVec.setWidth_setWidth_eq_self]
+      simpa [BitVec.lt_def, UInt32.le_iff_toNat_le] using Nat.lt_succ_iff.2 (Char.utf8Size_eq_three_iff.1 hc).2
+  | 4, _, _ =>
+    have size : (String.utf8EncodeChar c).length = 4 := (String.length_utf8EncodeChar c).trans hc
+    rw [utf8DecodeChar?_append_eq_assemble₄ size (parseFirstByte_utf8EncodeChar_eq_threeMore hc)]
+    apply assemble₄_eq_some_of_toBitVec
+    · apply isInvalidContinuationByte_getElem_utf8EncodeChar_one_of_utf8Size_eq_four hc
+    · apply isInvalidContinuationByte_getElem_utf8EncodeChar_two_of_utf8Size_eq_four hc
+    · apply isInvalidContinuationByte_getElem_utf8EncodeChar_three_of_utf8Size_eq_four hc
+    · exact Char.utf8Size_eq_four_iff.mp hc
+    · rw [String.toBitVec_getElem_utf8EncodeChar_zero_of_utf8Size_eq_four hc,
+        String.toBitVec_getElem_utf8EncodeChar_one_of_utf8Size_eq_four hc,
+        String.toBitVec_getElem_utf8EncodeChar_two_of_utf8Size_eq_four hc,
+        String.toBitVec_getElem_utf8EncodeChar_three_of_utf8Size_eq_four hc,
+        BitVec.setWidth_append_eq_right, BitVec.setWidth_append_eq_right, BitVec.setWidth_append_eq_right,
+        BitVec.setWidth_append_eq_right,
+        BitVec.extractLsb'_append_extractLsb'_eq_extractLsb' (by decide),
+        BitVec.extractLsb'_append_extractLsb'_eq_extractLsb' (by decide),
+        BitVec.extractLsb'_append_extractLsb'_eq_extractLsb' (by decide),
+        ← BitVec.setWidth_eq_extractLsb' (by decide), BitVec.setWidth_setWidth_eq_self]
+      have := c.toNat_le
+      simp only [Nat.reduceAdd, BitVec.lt_def, UInt32.toNat_toBitVec, BitVec.toNat_twoPow,
+        Nat.reducePow, Nat.reduceMod, gt_iff_lt, Char.toNat_val]
+      omega
+
 end OmegaChecks.InitPort.Alternatives
