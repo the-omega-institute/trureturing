@@ -18,7 +18,7 @@ internal sealed class Q9SharedContactGeometryReplayDocument : IScribeDocumentDef
                 H("Distance-three contacts have disjoint occupied directions"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("Normalize the shared contact using its overlap size. For every input clause in the "
-                    + "corresponding refutation, Lean checks that the local rules imply the exact clause "
+                    + "corresponding tracked JSON certificate, Lean checks that the local rules imply the exact clause "
                     + "appearing in the formula. Mathlib's LRAT proof replays the derivation of the empty "
                     + "clause under that valuation. The three certificates cover overlap sizes one, two and "
                     + "three."))),
