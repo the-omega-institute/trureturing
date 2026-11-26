@@ -202,4 +202,40 @@ public noncomputable def String.removeLeadingSpaces (s : String) : String :=
     | none => 0
   if width == 0 then s else (private_decl% _root_.String.removeNumLeadingSpaces) width s
 
+public theorem String.Slice.toList_positionsFrom : type_of% @_root_.String.Slice.toList_positionsFrom := by
+  intro s p
+  induction p using _root_.String.Slice.Pos.next_induction with
+  | endPos =>
+    rw [_root_.Std.Iter.toList_eq_match_step, _root_.String.Slice.Model.positionsFrom_endPos]
+    dsimp only [_root_.Std.Iter.step, _root_.String.Slice.positionsFrom, _root_.Std.IterM.step,
+      _root_.Std.Iterator.step, _root_.Std.Iter.toIterM, _root_.Std.IterM.internalState_mk]
+    rw [dite_eq_left (rfl : s.endPos = s.endPos)]
+    rw [Id.run_pure, Std.Shrink.inflate_deflate]
+    rfl
+  | next p h ih =>
+    rw [_root_.Std.Iter.toList_eq_match_step, _root_.String.Slice.Model.positionsFrom_eq_cons h]
+    dsimp only [_root_.Std.Iter.step, _root_.String.Slice.positionsFrom, _root_.Std.IterM.step,
+      _root_.Std.Iterator.step, _root_.Std.Iter.toIterM, _root_.Std.IterM.internalState_mk]
+    rw [dite_eq_right h]
+    rw [Id.run_pure, Std.Shrink.inflate_deflate]
+    exact congrArg (List.cons _) ih
+
+public theorem String.Slice.toList_revPositionsFrom : type_of% @_root_.String.Slice.toList_revPositionsFrom := by
+  intro s p
+  induction p using _root_.String.Slice.Pos.prev_induction with
+  | startPos =>
+    rw [_root_.Std.Iter.toList_eq_match_step, _root_.String.Slice.Model.revPositionsFrom_startPos]
+    dsimp only [_root_.Std.Iter.step, _root_.String.Slice.revPositionsFrom, _root_.Std.IterM.step,
+      _root_.Std.Iterator.step, _root_.Std.Iter.toIterM, _root_.Std.IterM.internalState_mk]
+    rw [dite_eq_left (rfl : s.startPos = s.startPos)]
+    rw [Id.run_pure, Std.Shrink.inflate_deflate]
+    rfl
+  | prev p h ih =>
+    rw [_root_.Std.Iter.toList_eq_match_step, _root_.String.Slice.Model.revPositionsFrom_eq_cons h]
+    dsimp only [_root_.Std.Iter.step, _root_.String.Slice.revPositionsFrom, _root_.Std.IterM.step,
+      _root_.Std.Iterator.step, _root_.Std.Iter.toIterM, _root_.Std.IterM.internalState_mk]
+    rw [dite_eq_right h]
+    rw [Id.run_pure, Std.Shrink.inflate_deflate]
+    exact congrArg (List.cons _) ih
+
 end OmegaChecks.InitPort.Alternatives
