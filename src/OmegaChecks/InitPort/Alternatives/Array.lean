@@ -25,6 +25,47 @@ public def Subarray.copy {α : Type u} (s : Subarray α) : Array α :=
 public def Array.ofSubarray {α : Type u} (s : Subarray α) : Array α :=
   s.array.extract s.start s.stop
 
+public theorem Array.mem_dite_empty_left : type_of% @_root_.Array.mem_dite_empty_left := by
+  intro α p x _ xs
+  by_cases h : p
+  · rw [dite_eq_left h]
+    exact ⟨fun m => (_root_.Array.not_mem_empty x m).elim, fun ⟨hn, _⟩ => (hn h).elim⟩
+  · rw [dite_eq_right h]
+    exact ⟨fun m => ⟨h, m⟩, fun ⟨_, m⟩ => m⟩
+
+public theorem Array.mem_ite_empty_left : type_of% @_root_.Array.mem_ite_empty_left := by
+  intro α p x _ xs
+  by_cases h : p
+  · rw [ite_eq_left h]
+    exact ⟨fun m => (_root_.Array.not_mem_empty x m).elim, fun m => (m.1 h).elim⟩
+  · rw [ite_eq_right h]
+    exact ⟨fun m => ⟨h, m⟩, And.right⟩
+
+/-- Use the list representation of array map from the checked strict basis. -/
+public theorem Array.map_inj {α : Type u} {β : Type v} {f g : α → β} :
+    (fun xs : Array α => (xs.toList.map f).toArray) = (fun xs => (xs.toList.map g).toArray) ↔ f = g := by
+  constructor
+  · exact fun eq => congrArg (fun k x => (k #[x]).toList.headD (f x)) eq
+  · rintro rfl
+    rfl
+
+public theorem Array.replicate_beq_replicate : type_of% @_root_.Array.replicate_beq_replicate := by
+  intros
+  rw [← _root_.Array.beq_toList, _root_.Array.toList_replicate, _root_.Array.toList_replicate]
+  exact _root_.List.replicate_beq_replicate
+
+public theorem Array.filter_eq_append_iff : type_of% @_root_.Array.filter_eq_append_iff := by
+  intro α xs ys zs p
+  constructor
+  · intro eq
+    have split := _root_.Array.toList_filter.symm.trans ((congrArg Array.toList eq).trans _root_.Array.toList_append)
+    obtain ⟨a, b, hab, ha, hb⟩ := _root_.List.filter_eq_append_iff.mp split
+    exact ⟨a.toArray, b.toArray, _root_.Array.ext' (hab.trans _root_.Array.toList_append.symm),
+      _root_.Array.ext' (_root_.Array.toList_filter.trans ha),
+      _root_.Array.ext' (_root_.Array.toList_filter.trans hb)⟩
+  · rintro ⟨a, b, rfl, rfl, rfl⟩
+    exact _root_.Array.filter_append _root_.Array.size_append
+
 public theorem Array.map_const : type_of% @_root_.Array.map_const := by
   intro α β xs b
   apply Array.ext'
@@ -334,6 +375,23 @@ private theorem foldRightLoop {α : Type u} {β : Type v} (f : α → β → β)
     have appended := takeNext xs.toList i within
     exact (ih (Nat.le_of_lt within) (f xs[i] b)).trans ((List.foldr_append (l := xs.toList.take i)
       (l' := [xs[i]]) (f := f) (b := b)).symm.trans (congrArg (fun l => l.foldr f b) appended))
+
+public theorem Array.foldr_induction : type_of% @_root_.Array.foldr_induction := by
+  intro α β xs motive init initial f step
+  have loop (i : Nat) (h : i ≤ xs.size) (b : β) (inv : motive i b) :
+      motive 0 (_root_.Array.foldrM.fold (m := Id) f xs 0 i h b) := by
+    induction i generalizing b with
+    | zero => exact inv
+    | succ i ih =>
+      rw [foldBefore (m := Id) f xs 0 i h (Nat.zero_lt_succ i)]
+      exact ih (Nat.le_of_lt h) (f xs[i] b) (step ⟨i, h⟩ b inv)
+  unfold _root_.Array.foldr _root_.Array.foldrM
+  rw [dite_eq_left (Nat.le_refl _)]
+  by_cases pos : 0 < xs.size
+  · rw [ite_eq_left pos]
+    exact loop xs.size (Nat.le_refl _) init initial
+  · rw [ite_eq_right pos]
+    exact Nat.eq_zero_of_not_pos pos ▸ initial
 
 public theorem Array.foldr_toList : type_of% @_root_.Array.foldr_toList := by
   intro α β f b xs
