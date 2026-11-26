@@ -48,6 +48,10 @@ $$(\operatorname{ExistsUnique}\left(((f : \mathbb{N} \to \mathbb{N}) \mapsto \op
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Polyomino/OeisA395348FourLag.a395348_four_lag` (`✓ std3`). ∎
 
+*Resolves.* `Problems/zaman-a395348` (proved) by `D5/S3/Combinatorics/Polyomino/OeisA395348FourLag.a395348_four_lag`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"zaman-a395348","declaration_gid":"D5/S3/Combinatorics/Polyomino/OeisA395348FourLag.a395348_four_lag","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Jonas Karlsson and N. J. A. Sloane (2026). *OEIS A395348 and Rahid Zaman’s spiral-queens recurrence*. URL: <https://oeis.org/A395348>.
