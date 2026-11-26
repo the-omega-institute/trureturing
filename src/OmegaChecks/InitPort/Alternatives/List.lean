@@ -5,6 +5,7 @@ import all Init.Data.List.Control
 import Init.Data.List.Monadic
 import all Init.Data.List.MapIdx
 import Init.Data.Array.Lemmas
+import Init.Data.Array.Count
 
 /-! Structural proofs for boolean predicates and folds over strict lists. -/
 
@@ -274,4 +275,34 @@ public theorem List.instLawfulBEq : type_of% @_root_.List.instLawfulBEq := by
       obtain ⟨hx,ht⟩ := Bool.and_eq_true_iff.mp h
       cases eq_of_beq hx
       exact congrArg (_root_.List.cons x) (ih ht)
+public theorem List.mem_replicate : type_of% @_root_.List.mem_replicate := by
+  intro α a b n
+  induction n with
+  | zero => exact ⟨fun h => (List.not_mem_nil h).elim, fun h => (h.1 rfl).elim⟩
+  | succ n ih =>
+    rw [List.replicate_succ]
+    exact ⟨fun h => ⟨Nat.succ_ne_zero _, (List.mem_cons.mp h).elim id (fun t => (ih.mp t).2)⟩,
+      fun h => List.mem_cons.mpr (.inl h.2)⟩
+
+public theorem List.findSomeM?_pure : type_of% @_root_.List.findSomeM?_pure := by
+  intro m α β monad lawful f xs
+  induction xs with
+  | nil => rfl
+  | cons a xs ih =>
+    rw [List.findSomeM?_cons, pure_bind, List.findSome?_cons]
+    cases f a with
+    | none => exact ih
+    | some b => rfl
+
+public theorem List.countP_toArray : type_of% @_root_.List.countP_toArray := by
+  intro α p xs
+  rw [Array.countP, List.foldr_toArray]
+  induction xs with
+  | nil => rfl
+  | cons a xs ih =>
+    rw [List.foldr_cons, List.countP_cons]
+    cases h : p a with
+    | false => exact ih
+    | true => exact congrArg Nat.succ ih
+
 end OmegaChecks.InitPort.Alternatives
