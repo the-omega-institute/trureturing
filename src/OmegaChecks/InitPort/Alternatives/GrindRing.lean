@@ -504,4 +504,137 @@ public theorem Lean.Grind.CommRing.Stepwise.d_stepk :
       Poly.denote_combine, Poly.denote_mulMon, Poly.denote_mulConst, h₂,
       Semiring.mul_zero, Semiring.add_zero, Ring.intCast_mul, Semiring.mul_assoc, h₁]
 
+
+open Ring Semiring in
+public theorem Lean.Grind.CommRing.Expr.denote_toPoly :
+    type_of% @_root_.Lean.Grind.CommRing.Expr.denote_toPoly := by
+  intro α _ ctx e
+  induction e with
+  | num n => exact (denoteInt_eq n).symm
+  | intCast n => rfl
+  | natCast n => exact (intCast_natCast n)
+  | var x => exact Poly.denote_ofVar ..
+  | neg a ih =>
+    change (a.toPoly.mulConst (-1)).denote ctx = -a.denote ctx
+    rw [Poly.denote_mulConst, intCast_neg, intCast_one, neg_mul, one_mul, ih]
+  | add a b i j => exact (Poly.denote_combine ..).trans (congr (congrArg HAdd.hAdd i) j)
+  | sub a b i j =>
+    change (a.toPoly.combine (b.toPoly.mulConst (-1))).denote ctx = a.denote ctx - b.denote ctx
+    rw [Poly.denote_combine, Poly.denote_mulConst, intCast_neg, intCast_one, neg_mul,
+        one_mul, Ring.sub_eq_add_neg, i, j]
+  | mul a b i j => exact (Poly.denote_mul ..).trans (congr (congrArg HMul.hMul i) j)
+  | pow a k ih =>
+    cases k with
+    | zero => exact intCast_one.trans (pow_zero _).symm
+    | succ k =>
+      cases a with
+      | num n =>
+        change (Poly.num (n^(k+1))).denote ctx = (denoteInt n : α) ^ (k+1)
+        rw [Poly.denote, intCast_pow, denoteInt_eq]
+      | intCast n => exact intCast_pow n (k+1)
+      | natCast n => exact (intCast_pow (n : Int) (k+1)).trans (congrArg (fun x : α => x ^ (k+1)) (intCast_natCast n))
+      | var x =>
+        change (Poly.ofMon (.mult ⟨x, k+1⟩ .unit)).denote ctx = x.denote ctx ^ (k+1)
+        rw [Poly.denote_ofMon, Mon.denote, Power.denote_eq, Mon.denote, mul_one]
+      | neg | add | sub | mul | pow =>
+        exact (Poly.denote_pow ..).trans (congrArg (fun x : α => x ^ (k+1)) ih)
+
+open Ring Semiring in
+public theorem Lean.Grind.CommRing.Expr.denote_toPoly_nc :
+    type_of% @_root_.Lean.Grind.CommRing.Expr.denote_toPoly_nc := by
+  intro α _ ctx e
+  induction e with
+  | num n => exact (denoteInt_eq n).symm
+  | intCast n => rfl
+  | natCast n => exact (intCast_natCast n)
+  | var x => exact Poly.denote_ofVar ..
+  | neg a ih =>
+    change (a.toPoly_nc.mulConst (-1)).denote ctx = -a.denote ctx
+    rw [Poly.denote_mulConst, intCast_neg, intCast_one, neg_mul, one_mul, ih]
+  | add a b i j => exact (Poly.denote_combine ..).trans (congr (congrArg HAdd.hAdd i) j)
+  | sub a b i j =>
+    change (a.toPoly_nc.combine (b.toPoly_nc.mulConst (-1))).denote ctx = a.denote ctx - b.denote ctx
+    rw [Poly.denote_combine, Poly.denote_mulConst, intCast_neg, intCast_one, neg_mul,
+        one_mul, Ring.sub_eq_add_neg, i, j]
+  | mul a b i j => exact (Poly.denote_mul_nc ..).trans (congr (congrArg HMul.hMul i) j)
+  | pow a k ih =>
+    cases k with
+    | zero => exact intCast_one.trans (pow_zero _).symm
+    | succ k =>
+      cases a with
+      | num n =>
+        change (Poly.num (n^(k+1))).denote ctx = (denoteInt n : α) ^ (k+1)
+        rw [Poly.denote, intCast_pow, denoteInt_eq]
+      | intCast n => exact intCast_pow n (k+1)
+      | natCast n => exact (intCast_pow (n : Int) (k+1)).trans (congrArg (fun x : α => x ^ (k+1)) (intCast_natCast n))
+      | var x =>
+        change (Poly.ofMon (.mult ⟨x, k+1⟩ .unit)).denote ctx = x.denote ctx ^ (k+1)
+        rw [Poly.denote_ofMon, Mon.denote, Power.denote_eq, Mon.denote, mul_one]
+      | neg | add | sub | mul | pow =>
+        exact (Poly.denote_pow_nc ..).trans (congrArg (fun x : α => x ^ (k+1)) ih)
+
+open Ring Semiring in
+public theorem Lean.Grind.CommRing.Expr.denote_toPolyC :
+    type_of% @_root_.Lean.Grind.CommRing.Expr.denote_toPolyC := by
+  intro α c _ _ ctx e
+  induction e with
+  | num n => exact ((IsCharP.intCast_emod (p := c) n).trans (denoteInt_eq n).symm)
+  | intCast n => exact IsCharP.intCast_emod (p := c) n
+  | natCast n => exact ((IsCharP.intCast_emod (p := c) (n : Int)).trans (intCast_natCast n))
+  | var x => exact Poly.denote_ofVar ..
+  | neg a ih =>
+    change ((a.toPolyC c).mulConstC (-1) c).denote ctx = -a.denote ctx
+    rw [Poly.denote_mulConstC, intCast_neg, intCast_one, neg_mul, one_mul, ih]
+  | add a b i j => exact (Poly.denote_combineC ..).trans (congr (congrArg HAdd.hAdd i) j)
+  | sub a b i j =>
+    change ((a.toPolyC c).combineC ((b.toPolyC c).mulConstC (-1) c) c).denote ctx = a.denote ctx - b.denote ctx
+    rw [Poly.denote_combineC, Poly.denote_mulConstC, intCast_neg, intCast_one, neg_mul,
+        one_mul, Ring.sub_eq_add_neg, i, j]
+  | mul a b i j => exact (Poly.denote_mulC ..).trans (congr (congrArg HMul.hMul i) j)
+  | pow a k ih =>
+    cases k with
+    | zero => exact intCast_one.trans (pow_zero _).symm
+    | succ k =>
+      cases a with
+      | num n =>
+        change (Poly.num ((n^(k+1)) % c)).denote ctx = (denoteInt n : α) ^ (k+1)
+        rw [Poly.denote, IsCharP.intCast_emod, intCast_pow, denoteInt_eq]
+      | var x =>
+        change (Poly.ofMon (.mult ⟨x, k+1⟩ .unit)).denote ctx = x.denote ctx ^ (k+1)
+        rw [Poly.denote_ofMon, Mon.denote, Power.denote_eq, Mon.denote, mul_one]
+      | intCast | natCast | neg | add | sub | mul | pow =>
+        exact (Poly.denote_powC ..).trans (congrArg (fun x : α => x ^ (k+1)) ih)
+
+open Ring Semiring in
+public theorem Lean.Grind.CommRing.Expr.denote_toPolyC_nc :
+    type_of% @_root_.Lean.Grind.CommRing.Expr.denote_toPolyC_nc := by
+  intro α c _ _ ctx e
+  induction e with
+  | num n => exact ((IsCharP.intCast_emod (p := c) n).trans (denoteInt_eq n).symm)
+  | intCast n => exact IsCharP.intCast_emod (p := c) n
+  | natCast n => exact ((IsCharP.intCast_emod (p := c) (n : Int)).trans (intCast_natCast n))
+  | var x => exact Poly.denote_ofVar ..
+  | neg a ih =>
+    change ((a.toPolyC_nc c).mulConstC (-1) c).denote ctx = -a.denote ctx
+    rw [Poly.denote_mulConstC, intCast_neg, intCast_one, neg_mul, one_mul, ih]
+  | add a b i j => exact (Poly.denote_combineC ..).trans (congr (congrArg HAdd.hAdd i) j)
+  | sub a b i j =>
+    change ((a.toPolyC_nc c).combineC ((b.toPolyC_nc c).mulConstC (-1) c) c).denote ctx = a.denote ctx - b.denote ctx
+    rw [Poly.denote_combineC, Poly.denote_mulConstC, intCast_neg, intCast_one, neg_mul,
+        one_mul, Ring.sub_eq_add_neg, i, j]
+  | mul a b i j => exact (Poly.denote_mulC_nc ..).trans (congr (congrArg HMul.hMul i) j)
+  | pow a k ih =>
+    cases k with
+    | zero => exact intCast_one.trans (pow_zero _).symm
+    | succ k =>
+      cases a with
+      | num n =>
+        change (Poly.num ((n^(k+1)) % c)).denote ctx = (denoteInt n : α) ^ (k+1)
+        rw [Poly.denote, IsCharP.intCast_emod, intCast_pow, denoteInt_eq]
+      | var x =>
+        change (Poly.ofMon (.mult ⟨x, k+1⟩ .unit)).denote ctx = x.denote ctx ^ (k+1)
+        rw [Poly.denote_ofMon, Mon.denote, Power.denote_eq, Mon.denote, mul_one]
+      | intCast | natCast | neg | add | sub | mul | pow =>
+        exact (Poly.denote_powC_nc ..).trans (congrArg (fun x : α => x ^ (k+1)) ih)
+
 end OmegaChecks.InitPort.Alternatives
