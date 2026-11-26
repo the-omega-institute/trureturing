@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Quantum/Entanglement/StabilizerMultiEntropy/SignedBouquetMomentReconstruction
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S3/Combinatorics/PerfectMatchings/SignedBouquetBoundary, D5/S3/Quantum/Entanglement/StabilizerMultiEntropy/ProjectionMoments]
+   anchors: []
    utility: none
    digest: Reconstruct the weighted signed ribbon boundary state sum from physical quotient-code moments of its intrinsic signed pairing. -/
 

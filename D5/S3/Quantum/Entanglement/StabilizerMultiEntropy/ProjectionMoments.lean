@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Quantum/Entanglement/StabilizerMultiEntropy/ProjectionMoments
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S3/Quantum/Entanglement/StabilizerMultiEntropy/DiagonalRibbonBoundaryWalsh]
+   anchors: []
    utility: none
    digest: Interpolate every scalar function of a finite-field column span from physical density moments of its quotient codes. -/
 

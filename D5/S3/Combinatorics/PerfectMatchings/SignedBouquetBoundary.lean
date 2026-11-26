@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/PerfectMatchings/SignedBouquetBoundary
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S3/Combinatorics/PerfectMatchings/RibbonCohomologyRank]
+   anchors: []
    utility: none
    digest: Derive literal untwisted and twisted one-vertex ribbon boundary counts from the restricted binary signed interlacement form. -/
 
