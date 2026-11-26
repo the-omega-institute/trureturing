@@ -1,0 +1,103 @@
+using static StrataLint.Scribe.DefinitionDsl;
+
+namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Gauge;
+
+internal sealed class LatticeReflectionPositivity4DDocument : IScribeDocumentDefinition
+{
+    private const string Prefix = "D5/S3/Quantum/Gauge/LatticeReflectionPositivity4D.";
+    private static LibraryNoteRef Reflection => LibraryNoteRef.Create("D5/L/LieTheory/jaffejanssens2017reflection");
+    private static LibraryNoteRef Ising => LibraryNoteRef.Create("D5/L/SpinModels/wegner2014generalizedising");
+
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Finite Wilson reflection positivity and planar Wilson loops in the two-element gauge theory.",
+        H("Reflection positivity and Wilson loops on finite lattices"),
+        Blocks(
+            Paragraph(Text(
+                "For a real kernel K on two copies of a finite set X, the reflection pairing of f and g "
+                + "is Σₓ Σᵧ K(x,y) overline(f(y)) g(x). Reflection exchanges the copies and conjugates "
+                + "the value of the first observable.")),
+            Node("product-reflection-positivity", "product_reflection_positivity", "The product pairing",
+                "For every real weight w on X, the pairing of f with itself for K(x,y) = w(x)w(y) equals "
+                + "the squared norm of Σₓ w(x) f(x), regarded as a complex number."),
+            Node("power-reflection-positivity", "factorized_interaction_pow_rp", "Powers of the interaction",
+                "For finitely many complex features Aᵢ and real coefficients cᵢ ≥ 0, put "
+                + "V(x,y) = Σᵢ cᵢ Re(Aᵢ(x) overline(Aᵢ(y))). For every natural n, the pairing of f "
+                + "with itself for w(x)w(y)V(x,y)ⁿ is real and nonnegative. Real and imaginary parts "
+                + "give real features and the product expansion gives the features for each power."),
+            Node("exponential-reflection-positivity", "exponential_boltzmann_reflection_positivity",
+                "Exponential reflection positivity",
+                "For every real half action S and β ≥ 0, the diagonal pairing with weight "
+                + "w(x)w(y) exp(β(S(x) + S(y) + V(x,y))) is real and nonnegative. Multiplying the "
+                + "product weights by exp(β S) incorporates both half actions. The exponential "
+                + "series then gives a convergent sum of the nonnegative power pairings.", Reflection),
+            Node("negative-coupling", "negative_coupling_rp_counterexample", "Negative coupling",
+                "On two points let f(false) = −1 and f(true) = 1. Use f as the single feature "
+                + "with coefficient one, unit weights and zero half action. The pairing is "
+                + "4 sinh β, regarded as a complex number, and is strictly negative for every β < 0."),
+            Paragraph(Text(
+                "The Wilson lattice has two open time halves of length T. Each time slice is the "
+                + "three-dimensional torus of side L, with T and L positive. Local transformations "
+                + "send an oriented link U from v to w to g(v) U g(w)⁻¹. Each plaquette contributes "
+                + "the real trace of the represented holonomy.")),
+            Node("plaquette-gauge-invariance", "plaquette_trace_gauge_invariant", "Gauge invariance on squares",
+                "Local transformations conjugate each plaquette holonomy at its starting site. "
+                + "Cyclicity preserves the trace in any finite-dimensional unitary representation."),
+            Node("action-gauge-invariance", "wilson_action_gauge_invariant", "Gauge invariance of the action",
+                "Summing the individual gauge-invariant real traces gives gauge invariance of the "
+                + "full Wilson action, including spatial, internal time-space and crossing plaquettes."),
+            Node("crossing-links-to-one", "temporalGauge_transform", "The temporal gauge transformation",
+                "Orient each crossing link from the negative to the positive half. The transformation "
+                + "that is one on the negative half and U₀(x) on the positive sites above x sends "
+                + "the crossing link U₀(x) to one and applies a bijection to the half configurations."),
+            Node("temporal-gauge-fixing", "temporal_gauge_fixing", "Counting in temporal gauge",
+                "For any gauge-invariant summand with values in an additive commutative monoid, "
+                + "the full sum equals |G|^(L³) times the sum with unit crossing links. The "
+                + "bijection of half configurations applies separately for each crossing field."),
+            Node("crossing-plaquette-factorization", "crossing_plaquette_factorization",
+                "Features of a crossing plaquette",
+                "When crossing links are one, the crossing plaquette holonomy can be taken as U₊ U₋⁻¹ "
+                + "for the paired spatial links at the cut. Its real trace is the sum over row and "
+                + "column indices of Re(rep(U₊)ₐᵦ overline(rep(U₋)ₐᵦ))."),
+            Node("wilson-reflection-positivity", "lattice_ym_4d_reflection_positivity",
+                "Reflection positivity of the four-dimensional Wilson action",
+                "For a finite gauge group, a unitary representation on a finite complex coordinate "
+                + "space, β ≥ 0, and a gauge-invariant positive-half observable F, the normalized "
+                + "reflection pairing of F with itself is real and nonnegative. In the gauge with "
+                + "unit crossing links, the crossing plaquette contributions are precisely the "
+                + "interaction features of the exponential theorem.", Reflection),
+            Node("wilson-cauchy-schwarz", "lattice_ym_4d_cauchy_schwarz",
+                "Cauchy–Schwarz for the physical pairing",
+                "For two gauge-invariant positive-half observables F and H, the squared norm of "
+                + "their reflection pairing is bounded by the product of the real diagonal pairings "
+                + "of F and H."),
+            Node("ising-boltzmann-expansion", "ising_boltzmann_expansion", "The Boltzmann weight of a sign",
+                "For every real β and s equal to 1 or −1, exp(βs) = cosh(β)(1 + s tanh(β)).", Ising),
+            Node("wilson-surface-ratio", "wilsonExpectation_eq_surfaceRatio", "The exact surface expansion",
+                "For every real β, the finite normalized Wilson expectation equals the sum of "
+                + "tanh(β)^|S| over surfaces with the prescribed boundary divided by the sum over "
+                + "closed surfaces. The parity character sum eliminates all other surfaces.", Ising),
+            Node("closed-surface-sum", "one_le_closedSurfaceSum", "The closed-surface sum",
+                "For any nonnegative weight t, the closed-surface sum is at least one because the "
+                + "empty surface contributes one and every term is nonnegative."),
+            Node("wilson-loop-2d", "wilson_loop_2d_exact_area_law", "Exact Wilson-loop area law in two dimensions",
+                "An R by T rectangular loop in an open M by N lattice has one plaquette filling. "
+                + "For every real β the expectation equals tanh(β)^(R T). For β > 0 the string tension "
+                + "σ = −log(tanh(β)) is positive and the same expectation equals exp(−σ R T)."),
+            Node("hypercubic-filling-area", "hypercubic_4d_minimal_surface_area_bound",
+                "Area of a four-dimensional plaquette filling",
+                "Every plaquette filling of an R by T planar rectangle in an open four-dimensional "
+                + "box contains at least R T plaquettes. Summing the boundary along an in-plane link "
+                + "ray, over all transverse coordinates, forces an odd number of in-plane plaquettes "
+                + "above each elementary square of the rectangle."),
+            Node("strong-coupling-4d", "strong_coupling_4d_minimal_surface_expansion_bound",
+                "Four-dimensional strong-coupling bound",
+                "At β ≥ 0 the Wilson expectation of the planar rectangle is between zero and the "
+                + "sum of tanh(β)^|M| over inclusion-minimal fillings M. Every exponent |M| is at "
+                + "least R T. Choosing a minimal subfilling and its disjoint closed complement determines the original filling. The closed-surface sum cancels."))));
+
+    private static DocumentBlock Node(string id, string name, string title, string prose,
+        params LibraryNoteRef[] sources) =>
+        Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + name), H(title),
+            StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(sources),
+            Blocks(Paragraph(Text(prose))), DescribeRole.Theorem);
+}
