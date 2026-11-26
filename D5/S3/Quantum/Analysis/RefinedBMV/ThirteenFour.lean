@@ -23,13 +23,100 @@ namespace RefinedBMV
 
 namespace WeightedGram67
 
-open private gramTerms gapTerms scaleTerms coefficientsVanish coefficients_sound
-  weightedSum weightedSum_append weightedSum_scale traceWord traceWord_cyclicRep
+open private gramTerms gapTerms scaleTerms
+  weightedSum weightedSum_append weightedSum_scale traceWord
   eval_gapTerms eval_gramTerms weightedGram_nonneg_of_ldl orderedTraceSum_re
   real_rat_mul from D5.S3.Quantum.Analysis.RefinedBMV67
 
 open private Algebra84.ldlChecks Algebra84.ldlChecks_sound
   from D5.S3.Quantum.Analysis.RefinedBMV84
+
+open private Word Terms weightedSum_eq_map
+  from D5.S3.Quantum.Analysis.RefinedBMV67
+
+private def mergeAdjacent : Terms → Terms
+  | [] => []
+  | u :: us =>
+    match mergeAdjacent us with
+    | [] => [u]
+    | v :: vs =>
+      if u.2 = v.2 then (u.1 + v.1, u.2) :: vs else u :: v :: vs
+
+private theorem weightedSum_mergeAdjacent (f : Word → ℂ) (terms : Terms) :
+    weightedSum f (mergeAdjacent terms) = weightedSum f terms := by
+  induction terms with
+  | nil => rfl
+  | cons u us ih =>
+    rw [mergeAdjacent]
+    cases h : mergeAdjacent us with
+    | nil =>
+      rw [h] at ih
+      simp only [weightedSum] at ih ⊢
+      rw [← ih]
+    | cons v vs =>
+      rw [h] at ih
+      change weightedSum f (if u.2 = v.2 then (u.1 + v.1, u.2) :: vs else u :: v :: vs) =
+        weightedSum f (u :: us)
+      by_cases huv : u.2 = v.2
+      · rw [ite_eq_left huv]
+        simp only [weightedSum] at ih ⊢
+        rw [← ih, Rat.cast_add, add_smul, huv, add_assoc]
+      · rw [ite_eq_right huv]
+        simp only [weightedSum] at ih ⊢
+        rw [ih]
+
+/-- Use binary codes to select the rotation before constructing its list of letters. -/
+private def cyclicWord (word : Word) : Word :=
+  let length := word.length
+  let modulus := 2 ^ length
+  let highBit := 2 ^ (length - 1)
+  let code := word.foldl (fun value letter => 2 * value + letter.toNat) 0
+  let (index, _, _) := (List.range length).foldl (fun (index, best, current) rotation =>
+    let next := (2 * current + current / highBit) % modulus
+    if current < best then (rotation, current, next) else (index, best, next)) (0, code, code)
+  word.rotate index
+
+/-- Stable binary radix sort of the first `bits` letters of each word. -/
+private def radixSort : ℕ → Terms → Terms
+  | 0, terms => terms
+  | bits + 1, terms =>
+    let sorted := radixSort bits terms
+    let buckets := sorted.partition fun t => !(t.2[bits]?.getD false)
+    buckets.1 ++ buckets.2
+
+private theorem radixSort_perm (bits : ℕ) (terms : Terms) : (radixSort bits terms).Perm terms := by
+  induction bits with
+  | zero => exact List.Perm.refl _
+  | succ bits ih =>
+    simp only [radixSort, List.partition_eq_filter_filter, Function.comp_def]
+    exact (List.filter_append_perm _ _).trans ih
+
+private def sortedCoefficients (terms : Terms) : Terms :=
+  mergeAdjacent (radixSort 17 (terms.map fun (c, w) => (c, cyclicWord w)))
+
+private theorem weightedSum_sortedCoefficients (f : Word → ℂ)
+    (hf : ∀ w, f (cyclicWord w) = f w) (terms : Terms) :
+    weightedSum f (sortedCoefficients terms) = weightedSum f terms := by
+  rw [sortedCoefficients, weightedSum_mergeAdjacent]
+  simp only [weightedSum_eq_map]
+  rw [((radixSort_perm _ _).map _).sum_eq]
+  simp only [List.map_map, Function.comp_def, hf]
+
+private def sortedCoefficientsVanish (terms : Terms) : Bool :=
+  (sortedCoefficients terms).all fun t => decide (t.1 = 0)
+
+private theorem sortedCoefficients_sound (f : Word → ℂ)
+    (hf : ∀ w, f (cyclicWord w) = f w) (terms : Terms)
+    (h : sortedCoefficientsVanish terms = true) : weightedSum f terms = 0 := by
+  rw [← weightedSum_sortedCoefficients f hf]
+  have hz : ∀ t ∈ sortedCoefficients terms, t.1 = 0 := fun t ht =>
+    of_decide_eq_true (List.all_eq_true.mp h t ht)
+  generalize sortedCoefficients terms = coefficients at hz ⊢
+  induction coefficients with
+  | nil => rfl
+  | cons t ts ih =>
+    simp only [weightedSum, hz t List.mem_cons_self, Rat.cast_zero, zero_smul, zero_add]
+    exact ih fun s hs => hz s (List.mem_cons_of_mem _ hs)
 
 local notation "𝔞" => true
 local notation "𝔟" => false
@@ -445,19 +532,47 @@ private theorem ldl134 : Algebra84.ldlChecks G134 d134 F134 = true := by
 
 private def features134 (i : Fin 28) : List (ℚ × List Bool) := [(1, words134 i)]
 
+-- Recursion on fuel lets the kernel enumerate the words directly.
+private def balancedWordsFuel : ℕ → ℕ → ℕ → List Word
+  | 0, 0, 0 => [[]]
+  | 0, _, _ => []
+  | _ + 1, 0, 0 => [[]]
+  | fuel + 1, 0, b + 1 => (balancedWordsFuel fuel 0 b).map (false :: ·)
+  | fuel + 1, a + 1, 0 => (balancedWordsFuel fuel a 0).map (true :: ·)
+  | fuel + 1, a + 1, b + 1 =>
+      (balancedWordsFuel fuel a (b + 1)).map (true :: ·) ++
+        (balancedWordsFuel fuel (a + 1) b).map (false :: ·)
+
+private theorem balancedWordsFuel_eq (fuel a b : ℕ) (h : a + b ≤ fuel) :
+    balancedWordsFuel fuel a b = balancedWords a b := by
+  induction fuel generalizing a b with
+  | zero =>
+    have ha : a = 0 := by omega
+    have hb : b = 0 := by omega
+    subst a b
+    simp only [balancedWordsFuel, balancedWords]
+  | succ fuel ih =>
+    cases a <;> cases b <;>
+      simp only [balancedWordsFuel, balancedWords] <;>
+      (repeat rw [ih _ _ (by omega)])
+
 set_option maxRecDepth 60000 in
 set_option maxHeartbeats 32000000 in
 private theorem coefficients134 :
-    coefficientsVanish
+    sortedCoefficientsVanish
       (scaleTerms 884520000000000 (gapTerms 13 (560 / 4) comparator134) ++
         scaleTerms (-1) (gramTerms G134 [𝔞] [] features134)) = true := by
-  simp only [gapTerms, balancedWords, List.map_cons, List.map_nil, List.cons_append, List.nil_append]
+  rw [gapTerms, ← balancedWordsFuel_eq 17 13 4 (by decide)]
   decide +kernel
 
 noncomputable section
 
 variable {n : ℕ}
 local notation "Mat" => Matrix (Fin n) (Fin n) ℂ
+
+private theorem traceWord_cyclicWord (A B : Mat) (w : Word) :
+    traceWord A B (cyclicWord w) = traceWord A B w :=
+  evalWord_rotate_trace43 _ _ _ _
 
 private theorem comparator134_eval (A B : Mat) :
     traceWord A B comparator134 = trace ((A ^ 4 * B) * (A ^ 3 * B) ^ 3) := by
@@ -467,7 +582,7 @@ private theorem trace_gap134 (A B : Mat) (hA : A.IsHermitian) (hB : B.IsHermitia
     ((884520000000000 : ℚ) : ℂ) * (((1 / 17 : ℚ) : ℂ) * orderedTraceSum A B 13 -
       ((560 / 4 : ℚ) : ℂ) * trace ((A ^ 4 * B) * (A ^ 3 * B) ^ 3)) =
       weightedGram G134 (fun i => weightedSum (evalWord A B) (features134 i)) A 1 := by
-  have h := coefficients_sound (traceWord A B) (traceWord_cyclicRep A B) _ coefficients134
+  have h := sortedCoefficients_sound (traceWord A B) (traceWord_cyclicWord A B) _ coefficients134
   apply eq_of_sub_eq_zero
   simp only [weightedSum_append, weightedSum_scale, eval_gapTerms,
     eval_gramTerms A B hA hB, comparator134_eval, Rat.cast_neg, Rat.cast_one, neg_one_mul,
