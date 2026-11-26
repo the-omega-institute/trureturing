@@ -122,21 +122,21 @@ elab "replay_geometry " name:ident index:num fingerprint:num certificate:term : 
 
 set_option maxHeartbeats 0 in
 -- Elaborating the full list of geometric clause proofs needs a larger budget.
-replay_geometry sharedCase3 2 8169083809360750239
+replay_geometry sharedCase3 2 4195449197998887067
   (include_str "../../../../../../../Evidence/D5/S3/Combinatorics/Graph/HypercubeCritical/ComponentBoundary/Placement/Q9SharedContactOverlap3.result.json")
 
 #print axioms sharedCase3
 
 set_option maxHeartbeats 0 in
 -- Elaborating the full list of geometric clause proofs needs a larger budget.
-replay_geometry sharedCase2 1 9104730146278566203
+replay_geometry sharedCase2 1 5451289532298363819
   (include_str "../../../../../../../Evidence/D5/S3/Combinatorics/Graph/HypercubeCritical/ComponentBoundary/Placement/Q9SharedContactOverlap2.result.json")
 
 #print axioms sharedCase2
 
 set_option maxHeartbeats 0 in
 -- Elaborating the full list of geometric clause proofs needs a larger budget.
-replay_geometry sharedCase1 0 16453404429952119345
+replay_geometry sharedCase1 0 6915809343543966175
   (include_str "../../../../../../../Evidence/D5/S3/Combinatorics/Graph/HypercubeCritical/ComponentBoundary/Placement/Q9SharedContactOverlap1.result.json")
 
 #print axioms sharedCase1
