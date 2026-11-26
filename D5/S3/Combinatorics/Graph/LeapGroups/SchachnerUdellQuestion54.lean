@@ -21,10 +21,6 @@ namespace D5.S3.Combinatorics.Graph.LeapGroups.SchachnerUdellQuestion54
 noncomputable section
 open scoped BigOperators
 
-private theorem zero_or_one (x : ZMod 2) : x = 0 ∨ x = 1 := by
-  have h : ∀ t : ZMod 2, t = 0 ∨ t = 1 := by decide
-  exact h x
-
 /-- The Cartesian product of the two-vertex complete graph and the cyclic graph. -/
 def prism (n : ℕ) : SimpleGraph (ZMod 2 × ZMod n) :=
   (⊤ : SimpleGraph (ZMod 2)) □ circulantGraph ({1} : Set (ZMod n))
@@ -125,8 +121,10 @@ private theorem prism_odd_all_swaps {n : ℕ} (hn : 3 ≤ n) (ho : Odd n) (x y :
       · change x.1 + ((k+n : ℕ) : ZMod 2) = y.1
         rw [Nat.cast_add, ho.natCast_zmod_two, ← add_assoc]
         change (advanceBy x k).1 + 1 = y.1
-        rcases zero_or_one (advanceBy x k).1 with h0 | h1 <;>
-          rcases zero_or_one y.1 with hy0 | hy1 <;>
+        rcases (show (advanceBy x k).1 = 0 ∨ (advanceBy x k).1 = 1 from
+          (Fin.exists_fin_two (p := ((advanceBy x k).1 = ·))).mp ⟨(advanceBy x k).1, rfl⟩) with h0 | h1 <;>
+          rcases (show y.1 = 0 ∨ y.1 = 1 from
+            (Fin.exists_fin_two (p := (y.1 = ·))).mp ⟨y.1, rfl⟩) with hy0 | hy1 <;>
           simp_all [CharTwo.add_self_eq_zero (1 : ZMod 2)]
       · change x.2 + ((k+n : ℕ) : ZMod n) = y.2
         rw [Nat.cast_add, ZMod.natCast_self, add_zero]
@@ -153,8 +151,11 @@ private theorem prism_adj_flip {n : ℕ} (hn : 3 ≤ n) (h : 2 ∣ n)
     prismParity h y = prismParity h x + 1 := by
   rcases (prism_adj_iff hn x y).mp ha with ⟨hb, hi⟩ | ⟨hi, hb⟩
   · have hf : y.1 = x.1 + 1 := by
-      rcases zero_or_one x.1 with h0 | h1 <;>
-        rcases zero_or_one y.1 with hy0 | hy1 <;> simp_all [CharTwo.add_self_eq_zero (1 : ZMod 2)]
+      rcases (show x.1 = 0 ∨ x.1 = 1 from
+        (Fin.exists_fin_two (p := (x.1 = ·))).mp ⟨x.1, rfl⟩) with h0 | h1 <;>
+        rcases (show y.1 = 0 ∨ y.1 = 1 from
+          (Fin.exists_fin_two (p := (y.1 = ·))).mp ⟨y.1, rfl⟩) with hy0 | hy1 <;>
+        simp_all [CharTwo.add_self_eq_zero (1 : ZMod 2)]
     simp [prismParity, hf, hi, add_right_comm]
   · rcases hi with hi | hi
     · simp only [prismParity, hi, hb, map_add, map_one, add_assoc]

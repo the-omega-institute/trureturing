@@ -53,10 +53,6 @@ theorem swap_mem_of_cross_edges [DecidableEq V] {h : Perm V}
     ((leapGroup G).inv_mem (hop_mem G hh))
   simpa [mul_assoc] using hm
 
-private theorem zmod_two_values (x : ZMod 2) : x = 0 ∨ x = 1 := by
-  have h : ∀ x : ZMod 2, x = 0 ∨ x = 1 := by decide
-  exact h x
-
 /-- The unordered family of the two labelled parity classes. -/
 private def parityClasses (p : V → ZMod 2) : Set (Set V) :=
   Set.range (fun t : ZMod 2 => {x | p x = t})
@@ -69,7 +65,8 @@ private theorem parityClasses_eq_pair (p : V → ZMod 2) :
   ext s
   constructor
   · rintro ⟨t, rfl⟩
-    rcases zmod_two_values t with rfl | rfl <;> simp
+    rcases (show t = 0 ∨ t = 1 from
+      (Fin.exists_fin_two (p := (t = ·))).mp ⟨t, rfl⟩) with rfl | rfl <;> simp
   · intro h
     simp only [Set.mem_insert_iff, Set.mem_singleton_iff] at h
     rcases h with rfl | rfl
@@ -97,7 +94,8 @@ private theorem mem_parityStabilizer_iff (p : V → ZMod 2) (g : Perm V) :
         simpa [this] using hy
       · intro hx
         exact Set.mem_smul_set.mpr ⟨x, hx, rfl⟩
-    rcases zmod_two_values (p x) with hz | ho
+    rcases (show p x = 0 ∨ p x = 1 from
+      (Fin.exists_fin_two (p := (p x = ·))).mp ⟨p x, rfl⟩) with hz | ho
     · rw [hz, zero_add]
       exact he.mpr hz
     · rw [ho]
@@ -106,8 +104,10 @@ private theorem mem_parityStabilizer_iff (p : V → ZMod 2) (g : Perm V) :
         have := he.mp heq
         rw [ho] at this
         exact one_ne_zero this
-      rcases zmod_two_values d with hd0 | hd1 <;>
-        rcases zmod_two_values (p (g x)) with hx0 | hx1 <;>
+      rcases (show d = 0 ∨ d = 1 from
+        (Fin.exists_fin_two (p := (d = ·))).mp ⟨d, rfl⟩) with hd0 | hd1 <;>
+        rcases (show p (g x) = 0 ∨ p (g x) = 1 from
+          (Fin.exists_fin_two (p := (p (g x) = ·))).mp ⟨p (g x), rfl⟩) with hx0 | hx1 <;>
         simp_all [show (1 + 1 : ZMod 2) = 0 by decide]
   · rintro ⟨d, hd⟩
     have hf (t : ZMod 2) :
@@ -164,7 +164,8 @@ theorem eq_parityStabilizer [Finite V] [DecidableEq V]
     exact (mem_parityStabilizer_iff p g).mpr ⟨1, fun x => hflip _ _ (hg x)⟩
   · intro g hg
     obtain ⟨d, hd⟩ := (mem_parityStabilizer_iff p g).mp hg
-    rcases zmod_two_values d with rfl | rfl
+    rcases (show d = 0 ∨ d = 1 from
+      (Fin.exists_fin_two (p := (d = ·))).mp ⟨d, rfl⟩) with rfl | rfl
     · exact mem_of_same_class_swaps _ p hs g (fun x => by simpa using hd x)
     · have hmem : h * g ∈ leapGroup G := by
         apply mem_of_same_class_swaps _ p hs
