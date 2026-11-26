@@ -15,6 +15,7 @@ public import OmegaChecks.InitPort.Alternatives.GrindRing
 public import OmegaChecks.InitPort.Alternatives.Integer
 public import OmegaChecks.InitPort.Alternatives.List
 public import OmegaChecks.InitPort.Alternatives.NatBits
+public import OmegaChecks.InitPort.Alternatives.NatOrder
 public import OmegaChecks.InitPort.Alternatives.OmegaIntList
 public import OmegaChecks.InitPort.Alternatives.Powers
 public import OmegaChecks.InitPort.Alternatives.Range
