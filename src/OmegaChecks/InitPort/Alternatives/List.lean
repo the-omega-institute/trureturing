@@ -25,6 +25,14 @@ private theorem mapLoopId (f : α → Id β) (xs : List α) (acc : List β) :
 public theorem List.idRun_mapM : type_of% @_root_.List.idRun_mapM :=
   fun {_ _ xs f} => mapLoopId f xs []
 
+public theorem Option.eq_none_iff_forall_ne_some : type_of% @_root_.Option.eq_none_iff_forall_ne_some := by
+  intro α o
+  cases o with
+  | none =>
+    exact ⟨fun _ _ h => Option.some_ne_none _ h.symm, fun _ => rfl⟩
+  | some a =>
+    exact ⟨fun h => (Option.some_ne_none _ h).elim, fun denied => (denied a rfl).elim⟩
+
 public theorem List.find?_append : type_of% @_root_.List.find?_append := by
   intro α p xs ys
   induction xs with

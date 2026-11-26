@@ -244,8 +244,14 @@ public def constructiveCasts (source : Environment) (body : Expr) (rules : NameM
       return mkApp6 (mkConst lemma us) p dec (.lam `hp p proof .default) α t f
     | `congrFun, _, #[_, _, _, _, h, a] | `congrFun', _, #[_, _, _, _, h, a] =>
       if let some term := mapCongruence? h a then return term
-      guard (h.isAppOfArity `funext 5)
-      return h.getAppArgs[4]!.beta #[a]
+      let pointwise ← if h.isAppOfArity `funext 5 then pure h else do
+        let .const name levels := h.getAppFn | none
+        let ci ← source.find? name
+        let proof ← ci.value? (allowOpaque := true)
+        let unfolded := (proof.instantiateLevelParams ci.levelParams levels).beta h.getAppArgs
+        guard (unfolded.isAppOfArity `funext 5)
+        pure unfolded
+      return pointwise.getAppArgs[4]!.beta #[a]
     | `Eq.mp, [.zero], #[p, q, h, x] | `Eq.mpr, [.zero], #[p, q, h, x]
     | `cast, [.zero], #[p, q, h, x] =>
       mapProof (n == `Eq.mpr) p q h x

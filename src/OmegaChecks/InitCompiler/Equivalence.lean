@@ -36,6 +36,10 @@ public partial def logicalEquivalence? (env : Environment) (p q proof : Expr) (r
   | `eq_false, #[a, h] | `eq_false', #[a, h] => return mkApp2 (mkConst `iff_false_intro) a h
   | `Bool.false_eq_true, #[] =>
     return mkApp2 (mkConst `iff_false_intro) p (mkConst `Bool.false_ne_true)
+  | `Bool.true_eq_false, #[] =>
+    let ne := mkApp4 (mkConst `Ne.symm [.succ .zero]) (mkConst `Bool) (mkConst `Bool.false)
+      (mkConst `Bool.true) (mkConst `Bool.false_ne_true)
+    return mkApp2 (mkConst `iff_false_intro) p ne
   | `Bool.not_eq_true, #[b] =>
     return mkApp3 (mkConst `Iff.symm) q p (mkApp (mkConst `Bool.eq_false_iff) b)
   | `Eq.symm, #[_, a, b, h] => return mkApp3 (mkConst `Iff.symm) a b (← again a b h)
