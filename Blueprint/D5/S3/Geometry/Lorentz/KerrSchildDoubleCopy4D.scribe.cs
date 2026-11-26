@@ -107,7 +107,7 @@ internal sealed class KerrSchildDoubleCopy4DDocument : IScribeDocumentDefinition
             Node("radial-quartic", "coulomb_schwarzschild_quartic", "Coulomb and Schwarzschild principal directions",
                 CoulombFormula(),
                 "In the radial spin frame the two axial rays are zero and infinity. "
-                + "The quartic square gives the algebraic Schwarzschild type D pattern with the displayed amplitude. "
+                + "For nonzero amplitude the quartic gives the algebraic Schwarzschild type D pattern. "
                 + "The spacetime Weyl double copy also includes the scalar normalization relating the physical fields.", WeylCopy)),
         []));
 

@@ -8,6 +8,7 @@
 
 import OmegaBuild.Commands
 import D5.S3.Geometry.Lorentz.KerrSchildDoubleCopy4D
+import D5.S3.Geometry.Lorentz.KerrSchildWeylDoubleCopy4D
 import Mathlib.Tactic.FieldSimp
 
 /-! At unit radius both the Coulomb field strength and the orthonormal Schwarzschild
@@ -155,30 +156,53 @@ private theorem coulomb_screen_polynomial (p : ℝ) (r : FutureNullRay) :
     Omega.ProjectivePolynomial.nodalQuadratic, Omega.ProjectivePolynomial.rayFactor,
     Polynomial.smul_eq_C_mul, Fin.sum_univ_succ] <;> ring
 
-private def pairA : PairIndex → Ind
-  | .inl _ => 0
-  | .inr i => ![2, 3, 1] i
+private theorem radial_weyl_eq (p : ℝ) :
+    radialWeyl p = KerrSchildWeylDoubleCopy4D.schwarzschildWeyl (-p/2) 1 := by
+  have he : radialElectric p = KerrSchildWeylDoubleCopy4D.schwarzschildElectric (-p/2) 1 := by
+    apply Subtype.ext
+    ext i j
+    fin_cases i <;> fin_cases j <;>
+      norm_num [radialElectric, KerrSchildWeylDoubleCopy4D.schwarzschildElectric, diagonal_apply] <;> ring
+  simp only [radialWeyl, KerrSchildWeylDoubleCopy4D.schwarzschildWeyl, he]
 
-private def pairB : PairIndex → Ind
-  | .inl i => i.succ
-  | .inr i => ![3, 1, 2] i
+private theorem radial_null (p : ℝ) : Null (radialJet p) := by
+  constructor
+  · norm_num [raise, KerrSchildDoubleCopy4D.sign, dotProduct, radialJet, Fin.sum_univ_four]
+  · intro a
+    fin_cases a <;> norm_num [raise, KerrSchildDoubleCopy4D.sign, dotProduct, radialJet,
+      transverse, Fin.sum_univ_four]
+  · intro a b
+    fin_cases a <;> fin_cases b <;>
+      norm_num [raise, KerrSchildDoubleCopy4D.sign, dotProduct, radialJet, transverse, Fin.sum_univ_four]
 
-private def screenBivector (r : FutureNullRay) (i : PairIndex) : ℂ :=
-  screenVector r (pairA i) * (nullGenerator r (pairB i) : ℂ) -
-    screenVector r (pairB i) * (nullGenerator r (pairA i) : ℂ)
+private theorem radial_geodesic (p : ℝ) : Geodesic (radialJet p) := by
+  constructor
+  · intro b
+    fin_cases b <;> norm_num [raise, KerrSchildDoubleCopy4D.sign, radialJet, transverse, Fin.sum_univ_four]
+  · intro a b
+    fin_cases a <;> fin_cases b <;>
+      norm_num [raise, KerrSchildDoubleCopy4D.sign, radialJet, transverse, Fin.sum_univ_four]
 
-private theorem radial_tidal (p : ℝ) (z : ℂ) :
-    complexTide (radialWeyl p).val (some z) = (-12 * (p : ℂ)) * z ^ 2 := by
-  change (∑ i : PairIndex, ∑ j : PairIndex, ((radialWeyl p).val.val i j : ℂ) *
-    screenBivector (some z) i * screenBivector (some z) j) = _
-  rw [radial_weyl_matrix, frame_curvature]
-  simp [Fintype.sum_sum_type, Fin.sum_univ_three, pairIndex, screenBivector,
-    pairA, pairB, screenVector, nullGenerator, diagonal_apply, Complex.normSq_apply]
-  ring_nf
-  simp [Complex.I_sq]
-  linear_combination (norm := ring_nf)
-    (-4 * (p : ℂ) * (2 * z + (z.re : ℂ) + (z.im : ℂ) * Complex.I)) * Complex.re_add_im z
-  simp [Complex.I_sq]
+private theorem radial_stationary (p : ℝ) : StationaryUnit (radialJet p) := by
+  constructor <;> try rfl
+  all_goals
+    first
+    | intro a b; fin_cases a <;> fin_cases b <;> norm_num [radialJet, transverse]
+    | intro a; fin_cases a <;> norm_num [radialJet, transverse, diagonal_apply]
+
+private theorem radial_maxwell_vacuum (p : ℝ) (i : Ind) :
+    maxwellDivergence (radialJet p) i = 0 := by
+  have hn := radial_null p
+  have hg := radial_geodesic p
+  have hs := radial_stationary p
+  have ht : mixedRicci (radialJet p) 0 0 = 0 :=
+    (stationary_ks_ricci_poisson_zeroth_copy (radialJet p) hn hg hs).2.mpr (by
+      norm_num [radialJet]
+      ring)
+  fin_cases i
+  · exact (stationary_ks_ricci_maxwell_double_copy (radialJet p) hn hg hs 0).2.mp ht
+  all_goals norm_num [maxwellDivergence, ddPotential, radialJet, transverse,
+    KerrSchildDoubleCopy4D.sign, diagonal_apply, Fin.sum_univ_four] <;> ring
 
 /-- For the radial Kerr–Schild jet the Maxwell screen is the Coulomb quadratic,
 and the Weyl quartic is its square with scalar normalization `-3 / p`. -/
@@ -187,17 +211,16 @@ theorem schwarzschild_coulomb_weyl_double_copy (p : ℝ) (hp : p ≠ 0) :
     (∀ i j, (radialWeyl p).val.val i j = radialCurvature p (pairIndex i) (pairIndex j)) ∧
     (∀ r, coulombScreen p r = Omega.ProjectivePolynomial.eval 2 r
       (maxwellQuadratic (2 * (p : ℂ)) (some 0) none)) ∧
+    (∀ i, maxwellDivergence (radialJet p) i = 0) ∧
     (weylQuarticEquiv (radialWeyl p) : ℂ[X]) =
       (-3 / (p : ℂ)) • (maxwellSquare (2 * (p : ℂ)) (some 0) none : ℂ[X]) := by
-  refine ⟨frame_isometry p, fun i j => congrFun (congrFun (radial_weyl_matrix p) i) j, coulomb_screen_polynomial p, ?_⟩
-  rw [(coulomb_schwarzschild_quartic (2 * (p : ℂ))).2.1]
-  apply Polynomial.funext
-  intro z
-  have h := (weylQuarticEquiv_eval (radialWeyl p) (some z)).trans (radial_tidal p z)
-  change Polynomial.eval z (weylQuarticEquiv (radialWeyl p) : ℂ[X]) = _ at h
-  rw [h]
-  simp only [Polynomial.smul_eq_C_mul, Polynomial.eval_mul, Polynomial.eval_C,
-    Polynomial.eval_pow, Polynomial.eval_X]
+  refine ⟨frame_isometry p, fun i j => congrFun (congrFun (radial_weyl_matrix p) i) j,
+    coulomb_screen_polynomial p, radial_maxwell_vacuum p, ?_⟩
+  rw [radial_weyl_eq, KerrSchildWeylDoubleCopy4D.schwarzschild_weylQuartic,
+    (coulomb_schwarzschild_quartic (2 * (p : ℂ))).2.1, ← C_mul_X_pow_eq_monomial]
+  simp only [smul_eq_C_mul, ← mul_assoc, ← map_mul, one_pow, div_one, Complex.ofReal_div,
+    Complex.ofReal_neg, Complex.ofReal_ofNat]
+  congr 2
   have hp' : (p : ℂ) ≠ 0 := Complex.ofReal_ne_zero.mpr hp
   field_simp
   ring

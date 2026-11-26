@@ -16,7 +16,7 @@ internal sealed class KerrSchildSchwarzschild4DDocument : IScribeDocumentDefinit
                 + "φ = p / |x| and k = (1, x / |x|). The frame T changes the Cartesian basis by the null "
                 + "rank-one term −p k♯ ⊗ k / 2. Write B for the pair matrix of the full Riemann curvature "
                 + "in T and C for the Ricci-free tensor with electric block diag(p/2, p/2, −p) and "
-                + "zero magnetic block. The bivector order is 01, 02, 03, 23, 31, 12.")),
+                + "zero magnetic block. Max is the Cartesian divergence of the Coulomb field with both indices raised. The bivector order is 01, 02, 03, 23, 31, 12.")),
             Describe.Lean(DescribeId.Create("schwarzschild-coulomb-copy"),
                 DeclarationHandle.Create("D5/S3/Geometry/Lorentz/KerrSchildSchwarzschild4D.schwarzschild_coulomb_weyl_double_copy"),
                 H("The normalized Weyl square at unit radius"),
@@ -25,7 +25,7 @@ internal sealed class KerrSchildSchwarzschild4DDocument : IScribeDocumentDefinit
                 Blocks(Paragraph(Text("The field strength of A = φ k has only F₀₃ = p and F₃₀ = −p. "
                     + "Its contraction with the screen vector and the null generator is the projective "
                     + "evaluation of the Maxwell quadratic 2pX in degree two. The orthonormal curvature "
-                    + "has spatial pair block opposite to its electric block. The Weyl contraction is "
+                    + "has spatial pair block opposite to its electric block. The harmonic scalar gives the zero time component of the Maxwell divergence through the stationary Poisson identity. The spatial components vanish by the radial derivative equations. The Weyl contraction is "
                     + "−12pX², so the scalar multiplying the Maxwell square is −3/p in these conventions."))),
                 DescribeRole.Theorem)),
         []));
@@ -49,8 +49,9 @@ internal sealed class KerrSchildSchwarzschild4DDocument : IScribeDocumentDefinit
         Formula matrix = All("i", pair, All("j", pair,
             Equal(Call("C", p, i, j), Call("B", p, Call("index", i), Call("index", j)))));
         Formula maxwell = All("r", rays, Equal(Call("CoulombScreen", p, r), Call("ev", D(2), r, q)));
+        Formula vacuum = All("i", Call("Fin", D(4)), Equal(Call("Max", p, i), zero));
         return All("p", Seq(Mathbb, Grp(F.Id("R"))), Parens(Seq(NotEqual(p, zero), Sp, Implies, Sp,
-            Parens(Seq(frame, Sp, Land, Sp, Parens(matrix), Sp, Land, Sp, Parens(maxwell), Sp, Land, Sp,
+            Parens(Seq(frame, Sp, Land, Sp, Parens(matrix), Sp, Land, Sp, Parens(maxwell), Sp, Land, Sp, Parens(vacuum), Sp, Land, Sp,
                 Equal(w, Mul(scalar, square)))))));
     }
 

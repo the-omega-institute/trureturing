@@ -168,7 +168,7 @@ $$\forall a \in \mathbb{C},\; (\operatorname{q}\left(a, 0, \infty\right) = a \cd
 
 *Commentary.*
 
-In the radial spin frame the two axial rays are zero and infinity. The quartic square gives the algebraic Schwarzschild type D pattern with the displayed amplitude. The spacetime Weyl double copy also includes the scalar normalization relating the physical fields.
+In the radial spin frame the two axial rays are zero and infinity. For nonzero amplitude the quartic gives the algebraic Schwarzschild type D pattern. The spacetime Weyl double copy also includes the scalar normalization relating the physical fields.
 
 ## References
 

@@ -585,7 +585,8 @@ def potential (j : FirstJet K) (i : Idx) : K := j.phi * j.k i
 def fieldStrength (j : FirstJet K) (a b : Idx) : K :=
   j.dphi a * j.k b + j.phi * j.dk a b - (j.dphi b * j.k a + j.phi * j.dk b a)
 
-private def ddPotential (j : Jet K) (a b i : Idx) : K :=
+/-- Second derivative of the single-copy potential. -/
+def ddPotential (j : Jet K) (a b i : Idx) : K :=
   j.ddphi a b * j.k i + j.dphi a * j.dk b i + j.dphi b * j.dk a i + j.phi * j.ddk a b i
 
 /-- The Cartesian divergence of the field strength with both indices raised. -/
