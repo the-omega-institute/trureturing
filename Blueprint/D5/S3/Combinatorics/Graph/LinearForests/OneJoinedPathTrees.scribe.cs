@@ -8,9 +8,9 @@ internal sealed class OneJoinedPathTreesDocument : IScribeDocumentDefinition
 {
     private const string Owner = "D5/S3/Combinatorics/Graph/LinearForests/OneJoinedPathTrees.";
     private static readonly LibraryNoteRef Question =
-        LibraryNoteRef.Create("D5/L/LinearForests/pinzonetal2026onejoinedpaths");
+        LibraryNoteRef.Create("D5/L/Semigroups/pinzonetal2026onejoinedpaths");
     private static readonly LibraryNoteRef Join =
-        LibraryNoteRef.Create("D5/L/LinearForests/pinzonpragelroberts2025graphjoins");
+        LibraryNoteRef.Create("D5/L/Semigroups/pinzonpragelroberts2025graphjoins");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Classification of finite trees formed by one-joining arbitrarily labelled paths.",
