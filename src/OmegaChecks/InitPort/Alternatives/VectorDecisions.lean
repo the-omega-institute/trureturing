@@ -69,4 +69,100 @@ public theorem Vector.replace_push : type_of% @_root_.Vector.replace_push := by
   · rw [ite_eq_right h]
     exact _root_.Array.replace_push.trans (ite_eq_right (fun m => h (_root_.Vector.mem_mk.mpr m)))
 
+public theorem Vector.reflBEq_iff : type_of% @_root_.Vector.reflBEq_iff := by
+  intro α n _ nz
+  cases n with
+  | zero => exact (nz.out rfl).elim
+  | succ n =>
+    constructor
+    · intro h
+      constructor
+      intro a
+      exact (_root_.Vector.replicate_beq_replicate (n := n+1) (a := a) (b := a)).symm.trans
+        (@ReflBEq.rfl _ _ h _)
+    · intro h
+      constructor
+      intro xs
+      exact (_root_.Vector.toArray_beq_toArray (xs := xs) (ys := xs)).symm.trans
+        (@ReflBEq.rfl _ _ inferInstance _)
+
+public theorem Vector.lawfulBEq_iff : type_of% @_root_.Vector.lawfulBEq_iff := by
+  intro α n _ nz
+  cases n with
+  | zero => exact (nz.out rfl).elim
+  | succ n =>
+    constructor
+    · intro h
+      haveI : ReflBEq α := (_root_.Vector.reflBEq_iff (n := n+1)).mp h.toReflBEq
+      constructor
+      intro a b hab
+      have eq := @LawfulBEq.eq_of_beq _ _ h _ _
+        ((_root_.Vector.replicate_beq_replicate (n := n+1) (a := a) (b := b)).trans hab)
+      exact (_root_.Vector.replicate_inj.mp eq).resolve_left (Nat.succ_ne_zero n)
+    · intro h
+      haveI : ReflBEq (_root_.Vector α (n+1)) := _root_.Vector.reflBEq_iff.mpr h.toReflBEq
+      constructor
+      intro xs ys eq
+      exact _root_.Vector.toArray_inj.mp (eq_of_beq (_root_.Vector.toArray_beq_toArray.trans eq))
+
+/-- The strict array map computes on the underlying list. Observing the head of a
+constant-length input recovers the full element function by definitional equality. -/
+public theorem Vector.map_inj {n : Nat} {α : Type u} {β : Type v} {f g : α → β} [nz : NeZero n] :
+    (fun xs : _root_.Vector α n => _root_.Vector.mk ((xs.toArray.toList.map f).toArray)
+      ((_root_.List.length_map (f := f)).trans xs.size_toArray)) =
+    (fun xs => _root_.Vector.mk ((xs.toArray.toList.map g).toArray)
+      ((_root_.List.length_map (f := g)).trans xs.size_toArray)) ↔ f = g := by
+  constructor
+  · intro h
+    cases n with
+    | zero => exact (nz.out rfl).elim
+    | succ n =>
+      exact congrArg (fun k x => (k (_root_.Vector.mk ((x :: List.replicate n x).toArray)
+        (congrArg Nat.succ List.length_replicate))).toArray.toList.headD (f x)) h
+  · rintro rfl
+    rfl
+
+public theorem Vector.map_id'' : type_of% @_root_.Vector.map_id'' := by
+  intro α n f h xs
+  exact (_root_.Vector.map_congr_left (g := id) (fun x _ => h x)).trans (_root_.Vector.map_id xs)
+
+public theorem Vector.append_eq_append_iff : type_of% @_root_.Vector.append_eq_append_iff := by
+  intro α n m k l ws xs ys zs sizes
+  obtain ⟨ws, rfl⟩ := ws
+  obtain ⟨xs, rfl⟩ := xs
+  obtain ⟨ys, rfl⟩ := ys
+  obtain ⟨zs, rfl⟩ := zs
+  constructor
+  · intro eq
+    have arrays := congrArg _root_.Vector.toArray eq
+    change ws ++ xs = ys ++ zs at arrays
+    rcases _root_.Array.append_eq_append_iff.mp arrays with ⟨as, rfl, rfl⟩ | ⟨cs, rfl, rfl⟩
+    · have le : ws.size ≤ (ws ++ as).size := _root_.Array.size_append ▸ Nat.le_add_right ..
+      rw [dite_eq_left le]
+      exact ⟨⟨as, by rw [_root_.Array.size_append]; omega⟩, rfl, rfl⟩
+    · by_cases le : (ys ++ cs).size ≤ ys.size
+      · have empty := _root_.Array.eq_empty_of_size_eq_zero (xs := cs) (by
+          rw [_root_.Array.size_append] at le
+          omega)
+        subst cs
+        rw [dite_eq_left le]
+        refine ⟨⟨#[], by rw [_root_.Array.size_append]; change 0 = _; omega⟩, ?_, ?_⟩
+        · apply _root_.Vector.toArray_inj.mp
+          change ys = (ys ++ #[]) ++ #[]
+          rw [_root_.Array.append_empty, _root_.Array.append_empty]
+        · apply _root_.Vector.toArray_inj.mp
+          change xs = #[] ++ (#[] ++ xs)
+          rw [_root_.Array.empty_append, _root_.Array.empty_append]
+      · rw [dite_eq_right le]
+        exact ⟨⟨cs, by rw [_root_.Array.size_append]; omega⟩, rfl, rfl⟩
+  · intro h
+    apply _root_.Vector.toArray_inj.mp
+    change ws ++ xs = ys ++ zs
+    apply _root_.Array.append_eq_append_iff.mpr
+    split at h
+    · obtain ⟨as, hys, hxs⟩ := h
+      exact .inl ⟨as.toArray, congrArg _root_.Vector.toArray hys, congrArg _root_.Vector.toArray hxs⟩
+    · obtain ⟨cs, hws, hzs⟩ := h
+      exact .inr ⟨cs.toArray, congrArg _root_.Vector.toArray hws, congrArg _root_.Vector.toArray hzs⟩
+
 end OmegaChecks.InitPort.Alternatives
