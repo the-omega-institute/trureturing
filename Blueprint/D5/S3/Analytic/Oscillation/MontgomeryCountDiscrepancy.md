@@ -36,7 +36,7 @@ Use the positive spectrum with integer multiplicities, the inclusive cutoff, and
 
 For each real H0 and D there is a real H at least H0 with abs(N(H) - F(H)) greater than D. Here F(H) is H/(2 pi) times (log(H/(2 pi)) - 1).
 
-Write L = log(H) > 0. For a fixed bounded integrable test p that vanishes outside [-1,1], the integrated error is bounded by B times the supremum norm of p divided by log(H), plus e(H) times the integral of abs(p). The normalized peak L exp(-2 L abs(alpha)) has mass one and converges against p to p(0). Taking p = abs(fourier(g))^2 for a real Schwartz test with Fourier support in [-1,1] gives the limit required by the autocorrelation and variance argument.
+Fix a real Schwartz function g with Fourier support in [-1,1]. Its squared Fourier modulus p is continuous, bounded, integrable, and zero outside that band. Write L = log(H) > 0. The integrated error against p is bounded by B times the supremum norm of p divided by L, plus e(H) times the integral of abs(p). The normalized peak L exp(-2 L abs(alpha)) has mass one and converges against this continuous p to p(0). This gives the limit required by the autocorrelation and variance argument.
 
 For zeta, the formula of Baluyot, Goldston, Suriajaya and Turnage-Butterbaugh for complex zero differences uses the same cutoff, multiplicities and normalization. On the critical line, swapping the ordered pairs gives the ordinate cosine sum. Evenness extends the estimate from [0,1] to [-1,1]. This theorem uses frequencies through the unit band and gives an unboundedness conclusion on every real tail.
 
