@@ -13,6 +13,7 @@ public import OmegaChecks.InitPort.Alternatives.Fin
 public import OmegaChecks.InitPort.Alternatives.Float
 public import OmegaChecks.InitPort.Alternatives.GeneratedProofs
 public import OmegaChecks.InitPort.Alternatives.GrindAC
+public import OmegaChecks.InitPort.Alternatives.GrindField
 public import OmegaChecks.InitPort.Alternatives.GrindLinear
 public import OmegaChecks.InitPort.Alternatives.GrindRing
 public import OmegaChecks.InitPort.Alternatives.Integer
