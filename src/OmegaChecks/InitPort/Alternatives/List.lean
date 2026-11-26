@@ -7,6 +7,7 @@ import all Init.Data.List.Control
 import Init.Data.List.Monadic
 import all Init.Data.List.MapIdx
 import all Init.Data.Array.Basic
+import Init.Data.Array.Find
 import Init.Data.Array.Lemmas
 import Init.Data.Array.Count
 import all Init.Data.List.Find
@@ -515,6 +516,11 @@ public theorem List.findFinIdx?_eq_pmap_findIdx? : type_of% @_root_.List.findFin
   intro α xs p
   exact recoverFinIndex _ _ _root_.List.findIdx?_eq_map_findFinIdx?_val
     (fun _ hit => (List.findIdx?_eq_some_iff_findIdx_eq.mp hit).1)
+
+public theorem Array.findFinIdx?_eq_pmap_findIdx? : type_of% @_root_.Array.findFinIdx?_eq_pmap_findIdx? := by
+  intro α xs p
+  exact recoverFinIndex _ _ _root_.Array.findIdx?_eq_map_findFinIdx?_val
+    (fun _ hit => (_root_.Array.findIdx?_eq_some_iff_getElem.mp hit).choose)
 
 public theorem List.findFinIdx?_cons : type_of% @_root_.List.findFinIdx?_cons := by
   intro α p x xs

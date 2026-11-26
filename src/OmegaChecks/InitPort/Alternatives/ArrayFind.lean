@@ -74,4 +74,36 @@ public theorem Array.findIdx?_append : type_of% @_root_.Array.findIdx?_append :=
         List.size_toArray]
       exact List.findIdx?_append
 
+public theorem List.head?_filter : type_of% @_root_.List.head?_filter := by
+  intro α p xs
+  induction xs with
+  | nil => rfl
+  | cons x xs ih =>
+    rw [List.filter_cons, List.find?_cons]
+    cases p x with
+    | true => rfl
+    | false => exact ih
+
+public theorem List.find?_eq_bind_findIdx?_getElem? : type_of% @_root_.List.find?_eq_bind_findIdx?_getElem? := by
+  intro α xs p
+  induction xs with
+  | nil => rfl
+  | cons x xs ih =>
+    rw [List.find?_cons, List.findIdx?_cons]
+    cases h : p x with
+    | true => rfl
+    | false =>
+      change xs.find? p = ((xs.findIdx? p).map Nat.succ).bind _
+      rw [ih]
+      cases xs.findIdx? p <;> rfl
+
+public theorem Array.find?_eq_bind_findIdx?_getElem? : type_of% @_root_.Array.find?_eq_bind_findIdx?_getElem? := by
+  intro α xs p
+  cases xs with
+  | mk xs =>
+    rw [_root_.List.find?_toArray, _root_.List.findIdx?_toArray, _root_.List.find?_eq_bind_findIdx?_getElem?]
+    cases xs.findIdx? p with
+    | none => rfl
+    | some i => exact List.getElem?_toArray.symm
+
 end OmegaChecks.InitPort.Alternatives
