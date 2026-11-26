@@ -23,4 +23,4 @@ triage: anchor
 
 ## Use and boundary
 
-Stage 3A of issue #34535 proves a sharp operator estimate under a quarter-power Hilbert–Schmidt factorization. The congruence and trace-class conclusions supply the operator step for Eq. (71) once its covariance operators satisfy the Lean hypotheses. Establishing that factorization for the characteristic data and deriving excitability are separate obligations.
+The companion Lean module proves a sharp operator estimate under a quarter-power Hilbert–Schmidt factorization. The congruence and trace-class conclusions supply the operator step for Eq. (71) once its covariance operators satisfy the Lean hypotheses. Establishing that factorization for the characteristic data and deriving excitability are separate obligations.

@@ -14,7 +14,7 @@ internal sealed class QuarterPowerSqrtHilbertSchmidtDocument : IScribeDocumentDe
         "Sharp quarter-power square-root estimates, bounded congruence, and compact coercivity.",
         H("Quarter-power Hilbert–Schmidt bounds for positive square roots"),
         Blocks(
-            Paragraph(Text("Stage 3A of issue #34535. The operator estimate supplies the square-root trace step "
+            Paragraph(Text("The operator estimate supplies the square-root trace step "
                 + "for Eq. (71) of Satishchandran and Sorce when the covariance operators admit the required "
                 + "quarter-power factorization.")),
             Entry("quarter-root", "quarterRoot", "Quarter root",
