@@ -207,14 +207,19 @@ public theorem String.Slice.posLE._proof_2 : type_of% @_root_.String.Slice.posLE
 
 public theorem String.Slice.offset_posLE_le : type_of% @_root_.String.Slice.offset_posLE_le := by
   intro s p
-  change (s.posLE p).offset.byteIdx ≤ p.byteIdx
-  induction p using String.Slice.posLE.induct (s := s) with
-  | case1 off valid =>
-    rw [String.Slice.posLE.eq_def, dite_eq_left valid]
-    exact Nat.le_refl _
-  | case2 off invalid _ ih =>
-    rw [String.Slice.posLE.eq_def, dite_eq_right invalid]
-    exact Nat.le_trans ih (Nat.sub_le off.byteIdx 1)
+  obtain ⟨i⟩ := p
+  induction i with
+  | zero =>
+    rw [String.Slice.posLE.eq_def]
+    split
+    · exact Nat.le_refl _
+    · rename_i invalid
+      exact (invalid s.startPos.isValidForSlice).elim
+  | succ n ih =>
+    rw [String.Slice.posLE.eq_def]
+    split
+    · exact Nat.le_refl _
+    · exact Nat.le_trans ih (Nat.le_succ n)
 
 public theorem String.Slice.Pos.prev_lt : type_of% @_root_.String.Slice.Pos.prev_lt := by
   intro s p ne
