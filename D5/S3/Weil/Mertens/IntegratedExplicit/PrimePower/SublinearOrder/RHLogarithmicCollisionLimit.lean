@@ -559,6 +559,7 @@ theorem harmonic_zeta_collision_limit (rh : RiemannHypothesis) (C : ℝ) (hC : 0
         (η n * harmonicMass rh (T n)^(2*n))) atTop (𝓝 (1 / Real.sqrt Real.pi)) := by
   intro scale hr
   have hd := whole_log_window_deficit rh C hC hLandau
+  change Tendsto (fun n => η n / harmonicScale rh T n) atTop (𝓝 0) at hr
   apply (normalized_harmonic_collision_limit_of_fejer rh T η hT hη (fun x hx => by
     let ε (n : ℕ) := x * η n
     have hε : ∀ᶠ n : ℕ in atTop, 0 < ε n := hη.mono fun _ he => mul_pos hx he

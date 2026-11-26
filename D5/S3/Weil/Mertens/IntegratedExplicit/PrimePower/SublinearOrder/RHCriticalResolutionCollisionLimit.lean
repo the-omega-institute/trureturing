@@ -53,7 +53,7 @@ open D5.S3.Fourier.Concentration.FejerCollisionLimit
 open D5.S3.Fourier.Concentration.FiniteTailMomentMissingWindow
 open D5.S3.Fourier.Concentration.FiniteSincCollisionMoment
 open D5.S3.Fourier.Asymptotics.MovingFejerGaussianPrincipal
-open D5.S3.Fourier.Asymptotics.FinitePairGaussianLimit (score_square_cosine)
+open D5.S3.Fourier.Asymptotics.FinitePairGaussianLimit (pairMoment score_square_cosine)
 open D5.S3.Analytic.Fourier.AngularFejerKernel
 open D5.S3.Weil.ZetaExplicit.LandauUniformCutoff (actual_cutoff_landau_envelope)
 open Finset
