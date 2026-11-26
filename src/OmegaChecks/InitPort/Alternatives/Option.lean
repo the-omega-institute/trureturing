@@ -3,6 +3,7 @@ module
 public import Init.Data.Option.Lemmas
 public import Init.Data.Option.Attach
 public import Init.Data.Option.Monadic
+public import Init.Data.Option.Array
 
 /-! Constructive witnesses for optional values and finite cases for filters and order. -/
 
@@ -276,6 +277,25 @@ public theorem attach_filter : type_of% @_root_.Option.attach_filter := by
       exact ite_eq_left eq
     · rw [dite_eq_right eq]
       exact ite_eq_right eq
+
+public theorem toArray_bind : type_of% @_root_.Option.toArray_bind := by
+  intro α β o f
+  cases o with
+  | none => rfl
+  | some x => exact (_root_.Array.flatMap_singleton (f := Option.toArray ∘ f)).symm
+
+public theorem toArray_join : type_of% @_root_.Option.toArray_join := by
+  intro α o
+  exact toArray_bind (o := o) (f := id)
+
+public theorem foldrM_toArray : type_of% @_root_.Option.foldrM_toArray := by
+  intro m β α _ _ o a f
+  cases o with
+  | none => exact Array.foldrM_empty
+  | some b =>
+    change (#[].push b).foldrM f a = f b a
+    change (f b a >>= pure) = _
+    exact bind_pure _
 
 end Option
 end OmegaChecks.InitPort.Alternatives
