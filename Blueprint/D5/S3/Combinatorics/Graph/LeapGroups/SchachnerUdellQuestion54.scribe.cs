@@ -7,6 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.LeapGroups;
 internal sealed class SchachnerUdellQuestion54Document : IScribeDocumentDefinition
 {
     private const string Owner = "D5/S3/Combinatorics/Graph/LeapGroups/SchachnerUdellQuestion54.";
+    private const string Slug = "schachner-udell-2026-question-5-4";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The exact leap subgroups of all prisms and positive-dimensional cubes.",
@@ -25,13 +26,15 @@ internal sealed class SchachnerUdellQuestion54Document : IScribeDocumentDefiniti
                 "The three clauses answer both families in Question 5.4 on printed and PDF page 21. In a prism the diagonal advances both coordinates. When n is odd, one extra circuit switches the layer, whereas when n is even the index and the parity determine the layer. In a cube, correcting differing coordinates in pairs gives every same-class transposition. The bipartite equalities use the setwise action on the unordered pair of fibers. Each fiber is inhabited in its stated range.",
                 DescribeRole.Theorem,
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create(
-                    "D5/L/FiniteGroups/schachnerudell2026leapgroups"))))));
+                    "D5/L/FiniteGroups/schachnerudell2026leapgroups")),
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create(Slug), ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string id, string title, string name, Formula formula,
-        string prose, DescribeRole role, AssessedProvenance? provenance = null) =>
+        string prose, DescribeRole role, AssessedProvenance? provenance = null,
+        OpenProblemResolutionClaim? claim = null) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Owner + name), H(title),
             StatementSource.FromAuthor(Disp(formula)), provenance ?? AssessedProvenance.FromRepo(),
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, claim);
 
     private static Formula Call(string name, params Formula[] args) =>
         new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. args]);
