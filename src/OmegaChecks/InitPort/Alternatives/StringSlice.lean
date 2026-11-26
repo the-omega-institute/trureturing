@@ -1,5 +1,6 @@
 module
 import all Init.Data.String.Basic
+import all Init.Data.String.Slice
 import all Init.Data.String.FindPos
 import all Init.Data.String.Lemmas.IsEmpty
 import all Init.Data.String.Lemmas.Order
@@ -894,5 +895,25 @@ public theorem String.Slice.Pos.eq_prev_of_prev?_eq_some :
   have eq := found
   rw [_root_.String.Slice.Pos.prev?_eq_dite, dite_eq_right ne] at eq
   exact (Option.some.inj eq).symm
+
+public theorem String.Slice.SplitInclusiveIterator.finitenessRelation._proof_2 :
+    type_of% (private_decl% @_root_.String.Slice.SplitInclusiveIterator.finitenessRelation._proof_2) := by
+  intro ρ σ iter pat searcher s it it' successor
+  obtain ⟨step, next, valid⟩ := successor
+  cases step <;> cases next
+  all_goals
+    obtain ⟨state⟩ := it
+    obtain ⟨state'⟩ := it'
+    cases state <;> cases state' <;> first | exact valid | exact True.intro | exact False.elim valid
+
+public theorem String.Slice.RevSplitIterator.finitenessRelation._proof_2 :
+    type_of% (private_decl% @_root_.String.Slice.RevSplitIterator.finitenessRelation._proof_2) := by
+  intro ρ σ iter pat searcher s it it' successor
+  obtain ⟨step, next, valid⟩ := successor
+  cases step <;> cases next
+  all_goals
+    obtain ⟨state⟩ := it
+    obtain ⟨state'⟩ := it'
+    cases state <;> cases state' <;> first | exact valid | exact True.intro | exact False.elim valid
 
 end OmegaChecks.InitPort.Alternatives
