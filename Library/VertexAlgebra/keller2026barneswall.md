@@ -17,6 +17,17 @@ triage: anchor
 
 # The rank-128 Barnes–Wall holomorphic orbifold
 
+## Verified locator
+
+DOI 10.48550/arXiv.2411.13646
+
+Primary version https://arxiv.org/abs/2411.13646v2
+
+Sections 2.2, 3.3 and 4.4 specify the lift phase and twisted-ground action.
+Appendix A.1 gives the tensor lattice basis. Section 5.3 states Conjecture 5.2.
+
+## Detecting the chiral anomaly
+
 The generator lifts in §§2.2 and 3.3, the tensor lattice basis in Appendix A.1,
 and the twisted-ground representation in §4.4 determine the finite trace
 calculation for the specified $E(7)$ action. Conjecture 5.2 concerns the
