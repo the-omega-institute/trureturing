@@ -6,20 +6,25 @@
    utility: none
    digest: Leap groups of all prisms and positive-dimensional cubes. -/
 
-import D5.S3.Combinatorics.Graph.LeapGroups.LeapGroup
-import D5.S3.Combinatorics.Graph.Hypercube
+import D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Placement.CubicContactDistance
 import Mathlib.Combinatorics.SimpleGraph.Circulant
 import Mathlib.GroupTheory.Perm.Sign
+import OmegaMath.Combinatorics.Graph.LeapGroup
 
 set_option autoImplicit false
 
 open Equiv Set MulAction Pointwise SimpleGraph Finset
 open D5.S3.Combinatorics.Graph.Hypercube D5.S3.Combinatorics.Graph.LeapGroups.LeapGroup
+open D5.S3.Combinatorics.Graph.HypercubeCritical
+open D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Placement
 
 namespace D5.S3.Combinatorics.Graph.LeapGroups.SchachnerUdellQuestion54
 
 noncomputable section
 open scoped BigOperators
+
+-- Keep the ring instances used by the frozen statements on the parity carrier.
+attribute [-instance] ZMod.instField
 
 /-- The Cartesian product of the two-vertex complete graph and the cyclic graph. -/
 def prism (n : ℕ) : SimpleGraph (ZMod 2 × ZMod n) :=
@@ -200,17 +205,18 @@ def cubeParity {n : ℕ} (x : Fin n → Bool) : ZMod 2 :=
 
 /-- Change exactly the specified Boolean coordinate. -/
 private def cubeFlip {n : ℕ} (i : Fin n) : Perm (Fin n → Bool) where
-  toFun x := fun j => if j = i then !x j else x j
-  invFun x := fun j => if j = i then !x j else x j
-  left_inv x := by
-    funext j
-    by_cases h : j = i <;> simp [h]
-  right_inv x := by
-    funext j
-    by_cases h : j = i <;> simp [h]
+  toFun x := BalancedCriticalSpectrum.flip x i
+  invFun x := BalancedCriticalSpectrum.flip x i
+  left_inv x := BalancedCriticalSpectrum.flip_flip x i
+  right_inv x := BalancedCriticalSpectrum.flip_flip x i
 
 @[simp] private theorem cubeFlip_apply {n : ℕ} (i : Fin n) (x : Fin n → Bool) (j : Fin n) :
-    cubeFlip i x j = if j = i then !x j else x j := rfl
+    cubeFlip i x j = if j = i then !x j else x j := by
+  change BalancedCriticalSpectrum.flip x i j = _
+  by_cases h : j = i
+  · subst j
+    simp
+  · simp [BalancedCriticalSpectrum.flip, h]
 
 @[simp] private theorem cubeFlip_symm {n : ℕ} (i : Fin n) : (cubeFlip i).symm = cubeFlip i := by
   ext x j
@@ -218,20 +224,11 @@ private def cubeFlip {n : ℕ} (i : Fin n) : Perm (Fin n → Bool) where
 
 private theorem cubeFlip_hop {n : ℕ} (i : Fin n) : IsHop (hypercube n) (cubeFlip i) := by
   intro x
-  change hammingDist x (cubeFlip i x) = 1
-  have he : (Finset.univ.filter (fun j => x j ≠ cubeFlip i x j)) = {i} := by
-    ext j
-    by_cases h : j = i
-    · subst j
-      cases x i <;> simp
-    · simp [h]
-  rw [hammingDist, he, Finset.card_singleton]
+  exact BalancedCriticalSpectrum.flip_adj x i
 
 private theorem cubeFlip_comm {n : ℕ} (i j : Fin n) (x : Fin n → Bool) :
-    cubeFlip i (cubeFlip j x) = cubeFlip j (cubeFlip i x) := by
-  funext k
-  simp only [cubeFlip_apply]
-  split_ifs <;> simp
+    cubeFlip i (cubeFlip j x) = cubeFlip j (cubeFlip i x) :=
+  BalancedCubeGirth.flip_comm x j i
 
 private theorem cube_double_flip_swap {n : ℕ} (i j : Fin n) (x : Fin n → Bool) :
     swap x (cubeFlip j (cubeFlip i x)) ∈ leapGroup (hypercube n) := by
@@ -262,49 +259,19 @@ private theorem cubeParity_flip {n : ℕ} (i : Fin n) (x : Fin n → Bool) :
 
 private theorem cube_adj_iff {n : ℕ} (x y : Fin n → Bool) :
     (hypercube n).Adj x y ↔ ∃ i, y = cubeFlip i x := by
-  constructor
-  · intro h
-    change hammingDist x y = 1 at h
-    rw [hammingDist] at h
-    obtain ⟨i, hi⟩ := Finset.card_eq_one.mp h
-    refine ⟨i, ?_⟩
-    funext j
-    have hm : x j ≠ y j ↔ j = i := by
-      have := Finset.ext_iff.mp hi j
-      simpa using this
-    by_cases hj : j = i
-    · subst j
-      have hn := hm.mpr rfl
-      cases hx : x i <;> cases hy : y i <;> simp_all
-    · have he : x j = y j := by
-        by_contra hn
-        exact hj (hm.mp hn)
-      simp [hj, he]
-  · rintro ⟨i, rfl⟩
-    exact cubeFlip_hop i x
+  refine ⟨BalancedCubeGirth.adjacent_exists_flip, ?_⟩
+  rintro ⟨i, rfl⟩
+  exact cubeFlip_hop i x
 
 private theorem cube_adj_flip {n : ℕ} (x y : Fin n → Bool) (h : (hypercube n).Adj x y) :
     cubeParity y = cubeParity x + 1 := by
   obtain ⟨i, rfl⟩ := (cube_adj_iff x y).mp h
   exact cubeParity_flip i x
 
-/-- Correcting a disagreement erases exactly that coordinate from the disagreement set. -/
-private theorem cubeFlip_erase_disagreement {n : ℕ} (x y : Fin n → Bool) (i : Fin n)
-    (hi : x i ≠ y i) :
-    Finset.univ.filter (fun j => cubeFlip i x j ≠ y j) =
-      (Finset.univ.filter (fun j => x j ≠ y j)).erase i := by
-  ext j
-  by_cases hj : j = i
-  · subst j
-    cases hx : x i <;> cases hy : y i <;> simp_all
-  · rw [Finset.mem_filter, Finset.mem_erase, Finset.mem_filter]
-    simp [hj]
-
 private theorem cubeFlip_dist_decreases {n : ℕ} (x y : Fin n → Bool) (i : Fin n)
     (hi : x i ≠ y i) :
-    hammingDist (cubeFlip i x) y = hammingDist x y - 1 := by
-  simp only [hammingDist, cubeFlip_erase_disagreement x y i hi]
-  exact Finset.card_erase_of_mem (by simp [hi])
+    hammingDist (cubeFlip i x) y = hammingDist x y - 1 :=
+  Nat.eq_sub_of_add_eq (CubicContactDistance.hamming_flip_of_ne hi)
 
 /-- Two coordinates are corrected at each induction step, with parity restored. -/
 private theorem cube_same_class_swaps {n : ℕ} (x y : Fin n → Bool)

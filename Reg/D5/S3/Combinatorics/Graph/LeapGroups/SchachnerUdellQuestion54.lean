@@ -12,6 +12,9 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section
 
+-- Match the parity-carrier instances in the registered theorem.
+attribute [-instance] ZMod.instField
+
 open _root_.D5.S3.Combinatorics.Graph.LeapGroups.SchachnerUdellQuestion54
 open _root_.D5.S3.Combinatorics.Graph.Hypercube
 
