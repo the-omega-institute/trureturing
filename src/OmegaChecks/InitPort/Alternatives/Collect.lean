@@ -1130,4 +1130,16 @@ public theorem Std.Iter.toArray_flatMap {α α₂ β γ : Type w} [Iterator α I
 
 end FlatMapOutput
 
+public theorem Std.IterM.toList_take_zero {α m β} [Monad m] [LawfulMonad m] [Iterator α m β]
+    [Finite (Take α m) m] {it : IterM (α := α) m β} :
+    Std.IterM.Total.toList (it.take 0).ensureTermination = pure [] := by
+  have stop : (it.take 0).step = pure (.deflate ⟨.done, Take.PlausibleStep.depleted rfl⟩) := rfl
+  change Array.toList <$> collectArrayFrom (it.take 0) #[] = _
+  unfold collectArrayFrom
+  rw [WellFounded.fix_eq]
+  dsimp only
+  rw [stop, pure_bind, Shrink.inflate_deflate]
+  change Array.toList <$> (pure (#[] : Array β) : m (Array β)) = pure []
+  rw [map_pure]
+
 end OmegaChecks.InitPort.Alternatives
