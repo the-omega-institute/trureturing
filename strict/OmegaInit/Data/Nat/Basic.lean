@@ -445,3 +445,74 @@ protected theorem mul_pow (a b n : Nat) :
             (Nat.mul_assoc (Nat.pow a k) a (Nat.mul (Nat.pow b k) b)).symm))) n
 
 end Omega.Nat
+
+namespace Omega.Nat
+
+theorem le.dest {n m : Nat} : Nat.le n m → Exists (fun k => Eq (Nat.add n k) m) := fun h =>
+  Nat.le.rec (motive := fun m _ => Exists (fun k => Eq (Nat.add n k) m))
+    (Exists.intro zero Omega.rfl) (fun {_} _ ih => ih.elim (fun k e => Exists.intro (succ k) (congrArg succ e))) h
+
+theorem le.intro {n m k : Nat} (h : Eq (Nat.add n k) m) : Nat.le n m :=
+  Eq.subst (motive := Nat.le n) h (le_add_right n k)
+
+protected theorem not_le_of_lt {a b : Nat} : Nat.lt a b → Not (Nat.le b a) :=
+  fun h bound => Nat.lt_irrefl a (Nat.le_trans h bound)
+
+protected theorem lt_of_not_ge {a b : Nat} : Not (Nat.le a b) → Nat.lt b a :=
+  Nat.rec (motive := fun a => ∀ b, Not (Nat.le a b) → Nat.lt b a)
+    (fun b h => False.elim (h (zero_le b)))
+    (fun a ih b => Nat.casesOn (motive := fun b => Not (Nat.le (succ a) b) → Nat.lt b (succ a)) b
+      (fun _ => succ_le_succ (zero_le a)) (fun b h => succ_le_succ (ih b (fun e => h (succ_le_succ e))))) a b
+
+protected theorem not_le {a b : Nat} : Iff (Not (Nat.le a b)) (Nat.lt b a) :=
+  Iff.intro Nat.lt_of_not_ge Nat.not_le_of_lt
+
+theorem add_sub_self_left (a b : Nat) : Eq (Nat.sub (Nat.add a b) a) b := Nat.add_sub_cancel_left a b
+
+theorem add_sub_of_le {a b : Nat} (h : Nat.le a b) : Eq (Nat.add a (Nat.sub b a)) b :=
+  (le.dest h).elim (fun k e => Eq.subst (motive := fun x => Eq (Nat.add a (Nat.sub x a)) x) e
+    (congrArg (Nat.add a) (Nat.add_sub_cancel_left a k)))
+
+protected theorem sub_add_cancel {n m : Nat} (h : Nat.le m n) : Eq (Nat.add (Nat.sub n m) m) n :=
+  (Nat.add_comm (Nat.sub n m) m).trans (add_sub_of_le h)
+
+theorem le_sub_of_add_le {a b c : Nat} (h : Nat.le (Nat.add a b) c) : Nat.le a (Nat.sub c b) :=
+  Nat.le_of_add_le_add_right (b := b) (Eq.subst (motive := Nat.le (Nat.add a b))
+    (Nat.sub_add_cancel (Nat.le_trans (le_add_left b a) h)).symm h)
+
+theorem zero_lt_sub_of_lt {i a : Nat} (h : Nat.lt i a) : Nat.lt zero (Nat.sub a i) :=
+  (le.dest h).elim (fun k e => Eq.subst (motive := fun n => Nat.lt zero (Nat.sub n i)) e
+    (Eq.subst (motive := Nat.lt zero)
+      ((congrArg (fun n => Nat.sub n i) ((succ_add i k).trans (add_succ i k).symm)).trans
+        (Nat.add_sub_cancel_left i (succ k))).symm (succ_le_succ (zero_le k))))
+
+theorem pred_lt {n : Nat} : Ne n zero → Nat.lt (pred n) n :=
+  Nat.casesOn (motive := fun n => Ne n zero → Nat.lt (pred n) n) n
+    (fun h => False.elim (h Omega.rfl)) (fun k _ => Nat.le_refl (succ k))
+
+theorem sub_succ_lt_self (a i : Nat) (h : Nat.lt i a) : Nat.lt (Nat.sub a (succ i)) (Nat.sub a i) :=
+  pred_lt (fun e => Nat.lt_irrefl zero (Eq.subst (motive := Nat.lt zero) e (zero_lt_sub_of_lt h)))
+
+theorem mul_le_mul_left {n m : Nat} (k : Nat) (h : Nat.le n m) : Nat.le (Nat.mul k n) (Nat.mul k m) :=
+  (le.dest h).elim (fun d e => le.intro ((Nat.mul_add k n d).symm.trans (congrArg (Nat.mul k) e)))
+
+theorem mul_le_mul_right {n m : Nat} (k : Nat) (h : Nat.le n m) : Nat.le (Nat.mul n k) (Nat.mul m k) :=
+  Eq.subst (motive := fun z => Nat.le z (Nat.mul m k)) (Nat.mul_comm k n)
+    (Eq.subst (motive := Nat.le (Nat.mul k n)) (Nat.mul_comm k m) (mul_le_mul_left k h))
+
+protected theorem mul_le_mul {n₁ m₁ n₂ m₂ : Nat} (h₁ : Nat.le n₁ n₂) (h₂ : Nat.le m₁ m₂) :
+    Nat.le (Nat.mul n₁ m₁) (Nat.mul n₂ m₂) :=
+  Nat.le_trans (mul_le_mul_right m₁ h₁) (mul_le_mul_left n₂ h₂)
+
+protected theorem mul_lt_mul_of_pos_left {n m k : Nat} (h : Nat.lt n m) (hk : Nat.lt zero k) :
+    Nat.lt (Nat.mul k n) (Nat.mul k m) :=
+  have grow : Nat.lt (Nat.mul k n) (Nat.mul k (succ n)) :=
+    Eq.subst (motive := Nat.lt (Nat.mul k n)) (mul_succ k n).symm (Nat.add_le_add_left hk (Nat.mul k n))
+  Nat.le_trans grow (mul_le_mul_left k h)
+
+protected theorem mul_lt_mul_of_pos_right {n m k : Nat} (h : Nat.lt n m) (hk : Nat.lt zero k) :
+    Nat.lt (Nat.mul n k) (Nat.mul m k) :=
+  Eq.subst (motive := fun z => Nat.lt z (Nat.mul m k)) (Nat.mul_comm k n)
+    (Eq.subst (motive := Nat.lt (Nat.mul k n)) (Nat.mul_comm k m) (Nat.mul_lt_mul_of_pos_left h hk))
+
+end Omega.Nat

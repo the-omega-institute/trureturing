@@ -420,6 +420,23 @@ namespace Omega.Nat
   Nat.rec (motive := fun _ => Nat → Bool) (fun _ => Bool.true)
     (fun _ smaller => Nat.rec Bool.false (fun k _ => smaller k))
 
+protected theorem lt_irrefl (n : Nat) : Not (Nat.lt n n) :=
+  Nat.rec (motive := fun k => Not (Nat.lt k k)) (not_succ_le_zero zero)
+    (fun _ ih h => ih (le_of_succ_le_succ h)) n
+
+theorem le_of_ble_eq_true {n m : Nat} (h : Eq (Nat.ble n m) Bool.true) : Nat.le n m :=
+  Nat.rec (motive := fun n => ∀ m, Eq (Nat.ble n m) Bool.true → Nat.le n m)
+    (fun m _ => zero_le m)
+    (fun n ih m => Nat.rec (motive := fun m => Eq (Nat.ble (succ n) m) Bool.true → Nat.le (succ n) m)
+      (fun e => False.elim (Bool.ne_true_of_eq_false Omega.rfl e))
+      (fun k _ e => succ_le_succ (ih k e)) m) n m h
+
+theorem ble_eq_true_of_le {n m : Nat} (h : Nat.le n m) : Eq (Nat.ble n m) Bool.true :=
+  Nat.rec (motive := fun n => ∀ m, Nat.le n m → Eq (Nat.ble n m) Bool.true)
+    (fun _ _ => Omega.rfl)
+    (fun n ih m => Nat.rec (motive := fun m => Nat.le (succ n) m → Eq (Nat.ble (succ n) m) Bool.true)
+      (fun e => False.elim (not_succ_le_zero n e)) (fun k _ e => ih k (le_of_succ_le_succ e)) m) n m h
+
 /-- Subtract a positive divisor at most once per remaining fuel unit. -/
 @[no_expose] protected def div (x y : Nat) : Nat :=
   Nat.rec zero (fun d _ =>
