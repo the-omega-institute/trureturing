@@ -17,8 +17,35 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  build:
+  pin:
     if: github.repository == 'the-omega-institute/trureturing' && github.ref == 'refs/heads/dev' && github.ref_protected
+    runs-on: ubuntu-24.04-arm
+    permissions:
+      actions: read
+      contents: read
+    outputs:
+      source: ${{ steps.pin.outputs.source }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.workflow_sha }}
+          sparse-checkout-cone-mode: false
+          sparse-checkout: /.github/actions/lean-cache-shards/pin-source.py
+          persist-credentials: false
+      - name: Pin the published source
+        id: pin
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 .github/actions/lean-cache-shards/pin-source.py --published
+      - if: steps.pin.outputs.upload == 'true'
+        uses: actions/upload-artifact@v6
+        with:
+          name: generation-pin-${{ github.run_id }}
+          path: ${{ runner.temp }}/pin/source
+          if-no-files-found: error
+
+  build:
+    needs: pin
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 360
     permissions:
@@ -26,67 +53,18 @@ jobs:
       contents: read
     outputs:
       artifact_id: ${{ steps.upload.outputs.artifact-id }}
-    env:
-      STRATALINT_CACHE_WRITES: 'false'
-      STRATALINT_ACCEPT_COLD_BUILD: '1'
     steps:
-      - name: Select the source from protected dev history
-        id: source
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          python3 - <<'PY'
-          import json
-          import os
-          from pathlib import Path
-          import re
-          import subprocess
-          import tempfile
-
-          tip = os.environ["GITHUB_SHA"]
-          payload = {}
-          if os.environ["GITHUB_EVENT_NAME"] == "repository_dispatch":
-              event = json.loads(Path(os.environ["GITHUB_EVENT_PATH"]).read_text())
-              payload = event.get("client_payload")
-              if payload is None:
-                  payload = {}
-              if not isinstance(payload, dict):
-                  raise SystemExit("client_payload must be a JSON object")
-
-          source = payload.get("source_commit", tip)
-          explicit = "source_commit" in payload
-          if explicit and (not isinstance(source, str) or not re.fullmatch(r"[0-9a-f]{40}", source)):
-              raise SystemExit("source_commit must be a lowercase 40-hex string")
-          if source != tip:
-              repository = os.environ["GITHUB_REPOSITORY"]
-              comparison = json.loads(subprocess.check_output([
-                  "gh", "api", f"repos/{repository}/compare/{source}...{tip}?per_page=1",
-              ]))
-              ahead = comparison["ahead_by"]
-              if comparison["merge_base_commit"]["sha"] != source or type(ahead) is not int or ahead < 1:
-                  raise SystemExit("source_commit must be on the first-parent history of the dev event commit")
-
-              # All commits ahead of source bound the length of a first-parent walk to it.
-              url = f"{os.environ['GITHUB_SERVER_URL']}/{repository}.git"
-              with tempfile.TemporaryDirectory(dir=os.environ["RUNNER_TEMP"]) as history:
-                  subprocess.run(["git", "init", "--bare", "--quiet", history], check=True)
-                  subprocess.run([
-                      "git", "-C", history, "fetch", "--no-tags", "--filter=tree:0", f"--depth={ahead + 1}", url, tip,
-                  ], check=True)
-                  first_parents = subprocess.check_output([
-                      "git", "-C", history, "rev-list", "--first-parent", tip,
-                  ], text=True).splitlines()
-              if source not in first_parents:
-                  raise SystemExit("source_commit must be on the first-parent history of the dev event commit")
-
-          with Path(os.environ["GITHUB_OUTPUT"]).open("a") as output:
-              print(f"commit={source}", file=output)
-              if explicit:
-                  print(f"version=lean-modules-{source}", file=output)
-          PY
       - uses: actions/checkout@v5
         with:
-          ref: ${{ steps.source.outputs.commit }}
+          ref: ${{ needs.pin.outputs.source }}
+          persist-credentials: false
+      - name: Check out the workflow's report reader
+        uses: actions/checkout@v5
+        with:
+          ref: ${{ github.workflow_sha }}
+          path: truth-workflow
+          sparse-checkout-cone-mode: false
+          sparse-checkout: /.github/scripts/read-module-reports.py
           persist-credentials: false
       - name: Check out the fixed truth release tools
         uses: actions/checkout@v5
@@ -100,59 +78,13 @@ jobs:
       - uses: actions/setup-dotnet@v5
         with:
           global-json-file: global.json
-      - name: Install the pinned Lean toolchain
-        run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
-      - name: Select the Lean dependency cache
-        id: keys
-        run: python3 tools/scripts/worktree/lean_actions.py keys --repository "$GITHUB_WORKSPACE" --layers dependency
-      - name: Restore the pinned Lean dependencies
-        id: dependencies
-        uses: actions/cache/restore@v5
-        with:
-          key: ${{ steps.keys.outputs.dependency_key }}
-          restore-keys: ${{ steps.keys.outputs.dependency_restore_prefix }}
-          path: ${{ steps.keys.outputs.dependency_archive_path }}
-      - name: Prepare the restored dependencies
+      - name: Read report ZIPs from the pinned module release
         env:
-          DEPENDENCY_KEY: ${{ steps.dependencies.outputs.cache-matched-key }}
-          DEPENDENCY_OUTCOME: ${{ steps.dependencies.outcome }}
+          MODULE_RELEASE: ${{ format('lean-modules-{0}', needs.pin.outputs.source) }}
         run: |
-          python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --layers dependency \
-            --dependency-key "$DEPENDENCY_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME"
-      - name: Restore published module shards with their Lean reports
-        if: steps.source.outputs.version == ''
-        continue-on-error: true
-        uses: ./.github/actions/lean-cache-shards
-        env:
-          GH_TOKEN: ${{ github.token }}
-          STRATALINT_LEAN_CACHE_RELEASE_TIMEOUT_SECONDS: '21600'
-        with:
-          operation: restore-published
-      - name: Restore and verify the exact published module release
-        if: steps.source.outputs.version != ''
-        # A JavaScript action receives the runtime credentials for ordinary Actions cache reads.
-        uses: actions/github-script@v8
-        env:
-          GH_TOKEN: ${{ github.token }}
-          MODULE_RELEASE: ${{ steps.source.outputs.version }}
-          SOURCE_COMMIT: ${{ steps.source.outputs.commit }}
-          LEAN_MODULE_ACTIONS_CACHE: '1'
-          STRATALINT_LEAN_CACHE_RELEASE_TIMEOUT_SECONDS: '21600'
-        with:
-          script: |
-            const {stdout} = await exec.getExecOutput('python3', [
-              '-B', 'tools/scripts/worktree/lean_module_cache.py', 'restore', '--version', process.env.MODULE_RELEASE,
-            ]);
-            const result = JSON.parse(stdout.trimEnd().split('\n').at(-1));
-            if (result.source !== process.env.SOURCE_COMMIT ||
-                !(result.requested > 0 && result.restored === result.requested) ||
-                !(result.reports_requested > 0 && result.reports_restored === result.reports_requested)) {
-              throw new Error('The selected module release did not restore all modules and reports');
-            }
-      - name: Prepare the source's Lean module reports
-        env:
-          LEAN_NUM_THREADS: '1'
-        run: bash .github/actions/lean-compile-layer/measure.sh --compile make lean-cache-prepare FULL_BUILD=1
+          python3 -B truth-workflow/.github/scripts/read-module-reports.py \
+            "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/releases/download" "$MODULE_RELEASE" \
+            "$GITHUB_WORKSPACE/.lake/build/lean-inspector/modules"
       - name: Generate and package the DAG and truth release
         run: bash "$GITHUB_WORKSPACE/truth-tools/.github/scripts/truth_release/build.sh" "$RUNNER_TEMP/truth-assets"
       - id: upload

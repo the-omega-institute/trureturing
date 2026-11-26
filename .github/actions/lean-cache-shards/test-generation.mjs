@@ -1,11 +1,11 @@
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
-import { mkdir, mkdtemp, readFile, rm, symlink, writeFile } from 'node:fs/promises';
+import { mkdir, mkdtemp, readdir, readFile, rm, symlink, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { test } from 'node:test';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const action = fileURLToPath(new URL('run.mjs', import.meta.url));
 const manifest = new URL('action.yml', import.meta.url);
@@ -244,6 +244,84 @@ esac
   assert.match(await readFile(join(root, 'outputs'), 'utf8'), new RegExp('source=' + earlier + '\\nupload=false\\n$'));
 });
 
+test('truth publication follows the completed release on protected dev and keeps its first pin', async t => {
+  const { root, env } = await fixture(t);
+  const event = join(root, 'event.json');
+  const pinned = 'b'.repeat(40);
+  const earlier = 'a'.repeat(40);
+  const outputs = join(root, 'outputs');
+  await writeFile(join(root, 'bin/gh'), `#!/bin/sh
+case "$*" in
+  *actions/runs/7/artifacts*) cat artifacts.json ;;
+  *git/ref/heads/lean-modules-published*) cat marker.json ;;
+  *branches/dev*) echo '{"protected":true,"commit":{"sha":"${pinned}"}}' ;;
+  'run download 7 '*) echo '${pinned}' > pin/source ;;
+  *) exit 2 ;;
+esac
+`, { mode: 0o755 });
+  const command = fileURLToPath(new URL('pin-source.py', import.meta.url));
+  const invoke = (name, attempt = '1') => spawnSync('python3', ['-B', command, '--published'], {
+    cwd: root, encoding: 'utf8', env: { ...env, GITHUB_EVENT_NAME: name, GITHUB_EVENT_PATH: event,
+      GITHUB_SHA: earlier, GITHUB_RUN_ID: '7', GITHUB_RUN_ATTEMPT: attempt, GITHUB_OUTPUT: outputs },
+  });
+  await writeFile(join(root, 'artifacts.json'), '[{"artifacts":[]}]');
+  await writeFile(join(root, 'marker.json'), JSON.stringify({ object: { sha: pinned } }));
+  await writeFile(event, '{"client_payload":{}}');
+  for (const name of ['schedule', 'repository_dispatch']) {
+    const result = invoke(name);
+    assert.equal(result.status, 0, result.stderr);
+    assert.equal(await readFile(outputs, 'utf8'), `source=${pinned}\nupload=true\n`);
+    await rm(outputs);
+  }
+  await rm(join(root, 'marker.json'));
+  await writeFile(event, JSON.stringify({ client_payload: { source_commit: earlier } }));
+  const explicit = invoke('repository_dispatch');
+  assert.equal(explicit.status, 0, explicit.stderr);
+  assert.equal(await readFile(outputs, 'utf8'), `source=${earlier}\nupload=true\n`);
+  await rm(outputs);
+  await writeFile(event, '{"client_payload":{"source_commit":"refs/heads/dev"}}');
+  assert.match(invoke('repository_dispatch').stderr, /lowercase 40-hex string/);
+  await writeFile(join(root, 'artifacts.json'), '[{"artifacts":[{"name":"generation-pin-7","expired":false}]}]');
+  const resume = invoke('schedule', '2');
+  assert.equal(resume.status, 0, resume.stderr);
+  assert.equal(await readFile(outputs, 'utf8'), `source=${pinned}\nupload=false\n`);
+});
+
+test('the truth reader copies only named report ZIPs from an inherited split Release', async t => {
+  const root = await mkdtemp(join(tmpdir(), 'published reports '));
+  t.after(() => rm(root, { recursive: true, force: true }));
+  const tag = 'lean-modules-' + 'b'.repeat(40);
+  const inherited = 'lean-modules-' + 'a'.repeat(40) + '-part-2';
+  await mkdir(join(root, tag));
+  await mkdir(join(root, inherited));
+  await writeFile(join(root, tag, 'index.json'), JSON.stringify({ shards: {
+    'D5.Example': { version: inherited, asset: 'old-D5.Example.tar.gz', members: ['D5.Example', 'D5.CompilerOnly'] },
+  }}));
+  const pack = spawnSync('python3', ['-c', `
+import io, sys, tarfile
+with tarfile.open(sys.argv[1], 'w:gz') as archive:
+    for name, data in {
+        'lean-inspector/modules/D5.Example.zip': b'opaque report bytes',
+        'lean-inspector/modules/D5.Example.zip.hash': b'hash',
+        'lean-inspector/modules/D5.Example.zip.trace': b'trace',
+        'lean-inspector/modules/D5.Other.zip': b'outside shard membership',
+        'lib/lean/D5/Example.olean': b'compiler output',
+        '../outside.zip': b'traversal',
+    }.items():
+        member = tarfile.TarInfo(name)
+        member.size = len(data)
+        archive.addfile(member, io.BytesIO(data))
+`, join(root, inherited, 'old-D5.Example.tar.gz')], { encoding: 'utf8' });
+  assert.equal(pack.status, 0, pack.stderr);
+  const reader = fileURLToPath(new URL('../../scripts/read-module-reports.py', import.meta.url));
+  const destination = join(root, '.lake/build/lean-inspector/modules');
+  const read = spawnSync('python3', ['-B', reader, pathToFileURL(root).href, tag, destination], { encoding: 'utf8' });
+  assert.equal(read.status, 0, read.stderr);
+  assert.equal(await readFile(join(destination, 'D5.Example.zip'), 'utf8'), 'opaque report bytes');
+  assert.deepEqual(await readdir(destination), ['D5.Example.zip']);
+  assert.deepEqual((await readdir(root)).sort(), ['.lake', inherited, tag].sort());
+});
+
 test('the same readable module key retrieves either version and readers cannot publish', async t => {
   const { root, requests, env } = await fixture(t);
   const key = 'v4.35.0-D5.S0.tar.gz';
@@ -322,12 +400,6 @@ else:
   assert.equal(await readFile(join(root, 'pinned-restore'), 'utf8'), env.INPUT_VERSION);
   const publisher = await readFile(new URL('../../workflows/cache-release-publish.yml', import.meta.url), 'utf8');
   assert.doesNotMatch(publisher, /plan-reports|build-reports|facet-plan/);
-  const truthRelease = await readFile(new URL('../../workflows/truth-release-publish.yml', import.meta.url), 'utf8');
-  assert.deepEqual([...truthRelease.matchAll(/^[ ]+operation: ([^\s]+)$/gm)].map(match => match[1]), ['restore-published']);
-  assert.match(truthRelease, /operation: restore-published[\s\S]*make lean-cache-prepare FULL_BUILD=1/);
-  const truthRestore = truthRelease.split('      - name: Restore published module shards with their Lean reports')[1];
-  assert.match(truthRestore.split('      - name:')[0], /continue-on-error: true/);
-  assert.doesNotMatch(truthRestore.split(`      - name: Prepare the source's Lean module reports`)[1].split('      - name:')[0], /continue-on-error: true/);
   assert.match(publisher, /needs: \[pin, publish\][\s\S]*uses: .\/\.github\/workflows\/ci-lean-module-verify.yml[\s\S]*published: true/);
 });
 
