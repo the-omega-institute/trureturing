@@ -329,4 +329,15 @@ public theorem Nat.mul_max_mul_right : type_of% @_root_.Nat.mul_max_mul_right :=
   · rw [Nat.max_eq_right ab, Nat.max_eq_right (Nat.mul_le_mul_right c ab)]
   · rw [Nat.max_eq_left ba, Nat.max_eq_left (Nat.mul_le_mul_right c ba)]
 
+public theorem Nat.min_eq_zero_iff : type_of% @_root_.Nat.min_eq_zero_iff := by
+  intro m n
+  constructor
+  · intro h
+    cases Nat.le_total m n with
+    | inl le => exact Or.inl ((Nat.min_eq_left le).symm.trans h)
+    | inr le => exact Or.inr ((Nat.min_eq_right le).symm.trans h)
+  · rintro (rfl | rfl)
+    · exact Nat.zero_min _
+    · exact Nat.min_zero _
+
 end OmegaChecks.InitPort.Alternatives
