@@ -282,6 +282,31 @@ theorem dneFromOpenRange (range : type_of% (@Std.Rxo.size_pos_iff_lt.{0}))
 theorem excludedMiddleFromDNE (dne : ∀ p : Prop, ¬¬p → p) (p : Prop) : p ∨ ¬p :=
   dne _ fun neither => neither (.inr fun hp => neither (.inl hp))
 
+namespace LexicographicOrder
+
+/-- Lexicographic comparison of one-element sequences can represent any proposition. -/
+private theorem singletonMiddle (caseSplit : ∀ p : Prop,
+    letI : LT Unit := ⟨fun _ _ => p⟩
+    ¬ ¬ (([()] : List Unit) < [()]) → ([()] : List Unit) < [()]) (p : Prop) : p ∨ ¬p := by
+  apply excludedMiddleFromDNE _ p
+  intro q nn
+  letI : LT Unit := ⟨fun _ _ => q⟩
+  have lt := caseSplit q (fun absent => nn (fun h => absent (List.Lex.rel h)))
+  cases lt with
+  | rel h => exact h
+  | cons h => cases h
+
+theorem ofListNotLE (law : type_of% (@List.not_le.{0})) : type_of% @Classical.em :=
+  singletonMiddle fun p => @law Unit ⟨fun _ _ => p⟩ [()] [()] |>.mp
+
+theorem ofArrayNotLE (law : type_of% (@Array.not_le.{0})) : type_of% @Classical.em :=
+  singletonMiddle fun p => @law Unit ⟨fun _ _ => p⟩ #[()] #[()] |>.mp
+
+theorem ofVectorNotLE (law : type_of% (@Vector.not_le.{0})) : type_of% @Classical.em :=
+  singletonMiddle fun p => @law Unit 1 ⟨fun _ _ => p⟩ #v[()] #v[()] |>.mp
+
+end LexicographicOrder
+
 /-- The comparison from the upper Boolean point back to the lower point can encode any proposition. -/
 theorem dneOfNotLT (notLT : type_of% (@Std.not_lt.{0})) (p : Prop) (nn : ¬¬p) : p := by
   let le (a b : Bool) : Prop := Bool.rec (motive := fun _ => Prop) True (Bool.rec (motive := fun _ => Prop) p True b) a
@@ -808,7 +833,8 @@ private def replayWitnesses (env : Environment) : IO Unit := do
   let official ← importModules #[{module := `Lean}] {} (level := .private)
   let mut terms : Std.HashMap Name ConstantInfo := {}
   let mut todo := (reductions.map fun (_, _, _, witness) => witness) ++
-    [``FiniteMembership.ofRunDecomposition, ``FiniteMembership.ofRunInduction,
+    [``LexicographicOrder.ofListNotLE, ``LexicographicOrder.ofArrayNotLE, ``LexicographicOrder.ofVectorNotLE,
+      ``FiniteMembership.ofRunDecomposition, ``FiniteMembership.ofRunInduction,
       ``FiniteMembership.ofListMember, ``FiniteMembership.ofArrayMember,
       ``FiniteMembership.ofFirstListMember, ``FiniteMembership.ofFirstArrayMember,
       ``choiceFromOptionPresence, ``VectorExistence.emOfVectorSucc, ``dneFromClosedRange, ``dneFromOpenRange, ``excludedMiddleFromDNE, ``excludedMiddleOfNotLT,
@@ -2065,6 +2091,12 @@ private def logicalConsequence? (owner name : Name) : Option (Name × Name) := d
       `OmegaChecks.InitInventory.StringPatterns.weakExcludedMiddleOfRevMatchAtNone)
   | _, _ => pure ()
   let witness ← match owner, name with
+    | `Init.Data.List.Lex, ``List.not_le | `Init.Data.List.Lex, `List.not_le_iff_gt =>
+      some ``OmegaChecks.InitBoundaries.LexicographicOrder.ofListNotLE
+    | `Init.Data.Array.Lex.Lemmas, ``Array.not_le | `Init.Data.Array.Lex.Lemmas, `Array.not_le_iff_gt =>
+      some ``OmegaChecks.InitBoundaries.LexicographicOrder.ofArrayNotLE
+    | `Init.Data.Vector.Lex, ``Vector.not_le | `Init.Data.Vector.Lex, `Vector.not_le_iff_gt =>
+      some ``OmegaChecks.InitBoundaries.LexicographicOrder.ofVectorNotLE
     | `Init.Data.Vector.Lemmas, ``Vector.instDecidableExistsVectorSucc => some ``OmegaChecks.InitBoundaries.VectorExistence.emOfVectorSucc
     | `Init.Grind.Order, ``Lean.Grind.Order.le_of_not_lt => some ``OmegaChecks.InitBoundaries.GrindOrder.excludedMiddleFromComparison
     | `Init.Grind.Norm, ``Lean.Grind.imp_eq => some ``OmegaChecks.InitBoundaries.GrindOrder.excludedMiddleFromImplication
