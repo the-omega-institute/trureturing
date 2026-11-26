@@ -2,6 +2,7 @@ module
 public import OmegaChecks.InitPort.Alternatives.ListFinRange
 public import Init.Data.Vector.Int
 public import Init.Data.Vector.Nat
+public import Init.Data.Vector.Count
 public import Init.Data.Vector.Extract
 import all Init.Data.Vector.FinRange
 public import Init.Data.Vector.Range
@@ -61,4 +62,22 @@ public theorem Vector.finRange_succ : type_of% @_root_.Vector.finRange_succ := b
     rw [dite_eq_right (Nat.not_lt_of_ge (Nat.succ_le_succ (Nat.zero_le j))), Vector.getElem_map,
       Vector.getElem_finRange]
     rfl
+
+public theorem Vector.size_eq_countP_add_countP :
+    type_of% @_root_.Vector.size_eq_countP_add_countP := by
+  rintro α p n ⟨xs, rfl⟩
+  exact Array.size_eq_countP_add_countP
+
+public theorem Vector.countP_le_size : type_of% @_root_.Vector.countP_le_size := by
+  rintro α p n ⟨xs, rfl⟩
+  exact Array.countP_le_size
+
+public theorem Vector.countP_replace : type_of% @_root_.Vector.countP_replace := by
+  rintro α inst lawful n a b ⟨xs, rfl⟩ p
+  exact Array.countP_replace
+
+public theorem Vector.count_replace : type_of% @_root_.Vector.count_replace := by
+  rintro α inst lawful n a b c ⟨xs, rfl⟩
+  exact Array.count_replace
+
 end OmegaChecks.InitPort.Alternatives
