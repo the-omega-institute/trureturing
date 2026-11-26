@@ -56,7 +56,7 @@ Helpers in `Reg`, `Interface` and `Impl` create no recursive D5 audit target and
 
 Utility refutations require the claim definition’s compiled type to be literally `Prop` and the result theorem’s compiled type to be literally `Not claim`. Write the result as `theorem result : ¬ claim := …`; definitionally equivalent aliases or expanded conclusions do not pass SL-031. The designated result is exempt from four-slot escape registration. Its selector resolves to the unique included compiled declaration with that final name component in the designated module, regardless of namespace; other new public theorems keep their obligations. A missing or ambiguous selector exempts nothing.
 
-When reporting an OmegaMath result, keep the same mathematical object and equality through the final inference. State the bridge for an interpretation as a classical object or an operator. Attribute any empty axiom list to the backend measured and any kernel replay to the closure actually replayed. [OmegaMath publication rule](../../docs/develop/spec/golden-ledger-repo-spec.md#omega-claim-fidelity)
+For a standard object, identify its pinned Mathlib declaration and use the admitted `OmegaMathlib.<upstream full name>` in the formal statement. When reporting an OmegaMath result, keep the same mathematical object and equality through the final inference. State the bridge for an interpretation as a classical object or an operator. Attribute any empty axiom list to the backend measured and any kernel replay to the closure actually replayed. [OmegaMath publication rule](../../docs/develop/spec/golden-ledger-repo-spec.md#omega-claim-fidelity)
 
 ## Compilation scope
 

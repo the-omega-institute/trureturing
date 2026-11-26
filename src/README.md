@@ -1,6 +1,6 @@
 # Omega 数学模块的架构与验证
 
-`OmegaInit` 提供严格基础，`OmegaMathlib` 提供与钉版 Mathlib 对应的公开接口，`OmegaMath` 公开六卷的项目数学。项目数学与外部核验库位于 `src/`，严格后端的基础实现位于 `strict/`。Lean 导入使用模块名，例如 `import OmegaMath`。根包使用钉版工具链和依赖锁文件。宿主审计与混合消费示例位于 `OmegaChecks`。[Lake 配置](../lakefile.toml)
+`OmegaInit` 提供严格基础，`OmegaMathlib` 提供与钉版 Mathlib 对应的公开接口，`OmegaMath` 公开六卷已有数学成果以及基于已核验对象的通用定理与证明。项目数学与外部核验库位于 `src/`，严格后端的基础实现位于 `strict/`。Lean 导入使用模块名，例如 `import OmegaMath`。根包使用钉版工具链和依赖锁文件。宿主审计与混合消费示例位于 `OmegaChecks`。[Lake 配置](../lakefile.toml)
 
 普通 Lake 构建和下游导入使用钉版官方 Lean Init 与 Mathlib。作者照常运行 `lake build`。编译器自动记录模块声明，官方构建照常编译带标记的模块及其下游；严格准入读取该记录并跳过这些模块。运行 `lake build +OmegaMath` 即可编译项目数学。Lake 从 `src/OmegaInit` 和 `src/OmegaMathlib` 读取与共享源码配套的官方名称别名。准入时，构建驱动在独立的工件目录中改用 `strict/OmegaInit` 和 `strict/OmegaMathlib`，以同一份项目数学源码做严格核验。[Lake 配置](../lakefile.toml) · [严格构建](OmegaChecks/strict_lake.py)
 
@@ -31,6 +31,22 @@ example (n : Omega.Nat) : Nat := Nat.factorial n
 任何直接或间接导入阶乘模块的消费者都只走官方后端。它们无需重复标记，共同上游和独立分支仍然双编。移除模块或其依赖上的最后一个标记后，严格端会再次编译这份源码。官方端的编译错误始终失败。对同时支持两端的模块，严格端的编译或导出对照失败也会报告。
 
 本仓定向核验使用 `python3 src/OmegaChecks/portable.py --backend both <消费模块名>`。结果列出只在官方端编译的模块，并给出到显式标记的 import 链。CI 按相同规则选择严格目标。下游 Lake 包中的两个例子由[集成测试](OmegaChecks/test_backend_plan.py)编译。
+
+## 标准数学对象
+
+按钉版 Mathlib 的模块和声明选取对象。导入对应端口后，在陈述和可观察定义中直接写 `OmegaMathlib.<上游全名>`。例如，下例在两个后端使用同一条二项式系数定理。
+
+```lean
+prelude
+import OmegaMathlib.Data.Nat.Choose.Basic
+
+example (n : Omega.Nat) : Omega.Eq (OmegaMathlib.Nat.choose n Omega.Nat.zero) Omega.Nat.zero.succ :=
+  OmegaMathlib.Nat.choose_zero_right n
+```
+
+同一写法适用于谓词（如 `OmegaMathlib.Nat.Prime p`）和函数性质（如 `OmegaMathlib.Function.Bijective f`）。一个消费者同时使用原生与严格载体时，导入 `OmegaBuild.Mathlib`，继续使用普通限定名，Lean 根据参数和预期类型解析。尚无端口时，按上游定义模块移植对象并通过双端核验；生成器从已编译导出取得名称。
+
+OmegaMath 可以发布通用定理、证明和对已核验对象的引用。新项目对象与可观察的旧表示归 D5。需要解释为标准数学时，在拥有旧表示的 D5 模块证明对应关系，例如谓词对所有适用输入等价、运算逐点相等。消费者直接导入该模块。OmegaMath 和 OmegaMathlib 的编译导入闭包独立于 D5。[发布规范](../docs/develop/spec/golden-ledger-repo-spec.md#omega-claim-fidelity)
 
 ## 六卷与模块树
 
@@ -145,7 +161,7 @@ open Omega
 example (a b : Nat) : Eq (Nat.add a b) (Nat.add b a) := Nat.add_comm a b
 ```
 
-审计器在单独的 Lean 环境中读取钉版工具链的官方编译产物，逐条核对公开声明的完整名字与定义模块。这一检查覆盖名称与归属。严格实现的传递公理由空内核重放另行核验。Omega 特有的精确比值及专题辅助引理归入 `OmegaMath`。[审计实现](OmegaChecks/Audit.lean) · [官方 Nat 基础定理](https://github.com/leanprover/lean4/blob/v4.35.0/src/lean/Init/Data/Nat/Basic.lean#L158)
+审计器在单独的 Lean 环境中读取钉版工具链的官方编译产物，逐条核对公开声明的完整名字与定义模块。这一检查覆盖名称与归属。严格实现的传递公理由空内核重放另行核验。已有的精确比值定义见 `OmegaMath.Data.Ratio` 和 `OmegaMath.Data.IntRatio`。[审计实现](OmegaChecks/Audit.lean) · [官方 Nat 基础定理](https://github.com/leanprover/lean4/blob/v4.35.0/src/lean/Init/Data/Nat/Basic.lean#L158)
 
 ### 查看移植覆盖和缺口
 
@@ -192,7 +208,7 @@ import OmegaInit.Data.List.Basic
 
 `OmegaInit` 可以导入本层模块。`OmegaMathlib` 可以导入本层与 `OmegaInit`。`OmegaMath` 可以导入三个严格库。审计器从编译产物读取每条导入边，并在空内核中重放选定的严格闭包。官方 Init 与 Mathlib 由外部核验器分别加载。[严格闭包审计](OmegaChecks/Audit.lean)
 
-`OmegaMathlib` 按上游模块路径组织，例如 `OmegaMathlib.Data.Nat.Fib.Basic` 对应 `Mathlib.Data.Nat.Fib.Basic`。每个公开移植声明都须指向钉版上游的同名声明，核对声明所属模块、类型、公开参数和运算含义。使用另一种算法实现函数时，需要一个针对实际函数体、对全部输入成立的对应证明，并限定公开接口可观察的计算规则。项目自有接口位于 `OmegaMath`。例如群减法模块显式接收运算和群公理，保留在项目数学层。[声明检查](OmegaChecks/Interface.lean) · [群接口](OmegaMath/Algebra/Group/Basic.lean)
+`OmegaMathlib` 按上游模块路径组织，例如 `OmegaMathlib.Data.Nat.Fib.Basic` 对应 `Mathlib.Data.Nat.Fib.Basic`。每个公开移植声明都须指向钉版上游的同名声明，核对声明所属模块、类型、公开参数和运算含义。使用另一种算法实现函数时，需要一个针对实际函数体、对全部输入成立的对应证明，并限定公开接口可观察的计算规则。现有的群减法定理在项目数学层显式接收运算和群公理。[声明检查](OmegaChecks/Interface.lean) · [群接口](OmegaMath/Algebra/Group/Basic.lean)
 
 `OmegaChecks.NatCorrespondence` 证明严格自然数与标准自然数之间的双向转换、加法保持、序关系双向等价，以及 Fibonacci 数和二项式系数对任意输入的逐点一致。[自然数对应](OmegaChecks/NatCorrespondence.lean)
 
@@ -217,7 +233,7 @@ python3 src/OmegaChecks/check.py --full
 python3 src/OmegaChecks/portable.py --regenerate-facades
 ```
 
-下游源码只写一次接口名。例如 `import OmegaMathlib.Data.Nat.Fib.Basic` 在官方环境中加载 `Mathlib.Data.Nat.Fib.Basic`，`Omega.Nat.fib` 由编译后的公开名自动解析到 `Nat.fib`。普通构建读取已入库的官方别名文件，每个环境各有自己的编译产物。对于使用全输入等价证明的不同算法，普通导入只能依赖已核对的公开方程。显式展开实现或局部改写透明性的源码需要在两个后端分别验证。用以下命令可以在本地选择某个环境，或运行双编译和导出核对。
+下游源码只写一次接口名。例如 `import OmegaMathlib.Data.Nat.Fib.Basic` 在官方环境中加载 `Mathlib.Data.Nat.Fib.Basic`，`OmegaMathlib.Nat.fib` 在官方端解析到 `Nat.fib`，在严格端解析到已核验的严格实现。普通构建读取已入库的官方别名文件，每个环境各有自己的编译产物。对于使用全输入等价证明的不同算法，普通导入只能依赖已核对的公开方程。显式展开实现或局部改写透明性的源码需要在两个后端分别验证。用以下命令可以在本地选择某个环境，或运行双编译和导出核对。
 
 支持双端的消费者使用原始官方环境和严格环境分别编译。准入还为严格端口的共同公开计算规则生成一份独立的官方构建配置，在其中限制已封装实现的展开，并编译仓内的共同接口用例。以 Fibonacci 为例，普通官方发布允许用 `rfl` 计算 `fib 0`，严格环境和共同接口用例可用公开定理 `fib_zero`。下列双端核验命令同时准备这份配置。随后可用 `lake -f .lake/omega-common.toml env lean <文件>` 检查其他消费者是否只用到了共同计算规则。
 ```sh
