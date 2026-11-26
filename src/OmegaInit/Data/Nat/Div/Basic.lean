@@ -5,5 +5,5 @@ public import OmegaInit.Prelude
 /-! Namespace aliases to the pinned public interface. -/
 public section
 namespace Omega.Nat
-export _root_.Nat (mod_one)
+export _root_.Nat (mod_one mod_zero)
 end Omega.Nat
