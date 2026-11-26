@@ -288,4 +288,105 @@ public theorem Lean.Grind.AC.eq_erase0_rhs :
   intro α ctx _ ident l a s cert h
   exact h.trans (certifiedDenotation ctx cert (@Seq.denote_erase0 α ctx ident a)).symm
 
+
+public theorem Lean.Grind.AC.Seq.eraseDup_k_eq_eraseDup :
+    type_of% @_root_.Lean.Grind.AC.Seq.eraseDup_k_eq_eraseDup := by
+  intro s
+  induction s with
+  | var => rfl
+  | cons x s ih =>
+    rw [Seq.eraseDup_k_cons, ih]
+    conv => rhs; unfold Seq.eraseDup
+    cases s.eraseDup with
+    | var y => dsimp only; cases x.beq y <;> rfl
+    | cons y t => dsimp only; cases x.beq y <;> rfl
+
+public theorem Lean.Grind.AC.Seq.erase0_k_eq_erase0 :
+    type_of% @_root_.Lean.Grind.AC.Seq.erase0_k_eq_erase0 := by
+  intro s
+  induction s with
+  | var => rfl
+  | cons x s ih =>
+    rw [Seq.erase0_k_cons, ih]
+    conv => rhs; unfold Seq.erase0
+    cases x with
+    | zero => rfl
+    | succ n =>
+      cases s.erase0 with
+      | var y => cases y <;> rfl
+      | cons => rfl
+
+public theorem Lean.Grind.AC.Seq.denote_insert_of_contains :
+    type_of% @_root_.Lean.Grind.AC.Seq.denote_insert_of_contains := by
+  intro α ctx assoc comm idem s x found
+  rw [@Seq.denote_insert α ctx assoc comm]
+  induction s with
+  | var y =>
+    cases Nat.eq_of_beq_eq_true (show x.beq y = true from found)
+    exact idem.idempotent ..
+  | cons y s ih =>
+    have choices := Bool.or_eq_true_iff.mp (show (x.beq y || s.contains_k x) = true from found)
+    change ctx.op (x.denote ctx) (ctx.op (y.denote ctx) (s.denote ctx)) = _
+    cases choices with
+    | inl eq =>
+      cases Nat.eq_of_beq_eq_true eq
+      rw [← assoc.assoc, idem.idempotent]
+      rfl
+    | inr later =>
+      rw [← assoc.assoc, comm.comm (x.denote ctx), assoc.assoc, ih later]
+      rfl
+
+public theorem Lean.Grind.AC.superpose_ac_idempotent :
+    type_of% @_root_.Lean.Grind.AC.superpose_ac_idempotent := by
+  intro α ctx assoc comm idem x s t result cert eq
+  have both := Bool.and_eq_true_iff.mp
+    (show (s.contains_k x && result.beq' (t.insert x)) = true from cert)
+  rw [seqEqOfBeq both.2, @Seq.denote_insert α ctx assoc comm, ← eq,
+      ← @Seq.denote_insert α ctx assoc comm, @Seq.denote_insert_of_contains α ctx assoc comm idem s x both.1]
+
+public theorem Lean.Grind.AC.superpose_head_idempotent :
+    type_of% @_root_.Lean.Grind.AC.superpose_head_idempotent := by
+  intro α ctx assoc idem x s t result cert eq
+  have both := Bool.and_eq_true_iff.mp
+    (show (s.startsWithVar_k x && result.beq' ((Seq.var x).concat t)) = true from cert)
+  rw [seqEqOfBeq both.2, @Seq.denote_concat α ctx assoc, ← eq, ← @Seq.denote_concat α ctx assoc,
+      ← Seq.concat_k_eq_concat, @Seq.denote_concat_of_startsWithVar α ctx assoc idem s x both.1]
+
+public theorem Lean.Grind.AC.superpose_tail_idempotent :
+    type_of% @_root_.Lean.Grind.AC.superpose_tail_idempotent := by
+  intro α ctx assoc idem x s t result cert eq
+  have both := Bool.and_eq_true_iff.mp
+    (show (s.endsWithVar_k x && result.beq' (t.concat (.var x))) = true from cert)
+  rw [seqEqOfBeq both.2, @Seq.denote_concat α ctx assoc, ← eq, ← @Seq.denote_concat α ctx assoc,
+      ← Seq.concat_k_eq_concat, @Seq.denote_concat_of_endsWithVar α ctx assoc idem s x both.1]
+
+public theorem Lean.Grind.AC.superpose :
+    type_of% @_root_.Lean.Grind.AC.superpose := by
+  intro α ctx assoc p c s a₁ b₁ a₂ b₂ l r cert eq₁ eq₂
+  have top := Bool.and_eq_true_iff.mp (show
+    (((a₁.beq' (p.concat_k c) && a₂.beq' (c.concat_k s)) && l.beq' (b₁.concat_k s)) &&
+      r.beq' (p.concat_k b₂)) = true from cert)
+  have mid := Bool.and_eq_true_iff.mp top.1
+  have first := Bool.and_eq_true_iff.mp mid.1
+  rw [seqEqOfBeq first.1, Seq.concat_k_eq_concat, @Seq.denote_concat α ctx assoc] at eq₁
+  rw [seqEqOfBeq first.2, Seq.concat_k_eq_concat, @Seq.denote_concat α ctx assoc] at eq₂
+  rw [seqEqOfBeq mid.2, seqEqOfBeq top.2, Seq.concat_k_eq_concat, Seq.concat_k_eq_concat,
+      @Seq.denote_concat α ctx assoc, @Seq.denote_concat α ctx assoc, ← eq₁, ← eq₂]
+  exact assoc.assoc ..
+
+public theorem Lean.Grind.AC.superpose_ac :
+    type_of% @_root_.Lean.Grind.AC.superpose_ac := by
+  intro α ctx assoc comm p c s a₁ b₁ a₂ b₂ l r cert eq₁ eq₂
+  have top := Bool.and_eq_true_iff.mp (show
+    (((a₁.beq' (c.union_k p) && a₂.beq' (c.union_k s)) && l.beq' (s.union_k b₁)) &&
+      r.beq' (p.union_k b₂)) = true from cert)
+  have mid := Bool.and_eq_true_iff.mp top.1
+  have first := Bool.and_eq_true_iff.mp mid.1
+  rw [seqEqOfBeq first.1, Seq.union_k_eq_union, @Seq.denote_union α ctx assoc comm] at eq₁
+  rw [seqEqOfBeq first.2, Seq.union_k_eq_union, @Seq.denote_union α ctx assoc comm] at eq₂
+  rw [seqEqOfBeq mid.2, seqEqOfBeq top.2, Seq.union_k_eq_union, Seq.union_k_eq_union,
+      @Seq.denote_union α ctx assoc comm, @Seq.denote_union α ctx assoc comm, ← eq₁, ← eq₂]
+  rw [← assoc.assoc, comm.comm (s.denote ctx) (c.denote ctx), assoc.assoc,
+      comm.comm (s.denote ctx) (p.denote ctx), ← assoc.assoc, comm.comm (c.denote ctx) (p.denote ctx), assoc.assoc]
+
 end OmegaChecks.InitPort.Alternatives
