@@ -1010,4 +1010,14 @@ public theorem Array.zipWithM_eq_mapM_id_zipWith : type_of% @_root_.Array.zipWit
   rw [_root_.Array.zipWithM, zipArrayLists, mapArrayList, _root_.Array.toList_zipWith,
     List.drop_zero, List.drop_zero, same]
 
+public theorem Array.allM_eq_not_anyM_not : type_of% @_root_.Array.allM_eq_not_anyM_not := by
+  intro m α mon law p xs
+  rw [_root_.Array.allM, bind_pure_comp]
+  apply congrArg (Functor.map (! ·))
+  exact Array.anyM_congr (xs := xs) rfl (fun a => bind_pure_comp ..) rfl rfl
+
+public theorem Vector.allM_eq_not_anyM_not : type_of% @_root_.Vector.allM_eq_not_anyM_not := by
+  intros
+  exact _root_.Array.allM_eq_not_anyM_not
+
 end OmegaChecks.InitPort.Alternatives
