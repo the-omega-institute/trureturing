@@ -1,12 +1,41 @@
 module
 import all Init.Data.String.Lemmas.Pattern.String.Basic
+import all Init.Data.String.Lemmas.Pattern.Char
+import all Init.Data.String.Lemmas.Pattern.Pred
+import all Init.Data.String.Pattern.Pred
 public import OmegaChecks.InitPort.Alternatives.StringEncoding
 
-/-! UTF-8 byte comparisons and search traces for literal string patterns. -/
+/-! UTF-8 byte comparisons, search traces and character predicate patterns. -/
 
 namespace OmegaChecks.InitPort.Alternatives.String.Slice.Pattern.Model
 
 open _root_.String.Slice.Pattern.Model
+
+private theorem forwardSearch {α β : Type} {p : α} {q : β} [PatternModel p] [PatternModel q]
+    {s : String.Slice} {pos : s.Pos} {steps}
+    (same : ∀ {a b : s.Pos}, IsLongestMatchAt p a b ↔ IsLongestMatchAt q a b) :
+    IsValidSearchFrom p pos steps → IsValidSearchFrom q pos steps := by
+  intro search
+  induction search with
+  | endPos => exact .endPos
+  | matched h _ tail => exact .matched (same.mp h) tail
+  | mismatched lt miss _ tail =>
+    refine .mismatched lt (fun cursor lo hi found => miss cursor lo hi ?_) tail
+    obtain ⟨⟨w, matched⟩⟩ := found
+    exact ⟨⟨w, same.mpr matched⟩⟩
+
+private theorem reverseSearch {α β : Type} {p : α} {q : β} [PatternModel p] [PatternModel q]
+    {s : String.Slice} {pos : s.Pos} {steps}
+    (same : ∀ {a b : s.Pos}, IsLongestRevMatchAt p a b ↔ IsLongestRevMatchAt q a b) :
+    IsValidRevSearchFrom p pos steps → IsValidRevSearchFrom q pos steps := by
+  intro search
+  induction search with
+  | startPos => exact .startPos
+  | matched h _ tail => exact .matched (same.mp h) tail
+  | mismatched lt miss _ tail =>
+    refine .mismatched lt (fun cursor lo hi found => miss cursor lo hi ?_) tail
+    obtain ⟨⟨w, matched⟩⟩ := found
+    exact ⟨⟨w, same.mpr matched⟩⟩
 
 namespace ForwardSliceSearcher
 
@@ -74,32 +103,14 @@ private theorem toSliceNonempty {pat : String} (h : pat ≠ "") : pat.toSlice.is
 public theorem isValidSearchFrom_iff_isValidSearchFrom_toSlice :
     type_of% @_root_.String.Slice.Pattern.Model.ForwardStringSearcher.isValidSearchFrom_iff_isValidSearchFrom_toSlice := by
   intro pat s pos steps
-  constructor <;> intro search
-  · induction search with
-    | endPos => exact .endPos
-    | matched h _ tail => exact .matched (_root_.String.Slice.Pattern.Model.ForwardStringSearcher.isLongestMatchAt_iff_isLongestMatchAt_toSlice.mp h) tail
-    | mismatched lt miss _ tail => exact .mismatched lt (fun q lo hi found => miss q lo hi
-        (_root_.String.Slice.Pattern.Model.ForwardStringSearcher.matchesAt_iff_matchesAt_toSlice.mpr found)) tail
-  · induction search with
-    | endPos => exact .endPos
-    | matched h _ tail => exact .matched (_root_.String.Slice.Pattern.Model.ForwardStringSearcher.isLongestMatchAt_iff_isLongestMatchAt_toSlice.mpr h) tail
-    | mismatched lt miss _ tail => exact .mismatched lt (fun q lo hi found => miss q lo hi
-        (_root_.String.Slice.Pattern.Model.ForwardStringSearcher.matchesAt_iff_matchesAt_toSlice.mp found)) tail
+  exact ⟨forwardSearch _root_.String.Slice.Pattern.Model.ForwardStringSearcher.isLongestMatchAt_iff_isLongestMatchAt_toSlice,
+    forwardSearch _root_.String.Slice.Pattern.Model.ForwardStringSearcher.isLongestMatchAt_iff_isLongestMatchAt_toSlice.symm⟩
 
 public theorem isValidRevSearchFrom_iff_isValidRevSearchFrom_toSlice :
     type_of% @_root_.String.Slice.Pattern.Model.ForwardStringSearcher.isValidRevSearchFrom_iff_isValidRevSearchFrom_toSlice := by
   intro pat s pos steps
-  constructor <;> intro search
-  · induction search with
-    | startPos => exact .startPos
-    | matched h _ tail => exact .matched (_root_.String.Slice.Pattern.Model.ForwardStringSearcher.isLongestRevMatchAt_iff_isLongestRevMatchAt_toSlice.mp h) tail
-    | mismatched lt miss _ tail => exact .mismatched lt (fun q lo hi found => miss q lo hi
-        (_root_.String.Slice.Pattern.Model.ForwardStringSearcher.revMatchesAt_iff_revMatchesAt_toSlice.mpr found)) tail
-  · induction search with
-    | startPos => exact .startPos
-    | matched h _ tail => exact .matched (_root_.String.Slice.Pattern.Model.ForwardStringSearcher.isLongestRevMatchAt_iff_isLongestRevMatchAt_toSlice.mpr h) tail
-    | mismatched lt miss _ tail => exact .mismatched lt (fun q lo hi found => miss q lo hi
-        (_root_.String.Slice.Pattern.Model.ForwardStringSearcher.revMatchesAt_iff_revMatchesAt_toSlice.mp found)) tail
+  exact ⟨reverseSearch _root_.String.Slice.Pattern.Model.ForwardStringSearcher.isLongestRevMatchAt_iff_isLongestRevMatchAt_toSlice,
+    reverseSearch _root_.String.Slice.Pattern.Model.ForwardStringSearcher.isLongestRevMatchAt_iff_isLongestRevMatchAt_toSlice.symm⟩
 
 public theorem matchesAt_iff_isLongestMatchAt :
     type_of% @_root_.String.Slice.Pattern.Model.ForwardStringSearcher.matchesAt_iff_isLongestMatchAt := by
@@ -140,5 +151,78 @@ public theorem le_of_matchesAt :
     (_root_.String.Slice.Pattern.Model.ForwardStringSearcher.matchesAt_iff_toSlice.mp matched)
 
 end ForwardStringSearcher
+
+namespace CharPred
+
+private theorem selectPosition {α : Type} {condition : Prop} [Decidable condition]
+    (next : ¬condition → α) (accepted : ¬condition → Bool) (pos : α) :
+    (if h : condition then none else if accepted h then some (next h) else none) = some pos ↔
+      ∃ h : ¬condition, pos = next h ∧ accepted h = true := by
+  by_cases h : condition
+  · rw [dite_eq_left h]
+    exact ⟨(fun eq => nomatch eq), fun ⟨ne, _⟩ => (ne h).elim⟩
+  · rw [dite_eq_right h]
+    split
+    next yes => exact ⟨fun eq => ⟨h, (Option.some.inj eq).symm, yes⟩, fun ⟨_, eq, _⟩ => congrArg some eq.symm⟩
+    next no => exact ⟨(fun eq => nomatch eq), fun ⟨_, _, yes⟩ => (no yes).elim⟩
+
+public theorem instLawfulForwardPatternModelForallCharBool :
+    type_of% @_root_.String.Slice.Pattern.Model.CharPred.instLawfulForwardPatternModelForallCharBool := by
+  intro p
+  constructor
+  intro s pos
+  exact (selectPosition (s.startPos.next ·) (fun h => p (s.startPos.get h)) pos).trans
+    _root_.String.Slice.Pattern.Model.CharPred.isLongestMatch_iff.symm
+
+public theorem instLawfulBackwardPatternModelForallCharBool :
+    type_of% @_root_.String.Slice.Pattern.Model.CharPred.instLawfulBackwardPatternModelForallCharBool := by
+  intro p
+  constructor
+  intro s pos
+  exact (selectPosition (s.endPos.prev ·)
+    (fun h => p ((s.endPos.prev h).get _root_.String.Slice.Pos.prev_ne_endPos)) pos).trans
+    _root_.String.Slice.Pattern.Model.CharPred.isLongestRevMatch_iff.symm
+
+namespace Decidable
+
+public theorem isValidSearchFrom_iff_isValidSearchFrom_decide :
+    type_of% @_root_.String.Slice.Pattern.Model.CharPred.Decidable.isValidSearchFrom_iff_isValidSearchFrom_decide := by
+  intro p inst s pos steps
+  exact ⟨forwardSearch _root_.String.Slice.Pattern.Model.CharPred.Decidable.isLongestMatchAt_iff_isLongestMatchAt_decide,
+    forwardSearch _root_.String.Slice.Pattern.Model.CharPred.Decidable.isLongestMatchAt_iff_isLongestMatchAt_decide.symm⟩
+
+public theorem isValidRevSearchFrom_iff_isValidRevSearchFrom_decide :
+    type_of% @_root_.String.Slice.Pattern.Model.CharPred.Decidable.isValidRevSearchFrom_iff_isValidRevSearchFrom_decide := by
+  intro p inst s pos steps
+  exact ⟨reverseSearch _root_.String.Slice.Pattern.Model.CharPred.Decidable.isLongestRevMatchAt_iff_isLongestRevMatchAt_decide,
+    reverseSearch _root_.String.Slice.Pattern.Model.CharPred.Decidable.isLongestRevMatchAt_iff_isLongestRevMatchAt_decide.symm⟩
+
+public theorem instLawfulBackwardPatternModelForallCharProp :
+    type_of% @_root_.String.Slice.Pattern.Model.CharPred.Decidable.instLawfulBackwardPatternModelForallCharProp := by
+  intro p inst
+  constructor
+  intro s pos
+  exact (_root_.String.Slice.Pattern.Model.LawfulBackwardPatternModel.skipSuffix?_eq_some_iff
+    (pat := fun c => decide (p c)) pos).trans
+    _root_.String.Slice.Pattern.Model.CharPred.Decidable.isLongestRevMatch_iff_isLongestRevMatch_decide.symm
+
+end Decidable
+end CharPred
+
+namespace Char
+
+public theorem isValidSearchFrom_iff_isValidSearchFrom_beq :
+    type_of% @_root_.String.Slice.Pattern.Model.Char.isValidSearchFrom_iff_isValidSearchFrom_beq := by
+  intro c s pos steps
+  exact ⟨forwardSearch _root_.String.Slice.Pattern.Model.Char.isLongestMatchAt_iff_isLongestMatchAt_beq,
+    forwardSearch _root_.String.Slice.Pattern.Model.Char.isLongestMatchAt_iff_isLongestMatchAt_beq.symm⟩
+
+public theorem isValidRevSearchFrom_iff_isValidRevSearchFrom_beq :
+    type_of% @_root_.String.Slice.Pattern.Model.Char.isValidRevSearchFrom_iff_isValidRevSearchFrom_beq := by
+  intro c s pos steps
+  exact ⟨reverseSearch _root_.String.Slice.Pattern.Model.Char.isLongestRevMatchAt_iff_isLongestRevMatchAt_beq,
+    reverseSearch _root_.String.Slice.Pattern.Model.Char.isLongestRevMatchAt_iff_isLongestRevMatchAt_beq.symm⟩
+
+end Char
 
 end OmegaChecks.InitPort.Alternatives.String.Slice.Pattern.Model
