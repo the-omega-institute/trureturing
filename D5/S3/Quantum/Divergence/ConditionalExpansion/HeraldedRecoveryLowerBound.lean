@@ -1,3 +1,11 @@
+/- GID: D5/S3/Quantum/Divergence/ConditionalExpansion/HeraldedRecoveryLowerBound
+   generality: G
+   mirror-B: D5/B/S3/Quantum/Divergence/ConditionalExpansion/HeraldedRecoveryLowerBound
+   mirror-E: none(waiver:finite-matrix-proof)
+   anchors: []
+   utility: none
+   digest: Heralded exact recovery characterizes positive conditional expansion. -/
+
 import Batteries.Tactic.OpenPrivate
 import D5.S3.Quantum.Divergence.CompleteHockeyStickRefutation
 import D5.S3.Quantum.Divergence.ConditionalExpansion.HeraldedRecoveryUpperBound
