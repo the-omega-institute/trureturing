@@ -1,9 +1,14 @@
 module
 
 public import Init.Data.Nat.Bitwise.Lemmas
+public import Init.Data.BitVec.Lemmas
 import all Init.Data.Nat.Bitwise.Basic
 
 namespace OmegaChecks.Interface.Equations
+
+public theorem BitVec.flattenListFast {n : Nat} (xs : List (BitVec n)) :
+    _root_.BitVec.flattenList xs = _root_.BitVec.flattenListFast xs :=
+  congrArg (fun k => @k n xs) _root_.BitVec.flattenList_eq_flattenListFast
 
 @[expose] public def bitwiseSteps (f : Bool → Bool → Bool) : Nat → Nat → Nat → Nat :=
   Nat.rec (motive := fun _ => Nat → Nat → Nat) (fun _ _ => Nat.zero)

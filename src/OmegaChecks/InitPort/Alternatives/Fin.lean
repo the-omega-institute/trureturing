@@ -285,14 +285,18 @@ public theorem Fin.foldlM_pure : type_of% @_root_.Fin.foldlM_pure := by
       have lt : i < n := by omega
       rw [congrFun (foldlMLt _ lt) _, pure_bind, foldl_loop_lt _ _ lt]
       exact ih (i+1) (by omega) _
-  have direct {k : Nat} (g : α → Fin k → α) (a : α) : foldlTR k g a = foldl k g a := by
+  have direct {k : Nat} (g : α → Fin k → α) (a : α) : foldl.loop k g a 0 = foldl k g a := by
     induction k generalizing a with
-    | zero => exact foldlTR_zero .. |>.trans (foldl_zero g a).symm
-    | succ k ih => rw [foldlTR_succ, foldl_succ, ih]
+    | zero => exact (foldl_loop_eq g a).trans (foldl_zero g a).symm
+    | succ k ih =>
+      rw [foldl_loop g a (Nat.zero_lt_succ k), foldl_succ, ih]
+      rfl
   exact (loops n 0 (Nat.zero_add _) x).trans (congrArg (pure (f := m)) (direct f x))
 
 public theorem Fin.foldl_eq_foldlM : type_of% @_root_.Fin.foldl_eq_foldlM := by
   intro α n f x
   exact (Fin.foldlM_pure (m := Id) (x := x) (f := f)).symm
+
+public def Fin.foldlTR : type_of% @_root_.Fin.foldlTR := @_root_.Fin.foldl
 
 end OmegaChecks.InitPort.Alternatives

@@ -1,10 +1,15 @@
 module
 
 public import OmegaChecks.InitPort.Alternatives.NatFold
+public import OmegaChecks.InitPort.Alternatives.Fin
 import all OmegaChecks.InitPort.Alternatives.NatFold
 import all Init.Data.Nat.Basic
 
 namespace OmegaChecks.Interface.Equations
+
+public theorem Fin.foldlTR {α : Sort u} (n : Nat) (f : α → Fin n → α) (init : α) :
+    _root_.Fin.foldl n f init = _root_.Fin.foldlTR n f init :=
+  congrArg (fun k => @k α n f init) _root_.Fin.foldl_eq_foldlTR
 
 public theorem Nat.recCompiled {motive : Nat → Sort u} (zero : motive 0)
     (step : (n : Nat) → motive n → motive (n + 1)) (n : Nat) :

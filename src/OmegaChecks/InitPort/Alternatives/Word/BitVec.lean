@@ -4,6 +4,9 @@ public import Init.Data.SInt.Lemmas
 
 namespace OmegaChecks.InitPort.Alternatives
 
+public def BitVec.flattenListFast : type_of% @_root_.BitVec.flattenListFast :=
+  @_root_.BitVec.flattenList
+
 public theorem Nat.one_mod_two_pow_eq_one : type_of% @_root_.Nat.one_mod_two_pow_eq_one := by
   intro n
   cases n with
