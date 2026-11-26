@@ -180,4 +180,17 @@ theorem testBit_of_two_pow_le_and_two_pow_add_one_gt {n i : Nat}
         (ge_two_pow_of_testBit witness.right))))
     (congrArg (testBit n) (Nat.le_antisymm witness.left atMost)).trans witness.right
 
+private theorem bool_of_binary (r : Nat) (small : Nat.lt r (succ (succ zero))) :
+    Eq (Bool.casesOn (motive := fun _ => Nat) (Nat.beq r (succ zero)) zero (succ zero)) r :=
+  (Nat.casesOn (motive := fun r => Nat.lt r (succ (succ zero)) →
+      Eq (Bool.casesOn (motive := fun _ => Nat) (Nat.beq r (succ zero)) zero (succ zero)) r) r
+    (fun _ => Omega.rfl)
+    (fun d => Nat.casesOn (motive := fun d => Nat.lt (succ d) (succ (succ zero)) →
+        Eq (Bool.casesOn (motive := fun _ => Nat) (Nat.beq (succ d) (succ zero)) zero (succ zero)) (succ d)) d
+      (fun _ => Omega.rfl) (fun k h => False.elim (not_succ_le_zero k (le_of_succ_le_succ (le_of_succ_le_succ h)))))) small
+
+theorem one_and_eq_mod_two (n : Nat) : Eq (Nat.land (succ zero) n) (Nat.mod n (succ (succ zero))) :=
+  Nat.casesOn (motive := fun n => Eq (Nat.land (succ zero) n) (Nat.mod n (succ (succ zero)))) n
+    Omega.rfl (fun k => bool_of_binary _ (Nat.mod_lt (succ k) Nat.zero_lt_two))
+
 end Omega.Nat
