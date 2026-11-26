@@ -7,6 +7,7 @@ public import OmegaChecks.InitPort.Alternatives.ArrayReverse
 public import OmegaChecks.InitPort.Alternatives.Collect
 public import OmegaChecks.InitPort.Alternatives.Constraint
 public import OmegaChecks.InitPort.Alternatives.Extract
+public import OmegaChecks.InitPort.Alternatives.Float
 public import OmegaChecks.InitPort.Alternatives.GeneratedProofs
 public import OmegaChecks.InitPort.Alternatives.GrindRing
 public import OmegaChecks.InitPort.Alternatives.Integer

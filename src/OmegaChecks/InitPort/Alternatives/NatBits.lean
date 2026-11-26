@@ -4,10 +4,13 @@ public import Init.Data.Nat.Bitwise.Lemmas
 namespace OmegaChecks.InitPort.Alternatives
 
 public theorem Bool.beq_eq_decide_eq : type_of% @_root_.Bool.beq_eq_decide_eq := by
-  intro α _ _ _ a b
-  cases h : a == b with
-  | false => exact (decide_eq_false (ne_of_beq_false h)).symm
-  | true => exact (decide_eq_true (eq_of_beq h)).symm
+  intro α inst law dec a b
+  cases dec a b with
+  | isTrue h => cases h; exact law.rfl
+  | isFalse h =>
+    cases eq : a == b with
+    | false => rfl
+    | true => exact False.elim (h (law.eq_of_beq eq))
 
 public theorem Nat.mod_two_bne_zero : type_of% @_root_.Nat.mod_two_bne_zero := by
   intro a

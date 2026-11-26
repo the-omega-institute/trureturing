@@ -8,6 +8,14 @@ open Std Std.PRange
 
 namespace OmegaChecks.InitPort.Alternatives
 
+public theorem Std.PRange.UpwardEnumerable.isSome_least? :
+    type_of% @_root_.Std.PRange.UpwardEnumerable.isSome_least? := by
+  intro α _ _ _ hn
+  obtain ⟨a⟩ := hn
+  obtain ⟨b, h, _⟩ := _root_.Std.PRange.UpwardEnumerable.least?_le (a := a)
+  rw [h]
+  rfl
+
 /-- Split the intermediate result before applying the successor law. This establishes
 the bind equation at the given element without identifying two functions. -/
 public theorem Std.PRange.UpwardEnumerable.succMany?_add
