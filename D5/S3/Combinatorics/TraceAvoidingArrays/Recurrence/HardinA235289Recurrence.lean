@@ -181,7 +181,7 @@ private def mixedEquiv (n k : ℕ) : {a : Grid (n + 1) (k + 1) // Mixed a} ≃
       simp [h]
 
 /-- The checkerboard transform and global complement give the exact count. -/
-private theorem original_eq_twice_low (n k : ℕ) :
+theorem original_eq_twice_low (n k : ℕ) :
     T (n + 1) (k + 1) = 2 * (Nat.card {a : Grid (n + 1) (k + 1) // Low a} : ℤ) := by
   unfold T
   rw [Nat.card_congr (checkerEquiv _ _), Nat.card_congr (mixedEquiv _ _), Nat.card_sum,
