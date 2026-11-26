@@ -10,6 +10,10 @@ $$\forall n \in \mathbb{N},\quad\lvert\{C \in O_{n} \mid \exists B \in M_{n}, ([
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/MatrixOrbits/SymmetricRepresentativeSeries.source_identity_literal` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a333886-symmetric-matrix-orbits` (proved) by `D5/S3/Combinatorics/MatrixOrbits/SymmetricRepresentativeSeries.source_identity_literal`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a333886-symmetric-matrix-orbits","declaration_gid":"D5/S3/Combinatorics/MatrixOrbits/SymmetricRepresentativeSeries.source_identity_literal","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Vladeta Jovovic (2026). *OEIS A333886 generating-function conjecture*. URL: <https://oeis.org/A333886>.

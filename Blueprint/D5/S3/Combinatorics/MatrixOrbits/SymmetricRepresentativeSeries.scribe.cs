@@ -29,7 +29,9 @@ internal sealed class SymmetricRepresentativeSeriesDocument : IScribeDocumentDef
                     "over I = {0, 1, 2, 3}. The coefficient and the cardinality equality are in the " +
                     "rationals. The denominator is a unit because its constant coefficient is one. " +
                     "This includes n = 0, where the orbit of the zero matrix contributes one."))),
-                DescribeRole.Theorem),
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("oeis-a333886-symmetric-matrix-orbits"),
+                    ResolutionKind.Proved)),
             Paragraph(Text(
                 "Transpose swaps the two permutation factors. In size four, every transpose-fixed " +
                 "orbit has a symmetric representative. The twisted counts split by cycle type with " +
