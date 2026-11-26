@@ -31,3 +31,17 @@ end Omega.Nat
 
 port_definition Nat.land
 port_definition Nat.lor
+
+port_definition Nat.shiftLeft.match_1
+
+namespace Omega.Nat
+
+@[implicit_reducible] def shiftRight : Nat → Nat → Nat := fun x n =>
+  Nat.brecOn (motive := fun _ => Nat → Nat) n (fun i below num =>
+    Nat.shiftLeft.match_1 (fun _ i => Nat.below (motive := fun _ => Nat → Nat) i → Nat) num i
+      (fun z _ => z) (fun z _ prior => Nat.div (prior.fst z) (succ (succ zero))) below) x
+
+@[implicit_reducible] def testBit (m n : Nat) : Bool :=
+  Bool.not (Nat.beq (Nat.land (succ zero) (Nat.shiftRight m n)) zero)
+
+end Omega.Nat
