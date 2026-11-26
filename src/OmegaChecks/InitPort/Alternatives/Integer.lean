@@ -691,4 +691,23 @@ public theorem Int.neg_emod : type_of% @_root_.Int.neg_emod := by
       Int.mul_sub, Int.mul_neg, Int.mul_sign_self]
     omega
 
+public theorem Int.fmod_eq_emod : type_of% @_root_.Int.fmod_eq_emod := by
+  intro a b
+  if pos : 0 ≤ b then
+    rw [ite_eq_left (Or.inl pos), Int.add_zero, Int.fmod_eq_emod_of_nonneg _ pos]
+  else if divides : b ∣ a then
+    rw [ite_eq_left (Or.inr divides), Int.fmod_eq_zero_of_dvd divides, Int.emod_eq_zero_of_dvd divides]
+    rfl
+  else
+    have neg : 0 ≤ -b := by omega
+    rw [ite_eq_right (fun h => h.elim pos divides)]
+    calc
+      a.fmod b = -((-a).fmod (-b)) := by rw [Int.neg_fmod_neg, Int.neg_neg]
+      _ = -((-a) % b) := by rw [Int.fmod_eq_emod_of_nonneg _ neg, Int.emod_neg]
+      _ = a % b + b := by
+        rw [Int.neg_emod, ite_eq_right divides]
+        have abs := Int.natAbs_of_nonneg neg
+        rw [Int.natAbs_neg] at abs
+        omega
+
 end OmegaChecks.InitPort.Alternatives
