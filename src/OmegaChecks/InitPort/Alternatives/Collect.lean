@@ -1012,4 +1012,14 @@ public theorem List.toListRev_iterM {m : Type w → Type w'} [Monad m] {β : Typ
   change collectRevFrom (l.iterM m) [] = _
   rw [reverseFromList, List.append_nil]
 
+public theorem Std.Iter.toList_uLift {α β : Type u} [Iterator α Id β] {it : Iter (α := α) β} [Finite α Id] :
+    Std.Iter.Total.toList it.uLift.ensureTermination = (Std.Iter.Total.toList it.ensureTermination).map ULift.up := by
+  induction it using _root_.Std.Iter.inductSteps with
+  | step it ihy ihs =>
+    rw [Std.Iter.toList_eq_match_step (it := it.uLift), Std.Iter.toList_eq_match_step (it := it), Std.Iter.step_uLift]
+    cases it.step using PlausibleIterStep.casesOn with
+    | yield next out h => exact congrArg (List.cons (ULift.up out)) (ihy h)
+    | skip next h => exact ihs h
+    | done h => rfl
+
 end OmegaChecks.InitPort.Alternatives
