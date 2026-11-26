@@ -3,6 +3,7 @@ module
 public import Lean
 import OmegaChecks.InitCompiler.ProofRules
 import OmegaChecks.InitCompiler.Equivalence
+import OmegaChecks.InitCompiler.NatProofs
 
 /-! Translate proof terms from the pinned Init environment into the strict namespace. -/
 
@@ -101,6 +102,8 @@ proof along it. Compose the underlying implications when the equality is consume
 private partial def transport? (source : Environment) (back : Bool) (p q eq input : Expr)
     (fuel : Nat) : Option Expr := do
   let fuel + 1 := fuel | none
+  if back && q.isConstOf `True then
+    if let some proof := natComparison? p then return proof
   let .const n us := eq.getAppFn | none
   let xs := eq.getAppArgs
   match n, xs with
