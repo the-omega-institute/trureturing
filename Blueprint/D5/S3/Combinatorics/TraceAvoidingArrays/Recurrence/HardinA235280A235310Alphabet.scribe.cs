@@ -24,6 +24,21 @@ internal sealed class HardinA235280A235310AlphabetDocument : IScribeDocumentDefi
                 + "across a shared edge, so the sum is uniform. Global complementation pairs the two "
                 + "classes. Every entry in the low class is at most d, and restricting the alphabet "
                 + "gives the exact count as twice the cardinality of the sum-d class over Fin (d+1).")),
+            Describe.Lean(DescribeId.Create("fixed-deficit-equiv"),
+                DeclarationHandle.Create(Owner + ".fixedDeficitEquiv"),
+                H("Fixed-deficit equivalence"), StatementSource.FromAuthor(Disp(FixedDeficitStatement())),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Here Grid(M,u,v) consists of functions from Fin (u+1) × Fin (v+1) "
+                    + "to Fin (M+1). The successor indices u=n+1 and v=k+1 give n+2 rows and k+2 "
+                    + "columns. Legal(S,a) is the absolute diagonal difference condition in every "
+                    + "contiguous block. Low(d,a) requires the natural sum of its four entries to be d "
+                    + "in every contiguous block. Sum denotes the tagged disjoint union.")),
+                    Paragraph(Text("Checkerboard complementation gives block sums d and 4M−d. "
+                    + "The gap exceeds the change possible across a shared edge, so the sum is uniform. "
+                    + "The first copy comes from the low class. Global complementation sends the high "
+                    + "class to the low class for the second copy. Every entry in a low-class grid "
+                    + "is at most d, so both copies use the alphabet 0 through d."))),
+                DescribeRole.Definition),
             Endpoint("a235280", "A235280", "hardin2014a235280", "hardin-a235280-alphabet-comparison",
                 Comparison((4, 5), (5, 7), (6, 9)), "The common deficit is three. The NAME count is C(4, 5, n, k)."),
             Endpoint("a235310", "A235310", "hardin2014a235310", "hardin-a235310-alphabet-comparison",
@@ -64,6 +79,24 @@ internal sealed class HardinA235280A235310AlphabetDocument : IScribeDocumentDefi
         var arrays = Seq(OpenBrace, a, Colon, Sp, grid, Sp, Mid, Sp, legal, CloseBrace);
         return All("M", V("Nat"), All("S", V("Nat"), ForDimensions(
             Equal(Call("C", m, s, n, k), App(Qualified("Nat", "card"), arrays)))));
+    }
+
+    private static Formula FixedDeficitStatement()
+    {
+        var m = V("M");
+        var d = V("d");
+        var n = Add(V("n"), D(1));
+        var k = Add(V("k"), D(1));
+        var a = V("a");
+        Formula Subtype(Formula maximum, Formula condition) =>
+            Seq(OpenBrace, a, Colon, Sp, Call("Grid", maximum, n, k), Sp, Mid, Sp, condition, CloseBrace);
+        var stress = new Formula.Binary(new Formula.Binary(D(2), FormulaBinaryOperator.Multiply, m),
+            FormulaBinaryOperator.Subtract, d);
+        var legal = Subtype(m, Call("Legal", stress, a));
+        var low = Subtype(d, Call("Low", d, a));
+        var codomain = Call("Sum", low, low);
+        return All("M", V("Nat"), All("d", V("Nat"), ForDimensions(
+            ImpliesFrom(Seq(d, Sp, Lt, Sp, m), Seq(legal, Sp, Equiv, Sp, codomain)))));
     }
 
     private static Formula Comparison((byte Max, byte Stress) first, (byte Max, byte Stress) second,

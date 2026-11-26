@@ -197,6 +197,17 @@ private def lowEquiv (M d n k : ℕ) (hd : d ≤ M) :
     apply Fin.ext
     rfl)
 
+/-- A positive literal rectangle at deficit d has two copies of the sum-d
+rectangles over the first d+1 symbols, one for each uniform block-sum class. -/
+def fixedDeficitEquiv (M d n k : ℕ) (hd : d < M) :
+    {a : Grid M (n + 1) (k + 1) // Legal (2 * M - d) a} ≃
+      ({a : Grid d (n + 1) (k + 1) // Low d a} ⊕
+        {a : Grid d (n + 1) (k + 1) // Low d a}) :=
+  (checkerEquiv M d _ _ hd).trans <|
+    (split M d n k hd).trans <|
+      Equiv.sumCongr (lowEquiv M d n k (Nat.le_of_lt hd))
+        ((complementEquiv M d _ _ hd).symm.trans (lowEquiv M d n k (Nat.le_of_lt hd)))
+
 /-- At fixed deficit d, the count is twice the count of sum-d grids over Fin (d+1). -/
 private theorem count_eq (M d n k : ℕ) (hd : d < M) (hn : 1 ≤ n) (hk : 1 ≤ k) :
     C M (2 * M - d) n k = 2 * Nat.card {a : Grid d n k // Low d a} := by
