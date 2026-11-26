@@ -15,6 +15,7 @@ public import OmegaChecks.InitPort.Alternatives.OmegaIntList
 public import OmegaChecks.InitPort.Alternatives.Powers
 public import OmegaChecks.InitPort.Alternatives.Range
 public import OmegaChecks.InitPort.Alternatives.RangeFinite
+public import OmegaChecks.InitPort.Alternatives.UTF8
 public import OmegaChecks.InitPort.Alternatives.Word
 
 /-! Read constructive alternatives without importing their environment into the generated library. -/
