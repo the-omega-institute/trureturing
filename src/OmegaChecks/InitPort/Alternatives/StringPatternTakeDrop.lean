@@ -5,6 +5,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 module
 import all Init.Data.String.Lemmas.Pattern.TakeDrop.Basic
 import all Init.Data.String.Slice
+import all Init.Data.String.Basic
 
 /-! Search chains for repeated forward and backward prefix matching. -/
 
@@ -106,4 +107,76 @@ public theorem Pos.not_revMatchesAt_revSkipWhile : type_of% @_root_.String.Slice
   intro ρ pat model strict instancePattern lawful s pos
   exact ((_root_.String.Slice.Pattern.Model.Pos.not_revMatchesAt_or_isLongestRevMatchAt_revSkipWhile pat pos)).resolve_right not_isLongestRevMatchAt_self
 
+public theorem startsWith_iff : type_of% @_root_.String.Slice.Pattern.Model.startsWith_iff := by
+  intro ρ pat model instancePattern lawful s
+  constructor
+  · intro yes
+    cases eq : s.skipPrefix? pat with
+    | none =>
+      have no := (_root_.String.Slice.skipPrefix?_eq_none_iff).mp eq
+      exact Bool.noConfusion (no.symm.trans yes)
+    | some pos =>
+      have h := (_root_.String.Slice.Pattern.Model.skipPrefix?_eq_some_iff).mp eq
+      exact ⟨⟨pos, _root_.String.Slice.Pattern.Model.isLongestMatchAt_startPos_iff.mpr h⟩⟩
+  · intro h
+    cases e : s.startsWith pat with
+    | true => rfl
+    | false => exact ((_root_.String.Slice.Pattern.Model.startsWith_eq_false_iff.mp e) h).elim
+
+public theorem endsWith_iff : type_of% @_root_.String.Slice.Pattern.Model.endsWith_iff := by
+  intro ρ pat model instancePattern lawful s
+  constructor
+  · intro yes
+    cases eq : s.skipSuffix? pat with
+    | none =>
+      have no := (_root_.String.Slice.skipSuffix?_eq_none_iff).mp eq
+      exact Bool.noConfusion (no.symm.trans yes)
+    | some pos =>
+      have h := (_root_.String.Slice.Pattern.Model.skipSuffix?_eq_some_iff).mp eq
+      exact ⟨⟨pos, _root_.String.Slice.Pattern.Model.isLongestRevMatchAt_endPos_iff.mpr h⟩⟩
+  · intro h
+    cases e : s.endsWith pat with
+    | true => rfl
+    | false => exact ((_root_.String.Slice.Pattern.Model.endsWith_eq_false_iff.mp e) h).elim
+
 end OmegaChecks.InitPort.Alternatives.String.Slice.Pattern.Model
+
+namespace OmegaChecks.InitPort.Alternatives.String.Slice
+
+public theorem Pos.skip?_cast : type_of% @_root_.String.Slice.Pos.skip?_cast := by
+  intro ρ pat model instancePattern lawful s t eq pos
+  apply Option.ext
+  intro q
+  apply (_root_.String.Slice.Pattern.Model.Pos.skip?_eq_some_iff).trans
+  let transport (a b : s.Pos) := @_root_.String.Slice.Pattern.Model.isLongestMatchAt_cast_iff _ pat model s t eq a b
+  constructor
+  · intro h
+    exact Option.map_eq_some_iff.mpr ⟨q.cast eq.symm,
+      _root_.String.Slice.Pattern.Model.Pos.skip?_eq_some_iff.mpr ((transport (pos) (q.cast eq.symm)).mp h), rfl⟩
+  · intro h
+    obtain ⟨b, success, rfl⟩ := Option.map_eq_some_iff.mp h
+    exact (transport _ _).mpr (_root_.String.Slice.Pattern.Model.Pos.skip?_eq_some_iff.mp success)
+
+public theorem Pos.skip?_congr : type_of% @_root_.String.Slice.Pos.skip?_congr := by
+  intro ρ pat model instancePattern lawful s t eq pos
+  exact (Pos.skip?_cast (pat := pat) eq.symm (pos := pos.cast eq))
+
+public theorem Pos.revSkip?_cast : type_of% @_root_.String.Slice.Pos.revSkip?_cast := by
+  intro ρ pat model instancePattern lawful s t eq pos
+  apply Option.ext
+  intro q
+  apply (_root_.String.Slice.Pattern.Model.Pos.revSkip?_eq_some_iff).trans
+  let transport (a b : s.Pos) := @_root_.String.Slice.Pattern.Model.isLongestRevMatchAt_cast_iff _ pat model s t eq a b
+  constructor
+  · intro h
+    exact Option.map_eq_some_iff.mpr ⟨q.cast eq.symm,
+      _root_.String.Slice.Pattern.Model.Pos.revSkip?_eq_some_iff.mpr ((transport (q.cast eq.symm) (pos)).mp h), rfl⟩
+  · intro h
+    obtain ⟨b, success, rfl⟩ := Option.map_eq_some_iff.mp h
+    exact (transport _ _).mpr (_root_.String.Slice.Pattern.Model.Pos.revSkip?_eq_some_iff.mp success)
+
+public theorem Pos.revSkip?_congr : type_of% @_root_.String.Slice.Pos.revSkip?_congr := by
+  intro ρ pat model instancePattern lawful s t eq pos
+  exact (Pos.revSkip?_cast (pat := pat) eq.symm (pos := pos.cast eq))
+
+end OmegaChecks.InitPort.Alternatives.String.Slice
