@@ -296,4 +296,28 @@ public theorem Lean.Omega.LinearCombo.sub_eval : type_of% @_root_.Lean.Omega.Lin
   rw [Lean.Omega.LinearCombo.sub_eq_add_neg, _root_.Lean.Omega.LinearCombo.add_eval,
     _root_.Lean.Omega.LinearCombo.neg_eval, Int.sub_eq_add_neg]
 
+
+private theorem eval_const_of_zero_coeffs (l : LinearCombo) (v : Coeffs) (h : l.coeffs.isZero) :
+    l.eval v = l.const := by
+  have hz : Coeffs.dot l.coeffs v = 0 := IntList.dot_of_left_zero h
+  rw [_root_.Lean.Omega.LinearCombo.eval, hz, Int.add_zero]
+
+private theorem eval_product (a b : LinearCombo) (v : Coeffs) :
+    (LinearCombo.mul a b).eval v = b.const * a.eval v + a.const * b.eval v - a.const * b.const := by
+  rw [_root_.Lean.Omega.LinearCombo.mul, Lean.Omega.LinearCombo.sub_eval,
+    _root_.Lean.Omega.LinearCombo.add_eval, _root_.Lean.Omega.LinearCombo.smul_eval,
+    _root_.Lean.Omega.LinearCombo.smul_eval]
+  exact congrArg (_ - ·) (Int.add_zero _)
+
+public theorem Lean.Omega.LinearCombo.mul_eval_of_const_left :
+    type_of% @_root_.Lean.Omega.LinearCombo.mul_eval_of_const_left := by
+  intro a b v h
+  rw [eval_product, eval_const_of_zero_coeffs a v h, Int.mul_comm b.const a.const,
+    Int.add_comm (a.const * b.const), Int.add_sub_cancel]
+
+public theorem Lean.Omega.LinearCombo.mul_eval_of_const_right :
+    type_of% @_root_.Lean.Omega.LinearCombo.mul_eval_of_const_right := by
+  intro a b v h
+  rw [eval_product, eval_const_of_zero_coeffs b v h, Int.add_sub_cancel, Int.mul_comm]
+
 end OmegaChecks.InitPort.Alternatives
