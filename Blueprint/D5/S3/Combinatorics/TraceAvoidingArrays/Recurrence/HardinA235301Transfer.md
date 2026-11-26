@@ -196,19 +196,7 @@ $$\forall w: \mathbb{N}, \forall m: \mathbb{N}, \operatorname{value}\left(w, m\r
 
 This integer sum counts words starting at zero whose consecutive column edges are all present in the mask. Test-bit returns a Boolean.
 
-**Lemma 1.17 (Empty history).**
-
-$$\forall \alpha: Type, \forall f: \alpha \to \mathbb{Z}, \operatorname{evalHist}\left([], f\right) = 0$$
-
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinA235301Transfer.eval_nil` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-The empty history has zero evaluation.
-
-**Lemma 1.18 (Concatenated histories).**
+**Lemma 1.17 (Concatenated histories).**
 
 $$\forall \alpha: Type, \forall xs: \operatorname{Hist}\left(\alpha\right), \forall ys: \operatorname{Hist}\left(\alpha\right), \forall f: \alpha \to \mathbb{Z}, \operatorname{evalHist}\left(xs ++ ys, f\right) = \operatorname{evalHist}\left(xs, f\right)+\operatorname{evalHist}\left(ys, f\right)$$
 
@@ -220,7 +208,7 @@ $$\forall \alpha: Type, \forall xs: \operatorname{Hist}\left(\alpha\right), \for
 
 Evaluation adds across concatenation.
 
-**Lemma 1.19 (Evaluation after scaling).**
+**Lemma 1.18 (Evaluation after scaling).**
 
 $$\forall \alpha: Type, \forall xs: \operatorname{Hist}\left(\alpha\right), \forall f: \alpha \to \mathbb{Z}, \forall c: \mathbb{Z}, \operatorname{evalHist}\left(\operatorname{scaleHist}\left(c, xs\right), f\right) = c\cdot \operatorname{evalHist}\left(xs, f\right)$$
 
@@ -232,7 +220,7 @@ $$\forall \alpha: Type, \forall xs: \operatorname{Hist}\left(\alpha\right), \for
 
 Every term acquires the same integer factor.
 
-**Lemma 1.20 (Evaluation after normalization).**
+**Lemma 1.19 (Evaluation after normalization).**
 
 $$\forall \alpha: Type, [\operatorname{DecidableEq}\left(\alpha\right)] \forall key: \alpha \to \mathbb{N}, \forall xs: \operatorname{Hist}\left(\alpha\right), \forall f: \alpha \to \mathbb{Z}, \operatorname{evalHist}\left(\operatorname{normalize}\left(key, xs\right), f\right) = \operatorname{evalHist}\left(xs, f\right)$$
 
@@ -244,7 +232,7 @@ $$\forall \alpha: Type, [\operatorname{DecidableEq}\left(\alpha\right)] \forall 
 
 Merging the runs and combining equal states preserves evaluation for every observable.
 
-**Lemma 1.21 (Evaluation by mask).**
+**Lemma 1.20 (Evaluation by mask).**
 
 $$\forall xs: \operatorname{Hist}\left(State\right), \forall f: \mathbb{N} \to \mathbb{Z}, \operatorname{evalHist}\left(\operatorname{groupMask}\left(xs\right), f\right) = \operatorname{evalHist}\left(xs, \lambda s, f\left(\operatorname{mask}\left(s\right)\right)\right)$$
 
@@ -256,7 +244,7 @@ $$\forall xs: \operatorname{Hist}\left(State\right), \forall f: \mathbb{N} \to \
 
 A mask observable gives the same evaluation before and after grouping.
 
-**Lemma 1.22 (Residual propagation).**
+**Lemma 1.21 (Residual propagation).**
 
 $$\forall h: \mathbb{N}, \forall f: State \to \mathbb{Z}, \operatorname{evalHist}\left(\operatorname{residualHist}\left(h+1\right), f\right) = \operatorname{evalHist}\left(\operatorname{residualHist}\left(h\right), \operatorname{action}\left(f\right)\right)$$
 
@@ -268,7 +256,7 @@ $$\forall h: \mathbb{N}, \forall f: State \to \mathbb{Z}, \operatorname{evalHist
 
 Moving the residual window forward by one applies the transfer action to the observable.
 
-**Theorem 1.23 (Transfer equals the literal count).**
+**Theorem 1.22 (Transfer equals the literal count).**
 
 $$\forall h: \mathbb{N}, \forall w: \mathbb{N}, 0<h \implies 0<w \implies (\operatorname{C}\left(3, 3, h, w\right): \mathbb{Z}) = \operatorname{evalHist}\left(\operatorname{path}\left(h\right), \lambda s, \operatorname{value}\left(w, \operatorname{mask}\left(s\right)\right)\right)$$
 
@@ -290,7 +278,6 @@ By the boundary-word equivalence, each row word contributes the number of compat
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinA235301Transfer.evalHist`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinA235301Transfer.eval_append`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinA235301Transfer.eval_group`
-- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinA235301Transfer.eval_nil`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinA235301Transfer.eval_normalize`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinA235301Transfer.eval_residual_succ`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinA235301Transfer.eval_scale`
