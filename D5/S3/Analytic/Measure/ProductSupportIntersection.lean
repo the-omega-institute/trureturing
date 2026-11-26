@@ -63,8 +63,9 @@ private lemma marginal_congr_ae [DecidableEq I] (s : Finset I) {f g : (∀ i, X 
   apply lintegral_congr_ae
   filter_upwards [hslice] with y hy
   by_contra hne
-  simpa [e, hne] using hy
+  simp [e, hne] at hy
 
+omit [Fintype I] [∀ i, IsProbabilityMeasure (μ i)] in
 private lemma marginal_depends [DecidableEq I] (u : Finset I) {f : (∀ i, X i) → ℝ≥0∞}
     {S : Set I} (hd : DependsOn f S) : DependsOn (lmarginal μ u f) (S \ u) := by
   classical
