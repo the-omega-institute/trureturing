@@ -1,9 +1,19 @@
 module
+import all Init.Data.Order.Opposite
 public import Init.Data.Order.Lemmas
 import all Init.Data.Order.PackageFactories
 public import OmegaChecks.InitPort.Alternatives.Compare
 
 namespace OmegaChecks.InitPort.Alternatives
+
+public theorem Std.OppositeOrderInstances.instLawfulOrderBEqOpposite :
+    type_of% @_root_.Std.OppositeOrderInstances.instLawfulOrderBEqOpposite := by
+  intro α le beq law
+  apply @_root_.Std.LawfulOrderBEq.mk α beq le.opposite
+  intro a b
+  unfold LE.opposite
+  exact (@_root_.Std.LawfulOrderBEq.beq_iff_le_and_ge α beq le law a b).trans and_comm
+
 
 public theorem Std.lt_of_le_of_ne : type_of% @_root_.Std.lt_of_le_of_ne := by
   intro α le lt antisymm lawful a b forward different
