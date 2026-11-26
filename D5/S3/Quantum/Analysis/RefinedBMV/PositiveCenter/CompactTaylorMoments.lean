@@ -20,6 +20,24 @@ open DimThree.Certificate (Term)
 open SmallCorner (momentHorner normalizedMomentCoeffs normalized_moment_eval_swap
   normalized_moment_eval_joint)
 
+open private coeffAdd coeffScale horner_add horner_scale from
+  D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.MomentPolynomial
+
+/-- Exact coefficients after substituting h = a + a * z in an ascending Horner list. -/
+private def recenterMomentCoeffs (a : ℚ) : List ℚ → List ℚ
+  | [] => []
+  | c :: cs =>
+    let scaled := coeffScale a (recenterMomentCoeffs a cs)
+    coeffAdd scaled (c :: scaled)
+
+private theorem recenterMomentCoeffs_eval (a : ℚ) (z : ℝ) (cs : List ℚ) :
+    momentHorner z (recenterMomentCoeffs a cs) = momentHorner ((a : ℝ) + (a : ℝ) * z) cs := by
+  induction cs with
+  | nil => rfl
+  | cons c cs ih =>
+    simp only [recenterMomentCoeffs, horner_add, momentHorner, horner_scale, ih]
+    ring
+
 theorem Model.horner_sound {s t z x : ℝ} {X : Model} (hb : InBox s t z)
     (hx : X.Encloses s t z x) (cs : List ℚ) :
     (Model.horner cs X).Encloses s t z (momentHorner x cs) := by
@@ -91,13 +109,13 @@ private theorem addSpacingShift_cast (b : ℤ) (bs : List ℤ) :
 
 private theorem recenterSpacingInts_cast (bs : List ℤ) :
     (recenterSpacingInts bs).map (fun c : ℤ => (c : ℚ)) =
-      SmallCorner.recenterMomentCoeffs 1 (bs.map fun c : ℤ => (c : ℚ)) := by
+      recenterMomentCoeffs 1 (bs.map fun c : ℤ => (c : ℚ)) := by
   induction bs with
   | nil => rfl
   | cons b bs ih =>
     have hscale (rs : List ℚ) : coeffScale 1 rs = rs := by simp [coeffScale]
     simp only [recenterSpacingInts, addSpacingShift_cast, List.map_cons,
-      SmallCorner.recenterMomentCoeffs, hscale, ih]
+      recenterMomentCoeffs, hscale, ih]
 
 end
 
@@ -175,7 +193,7 @@ private theorem shortSpacingCoeffs_sound (cs : List ℚ) {z h : ℝ}
         rfl,
       momentHorner_div, recenterSpacingInts_cast]
     simpa only [Rat.cast_one, one_mul] using
-      congrArg (fun x : ℝ => x / (B : ℝ)) (SmallCorner.recenterMomentCoeffs_eval 1 z qs)
+      congrArg (fun x : ℝ => x / (B : ℝ)) (recenterMomentCoeffs_eval 1 z qs)
   have hh' : h = (3 / 22 : ℝ) * (1 + z) := hh.trans (by ring)
   rw [heval, show momentHorner h cs - momentHorner (1 + z) qs / (B : ℝ) =
         ((B : ℝ) * momentHorner h cs - momentHorner (1 + z) qs) / (B : ℝ) by

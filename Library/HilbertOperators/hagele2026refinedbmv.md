@@ -19,6 +19,7 @@ strata_touched:
   - D5/S3/Quantum/Analysis/RefinedBMV33
   - D5/S3/Quantum/Analysis/RefinedBMV/LargeDegree
   - D5/S3/Quantum/Analysis/RefinedBMV/Tracial/Bound
+  - D5/S3/Quantum/Analysis/RefinedBMV/Tracial/SingularFourCycle
   - D5/S3/Quantum/Analysis/RefinedBMVLowerBound
   - D5/S3/Quantum/Analysis/RefinedBMV43
   - D5/S3/Quantum/Analysis/RefinedBMV43Kernel
@@ -195,6 +196,16 @@ product lower comparison. The related arXiv results 0802.1153,
 positive measures for fixed occurrences and a pinched comparison,
 respectively. Historical priority for the spectral result has not
 been established.
+
+## Four-cycle compensation with a zero spectral value
+
+For each positive integer degree, the four-label scalar deficit with a
+zero label is bounded by the sum of the geometric means of the two
+opposite pairs of backtracking deficits. The theorem includes coincident
+labels and additional zeros. It uses an exact reciprocal identity for
+complete homogeneous polynomials. A change of beta-binomial counting
+law with a uniform relative-entropy bound controls the remaining
+centering term.
 
 ## Sharp conditioning for four-copy Gram blocks
 
