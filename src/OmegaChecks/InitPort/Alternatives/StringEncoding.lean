@@ -783,32 +783,19 @@ public theorem BitVec.append_assoc : type_of% @_root_.BitVec.append_assoc := by
     BitVec.toNat_append, Nat.shiftLeft_or_distrib, ← Nat.shiftLeft_add, Nat.or_assoc]
 
 
+public theorem ByteArray.extract_append_size_left : type_of% @_root_.ByteArray.extract_append_size_left := by
+  intro a b i
+  have segment : (a ++ b).extract 0 a.size = a := ByteArray.extract_append_eq_left rfl
+  have both := congrArg (fun x : ByteArray => x.extract i a.size) segment
+  rw [ByteArray.extract_extract, Nat.zero_add, Nat.zero_add, Nat.min_self] at both
+  exact both
 public theorem ByteArray.utf8DecodeChar?_append_eq_some : type_of% @_root_.ByteArray.utf8DecodeChar?_append_eq_some := by
   intro b i c success t
-  have widen {j : Nat} (h : j < b.size) : j < (b ++ t).size :=
-    Nat.lt_of_lt_of_le h (ByteArray.size_append.symm ▸ Nat.le_add_right b.size t.size)
-  unfold ByteArray.utf8DecodeChar? at success ⊢
-  split at success <;> try (cases success; done)
-  rename_i bounded
-  rw [dite_eq_left (widen bounded)]
-  simp only [ByteArray.getElem_append_left bounded]
-  split at success <;> try (cases success; done)
-  all_goals rename_i tag
-  all_goals
-    have agree := (congrArg ByteArray.utf8DecodeChar?.parseFirstByte
-      (ByteArray.getElem_append_left (b := t) (h := widen bounded) bounded)).trans tag
-    split <;> rename_i branch <;> try (cases branch.symm.trans agree; done)
-  · exact success
-  all_goals
-    split at success <;> try (cases success; done)
-    rename_i last
-    rw [dite_eq_left (widen last)]
-    simp only [ByteArray.getElem_append_left last]
-    first | exact success | skip
-    try (simp only [ByteArray.getElem_append_left (Nat.lt_trans (Nat.lt_succ_self _) last)])
-    first | exact success | skip
-    try (simp only [ByteArray.getElem_append_left (Nat.lt_trans (Nat.lt_succ_self _) (Nat.lt_trans (Nat.lt_succ_self _) last))])
-    all_goals exact success
+  have inside : i ≤ b.size := Nat.le_of_lt (ByteArray.lt_size_of_isSome_utf8DecodeChar? (success ▸ rfl))
+  have extend : b.size ≤ (b ++ t).size := ByteArray.size_append.symm ▸ Nat.le_add_right b.size t.size
+  rw [ByteArray.utf8DecodeChar?_eq_utf8DecodeChar?_extract] at ⊢ success
+  rw [ByteArray.extract_eq_extract_append_extract b.size inside extend, ByteArray.extract_append_size_left,
+    ByteArray.eq_of_utf8DecodeChar?_eq_some success, ByteArray.append_assoc, ByteArray.utf8DecodeChar?_utf8EncodeChar_append]
 
 public theorem ByteArray.utf8DecodeChar_extract_congr_of_le : type_of% (private_decl% @_root_.ByteArray.utf8DecodeChar_extract_congr_of_le) := by
   intro bytes i j k valid₁ valid₂ order
