@@ -6,7 +6,7 @@ Two rooted copies joined through a centre satisfy a general quarter-square homom
 
 **Theorem 1.1 (A fixed centre in an asymmetric host).**
 
-$$\forall A: Type, \forall B: Type, [\operatorname{Finite}\left(A\right)] [\operatorname{Finite}\left(B\right)] \forall H: \operatorname{Digraph}\left(A\right), \forall w: A, \forall R: B \to \left(B \to Prop\right), (\forall x: B, \forall y: B, \operatorname{R}\left(x, y\right) \Rightarrow \neg \operatorname{R}\left(y, x\right)) \Rightarrow \forall t: B, 4 \cdot \operatorname{Nat}.\operatorname{card}\left(\{f: \operatorname{RelHom}\left(\operatorname{rootedTwin}\left(H, w\right).\operatorname{Adj}, R\right) \mid \operatorname{f}\left(none\right) = t\}\right) \le \operatorname{Nat}.\operatorname{card}\left(\operatorname{RelHom}\left(H.\operatorname{Adj}, R\right)\right)^{2}$$
+$$\forall A: Type_{u}, \forall B: Type_{v}, [\operatorname{Finite}\left(A\right)] [\operatorname{Finite}\left(B\right)] \forall H: \operatorname{Digraph}\left(A\right), \forall w: A, \forall R: B \to \left(B \to Prop\right), (\forall x: B, \forall y: B, \operatorname{R}\left(x, y\right) \Rightarrow \neg \operatorname{R}\left(y, x\right)) \Rightarrow \forall t: B, 4 \cdot \operatorname{Nat}.\operatorname{card}\left(\{f: \operatorname{RelHom}\left(\operatorname{rootedTwin}\left(H, w\right).\operatorname{Adj}, R\right) \mid \operatorname{f}\left(none\right) = t\}\right) \le \operatorname{Nat}.\operatorname{card}\left(\operatorname{RelHom}\left(H.\operatorname{Adj}, R\right)\right)^{2}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/ExtremalDensity/RootedTwinHomCount.quarter_bound` (`✓ std3`). ∎
 
@@ -14,7 +14,7 @@ $$\forall A: Type, \forall B: Type, [\operatorname{Finite}\left(A\right)] [\oper
 
 *Commentary.*
 
-Let A and B be arbitrary finite types, H a digraph on A, w a vertex of H, R an asymmetric relation on B, and t a vertex of B. Put D = rootedTwin H w. Its vertex type is Option (Bool × A): none is the new centre, and some (false,a) and some (true,a) are the two copies of a. Within either copy the arcs are exactly those of H. The only additional arcs are some (false,w) → none and none → some (true,w). There are no other cross-copy or centre arcs. RelHom counts every adjacency-preserving map; neither injectivity nor disjoint images of the two copies is required.
+Let A : Type u and B : Type v be arbitrary finite types in independent universe levels u and v, H a digraph on A, w a vertex of H, R an asymmetric relation on B, and t a vertex of B. Put D = rootedTwin H w. Its vertex type is Option (Bool × A): none is the new centre, and some (false,a) and some (true,a) are the two copies of a. Within either copy the arcs are exactly those of H. The only additional arcs are some (false,w) → none and none → some (true,w). There are no other cross-copy or centre arcs. RelHom counts every adjacency-preserving map; neither injectivity nor disjoint images of the two copies is required.
 
 The proof is Omega.RootedTwinHomCount.quarter_bound in OmegaMath.Combinatorics.RootedTwinHomCount. Restriction to the two copies gives an equivalence between the fibre f(none)=t and the product of the H-homomorphisms g with R(g(w),t) and the H-homomorphisms h with R(t,h(w)). Assembly assigns t to the centre and uses g and h on their respective copies. All internal and centre arcs are preserved, and restriction and assembly are inverse. This correspondence requires neither finiteness nor asymmetry.
 

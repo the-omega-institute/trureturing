@@ -13,7 +13,7 @@ internal sealed class RootedTwinHomCountDocument : IScribeDocumentDefinition
             H("A fixed centre in an asymmetric host"),
             StatementSource.FromAuthor(Disp(Statement())), AssessedProvenance.FromRepo(),
             Blocks(
-                Paragraph(Text("Let A and B be arbitrary finite types, H a digraph on A, w a vertex of H, "
+                Paragraph(Text("Let A : Type u and B : Type v be arbitrary finite types in independent universe levels u and v, H a digraph on A, w a vertex of H, "
                     + "R an asymmetric relation on B, and t a vertex of B. Put D = rootedTwin H w. "
                     + "Its vertex type is Option (Bool × A): none is the new centre, and some (false,a) "
                     + "and some (true,a) are the two copies of a. Within either copy the arcs are exactly "
@@ -62,7 +62,7 @@ internal sealed class RootedTwinHomCountDocument : IScribeDocumentDefinition
             Eq(Call("f",V("none")),t), CloseBrace);
         var bound = new Formula.Relation(new Formula.Binary(D(4), FormulaBinaryOperator.Multiply, Card(fibre)),
             FormulaRelationOperator.LessThanOrEqual, new Formula.Power(Card(Call("RelHom",Adj(Hh),R)),D(2)));
-        return All("A", V("Type"), All("B", V("Type"), Seq(
+        return All("A", new Formula.Subscript(V("Type"),V("u")), All("B", new Formula.Subscript(V("Type"),V("v")), Seq(
             OpenBracket, Call("Finite",A), CloseBracket, Sp,
             OpenBracket, Call("Finite",B), CloseBracket, Sp,
             All("H",Call("Digraph",A),All("w",A,All("R",Arr(B,Arr(B,V("Prop"))),
