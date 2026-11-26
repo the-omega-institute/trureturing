@@ -434,6 +434,29 @@ def witnesses : List (Name × Name) := [
 
 end ClassicalConsequences
 
+namespace EmbeddingRange
+
+/-- A retraction of the inclusion of {false} ∪ {true | p} must decide p at true. -/
+theorem ofExists (split : type_of% @Function.Injective.exists_leftInverse.{1,1}) : type_of% @Classical.em := by
+  intro p
+  let T := {b : Bool // b = false ∨ p}
+  letI : Nonempty T := ⟨⟨false, .inl rfl⟩⟩
+  obtain ⟨back, retract⟩ := @split T Bool Subtype.val (fun _ _ => Subtype.ext) _
+  cases h : (back true).val with
+  | false =>
+    right
+    intro hp
+    have atTrue := congrArg Subtype.val (retract (⟨true, .inr hp⟩ : T))
+    exact Bool.noConfusion (h.symm.trans atTrue)
+  | true =>
+    exact (back true).property.elim (fun atFalse => Bool.noConfusion (h.symm.trans atFalse)) Or.inl
+
+set_option linter.deprecated false in
+theorem ofLeftInverse (split : type_of% @Function.Injective.leftInverse.{1,1}) : type_of% @Classical.em :=
+  ofExists fun {α β f} hf hα => @split α β f hf hα
+
+end EmbeddingRange
+
 namespace LexicographicOrder
 
 /-- Lexicographic comparison of one-element sequences can represent any proposition. -/
@@ -1019,7 +1042,8 @@ private def replayWitnesses (env : Environment) : IO Unit := do
   let mut terms : Std.HashMap Name ConstantInfo := {}
   let mut todo := (reductions.map fun (_, _, _, witness) => witness) ++
     ClassicalConsequences.witnesses.map Prod.snd ++
-    [``LexicographicOrder.ofListNotLE, ``LexicographicOrder.ofArrayNotLE, ``LexicographicOrder.ofVectorNotLE,
+    [``EmbeddingRange.ofExists, ``EmbeddingRange.ofLeftInverse,
+      ``LexicographicOrder.ofListNotLE, ``LexicographicOrder.ofArrayNotLE, ``LexicographicOrder.ofVectorNotLE,
       ``FiniteMembership.ofRunDecomposition, ``FiniteMembership.ofRunInduction,
       ``FiniteMembership.ofListMember, ``FiniteMembership.ofArrayMember,
       ``FiniteMembership.ofFirstListMember, ``FiniteMembership.ofFirstArrayMember,
@@ -2576,6 +2600,8 @@ private def logicalConsequence? (owner name : Name) : Option (Name × Name) := d
     if let some witness := OmegaChecks.InitBoundaries.ClassicalConsequences.witnesses.lookup name then
       return (``Classical.em, witness)
   let witness ← match owner, name with
+    | `Init.Data.Function, ``Function.Injective.exists_leftInverse => some ``OmegaChecks.InitBoundaries.EmbeddingRange.ofExists
+    | `Init.Data.Function, `Function.Injective.leftInverse => some ``OmegaChecks.InitBoundaries.EmbeddingRange.ofLeftInverse
     | `Init.Data.List.Lex, ``List.not_le | `Init.Data.List.Lex, `List.not_le_iff_gt =>
       some ``OmegaChecks.InitBoundaries.LexicographicOrder.ofListNotLE
     | `Init.Data.Array.Lex.Lemmas, ``Array.not_le | `Init.Data.Array.Lex.Lemmas, `Array.not_le_iff_gt =>
