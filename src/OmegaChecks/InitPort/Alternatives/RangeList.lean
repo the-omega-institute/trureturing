@@ -1,5 +1,7 @@
 module
 public import Init.Data.Range.Polymorphic.Lemmas
+import Init.Data.Iterators.Lemmas.Basic
+import Init.Data.Iterators.Lemmas.Consumers.Loop
 import all Init.Data.Array.Basic
 import all Init.Data.Range.Polymorphic.Basic
 import all Init.Data.Range.Polymorphic.RangeIterator
@@ -1176,5 +1178,76 @@ public theorem Std.Rii.mem_toArray : type_of% @_root_.Std.Rii.mem_toArray := by
   intro α r _ _ _ _ _ a
   rw [Array.mem_def, _root_.Std.Rii.toList_toArray]
   exact _root_.Std.Rii.mem_toList
+
+public theorem Std.Rxc.Iterator.pairwise_toList_upwardEnumerableLt :
+    type_of% @_root_.Std.Rxc.Iterator.pairwise_toList_upwardEnumerableLt := by
+  intro α _ _ _ _ _ _ it
+  induction it using _root_.Std.Iter.inductSteps with
+  | step it ihy ihs =>
+    rw [_root_.Std.Rxc.Iterator.toList_eq_match]
+    cases hn : it.internalState.next with
+    | none => exact .nil
+    | some a =>
+      dsimp only
+      by_cases bound : a ≤ it.internalState.upperBound
+      · rw [ite_eq_left bound]
+        apply List.Pairwise.cons
+        · intro b member
+          obtain ⟨c, step, le⟩ := _root_.Std.Rxc.Iterator.upwardEnumerableLe_of_isPlausibleIndirectOutput
+            (_root_.Std.Iter.mem_toList_iff_isPlausibleIndirectOutput.mp member)
+          exact UpwardEnumerable.lt_of_lt_of_le (UpwardEnumerable.lt_succ? step) le
+        · apply ihy (out := a)
+          apply _root_.Std.Rxc.Iterator.isPlausibleStep_iff.mpr
+          unfold _root_.Std.Rxc.Iterator.step
+          rw [hn]
+          dsimp only
+          rw [ite_eq_left bound]
+      · rw [ite_eq_right bound]
+        exact .nil
+
+public theorem Std.Rxo.Iterator.pairwise_toList_upwardEnumerableLt :
+    type_of% @_root_.Std.Rxo.Iterator.pairwise_toList_upwardEnumerableLt := by
+  intro α _ _ _ _ _ _ it
+  induction it using _root_.Std.Iter.inductSteps with
+  | step it ihy ihs =>
+    rw [_root_.Std.Rxo.Iterator.toList_eq_match]
+    cases hn : it.internalState.next with
+    | none => exact .nil
+    | some a =>
+      dsimp only
+      by_cases bound : a < it.internalState.upperBound
+      · rw [ite_eq_left bound]
+        apply List.Pairwise.cons
+        · intro b member
+          obtain ⟨c, step, le⟩ := _root_.Std.Rxo.Iterator.upwardEnumerableLe_of_isPlausibleIndirectOutput
+            (_root_.Std.Iter.mem_toList_iff_isPlausibleIndirectOutput.mp member)
+          exact UpwardEnumerable.lt_of_lt_of_le (UpwardEnumerable.lt_succ? step) le
+        · apply ihy (out := a)
+          apply _root_.Std.Rxo.Iterator.isPlausibleStep_iff.mpr
+          unfold _root_.Std.Rxo.Iterator.step
+          rw [hn]
+          dsimp only
+          rw [ite_eq_left bound]
+      · rw [ite_eq_right bound]
+        exact .nil
+
+public theorem Std.Rxi.Iterator.pairwise_toList_upwardEnumerableLt :
+    type_of% @_root_.Std.Rxi.Iterator.pairwise_toList_upwardEnumerableLt := by
+  intro α _ _ _ it
+  induction it using _root_.Std.Iter.inductSteps with
+  | step it ihy ihs =>
+    rw [_root_.Std.Rxi.Iterator.toList_eq_match]
+    cases hn : it.internalState.next with
+    | none => exact .nil
+    | some a =>
+      apply List.Pairwise.cons
+      · intro b member
+        obtain ⟨c, step, le⟩ := _root_.Std.Rxi.Iterator.upwardEnumerableLe_of_isPlausibleIndirectOutput
+          (_root_.Std.Iter.mem_toList_iff_isPlausibleIndirectOutput.mp member)
+        exact UpwardEnumerable.lt_of_lt_of_le (UpwardEnumerable.lt_succ? step) le
+      · apply ihy (out := a)
+        apply _root_.Std.Rxi.Iterator.isPlausibleStep_iff.mpr
+        unfold _root_.Std.Rxi.Iterator.step
+        rw [hn]
 
 end OmegaChecks.InitPort.Alternatives
