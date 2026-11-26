@@ -2,6 +2,7 @@ module
 
 public meta import Lean.Compiler.ModPkgExt
 public meta import Lean.Elab.Command
+public meta import OmegaBuild.Commands.Origin
 
 public meta section
 
@@ -31,5 +32,30 @@ def mathlibOnlyPaths (env : Environment) : NameMap (List Name) := Id.run do
 /-- Compile this module and all its importers only with the official Mathlib backend. -/
 elab "compile_only_with_mathlib" : command =>
   modifyEnv fun env => mathlibOnlyExt.setState env true
+
+/-- Select the pinned native declaration of an explicitly named OmegaMathlib port. -/
+syntax (name := nativePort) "native% " ident : term
+
+@[term_elab nativePort] def elabNativePort : Elab.Term.TermElab := fun stx expectedType? => do
+  let id := stx[1]
+  let aliasName := id.getId.eraseMacroScopes.replacePrefix `_root_ .anonymous
+  unless aliasName.getRoot == `OmegaMathlib do
+    throwErrorAt id "expected a qualified OmegaMathlib port"
+  let native := aliasName.replacePrefix `OmegaMathlib .anonymous
+  let env ← getEnv
+  let some nativeIdx := env.getModuleIdxFor? native
+    | throwErrorAt id "native Mathlib declaration {native} must be imported"
+  let upstream := env.header.moduleNames[nativeIdx]!
+  unless upstream.getRoot == `Mathlib && declaredIn env native upstream do
+    throwErrorAt id "{native} is not the active declaration from its pinned Mathlib module"
+  let provider := upstream.replacePrefix `Mathlib `OmegaMathlib
+  let some idx := env.getModuleIdx? provider
+    | throwErrorAt id "{aliasName} requires the admitted port module {provider}"
+  let strict := aliasName.replacePrefix `OmegaMathlib `Omega
+  let authentic := (aliasExtension.getModuleEntries env idx).any fun (alias, target) =>
+    alias == aliasName && (target == native ||
+      (target == strict && env.getModuleIdxFor? target == some idx && declaredIn env target provider))
+  unless authentic do throwErrorAt id "{provider} does not export the verified port {aliasName}"
+  Elab.Term.elabTerm (mkIdentFrom id (`_root_ ++ native)) expectedType?
 
 end OmegaBuild
