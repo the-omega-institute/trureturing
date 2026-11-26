@@ -1,5 +1,7 @@
 module
 
+import Init.Data.List.SplitOn.Basic
+public import OmegaChecks.Interface.Equations.List
 public import OmegaChecks.Interface.Equations.Logic
 public import OmegaChecks.Interface.Equations.Array
 public import OmegaChecks.Interface.Equations.Collect
@@ -15,6 +17,10 @@ public import Mathlib.Data.Nat.Prime.Defs
 /-! Pointwise equations for strict arithmetic algorithms interpreted over official types. -/
 
 namespace OmegaChecks.Interface.Equations
+
+public theorem List.splitOnPTR {α : Type u} (p : α → Bool) (xs : List α) :
+    xs.splitOnP p = _root_.List.splitOnPTR p xs :=
+  congrFun (congrFun (congrFun _root_.List.splitOnP_eq_splitOnPTR α) p) xs
 
 @[expose] public def pair (n : Nat) : Bool → Nat :=
   Nat.rec (motive := fun _ => Bool → Nat) (Bool.rec 0 1)

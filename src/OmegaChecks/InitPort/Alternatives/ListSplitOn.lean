@@ -7,6 +7,11 @@ import all Init.Data.List.SplitOn.Basic
 
 namespace OmegaChecks.InitPort.Alternatives
 
+@[expose] public noncomputable def List.splitOnPTR {α : Type u} (p : α → Bool) (xs : List α) : List (List α) :=
+  _root_.List.splitOnP p xs
+
+public theorem List.splitOnP_eq_splitOnPTR : @_root_.List.splitOnP = @List.splitOnPTR := rfl
+
 public theorem List.splitOnPPrepend_eq_modifyHead : type_of% @_root_.List.splitOnPPrepend_eq_modifyHead := by
   intro α p xs acc
   induction xs generalizing acc with
