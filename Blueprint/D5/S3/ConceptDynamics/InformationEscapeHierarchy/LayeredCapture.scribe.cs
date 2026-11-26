@@ -106,11 +106,6 @@ internal sealed class LayeredCaptureDocument : IScribeDocumentDefinition
             Definition("system-catalog-irredundant", "SystemCatalogIrredundant",
                 "System catalog irredundancy",
                 "Every maximal catalog in the designated root must be irredundant."),
-            Definition("system-wide-positive", "SystemWidePositive", "System-wide positivity",
-                "The compatibility name denotes the same one-root universal proposition."),
-            Theorem("system-wide-positive-iff-system-catalog-irredundant",
-                "systemWidePositive_iff_systemCatalogIrredundant",
-                "System positivity is designated-root irredundancy", SystemPositive()),
             Definition("schedule-to-layer-chain", "toLayerChain",
                 "Generated schedule layer chain",
                 "A classified generator schedule yields a certified general kernel chain."),
@@ -235,10 +230,6 @@ internal sealed class LayeredCaptureDocument : IScribeDocumentDefinition
             Sp, Eq, Sp, Emptyset);
         return Implies(premises, conclusion);
     }
-
-    private static Formula SystemPositive() => Seq(
-        Call("SystemWidePositive", F.Id("S")), Sp, Leftrightarrow, Sp,
-        Call("SystemCatalogIrredundant", F.Id("S")));
 
     private static Formula ScheduleBridge() => Seq(
         Call("layeredCapturePairs", Call("toLayerChain", F.Id("G")),
