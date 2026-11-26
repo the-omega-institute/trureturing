@@ -156,4 +156,35 @@ public theorem String.Slice.Pos.prevAux._proof_8 :
     (fun eq => ne (String.Slice.Pos.ext (String.Pos.Raw.ext eq)))
   exact Nat.lt_of_lt_of_le (Nat.sub_lt pos (by decide)) p.isValidForSlice.le_utf8ByteSize
 
+private theorem boundaryCheck {P : Prop} (dec : Decidable P) {pos endOff : String.Pos.Raw}
+    (h : pos < endOff) : decide P = true ↔ pos = endOff ∨ ∃ _ : pos < endOff, P := by
+  constructor
+  · intro ok
+    exact Or.inr ⟨h, of_decide_eq_true ok⟩
+  · rintro (eq | ⟨_, valid⟩)
+    · exact (Nat.ne_of_lt h (congrArg String.Pos.Raw.byteIdx eq)).elim
+    · exact decide_eq_true valid
+
+private theorem outsideCheck {pos endOff : String.Pos.Raw} {P : pos < endOff → Prop} (h : ¬ pos < endOff) :
+    decide (pos = endOff) = true ↔ pos = endOff ∨ ∃ lt : pos < endOff, P lt := by
+  exact ⟨fun ok => .inl (of_decide_eq_true ok),
+    fun valid => valid.elim (fun eq => decide_eq_true eq) (fun ⟨lt, _⟩ => (h lt).elim)⟩
+
+public theorem String.Pos.Raw.isValid_eq_true_iff : type_of% @_root_.String.Pos.Raw.isValid_eq_true_iff := by
+  intro s p
+  apply Iff.trans _ _root_.String.Pos.Raw.isValid_iff_isUTF8FirstByte.symm
+  unfold _root_.String.Pos.Raw.isValid
+  split <;> rename_i h
+  · exact boundaryCheck _ h
+  · exact outsideCheck h
+
+public theorem String.Pos.Raw.isValidForSlice_eq_true_iff :
+    type_of% @_root_.String.Pos.Raw.isValidForSlice_eq_true_iff := by
+  intro s p
+  apply Iff.trans _ _root_.String.Pos.Raw.isValidForSlice_iff_isUTF8FirstByte.symm
+  unfold _root_.String.Pos.Raw.isValidForSlice
+  split <;> rename_i h
+  · exact boundaryCheck _ h
+  · exact outsideCheck h
+
 end OmegaChecks.InitPort.Alternatives
