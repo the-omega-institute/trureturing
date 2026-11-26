@@ -2,6 +2,8 @@ module
 
 public import Init.Data.Rat.Lemmas
 public import Init.Data.Dyadic.Inv
+import all Init.Data.Dyadic.Round
+import all Init.Data.Dyadic.Basic
 
 namespace OmegaChecks.InitPort.Alternatives
 
@@ -210,5 +212,35 @@ public theorem Dyadic.divAtPrec_sub_mul_lt_mul_invAtPrec :
     rw [toRat_add, toRat_ofIntWithPrec_eq_mul_two_pow, Rat.intCast_one,
       Rat.one_mul, Rat.mul_add] at upper
     exact Rat.not_le.mp fun h => Rat.not_le.mpr upper (Rat.le_trans h lower)
+
+public theorem Dyadic.roundDown_le : type_of% @_root_.Dyadic.roundDown_le := by
+  intro x prec
+  cases x with
+  | zero => exact _root_.Dyadic.le_refl _
+  | ofOdd n k hn =>
+    unfold _root_.Dyadic.roundDown
+    dsimp only
+    cases h : k - prec with
+    | negSucc l => exact _root_.Dyadic.le_refl _
+    | ofNat l =>
+      apply _root_.Dyadic.toRat_le_toRat_iff.mp
+      rw [_root_.Dyadic.ofOdd_eq_ofIntWithPrec, _root_.Dyadic.toRat_ofIntWithPrec_eq_mul_two_pow,
+        _root_.Dyadic.toRat_ofIntWithPrec_eq_mul_two_pow]
+      have hprec : k = Int.ofNat l + prec := by omega
+      rw [hprec, Int.neg_add, Rat.zpow_add (by decide), ← Rat.mul_assoc]
+      apply _root_.Rat.mul_le_mul_of_nonneg_right _ (Rat.zpow_nonneg (by decide))
+      rw [Int.shiftRight_eq_div_pow]
+      apply _root_.Rat.le_of_mul_le_mul_right _ (Rat.zpow_pos (by decide : (0 : Rat) < 2) (n := Int.ofNat l))
+      rw [Rat.mul_assoc, ← Rat.zpow_add (by decide), Int.add_left_neg, Rat.zpow_zero, Rat.mul_one]
+      have cast : (2 : Rat) ^ (Int.ofNat l) = (2 ^ l : Int) := by
+        change (2 : Rat) ^ (l : Int) = (2 ^ l : Int)
+        rw [Rat.zpow_natCast, Rat.intCast_pow, Rat.intCast_ofNat]
+      rw [cast, ← Rat.intCast_mul]
+      exact Rat.intCast_le_intCast.mpr (Int.ediv_mul_le n (Int.pow_ne_zero (by decide : (2 : Int) ≠ 0)))
+
+public theorem Dyadic.le_roundUp : type_of% @_root_.Dyadic.le_roundUp := by
+  intro x prec
+  rw [_root_.Dyadic.roundUp_eq_neg_roundDown_neg]
+  exact Lean.Grind.OrderedAdd.le_neg_iff.mpr Dyadic.roundDown_le
 
 end OmegaChecks.InitPort.Alternatives
