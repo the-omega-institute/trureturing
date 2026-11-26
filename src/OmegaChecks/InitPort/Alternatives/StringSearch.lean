@@ -220,6 +220,56 @@ public theorem IsLongestRevMatchAtChain.le : type_of% @_root_.String.Slice.Patte
   | nil => exact Nat.le_refl _
   | cons _ _ _ last head => exact Nat.le_trans head last.le
 
+public theorem IsLongestMatchAt.eq : type_of% @_root_.String.Slice.Pattern.Model.IsLongestMatchAt.eq := by
+  intro ρ pat i s start x y hx hy
+  exact _root_.String.Slice.Pos.sliceFrom_inj.mp
+    (IsLongestMatch.eq hx.isLongestMatch_sliceFrom hy.isLongestMatch_sliceFrom)
+
+public theorem IsLongestRevMatchAt.eq : type_of% @_root_.String.Slice.Pattern.Model.IsLongestRevMatchAt.eq := by
+  intro ρ pat i s x y stop hx hy
+  exact _root_.String.Slice.Pos.sliceTo_inj.mp
+    (IsLongestRevMatch.eq hx.isLongestRevMatch_sliceTo hy.isLongestRevMatch_sliceTo)
+
+public theorem isLongestMatchAt_cast_iff : type_of% @_root_.String.Slice.Pattern.Model.isLongestMatchAt_cast_iff := by
+  intro ρ pat i s t eq start stop
+  constructor
+  · intro h
+    have inner := h.isLongestMatch_sliceFrom
+    rw [_root_.String.Slice.Pos.sliceFrom_cast] at inner
+    exact ⟨h.le, (isLongestMatch_cast_iff _).mp inner⟩
+  · intro h
+    refine ⟨(_root_.String.Slice.Pos.cast_le_cast_iff).mpr h.le, ?_⟩
+    rw [_root_.String.Slice.Pos.sliceFrom_cast (hst := eq) start stop]
+    exact (isLongestMatch_cast_iff _).mpr h.isLongestMatch_sliceFrom
+
+public theorem isLongestRevMatchAt_cast_iff : type_of% @_root_.String.Slice.Pattern.Model.isLongestRevMatchAt_cast_iff := by
+  intro ρ pat i s t eq start stop
+  constructor
+  · intro h
+    have inner := h.isLongestRevMatch_sliceTo
+    rw [_root_.String.Slice.Pos.sliceTo_cast] at inner
+    exact ⟨h.le, (isLongestRevMatch_cast_iff _).mp inner⟩
+  · intro h
+    refine ⟨(_root_.String.Slice.Pos.cast_le_cast_iff).mpr h.le, ?_⟩
+    rw [_root_.String.Slice.Pos.sliceTo_cast (hst := eq) stop start]
+    exact (isLongestRevMatch_cast_iff _).mpr h.isLongestRevMatch_sliceTo
+
+public theorem matchesAt_cast_iff : type_of% @_root_.String.Slice.Pattern.Model.matchesAt_cast_iff := by
+  intro ρ pat i s t eq p
+  constructor
+  · rintro ⟨⟨q, matched⟩⟩
+    exact ⟨⟨q.cast eq.symm, (isLongestMatchAt_cast_iff eq).mp matched⟩⟩
+  · rintro ⟨⟨q, matched⟩⟩
+    exact ⟨⟨q.cast eq, (isLongestMatchAt_cast_iff eq).mpr matched⟩⟩
+
+public theorem revMatchesAt_cast_iff : type_of% @_root_.String.Slice.Pattern.Model.revMatchesAt_cast_iff := by
+  intro ρ pat i s t eq p
+  constructor
+  · rintro ⟨⟨q, matched⟩⟩
+    exact ⟨⟨q.cast eq.symm, (isLongestRevMatchAt_cast_iff eq).mp matched⟩⟩
+  · rintro ⟨⟨q, matched⟩⟩
+    exact ⟨⟨q.cast eq, (isLongestRevMatchAt_cast_iff eq).mpr matched⟩⟩
+
 end String.Slice.Pattern.Model
 
 public theorem String.Slice.eqIgnoreAsciiCase.go._unary._proof_3 :
