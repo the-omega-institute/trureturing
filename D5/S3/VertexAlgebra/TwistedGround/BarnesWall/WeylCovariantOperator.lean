@@ -1,5 +1,5 @@
 /- GID: D5/S3/VertexAlgebra/TwistedGround/BarnesWall/WeylCovariantOperator
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/VertexAlgebra/TwistedGround/BarnesWall/WeylCovariantOperator
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.LinearAlgebra.Trace]
@@ -7,6 +7,7 @@
    digest: A binary Weyl displacement sum gives a covariant operator with maximal trace normalization. -/
 
 import D5.S3.VertexAlgebra.LatticeTwistedGroundRealization
+import Mathlib.LinearAlgebra.Trace
 
 /-!
 # Existence of a binary Weyl covariant operator
