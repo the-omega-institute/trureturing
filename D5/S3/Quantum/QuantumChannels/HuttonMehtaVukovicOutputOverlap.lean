@@ -102,7 +102,7 @@ open Matrix Finset ComplexOrder
 open scoped BigOperators
 noncomputable section
 namespace D5.S3.Quantum.QuantumChannels.HuttonMehtaVukovicOutputOverlap.HMV
-private def prob {n k : ℕ} (U : Matrix (Fin n) (Fin k) ℂ) (S : {S : Finset (Fin n) // S.card = k}) : ℝ :=
+def prob {n k : ℕ} (U : Matrix (Fin n) (Fin k) ℂ) (S : {S : Finset (Fin n) // S.card = k}) : ℝ :=
   Complex.normSq (U.submatrix (S.1.orderEmbOfFin S.2) id).det
 private lemma weighted_cauchy {n k : ℕ} (U : Matrix (Fin n) (Fin k) ℂ) (z : Fin n → ℂ) :
     (Uᴴ * diagonal z * U).det =
@@ -120,7 +120,7 @@ private lemma weighted_cauchy {n k : ℕ} (U : Matrix (Fin n) (Fin k) ℂ) (z : 
   simp only [prob, Complex.normSq_eq_conj_mul_self, Complex.star_def]
   ring
 
-private lemma total_prob {n k : ℕ} (U : Matrix (Fin n) (Fin k) ℂ) (hU : Uᴴ * U = 1) :
+lemma total_prob {n k : ℕ} (U : Matrix (Fin n) (Fin k) ℂ) (hU : Uᴴ * U = 1) :
     ∑ S : {S : Finset (Fin n) // S.card = k}, prob U S = 1 := by
   have h := weighted_cauchy U (fun _ => 1)
   simp only [Matrix.diagonal_one, Matrix.mul_one, hU, Matrix.det_one,
@@ -338,7 +338,7 @@ end D5.S3.Quantum.QuantumChannels.HuttonMehtaVukovicOutputOverlap.HMVResidual
 namespace D5.S3.Quantum.QuantumChannels.HuttonMehtaVukovicOutputOverlap.HMV
 open D5.S3.Quantum.QuantumChannels.HuttonMehtaVukovicOutputOverlap
 
-private def score {n k : ℕ} (G : Fin n → Fin n → ℂ) (S : {S : Finset (Fin n) // S.card = k}) : ℂ :=
+def score {n k : ℕ} (G : Fin n → Fin n → ℂ) (S : {S : Finset (Fin n) // S.card = k}) : ℂ :=
   ∑ i ∈ S.1, ∑ j ∈ S.1, if i = j then 0 else G i j
 
 private lemma score_as_full {n k : ℕ} (G : Fin n → Fin n → ℂ) (S : {S : Finset (Fin n) // S.card = k}) :
@@ -355,7 +355,7 @@ private lemma score_as_full {n k : ℕ} (G : Fin n → Fin n → ℂ) (S : {S : 
         exact (Fintype.sum_ite_mem S.1 _).symm
       · simp [hi]
 
-private lemma expected_score {n k : ℕ} (U : Matrix (Fin n) (Fin k) ℂ)
+lemma expected_score {n k : ℕ} (U : Matrix (Fin n) (Fin k) ℂ)
     (hU : Uᴴ * U = 1) (G : Fin n → Fin n → ℂ) :
     (∑ S : {S : Finset (Fin n) // S.card = k}, (prob U S : ℂ) * score G S) =
       ∑ i, ∑ j, (((star (U i)) ⬝ᵥ (U i)) * ((star (U j)) ⬝ᵥ (U j)) - ((star (U i)) ⬝ᵥ (U j)) * ((star (U j)) ⬝ᵥ (U i))) * G i j := by
