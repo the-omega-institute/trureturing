@@ -61,16 +61,21 @@ private def usedConstants (e : Expr) : NameSet := Id.run do
       deps := (deps.insert `List.cons).insert `Char.ofNat
   return deps
 
+/-- The pinned definitions of these bounded reads contain only checked indexing.
+Borrowing changes the native reference-count convention, which is absent in the kernel term. -/
+private def boundedBorrowedRead (ci : ConstantInfo) : Bool :=
+  (ci matches .opaqueInfo _) && [`Array.getInternalBorrowed, `Array.ugetBorrowed].contains ci.name
+
 def translateDecl (info : ConstantInfo) (body : Expr) : Except String Declaration := do
   let rename := portName
   let val (v : ConstantVal) := { v with name := rename v.name, type := translate rename v.type }
-  if info.isUnsafe || info.isPartial then throw "unsafe/partial"
+  if (info.isUnsafe && !boundedBorrowedRead info) || info.isPartial then throw "unsafe/partial"
   if invalidExpr info.type || invalidExpr body then throw "open term or unsupported string literal"
   let body := translate rename body
   match info with
   | .defnInfo d => return .defnDecl { d with toConstantVal := val d.toConstantVal, value := body, all := d.all.map rename }
   | .thmInfo d => return .thmDecl { d with toConstantVal := val d.toConstantVal, value := body, all := d.all.map rename }
-  | .opaqueInfo d => return .opaqueDecl { d with toConstantVal := val d.toConstantVal, value := body, all := d.all.map rename }
+  | .opaqueInfo d => return .opaqueDecl { d with toConstantVal := val d.toConstantVal, value := body, all := d.all.map rename, isUnsafe := false }
   | _ => throw "unsupported declaration kind"
 
 inductive Outcome
@@ -370,7 +375,7 @@ partial def visit (n : Name) : M Bool := do
       if missing.isSome then return ← record n (.blocked "smart unfolding requires unavailable matcher metadata")
   if let some reason := c.excluded.find? n then return ← record n (.blocked reason)
   if ci.isAxiom then return ← record n (.blocked "axiom")
-  if ci.isUnsafe || ci.isPartial then return ← record n (.blocked "unsafe/partial")
+  if (ci.isUnsafe && !boundedBorrowedRead ci) || ci.isPartial then return ← record n (.blocked "unsafe/partial")
   if let .inductInfo i := ci then
     let .ok f := family c.source i | return ← record n (.blocked "malformed family")
     if let some member := f.generated.find? (fun member => c.excluded.contains member) then

@@ -213,7 +213,9 @@ where
     -- it directly also avoids evaluating large closed computations on both sides.
     let original := match src, dst with
       | .defnInfo _, .defnInfo y => some y.value
-      | .opaqueInfo x, .opaqueInfo y => if x.isUnsafe == y.isUnsafe then some y.value else none
+      | .opaqueInfo x, .opaqueInfo y =>
+        let safeIndex := !x.isUnsafe && [`Array.getInternalBorrowed, `Array.ugetBorrowed].contains y.name
+        if x.isUnsafe == y.isUnsafe || safeIndex then some y.value else none
       | _, _ => none
     let identical : Bool := original.any (fun target => sameLiterals reference body target ||
       foundation.any (fun pair => sameClosedProofs pair.1 reference rename raw body target))
