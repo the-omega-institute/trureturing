@@ -12,21 +12,131 @@ import Mathlib.Algebra.Module.ZMod
 import Mathlib.Algebra.Group.MinimalAxioms
 import Mathlib.Algebra.Homology.ShortComplex.ModuleCat
 import Mathlib.Tactic
+import D5.S3.HomologicalAlgebra.CocycleDiagonalQuadratic
 
 set_option autoImplicit false
 noncomputable section
 namespace D5.S3.HomologicalAlgebra.ElementaryTwoThirdCohomologyDetection
 open CategoryTheory groupCohomology
 
+/-- A product cocycle differs from the sum of its factor and mixed components
+by the explicit coboundary of the comparison cochain. -/
+theorem product_cocycle_comparison {G H M : Type} [CommGroup G] [CommGroup H] [AddCommGroup M] (f : G × H → G × H → G × H → M)
+    (hf : ∀ a b c d, f b c d - f (a * b) c d + f a (b * c) d -
+      f a b (c * d) + f a b c = 0) (a b c : G) (x y z : H) :
+  let A : G × H := (a,1); let B : G × H := (b,1); let C : G × H := (c,1)
+  let X : G × H := (1,x); let Y : G × H := (1,y); let Z : G × H := (1,z)
+  let β : G × H → G × H → M := fun s t =>
+    -f (1,s.2) (s.1,1) t + f (s.1,1) (1,t.2) (t.1,1) -
+      f (1,t.2) (s.1,1) (t.1,1) + f (1,s.2) (1,t.2) (s.1*t.1,1)
+  f (a,x) (b,y) (c,z) = f A B C +
+    (f A B Z - f A Z B + f Z A B) +
+    (f A Y Z - f Y A Z + f Y Z A) + f X Y Z +
+    (β (b,y) (c,z) - β (a * b,x * y) (c,z) +
+      β (a,x) (b * c,y * z) - β (a,x) (b,y)) := by
+  dsimp only
+  have h1 := hf (1,x) (a,1) (b,y) (c,z)
+  have h2 := hf (1,x) (1,y) (a * b,1) (c,z)
+  have h3 := hf (1,x) (1,y) (1,z) (a * b * c,1)
+  have h4 := hf (1,y) (a,1) (b,1) (c,z)
+  have h5 := hf (a,1) (1,y) (b,1) (c,z)
+  have h6 := hf (1,y) (1,z) (a,1) (b * c,1)
+  have h7 := hf (1,y) (a,1) (1,z) (b * c,1)
+  have h8 := hf (a,1) (1,y) (1,z) (b * c,1)
+  have h9 := hf (a,1) (b,1) (1,z) (c,1)
+  have h10 := hf (a,1) (1,z) (b,1) (c,1)
+  have h11 := hf (1,z) (a,1) (b,1) (c,1)
+  simp only [Prod.mul_def, one_mul, mul_one, mul_assoc] at h1 h2 h3 h4 h5 h6 h7 h8 h9 h10 h11
+  simp only [Prod.mul_def, mul_assoc]
+  linear_combination (norm := abel) -h1 + h2 - h3 - h4 + h5 - h6 + h7 - h8 - h9 + h10 - h11
+
+set_option maxHeartbeats 1000000 in
+/-- Adding an elementary two-group coordinate to a normalized three-cocycle
+adds a constant and a quadratic mixed contribution to its cyclic diagonal. -/
+theorem product_diagonal_quadratic {G M : Type} [CommGroup G] [AddCommGroup M]
+    (hG : ∀ a : G, a * a = 1) (half : ∀ m : M, ∃ k, k + k = m)
+    (F : G × Multiplicative (ZMod 2) → G × Multiplicative (ZMod 2) →
+      G × Multiplicative (ZMod 2) → M)
+    (hc : ∀ a b c d, F b c d - F (a * b) c d + F a (b * c) d -
+      F a b (c * d) + F a b c = 0)
+    (hn : ∀ a b, F 1 a b = 0 ∧ F a 1 b = 0 ∧ F a b 1 = 0) :
+    let T := Multiplicative.ofAdd (1 : ZMod 2)
+    ∃ q : Additive G → M, q 0 = 0 ∧ (∀ a, q a + q a = 0) ∧
+      (∀ a b c, QuadraticMap.polar q (a + b) c =
+        QuadraticMap.polar q a c + QuadraticMap.polar q b c) ∧
+      ∀ a : G, F (a,T) (a,T) (a,T) =
+        F (a,1) (a,1) (a,1) + F (1,T) (1,T) (1,T) + q (Additive.ofMul a) := by
+  classical
+  let Q := Multiplicative (ZMod 2)
+  let T : Q := Multiplicative.ofAdd (1 : ZMod 2)
+  have TT : T * T = 1 := by decide
+  have Tne : T ≠ 1 := by decide
+  have hOne : ((1 : G), (1 : Q)) = (1 : G × Q) := rfl
+  have hn1 (a b) := (hn a b).1
+  have hn2 (a b) := (hn a b).2.1
+  have hn3 (a b) := (hn a b).2.2
+  let β : G × Q → G × Q → M := fun s t =>
+    -F (1,s.2) (s.1,1) t + F (s.1,1) (1,t.2) (t.1,1) -
+      F (1,t.2) (s.1,1) (t.1,1) + F (1,s.2) (1,t.2) (s.1*t.1,1)
+  let dβ (a b c : G × Q) := β b c - β (a * b) c + β a (b * c) - β a b
+  let P (a b c : G × Q) := F a b c - dβ a b c
+  have pc (a b c d : G × Q) :
+      P b c d - P (a * b) c d + P a (b * c) d - P a b (c * d) + P a b c = 0 := by
+    simp only [P, dβ, mul_assoc]
+    linear_combination (norm := abel) hc a b c d
+  let u (a b : G) := F (a,1) (b,1) (1,T) - F (a,1) (1,T) (b,1) + F (1,T) (a,1) (b,1)
+  let v (a : G) := F (a,1) (1,T) (1,T) - F (1,T) (a,1) (1,T) + F (1,T) (1,T) (a,1)
+  have hform (a b c : G) (x y z : Q) :
+      P (a,x) (b,y) (c,z) = F (a,1) (b,1) (c,1) +
+        (if z = 1 then 0 else u a b) +
+        (if y = 1 ∨ z = 1 then 0 else v a) + F (1,x) (1,y) (1,z) := by
+    have h := product_cocycle_comparison F hc a b c x y z
+    change F (a,x) (b,y) (c,z) = _ + _ + _ + _ + dβ (a,x) (b,y) (c,z) at h
+    have oneOrT (e : Q) : e = 1 ∨ e = T := by
+      fin_cases e
+      · exact Or.inl rfl
+      · exact Or.inr rfl
+    rcases oneOrT y with rfl | rfl <;> rcases oneOrT z with rfl | rfl <;>
+      simp only [P, h, one_ne_zero, hOne, hn1, hn2, hn3, u, v, Tne, true_or, or_true,
+        or_self, ite_true, ite_false, sub_zero, add_zero, sub_self, zero_add, not_false_eq_true,
+        eq_self, not_true_eq_false, false_or, add_sub_cancel_right]
+  have u0 (a : G) : u 1 a = 0 := by simp [u, hOne, hn1, hn2, hn3]
+  have u1 (a : G) : u a 1 = 0 := by simp [u, hOne, hn1, hn2, hn3]
+  have v0 : v 1 = 0 := by simp [v, hOne, hn1, hn2, hn3]
+  have hu (a b c : G) : u a b + u (a*b) c = u b c + u a (b*c) := by
+    have h := pc (a,1) (b,1) (c,1) (1,T)
+    simp [Prod.mul_def, hform, hOne, hn1, hn2, hn3, Tne] at h
+    linear_combination (norm := abel) -h
+  have hjoint (a b : G) : u a b + u a b + (v b - v (a*b) + v a) = 0 := by
+    have h := pc (a,1) (b,1) (1,T) (1,T)
+    simp [Prod.mul_def, hform, hOne, hn1, hn2, hn3, u1, Tne, TT] at h
+    linear_combination (norm := abel) h
+  let q (a : Additive G) := u a.toMul a.toMul + v a.toMul
+  have hq : q 0 = 0 ∧ (∀ a, q a + q a = 0) ∧ ∀ a b c,
+      QuadraticMap.polar q (a + b) c = QuadraticMap.polar q a c + QuadraticMap.polar q b c :=
+    CocycleDiagonalQuadratic.mixed_diagonal_quadratic (A := Additive G) hG half
+      (fun a b => u a.toMul b.toMul) (fun a => v a.toMul) u0 v0 hu hjoint
+  refine ⟨q, hq.1, hq.2.1, hq.2.2, fun a => ?_⟩
+  have b1 (a : G × Q) : β 1 a = 0 := by simp [β, hOne, hn1, hn2, hn3]
+  have b2 (a : G × Q) : β a 1 = 0 := by simp [β, hOne, hn1, hn2, hn3]
+  have haa : (a,T) * (a,T) = 1 := Prod.ext (hG a) TT
+  have hdiag : P (a,T) (a,T) (a,T) = F (a,T) (a,T) (a,T) := by
+    simp [P, dβ, haa, b1, b2]
+  rw [← hdiag, hform]
+  simp [Tne, q]
+  abel
+
 set_option maxHeartbeats 2400000 in
-/-- For surjective doubling coefficients, all nonidentity cyclic subgroup restrictions
-jointly detect actual degree-three cohomology, including rank zero. -/
-theorem cyclic_restriction_detects_third_cohomology
-    (M : Type) [AddCommGroup M] (half : ∀ m : M, ∃ k, k + k = m)
-    (r : ℕ)
-    (c : groupCohomology (Rep.trivial ℤ (Multiplicative (Fin r → ZMod 2)) M) 3)
-    (hr : ∀ g : Multiplicative (Fin r → ZMod 2), g ≠ 1 →
-      groupCohomology.map (Subgroup.zpowers g).subtype (𝟙 _) 3 c = 0) : c = 0 := by
+private theorem normalized_diagonal_zero_is_coboundary_fin
+    {M : Type} [AddCommGroup M] (half : ∀ m : M, ∃ k, k + k = m) (r : ℕ)
+    (f : Multiplicative (Fin r → ZMod 2) → Multiplicative (Fin r → ZMod 2) →
+      Multiplicative (Fin r → ZMod 2) → M)
+    (hc : ∀ a b c d, f b c d - f (a * b) c d + f a (b * c) d -
+      f a b (c * d) + f a b c = 0)
+    (hn : ∀ a b, f 1 a b = 0 ∧ f a 1 b = 0 ∧ f a b 1 = 0)
+    (hd : ∀ a, f a a a = 0) :
+    ∃ B : Multiplicative (Fin r → ZMod 2) → Multiplicative (Fin r → ZMod 2) → M,
+      ∀ a b c, B b c - B (a * b) c + B a (b * c) - B a b = f a b c := by
   classical
   let E (r : ℕ) := Multiplicative (Fin r → ZMod 2)
   let Q := Multiplicative (ZMod 2)
@@ -35,49 +145,6 @@ theorem cyclic_restriction_detects_third_cohomology
   have d2d3 {G : Type} [CommGroup G] (B : G → G → M) (a b c d : G) : d3 (d2 B) a b c d = 0 := by
     simp only [d3, d2, mul_assoc]
     abel
-  have normalization {G : Type} [CommGroup G] (f : G → G → G → M) (hf : ∀ a b c d, d3 f a b c d = 0) :
-      ∃ N : G → G → M, ∀ a b, (f 1 a b - d2 N 1 a b = 0) ∧
-        (f a 1 b - d2 N a 1 b = 0) ∧ (f a b 1 - d2 N a b 1 = 0) := by
-    let N : G → G → M := fun a b => f 1 1 b - f a 1 1
-    refine ⟨N, ?_⟩
-    have h0 : f 1 1 1 = 0 := by simpa [d3] using hf 1 1 1 1
-    intro a b
-    have h1 := hf 1 1 a b
-    have h2 := hf a 1 1 b
-    have h3 := hf a b 1 1
-    simp only [d3, one_mul, mul_one, h0] at h1 h2 h3
-    dsimp [d2, N]
-    simp only [one_mul, mul_one, h0]
-    constructor
-    · linear_combination (norm := abel) h1
-    constructor
-    · linear_combination (norm := abel) -h2
-    · linear_combination (norm := abel) h3
-  have comparison {G H : Type} [CommGroup G] [CommGroup H] (f : G × H → G × H → G × H → M)
-      (hf : ∀ a b c d, d3 f a b c d = 0) (a b c : G) (x y z : H) :
-    let A : G × H := (a,1); let B : G × H := (b,1); let C : G × H := (c,1)
-    let X : G × H := (1,x); let Y : G × H := (1,y); let Z : G × H := (1,z)
-    let β : G × H → G × H → M := fun s t =>
-      -f (1,s.2) (s.1,1) t + f (s.1,1) (1,t.2) (t.1,1) -
-        f (1,t.2) (s.1,1) (t.1,1) + f (1,s.2) (1,t.2) (s.1*t.1,1)
-    f (a,x) (b,y) (c,z) = f A B C +
-      (f A B Z - f A Z B + f Z A B) +
-      (f A Y Z - f Y A Z + f Y Z A) + f X Y Z + d2 β (a,x) (b,y) (c,z) := by
-    dsimp only
-    have h1 := hf (1,x) (a,1) (b,y) (c,z)
-    have h2 := hf (1,x) (1,y) (a * b,1) (c,z)
-    have h3 := hf (1,x) (1,y) (1,z) (a * b * c,1)
-    have h4 := hf (1,y) (a,1) (b,1) (c,z)
-    have h5 := hf (a,1) (1,y) (b,1) (c,z)
-    have h6 := hf (1,y) (1,z) (a,1) (b * c,1)
-    have h7 := hf (1,y) (a,1) (1,z) (b * c,1)
-    have h8 := hf (a,1) (1,y) (1,z) (b * c,1)
-    have h9 := hf (a,1) (b,1) (1,z) (c,1)
-    have h10 := hf (a,1) (1,z) (b,1) (c,1)
-    have h11 := hf (1,z) (a,1) (b,1) (c,1)
-    simp only [d3, Prod.mul_def, one_mul, mul_one, mul_assoc] at h1 h2 h3 h4 h5 h6 h7 h8 h9 h10 h11
-    simp only [d2, Prod.mul_def, mul_assoc]
-    linear_combination (norm := abel) -h1 + h2 - h3 - h4 + h5 - h6 + h7 - h8 - h9 + h10 - h11
   have splitting (r : ℕ) (F : (Fin r → ZMod 2) → (Fin r → ZMod 2) → M)
       (hc : ∀ a b c, F a b + F (a + b) c = F b c + F a (b + c))
       (hdiag : ∀ a, F a a = 0) (htwo : ∀ a b, F a b + F a b = 0) :
@@ -232,7 +299,7 @@ theorem cyclic_restriction_detects_third_cohomology
         (F (a,1) (1,y) (1,z) - F (1,y) (a,1) (1,z) + F (1,y) (1,z) (a,1)) +
         F (1,x) (1,y) (1,z) := by
       intro a b c x y z
-      have h := comparison F hc a b c x y z
+      have h := product_cocycle_comparison F hc a b c x y z
       change F (a,x) (b,y) (c,z) = _ + d2 β (a,x) (b,y) (c,z) at h
       dsimp [P, fg]
       linear_combination (norm := abel) h
@@ -376,6 +443,76 @@ theorem cyclic_restriction_detects_third_cohomology
       refine ⟨fun a b => B (e a) (e b), ?_⟩
       intro a b c
       simpa [d2, F, e.map_mul] using hB (e a) (e b) (e c)
+  exact normalizedDescent half r f hc hn hd
+
+/-- On an elementary abelian two-group, a normalized three-cocycle with
+zero diagonal is a coboundary when the coefficients admit division by two. -/
+theorem normalized_diagonal_zero_is_coboundary {ι M : Type}
+    [Fintype ι] [AddCommGroup M] (half : ∀ m : M, ∃ k, k + k = m)
+    (f : Multiplicative (ι → ZMod 2) → Multiplicative (ι → ZMod 2) →
+      Multiplicative (ι → ZMod 2) → M)
+    (hc : ∀ a b c d, f b c d - f (a * b) c d + f a (b * c) d -
+      f a b (c * d) + f a b c = 0)
+    (hn : ∀ a b, f 1 a b = 0 ∧ f a 1 b = 0 ∧ f a b 1 = 0)
+    (hd : ∀ a, f a a a = 0) :
+    ∃ B : Multiplicative (ι → ZMod 2) → Multiplicative (ι → ZMod 2) → M,
+      ∀ a b c, B b c - B (a * b) c + B a (b * c) - B a b = f a b c := by
+  classical
+  let e := Fintype.equivFin ι
+  let E : Multiplicative (ι → ZMod 2) ≃* Multiplicative (Fin (Fintype.card ι) → ZMod 2) :=
+    { toFun := fun a => Multiplicative.ofAdd (a.toAdd ∘ e.symm)
+      invFun := fun a => Multiplicative.ofAdd (a.toAdd ∘ e)
+      left_inv := fun a => by
+        apply Multiplicative.toAdd.injective
+        funext i
+        simp [Function.comp_def]
+      right_inv := fun a => by
+        apply Multiplicative.toAdd.injective
+        funext i
+        simp [Function.comp_def]
+      map_mul' := fun _ _ => rfl }
+  let F := fun a b c => f (E.symm a) (E.symm b) (E.symm c)
+  obtain ⟨B, hB⟩ := normalized_diagonal_zero_is_coboundary_fin half _ F
+    (fun a b c d => by simpa [F, map_mul] using hc (E.symm a) (E.symm b) (E.symm c) (E.symm d))
+    (fun a b => by simpa [F, map_one] using hn (E.symm a) (E.symm b))
+    (fun a => hd (E.symm a))
+  refine ⟨fun a b => B (E a) (E b), fun a b c => ?_⟩
+  simpa [F, map_mul] using hB (E a) (E b) (E c)
+
+set_option maxHeartbeats 2400000 in
+/-- For surjective doubling coefficients, all nonidentity cyclic subgroup restrictions
+jointly detect actual degree-three cohomology, including rank zero. -/
+theorem cyclic_restriction_detects_third_cohomology
+    (M : Type) [AddCommGroup M] (half : ∀ m : M, ∃ k, k + k = m)
+    (r : ℕ)
+    (c : groupCohomology (Rep.trivial ℤ (Multiplicative (Fin r → ZMod 2)) M) 3)
+    (hr : ∀ g : Multiplicative (Fin r → ZMod 2), g ≠ 1 →
+      groupCohomology.map (Subgroup.zpowers g).subtype (𝟙 _) 3 c = 0) : c = 0 := by
+  classical
+  let E (r : ℕ) := Multiplicative (Fin r → ZMod 2)
+  let d2 {G : Type} [CommGroup G] (B : G → G → M) (a b c : G) : M := B b c - B (a * b) c + B a (b * c) - B a b
+  let d3 {G : Type} [CommGroup G] (f : G → G → G → M) (a b c d : G) : M := f b c d - f (a * b) c d + f a (b * c) d - f a b (c * d) + f a b c
+  have d2d3 {G : Type} [CommGroup G] (B : G → G → M) (a b c d : G) : d3 (d2 B) a b c d = 0 := by
+    simp only [d3, d2, mul_assoc]
+    abel
+  have normalization {G : Type} [CommGroup G] (f : G → G → G → M) (hf : ∀ a b c d, d3 f a b c d = 0) :
+      ∃ N : G → G → M, ∀ a b, (f 1 a b - d2 N 1 a b = 0) ∧
+        (f a 1 b - d2 N a 1 b = 0) ∧ (f a b 1 - d2 N a b 1 = 0) := by
+    let N : G → G → M := fun a b => f 1 1 b - f a 1 1
+    refine ⟨N, ?_⟩
+    have h0 : f 1 1 1 = 0 := by simpa [d3] using hf 1 1 1 1
+    intro a b
+    have h1 := hf 1 1 a b
+    have h2 := hf a 1 1 b
+    have h3 := hf a b 1 1
+    simp only [d3, one_mul, mul_one, h0] at h1 h2 h3
+    dsimp [d2, N]
+    simp only [one_mul, mul_one, h0]
+    constructor
+    · linear_combination (norm := abel) h1
+    constructor
+    · linear_combination (norm := abel) -h2
+    · linear_combination (norm := abel) h3
   have unnormalizedDescent (half : ∀ m : M, ∃ k, k+k=m) (r : ℕ)
       (f : E r → E r → E r → M) (hc : ∀ a b c d, d3 f a b c d = 0)
       (hq : ∀ a, f a a a + f a 1 a = 0) : ∃ B, ∀ a b c, d2 B a b c = f a b c := by
@@ -395,7 +532,7 @@ theorem cyclic_restriction_detects_third_cohomology
       dsimp [F]
       simp only [d2, aa, one_mul, mul_one] at hh ⊢
       linear_combination (norm := abel) h - hh
-    obtain ⟨B,hB⟩ := normalizedDescent half r F Fc hN Fd
+    obtain ⟨B,hB⟩ := normalized_diagonal_zero_is_coboundary_fin half r F Fc hN Fd
     refine ⟨fun a b => N a b+B a b, ?_⟩
     intro a b c
     have h := hB a b c
