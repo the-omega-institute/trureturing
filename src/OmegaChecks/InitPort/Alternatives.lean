@@ -6,6 +6,7 @@ public import OmegaChecks.InitPort.Alternatives.Constraint
 public import OmegaChecks.InitPort.Alternatives.Extract
 public import OmegaChecks.InitPort.Alternatives.Integer
 public import OmegaChecks.InitPort.Alternatives.List
+public import OmegaChecks.InitPort.Alternatives.NatBits
 public import OmegaChecks.InitPort.Alternatives.Range
 public import OmegaChecks.InitPort.Alternatives.Word
 
