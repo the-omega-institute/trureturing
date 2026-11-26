@@ -318,11 +318,11 @@ public def specializeProjections (source : Environment) (body : Expr) (unavailab
     term := next
   return term
 
-/-- The strict foundation represents conjunction and equivalence using eliminators.
-Replace projection instructions for the native structures with their named interfaces. -/
+/-- The strict foundation encodes logical types with eliminators. For an existential
+whose witness is a proof, both projections can eliminate into Prop. -/
 public def namedLogicalProjections (source : Environment) (body : Expr) : IO Expr := do
   let logical := fun e => match e with
-    | Expr.proj name _ _ => name == `And || name == `Iff
+    | Expr.proj name _ _ => name == `And || name == `Iff || name == `Exists
     | _ => false
   unless (body.find? logical).isSome do return body
   let action := Meta.transform body (post := fun e => do
@@ -330,6 +330,17 @@ public def namedLogicalProjections (source : Environment) (body : Expr) : IO Exp
     let .proj owner idx target := e | return .done e
     let ty ← Meta.whnf (← Meta.inferType target)
     unless ty.isAppOfArity owner 2 && idx < 2 do return .done e
+    if owner == `Exists then
+      let #[α, pred] := ty.getAppArgs | return .done e
+      unless ← Meta.isProp α do return .done e
+      let levels := ty.getAppFn.constLevels!
+      let chooseProof ← Meta.withLocalDeclD `h α fun h =>
+        Meta.withLocalDeclD `hp (pred.beta #[h]) fun hp => Meta.mkLambdaFVars #[h, hp] h
+      let witness := mkApp5 (mkConst `Exists.elim levels) α pred α target chooseProof
+      if idx == 0 then return .done witness
+      let branch ← Meta.withLocalDeclD `h α fun h =>
+        Meta.withLocalDeclD `hp (pred.beta #[h]) fun hp => Meta.mkLambdaFVars #[h, hp] hp
+      return .done (mkApp5 (mkConst `Exists.elim levels) α pred (pred.beta #[witness]) target branch)
     let field := if owner == `And then (if idx == 0 then `And.left else `And.right)
       else (if idx == 0 then `Iff.mp else `Iff.mpr)
     return .done (mkAppN (mkConst field) (ty.getAppArgs.push target)))

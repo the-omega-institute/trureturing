@@ -34,6 +34,37 @@ private theorem mapFinIdxSize (xs : Array α) (f : (i : Nat) → α → i < xs.s
     dsimp only [Bind.bind, Id.instMonad]
     exact (ih ..).trans ((congrArg (· + i) (Array.size_push _)).trans (Nat.succ_add _ i))
 
+
+public theorem Array.mapFinIdx_induction : type_of% @_root_.Array.mapFinIdx_induction := by
+  intro α β xs f motive h0 p hs
+  have loop (i j : Nat) (inv : i + j = xs.size) (acc : Array β)
+      (len : acc.size = j) (hm : motive j)
+      (valid : ∀ k (hk : k < acc.size) (h : k < xs.size), p k acc[k] h) :
+      let out : Array β := _root_.Array.mapFinIdxM.map (m := Id) xs (fun k x h => f k x h) i j inv acc
+      motive xs.size ∧ ∃ eq : out.size = xs.size, ∀ k h, p k (out[k]'(Nat.lt_of_lt_of_eq h eq.symm)) h := by
+    induction i generalizing acc j with
+    | zero =>
+      have ej := (Nat.zero_add j).symm.trans inv
+      exact ⟨ej ▸ hm, len.trans ej, fun _ _ => valid ..⟩
+    | succ i ih =>
+      rw [Array.mapFinIdxM.map.eq_def]
+      have hj : j < xs.size := Nat.lt_of_lt_of_eq (Nat.lt_add_of_pos_left (Nat.zero_lt_succ i)) inv
+      have hi : i + (j+1) = xs.size := (Nat.succ_add i j).symm.trans inv
+      have pair := hs j hj hm
+      apply ih (j+1) hi (acc.push (f j xs[j] hj)) ((_root_.Array.size_push _).trans (congrArg Nat.succ len)) pair.2
+      intro k hk h
+      by_cases hacc : k < acc.size
+      · rw [Array.getElem_push_lt hacc]
+        exact valid k hacc h
+      · have kEq : k = acc.size := Nat.le_antisymm
+          (Nat.le_of_lt_succ (Nat.lt_of_lt_of_eq hk (_root_.Array.size_push _))) (Nat.le_of_not_lt hacc)
+        subst k
+        rw [Array.getElem_push_eq]
+        cases len
+        exact pair.1
+  exact loop xs.size 0 rfl (Array.emptyWithCapacity xs.size) rfl h0
+    (fun k hk _ => (Nat.not_succ_le_zero k hk).elim)
+
 public theorem Array.size_mapFinIdx : type_of% @_root_.Array.size_mapFinIdx := by
   intro α β xs f
   exact (mapFinIdxSize xs f xs.size 0 rfl (Array.emptyWithCapacity xs.size)).trans (Nat.zero_add _)
