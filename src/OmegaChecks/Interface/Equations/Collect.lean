@@ -3,6 +3,9 @@ module
 public import OmegaChecks.InitPort.Alternatives.Collect
 import all OmegaChecks.InitPort.Alternatives.Collect
 import all OmegaChecks.InitPort.Alternatives.IteratorSlice
+import all OmegaChecks.InitPort.Alternatives.FiniteLoop
+import all Init.Data.Iterators.Consumers.Monadic.Loop
+import all Init.Data.Iterators.Producers.Monadic.List
 import all Init.Data.Slice.Array.Iterator
 import all Init.Data.Slice.List.Iterator
 import all Init.Data.Iterators.Consumers.Monadic.Collect
@@ -119,5 +122,41 @@ public theorem List.instToStringListSlice {α : Type u} [ToString α] :
   funext s
   change toString (OmegaChecks.InitPort.Alternatives.listSliceContents s).toArray = toString s.toArray
   rw [contents_eq, ListSlice.toArray_toList]
+
+private theorem finiteIteratorLoop_eq {α β : Type w} {m : Type w → Type w'} [Iterator α m β] [Finite α m]
+    {n : Type x → Type x'} [Monad n] :
+    OmegaChecks.InitPort.Alternatives.finiteIteratorLoop (α := α) (m := m) (n := n) =
+      IteratorLoop.defaultImplementation := by
+  change IteratorLoop.mk _ = IteratorLoop.mk _
+  congr 1
+  funext lift γ Pl it init f
+  letI : Nonempty γ := ⟨init⟩
+  unfold OmegaChecks.InitPort.Alternatives.finiteForIn IterM.DefaultConsumers.forIn'
+  rw [WellFounded.extrinsicFix₃_eq_fix (InvImage.wf _ (IteratorLoop.wellFounded_of_finite (P := Pl)))]
+  dsimp only
+  congr 1
+  funext p recur
+  congr 1
+  funext step
+  cases step.inflate using PlausibleIterStep.casesOn with
+  | yield next out plausible =>
+    dsimp only
+    congr 1
+    funext result
+    rcases result with ⟨result, h⟩
+    cases result <;> rfl
+  | skip => rfl
+  | done => rfl
+
+public theorem instIteratorLoopSubarrayIteratorIdOfMonad {α : Type u} {m : Type v → Type w} [Monad m] :
+    @OmegaChecks.InitPort.Alternatives.instIteratorLoopSubarrayIteratorIdOfMonad α m _ =
+      @_root_.instIteratorLoopSubarrayIteratorIdOfMonad α m _ :=
+  finiteIteratorLoop_eq
+
+public theorem Std.Iterators.Types.ListIterator.instIteratorLoop {m : Type w → Type w'} {α : Type w}
+    [Monad m] {n : Type x → Type x'} [Monad n] :
+    @OmegaChecks.InitPort.Alternatives.Std.Iterators.Types.ListIterator.instIteratorLoop m α _ n _ =
+      @_root_.Std.Iterators.Types.ListIterator.instIteratorLoop m α _ n _ :=
+  finiteIteratorLoop_eq
 
 end OmegaChecks.Interface.Equations

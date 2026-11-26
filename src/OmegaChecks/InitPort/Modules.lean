@@ -65,7 +65,8 @@ private def instanceEntries (source : Environment) (idx : ModuleIdx) (available 
 private def sealedImplementation (n : Name) : Bool :=
   [`Std.IterM.Total.toArray, `Std.IterM.Total.toListRev, `Std.Iterators.Types.Take.Rel,
     `Subarray.copy, `Array.ofSubarray, `instSliceSizeListSliceData, `List.instAppendListSlice,
-    `List.instToStringListSlice].contains n
+    `List.instToStringListSlice, `instIteratorLoopSubarrayIteratorIdOfMonad,
+    `Std.Iterators.Types.ListIterator.instIteratorLoop].contains n
 
 /-- Inline a later proof dependency locally, so module cycles do not discard checked
 theorems. Types, owners and computational declarations stay as translated by the kernel. -/

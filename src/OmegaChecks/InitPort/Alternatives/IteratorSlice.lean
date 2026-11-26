@@ -1,4 +1,5 @@
 module
+public import OmegaChecks.InitPort.Alternatives.FiniteLoop
 public import Init.Data.Slice.Array.Lemmas
 import all Init.Data.Slice.Array.Iterator
 public import Init.Data.Slice.List.Lemmas
