@@ -390,7 +390,7 @@ public theorem String.Slice.eqIgnoreAsciiCase.go._unary._proof_3 :
   intro s t p q bound
   exact Nat.sub_lt_sub_left bound.1 (Nat.lt_succ_self _)
 
-public def String.Slice.Pattern.instBEqSearchStep.beq :
+@[expose] public def String.Slice.Pattern.instBEqSearchStep.beq :
     type_of% @_root_.String.Slice.Pattern.instBEqSearchStep.beq := by
   intro s a b
   match a, b with
@@ -434,5 +434,14 @@ public theorem String.Slice.Pattern.ToBackwardSearcher.DefaultBackwardSearcher.f
     else
       return false
   return lastWasDigit
+
+@[expose] public def String.Internal.posOfImpl (s : String) (c : Char) : String.Pos.Raw :=
+  (String.ofList (s.toList.takeWhile (· != c))).rawEndPos
+
+@[expose] public def String.Internal.containsImpl (s : String) (c : Char) : Bool :=
+  decide (c ∈ s.toList)
+
+@[expose] public def String.Internal.anyImpl (s : String) (p : Char → Bool) : Bool :=
+  s.toList.any p
 
 end OmegaChecks.InitPort.Alternatives
