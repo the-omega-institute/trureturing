@@ -174,6 +174,16 @@ private def comparisonProofs (source : Environment) (proofs : NameMap ConstantIn
     | some provider, some current => provider.toNat < current.toNat
     | _, _ => false
   let result := body.replace fun e => Id.run do
+    if e.isAppOfArity `of_eq_true 2 then
+      let eq := e.getAppArgs[1]!
+      if eq.isAppOfArity `Nat.dvd_eq_true_of_mod_eq_zero 3 && earlier `Nat.pow_dvd_pow then
+        let some divisor := numeral? source eq.getAppArgs[0]! | return none
+        let some dividend := numeral? source eq.getAppArgs[1]! | return none
+        let lo := divisor.log2
+        let hi := dividend.log2
+        if lo ≤ hi && hi ≤ 256 && 2^lo == divisor && 2^hi == dividend then
+          return some (mkApp4 (mkConst `Nat.pow_dvd_pow) (mkRawNatLit lo) (mkRawNatLit hi)
+            (mkRawNatLit 2) (mkConst `True.intro))
     unless e.getAppFn.isConstOf `of_decide_eq_true do return none
     let some p := e.getAppArgs[0]? | return none
     let asProof := mkApp (mkConst `id [.zero]) p
