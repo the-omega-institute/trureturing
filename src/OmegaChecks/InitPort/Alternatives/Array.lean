@@ -611,4 +611,116 @@ public theorem Array.flatten_reverse : type_of% @_root_.Array.flatten_reverse :=
     _root_.Array.flatMap_map]
   rfl
 
+public theorem Array.set_append_left : type_of% @_root_.Array.set_append_left := by
+  intro α xs ys i x bound
+  apply _root_.Array.ext'
+  rw [_root_.Array.toList_set, _root_.Array.toList_append, _root_.Array.toList_append,
+    _root_.Array.toList_set]
+  exact _root_.List.set_append_left i x bound
+
+public theorem Array.set_append_right : type_of% @_root_.Array.set_append_right := by
+  intro α xs ys i x valid bound
+  apply _root_.Array.ext'
+  rw [_root_.Array.toList_set, _root_.Array.toList_append, _root_.Array.toList_append,
+    _root_.Array.toList_set]
+  exact _root_.List.set_append_right i x bound
+
+public theorem Array.set_append : type_of% @_root_.Array.set_append := by
+  intro α xs ys i x valid
+  by_cases left : i < xs.size
+  · rw [dite_eq_left left]
+    exact _root_.Array.set_append_left left
+  · rw [dite_eq_right left]
+    exact _root_.Array.set_append_right valid (Nat.le_of_not_lt left)
+
+public theorem Array.set_push : type_of% @_root_.Array.set_push := by
+  intro α i xs x y valid
+  apply _root_.Array.ext'
+  by_cases left : i < xs.size
+  · rw [dite_eq_left left, _root_.Array.toList_set, _root_.Array.toList_push,
+      _root_.Array.toList_push, _root_.Array.toList_set]
+    exact _root_.List.set_append_left i y left
+  · rw [dite_eq_right left, _root_.Array.toList_set, _root_.Array.toList_push,
+      _root_.Array.toList_push, _root_.List.set_append_right i y (Nat.le_of_not_lt left)]
+    have atEnd := Nat.le_antisymm (Nat.le_of_lt_succ (Nat.lt_of_lt_of_eq valid (_root_.Array.size_push _)))
+      (Nat.le_of_not_lt left)
+    rw [show xs.toList.length = xs.size from rfl, atEnd, Nat.sub_self]
+    rfl
+
+public theorem Array.none_eq_getElem?_iff : type_of% @_root_.Array.none_eq_getElem?_iff := by
+  intro α xs i
+  exact ⟨fun h => _root_.Array.getElem?_eq_none_iff.mp h.symm,
+    fun h => (_root_.Array.getElem?_eq_none_iff.mpr h).symm⟩
+
+public theorem Array.map_inj_right : type_of% @_root_.Array.map_inj_right := by
+  intro α β xs ys f injective
+  constructor
+  · intro h
+    apply _root_.Array.ext'
+    apply (_root_.List.map_inj_right injective).mp
+    exact _root_.Array.toList_map.symm.trans ((congrArg _root_.Array.toList h).trans _root_.Array.toList_map)
+  · intro h
+    cases h
+    rfl
+
+public theorem Array.flatten_ne_empty_iff : type_of% @_root_.Array.flatten_ne_empty_iff := by
+  intro α xss
+  constructor
+  · intro ne
+    obtain ⟨x, inside⟩ := _root_.Array.exists_mem_of_ne_empty _ ne
+    obtain ⟨row, mem, inner⟩ := _root_.Array.mem_flatten.mp inside
+    exact ⟨row, mem, _root_.Array.ne_empty_of_mem inner⟩
+  · intro ⟨row, mem, ne⟩
+    obtain ⟨x, inner⟩ := _root_.Array.exists_mem_of_ne_empty _ ne
+    exact _root_.Array.ne_empty_of_mem (_root_.Array.mem_flatten.mpr ⟨row, mem, inner⟩)
+
+public theorem Array.map_filterMap_of_inv : type_of% @_root_.Array.map_filterMap_of_inv := by
+  intro α β f g inv xs
+  apply _root_.Array.ext'
+  rw [_root_.Array.toList_map, _root_.Array.toList_filterMap]
+  exact _root_.List.map_filterMap_of_inv inv
+
+private theorem getZipWith (f : α → β → γ) (xs : _root_.List α) (ys : _root_.List β)
+    (i : Nat) (valid : i < (xs.zipWith f ys).length)
+    (left : i < xs.length) (right : i < ys.length) :
+    (xs.zipWith f ys)[i] = f xs[i] ys[i] := by
+  induction xs generalizing i ys with
+  | nil => exact (Nat.not_lt_zero _ left).elim
+  | cons x xs ih =>
+    cases ys with
+    | nil => exact (Nat.not_lt_zero _ right).elim
+    | cons y ys =>
+      cases i with
+      | zero => rfl
+      | succ i =>
+        exact ih ys i (Nat.lt_of_succ_lt_succ valid)
+          (Nat.lt_of_succ_lt_succ left) (Nat.lt_of_succ_lt_succ right)
+
+public theorem Array.getElem_zipWith : type_of% @_root_.Array.getElem_zipWith := by
+  intro α β γ xs ys f i hi
+  have bound : i < min xs.size ys.size := _root_.Array.size_zipWith (f := f) ▸ hi
+  have lists := _root_.Array.toList_zipWith (f := f) (xs := xs) (ys := ys)
+  refine (_root_.Array.getElem_toList _).symm.trans ((_root_.List.getElem_of_eq lists _).trans ?_)
+  exact getZipWith f xs.toList ys.toList i _ (Nat.lt_of_lt_of_le bound (Nat.min_le_left ..))
+    (Nat.lt_of_lt_of_le bound (Nat.min_le_right ..))
+
+public theorem Array.getElem_replace : type_of% @_root_.Array.getElem_replace := by
+  intro α _ _ a b xs i hi
+  letI : DecidableEq α := _root_.instDecidableEqOfLawfulBEq
+  apply Option.some.inj
+  rw [← _root_.Array.getElem?_eq_getElem (show i < (xs.replace a b).size from
+    (_root_.Array.size_replace (xs := xs) (a := a) (b := b)).symm ▸ hi),
+    _root_.Array.getElem?_replace, _root_.Array.getElem?_eq_getElem hi]
+  by_cases hit : xs[i] = a
+  · rw [ite_eq_left (beq_iff_eq.mpr (congrArg some hit)), ite_eq_left (beq_iff_eq.mpr hit)]
+    by_cases old : a ∈ xs.take i
+    · rw [ite_eq_left old, ite_eq_left old]
+    · rw [ite_eq_right old, ite_eq_right old]
+  · rw [ite_eq_right (fun h => hit (Option.some.inj (eq_of_beq h))),
+      ite_eq_right (fun h => hit (eq_of_beq h))]
+
+public theorem Array.getElem_replace_of_ne : type_of% @_root_.Array.getElem_replace_of_ne := by
+  intro α _ _ a b xs i hi ne
+  exact (_root_.Array.getElem_replace hi).trans (ite_eq_right (fun hit => ne (eq_of_beq hit)))
+
 end OmegaChecks.InitPort.Alternatives
