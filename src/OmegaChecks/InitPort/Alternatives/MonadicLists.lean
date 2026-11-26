@@ -614,11 +614,11 @@ private theorem mapArrayLoop [Monad m] (xs : Array α) (f : α → m β) (j : Na
     | succ fuel ih =>
       dsimp only [WellFounded.Nat.fix.go, act]
       by_cases bound : i < xs.size
-      · rw [List.drop_eq_getElem_cons (l := xs.toList) (i := i) bound]
+      · rw [← List.getElem_cons_drop (as := xs.toList) (i := i) bound]
         apply (dependentBranch bound _ _).trans
         exact congrArg (fun tail (acc : Array β) => f xs[i] >>= fun b => tail (acc.push b))
           (ih (i+1) (Nat.lt_of_lt_of_le (Nat.sub_succ_lt_self _ _ bound) (Nat.le_of_lt_succ h)))
-      · rw [List.drop_of_length_le (Nat.le_of_not_gt bound)]
+      · rw [List.drop_eq_nil_of_le (Nat.le_of_not_gt bound)]
         exact dependentElse bound _ _
   delta Array.mapM.map Array.mapM.map._unary WellFounded.Nat.fix
   have fuel : xs.size - j < WellFounded.Nat.eager (xs.size - j + 1) := by
@@ -634,9 +634,9 @@ public theorem Array.mapM.map.eq_def : type_of% @_root_.Array.mapM.map.eq_def :=
   intro α β m inst f xs i acc
   rw [congrFun (mapArrayLoop xs f i) acc]
   by_cases h : i < xs.size
-  · rw [dite_eq_left h, List.drop_eq_getElem_cons (l := xs.toList) (i := i) h]
+  · rw [dite_eq_left h, ← List.getElem_cons_drop (as := xs.toList) (i := i) h]
     exact congrArg (fun tail => f xs[i] >>= fun b => tail (acc.push b)) (mapArrayLoop xs f (i+1)).symm
-  · rw [dite_eq_right h, List.drop_of_length_le (Nat.le_of_not_gt h)]
+  · rw [dite_eq_right h, List.drop_eq_nil_of_le (Nat.le_of_not_gt h)]
     rfl
 
 public theorem Array.map.eq_1 : type_of% @_root_.Array.map.eq_1 := by
