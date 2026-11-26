@@ -4,6 +4,7 @@ import Init.Data.List.Impl
 import all Init.Data.List.Control
 import Init.Data.List.Monadic
 import all Init.Data.List.MapIdx
+import all Init.Data.Array.Basic
 import Init.Data.Array.Lemmas
 import Init.Data.Array.Count
 
@@ -304,5 +305,54 @@ public theorem List.countP_toArray : type_of% @_root_.List.countP_toArray := by
     cases h : p a with
     | false => exact ih
     | true => exact congrArg Nat.succ ih
+
+private def findStep (f : α → Option β) (a : α) : ForInStep (Option (Option β) × Unit) :=
+  match f a with
+  | some b => .done (some (some b), ())
+  | none => .yield (none, ())
+
+set_option backward.isDefEq.respectTransparency false in
+private theorem findSuffix (f : α → Option β) (l : List α)
+    (step : (a : α) → a ∈ l.toArray → Option (Option β) × Unit → Id (ForInStep (Option (Option β) × Unit)))
+    (compute : ∀ a m state, step a m state = findStep f a) (i : Nat) (bound : i ≤ l.length) :
+    (Array.forIn'.loop (m := Id) l.toArray step i bound (none, ())).run.fst.join =
+      (l.drop (l.length - i)).findSome? f := by
+  induction i with
+  | zero =>
+    rw [Nat.sub_zero, List.drop_length]
+    rfl
+  | succ i ih =>
+    have index : l.length - 1 - i < l.length := by omega
+    have next : l.length - 1 - i + 1 = l.length - i := by omega
+    have current : l.length - (i+1) = l.length - 1 - i := by omega
+    rw [current, List.drop_eq_getElem_cons index, next, List.findSome?_cons, Array.forIn'.loop.eq_2]
+    simp only [compute, List.size_toArray, List.getElem_toArray, Bind.bind, Pure.pure, Id.instMonad]
+    cases h : f l[l.length-1-i] with
+    | none =>
+      simp only [findStep, h]
+      exact ih (Nat.le_of_succ_le bound)
+    | some b => simp only [findStep, h]; rfl
+
+set_option backward.isDefEq.respectTransparency false in
+public theorem List.findSome?_toArray : type_of% @_root_.List.findSome?_toArray := by
+  intro α β f l
+  have whole (step : (a : α) → a ∈ l.toArray → Option (Option β) × Unit → Id (ForInStep (Option (Option β) × Unit)))
+      (compute : ∀ a m state, step a m state = findStep f a) :
+      (Array.forIn'.loop (m := Id) l.toArray step l.length (Nat.le_refl _) (none, ())).fst.join = l.findSome? f := by
+    have found := findSuffix f l step compute l.length (Nat.le_refl _)
+    rw [Nat.sub_self, List.drop_zero] at found
+    exact found
+  unfold Array.findSome? Array.findSomeM?
+  dsimp only [ForIn.forIn, instForInOfForIn', ForIn'.forIn', Array.forIn', Bind.bind, Pure.pure, Id.instMonad, Id.run]
+  simp only [List.size_toArray]
+  generalize hx : Prod.fst (Array.forIn'.loop (m := Id) (β := Option (Option β) × Unit)
+    l.toArray _ l.length _ (none, ())) = v
+  have result : v.join = l.findSome? f := by
+    rw [← hx]
+    apply whole
+    intro a _ state
+    unfold findStep
+    cases f a <;> rfl
+  cases v <;> exact result
 
 end OmegaChecks.InitPort.Alternatives
