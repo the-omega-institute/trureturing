@@ -42,6 +42,31 @@ public theorem Nat.bitwise_mod_two_pow : type_of% @_root_.Nat.bitwise_mod_two_po
   | false => exact zero.symm
   | true => rfl
 
+public theorem Nat.testBit_two_pow_sub_one : type_of% @_root_.Nat.testBit_two_pow_sub_one := by
+  intro n i
+  induction n generalizing i with
+  | zero =>
+    change Nat.testBit 0 i = _
+    rw [Nat.zero_testBit, decide_eq_false (Nat.not_lt_zero _)]
+  | succ n ih =>
+    have mask : 2 ^ (n + 1) - 1 = 2 * (2 ^ n - 1) + 1 := by
+      have pred : (2 ^ n - 1).succ = 2 ^ n := Nat.succ_pred_eq_of_pos (Nat.two_pow_pos n)
+      rw [Nat.pow_succ, ← pred, Nat.succ_mul, Nat.mul_comm]
+      rfl
+    rw [mask]
+    cases i with
+    | zero =>
+      rw [Nat.testBit_eq_decide_div_mod_eq, Nat.div_one, Nat.mul_add_mod_self_left,
+        decide_eq_true (Nat.zero_lt_succ _)]
+      rfl
+    | succ i =>
+      rw [Nat.testBit_succ, Nat.add_comm (2 * (2 ^ n - 1)) 1, Nat.add_mul_div_left _ _ (by decide)]
+      change Nat.testBit (0 + (2 ^ n - 1)) i = _
+      rw [Nat.zero_add, ih]
+      by_cases lt : i < n
+      · rw [decide_eq_true lt, decide_eq_true (Nat.succ_lt_succ lt)]
+      · rw [decide_eq_false lt, decide_eq_false (fun h => lt (Nat.lt_of_succ_lt_succ h))]
+
 private theorem highestBits {i k tag mask : Nat} (low : i < 2 ^ k)
     (zero : mask % (2 ^ k) = 0) :
     (i + 2 ^ k * tag) &&& mask = 2 ^ k * (tag &&& (mask / 2 ^ k)) := by
