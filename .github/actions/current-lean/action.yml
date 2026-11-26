@@ -1,0 +1,56 @@
+name: Restore Lean inputs for the current check
+description: Install the pinned toolchain and restore the published shards selected by the plan.
+inputs:
+  batch:
+    required: false
+    description: Restore inputs for this report batch, or for the complete scope when omitted.
+runs:
+  using: composite
+  steps:
+    - id: keys
+      shell: bash
+      env:
+        GH_TOKEN: ${{ github.token }}
+      run: python3 tools/scripts/worktree/lean_actions.py keys --repository "$GITHUB_WORKSPACE"
+    - if: steps.keys.outputs.elan_key != ''
+      continue-on-error: true
+      uses: actions/cache/restore@v5
+      with:
+        path: ~/.elan
+        key: ${{ steps.keys.outputs.elan_key }}
+    - name: Install the pinned Lean toolchain
+      shell: bash
+      run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
+    - id: dependency
+      if: steps.keys.outputs.dependency_key != ''
+      continue-on-error: true
+      uses: actions/cache/restore@v5
+      with:
+        path: ${{ steps.keys.outputs.dependency_archive_path }}
+        key: ${{ steps.keys.outputs.dependency_key }}
+        restore-keys: ${{ steps.keys.outputs.dependency_restore_prefix }}
+    - name: Install the restored Lean dependencies
+      shell: bash
+      env:
+        DEPENDENCY_KEY: ${{ steps.dependency.outputs.cache-matched-key }}
+        DEPENDENCY_OUTCOME: ${{ steps.dependency.outcome }}
+      run: python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --layers dependency --dependency-key "$DEPENDENCY_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME"
+    - id: cache_scope
+      shell: bash
+      env:
+        BATCH: ${{ inputs.batch }}
+      run: |
+        batch=()
+        if [[ -n "$BATCH" ]]; then batch=(--batch "$BATCH"); fi
+        targets="$RUNNER_TEMP/lean-cache-targets"
+        python3 tools/scripts/workflow/ci_pr_lean.py "$RUNNER_TEMP/changed-paths" --cache-targets --read-plan "$RUNNER_TEMP/current-lean-plan.json" "${batch[@]}" > "$targets"
+        if [[ -s "$targets" ]]; then echo "targets-file=$targets" >> "$GITHUB_OUTPUT"; fi
+    - name: Restore the published shards for the selected modules
+      if: steps.cache_scope.outputs.targets-file != ''
+      continue-on-error: true
+      uses: ./.github/actions/lean-cache-shards
+      env:
+        GH_TOKEN: ${{ github.token }}
+      with:
+        operation: restore-published
+        targets-file: ${{ steps.cache_scope.outputs.targets-file }}
