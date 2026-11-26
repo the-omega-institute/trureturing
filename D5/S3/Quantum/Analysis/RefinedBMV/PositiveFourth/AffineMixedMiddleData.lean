@@ -10,7 +10,7 @@ import D5.S3.Quantum.Analysis.RefinedBMV.PositiveFourth.GroupedAffineMasks
 
 /-! Grouped coefficients in ascending degree order. -/
 
-set_option maxRecDepth 4096
+set_option maxRecDepth 16000
 
 namespace RefinedBMV.ThreeBlockGram.PositiveSpectrum.GroupedAffineMasks.MixedMiddle
 
