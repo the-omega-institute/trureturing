@@ -24,8 +24,7 @@ open BalancedCriticalSpectrum (Q)
 local notation "flip" => BalancedCriticalSpectrum.flip
 open private huangMatrix huangMatrix_symmetric from
   D5.S3.Combinatorics.Graph.HypercubeSubQuorum
-open private adjacent_exists_flip from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeGirth
+open BalancedCubeGirth (adjacent_exists_flip)
 
 private theorem flip_cons_zero {n : ℕ} (b : Bool) (u : Q n) :
     flip (Fin.cons b u) 0 = Fin.cons (!b) u := by

@@ -28,8 +28,7 @@ open BalancedCriticalSpectrum (flip_adj)
 open BalancedCubeLowerBound (coordinateSlice)
 open private cubeParity cubeParity_ne_of_adj from
   D5.S3.Combinatorics.Graph.HypercubeSubQuorum
-open private adjacent_exists_flip from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeGirth
+open BalancedCubeGirth (adjacent_exists_flip)
 open private balanced_subset paritySide parity_bipartite parity_union from
   D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeLowerBound
 open private side_spectrum from
