@@ -36,13 +36,16 @@ internal sealed class FerrersResultantDocument : IScribeDocumentDefinition
             Node("result", "result", "Exact answer to Question 4.1",
                 Criterion(),
                 "The least-row count identifies p with P and gives the coefficients. A maximal term contributes positively at degree d. A root of p in the open right half-plane would produce a positive real resultant root by conjugate pairing. When the scan passes, a zero pair sum has both real parts zero, so the constant coefficient detects the imaginary axis. The empty independent set gives p(0) equal to one.",
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("ta-hoang-nguyen-2026-ferrers-question-4-1"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string id, string name, string title, Formula formula,
-        string prose, DescribeRole role) =>
+        string prose, DescribeRole role, OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("ferrers-stability-" + id), DeclarationHandle.Create(Prefix + name),
             H(title), StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromRepo(Source),
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula Criterion() => new Formula.Aligned([
         Seq(F.Id("p"), Eq, F.Id("P"), Land,

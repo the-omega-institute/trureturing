@@ -66,6 +66,10 @@ $$\begin{aligned}p=P\land(\forall j\in\mathbb{N}, [X^{j}]p=N\left(j\right))\land
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/HardCore/FerrersResultant.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/ta-hoang-nguyen-2026-ferrers-question-4-1` (proved) by `D5/S3/StatisticalMechanics/HardCore/FerrersResultant.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"ta-hoang-nguyen-2026-ferrers-question-4-1","declaration_gid":"D5/S3/StatisticalMechanics/HardCore/FerrersResultant.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Ta Quang Anh, Do Trong Hoang and Nguyen Minh Nhat (2026). *Stability of independence polynomials of well-covered Ferrers graphs*. URL: <https://arxiv.org/abs/2611.26962v1>.
