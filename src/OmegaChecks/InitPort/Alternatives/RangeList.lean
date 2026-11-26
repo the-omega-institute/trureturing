@@ -2,6 +2,7 @@ module
 public import Init.Data.Range.Polymorphic.Lemmas
 import all Init.Data.Array.Basic
 import all Init.Data.Range.Polymorphic.Basic
+import all Init.Data.Range.Polymorphic.RangeIterator
 public import Init.Data.Range.Polymorphic.NatLemmas
 public import Init.Data.Range.Polymorphic.IntLemmas
 
@@ -758,5 +759,40 @@ public theorem Std.Roc.toArray_eq_empty_iff : type_of% @_root_.Std.Roc.toArray_e
   intro α r _ _ _ _ _ _ _ _
   rw [← _root_.Std.Roc.toArray_toList]
   exact (arrayNilOfList _).trans _root_.Std.Roc.toList_eq_nil_iff
+
+public theorem Std.Rxi.Iterator.toList_eq_match : type_of% @_root_.Std.Rxi.Iterator.toList_eq_match := by
+  intro α _ _ _ it
+  rw [_root_.Std.Iter.toList_eq_match_step (it := it), _root_.Std.Rxi.Iterator.step_eq_step]
+  unfold _root_.Std.Rxi.Iterator.step
+  dsimp only [Subtype.val]
+  cases h : it.internalState.next with
+  | none => rfl
+  | some a => rfl
+
+public theorem Std.Rxc.Iterator.toList_eq_match : type_of% @_root_.Std.Rxc.Iterator.toList_eq_match := by
+  intro α _ _ _ _ _ _ it
+  rw [_root_.Std.Iter.toList_eq_match_step (it := it), _root_.Std.Rxc.Iterator.step_eq_step]
+  unfold _root_.Std.Rxc.Iterator.step
+  dsimp only [Subtype.val]
+  cases h : it.internalState.next with
+  | none => rfl
+  | some a =>
+    dsimp only
+    by_cases bound : a ≤ it.internalState.upperBound
+    · rw [ite_eq_left bound, ite_eq_left bound]
+    · rw [ite_eq_right bound, ite_eq_right bound]
+
+public theorem Std.Rxo.Iterator.toList_eq_match : type_of% @_root_.Std.Rxo.Iterator.toList_eq_match := by
+  intro α _ _ _ _ _ _ it
+  rw [_root_.Std.Iter.toList_eq_match_step (it := it), _root_.Std.Rxo.Iterator.step_eq_step]
+  unfold _root_.Std.Rxo.Iterator.step
+  dsimp only [Subtype.val]
+  cases h : it.internalState.next with
+  | none => rfl
+  | some a =>
+    dsimp only
+    by_cases bound : a < it.internalState.upperBound
+    · rw [ite_eq_left bound, ite_eq_left bound]
+    · rw [ite_eq_right bound, ite_eq_right bound]
 
 end OmegaChecks.InitPort.Alternatives
