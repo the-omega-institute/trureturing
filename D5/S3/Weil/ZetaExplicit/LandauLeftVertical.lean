@@ -6,12 +6,9 @@
    utility: none
    digest: An oscillatory logarithm bound for the left vertical integral of a finite Landau contour. -/
 
-import OmegaBuild.Commands
 import D5.S3.Weil.Mertens.Cryptids.DigammaBinet
 import Mathlib.MeasureTheory.Integral.IntervalIntegral.IntegrationByParts
 import Mathlib.Analysis.SpecialFunctions.Complex.LogDeriv
-
-compile_only_with_mathlib
 
 namespace D5.S3.Weil.ZetaExplicit.LandauLeftVertical
 

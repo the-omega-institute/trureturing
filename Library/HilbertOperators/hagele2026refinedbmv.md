@@ -11,6 +11,7 @@ strata_touched:
   - D5/S3/Quantum/Analysis/RefinedBMV/NineFour
   - D5/S3/Quantum/Analysis/RefinedBMV/TenFour
   - D5/S3/Quantum/Analysis/RefinedBMV/ThirteenFour
+  - D5/S3/Quantum/Analysis/RefinedBMV/SeventeenFour
   - D5/S3/Quantum/Analysis/RefinedBMV/NearScalar/WordMean
   - D5/S3/Quantum/Analysis/RefinedBMV/SingularFourth/ZeroSpectrumProduct
   - D5/S3/Quantum/Analysis/RefinedBMV/BinaryGramConditioning
@@ -172,6 +173,24 @@ trace of the word with gaps (4,3,3,3). Two trace Cauchy–Schwarz
 inequalities give the fractional-power bound. The dyadic comparison
 from Lemma 2 gives the lower bound by the real part of the trace of
 `exp(13H + 4K)` for the same word mean on `exp H` and `exp K`.
+
+## Seventeen copies of the first factor
+
+At (17,4), for positive semidefinite A and Hermitian B in every finite
+complex dimension, the mean of the real parts of the 5,985 ordered
+word traces dominates the real part of the trace of `(A^(17/4) B)^4`.
+The argument includes singular A. A rational Gram factorization on
+45 half-words with 28 positive weights compares the word mean with
+the trace of the cyclic word with gaps (5,4,4,4). The proof reuses the
+four-gap identity to check the cyclic coefficients. Two trace
+Cauchy–Schwarz inequalities give the fractional-power comparison.
+The dyadic argument in Hägele's Lemma 2 gives the corresponding
+lower bound by the trace of `exp(17H + 4K)`.
+
+The literature check found lower bounds with different hypotheses or
+comparators. Hägele's Theorem 1.2 treats smaller degrees and dimensions.
+Burgdorf's Theorem 1.5 proves four-copy coefficient positivity.
+Dinh, Le, and Vuong's Theorem 4.2 uses a spectrally pinched comparator.
 
 ## Four copies of the second factor near the identity
 
