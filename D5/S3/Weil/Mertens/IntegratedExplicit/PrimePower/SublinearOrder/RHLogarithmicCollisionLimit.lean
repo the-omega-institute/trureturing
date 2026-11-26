@@ -12,9 +12,6 @@ import D5.S3.Fourier.Concentration.FejerCollisionLimit
 import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
 import D5.S3.Fourier.Concentration.FejerRelativeLocalization
 import D5.S3.Fourier.Asymptotics.MovingFejerGaussianPrincipal
-import OmegaBuild.Commands
-
-compile_only_with_mathlib
 
 open Finset Filter Set MeasureTheory
 open scoped Topology
