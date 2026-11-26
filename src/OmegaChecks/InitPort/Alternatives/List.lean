@@ -15,6 +15,14 @@ import all Init.Data.List.ToArray
 
 namespace OmegaChecks.InitPort.Alternatives
 
+public theorem List.foldlM_pure : type_of% @_root_.List.foldlM_pure := by
+  intro m β α monad lawful f b xs
+  induction xs generalizing b with
+  | nil => rfl
+  | cons x xs ih =>
+    rw [List.foldlM_cons, pure_bind]
+    exact ih
+
 public theorem List.map_const : type_of% @_root_.List.map_const := by
   intro α β xs b
   induction xs with
@@ -105,6 +113,11 @@ public theorem List.foldl_reverse {α : Type u} {β : Type v} {l : _root_.List �
     exact (congrArg (fun ys => ys.foldl f b) List.reverse_cons).trans
       ((List.foldl_append (f := f) (b := b) (l := xs.reverse) (l' := [a])).trans
         (congrArg (fun x => f x a) ih))
+
+public theorem List.foldrM_pure : type_of% @_root_.List.foldrM_pure := by
+  intro m α β monad lawful f b xs
+  unfold _root_.List.foldrM
+  rw [List.foldlM_pure, List.foldl_reverse]
 
 public theorem List.foldr_eq_foldrM {α : Type u} {β : Type v} {f : α → β → β}
     {b : β} {l : _root_.List α} :
