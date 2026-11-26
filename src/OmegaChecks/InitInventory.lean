@@ -1342,6 +1342,34 @@ run_cmd
       ``fromReaderTFunctor, ``fromReaderTApplicative, ``fromReaderTMonad, ``fromStateTMonad] do
     unless (← collectAxioms n).isEmpty do throwError "transformer law witness {n} uses axioms"
 
+private theorem constructorEndomorphisms (make : type_of% @LawfulMonad.mk'.{u,u})
+    {T : Type u} {f g : T → T} (agree : ∀ x, f x = g x) : f = g := by
+  let base : Monad (Except (Graph f)) := inferInstance
+  let custom : Monad (ErrorM f) := { base with mapConst := fun a x =>
+    match x with | .ok _ => .ok a | .error e => .error (resetGraph f e) }
+  letI : Monad (ErrorM f) := custom
+  let law := make (ErrorM f) (fun x => by cases x <;> rfl) (fun _ _ => rfl)
+    (fun x _ _ => by cases x <;> rfl) (fun a x => by
+      cases x with
+      | ok b => rfl
+      | error e => exact congrArg Except.error (resetGraph_eq f e))
+    (fun x y => by cases x <;> cases y <;> rfl)
+    (fun x y => by cases x <;> cases y <;> rfl)
+    (fun k x => by cases x <;> rfl)
+    (fun k x => by cases k <;> cases x <;> rfl)
+  let input (t : T) : ErrorM f PUnit := .error ⟨t, g t, agree t⟩
+  let see (k : PUnit → ErrorM f PUnit → ErrorM f PUnit) (t : T) :=
+    match k .unit (input t) with | .error e => e.2.val | .ok _ => t
+  exact congrArg see (@LawfulFunctor.map_const (ErrorM f) _ law.toLawfulApplicative.toLawfulFunctor PUnit PUnit)
+
+public theorem fromMonadConstructor (make : type_of% @LawfulMonad.mk'.{max 1 u v, max 1 u v}) :
+    type_of% @funext.{u,v} :=
+  funextFromEndomorphisms (constructorEndomorphisms @make)
+
+open Lean in
+run_cmd
+  unless (← collectAxioms ``fromMonadConstructor).isEmpty do throwError "monad constructor witness uses axioms"
+
 end TransformerLaws
 
 namespace MonadicTraversal
@@ -2122,6 +2150,8 @@ private def logicalConsequence? (owner name : Name) : Option (Name × Name) := d
     return (``funext, ``OmegaChecks.InitBoundaries.TransformerLaws.fromStateTWeakAttach)
   | `Init.Control.Lawful.MonadAttach.Instances, ``instLawfulMonadAttachStateTOfLawfulMonad =>
     return (``funext, ``OmegaChecks.InitBoundaries.TransformerLaws.fromStateTAttach)
+  | `Init.Control.Lawful.Basic, ``LawfulMonad.mk' =>
+    return (``funext, ``OmegaChecks.InitBoundaries.TransformerLaws.fromMonadConstructor)
   | `Init.Control.Lawful.Instances, ``ReaderT.instLawfulFunctor =>
     return (``funext, ``OmegaChecks.InitBoundaries.TransformerLaws.fromReaderTFunctor)
   | `Init.Control.Lawful.Instances, ``ReaderT.instLawfulApplicative =>
