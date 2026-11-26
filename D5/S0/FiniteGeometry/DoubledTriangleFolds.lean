@@ -202,4 +202,129 @@ private theorem edgeFaces_inside (p : Point n 1) (a : Axis) (h : p.coord a ≠ 0
     (s : Bool) : edgeFaces (edge p a s) = (up s p, down s (below p a h)) := by
   simp [edgeFaces, edge, h]
 
+private def signed (b : Bool) : Int := if b then 1 else -1
+
+private theorem signed_balance (C : Coloring n) (fs : List (Face n)) :
+    black C fs - white C fs = (fs.map (fun f => signed (C f))).sum := by
+  induction fs with
+  | nil => rfl
+  | cons f fs ih =>
+    cases h : C f <;> simp [black, white, h, signed] at ih ⊢ <;> omega
+
+private theorem good_balance {C : Coloring n} (hC : Good C) (v : Point n 0) (s : Bool) :
+    (3 : Int) ∣ ((incidentCorners v s).map (fun f => signed (C f))).sum := by
+  rw [← signed_balance]
+  exact hC v s
+
+private theorem opposite_from_two {a b : Bool}
+    (h : (3 : Int) ∣ signed a + signed b) : a ≠ b := by
+  cases a <;> cases b <;> simp [signed] at h ⊢
+
+private theorem aligned_from_four {a b c : Bool}
+    (h : (3 : Int) ∣ signed a * 4 + signed b + signed c) : b = a ∧ c = a := by
+  cases a <;> cases b <;> cases c <;> simp [signed] at h ⊢
+
+private structure Ring (n : ℕ) where
+  level : ℕ
+  width : ℕ
+  size : level + width + 1 = n
+
+private def Ring.next (r : Ring n) (hw : 0 < r.width) : Ring n :=
+  ⟨r.level + 1, r.width - 1, by have := r.size; omega⟩
+
+private def Ring.U (r : Ring n) (j : ℕ) (hj : j ≤ r.width) : Point n 1 :=
+  ⟨r.level, j, r.width - j, by have := r.size; omega⟩
+
+private def Ring.D (r : Ring n) (j : ℕ) (hj : j < r.width) : Point n 2 :=
+  ⟨r.level, j, r.width - (j+1), by have := r.size; omega⟩
+
+private def Ring.Mono (C : Coloring n) (r : Ring n) (b : Bool) : Prop :=
+  (∀ (s : Bool) (j : ℕ) (hj : j ≤ r.width), C (up s (r.U j hj)) = b) ∧
+  (∀ (s : Bool) (j : ℕ) (hj : j < r.width), C (down s (r.D j hj)) = b)
+
+private theorem corner_opposite {C : Coloring n} (hC : Good C) (p : Point n 1)
+    (hy : p.y = 0) (hz : p.z = 0) : C (up false p) ≠ C (up true p) := by
+  let v : Point n 0 := ⟨p.x + 1, 0, 0, by have := p.total; omega⟩
+  have hv := good_balance hC v false
+  have hp : (⟨p.x, 0, 0, by have := p.total; omega⟩ : Point n 1) = p :=
+    Point.ext rfl hy.symm hz.symm
+  apply opposite_from_two
+  simpa [incidentCorners, Point.boundary, sheetCorners, atUp, atDown, bump, bumpPair,
+    Point.coord, v, hp] using hv
+
+private theorem ring_next_start {C : Coloring n} {r : Ring n} {b : Bool} (hC : Good C)
+    (h : r.Mono C b) (hw : 0 < r.width) :
+    ∀ s, C (up s ((r.next hw).U 0 (Nat.zero_le _))) = b := by
+  let v : Point n 0 := ⟨r.level + 1, 0, r.width, by have := r.size; omega⟩
+  have hv := good_balance hC v false
+  have h₁ := h.1 false 0 (Nat.zero_le _)
+  have h₂ := h.1 true 0 (Nat.zero_le _)
+  have h₃ := h.2 false 0 hw
+  have h₄ := h.2 true 0 hw
+  simp [Ring.U, Ring.D] at h₁ h₂ h₃ h₄
+  simp [incidentCorners, Point.boundary, sheetCorners, atUp, atDown, bump, bumpPair,
+    Point.coord, v, hw, Nat.succ_le_iff, h₁, h₂, h₃, h₄] at hv
+  have hsum : (3 : Int) ∣ signed b * 4 +
+      signed (C (up false ((r.next hw).U 0 (Nat.zero_le _)))) +
+      signed (C (up true ((r.next hw).U 0 (Nat.zero_le _)))) := by
+    convert hv using 1
+    simp [Ring.next, Ring.U]
+    omega
+  have hcol := aligned_from_four hsum
+  intro s
+  cases s
+  · exact hcol.1
+  · exact hcol.2
+
+private theorem ring_next_step {C : Coloring n} {r : Ring n} {b : Bool} (hC : Good C)
+    (h : r.Mono C b) {j : ℕ} (hj : j+1 < r.width) (s : Bool)
+    (hs : C (up s ((r.next (by omega)).U j (by simp [Ring.next]; omega))) = b) :
+    C (down s ((r.next (by omega)).D j (by simp [Ring.next]; omega))) = b ∧
+    C (up s ((r.next (by omega)).U (j+1) (by simp [Ring.next]; omega))) = b := by
+  let v : Point n 0 := ⟨r.level + 1, j+1, r.width - (j+1), by have := r.size; omega⟩
+  have hv := good_balance hC v s
+  have h₁ := h.1 s (j+1) (by omega)
+  have h₂ := h.2 s (j+1) hj
+  have h₃ := h.2 s j (by omega)
+  have hz : 0 < r.width - (j+1) := by omega
+  have hd : r.width - (j+1) - 1 = r.width - (j+1+1) := by omega
+  have hd' : r.width - 1 - (j+1) = r.width - (j+1) - 1 := by omega
+  have hu : r.width - 1 - j = r.width - (j+1) := by omega
+  simp [Ring.U, Ring.D] at h₁ h₂ h₃
+  simp [Ring.U, Ring.next, hu] at hs
+  simp [incidentCorners, Point.boundary, sheetCorners, atUp, atDown, bump, bumpPair,
+    Point.coord, v, hz, Nat.ne_of_gt hz, hd, Nat.succ_le_iff, h₁, h₂, h₃, hs] at hv
+  apply aligned_from_four
+  convert hv using 1
+  simp [Ring.next, Ring.U, Ring.D, hd', hd]
+  omega
+
+private theorem ring_next_mono {C : Coloring n} {r : Ring n} {b : Bool} (hC : Good C)
+    (h : r.Mono C b) (hw : 0 < r.width) : (r.next hw).Mono C b := by
+  have hu (s : Bool) (j : ℕ) (hj : j ≤ (r.next hw).width) :
+      C (up s ((r.next hw).U j hj)) = b := by
+    induction j with
+    | zero => exact ring_next_start hC h hw s
+    | succ j ih =>
+      have hj' : j + 1 < r.width := by
+        simp [Ring.next] at hj
+        omega
+      exact (ring_next_step hC h hj' s (ih (by omega))).2
+  refine ⟨hu, ?_⟩
+  intro s j hj
+  have hj' : j + 1 < r.width := by simp [Ring.next] at hj; omega
+  exact (ring_next_step hC h hj' s (hu s j (by omega))).1
+
+private theorem ring_not_mono {C : Coloring n} (hC : Good C) (r : Ring n) (b : Bool) :
+    ¬ r.Mono C b := by
+  intro h
+  induction w : r.width using Nat.strong_induction_on generalizing r with
+  | h w ih =>
+    by_cases hw : 0 < r.width
+    · exact ih (r.next hw).width (by simp [Ring.next]; omega) (r.next hw)
+        (ring_next_mono hC h hw) rfl
+    · let p := r.U 0 (Nat.zero_le _)
+      have hne := corner_opposite hC p rfl (by change r.width - 0 = 0; omega)
+      exact hne ((h.1 false 0 (Nat.zero_le _)).trans (h.1 true 0 (Nat.zero_le _)).symm)
+
 end D5.S0.FiniteGeometry.DoubledTriangleFolds
