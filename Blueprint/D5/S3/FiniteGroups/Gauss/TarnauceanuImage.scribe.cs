@@ -95,7 +95,10 @@ internal sealed class TarnauceanuImageDocument : IScribeDocumentDefinition
                         + "and each differs from 3. Closedness would put 3 into the image. The sequence "
                         + "would then converge in the image itself, and the open singleton at 3 "
                         + "would have to contain every sufficiently late term."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("tarnauceanu-2026-gauss-image-closed-discrete"),
+                    ResolutionKind.Proved)))));
 
     private static DeclarationHandle Handle(string name) =>
         DeclarationHandle.Create(Module + "." + name);

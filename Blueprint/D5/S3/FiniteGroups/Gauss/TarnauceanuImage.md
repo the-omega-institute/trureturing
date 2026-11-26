@@ -68,6 +68,10 @@ $$\neg \left(\operatorname{IsClosed}\left(I\right) \land \operatorname{DiscreteT
 
 *Proof.* Machine-checked in Lean as `D5/S3/FiniteGroups/Gauss/TarnauceanuImage.image_not_closed_and_discrete` (`✓ std3`). ∎
 
+*Resolves.* `Problems/tarnauceanu-2026-gauss-image-closed-discrete` (proved) by `D5/S3/FiniteGroups/Gauss/TarnauceanuImage.image_not_closed_and_discrete`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"tarnauceanu-2026-gauss-image-closed-discrete","declaration_gid":"D5/S3/FiniteGroups/Gauss/TarnauceanuImage.image_not_closed_and_discrete","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Marius Tărnăuceanu (2026). *On some problems regarding a group-theoretical generalization of the Gauss formula*. DOI: [10.48550/arXiv.2611.34371](https://doi.org/10.48550/arXiv.2611.34371). URL: <https://arxiv.org/pdf/2611.34371v1#page=10>.
