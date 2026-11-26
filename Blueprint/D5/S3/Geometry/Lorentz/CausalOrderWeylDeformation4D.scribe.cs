@@ -8,7 +8,7 @@ internal sealed class CausalOrderWeylDeformation4DDocument : IScribeDocumentDefi
 {
     private const string Prefix = "D5/S3/Geometry/Lorentz/CausalOrderWeylDeformation4D.";
     private static LibraryNoteRef Source =>
-        LibraryNoteRef.Create("D5/L/Geometry/gibbonssolodukhin2007causaldiamonds");
+        LibraryNoteRef.Create("D5/L/QuadraticForms/gibbonssolodukhin2007causaldiamonds");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Null-cone rigidity and pointwise reconstruction of four-dimensional Lorentzian curvature.",
