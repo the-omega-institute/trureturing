@@ -35,18 +35,18 @@ public theorem Nat.allTR (n : Nat) (f : (i : Nat) → i < n → Bool) :
     OmegaChecks.InitPort.Alternatives.Nat.allTR n f = _root_.Nat.allTR n f :=
   congrArg (fun k => @k n f) _root_.Nat.all_eq_allTR
 
-public theorem Nat.decidableBallLT (n : Nat) (P : ∀ k, k < n → Prop)
+public theorem Nat.decidableBallLTTR (n : Nat) (P : ∀ k, k < n → Prop)
     [inst : ∀ k h, Decidable (P k h)] :
-    @OmegaChecks.InitPort.Alternatives.Nat.decidableBallLT n P inst =
-      @_root_.Nat.decidableBallLT n P inst := Subsingleton.elim ..
+    @_root_.Nat.decidableBallLT n P inst =
+      @_root_.Nat.decidableBallLTTR n P inst := Subsingleton.elim ..
 
-public theorem Nat.decidableExistsLT {p : Nat → Prop} [inst : DecidablePred p] (n : Nat) :
-    @OmegaChecks.InitPort.Alternatives.Nat.decidableExistsLT p inst n =
-      @_root_.Nat.decidableExistsLT p inst n := Subsingleton.elim ..
+public theorem Nat.decidableExistsLTTR {p : Nat → Prop} [inst : DecidablePred p] (n : Nat) :
+    @_root_.Nat.decidableExistsLT p inst n =
+      @_root_.Nat.decidableExistsLTTR p inst n := Subsingleton.elim ..
 
-public theorem Nat.decidableExistsLT' {n : Nat} {p : (m : Nat) → m < n → Prop}
+public theorem Nat.decidableExistsLT'TR {n : Nat} {p : (m : Nat) → m < n → Prop}
     [inst : ∀ m h, Decidable (p m h)] :
-    @OmegaChecks.InitPort.Alternatives.Nat.decidableExistsLT' n p inst =
-      @_root_.Nat.decidableExistsLT' n p inst := Subsingleton.elim ..
+    @_root_.Nat.decidableExistsLT' n p inst =
+      @_root_.Nat.decidableExistsLT'TR n p inst := Subsingleton.elim ..
 
 end OmegaChecks.Interface.Equations

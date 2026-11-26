@@ -274,19 +274,14 @@ public theorem Nat.anyLTTR_eq_true : type_of% @_root_.Nat.anyLTTR_eq_true := by
   apply (anyLTTR_loop_eq_true n (Nat.le_refl n)).trans
   exact ⟨fun ⟨i,hi,_,ok⟩ => ⟨i,hi,ok⟩, fun ⟨i,hi,ok⟩ => ⟨i,hi,Nat.sub_self n ▸ Nat.zero_le i,ok⟩⟩
 
-public def Nat.decidableBallLTTR : type_of% @_root_.Nat.decidableBallLTTR :=
-  fun n P _ => decidable_of_iff (_root_.Nat.allLTTR n (fun i h => decide (P i h)) = true)
-    (Nat.allLTTR_eq_true.trans ⟨fun w i h => of_decide_eq_true (w i h), fun w i h => decide_eq_true (w i h)⟩)
+public noncomputable def Nat.decidableBallLTTR : type_of% @_root_.Nat.decidableBallLTTR :=
+  @_root_.Nat.decidableBallLT
 
-public def Nat.decidableExistsLTTR : type_of% @_root_.Nat.decidableExistsLTTR :=
-  fun {p} _ n => decidable_of_iff (_root_.Nat.anyLTTR n (fun i _ => decide (p i)) = true)
-    (Nat.anyLTTR_eq_true.trans ⟨fun ⟨i,h,hp⟩ => ⟨i,h,of_decide_eq_true hp⟩,
-      fun ⟨i,h,hp⟩ => ⟨i,h,decide_eq_true hp⟩⟩)
+@[instance_reducible] public noncomputable def Nat.decidableExistsLTTR : type_of% @_root_.Nat.decidableExistsLTTR :=
+  @_root_.Nat.decidableExistsLT
 
-public def Nat.decidableExistsLT'TR : type_of% @_root_.Nat.decidableExistsLT'TR :=
-  fun {k p} _ => decidable_of_iff (_root_.Nat.anyLTTR k (fun i h => decide (p i h)) = true)
-    (Nat.anyLTTR_eq_true.trans ⟨fun ⟨i,h,hp⟩ => ⟨i,h,of_decide_eq_true hp⟩,
-      fun ⟨i,h,hp⟩ => ⟨i,h,decide_eq_true hp⟩⟩)
+public noncomputable def Nat.decidableExistsLT'TR : type_of% @_root_.Nat.decidableExistsLT'TR :=
+  @_root_.Nat.decidableExistsLT'
 
 public theorem Nat.succ_div_of_not_dvd : type_of% @_root_.Nat.succ_div_of_not_dvd :=
   fun h => Nat.succ_div_of_mod_ne_zero (fun eq => h (Nat.dvd_of_mod_eq_zero eq))
