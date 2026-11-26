@@ -98,7 +98,35 @@ $$(\operatorname{walk}\left(0\right) = \langle (0, 0), 0, 0 \rangle) \land (\for
 
 Cell zero is (0,0). Applying advance repeatedly gives the cells of the displayed spiral in their insertion order.
 
-**Definition 1.8 (Spiral diagrams).**
+**Definition 1.8 (Affine lattice frame).**
+
+$$\forall (o : (\mathbb{Z} \times \mathbb{Z})), \forall (s : \mathbb{Z}), \forall (u : (\mathbb{Z} \times \mathbb{Z})), \operatorname{frame}\left(o, s, u\right) = o + (s, s) \cdot u$$
+
+*Formalization.* `D5/S3/Combinatorics/Polyomino/IrwinA138099HookSum.frame` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Paul Curtz and Benedict W. J. Irwin (2016). *OEIS A138099: irregular triangle and Irwin's hook-sum conjecture*. URL: <https://oeis.org/A138099>.
+
+*Commentary.*
+
+Translate a coordinate pair after scaling both coordinates by the same integer.
+
+**Theorem 1.9 (The two legs after an odd or even square start).**
+
+$$\forall (m : \mathbb{N}), (1 \le m) \Rightarrow (\forall (o : (\mathbb{Z} \times \mathbb{Z})), (\operatorname{walk}\left(m \cdot m - 1\right) = \langle o, 2 \cdot m - 2, m - 1 \rangle) \Rightarrow ((\forall (t : \mathbb{N}), (t < m) \Rightarrow (\operatorname{walk}\left(m \cdot m + t\right) = \langle \operatorname{frame}\left(o, \operatorname{ite}\left(\operatorname{Nat.mod}\left(m, 2\right) = 0, (-1 : \mathbb{Z}), 1\right), (-1, (t : \mathbb{Z}))\right), 2 \cdot m - 1, t \rangle)) \land (\forall (t : \mathbb{N}), (t \le m) \Rightarrow (\operatorname{walk}\left(m \cdot m + m + t\right) = \langle \operatorname{frame}\left(o, \operatorname{ite}\left(\operatorname{Nat.mod}\left(m, 2\right) = 0, (-1 : \mathbb{Z}), 1\right), ((t : \mathbb{Z}) - 1, (m : \mathbb{Z}))\right), 2 \cdot m, t \rangle))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Polyomino/IrwinA138099HookSum.layer_walk` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Paul Curtz and Benedict W. J. Irwin (2016). *OEIS A138099: irregular triangle and Irwin's hook-sum conjecture*. URL: <https://oeis.org/A138099>.
+
+*Commentary.*
+
+Starting at the indicated walk state, the next two legs follow the two displayed coordinate offsets in the appropriate signed frame. The square-start equality fixes the cell o and the leg and used counters immediately before the turn, so the next step starts leg 2m-1 in the claimed frame. Positivity of m is necessary. At m=0 and o=(0,0) the starting equality holds by truncated natural subtraction, yet the second formula at t=0 puts the origin at (1,0). On the first leg t<m is strict because at t=m the walk has turned to leg 2m and reset used to zero. The second leg has length m+1, so t=m is still in that leg and t=m+1 would already be on the next leg with used zero.
+
+**Definition 1.10 (Spiral diagrams).**
 
 $$\forall (T : \mathbb{N} \to \operatorname{Finset}\left((\mathbb{Z} \times \mathbb{Z})\right)), (\operatorname{IsSourceSpiral}\left(T\right)) \Leftrightarrow ((T\left(0\right) = \emptyset) \land (\forall (n : \mathbb{N}), T\left(n + 1\right) = \operatorname{insert}\left(\operatorname{walk}\left(n\right).cell, T\left(n\right)\right)))$$
 
@@ -110,7 +138,7 @@ $$\forall (T : \mathbb{N} \to \operatorname{Finset}\left((\mathbb{Z} \times \mat
 
 Conjecture: a(n) = HookSum(T(n))-HookSum(T(n-1)), where HookSum(A) is the sum of all hooks across a tableau A, and T(n) are the spiraling sequence of tableaux: The source's diagram, in its unpaginated FORMULA block, starts Empty, o, oo. Here T 0 is empty and T(n+1) inserts cell n of the walk. No reordering of rows or cells is performed.
 
-**Definition 1.9 (Ordinary hooks in occupied cells).**
+**Definition 1.11 (Ordinary hooks in occupied cells).**
 
 $$\forall (D : \operatorname{Finset}\left((\mathbb{Z} \times \mathbb{Z})\right)), \forall (c : (\mathbb{Z} \times \mathbb{Z})), \operatorname{hookLength}\left(D, c\right) = 1 + ((D).filter\left((d : (\mathbb{Z} \times \mathbb{Z})) \mapsto (d.2 = c.2) \land (c.1 < d.1)\right)).card + ((D).filter\left((d : (\mathbb{Z} \times \mathbb{Z})) \mapsto (d.1 = c.1) \land (c.2 < d.2)\right)).card$$
 
@@ -122,7 +150,7 @@ $$\forall (D : \operatorname{Finset}\left((\mathbb{Z} \times \mathbb{Z})\right))
 
 Conjecture: a(n) = HookSum(T(n))-HookSum(T(n-1)), where HookSum(A) is the sum of all hooks across a tableau A, and T(n) are the spiraling sequence of tableaux: The ordinary hook contains its own cell, the occupied cells strictly to its right in its row, and the occupied cells strictly below it in its column. The formula is used for c in D when summing hooks; holes are allowed.
 
-**Definition 1.10 (The sum of all hooks).**
+**Definition 1.12 (The sum of all hooks).**
 
 $$\forall (D : \operatorname{Finset}\left((\mathbb{Z} \times \mathbb{Z})\right)), \operatorname{hookSum}\left(D\right) = (D).sum\left((c : (\mathbb{Z} \times \mathbb{Z})) \mapsto \operatorname{hookLength}\left(D, c\right)\right)$$
 
@@ -134,7 +162,7 @@ $$\forall (D : \operatorname{Finset}\left((\mathbb{Z} \times \mathbb{Z})\right))
 
 Conjecture: a(n) = HookSum(T(n))-HookSum(T(n-1)), where HookSum(A) is the sum of all hooks across a tableau A, and T(n) are the spiraling sequence of tableaux: This finite sum uses the occupied cells themselves, including the empty sum zero.
 
-**Definition 1.11 (The source assertion with existence).**
+**Definition 1.13 (The source assertion with existence).**
 
 $$(claim) \Leftrightarrow ((\exists (a : \mathbb{N} \to \mathbb{N}), \operatorname{IsSourceSequence}\left(a\right)) \land ((\exists (T : \mathbb{N} \to \operatorname{Finset}\left((\mathbb{Z} \times \mathbb{Z})\right)), \operatorname{IsSourceSpiral}\left(T\right)) \land (\forall (a : \mathbb{N} \to \mathbb{N}), \forall (T : \mathbb{N} \to \operatorname{Finset}\left((\mathbb{Z} \times \mathbb{Z})\right)), (\operatorname{IsSourceSequence}\left(a\right)) \Rightarrow ((\operatorname{IsSourceSpiral}\left(T\right)) \Rightarrow (\forall (n : \mathbb{N}), (1 \le n) \Rightarrow ((a\left(n\right) : \mathbb{Z}) = (\operatorname{hookSum}\left(T\left(n\right)\right) : \mathbb{Z}) - (\operatorname{hookSum}\left(T\left(n - 1\right)\right) : \mathbb{Z})))))))$$
 
@@ -146,7 +174,7 @@ $$(claim) \Leftrightarrow ((\exists (a : \mathbb{N} \to \mathbb{N}), \operatorna
 
 Conjecture: a(n) = HookSum(T(n))-HookSum(T(n-1)), where HookSum(A) is the sum of all hooks across a tableau A, and T(n) are the spiraling sequence of tableaux: This is the complete sentence in Irwin's unpaginated FORMULA block. The arithmetic and spiral sequences both exist, and the identity holds for every pair of such sequences and every positive index. The first two conjuncts assert existence rather than assume it.
 
-**Theorem 1.12 (The hook-sum identity at every positive index).**
+**Theorem 1.14 (The hook-sum identity at every positive index).**
 
 $$(\exists (a : \mathbb{N} \to \mathbb{N}), \operatorname{IsSourceSequence}\left(a\right)) \land ((\exists (T : \mathbb{N} \to \operatorname{Finset}\left((\mathbb{Z} \times \mathbb{Z})\right)), \operatorname{IsSourceSpiral}\left(T\right)) \land (\forall (a : \mathbb{N} \to \mathbb{N}), \forall (T : \mathbb{N} \to \operatorname{Finset}\left((\mathbb{Z} \times \mathbb{Z})\right)), (\operatorname{IsSourceSequence}\left(a\right)) \Rightarrow ((\operatorname{IsSourceSpiral}\left(T\right)) \Rightarrow (\forall (n : \mathbb{N}), (1 \le n) \Rightarrow ((a\left(n\right) : \mathbb{Z}) = (\operatorname{hookSum}\left(T\left(n\right)\right) : \mathbb{Z}) - (\operatorname{hookSum}\left(T\left(n - 1\right)\right) : \mathbb{Z}))))))$$
 
@@ -171,8 +199,10 @@ Inserting a fresh cell increases the total hook sum by one plus the old row and 
 - Truth anchor: `D5/S3/Combinatorics/Polyomino/IrwinA138099HookSum.WalkState`
 - Truth anchor: `D5/S3/Combinatorics/Polyomino/IrwinA138099HookSum.advance`
 - Truth anchor: `D5/S3/Combinatorics/Polyomino/IrwinA138099HookSum.claim`
+- Truth anchor: `D5/S3/Combinatorics/Polyomino/IrwinA138099HookSum.frame`
 - Truth anchor: `D5/S3/Combinatorics/Polyomino/IrwinA138099HookSum.hookLength`
 - Truth anchor: `D5/S3/Combinatorics/Polyomino/IrwinA138099HookSum.hookSum`
+- Truth anchor: `D5/S3/Combinatorics/Polyomino/IrwinA138099HookSum.layer_walk`
 - Truth anchor: `D5/S3/Combinatorics/Polyomino/IrwinA138099HookSum.legDirection`
 - Truth anchor: `D5/S3/Combinatorics/Polyomino/IrwinA138099HookSum.result`
 - Truth anchor: `D5/S3/Combinatorics/Polyomino/IrwinA138099HookSum.triangleEntry`
