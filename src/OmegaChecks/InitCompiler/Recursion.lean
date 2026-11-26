@@ -112,7 +112,10 @@ public def specialize (env : Environment) (rule official : ConstantInfo) (body :
       let some term ← observing? (pointwiseApplication rule e.getAppFn.constLevels! e.getAppArgs) | return .done e
       return .done term)
   try
-    let result ← action.run' |>.toIO' {fileName := "<fixed point congruence>", fileMap := default} {env}
+    let inlineGenerated : MetaM Expr := do
+      let result ← action
+      Meta.deltaExpand result (fun n => !env.contains n) (allowOpaque := true)
+    let result ← inlineGenerated.run' |>.toIO' {fileName := "<fixed point congruence>", fileMap := default} {env}
     if result.hasFVar || result.hasMVar || result.hasLooseBVars then return body
     return result
   catch _ => return body
