@@ -349,7 +349,7 @@ private theorem symmetric_rpow_cosh {u v : ℝ} (hu : 0 < u) (hv : 0 < v) (p : �
   ring
 
 /-- The symmetric powers vanish on zero-product edges because both exponents are positive. -/
-private theorem edgeKernel_eq_cosh {p u v : ℝ} (hp : 0 < p) (hp₁ : p < 1)
+theorem edgeKernel_eq_cosh {p u v : ℝ} (hp : 0 < p) (hp₁ : p < 1)
     (hu : 0 ≤ u) (hv : 0 ≤ v) :
     edgeKernel p u v = coshEdgeKernel p u v := by
   by_cases hz : u * v = 0
