@@ -776,4 +776,11 @@ public theorem BitVec.extractLsb'_append_eq_right : type_of% @_root_.BitVec.extr
   intro w v a b
   rw [← BitVec.setWidth_eq_extractLsb' (Nat.le_add_left v w), BitVec.setWidth_append_eq_right]
 
+public theorem BitVec.append_assoc : type_of% @_root_.BitVec.append_assoc := by
+  intro w v k a b c
+  apply BitVec.toNat_inj.mp
+  rw [BitVec.toNat_cast, BitVec.toNat_append, BitVec.toNat_append, BitVec.toNat_append,
+    BitVec.toNat_append, Nat.shiftLeft_or_distrib, ← Nat.shiftLeft_add, Nat.or_assoc]
+
+
 end OmegaChecks.InitPort.Alternatives

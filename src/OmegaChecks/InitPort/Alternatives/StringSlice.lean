@@ -283,4 +283,20 @@ public theorem String.Slice.Pos.get_copy._proof_1 : type_of% @_root_.String.Slic
   intro s p ne eq
   exact ne ((congrArg String.Slice.Pos.copy eq).trans String.Slice.endPos_copy.symm)
 
+public theorem String.get_startPos._proof_1 : type_of% @_root_.String.get_startPos._proof_1 := by
+  intro s ne nil
+  exact ne (String.startPos_eq_endPos_iff.mpr (String.toList_eq_nil_iff.mp nil))
+
+public theorem String.head_toList : type_of% @_root_.String.head_toList := by
+  intro s nonempty
+  obtain ⟨xs, rfl⟩ := s.exists_eq_ofList
+  cases xs with
+  | nil => exact (nonempty String.toList_empty).elim
+  | cons c cs =>
+    have dec := List.utf8DecodeChar?_utf8Encode_cons (c := c) (l := cs)
+    have xs := String.toList_ofList (l := c :: cs)
+    simp only [xs, List.head_cons]
+    unfold ByteArray.utf8DecodeChar
+    exact (Option.get_of_eq_some _ dec).symm
+
 end OmegaChecks.InitPort.Alternatives
