@@ -1,5 +1,5 @@
 /- GID: D5/S3/HomologicalAlgebra/InflatedCupCoboundary
-   generality: G
+   generality: I
    mirror-B: none(waiver:internal-proof-component)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
