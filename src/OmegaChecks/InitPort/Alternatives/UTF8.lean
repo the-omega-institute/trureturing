@@ -411,4 +411,112 @@ public theorem ByteArray.utf8Decode?go_eq_utf8Decode?go_extract :
   rw [Array.append_empty] at same
   exact same
 
+public theorem Nat.two_pow_add_eq_or_of_lt : type_of% @_root_.Nat.two_pow_add_eq_or_of_lt := by
+  intro i b small a
+  let n := 2^i * a ||| b
+  have parts := Nat.mod_add_div n (2^i)
+  unfold n at parts
+  rw [Nat.or_mod_two_pow, Nat.or_div_two_pow, Nat.mul_mod_right,
+    Nat.mod_eq_of_lt small, Nat.zero_or, Nat.mul_div_cancel_left _ (Nat.two_pow_pos _),
+    Nat.div_eq_of_lt small, Nat.or_zero, Nat.add_comm] at parts
+  exact parts
+
+private theorem packedField (v : BitVec n) (s w : Nat) (tag : BitVec k) :
+    (tag ++ v.extractLsb' s w).toNat = v.toNat / 2^s % 2^w + 2^w * tag.toNat := by
+  rw [BitVec.toNat_append, BitVec.extractLsb'_toNat, Nat.shiftRight_eq_div_pow,
+    Nat.shiftLeft_eq, Nat.mul_comm tag.toNat, ← _root_.Nat.two_pow_add_eq_or_of_lt (Nat.mod_lt _ (Nat.two_pow_pos _)),
+    Nat.add_comm]
+private theorem packedByte (c : Char) {s w k : Nat} (tag : BitVec k) (size : k + w = 8)
+    (v : Nat) (val : v = c.val.toNat / 2^s % 2^w + 2^w * tag.toNat) :
+    (UInt8.ofNat v).toBitVec = (tag ++ c.val.toBitVec.extractLsb' s w).cast size := by
+  apply BitVec.eq_of_toNat_eq
+  change v % 256 = (tag ++ c.val.toBitVec.extractLsb' s w).toNat
+  have eq : v = (tag ++ c.val.toBitVec.extractLsb' s w).toNat := val.trans (packedField ..).symm
+  rw [eq, Nat.mod_eq_of_lt]
+  have bound := (tag ++ c.val.toBitVec.extractLsb' s w).isLt
+  exact Nat.lt_of_lt_of_eq bound (congrArg (2 ^ ·) size)
+
+private def encodedBytes (c : Char) : Nat → List UInt8
+  | 1 => [UInt8.ofNat c.val.toNat]
+  | 2 => [UInt8.ofNat (c.val.toNat / 64 % 32 + 192),
+      UInt8.ofNat (c.val.toNat % 64 + 128)]
+  | 3 => [UInt8.ofNat (c.val.toNat / 4096 % 16 + 224),
+      UInt8.ofNat (c.val.toNat / 64 % 64 + 128),
+      UInt8.ofNat (c.val.toNat % 64 + 128)]
+  | _ => [UInt8.ofNat (c.val.toNat / 262144 % 8 + 240),
+      UInt8.ofNat (c.val.toNat / 4096 % 64 + 128),
+      UInt8.ofNat (c.val.toNat / 64 % 64 + 128),
+      UInt8.ofNat (c.val.toNat % 64 + 128)]
+
+private theorem encodedBytes_of_size {c : Char} {n : Nat} (h : c.utf8Size = n) :
+    String.utf8EncodeChar c = encodedBytes c n := by
+  subst n
+  rw [width_value]
+  unfold String.utf8EncodeChar
+  dsimp only
+  split <;> first | rfl | (split <;> first | rfl | (split <;> rfl))
+
+public theorem String.toBitVec_getElem_utf8EncodeChar_zero_of_utf8Size_eq_one :
+    type_of% (private_decl% @_root_.String.toBitVec_getElem_utf8EncodeChar_zero_of_utf8Size_eq_one) := fun {c} h =>
+  (congrArg UInt8.toBitVec (List.getElem_of_eq (i := 0) (encodedBytes_of_size h)
+    (Nat.lt_of_lt_of_eq (by decide : 0 < 1) ((_root_.String.length_utf8EncodeChar c).trans h).symm))).trans
+    (packedByte (s := 0) (w := 7) c 0#1 rfl _ (by
+      have bound : c.val.toNat < 128 := Nat.lt_succ_of_le (_root_.Char.utf8Size_eq_one_iff.1 h)
+      rw [Nat.div_one, Nat.mod_eq_of_lt bound]
+      rfl))
+
+public theorem String.toBitVec_getElem_utf8EncodeChar_zero_of_utf8Size_eq_two :
+    type_of% (private_decl% @_root_.String.toBitVec_getElem_utf8EncodeChar_zero_of_utf8Size_eq_two) := fun {c} h =>
+  (congrArg UInt8.toBitVec (List.getElem_of_eq (i := 0) (encodedBytes_of_size h)
+    (Nat.lt_of_lt_of_eq (by decide : 0 < 2) ((_root_.String.length_utf8EncodeChar c).trans h).symm))).trans
+    (packedByte (s := 6) (w := 5) c 6#3 rfl _ rfl)
+
+public theorem String.toBitVec_getElem_utf8EncodeChar_one_of_utf8Size_eq_two :
+    type_of% (private_decl% @_root_.String.toBitVec_getElem_utf8EncodeChar_one_of_utf8Size_eq_two) := fun {c} h =>
+  (congrArg UInt8.toBitVec (List.getElem_of_eq (i := 1) (encodedBytes_of_size h)
+    (Nat.lt_of_lt_of_eq (by decide : 1 < 2) ((_root_.String.length_utf8EncodeChar c).trans h).symm))).trans
+    (packedByte (s := 0) (w := 6) c 2#2 rfl _ (by rw [Nat.div_one]; rfl))
+
+public theorem String.toBitVec_getElem_utf8EncodeChar_zero_of_utf8Size_eq_three :
+    type_of% (private_decl% @_root_.String.toBitVec_getElem_utf8EncodeChar_zero_of_utf8Size_eq_three) := fun {c} h =>
+  (congrArg UInt8.toBitVec (List.getElem_of_eq (i := 0) (encodedBytes_of_size h)
+    (Nat.lt_of_lt_of_eq (by decide : 0 < 3) ((_root_.String.length_utf8EncodeChar c).trans h).symm))).trans
+    (packedByte (s := 12) (w := 4) c 14#4 rfl _ rfl)
+
+public theorem String.toBitVec_getElem_utf8EncodeChar_one_of_utf8Size_eq_three :
+    type_of% (private_decl% @_root_.String.toBitVec_getElem_utf8EncodeChar_one_of_utf8Size_eq_three) := fun {c} h =>
+  (congrArg UInt8.toBitVec (List.getElem_of_eq (i := 1) (encodedBytes_of_size h)
+    (Nat.lt_of_lt_of_eq (by decide : 1 < 3) ((_root_.String.length_utf8EncodeChar c).trans h).symm))).trans
+    (packedByte (s := 6) (w := 6) c 2#2 rfl _ rfl)
+
+public theorem String.toBitVec_getElem_utf8EncodeChar_two_of_utf8Size_eq_three :
+    type_of% (private_decl% @_root_.String.toBitVec_getElem_utf8EncodeChar_two_of_utf8Size_eq_three) := fun {c} h =>
+  (congrArg UInt8.toBitVec (List.getElem_of_eq (i := 2) (encodedBytes_of_size h)
+    (Nat.lt_of_lt_of_eq (by decide : 2 < 3) ((_root_.String.length_utf8EncodeChar c).trans h).symm))).trans
+    (packedByte (s := 0) (w := 6) c 2#2 rfl _ (by rw [Nat.div_one]; rfl))
+
+public theorem String.toBitVec_getElem_utf8EncodeChar_zero_of_utf8Size_eq_four :
+    type_of% (private_decl% @_root_.String.toBitVec_getElem_utf8EncodeChar_zero_of_utf8Size_eq_four) := fun {c} h =>
+  (congrArg UInt8.toBitVec (List.getElem_of_eq (i := 0) (encodedBytes_of_size h)
+    (Nat.lt_of_lt_of_eq (by decide : 0 < 4) ((_root_.String.length_utf8EncodeChar c).trans h).symm))).trans
+    (packedByte (s := 18) (w := 3) c 30#5 rfl _ rfl)
+
+public theorem String.toBitVec_getElem_utf8EncodeChar_one_of_utf8Size_eq_four :
+    type_of% (private_decl% @_root_.String.toBitVec_getElem_utf8EncodeChar_one_of_utf8Size_eq_four) := fun {c} h =>
+  (congrArg UInt8.toBitVec (List.getElem_of_eq (i := 1) (encodedBytes_of_size h)
+    (Nat.lt_of_lt_of_eq (by decide : 1 < 4) ((_root_.String.length_utf8EncodeChar c).trans h).symm))).trans
+    (packedByte (s := 12) (w := 6) c 2#2 rfl _ rfl)
+
+public theorem String.toBitVec_getElem_utf8EncodeChar_two_of_utf8Size_eq_four :
+    type_of% (private_decl% @_root_.String.toBitVec_getElem_utf8EncodeChar_two_of_utf8Size_eq_four) := fun {c} h =>
+  (congrArg UInt8.toBitVec (List.getElem_of_eq (i := 2) (encodedBytes_of_size h)
+    (Nat.lt_of_lt_of_eq (by decide : 2 < 4) ((_root_.String.length_utf8EncodeChar c).trans h).symm))).trans
+    (packedByte (s := 6) (w := 6) c 2#2 rfl _ rfl)
+
+public theorem String.toBitVec_getElem_utf8EncodeChar_three_of_utf8Size_eq_four :
+    type_of% (private_decl% @_root_.String.toBitVec_getElem_utf8EncodeChar_three_of_utf8Size_eq_four) := fun {c} h =>
+  (congrArg UInt8.toBitVec (List.getElem_of_eq (i := 3) (encodedBytes_of_size h)
+    (Nat.lt_of_lt_of_eq (by decide : 3 < 4) ((_root_.String.length_utf8EncodeChar c).trans h).symm))).trans
+    (packedByte (s := 0) (w := 6) c 2#2 rfl _ (by rw [Nat.div_one]; rfl))
+
 end OmegaChecks.InitPort.Alternatives
