@@ -61,6 +61,10 @@ def quad (a : Quaternion) (rest : Values) : Values :=
 
 def triple (x y z : Int) (rest : Values) : Values := .cons x (.cons y (.cons z rest))
 
+def cfst (A : Expr) (c d e f : Coordinates) : Coordinates := cadd (c.mul e) ((d.mul f).scale A.neg)
+
+def csnd (c d e f : Coordinates) : Coordinates := cadd (c.mul f) (d.mul e)
+
 def n3 : Nat := Nat.zero.succ.succ.succ
 def n4 : Nat := n3.succ
 def n5 : Nat := n4.succ
@@ -155,6 +159,12 @@ theorem mul_mul_of_isPure {a : Quaternion} (h : a.IsPure) (u : Quaternion) :
     Eq ((u.mul a).mul a) (scale (a.dot a).neg u) :=
   (mul_assoc u a a).trans ((congrArg u.mul (mul_self_of_isPure h)).trans (mul_scalar _ u))
 
+theorem add_scale_zero (x y : Quaternion) :
+    Eq (x.add (scale (Int.ofNat Nat.zero) y)) x :=
+  let coordinate := fun (c d : Int) =>
+    (congrArg c.add (Int.zero_mul d)).trans (Int.add_zero c)
+  ext (coordinate x.w y.w) (coordinate x.x y.x) (coordinate x.y y.y) (coordinate x.z y.z)
+
 theorem shell_eq_pairAct (s : Int) (p a v : Quaternion) :
     Eq (shell s p a v) (pairAct a (scalar s) p v) :=
   congrArg (fun t : Quaternion => t.add ((p.mul v).mul a)) (scalar_mul s v).symm
@@ -196,6 +206,92 @@ theorem pairAct_pairAct {a : Quaternion} (h : a.IsPure) (c d e f u : Quaternion)
       ((congrArg (fun t : Quaternion => t.mul a) (mul_pairAct a d e f u)).trans
         (pairAct_mul h (d.mul e) (d.mul f) u))).trans
     (pairAct_add a (c.mul e) (c.mul f) (scale (a.dot a).neg (d.mul f)) (d.mul e) u)
+
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
+private theorem compress_pairs_mk (α s x1 x2 x3 y1 y2 y3 : Int) :
+    let p := Quaternion.mk Int.zero x1 x2 x3
+    let q := Quaternion.mk Int.zero y1 y2 y3
+    let c := pairFst α (scalar s) q (scalar s) p
+    let d := pairSnd (scalar s) q (scalar s) p
+    let t := (s.mul s).add (α.mul (p.dot q))
+    let δ := (s.mul s).sub ((p.dot p).mul α)
+    And (Eq (pairFst α (scalar s) p c d) ((scale (t.add t) (scalar s)).add (scale δ (scalar s.neg))))
+      (Eq (pairSnd (scalar s) p c d) ((scale (t.add t) p).add (scale δ q))) :=
+  let values := Values.cons α (Values.cons s (triple x1 x2 x3 (triple y1 y2 y3 .nil)))
+  let A := Expr.var Nat.zero
+  let S := Expr.var Nat.zero.succ
+  let P := pure Nat.zero.succ.succ
+  let Q := pure n5
+  let C := cfst A (Coordinates.scalar S) Q (Coordinates.scalar S) P
+  let D := csnd (Coordinates.scalar S) Q (Coordinates.scalar S) P
+  let T := (S.mul S).add (A.mul (P.dot Q))
+  let Δ := (S.mul S).sub ((P.dot P).mul A)
+  let lhs := cfst A (Coordinates.scalar S) P C D
+  let rhs := cadd ((Coordinates.scalar S).scale (T.add T)) ((Coordinates.scalar S.neg).scale Δ)
+  let lhs' := csnd (Coordinates.scalar S) P C D
+  let rhs' := cadd (P.scale (T.add T)) (Q.scale Δ)
+  And.intro
+    (ext (lhs.w.sound rhs.w values rfl) (lhs.x.sound rhs.x values rfl)
+      (lhs.y.sound rhs.y values rfl) (lhs.z.sound rhs.z values rfl))
+    (ext (lhs'.w.sound rhs'.w values rfl) (lhs'.x.sound rhs'.x values rfl)
+      (lhs'.y.sound rhs'.y values rfl) (lhs'.z.sound rhs'.z values rfl))
+
+/-- Shell compression without norm conditions. For pure `p`, `q`, `a`, any integer `s` and
+any quaternion `v`,
+`P_p P_q P_p v = 2 (s² + N(a) (p·q)) P_p v + (s² - N(p) N(a)) P_{-s,q,a} v`,
+where `P_{-s,q,a} v = q v a - s v`. -/
+theorem shell_compress (s : Int) {p q a : Quaternion} (hp : p.IsPure) (hq : q.IsPure)
+    (ha : a.IsPure) (v : Quaternion) :
+    let t := (s.mul s).add ((a.dot a).mul (p.dot q))
+    let δ := (s.mul s).sub ((p.dot p).mul (a.dot a))
+    Eq (shell s p a (shell s q a (shell s p a v)))
+      ((scale (t.add t) (shell s p a v)).add (scale δ (shell s.neg q a v))) :=
+  let S := scalar s
+  let α := a.dot a
+  let t := (s.mul s).add (α.mul (p.dot q))
+  let δ := (s.mul s).sub ((p.dot p).mul α)
+  let c := pairFst α S q S p
+  let d := pairSnd S q S p
+  let stmt := fun P Q : Quaternion =>
+    let c := pairFst α S Q S P
+    let d := pairSnd S Q S P
+    let t := (s.mul s).add (α.mul (P.dot Q))
+    let δ := (s.mul s).sub ((P.dot P).mul α)
+    And (Eq (pairFst α S P c d) ((scale (t.add t) S).add (scale δ (scalar s.neg))))
+      (Eq (pairSnd S P c d) ((scale (t.add t) P).add (scale δ Q)))
+  have pairs : stmt p q :=
+    Eq.subst (motive := fun P => stmt P q) (eq_mk_of_isPure hp).symm
+      (Eq.subst (motive := fun Q => stmt (Quaternion.mk Int.zero p.x p.y p.z) Q)
+        (eq_mk_of_isPure hq).symm (compress_pairs_mk α s p.x p.y p.z q.x q.y q.z))
+  have inner : Eq (shell s q a (shell s p a v)) (pairAct a c d v) :=
+    (congrArg (shell s q a) (shell_eq_pairAct s p a v)).trans
+      ((shell_eq_pairAct s q a _).trans (pairAct_pairAct ha S q S p v))
+  have left : Eq (shell s p a (shell s q a (shell s p a v)))
+      (pairAct a (pairFst α S p c d) (pairSnd S p c d) v) :=
+    (congrArg (shell s p a) inner).trans
+      ((shell_eq_pairAct s p a _).trans (pairAct_pairAct ha S p c d v))
+  have right : Eq ((scale (t.add t) (shell s p a v)).add (scale δ (shell s.neg q a v)))
+      (pairAct a ((scale (t.add t) S).add (scale δ (scalar s.neg)))
+        ((scale (t.add t) p).add (scale δ q)) v) :=
+    (Eq.map₂ add
+      ((congrArg (scale (t.add t)) (shell_eq_pairAct s p a v)).trans
+        (scale_pairAct (t.add t) a S p v))
+      ((congrArg (scale δ) (shell_eq_pairAct s.neg q a v)).trans
+        (scale_pairAct δ a (scalar s.neg) q v))).trans
+    (pairAct_add a _ _ _ _ v)
+  left.trans ((Eq.map₂ (fun c' d' => pairAct a c' d' v) pairs.left pairs.right).trans right.symm)
+
+/-- On the shell `s² = N(p) N(a)` the composition `P_p P_q P_p` is the multiple
+`2 (s² + N(a) (p·q))` of `P_p`. -/
+theorem shell_compress_of_eq (s : Int) {p q a : Quaternion} (hp : p.IsPure) (hq : q.IsPure)
+    (ha : a.IsPure) (hs : Eq (s.mul s) ((p.dot p).mul (a.dot a))) (v : Quaternion) :
+    let t := (s.mul s).add ((a.dot a).mul (p.dot q))
+    Eq (shell s p a (shell s q a (shell s p a v))) (scale (t.add t) (shell s p a v)) :=
+  let t := (s.mul s).add ((a.dot a).mul (p.dot q))
+  (shell_compress s hp hq ha v).trans
+    ((congrArg (fun k : Int => (scale (t.add t) (shell s p a v)).add (scale k (shell s.neg q a v)))
+      (Int.sub_eq_zero.mpr hs)).trans (add_scale_zero _ _))
 
 end Quaternion
 end Omega
