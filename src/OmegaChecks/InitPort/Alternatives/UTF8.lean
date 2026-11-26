@@ -243,4 +243,49 @@ public theorem String.Pos.isValidUTF8_extract : type_of% @_root_.String.Pos.isVa
 @[expose] public def String.Internal.toArray (s : String) : Array Char :=
   s.toByteArray.utf8Decode?.getD #[]
 
+private theorem same_decode (a b : ByteArray) (i j : Nat)
+    (bound : ∀ k, i + k < a.size ↔ j + k < b.size)
+    (byte : ∀ k (hi : i + k < a.size) (hj : j + k < b.size), a[i + k] = b[j + k]) :
+    a.utf8DecodeChar? i = b.utf8DecodeChar? j := by
+  unfold ByteArray.utf8DecodeChar?
+  by_cases hi : i < a.size
+  · have hj : j < b.size := (bound 0).1 hi
+    rw [dite_eq_left hi, dite_eq_left hj]
+    have hx := byte 0 hi hj
+    change a[i] = b[j] at hx
+    generalize ha : a[i] = w
+    have hb : b[j] = w := hx.symm.trans ha
+    rw [hb]
+    split
+    · rfl
+    · rfl
+    · by_cases h₁ : i + 1 < a.size
+      · rw [dite_eq_left h₁, dite_eq_left ((bound 1).1 h₁), byte 1 h₁ ((bound 1).1 h₁)]
+      · rw [dite_eq_right h₁, dite_eq_right (fun h => h₁ ((bound 1).2 h))]
+    · by_cases h₂ : i + 2 < a.size
+      · have hi₁ := Nat.lt_of_succ_lt h₂
+        have hj₂ := (bound 2).1 h₂
+        rw [dite_eq_left h₂, dite_eq_left hj₂, byte 1 hi₁ ((bound 1).1 hi₁), byte 2 h₂ hj₂]
+      · rw [dite_eq_right h₂, dite_eq_right (fun h => h₂ ((bound 2).2 h))]
+    · by_cases h₃ : i + 3 < a.size
+      · have hi₂ := Nat.lt_of_succ_lt h₃
+        have hi₁ := Nat.lt_of_succ_lt hi₂
+        have hj₃ := (bound 3).1 h₃
+        rw [dite_eq_left h₃, dite_eq_left hj₃, byte 1 hi₁ ((bound 1).1 hi₁),
+          byte 2 hi₂ ((bound 2).1 hi₂), byte 3 h₃ hj₃]
+      · rw [dite_eq_right h₃, dite_eq_right (fun h => h₃ ((bound 3).2 h))]
+  · have hj : ¬j < b.size := fun h => hi ((bound 0).2 h)
+    rw [dite_eq_right hi, dite_eq_right hj]
+
+public theorem ByteArray.utf8DecodeChar?_eq_utf8DecodeChar?_extract :
+    type_of% @_root_.ByteArray.utf8DecodeChar?_eq_utf8DecodeChar?_extract := by
+  intro b i
+  apply same_decode
+  · intro k
+    rw [ByteArray.size_extract, Nat.min_self, Nat.zero_add, Nat.add_comm]
+    exact Nat.lt_sub_iff_add_lt.symm
+  · intro k left right
+    have h : (b.extract i b.size)[0 + k]'right = b[i + (0 + k)] :=
+      ByteArray.getElem_extract right
+    simpa only [Nat.zero_add] using h.symm
 end OmegaChecks.InitPort.Alternatives
