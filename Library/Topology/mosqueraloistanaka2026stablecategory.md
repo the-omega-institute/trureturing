@@ -16,11 +16,16 @@ triage: anchor
 
 # Weak and stable category of finite spaces
 
-Question 6.3 asks whether (operatorname{cat}_s(X)le 2operatorname{cat}_w(X)).
+Question 6.3 asks whether `cat_s(X) ≤ 2 cat_w(X)`.
 The stable invariant takes the minimum of the ordinary finite-space category
 over all barycentric subdivisions. The weak invariant is the category of
 the realization of the order complex. The paper uses unreduced category.
-[§2 and Question 6.3](https://arxiv.org/abs/2609.39615v1)
+
+## Locator
+
+Section 2 and Question 6.3 of the cited preprint give the category invariants
+and the proposed inequality. DOI 10.48550/arXiv.2609.39615.
+[Preprint v1](https://arxiv.org/abs/2609.39615v1)
 
 ## A coface bound on a collapse sequence
 
