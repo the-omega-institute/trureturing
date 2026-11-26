@@ -649,4 +649,59 @@ public theorem Std.Rco.size_eq_ite_rcc : type_of% @_root_.Std.Rco.size_eq_ite_rc
   · rw [ite_eq_right h]
     exact Rxo.LawfulHasSize.size_eq_zero_of_not_le _ _ h
 
+private theorem consRangeEmpty (p : Prop) [Decidable p] (a : α) (tail : List α) :
+    (if p then a :: tail else []) = [] ↔ ¬p := by
+  constructor
+  · intro empty hp
+    rw [ite_eq_left hp] at empty
+    contradiction
+  · intro no
+    exact ite_eq_right no
+
+private theorem arrayNilOfList (xs : List α) : xs.toArray = #[] ↔ xs = [] :=
+  ⟨fun eq => congrArg Array.toList eq, fun eq => congrArg List.toArray eq⟩
+
+public theorem Std.Rcc.toList_eq_nil_iff : type_of% @_root_.Std.Rcc.toList_eq_nil_iff := by
+  intro α r _ _ _ _ _ _
+  rw [_root_.Std.Rcc.toList_eq_ite_roc]
+  exact consRangeEmpty _ _ _
+
+public theorem Std.Rco.toList_eq_nil_iff : type_of% @_root_.Std.Rco.toList_eq_nil_iff := by
+  intro α r _ _ _ _ _ _
+  rw [_root_.Std.Rco.toList_eq_ite_roo]
+  exact consRangeEmpty _ _ _
+
+public theorem Std.Roo.toList_eq_nil_iff : type_of% @_root_.Std.Roo.toList_eq_nil_iff := by
+  intro α r _ _ _ _ _ _ _
+  rw [_root_.Std.Roo.toList_eq_match_rco]
+  cases h : UpwardEnumerable.succ? r.lower with
+  | none =>
+    constructor
+    · intro _ _ eq
+      cases eq
+    · intro _
+      rfl
+  | some next =>
+    constructor
+    · intro empty a eq
+      cases eq
+      exact _root_.Std.Rco.toList_eq_nil_iff.mp empty
+    · intro noneBelow
+      exact _root_.Std.Rco.toList_eq_nil_iff.mpr (noneBelow next rfl)
+
+public theorem Std.Rcc.toArray_eq_empty_iff : type_of% @_root_.Std.Rcc.toArray_eq_empty_iff := by
+  intro α r _ _ _ _ _ _
+  rw [← _root_.Std.Rcc.toArray_toList]
+  exact (arrayNilOfList _).trans _root_.Std.Rcc.toList_eq_nil_iff
+
+public theorem Std.Rco.toArray_eq_empty_iff : type_of% @_root_.Std.Rco.toArray_eq_empty_iff := by
+  intro α r _ _ _ _ _ _
+  rw [← _root_.Std.Rco.toArray_toList]
+  exact (arrayNilOfList _).trans _root_.Std.Rco.toList_eq_nil_iff
+
+public theorem Std.Roo.toArray_eq_empty_iff : type_of% @_root_.Std.Roo.toArray_eq_empty_iff := by
+  intro α r _ _ _ _ _ _ _
+  rw [← _root_.Std.Roo.toArray_toList]
+  exact (arrayNilOfList _).trans _root_.Std.Roo.toList_eq_nil_iff
+
 end OmegaChecks.InitPort.Alternatives
