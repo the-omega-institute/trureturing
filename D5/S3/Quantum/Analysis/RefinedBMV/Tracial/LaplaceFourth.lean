@@ -10,6 +10,8 @@ import D5.S3.Quantum.Analysis.RefinedBMV.Tracial.FourthEnergy
 import Mathlib.Analysis.Matrix.Order
 import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Gaussian.GaussianIntegral
+import Mathlib.Data.Nat.Choose.Multinomial
+import Mathlib.MeasureTheory.Integral.Pi
 
 namespace RefinedBMV.Tracial
 
@@ -203,6 +205,61 @@ theorem fourth_laplace_moment_congruence_le (p : ℝ) (hp : -4 < p)
   simp_rw [htrace, hnorm, mul_one] at hmoment
   rw [← Finset.mul_sum] at hmoment
   simpa only [trace, diag_apply, Complex.re_sum, show p + 3 + 1 = p + 4 by ring] using hmoment
+
+
+/-- Integrating a power of the coordinate sum against a product of decaying
+exponentials gives the complete homogeneous polynomial in the inverse rates. -/
+theorem integral_orthant_sum_pow_mul_exp {ι : Type*} [Fintype ι] [DecidableEq ι]
+    (m : ℕ) (a : ι → ℝ) (ha : ∀ i, 0 < a i) :
+    (∫ x : ι → ℝ, (∑ i, x i) ^ m * Real.exp (-(∑ i, a i * x i))
+      ∂(Measure.pi (fun _ : ι ↦ volume.restrict (Ioi (0 : ℝ))))) =
+      (m.factorial : ℝ) *
+        ∑ g ∈ Finset.piAntidiag (Finset.univ : Finset ι) m, ∏ i, (a i)⁻¹ ^ (g i + 1) := by
+  let μ : ι → Measure ℝ := fun _ ↦ volume.restrict (Ioi 0)
+  let _ : ∀ i : ι, SigmaFinite (μ i) := fun _ ↦ by dsimp [μ]; infer_instance
+  let compositions : Finset (ι → ℕ) := Finset.piAntidiag Finset.univ m
+  let c (g : ι → ℕ) : ℝ := Nat.multinomial Finset.univ g
+  let f (g : ι → ℕ) (i : ι) (t : ℝ) : ℝ := t ^ g i * Real.exp (-(a i * t))
+  have hf (g : ι → ℕ) (i : ι) : Integrable (f g i) (μ i) := by
+    change IntegrableOn (fun t : ℝ ↦ t ^ g i * Real.exp (-(a i * t))) (Ioi 0)
+    simpa only [Real.rpow_natCast, Real.rpow_one, neg_mul] using
+      (integrableOn_rpow_mul_exp_neg_mul_rpow (p := 1) (s := (g i : ℝ))
+        (by linarith [Nat.cast_nonneg (α := ℝ) (g i)]) one_pos (ha i))
+  have hf_prod (g : ι → ℕ) :
+      Integrable (fun x : ι → ℝ ↦ ∏ i, f g i (x i)) (Measure.pi μ) :=
+    Integrable.fintype_prod (hf g)
+  have hf_integral (g : ι → ℕ) (i : ι) :
+      (∫ t : ℝ, f g i t ∂(μ i)) = ((g i).factorial : ℝ) * (a i)⁻¹ ^ (g i + 1) := by
+    change (∫ t in Ioi (0 : ℝ), t ^ g i * Real.exp (-(a i * t))) = _
+    have h := gamma_trace_weight (g i : ℝ)
+      (by linarith [Nat.cast_nonneg (α := ℝ) (g i)]) (ha i)
+    rw [Real.Gamma_nat_eq_factorial, ← Nat.cast_succ, Real.rpow_natCast] at h
+    simpa only [Real.rpow_natCast, one_div, Nat.succ_eq_add_one, mul_comm] using h
+  have h_expand (x : ι → ℝ) :
+      (∑ i, x i) ^ m * Real.exp (-(∑ i, a i * x i)) =
+        ∑ g ∈ compositions, c g * ∏ i, f g i (x i) := by
+    rw [← Finset.sum_neg_distrib, Real.exp_sum, Finset.sum_pow_eq_sum_piAntidiag, Finset.sum_mul]
+    refine Finset.sum_congr rfl fun g _ ↦ ?_
+    simp only [c, f, Finset.prod_mul_distrib, mul_assoc]
+  change (∫ x : ι → ℝ, (∑ i, x i) ^ m *
+    Real.exp (-(∑ i, a i * x i)) ∂(Measure.pi μ)) = _
+  calc
+    _ = ∫ x : ι → ℝ, (∑ g ∈ compositions, c g * ∏ i, f g i (x i)) ∂(Measure.pi μ) :=
+      integral_congr_ae (Filter.Eventually.of_forall h_expand)
+    _ = ∑ g ∈ compositions, c g * ∏ i, ((g i).factorial : ℝ) * (a i)⁻¹ ^ (g i + 1) := by
+      rw [MeasureTheory.integral_finsetSum compositions (fun g _ ↦ (hf_prod g).const_mul (c g))]
+      refine Finset.sum_congr rfl fun g _ ↦ ?_
+      rw [MeasureTheory.integral_const_mul, MeasureTheory.integral_fintype_prod_eq_prod (f g)]
+      simp_rw [hf_integral]
+    _ = _ := by
+      rw [Finset.mul_sum]
+      refine Finset.sum_congr rfl fun g hg ↦ ?_
+      have h_degree := (Finset.mem_piAntidiag.mp hg).1
+      have h_nat := (Nat.multinomial_spec Finset.univ g).trans (congrArg Nat.factorial h_degree)
+      have h_factorial : c g * (∏ i, ((g i).factorial : ℝ)) = (m.factorial : ℝ) := by
+        simpa only [c, Nat.cast_mul, Nat.cast_prod, mul_comm] using
+          congrArg (fun n : ℕ ↦ (n : ℝ)) h_nat
+      rw [Finset.prod_mul_distrib, ← mul_assoc, h_factorial]
 
 
 end
