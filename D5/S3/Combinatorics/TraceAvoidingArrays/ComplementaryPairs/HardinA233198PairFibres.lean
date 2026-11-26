@@ -1,12 +1,12 @@
-/- GID: D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233198PairFibres
+/- GID: D5/S3/Combinatorics/TraceAvoidingArrays/ComplementaryPairs/HardinA233198PairFibres
    generality: G
-   mirror-B: D5/B/S3/Combinatorics/TraceAvoidingArrays/HardinA233198PairFibres
+   mirror-B: D5/B/S3/Combinatorics/TraceAvoidingArrays/ComplementaryPairs/HardinA233198PairFibres
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   utility: kind=numeric-reduction; basis=consumer=D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233198PairFibres.generating_function; premises=D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233198PairFibres.row_table,D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233198PairFibres.initial_pairs,D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233198PairFibres.powers_table,D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233198PairFibres.power_relation,D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233198PairFibres.four_initial,D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233198PairFibres.three_next,D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233198PairFibres.three_initial
+   utility: kind=numeric-reduction; basis=consumer=D5/S3/Combinatorics/TraceAvoidingArrays/ComplementaryPairs/HardinA233198PairFibres.generating_function; premises=D5/S3/Combinatorics/TraceAvoidingArrays/ComplementaryPairs/HardinA233198PairFibres.row_table,D5/S3/Combinatorics/TraceAvoidingArrays/ComplementaryPairs/HardinA233198PairFibres.initial_pairs,D5/S3/Combinatorics/TraceAvoidingArrays/ComplementaryPairs/HardinA233198PairFibres.powers_table,D5/S3/Combinatorics/TraceAvoidingArrays/ComplementaryPairs/HardinA233198PairFibres.power_relation,D5/S3/Combinatorics/TraceAvoidingArrays/ComplementaryPairs/HardinA233198PairFibres.four_initial,D5/S3/Combinatorics/TraceAvoidingArrays/ComplementaryPairs/HardinA233198PairFibres.three_next,D5/S3/Combinatorics/TraceAvoidingArrays/ComplementaryPairs/HardinA233198PairFibres.three_initial
    digest: Literal eight-colour arrays and their ordered complementary-pair fibres. -/
 
-import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233198LiteralModel
+import D5.S3.Combinatorics.TraceAvoidingArrays.ComplementaryPairs.HardinA233198LiteralModel
 
 /-! Complementary-pair fibres with strict row-major colour prerequisites.
 The numerical reduction serves the full generating_function, not finite agreement.
@@ -21,7 +21,7 @@ set_option Elab.async false
 set_option maxRecDepth 10000
 set_option backward.isDefEq.respectTransparency false
 
-namespace D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233198PairFibres
+namespace D5.S3.Combinatorics.TraceAvoidingArrays.ComplementaryPairs.HardinA233198PairFibres
 
 open scoped BigOperators
 
@@ -441,4 +441,4 @@ theorem generating_function : GeneratingFunction := by
       rw [mul_assoc, PowerSeries.mul_inv_cancel _ (by norm_num [denominator]), mul_one]
     _ = numerator * denominator⁻¹ := by rw [hp]
 
-end D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233198PairFibres
+end D5.S3.Combinatorics.TraceAvoidingArrays.ComplementaryPairs.HardinA233198PairFibres

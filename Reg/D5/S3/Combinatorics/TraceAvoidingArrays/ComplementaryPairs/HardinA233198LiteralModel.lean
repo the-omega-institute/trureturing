@@ -1,12 +1,12 @@
-import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233198PairFibres
+import D5.S3.Combinatorics.TraceAvoidingArrays.ComplementaryPairs.HardinA233198PairFibres
 import Reg.Support.SingleDependentReadout
 import LeanInformationAuditInterface.Contract.Registration
 
 /-! Whole-family readouts of the literal complementary-pair fibre counts. -/
 
-namespace Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233198PairFibres
+namespace Reg.D5.S3.Combinatorics.TraceAvoidingArrays.ComplementaryPairs.HardinA233198PairFibres
 
-open _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233198PairFibres
+open _root_.D5.S3.Combinatorics.TraceAvoidingArrays.ComplementaryPairs.HardinA233198PairFibres
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
 
@@ -78,8 +78,8 @@ def family : Registration arena (type_of% @literal_fibre_card) where
 
 def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
     (@literal_fibre_card) (Realization fibreSignature) Type Unit where
-  unitName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233198PairFibres.FibreCard.unit
-  realizationName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233198PairFibres.FibreCard.family
+  unitName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.ComplementaryPairs.HardinA233198PairFibres.FibreCard.unit
+  realizationName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.ComplementaryPairs.HardinA233198PairFibres.FibreCard.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -95,7 +95,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233198LiteralModel
+    owner := `D5.S3.Combinatorics.TraceAvoidingArrays.ComplementaryPairs.HardinA233198LiteralModel
     definition := none
     coordinates := #[0]
     readouts := #[{
@@ -135,8 +135,8 @@ def family : Registration arena (type_of% @literal_fibre_power) where
 
 def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
     (@literal_fibre_power) (Realization fibreSignature) Type Unit where
-  unitName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233198PairFibres.FibrePower.unit
-  realizationName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233198PairFibres.FibrePower.family
+  unitName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.ComplementaryPairs.HardinA233198PairFibres.FibrePower.unit
+  realizationName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.ComplementaryPairs.HardinA233198PairFibres.FibrePower.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -152,7 +152,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233198LiteralModel
+    owner := `D5.S3.Combinatorics.TraceAvoidingArrays.ComplementaryPairs.HardinA233198LiteralModel
     definition := none
     coordinates := #[0]
     readouts := #[{
@@ -233,8 +233,8 @@ def family : Registration arena (type_of% @literal_count_by_pairs) where
 
 def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
     (@literal_count_by_pairs) (Realization signature) Type Unit where
-  unitName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233198PairFibres.LiteralCount.unit
-  realizationName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233198PairFibres.LiteralCount.family
+  unitName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.ComplementaryPairs.HardinA233198PairFibres.LiteralCount.unit
+  realizationName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.ComplementaryPairs.HardinA233198PairFibres.LiteralCount.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -250,7 +250,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233198LiteralModel
+    owner := `D5.S3.Combinatorics.TraceAvoidingArrays.ComplementaryPairs.HardinA233198LiteralModel
     definition := none
     coordinates := #[]
     readouts := #[{
@@ -308,8 +308,8 @@ def family : Registration arena (type_of% @ordinary_count_by_pairs) where
 
 def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
     (@ordinary_count_by_pairs) (Realization signature) Type Unit where
-  unitName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233198PairFibres.OrdinaryPairs.unit
-  realizationName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233198PairFibres.OrdinaryPairs.family
+  unitName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.ComplementaryPairs.HardinA233198PairFibres.OrdinaryPairs.unit
+  realizationName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.ComplementaryPairs.HardinA233198PairFibres.OrdinaryPairs.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -325,7 +325,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233198LiteralModel
+    owner := `D5.S3.Combinatorics.TraceAvoidingArrays.ComplementaryPairs.HardinA233198LiteralModel
     definition := none
     coordinates := #[0]
     readouts := #[{
@@ -379,8 +379,8 @@ def family : Registration arena (type_of% @literal_ordinary_count) where
 
 def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
     (@literal_ordinary_count) (Realization signature) Type Unit where
-  unitName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233198PairFibres.LiteralOrdinary.unit
-  realizationName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233198PairFibres.LiteralOrdinary.family
+  unitName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.ComplementaryPairs.HardinA233198PairFibres.LiteralOrdinary.unit
+  realizationName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.ComplementaryPairs.HardinA233198PairFibres.LiteralOrdinary.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -396,7 +396,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233198LiteralModel
+    owner := `D5.S3.Combinatorics.TraceAvoidingArrays.ComplementaryPairs.HardinA233198LiteralModel
     definition := none
     coordinates := #[]
     readouts := #[{
@@ -413,4 +413,4 @@ end LiteralOrdinary
 
 end
 
-end Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233198PairFibres
+end Reg.D5.S3.Combinatorics.TraceAvoidingArrays.ComplementaryPairs.HardinA233198PairFibres

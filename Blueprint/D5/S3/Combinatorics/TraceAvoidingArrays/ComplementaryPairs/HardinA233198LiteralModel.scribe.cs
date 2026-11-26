@@ -1,14 +1,14 @@
 using F = StrataLint.Scribe.FormulaDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using static StrataLint.Scribe.DefinitionDsl;
-using static StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233198Formulas;
+using static StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.TraceAvoidingArrays.ComplementaryPairs.HardinA233198Formulas;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.TraceAvoidingArrays;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.TraceAvoidingArrays.ComplementaryPairs;
 
 internal sealed class HardinA233198LiteralModelDocument : IScribeDocumentDefinition
 {
     private const string ModelPrefix =
-        "D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233198LiteralModel.";
+        "D5/S3/Combinatorics/TraceAvoidingArrays/ComplementaryPairs/HardinA233198LiteralModel.";
     private static LibraryNoteRef Source =>
         LibraryNoteRef.Create("D5/L/Automata/hardin2013a233198");
 
@@ -108,7 +108,7 @@ internal sealed class HardinA233198LiteralModelDocument : IScribeDocumentDefinit
 internal static class HardinA233198Formulas
 {
     private const string LeanPrefix =
-        "D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233198PairFibres.";
+        "D5.S3.Combinatorics.TraceAvoidingArrays.ComplementaryPairs.HardinA233198PairFibres.";
     internal static Formula EdgeFormula()
     {
         var n = V("n"); var v = V("v"); var w = V("w");

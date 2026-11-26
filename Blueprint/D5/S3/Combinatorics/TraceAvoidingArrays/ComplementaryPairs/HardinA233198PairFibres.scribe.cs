@@ -2,12 +2,12 @@ using F = StrataLint.Scribe.FormulaDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.TraceAvoidingArrays;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.TraceAvoidingArrays.ComplementaryPairs;
 
 internal sealed class HardinA233198PairFibresDocument : IScribeDocumentDefinition
 {
     private const string Prefix =
-        "D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233198PairFibres.";
+        "D5/S3/Combinatorics/TraceAvoidingArrays/ComplementaryPairs/HardinA233198PairFibres.";
     private static LibraryNoteRef Source =>
         LibraryNoteRef.Create("D5/L/Automata/hardin2013a233198");
 
@@ -55,9 +55,7 @@ internal sealed class HardinA233198PairFibresDocument : IScribeDocumentDefinitio
                 + "entire displayed polynomial identity. Its denominator has constant "
                 + "coefficient one, so formal inversion is valid. The coefficient "
                 + "definition of A retains exactly the literal positive-height arrays, "
-                + "including the height-one boundary and unused colours.",
-                new OpenProblemResolutionClaim(ProblemSlugRef.Create("hardin233198"),
-                    ResolutionKind.Proved)))));
+                + "including the height-one boundary and unused colours."))));
 
     private static DocumentBlock Def(string id, string name, string title, Formula formula,
         string prose, bool literature = false) =>
@@ -68,13 +66,13 @@ internal sealed class HardinA233198PairFibresDocument : IScribeDocumentDefinitio
 
 
     private static DocumentBlock Thm(string id, string name, string title, Formula formula,
-        string prose, OpenProblemResolutionClaim? resolution = null) =>
+        string prose) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + name), H(title),
             StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromRepo(Source),
-            Blocks(Paragraph(Text(prose))), DescribeRole.Theorem, resolution);
+            Blocks(Paragraph(Text(prose))), DescribeRole.Theorem);
 
     private const string LeanPrefix =
-        "D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233198PairFibres.";
+        "D5.S3.Combinatorics.TraceAvoidingArrays.ComplementaryPairs.HardinA233198PairFibres.";
     private static Formula SmallColourFormula(long q, long first, long later)
     {
         var n = V("n");

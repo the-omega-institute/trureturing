@@ -1,13 +1,13 @@
-import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233198PairFibres
-import Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233198LiteralModel
+import D5.S3.Combinatorics.TraceAvoidingArrays.ComplementaryPairs.HardinA233198PairFibres
+import Reg.D5.S3.Combinatorics.TraceAvoidingArrays.ComplementaryPairs.HardinA233198LiteralModel
 import Reg.Support.SingleDependentReadout
 import LeanInformationAuditInterface.Contract.Registration
 
 /-! Whole-family readouts of the literal complementary-pair fibre counts. -/
 
-namespace Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233198PairFibres
+namespace Reg.D5.S3.Combinatorics.TraceAvoidingArrays.ComplementaryPairs.HardinA233198PairFibres
 
-open _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233198PairFibres
+open _root_.D5.S3.Combinatorics.TraceAvoidingArrays.ComplementaryPairs.HardinA233198PairFibres
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
 
@@ -53,8 +53,8 @@ def family : Registration arena (type_of% @ordinary_two_count) where
 
 def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
     (@ordinary_two_count) (Realization signature) Type Unit where
-  unitName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233198PairFibres.TwoColours.unit
-  realizationName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233198PairFibres.TwoColours.family
+  unitName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.ComplementaryPairs.HardinA233198PairFibres.TwoColours.unit
+  realizationName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.ComplementaryPairs.HardinA233198PairFibres.TwoColours.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -70,7 +70,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233198PairFibres
+    owner := `D5.S3.Combinatorics.TraceAvoidingArrays.ComplementaryPairs.HardinA233198PairFibres
     definition := none
     coordinates := #[]
     readouts := #[{
@@ -123,8 +123,8 @@ def family : Registration arena (type_of% @ordinary_three_count) where
 
 def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
     (@ordinary_three_count) (Realization signature) Type Unit where
-  unitName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233198PairFibres.ThreeColours.unit
-  realizationName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233198PairFibres.ThreeColours.family
+  unitName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.ComplementaryPairs.HardinA233198PairFibres.ThreeColours.unit
+  realizationName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.ComplementaryPairs.HardinA233198PairFibres.ThreeColours.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -140,7 +140,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233198PairFibres
+    owner := `D5.S3.Combinatorics.TraceAvoidingArrays.ComplementaryPairs.HardinA233198PairFibres
     definition := none
     coordinates := #[]
     readouts := #[{
@@ -203,8 +203,8 @@ def family : Registration arena (type_of% @ordinary_series_four) where
 
 def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
     (@ordinary_series_four) (Realization signature) Type Unit where
-  unitName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233198PairFibres.FourSeries.unit
-  realizationName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233198PairFibres.FourSeries.family
+  unitName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.ComplementaryPairs.HardinA233198PairFibres.FourSeries.unit
+  realizationName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.ComplementaryPairs.HardinA233198PairFibres.FourSeries.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -220,7 +220,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233198PairFibres
+    owner := `D5.S3.Combinatorics.TraceAvoidingArrays.ComplementaryPairs.HardinA233198PairFibres
     definition := none
     coordinates := #[]
     readouts := #[{
@@ -282,8 +282,8 @@ def family : Registration arena (type_of% @generating_function) where
 
 def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
     (@generating_function) (Realization signature) Type Unit where
-  unitName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233198PairFibres.LiteralSeries.unit
-  realizationName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233198PairFibres.LiteralSeries.family
+  unitName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.ComplementaryPairs.HardinA233198PairFibres.LiteralSeries.unit
+  realizationName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.ComplementaryPairs.HardinA233198PairFibres.LiteralSeries.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -299,10 +299,10 @@ def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233198PairFibres
+    owner := `D5.S3.Combinatorics.TraceAvoidingArrays.ComplementaryPairs.HardinA233198PairFibres
     definition := some {
-      owner := `D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233198PairFibres
-      name := `D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233198PairFibres.GeneratingFunction
+      owner := `D5.S3.Combinatorics.TraceAvoidingArrays.ComplementaryPairs.HardinA233198PairFibres
+      name := `D5.S3.Combinatorics.TraceAvoidingArrays.ComplementaryPairs.HardinA233198PairFibres.GeneratingFunction
       path := #[] }
     coordinates := #[]
     readouts := #[{
@@ -319,4 +319,4 @@ end LiteralSeries
 
 end
 
-end Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233198PairFibres
+end Reg.D5.S3.Combinatorics.TraceAvoidingArrays.ComplementaryPairs.HardinA233198PairFibres

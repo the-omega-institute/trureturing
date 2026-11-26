@@ -1,6 +1,6 @@
-/- GID: D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233198LiteralModel
+/- GID: D5/S3/Combinatorics/TraceAvoidingArrays/ComplementaryPairs/HardinA233198LiteralModel
    generality: G
-   mirror-B: D5/B/S3/Combinatorics/TraceAvoidingArrays/HardinA233198LiteralModel
+   mirror-B: D5/B/S3/Combinatorics/TraceAvoidingArrays/ComplementaryPairs/HardinA233198LiteralModel
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
@@ -30,7 +30,7 @@ set_option Elab.async false
 set_option maxRecDepth 10000
 set_option backward.isDefEq.respectTransparency false
 
-namespace D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233198PairFibres
+namespace D5.S3.Combinatorics.TraceAvoidingArrays.ComplementaryPairs.HardinA233198PairFibres
 
 open scoped BigOperators
 
@@ -676,4 +676,4 @@ theorem literal_ordinary_count (n : ℕ) (hn : 0 < n) :
 
 end
 
-end D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233198PairFibres
+end D5.S3.Combinatorics.TraceAvoidingArrays.ComplementaryPairs.HardinA233198PairFibres
