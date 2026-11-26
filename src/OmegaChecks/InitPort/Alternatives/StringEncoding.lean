@@ -657,10 +657,22 @@ private theorem incrementTrailingOnes (n high : Nat) :
   | succ n ih =>
     change ((appendBits true n high * 2).succ).succ = appendBits false n high.succ * 2
     rw [← ih, Nat.succ_mul]
+private theorem boundedBits (n x y : Nat) (h : x ≤ y) :
+    appendBits false n x ≤ appendBits true n y := by
+  induction n with
+  | zero => exact h
+  | succ n ih => exact Nat.le_trans (Nat.mul_le_mul_right 2 ih) (Nat.le_succ _)
+private theorem grows (n high : Nat) : high ≤ appendBits true n high := by
+  induction n with
+  | zero => exact Nat.le_refl _
+  | succ n ih =>
+    apply Nat.le_trans ih
+    exact Nat.le_trans (Nat.le_mul_of_pos_right _ (by decide : 0 < 2)) (Nat.le_succ _)
+
 public theorem Char.toNat_le : type_of% (private_decl% @_root_.Char.toNat_le) := by
   intro c
   rcases c.valid with below | ⟨_, upper⟩
-  · exact Nat.le_trans (Nat.le_of_lt below) (by decide : 0xd800 ≤ 0x10ffff)
+  · exact Nat.le_trans (Nat.le_of_lt below) (boundedBits 11 27 543 (Nat.le_trans (by decide : 27 ≤ 33) (grows 4 33)))
   · have carry : (0x10ffff : Nat).succ = 0x110000 := incrementTrailingOnes 16 16
     exact Nat.le_of_lt_succ (carry.symm ▸ upper)
 
