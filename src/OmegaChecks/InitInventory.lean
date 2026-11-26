@@ -2533,6 +2533,49 @@ private theorem fromVecForIn (combine : VectorCongruence.{u,u}) {T : Type u}
 public theorem forInCongr (combine : ArrayCongruence.{max 1 u v,max 1 u v}) :
     type_of% @funext.{u,v} := funextFromEndomorphisms (fromForIn combine)
 
+private theorem appendHead (before : List α) (a : α) (after : List α) :
+    (before ++ [a]) ++ after = before ++ a :: after := by
+  induction before with
+  | nil => rfl
+  | cons x _ ih => exact congrArg (x :: ·) ih
+
+public def listLoop {α : Type u} {β : Type v} {m : Type v → Type w} [Monad m] (as : List α) (init : β) (f : (a : α) → a ∈ as → β → m (ForInStep β)) : m β :=
+  let rec loop : (as' : List α) → (b : β) → Exists (fun bs => bs ++ as' = as) → m β
+    | [], b, _    => pure b
+    | a::as', b, h => do
+      have : a ∈ as := by
+        clear f
+        have ⟨bs, h⟩ := h
+        subst h
+        exact List.mem_append_right _ (List.Mem.head ..)
+      match (← f a this b) with
+      | ForInStep.done b  => pure b
+      | ForInStep.yield b =>
+        have : Exists (fun bs => bs ++ as' = as) := have ⟨bs, h⟩ := h; ⟨bs ++ [a], (appendHead bs a as').trans h⟩
+        loop as' b this
+  loop as init ⟨[], rfl⟩
+
+public abbrev ListCongruence.{levelIn,levelOut} :=
+  ∀ {m : Type levelIn → Type levelOut} {α : Type} {β : Type levelIn} [Monad m] {as bs : List α} (w : as = bs)
+    {b b' : β} (_hb : b = b') {f : (a : α) → a ∈ as → β → m (ForInStep β)}
+    {g : (a : α) → a ∈ bs → β → m (ForInStep β)},
+    (∀ a h s, f a (w.symm ▸ h) s = g a h s) → listLoop as b f = listLoop bs b' g
+
+private theorem listLoop_eq : @listLoop = @List.forIn' := by
+  delta listLoop List.forIn' listLoop.loop List.forIn'.loop
+  rfl
+example : ListCongruence.{u,u} := by
+  unfold ListCongruence
+  rw [listLoop_eq]
+  exact @List.forIn'_congr.{u,u,0}
+private theorem fromListForIn (combine : ListCongruence.{u,u}) {T : Type u}
+    {f g : T → T} (h : ∀ x, f x = g x) : f = g := by
+  have e := combine (m := ReaderM T) (as := [false,true]) (b := none) rfl rfl
+    (f := fun bit _ => sampleStep f bit) (g := fun bit _ => sampleStep g bit) (fun bit _ s => stepCongr h bit s)
+  exact congrArg readBack e
+public theorem listForInCongr (combine : ListCongruence.{max 1 u v,max 1 u v}) :
+    type_of% @funext.{u,v} := funextFromEndomorphisms (fromListForIn combine)
+
 public theorem vectorForInCongr (combine : VectorCongruence.{max 1 u v,max 1 u v}) :
     type_of% @funext.{u,v} := funextFromEndomorphisms (fromVecForIn combine)
 
@@ -2544,7 +2587,7 @@ public theorem foldrCongr (combine : type_of% @Array.foldrM_congr.{0,max 1 u v,m
 
 open Lean in
 run_cmd
-  for n in [``foldlCongr, ``foldrCongr, ``forInCongr, ``vectorForInCongr] do
+  for n in [``foldlCongr, ``foldrCongr, ``forInCongr, ``vectorForInCongr, ``listForInCongr] do
     unless (← collectAxioms n).isEmpty do throwError "array congruence witness {n} uses axioms"
 
 end ArrayLoopCongruence
@@ -3214,6 +3257,8 @@ private def logicalConsequence? (owner name : Name) : Option (Name × Name) := d
     return (``funext, ``OmegaChecks.InitBoundaries.MonadicTraversal.fromListFoldl)
   | `Init.Data.List.Monadic, ``List.foldrM_subtype =>
     return (``funext, ``OmegaChecks.InitBoundaries.MonadicTraversal.fromListFoldr)
+  | `Init.Data.List.Monadic, ``List.forIn'_congr =>
+    return (``funext, ``OmegaChecks.InitBoundaries.ArrayLoopCongruence.listForInCongr)
   | `Init.Data.Array.Monadic, ``Array.forIn'_congr =>
     return (``funext, ``OmegaChecks.InitBoundaries.ArrayLoopCongruence.forInCongr)
   | `Init.Data.Vector.Monadic, ``Vector.forIn'_congr =>
