@@ -272,4 +272,60 @@ public theorem List.reverse_range' : type_of% @_root_.List.reverse_range' := by
     rw [_root_.List.length_range']
     omega
 
+public theorem List.getLast?_zipIdx : type_of% @_root_.List.getLast?_zipIdx := by
+  intro α l k
+  induction l generalizing k with
+  | nil => rfl
+  | cons a as ih =>
+    cases as with
+    | nil => simp only [_root_.List.zipIdx_cons, _root_.List.zipIdx_nil, _root_.List.getLast?_singleton,
+        Option.map_some, _root_.List.length_cons, _root_.List.length_nil, Nat.add_one_sub_one]
+    | cons b bs =>
+      rw [_root_.List.zipIdx_cons, _root_.List.zipIdx_cons, _root_.List.getLast?_cons_cons,
+        ← _root_.List.zipIdx_cons, ih, _root_.List.getLast?_cons_cons]
+      have e : k + 1 + (b :: bs).length - 1 = k + (a :: b :: bs).length - 1 := by
+        simp only [_root_.List.length_cons]
+        omega
+      rw [e]
+
+public theorem List.erase_range' : type_of% @_root_.List.erase_range' := by
+  intro s n i
+  induction n generalizing s with
+  | zero =>
+    rw [Nat.zero_min]
+    have h : min s (i + 1) + 0 - (i + 1) = 0 := Nat.sub_eq_zero_of_le (Nat.min_le_right ..)
+    rw [h]
+    rfl
+  | succ n ih =>
+    rw [_root_.List.range'_succ]
+    by_cases eq : s = i
+    · subst i
+      rw [_root_.List.erase_cons_head]
+      simp only [Nat.sub_self, Nat.min_zero, Nat.max_eq_right (Nat.le_succ s),
+        Nat.min_eq_left (Nat.le_succ s)]
+      have len : s + (n + 1) - (s + 1) = n := by omega
+      rw [len]
+      rfl
+    · by_cases before : i < s
+      · have absent : i ∉ _root_.List.range' s (n+1) :=
+          fun mem => (Nat.not_le_of_gt before) (List.mem_range'_1.mp mem).1
+        rw [← _root_.List.range'_succ, _root_.List.erase_of_not_mem absent,
+          Nat.sub_eq_zero_of_le (Nat.le_of_lt before), Nat.min_zero,
+          Nat.max_eq_left before, Nat.min_eq_right before, Nat.add_sub_cancel_left]
+        rfl
+      · have after := Nat.lt_of_le_of_ne (Nat.le_of_not_gt before) eq
+        have ne : ¬(s == i) := fun h => eq (eq_of_beq h)
+        rw [_root_.List.erase_cons_tail ne, ih]
+        have len : min (n+1) (i-s) = min n (i-(s+1)) + 1 := by omega
+        rw [len, _root_.List.range'_succ]
+        have maxEq : max (s+1) (i+1) = max s (i+1) := by omega
+        have minEq : min (s+1) (i+1) + n = min s (i+1) + (n+1) := by omega
+        rw [maxEq, minEq]
+        rfl
+
+public theorem List.erase_range : type_of% @_root_.List.erase_range := by
+  intros
+  simp only [_root_.List.range_eq_range', List.erase_range', Nat.sub_zero, Nat.zero_max,
+    Nat.zero_min, Nat.zero_add]
+
 end OmegaChecks.InitPort.Alternatives
