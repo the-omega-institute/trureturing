@@ -186,4 +186,59 @@ public theorem Int.shiftRight_trailingZeros_mod_two : type_of% @_root_.Int.shift
   rw [_root_.Int.trailingZeros, dite_eq_right ha]
   exact odd _ a ha (Nat.le_refl _) 0 (Int.shiftRight_zero a)
 
+public theorem Int.ne_iff_lt_or_gt : type_of% @_root_.Int.ne_iff_lt_or_gt := by
+  intro a b
+  constructor
+  · intro ne
+    rcases Int.lt_trichotomy a b with h | h | h
+    · exact Or.inl h
+    · exact False.elim (ne h)
+    · exact Or.inr h
+  · exact fun h => h.elim Int.ne_of_lt Int.ne_of_gt
+
+public theorem Int.neg_emod_two : type_of% @_root_.Int.neg_emod_two := by
+  intro i
+  apply Int.emod_eq_emod_iff_emod_sub_eq_zero.mpr
+  rw [Int.sub_eq_add_neg, ← Int.two_mul, Int.mul_emod_right]
+
+public theorem Int.natAbs_emod_two : type_of% @_root_.Int.natAbs_emod_two := by
+  intro i
+  cases i with
+  | ofNat n => rfl
+  | negSucc n =>
+    change n.succ % 2 = ((-(Int.ofNat n.succ)) % 2).natAbs
+    rw [Int.neg_emod_two]
+    rfl
+
+public theorem Int.shiftLeft_eq : type_of% @_root_.Int.shiftLeft_eq := by
+  intro a b
+  cases a with
+  | ofNat a => exact congrArg Int.ofNat (Nat.shiftLeft_eq a b)
+  | negSucc a =>
+    change Int.negSucc (((a+1) <<< b) - 1) = -(Int.ofNat (a+1)) * (Int.ofNat (2^b))
+    rw [Nat.shiftLeft_eq, Int.neg_mul]
+    apply Eq.symm
+    apply Int.neg_ofNat_eq_negSucc_iff.mpr
+    exact (Nat.sub_add_cancel (Nat.mul_pos (Nat.succ_pos _) (Nat.pow_pos Nat.zero_lt_two))).symm
+
+public theorem Int.trailingZeros_eq_zero_of_mod_eq : type_of% @_root_.Int.trailingZeros_eq_zero_of_mod_eq := by
+  intro i odd
+  have ne : i ≠ 0 := by
+    intro h
+    subst i
+    exact (by decide : (0 : Int) ≠ 1) odd
+  rw [_root_.Int.trailingZeros, dite_eq_right ne]
+  have base (k : Nat) (bound : i.natAbs ≤ k) : _root_.Int.trailingZeros.aux k i ne bound 0 = 0 := by
+    cases k with
+    | zero => exact False.elim (ne (Int.natAbs_eq_zero.mp (Nat.eq_zero_of_le_zero bound)))
+    | succ k =>
+      rw [_root_.Int.trailingZeros.aux.eq_1 i ne 0 k (Nat.succ_ne_zero k)]
+      exact dite_eq_right (fun even => (by decide : (0 : Int) ≠ 1) (even.symm.trans odd))
+  exact base _ (Nat.le_refl _)
+
+public theorem Int.trailingZeros_two_mul_add_one : type_of% @_root_.Int.trailingZeros_two_mul_add_one := by
+  intro i
+  apply Int.trailingZeros_eq_zero_of_mod_eq
+  exact Int.mul_add_emod_self_left 2 i 1
+
 end OmegaChecks.InitPort.Alternatives
