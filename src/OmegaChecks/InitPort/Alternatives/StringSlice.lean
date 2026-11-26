@@ -8,6 +8,7 @@ import all Init.Data.String.Pattern.Pred
 import all Init.Data.String.Pattern.Basic
 import all Init.Data.String.Defs
 public import OmegaChecks.InitPort.Alternatives.StringEncoding
+public import OmegaChecks.InitPort.Alternatives.StringSearch
 
 /-! Byte bounds for positions relative to a string slice. -/
 
