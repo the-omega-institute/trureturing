@@ -41,7 +41,9 @@ internal sealed class HardinA233200RecurrenceDocument : IScribeDocumentDefinitio
                         + "TransferMatrix.scalarRelationShift propagates the relation to every later power. "
                         + "The all-height counting bridge applies the anchored initial vector and shifts from "
                         + "additional rows to total height. At height 24 the lagged counts run from height 23 down to 2."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("hardin233200"),
+                    ResolutionKind.Proved)))));
 
     private static Formula Recurrence()
     {

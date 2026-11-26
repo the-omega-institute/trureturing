@@ -24,6 +24,10 @@ $$\forall n: \operatorname{PNat}, 24 \le \operatorname{val}\left(n\right) \impli
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/ComplementaryPairs/HardinA233200Recurrence.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/hardin233200` (proved) by `D5/S3/Combinatorics/TraceAvoidingArrays/ComplementaryPairs/HardinA233200Recurrence.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hardin233200","declaration_gid":"D5/S3/Combinatorics/TraceAvoidingArrays/ComplementaryPairs/HardinA233200Recurrence.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* R. H. Hardin and OEIS Foundation Inc. (2013). *OEIS A233200: complementary exclusion on a width-six eight-colour strip*. URL: <https://oeis.org/A233200>.
