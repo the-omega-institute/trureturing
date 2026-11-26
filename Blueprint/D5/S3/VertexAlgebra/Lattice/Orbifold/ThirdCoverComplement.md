@@ -54,7 +54,43 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/Orbifold/ThirdCoverComplement.compl
 
 Compose the two complementary native modes with the smaller index on the left. The larger index acts first, as in the native normalPair definition.
 
-**Definition 1.5 (Fractional Virasoro operators).**
+**Definition 1.5 (Native indices of integral frequency).**
+
+Lean statement: `D5/S3/VertexAlgebra/Lattice/Orbifold/ThirdCoverComplement.integerIndices`
+
+*Formalization.* `D5/S3/VertexAlgebra/Lattice/Orbifold/ThirdCoverComplement.integerIndices` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The integral frequencies have native indices divisible by three.
+
+**Theorem 1.6 (Reflection preserves the complementary indices).**
+
+Lean statement: `D5/S3/VertexAlgebra/Lattice/Orbifold/ThirdCoverComplement.noninteger_partner`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Lattice/Orbifold/ThirdCoverComplement.noninteger_partner` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For integer m, the partner 3m − k is indivisible by three whenever k is.
+
+**Theorem 1.7 (Finite support of the complementary pair sum).**
+
+Lean statement: `D5/S3/VertexAlgebra/Lattice/Orbifold/ThirdCoverComplement.complementPair_finiteSupport`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Lattice/Orbifold/ThirdCoverComplement.complementPair_finiteSupport` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For each integer m and complement polynomial Q, only finitely many complementary indices k yield a nonzero pair (3m − k, k) on Q. The ordinary vacuum slice transports the native support interval.
+
+**Definition 1.8 (Fractional Virasoro operators).**
 
 Lean statement: `D5/S3/VertexAlgebra/Lattice/Orbifold/ThirdCoverComplement.fractionalVirasoro`
 
@@ -66,7 +102,7 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/Orbifold/ThirdCoverComplement.fract
 
 For each integer m, use one third of one half of the normal-ordered sum with pairs (3m-k,k) over k indivisible by three, and add 1/9 times the identity at m=0. The support bound is transported from the full native action through the ordinary vacuum slice. Additivity and complex linearity follow from pointwise finite support.
 
-**Theorem 1.6 (Complement of the integral Sugawara sum).**
+**Theorem 1.9 (Complement of the integral Sugawara sum).**
 
 Lean statement: `D5/S3/VertexAlgebra/Lattice/Orbifold/ThirdCoverComplement.cover_sub_integer_join_tmul`
 
@@ -78,7 +114,7 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/Orbifold/ThirdCoverComplement.cover
 
 For every nonzero s, subtract integerSugawara(m) from the merged coverMode(m) acting on join(P tensor Q). The finite sum separates into the complementary and integral index sets, and both indices 3m-k and k are complementary together. Transport the remaining pairs through join to obtain join(P tensor fractionalVirasoro(m)(Q)).
 
-**Theorem 1.7 (Complement operator on all split states).**
+**Theorem 1.10 (Complement operator on all split states).**
 
 Lean statement: `D5/S3/VertexAlgebra/Lattice/Orbifold/ThirdCoverComplement.split_cover_sub_integer`
 
@@ -90,7 +126,7 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/Orbifold/ThirdCoverComplement.split
 
 The pure-tensor subtraction implies that conjugation sends the cover minus its integral summand to identity tensor fractionalVirasoro(m).
 
-**Theorem 1.8 (Factorization of the full cover).**
+**Theorem 1.11 (Factorization of the full cover).**
 
 Lean statement: `D5/S3/VertexAlgebra/Lattice/Orbifold/ThirdCoverComplement.split_coverMode`
 
@@ -102,7 +138,7 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/Orbifold/ThirdCoverComplement.split
 
 For every complex s with s squared equal to three, conjugation by split sends coverMode(m) to L(m) tensor identity plus identity tensor fractionalVirasoro(m). This follows by adding the ordinary Sugawara intertwiner to the complementary subtraction.
 
-**Theorem 1.9 (Virasoro law at central charge two).**
+**Theorem 1.12 (Virasoro law at central charge two).**
 
 Lean statement: `D5/S3/VertexAlgebra/Lattice/Orbifold/ThirdCoverComplement.fractionalVirasoro_commutator`
 
@@ -114,7 +150,7 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/Orbifold/ThirdCoverComplement.fract
 
 For all integers n and m, the commutator equals (n-m) fractionalVirasoro(n+m) plus 2(n^3-n)/12 times the identity when n+m=0. Under split the two factor actions commute. Conjugate the merged cover commutator at charge three, subtract the native L commutator at charge one, and cancel the injective tensor extension. Injectivity follows by evaluating on 1 tensor Q and applying join.
 
-**Theorem 1.10 (Highest-weight vacuum).**
+**Theorem 1.13 (Highest-weight vacuum).**
 
 Lean statement: `D5/S3/VertexAlgebra/Lattice/Orbifold/ThirdCoverComplement.fractionalVirasoro_vacuum`
 
@@ -126,7 +162,7 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/Orbifold/ThirdCoverComplement.fract
 
 For every nonnegative integer m, fractionalVirasoro(m)(1) is 1/9 times 1 if m=0 and zero otherwise. In each pair with sum 3m, the larger index is nonnegative and therefore annihilates the constant polynomial before the other mode acts.
 
-**Definition 1.11 (Normalized complementary current).**
+**Definition 1.14 (Normalized complementary current).**
 
 Lean statement: `D5/S3/VertexAlgebra/Lattice/Orbifold/ThirdCoverComplement.fractionalCurrent`
 
@@ -138,7 +174,19 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/Orbifold/ThirdCoverComplement.fract
 
 Multiply complementMode(r) by the inverse of the chosen square root of three. The frequency r/3 lies in the complementary grids when r is indivisible by three.
 
-**Theorem 1.12 (Heisenberg bracket on the complementary factor).**
+**Theorem 1.15 (Square of the inverse current scale).**
+
+Lean statement: `D5/S3/VertexAlgebra/Lattice/Orbifold/ThirdCoverComplement.inverse_scale_sq`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Lattice/Orbifold/ThirdCoverComplement.inverse_scale_sq` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The product of two inverse square-root-of-three scales is 1/3.
+
+**Theorem 1.16 (Heisenberg bracket on the complementary factor).**
 
 Lean statement: `D5/S3/VertexAlgebra/Lattice/Orbifold/ThirdCoverComplement.fractionalCurrent_commutator`
 
@@ -158,13 +206,17 @@ This establishes a concrete polynomial oscillator factor and its operator relati
 
 - Truth anchor: `D5/S3/VertexAlgebra/Lattice/Orbifold/ThirdCoverComplement.complementMode`
 - Truth anchor: `D5/S3/VertexAlgebra/Lattice/Orbifold/ThirdCoverComplement.complementPair`
+- Truth anchor: `D5/S3/VertexAlgebra/Lattice/Orbifold/ThirdCoverComplement.complementPair_finiteSupport`
 - Truth anchor: `D5/S3/VertexAlgebra/Lattice/Orbifold/ThirdCoverComplement.cover_sub_integer_join_tmul`
 - Truth anchor: `D5/S3/VertexAlgebra/Lattice/Orbifold/ThirdCoverComplement.fractionalCurrent`
 - Truth anchor: `D5/S3/VertexAlgebra/Lattice/Orbifold/ThirdCoverComplement.fractionalCurrent_commutator`
 - Truth anchor: `D5/S3/VertexAlgebra/Lattice/Orbifold/ThirdCoverComplement.fractionalVirasoro`
 - Truth anchor: `D5/S3/VertexAlgebra/Lattice/Orbifold/ThirdCoverComplement.fractionalVirasoro_commutator`
 - Truth anchor: `D5/S3/VertexAlgebra/Lattice/Orbifold/ThirdCoverComplement.fractionalVirasoro_vacuum`
+- Truth anchor: `D5/S3/VertexAlgebra/Lattice/Orbifold/ThirdCoverComplement.integerIndices`
+- Truth anchor: `D5/S3/VertexAlgebra/Lattice/Orbifold/ThirdCoverComplement.inverse_scale_sq`
 - Truth anchor: `D5/S3/VertexAlgebra/Lattice/Orbifold/ThirdCoverComplement.mode_join_complement`
+- Truth anchor: `D5/S3/VertexAlgebra/Lattice/Orbifold/ThirdCoverComplement.noninteger_partner`
 - Truth anchor: `D5/S3/VertexAlgebra/Lattice/Orbifold/ThirdCoverComplement.split_complementMode`
 - Truth anchor: `D5/S3/VertexAlgebra/Lattice/Orbifold/ThirdCoverComplement.split_coverMode`
 - Truth anchor: `D5/S3/VertexAlgebra/Lattice/Orbifold/ThirdCoverComplement.split_cover_sub_integer`

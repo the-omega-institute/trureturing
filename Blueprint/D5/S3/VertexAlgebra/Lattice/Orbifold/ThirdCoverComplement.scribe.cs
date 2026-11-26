@@ -56,6 +56,32 @@ internal sealed class ThirdCoverComplementDocument : IScribeDocumentDefinition
                            + "first, as in the native normalPair definition."))),
                 DescribeRole.Definition),
             Describe.Lean(
+                DescribeId.Create("thirdcovercomplement-integer-indices"),
+                DeclarationHandle.Create(Prefix + "integerIndices"),
+                H("Native indices of integral frequency"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The integral frequencies have native indices divisible by three."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("thirdcovercomplement-noninteger-partner"),
+                DeclarationHandle.Create(Prefix + "noninteger_partner"),
+                H("Reflection preserves the complementary indices"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For integer m, the partner 3m − k is indivisible by three whenever k is."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("thirdcovercomplement-complement-pair-finite-support"),
+                DeclarationHandle.Create(Prefix + "complementPair_finiteSupport"),
+                H("Finite support of the complementary pair sum"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For each integer m and complement polynomial Q, only finitely many "
+                    + "complementary indices k yield a nonzero pair (3m − k, k) on Q. "
+                    + "The ordinary vacuum slice transports the native support interval."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("thirdcovercomplement-fractional-virasoro"),
                 DeclarationHandle.Create(Prefix + "fractionalVirasoro"),
                 H("Fractional Virasoro operators"),
@@ -126,6 +152,14 @@ internal sealed class ThirdCoverComplementDocument : IScribeDocumentDefinition
                 Blocks(Paragraph(Text("Multiply complementMode(r) by the inverse of the chosen square root of three. The frequency r/3 lies "
                            + "in the complementary grids when r is indivisible by three."))),
                 DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("thirdcovercomplement-inverse-scale-square"),
+                DeclarationHandle.Create(Prefix + "inverse_scale_sq"),
+                H("Square of the inverse current scale"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The product of two inverse square-root-of-three scales is 1/3."))),
+                DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("thirdcovercomplement-fractional-current-commutator"),
                 DeclarationHandle.Create(Prefix + "fractionalCurrent_commutator"),
