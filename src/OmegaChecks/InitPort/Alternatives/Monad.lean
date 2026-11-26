@@ -1,5 +1,7 @@
 module
 public import Init.Control.Lawful.Instances
+public import Init.Control.StateCps
+public import Init.Control.ExceptCps
 
 /-! Monad laws for optional values and exceptions, and reduction of state operations. -/
 
@@ -46,5 +48,41 @@ public theorem StateT.run_restoreM [Monad m] [LawfulMonad m] (x : stM m (StateT 
     StateT.run (restoreM x) s = pure x := by
   dsimp [restoreM, MonadControl.restoreM, StateT.run, StateT.bind, StateT.lift]
   rw [pure_bind, pure_bind, pure_bind]
+
+public theorem StateCpsT.instLawfulMonad : type_of% @_root_.StateCpsT.instLawfulMonad := by
+  intros
+  exact {
+    map_const := rfl
+    id_map := by intros; rfl
+    comp_map := by intros; rfl
+    pure_seq := by intros; rfl
+    map_pure := by intros; rfl
+    seq_pure := by intros; rfl
+    seqLeft_eq := by intros; rfl
+    seqRight_eq := by intros; rfl
+    seq_assoc := by intros; rfl
+    bind_pure_comp := by intros; rfl
+    bind_map := by intros; rfl
+    pure_bind := by intros; rfl
+    bind_assoc := by intros; rfl
+  }
+
+public theorem ExceptCpsT.instLawfulMonad : type_of% @_root_.ExceptCpsT.instLawfulMonad := by
+  intros
+  exact {
+    map_const := rfl
+    id_map := by intros; rfl
+    comp_map := by intros; rfl
+    pure_seq := by intros; rfl
+    map_pure := by intros; rfl
+    seq_pure := by intros; rfl
+    seqLeft_eq := by intros; rfl
+    seqRight_eq := by intros; rfl
+    seq_assoc := by intros; rfl
+    bind_pure_comp := by intros; rfl
+    bind_map := by intros; rfl
+    pure_bind := by intros; rfl
+    bind_assoc := by intros; rfl
+  }
 
 end OmegaChecks.InitPort.Alternatives
