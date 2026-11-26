@@ -479,6 +479,109 @@ theorem weakMiddleOfLinearOrder (order : type_of% (@Std.IsLinearOrder.of_lt.{0})
 
 end AbstractOrder
 
+namespace InternalOrder
+
+open Lean.Order
+
+theorem excludedMiddleOfFlatSuprema
+    (complete : ∀ {α : Type} {c : Option α → Prop}, chain c → ∃ top, is_sup c top)
+    (p : Prop) : p ∨ ¬p := by
+  let c : Option (Decidable p) → Prop := fun x => ∃ d, x = some d
+  have ordered : chain c := by
+    rintro _ _ ⟨d, rfl⟩ ⟨d', rfl⟩
+    have eq : d = d' := Subsingleton.elim _ _
+    cases eq
+    exact Or.inl PartialOrder.rel_refl
+  obtain ⟨top, hup⟩ := complete ordered
+  cases top with
+  | some d =>
+    cases d with
+    | isTrue hp => exact .inl hp
+    | isFalse hn => exact .inr hn
+  | none =>
+    have impossible (d : Decidable p) : False := by
+      have h := (hup none).mp PartialOrder.rel_refl (some d) ⟨d, rfl⟩
+      change FlatOrder.rel (b := (none : Option (Decidable p))) (some d) none at h
+      cases h
+    exact .inr fun hp => impossible (.isTrue hp)
+
+
+private theorem completeFlatOrder {α : Type} (order : CCPO (Option α))
+    (agree : ∀ x y : Option α, order.rel x y ↔ x ⊑ y)
+    {c : Option α → Prop} (hc : chain c) : ∃ top, is_sup c top := by
+  have hc' : @chain _ order.toPartialOrder c := fun x y hx hy =>
+    (hc x y hx hy).elim (fun h => .inl ((agree x y).mpr h)) (fun h => .inr ((agree y x).mpr h))
+  obtain ⟨top, upper⟩ := @CCPO.has_csup _ order c hc'
+  refine ⟨top, fun x => ⟨?_, ?_⟩⟩
+  · intro bound y hy
+    exact (agree y x).mp ((upper x).mp ((agree top x).mpr bound) y hy)
+  · intro bounds
+    exact (agree top x).mp ((upper x).mpr fun y hy => (agree y x).mpr (bounds y hy))
+
+
+theorem excludedMiddleOfOptionCCPO (order : type_of% @Lean.Order.instCCPOOption.{0})
+    (agree : ∀ {α : Type} (x y : Option α), (@order α).rel x y ↔ x ⊑ y)
+    (p : Prop) : p ∨ ¬p :=
+  excludedMiddleOfFlatSuprema (fun {α _} hc => completeFlatOrder (@order α) agree hc) p
+
+theorem excludedMiddleOfFlatCCPO (order : type_of% @FlatOrder.instCCPO.{1})
+    (agree : ∀ {α : Type} (x y : Option α), (@order (Option α) none).rel x y ↔ x ⊑ y)
+    (p : Prop) : p ∨ ¬p :=
+  excludedMiddleOfFlatSuprema (fun {α _} hc => completeFlatOrder (@order (Option α) none) agree hc) p
+
+theorem excludedMiddleOfFlatCSup (pick : type_of% @flat_csup.{1})
+    (valid : ∀ {α : Type} (c : Option α → Prop), chain c → is_sup c (@pick (Option α) none c))
+    (p : Prop) : p ∨ ¬p :=
+  excludedMiddleOfFlatSuprema (fun {_ c} hc => ⟨_, valid c hc⟩) p
+
+theorem funextOfPointwiseOrder
+    (order : type_of% @Lean.Order.instOrderPi.{u,v})
+    (pointwise : ∀ {α : Sort u} {β : α → Sort v} [inst : ∀ a, PartialOrder (β a)]
+      (f g : ∀ a, β a), (∀ a, f a ⊑ g a) → (@order α β inst).rel f g) :
+    type_of% @funext.{u,v} := by
+  intro α β f g same
+  letI component (a : α) : PartialOrder (β a) :=
+    ⟨Eq, rfl, Eq.trans, fun h _ => h⟩
+  exact (@order α β component).rel_antisymm (pointwise f g same)
+    (pointwise g f fun a => (same a).symm)
+
+theorem propextOfImplicationOrder (order : PartialOrder Prop)
+    (rel : ∀ p q : Prop, (p → q) → order.rel p q) : type_of% @propext :=
+  fun {p q} iff => order.rel_antisymm (rel p q iff.mp) (rel q p iff.mpr)
+
+theorem propextOfReverseImplicationOrder (order : PartialOrder Prop)
+    (rel : ∀ p q : Prop, (q → p) → order.rel p q) : type_of% @propext :=
+  fun {p q} iff => order.rel_antisymm (rel p q iff.mpr) (rel q p iff.mp)
+
+@[instance_reducible] private def singletonOrder (α : Sort u) [Subsingleton α] : PartialOrder α :=
+  ⟨fun _ _ => True, trivial, fun _ _ => trivial, fun {_ _} _ _ => Subsingleton.elim _ _⟩
+
+@[instance_reducible] private def singletonLattice (α : Sort u) [Subsingleton α]
+    (inh : Nonempty α) : CompleteLattice α where
+  toPartialOrder := singletonOrder α
+  has_sup _ := inh.elim fun a => ⟨a, fun _ => ⟨fun _ _ _ => trivial, fun _ => trivial⟩⟩
+
+@[instance_reducible] private def singletonCCPO (α : Sort u) [Subsingleton α] (inh : Nonempty α) : CCPO α where
+  toPartialOrder := singletonOrder α
+  has_csup {c} _ := (singletonLattice α inh).has_sup c
+
+abbrev UniqueChoice := ∀ {α : Sort u} [Subsingleton α], Nonempty α → α
+
+def uniqueChoiceOfSup (select : type_of% @CompleteLattice.sup.{u}) : UniqueChoice.{u} :=
+  fun {α} _ inh => @select α (singletonLattice α inh) (fun _ => False)
+
+def uniqueChoiceOfChainSup (select : type_of% @CCPO.csup.{u}) : UniqueChoice.{u} := by
+  intro α _ inh
+  letI : CCPO α := singletonCCPO α inh
+  exact select (chain_empty α)
+
+def uniqueChoiceOfBot (select : type_of% @Lean.Order.bot.{u}) : UniqueChoice.{u} := by
+  intro α _ inh
+  letI : CCPO α := singletonCCPO α inh
+  exact select
+
+end InternalOrder
+
 namespace TwoWorlds
 
 /-- Kripke implication on the chain `false ≤ true`. -/
@@ -547,6 +650,11 @@ private def replayWitnesses (env : Environment) : IO Unit := do
       ``GrindOrder.excludedMiddleFromNotNot, ``GrindOrder.excludedMiddleFromLookahead,
       ``AbstractOrder.excludedMiddleOfTrichotomy, ``AbstractOrder.excludedMiddleOfLTTrichotomy,
       ``AbstractOrder.excludedMiddleOfTrichotomousTotal, ``AbstractOrder.excludedMiddleOfNegationTotal,
+      ``InternalOrder.funextOfPointwiseOrder, ``InternalOrder.propextOfImplicationOrder,
+      ``InternalOrder.propextOfReverseImplicationOrder, ``InternalOrder.excludedMiddleOfFlatSuprema,
+      ``InternalOrder.excludedMiddleOfOptionCCPO, ``InternalOrder.excludedMiddleOfFlatCCPO,
+      ``InternalOrder.excludedMiddleOfFlatCSup,
+      ``InternalOrder.uniqueChoiceOfBot, ``InternalOrder.uniqueChoiceOfChainSup, ``InternalOrder.uniqueChoiceOfSup,
       ``AbstractOrder.excludedMiddleOfLawfulLT, ``AbstractOrder.weakMiddleOfTotalNot,
       ``AbstractOrder.weakMiddleOfLinearPreorder, ``AbstractOrder.weakMiddleOfLinearOrder,
       ``inhabitedPropExtOfProofHEq, ``inhabitedPropExtOfEqTrue,
@@ -1527,6 +1635,15 @@ private def reductionPaths (official strict full : Environment) : NameMap (List 
 missing official interface in the completeness check. -/
 private def logicalConsequence? (owner name : Name) : Option (Name × Name) := do
   match owner, name with
+  | `Init.Internal.Order.Basic, ``Lean.Order.CompleteLattice.sup =>
+    return (``OmegaChecks.InitBoundaries.InternalOrder.UniqueChoice,
+      ``OmegaChecks.InitBoundaries.InternalOrder.uniqueChoiceOfSup)
+  | `Init.Internal.Order.Basic, ``Lean.Order.CCPO.csup =>
+    return (``OmegaChecks.InitBoundaries.InternalOrder.UniqueChoice,
+      ``OmegaChecks.InitBoundaries.InternalOrder.uniqueChoiceOfChainSup)
+  | `Init.Internal.Order.Basic, ``Lean.Order.bot =>
+    return (``OmegaChecks.InitBoundaries.InternalOrder.UniqueChoice,
+      ``OmegaChecks.InitBoundaries.InternalOrder.uniqueChoiceOfBot)
   | `Init.Control.Lawful.Basic, ``bind_congr =>
     return (``funext, ``OmegaChecks.InitBoundaries.dependentFunextFromBindCongr)
   | `Init.Control.Lawful.Basic, ``map_congr =>
@@ -1638,6 +1755,25 @@ private def logicalConsequence? (owner name : Name) : Option (Name × Name) := d
 
 /-- The conclusion uses the indicated semantic agreement in addition to the public type. -/
 private def conditionalConsequence? (owner name : Name) : Option (String × Name × String) := do
+  if owner == `Init.Internal.Order.Basic then
+    if name == ``Lean.Order.instOrderPi then
+      return ((``funext).toString, ``OmegaChecks.InitBoundaries.InternalOrder.funextOfPointwiseOrder,
+        "Pointwise comparison of functions implies comparison in the proposed order")
+    if name == ``Lean.Order.ImplicationOrder.instOrder then
+      return ((``propext).toString, ``OmegaChecks.InitBoundaries.InternalOrder.propextOfImplicationOrder,
+        "An implication from p to q implies p is below q")
+    if name == ``Lean.Order.ReverseImplicationOrder.instOrder then
+      return ((``propext).toString, ``OmegaChecks.InitBoundaries.InternalOrder.propextOfReverseImplicationOrder,
+        "An implication from q to p implies p is below q")
+    if name == ``Lean.Order.instCCPOOption then
+      return ((``Classical.em).toString, ``OmegaChecks.InitBoundaries.InternalOrder.excludedMiddleOfOptionCCPO,
+        "The order underlying the proposed CCPO on options agrees with the official flat order")
+    if name == ``Lean.Order.FlatOrder.instCCPO then
+      return ((``Classical.em).toString, ``OmegaChecks.InitBoundaries.InternalOrder.excludedMiddleOfFlatCCPO,
+        "At options with bottom none the order underlying the proposed CCPO agrees with the flat order")
+    if name == ``Lean.Order.flat_csup then
+      return ((``Classical.em).toString, ``OmegaChecks.InitBoundaries.InternalOrder.excludedMiddleOfFlatCSup,
+        "On chains of options with bottom none, the result satisfies flat_csup_is_sup")
   if owner == `Init.Data.String.Lemmas.Pattern.Basic then
     if name == ``String.Slice.Pattern.Model.matchAt? then
       return ((``Classical.em).toString, `OmegaChecks.InitInventory.StringPatterns.excludedMiddleOfForwardResult,
