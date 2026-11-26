@@ -198,7 +198,31 @@ Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/ComplementaryPairs/Hard
 
 For every natural n the literal count at height n+1 equals the weighted sum over five-label words q. Prepend label zero and retain the summand only when that six-label word is proper. The summand is rowWeight from the three false flags along q, times pairV at n with rowFinish along q and boundary obtained by prepending zero. The fixed first colour has multiplicity one and leaves all flags false. This identity includes every positive height and gives the literal input for the 58-state reduction.
 
-**Definition 1.17 (Historical scanner stage).**
+**Definition 1.17 (Stage flags).**
+
+Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/ComplementaryPairs/HardinA233200PairTransfer.seen`
+
+*Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/ComplementaryPairs/HardinA233200PairTransfer.seen` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Stage k records flags one through k as seen.
+
+**Definition 1.18 (Stage after scanning).**
+
+Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/ComplementaryPairs/HardinA233200PairTransfer.finalStage`
+
+*Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/ComplementaryPairs/HardinA233200PairTransfer.finalStage` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Take the highest recorded flag index, or zero if all flags are false.
+
+**Definition 1.19 (Historical scanner stage).**
 
 Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/ComplementaryPairs/HardinA233200PairTransfer.nativeStage`
 
@@ -210,7 +234,7 @@ Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/ComplementaryPairs/Hard
 
 The 58 states contain one canonical proper boundary with two available pair labels, sixteen with three available labels, and forty-one with four available labels. The stage is the number of available labels minus one.
 
-**Definition 1.18 (Canonical proper boundaries).**
+**Definition 1.20 (Canonical proper boundaries).**
 
 Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/ComplementaryPairs/HardinA233200PairTransfer.nativeRepresentative`
 
@@ -222,7 +246,7 @@ Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/ComplementaryPairs/Hard
 
 Each boundary is a restricted growth word beginning zero, one. Rows related by a permutation of the already available labels have the same continuation; unavailable labels are fixed. Canonicalization retains the historical stage even if an available label is absent from the current boundary.
 
-**Definition 1.19 (Stage-preserving boundary class).**
+**Definition 1.21 (Stage-preserving boundary class).**
 
 Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/ComplementaryPairs/HardinA233200PairTransfer.nativeClassOf`
 
@@ -234,7 +258,7 @@ Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/ComplementaryPairs/Hard
 
 For a proper six-label boundary using only labels zero through its positive stage, relabel by order of first occurrence and select the corresponding state at that same stage.
 
-**Definition 1.20 (The exact finite weighted transfer).**
+**Definition 1.22 (The exact finite weighted transfer).**
 
 Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/ComplementaryPairs/HardinA233200PairTransfer.nativeT`
 
@@ -246,7 +270,7 @@ Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/ComplementaryPairs/Hard
 
 Entry (i,j) sums rowWeight over every proper six-label row compatible with representative i whose final scanner stage and normalized boundary have class j. Compatibility includes six vertical and five antidiagonal bonds. The scanner starts at the three flags encoded by stage i. Every weighted nonzero successor has a valid positive stage and uses only labels available at its final stage.
 
-**Definition 1.21 (Anchored initial vector).**
+**Definition 1.23 (Anchored initial vector).**
 
 Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/ComplementaryPairs/HardinA233200PairTransfer.nativeInitial`
 
@@ -258,7 +282,7 @@ Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/ComplementaryPairs/Hard
 
 Component i sums the exact rowWeight of all five-label words q for which zero prepended to q is proper and its final stage and boundary have class i. The individual first colour is fixed to zero and has weight one; no unused label is required to occur.
 
-**Theorem 1.22 (All positive heights as a finite linear readout).**
+**Theorem 1.24 (All positive heights as a finite linear readout).**
 
 Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/ComplementaryPairs/HardinA233200PairTransfer.native_linear_bridge`
 
@@ -280,6 +304,7 @@ For every natural n the original literal count a(n+1), cast to the integers, equ
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/ComplementaryPairs/HardinA233200PairTransfer.bonds`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/ComplementaryPairs/HardinA233200PairTransfer.compatible`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/ComplementaryPairs/HardinA233200PairTransfer.continuation_pair_bridge`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/ComplementaryPairs/HardinA233200PairTransfer.finalStage`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/ComplementaryPairs/HardinA233200PairTransfer.labelBoundary`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/ComplementaryPairs/HardinA233200PairTransfer.labelCompatible`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/ComplementaryPairs/HardinA233200PairTransfer.literal_pair_bridge`
@@ -294,4 +319,5 @@ For every natural n the original literal count a(n+1), cast to the integers, equ
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/ComplementaryPairs/HardinA233200PairTransfer.rho`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/ComplementaryPairs/HardinA233200PairTransfer.rowLegal`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/ComplementaryPairs/HardinA233200PairTransfer.rowProper`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/ComplementaryPairs/HardinA233200PairTransfer.seen`
 - Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/ComplementaryPairs/HardinA233200LiteralBridge](HardinA233200LiteralBridge.md)
