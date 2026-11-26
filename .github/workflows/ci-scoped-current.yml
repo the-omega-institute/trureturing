@@ -46,7 +46,7 @@ jobs:
     outputs:
       unit: ${{ steps.checked.outputs.unit }}
       matrix: ${{ steps.batches.outputs.matrix }}
-      parallel: ${{ steps.batches.outputs.parallel }}
+      parallel: ${{ steps.distribution.outputs.parallel }}
       count: ${{ steps.batches.outputs.count }}
       remaining: ${{ steps.remaining.outputs.compute_remaining }}
       epoch: ${{ steps.remaining.outputs.epoch }}
@@ -78,18 +78,42 @@ jobs:
         name: Select affected Lean inputs
         if: ${{ !cancelled() && inputs.report && steps.budget.outcome == 'success' }}
         run: python3 tools/scripts/workflow/ci_checks.py current lean-plan --scope-file "$RUNNER_TEMP/current-lean-plan.json"
-      - id: batches
+      - id: distribution
         if: steps.lean_plan.outcome == 'success'
         run: |
           matrix="$(python3 tools/scripts/workflow/ci_pr_lean.py "$RUNNER_TEMP/changed-paths" --read-plan "$RUNNER_TEMP/current-lean-plan.json" --batch-matrix)"
           count="$(jq -e '.include | length' <<< "$matrix")"
-          echo "count=$count" >> "$GITHUB_OUTPUT"
           if (( count > 1 && count <= 256 )); then
             echo "parallel=true" >> "$GITHUB_OUTPUT"
-            echo "matrix=$(jq -c . <<< "$matrix")" >> "$GITHUB_OUTPUT"
           fi
+      - name: Install the pinned parser for parallel planning
+        if: steps.distribution.outputs.parallel == 'true'
+        uses: ./.github/actions/current-lean
+        with:
+          mode: plan
+      - name: Read the published module index for parallel planning
+        if: steps.distribution.outputs.parallel == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 tools/scripts/worktree/lean_module_cache.py index --output "$RUNNER_TEMP/current-module-index.json"
+      - name: Balance report batches against the published inputs
+        if: steps.distribution.outputs.parallel == 'true'
+        run: |
+          STRATALINT_LEAN_PRODUCER_DLL="$(bash tools/scripts/workflow/judge-lean-producer.sh tools/StrataLint.Cli/bin/Release/net10.0)"
+          export STRATALINT_LEAN_PRODUCER_DLL
+          python3 tools/scripts/workflow/ci_compute.py run -- \
+            python3 tools/scripts/workflow/ci_pr_lean.py "$RUNNER_TEMP/changed-paths" --read-plan "$RUNNER_TEMP/current-lean-plan.json" --balance-plan "$RUNNER_TEMP/current-module-index.json"
+      - id: batches
+        name: Select the runners from the final report plan
+        if: steps.distribution.outputs.parallel == 'true'
+        run: |
+          matrix="$(python3 tools/scripts/workflow/ci_pr_lean.py "$RUNNER_TEMP/changed-paths" --read-plan "$RUNNER_TEMP/current-lean-plan.json" --batch-matrix)"
+          count="$(jq -e '.include | length' <<< "$matrix")"
+          (( count > 1 && count <= 256 ))
+          echo "count=$count" >> "$GITHUB_OUTPUT"
+          echo "matrix=$(jq -c . <<< "$matrix")" >> "$GITHUB_OUTPUT"
       - name: Share the plan with the report batches
-        if: steps.batches.outputs.parallel == 'true'
+        if: steps.distribution.outputs.parallel == 'true'
         uses: actions/upload-artifact@v4
         with:
           name: current-lean-plan
@@ -99,24 +123,24 @@ jobs:
           if-no-files-found: error
           overwrite: true
       - id: remaining
-        if: steps.batches.outputs.parallel == 'true'
+        if: steps.distribution.outputs.parallel == 'true'
         run: |
           python3 tools/scripts/workflow/ci_compute.py export-current "$STRATALINT_CI_COMPUTE_BUDGET" >> "$GITHUB_OUTPUT"
           echo "epoch=$(date -u +%s)" >> "$GITHUB_OUTPUT"
       - id: lean
-        if: steps.batches.outputs.parallel != 'true' && steps.lean_plan.outputs.needs_lean == 'true'
+        if: steps.distribution.outputs.parallel != 'true' && steps.lean_plan.outputs.needs_lean == 'true'
         uses: ./.github/actions/current-lean
       - name: Theory-only file and capacity checks
         if: ${{ !inputs.report && inputs.source-status != 'accepted' }}
         run: python3 tools/scripts/workflow/ci_checks.py current check-delta
       - name: Check current and delta with affected Lean and Scribe inputs
-        if: ${{ !cancelled() && steps.batches.outcome == 'success' && steps.batches.outputs.parallel != 'true' && (steps.lean_plan.outputs.builds_lean == 'false' || steps.lean.outcome == 'success') }}
+        if: ${{ !cancelled() && steps.distribution.outcome == 'success' && steps.distribution.outputs.parallel != 'true' && (steps.lean_plan.outputs.builds_lean == 'false' || steps.lean.outcome == 'success') }}
         env:
           LEAN_NUM_THREADS: '1'
         run: |
           python3 tools/scripts/workflow/ci_checks.py current pr-lean --scope-file "$RUNNER_TEMP/current-lean-plan.json"
       - id: checked
-        if: steps.batches.outputs.parallel != 'true'
+        if: steps.distribution.outputs.parallel != 'true'
         run: echo 'unit=current' >> "$GITHUB_OUTPUT"
 
   batch:
@@ -241,7 +265,7 @@ jobs:
         run: python3 tools/scripts/workflow/ci_checks.py current build-judge
       - uses: ./.github/actions/current-lean
         with:
-          verify-bundles: 'true'
+          mode: verify
       - name: Check current and delta with all report bundles
         env:
           CHECK_DELTA: ${{ inputs.delta }}
