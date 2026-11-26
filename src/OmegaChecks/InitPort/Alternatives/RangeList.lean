@@ -824,4 +824,45 @@ public theorem Std.Roo.toList_eq_match : type_of% @_root_.Std.Roo.toList_eq_matc
   | none => rfl
   | some a => exact _root_.Std.Rco.toList_eq_ite_roo
 
+public theorem Std.Rci.length_toList : type_of% @_root_.Std.Rci.length_toList := by
+  intro α r _ _ _ _ _
+  obtain ⟨lo⟩ := r
+  generalize hn : Rxi.HasSize.size lo = n
+  induction n generalizing lo with
+  | zero => exact False.elim (Nat.not_lt_zero _ (hn ▸ _root_.Std.Rxi.size_pos (lo := lo)))
+  | succ n ih =>
+    rw [_root_.Std.Rci.toList_eq_toList_roi, List.length_cons, _root_.Std.Roi.toList_eq_match_rci]
+    cases hs : UpwardEnumerable.succ? lo with
+    | none => exact (Rxi.LawfulHasSize.size_eq_one_of_succ?_eq_none _ hs).symm
+    | some next =>
+      have eq := Rxi.LawfulHasSize.size_eq_succ_of_succ?_eq_some _ _ hs
+      exact (congrArg Nat.succ (ih next (Nat.succ.inj (eq.symm.trans hn)))).trans eq.symm
+
+public theorem Std.Roi.length_toList : type_of% @_root_.Std.Roi.length_toList := by
+  intro α r _ _ _ _ _
+  rw [_root_.Std.Roi.toList_eq_match_rci, _root_.Std.Roi.size_eq_match_rci]
+  cases UpwardEnumerable.succ? r.lower with
+  | none => rfl
+  | some next => exact _root_.Std.Rci.length_toList
+
+public theorem Std.Rii.length_toList : type_of% @_root_.Std.Rii.length_toList := by
+  intro α r _ _ _ _ _ _
+  rw [_root_.Std.Rii.toList_eq_match_rci, _root_.Std.Rii.size_eq_match_rci]
+  cases Least?.least? (α := α) with
+  | none => rfl
+  | some next => exact _root_.Std.Rci.length_toList
+
+public theorem Std.Rci.getElem?_toList_eq : type_of% @_root_.Std.Rci.getElem?_toList_eq := by
+  intro α _ _ _ r i
+  induction i generalizing r with
+  | zero =>
+    rw [_root_.Std.Rci.toList_eq_toList_roi, UpwardEnumerable.succMany?_zero]
+    rfl
+  | succ i ih =>
+    rw [_root_.Std.Rci.toList_eq_toList_roi, List.getElem?_cons_succ,
+      _root_.Std.Roi.toList_eq_match_rci, UpwardEnumerable.succMany?_add_one_eq_succ?_bind_succMany?]
+    cases UpwardEnumerable.succ? r.lower with
+    | none => rfl
+    | some next => exact ih (r := ⟨next⟩)
+
 end OmegaChecks.InitPort.Alternatives
