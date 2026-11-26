@@ -142,6 +142,25 @@ public theorem Std.PRange.instLawfulHasSizeInt : Rxc.LawfulHasSize Int where
     rw [Int.add_sub_add_right, shift]
     exact Int.toNat_add (Int.sub_nonneg_of_le h) (Int.le_of_lt (Int.zero_lt_one))
 
+private theorem intOpenSize (lo hi : Int) : Rxo.HasSize.size lo hi = (hi - lo).toNat := by
+  change (hi + 1 - lo).toNat - 1 = (hi - lo).toNat
+  rw [← Int.pred_toNat]
+  apply congrArg Int.toNat
+  exact (congrArg (· - 1) (Int.add_right_comm hi 1 (-lo))).trans (Int.add_sub_cancel ..)
+
+public theorem Std.PRange.instLawfulHasSizeInt_1 : Rxo.LawfulHasSize Int where
+  size_eq_zero_of_not_le lo hi h := (intOpenSize lo hi).trans (Int.toNat_of_nonpos (Int.sub_nonpos_of_le (Int.le_of_not_gt h)))
+  size_eq_one_of_succ?_eq_none lo _ _ h :=
+    False.elim (Option.noConfusion rfl (heq_of_eq (show some (lo + 1) = none from h)))
+  size_eq_succ_of_succ?_eq_some lo hi lo' h next := by
+    have eq : lo + 1 = lo' := Option.some.inj next
+    subst lo'
+    rw [intOpenSize, intOpenSize]
+    have diff : hi - (lo + 1) + 1 = hi - lo := by
+      rw [← Int.sub_sub, Int.sub_add_cancel]
+    exact (congrArg Int.toNat diff.symm).trans
+      (Int.toNat_add (Int.sub_nonneg_of_le h) (Int.le_of_lt Int.zero_lt_one))
+
 public theorem Std.PRange.instIsAlwaysFiniteInt_1 : Rxo.IsAlwaysFinite Int :=
   ⟨fun lo hi => ⟨(hi - lo).toNat, Int.not_lt_of_ge (reachUpper lo hi)⟩⟩
 
