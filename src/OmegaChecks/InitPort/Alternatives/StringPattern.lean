@@ -786,4 +786,51 @@ public theorem prefixFunction_eq_iff :
   · rintro ⟨hi, hit, maximal⟩
     exact Nat.le_antisymm ((private_decl% _root_.String.Slice.Pattern.Model.ForwardSliceSearcher.prefixFunction_le_iff).mpr maximal) ((private_decl% _root_.String.Slice.Pattern.Model.ForwardSliceSearcher.le_prefixFunction_iff).mpr ⟨_, Nat.le_refl _, hi, hit⟩)
 
+public theorem prefixFunctionRecurrence_eq_prefixFunction :
+    type_of% (private_decl% @_root_.String.Slice.Pattern.Model.ForwardSliceSearcher.prefixFunctionRecurrence_eq_prefixFunction) := by
+  intro pat pos limit start hs
+  delta prefixFunctionRecurrence prefixFunctionRecurrence._unary
+  let best := prefixFunction pat pos limit
+  let P (q : (g : Nat) ×' g < pos) (v : Nat) :=
+    best ≤ q.1 + 1 → PartialMatch pat pat q.1 pos → v = best
+  apply (private_decl% OmegaChecks.InitPort.Alternatives.fixInvariant) (P := P) (x := ⟨start, hs⟩)
+  rintro ⟨g, hg⟩ cont ih upper hp
+  dsimp only
+  by_cases same : pat[g] = pat[pos]
+  · rw [dite_eq_left same]
+    exact Nat.le_antisymm ((private_decl% _root_.String.Slice.Pattern.Model.ForwardSliceSearcher.le_prefixFunction_iff).mpr ⟨_, Nat.le_refl _, hg,
+      partialMatch_add_one_add_one_iff.mpr ⟨hp, ⟨_, _, same⟩⟩⟩) upper
+  · rw [dite_eq_right same]
+    by_cases zero : g = 0
+    · rw [dite_eq_left zero]
+      subst g
+      cases bestEq : best with
+      | zero => rfl
+      | succ n =>
+        have nonzero : best = 1 := (Nat.le_antisymm upper (bestEq ▸ Nat.zero_lt_succ n))
+        have hit := ((private_decl% _root_.String.Slice.Pattern.Model.ForwardSliceSearcher.prefixFunction_eq_iff).mp nonzero).2.1
+        have byte := hit.getElem_eq 0 (Nat.zero_lt_succ 0)
+        simp only [Nat.add_one_sub_one, Nat.add_zero] at byte
+        exact (same byte).elim
+    · rw [dite_eq_right zero]
+      apply ih
+      · apply (private_decl% _root_.String.Slice.Pattern.Model.ForwardSliceSearcher.prefixFunction_le_iff).mpr
+        intro k more small part
+        have bound := ((private_decl% _root_.String.Slice.Pattern.Model.ForwardSliceSearcher.le_prefixFunction_iff).mpr ⟨k, Nat.le_refl _, small, part⟩ :
+          k ≤ prefixFunction pat pos limit)
+        have kbound := Nat.le_trans bound upper
+        cases k with
+        | zero => exact (Nat.not_lt_zero _ more).elim
+        | succ j =>
+          obtain ⟨partialPrev, ⟨h₁, h₂, eq⟩⟩ := partialMatch_add_one_add_one_iff.mp part
+          have jle : j ≤ g := Nat.le_of_succ_le_succ kbound
+          have lt : j < g := Nat.lt_of_le_of_ne jle (fun h => by
+            subst j
+            exact same eq)
+          have inner := hp.partialMatch_iff.mpr ⟨jle, partialPrev⟩
+          exact Nat.not_lt_of_ge
+            (inner.le_prefixFunction (Nat.pos_of_ne_zero zero) (Nat.le_pred_of_lt lt))
+            (Nat.lt_of_succ_lt_succ more)
+      · exact (hp.partialMatch_iff.mp (partialMatch_prefixFunction_sub_one (Nat.pos_of_ne_zero zero))).2
+
 end OmegaChecks.InitPort.Alternatives.String.Slice.Pattern.Model.ForwardSliceSearcher
