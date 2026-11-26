@@ -1,6 +1,10 @@
+module
+
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Analytic.Measure.ProductSupportIntersection
 import Reg.Support.DependentFamily
+
+@[expose] public section
 
 open _root_.D5.S3.Analytic.Measure.ProductSupportIntersection
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
