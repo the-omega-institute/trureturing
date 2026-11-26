@@ -329,4 +329,33 @@ public theorem String.eq_singleton_append : type_of% @_root_.String.eq_singleton
     rw [char, String.singleton_eq_ofList, ← String.ofList_append]
     rfl
 
+open _root_.String.Slice.Pattern
+private theorem isSomeWhen (b : Bool) (q : α) : b = (if b then some q else none).isSome := by
+  cases b <;> rfl
+
+public theorem String.Slice.Pattern.CharPred.instLawfulForwardPatternForallCharBool : type_of% @_root_.String.Slice.Pattern.CharPred.instLawfulForwardPatternForallCharBool := by
+  intro p
+  constructor
+  · intro s h
+    dsimp only [ForwardPattern.skipPrefixOfNonempty?, ForwardPattern.skipPrefix?, CharPred.instForwardPatternForallCharBool]
+    rw [dite_eq_right (String.Slice.startPos_ne_endPos h)]
+  · intro s
+    dsimp only [ForwardPattern.startsWith, ForwardPattern.skipPrefix?, CharPred.instForwardPatternForallCharBool]
+    split
+    · rfl
+    · rename_i ne
+      exact isSomeWhen _ _
+public theorem String.Slice.Pattern.CharPred.instLawfulBackwardPatternForallCharBool : type_of% @_root_.String.Slice.Pattern.CharPred.instLawfulBackwardPatternForallCharBool := by
+  intro p
+  constructor
+  · intro s h
+    dsimp only [BackwardPattern.skipSuffixOfNonempty?, BackwardPattern.skipSuffix?, CharPred.instBackwardPatternForallCharBool]
+    rw [dite_eq_right (String.Slice.startPos_ne_endPos h).symm]
+  · intro s
+    dsimp only [BackwardPattern.endsWith, BackwardPattern.skipSuffix?, CharPred.instBackwardPatternForallCharBool]
+    split
+    · rfl
+    · rename_i ne
+      exact isSomeWhen _ _
+
 end OmegaChecks.InitPort.Alternatives
