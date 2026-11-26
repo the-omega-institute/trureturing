@@ -1,6 +1,7 @@
 module
 
 public import Lean
+public import OmegaChecks.InitPort.Alternatives.AC
 public import OmegaChecks.InitPort.Alternatives.Array
 public import OmegaChecks.InitPort.Alternatives.ArrayPredicates
 public import OmegaChecks.InitPort.Alternatives.ArrayReverse
