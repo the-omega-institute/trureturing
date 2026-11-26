@@ -3,7 +3,7 @@ bibkey: luna2019weyldoublecopy
 authors: Andrés Luna, Ricardo Monteiro, Isobel Nicholson, Donal O'Connell
 year: 2019
 title: Type D Spacetimes and the Weyl Double Copy
-doi: "10.1103/PhysRevLett.122.211101"
+doi: "10.1088/1361-6382/ab03e6"
 url: "https://arxiv.org/abs/1810.08183"
 claim: A type D Weyl spinor factors as a squared Maxwell spinor times a scalar.
 strata_touched:
@@ -18,6 +18,6 @@ Section 3 relates the symmetric four-index Weyl spinor to the symmetric product 
 
 ## Verified locator
 
-DOI https://doi.org/10.1103/PhysRevLett.122.211101
+DOI https://doi.org/10.1088/1361-6382/ab03e6
 
 Open manuscript https://arxiv.org/abs/1810.08183

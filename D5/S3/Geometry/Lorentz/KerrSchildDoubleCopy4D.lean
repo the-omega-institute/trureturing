@@ -28,7 +28,7 @@ private abbrev Idx := Fin 4
 private abbrev Covector (K : Type*) := Idx → K
 private abbrev Matrix4 (K : Type*) := Matrix Idx Idx K
 
-private def sign (K : Type*) [Ring K] : Covector K := ![-1, 1, 1, 1]
+def sign (K : Type*) [Ring K] : Covector K := ![-1, 1, 1, 1]
 
 /-- The Cartesian Minkowski metric with time index zero. -/
 def eta (K : Type*) [Ring K] : Matrix4 K := diagonal (sign K)
@@ -57,10 +57,6 @@ private theorem eta_raise {K : Type*} [CommRing K] (k : Covector K) :
     eta K *ᵥ raise k = k := by
   ext i
   simp [eta, raise, mulVec_diagonal, ← mul_assoc, sign_sq]
-
-private theorem raise_dot {K : Type*} [CommRing K] (k v : Covector K) :
-    raise k ⬝ᵥ v = WeylNullScreen.minkowski k v := by
-  simp [raise, dotProduct, Fin.sum_univ_succ, sign, WeylNullScreen.minkowski, add_assoc]
 
 theorem ks_metric_symm {K : Type*} [CommRing K] (φ : K) (k : Covector K) :
     (ksMetric φ k)ᵀ = ksMetric φ k := by
@@ -110,18 +106,6 @@ theorem ks_metric_det_formula {K : Type*} [CommRing K] (φ : K) (k : Covector K)
 theorem ks_metric_det {K : Type*} [CommRing K] (φ : K) (k : Covector K)
     (hn : raise k ⬝ᵥ k = 0) : (ksMetric φ k).det = -1 := by
   rw [ks_metric_det_formula, hn, mul_zero, add_zero]
-
-theorem ks_metric_det_timelike {K : Type*} [Field K] (φ : K) (hφ : φ ≠ 0) :
-    (ksMetric φ ![1, 0, 0, 0]).det = -(1 - φ) ∧
-      (ksMetric φ ![1, 0, 0, 0]).det ≠ -1 := by
-  have h : (ksMetric φ ![1, 0, 0, 0]).det = -(1 - φ) := by
-    rw [ks_metric_det_formula, raise_dot]
-    simp [WeylNullScreen.minkowski, sub_eq_add_neg]
-  refine ⟨h, ?_⟩
-  rw [h]
-  intro he
-  apply hφ
-  linear_combination he
 
 /-- Pointwise values and first derivatives of the scalar and lower null covector. -/
 structure FirstJet (K : Type*) where
@@ -240,14 +224,18 @@ private theorem connection_split (j : FirstJet K) (hn : raise j.k ⬝ᵥ j.k = 0
   ring
 
 private theorem connection_trace (j : FirstJet K) (hn : raise j.k ⬝ᵥ j.k = 0)
-    (hd : ∀ a, raise j.k ⬝ᵥ j.dk a = 0)
-    (hg : ∀ b, (∑ a, raise j.k a * j.dk a b) = 0) (i : Idx) :
+    (hd : ∀ a, raise j.k ⬝ᵥ j.dk a = 0) (i : Idx) :
     (∑ a, connection j a a i) = 0 := by
-  simp only [connection_split j hn hd hg, Finset.sum_add_distrib, flat_trace j hn hd,
-    zero_add, correction]
-  have h := hn
-  simp only [dotProduct, Fin.sum_univ_succ, Fin.sum_univ_zero] at h ⊢
-  linear_combination j.phi * along j * j.k i * h
+  have h : (∑ a, j.phi * raise j.k a * (raise j.k ⬝ᵥ fun r => lowerConnection j r a i)) = 0 := by
+    calc
+      _ = j.phi * (raise j.k ⬝ᵥ j.k) *
+          (j.dphi i * (raise j.k ⬝ᵥ j.k) + 2 * j.phi * (raise j.k ⬝ᵥ j.dk i)) := by
+        simp only [dotProduct, lowerConnection, dPerturbation,
+          Fin.sum_univ_succ, Fin.sum_univ_zero]
+        ring
+      _ = 0 := by rw [hn, mul_zero, zero_mul]
+  simp only [connection, sum_inv, Finset.sum_sub_distrib]
+  exact sub_eq_zero.mpr ((flat_trace j hn hd i).trans h.symm)
 
 private theorem sign_tangent (i : Idx) :
     sign (TrivSqZeroExt K K) i = dual (sign K i) 0 := by
@@ -307,11 +295,10 @@ private theorem correction_tangent (j : Jet K) (c a i b : Idx) :
     dual_fst, dual_snd, add_zero, Fin.sum_univ_succ, Fin.sum_univ_zero]
   ring
 
-private theorem trace_derivative (j : Jet K) (hn : Null j) (hg : Geodesic j) (c b : Idx) :
+private theorem trace_derivative (j : Jet K) (hn : Null j) (c b : Idx) :
     (∑ a, connectionDerivative j c a a b) = 0 := by
   have h := congrArg TrivSqZeroExt.snd
-    (connection_trace (tangent j c) (tangent_null j hn c) (tangent_dnull j hn c)
-      (tangent_geodesic j hg c) b)
+    (connection_trace (tangent j c) (tangent_null j hn c) (tangent_dnull j hn c) b)
   simpa only [TrivSqZeroExt.snd_sum, TrivSqZeroExt.snd_zero, connectionDerivative] using h
 
 private theorem derivative_split (j : Jet K) (hn : Null j) (hg : Geodesic j) (c a i b : Idx) :
@@ -385,39 +372,6 @@ private theorem trace_mul_outer (u v : Covector K) (M : Matrix4 K) :
 
 private def connectionMatrix (j : FirstJet K) (i : Idx) : Matrix4 K :=
   fun a b => connection j a i b
-
-private theorem connection_matrix (j : FirstJet K) (hn : raise j.k ⬝ᵥ j.k = 0)
-    (hd : ∀ a, raise j.k ⬝ᵥ j.dk a = 0)
-    (hg : ∀ b, (∑ a, raise j.k a * j.dk a b) = 0) (i : Idx) :
-    connectionMatrix j i =
-      vecMulVec (raise j.k) (symmetricTerm j i + (j.phi * along j * j.k i) • j.k) +
-        vecMulVec (twistTerm j i) j.k + (j.phi * j.k i) • twist j := by
-  ext a b
-  rw [connectionMatrix, connection_split j hn hd hg, flat_expansion, correction]
-  simp only [Matrix.add_apply, Matrix.smul_apply, vecMulVec_apply, Pi.add_apply,
-    Pi.smul_apply, smul_eq_mul]
-  ring
-
-private theorem trace_product (j : FirstJet K) (hn : raise j.k ⬝ᵥ j.k = 0)
-    (hd : ∀ a, raise j.k ⬝ᵥ j.dk a = 0)
-    (hg : ∀ b, (∑ a, raise j.k a * j.dk a b) = 0) (i b : Idx) :
-    trace (connectionMatrix j i * connectionMatrix j b) =
-      (2 * along j ^ 2 + j.phi ^ 2 * trace (twist j * twist j)) * j.k i * j.k b := by
-  have ht := twist_mul j hd hg
-  have hnk : j.k ⬝ᵥ raise j.k = 0 := (dotProduct_comm _ _).trans hn
-  rw [connection_matrix j hn hd hg, connection_matrix j hn hd hg]
-  simp only [Matrix.add_mul, Matrix.mul_add, Matrix.mul_smul, Matrix.smul_mul,
-    trace_add, trace_smul]
-  have hleft (v : Covector K) : trace (vecMulVec (raise j.k) v * twist j) = 0 := by
-    rw [trace_mul_comm, trace_mul_outer, ht.1, dotProduct_zero]
-  have hright (u : Covector K) : trace (twist j * vecMulVec u j.k) = 0 := by
-    rw [trace_mul_comm, trace_outer_mul, ht.2, zero_dotProduct]
-  simp only [trace_outer_pair]
-  simp only [hleft, hright, trace_outer_mul, trace_mul_outer,
-    ht.1, ht.2, dotProduct_zero, zero_dotProduct, add_dotProduct,
-    smul_dotProduct, hnk, add_zero, symmetric_contract j hn hd hg,
-    twistTerm_contract j ht.2, zero_mul, mul_zero, smul_eq_mul]
-  ring
 
 private theorem flat_last_contract (j : FirstJet K) (hn : raise j.k ⬝ᵥ j.k = 0)
     (hd : ∀ a, raise j.k ⬝ᵥ j.dk a = 0)
@@ -528,19 +482,56 @@ def mixedRicci (j : Jet K) (i b : Idx) : K := ∑ r, ksInv j.phi j.k i r * ricci
 def linearRicci (j : Jet K) (i b : Idx) : K :=
   sign K i * (∑ a, flatDerivative j a a i b) / 2
 
-theorem ks_christoffel_exact (j : Jet K) (hn : Null j) (hg : Geodesic j) (a i b : Idx) :
-    christoffel j.toFirstJet a i b =
-      flatConnection j.toFirstJet a i b / 2 +
-        j.phi * (raise j.k ⬝ᵥ j.dphi) * raise j.k a * j.k i * j.k b / 2 := by
-  rw [christoffel, connection_split j.toFirstJet hn.value hn.first hg.value, correction, add_div]
+theorem ks_christoffel_exact (j : FirstJet K) (hn : raise j.k ⬝ᵥ j.k = 0)
+    (hd : ∀ i, raise j.k ⬝ᵥ j.dk i = 0)
+    (hg : ∀ i, (∑ a, raise j.k a * j.dk a i) = 0) (a i b : Idx) :
+    christoffel j a i b = flatConnection j a i b / 2 +
+      j.phi * (raise j.k ⬝ᵥ j.dphi) * raise j.k a * j.k i * j.k b / 2 := by
+  rw [christoffel, connection_split j hn hd hg, correction, add_div]
   rfl
 
-theorem ks_christoffel_trace_zero (j : Jet K) (hn : Null j) (hg : Geodesic j) (i : Idx) :
-    (∑ a, christoffel j.toFirstJet a a i) = 0 := by
-  simp only [christoffel, div_eq_mul_inv, ← Finset.sum_mul, connection_trace j.toFirstJet
-    hn.value hn.first hg.value, zero_mul]
+theorem ks_christoffel_trace_zero (j : FirstJet K) (hn : raise j.k ⬝ᵥ j.k = 0)
+    (hd : ∀ i, raise j.k ⬝ᵥ j.dk i = 0) (i : Idx) :
+    (∑ a, christoffel j a a i) = 0 := by
+  simp only [christoffel, div_eq_mul_inv, ← Finset.sum_mul, connection_trace j hn hd, zero_mul]
 
 variable [CharZero K]
+
+private theorem connection_matrix (j : FirstJet K) (hn : raise j.k ⬝ᵥ j.k = 0)
+    (hd : ∀ a, raise j.k ⬝ᵥ j.dk a = 0)
+    (hg : ∀ b, (∑ a, raise j.k a * j.dk a b) = 0) (i : Idx) :
+    connectionMatrix j i =
+      vecMulVec (raise j.k) (symmetricTerm j i + (j.phi * along j * j.k i) • j.k) +
+        vecMulVec (twistTerm j i) j.k + (j.phi * j.k i) • twist j := by
+  ext a b
+  have h := ks_christoffel_exact j hn hd hg a i b
+  simp only [christoffel, ← add_div] at h
+  have hsplit := (div_left_inj' (by norm_num : (2 : K) ≠ 0)).mp h
+  rw [connectionMatrix, hsplit, flat_expansion]
+  simp only [along, Matrix.add_apply, Matrix.smul_apply, vecMulVec_apply, Pi.add_apply,
+    Pi.smul_apply, smul_eq_mul]
+  ring
+
+private theorem trace_product (j : FirstJet K) (hn : raise j.k ⬝ᵥ j.k = 0)
+    (hd : ∀ a, raise j.k ⬝ᵥ j.dk a = 0)
+    (hg : ∀ b, (∑ a, raise j.k a * j.dk a b) = 0) (i b : Idx) :
+    trace (connectionMatrix j i * connectionMatrix j b) =
+      (2 * along j ^ 2 + j.phi ^ 2 * trace (twist j * twist j)) * j.k i * j.k b := by
+  have ht := twist_mul j hd hg
+  have hnk : j.k ⬝ᵥ raise j.k = 0 := (dotProduct_comm _ _).trans hn
+  rw [connection_matrix j hn hd hg, connection_matrix j hn hd hg]
+  simp only [Matrix.add_mul, Matrix.mul_add, Matrix.mul_smul, Matrix.smul_mul,
+    trace_add, trace_smul]
+  have hleft (v : Covector K) : trace (vecMulVec (raise j.k) v * twist j) = 0 := by
+    rw [trace_mul_comm, trace_mul_outer, ht.1, dotProduct_zero]
+  have hright (u : Covector K) : trace (twist j * vecMulVec u j.k) = 0 := by
+    rw [trace_mul_comm, trace_outer_mul, ht.2, zero_dotProduct]
+  simp only [trace_outer_pair]
+  simp only [hleft, hright, trace_outer_mul, trace_mul_outer,
+    ht.1, ht.2, dotProduct_zero, zero_dotProduct, add_dotProduct,
+    smul_dotProduct, hnk, add_zero, symmetric_contract j hn hd hg,
+    twistTerm_contract j ht.2, zero_mul, mul_zero, smul_eq_mul]
+  ring
 
 private def scalarCurvatureCorrection (j : Jet K) : K :=
   2 * flowDivergence j - j.phi * trace (twist j.toFirstJet * twist j.toFirstJet)
@@ -549,12 +540,12 @@ private theorem covariant_ricci_split (j : Jet K) (hn : Null j) (hg : Geodesic j
     (i b : Idx) :
     ricci j i b = (∑ a, flatDerivative j a a i b) / 2 +
       j.phi * scalarCurvatureCorrection j * j.k i * j.k b / 4 := by
-  have hT : (∑ a, ∑ c, connection j.toFirstJet a a c *
-      connection j.toFirstJet c i b) = 0 := by
+  have hT : (∑ a, ∑ c, christoffel j.toFirstJet a a c *
+      christoffel j.toFirstJet c i b) = 0 := by
     rw [Finset.sum_comm]
-    simp only [← Finset.sum_mul, connection_trace j.toFirstJet hn.value hn.first hg.value,
+    simp only [← Finset.sum_mul, ks_christoffel_trace_zero j.toFirstJet hn.value hn.first,
       zero_mul, Finset.sum_const_zero]
-  have hDT := trace_derivative j hn hg b i
+  have hDT := trace_derivative j hn b i
   have hprod := trace_product j.toFirstJet hn.value hn.first hg.value i b
   have hdiv := correction_divergence j hg i b
   have hsplit : (∑ a, connectionDerivative j a a i b) =
@@ -563,7 +554,7 @@ private theorem covariant_ricci_split (j : Jet K) (hn : Null j) (hg : Geodesic j
   simp only [ricci, christoffel, dChristoffel, scalarCurvatureCorrection,
     Fin.sum_univ_succ, Fin.sum_univ_zero, trace, diag, Matrix.mul_apply,
     connectionMatrix] at hT hDT hprod hdiv hsplit ⊢
-  linear_combination hsplit / 2 + hdiv / 2 - hDT / 2 - hprod / 4 + hT / 4
+  linear_combination hsplit / 2 + hdiv / 2 - hDT / 2 - hprod / 4 + hT
 
 /-- Raising the Ricci index with the full inverse cancels its covariant nonlinear term. -/
 theorem ks_mixed_ricci_linear_in_phi (j : Jet K) (hn : Null j) (hg : Geodesic j) (i b : Idx) :
