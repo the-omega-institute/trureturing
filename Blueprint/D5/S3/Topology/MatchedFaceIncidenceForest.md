@@ -6,9 +6,9 @@ The incidence forest of a collapse sequence
 
 **Theorem 1.1 (A coface bound prevents cycles among deleted faces).**
 
-Lean statement: `D5/S3/Geometry/MatchedFaceIncidenceForest.incidenceGraph_isAcyclic_of_sequence`
+Lean statement: `D5/S3/Topology/MatchedFaceIncidenceForest.incidenceGraph_isAcyclic_of_sequence`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Geometry/MatchedFaceIncidenceForest.incidenceGraph_isAcyclic_of_sequence` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Topology/MatchedFaceIncidenceForest.incidenceGraph_isAcyclic_of_sequence` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -20,5 +20,5 @@ A fixed-dimensional collapse sequence orders the matched faces. Each lower face 
 
 ## References
 
-- Truth anchor: `D5/S3/Geometry/MatchedFaceIncidenceForest.incidenceGraph_isAcyclic_of_sequence`
-- Dependency: [D5/S3/Geometry/FiniteRelativeSimplicialCollapse](FiniteRelativeSimplicialCollapse.md)
+- Truth anchor: `D5/S3/Topology/MatchedFaceIncidenceForest.incidenceGraph_isAcyclic_of_sequence`
+- Dependency: [D5/S3/Geometry/FiniteRelativeSimplicialCollapse](../Geometry/FiniteRelativeSimplicialCollapse.md)

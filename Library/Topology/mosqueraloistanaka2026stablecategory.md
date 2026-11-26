@@ -7,12 +7,12 @@ doi: 10.48550/arXiv.2609.39615
 url: https://arxiv.org/abs/2609.39615v1
 claim: Question 6.3 asks whether the stable category of every finite T₀-space is at most twice its weak category.
 strata_touched:
-  - D5/S3/Geometry/MatchedFaceIncidenceForest
+  - D5/S3/Topology/MatchedFaceIncidenceForest
 license: citation-only
 triage: anchor
 ---
 
-<!-- GID: D5/L/Geometry/mosqueraloistanaka2026stablecategory -->
+<!-- GID: D5/L/Topology/mosqueraloistanaka2026stablecategory -->
 
 # Weak and stable category of finite spaces
 

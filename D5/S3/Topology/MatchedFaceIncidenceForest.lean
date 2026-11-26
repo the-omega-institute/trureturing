@@ -1,6 +1,6 @@
-/- GID: D5/S3/Geometry/MatchedFaceIncidenceForest
+/- GID: D5/S3/Topology/MatchedFaceIncidenceForest
    generality: G
-   mirror-B: D5/B/S3/Geometry/MatchedFaceIncidenceForest
+   mirror-B: D5/B/S3/Topology/MatchedFaceIncidenceForest
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Acyclic]
    utility: none
@@ -24,7 +24,7 @@ compile_only_with_mathlib
 
 set_option autoImplicit false
 
-namespace D5.S3.Geometry.MatchedFaceIncidenceForest
+namespace D5.S3.Topology.MatchedFaceIncidenceForest
 
 variable {V : Type*} {n : ℕ}
 
@@ -125,8 +125,8 @@ theorem incidenceGraph_isAcyclic
 
 section CollapseSequence
 
-open FiniteElementaryCollapse (CollapsePair)
-open FiniteRelativeSimplicialCollapse (Sequence)
+open D5.S3.Geometry.FiniteElementaryCollapse (CollapsePair)
+open D5.S3.Geometry.FiniteRelativeSimplicialCollapse (Sequence)
 
 variable [Fintype V] [DecidableEq V]
 variable {K L : PreAbstractSimplicialComplex V}
@@ -267,4 +267,4 @@ theorem incidenceGraph_isAcyclic_of_sequence (S : Sequence K L)
 
 end CollapseSequence
 
-end D5.S3.Geometry.MatchedFaceIncidenceForest
+end D5.S3.Topology.MatchedFaceIncidenceForest
