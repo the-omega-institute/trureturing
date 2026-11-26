@@ -24,18 +24,19 @@ internal sealed class HardinA235280A235310AlphabetDocument : IScribeDocumentDefi
                 + "across a shared edge, so the sum is uniform. Global complementation pairs the two "
                 + "classes. Every entry in the low class is at most d, and restricting the alphabet "
                 + "gives the exact count as twice the cardinality of the sum-d class over Fin (d+1).")),
-            Endpoint("a235280", "A235280", "hardin2014a235280",
+            Endpoint("a235280", "A235280", "hardin2014a235280", "hardin-a235280-alphabet-comparison",
                 Comparison((4, 5), (5, 7), (6, 9)), "The common deficit is three. The NAME count is C(4, 5, n, k)."),
-            Endpoint("a235310", "A235310", "hardin2014a235310",
+            Endpoint("a235310", "A235310", "hardin2014a235310", "hardin-a235310-alphabet-comparison",
                 Comparison((5, 6), (6, 8), (7, 10)), "The common deficit is four. The NAME count is C(5, 6, n, k)."))));
 
-    private static DocumentBlock Endpoint(string name, string sequence, string bibkey,
+    private static DocumentBlock Endpoint(string name, string sequence, string bibkey, string slug,
         Formula statement, string correspondence) =>
         Describe.Lean(DescribeId.Create(name), DeclarationHandle.Create(Owner + "." + name),
             H(sequence + " alphabet comparison"), StatementSource.FromAuthor(Disp(statement)),
             AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Automata/" + bibkey)),
             Blocks(Paragraph(Text(correspondence + " The COMMENT specifies i = 1, 2, 3."))),
-            DescribeRole.Theorem);
+            DescribeRole.Theorem,
+            new OpenProblemResolutionClaim(ProblemSlugRef.Create(slug), ResolutionKind.Proved));
 
     private static Formula LiteralCountDefinition()
     {

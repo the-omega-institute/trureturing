@@ -28,6 +28,10 @@ $$\forall n: Nat, (\forall k: Nat, ((1 \le n) \implies ((1 \le k) \implies ((\op
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinA235280A235310Alphabet.a235280` (`✓ std3`). ∎
 
+*Resolves.* `Problems/hardin-a235280-alphabet-comparison` (proved) by `D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinA235280A235310Alphabet.a235280`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hardin-a235280-alphabet-comparison","declaration_gid":"D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinA235280A235310Alphabet.a235280","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* R. H. Hardin (2014). *OEIS A235280 — Constant-stress rectangular arrays*. URL: <https://oeis.org/A235280>.
@@ -41,6 +45,10 @@ The common deficit is three. The NAME count is C(4, 5, n, k). The COMMENT specif
 $$\forall n: Nat, (\forall k: Nat, ((1 \le n) \implies ((1 \le k) \implies ((\operatorname{C}\left(5, 6, n, k\right) = \operatorname{C}\left(6, 8, n, k\right)) \land (\operatorname{C}\left(6, 8, n, k\right) = \operatorname{C}\left(7, 10, n, k\right))))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinA235280A235310Alphabet.a235310` (`✓ std3`). ∎
+
+*Resolves.* `Problems/hardin-a235310-alphabet-comparison` (proved) by `D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinA235280A235310Alphabet.a235310`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hardin-a235310-alphabet-comparison","declaration_gid":"D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinA235280A235310Alphabet.a235310","resolution_kind":"proved"} -->
 
 *Source.* Repository-derived.
 
