@@ -5,5 +5,6 @@ Released under Apache 2.0 license as described in the file LICENSE.
 module
 prelude
 
+public import OmegaInit.Data.Nat.Coprime
 public import OmegaInit.Data.Nat.Gcd
 public import OmegaInit.Data.Nat.Lemmas
