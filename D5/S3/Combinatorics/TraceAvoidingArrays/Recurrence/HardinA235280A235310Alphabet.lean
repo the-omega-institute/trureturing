@@ -7,6 +7,7 @@
    digest: Hardin's literal constant-stress alphabet comparisons for A235280 and A235310. -/
 
 import D5.S3.Combinatorics.TraceAvoidingArrays.Recurrence.HardinA235289Recurrence
+import D5.S3.Combinatorics.TraceAvoidingArrays.Recurrence.HardinA235289Alphabet
 import Mathlib.Data.Fin.Basic
 import Mathlib.Data.Fintype.Pi
 import Mathlib.SetTheory.Cardinal.Finite
@@ -173,17 +174,10 @@ private def complementEquiv (M d n k : ℕ) (hd : d < M) :
   left_inv a := Subtype.ext (complement_involutive a.1)
   right_inv a := Subtype.ext (complement_involutive a.1)
 
-/-- Every index on an axis of length at least two occurs in an adjacent pair. -/
-private theorem inPair {n : ℕ} (x : Fin (n + 2)) :
-    ∃ j : Fin (n + 1), x = j.castSucc ∨ x = j.succ := by
-  refine Fin.cases ?_ (fun j => ?_) x
-  · exact ⟨0, Or.inl (Fin.ext rfl)⟩
-  · exact ⟨j, Or.inr rfl⟩
-
 private theorem lowEntry {M d n k : ℕ} (a : {a : Grid M (n + 1) (k + 1) // Low d a})
     (r : Fin (n + 2)) (c : Fin (k + 2)) : (a.1 (r, c)).val < d + 1 := by
-  obtain ⟨r', hr⟩ := inPair r
-  obtain ⟨c', hc⟩ := inPair c
+  obtain ⟨r', hr⟩ := HardinA235289Alphabet.inPair r
+  obtain ⟨c', hc⟩ := HardinA235289Alphabet.inPair c
   have sum := a.2 r' c'
   unfold block at sum
   rcases hr with rfl | rfl <;> rcases hc with rfl | rfl <;> omega

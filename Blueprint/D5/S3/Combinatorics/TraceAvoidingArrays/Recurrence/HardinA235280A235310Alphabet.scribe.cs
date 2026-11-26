@@ -19,8 +19,8 @@ internal sealed class HardinA235280A235310AlphabetDocument : IScribeDocumentDefi
                 Blocks(Paragraph(Text("The coordinates are ordered. Each legal filling contributes once. "
                     + "The contiguous block condition tests the absolute difference of the two integer sums."))),
                 DescribeRole.Definition),
-            Paragraph(Text("For a fixed deficit d and M greater than d, checkerboard complementation sends "
-                + "stress 2M−d to block sums d and 4M−d. The gap is greater than the change possible "
+            Paragraph(Text("For positive n and k, a fixed deficit d, and M greater than d, "
+                + "checkerboard complementation sends stress 2M−d to block sums d and 4M−d. The gap is greater than the change possible "
                 + "across a shared edge, so the sum is uniform. Global complementation pairs the two "
                 + "classes. Every entry in the low class is at most d, and restricting the alphabet "
                 + "gives the exact count as twice the cardinality of the sum-d class over Fin (d+1).")),
