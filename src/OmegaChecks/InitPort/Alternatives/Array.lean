@@ -4,7 +4,7 @@ public import OmegaChecks.InitPort.Alternatives.ArrayErase
 public import OmegaChecks.InitPort.Alternatives.ArrayLex
 public import OmegaChecks.InitPort.Alternatives.ArrayFind
 public import OmegaChecks.InitPort.Alternatives.ArrayMapIdx
-public import OmegaChecks.InitPort.Alternatives.VectorNested
+public import OmegaChecks.InitPort.Alternatives.Vector
 
 public import Init.Data.Array.Basic
 public import Init.Data.Nat.Basic
