@@ -168,16 +168,17 @@ private def comparisonProofs (source : Environment) (proofs : NameMap ConstantIn
     let some x := numeral? source a | return none
     let some y := numeral? source b | return none
     unless (if strict then x < y else x ≤ y) && y ≥ 32 do return none
+    let asProof := mkApp (mkConst `id [.zero]) p
     if canUsePowMonotonicity && !strict && x > 0 && y > 0 && y.log2 < 128 &&
         2 ^ x.log2 == x && 2 ^ y.log2 == y then
-      return some <| mkApp5 (mkConst `Nat.pow_le_pow_right) (mkRawNatLit 2)
+      return some <| mkApp asProof <| mkApp5 (mkConst `Nat.pow_le_pow_right) (mkRawNatLit 2)
         (mkConst `True.intro) (mkRawNatLit x.log2) (mkRawNatLit y.log2) (mkConst `True.intro)
     let cert := if x == y then mkApp (mkConst `Omega.Nat.le_refl) (natTerm x)
       else if strict then binaryLt x y
       else mkApp5 (mkConst `Omega.Nat.le_trans) (natTerm x) (mkApp (mkConst `Omega.Nat.succ) (natTerm x))
         (natTerm y) (mkApp (mkConst `Omega.Nat.le_succ) (natTerm x)) (binaryLt x y)
     let cert := inlineLiteralProofs proofs cert
-    return some <| cert.replace fun
+    return some <| mkApp asProof <| cert.replace fun
       | .const n us => some (.const (n.replacePrefix `Omega .anonymous) us)
       | _ => none
   return if result.equal body then none else some result
@@ -262,7 +263,7 @@ def checkDecl (env : Kernel.Environment) (decl : Declaration) (budget : Nat) :
 private def checkWithRetry (env : Kernel.Environment) (decl : Declaration) (budget : Nat) :
     BaseIO (Except Kernel.Exception Kernel.Environment) := do
   let result ← checkDecl env decl budget
-  if result matches .error .deterministicTimeout then checkDecl env decl (20 * budget)
+  if result matches .error .deterministicTimeout then checkDecl env decl (200 * budget)
   else return result
 
 /-- For equations compiled by the pattern matcher, expose at most two Nat or List arguments.
