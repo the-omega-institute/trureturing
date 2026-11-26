@@ -132,8 +132,8 @@ class Admission(unittest.TestCase):
         self.add_tag("v0.2.0", OLD)
         self.add_ancestry(OLD, "main")
         installer.verify_adopted_source({"version": "v0.2.0", "sha256": DIGEST})
-        self.assertEqual(installer.parse_pin(json.dumps(self.legacy | {"workflow_sha": DEV})),
-                         self.legacy | {"workflow_sha": DEV})
+        with self.assertRaisesRegex(ValueError, "invalid tools release pin"):
+            installer.parse_pin(json.dumps(self.legacy | {"workflow_sha": DEV}))
         no_source = {key: value for key, value in self.a.items() if key != "source_sha"}
         with self.assertRaisesRegex(ValueError, "full source_sha"):
             installer.verify_adopted_source(no_source)
