@@ -817,15 +817,15 @@ private theorem zipArrayLists [Monad m] (as : Array α) (bs : Array β) (f : α 
       dsimp only [WellFounded.Nat.fix.go, act]
       by_cases ha : j < as.size
       · apply (dependentBranch ha _ _).trans
-        rw [List.drop_eq_getElem_cons (l := as.toList) (i := j) ha]
+        rw [← List.getElem_cons_drop (as := as.toList) (i := j) ha]
         by_cases hb : j < bs.size
         · apply (dependentBranch hb _ _).trans
-          rw [List.drop_eq_getElem_cons (l := bs.toList) (i := j) hb]
+          rw [← List.getElem_cons_drop (as := bs.toList) (i := j) hb]
           exact congrArg (fun tail (acc : Array γ) => f as[j] bs[j] >>= fun c => tail (acc.push c))
             (ih (j+1) (Nat.lt_of_lt_of_le (Nat.sub_succ_lt_self _ _ ha) (Nat.le_of_lt_succ h)))
-        · rw [List.drop_of_length_le (Nat.le_of_not_gt hb), zipRightNil]
+        · rw [List.drop_eq_nil_of_le (Nat.le_of_not_gt hb), zipRightNil]
           exact dependentElse hb _ _
-      · rw [List.drop_of_length_le (Nat.le_of_not_gt ha)]
+      · rw [List.drop_eq_nil_of_le (Nat.le_of_not_gt ha)]
         exact dependentElse ha _ _
   delta Array.zipWithMAux Array.zipWithMAux._unary WellFounded.Nat.fix
   have fuel : as.size - i < WellFounded.Nat.eager (as.size - i + 1) := by
@@ -845,16 +845,16 @@ public theorem List.zipWithMAux_toArray_succ' : type_of% @_root_.List.zipWithMAu
   rw [zipArrayLists, zipArrayLists]
   rfl
 
-public theorem Array.zipWithMAux.eq_1 : type_of% @_root_.Array.zipWithMAux.eq_1 := by
+public theorem Array.zipWithMAux.eq_def : type_of% @_root_.Array.zipWithMAux.eq_def := by
   intro α β γ m mon as bs f i acc
   rw [zipArrayLists]
   by_cases ha : i < as.size
-  · rw [dite_eq_left ha, List.drop_eq_getElem_cons (l := as.toList) (i := i) ha]
+  · rw [dite_eq_left ha, ← List.getElem_cons_drop (as := as.toList) (i := i) ha]
     by_cases hb : i < bs.size
-    · rw [dite_eq_left hb, List.drop_eq_getElem_cons (l := bs.toList) (i := i) hb]
+    · rw [dite_eq_left hb, ← List.getElem_cons_drop (as := bs.toList) (i := i) hb]
       exact congrArg (fun tail => f as[i] bs[i] >>= fun c => tail (acc.push c)) (zipArrayLists as bs f (i+1)).symm
-    · rw [dite_eq_right hb, List.drop_of_length_le (Nat.le_of_not_gt hb), zipRightNil]
-  · rw [dite_eq_right ha, List.drop_of_length_le (Nat.le_of_not_gt ha)]
+    · rw [dite_eq_right hb, List.drop_eq_nil_of_le (Nat.le_of_not_gt hb), zipRightNil]
+  · rw [dite_eq_right ha, List.drop_eq_nil_of_le (Nat.le_of_not_gt ha)]
     rfl
 
 public theorem List.firstM_toArray : type_of% @_root_.List.firstM_toArray := by
