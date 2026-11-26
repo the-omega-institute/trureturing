@@ -246,6 +246,91 @@ theorem fourth_cycle_inv_mean_le_resolvent_integral (a : ι → ℝ) (ha : ∀ i
   simpa only [Finset.mul_sum, resolventDensity, c, pow_succ, pow_zero, one_mul, mul_assoc]
     using hmul
 
+private def interpolate (x y t : ℝ) : ℝ := y + (x - y) * t
+
+private theorem interpolate_pos {x y t : ℝ} (hx : 0 < x) (hy : 0 < y)
+    (ht : t ∈ Icc (0 : ℝ) 1) : 0 < interpolate x y t := by
+  have heq : interpolate x y t = (1 - t) * y + t * x := by
+    unfold interpolate
+    ring
+  rw [heq]
+  rcases ht.2.eq_or_lt with he | hlt
+  · simpa [he] using hx
+  · exact add_pos_of_pos_of_nonneg (mul_pos (sub_pos.mpr hlt) hy) (mul_nonneg ht.1 hx.le)
+
+private theorem integral_beta_resolvent (n : ℕ) {x y : ℝ} (hx : 0 < x) (hy : 0 < y) :
+    (∫ t in (0 : ℝ)..1, ((n : ℝ) + 1) * t ^ n * (interpolate x y t)⁻¹ ^ (n + 2)) =
+      x⁻¹ ^ (n + 1) * y⁻¹ := by
+  let P (t : ℝ) := y⁻¹ * (t / interpolate x y t) ^ (n + 1)
+  have hden (t : ℝ) (ht : t ∈ uIcc (0 : ℝ) 1) : 0 < interpolate x y t :=
+    interpolate_pos hx hy (by simpa only [uIcc_of_le zero_le_one] using ht)
+  have hderiv (t : ℝ) (ht : t ∈ uIcc (0 : ℝ) 1) : HasDerivAt P
+      (((n : ℝ) + 1) * t ^ n * (interpolate x y t)⁻¹ ^ (n + 2)) t := by
+    have hI : HasDerivAt (interpolate x y) (x - y) t := by
+      simpa only [interpolate, id_eq, mul_one] using
+        (show HasDerivAt (fun u : ℝ ↦ y + (x - y) * id u) ((x - y) * 1) t from
+          (((hasDerivAt_id t).const_mul (x - y)).const_add y))
+    have h := (((hasDerivAt_id t).div hI (hden t ht).ne').pow (n + 1)).const_mul y⁻¹
+    convert h using 1
+    · rfl
+    · have hsub : 1 * interpolate x y t - t * (x - y) = y := by
+        unfold interpolate
+        ring
+      simp only [Nat.cast_add, Nat.cast_one, Nat.add_sub_cancel, id_eq, hsub, div_pow, inv_pow,
+        pow_succ _ (n + 1), pow_succ _ n]
+      field_simp [(hden t ht).ne', hy.ne']
+      ring
+  have hc : ContinuousOn
+      (fun t : ℝ ↦ ((n : ℝ) + 1) * t ^ n * (interpolate x y t)⁻¹ ^ (n + 2)) (uIcc 0 1) := by
+    have hI : Continuous (interpolate x y) := by unfold interpolate; fun_prop
+    exact ((continuous_const.mul (continuous_id.pow n)).continuousOn).mul
+      ((hI.continuousOn.inv₀ fun t ht ↦ (hden t ht).ne').pow (n + 2))
+  rw [intervalIntegral.integral_eq_sub_of_hasDerivAt hderiv hc.intervalIntegrable]
+  have h1 : interpolate x y 1 = x := by unfold interpolate; ring
+  simp [P, h1, mul_comm]
+
+/-- The mean over four uniform simplex weights, written as the iterated
+mean over the independent Beta(1,1), Beta(2,1), and Beta(3,1) weights. -/
+def fourthSimplexMean (f : ℝ → ℝ) (a b c d : ℝ) : ℝ :=
+  ∫ w in (0 : ℝ)..1, ∫ v in (0 : ℝ)..1, 2 * v *
+    (∫ u in (0 : ℝ)..1, 3 * u ^ 2 *
+      f (interpolate (interpolate (interpolate a b w) c v) d u))
+
+/-- The inverse-fourth-power simplex mean is the product of four
+ordinary reciprocals, including repeated knots. -/
+theorem fourthSimplexMean_inv_fourth {a b c d : ℝ}
+    (ha : 0 < a) (hb : 0 < b) (hc : 0 < c) (hd : 0 < d) :
+    fourthSimplexMean (fun x ↦ x⁻¹ ^ 4) a b c d = a⁻¹ * b⁻¹ * c⁻¹ * d⁻¹ := by
+  unfold fourthSimplexMean
+  calc
+    _ = ∫ w in (0 : ℝ)..1, ((interpolate a b w)⁻¹ ^ 2 * c⁻¹) * d⁻¹ := by
+      apply intervalIntegral.integral_congr
+      intro w hw
+      have hp : 0 < interpolate a b w :=
+        interpolate_pos ha hb (by simpa only [uIcc_of_le zero_le_one] using hw)
+      calc
+        _ = ∫ v in (0 : ℝ)..1, 2 * v * (interpolate (interpolate a b w) c v)⁻¹ ^ 3 * d⁻¹ := by
+          apply intervalIntegral.integral_congr
+          intro v hv
+          have hq : 0 < interpolate (interpolate a b w) c v :=
+            interpolate_pos hp hc (by simpa only [uIcc_of_le zero_le_one] using hv)
+          dsimp only
+          rw [show (∫ u in (0 : ℝ)..1, 3 * u ^ 2 *
+              (interpolate (interpolate (interpolate a b w) c v) d u)⁻¹ ^ 4) = _ from by
+              simpa only [Nat.cast_ofNat, show (2 : ℝ) + 1 = 3 by norm_num] using
+                integral_beta_resolvent 2 hq hd]
+          ring
+        _ = _ := by
+          rw [intervalIntegral.integral_mul_const]
+          congr 1
+          simpa only [Nat.cast_one, one_add_one_eq_two, pow_one] using
+            integral_beta_resolvent 1 hp hc
+    _ = _ := by
+      rw [intervalIntegral.integral_mul_const, intervalIntegral.integral_mul_const]
+      congr 2
+      simpa only [Nat.cast_zero, zero_add, pow_zero, mul_one, one_mul, pow_one] using
+        integral_beta_resolvent 0 ha hb
+
 end
 
 end RefinedBMV.Tracial
