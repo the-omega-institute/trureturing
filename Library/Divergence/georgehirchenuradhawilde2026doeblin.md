@@ -14,6 +14,12 @@ triage: anchor
 
 # Quantum Doeblin coefficients
 
+## Verified locator
+
+Published article DOI 10.22331/q-2026-05-22-2115. The source text used here is arXiv v3, https://arxiv.org/html/2503.22823v3. The relevant locators are Eq. (2.2), Definition 4, Definition 7, Proposition 31 and §9.2(1). [Published article](https://doi.org/10.22331/q-2026-05-22-2115)
+
+## Source statements
+
 Equation (2.2) uses the unnormalized, input-first Choi operator. Definition 4 defines α as the supremum of Tr H over Hermitian H with I ⊗ H ⪯ J. Equation (3.25) requires H ⪰ 0 for α₊. Proposition 31 proves ηᶜ_γ ≤ 1 − α₊ for γ ≥ 1. Section 9.2(1) asks whether ηᶜ_γ ≤ 1 − α. [Equation (2.2)](https://arxiv.org/html/2503.22823v3#S2.E2) · [Definition 4](https://arxiv.org/html/2503.22823v3#Thmdefinition4) · [Equation (3.25)](https://arxiv.org/html/2503.22823v3#S3.E25) · [Proposition 31](https://arxiv.org/html/2503.22823v3#Thmproposition31) · [Section 9.2(1)](https://arxiv.org/html/2503.22823v3#S9.SS2)
 
 `CompleteHockeyStickDoeblinRefutation.result` gives a negative answer at γ = 2. The channel prepares the rays P of (1,0) and Q of (4/5,3/5). Lean identifies its actual Choi blocks and checks the Hermitian minorant H = [[13,6],[6,−3]]/25. Its trace is 2/5 and the reused complete-coefficient lower bound is 9/10, so 1 − α ≤ 3/5 < ηᶜ₂.
