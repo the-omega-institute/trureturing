@@ -8,9 +8,14 @@ namespace OmegaChecks.InitPort.Alternatives
 
 public def Vector.instDecidableExistsVectorZero {α : Type u} (p : _root_.Vector α 0 → Prop)
     [d : Decidable (p #v[])] : Decidable (∃ xs, p xs) :=
-  match d with
-  | .isTrue h => .isTrue ⟨#v[], h⟩
-  | .isFalse h => .isFalse fun ⟨xs, hp⟩ => h (_root_.Vector.eq_empty (xs := xs) ▸ hp)
+  decidable_of_iff (¬ ∀ xs, ¬ p xs) <| by
+    constructor
+    · intro h
+      cases d with
+      | isTrue yes => exact ⟨#v[], yes⟩
+      | isFalse no => exact (h fun xs hp => no (_root_.Vector.eq_empty (xs := xs) ▸ hp)).elim
+    · rintro ⟨xs, yes⟩ no
+      exact no xs yes
 
 public theorem Vector.mem_dite_empty_left : type_of% @_root_.Vector.mem_dite_empty_left := by
   intro α p x _ xs
