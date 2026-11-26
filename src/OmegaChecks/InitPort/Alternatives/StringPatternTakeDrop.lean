@@ -330,3 +330,69 @@ public theorem Slice.takeEndWhile_takeEndWhile : type_of% @_root_.String.Slice.t
   exact Slice.takeEndWhile_eq_self_iff.mpr _root_.String.Slice.revAll_takeEndWhile
 
 end OmegaChecks.InitPort.Alternatives.String
+
+namespace OmegaChecks.InitPort.Alternatives.String.Slice
+
+public theorem dropPrefix?_congr : type_of% @_root_.String.Slice.dropPrefix?_congr := by
+  intro ρ pat model instancePattern lawful s t eq
+  simp only [_root_.String.Slice.dropPrefix?_eq_map_skipPrefix?]
+  rw [_root_.String.Slice.skipPrefix?_congr eq]
+  cases t.skipPrefix? pat with
+  | none => rfl
+  | some pos => exact congrArg some (_root_.String.Slice.copy_sliceFrom_cast eq.symm)
+
+public theorem skipPrefix?_copy : type_of% @_root_.String.Slice.skipPrefix?_copy := by
+  intro ρ pat instancePattern model lawful s
+  rw [_root_.String.skipPrefix?_eq_skipPrefix?_toSlice, _root_.String.Slice.skipPrefix?_congr _root_.String.copy_toSlice]
+  cases s.skipPrefix? pat with
+  | none => rfl
+  | some pos => rfl
+
+public theorem Pos.skip?_copy : type_of% @_root_.String.Slice.Pos.skip?_copy := by
+  intro ρ pat instancePattern model lawful s pos
+  rw [_root_.String.Pos.skip?_eq_skip?_toSlice, _root_.String.Slice.Pos.skip?_congr (hst := _root_.String.copy_toSlice),
+    _root_.String.Slice.Pos.cast_toSlice_copy]
+  cases pos.skip? pat with
+  | none => rfl
+  | some result => rfl
+
+public theorem all_congr : type_of% @_root_.String.Slice.all_congr := by
+  intro ρ pat model instancePattern lawful s t eq
+  apply Bool.eq_iff_iff.mpr
+  rw [_root_.String.Slice.all_eq_skipPrefixWhile_beq, _root_.String.Slice.all_eq_skipPrefixWhile_beq,
+    ← _root_.String.Slice.cast_skipPrefixWhile eq]
+  exact (Pattern.Model.positionBeq _ _).trans
+    (_root_.String.Slice.Pos.cast_eq_endPos.symm.trans (Pattern.Model.positionBeq _ _).symm)
+
+public theorem dropSuffix?_congr : type_of% @_root_.String.Slice.dropSuffix?_congr := by
+  intro ρ pat model instancePattern lawful s t eq
+  simp only [_root_.String.Slice.dropSuffix?_eq_map_skipSuffix?]
+  rw [_root_.String.Slice.skipSuffix?_congr eq]
+  cases t.skipSuffix? pat with
+  | none => rfl
+  | some pos => exact congrArg some (_root_.String.Slice.copy_sliceTo_cast eq.symm)
+
+public theorem skipSuffix?_copy : type_of% @_root_.String.Slice.skipSuffix?_copy := by
+  intro ρ pat instancePattern model lawful s
+  rw [_root_.String.skipSuffix?_eq_skipSuffix?_toSlice, _root_.String.Slice.skipSuffix?_congr _root_.String.copy_toSlice]
+  cases s.skipSuffix? pat with
+  | none => rfl
+  | some pos => rfl
+
+public theorem Pos.revSkip?_copy : type_of% @_root_.String.Slice.Pos.revSkip?_copy := by
+  intro ρ pat instancePattern model lawful s pos
+  rw [_root_.String.revSkip?_eq_revSkip?_toSlice, _root_.String.Slice.Pos.revSkip?_congr (hst := _root_.String.copy_toSlice),
+    _root_.String.Slice.Pos.cast_toSlice_copy]
+  cases pos.revSkip? pat with
+  | none => rfl
+  | some result => rfl
+
+public theorem revAll_congr : type_of% @_root_.String.Slice.revAll_congr := by
+  intro ρ pat model instancePattern lawful s t eq
+  apply Bool.eq_iff_iff.mpr
+  rw [_root_.String.Slice.revAll_eq_skipSuffixWhile_beq, _root_.String.Slice.revAll_eq_skipSuffixWhile_beq,
+    ← _root_.String.Slice.cast_skipSuffixWhile eq]
+  exact (Pattern.Model.positionBeq _ _).trans
+    (_root_.String.Slice.Pos.cast_eq_startPos.symm.trans (Pattern.Model.positionBeq _ _).symm)
+
+end OmegaChecks.InitPort.Alternatives.String.Slice
