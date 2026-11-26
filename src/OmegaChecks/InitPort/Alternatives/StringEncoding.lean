@@ -284,6 +284,18 @@ public theorem String.Pos.Raw.isValid_iff_isSome_utf8DecodeChar? :
     · exact String.Pos.Raw.isValid_iff_isUTF8FirstByte.mpr (Or.inr
         ⟨ByteArray.lt_size_of_isSome_utf8DecodeChar? decodes, ByteArray.isUTF8FirstByte_of_isSome_utf8DecodeChar? decodes⟩)
 
+public theorem ByteArray.extract_append_size_add : type_of% @_root_.ByteArray.extract_append_size_add := by
+  intro a b i j
+  apply ByteArray.ext
+  apply Array.ext'
+  rw [ByteArray.data_extract, ByteArray.data_append, Array.toList_extract, ByteArray.data_extract,
+    Array.toList_extract, Array.toList_append]
+  unfold List.extract
+  rw [List.drop_append, List.drop_of_length_le, List.nil_append]
+  · change List.take (a.size + j - (a.size + i)) (List.drop (a.size + i - a.size) _) = _
+    rw [Nat.add_sub_cancel_left, Nat.add_sub_add_left]
+  · exact Nat.le_add_right _ _
+
 public theorem String.Pos.Raw.IsValid.append_left : type_of% @_root_.String.Pos.Raw.IsValid.append_left := by
   intro t p h s
   apply String.Pos.Raw.isValid_iff_isValidUTF8_extract_zero.mpr
@@ -292,10 +304,11 @@ public theorem String.Pos.Raw.IsValid.append_left : type_of% @_root_.String.Pos.
     rw [String.utf8ByteSize_append]
     exact Nat.add_le_add_left h.le_utf8ByteSize _
   · change ((s.toByteArray ++ t.toByteArray).extract 0 (s.toByteArray.size + p.byteIdx)).IsValidUTF8
-    rw [ByteArray.extract_append, Nat.zero_sub, Nat.add_sub_cancel_left]
-    have all : s.toByteArray.extract 0 (s.toByteArray.size + p.byteIdx) = s.toByteArray := by
-      exact Nat.max_eq_left (Nat.le_add_right ..) ▸ @ByteArray.extract_zero_max_size s.toByteArray (s.toByteArray.size + p.byteIdx)
-    rw [all]
+    rw [ByteArray.extract_eq_extract_append_extract s.toByteArray.size (Nat.zero_le _) (Nat.le_add_right ..),
+      ByteArray.extract_append_eq_left rfl]
+    have right := ByteArray.extract_append_size_add (a := s.toByteArray) (b := t.toByteArray) (i := 0) (j := p.byteIdx)
+    rw [Nat.add_zero] at right
+    rw [right]
     obtain ⟨a, ha⟩ := s.isValidUTF8
     obtain ⟨b, hb⟩ := h.isValidUTF8_extract_zero
     exact ⟨a ++ b, by rw [ha, hb, List.utf8Encode_append]⟩
