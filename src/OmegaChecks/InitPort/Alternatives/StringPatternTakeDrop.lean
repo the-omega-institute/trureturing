@@ -51,6 +51,22 @@ public theorem Pos.skipWhile_eq_self : type_of% @_root_.String.Slice.Pattern.Mod
   have h := (_root_.String.Slice.Pattern.Model.Pos.skip?_eq_none_iff).mpr miss
   rw [_root_.String.Slice.Pos.skipWhile, h]
 
+public theorem Pos.le_skipWhile_of_isLongestMatchAtChain :
+    type_of% @_root_.String.Slice.Pattern.Model.Pos.le_skipWhile_of_isLongestMatchAtChain := by
+  intro ρ pat model instancePattern lawful s startPos endPos chain
+  induction chain with
+  | nil pos => exact _root_.String.Slice.Pos.le_skipWhile
+  | cons p₁ p₂ p₃ hmatch hchain ih =>
+    rw [_root_.String.Slice.Pos.skipWhile, _root_.String.Slice.Pattern.Model.Pos.skip?_eq_some_iff.mpr hmatch]
+    dsimp only
+    split
+    · exact ih
+    · rename_i noProgress
+      obtain rfl := _root_.String.Slice.Pos.ext (String.Pos.Raw.ext
+        (Nat.le_antisymm hmatch.le (Nat.le_of_not_gt noProgress)))
+      obtain rfl := hchain.eq_of_isLongestMatchAt_self hmatch
+      exact Nat.le_refl _
+
 public theorem Pos.skipWhile_eq_self_iff_or : type_of% @_root_.String.Slice.Pattern.Model.Pos.skipWhile_eq_self_iff_or := by
   intro ρ pat model instancePattern lawful s pos
   exact (Pos.skipWhile_eq_iff pat pos pos).trans ⟨And.right, fun h => ⟨.nil _, h⟩⟩
@@ -97,6 +113,22 @@ public theorem Pos.revSkipWhile_eq_self : type_of% @_root_.String.Slice.Pattern.
   intro ρ pat model instancePattern lawful s pos miss
   have h := (_root_.String.Slice.Pattern.Model.Pos.revSkip?_eq_none_iff).mpr miss
   rw [_root_.String.Slice.Pos.revSkipWhile, h]
+
+public theorem Pos.revSkipWhile_le_of_isLongestRevMatchAtChain :
+    type_of% @_root_.String.Slice.Pattern.Model.Pos.revSkipWhile_le_of_isLongestRevMatchAtChain := by
+  intro ρ pat model instancePattern lawful s startPos endPos chain
+  induction chain with
+  | nil => exact _root_.String.Slice.Pos.revSkipWhile_le
+  | cons mid endP hchain hmatch ih =>
+    rw [_root_.String.Slice.Pos.revSkipWhile, _root_.String.Slice.Pattern.Model.Pos.revSkip?_eq_some_iff.mpr hmatch]
+    dsimp only
+    split
+    · exact ih
+    · rename_i noProgress
+      obtain rfl := _root_.String.Slice.Pos.ext (String.Pos.Raw.ext
+        (Nat.le_antisymm hmatch.le (Nat.le_of_not_gt noProgress)))
+      obtain rfl := hchain.eq_of_isLongestRevMatchAt_self hmatch
+      exact Nat.le_refl _
 
 public theorem Pos.revSkipWhile_eq_self_iff_or : type_of% @_root_.String.Slice.Pattern.Model.Pos.revSkipWhile_eq_self_iff_or := by
   intro ρ pat model instancePattern lawful s pos
