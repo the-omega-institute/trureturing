@@ -20,11 +20,12 @@ open BalancedCriticalSpectrum (Q flip flip_adj)
 open BalancedCubeComponentBoundary (directions directions_card mem_directions)
 open BalancedCubeGirth (flip_comm)
 open SupportedEigenSaturation (matrix_abs_of_adj selected_neighbor_card)
-open ComponentBoundary.Q9IsotropicHuang (flipSign weightedAction weightedLinear)
+open ComponentBoundary.Q9IsotropicHuang
+  (flipSign weightedAction weightedLinear weightedLinear_apply)
 open ComponentBoundary.Q9SignedContactCells (weighted_square)
 open private complement_card from
   D5.S3.Combinatorics.Graph.HypercubeCritical.SupportedEigenDimension
-open private weightedLinear_apply flipSign_cast from
+open private flipSign_cast from
   D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Q9IsotropicHuang
 
 set_option autoImplicit false

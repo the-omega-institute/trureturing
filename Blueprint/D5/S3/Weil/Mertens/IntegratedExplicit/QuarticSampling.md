@@ -48,8 +48,60 @@ For each positive exponent loss and each natural threshold A, the test asks for 
 
 Conversely, choose the real window with left end k¹² and power exponent 4/3. Its right end is k¹⁶. The boundary roots are k³ and k⁴, and monotonicity of the fourth power places every interior sample root between them. Such windows start arbitrarily far out, so they satisfy the closed-window criterion at every positive loss.
 
+**Theorem 1.4 (An integer block inside a wider real power window).**
+
+Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/QuarticSampling.exists_quartic_block_in_power_window`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Weil/Mertens/IntegratedExplicit/QuarticSampling.exists_quartic_block_in_power_window` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Round the twelfth root v of Y up to the natural k. For v≥5, the ceiling is at most (6/5)v and (6/5)^16≤v². Thus Y≤k¹² and k¹⁶≤Y^(3/2). Choosing Y above max(A,5)^12 ensures k≥max(A,2).
+
+**Theorem 1.5 (Cofinal real windows supply complete fourth-power blocks).**
+
+Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/QuarticSampling.quartic_integer_blocks_of_pointwise_windows`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Weil/Mertens/IntegratedExplicit/QuarticSampling.quartic_integer_blocks_of_pointwise_windows` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For each exponent loss and natural threshold, use the contained block of the supplied real window. Every fourth power between the boundary roots k³ and k⁴ lies in the same closed interval, so the pointwise estimate bounds all samples of the native integer-block criterion.
+
+**Theorem 1.6 (Every width above four thirds eventually contains a block).**
+
+Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/QuarticSampling.eventually_exists_quartic_block`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Weil/Mertens/IntegratedExplicit/QuarticSampling.eventually_exists_quartic_block` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For any b>4/3 the factor Y^(b−4/3) eventually exceeds the bounded power cost of rounding. Every sufficiently large starting point then contains a block.
+
+**Theorem 1.7 (Exact width forces start-point alignment).**
+
+Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/QuarticSampling.quartic_block_subset_exact_width_iff`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Weil/Mertens/IntegratedExplicit/QuarticSampling.quartic_block_subset_exact_width_iff` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+At width 4/3, the upper endpoint of the candidate block is the 4/3 power of its left endpoint. Monotonicity turns the two containment conditions into equality of the left endpoints.
+
 ## References
 
+- Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/QuarticSampling.eventually_exists_quartic_block`
+- Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/QuarticSampling.exists_quartic_block_in_power_window`
+- Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/QuarticSampling.quartic_block_subset_exact_width_iff`
+- Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/QuarticSampling.quartic_integer_blocks_of_pointwise_windows`
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/QuarticSampling.rh_iff_eventually_quartic_samples`
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/QuarticSampling.rh_iff_quartic_integer_blocks`
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/QuarticSampling.rh_iff_quartic_power_windows`

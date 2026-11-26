@@ -46,9 +46,15 @@ theorem guarded_wall_persists_in_ledger_limit
           history.enrolledAt statement <= cutoff /\
             forall t, cutoff <= t -> history.grade statement t = terminalGrade statement) /\
         forall w, w ∈ wall -> terminalGrade w ∉ positiveGrades := by
-  have wallNeverPositive := wall_never_positive
-    (positive := fun t statement => history.grade statement t ∈ positiveGrades)
-    wall gatekeepers forbidden gatekeepers_positive joint_positive_forbidden consistent
+  have wallNeverPositive : ∀ t statement, statement ∈ wall →
+      history.grade statement t ∉ positiveGrades := by
+    intro t statement inWall positiveNow
+    exact Omega.False.elim (wall_never_positive
+      (positive := fun time entry => history.grade entry time ∈ positiveGrades)
+      wall gatekeepers forbidden gatekeepers_positive joint_positive_forbidden
+      (fun time entry membership impossible =>
+        False.elim (consistent time entry membership impossible))
+      t statement inWall positiveNow)
   refine ⟨wallNeverPositive, ?_⟩
   obtain ⟨terminalGrade, stable, terminalUnique⟩ :=
     ledger_limit_exists_unique history repairClause

@@ -177,4 +177,156 @@ noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
 
 end Adjustable
 
+namespace MomentIntegrable
+
+abbrev sig : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℝ → ℝ)
+    (fun _ => Set ℝ → Measure ℝ → Prop)
+
+def actual : Realization sig :=
+  realize sig (fun _ _ f S μ => IntegrableOn f S μ) (fun e => nomatch e)
+
+def rejected : Realization sig :=
+  realize sig (fun _ _ _ _ _ => False) (fun e => nomatch e)
+
+def arena : Arena where
+  signature := sig
+  Law V := ∀ (k : ℕ) {r : ℝ}, 0 < r → V.readout () () (moment k r) (Ioi 0) volume
+
+private theorem rejected_fails : ¬ arena.Law rejected := by
+  intro h
+  exact h 0 (r := 1) zero_lt_one
+
+private theorem dependence : ObservationalDependence sig actual := by
+  intro _
+  refine ⟨(), (fun _ : ℝ => (0 : ℝ)), (fun _ : ℝ => (1 : ℝ)), ?_⟩
+  intro h
+  have he := congrFun (congrFun h (Ici (0 : ℝ))) volume
+  have hi : IntegrableOn (fun _ : ℝ => (1 : ℝ)) (Ici (0 : ℝ)) := by
+    change IntegrableOn (fun _ : ℝ => (0 : ℝ)) (Ici (0 : ℝ)) =
+      IntegrableOn (fun _ : ℝ => (1 : ℝ)) (Ici (0 : ℝ)) at he
+    rw [← he]
+    simp
+  simpa [integrableOn_const_iff, Real.volume_Ici] using hi
+
+def family : Registration arena (type_of% @moment_integrable) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@moment_integrable, rejected, rejected_fails⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law actual rejected rejected_fails
+  dependence := dependence
+
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@moment_integrable) (Realization sig) Unit Unit where
+  unitName := .str
+    `D5.S3.Analytic.Laplace.CriticalGammaWindow.moment_integrable
+    "__information_unit"
+  realizationName := .str
+    `Reg.D5.S3.Analytic.Laplace.CriticalGammaWindow.MomentIntegrable "family"
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize sig actual.readout actual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Analytic.Laplace.CriticalGammaWindow
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "fn", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end MomentIntegrable
+
+namespace MomentIntegral
+
+abbrev sig : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℝ → ℝ) (fun _ => ℝ)
+
+def actual : Realization sig :=
+  realize sig (fun _ _ f => ∫ u in Ioi (0 : ℝ), f u) (fun e => nomatch e)
+
+def rejected : Realization sig :=
+  realize sig (fun _ _ f => (∫ u in Ioi (0 : ℝ), f u) + 1) (fun e => nomatch e)
+
+def arena : Arena where
+  signature := sig
+  Law V := ∀ (k : ℕ) {r : ℝ}, 0 < r →
+    V.readout () () (moment k r) = r⁻¹ ^ (k+1)
+
+private theorem rejected_fails : ¬ arena.Law rejected := by
+  intro h
+  have bad := h 0 (r := 1) zero_lt_one
+  change (∫ u in Ioi 0, moment 0 1 u) + 1 = _ at bad
+  rw [moment_integral 0 zero_lt_one] at bad
+  linarith
+
+private theorem dependence : ObservationalDependence sig actual := by
+  intro _
+  refine ⟨(), (fun _ => 0), moment 0 1, ?_⟩
+  change (∫ _ : ℝ in Ioi 0, (0 : ℝ)) ≠ ∫ u in Ioi 0, moment 0 1 u
+  rw [integral_zero, moment_integral 0 zero_lt_one]
+  norm_num
+
+def family : Registration arena (type_of% @moment_integral) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@moment_integral, rejected, rejected_fails⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law actual rejected rejected_fails
+  dependence := dependence
+
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@moment_integral) (Realization sig) Unit Unit where
+  unitName := .str
+    `D5.S3.Analytic.Laplace.CriticalGammaWindow.moment_integral
+    "__information_unit"
+  realizationName := .str
+    `Reg.D5.S3.Analytic.Laplace.CriticalGammaWindow.MomentIntegral "family"
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize sig actual.readout actual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Analytic.Laplace.CriticalGammaWindow
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "fn", "arg", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end MomentIntegral
+
 end Reg.D5.S3.Analytic.Laplace.CriticalGammaWindow

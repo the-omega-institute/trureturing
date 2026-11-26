@@ -1,0 +1,1 @@
+{"statement_id":"sha256:18adc89637cf70d03813778d1055f01414547aec1f1ea953b23b223c3c8e41e8","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),8:Topology),8:Measures),25:IntegralEpsilonDomination),38:tendsto_integral_of_epsilon_domination)","kind":"theorem","libraries":["Batteries","Init","Lean","Mathlib","Std"]}]}

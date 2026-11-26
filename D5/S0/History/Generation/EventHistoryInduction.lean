@@ -5,25 +5,22 @@
    anchors: []
    digest: Event-history properties follow from empty and one-event generation cases. -/
 
-import D5.S0.History.HistoryCarrier
+module
+prelude
+public import OmegaMath.Data.SnocList
 
 namespace D5.S0.History.Generation
 
-/-- A property of event histories holds universally when it holds for the empty history
-and is preserved whenever one event is appended. -/
-theorem event_history_induction
-    (P : EventHistory → Prop)
-    (empty : P 1)
-    (step : ∀ (h : EventHistory) (u : Event), P h → P (generate h u)) :
-    ∀ h : EventHistory, P h := by
-  intro h
-  have reversed : P (FreeMonoid.reverse (FreeMonoid.reverse h)) := by
-    refine FreeMonoid.inductionOn' (FreeMonoid.reverse h) ?_ ?_
-    · change P 1
-      exact empty
-    · intro u tail ih
-      rw [FreeMonoid.reverse_mul, FreeMonoid.reverse_of]
-      simpa [generate] using step (FreeMonoid.reverse tail) u ih
-  simpa using reversed
+open Omega
+
+/-- A property of finite event histories follows from the empty history and
+preservation under appending one event. -/
+public theorem event_history_induction
+    {Event : Type u} (P : SnocList Event → Prop)
+    (empty : P .empty)
+    (step : ∀ history event, P history → P (history.pushBack event)) :
+    ∀ history, P history :=
+  SnocList.rec (motive := fun history => P history) empty
+    (fun history last previous => step history (last True.intro) previous)
 
 end D5.S0.History.Generation

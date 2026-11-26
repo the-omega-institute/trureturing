@@ -4,15 +4,16 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: A right-half-strip zero forces positive Mangoldt mass on every sufficiently late power window. -/
+   digest: A right-half-strip zero forces both signs of complete Chebyshev tail mass on every late power window. -/
 
-import D5.S3.Weil.Mertens.IntegratedExplicit.CompleteMangoldtMoments
-import D5.S3.Weil.Mertens.IntegratedExplicit.CompleteMangoldtAtOne
+import D5.S3.Weil.Mertens.IntegratedExplicit.CompleteMangoldtSignedWindow
 import D5.S3.Weil.Mertens.IntegratedExplicit.PrimeOnlyTailCorrection
 import D5.S3.Analytic.Laplace.CriticalGammaWindow
 import D5.S3.Weil.ZetaBridge.EqualRadiusZeroDisks
 import D5.S3.Weil.ZetaBridge.RightHalfStripRiemannReduction
 import D5.S3.Weil.Mertens.IntegratedExplicit.RHSharpActualEnvelope
+
+/-! A zeta pole gives both signed lower bounds for the complete Chebyshev tail. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -25,150 +26,23 @@ open D5.S3.Arith.Robin.CompleteMertensPeak (Q U)
 namespace D5.S3.Weil.Mertens.IntegratedExplicit.PrimeWindowPoleGrowth
 
 private def coeff (k : ℕ) (s : ℂ) : ℂ :=
-  ((-1 : ℂ)^k / k.factorial) * iteratedDeriv k CompleteMangoldtLaurent.transform s
+  ((-1 : ℂ)^k / k.factorial) * iteratedDeriv k CompleteMangoldtAtOne.completed s
 
 private def weight (k : ℕ) (σ u : ℝ) : ℝ :=
-  u^k * Real.exp (-(σ*u)) / k.factorial
+  u^k * Real.exp (-σ*u) / k.factorial
 
-private def integrand (k : ℕ) (s : ℂ) (u : ℝ) : ℂ :=
-  (u : ℂ)^k * Complex.exp (-s*u) * (U (Real.exp u) : ℂ) / k.factorial
-
-private lemma coeff_integral (k : ℕ) {s : ℂ} (hs : 1 < s.re) :
-    IntegrableOn (integrand k s) (Ioi 0) ∧
-      coeff k s = ∫ u in Ioi 0, integrand k s u := by
-  obtain ⟨hi, heq⟩ := CompleteMangoldtMoments.iterated_derivative_moment k hs
-  let q := (-1 : ℂ)^k / k.factorial
-  have hh (u : ℝ) : q * ((-(u : ℂ))^k *
-      (Complex.exp (-s*u) * (U (Real.exp u) : ℂ))) = integrand k s u := by
-    have hsquare : (-1 : ℂ)^k * (-1)^k = 1 := by rw [← mul_pow]; norm_num
-    rw [show -(u : ℂ) = (-1 : ℂ)*u by ring, mul_pow]
-    unfold q integrand
-    linear_combination ((u : ℂ)^k * Complex.exp (-s*u) * (U (Real.exp u) : ℂ) /
-      k.factorial) * hsquare
-  refine ⟨(hi.const_mul q).congr (ae_of_all _ hh), ?_⟩
-  unfold coeff
-  rw [heq, ← integral_const_mul]
-  exact integral_congr_ae (ae_of_all _ hh)
-
-private lemma norm_integrand (k : ℕ) (s : ℂ) {u : ℝ} (hu : 0 ≤ u) :
-    ‖integrand k s u‖ = |U (Real.exp u)| * weight k s.re u := by
-  simp [integrand, weight, norm_pow, Complex.norm_exp,
-    Complex.mul_re, abs_of_nonneg hu]
-  ring
-
-private lemma real_integrand (k : ℕ) (σ u : ℝ) :
-    integrand k (σ : ℂ) u = ((U (Real.exp u) * weight k σ u : ℝ) : ℂ) := by
-  unfold integrand weight
-  push_cast
-  rw [← Complex.ofReal_neg, ← Complex.ofReal_mul, ← Complex.ofReal_exp]
-  push_cast
-  ring
-
-private lemma positive_moment (k : ℕ) {s : ℂ} (hs : 1 < s.re) :
-    ‖coeff k s‖ + (coeff k (s.re : ℂ)).re ≤
-      ∫ u in Ioi 0, 2 * max (U (Real.exp u)) 0 * weight k s.re u := by
-  let μ := volume.restrict (Ioi (0 : ℝ))
-  obtain ⟨hi, heq⟩ := coeff_integral k hs
-  obtain ⟨hj, hre⟩ := coeff_integral k (s := (s.re : ℂ)) (by simpa)
-  have hreal : Integrable (fun u => U (Real.exp u) * weight k s.re u) μ := by
-    have hcast := hj.congr (ae_of_all _ fun u => real_integrand k s.re u)
-    simpa using hcast.re
-  have heqreal : (coeff k (s.re : ℂ)).re =
-      ∫ u, U (Real.exp u) * weight k s.re u ∂μ := by
-    rw [hre, integral_congr_ae (ae_of_all _ fun u => real_integrand k s.re u),
-      integral_complex_ofReal]
-    rfl
-  rw [heq, heqreal]
-  calc
-    _ ≤ (∫ u, ‖integrand k s u‖ ∂μ) + ∫ u, U (Real.exp u) * weight k s.re u ∂μ :=
-      add_le_add (norm_integral_le_integral_norm _) le_rfl
-    _ = _ := by
-      rw [← integral_add hi.norm hreal]
-      apply integral_congr_ae
-      filter_upwards [ae_restrict_mem (μ := volume) measurableSet_Ioi] with u hu
-      rw [norm_integrand k s (le_of_lt hu), ← add_mul]
-      congr 1
-      rcases le_total 0 (U (Real.exp u)) with h | h
-      · rw [abs_of_nonneg h, max_eq_left h]; ring
-      · rw [abs_of_nonpos h, max_eq_right h]; ring
-
-
-private lemma weight_le (k : ℕ) {σ u : ℝ} (hσ : 1 < σ) (hu : 0 ≤ u) :
-    weight k σ u ≤ (σ-1/2)⁻¹^k * Real.exp (-(u/2)) := by
-  have hr : 0 < σ-1/2 := by linarith
-  have h := Real.pow_div_factorial_le_exp ((σ-1/2)*u) (mul_nonneg hr.le hu) k
-  rw [mul_pow] at h
-  have hf : 0 < (k.factorial : ℝ) := by positivity
-  have h1 : u^k / k.factorial ≤ (σ-1/2)⁻¹^k * Real.exp ((σ-1/2)*u) := by
-    rw [inv_pow, ← div_eq_inv_mul, le_div_iff₀ (pow_pos hr k)]
-    simpa only [div_mul_eq_mul_div, mul_comm] using h
-  calc
-    weight k σ u = u^k / k.factorial * Real.exp (-(σ*u)) := by unfold weight; ring
-    _ ≤ _ := (mul_le_mul_of_nonneg_right h1 (Real.exp_pos _).le).trans_eq (by
-      rw [mul_assoc, ← Real.exp_add]; congr 2; ring)
-
-/-- The total absolute moment outside the window stays as an explicit error.
-The arithmetic term inside it uses just the positive part of the complete
-Mangoldt remainder. -/
-private lemma coeff_window (k : ℕ) {s : ℂ} (hs : 1 < s.re) {a z : ℝ} (ha : 0 < a) :
-    ‖coeff k s‖ + (coeff k (s.re : ℂ)).re ≤
-      2 * ((s.re-1/2)⁻¹^k *
-        (∫ u in Icc a z, max (U (Real.exp u)) 0 * Real.exp (-(u/2))) +
-        ∫ u in Ioi (0 : ℝ) \ Icc a z, |U (Real.exp u)| * weight k s.re u) := by
-  let g (u : ℝ) := U (Real.exp u)
-  let f (u : ℝ) := max (g u) 0 * weight k s.re u
-  let F (u : ℝ) := |g u| * weight k s.re u
-  let j (u : ℝ) := max (g u) 0 * Real.exp (-(u/2))
-  have hg : Continuous g := U_exp_continuous
-  have hw : Continuous (weight k s.re) := by unfold weight; fun_prop
-  have hfC : Continuous f := (hg.max continuous_const).mul hw
-  have hjC : Continuous j := (hg.max continuous_const).mul (by fun_prop)
-  have hw0 {u : ℝ} (hu : 0 ≤ u) : 0 ≤ weight k s.re u := by unfold weight; positivity
-  have hF : IntegrableOn F (Ioi 0) :=
-    (coeff_integral k hs).1.norm.congr (by
-      filter_upwards [ae_restrict_mem (μ := volume) measurableSet_Ioi] with u hu
-      exact norm_integrand k s (le_of_lt hu))
-  have hpoint {u : ℝ} (hu : 0 ≤ u) : f u ≤ F u :=
-    mul_le_mul_of_nonneg_right (max_le (le_abs_self _) (abs_nonneg _)) (hw0 hu)
-  have hf : IntegrableOn f (Ioi 0) := by
-    apply hF.mono' hfC.aestronglyMeasurable
-    filter_upwards [ae_restrict_mem (μ := volume) measurableSet_Ioi] with u hu
-    rw [Real.norm_eq_abs, abs_of_nonneg (mul_nonneg (le_max_right _ _) (hw0 (le_of_lt hu)))]
-    exact hpoint (le_of_lt hu)
-  have hsub : Icc a z ⊆ Ioi (0 : ℝ) := fun _ hu => ha.trans_le hu.1
-  have hout := setIntegral_mono_on (s := Ioi (0 : ℝ) \ Icc a z)
-    (hf.mono_set sdiff_subset) (hF.mono_set sdiff_subset)
-    (measurableSet_Ioi.diff measurableSet_Icc) (fun u hu => hpoint (le_of_lt hu.1))
-  have hin : (∫ u in Icc a z, f u) ≤
-      (s.re-1/2)⁻¹^k * ∫ u in Icc a z, j u := by
-    rw [← integral_const_mul]
-    apply setIntegral_mono_on (hf.mono_set hsub) ((hjC.integrableOn_Icc).const_mul _) measurableSet_Icc
-    intro u hu
-    calc
-      _ ≤ max (g u) 0 * ((s.re-1/2)⁻¹^k * Real.exp (-(u/2))) :=
-        mul_le_mul_of_nonneg_left (weight_le k hs (ha.le.trans hu.1)) (le_max_right _ _)
-      _ = _ := by dsimp [j]; ring
-  have hsplit := setIntegral_sdiff measurableSet_Icc hf hsub
-  have htot := positive_moment k hs
-  rw [show (fun u => 2 * max (U (Real.exp u)) 0 * weight k s.re u) =
-    fun u => 2 * f u by ext u; dsimp [f, g]; ring, integral_const_mul] at htot
-  change _ ≤ 2 * (_ * (∫ u in Icc a z, j u) + ∫ u in Ioi 0 \ Icc a z, F u)
-  linarith
-
-
-private lemma log_window_mass {a z : ℝ} (haz : a ≤ z) (ha : 2 ≤ Real.exp a) :
-    (∫ u in Icc a z, max (U (Real.exp u)) 0 * Real.exp (-(u/2))) =
-    ∫ x in Real.exp a..Real.exp z, max (-Q x) 0 / Real.sqrt x := by
-  let H (x : ℝ) := max (U x) 0 / x / Real.sqrt x
+private lemma log_window_mass (e : ℝ) {a z : ℝ} (haz : a ≤ z) (ha : 2 ≤ Real.exp a) :
+    (∫ u in a..z, max (e * U (Real.exp u)) 0 * Real.exp (-(u/2))) =
+    ∫ x in Real.exp a..Real.exp z, max (e * (-Q x)) 0 / Real.sqrt x := by
+  let H (x : ℝ) := max (e * U x) 0 / x / Real.sqrt x
   have hHC : ContinuousOn H (Real.exp '' uIcc a z) := by
     rintro x ⟨u, _, rfl⟩
-    have h : ContinuousAt (fun x => max (U x) 0) (Real.exp u) :=
-      (U_continuousAt_pos (Real.exp_pos u)).max continuousAt_const
+    have h : ContinuousAt (fun x => max (e * U x) 0) (Real.exp u) :=
+      (continuousAt_const.mul (U_continuousAt_pos (Real.exp_pos u))).max continuousAt_const
     exact ((h.div continuousAt_id (Real.exp_pos _).ne').div
       Real.continuous_sqrt.continuousAt (Real.sqrt_pos.mpr (Real.exp_pos _)).ne').continuousWithinAt
   have hsubst := intervalIntegral.integral_comp_mul_deriv' (g := H)
     (fun u (_ : u ∈ uIcc a z) => Real.hasDerivAt_exp u) Real.continuous_exp.continuousOn hHC
-  rw [integral_Icc_eq_integral_Ioc, ← intervalIntegral.integral_of_le haz]
   calc
     _ = ∫ u in a..z, (H ∘ Real.exp) u * Real.exp u := by
       apply intervalIntegral.integral_congr
@@ -187,26 +61,14 @@ private lemma log_window_mass {a z : ℝ} (haz : a ≤ z) (ha : 2 ≤ Real.exp a
       have heq : -Q x = U x / x := by
         rw [ht]; dsimp only [U]; field_simp [hx0.ne']; ring
       dsimp only [H]
-      rw [heq, ← max_div_div_right hx0.le (U x) 0, zero_div])
+      rw [heq, ← mul_div_assoc, ← max_div_div_right hx0.le (e * U x) 0, zero_div])
 
-
-private lemma coeff_completed (k : ℕ) {p : ℂ} (hp : 1 < p.re) :
-    coeff k p = ((-1 : ℂ)^k / k.factorial) *
-      iteratedDeriv k CompleteMangoldtAtOne.completed p := by
-  unfold coeff
-  apply congrArg (((-1 : ℂ)^k / k.factorial) * ·)
-  apply Filter.EventuallyEq.iteratedDeriv_eq
-  filter_upwards [(isOpen_lt continuous_const Complex.continuous_re).mem_nhds hp]
-    with z (hz : 1 < z.re)
-  exact (CompleteMangoldtAtOne.completed_disk_cauchy.1.1 z
-    (by intro he; rw [he] at hz; norm_num at hz)).symm
-
-private lemma disk_lower {p ρ : ℂ} {r : ℝ} (hp : 1 < p.re) (hρ : riemannZeta ρ = 0)
+private lemma disk_lower {p ρ : ℂ} {r : ℝ} (hρ : riemannZeta ρ = 0)
     (hd : 0 < ‖p-ρ‖) (hdr : ‖p-ρ‖ < r)
     (hcomplex : ∀ w ∈ Metric.closedBall p r, w ≠ 0 ∧ (riemannZeta w = 0 → w = ρ))
     (hreal : ∀ w ∈ Metric.closedBall (p.re : ℂ) r, w ≠ 0 ∧ riemannZeta w ≠ 0) :
     ∃ L : ℝ, 0 < L ∧ ∀ᶠ k : ℕ in atTop,
-      L ≤ ‖p-ρ‖^k * (‖coeff k p‖ + (coeff k (p.re : ℂ)).re) := by
+      L ≤ ‖p-ρ‖^k * (‖coeff k p‖ - |(coeff k (p.re : ℂ)).re|) := by
   let F := CompleteMangoldtAtOne.completed
   let c := (analyticOrderNatAt riemannZeta ρ : ℂ) / (ρ*(1-ρ))
   have hr := hd.trans hdr
@@ -231,7 +93,7 @@ private lemma disk_lower {p ρ : ℂ} {r : ℝ} (hp : 1 < p.re) (hρ : riemannZe
     (fun w hw => hB w (Metric.sphere_subset_closedBall hw))
   have hfac : (0 : ℝ) < k.factorial := by positivity
   have hrc : ‖coeff k (p.re : ℂ)‖ ≤ B / r^k := by
-    rw [coeff_completed k (by simpa : 1 < (p.re : ℂ).re)]
+    unfold coeff
     simp only [norm_mul, norm_div, norm_pow, norm_neg, norm_one, one_pow, Complex.norm_natCast]
     change 1 / (k.factorial : ℝ) * _ ≤ _
     rw [div_mul_eq_mul_div, one_mul, div_le_iff₀ hfac]
@@ -239,15 +101,14 @@ private lemma disk_lower {p ρ : ℂ} {r : ℝ} (hp : 1 < p.re) (hρ : riemannZe
   have hscale : ‖p-ρ‖^k * ‖coeff k (p.re : ℂ)‖ ≤ B * (‖p-ρ‖/r)^k :=
     (mul_le_mul_of_nonneg_left hrc (pow_nonneg hd.le _)).trans_eq (by rw [div_pow]; ring)
   have hcplx : ‖c‖ / 2 ≤ ‖p-ρ‖^(k+1) * ‖coeff k p‖ := by
-    rw [coeff_completed k hp, ← norm_pow, ← norm_mul]
+    rw [coeff, ← norm_pow, ← norm_mul]
     simpa only [mul_assoc] using hk
   have hpos : ‖c‖ / (2*‖p-ρ‖) ≤ ‖p-ρ‖^k * ‖coeff k p‖ := by
     rw [div_mul_eq_div_div, div_le_iff₀ hd]
     simpa [pow_succ, mul_assoc, mul_left_comm, mul_comm] using hcplx
-  have hneg := (abs_le.mp (Complex.abs_re_le_norm (coeff k (p.re : ℂ)))).1
-  have hn := mul_le_mul_of_nonneg_left hneg (pow_nonneg hd.le k)
-  rw [mul_neg] at hn
-  rw [mul_add]
+  have hn := (mul_le_mul_of_nonneg_left (Complex.abs_re_le_norm (coeff k (p.re : ℂ)))
+    (pow_nonneg hd.le k)).trans hscale
+  rw [mul_sub]
   have hid : ‖c‖ / (2*‖p-ρ‖) = 2 * (‖c‖ / (4*‖p-ρ‖)) := by ring
   linarith
 
@@ -413,13 +274,13 @@ private lemma absorb_tails {d σ L C : ℝ} (hd : 0 < d) (hσ : 1 < σ)
 
 open PrimeOnlyTailCorrection (primeTail)
 
-/-- A zero with real part above one half forces prime-only negative-part mass
-on every sufficiently late power window, at the full exponent up to any
-positive loss. -/
-theorem off_line_zero_forces_window_mass {z₀ : ℂ} (hz : riemannZeta z₀ = 0)
-    (hβ : 1/2 < z₀.re) {b ε : ℝ} (hb : 1 < b) (hε : 0 < ε) :
-    ∀ᶠ Y : ℝ in atTop, Y^(b*(z₀.re-1/2)-ε) ≤
-      ∫ x in Y..Y^b, max (-primeTail x) 0 / Real.sqrt x := by
+/-- A zero to the right of the critical line forces both signs of the complete
+Chebyshev tail on every sufficiently late fixed power window, with the same
+exponent and the same window threshold for both signs. -/
+theorem off_line_zero_forces_signed_complete_window_mass {z₀ : ℂ}
+    (hz : riemannZeta z₀ = 0) (hβ : 1/2 < z₀.re) {b ε : ℝ} (hb : 1 < b) (hε : 0 < ε) :
+    ∀ᶠ Y : ℝ in atTop, ∀ e : ℝ, e = 1 ∨ e = -1 →
+      Y^(b*(z₀.re-1/2)-ε) ≤ ∫ x in Y..Y^b, max (e * (-Q x)) 0 / Real.sqrt x := by
   obtain ⟨h, δ, hh, hhb, hδ, hδv, hg⟩ :=
     select_parameters (sub_pos.mpr hβ) hb hε
   have hgamma := D5.S3.Analytic.Laplace.CriticalGammaWindow.adjustable_window_off_mass hh hhb
@@ -428,7 +289,6 @@ theorem off_line_zero_forces_window_mass {z₀ : ℂ} (hz : riemannZeta z₀ = 0
   have hσ : 1 < σ := by linarith
   have hσ0 : 0 < σ := by linarith
   have hh0 := zero_lt_one.trans hh
-  have hb0 := zero_lt_one.trans hb
   obtain ⟨p, ρ, r, hpre, hρ, hd₀, hdr₀, hr, hre, hcomplex⟩ :=
     D5.S3.Weil.ZetaBridge.EqualRadiusZeroDisks.equal_radius_zero_disks hz hσ2 hδ hδv
   let d := ‖p-ρ‖
@@ -437,7 +297,7 @@ theorem off_line_zero_forces_window_mass {z₀ : ℂ} (hz : riemannZeta z₀ = 0
   have hhp : 1 < p.re := hpre ▸ hσ
   have hcoord (w : ℂ) (hw : 1/2 < w.re) : w ≠ 0 := by
     rintro rfl; norm_num at hw
-  obtain ⟨L, hL, hD⟩ := disk_lower hhp hρ hd hdr
+  obtain ⟨L, hL, hD⟩ := disk_lower hρ hd hdr
     (fun w hw => ⟨hcoord w (hcomplex w hw).1, (hcomplex w hw).2⟩)
     (fun w hw => by rw [hpre] at hw; exact ⟨hcoord w (hre w hw).1, (hre w hw).2⟩)
   obtain ⟨M, hM0, hM⟩ := input_growth
@@ -453,8 +313,9 @@ theorem off_line_zero_forces_window_mass {z₀ : ℂ} (hz : riemannZeta z₀ = 0
   have hAbs := absorb_tails (C := C) hd hσ (by linarith : d < σ) hL
   have hK : Tendsto (fun a : ℝ => ⌊σ*h*a⌋₊) atTop atTop :=
     tendsto_nat_floor_atTop.comp (Filter.tendsto_id.const_mul_atTop (mul_pos hσ0 hh0))
-  have hlogwin : ∀ᶠ a : ℝ in atTop, Real.exp (a*(b*(z₀.re-1/2)-ε)) ≤
-      ∫ x in Real.exp a..Real.exp (b*a), max (-primeTail x) 0 / Real.sqrt x := by
+  have hlogwin : ∀ᶠ a : ℝ in atTop, ∀ e : ℝ, e = 1 ∨ e = -1 →
+      Real.exp (a*(b*(z₀.re-1/2)-ε)) ≤
+        ∫ x in Real.exp a..Real.exp (b*a), max (e * (-Q x)) 0 / Real.sqrt x := by
     filter_upwards [eventually_gt_atTop (0 : ℝ), Real.tendsto_exp_atTop (eventually_ge_atTop 2),
       hK.eventually hD, hK.eventually hAbs, hexp] with a ha h2 hdisc habs he
     let k := ⌊σ*h*a⌋₊
@@ -462,29 +323,55 @@ theorem off_line_zero_forces_window_mass {z₀ : ℂ} (hz : riemannZeta z₀ = 0
     have Htail := (hgamma.2 hsign ha U_exp_continuous.measurable hM).2
     have hTail : (∫ u in Ioi (0 : ℝ) \ Icc a (b*a), |U (Real.exp u)| * weight k σ u)
         ≤ C * σ⁻¹^k := by
+      simp only [weight, neg_mul]
       apply Htail.trans
       have h1 := Real.exp_le_one_iff.mpr (mul_nonpos_of_nonpos_of_nonneg (neg_nonpos.mpr hleft.le) ha.le)
       have h2' := Real.exp_le_one_iff.mpr (mul_nonpos_of_nonpos_of_nonneg (neg_nonpos.mpr hright.le) ha.le)
       calc
         _ ≤ (M*σ⁻¹^k) * (1/σ + b/(h*σ)*1) := by gcongr
         _ = _ := by dsimp [C]; ring
-    have hB := coeff_window k hhp (a := a) (z := b*a) ha
-    rw [hpre, log_window_mass hab h2] at hB
-    obtain ⟨C₀, hC₀⟩ := Chebyshev.psi_sub_theta_le_mul_sqrt
-    have hmass := (compare_prime_mass (C := C₀) (fun t _ => hC₀ t) (Real.one_le_exp ha.le)
-      (Real.exp_le_exp.mpr hab)).1
+    intro e heSign
+    have hα : (1/2 : ℝ) < p.re := by linarith
+    have hB := CompleteMangoldtSignedWindow.signed_window_moment_bound k hhp ha hab hα heSign
+    change ‖coeff k p‖ + e * (coeff k (p.re : ℂ)).re ≤ _ at hB
+    rw [hpre] at hB
+    simp_rw [show ∀ u : ℝ, -(1/2 : ℝ)*u = -(u/2) by intro u; ring] at hB
+    rw [log_window_mass e hab h2] at hB
+    have hsignLower : -|(coeff k (σ : ℂ)).re| ≤ e * (coeff k (σ : ℂ)).re := by
+      rcases heSign with rfl | rfl
+      · rw [one_mul]
+        exact neg_le.mp (neg_le_abs _)
+      · simpa only [neg_one_mul, neg_le_neg_iff] using le_abs_self (coeff k (σ : ℂ)).re
+    rw [hpre] at hdisc
     apply he.trans
     apply habs
-    have hdisc' : L ≤ d^k*(‖coeff k p‖ + (coeff k (σ : ℂ)).re) := by simpa only [hpre] using hdisc
-    apply hdisc'.trans
-    apply mul_le_mul_of_nonneg_left _ (pow_nonneg hd.le k)
-    exact hB.trans (mul_le_mul_of_nonneg_left (add_le_add
-      (mul_le_mul_of_nonneg_left hmass (pow_nonneg (inv_nonneg.mpr (by linarith)) k)) hTail)
-      (by norm_num))
+    refine hdisc.trans (mul_le_mul_of_nonneg_left ?_ (pow_nonneg hd.le k))
+    calc
+      _ ≤ ‖coeff k p‖ + e * (coeff k (σ : ℂ)).re := by linarith only [hsignLower]
+      _ ≤ _ := hB.trans (by
+        have ht := mul_le_mul_of_nonneg_left hTail (show (0 : ℝ) ≤ 2 by norm_num)
+        dsimp only [weight] at ht
+        linarith only [ht])
   filter_upwards [Real.tendsto_log_atTop.eventually hlogwin, eventually_gt_atTop (0 : ℝ)]
-    with Y hY hy
+    with Y hY hy e he
   rw [Real.rpow_def_of_pos hy, Real.rpow_def_of_pos hy]
-  simpa only [Real.exp_log hy, mul_comm b (Real.log Y)] using hY
+  simpa only [Real.exp_log hy, mul_comm b (Real.log Y)] using hY e he
+
+/-- A zero with real part above one half forces prime-only negative-part mass
+on every sufficiently late power window, at the full exponent up to any
+positive loss. -/
+theorem off_line_zero_forces_window_mass {z₀ : ℂ} (hz : riemannZeta z₀ = 0)
+    (hβ : 1/2 < z₀.re) {b ε : ℝ} (hb : 1 < b) (hε : 0 < ε) :
+    ∀ᶠ Y : ℝ in atTop, Y^(b*(z₀.re-1/2)-ε) ≤
+      ∫ x in Y..Y^b, max (-primeTail x) 0 / Real.sqrt x := by
+  obtain ⟨C, hC⟩ := Chebyshev.psi_sub_theta_le_mul_sqrt
+  filter_upwards [off_line_zero_forces_signed_complete_window_mass hz hβ hb hε,
+    eventually_ge_atTop (1 : ℝ)] with Y hY hY1
+  have hpower := Real.rpow_le_rpow_of_exponent_le hY1 hb.le
+  rw [Real.rpow_one] at hpower
+  have hmass := (compare_prime_mass (C := C) (fun t _ => hC t) hY1 hpower).1
+  apply le_trans _ hmass
+  simpa only [one_mul] using hY 1 (Or.inl rfl)
 
 
 private lemma eventual_small_windows (hRH : RiemannHypothesis) {b : ℝ} (hb : 1 < b)
@@ -515,7 +402,10 @@ private lemma eventual_small_windows (hRH : RiemannHypothesis) {b : ℝ} (hb : 1
             (Real.exp_pos _).le).trans (by simpa only [mul_comm] using H)
         _ = _ := by rw [integral_Icc_eq_integral_Ioc, ← intervalIntegral.integral_of_le hab,
           intervalIntegral.integral_const]; simp [mul_comm]
-    rw [log_window_mass hab ha2] at hG
+    rw [integral_Icc_eq_integral_Ioc, ← intervalIntegral.integral_of_le hab] at hG
+    have hlog := log_window_mass 1 hab ha2
+    simp only [one_mul] at hlog
+    rw [hlog] at hG
     have hc := (compare_prime_mass (C := C) (fun t _ => hC t) (Real.one_le_exp ha.le)
       (Real.exp_le_exp.mpr hab)).2
     rw [← Real.exp_sub, Real.log_exp] at hc

@@ -16,7 +16,31 @@ Lean statement: `D5/S3/HilbertOperators/FiniteCyclicProjectionStrong.cycle`
 
 For a finite ordered list Us of closed k-linear subspaces of H, Cycle(Us) is a bounded k-linear endomorphism. Cycle([]) is the identity. For a head U and tail Vs, Cycle(U::Vs) is Cycle(Vs) composed with the actual orthogonal projection P(U). Thus the first listed projection acts first, and the last listed projection acts last. The order is part of the list and remains fixed throughout iteration.
 
-**Theorem 1.2 (Convergence to the common intersection).**
+**Theorem 1.2 (Nonexpansive cycle).**
+
+Lean statement: `D5/S3/HilbertOperators/FiniteCyclicProjectionStrong.norm_cycle_le`
+
+*Proof.* Machine-checked in Lean as `D5/S3/HilbertOperators/FiniteCyclicProjectionStrong.norm_cycle_le` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every finite list Us and z in H, the norm of Cycle(Us)z is at most the norm of z. Induction composes the actual projection norm bounds. This estimate also supplies the member residual energy proof for cyclic rates.
+
+**Theorem 1.3 (Exact common fixed locus).**
+
+Lean statement: `D5/S3/HilbertOperators/FiniteCyclicProjectionStrong.cycle_fixed_iff`
+
+*Proof.* Machine-checked in Lean as `D5/S3/HilbertOperators/FiniteCyclicProjectionStrong.cycle_fixed_iff` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Cycle(Us)z=z if and only if z belongs to every member of Us. Equality in the projection norm bound gives the first membership, and induction gives the remaining memberships. This identifies the common projection as a fixed vector in the cyclic-rate energy proof.
+
+**Theorem 1.4 (Convergence to the common intersection).**
 
 $$\forall (u: \operatorname{UniverseLevel}()), \forall (v: \operatorname{UniverseLevel}()), \forall (k: \operatorname{Type}_{u}), \forall (H: \operatorname{Type}_{v}), [\operatorname{RCLike}(k)] [\operatorname{NormedAddCommGroup}(H)] [\operatorname{InnerProductSpace}(k, H)] [\operatorname{CompleteSpace}(H)] \forall (Us: \operatorname{List}(\operatorname{ClosedSubmodule}(k, H))), \forall (x: H), \forall (epsilon: \mathbb{R}), (0 < epsilon) \Rightarrow \exists (N: \mathbb{N}), \forall (n: \mathbb{N}), (N \leq n) \Rightarrow \left\lVert (\operatorname{Cycle}(Us))^{n}(x) - \operatorname{P}(\operatorname{Inter}(Us))(x) \right\rVert < epsilon$$
 
@@ -41,5 +65,7 @@ Ginat, arXiv:1809.05858v1, Section 4.2, Theorem 4.2 on printed page 21, states H
 ## References
 
 - Truth anchor: `D5/S3/HilbertOperators/FiniteCyclicProjectionStrong.cycle`
+- Truth anchor: `D5/S3/HilbertOperators/FiniteCyclicProjectionStrong.cycle_fixed_iff`
+- Truth anchor: `D5/S3/HilbertOperators/FiniteCyclicProjectionStrong.norm_cycle_le`
 - Truth anchor: `D5/S3/HilbertOperators/FiniteCyclicProjectionStrong.tendsto_cycle_pow`
 - Dependency: [D5/S3/HilbertOperators/AlternatingProjectionStrong](AlternatingProjectionStrong.md)

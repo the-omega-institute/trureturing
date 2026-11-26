@@ -133,4 +133,201 @@ def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
 #print axioms family
 #print axioms registration
 
+
+namespace Uniform
+
+private abbrev SampleBasis := ULift.{u} (Fin 2)
+private abbrev SampleLabel := ULift.{v} Unit
+private abbrev sampleClass : SampleBasis → SampleLabel := fun _ => ⟨()⟩
+
+private theorem sample_card : Fintype.card SampleBasis.{u} = 2 := by simp [SampleBasis]
+
+private theorem sample_classSize (j : SampleLabel.{v}) : classSize sampleClass.{u, v} j = 2 := by
+  have hj : (⟨()⟩ : SampleLabel.{v}) = j := Subsingleton.elim _ _
+  simp [classSize, hj]
+
+private theorem sample_fullBlockCount : fullBlockCount sampleClass.{u, v} 2 = 1 := by
+  simp [fullBlockCount, sample_classSize.{u, v}]
+
+private theorem sample_feasible : Fintype.card SampleBasis.{u} ≤ 1 * 2 := by simp [sample_card.{u}]
+
+private theorem sample_optimum :
+    (Fintype.card SampleBasis.{u} : ℝ) *
+      optimalSuccess (d := 1) (e := 2) sampleClass.{u, v} (uniformPrior SampleBasis.{u}) sample_feasible.{u} = 2 := by
+  rw [uniform_optimalSuccess_eq (d := 1) (e := 2) sampleClass.{u, v} (by decide) sample_feasible.{u},
+    sample_fullBlockCount.{u, v}]
+  norm_num [largestRemainderSum, sample_classSize.{u, v}]
+
+@[reducible] def exactArena : Arena where
+  signature := signature
+  Law R := ∀ {B : Type u} {J : Type v} [Fintype B] [DecidableEq B] [Fintype J] {d e : ℕ} [Nonempty B]
+    (c : B → J), 0 < e → ∀ hN : Fintype.card B ≤ d * e,
+    (Fintype.card B : ℝ) * optimalSuccess c (uniformPrior B) hN =
+      (R.readout () () e : ℝ) * fullBlockCount c e +
+        largestRemainderSum c e (d - fullBlockCount c e)
+
+private theorem rejected_exact : ¬ exactArena.{u, v}.Law rejected := by
+  intro h
+  have hBad := h sampleClass.{u, v} (by decide) sample_feasible.{u}
+  rw [sample_optimum.{u, v}, sample_fullBlockCount.{u, v}] at hBad
+  rw [show rejected.readout () () 2 = 1 from rfl] at hBad
+  norm_num [largestRemainderSum, sample_classSize.{u, v}] at hBad
+
+def exactFamily : Registration exactArena.{u, v} (type_of% @uniform_optimalSuccess_eq.{u, v}) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@uniform_optimalSuccess_eq.{u, v}, rejected, rejected_exact⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_exact⟩
+      intro j hji
+      exact (hji (Subsingleton.elim _ _)).elim
+    · intro a
+      exact nomatch a
+  dependence := by
+    change ObservationalDependence signature actual
+    intro i
+    refine ⟨(), 1, 2, ?_⟩
+    change (1 : ℕ) ≠ 2
+    decide
+
+def exactRegistration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+    (@uniform_optimalSuccess_eq.{u, v}) (Realization signature) Unit Unit where
+  unitName := `D5.S3.Quantum.Measurements.WeightedLabelRecordDilation.uniform_optimalSuccess_eq.audit
+  realizationName := `Reg.D5.S3.Quantum.Measurements.WeightedLabelRecordDilation.Uniform.exactFamily
+  realizationSource := none
+  generated := false
+  arena := .source ⟨exactArena.{u, v}⟩
+  objectArena := .source ⟨exactArena.{u, v}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source exactArena.{u, v} ⟨exactFamily⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ e => e) (fun a => nomatch a))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Measurements.WeightedLabelRecordDilation
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body",
+        "arg", "fn", "arg", "fn", "arg", "arg"]
+      stateBinder := 6
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms exactRegistration
+
+
+@[reducible] def memoryArena : Arena where
+  signature := signature
+  Law R := ∀ {B : Type u} {J : Type v} [Fintype B] [DecidableEq B] [Fintype J] {d e : ℕ}
+    [Nonempty B] (c : B → J), 0 < e →
+    ∀ hN : Fintype.card B ≤ d * e, ∀ (α : ℝ) (M : ℕ),
+    (∃ S : Finset J, S.card = M ∧ α ≤ classMass c S ∧
+      ∀ T : Finset J, α ≤ classMass c T → M ≤ T.card) →
+    let Reaches := ∃ (V : Matrix (Fin d × Fin e) B ℂ) (E : J → Matrix (Fin d) (Fin d) ℂ),
+      Vᴴ * V = 1 ∧ (∀ j, (E j).PosSemidef) ∧ (∑ j, E j) = 1 ∧
+        α ≤ averageSuccess c (uniformPrior B) V E
+    (Reaches → max (Fintype.card B ⌈/⌉ R.readout () () e)
+      (fullBlockCount c e + M - fullLabelCount c e) ≤ d) ∧
+    (max (Fintype.card B ⌈/⌉ e) (fullBlockCount c e + M) ≤ d → Reaches)
+
+set_option maxHeartbeats 800000 in
+private theorem rejected_memory : ¬ memoryArena.{u, v}.Law rejected := by
+  intro h
+  let j : SampleLabel.{v} := ⟨()⟩
+  have hCover : ∃ S : Finset SampleLabel.{v}, S.card = 1 ∧ (1 / 2 : ℝ) ≤ classMass sampleClass.{u, v} S ∧
+      ∀ T : Finset SampleLabel.{v}, (1 / 2 : ℝ) ≤ classMass sampleClass.{u, v} T → 1 ≤ T.card := by
+    refine ⟨{j}, by simp, by norm_num [classMass, sample_classSize.{u, v}, sample_card.{u}], ?_⟩
+    intro T hT
+    by_contra! hEmpty
+    have he : T = ∅ := Finset.card_eq_zero.mp (by omega)
+    norm_num [he, classMass] at hT
+  have hPrior : ∑ b, uniformPrior SampleBasis.{u} b = 1 := by
+    simp [uniformPrior, nsmul_eq_mul]
+  have hNonneg : ∀ b, 0 ≤ uniformPrior SampleBasis.{u} b := by
+    intro b
+    norm_num [uniformPrior, sample_card.{u}]
+  obtain ⟨g, r, hV, hE, hSum, _, hScore⟩ :=
+    (weightedLabelRecord_optimum (d := 1) (e := 2) sampleClass.{u, v} (uniformPrior SampleBasis.{u})
+      hNonneg hPrior (by decide) sample_feasible.{u}).2.1
+  have hOpt : (1 / 2 : ℝ) ≤ optimalSuccess (d := 1) (e := 2) sampleClass.{u, v} (uniformPrior SampleBasis.{u}) sample_feasible.{u} := by
+    have hs := sample_optimum.{u, v}
+    rw [sample_card.{u}, Nat.cast_ofNat] at hs
+    linarith only [hs]
+  have hBad := (h (d := 1) (e := 2) sampleClass.{u, v} (by decide) sample_feasible.{u} (1 / 2) 1 hCover).1
+    ⟨_, _, hV, hE, hSum, hScore ▸ hOpt⟩
+  have hFloor : Fintype.card SampleBasis.{u} ⌈/⌉ rejected.readout () () 2 ≤ 1 :=
+    (le_max_left _ _).trans hBad
+  rw [sample_card.{u}, show rejected.readout () () 2 = 1 from rfl] at hFloor
+  exact (by decide : ¬ ((2 : ℕ) ⌈/⌉ 1 ≤ 1)) hFloor
+
+def memoryFamily : Registration memoryArena.{u, v} (type_of% @uniform_record_memory_bounds.{u, v}) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@uniform_record_memory_bounds.{u, v}, rejected, rejected_memory⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_memory⟩
+      intro j hji
+      exact (hji (Subsingleton.elim _ _)).elim
+    · intro a
+      exact nomatch a
+  dependence := by
+    change ObservationalDependence signature actual
+    intro i
+    refine ⟨(), 1, 2, ?_⟩
+    change (1 : ℕ) ≠ 2
+    decide
+
+def memoryRegistration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+    (@uniform_record_memory_bounds.{u, v}) (Realization signature) Unit Unit where
+  unitName := `D5.S3.Quantum.Measurements.WeightedLabelRecordDilation.uniform_record_memory_bounds.audit
+  realizationName := `Reg.D5.S3.Quantum.Measurements.WeightedLabelRecordDilation.Uniform.memoryFamily
+  realizationSource := none
+  generated := false
+  arena := .source ⟨memoryArena.{u, v}⟩
+  objectArena := .source ⟨memoryArena.{u, v}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source memoryArena.{u, v} ⟨memoryFamily⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ e => e) (fun a => nomatch a))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Measurements.WeightedLabelRecordDilation
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body",
+        "body", "body", "body", "body", "body", "fn", "arg", "body", "fn", "arg", "fn", "arg", "arg"]
+      stateBinder := 6
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms memoryRegistration
+
+
+end Uniform
+
+
 end Reg.D5.S3.Quantum.Measurements.WeightedLabelRecordDilation

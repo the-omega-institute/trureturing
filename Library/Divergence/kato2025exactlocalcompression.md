@@ -14,6 +14,8 @@ strata_touched:
   - D5/S3/Quantum/Recovery/LocalCompression/QutritPure
   - D5/S3/Quantum/Recovery/LocalCompression/QutritDiagonalReset
   - D5/S3/Quantum/Recovery/LocalCompression/QutritDiagonalResetDistortion
+  - D5/S3/Quantum/Recovery/LocalCompression/QutritDiagonalResetOptimum
+  - D5/S3/Quantum/Recovery/LocalCompression/SignedTestRecordDimension
 license: citation-only
 triage: anchor
 ---
@@ -101,3 +103,23 @@ probability. Its entries follow from the decoder's Choi positivity and trace
 preservation, and the pure reset with a two-Kraus attenuating decoder realizes
 that block. The local manuscript is the source of this comparison. Kato
 Section VII supplies the approximate-compression setting.
+
+The companion isotropic-compression manuscript also supplies the stationary
+characteristic polynomial and the exact rational enclosure for the pure
+diagonal-reset minimum. The optimal amplitude lies strictly between
+0.80680296 and 0.80680298, and the attained error is one third of the
+stationary spectral parameter. The minimum uses the joint Bell-state error
+and permits any decoder after a plane-preserving diagonal reset. Kato §VII
+provides the research direction. Farber–Gour Theorem 5 optimizes purification
+fidelity, and Cha–Park–Lee Proposition 3.7 gives a nonisometric decoding
+advantage for average ensemble fidelity.
+[Farber–Gour](https://arxiv.org/abs/2610.14785) ·
+[Cha–Park–Lee](https://arxiv.org/abs/2605.01258)
+
+## Finite signed-test dimension bound
+
+Section VII motivates a static one-shot bound for a fixed finite experiment.
+The signed-test certificate compares density-weighted label loss to exact sign
+leakage and uses the spectral packing of each auxiliary label to bound the
+full trace-norm reconstruction error. The prescribed pure environment is
+part of the encoder isometry on the specified whole input space.

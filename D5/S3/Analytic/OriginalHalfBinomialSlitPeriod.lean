@@ -357,7 +357,8 @@ theorem tau_im_pos {r : ℂ} (hr : r ∈ doubleSlit) : 0 < (tau r).im := by
   exact mul_pos hFG (inv_pos.mpr (Complex.normSq_pos.mpr (slitPeriod_ne_zero hr.1)))
 
 
-private lemma midpoint_mem : (1 / 2 : ℂ) ∈ doubleSlit := by
+/-- The real midpoint belongs to both slits' common domain. -/
+lemma midpoint_mem : (1 / 2 : ℂ) ∈ doubleSlit := by
   exact ⟨(mem_slitDomain _).2 (Or.inl (by norm_num)),
     Complex.mem_slitPlane_iff.2 (Or.inl (by norm_num))⟩
 

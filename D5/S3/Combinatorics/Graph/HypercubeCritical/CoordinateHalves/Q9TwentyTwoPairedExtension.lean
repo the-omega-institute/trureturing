@@ -26,8 +26,7 @@ open private adjacent_exists_flip from
   D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeGirth
 open private flip_direction_injective from
   D5.S3.Combinatorics.Graph.HypercubeCritical.CubeLayerDisjointness
-open private toggle from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.CubeBitMoves
+open CubeBitMoves (toggle)
 open private same_cut from
   D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9TwentyTwoReconstruction
 open private hasExcessDegree reconstructedMask from

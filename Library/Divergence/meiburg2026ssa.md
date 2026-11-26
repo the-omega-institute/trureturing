@@ -7,6 +7,9 @@ doi: null
 url: https://github.com/leanprover-community/physlib/blob/2725b6f621901d4cd330869e9b77105045c1582e/QuantumInfo/Entropy/SSA.lean
 claim: Attributed finite-dimensional strong subadditivity, including singular density states, supplies the actual-density bridge used by the repository's AD-classical conditional-copy Zhang-Yeung derivation.
 strata_touched:
+  - D5/S3/Quantum/Foundation/QutritPureLift
+  - D5/S3/Quantum/Foundation/QutritSchurPlane
+  - D5/S3/Quantum/Foundation/QutritSingletonIncidence
   - D5/S3/Quantum/Foundation/FiniteDensityPurification
   - D5/S3/Quantum/Information/StrongSubadditivity
   - D5/S3/Quantum/Information/ClassicalConditionalCopy
@@ -42,6 +45,28 @@ The mathematical literature cited below is citation-only; its prose is not copie
 - Preserved receiving source: `D5/S3/Quantum/Information/StrongSubadditivity/Physlib/Entropy/SSA.lean`, whose retained upstream header and declaration identify this exact source mapping. The locator covers the finite density-state supplier, including the singular-state scope recorded above; the receiving port and downstream AD-classical conditional-copy application remain repository content.
 
 ## Consumed source mapping
+
+The actual qutrit face quotient proof also uses the retained Physlib
+`HermitianMat` carrier, its positive semidefinite order and its real trace.
+The spectral expansion uses the repository's
+`D5.S3.Quantum.Matrix.CartesianVariance.hermitian_spectral_sum`. The signed
+crossing and unique-lift argument are repository-derived.
+
+The affine quotient plane also uses the retained Hermitian trace pairing,
+unitary congruence, and reindexing to choose a positive support pivot in the
+second actual qutrit. The dimension of the shared binary face identifies the
+lower Hermitian block. Original pure lifts come from the rank-one Schur
+completions using `SectionROGFrame.whole_pure_carrier` and faciality. Their
+quotient injectivity uses `QutritPureLift.unique_original_pure_lift`. The
+adapted overlap and the entire affine quotient slice are repository-derived.
+
+The classical support-face correspondence and the projective coordinates for
+complex pure states provide background for this geometric calculation.
+See [Alfsen and Shultz, §II](https://doi.org/10.1063/1.3399808) for matrix-state
+faces and [Bengtsson, Brännlund, and Życzkowski, §2](https://arxiv.org/abs/quant-ph/0108064)
+for the rank-one projective coordinates.
+
+
 
 There are 32 local supplier modules. In this table local paths are relative to
 `D5/S3/Quantum/Information/StrongSubadditivity/Physlib/`; upstream paths are
@@ -158,3 +183,10 @@ nonorthogonal, merely separable, AB-classical or unrestricted quantum case.
 No separate AC extension is claimed. The unrestricted quantum target
 [issue #23764](https://github.com/the-omega-institute/trureturing/issues/23764)
 remains open.
+
+Singleton incidence uses the retained Hermitian carrier and the repository's
+`QutritSchurPlane.reindexEquiv`, `unitaryEquiv`, `diagonal_read`, and
+`unit_rankOne_original`. It applies `Matrix.IsHermitian.coe_re_apply_self`
+from the pinned Mathlib for the reality of Hermitian diagonal entries. The
+support-adapted singular representative and the two-atom cancellation via the
+original pure-lift theorem are repository-derived.

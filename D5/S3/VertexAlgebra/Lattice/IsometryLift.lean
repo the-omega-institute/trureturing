@@ -239,7 +239,7 @@ private theorem phase_zero (D : LatticeData) (g : Charge D ≃+ Charge D) :
   apply Units.ext
   simp [phase, liftPhase, diagonalPhase, normalExponent, complexSign, reduceCharge]
 
-private theorem phase_law (D : LatticeData) (g : Charge D ≃+ Charge D)
+theorem phase_law (D : LatticeData) (g : Charge D ≃+ Charge D)
     (hg : ∀ a b, bilinear D (g a) (g b) = bilinear D a b) (a b : Charge D) :
     (phase D g (a + b) : ℂ) * epsilon D a b =
       (phase D g a : ℂ) * (phase D g b : ℂ) * epsilon D (g a) (g b) := by

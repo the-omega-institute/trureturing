@@ -57,7 +57,7 @@ private lemma zero_weight_log_shift_tendsto {H : Matrix n n ℂ} (hH : H.PosSemi
   simpa only [zero_add, Matrix.zero_mul] using
     (cross_log_regularization_tendsto (ρ := 0) hH (fun _ _ => Matrix.zero_mulVec _))
 
-private lemma supported_log_shift_tendsto {W H : Matrix n n ℂ} (hH : H.PosSemidef)
+lemma supported_log_shift_tendsto {W H : Matrix n n ℂ} (hH : H.PosSemidef)
     (hs : ∀ v : n → ℂ, H *ᵥ v = 0 → W *ᵥ v = 0) :
     Tendsto (fun t : ℝ => W * CFC.log (H + t • 1))
       (𝓝[>] 0) (𝓝 (W * CFC.log H)) := by

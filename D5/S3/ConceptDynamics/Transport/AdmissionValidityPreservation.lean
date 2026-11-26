@@ -5,74 +5,51 @@
    anchors: []
    digest: Admission-preserving transport pulls target validity back to the source. -/
 
-import D5.S3.ConceptDynamics.ConceptFiberDecomposition
-import Mathlib.Data.Set.Function
-
-/- Library-search audit trail (2026-08-21):
-   * Repository searches for validity preservation, admission-preserving maps,
-     predicate pullback, and model satisfaction found no exact theorem.
-   * `EffectiveImageNaturality` is adjacent transport machinery but concerns
-     readout factorization on an image rather than validity of predicates.
-   * Exact pinned-Mathlib hit `Set.MapsTo` expresses admission preservation and
-     is used directly. No pinned theorem packages the target-validity transfer.
-   * The `loogle` and `leansearch` executables are absent from PATH. -/
-
-set_option autoImplicit false
-set_option relaxedAutoImplicit false
+module
+prelude
+public import OmegaInit.Core
 
 namespace D5.S3.ConceptDynamics.Transport.AdmissionValidityPreservation
 
-open D5.S3.ConceptDynamics.ConceptFiberDecomposition
+open Omega
 
-/-- If every admissible target state satisfies a predicate and a transport
-maps admissible source states to admissible target states, the pulled-back
-predicate is valid on every admissible source state. -/
-theorem validity_preserved_by_admission_map
-    {X Y : Type*}
-    (sourceAdmissible : X -> Prop)
-    (targetAdmissible : Y -> Prop)
-    (h : Concept X Y)
-    (P : Y -> Prop)
-    (targetValid : ∀ y, targetAdmissible y -> P y)
-    (admissionPreserving :
-      Set.MapsTo h {x | sourceAdmissible x} {y | targetAdmissible y}) :
-    ∀ x, sourceAdmissible x -> (P ∘ h) x := by
-  intro x sourceIsAdmissible
-  exact targetValid (h x) (admissionPreserving sourceIsAdmissible)
+/-- Admission-preserving transport pulls target validity back to the source. -/
+public theorem validity_preserved_by_admission_map
+    {X : Type u} {Y : Type v}
+    (sourceAdmissible : X → Prop) (targetAdmissible : Y → Prop)
+    (transport : X → Y) (P : Y → Prop)
+    (targetValid : ∀ y, targetAdmissible y → P y)
+    (admissionPreserving : ∀ x, sourceAdmissible x → targetAdmissible (transport x)) :
+    ∀ x, sourceAdmissible x → P (transport x) :=
+  fun x admitted => targetValid (transport x) (admissionPreserving x admitted)
 
-/-- The transport carrier and both validity hypotheses have an inhabited
-Boolean model. -/
+/-- The identity transport and constant true predicate satisfy both premises. -/
 example :
-    let sourceAdmissible : Bool -> Prop := fun _ => True
-    let targetAdmissible : Bool -> Prop := fun _ => True
-    let h : Concept Bool Bool := id
-    let P : Bool -> Prop := fun _ => True
-    (∀ y, targetAdmissible y -> P y) ∧
-      Set.MapsTo h {x | sourceAdmissible x} {y | targetAdmissible y} := by
-  simp
+    let admitted : Bool → Prop := fun _ => True
+    let transport : Bool → Bool := fun x => x
+    let P : Bool → Prop := fun _ => True
+    And (∀ y, admitted y → P y) (∀ x, admitted x → admitted (transport x)) :=
+  And.intro (fun _ h => h) (fun _ h => h)
 
-/-- Target validity alone does not make its pullback valid when transport can
-send an admissible source state outside the target admission domain. -/
+/-- Target validity can hold while the unadmitted source image fails the predicate. -/
 example :
-    let sourceAdmissible : Bool -> Prop := fun _ => True
-    let targetAdmissible : Bool -> Prop := fun y => y = true
-    let h : Concept Bool Bool := id
-    let P : Bool -> Prop := fun y => y = true
-    (∀ y, targetAdmissible y -> P y) ∧
-      ¬(∀ x, sourceAdmissible x -> (P ∘ h) x) := by
-  simp [Function.comp_apply]
+    let sourceAdmissible : Bool → Prop := fun _ => True
+    let targetAdmissible : Bool → Prop := fun y => Eq y .true
+    let transport : Bool → Bool := fun x => x
+    let P : Bool → Prop := fun y => Eq y .true
+    And (∀ y, targetAdmissible y → P y)
+      (Not (∀ x, sourceAdmissible x → P (transport x))) :=
+  And.intro (fun _ h => h) (fun valid =>
+    Eq.subst (motive := Bool.rec (motive := fun _ => Prop) True False)
+      (valid .false True.intro) True.intro)
 
-/-- Admission preservation alone does not imply validity when the target
-predicate itself is invalid. -/
+/-- Admission preservation can hold while the target predicate is false everywhere. -/
 example :
-    let sourceAdmissible : Bool -> Prop := fun _ => True
-    let targetAdmissible : Bool -> Prop := fun _ => True
-    let h : Concept Bool Bool := id
-    let P : Bool -> Prop := fun _ => False
-    Set.MapsTo h {x | sourceAdmissible x} {y | targetAdmissible y} ∧
-      ¬(∀ x, sourceAdmissible x -> (P ∘ h) x) := by
-  simp [Function.comp_apply]
-
-#print axioms validity_preserved_by_admission_map
+    let admitted : Bool → Prop := fun _ => True
+    let transport : Bool → Bool := fun x => x
+    let P : Bool → Prop := fun _ => False
+    And (∀ x, admitted x → admitted (transport x))
+      (Not (∀ x, admitted x → P (transport x))) :=
+  And.intro (fun _ h => h) (fun valid => valid .false True.intro)
 
 end D5.S3.ConceptDynamics.Transport.AdmissionValidityPreservation

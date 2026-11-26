@@ -5,36 +5,29 @@
    anchors: []
    digest: Factorized targets and image-correct decoding exclude misleading reception. -/
 
-/- Library-search audit trail (2026-08-21):
-   * Repository searches for misleading-message exclusion, decoder agreement on
-     a message image, and target factorization found no exact theorem.
-   * The directly applicable pinned-library primitives are Function.comp_apply
-     and Set.mem_range_self; the pointwise proof below applies both explicitly.
--/
-
-import Mathlib.Data.Set.Function
-
-noncomputable section
+module
+prelude
+public import OmegaInit.Core
 
 namespace D5.S3.ConceptDynamics.Transport.MisleadingReceiverExclusion
 
-def Misleading {State Message Target : Type*}
-    (messageOf : State -> Message) (targetOf : State -> Target)
-    (decode : Message -> Target) (state : State) : Prop :=
-  decode (messageOf state) ≠ targetOf state
+open Omega
 
-theorem misleading_impossible {State Message Target : Type*}
-    (messageOf : State -> Message) (targetOf : State -> Target)
-    (decode : Message -> Target) (correctDecode : Message -> Target)
-    (factorization : targetOf = correctDecode ∘ messageOf)
-    (agreement : forall message, message ∈ Set.range messageOf ->
-      decode message = correctDecode message) :
-    forall state, ¬ Misleading messageOf targetOf decode state := by
-  intro state hmisleading
-  apply hmisleading
-  rw [factorization, Function.comp_apply]
-  exact agreement (messageOf state) (Set.mem_range_self state)
+/-- A decoded message is misleading when it disagrees with the target of its state. -/
+public def Misleading {State : Type u} {Message : Type v} {Target : Type w}
+    (messageOf : State → Message) (targetOf : State → Target)
+    (decode : Message → Target) (state : State) : Prop :=
+  Not (Eq (decode (messageOf state)) (targetOf state))
 
-#print axioms misleading_impossible
+/-- Decoder agreement on all attainable messages excludes misleading reception. -/
+public theorem misleading_impossible {State : Type u} {Message : Type v} {Target : Type w}
+    (messageOf : State → Message) (targetOf : State → Target)
+    (decode correctDecode : Message → Target)
+    (factorization : ∀ state, Eq (targetOf state) (correctDecode (messageOf state)))
+    (agreement : ∀ message, Exists (fun state => Eq (messageOf state) message) →
+      Eq (decode message) (correctDecode message)) :
+    ∀ state, Not (Misleading messageOf targetOf decode state) :=
+  fun state misleading => misleading
+    ((agreement (messageOf state) (Exists.intro state rfl)).trans (factorization state).symm)
 
 end D5.S3.ConceptDynamics.Transport.MisleadingReceiverExclusion

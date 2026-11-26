@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics;
 internal sealed class ArcherCyclicTetranacciInsertionDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/ArcherCyclicTetranacciInsertion.";
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Combinatorics/archer2024pattern");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/PermutationPatterns/archer2024pattern");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Inserting a low arc preserves circular avoidance of 1324.",

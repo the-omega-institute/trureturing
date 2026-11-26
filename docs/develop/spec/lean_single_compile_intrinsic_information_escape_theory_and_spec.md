@@ -5718,7 +5718,7 @@ kernel-address coincidence 无回边进入分组或判词。
 
 ### 30.1 模块与登记绑定
 
-模块报告使用 `stratalint-raw-lean-report-v3`，定向汇总使用 `stratalint-scoped-lean-report-v1`。每个模块记录其声明、import、来源、
+模块报告使用 `stratalint-raw-lean-report-v4`，定向汇总使用 `stratalint-scoped-lean-report-v2`。每个模块记录其声明、import、来源、
 公理闭包及适用的登记绑定；格式由严格读取器检查。
 `information_templates` 的容器形状为：
 

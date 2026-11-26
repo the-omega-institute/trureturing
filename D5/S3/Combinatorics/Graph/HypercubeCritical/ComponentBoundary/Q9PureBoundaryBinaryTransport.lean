@@ -21,9 +21,8 @@ open scoped BigOperators
 open D5.S3.Combinatorics.Graph.Hypercube (hypercube)
 open BalancedCriticalSpectrum (Q flip flip_adj)
 open BalancedCubeComponentBoundary (directions mem_directions)
-open Q9IsotropicHuang (flipSign weightedAction weightedLinear)
-open private weightedLinear_apply weightedLinear_square from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Q9IsotropicHuang
+open Q9IsotropicHuang
+  (flipSign weightedAction weightedLinear weightedLinear_apply weightedLinear_square)
 
 /-- The binary characteristic function of a finite support. -/
 def indicator (S : Finset (Q 9)) (x : Q 9) : ZMod 2 :=

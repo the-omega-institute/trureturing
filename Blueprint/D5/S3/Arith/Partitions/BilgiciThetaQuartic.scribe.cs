@@ -57,8 +57,7 @@ internal sealed class BilgiciThetaQuarticDocument : IScribeDocumentDefinition
                     Paragraph(Text("Independently, substituting X to the integer weight exponent "
                         + "for each variable sends every theta generator to a multiple of X¹⁰. "
                         + "Periodicity and reflection of the paired factors reduce this check to "
-                        + "indices zero through nine. The image of Q has coefficient one at X⁹. "
-                        + "A direct derivation of the factorization without coefficient comparisons remains open."))),
+                        + "indices zero through nine. The image of Q has coefficient one at X⁹."))),
                 DescribeRole.Theorem,
                 openProblemResolutionClaim: new OpenProblemResolutionClaim(
                     ProblemSlugRef.Create(Slug), ResolutionKind.Proved)))));

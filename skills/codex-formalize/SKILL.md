@@ -5,6 +5,8 @@ description: Use when asked to formalize mathematics in this repository, using D
 
 # Codex Formalization Workflow
 
+Use the common interface to compile one source on both backends. `OmegaMathlib` is the checked strict subset of pinned Mathlib. If a consumer needs the full official API, import `OmegaBuild.Commands`, put `compile_only_with_mathlib` after the imports, and use Mathlib directly. All modules importing that consumer inherit the choice. [Two compilable examples](../../src/README.md#选择编译后端)
+
 ## Install
 
 This is a Codex skill package. Install it by copying the `skills/codex-formalize/` directory into `$CODEX_HOME/skills/` (default `~/.codex/skills`), or load it by naming this `SKILL.md` path directly in a dispatcher. This repository copy is the single source of truth; any installed copy is a projection of it.
@@ -98,7 +100,11 @@ Postcondition: every source clause has one intended Lean counterpart or is recor
 
 ### 3. Search the library before proving
 
-Apply `CLAUDE.md` 11, "library before proof." Search pinned mathlib and the repository's `D5/` declarations for the complete statement and for lemmas that close its dependencies. Record every query verbatim and record whether it hit.
+Apply `CLAUDE.md` 11, "library before proof." Search the frozen D5 declarations for a match and prefer `src/OmegaMath/` for a constructive proof. Check its `OmegaInit` foundations and the pinned Mathlib for the exact statement and prerequisites. Record every query verbatim and record whether it hit.
+
+For an existing formalization migrating to strict Omega mathematics, use the [migration skill](../omega-math-migration/SKILL.md) to update the original owner and verify its dependencies. Keep consumer references on the consumer side.
+
+When strict support requires a Mathlib port, place it under `strict/OmegaMathlib/`, preserve the upstream defining path and prefix the declaration name with `Omega.`. Place original reusable mathematics under `src/OmegaMath/` beside the relevant topic with `Omega original.` as the first line of the module documentation. Import the narrowest applicable module from D5. Use the strict scoped audit from [the library guide](../../src/README.md). D5 owns problem-specific applications and their frozen book citations. For example, the general positive-scaling proof lives in `OmegaMath.Projective` as `Omega.Projective.kappa_scale`. A D5 citation can reuse it directly. Determine axiom use from the individual frozen declaration's measured closure.
 
 Check the bind path first: the cheapest faithful discharge is an existing frozen theorem, and dozens of residues have been discharged with zero new Lean. If a frozen declaration already covers the residue leg verbatim, use the canonical coverage route naming that declaration and the evidence, not a new module or a recommendation for another worker. If the writer cannot run, name that blocker and its next command; do not claim the atom is processed.
 
@@ -334,6 +340,8 @@ Before Step 7, the producing seat must answer every item with concrete evidence.
 - Deposit substance: for a module introducing a new definition, name the theorem(s) that make the definition earn its freeze (instantiation against existing repository structures, an independent-sides characterization, or a citable property), and show the module's connection to the existing machinery its vocabulary names. Anonymous `example`s do not discharge this item; see the thin-deposit taxonomy above.
 - Duplicate search: cite the Step 3 trace showing this is not a renamed duplicate of a mathlib or `D5/` declaration.
 - Clause fidelity: place the authoritative atom clauses beside the Lean clauses one-to-one, mapping every clause to an exact Lean binder, hypothesis, or conclusion. The dropped-or-weakened set must be empty; any weakening, omission, or unresolved ambiguity forces `open` before deposit.
+- For an OmegaMath citation, expand the carrier and equality at the use site. Check the premise that would justify each change of domain or representation. A rational rotation matrix need not have a rational unit-spinor lift. Verify worked examples and manual deductions against their stated definitions. For a zero-axiom claim about the current build, measure the compiled declaration on the named backend. For a claim about a frozen version, read that version’s matching declaration entry. [OmegaMath publication rule](../../docs/develop/spec/golden-ledger-repo-spec.md#omega-claim-fidelity)
+
 - Rendered-statement fidelity: read the emitted Blueprint `.md` for this document and compare its displayed statement against the Lean declaration symbol by symbol; use a neighbouring landed mirror as a shape check.
   The formula DSL and writer own tokens that can be valid LaTeX and structurally accepted yet mean something different from the theorem, so `emit` exiting 0 is not evidence that the rendering is faithful.
   A mismatch blocks deposit; resolve it against `tools/StrataLint.Scribe/Ast/FormulaDsl.cs` and `tools/StrataLint.Scribe/Writers/LatexWriter.cs`, or end the task `open`.
@@ -417,7 +425,7 @@ Several machines drive this repository concurrently and `dev` advances roughly h
 - Never modify the judge during formalization (CLAUDE.md §1.2 「形式化不改判官」): a formalization lane changes only content surfaces (D5, Blueprint, Reg declaration sources and content templates, digestion ledger, theory volumes); `tools/**` (StrataLint, lean-inspector, report producers and schedulers, scripts), the judge Interface/Impl packages, `.github/**` and other admission surfaces are out of scope. If the judge is wrong or blocks you, open or reuse an issue with the verdict and readings, report the blocker, and continue other mathematical work; do not carry a judge fix in the delivery.
 - Never exceed directory capacity; `tools/StrataLint.Engine/Rules/RepositoryRules.Structure.cs` owns this rule.
 - Never weaken the echoed statement to make a proof close; the statement echo and this fidelity gate own that obligation.
-- Never deposit a first-freeze module without `admission_basis: escape-witness`; `CLAUDE.md` §3.2 owns the rule. A wholly bind-only module has no admission basis, even with an atom requirement or promised downstream consumer.
+- Identify the applicable first-freeze admission basis in `CLAUDE.md` §3.2. For a book citation of an existing OmegaMath theorem, apply the publication rule in §3.2 and record the actual book location, the missing D5 GID and the original proof. Otherwise a wholly bind-only module has no admission basis, even with an atom requirement or promised downstream consumer.
 - Never invent a "needs human review" outcome; `CLAUDE.md` 22 forbids human-review gates outright.
 
 ## What this skill does not own

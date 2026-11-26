@@ -278,7 +278,8 @@ theorem dPeriod_boundary (upperA : Bool) {t : ℝ} (ht : 1 < t) :
     (h.deriv.continuousAt.tendsto.mono_left nhdsWithin_le_nhds).congr'
       (he.mono fun _ hu => deriv_dPeriod_eq hu)⟩
 
-private theorem dLip_neBot (upperA : Bool) (t : ℝ) :
+/-- Each open D lip accumulates at every real parameter. -/
+theorem dLip_neBot (upperA : Bool) (t : ℝ) :
     (𝓝[dLip upperA] (t : ℂ)).NeBot := by
   let s : ℂ := if upperA then -Complex.I else Complex.I
   let path : ℝ → ℂ := fun v => (t : ℂ) + (v : ℂ) * s

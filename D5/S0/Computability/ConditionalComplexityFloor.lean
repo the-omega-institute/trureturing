@@ -5,45 +5,58 @@
    anchors: []
    digest: A nonempty class with bounded realizing programs gives a conditional complexity floor. -/
 
-import Mathlib.Data.Nat.Basic
+module
+prelude
+import all OmegaInit.Prelude
+public import OmegaMath.Arithmetic.Euclidean.Division
 
 namespace D5.S0.Computability.ConditionalComplexityFloor
 
+open Omega
+
 /-- Class members that have a realizing program within the supplied length budget. -/
-def BudgetedRealizers {ClassMember Program : Type*}
-    (realizes : ClassMember -> Program -> Prop)
-    (length : Program -> Nat) (budget : Nat) : Set ClassMember :=
-  {f | exists p, realizes f p /\ length p <= budget}
+@[expose] public def BudgetedRealizers {ClassMember : Type u} {Program : Type v}
+    (realizes : ClassMember → Program → Prop)
+    (length : Program → Nat) (budget : Nat) : ClassMember → Prop :=
+  fun member => Exists (fun program => And (realizes member program) (Nat.le (length program) budget))
 
-/-- If every realizing program compiles to a conditional description with fixed overhead,
-nonemptiness of the budgeted class forces conditional complexity minus that overhead below the
-budget. -/
-theorem conditional_complexity_floor {ClassMember Program : Type*}
-    (realizes : ClassMember -> Program -> Prop)
-    (length : Program -> Nat)
+/-- A compiler with bounded overhead puts conditional complexity minus that overhead
+below the length budget of a nonempty class of realizers. -/
+public theorem conditional_complexity_floor {ClassMember : Type u} {Program : Type v}
+    (realizes : ClassMember → Program → Prop)
+    (length : Program → Nat)
     (budget conditionalComplexity overhead : Nat)
-    (hnonempty : (BudgetedRealizers realizes length budget).Nonempty)
-    (hcompile : forall f p, realizes f p -> conditionalComplexity <= length p + overhead) :
-    conditionalComplexity - overhead <= budget := by
-  rcases hnonempty with ⟨f, p, hrealizes, hlength⟩
-  rw [Nat.sub_le_iff_le_add]
-  exact le_trans (hcompile f p hrealizes) (Nat.add_le_add_right hlength overhead)
+    (nonempty : Exists (BudgetedRealizers realizes length budget))
+    (compile : ∀ member program, realizes member program →
+      Nat.le conditionalComplexity (Nat.add (length program) overhead)) :
+    Nat.le (Nat.sub conditionalComplexity overhead) budget :=
+  nonempty.elim (fun member realizer =>
+    realizer.elim (fun program witness =>
+      Nat.sub_le_of_le_add (Nat.le_trans (compile member program witness.left)
+        (Arithmetic.add_le_add_right witness.right overhead))))
 
-/-- The member and program domains can both be inhabited. -/
-example : Nonempty (Unit × Unit) := inferInstance
+private inductive One where
+  | only
 
-/-- A one-member class with a length-three program, complexity five, and overhead two satisfies
-the hypotheses and attains the floor bound. -/
+example : Exists (fun _ : One => Exists (fun _ : One => True)) :=
+  Exists.intro .only (Exists.intro .only True.intro)
+
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Nat.add Nat.sub Nat.pred in
+/-- A program of length three with overhead two attains complexity five. -/
 example :
-    let realizes : Unit -> Unit -> Prop := fun _ _ => True
-    let length : Unit -> Nat := fun _ => 3
-    let budget := 3
-    let conditionalComplexity := 5
-    let overhead := 2
-    (BudgetedRealizers realizes length budget).Nonempty /\
-      (forall f p, realizes f p -> conditionalComplexity <= length p + overhead) /\
-      conditionalComplexity - overhead <= budget := by
-  dsimp
-  exact ⟨⟨(), (), trivial, by decide⟩, fun _ _ _ => by decide, by decide⟩
+    let two := Nat.zero.succ.succ
+    let three := two.succ
+    let five := three.succ.succ
+    let realizes : One → One → Prop := fun _ _ => True
+    let length : One → Nat := fun _ => three
+    And (Exists (BudgetedRealizers realizes length three))
+      (And (∀ member program, realizes member program → Nat.le five (Nat.add (length program) two))
+        (Nat.le (Nat.sub five two) three)) :=
+  let two := Nat.zero.succ.succ
+  let three := two.succ
+  let five := three.succ.succ
+  And.intro (Exists.intro .only (Exists.intro .only (And.intro True.intro (Nat.le_refl three))))
+    (And.intro (fun _ _ _ => Nat.le_refl five) (Nat.le_refl three))
 
 end D5.S0.Computability.ConditionalComplexityFloor

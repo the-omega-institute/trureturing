@@ -16,7 +16,7 @@ internal sealed class PropertyObjectDocument : IScribeDocumentDefinition
                 H("Property objects have seven lossless components"),
                 StatementSource.FromAuthor(Disp(Seq(
                     Operatorname, Grp(F.Id("Bijective")), Open,
-                    Operatorname, Grp(F.Id("propertyObjectEquivComponents")), Close))),
+                    Operatorname, Grp(F.Id("encodePropertyComponents")), Close))),
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
@@ -28,13 +28,9 @@ internal sealed class PropertyObjectDocument : IScribeDocumentDefinition
                         + "proved. Bijectivity therefore certifies that internalization neither "
                         + "drops information nor adds an untracked component.")),
                     Paragraph(Text(
-                        "The pinned library was searched before implementation. It provides "
-                        + "standard product equivalences such as Equiv.prodAssoc and "
-                        + "Equiv.prodCongr, together with bundled bijectivity through "
-                        + "Equiv.bijective, but it has no declaration for this source-specific "
-                        + "seven-component property object. The Lean module consequently "
-                        + "constructs only that local structure equivalence and delegates the "
-                        + "final theorem to the library's bijectivity API. The source atom is "
-                        + "a structural definition and carries no numerical certificate."))),
+                        "The strict product stores each component in the same position as the "
+                        + "standard tuple. Rebuilding the object gives the left inverse used for "
+                        + "injectivity. Rebuilding the tuple gives the right inverse used for "
+                        + "surjectivity."))),
                 DescribeRole.Theorem))));
 }

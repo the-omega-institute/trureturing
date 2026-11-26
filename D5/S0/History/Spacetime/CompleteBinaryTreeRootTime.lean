@@ -11,6 +11,9 @@ import Mathlib.Data.List.MinMax
 import Mathlib.Algebra.Order.Group.MinMax
 import Mathlib.Algebra.Order.Monoid.Unbundled.Basic
 import Mathlib.Algebra.Order.Monoid.WithTop
+import OmegaMath.Data.Int
+
+/-! Root times of complete binary trees with unit edge delays. -/
 
 namespace D5.S0.History.Spacetime.CompleteBinaryTreeRootTime
 
@@ -42,55 +45,53 @@ def leafScore (record : ℤ × ℕ) : ℤ := record.1 + (record.2 : ℤ)
 def leafScores (tree : CompleteBinaryTree) : List ℤ :=
   (leafData tree).map leafScore
 
-private lemma maximum_map_add (values : List ℤ) (offset : ℤ) :
-    (values.map (· + offset)).maximum = values.maximum + offset := by
-  induction values with
-  | nil => simp
-  | cons head tail ih =>
-      simp only [List.map_cons, List.maximum_cons, ih]
-      cases h : tail.maximum with
-      | bot => simp [h]
-      | coe maximumTail =>
-          simp only [h, WithBot.coe_add]
-          have h' : max (head + offset) (maximumTail + offset) =
-              max head maximumTail + offset := by
-            simpa [add_comm] using (max_add_add_left offset head maximumTail)
-          exact_mod_cast h'
+/-- The size of a signed leaf time counts its sign constructor and natural payload. -/
+@[instance_reducible] private noncomputable def timeSize : SizeOf Omega.Int :=
+  let signedBranch := fun count : Omega.Nat => 1 + Omega.Nat.rec (motive := fun _ => ℕ) 0 (fun _ n => n.succ) count
+  ⟨Omega.Int.rec signedBranch signedBranch⟩
 
-private lemma map_bumpDepth_leafScore (records : List (ℤ × ℕ)) :
-    (records.map bumpDepth).map leafScore =
-      (records.map leafScore).map (· + 1) := by
-  rw [List.map_map, List.map_map]
-  apply List.map_congr_left
-  intro record _
-  rcases record with ⟨time, depth⟩
-  simp [bumpDepth, leafScore, Nat.cast_add, add_assoc, add_comm, add_left_comm]
-  omega
+attribute [local instance] timeSize
 
-/-- For every finite complete binary tree, recursively computed root time equals
-    the maximum of `leaf time + depth` over its finite leaves. -/
-theorem rootTime_eq_max_leaf_time_add_depth : ∀ tree : CompleteBinaryTree,
-    (rootTime tree : WithBot ℤ) = (leafScores tree).maximum
-  | .leaf time => by
-      simp [rootTime, leafScores, leafData, leafScore]
-  | .node left right => by
-      change ((max (rootTime left) (rootTime right) + 1 : ℤ) : WithBot ℤ) =
-        (((leafData left).map bumpDepth ++ (leafData right).map bumpDepth).map leafScore).maximum
-      simp only [List.map_append, List.maximum_append]
-      rw [map_bumpDepth_leafScore, map_bumpDepth_leafScore]
-      rw [maximum_map_add, maximum_map_add]
-      have leftEquation := rootTime_eq_max_leaf_time_add_depth left
-      have rightEquation := rootTime_eq_max_leaf_time_add_depth right
-      change ((max (rootTime left) (rootTime right) + 1 : ℤ) : WithBot ℤ) =
-        max ((leafScores left).maximum + (1 : WithBot ℤ))
-          ((leafScores right).maximum + (1 : WithBot ℤ))
-      rw [← leftEquation, ← rightEquation]
-      have rootReassociation : max (rootTime left) (rootTime right) + 1 =
-          max (rootTime left + 1) (rootTime right + 1) := by
-        simpa [add_comm] using
-          (max_add_add_left (1 : ℤ) (rootTime left) (rootTime right)).symm
-      exact_mod_cast rootReassociation
+/-- A complete binary tree with leaf times in the strict integer representation. -/
+inductive StrictCompleteBinaryTree where
+  | leaf (time : Omega.Int)
+  | node (left right : StrictCompleteBinaryTree)
 
-#print axioms rootTime_eq_max_leaf_time_add_depth
+/-- Compute a strict root time by adding one at each internal node. -/
+noncomputable def strictRootTime : StrictCompleteBinaryTree → Omega.Int :=
+  StrictCompleteBinaryTree.rec (fun time => time)
+    (fun _ _ left right => (Omega.Int.max left right).add Omega.Int.one)
+
+/-- Take the maximum of input time plus depth over the leaves, starting at `depth`. -/
+noncomputable def strictLeafMaximumFrom (tree : StrictCompleteBinaryTree) :
+    Omega.Nat → Omega.Int :=
+  StrictCompleteBinaryTree.rec (motive := fun _ => Omega.Nat → Omega.Int)
+    (fun time depth => time.add (.ofNat depth))
+    (fun _ _ left right depth => Omega.Int.max (left depth.succ) (right depth.succ)) tree
+
+private theorem map_bumpDepth_leafScore (time : Omega.Int) (depth : Omega.Nat) :
+    Omega.Eq (time.add (.ofNat depth.succ)) ((time.add Omega.Int.one).add (.ofNat depth)) :=
+  (Omega.congrArg (fun n => time.add (.ofNat n)) (Omega.Nat.add_one depth).symm).trans
+    ((Omega.congrArg time.add (Omega.Int.add_comm (.ofNat depth) Omega.Int.one)).trans
+      (Omega.Int.add_assoc time Omega.Int.one (.ofNat depth)).symm)
+
+private theorem maximum_map_add (tree : StrictCompleteBinaryTree) :
+    ∀ depth, Omega.Eq (strictLeafMaximumFrom tree depth)
+      ((strictRootTime tree).add (.ofNat depth)) :=
+  StrictCompleteBinaryTree.rec (motive := fun tree => ∀ depth,
+    Omega.Eq (strictLeafMaximumFrom tree depth) ((strictRootTime tree).add (.ofNat depth)))
+    (fun _ _ => Omega.rfl)
+    (fun left right leftAgreement rightAgreement depth =>
+      let leftTime := strictRootTime left
+      let rightTime := strictRootTime right
+      (Omega.Eq.map₂ Omega.Int.max (leftAgreement depth.succ) (rightAgreement depth.succ)).trans
+        ((Omega.Int.max_add_common_right leftTime rightTime (.ofNat depth.succ)).trans
+          (map_bumpDepth_leafScore (Omega.Int.max leftTime rightTime) depth)))
+    tree
+
+/-- The recursively computed root time is the maximum of input time plus depth over the leaves. -/
+theorem rootTime_eq_max_leaf_time_add_depth (tree : StrictCompleteBinaryTree) :
+    Omega.Eq (strictRootTime tree) (strictLeafMaximumFrom tree .zero) :=
+  (Omega.Int.add_zero (strictRootTime tree)).symm.trans (maximum_map_add tree .zero).symm
 
 end D5.S0.History.Spacetime.CompleteBinaryTreeRootTime

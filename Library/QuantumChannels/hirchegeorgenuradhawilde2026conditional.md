@@ -8,6 +8,15 @@ url: https://arxiv.org/abs/2608.27171v1
 claim: "For a quantum channel N and a generalized divergence D, the conditional contraction coefficient is η^Δ_D(N) := sup over |R| and ρ_RA ≠ σ_RA of [D((id ⊗ N)(ρ_RA)‖(id ⊗ N)(σ_RA)) − D(ρ_R‖σ_R)] / [D(ρ_RA‖σ_RA) − D(ρ_R‖σ_R)] (Eq. (2.14)), optimized over pairs with a strictly positive finite denominator (Remark 2). The hockey-stick divergence is E_γ(ρ‖σ) := Tr(ρ − γσ)_+ (Eq. (5.1)). For the trace distance (γ = 1), η^c_Tr(N) and η^Δ_Tr(N) are optimized by orthogonal states (Proposition 8). §9 asks whether, for the hockey-stick divergence, the optimization can be restricted to orthogonal states, which would imply monotonicity of the coefficient in γ."
 strata_touched:
   - D5/S3/Quantum/Divergence/ConditionalHockeyStickOrthogonalReduction
+  - D5/S3/Quantum/Divergence/ConditionalExpansion/BellCenteredConditionalTraceGap
+  - D5/S3/Quantum/Divergence/ConditionalExpansion/ReverseDoeblinRefutation
+  - D5/S3/Quantum/Divergence/ConditionalExpansion/DerivativeFreeHarmonicCongruence
+  - D5/S3/Quantum/Divergence/ConditionalExpansion/FilteredChannelConditionalGap
+  - D5/S3/Quantum/Divergence/CompleteHockeyStickRefutation
+  - D5/S3/Quantum/Divergence/CompleteHockeyStickBasisSupport
+  - D5/S3/Quantum/Divergence/CompleteHockeyStickChoiSupport
+  - D5/S3/Quantum/Divergence/CompleteHockeyStickChoiConverse
+  - D5/S3/Quantum/Divergence/CompleteHockeyStick/NonlinearCurve
   - D5/S3/Quantum/Divergence/FaithfulConditionalGap
   - D5/S3/Quantum/Divergence/UmegakiChannelSupportedExtension
   - D5/S3/Quantum/Divergence/UmegakiSupportedMoorePenrose
@@ -28,10 +37,15 @@ Source: https://arxiv.org/abs/2608.27171v1
 No DOI or journal reference is listed in the arXiv metadata. The text was read from the PDF https://arxiv.org/pdf/2608.27171v1:
 - p. 8, Definition 2, Eqs. (2.12)–(2.14);
 - p. 9, Remark 2;
+- §2.5, Definition 3, Eq. (2.42), conditional expansion;
 - p. 37, §5, Eqs. (5.1)–(5.2);
-- p. 40, Proposition 8;
+- p. 40, Proposition 8 and Remark 6;
+- §5, Theorem 6, Eq. (5.17), and Proposition 9, Eq. (5.26);
+- §5, paragraph immediately after Proposition 9, conditional reverse Doeblin question;
+- §5, Proposition 10, Eqs. (5.38)–(5.39), classical witness family;
 - p. 72, §9, the first open problem.
 - p. 72, §9, the second open problem (faithful-divergence separation).
+- p. 72, §9, the fourth bullet (nonlinear strong data processing with references).
 
 ## Source statements
 
@@ -58,6 +72,180 @@ The repository proves two statements:
 - S_γ(N) = S_δ(N) for all γ, δ ≥ 1, so η^Δ_{E_γ}(N) does not depend on γ ≥ 1.
 
 In the formal numerator, the subtracted reference marginals are taken of the output states (id ⊗ N)ρ and (id ⊗ N)σ; they equal ρ_R and σ_R because N is trace preserving.
+
+## Conditional trace-distance expansion
+
+Equation (2.42) takes the infimum of the conditional retention ratio over all
+finite references and pairs with strictly positive denominator. Theorem 6,
+Eq. (5.17), preserves conditional trace-distance ratios under orthogonal
+reduction. Proposition 9, Eq. (5.26), applies this to the conditional expansion
+infimum.
+[Eq. (2.42)](https://arxiv.org/html/2608.27171v1#S2.EGx43) ·
+[Theorem 6](https://arxiv.org/html/2608.27171v1#Thmtheorem6) ·
+[Proposition 9](https://arxiv.org/html/2608.27171v1#Thmproposition9)
+
+`ConditionalExpansion.BellCenteredConditionalTraceGap.bell_padded_gap`
+gives a repository-derived orthogonal pair on a reference of size $d+1$,
+where $d$ is the input dimension. For the Bell projector $P$, let $C=I-P$,
+$D=d^2-1$, and $0<\varepsilon\le D$.
+The input gap is $\varepsilon/D$ and the conditional trace-distance ratio is
+$\operatorname{Tr}[(\varepsilon\operatorname{amp}_N(P)-\operatorname{amp}_N(C))_+]/\varepsilon$,
+where $\operatorname{amp}_N=\operatorname{id}\otimes N$. The output gap and the
+ratio for this pair each vanish exactly when
+$\varepsilon\operatorname{amp}_N(P)\le\operatorname{amp}_N(C)$ in Loewner order.
+Under this domination the pair attains zero in the orthogonal ratio set.
+
+The paragraph immediately after Proposition 9 asks whether the reverse Doeblin
+lower bound for complete trace-distance expansion extends to conditional
+expansion.
+[Text after Proposition 9](https://arxiv.org/html/2608.27171v1#S5.p13)
+
+The reverse Doeblin coefficient is the infimum of feasible weights $p$ for
+which a CPTP postprocessor degrades $N$ to $Z\mapsto (1-p)Z+p\operatorname{Tr}(Z)X$
+with $X$ Hermitian. The proposed lower bound by one minus this infimum is
+equivalent to bounding every admissible conditional ratio below by $1-p$ for
+every feasible weight in $[0,1]$.
+[George et al., arXiv:2503.22823v3, (6.54)](https://arxiv.org/html/2503.22823v3#S6.E54) ·
+[(6.55)](https://arxiv.org/html/2503.22823v3#S6.E55) ·
+[Proposition 33](https://arxiv.org/html/2503.22823v3#Thmproposition33)
+
+`ConditionalExpansion.ReverseDoeblinRefutation.result` proves that the
+pointwise bound is false. For qubit half-depolarization, the identity
+postprocessor realizes $p=1/2$ and $X=I/2$ on all input matrices. With a qubit
+reference and joint diagonals $(1,0,0,0)$ and $(0,1/4,3/4,0)$ in reference-first
+order, the input, reference and output trace distances are $1$, $3/4$ and $3/4$.
+The denominator is $1/4$ and the conditional ratio is zero, violating the
+lower bound of $1/2$ from this feasible weight.
+
+The classical pair formulas (5.38)–(5.39) in the proof of Proposition 10
+give the formal witness at $\gamma=4$ after relabeling both binary systems.
+The trace-distance evaluation uses those formulas independently of the
+crossover parameter relation used in Proposition 10.
+[Proposition 10](https://arxiv.org/html/2608.27171v1#Thmproposition10)
+
+Hirche's 2024 proof of vanishing ordinary hockey-stick expansion for qubit
+depolarization also implies the conditional trace-distance failure. For input
+states $\alpha,\beta$, give the first state weight $1/\gamma$ on $\alpha$ and
+the remaining weight on a second reference flag. Place all of $\beta$ on the
+first flag of the other state. The joint trace distance minus the reference
+distance is $E_\gamma(\alpha\|\beta)/\gamma$, before and after the channel.
+[Hirche, Appendix B-B, Eqs. (B.10)–(B.16)](https://arxiv.org/abs/2405.00105v2)
+
+The repository's harmonic congruence inequality uses the effect formula in
+Eq. (5.2). For a Hermitian matrix $X$, a projection $Q$, and a positive
+definite matrix $W$ commuting with $Q$, set $S=W^{1/2}$ and
+$B=QX_+Q+(I-Q)X_-(I-Q)$. If $\delta=\operatorname{Tr} B>0$, the result bounds
+$\operatorname{Tr}(SXS)_-+\operatorname{Tr}(QSXS)$ below by
+$\delta^2/\operatorname{Tr}(W^{-1}B)$. Taking $Q$ from the negative spectrum
+of the reference marginal makes this a matrix estimate for the conditional
+gap in Eq. (2.42). The argument uses orthogonality of two modified ranges.
+[Eq. (5.2)](https://arxiv.org/html/2608.27171v1#S5.E2)
+
+`FilteredChannelConditionalGap` constructs the finite CPTP channel
+$N_G(X)=G^{1/2}(X\otimes I_E/e)G^{1/2}$ for $G>0$ and
+$\operatorname{Tr}_E(G)/e=I_A$, where $e=\dim E>0$. For every Hermitian
+joint input and every finite reference, its conditional negative-trace gap
+is at least $1/k$ times the input gap if $L=\operatorname{Tr}_E(G^{-1})/e\le kI_A$
+and $k>0$. With nonempty input, $k=\|L\|_\infty$ gives a lower bound on every
+admissible conditional hockey-stick ratio, including trace distance at
+$\gamma=1$. This is a repository-derived bound for the conditional
+optimization of Eq. (2.42). The complete bound in George et al.,
+Proposition 33, Eqs. (6.56)–(6.60), uses equal reference marginals.
+Attainment and the sharp comparison with heralded recovery remain unformalized.
+[Eq. (2.42)](https://arxiv.org/html/2608.27171v1#S2.EGx43) ·
+[George et al., Proposition 33](https://arxiv.org/html/2503.22823v3#Thmproposition33)
+
+## Complete hockey-stick contraction
+
+`CompleteHockeyStickRefutation.refutes_monotonicity_and_orthogonal_reduction`
+gives a binary measure-and-prepare channel with complete coefficient at most
+$3/5$ at $\gamma=1$ and at least $9/10$ at $\gamma=2$. The orthogonal-input
+complete coefficient is at most $3/5$ for every $\gamma\ge 1$. This answers
+Remark 6 on $[1,\infty)$ and the complete-coefficient case of the first
+question in §9. Both upper bounds quantify over all finite quantum references.
+The lower bound uses two-dimensional input, output and reference systems.
+
+Eriksson, *Common support and complete contraction with quantum side information*,
+v3, §6.4, gives an earlier complete Umegaki ratio above its trace endpoint for
+a different channel. Integrating the two ordered hockey-stick divergences
+gives the qualitative failure of endpoint monotonicity as a consequence of
+that earlier result. The Lean theorem gives an explicit rational witness at
+$\gamma=2$ with no relative-entropy step. [Eriksson, v3](https://airr.science/papers/ARR-2026-564FZ70CSN83KACD/versions/v3/)
+
+`CompleteHockeyStickBasisSupport.result` gives a sufficient condition for a
+unit complete coefficient at every fixed $\gamma>1$. For a finite channel with
+at least two computational basis states, intersect the supports of their
+outputs. If the intersection is zero, equal-marginal witnesses approach
+retention one with a reference of input dimension. The simplex uses Eriksson's
+common-support construction in §6 with input blocks calibrated directly for
+the fixed hockey-stick parameter. A fixed-parameter CQ saturation
+statement also follows from Eriksson’s §§6.2–6.3 estimates. For $t>1$,
+completing the square in the two active input coordinates gives
+$E_t(\rho\Vert\sigma)\le4nt\beta/(t-1)$. His graph effect has
+$p\sim4n\beta$ and $q=o(\beta)$, so $p-tq$ gives a limiting ratio
+of at least $(t-1)/t$. For any fixed $\gamma>1$, mixing the first
+input toward the second by weight $(\gamma-1)/(t-1)$ on the first
+input preserves the ratio for $t\ge\gamma$. Sending $t$ to infinity
+gives the saturation statement. [Eriksson, v3](https://airr.science/papers/ARR-2026-564FZ70CSN83KACD/versions/v3/)
+
+`CompleteHockeyStickChoiSupport.result` proves unit complete contraction for
+each fixed $\gamma>1$ when the normalized Choi support of a finite channel
+contains no full reference factor over a nonzero output vector. A finite
+family of reference-unitary translates of the Choi state has zero common
+support. Computational-basis preparation of the corresponding Bell states
+transfers the ratios from the fixed-parameter simplex theorem while
+preserving the common reference marginal. Eriksson v3, Theorem 6.1, gives
+the Umegaki criterion for finite classical-input channels and provides the
+simplex mechanism used in the basis-support step.
+[Eriksson, v3](https://airr.science/papers/ARR-2026-564FZ70CSN83KACD/versions/v3/)
+
+The exhibited positive-weight bound in George, Hirche, Nuradha and Wilde,
+*Quantum Doeblin Coefficients: Interpretations and Applications*, v3,
+Proposition 31, gives an upper bound of $1-p$ for a channel with a
+replacement component of weight $p$ at every $\gamma\ge 1$. Their §9.2
+Question 1 concerns the bound using the Hermitian Doeblin coefficient.
+[arXiv:2503.22823v3](https://arxiv.org/abs/2503.22823v3)
+
+`CompleteHockeyStickChoiConverse.exists_replacement_of_choi_support`
+constructs a pure replacement of weight $0<p<1$ and a finite CPTP residual
+whenever the normalized Choi support contains every reference basis slice
+over a common nonzero output vector. The construction bounds the Gram
+matrix of slice preimages under the positive Choi square root, subtracts
+the weighted replacement Choi matrix, and normalizes the positive residual.
+Trace preservation gives Kraus completeness for the residual and hence
+the channel decomposition on all input matrices.
+
+`CompleteHockeyStickChoiConverse.coefficient_lt_one_of_choi_support`
+applies Proposition 31's exhibited-weight bound for every $\gamma\ge 1$.
+`CompleteHockeyStickChoiConverse.coefficient_lt_one_iff` combines this
+implication with Choi support saturation. For every finite CPTP channel
+with nonempty input and each fixed $\gamma>1$, the complete coefficient
+is strictly below one exactly when the full reference slice condition holds.
+Both branches use the static Choi matrix of the channel.
+
+## Complete nonlinear hockey-stick curve
+
+The fourth bullet of §9 proposes nonlinear strong data-processing inequalities
+with reference systems. The ordinary curve in Nuradha, George and Hirche,
+Eq. (4.1), maximizes output divergence under an input divergence budget.
+The complete curve uses every finite reference and joint density pairs with
+equal reference marginals. [arXiv:2512.16778v1](https://arxiv.org/abs/2512.16778v1)
+
+`quadratic_loss_near_zero` fixes $\gamma>1$ and assumes that the Kraus products
+span the input matrix algebra and the normalized Choi support contains no
+full reference fiber over a nonzero output vector. For the complete curve
+$F_\gamma$, there are $c,C,\delta>0$ with
+$c a^2\le a-F_\gamma(a)\le C a^2$ for $0<a\le\delta$.
+
+The span gives a matrix-unit lift bound independent of the reference dimension.
+Ordered reference marginals of the two parts of the input difference give
+purifications related by a contraction. Lifting that contraction and splitting
+its overlap with an output effect bounds the output divergence at every finite
+reference dimension. In the other direction, the Choi orbit gives a preparation
+with zero common output support. Eriksson's simplex and graph effect
+(§§6.2–6.3), calibrated at the fixed hockey-stick parameter, yield output
+divergence at least $a/(1+D a)$ on one finite reference for all small budgets.
+The curve estimate applies in this channel class near zero. [Eriksson, v3](https://airr.science/papers/ARR-2026-564FZ70CSN83KACD/versions/v3/)
 
 ## Faithful-divergence separation
 
