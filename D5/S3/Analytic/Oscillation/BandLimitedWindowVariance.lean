@@ -34,7 +34,7 @@ private def smoothCountWindow (R : ℝ) (φ : ℝ → ℝ) (x : ℝ) : ℝ :=
 
 private lemma window_integrable (R : ℝ) : Integrable (window R) := by
   rw [window, integrable_indicator_iff measurableSet_Ioc]
-  exact integrableOn_const (hs := measure_Ioc_lt_top.ne) 
+  exact integrableOn_const (hs := measure_Ioc_lt_top.ne)
 
 private lemma fourier_window_smooth (R : ℝ) : ContDiff ℝ ∞ (𝓕 (window R)) := by
   apply Real.contDiff_fourier
