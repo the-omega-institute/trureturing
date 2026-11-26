@@ -12,7 +12,7 @@ internal sealed class DirichletGRHDocument : IScribeDocumentDefinition
         H("Zeros of the Riemann zeta function and Dirichlet L-functions"),
         Blocks(
             Paragraph(Text("Levent Alpöge's proof, written with Claude, reaches the critical line through a nonvanishing theorem. In the compact edition, New.Main compares two bounds for the covolume of the same family of theta lifts. After the main height cancels, the comparison bounds a weighted prime sum from above. A one-sided analytic criterion converts the resulting estimate into nonvanishing for every Dirichlet character to the right of the critical line, with the principal character's pole excluded.")),
-            Paragraph(Text("The functional equation then rules out a zero in the left half of the open critical strip by passing to the reflected point for the corresponding character. For the Riemann zeta function the proof specializes to modulus one and uses the zeros contributed by its gamma factor to identify the exceptional negative even integers.")),
+            Paragraph(Text("The functional equation then rules out a zero in the left half of the open critical strip by passing to the reflected point for the corresponding character. For the Riemann zeta function the proof specializes to modulus one and uses the functional equation for the completed zeta function. The negative even integers are among the poles of the classical gamma factor, and the zeta statement excludes them explicitly.")),
             Describe.Lean(DescribeId.Create("riemann-hypothesis"),
                 DeclarationHandle.Create(Module + "riemannHypothesis"), H("The Riemann hypothesis"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromLiterature(Source),
