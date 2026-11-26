@@ -18,8 +18,12 @@ open scoped BigOperators
 
 set_option warningAsError true
 
-set_option maxHeartbeats 0
 set_option maxRecDepth 100000
+
+section
+
+-- Three state-weight pairs per line keep each finite vector readable.
+set_option linter.style.longLine false
 
 private def v0 : Hist State := [
   (⟨false, 0, 4722366482869645213695⟩, 1), (⟨false, 1, 4722366482869645213695⟩, 1), (⟨false, 2, 4722366482869645213695⟩, 1),
@@ -661,6 +665,8 @@ private def r2 : Hist State := [
   (⟨false, 2, 2622896423032116481072⟩, -210), (⟨true, 1, 2622896423032116481072⟩, 210), (⟨false, 1, 2877703053061436623140⟩, -210),
   (⟨true, 1, 2877703053061436623140⟩, 210)]
 
+end
+
 private theorem v0_path : path 0 = v0 := by decide +kernel
 
 private theorem step0 : stepHist v0 = v1 := by decide +kernel
@@ -742,30 +748,54 @@ private theorem v13_path : path 13 = v13 := by
   rw [v12_path, step12]
 
 private theorem residual_check0 :
-  normalize stateKey (scaleHist 1 v11 ++ scaleHist (-3) v10 ++ scaleHist (-17) v9 ++ scaleHist 57 v8 ++ scaleHist 86 v7 ++ scaleHist (-372) v6 ++ scaleHist (-76) v5 ++ scaleHist 972 v4 ++ scaleHist (-360) v3 ++ scaleHist (-864) v2 ++ scaleHist 576 v1) = r0 := by
+  normalize stateKey (scaleHist 1 v11 ++ scaleHist (-3) v10 ++ scaleHist (-17) v9 ++
+      scaleHist 57 v8 ++ scaleHist 86 v7 ++ scaleHist (-372) v6 ++
+      scaleHist (-76) v5 ++ scaleHist 972 v4 ++ scaleHist (-360) v3 ++
+      scaleHist (-864) v2 ++ scaleHist 576 v1) = r0 := by
   decide +kernel
 
 private theorem residual0 : residualHist 0 = r0 := by
-  change normalize stateKey (scaleHist 1 (path 11) ++ scaleHist (-3) (path 10) ++ scaleHist (-17) (path 9) ++ scaleHist 57 (path 8) ++ scaleHist 86 (path 7) ++ scaleHist (-372) (path 6) ++ scaleHist (-76) (path 5) ++ scaleHist 972 (path 4) ++ scaleHist (-360) (path 3) ++ scaleHist (-864) (path 2) ++ scaleHist 576 (path 1)) = r0
-  rw [v1_path, v2_path, v3_path, v4_path, v5_path, v6_path, v7_path, v8_path, v9_path, v10_path, v11_path]
+  change normalize stateKey
+    (scaleHist 1 (path 11) ++ scaleHist (-3) (path 10) ++ scaleHist (-17) (path 9) ++
+      scaleHist 57 (path 8) ++ scaleHist 86 (path 7) ++ scaleHist (-372) (path 6) ++
+      scaleHist (-76) (path 5) ++ scaleHist 972 (path 4) ++ scaleHist (-360) (path 3) ++
+      scaleHist (-864) (path 2) ++ scaleHist 576 (path 1)) = r0
+  rw [v1_path, v2_path, v3_path, v4_path, v5_path, v6_path, v7_path, v8_path,
+    v9_path, v10_path, v11_path]
   exact residual_check0
 
 private theorem residual_check1 :
-  normalize stateKey (scaleHist 1 v12 ++ scaleHist (-3) v11 ++ scaleHist (-17) v10 ++ scaleHist 57 v9 ++ scaleHist 86 v8 ++ scaleHist (-372) v7 ++ scaleHist (-76) v6 ++ scaleHist 972 v5 ++ scaleHist (-360) v4 ++ scaleHist (-864) v3 ++ scaleHist 576 v2) = r1 := by
+  normalize stateKey (scaleHist 1 v12 ++ scaleHist (-3) v11 ++ scaleHist (-17) v10 ++
+      scaleHist 57 v9 ++ scaleHist 86 v8 ++ scaleHist (-372) v7 ++
+      scaleHist (-76) v6 ++ scaleHist 972 v5 ++ scaleHist (-360) v4 ++
+      scaleHist (-864) v3 ++ scaleHist 576 v2) = r1 := by
   decide +kernel
 
 private theorem residual1 : residualHist 1 = r1 := by
-  change normalize stateKey (scaleHist 1 (path 12) ++ scaleHist (-3) (path 11) ++ scaleHist (-17) (path 10) ++ scaleHist 57 (path 9) ++ scaleHist 86 (path 8) ++ scaleHist (-372) (path 7) ++ scaleHist (-76) (path 6) ++ scaleHist 972 (path 5) ++ scaleHist (-360) (path 4) ++ scaleHist (-864) (path 3) ++ scaleHist 576 (path 2)) = r1
-  rw [v2_path, v3_path, v4_path, v5_path, v6_path, v7_path, v8_path, v9_path, v10_path, v11_path, v12_path]
+  change normalize stateKey
+    (scaleHist 1 (path 12) ++ scaleHist (-3) (path 11) ++ scaleHist (-17) (path 10) ++
+      scaleHist 57 (path 9) ++ scaleHist 86 (path 8) ++ scaleHist (-372) (path 7) ++
+      scaleHist (-76) (path 6) ++ scaleHist 972 (path 5) ++ scaleHist (-360) (path 4) ++
+      scaleHist (-864) (path 3) ++ scaleHist 576 (path 2)) = r1
+  rw [v2_path, v3_path, v4_path, v5_path, v6_path, v7_path, v8_path,
+    v9_path, v10_path, v11_path, v12_path]
   exact residual_check1
 
 private theorem residual_check2 :
-  normalize stateKey (scaleHist 1 v13 ++ scaleHist (-3) v12 ++ scaleHist (-17) v11 ++ scaleHist 57 v10 ++ scaleHist 86 v9 ++ scaleHist (-372) v8 ++ scaleHist (-76) v7 ++ scaleHist 972 v6 ++ scaleHist (-360) v5 ++ scaleHist (-864) v4 ++ scaleHist 576 v3) = r2 := by
+  normalize stateKey (scaleHist 1 v13 ++ scaleHist (-3) v12 ++ scaleHist (-17) v11 ++
+      scaleHist 57 v10 ++ scaleHist 86 v9 ++ scaleHist (-372) v8 ++
+      scaleHist (-76) v7 ++ scaleHist 972 v6 ++ scaleHist (-360) v5 ++
+      scaleHist (-864) v4 ++ scaleHist 576 v3) = r2 := by
   decide +kernel
 
 private theorem residual2 : residualHist 2 = r2 := by
-  change normalize stateKey (scaleHist 1 (path 13) ++ scaleHist (-3) (path 12) ++ scaleHist (-17) (path 11) ++ scaleHist 57 (path 10) ++ scaleHist 86 (path 9) ++ scaleHist (-372) (path 8) ++ scaleHist (-76) (path 7) ++ scaleHist 972 (path 6) ++ scaleHist (-360) (path 5) ++ scaleHist (-864) (path 4) ++ scaleHist 576 (path 3)) = r2
-  rw [v3_path, v4_path, v5_path, v6_path, v7_path, v8_path, v9_path, v10_path, v11_path, v12_path, v13_path]
+  change normalize stateKey
+    (scaleHist 1 (path 13) ++ scaleHist (-3) (path 12) ++ scaleHist (-17) (path 11) ++
+      scaleHist 57 (path 10) ++ scaleHist 86 (path 9) ++ scaleHist (-372) (path 8) ++
+      scaleHist (-76) (path 7) ++ scaleHist 972 (path 6) ++ scaleHist (-360) (path 5) ++
+      scaleHist (-864) (path 4) ++ scaleHist 576 (path 3)) = r2
+  rw [v3_path, v4_path, v5_path, v6_path, v7_path, v8_path,
+    v9_path, v10_path, v11_path, v12_path, v13_path]
   exact residual_check2
 
 private theorem grouped0 : groupMask r0 = [] := by decide +kernel

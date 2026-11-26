@@ -15,14 +15,14 @@ import Mathlib.Algebra.BigOperators.Ring.Finset
 import Mathlib.Data.Fin.Tuple.Basic
 import OmegaBuild.Commands
 
-compile_only_with_mathlib
-
 /-! Boundary-word encoding of literal stress-three rectangles. -/
+
+compile_only_with_mathlib
 
 namespace D5.S3.Combinatorics.TraceAvoidingArrays.Recurrence.HardinA235301Encoding
 
 
-open D5.S3.Combinatorics.TraceAvoidingArrays.Recurrence.HardinA235280A235310Alphabet (C)
+open HardinA235280A235310Alphabet (C)
 open scoped BigOperators
 
 set_option warningAsError true
@@ -36,7 +36,7 @@ private def stress (a b c d : ℕ) : ℕ :=
   Int.natAbs ((a : ℤ) + d - (b + c))
 
 private abbrev Legal {h w : ℕ} (x : Grid h w) : Prop :=
-  D5.S3.Combinatorics.TraceAvoidingArrays.Recurrence.HardinA235280A235310Alphabet.Legal 3 (fun p => x p.1 p.2)
+  HardinA235280A235310Alphabet.Legal 3 (fun p => x p.1 p.2)
 
 private def raw (p q : ℕ) (a b : Fin 6) : ℕ := (a.val + b.val + 3 * p * q) % 6
 
@@ -55,9 +55,9 @@ def CodeOK {h w : ℕ} (r : Word h) (c : Word w) : Prop :=
   c 0 = 0 ∧ ∀ (i : Fin h) (j : Fin w),
     Cross (i.val % 2) (j.val % 2) (r i.castSucc) (r i.succ) (c j.castSucc) (c j.succ)
 
-theorem next_parity (n : ℕ) : (n+1) % 2 = 1 - n % 2 := by omega
+theorem next_parity (n : ℕ) : (n + 1) % 2 = 1 - n % 2 := by omega
 
-private def GX {h w : ℕ} (x : Grid h w) (i : Fin (h+1)) (j : Fin (w+1)) : ZMod 6 :=
+private def GX {h w : ℕ} (x : Grid h w) (i : Fin (h + 1)) (j : Fin (w + 1)) : ZMod 6 :=
   (x i j).val
 
 private lemma zstress (a b c d : ℕ) (h : stress a b c d = 3) :
@@ -71,13 +71,13 @@ private lemma zstress (a b c d : ℕ) (h : stress a b c d = 3) :
     rw [hm]
     decide
 
-private theorem additive_grid {h w : ℕ} (f : Fin (h+1) → Fin (w+1) → ZMod 6)
+private theorem additive_grid {h w : ℕ} (f : Fin (h + 1) → Fin (w + 1) → ZMod 6)
     (hf : ∀ (i : Fin h) (j : Fin w),
       f i.castSucc j.castSucc + f i.succ j.succ -
         (f i.castSucc j.succ + f i.succ j.castSucc) = 0)
-    (i : Fin (h+1)) (j : Fin (w+1)) :
+    (i : Fin (h + 1)) (j : Fin (w + 1)) :
     f i j = f i 0 + (f 0 j - f 0 0) := by
-  have hd (j : Fin w) (i : Fin (h+1)) :
+  have hd (j : Fin w) (i : Fin (h + 1)) :
       f i j.succ - f i j.castSucc = f 0 j.succ - f 0 j.castSucc := by
     apply fin_constant
       (fun i => f i j.succ - f i j.castSucc) _ i
@@ -107,9 +107,9 @@ private def colCode {h w : ℕ} (x : Grid h w) : Word w :=
   fun j => ⟨(GX x 0 j - GX x 0 0).val, ZMod.val_lt _⟩
 
 private theorem reconstruct {h w : ℕ} {x : Grid h w} (hx : Legal x)
-    (i : Fin (h+1)) (j : Fin (w+1)) :
+    (i : Fin (h + 1)) (j : Fin (w + 1)) :
     raw (i.val % 2) (j.val % 2) (rowCode x i) (colCode x j) = (x i j).val := by
-  let f (i : Fin (h+1)) (j : Fin (w+1)) :=
+  let f (i : Fin (h + 1)) (j : Fin (w + 1)) :=
     GX x i j - 3 * (i.val : ZMod 6) * (j.val : ZMod 6)
   have haf (i : Fin h) (j : Fin w) :
       f i.castSucc j.castSucc + f i.succ j.succ -
@@ -119,7 +119,8 @@ private theorem reconstruct {h w : ℕ} {x : Grid h w} (hx : Legal x)
     simp only [Fin.val_castSucc, Fin.val_succ, Nat.cast_add, Nat.cast_one]
     linear_combination hf
   have hf := additive_grid f haf i j
-  simp [f, parity_term i.val j.val] at hf
+  simp only [f, parity_term i.val j.val, Fin.val_zero, Nat.cast_zero,
+    mul_zero, zero_mul, sub_zero] at hf
   have hr : ((rowCode x i).val : ZMod 6) = GX x i 0 := rfl
   have hc : ((colCode x j).val : ZMod 6) = GX x 0 j - GX x 0 0 := by
     change (↑((GX x 0 j - GX x 0 0).val) : ZMod 6) = _
@@ -153,12 +154,12 @@ private theorem code_of_legal {h w : ℕ} {x : Grid h w} (hx : Legal x) :
       And.intro (x i.succ j.succ).isLt (hx i j)
 
 private theorem raw_bound {h w : ℕ} (hh : 0 < h) (hw : 0 < w)
-    {r : Word h} {c : Word w} (hc : CodeOK r c) (i : Fin (h+1)) (j : Fin (w+1)) :
+    {r : Word h} {c : Word w} (hc : CodeOK r c) (i : Fin (h + 1)) (j : Fin (w + 1)) :
     raw (i.val % 2) (j.val % 2) (r i) (c j) < 4 := by
   obtain ⟨h, rfl⟩ := Nat.exists_eq_succ_of_ne_zero (by omega : h ≠ 0)
   obtain ⟨w, rfl⟩ := Nat.exists_eq_succ_of_ne_zero (by omega : w ≠ 0)
-  obtain ⟨i', hi⟩ := D5.S3.Combinatorics.TraceAvoidingArrays.Recurrence.HardinA235289Alphabet.inPair i
-  obtain ⟨j', hj⟩ := D5.S3.Combinatorics.TraceAvoidingArrays.Recurrence.HardinA235289Alphabet.inPair j
+  obtain ⟨i', hi⟩ := HardinA235289Alphabet.inPair i
+  obtain ⟨j', hj⟩ := HardinA235289Alphabet.inPair j
   have H := hc.2 i' j'
   unfold Cross at H
   rcases hi with rfl | rfl <;> rcases hj with rfl | rfl <;>
@@ -183,7 +184,7 @@ private theorem decode_row {h w : ℕ} (hh : 0 < h) (hw : 0 < w)
   simp [rowCode, decode, hc.1, raw, Nat.mod_eq_of_lt (r i).isLt]
 
 private lemma decode_z {h w : ℕ} (hh : 0 < h) (hw : 0 < w)
-    {r : Word h} {c : Word w} (hc : CodeOK r c) (j : Fin (w+1)) :
+    {r : Word h} {c : Word w} (hc : CodeOK r c) (j : Fin (w + 1)) :
     GX (decode hh hw hc) 0 j = ((r 0).val : ZMod 6) + (c j).val := by
   simp [GX, decode, raw, ZMod.natCast_mod]
 
@@ -216,13 +217,14 @@ theorem count_codes (h w : ℕ) (hh : 0 < h) (hw : 0 < w) :
   unfold C
   apply Nat.card_congr
   let curryEquiv :
-      {x : D5.S3.Combinatorics.TraceAvoidingArrays.Recurrence.HardinA235280A235310Alphabet.Grid 3 h w // D5.S3.Combinatorics.TraceAvoidingArrays.Recurrence.HardinA235280A235310Alphabet.Legal 3 x} ≃
+      {x : HardinA235280A235310Alphabet.Grid 3 h w //
+        HardinA235280A235310Alphabet.Legal 3 x} ≃
         {x : Grid h w // Legal x} :=
-    { toFun := fun x => ⟨fun i j => x.1 (i,j), x.2⟩
+    { toFun := fun x => ⟨fun i j => x.1 (i, j), x.2⟩
       invFun := fun x => ⟨fun p => x.1 p.1 p.2, x.2⟩
       left_inv := fun x => by
         apply Subtype.ext
-        funext ⟨i,j⟩
+        funext ⟨i, j⟩
         rfl
       right_inv := fun x => rfl }
   exact curryEquiv.trans (gridEquiv hh hw)
@@ -232,10 +234,10 @@ theorem count_symm (h w : ℕ) : C 3 3 h w = C 3 3 w h := by
   unfold C
   apply Nat.card_congr
   refine {
-    toFun := fun x => ⟨fun p => x.1 (p.2,p.1), ?_⟩
-    invFun := fun x => ⟨fun p => x.1 (p.2,p.1), ?_⟩
-    left_inv := fun x => by apply Subtype.ext; funext ⟨i,j⟩; rfl
-    right_inv := fun x => by apply Subtype.ext; funext ⟨i,j⟩; rfl }
+    toFun := fun x => ⟨fun p => x.1 (p.2, p.1), ?_⟩
+    invFun := fun x => ⟨fun p => x.1 (p.2, p.1), ?_⟩
+    left_inv := fun x => by apply Subtype.ext; funext ⟨i, j⟩; rfl
+    right_inv := fun x => by apply Subtype.ext; funext ⟨i, j⟩; rfl }
   all_goals
     intro i j
     simpa only [add_comm] using x.2 j i

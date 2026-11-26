@@ -28,16 +28,16 @@ private def rejected : Realization signature :=
 abbrev arena : Arena where
   signature := signature
   Law R := ∀ (k n : ℕ), 1 ≤ k → 11 ≤ n →
-      R.readout () n k = 3 * R.readout () (n-1) k + 17 * R.readout () (n-2) k -
-        57 * R.readout () (n-3) k - 86 * R.readout () (n-4) k +
-        372 * R.readout () (n-5) k + 76 * R.readout () (n-6) k -
-        972 * R.readout () (n-7) k + 360 * R.readout () (n-8) k +
-        864 * R.readout () (n-9) k - 576 * R.readout () (n-10) k ∧
-      R.readout () k n = 3 * R.readout () k (n-1) + 17 * R.readout () k (n-2) -
-        57 * R.readout () k (n-3) - 86 * R.readout () k (n-4) +
-        372 * R.readout () k (n-5) + 76 * R.readout () k (n-6) -
-        972 * R.readout () k (n-7) + 360 * R.readout () k (n-8) +
-        864 * R.readout () k (n-9) - 576 * R.readout () k (n-10)
+      R.readout () n k = 3 * R.readout () (n - 1) k + 17 * R.readout () (n - 2) k -
+        57 * R.readout () (n - 3) k - 86 * R.readout () (n - 4) k +
+        372 * R.readout () (n - 5) k + 76 * R.readout () (n - 6) k -
+        972 * R.readout () (n - 7) k + 360 * R.readout () (n - 8) k +
+        864 * R.readout () (n - 9) k - 576 * R.readout () (n - 10) k ∧
+      R.readout () k n = 3 * R.readout () k (n - 1) + 17 * R.readout () k (n - 2) -
+        57 * R.readout () k (n - 3) - 86 * R.readout () k (n - 4) +
+        372 * R.readout () k (n - 5) + 76 * R.readout () k (n - 6) -
+        972 * R.readout () k (n - 7) + 360 * R.readout () k (n - 8) +
+        864 * R.readout () k (n - 9) - 576 * R.readout () k (n - 10)
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h

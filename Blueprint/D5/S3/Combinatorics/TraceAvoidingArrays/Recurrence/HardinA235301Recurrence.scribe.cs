@@ -73,7 +73,8 @@ internal sealed class HardinA235301RecurrenceDocument : IScribeDocumentDefinitio
             var coefficient = coefficients[i];
             if (i > 0)
                 row.Add(coefficient > 0 ? Plus : Minus);
-            row.AddRange([Number(Math.Abs(coefficient)), Cdot, count(i + 1)]);
+            var magnitude = coefficient > 0 ? coefficient : -coefficient;
+            row.AddRange([Number(magnitude), Cdot, count(i + 1)]);
         }
         row.Add(Close);
         rows.Add(Seq([.. row]));
