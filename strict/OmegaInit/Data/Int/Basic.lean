@@ -67,3 +67,5 @@ attribute [irreducible] subNatNat
 
 end Int
 end Omega
+
+port_definition Int.negOfNat.match_1

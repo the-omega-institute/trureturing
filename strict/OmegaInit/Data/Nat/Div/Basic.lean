@@ -209,4 +209,24 @@ theorem div_eq_sub_div {b a : Nat} (h₁ : Nat.lt zero b) (h₂ : Nat.le b a) :
 theorem div_eq_of_lt {a b : Nat} (h₀ : Nat.lt a b) : Eq (Nat.div a b) zero :=
   (div_eq_ite a b).trans (ite_eq_right (fun h => Nat.not_le_of_lt h₀ h.right))
 
+theorem div_add_mod (m n : Nat) : Eq (Nat.add (Nat.mul n (Nat.div m n)) (Nat.mod m n)) m :=
+  (Nat.add_comm _ _).trans (mod_add_div m n)
+
+theorem mul_div_le (m n : Nat) : Nat.le (Nat.mul n (Nat.div m n)) m :=
+  Eq.subst (motive := fun k => Nat.le k m) (Nat.mul_comm (Nat.div m n) n) (div_mul_le_self m n)
+
+theorem mod_eq_of_lt {a b : Nat} (h : Nat.lt a b) : Eq (Nat.mod a b) a :=
+  (mod_eq_ite a b).trans (ite_eq_right (fun fit => Nat.not_le_of_lt h fit.right))
+
+private theorem mod_succ_eq (k n : Nat) : Eq (Nat.mod (succ n) k)
+    (Omega.ite (LE.le k (succ n)) (Nat.modCore (succ n) k) (succ n)) :=
+  Bool.casesOn (motive := fun bit => Eq (Nat.ble k (succ n)) bit → Eq (Nat.mod (succ n) k)
+      (Omega.ite (LE.le k (succ n)) (Nat.modCore (succ n) k) (succ n))) (Nat.ble k (succ n))
+    (fun e =>
+      have notFit : Not (Nat.le k (succ n)) := fun h => Bool.ne_false_of_eq_true (ble_eq_true_of_le h) e
+      (mod_eq_of_lt (Nat.lt_of_not_ge notFit)).trans (ite_eq_right notFit).symm)
+    (fun e => (Nat.modCore_eq_mod _ _).symm.trans (ite_eq_left (le_of_ble_eq_true e)).symm) Omega.rfl
+
 end Omega.Nat
+
+port_proof Nat.mod.eq_2 using Omega.Nat.mod_succ_eq

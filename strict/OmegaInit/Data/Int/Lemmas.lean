@@ -427,6 +427,24 @@ protected theorem sub_add_cancel (a b : Int) : Eq ((a.sub b).add b) a :=
 protected theorem add_sub_cancel (a b : Int) : Eq ((a.add b).sub b) a :=
   (Int.add_assoc a b b.neg).trans ((congrArg a.add (Int.add_right_neg b)).trans (Int.add_zero a))
 
+theorem ofNat_sub {m n : Nat} (h : Nat.le m n) : Eq (ofNat (Nat.sub n m)) ((ofNat n).sub (ofNat m)) :=
+  (Nat.le.dest h).elim fun k e =>
+    Eq.subst (motive := fun n => Eq (ofNat (Nat.sub n m)) ((ofNat n).sub (ofNat m))) e
+      ((congrArg ofNat (Nat.add_sub_cancel_left m k)).trans
+        (subNatNat_add_left.symm.trans Int.subNatNat_eq_coe))
+
+private theorem subNatNat_eq_cases (m n : Nat) : Eq (subNatNat m n)
+    (Nat.casesOn (motive := fun _ => Int) (Nat.sub n m) (ofNat (Nat.sub m n)) negSucc) :=
+  subNatNat_elim m n (fun m n i => Eq i
+      (Nat.casesOn (motive := fun _ => Int) (Nat.sub n m) (ofNat (Nat.sub m n)) negSucc))
+    (fun i n =>
+      (congrArg ofNat (Nat.add_sub_cancel_left n i)).symm.trans
+        (congrArg (fun k : Nat => Nat.casesOn (motive := fun _ => Int) k
+          (ofNat (Nat.sub (Nat.add n i) n)) negSucc) (Nat.sub_self_add n i)).symm)
+    (fun i m => (congrArg (fun k : Nat => Nat.casesOn (motive := fun _ => Int) k
+      (ofNat (Nat.sub m (Nat.add m i.succ))) negSucc) (Nat.add_sub_cancel_left m i.succ)).symm)
+
 end Omega.Int
 
+port_proof Int.subNatNat.eq_1 using Omega.Int.subNatNat_eq_cases
 port_proof Ne.eq_1 by_reflexivity

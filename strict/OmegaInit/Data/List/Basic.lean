@@ -253,3 +253,17 @@ end Omega.List
 
 port_proof List.append_eq by_reflexivity
 port_proof List.flatten_cons by_reflexivity
+
+port_definition List.eraseIdx.match_1
+namespace Omega.List
+
+def eraseIdx {α : Type u} : (l : List α) → (i : Nat) → List α := fun l i =>
+  List.brecOn (motive := fun _ : List α => Nat → List α) l (fun x f index =>
+    eraseIdx.match_1 (fun x _ =>
+        List.below (motive := fun _ : List α => Nat → List α) x → List α) x index
+      (fun _ _ => nil) (fun _ tail _ => tail) (fun a _ n below => cons a (below.fst n)) f) i
+
+end Omega.List
+
+port_proof List.eraseIdx_nil by_reflexivity
+port_proof List.eraseIdx_cons_zero by_reflexivity
