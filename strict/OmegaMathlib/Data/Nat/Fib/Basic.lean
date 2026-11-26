@@ -7,6 +7,7 @@ prelude
 import all OmegaInit.Prelude
 
 public import OmegaInit.Data.Nat.Lemmas
+public import OmegaMathlib.Order.RelClasses
 
 /-!
 The strict counterparts of the Fibonacci sequence and its initial recurrence

@@ -376,4 +376,57 @@ protected theorem eq_of_mul_eq_mul_left {a b c : Int}
     (ha : Not (Eq a (ofNat Nat.zero))) (h : Eq (a.mul b) (a.mul c)) : Eq b c :=
   Int.eq_of_mul_eq_mul_right ha ((Int.mul_comm b a).trans (h.trans (Int.mul_comm a c)))
 
+protected theorem neg_zero : Eq (ofNat Nat.zero).neg (ofNat Nat.zero) := Omega.rfl
+
+theorem neg_ofNat_succ (n : Nat) : Eq (ofNat n.succ).neg (negSucc n) := Omega.rfl
+
+theorem neg_negSucc (n : Nat) : Eq (negSucc n).neg (ofNat n.succ) := Omega.rfl
+
+theorem ofNat_add_ofNat (m n : Nat) : Eq ((ofNat m).add (ofNat n)) (ofNat (m.add n)) := Omega.rfl
+
+theorem ofNat_add_negSucc (m n : Nat) :
+    Eq ((ofNat m).add (negSucc n)) (subNatNat m n.succ) := Omega.rfl
+
+theorem negSucc_add_ofNat (m n : Nat) :
+    Eq ((negSucc m).add (ofNat n)) (subNatNat n m.succ) := Omega.rfl
+
+theorem negSucc_add_negSucc (m n : Nat) :
+    Eq ((negSucc m).add (negSucc n)) (negSucc (m.add n).succ) := Omega.rfl
+
+theorem ofNat_mul_ofNat (m n : Nat) : Eq ((ofNat m).mul (ofNat n)) (ofNat (m.mul n)) := Omega.rfl
+
+theorem ofNat_mul_negSucc (m n : Nat) :
+    Eq ((ofNat m).mul (negSucc n)) (ofNat (m.mul n.succ)).neg := Omega.rfl
+
+theorem negSucc_mul_ofNat (m n : Nat) :
+    Eq ((negSucc m).mul (ofNat n)) (ofNat (m.succ.mul n)).neg := Omega.rfl
+
+theorem negSucc_mul_negSucc (m n : Nat) :
+    Eq ((negSucc m).mul (negSucc n)) (ofNat (m.succ.mul n.succ)) := Omega.rfl
+
+theorem negSucc_inj {m n : Nat} : Iff (Eq (negSucc m) (negSucc n)) (Eq m n) :=
+  Iff.intro (fun h => Nat.succ.inj (congrArg natAbs h)) (congrArg negSucc)
+
+theorem wlog_sign {P : Int → Prop} (inv : ∀ i, Iff (P i) (P i.neg))
+    (w : ∀ n : Nat, P (ofNat n)) (i : Int) : P i :=
+  Int.rec (motive := P) w (fun n => (inv (ofNat n.succ)).mp (w n.succ)) i
+
+protected theorem sub_zero (a : Int) : Eq (a.sub (ofNat Nat.zero)) a := Int.add_zero a
+
+protected theorem zero_sub (a : Int) : Eq ((ofNat Nat.zero).sub a) a.neg := Int.zero_add a.neg
+
+protected theorem sub_sub (a b c : Int) : Eq ((a.sub b).sub c) (a.sub (b.add c)) :=
+  (Int.add_assoc a b.neg c.neg).trans (congrArg a.add Int.neg_add.symm)
+
+protected theorem neg_sub (a b : Int) : Eq (a.sub b).neg (b.sub a) :=
+  Int.neg_add.trans ((congrArg a.neg.add (Int.neg_neg b)).trans (Int.add_comm a.neg b))
+
+protected theorem sub_add_cancel (a b : Int) : Eq ((a.sub b).add b) a :=
+  (Int.add_assoc a b.neg b).trans ((congrArg a.add (Int.add_left_neg b)).trans (Int.add_zero a))
+
+protected theorem add_sub_cancel (a b : Int) : Eq ((a.add b).sub b) a :=
+  (Int.add_assoc a b b.neg).trans ((congrArg a.add (Int.add_right_neg b)).trans (Int.add_zero a))
+
 end Omega.Int
+
+port_proof Ne.eq_1 by_reflexivity
