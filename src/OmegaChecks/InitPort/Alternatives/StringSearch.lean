@@ -417,4 +417,22 @@ public theorem String.Slice.Pattern.ToBackwardSearcher.DefaultBackwardSearcher.f
       (_root_.String.Slice.Pattern.StrictBackwardPattern.ne_endPos _ _ found)
     exact Nat.lt_of_lt_of_le lt (Nat.le_of_eq _root_.String.Slice.utf8ByteSize_sliceTo)
 
+@[expose] public def String.Slice.foldl (f : α → Char → α) (init : α) (s : String.Slice) : α :=
+  s.copy.toList.foldl f init
+
+@[expose] public def String.Slice.foldr (f : Char → α → α) (init : α) (s : String.Slice) : α :=
+  s.copy.toList.foldr f init
+
+@[expose] public def String.Slice.isNat (s : String.Slice) : Bool := Id.run do
+  let mut lastWasDigit := false
+  for c in s.copy.toList do
+    if c = '_' then
+      if !lastWasDigit then return false
+      lastWasDigit := false
+    else if c.isDigit then
+      lastWasDigit := true
+    else
+      return false
+  return lastWasDigit
+
 end OmegaChecks.InitPort.Alternatives
