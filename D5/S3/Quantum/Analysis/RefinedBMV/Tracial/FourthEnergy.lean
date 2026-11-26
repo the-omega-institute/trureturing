@@ -8,6 +8,7 @@
 
 import Mathlib.Analysis.CStarAlgebra.PositiveLinearFunctional
 import Mathlib.Basic.Complex.BigOperators
+import Mathlib.Tactic.NoncommRing
 
 /-! The leading trace energy and the dimensionless resolvent correction. -/
 
@@ -113,5 +114,44 @@ theorem adjacent_resolvent_sandwich_sub
     _ = _ := by
       simp only [hres, smul_mul_assoc, mul_smul_comm, smul_add]
       rw [smul_comm a (b - a)]
+
+
+/-- Cyclic transport through three commutators. The terms from commuting
+past a resolvent are quartic once its commutator is expanded. The other
+terms contain the commutator with the square of the second factor. -/
+theorem trace_three_commutator_transport
+    {𝕜 A : Type*} [CommRing 𝕜] [Ring A] [Module 𝕜 A]
+    (τ : A →ₗ[𝕜] 𝕜) (hτ : ∀ a b : A, τ (a * b) = τ (b * a))
+    (H B U V W : A) :
+    let C := H * B - B * H
+    let J := H * B ^ 2 - B ^ 2 * H
+    2 * τ (B * (C * U * C * V * C * W)) =
+      τ (J * U * C * V * C * W - C * U * J * V * C * W +
+        C * U * C * V * J * W +
+        C * (U * B - B * U) * C * V * C * W -
+        C * U * C * (V * B - B * V) * C * W +
+        C * U * C * V * C * (W * B - B * W)) := by
+  let C := H * B - B * H
+  let J := H * B ^ 2 - B ^ 2 * H
+  have hJ : J = B * C + C * B := by
+    dsimp [J, C]
+    noncomm_ring
+  change _ = τ (J * U * C * V * C * W - C * U * J * V * C * W +
+    C * U * C * V * J * W +
+    C * (U * B - B * U) * C * V * C * W -
+    C * U * C * (V * B - B * V) * C * W +
+    C * U * C * V * C * (W * B - B * W))
+  have htel :
+      (B * C + C * B) * U * C * V * C * W -
+        C * U * (B * C + C * B) * V * C * W +
+        C * U * C * V * (B * C + C * B) * W +
+        C * (U * B - B * U) * C * V * C * W -
+        C * U * C * (V * B - B * V) * C * W +
+        C * U * C * V * C * (W * B - B * W) =
+      B * (C * U * C * V * C * W) + (C * U * C * V * C * W) * B := by
+    noncomm_ring
+  rw [hJ, htel, map_add, ← hτ]
+  ring
+
 
 end RefinedBMV.Tracial
