@@ -1,6 +1,7 @@
 """Install the tools release pinned by this checkout, or cache a historical pin."""
 
 import argparse
+import base64
 import fcntl
 import hashlib
 import json
@@ -24,6 +25,11 @@ RELEASES = f"https://github.com/{TOOLS}/releases/download"
 CACHE = ROOT / "build/tools-releases"
 STAMP = ".release-sha256"
 SHA = r"[0-9a-f]{40}"
+TREE_MODE = 0o040000
+REGULAR_MODES = {0o100644, 0o100755}
+TREE_ENTRY_MODES = REGULAR_MODES | {TREE_MODE, 0o120000, 0o160000}
+HISTORY_BATCH_SIZE = 50
+HISTORY_PARENT_LIMIT = 100
 PR_PREVIEW = re.compile(r"v[0-9]+\.[0-9]+\.[0-9]+-pr\.([1-9][0-9]*)\.[1-9][0-9]*\.g([0-9a-f]{12})")
 BASE_TRAILER = "consumer-tools-base"
 ACTIONS_BOT = 41898282
@@ -103,33 +109,99 @@ def pr_only_commits(repo, base, head):
     return commits
 
 
-def verify_pin_history(repo, base, head, allowed):
+def history_objects(repo, oids, selection):
     owner, name = map(json.dumps, repo.split("/"))
+    queries = [f'o{i}:object(oid:"{oid}") {{ {selection} }}' for i, oid in enumerate(oids)]
+    query = f"{{ repository(owner:{owner},name:{name}) {{ {' '.join(queries)} }} }}"
+    response = github("graphql", "-f", f"query={query}")
+    if "errors" in response:
+        raise ValueError("could not inspect all consumer PR pin snapshots")
+    objects = response["data"]["repository"]
+    for i, oid in enumerate(oids):
+        result = objects[f"o{i}"]
+        if result is None or result.get("oid") != oid:
+            raise ValueError(f"missing or mismatched consumer Git object {oid}")
+        yield result
+
+
+def complete_tree_entries(tree):
+    entries = tree["entries"]
+    if not isinstance(entries, list):
+        raise ValueError(f"missing entries for consumer tree {tree['oid']}")
+    by_name = {}
+    for entry in entries:
+        name = base64.b64decode(entry["nameRaw"], validate=True)
+        mode, oid = entry["mode"], entry["oid"]
+        if (not name or b"/" in name or b"\0" in name or name in {b".", b".."} or name in by_name
+                or type(mode) is not int or mode not in TREE_ENTRY_MODES or not re.fullmatch(SHA, oid)):
+            raise ValueError(f"malformed entries for consumer tree {tree['oid']}")
+        by_name[name] = (oid, mode)
+
+    # Tree.entries has no completeness flag. Rebuild the Git tree ID before
+    # treating any omitted name as absent. Git sorts directories with a trailing slash.
+    ordered = sorted(by_name.items(), key=lambda item: item[0] + (b"/" if item[1][1] == TREE_MODE else b""))
+    body = b"".join(f"{mode:o} ".encode() + name + b"\0" + bytes.fromhex(oid) for name, (oid, mode) in ordered)
+    if hashlib.sha1(f"tree {len(body)}\0".encode() + body).hexdigest() != tree["oid"]:
+        raise ValueError(f"incomplete or inconsistent entries for consumer tree {tree['oid']}")
+    return by_name
+
+
+def load_history_trees(repo, oids, trees):
+    missing = sorted(set(oids) - trees.keys())
+    for start in range(0, len(missing), HISTORY_BATCH_SIZE):
+        batch = missing[start:start + HISTORY_BATCH_SIZE]
+        for tree in history_objects(repo, batch, "... on Tree { oid entries { nameRaw mode oid } }"):
+            trees[tree["oid"]] = complete_tree_entries(tree)
+
+
+def verify_pin_history(repo, base, head, allowed):
     commits = pr_only_commits(repo, base, head)
-    for start in range(0, len(commits), 50):
-        batch = commits[start:start + 50]
-        queries = [
-            f'c{i}:object(oid:"{commit}") {{ ... on Commit {{ oid file(path:"{PIN}") {{ oid mode }} '
-            f'parents(first:100) {{ nodes {{ file(path:"{PIN}") {{ oid mode }} }} }} }} }}'
-            for i, commit in enumerate(batch)
-        ]
-        query = f"{{ repository(owner:{owner},name:{name}) {{ {' '.join(queries)} }} }}"
-        response = github("graphql", "-f", f"query={query}")
-        if response.get("errors"):
-            raise ValueError("could not inspect all consumer PR pin snapshots")
-        snapshots = response["data"]["repository"]
-        for i, commit in enumerate(batch):
-            snapshot = snapshots[f"c{i}"]
-            if snapshot is None or snapshot["oid"] != commit:
-                raise ValueError(f"missing consumer PR commit {commit}")
-            entry = snapshot["file"]
-            blob = entry["oid"] if entry is not None else None
+    root_by_commit = {}
+    trees = {}
+    directory, filename = PIN.encode().split(b"/")
+    selection = ("... on Commit { oid tree { oid } "
+                 f"parents(first:{HISTORY_PARENT_LIMIT}) "
+                 "{ totalCount pageInfo { hasNextPage } nodes { oid tree { oid } } } }")
+    for start in range(0, len(commits), HISTORY_BATCH_SIZE):
+        batch = commits[start:start + HISTORY_BATCH_SIZE]
+        parents_by_commit = {}
+        for snapshot in history_objects(repo, batch, selection):
+            commit = snapshot["oid"]
+            parents = snapshot["parents"]
+            nodes, count = parents["nodes"], parents["totalCount"]
+            if (not isinstance(nodes, list) or type(count) is not int or len(nodes) != count
+                    or count > HISTORY_PARENT_LIMIT
+                    or parents["pageInfo"]["hasNextPage"] is not False):
+                raise ValueError(f"incomplete consumer parents at {commit}")
+            parents_by_commit[commit] = [parent["oid"] for parent in nodes]
+            for node in [snapshot, *nodes]:
+                revision, root = node["oid"], node["tree"]["oid"]
+                if (not re.fullmatch(SHA, revision) or not re.fullmatch(SHA, root)
+                        or root_by_commit.setdefault(revision, root) != root):
+                    raise ValueError(f"invalid or inconsistent consumer commit tree at {revision}")
+
+        revisions = batch + [parent for parents in parents_by_commit.values() for parent in parents]
+        roots = {root_by_commit[revision] for revision in revisions}
+        load_history_trees(repo, roots, trees)
+        directories = {root: trees[root].get(directory) for root in roots}
+        if any(entry is not None and entry[1] != TREE_MODE for entry in directories.values()):
+            raise ValueError(f"parent directory of {PIN} must be a tree")
+        load_history_trees(repo, (entry[0] for entry in directories.values() if entry is not None), trees)
+        pins = {root: trees[entry[0]].get(filename) if entry is not None else None
+                for root, entry in directories.items()}
+        for revision in revisions:
+            entry = pins[root_by_commit[revision]]
+            if entry is not None and entry[1] not in REGULAR_MODES:
+                raise ValueError(f"{PIN} must be a regular file at {revision}")
+
+        for commit, parents in parents_by_commit.items():
+            entry = pins[root_by_commit[commit]]
+            blob = entry[0] if entry is not None else None
             # A content branch may inherit earlier dev pins as it merges dev.
             # Check every PR-only commit, so following a parent can never hide
             # the introduction of an unadopted third pin elsewhere in this DAG.
-            inherited = any(parent["file"] == entry for parent in snapshot["parents"]["nodes"])
-            if ((entry is not None and entry["mode"] not in {0o100644, 0o100755})
-                    or (blob not in allowed and not inherited)):
+            inherited = any(pins[root_by_commit[parent]] == entry for parent in parents)
+            if blob not in allowed and not inherited:
                 raise ValueError(f"tools pin conflict at consumer PR commit {commit}: "
                                  "rebase or condense the intermediate pin edits")
 

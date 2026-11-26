@@ -8,7 +8,9 @@ url: https://arxiv.org/abs/2608.27171v1
 claim: "For a quantum channel N and a generalized divergence D, the conditional contraction coefficient is η^Δ_D(N) := sup over |R| and ρ_RA ≠ σ_RA of [D((id ⊗ N)(ρ_RA)‖(id ⊗ N)(σ_RA)) − D(ρ_R‖σ_R)] / [D(ρ_RA‖σ_RA) − D(ρ_R‖σ_R)] (Eq. (2.14)), optimized over pairs with a strictly positive finite denominator (Remark 2). The hockey-stick divergence is E_γ(ρ‖σ) := Tr(ρ − γσ)_+ (Eq. (5.1)). For the trace distance (γ = 1), η^c_Tr(N) and η^Δ_Tr(N) are optimized by orthogonal states (Proposition 8). §9 asks whether, for the hockey-stick divergence, the optimization can be restricted to orthogonal states, which would imply monotonicity of the coefficient in γ."
 strata_touched:
   - D5/S3/Quantum/Divergence/ConditionalHockeyStickOrthogonalReduction
+  - D5/S3/Quantum/Divergence/ConditionalExpansion/BellCenteredConditionalTraceGap
   - D5/S3/Quantum/Divergence/ConditionalExpansion/ReverseDoeblinRefutation
+  - D5/S3/Quantum/Divergence/ConditionalExpansion/DerivativeFreeHarmonicCongruence
   - D5/S3/Quantum/Divergence/CompleteHockeyStickRefutation
   - D5/S3/Quantum/Divergence/CompleteHockeyStickBasisSupport
   - D5/S3/Quantum/Divergence/CompleteHockeyStickChoiSupport
@@ -37,6 +39,7 @@ No DOI or journal reference is listed in the arXiv metadata. The text was read f
 - §2.5, Definition 3, Eq. (2.42), conditional expansion;
 - p. 37, §5, Eqs. (5.1)–(5.2);
 - p. 40, Proposition 8 and Remark 6;
+- §5, Theorem 6, Eq. (5.17), and Proposition 9, Eq. (5.26);
 - §5, paragraph immediately after Proposition 9, conditional reverse Doeblin question;
 - §5, Proposition 10, Eqs. (5.38)–(5.39), classical witness family;
 - p. 72, §9, the first open problem.
@@ -72,10 +75,28 @@ In the formal numerator, the subtracted reference marginals are taken of the out
 ## Conditional trace-distance expansion
 
 Equation (2.42) takes the infimum of the conditional retention ratio over all
-finite references and pairs with strictly positive denominator. The paragraph
-immediately after Proposition 9 asks whether the reverse Doeblin lower bound
-for complete trace-distance expansion extends to conditional expansion.
+finite references and pairs with strictly positive denominator. Theorem 6,
+Eq. (5.17), preserves conditional trace-distance ratios under orthogonal
+reduction. Proposition 9, Eq. (5.26), applies this to the conditional expansion
+infimum.
 [Eq. (2.42)](https://arxiv.org/html/2608.27171v1#S2.EGx43) ·
+[Theorem 6](https://arxiv.org/html/2608.27171v1#Thmtheorem6) ·
+[Proposition 9](https://arxiv.org/html/2608.27171v1#Thmproposition9)
+
+`ConditionalExpansion.BellCenteredConditionalTraceGap.bell_padded_gap`
+gives a repository-derived orthogonal pair on a reference of size $d+1$,
+where $d$ is the input dimension. For the Bell projector $P$, let $C=I-P$,
+$D=d^2-1$, and $0<\varepsilon\le D$.
+The input gap is $\varepsilon/D$ and the conditional trace-distance ratio is
+$\operatorname{Tr}[(\varepsilon\operatorname{amp}_N(P)-\operatorname{amp}_N(C))_+]/\varepsilon$,
+where $\operatorname{amp}_N=\operatorname{id}\otimes N$. The output gap and the
+ratio for this pair each vanish exactly when
+$\varepsilon\operatorname{amp}_N(P)\le\operatorname{amp}_N(C)$ in Loewner order.
+Under this domination the pair attains zero in the orthogonal ratio set.
+
+The paragraph immediately after Proposition 9 asks whether the reverse Doeblin
+lower bound for complete trace-distance expansion extends to conditional
+expansion.
 [Text after Proposition 9](https://arxiv.org/html/2608.27171v1#S5.p13)
 
 The reverse Doeblin coefficient is the infimum of feasible weights $p$ for
@@ -108,6 +129,16 @@ the remaining weight on a second reference flag. Place all of $\beta$ on the
 first flag of the other state. The joint trace distance minus the reference
 distance is $E_\gamma(\alpha\|\beta)/\gamma$, before and after the channel.
 [Hirche, Appendix B-B, Eqs. (B.10)–(B.16)](https://arxiv.org/abs/2405.00105v2)
+
+The repository's harmonic congruence inequality uses the effect formula in
+Eq. (5.2). For a Hermitian matrix $X$, a projection $Q$, and a positive
+definite matrix $W$ commuting with $Q$, set $S=W^{1/2}$ and
+$B=QX_+Q+(I-Q)X_-(I-Q)$. If $\delta=\operatorname{Tr} B>0$, the result bounds
+$\operatorname{Tr}(SXS)_-+\operatorname{Tr}(QSXS)$ below by
+$\delta^2/\operatorname{Tr}(W^{-1}B)$. Taking $Q$ from the negative spectrum
+of the reference marginal makes this a matrix estimate for the conditional
+gap in Eq. (2.42). The argument uses orthogonality of two modified ranges.
+[Eq. (5.2)](https://arxiv.org/html/2608.27171v1#S5.E2)
 
 ## Complete hockey-stick contraction
 
