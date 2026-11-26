@@ -157,4 +157,31 @@ public theorem ByteArray.extract_append_eq_left : type_of% @_root_.ByteArray.ext
   rw [ByteArray.data_extract, ByteArray.data_append, Array.toList_extract, Array.toList_append]
   exact List.take_left
 
+private theorem sliceAppend (xs ys : List α) (i j : Nat) :
+    ((xs ++ ys).drop i).take (j - i) = (xs.drop i).take (j - i) ++
+      (ys.drop (i - xs.length)).take ((j - xs.length) - (i - xs.length)) := by
+  induction xs generalizing i j with
+  | nil => simp only [List.nil_append, List.drop_nil, List.take_nil, List.length_nil, Nat.sub_zero]
+  | cons x xs ih =>
+    cases i <;> cases j <;> simp only [List.cons_append, List.drop_zero, List.drop_succ_cons, List.take_zero,
+      List.take_succ_cons, List.length_cons, Nat.zero_sub, Nat.sub_zero, Nat.succ_sub_succ, List.nil_append]
+    · rename_i n
+      apply congrArg (List.cons x)
+      simpa only [Nat.sub_zero, Nat.zero_sub, List.drop_zero] using ih 0 n
+    · exact ih _ _
+
+public theorem Array.extract_append : type_of% @_root_.Array.extract_append := by
+  intro α as bs i j
+  apply _root_.Array.ext'
+  rw [_root_.Array.toList_extract, _root_.Array.toList_append, _root_.Array.toList_append,
+    _root_.Array.toList_extract, _root_.Array.toList_extract]
+  exact sliceAppend as.toList bs.toList i j
+
+public theorem ByteArray.extract_append : type_of% @_root_.ByteArray.extract_append := by
+  intro as bs i j
+  apply _root_.ByteArray.ext
+  rw [_root_.ByteArray.data_extract, _root_.ByteArray.data_append, _root_.ByteArray.data_append,
+    _root_.ByteArray.data_extract, _root_.ByteArray.data_extract]
+  exact _root_.Array.extract_append
+
 end OmegaChecks.InitPort.Alternatives
