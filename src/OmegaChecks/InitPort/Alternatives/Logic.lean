@@ -110,6 +110,12 @@ public theorem Bool.dite_true_left_eq_false : type_of% @_root_.Bool.dite_true_le
   | isTrue h => exact ⟨Bool.noConfusion, fun ⟨n, _⟩ => (n h).elim⟩
   | isFalse n => exact ⟨fun e => ⟨n, e⟩, fun ⟨_, e⟩ => e⟩
 
+public theorem Bool.dite_false_right_eq_true : type_of% @_root_.Bool.dite_false_right_eq_true := by
+  intro p d x
+  cases d with
+  | isTrue h => exact ⟨fun e => ⟨h, e⟩, fun ⟨_, e⟩ => e⟩
+  | isFalse n => exact ⟨Bool.noConfusion, fun ⟨h, _⟩ => (n h).elim⟩
+
 public theorem Bool.dite_true_right_eq_false : type_of% @_root_.Bool.dite_true_right_eq_false := by
   intro p d x
   cases d with
