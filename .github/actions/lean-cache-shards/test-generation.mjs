@@ -416,3 +416,24 @@ test('the published module reader requires the restored report before invoking L
   }
   assert.match(verification.slice(prepare), /make lean-report-scoped[\s\S]*extracted_modules == 0/);
 });
+
+test('Truth publication caches Scribe inputs independently from the previous public bundle', async () => {
+  const workflow = await readFile(new URL('../../workflows/truth-release-publish.yml', import.meta.url), 'utf8');
+  const first = workflow.indexOf('      - name: Restore Scribe resource inputs');
+  const build = workflow.indexOf('      - name: Generate and package the DAG and truth release');
+  const save = workflow.indexOf('      - name: Save the prepared Scribe resources');
+  assert.ok(first >= 0 && build > first && save > build);
+  const restore = workflow.slice(first, build);
+  const generate = workflow.slice(build, save);
+  const persist = workflow.slice(save, workflow.indexOf('      - id: upload', save));
+  assert.match(restore, /if: steps\.reports\.outputs\.existing == ''/);
+  for (const step of [restore, persist]) {
+    assert.ok(step.includes('path: ${{ runner.temp }}/truth-scribe'));
+    assert.ok(step.includes('key: truth-scribe-v1-${{ needs.pin.outputs.source }}'));
+  }
+  assert.ok(restore.includes('restore-keys: truth-scribe-v1-'));
+  assert.ok(generate.includes('TRUTH_RELEASE_BASE: ${{ runner.temp }}/truth-base'));
+  assert.ok(generate.includes('TRUTH_RELEASE_SCRIBE_CACHE: ${{ runner.temp }}/truth-scribe'));
+  assert.ok(persist.includes("steps.generate.outputs.scribe_cache_ready == 'true'"));
+  assert.ok(persist.includes("steps.scribe-cache.outputs.cache-hit != 'true'"));
+});
