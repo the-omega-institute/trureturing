@@ -124,6 +124,33 @@ public theorem Int.pow_succ : type_of% @_root_.Int.pow_succ := by
       rw [ite_eq_left even, ite_eq_right odd, Nat.pow_succ]
       exact (Int.negOfNat_mul_negSucc _ _).symm
 
+public theorem Int.shiftRight_eq_div_pow : type_of% @_root_.Int.shiftRight_eq_div_pow := by
+  intro m n
+  cases m with
+  | ofNat a => exact congrArg Int.ofNat (Nat.shiftRight_eq_div_pow a n)
+  | negSucc a =>
+    rw [Int.negSucc_ediv a (Int.natCast_pos.mpr (Nat.pow_pos Nat.zero_lt_two))]
+    exact congrArg Int.negSucc (Nat.shiftRight_eq_div_pow a n)
+
+public theorem Int.emod_two_eq : type_of% @_root_.Int.emod_two_eq := by
+  intro i
+  have lo := Int.emod_nonneg i (b := 2) (by decide)
+  have hi := Int.emod_lt_of_pos i (b := 2) (by decide)
+  cases e : i % 2 with
+  | negSucc a =>
+    rw [e] at lo
+    exact False.elim ((Int.negSucc_not_nonneg a).mp lo)
+  | ofNat a =>
+    cases a with
+    | zero => exact Or.inl rfl
+    | succ a =>
+      cases a with
+      | zero => exact Or.inr rfl
+      | succ a =>
+        rw [e] at hi
+        have bound : a.succ.succ < 2 := Int.ofNat_lt.mp hi
+        exact False.elim (Nat.not_lt_zero a (Nat.lt_of_succ_lt_succ (Nat.lt_of_succ_lt_succ bound)))
+
 public theorem Int.trailingZeros._proof_2 : type_of% @_root_.Int.trailingZeros._proof_2 :=
   fun _ _ hi hk e => hi (Int.natAbs_eq_zero.mp (Nat.eq_zero_of_le_zero (e ▸ hk)))
 
@@ -140,5 +167,23 @@ public theorem Int.trailingZeros._proof_6 : type_of% @_root_.Int.trailingZeros._
   | inl e => rw [e, Nat.zero_div]; exact Nat.zero_le k
   | inr p =>
     exact Nat.le_of_lt_succ (Nat.lt_of_lt_of_le (Nat.div_lt_self p Nat.one_lt_two) bound)
+
+public theorem Int.shiftRight_trailingZeros_mod_two : type_of% @_root_.Int.shiftRight_trailingZeros_mod_two := by
+  intro a ha
+  have odd (k : Nat) (i : Int) (hi : i ≠ 0) (hk : i.natAbs ≤ k) (acc : Nat)
+      (shifted : a >>> acc = i) : (a >>> _root_.Int.trailingZeros.aux k i hi hk acc) % 2 = 1 := by
+    induction k generalizing i acc with
+    | zero => exact False.elim (hi (Int.natAbs_eq_zero.mp (Nat.eq_zero_of_le_zero hk)))
+    | succ k ih =>
+      rw [_root_.Int.trailingZeros.aux.eq_1 i hi acc k (Nat.succ_ne_zero k)]
+      by_cases even : i % 2 = 0
+      · rw [dite_eq_left even]
+        apply ih
+        exact (Int.shiftRight_add a acc 1).trans ((congrArg (fun x : Int => x >>> 1) shifted).trans
+          (Int.shiftRight_eq_div_pow i 1))
+      · rw [dite_eq_right even, shifted]
+        exact (Int.emod_two_eq i).resolve_left even
+  rw [_root_.Int.trailingZeros, dite_eq_right ha]
+  exact odd _ a ha (Nat.le_refl _) 0 (Int.shiftRight_zero a)
 
 end OmegaChecks.InitPort.Alternatives
