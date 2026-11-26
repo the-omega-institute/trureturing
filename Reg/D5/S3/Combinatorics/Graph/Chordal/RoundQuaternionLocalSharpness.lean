@@ -1,3 +1,6 @@
+import Reg.D5.S3.Combinatorics.Graph.Chordal.Reconstruction.RoundQuaternionLocalScorePerturbation
+import Reg.D5.S3.Combinatorics.Graph.Chordal.Reconstruction.RoundQuaternionLocalPureScore
+import Reg.D5.S3.Combinatorics.Graph.Chordal.Reconstruction.RoundQuaternionLocalGeometry
 import D5.S3.Combinatorics.Graph.Chordal.RoundQuaternionLocalSharpness
 import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.SingleDependentReadout
@@ -69,10 +72,11 @@ private theorem dependence : ObservationalDependence signature actual := by
   intro _
   refine ⟨(), fun _ => 1, fun _ => unitI, ?_⟩
   change hubMaxDefect (fun _ => 1) ≠ hubMaxDefect (fun _ => unitI)
-  have h := (le_max_left (roundDist 1 unitI) (max (roundDist 1 unitI) (roundDist 1 unitI))).trans
-    (le_max_left _ (roundDist (unitI * unitI * unitI) 1))
+  have h : roundDist 1 unitI ≤ hubMaxDefect (fun _ => unitI) :=
+    (le_max_left _ _).trans (le_max_left _ _)
   have h₀ : hubMaxDefect (fun _ => 1) = 0 := by simp [hubMaxDefect, dist_id]
-  rw [h₀, dist_axis] at *
+  rw [h₀]
+  rw [dist_axis] at h
   exact ne_of_lt (Real.pi_div_two_pos.trans_le h)
 
 def family : Registration arena (type_of% @quarterLocal_strictFit) where
@@ -120,7 +124,7 @@ end Local
 
 namespace Angular
 
-abbrev signature := _root_.Reg.Support.SingleDependentReadout.signature (ℝ × ℝ × ℝ × ℝ × ℝ)
+abbrev signature := _root_.Reg.Support.SingleDependentReadout.signature (Σ _ : ℝ, Σ _ : ℝ, Σ _ : ℝ, Σ _ : ℝ, ℝ)
   (fun _ => ℝ) (fun _ => ℝ)
 
 def actual : Realization signature :=
@@ -137,7 +141,7 @@ def arena : Arena where
     0 ≤ u → 0 ≤ v → u + v < π/2 →
     u^2 + v^2 + (u+v)^2 ≤ (4497/500) * localR^2 →
     let g := chartGains a b c u v w
-    let e := observer.readout () (b,c,u,v,w) a
+    let e := observer.readout () ⟨b,c,u,v,w⟩ a
     let center := a = π/2 ∧ b = π/2 ∧ c = π/2 ∧ u = 0 ∧ v = 0
     DefectLE g e ∧
     (∃ i j k : Fin 4, i ≠ j ∧ j ≠ k ∧ i ≠ k ∧ roundDist (g i j * g j k) (g i k) = e) ∧
@@ -153,7 +157,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
 
 private theorem dependence : ObservationalDependence signature actual := by
   intro _
-  refine ⟨(0,0,0,0,0), 0, π/2, ?_⟩
+  refine ⟨⟨0,0,0,0,0⟩, 0, π/2, ?_⟩
   change chartMaxDefect 0 0 0 0 0 0 ≠ chartMaxDefect (π/2) 0 0 0 0 0
   let rim (a : ℝ) : Fin 3 → U := fun j =>
     chartGains a 0 0 0 0 0 j.succ (j + 1).succ
@@ -249,6 +253,6 @@ example :
   · positivity
   constructor
   · positivity
-  exact ⟨le_rfl, le_rfl, by positivity, by positivity⟩
+  exact ⟨le_rfl, le_rfl, by positivity, by norm_num [localR]⟩
 
 end Reg.D5.S3.Combinatorics.Graph.Chordal.RoundQuaternionLocalSharpness

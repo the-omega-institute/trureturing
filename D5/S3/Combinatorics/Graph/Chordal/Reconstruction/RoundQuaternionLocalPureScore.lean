@@ -86,8 +86,8 @@ def localRim (p q : ℂ) (j : Fin 3) : ℍ[ℝ] :=
 
 private theorem local_rim_unit (p q : ℂ) (j : Fin 3) (h : 0 ≤ localRadicand p q j) :
     normSq (localRim p q j) = 1 := by
-  simp only [localRim, local_normSq_pair, norm_mul, local_phase_norm, one_mul,
-    local_sq_complex]
+  simp only [localRim, local_geometry.local_normSq_pair, norm_mul, local_geometry.local_phase_norm, one_mul,
+    local_geometry.local_sq_complex]
   rw [Real.sq_sqrt h, localRadicand]
   ring
 
@@ -101,7 +101,7 @@ def phasedPotential (p q : ℂ) : Fin 4 → U :=
 
 private theorem local_b_bound (p : ℂ) (j : Fin 3) : |localB p j| ≤ localLinear * ‖p‖ := by
   have h := Complex.abs_re_le_norm (p * rimPhase (rimPrev j))
-  rw [norm_mul, local_phase_norm, mul_one] at h
+  rw [norm_mul, local_geometry.local_phase_norm, mul_one] at h
   have hl : 0 ≤ localLinear := by unfold localLinear; positivity
   simpa only [localB, abs_mul, abs_of_nonneg hl] using mul_le_mul_of_nonneg_left h hl
 
@@ -498,6 +498,9 @@ private def localGainMajorant : Fin 5 → ℝ := ![1, 1, 1/2, 0, 14/100]
 
 private theorem local_rim_terms_bound (p : ℂ) (hp : ‖p‖ ≤ localR) (j : Fin 3) :
     ∀ i : Fin 5, ‖localRimTerms p j i‖ ≤ localRimMajorant i * ‖p‖^i.val := by
+  have hpn : p.re^2 + p.im^2 = ‖p‖^2 := by
+    rw [Complex.sq_norm, Complex.normSq_apply]
+    ring
   obtain ⟨ht, hs, ha, _, hi⟩ := local_constant_squares
   have h3 : Real.sqrt 3 ^ 2 = 3 := Real.sq_sqrt (by norm_num)
   have hτ : localTau p j ^ 2 = 3*localB p j ^ 2 := by rw [localTau, mul_pow, h3]
@@ -522,14 +525,16 @@ private theorem local_rim_terms_bound (p : ℂ) (hp : ‖p‖ ≤ localR) (j : F
   case «4» =>
     change ‖localRimTerms p j 4‖ ^ 2 ≤ _
     rw [hExpand]
-    norm_num [localRimMajorant, local_norm_pair, norm_mul, local_phase_norm,
-      local_sq_complex, mul_pow]
+    norm_num [localRimMajorant, local_geometry.local_norm_pair, norm_mul, local_geometry.local_phase_norm,
+      local_geometry.local_sq_complex, mul_pow]
+    try rw [hpn]
     have hr := (local_pure_radical p hp j).2.2
     have h := (sq_le_sq₀ (abs_nonneg _) (by positivity)).2 hr
     rw [sq_abs] at h
     nlinarith only [h]
-  all_goals norm_num [localRimTerms, localRimTerm, localRimMajorant, local_norm_pair, norm_mul,
-    local_phase_norm, local_sq_complex, mul_pow, ht, hs, ha, hi, hτ]
+  all_goals norm_num [localRimTerms, localRimTerm, localRimMajorant, local_geometry.local_norm_pair, norm_mul,
+    local_geometry.local_phase_norm, local_geometry.local_sq_complex, mul_pow, ht, hs, ha, hi, hτ]
+  all_goals try rw [hpn]
   · nlinarith only [hb, sq_nonneg ‖p‖]
   · nlinarith only [h₂, hψ, show 0 ≤ ‖p‖^4 by positivity]
   · rw [hτ] at h₃
@@ -539,7 +544,7 @@ private theorem local_gain_terms_bound (p : ℂ) (hp : ‖p‖ ≤ localR) (j : 
     ∀ i : Fin 5, ‖localGainTerms p j i‖ ≤ localGainMajorant i * ‖p‖^i.val := by
   have hAxis : ‖localAxis‖ = 1 := by
     apply (sq_eq_sq₀ (norm_nonneg _) (by norm_num)).1
-    simp [localAxis, local_norm_pair]
+    simp [localAxis, local_geometry.local_norm_pair]
   have hExpand : localGainTerms p j 4 =
       (Real.sqrt (1-‖p‖^2) - (1-‖p‖^2/2)) • localAxis := by
     ext <;> simp [localGainTerms, localGainTerm, localGainPure, localAxis, quatPair,
@@ -549,11 +554,11 @@ private theorem local_gain_terms_bound (p : ℂ) (hp : ‖p‖ ≤ localR) (j : 
   · simpa [localGainTerms, localGainTerm, localGainMajorant] using hAxis.le
   · have h : ‖quatPair 0 (p * star (rimPhase j))‖ ≤ ‖p‖ := by
       apply (sq_le_sq₀ (norm_nonneg _) (norm_nonneg p)).1
-      simp [local_norm_pair, local_phase_norm]
+      simp [local_geometry.local_norm_pair, local_geometry.local_phase_norm]
     simpa [localGainTerms, localGainTerm, localGainMajorant] using h
   · have h : ‖quatPair ⟨0,-‖p‖^2/2⟩ 0‖ ≤ (1/2)*‖p‖^2 := by
       apply (sq_le_sq₀ (norm_nonneg _) (by positivity)).1
-      simp [local_norm_pair, local_sq_complex] <;> ring_nf <;> exact le_rfl
+      simp [local_geometry.local_norm_pair, local_geometry.local_sq_complex] <;> ring_nf <;> exact le_rfl
     simpa [localGainTerms, localGainTerm, localGainMajorant] using h
   · have h : quatPair 0 0 = (0 : ℍ[ℝ]) := rfl
     simp [localGainTerms, localGainTerm, localGainMajorant, h]
@@ -649,7 +654,7 @@ private theorem local_pure_score (p : ℂ) (hp : ‖p‖ ≤ localR) (j : Fin 3)
 
 private theorem local_real_fibre_norm (j : Fin 3) (a b : ℝ) :
     ‖quatPair ⟨a, 0⟩ (rimPhase j * ⟨b, 0⟩)‖ ^ 2 = a^2+b^2 := by
-  simp [local_norm_pair, norm_mul, local_phase_norm, local_sq_complex]
+  simp [local_geometry.local_norm_pair, norm_mul, local_geometry.local_phase_norm, local_geometry.local_sq_complex]
 
 def localQLinear (q : ℂ) (j : Fin 3) : ℍ[ℝ] :=
   quatPair ⟨localLinear*‖q‖, 0⟩
@@ -717,17 +722,22 @@ private theorem local_pure_gain_unit (p : ℂ) (hp : ‖p‖ ≤ localR) (j : Fi
   have hp₂ : ‖p‖^2 ≤ localR^2 := by gcongr
   have hn : 0 ≤ 1-‖p‖^2 := by norm_num [localR] at hp₂; linarith
   apply (sq_eq_sq₀ (norm_nonneg _) (by norm_num)).1
-  simp [localGainPure, local_norm_pair, local_sq_complex, norm_mul, Complex.star_def,
-    Complex.norm_conj, local_phase_norm, Real.sq_sqrt hn]
+  simp [localGainPure, local_geometry.local_norm_pair, local_geometry.local_sq_complex, norm_mul, Complex.star_def,
+    Complex.norm_conj, local_geometry.local_phase_norm, Real.sq_sqrt hn]
+  have hpn : p.re^2 + p.im^2 = ‖p‖^2 := by
+    rw [Complex.sq_norm, Complex.normSq_apply]
+    ring
+  rw [hpn, Real.sq_sqrt hn]
+  ring
 
 private theorem local_raw_unit (p q : ℂ) (hp : ‖p‖ ≤ localR) (hq : ‖q‖ ≤ localR) (j : Fin 3) :
     ‖localRim p q j‖ = 1 := by
   rw [← local_unit_rim_coe p q hp hq j]
-  exact unit_norm _
+  exact CStarRing.norm_coe_unitary _
 
 private theorem local_base_unit (p : ℂ) (j : Fin 3) : ‖localRimTerm p j 0‖ = 1 := by
   apply (sq_eq_sq₀ (norm_nonneg _) (by norm_num)).1
-  norm_num [localRimTerm, local_norm_pair, local_phase_norm, local_sq_complex,
+  norm_num [localRimTerm, local_geometry.local_norm_pair, local_geometry.local_phase_norm, local_geometry.local_sq_complex,
     local_constant_squares.1, local_constant_squares.2.1]
 
 private theorem local_b_diff (p : ℂ) (j : Fin 3) :
@@ -795,7 +805,7 @@ private theorem local_linear_norm (q : ℂ) (j : Fin 3) :
 
 private theorem local_axis_unit : ‖localAxis‖ = 1 := by
   apply (sq_eq_sq₀ (norm_nonneg _) (by norm_num)).1
-  simp [localAxis,local_norm_pair]
+  simp [localAxis,local_geometry.local_norm_pair]
 
 private theorem local_axis_base (p : ℂ) (j : Fin 3) :
     localScore (localRimTerm p j 0) localAxis (localRimTerm p (rimNext j) 0) = localT := by

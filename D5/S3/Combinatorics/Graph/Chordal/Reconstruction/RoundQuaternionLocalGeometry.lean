@@ -42,7 +42,7 @@ def hubMaxDefect (A : Fin 3 → U) : ℝ :=
 /-- The ratio of the sharp quarter-turn fit radius to its triangle defect. -/
 def cStar : ℝ := 2 * quarterError / π
 
-theorem unit_norm (a : U) : ‖(a : ℍ[ℝ])‖ = 1 :=
+private theorem unit_norm (a : U) : ‖(a : ℍ[ℝ])‖ = 1 :=
   CStarRing.norm_coe_unitary a
 
 def asUnit (a : ℍ[ℝ]) (ha : normSq a = 1) : U :=
@@ -51,22 +51,22 @@ def asUnit (a : ℍ[ℝ]) (ha : normSq a = 1) : U :=
     rw [normSq_eq_norm_mul_self] at ha
     nlinarith [norm_nonneg a]⟩
 
-theorem re_comm (x y : ℍ[ℝ]) : (x * y).re = (y * x).re := by
+private theorem re_comm (x y : ℍ[ℝ]) : (x * y).re = (y * x).re := by
   simp only [Quaternion.re_mul]
   ring
 
-theorem re_cyclic (x y z : ℍ[ℝ]) : (x * y * z).re = (y * z * x).re := by
+private theorem re_cyclic (x y z : ℍ[ℝ]) : (x * y * z).re = (y * z * x).re := by
   rw [mul_assoc, re_comm x]
 
-theorem dist_trace (a b : U) :
+private theorem dist_trace (a b : U) :
     roundDist a b = arccos (((a * b⁻¹ : U) : ℍ[ℝ]).re) := by
   rw [roundDist, Quaternion.inner_def, Submonoid.coe_mul, ← Unitary.star_eq_inv, Unitary.coe_star]
 
-theorem hub_reverse (A : Fin 3 → U) (i j : Fin 4) :
+private theorem hub_reverse (A : Fin 3 → U) (i j : Fin 4) :
     hubGaugedGains A j i = (hubGaugedGains A i j)⁻¹ := by
   fin_cases i <;> fin_cases j <;> simp [hubGaugedGains]
 
-theorem hub_faces (A : Fin 3 → U) :
+private theorem hub_faces (A : Fin 3 → U) :
     DefectLE (hubGaugedGains A) (hubMaxDefect A) ∧
     ∃ i j k : Fin 4, i ≠ j ∧ j ≠ k ∧ i ≠ k ∧
       roundDist (hubGaugedGains A i j * hubGaugedGains A j k)
@@ -154,30 +154,30 @@ theorem hub_faces (A : Fin 3 → U) :
 
 def conjugate (C a : U) : U := C * a * C⁻¹
 
-theorem conj_mul (C a b : U) :
+private theorem conj_mul (C a b : U) :
     conjugate C (a * b) = conjugate C a * conjugate C b := by
   unfold conjugate
   group
 
-theorem conj_inv (C a : U) :
+private theorem conj_inv (C a : U) :
     conjugate C a⁻¹ = (conjugate C a)⁻¹ := by
   unfold conjugate
   group
 
-theorem conj_one (C : U) : conjugate C 1 = 1 := by
+private theorem conj_one (C : U) : conjugate C 1 = 1 := by
   simp [conjugate]
 
-theorem conj_cancel (C a : U) : conjugate C⁻¹ (conjugate C a) = a := by
+private theorem conj_cancel (C a : U) : conjugate C⁻¹ (conjugate C a) = a := by
   unfold conjugate
   group
 
-theorem conj_trace (C a : U) :
+private theorem conj_trace (C a : U) :
     ((conjugate C a : U) : ℍ[ℝ]).re = (a : ℍ[ℝ]).re := by
   change (((C : ℍ[ℝ]) * (a : ℍ[ℝ])) * (↑(C⁻¹) : ℍ[ℝ])).re = _
   rw [← re_cyclic (↑(C⁻¹) : ℍ[ℝ]), ← Submonoid.coe_mul,
     inv_mul_cancel, OneMemClass.coe_one, one_mul]
 
-theorem conj_inner (C a b : U) :
+private theorem conj_inner (C a b : U) :
     ⟪(conjugate C a : ℍ[ℝ]), (conjugate C b : ℍ[ℝ])⟫_ℝ =
       ⟪(a : ℍ[ℝ]), (b : ℍ[ℝ])⟫_ℝ := by
   simp only [Quaternion.inner_def]
@@ -185,15 +185,15 @@ theorem conj_inner (C a b : U) :
     (↑(a * b⁻¹) : ℍ[ℝ]).re
   rw [← conj_inv, ← conj_mul, conj_trace]
 
-theorem conj_dist (C a b : U) :
+private theorem conj_dist (C a b : U) :
     roundDist (conjugate C a) (conjugate C b) = roundDist a b := by
   simp only [roundDist, conj_inner]
 
-theorem conjugate_hub (C : U) (A : Fin 3 → U) (i j : Fin 4) :
+private theorem conjugate_hub (C : U) (A : Fin 3 → U) (i j : Fin 4) :
     hubGaugedGains (conjugate C ∘ A) i j = conjugate C (hubGaugedGains A i j) := by
   fin_cases i <;> fin_cases j <;> simp [hubGaugedGains, conj_one, conj_inv]
 
-theorem conjugate_hubMaxDefect (C : U) (A : Fin 3 → U) :
+private theorem conjugate_hubMaxDefect (C : U) (A : Fin 3 → U) :
     hubMaxDefect (conjugate C ∘ A) = hubMaxDefect A := by
   have h₁ (a : U) : roundDist 1 (conjugate C a) = roundDist 1 a := by
     simpa only [conj_one] using conj_dist C 1 a
@@ -201,11 +201,11 @@ theorem conjugate_hubMaxDefect (C : U) (A : Fin 3 → U) :
     simpa only [conj_one] using conj_dist C a 1
   simp only [hubMaxDefect, Function.comp_apply, ← conj_mul, h₁, h₂]
 
-theorem conjugate_fits (C : U) (g : Fin 4 → Fin 4 → U) (φ : Fin 4 → U) (R : ℝ) :
+private theorem conjugate_fits (C : U) (g : Fin 4 → Fin 4 → U) (φ : Fin 4 → U) (R : ℝ) :
     Fits (fun i j => conjugate C (g i j)) (conjugate C ∘ φ) R ↔ Fits g φ R := by
   simp only [Fits, Function.comp_apply, ← conj_inv, ← conj_mul, conj_dist]
 
-theorem score_ge_iff {a b : U} {R : ℝ} (hR : R ∈ Set.Icc 0 π) :
+private theorem score_ge_iff {a b : U} {R : ℝ} (hR : R ∈ Set.Icc 0 π) :
     roundDist a b ≤ R ↔ cos R ≤ ⟪(a : ℍ[ℝ]), (b : ℍ[ℝ])⟫_ℝ := by
   have hb : |⟪(a : ℍ[ℝ]), (b : ℍ[ℝ])⟫_ℝ| ≤ 1 := by
     simpa only [unit_norm, mul_one] using abs_real_inner_le_norm (a : ℍ[ℝ]) (b : ℍ[ℝ])
@@ -217,7 +217,7 @@ theorem score_ge_iff {a b : U} {R : ℝ} (hR : R ∈ Set.Icc 0 π) :
   · intro h
     exact (arccos_le_arccos h).trans_eq (arccos_cos hR.1 hR.2)
 
-theorem strict_fit_of_scores {g : Fin 4 → Fin 4 → U} {φ : Fin 4 → U} {R δ : ℝ}
+private theorem strict_fit_of_scores {g : Fin 4 → Fin 4 → U} {φ : Fin 4 → U} {R δ : ℝ}
     (hR : R ∈ Set.Icc 0 π) (hd : 0 < δ)
     (hs : ∀ i j, i ≠ j → cos R + δ ≤
       ⟪(g i j : ℍ[ℝ]), (↑((φ i)⁻¹ * φ j) : ℍ[ℝ])⟫_ℝ) :
@@ -250,30 +250,30 @@ def etaMax (η : Fin 3 → ℝ) : ℝ := max |η 0| (max |η 1| |η 2|)
 /-- The Fourier and scalar perturbation threshold. -/
 def localR : ℝ := 3/50
 
-theorem local_abs_eta (η : Fin 3 → ℝ) (j : Fin 3) : |η j| ≤ etaMax η := by
+private theorem local_abs_eta (η : Fin 3 → ℝ) (j : Fin 3) : |η j| ≤ etaMax η := by
   fin_cases j <;> unfold etaMax
   · exact le_max_left _ _
   · exact (le_max_left _ _).trans (le_max_right _ _)
   · exact (le_max_right _ _).trans (le_max_right _ _)
 
-theorem local_eta_nonneg (η : Fin 3 → ℝ) : 0 ≤ etaMax η :=
+private theorem local_eta_nonneg (η : Fin 3 → ℝ) : 0 ≤ etaMax η :=
   (abs_nonneg (η 0)).trans (local_abs_eta η 0)
 
-theorem local_normSq_pair (z h : ℂ) :
+private theorem local_normSq_pair (z h : ℂ) :
     normSq (quatPair z h) = ‖z‖ ^ 2 + ‖h‖ ^ 2 := by
   rw [Complex.sq_norm, Complex.sq_norm]
   simp only [normSq_def', Complex.normSq_apply, quatPair]
   ring
 
-theorem local_sq_complex (x y : ℝ) : ‖(⟨x, y⟩ : ℂ)‖ ^ 2 = x ^ 2 + y ^ 2 := by
+private theorem local_sq_complex (x y : ℝ) : ‖(⟨x, y⟩ : ℂ)‖ ^ 2 = x ^ 2 + y ^ 2 := by
   rw [Complex.sq_norm, Complex.normSq_apply]
   ring
 
-theorem local_norm_pair (z h : ℂ) :
+private theorem local_norm_pair (z h : ℂ) :
     ‖quatPair z h‖ ^ 2 = ‖z‖ ^ 2 + ‖h‖ ^ 2 := by
   rw [← local_normSq_pair, normSq_eq_norm_mul_self, pow_two]
 
-theorem local_phase_norm (j : Fin 3) : ‖rimPhase j‖ = 1 := by
+private theorem local_phase_norm (j : Fin 3) : ‖rimPhase j‖ = 1 := by
   have hz : ‖zeta‖ = 1 := by
     have h3 : (Real.sqrt 3) ^ 2 = 3 := Real.sq_sqrt (by norm_num)
     have h := local_sq_complex (-1/2) (Real.sqrt 3 / 2)
@@ -281,7 +281,7 @@ theorem local_phase_norm (j : Fin 3) : ‖rimPhase j‖ = 1 := by
     nlinarith [norm_nonneg zeta]
   fin_cases j <;> simp [rimPhase, hz]
 
-theorem local_pair_sub (z h z' h' : ℂ) :
+private theorem local_pair_sub (z h z' h' : ℂ) :
     quatPair z h - quatPair z' h' = quatPair (z - z') (h - h') := by
   ext <;> rfl
 
@@ -330,7 +330,7 @@ private theorem localCos_taylor {x : ℝ} (hx : 0 ≤ x) :
     (by dsimp [f]; fun_prop) (by simp [f])
     (fun z hz => by rw [h']; exact sub_nonneg.mpr (h5 z hz)) hx), h4 x hx⟩
 
-theorem cStar_bounds : 3 / 5 < cStar ∧ cStar < 61 / 100 ∧
+private theorem cStar_bounds : 3 / 5 < cStar ∧ cStar < 61 / 100 ∧
     496 / 1000 < cStar * √(2 / 3) ∧ cStar * √(2 / 3) < 1 / 2 := by
   have hlow : (5774 / 10000 : ℝ) < cos (9545 / 10000) := by
     linarith only [(localCos_taylor (by norm_num : (0 : ℝ) ≤ 9545 / 10000)).1]
@@ -474,7 +474,7 @@ private theorem quarterCos_le_tangent {h : ℝ} (hh : |h| ≤ 1 / 5) :
     rw [slope_def_field, sub_zero, div_le_iff₀ hpos] at hs
     linarith only [hs, localCos_at_zero.1]
 
-theorem localMargin {P Q E h S : ℝ}
+private theorem localMargin {P Q E h S : ℝ}
     (hP : P ∈ Set.Icc 0 (3 / 50)) (hQ : Q ∈ Set.Icc 0 (3 / 50)) (hE : 0 ≤ E)
     (hh : |h| ≤ 1 / 5)
     (hdef : E / 3 + (51 / 20) * P ^ 2 / 6 -
@@ -520,7 +520,7 @@ theorem localMargin {P Q E h S : ℝ}
 def localDefectParam (A : Fin 3 → U) (η : Fin 3 → ℝ) : ℝ :=
   max (max (η 0) (max (η 1) (η 2))) (-((A 0 * A 1 * A 2 : U) : ℍ[ℝ]).re)
 
-theorem hubMaxDefect_eq_asin (A : Fin 3 → U) (η : Fin 3 → ℝ)
+private theorem hubMaxDefect_eq_asin (A : Fin 3 → U) (η : Fin 3 → ℝ)
     (hη : ∀ j, (A j : ℍ[ℝ]).re = -η j) :
     hubMaxDefect A = π / 2 + arcsin (localDefectParam A η) := by
   have hd (j : Fin 3) : roundDist 1 (A j) = π / 2 + arcsin (η j) := by
@@ -578,7 +578,7 @@ private theorem trace_rim (A : Fin 3 → U) (η γ : Fin 3 → ℝ) (p q : ℂ)
     Quaternion.imJ_mul, Quaternion.imK_mul, quatPair, imagDot]
   linear_combination -γ 2 * ha - γ 0 * hb - γ 1 * hc
 
-theorem quarterLocal_defectLower (A : Fin 3 → U) (η γ : Fin 3 → ℝ) (p q : ℂ)
+private theorem quarterLocal_defectLower (A : Fin 3 → U) (η γ : Fin 3 → ℝ) (p q : ℂ)
     (hA : ∀ j, (A j : ℍ[ℝ]) = quatPair ⟨-η j, γ j⟩ (transverse p q j))
     (hγ : ∀ j, 0 < γ j)
     (hP : ‖p‖ ≤ localR) (hQ : ‖q‖ ≤ localR) (hE : etaMax η ≤ localR) :
@@ -748,5 +748,115 @@ theorem quarterLocal_defectLower (A : Fin 3 → U) (η γ : Fin 3 → ℝ) (p q 
         nlinarith only [hj, hm 0, hm 2, ht, hmt, sq_nonneg P]
       · change E = -η 2 at hj
         nlinarith only [hj, hm 0, hm 1, ht, hmt, sq_nonneg P]
+
+/-- Coordinate laws and transport on the hub-gauged quotient, with its exact face maximum. -/
+structure LocalGeometryLaws (e : (Fin 3 → U) → ℝ) : Prop where
+  re_comm : ∀ (x y : ℍ[ℝ]),
+    (x * y).re = (y * x).re
+  re_cyclic : ∀ (x y z : ℍ[ℝ]),
+    (x * y * z).re = (y * z * x).re
+  dist_trace : ∀ (a b : U),
+    roundDist a b = arccos (((a * b⁻¹ : U) : ℍ[ℝ]).re)
+  hub_reverse : ∀ (A : Fin 3 → U) (i j : Fin 4),
+    hubGaugedGains A j i = (hubGaugedGains A i j)⁻¹
+  hub_faces : ∀ (A : Fin 3 → U),
+    DefectLE (hubGaugedGains A) (e A) ∧
+    ∃ i j k : Fin 4, i ≠ j ∧ j ≠ k ∧ i ≠ k ∧
+      roundDist (hubGaugedGains A i j * hubGaugedGains A j k)
+        (hubGaugedGains A i k) = e A
+  conj_mul : ∀ (C a b : U),
+    conjugate C (a * b) = conjugate C a * conjugate C b
+  conj_inv : ∀ (C a : U),
+    conjugate C a⁻¹ = (conjugate C a)⁻¹
+  conj_cancel : ∀ (C a : U),
+    conjugate C⁻¹ (conjugate C a) = a
+  conj_inner : ∀ (C a b : U),
+    ⟪(conjugate C a : ℍ[ℝ]), (conjugate C b : ℍ[ℝ])⟫_ℝ =
+      ⟪(a : ℍ[ℝ]), (b : ℍ[ℝ])⟫_ℝ
+  conjugate_hub : ∀ (C : U) (A : Fin 3 → U) (i j : Fin 4),
+    hubGaugedGains (conjugate C ∘ A) i j = conjugate C (hubGaugedGains A i j)
+  conjugate_hubMaxDefect : ∀ (C : U) (A : Fin 3 → U),
+    e (conjugate C ∘ A) = e A
+  conjugate_fits : ∀ (C : U) (g : Fin 4 → Fin 4 → U) (φ : Fin 4 → U) (R : ℝ),
+    Fits (fun i j => conjugate C (g i j)) (conjugate C ∘ φ) R ↔ Fits g φ R
+  score_ge_iff : ∀ {a b : U} {R : ℝ} (hR : R ∈ Set.Icc 0 π),
+    roundDist a b ≤ R ↔ cos R ≤ ⟪(a : ℍ[ℝ]), (b : ℍ[ℝ])⟫_ℝ
+  strict_fit_of_scores : ∀ {g : Fin 4 → Fin 4 → U} {φ : Fin 4 → U} {R δ : ℝ}
+    (hR : R ∈ Set.Icc 0 π) (hd : 0 < δ)
+    (hs : ∀ i j, i ≠ j → cos R + δ ≤
+      ⟪(g i j : ℍ[ℝ]), (↑((φ i)⁻¹ * φ j) : ℍ[ℝ])⟫_ℝ),
+    ∃ s < R, Fits g φ s
+  local_abs_eta : ∀ (η : Fin 3 → ℝ) (j : Fin 3),
+    |η j| ≤ etaMax η
+  local_eta_nonneg : ∀ (η : Fin 3 → ℝ),
+    0 ≤ etaMax η
+  local_normSq_pair : ∀ (z h : ℂ),
+    normSq (quatPair z h) = ‖z‖ ^ 2 + ‖h‖ ^ 2
+  local_sq_complex : ∀ (x y : ℝ),
+    ‖(⟨x, y⟩ : ℂ)‖ ^ 2 = x ^ 2 + y ^ 2
+  local_norm_pair : ∀ (z h : ℂ),
+    ‖quatPair z h‖ ^ 2 = ‖z‖ ^ 2 + ‖h‖ ^ 2
+  local_phase_norm : ∀ (j : Fin 3),
+    ‖rimPhase j‖ = 1
+  local_pair_sub : ∀ (z h z' h' : ℂ),
+    quatPair z h - quatPair z' h' = quatPair (z - z') (h - h')
+
+/-- The face maximum, quaternion coordinates, and unitary transport agree on the hub gauge. -/
+theorem local_geometry : LocalGeometryLaws hubMaxDefect where
+  re_comm := re_comm
+  re_cyclic := re_cyclic
+  dist_trace := dist_trace
+  hub_reverse := hub_reverse
+  hub_faces := hub_faces
+  conj_mul := conj_mul
+  conj_inv := conj_inv
+  conj_cancel := conj_cancel
+  conj_inner := conj_inner
+  conjugate_hub := conjugate_hub
+  conjugate_hubMaxDefect := conjugate_hubMaxDefect
+  conjugate_fits := conjugate_fits
+  score_ge_iff := score_ge_iff
+  strict_fit_of_scores := strict_fit_of_scores
+  local_abs_eta := local_abs_eta
+  local_eta_nonneg := local_eta_nonneg
+  local_normSq_pair := local_normSq_pair
+  local_sq_complex := local_sq_complex
+  local_norm_pair := local_norm_pair
+  local_phase_norm := local_phase_norm
+  local_pair_sub := local_pair_sub
+
+/-- The exact defect, the trace bounds and the resulting numerical score comparison. -/
+structure LocalDefectEstimates (A : Fin 3 → U) (η : Fin 3 → ℝ) (p q : ℂ) (e : ℝ) : Prop where
+  exact_defect : e = π / 2 + arcsin (localDefectParam A η)
+  trace_range : |localDefectParam A η| < 1 / 5
+  trace_lower : etaMax η / 3 + (51 / 20) * ‖p‖ ^ 2 / 6 -
+    ((13 / 5) * ‖q‖ ^ 2 + 25 * localR ^ 2 * etaMax η) / 3 ≤ localDefectParam A η
+  fit_radius_range : cStar * e ∈ Set.Icc 0 π
+  score_comparison : ∀ S : ℝ,
+    1 / √3 + ‖q‖ / √6 - (√3 / 12) * ‖p‖ ^ 2 - (2 / 5) * ‖p‖ ^ 3 -
+      3 * ‖p‖ ^ 4 - (627 / 100) * localR * ‖q‖ - 2 * localR * etaMax η ≤ S →
+    cos (cStar * e) + ‖q‖ / 200 + (3 / 100) * (‖p‖ ^ 2 + etaMax η) ≤ S
+
+/-- The cyclic rim trace and the three spoke defects yield the strict score margin. -/
+theorem local_defect_estimates (A : Fin 3 → U) (p q : ℂ) (η γ : Fin 3 → ℝ)
+    (hA : ∀ j, (A j : ℍ[ℝ]) = quatPair ⟨-η j, γ j⟩ (transverse p q j))
+    (hγ : ∀ j, 0 < γ j)
+    (hp : ‖p‖ ≤ localR) (hq : ‖q‖ ≤ localR) (hη : etaMax η ≤ localR) :
+    LocalDefectEstimates A η p q (hubMaxDefect A) := by
+  have he := hubMaxDefect_eq_asin A η (fun j => congrArg (fun x : ℍ[ℝ] => x.re) (hA j))
+  obtain ⟨hrange, htrace⟩ := quarterLocal_defectLower A η γ p q hA hγ hp hq hη
+  refine ⟨he, hrange, htrace, ?_, ?_⟩
+  · have hc₀ : 0 ≤ cStar := by linarith [cStar_bounds.1]
+    have hc₁ : cStar ≤ 1 := by linarith [cStar_bounds.2.1]
+    have he₀ : 0 ≤ hubMaxDefect A := (arccos_nonneg _).trans (le_max_right _ _)
+    have he₁ : hubMaxDefect A ≤ π := by
+      unfold hubMaxDefect roundDist
+      simp only [max_le_iff]
+      exact ⟨⟨arccos_le_pi _, arccos_le_pi _, arccos_le_pi _⟩, arccos_le_pi _⟩
+    exact ⟨mul_nonneg hc₀ he₀, (mul_le_of_le_one_left he₀ hc₁).trans he₁⟩
+  · intro S hs
+    rw [he]
+    exact localMargin ⟨norm_nonneg _, hp⟩ ⟨norm_nonneg _, hq⟩ (local_eta_nonneg η)
+      hrange.le htrace hs
 
 end RoundQuaternionLocalSharpness

@@ -59,7 +59,7 @@ private theorem phaseFactor_align (q : ℂ) :
       rw [show ‖z‖ = ‖q‖ * ‖zeta - 1‖ by exact norm_mul _ _, hz, mul_comm]
 
 private def axisConjugator (l : ℂ) (hl : ‖l‖ = 1) : U :=
-  asUnit (quatPair l 0) (by simp [local_normSq_pair, hl])
+  asUnit (quatPair l 0) (by simp [local_geometry.local_normSq_pair, hl])
 
 private theorem phase_coords (l z w : ℂ) (hl : ‖l‖ = 1) (a : U)
     (ha : (a : ℍ[ℝ]) = quatPair z w) :
@@ -86,27 +86,17 @@ def quarterLocalPotential (p q : ℂ) : Fin 4 → U :=
   let C := axisConjugator l (phaseFactor_norm q)
   conjugate C⁻¹ ∘ phasedPotential (l ^ 2 * p) (l ^ 2 * q)
 
-private theorem fitRadius_range (A : Fin 3 → U) (hc₀ : 0 ≤ cStar) (hc₁ : cStar ≤ 1) :
-    cStar * hubMaxDefect A ∈ Set.Icc 0 π := by
-  have he₀ : 0 ≤ hubMaxDefect A :=
-    (Real.arccos_nonneg _).trans (le_max_right _ _)
-  have he₁ : hubMaxDefect A ≤ π := by
-    unfold hubMaxDefect roundDist
-    simp only [max_le_iff]
-    exact ⟨⟨arccos_le_pi _, arccos_le_pi _, arccos_le_pi _⟩, arccos_le_pi _⟩
-  exact ⟨mul_nonneg hc₀ he₀, (mul_le_of_le_one_left he₀ hc₁).trans he₁⟩
-
 private theorem zero_parameters {p q : ℂ} {η : Fin 3 → ℝ} :
     ‖q‖ / 200 + (3/100) * (‖p‖ ^ 2 + etaMax η) = 0 ↔
       p = 0 ∧ q = 0 ∧ η = 0 := by
   constructor
   · intro h
-    have hE := local_eta_nonneg η
+    have hE := local_geometry.local_eta_nonneg η
     have hp : ‖p‖ ^ 2 = 0 := by nlinarith [norm_nonneg q, sq_nonneg ‖p‖]
     have hq : ‖q‖ = 0 := by nlinarith [norm_nonneg q, sq_nonneg ‖p‖]
     have hη : etaMax η = 0 := by nlinarith [norm_nonneg q, sq_nonneg ‖p‖]
     refine ⟨norm_eq_zero.mp (by nlinarith [norm_nonneg p]), norm_eq_zero.mp hq, funext fun j => ?_⟩
-    exact abs_eq_zero.mp (le_antisymm ((local_abs_eta η j).trans_eq hη) (abs_nonneg _))
+    exact abs_eq_zero.mp (le_antisymm ((local_geometry.local_abs_eta η j).trans_eq hη) (abs_nonneg _))
   · rintro ⟨rfl, rfl, rfl⟩
     norm_num [etaMax]
 
@@ -116,7 +106,7 @@ private theorem quarter_defect_exact :
     rw [roundDist, inner_eq_components]
     norm_num [unitI, Real.arccos_zero]
   have hRim : roundDist (unitI * unitI * unitI) 1 = π / 2 := by
-    rw [dist_trace, inv_one, mul_one]
+    rw [local_geometry.dist_trace, inv_one, mul_one]
     norm_num [unitI, Real.arccos_zero, Submonoid.coe_mul,
       Quaternion.re_mul, Quaternion.imI_mul, Quaternion.imJ_mul, Quaternion.imK_mul]
   simp [hubMaxDefect, hSpoke, hRim]
@@ -160,11 +150,10 @@ theorem quarterLocal_strictFit (A : Fin 3 → U) (p q : ℂ) (η γ : Fin 3 → 
     exact phaseFactor_align q
   have hs i j (hij : i ≠ j) := local_minScore
     (hnp ▸ hp) (hnq ▸ hq) he hγ' hA' hphase i j hij
-  have hdef := quarterLocal_defectLower A η γ p q hA hγpos hp hq he
-  have hfit := fitRadius_range A (by linarith [cStar_bounds.1])
-    (by linarith [cStar_bounds.2.1])
+  have hdef := local_defect_estimates A p q η γ hA hγpos hp hq he
+  have hfit := hdef.fit_radius_range
   let δ := ‖q‖/200 + (3/100)*(‖p‖^2 + etaMax η)
-  have hδ : 0 ≤ δ := by dsimp [δ]; positivity [local_eta_nonneg η]
+  have hδ : 0 ≤ δ := by dsimp [δ]; positivity [local_geometry.local_eta_nonneg η]
   have hscore i j (hij : i ≠ j) :
       cos (cStar * hubMaxDefect A) + δ ≤
         ⟪(hubGaugedGains A i j : ℍ[ℝ]),
@@ -172,28 +161,26 @@ theorem quarterLocal_strictFit (A : Fin 3 → U) (p q : ℂ) (η γ : Fin 3 → 
     have hb := hs i j hij
     rw [hnp, hnq] at hb
     change _ ≤ ⟪(hubGaugedGains A' i j : ℍ[ℝ]), ((φ' i)⁻¹ * φ' j : U)⟫_ℝ at hb
-    rw [conjugate_hub] at hb
+    rw [local_geometry.conjugate_hub] at hb
     rw [show φ' i = conjugate C (quarterLocalPotential p q i) by
       simpa [quarterLocalPotential, Function.comp_apply, inv_inv] using
-        (conj_cancel C⁻¹ (φ' i)).symm,
+        (local_geometry.conj_cancel C⁻¹ (φ' i)).symm,
       show φ' j = conjugate C (quarterLocalPotential p q j) by
         simpa [quarterLocalPotential, Function.comp_apply, inv_inv] using
-          (conj_cancel C⁻¹ (φ' j)).symm,
-      ← conj_inv, ← conj_mul, conj_inner] at hb
-    rw [hubMaxDefect_eq_asin A η (fun j => congrArg (fun x : ℍ[ℝ] => x.re) (hA j))]
+          (local_geometry.conj_cancel C⁻¹ (φ' j)).symm,
+      ← local_geometry.conj_inv, ← local_geometry.conj_mul, local_geometry.conj_inner] at hb
     have hb' := hb
     rw [pure_score_estimates.constant_values.1, pure_score_estimates.constant_values.2.2] at hb'
-    simpa only [δ, add_assoc] using localMargin
-      ⟨norm_nonneg _, hp⟩ ⟨norm_nonneg _, hq⟩ (local_eta_nonneg η) hdef.1.le hdef.2
+    simpa only [δ, add_assoc] using hdef.score_comparison _
       (by simpa [localAlpha, div_eq_mul_inv, mul_comm, localR] using hb')
-  rcases hub_faces A with ⟨hfaces, hattain⟩
+  rcases local_geometry.hub_faces A with ⟨hfaces, hattain⟩
   refine ⟨hfaces, hattain, ?_, ?_, ?_, ?_⟩
   · intro i j hij
     simpa only [δ, add_assoc] using hscore i j hij
   · intro i j hij
-    exact (score_ge_iff hfit).mpr (le_trans (le_add_of_nonneg_right hδ) (hscore i j hij))
+    exact (local_geometry.score_ge_iff hfit).mpr (le_trans (le_add_of_nonneg_right hδ) (hscore i j hij))
   · intro hn
-    exact strict_fit_of_scores hfit (lt_of_le_of_ne hδ (Ne.symm (mt zero_parameters.mp hn))) hscore
+    exact local_geometry.strict_fit_of_scores hfit (lt_of_le_of_ne hδ (Ne.symm (mt zero_parameters.mp hn))) hscore
   · rintro ⟨rfl, rfl, rfl⟩ ψ R hR hf
     have hA0 : A = fun _ => unitI := by
       funext j
@@ -320,7 +307,7 @@ private theorem chartRotate_axis (x : ℍ[ℝ]) (hx : x.re = 0)
 
 private theorem chartRotate_real (C : U) (x : ℍ[ℝ]) : (chartRotate C x).re = x.re := by
   change ((C : ℍ[ℝ]) * x * ↑(C⁻¹)).re = x.re
-  rw [re_cyclic, re_cyclic]
+  rw [local_geometry.re_cyclic, local_geometry.re_cyclic]
   change ((↑(C⁻¹ * C) : ℍ[ℝ]) * x).re = x.re
   simp
 
@@ -558,7 +545,7 @@ private theorem chartAlignment (a b c u v w : ℝ)
     rw [chartRotate_real, chartDir_re]
   have hroot (j : Fin 3) : √(1 - (η j)^2 - ‖transverse p q j‖^2) = s j * (f j).imI := by
     have hn : normSq (↑(conjugate C (chartRim a b c u v w j)) : ℍ[ℝ]) = 1 := by
-      rw [normSq_eq_norm_mul_self, unit_norm, mul_one]
+      rw [normSq_eq_norm_mul_self, CStarRing.norm_coe_unitary, mul_one]
     have hd : 1 - (η j)^2 - ‖transverse p q j‖^2 = (s j * (f j).imI)^2 := by
       rw [← hftr, hA, Complex.sq_norm]
       rw [hA, normSq_def'] at hn
@@ -639,21 +626,21 @@ theorem quarterLocal_angularRegion (a b c u v w : ℝ)
     chartAlignment a b c u v w ha hb hc hu hv huv hsize
   obtain ⟨_, _, _, hf, hs, _⟩ := quarterLocal_strictFit (conjugate C ∘ A) p q η
     (fun j => √(1-(η j)^2-‖transverse p q j‖^2)) hA (fun _ => rfl) hγpos hp hq he
-  rw [conjugate_hubMaxDefect] at hf hs
+  rw [local_geometry.conjugate_hubMaxDefect] at hf hs
   let φ := conjugate C⁻¹ ∘ quarterLocalPotential p q
   have transport (R : ℝ) (h : Fits (hubGaugedGains (conjugate C ∘ A))
       (quarterLocalPotential p q) R) : Fits (hubGaugedGains A) φ R := by
-    apply (conjugate_fits C (hubGaugedGains A) φ R).mp
+    apply (local_geometry.conjugate_fits C (hubGaugedGains A) φ R).mp
     have hg : (fun i j => conjugate C (hubGaugedGains A i j)) =
         hubGaugedGains (conjugate C ∘ A) := by
       funext i j
-      exact (conjugate_hub C A i j).symm
+      exact (local_geometry.conjugate_hub C A i j).symm
     have hφ : conjugate C ∘ φ = quarterLocalPotential p q := by
       funext i
-      simpa [φ, Function.comp_apply] using conj_cancel C⁻¹ (quarterLocalPotential p q i)
+      simpa [φ, Function.comp_apply] using local_geometry.conj_cancel C⁻¹ (quarterLocalPotential p q i)
     rw [hg, hφ]
     exact h
-  have faces := hub_faces A
+  have faces := local_geometry.hub_faces A
   refine ⟨faces.1, faces.2, ⟨φ, transport _ hf, ?_⟩, ?_⟩
   · intro hn
     obtain ⟨R, hR, hF⟩ := hs (mt hz hn)
