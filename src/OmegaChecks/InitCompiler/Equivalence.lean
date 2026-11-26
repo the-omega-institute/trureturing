@@ -10,9 +10,9 @@ private def under (e : Expr) := e.liftLooseBVars 0 1
 
 /-- Interpret a simplifier's equality of propositions as a single equivalence.
 Both directions share the same subproofs, including under dependent binders. -/
-public partial def logicalEquivalence? (env : Environment) (p q proof : Expr) (fuel := 64) : Option Expr := do
+public partial def logicalEquivalence? (env : Environment) (p q proof : Expr) (rules : NameMap ConstantInfo) (fuel := 64) : Option Expr := do
   let fuel + 1 := fuel | none
-  let again := fun a b h => logicalEquivalence? env a b h fuel
+  let again := fun a b h => logicalEquivalence? env a b h rules fuel
   let liftEq := fun a b h =>
     (again a b h).getD (mkApp3 (mkConst `Iff.of_eq) a b h)
   let pointwise := fun dom a b h =>
@@ -39,6 +39,14 @@ public partial def logicalEquivalence? (env : Environment) (p q proof : Expr) (f
   | `implies_congr_ctx, #[a, c, b, d, h, k] =>
     let branch := Expr.lam `hc c (liftEq (under b) (under d) ((under k).beta #[mkBVar 0])) .default
     return mkApp6 (mkConst `imp_congr_ctx) a b c d (liftEq a c h) branch
+  | `forall_prop_domain_congr, #[a, c, b, d, h, k] =>
+    let ac := liftEq a c h
+    let hc := mkBVar 0
+    let ha := mkApp4 (mkConst `Iff.mpr) (under a) (under c) (under ac) hc
+    let pred := (under b).beta #[ha]
+    let step := Expr.lam `hc c (liftEq pred ((under d).beta #[hc]) ((under k).beta #[hc])) .default
+    let rule ← rules.find? `forallDomain
+    return (← rule.value? (allowOpaque := true)).beta #[a, c, b, d, ac, step]
   | `forall_congr, #[dom, a, b, h] =>
     return mkApp4 (mkConst `forall_congr' us) dom a b (pointwise dom a b h)
   | `congrArg, #[_, _, a, b, .app (.const `Exists ls) dom, h] =>

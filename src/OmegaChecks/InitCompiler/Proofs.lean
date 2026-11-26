@@ -164,12 +164,12 @@ public def constructiveCasts (source : Environment) (body : Expr) (rules : NameM
     (useEquivalences := false) : Expr := Id.run do
   let mapProof := fun back p q h x => do
     if useEquivalences then
-      if let some iff := logicalEquivalence? source p q h then
+      if let some iff := logicalEquivalence? source p q h rules then
         return mkApp4 (mkConst (if back then `Iff.mpr else `Iff.mp)) p q iff x
     transport? source back p q h x 32
   let equiv := fun (a b h : Expr) => do
     if useEquivalences then
-      if let some iff := logicalEquivalence? source a b h then return iff
+      if let some iff := logicalEquivalence? source a b h rules then return iff
     let direction := fun rev dom => do
       let lift := fun (e : Expr) => e.liftLooseBVars 0 1
       let proof ← mapProof rev (lift a) (lift b) (lift h) (mkBVar 0)
@@ -193,6 +193,13 @@ public def constructiveCasts (source : Environment) (body : Expr) (rules : NameM
       let args := #[α, b, c, x, y, x, y, db, dc, ← equiv b c h,
         sameBranch c x, sameBranch (mkApp (mkConst `Not) c) y]
       return ((← rule.value? (allowOpaque := true)).instantiateLevelParams rule.levelParams us).beta args
+    | `Eq.substr, _, #[.sort .zero, motive, a, b, h, x] =>
+      let fromType := motive.beta #[a]
+      let toType := motive.beta #[b]
+      if fromType == a && toType == b then mapProof true b a h x
+      else
+        let lifted ← congrIff? b a (← equiv b a h) toType fromType
+        return mkApp4 (mkConst `Iff.mpr) toType fromType lifted x
     | `Eq.mpr_prop, _, #[p, q, h, x] => mapProof true p q h x
     | `Eq.mpr_not, _, #[p, q, h, x] =>
       let lift := fun (e : Expr) => e.liftLooseBVars 0 1
