@@ -539,6 +539,9 @@ partial def visit (n : Name) : M Bool := do
     unless compact.equal value do
       if (← checkValue compact budget) matches .added then return .added
     return result
+  -- A binary comparison certificate for a Unicode or machine-word bound may
+  -- exhaust the ordinary budget while the kernel checks its numeral conversions.
+  let comparisonBudget := 400 * c.maxHeartbeats
   if let some alt := OmegaChecks.InitPort.alternativeBody? c.alternatives ci then
     let result ← attempt alt
     if result matches .added then return ← record n .added
@@ -550,10 +553,10 @@ partial def visit (n : Name) : M Bool := do
       if !candidate.equal alt then
         if (← attempt candidate) matches .added then return ← record n .added
     if let some certified := comparisonProofs c.source c.literalProofs alt n then
-      if (← attempt certified (40 * c.maxHeartbeats)) matches .added then return ← record n .added
+      if (← attempt certified comparisonBudget) matches .added then return ← record n .added
     if !candidate.equal alt then
       if let some certified := comparisonProofs c.source c.literalProofs candidate n then
-        if (← attempt certified (40 * c.maxHeartbeats)) matches .added then return ← record n .added
+        if (← attempt certified comparisonBudget) matches .added then return ← record n .added
   if ci.isTheorem then
     if let some proof ← orderTruthProof? c.source c.literalProofs type then
       if (← attempt proof) matches .added then return ← record n .added
@@ -586,7 +589,7 @@ partial def visit (n : Name) : M Bool := do
   if let some certified := comparisonProofs c.source c.literalProofs decided n then
     -- Rechecking the closed proof of comparison costs proportionally more than
     -- applying the original opaque theorem; its bound remains deterministic.
-    if (← attempt certified (40 * c.maxHeartbeats)) matches .added then return ← record n .added
+    if (← attempt certified comparisonBudget) matches .added then return ← record n .added
   if ci.isTheorem then
     for previous in (← get).proofsByType.getD (theoremKey ci) [] do
       let some thm := c.source.find? previous | continue
