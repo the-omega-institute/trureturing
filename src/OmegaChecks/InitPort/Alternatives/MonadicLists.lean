@@ -1,4 +1,5 @@
 module
+import Init.Data.Array.Zip
 import all Init.Data.Array.OfFn
 import all Init.Data.Vector.Basic
 import all Init.Data.Vector.OfFn
@@ -994,5 +995,19 @@ private theorem mapVectorEffects [Monad m] (xs : Vector α n) (ys : Vector β n)
 public theorem Vector.mapM_map : type_of% @_root_.Vector.mapM_map := by
   intro m α β γ n mon law f g xs
   exact mapVectorEffects (xs.map f) xs g (g ∘ f) fun i hi => congrArg g (Vector.getElem_map f hi)
+
+public theorem Array.zipWithM_eq_mapM_id_zipWith : type_of% @_root_.Array.zipWithM_eq_mapM_id_zipWith := by
+  intro α β γ m mon law f as bs
+  have same (xs : List α) (ys : List β) :
+      zipListInto f xs ys = mapListInto id (xs.zipWith f ys) := by
+    induction xs generalizing ys with
+    | nil => rfl
+    | cons x xs ih =>
+      cases ys with
+      | nil => rfl
+      | cons y ys =>
+        exact congrArg (fun tail (acc : Array γ) => f x y >>= fun z => tail (acc.push z)) (ih ys)
+  rw [_root_.Array.zipWithM, zipArrayLists, mapArrayList, _root_.Array.toList_zipWith,
+    List.drop_zero, List.drop_zero, same]
 
 end OmegaChecks.InitPort.Alternatives
