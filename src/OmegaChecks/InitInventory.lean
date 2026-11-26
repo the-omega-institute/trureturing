@@ -1124,6 +1124,31 @@ private theorem endomorphisms (combine : type_of% (@Iter.forIn_congr.{u,u}))
   exact congrArg (fun (k : T → Option T) x => (k x).getD x) eq
 
 
+private theorem monadicEndomorphisms (combine : type_of% (@IterM.forIn_congr.{u,u,u}))
+    {T : Type u} {f g : T → T} (agree : ∀ x, f x = g x) : f = g := by
+  letI := itInst T
+  letI := reading T
+  letI : MonadLift Id (ReaderM T) := ⟨fun x _ => x⟩
+  let i : IterM (α := State.{u}) Id T := ⟨⟨true⟩⟩
+  let finish (y : T) : ReaderM T (ForInStep (Option T)) := fun _ => .done (some y)
+  have eq := combine (ita := i) (itb := i) rfl (b := (none : Option T)) rfl
+    (f := fun x _ => finish (f x)) (g := fun x _ => finish (g x)) (fun x _ => congrArg finish (agree x))
+  exact congrArg (fun (k : T → Option T) x => (k x).getD x) eq
+
+private theorem forgetMonadicMembership (combine : type_of% @IterM.forIn'_congr.{u,u,u}) :
+    type_of% @IterM.forIn_congr.{u,u,u} := by
+  intro α β m n monN monM iterator loop lift γ ita itb w b b' hb f g agree
+  cases w
+  exact combine rfl hb (fun a _ c => agree a c)
+
+public theorem funextFromMonadicCongr (combine : type_of% @IterM.forIn_congr.{max 1 u v, max 1 u v,max 1 u v}) :
+    type_of% @funext.{u,v} :=
+  funextFromEndomorphisms (monadicEndomorphisms combine)
+
+public theorem funextFromMonadicCongr' (combine : type_of% @IterM.forIn'_congr.{max 1 u v, max 1 u v,max 1 u v}) :
+    type_of% @funext.{u,v} :=
+  funextFromMonadicCongr (forgetMonadicMembership combine)
+
 /-- Membership-dependent loop congruence specializes to ordinary loop congruence. -/
 private theorem forgetMembership (combine : type_of% (@Iter.forIn'_congr.{u,u})) :
     type_of% (@Iter.forIn_congr.{u,u}) := by
@@ -1142,7 +1167,7 @@ public theorem funextFromCongr' (combine : type_of% @Iter.forIn'_congr.{max 1 u 
 
 open Lean in
 run_cmd
-  for n in [``funextFromCongr, ``funextFromCongr'] do
+  for n in [``funextFromCongr, ``funextFromCongr', ``funextFromMonadicCongr, ``funextFromMonadicCongr'] do
     unless (← collectAxioms n).isEmpty do throwError "iterator congruence witness {n} uses axioms"
 
 end IteratorLoopCongruence
@@ -1714,6 +1739,10 @@ private def logicalConsequence? (owner name : Name) : Option (Name × Name) := d
     return (``funext, ``OmegaChecks.InitBoundaries.MonadicTraversal.fromListFoldl)
   | `Init.Data.List.Monadic, ``List.foldrM_subtype =>
     return (``funext, ``OmegaChecks.InitBoundaries.MonadicTraversal.fromListFoldr)
+  | `Init.Data.Iterators.Lemmas.Consumers.Monadic.Loop, ``Std.IterM.forIn_congr =>
+    return (``funext, ``OmegaChecks.InitBoundaries.IteratorLoopCongruence.funextFromMonadicCongr)
+  | `Init.Data.Iterators.Lemmas.Consumers.Monadic.Loop, ``Std.IterM.forIn'_congr =>
+    return (``funext, ``OmegaChecks.InitBoundaries.IteratorLoopCongruence.funextFromMonadicCongr')
   | `Init.Data.Iterators.Lemmas.Consumers.Loop, ``Std.Iter.forIn_congr =>
     return (``funext, ``OmegaChecks.InitBoundaries.IteratorLoopCongruence.funextFromCongr)
   | `Init.Data.Iterators.Lemmas.Consumers.Loop, ``Std.Iter.forIn'_congr =>
