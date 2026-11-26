@@ -11,6 +11,7 @@ import all Init.Data.Range.Polymorphic.RangeIterator
 import all Init.Data.Range.Polymorphic.Iterators
 public import Init.Data.Range.Polymorphic.Instances
 public import Init.Data.Range.Polymorphic.Map
+public import OmegaChecks.InitPort.Alternatives.RangeList
 
 /-! Finite consumers have a well-founded relation in their own interface. -/
 
