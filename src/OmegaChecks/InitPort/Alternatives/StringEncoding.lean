@@ -258,6 +258,64 @@ public theorem String.Pos.Raw.isValid_iff_isUTF8FirstByte :
       rw [List.utf8Encode_append, ByteArray.extract_append_eq_left off]
       exact ⟨a, rfl⟩
 
+public theorem String.Pos.Raw.isValidUTF8_extract_iff : type_of% @_root_.String.Pos.Raw.isValidUTF8_extract_iff := by
+  intro s p q le upper
+  constructor
+  · intro valid
+    by_cases eq : p = q
+    · exact Or.inl eq
+    · have lt : p.byteIdx < q.byteIdx :=
+        Nat.lt_of_le_of_ne le (fun eqIdx => eq (String.Pos.Raw.ext eqIdx))
+      have nonempty : 0 < (s.toByteArray.extract p.byteIdx q.byteIdx).size := by
+        rw [ByteArray.size_extract, Nat.min_eq_left (show q.byteIdx ≤ s.toByteArray.size from upper)]
+        exact Nat.sub_pos_of_lt lt
+      have first := ByteArray.IsValidUTF8.isUTF8FirstByte_getElem_zero valid nonempty
+      rw [ByteArray.getElem_extract] at first
+      have hp := String.Pos.Raw.isValid_iff_isUTF8FirstByte.mpr (Or.inr ⟨Nat.lt_of_lt_of_le lt upper, first⟩)
+      refine Or.inr ⟨hp, _root_.String.Pos.Raw.isValid_iff_isValidUTF8_extract_zero.mpr ⟨upper, ?_⟩⟩
+      rw [ByteArray.extract_eq_extract_append_extract p.byteIdx (Nat.zero_le _) le]
+      exact hp.isValidUTF8_extract_zero.append valid
+  · rintro (rfl | ⟨hp, hq⟩)
+    · rw [ByteArray.extract_same]
+      exact ByteArray.isValidUTF8_empty
+    · exact _root_.String.Pos.isValidUTF8_extract ⟨p, hp⟩ ⟨q, hq⟩
+
+public theorem String.Pos.Raw.isValid_iff_isValidUTF8_extract_utf8ByteSize :
+    type_of% @_root_.String.Pos.Raw.isValid_iff_isValidUTF8_extract_utf8ByteSize := by
+  intro s p
+  constructor
+  · intro valid
+    exact ⟨valid.le_rawEndPos, String.Pos.Raw.IsValid.isValidUTF8_extract_utf8ByteSize valid⟩
+  · rintro ⟨le, utf8⟩
+    obtain eq | ⟨hp, _⟩ := (String.Pos.Raw.isValidUTF8_extract_iff p s.rawEndPos le (Nat.le_refl _)).mp utf8
+    · exact eq ▸ s.endPos.isValid
+    · exact hp
+
+public theorem String.Pos.Raw.isValid_push : type_of% @_root_.String.Pos.Raw.isValid_push := by
+  intro s c p
+  constructor
+  · intro valid
+    rw [← _root_.String.append_singleton] at valid
+    obtain inOriginal | ⟨lower, tail⟩ := _root_.String.Pos.Raw.isValid_append.mp valid
+    · exact Or.inl inOriginal
+    · have low : s.utf8ByteSize ≤ p.byteIdx := lower
+      have restore := Nat.sub_add_cancel low
+      obtain zero | last := _root_.String.Pos.Raw.isValid_singleton.mp tail
+      · have eq : p.byteIdx = s.utf8ByteSize := by
+          have diff : p.byteIdx - s.utf8ByteSize = 0 := congrArg String.Pos.Raw.byteIdx zero
+          rw [diff, Nat.zero_add] at restore
+          exact restore.symm
+        exact Or.inl (String.Pos.Raw.ext eq ▸ s.endPos.isValid)
+      · right
+        apply String.Pos.Raw.ext
+        change p.byteIdx - s.utf8ByteSize = c.utf8Size at last
+        rw [last, Nat.add_comm] at restore
+        exact restore.symm
+  · rintro (inOriginal | rfl)
+    · rw [← _root_.String.append_singleton]
+      exact _root_.String.Pos.Raw.isValid_append.mpr (Or.inl inOriginal)
+    · exact _root_.String.rawEndPos_push ▸ (s.push c).endPos.isValid
+
 public theorem String.Pos.Raw.isValid_iff_isSome_utf8DecodeChar? :
     type_of% @_root_.String.Pos.Raw.isValid_iff_isSome_utf8DecodeChar? := by
   intro s p
