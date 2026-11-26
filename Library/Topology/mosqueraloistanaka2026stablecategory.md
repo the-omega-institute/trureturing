@@ -13,6 +13,7 @@ strata_touched:
   - D5/S3/Topology/BarycentricGraphDistance
   - D5/S3/Topology/BarycentricNeighborhoodIteration
   - D5/S3/Topology/BarycentricBaseRigidity
+  - D5/S3/Topology/ConnectedCategoryGraft
 license: citation-only
 triage: anchor
 ---
@@ -29,8 +30,37 @@ the realization of the order complex. The paper uses unreduced category.
 ## Locator
 
 Section 2 and Question 6.3 of the cited preprint give the category invariants
-and the proposed inequality. DOI 10.48550/arXiv.2609.39615.
+and the proposed inequality. Proposition 5.2 and Question 6.2 give the
+height-one family and the connected realization problem. DOI
+10.48550/arXiv.2609.39615.
 [Preprint v1](https://arxiv.org/abs/2609.39615v1)
+
+## Connected realizations
+
+For a connected finite poset `X`, identify a minimal point with one of the
+minima of the height-one poset `B_m` with `m ≥ 2` common maxima. The graft has
+ordinary category `max(cat(X), m)`. The Lean theorem gives the exact criterion
+for a categorical lower cover of each size. The principal lower sets of `B_m`
+contract to the shared point while fixing it. In the lower bound, a piece
+containing two maxima would contract the four-point retract whose identity is
+isolated among pointwise-comparable maps.
+
+Subdivision preserves this union and its minimal shared point. At positive
+depth the subdivided `B_m` has a lower cover by the face posets of two
+subdivided tree stars. Leaf pruning gives the rooted contraction required at
+the common point. The same cover argument at positive depths yields stable
+category `max(cat_s(X), 2)`. The classical wedge formula gives weak category
+`max(cat_w(X), 2)`.
+
+For `a ≥ 2`, take the opposite face poset of the first barycentric subdivision
+of a triangulated `(a − 1)`-torus. For each face dimension, the open set of
+faces meeting that dimension color contracts through the projection onto its
+discrete color class. The torus cup-length gives weak category `a`, so all
+three categories equal `a`. Grafting `B_c` yields every connected triple
+`(a, a, c)` with `2 ≤ a ≤ c`. The Lean module proves the ordinary cover formula
+used in this construction. The stable and weak formulas and the torus argument
+are mathematical deductions using the subdivision and classical category
+comparisons.
 
 ## A coface bound on a collapse sequence
 
