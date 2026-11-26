@@ -154,4 +154,89 @@ theorem trace_three_commutator_transport
   ring
 
 
+
+/-- The three-square trace identity used for the Laplace average of
+the four-copy deficit. Both factors may have either sign. -/
+theorem fourth_power_three_squares
+    {𝕜 A : Type*} [CommRing 𝕜] [Ring A] [StarRing A] [Module 𝕜 A]
+    (τ : A →ₗ[𝕜] 𝕜) (hτ : ∀ a b : A, τ (a * b) = τ (b * a))
+    (P C : A) (hP : star P = P) (hC : star C = C) :
+    let X := P ^ 2 * C ^ 2 - C ^ 2 * P ^ 2
+    let Y := C * P ^ 2 * C - P * C ^ 2 * P
+    let Z := (P * C) ^ 2 - (C * P) ^ 2
+    τ (star X * X) + τ (star Y * Y) + τ (star Z * Z) =
+      2 * (τ (P ^ 4 * C ^ 4) - τ ((P * C) ^ 4)) := by
+  let X := P ^ 2 * C ^ 2 - C ^ 2 * P ^ 2
+  let Y := C * P ^ 2 * C - P * C ^ 2 * P
+  let Z := (P * C) ^ 2 - (C * P) ^ 2
+  have hx : star X = -X := by simp [X, star_mul, hP, hC, neg_sub]
+  have hy : star Y = Y := by simp [Y, star_mul, hP, hC, mul_assoc]
+  have hz : star Z = -Z := by simp [Z, star_mul, hP, hC, neg_sub]
+  change τ (star X * X) + τ (star Y * Y) + τ (star Z * Z) = _
+  rw [hx, hy, hz]
+  have hx' : -X * X =
+      P ^ 2 * C ^ 4 * P ^ 2 + C ^ 2 * P ^ 4 * C ^ 2 -
+        P ^ 2 * C ^ 2 * P ^ 2 * C ^ 2 - C ^ 2 * P ^ 2 * C ^ 2 * P ^ 2 := by
+    dsimp [X]
+    noncomm_ring
+  have hx₁ : τ (P ^ 2 * C ^ 4 * P ^ 2) = τ (P ^ 4 * C ^ 4) := by
+    rw [hτ]
+    congr 1
+    noncomm_ring
+  have hx₂ : τ (C ^ 2 * P ^ 4 * C ^ 2) = τ (P ^ 4 * C ^ 4) := by
+    rw [mul_assoc, hτ]
+    congr 1
+    noncomm_ring
+  have hx₃ : τ (C ^ 2 * P ^ 2 * C ^ 2 * P ^ 2) = τ (P ^ 2 * C ^ 2 * P ^ 2 * C ^ 2) := by
+    rw [hτ]
+    congr 1
+    noncomm_ring
+  have hmid : τ (-X * X) =
+      2 * (τ (P ^ 4 * C ^ 4) - τ (P ^ 2 * C ^ 2 * P ^ 2 * C ^ 2)) := by
+    rw [hx', map_sub, map_sub, map_add, hx₁, hx₂, hx₃]
+    ring
+  let M := P * C
+  let N := C * P
+  have hm : Y = N * M - M * N := by
+    dsimp [Y, M, N]
+    noncomm_ring
+  have hn : Z = M ^ 2 - N ^ 2 := rfl
+  have hex : Y * Y + -Z * Z =
+      (N * M) ^ 2 + (M * N) ^ 2 - M ^ 4 - N ^ 4 +
+        (M ^ 2 * N ^ 2 - N * M ^ 2 * N) + (N ^ 2 * M ^ 2 - M * N ^ 2 * M) := by
+    rw [hm, hn]
+    noncomm_ring
+  have h₁ : τ ((N * M) ^ 2) = τ (P ^ 2 * C ^ 2 * P ^ 2 * C ^ 2) := by
+    rw [show (N * M) ^ 2 = C * (P ^ 2 * C ^ 2 * P ^ 2 * C) by
+      dsimp [M, N]; noncomm_ring, hτ]
+    congr 1
+    noncomm_ring
+  have h₂ : τ ((M * N) ^ 2) = τ (P ^ 2 * C ^ 2 * P ^ 2 * C ^ 2) := by
+    rw [show (M * N) ^ 2 = (P * C ^ 2 * P ^ 2 * C ^ 2) * P by
+      dsimp [M, N]; noncomm_ring, hτ]
+    congr 1
+    noncomm_ring
+  have h₃ : τ (N ^ 4) = τ (M ^ 4) := by
+    rw [show N ^ 4 = C * (M ^ 3 * P) by dsimp [M, N]; noncomm_ring, hτ]
+    congr 1
+    dsimp [M]
+    noncomm_ring
+  have h₄ : τ (N * M ^ 2 * N) = τ (M ^ 2 * N ^ 2) := by
+    rw [mul_assoc, hτ]
+    congr 1
+    noncomm_ring
+  have h₅ : τ (M * N ^ 2 * M) = τ (N ^ 2 * M ^ 2) := by
+    rw [mul_assoc, hτ]
+    congr 1
+    noncomm_ring
+  have htail : τ (Y * Y) + τ (-Z * Z) =
+      2 * (τ (P ^ 2 * C ^ 2 * P ^ 2 * C ^ 2) - τ (M ^ 4)) := by
+    rw [← map_add, hex, map_add, map_add, map_sub, map_sub, map_add,
+      map_sub, map_sub, h₁, h₂, h₃, h₄, h₅]
+    ring
+  rw [add_assoc, hmid, htail]
+  dsimp [M]
+  ring
+
+
 end RefinedBMV.Tracial
