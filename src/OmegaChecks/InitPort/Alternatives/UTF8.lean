@@ -240,4 +240,7 @@ public theorem String.Pos.isValidUTF8_extract : type_of% @_root_.String.Pos.isVa
   · rw [ByteArray.extract_eq_empty_iff.2 (Nat.le_trans (Nat.min_le_left ..) (Nat.le_of_not_le h))]
     exact ByteArray.isValidUTF8_empty
 
+@[expose] public def String.Internal.toArray (s : String) : Array Char :=
+  s.toByteArray.utf8Decode?.getD #[]
+
 end OmegaChecks.InitPort.Alternatives
