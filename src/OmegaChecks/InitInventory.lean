@@ -486,6 +486,96 @@ def limitedOmniscienceFromMonadicReverse (collect : type_of% (@Std.IterM.toListR
   limitedOmniscienceFromReverse (fun it => (collect it.toIterM).run)
     (fun it => (correct it.toIterM).trans Iter.toListRev_eq_toListRev_toIterM.symm) f
 
+private def indexStep (f : Nat → Bool) (it : IterM (α := Option Nat) Id Nat) :
+    IterStep (IterM (α := Option Nat) Id Nat) Nat :=
+  match it.internalState with
+  | none => .done
+  | some k => if f k then .yield ⟨none⟩ k else .skip ⟨some (k+1)⟩
+
+@[instance_reducible] private def indexIterator (f : Nat → Bool) : Iterator (Option Nat) Id Nat where
+  IsPlausibleStep it s := s = indexStep f it
+  step it := pure (.deflate ⟨indexStep f it, rfl⟩)
+
+private theorem indexFinite {f : Nat → Bool} (sticky : ∀ i, f i = true → f (i+1) = true)
+    {n : Nat} (hit : f n = true) :
+    letI := indexIterator f
+    Finite (Option Nat) Id := by
+  letI := indexIterator f
+  let rank (it : IterM (α := Option Nat) Id Nat) := it.internalState.elim 0 (fun k => n - k + 1)
+  apply Finite.of_finitenessRelation
+  refine ⟨InvImage Nat.lt rank, InvImage.wf _ Nat.lt_wfRel.wf, ?_⟩
+  intro it next h
+  obtain ⟨s, dest, step⟩ := h
+  change s = indexStep f it at step
+  subst s
+  rcases it with ⟨_ | k⟩
+  · cases dest
+  · dsimp only [indexStep] at dest
+    cases e : f k with
+    | true =>
+      rw [e] at dest
+      cases Option.some.inj dest
+      exact Nat.zero_lt_succ _
+    | false =>
+      rw [e] at dest
+      cases Option.some.inj dest
+      have lt : k < n := Nat.lt_of_not_ge fun ge =>
+        Bool.noConfusion (e.symm.trans (signal_after sticky hit ge))
+      change n - (k + 1) + 1 < n - k + 1
+      omega
+
+private theorem firstIndexHit {f : Nat → Bool} (sticky : ∀ i, f i = true → f (i+1) = true)
+    {n : Nat} (hit : f n = true) (k : Nat) :
+    letI := indexIterator f
+    ∃ j, (⟨some k⟩ : Iter (α := Option Nat) Nat).atIdxSlow? 0 = some j ∧ f j = true := by
+  letI := indexIterator f
+  letI := indexFinite sticky hit
+  have unroll (k : Nat) :
+      (⟨some k⟩ : Iter (α := Option Nat) Nat).atIdxSlow? 0 =
+        if f k then some k else (⟨some (k+1)⟩ : Iter (α := Option Nat) Nat).atIdxSlow? 0 := by
+    rw [Iter.atIdxSlow?_eq_match]
+    have eq := congrArg (fun q => (IterM.Step.toPure (it := (⟨some k⟩ : Iter (α := Option Nat) Nat).toIterM) q).val)
+      (Shrink.inflate_deflate (x := (⟨indexStep f ⟨some k⟩, rfl⟩ : (⟨some k⟩ : IterM (α := Option Nat) Id Nat).Step)))
+    change (⟨some k⟩ : Iter (α := Option Nat) Nat).step.val = _ at eq
+    rw [eq]
+    cases e : f k <;> simp [IterM.Step.toPure, indexStep, e, IterStep.mapIterator, IterM.toIter]
+  generalize heq : n - k = fuel
+  induction fuel generalizing k with
+  | zero =>
+    have yes := signal_after sticky hit (Nat.le_of_sub_eq_zero heq)
+    exact ⟨k, by rw [unroll, yes]; rfl, yes⟩
+  | succ fuel ih =>
+    cases e : f k with
+    | true => exact ⟨k, by rw [unroll, e]; rfl, e⟩
+    | false =>
+      obtain ⟨j, hj, h⟩ := ih (k+1) (by omega)
+      exact ⟨j, by rw [unroll, e]; exact hj, h⟩
+
+/-- The unrestricted lookup accepts iterators that skip before their first output.
+For a stream with a signal its first output can be the location of that signal. -/
+def limitedOmniscienceFromLookup (lookup : type_of% (@Std.Iter.atIdxSlow?.{0}))
+    (correct : ∀ {α β : Type} [Iterator α Id β] [Finite α Id] (i : Nat) (it : Iter (α := α) β),
+      lookup i it = it.atIdxSlow? i) (f : Nat → Bool) : Decidable (∃ i, f i = true) := by
+  letI := indexIterator (seen f)
+  let it : Iter (α := Option Nat) Nat := ⟨some 0⟩
+  cases h : lookup 0 it with
+  | none =>
+    refine isFalse fun ⟨k, hk⟩ => ?_
+    have yes := seen_of_hit f k hk
+    letI := indexFinite (seenSticky f) yes
+    obtain ⟨j, hj, _⟩ := firstIndexHit (seenSticky f) yes 0
+    cases h.symm.trans ((correct 0 it).trans hj)
+  | some j =>
+    cases e : seen f j with
+    | true => exact isTrue (hit_of_seen f j e)
+    | false =>
+      refine isFalse fun ⟨k, hk⟩ => ?_
+      have yes := seen_of_hit f k hk
+      letI := indexFinite (seenSticky f) yes
+      obtain ⟨j', hj, sign⟩ := firstIndexHit (seenSticky f) yes 0
+      cases Option.some.inj (h.symm.trans ((correct 0 it).trans hj))
+      exact Bool.noConfusion (e.symm.trans sign)
+
 end Collector
 
 end OmegaChecks.InitBoundaries
