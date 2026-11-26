@@ -1,4 +1,6 @@
 module
+import all Init.Data.Array.OfFn
+import all Init.Data.Vector.OfFn
 public import Init.Data.Array.Monadic
 import all Init.Data.Array.Basic
 public import Init.Data.List.Monadic
@@ -42,12 +44,12 @@ public theorem List.allM_pure : type_of% @_root_.List.allM_pure := by
     | false => rfl
     | true => exact ih
 
-private theorem fixInvariant {A : Sort u} {B : Sort v} (measure : A → Nat) (spec : A → B)
+private theorem fixInvariant {A : Sort u} {B : Sort v} (measure : A → Nat) (satisfies : A → B → Prop)
     (action : (x : A) → ((y : A) → measure y < measure x → B) → B)
-    (step : ∀ x recur, (∀ y h, recur y h = spec y) → action x recur = spec x) (x : A) :
-    WellFounded.Nat.fix measure action x = spec x := by
+    (step : ∀ x recur, (∀ y h, satisfies y (recur y h)) → satisfies x (action x recur)) (x : A) :
+    satisfies x (WellFounded.Nat.fix measure action x) := by
   have go (n : Nat) (x : A) (hn : measure x < n) :
-      WellFounded.Nat.fix.go measure action n x hn = spec x := by
+      satisfies x (WellFounded.Nat.fix.go measure action n x hn) := by
     induction n generalizing x with
     | zero => exact False.elim (Nat.not_lt_zero _ hn)
     | succ n ih => exact step x _ (fun y _ => ih y _)
@@ -60,7 +62,7 @@ public theorem Array.mapM_pure : type_of% @_root_.Array.mapM_pure := by
   have run (i : Nat) (acc : Array β) :
       Array.mapM.map (m := m) (fun x => pure (f x)) xs i acc = spec ⟨i, acc⟩ := by
     delta Array.mapM.map Array.mapM.map._unary
-    apply fixInvariant _ spec
+    apply fixInvariant _ (fun p out => out = spec p)
     rintro ⟨j, bs⟩ recur ih
     dsimp only
     by_cases h : j < xs.size
@@ -111,7 +113,7 @@ private theorem arrayAnyPure [Monad m] [LawfulMonad m] (xs : Array α)
   let spec (i : Nat) : m Bool := pure ((xs.toList.drop i).any p)
   have run (i : Nat) : Array.anyM.loop q xs xs.size (Nat.le_refl _) i = spec i := by
     delta Array.anyM.loop
-    apply fixInvariant _ spec
+    apply fixInvariant _ (fun p out => out = spec p)
     intro j recur ih
     dsimp only
     by_cases hj : j < xs.size
@@ -869,5 +871,61 @@ public theorem List.firstM_toArray : type_of% @_root_.List.firstM_toArray := by
       rw [Array.firstM.go, dite_eq_left inside, ← List.getElem_cons_drop bound, List.firstM]
       exact congrArg (fun x => f xs[j] <|> x) (ih (j+1) (by omega))
   exact loop xs.length 0 (Nat.zero_add _)
+
+private theorem foldPurePush [Monad m] [LawfulMonad m] (f : Fin n → α) (xs : Array α) :
+    Fin.foldlM n (m := m) (fun acc j => acc.push <$> pure (f j)) xs =
+      pure (xs ++ Array.ofFn f) := by
+  induction n generalizing xs with
+  | zero => rw [Fin.foldlM_zero, Array.ofFn_zero, Array.append_empty]
+  | succ n ih =>
+    rw [Fin.foldlM_succ]
+    dsimp only
+    rw [map_pure, pure_bind, ih, Array.ofFn_succ' (f := f), Array.push_eq_append, Array.append_assoc]
+
+public theorem Array.ofFnM_pure_comp : type_of% @_root_.Array.ofFnM_pure_comp := by
+  intro m α mon law n f
+  unfold _root_.Array.ofFnM
+  change Fin.foldlM n (m := m) (fun acc j => acc.push <$> pure (f j)) #[] = _
+  rw [foldPurePush, _root_.Array.empty_append]
+
+public theorem Array.idRun_ofFnM : type_of% @_root_.Array.idRun_ofFnM := by
+  intro α n f
+  exact _root_.Array.ofFnM_pure_comp (m := Id)
+
+public theorem Vector.ofFnM_pure_comp : type_of% @_root_.Vector.ofFnM_pure_comp := by
+  intro m α mon law n f
+  let agrees (p : (i : Nat) ×' (_ : i ≤ n) ×' (xs : Array α) ×' xs.size = i) (out : m (Vector α n)) :=
+    (∀ j (hj : j < p.2.2.1.size),
+      p.2.2.1[j] = f ⟨j, Nat.lt_of_lt_of_le (p.2.2.2 ▸ hj) p.2.1⟩) →
+      out = pure (Vector.ofFn f)
+  delta _root_.Vector.ofFnM _root_.Vector.ofFnM.go _root_.Vector.ofFnM.go._unary
+  apply fixInvariant _ agrees
+  · rintro ⟨i, hi, xs, hx⟩ recur ih
+    dsimp only [agrees, Function.comp_apply]
+    intro prefixAgree
+    by_cases h : i < n
+    · rw [dite_eq_left h, pure_bind]
+      apply ih
+      intro j hj
+      by_cases old : j < xs.size
+      · exact (Array.getElem_push_lt old).trans (prefixAgree j old)
+      · have last : j = xs.size := by
+          rw [Array.size_push] at hj
+          exact Nat.le_antisymm (Nat.le_of_lt_succ hj) (Nat.le_of_not_lt old)
+        subst j
+        rw [Array.getElem_push_eq]
+        exact congrArg f (Fin.ext hx.symm)
+    · rw [dite_eq_right h]
+      apply congrArg pure
+      apply Vector.ext
+      intro j hj
+      rw [Vector.getElem_ofFn]
+      exact prefixAgree j _
+  · intro j hj
+    exact False.elim (Nat.not_lt_zero _ hj)
+
+public theorem Vector.idRun_ofFnM : type_of% @_root_.Vector.idRun_ofFnM := by
+  intro α n f
+  exact _root_.Vector.ofFnM_pure_comp (m := Id)
 
 end OmegaChecks.InitPort.Alternatives
