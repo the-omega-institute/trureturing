@@ -5,10 +5,19 @@ public import Init.Data.Nat.Basic
 import all Init.Data.Array.Basic
 import Init.Data.Array.Lemmas
 import all Init.Data.Array.MapIdx
+import Init.Data.Slice.Array.Iterator
+import Init.Data.Array.InsertIdx
+import all Init.Data.Vector.Basic
 
 /-! List-backed implementations and induction proofs for the pinned array interfaces. -/
 
 namespace OmegaChecks.InitPort.Alternatives
+
+public def Subarray.copy {α : Type u} (s : Subarray α) : Array α :=
+  s.array.extract s.start s.stop
+
+public def Array.ofSubarray {α : Type u} (s : Subarray α) : Array α :=
+  s.array.extract s.start s.stop
 
 public theorem Array.map_const : type_of% @_root_.Array.map_const := by
   intro α β xs b
@@ -228,5 +237,22 @@ public theorem Array.toList_filterMap' : type_of% @_root_.Array.toList_filterMap
 public theorem Array.toList_filterMap : type_of% @_root_.Array.toList_filterMap := by
   intro α β f xs
   exact Array.toList_filterMap' rfl
+
+private theorem insertLoopSize (i : Nat) (xs : Array α) (j : Fin xs.size) :
+    (Array.insertIdx.loop i xs j).size = xs.size := by
+  apply Array.insertIdx.loop.induct i (fun ys k => (Array.insertIdx.loop i ys k).size = ys.size) _ _ xs j
+  · intro ys k hk
+    dsimp only
+    intro ih
+    rw [Array.insertIdx.loop.eq_def, ite_eq_left hk]
+    exact ih.trans Array.size_swap
+  · intro ys k hk
+    rw [Array.insertIdx.loop.eq_def, ite_eq_right hk]
+public theorem Array.size_insertIdx : type_of% @_root_.Array.size_insertIdx := by
+  intro α a i xs h
+  exact (insertLoopSize i (xs.push a) _).trans (_root_.Array.size_push a)
+public theorem Vector.insertIdx._proof_1 : type_of% @_root_.Vector.insertIdx._proof_1 := by
+  intro α n xs i x h
+  exact (Array.size_insertIdx (xs.size_toArray.symm ▸ h)).trans (congrArg (· + 1) xs.size_toArray)
 
 end OmegaChecks.InitPort.Alternatives

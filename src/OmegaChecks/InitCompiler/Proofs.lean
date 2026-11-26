@@ -337,8 +337,10 @@ public def namedLogicalProjections (source : Environment) (body : Expr) : IO Exp
     return ← action.run' |>.toIO' {fileName := "<logical projection>", fileMap := default} {env := source}
   catch _ => return body
 
+private def nonemptyChoices := [`Classical.choice, `Classical.ofNonempty, `Classical.inhabited_of_nonempty]
+
 private def choiceWitness? (e : Expr) : Bool :=
-  e.isAppOfArity `Classical.choice 2 ||
+  (nonemptyChoices.any fun n => e.isAppOfArity n 2) ||
     ([`Classical.choose, `Classical.choose_spec, `Exists.choose, `Exists.choose_spec,
       `Classical.indefiniteDescription].any fun n => e.isAppOfArity n 3)
 
@@ -350,10 +352,11 @@ private def eliminateChoice (e : Expr) : MetaM Expr := do
   let .const name us := chosen.getAppFn | return e
   let args := chosen.getAppArgs
   let α := args[0]!
-  if name == `Classical.choice then
+  if nonemptyChoices.contains name then
     if chosen.occurs conclusion then return e
-    let branch ← Meta.withLocalDeclD `w α fun x => Meta.mkLambdaFVars #[x] (e.replace fun sub =>
-      if sub == chosen then some x else none)
+    let branch ← Meta.withLocalDeclD `w α fun x => do
+      let value := if name == `Classical.inhabited_of_nonempty then mkApp2 (mkConst `Inhabited.mk us) α x else x
+      Meta.mkLambdaFVars #[x] (e.replace fun sub => if sub == chosen then some value else none)
     return mkApp4 (mkConst `Nonempty.elim us) α conclusion args[1]! branch
   let p := args[1]!
   let witnesses := [`Classical.choose, `Exists.choose].map fun n => mkAppN (mkConst n us) args
@@ -393,8 +396,8 @@ public def decidableProof (source : Environment) (body : Expr) : IO Expr := do
   let body := exposeDecidableTheorems source body
   let classical := [`Classical.em, `Classical.byCases, `Classical.byContradiction, `Classical.propDecidable]
   let deps := body.getUsedConstants
-  let usesChoice := deps.any [`Classical.choose, `Classical.choose_spec, `Exists.choose, `Exists.choose_spec, `Classical.choice,
-    `Classical.indefiniteDescription].contains
+  let usesChoice := deps.any nonemptyChoices.contains || deps.any [`Classical.choose, `Classical.choose_spec,
+    `Exists.choose, `Exists.choose_spec, `Classical.indefiniteDescription].contains
   unless usesChoice || deps.any classical.contains do return body
   let action : MetaM Expr := Meta.transform body (post := fun e => do
     if usesChoice then

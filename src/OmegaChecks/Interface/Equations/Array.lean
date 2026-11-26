@@ -1,10 +1,20 @@
 module
 
 public import Init.Data.Array.Lemmas
+import Init.Data.Slice.Array.Lemmas
+import all Init.Data.Slice.Array.Iterator
 
 /-! Pointwise correspondence between the strict list-backed array operations and pinned Init. -/
 
 namespace OmegaChecks.Interface.Equations
+
+public theorem Subarray.copy {α : Type u} (s : Subarray α) :
+    s.array.extract s.start s.stop = _root_.Subarray.copy s :=
+  Array.ext' (_root_.Subarray.toList_eq.symm.trans _root_.Subarray.toList_toArray.symm)
+
+public theorem Array.ofSubarray {α : Type u} (s : Subarray α) :
+    s.array.extract s.start s.stop = _root_.Array.ofSubarray s :=
+  Array.ext' (_root_.Subarray.toList_eq.symm.trans _root_.Subarray.toList_toArray.symm)
 
 public theorem Array.append {α : Type u} (as bs : Array α) :
     _root_.Array.mk (List.append as.toList bs.toList) = _root_.Array.append as bs :=
