@@ -395,7 +395,8 @@ set_option maxHeartbeats 0 in
 private theorem diagonal_check : ∀ u : Index, coefficient u u = cross u u := by
   decide +kernel
 
-private theorem same_quadratic {n : Type} [Fintype n] [LinearOrder n]
+/-- Diagonal values and the polar form determine a quadratic form over `ZMod 2`. -/
+theorem same_quadratic {n : Type} [Fintype n] [LinearOrder n]
     (A B : Matrix n n F₂)
     (hdiag : ∀ u, A u u = B u u)
     (hpolar : ∀ u v, A u v + A v u = B u v + B v u)
