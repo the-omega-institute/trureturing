@@ -646,10 +646,32 @@ theorem funextFromStateExtIff (ext : type_of% @StateT.ext_iff.{max 1 u v,max 1 u
     type_of% @funext.{u,v} :=
   funextFromStateExt fun {_ _ _ _ _} => ext.mpr
 
+/-- On the graph of f, replacing each value by its pointwise equal g gives an identity map. -/
+private theorem endomorphismsOfPointwiseId
+    (fixes : ∀ {S : Type w} (k : S → S), (∀ s, k s = s) → k = id)
+    {T : Type w} {f g : T → T} (h : ∀ x, f x = g x) : f = g := by
+  let graph := {p : T × T // p.2 = f p.1}
+  let k (p : graph) : graph := ⟨(p.val.1, g p.val.1), (h p.val.1).symm⟩
+  have eq := fixes k fun p => Subtype.ext (Prod.ext rfl ((h p.val.1).symm.trans p.property.symm))
+  exact (congrArg (fun (j : graph → graph) x => (j ⟨(x, f x), rfl⟩).val.2) eq).symm
+
+theorem funextFromLeftInverseId
+    (inv : type_of% @Function.LeftInverse.id.{(max 1 u v)+1,(max 1 u v)+1}) :
+    type_of% @funext.{u,v} :=
+  funextFromEndomorphisms fun {_ _ _} h =>
+    endomorphismsOfPointwiseId (fun {S} k hk => @inv S S k id hk) h
+
+theorem funextFromRightInverseId
+    (inv : type_of% @Function.RightInverse.id.{(max 1 u v)+1,(max 1 u v)+1}) :
+    type_of% @funext.{u,v} :=
+  funextFromEndomorphisms fun {_ _ _} h =>
+    endomorphismsOfPointwiseId (fun {S} k hk => @inv S S id k hk) h
+
 open Lean in
 run_cmd
   for n in [``dependentFunextFromBindCongr, ``dependentFunextFromMapCongr,
-      ``funextFromReaderExt, ``funextFromReaderExtIff, ``funextFromStateExt, ``funextFromStateExtIff] do
+      ``funextFromReaderExt, ``funextFromReaderExtIff, ``funextFromStateExt, ``funextFromStateExtIff,
+      ``funextFromLeftInverseId, ``funextFromRightInverseId] do
     unless (← collectAxioms n).isEmpty do throwError "reader congruence witness {n} uses axioms"
 
 namespace RangeMap
@@ -1290,6 +1312,8 @@ private def logicalConsequence? (owner name : Name) : Option (Name × Name) := d
   | `Init.Control.Lawful.Instances, ``ReaderT.ext_iff => return (``funext, ``OmegaChecks.InitBoundaries.funextFromReaderExtIff)
   | `Init.Control.Lawful.Instances, ``StateT.ext => return (``funext, ``OmegaChecks.InitBoundaries.funextFromStateExt)
   | `Init.Control.Lawful.Instances, ``StateT.ext_iff => return (``funext, ``OmegaChecks.InitBoundaries.funextFromStateExtIff)
+  | `Init.Data.Function, ``Function.LeftInverse.id => return (``funext, ``OmegaChecks.InitBoundaries.funextFromLeftInverseId)
+  | `Init.Data.Function, ``Function.RightInverse.id => return (``funext, ``OmegaChecks.InitBoundaries.funextFromRightInverseId)
   | `Init.Data.Iterators.Lemmas.Consumers.Loop, ``Std.Iter.forIn_congr =>
     return (``funext, ``OmegaChecks.InitBoundaries.IteratorLoopCongruence.funextFromCongr)
   | `Init.Data.Iterators.Lemmas.Consumers.Loop, ``Std.Iter.forIn'_congr =>
