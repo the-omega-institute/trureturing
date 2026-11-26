@@ -7,7 +7,7 @@ doi: 10.48550/arXiv.2411.13646
 url: https://arxiv.org/abs/2411.13646v2
 claim: Theorem 3.5 constructs the extraspecial lift and Conjecture 5.2 proposes a holomorphic rank-128 Barnes–Wall orbifold of gap four.
 strata_touched:
-  - D5/S3/VertexAlgebra/TwistedGround/BarnesWallQ8TraceSign
+  - D5/S3/VertexAlgebra/TwistedGround/BarnesWall/Q8TraceSign
   - D5/S3/HomologicalAlgebra/BarnesWallQ8CohomologyDetector
 license: citation-only
 triage: anchor

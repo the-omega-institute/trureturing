@@ -1,6 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.VertexAlgebra.TwistedGround;
+namespace StrataLint.Scribe.Blueprint.D5.S3.VertexAlgebra.TwistedGround.BarnesWall;
 
 internal sealed class BarnesWallQ8TraceSignDocument : IScribeDocumentDefinition
 {
@@ -9,7 +9,7 @@ internal sealed class BarnesWallQ8TraceSignDocument : IScribeDocumentDefinition
         H("The Barnes–Wall quaternion trace sign"),
         Blocks(Describe.Lean(
             DescribeId.Create("barnes-wall-quaternion-ground-gauss-sum"),
-            DeclarationHandle.Create("D5/S3/VertexAlgebra/TwistedGround/BarnesWallQ8TraceSign.defect_ground_gauss_sum"),
+            DeclarationHandle.Create("D5/S3/VertexAlgebra/TwistedGround/BarnesWall/Q8TraceSign.defect_ground_gauss_sum"),
             H("Gauss sum on the common displacement image"),
             StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo(

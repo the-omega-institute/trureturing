@@ -6,9 +6,9 @@ The Barnes–Wall quaternion trace sign
 
 **Theorem 1.1 (Gauss sum on the common displacement image).**
 
-Lean statement: `D5/S3/VertexAlgebra/TwistedGround/BarnesWallQ8TraceSign.defect_ground_gauss_sum`
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/BarnesWall/Q8TraceSign.defect_ground_gauss_sum`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/BarnesWallQ8TraceSign.defect_ground_gauss_sum` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/BarnesWall/Q8TraceSign.defect_ground_gauss_sum` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -22,5 +22,5 @@ On the common image the trace-product exponent has a perfect cross pairing betwe
 
 ## References
 
-- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/BarnesWallQ8TraceSign.defect_ground_gauss_sum`
-- Dependency: [D5/S3/VertexAlgebra/TwistedGround/BinaryGauss](BinaryGauss.md)
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/BarnesWall/Q8TraceSign.defect_ground_gauss_sum`
+- Dependency: [D5/S3/VertexAlgebra/TwistedGround/BinaryGauss](../BinaryGauss.md)

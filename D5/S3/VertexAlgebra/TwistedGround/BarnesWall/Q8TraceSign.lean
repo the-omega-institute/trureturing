@@ -1,6 +1,6 @@
-/- GID: D5/S3/VertexAlgebra/TwistedGround/BarnesWallQ8TraceSign
+/- GID: D5/S3/VertexAlgebra/TwistedGround/BarnesWall/Q8TraceSign
    generality: I
-   mirror-B: D5/B/S3/VertexAlgebra/TwistedGround/BarnesWallQ8TraceSign
+   mirror-B: D5/B/S3/VertexAlgebra/TwistedGround/BarnesWall/Q8TraceSign
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.LinearAlgebra.Matrix.BilinearForm]
    utility: none
@@ -15,7 +15,7 @@ half-Gram correction and reads products of generators in row-action order. -/
 
 set_option autoImplicit false
 
-namespace D5.S3.VertexAlgebra.TwistedGround.BarnesWallQ8TraceSign
+namespace D5.S3.VertexAlgebra.TwistedGround.BarnesWall.Q8TraceSign
 
 open LatticeTwistedGroundRealization.SignQuotient
 open LatticeTwistedGroundRealization (sign_zero sign_sum symmetric_pairing_split)
@@ -550,4 +550,4 @@ theorem defect_ground_gauss_sum :
 
 #print axioms defect_ground_gauss_sum
 
-end D5.S3.VertexAlgebra.TwistedGround.BarnesWallQ8TraceSign
+end D5.S3.VertexAlgebra.TwistedGround.BarnesWall.Q8TraceSign
