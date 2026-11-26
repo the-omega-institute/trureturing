@@ -602,4 +602,51 @@ public theorem Std.Rio.size_eq_match_roc : type_of% @_root_.Std.Rio.size_eq_matc
   | none => rfl
   | some next => exact _root_.Std.Rco.size_eq_ite_roo
 
+public theorem Std.Rci.size_eq_size_roi : type_of% @_root_.Std.Rci.size_eq_size_roi := by
+  intro α r _ _ _ _ _
+  rw [_root_.Std.Roi.size_eq_match_rci]
+  cases hs : UpwardEnumerable.succ? r.lower with
+  | none => exact Rxi.LawfulHasSize.size_eq_one_of_succ?_eq_none _ hs
+  | some next => exact Rxi.LawfulHasSize.size_eq_succ_of_succ?_eq_some _ _ hs
+
+public theorem Std.Rci.size_eq_match_rci : type_of% @_root_.Std.Rci.size_eq_match_rci := by
+  intro α r _ _ _ _ _
+  cases hs : UpwardEnumerable.succ? r.lower with
+  | none => exact Rxi.LawfulHasSize.size_eq_one_of_succ?_eq_none _ hs
+  | some next => exact Rxi.LawfulHasSize.size_eq_succ_of_succ?_eq_some _ _ hs
+
+public theorem Std.Roi.size_eq_match_roi : type_of% @_root_.Std.Roi.size_eq_match_roi := by
+  intro α r _ _ _ _ _
+  rw [_root_.Std.Roi.size_eq_match_rci]
+  cases UpwardEnumerable.succ? r.lower with
+  | none => rfl
+  | some next => exact _root_.Std.Rci.size_eq_size_roi
+
+public theorem Std.Rii.size_eq_match_roi : type_of% @_root_.Std.Rii.size_eq_match_roi := by
+  intro α r _ _ _ _ _ _
+  rw [_root_.Std.Rii.size_eq_match_rci]
+  cases Least?.least? (α := α) with
+  | none => rfl
+  | some next => exact _root_.Std.Rci.size_eq_size_roi
+
+public theorem Std.Rcc.size_eq_ite_rcc : type_of% @_root_.Std.Rcc.size_eq_ite_rcc := by
+  intro α r _ _ _ _ _ _ _ _
+  by_cases h : r.lower ≤ r.upper
+  · rw [ite_eq_left h]
+    cases hs : UpwardEnumerable.succ? r.lower with
+    | none => exact Rxc.LawfulHasSize.size_eq_one_of_succ?_eq_none _ _ h hs
+    | some next => exact Rxc.LawfulHasSize.size_eq_succ_of_succ?_eq_some _ _ _ h hs
+  · rw [ite_eq_right h]
+    exact Rxc.LawfulHasSize.size_eq_zero_of_not_le _ _ h
+
+public theorem Std.Rco.size_eq_ite_rcc : type_of% @_root_.Std.Rco.size_eq_ite_rcc := by
+  intro α r _ _ _ _ _ _ _ _
+  by_cases h : r.lower < r.upper
+  · rw [ite_eq_left h]
+    cases hs : UpwardEnumerable.succ? r.lower with
+    | none => exact Rxo.LawfulHasSize.size_eq_one_of_succ?_eq_none _ _ h hs
+    | some next => exact Rxo.LawfulHasSize.size_eq_succ_of_succ?_eq_some _ _ _ h hs
+  · rw [ite_eq_right h]
+    exact Rxo.LawfulHasSize.size_eq_zero_of_not_le _ _ h
+
 end OmegaChecks.InitPort.Alternatives
