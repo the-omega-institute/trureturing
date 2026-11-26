@@ -620,4 +620,315 @@ public theorem ISize.le_toInt_maxValue : type_of% @_root_.ISize.le_toInt_maxValu
   exact Int.sub_le_sub_right (Int.ofNat_le.mpr (Nat.pow_le_pow_right (n := 2) Nat.zero_lt_two
     (Nat.sub_le_sub_right System.Platform.le_numBits 1))) _
 
+public theorem BitVec.toInt_srem : type_of% @_root_.BitVec.toInt_srem := by
+  intro w a b
+  cases w with
+  | zero => rw [_root_.BitVec.eq_nil a, _root_.BitVec.eq_nil b]; rfl
+  | succ w =>
+    have hw : 0 < w+1 := Nat.zero_lt_succ w
+    have rem (x y : BitVec (w+1)) : x % y = _root_.BitVec.ofInt (w+1) ((x.toNat : Int).tmod y.toNat) := by
+      apply _root_.BitVec.eq_of_toNat_eq
+      change (x % y).toNat = (_root_.BitVec.ofNat (w+1) (x.toNat % y.toNat)).toNat
+      exact _root_.BitVec.toNat_umod.trans ((_root_.BitVec.toNat_ofNat _ _).trans
+        (Nat.mod_eq_of_lt (Nat.lt_of_le_of_lt (Nat.mod_le ..) x.isLt))).symm
+    have repr : a.srem b = _root_.BitVec.ofInt (w+1) (a.toInt.tmod b.toInt) := by
+      rw [_root_.BitVec.srem_eq]
+      cases ha : a.msb <;> cases hb : b.msb
+      · rw [BitVec.toInt_eq_toNat_of_msb ha, BitVec.toInt_eq_toNat_of_msb hb]
+        exact rem a b
+      · rw [BitVec.toInt_eq_toNat_of_msb ha, BitVec.toInt_eq_neg_toNat_neg_of_msb_true hb, Int.tmod_neg]
+        exact rem a (-b)
+      · rw [BitVec.toInt_eq_neg_toNat_neg_of_msb_true ha, BitVec.toInt_eq_toNat_of_msb hb, Int.neg_tmod, _root_.BitVec.ofInt_neg]
+        exact congrArg Neg.neg (rem (-a) b)
+      · rw [BitVec.toInt_eq_neg_toNat_neg_of_msb_true ha, BitVec.toInt_eq_neg_toNat_neg_of_msb_true hb, Int.tmod_neg, Int.neg_tmod, _root_.BitVec.ofInt_neg]
+        exact congrArg Neg.neg (rem (-a) (-b))
+    rw [repr]
+    have lo := _root_.BitVec.le_toInt a
+    have hi := @_root_.BitVec.toInt_lt _ a
+    have pos : (0 : Int) < 2 ^ ((w+1)-1) := Int.pow_pos (by decide)
+    have le : (a.toInt.tmod b.toInt).natAbs ≤ a.toInt.natAbs := by
+      rw [Int.natAbs_tmod]
+      exact Nat.mod_le ..
+    apply _root_.BitVec.toInt_ofInt_eq_self hw
+    · rcases Int.natAbs_eq a.toInt with pa | na <;> rcases Int.natAbs_eq (a.toInt.tmod b.toInt) with pm | nm <;> omega
+    · by_cases ha : 0 ≤ a.toInt
+      · have absA := Int.natAbs_of_nonneg ha
+        have absM := Int.le_natAbs (a := a.toInt.tmod b.toInt)
+        omega
+      · have npos := Int.tmod_nonneg b.toInt (Int.neg_nonneg_of_nonpos (Int.le_of_lt (Int.lt_of_not_ge ha)))
+        rw [Int.neg_tmod] at npos
+        omega
+
+public theorem BitVec.toInt_one_of_lt : type_of% @_root_.BitVec.toInt_one_of_lt := by
+  intro w h
+  rw [← _root_.BitVec.ofInt_natCast w 1]
+  apply _root_.BitVec.toInt_ofInt_eq_self (Nat.zero_lt_of_lt h)
+  · have pos : (0 : Int) < 2 ^ (w-1) := Int.pow_pos (by decide)
+    omega
+  · exact Int.ofNat_lt.mpr (Nat.one_lt_two_pow (Nat.ne_of_gt (Nat.sub_pos_of_lt h)))
+
+public theorem BitVec.sdiv_one : type_of% @_root_.BitVec.sdiv_one := by
+  intro w x
+  cases w with
+  | zero => exact (_root_.BitVec.eq_nil _).trans (_root_.BitVec.eq_nil _).symm
+  | succ w => cases w with
+    | zero => rcases _root_.BitVec.eq_zero_or_eq_one x with rfl | rfl <;> rfl
+    | succ w =>
+      apply _root_.BitVec.eq_of_toInt_eq
+      rw [BitVec.toInt_sdiv, BitVec.toInt_one_of_lt (Nat.succ_lt_succ (Nat.zero_lt_succ _)), Int.tdiv_one,
+        ← _root_.BitVec.toInt_ofInt, _root_.BitVec.ofInt_toInt]
+
+public theorem BitVec.srem_one : type_of% @_root_.BitVec.srem_one := by
+  intro w x
+  cases w with
+  | zero => exact (_root_.BitVec.eq_nil _).trans (_root_.BitVec.eq_nil _).symm
+  | succ w => cases w with
+    | zero => rcases _root_.BitVec.eq_zero_or_eq_one x with rfl | rfl <;> rfl
+    | succ w =>
+      apply _root_.BitVec.eq_of_toInt_eq
+      rw [BitVec.toInt_srem, BitVec.toInt_one_of_lt (Nat.succ_lt_succ (Nat.zero_lt_succ _)), Int.tmod_one,
+        _root_.BitVec.toInt_zero]
+
+public theorem Int16.toInt_ofIntLE : type_of% @_root_.Int16.toInt_ofIntLE := by
+  intro x lo hi
+  rw [← _root_.Int16.toInt_toBitVec, _root_.Int16.toBitVec_ofIntLE]
+  rw [_root_.Int16.toInt_minValue] at lo
+  rw [_root_.Int16.toInt_maxValue] at hi
+  exact _root_.BitVec.toInt_ofInt_eq_self (Nat.zero_lt_succ 15) lo (Int.lt_of_le_sub_one hi)
+
+public theorem Int32.toInt_ofIntLE : type_of% @_root_.Int32.toInt_ofIntLE := by
+  intro x lo hi
+  rw [← _root_.Int32.toInt_toBitVec, _root_.Int32.toBitVec_ofIntLE]
+  rw [_root_.Int32.toInt_minValue] at lo
+  rw [_root_.Int32.toInt_maxValue] at hi
+  exact _root_.BitVec.toInt_ofInt_eq_self (Nat.zero_lt_succ 31) lo (Int.lt_of_le_sub_one hi)
+
+public theorem Int64.toInt_ofIntLE : type_of% @_root_.Int64.toInt_ofIntLE := by
+  intro x lo hi
+  rw [← _root_.Int64.toInt_toBitVec, _root_.Int64.toBitVec_ofIntLE]
+  rw [_root_.Int64.toInt_minValue] at lo
+  rw [_root_.Int64.toInt_maxValue] at hi
+  exact _root_.BitVec.toInt_ofInt_eq_self (Nat.zero_lt_succ 63) lo (Int.lt_of_le_sub_one hi)
+
+public theorem Int16.iSizeMinValue_le_toInt : type_of% @_root_.Int16.iSizeMinValue_le_toInt := by
+  intro x
+  have bound : (2 : Int) ^ 15 ≤ 2 ^ 31 := Int.ofNat_le.mpr (Nat.pow_le_pow_right Nat.zero_lt_two (by decide : 15 ≤ 31))
+  exact Int.le_trans ISize.toInt_minValue_le (Int.le_trans (Int.neg_le_neg bound) (Int16.le_toInt x))
+
+public theorem Int16.toInt_le_iSizeMaxValue : type_of% @_root_.Int16.toInt_le_iSizeMaxValue := by
+  intro x
+  have bound : (2 : Int) ^ 15 ≤ 2 ^ 31 := Int.ofNat_le.mpr (Nat.pow_le_pow_right Nat.zero_lt_two (by decide : 15 ≤ 31))
+  exact Int.le_trans (Int.le_sub_one_of_lt (Int16.toInt_lt x)) (Int.le_trans (Int.sub_le_sub_right bound 1) ISize.le_toInt_maxValue)
+
+public theorem Int32.iSizeMinValue_le_toInt : type_of% @_root_.Int32.iSizeMinValue_le_toInt := by
+  intro x
+  have bound : (2 : Int) ^ 31 ≤ 2 ^ 31 := Int.ofNat_le.mpr (Nat.pow_le_pow_right Nat.zero_lt_two (by decide : 31 ≤ 31))
+  exact Int.le_trans ISize.toInt_minValue_le (Int.le_trans (Int.neg_le_neg bound) (Int32.le_toInt x))
+
+public theorem Int32.toInt_le_iSizeMaxValue : type_of% @_root_.Int32.toInt_le_iSizeMaxValue := by
+  intro x
+  have bound : (2 : Int) ^ 31 ≤ 2 ^ 31 := Int.ofNat_le.mpr (Nat.pow_le_pow_right Nat.zero_lt_two (by decide : 31 ≤ 31))
+  exact Int.le_trans (Int.le_sub_one_of_lt (Int32.toInt_lt x)) (Int.le_trans (Int.sub_le_sub_right bound 1) ISize.le_toInt_maxValue)
+
+public theorem ISize.int64MinValue_le_toInt : type_of% @_root_.ISize.int64MinValue_le_toInt := by
+  intro x
+  rw [_root_.Int64.toInt_minValue]
+  exact ISize.le_toInt x
+
+public theorem ISize.toInt_le_int64MaxValue : type_of% @_root_.ISize.toInt_le_int64MaxValue := by
+  intro x
+  rw [_root_.Int64.toInt_maxValue]
+  exact Int.le_sub_one_of_lt (ISize.toInt_lt x)
+
+public theorem BitVec.zero_sle_iff_msb_eq_false : type_of% @_root_.BitVec.zero_sle_iff_msb_eq_false := by
+  intro w x
+  constructor
+  · intro h
+    have hx := _root_.BitVec.sle_iff_toInt_le.mp h
+    rw [_root_.BitVec.toInt_zero] at hx
+    cases hm : x.msb with
+    | false => rfl
+    | true => exact False.elim (Int.not_lt_of_ge hx (_root_.BitVec.toInt_neg_of_msb_true hm))
+  · intro hm
+    apply _root_.BitVec.sle_iff_toInt_le.mpr
+    rw [_root_.BitVec.toInt_zero]
+    exact _root_.BitVec.toInt_nonneg_of_msb_false hm
+
+public theorem BitVec.zero_sle_eq_not_msb : type_of% @_root_.BitVec.zero_sle_eq_not_msb := by
+  intro w x
+  cases h : x.msb with
+  | false => exact BitVec.zero_sle_iff_msb_eq_false.mpr h
+  | true =>
+    cases hb : _root_.BitVec.sle 0#w x with
+    | false => rfl
+    | true => exact False.elim (Bool.noConfusion (h.symm.trans (BitVec.zero_sle_iff_msb_eq_false.mp hb)))
+
+public theorem BitVec.msb_eq_toInt : type_of% @_root_.BitVec.msb_eq_toInt := by
+  intro w x
+  cases h : x.msb with
+  | false => exact (decide_eq_false (Int.not_lt_of_ge (_root_.BitVec.toInt_nonneg_of_msb_false h))).symm
+  | true => exact (decide_eq_true (_root_.BitVec.toInt_neg_of_msb_true h)).symm
+
+public theorem Int16.toInt_bmod : type_of% @_root_.Int16.toInt_bmod := by
+  intro x
+  rw [← _root_.Int16.toInt_toBitVec x]
+  exact (_root_.BitVec.toInt_ofInt _ (n := 16)).symm.trans (congrArg _root_.BitVec.toInt _root_.BitVec.ofInt_toInt)
+
+public theorem Int32.toInt_bmod : type_of% @_root_.Int32.toInt_bmod := by
+  intro x
+  rw [← _root_.Int32.toInt_toBitVec x]
+  exact (_root_.BitVec.toInt_ofInt _ (n := 32)).symm.trans (congrArg _root_.BitVec.toInt _root_.BitVec.ofInt_toInt)
+
+public theorem Int64.toInt_bmod : type_of% @_root_.Int64.toInt_bmod := by
+  intro x
+  rw [← _root_.Int64.toInt_toBitVec x]
+  exact (_root_.BitVec.toInt_ofInt _ (n := 64)).symm.trans (congrArg _root_.BitVec.toInt _root_.BitVec.ofInt_toInt)
+
+public theorem Int16.toInt_bmod_4294967296 : type_of% @_root_.Int16.toInt_bmod_4294967296 := by
+  intro x
+  rw [← _root_.Int16.toInt_toInt32 x]
+  exact Int32.toInt_bmod _
+
+public theorem Int16.toInt_bmod_18446744073709551616 : type_of% @_root_.Int16.toInt_bmod_18446744073709551616 := by
+  intro x
+  rw [← _root_.Int16.toInt_toInt64 x]
+  exact Int64.toInt_bmod _
+
+public theorem Int32.toInt_bmod_18446744073709551616 : type_of% @_root_.Int32.toInt_bmod_18446744073709551616 := by
+  intro x
+  rw [← _root_.Int32.toInt_toInt64 x]
+  exact Int64.toInt_bmod _
+
+public theorem ISize.toInt_bmod_18446744073709551616 : type_of% @_root_.ISize.toInt_bmod_18446744073709551616 := by
+  intro x
+  rw [← _root_.ISize.toInt_toInt64 x]
+  exact Int64.toInt_bmod _
+
+public theorem Int8.toInt_ofNat_of_lt : type_of% @_root_.Int8.toInt_ofNat_of_lt := by
+  intro n h
+  rw [← _root_.Int8.ofInt_eq_ofNat]
+  exact _root_.Int8.toInt_ofInt_of_le
+    (Int.le_trans (Int.neg_nonpos_of_nonneg (Int.pow_nonneg (by decide))) (Int.natCast_nonneg n)) (Int.ofNat_lt.mpr h)
+
+public theorem Int16.toInt_ofNat_of_lt : type_of% @_root_.Int16.toInt_ofNat_of_lt := by
+  intro n h
+  rw [← _root_.Int16.ofInt_eq_ofNat]
+  exact _root_.Int16.toInt_ofInt_of_le
+    (Int.le_trans (Int.neg_nonpos_of_nonneg (Int.pow_nonneg (by decide))) (Int.natCast_nonneg n)) (Int.ofNat_lt.mpr h)
+
+public theorem Int32.toInt_ofNat_of_lt : type_of% @_root_.Int32.toInt_ofNat_of_lt := by
+  intro n h
+  rw [← _root_.Int32.ofInt_eq_ofNat]
+  exact _root_.Int32.toInt_ofInt_of_le
+    (Int.le_trans (Int.neg_nonpos_of_nonneg (Int.pow_nonneg (by decide))) (Int.natCast_nonneg n)) (Int.ofNat_lt.mpr h)
+
+public theorem Int64.toInt_ofNat_of_lt : type_of% @_root_.Int64.toInt_ofNat_of_lt := by
+  intro n h
+  rw [← _root_.Int64.ofInt_eq_ofNat]
+  exact _root_.Int64.toInt_ofInt_of_le
+    (Int.le_trans (Int.neg_nonpos_of_nonneg (Int.pow_nonneg (by decide))) (Int.natCast_nonneg n)) (Int.ofNat_lt.mpr h)
+
+public theorem ISize.toInt_ofInt_of_le : type_of% @_root_.ISize.toInt_ofInt_of_le := by
+  intro n lo hi
+  have bound : (2 : Int) ^ 31 ≤ 2 ^ (System.Platform.numBits - 1) :=
+    Int.ofNat_le.mpr (Nat.pow_le_pow_right Nat.zero_lt_two (Nat.sub_le_sub_right System.Platform.le_numBits 1))
+  exact _root_.ISize.toInt_ofInt_of_two_pow_numBits_le (Int.le_trans (Int.neg_le_neg bound) lo)
+    (Int.lt_of_lt_of_le hi bound)
+
+public theorem ISize.toInt_ofNat_of_lt : type_of% @_root_.ISize.toInt_ofNat_of_lt := by
+  intro n h
+  rw [← _root_.ISize.ofInt_eq_ofNat]
+  exact ISize.toInt_ofInt_of_le
+    (Int.le_trans (Int.neg_nonpos_of_nonneg (Int.pow_nonneg (by decide))) (Int.natCast_nonneg n)) (Int.ofNat_lt.mpr h)
+
+public theorem Int16.toNatClampNeg_ofIntLE : type_of% @_root_.Int16.toNatClampNeg_ofIntLE :=
+  fun h₁ h₂ => congrArg Int.toNat (Int16.toInt_ofIntLE (h₁ := h₁) (h₂ := h₂))
+
+public theorem Int32.toNatClampNeg_ofIntLE : type_of% @_root_.Int32.toNatClampNeg_ofIntLE :=
+  fun h₁ h₂ => congrArg Int.toNat (Int32.toInt_ofIntLE (h₁ := h₁) (h₂ := h₂))
+
+public theorem Int64.toNatClampNeg_ofIntLE : type_of% @_root_.Int64.toNatClampNeg_ofIntLE :=
+  fun h₁ h₂ => congrArg Int.toNat (Int64.toInt_ofIntLE (h₁ := h₁) (h₂ := h₂))
+
+public theorem ISize.toInt_ofNat_of_lt_two_pow_numBits : type_of% @_root_.ISize.toInt_ofNat_of_lt_two_pow_numBits := by
+  intro n h
+  rw [← _root_.ISize.ofInt_eq_ofNat]
+  exact _root_.ISize.toInt_ofInt_of_two_pow_numBits_le
+    (Int.le_trans (Int.neg_nonpos_of_nonneg (Int.pow_nonneg (by decide))) (Int.natCast_nonneg n)) (Int.ofNat_lt.mpr h)
+
+public theorem Int8.toInt_div_of_ne_left : type_of% @_root_.Int8.toInt_div_of_ne_left := by
+  intro a b h
+  have ne : a.toBitVec ≠ _root_.BitVec.intMin 8 := fun eq =>
+    h (_root_.Int8.toBitVec_inj.mp (eq.trans _root_.Int8.toBitVec_minValue.symm))
+  rw [← _root_.Int8.toInt_toBitVec, _root_.Int8.toBitVec_div,
+    BitVec.toInt_sdiv_of_ne_or_ne _ _ (Or.inl ne), _root_.Int8.toInt_toBitVec, _root_.Int8.toInt_toBitVec]
+
+public theorem Int8.toInt_div_of_ne_right : type_of% @_root_.Int8.toInt_div_of_ne_right := by
+  intro a b h
+  have neg : (-1 : Int8).toBitVec = -1#8 := (_root_.Int8.toBitVec_neg 1).trans
+    (congrArg Neg.neg _root_.Int8.toBitVec_one)
+  have ne := fun eq => h (_root_.Int8.toBitVec_inj.mp (Eq.trans eq neg.symm))
+  rw [← _root_.Int8.toInt_toBitVec, _root_.Int8.toBitVec_div,
+    BitVec.toInt_sdiv_of_ne_or_ne _ _ (Or.inr ne), _root_.Int8.toInt_toBitVec, _root_.Int8.toInt_toBitVec]
+
+public theorem Int16.toInt_div_of_ne_left : type_of% @_root_.Int16.toInt_div_of_ne_left := by
+  intro a b h
+  have ne : a.toBitVec ≠ _root_.BitVec.intMin 16 := fun eq =>
+    h (_root_.Int16.toBitVec_inj.mp (eq.trans _root_.Int16.toBitVec_minValue.symm))
+  rw [← _root_.Int16.toInt_toBitVec, _root_.Int16.toBitVec_div,
+    BitVec.toInt_sdiv_of_ne_or_ne _ _ (Or.inl ne), _root_.Int16.toInt_toBitVec, _root_.Int16.toInt_toBitVec]
+
+public theorem Int16.toInt_div_of_ne_right : type_of% @_root_.Int16.toInt_div_of_ne_right := by
+  intro a b h
+  have neg : (-1 : Int16).toBitVec = -1#16 := (_root_.Int16.toBitVec_neg 1).trans
+    (congrArg Neg.neg _root_.Int16.toBitVec_one)
+  have ne := fun eq => h (_root_.Int16.toBitVec_inj.mp (Eq.trans eq neg.symm))
+  rw [← _root_.Int16.toInt_toBitVec, _root_.Int16.toBitVec_div,
+    BitVec.toInt_sdiv_of_ne_or_ne _ _ (Or.inr ne), _root_.Int16.toInt_toBitVec, _root_.Int16.toInt_toBitVec]
+
+public theorem Int16.minValue_div_neg_one : type_of% @_root_.Int16.minValue_div_neg_one := by
+  apply _root_.Int16.toBitVec_inj.mp
+  rw [_root_.Int16.toBitVec_div, _root_.Int16.toBitVec_minValue, _root_.Int16.toBitVec_neg, _root_.Int16.toBitVec_one,
+    _root_.BitVec.intMin_sdiv_neg_one]
+
+public theorem Int32.toInt_div_of_ne_left : type_of% @_root_.Int32.toInt_div_of_ne_left := by
+  intro a b h
+  have ne : a.toBitVec ≠ _root_.BitVec.intMin 32 := fun eq =>
+    h (_root_.Int32.toBitVec_inj.mp (eq.trans _root_.Int32.toBitVec_minValue.symm))
+  rw [← _root_.Int32.toInt_toBitVec, _root_.Int32.toBitVec_div,
+    BitVec.toInt_sdiv_of_ne_or_ne _ _ (Or.inl ne), _root_.Int32.toInt_toBitVec, _root_.Int32.toInt_toBitVec]
+
+public theorem Int32.toInt_div_of_ne_right : type_of% @_root_.Int32.toInt_div_of_ne_right := by
+  intro a b h
+  have neg : (-1 : Int32).toBitVec = -1#32 := (_root_.Int32.toBitVec_neg 1).trans
+    (congrArg Neg.neg _root_.Int32.toBitVec_one)
+  have ne := fun eq => h (_root_.Int32.toBitVec_inj.mp (Eq.trans eq neg.symm))
+  rw [← _root_.Int32.toInt_toBitVec, _root_.Int32.toBitVec_div,
+    BitVec.toInt_sdiv_of_ne_or_ne _ _ (Or.inr ne), _root_.Int32.toInt_toBitVec, _root_.Int32.toInt_toBitVec]
+
+public theorem Int32.minValue_div_neg_one : type_of% @_root_.Int32.minValue_div_neg_one := by
+  apply _root_.Int32.toBitVec_inj.mp
+  rw [_root_.Int32.toBitVec_div, _root_.Int32.toBitVec_minValue, _root_.Int32.toBitVec_neg, _root_.Int32.toBitVec_one,
+    _root_.BitVec.intMin_sdiv_neg_one]
+
+public theorem Int64.toInt_div_of_ne_left : type_of% @_root_.Int64.toInt_div_of_ne_left := by
+  intro a b h
+  have ne : a.toBitVec ≠ _root_.BitVec.intMin 64 := fun eq =>
+    h (_root_.Int64.toBitVec_inj.mp (eq.trans _root_.Int64.toBitVec_minValue.symm))
+  rw [← _root_.Int64.toInt_toBitVec, _root_.Int64.toBitVec_div,
+    BitVec.toInt_sdiv_of_ne_or_ne _ _ (Or.inl ne), _root_.Int64.toInt_toBitVec, _root_.Int64.toInt_toBitVec]
+
+public theorem Int64.toInt_div_of_ne_right : type_of% @_root_.Int64.toInt_div_of_ne_right := by
+  intro a b h
+  have neg : (-1 : Int64).toBitVec = -1#64 := (_root_.Int64.toBitVec_neg 1).trans
+    (congrArg Neg.neg _root_.Int64.toBitVec_one)
+  have ne := fun eq => h (_root_.Int64.toBitVec_inj.mp (Eq.trans eq neg.symm))
+  rw [← _root_.Int64.toInt_toBitVec, _root_.Int64.toBitVec_div,
+    BitVec.toInt_sdiv_of_ne_or_ne _ _ (Or.inr ne), _root_.Int64.toInt_toBitVec, _root_.Int64.toInt_toBitVec]
+
+public theorem Int64.minValue_div_neg_one : type_of% @_root_.Int64.minValue_div_neg_one := by
+  apply _root_.Int64.toBitVec_inj.mp
+  rw [_root_.Int64.toBitVec_div, _root_.Int64.toBitVec_minValue, _root_.Int64.toBitVec_neg, _root_.Int64.toBitVec_one,
+    _root_.BitVec.intMin_sdiv_neg_one]
+
 end OmegaChecks.InitPort.Alternatives
