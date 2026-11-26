@@ -689,4 +689,60 @@ public theorem String.Pos.ne_endPos_of_slice_ne_endPos : type_of% @_root_.String
   exact String.Pos.ofSlice_ne_endPos (p := p.slice start stop lower upper) ne
     ((_root_.String.Pos.ofSlice_slice (h₁ := lower) (h₂ := upper)).trans atEnd)
 
+public theorem String.Slice.Pos.posGE_offset : type_of% @_root_.String.Slice.Pos.posGE_offset := by
+  intro s p
+  exact _root_.String.Slice.posGE_eq_iff.mpr ⟨Nat.le_refl _, fun _ h => h⟩
+
+public theorem String.Slice.Pos.posLE_offset : type_of% @_root_.String.Slice.Pos.posLE_offset := by
+  intro s p
+  exact _root_.String.Slice.posLE_eq_iff.mpr ⟨Nat.le_refl _, fun _ h => h⟩
+
+public theorem String.Slice.posLT_eq_iff : type_of% @_root_.String.Slice.posLT_eq_iff := by
+  intro s raw h p
+  constructor
+  · rintro rfl
+    exact ⟨_root_.String.Slice.offset_posLT_lt, fun _ lt => _root_.String.Slice.le_posLT_iff.mpr lt⟩
+  · rintro ⟨bound, maximal⟩
+    apply _root_.String.Slice.Pos.ext
+    apply String.Pos.Raw.ext
+    exact Nat.le_antisymm (maximal _ _root_.String.Slice.offset_posLT_lt)
+      (_root_.String.Slice.le_posLT_iff.mpr bound)
+
+public theorem String.Slice.Pos.prev_eq_iff : type_of% @_root_.String.Slice.Pos.prev_eq_iff := by
+  intro s p q h
+  rw [_root_.String.Slice.Pos.prev_eq_posLT]
+  exact String.Slice.posLT_eq_iff
+
+public theorem String.Slice.Pos.prev_le : type_of% @_root_.String.Slice.Pos.prev_le := by
+  intro s p h
+  exact Nat.le_of_lt (_root_.String.Slice.Pos.prev_lt (h := h))
+
+public theorem String.Pos.posGE_offset : type_of% @_root_.String.Pos.posGE_offset := by
+  intro s p
+  exact _root_.String.posGE_eq_iff.mpr ⟨Nat.le_refl _, fun _ h => h⟩
+
+public theorem String.Pos.posLE_offset : type_of% @_root_.String.Pos.posLE_offset := by
+  intro s p
+  exact _root_.String.posLE_eq_iff.mpr ⟨Nat.le_refl _, fun _ h => h⟩
+
+public theorem String.posLT_eq_iff : type_of% @_root_.String.posLT_eq_iff := by
+  intro s raw h p
+  constructor
+  · rintro rfl
+    exact ⟨_root_.String.offset_posLT_lt, fun _ lt => _root_.String.le_posLT_iff.mpr lt⟩
+  · rintro ⟨bound, maximal⟩
+    apply _root_.String.Pos.ext
+    apply String.Pos.Raw.ext
+    exact Nat.le_antisymm (maximal _ _root_.String.offset_posLT_lt)
+      (_root_.String.le_posLT_iff.mpr bound)
+
+public theorem String.Pos.prev_eq_iff : type_of% @_root_.String.Pos.prev_eq_iff := by
+  intro s p q h
+  rw [_root_.String.Pos.prev_eq_posLT]
+  exact String.posLT_eq_iff
+
+public theorem String.Pos.prev_le : type_of% @_root_.String.Pos.prev_le := by
+  intro s p h
+  exact Nat.le_of_lt (_root_.String.Pos.prev_lt (h := h))
+
 end OmegaChecks.InitPort.Alternatives
