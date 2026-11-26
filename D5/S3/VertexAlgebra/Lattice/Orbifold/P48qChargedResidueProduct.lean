@@ -1,5 +1,7 @@
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qChargedDiagonalIterate
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qNativeResidueProduct
+import D5.S3.VertexAlgebra.GroundRightCurrentTransport.Interchange
+import D5.S3.VertexAlgebra.LatticeActualStateFieldCalculus
 
 /-! Residue extraction from finite homogeneous slices of the charged radial products. -/
 
@@ -999,6 +1001,499 @@ theorem exists_adjustedResidue_native_projected_chargedGround
     adjustedResidue_native_projected_chargedGround a b r p _ (fun i j => ?_) n⟩
   change order (i, j) ≤ Finset.univ.sup order
   exact Finset.le_sup (f := order) (Finset.mem_univ (i, j))
+
+open P48qNativeCurrentLocality (Field stripResidue stripResidue_coeff)
+open P48qTwistedHeisenberg (currentField)
+open P48qNativeCurrentCommutator (nativeField_current_commutator)
+open P48qCurrentChargedIterate (source_product_positive)
+open ThirdTwistedIterate (currentAlong)
+open ThirdEigenspacePairing (p48qAction)
+open private strip_current_ncoeff from
+  D5.S3.VertexAlgebra.Lattice.Orbifold.P48qNativeCurrentLocality
+open private projectAt_on_residue from
+  D5.S3.VertexAlgebra.Lattice.Orbifold.P48qCurrentChargedIterate
+
+open private groundSpan chargeGround from
+  D5.S3.VertexAlgebra.Lattice.Orbifold.P48qNativePairwiseLocality
+
+private theorem ground_current_positive (a : NativeStates) (ha : a ∈ groundSpan)
+    (u : Cartan) (i : ℤ) (hi : 0 < i) :
+    mu lattice (currentAlong lattice u) i a = 0 := by
+  let L := (LatticeAllStateField.Y lattice (currentAlong lattice u))[[i]]
+  change L a = 0
+  induction ha using Submodule.span_induction with
+  | mem a ha =>
+    obtain ⟨b, rfl⟩ := ha
+    exact source_product_positive b u i hi
+  | zero => exact map_zero _
+  | add a b _ _ ha hb => rw [map_add, ha, hb, add_zero]
+  | smul c a _ ha => rw [map_smul, ha, smul_zero]
+
+private theorem ground_current_zero_mem (a : NativeStates) (ha : a ∈ groundSpan)
+    (u : Cartan) : mu lattice (currentAlong lattice u) 0 a ∈ groundSpan := by
+  let L := (LatticeAllStateField.Y lattice (currentAlong lattice u))[[0]]
+  change L a ∈ groundSpan
+  induction ha using Submodule.span_induction with
+  | mem a ha =>
+    obtain ⟨b, rfl⟩ := ha
+    change mu lattice (currentAlong lattice u) 0 (chargedGround b) ∈ groundSpan
+    rw [P48qCurrentChargedIterate.source_product_zero]
+    exact groundSpan.smul_mem _ (Submodule.subset_span ⟨b, rfl⟩)
+  | zero => rw [map_zero]; exact groundSpan.zero_mem
+  | add a b _ _ ha hb => rw [map_add]; exact groundSpan.add_mem ha hb
+  | smul c a _ ha => rw [map_smul]; exact groundSpan.smul_mem c ha
+
+set_option maxHeartbeats 1000000 in
+-- Elaborating the bracket aligns the two stripped mode indices.
+private theorem stripped_current_ground_commutator
+    (u : Cartan) (r : ℕ) (hr : r < 3) (hu : p48qAction u = (ζ ^ r) ^ 2 • u)
+    (a : NativeStates) (ha : a ∈ groundSpan) (s z j : ℤ) :
+    ⁅(stripResidue (-(r : ℤ)) (currentField u))[[z]],
+      (stripResidue s (nativeField a))[[j]]⁆ =
+      (stripResidue (-(r : ℤ) + s)
+        (nativeField (mu lattice (currentAlong lattice u) 0 a)))[[z + j]] := by
+  let m : ℤ := 3 * z + r
+  rw [strip_current_ncoeff, VertexOperator.ncoeff_apply, stripResidue_coeff,
+    nativeField_current_commutator,
+    projectAt_on_residue u r hr hu m (by dsimp [m]; omega)]
+  rw [finsum_eq_single _ 0 (fun i hi => by
+    rw [ground_current_positive a ha u i (by omega)]
+    simp only [map_zero, Pi.zero_apply, smul_zero])]
+  simp only [Ring.choose_zero_right, one_smul, Nat.cast_zero, mul_zero, add_zero,
+    VertexOperator.ncoeff_apply, stripResidue_coeff]
+  rw [show 3 * (-j - 1) + s - (3 * z + (r : ℤ)) =
+    3 * (-(z + j) - 1) + (-(r : ℤ) + s) by omega]
+
+open LatticeHalfFockGroundRightCurrentTransport (residueWeight)
+open LatticeHalfFockGroundRightCurrentTransport.Calculus (R)
+open SignedFieldResidueLocality (residueField residueCoefficient residueLeft residueRight)
+open StateFieldResidueReconstruction (epsilon integerBinomial)
+open private R_mode ext_modes from D5.S3.VertexAlgebra.GroundRightCurrentTransport.Residue
+open private R_interchange from D5.S3.VertexAlgebra.GroundRightCurrentTransport.Interchange
+-- Li, arXiv:q-alg/9504022, §3. The imported interchange is proved
+-- by the finite double residue for a simple-pole commutator.
+
+private theorem ordinaryResidue_eq_R {V : Type*} [AddCommGroup V] [Module ℂ V]
+    (A B : VertexOperator ℂ V) (n : ℤ) : (residueField 1 n A B).operator = R A B n := by
+  apply ext_modes
+  intro q
+  apply LinearMap.ext
+  intro x
+  rw [(residueField 1 n A B).coefficient, R_mode]
+  have hchoose (i : ℕ) : integerBinomial n i = Ring.choose (n : ℂ) i :=
+    Ring.map_choose (Int.castRingHom ℂ) n i
+  simp only [residueCoefficient, residueLeft, residueRight, residueWeight, epsilon,
+    mul_one, hchoose, add_comm n q]
+
+open LatticeHalfFockGroundRightCurrentTransport.Calculus (Z Valid)
+open private R_sum R_smul R_Z R_zero from D5.S3.VertexAlgebra.GroundRightCurrentTransport.Residue
+open private Z_mode from D5.S3.VertexAlgebra.GroundRightCurrentTransport.Residue
+open private Z_smul Z_sum Z_Z Z_zero Z_sub from
+  D5.S3.VertexAlgebra.GroundRightCurrentTransport.Interchange
+open private finite_convolution from D5.S3.VertexAlgebra.LatticeHalfFockCurrentBorcherds
+open P48qNativeCurrentLocality (stripResidue_restoreResidue
+  restoreResidue_stripResidue coverDelta_comm_eq_zero_iff)
+
+private def integralAdjusted {V : Type*} [AddCommGroup V] [Module ℂ V]
+    (c : ℂ) (A B : VertexOperator ℂ V) (N : ℕ) (n : ℤ) : VertexOperator ℂ V :=
+  ∑ i ∈ Finset.range ((N : ℤ) - n).toNat, Ring.choose c i • Z i (R A B (n + i))
+
+private theorem integralAdjusted_pad {V : Type*} [AddCommGroup V] [Module ℂ V]
+    (c : ℂ) (A B : VertexOperator ℂ V) (N L : ℕ) (n : ℤ)
+    (h : Valid A B N) (hlen : (N : ℤ) ≤ n + L) :
+    integralAdjusted c A B N n =
+      ∑ i ∈ Finset.range L, Ring.choose c i • Z i (R A B (n + i)) := by
+  unfold integralAdjusted
+  apply Finset.sum_subset (Finset.range_mono (by omega))
+  intro i _ hi
+  rw [h _ (by simp only [Finset.mem_range, not_lt] at hi; omega), Z_zero, smul_zero]
+
+private theorem integralAdjusted_interchange {V : Type*} [AddCommGroup V] [Module ℂ V]
+    (A J B A₀ : VertexOperator ℂ V) (c d : ℂ) (n m : ℤ)
+    (I K I₀ O P : ℕ) (hI : Valid J B I) (hK : Valid A B K) (h₀ : Valid A₀ B I₀)
+    (hO : Valid A (integralAdjusted d J B I m) O)
+    (hP : Valid J (integralAdjusted c A B K n) P)
+    (ward : ∀ z j : ℤ, J[[z]] * A[[j]] - A[[j]] * J[[z]] = A₀[[z + j]]) :
+    integralAdjusted c A (integralAdjusted d J B I m) O n =
+      integralAdjusted d J (integralAdjusted c A B K n) P m -
+        integralAdjusted (c + d) A₀ B I₀ (n + m) := by
+  let L := ((I : ℤ) - m).toNat + ((K : ℤ) - n).toNat + ((I₀ : ℤ) - (n + m)).toNat +
+    ((O : ℤ) - n).toNat + ((P : ℤ) - m).toNat
+  have hi : (I : ℤ) ≤ m + L := by dsimp [L]; omega
+  have hk : (K : ℤ) ≤ n + L := by dsimp [L]; omega
+  have h0 : (I₀ : ℤ) ≤ n + m + L := by dsimp [L]; omega
+  have ho : (O : ℤ) ≤ n + L := by dsimp [L]; omega
+  have hp : (P : ℤ) ≤ m + L := by dsimp [L]; omega
+  rw [integralAdjusted_pad _ _ _ _ _ _ hO ho,
+    integralAdjusted_pad _ _ _ _ _ _ hP hp,
+    integralAdjusted_pad _ _ _ _ _ _ hI hi,
+    integralAdjusted_pad _ _ _ _ _ _ hK hk,
+    integralAdjusted_pad _ _ _ _ _ _ h₀ h0]
+  simp only [R_sum, R_smul, R_Z, Z_sum, Z_smul, Z_Z]
+  simp_rw [R_interchange A A₀ J B _ _ ward, Z_sub, smul_sub]
+  simp_rw [Finset.sum_sub_distrib, smul_sub, Finset.sum_sub_distrib]
+  let F (i : ℕ) := Z i (R A₀ B (n + m + i))
+  have hF (i : ℕ) (h : L ≤ i) : F i = 0 := by
+    simp only [F, h₀ _ (by omega : (I₀ : ℤ) ≤ n + m + i), Z_zero]
+  have hc := finite_convolution c d L F hF
+  have hcorr :
+      (∑ i ∈ Finset.range L, Ring.choose c i •
+        ∑ j ∈ Finset.range L, Ring.choose d j •
+          Z ((i : ℤ) + j) (R A₀ B (n + i + (m + j)))) =
+        ∑ i ∈ Finset.range L, Ring.choose (c + d) i • Z i (R A₀ B (n + m + i)) := by
+    simpa only [F, Nat.cast_add, show ∀ i j : ℕ,
+      n + m + ((i : ℤ) + j) = n + i + (m + j) by intros; omega] using hc
+  rw [hcorr]
+  congr 1
+  simp_rw [Finset.smul_sum, smul_smul]
+  rw [Finset.sum_comm]
+  apply Finset.sum_congr rfl
+  intro j _
+  apply Finset.sum_congr rfl
+  intro i _
+  rw [mul_comm (Ring.choose c i), add_comm (i : ℤ)]
+
+private theorem strip_adjusted (s t : ℤ) (A B : Field) (N : ℕ) (n : ℤ) :
+    stripResidue (s + t) (adjustedResidue s t A B N n) =
+      integralAdjusted ((s : ℂ) / 3) (stripResidue s A) (stripResidue t B) N n := by
+  apply ext_modes
+  intro q
+  simp only [VertexOperator.ncoeff_apply, stripResidue_coeff, adjustedResidue,
+    integralAdjusted, map_sum, map_smul, Finset.sum_apply, Pi.smul_apply]
+  apply Finset.sum_congr rfl
+  intro i _
+  rw [restoreResidue_coeff, ite_eq_left (by omega), VertexOperator.coeff_eq_ncoeff,
+    VertexOperator.coeff_eq_ncoeff, Z_mode, ordinaryResidue_eq_R]
+  rw [show -((3 * (-q - 1) + (s + t) - (s + t - 3 * (i : ℤ))) / 3) - 1 =
+    (-(-q - 1) - 1) - i by omega]
+
+private theorem valid_of_coverLocality (s t : ℤ) (A B : Field) (N : ℕ)
+    (ha : InResidue s A) (hb : InResidue t B)
+    (h : P48qNativeCurrentLocality.coverDelta^[N]
+      (P48qNativeCurrentLocality.coverComm A B) = 0) :
+    Valid (stripResidue s A) (stripResidue t B) N := by
+  apply LatticeHalfFockGroundRightCurrentTransport.Calculus.valid_of_locality
+  rw [Module.End.pow_apply]
+  exact (coverDelta_comm_eq_zero_iff s t A B ha hb N).mp h
+
+private theorem adjusted_inResidue (s t : ℤ) (A B : Field) (N : ℕ) (n : ℤ) :
+    InResidue (s + t) (adjustedResidue s t A B N n) := by
+  intro k hk
+  simp only [adjustedResidue, map_sum, Finset.sum_apply, map_smul, Pi.smul_apply,
+    restoreResidue_coeff, show ∀ j : ℕ, (s+t-3*(j:ℤ)) % 3 = (s+t) % 3 by intro; omega,
+    ite_eq_right hk, smul_zero, Finset.sum_const_zero]
+
+private theorem restore_sub (s : ℤ) (A B : Field) :
+    P48qNativeCurrentLocality.restoreResidue s (A - B) =
+      P48qNativeCurrentLocality.restoreResidue s A -
+      P48qNativeCurrentLocality.restoreResidue s B := by
+  apply HVertexOperator.coeff_inj
+  funext k
+  simp only [restoreResidue_coeff, map_sub, Pi.sub_apply]
+  split_ifs <;> simp only [sub_zero]
+
+private theorem adjusted_simplePole_interchange (s j t : ℤ) (A J B A₀ : Field)
+    (n m : ℤ) (I K I₀ O P : ℕ)
+    (hI : Valid (stripResidue j J) (stripResidue t B) I)
+    (hK : Valid (stripResidue s A) (stripResidue t B) K)
+    (h₀ : Valid (stripResidue (j + s) A₀) (stripResidue t B) I₀)
+    (hO : Valid (stripResidue s A) (stripResidue (j + t) (adjustedResidue j t J B I m)) O)
+    (hP : Valid (stripResidue j J) (stripResidue (s + t) (adjustedResidue s t A B K n)) P)
+    (ward : ∀ z l : ℤ, (stripResidue j J)[[z]] * (stripResidue s A)[[l]] -
+      (stripResidue s A)[[l]] * (stripResidue j J)[[z]] = (stripResidue (j + s) A₀)[[z + l]]) :
+    adjustedResidue s (j + t) A (adjustedResidue j t J B I m) O n =
+      adjustedResidue j (s + t) J (adjustedResidue s t A B K n) P m -
+        adjustedResidue (j + s) t A₀ B I₀ (n + m) := by
+  rw [strip_adjusted] at hO hP
+  have h := integralAdjusted_interchange _ _ _ _ ((s : ℂ) / 3) ((j : ℂ) / 3) n m
+    I K I₀ O P hI hK h₀ hO hP ward
+  rw [show (s : ℂ) / 3 + (j : ℂ) / 3 = ((j + s : ℤ) : ℂ) / 3 by push_cast; ring] at h
+  have hform (a b : ℤ) (X Y : Field) (N : ℕ) (q : ℤ) :
+      adjustedResidue a b X Y N q =
+        P48qNativeCurrentLocality.restoreResidue (a + b)
+          (integralAdjusted ((a : ℂ) / 3) (stripResidue a X) (stripResidue b Y) N q) := by
+    rw [← strip_adjusted a b X Y N q,
+      restoreResidue_stripResidue _ _ (adjusted_inResidue a b X Y N q)]
+  rw [hform s (j + t), hform j (s + t), hform (j + s) t,
+    strip_adjusted, strip_adjusted, show s + (j + t) = j + (s + t) by omega,
+    show j + s + t = j + (s + t) by omega, h, restore_sub]
+
+open P48qNativeCurrentLocality (coverDelta coverComm)
+open private lift_current currentStateLinear from
+  D5.S3.VertexAlgebra.Lattice.Orbifold.P48qNativePairwiseLocality
+open P48qNativePairwiseLocality (nativeField_pairwise_locality)
+open NativeStandardThirdLift (standardLift_compatible)
+
+open P48qNativeCurrentLocality (CoverLocal)
+open private coverLocal_iff localCoefficients strip_local restore_local from
+  D5.S3.VertexAlgebra.Lattice.Orbifold.P48qNativeCurrentLocality
+open private coverLocal_symm from
+  D5.S3.VertexAlgebra.Lattice.Orbifold.P48qNativePairwiseLocality
+
+private theorem adjusted_coverLocal (s t c : ℤ) (A B C : Field) (N : ℕ) (n : ℤ)
+    (hc : InResidue c C) (hAC : CoverLocal A C) (hBC : CoverLocal B C)
+    (hAB : CoverLocal A B) : CoverLocal (adjustedResidue s t A B N n) C := by
+  have ordinary (X Y : Field) :
+      SignedFieldNormalProductLocality.signedComm (1 : ℂ) X Y =
+        FieldNormalProductLocality.commutator X Y := by
+    funext i j
+    simp [SignedFieldNormalProductLocality.signedComm, FieldNormalProductLocality.commutator]
+  apply (coverLocal_iff _ C).mpr
+  simp only [adjustedResidue, map_sum, map_smul]
+  apply (localCoefficients C).sum_mem
+  intro i _
+  apply (localCoefficients C).smul_mem
+  apply (coverLocal_iff _ C).mp
+  apply restore_local _ c _ C hc
+  have h := SignedFieldResidueLocality.residue_locality 1 1 1
+    (stripResidue s A) (stripResidue t B) (stripResidue c C)
+  simp only [mul_one, ordinary] at h
+  exact h (strip_local s c A C hAC) (strip_local t c B C hBC)
+    (strip_local s t A B hAB) (n + i)
+
+private theorem current_lift_eigen (u : Cartan) (r : ℕ)
+    (hu : p48qAction u = (ζ ^ r) ^ 2 • u) :
+    σ (currentAlong lattice u) = ζ ^ (-(r : ℤ)) • currentAlong lattice u := by
+  have hζ : IsPrimitiveRoot ζ 3 :=
+    IsPrimitiveRoot.coe_units_iff.mpr ThirdTwistedChargeCocycle.zeta_primitive
+  have hz : (ζ ^ r) ^ 3 = 1 := by rw [pow_right_comm, hζ.pow_eq_one, one_pow]
+  have hp : ζ ^ (-(r : ℤ)) = (ζ ^ r) ^ 2 := by
+    rw [zpow_neg, zpow_natCast]
+    apply inv_eq_of_mul_eq_one_right
+    rw [← pow_succ', hz]
+  rw [hp, lift_current, hu]
+  exact currentStateLinear.map_smul _ _
+
+private theorem mu_eigen (a b : NativeStates) (s t m : ℤ)
+    (ha : σ a = ζ ^ s • a) (hb : σ b = ζ ^ t • b) :
+    σ (mu lattice a m b) = ζ ^ (s + t) • mu lattice a m b := by
+  unfold mu
+  rw [(standardLift_compatible lattice g g_cube g_isometry).2.1, ha, hb,
+    zpow_add₀ (Units.ne_zero ThirdTwistedChargeCocycle.zeta)]
+  simp only [map_smul, Pi.smul_apply, LinearMap.smul_apply, smul_smul, mul_comm]
+
+set_option backward.isDefEq.respectTransparency false in
+set_option maxHeartbeats 1000000 in
+-- The theorem aligns the actual eigenstates and five pairwise locality orders.
+/-- The local-field commutator for a current and a lift eigenstate in the
+charged ground span. The higher current products of the charged ground vanish,
+so the zero product is the entire correction at all integer product labels. -/
+theorem adjustedResidue_current_ground_interchange
+    (u : Cartan) (r : ℕ) (hr : r < 3) (hu : p48qAction u = (ζ ^ r) ^ 2 • u)
+    (a b : NativeStates) (s t n m : ℤ) (ha : a ∈ groundSpan)
+    (hAe : σ a = ζ ^ s • a) (hb : σ b = ζ ^ t • b) :
+    let j := -(r : ℤ)
+    let A := nativeField a
+    let J := nativeField (currentAlong lattice u)
+    let B := nativeField b
+    let A₀ := nativeField (mu lattice (currentAlong lattice u) 0 a)
+    ∃ I K I₀ O P : ℕ,
+      coverDelta^[I] (coverComm J B) = 0 ∧
+      coverDelta^[K] (coverComm A B) = 0 ∧
+      coverDelta^[I₀] (coverComm A₀ B) = 0 ∧
+      coverDelta^[O] (coverComm A (adjustedResidue j t J B I m)) = 0 ∧
+      coverDelta^[P] (coverComm J (adjustedResidue s t A B K n)) = 0 ∧
+      adjustedResidue s (j + t) A (adjustedResidue j t J B I m) O n =
+        adjustedResidue j (s + t) J (adjustedResidue s t A B K n) P m -
+          adjustedResidue (j + s) t A₀ B I₀ (n + m) := by
+  let j := -(r : ℤ)
+  let h := currentAlong lattice u
+  let a₀ := mu lattice h 0 a
+  let A := nativeField a
+  let J := nativeField h
+  let B := nativeField b
+  let A₀ := nativeField a₀
+  have hJe := current_lift_eigen u r hu
+  have hA₀e : σ a₀ = ζ ^ (j + s) • a₀ := mu_eigen h a j s 0 hJe hAe
+  obtain ⟨I, hI⟩ := nativeField_pairwise_locality h b
+  obtain ⟨K, hK⟩ := nativeField_pairwise_locality a b
+  obtain ⟨I₀, hI₀⟩ := nativeField_pairwise_locality a₀ b
+  have hs : InResidue s A := nativeField_inResidue _ _ hAe
+  have hj : InResidue j J := nativeField_inResidue _ _ hJe
+  have ht : InResidue t B := nativeField_inResidue _ _ hb
+  have h0 : InResidue (j + s) A₀ := nativeField_inResidue _ _ hA₀e
+  have hAJ := nativeField_pairwise_locality a h
+  have hJA := nativeField_pairwise_locality h a
+  obtain ⟨O, hO⟩ := coverLocal_symm
+    (adjusted_coverLocal j t s J B A I m hs hJA (coverLocal_symm ⟨K, hK⟩) ⟨I, hI⟩)
+  obtain ⟨P, hP⟩ := coverLocal_symm
+    (adjusted_coverLocal s t j A B J K n hj hAJ (coverLocal_symm ⟨I, hI⟩) ⟨K, hK⟩)
+  refine ⟨I, K, I₀, O, P, hI, hK, hI₀, hO, hP, ?_⟩
+  refine adjusted_simplePole_interchange s j t A J B A₀ n m I K I₀ O P
+    (valid_of_coverLocality _ _ _ _ _ hj ht hI) (valid_of_coverLocality _ _ _ _ _ hs ht hK)
+    (valid_of_coverLocality _ _ _ _ _ h0 ht hI₀)
+    (valid_of_coverLocality _ _ _ _ _ hs (adjusted_inResidue _ _ _ _ _ _) hO)
+    (valid_of_coverLocality _ _ _ _ _ hj (adjusted_inResidue _ _ _ _ _ _) hP) ?_
+  intro z l
+  simpa only [A, J, h, j, A₀, a₀, P48qNativeMonodromy.nativeField_current,
+    LieRing.of_associative_ring_bracket] using
+    stripped_current_ground_commutator u r hr hu a ha s z l
+
+#check adjustedResidue_current_ground_interchange
+#print axioms adjustedResidue_current_ground_interchange
+
+
+open LatticeSugawaraCurrents (vectorFrequencyBound)
+open P48qNativeResidueProduct (adjustedResidue_coeff adjustedResidue_cutoff_mono
+  adjustedResidue_native_current)
+open private current_cleared_nonneg from
+  D5.S3.VertexAlgebra.Lattice.Orbifold.P48qNativeResidueProduct
+open private EigenWord prepend groundProject_mem from
+  D5.S3.VertexAlgebra.Lattice.Orbifold.P48qNativePairwiseLocality
+open LatticeActualStateFieldCalculus (mode_commutator commutatorTerm)
+
+private theorem adjusted_at_valid_cutoffs (s t : ℤ) (A B : Field) (N M : ℕ)
+    (hN : ∀ q ≥ (N : ℤ), clearedResidue s t A B q = 0)
+    (hM : ∀ q ≥ (M : ℤ), clearedResidue s t A B q = 0) (n : ℤ) :
+    adjustedResidue s t A B N n = adjustedResidue s t A B M n :=
+  (adjustedResidue_cutoff_mono s t A B N (max N M) (le_max_left _ _) hN n).trans
+    (adjustedResidue_cutoff_mono s t A B M (max N M) (le_max_right _ _) hM n).symm
+
+private theorem adjusted_current_at_locality (u : Cartan) (r : ℕ) (hr : r < 3)
+    (hu : p48qAction u = (ζ ^ r) ^ 2 • u) (b : NativeStates) (t : ℤ)
+    (he : σ b = ζ ^ t • b) (N : ℕ) (n : ℤ)
+    (hN : coverDelta^[N] (coverComm (nativeField (currentAlong lattice u)) (nativeField b)) = 0) :
+    adjustedResidue (-(r : ℤ)) t (nativeField (currentAlong lattice u)) (nativeField b) N n =
+      nativeField (mu lattice (currentAlong lattice u) n b) := by
+  have hb := nativeField_inResidue b t he
+  have hc := nativeField_inResidue (currentAlong lattice u) _ (current_lift_eigen u r hu)
+  refine (adjusted_at_valid_cutoffs _ _ _ _ N (vectorFrequencyBound lattice b + 1)
+    (fun q hq => clearedResidue_zero_of_locality _ _ _ _ hc hb N hN q hq) ?_ n).trans
+      (adjustedResidue_native_current u r hr hu b t hb n)
+  intro p hp
+  have hnonneg : 0 ≤ p := by omega
+  obtain ⟨q, rfl⟩ := Int.eq_ofNat_of_zero_le hnonneg
+  apply HVertexOperator.coeff_inj
+  funext l
+  let k := l - 3 * (q : ℤ)
+  have hk : k + 3 * (q : ℤ) = l := by dsimp [k]; ring
+  rw [P48qNativeMonodromy.nativeField_current, ← hk, current_cleared_nonneg u r hr hu b t hb]
+  have hq : vectorFrequencyBound lattice b + 1 ≤ q := by exact_mod_cast hp
+  simp [binomialTail, Nat.sub_eq_zero_of_le hq]
+
+private theorem source_current_ground_commute (u : Cartan) (a b : NativeStates)
+    (ha : a ∈ groundSpan) (m n : ℤ) :
+    mu lattice a n (mu lattice (currentAlong lattice u) m b) =
+      mu lattice (currentAlong lattice u) m (mu lattice a n b) -
+        mu lattice (mu lattice (currentAlong lattice u) 0 a) (n + m) b := by
+  let h := currentAlong lattice u
+  have law := mode_commutator lattice h a m n
+  rw [finsum_eq_single _ 0 (fun i hi => by
+    unfold commutatorTerm
+    rw [ground_current_positive a ha u i (by omega)]
+    simp only [map_zero, Pi.zero_apply, smul_zero])] at law
+  simp only [commutatorTerm, StateFieldResidueReconstruction.integerBinomial,
+    Ring.choose_zero_right, Int.cast_one, one_smul, Nat.cast_zero, sub_zero] at law
+  have at_b := LinearMap.congr_fun law b
+  change mu lattice h m (mu lattice a n b) - mu lattice a n (mu lattice h m b) =
+    mu lattice (mu lattice h 0 a) (m + n) b at at_b
+  rw [add_comm m n] at at_b
+  rw [← at_b]
+  abel
+
+private def GroundFirstCompatible (b : NativeStates) (t : ℤ) : Prop :=
+  ∀ (a : NativeStates) (s : ℤ), a ∈ groundSpan → σ a = ζ ^ s • a →
+    ∀ (N : ℕ), coverDelta^[N] (coverComm (nativeField a) (nativeField b)) = 0 →
+      ∀ n, adjustedResidue s t (nativeField a) (nativeField b) N n =
+        nativeField (mu lattice a n b)
+
+private theorem groundSpan_sum (a : NativeStates) (ha : a ∈ groundSpan) :
+    ∃ c : Charge lattice →₀ ℂ,
+      groundSum (fun i : c.support => i.val) (fun i => c i.val) = a := by
+  obtain ⟨c, hc⟩ := Finsupp.mem_span_range_iff_exists_finsupp.mp ha
+  refine ⟨c, ?_⟩
+  rw [groundSum, c.support.sum_coe_sort (fun i => c i • chargedGround i)]
+  exact hc
+
+set_option backward.isDefEq.respectTransparency false in
+set_option maxHeartbeats 1000000 in
+-- The cutoff is chosen over arbitrary finite indices and reused by both radial sums.
+private theorem groundSums_adjusted_atLocality {I J : Type*} [Fintype I] [Fintype J]
+    (a : I → Charge lattice) (b : J → Charge lattice) (u : I → ℂ) (v : J → ℂ)
+    (s t : ℤ) (N : ℕ) (n : ℤ)
+    (hs : InResidue s (nativeField (groundSum a u)))
+    (ht : InResidue t (nativeField (groundSum b v)))
+    (hN : coverDelta^[N]
+      (coverComm (nativeField (groundSum a u)) (nativeField (groundSum b v))) = 0) :
+    adjustedResidue s t (nativeField (groundSum a u)) (nativeField (groundSum b v)) N n =
+      nativeField (mu lattice (groundSum a u) n (groundSum b v)) := by
+  let order (ij : I × J) := chargedLocalityOrder (a ij.1) (b ij.2)
+  let M := Finset.univ.sup order
+  have hM (i : I) (j : J) : chargedLocalityOrder (a i) (b j) ≤ M := by
+    change order (i, j) ≤ Finset.univ.sup order
+    exact Finset.le_sup (f := order) (Finset.mem_univ (i, j))
+  let A := nativeField (groundSum a u)
+  let B := nativeField (groundSum b v)
+  have hloc : coverDelta^[M] (coverComm A B) = 0 :=
+    clear_radial_locality A B M (radialGroundSum a b u v) (radialGroundSum b a v u)
+      (radialGroundSum_coeff a b u v)
+      (fun x p k l => radialGroundSum_coeff b a v u x p l k)
+      (fun x p => radialGroundSum_cleared_swap a b u v x p M hM)
+  exact (adjusted_at_valid_cutoffs s t A B N M
+    (fun q hq => clearedResidue_zero_of_locality s t A B hs ht N hN q hq)
+    (fun q hq => clearedResidue_zero_of_locality s t A B hs ht M hloc q hq) n).trans
+      (groundSums_adjustedResidue a b u v s t hs ht M hM n)
+
+private theorem groundFirst_ground (b : NativeStates) (t : ℤ) (hb : b ∈ groundSpan)
+    (hbe : σ b = ζ ^ t • b) : GroundFirstCompatible b t := by
+  intro a s ha hae N hN n
+  obtain ⟨c, hc⟩ := groundSpan_sum a ha
+  obtain ⟨d, hd⟩ := groundSpan_sum b hb
+  subst a
+  subst b
+  exact groundSums_adjusted_atLocality _ _ _ _ s t N n
+    (nativeField_inResidue _ s hae) (nativeField_inResidue _ t hbe) hN
+
+set_option backward.isDefEq.respectTransparency false in
+set_option maxHeartbeats 1000000 in
+-- The two inner iterations carry different native inputs and locality orders.
+private theorem groundFirst_current_step (u : Cartan) (r : ℕ) (hr : r < 3)
+    (hu : p48qAction u = (ζ ^ r) ^ 2 • u) (b : NativeStates) (t m : ℤ)
+    (hbe : σ b = ζ ^ t • b) (ih : GroundFirstCompatible b t) :
+    GroundFirstCompatible (mu lattice (currentAlong lattice u) m b) (-(r : ℤ) + t) := by
+  intro a s ha hae N hN n
+  let h := currentAlong lattice u
+  let a₀ := mu lattice h 0 a
+  let j := -(r : ℤ)
+  let b' := mu lattice h m b
+  let w := mu lattice a n b
+  have hhe := current_lift_eigen u r hu
+  have hwe := mu_eigen a b s t n hae hbe
+  have hbe' := mu_eigen h b j t m hhe hbe
+  obtain ⟨I, K, I₀, O, P, hI, hK, hI₀, hO, hP, eq⟩ :=
+    adjustedResidue_current_ground_interchange u r hr hu a b s t n m ha hae hbe
+  have hinner := adjusted_current_at_locality u r hr hu b t hbe I m hI
+  rw [hinner] at hO eq
+  have hpair := ih a s ha hae K hK n
+  rw [hpair] at hP eq
+  rw [adjusted_current_at_locality u r hr hu w (s + t) hwe P m hP,
+    ih a₀ (j + s) (ground_current_zero_mem a ha u)
+      (mu_eigen h a j s 0 hhe hae) I₀ hI₀ (n + m), ← map_sub,
+    ← source_current_ground_commute u a b ha m n] at eq
+  have hs := nativeField_inResidue a s hae
+  have ht := nativeField_inResidue b' (j + t) hbe'
+  exact (adjusted_at_valid_cutoffs _ _ _ _ N O
+    (fun q hq => clearedResidue_zero_of_locality _ _ _ _ hs ht N hN q hq)
+    (fun q hq => clearedResidue_zero_of_locality _ _ _ _ hs ht O hO q hq) n).trans eq
+
+/-- Charged-ground eigenstates act compatibly on every negative-current
+eigenword, for every integer product label and every uniform locality order. -/
+theorem adjustedResidue_ground_first_eigenWord {d : ℕ} {b : NativeStates}
+    (hb : EigenWord d b) : ∃ t : ℤ, σ b = ζ ^ t • b ∧ GroundFirstCompatible b t := by
+  induction hb with
+  | ground a p =>
+    have h : σ (liftProject p (chargeGround a)) =
+        ζ ^ (((p.val * 2 : ℕ) : ℤ)) • liftProject p (chargeGround a) := by
+      simpa only [zpow_natCast, pow_mul] using liftProject_eigen p (chargeGround a)
+    exact ⟨_, h, groundFirst_ground _ _ (groundProject_mem a p) h⟩
+  | @cons d b hb level u r hu ih =>
+    obtain ⟨t, he, hc⟩ := ih
+    exact ⟨-(r.val : ℤ) + t,
+      mu_eigen _ _ _ _ _ (current_lift_eigen u r.val hu) he,
+      groundFirst_current_step u r.val r.isLt hu b t (-((level : ℕ) : ℤ)) he hc⟩
+
+#check adjustedResidue_ground_first_eigenWord
+#print axioms adjustedResidue_ground_first_eigenWord
 
 #check adjustedResidue_native_projected_chargedGround
 #check exists_adjustedResidue_native_projected_chargedGround

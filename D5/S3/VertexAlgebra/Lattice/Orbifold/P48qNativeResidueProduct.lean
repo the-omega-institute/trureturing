@@ -143,6 +143,212 @@ theorem adjustedResidue_cutoff_mono (s t : ℤ) (A B : Field) (N M : ℕ) (hNM :
   simp only [Finset.mem_range, not_lt] at hj
   simp [hR (n + j) (by omega)]
 
+open BinomialKernelDelta (chooseSign chooseSign_pascal finsum_split)
+open SignedFieldResidueLocality (residueField residueCoefficient residueLeft residueRight)
+open StateFieldResidueReconstruction (epsilon)
+open P48qNativeCurrentLocality (stripResidue_coeff restoreResidue_coeff)
+open P48qThirdTwistedField (State)
+
+private theorem signedPascal {V : Type*} [AddCommGroup V] [Module ℂ V]
+    (r : ℤ) (f : ℕ → V)
+    (hf : Function.HasFiniteSupport f) :
+    (∑ᶠ j : ℕ, chooseSign (r + 1) j • f j) =
+      (∑ᶠ j : ℕ, chooseSign r j • f j) - ∑ᶠ j : ℕ, chooseSign r j • f (j + 1) := by
+  have ht := hf.fun_comp_of_injective (g := fun j : ℕ => j + 1)
+    (fun _ _ h => Nat.add_right_cancel h)
+  rw [finsum_split (fun j => chooseSign (r + 1) j • f j) (hf.smul_right (chooseSign (r + 1))),
+    finsum_split (fun j => chooseSign r j • f j) (hf.smul_right (chooseSign r))]
+  simp only [BinomialKernelDelta.chooseSign_zero, one_smul, chooseSign_pascal, sub_smul]
+  have h₁ : Function.HasFiniteSupport (fun j => chooseSign r (j + 1) • f (j + 1)) :=
+    ht.smul_right (fun j => chooseSign r (j + 1))
+  have h₂ : Function.HasFiniteSupport (fun j => chooseSign r j • f (j + 1)) :=
+    ht.smul_right (chooseSign r)
+  rw [finsum_sub_distrib h₁ h₂]
+  abel
+
+private theorem modeSupport {V : Type*} [AddCommGroup V] [Module ℂ V]
+    (A : VertexOperator ℂ V) (w : V) (p : ℤ) :
+    Function.HasFiniteSupport (fun j : ℕ => (A[[p + j]]) w) := by
+  refine BddAbove.finite (bddAbove_def.mpr ⟨(-((HahnModule.of ℂ).symm (A w)).order - p).toNat,
+    fun j hj => le_of_not_gt (fun h => hj ?_)⟩)
+  exact VertexOperator.ncoeff_eq_zero_of_lt_order A _ w (by omega)
+
+private theorem stripMode_step (s : ℤ) (A : Field) (q : ℤ) :
+    (stripResidue s A)[[q]] = (stripResidue (s + 3) A)[[q + 1]] := by
+  simp only [VertexOperator.ncoeff_apply, stripResidue_coeff]
+  rw [show 3 * (-(q + 1) - 1) + (s + 3) = 3 * (-q - 1) + s by omega]
+
+set_option backward.isDefEq.respectTransparency false in
+set_option maxHeartbeats 1000000 in
+-- Elaborating the coefficient identities unfolds the residue constructor.
+/-- Moving one integral power from the first strip into its field multiplies
+the residue kernel by `z = w + (z - w)`. -/
+private theorem residueLeft_mode_step {V : Type*} [AddCommGroup V] [Module ℂ V]
+    (A C D : VertexOperator ℂ V) (hmode : ∀ i, A[[i]] = C[[i + 1]]) (r q : ℤ) :
+    ((residueField 1 r A D).operator)[[q]] =
+      ((residueField 1 r C D).operator)[[q + 1]] +
+      ((residueField 1 (r + 1) C D).operator)[[q]] := by
+  apply LinearMap.ext
+  intro w
+  let f (j : ℕ) := (C[[r + 1 - j]]) ((D[[q + j]]) w)
+  let g (j : ℕ) := (D[[r + q + 1 - j]]) ((C[[j]]) w)
+  have hf : Function.HasFiniteSupport f :=
+    (modeSupport D w q).subset (fun j hj hz => hj (by simp [f, hz]))
+  have hg : Function.HasFiniteSupport g := by
+    refine (modeSupport C w 0).subset (fun j hj hz => hj ?_)
+    change (C[[0 + (j : ℤ)]]) w = 0 at hz
+    simp only [zero_add] at hz
+    simp [g, hz]
+  rw [LinearMap.add_apply, (residueField 1 r A D).coefficient,
+    (residueField 1 r C D).coefficient, (residueField 1 (r + 1) C D).coefficient]
+  simp only [residueCoefficient, mul_one]
+  have hl : residueLeft r q A D w =
+      ∑ᶠ j : ℕ, chooseSign r j • f j := by
+    unfold residueLeft
+    apply finsum_congr
+    intro j
+    rw [hmode (r - j)]
+    simp only [f, chooseSign, StateFieldResidueReconstruction.integerBinomial]
+    rw [show r - (j : ℤ) + 1 = r + 1 - j by omega]
+  have hl' : residueLeft r (q + 1) C D w =
+      ∑ᶠ j : ℕ, chooseSign r j • f (j + 1) := by
+    unfold residueLeft
+    apply finsum_congr
+    intro j
+    simp only [f, chooseSign, StateFieldResidueReconstruction.integerBinomial, Nat.cast_add,
+      Nat.cast_one]
+    rw [show r + 1 - ((j : ℤ) + 1) = r - j by omega,
+      show q + ((j : ℤ) + 1) = q + 1 + j by omega]
+  have hr : residueRight r q A D w =
+      ∑ᶠ j : ℕ, chooseSign r j • g (j + 1) := by
+    unfold residueRight
+    apply finsum_congr
+    intro j
+    rw [hmode j]
+    simp only [g, chooseSign, StateFieldResidueReconstruction.integerBinomial,
+      Nat.cast_add, Nat.cast_one]
+    rw [show r + q + 1 - ((j : ℤ) + 1) = r + q - j by omega]
+  have hr' : residueRight r (q + 1) C D w =
+      ∑ᶠ j : ℕ, chooseSign r j • g j := by
+    unfold residueRight
+    apply finsum_congr
+    intro j
+    simp only [g, chooseSign, StateFieldResidueReconstruction.integerBinomial]
+    rw [show r + (q + 1) = r + q + 1 by omega]
+  change residueLeft r q A D w -
+      epsilon r • residueRight r q A D w =
+    (residueLeft r (q + 1) C D w - epsilon r • residueRight r (q + 1) C D w) +
+      (residueLeft (r + 1) q C D w - epsilon (r + 1) • residueRight (r + 1) q C D w)
+  have hsign : epsilon (r + 1) = -epsilon r := by
+    simp [epsilon, zpow_add₀ (by norm_num : (-1 : ℂ) ≠ 0)]
+  have hg' : residueRight (r + 1) q C D w = ∑ᶠ j : ℕ, chooseSign (r + 1) j • g j := by
+    simp only [residueRight, g, chooseSign, StateFieldResidueReconstruction.integerBinomial]
+    rw [show r + 1 + q = r + q + 1 by omega]
+  rw [hl, hl', hr, hr', hsign, hg']
+  change _ = _ + ((∑ᶠ j : ℕ, chooseSign (r + 1) j • f j) -
+    (-epsilon r) • (∑ᶠ j : ℕ, chooseSign (r + 1) j • g j))
+  rw [signedPascal r f hf, signedPascal r g hg, neg_smul, smul_sub]
+  abel
+
+private theorem binomialTail_one {M : Type*} [AddCommMonoid M] [Module ℂ M]
+    (N : ℤ) (F : ℤ → M) (hF : ∀ n ≥ N, F n = 0) (n : ℤ) :
+    binomialTail 1 N F n = F n + F (n + 1) := by
+  unfold binomialTail
+  rcases lt_trichotomy (n + 1) N with h | h | h
+  · rw [show (N - n).toNat = 2 + ((N - n).toNat - 2) by omega, Finset.sum_range_add]
+    have hz : (∑ j ∈ Finset.range ((N - n).toNat - 2),
+        Ring.choose (1 : ℂ) (2 + j) • F (n + ((2 + j : ℕ) : ℤ))) = 0 :=
+      Finset.sum_eq_zero fun j _ => by
+        rw [← Nat.cast_one (R := ℂ)]
+        rw [Ring.choose_natCast, Nat.choose_eq_zero_of_lt (by omega : 1 < 2 + j)]
+        simp
+    rw [hz, add_zero]
+    simp [Finset.sum_range_succ]
+  · simp [show (N - n).toNat = 1 by omega, hF (n + 1) (by omega)]
+  · simp [show (N - n).toNat = 0 by omega, hF n (by omega), hF (n + 1) (by omega)]
+
+/-- The adjusted product is invariant under increasing the first strip
+representative by three, with the same uniform locality cutoff. -/
+theorem adjustedResidue_strip_left_add_three (s t : ℤ) (A B : Field)
+    (hA : InResidue s A) (hB : InResidue t B) (N : ℕ)
+    (hlocal : coverDelta^[N] (coverComm A B) = 0) (n : ℤ) :
+    adjustedResidue (s + 3) t A B N n = adjustedResidue s t A B N n := by
+  apply HVertexOperator.coeff_inj
+  funext l
+  let k := l - 3 * n
+  have hk : k + 3 * n = l := by dsimp [k]; ring
+  rw [← hk, adjustedResidue_coeff, adjustedResidue_coeff]
+  let F (p : ℤ) := HVertexOperator.coeff (clearedResidue (s + 3) t A B p) (k + 3 * p)
+  have hA' : InResidue (s + 3) A := by
+    intro i hi
+    exact hA i (by simpa only [show (s + 3) % 3 = s % 3 by omega] using hi)
+  have hF (p : ℤ) (hp : (N : ℤ) ≤ p) : F p = 0 := by
+    simp [F, clearedResidue_zero_of_locality _ _ _ _ hA' hB N hlocal p hp]
+  have hstep (p : ℤ) :
+      HVertexOperator.coeff (clearedResidue s t A B p) (k + 3 * p) =
+        F p + F (p + 1) := by
+    simp only [F, clearedResidue, restoreResidue_coeff]
+    have hcond (q : ℤ) : (k + 3 * q) % 3 = k % 3 := by omega
+    simp only [hcond, show (s + 3 + t) % 3 = (s + t) % 3 by omega]
+    split_ifs
+    · simp only [VertexOperator.coeff_eq_ncoeff]
+      rw [show -((k + 3 * p - (s + 3 + t)) / 3) - 1 =
+          (-((k + 3 * p - (s + t)) / 3) - 1) + 1 by omega,
+        show -((k + 3 * (p + 1) - (s + 3 + t)) / 3) - 1 =
+          -((k + 3 * p - (s + t)) / 3) - 1 by omega]
+      exact residueLeft_mode_step _ _ _ (stripMode_step s A) p _
+    · rw [add_zero]
+  change binomialTail (((s + 3 : ℤ) : ℂ) / 3) N F n = _
+  simp_rw [hstep, ← binomialTail_one N F hF]
+  rw [binomialTail_add]
+  congr 2
+  push_cast
+  ring
+
+private theorem residueRight_mode_step {V : Type*} [AddCommGroup V] [Module ℂ V]
+    (A B C : VertexOperator ℂ V) (hmode : ∀ i, B[[i]] = C[[i + 1]]) (p q : ℤ) :
+    ((residueField 1 p A C).operator)[[q + 1]] = ((residueField 1 p A B).operator)[[q]] := by
+  apply LinearMap.ext
+  intro w
+  rw [(residueField 1 p A C).coefficient, (residueField 1 p A B).coefficient]
+  simp only [residueCoefficient]
+  apply congrArg₂ (· - ·)
+  · unfold residueLeft
+    apply finsum_congr
+    intro j
+    rw [show q + 1 + (j : ℤ) = q + j + 1 by omega, ← hmode (q + j)]
+  · congr 1
+    unfold residueRight
+    apply finsum_congr
+    intro j
+    rw [show p + (q + 1) - (j : ℤ) = p + q - j + 1 by omega, ← hmode (p + q - j)]
+
+set_option backward.isDefEq.respectTransparency false in
+set_option maxHeartbeats 1000000 in
+/-- The second strip shift cancels directly against the restoring monomial. -/
+theorem adjustedResidue_strip_right_add_three (s t : ℤ) (A B : Field) (N : ℕ) (n : ℤ) :
+    adjustedResidue s (t + 3) A B N n = adjustedResidue s t A B N n := by
+  have he (p : ℤ) : clearedResidue s (t + 3) A B p = clearedResidue s t A B p := by
+    apply HVertexOperator.coeff_inj
+    funext l
+    simp only [clearedResidue, restoreResidue_coeff,
+      show (s + (t + 3)) % 3 = (s + t) % 3 by omega]
+    split_ifs <;> try rfl
+    simp only [VertexOperator.coeff_eq_ncoeff]
+    let q := -((l - (s + t)) / 3) - 1
+    rw [show -((l - (s + (t + 3))) / 3) - 1 = q + 1 by dsimp [q]; omega]
+    exact residueRight_mode_step _ _ _ (stripMode_step t B) p q
+  apply HVertexOperator.coeff_inj
+  funext l
+  let k := l - 3 * n
+  have hk : k + 3 * n = l := by dsimp [k]; ring
+  have hs :
+    (fun p => HVertexOperator.coeff (clearedResidue s (t + 3) A B p) (k + 3 * p)) =
+      fun p => HVertexOperator.coeff (clearedResidue s t A B p) (k + 3 * p) := by
+    funext p
+    rw [he p]
+  rw [← hk, adjustedResidue_coeff, adjustedResidue_coeff, hs]
+
 /-- At every integer product label, equality with the inverse-twisted field
 is equivalent to the forward BK formula on the cleared residues. -/
 theorem adjustedResidue_eq_iff (s t : ℤ) (A B : Field) (N : ℕ)
@@ -406,6 +612,8 @@ theorem adjustedResidue_native_current (u : Cartan) (r : ℕ) (hr : r < 3)
 #check clearedResidue_zero_of_locality
 #check adjustedResidue_coeff
 #check adjustedResidue_cutoff_mono
+#check adjustedResidue_strip_left_add_three
+#check adjustedResidue_strip_right_add_three
 #check adjustedResidue_eq_iff
 #check native_clearedResidue_cutoff
 #check adjustedResidue_native_current_nonneg
@@ -415,6 +623,8 @@ theorem adjustedResidue_native_current (u : Cartan) (r : ℕ) (hr : r < 3)
 #print axioms clearedResidue_zero_of_locality
 #print axioms adjustedResidue_coeff
 #print axioms adjustedResidue_cutoff_mono
+#print axioms adjustedResidue_strip_left_add_three
+#print axioms adjustedResidue_strip_right_add_three
 #print axioms adjustedResidue_eq_iff
 #print axioms native_clearedResidue_cutoff
 #print axioms adjustedResidue_native_current_nonneg
