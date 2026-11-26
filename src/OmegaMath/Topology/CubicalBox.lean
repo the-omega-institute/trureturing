@@ -1,9 +1,7 @@
-module
-
 import OmegaBuild.Commands
-public import Mathlib.Data.Fintype.Pi
-public import Mathlib.Data.Matrix.Mul
-public import Mathlib.Data.ZMod.Basic
+import Mathlib.Data.Fintype.Pi
+import Mathlib.Data.Matrix.Mul
+import Mathlib.Data.ZMod.Basic
 
 /-! Omega original.
 
@@ -12,8 +10,6 @@ A ray of links tests the parity of a projected plaquette fiber.
 -/
 
 compile_only_with_mathlib
-
-@[expose] public section
 
 set_option autoImplicit false
 

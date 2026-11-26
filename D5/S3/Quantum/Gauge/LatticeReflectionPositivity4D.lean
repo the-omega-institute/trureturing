@@ -6,16 +6,14 @@
    utility: none
    digest: Finite Wilson reflection positivity and planar Wilson-loop bounds. -/
 
-module
-
 import OmegaBuild.Commands
-public import D5.S3.StatisticalMechanics.ZTwoHighTemperatureExpansion
-public import OmegaMath.Topology.CubicalBox
-public import Mathlib.Analysis.Complex.Trigonometric
-public import Mathlib.Analysis.SpecialFunctions.Exponential
-public import Mathlib.Analysis.InnerProductSpace.Defs
-public import Mathlib.Analysis.SpecialFunctions.Log.Basic
-public import Mathlib.LinearAlgebra.UnitaryGroup
+import D5.S3.StatisticalMechanics.ZTwoHighTemperatureExpansion
+import OmegaMath.Topology.CubicalBox
+import Mathlib.Analysis.Complex.Trigonometric
+import Mathlib.Analysis.SpecialFunctions.Exponential
+import Mathlib.Analysis.InnerProductSpace.Defs
+import Mathlib.Analysis.SpecialFunctions.Log.Basic
+import Mathlib.LinearAlgebra.UnitaryGroup
 
 /-! # Finite Wilson reflection positivity and planar Wilson loops
 
@@ -25,8 +23,6 @@ loop expectation and the four-dimensional bound on open cubical boxes.
 -/
 
 compile_only_with_mathlib
-
-@[expose] public section
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -622,8 +618,15 @@ private theorem surfaceSum_le_minimal_mul_closed (M : Matrix P E (ZMod 2))
   · intro s _ _
     exact mul_nonneg (pow_nonneg ht _) (pow_nonneg ht _)
 
-/-- With injective boundary there is a unique filling and the only closed surface is zero. -/
+omit [DecidableEq E] in
+private theorem minimalFilling_boundary (M : Matrix P E (ZMod 2)) (c : E → ZMod 2)
+    {S : P → ZMod 2} (hS : S ∈ minimalFillings M c) : Mᵀ *ᵥ S = c := by
+  classical
+  have hs : S ∈ fillings M c := (Finset.mem_filter.mp hS).1
+  exact (Finset.mem_filter.mp hs).2
+
 omit [DecidableEq P] in
+/-- With injective boundary there is a unique filling and the only closed surface is zero. -/
 private theorem wilsonExpectation_eq_pow_of_injective (M : Matrix P E (ZMod 2))
     (hM : Function.Injective (Mᵀ *ᵥ ·)) (β : ℝ) (S : P → ZMod 2) :
     wilsonExpectation M β (Mᵀ *ᵥ S) = (Real.tanh β) ^ (plaquetteSupport S).card := by
@@ -689,7 +692,6 @@ theorem hypercubic_4d_minimal_surface_area_bound {w : Fin 4 → ℕ} (r : Rectan
   simpa using bound
 
 
-set_option maxHeartbeats 600000 in
 open Omega.CubicalBox in
 /-- The closed surfaces cancel from the upper bound, and each minimal filling has at least the
 area of the rectangle. -/
@@ -707,8 +709,7 @@ theorem strong_coupling_4d_minimal_surface_expansion_bound {w : Fin 4 → ℕ}
   refine ⟨div_nonneg (Finset.sum_nonneg fun _ _ => pow_nonneg ht _) hden.le,
     (div_le_iff₀ hden).mpr (surfaceSum_le_minimal_mul_closed (incidence w) _ ht), ?_⟩
   intro S hS
-  have hs : S ∈ fillings (incidence w) r.perimeter := (Finset.mem_filter.mp hS).1
-  exact hypercubic_4d_minimal_surface_area_bound r S (Finset.mem_filter.mp hs).2
+  exact hypercubic_4d_minimal_surface_area_bound r S (minimalFilling_boundary _ _ hS)
 
 end WilsonLoops
 
