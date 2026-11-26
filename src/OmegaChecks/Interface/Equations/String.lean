@@ -109,4 +109,13 @@ public theorem String.Slice.RevByteIterator.instIteratorLoopUInt8OfMonad
       @_root_.String.Slice.RevByteIterator.instIteratorLoopUInt8OfMonad m n _ _ :=
   finiteIteratorLoop_eq
 
+public theorem String.Slice.RevByteIterator.instForInCharOfMonad {m : Type u → Type v} [Monad m] :
+    OmegaChecks.InitPort.Alternatives.String.Slice.RevByteIterator.instForInCharOfMonad (m := m) =
+      _root_.String.Slice.RevByteIterator.instForInCharOfMonad (m := m) := by
+  unfold OmegaChecks.InitPort.Alternatives.String.Slice.RevByteIterator.instForInCharOfMonad
+    _root_.String.Slice.RevByteIterator.instForInCharOfMonad
+  congr 1
+  funext β s b f
+  rw [finiteIteratorLoop_eq]
+
 end OmegaChecks.Interface.Equations

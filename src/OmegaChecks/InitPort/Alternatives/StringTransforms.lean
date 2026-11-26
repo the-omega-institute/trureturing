@@ -78,4 +78,10 @@ public theorem String.intercalate_append_of_ne_nil :
     type_of% @_root_.String.Slice.RevByteIterator.instIteratorLoopUInt8OfMonad :=
   fun {_ _} _ _ => finiteIteratorLoop
 
+@[instance_reducible] public noncomputable def String.Slice.RevByteIterator.instForInCharOfMonad
+    {m : Type u → Type v} [Monad m] : ForIn m String.Slice Char where
+  forIn s b f :=
+    @ForIn.forIn m _ Char (@Std.instForInIterOfMonadOfIteratorLoopId _ _ m _ _ finiteIteratorLoop)
+      _ s.chars b f
+
 end OmegaChecks.InitPort.Alternatives
