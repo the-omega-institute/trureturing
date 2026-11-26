@@ -1,5 +1,6 @@
 module
 
+public import Init.Data.Array.DecidableEq
 public import Init.Data.Array.Lemmas
 public import Init.Data.Vector.Lex
 public import Init.Data.Vector.Attach
@@ -28,6 +29,14 @@ public theorem Vector.pmapImpl {α : Type u} {β : Type v} {n : Nat} {P : α →
     (f : ∀ a, P a → β) (xs : Vector α n) (h : ∀ a ∈ xs, P a) :
     _root_.Vector.pmap f xs h = _root_.Vector.pmapImpl f xs h := by
   rw [_root_.Vector.pmap_eq_pmapImpl]
+
+public theorem Array.instDecidableEqEmpImpl {α : Type u} (xs : Array α) :
+    _root_.Array.instDecidableEqEmp xs = _root_.Array.instDecidableEqEmpImpl xs :=
+  Subsingleton.elim _ _
+
+public theorem Array.instDecidableEmpEqImpl {α : Type u} (xs : Array α) :
+    _root_.Array.instDecidableEmpEq xs = _root_.Array.instDecidableEmpEqImpl xs :=
+  Subsingleton.elim _ _
 
 public theorem Array.lex {α : Type u} [BEq α] (xs ys : Array α) (lt : α → α → Bool) :
     xs.toList.lex ys.toList lt = xs.lex ys lt := _root_.Array.lex_toList

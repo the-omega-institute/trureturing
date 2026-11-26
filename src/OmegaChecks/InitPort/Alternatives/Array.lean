@@ -7,6 +7,7 @@ public import OmegaChecks.InitPort.Alternatives.ArrayFind
 public import OmegaChecks.InitPort.Alternatives.ArrayMapIdx
 public import OmegaChecks.InitPort.Alternatives.Vector
 
+public import Init.Data.Array.DecidableEq
 public import Init.Data.Array.Basic
 public import Init.Data.Nat.Basic
 import all Init.Data.Array.Basic
@@ -19,6 +20,16 @@ import all Init.Data.Vector.Basic
 /-! List-backed implementations and induction proofs for the pinned array interfaces. -/
 
 namespace OmegaChecks.InitPort.Alternatives
+
+@[expose] public def Array.instDecidableEqEmpImpl : type_of% @_root_.Array.instDecidableEqEmpImpl :=
+  @_root_.Array.instDecidableEqEmp
+
+public theorem Array.instDecidableEqEmp_csimp : @_root_.Array.instDecidableEqEmp = @Array.instDecidableEqEmpImpl := rfl
+
+@[expose] public def Array.instDecidableEmpEqImpl : type_of% @_root_.Array.instDecidableEmpEqImpl :=
+  @_root_.Array.instDecidableEmpEq
+
+public theorem Array.instDecidableEmpEq_csimp : @_root_.Array.instDecidableEmpEq = @Array.instDecidableEmpEqImpl := rfl
 
 public theorem Array.mem_dite_empty_left : type_of% @_root_.Array.mem_dite_empty_left := by
   intro α p x _ xs
