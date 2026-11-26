@@ -4,6 +4,7 @@ public import Init.Data.Option.Lemmas
 public import Init.Data.Option.Attach
 public import Init.Data.Option.Monadic
 public import Init.Data.Option.Array
+public import Init.Data.Option.List
 
 /-! Constructive witnesses for optional values and finite cases for filters and order. -/
 
@@ -295,6 +296,14 @@ public theorem foldrM_toArray : type_of% @_root_.Option.foldrM_toArray := by
   | some b =>
     change (#[].push b).foldrM f a = f b a
     change (f b a >>= pure) = _
+    exact bind_pure _
+
+public theorem foldrM_toList : type_of% @_root_.Option.foldrM_toList := by
+  intro m β α _ _ o a f
+  cases o with
+  | none => rfl
+  | some b =>
+    change (f b a >>= pure) = f b a
     exact bind_pure _
 
 end Option
