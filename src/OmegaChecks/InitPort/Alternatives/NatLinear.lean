@@ -2,6 +2,7 @@ module
 
 public import Init.Data.Nat.Internal.Linear
 public import Init.Data.Nat.Simproc
+public import Init.Grind.Offset
 
 open Nat.Internal.Linear
 
@@ -215,5 +216,38 @@ public theorem Nat.Simproc.add_le_gt (a : Nat) {b c : Nat} (h : b > c) :
 public theorem Nat.Simproc.le_add_le (a : Nat) {b c : Nat} (h : a ≤ c) :
     compareProp a (b+c) = True :=
   compareTrue _ _ (Nat.le_trans h (Nat.le_add_left c b))
+
+public theorem Lean.Grind.Nat.lo_eq_true_of_lo (u v k₁ k₂ : Nat) : _root_.Lean.Grind.isLE k₂ k₁ = true → u + k₁ ≤ v → compareProp (u + k₂) (v) = True :=
+  fun test h => compareTrue _ _ (Nat.le_trans (Nat.add_le_add_left (of_decide_eq_true test) u) h)
+
+public theorem Lean.Grind.Nat.le_eq_true_of_lo (u v k : Nat) : u + k ≤ v → compareProp (u) (v) = True :=
+  fun h => compareTrue _ _ (Nat.le_trans (Nat.le_add_right u k) h)
+
+public theorem Lean.Grind.Nat.le_eq_true_of_le (u v : Nat) : u ≤ v → compareProp (u) (v) = True :=
+  compareTrue u v
+
+public theorem Lean.Grind.Nat.ro_eq_true_of_lo (u v k₁ k₂ : Nat) : u + k₁ ≤ v → compareProp (u) (v + k₂) = True :=
+  fun h => compareTrue _ _ (Nat.le_trans (Nat.le_trans (Nat.le_add_right u k₁) h) (Nat.le_add_right v k₂))
+
+public theorem Lean.Grind.Nat.ro_eq_true_of_le (u v k : Nat) : u ≤ v → compareProp (u) (v + k) = True :=
+  fun h => compareTrue _ _ (Nat.le_trans h (Nat.le_add_right v k))
+
+public theorem Lean.Grind.Nat.ro_eq_true_of_ro (u v k₁ k₂ : Nat) : _root_.Lean.Grind.isLE k₁ k₂ = true → u ≤ v + k₁ → compareProp (u) (v + k₂) = True :=
+  fun test h => compareTrue _ _ (Nat.le_trans h (Nat.add_le_add_left (of_decide_eq_true test) v))
+
+public theorem Lean.Grind.Nat.lo_eq_false_of_le (u v k : Nat) : _root_.Lean.Grind.isLt 0 k = true → u ≤ v → compareProp (v + k) (u) = False :=
+  fun test h => compareFalse _ _ (_root_.Lean.Grind.Nat.unsat_le_lo u v k test h)
+
+public theorem Lean.Grind.Nat.le_eq_false_of_lo (u v k : Nat) : _root_.Lean.Grind.isLt 0 k = true → u + k ≤ v → compareProp (v) (u) = False :=
+  fun test h => compareFalse _ _ (fun le => _root_.Lean.Grind.Nat.unsat_le_lo v u k test le h)
+
+public theorem Lean.Grind.Nat.lo_eq_false_of_lo (u v k₁ k₂ : Nat) : _root_.Lean.Grind.isLt 0 (k₁+k₂) = true → u + k₁ ≤ v → compareProp (v + k₂) (u) = False :=
+  fun test h => compareFalse _ _ (_root_.Lean.Grind.Nat.unsat_lo_lo u v k₁ k₂ test h)
+
+public theorem Lean.Grind.Nat.ro_eq_false_of_lo (u v k₁ k₂ : Nat) : _root_.Lean.Grind.isLt k₂ k₁ = true → u + k₁ ≤ v → compareProp (v) (u + k₂) = False :=
+  fun test h => compareFalse _ _ (_root_.Lean.Grind.Nat.unsat_lo_ro u v k₁ k₂ test h)
+
+public theorem Lean.Grind.Nat.lo_eq_false_of_ro (u v k₁ k₂ : Nat) : _root_.Lean.Grind.isLt k₁ k₂ = true → u ≤ v + k₁ → compareProp (v + k₂) (u) = False :=
+  fun test h => compareFalse _ _ (fun le => _root_.Lean.Grind.Nat.unsat_lo_ro v u k₂ k₁ test le h)
 
 end OmegaChecks.InitPort.Alternatives
