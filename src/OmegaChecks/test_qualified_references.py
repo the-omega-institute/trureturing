@@ -137,6 +137,22 @@ def native_cases(backend):
     yield name, header + (
         f"public theorem mixed (p : Nat) (h : ({ref}) p) (hp : _root_.Nat.Prime p) : ({ref}) p := h\n"
     ), ["qualify this identifier as OmegaMathlib.Nat.Prime"] if backend == "official" else []
+    functions = header + "public import OmegaMathlib.Logic.Function.Defs\npublic import Mathlib.Logic.Function.Defs\n"
+    bij = "native% OmegaMathlib.Function.Bijective"
+    yield name, functions + (
+        "universe u v\n"
+        f"public def plain : (Nat → Nat) → Prop := {bij}\n"
+        f"public def applied (f : Nat → Nat) : Prop := ({bij}) f\n"
+        f"public def ascribed := (({bij}) : (Nat → Nat) → Prop)\n"
+        "public def levels {α : Sort u} {β : Sort v} (f : α → β) : Prop := "
+        f"({bij}.{{u,v}}) f\n"
+        "public theorem primeLower (p : Nat) (h : (native% OmegaMathlib.Nat.Prime) p) : 2 ≤ p := "
+        "(native% OmegaMathlib.Nat.Prime.two_le) h\n"), []
+    lying = (functions + "public meta import Lean\nopen Lean Elab Term in\n"
+             "@[term_elab OmegaBuild.nativePort] public meta def forgedImplicit : TermElab := fun stx ex => do\n"
+             "  addConstInfo stx `Function.Bijective\n"
+             "  elabTerm (mkCIdentFrom stx[1] `Function.Surjective) ex\n")
+    yield name, lying + f"public def forgedValue : (Nat → Nat) → Prop := {bij}\n", ["forgedValue"]
     # A replacement elaborator can emit an incorrect object at the genuine grammar node.
     forged = (header + "public meta import Lean\n"
               "public def Shadow.Prime (_ : Nat) : Prop := True\n"
@@ -201,16 +217,21 @@ def check_reflected(lean, label, path):
     header = f"module\npublic import {PORTS[0]}\n"
     owner = ("D5.AuthenticatedTheorem", header +
              "public theorem evidence (p : Omega.Nat) (h : OmegaMathlib.Nat.Prime p) : "
-             "OmegaMathlib.Nat.Prime p := h\n")
+             "OmegaMathlib.Nat.Prime p := h\n"
+             "public structure Carrier where n : Omega.Nat\n"
+             "public theorem Carrier.evidence (c : Carrier) : OmegaMathlib.Nat.Prime c.n ∨ True := Or.inr True.intro\n")
     imported = (f"module\npublic import {owner[0]}\npublic import Lean\n"
                 "public def withProof {p : Prop} (_ : p) : Prop := p\n")
     good = ("public def observed : Prop := type_of% @evidence\n"
-            "public def implicit : Prop := withProof (@evidence)\n")
+            "public def implicit : Prop := withProof (@evidence)\n"
+            "public def dot (c : Carrier) : Prop := type_of% c.evidence\n"
+            "public def applied (c : Carrier) : Prop := type_of% (Carrier.evidence c)\n"
+            "public def implicitDot (c : Carrier) : Prop := withProof c.evidence\n")
     check_case(lean, label, path, [owner, ("D5.Reflected", imported + good)], [])
     # The genuine reflected type is independently checked at its occurrence.
     # A hidden port introduced beside it still has no authenticated source position.
     hidden = ('local notation "unmarked" n => Omega.Nat.Prime n\n'
-              'public def wrong (n : Omega.Nat) : Prop := (type_of% @evidence) ∧ unmarked n\n')
+              'public def wrong (c : Carrier) : Prop := (type_of% c.evidence) ∧ unmarked c.n\n')
     check_case(lean, label, path, [owner, ("D5.Reflected", imported + hidden)],
                ["D5.Reflected", "without an explicit source reference", "OmegaMathlib.Nat.Prime"])
 

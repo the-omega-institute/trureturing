@@ -34,7 +34,7 @@ elab "compile_only_with_mathlib" : command =>
   modifyEnv fun env => mathlibOnlyExt.setState env true
 
 /-- Select the pinned native declaration of an explicitly named OmegaMathlib port. -/
-syntax (name := nativePort) "native% " ident : term
+syntax (name := nativePort) "native% " ident (Parser.Term.explicitUnivSuffix)? : term
 
 @[term_elab nativePort] def elabNativePort : Elab.Term.TermElab := fun stx expectedType? => do
   let id := stx[1]
@@ -56,6 +56,13 @@ syntax (name := nativePort) "native% " ident : term
     alias == aliasName && (target == native ||
       (target == strict && env.getModuleIdxFor? target == some idx && declaredIn env target provider))
   unless authentic do throwErrorAt id "{provider} does not export the verified port {aliasName}"
-  Elab.Term.elabTerm (mkIdentFrom id (`_root_ ++ native)) expectedType?
+  let ref := mkCIdentFrom id native
+  let ref := if stx[2].isNone then ref.raw else
+    mkNode ``Parser.Term.explicitUniv (#[ref.raw] ++ stx[2].getArgs)
+  let result ← Elab.Term.elabTerm ref expectedType?
+  -- The inferred implicit arguments can make the result an application; the reference
+  -- index records an identifier only for a constant expression at its source range.
+  Elab.addConstInfo stx native
+  return result
 
 end OmegaBuild
