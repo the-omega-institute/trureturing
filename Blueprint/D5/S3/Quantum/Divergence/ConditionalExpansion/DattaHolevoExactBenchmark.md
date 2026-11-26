@@ -36,4 +36,6 @@ The related complementary-channel replacement-weight characterization follows fr
 
 - Truth anchor: `D5/S3/Quantum/Divergence/ConditionalExpansion/DattaHolevoExactBenchmark.sharp_family_expansion_eq`
 - Truth anchor: `D5/S3/Quantum/Divergence/ConditionalExpansion/DattaHolevoExactBenchmark.sharp_family_recovery_sup_eq`
+- Dependency: [D5/S3/Quantum/Divergence/ConditionalExpansion/FilteredBellKernelUpperBound](FilteredBellKernelUpperBound.md)
 - Dependency: [D5/S3/Quantum/Divergence/ConditionalExpansion/HeraldedRecoveryLowerBound](HeraldedRecoveryLowerBound.md)
+- Dependency: [D5/S3/Quantum/Divergence/ConditionalExpansion/SharpFilteredRecoveryFactor](SharpFilteredRecoveryFactor.md)
