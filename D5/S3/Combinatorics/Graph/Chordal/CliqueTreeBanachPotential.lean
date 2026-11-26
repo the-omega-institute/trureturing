@@ -6,6 +6,7 @@
    utility: none
    digest: Center extension and separator midpoint bounds on clique trees. -/
 
+import D5.S3.Combinatorics.Graph.Chordal.CompleteAndCliqueSumBanach
 import Mathlib.Analysis.Normed.Module.Basic
 import Mathlib.Analysis.Normed.Group.Constructions
 import Mathlib.Algebra.Module.BigOperators
@@ -580,18 +581,6 @@ private theorem common_stars {A S : Finset V} (hS : S ⊆ A) (ha : A.Nonempty)
   apply weighted_bound w f ε _ hf
   intro t _
   by_cases ht : t ∈ S <;> simp [w, ht, sub_nonneg, hqa, inv_nonneg]
-private def transport {T : SimpleGraph I} (d : I → I → E) {a b : I} : T.Walk a b → E
-  | .nil => 0
-  | .cons' x y _ _ p => d x y + transport d p
-omit [NormedSpace ℝ E] in
-private theorem transport_concat (d : I → I → E) {a b c : I}
-    (p : T.Walk a b) (h : T.Adj b c) :
-    transport d (p.concat h) = transport d p + d b c := by
-  induction p with
-  | nil => simp [Walk.concat, transport]
-  | cons h' p ih =>
-    change _ + transport d (p.concat h) = (_ + transport d p) + d _ _
-    rw [ih, add_assoc]
 private theorem shared_adj [Finite I] (hK : IsCliqueTree T G K)
     (h₂ : ∀ v : V, {i : I | v ∈ K i}.ncard ≤ 2)
     {a b : I} {x : V} (ha : x ∈ K a) (hb : x ∈ K b) (hab : a ≠ b) : T.Adj a b := by
@@ -667,12 +656,7 @@ theorem cliqueTree_twoClique_midpoint_banach_potential {V : Type u} [Finite V] {
   have rev (a b : I) : gain b a = -gain a b := by
     simp only [gain, S, Set.inter_comm (K b) (K a), ← mean_sub]
     abel
-  let root := hK.isTree.connected.nonempty.some
-  let c (a : I) := transport gain (route hK.isTree root a)
-  have offset (a b : I) (hab : T.Adj a b) : c b - c a = gain a b := by
-    rcases route_adj hK.isTree root hab with h | h
-    · simp only [c, h, transport_concat]; abel
-    · simp only [c, h, transport_concat, rev a b]; abel
+  obtain ⟨c, offset⟩ := tree_offsets hK.isTree gain (fun a b _ => rev a b)
   let ψ (a : I) (x : V) := p a x + c a
   have fit (a : I) (u v : V) (hu : u ∈ K a) (hv : v ∈ K a) (h : G.Adj u v) :
       ‖g u v - (ψ a v - ψ a u)‖ ≤ C a * ε := by
