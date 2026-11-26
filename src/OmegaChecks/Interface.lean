@@ -7,14 +7,26 @@ open Lean
 
 namespace OmegaChecks.Interface
 
-private def official (n : Name) : Name :=
-  n.replacePrefix `Omega Name.anonymous
+private def official (strict : Environment) (n : Name) : Name := Id.run do
+  if let some user := privateToUserName? n then
+    if let some idx := strict.getModuleIdxFor? n then
+      let owner := strict.header.moduleNames[idx]!
+      if owner.getRoot == `OmegaInit && user.getRoot == `Omega &&
+          mkPrivateNameCore owner user == n then
+        return mkPrivateNameCore (owner.replacePrefix `OmegaInit `Init)
+          (user.replacePrefix `Omega .anonymous)
+  return n.replacePrefix `Omega .anonymous
 
 private partial def translate (rename : Name → Name) (e : Expr) : Expr := Id.run do
   -- Replace constants and kernel projections, including their target expressions.
   return e.replace fun
     | .const n us => some (.const (rename n) us)
     | .proj n i target => if rename n != n then some (.proj (rename n) i (translate rename target)) else none
+    | .forallE n dom body bi =>
+      -- The kernel names a recursor's branch after its constructor, including private ones.
+      if isPrivateName n && rename n != n then
+        some (.forallE (rename n) (translate rename dom) (translate rename body) bi)
+      else none
     | _ => none
 
 private def same (env : Environment) (lhs rhs : Expr) : Bool :=
@@ -49,6 +61,7 @@ def declaredIn (env : Environment) (name owner : Name) : Bool := Id.run do
 /-- Kernel conversion ignores elaborator binder visibility and named-argument labels. -/
 private partial def compatibleBinders (env : Environment) (ctx : LocalContext) (depth : Nat)
     (src dst : Expr) : Bool := Id.run do
+  if src.equal dst then return true
   let .ok a := Kernel.whnf env ctx src | return false
   let .ok b := Kernel.whnf env ctx dst | return false
   match a, b with
@@ -63,6 +76,7 @@ private partial def compatibleBinders (env : Environment) (ctx : LocalContext) (
   | _, _ => return true
 
 private def requireSame (env : Environment) (name : Name) (label : String) (lhs rhs : Expr) : IO Unit := do
+  if lhs.equal rhs then return
   if let .error _ := Kernel.check env {} lhs then
     throw <| IO.userError s!"ill-typed translated {label} for {name}"
   unless same env lhs rhs do
@@ -147,14 +161,24 @@ where
   compareDefinitionBody : IO Unit := do
     let value := src.value! (allowOpaque := true)
     let body := translate rename (value.instantiateLevelParams src.levelParams (dst.levelParams.map Level.param))
-    if let .error _ := Kernel.check reference {} body then
-      throw <| IO.userError s!"ill-typed translated definition for {src.name}"
+    -- A copy of a checked official body already has its official type. Comparing
+    -- it directly also avoids evaluating large closed computations on both sides.
+    let original := match src, dst with
+      | .defnInfo _, .defnInfo y => some y.value
+      | .opaqueInfo x, .opaqueInfo y => if x.isUnsafe == y.isUnsafe then some y.value else none
+      | _, _ => none
+    let identical := original.any (body.equal ·)
+    unless identical do
+      if let .error _ := Kernel.check reference {} body then
+        throw <| IO.userError s!"ill-typed translated definition for {src.name}"
     let target := mkConst dst.name (dst.levelParams.map Level.param)
     let mut hidden := false
     if let some (_, publicStrict) := foundation then
-      let exposed ← lookup publicStrict src.name
-      hidden := exposed.isAxiom || exposed matches .opaqueInfo _
-    if !same reference body target then
+      if !isPrivateName src.name then
+        let exposed ← lookup publicStrict src.name
+        hidden := exposed.isAxiom || exposed matches .opaqueInfo _
+    let sameBody := identical || (original.any fun value => same reference body value)
+    if !sameBody && !same reference body target then
       unless hidden do
         throw <| IO.userError s!"computed definition mismatch for {src.name}"
       checkEquation reference src dst body
@@ -172,10 +196,10 @@ def check (strict publicStrict reference : Environment) (bindings : Array (Name 
     pending := pending.pop
     unless seen.contains name do
       seen := seen.insert name
-      let dst := official name
+      let dst := official strict name
       unless declaredIn reference dst owner do
         throw <| IO.userError s!"upstream module mismatch for {name}"
-      let deps ← compare reference official (← lookup strict name) (← lookup reference dst)
+      let deps ← compare reference (official strict) (← lookup strict name) (← lookup reference dst)
         (some (strict, publicStrict))
       for dep in deps do
         let owner ← ownerOf strict dep
@@ -183,7 +207,7 @@ def check (strict publicStrict reference : Environment) (bindings : Array (Name 
           | `OmegaInit => owner.replacePrefix `OmegaInit `Init
           | `OmegaMathlib => owner.replacePrefix `OmegaMathlib `Mathlib
           | _ => Name.anonymous
-        if target.isAnonymous || dep.getRoot != `Omega then
+        if target.isAnonymous || (privateToUserName dep).getRoot != `Omega then
           throw <| IO.userError s!"dependency outside the standard interface: {name} uses {dep} in {owner}"
         pending := pending.push (dep, target)
   let roots := NameSet.ofList (bindings.toList.map Prod.fst)
@@ -438,7 +462,7 @@ def checkConsumers (strict publicStrict reference : Environment) (modules : Arra
   let rename := fun (name : Name) => Id.run do
     let some idx := strict.getModuleIdxFor? name | return name
     let owner := strict.header.modules[idx]!.module
-    if owner.getRoot == `OmegaInit || owner.getRoot == `OmegaMathlib then return official name
+    if owner.getRoot == `OmegaInit || owner.getRoot == `OmegaMathlib then return official strict name
     return name
   let officialOnly ← frozenRoots reference modules inventory (·.officialOnly)
   let strictOnly ← frozenRoots strict modules inventory (·.strictOnly)
