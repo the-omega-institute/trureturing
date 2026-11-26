@@ -13,6 +13,21 @@ triage: anchor
 
 # Inclination and cyclic projection rates
 
+## Verified locator
+
+https://doi.org/10.48550/arXiv.1006.2047 resolves to the arXiv record for
+*The rate of convergence in the method of alternating projections*.
+The directly consulted version is https://arxiv.org/abs/1006.2047v1,
+with source text at https://arxiv.org/src/1006.2047v1.
+Section 3 defines the inclination. Section 4.1, Theorem 4.1,
+contains the qualitative criterion; its proof of implication (6) to (3)
+uses the lemma labelled lemma:4 and the estimate labelled eq:norm.
+The quantitative remark in Section 4.2 gives the factor
+sqrt(1-ell squared divided by m squared).
+The source assumes a complex Hilbert space and N at least two.
+
+## Scope
+
 For closed linear subspaces M_1,...,M_N of a complex Hilbert space,
 with N at least two and common intersection M, Section 3 defines the
 inclination through the maximum individual distance divided by distance
@@ -21,7 +36,7 @@ of uniform convergence of the cyclic product of their actual orthogonal
 projections.
 
 In the proof of implication (6) to (3), the lemma labelled lemma:4 and
-the displayed estimate labelled eq:norm bound the initial residual of
+the displayed estimate labelled eq:norm bound the squared initial residual of
 every listed member by N squared times the centered one-cycle energy
 loss. Section 4.2 gives the corresponding quantitative estimate for a
 product visiting the family in m steps: its norm on the common
