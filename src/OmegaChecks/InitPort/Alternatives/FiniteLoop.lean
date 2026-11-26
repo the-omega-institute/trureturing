@@ -64,7 +64,7 @@ public noncomputable def Std.Iter.Total.atIdxSlow? {α β : Type u} [Iterator α
     | .done _ => none) ⟨it.it, n⟩
 
 
-public theorem Std.Iter.atIdxSlow?_eq_match {α β : Type u} [Iterator α Id β] [Productive α Id]
+private theorem indexEq {α β : Type u} [Iterator α Id β] [Productive α Id]
     {n : Nat} {it : Iter (α := α) β} :
     Std.Iter.Total.atIdxSlow? n it.ensureTermination =
       IterStep.casesOn (motive := fun _ => Option β) it.step.val
@@ -79,5 +79,41 @@ public theorem Std.Iter.atIdxSlow?_eq_match {α β : Type u} [Iterator α Id β]
   | yield next out h => cases n <;> rfl
   | skip next h => rfl
   | done h => rfl
+
+public theorem Std.Iter.atIdxSlow?_eq_match {α β : Type u} [Iterator α Id β] [Productive α Id]
+    {n : Nat} {it : Iter (α := α) β} :
+    Std.Iter.Total.atIdxSlow? n it.ensureTermination =
+      IterStep.casesOn (motive := fun _ => Option β) it.step.val
+        (fun next out => Nat.casesOn n (some out) (fun k => Std.Iter.Total.atIdxSlow? k next.ensureTermination))
+        (fun next => Std.Iter.Total.atIdxSlow? n next.ensureTermination) none := indexEq
+
+
+public theorem Std.Iter.atIdxSlow?.induct_unfolding {α β : Type u} [Iterator α Id β] [Productive α Id]
+    (motive : Nat → Iter β → Option β → Prop)
+    (yield_zero : ∀ (it it' : Iter (α := α) β) (out : β) (property : it.IsPlausibleStep (IterStep.yield it' out)),
+        it.step = ⟨IterStep.yield it' out, property⟩ → motive 0 it (some out))
+    (yield_succ : ∀ (it it' : Iter (α := α) β) (out : β) (property : it.IsPlausibleStep (IterStep.yield it' out)),
+        it.step = ⟨IterStep.yield it' out, property⟩ →
+        ∀ (k : Nat), motive k it' (Std.Iter.Total.atIdxSlow? k it'.ensureTermination) → motive k.succ it (Std.Iter.Total.atIdxSlow? k it'.ensureTermination))
+    (skip_case : ∀ (n : Nat) (it it' : Iter β) (property : it.IsPlausibleStep (IterStep.skip it')),
+        it.step = ⟨IterStep.skip it', property⟩ →
+        motive n it' (Std.Iter.Total.atIdxSlow? n it'.ensureTermination) → motive n it (Std.Iter.Total.atIdxSlow? n it'.ensureTermination))
+    (done_case : ∀ (n : Nat) (it : Iter β) (property : it.IsPlausibleStep IterStep.done),
+        it.step = ⟨IterStep.done, property⟩ → motive n it none)
+    (n : Nat) (it : Iter β) : motive n it (Std.Iter.Total.atIdxSlow? n it.ensureTermination) := by
+  refine (indexWF (α := α) (β := β)).induction (C := fun p =>
+    motive p.2 p.1 (Std.Iter.Total.atIdxSlow? p.2 p.1.ensureTermination)) ⟨it, n⟩ ?_
+  rintro ⟨i, k⟩ ih
+  change motive k i (Std.Iter.Total.atIdxSlow? k i.ensureTermination)
+  rw [indexEq]
+  generalize h : i.step = step
+  cases step using PlausibleIterStep.casesOn with
+  | yield next out hs =>
+    cases k with
+    | zero => exact yield_zero i next out hs h
+    | succ k => exact yield_succ i next out hs h k (ih ⟨next, k⟩ (Prod.Lex.left _ _ (Nat.lt_succ_self k)))
+  | skip next hs =>
+    exact skip_case k i next hs h (ih ⟨next, k⟩ (Prod.Lex.right _ (IterM.TerminationMeasures.Productive.rel_of_skip hs)))
+  | done hs => exact done_case k i hs h
 
 end OmegaChecks.InitPort.Alternatives
