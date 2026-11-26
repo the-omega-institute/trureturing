@@ -1,4 +1,5 @@
 module
+public import OmegaChecks.InitPort.Alternatives.Order
 import all Init.Data.List.MinMaxIdx
 import all Init.Data.List.MinMaxOn
 import Init.Data.List.MinMax
