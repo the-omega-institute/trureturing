@@ -10,6 +10,10 @@ $$\forall k,m \in \mathbb{N}, k > 0 \land \neg(3 \mid q) \implies \operatorname{
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/CellularAutomata/BojicRule150.semisimpleOrder_lcm` (`✓ std3`). ∎
 
+*Resolves.* `Problems/bojic-2026-rule-150-local-lcm` (proved) by `D5/S3/StatisticalMechanics/CellularAutomata/BojicRule150.semisimpleOrder_lcm`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"bojic-2026-rule-150-local-lcm","declaration_gid":"D5/S3/StatisticalMechanics/CellularAutomata/BojicRule150.semisimpleOrder_lcm","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Ana Bojić (2026). *Semisimple–Unipotent Decomposition and the Exact Order of a Linear Cellular Automaton over F2*. DOI: [10.48550/arXiv.2611.33216](https://doi.org/10.48550/arXiv.2611.33216). URL: <https://arxiv.org/abs/2611.33216v1>.
