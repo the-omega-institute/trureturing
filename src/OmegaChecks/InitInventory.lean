@@ -234,6 +234,69 @@ theorem ofRunInduction (rec : type_of% (@List.replicateRecOn.{u})) : EqualityCas
   · intro a b n l ne pos _
     exact .inr (.inr ⟨n, a, b, l, rfl, pos, ne⟩)
 
+/-- Equality of vector values ignores their length proof. These kernels build the same
+array data with length proofs that replay without axioms. -/
+theorem sizeAfterPush {α : Type u} (xs : Array α) (v : α) :
+    (xs.push v).size = xs.size + 1 := by
+  cases xs with
+  | mk xs =>
+    change (xs.concat v).length = xs.length + 1
+    induction xs with
+    | nil => rfl
+    | cons x xs ih => exact congrArg Nat.succ ih
+
+@[expose] def pushed {α : Type u} {n} (xs : Vector α n) (v : α) : Vector α (n+1) :=
+  ⟨xs.toArray.push v, (sizeAfterPush xs.toArray v).trans (congrArg Nat.succ xs.size_toArray)⟩
+
+theorem ofVectorMember (branch : ∀ {α : Type u} {n} {a b : α} {xs : Vector α n},
+    a ∈ pushed xs b → a = b ∨ (a ≠ b ∧ a ∈ xs)) :
+    EqualityCases.{u} := by
+  intro α a b
+  have h : a ∈ pushed #[a].toVector b := ⟨⟨.head _⟩⟩
+  exact (branch h).imp_right And.left
+
+example (branch : type_of% (@Vector.eq_or_ne_mem_of_mem.{u})) : EqualityCases.{u} :=
+  ofVectorMember (@branch)
+
+theorem sizeAfterAppend {α : Type u} (xs ys : Array α) : (xs ++ ys).size = xs.size + ys.size := by
+  have loop (fuel i : Nat) (st : Array α) (eqn : i + fuel = ys.size) :
+      (Array.foldlM.loop (m := Id) (fun as x => pure (as.push x)) ys ys.size (Nat.le_refl _)
+        fuel i st).run.size = st.size + fuel := by
+    induction fuel generalizing i st with
+    | zero =>
+      have n : ¬ i < ys.size := (eqn ▸ Nat.lt_irrefl i)
+      unfold Array.foldlM.loop
+      rw [dite_eq_right n]
+      rfl
+    | succ fuel ih =>
+      have hi : i < ys.size := eqn ▸ (Nat.lt_of_lt_of_le (Nat.lt_succ_self i) (Nat.succ_le_succ (Nat.le_add_right i fuel)))
+      unfold Array.foldlM.loop
+      rw [dite_eq_left hi]
+      exact (ih (i+1) (st.push ys[i]) ((Nat.succ_add i fuel).trans eqn)).trans
+        ((congrArg (· + fuel) (sizeAfterPush st ys[i])).trans (Nat.succ_add st.size fuel))
+  change (Array.foldl (fun st x => st.push x) xs ys).size = _
+  unfold Array.foldl Array.foldlM
+  rw [dite_eq_left (Nat.le_refl _)]
+  exact loop ys.size 0 xs (Nat.zero_add _)
+
+@[expose] def appended {α : Type u} {n m} (xs : Vector α n) (ys : Vector α m) : Vector α (n+m) :=
+  ⟨xs.toArray ++ ys.toArray, (sizeAfterAppend ..).trans ((congrArg (· + ys.toArray.size) xs.size_toArray).trans (congrArg (n + ·) ys.size_toArray))⟩
+
+@[expose] def casted {α : Type u} {n m} (h : n = m) (xs : Vector α n) : Vector α m :=
+  ⟨xs.toArray, xs.size_toArray.trans h⟩
+
+theorem ofFirstVectorMember (split : ∀ {α : Type u} {n} {xs : Vector α n} {x : α} (_ : x ∈ xs),
+      ∃ (i j : Nat) (pre : Vector α i) (post : Vector α j) (h : i + 1 + j = n),
+        xs = casted h (appended (pushed pre x) post) ∧ x ∉ pre) :
+    EqualityCases.{u} := by
+  apply ofFirstArrayMember
+  intro α xs x mem
+  obtain ⟨_, _, pre, post, h, shape, absent⟩ := split (xs := xs.toVector) ⟨mem⟩
+  exact ⟨pre.toArray, post.toArray, congrArg Vector.toArray shape, fun h => absent ⟨h⟩⟩
+
+example (split : type_of% (@Vector.eq_push_append_of_mem.{u})) : EqualityCases.{u} :=
+  ofFirstVectorMember (@split)
+
 end FiniteMembership
 
 namespace VectorExistence
@@ -870,6 +933,7 @@ private def replayWitnesses (env : Environment) : IO Unit := do
       ``FiniteMembership.ofRunDecomposition, ``FiniteMembership.ofRunInduction,
       ``FiniteMembership.ofListMember, ``FiniteMembership.ofArrayMember,
       ``FiniteMembership.ofFirstListMember, ``FiniteMembership.ofFirstArrayMember,
+      ``FiniteMembership.ofVectorMember, ``FiniteMembership.ofFirstVectorMember,
       ``choiceFromOptionPresence, ``VectorExistence.emOfVectorSucc, ``dneFromClosedRange, ``dneFromOpenRange, ``excludedMiddleFromDNE, ``excludedMiddleOfNotLT,
       ``excludedMiddleOfNotLTIff, ``GrindOrder.excludedMiddleFromComparison, ``GrindOrder.excludedMiddleFromImplication,
       ``GrindOrder.excludedMiddleFromNotNot, ``GrindOrder.excludedMiddleFromLookahead,
@@ -2098,6 +2162,12 @@ private def reductionPaths (official strict full : Environment) : NameMap (List 
 missing official interface in the completeness check. -/
 private def logicalConsequence? (owner name : Name) : Option (Name × Name) := do
   match owner, name with
+  | `Init.Data.Vector.Lemmas, ``Vector.eq_or_ne_mem_of_mem =>
+    return (``OmegaChecks.InitBoundaries.FiniteMembership.EqualityCases,
+      ``OmegaChecks.InitBoundaries.FiniteMembership.ofVectorMember)
+  | `Init.Data.Vector.Lemmas, ``Vector.eq_push_append_of_mem =>
+    return (``OmegaChecks.InitBoundaries.FiniteMembership.EqualityCases,
+      ``OmegaChecks.InitBoundaries.FiniteMembership.ofFirstVectorMember)
   | `Init.Data.List.Lemmas, ``List.eq_replicate_or_eq_replicate_append_cons =>
     return (``OmegaChecks.InitBoundaries.FiniteMembership.EqualityCases,
       ``OmegaChecks.InitBoundaries.FiniteMembership.ofRunDecomposition)
