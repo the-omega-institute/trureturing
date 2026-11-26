@@ -350,4 +350,65 @@ public theorem Char.utf8Size_eq_four_iff : type_of% @_root_.Char.utf8Size_eq_fou
       · rename_i lo
         exact ⟨fun _ => Nat.lt_of_not_ge lo, fun _ => rfl⟩
 
+
+private theorem size_from (b : ByteArray) (i : Nat) : (b.extract i b.size).size = b.size - i :=
+  ByteArray.size_extract.trans (congrArg (· - i) (Nat.min_self _))
+
+private theorem shift_from (b : ByteArray) (i n : Nat) (hi : i ≤ b.size) :
+    (b.extract i b.size).extract n (b.extract i b.size).size = b.extract (i + n) b.size := by
+  rw [ByteArray.extract_extract, size_from, Nat.add_sub_of_le hi, Nat.min_self]
+
+private theorem same_suffix_bound {a b : ByteArray} {i j : Nat} (suffix : a.extract i a.size = b.extract j b.size) :
+    i < a.size ↔ j < b.size := by
+  have sizes : a.size - i = b.size - j := (size_from a i).symm.trans ((congrArg ByteArray.size suffix).trans (size_from b j))
+  exact (Nat.sub_pos_iff_lt.symm.trans (by rw [sizes])).trans Nat.sub_pos_iff_lt
+
+private theorem decode_same_suffix (fuel : Nat) {a b : ByteArray} (i j : Nat) (hi : i ≤ a.size) (hj : j ≤ b.size)
+    (front acc : Array Char) (room : a.size - i ≤ fuel) (suffix : a.extract i a.size = b.extract j b.size) :
+    ByteArray.utf8Decode?.go a i (front ++ acc) hi = (ByteArray.utf8Decode?.go b j acc hj).map (front ++ ·) := by
+  induction fuel generalizing i j acc with
+  | zero =>
+    have endA := Nat.le_of_sub_eq_zero (Nat.le_zero.mp room)
+    rw [ByteArray.utf8Decode?.go.eq_1 a, ByteArray.utf8Decode?.go.eq_1 b,
+        ite_eq_right (Nat.not_lt_of_ge endA), ite_eq_right (fun h => Nat.not_lt_of_ge endA ((same_suffix_bound suffix).2 h))]
+    rfl
+  | succ n ih =>
+    rw [ByteArray.utf8Decode?.go.eq_1 a, ByteArray.utf8Decode?.go.eq_1 b]
+    by_cases ha : i < a.size
+    · rw [ite_eq_left ha, ite_eq_left ((same_suffix_bound suffix).1 ha)]
+      have code : a.utf8DecodeChar? i = b.utf8DecodeChar? j :=
+        _root_.ByteArray.utf8DecodeChar?_eq_utf8DecodeChar?_extract.trans
+          ((congrArg (fun r : ByteArray => r.utf8DecodeChar? 0) suffix).trans
+            _root_.ByteArray.utf8DecodeChar?_eq_utf8DecodeChar?_extract.symm)
+      split <;> rename_i left
+      · split <;> rename_i right
+        · rfl
+        · cases left.symm.trans (code.trans right)
+      · rename_i c
+        split <;> rename_i right
+        · cases left.symm.trans (code.trans right)
+        · rename_i d
+          cases Option.some.inj (left.symm.trans (code.trans right))
+          have nextA := ByteArray.le_size_of_utf8DecodeChar?_eq_some left
+          have nextB := ByteArray.le_size_of_utf8DecodeChar?_eq_some right
+          have rest := congrArg (fun r : ByteArray => r.extract c.utf8Size r.size) suffix
+          rw [shift_from a _ _ hi, shift_from b _ _ hj] at rest
+          have smaller : a.size - (i + c.utf8Size) < a.size - i :=
+            Nat.sub_lt_sub_left ha (Nat.lt_add_of_pos_right c.utf8Size_pos)
+          have pushed : (front ++ acc).push c = front ++ acc.push c := by
+            apply Array.ext'
+            rw [Array.toList_push, Array.toList_append, Array.toList_append, Array.toList_push, List.append_assoc]
+          rw [pushed]
+          apply ih _ _ nextA nextB (acc.push c) (Nat.le_of_lt_succ (Nat.lt_of_lt_of_le smaller room)) rest
+    · rw [ite_eq_right ha, ite_eq_right (fun h => ha ((same_suffix_bound suffix).2 h))]
+      rfl
+
+public theorem ByteArray.utf8Decode?go_eq_utf8Decode?go_extract :
+    type_of% (private_decl% @_root_.ByteArray.utf8Decode?go_eq_utf8Decode?go_extract) := by
+  intro i b hi acc
+  have same := decode_same_suffix (b.size - i) (a := b) (b := b.extract i b.size)
+    i 0 hi (Nat.zero_le _) acc #[] (Nat.le_refl _) (_root_.ByteArray.extract_zero_size.symm)
+  rw [Array.append_empty] at same
+  exact same
+
 end OmegaChecks.InitPort.Alternatives
