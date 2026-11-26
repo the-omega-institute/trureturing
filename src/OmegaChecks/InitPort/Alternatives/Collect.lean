@@ -532,6 +532,17 @@ private theorem collectList_eq {α β : Type u} [Iterator α Id β] [Finite α I
   | done _ => rfl
 
 
+public theorem Std.Iter.toList_eq_match_step {α β : Type u} [Iterator α Id β] [Finite α Id]
+    {it : Iter (α := α) β} :
+    Std.Iter.Total.toList it.ensureTermination =
+      IterStep.casesOn (motive := fun _ => List β) it.step.val
+        (fun next out => out :: Std.Iter.Total.toList next.ensureTermination)
+        (fun next => Std.Iter.Total.toList next.ensureTermination) [] := by
+  change (collectInto it.toIterM #[]).toList = _
+  rw [collectList_eq]
+  unfold _root_.Std.Iter.step
+  cases it.toIterM.step.run.inflate using PlausibleIterStep.casesOn <;> rfl
+
 private theorem realStepRxo {α : Type u} [UpwardEnumerable α] [LT α] [DecidableLT α] (it : IterM (α := Rxo.Iterator α) Id α) : it.step.run.inflate.val = Rxo.Iterator.Monadic.step it :=
     congrArg Subtype.val (Shrink.inflate_deflate (x := ⟨Rxo.Iterator.Monadic.step it, rfl⟩) (α := PlausibleIterStep it.IsPlausibleStep))
 
