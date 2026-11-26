@@ -1,4 +1,5 @@
 module
+public import OmegaChecks.Interface.Equations.RangeLoop
 import all Init.Data.Iterators.Consumers.Access
 
 public import OmegaChecks.InitPort.Alternatives.Collect
