@@ -539,7 +539,7 @@ public theorem String.Slice.Pattern.ToBackwardSearcher.DefaultBackwardSearcher.f
   s.toList.any p
 
 @[expose] public def Substring.Raw.posOf (s : Substring.Raw) (c : Char) : String.Pos.Raw :=
-  (s.toSlice?.map fun t => String.Internal.posOfImpl t.copy c).getD ⟨s.bsize⟩
+  (s.toSlice?.map fun t => (String.ofList (t.copy.toList.takeWhile (· != c))).rawEndPos).getD ⟨s.bsize⟩
 
 @[expose] public def Substring.Raw.any (s : Substring.Raw) (p : Char → Bool) : Bool :=
   s.toSlice?.get!.copy.toList.any p
