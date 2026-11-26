@@ -4,6 +4,7 @@ from collections import Counter, defaultdict
 from graphlib import CycleError, TopologicalSorter
 import json
 import omegamath
+import os
 from pathlib import Path
 from report import report
 import shutil
@@ -74,7 +75,8 @@ def generate(stage, product, seed, roots, excluded):
         while True:
             exclusions = stage / "exclusions.json"
             exclusions.write_text(json.dumps(sorted(omissions.items())))
-            run("lake", "env", "lean", "--run", HERE / "Kernel.lean", seed, transfer, inventory, exclusions, *roots)
+            run("lake", "env", "lean", "--run", HERE / "Kernel.lean", seed, transfer, inventory, exclusions,
+                *roots, env={**os.environ, "LEAN_ABORT_ON_PANIC": "1"})
             run("lean", "--run", HERE / "Modules.lean", transfer, seed, artifact, *roots)
             graph = dict(json.loads((product / "modules.json").read_text()))
             try:
