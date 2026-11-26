@@ -211,6 +211,59 @@ theorem excludedMiddleFromLookahead (look : type_of% @Lean.Grind.of_lookahead) (
 
 end GrindOrder
 
+namespace AbstractOrder
+
+private theorem notNotEM (p : Prop) : ¬ ¬ (p ∨ ¬p) :=
+  fun neither => neither (.inr fun hp => neither (.inl hp))
+
+/-- The off-diagonal comparison is excluded middle, in both directions. -/
+private def offDiagonal (p : Prop) (a b : Bool) : Prop :=
+  if a = b then True else p ∨ ¬p
+
+private theorem offRefl (p : Prop) : Std.Refl (offDiagonal p) := by
+  refine ⟨fun a => ?_⟩
+  unfold offDiagonal
+  rw [ite_eq_left rfl]
+  trivial
+
+private theorem offTri (p : Prop) : Std.Trichotomous (offDiagonal p) := by
+  refine ⟨fun a b denied _ => ?_⟩
+  by_cases eq : a = b
+  · exact eq
+  · rw [offDiagonal, ite_eq_right eq] at denied
+    exact (notNotEM p denied).elim
+
+theorem excludedMiddleOfTrichotomy
+    (tri : type_of% (@Std.Trichotomous.rel_or_eq_or_rel_swap.{1})) (p : Prop) : p ∨ ¬p :=
+  (@tri Bool (offDiagonal p) (offTri p) false true).elim id
+    (fun h => h.elim Bool.noConfusion id)
+
+theorem excludedMiddleOfLTTrichotomy
+    (tri : type_of% (@Std.lt_trichotomy.{0})) (p : Prop) : p ∨ ¬p :=
+  (@tri Bool ⟨offDiagonal p⟩ (offTri p) false true).elim id
+    (fun h => h.elim Bool.noConfusion id)
+
+theorem excludedMiddleOfTrichotomousTotal
+    (total : type_of% (@Std.total_of_refl_of_trichotomous.{1})) (p : Prop) : p ∨ ¬p :=
+  ((@total Bool (offDiagonal p) (offRefl p) (offTri p)).total false true).elim id id
+
+theorem excludedMiddleOfNegationTotal
+    (total : type_of% (@Std.total_of_not_rel_swap_imp_rel.{1})) (p : Prop) : p ∨ ¬p :=
+  ((@total Unit (fun _ _ => p ∨ ¬p) (fun {_ _} denied => (notNotEM p denied).elim)).total () ()).elim id id
+
+theorem excludedMiddleOfLawfulLT
+    (order : type_of% (@Std.LawfulOrderLT.of_lt.{0})) (p : Prop) : p ∨ ¬p := by
+  apply excludedMiddleFromDNE _ p
+  intro q nn
+  letI : LT Bool := ⟨fun a b => a = false ∧ b = true ∧ q⟩
+  letI : Std.Asymm (α := Bool) (· < ·) :=
+    ⟨fun _ _ h r => Bool.noConfusion (r.1.symm.trans h.2.1)⟩
+  have law := (@order Bool _ _).lt_iff false true
+  exact (law.mpr ⟨fun h => Bool.noConfusion h.1,
+    fun denied => nn fun hq => denied ⟨rfl,rfl,hq⟩⟩).2.2
+
+end AbstractOrder
+
 namespace TwoWorlds
 
 /-- Kripke implication on the chain `false ≤ true`. -/
@@ -276,7 +329,10 @@ private def replayWitnesses (env : Environment) : IO Unit := do
   let mut todo := (reductions.map fun (_, _, _, witness) => witness) ++
     [``dneFromClosedRange, ``dneFromOpenRange, ``excludedMiddleFromDNE, ``excludedMiddleOfNotLT,
       ``excludedMiddleOfNotLTIff, ``GrindOrder.excludedMiddleFromComparison, ``GrindOrder.excludedMiddleFromImplication,
-      ``GrindOrder.excludedMiddleFromNotNot, ``GrindOrder.excludedMiddleFromLookahead, ``TwoWorlds.countermodel]
+      ``GrindOrder.excludedMiddleFromNotNot, ``GrindOrder.excludedMiddleFromLookahead,
+      ``AbstractOrder.excludedMiddleOfTrichotomy, ``AbstractOrder.excludedMiddleOfLTTrichotomy,
+      ``AbstractOrder.excludedMiddleOfTrichotomousTotal, ``AbstractOrder.excludedMiddleOfNegationTotal,
+      ``AbstractOrder.excludedMiddleOfLawfulLT, ``TwoWorlds.countermodel]
   while let n :: more := todo do
     todo := more
     if terms.contains n then continue
@@ -1135,6 +1191,14 @@ private def logicalConsequence? (owner name : Name) : Option (Name × Name) := d
     | `Init.Grind.Norm, ``Lean.Grind.imp_eq => some ``OmegaChecks.InitBoundaries.GrindOrder.excludedMiddleFromImplication
     | `Init.Grind.Norm, ``Lean.Grind.not_not => some ``OmegaChecks.InitBoundaries.GrindOrder.excludedMiddleFromNotNot
     | `Init.Grind.Lemmas, ``Lean.Grind.of_lookahead => some ``OmegaChecks.InitBoundaries.GrindOrder.excludedMiddleFromLookahead
+    | `Init.Data.Order.Lemmas, ``Std.Trichotomous.rel_or_eq_or_rel_swap =>
+      some ``OmegaChecks.InitBoundaries.AbstractOrder.excludedMiddleOfTrichotomy
+    | `Init.Data.Order.Lemmas, ``Std.lt_trichotomy => some ``OmegaChecks.InitBoundaries.AbstractOrder.excludedMiddleOfLTTrichotomy
+    | `Init.Data.Order.Lemmas, ``Std.total_of_refl_of_trichotomous =>
+      some ``OmegaChecks.InitBoundaries.AbstractOrder.excludedMiddleOfTrichotomousTotal
+    | `Init.Data.Order.Lemmas, ``Std.total_of_not_rel_swap_imp_rel =>
+      some ``OmegaChecks.InitBoundaries.AbstractOrder.excludedMiddleOfNegationTotal
+    | `Init.Data.Order.Factories, ``Std.LawfulOrderLT.of_lt => some ``OmegaChecks.InitBoundaries.AbstractOrder.excludedMiddleOfLawfulLT
     | `Init.Data.Order.Lemmas, ``Std.not_lt => some ``OmegaChecks.InitBoundaries.excludedMiddleOfNotLT
     | `Init.Data.Order.Lemmas, ``Std.not_lt_iff_not_le_or_ge =>
       some ``OmegaChecks.InitBoundaries.excludedMiddleOfNotLTIff
