@@ -17,6 +17,7 @@ public import OmegaChecks.InitPort.Alternatives.GrindField
 public import OmegaChecks.InitPort.Alternatives.GrindFieldNorm
 public import OmegaChecks.InitPort.Alternatives.GrindLinear
 public import OmegaChecks.InitPort.Alternatives.GrindNatModule
+public import OmegaChecks.InitPort.Alternatives.GrindOrder
 public import OmegaChecks.InitPort.Alternatives.GrindRing
 public import OmegaChecks.InitPort.Alternatives.Integer
 public import OmegaChecks.InitPort.Alternatives.List
