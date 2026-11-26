@@ -28,6 +28,15 @@ referring to the values of the upstream constants. -/
 namespace OmegaChecks.InitBoundaries
 universe u
 
+/-- The official option selector returns a value on every inhabited input.
+Lifting a sort into a type also covers propositional inputs to choice. -/
+def choiceFromOptionPresence (select : type_of% (@Option.choice.{u}))
+    (present : ∀ (α : Type u), Nonempty α → (select α).isSome) :
+    type_of% (@Classical.choice.{u}) := by
+  intro α h
+  have nonempty : Nonempty (PLift α) := h.elim fun a => ⟨⟨a⟩⟩
+  exact ((select (PLift α)).get (present _ nonempty)).down
+
 def choiceFromChoose (select : type_of% (@Classical.choose.{u})) : type_of% (@Classical.choice.{u}) :=
   fun {α} inhabited => @select α (fun _ => True) (inhabited.elim fun x => ⟨x, trivial⟩)
 
@@ -645,7 +654,7 @@ private def replayWitnesses (env : Environment) : IO Unit := do
   let official ← importModules #[{module := `Lean}] {} (level := .private)
   let mut terms : Std.HashMap Name ConstantInfo := {}
   let mut todo := (reductions.map fun (_, _, _, witness) => witness) ++
-    [``VectorExistence.emOfVectorSucc, ``dneFromClosedRange, ``dneFromOpenRange, ``excludedMiddleFromDNE, ``excludedMiddleOfNotLT,
+    [``choiceFromOptionPresence, ``VectorExistence.emOfVectorSucc, ``dneFromClosedRange, ``dneFromOpenRange, ``excludedMiddleFromDNE, ``excludedMiddleOfNotLT,
       ``excludedMiddleOfNotLTIff, ``GrindOrder.excludedMiddleFromComparison, ``GrindOrder.excludedMiddleFromImplication,
       ``GrindOrder.excludedMiddleFromNotNot, ``GrindOrder.excludedMiddleFromLookahead,
       ``AbstractOrder.excludedMiddleOfTrichotomy, ``AbstractOrder.excludedMiddleOfLTTrichotomy,
@@ -1755,6 +1764,9 @@ private def logicalConsequence? (owner name : Name) : Option (Name × Name) := d
 
 /-- The conclusion uses the indicated semantic agreement in addition to the public type. -/
 private def conditionalConsequence? (owner name : Name) : Option (String × Name × String) := do
+  if owner == `Init.Data.Option.Lemmas && name == ``Option.choice then
+    return ((``Classical.choice).toString, ``OmegaChecks.InitBoundaries.choiceFromOptionPresence,
+      "For every nonempty type, the selector returns some, as specified by Option.isSome_choice")
   if owner == `Init.Internal.Order.Basic then
     if name == ``Lean.Order.instOrderPi then
       return ((``funext).toString, ``OmegaChecks.InitBoundaries.InternalOrder.funextOfPointwiseOrder,

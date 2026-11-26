@@ -228,4 +228,10 @@ public theorem List.getLast_flatten : type_of% @_root_.List.getLast_flatten := b
   apply (_root_.List.getLast_eq_iff_getLast?_eq_some _).mpr
   exact _root_.List.getLast?_flatten.trans (Option.some_get _).symm
 
+public theorem List.head!_eq_getElem! : type_of% @_root_.List.head!_eq_getElem! := by
+  intro α _ xs
+  cases xs with
+  | nil => exact _root_.List.getElem!_nil.symm
+  | cons a as => exact _root_.List.getElem!_cons_zero.symm
+
 end OmegaChecks.InitPort.Alternatives
