@@ -198,7 +198,6 @@ private lemma proper_assembly [DecidableEq I] {J : Type*} [Fintype J]
     (hf : ∀ j, Measurable (f j)) (hd : ∀ j, DependsOn (f j) (S j))
     (hi : ∀ j, ∫⁻ x, f j x ∂MeasureTheory.Measure.pi μ = 1)
     (hs : ∀ j, S j ⊆ s) (hp : ∀ j, S j ≠ s)
-    (hc : ∀ i ∈ s, ∃ j, i ∈ S j)
     (hl : ∀ k ∈ s, ∃ h : ∀ i, X i → ℝ≥0∞,
       (∀ i, Measurable (h i)) ∧ (∀ i, ∫⁻ t, h i t ∂μ i = 1) ∧
       ∀ j, lmarginal μ {k} (f j) =ᵐ[MeasureTheory.Measure.pi μ]
@@ -208,9 +207,10 @@ private lemma proper_assembly [DecidableEq I] {J : Type*} [Fintype J]
       ∀ j, f j =ᵐ[MeasureTheory.Measure.pi μ] (fun x => ∏ i ∈ S j, h i (x i)) := by
   classical
   let a : ∀ i, X i := fun i => Classical.choice (nonempty_of_isProbabilityMeasure (μ i))
-  choose p hpm using hc
+  let p (i : I) (hi : ∃ j, i ∈ S j) : J := Classical.choose hi
+  have hpm (i : I) (hi : ∃ j, i ∈ S j) : i ∈ S (p i hi) := Classical.choose_spec hi
   let h : ∀ i, X i → ℝ≥0∞ := fun i t =>
-    if his : i ∈ s then lmarginal μ (univ.erase i) (f (p i his)) (update a i t) else 1
+    if his : ∃ j, i ∈ S j then lmarginal μ (univ.erase i) (f (p i his)) (update a i t) else 1
   have hm (i : I) : Measurable (h i) := by
     dsimp [h]
     split_ifs <;> fun_prop
@@ -230,7 +230,7 @@ private lemma proper_assembly [DecidableEq I] {J : Type*} [Fintype J]
   have hmatch : ∀ i ∈ S j, (fun x : ∀ i, X i => h i (x i)) =ᵐ[MeasureTheory.Measure.pi μ]
       (fun x => g i (x i)) := by
     intro i hij
-    have his := hs j hij
+    have his : ∃ j, i ∈ S j := ⟨j, hij⟩
     have hik : i ≠ k := ne_of_mem_of_not_mem hij hkj
     have hip : i ∈ (S (p i his)).erase k := mem_erase.mpr ⟨hik, hpm i his⟩
     have H := canonical_factor μ ((S (p i his)).erase k) ((hf _).lmarginal μ)
@@ -252,5 +252,61 @@ private lemma proper_assembly [DecidableEq I] {J : Type*} [Fintype J]
   have H := ge j
   rw [hfix, erase_eq_of_notMem hkj] at H
   exact H.trans hprod.symm
+
+/-- Normalized factorizations of every one-coordinate-deleted marginal glue to
+one common normalized factorization of all original proper-support rows.
+The hypotheses provide actual factorizations under the original product law. -/
+theorem exists_common_profiles_of_deleted_marginal_factorizations [DecidableEq I]
+    {J : Type*} [Fintype J] (s : Finset I) (S : J → Finset I)
+    (f : J → (∀ i, X i) → ℝ≥0∞)
+    (hf : ∀ j, Measurable (f j)) (hd : ∀ j, DependsOn (f j) (S j))
+    (hpos : ∀ j, 0 < ∫⁻ x, f j x ∂MeasureTheory.Measure.pi μ)
+    (hfin : ∀ j, (∫⁻ x, f j x ∂MeasureTheory.Measure.pi μ) ≠ ∞)
+    (hs : ∀ j, S j ⊆ s) (hp : ∀ j, S j ≠ s)
+    (hl : ∀ k ∈ s, ∃ h : ∀ i, X i → ℝ≥0∞,
+      (∀ i, Measurable (h i)) ∧ (∀ i, ∫⁻ t, h i t ∂μ i = 1) ∧
+      ∀ j, lmarginal μ {k} (f j) =ᵐ[MeasureTheory.Measure.pi μ]
+        (fun x => (∫⁻ y, f j y ∂MeasureTheory.Measure.pi μ) *
+          ∏ i ∈ (S j).erase k, h i (x i))) :
+    ∃ h : ∀ i, X i → ℝ≥0∞, (∀ i, Measurable (h i)) ∧
+      (∀ i, ∫⁻ t, h i t ∂μ i = 1) ∧
+      ∀ j, f j =ᵐ[MeasureTheory.Measure.pi μ]
+        (fun x => (∫⁻ y, f j y ∂MeasureTheory.Measure.pi μ) *
+          ∏ i ∈ S j, h i (x i)) := by
+  classical
+  let m (j : J) := ∫⁻ x, f j x ∂MeasureTheory.Measure.pi μ
+  let q (j : J) (x : ∀ i, X i) := (m j)⁻¹ * f j x
+  have qm (j : J) : Measurable (q j) := measurable_const.mul (hf j)
+  have qd (j : J) : DependsOn (q j) (S j) := by
+    intro x y hxy
+    exact congrArg ((m j)⁻¹ * ·) (hd j hxy)
+  have qu (j : J) : ∫⁻ x, q j x ∂MeasureTheory.Measure.pi μ = 1 := by
+    rw [show q j = fun x => (m j)⁻¹ * f j x from rfl,
+      lintegral_const_mul _ (hf j)]
+    exact ENNReal.inv_mul_cancel (hpos j).ne' (hfin j)
+  have ql : ∀ k ∈ s, ∃ h : ∀ i, X i → ℝ≥0∞,
+      (∀ i, Measurable (h i)) ∧ (∀ i, ∫⁻ t, h i t ∂μ i = 1) ∧
+      ∀ j, lmarginal μ {k} (q j) =ᵐ[MeasureTheory.Measure.pi μ]
+        (fun x => ∏ i ∈ (S j).erase k, h i (x i)) := by
+    intro k hk
+    obtain ⟨h, hm, hu, he⟩ := hl k hk
+    refine ⟨h, hm, hu, ?_⟩
+    intro j
+    have ht : lmarginal μ {k} (q j) =
+        fun x => (m j)⁻¹ * lmarginal μ {k} (f j) x := by
+      ext x
+      change (∫⁻ y, (m j)⁻¹ * f j (updateFinset x {k} y)
+        ∂MeasureTheory.Measure.pi (fun i : ({k} : Finset I) => μ i)) = _
+      exact lintegral_const_mul _ ((hf j).comp measurable_updateFinset)
+    rw [ht]
+    filter_upwards [he j] with x hx
+    rw [hx, ← mul_assoc, ENNReal.inv_mul_cancel (hpos j).ne' (hfin j), one_mul]
+  obtain ⟨h, hm, hu, he⟩ := proper_assembly μ s S q qm qd qu hs hp ql
+  refine ⟨h, hm, hu, ?_⟩
+  intro j
+  filter_upwards [he j] with x hx
+  have hh := congrArg (m j * ·) hx
+  simpa only [q, ← mul_assoc, ENNReal.mul_inv_cancel (hpos j).ne' (hfin j), one_mul]
+    using hh
 
 end D5.S3.Combinatorics.Hypergraphs.FinnerEquality
