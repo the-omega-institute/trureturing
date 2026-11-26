@@ -1,0 +1,163 @@
+module
+public import Init.Data.Array.Erase
+
+/-! Transfer indexed erasure and update laws through the array's list representation. -/
+namespace OmegaChecks.InitPort.Alternatives
+
+public theorem List.getElem?_eraseIdx : type_of% @_root_.List.getElem?_eraseIdx := by
+  intro α xs i j
+  induction xs generalizing i j with
+  | nil => cases i <;> cases j <;> split <;> rfl
+  | cons a xs ih =>
+    cases i with
+    | zero => rw [ite_eq_right (Nat.not_lt_zero _)]; rfl
+    | succ i =>
+      cases j with
+      | zero => rw [ite_eq_left (Nat.zero_lt_succ _)]; rfl
+      | succ j =>
+        change (xs.eraseIdx i)[j]? = if j + 1 < i + 1 then xs[j]? else xs[j + 1]?
+        by_cases lt : j < i
+        · rw [ih, ite_eq_left lt, ite_eq_left (Nat.succ_lt_succ lt)]
+        · rw [ih, ite_eq_right lt, ite_eq_right (fun h => lt (Nat.lt_of_succ_lt_succ h))]
+
+public theorem List.eraseIdx_set_eq : type_of% @_root_.List.eraseIdx_set_eq := by
+  intro α xs i a
+  induction xs generalizing i with
+  | nil => cases i <;> rfl
+  | cons x xs ih => cases i with
+    | zero => rfl
+    | succ i => exact congrArg (x :: ·) (ih (i := i))
+
+public theorem List.eraseIdx_set_lt : type_of% @_root_.List.eraseIdx_set_lt := by
+  intro α xs i j a lt
+  induction xs generalizing i j with
+  | nil => cases i <;> cases j <;> rfl
+  | cons x xs ih =>
+    cases i with
+    | zero => exact (Nat.not_lt_zero _ lt).elim
+    | succ i =>
+      cases j with
+      | zero => rfl
+      | succ j =>
+        cases i with
+        | zero => exact (Nat.not_lt_zero _ (Nat.lt_of_succ_lt_succ lt)).elim
+        | succ i => exact congrArg (x :: ·) (ih (Nat.lt_of_succ_lt_succ lt))
+
+public theorem List.eraseIdx_set_gt : type_of% @_root_.List.eraseIdx_set_gt := by
+  intro α xs i j a lt
+  induction xs generalizing i j with
+  | nil => cases i <;> cases j <;> rfl
+  | cons x xs ih =>
+    cases j with
+    | zero => exact (Nat.not_lt_zero _ lt).elim
+    | succ j =>
+      cases i with
+      | zero => rfl
+      | succ i => exact congrArg (x :: ·) (ih (Nat.lt_of_succ_lt_succ lt))
+
+public theorem List.set_eraseIdx_le : type_of% @_root_.List.set_eraseIdx_le := by
+  intro α xs i j a le
+  exact (List.eraseIdx_set_lt (l := xs) (a := a) (Nat.lt_succ_of_le le)).symm
+
+public theorem List.set_eraseIdx_gt : type_of% @_root_.List.set_eraseIdx_gt := by
+  intro α xs i j a lt
+  exact (List.eraseIdx_set_gt (l := xs) (a := a) lt).symm
+
+public theorem List.mem_eraseIdx_iff_getElem? : type_of% @_root_.List.mem_eraseIdx_iff_getElem? := by
+  intro α x xs k
+  constructor
+  · intro mem
+    obtain ⟨i, val⟩ := _root_.List.mem_iff_getElem?.mp mem
+    rw [List.getElem?_eraseIdx] at val
+    by_cases h : i < k
+    · exact ⟨i, Nat.ne_of_lt h, (ite_eq_left h).symm.trans val⟩
+    · exact ⟨i+1, Nat.ne_of_gt (Nat.lt_succ_of_le (Nat.le_of_not_gt h)), (ite_eq_right h).symm.trans val⟩
+  · intro ⟨i, ne, val⟩
+    apply _root_.List.mem_iff_getElem?.mpr
+    by_cases h : i < k
+    · exact ⟨i, List.getElem?_eraseIdx.trans ((ite_eq_left h).trans val)⟩
+    · have greater := Nat.lt_of_le_of_ne (Nat.le_of_not_gt h) (Ne.symm ne)
+      cases i with
+      | zero => exact (Nat.not_lt_zero _ greater).elim
+      | succ j =>
+        exact ⟨j, List.getElem?_eraseIdx.trans ((ite_eq_right (Nat.not_lt_of_ge (Nat.le_of_lt_succ greater))).trans val)⟩
+
+public theorem List.mem_eraseIdx_iff_getElem : type_of% @_root_.List.mem_eraseIdx_iff_getElem := by
+  intro α x xs k
+  constructor
+  · intro h
+    obtain ⟨i, ne, v⟩ := List.mem_eraseIdx_iff_getElem?.mp h
+    obtain ⟨hi, eq⟩ := _root_.List.getElem?_eq_some_iff.mp v
+    exact ⟨i, hi, ne, eq⟩
+  · intro ⟨i, hi, ne, eq⟩
+    exact List.mem_eraseIdx_iff_getElem?.mpr ⟨i, ne, _root_.List.getElem?_eq_some_iff.mpr ⟨hi, eq⟩⟩
+
+public theorem Array.getElem?_eraseIdx : type_of% @_root_.Array.getElem?_eraseIdx := by
+  intros
+  simp only [← _root_.Array.getElem?_toList, _root_.Array.toList_eraseIdx, _root_.List.getElem?_eraseIdx]
+
+public theorem Array.getElem?_eraseIdx_of_lt : type_of% @_root_.Array.getElem?_eraseIdx_of_lt := by
+  intro α xs i hi j lt
+  rw [Array.getElem?_eraseIdx, ite_eq_left lt]
+
+public theorem Array.getElem?_eraseIdx_of_ge : type_of% @_root_.Array.getElem?_eraseIdx_of_ge := by
+  intro α xs i hi j le
+  rw [Array.getElem?_eraseIdx, ite_eq_right (Nat.not_lt_of_ge le)]
+
+public theorem Array.getElem_eraseIdx : type_of% @_root_.Array.getElem_eraseIdx := by
+  intro α xs i hi j hj
+  apply Option.some.inj
+  rw [← _root_.getElem?_pos (xs.eraseIdx i hi) j hj, Array.getElem?_eraseIdx]
+  by_cases lt : j < i
+  · rw [ite_eq_left lt, dite_eq_left lt]
+    exact _root_.getElem?_pos xs j (Nat.lt_trans lt hi)
+  · rw [ite_eq_right lt, dite_eq_right lt]
+    apply _root_.getElem?_pos
+
+public theorem Array.eraseIdx_set_eq : type_of% @_root_.Array.eraseIdx_set_eq := by
+  intros
+  apply _root_.Array.ext'
+  simp only [_root_.Array.toList_eraseIdx, _root_.Array.toList_set, _root_.List.eraseIdx_set_eq]
+
+public theorem Array.eraseIdx_set_lt : type_of% @_root_.Array.eraseIdx_set_lt := by
+  intro α xs i hi j a lt
+  apply _root_.Array.ext'
+  simpa only [_root_.Array.toList_eraseIdx, _root_.Array.toList_set] using
+    (_root_.List.eraseIdx_set_lt (l := xs.toList) (a := a) lt)
+
+public theorem Array.eraseIdx_set_gt : type_of% @_root_.Array.eraseIdx_set_gt := by
+  intro α xs i j a lt hj
+  apply _root_.Array.ext'
+  simpa only [_root_.Array.toList_eraseIdx, _root_.Array.toList_set] using
+    (_root_.List.eraseIdx_set_gt (l := xs.toList) (a := a) lt)
+
+public theorem Array.set_eraseIdx_le : type_of% @_root_.Array.set_eraseIdx_le := by
+  intro α xs i hi j a le hj
+  apply _root_.Array.ext'
+  simpa only [_root_.Array.toList_eraseIdx, _root_.Array.toList_set] using
+    (_root_.List.set_eraseIdx_le (xs := xs.toList) (a := a) le)
+
+public theorem Array.set_eraseIdx_gt : type_of% @_root_.Array.set_eraseIdx_gt := by
+  intro α xs i hi j a lt hj
+  apply _root_.Array.ext'
+  simpa only [_root_.Array.toList_eraseIdx, _root_.Array.toList_set] using
+    (_root_.List.set_eraseIdx_gt (xs := xs.toList) (a := a) lt)
+
+public theorem Array.mem_eraseIdx_iff_getElem? : type_of% @_root_.Array.mem_eraseIdx_iff_getElem? := by
+  intro α x xs k h
+  have erase := _root_.Array.toList_eraseIdx (xs := xs) (i := k) (h := h)
+  constructor
+  · intro member
+    obtain ⟨i, ne, val⟩ := List.mem_eraseIdx_iff_getElem?.mp (erase ▸ _root_.Array.mem_def.mp member)
+    exact ⟨i, ne, _root_.Array.getElem?_toList.symm.trans val⟩
+  · intro ⟨i, ne, val⟩
+    apply _root_.Array.mem_def.mpr
+    exact erase.symm ▸ List.mem_eraseIdx_iff_getElem?.mpr ⟨i, ne, _root_.Array.getElem?_toList.trans val⟩
+
+public theorem Array.mem_eraseIdx_iff_getElem : type_of% @_root_.Array.mem_eraseIdx_iff_getElem := by
+  intro α x xs k h
+  have erase := _root_.Array.toList_eraseIdx (xs := xs) (i := k) (h := h)
+  exact _root_.Array.mem_def.trans ((Iff.of_eq (congrArg (fun ys => x ∈ ys) erase)).trans
+    List.mem_eraseIdx_iff_getElem)
+
+end OmegaChecks.InitPort.Alternatives
