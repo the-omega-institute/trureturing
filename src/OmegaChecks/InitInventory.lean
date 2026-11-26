@@ -302,6 +302,59 @@ theorem decidablePropExtOfIsSome (read : type_of% (@isSome_getElem?.{0,0,0})) :
 
 end OptionalIndex
 
+namespace NaturalCancellation
+
+open Nat.Internal.Linear
+
+/-- Two slots in the official linear expression evaluator. -/
+private abbrev pairCtx (a b : Nat) : Context := .branch 1 (.leaf a) (.leaf b)
+private abbrev plusOne (i : Nat) : Nat.Internal.Linear.Expr := .add (.var i) (.num 1)
+
+/-- Removing one successor from each side preserves the proposition itself. -/
+def SuccLeEq := ∀ a b : Nat, (a.succ ≤ b.succ) = (a ≤ b)
+
+theorem exprEq (rule : type_of% @Expr.of_cancel_eq) : type_of% @Nat.succ.injEq := by
+  intro a b
+  exact rule (pairCtx a b) (plusOne 0) (plusOne 1) (.var 0) (.var 1) rfl
+
+theorem exprLe (rule : type_of% @Expr.of_cancel_le) : SuccLeEq := by
+  intro a b
+  exact rule (pairCtx a b) (plusOne 0) (plusOne 1) (.var 0) (.var 1) rfl
+
+theorem exprNormEq (rule : type_of% @ExprCnstr.eq_of_toNormPoly_eq) : type_of% @Nat.succ.injEq := by
+  intro a b
+  exact rule (pairCtx a b) ⟨true, plusOne 0, plusOne 1⟩ ⟨true, .var 0, .var 1⟩ rfl
+
+theorem exprNorm (rule : type_of% @ExprCnstr.denote_toNormPoly) : type_of% @Nat.succ.injEq := by
+  intro a b
+  have h := (rule (pairCtx a b) ⟨true, plusOne 0, plusOne 1⟩).symm
+  change (a.succ = b.succ) = (1 * a = 1 * b) at h
+  rwa [Nat.one_mul, Nat.one_mul] at h
+
+private abbrev polyPlus (i : Nat) : Poly := [(1, i), (1, fixedVar)]
+
+theorem polyEq (rule : type_of% @Poly.denote_eq_cancel_eq) : type_of% @Nat.succ.injEq := by
+  intro a b
+  have h := (rule (pairCtx a b) (polyPlus 0) (polyPlus 1)).symm
+  change ((1 * a) + 1 = (1 * b) + 1) = (1 * a = 1 * b) at h
+  rwa [Nat.one_mul, Nat.one_mul] at h
+
+theorem polyLe (rule : type_of% @Poly.denote_le_cancel_eq) : SuccLeEq := by
+  intro a b
+  have h := (rule (pairCtx a b) (polyPlus 0) (polyPlus 1)).symm
+  change ((1 * a) + 1 ≤ (1 * b) + 1) = (1 * a ≤ 1 * b) at h
+  rwa [Nat.one_mul, Nat.one_mul] at h
+
+
+/-- Strict comparison reflects the same successor cancellation. -/
+def SuccLtEq := ∀ a b : Nat, (a.succ < b.succ) = (a < b)
+
+theorem exprLt (rule : type_of% @Expr.of_cancel_lt) : SuccLtEq := by
+  intro a b
+  exact rule (pairCtx a b) (plusOne 0) (plusOne 1) (.var 0) (.var 1) rfl
+
+end NaturalCancellation
+
 namespace AbstractOrder
 
 private theorem notNotEM (p : Prop) : ¬ ¬ (p ∨ ¬p) :=
@@ -462,6 +515,9 @@ private def replayWitnesses (env : Environment) : IO Unit := do
       ``inhabitedPropExtOfProofHEq, ``inhabitedPropExtOfEqTrue,
       ``inhabitedPropExtOfDecision, ``refutedPropExtOfDecision, ``inhabitedPropExtOfEqTrueRule,
       ``refutedPropExtOfEqFalseRule, ``OptionalIndex.decidablePropExtOfIte,
+      ``NaturalCancellation.exprEq, ``NaturalCancellation.exprLe, ``NaturalCancellation.exprLt,
+      ``NaturalCancellation.exprNormEq, ``NaturalCancellation.exprNorm, ``NaturalCancellation.polyEq,
+      ``NaturalCancellation.polyLe,
       ``OptionalIndex.decidablePropExtOfIsSome, ``TwoWorlds.countermodel]
   while let n :: more := todo do
     todo := more
@@ -1404,6 +1460,20 @@ private def logicalConsequence? (owner name : Name) : Option (Name × Name) := d
     return (``OmegaChecks.InitBoundaries.RefutedPropExt, ``OmegaChecks.InitBoundaries.refutedPropExtOfEqFalseRule)
   | `Init.Grind.Norm, ``Lean.Grind.ite_true_false =>
     return (``OmegaChecks.InitBoundaries.OptionalIndex.DecidablePropExt, ``OmegaChecks.InitBoundaries.OptionalIndex.decidablePropExtOfIte)
+  | `Init.Data.Nat.Internal.Linear, ``Nat.Internal.Linear.Expr.of_cancel_eq =>
+    return (``Nat.succ.injEq, ``OmegaChecks.InitBoundaries.NaturalCancellation.exprEq)
+  | `Init.Data.Nat.Internal.Linear, ``Nat.Internal.Linear.Expr.of_cancel_le =>
+    return (``OmegaChecks.InitBoundaries.NaturalCancellation.SuccLeEq, ``OmegaChecks.InitBoundaries.NaturalCancellation.exprLe)
+  | `Init.Data.Nat.Internal.Linear, ``Nat.Internal.Linear.Expr.of_cancel_lt =>
+    return (``OmegaChecks.InitBoundaries.NaturalCancellation.SuccLtEq, ``OmegaChecks.InitBoundaries.NaturalCancellation.exprLt)
+  | `Init.Data.Nat.Internal.Linear, ``Nat.Internal.Linear.ExprCnstr.eq_of_toNormPoly_eq =>
+    return (``Nat.succ.injEq, ``OmegaChecks.InitBoundaries.NaturalCancellation.exprNormEq)
+  | `Init.Data.Nat.Internal.Linear, ``Nat.Internal.Linear.ExprCnstr.denote_toNormPoly =>
+    return (``Nat.succ.injEq, ``OmegaChecks.InitBoundaries.NaturalCancellation.exprNorm)
+  | `Init.Data.Nat.Internal.Linear, ``Nat.Internal.Linear.Poly.denote_eq_cancel_eq =>
+    return (``Nat.succ.injEq, ``OmegaChecks.InitBoundaries.NaturalCancellation.polyEq)
+  | `Init.Data.Nat.Internal.Linear, ``Nat.Internal.Linear.Poly.denote_le_cancel_eq =>
+    return (``OmegaChecks.InitBoundaries.NaturalCancellation.SuccLeEq, ``OmegaChecks.InitBoundaries.NaturalCancellation.polyLe)
   | `Init.GetElem, ``isSome_getElem? =>
     return (``OmegaChecks.InitBoundaries.OptionalIndex.DecidablePropExt, ``OmegaChecks.InitBoundaries.OptionalIndex.decidablePropExtOfIsSome)
   | `Init.Data.Order.Lemmas, ``Std.Asymm.total_not =>
