@@ -3,6 +3,7 @@ public import Init.Data.Range.Polymorphic.Lemmas
 import all Init.Data.Array.Basic
 import all Init.Data.Range.Polymorphic.Basic
 import all Init.Data.Range.Polymorphic.RangeIterator
+import all Init.Data.Range.Polymorphic.Iterators
 public import Init.Data.Range.Polymorphic.NatLemmas
 public import Init.Data.Range.Polymorphic.IntLemmas
 
@@ -794,5 +795,33 @@ public theorem Std.Rxo.Iterator.toList_eq_match : type_of% @_root_.Std.Rxo.Itera
     by_cases bound : a < it.internalState.upperBound
     · rw [ite_eq_left bound, ite_eq_left bound]
     · rw [ite_eq_right bound, ite_eq_right bound]
+
+public theorem Std.Roi.toList_eq_match_rci : type_of% @_root_.Std.Roi.toList_eq_match_rci := by
+  intro α r _ _ _
+  unfold _root_.Std.Roi.toList _root_.Std.Roi.Internal.iter
+  cases start : UpwardEnumerable.succ? r.lower with
+  | none => rw [_root_.Std.Rxi.Iterator.toList_eq_match]
+  | some a => rfl
+
+public theorem Std.Rii.toList_eq_match_rci : type_of% @_root_.Std.Rii.toList_eq_match_rci := by
+  intro α r _ _ _ _
+  unfold _root_.Std.Rii.toList _root_.Std.Rii.Internal.iter
+  cases start : Least?.least? (α := α) with
+  | none => rw [_root_.Std.Rxi.Iterator.toList_eq_match]
+  | some a => rfl
+
+public theorem Std.Roc.toList_eq_match : type_of% @_root_.Std.Roc.toList_eq_match := by
+  intro α r _ _ _ _ _ _
+  rw [_root_.Std.Roc.toList_eq_match_rcc]
+  cases UpwardEnumerable.succ? r.lower with
+  | none => rfl
+  | some a => exact _root_.Std.Rcc.toList_eq_ite_roc
+
+public theorem Std.Roo.toList_eq_match : type_of% @_root_.Std.Roo.toList_eq_match := by
+  intro α r _ _ _ _ _ _
+  rw [_root_.Std.Roo.toList_eq_match_rco]
+  cases UpwardEnumerable.succ? r.lower with
+  | none => rfl
+  | some a => exact _root_.Std.Rco.toList_eq_ite_roo
 
 end OmegaChecks.InitPort.Alternatives
