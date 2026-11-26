@@ -1,6 +1,8 @@
 module
 
-public import Init.Data.Iterators.Combinators.Monadic.Take
+import all Init.Data.Iterators.Combinators.Monadic.Take
+public import Init.Data.Iterators.Lemmas.Combinators.Monadic.Take
+import all Init.Data.Iterators.Lemmas.Combinators.Monadic.Take
 public import Init.Data.Iterators.Lemmas.Consumers.Loop
 import Init.Data.Iterators.Lemmas.Basic
 public import Init.Data.Iterators.Lemmas.Combinators.FilterMap
@@ -81,6 +83,17 @@ public theorem Std.Iterators.Types.Take.instFinite {α : Type u} {m : Type u →
   cases h with
   | inl hp => exact positive n hp inner
   | inr hf => exact finiteInner hf inner n (Or.inr hf)
+
+public theorem Std.IterM.step_take : type_of% @_root_.Std.IterM.step_take := by
+  intro α m β mon inst n it
+  cases n with
+  | zero => rfl
+  | succ k =>
+    dsimp only [IterM.take, IterM.step, Iterator.step, IterM.internalState_mk, Take.instIterator]
+    rw [dite_eq_right (fun h => Nat.noConfusion (Nat.succ.inj h))]
+    congr 1
+    unfold Take.instIterator.match_1 _root_.Std.IterM.step_take.match_1
+    rfl
 
 public theorem Std.Iter.step_filterMapWithPostcondition : type_of% @_root_.Std.Iter.step_filterMapWithPostcondition := by
   intro α β γ inst it m n f mon law lift
