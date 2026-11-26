@@ -341,4 +341,65 @@ public theorem Int.Internal.Linear.cooper_dvd_right :
             (private_decl% _root_.Int.Internal.Linear.denote'_mul_combine_mul_addConst_eq)]
         exact value
 
+
+private theorem intPositiveOfBlt {k : Int} (h : Int.blt' 0 k) : 0 < k := by
+  cases k with
+  | negSucc => contradiction
+  | ofNat n =>
+    cases n with
+    | zero => contradiction
+    | succ n => exact Int.natCast_pos.mpr (Nat.zero_lt_succ n)
+
+public theorem Int.Internal.Linear.eq_unsat_coeff :
+    type_of% @_root_.Int.Internal.Linear.eq_unsat_coeff := by
+  intro ctx p k cert zero
+  have both := Bool.and_eq_true_iff.mp
+    (show (p.divCoeffs k && (Int.blt' 0 k && decide (cmod p.getConst k < 0))) = true from cert)
+  have bounds := Bool.and_eq_true_iff.mp both.2
+  have pos := intPositiveOfBlt bounds.1
+  have divide := _root_.Int.Internal.Linear.Poly.denote_div_eq_of_divCoeffs ctx p k both.1
+  rw [_root_.Int.Internal.Linear.Poly.denote'_eq_denote] at zero
+  exact (private_decl% _root_.Int.Internal.Linear.contra) pos (cmod_gt_of_pos p.getConst pos)
+    (of_decide_eq_true bounds.2) (divide.trans zero)
+
+private theorem linearPolyEqOfBeq {p q : _root_.Int.Internal.Linear.Poly} (h : p.beq' q) : p = q := by
+  induction p generalizing q with
+  | num a =>
+    cases q with
+    | num b =>
+      change Int.beq' a b = true at h
+      rw [Int.beq'_eq_beq] at h
+      exact congrArg _root_.Int.Internal.Linear.Poly.num (eq_of_beq h)
+    | add => contradiction
+  | add a x p ih =>
+    cases q with
+    | num => contradiction
+    | add b y q =>
+      have both := Bool.and_eq_true_iff.mp
+        (show (Int.beq' a b && (x.beq y && p.beq' q)) = true from h)
+      have tails := Bool.and_eq_true_iff.mp both.2
+      have coeff := both.1
+      rw [Int.beq'_eq_beq] at coeff
+      cases eq_of_beq coeff
+      cases Nat.eq_of_beq_eq_true tails.1
+      exact congrArg (_root_.Int.Internal.Linear.Poly.add a x) (ih tails.2)
+
+public theorem Int.Internal.Linear.le_of_le_diseq :
+    type_of% @_root_.Int.Internal.Linear.le_of_le_diseq := by
+  intro ctx p q result cert nonpos neq
+  have parts := Bool.and_eq_true_iff.mp (show
+    ((q.beq' p || q.beq' (p.mul_k (-1))) && result.beq' (p.addConst_k 1)) = true from cert)
+  rw [linearPolyEqOfBeq parts.2, _root_.Int.Internal.Linear.Poly.addConst_k_eq_addConst,
+      _root_.Int.Internal.Linear.Poly.denote'_eq_denote, _root_.Int.Internal.Linear.Poly.denote_addConst]
+  rw [_root_.Int.Internal.Linear.Poly.denote'_eq_denote] at nonpos neq
+  have nz : p.denote ctx ≠ 0 := by
+    intro zero
+    apply neq
+    cases Bool.or_eq_true_iff.mp parts.1 with
+    | inl eq => rw [linearPolyEqOfBeq eq, zero]
+    | inr eq =>
+      rw [linearPolyEqOfBeq eq, _root_.Int.Internal.Linear.Poly.mul_k_eq_mul,
+          _root_.Int.Internal.Linear.Poly.denote_mul, zero, Int.mul_zero]
+  exact Int.add_one_le_iff.mpr ((Int.lt_or_gt_of_ne nz).resolve_right (fun gt => (Int.not_le_of_gt gt) nonpos))
+
 end OmegaChecks.InitPort.Alternatives
