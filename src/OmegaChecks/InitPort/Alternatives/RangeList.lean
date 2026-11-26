@@ -1,6 +1,7 @@
 module
 public import Init.Data.Range.Polymorphic.Lemmas
 import all Init.Data.Array.Basic
+import all Init.Data.Range.Polymorphic.Basic
 public import Init.Data.Range.Polymorphic.NatLemmas
 public import Init.Data.Range.Polymorphic.IntLemmas
 
@@ -703,5 +704,59 @@ public theorem Std.Roo.toArray_eq_empty_iff : type_of% @_root_.Std.Roo.toArray_e
   intro α r _ _ _ _ _ _ _
   rw [← _root_.Std.Roo.toArray_toList]
   exact (arrayNilOfList _).trans _root_.Std.Roo.toList_eq_nil_iff
+
+public theorem Std.Rci.isEmpty_iff_forall_not_mem : type_of% @_root_.Std.Rci.isEmpty_iff_forall_not_mem := by
+  intro α r _ _ _ _ _ _ _
+  constructor
+  · intro empty
+    change false = true at empty
+    cases empty
+  · intro absent
+    exact (absent r.lower (UpwardEnumerable.le_iff.mpr (UpwardEnumerable.le_refl _))).elim
+
+public theorem Std.Ric.isEmpty_iff_forall_not_mem : type_of% @_root_.Std.Ric.isEmpty_iff_forall_not_mem := by
+  intro α r _ _ _ _ _ _ _
+  constructor
+  · intro empty
+    change false = true at empty
+    cases empty
+  · intro absent
+    exact (absent r.upper (UpwardEnumerable.le_iff.mpr (UpwardEnumerable.le_refl _))).elim
+
+public theorem Std.Rii.isEmpty_iff_forall_not_mem : type_of% @_root_.Std.Rii.isEmpty_iff_forall_not_mem := by
+  intro α r _ _ _ _ _ _ _
+  constructor
+  · intro empty a _
+    exact (_root_.Std.Rii.isEmpty_iff.mp empty) ⟨a⟩
+  · intro absent
+    exact _root_.Std.Rii.isEmpty_iff.mpr fun ⟨a⟩ => absent a True.intro
+
+public theorem Std.Roc.toList_eq_nil_iff : type_of% @_root_.Std.Roc.toList_eq_nil_iff := by
+  intro α r _ _ _ _ _ _ _ _
+  rw [_root_.Std.Roc.toList_eq_match_rcc]
+  cases s : UpwardEnumerable.succ? r.lower with
+  | none =>
+    constructor
+    · intro _ lt
+      obtain ⟨n, h⟩ := UpwardEnumerable.lt_iff.mp lt
+      rw [UpwardEnumerable.succMany?_add_one_eq_succ?_bind_succMany?, s] at h
+      cases h
+    · intro _
+      rfl
+  | some next =>
+    constructor
+    · intro empty lt
+      obtain ⟨n, h⟩ := UpwardEnumerable.lt_iff.mp lt
+      rw [UpwardEnumerable.succMany?_add_one_eq_succ?_bind_succMany?, s] at h
+      exact (_root_.Std.Rcc.toList_eq_nil_iff.mp empty) (UpwardEnumerable.le_iff.mpr ⟨n, h⟩)
+    · intro before
+      exact _root_.Std.Rcc.toList_eq_nil_iff.mpr fun le =>
+        before (UpwardEnumerable.lt_iff.mpr (UpwardEnumerable.lt_of_lt_of_le
+          (UpwardEnumerable.lt_succ? s) (UpwardEnumerable.le_iff.mp le)))
+
+public theorem Std.Roc.toArray_eq_empty_iff : type_of% @_root_.Std.Roc.toArray_eq_empty_iff := by
+  intro α r _ _ _ _ _ _ _ _
+  rw [← _root_.Std.Roc.toArray_toList]
+  exact (arrayNilOfList _).trans _root_.Std.Roc.toList_eq_nil_iff
 
 end OmegaChecks.InitPort.Alternatives
