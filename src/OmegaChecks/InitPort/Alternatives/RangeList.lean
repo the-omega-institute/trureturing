@@ -554,4 +554,52 @@ public theorem Array.range'_eq_toArray_rco : type_of% @_root_.Array.range'_eq_to
   rw [Array.toList_range', _root_.Std.Rco.toList_toArray]
   exact _root_.List.range'_eq_toList_rco
 
+public theorem Std.Rcc.size_eq_ite_roc : type_of% @_root_.Std.Rcc.size_eq_ite_roc := by
+  intro α r _ _ _ _ _ _ _ _
+  by_cases h : r.lower ≤ r.upper
+  · rw [ite_eq_left h, _root_.Std.Roc.size_eq_match_rcc]
+    cases hs : UpwardEnumerable.succ? r.lower with
+    | none => exact Rxc.LawfulHasSize.size_eq_one_of_succ?_eq_none _ _ h hs
+    | some next => exact Rxc.LawfulHasSize.size_eq_succ_of_succ?_eq_some _ _ _ h hs
+  · rw [ite_eq_right h]
+    exact Rxc.LawfulHasSize.size_eq_zero_of_not_le _ _ h
+
+public theorem Std.Rco.size_eq_ite_roo : type_of% @_root_.Std.Rco.size_eq_ite_roo := by
+  intro α r _ _ _ _ _ _ _ _
+  by_cases h : r.lower < r.upper
+  · rw [ite_eq_left h, _root_.Std.Roo.size_eq_match_rcc]
+    cases hs : UpwardEnumerable.succ? r.lower with
+    | none => exact Rxo.LawfulHasSize.size_eq_one_of_succ?_eq_none _ _ h hs
+    | some next => exact Rxo.LawfulHasSize.size_eq_succ_of_succ?_eq_some _ _ _ h hs
+  · rw [ite_eq_right h]
+    exact Rxo.LawfulHasSize.size_eq_zero_of_not_le _ _ h
+
+public theorem Std.Roc.size_eq_match_roc : type_of% @_root_.Std.Roc.size_eq_match_roc := by
+  intro α r _ _ _ _ _ _ _ _
+  rw [_root_.Std.Roc.size_eq_match_rcc]
+  cases succ? r.lower with
+  | none => rfl
+  | some next => exact _root_.Std.Rcc.size_eq_ite_roc
+
+public theorem Std.Ric.size_eq_match_roc : type_of% @_root_.Std.Ric.size_eq_match_roc := by
+  intro α r _ _ _ _ _ _ _ _ _
+  rw [_root_.Std.Ric.size_eq_match_rcc]
+  cases Least?.least? (α := α) with
+  | none => rfl
+  | some next => exact _root_.Std.Rcc.size_eq_ite_roc
+
+public theorem Std.Roo.size_eq_match_roc : type_of% @_root_.Std.Roo.size_eq_match_roc := by
+  intro α r _ _ _ _ _ _ _ _
+  rw [_root_.Std.Roo.size_eq_match_rcc]
+  cases succ? r.lower with
+  | none => rfl
+  | some next => exact _root_.Std.Rco.size_eq_ite_roo
+
+public theorem Std.Rio.size_eq_match_roc : type_of% @_root_.Std.Rio.size_eq_match_roc := by
+  intro α r _ _ _ _ _ _ _ _ _
+  rw [_root_.Std.Rio.size_eq_match_rcc]
+  cases Least?.least? (α := α) with
+  | none => rfl
+  | some next => exact _root_.Std.Rco.size_eq_ite_roo
+
 end OmegaChecks.InitPort.Alternatives
