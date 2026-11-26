@@ -24,5 +24,17 @@ internal sealed class CircleHessianDocument : IScribeDocumentDefinition
                     "counts. The resulting quadratic coefficient dominates the squared Frobenius " +
                     "norm of the commutator multiplied by the second factor. The bound permits " +
                     "signed eigenvalues and has no dependence on the dimension or spectral gaps."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("refined-bmv-four-mark-mixed-mass"),
+                DeclarationHandle.Create(
+                    "D5/S3/Quantum/Analysis/RefinedBMV/Tracial/CircleHessian.fourMarkTraceInsertionDefect_le_expected"),
+                H("Comparison under a random arc mass"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text(
+                    "A probability distribution of arc masses with a fixed mean only increases the " +
+                    "two-insertion expectation. In the common eigenbasis the fourth power of the affine " +
+                    "spectral interpolation is convex even for signed eigenvalues."))),
                 DescribeRole.Theorem))));
 }

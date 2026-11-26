@@ -10,6 +10,8 @@ import D5.S3.Quantum.Analysis.RefinedBMV.Tracial.HingeMoments
 import Mathlib.Analysis.Matrix.Normed
 import Mathlib.LinearAlgebra.Matrix.Hermitian
 import Mathlib.LinearAlgebra.Matrix.Trace
+import Mathlib.Analysis.Convex.Integral
+import Mathlib.Analysis.Convex.Mul
 
 namespace RefinedBMV.Tracial
 
@@ -191,23 +193,29 @@ private def periodicArcAverage (s : ℝ) (f : ℕ → ℝ) : ℝ :=
   else if s ≤ 3 / 4 then (3 - 4 * s) * f 2 + (4 * s - 2) * f 3
   else (4 - 4 * s) * f 3 + (4 * s - 3) * f 4
 
-/-- The difference of the two arc-count expectations of the trace with
-two insertions of a Hermitian perturbation. -/
-def fourMarkTraceInsertionDefect {ι : Type*} [Fintype ι] [DecidableEq ι]
-    (h b : ι → ℝ) (X : Matrix ι ι ℂ) (s : ℝ) : ℝ :=
+/-- Two-insertion trace difference for an independent arc mass and a
+periodic arc count associated with the actual arc length. -/
+def fourMarkTraceInsertionDefectAtMass {ι : Type*} [Fintype ι] [DecidableEq ι]
+    (h b : ι → ℝ) (X : Matrix ι ι ℂ) (s mass : ℝ) : ℝ :=
   let B := Matrix.diagonal fun i ↦ (b i : ℂ)
   let E₀ := Matrix.diagonal fun i ↦ (Real.exp ((1 - s) * h i) : ℂ)
   let E₁ := Matrix.diagonal fun i ↦ (Real.exp (s * h i) : ℂ)
   let traceCount := fun k : ℕ ↦
     (Matrix.trace ((E₀ * B ^ (4 - k) * X) * (E₁ * B ^ k * X))).re
-  binomialArcAverage s traceCount - periodicArcAverage s traceCount
+  binomialArcAverage mass traceCount - periodicArcAverage s traceCount
 
-private lemma fourMarkTraceInsertionDefect_spectral {ι : Type*} [Fintype ι] [DecidableEq ι]
-    (h b : ι → ℝ) (X : Matrix ι ι ℂ) (hX : X.IsHermitian) (s : ℝ) :
-    fourMarkTraceInsertionDefect h b X s =
+/-- The difference for four independent uniform marks and four periodically
+spaced marks. -/
+def fourMarkTraceInsertionDefect {ι : Type*} [Fintype ι] [DecidableEq ι]
+    (h b : ι → ℝ) (X : Matrix ι ι ℂ) (s : ℝ) : ℝ :=
+  fourMarkTraceInsertionDefectAtMass h b X s s
+
+private lemma fourMarkTraceInsertionDefectAtMass_spectral {ι : Type*} [Fintype ι] [DecidableEq ι]
+    (h b : ι → ℝ) (X : Matrix ι ι ℂ) (hX : X.IsHermitian) (s mass : ℝ) :
+    fourMarkTraceInsertionDefectAtMass h b X s mass =
       ∑ i, ∑ j, ‖X i j‖ ^ 2 * (Real.exp ((1 - s) * h i + s * h j) *
-        (((1 - s) * b i + s * b j) ^ 4 - fourMarkPeriodicMean s (b i) (b j))) := by
-  dsimp only [fourMarkTraceInsertionDefect, binomialArcAverage, periodicArcAverage,
+        (((1 - mass) * b i + mass * b j) ^ 4 - fourMarkPeriodicMean s (b i) (b j))) := by
+  dsimp only [fourMarkTraceInsertionDefectAtMass, binomialArcAverage, periodicArcAverage,
     fourMarkPeriodicMean]
   simp_rw [trace_fourMarkArc_spectral h b X hX s]
   split_ifs
@@ -233,7 +241,7 @@ theorem fourMarkTraceHessian_lower {ι : Type*} [Fintype ι] [DecidableEq ι]
   refine (fourMarkSpectralHessian_lower h b X hX hR).trans ?_
   apply le_of_eq
   congr 1
-  simp_rw [fourMarkTraceInsertionDefect_spectral h b X hX]
+  simp_rw [fourMarkTraceInsertionDefect, fourMarkTraceInsertionDefectAtMass_spectral h b X hX]
   let f : ι → ι → ℝ → ℝ := fun i j s ↦ ‖X i j‖ ^ 2 *
     (Real.exp ((1 - s) * h i + s * h j) *
       (((1 - s) * b i + s * b j) ^ 4 - fourMarkPeriodicMean s (b i) (b j)))
@@ -248,6 +256,88 @@ theorem fourMarkTraceHessian_lower {ι : Type*} [Fintype ι] [DecidableEq ι]
   rw [integral_finsetSum (fun i _ ↦ (hi i).intervalIntegrable 0 1)]
   simp_rw [integral_finsetSum (fun j _ ↦ (hf _ j).intervalIntegrable 0 1)]
   simp only [f, fourMarkSpectralDefect, integral_const_mul]
+
+
+
+open MeasureTheory in
+private lemma affine_fourth_integrable {Ω : Type*} [MeasurableSpace Ω] {μ : Measure Ω}
+    [IsProbabilityMeasure μ] {mass : Ω → ℝ} (hm : AEMeasurable mass μ)
+    (h01 : ∀ᵐ ω ∂μ, mass ω ∈ Set.Icc (0 : ℝ) 1) (x y : ℝ) :
+    Integrable (fun ω ↦ ((1 - mass ω) * x + mass ω * y) ^ 4) μ := by
+  have hmeas : AEMeasurable (fun ω ↦ ((1 - mass ω) * x + mass ω * y) ^ 4) μ := by
+    fun_prop
+  apply (integrable_const ((‖x‖ + ‖y‖) ^ 4)).mono' hmeas.aestronglyMeasurable
+  filter_upwards [h01] with ω hω
+  rw [norm_pow]
+  apply pow_le_pow_left₀ (norm_nonneg _) _ 4
+  refine (norm_add_le _ _).trans ?_
+  rw [norm_mul, norm_mul, Real.norm_of_nonneg hω.1,
+    Real.norm_of_nonneg (sub_nonneg.mpr hω.2)]
+  exact add_le_add
+    (mul_le_of_le_one_left (norm_nonneg _) (by linarith [hω.1]))
+    (mul_le_of_le_one_left (norm_nonneg _) hω.2)
+
+open MeasureTheory in
+private lemma affine_fourth_jensen {Ω : Type*} [MeasurableSpace Ω] {μ : Measure Ω}
+    [IsProbabilityMeasure μ] {mass : Ω → ℝ} (hm : Integrable mass μ)
+    (h01 : ∀ᵐ ω ∂μ, mass ω ∈ Set.Icc (0 : ℝ) 1) {s : ℝ}
+    (hmean : (∫ ω, mass ω ∂μ) = s) (x y : ℝ) :
+    ((1 - s) * x + s * y) ^ 4 ≤ ∫ ω, ((1 - mass ω) * x + mass ω * y) ^ 4 ∂μ := by
+  let g : Ω → ℝ := fun ω ↦ (1 - mass ω) * x + mass ω * y
+  have hg : Integrable g μ := ((integrable_const 1).sub hm).mul_const x |>.add (hm.mul_const y)
+  have he : (∫ ω, g ω ∂μ) = (1 - s) * x + s * y := by
+    change (∫ ω, (1 - mass ω) * x + mass ω * y ∂μ) = _
+    have h₁ : Integrable (fun ω ↦ (1 - mass ω) * x) μ :=
+      ((integrable_const 1).sub hm).mul_const x
+    rw [MeasureTheory.integral_add h₁ (hm.mul_const y),
+      MeasureTheory.integral_mul_const, MeasureTheory.integral_mul_const]
+    have hs : (∫ ω, 1 - mass ω ∂μ) = (∫ _ : Ω, (1 : ℝ) ∂μ) - ∫ ω, mass ω ∂μ :=
+      MeasureTheory.integral_sub (integrable_const 1) hm
+    rw [hs, hmean]
+    simp
+  have hv : ConvexOn ℝ Set.univ (fun t : ℝ ↦ t ^ 4) :=
+    (show Even (4 : ℕ) by decide).convexOn_pow
+  have hcv : Continuous (fun t : ℝ ↦ t ^ 4) := by fun_prop
+  have hj := hv.map_integral_le hcv.continuousOn isClosed_univ
+    (.of_forall fun _ ↦ Set.mem_univ _) hg (affine_fourth_integrable hm.aemeasurable h01 x y)
+  rwa [he] at hj
+
+open MeasureTheory in
+/-- Randomizing the arc mass with its mean fixed preserves the two-insertion
+lower bound pointwise. This applies to the conditional binomial law
+from a randomly rotated lattice of B marks. -/
+theorem fourMarkTraceInsertionDefect_le_expected {ι Ω : Type*} [Fintype ι] [DecidableEq ι]
+    [MeasurableSpace Ω] {μ : Measure Ω} [IsProbabilityMeasure μ]
+    (h b : ι → ℝ) (X : Matrix ι ι ℂ) (hX : X.IsHermitian)
+    {mass : Ω → ℝ} (hm : Integrable mass μ)
+    (h01 : ∀ᵐ ω ∂μ, mass ω ∈ Set.Icc (0 : ℝ) 1) {s : ℝ}
+    (hmean : (∫ ω, mass ω ∂μ) = s) :
+    fourMarkTraceInsertionDefect h b X s ≤
+      ∫ ω, fourMarkTraceInsertionDefectAtMass h b X s (mass ω) ∂μ := by
+  simp_rw [fourMarkTraceInsertionDefect, fourMarkTraceInsertionDefectAtMass_spectral h b X hX]
+  let w : ι → ι → ℝ := fun i j ↦ ‖X i j‖ ^ 2 * Real.exp ((1 - s) * h i + s * h j)
+  let f : ι → ι → ℝ → ℝ := fun i j t ↦
+    ((1 - t) * b i + t * b j) ^ 4 - fourMarkPeriodicMean s (b i) (b j)
+  simp_rw [← mul_assoc]
+  change (∑ i, ∑ j, w i j * f i j s) ≤ ∫ ω, ∑ i, ∑ j, w i j * f i j (mass ω) ∂μ
+  have hf (i j : ι) : Integrable (fun ω ↦ f i j (mass ω)) μ :=
+    (affine_fourth_integrable hm.aemeasurable h01 (b i) (b j)).sub (integrable_const _)
+  have hweighted (i j : ι) : Integrable (fun ω ↦ w i j * f i j (mass ω)) μ :=
+    (hf i j).const_mul _
+  rw [MeasureTheory.integral_finsetSum _ (fun i _ ↦
+    integrable_finsetSum _ (fun j _ ↦ hweighted i j))]
+  simp_rw [MeasureTheory.integral_finsetSum _ (fun j _ ↦ hweighted _ j)]
+  apply Finset.sum_le_sum
+  intro i _
+  apply Finset.sum_le_sum
+  intro j _
+  rw [MeasureTheory.integral_const_mul]
+  apply mul_le_mul_of_nonneg_left _ (by unfold w; positivity)
+  unfold f
+  rw [MeasureTheory.integral_sub
+    (affine_fourth_integrable hm.aemeasurable h01 (b i) (b j)) (integrable_const _)]
+  simpa using sub_le_sub_right (affine_fourth_jensen hm h01 hmean (b i) (b j))
+    (fourMarkPeriodicMean s (b i) (b j))
 
 
 end
