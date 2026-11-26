@@ -8,8 +8,11 @@
 
 module
 
+public import OmegaBuild.Commands
 public import Mathlib.Probability.Independence.Integration
 import D5.S3.Analytic.Measure.ProductSupportIntersection
+
+compile_only_with_mathlib
 
 /-! # Proper-support marginal gluing under a product probability law -/
 

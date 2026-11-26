@@ -8,8 +8,11 @@
 
 module
 
+public import OmegaBuild.Commands
 public import Mathlib.MeasureTheory.Integral.Marginal
 public import Mathlib.Logic.Function.DependsOn
+
+compile_only_with_mathlib
 
 /-! # Intersections of coordinate supports under product probability laws
 
