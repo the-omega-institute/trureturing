@@ -1,5 +1,5 @@
 /- GID: D5/S3/HomologicalAlgebra/QuaternionCandidateRestriction
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/HomologicalAlgebra/QuaternionCandidateRestriction
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.GroupTheory.SpecificGroups.Quaternion]
