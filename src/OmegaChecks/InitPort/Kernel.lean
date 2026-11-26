@@ -67,11 +67,11 @@ Borrowing changes the native reference-count convention, which is absent in the 
 private def boundedBorrowedRead (ci : ConstantInfo) : Bool :=
   (ci matches .opaqueInfo _) && [`Array.getInternalBorrowed, `Array.ugetBorrowed].contains ci.name
 
-def translateDecl (info : ConstantInfo) (body : Expr) : Except String Declaration := do
+def translateDecl (info : ConstantInfo) (type body : Expr) : Except String Declaration := do
   let rename := portName
-  let val (v : ConstantVal) := { v with name := rename v.name, type := translate rename v.type }
+  let val (v : ConstantVal) := { v with name := rename v.name, type := translate rename type }
   if (info.isUnsafe && !boundedBorrowedRead info) || info.isPartial then throw "unsafe/partial"
-  if invalidExpr info.type || invalidExpr body then throw "open term or unsupported string literal"
+  if invalidExpr type || invalidExpr body then throw "open term or unsupported string literal"
   let body := translate rename body
   match info with
   | .defnInfo d => return .defnDecl { d with toConstantVal := val d.toConstantVal, value := body, all := d.all.map rename }
@@ -425,14 +425,26 @@ partial def visit (n : Name) : M Bool := do
   if !(ci matches .thmInfo _ | .defnInfo _ | .opaqueInfo _) then
     return ← record n (.blocked "requires inductive family or primitive")
   modify fun s => {s with visiting := s.visiting.insert n}
+  -- A dependent type can contain a proof emitted by simp. Keep its official
+  -- conversion class and let the target kernel check the replacement.
+  let mut type := ci.type
   for dep in usedConstants ci.type do
-    if !(← visit dep) then return ← record n (.blocked "unavailable dependency" (some dep))
+    if !(← visit dep) then
+      let rewritten := OmegaChecks.InitCompiler.constructiveCasts c.source ci.type c.proofRules true
+      let rewritten ← OmegaChecks.InitCompiler.decidableProof c.source rewritten
+      if rewritten == ci.type || (Kernel.check c.source {} rewritten).toOption.isNone ||
+          !Kernel.isDefEqGuarded c.source {} ci.type rewritten then
+        return ← record n (.blocked "unavailable dependency" (some dep))
+      for required in usedConstants rewritten do
+        if !(← visit required) then return ← record n (.blocked "unavailable dependency" (some required))
+      type := rewritten
+      break
   let some body := ci.value? (allowOpaque := true) | return ← record n (.blocked "no kernel body")
   let attempt (value : Expr) (budget := c.maxHeartbeats) : M Outcome := do
     let value ← OmegaChecks.InitCompiler.namedLogicalProjections c.source value
     for dep in usedConstants value do
       if !(← visit dep) then return .blocked "unavailable dependency" (some dep)
-    let .ok decl := translateDecl ci value | return .blocked "open term"
+    let .ok decl := translateDecl ci type value | return .blocked "open term"
     let check := if budget == c.maxHeartbeats then checkWithRetry else checkDecl
     match ← check (← get).env decl budget with
     | .error ex =>
