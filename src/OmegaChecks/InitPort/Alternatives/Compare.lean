@@ -1,8 +1,22 @@
 module
 import all Init.Data.Ord.Array
+public import Init.Data.Int.Compare
+public import Init.Data.Nat.Compare
 public import Init.Data.Order.Ord
 
 namespace OmegaChecks.InitPort.Alternatives
+
+public theorem Nat.compare_ne_gt : type_of% @_root_.Nat.compare_ne_gt :=
+  Iff.trans (not_congr _root_.Nat.compare_eq_gt) _root_.Nat.not_lt
+
+public theorem Nat.compare_ne_lt : type_of% @_root_.Nat.compare_ne_lt :=
+  Iff.trans (not_congr _root_.Nat.compare_eq_lt) _root_.Nat.not_lt
+
+public theorem Int.compare_ne_gt : type_of% @_root_.Int.compare_ne_gt :=
+  Iff.trans (not_congr _root_.Int.compare_eq_gt) _root_.Int.not_lt
+
+public theorem Int.compare_ne_lt : type_of% @_root_.Int.compare_ne_lt :=
+  Iff.trans (not_congr _root_.Int.compare_eq_lt) _root_.Int.not_lt
 
 public theorem Ordering.then.eq_2 : type_of% @_root_.Ordering.then.eq_2 := by
   intro a b different
