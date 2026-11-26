@@ -16,6 +16,18 @@ public theorem iff_congr {p₁ p₂ q₁ q₂ : Prop} (h₁ : Iff p₁ p₂) (h�
   Iff.intro (fun h => h₁.symm.trans (h.trans h₂))
     (fun h => h₁.trans (h.trans h₂.symm))
 
+public theorem and_self_left {a b : Prop} : Iff (And a (And a b)) (And a b) :=
+  Iff.intro And.right (fun h => And.intro h.left h)
+
+public theorem and_self_right {a b : Prop} : Iff (And (And a b) b) (And a b) :=
+  Iff.intro And.left (fun h => And.intro h h.right)
+
+public theorem or_self_left {a b : Prop} : Iff (Or a (Or a b)) (Or a b) :=
+  Iff.intro (fun h => Or.elim h Or.inl (fun x => x)) Or.inr
+
+public theorem or_self_right {a b : Prop} : Iff (Or (Or a b) b) (Or a b) :=
+  Iff.intro (fun h => Or.elim h (fun x => x) Or.inr) Or.inl
+
 end Omega
 
 port_proof and_assoc
