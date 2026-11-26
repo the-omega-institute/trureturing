@@ -545,4 +545,70 @@ public theorem Array.toList_modify : type_of% @_root_.Array.toList_modify := by
     rw [_root_.Array.getElem_toList, _root_.Array.getElem_modify, _root_.List.getElem_modify]
     rfl
 
+private theorem flatMapPointwise (xs : _root_.List α) {f g : α → _root_.List β}
+    (h : ∀ x, f x = g x) : xs.flatMap f = xs.flatMap g := by
+  induction xs with
+  | nil => rfl
+  | cons x xs ih => rw [_root_.List.flatMap_cons, _root_.List.flatMap_cons, h x, ih]
+
+public theorem Array.flatMap_assoc : type_of% @_root_.Array.flatMap_assoc := by
+  intro α β γ xs f g
+  apply _root_.Array.ext'
+  rw [_root_.Array.toList_flatMap, _root_.Array.toList_flatMap, _root_.Array.toList_flatMap,
+    _root_.List.flatMap_assoc]
+  exact flatMapPointwise _ (fun _ => _root_.Array.toList_flatMap.symm)
+
+public theorem Array.map_flatMap : type_of% @_root_.Array.map_flatMap := by
+  intro α β γ f g xs
+  apply _root_.Array.ext'
+  rw [_root_.Array.toList_map, _root_.Array.toList_flatMap, _root_.Array.toList_flatMap,
+    _root_.List.map_flatMap]
+  exact flatMapPointwise _ (fun _ => _root_.Array.toList_map.symm)
+
+public theorem Array.map_eq_flatMap : type_of% @_root_.Array.map_eq_flatMap := by
+  intro α β f xs
+  apply _root_.Array.ext'
+  rw [_root_.Array.toList_map, _root_.Array.toList_flatMap]
+  exact _root_.List.map_eq_flatMap
+
+public theorem Array.filterMap_flatMap : type_of% @_root_.Array.filterMap_flatMap := by
+  intro α β γ xs g f
+  apply _root_.Array.ext'
+  rw [_root_.Array.toList_filterMap, _root_.Array.toList_flatMap, _root_.Array.toList_flatMap,
+    _root_.List.filterMap_flatMap]
+  exact flatMapPointwise _ (fun _ => _root_.Array.toList_filterMap.symm)
+
+public theorem Array.filter_flatMap : type_of% @_root_.Array.filter_flatMap := by
+  intro α β xs g f
+  apply _root_.Array.ext'
+  rw [_root_.Array.toList_filter, _root_.Array.toList_flatMap, _root_.Array.toList_flatMap,
+    _root_.List.filter_flatMap]
+  exact flatMapPointwise _ (fun _ => _root_.Array.toList_filter.symm)
+
+public theorem Array.reverse_flatMap : type_of% @_root_.Array.reverse_flatMap := by
+  intro α β xs f
+  apply _root_.Array.ext'
+  rw [_root_.Array.toList_reverse, _root_.Array.toList_flatMap, _root_.Array.toList_flatMap,
+    _root_.List.reverse_flatMap, _root_.Array.toList_reverse]
+  exact flatMapPointwise _ (fun _ => _root_.Array.toList_reverse.symm)
+
+public theorem Array.flatMap_reverse : type_of% @_root_.Array.flatMap_reverse := by
+  intro α β xs f
+  apply _root_.Array.ext'
+  rw [_root_.Array.toList_flatMap, _root_.Array.toList_reverse, _root_.Array.toList_reverse,
+    _root_.Array.toList_flatMap, _root_.List.flatMap_reverse]
+  exact congrArg _root_.List.reverse (flatMapPointwise _ (fun _ => _root_.Array.toList_reverse.symm))
+
+public theorem Array.reverse_flatten : type_of% @_root_.Array.reverse_flatten := by
+  intro α xss
+  rw [_root_.Array.flatten_eq_flatMap, _root_.Array.reverse_flatMap, _root_.Array.flatten_eq_flatMap,
+    ← _root_.Array.map_reverse, _root_.Array.flatMap_map]
+  rfl
+
+public theorem Array.flatten_reverse : type_of% @_root_.Array.flatten_reverse := by
+  intro α xss
+  rw [_root_.Array.flatten_eq_flatMap, _root_.Array.flatMap_reverse, _root_.Array.flatten_eq_flatMap,
+    _root_.Array.flatMap_map]
+  rfl
+
 end OmegaChecks.InitPort.Alternatives
