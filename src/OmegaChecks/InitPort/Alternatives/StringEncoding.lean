@@ -313,6 +313,49 @@ public theorem String.Pos.Raw.IsValid.append_left : type_of% @_root_.String.Pos.
     obtain ⟨b, hb⟩ := h.isValidUTF8_extract_zero
     exact ⟨a ++ b, by rw [ha, hb, List.utf8Encode_append]⟩
 
+private def appendBits (bit : Bool) : Nat → Nat → Nat
+  | 0, high => high
+  | n + 1, high =>
+    let prev := appendBits bit n high * 2
+    if bit then prev.succ else prev
+
+private theorem incrementTrailingOnes (n high : Nat) :
+    (appendBits true n high).succ = appendBits false n high.succ := by
+  induction n with
+  | zero => rfl
+  | succ n ih =>
+    change ((appendBits true n high * 2).succ).succ = appendBits false n high.succ * 2
+    rw [← ih, Nat.succ_mul]
+private theorem boundedBits (n x y : Nat) (h : x ≤ y) :
+    appendBits false n x ≤ appendBits true n y := by
+  induction n with
+  | zero => exact h
+  | succ n ih => exact Nat.le_trans (Nat.mul_le_mul_right 2 ih) (Nat.le_succ _)
+private theorem grows (n high : Nat) : high ≤ appendBits true n high := by
+  induction n with
+  | zero => exact Nat.le_refl _
+  | succ n ih =>
+    apply Nat.le_trans ih
+    exact Nat.le_trans (Nat.le_mul_of_pos_right _ (by decide : 0 < 2)) (Nat.le_succ _)
+
+private theorem separateFields (n x y : Nat) (h : x < y) :
+    appendBits true n x < appendBits false n y := by
+  induction n with
+  | zero => exact h
+  | succ n ih =>
+    have bound := Nat.mul_le_mul_right 2 (Nat.succ_le_of_lt ih)
+    rw [Nat.succ_mul] at bound
+    exact bound
+
+private theorem restoreWidth {w k : Nat} {x : BitVec w} (fits : x.toNat < 2 ^ k) :
+    (x.setWidth k).setWidth w = x := by
+  apply BitVec.toNat_inj.mp
+  rw [BitVec.toNat_setWidth, BitVec.toNat_setWidth, Nat.mod_eq_of_lt fits, Nat.mod_eq_of_lt x.isLt]
+
+private theorem nextWordBound {a b : Nat} {v : UInt32} (next : a.succ = b)
+    (ha : a < 2^32) (hb : b < 2^32) (lower : UInt32.ofNat a < v) : UInt32.ofNat b ≤ v :=
+  (UInt32.ofNat_le_iff hb).mpr (next ▸ (UInt32.ofNat_lt_iff ha).mp lower)
+
 open _root_.ByteArray.utf8DecodeChar? in
 public theorem ByteArray.utf8DecodeChar?_utf8EncodeChar_append :
     type_of% @_root_.ByteArray.utf8DecodeChar?_utf8EncodeChar_append := by
@@ -336,29 +379,31 @@ public theorem ByteArray.utf8DecodeChar?_utf8EncodeChar_append :
     rw [utf8DecodeChar?_append_eq_assemble₂ size (parseFirstByte_utf8EncodeChar_eq_oneMore hc)]
     apply assemble₂_eq_some_of_toBitVec
     · apply isInvalidContinuationByte_getElem_utf8EncodeChar_one_of_utf8Size_eq_two hc
-    · exact (Char.utf8Size_eq_two_iff.mp hc).1
+    · exact nextWordBound (a := 127) (incrementTrailingOnes 7 0) (by decide) (by decide) (Char.utf8Size_eq_two_iff.mp hc).1
     · rw [String.toBitVec_getElem_utf8EncodeChar_zero_of_utf8Size_eq_two hc,
         String.toBitVec_getElem_utf8EncodeChar_one_of_utf8Size_eq_two hc,
         BitVec.setWidth_append_eq_right, BitVec.setWidth_append_eq_right,
         BitVec.extractLsb'_append_extractLsb'_eq_extractLsb' (by decide),
         ← BitVec.setWidth_eq_extractLsb' (by decide),
-        BitVec.setWidth_setWidth_eq_self]
-      exact Nat.lt_succ_of_le ((UInt32.le_ofNat_iff (by decide : 2047 < 2 ^ 32)).mp (Char.utf8Size_eq_two_iff.mp hc).2)
+        restoreWidth]
+      have upper := (UInt32.le_ofNat_iff (by decide : 2047 < 2 ^ 32)).mp (Char.utf8Size_eq_two_iff.mp hc).2
+      exact (show (2047 : Nat).succ = 2^11 from incrementTrailingOnes 11 0) ▸ Nat.lt_succ_of_le upper
   | 3, _, _ =>
     have size : (String.utf8EncodeChar c).length = 3 := (String.length_utf8EncodeChar c).trans hc
     rw [utf8DecodeChar?_append_eq_assemble₃ size (parseFirstByte_utf8EncodeChar_eq_twoMore hc)]
     apply assemble₃_eq_some_of_toBitVec
     · apply isInvalidContinuationByte_getElem_utf8EncodeChar_one_of_utf8Size_eq_three hc
     · apply isInvalidContinuationByte_getElem_utf8EncodeChar_two_of_utf8Size_eq_three hc
-    · exact (Char.utf8Size_eq_three_iff.mp hc).1
+    · exact nextWordBound (a := 2047) (incrementTrailingOnes 11 0) (by decide) (by decide) (Char.utf8Size_eq_three_iff.mp hc).1
     · rw [String.toBitVec_getElem_utf8EncodeChar_zero_of_utf8Size_eq_three hc,
         String.toBitVec_getElem_utf8EncodeChar_one_of_utf8Size_eq_three hc,
         String.toBitVec_getElem_utf8EncodeChar_two_of_utf8Size_eq_three hc,
         BitVec.setWidth_append_eq_right, BitVec.setWidth_append_eq_right, BitVec.setWidth_append_eq_right,
         BitVec.extractLsb'_append_extractLsb'_eq_extractLsb' (by decide),
         BitVec.extractLsb'_append_extractLsb'_eq_extractLsb' (by decide),
-        ← BitVec.setWidth_eq_extractLsb' (by decide), BitVec.setWidth_setWidth_eq_self]
-      exact Nat.lt_succ_of_le ((UInt32.le_ofNat_iff (by decide : 65535 < 2 ^ 32)).mp (Char.utf8Size_eq_three_iff.mp hc).2)
+        ← BitVec.setWidth_eq_extractLsb' (by decide), restoreWidth]
+      have upper := (UInt32.le_ofNat_iff (by decide : 65535 < 2 ^ 32)).mp (Char.utf8Size_eq_three_iff.mp hc).2
+      exact (show (65535 : Nat).succ = 2^16 from incrementTrailingOnes 16 0) ▸ Nat.lt_succ_of_le upper
   | 4, _, _ =>
     have size : (String.utf8EncodeChar c).length = 4 := (String.length_utf8EncodeChar c).trans hc
     rw [utf8DecodeChar?_append_eq_assemble₄ size (parseFirstByte_utf8EncodeChar_eq_threeMore hc)]
@@ -366,7 +411,7 @@ public theorem ByteArray.utf8DecodeChar?_utf8EncodeChar_append :
     · apply isInvalidContinuationByte_getElem_utf8EncodeChar_one_of_utf8Size_eq_four hc
     · apply isInvalidContinuationByte_getElem_utf8EncodeChar_two_of_utf8Size_eq_four hc
     · apply isInvalidContinuationByte_getElem_utf8EncodeChar_three_of_utf8Size_eq_four hc
-    · exact Char.utf8Size_eq_four_iff.mp hc
+    · exact nextWordBound (a := 65535) (incrementTrailingOnes 16 0) (by decide) (by decide) (Char.utf8Size_eq_four_iff.mp hc)
     · rw [String.toBitVec_getElem_utf8EncodeChar_zero_of_utf8Size_eq_four hc,
         String.toBitVec_getElem_utf8EncodeChar_one_of_utf8Size_eq_four hc,
         String.toBitVec_getElem_utf8EncodeChar_two_of_utf8Size_eq_four hc,
@@ -376,11 +421,8 @@ public theorem ByteArray.utf8DecodeChar?_utf8EncodeChar_append :
         BitVec.extractLsb'_append_extractLsb'_eq_extractLsb' (by decide),
         BitVec.extractLsb'_append_extractLsb'_eq_extractLsb' (by decide),
         BitVec.extractLsb'_append_extractLsb'_eq_extractLsb' (by decide),
-        ← BitVec.setWidth_eq_extractLsb' (by decide), BitVec.setWidth_setWidth_eq_self]
-      have := c.toNat_le
-      simp only [Nat.reduceAdd, BitVec.lt_def, UInt32.toNat_toBitVec, BitVec.toNat_twoPow,
-        Nat.reducePow, Nat.reduceMod, gt_iff_lt, Char.toNat_val]
-      omega
+        ← BitVec.setWidth_eq_extractLsb' (by decide), restoreWidth]
+      exact Nat.lt_of_le_of_lt c.toNat_le (separateFields 16 16 32 (by decide))
 
 private theorem encodedContinuation (x : Fin 64) :
     _root_.ByteArray.utf8DecodeChar?.isInvalidContinuationByte (UInt8.ofNat (x.val + 128)) = false := by
@@ -643,31 +685,6 @@ public theorem Nat.shiftLeft_or_distrib : type_of% @_root_.Nat.shiftLeft_or_dist
     Nat.mul_div_cancel_left _ (Nat.two_pow_pos _)] at parts
   rw [Nat.shiftLeft_eq, Nat.shiftLeft_eq, Nat.shiftLeft_eq, Nat.mul_comm _ (2^i), Nat.mul_comm a, Nat.mul_comm b]
   exact parts
-
-private def appendBits (bit : Bool) : Nat → Nat → Nat
-  | 0, high => high
-  | n + 1, high =>
-    let prev := appendBits bit n high * 2
-    if bit then prev.succ else prev
-
-private theorem incrementTrailingOnes (n high : Nat) :
-    (appendBits true n high).succ = appendBits false n high.succ := by
-  induction n with
-  | zero => rfl
-  | succ n ih =>
-    change ((appendBits true n high * 2).succ).succ = appendBits false n high.succ * 2
-    rw [← ih, Nat.succ_mul]
-private theorem boundedBits (n x y : Nat) (h : x ≤ y) :
-    appendBits false n x ≤ appendBits true n y := by
-  induction n with
-  | zero => exact h
-  | succ n ih => exact Nat.le_trans (Nat.mul_le_mul_right 2 ih) (Nat.le_succ _)
-private theorem grows (n high : Nat) : high ≤ appendBits true n high := by
-  induction n with
-  | zero => exact Nat.le_refl _
-  | succ n ih =>
-    apply Nat.le_trans ih
-    exact Nat.le_trans (Nat.le_mul_of_pos_right _ (by decide : 0 < 2)) (Nat.le_succ _)
 
 public theorem Char.toNat_le : type_of% (private_decl% @_root_.Char.toNat_le) := by
   intro c
