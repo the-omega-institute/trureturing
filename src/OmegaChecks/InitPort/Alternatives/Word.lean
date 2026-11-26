@@ -185,4 +185,40 @@ public theorem Int64.toInt_minValue : type_of% @_root_.Int64.toInt_minValue :=
     ((congrArg _root_.BitVec.toInt Int64.toBitVec_minValue).trans
       (BitVec.toInt_intMin_of_pos (Nat.zero_lt_succ _)))
 
+public theorem Int16.ofBitVec_intMin : type_of% @_root_.Int16.ofBitVec_intMin :=
+  congrArg _root_.Int16.ofBitVec Int16.toBitVec_minValue.symm
+
+public theorem Int16.toInt_minValue_lt_zero : type_of% @_root_.Int16.toInt_minValue_lt_zero := by
+  rw [Int16.toInt_minValue]
+  apply Int.neg_lt_zero_iff.mpr
+  rw [← Int.cast_ofNat_Int (n := 2), ← Int.natCast_pow]
+  exact Int.natCast_pos.mpr (Nat.two_pow_pos _)
+
+public theorem Int16.toNatClampNeg_minValue : type_of% @_root_.Int16.toNatClampNeg_minValue :=
+  Int.toNat_of_nonpos (Int.le_of_lt Int16.toInt_minValue_lt_zero)
+
+public theorem Int32.ofBitVec_intMin : type_of% @_root_.Int32.ofBitVec_intMin :=
+  congrArg _root_.Int32.ofBitVec Int32.toBitVec_minValue.symm
+
+public theorem Int32.toInt_minValue_lt_zero : type_of% @_root_.Int32.toInt_minValue_lt_zero := by
+  rw [Int32.toInt_minValue]
+  apply Int.neg_lt_zero_iff.mpr
+  rw [← Int.cast_ofNat_Int (n := 2), ← Int.natCast_pow]
+  exact Int.natCast_pos.mpr (Nat.two_pow_pos _)
+
+public theorem Int32.toNatClampNeg_minValue : type_of% @_root_.Int32.toNatClampNeg_minValue :=
+  Int.toNat_of_nonpos (Int.le_of_lt Int32.toInt_minValue_lt_zero)
+
+public theorem Int64.ofBitVec_intMin : type_of% @_root_.Int64.ofBitVec_intMin :=
+  congrArg _root_.Int64.ofBitVec Int64.toBitVec_minValue.symm
+
+public theorem Int64.toInt_minValue_lt_zero : type_of% @_root_.Int64.toInt_minValue_lt_zero := by
+  rw [Int64.toInt_minValue]
+  apply Int.neg_lt_zero_iff.mpr
+  rw [← Int.cast_ofNat_Int (n := 2), ← Int.natCast_pow]
+  exact Int.natCast_pos.mpr (Nat.two_pow_pos _)
+
+public theorem Int64.toNatClampNeg_minValue : type_of% @_root_.Int64.toNatClampNeg_minValue :=
+  Int.toNat_of_nonpos (Int.le_of_lt Int64.toInt_minValue_lt_zero)
+
 end OmegaChecks.InitPort.Alternatives
