@@ -33,8 +33,7 @@ open private componentFinset_nonempty componentFinset_disjoint componentFinset_n
   D5.S3.Combinatorics.Graph.HypercubeCritical.TwoBalancedComponents
 open private component_connected from
   D5.S3.Combinatorics.Graph.HypercubeCritical.Translation.Q9TranslationAperiodicity
-open private exists_both_parity_supported_of_signed_defect_singular from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Placement.Q9ActualMinimumDisplacements
+open Q9ActualMinimumDisplacements (exists_both_parity_supported_of_signed_defect_singular)
 open private minimum_displacements_three_extensions mem_minimumDisplacements from
   D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Placement.Q9MinimumDistanceOperator
 open Q9EightMaskGraph (eight_le_of_three_extensions_of_card_ne_six)
