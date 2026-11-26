@@ -6,7 +6,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Geometry.DiscreteGravity;
 
 internal sealed class ReggeSchlafli4DDocument : IScribeDocumentDefinition
 {
-    private static LibraryNoteRef Schlafli => LibraryNoteRef.Create("D5/L/Geometry/rivinschlenker2000schlafli");
+    private static LibraryNoteRef Schlafli => LibraryNoteRef.Create("D5/L/Convexity/rivinschlenker2000schlafli");
     private const string Prefix = "D5/S3/Geometry/DiscreteGravity/ReggeSchlafli4D.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
