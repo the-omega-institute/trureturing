@@ -355,6 +355,43 @@ theorem exprLt (rule : type_of% @Expr.of_cancel_lt) : SuccLtEq := by
 
 end NaturalCancellation
 
+namespace IntegerCancellation
+
+open Int.Internal.Linear
+
+private abbrev pairCtx (a b : Int) : Context := .branch 1 (.leaf a) (.leaf b)
+private abbrev plusOne (i : Nat) : Int.Internal.Linear.Expr := .add (.var i) (.num 1)
+def AddOneEq := ∀ a b : Int, (a + 1 = b + 1) = (a = b)
+def AddOneLE := ∀ a b : Int, (a + 1 ≤ b + 1) = (a ≤ b)
+private abbrev difference : Poly := .add (-1) 1 (.add 1 0 (.num 0))
+
+
+theorem eqVar (rule : type_of% @norm_eq_var) : AddOneEq := by
+  intro a b
+  exact rule (pairCtx b a) (plusOne 1) (plusOne 0) 1 0 rfl
+
+theorem eqNorm (rule : type_of% @norm_eq) : AddOneEq := by
+  intro a b
+  exact (rule (pairCtx a b) (plusOne 0) (plusOne 1) difference rfl).trans
+    (rule (pairCtx a b) (.var 0) (.var 1) difference rfl).symm
+
+theorem leNorm (rule : type_of% @norm_le) : AddOneLE := by
+  intro a b
+  exact (rule (pairCtx a b) (plusOne 0) (plusOne 1) difference rfl).trans
+    (rule (pairCtx a b) (.var 0) (.var 1) difference rfl).symm
+
+theorem eqCoeff (rule : type_of% @norm_eq_coeff) : AddOneEq := by
+  intro a b
+  exact (rule (pairCtx a b) (plusOne 0) (plusOne 1) difference 1 rfl).trans
+    (rule (pairCtx a b) (.var 0) (.var 1) difference 1 rfl).symm
+
+theorem leCoeff (rule : type_of% @norm_le_coeff) : AddOneLE := by
+  intro a b
+  exact (rule (pairCtx a b) (plusOne 0) (plusOne 1) difference 1 rfl).trans
+    (rule (pairCtx a b) (.var 0) (.var 1) difference 1 rfl).symm
+
+end IntegerCancellation
+
 namespace AbstractOrder
 
 private theorem notNotEM (p : Prop) : ¬ ¬ (p ∨ ¬p) :=
@@ -515,6 +552,8 @@ private def replayWitnesses (env : Environment) : IO Unit := do
       ``inhabitedPropExtOfProofHEq, ``inhabitedPropExtOfEqTrue,
       ``inhabitedPropExtOfDecision, ``refutedPropExtOfDecision, ``inhabitedPropExtOfEqTrueRule,
       ``refutedPropExtOfEqFalseRule, ``OptionalIndex.decidablePropExtOfIte,
+      ``IntegerCancellation.eqVar, ``IntegerCancellation.eqNorm, ``IntegerCancellation.leNorm,
+      ``IntegerCancellation.eqCoeff, ``IntegerCancellation.leCoeff,
       ``NaturalCancellation.exprEq, ``NaturalCancellation.exprLe, ``NaturalCancellation.exprLt,
       ``NaturalCancellation.exprNormEq, ``NaturalCancellation.exprNorm, ``NaturalCancellation.polyEq,
       ``NaturalCancellation.polyLe,
@@ -1540,6 +1579,16 @@ private def logicalConsequence? (owner name : Name) : Option (Name × Name) := d
     return (``Nat.succ.injEq, ``OmegaChecks.InitBoundaries.NaturalCancellation.polyEq)
   | `Init.Data.Nat.Internal.Linear, ``Nat.Internal.Linear.Poly.denote_le_cancel_eq =>
     return (``OmegaChecks.InitBoundaries.NaturalCancellation.SuccLeEq, ``OmegaChecks.InitBoundaries.NaturalCancellation.polyLe)
+  | `Init.Data.Int.Linear, ``Int.Internal.Linear.norm_eq_var =>
+    return (``OmegaChecks.InitBoundaries.IntegerCancellation.AddOneEq, ``OmegaChecks.InitBoundaries.IntegerCancellation.eqVar)
+  | `Init.Data.Int.Linear, ``Int.Internal.Linear.norm_eq =>
+    return (``OmegaChecks.InitBoundaries.IntegerCancellation.AddOneEq, ``OmegaChecks.InitBoundaries.IntegerCancellation.eqNorm)
+  | `Init.Data.Int.Linear, ``Int.Internal.Linear.norm_le =>
+    return (``OmegaChecks.InitBoundaries.IntegerCancellation.AddOneLE, ``OmegaChecks.InitBoundaries.IntegerCancellation.leNorm)
+  | `Init.Data.Int.Linear, ``Int.Internal.Linear.norm_eq_coeff =>
+    return (``OmegaChecks.InitBoundaries.IntegerCancellation.AddOneEq, ``OmegaChecks.InitBoundaries.IntegerCancellation.eqCoeff)
+  | `Init.Data.Int.Linear, ``Int.Internal.Linear.norm_le_coeff =>
+    return (``OmegaChecks.InitBoundaries.IntegerCancellation.AddOneLE, ``OmegaChecks.InitBoundaries.IntegerCancellation.leCoeff)
   | `Init.GetElem, ``isSome_getElem? =>
     return (``OmegaChecks.InitBoundaries.OptionalIndex.DecidablePropExt, ``OmegaChecks.InitBoundaries.OptionalIndex.decidablePropExtOfIsSome)
   | `Init.Data.Order.Lemmas, ``Std.Asymm.total_not =>
