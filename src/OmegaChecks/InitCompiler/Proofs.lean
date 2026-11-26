@@ -116,6 +116,28 @@ private def transport? (source : Environment) (back : Bool) (p q eq input : Expr
   | `eq_true, #[_, h] => return if back then h else mkConst `True.intro
   | `eq_false, #[a, h] | `eq_false', #[a, h] =>
     return if back then mkApp2 (mkConst `False.elim [.zero]) a input else h.beta #[input]
+  | `congr, #[_, _, f, g, b, d, hf, hb] =>
+    let .app op a := f | none
+    let .app op' c := g | none
+    guard (op == op')
+    let rule ← match op.constName? with
+      | some `And => some `and_congr
+      | some `Or => some `or_congr
+      | some `Iff => some `iff_congr
+      | _ => none
+    let fromEq := fun a b h => do
+      if a == b then return mkApp (mkConst `Iff.rfl) a
+      let dir := fun rev dom => do
+        let lift := fun (e : Expr) => e.liftLooseBVars 0 1
+        let map ← transport? source rev (lift a) (lift b) (lift h) (mkBVar 0) fuel
+        return Expr.lam `hp dom map .default
+      return mkApp4 (mkConst `Iff.intro) a b (← dir false a) (← dir true b)
+    let ac ← if a == c then pure (mkApp (mkConst `Iff.rfl) a) else do
+      let (x, y, h) ← propositionChange? hf fuel
+      guard (x == a && y == c)
+      fromEq a c h
+    let lifted := mkApp6 (mkConst rule) a c b d ac (← fromEq b d hb)
+    return mkApp4 (mkConst (if back then `Iff.mpr else `Iff.mp)) p q lifted input
   | `congrArg, _ | `congrFun, _ | `congrFun', _ =>
     let (a, b, h) ← propositionChange? eq fuel
     let localMap := fun (rev : Bool) (dom : Expr) => do
@@ -271,5 +293,36 @@ public partial def elementaryCandidates (type : Expr) : List Expr :=
 public def elementaryProof? (env : Environment) (type : Expr) : Option Expr :=
   (elementaryCandidates type).find? (fun e =>
     (Kernel.check env {} e).toOption.any (Kernel.isDefEqGuarded env {} type))
+
+/-- Split finite enumeration arguments before checking reflexivity, local hypotheses,
+or a decision procedure. Every branch uses the motive of the original theorem. -/
+public partial def finiteProof? (source : Environment) (type : Expr) : IO (Option Expr) := do
+  let enums := [`Bool, `Ordering]
+  unless (type.find? fun e => e.isForall && e.bindingDomain!.constName?.any enums.contains).isSome do
+    return none
+  try
+    let proof ← (go type 3).run' |>.toIO'
+      {fileName := "<finite proof>", fileMap := default, options := maxHeartbeats.set {} 2000}
+      {env := source}
+    return if proof.hasMVar || proof.hasFVar || proof.hasLooseBVars then none else some proof
+  catch _ => return none
+where
+  go (goal : Expr) (splits : Nat) : MetaM Expr := do
+    if let .forallE n dom body bi := goal then
+      return ← Meta.withLocalDecl n bi dom fun x => do
+        if splits > 0 && (dom.isConstOf `Bool || dom.isConstOf `Ordering) then
+          let ind ← getConstInfoInduct dom.constName!
+          let branches ← ind.ctors.mapM fun ctor => go (body.instantiate1 (mkConst ctor)) (splits - 1)
+          let motive := Expr.lam n dom body .default
+          let term := mkAppN (mkConst (ind.name ++ `rec) [.zero]) (#[motive] ++ branches.toArray ++ #[x])
+          return ← Meta.mkLambdaFVars #[x] term
+        Meta.mkLambdaFVars #[x] (← go (body.instantiate1 x) splits)
+    for decl in ← getLCtx do
+      if !decl.isImplementationDetail && (← Meta.isDefEq decl.type goal) then return decl.toExpr
+    if let some (_, a, b) := goal.eq? then
+      if ← Meta.isDefEq a b then return ← Meta.mkEqRefl a
+    if let some (a, b) := goal.iff? then
+      if ← Meta.isDefEq a b then return mkApp (mkConst `Iff.rfl) a
+    Meta.mkDecideProof goal
 
 end OmegaChecks.InitCompiler

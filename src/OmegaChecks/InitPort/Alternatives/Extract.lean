@@ -8,6 +8,26 @@ public theorem Nat.min_zero (a : Nat) : min a 0 = 0 := Nat.min_eq_right (Nat.zer
 
 public theorem Nat.zero_min (a : Nat) : min 0 a = 0 := Nat.min_eq_left (Nat.zero_le a)
 
+public theorem Nat.add_min_add_left (a b c : Nat) : min (a + b) (a + c) = a + min b c := by
+  cases Nat.le_total b c with
+  | inl h => rw [Nat.min_eq_left (Nat.add_le_add_left h a), Nat.min_eq_left h]
+  | inr h => rw [Nat.min_eq_right (Nat.add_le_add_left h a), Nat.min_eq_right h]
+
+public theorem Nat.add_min_add_right (a b c : Nat) : min (a + c) (b + c) = min a b + c := by
+  cases Nat.le_total a b with
+  | inl h => rw [Nat.min_eq_left (Nat.add_le_add_right h c), Nat.min_eq_left h]
+  | inr h => rw [Nat.min_eq_right (Nat.add_le_add_right h c), Nat.min_eq_right h]
+
+public theorem Nat.add_max_add_left (a b c : Nat) : max (a + b) (a + c) = a + max b c := by
+  cases Nat.le_total b c with
+  | inl h => rw [Nat.max_eq_right (Nat.add_le_add_left h a), Nat.max_eq_right h]
+  | inr h => rw [Nat.max_eq_left (Nat.add_le_add_left h a), Nat.max_eq_left h]
+
+public theorem Nat.add_max_add_right (a b c : Nat) : max (a + c) (b + c) = max a b + c := by
+  cases Nat.le_total a b with
+  | inl h => rw [Nat.max_eq_right (Nat.add_le_add_right h c), Nat.max_eq_right h]
+  | inr h => rw [Nat.max_eq_left (Nat.add_le_add_right h c), Nat.max_eq_left h]
+
 public theorem Nat.min_assoc (a b c : Nat) : min (min a b) c = min a (min b c) :=
   Nat.le_antisymm
     (Nat.le_min.mpr ⟨Nat.le_trans (Nat.min_le_left ..) (Nat.min_le_left ..),
