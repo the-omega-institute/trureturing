@@ -178,15 +178,60 @@ private def publicUses (moduleName : Name) (data : ModuleData) (catalog : Enviro
       if (objectValue? catalog dep).isSome then pending := pending.push n
   return (sensitive, reachable)
 
+/-- The index locates the constant at the head of a proof. Preserve the whole application
+(including dot receivers, inferred arguments and universe annotations) when marking it. -/
+private partial def proofApplications (stx : Syntax) (out : Std.HashMap Nat Lean.Syntax.Range := {})
+    (application : Option Lean.Syntax.Range := none) : Std.HashMap Nat Lean.Syntax.Range := Id.run do
+  let kind := stx.getKind
+  let span := application.orElse fun _ => stx.getRange?
+  if stx.isIdent then
+    let some span := span | return out
+    return (prefixes stx ++ stx.identComponents.tail).foldl (init := out) fun m part =>
+      if let some r := part.getRange? then m.insert r.stop.byteIdx span else m
+  let head := if kind == ``Parser.Term.app || kind == ``Parser.Term.explicitUniv then some 0
+              else if kind == ``Parser.Term.explicit || kind == ``Parser.Term.paren then some 1
+              else if kind == ``Parser.Term.proj then some 2 else none
+  let mut out := out
+  for i in [:stx.getNumArgs] do
+    out := proofApplications stx[i] out (if head == some i then span else none)
+  return out
+
+/-- A proposition introduced by the replay is authenticated only for the actual
+application of its indexed theorem. The proof arguments remain independently visible. -/
+private def reflectedApplication? (env : Environment) (reflected : NameMap Name) (e : Expr) : Option (Name × Expr × Expr) := do
+  let .const marker _ := e.getAppFn | none
+  let target ← reflected.find? marker
+  let #[p, proof] := e.getAppArgs | none
+  if proof.getAppFn.isConstOf target then return (marker, p, proof)
+  -- The frontend can lift the actual theorem application into a private auxiliary proof.
+  let .const aux levels := proof.getAppFn | none
+  guard (isPrivateName aux && (env.getModuleIdxFor? aux).isNone)
+  let .thmInfo info ← env.find? aux | none
+  let app := (info.value.instantiateLevelParams info.levelParams levels).beta proof.getAppArgs
+  guard (app.getAppFn.isConstOf target)
+  return (marker, p, app)
+
+private partial def visibleConstants (env : Environment) (reflected : NameMap Name) (e : Expr) : Array Name :=
+  if reflected.isEmpty then e.getUsedConstants else
+  let stripped := e.replace fun sub => do
+    let (_, _, proof) ← reflectedApplication? env reflected sub
+    return proof
+  if stripped == e then e.getUsedConstants else visibleConstants env reflected stripped
+
 /-- Restore exactly the marked reference positions. A theorem can contribute its type through
 implicit arguments. The kernel may also extract proofs in the enclosing data body differently. -/
 private partial def restoreReplay (env originalEnv : Environment) (markers : NameMap Name)
-    (reflected : NameMap ConstantInfo) (value : Bool) (e old : Expr) : Expr := Id.run do
+    (reflected : NameMap Name) (value : Bool) (e old : Expr) : Expr := Id.run do
   if e == old then return e
+  if let some (marker, p, proof) := reflectedApplication? env reflected e then
+    let direct := if markers.contains marker then proof else p
+    let recovered := restoreReplay env originalEnv markers reflected value direct old
+    if recovered == old then return old
+    if !recovered.hasLooseBVars && !old.hasLooseBVars &&
+        Kernel.isDefEqGuarded originalEnv {} recovered old then return old
   if let .const n ls := e then
-    if let some obj := reflected.find? n then
-      if Kernel.isDefEqGuarded originalEnv {} (obj.type.instantiateLevelParams obj.levelParams ls) old then return old
-    if let some target := markers.find? n then return mkConst target ls
+    if !reflected.contains n then
+      if let some target := markers.find? n then return mkConst target ls
   if value && !reflected.isEmpty && !e.hasLooseBVars && !old.hasLooseBVars then
     if let .ok p := Kernel.check env {} e then
       if let .ok q := Kernel.check originalEnv {} old then
@@ -206,13 +251,13 @@ private partial def restoreReplay (env originalEnv : Environment) (markers : Nam
 A named reference preserves Lean's explicit application, universe and projection syntax. -/
 private def checkElaborated (source : System.FilePath) (text : String)
     (commands : Array Syntax) (env : Environment) (opts : Options) (names : Array Name) (isModule : Bool)
-    (marks : Array (Lean.Syntax.Range × Name)) (catalog : Environment) (ports : Ports) (project : NameSet) : IO Unit := do
+    (marks proofs : Array (Lean.Syntax.Range × Name)) (catalog : Environment) (ports : Ports) (project : NameSet) : IO Unit := do
   let prefixName := s!"OmegaCheckedReference{← IO.rand 1 4294967295}".toName
   if text.contains prefixName.toString then throw <| IO.userError "fresh reference marker collision"
   let mut edits : Array (Lean.Syntax.Range × String) := #[]
   let mut markers : NameMap Name := {}
   let mut targets : NameMap Name := {}
-  let mut reflected : NameMap ConstantInfo := {}
+  let mut reflected : NameMap Name := {}
   for (span, target) in marks.toList.eraseDups.mergeSort (fun a b => a.1.start.byteIdx ≤ b.1.start.byteIdx) do
     let marker := (targets.find? target).getD (.str prefixName s!"ref{markers.toList.length}")
     unless targets.contains target do
@@ -225,18 +270,25 @@ private def checkElaborated (source : System.FilePath) (text : String)
       let univs := if levels.isEmpty then "" else ".{" ++ String.intercalate "," levels ++ "}"
       let vis := if isModule then "public " else ""
       let comp := if isNoncomputable catalog target then "noncomputable " else ""
-      let mut decl := s!"\n{vis}{comp}abbrev _root_.{marker}{univs} := @_root_.{target}{univs}\n"
-      if obj.isTheorem then
-        -- Its inferred proposition may be inserted at type_of% or an implicit argument.
-        -- Mark that proposition independently of the proof constant at this source token.
-        let typeName := marker ++ `proposition
-        decl := s!"\n{vis}abbrev _root_.{typeName}{univs} := type_of% @_root_.{target}{univs}\n" ++
-                s!"{vis}theorem _root_.{marker}{univs} : @_root_.{typeName}{univs} := @_root_.{target}{univs}\n"
-        reflected := reflected.insert typeName obj
+      let decl := s!"\n{vis}{comp}abbrev _root_.{marker}{univs} := @_root_.{target}{univs}\n"
       edits := edits.push (⟨pos, pos⟩, decl)
       markers := markers.insert marker target
       targets := targets.insert target marker
     edits := edits.push (span, s!"_root_.{marker}")
+  for (span, target) in proofs.toList.eraseDups do
+    let marker := .str prefixName s!"proof{reflected.toList.length}"
+    let typeName := marker ++ `proposition
+    let vis := if isModule then "public " else ""
+    let decl := s!"\n{vis}abbrev _root_.{typeName} (p : Prop) (_ : p) : Prop := p\n" ++
+                s!"{vis}theorem _root_.{marker} " ++ "{p : Prop} " ++ s!"(h : p) : _root_.{typeName} p h := h\n"
+    let some cmd := commands.find? (fun c => c.getRange?.any fun r => r.start ≤ span.start && span.stop ≤ r.stop)
+      | throw <| IO.userError s!"unlocated theorem reference to {target}"
+    let some pos := cmd.getPos? | throw <| IO.userError s!"unlocated theorem reference to {target}"
+    edits := edits.push (⟨pos, pos⟩, decl)
+    edits := edits.push (⟨span.start, span.start⟩, s!"(@_root_.{marker} _ (")
+    edits := edits.push (⟨span.stop, span.stop⟩, "))")
+    markers := markers.insert marker target
+    reflected := (reflected.insert marker target).insert typeName target
   let mut marked := text
   for (span, replacement) in edits.toList.mergeSort (fun a b => b.1.start.byteIdx ≤ a.1.start.byteIdx) do
     marked := (0 : String.Pos.Raw).extract marked span.start ++ replacement ++ span.stop.extract marked marked.rawEndPos
@@ -250,7 +302,7 @@ private def checkElaborated (source : System.FilePath) (text : String)
     let check (expr original : Expr) (value := false) := do
       unless restoreReplay state.commandState.env catalog markers reflected value expr original == original do
         throw <| IO.userError s!"{source}: could not recover the compiled expression of {name} after checking its reference positions"
-      for n in expr.getUsedConstants do
+      for n in visibleConstants state.commandState.env reflected expr do
         if let some standard := sensitive? catalog ports project n then
           throw <| IO.userError s!"{source}: {name} exposes {n} without an explicit source reference to {standard} or its qualified project identity at that occurrence"
     let some original := catalog.find? name | throw <| IO.userError s!"missing compiled declaration {name}"
@@ -303,6 +355,8 @@ private def checkFile (moduleName : Name) (source index : System.FilePath)
       locations := locations.alter (key loc.range) (fun entries => some ((id, loc.parentDecl) :: entries.getD []))
   let mut count := 0
   let mut marks := #[]
+  let mut proofs := #[]
+  let applications := state.commands.foldl (fun m cmd => proofApplications cmd m) {}
   let mut nativeParents : NameSet := {}
   let sourceEnv := env
   let env := state.commandState.env
@@ -328,7 +382,7 @@ private def checkFile (moduleName : Name) (source index : System.FilePath)
         if let some info := env.find? parent.toName then
           if reachable.contains info.name && (signature || (objectValue? env info).isSome) then
             nativeParents := nativeParents.insert info.name
-            marks := marks.push (span, native)
+            marks := marks.push (⟨span.start, token[1].getTailPos?.getD span.stop⟩, native)
       continue
     -- The compiler indexes dot notation at the field token as well as the receiver.
     let spans := prefixes token ++ (if token.isIdent then token.identComponents.tail else [])
@@ -346,7 +400,8 @@ private def checkFile (moduleName : Name) (source index : System.FilePath)
             if let some (.thmInfo theoremInfo) := catalog.find? actual then
               if theoremInfo.type.getUsedConstants.any (fun n => (sensitive? catalog ports project n).isSome) &&
                   OmegaBuild.declaredIn env actual owner.toName && (locations.getD (key pos) []).map Prod.fst == [.const owner name] then
-                if let some span := part.getRange? then marks := marks.push (span, actual)
+                if let some r := part.getRange? then
+                  if let some app := applications[r.stop.byteIdx]? then proofs := proofs.push (app, actual)
           if let some port := ports.objects.find? actual then
             if port.owner == owner.toName then
               if ports.allowNative then continue
@@ -375,7 +430,7 @@ private def checkFile (moduleName : Name) (source index : System.FilePath)
       if let some span := id.getRange? then marks := marks.push (span, port.target)
   let published := nativeParents.foldl (fun names n => if names.contains n then names else names.push n) published
   unless published.isEmpty do
-    checkElaborated source text state.commands sourceEnv opts published data.isModule marks catalog ports project
+    checkElaborated source text state.commands sourceEnv opts published data.isModule marks proofs catalog ports project
   return some count
 
 private structure ReferenceFile where

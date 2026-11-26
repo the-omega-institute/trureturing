@@ -218,6 +218,7 @@ def check_reflected(lean, label, path):
     owner = ("D5.AuthenticatedTheorem", header +
              "public theorem evidence (p : Omega.Nat) (h : OmegaMathlib.Nat.Prime p) : "
              "OmegaMathlib.Nat.Prime p := h\n"
+             "public theorem tagged (p : Prop) (n : Omega.Nat) : OmegaMathlib.Nat.Prime n ∨ (p ∨ True) := Or.inr (Or.inr True.intro)\n"
              "public structure Carrier where n : Omega.Nat\n"
              "public theorem Carrier.evidence (c : Carrier) : OmegaMathlib.Nat.Prime c.n ∨ True := Or.inr True.intro\n")
     imported = (f"module\npublic import {owner[0]}\npublic import Lean\n"
@@ -226,13 +227,18 @@ def check_reflected(lean, label, path):
             "public def implicit : Prop := withProof (@evidence)\n"
             "public def dot (c : Carrier) : Prop := type_of% c.evidence\n"
             "public def applied (c : Carrier) : Prop := type_of% (Carrier.evidence c)\n"
-            "public def implicitDot (c : Carrier) : Prop := withProof c.evidence\n")
+            "public def implicitDot (c : Carrier) : Prop := withProof c.evidence\n"
+            "public def argument (c : Carrier) : Prop := type_of% (tagged (OmegaMathlib.Nat.Prime c.n) c.n)\n")
     check_case(lean, label, path, [owner, ("D5.Reflected", imported + good)], [])
     # The genuine reflected type is independently checked at its occurrence.
     # A hidden port introduced beside it still has no authenticated source position.
     hidden = ('local notation "unmarked" n => Omega.Nat.Prime n\n'
               'public def wrong (c : Carrier) : Prop := (type_of% c.evidence) ∧ unmarked c.n\n')
     check_case(lean, label, path, [owner, ("D5.Reflected", imported + hidden)],
+               ["D5.Reflected", "without an explicit source reference", "OmegaMathlib.Nat.Prime"])
+    hidden_arg = ('local notation "unmarked" n => Omega.Nat.Prime n\n'
+                  'public def wrongArg (c : Carrier) : Prop := type_of% (tagged (unmarked c.n) c.n)\n')
+    check_case(lean, label, path, [owner, ("D5.Reflected", imported + hidden_arg)],
                ["D5.Reflected", "without an explicit source reference", "OmegaMathlib.Nat.Prime"])
 
 
