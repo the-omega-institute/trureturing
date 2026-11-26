@@ -379,4 +379,35 @@ public theorem String.Slice.Pos.startPos_lt_iff : type_of% @_root_.String.Slice.
   exact ⟨fun lt eq => Nat.ne_of_lt lt (congrArg (fun q : s.Pos => q.offset.byteIdx) eq.symm),
     fun ne => Nat.pos_of_ne_zero (fun eq => ne (String.Slice.Pos.ext (String.Pos.Raw.ext eq)))⟩
 
+public theorem String.Slice.le_offset_posGE : type_of% @_root_.String.Slice.le_offset_posGE := by
+  intro s p bound
+  fun_induction String.Slice.posGE with
+  | case1 => exact Nat.le_refl _
+  | case2 r h invalid lt ih => exact Nat.le_trans (Nat.le_succ _) ih
+public theorem String.Slice.posGE_le_iff : type_of% @_root_.String.Slice.posGE_le_iff := by
+  intro s p bound q
+  fun_induction String.Slice.posGE with
+  | case1 => exact Iff.rfl
+  | case2 r h invalid lt ih =>
+    exact ih.trans ⟨fun nextBound => Nat.le_trans (Nat.le_succ _) nextBound,
+      fun rawBound => Nat.lt_of_le_of_ne rawBound (fun eq => invalid (String.Pos.Raw.ext eq ▸ q.isValidForSlice))⟩
+public theorem String.Slice.le_posLE_iff : type_of% @_root_.String.Slice.le_posLE_iff := by
+  intro s p q
+  fun_induction String.Slice.posLE with
+  | case1 => exact Iff.rfl
+  | case2 r invalid positive ih =>
+    refine ih.trans ⟨fun prevBound => Nat.le_trans prevBound (Nat.sub_le ..), fun rawBound => ?_⟩
+    have strict := Nat.lt_of_le_of_ne rawBound (fun eq => invalid (String.Pos.Raw.ext eq ▸ p.isValidForSlice))
+    exact Nat.le_pred_of_lt strict
+public theorem String.Slice.lt_posGE_iff : type_of% @_root_.String.Slice.lt_posGE_iff := by
+  intro s p bound q
+  have least := String.Slice.posGE_le_iff (s := s) (p := p) (h := bound) (q := q)
+  exact ⟨fun lt => Nat.lt_of_not_ge (fun ge => Nat.not_le_of_lt lt (least.mpr ge)),
+    fun lt => Nat.lt_of_not_ge (fun ge => Nat.not_le_of_lt lt (least.mp ge))⟩
+public theorem String.Slice.posLE_lt_iff : type_of% @_root_.String.Slice.posLE_lt_iff := by
+  intro s p q
+  have greatest := String.Slice.le_posLE_iff (s := s) (p := p) (q := q)
+  exact ⟨fun lt => Nat.lt_of_not_ge (fun ge => Nat.not_le_of_lt lt (greatest.mpr ge)),
+    fun lt => Nat.lt_of_not_ge (fun ge => Nat.not_le_of_lt lt (greatest.mp ge))⟩
+
 end OmegaChecks.InitPort.Alternatives
