@@ -742,6 +742,45 @@ def witnesses : List (Name × (Name × Name)) := [
 
 end BooleanReflection
 
+namespace ConstructorNormalization
+
+theorem propextOfDecision
+    (lift : type_of% @instDecidableEqOfIff)
+    (accept : ∀ (p q : Prop) (h : p ↔ q), @decide (p = q) (@lift p q (.isTrue h)) = true) :
+    type_of% @propext :=
+  fun {p q} h => @of_decide_eq_true (p = q) (@lift p q (.isTrue h)) (accept p q h)
+
+/-- Adding the same natural to both sides preserves their equality proposition. -/
+def AddCancel := ∀ n a b : Nat, (a + n = b + n) = (a = b)
+
+theorem addCancelOfSucc (inject : type_of% @Nat.succ.injEq) : AddCancel := by
+  intro n a b
+  induction n with
+  | zero => rfl
+  | succ n prev => exact (inject (a+n) (b+n)).trans prev
+
+/-- The proposition equating two prefixed lists retains every equality of corresponding heads. -/
+def PrefixEquality : Prop := ∀ {α : Type u} (s t : List α) (xs ys : List α), s.length = t.length →
+  ((s ++ xs) = (t ++ ys)) = List.foldr (fun ab r => ab.1 = ab.2 ∧ r) (xs = ys) (s.zip t)
+
+theorem prefixEqualityOfCons (inject : type_of% @List.cons.injEq.{u}) : PrefixEquality.{u} := by
+  intro α s
+  induction s with
+  | nil =>
+    intro t xs ys eq
+    cases t with
+    | nil => rfl
+    | cons _ _ => exact nomatch eq
+  | cons a as ih =>
+    intro t xs ys eq
+    cases t with
+    | nil => exact nomatch eq
+    | cons b bs =>
+      exact (inject a (as ++ xs) b (bs ++ ys)).trans
+        (congrArg (fun r : Prop => a = b ∧ r) (ih bs xs ys (Nat.succ.inj eq)))
+
+end ConstructorNormalization
+
 namespace NaturalCancellation
 
 open Nat.Internal.Linear
@@ -1177,6 +1216,8 @@ private def replayWitnesses (env : Environment) : IO Unit := do
   let mut todo := (reductions.map fun (_, _, _, witness) => witness) ++
     ClassicalConsequences.witnesses.map Prod.snd ++
     BooleanReflection.witnesses.map (fun row => row.2.2) ++
+    [``ConstructorNormalization.propextOfDecision, ``ConstructorNormalization.addCancelOfSucc,
+     ``ConstructorNormalization.prefixEqualityOfCons] ++
     [``EmbeddingRange.ofExists, ``EmbeddingRange.ofLeftInverse,
       ``LexicographicOrder.ofListNotLE, ``LexicographicOrder.ofArrayNotLE, ``LexicographicOrder.ofVectorNotLE,
       ``FiniteMembership.ofRunDecomposition, ``FiniteMembership.ofRunInduction,
@@ -2782,6 +2823,13 @@ private def logicalConsequence? (owner name : Name) : Option (Name × Name) := d
     return (`OmegaChecks.InitInventory.StringPatterns.WeakExcludedMiddle,
       `OmegaChecks.InitInventory.StringPatterns.weakExcludedMiddleOfRevMatchAtNone)
   | _, _ => pure ()
+  if owner == `Init.Core then
+    if name == ``Nat.succ.injEq then
+      return (``OmegaChecks.InitBoundaries.ConstructorNormalization.AddCancel,
+        ``OmegaChecks.InitBoundaries.ConstructorNormalization.addCancelOfSucc)
+    if name == ``List.cons.injEq then
+      return (``OmegaChecks.InitBoundaries.ConstructorNormalization.PrefixEquality,
+        ``OmegaChecks.InitBoundaries.ConstructorNormalization.prefixEqualityOfCons)
   if owner == `Init.SimpLemmas || owner == `Init.Sym.Lemmas then
     if let some reduction := OmegaChecks.InitBoundaries.BooleanReflection.witnesses.lookup name then
       return reduction
@@ -2830,6 +2878,9 @@ private def logicalConsequence? (owner name : Name) : Option (Name × Name) := d
 
 /-- The conclusion uses the indicated semantic agreement in addition to the public type. -/
 private def conditionalConsequence? (owner name : Name) : Option (String × Name × String) := do
+  if owner == `Init.Core && name == ``instDecidableEqOfIff then
+    return ((``propext).toString, ``OmegaChecks.InitBoundaries.ConstructorNormalization.propextOfDecision,
+      "A positive decision of p ↔ q produces a positive decision of p = q")
   if owner == `Init.Data.Option.Lemmas && name == ``Option.choice then
     return ((``Classical.choice).toString, ``OmegaChecks.InitBoundaries.choiceFromOptionPresence,
       "For every nonempty type, the selector returns some, as specified by Option.isSome_choice")
