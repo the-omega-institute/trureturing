@@ -475,6 +475,8 @@ Truth Release 按 A14.2 发布冻结声明最近一次测量的库根与公理�
 
 独占定时工作流 `truth-release-publish.yml` 每日从受保护的 `dev` 事件提交生成 DAG 和 truth bundle。逐模块报告和 Scribe 资源使用源码钉版的工具生成，发布器使用工作流独立钉住的 `trureturing-tools` 提交。发布清单的 `required_checks` 为空。归档发布到 GHCR，`truth-release-<digest>` GitHub Release 提供同一归档、发布坐标与 `DAG.md`。
 
+`publish-truth-release` 的 `repository_dispatch` 可在 `client_payload.source_commit` 指定 40 位小写十六进制提交字符串。工作流在检出前验证该提交位于受保护 `dev` 事件提交的第一父链上（含事件提交自身），并将源码及普通模块缓存固定到该提交与 `lean-modules-<source_commit>`。显式恢复必须命中全部模块及其适用报告，输入无效、越出第一父链或恢复不全时工作流失败。重试使用同一事件的提交和版本标签。定时触发和省略该字段的手动触发使用事件提交，普通缓存未命中或恢复失败时由 Lake 全量准备补建。
+
 
 <a id="a22-ci-cache-flow"></a>
 **缓存角色与数据流。** 普通 push 在事件提交、PR 在 merge candidate 上计算模块编译和适用报告的输入键。读者固定版本索引，按模块名和依赖闭包选择分片。Actions 缓存使用可读的 mathlib 修订与模块前缀作为键；缓存服务未命中时可从索引指定的 Release 取回同一分片。读者恢复命中模块的编译产物和适用的逐模块报告，Lake 按当前输入补建缺失或过期的产物。
