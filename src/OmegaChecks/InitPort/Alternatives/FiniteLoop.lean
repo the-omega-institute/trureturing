@@ -4,6 +4,7 @@ import all Init.Data.Iterators.Consumers.Total
 public import Init.Data.Iterators.Consumers.Access
 import all Init.Data.Iterators.Consumers.Monadic.Loop
 public import Init.Data.Slice.Array.Iterator
+public import Init.Data.Slice.List.Iterator
 public import Init.Data.Iterators.Producers.Monadic.List
 /-! Run the default loop by induction on the finite iterator, for arbitrary lifts and monads. -/
 
@@ -41,6 +42,12 @@ private noncomputable def finiteForIn {α β : Type w} {m : Type w → Type w'} 
 @[instance_reducible] public noncomputable def Std.Iterators.Types.ListIterator.instIteratorLoop :
     type_of% @_root_.Std.Iterators.Types.ListIterator.instIteratorLoop :=
   fun {_ _} _ {_} _ => finiteIteratorLoop
+
+@[instance_reducible] public noncomputable def instForInListSliceOfMonad
+    {α : Type u} {m : Type v → Type w} [Monad m] : ForIn m (ListSlice α) α where
+  forIn xs init f :=
+    @ForIn.forIn m _ α (@Std.instForInIterOfMonadOfIteratorLoopId _ _ m _ _ finiteIteratorLoop)
+      _ (Std.Slice.Internal.iter xs) init f
 
 private theorem indexWF {α β : Type u} [Iterator α Id β] [Productive α Id] :
     WellFounded (InvImage (Prod.Lex WellFoundedRelation.rel IterM.TerminationMeasures.Productive.Rel)
