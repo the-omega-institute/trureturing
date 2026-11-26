@@ -141,7 +141,10 @@ internal sealed class DoubledTriangleFoldsDocument : IScribeDocumentDefinition
                         "Conversely, the opposite uniform sheets balance their incident corners at " +
                         "boundary vertices. Each interior vertex has six corners of one color. " +
                         "Exactly the seam edges fold, giving 3n folds."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("fernando-doubled-triangle-minimum-fold"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock.Describe Model(string id, string declaration, string title,
         Formula formula, string commentary) =>

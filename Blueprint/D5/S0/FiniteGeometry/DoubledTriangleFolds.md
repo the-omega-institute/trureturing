@@ -310,6 +310,10 @@ $$\forall n: \mathbb{N}, \forall C: \operatorname{Coloring}\left(n\right), 0<n\i
 
 *Proof.* Machine-checked in Lean as `D5/S0/FiniteGeometry/DoubledTriangleFolds.minimum_fold_uniqueness` (`✓ std3`). ∎
 
+*Resolves.* `Problems/fernando-doubled-triangle-minimum-fold` (proved) by `D5/S0/FiniteGeometry/DoubledTriangleFolds.minimum_fold_uniqueness`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"fernando-doubled-triangle-minimum-fold","declaration_gid":"D5/S0/FiniteGeometry/DoubledTriangleFolds.minimum_fold_uniqueness","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Lakshitha Fernando, Eranda Dhananjaya, Rajitha Ranasinghe, and Dinusha Priyadarshani (2026). *Good colorings of doubled triangles and a conjecture of Schwartz*. DOI: [10.48550/arXiv.2611.12065](https://doi.org/10.48550/arXiv.2611.12065). URL: <https://arxiv.org/html/2611.12065v1#Thmquestionx2>.
