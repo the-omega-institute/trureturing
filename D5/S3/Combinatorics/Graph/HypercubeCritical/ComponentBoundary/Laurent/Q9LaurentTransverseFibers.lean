@@ -85,7 +85,7 @@ noncomputable def transverseSide (S : Block) (root : Side C b) : Finset (Side C 
   classical
   exact univ.filter fun x => Relation.ReflTransGen (transverseMove S) root x
 
-private theorem mem_transverseSide {S : Block} {root x : Side C b} :
+theorem mem_transverseSide {S : Block} {root x : Side C b} :
     x ∈ transverseSide S root ↔ Relation.ReflTransGen (transverseMove S) root x := by
   classical
   simp [transverseSide]
