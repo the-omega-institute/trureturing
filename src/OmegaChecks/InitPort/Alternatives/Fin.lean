@@ -1,6 +1,7 @@
 module
 
 public import Init.Data.Fin.Lemmas
+import all Init.Data.Fin.Lemmas
 
 namespace OmegaChecks.InitPort.Alternatives
 
@@ -62,5 +63,25 @@ public theorem Fin.succ_eq_last_succ : type_of% @_root_.Fin.succ_eq_last_succ :=
   intro n i
   rw [← _root_.Fin.succ_last]
   exact _root_.Fin.succ_inj
+
+public theorem Fin.reverseInduction_castSucc_aux {n : Nat} {motive : Fin (n + 1) → Sort _} {step}
+    (i : Fin n) (j : Nat) (hj) (lt : i.val < j) (x : motive ⟨j, hj⟩) :
+    _root_.Fin.reverseInduction.go (motive := motive) step i.castSucc j hj (Nat.le_of_lt lt) x =
+      step i (_root_.Fin.reverseInduction.go step i.succ j hj lt x) := by
+  induction j generalizing i with
+  | zero => exact False.elim (Nat.not_lt_zero _ lt)
+  | succ j ih =>
+    rw [_root_.Fin.reverseInduction.go, dite_eq_right (show i.castSucc.val ≠ j + 1 from Nat.ne_of_lt lt)]
+    if equal : i.val = j then
+      subst j
+      dsimp only
+      rw [_root_.Fin.reverseInduction.go, dite_eq_left (show i.castSucc.val = i.val from rfl),
+        _root_.Fin.reverseInduction.go, dite_eq_left (show i.succ.val = i.val + 1 from rfl)]
+      rfl
+    else
+      have smaller := Nat.lt_of_le_of_ne (Nat.le_of_lt_succ lt) equal
+      dsimp only
+      rw [ih _ _ smaller]
+      conv => rhs; rw [_root_.Fin.reverseInduction.go, dite_eq_right (show i.succ.val ≠ j + 1 from Nat.succ_ne_succ_iff.mpr equal)]
 
 end OmegaChecks.InitPort.Alternatives
