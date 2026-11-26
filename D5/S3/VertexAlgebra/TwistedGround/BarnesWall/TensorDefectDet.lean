@@ -8,6 +8,7 @@
 
 import D5.S3.VertexAlgebra.TwistedGround.BarnesWall.TensorLift
 import D5.S3.VertexAlgebra.TwistedGround.BarnesWall.TensorGramDet
+import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
 
 /-! Determinants of order-four defect operators in the Barnes–Wall tensor basis. -/
 
