@@ -1,10 +1,10 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Hypergraphs;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Analytic.Measure;
 
-internal sealed class FinnerEqualityDocument : IScribeDocumentDefinition
+internal sealed class ProperSupportMarginalGluingDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S3/Combinatorics/Hypergraphs/FinnerEquality.";
+    private const string Prefix = "D5/S3/Analytic/Measure/ProperSupportMarginalGluing.";
     private static readonly LibraryNoteRef Source =
         LibraryNoteRef.Create("D5/L/Convexity/finner1992holder");
 

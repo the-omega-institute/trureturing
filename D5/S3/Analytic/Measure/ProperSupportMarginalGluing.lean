@@ -1,28 +1,27 @@
-/- GID: D5/S3/Combinatorics/Hypergraphs/FinnerEquality
+/- GID: D5/S3/Analytic/Measure/ProperSupportMarginalGluing
    generality: G
-   mirror-B: D5/B/S3/Combinatorics/Hypergraphs/FinnerEquality
+   mirror-B: D5/B/S3/Analytic/Measure/ProperSupportMarginalGluing
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Common coordinate profiles for balanced Finner saturation. -/
+   digest: Common normalized profiles from factorizations of deleted marginals. -/
 
 module
 
-public import D5.S3.Combinatorics.Hypergraphs.FinnerProductMeasure
-public import D5.S3.Analytic.Measure.NormalizedHolderEquality
+public import Mathlib.Probability.Independence.Integration
 import D5.S3.Analytic.Measure.ProductSupportIntersection
 
-/-! # Balanced Finner equality and canonical coordinate marginals -/
+/-! # Proper-support marginal gluing under a product probability law -/
 
 @[expose] public section
 
 open MeasureTheory Function Finset Filter
-open scoped ENNReal BigOperators
+open scoped ENNReal BigOperators Classical
 
 noncomputable section
 set_option autoImplicit false
 
-namespace D5.S3.Combinatorics.Hypergraphs.FinnerEquality
+namespace D5.S3.Analytic.Measure.ProperSupportMarginalGluing
 
 variable {I : Type*} [Fintype I] {X : I → Type*} [∀ i, MeasurableSpace (X i)]
     (μ : ∀ i, MeasureTheory.Measure (X i)) [∀ i, IsProbabilityMeasure (μ i)]
@@ -66,28 +65,13 @@ private lemma integral_coordinate_product (s : Finset I) (h : ∀ i, X i → ℝ
     (∫⁻ x, ∏ i ∈ s, h i (x i) ∂MeasureTheory.Measure.pi μ) =
       ∏ i ∈ s, ∫⁻ t, h i t ∂μ i := by
   classical
-  have H (h : ∀ i, X i → ℝ≥0∞) (hm : ∀ i, Measurable (h i)) :
-      (∫⁻ x, ∏ i, h i (x i) ∂MeasureTheory.Measure.pi μ) =
-        ∏ i, ∫⁻ t, h i t ∂μ i := by
-    let e := (Fintype.equivFin I).symm
-    rw [← (measurePreserving_piCongrLeft μ e).lintegral_comp_emb
-      (MeasurableEquiv.measurableEmbedding _)]
-    simp only [← e.prod_comp, MeasurableEquiv.coe_piCongrLeft,
-      Equiv.piCongrLeft_apply_apply]
-    exact FinnerProductMeasure.lintegral_fin_prod (fun i => μ (e i))
-      (fun i => h (e i)) (fun i => hm (e i))
-  let g : ∀ i, X i → ℝ≥0∞ := fun i t => if i ∈ s then h i t else 1
-  have hg (i : I) : Measurable (g i) := by
-    dsimp [g]
-    split_ifs <;> fun_prop
-  have hp (x : ∀ i, X i) : (∏ i, g i (x i)) = ∏ i ∈ s, h i (x i) :=
-    prod_ite_mem_eq s (fun i => h i (x i))
-  rw [← funext hp, H g hg]
-  have hi (i : I) : (∫⁻ t, g i t ∂μ i) = if i ∈ s then (∫⁻ t, h i t ∂μ i) else 1 := by
-    dsimp [g]
-    split_ifs <;> simp
-  simp_rw [hi]
-  exact prod_ite_mem_eq s (fun i => ∫⁻ t, h i t ∂μ i)
+  rw [ProbabilityTheory.lintegral_prod_eq_prod_lintegral_of_indepFun s
+    (fun i x => h i (x i))
+    (ProbabilityTheory.iIndepFun_pi (fun i => (hm i).aemeasurable))
+    (fun i => (hm i).comp (measurable_pi_apply i))]
+  apply prod_congr rfl
+  intro i hi
+  exact (measurePreserving_eval μ i).lintegral_comp (hm i)
 
 private lemma marginal_coordinate_product [DecidableEq I] (s : Finset I)
     (h : ∀ i, X i → ℝ≥0∞) (hm : ∀ i, Measurable (h i))
@@ -232,7 +216,7 @@ private lemma proper_assembly [DecidableEq I] {J : Type*}
 /-- Normalized factorizations of every one-coordinate-deleted marginal glue to
 one common normalized factorization of all original proper-support rows.
 The hypotheses provide actual factorizations under the original product law. -/
-theorem exists_common_profiles_of_deleted_marginal_factorizations [DecidableEq I]
+theorem exists_common_profiles_of_deleted_marginal_factorizations
     {J : Type*} (s : Finset I) (S : J → Finset I)
     (f : J → (∀ i, X i) → ℝ≥0∞)
     (hf : ∀ j, Measurable (f j)) (hd : ∀ j, DependsOn (f j) (S j))
@@ -286,4 +270,4 @@ theorem exists_common_profiles_of_deleted_marginal_factorizations [DecidableEq I
   rw [← mul_assoc, ENNReal.mul_inv_cancel (hpos j).ne' (hfin j), one_mul] at hh
   exact hh
 
-end D5.S3.Combinatorics.Hypergraphs.FinnerEquality
+end D5.S3.Analytic.Measure.ProperSupportMarginalGluing

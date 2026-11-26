@@ -1,5 +1,5 @@
 import LeanInformationAuditInterface.Contract.Registration
-import D5.S3.Combinatorics.Hypergraphs.FinnerEquality
+import D5.S3.Analytic.Measure.ProperSupportMarginalGluing
 import D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 
 /-! The dependent state retains arbitrary coordinate types. The law retains the
@@ -9,10 +9,10 @@ noncomputable section
 set_option autoImplicit false
 open MeasureTheory Function Finset Filter LeanInformationAudit
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
-open _root_.D5.S3.Combinatorics.Hypergraphs.FinnerEquality
-open scoped ENNReal BigOperators
+open _root_.D5.S3.Analytic.Measure.ProperSupportMarginalGluing
+open scoped ENNReal BigOperators Classical
 
-namespace Reg.D5.S3.Combinatorics.Hypergraphs.FinnerEquality
+namespace Reg.D5.S3.Analytic.Measure.ProperSupportMarginalGluing
 universe u v w
 
 abbrev signature : Signature where
@@ -35,7 +35,7 @@ abbrev arena : Arena where
   signature := signature.{u,v}
   Law R := ∀ {I : Type u} [Fintype I] {X : I → Type v} [∀ i, MeasurableSpace (X i)]
     (μ : ∀ i, MeasureTheory.Measure (X i)) [∀ i, IsProbabilityMeasure (μ i)]
-    [DecidableEq I] {J : Type w} (s : Finset I) (S : J → Finset I)
+    {J : Type w} (s : Finset I) (S : J → Finset I)
     (f : J → (∀ i, X i) → ℝ≥0∞),
     (∀ j, Measurable (f j)) → (∀ j, DependsOn (f j) (S j)) →
     (∀ j, 0 < ∫⁻ x, f j x ∂MeasureTheory.Measure.pi μ) →
@@ -111,8 +111,8 @@ def family : Registration arena.{u,v,w}
 def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@exists_common_profiles_of_deleted_marginal_factorizations.{u,v,w})
     (Realization signature.{u,v}) Unit Unit where
-  unitName := `D5.S3.Combinatorics.Hypergraphs.FinnerEquality.exists_common_profiles_of_deleted_marginal_factorizations.__information_unit
-  realizationName := `Reg.D5.S3.Combinatorics.Hypergraphs.FinnerEquality.family
+  unitName := `D5.S3.Analytic.Measure.ProperSupportMarginalGluing.exists_common_profiles_of_deleted_marginal_factorizations.__information_unit
+  realizationName := `Reg.D5.S3.Analytic.Measure.ProperSupportMarginalGluing.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena.{u,v,w}⟩
@@ -132,4 +132,4 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   familyRecord := none
   options := #[]
 
-end Reg.D5.S3.Combinatorics.Hypergraphs.FinnerEquality
+end Reg.D5.S3.Analytic.Measure.ProperSupportMarginalGluing
