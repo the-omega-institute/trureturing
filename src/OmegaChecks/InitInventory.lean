@@ -1517,6 +1517,86 @@ run_cmd
   for n in [``fromStateCpsLift, ``fromExceptCpsLift] do
     unless (← collectAxioms n).isEmpty do throwError "continuation lift witness {n} uses axioms"
 
+@[instance_reducible] private def reader (T : Type u) : Monad (fun α : Type u => T → α) where
+  pure a _ := a
+  bind x k t := k (x t) t
+
+private theorem readerLaws (T : Type u) :
+    letI := reader T; LawfulMonad (fun α : Type u => T → α) := by
+  letI := reader T
+  exact {
+    map_const := rfl
+    id_map := by intros; rfl
+    comp_map := by intros; rfl
+    pure_seq := by intros; rfl
+    map_pure := by intros; rfl
+    seq_pure := by intros; rfl
+    seqLeft_eq := by intros; rfl
+    seqRight_eq := by intros; rfl
+    seq_assoc := by intros; rfl
+    bind_pure_comp := by intros; rfl
+    bind_map := by intros; rfl
+    pure_bind := by intros; rfl
+    bind_assoc := by intros; rfl
+  }
+
+private def input? {T : Type u} {f : T → T} : Option (Graph f) → Option T
+  | none => none
+  | some p => some p.1
+
+private def graph? {T : Type u} (f : T → T) : Option T → Option (Graph f)
+  | none => none
+  | some t => some ⟨t, f t, rfl⟩
+
+private theorem graphInverse {T : Type u} {f : T → T} (p : Option (Graph f)) :
+    graph? f (input? p) = p := by
+  cases p with
+  | none => rfl
+  | some p => exact congrArg some (resetGraph_eq f p)
+
+private theorem injectivityEndomorphisms
+    (cancel : ∀ {T : Type u} {f : T → T} {x y : T → Option (Graph f)},
+       (fun t => input? (x t)) = (fun t => input? (y t)) → x = y)
+    {T : Type u} {f g : T → T} (agree : ∀ x, f x = g x) : f = g := by
+  let x (t : T) : Option (Graph f) := some ⟨t, f t, rfl⟩
+  let y (t : T) : Option (Graph f) := some ⟨t, g t, agree t⟩
+  let output (r : T → Option (Graph f)) (t : T) := (r t).elim t (fun p => p.2.val)
+  exact congrArg output (cancel (x := x) (y := y) rfl)
+
+public theorem fromMapInjectiveLeftInverse (cancel : type_of% @map_inj_of_left_inverse.{max 1 u v, max 1 u v}) :
+    type_of% @funext.{u,v} := by
+  apply funextFromEndomorphisms
+  apply injectivityEndomorphisms
+  intro T f x y h
+  letI := reader T
+  letI : LawfulMonad (fun α : Type (max 1 u v) => T → α) := readerLaws T
+  exact (cancel (m := fun α => T → α) (f := input?) ⟨graph? f, graphInverse⟩).mp h
+
+public theorem fromMapInjectiveNonempty (cancel : type_of% @map_inj_right_of_nonempty.{max 1 u v, max 1 u v}) :
+    type_of% @funext.{u,v} := by
+  apply funextFromEndomorphisms
+  apply injectivityEndomorphisms
+  intro T f x y h
+  letI := reader T
+  letI : LawfulMonad (fun α : Type (max 1 u v) => T → α) := readerLaws T
+  exact (cancel (m := fun α => T → α) (f := input? (f := f))
+    (fun {x y} eq => (graphInverse x).symm.trans ((congrArg (graph? f) eq).trans (graphInverse y)))).mp h
+
+public theorem fromMapInjectiveMonad (cancel : type_of% @map_inj_right.{max 1 u v, max 1 u v}) :
+    type_of% @funext.{u,v} := by
+  apply funextFromEndomorphisms
+  apply injectivityEndomorphisms
+  intro T f x y h
+  letI := reader T
+  letI : LawfulMonad (fun α : Type (max 1 u v) => T → α) := readerLaws T
+  exact (cancel (m := fun α => T → α) (f := input? (f := f))
+    (fun {x y} eq => (graphInverse x).symm.trans ((congrArg (graph? f) eq).trans (graphInverse y)))).mp h
+
+open Lean in
+run_cmd
+  for n in [``fromMapInjectiveLeftInverse, ``fromMapInjectiveNonempty, ``fromMapInjectiveMonad] do
+    unless (← collectAxioms n).isEmpty do throwError "map injectivity witness {n} uses axioms"
+
 end TransformerLaws
 
 namespace MonadicTraversal
@@ -2312,6 +2392,12 @@ private def logicalConsequence? (owner name : Name) : Option (Name × Name) := d
     return (``funext, ``OmegaChecks.InitBoundaries.TransformerLaws.fromExceptCpsLift)
   | `Init.Control.Lawful.Basic, ``LawfulMonad.mk' =>
     return (``funext, ``OmegaChecks.InitBoundaries.TransformerLaws.fromMonadConstructor)
+  | `Init.Control.Lawful.Lemmas, ``map_inj_of_left_inverse =>
+    return (``funext, ``OmegaChecks.InitBoundaries.TransformerLaws.fromMapInjectiveLeftInverse)
+  | `Init.Control.Lawful.Lemmas, ``map_inj_right_of_nonempty =>
+    return (``funext, ``OmegaChecks.InitBoundaries.TransformerLaws.fromMapInjectiveNonempty)
+  | `Init.Control.Lawful.Lemmas, ``map_inj_right =>
+    return (``funext, ``OmegaChecks.InitBoundaries.TransformerLaws.fromMapInjectiveMonad)
   | `Init.Control.Lawful.Instances, ``ReaderT.instLawfulFunctor =>
     return (``funext, ``OmegaChecks.InitBoundaries.TransformerLaws.fromReaderTFunctor)
   | `Init.Control.Lawful.Instances, ``ReaderT.instLawfulApplicative =>
