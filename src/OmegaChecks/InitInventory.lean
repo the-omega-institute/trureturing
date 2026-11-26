@@ -667,11 +667,27 @@ theorem funextFromRightInverseId
   funextFromEndomorphisms fun {_ _ _} h =>
     endomorphismsOfPointwiseId (fun {S} k hk => @inv S S id k hk) h
 
+/-- A reader iterator returns the callback's value at the supplied element. -/
+theorem funextFromForInEq
+    (loop : type_of% @forIn'_eq_forIn.{max 1 u v,0,max 1 u v,max 1 u v}) :
+    type_of% @funext.{u,v} := by
+  apply funextFromEndomorphisms
+  intro T f g h
+  let read (α : Type (max 1 u v)) := T → α
+  letI : Membership T Unit := ⟨fun _ _ => True⟩
+  letI : ForIn' read Unit T inferInstance := ⟨fun _ b visit x => (visit x True.intro b x).value⟩
+  let body (k : T → T) (a : T) (_ : T → T) : read (ForInStep (T → T)) :=
+    fun _ => .yield fun _ => k a
+  have eq := @loop T Unit read _ _ (T → T) () id (fun a _ => body f a) (body g)
+    (fun a _ _ => congrArg (fun (y : T) (_ : T) => ForInStep.yield fun _ : T => y) (h a))
+  have diagonal := congrArg (fun (k : T → T → T) x => k x x) eq
+  exact diagonal
+
 open Lean in
 run_cmd
   for n in [``dependentFunextFromBindCongr, ``dependentFunextFromMapCongr,
       ``funextFromReaderExt, ``funextFromReaderExtIff, ``funextFromStateExt, ``funextFromStateExtIff,
-      ``funextFromLeftInverseId, ``funextFromRightInverseId] do
+      ``funextFromLeftInverseId, ``funextFromRightInverseId, ``funextFromForInEq] do
     unless (← collectAxioms n).isEmpty do throwError "reader congruence witness {n} uses axioms"
 
 namespace RangeMap
@@ -1308,6 +1324,7 @@ private def logicalConsequence? (owner name : Name) : Option (Name × Name) := d
     return (``funext, ``OmegaChecks.InitBoundaries.dependentFunextFromBindCongr)
   | `Init.Control.Lawful.Basic, ``map_congr =>
     return (``funext, ``OmegaChecks.InitBoundaries.dependentFunextFromMapCongr)
+  | `Init.Control.Basic, ``forIn'_eq_forIn => return (``funext, ``OmegaChecks.InitBoundaries.funextFromForInEq)
   | `Init.Control.Lawful.Instances, ``ReaderT.ext => return (``funext, ``OmegaChecks.InitBoundaries.funextFromReaderExt)
   | `Init.Control.Lawful.Instances, ``ReaderT.ext_iff => return (``funext, ``OmegaChecks.InitBoundaries.funextFromReaderExtIff)
   | `Init.Control.Lawful.Instances, ``StateT.ext => return (``funext, ``OmegaChecks.InitBoundaries.funextFromStateExt)
