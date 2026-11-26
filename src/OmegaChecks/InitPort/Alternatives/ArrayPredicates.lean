@@ -261,4 +261,52 @@ public theorem Array.any_eq_not_all_not : type_of% @_root_.Array.any_eq_not_all_
   rw [_root_.Array.all_eq_not_any_not, Bool.not_not]
   exact _root_.Array.any_congr rfl (fun x => (Bool.not_not (p x)).symm) rfl rfl
 
+public theorem List.length_filter_lt_length_iff_exists :
+    type_of% @_root_.List.length_filter_lt_length_iff_exists := by
+  intro α p xs
+  induction xs with
+  | nil =>
+    exact ⟨fun h => (Nat.lt_irrefl 0 h).elim, fun ⟨_, mem, _⟩ => nomatch mem⟩
+  | cons x xs ih =>
+    cases hit : p x with
+    | false =>
+      rw [_root_.List.filter_cons_of_neg (by rw [hit]; decide)]
+      exact ⟨fun _ => ⟨x, .head _, fun eq => Bool.false_ne_true (hit.symm.trans eq)⟩,
+        fun _ => Nat.lt_succ_of_le (_root_.List.length_filter_le p xs)⟩
+    | true =>
+      rw [_root_.List.filter_cons_of_pos hit]
+      constructor
+      · intro lt
+        obtain ⟨a, mem, miss⟩ := ih.mp (Nat.lt_of_succ_lt_succ lt)
+        exact ⟨a, .tail _ mem, miss⟩
+      · rintro ⟨a, mem, miss⟩
+        rcases _root_.List.mem_cons.mp mem with rfl | tail
+        · exact (miss hit).elim
+        · exact Nat.succ_lt_succ (ih.mpr ⟨a, tail, miss⟩)
+
+public theorem Array.size_filter_lt_size_iff_exists : type_of% @_root_.Array.size_filter_lt_size_iff_exists := by
+  intro α xs p
+  change (xs.filter p).toList.length < xs.toList.length ↔ _
+  rw [_root_.Array.toList_filter]
+  constructor
+  · intro h
+    obtain ⟨x, hx, miss⟩ := _root_.List.length_filter_lt_length_iff_exists.mp h
+    exact ⟨x, _root_.Array.mem_def.mpr hx, miss⟩
+  · rintro ⟨x, hx, miss⟩
+    exact _root_.List.length_filter_lt_length_iff_exists.mpr ⟨x, _root_.Array.mem_def.mp hx, miss⟩
+
+public theorem Array.flatten_filter_ne_empty : type_of% @_root_.Array.flatten_filter_ne_empty := by
+  intro α dec xss
+  apply Eq.trans (congrArg _root_.Array.flatten (_root_.Array.ext' ?_)) _root_.Array.flatten_filter_not_isEmpty
+  rw [_root_.Array.toList_filter, _root_.Array.toList_filter]
+  apply _root_.List.filter_congr
+  intro xs _
+  by_cases h : xs.isEmpty = true
+  · rw [h, decide_eq_false (fun ne => ne (_root_.Array.isEmpty_iff.mp h))]
+    rfl
+  · rw [decide_eq_true (fun eq => h (_root_.Array.isEmpty_iff.mpr eq))]
+    cases e : xs.isEmpty
+    · rfl
+    · exact (h e).elim
+
 end OmegaChecks.InitPort.Alternatives

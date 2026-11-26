@@ -144,4 +144,38 @@ public theorem Array.foldr_flatten' : type_of% @_root_.Array.foldr_flatten' := b
   cases h
   exact Array.foldr_flatten
 
+public theorem Array.map_eq_foldl : type_of% @_root_.Array.map_eq_foldl := by
+  intros
+  rw [_root_.Array.foldl_push_eq_append rfl, _root_.Array.empty_append]
+
+public theorem Array.getElem_extract_loop_ge : type_of% @_root_.Array.getElem_extract_loop_ge := by
+  intro α i xs ys count start ge bound
+  induction count generalizing start ys with
+  | zero =>
+    rw [_root_.Array.extract_loop_zero] at bound
+    exact (Nat.not_lt_of_ge ge bound).elim
+  | succ count ih =>
+    have valid := _root_.Array.getElem_extract_loop_ge_aux ge bound
+    have before : start < xs.size := by omega
+    have step := _root_.Array.extract_loop_succ (ys := ys) (size := count) before
+    have next := Eq.subst (motive := fun a : _root_.Array α => i < a.size) step bound
+    apply (getElem_congr_coll step).trans
+    by_cases eq : ys.size = i
+    · subst i
+      have inside : ys.size < (ys.push xs[start]).size :=
+        (_root_.Array.size_push ..).symm ▸ Nat.lt_succ_self _
+      apply (_root_.Array.getElem_extract_loop_lt inside next).trans
+      exact _root_.Array.getElem_push_eq.trans (getElem_congr_idx (Nat.add_sub_cancel ..).symm)
+    · have ge' : (ys.push xs[start]).size ≤ i :=
+        (_root_.Array.size_push ..).symm ▸ Nat.lt_of_le_of_ne ge eq
+      apply (ih ge' next).trans
+      apply getElem_congr_idx
+      rw [_root_.Array.size_push]
+      omega
+
+public theorem List.foldl_flip_cons_eq_append' : type_of% @_root_.List.foldl_flip_cons_eq_append' := by
+  intro α xs acc
+  exact (_root_.List.foldl_flip_cons_eq_append (l := xs) (f := id)).trans
+    (congrArg (fun ys => ys.reverse ++ acc) (_root_.List.map_id xs))
+
 end OmegaChecks.InitPort.Alternatives
