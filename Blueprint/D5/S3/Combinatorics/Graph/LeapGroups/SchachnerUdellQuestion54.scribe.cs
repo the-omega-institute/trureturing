@@ -23,12 +23,14 @@ internal sealed class SchachnerUdellQuestion54Document : IScribeDocumentDefiniti
                 DescribeRole.Definition),
             Node("classification", "Exact subgroup equalities on the original vertices", "result", Result(),
                 "The three clauses answer both families in Question 5.4 on printed and PDF page 21. In a prism the diagonal advances both coordinates. When n is odd, one extra circuit switches the layer, whereas when n is even the index and the parity determine the layer. In a cube, correcting differing coordinates in pairs gives every same-class transposition. The bipartite equalities use the setwise action on the unordered pair of fibers. Each fiber is inhabited in its stated range.",
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create(
+                    "D5/L/FiniteGroups/schachnerudell2026leapgroups"))))));
 
     private static DocumentBlock Node(string id, string title, string name, Formula formula,
-        string prose, DescribeRole role) =>
+        string prose, DescribeRole role, AssessedProvenance? provenance = null) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Owner + name), H(title),
-            StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromRepo(),
+            StatementSource.FromAuthor(Disp(formula)), provenance ?? AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(prose))), role);
 
     private static Formula Call(string name, params Formula[] args) =>
