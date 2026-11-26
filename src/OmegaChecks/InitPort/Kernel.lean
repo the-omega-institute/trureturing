@@ -528,6 +528,8 @@ partial def visit (n : Name) : M Bool := do
   if ci.isTheorem then
     if let some term ← OmegaChecks.InitCompiler.finiteProof? c.source ci.type then
       if (← attempt term) matches .added then return ← record n .added
+    if let some term ← OmegaChecks.InitCompiler.finiteProof? c.source ci.type true then
+      if (← attempt term) matches .added then return ← record n .added
     let checked := (← get).env
     if (checked.find? (portName `Lean.Omega.Constraint.not_sat'_of_isImpossible)).isSome then
       if let some term ← OmegaChecks.InitPort.arithmeticProof? c.source ci.type then

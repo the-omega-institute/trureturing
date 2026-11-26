@@ -484,55 +484,75 @@ public def elementaryProof? (env : Environment) (type : Expr) : Option Expr :=
   (elementaryCandidates type).find? (fun e =>
     (Kernel.check env {} e).toOption.any (Kernel.isDefEqGuarded env {} type))
 
-/-- Split finite enumeration arguments before checking reflexivity, local hypotheses,
-or a decision procedure. Every branch uses the motive of the original theorem. -/
-public partial def finiteProof? (source : Environment) (type : Expr) : IO (Option Expr) := do
+private def splitContainer (type : Expr) : Bool :=
+  type.getAppFn.constName?.any [`Option, `Sum, `Prod, `List].contains
+
+/-- Split finite enumeration arguments, or additionally split container arguments by their
+constructors. Every branch uses the motive of the original theorem. -/
+public partial def finiteProof? (source : Environment) (type : Expr) (splitContainers := false) : IO (Option Expr) := do
   let enums := [`Bool, `Ordering]
   let hasDecision := (type.find? fun e =>
     e.isForall && e.bindingDomain!.isAppOfArity `Decidable 1).isSome
   let conditional := hasDecision && (type.getUsedConstants.any [`ite, `dite, `Decidable.decide].contains)
-  unless conditional || (type.find? fun e => e.isForall && e.bindingDomain!.constName?.any enums.contains).isSome do
-    return none
+  if splitContainers then
+    unless (type.find? fun e => e.isForall && splitContainer e.bindingDomain!).isSome do return none
+  else
+    unless conditional || (type.find? fun e => e.isForall && e.bindingDomain!.constName?.any enums.contains).isSome do
+      return none
   try
-    let proof ← (go type 3 conditional).run' |>.toIO'
+    let proof ← (go type 3 conditional splitContainers).run' |>.toIO'
       {fileName := "<finite proof>", fileMap := default, options := maxHeartbeats.set {} 2000}
       {env := source}
     return if proof.hasMVar || proof.hasFVar || proof.hasLooseBVars then none else some proof
   catch _ => return none
 where
-  go (goal : Expr) (splits : Nat) (conditional : Bool) : MetaM Expr := do
+  go (goal : Expr) (splits : Nat) (conditional splitContainers : Bool) : MetaM Expr := do
     if let .forallE n dom body bi := goal then
       return ← Meta.withLocalDecl n bi dom fun x => do
         if splits > 0 && (dom.isConstOf `Bool || dom.isConstOf `Ordering) then
           let ind ← getConstInfoInduct dom.constName!
-          let branches ← ind.ctors.mapM fun ctor => go (body.instantiate1 (mkConst ctor)) (splits - 1) conditional
+          let branches ← ind.ctors.mapM fun ctor => go (body.instantiate1 (mkConst ctor)) (splits - 1) conditional splitContainers
           let motive := Expr.lam n dom body .default
           let term := mkAppN (mkConst (ind.name ++ `rec) [.zero]) (#[motive] ++ branches.toArray ++ #[x])
           return ← Meta.mkLambdaFVars #[x] term
+        if splitContainers && splits > 0 && splitContainer dom then
+          let .const name levels := dom.getAppFn | throwError "expected an inductive type"
+          let ind ← getConstInfoInduct name
+          let params := dom.getAppArgs
+          let branches ← ind.ctors.mapM fun ctor => do
+            let head := mkAppN (mkConst ctor levels) params
+            Meta.forallTelescope (← Meta.inferType head) fun fields _ => do
+              let term ← go (body.instantiate1 (mkAppN head fields)) (splits - 1) conditional splitContainers
+              Meta.mkLambdaFVars fields term
+          let motive := Expr.lam n dom body .default
+          let cases := mkConst (name ++ `casesOn) (.zero :: levels)
+          return ← Meta.mkLambdaFVars #[x] (mkAppN cases (params ++ #[motive, x] ++ branches.toArray))
         if conditional && splits > 0 && dom.isAppOfArity `Decidable 1 then
           let p := dom.appArg!
           let branch := fun (ctor : Name) witness =>
             Meta.withLocalDeclD `h witness fun h => do
-              let result ← go (body.instantiate1 (mkApp2 (mkConst ctor) p h)) (splits - 1) conditional
+              let result ← go (body.instantiate1 (mkApp2 (mkConst ctor) p h)) (splits - 1) conditional splitContainers
               Meta.mkLambdaFVars #[h] result
           let motive := Expr.lam n dom body .default
           let no ← branch `Decidable.isFalse (mkApp (mkConst `Not) p)
           let yes ← branch `Decidable.isTrue p
           return ← Meta.mkLambdaFVars #[x] (mkApp5 (mkConst `Decidable.falseTrueCases [.zero]) p motive no yes x)
-        Meta.mkLambdaFVars #[x] (← go (body.instantiate1 x) splits conditional)
+        Meta.mkLambdaFVars #[x] (← go (body.instantiate1 x) splits conditional splitContainers)
     for decl in ← getLCtx do
       if !decl.isImplementationDetail && (← Meta.isDefEq decl.type goal) then return decl.toExpr
     if let some (_, a, b) := goal.eq? then
       if ← Meta.isDefEq a b then return ← Meta.mkEqRefl a
+    if splitContainers && !conditional then
+      try return ← Meta.mkDecideProof goal catch _ => pure ()
     if let some (a, b) := goal.iff? then
       if ← Meta.isDefEq a b then return mkApp (mkConst `Iff.rfl) a
-      if conditional then
+      if conditional || splitContainers then
         try
-          let forward ← go (← mkArrow a b) splits conditional
-          let reverse ← go (← mkArrow b a) splits conditional
+          let forward ← go (← mkArrow a b) splits conditional splitContainers
+          let reverse ← go (← mkArrow b a) splits conditional splitContainers
           return mkApp4 (mkConst `Iff.intro) a b forward reverse
         catch _ => pure ()
-    if conditional then
+    if conditional || splitContainers then
       try
         let hole ← Meta.mkFreshExprSyntheticOpaqueMVar goal
         let rules := [`Iff.intro, `True.intro, `Eq.refl, `False.elim]
