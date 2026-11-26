@@ -157,7 +157,7 @@ private def numeral? (source : Environment) (expr : Expr) (fuel : Nat := 4) : Op
   numeral? source body fuel
 
 private def comparisonProofs (source : Environment) (proofs : NameMap ConstantInfo)
-    (body : Expr) : Option Expr := Id.run do
+    (body : Expr) (canUsePowMonotonicity : Bool) : Option Expr := Id.run do
   let result := body.replace fun e => Id.run do
     unless e.getAppFn.isConstOf `of_decide_eq_true do return none
     let some p := e.getAppArgs[0]? | return none
@@ -168,6 +168,10 @@ private def comparisonProofs (source : Environment) (proofs : NameMap ConstantIn
     let some x := numeral? source a | return none
     let some y := numeral? source b | return none
     unless (if strict then x < y else x ≤ y) && y ≥ 32 do return none
+    if canUsePowMonotonicity && !strict && x > 0 && y > 0 && y.log2 < 128 &&
+        2 ^ x.log2 == x && 2 ^ y.log2 == y then
+      return some <| mkApp5 (mkConst `Nat.pow_le_pow_right) (mkRawNatLit 2)
+        (mkConst `True.intro) (mkRawNatLit x.log2) (mkRawNatLit y.log2) (mkConst `True.intro)
     let cert := if x == y then mkApp (mkConst `Omega.Nat.le_refl) (natTerm x)
       else if strict then binaryLt x y
       else mkApp5 (mkConst `Omega.Nat.le_trans) (natTerm x) (mkApp (mkConst `Omega.Nat.succ) (natTerm x))
@@ -397,7 +401,10 @@ partial def visit (n : Name) : M Bool := do
   if !decided.equal rewritten then
     if (← attempt (OmegaChecks.InitCompiler.constructiveCasts c.source decided)) matches .added then
       return ← record n .added
-  if let some certified := comparisonProofs c.source c.literalProofs decided then
+  let canUsePowMonotonicity := match c.source.getModuleIdxFor? `Nat.pow_le_pow_right, c.source.getModuleIdxFor? n with
+    | some provider, some owner => provider.toNat < owner.toNat
+    | _, _ => false
+  if let some certified := comparisonProofs c.source c.literalProofs decided canUsePowMonotonicity then
     -- Rechecking the closed proof of comparison costs proportionally more than
     -- applying the original opaque theorem; its bound remains deterministic.
     if (← attempt certified (40 * c.maxHeartbeats)) matches .added then return ← record n .added
