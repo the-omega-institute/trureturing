@@ -636,4 +636,13 @@ public theorem BitVec.shiftLeft_add : type_of% @_root_.BitVec.shiftLeft_add := b
   rw [BitVec.toNat_shiftLeft, BitVec.toNat_shiftLeft, BitVec.toNat_shiftLeft,
     Nat.mod_two_pow_shiftLeft_mod_two_pow, Nat.shiftLeft_add]
 
+public theorem Nat.shiftLeft_or_distrib : type_of% @_root_.Nat.shiftLeft_or_distrib := by
+  intro i a b
+  have parts := Nat.mod_add_div (2^i * a ||| 2^i * b) (2^i)
+  rw [Nat.or_mod_two_pow, Nat.or_div_two_pow, Nat.mul_mod_right, Nat.mul_mod_right,
+    Nat.zero_or, Nat.zero_add, Nat.mul_div_cancel_left _ (Nat.two_pow_pos _),
+    Nat.mul_div_cancel_left _ (Nat.two_pow_pos _)] at parts
+  rw [Nat.shiftLeft_eq, Nat.shiftLeft_eq, Nat.shiftLeft_eq, Nat.mul_comm _ (2^i), Nat.mul_comm a, Nat.mul_comm b]
+  exact parts
+
 end OmegaChecks.InitPort.Alternatives

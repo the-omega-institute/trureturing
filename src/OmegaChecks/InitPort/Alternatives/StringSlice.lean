@@ -233,4 +233,14 @@ public theorem String.Slice.Pattern.CharPred.instBackwardPatternForallCharBool._
   have lt := String.Slice.Pos.prev_lt (p := s.endPos) (h := (String.Slice.startPos_ne_endPos ne).symm)
   exact Nat.ne_of_lt lt (congrArg (fun p : s.Pos => p.offset.byteIdx) eq)
 
+public theorem String.Slice.Pos.next._proof_1 : type_of% @_root_.String.Slice.Pos.next._proof_1 := by
+  intro s pos h
+  obtain ⟨t₁, t₂, ht, offset⟩ := String.Slice.Pos.copy_eq_append_get h
+  apply String.Pos.Raw.isValid_copy_iff.mp
+  rw [String.Slice.Pos.utf8ByteSize_byte, ht, ← String.Pos.Raw.ext offset]
+  apply String.Pos.Raw.IsValid.append_right _ t₂
+  rw [String.Pos.Raw.increaseBy_charUtf8Size]
+  apply String.Pos.Raw.IsValid.append_left _ t₁
+  exact String.Pos.Raw.isValid_singleton.mpr (Or.inr rfl)
+
 end OmegaChecks.InitPort.Alternatives
