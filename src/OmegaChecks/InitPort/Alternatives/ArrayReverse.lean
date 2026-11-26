@@ -1,6 +1,6 @@
 module
 import all Init.Data.Array.Basic
-import Init.Data.Array.Lemmas
+import all Init.Data.Array.Lemmas
 
 /-! The two endpoints of the official swapping loop remain symmetric in the original list. -/
 
@@ -106,5 +106,49 @@ public theorem Array.toList_reverse : type_of% @_root_.Array.toList_reverse := b
         have past : xs.toList.length ≤ t := Eq.subst (motive := (· ≤ t)) len h
         exact (List.getElem?_eq_none past).trans
           (List.getElem?_eq_none (Eq.subst (motive := (· ≤ t)) List.length_reverse.symm past)).symm
+
+public theorem Array.size_reverse : type_of% @_root_.Array.size_reverse := by
+  intro α xs
+  exact (congrArg List.length (_root_.Array.toList_reverse (xs := xs))).trans List.length_reverse
+
+public theorem Array.getElem_reverse._proof_1 :
+    type_of% (private_decl% @_root_.Array.getElem_reverse._proof_1) := by
+  intro α xs i h impossible
+  exact impossible (Nat.sub_one_sub_lt_of_lt h)
+
+public theorem Array.getElem_reverse._proof_2 : type_of% @_root_.Array.getElem_reverse._proof_2 := by
+  intro α xs i h
+  exact Nat.sub_one_sub_lt_of_lt (Eq.subst (motive := (i < ·)) Array.size_reverse h)
+
+public theorem Array.getElem_reverse : type_of% @_root_.Array.getElem_reverse := by
+  intro α xs i h
+  have hi : i < xs.size := Eq.subst (motive := (i < ·)) Array.size_reverse h
+  exact Option.some.inj (((_root_.Array.getElem?_eq_getElem h).symm.trans
+    (_root_.Array.getElem?_reverse hi)).trans (_root_.Array.getElem?_eq_getElem (Nat.sub_one_sub_lt_of_lt hi)))
+
+public theorem Array.getElem_swap : type_of% @_root_.Array.getElem_swap := by
+  intro α xs i j hi hj k hk
+  have shape := (_root_.Array.getElem?_eq_getElem hk).symm.trans (_root_.Array.getElem?_swap hi hj)
+  have original : k < xs.size := Eq.subst (motive := (k < ·)) (_root_.Array.size_swap ..) hk
+  by_cases il : k = i
+  · cases il
+    rw [ite_eq_left rfl]
+    by_cases same : j = i
+    · cases same
+      exact Option.some.inj (shape.trans (ite_eq_left rfl))
+    · exact Option.some.inj (shape.trans ((ite_eq_right same).trans (ite_eq_left rfl)))
+  · rw [ite_eq_right il]
+    by_cases jr : k = j
+    · cases jr
+      rw [ite_eq_left rfl]
+      exact Option.some.inj (shape.trans (ite_eq_left rfl))
+    · rw [ite_eq_right jr]
+      exact Option.some.inj (shape.trans ((ite_eq_right (Ne.symm jr)).trans
+        ((ite_eq_right (Ne.symm il)).trans (_root_.Array.getElem?_eq_getElem original))))
+
+public theorem Array.getElem_swap_right : type_of% @_root_.Array.getElem_swap_right := by
+  intro α xs i j hi hj
+  exact Option.some.inj (((_root_.Array.getElem?_eq_getElem _).symm.trans
+    (_root_.Array.getElem?_swap hi hj)).trans (ite_eq_left rfl))
 
 end OmegaChecks.InitPort.Alternatives
