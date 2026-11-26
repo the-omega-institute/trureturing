@@ -47,6 +47,20 @@ public theorem Std.PRange.instLawfulHasSizeNat_1 : Rxo.LawfulHasSize Nat where
     rw [openSize, openSize, Nat.sub_succ]
     exact (Nat.succ_pred_eq_of_ne_zero (Nat.sub_ne_zero_of_lt h)).symm
 
+public theorem Std.PRange.instLawfulUpwardEnumerableInt : LawfulUpwardEnumerable Int where
+  ne_of_lt a _ h := h.elim fun n eqNext =>
+    have advance : a < a + (↑(n + 1) : Int) := Int.lt_add_of_pos_right a (Int.natCast_pos.mpr (Nat.zero_lt_succ n))
+    Int.ne_of_lt ((Option.some.inj eqNext) ▸ advance)
+  succMany?_zero a := congrArg some (Int.add_zero a)
+  succMany?_add_one n a := congrArg some (Int.add_assoc a (n : Int) 1).symm
+
+public theorem Std.PRange.instLawfulUpwardEnumerableLEInt : LawfulUpwardEnumerableLE Int where
+  le_iff a b := ⟨fun h => ⟨(b - a).toNat, congrArg some (by
+    change a + ((b - a).toNat : Int) = b
+    rw [Int.toNat_of_nonneg (Int.sub_nonneg_of_le h), Int.add_comm, Int.sub_add_cancel])⟩,
+    fun h => h.elim fun n eqNext =>
+      (Option.some.inj eqNext) ▸ Int.le_add_of_nonneg_right (a := a) (Int.natCast_nonneg n)⟩
+
 private theorem reachUpper (lo hi : Int) : hi ≤ lo + ((hi - lo).toNat : Int) := by
   by_cases h : lo ≤ hi
   · rw [Int.toNat_of_nonneg (Int.sub_nonneg_of_le h), Int.add_comm, Int.sub_add_cancel]
