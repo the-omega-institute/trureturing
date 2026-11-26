@@ -1413,4 +1413,62 @@ public theorem Std.Rii.toArray_eq_empty_iff : type_of% @_root_.Std.Rii.toArray_e
   rw [← _root_.Std.Rii.toArray_toList]
   exact (arrayNilOfList _).trans _root_.Std.Rii.toList_eq_nil_iff
 
+public theorem Std.Roc.toArray_eq_match : type_of% @_root_.Std.Roc.toArray_eq_match := by
+  intro α r _ _ _ _ _ _
+  apply Array.toList_inj.mp
+  rw [_root_.Std.Roc.toList_toArray, _root_.Std.Roc.toList_eq_match]
+  cases start : succ? r.lower with
+  | none => rfl
+  | some next =>
+    dsimp only
+    by_cases inside : next ≤ r.upper
+    · rw [ite_eq_left inside, ite_eq_left inside, Array.toList_append, _root_.Std.Roc.toList_toArray]
+      rfl
+    · rw [ite_eq_right inside, ite_eq_right inside]
+
+public theorem Std.Rii.toList_eq_match_roi : type_of% @_root_.Std.Rii.toList_eq_match_roi := by
+  intro α r _ _ _ _
+  rw [_root_.Std.Rii.toList_eq_match_rci]
+  cases Least?.least? (α := α) with
+  | none => rfl
+  | some next => exact _root_.Std.Rci.toList_eq_toList_roi
+
+public theorem Std.Rii.toArray_eq_match_roi : type_of% @_root_.Std.Rii.toArray_eq_match_roi := by
+  intro α r _ _ _ _ _
+  rw [_root_.Std.Rii.toArray_eq_match_rci]
+  cases Least?.least? (α := α) with
+  | none => rfl
+  | some next => exact _root_.Std.Rci.toArray_eq_toArray_roi
+
+public theorem Std.Rxc.Iterator.toList_eq_toList_rxoIterator :
+    type_of% @_root_.Std.Rxc.Iterator.toList_eq_toList_rxoIterator := by
+  intro α _ _ _ _ _ _ _ _ _ _ _ _ it
+  rcases it with ⟨⟨start, upper⟩⟩
+  cases start with
+  | none =>
+    rw [_root_.Std.Rxc.Iterator.toList_eq_match, _root_.Std.Rxo.Iterator.toList_eq_match]
+  | some next => exact _root_.Std.Rcc.toList_eq_toList_rco (r := ⟨next, upper⟩)
+
+public theorem Std.Ric.toList_succ_eq_map : type_of% @_root_.Std.Ric.toList_succ_eq_map := by
+  intro α _ _ _ _ _ _ _ _ _ _ hi
+  letI : Nonempty α := ⟨hi⟩
+  rw [_root_.Std.Ric.toList_eq_toList_rcc, _root_.Std.Ric.toList_eq_toList_rcc,
+    _root_.Std.Rcc.toList_eq_ite_roc]
+  have bound : UpwardEnumerable.least ≤ succ hi := UpwardEnumerable.le_iff.mpr UpwardEnumerable.least_le
+  rw [ite_eq_left bound, _root_.Std.Roc.toList_eq_match_rcc, UpwardEnumerable.succ?_eq_some]
+  exact congrArg (List.cons _) (_root_.Std.Rcc.toList_succ_succ_eq_map (lo := UpwardEnumerable.least) (hi := hi))
+
+public theorem Std.Rio.toList_succ_eq_map : type_of% @_root_.Std.Rio.toList_succ_eq_map := by
+  intro α _ _ _ _ _ _ _ _ _ _ hi
+  letI : Nonempty α := ⟨hi⟩
+  letI : LE α := ⟨UpwardEnumerable.LE⟩
+  letI : LawfulUpwardEnumerableLE α := ⟨fun _ _ => Iff.rfl⟩
+  letI : DecidableLE α := fun a b => decidable_of_iff (a < succ b)
+    (UpwardEnumerable.lt_iff.trans UpwardEnumerable.lt_succ_iff)
+  rw [_root_.Std.Rio.toList_eq_toList_rco, _root_.Std.Rio.toList_eq_toList_rco, _root_.Std.Rco.toList_eq_ite_rco]
+  have bound : UpwardEnumerable.least < succ hi :=
+    UpwardEnumerable.lt_iff.mpr (UpwardEnumerable.lt_succ_iff.mpr UpwardEnumerable.least_le)
+  rw [ite_eq_left bound, UpwardEnumerable.succ?_eq_some]
+  exact congrArg (List.cons _) (_root_.Std.Rco.toList_succ_succ_eq_map (lo := UpwardEnumerable.least) (hi := hi))
+
 end OmegaChecks.InitPort.Alternatives
