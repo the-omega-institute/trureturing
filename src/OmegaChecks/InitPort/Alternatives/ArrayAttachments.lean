@@ -1,9 +1,11 @@
 module
+public import Init.Data.Vector.Attach
+import all Init.Data.Vector.Attach
 public import Init.Data.Array.Mem
 public import Init.Data.Array.Attach
 import all Init.Data.Array.Attach
 
-/-! Membership and projection laws for arrays carrying proofs on their elements. -/
+/-! Membership and projection laws for arrays and vectors carrying proofs on their elements. -/
 namespace OmegaChecks.InitPort.Alternatives
 
 public theorem Array.attach_congr : type_of% @_root_.Array.attach_congr := by
@@ -104,5 +106,50 @@ public theorem Array.sizeOf_get : type_of% @_root_.Array.sizeOf_get := by
     change sizeOf xs < 1 + sizeOf xs
     rw [Nat.one_add]
     exact Nat.lt_succ_self _
+
+
+public theorem Vector.attach_congr : type_of% @_root_.Vector.attach_congr := by
+  intro α n xs ys h
+  subst ys
+  exact (Vector.map_id xs.attach).symm
+
+public theorem Vector.attach_map_subtype_val : type_of% @_root_.Vector.attach_map_subtype_val := by
+  intro α n xs
+  exact (Vector.attach_map_val xs id).trans (Vector.map_id xs)
+
+public theorem Vector.attachWith_map_subtype_val : type_of% @_root_.Vector.attachWith_map_subtype_val := by
+  intro α n p xs H
+  exact (Vector.attachWith_map_val (f := id) H).trans (Vector.map_id xs)
+
+public theorem Vector.mem_attach : type_of% @_root_.Vector.mem_attach := by
+  intro α n xs x
+  exact (Vector.mem_attachWith (q := (· ∈ xs)) _ x).mpr x.2
+
+public theorem Vector.mem_pmap : type_of% @_root_.Vector.mem_pmap := by
+  intro α β n pred f xs h b
+  rw [Vector.pmap_eq_map_attach, Vector.mem_map]
+  constructor
+  · rintro ⟨⟨a, mem⟩, _, eq⟩
+    exact ⟨a, mem, eq⟩
+  · rintro ⟨a, mem, eq⟩
+    exact ⟨⟨a, mem⟩, Vector.mem_attach _ _, eq⟩
+
+public theorem Vector.attach_append : type_of% @_root_.Vector.attach_append := by
+  intro α n m xs ys
+  apply (Vector.map_inj_right (f := Subtype.val) (fun _ _ => Subtype.ext)).mp
+  rw [Vector.attach_map_subtype_val, Vector.map_append, Vector.map_map, Vector.map_map]
+  change xs ++ ys = xs.attach.map Subtype.val ++ ys.attach.map Subtype.val
+  rw [Vector.attach_map_subtype_val, Vector.attach_map_subtype_val]
+
+public theorem Vector.attach_reverse : type_of% @_root_.Vector.attach_reverse := by
+  intro α n xs
+  apply (Vector.map_inj_right (f := Subtype.val) (fun _ _ => Subtype.ext)).mp
+  rw [Vector.attach_map_subtype_val, Vector.map_map]
+  change xs.reverse = xs.attach.reverse.map Subtype.val
+  rw [Vector.map_reverse, Vector.attach_map_subtype_val]
+
+public theorem Vector.unattach_flatten : type_of% @_root_.Vector.unattach_flatten := by
+  intros
+  exact Vector.map_flatten
 
 end OmegaChecks.InitPort.Alternatives
