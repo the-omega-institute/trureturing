@@ -24,6 +24,7 @@ public import OmegaInit.Data.List.Lemmas
 public import OmegaInit.Data.List.Perm
 public import OmegaInit.Data.List.Scan.Lemmas
 public import OmegaInit.Data.Nat
+public import OmegaInit.Data.Nat.Bitwise.Lemmas
 public import OmegaInit.Data.Option.Basic
 public import OmegaInit.Data.Option.Lemmas
 public import OmegaInit.Data.Ord.Basic

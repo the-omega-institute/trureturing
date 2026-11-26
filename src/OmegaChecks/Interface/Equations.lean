@@ -2,6 +2,7 @@ module
 
 public import OmegaChecks.Interface.Equations.Logic
 public import OmegaChecks.Interface.Equations.Array
+public import OmegaChecks.Interface.Equations.Bitwise
 public import Mathlib.Data.Nat.Fib.Basic
 public import Mathlib.Data.Nat.Choose.Basic
 public import Mathlib.Data.Nat.Prime.Defs
