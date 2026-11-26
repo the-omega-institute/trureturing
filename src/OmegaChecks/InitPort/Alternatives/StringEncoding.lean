@@ -2,10 +2,21 @@ module
 import all Init.Data.String.Decode
 import all Init.Data.String.Basic
 import all Init.Data.ByteArray.Lemmas
+import all Init.Data.BitVec.Lemmas
 
 /-! The leading and continuation byte ranges of UTF-8 code points. -/
 
 namespace OmegaChecks.InitPort.Alternatives
+
+public theorem BitVec.ushiftRight._proof_3 : type_of% @_root_.BitVec.ushiftRight._proof_3 := by
+  intro n x s
+  exact Nat.lt_of_le_of_lt (Nat.shiftRight_le ..) x.isLt
+
+public theorem BitVec.extractLsb'_append_eq_left : type_of% @_root_.BitVec.extractLsb'_append_eq_left := by
+  intro w v a b
+  apply BitVec.toNat_inj.mp
+  rw [BitVec.extractLsb'_toNat, BitVec.toNat_append, Nat.shiftRight_or_distrib,
+    Nat.shiftLeft_shiftRight, Nat.shiftRight_eq_zero _ _ b.isLt, Nat.or_zero, Nat.mod_eq_of_lt a.isLt]
 
 private def checkBelow (p : Nat → Bool) : Nat → Bool
   | 0 => true
