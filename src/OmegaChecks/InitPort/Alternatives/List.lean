@@ -3,6 +3,8 @@ public import Init.Data.List.Lemmas
 import Init.Data.List.Impl
 import all Init.Data.List.Control
 import Init.Data.List.Monadic
+import all Init.Data.List.MapIdx
+import Init.Data.Array.Lemmas
 
 /-! Structural proofs for boolean predicates and folds over strict lists. -/
 
@@ -200,5 +202,41 @@ public theorem List.filterMap_filterMap : type_of% @_root_.List.filterMap_filter
       | some c =>
         rw [List.filterMap_cons_some fa, List.filterMap_cons_some gb, List.filterMap_cons_some (f := fun x => (f x).bind g) (bind.trans gb)]
         exact congrArg (c :: ·) ih
+
+public theorem List.getElem_mapFinIdx_go : type_of% @_root_.List.getElem_mapFinIdx_go := by
+  intro α β bs acc as f i h w
+  induction bs generalizing acc with
+  | nil =>
+    have small : i < acc.size := w
+    rw [dite_eq_left small]
+    rfl
+  | cons a bs ih =>
+    have hacc : acc.size < as.length :=
+      Nat.lt_of_lt_of_eq (Nat.lt_add_of_pos_left (Nat.zero_lt_succ bs.length)) h
+    let next := acc.push (f acc.size a hacc)
+    have len : next.size = acc.size + 1 := Array.size_push _
+    have inv : bs.length + next.size = as.length :=
+      (congrArg (bs.length + ·) len).trans ((Nat.succ_add bs.length acc.size).symm.trans h)
+    have stepEq := ih (acc := next) (h := inv) (w := w)
+    apply stepEq.trans
+    by_cases small : i < acc.size
+    · rw [dite_eq_left small, dite_eq_left (Nat.lt_of_lt_of_eq (Nat.lt_succ_of_lt small) len.symm)]
+      exact Array.getElem_push_lt small
+    · rw [dite_eq_right small]
+      by_cases eq : i = acc.size
+      · subst i
+        rw [dite_eq_left (Nat.lt_of_lt_of_eq (Nat.lt_succ_self _) len.symm)]
+        apply (Array.getElem_push_eq).trans
+        congr 1
+        exact (getElem_congr_idx (c := a :: bs) (w := by exact Nat.zero_lt_succ _) (Nat.sub_self _).symm)
+      · have lt := Nat.lt_of_le_of_ne (Nat.le_of_not_lt small) (Ne.symm eq)
+        have large : ¬i < next.size := Nat.not_lt_of_ge (len.symm ▸ lt)
+        rw [dite_eq_right large]
+        congr 1
+        have ds : i - acc.size = (i - next.size).succ := by
+          rw [len, Nat.sub_succ, Nat.succ_pred_eq_of_pos (Nat.sub_pos_of_lt lt)]
+        have inBounds := Nat.sub_lt_right_of_lt_add (Nat.le_of_lt lt)
+          (Nat.lt_of_lt_of_eq w (_root_.List.length_mapFinIdx_go.trans h.symm))
+        exact (getElem_congr_idx (c := a :: bs) (w := inBounds) ds).symm
 
 end OmegaChecks.InitPort.Alternatives
