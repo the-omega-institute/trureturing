@@ -61,4 +61,87 @@ public theorem Std.LinearOrderPackage.ofLE._proof_2 : type_of% @_root_.Std.Linea
     · rename_i notBA
       exact ⟨fun bc => ⟨args.le_trans a b c ((args.le_total b a).resolve_left notBA) bc, bc⟩, And.right⟩
 
+public theorem Std.OrientedCmp.of_gt_iff_lt : type_of% @_root_.Std.OrientedCmp.of_gt_iff_lt := by
+  intro α cmp compatible
+  constructor
+  intro a b
+  cases ab : cmp a b with
+  | gt => rw [(compatible a b).mp ab]; rfl
+  | lt => rw [(compatible b a).mpr ab]; rfl
+  | eq =>
+    cases ba : cmp b a with
+    | eq => rfl
+    | lt => exact Ordering.noConfusion (ab.symm.trans ((compatible a b).mpr ba))
+    | gt => exact Ordering.noConfusion (ab.symm.trans ((compatible b a).mp ba))
+
+public theorem Std.LinearPreorderPackage.ofOrd._proof_1 :
+    type_of% @_root_.Std.LinearPreorderPackage.ofOrd._proof_1 := by
+  intro α args a b
+  letI := args.ord
+  have isLT (o : Ordering) : o = .lt ↔ o.isLE = true ∧ ¬o.isGE = true := by
+    cases o <;> decide
+  exact (args.lt_iff a b).trans ((isLT (compare a b)).trans
+    (and_congr (args.lawfulOrderOrd.isLE_compare a b) (not_congr (args.lawfulOrderOrd.isGE_compare a b))))
+
+public theorem Std.LinearPreorderPackage.ofOrd._proof_3 :
+    type_of% @_root_.Std.LinearPreorderPackage.ofOrd._proof_3 := by
+  intro α args
+  letI := args.le
+  letI := args.beq
+  refine { beq_iff_le_and_ge := ?_ }
+  intro a b
+  exact (args.beq_iff a b).trans (Ordering.eq_eq_iff_isLE_and_isGE.trans
+    (and_congr (args.lawfulOrderOrd.isLE_compare a b) (args.lawfulOrderOrd.isGE_compare a b)))
+
+public theorem Std.LinearPreorderPackage.ofOrd._proof_9 :
+    type_of% @_root_.Std.LinearPreorderPackage.ofOrd._proof_9 := by
+  intro α args law a b
+  letI := args.ord
+  have total (o : Ordering) : o.isLE = true ∨ o.isGE = true := by cases o <;> decide
+  exact (total (compare a b)).elim (fun h => Or.inl ((law.isLE_compare a b).mp h))
+    (fun h => Or.inr ((law.isGE_compare a b).mp h))
+
+public theorem Std.LinearOrderPackage.ofOrd._proof_3 :
+    type_of% @_root_.Std.LinearOrderPackage.ofOrd._proof_3 := by
+  intro α args a b ab ba
+  apply args.eq_of_compare a b
+  exact Ordering.eq_eq_of_isLE_of_isGE ((args.lawfulOrderOrd.isLE_compare a b).mpr ab)
+    ((args.lawfulOrderOrd.isGE_compare a b).mpr ba)
+
+public theorem Std.LinearOrderPackage.ofOrd._proof_1 :
+    type_of% @_root_.Std.LinearOrderPackage.ofOrd._proof_1 := by
+  intro α args
+  letI := _root_.Std.LinearPreorderPackage.ofOrd α args.toLinearPreorderOfOrdArgs
+  letI := args.min
+  refine { min_eq_or := ?_, le_min_iff := ?_ }
+  · intro a b
+    rw [args.min_eq]
+    split <;> first | exact Or.inl rfl | exact Or.inr rfl
+  · intro a b c
+    rw [args.min_eq]
+    split
+    · rename_i bc
+      exact ⟨fun ab => ⟨ab, _root_.Std.le_trans ab ((args.lawfulOrderOrd.isLE_compare b c).mp bc)⟩, And.left⟩
+    · rename_i notBC
+      have cb := _root_.Std.le_of_not_ge (fun bc => notBC ((args.lawfulOrderOrd.isLE_compare b c).mpr bc))
+      exact ⟨fun ac => ⟨_root_.Std.le_trans ac cb, ac⟩, And.right⟩
+
+public theorem Std.LinearOrderPackage.ofOrd._proof_2 :
+    type_of% @_root_.Std.LinearOrderPackage.ofOrd._proof_2 := by
+  intro α args
+  letI := _root_.Std.LinearPreorderPackage.ofOrd α args.toLinearPreorderOfOrdArgs
+  letI := args.max
+  refine { max_eq_or := ?_, max_le_iff := ?_ }
+  · intro a b
+    rw [args.max_eq]
+    split <;> first | exact Or.inl rfl | exact Or.inr rfl
+  · intro a b c
+    rw [args.max_eq]
+    split
+    · rename_i ba
+      exact ⟨fun ac => ⟨ac, _root_.Std.le_trans ((args.lawfulOrderOrd.isGE_compare a b).mp ba) ac⟩, And.left⟩
+    · rename_i notBA
+      have ab := _root_.Std.le_of_not_ge (fun ba => notBA ((args.lawfulOrderOrd.isGE_compare a b).mpr ba))
+      exact ⟨fun bc => ⟨_root_.Std.le_trans ab bc, bc⟩, And.right⟩
+
 end OmegaChecks.InitPort.Alternatives
