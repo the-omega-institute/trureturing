@@ -2,7 +2,7 @@
 
 ## Abstract
 
-The absence of a full reference factor in the Choi support forces unit complete hockey-stick contraction.
+The absence of a full reference factor in the Choi support forces unit complete hockey-stick contraction at every parameter greater than one.
 
 **Theorem 1.1 (Unit contraction from the normalized Choi support).**
 
@@ -28,7 +28,7 @@ Lean statement: `D5/S3/Quantum/Divergence/CompleteHockeyStickChoiSupport.coeffic
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Divergence/CompleteHockeyStickChoiSupport.coefficient_le_of_replacement` (`✓ std3`). ∎
 
-*Citation.* Ian George; Christoph Hirche; Theshani Nuradha; Mark M. Wilde (2025). *Quantum Doeblin Coefficients: Interpretations and Applications*. URL: <https://arxiv.org/abs/2503.22823v3>.
+*Citation.* Ian George; Christoph Hirche; Theshani Nuradha; Mark M. Wilde (2026). *Quantum Doeblin Coefficients: Interpretations and Applications*. DOI: [10.22331/q-2026-05-22-2115](https://doi.org/10.22331/q-2026-05-22-2115). URL: <https://arxiv.org/html/2503.22823v3>.
 
 *Commentary.*
 

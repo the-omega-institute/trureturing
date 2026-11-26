@@ -9,10 +9,10 @@ internal sealed class CompleteHockeyStickChoiSupportDocument : IScribeDocumentDe
         LibraryNoteRef.Create("D5/L/QuantumChannels/hirchegeorgenuradhawilde2026conditional");
 
     private static readonly LibraryNoteRef DoeblinSource =
-        LibraryNoteRef.Create("D5/L/QuantumChannels/georgehirchenuradhawilde2025doeblin");
+        LibraryNoteRef.Create("D5/L/Divergence/georgehirchenuradhawilde2026doeblin");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "The absence of a full reference factor in the Choi support forces unit complete hockey-stick contraction.",
+        "The absence of a full reference factor in the Choi support forces unit complete hockey-stick contraction at every parameter greater than one.",
         H("Complete hockey-stick contraction and Choi support"),
         Blocks(
           Describe.Lean(

@@ -85,7 +85,15 @@ at least two computational basis states, intersect the supports of their
 outputs. If the intersection is zero, equal-marginal witnesses approach
 retention one with a reference of input dimension. The simplex uses Eriksson's
 common-support construction in §6 with input blocks calibrated directly for
-the fixed hockey-stick parameter. [Eriksson, v3](https://airr.science/papers/ARR-2026-564FZ70CSN83KACD/versions/v3/)
+the fixed hockey-stick parameter. A fixed-parameter CQ saturation
+statement also follows from Eriksson’s §§6.2–6.3 estimates. For $t>1$,
+completing the square in the two active input coordinates gives
+$E_t(\rho\Vert\sigma)\le4nt\beta/(t-1)$. His graph effect has
+$p\sim4n\beta$ and $q=o(\beta)$, so $p-tq$ gives a limiting ratio
+of at least $(t-1)/t$. For any fixed $\gamma>1$, mixing the first
+input toward the second by weight $(\gamma-1)/(t-1)$ on the first
+input preserves the ratio for $t\ge\gamma$. Sending $t$ to infinity
+gives the saturation statement. [Eriksson, v3](https://airr.science/papers/ARR-2026-564FZ70CSN83KACD/versions/v3/)
 
 `CompleteHockeyStickChoiSupport.result` proves unit complete contraction for
 each fixed $\gamma>1$ when the normalized Choi support of a finite channel
