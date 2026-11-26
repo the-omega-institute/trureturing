@@ -55,7 +55,9 @@ public def finiteCollectors (env : Environment) (input : Expr) (withinImplementa
           let new ← mkLambdaFVars locals result
           unless (Kernel.check env {} old).isOk && (Kernel.check env {} new).isOk &&
               Kernel.isDefEqGuarded env {} old new do return .continue
-        return .done (← mkLambdaFVars xs result)
+        -- A list slice may itself contain another collection, for example when
+        -- sorting a subarray via the halves of its list representation.
+        return .visit (← mkLambdaFVars xs result)
     catch _ => return .continue)
   let .ok result ← (rewrite.run' |>.toIO' {fileName := "<finite collector>", fileMap := default} {env}).toBaseIO
     | return input
