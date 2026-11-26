@@ -25,7 +25,7 @@ open scoped BigOperators
 
 noncomputable section
 
-private abbrev Sequence := ℕ → ℤ
+abbrev Sequence := ℕ → ℤ
 
 /-- Advance the argument of a sequence by one. -/
 private def shift : Module.End ℤ Sequence where
@@ -33,7 +33,7 @@ private def shift : Module.End ℤ Sequence where
   map_add' _ _ := rfl
   map_smul' _ _ := rfl
 
-private theorem shift_pow_apply (f : Sequence) (n r : ℕ) :
+theorem shift_pow_apply (f : Sequence) (n r : ℕ) :
     (shift ^ r) f n = f (n + r) := by
   induction r generalizing f with
   | zero => rfl
@@ -41,35 +41,35 @@ private theorem shift_pow_apply (f : Sequence) (n r : ℕ) :
     rw [pow_succ, Module.End.mul_apply, ih]
     rfl
 
-private def Kills (P : ℤ[X]) (f : Sequence) : Prop := (aeval shift P) f = 0
+def Kills (P : ℤ[X]) (f : Sequence) : Prop := (aeval shift P) f = 0
 
-private theorem kills_of_dvd {P Q : ℤ[X]} {f : Sequence} (hPQ : Q ∣ P) (hQ : Kills Q f) :
+theorem kills_of_dvd {P Q : ℤ[X]} {f : Sequence} (hPQ : Q ∣ P) (hQ : Kills Q f) :
     Kills P f := by
   obtain ⟨R, rfl⟩ := hPQ
   unfold Kills at *
   rw [mul_comm, map_mul, Module.End.mul_apply, hQ, map_zero]
 
-private theorem kills_zero (P : ℤ[X]) : Kills P 0 := by
+theorem kills_zero (P : ℤ[X]) : Kills P 0 := by
   exact map_zero (aeval shift P)
 
-private theorem kills_sum {α : Type} [Fintype α] {P : ℤ[X]} (f : α → Sequence)
+theorem kills_sum {α : Type} [Fintype α] {P : ℤ[X]} (f : α → Sequence)
     (h : ∀ a, Kills P (f a)) : Kills P (∑ a, f a) := by
   unfold Kills at *
   rw [map_sum]
   simp only [h, Finset.sum_const_zero]
 
-private theorem kills_smul {P : ℤ[X]} {f : Sequence} (c : ℤ) (h : Kills P f) :
+theorem kills_smul {P : ℤ[X]} {f : Sequence} (c : ℤ) (h : Kills P f) :
     Kills P (c • f) := by
   unfold Kills at *
   rw [map_smul, h, smul_zero]
 
-private theorem eval_C_mul_X_pow (a : ℤ) (r : ℕ) (f : Sequence) (n : ℕ) :
+theorem eval_C_mul_X_pow (a : ℤ) (r : ℕ) (f : Sequence) (n : ℕ) :
     (aeval shift (Polynomial.C a * X ^ r : ℤ[X])) f n = a * f (n + r) := by
   rw [map_mul, Module.End.mul_apply, aeval_C, Algebra.algebraMap_eq_smul_one,
     LinearMap.smul_apply, Module.End.one_apply, Pi.smul_apply, map_pow, aeval_X,
     shift_pow_apply, zsmul_eq_mul, Int.cast_id]
 
-private theorem kills_step {d : ℕ} {a : ℤ} {f : Sequence}
+theorem kills_step {d : ℕ} {a : ℤ} {f : Sequence}
     (h : ∀ n, f (n + d) = a * f n) : Kills (X ^ d - Polynomial.C a) f := by
   unfold Kills
   funext n
@@ -78,21 +78,21 @@ private theorem kills_step {d : ℕ} {a : ℤ} {f : Sequence}
     Module.End.one_apply, Pi.smul_apply, zsmul_eq_mul, Int.cast_id, h, sub_self]
   rfl
 
-private abbrev Row (d k : ℕ) := Fin (k + 1) → Fin (d + 1)
-private abbrev Profile (d k : ℕ) := Fin k → Fin (d + 1)
+abbrev Row (d k : ℕ) := Fin (k + 1) → Fin (d + 1)
+abbrev Profile (d k : ℕ) := Fin k → Fin (d + 1)
 
-private def edge {d k : ℕ} (r : Row d k) (j : Fin k) : ℕ :=
+def edge {d k : ℕ} (r : Row d k) (j : Fin k) : ℕ :=
   (r j.castSucc).val + (r j.succ).val
 
-private def Fiber {d k : ℕ} (p : Profile d k) := {r : Row d k // ∀ j, edge r j = (p j).val}
+def Fiber {d k : ℕ} (p : Profile d k) := {r : Row d k // ∀ j, edge r j = (p j).val}
 
 private instance {d k : ℕ} (p : Profile d k) : Finite (Fiber p) := by
   unfold Fiber
   infer_instance
 
-private def flip {d k : ℕ} (p : Profile d k) : Profile d k := fun j => (p j).rev
+def flip {d k : ℕ} (p : Profile d k) : Profile d k := fun j => (p j).rev
 
-private def profileAt {d k : ℕ} (p : Profile d k) (i : ℕ) : Profile d k :=
+def profileAt {d k : ℕ} (p : Profile d k) (i : ℕ) : Profile d k :=
   if i % 2 = 0 then p else flip p
 
 @[local simp] private theorem profileAt_zero {d k : ℕ} (p : Profile d k) : profileAt p 0 = p := by
@@ -183,9 +183,9 @@ private def lowEquiv (d n k : ℕ) :
     (Σ p : Profile d k, AltRows p (n + 2)) ≃ {a : Grid d (n + 1) k // Low d a} :=
   Equiv.ofBijective (rowsToLow d n k) ⟨rowsToLow_injective d n k, rowsToLow_surjective d n k⟩
 
-private def b {d k : ℕ} (p : Profile d k) : ℕ := Nat.card (Fiber p)
+def b {d k : ℕ} (p : Profile d k) : ℕ := Nat.card (Fiber p)
 
-private def profileCount {d k : ℕ} (p : Profile d k) (h : ℕ) : ℕ :=
+def profileCount {d k : ℕ} (p : Profile d k) (h : ℕ) : ℕ :=
   ∏ i : Fin h, b (profileAt p i.val)
 
 private theorem card_altRows {d k : ℕ} (p : Profile d k) (h : ℕ) :
@@ -201,7 +201,7 @@ private theorem low_count (d n k : ℕ) :
   simp_rw [card_altRows]
 
 /-- The initial cell uniquely determines a row with prescribed edge sums. -/
-private theorem fiber_bound {d k : ℕ} (p : Profile d (k + 1)) :
+theorem fiber_bound {d k : ℕ} (p : Profile d (k + 1)) :
     b p ≤ (p 0).val + 1 := by
   let f (r : Fiber p) : Fin ((p 0).val + 1) :=
     ⟨(r.1 0).val, by
@@ -254,7 +254,7 @@ private theorem profileCount_eq_pow {d k : ℕ} (p : Profile d k) (c : ℕ)
   simp
 
 /-- Positive-index literal cardinality as a sum of shifted profile counts. -/
-private theorem literal_sum (M d n k : ℕ) (hd : d < M) :
+theorem literal_sum (M d n k : ℕ) (hd : d < M) :
     C M (2 * M - d) (n + 1) (k + 1) =
       2 * ∑ p : Profile d (k + 1), profileCount p (n + 2) := by
   rw [count_eq M d (n + 1) (k + 1) hd (Nat.succ_pos _) (Nat.succ_pos _), low_count]
@@ -301,8 +301,8 @@ private def P14 : ℤ[X] :=
     Polynomial.C (-36288) * X ^ 3 + Polynomial.C 21456 * X ^ 2 +
     Polynomial.C 23040 * X ^ 1 + Polynomial.C (-17280) * X ^ 0)
 
-private def linear (a : ℤ) : ℤ[X] := X - Polynomial.C a
-private def quadratic (a : ℤ) : ℤ[X] := X ^ 2 - Polynomial.C a
+def linear (a : ℤ) : ℤ[X] := X - Polynomial.C a
+def quadratic (a : ℤ) : ℤ[X] := X ^ 2 - Polynomial.C a
 
 private def factors9 : List ℤ[X] :=
   [linear 1, quadratic 2, quadratic 3, quadratic 4, quadratic 6]

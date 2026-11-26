@@ -1,17 +1,15 @@
 import D5.S3.Combinatorics.TraceAvoidingArrays.Recurrence.HardinA235280A235310Alphabet
 import Reg.Support.SingleDependentReadout
 import LeanInformationAuditInterface.Contract.Registration
-import Batteries.Tactic.OpenPrivate
 
 /-! Source-bound readouts for the two literal alphabet comparisons. -/
 
 namespace Reg.D5.S3.Combinatorics.TraceAvoidingArrays.Recurrence.HardinA235280A235310Alphabet
 
 open _root_.D5.S3.Combinatorics.TraceAvoidingArrays.Recurrence.HardinA235280A235310Alphabet
-  (C Grid a235280 a235310)
+  (C Grid Legal a235280 a235310)
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
-open private Legal from D5.S3.Combinatorics.TraceAvoidingArrays.Recurrence.HardinA235280A235310Alphabet
 
 noncomputable section
 
