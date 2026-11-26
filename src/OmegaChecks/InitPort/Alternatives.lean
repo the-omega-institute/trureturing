@@ -3,6 +3,7 @@ module
 public import Lean
 public import OmegaChecks.InitPort.Alternatives.AC
 public import OmegaChecks.InitPort.Alternatives.Array
+public import OmegaChecks.InitPort.Alternatives.ArrayFold
 public import OmegaChecks.InitPort.Alternatives.ArrayPredicates
 public import OmegaChecks.InitPort.Alternatives.ArrayReverse
 public import OmegaChecks.InitPort.Alternatives.Collect
