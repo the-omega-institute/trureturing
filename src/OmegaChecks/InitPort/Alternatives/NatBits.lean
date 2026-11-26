@@ -1,5 +1,7 @@
 module
 public import Init.Data.Nat.Bitwise.Lemmas
+public import Init.Data.Nat.Power2.Bitwise
+import all Init.Data.Nat.Power2.Basic
 
 namespace OmegaChecks.InitPort.Alternatives
 
@@ -111,5 +113,42 @@ public theorem Nat.right_le_or : type_of% @_root_.Nat.right_le_or := by
   intro n m
   refine Nat.le_of_testBit fun i bit => ?_
   rw [Nat.testBit_or, bit, Bool.or_true]
+
+private theorem highestBitAfterSub {n : Nat} (nonzero : n ≠ 0) (hne : n ≠ 2 ^ n.log2) :
+    (n &&& (n - 1)).testBit n.log2 = true := by
+  have bounds := (_root_.Nat.log2_eq_iff (k := n.log2) nonzero).mp rfl
+  have lower := Nat.lt_of_le_of_ne bounds.1 (Ne.symm hne)
+  have positive := Nat.two_pow_pos n.log2
+  have previous : n - 1 ≠ 0 := by omega
+  have log : (n - 1).log2 = n.log2 := (_root_.Nat.log2_eq_iff previous).mpr
+    ⟨by omega, Nat.lt_of_le_of_lt (Nat.sub_le ..) bounds.2⟩
+  rw [Nat.testBit_and, Nat.testBit_log2 nonzero, ← log, Nat.testBit_log2 previous]
+  rfl
+
+public theorem Nat.and_sub_one_testBit_log2 : type_of% @_root_.Nat.and_sub_one_testBit_log2 :=
+  fun {_} hn hpow => highestBitAfterSub hn fun h => hpow ⟨_, h⟩
+
+public theorem Nat.and_sub_one_eq_zero_iff_isPowerOfTwo :
+    type_of% @_root_.Nat.and_sub_one_eq_zero_iff_isPowerOfTwo := by
+  intro n hn
+  constructor
+  · intro h
+    by_cases hp : n = 2 ^ n.log2
+    · exact ⟨n.log2, hp⟩
+    · have bit := highestBitAfterSub hn hp
+      rw [h, Nat.zero_testBit] at bit
+      contradiction
+  · rintro ⟨k, rfl⟩
+    exact (Nat.and_two_pow_sub_one_eq_mod ..).trans (Nat.mod_self _)
+
+public theorem Nat.ne_zero_and_sub_one_eq_zero_iff_isPowerOfTwo :
+    type_of% @_root_.Nat.ne_zero_and_sub_one_eq_zero_iff_isPowerOfTwo := by
+  intro n
+  constructor
+  · rintro ⟨hn, h⟩
+    exact (Nat.and_sub_one_eq_zero_iff_isPowerOfTwo hn).mp h
+  · intro h
+    have hn : n ≠ 0 := fun e => Nat.not_isPowerOfTwo_zero (e ▸ h)
+    exact ⟨hn, (Nat.and_sub_one_eq_zero_iff_isPowerOfTwo hn).mpr h⟩
 
 end OmegaChecks.InitPort.Alternatives
