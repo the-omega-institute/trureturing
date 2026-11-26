@@ -27,7 +27,10 @@ theorem size_push {α : Type u} {xs : Array α} (v : α) :
 @[no_expose] def map {α : Type u} {β : Type v} (f : α → β) (as : Array α) : Array β :=
   Array.mk (List.map f (Array.toList as))
 
-attribute [irreducible] Array.append Array.map
+@[no_expose] def eraseIdxIfInBounds {α : Type u} (xs : Array α) (i : Nat) : Array α :=
+  Array.mk (List.eraseIdx (Array.toList xs) i)
+
+attribute [irreducible] Array.append Array.map Array.eraseIdxIfInBounds
 
 end Omega.Array
 

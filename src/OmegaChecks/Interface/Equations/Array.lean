@@ -14,4 +14,8 @@ public theorem Array.map {α : Type u} {β : Type v} (f : α → β) (as : Array
     _root_.Array.mk (List.map f as.toList) = _root_.Array.map f as :=
   _root_.Array.ext' _root_.Array.toList_map.symm
 
+public theorem Array.eraseIdxIfInBounds {α : Type u} (xs : Array α) (i : Nat) :
+    _root_.Array.mk (List.eraseIdx xs.toList i) = _root_.Array.eraseIdxIfInBounds xs i :=
+  _root_.Array.ext' _root_.Array.toList_eraseIdxIfInBounds.symm
+
 end OmegaChecks.Interface.Equations
