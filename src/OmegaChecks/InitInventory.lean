@@ -743,6 +743,18 @@ private def reductionPaths (official strict full : Environment) : NameMap (List 
         todo := todo.push n
   return paths
 
+/-- Additional logical consequences with separate proof terms. These do not discharge a
+missing official interface in the completeness check. -/
+private def logicalConsequence? (owner name : Name) : Option (Name × Name) := do
+  guard (owner == `Init.Data.String.Lemmas.Pattern.Basic)
+  let witness ← match name with
+    | ``String.Slice.Pattern.Model.IsMatch.exists_isLongestMatch =>
+      some `OmegaChecks.InitInventory.StringPatterns.excludedMiddleOfLongest
+    | ``String.Slice.Pattern.Model.IsRevMatch.exists_isLongestRevMatch =>
+      some `OmegaChecks.InitInventory.StringPatterns.excludedMiddleOfRevLongest
+    | _ => none
+  return (``Classical.em, witness)
+
 private def inventory (lib : System.FilePath) (visible strict full : Environment) (modules : Array Name)
     (gaps : Option IO.FS.Handle) : CoreM Json := do
   let official ← getEnv
@@ -766,7 +778,7 @@ private def inventory (lib : System.FilePath) (visible strict full : Environment
   let mut directAxioms := 0
   let mut withAxioms := 0
   if let some file := gaps then
-    file.putStrLn "module\tdeclaration\tkind\tunsafe\tpartial\tupstreamAxioms\timpliesAxiom\treductionWitness"
+    file.putStrLn "module\tdeclaration\tkind\tunsafe\tpartial\tupstreamAxioms\timpliesAxiom\treductionWitness\tlogicalConsequence\tlogicalConsequenceWitness"
   for owner in modules do
     let some idx := visible.getModuleIdx? owner | throwError "missing official module {owner}"
     let publicNames := visible.header.moduleData[idx]!.constNames.filter publicName
@@ -787,6 +799,7 @@ private def inventory (lib : System.FilePath) (visible strict full : Environment
       let some info := localDecls.find? name | throwError "missing declaration {owner}/{name}"
       let some (_, axioms) := localAxioms.binSearch (name, #[]) (fun a b => Name.quickLt a.1 b.1)
         | throwError "missing official axiom closure for {owner}/{name}"
+      let consequence := logicalConsequence? owner name
       let boundary := boundaries[(owner, name)]?
       if boundary.isSome then certifiedSites := certifiedSites + 1
       let strictName := `Omega ++ name
@@ -800,7 +813,8 @@ private def inventory (lib : System.FilePath) (visible strict full : Environment
           file.putStrLn <| String.intercalate "\t" [owner.toString, name.toString,
             declarationKind info, toString info.isUnsafe, toString info.isPartial,
             String.intercalate "," (axioms.toList.map Name.toString),
-            (boundary.map (·.1.toString)).getD "", (boundary.map (·.2.toString)).getD ""]
+            (boundary.map (·.1.toString)).getD "", (boundary.map (·.2.toString)).getD "",
+            (consequence.map (·.1.toString)).getD "", (consequence.map (·.2.toString)).getD ""]
       if info.isAxiom then
         directAxioms := directAxioms + 1
         axiomUnique := axiomUnique.insert name
@@ -808,7 +822,7 @@ private def inventory (lib : System.FilePath) (visible strict full : Environment
         withAxioms := withAxioms + 1
         withAxiomsUnique := withAxiomsUnique.insert name
       let reduction := if matched then reductions.get? strictName else none
-      rows := rows.push <| Json.mkObj [
+      let row := Json.mkObj [
         ("name", toJson name.toString), ("module", toJson owner.toString),
         ("kind", toJson (declarationKind info)), ("unsafe", toJson info.isUnsafe), ("partial", toJson info.isPartial),
         ("matchingNameAndModule", toJson matched),
@@ -818,6 +832,10 @@ private def inventory (lib : System.FilePath) (visible strict full : Environment
         ("impliesAxiom", toJson (boundary.map (·.1.toString))),
         ("reductionWitness", toJson (boundary.map (·.2.toString))),
         ("strictModule", toJson (strictOwner.map Name.toString))]
+      rows := rows.push <| match consequence with
+        | some (target, witness) => row.mergeObj <| Json.mkObj [
+            ("logicalConsequence", toJson target.toString), ("logicalConsequenceWitness", toJson witness.toString)]
+        | none => row
   unless certifiedSites == boundaries.size do throwError "missing registered public definition site"
   let summary := Json.mkObj [("declarations", toJson rows.size), ("directAxioms", toJson directAxioms),
     ("withAxioms", toJson withAxioms), ("matchingNameAndModule", toJson matchingNames)]
