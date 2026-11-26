@@ -26,6 +26,45 @@ namespace KernelLimit
 open Filter MeasureTheory
 open scoped Topology
 
+open D5.S3.Analytic.Oscillation.MontgomeryWindow
+
+private lemma peak_error_integral_bound
+    (f E : ℝ → ℝ) (hf : Integrable f) (hE : Measurable E)
+    (L B M e : ℝ) (hL : 0 < L) (hB : 0 ≤ B) (hM : 0 ≤ M)
+    (hbound : ∀ u, ‖f u‖ ≤ M)
+    (hcompact : ∀ u, 1 < |u| → f u = 0)
+    (herr : ∀ u, |u| ≤ 1 → ‖E u‖ ≤ B * exponentialWeight (L * u) + e) :
+    Integrable (fun u => E u * f u) ∧
+    ‖∫ u : ℝ, E u * f u‖ ≤ (B * M) / L + e * ∫ u : ℝ, ‖f u‖ := by
+  let K (u : ℝ) := exponentialWeight (L * u)
+  let Q (u : ℝ) := (B * M) * K u + e * ‖f u‖
+  have hK0 (u : ℝ) : 0 ≤ K u := (Real.exp_pos _).le
+  have hK : Integrable K := exponentialWeight_integrable.comp_mul_left' hL.ne'
+  have hQ : Integrable Q := (hK.const_mul (B * M)).add (hf.norm.const_mul e)
+  have hdom (u : ℝ) : ‖E u * f u‖ ≤ Q u := by
+    by_cases hu : |u| ≤ 1
+    · rw [norm_mul]
+      calc
+        _ ≤ (B * K u + e) * ‖f u‖ := mul_le_mul_of_nonneg_right (herr u hu) (norm_nonneg _)
+        _ = (B * K u) * ‖f u‖ + e * ‖f u‖ := add_mul _ _ _
+        _ ≤ Q u := by
+          dsimp [Q]
+          rw [mul_right_comm B M]
+          exact add_le_add_left (mul_le_mul_of_nonneg_left (hbound u) (mul_nonneg hB (hK0 u))) _
+    · rw [hcompact u (lt_of_not_ge hu), mul_zero, norm_zero]
+      dsimp [Q]
+      simp only [hcompact u (lt_of_not_ge hu), abs_zero, mul_zero, add_zero]
+      exact mul_nonneg (mul_nonneg hB hM) (hK0 u)
+  have hi := hQ.mono' (hE.aestronglyMeasurable.mul hf.aestronglyMeasurable) (ae_of_all _ hdom)
+  refine ⟨hi, (norm_integral_le_integral_norm _).trans ((integral_mono hi.norm hQ hdom).trans_eq ?_)⟩
+  have hm : (∫ u : ℝ, exponentialWeight u) = 1 := by simpa using exponentialWeight_cosine 0 0
+  have hs : (∫ u : ℝ, K u) = L⁻¹ := by
+    rw [show K = fun u => exponentialWeight (L * u) from rfl,
+      Measure.integral_comp_mul_left, abs_of_pos (inv_pos.mpr hL), hm, smul_eq_mul, mul_one]
+  change (∫ u : ℝ, (B * M) * K u + e * ‖f u‖) = _
+  have he := integral_add (hK.const_mul (B * M)) (hf.norm.const_mul e)
+  rw [he, integral_const_mul, hs, integral_const_mul, div_eq_mul_inv]
+
 private lemma kernelDilationLimit (K f : ℝ → ℝ) (hK : Integrable K) (hK_mass : (∫ x, K x) = 1)
     (hf : Continuous f) (B : ℝ) (hB : ∀ x, ‖f x‖ ≤ B) :
     Tendsto (fun L : ℝ => ∫ x : ℝ, L * K (L * x) * f x) atTop (𝓝 (f 0)) := by
@@ -50,18 +89,22 @@ private lemma kernelDilationLimit (K f : ℝ → ℝ) (hK : Integrable K) (hK_ma
     (∫ x : ℝ, K x * f (L⁻¹ * x)) = L * (∫ x : ℝ, K (L * x) * f x) := by rw [hscale, ← mul_assoc, mul_inv_cancel₀ hL.ne', one_mul]
     _ = ∫ x : ℝ, L * K (L * x) * f x := by simp only [mul_assoc, integral_const_mul]
 
-private lemma profile_integral_limit (K f : ℝ → ℝ) (hK : Integrable K) (hK_mass : (∫ x, K x) = 1)
-    (hf : Continuous f) (hfint : Integrable f) (B : ℝ) (hB : ∀ x, ‖f x‖ ≤ B)
+private lemma profile_integral_limit (f : ℝ → ℝ)
+    (hf : Continuous f) (hfint : Integrable f) (B M : ℝ) (hB : 0 ≤ B) (hM : 0 ≤ M)
+    (hfB : ∀ x, ‖f x‖ ≤ M)
     (scale : ℝ → ℝ) (hscale : Tendsto scale atTop atTop)
     (P : ℝ → ℝ → ℝ) (hP : ∀ L, Measurable (P L))
     (c ε : ℝ → ℝ) (hc : Tendsto c atTop (𝓝 1)) (hε : Tendsto ε atTop (𝓝 0))
     (hcompact : ∀ x, 1 < |x| → f x = 0)
     (herror : ∀ᶠ L : ℝ in atTop, ∀ x, |x| ≤ 1 →
-      |P L x - (c L * (scale L * K (scale L * x)) + |x|)| ≤ ε L) :
+      |P L x - (c L * (scale L * exponentialWeight (scale L * x)) + |x|)| ≤ B * exponentialWeight (scale L * x) + ε L) :
     Tendsto (fun L : ℝ => ∫ x : ℝ, P L x * f x) atTop
       (𝓝 (f 0 + ∫ x : ℝ, |x| * f x)) := by
-  have hpeak := (kernelDilationLimit K f hK hK_mass hf B hB).comp hscale
-  let E (L x : ℝ) := P L x - (c L * (scale L * K (scale L * x)) + |x|)
+  let K := exponentialWeight
+  have hK : Integrable K := exponentialWeight_integrable
+  have hK_mass : (∫ x, K x) = 1 := by simpa [K] using exponentialWeight_cosine 0 0
+  have hpeak := (kernelDilationLimit K f hK hK_mass hf M hfB).comp hscale
+  let E (L x : ℝ) := P L x - (c L * (scale L * exponentialWeight (scale L * x)) + |x|)
   have hlin : Integrable (fun x : ℝ => |x| * f x) := by
     refine (hfint.norm).mono' (by fun_prop) (ae_of_all _ fun x => ?_)
     by_cases hx : |x| ≤ 1
@@ -73,33 +116,25 @@ private lemma profile_integral_limit (K f : ℝ → ℝ) (hK : Integrable K) (hK
       (𝓝 (f 0 + ∫ x : ℝ, |x| * f x)) := by
     simpa only [one_mul, Function.comp_apply] using (hc.mul hpeak).add_const _
   have hbound : ∀ᶠ L : ℝ in atTop, 0 < scale L ∧ Integrable (fun x => E L x * f x) ∧
-      ‖∫ x, E L x * f x‖ ≤ ε L * ∫ x, ‖f x‖ := by
+      ‖∫ x, E L x * f x‖ ≤ (B * M) / scale L + ε L * ∫ x, ‖f x‖ := by
     filter_upwards [hscale.eventually_gt_atTop (0 : ℝ), herror] with L hL herr
-    have hKscale := hK.comp_mul_left' hL.ne'
-    have hE : AEStronglyMeasurable (E L) volume := by
-      unfold E
-      exact (hP L).aestronglyMeasurable.sub
-        (((hKscale.aestronglyMeasurable.const_mul (scale L)).const_mul (c L)).add
-          continuous_abs.aestronglyMeasurable)
-    have hh (x : ℝ) : ‖E L x * f x‖ ≤ ε L * ‖f x‖ := by
-      by_cases hx : |x| ≤ 1
-      · rw [norm_mul, Real.norm_eq_abs]
-        exact mul_le_mul_of_nonneg_right (herr x hx) (norm_nonneg _)
-      · simp [hcompact x (lt_of_not_ge hx)]
-    have hi : Integrable (fun x => E L x * f x) :=
-      (hfint.norm.const_mul (ε L)).mono' (hE.mul hf.aestronglyMeasurable) (ae_of_all _ hh)
-    refine ⟨hL, hi, (norm_integral_le_integral_norm _).trans ?_⟩
-    rw [← integral_const_mul]
-    exact integral_mono hi.norm (hfint.norm.const_mul _) hh
+    have hE : Measurable (E L) := by
+      unfold E exponentialWeight
+      exact (hP L).sub (by fun_prop)
+    have h := peak_error_integral_bound f (E L) hfint hE (scale L) B M (ε L)
+      hL hB hM hfB hcompact (fun x hx => by simpa only [E, Real.norm_eq_abs] using herr x hx)
+    exact ⟨hL, h⟩
   have hE0 : Tendsto (fun L : ℝ => ∫ x, E L x * f x) atTop (𝓝 0) := by
-    apply squeeze_zero_norm' (hbound.mono fun _ h => h.2.2)
-    simpa only [zero_mul] using hε.mul_const (∫ x, ‖f x‖)
+    have hsmall : Tendsto (fun L => (B * M) / scale L) atTop (𝓝 0) :=
+      tendsto_const_nhds.div_atTop hscale
+    refine squeeze_zero_norm' (hbound.mono (fun _ h => h.2.2)) ?_
+    simpa only [zero_mul, add_zero] using hsmall.add (hε.mul_const (∫ x, ‖f x‖))
   have hsum := hmain.add hE0
   simp only [add_zero] at hsum
   refine hsum.congr' ?_
   filter_upwards [hbound] with L hL
   have hpeak_int : Integrable (fun x => scale L * K (scale L * x) * f x) :=
-    ((hK.comp_mul_left' hL.1.ne').const_mul (scale L)).mul_bdd hf.aestronglyMeasurable (ae_of_all _ hB)
+    ((hK.comp_mul_left' hL.1.ne').const_mul (scale L)).mul_bdd hf.aestronglyMeasurable (ae_of_all _ hfB)
   calc
     _ = ∫ x : ℝ, (c L * (scale L * K (scale L * x) * f x) + |x| * f x) + E L x * f x := by
       have hadd := integral_add ((hpeak_int.const_mul (c L)).add hlin) hL.2.1
@@ -489,28 +524,53 @@ def UnitBandProfile (S : Spectrum) : Prop :=
   ∀ᶠ H : ℝ in atTop, ∀ u : ℝ, |u| ≤ 1 →
     |montgomery S u H - (c H * (Real.log H * Real.exp (-2 * Real.log H * |u|)) + |u|)| ≤ e H
 
-private lemma band_integral_limit (S : Spectrum) (g : 𝓢(ℝ, ℝ))
-    (hg : ∀ u, 1 < |u| → 𝓕 ((fun x => (g x : ℂ))) u = 0)
-    (hS : UnitBandProfile S) :
+/-- The pointwise error may include a bounded multiple of the unscaled exponential peak. -/
+def ConcentratedUnitBandProfile (S : Spectrum) : Prop :=
+  ∃ B : ℝ, 0 ≤ B ∧ ∃ e : ℝ → ℝ, Tendsto e atTop (𝓝 0) ∧
+    ∀ᶠ H : ℝ in atTop, ∀ u : ℝ, |u| ≤ 1 →
+      |montgomery S u H - (Real.log H * Real.exp (-2 * Real.log H * |u|) + |u|)| ≤
+        B * Real.exp (-2 * Real.log H * |u|) + e H
+
+/-- Pair-profile convergence against the squared Fourier transform of each fixed test. -/
+def UnitBandTestLimit (S : Spectrum) : Prop :=
+  ∀ g : 𝓢(ℝ, ℝ), (∀ u, 1 < |u| → 𝓕 (fun x => (g x : ℂ)) u = 0) →
     Tendsto (fun H : ℝ => ∫ u : ℝ, montgomery S u H * spectralTest g u) atTop
-      (𝓝 ((∫ x : ℝ, g x) ^ 2 + ∫ u : ℝ, |u| * spectralTest g u)) := by
-  obtain ⟨c, e, hc, he, hbound⟩ := hS
-  obtain ⟨B, hB⟩ := spectralTest_bounded g
-  have hKmass : (∫ u, exponentialWeight u) = 1 := by
-    simpa using exponentialWeight_cosine 0 0
-  have hM (H : ℝ) : Measurable (fun u => montgomery S u H) := by
+      (𝓝 ((∫ x : ℝ, g x) ^ 2 + ∫ u : ℝ, |u| * spectralTest g u))
+
+private lemma band_integral_limit (S : Spectrum) (B : ℝ) (hB : 0 ≤ B)
+    (c e : ℝ → ℝ) (hc : Tendsto c atTop (𝓝 1)) (he : Tendsto e atTop (𝓝 0))
+    (hbound : ∀ᶠ H : ℝ in atTop, ∀ u : ℝ, |u| ≤ 1 →
+      |montgomery S u H - (c H * (Real.log H * Real.exp (-2 * Real.log H * |u|)) + |u|)| ≤
+        B * Real.exp (-2 * Real.log H * |u|) + e H) :
+    UnitBandTestLimit S := by
+  intro g hg
+  obtain ⟨M, hM⟩ := spectralTest_bounded g
+  have hM0 : 0 ≤ M := (norm_nonneg _).trans (hM 0)
+  have hP (H : ℝ) : Measurable (fun u => montgomery S u H) := by
     apply Continuous.measurable
     unfold montgomery
     fun_prop
   rw [← spectralTest_zero g]
-  apply KernelLimit.profile_integral_limit exponentialWeight (spectralTest g)
-    exponentialWeight_integrable hKmass (spectralTest_continuous g) (spectralTest_integrable g)
-    B hB Real.log Real.tendsto_log_atTop (fun H u => montgomery S u H) hM c e hc he
+  apply KernelLimit.profile_integral_limit (spectralTest g)
+    (spectralTest_continuous g) (spectralTest_integrable g) B M hB hM0 hM
+    Real.log Real.tendsto_log_atTop (fun H u => montgomery S u H) hP c e hc he
   · intro u hu
     rw [spectralTest_eq, hg u hu, norm_zero, zero_pow (by decide : (2 : ℕ) ≠ 0)]
   · filter_upwards [hbound, eventually_gt_atTop (1 : ℝ)] with H hh hH
     intro u hu
     simpa only [exponentialWeight, abs_mul, abs_of_pos (Real.log_pos hH), mul_assoc] using hh u hu
+
+lemma unitBandTestLimit_of_uniform (S : Spectrum) (hS : UnitBandProfile S) :
+    UnitBandTestLimit S := by
+  obtain ⟨c, e, hc, he, hbound⟩ := hS
+  refine band_integral_limit S 0 le_rfl c e hc he ?_
+  simpa only [zero_mul, zero_add] using hbound
+
+lemma unitBandTestLimit_of_concentrated (S : Spectrum) (hS : ConcentratedUnitBandProfile S) :
+    UnitBandTestLimit S := by
+  obtain ⟨B, hB, e, he, hbound⟩ := hS
+  refine band_integral_limit S B hB (fun _ => 1) e tendsto_const_nhds he ?_
+  simpa only [one_mul] using hbound
 
 private def weightedAuto (S : Spectrum) (g : ℝ → ℝ) (H : ℝ) : ℝ :=
   ∑ p ∈ CutDensity.copies (S.cut H) S.mult, ∑ q ∈ CutDensity.copies (S.cut H) S.mult,
@@ -647,9 +707,9 @@ def unweightedAuto (S : Spectrum) (g : ℝ → ℝ) (H : ℝ) : ℝ :=
   ∑ p ∈ CutDensity.copies (S.cut H) S.mult, ∑ q ∈ CutDensity.copies (S.cut H) S.mult,
     Autocorrelation.autocorrelation g (meanScale H * (S.gamma p.1 - S.gamma q.1))
 
-lemma spectral_unweighted_limit (S : Spectrum) (g : 𝓢(ℝ, ℝ)) (E : ℝ)
+lemma spectral_unweighted_limit_of_test_limit (S : Spectrum) (g : 𝓢(ℝ, ℝ)) (E : ℝ)
     (hg : ∀ u, 1 < |u| → 𝓕 ((fun x => (g x : ℂ))) u = 0)
-    (hS : UnitBandProfile S)
+    (hS : UnitBandTestLimit S)
     (hcount : ∀ t, 2 * Real.pi ≤ t →
       |(S.N t : ℝ) - CutDensity.countMain (2 * Real.pi) t| ≤ E) :
     Tendsto (fun H : ℝ => unweightedAuto S g H / (H * meanScale H)) atTop
@@ -679,8 +739,17 @@ lemma spectral_unweighted_limit (S : Spectrum) (g : 𝓢(ℝ, ℝ)) (E : ℝ)
     refine (div_le_div_of_nonneg_right h hden.le).trans_eq ?_
     dsimp [c]
     ring
-  have hw := (band_integral_limit S g hg hS).congr (fun H => (band_weighted_eq S g H).symm)
+  have hw := (hS g hg).congr (fun H => (band_weighted_eq S g H).symm)
   simpa only [add_zero] using (hw.add hdiff).congr (fun H => by rw [← add_div]; congr 1; ring)
+
+lemma spectral_unweighted_limit (S : Spectrum) (g : 𝓢(ℝ, ℝ)) (E : ℝ)
+    (hg : ∀ u, 1 < |u| → 𝓕 ((fun x => (g x : ℂ))) u = 0)
+    (hS : UnitBandProfile S)
+    (hcount : ∀ t, 2 * Real.pi ≤ t →
+      |(S.N t : ℝ) - CutDensity.countMain (2 * Real.pi) t| ≤ E) :
+    Tendsto (fun H : ℝ => unweightedAuto S g H / (H * meanScale H)) atTop
+      (𝓝 ((∫ x : ℝ, g x) ^ 2 + ∫ u : ℝ, |u| * spectralTest g u)) :=
+  spectral_unweighted_limit_of_test_limit S g E hg (unitBandTestLimit_of_uniform S hS) hcount
 
 end
 end D5.S3.Analytic.Oscillation.MontgomeryAutocorrelationLimit

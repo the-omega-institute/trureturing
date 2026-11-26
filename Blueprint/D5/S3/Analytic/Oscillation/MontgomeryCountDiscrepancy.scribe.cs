@@ -42,5 +42,17 @@ internal sealed class MontgomeryCountDiscrepancyDocument : IScribeDocumentDefini
                         + "variance with the weighted Fourier energy after dropping the vanishing "
                         + "exterior first and second moments. Choosing larger windows then forces "
                         + "this energy past the bound shared by all windows."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("concentrated-unit-band-unbounded-discrepancy"),
+                DeclarationHandle.Create("D5/S3/Analytic/Oscillation/MontgomeryCountDiscrepancy.concentrated_unit_band_profile_forces_unbounded_count_discrepancy"),
+                H("Unbounded count discrepancy with a concentrated unit-band error"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("Use the positive spectrum with integer multiplicities, the inclusive cutoff, and the normalization of the Montgomery profile in the preceding theorem. For all sufficiently large real H and all abs(alpha) at most one, suppose the absolute error from log(H) exp(-2 log(H) abs(alpha)) + abs(alpha) is bounded by B exp(-2 log(H) abs(alpha)) + e(H), where B is a fixed nonnegative constant and e(H) tends to zero.")),
+                    Paragraph(Text("For each real H0 and D there is a real H at least H0 with abs(N(H) - F(H)) greater than D. Here F(H) is H/(2 pi) times (log(H/(2 pi)) - 1).")),
+                    Paragraph(Text("Against a fixed bounded integrable Fourier test p, the integrated error is bounded by B times the supremum norm of p divided by log(H), plus e(H) times the integral of abs(p). The exponential kernel supplies the same unit mass at zero. Thus the profile gives the test limits required by the autocorrelation and variance argument.")),
+                    Paragraph(Text("For zeta, using a corresponding formula stated for complex zero differences additionally requires the equality of that statistic with the ordinate statistic. This theorem uses frequencies through the unit band and gives an unboundedness conclusion on every real tail."))),
                 DescribeRole.Theorem))));
 }
