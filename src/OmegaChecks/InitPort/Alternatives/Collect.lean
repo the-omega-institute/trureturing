@@ -40,6 +40,34 @@ public def Std.IterM.Total.toList {α : Type u} {m : Type u → Type v} {β : Ty
     [Iterator α m β] [Finite α m] (it : IterM.Total (α := α) m β) : m (List β) :=
   Array.toList <$> _root_.Std.IterM.Total.toArray it
 
+/-- A decreasing countdown suffices. At equal countdowns, a finite inner iterator
+also allows yielding steps to contribute to the decrease. -/
+public def Std.Iterators.Types.Take.Rel {α β : Type w} (m : Type w → Type v)
+    [Monad m] [Iterator α m β] [Productive α m] (a b : IterM (α := Take α m) m β) : Prop :=
+  a.internalState.countdown < b.internalState.countdown ∨
+    a.internalState.countdown = b.internalState.countdown ∧
+      (a.internalState.inner.finitelyManySkips.Rel b.internalState.inner.finitelyManySkips ∨
+        Finite α m ∧ a.internalState.inner.finitelyManySteps!.Rel b.internalState.inner.finitelyManySteps!)
+
+public theorem Std.Iterators.Types.Take.rel_of_countdown {α : Type w} {m : Type w → Type v}
+    {β : Type w} [Monad m] [Iterator α m β] [Productive α m] {it it' : IterM (α := Take α m) m β}
+    (h : it'.internalState.countdown < it.internalState.countdown) :
+    Std.Iterators.Types.Take.Rel m it' it := Or.inl h
+
+public theorem Std.Iterators.Types.Take.rel_of_inner {α : Type w} {m : Type w → Type v}
+    {β : Type w} [Monad m] [Iterator α m β] [Productive α m] {remaining : Nat}
+    {it it' : IterM (α := α) m β} (h : it'.finitelyManySkips.Rel it.finitelyManySkips) :
+    Std.Iterators.Types.Take.Rel m (it'.take remaining) (it.take remaining) := Or.inr ⟨rfl, Or.inl h⟩
+
+public theorem Std.Iterators.Types.Take.rel_of_zero_of_inner {α : Type w} {m : Type w → Type v}
+    {β : Type w} [Monad m] [Iterator α m β] {it it' : IterM (α := Take α m) m β}
+    (h : it.internalState.countdown = 0) (h' : it'.internalState.countdown = 0)
+    (h'' : it'.internalState.inner.finitelyManySteps!.Rel it.internalState.inner.finitelyManySteps!) :
+    letI : Finite α m := it.internalState.finite.resolve_left (fun hp => Nat.not_lt_zero _ (h ▸ hp))
+    Std.Iterators.Types.Take.Rel m it' it := by
+  have hf := it.internalState.finite.resolve_left (fun hp => Nat.not_lt_zero _ (h ▸ hp))
+  exact Or.inr ⟨h'.trans h.symm, Or.inr ⟨hf, h''⟩⟩
+
 public theorem Std.Iterators.Types.Take.instFinite {α : Type u} {m : Type u → Type v} {β : Type u}
     [Monad m] [Iterator α m β] [Productive α m] : Finite (Take α m) m := by
   let T := IterM (α := Take α m) m β
