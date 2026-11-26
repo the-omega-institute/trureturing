@@ -41,17 +41,17 @@ private theorem radius_small (m : ℕ) (hm : 1 ≤ m) (n : ℕ) :
     have hp : 0 < 1 + cliqueTreeRadius m 1 n := by linarith [hR n]
     have hprod := mul_lt_mul_of_pos_right hlt hp
     rw [one_mul] at hprod
-    exact ⟨⟨by linarith, by positivity⟩, by linarith⟩
+    exact ⟨⟨by linarith, by linarith [Nat.cast_nonneg (α := ℝ) n]⟩, by linarith⟩
 
 example (m D : ℕ) (hm : 1 ≤ m) (hD : D ≤ 5) :
     cliqueTreeRadius m 1 (D / 2) < 3 := by
   refine lt_of_le_of_lt (radius_mono m (show D / 2 ≤ 2 by omega)) ?_
-  simpa using (radius_small m hm 2).resolve_right (by decide)
+  simpa only [Nat.cast_ofNat, show (2 : ℝ) + 1 = 3 by norm_num] using (radius_small m hm 2).resolve_right (by decide)
 
 example (m D : ℕ) (hm : 1 ≤ m) (hD : D ≤ 7) :
     cliqueTreeRadius m 1 (D / 2) < 4 := by
   refine lt_of_le_of_lt (radius_mono m (show D / 2 ≤ 3 by omega)) ?_
-  simpa using (radius_small m hm 3).resolve_right (by decide)
+  simpa only [Nat.cast_ofNat, show (3 : ℝ) + 1 = 4 by norm_num] using (radius_small m hm 3).resolve_right (by decide)
 
 example (D : ℕ) (hD : D ≤ 19) :
     cliqueTreeRadius 4 1 (D / 2) ≤ 373533 / 131072 ∧ (373533 / 131072 : ℝ) < 20 / 7 := by
@@ -103,21 +103,21 @@ abbrev arena : Arena where
       ‖g i j + g j l - g i l‖ ≤ ε),
     ∃ φ : V → E, ∀ u v, G.Adj u v → ‖g u v - (φ v - φ u)‖ ≤ R.readout () (m, D) ε
 
-private theorem rejected_law : ¬ arena.{u, w, v}.Law rejected := by
+private theorem rejected_law : ¬ arena.{u, v, w}.Law rejected := by
   intro h
   obtain ⟨φ, hφ⟩ := h one_bag (fun i j h => (no_sep i j h).elim)
     1 le_rfl (fun i j h => (no_sep i j h).elim) 0 (fun i j => by
-      rw [Subsingleton.elim j i, dist_self])
+      simp [Subsingleton.elim j i, SimpleGraph.dist_self])
     (E := ULift.{v} ℝ) (fun _ _ => 0) 0 le_rfl (by simp) (by simp)
   have hn := hφ a b pair_adj
   change ‖(0 : ULift.{v} ℝ) - (φ b - φ a)‖ ≤ -1 at hn
   linarith [norm_nonneg ((0 : ULift.{v} ℝ) - (φ b - φ a))]
 
-def family : Registration arena.{u, w, v}
-    (type_of% (@cliqueTree_center_extension_banach_potential.{u, w, v})) where
+def family : Registration arena.{u, v, w}
+    (type_of% (@cliqueTree_center_extension_banach_potential.{u, v, w})) where
   actual := actual
   bridge := Iff.rfl
-  variation := ⟨@cliqueTree_center_extension_banach_potential.{u, w, v}, rejected, rejected_law⟩
+  variation := ⟨@cliqueTree_center_extension_banach_potential.{u, v, w}, rejected, rejected_law⟩
   sensitivity := SingleDependentReadout.sensitivity arena.Law actual rejected rejected_law
   dependence := by
     intro _
@@ -125,7 +125,7 @@ def family : Registration arena.{u, w, v}
     norm_num [actual, realize, cliqueTreeRadius]
 
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-    (@cliqueTree_center_extension_banach_potential.{u, w, v})
+    (@cliqueTree_center_extension_banach_potential.{u, v, w})
     (Realization signature) Unit Unit where
   unitName := `SimpleGraph.cliqueTree_center_extension_banach_potential.__information_unit
   realizationName := `Reg.D5.S3.Combinatorics.Graph.Chordal.CliqueTreeBanachPotential.Center.family
@@ -148,7 +148,8 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     definition := none
     coordinates := #[9, 12]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "body", "body", "body", "body", "arg"]
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body",
+        "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "body", "body", "body", "body", "arg"]
       stateBinder := 18
       functionOperand := false
       stateOperand := none
@@ -203,7 +204,7 @@ private theorem at_most_two (x : Pair.{u}) : {i : Root.{w} | x ∈ pairBag i}.nc
   rw [hs, Set.ncard_univ, Nat.card_eq_fintype_card]
   simp
 
-private theorem rejected_law : ¬ arena.{u, w, v}.Law rejected := by
+private theorem rejected_law : ¬ arena.{u, v, w}.Law rejected := by
   intro h
   obtain ⟨_, φ, hφ⟩ := h one_bag (fun i j h => (no_sep i j h).elim) at_most_two
     (E := ULift.{v} ℝ) (fun _ _ => 0) 0 le_rfl (by simp) (by simp)
@@ -228,15 +229,15 @@ private theorem positive (T : SimpleGraph Root.{w}) :
     apply Finset.mem_insert_of_mem
     refine Finset.mem_image.mpr ⟨r, ?_, rfl⟩
     change r ∈ ({a : Root.{w} | 2 ≤ (K a).ncard} : Set Root.{w}).toFinite.toFinset
-    simp [hcard]
+    simp [K, Set.ncard_univ, Nat.card_eq_fintype_card]
   rw [hcard] at hle
   linarith
 
-def family : Registration arena.{u, w, v}
-    (type_of% (@cliqueTree_twoClique_midpoint_banach_potential.{u, w, v})) where
+def family : Registration arena.{u, v, w}
+    (type_of% (@cliqueTree_twoClique_midpoint_banach_potential.{u, v, w})) where
   actual := actual
   bridge := Iff.rfl
-  variation := ⟨@cliqueTree_twoClique_midpoint_banach_potential.{u, w, v}, rejected, rejected_law⟩
+  variation := ⟨@cliqueTree_twoClique_midpoint_banach_potential.{u, v, w}, rejected, rejected_law⟩
   sensitivity := by
     constructor
     · intro i
@@ -252,7 +253,7 @@ def family : Registration arena.{u, w, v}
     exact (positive (⊥ : SimpleGraph Root.{w})).ne
 
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-    (@cliqueTree_twoClique_midpoint_banach_potential.{u, w, v})
+    (@cliqueTree_twoClique_midpoint_banach_potential.{u, v, w})
     (Realization signature.{u, w}) Unit Unit where
   unitName := `SimpleGraph.cliqueTree_twoClique_midpoint_banach_potential.__information_unit
   realizationName := `Reg.D5.S3.Combinatorics.Graph.Chordal.CliqueTreeBanachPotential.Midpoint.family
@@ -275,7 +276,8 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     definition := none
     coordinates := #[0, 2, 3, 4, 6]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "arg", "body", "body", "body", "body", "arg"]
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body",
+        "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "arg", "body", "body", "body", "body", "arg"]
       stateBinder := 14
       functionOperand := false
       stateOperand := none
@@ -285,5 +287,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   options := #[]
 
 end Midpoint
+
+end
 
 end Reg.D5.S3.Combinatorics.Graph.Chordal.CliqueTreeBanachPotential

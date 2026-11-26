@@ -65,7 +65,7 @@ internal sealed class CliqueTreeBanachPotentialDocument : IScribeDocumentDefinit
             All("V", Call("Type", F.Id("u")), Seq(Instance("Finite", V),
                 All("I", Call("Type", F.Id("w")), Seq(Instance("Finite", I),
                     All("T", Call("SimpleGraph", I), All("G", Call("SimpleGraph", V),
-                        All("K", Arrow(I, Call("Set", V)), tree)))))))));
+                        All("K", Arrow(I, Call("Set", V)), tree))))))))));
     }
 
     private static Formula Gains(Formula coefficient, bool strict)

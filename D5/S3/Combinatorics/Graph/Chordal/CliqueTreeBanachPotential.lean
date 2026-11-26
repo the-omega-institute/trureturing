@@ -21,9 +21,7 @@ import Mathlib.Tactic.Ring
 /-! # Gain reconstruction on clique trees -/
 
 open scoped BigOperators
-
 namespace SimpleGraph
-
 universe u v w
 
 /-- A tree of clique bags covering the vertices and edges, with running intersection
@@ -50,24 +48,18 @@ noncomputable def sepShift {I : Type w} {V : Type u} (K : I → Set V) (a b : I)
     (1 - ((K a ∩ K b).ncard : ℝ) / ((max (K a).ncard (K b).ncard : ℕ) : ℝ))
 
 namespace CliqueTreeBanach
-
 variable {V : Type u} {I : Type w} {G : SimpleGraph V} {T : SimpleGraph I} {K : I → Set V}
 variable {E : Type v} [SeminormedAddCommGroup E] [NormedSpace ℝ E]
-
 private noncomputable def mean (S : Finset V) (f : V → E) : E :=
   (S.card : ℝ)⁻¹ • ∑ t ∈ S, f t
-
 private theorem mean_sub (S : Finset V) (f h : V → E) :
     mean S f - mean S h = mean S (fun t => f t - h t) := by
   simp [mean, Finset.sum_sub_distrib, smul_sub]
-
 private theorem const_sub_mean {S : Finset V} (hS : S.Nonempty) (e : E) (f : V → E) :
     e - mean S f = mean S (fun t => e - f t) := by
-  have hpos : (0 : ℝ) < S.card := by exact_mod_cast hS.card_pos
-  simp [mean, Finset.sum_sub_distrib, smul_sub, ← Nat.cast_smul_eq_nsmul ℝ,
-    smul_smul, hpos.ne']
-
-private theorem mean_bound {S A : Finset V} (_hS : S.Nonempty) (hAS : A ⊆ S)
+  have hn : (S.card : ℝ) ≠ 0 := by exact_mod_cast hS.card_ne_zero
+  simp [mean, Finset.sum_sub_distrib, smul_sub, ← Nat.cast_smul_eq_nsmul ℝ, smul_smul, hn]
+private theorem mean_bound {S A : Finset V} (hAS : A ⊆ S)
     (f : V → E) (B : ℝ) (hz : ∀ t ∈ S, t ∉ A → f t = 0)
     (hb : ∀ t ∈ A, ‖f t‖ ≤ B) :
     ‖mean S f‖ ≤ ((A.card : ℝ) / S.card) * B := by
@@ -81,38 +73,42 @@ private theorem mean_bound {S A : Finset V} (_hS : S.Nonempty) (hAS : A ⊆ S)
     _ ≤ (S.card : ℝ)⁻¹ * (∑ _t ∈ A, B) :=
       mul_le_mul_of_nonneg_left (Finset.sum_le_sum hb) hp
     _ = _ := by simp [div_eq_mul_inv]; ring
-
+private theorem full_mean_bound {S : Finset V} (hS : S.Nonempty) {f : V → E} {B : ℝ}
+    (hb : ∀ t ∈ S, ‖f t‖ ≤ B) : ‖mean S f‖ ≤ 1 * B := by
+  have hn : (S.card : ℝ) ≠ 0 := by exact_mod_cast hS.card_ne_zero
+  simpa only [div_self hn] using mean_bound (fun _ h => h : S ⊆ S) f B
+    (fun _ ht hnt => (hnt ht).elim) hb
 private theorem diag_zero (g : V → V → E) (hrev : ∀ i j, g j i = -g i j)
     (x : V) : g x x = 0 := by
   have hz : (2 : ℝ) • g x x = 0 := by rw [two_smul, eq_neg_iff_add_eq_zero.mp (hrev x x)]
   calc
     g x x = (1 / 2 : ℝ) • ((2 : ℝ) • g x x) := by rw [smul_smul]; norm_num
     _ = 0 := by rw [hz, smul_zero]
-
+private abbrev TriangleFlat (G : SimpleGraph V) (g : V → V → E) (ε : ℝ) :=
+  ∀ i j l, G.Adj i j → G.Adj j l → G.Adj i l → ‖g i j + g j l - g i l‖ ≤ ε
 private theorem defect_bound (g : V → V → E) (ε : ℝ) (hε : 0 ≤ ε)
     (hrev : ∀ i j, g j i = -g i j)
-    (htri : ∀ i j l, G.Adj i j → G.Adj j l → G.Adj i l →
-      ‖g i j + g j l - g i l‖ ≤ ε)
-    {u v t : V} (huv : G.Adj u v) (htu : t ≠ u → G.Adj t u)
+    (htri : TriangleFlat G g ε)
+    {u v t : V} (huv : u ≠ v → G.Adj u v) (htu : t ≠ u → G.Adj t u)
     (htv : t ≠ v → G.Adj t v) : ‖g u v - (g t v - g t u)‖ ≤ ε := by
+  by_cases h : u = v
+  · subst v
+    simpa [diag_zero g hrev] using hε
   by_cases hu : t = u
   · subst t
     simpa [diag_zero g hrev] using hε
   by_cases hv : t = v
   · subst t
     simpa [diag_zero g hrev, hrev u v] using hε
-  convert htri t u v (htu hu) huv (htv hv) using 1
+  convert htri t u v (htu hu) (huv h) (htv hv) using 1
   abel
-
 private theorem star_residual {S : Finset V} (hS : S.Nonempty) (g : V → V → E) (u v : V) :
     g u v - (mean S (fun t => g t v) - mean S (fun t => g t u)) =
       mean S (fun t => g u v - (g t v - g t u)) := by
   rw [mean_sub, const_sub_mean hS]
-
 private theorem star_bound {S : Finset V} (g : V → V → E) (ε : ℝ) (hε : 0 ≤ ε)
     (hrev : ∀ i j, g j i = -g i j)
-    (htri : ∀ i j l, G.Adj i j → G.Adj j l → G.Adj i l →
-      ‖g i j + g j l - g i l‖ ≤ ε)
+    (htri : TriangleFlat G g ε)
     (hcl : G.IsClique (S : Set V)) {u v : V} (hu : u ∈ S) (hv : v ∈ S) (huv : G.Adj u v) :
     ‖g u v - (mean S (fun t => g t v) - mean S (fun t => g t u))‖ ≤
       (1 - 2 / (S.card : ℝ)) * ε := by
@@ -124,12 +120,11 @@ private theorem star_bound {S : Finset V} (g : V → V → E) (ε : ℝ) (hε : 
     have h₂ := Finset.card_erase_add_one (Finset.mem_erase.mpr ⟨huv.ne.symm, hv⟩)
     dsimp [A]
     omega
-  have hr : (A.card : ℝ) + 2 = S.card := by exact_mod_cast hc
-  have hp : (0 : ℝ) < S.card := by exact_mod_cast hs.card_pos
+  have hp : (S.card : ℝ) ≠ 0 := by exact_mod_cast hs.card_ne_zero
   rw [star_residual hs]
   calc
     _ ≤ ((A.card : ℝ) / S.card) * ε := by
-      apply mean_bound hs ((Finset.erase_subset _ _).trans (Finset.erase_subset _ _))
+      apply mean_bound ((Finset.erase_subset _ _).trans (Finset.erase_subset _ _))
       · intro t ht hta
         by_cases htu : t = u
         · subst t
@@ -139,31 +134,34 @@ private theorem star_bound {S : Finset V} (g : V → V → E) (ε : ℝ) (hε : 
         simp [diag_zero g hrev, hrev u v]
       · intro t ht
         have hts : t ∈ S := (Finset.erase_subset _ _).trans (Finset.erase_subset _ _) ht
-        exact defect_bound g ε hε hrev htri huv (fun hn => hcl hts hu hn)
+        exact defect_bound g ε hε hrev htri (fun _ => huv) (fun hn => hcl hts hu hn)
           (fun hn => hcl hts hv hn)
-    _ = _ := by rw [show (A.card : ℝ) = S.card - 2 by linarith]; field_simp
-
+    _ = _ := by
+      have hr : (A.card : ℝ) + 2 = S.card := by exact_mod_cast hc
+      rw [show (A.card : ℝ) = S.card - 2 by linarith]
+      field_simp
 private noncomputable def bag [Finite V] (S : Set V) : Finset V :=
   S.toFinite.toFinset
-
 @[simp] private theorem mem_bag [Finite V] {x : V} {S : Set V} : x ∈ bag S ↔ x ∈ S := by
   simp [bag]
-
 @[simp] private theorem card_bag [Finite V] (S : Set V) : (bag S).card = S.ncard := by
   exact (Set.ncard_eq_toFinset_card S S.toFinite).symm
-
+private theorem erase_fraction [DecidableEq V] {S : Finset V} {u : V} (hu : u ∈ S) :
+    ((S.erase u).card : ℝ) / S.card = 1 - 1 / (S.card : ℝ) := by
+  have hn : (S.card : ℝ) ≠ 0 := by exact_mod_cast (show S.Nonempty from ⟨u, hu⟩).card_ne_zero
+  have hc : ((S.erase u).card : ℝ) + 1 = S.card := by exact_mod_cast Finset.card_erase_add_one hu
+  field_simp
+  linarith
 omit [NormedSpace ℝ E] in
 private theorem fit_reverse (g : V → V → E) (hrev : ∀ i j, g j i = -g i j)
     (p : V → E) (u v : V) :
     ‖g v u - (p u - p v)‖ = ‖g u v - (p v - p u)‖ := by
   rw [hrev u v, show -g u v - (p u - p v) = -(g u v - (p v - p u)) by abel, norm_neg]
-
 private theorem extend_bound {S : Finset V} {A : Set V} (hS : S.Nonempty)
     (hSA : (S : Set V) ⊆ A) (hcl : G.IsClique A)
     (g : V → V → E) (ε : ℝ) (hε : 0 ≤ ε)
     (hrev : ∀ i j, g j i = -g i j)
-    (htri : ∀ i j l, G.Adj i j → G.Adj j l → G.Adj i l →
-      ‖g i j + g j l - g i l‖ ≤ ε)
+    (htri : TriangleFlat G g ε)
     (p : V → E) (R : ℝ) (hR : 0 ≤ R)
     (hfit : ∀ u ∈ S, ∀ v ∈ S, G.Adj u v → ‖g u v - (p v - p u)‖ ≤ R * ε)
     (m : ℕ) (hm : S.card ≤ m) :
@@ -180,26 +178,23 @@ private theorem extend_bound {S : Finset V} {A : Set V} (hS : S.Nonempty)
         show q v = mean S (fun t => p t + g t v) by simp [q, hvs],
         ← const_sub_mean hS]
       abel
-    have hcard : ((S.erase u).card : ℝ) + 1 = S.card := by
-      exact_mod_cast Finset.card_erase_add_one hu
     have hpos : (0 : ℝ) < S.card := by exact_mod_cast hS.card_pos
     have hmR : (S.card : ℝ) ≤ m := by exact_mod_cast hm
-    have hmp : (0 : ℝ) < m := hpos.trans_le hmR
     have hfraction : ((S.erase u).card : ℝ) / S.card ≤ 1 - 1 / (m : ℝ) := by
-      rw [show ((S.erase u).card : ℝ) / S.card = 1 - 1 / S.card by field_simp; linarith]
+      rw [erase_fraction hu]
       linarith [one_div_le_one_div_of_le hpos hmR]
     rw [he]
     calc
       _ ≤ (((S.erase u).card : ℝ) / S.card) * ((1 + R) * ε) := by
-        apply mean_bound hS (Finset.erase_subset _ _)
+        apply mean_bound (Finset.erase_subset _ _)
         · intro t ht hn
-          have : t = u := by by_contra h; exact hn (Finset.mem_erase.mpr ⟨h, ht⟩)
+          have : t = u := by simpa [ht] using hn
           subst t
           abel
         · intro t ht
           obtain ⟨htu, hts⟩ := Finset.mem_erase.mp ht
           have hut := hcl (hSA hu) (hSA hts) htu.symm
-          have hb := defect_bound g ε hε hrev htri huv (fun _ => hut.symm)
+          have hb := defect_bound g ε hε hrev htri (fun _ => huv) (fun _ => hut.symm)
             (fun h => hcl (hSA hts) hv h)
           rw [show g u v + p u - (p t + g t v) =
             (g u v - (g t v - g t u)) + (g u t - (p t - p u)) by rw [hrev u t]; abel]
@@ -224,16 +219,9 @@ private theorem extend_bound {S : Finset V} {A : Set V} (hS : S.Nonempty)
     funext t
     abel
   rw [he]
-  have hp : (S.card : ℝ) ≠ 0 := by exact_mod_cast hS.card_ne_zero
-  have hb := mean_bound hS (show S ⊆ S from fun _ h => h) (fun t => g u v - (g t v - g t u)) ε
-    (fun _ ht hn => (hn ht).elim) (fun t ht =>
-      defect_bound g ε hε hrev htri huv (fun hn => hcl (hSA ht) hu hn)
-        (fun hn => hcl (hSA ht) hv hn))
-  rw [div_self hp, one_mul] at hb
-  exact hb.trans (by
-    conv_lhs => rw [← one_mul ε]
-    exact mul_le_mul_of_nonneg_right ((le_max_right R 1).trans (le_max_left _ _)) hε)
-
+  refine (full_mean_bound hS (fun _ ht => defect_bound g ε hε hrev htri (fun _ => huv)
+    (fun hn => hcl (hSA ht) hu hn) (fun hn => hcl (hSA ht) hv hn))).trans
+    (mul_le_mul_of_nonneg_right ((le_max_right R 1).trans (le_max_left _ _)) hε)
 omit [SeminormedAddCommGroup E] [NormedSpace ℝ E] in
 private theorem glue_equal {p : I → V → E} (hK : IsCliqueTree T G K)
     (hag : ∀ a b, T.Adj a b → ∀ x ∈ K a ∩ K b, p a x = p b x) :
@@ -249,22 +237,17 @@ private theorem glue_equal {p : I → V → E} (hK : IsCliqueTree T G K)
   refine ⟨fun x => p (hK.cover x).choose x, fun a x hx => ?_⟩
   obtain ⟨q, hq⟩ := (hK.isTree.existsUnique_path (hK.cover x).choose a).exists
   exact along q x (hK.running q hq x (hK.cover x).choose_spec hx)
-
 private noncomputable def route (hT : T.IsTree) (r a : I) : T.Walk r a :=
   (hT.existsUnique_path r a).exists.choose
-
 private theorem route_path (hT : T.IsTree) (r a : I) : (route hT r a).IsPath :=
   (hT.existsUnique_path r a).exists.choose_spec
-
 private theorem path_eq_route (hT : T.IsTree) {r a : I} {p : T.Walk r a} (hp : p.IsPath) :
     p = route hT r a :=
   Subtype.mk.inj ((hT.isAcyclic.subsingleton_path r a).elim ⟨p, hp⟩ ⟨_, route_path hT r a⟩)
-
 private theorem path_length (hT : T.IsTree) {r a : I} {p : T.Walk r a} (hp : p.IsPath) :
     p.length = T.dist r a := by
   obtain ⟨q, hq, hlen⟩ := hT.connected.exists_path_of_dist r a
   rw [path_eq_route hT hp, ← path_eq_route hT hq, hlen]
-
 private theorem route_adj (hT : T.IsTree) (r : I) {a b : I} (h : T.Adj a b) :
     route hT r b = (route hT r a).concat h ∨
       route hT r a = (route hT r b).concat h.symm := by
@@ -290,7 +273,6 @@ private theorem branch_distance (hT : T.IsTree) {r b : I} (h : T.Adj r b) (a : I
     omega
   · have hc : (p.cons h.symm).IsPath := (Walk.cons_isPath_iff ..).mpr ⟨hp, ha⟩
     rw [← path_length hT hc, Walk.length, path_length hT hp]
-
 private theorem branch_separation (hT : T.IsTree) {r b x y : I} (h : T.Adj r b)
     (hx : b ∈ (route hT r x).support) (hy : b ∉ (route hT r y).support) :
     T.dist x y = T.dist r x + T.dist r y := by
@@ -320,11 +302,9 @@ private theorem branch_separation (hT : T.IsTree) {r b x y : I} (h : T.Adj r b)
   have happ := (p.reverse.isPath_append q).mpr ⟨hp.reverse, hq.tail, hdis⟩
   rw [← path_length hT happ, Walk.length_append, Walk.length_reverse,
     path_length hT hp, path_length hT hq]
-
 private theorem center_piece [Finite I] (hT : T.IsTree) (D : ℕ)
     (hD : ∀ a b, T.dist a b ≤ D) :
-    (∃ r, ∀ a, T.dist r a ≤ D / 2) ∨
-    (∃ r b, T.Adj r b ∧ ∀ a, min (T.dist r a) (T.dist b a) ≤ D / 2) := by
+    ∃ r b, (r = b ∨ T.Adj r b) ∧ ∀ a, min (T.dist r a) (T.dist b a) ≤ D / 2 := by
   classical
   let := Fintype.ofFinite I
   let := hT.connected.nonempty
@@ -332,15 +312,11 @@ private theorem center_piece [Finite I] (hT : T.IsTree) (D : ℕ)
   have he (r a : I) : T.dist r a ≤ e r := Finset.le_sup (f := T.dist r) (Finset.mem_univ a)
   obtain ⟨r, -, hr⟩ := Finset.exists_min_image Finset.univ e Finset.univ_nonempty
   by_cases small : e r ≤ D / 2
-  · exact Or.inl ⟨r, fun a => (he r a).trans small⟩
+  · exact ⟨r, r, Or.inl rfl, fun a => (min_le_left ..).trans ((he r a).trans small)⟩
   obtain ⟨x, -, hx⟩ := Finset.exists_max_image Finset.univ (T.dist r) Finset.univ_nonempty
   have hxe : T.dist r x = e r :=
     (he r x).antisymm (Finset.sup_le fun a ha => hx a ha)
-  have hrx : r ≠ x := by
-    intro h
-    subst x
-    simp at hxe
-    omega
+  have hrx : r ≠ x := by rintro rfl; simp at hxe; omega
   let p := route hT r x
   let b := p.snd
   have hp := Walk.not_nil_of_ne hrx (p := p)
@@ -348,33 +324,27 @@ private theorem center_piece [Finite I] (hT : T.IsTree) (D : ℕ)
   have hbx : b ∈ (route hT r x).support := List.mem_of_mem_tail (p.snd_mem_tail_support hp)
   have hd (a : I) := branch_distance hT hab a
   have hout (a : I) (ha : b ∉ (route hT r a).support) : T.dist r a + e r ≤ D := by
-    have hh := hD x a
-    rw [branch_separation hT hab hbx ha, hxe, add_comm] at hh
-    exact hh
+    simpa [branch_separation hT hab hbx ha, hxe, add_comm] using hD x a
   have hf : e r ≤ D / 2 + 1 := by
     by_contra! hh
-    have hlt : e b ≤ e r - 1 := by
-      apply Finset.sup_le
-      intro a _
+    have hlt : e b ≤ e r - 1 := Finset.sup_le fun a _ => by
       specialize hd a
       split_ifs at hd with ha
       · have := he r a; omega
       · have := hout a ha; omega
     have := hr b (Finset.mem_univ b)
     omega
-  refine Or.inr ⟨r, b, hab, fun a => ?_⟩
+  refine ⟨r, b, Or.inr hab, fun a => ?_⟩
   specialize hd a
   split_ifs at hd with ha
   · exact (min_le_right _ _).trans (by have := he r a; omega)
   · exact (min_le_left _ _).trans (by have := hout a ha; omega)
-
 private theorem extend_layers [Finite V] (hK : IsCliqueTree T G K)
     (hs : ∀ a b, T.Adj a b → (K a ∩ K b).Nonempty)
     (m : ℕ) (hm : ∀ a b, T.Adj a b → (K a ∩ K b).ncard ≤ m)
     (g : V → V → E) (ε : ℝ) (hε : 0 ≤ ε)
     (hrev : ∀ i j, g j i = -g i j)
-    (htri : ∀ i j l, G.Adj i j → G.Adj j l → G.Adj i l →
-      ‖g i j + g j l - g i l‖ ≤ ε)
+    (htri : TriangleFlat G g ε)
     (d : I → ℕ) (parent : I → I)
     (hpar : ∀ a, 0 < d a → T.Adj (parent a) a ∧ d a = d (parent a) + 1)
     (hedge : ∀ a b, T.Adj a b →
@@ -388,11 +358,8 @@ private theorem extend_layers [Finite V] (hK : IsCliqueTree T G K)
       ‖g u v - (φ v - φ u)‖ ≤ cliqueTreeRadius m R₀ n * ε := by
   classical
   let R := cliqueTreeRadius m R₀
-  have hR : ∀ j, 0 ≤ R j := by
-    intro j
-    induction j with
-    | zero => exact hR₀
-    | succ j ih => exact ih.trans ((le_max_left _ _).trans (le_max_left _ _))
+  have step (j : ℕ) : R j ≤ R (j + 1) := (le_max_left _ _).trans (le_max_left _ _)
+  have hR (j : ℕ) : 0 ≤ R j := hR₀.trans (monotone_nat_of_le_succ step (Nat.zero_le j))
   have layers (j : ℕ) : ∃ p : I → V → E,
       (∀ a, d a ≤ j → ∀ u ∈ K a, ∀ v ∈ K a, G.Adj u v →
         ‖g u v - (p a v - p a u)‖ ≤ R j * ε) ∧
@@ -419,32 +386,36 @@ private theorem extend_layers [Finite V] (hK : IsCliqueTree T G K)
           m (by simpa [S] using hm _ _ hadj)
         exact ⟨q, fun x hx => hq x (mem_bag.mpr hx), he⟩
       let q (a : I) := if ha : d a = j + 1 then (next a ha).choose else p a
+      have old (a : I) (ha : d a ≤ j) : q a = p a := dite_eq_right (by omega)
+      have fresh (a : I) (ha : d a = j + 1) : q a = (next a ha).choose := dite_eq_left ha
+      have agree (a b : I) (hab : T.Adj a b) (hb : d b ≤ j + 1)
+          (hpar : parent b = a) (hdep : d b = d a + 1) (x : V) (hx : x ∈ K a ∩ K b) :
+          q a x = q b x := by
+        rw [old a (by omega)]
+        by_cases h : d b ≤ j
+        · rw [old b h]
+          exact hag a b hab (by omega) h x hx
+        · have hd : d b = j + 1 := by omega
+          rw [fresh b hd]
+          simpa only [hpar] using ((next b hd).choose_spec.1 x (hpar.symm ▸ hx)).symm
       refine ⟨q, fun a ha u hu v hv huv => ?_, fun a b hab ha hb x hx => ?_⟩
-      · by_cases hh : d a = j + 1
-        · simp only [q, dite_eq_left hh]
-          exact (next a hh).choose_spec.2 u hu v hv huv
-        · simp only [q, dite_eq_right hh]
-          exact (hp a (by omega) u hu v hv huv).trans
-            (mul_le_mul_of_nonneg_right ((le_max_left _ _).trans (le_max_left _ _)) hε)
+      · by_cases h : d a ≤ j
+        · rw [old a h]
+          exact (hp a h u hu v hv huv).trans (mul_le_mul_of_nonneg_right (step j) hε)
+        · have hd : d a = j + 1 := by omega
+          rw [fresh a hd]
+          exact (next a hd).choose_spec.2 u hu v hv huv
       · rcases hedge a b hab with ⟨h₀, h₁⟩ | ⟨h₀, h₁⟩ | ⟨h₀, h₁⟩
-        · simpa [q, show d a ≠ j + 1 by omega, show d b ≠ j + 1 by omega] using
-            hag a b hab (by omega) (by omega) x hx
-        · by_cases hh : d b = j + 1
-          · simp only [q, dite_eq_left hh, dite_eq_right (show d a ≠ j + 1 by omega)]
-            rw [← h₀] at hx ⊢
-            exact ((next b hh).choose_spec.1 x hx).symm
-          · simpa [q, hh, show d a ≠ j + 1 by omega] using hag a b hab (by omega) (by omega) x hx
-        · by_cases hh : d a = j + 1
-          · simp only [q, dite_eq_left hh, dite_eq_right (show d b ≠ j + 1 by omega)]
-            exact ((next a hh).choose_spec.1 x (h₀.symm ▸ And.intro hx.2 hx.1)).trans (by rw [h₀])
-          · simpa [q, hh, show d b ≠ j + 1 by omega] using hag a b hab (by omega) (by omega) x hx
+        · rw [old a (by omega), old b (by omega)]
+          exact hag a b hab (by omega) (by omega) x hx
+        · exact agree a b hab hb h₀ h₁ x hx
+        · exact (agree b a hab.symm ha h₀ h₁ x ⟨hx.2, hx.1⟩).symm
   obtain ⟨p, hp, hag⟩ := layers n
   obtain ⟨φ, hφ⟩ := glue_equal hK (fun a b hab => hag a b hab (hn a) (hn b))
   refine ⟨φ, fun u v huv => ?_⟩
   obtain ⟨a, hu, hv⟩ := hK.edge u v huv
   rw [hφ a u hu, hφ a v hv]
   exact hp a (hn a) u hu v hv huv
-
 private theorem rooted_layers (hT : T.IsTree) {r b : I} (hrb : r = b ∨ T.Adj r b) :
     ∃ d : I → ℕ, ∃ parent : I → I,
       (∀ a, d a = min (T.dist r a) (T.dist b a)) ∧
@@ -462,11 +433,7 @@ private theorem rooted_layers (hT : T.IsTree) {r b : I} (hrb : r = b ∨ T.Adj r
     · subst b
       simp [d]
     have hh := branch_distance hT ha a
-    by_cases hs : b ∈ (route hT r a).support
-    · simp [hs] at hh
-      simp [d, hs, ha.ne, hh]
-    · simp [hs] at hh
-      simp [d, hs, hh]
+    split_ifs at hh with hs <;> simp [d, hs, ha.ne, hh]
   have orient {a a' : I} (h : T.Adj a a') (he : route hT r a' = (route hT r a).concat h) :
       parent a' = a ∧ ((d a = 0 ∧ d a' = 0) ∨ d a' = d a + 1) := by
     have hlen : T.dist r a' = T.dist r a + 1 := by
@@ -484,7 +451,7 @@ private theorem rooted_layers (hT : T.IsTree) {r b : I} (hrb : r = b ∨ T.Adj r
     · right
       have hx : (r ≠ b ∧ b ∈ (route hT r a').support) ↔
           (r ≠ b ∧ b ∈ (route hT r a).support) := by
-        simp only [he, Walk.support_concat, List.concat_eq_append, List.mem_append, List.mem_singleton]
+        simp only [he, Walk.support_concat, List.mem_append, List.mem_singleton]
         tauto
       rw [depth, depth, hlen]
       by_cases hs : r ≠ b ∧ b ∈ (route hT r a).support
@@ -535,51 +502,32 @@ theorem cliqueTree_center_extension_banach_potential {V : Type u} [Finite V] {I 
     ∃ φ : V → E, ∀ u v, G.Adj u v →
       ‖g u v - (φ v - φ u)‖ ≤ cliqueTreeRadius m 1 (D / 2) * ε := by
   classical
-  rcases center_piece hK.isTree D hD with ⟨r, hr⟩ | ⟨r, b, hab, hr⟩
-  · obtain ⟨d, p, hd, hz, hp, he⟩ := rooted_layers hK.isTree (r := r) (b := r) (Or.inl rfl)
-    refine extend_layers hK hs m hsep g ε hε hrev htri d p hp he
-      (fun v => mean (bag (K r)) (fun t => g t v)) 1 (by norm_num) ?_ (D / 2)
-      (fun a => by simpa [hd a] using hr a)
-    intro a ha u hu v hv huv
-    have : a = r := (hz a ha).elim id id
-    subst a
-    have hb := star_bound g ε hε hrev htri
-      (show G.IsClique (bag (K r) : Set V) from fun _ hx _ hy =>
-        hK.clique r (mem_bag.mp hx) (mem_bag.mp hy))
-      (mem_bag.mpr hu) (mem_bag.mpr hv) huv
-    exact hb.trans (mul_le_mul_of_nonneg_right (sub_le_self _ (by positivity)) hε)
-  · obtain ⟨d, p, hd, hz, hp, he⟩ := rooted_layers hK.isTree (Or.inr hab)
-    let S := bag (K r ∩ K b)
-    obtain ⟨s, hs'⟩ := hs r b hab
-    have hS : S.Nonempty := ⟨s, mem_bag.mpr hs'⟩
-    refine extend_layers hK hs m hsep g ε hε hrev htri d p hp he
-      (fun v => mean S (fun t => g t v)) 1 (by norm_num) ?_ (D / 2)
-      (fun a => (hd a).symm ▸ hr a)
-    intro a ha u hu v hv huv
-    have hsub : (S : Set V) ⊆ K a := by
-      rcases hz a ha with rfl | rfl
-      · exact fun _ ht => (mem_bag.mp ht).1
-      · exact fun _ ht => (mem_bag.mp ht).2
-    rw [star_residual hS]
-    simpa [div_self (show (S.card : ℝ) ≠ 0 by exact_mod_cast hS.card_ne_zero)] using
-      mean_bound hS (show S ⊆ S from fun _ h => h) (fun t => g u v - (g t v - g t u)) ε
-        (fun _ ht hn => (hn ht).elim)
-        (fun t ht => defect_bound g ε hε hrev htri huv
-          (fun hn => hK.clique a (hsub ht) hu hn) (fun hn => hK.clique a (hsub ht) hv hn))
+  obtain ⟨r, b, hab, hr⟩ := center_piece hK.isTree D hD
+  obtain ⟨d, p, hd, hz, hp, he⟩ := rooted_layers hK.isTree hab
+  let S := bag (K r ∩ K b)
+  refine extend_layers hK hs m hsep g ε hε hrev htri d p hp he
+    (fun v => mean S (fun t => g t v)) 1 (by norm_num) ?_ (D / 2) (fun a => (hd a).symm ▸ hr a)
+  intro a ha u hu v hv huv
+  have hsub : (S : Set V) ⊆ K a := by
+    rcases hz a ha with rfl | rfl
+    · exact fun _ ht => (mem_bag.mp ht).1
+    · exact fun _ ht => (mem_bag.mp ht).2
+  obtain ⟨x, hx⟩ : (K r ∩ K b).Nonempty := hab.elim
+    (fun he => ⟨u, by rcases hz a ha with rfl | rfl <;> simpa [he] using hu⟩) (hs r b)
+  have hS : S.Nonempty := ⟨x, mem_bag.mpr hx⟩
+  rw [star_residual hS]
+  exact full_mean_bound hS (fun _ ht => defect_bound g ε hε hrev htri (fun _ => huv)
+    (fun hn => hK.clique a (hsub ht) hu hn) (fun hn => hK.clique a (hsub ht) hv hn))
 
 namespace CliqueTreeBanach
-
 variable {V : Type u} {I : Type w} {G : SimpleGraph V} {T : SimpleGraph I} {K : I → Set V}
 variable {E : Type v} [SeminormedAddCommGroup E] [NormedSpace ℝ E]
-
 private noncomputable def maxZero (s : Finset ℝ) : ℝ := by
   classical
   exact (insert 0 s).max' (Finset.insert_nonempty ..)
-
 private theorem le_maxZero {s : Finset ℝ} {x : ℝ} (hx : x ∈ s) : x ≤ maxZero s := by
   classical
   exact Finset.le_max' _ _ (Finset.mem_insert_of_mem hx)
-
 private theorem maxZero_lt {s : Finset ℝ} {k : ℝ} (hk : 0 < k)
     (h : ∀ x ∈ s, x < k) : maxZero s < k := by
   classical
@@ -595,7 +543,6 @@ noncomputable def twoShifts [Finite I] (T : SimpleGraph I) (K : I → Set V) (a 
   let weight : Option I → ℝ := fun b => b.elim 0 (fun b => if T.Adj a b then sepShift K a b else 0)
   exact maxZero (Finset.univ.image fun b : Option I × Option I =>
     if b.1 = b.2 then 0 else weight b.1 + weight b.2)
-
 private theorem sepShift_bounds [Finite V] (h : (K (a : I) ∩ K (b : I)).Nonempty) :
     0 ≤ sepShift K a b ∧ sepShift K a b < 1 := by
   have hp : (1 : ℝ) ≤ (K a ∩ K b).ncard := by exact_mod_cast h.ncard_pos
@@ -603,29 +550,18 @@ private theorem sepShift_bounds [Finite V] (h : (K (a : I) ∩ K (b : I)).Nonemp
     exact_mod_cast (Set.ncard_le_ncard Set.inter_subset_left).trans
       (le_max_left (K a).ncard (K b).ncard)
   have hm : (0 : ℝ) < ((max (K a).ncard (K b).ncard : ℕ) : ℝ) := by linarith
-  have h₁ : 0 ≤ (1 - 1 / ((K a ∩ K b).ncard : ℝ)) :=
-    sub_nonneg.mpr ((div_le_one (by linarith)).2 hp)
-  have h₂ : 0 ≤ (1 - ((K a ∩ K b).ncard : ℝ) / ((max (K a).ncard (K b).ncard : ℕ) : ℝ)) :=
-    sub_nonneg.mpr ((div_le_one hm).2 hle)
-  have h₃ : (1 - 1 / ((K a ∩ K b).ncard : ℝ)) < 1 := by
-    have : 0 < 1 / ((K a ∩ K b).ncard : ℝ) := by positivity
-    linarith
-  have h₄ : (1 - ((K a ∩ K b).ncard : ℝ) / ((max (K a).ncard (K b).ncard : ℕ) : ℝ)) ≤ 1 := by
-    have := div_nonneg (show 0 ≤ ((K a ∩ K b).ncard : ℝ) by positivity) hm.le
-    linarith
-  exact ⟨mul_nonneg h₁ h₂, (mul_le_of_le_one_right h₁ h₄).trans_lt h₃⟩
-
+  have h₁ := sub_nonneg.mpr ((div_le_one (by linarith : (0 : ℝ) < (K a ∩ K b).ncard)).2 hp)
+  exact ⟨mul_nonneg h₁ (sub_nonneg.mpr ((div_le_one hm).2 hle)),
+    (mul_le_of_le_one_right h₁ (sub_le_self _ (by positivity))).trans_lt (sub_lt_self _ (by positivity))⟩
 private theorem weighted_bound {A : Finset V} (w : V → ℝ) (f : V → E) (ε : ℝ)
     (hw : ∀ t ∈ A, 0 ≤ w t) (hf : ∀ t ∈ A, ‖f t‖ ≤ ε) :
     ‖∑ t ∈ A, w t • f t‖ ≤ (∑ t ∈ A, w t) * ε := by
-  refine (norm_sum_le _ _).trans ?_
   rw [Finset.sum_mul]
-  exact Finset.sum_le_sum fun t ht => by
-    rw [norm_smul, Real.norm_eq_abs, abs_of_nonneg (hw t ht)]
-    exact mul_le_mul_of_nonneg_left (hf t ht) (hw t ht)
-
+  refine (norm_sum_le _ _).trans (Finset.sum_le_sum fun t ht => ?_)
+  rw [norm_smul, Real.norm_eq_abs, abs_of_nonneg (hw t ht)]
+  exact mul_le_mul_of_nonneg_left (hf t ht) (hw t ht)
 private theorem common_stars {A S : Finset V} (hS : S ⊆ A) (ha : A.Nonempty)
-    (f : V → E) (ε q : ℝ) (_hq : 0 ≤ q) (hqa : q ≤ (A.card : ℝ)⁻¹)
+    (f : V → E) (ε q : ℝ) (hqa : q ≤ (A.card : ℝ)⁻¹)
     (hf : ∀ t ∈ A, ‖f t‖ ≤ ε) :
     ‖mean A f - q • ∑ t ∈ S, f t‖ ≤ (1 - S.card * q) * ε := by
   classical
@@ -644,11 +580,9 @@ private theorem common_stars {A S : Finset V} (hS : S ⊆ A) (ha : A.Nonempty)
   apply weighted_bound w f ε _ hf
   intro t _
   by_cases ht : t ∈ S <;> simp [w, ht, sub_nonneg, hqa, inv_nonneg]
-
 private def transport {T : SimpleGraph I} (d : I → I → E) {a b : I} : T.Walk a b → E
   | .nil => 0
   | .cons' x y _ _ p => d x y + transport d p
-
 omit [NormedSpace ℝ E] in
 private theorem transport_concat (d : I → I → E) {a b c : I}
     (p : T.Walk a b) (h : T.Adj b c) :
@@ -658,7 +592,6 @@ private theorem transport_concat (d : I → I → E) {a b c : I}
   | cons h' p ih =>
     change _ + transport d (p.concat h) = (_ + transport d p) + d _ _
     rw [ih, add_assoc]
-
 private theorem shared_adj [Finite I] (hK : IsCliqueTree T G K)
     (h₂ : ∀ v : V, {i : I | v ∈ K i}.ncard ≤ 2)
     {a b : I} {x : V} (ha : x ∈ K a) (hb : x ∈ K b) (hab : a ≠ b) : T.Adj a b := by
@@ -668,23 +601,18 @@ private theorem shared_adj [Finite I] (hK : IsCliqueTree T G K)
   have hsub : p.support.toFinset ⊆ bag {i : I | x ∈ K i} := by
     intro c hc
     exact mem_bag.mpr (hK.running p hp x ha hb c (List.mem_toFinset.mp hc))
-  have hle : p.support.toFinset.card ≤ 2 := (Finset.card_le_card hsub).trans
-    (by simpa using h₂ x)
-  rw [List.toFinset_card_of_nodup hp.support_nodup, Walk.length_support,
-    path_length hK.isTree hp] at hle
+  have hle : p.support.toFinset.card ≤ 2 := (Finset.card_le_card hsub).trans (by simpa using h₂ x)
+  rw [List.toFinset_card_of_nodup hp.support_nodup, Walk.length_support, path_length hK.isTree hp] at hle
   exact T.dist_eq_one_iff_adj.mp (by have := hK.isTree.connected.pos_dist_of_ne hab; omega)
-
 private theorem shared_unique [Finite I] (h₂ : ∀ v : V, {i : I | v ∈ K i}.ncard ≤ 2)
     {a b c : I} {x : V} (ha : x ∈ K a) (hb : x ∈ K b) (hc : x ∈ K c)
     (hab : a ≠ b) (hac : a ≠ c) : b = c := by
   classical
   by_contra hbc
-  have h := Finset.card_le_card (show ({a, b, c} : Finset I) ⊆ bag {i : I | x ∈ K i} by
-    intro t ht
-    simp only [Finset.mem_insert, Finset.mem_singleton] at ht
-    rcases ht with rfl | rfl | rfl <;> exact mem_bag.mpr (by assumption))
-  simp [Finset.card_insert_of_notMem, hab, hac, hbc] at h
-  exact (by decide : ¬ 3 ≤ 2) (h.trans (h₂ x))
+  have h : ({a, b, c} : Set I) ⊆ {i : I | x ∈ K i} := by
+    simp [Set.insert_subset_iff, ha, hb, hc]
+  have hle := (Set.ncard_le_ncard h).trans (h₂ x)
+  simp [Set.ncard_insert_of_notMem, hab, hac, hbc] at hle
 
 end CliqueTreeBanach
 
@@ -707,7 +635,7 @@ theorem cliqueTree_twoClique_midpoint_banach_potential {V : Type u} [Finite V] {
     cliqueTreeMidpointCoeff T K < 3 ∧ ∃ φ : V → E, ∀ u v, G.Adj u v →
       ‖g u v - (φ v - φ u)‖ ≤ cliqueTreeMidpointCoeff T K * ε := by
   classical
-  letI := Fintype.ofFinite (Option I × Option I)
+  let := Fintype.ofFinite (Option I × Option I)
   let A (a : I) := bag (K a)
   let S (a b : I) := bag (K a ∩ K b)
   let C (a : I) := 1 - 2 / ((K a).ncard : ℝ)
@@ -733,18 +661,16 @@ theorem cliqueTree_twoClique_midpoint_banach_potential {V : Type u} [Finite V] {
       split_ifs
       · norm_num
       · convert add_lt_add (wlt a b) (wlt a c) using 1 <;> norm_num
-    have hC : C a ≤ 1 := sub_le_self _ (by positivity)
-    change C a + _ < _
-    linarith
+    exact (add_lt_add_of_le_of_lt (sub_le_self (1 : ℝ) (by positivity)) ht).trans_le (by norm_num)
   let p (a : I) (x : V) := mean (A a) (fun t => g t x)
   let gain (a b : I) := mean (S a b) (fun x => p a x - p b x)
   have rev (a b : I) : gain b a = -gain a b := by
     simp only [gain, S, Set.inter_comm (K b) (K a), ← mean_sub]
     abel
-  let r := hK.isTree.connected.nonempty.some
-  let c (a : I) := transport gain (route hK.isTree r a)
+  let root := hK.isTree.connected.nonempty.some
+  let c (a : I) := transport gain (route hK.isTree root a)
   have offset (a b : I) (hab : T.Adj a b) : c b - c a = gain a b := by
-    rcases route_adj hK.isTree r hab with h | h
+    rcases route_adj hK.isTree root hab with h | h
     · simp only [c, h, transport_concat]; abel
     · simp only [c, h, transport_concat, rev a b]; abel
   let ψ (a : I) (x : V) := p a x + c a
@@ -764,18 +690,6 @@ theorem cliqueTree_twoClique_midpoint_banach_potential {V : Type u} [Finite V] {
     let q : ℝ := ((max (K a).ncard (K b).ncard : ℕ) : ℝ)⁻¹
     have inc (v : V) (hv : v ∈ B) :
         ‖(p b u - p a u) - (p b v - p a v)‖ ≤ 2 * (1 - B.card * q) * ε := by
-      by_cases huv : u = v
-      · subst v
-        have hq : (B.card : ℝ) * q ≤ 1 := by
-          have hn : (0 : ℝ) < ((max (K a).ncard (K b).ncard : ℕ) : ℝ) := by
-            exact_mod_cast ha.card_pos.trans_le (by simp [A])
-          rw [show (B.card : ℝ) * q = B.card / ((max (K a).ncard (K b).ncard : ℕ) : ℝ) by
-            simp [q, div_eq_mul_inv]]
-          have hcard : B.card ≤ max (K a).ncard (K b).ncard := by
-            have hsub : (K a ∩ K b).ncard ≤ (K a).ncard := Set.ncard_le_ncard Set.inter_subset_left
-            simpa [B, S] using hsub.trans (le_max_left (K a).ncard (K b).ncard)
-          exact (div_le_one hn).2 (by exact_mod_cast hcard)
-        simpa using mul_nonneg (mul_nonneg (by norm_num : (0 : ℝ) ≤ 2) (sub_nonneg.mpr hq)) hε
       have hv' : v ∈ K a ∩ K b := mem_bag.mp hv
       let F (t : V) := g u v - (g t v - g t u)
       have cancel (j : I) (huj : u ∈ K j) (hvj : v ∈ K j) (hsub : (B : Set V) ⊆ K j)
@@ -784,8 +698,8 @@ theorem cliqueTree_twoClique_midpoint_banach_potential {V : Type u} [Finite V] {
         have hpos : (0 : ℝ) < (A j).card := by
           exact_mod_cast (show (A j).Nonempty from ⟨u, mem_bag.mpr huj⟩).card_pos
         exact common_stars (fun x hx => mem_bag.mpr (hsub hx)) ⟨u, mem_bag.mpr huj⟩
-          F ε q (by positivity) (inv_anti₀ hpos (by exact_mod_cast (by simpa [A] using hj)))
-          (fun t ht => defect_bound g ε hε hrev htri (hK.clique j huj hvj huv)
+          F ε q (inv_anti₀ hpos (by exact_mod_cast (by simpa [A] using hj)))
+          (fun t ht => defect_bound g ε hε hrev htri (hK.clique j huj hvj)
             (fun hn => hK.clique j (mem_bag.mp ht) huj hn)
             (fun hn => hK.clique j (mem_bag.mp ht) hvj hn))
       have h₁ := cancel a hu.1 hv'.1 (fun _ hx => (mem_bag.mp hx).1) (le_max_left ..)
@@ -802,33 +716,21 @@ theorem cliqueTree_twoClique_midpoint_banach_potential {V : Type u} [Finite V] {
         p b u - p a u + (c b - c a) by abel, offset a b hab]
       simp only [gain, B, ← mean_sub]
       abel
-    have hcard : ((B.erase u).card : ℝ) + 1 = B.card := by
-      exact_mod_cast Finset.card_erase_add_one huB
-    have hpos : (0 : ℝ) < B.card := by exact_mod_cast hB.card_pos
-    have hnorm := mean_bound hB (Finset.erase_subset u B) _ (2 * (1 - B.card * q) * ε)
-      (fun v hv hn => by
-        have : v = u := by by_contra h; exact hn (Finset.mem_erase.mpr ⟨h, hv⟩)
-        subst v
-        simp)
+    have hnorm := mean_bound (Finset.erase_subset u B) _ (2 * (1 - B.card * q) * ε)
+      (fun v hv hn => by rw [show v = u by simpa [hv] using hn, sub_self])
       (fun v hv => inc v (Finset.mem_of_mem_erase hv))
     rw [show (1 / 2 : ℝ) • (ψ a u + ψ b u) - ψ a u =
       (1 / 2 : ℝ) • (ψ b u - ψ a u) by module,
       norm_smul, Real.norm_eq_abs, abs_of_nonneg (by norm_num : (0 : ℝ) ≤ 1 / 2), hdiff]
     refine (mul_le_mul_of_nonneg_left hnorm (by norm_num)).trans_eq ?_
-    have he : ((B.erase u).card : ℝ) / B.card = 1 - 1 / (B.card : ℝ) := by
-      field_simp
-      linarith
-    rw [he]
+    rw [erase_fraction huB]
     simp only [sepShift, q, B, S, card_bag, div_eq_mul_inv]
     ring
   have coeff (a : I) (u v : V) (hu : u ∈ K a) (hv : v ∈ K a) (hne : u ≠ v) :
       C a + twoShifts T K a ≤ cliqueTreeMidpointCoeff T K := by
     have hn : 2 ≤ (K a).ncard := by
-      have he := Finset.card_le_card (show ({u, v} : Finset V) ⊆ A a by
-        intro t ht
-        simp only [Finset.mem_insert, Finset.mem_singleton] at ht
-        rcases ht with rfl | rfl <;> exact mem_bag.mpr (by assumption))
-      simpa [A, hne] using he
+      have sub : ({u, v} : Set V) ⊆ K a := by simp [Set.insert_subset_iff, hu, hv]
+      simpa [hne] using Set.ncard_le_ncard sub
     exact le_maxZero (Finset.mem_image.mpr ⟨a, mem_bag.mpr hn, rfl⟩)
   let attached (a : I) (x : V) := ∃ b, a ≠ b ∧ x ∈ K b
   let idx (a : I) (x : V) : Option I :=
@@ -837,8 +739,7 @@ theorem cliqueTree_twoClique_midpoint_banach_potential {V : Type u} [Finite V] {
   have shared (a b : I) (x : V) (ha : x ∈ K a) (hb : x ∈ K b) (hab : a ≠ b) :
       idx a x = some b := by
     have h : attached a x := ⟨b, hab, hb⟩
-    have he := shared_unique h₂ ha h.choose_spec.2 hb h.choose_spec.1 hab
-    simp [idx, h, he]
+    simp [idx, h, shared_unique h₂ ha h.choose_spec.2 hb h.choose_spec.1 hab]
   have close (a : I) (x : V) (ha : x ∈ K a) :
       ‖mid a x - ψ a x‖ ≤ w a (idx a x) * ε := by
     by_cases h : attached a x
@@ -878,10 +779,10 @@ theorem cliqueTree_twoClique_midpoint_banach_potential {V : Type u} [Finite V] {
       rw [show g u v - ((1 / 2 : ℝ) • (ψ a v + ψ b v) - (1 / 2 : ℝ) • (ψ a u + ψ b u)) =
         (1 / 2 : ℝ) • ((g u v - (ψ a v - ψ a u)) + (g u v - (ψ b v - ψ b u))) by module,
         norm_smul, Real.norm_eq_abs, abs_of_nonneg (by norm_num : (0 : ℝ) ≤ 1 / 2)]
-      refine (mul_le_mul_of_nonneg_left (norm_add_le _ _) (by norm_num)).trans ?_
-      linarith [ (fit a u v hu hv huv).trans
-        (mul_le_mul_of_nonneg_right (local_le a hu hv) hε),
-        (fit b u v ub vb huv).trans (mul_le_mul_of_nonneg_right (local_le b ub vb) hε)]
+      have fitM (j : I) (uj : u ∈ K j) (vj : v ∈ K j) :=
+        (fit j u v uj vj huv).trans (mul_le_mul_of_nonneg_right (local_le j uj vj) hε)
+      exact (mul_le_mul_of_nonneg_left (norm_add_le _ _) (by norm_num)).trans
+        (by linarith [fitM a hu hv, fitM b ub vb])
   · rw [show g u v - (mid a v - mid a u) = (g u v - (ψ a v - ψ a u)) +
       ((mid a u - ψ a u) - (mid a v - ψ a v)) by abel]
     have hmove := (norm_sub_le _ _).trans (add_le_add (close a u hu) (close a v hv))
