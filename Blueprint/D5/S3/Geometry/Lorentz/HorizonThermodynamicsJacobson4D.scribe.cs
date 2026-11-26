@@ -276,7 +276,7 @@ internal sealed class HorizonThermodynamicsJacobson4DDocument : IScribeDocumentD
     private static Formula OpticalVariables(Formula body) =>
         All("f", Arrow(R, R), All("s", Arrow(R, C), All("p", Arrow(R, R), body)));
     private static Formula Ray(Formula f, Formula s, Formula p) =>
-        Sub(Sub(Negate(Div(Square(f), D(2))), Square(Seq(Vert, Sp, Vert, Sp, s, Sp, Vert, Sp, Vert))), p);
+        Sub(Sub(Negate(Div(Square(f), D(2))), Square(Seq(Vert, Sp, s, Sp, Vert))), p);
     private static Formula HasDerivative(Formula f, Formula v, Formula t) => Call("HasDerivAt", f, v, t);
     private static Formula NullNorm(Formula k) => Call("eta", k, k);
     private static Formula Contract(Formula k, Formula s) =>
@@ -309,12 +309,14 @@ internal sealed class HorizonThermodynamicsJacobson4DDocument : IScribeDocumentD
     private static Formula Sub(Formula a, Formula b) => Rel(a, Minus, b);
     private static Formula If(Formula a, Formula b) => Rel(a, Implies, b);
     private static Formula Parens(Formula value) => Seq(Open, value, Close);
-    private static Formula Rel(Formula a, Formula r, Formula b) => Parens(Seq(a, Sp, r, Sp, b));
+    private static Formula GroupBinder(Formula term) => term is Formula.Bind ? Parens(term) : term;
+    private static Formula Rel(Formula a, Formula r, Formula b) =>
+        Parens(Seq(GroupBinder(a), Sp, r, Sp, GroupBinder(b)));
     private static Formula And(params Formula[] terms)
     {
-        var parts = new List<Formula> { terms[0] };
+        var parts = new List<Formula> { GroupBinder(terms[0]) };
         foreach (var term in terms[1..])
-            parts.AddRange([Sp, Land, Sp, term]);
+            parts.AddRange([Sp, Land, Sp, GroupBinder(term)]);
         return Parens(Seq([.. parts]));
     }
     private static Formula All(string name, Formula type, Formula body) =>
