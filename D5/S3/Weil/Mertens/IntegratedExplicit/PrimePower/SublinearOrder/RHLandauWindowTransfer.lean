@@ -78,7 +78,7 @@ open D5.S3.Analytic.Oscillation.OrdinateCounting
 open D5.S3.Weil.DirichletPolynomialMeanSquare (phase norm_phase)
 open D5.S3.Fourier.Concentration.FiniteTailMomentMissingWindow (complexScore)
 
-private theorem harmonic_band_transfer (rh : RiemannHypothesis) :
+theorem harmonic_band_transfer (rh : RiemannHypothesis) :
     ∃ L : ℝ, 1 < L ∧ ∀ T : ℝ, L ≤ T → ∀ t : ℝ,
       let s := positiveCutoff rh T
       let B := s \ positiveCutoff rh (T * (3/4))

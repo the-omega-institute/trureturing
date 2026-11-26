@@ -37,6 +37,7 @@ strata_touched:
   - D5/S3/Quantum/Analysis/RefinedBMV/PositiveCenter/LeftStripWideSign
   - D5/S3/Quantum/Analysis/RefinedBMV/PositiveCenter/MiddleGapReplay
   - D5/S3/Quantum/Analysis/RefinedBMV/PositiveCenter/SeparatedFourKernel
+  - D5/S3/Quantum/Analysis/RefinedBMV/PositiveCenter/ShortGapTenThirds
   - D5/S3/Quantum/Analysis/RefinedBMVExtremeAnalytic
   - D5/S3/Quantum/Analysis/RefinedBMVUniformCorner
   - D5/S3/Quantum/Analysis/RefinedBMVThreeSpectrumReduction
@@ -439,6 +440,12 @@ the logarithmic kernel has strictly negative mixed derivative at all
 gaps at least one. Geometric reduction controls the scaled scalar
 through integration gap seven halves with exact Taylor enclosures. The
 analytic tail estimate supplies the sign past that threshold.
+
+For first degrees at least eleven, the short-gap result extends to lower
+coordinate at least ten thirds and all positive gaps through two. The
+proof combines the certified curvature and slope of the short-gap profile
+with a bound for the radical derivative. The fourth moment strengthens
+the marginal slope estimate for gaps at least one.
 
 ## Quantitative degree-three gap for finite traces
 

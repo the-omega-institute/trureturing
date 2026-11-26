@@ -8,6 +8,8 @@ url: https://arxiv.org/abs/2411.13646v2
 claim: Theorem 3.5 constructs the extraspecial lift and Conjecture 5.2 proposes a holomorphic rank-128 Barnes–Wall orbifold of gap four.
 strata_touched:
   - D5/S3/VertexAlgebra/TwistedGround/BarnesWall/Q8TraceSign
+  - D5/S3/VertexAlgebra/TwistedGround/BarnesWall/Rank128Lattice
+  - D5/S3/VertexAlgebra/TwistedGround/BarnesWall/Q8GroundTrace
   - D5/S3/HomologicalAlgebra/BarnesWallQ8CohomologyDetector
 license: citation-only
 triage: anchor
@@ -49,12 +51,18 @@ gives $+2^{32}$. The separate bar-complex calculation shows that the
 candidate restricted to $Q_8$ pairs to $1/2$ modulo the integers and is
 nonzero in degree-three circle-valued group cohomology.
 
+The even unimodular tensor Gram realizes the stated lower-triangular
+cocycle on the rank-128 reflection quotient. Its two prescribed lift
+phases define covariant Weyl operators with individual traces `2^64`
+and product trace `2^96`.
+
 In the VOA argument, the order-four cyclic trivializations determine the
 relative phases of the three centralizer actions through the cyclic modular
 $S$ transform. Their physical trace product has positive sign, which
 selects the zero class. This identification uses the cyclic trace and
 equivariantization theorems in the literature. The Lean statements cover
-the finite Gauss sum and the cohomological detector.
+the finite Gauss sum, the covariant ground-space operators, and the
+cohomological detector.
 [van Ekeren–Möller–Scheithauer, Theorem 5.13](https://arxiv.org/abs/1507.08142v3) ·
 [McRae, Theorem 4.17](https://arxiv.org/abs/1910.13226v2) ·
 [Gelaki–Naidu–Nikshych, Theorem 3.5](https://arxiv.org/abs/0905.3117)

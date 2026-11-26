@@ -20,6 +20,10 @@ strata_touched:
   - D5/S3/Quantum/Divergence/FaithfulConditionalGap
   - D5/S3/Quantum/Divergence/UmegakiChannelSupportedExtension
   - D5/S3/Quantum/Divergence/UmegakiSupportedMoorePenrose
+  - D5/S3/Quantum/Divergence/ConditionalExpansion/BellKernelLimit
+  - D5/S3/Quantum/Divergence/ConditionalExpansion/DirectBellKrausRecovery
+  - D5/S3/Quantum/Divergence/ConditionalExpansion/HeraldedRecoveryUpperBound
+  - D5/S3/Quantum/Divergence/ConditionalExpansion/HeraldedRecoveryLowerBound
 license: citation-only
 triage: anchor
 ---
@@ -288,3 +292,36 @@ positive input inverse form. At the actual channel output the direction belongs
 to the range of the corresponding arithmetic operator, so the numerator is
 the real Hilbert–Schmidt pairing against its supported Moore–Penrose preimage.
 The supremum over the interval is attained at $t=0$.
+
+## Heralded exact recovery from the Bell kernel
+
+For input dimension $d\ge2$, let $P$ be the normalized Bell projector and
+let $Q$ project onto the kernel of $\operatorname{amp}_N(I-P)$.
+`HeraldedRecoveryUpperBound` constructs a completely positive,
+trace-nonincreasing operation from the columns of $Q$. Its composition
+with $N$ is $p\,\mathrm{id}$ on all matrices with
+$p=\operatorname{Re}\operatorname{Tr}(Q\operatorname{amp}_N(P))/d^2$.
+The Bell kernel limit gives orthogonal density pairs on $d+1$ reference
+coordinates with positive input gaps and ratios below $d^2p+\varepsilon$
+for every $\varepsilon>0$. Thus the conditional expansion infimum is at
+most $d^2$ times the optimal heralded exact recovery probability.
+
+Bény and Oreshkov's postprocessing-order duality gives the related
+replacement-weight characterization on the complementary channel by
+complementing an erasure channel. The quantitative bound here concerns
+the conditional expansion coefficient of Eq. (2.42).
+[Eq. (2.42)](https://arxiv.org/html/2608.27171v1#S2.EGx43) ·
+[Bény and Oreshkov, Theorem 2](https://arxiv.org/abs/1103.0649v3)
+
+`heralded_recovery_coefficient_comparison` bounds the conditional expansion
+coefficient $\eta$ between $p_{\rm rec}$ and $d^2p_{\rm rec}$, where
+$p_{\rm rec}$ is the supremum of success probabilities for finite Kraus
+operations whose composition with $N$ is $p\,\mathrm{id}$ on every input
+matrix. The lower bound controls the positive trace on the success and
+failure branches for every finite reference. The comparison holds for
+every hockey-stick parameter $\gamma\ge1$, including trace distance at
+$\gamma=1$, and also for the orthogonally restricted ratio set. In particular,
+the output retains a uniformly positive fraction of the conditional
+contrast exactly when it admits a heralded exact recovery with positive
+success probability. This characterizes recoverability from the channel
+output and its success flag in the finite-dimensional model.
