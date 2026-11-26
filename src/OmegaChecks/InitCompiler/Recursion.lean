@@ -49,6 +49,11 @@ private partial def solveBranch (g : MVarId) (agree : FVarId) (depth : Nat) : Me
     let rest ← g.apply (mkFVar agree)
     guard rest.isEmpty).isSome then return
   if depth == 0 then throwError "recursive step requires further congruence"
+  if (← observing? do
+    let result ← g.rewrite (← g.getType) (mkFVar agree)
+    guard result.mvarIds.isEmpty
+    let next ← g.replaceTargetEq result.eNew result.eqProof
+    solveBranch next agree (depth - 1)).isSome then return
   let some branches ← splitTarget? g (useNewSemantics := true) | throwError "step branches do not match"
   for branch in branches do solveBranch branch agree (depth - 1)
 
