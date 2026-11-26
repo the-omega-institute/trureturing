@@ -3,6 +3,7 @@ module
 public import Init.Data.Range.Polymorphic.Iterators
 public import Init.Data.Iterators.Combinators.Monadic.Take
 public import Init.Data.Iterators.Lemmas.Consumers.Loop
+import Init.Data.Iterators.Lemmas.Basic
 public import Init.Data.Iterators.Lemmas.Combinators.FilterMap
 import all Init.Data.Iterators.Combinators.Monadic.FilterMap
 import all Init.Data.Iterators.Consumers.Monadic.Total
@@ -542,6 +543,17 @@ public theorem Std.Iter.toList_eq_match_step {α β : Type u} [Iterator α Id β
   rw [collectList_eq]
   unfold _root_.Std.Iter.step
   cases it.toIterM.step.run.inflate using PlausibleIterStep.casesOn <;> rfl
+
+public theorem Std.Iter.toList_map : type_of% @_root_.Std.Iter.toList_map := by
+  intro α β γ iterator it finite f
+  induction it using _root_.Std.Iter.inductSteps with
+  | step it ihy ihs =>
+    rw [_root_.Std.Iter.toList_eq_match_step (it := it.map f),
+      _root_.Std.Iter.toList_eq_match_step (it := it), _root_.Std.Iter.step_map]
+    cases it.step using PlausibleIterStep.casesOn with
+    | yield next out h => exact congrArg (List.cons (f out)) (ihy h)
+    | skip next h => exact ihs h
+    | done _ => rfl
 
 private theorem realStepRxo {α : Type u} [UpwardEnumerable α] [LT α] [DecidableLT α] (it : IterM (α := Rxo.Iterator α) Id α) : it.step.run.inflate.val = Rxo.Iterator.Monadic.step it :=
     congrArg Subtype.val (Shrink.inflate_deflate (x := ⟨Rxo.Iterator.Monadic.step it, rfl⟩) (α := PlausibleIterStep it.IsPlausibleStep))
