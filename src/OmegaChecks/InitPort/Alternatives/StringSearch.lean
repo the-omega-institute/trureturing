@@ -222,4 +222,36 @@ public theorem IsLongestRevMatchAtChain.le : type_of% @_root_.String.Slice.Patte
 
 end String.Slice.Pattern.Model
 
+public theorem String.Slice.eqIgnoreAsciiCase.go._unary._proof_3 :
+    type_of% (private_decl% @_root_.String.Slice.eqIgnoreAsciiCase.go._unary._proof_3) := by
+  intro s t p q bound
+  exact Nat.sub_lt_sub_left bound.1 (Nat.lt_succ_self _)
+
+public def String.Slice.Pattern.instBEqSearchStep.beq :
+    type_of% @_root_.String.Slice.Pattern.instBEqSearchStep.beq := by
+  intro s a b
+  match a, b with
+  | .matched p q, .matched r t | .rejected p q, .rejected r t =>
+    exact (p.offset.byteIdx == r.offset.byteIdx) && (q.offset.byteIdx == t.offset.byteIdx)
+  | .matched .., .rejected .. | .rejected .., .matched .. => exact false
+
+public theorem String.Slice.Pattern.ToBackwardSearcher.DefaultBackwardSearcher.finitenessRelation._proof_2 :
+    type_of% (private_decl% @_root_.String.Slice.Pattern.ToBackwardSearcher.DefaultBackwardSearcher.finitenessRelation._proof_2) := by
+  intro ρ pat s _ _ it it' step
+  simp_wf
+  obtain ⟨step, eq, valid⟩ := step
+  match step with
+  | .yield next (.rejected p q) =>
+    obtain ⟨_, ⟨_, _, _, advance⟩⟩ := valid
+    cases eq
+    rw [advance]
+    exact _root_.String.Slice.Pos.prev_lt
+  | .yield next (.matched p q) =>
+    obtain ⟨_, pos, ⟨found, _, _, advance⟩⟩ := valid
+    cases eq
+    rw [advance]
+    have lt := (_root_.String.Slice.Pos.lt_endPos_iff _).mpr
+      (_root_.String.Slice.Pattern.StrictBackwardPattern.ne_endPos _ _ found)
+    exact Nat.lt_of_lt_of_le lt (Nat.le_of_eq _root_.String.Slice.utf8ByteSize_sliceTo)
+
 end OmegaChecks.InitPort.Alternatives
