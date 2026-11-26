@@ -1,5 +1,6 @@
 module
 public import Init.Data.List.Lemmas
+public import OmegaChecks.InitPort.Alternatives.ListScan
 public import OmegaChecks.InitPort.Alternatives.ListMinMax
 import Init.Data.List.Impl
 import all Init.Data.List.Control
