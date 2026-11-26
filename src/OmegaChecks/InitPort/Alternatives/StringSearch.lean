@@ -346,6 +346,43 @@ public theorem LawfulBackwardPatternModel.skipSuffix?_eq_none_iff :
     exact ⟨p, (_root_.String.Slice.Pattern.Model.LawfulBackwardPatternModel.skipSuffix?_eq_some_iff p).mpr
       (_root_.String.Slice.Pattern.Model.isLongestRevMatchAt_endPos_iff.mp matched)⟩
 
+private theorem returnSteps {s t : String.Slice} (eq : s.copy = t.copy) (steps : List (String.Slice.Pattern.SearchStep t)) :
+    (steps.map (·.cast eq.symm)).map (·.cast eq) = steps := by
+  induction steps with
+  | nil => rfl
+  | cons step tail ih =>
+    cases step <;> exact congrArg (List.cons _) ih
+
+public theorem isValidSearchFrom_cast_iff : type_of% @_root_.String.Slice.Pattern.Model.isValidSearchFrom_cast_iff := by
+  intro ρ pat i s t eq p steps
+  have transport {s t : String.Slice} (eq : s.copy = t.copy) {p : s.Pos} {xs}
+      (h : _root_.String.Slice.Pattern.Model.IsValidSearchFrom pat p xs) :
+      _root_.String.Slice.Pattern.Model.IsValidSearchFrom pat (p.cast eq) (xs.map (·.cast eq)) := by
+    induction h with
+    | endPos =>
+      rw [_root_.String.Slice.Pos.cast_endPos]
+      exact .endPos
+    | matched matched _ ih => exact .matched ((isLongestMatchAt_cast_iff eq).mpr matched) ih
+    | mismatched lt misses _ ih =>
+      exact .mismatched lt (fun q lower upper found =>
+        misses (q.cast eq.symm) lower upper ((matchesAt_cast_iff eq.symm).mpr found)) ih
+  exact ⟨fun h => transport eq.symm h, fun h => returnSteps eq steps ▸ transport eq h⟩
+
+public theorem isValidRevSearchFrom_cast_iff : type_of% @_root_.String.Slice.Pattern.Model.isValidRevSearchFrom_cast_iff := by
+  intro ρ pat i s t eq p steps
+  have transport {s t : String.Slice} (eq : s.copy = t.copy) {p : s.Pos} {xs}
+      (h : _root_.String.Slice.Pattern.Model.IsValidRevSearchFrom pat p xs) :
+      _root_.String.Slice.Pattern.Model.IsValidRevSearchFrom pat (p.cast eq) (xs.map (·.cast eq)) := by
+    induction h with
+    | startPos =>
+      rw [_root_.String.Slice.Pos.cast_startPos]
+      exact .startPos
+    | matched matched _ ih => exact .matched ((isLongestRevMatchAt_cast_iff eq).mpr matched) ih
+    | mismatched lt misses _ ih =>
+      exact .mismatched lt (fun q lower upper found =>
+        misses (q.cast eq.symm) lower upper ((revMatchesAt_cast_iff eq.symm).mpr found)) ih
+  exact ⟨fun h => transport eq.symm h, fun h => returnSteps eq steps ▸ transport eq h⟩
+
 end String.Slice.Pattern.Model
 
 public theorem String.Slice.eqIgnoreAsciiCase.go._unary._proof_3 :
