@@ -6,6 +6,11 @@ import all Init.Data.Nat.Lemmas
 
 namespace OmegaChecks.InitPort.Alternatives
 
+public theorem Nat.lt_sub_iff_add_lt' : type_of% @_root_.Nat.lt_sub_iff_add_lt' := by
+  intro a b c
+  rw [Nat.add_comm b a]
+  exact ⟨Nat.add_lt_of_lt_sub, Nat.lt_sub_of_add_lt⟩
+
 public theorem Nat.mod_two_eq_zero_or_one : type_of% @_root_.Nat.mod_two_eq_zero_or_one := by
   intro n
   have classify (r : Nat) (small : r < 2) : r = 0 ∨ r = 1 := by
