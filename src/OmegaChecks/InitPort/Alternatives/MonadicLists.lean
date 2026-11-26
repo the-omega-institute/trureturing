@@ -5,6 +5,7 @@ public import Init.Data.List.Monadic
 import all Init.Data.List.ToArray
 import all Init.Data.List.Control
 import Init.Data.List.Attach
+import all Init.Data.List.OfFn
 
 /-! Reduction of pure monadic list operations on arbitrary accumulators. -/
 namespace OmegaChecks.InitPort.Alternatives
@@ -525,5 +526,42 @@ public theorem Array.flatMapM_subtype : type_of% @_root_.Array.flatMapM_subtype 
   unfold List.unattach
   rw [List.foldlM_map]
   exact congrFun (foldActions (fun a => by rw [h a.1 a.2]) xs.toList) _
+
+public theorem List.findM?_pure : type_of% @_root_.List.findM?_pure := by
+  intro α m _ _ p xs
+  induction xs with
+  | nil => rfl
+  | cons x xs ih =>
+    rw [List.findM?, pure_bind, List.find?_cons]
+    cases p x <;> first | rfl | exact ih
+
+public theorem List.ofFnM_zero : type_of% @_root_.List.ofFnM_zero := by
+  intros
+  unfold List.ofFnM
+  rw [Fin.foldlM_zero, map_pure]
+  rfl
+
+private theorem foldPureCons [Monad m] [LawfulMonad m] (f : Fin n → α) (xs : List α) :
+    Fin.foldlM n (m := m) (fun acc j => (· :: acc) <$> pure (f j)) xs =
+      Fin.foldlM n (fun acc j => pure (f j :: acc)) xs := by
+  induction n generalizing xs with
+  | zero => rw [Fin.foldlM_zero, Fin.foldlM_zero]
+  | succ n ih =>
+    rw [Fin.foldlM_succ, Fin.foldlM_succ]
+    dsimp only
+    rw [map_pure, pure_bind, pure_bind]
+    exact ih (fun j => f j.succ) _
+
+public theorem List.ofFnM_pure_comp : type_of% @_root_.List.ofFnM_pure_comp := by
+  intro m α _ _ n f
+  unfold List.ofFnM
+  change List.reverse <$> (Fin.foldlM n (m := m) (fun acc j => (· :: acc) <$> pure (f j)) []) = _
+  rw [foldPureCons]
+  rw [Fin.foldlM_pure, map_pure, Fin.foldl_cons_eq_append, List.append_nil, List.reverse_reverse]
+
+public theorem List.idRun_ofFnM : type_of% @_root_.List.idRun_ofFnM := by
+  intro α n f
+  change (_root_.List.ofFnM (m := Id) (pure ∘ f)) = _
+  exact _root_.List.ofFnM_pure_comp (m := Id)
 
 end OmegaChecks.InitPort.Alternatives
