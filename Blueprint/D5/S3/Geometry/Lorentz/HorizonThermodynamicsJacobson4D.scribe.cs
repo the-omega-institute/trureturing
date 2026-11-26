@@ -24,9 +24,9 @@ internal sealed class HorizonThermodynamicsJacobson4DDocument : IScribeDocumentD
                 + "then eliminates the mixed spatial entry. The argument works over every field of characteristic zero.",
                 NullCone()),
             Result("bianchi-closure", "jacobson_bianchi_einstein_equation", "One integration constant",
-                "On the preconnected open domain U, the matrix fields R and T are symmetric and their entries "
+                "On the preconnected open domain U, the coupling is c and the matrix fields R and T are symmetric. Their entries "
                 + "are differentiable at each point. Write E = R − trη(R)η/2 and "
-                + "p = (R − κT)₀₀, so κT − R = pη. The contracted derivative div uses "
+                + "p = (R − cT)₀₀, so cT − R = pη. The contracted derivative div uses "
                 + "Σₐ ηₐₐ ∂ₐ in the first slot of each matrix field. "
                 + "The Bianchi and conservation equations force each coordinate derivative of p + trη(R)/2 to vanish. "
                 + "That scalar is locally constant and hence constant on U. This is the flat-chart form of "
@@ -116,12 +116,21 @@ internal sealed class HorizonThermodynamicsJacobson4DDocument : IScribeDocumentD
                     Equal(Contract(k, Sub(r, Mul(coupling, t))), D(0)))),
                 All("b", Index, And(Equal(Call("div", F.Id("E"), x, F.Id("b")), D(0)),
                     Equal(Call("div", F.Id("T"), x, F.Id("b")), D(0)))))));
-        var derivative = On("x", Chart, u, Call("HasFDerivAt", Seq(F.Id("y"), Sp, Mapsto, Sp,
-            Add(At(F.Id("p"), F.Id("y")), Div(Call("tr", At(F.Id("R"), F.Id("y"))), D(2)))), D(0), x));
+        var y = F.Id("y");
+        var ricci = At(F.Id("R"), y);
+        var traceHalf = Div(Call("MinkowskiTrace", ricci), D(2));
+        var residual = Sub(ricci, Mul(coupling, At(F.Id("T"), y)));
+        var definitions = All("y", Chart, And(
+            Equal(At(F.Id("E"), y), Sub(ricci, Mul(traceHalf, Eta))),
+            Equal(At(F.Id("p"), y), At(residual, D(0), D(0)))));
+        var scalar = Seq(y, Sp, Mapsto, Sp, Add(At(F.Id("p"), y), traceHalf));
+        var derivative = On("x", Chart, u, Call("HasFDerivAt", scalar, D(0), x));
+        var equation = Ex("l", R, On("x", Chart, u,
+            Equal(Add(e, Mul(F.Id("l"), Eta)), Mul(coupling, t))));
+        var body = All("E", Arrow(Chart, Mat(R)), All("p", Arrow(Chart, R),
+            If(And(definitions, hypotheses), And(derivative, equation))));
         return All("U", Call("Set", Chart), All("R", Arrow(Chart, Mat(R)),
-            All("T", Arrow(Chart, Mat(R)), All("c", R,
-                If(hypotheses, And(derivative, Ex("l", R, On("x", Chart, u,
-                    Equal(Add(e, Mul(F.Id("l"), Eta)), Mul(coupling, t))))))))));
+            All("T", Arrow(Chart, Mat(R)), All("c", R, body))));
     }
 
     private static Formula Vacuum()
@@ -130,14 +139,24 @@ internal sealed class HorizonThermodynamicsJacobson4DDocument : IScribeDocumentD
         var l = F.Id("l");
         var k = F.Id("k");
         var b = F.Id("b");
-        return All("c", R, All("l", R, All("m", R, If(Rel(l, Neq, F.Id("m")),
-            And(All("p", R, All("x", Chart, And(
-                    All("k", Chart, If(Equal(NullNorm(k), D(0)),
-                        Equal(Contract(k, Sub(At(F.Id("R"), F.Id("p"), x), Mul(F.Id("c"), At(F.Id("T"), x)))), D(0)))),
-                    All("b", Index, Equal(Call("div", At(F.Id("E"), F.Id("p")), x, b), D(0))),
-                    Equal(Add(At(F.Id("E"), F.Id("p"), x), Mul(F.Id("p"), Eta)), D(0))))),
-                All("x", Chart, All("b", Index, Equal(Call("div", F.Id("T"), x, b), D(0)))),
-                Rel(At(F.Id("R"), l), Neq, At(F.Id("R"), F.Id("m"))))))));
+        var coefficient = F.Id("p");
+        var ricci = At(F.Id("R"), coefficient, x);
+        var corrected = At(F.Id("E"), coefficient, x);
+        var tensorFamily = Arrow(R, Arrow(Chart, Mat(R)));
+        var definitions = And(All("x", Chart, Equal(At(F.Id("T"), x), D(0))),
+            All("p", R, All("x", Chart, And(
+                Equal(ricci, Mul(coefficient, Eta)),
+                Equal(corrected, Sub(ricci, Mul(Div(Call("MinkowskiTrace", ricci), D(2)), Eta)))))));
+        var vacuum = All("p", R, All("x", Chart, And(
+            All("k", Chart, If(Equal(NullNorm(k), D(0)),
+                Equal(Contract(k, Sub(ricci, Mul(F.Id("c"), At(F.Id("T"), x)))), D(0)))),
+            All("b", Index, Equal(Call("div", At(F.Id("E"), coefficient), x, b), D(0))),
+            Equal(Add(corrected, Mul(coefficient, Eta)), D(0)))));
+        var conserved = All("x", Chart, All("b", Index, Equal(Call("div", F.Id("T"), x, b), D(0))));
+        var distinct = Rel(At(F.Id("R"), l), Neq, At(F.Id("R"), F.Id("m")));
+        var body = All("R", tensorFamily, All("T", Arrow(Chart, Mat(R)), All("E", tensorFamily,
+            If(And(Rel(l, Neq, F.Id("m")), definitions), And(vacuum, conserved, distinct)))));
+        return All("c", R, All("l", R, All("m", R, body)));
     }
 
     private static Formula Raychaudhuri()
@@ -180,7 +199,7 @@ internal sealed class HorizonThermodynamicsJacobson4DDocument : IScribeDocumentD
         var fzero = At(f, D(0));
         var ft = At(f, t);
         return All("T", R, If(Rel(D(0), Lt, pole),
-            All("f", Arrow(R, R), If(All("t", R, Equal(At(f, t), Div(Negate(D(2)), Sub(pole, t)))),
+            All("f", Arrow(R, R), If(All("t", R, If(Rel(t, Lt, pole), Equal(At(f, t), Div(Negate(D(2)), Sub(pole, t))))),
                 And(Rel(fzero, Lt, D(0)), Equal(pole, Div(Negate(D(2)), fzero)),
                     All("t", R, If(Rel(t, Lt, pole), And(
                         HasDerivative(f, Negate(Div(Square(ft), D(2))), t),
