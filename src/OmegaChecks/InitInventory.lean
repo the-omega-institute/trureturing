@@ -1443,6 +1443,80 @@ open Lean in
 run_cmd
   unless (← collectAxioms ``fromMonadConstructor).isEmpty do throwError "monad constructor witness uses axioms"
 
+private def normalize {ε α : Type u} (reset : ε → ε) : Except ε α → Except ε α
+  | .error e => .error (reset e)
+  | .ok a => .ok a
+private theorem normal {ε α : Type u} (reset : ε → ε) (fixed : ∀ e, reset e = e) (x : Except ε α) :
+    normalize reset x = x := by
+  cases x with
+  | ok _ => rfl
+  | error e => exact congrArg Except.error (fixed e)
+@[instance_reducible] private def normalized {ε : Type u} (reset : ε → ε) : Monad (fun α : Type u => Except ε α) where
+  pure := Except.ok
+  bind x k := match x with | .ok a => normalize reset (k a) | .error e => .error e
+
+private theorem normalizedLawful {ε : Type u} (reset : ε → ε) (fixed : ∀ e, reset e = e) :
+    letI := normalized reset; LawfulMonad (fun α : Type u => Except ε α) := by
+  letI := normalized reset
+  exact {
+    map_const := rfl
+    id_map := by intro _ x; cases x <;> rfl
+    comp_map := by intro _ _ _ g h x; cases x <;> rfl
+    pure_seq := by intro _ _ f x; cases x <;> first | rfl | exact congrArg Except.error (fixed _)
+    map_pure := by intros; rfl
+    seq_pure := by intro _ _ g x; cases g <;> rfl
+    seqLeft_eq := by intro _ _ x y; cases x <;> cases y <;> first | rfl | exact congrArg Except.error (fixed _).symm
+    seqRight_eq := by intro _ _ x y; cases x <;> cases y <;> first | rfl | exact congrArg Except.error (fixed _).symm
+    seq_assoc := by intro _ _ _ x g h; cases x <;> cases g <;> cases h <;> first | rfl | exact congrArg Except.error (fixed _) | exact congrArg Except.error (fixed _).symm
+    bind_pure_comp := by intro _ _ f x; cases x <;> rfl
+    bind_map := by intro _ _ f x; cases f <;> cases x <;> first | rfl | exact congrArg Except.error (fixed _)
+    pure_bind := by intro _ _ a k; exact normal reset fixed (k a)
+    bind_assoc := by
+      intro α β γ x f g
+      cases x with
+      | error e => rfl
+      | ok a =>
+        change ((normalize reset (f a)) >>= g) = normalize reset (f a >>= g)
+        rw [normal reset fixed, normal reset fixed]
+  }
+
+private theorem viaStateCpsLift (law : type_of% @StateCpsT.instLawfulMonadLiftOfLawfulMonad.{u,u})
+    {T : Type u} {f g : T → T} (agree : ∀ x, f x = g x) : f = g := by
+  letI := normalized (resetGraph f)
+  letI : LawfulMonad (ErrorM f) := normalizedLawful (resetGraph f) (resetGraph_eq f)
+  letI : LawfulMonadLift (ErrorM f) (StateCpsT PUnit (ErrorM f)) := law
+  let use (t : T) : ErrorM f PUnit := .error ⟨t, g t, agree t⟩
+  let observe (a : StateCpsT PUnit (ErrorM f) PUnit) (t : T) :=
+    match a PUnit .unit (fun _ _ => use t) with
+    | .error err => err.2.val
+    | .ok _ => t
+  exact congrArg observe (LawfulMonadLift.monadLift_pure (m := ErrorM f) (n := StateCpsT PUnit (ErrorM f)) PUnit.unit)
+
+private theorem viaExceptCpsLift (law : type_of% @ExceptCpsT.instLawfulMonadLiftOfLawfulMonad.{u,u})
+    {T : Type u} {f g : T → T} (agree : ∀ x, f x = g x) : f = g := by
+  letI := normalized (resetGraph f)
+  letI : LawfulMonad (ErrorM f) := normalizedLawful (resetGraph f) (resetGraph_eq f)
+  letI : LawfulMonadLift (ErrorM f) (ExceptCpsT PUnit (ErrorM f)) := law
+  let use (t : T) : ErrorM f PUnit := .error ⟨t, g t, agree t⟩
+  let observe (a : ExceptCpsT PUnit (ErrorM f) PUnit) (t : T) :=
+    match a PUnit (fun _ => use t) (fun _ => use t) with
+    | .error err => err.2.val
+    | .ok _ => t
+  exact congrArg observe (LawfulMonadLift.monadLift_pure (m := ErrorM f) (n := ExceptCpsT PUnit (ErrorM f)) PUnit.unit)
+
+public theorem fromStateCpsLift
+    (law : type_of% @StateCpsT.instLawfulMonadLiftOfLawfulMonad.{max 1 u v, max 1 u v}) : type_of% @funext.{u,v} :=
+  funextFromEndomorphisms (viaStateCpsLift law)
+
+public theorem fromExceptCpsLift
+    (law : type_of% @ExceptCpsT.instLawfulMonadLiftOfLawfulMonad.{max 1 u v, max 1 u v}) : type_of% @funext.{u,v} :=
+  funextFromEndomorphisms (viaExceptCpsLift law)
+
+open Lean in
+run_cmd
+  for n in [``fromStateCpsLift, ``fromExceptCpsLift] do
+    unless (← collectAxioms n).isEmpty do throwError "continuation lift witness {n} uses axioms"
+
 end TransformerLaws
 
 namespace MonadicTraversal
@@ -2232,6 +2306,10 @@ private def logicalConsequence? (owner name : Name) : Option (Name × Name) := d
     return (``funext, ``OmegaChecks.InitBoundaries.TransformerLaws.fromStateTWeakAttach)
   | `Init.Control.Lawful.MonadAttach.Instances, ``instLawfulMonadAttachStateTOfLawfulMonad =>
     return (``funext, ``OmegaChecks.InitBoundaries.TransformerLaws.fromStateTAttach)
+  | `Init.Control.Lawful.MonadLift.Instances, ``StateCpsT.instLawfulMonadLiftOfLawfulMonad =>
+    return (``funext, ``OmegaChecks.InitBoundaries.TransformerLaws.fromStateCpsLift)
+  | `Init.Control.Lawful.MonadLift.Instances, ``ExceptCpsT.instLawfulMonadLiftOfLawfulMonad =>
+    return (``funext, ``OmegaChecks.InitBoundaries.TransformerLaws.fromExceptCpsLift)
   | `Init.Control.Lawful.Basic, ``LawfulMonad.mk' =>
     return (``funext, ``OmegaChecks.InitBoundaries.TransformerLaws.fromMonadConstructor)
   | `Init.Control.Lawful.Instances, ``ReaderT.instLawfulFunctor =>
