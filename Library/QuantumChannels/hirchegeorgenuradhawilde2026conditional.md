@@ -23,6 +23,7 @@ strata_touched:
   - D5/S3/Quantum/Divergence/ConditionalExpansion/BellKernelLimit
   - D5/S3/Quantum/Divergence/ConditionalExpansion/DirectBellKrausRecovery
   - D5/S3/Quantum/Divergence/ConditionalExpansion/HeraldedRecoveryUpperBound
+  - D5/S3/Quantum/Divergence/ConditionalExpansion/HeraldedRecoveryLowerBound
 license: citation-only
 triage: anchor
 ---
@@ -311,3 +312,16 @@ complementing an erasure channel. The quantitative bound here concerns
 the conditional expansion coefficient of Eq. (2.42).
 [Eq. (2.42)](https://arxiv.org/html/2608.27171v1#S2.EGx43) ·
 [Bény and Oreshkov, Theorem 2](https://arxiv.org/abs/1103.0649v3)
+
+`heralded_recovery_coefficient_comparison` bounds the conditional expansion
+coefficient $\eta$ between $p_{\rm rec}$ and $d^2p_{\rm rec}$, where
+$p_{\rm rec}$ is the supremum of success probabilities for finite Kraus
+operations whose composition with $N$ is $p\,\mathrm{id}$ on every input
+matrix. The lower bound controls the positive trace on the success and
+failure branches for every finite reference. The comparison holds for
+every hockey-stick parameter $\gamma\ge1$, including trace distance at
+$\gamma=1$, and also for the orthogonally restricted ratio set. In particular,
+the output retains a uniformly positive fraction of the conditional
+contrast exactly when it admits a heralded exact recovery with positive
+success probability. This characterizes recoverability from the channel
+output and its success flag in the finite-dimensional model.
