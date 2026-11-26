@@ -395,14 +395,13 @@ theorem noContinuousSignalDecider
     | true => exact False.elim ((Nat.ne_of_lt lt) (Nat.eq_of_beq_eq_true eq))
   exact (same spike agree).symm.trans yes
 
-/-- Agreement with the official collector on finite iterators gives the limited principle
-of omniscience for arbitrary Boolean streams. -/
-def limitedOmniscienceFromCollector (collect : type_of% (@Std.Iter.toList.{0}))
+private def limitedOmniscienceFromLength
+    (measure : ∀ {α β : Type} [Iterator α Id β], Iter (α := α) β → Nat)
     (correct : ∀ {α β : Type} [Iterator α Id β] [Finite α Id] (it : Iter (α := α) β),
-      collect it = it.toList) (f : Nat → Bool) : Decidable (∃ n, f n = true) := by
+      measure it = it.toList.length) (f : Nat → Bool) : Decidable (∃ n, f n = true) := by
   let g := seen f
   letI := searchIterator g
-  let len := fun k => (collect (search k)).length
+  let len := fun k => measure (search k)
   cases h : g (len 0) with
   | true => exact isTrue (hit_of_seen f _ h)
   | false =>
@@ -414,9 +413,31 @@ def limitedOmniscienceFromCollector (collect : type_of% (@Std.Iter.toList.{0}))
       rw [correct (search k), Iter.toList_eq_match_step, searchStep]
       cases e : g k with
       | true => rfl
-      | false => exact congrArg Nat.succ (congrArg List.length (correct (search (k+1))).symm)
+      | false => exact congrArg Nat.succ (correct (search (k+1))).symm
     have result := length_hits (seenSticky f) gHit len unroll 0
     exact Bool.noConfusion (h.symm.trans (by simpa only [Nat.zero_add] using result))
+
+/-- Agreement with the official collector on finite iterators gives the limited principle
+of omniscience for arbitrary Boolean streams. -/
+def limitedOmniscienceFromCollector (collect : type_of% (@Std.Iter.toList.{0}))
+    (correct : ∀ {α β : Type} [Iterator α Id β] [Finite α Id] (it : Iter (α := α) β),
+      collect it = it.toList) (f : Nat → Bool) : Decidable (∃ n, f n = true) :=
+  limitedOmniscienceFromLength (fun it => (collect it).length)
+    (fun it => congrArg List.length (correct it)) f
+
+/-- A universal default loop can count outputs before the first signal. It suffices that its
+identity-monad specialization agrees with the official loop on finite iterators. -/
+def limitedOmniscienceFromDefaultLoop (loop : type_of% (@Std.IteratorLoop.defaultImplementation.{0,0,0,0}))
+    (correct : ∀ {α β : Type} [inst : Iterator α Id β] [Finite α Id],
+      @loop β α Id Id _ inst = @IteratorLoop.defaultImplementation β α Id Id _ inst)
+    (f : Nat → Bool) : Decidable (∃ n, f n = true) := by
+  apply limitedOmniscienceFromLength (f := f) (fun {α β} [inst : Iterator α Id β] it =>
+    letI := @loop β α Id Id _ inst
+    it.length)
+  intro α β inst finite it
+  rw [correct]
+  letI : IteratorLoop α Id Id := .defaultImplementation
+  exact Iter.length_toList_eq_length.symm
 
 /-- An array collector on unrestricted iterators also gives a list collector pointwise. -/
 def limitedOmniscienceFromArray (collect : type_of% (@Std.Iter.toArray.{0}))
