@@ -10,6 +10,10 @@ $$\forall n: Nat, (12 \le n \implies a\left(n\right) = 4 \cdot a\left(n - 1\righ
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinA235290DiagonalRecurrence.hardin_a235290` (`✓ std3`). ∎
 
+*Resolves.* `Problems/hardin-a235290-diagonal-recurrence` (proved) by `D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinA235290DiagonalRecurrence.hardin_a235290`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hardin-a235290-diagonal-recurrence","declaration_gid":"D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinA235290DiagonalRecurrence.hardin_a235290","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* R. H. Hardin (2014). *OEIS A235290 — Constant-stress square arrays*. URL: <https://oeis.org/A235290>.

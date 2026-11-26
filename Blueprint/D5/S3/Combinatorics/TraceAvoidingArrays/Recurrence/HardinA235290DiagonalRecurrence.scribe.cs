@@ -36,7 +36,9 @@ internal sealed class HardinA235290DiagonalRecurrenceDocument : IScribeDocumentD
                     + "The residual vanishes on the full ten-by-ten window of starting side parameters. "
                     + "The order-ten recurrence propagates those zeros along both axes. "
                     + "Taking the two side parameters equal gives the displayed identity."))),
-            DescribeRole.Theorem))));
+            DescribeRole.Theorem,
+            new OpenProblemResolutionClaim(ProblemSlugRef.Create("hardin-a235290-diagonal-recurrence"),
+                ResolutionKind.Proved)))));
 
     private static Formula RecurrenceStatement()
     {

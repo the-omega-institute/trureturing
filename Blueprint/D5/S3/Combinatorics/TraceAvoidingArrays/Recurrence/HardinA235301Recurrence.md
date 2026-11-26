@@ -10,6 +10,10 @@ $$\begin{aligned}&\forall k: \mathbb{N}, \forall n: \mathbb{N}, 1 \le k \implies
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinA235301Recurrence.hardin_a235301` (`✓ std3`). ∎
 
+*Resolves.* `Problems/hardin-a235301-common-recurrence` (proved) by `D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinA235301Recurrence.hardin_a235301`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hardin-a235301-common-recurrence","declaration_gid":"D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinA235301Recurrence.hardin_a235301","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* R. H. Hardin (2014). *OEIS A235301 — Constant-stress rectangular arrays*. URL: <https://oeis.org/A235301>.
