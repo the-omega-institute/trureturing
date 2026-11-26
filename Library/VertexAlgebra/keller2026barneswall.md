@@ -8,6 +8,7 @@ url: https://arxiv.org/abs/2411.13646v2
 claim: Theorem 3.5 constructs the extraspecial lift and Conjecture 5.2 proposes a holomorphic rank-128 Barnes–Wall orbifold of gap four.
 strata_touched:
   - D5/S3/VertexAlgebra/TwistedGround/BarnesWall/Q8TraceSign
+  - D5/S3/VertexAlgebra/TwistedGround/BarnesWall/OddGaussSum
   - D5/S3/VertexAlgebra/TwistedGround/BarnesWall/Rank128Lattice
   - D5/S3/VertexAlgebra/TwistedGround/BarnesWall/Q8GroundTrace
   - D5/S3/VertexAlgebra/TwistedGround/BarnesWall/PauliRows
@@ -113,3 +114,19 @@ theorem uses the two-block half-Gram hypotheses of Appendix A.1 and the
 actual signed ambient involution. It applies to words containing both X
 and Z factors in the same slot.
 [Keller–Roberts–Roberts, Appendix A.1](https://arxiv.org/abs/2411.13646v2)
+
+## Uniform quaternion Gauss sum
+
+For any odd tensor slot count $m\geq 5$, the normalized Gram of the
+subset rows has the complement pairing against every even-weight row.
+The lower-triangular half Gram, including its halved diagonal, vanishes
+on each block with the two active slots free. The integral Pauli
+matrices act by the literal signed permutations on the scaled rows and
+preserve their Gram. Their triangular lift defect gives the polarization
+of the composed lift exponents.
+
+On the even-row displacement coordinates the quaternion trace exponent
+has zero basis values. Splitting by a spectator slot makes the cross
+pairing a complement permutation and a square-zero shear. The resulting
+finite Gauss sum is $+2^{2^{m-2}}$. The rank-128 value is $+2^{32}$.
+[Keller–Roberts–Roberts, §2.2 and Appendix A](https://arxiv.org/abs/2411.13646v2)
