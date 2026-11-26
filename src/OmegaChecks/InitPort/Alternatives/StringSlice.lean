@@ -4,6 +4,7 @@ import all Init.Data.String.FindPos
 import all Init.Data.String.Lemmas.Order
 import all Init.Data.String.Lemmas.FindPos
 import all Init.Data.String.Pattern.Pred
+import all Init.Data.String.Pattern.Basic
 import all Init.Data.String.Defs
 public import OmegaChecks.InitPort.Alternatives.StringEncoding
 
@@ -434,5 +435,25 @@ public theorem String.Pos.lt_endPos_iff : type_of% @_root_.String.Pos.lt_endPos_
   intro s p
   exact ⟨fun lt eq => Nat.ne_of_lt lt (congrArg (fun q : s.Pos => q.offset.byteIdx) eq),
     fun ne => Nat.lt_of_le_of_ne p.isValid.le_utf8ByteSize (fun eq => ne (String.Pos.ext (String.Pos.Raw.ext eq)))⟩
+
+public theorem String.Slice.Pattern.ToForwardSearcher.DefaultForwardSearcher.instIteratorIdSearchStepOfForwardPattern._proof_9 :
+    type_of% @_root_.String.Slice.Pattern.ToForwardSearcher.DefaultForwardSearcher.instIteratorIdSearchStepOfForwardPattern._proof_9 := by
+  intro ρ p s inst iter h pos found
+  exact ⟨h, pos, found, rfl, rfl, rfl⟩
+
+public theorem String.Slice.Pattern.ToForwardSearcher.DefaultForwardSearcher.instIteratorIdSearchStepOfForwardPattern._proof_10 :
+    type_of% @_root_.String.Slice.Pattern.ToForwardSearcher.DefaultForwardSearcher.instIteratorIdSearchStepOfForwardPattern._proof_10 := by
+  intro ρ p s inst iter h miss
+  exact ⟨h, miss, rfl, rfl, rfl⟩
+
+public theorem String.Slice.Pattern.ToBackwardSearcher.DefaultBackwardSearcher.instIteratorIdSearchStepOfBackwardPattern._proof_9 :
+    type_of% @_root_.String.Slice.Pattern.ToBackwardSearcher.DefaultBackwardSearcher.instIteratorIdSearchStepOfBackwardPattern._proof_9 := by
+  intro ρ p s inst iter h pos found
+  exact ⟨h, pos, found, rfl, rfl, rfl⟩
+
+public theorem String.Slice.Pattern.ToBackwardSearcher.DefaultBackwardSearcher.instIteratorIdSearchStepOfBackwardPattern._proof_10 :
+    type_of% @_root_.String.Slice.Pattern.ToBackwardSearcher.DefaultBackwardSearcher.instIteratorIdSearchStepOfBackwardPattern._proof_10 := by
+  intro ρ p s inst iter h miss
+  exact ⟨h, miss, rfl, rfl, rfl⟩
 
 end OmegaChecks.InitPort.Alternatives
