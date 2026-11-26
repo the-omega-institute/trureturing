@@ -486,7 +486,7 @@ public theorem ByteArray.utf8DecodeChar?.assemble₂_eq_some_of_toBitVec :
   dsimp only
   split
   · rename_i short
-    exact (Nat.not_lt_of_ge lower (value ▸ short)).elim
+    exact (UInt32.not_lt.mpr lower (value ▸ short)).elim
   · apply congrArg some
     exact Char.ext value.symm
 
@@ -501,12 +501,12 @@ public theorem ByteArray.utf8DecodeChar?.assemble₃_eq_some_of_toBitVec :
   dsimp only
   split
   · rename_i short
-    exact (Nat.not_lt_of_ge lower (value ▸ short)).elim
+    exact (UInt32.not_lt.mpr lower (value ▸ short)).elim
   · split
     · rename_i surrogate
       rcases c.valid with below | ⟨above, _⟩
-      · exact (Nat.not_le_of_gt below (value ▸ surrogate.1)).elim
-      · exact (Nat.not_le_of_gt above (value ▸ surrogate.2)).elim
+      · exact (Nat.not_le_of_gt below ((UInt32.ofNat_le_iff (by decide : 0xd800 < 2 ^ 32)).mp (value ▸ surrogate.1))).elim
+      · exact (Nat.not_le_of_gt above ((UInt32.le_ofNat_iff (by decide : 0xdfff < 2 ^ 32)).mp (value ▸ surrogate.2))).elim
     · apply congrArg some
       exact Char.ext value.symm
 
@@ -521,11 +521,11 @@ public theorem ByteArray.utf8DecodeChar?.assemble₄_eq_some_of_toBitVec :
   dsimp only
   split
   · rename_i short
-    exact (Nat.not_lt_of_ge lower (value ▸ short)).elim
+    exact (UInt32.not_lt.mpr lower (value ▸ short)).elim
   · split
     · rename_i tooLarge
       have out : (1114111 : UInt32) < c.val := value ▸ tooLarge
-      exact (Nat.not_lt_of_ge c.toNat_le out).elim
+      exact (Nat.not_lt_of_ge c.toNat_le ((UInt32.ofNat_lt_iff (by decide : 0x10ffff < 2 ^ 32)).mp out)).elim
     · apply congrArg some
       exact Char.ext value.symm
 
