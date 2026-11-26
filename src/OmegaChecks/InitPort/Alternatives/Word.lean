@@ -103,4 +103,36 @@ public theorem BitVec.toInt_intMin_of_pos : type_of% @_root_.BitVec.toInt_intMin
   rw [_root_.BitVec.toInt, half, ite_eq_right boundary, Int.two_pow_pred_sub_two_pow h,
     Int.natCast_pow, Int.cast_ofNat_Int]
 
+public theorem BitVec.toInt_intMin : type_of% @_root_.BitVec.toInt_intMin := by
+  intro w
+  cases w with
+  | zero => rfl
+  | succ k =>
+    have h := Nat.zero_lt_succ k
+    rw [BitVec.toInt_intMin_of_pos h, Nat.two_pow_pred_mod_two_pow h, Int.natCast_pow, Int.cast_ofNat_Int]
+
+public theorem BitVec.intMin_eq_zero_iff : type_of% @_root_.BitVec.intMin_eq_zero_iff := by
+  intro w
+  cases w with
+  | zero => exact ⟨fun _ => rfl, fun _ => rfl⟩
+  | succ k =>
+    have pos : 0 < (_root_.BitVec.intMin (k + 1)).toNat := by
+      rw [BitVec.toNat_intMin_of_pos (Nat.zero_lt_succ k)]
+      exact Nat.two_pow_pos _
+    exact ⟨fun h => False.elim (Nat.ne_of_gt pos
+      ((congrArg _root_.BitVec.toNat h).trans _root_.BitVec.toNat_zero)),
+      fun h => False.elim (k.succ_ne_zero h)⟩
+
+public theorem BitVec.toInt_intMax : type_of% @_root_.BitVec.toInt_intMax := by
+  intro w
+  cases w with
+  | zero => rfl
+  | succ k =>
+    have fits : 2 * (2 ^ k - 1) < 2 ^ (k + 1) := by
+      rw [Nat.pow_succ']
+      exact Nat.mul_lt_mul_of_pos_left (Nat.sub_lt (Nat.two_pow_pos _) Nat.zero_lt_one)
+        (Nat.zero_lt_succ 1)
+    rw [_root_.BitVec.toInt, BitVec.toNat_intMax, Nat.add_one_sub_one, ite_eq_left fits, Int.ofNat_sub Nat.one_le_two_pow,
+      Int.natCast_pow, Int.cast_ofNat_Int, Int.cast_ofNat_Int]
+
 end OmegaChecks.InitPort.Alternatives
