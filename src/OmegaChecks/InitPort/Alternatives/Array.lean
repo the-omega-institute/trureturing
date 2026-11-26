@@ -4,6 +4,7 @@ public import Init.Data.Array.Basic
 public import Init.Data.Nat.Basic
 import all Init.Data.Array.Basic
 import Init.Data.Array.Lemmas
+import all Init.Data.Array.MapIdx
 
 /-! List-backed implementations and induction proofs for the pinned array interfaces. -/
 
@@ -13,6 +14,23 @@ public theorem Array.map_const : type_of% @_root_.Array.map_const := by
   intro α β xs b
   apply Array.ext'
   exact Array.toList_map.trans (_root_.List.map_const.trans Array.toList_replicate.symm)
+
+private theorem mapFinIdxSize (xs : Array α) (f : (i : Nat) → α → i < xs.size → β)
+    (i j : Nat) (inv : i + j = xs.size) (acc : Array β) :
+    (Array.mapFinIdxM.map (m := Id) xs (fun k x h => f k x h) i j inv acc).size = acc.size + i := by
+  induction i generalizing j acc with
+  | zero => rfl
+  | succ i ih =>
+    rw [Array.mapFinIdxM.map.eq_def]
+    dsimp only [Bind.bind, Id.instMonad]
+    exact (ih ..).trans ((congrArg (· + i) (Array.size_push _)).trans (Nat.succ_add _ i))
+
+public theorem Array.size_mapFinIdx : type_of% @_root_.Array.size_mapFinIdx := by
+  intro α β xs f
+  exact (mapFinIdxSize xs f xs.size 0 rfl (Array.emptyWithCapacity xs.size)).trans (Nat.zero_add _)
+
+public theorem Array.size_mapIdx : type_of% @_root_.Array.size_mapIdx :=
+  fun {_ _ f xs} => Array.size_mapFinIdx (xs := xs) (f := fun i x _ => f i x)
 
 @[expose] public def Array.eraseIdx {α : Type u} (xs : _root_.Array α) (i : Nat) (_h : i < xs.size) :
     _root_.Array α := ⟨xs.toList.eraseIdx i⟩

@@ -1,5 +1,6 @@
 module
 public import Init.Data.List.Lemmas
+import Init.Data.List.Impl
 
 /-! Structural proofs for boolean predicates and folds over strict lists. -/
 
@@ -10,6 +11,22 @@ public theorem List.map_const : type_of% @_root_.List.map_const := by
   induction xs with
   | nil => rfl
   | cons a xs ih => exact (congrArg (b :: ·) ih).trans List.replicate_succ.symm
+
+public theorem List.find?_append : type_of% @_root_.List.find?_append := by
+  intro α p xs ys
+  induction xs with
+  | nil => rfl
+  | cons x xs ih =>
+    rw [List.cons_append, List.find?_cons, List.find?_cons, ih]
+    cases p x <;> rfl
+
+public theorem List.findSome?_append : type_of% @_root_.List.findSome?_append := by
+  intro α β f xs ys
+  induction xs with
+  | nil => rfl
+  | cons x xs ih =>
+    rw [List.cons_append, List.findSome?_cons, List.findSome?_cons, ih]
+    cases f x <;> rfl
 
 public theorem List.any_eq_true {α : Type u} {p : α → Bool} {l : _root_.List α} :
     l.any p = true ↔ ∃ x, x ∈ l ∧ p x = true := by
