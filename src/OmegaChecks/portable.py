@@ -546,7 +546,7 @@ def check(only, backend="mathlib", destination=None, *, frozen=None, discovered=
                        for file in ("lakefile.toml", "lake-manifest.json"))
     tracked.update([Path(__file__), SRC / "OmegaChecks/strict_lake.py", SRC / "OmegaChecks/Portable/ArtifactHashes.lean"])
     if backend != "mathlib" or destination:
-        tracked.update((SRC / "OmegaBuild/Commands.lean", SRC / "OmegaBuild/Plan.lean"))
+        tracked.update(sources[name] for name in closure(graph, ["OmegaBuild.Plan"]))
     if backend == "both":
         tracked.update([SRC / "OmegaChecks/Portable/Exports.lean", SRC / "OmegaChecks/QualifiedReferences.lean"])
     if frozen is not None:
