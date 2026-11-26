@@ -35,7 +35,6 @@ internal sealed class Q9K33AlignedLayerDocument : IScribeDocumentDefinition
                 DescribeRole.Theorem)),
         [
             DocumentEdge.Dependency.Create(GidRef.Create(Placement + "Q9DegreeThreeContactOrbit")),
-            DocumentEdge.Dependency.Create(GidRef.Create(Placement + "Q9K33ContactRectangles")),
             DocumentEdge.Dependency.Create(GidRef.Create(Placement + "Q9SquareMaskGraph"))
         ]));
 }

@@ -46,6 +46,5 @@ A single coordinate permutation, obtained from the two parts of the mask graph, 
 - Truth anchor: `D5/S3/Combinatorics/Graph/HypercubeCritical/ComponentBoundary/Placement/Q9K33AlignedLayer.aligned_layers_eq_product`
 - Truth anchor: `D5/S3/Combinatorics/Graph/HypercubeCritical/ComponentBoundary/Placement/Q9K33AlignedLayer.nine_masks_on_six_axes_force_contact_rectangles`
 - Dependency: [D5/S3/Combinatorics/Graph/HypercubeCritical/ComponentBoundary/Placement/Q9DegreeThreeContactOrbit](Q9DegreeThreeContactOrbit.md)
-- Dependency: [D5/S3/Combinatorics/Graph/HypercubeCritical/ComponentBoundary/Placement/Q9K33ContactRectangles](Q9K33ContactRectangles.md)
 - Dependency: [D5/S3/Combinatorics/Graph/HypercubeCritical/ComponentBoundary/Placement/Q9SquareMaskGraph](Q9SquareMaskGraph.md)
 - Dependency: [D5/S3/Combinatorics/Graph/HypercubeCritical/ComponentBoundary/SixAxisGridSignedCompression](../SixAxisGridSignedCompression.md)

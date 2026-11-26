@@ -34,7 +34,6 @@ internal sealed class Q9SquareMaskGraphDocument : IScribeDocumentDefinition
                 Blocks(Paragraph(Text("Nine edges on six axes make the mask graph cubic. Square completion then forces the complete bipartite graph with two three-axis parts."))),
                 DescribeRole.Theorem)),
         [
-            DocumentEdge.Dependency.Create(GidRef.Create(Placement + "SmallAxisSquareObstruction")),
             DocumentEdge.Dependency.Create(GidRef.Create(Placement + "Q9EightMaskGraph")),
             DocumentEdge.Dependency.Create(GidRef.Create(Placement + "Q9DegreeThreeContactOrbit"))
         ]));

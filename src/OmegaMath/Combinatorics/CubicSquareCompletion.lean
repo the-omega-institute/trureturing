@@ -1,18 +1,21 @@
-/- GID: D5/S3/Combinatorics/Graph/HypercubeCritical/ComponentBoundary/Placement/SmallAxisSquareObstruction
-   generality: G
-   mirror-B: D5/B/S3/Combinatorics/Graph/HypercubeCritical/ComponentBoundary/Placement/SmallAxisSquareObstruction
-   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/module/Archive.Sensitivity]
-   utility: none
-   digest: Square completion at cubic neighbors forces a complete bipartite graph. -/
+module
 
-import Mathlib.Combinatorics.SimpleGraph.LapMatrix
+public import OmegaBuild.Commands
+public import Mathlib.Combinatorics.SimpleGraph.LapMatrix
 
-/-! Rigidity of a cubic graph under four-cycle completion when a vertex has two nonneighbors. -/
+/-!
+Omega original.
+
+Square completion at cubic neighbors of a vertex forces complete bipartite structure.
+-/
+
+compile_only_with_mathlib
+
+@[expose] public section
 
 set_option autoImplicit false
 
-namespace SmallAxisSquareObstruction
+namespace Omega.CubicSquareCompletion
 
 open Finset
 
@@ -169,4 +172,4 @@ theorem complete_bipartite {V : Type*} [Fintype V] [DecidableEq V]
   rw [hzB haB] at hn
   omega
 
-end SmallAxisSquareObstruction
+end Omega.CubicSquareCompletion

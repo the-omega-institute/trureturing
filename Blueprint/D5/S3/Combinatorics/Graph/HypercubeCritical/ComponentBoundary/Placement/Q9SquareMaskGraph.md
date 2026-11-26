@@ -47,4 +47,3 @@ Nine edges on six axes make the mask graph cubic. Square completion then forces 
 - Truth anchor: `D5/S3/Combinatorics/Graph/HypercubeCritical/ComponentBoundary/Placement/Q9SquareMaskGraph.no_eleven_masks_on_seven_axes`
 - Dependency: [D5/S3/Combinatorics/Graph/HypercubeCritical/ComponentBoundary/Placement/Q9DegreeThreeContactOrbit](Q9DegreeThreeContactOrbit.md)
 - Dependency: [D5/S3/Combinatorics/Graph/HypercubeCritical/ComponentBoundary/Placement/Q9EightMaskGraph](Q9EightMaskGraph.md)
-- Dependency: [D5/S3/Combinatorics/Graph/HypercubeCritical/ComponentBoundary/Placement/SmallAxisSquareObstruction](SmallAxisSquareObstruction.md)

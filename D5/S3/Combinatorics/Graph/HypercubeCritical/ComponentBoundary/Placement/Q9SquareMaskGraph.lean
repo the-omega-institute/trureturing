@@ -6,7 +6,7 @@
    utility: none
    digest: Forced squares constrain the number and shape of distance-two contact masks. -/
 
-import D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Placement.SmallAxisSquareObstruction
+import OmegaMath.Combinatorics.CubicSquareCompletion
 import Mathlib.Combinatorics.SimpleGraph.DegreeSum
 import D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Placement.Q9EightMaskGraph
 import D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Placement.Q9DegreeThreeContactOrbit
@@ -36,8 +36,7 @@ open private differingAxes_right_inj from
   D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Placement.Q9TightContactComplement
 open private diff_pair from
   D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Placement.Q9TightContactStar
-open private exists_both_parity_supported_of_signed_defect_singular from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Placement.Q9ActualMinimumDisplacements
+open Q9ActualMinimumDisplacements (exists_both_parity_supported_of_signed_defect_singular)
 
 /-- The vertices are exactly the coordinates occurring in the mask family. -/
 abbrev activeAxes (F : Finset (Finset (Fin 9))) : Finset (Fin 9) := axes F
@@ -269,7 +268,7 @@ theorem no_eleven_masks_on_seven_axes
     rw [hxsum, sum_pair ha] at hle
     have heq := hsplit a
     omega
-  have hshape := SmallAxisSquareObstruction.complete_bipartite G h
+  have hshape := Omega.CubicSquareCompletion.complete_bipartite G h
     (by rw [hh]; decide) (by rw [hh]) (by rw [hn, hh]) hcubic hsquare
   omega
 
@@ -323,7 +322,7 @@ theorem nine_masks_on_six_axes_bipartite
     omega
   have hnonempty : Nonempty (activeAxes F) := Fintype.card_pos_iff.mp (by omega)
   obtain ⟨h⟩ := hnonempty
-  obtain ⟨_, hG⟩ := SmallAxisSquareObstruction.complete_bipartite G h
+  obtain ⟨_, hG⟩ := Omega.CubicSquareCompletion.complete_bipartite G h
     (by rw [hcubic]) (by rw [hcubic]; decide) (by rw [hn, hcubic])
     (fun a _ => hcubic a) hsquare
   refine ⟨G.neighborFinset h, by rw [SimpleGraph.card_neighborFinset_eq_degree, hcubic], ?_⟩

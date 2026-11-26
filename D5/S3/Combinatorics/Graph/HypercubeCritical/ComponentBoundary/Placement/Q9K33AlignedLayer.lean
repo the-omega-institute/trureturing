@@ -8,7 +8,7 @@
 
 import Mathlib.Data.Set.Card
 import D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Placement.Q9DegreeThreeContactOrbit
-import D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Placement.Q9K33ContactRectangles
+import OmegaMath.Combinatorics.ContactSwapRectangle
 import D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Placement.Q9SquareMaskGraph
 import D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.SixAxisGridSignedCompression
 
@@ -27,7 +27,7 @@ open BalancedCubeComponentBoundary (directions mem_directions flip_injective)
 open Q9IsotropicHuang (parity weightedLinear)
 open Q9MinimumDistanceOperator (RidgeContact minimumDisplacements)
 open Q9DegreeThreeContactOrbit (translated_contact_of_three_partners exterior_midpoint_directions)
-open Q9K33ContactRectangles (ClosedUnderContactSwaps eq_prod_of_contact)
+open Omega.ContactSwapRectangle (ClosedUnderContactSwaps eq_prod_of_contact)
 open SixAxisGridSignedCompression (flip_append_left flip_append_right)
 open private parity_flip from
   D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Placement.Q9MinimumDistanceOperator
@@ -301,8 +301,7 @@ open private differingAxes_right_inj from
   D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Placement.Q9TightContactComplement
 open private mem_axes from
   D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Placement.MinimumContactDisplacementCount
-open private exists_both_parity_supported_of_signed_defect_singular from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Placement.Q9ActualMinimumDisplacements
+open Q9ActualMinimumDisplacements (exists_both_parity_supported_of_signed_defect_singular)
 
 open Q9SquareMaskGraph (activeAxes maskGraph nine_masks_on_six_axes_bipartite)
 open Q9WeightedSaturation (defect signedBiadjacency)
