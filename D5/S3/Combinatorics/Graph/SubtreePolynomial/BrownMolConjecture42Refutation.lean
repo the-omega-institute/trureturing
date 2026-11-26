@@ -6,7 +6,6 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Combinatorics/Graph/SubtreePolynomial/BrownMolConjecture42Refutation.Conjecture42; result=D5/S3/Combinatorics/Graph/SubtreePolynomial/BrownMolConjecture42Refutation.conjecture42_false; claim=D5/S3/Combinatorics/Graph/SubtreePolynomial/BrownMolConjecture42Refutation.Conjecture42
    digest: A subtree root of a 206-vertex tree violates the Brown–Mol inner bound. -/
 
-import OmegaBuild.Commands
 import D5.S3.Weil.ZetaAnalytic.RoucheZeroCount
 import Mathlib.Algebra.BigOperators.Ring.Finset
 import Mathlib.Algebra.Polynomial.Eval.Defs
@@ -18,8 +17,6 @@ import Mathlib.Tactic.FieldSimp
 import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.Positivity
 import Mathlib.Tactic.Ring
-
-compile_only_with_mathlib
 
 /-!
 # Brown–Mol Conjecture 4.2
