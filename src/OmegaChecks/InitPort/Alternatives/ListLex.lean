@@ -198,4 +198,20 @@ public theorem List.lex_eq_false_iff_exists : type_of% @_root_.List.lex_eq_false
           · rw [_root_.List.cons_lex_cons, irrefl _ _ eqHead, eqHead, (ih (ys := ys)).mpr (.inr diff)]
             rfl
 
+public theorem List.le_antisymm : type_of% @_root_.List.le_antisymm := by
+  intro α _ law xs ys xy yx
+  induction xs generalizing ys with
+  | nil =>
+    cases ys with
+    | nil => rfl
+    | cons y ys => exact False.elim (yx _root_.List.Lex.nil)
+  | cons x xs ih =>
+    cases ys with
+    | nil => exact False.elim (xy _root_.List.Lex.nil)
+    | cons y ys =>
+      have head := law.trichotomous x y
+        (fun lt => yx (_root_.List.Lex.rel lt)) (fun gt => xy (_root_.List.Lex.rel gt))
+      cases head
+      exact congrArg (x :: ·) (ih (fun lt => xy (_root_.List.Lex.cons lt)) (fun lt => yx (_root_.List.Lex.cons lt)))
+
 end OmegaChecks.InitPort.Alternatives
