@@ -407,6 +407,7 @@ partial def visit (n : Name) : M Bool := do
     if !(← visit dep) then return ← record n (.blocked "unavailable dependency" (some dep))
   let some body := ci.value? (allowOpaque := true) | return ← record n (.blocked "no kernel body")
   let attempt (value : Expr) (budget := c.maxHeartbeats) : M Outcome := do
+    let value ← OmegaChecks.InitCompiler.namedLogicalProjections c.source value
     for dep in usedConstants value do
       if !(← visit dep) then return .blocked "unavailable dependency" (some dep)
     let .ok decl := translateDecl ci value | return .blocked "open term"

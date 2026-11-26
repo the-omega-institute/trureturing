@@ -285,6 +285,25 @@ public def specializeProjections (source : Environment) (body : Expr) (unavailab
     term := next
   return term
 
+/-- The strict foundation represents conjunction and equivalence using eliminators.
+Replace projection instructions for the native structures with their named interfaces. -/
+public def namedLogicalProjections (source : Environment) (body : Expr) : IO Expr := do
+  let logical := fun e => match e with
+    | Expr.proj name _ _ => name == `And || name == `Iff
+    | _ => false
+  unless (body.find? logical).isSome do return body
+  let action := Meta.transform body (post := fun e => do
+    unless logical e do return .done e
+    let .proj owner idx target := e | return .done e
+    let ty ← Meta.whnf (← Meta.inferType target)
+    unless ty.isAppOfArity owner 2 && idx < 2 do return .done e
+    let field := if owner == `And then (if idx == 0 then `And.left else `And.right)
+      else (if idx == 0 then `Iff.mp else `Iff.mpr)
+    return .done (mkAppN (mkConst field) (ty.getAppArgs.push target)))
+  try
+    return ← action.run' |>.toIO' {fileName := "<logical projection>", fileMap := default} {env := source}
+  catch _ => return body
+
 private def eliminateChoice (e : Expr) : MetaM Expr := do
   unless e.isApp do return e
   let some chosen := e.find? (fun expr => !expr.hasLooseBVars &&
