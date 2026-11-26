@@ -2,6 +2,7 @@ module
 public import Init.Data.Iterators.Lemmas.Combinators.FilterMap
 public import Init.Data.Iterators.Lemmas.Consumers.Collect
 import Init.Data.Iterators.Lemmas.Basic
+import all Init.Data.Iterators.Lemmas.Consumers.Monadic.Loop
 
 /-! Finite filtering follows the yielding and skipping steps of the input iterator. -/
 
@@ -91,5 +92,10 @@ public theorem Std.Iter.toListRev_eq_match_step : type_of% @_root_.Std.Iter.toLi
     rw [List.reverse_cons, _root_.Std.Iter.toListRev_eq]
   | skip next => exact _root_.Std.Iter.toListRev_eq.symm
   | done => rfl
+
+public theorem Std.IterM.drain_eq_foldM : type_of% @_root_.Std.IterM.drain_eq_foldM := by
+  intro α β m iterator finite mon law loop it
+  exact congrArg (fun action => ForIn.forIn (m := m) it PUnit.unit (fun _ _ => action))
+    (map_pure (f := m) ForInStep.yield PUnit.unit).symm
 
 end OmegaChecks.InitPort.Alternatives
