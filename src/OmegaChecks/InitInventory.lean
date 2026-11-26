@@ -1873,6 +1873,54 @@ private def conditionalConsequence? (owner name : Name) : Option (String × Name
       `OmegaChecks.InitInventory.StringPatterns.weakExcludedMiddleOfOfficialSplit,
       "Pointwise agreement with Model.split (split_endPos, split_eq_of_isLongestMatchAt, split_eq_of_not_matchesAt)")
   let (witness, behavior) ← match owner, name with
+    | `Init.Data.Iterators.Consumers.Collect, ``Std.Iter.toList =>
+      some (``OmegaChecks.InitBoundaries.Collector.limitedOmniscienceFromCollector,
+        "the official result of the ordinary list collector")
+    | `Init.Data.Iterators.Consumers.Collect, ``Std.Iter.toArray =>
+      some (``OmegaChecks.InitBoundaries.Collector.limitedOmniscienceFromArray,
+        "the official result of the ordinary array collector")
+    | `Init.Data.Iterators.Consumers.Collect, ``Std.Iter.toListRev =>
+      some (``OmegaChecks.InitBoundaries.Collector.limitedOmniscienceFromReverse,
+        "the official result of the reverse list collector")
+    | `Init.Data.Iterators.Consumers.Monadic.Collect, ``Std.IterM.toList =>
+      some (``OmegaChecks.InitBoundaries.Collector.limitedOmniscienceFromMonadicCollector,
+        "the official result of the identity-monad list collector")
+    | `Init.Data.Iterators.Consumers.Monadic.Collect, ``Std.IterM.toArray =>
+      some (``OmegaChecks.InitBoundaries.Collector.limitedOmniscienceFromMonadicArray,
+        "the official result of the identity-monad array collector")
+    | `Init.Data.Iterators.Consumers.Monadic.Collect, ``Std.IterM.toListRev =>
+      some (``OmegaChecks.InitBoundaries.Collector.limitedOmniscienceFromMonadicReverse,
+        "the official result of the identity-monad reverse collector")
+    | `Init.Data.Slice.Operations, ``Std.Slice.toList =>
+      some (``OmegaChecks.InitBoundaries.Collector.limitedOmniscienceFromSlice,
+        "the official result of the list of each slice whose underlying iterator is finite")
+    | `Init.Data.Iterators.Consumers.Access, ``Std.Iter.atIdxSlow? =>
+      some (``OmegaChecks.InitBoundaries.Collector.limitedOmniscienceFromLookup,
+        "the official result of the optional lookup at each natural index")
+    | `Init.Data.Iterators.Consumers.Monadic.Loop, ``Std.IteratorLoop.defaultImplementation =>
+      some (``OmegaChecks.InitBoundaries.Collector.limitedOmniscienceFromDefaultLoop,
+        "the official result of the default identity-monad loop")
+    | `Init.Data.Iterators.Combinators.Monadic.FilterMap, ``Std.Iterators.Types.Map.instIteratorLoop =>
+      some (``OmegaChecks.InitBoundaries.Collector.limitedOmniscienceFromMapLoop,
+        "the official result of the identity-monad loop for mapping the identity")
+    | `Init.Data.Iterators.Combinators.Monadic.FilterMap, ``Std.Iterators.Types.FilterMap.instIteratorLoop =>
+      some (``OmegaChecks.InitBoundaries.Collector.limitedOmniscienceFromFilterMapLoop,
+        "the official result of the identity-monad loop for filtering with some")
+    | `Init.Data.Iterators.Combinators.Monadic.Attach, ``Std.Iterators.Types.Attach.instIteratorLoop =>
+      some (``OmegaChecks.InitBoundaries.Collector.limitedOmniscienceFromAttachLoop,
+        "the official result of the identity-monad loop attaching the true predicate")
+    | `Init.Data.Iterators.Combinators.Monadic.ULift, ``Std.Iterators.Types.ULiftIterator.instIteratorLoop =>
+      some (``OmegaChecks.InitBoundaries.Collector.limitedOmniscienceFromULiftLoop,
+        "the official result of the same-universe identity-monad lifting loop")
+    | `Init.Data.Iterators.Combinators.Monadic.Append, ``Std.Iterators.Types.Append.instIteratorLoop =>
+      some (``OmegaChecks.InitBoundaries.Collector.limitedOmniscienceFromAppendLoop,
+        "the official result of the identity-monad append loop with a list iterator as the second input")
+    | `Init.Data.Iterators.Combinators.Monadic.FlatMap, ``Std.Iterators.Types.Flatten.instIteratorLoop =>
+      some (``OmegaChecks.InitBoundaries.Collector.limitedOmniscienceFromFlattenLoop,
+        "the official result of the identity-monad flattening loop for finite outer and inner iterators")
+    | `Init.Data.Iterators.Combinators.Monadic.Take, ``Std.Iterators.Types.Take.instIteratorLoop =>
+      some (``OmegaChecks.InitBoundaries.Collector.limitedOmniscienceFromTakeLoop,
+        "the official result of the identity-monad take loop")
     | `Init.Data.String.Iter.Basic, ``Std.Iter.toStringList =>
       some (``OmegaChecks.InitBoundaries.Collector.limitedOmniscienceFromStringList, "it.toStringList")
     | `Init.Data.String.Iter.Basic, ``Std.Iter.toStringArray =>
