@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:63f5c9758b91a79f03c6bffc4848b8ced5eeb7092c5116847015eeb88ba40fc4
-  normalized_sha256: sha256:63f5c9758b91a79f03c6bffc4848b8ced5eeb7092c5116847015eeb88ba40fc4
-cas_ref: sha256:63f5c9758b91a79f03c6bffc4848b8ced5eeb7092c5116847015eeb88ba40fc4
-coverage_gids:
-  - gid: D5/S3/Arith/FibonacciAtomic/Observer/FiniteMenu/NativeStationaryIntervalResources.native_interval_joint_optimum
-    target_statement_id: sha256:685771092e5cec418e632fe4f0ffe69136e9a40248dcd1838788d14b3d19e40f
-receipts:
-  unresolved_subitems: []

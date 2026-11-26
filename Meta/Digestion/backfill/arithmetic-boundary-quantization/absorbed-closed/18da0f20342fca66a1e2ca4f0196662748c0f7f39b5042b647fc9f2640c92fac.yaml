@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:18da0f20342fca66a1e2ca4f0196662748c0f7f39b5042b647fc9f2640c92fac
-  normalized_sha256: sha256:18da0f20342fca66a1e2ca4f0196662748c0f7f39b5042b647fc9f2640c92fac
-cas_ref: sha256:18da0f20342fca66a1e2ca4f0196662748c0f7f39b5042b647fc9f2640c92fac
-coverage_gids:
-  - gid: D5/S0/Diagonal/PigeonholeFiber.finite_reading_has_fiber
-    target_statement_id: sha256:7055ad403a73e564741999ceb43535300eeb0a5af556401ff847379f29eb8e9e
-receipts:
-  unresolved_subitems: []

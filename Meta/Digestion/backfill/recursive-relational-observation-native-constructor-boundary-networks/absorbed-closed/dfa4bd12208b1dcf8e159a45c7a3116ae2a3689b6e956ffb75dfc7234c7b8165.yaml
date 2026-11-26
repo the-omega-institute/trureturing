@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:dfa4bd12208b1dcf8e159a45c7a3116ae2a3689b6e956ffb75dfc7234c7b8165
-  normalized_sha256: sha256:dfa4bd12208b1dcf8e159a45c7a3116ae2a3689b6e956ffb75dfc7234c7b8165
-cas_ref: sha256:dfa4bd12208b1dcf8e159a45c7a3116ae2a3689b6e956ffb75dfc7234c7b8165
-coverage_gids:
-  - gid: D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeConstructorArrays.faithful_constructor_representation
-    target_statement_id: sha256:9a7f9a1dc9be3cbb3152afeeac358bee3f08c5941ff43d1e0ff880e1ad42950b
-receipts:
-  unresolved_subitems: []

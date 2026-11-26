@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:7080023afa44837d15493a9925a76cd7a4b186292d8fd34f72685930897c3b77
-  normalized_sha256: sha256:7080023afa44837d15493a9925a76cd7a4b186292d8fd34f72685930897c3b77
-cas_ref: sha256:7080023afa44837d15493a9925a76cd7a4b186292d8fd34f72685930897c3b77
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/NormativeStructure/HistorySensitiveOutcomeReductionComplete.history_sensitive_evaluation_not_outcome_reducible_with_defect
-    target_statement_id: sha256:57a1c39f813c3cf52ce3e17ba5f71c750f6a2e1844f3a6f859eca0d910c7f9ec
-receipts:
-  unresolved_subitems: []

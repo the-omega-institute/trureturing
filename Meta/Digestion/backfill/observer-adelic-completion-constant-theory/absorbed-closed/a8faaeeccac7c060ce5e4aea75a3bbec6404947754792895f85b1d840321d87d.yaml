@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:a8faaeeccac7c060ce5e4aea75a3bbec6404947754792895f85b1d840321d87d
-  normalized_sha256: sha256:a8faaeeccac7c060ce5e4aea75a3bbec6404947754792895f85b1d840321d87d
-cas_ref: sha256:a8faaeeccac7c060ce5e4aea75a3bbec6404947754792895f85b1d840321d87d
-coverage_gids:
-  - gid: D5/S3/Weil/ZetaBridge/PoleRankOneDecomposition.pole_rank_one_decomposition
-    target_statement_id: sha256:f6627fae6f282b08bb5a7e688780c90791c8ff9890c700d42729e4e30654bebb
-receipts:
-  unresolved_subitems: []

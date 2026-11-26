@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:5ef67d62b231ab49fff6a3679860758d172acfab2b6a8062dd31470d9e897b89
-  normalized_sha256: sha256:5ef67d62b231ab49fff6a3679860758d172acfab2b6a8062dd31470d9e897b89
-cas_ref: sha256:5ef67d62b231ab49fff6a3679860758d172acfab2b6a8062dd31470d9e897b89
-coverage_gids:
-  - gid: D5/S3/Weil/PrimeAddress/FinitePrimePhaseRecurrence.finite_prime_phase_recurrence
-    target_statement_id: sha256:8db8dea0fa0da85cc1b1ec545237b34cad71856812e4f229c53f518e6a3c7e10
-receipts:
-  unresolved_subitems: []

@@ -1,4 +1,0 @@
-**Proposition 5.2 (acquisition count).** Starting from an acquired prefix, the word of Theorem 2.1 adds sixteen atoms and sixteen readings and uses seventeen readings including the current one. Starting after the six-atom history $(J,M,J,M,M,M)$, its complete history has twenty-two atoms and twenty-three readings, at clocks $0,\ldots,22$.
-
-**Proof.** The word has sixteen letters and each letter has its mandatory reading. $Y_0$ is reused at the current clock. The six-atom prefix has seven readings, so the total is $6+16$ atoms and $7+16$ readings. All three consecutive $J$ letters are executed and read: although $J^2=I$, their clocks and intermediate readings remain distinct. Removing them would change the observation matrix. All inverses and coefficient divisions occur in the decoder; one actual forward path supplies all data. ∎
-

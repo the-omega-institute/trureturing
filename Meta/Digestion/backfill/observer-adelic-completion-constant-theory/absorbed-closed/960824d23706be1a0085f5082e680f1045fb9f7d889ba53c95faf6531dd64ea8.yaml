@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:960824d23706be1a0085f5082e680f1045fb9f7d889ba53c95faf6531dd64ea8
-  normalized_sha256: sha256:960824d23706be1a0085f5082e680f1045fb9f7d889ba53c95faf6531dd64ea8
-cas_ref: sha256:960824d23706be1a0085f5082e680f1045fb9f7d889ba53c95faf6531dd64ea8
-coverage_gids:
-  - gid: D5/S3/Constants/MoranComplexDimensions.moran_complex_dimension
-    target_statement_id: sha256:9400e77008ba0695f06c49db2071d32d6a155216f6df0173c039fe18cc52bee7
-receipts:
-  unresolved_subitems: []

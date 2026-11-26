@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:427a221e46a352cdaacc0942704b93b0cf82fe9d7367cd2e166f28f54e830d3e
-  normalized_sha256: sha256:427a221e46a352cdaacc0942704b93b0cf82fe9d7367cd2e166f28f54e830d3e
-cas_ref: sha256:427a221e46a352cdaacc0942704b93b0cf82fe9d7367cd2e166f28f54e830d3e
-coverage_gids:
-  - gid: D5/S3/Quantum/PointerBasis.fourier_phase_damping_fixed_iff
-    target_statement_id: sha256:92cfa50eec06cc5a81360a4face2c67470cc34188c59eb2579a861a0cb9d80c0
-receipts:
-  unresolved_subitems: []

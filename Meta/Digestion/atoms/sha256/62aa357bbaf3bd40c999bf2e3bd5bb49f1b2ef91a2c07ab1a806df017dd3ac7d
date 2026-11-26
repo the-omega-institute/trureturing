@@ -1,8 +1,0 @@
-则
-
-$$
-\operatorname{Cov}(\ell_t,\ell_{t+1})=IJ,\qquad
-\operatorname{Cov}(\ell_t,\ell_{t+j})=0\quad(j\ge2),
-\tag{11.5}
-$$
-

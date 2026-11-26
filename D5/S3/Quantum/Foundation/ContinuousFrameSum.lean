@@ -305,7 +305,7 @@ private theorem exclusion_coordinates {C : PointedCone ℝ V} {u : V →ₗ[ℝ]
     ⟨b.dim,b.dim_pos,b.param,b.injective,b.whole.trans hpair.symm⟩
   exact ⟨n,chart_pure_norm b'' (by simpa using hn) (by rw [he]; exact q.property),he⟩
 
-private theorem orthogonal_center_sum {C : PointedCone ℝ V} {u : V →ₗ[ℝ] ℝ}
+theorem orthogonal_center_sum {C : PointedCone ℝ V} {u : V →ₗ[ℝ] ℝ}
     (hc : IsClosed (C : Set V)) (hs : ∀ x ∈ C, x ≠ 0 → 0 < u x)
     (hg : Submodule.span ℝ (C : Set V) = ⊤) (hB : exclusionBalls C u)
     (p q r : pure C u) (hq : (q : V) ∈ exclusion C u p)

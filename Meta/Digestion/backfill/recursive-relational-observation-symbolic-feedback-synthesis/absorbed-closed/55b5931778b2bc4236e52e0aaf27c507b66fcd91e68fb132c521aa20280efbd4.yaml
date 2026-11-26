@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:55b5931778b2bc4236e52e0aaf27c507b66fcd91e68fb132c521aa20280efbd4
-  normalized_sha256: sha256:55b5931778b2bc4236e52e0aaf27c507b66fcd91e68fb132c521aa20280efbd4
-cas_ref: sha256:55b5931778b2bc4236e52e0aaf27c507b66fcd91e68fb132c521aa20280efbd4
-coverage_gids:
-  - gid: D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeThirteenHoleRealization.actual_joint_realization
-    target_statement_id: sha256:3238cffdffe690f0d1f3c1a0e1f5a10e5ca2c0156654b3b89f9b8c9f8d9832a5
-receipts:
-  unresolved_subitems: []

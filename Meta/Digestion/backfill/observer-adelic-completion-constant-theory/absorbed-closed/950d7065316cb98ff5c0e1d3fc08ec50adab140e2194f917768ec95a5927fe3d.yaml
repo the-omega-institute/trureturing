@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:950d7065316cb98ff5c0e1d3fc08ec50adab140e2194f917768ec95a5927fe3d
-  normalized_sha256: sha256:950d7065316cb98ff5c0e1d3fc08ec50adab140e2194f917768ec95a5927fe3d
-cas_ref: sha256:950d7065316cb98ff5c0e1d3fc08ec50adab140e2194f917768ec95a5927fe3d
-coverage_gids:
-  - gid: D5/S3/Observer/AgencySelf/StrictKernelTowerNoFiniteTerminal.strict_kernel_tower_no_finite_terminal
-    target_statement_id: sha256:ce55db7ebf06cead308d5114299f2f7f4263875d48315c8fadcfece502091ef8
-receipts:
-  unresolved_subitems: []

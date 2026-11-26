@@ -8,6 +8,9 @@
 
 import D5.S3.Combinatorics.Graph.DUFWedges
 import Mathlib.Combinatorics.Enumerative.DoubleCounting
+import Mathlib.Tactic.IntervalCases
+import Mathlib.Tactic.NormNum
+import Mathlib.Algebra.Group.Action.Defs
 
 set_option autoImplicit false
 

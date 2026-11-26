@@ -1,0 +1,1 @@
+{"statement_id":"sha256:929f54905304aae5062beb07ac73058c205d0bb654fb6de02e00390baebd6025","declarations":[{"declaration_name_key":"ns(ns(n0,10:AffineNine),10:f9Labeling)","kind":"def"},{"declaration_name_key":"ns(ns(n0,10:AffineNine),14:exists_f9Basis)","kind":"theorem"},{"declaration_name_key":"ns(ns(n0,10:AffineNine),7:f9Local)","kind":"def"}]}

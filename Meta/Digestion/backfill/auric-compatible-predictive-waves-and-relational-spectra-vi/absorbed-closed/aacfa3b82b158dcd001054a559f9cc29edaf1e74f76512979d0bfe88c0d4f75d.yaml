@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:aacfa3b82b158dcd001054a559f9cc29edaf1e74f76512979d0bfe88c0d4f75d
-  normalized_sha256: sha256:aacfa3b82b158dcd001054a559f9cc29edaf1e74f76512979d0bfe88c0d4f75d
-cas_ref: sha256:aacfa3b82b158dcd001054a559f9cc29edaf1e74f76512979d0bfe88c0d4f75d
-coverage_gids:
-  - gid: D5/S3/Quantum/Measurement/OriginalSingleTerminalTernaryObstruction.complete_original_single_terminal_ternary_obstruction
-    target_statement_id: sha256:3ee44b881479dbec41d9aba2e2aabca268e7fbba7a93b41dd5a6a5226a8cb6b9
-receipts:
-  unresolved_subitems: []

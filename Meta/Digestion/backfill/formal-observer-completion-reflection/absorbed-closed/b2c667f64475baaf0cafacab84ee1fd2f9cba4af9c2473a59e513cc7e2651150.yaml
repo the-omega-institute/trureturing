@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:b2c667f64475baaf0cafacab84ee1fd2f9cba4af9c2473a59e513cc7e2651150
-  normalized_sha256: sha256:b2c667f64475baaf0cafacab84ee1fd2f9cba4af9c2473a59e513cc7e2651150
-cas_ref: sha256:b2c667f64475baaf0cafacab84ee1fd2f9cba4af9c2473a59e513cc7e2651150
-coverage_gids:
-  - gid: D5/S3/Quantum/FixedAlgebra/SingletonRecordClassicality.singleton_record_classicality
-    target_statement_id: sha256:2838432f37b2818718d1986cbfd1772edd88647db455ee5b3ff44c34af7e9133
-receipts:
-  unresolved_subitems: []

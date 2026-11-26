@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:17baafe0656f10dd6a6ba6fa380a228b8bffcc61c40208e1941beebe9eb90784
-  normalized_sha256: sha256:17baafe0656f10dd6a6ba6fa380a228b8bffcc61c40208e1941beebe9eb90784
-cas_ref: sha256:17baafe0656f10dd6a6ba6fa380a228b8bffcc61c40208e1941beebe9eb90784
-coverage_gids:
-  - gid: D5/S3/Factorization/Embeddings/RationalPadicProductFormula.rational_padic_product_formula
-    target_statement_id: sha256:0430a8da799b67fb3fd1a146297ab742a2284d4de87f2b830be228ad147ad4c8
-receipts:
-  unresolved_subitems: []

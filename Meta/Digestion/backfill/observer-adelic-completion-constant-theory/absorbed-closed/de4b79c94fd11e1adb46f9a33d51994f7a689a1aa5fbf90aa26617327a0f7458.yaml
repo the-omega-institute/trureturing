@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:de4b79c94fd11e1adb46f9a33d51994f7a689a1aa5fbf90aa26617327a0f7458
-  normalized_sha256: sha256:de4b79c94fd11e1adb46f9a33d51994f7a689a1aa5fbf90aa26617327a0f7458
-cas_ref: sha256:de4b79c94fd11e1adb46f9a33d51994f7a689a1aa5fbf90aa26617327a0f7458
-coverage_gids:
-  - gid: D5/S3/Weil/ZetaAnalytic/ContactZeroLocalization.contact_zero_localization
-    target_statement_id: sha256:3ba5ca6c527a19651203908492bcedf09d4e5f4b45ff3f9219b40392a3d53149
-receipts:
-  unresolved_subitems: []

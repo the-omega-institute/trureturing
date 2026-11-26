@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:07dc000ce35c6158a3a666950381ea0cf04d8a072203e507a2c3849a2f7af414
-  normalized_sha256: sha256:07dc000ce35c6158a3a666950381ea0cf04d8a072203e507a2c3849a2f7af414
-cas_ref: sha256:07dc000ce35c6158a3a666950381ea0cf04d8a072203e507a2c3849a2f7af414
-coverage_gids:
-  - gid: D5/S3/PrimeForms/Splitting/ThreeRingProfileFactorization.prime_three_ring_profile_factor_unique
-    target_statement_id: sha256:776c5d1b53632d144e7ac9b9df7828732a85981eb8a3930227d7e073cf1bc5b2
-receipts:
-  unresolved_subitems: []

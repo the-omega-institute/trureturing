@@ -45,12 +45,12 @@ private theorem diff_eq_zero_const {A : Type*} [AddGroup A] (v : ZMod p → A)
   obtain ⟨n, rfl⟩ := ZMod.natCast_zmod_surjective j
   simpa only [mul_one] using hv.nat_mul_eq n
 
-private theorem sum_diff {A : Type*} [AddCommGroup A] (v : ZMod p → A) :
+theorem sum_diff {A : Type*} [AddCommGroup A] (v : ZMod p → A) :
     ∑ j, (v j - v (j - 1)) = 0 := by
   simp only [sum_sub_distrib]
   exact sub_eq_zero.mpr ((Equiv.subRight (1 : ZMod p)).sum_comp v).symm
 
-private theorem diff_injective_sum_zero {K : Type*} [Ring K] [NoZeroDivisors K] (hp : (p : K) ≠ 0)
+theorem diff_injective_sum_zero {K : Type*} [Ring K] [NoZeroDivisors K] (hp : (p : K) ≠ 0)
     (v : ZMod p → K) (hsum : ∑ j, v j = 0)
     (h : ∀ j, (v j - v (j - 1)) = 0) : ∀ j, v j = 0 := by
   have hc := diff_eq_zero_const v h

@@ -7,13 +7,17 @@
    digest: Growing uniform-matroid ranks satisfy the central and local normal limit theorems. -/
 
 /- admission_basis: open-problem-resolution (#15111; Proved)
-   Direct frozen dependencies (declaration GID and declaration statement_id):
-   F0: D5/S3/Zeros/Endpoints/BernoulliBridgeVariance.bernoulli_bridge_variance sha256:acf3515171050627eccee903208eb3f1d603d5d3ff4cc74a94c0c95259871d6f
-   F1: D5/S3/Zeros/Endpoints/BernoulliBridgeVariance.bernoulli_bridge_variance_le_quarter sha256:d26843918e966727ef778f8c78682791d54fdc06c6a8b7c77e5a9601dd05c43e
-   F2: D5/S3/TotalVariation/Asymptotics/StatLeanFourierSuppliers.stdNormalCDF sha256:bedd42e0116dd2f043fdce1b697eb76e39eb075a733900543f5071ddb4405a7c
-   F4: D5/S3/TotalVariation/Asymptotics/StatLeanFourierSuppliers.stdNormalPDF sha256:09ec747bd067dc23f72a70f43c419879f8a0a5eaceb77360e81137c6bcbaec5f
-   F5: D5/S3/TotalVariation/Asymptotics/StatLeanFourierSuppliers.stdNormalPDF_eq_gaussianPDFReal sha256:58d494ec9f13bfb185d13aed064fce12d7eae49cef3f5b9932af21926e310c11
-   Module escape_witness: monotone_cdf_pointwise_to_uniform (same-delivery content)
+   Direct frozen dependencies of result:
+   D5/S3/Analytic/Probability/BernoulliTriangularLimits.bernoulliPGF sha256:40dae2ca25e4b21f21f1217e706335c4f5d9da34d36c002514e53d2df2f1f0a9
+   D5/S3/Analytic/Probability/BernoulliTriangularLimits.bernoulli_polynomial_uniform_limits sha256:c4868f60f6435c664a9f0c9404bd0067d0555e6887fa6bf06d83087b13cf4e94
+   D5/S3/Analytic/Probability/BernoulliTriangularLimits.factorization_moments sha256:8878ec7d2e1d9564f8286aa2e240e6df59faee13323f575ffff1b91d3ca7d871
+   D5/S3/Analytic/Probability/BernoulliTriangularLimits.mu sha256:b7c1a6d951f25d9ee75de4f0d81d71a1a8e673b687837ffe9db024fe9004c155
+   D5/S3/Analytic/Probability/BernoulliTriangularLimits.normalized sha256:6a51afc664296197850382a73841a766e6ac589e3d6b346449e32647684ba774
+   D5/S3/Analytic/Probability/BernoulliTriangularLimits.rowMean sha256:155e49f2053e12d60f2e820552ce45df6bd03c24b4ca9779ea27fa2d13fc142d
+   D5/S3/Analytic/Probability/BernoulliTriangularLimits.rowVariance sha256:ced9c60ac8dfb63dc57615620993837f835a60a88001bc4a5baf9262e0394ad9
+   D5/S3/Analytic/Probability/BernoulliTriangularLimits.sigmaSq sha256:a3ea86df2dd9591b4e26a317c3b3d6ef80d00ce4e479aff2aa5d4eab72e475c9
+   Existing frozen settlement: result applies the frozen Bernoulli limit theorem.
+   This visibility update has no new escape witness.
    Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/15743
    Template gap: No divergent-rank-sequence realization or conjunction-of-limits readout is supplied.
    Four-slot evidence missing: source-specific arenas and observation/readout maps,
@@ -22,9 +26,8 @@
    frozen StatLean.HypothesisTesting standard Gaussian owners.
    claim: proof_shape: bind-only; escape_witness: none;
      consumers: statement/type consumers.
-   result: proof_shape: content; escape_witness: monotone_cdf_pointwise_to_uniform;
-     frozen_dependencies: F0, F1, F2, F4, F5.
-     consumers: statement/type consumers.
+   result: proof_shape: bind-only; escape_witness: none;
+     Existing frozen settlement of #15111.
    g: proof_shape: bind-only; escape_witness: none;
      consumers: g_coeff_succ, g_coeff_zero, g_coeff_above, g_eq_X_mul_q, speyer_variance_bound, speyer_variance_bound_eighth, speyer_variance_eighth_unconditional, speyer_variance_tendsto, g_normalized_bernoulli_multiset, g_bernoulli_factorization, claim, result.
    qAB: proof_shape: bind-only; escape_witness: none;
@@ -89,6 +92,8 @@
      consumers: q_splits_roots.
    qAB_pos: proof_shape: bind-only; escape_witness: none;
      consumers: qAB_roots_lt, speyer_variance_bound, g_normalized_bernoulli_multiset.
+     External consumer: D5.S3.Combinatorics.Delannoy.GrauOllerMarcenVaronaFactorialBorderGrowth.Q_nonneg.
+     Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/22168
    qAB_roots_lt: proof_shape: bind-only; escape_witness: none;
      consumers: q_splits_roots.
    q_splits_roots: proof_shape: bind-only; escape_witness: none;
@@ -138,7 +143,7 @@ def g (n d : ℕ) : ℝ[X] := ∑ i ∈ Finset.Icc 1 (min d (n - d)),
     ((d - i).factorial * (n - d - i).factorial * (i - 1).factorial)) * X ^ i
 
 
-private def qAB (a b : ℕ) : ℝ[X] := ∑ j ∈ range (a+1), C ((a.choose j * b.choose j : ℕ) : ℝ) * (X+1)^j
+def qAB (a b : ℕ) : ℝ[X] := ∑ j ∈ range (a+1), C ((a.choose j * b.choose j : ℕ) : ℝ) * (X+1)^j
 
 
 private lemma choose_triple_sum (a b k : ℕ) (hab : a ≤ b) (hk : k ≤ a) :
@@ -534,7 +539,7 @@ private lemma qAB_splits (a b : ℕ) (hab : a ≤ b) : (qAB a b).Splits := by
   rw [H_reflect_transport] at hs
   exact (splits_mul_iff_right (by simp : C ((-1:ℝ)^a) ≠ 0) (Splits.C _)).mp hs
 
-private lemma qAB_pos (a b : ℕ) (x : ℝ) (hx : -1 ≤ x) : 0 < (qAB a b).eval x := by
+lemma qAB_pos (a b : ℕ) (x : ℝ) (hx : -1 ≤ x) : 0 < (qAB a b).eval x := by
   simp only [qAB, eval_finsetSum, eval_mul, eval_C, eval_pow, eval_add, eval_X, eval_one]
   apply sum_pos'
   · intro j hj

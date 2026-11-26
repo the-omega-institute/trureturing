@@ -1,4 +1,3 @@
-import Batteries.Tactic.OpenPrivate
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.TensorNetworks.CZXParentLindbladianWindowChannel
 import Reg.Support.SingleDependentReadout
@@ -319,7 +318,6 @@ end SuccessorInjective
 
 namespace GaugedWindowSector
 
-open private middleUpdate from D5.S3.Quantum.TensorNetworks.CZXParentLindbladianWindowChannel
 
 /-- The selected source predicate is observed on its original data operands. -/
 abbrev signature : Signature :=
@@ -635,7 +633,6 @@ end SuperoperatorAction
 
 namespace WindowIdempotence
 
-open private middleUpdate from D5.S3.Quantum.TensorNetworks.CZXParentLindbladianWindowChannel
 
 /-- Observe a row of the source window superoperator. -/
 abbrev signature : Signature :=

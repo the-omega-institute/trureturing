@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:42a5ec466e271146e2719d7ad052627e6c234278b62dad30b61184d2d06ab218
-  normalized_sha256: sha256:42a5ec466e271146e2719d7ad052627e6c234278b62dad30b61184d2d06ab218
-cas_ref: sha256:42a5ec466e271146e2719d7ad052627e6c234278b62dad30b61184d2d06ab218
-coverage_gids:
-  - gid: D5/S3/Analytic/Adelic/GlobalLogarithmicGaugeCriterion.global_logarithmic_gauge_criterion
-    target_statement_id: sha256:0e9bd3d0a8700185f5d4326339b9e8b562229c847231d8c91e2ee3fb4be8013a
-receipts:
-  unresolved_subitems: []

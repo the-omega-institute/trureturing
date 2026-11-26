@@ -1,8 +1,0 @@
-**Definition 39.1 (the sampled four-expression domain).** Consider completed Sample cuts of the fixed comb binary phase, after every input, reply and predictor update has finished and the controller has returned to Ready. Put $v=w0^{N-1}$ for the actual binary chain including the last Sample's zero pulses. The four expressions expose the following different objects.
-
-| Expression | Independently specified content |
-| --- | --- |
-| Space | The actual rooted ordered unit material tree and its current field $x_v$, modulo rooted order-preserving isomorphism |
-| Time | The actual successful labelled native generation projection, and the actual binary pulse chain $v$ since the earned origin |
-| Boundary | Only the framed ordered list of $N$ literal root values received in the last Sample |
-| Memory | The retained current recursive native term and current full predictive field $x_v$ in its material-address coordinates |

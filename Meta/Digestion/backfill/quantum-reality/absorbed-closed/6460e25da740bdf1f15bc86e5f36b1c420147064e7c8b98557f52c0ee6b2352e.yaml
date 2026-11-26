@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:6460e25da740bdf1f15bc86e5f36b1c420147064e7c8b98557f52c0ee6b2352e
-  normalized_sha256: sha256:6460e25da740bdf1f15bc86e5f36b1c420147064e7c8b98557f52c0ee6b2352e
-cas_ref: sha256:6460e25da740bdf1f15bc86e5f36b1c420147064e7c8b98557f52c0ee6b2352e
-coverage_gids:
-  - gid: D5/S3/Arith/GoldenResource/GoldenResourceThresholdCriterion.golden_resource_optimal_iff_layer_thresholds
-    target_statement_id: sha256:07dfae064c37a1fc84275cb5b2f41f58f49a028a212ccf7352eabf9a29fd6c0b
-receipts:
-  unresolved_subitems: []

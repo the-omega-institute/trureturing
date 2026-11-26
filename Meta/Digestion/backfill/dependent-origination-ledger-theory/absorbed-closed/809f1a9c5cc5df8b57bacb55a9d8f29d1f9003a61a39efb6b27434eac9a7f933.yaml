@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:809f1a9c5cc5df8b57bacb55a9d8f29d1f9003a61a39efb6b27434eac9a7f933
-  normalized_sha256: sha256:809f1a9c5cc5df8b57bacb55a9d8f29d1f9003a61a39efb6b27434eac9a7f933
-cas_ref: sha256:809f1a9c5cc5df8b57bacb55a9d8f29d1f9003a61a39efb6b27434eac9a7f933
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/Governance/FiniteAcyclicJudgingGraphRoot.finite_acyclic_judging_graph_has_root
-    target_statement_id: sha256:64e0800028c1d20869935d303de165bcd3ba63f10ff0b09e068c643a228935b3
-receipts:
-  unresolved_subitems: []

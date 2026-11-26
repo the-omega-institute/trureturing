@@ -1,6 +1,0 @@
-The continuation equations have an original-world realization if and only if:
-
-1. At least one $h_j$ is nonzero.
-2. For the smallest $k$ with $h_k\ne0$, the matrix $P=B_k/h_k$ has four strictly positive entries and determinant zero.
-3. $B_j=h_jP$ for all $j=0,1,2,3$.
-

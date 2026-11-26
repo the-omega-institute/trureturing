@@ -284,7 +284,7 @@ theorem first_prefix_displacement_charge {z η : ℝ} (hz : 1 < z)
   rwa [heq] at hc
 
 -- Uniformity in y is essential: the endpoint may move with z.
-private lemma uniform_theta_error {T z : ℝ} (hz : 1 < z)
+lemma uniform_theta_error {T z : ℝ} (hz : 1 < z)
     (hL : 2 * log 2 ≤ log z) (hT : T ≤ z / 2) (N : ℕ)
     (hθ : ∀ y : ℝ, T ≤ y → |Chebyshev.theta y - y| ≤ y / log y ^ N)
     {y : ℝ} (hylo : z / 2 ≤ y) (hyhi : y ≤ 2 * z) :

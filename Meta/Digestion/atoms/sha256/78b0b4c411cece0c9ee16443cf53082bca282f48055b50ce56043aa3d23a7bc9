@@ -1,8 +1,0 @@
-**Lemma 5.1 (No common leading/constant coefficient).** For every real
-$p\in\mathcal P$, the polynomial $a(p,v)$ has no common complex root
-with any of $\ell(p,v),q_2(p,v),q_3(p,v)$.
-
-**Proof.** The Sylvester criterion says that a common complex root would
-make the corresponding $h_q(p)$ vanish.  Section 4 proves that all
-three resultants are nonzero on $\mathcal P$. ∎
-

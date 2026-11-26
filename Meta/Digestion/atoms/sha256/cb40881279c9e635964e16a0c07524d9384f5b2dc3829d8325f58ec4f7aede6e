@@ -1,7 +1,0 @@
-Proof. Before inversion, a canonically finite expression reaches no live
-free state, $\Omega$ or guarded cycle. It is a finite expression in grounds,
-parameters and fixed free atoms, so is the same in every solution of the mode,
-as in FJC Theorem 3.1. For an original state $X_i$, its image is $Y_i$;
-finiteness of either is equivalent to finiteness of the other. If the image
-is finite and fixed, image injectivity makes its inverse finite and fixed.
-

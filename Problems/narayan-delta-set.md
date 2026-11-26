@@ -73,7 +73,7 @@ The tested scope is 87,175 rewrite identities and residue bijections for odd $a=
 4. **Computed:** $E(1,2)=\{1,2\}$, with terminating trace $(1,2)\to(1,1)$, by the exact-arithmetic experiment above. The formal refutation uses only initial-state membership $2\in E(1,2)$, constructed directly inside `result`.
 5. **Computed:** the same verified checker validates 87,175 rewrite identities, 27,803 bounded coordinate factorizations and 74,415 represented values, with the exact windows given above and final result `ALL_CHECKS_OK`. These windows are not the unbounded proof.
 6. **Computed:** without the redundant $6$ coordinate, $(3,8,10)$ has observed delta union $\{1,2,3,4\}$ for $0\le n\le2000$, by the same checker. The paper's main theorem for the unexpanded tuple remains a separate assertion.
-7. **Open:** classification for other $h,d,k$, sharpness of the coprimality hypothesis, and catenary Conjectures 18.1 and 18.2 are not settled here.
+7. **Open:** classification for other $h,d,k$, sharpness of the coprimality hypothesis, and catenary Conjecture 18.1. Conjecture 18.2 has a separate proof for the original atom tuple. [Conjecture 18.2 Blueprint](../Blueprint/D5/S3/Arith/Additive/NarayanCatenarySpectrumMembership.md)
 
 ### What the settlement shows
 
@@ -85,4 +85,4 @@ The preregistration records the versioned arXiv source and earlier Narayan Zenod
 
 ## ASSUMED-UNVERIFIED
 
-Completeness of the external literature search is unverified. The preregistration records exhausted OpenAlex budget, Semantic Scholar HTTP 429, unusable general-web challenge pages, incomplete MathDB coverage and the unrecovered Banks et al. work. No exhaustive absence or priority claim is made. Classification outside the stated family, sharpness of coprimality, and catenary Conjectures 18.1–18.2 remain open.
+Completeness of the external literature search is unverified. The preregistration records exhausted OpenAlex budget, Semantic Scholar HTTP 429, unusable general-web challenge pages, incomplete MathDB coverage and the unrecovered Banks et al. work. No exhaustive absence or priority claim is made. Classification outside the stated family, sharpness of coprimality, and catenary Conjecture 18.1 remain open here.

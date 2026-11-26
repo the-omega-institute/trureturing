@@ -1,1 +1,0 @@
-| 有定义的 $X\triangleright Y$ | 左侧 $(a,b,U)\mapsto(a,b,U\cup V_Y)$，$V_Y=\alpha[\Omega_Y]$；右侧不变，再相加 

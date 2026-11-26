@@ -60,7 +60,21 @@ Lean statement: `D5/S3/Combinatorics/Partitions/BarreseSourceNormalization.LFibe
 
 LFiber(m,c) consists of every positive source column tuple whose bottom-up totals are the reverse of c and zero thereafter, with every entry of c strictly positive. For nonempty c this is exactly the trimmed top-down tuple in Definition 4 of Barrese, Loehr, Remmel and Sagan, arXiv:1508.05944v1: each displayed level is nonempty and every higher one is empty. An explicit zero in a nonempty target tuple is rejected. The empty-board extension used here is l(empty)=[], which is stated separately because that definition does not define its largest nonempty level.
 
-**Theorem 1.5 (The entire normalized all-width source count).**
+**Definition 1.5 (The unrestricted shape fiber).**
+
+Lean statement: `D5/S3/Combinatorics/Partitions/BarreseSourceNormalization.sourceShapeEquiv`
+
+*Formalization.* `D5/S3/Combinatorics/Partitions/BarreseSourceNormalization.sourceShapeEquiv` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Kenneth Barrese (2023). *Weighted File Placements on Singleton Boards*. DOI: [10.48550/arXiv.2312.10855](https://doi.org/10.48550/arXiv.2312.10855). URL: <https://arxiv.org/abs/2312.10855v1>.
+
+*Commentary.*
+
+For a positive target tuple c, the normalized source fiber is equivalent to the existing ShapeFiber with the reversed bottom-up tuple. This is the normalization equivalence restricted by exact level data; it introduces no new width assumption. The equivalence lets consumers transport the derived finite ambient carrier without re-proving the source coordinate bridge.
+
+**Theorem 1.6 (The entire normalized all-width source count).**
 
 Lean statement: `D5/S3/Combinatorics/Partitions/BarreseSourceNormalization.source2015_count`
 
@@ -74,7 +88,7 @@ Lean statement: `D5/S3/Combinatorics/Partitions/BarreseSourceNormalization.sourc
 
 For every positive m and every finite target tuple c, the cardinality of LFiber(m,c) is zero if c has a nonpositive entry; otherwise it is F(reverse(c),last(c)), with the empty-list bound taken as zero. The original singleton targets are included, while the unknown input boards are unrestricted Ferrers boards. The source-to-diagram and derived-padding bijections establish this formula for all widths and all allowed heights. For a singleton target with t positive entries, the uppermost level is nonempty, so heights range from m(t-1)+1 through mt.
 
-**Definition 1.6 (The native trimmed l-operator).**
+**Definition 1.7 (The native trimmed l-operator).**
 
 Lean statement: `D5/S3/Combinatorics/Partitions/BarreseSourceNormalization.lOperator`
 
@@ -88,7 +102,7 @@ Lean statement: `D5/S3/Combinatorics/Partitions/BarreseSourceNormalization.lOper
 
 Start with the literal bottom-up level cell totals. These totals decrease weakly, and finiteness of the board supplies an empty level. Let t be the first empty level index. The operator reverses the list of totals at indices zero through t-1. Thus t is exactly the largest nonempty level in the source's one-based numbering, and the empty board has the stated empty-tuple extension.
 
-**Definition 1.7 (Exact operator fiber correspondence).**
+**Definition 1.8 (Exact operator fiber correspondence).**
 
 Lean statement: `D5/S3/Combinatorics/Partitions/BarreseSourceNormalization.operatorFiberEquiv`
 
@@ -102,7 +116,7 @@ Lean statement: `D5/S3/Combinatorics/Partitions/BarreseSourceNormalization.opera
 
 The native equality lOperator(m,B)=c is equivalent to the absolute-level specification LFiber(m,c). The forward map uses positivity before the first zero and vanishing afterwards. The reverse map uses uniqueness of a positive finite list from its zero-extended entries: neither an appended zero nor a reordered tuple can represent the same data.
 
-**Theorem 1.8 (Evaluation of the native l-operator fiber).**
+**Theorem 1.9 (Evaluation of the native l-operator fiber).**
 
 Lean statement: `D5/S3/Combinatorics/Partitions/BarreseSourceNormalization.lOperator_count`
 
@@ -126,4 +140,5 @@ For every positive m and every c, the number of arbitrary-width positive source 
 - Truth anchor: `D5/S3/Combinatorics/Partitions/BarreseSourceNormalization.normalizedColumnsEquiv`
 - Truth anchor: `D5/S3/Combinatorics/Partitions/BarreseSourceNormalization.operatorFiberEquiv`
 - Truth anchor: `D5/S3/Combinatorics/Partitions/BarreseSourceNormalization.source2015_count`
+- Truth anchor: `D5/S3/Combinatorics/Partitions/BarreseSourceNormalization.sourceShapeEquiv`
 - Dependency: [D5/S3/Combinatorics/Partitions/BarreseAllWidths](BarreseAllWidths.md)

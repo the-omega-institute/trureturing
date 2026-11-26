@@ -7,10 +7,10 @@ internal sealed class QuantitativePrimeAbelDocument : IScribeDocumentDefinition
     private const string Prefix = "D5/S3/Arith/Robin/PriceRecord/QuantitativePrimeAbel.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Real-endpoint four-term prime-counting expansion.",
+        "Real-endpoint factorial prime-counting expansion.",
         H("Quantitative counting and finite Euler deficits"),
         Blocks(
-            Paragraph(Text("A quantitative theta remainder and finite Abel summation give the real-endpoint prime-counting expansion through its residual coefficient 24. The same literal finite prime intervals carry the nonlinear Euler deficit estimates used by the real-image infimum limit.")),
+            Paragraph(Text("A quantitative theta remainder and finite Abel summation give the real-endpoint prime-counting expansion at every fixed order. The same literal finite prime intervals carry the nonlinear Euler deficit estimates used by the real-image infimum limit.")),
             Describe.Lean(DescribeId.Create("quantitativeprimeabel-theta-error-log-power"),
                 DeclarationHandle.Create(Prefix + "theta_error_log_power"), H("Theta remainder at every fixed log power"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
@@ -23,6 +23,13 @@ internal sealed class QuantitativePrimeAbelDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(Prefix + "prime_counting_four_terms"), H("Four terms with residual coefficient 24"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("The real-endpoint residual (primeCount x-countingPolynomial x)/(x/log(x)^5) tends to 24 atTop. The primeCount definition includes the floor endpoint and no separate pi hypothesis is introduced."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("quantitativeprimeabel-prime-counting-factorial-residual"),
+                DeclarationHandle.Create(Prefix + "prime_counting_factorial_residual"), H("Factorial residual at every fixed order"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("Fix a natural number r and set G_k(x) = x/(log x)^k and A_r(x) = sum_{j<r} j! G_{j+1}(x). The real-endpoint residual (primeCount(x) - A_r(x))/G_{r+1}(x) tends to r!. The sum is empty at r = 0.")),
+                    Paragraph(Text("For x > 1, write b_k(x) = 1/(log x)^k. Differentiation gives G'_k = b_k - k b_{k+1}. The finite sum telescopes by (j+1)! = (j+1) j!, giving A'_r = b_1 - r! b_{r+1}. In exact Abel summation, subtract the derivative of A_r - G_1 from the integrand, then divide by r!. The resulting integrand divided by G'_{r+1} tends to one by the order-r theta error. The integral comparison transfers the limit, and the normalized Abel endpoint error and fixed lower endpoint tend to zero.")),
+                    Paragraph(Text("Applying the limit at r + 1 bounds the remainder after subtracting r! G_{r+1} by a constant times G_{r+2}. This is the arithmetic expansion used in Proposition 7.9 of LCM_POWER_ROBIN_KAPPA_THRESHOLD.md."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("quantitativeprimeabel-primecount"),
                 DeclarationHandle.Create(Prefix + "primeCount"), H("primeCount"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),

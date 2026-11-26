@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:86131215bc59a49581c27d70dec450fdbe1d98b3e698b655dd0af4c9f9f93f2f
-  normalized_sha256: sha256:86131215bc59a49581c27d70dec450fdbe1d98b3e698b655dd0af4c9f9f93f2f
-cas_ref: sha256:86131215bc59a49581c27d70dec450fdbe1d98b3e698b655dd0af4c9f9f93f2f
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/DefinitionEscapeRegrade/SemanticTargetLaunderingDecision.target_laundering_decision_nonempty
-    target_statement_id: sha256:e54507890cffebac5448576af21147d64a0dcd910e3c963abc224603b66964c0
-receipts:
-  unresolved_subitems: []

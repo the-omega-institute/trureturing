@@ -1,9 +1,0 @@
-## 58. Scope and assumptions for a native bridge
-
-All Relational IV references in this section denote the
-[immutable published edition, §§46--50](https://github.com/the-omega-institute/trureturing/blob/0cd2d8e87296269efebb3d308ff59318aab0a10a/docs/develop/theory/FIB_RELATIONAL_FIBER_CALCULUS_CONTINUATION_IV.md#46-execution-boundary-corrections).
-Its corrected finite-profile and source-total contracts are the resource
-supplier. The following definitions and assumptions specify what an
-additional bridge would have to retain. No general signed-fiber bridge,
-controller synthesis, or quotient-minimality result is asserted here.
-

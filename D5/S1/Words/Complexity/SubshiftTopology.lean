@@ -5,6 +5,11 @@
    anchors: []
    digest: Word subshifts are closed orbit closures, and the golden subshift is perfect of continuum cardinality. -/
 
+/- Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/23567. -/
+
+import D5.S1.Words.Complexity.MorseHedlund
+import D5.S1.Words.GoldenFactorComplexity
+import D5.S1.Words.GoldenWord
 import D5.S1.Words.Complexity.SubshiftHausdorffDimension
 import D5.S1.Words.GoldenRecurrence
 import Mathlib.Topology.MetricSpace.Perfect
@@ -93,7 +98,7 @@ theorem closure_shift_orbit_eq_wordSubshift (x : ℕ → A) :
     have hik := congrFun hi ⟨k, hk⟩
     simpa [FullShift.shift, wordFactor] using hik.symm.trans hyk
 
-private theorem golden_wordFactorSet_card (n : ℕ) :
+theorem golden_wordFactorSet_card (n : ℕ) :
     (wordFactorSet goldenWord n).card = n + 1 := by
   classical
   have himg : goldenFactorSet n = (wordFactorSet goldenWord n).image List.ofFn := by
@@ -214,10 +219,6 @@ theorem golden_wordSubshift_cardinal_eq_continuum :
       exact congrArg Subtype.val hab
     simpa using Cardinal.mk_le_of_injective hginj
 
-#print axioms isClosed_wordSubshift
-#print axioms closure_shift_orbit_eq_wordSubshift
-#print axioms golden_wordSubshift_perfect
-#print axioms golden_wordSubshift_cardinal_eq_continuum
 
 end
 

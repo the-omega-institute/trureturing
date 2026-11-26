@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:fa01d7e9f043ff49e26145b2b4f58dc2dc5262f2fda0ff39cef14dbee0eee16a
-  normalized_sha256: sha256:fa01d7e9f043ff49e26145b2b4f58dc2dc5262f2fda0ff39cef14dbee0eee16a
-cas_ref: sha256:fa01d7e9f043ff49e26145b2b4f58dc2dc5262f2fda0ff39cef14dbee0eee16a
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/Termination/FiniteDefectTermination.finite_defect_repairs_terminate
-    target_statement_id: sha256:42656eb56bf70150d344c88f118d372bd24c1d6b243486088b8a39fc0f3afb43
-receipts:
-  unresolved_subitems: []

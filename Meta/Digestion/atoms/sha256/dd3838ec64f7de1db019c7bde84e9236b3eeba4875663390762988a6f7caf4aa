@@ -1,6 +1,0 @@
-**定理 329.2（总变差对任务的双向刻画）。** 对有限输出空间上的两个分布 \(p,q\)，有
-\[
-\boxed{
-\sup_{0\le g\le1}
-\left|\mathbb E_p g-\mathbb E_q g\right|
-=

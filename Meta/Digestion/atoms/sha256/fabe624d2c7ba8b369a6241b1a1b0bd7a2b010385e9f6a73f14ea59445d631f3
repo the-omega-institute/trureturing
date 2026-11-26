@@ -1,7 +1,0 @@
-**Theorem 20.1 (critical complete-target exclusion).** For every declared integer $d\ge1$, there is no deterministic full-domain protocol that, with uniformly at most $2d+3$ reads, both returns the exact actual normalized triple $(P,g,\delta)$ and outputs a nonzero full gain ray by a countable preassigned palette of fixed real matrices per terminal word. The domain and acquisitions are exactly (1.1)–(1.3). In particular all actual degree drops, sampled and repeated roots, coefficient signs, and real constant drifts are allowed; actions, stopping, answers and palette selection may be arbitrary functions of actual history. Thus
-
-$$
-N_d^{\mathrm{lin}}\ge2d+4\qquad(d\ge1).
-\tag{20.1}
-$$
-

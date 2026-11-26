@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:3799a177570b09097b5b0608bd7ab49a9608c4b64eb35edab89ac616c73c79d4
-  normalized_sha256: sha256:3799a177570b09097b5b0608bd7ab49a9608c4b64eb35edab89ac616c73c79d4
-cas_ref: sha256:3799a177570b09097b5b0608bd7ab49a9608c4b64eb35edab89ac616c73c79d4
-coverage_gids:
-  - gid: D5/S3/Estimation/SequentialDecisionRisk/MeasurableDeficiencyTriangle.measurable_deficiency_triangle
-    target_statement_id: sha256:408044adae4f57cbc390a036cbeeab508f561046b60d2830c5daf7ef6dfd6279
-receipts:
-  unresolved_subitems: []

@@ -1,2 +1,0 @@
-**定义 260.0（矩阵记号）。** $H_d=\operatorname{Herm}_d(\mathbb C)$，$\operatorname{PSD}_d$ 是其正半定锥；$\mathcal D(S)$ 是复子空间 $S$ 上迹一 PSD 矩阵的全体，$\mathcal D_d=\mathcal D(\mathbb C^d)$。$P_v=vv^*/\|v\|^2$ 表示非零向量的归一秩一投影；跃迁公式中的 $v,w$ 均取单位向量。$\operatorname{Ad}_U(X)=UXU^*$，$T_i$ 是指定乘积基中第 $i$ 因子的转置，$\oplus$ 用于线性直和，$\mathbin{\oplus}$ 用于转置位时表示模二相加。
-

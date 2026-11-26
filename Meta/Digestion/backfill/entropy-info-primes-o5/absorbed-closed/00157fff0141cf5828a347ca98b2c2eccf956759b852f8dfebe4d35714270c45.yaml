@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:00157fff0141cf5828a347ca98b2c2eccf956759b852f8dfebe4d35714270c45
-  normalized_sha256: sha256:00157fff0141cf5828a347ca98b2c2eccf956759b852f8dfebe4d35714270c45
-cas_ref: sha256:00157fff0141cf5828a347ca98b2c2eccf956759b852f8dfebe4d35714270c45
-coverage_gids:
-  - gid: D5/S3/Quantum/Recovery/FiniteKrausReversibility.scalar_products_construct_left_inverse
-    target_statement_id: sha256:be0a414c2d451b9114a7c02afc4253b5a4f8b12af4a863d6f38bb48594303a31
-receipts:
-  unresolved_subitems: []

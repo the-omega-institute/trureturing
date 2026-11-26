@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:433e540c99a5470623282d2ea62f73d87a4751481e63d55b3ba5d9e6dff999be
-  normalized_sha256: sha256:433e540c99a5470623282d2ea62f73d87a4751481e63d55b3ba5d9e6dff999be
-cas_ref: sha256:433e540c99a5470623282d2ea62f73d87a4751481e63d55b3ba5d9e6dff999be
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/Decision/PredictionDecisionSufficiencyStrictness.prediction_sufficiency_implies_decision_sufficiency_strictly
-    target_statement_id: sha256:50cf13d2612ea22fdf6a6175ab96a9c01bcc77d4cd41efb2f38b4464777a0bbc
-receipts:
-  unresolved_subitems: []

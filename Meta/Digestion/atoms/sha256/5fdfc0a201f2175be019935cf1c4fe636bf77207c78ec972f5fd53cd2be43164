@@ -1,8 +1,0 @@
-**推论 329.3（事件任务足以检测模拟距离）。** 在有限输出空间中，若对某个未来动作词存在事件 \(E\) 使
-\[
-\left|K^A_\omega(E\mid s)
--
-K^B_{\theta(\omega)}(E\mid s)\right|>\varepsilon,
-\]
-则不存在误差不超过 \(\varepsilon\) 的该方向接口模拟。
-

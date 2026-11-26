@@ -9,6 +9,7 @@ claim: Relative entropy of coherence is the entropy gain under diagonal pinching
 strata_touched:
   - D5/S3/Quantum/Information/CoherentCopyCorrelationTax
   - D5/S3/Quantum/Divergence/SpectralReadoutEntropyEquality
+  - D5/S3/Quantum/Decoherence/FourLevelBathEntropyBudget
 license: citation-only
 triage: anchor
 ---
@@ -99,3 +100,18 @@ underlying historical attributions remain `ASSUMED-UNVERIFIED` here.
 The paper's explicit statement that its measure fulfils (C1') is a verified
 reading of this paper, not a claim to have independently retrieved every
 source used in its proof.
+
+## Entropy gain and the purified Gibbs bath
+
+Equation (8), arXiv v3 p. 3, identifies the relative entropy of coherence
+with S(Δρ) − S(ρ) for the chosen coordinate basis. For a qutrit density
+with Born weights aᵢ = ρᵢᵢ, the diagonal entropy is H(a). The support
+argument above applies even at singular inputs and zero Born weights.
+
+In the repository's four-level purified Gibbs preparation,
+`gibbs_phase_budgets` identifies that entropy difference with both
+I(S:B) and I(S:R) of the evolved state. The separate rectangular
+record embedding carries the coherent copy into SBR and gives
+I(S:BR) = 2H(a) − S(ρ). These identifications use the actual partial
+traces of the Gibbs model.
+[Quantifying Coherence, p. 3, Eq. (8)](https://arxiv.org/pdf/1311.0275v3#page=3)

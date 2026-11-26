@@ -262,7 +262,7 @@ theorem exclusion_symmetric {C : PointedCone ℝ A} {u : A →ₗ[ℝ] ℝ}
   · simp [LinearMap.sub_apply, (pure_mem q).2, hfq]
   · simp [LinearMap.sub_apply, (pure_mem p).2, hf.2]
 
-private theorem normalized_face_dimension (D : PointedCone ℝ A) (u : A →ₗ[ℝ] ℝ)
+theorem normalized_face_dimension (D : PointedCone ℝ A) (u : A →ₗ[ℝ] ℝ)
     (hstrict : ∀ x ∈ D, x ≠ 0 → 0 < u x) (hne : ∃ x ∈ D, x ≠ (0 : A)) :
     Module.finrank ℝ (affineSpan ℝ (base D u)).direction + 1 =
       Module.finrank ℝ (Submodule.span ℝ (D : Set A)) := by

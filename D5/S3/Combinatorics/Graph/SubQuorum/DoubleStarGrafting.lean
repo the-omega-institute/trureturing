@@ -1,12 +1,12 @@
 /- GID: D5/S3/Combinatorics/Graph/SubQuorum/DoubleStarGrafting
-   generality: I
+   generality: G
    mirror-B: D5/B/S3/Combinatorics/Graph/SubQuorum/DoubleStarGrafting
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.Algebra.Order.BigOperators.Group.Finset]
    utility: none
    digest: Double-star grafting with actual induced sets and partial colorings. -/
 
-import D5.S3.Combinatorics.Graph.StarFormingDissociationRefutation
+import D5.S3.Combinatorics.Graph.StarForming.Foundations.Invariants
 import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 import Mathlib.Algebra.Order.BigOperators.Group.Finset
 import Mathlib.Data.Finset.Prod
@@ -59,18 +59,6 @@ noncomputable instance {V : Type*} [DecidableEq V] (F : SimpleGraph V) [Decidabl
     (p.1 = q.1 ∧ localAdj p.2 q.2)))
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
-
-private theorem independent_iff {W : Type*} [Fintype W] [DecidableEq W]
-    (G : SimpleGraph W) [DecidableRel G.Adj] (S : Finset W) :
-    IsKIndependent G 2 S ↔ ∀ v ∈ S, ∀ a ∈ S, ∀ b ∈ S,
-      G.Adj v a → G.Adj v b → a = b := by
-  simp only [IsKIndependent, Nat.lt_succ_iff, Finset.card_le_one]
-  constructor
-  · intro h v hv a ha b hb hva hvb
-    exact h v hv a (Finset.mem_filter.mpr ⟨ha,hva⟩) b (Finset.mem_filter.mpr ⟨hb,hvb⟩)
-  · intro h v hv a ha b hb
-    exact h v hv a (Finset.mem_filter.mp ha).1 b (Finset.mem_filter.mp hb).1
-      (Finset.mem_filter.mp ha).2 (Finset.mem_filter.mp hb).2
 
 private theorem gadget_bound (S : Finset (Fin 7)) (hzero : 0 ∉ S)
     (h : ∀ v ∈ S, ∀ a ∈ S, ∀ b ∈ S, localAdj v a → localAdj v b → a = b) :

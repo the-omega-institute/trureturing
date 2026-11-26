@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:019c0d9552e20f9f1c226a473c583cb1b442fadfe618b8a2c65093327750ec39
-  normalized_sha256: sha256:019c0d9552e20f9f1c226a473c583cb1b442fadfe618b8a2c65093327750ec39
-cas_ref: sha256:019c0d9552e20f9f1c226a473c583cb1b442fadfe618b8a2c65093327750ec39
-coverage_gids:
-  - gid: D5/S3/Entropy/Observation/DeterministicReadoutEntropyDecomposition.deterministic_readout_entropy_decomposition
-    target_statement_id: sha256:242d40cca9bcbc67eeaecbfe8fee75946a24a3f4109432ae2bb25737942c4edc
-receipts:
-  unresolved_subitems: []

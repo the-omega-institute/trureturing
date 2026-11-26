@@ -1,4 +1,5 @@
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233260Literal
+import D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 import Reg.Support.SingleDependentReadout
 import LeanInformationAuditInterface.Contract.Registration
 

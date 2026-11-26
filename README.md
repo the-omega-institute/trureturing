@@ -6,7 +6,7 @@
 [Examples](#three-places-to-look) · [Truth and computation](#truth-and-computation) ·
 [Spacetime](#toward-holographic-spacetime) · [Information escape](#information-escape) ·
 [Evidence](#what-is-proved-and-what-is-open) · [First run](#first-run) ·
-[Lean source](D5/) · [Book](https://the-omega-institute.github.io/trureturing-mdbook/) ·
+[Lean source](D5/) · [Theory and literature reader](https://the-omega-institute.github.io/trureturing-source-theories/) · [Book](https://the-omega-institute.github.io/trureturing-mdbook/) ·
 [Contribute](#take-part) · [Licensing](#license-and-foundations)
 
 trureturing develops a scientific method for AI to turn gaps in knowledge into
@@ -168,11 +168,11 @@ with resolution and error bounds require further results. Links to physical
 spacetime or holographic duality remain research questions.
 
 Theory inputs study
-[event archives](docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC.md)
+[event archives](https://github.com/the-omega-institute/trureturing-source-theories/blob/dev/docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC.md)
 retaining time, position, causal order and provenance;
-[when observations preserve](docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)
+[when observations preserve](https://github.com/the-omega-institute/trureturing-source-theories/blob/dev/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)
 composition, shared sources and targets; and
-[experimental distances](docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_CONTEXT_GEOMETRY.md)
+[experimental distances](https://github.com/the-omega-institute/trureturing-source-theories/blob/dev/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_CONTEXT_GEOMETRY.md)
 defined through allowed experiments and responses. Their prose does not certify
 formal coverage.
 
@@ -214,7 +214,7 @@ adding this readout?
 The current declared-template binding rule issues
 **Observe warnings that do not block admission**
 ([specification, A5.5](docs/develop/spec/golden-ledger-repo-spec.md);
-[implementation](tools/StrataLint.Engine/Rules/TheoryGeneration/DeclaredTemplateBindingRule.cs)).
+[implementation](https://github.com/the-omega-institute/trureturing-tools/blob/f2cb19194353ed36282c05c164c9c52d3816befd/tools/StrataLint.Engine/Rules/TheoryGeneration/DeclaredTemplateBindingRule.cs)).
 Other admission checks still apply. Its module selection is
 separate from the mathematical comparison above.
 The [Normative Draft](docs/develop/spec/lean_single_compile_intrinsic_information_escape_theory_and_spec.md)
@@ -224,8 +224,12 @@ describes a wider design whose implementation remains incomplete.
 
 Mathematical reuse rests on the statements, checked proof terms and axiom
 dependencies in the [Lean source](D5/). The
-[frozen ledger](Golden/Frozen/state/) tracks frozen module identities.
-[Theory prose](docs/develop/theory/) supplies research input, and
+[frozen ledger](Golden/Frozen/state/) tracks frozen module identities. A declaration
+row can also show the libraries and axioms measured from its compiled statement
+and proof. An omitted library field leaves provenance unknown. An omitted axiom
+field gives the standard three-axiom upper bound, and an empty array records
+a measurement of zero axioms. [Reading and refreshing frozen evidence](docs/CONTRIBUTING.md#refresh-frozen-declaration-evidence)
+[Theory prose](https://github.com/the-omega-institute/trureturing-source-theories/tree/dev/docs/develop/theory/) supplies research input, and
 [experiments](Evidence/) supply observations within their declared scope;
 neither substitutes for a Lean proof. The C# harness checks repository rules,
 proof reports and frozen state. Independent review examines whether statements
@@ -244,8 +248,9 @@ Two explicit boundaries live in [Hearts.lean](D5/X_Frontier/Hearts.lean):
 - **O-6:** `o6WeilPositivityStatement` defines a Weil-positivity proposition.
   Defining that proposition supplies no proof of it.
 
-These are open research obligations, not established impossibility results.
-This repository does **not** establish the Riemann hypothesis.
+Both obligations remain open. Levent Alpöge’s proof establishes the classical
+Riemann hypothesis. The recommended Lean repository for that proof and Dirichlet
+GRH provides readable and compact editions. [Lean and Mathlib statement](https://leanprover-community.github.io/blog/posts/riemann-hypothesis/) · [lsernau/grh-lean](https://github.com/lsernau/grh-lean)
 
 ## First run
 
@@ -256,10 +261,10 @@ you also need Git, Make and Bash.
 elan selects Lean from [lean-toolchain](lean-toolchain). Mathlib is declared in
 [lakefile.toml](lakefile.toml), with resolved dependencies in
 [lake-manifest.json](lake-manifest.json). For contribution checks, add Python
-3.11+ as `python3`; see the [full prerequisites](docs/CONTRIBUTING.md#prerequisites).
+3.12+ as `python3`; see the [full prerequisites](docs/CONTRIBUTING.md#prerequisites).
 
 Clone the project, then build just the introductory module. The `make` entry
-prepares a private Lean cache; the first run may download dependencies.
+installs the tools release pinned in `Meta/tools-release.json` and prepares a private Lean cache.
 
 ```sh
 git clone https://github.com/the-omega-institute/trureturing.git
@@ -293,6 +298,16 @@ Evaluating 42 illustrates the encoding; the theorem covers every natural number.
 
 [Read the explanation](Blueprint/D5/S0/Conventions/WDigits.md).
 `make help` lists the repository's command entry points.
+
+## Strict Omega mathematics
+
+The `trureturing` Lake package builds `OmegaMath` against pinned Lean Init and
+Mathlib by default. For the chapter 39 projective overlap, import
+`OmegaMath.Projective.Basic` to compute the reading or `OmegaMath.Projective`
+to use the scaling theorem. Admission recompiles the same source against
+`OmegaInit` and `OmegaMathlib`, compares the exported mathematics, and replays
+the strict library in an empty Lean kernel with zero axioms.
+[Build commands and interface checks](src/README.md)
 
 ## Take part
 

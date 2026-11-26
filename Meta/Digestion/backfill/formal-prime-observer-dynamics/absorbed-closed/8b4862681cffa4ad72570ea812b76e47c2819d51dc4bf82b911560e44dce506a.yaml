@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:8b4862681cffa4ad72570ea812b76e47c2819d51dc4bf82b911560e44dce506a
-  normalized_sha256: sha256:8b4862681cffa4ad72570ea812b76e47c2819d51dc4bf82b911560e44dce506a
-cas_ref: sha256:8b4862681cffa4ad72570ea812b76e47c2819d51dc4bf82b911560e44dce506a
-coverage_gids:
-  - gid: D5/S3/Analytic/ZetaObservation/RestrictedZetaPosterior.single_prime_restricted_zeta_posterior
-    target_statement_id: sha256:aae688d327abe97248b56d3f1835b57817037831b6d6c6d07a9d7cdfd57642e6
-receipts:
-  unresolved_subitems: []

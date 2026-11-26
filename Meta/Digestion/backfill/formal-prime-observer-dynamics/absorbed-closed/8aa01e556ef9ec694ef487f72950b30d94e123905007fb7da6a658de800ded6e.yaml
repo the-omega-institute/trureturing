@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:8aa01e556ef9ec694ef487f72950b30d94e123905007fb7da6a658de800ded6e
-  normalized_sha256: sha256:8aa01e556ef9ec694ef487f72950b30d94e123905007fb7da6a658de800ded6e
-cas_ref: sha256:8aa01e556ef9ec694ef487f72950b30d94e123905007fb7da6a658de800ded6e
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/Experiment/OffPolicyResidualIdentifiability.offPolicyResidual
-    target_statement_id: sha256:7a23a7f0b0d677fd27388f4bf61023fb73b12248c16e34516bb3fe8b61990afa
-receipts:
-  unresolved_subitems: []

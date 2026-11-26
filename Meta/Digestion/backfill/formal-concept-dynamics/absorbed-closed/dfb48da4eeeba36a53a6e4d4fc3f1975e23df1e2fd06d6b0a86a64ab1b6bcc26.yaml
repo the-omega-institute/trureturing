@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:dfb48da4eeeba36a53a6e4d4fc3f1975e23df1e2fd06d6b0a86a64ab1b6bcc26
-  normalized_sha256: sha256:dfb48da4eeeba36a53a6e4d4fc3f1975e23df1e2fd06d6b0a86a64ab1b6bcc26
-cas_ref: sha256:dfb48da4eeeba36a53a6e4d4fc3f1975e23df1e2fd06d6b0a86a64ab1b6bcc26
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/Aggregation/SymmetricGainAllocation.symmetric_gain_allocation
-    target_statement_id: sha256:451f1dda61afd67d9da4b2c6a75c836227c403040edb7752ac5ad1321c9c6c7b
-receipts:
-  unresolved_subitems: []

@@ -41,7 +41,7 @@ The source-array predicate inlines the signed-difference list. The proof uses th
 
 ## Gap
 
-The bounded literature screen in #23890 found no inspected source-array proof of the two empirical FORMULA assertions. Programs computing a conjectural sequence do not establish that the English array count has that sequence. The issue also identifies Haobo Ma and Wenlin Zhang's later Zenodo record [23903301](https://zenodo.org/records/23903301), *OEIS A209723: Barker's conjectures on distinct clockwise edge differences*, as mentioning A209721. Its creation is later than the preregistration. This attribution is issue-reported; the live Zenodo API reading returned HTTP 403, so the record's full scope is unverified here. Literature completeness is `ASSUMED-UNVERIFIED`.
+The bounded literature screen in #23890 found no inspected source-array proof of the two empirical FORMULA assertions. Programs computing a conjectural sequence do not establish that the English array count has that sequence. The issue also identifies Haobo Ma and Wenlin Zhang's later Zenodo record [23903301](https://zenodo.org/records/23903301), *OEIS A209723: Barker's conjectures on distinct clockwise edge differences*, as mentioning A209721. Its creation is later than the preregistration. Its version 2 PDF has since been read: Corollary 1 proves Peterson's two-step recurrence, Beck's A029744 formula and the triangle third-side count, now formalized in `HardinBarkerA209721BeckPeterson` (Library note mazhang2026a209723). Literature completeness is `ASSUMED-UNVERIFIED`.
 
 ## Route
 
@@ -71,7 +71,8 @@ The four-slot escape audit of the public `result` is unfinished: [#25560](https:
 | Literal square classification, row table and entry-preserving array/walk equivalence | Proved in prose for the eight-square classification below; kernel-checked for the row table and equivalence | `compatibility` and `arrayWalkEquiv` are used by `source_count`, which is used by `result`. No separate eight-square Lean theorem is asserted. |
 | General finite-relation history count, including disconnected graphs and isolated states | Proved; kernel-checked | `count_histories` has arbitrary finite $V$, arbitrary decidable $R$, and arbitrary transfer vector satisfying the displayed zero and successor laws. |
 | Independent finite checker | Computed | The immutable experiment and command in Evidence exit 0, with the stated SHA-256 and exact tested ranges. |
-| Separate all-index parity and Peterson two-step Lean results | Open as separate formalization obligations | Their finite checks do not constitute new all-index Lean theorems. |
+| Peterson two-step recurrence, Beck's A029744 formula and the triangle third-side count | Proved; kernel-checked | `D5/S3/Combinatorics/Graph/Pressure/HardinBarkerA209721BeckPeterson.beck_peterson`, from `a_recurrence` and `a_initial`, for every n ≥ 1 or n ≥ 3 as stated. |
+| Separate all-index parity Lean results | Open as a separate formalization obligation | Their finite checks do not constitute new all-index Lean theorems. |
 | Widths other than three columns and analytic convergence | Open within this delivery's scope | Neither is a conclusion of this module. |
 
 ### What the settlement shows
@@ -80,10 +81,10 @@ The decisive mechanism is the literal row-history equivalence together with an a
 
 The eight-square classification has the following prose proof. Four distinct differences are chosen from $\{-2,-1,0,1,2\}$ and sum to zero. Since all five numbers sum to zero, the omitted difference is zero. The $+2$ and $-2$ edges cannot be opposite: their forced endpoints make the remaining two differences zero. They are adjacent, giving three consecutive entries $0,2,0$ or $2,0,2$; the fourth entry is $1$. The two patterns and their four rotations are exactly the eight possible squares, and substitution proves the converse. This is proved in prose, not a separate kernel-checked declaration.
 
-The exact row table consists of the two three-vertex paths $010-202-121$ and $101-020-212$, the two edges $021-102$ and $120-201$, and 17 isolated rows. This graph description is mathematical explanation of the explicit table proved by `compatibility`. Branching every two steps explains the factor two; the deterministic components explain the additive term in the neighbouring affine recurrence. The parity formulas and Peterson recurrence are computed only over the finite ranges in Evidence and remain separate all-index formalization obligations here.
+The exact row table consists of the two three-vertex paths $010-202-121$ and $101-020-212$, the two edges $021-102$ and $120-201$, and 17 isolated rows. This graph description is mathematical explanation of the explicit table proved by `compatibility`. Branching every two steps explains the factor two; the deterministic components explain the additive term in the neighbouring affine recurrence. The parity formulas are computed only over the finite ranges in Evidence and remain a separate all-index formalization obligation here. Peterson's recurrence is proved for all indices by `HardinBarkerA209721BeckPeterson.beck_peterson`.
 
 The two empirical FORMULA assertions can therefore be used as proved statements about the source-defined three-column arrays. The parent table's other widths and claims depending on them do not follow from this settling theorem. No convergence radius or analytic identity is asserted.
 
 ## ASSUMED-UNVERIFIED
 
-Literature completeness is `ASSUMED-UNVERIFIED`: the preregistration's bounded screen includes unavailable indexes, and the later Zenodo record's full scope was not independently read because its API returned HTTP 403. The unfinished four-slot audit is disclosed in #25560. Neither boundary weakens the stated Lean proposition or supplies missing registration evidence.
+Literature completeness is `ASSUMED-UNVERIFIED`: the preregistration's bounded screen includes unavailable indexes, and the later Zenodo record was read only for its Corollary 1. The unfinished four-slot audit is disclosed in #25560. Neither boundary weakens the stated Lean proposition or supplies missing registration evidence.

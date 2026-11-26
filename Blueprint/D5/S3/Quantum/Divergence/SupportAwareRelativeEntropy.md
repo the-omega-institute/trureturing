@@ -4,7 +4,19 @@
 
 Quantum trace-log relative entropy is extended by top exactly outside support inclusion.
 
-**Theorem 1.1 (The infinite branch is exactly support failure).**
+**Theorem 1.1 (A faithful second state has full support).**
+
+Lean statement: `D5/S3/Quantum/Divergence/SupportAwareRelativeEntropy.support_of_posDef`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Divergence/SupportAwareRelativeEntropy.support_of_posDef` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+A positive definite matrix has zero nullspace. Its density state therefore contains the support of every first state.
+
+**Theorem 1.2 (The infinite branch is exactly support failure).**
 
 $$\operatorname{extendedQuantumRelativeEntropy}(\rho, \sigma) = \infty \iff \neg\operatorname{SupportContained}(\rho, \sigma)$$
 
@@ -23,4 +35,5 @@ Positivity, data-processing, and Petz equality are deliberately left as separate
 ## References
 
 - Truth anchor: `D5/S3/Quantum/Divergence/SupportAwareRelativeEntropy.extendedQuantumRelativeEntropy_eq_top_iff`
+- Truth anchor: `D5/S3/Quantum/Divergence/SupportAwareRelativeEntropy.support_of_posDef`
 - Dependency: [D5/S3/Quantum/Foundation/FiniteStateChannel](../Foundation/FiniteStateChannel.md)

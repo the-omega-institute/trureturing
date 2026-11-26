@@ -1,0 +1,20 @@
+using static StrataLint.Scribe.DefinitionDsl;
+
+namespace StrataLint.Scribe.Blueprint.D5.S3.VertexAlgebra.HalfFock.Hermitian;
+
+internal sealed class LatticeHalfFockCreationTranslationAdjointDocument : IScribeDocumentDefinition
+{
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Native Half-Frequency Creation and Translation Transpose",
+        H("Native Half-Frequency Creation and Translation Transpose"),
+        Blocks(
+            Paragraph(Text("The objects are the original Oscillator(D), halfCreationSeries, halfCreationExponential, halfCreationCoeff, halfTranslatedPolynomial and halfForm. The only additional coefficient selector is halfTranslationCoeff: it is zero at a negative integer degree and is the ordinary finite polynomial coefficient at a nonnegative degree. No operator is defined by assigning a desired transpose. The actual creation logarithm has coefficient 2/(2k+1); its exponential and factorials are those already proved in LatticeHalfFockChargedCoefficients. The original current has positive frequency k+1/2, so (k+1/2) times 2/(2k+1) is exactly one.")),
+            Describe.Lean(
+                DescribeId.Create("half-creation-translation-adjoint"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/HalfFock/Hermitian/LatticeHalfFockCreationTranslationAdjoint.half_creation_translation_adjoint"),
+                H("Every Integer Degree and Every Polynomial Pair"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every lattice D, integral charge a, integer degree d and original polynomials P,Q, multiplication of P by the literal halfCreationCoeff(D,a,d) is adjoint to halfTranslationCoeff(D,-a,d) acting on Q. Negative degrees are included as zero coefficients on both sides. No Gram inverse or positive signature hypothesis is needed for this algebraic identity. The original current adjoint is reused, not reproved. The proof uses the Gram-weighted original annihilation derivative of each actual creation coefficient and structural induction on the complete finite polynomial Q, generalizing both P and d. Thus the result is not restricted to monomials, the vacuum or scalar evaluation. The constant coefficient base case follows from actual odd weighted homogeneity, and the induction step uses the actual translation substitution X(i,k) minus the Gram pairing times t^(2k+1)."))),
+                DescribeRole.Theorem),
+            Paragraph(Text("The constant coefficient of the creation operator, the vacuum pairing and the integral scalar law supply the base and scalar steps. LatticeCreationTranslationAdjoint supplies the prior integer-frequency induction architecture. LatticeHalfFockHermitian supplies the half-frequency form and current adjoints.")) )));
+}

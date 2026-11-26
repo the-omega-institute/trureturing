@@ -66,7 +66,7 @@ theorem affine_extreme_preimage {E : Type*} [AddCommGroup E] [Module ℝ E]
     ((image_openSegment ℝ f a b) ▸ Set.mem_image_of_mem f hab)
 
 omit [FiniteDimensional ℝ V] in
-private theorem chart_mem {C : PointedCone ℝ V} {u : V →ₗ[ℝ] ℝ} {p q : V}
+theorem chart_mem {C : PointedCone ℝ V} {u : V →ₗ[ℝ] ℝ} {p q : V}
     (b : BallChart C u p q) {s} (hs : ‖s‖ ≤ 1) : b.param s ∈ pairBase C u p q := by
   rw [← b.whole]
   exact ⟨s, by simpa using hs, rfl⟩
@@ -206,7 +206,7 @@ theorem pair_extreme (C : PointedCone ℝ V) (u : V →ₗ[ℝ] ℝ) (p q : V) :
   refine ⟨hx, fun F hp hq => ?_⟩
   exact F.isFaceOf.isExtreme.left_mem_of_mem_openSegment hx.1 hy.1 (hz.2 F hp hq) hseg
 
-private theorem chart_sphere_pure {C : PointedCone ℝ V} {u : V →ₗ[ℝ] ℝ} {p q : V}
+theorem chart_sphere_pure {C : PointedCone ℝ V} {u : V →ₗ[ℝ] ℝ} {p q : V}
     (b : BallChart C u p q) {n} (hn : ‖n‖ = 1) : b.param n ∈ pure C u := by
   have : Nonempty (Fin b.dim) := ⟨⟨0, b.dim_pos⟩⟩
   have hh : n ∈ (Metric.closedBall 0 1).extremePoints ℝ := by

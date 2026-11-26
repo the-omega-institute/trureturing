@@ -1,7 +1,0 @@
-它从自己的 principal part 中无法知道：
-
-* 自己的绝对 ordinate \(\gamma\)；
-* 自己位于临界线左侧还是右侧；
-* 其他零点的位置；
-* 全局 prime–Archimedean 完成轴。
-

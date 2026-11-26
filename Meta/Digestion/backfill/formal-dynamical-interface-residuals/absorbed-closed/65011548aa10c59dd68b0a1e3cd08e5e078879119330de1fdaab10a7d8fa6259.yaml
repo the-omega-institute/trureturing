@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:65011548aa10c59dd68b0a1e3cd08e5e078879119330de1fdaab10a7d8fa6259
-  normalized_sha256: sha256:65011548aa10c59dd68b0a1e3cd08e5e078879119330de1fdaab10a7d8fa6259
-cas_ref: sha256:65011548aa10c59dd68b0a1e3cd08e5e078879119330de1fdaab10a7d8fa6259
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/Experiment/ExperimentValueIsKernelReduction.experiment_value_is_kernel_reduction
-    target_statement_id: sha256:b910469f2f331e1ceeaef28253ba37116e632c76b52162faab0dd38ec175733e
-receipts:
-  unresolved_subitems: []

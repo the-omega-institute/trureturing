@@ -1,4 +1,0 @@
-## [PR #5065] UNIFORM_MULTI_ORBIT_BURNOL_REMAINDER
-
-Candidate formalization, 2026-09-05. No successful Lean compilation or axiom audit is claimed by this source-write operation. The reviewed development baseline was `a2412c6c5cbfdcf38145b6386ac54a3cdc536408`; the existing candidate frame APIs were read at `fcfc744126d37ede7750dbecc4b840b5a8923bd7`. This increment stays on the existing draft PR, without merge or rebase.
-

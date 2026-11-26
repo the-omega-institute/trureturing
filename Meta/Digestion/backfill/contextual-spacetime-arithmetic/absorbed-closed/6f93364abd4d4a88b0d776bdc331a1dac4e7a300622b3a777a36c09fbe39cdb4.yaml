@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:6f93364abd4d4a88b0d776bdc331a1dac4e7a300622b3a777a36c09fbe39cdb4
-  normalized_sha256: sha256:6f93364abd4d4a88b0d776bdc331a1dac4e7a300622b3a777a36c09fbe39cdb4
-cas_ref: sha256:6f93364abd4d4a88b0d776bdc331a1dac4e7a300622b3a777a36c09fbe39cdb4
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/SpacetimeArithmetic/IntegerAffineSquareCollision.exists_pos_nat_affine_fiber_sq_ne
-    target_statement_id: sha256:0c9b3258ae3e0ad7b390a86af706a45e60b346d0e1e7e3256e7cc386bf605194
-receipts:
-  unresolved_subitems: []

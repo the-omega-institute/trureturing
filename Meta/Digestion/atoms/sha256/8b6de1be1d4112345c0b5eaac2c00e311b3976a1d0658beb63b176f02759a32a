@@ -1,6 +1,0 @@
-但无预算极值可能存在：
-
-* 谱质量逃逸；
-* optimizer 不取到；
-* primal completion 难以构造。
-

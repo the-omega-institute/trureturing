@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:7b899591dafa9020f1c2892ac047bfda41694fd76752eb5eb86e390a16cd2efd
-  normalized_sha256: sha256:7b899591dafa9020f1c2892ac047bfda41694fd76752eb5eb86e390a16cd2efd
-cas_ref: sha256:7b899591dafa9020f1c2892ac047bfda41694fd76752eb5eb86e390a16cd2efd
-coverage_gids:
-  - gid: D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeFreeStateCardinality.free_state_cardinality
-    target_statement_id: sha256:baaf4f927347f5ab72d5971abb875072e8d5685c90556b7daac1700ef7628ec3
-receipts:
-  unresolved_subitems: []

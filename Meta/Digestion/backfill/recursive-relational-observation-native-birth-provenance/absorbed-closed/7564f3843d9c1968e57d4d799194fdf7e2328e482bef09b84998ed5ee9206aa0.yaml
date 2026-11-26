@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:7564f3843d9c1968e57d4d799194fdf7e2328e482bef09b84998ed5ee9206aa0
-  normalized_sha256: sha256:7564f3843d9c1968e57d4d799194fdf7e2328e482bef09b84998ed5ee9206aa0
-cas_ref: sha256:7564f3843d9c1968e57d4d799194fdf7e2328e482bef09b84998ed5ee9206aa0
-coverage_gids:
-  - gid: D5/S3/Arith/FibonacciAtomic/Observer/NativeRepeatedPartnerFrontier.exact_frontier
-    target_statement_id: sha256:37c5b08852dbbee3206694e375ca7f4d3247648b1feee94f3604076f040287f1
-receipts:
-  unresolved_subitems: []

@@ -1,4 +1,0 @@
-This establishes membership before using the source trace theorem; it assumes no density of arbitrary smooth source-meeting functions in the punctured core.
-
-5. For every real $v\in L^2(G,m)$, put $F_\sigma=T_\sigma v$ and $u(\sigma,Z)=F_\sigma(\Phi Z)$. Spectral calculus gives, for $\sigma\ge t_0>0$,
-

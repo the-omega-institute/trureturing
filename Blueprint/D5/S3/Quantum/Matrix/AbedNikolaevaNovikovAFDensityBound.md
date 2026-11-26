@@ -16,7 +16,7 @@ $$(\forall iota: Type, [Fintype(iota)] [DecidableEq(iota)] (\forall rho: Matrix(
 
 *Commentary.*
 
-For an arbitrary finite index type iota, bornProbability(rho,Y) is the existing unnormalized complex trace Tr(rho Y). The set consists exactly of real q obtained from A positive semidefinite, B Hermitian, and A+iB nonzero. Both traces are projected to their real parts. Positivity of rho makes the denominator strictly positive. The definition is Section 5.12 of arXiv:2610.34388v1, with the standing positive definite density convention of Section 3.1.
+For an arbitrary finite index type iota, bornProbability(rho,Y) is the existing unnormalized complex trace Tr(rho Y). The set consists exactly of real q obtained from A positive semidefinite, B Hermitian, and A+iB nonzero. Both traces are projected to their real parts. Positivity of rho makes the denominator strictly positive. The definition is Section 5.12 of arXiv:2610.34388v1, with the standing positive definite density assumption of Section 3.1.
 
 **Definition 1.2 (The real supremum).**
 
@@ -46,7 +46,21 @@ $$(\forall iota: Type, [Fintype(iota)] [DecidableEq(iota)] (\forall A: Matrix(io
 
 For every finite index type and all A positive semidefinite and B Hermitian, A is at most card(iota) times the actual CFC modulus of A+iB in Loewner order. Diagonalize P=|A+iB|, rather than A+iB. If P e_j=s_j e_j in an orthonormal basis, then s_j is nonnegative and the square identity gives norm(X e_j)=s_j. The real part of the quadratic form of X is that of A, so Cauchy–Schwarz gives h_j=inner(e_j,A e_j) at most s_j. For Q=sqrt(A), expand any v in the same basis. Triangle inequality and finite Cauchy–Schwarz bound norm(Q v) squared by card(iota) times the sum of norm(z_j) squared h_j, and hence by card(iota) times inner(v,P v). Zero eigenvalues and the zero-dimensional case remain included; no singular value is inverted.
 
-**Definition 1.4 (The original boundedness question).**
+**Lemma 1.4 (Strict positivity of the trace pairing).**
+
+$$(\forall iota: Type, [Fintype(iota)] [DecidableEq(iota)] (\forall rho: Matrix(iota, iota, \mathbb{C}), (\forall P: Matrix(iota, iota, \mathbb{C}), (PosDef(rho) \Rightarrow (PosSemidef(P) \Rightarrow (P \neq 0 \Rightarrow 0 < (\operatorname{bornProbability}\left(rho, P\right)).re))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Matrix/AbedNikolaevaNovikovAFDensityBound.trace_pair_pos` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Sami Abdullah Abed; Irina Nikolaeva; Andrej Novikov (2026). *How characterisations of traces and central elements fail: sharp violation constants via Michelson contrast and noncentrality*. DOI: [10.48550/arXiv.2610.34388](https://doi.org/10.48550/arXiv.2610.34388). URL: <https://arxiv.org/abs/2610.34388v1>.
+
+*Commentary.*
+
+For every finite index type, a positive definite complex matrix rho has strictly positive real trace pairing with every nonzero positive semidefinite matrix P.
+
+**Definition 1.5 (The original boundedness question).**
 
 $$(\forall n: \mathbb{N}, (1 \le n \Rightarrow (\exists C: \mathbb{R}, (0 \le C \land (\forall rho: Matrix(Fin(n), Fin(n), \mathbb{C}), (PosDef(rho) \Rightarrow (Nonempty(quotientValues(rho)) \land (IsLUB(quotientValues(rho), a(rho)) \land a(rho) \le C))))))))$$
 
@@ -60,7 +74,7 @@ $$(\forall n: \mathbb{N}, (1 \le n \Rightarrow (\exists C: \mathbb{R}, (0 \le C 
 
 For every positive dimension there exists one finite real bound before the quantifier over positive definite densities. The quotient set must be nonempty and its real supremum must be a least upper bound.
 
-**Theorem 1.5 (The complete fixed-dimension boundedness assertion).**
+**Theorem 1.6 (The complete fixed-dimension boundedness assertion).**
 
 $$(\forall n: \mathbb{N}, (1 \le n \Rightarrow (\exists C: \mathbb{R}, (0 \le C \land (\forall rho: Matrix(Fin(n), Fin(n), \mathbb{C}), (PosDef(rho) \Rightarrow (Nonempty(quotientValues(rho)) \land (IsLUB(quotientValues(rho), a(rho)) \land a(rho) \le C))))))))$$
 
@@ -85,4 +99,5 @@ This answers the selected sentence of Section 11.2(5), original owner #22774: �
 - Truth anchor: `D5/S3/Quantum/Matrix/AbedNikolaevaNovikovAFDensityBound.claim`
 - Truth anchor: `D5/S3/Quantum/Matrix/AbedNikolaevaNovikovAFDensityBound.quotientValues`
 - Truth anchor: `D5/S3/Quantum/Matrix/AbedNikolaevaNovikovAFDensityBound.result`
+- Truth anchor: `D5/S3/Quantum/Matrix/AbedNikolaevaNovikovAFDensityBound.trace_pair_pos`
 - Dependency: [D5/S3/Quantum/FiniteDimensional](../FiniteDimensional.md)

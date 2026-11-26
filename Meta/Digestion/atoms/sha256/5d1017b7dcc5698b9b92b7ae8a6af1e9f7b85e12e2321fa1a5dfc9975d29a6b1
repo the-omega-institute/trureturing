@@ -1,4 +1,0 @@
-**定义 340.1（任务族的最小充分访问）。** 对任务族 \(\Phi\subseteq\mathfrak T\)，令
-\[
-\operatorname{MinAcc}(\Phi)
-=

@@ -15,6 +15,7 @@
    repository's pinned mathlib revision, replacing consumers by direct imports. -/
 
 /- Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/30545. -/
+/- Partition comparison audit: https://github.com/the-omega-institute/trureturing/issues/31572. -/
 
 import D5.S3.Entropy.KolmogorovSinai.GeneratorConditioning
 
@@ -522,6 +523,14 @@ private lemma entropy_le_entropy_join [Fintype ι] [Fintype κ] {μ : Measure α
   rw [← hrow i]
   exact negMulLog_sum_le_sum_negMulLog (fun j => p (i, j)) (fun j => hpnn (i, j))
 
+/-- Refining a finite partition increases its entropy. -/
+lemma entropy_le_of_partition_refinement [Fintype ι] [Fintype κ] {μ : Measure α}
+    [IsProbabilityMeasure μ] (P : MeasurePartition μ ι) (Q : MeasurePartition μ κ)
+    (g : κ → ι) (h : ∀ j, Q.cells j ≤ᵐ[μ] P.cells (g j)) :
+    entropy μ P.cells ≤ entropy μ Q.cells := by
+  have hjoin := entropy_le_entropy_join P Q
+  rwa [entropy_joinCells_of_refines P.cells P.measurable P.aedisjoint Q.cells g h] at hjoin
+
 private lemma ksEntropySeq_le_join [Fintype ι] [Fintype κ] {μ : Measure α} [IsProbabilityMeasure μ]
     {T : α → α} (hT : MeasurePreserving T μ μ) (P : MeasurePartition μ ι)
     (Q : MeasurePartition μ κ) (n : ℕ) :
@@ -566,25 +575,29 @@ namespace D5.S3.Entropy.KolmogorovSinai
 
 variable {α : Type*} {ι : Type*} [mα : MeasurableSpace α] [StandardBorelSpace α] [Fintype ι]
 
-private lemma condEntropy_full_eq_zero {μ : Measure α} [IsProbabilityMeasure μ]
-    (R : MeasurePartition μ ι) :
-    condEntropy μ mα R.cells = 0 := by
-  have hσ : SigmaFinite (μ.trim (le_refl mα)) := by rw [trim_eq_self]; infer_instance
+section
+
+variable {𝒜 : MeasurableSpace α} [mα : MeasurableSpace α] [StandardBorelSpace α]
+
+private lemma condEntropy_eq_zero_of_measurable {μ : Measure α} [IsProbabilityMeasure μ]
+    (h𝒜 : 𝒜 ≤ mα) (R : MeasurePartition μ ι) (hR : ∀ i, @MeasurableSet α 𝒜 (R.cells i)) :
+    condEntropy μ 𝒜 R.cells = 0 := by
+  have : SigmaFinite (μ.trim h𝒜) := inferInstance
   rw [condEntropy_def]
   
   refine integral_eq_zero_of_ae ?_
   
-  have hcell : ∀ i : ι, (fun ω => (@condExpKernel α mα _ μ _ mα ω (R.cells i)).toReal)
+  have hcell : ∀ i : ι, (fun ω => (@condExpKernel α mα _ μ _ 𝒜 ω (R.cells i)).toReal)
       =ᵐ[μ] (R.cells i).indicator (fun _ => (1 : ℝ)) := by
     intro i
     
-    have h1 : (fun ω => (@condExpKernel α mα _ μ _ mα ω (R.cells i)).toReal)
-        =ᵐ[μ] μ⟦R.cells i | mα⟧ := condExpKernel_ae_eq_condExp le_rfl (R.measurable i)
+    have h1 : (fun ω => (@condExpKernel α mα _ μ _ 𝒜 ω (R.cells i)).toReal)
+        =ᵐ[μ] μ⟦R.cells i | 𝒜⟧ := condExpKernel_ae_eq_condExp h𝒜 (R.measurable i)
     
     
-    have h2 : μ⟦R.cells i | mα⟧ = (R.cells i).indicator (fun _ => (1 : ℝ)) :=
-      condExp_of_stronglyMeasurable le_rfl
-        ((stronglyMeasurable_const.indicator (R.measurable i)))
+    have h2 : μ⟦R.cells i | 𝒜⟧ = (R.cells i).indicator (fun _ => (1 : ℝ)) :=
+      condExp_of_stronglyMeasurable h𝒜
+        (stronglyMeasurable_const.indicator (hR i))
         ((integrable_const (1 : ℝ)).indicator (R.measurable i))
     rw [h2] at h1
     exact h1
@@ -596,6 +609,13 @@ private lemma condEntropy_full_eq_zero {μ : Measure α} [IsProbabilityMeasure �
   by_cases hmem : ω ∈ R.cells i
   · rw [Set.indicator_of_mem hmem, Real.negMulLog_one]
   · rw [Set.indicator_of_notMem hmem, Real.negMulLog_zero]
+
+end
+
+private lemma condEntropy_full_eq_zero {μ : Measure α} [IsProbabilityMeasure μ]
+    (R : MeasurePartition μ ι) :
+    condEntropy μ mα R.cells = 0 :=
+  condEntropy_eq_zero_of_measurable le_rfl R R.measurable
 
 omit [StandardBorelSpace α] in
 
@@ -665,6 +685,66 @@ theorem ksEntropy_eq_ksEntropyPartition_of_generating
   refine iSup_le fun m => iSup_le fun Q => ?_
   rw [EReal.coe_le_coe_iff]
   exact ksEntropyPartition_le_of_generating hT P hgen Q
+
+/-- A uniform entropy bound for finite partitions bounds the system entropy when their
+forward orbit σ-algebras increase to the ambient σ-algebra. The forward orbit of one
+partition suffices when it already generates the ambient σ-algebra. -/
+theorem ksEntropy_le_of_increasing_partition_saturations
+    {μ : Measure α} [IsProbabilityMeasure μ] {T : α → α}
+    (hT : MeasurePreserving T μ μ) {Index : ℕ → Type*} [∀ N, Fintype (Index N)]
+    (P : ∀ N, MeasurePartition μ (Index N))
+    (hmono : Monotone (fun N => ⨆ n : ℕ, generatedSigmaAlgebra μ (ksJoin hT (P N) n)))
+    (hfull : (⨆ N, ⨆ n : ℕ, generatedSigmaAlgebra μ (ksJoin hT (P N) n)) = mα)
+    (bound : ℝ) (hbound : ∀ N, ksEntropyPartition hT (P N) ≤ bound) :
+    ksEntropy hT ≤ (bound : EReal) := by
+  let 𝒲 (N : ℕ) := ⨆ n : ℕ, generatedSigmaAlgebra μ (ksJoin hT (P N) n)
+  have hle (N : ℕ) : 𝒲 N ≤ mα := iSup_le fun n => generatedSigmaAlgebra_le _
+  refine iSup_le fun m => iSup_le fun Q => ?_
+  rw [EReal.coe_le_coe_iff]
+  have : Nonempty (Fin m) := Q.index_nonempty
+  have hperN (N : ℕ) : ksEntropyPartition hT Q ≤ bound + condEntropy μ (𝒲 N) Q.cells := by
+    let R := joinPartition Q (P N)
+    have : Nonempty (Fin m × Index N) := R.index_nonempty
+    have hsaturation : 𝒲 N =
+        ⨆ n : ℕ, MeasurableSpace.comap (T^[n]) (generatedSigmaAlgebra μ (P N)) :=
+      iSup_generatedSigmaAlgebra_ksJoin_eq hT (P N)
+    have hinv : MeasurableSpace.comap T (𝒲 N) ≤ 𝒲 N := by
+      rw [hsaturation, MeasurableSpace.comap_iSup]
+      refine iSup_le fun n => ?_
+      rw [MeasurableSpace.comap_comp, ← Function.iterate_succ]
+      exact le_iSup
+        (fun j => MeasurableSpace.comap (T^[j]) (generatedSigmaAlgebra μ (P N))) (n + 1)
+    have hcells (i : Index N) : @MeasurableSet α (𝒲 N) ((P N).cells i) := by
+      have hP : generatedSigmaAlgebra μ (P N) ≤ 𝒲 N := by
+        rw [hsaturation]
+        simpa using le_iSup
+          (fun n => MeasurableSpace.comap (T^[n]) (generatedSigmaAlgebra μ (P N))) 0
+      exact hP _ (measurableSet_generateFrom ⟨i, rfl⟩)
+    have hrel := abramovRokhlin_partition (hle N) hT hinv (P N) R
+      (fun _ f j => (f j).2)
+      (fun n f => Filter.Eventually.of_forall fun _ hx =>
+        ksJoin_joinPartition_subset hT Q (P N) n f hx)
+      rfl
+    have hcellBound : condEntropy μ (𝒲 N) R.cells ≤ condEntropy μ (𝒲 N) Q.cells := by
+      calc
+        condEntropy μ (𝒲 N) R.cells
+            ≤ condEntropy μ (𝒲 N) Q.cells + condEntropy μ (𝒲 N) (P N).cells :=
+          condEntropy_join_le (hle N) Q (P N)
+        _ = condEntropy μ (𝒲 N) Q.cells := by
+          rw [condEntropy_eq_zero_of_measurable (hle N) _ hcells, add_zero]
+    calc
+      ksEntropyPartition hT Q ≤ ksEntropyPartition hT R := ksEntropyPartition_le_join hT Q (P N)
+      _ = ksEntropyPartition hT (P N) + condKsEntropyPartition (hle N) hT hinv R := hrel
+      _ ≤ bound + condEntropy μ (𝒲 N) Q.cells :=
+        add_le_add (hbound N) ((condKsEntropyPartition_le_condEntropy (hle N) hT hinv R).trans hcellBound)
+  have hlimit := condEntropy_tendsto_iSup 𝒲 hmono hle Q
+  change Tendsto (fun N => condEntropy μ (𝒲 N) Q.cells) atTop
+    (𝓝 (condEntropy μ (⨆ N, 𝒲 N) Q.cells)) at hlimit
+  have hfull' : (⨆ N, 𝒲 N) = mα := hfull
+  rw [hfull', condEntropy_full_eq_zero Q] at hlimit
+  have htend := (tendsto_const_nhds (x := bound)).add hlimit
+  rw [add_zero] at htend
+  exact ge_of_tendsto' htend hperN
 
 end D5.S3.Entropy.KolmogorovSinai
 

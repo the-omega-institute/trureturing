@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:752dbe229ff0228348ff04248135242451c5ea9c1a6c6bb20da6400704ee017b
-  normalized_sha256: sha256:752dbe229ff0228348ff04248135242451c5ea9c1a6c6bb20da6400704ee017b
-cas_ref: sha256:752dbe229ff0228348ff04248135242451c5ea9c1a6c6bb20da6400704ee017b
-coverage_gids:
-  - gid: D5/S3/Weil/Budget/FullCirclePrimalAttainment.full_circle_primal_attainment
-    target_statement_id: sha256:0894641c19210b5692aa7dc43a5eb27b40bbf1b7e13aa692d517bef83525fa40
-receipts:
-  unresolved_subitems: []

@@ -1,8 +1,0 @@
-**Proposition 14.4 (overlap edge cases in the native contract).** A
-singleton menu $\{S\}$ has price $H+1$, for any nonempty $S$ and any
-$H\ge0$, as supplied by Theorem 13.4. At $H=1$, a common exposed
-position in every member allows retaining its one acquired age bit;
-a common position is unnecessary. A menu of singleton positions has
-price $2^t$ when it contains $t$ distinct positions. A connected menu
-intersection graph does not suffice for two labels.
-

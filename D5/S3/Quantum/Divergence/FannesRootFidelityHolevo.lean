@@ -510,7 +510,7 @@ private theorem eraseKraus_complete : (∑ a : ι, (((1 : Matrix (n × ι) (n ×
     Matrix.submatrix_apply, Matrix.one_apply, Prod.mk.injEq, apply_ite, ite_and, eq_comm]
   split_ifs <;> simp_all
 
-private theorem exists_eraseChannel :
+theorem exists_eraseChannel :
     ∃ Φ : D5.S3.Quantum.Foundation.FiniteStateChannel.QuantumChannel (n × ι) n,
       ∀ X : Matrix (n × ι) (n × ι) ℂ,
         CStarMatrix.ofMatrix.symm (Φ.toCompletelyPositiveMap (CStarMatrix.ofMatrix X)) =
@@ -969,5 +969,11 @@ theorem result : claim := by
   have h := (holevo_le_blockHolevo p hp hs v ρ hv' (fun i => (hρ i).2)).trans
     (blockHolevo_le_entropy_root p hp hs v ρ hq hF)
   simpa only [entropy_owner_eq_trace_log] using h
+
+namespace LogSum
+
+export _root_.D5.S3.Quantum.Divergence.FannesRootFidelityHolevo (matrix_log_sum relativeEntropy)
+
+end LogSum
 
 end D5.S3.Quantum.Divergence.FannesRootFidelityHolevo

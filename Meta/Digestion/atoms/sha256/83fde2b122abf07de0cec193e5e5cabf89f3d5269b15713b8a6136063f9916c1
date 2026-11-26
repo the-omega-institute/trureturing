@@ -1,4 +1,0 @@
-**命题 1.3（操作合法性不蕴含后验支撑约束）。** The graph (1.2) is the actual one-bit graph, with bipartition $L=\{a,d\}$, $R=\{b,c,e\}$ and leaf $c$ adjacent only to $a$. A source supported entirely on legal windows and admitting only legal-toggle operations need not satisfy (1.3).
-
-Proof. From $000$ the three flips give $100,010,001$. From $100$ the only additional legal flip gives $101$, and from $001$ it also gives $101$. The other flips yield adjacent occupied bits. These are exactly (1.2), with the stated bipartition and leaf. For the last assertion take the uniform law on the five legal windows, the identity label, all edges in (1.2) as allowed toggles, and a constant readout. Its posterior has five-point support. Thus (1.3) restricts readouts beyond the legality of the underlying states and operations. $\square$
-

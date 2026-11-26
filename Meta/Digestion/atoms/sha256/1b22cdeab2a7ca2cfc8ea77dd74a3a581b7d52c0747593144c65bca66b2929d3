@@ -1,5 +1,0 @@
-## 180. The exact product-projector identity
-
-Write $P_{ab}=|a\rangle\langle a|\otimes|b\rangle\langle b|$
-for the normalized occupation-basis endpoint projectors.
-

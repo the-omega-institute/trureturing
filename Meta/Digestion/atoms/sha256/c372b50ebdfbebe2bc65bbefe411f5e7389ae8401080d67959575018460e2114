@@ -1,1 +1,0 @@
-**推论 323.3（精确恢复是零一损失的端点）。** 若 \(\ell(\widehat v,v)=\mathbf 1_{\widehat v\ne v}\)，则 \(\delta_\pi(\phi)=0\) 当且仅当不同任务值的 transcript 支持两两不交。

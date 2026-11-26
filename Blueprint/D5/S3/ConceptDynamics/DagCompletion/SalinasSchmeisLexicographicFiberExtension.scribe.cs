@@ -1,0 +1,198 @@
+using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
+
+namespace StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.DagCompletion;
+
+internal sealed class SalinasSchmeisLexicographicFiberExtensionDocument : IScribeDocumentDefinition
+{
+    private const string Prefix =
+        "D5/S3/ConceptDynamics/DagCompletion/SalinasSchmeisLexicographicFiberExtension.";
+    private static readonly LibraryNoteRef Source =
+        LibraryNoteRef.Create("D5/L/ConceptDynamics/salinasschmeis2026omega");
+
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Lexicographic extensions, inherited fiber partitions and explicit Noetherian lifting.",
+        H("Extensions by lexicographic fibers"),
+        Blocks(
+            Describe.Lean(
+                DescribeId.Create("lex-fiber"), DeclarationHandle.Create(Prefix + "lexFiber"),
+                H("The first-coordinate fiber"), StatementSource.FromAuthor(Disp(FiberFormula())),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text(
+                    "The carrier is Lex(Prod(P,A)), with the lexicographic partial order supplied "
+                    + "by Mathlib. A fiber is the literal subset on which the first coordinate "
+                    + "equals the index, with the order inherited from the product."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("lex-fiber-order-iso"),
+                DeclarationHandle.Create(Prefix + "lexFiberOrderIso"),
+                H("The inherited fiber order"), StatementSource.FromAuthor(Disp(FiberIsoFormula())),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text(
+                    "Insert the second coordinate at the fixed first coordinate. The inverse "
+                    + "reads the second coordinate, and the strict first-coordinate comparison "
+                    + "is impossible within the fiber. The resulting comparison is exactly "
+                    + "the comparison in A."))),
+                DescribeRole.Definition),
+            new DocumentBlock.Section(
+                H("The literal fiber partition"),
+                Blocks(
+                    new DocumentBlock.DisplayFormula(Disp(ExtensionFormula())),
+                    Paragraph(Text(
+                        "For the fixed point a of A, the map p ↦ toLex(p,a) preserves and reflects "
+                        + "the order by the lexicographic comparison law. The map is a section of "
+                        + "first projection. Each literal fiber is the kernel class of the corresponding "
+                        + "base image by Setoid.mem_classes, and every kernel class is a fiber by "
+                        + "Setoid.classes_ker_subset_fiber_set. Setoid.isPartition_classes therefore "
+                        + "gives a partition of the whole carrier. If P is empty, the carrier and "
+                        + "the family of parts are both empty.")),
+                    Paragraph(Text(
+                        "Taking A to be the natural numbers and the distinguished point to be zero "
+                        + "gives an induced extension of every partial order and an omega partition "
+                        + "in the original IsExtension and OmegaPartitionable predicates.")),
+                    Paragraph(Text(
+                        "For any nonzero ordinal α in universe v, take A = α.ToType and choose "
+                        + "the point represented by zero. The base may be in any independent universe u. "
+                        + "Each part lies in universe max(u,v) and its inherited strict order has type "
+                        + "Ordinal.lift to that universe applied to α. Lifting the ambient carrier "
+                        + "upward again replaces each part by its preimage under ULift.down and "
+                        + "lifts the order type accordingly. This covers α = 1, successors, limits "
+                        + "and uncountable ordinals. The family is a skeleton in the sense of "
+                        + "Definition 2.33 because it is disjoint and each point itself witnesses "
+                        + "cofinality in its own part.")),
+                    Paragraph(Text(
+                        "The construction formalizes the existence proposition and the extension "
+                        + "clause of the skeleton corollary in the revision-2 note by Haobo Ma "
+                        + "(ChronoAI Pte Ltd, Singapore) and Wenlin Zhang (National University of "
+                        + "Singapore and ChronoAI Pte Ltd, Singapore). The countable partition "
+                        + "theorem and the general partition and lifting results remain credited "
+                        + "to Remi Salinas Schmeis.")))),
+            Describe.Lean(
+                DescribeId.Create("lex-nat-fiber-lifting"), DeclarationHandle.Create(Prefix + "lexNatFiberLifting"),
+                H("Lifting Noetherian subsets of the natural-number extension"),
+                StatementSource.FromAuthor(Disp(LiftingFormula())),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(
+                    Paragraph(Text(
+                        "Let E be the lexicographic product of an arbitrary partial order with the "
+                        + "natural numbers. The premise says that K contains no subset order-isomorphic "
+                        + "to the natural numbers with its inherited order. An infinite section of K "
+                        + "would have an increasing enumeration by Nat.Subtype.orderIsoOfNat. Composing "
+                        + "it with lexFiberOrderIso and taking its inherited range in E would give "
+                        + "such a subset of K. Thus every section is finite. P and K may be uncountable.")),
+                    Paragraph(Text(
+                        "An empty section has offset zero. In a nonempty section the offset is one plus "
+                        + "its maximum. Adding this offset to the second coordinate sends an input above "
+                        + "the entire section. The image lies outside K, and the original input witnesses "
+                        + "membership in the strict upset. Equal images give the same first coordinate and "
+                        + "therefore the same offset, which can then be cancelled from the second coordinates. "
+                        + "This gives a single injection on K, including the empty injection when K is empty.")),
+                    Paragraph(Text(
+                        "Every point of E has a strict successor obtained by adding one in its fiber. "
+                        + "The no-maximal-element condition is vacuous when P is empty. The global injection "
+                        + "and its strict upwardness give the lifting property of Definition 2.26. Its "
+                        + "injectivity gives the cardinal inequality of local shortness in Definition 2.14. "
+                        + "This is the explicit lifting corollary in the revision-2 note by Haobo Ma and "
+                        + "Wenlin Zhang. The general equivalence in Theorem 2.27 is due to Remi Salinas Schmeis."))),
+                DescribeRole.Theorem))));
+
+    private static Formula FiberFormula()
+    {
+        var p = F.Id("p");
+        var x = F.Id("x");
+        return Carriers(All("p", F.Id("P"),
+            Equal(Call("lexFiber", p), Seq(
+                OpenBrace, x, Sp, InMacro, Sp, Product(), Sp, Mid, Sp,
+                Equal(Seq(Call("ofLex", x), Dot, D(1)), p), CloseBrace))));
+    }
+
+    private static Formula FiberIsoFormula()
+    {
+        var p = F.Id("p");
+        var a = F.Id("a");
+        return OrderedCarriers(All("p", F.Id("P"), All("a", F.Id("A"),
+            Equal(Seq(Parenthesized(App(Call("lexFiberOrderIso", p), a)), Dot, F.Id("val")),
+                Call("toLex", Pair(p, a))))));
+    }
+
+    private static Formula ExtensionFormula()
+    {
+        var p = F.Id("P");
+        var point = F.Id("p");
+        var literalFamily = App(Seq(Operatorname, Grp(F.Id("Set")), Dot, F.Id("range")),
+            Seq(point, Sp, Mapsto, Sp, Call("lexFiber", point)));
+        var partition = App(Seq(Operatorname, Grp(F.Id("Setoid")), Dot, F.Id("IsPartition")),
+            literalFamily);
+        var inherited = All("p", p,
+            Call("Nonempty", Call("OrderIso", F.Id("A"), Call("lexFiber", point))));
+        return OrderedCarriers(Seq(
+            Forall, Sp, F.Id("a"), Sp, Colon, Sp, F.Id("A"), Comma, Sp,
+            Call("IsExtension", p, Product()), Sp, Land, Sp,
+            partition, Sp, Land, Sp, Parenthesized(inherited)));
+    }
+
+    private static Formula LiftingFormula()
+    {
+        var p = F.Id("P");
+        var point = F.Id("p");
+        var k = F.Id("K");
+        var c = F.Id("C");
+        var x = F.Id("x");
+        var y = F.Id("y");
+        var n = F.Id("n");
+        var m = F.Id("m");
+        var naturals = Seq(Mathbb, Grp(F.Id("N")));
+        var extension = Call("Lex", Call("Prod", p, naturals));
+        var sets = Call("Set", extension);
+        var section = Seq(OpenBrace, n, Sp, InMacro, Sp, naturals, Sp, Mid, Sp,
+            Call("toLex", Pair(point, n)), Sp, InMacro, Sp, k, CloseBrace);
+        var difference = Seq(OpenBrace, y, Sp, InMacro, Sp, extension, Sp, Mid, Sp,
+            Exists("x", k, Seq(x, Sp, Lt, Sp, y)), CloseBrace, Sp, Setminus, Sp, k);
+        var noetherian = All("C", sets, Seq(c, Sp, Subseteq, Sp, k, Sp, Rightarrow, Sp,
+            Neg, Sp, Call("IsOmegaChain", c)));
+        var finite = All("p", p, Call("Finite", section));
+        var emptyOffset = All("p", p, Seq(Equal(section, Emptyset), Sp, Rightarrow, Sp,
+            Equal(Call("b", point), D(0))));
+        var maxOffset = All("p", p, Seq(Call("Nonempty", section), Sp, Rightarrow, Sp,
+            Exists("m", naturals, Seq(Call("IsGreatest", section, m), Sp, Land, Sp,
+                Equal(Call("b", point), Seq(D(1), Sp, Plus, Sp, m))))));
+        var lifted = Call("val", Call("L", x));
+        var first = Call("fst", Call("ofLex", Call("val", x)));
+        var second = Call("snd", Call("ofLex", Call("val", x)));
+        var map = Exists("L", Call("Embedding", k, difference), All("x", k, Seq(
+            Call("val", x), Sp, Lt, Sp, lifted, Sp, Land, Sp,
+            Equal(lifted, Call("toLex", Pair(first, Seq(Call("b", first), Sp, Plus, Sp, second)))))));
+        return All("P", TypeAt("u"), Seq(OpenBracket, Call("PartialOrder", p), CloseBracket, Sp,
+            All("K", sets, Seq(Parenthesized(noetherian), Sp, Rightarrow, RowBreak,
+                Exists("b", Seq(p, Sp, To, Sp, naturals), Seq(
+                    Parenthesized(finite), Sp, Land, RowBreak,
+                    Parenthesized(emptyOffset), Sp, Land, RowBreak,
+                    Parenthesized(maxOffset), Sp, Land, RowBreak, map))))));
+    }
+
+    private static Formula Carriers(Formula body) =>
+        All("P", TypeAt("u"), All("A", TypeAt("v"), body));
+
+    private static Formula OrderedCarriers(Formula body) =>
+        Carriers(Seq(OpenBracket, Call("PartialOrder", F.Id("P")), CloseBracket, Sp,
+            OpenBracket, Call("PartialOrder", F.Id("A")), CloseBracket, Sp, body));
+
+    private static Formula TypeAt(string level) => Seq(F.Id("Type"), Sp, F.Id(level));
+
+    private static Formula Product() => Call("Lex", Call("Prod", F.Id("P"), F.Id("A")));
+
+    private static Formula Pair(Formula left, Formula right) =>
+        Seq(Open, left, Comma, Sp, right, Close);
+
+    private static Formula Parenthesized(Formula body) => Seq(Open, body, Close);
+
+    private static Formula App(Formula f, params Formula[] args) =>
+        new Formula.Apply(f, [.. args]);
+
+    private static Formula All(string name, Formula type, Formula body) =>
+        new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), type, body);
+
+    private static Formula Exists(string name, Formula type, Formula body) =>
+        new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create(name), type, body);
+}

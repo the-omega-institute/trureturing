@@ -1,8 +1,0 @@
-## 54. Complete unit-family supplied advice: linear capacity and actual acquisition
-
-This appendix refines the conditional minimum-advice question on the **complete actual unit-history family**. [OR68.5][OR68] already proves linear growth with the public cap and the exact values 1 at $8\le H\le19$ and 2 at $20\le H\le35$. [OR69.4][OR69] gives 2 at $36\le H\le39$ and 3 at $40\le H\le55$. Here the all-policy lower bound improves OR68's $h/8$ leading lower to $\gamma h$, where $h=\lfloor H/4\rfloor$ and $\gamma=(7-3\sqrt3)/11$. Two explicit constructions give separate alphabet/depth/call tradeoffs, and a cap-28–31 policy supplies a particular call bound and a fixed-executor separation for already known numerical exactness.
-
-The general exact function, the sharp leading alphabet coefficient, existence of a normalized limit, and normal forms for minimum-alphabet policies remain unresolved; particular caps can be settled when valid bounds coincide. These are ordinary mathematical proofs under the conditional supplied-advice interface, without a Lean verification claim.
-
-The structural premises below are taken from the immutable revision `e33c70ab6b3d80f132f5d7cb2fa82ebbc62fce74`; the published OR68–69 comparisons use `511f1920bceaaf9f6ec6411030fbd4da42abfbfd`.
-

@@ -150,7 +150,19 @@ Lean statement: `D5/S1/Words/ReturnWords/CoherentReturnPathTemplates.BoundedPhas
 
 BoundedPhases label S asserts existence of a natural p with 1 <= p <= Nat.card(Component S), a cyclic word P : ZMod p -> alpha and a phase theta : Component S -> ZMod p. Every actual internal arrow e : a -> b has label P(theta a) and theta b = theta a + 1. A function on the p residues is a word with exactly p positions.
 
-**Definition 1.13 (One purely periodic stream per entry).**
+**Theorem 1.13 (Bounded phases determine actual path output).**
+
+Lean statement: `D5/S1/Words/ReturnWords/CoherentReturnPathTemplates.path_output_of_bounded_phases`
+
+*Proof.* Machine-checked in Lean as `D5/S1/Words/ReturnWords/CoherentReturnPathTemplates.path_output_of_bounded_phases` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The edge-to-path implication of FIB_SOURCE_COMPLETION_DYNAMICS.md Theorem 36.22 uses the bounded phases of a finite vertex quiver. The same positive period p, block P and phase map theta satisfy the two edge laws and determine the endpoint phase of every actual internal path H from a to b as theta(a) + length(H) modulo p. At every i < length(H), the output at i is P(theta(a) + i) modulo p in the phase index. The induction uses the label of the actual appended arrow, and the empty path gives the initial phase and no letters. The periodic-prefix equivalence and the finite template cover both use this implication.
+
+**Definition 1.14 (One purely periodic stream per entry).**
 
 Lean statement: `D5/S1/Words/ReturnWords/CoherentReturnPathTemplates.PeriodicPrefixes`
 
@@ -162,7 +174,7 @@ Lean statement: `D5/S1/Words/ReturnWords/CoherentReturnPathTemplates.PeriodicPre
 
 For every entry a in Component S there exist one stream X : Nat -> alpha and one positive period p, with X(n+p)=X(n) for every n. For every actual finite internal path H from a and every i < length H, output(H)[i]? = some(X(i)). Empty paths are included.
 
-**Definition 1.14 (Powers of actual returns).**
+**Definition 1.15 (Powers of actual returns).**
 
 Lean statement: `D5/S1/Words/ReturnWords/CoherentReturnPathTemplates.returnPower`
 
@@ -174,7 +186,7 @@ Lean statement: `D5/S1/Words/ReturnWords/CoherentReturnPathTemplates.returnPower
 
 returnPower A 0 is the empty return. returnPower A (k+1) is A composed with returnPower A k, retaining every arrow of every copy.
 
-**Definition 1.15 (Power and literal segments).**
+**Definition 1.16 (Power and literal segments).**
 
 Lean statement: `D5/S1/Words/ReturnWords/CoherentReturnPathTemplates.PowerTemplate`
 
@@ -186,7 +198,7 @@ Lean statement: `D5/S1/Words/ReturnWords/CoherentReturnPathTemplates.PowerTempla
 
 A PowerTemplate is a finite list of pairs (P,a) of finite words. Each pair contributes P to a chosen nonnegative power followed by literal a. An empty P is only a literal segment. Omitting empty blocks and concatenating neighboring literals gives the conventional form a0 P1^k1 a1 ... Pd^kd ad, with every counted Pi nonempty.
 
-**Definition 1.16 (Evaluate a fixed template).**
+**Definition 1.17 (Evaluate a fixed template).**
 
 Lean statement: `D5/S1/Words/ReturnWords/CoherentReturnPathTemplates.templateOutput`
 
@@ -198,7 +210,7 @@ Lean statement: `D5/S1/Words/ReturnWords/CoherentReturnPathTemplates.templateOut
 
 templateOutput t k concatenates wordPower(k(0))(P), the first literal and the remaining template evaluated with i mapped to k(i+1). The blocks and literals are fixed before the exponents are chosen.
 
-**Definition 1.17 (Count only positive periodic blocks).**
+**Definition 1.18 (Count only positive periodic blocks).**
 
 Lean statement: `D5/S1/Words/ReturnWords/CoherentReturnPathTemplates.factorCount`
 
@@ -210,7 +222,7 @@ Lean statement: `D5/S1/Words/ReturnWords/CoherentReturnPathTemplates.factorCount
 
 factorCount t is the number of segments whose power block is nonempty. Literal-only segments and the empty template contribute zero factors.
 
-**Definition 1.18 (Actual visited component set).**
+**Definition 1.19 (Actual visited component set).**
 
 Lean statement: `D5/S1/Words/ReturnWords/CoherentReturnPathTemplates.visitedComponents`
 
@@ -222,7 +234,7 @@ Lean statement: `D5/S1/Words/ReturnWords/CoherentReturnPathTemplates.visitedComp
 
 visitedComponents H is the finite set of native SCC classes of the vertices in H, including both endpoints. The SCC-run construction proves that after leaving a component the path cannot revisit it.
 
-**Definition 1.19 (Path-specific cyclic component count).**
+**Definition 1.20 (Path-specific cyclic component count).**
 
 Lean statement: `D5/S1/Words/ReturnWords/CoherentReturnPathTemplates.visitedCyclicCount`
 
@@ -234,7 +246,7 @@ Lean statement: `D5/S1/Words/ReturnWords/CoherentReturnPathTemplates.visitedCycl
 
 visitedCyclicCount H counts the cyclic components in visitedComponents H. Since the component runs cannot revisit a class, it is the number of cyclic SCCs in this path's compressed component itinerary.
 
-**Definition 1.20 (One finite family covers every actual path).**
+**Definition 1.21 (One finite family covers every actual path).**
 
 Lean statement: `D5/S1/Words/ReturnWords/CoherentReturnPathTemplates.FiniteTemplateCover`
 
@@ -246,7 +258,7 @@ Lean statement: `D5/S1/Words/ReturnWords/CoherentReturnPathTemplates.FiniteTempl
 
 There is one finite set T of PowerTemplate values such that for every actual finite graph path H, some t in T and some nonnegative exponent tuple k satisfy output H = templateOutput t k and factorCount t <= visitedCyclicCount H. Zero-factor templates, empty paths, acyclic graphs and paths through several cyclic SCCs are allowed.
 
-**Definition 1.21 (Two distinct example vertices).**
+**Definition 1.22 (Two distinct example vertices).**
 
 Lean statement: `D5/S1/Words/ReturnWords/CoherentReturnPathTemplates.TwoLoopVertex`
 
@@ -258,7 +270,7 @@ Lean statement: `D5/S1/Words/ReturnWords/CoherentReturnPathTemplates.TwoLoopVert
 
 TwoLoopVertex has constructors left and right. The type has exactly these two vertices and carries the displayed finite instance.
 
-**Definition 1.22 (Actual example arrows).**
+**Definition 1.23 (Actual example arrows).**
 
 Lean statement: `D5/S1/Words/ReturnWords/CoherentReturnPathTemplates.TwoLoopArrow`
 
@@ -270,7 +282,7 @@ Lean statement: `D5/S1/Words/ReturnWords/CoherentReturnPathTemplates.TwoLoopArro
 
 TwoLoopArrow has a left loop, a right loop and one directed bridge from left to right. These are the only arrows of the example quiver; there is no reverse bridge.
 
-**Definition 1.23 (Two loops and a directed bridge).**
+**Definition 1.24 (Two loops and a directed bridge).**
 
 Lean statement: `D5/S1/Words/ReturnWords/CoherentReturnPathTemplates.twoLoopLabel`
 
@@ -282,7 +294,7 @@ Lean statement: `D5/S1/Words/ReturnWords/CoherentReturnPathTemplates.twoLoopLabe
 
 The example graph has vertices left and right, a loop at each vertex and one arrow from left to right. Over Fin 3 the left loop has symbol 0, the right loop symbol 1 and the bridge symbol 2. Its two cyclic SCCs are distinct and coherent.
 
-**Definition 1.24 (Actual crossing paths with two exponents).**
+**Definition 1.25 (Actual crossing paths with two exponents).**
 
 Lean statement: `D5/S1/Words/ReturnWords/CoherentReturnPathTemplates.twoLoopCrossing`
 
@@ -294,7 +306,7 @@ Lean statement: `D5/S1/Words/ReturnWords/CoherentReturnPathTemplates.twoLoopCros
 
 twoLoopCrossing i j traverses the left loop i times, then the bridge, then the right loop j times. It is an actual left-to-right path; the graph also contains noncrossing paths.
 
-**Definition 1.25 (The crossing sublanguage).**
+**Definition 1.26 (The crossing sublanguage).**
 
 Lean statement: `D5/S1/Words/ReturnWords/CoherentReturnPathTemplates.twoLoopWord`
 
@@ -306,7 +318,7 @@ Lean statement: `D5/S1/Words/ReturnWords/CoherentReturnPathTemplates.twoLoopWord
 
 twoLoopWord i j is 0^i 2 1^j. For every n, the words indexed by i in Fin(n+1) with j=n-i are distinct and have length n+1.
 
-**Definition 1.26 (Single-power templates include literal exceptions).**
+**Definition 1.27 (Single-power templates include literal exceptions).**
 
 Lean statement: `D5/S1/Words/ReturnWords/CoherentReturnPathTemplates.SinglePowerTemplate`
 
@@ -318,7 +330,7 @@ Lean statement: `D5/S1/Words/ReturnWords/CoherentReturnPathTemplates.SinglePower
 
 SinglePowerTemplate stores fixed words before, block and after. An empty block permits a fixed literal exception, so the obstruction also excludes finite single-power families enlarged by finite literals.
 
-**Definition 1.27 (Evaluate a single-power template).**
+**Definition 1.28 (Evaluate a single-power template).**
 
 Lean statement: `D5/S1/Words/ReturnWords/CoherentReturnPathTemplates.singlePowerOutput`
 
@@ -330,7 +342,7 @@ Lean statement: `D5/S1/Words/ReturnWords/CoherentReturnPathTemplates.singlePower
 
 singlePowerOutput t k is t.before followed by wordPower k t.block and then t.after, for any nonnegative k.
 
-**Definition 1.28 (Growing output counts and no finite single-power cover).**
+**Definition 1.29 (Growing output counts and no finite single-power cover).**
 
 Lean statement: `D5/S1/Words/ReturnWords/CoherentReturnPathTemplates.TwoLoopBoundary`
 
@@ -342,7 +354,7 @@ Lean statement: `D5/S1/Words/ReturnWords/CoherentReturnPathTemplates.TwoLoopBoun
 
 The two native SCCs are distinct and cyclic, every cyclic component is coherent, all crossing paths have the displayed outputs, and there are n+1 distinct crossing outputs of length n+1 for every n. No fixed finite set of SinglePowerTemplate values covers all of these outputs. This is an output-language obstruction; no observer history or decoder-width model is introduced.
 
-**Theorem 1.29 (The complete local equivalence).**
+**Theorem 1.30 (The complete local equivalence).**
 
 Lean statement: `D5/S1/Words/ReturnWords/CoherentReturnPathTemplates.coherent_component_phases`
 
@@ -354,7 +366,7 @@ Lean statement: `D5/S1/Words/ReturnWords/CoherentReturnPathTemplates.coherent_co
 
 For every finite vertex type, arbitrary arrow-valued quiver, symbol type, edge labels and actual cyclic SCC S, Coherent label S is equivalent to BoundedPhases label S, and BoundedPhases label S is equivalent to PeriodicPrefixes label S. Coherence also implies SynchronizedAt at every component vertex. A positive actual return defines a repeated stream. LCM synchronization identifies every positive return stream; minimal-period facts give positivity and divisibility. Common closing paths give residue independence, completed edges give both edge laws, and the first p positions of the chosen return give surjectivity onto the p residues, hence p is at most the number of component vertices. No phase, primitive root, return divisibility, determinism or short-cycle bound is assumed.
 
-**Theorem 1.30 (Local characterization, finite global cover and two-loop obstruction).**
+**Theorem 1.31 (Local characterization, finite global cover and two-loop obstruction).**
 
 Lean statement: `D5/S1/Words/ReturnWords/CoherentReturnPathTemplates.result`
 
@@ -389,6 +401,7 @@ For every finite labelled quiver with finite output alphabet, the local characte
 - Truth anchor: `D5/S1/Words/ReturnWords/CoherentReturnPathTemplates.factorCount`
 - Truth anchor: `D5/S1/Words/ReturnWords/CoherentReturnPathTemplates.liftComponentPath`
 - Truth anchor: `D5/S1/Words/ReturnWords/CoherentReturnPathTemplates.output`
+- Truth anchor: `D5/S1/Words/ReturnWords/CoherentReturnPathTemplates.path_output_of_bounded_phases`
 - Truth anchor: `D5/S1/Words/ReturnWords/CoherentReturnPathTemplates.result`
 - Truth anchor: `D5/S1/Words/ReturnWords/CoherentReturnPathTemplates.returnPower`
 - Truth anchor: `D5/S1/Words/ReturnWords/CoherentReturnPathTemplates.singlePowerOutput`

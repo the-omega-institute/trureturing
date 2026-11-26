@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:96401ad88ae4e4e56d0fe4aa824d20f8fe24d46f4ea7023a90401d6deebb058f
-  normalized_sha256: sha256:96401ad88ae4e4e56d0fe4aa824d20f8fe24d46f4ea7023a90401d6deebb058f
-cas_ref: sha256:96401ad88ae4e4e56d0fe4aa824d20f8fe24d46f4ea7023a90401d6deebb058f
-coverage_gids:
-  - gid: D5/S3/Geometry/Hyperideal/FourCycleCurvature.fourcycle_curvature_box
-    target_statement_id: sha256:97f066ebe2e8315c878150061d7eb33fda5e17dcb4ef2f60670f8e4fcb5b0f0f
-receipts:
-  unresolved_subitems: []

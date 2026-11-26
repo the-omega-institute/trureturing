@@ -1,6 +1,0 @@
-# 2026-09-07：跨素数阈值的实际 Weil 闭形式连续性与局部谱传递
-
-新 Lean：`D5/S3/Weil/ZetaBridge/WeilGammaScaleModulus.lean`，配套同名 Scribe。执行源与结果为 `research/weil_ground_mode/certify_weil_scale_modulus.py`、`weil_scale_modulus_certificate.json`；第二表达诊断为 `test_weil_scale_modulus.py`、`weil_scale_modulus_regression.json`。
-
-本节完成参数化的实际 Gamma/素数形式模量，继而在纸面上证明同一 Friedrichs 实现经单位伸缩后的共同形式域、紧 resolvent 与范数 resolvent 连续性。它允许穿过素数幂激活点，并将已认证简单偶最低模态局部延拓。核心估计来自原 Gamma 的正部分分式；没有假设整个算子连续。普通算子范数在激活处确实存在跳变，并给出 Gamma 形式范数下仅对数速度的下界。新 Lean 保存有限正部分和、调和高频下界与实际余弦乘子估计；Plancherel、核心、形式表示和谱投影仍是下面的纸面证明，未报为内核结果。
-

@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:de0cc0003514f790d9047ab81b8c072dfebd443266e269e6bd87b66bbdf01d05
-  normalized_sha256: sha256:de0cc0003514f790d9047ab81b8c072dfebd443266e269e6bd87b66bbdf01d05
-cas_ref: sha256:de0cc0003514f790d9047ab81b8c072dfebd443266e269e6bd87b66bbdf01d05
-coverage_gids:
-  - gid: D5/S3/Quantum/Reduction/IsometricCompression.word_intertwines
-    target_statement_id: sha256:f45fcc286156b039231e04acd69b97b10a7e1e9b73c5c9f4f6b8dd475583bda4
-receipts:
-  unresolved_subitems: []

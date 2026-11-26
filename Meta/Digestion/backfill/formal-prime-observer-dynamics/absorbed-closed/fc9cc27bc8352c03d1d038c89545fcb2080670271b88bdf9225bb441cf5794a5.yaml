@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:fc9cc27bc8352c03d1d038c89545fcb2080670271b88bdf9225bb441cf5794a5
-  normalized_sha256: sha256:fc9cc27bc8352c03d1d038c89545fcb2080670271b88bdf9225bb441cf5794a5
-cas_ref: sha256:fc9cc27bc8352c03d1d038c89545fcb2080670271b88bdf9225bb441cf5794a5
-coverage_gids:
-  - gid: D5/S3/Observer/Separation/FiniteHistoryStability.finite_history_stability
-    target_statement_id: sha256:7351a1560f56b0fd9a631a67a899a20579bd35476c89d7cab05be52bef661bcc
-receipts:
-  unresolved_subitems: []

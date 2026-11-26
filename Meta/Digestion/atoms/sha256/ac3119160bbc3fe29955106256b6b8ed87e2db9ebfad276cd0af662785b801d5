@@ -1,4 +1,0 @@
-- **skill 上下文**:正文写作无 skill,claude 主循环直接实施;评审阶段按 `consensus-rnd:sshx` 的评审三席形态派 codex-cli 席位(本仓政策:席位全为 codex-cli,不用 subagent)。
-- **载体与分工**:全部正文由 claude 主循环(Claude Fable 5.1)亲撰;文献锚由主循环联网核对;评审席为 codex-cli(异模型族于作者)。作者与评审**不同族**;评审席之间**同族**,如实声明,不冒充多样性共识。
-- **混合方式**:评审席并发、互不可见;每席产出 `approve` / `comment` / `reject` 与 findings;orchestrator 逐条亲核 findings 后修订正文(合并前修订计入 v1.0)。**第一轮票数:reject / reject / reject**(quality 27 blocking + 3 advisory;architecture 11 blocking + 6 advisory;tests 12 blocking + 16 advisory),全部 blocking 经亲核成立并已修订;第二轮复审票数见追加账本。
-

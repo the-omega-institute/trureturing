@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:ffe21cc075d7f50a0bac85f0488295961d4963766a9301d41b8c7177351f1eb6
-  normalized_sha256: sha256:ffe21cc075d7f50a0bac85f0488295961d4963766a9301d41b8c7177351f1eb6
-cas_ref: sha256:ffe21cc075d7f50a0bac85f0488295961d4963766a9301d41b8c7177351f1eb6
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/Appeal/ExplainableNotContestable.explainable_not_contestable
-    target_statement_id: sha256:fa2dc13929808f04dc293822183ba3e39482ae0313a46f15a1f7e7b5db8e3567
-receipts:
-  unresolved_subitems: []

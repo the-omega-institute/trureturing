@@ -390,7 +390,7 @@ private lemma rankin_euler_majorant {s z x T : ℝ} (hs : 1 < s) (hz : 1 ≤ z)
   exact (rankin_finite_product hs0 hz hx).trans
     ((mul_le_mul_of_nonneg_left hprod hC).trans_eq (by ring))
 
-private lemma rankin_exponential_bound {s z x T : ℝ} (hs : 1 < s) (hz : 1 ≤ z)
+lemma rankin_exponential_bound {s z x T : ℝ} (hs : 1 < s) (hz : 1 ≤ z)
     (hx : 0 < x) :
     (((Icc 1 ⌊x⌋₊).filter (fun n => T <
       (ArithmeticFunction.cardDistinctFactors n : ℝ))).card : ℝ) ≤

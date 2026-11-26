@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:9e66e9f62b7725d67685c255e63f08e8f1d68715854b4bc095a6a90bac4ded92
-  normalized_sha256: sha256:9e66e9f62b7725d67685c255e63f08e8f1d68715854b4bc095a6a90bac4ded92
-cas_ref: sha256:9e66e9f62b7725d67685c255e63f08e8f1d68715854b4bc095a6a90bac4ded92
-coverage_gids:
-  - gid: D5/S3/Analytic/PrimeProducts/FiniteMarginalGlobalSupportContrast.finite_marginals_and_global_support_contrast
-    target_statement_id: sha256:6a2bddc3a2f9a0bac9b19a2c018b5400274ffada85babaf2b2ee3ecd202d27eb
-receipts:
-  unresolved_subitems: []

@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:8f92c13f27c029edb69d2255ced23626b6e5ff3b8d59a03292b005c904c9c7f4
-  normalized_sha256: sha256:8f92c13f27c029edb69d2255ced23626b6e5ff3b8d59a03292b005c904c9c7f4
-cas_ref: sha256:8f92c13f27c029edb69d2255ced23626b6e5ff3b8d59a03292b005c904c9c7f4
-coverage_gids:
-  - gid: D5/S3/Entropy/EntropyEquality.entropy_eq_log_card_iff_uniform
-    target_statement_id: sha256:71dc31bafc55792064ed900da5645d67f6ef2b67ee3f0c7fcc00ffe6ab609328
-receipts:
-  unresolved_subitems: []

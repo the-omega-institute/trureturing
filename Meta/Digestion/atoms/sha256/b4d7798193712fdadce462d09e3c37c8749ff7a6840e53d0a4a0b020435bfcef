@@ -1,9 +1,0 @@
-**命题 193.10（工具归属与完整白话）。** 交错、紧凸分离、商范数对偶、Hermitian 谱重排及单复矩阵零对角化均为成熟工具。基范数／全效应对偶归[Q193LPW]，纯态统计识别的核／惯性背景归 XIV165 所引[Q193CHST]；后者不承担零错误区分的谱质量条件。单复矩阵零对角化归[Q193GA] Lemma 1 所列经典结论，二正交纯态的条件重叠归零与逐方递归归[Q193W]、[Q193GA]。本章的 repo-derived 接合是193.2的共同原菜单谱判据、193.4的最坏对比度公式、193.5的单核互反分类，以及193.6的平衡中性基和它在193.7—193.8中的全有限层消费者；不申领历史优先权，已有平衡商、经典递归或既有重构不另计为新内容。
-
-证明。193.2—193.9给推导与适用边界。完整白话是：一个大空间可以压掉某些“看不见的方向”，却仍让任意两种纯准备之间的最低确认读数都和量子力学完全相同；这甚至能在全部有限复合中一起做到。办法是先把每次比较的重叠信息分到两张互补平面，让两张平面都对被删方向中性，再在里面选一组使条件重叠归零的基，逐层拼成同一把合法测试尺。谱判据说明这些被删方向为何不缩短任何正交纯弦。但两点之间总能各找一把好尺，不等于所有零邻点能共用一把尺：分别读零的准备混起来，仍会读出正数。因而回溯完整量子公理时，真正不能丢的是“这些关系能在同一个原系统里共同实现”的约束。完整候选继续用三维实际面上的两目标互反和有限正配对表达它；前者产生小球，后者把小球的尺接成共同删除与正延拓，才由既有定理给全部有限复矩阵理论。本章把纯点读数路线能走到哪里、在哪一步不足，给成了同一个全有限反模型的定理。$\square$
-
-[Q193LPW]: https://arxiv.org/pdf/1703.03392v2 "L. Lami, C. Palazuelos, A. Winter, Ultimate data hiding in quantum mechanics and beyond；§II.A Definition 2、Lemma 3，基范数与全效应对偶。"
-[Q193CHST]: https://arxiv.org/pdf/1411.0828v2 "C. Carmeli, T. Heinosaari, J. Schultz, A. Toigo, Expanding the Principle of Local Distinguishability；§§II—V，纯态统计识别、核、压缩与惯性，不作零错误区分谱条件的来源。"
-[Q193W]: https://arxiv.org/pdf/quant-ph/0007098 "J. Walgate, A. J. Short, L. Hardy, V. Vedral, Local Distinguishability of Multipartite Orthogonal Quantum States，PRL85 (2000), 4972—4975；条件重叠与逐方递归，不含平衡中性限制。"
-[Q193GA]: https://arxiv.org/pdf/2601.20074 "I. George, M. A. Alhejji, Local Distinguishability of Multipartite Orthogonal Quantum States: Generalized and Simplified；Lemma1的经典单复矩阵零对角化与Theorem2、§III的标准递归，不含H中性限制。"
-

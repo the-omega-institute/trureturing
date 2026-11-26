@@ -11,6 +11,16 @@ internal sealed class RankOneInvariantMetricDocument : IScribeDocumentDefinition
         H("Rank-One Centralizers in Real Metric Lie Algebras"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("minimum-frequency-frame"),
+                DeclarationHandle.Create("D5/S3/Quantum/Algebra/RankOneInvariantMetric.min_frame"),
+                H("An orthonormal frame at the minimum positive frequency"),
+                StatementSource.FromAuthor(MinFrameFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("Let L be a finite-dimensional real inner product space and br a bilinear operation on L. Assume br(z,z)=0 and the derivation identity br(x,br(y,z))=br(br(x,y),z)+br(y,br(x,z)) for every x,y,z. Fix a unit vector a. Assume the inner product is invariant, in the precise form inner(br(x,y),z)=-inner(y,br(x,z)), that every z with br(a,z)=0 is a real multiple of a, and that the linear map br(a) is nonzero.")),
+                    Paragraph(Text("There are a positive real number m and unit vectors u,v such that a,u,v are pairwise orthogonal, br(a,u)=m v, br(a,v)=-m u, and br(u,v)=m a. Moreover, m is the least positive rotation frequency: for every positive real q and every nonzero x with br(a,br(a,x))=-(q squared)x, one has m at most q. The finite spectral decomposition supplies a minimum positive frequency and a unit eigenvector; invariance, the derivation identity and the centralizer condition determine the third bracket."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("finrank-eq-one-or-three"),
                 DeclarationHandle.Create("D5/S3/Quantum/Algebra/RankOneInvariantMetric.finrank_eq_one_or_three"),
                 H("The dimension dichotomy"),
@@ -26,6 +36,54 @@ internal sealed class RankOneInvariantMetricDocument : IScribeDocumentDefinition
 
     private static Formula Bracket(Formula x, Formula y) => Seq(OpenBracket, x, Comma, y, CloseBracket);
     private static Formula Pair(Formula b, Formula x, Formula y) => Seq(b, Open, x, Comma, y, Close);
+
+    private static Formula MinFrameFormula()
+    {
+        Formula l = F.Id("L"), br = F.Id("br"), a = F.Id("a");
+        Formula x = F.Id("x"), y = F.Id("y"), z = F.Id("z"), c = F.Id("c");
+        Formula m = F.Id("m"), u = F.Id("u"), v = F.Id("v"), q = F.Id("q");
+        Formula real = Seq(Mathbb, Grp(F.Id("R")));
+        Formula zero = D(0), one = D(1);
+        Formula assumptions = Seq(
+            Open, Forall, Sp, z, Colon, Sp, l, Comma, Esc, Pair(br,z,z), Eq, zero, Close,
+            Sp, Land, Sp,
+            Open, Forall, Sp, x, Comma, y, Comma, z, Colon, Sp, l, Comma, Esc,
+                Pair(br,x,Pair(br,y,z)), Eq,
+                Pair(br,Pair(br,x,y),z), Plus, Pair(br,y,Pair(br,x,z)), Close,
+            Sp, Land, Sp, Call("norm",a), Eq, one, Sp, Land, Sp,
+            Open, Forall, Sp, x, Comma, y, Comma, z, Colon, Sp, l, Comma, Esc,
+                Call("inner",Pair(br,x,y),z), Eq, Minus, Call("inner",y,Pair(br,x,z)), Close,
+            Sp, Land, Sp,
+            Open, Forall, Sp, z, Colon, Sp, l, Comma, Esc,
+                Pair(br,a,z), Eq, zero, Sp, Rightarrow, Sp,
+                Exists, Sp, c, Colon, Sp, real, Comma, Esc, z, Eq, c, Cdot, Sp, a, Close,
+            Sp, Land, Sp, br, Open, a, Close, Neq, Sp, zero);
+        Formula conclusion = Seq(
+            Exists, Sp, m, Colon, Sp, real, Comma, Esc,
+            Exists, Sp, u, Comma, v, Colon, Sp, l, Comma, Esc,
+            zero, Lt, m, Sp, Land, Sp, Call("norm",u), Eq, one,
+            Sp, Land, Sp, Call("norm",v), Eq, one,
+            Sp, Land, Sp, Call("inner",a,u), Eq, zero,
+            Sp, Land, Sp, Call("inner",a,v), Eq, zero,
+            Sp, Land, Sp, Call("inner",u,v), Eq, zero,
+            Sp, Land, Sp, Pair(br,a,u), Eq, m, Cdot, Sp, v,
+            Sp, Land, Sp, Pair(br,a,v), Eq, Minus, m, Cdot, Sp, u,
+            Sp, Land, Sp, Pair(br,u,v), Eq, m, Cdot, Sp, a,
+            Sp, Land, Sp,
+            Open, Forall, Sp, q, Colon, Sp, real, Comma, Esc,
+                Forall, Sp, x, Colon, Sp, l, Comma, Esc,
+                zero, Lt, q, Sp, Land, Sp, x, Neq, Sp, zero, Sp, Land, Sp,
+                Pair(br,a,Pair(br,a,x)), Eq, Minus, q, Caret, Grp(D(2)), Cdot, Sp, x,
+                Sp, Rightarrow, Sp, m, Leq, Sp, q, Close);
+        return Disp(Seq(
+            Forall, Sp, l, Colon, Sp, Operatorname, Grp(F.Id("Type")), Comma, Esc,
+            OpenBracket, Call("NormedAddCommGroup",l), CloseBracket, Comma, Esc,
+            OpenBracket, Call("InnerProductSpace",real,l), CloseBracket, Comma, Esc,
+            OpenBracket, Call("FiniteDimensional",real,l), CloseBracket, Comma, Esc,
+            br, Colon, Sp, Call("LinearMap",real,l,Call("LinearMap",real,l,l)), Comma, Esc,
+            a, Colon, Sp, l, Comma, Esc,
+            Open, assumptions, Close, Sp, Rightarrow, Sp, conclusion));
+    }
 
     private static Formula DimensionFormula()
     {

@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:7081fa09b5fe9c17b8789155ed193d70096707682f2fc05854165ad82500b15b
-  normalized_sha256: sha256:7081fa09b5fe9c17b8789155ed193d70096707682f2fc05854165ad82500b15b
-cas_ref: sha256:7081fa09b5fe9c17b8789155ed193d70096707682f2fc05854165ad82500b15b
-coverage_gids:
-  - gid: D5/S3/Observer/Hankel/HankelMinimalStateDimension.hankel_rank_lower_bound_and_quotient_attainment
-    target_statement_id: sha256:8fecfb9751f9e3a2e94c104b34da37d8c3d340472a63a360def24088f3415a99
-receipts:
-  unresolved_subitems: []

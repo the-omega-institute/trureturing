@@ -1,0 +1,1 @@
+{"statement_id":"sha256:07f4d0eee1ad4fa5c9fcef2020f67334928636baee5cb6597d89819f5383af22","declarations":[{"declaration_name_key":"ns(ns(n0,10:Polynomial),10:toFn_apply)","kind":"theorem"},{"declaration_name_key":"ns(ns(n0,10:Polynomial),11:ofFn_single)","kind":"theorem"},{"declaration_name_key":"ns(ns(n0,10:Polynomial),33:ofFn_comp_toFn_eq_id_of_degree_lt)","kind":"theorem"}]}

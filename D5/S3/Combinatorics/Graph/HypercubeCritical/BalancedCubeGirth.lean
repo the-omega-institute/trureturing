@@ -25,7 +25,8 @@ open D5.S3.Combinatorics.Graph.Hypercube
 
 open D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCriticalSpectrum
   (Q flip gamma IsSwitching IsBalanced)
-open private gammaV coeff switching_sq from
+open BalancedCriticalSpectrum (switching_sq)
+open private gammaV coeff from
   D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCriticalSpectrum
 open private huangMatrix cubeParity cubeParity_ne_of_adj from
   D5.S3.Combinatorics.Graph.HypercubeSubQuorum
@@ -72,7 +73,7 @@ theorem gamma_anticommute {n : Nat} {i j : Fin n} (hij : i ≠ j)
   rw [(coeff n).symm_apply_apply, (coeff n).symm_apply_apply,
     gammaV_anticommute n i j hij, map_neg]
 
-private theorem flip_comm {n : Nat} (x : Q n) (i j : Fin n) :
+theorem flip_comm {n : Nat} (x : Q n) (i j : Fin n) :
     flip (flip x i) j = flip (flip x j) i := by
   funext r
   by_cases hri : r = i
@@ -240,7 +241,7 @@ private theorem two_step_first_direction_eq {n : Nat} {C : Finset (Q n)}
   · subst a
     exact (no_selected_square hC _hij hx hxi hxa hxij).elim
 
-private theorem adjacent_exists_flip {n : Nat} {x y : Q n}
+theorem adjacent_exists_flip {n : Nat} {x y : Q n}
     (hxy : (hypercube n).Adj x y) : ∃ i : Fin n, y = flip x i := by
   change (Finset.univ.filter (fun i => x i ≠ y i)).card = 1 at hxy
   obtain ⟨i, hi⟩ := Finset.card_eq_one.mp hxy
@@ -258,6 +259,9 @@ private theorem adjacent_exists_flip {n : Nat} {x y : Q n}
       by_contra hne
       exact hji ((hdiff j).mp hne)
     simpa [BalancedCriticalSpectrum.flip, hji] using heq.symm
+
+-- Keep the short-name lookup used by existing `open private ... from` callers.
+private alias Legacy.adjacent_exists_flip := adjacent_exists_flip
 
 /-- The actual induced graph of a balanced cube restriction has no four-cycle. -/
 theorem no_four_cycle {n : Nat} {C : Finset (Q n)} (hC : IsBalanced C)

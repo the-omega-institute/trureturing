@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:f035572accc4cfbfd7782cc6094016c06555ada071d766779721923062c36045
-  normalized_sha256: sha256:f035572accc4cfbfd7782cc6094016c06555ada071d766779721923062c36045
-cas_ref: sha256:f035572accc4cfbfd7782cc6094016c06555ada071d766779721923062c36045
-coverage_gids:
-  - gid: D5/S3/Analytic/Isolation/MeromorphicContinuationUniqueness.meromorphic_continuation_unique
-    target_statement_id: sha256:02162bb4b666beca5a369c05397549f5e3561b542b0670b4204386385c730959
-receipts:
-  unresolved_subitems: []

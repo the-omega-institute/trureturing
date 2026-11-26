@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:481b01921fe22b0e391121257e10fe2b3be6213e274bf124458db5db58b21ea7
-  normalized_sha256: sha256:481b01921fe22b0e391121257e10fe2b3be6213e274bf124458db5db58b21ea7
-cas_ref: sha256:481b01921fe22b0e391121257e10fe2b3be6213e274bf124458db5db58b21ea7
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/Epistemic/GettierWitness.gettier_iff
-    target_statement_id: sha256:4f971a3b236c4656427ed73aa775927ce711582f4ed6f3cd2a7f76910f12bb2c
-receipts:
-  unresolved_subitems: []

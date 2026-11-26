@@ -1,9 +1,0 @@
-**Proposition 35.7 (Pointwise exhaustion is not uniform calibration).** Let $S_1\subseteq S_2\subseteq\cdots$ be finite prime sets with $\bigcup_{j\ge1}S_j=\mathbb P$. For each fixed $n\in W$, there is $J(n)$ such that $\rho_{S_j}(n)=0$ for all $j\ge J(n)$. Nevertheless, for every finite $j$ and every $b\in\{0,1\}^{S_j}$,
-
-$$
-\sup_{n\in W_{S_j,b}}\rho_{S_j}(n)=+\infty,
-\qquad
-\sup_{n\in W}\rho_{S_j}(n)=+\infty.
-\tag{35.14}
-$$
-

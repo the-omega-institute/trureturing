@@ -80,6 +80,28 @@ internal sealed class ActualCycleLawDocument : IScribeDocumentDefinition
                         + "position and label transport, the precycle filtration and the "
                         + "occupation and marginal discrepancy hypotheses remain separate "
                         + "mathematical requirements."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("actual-prefix-cylinder-box"),
+                DeclarationHandle.Create("D5/S1/Words/Patterns/Separable/ActualCycleLaw.box"),
+                H("Exact finite coordinate box for a prefix cylinder"),
+                StatementSource.FromAuthor(Disp(new Formula.Relation(
+                    Call("cyl", V("gamma")), FormulaRelationOperator.Equal,
+                    Call("Box", V("k"), V("gamma"))))),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("For each natural k and each actual tuple gamma of length k, Box(k,gamma) is the set of streams whose coordinates at indices i<k equal the corresponding gamma mark. In set-product notation, the index set is range(k) and the coordinate constraint at i is equality to nth(gamma,i), for every witness that i<k.")),
+                    Paragraph(Text("The equality is extensional: cylinder membership gives each coordinate constraint, and a box member supplies each finite-index equality. At k=0 both sides are the full stream space. This is the existing prefix box identity, exposed unchanged so the next-coordinate hazard proof can consume it directly."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("actual-fixed-decode-size"),
+                DeclarationHandle.Create("D5/S1/Words/Patterns/Separable/ActualCycleLaw.decode_size"),
+                H("Decoding preserves the size of a fixed-count cycle"),
+                StatementSource.FromAuthor(Disp(new Formula.Relation(
+                    Call("size", Call("decode", V("p"))), FormulaRelationOperator.Equal,
+                    Call("size", V("p"))))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every starting sign and removal count, each fixed-count code p has the same total shape size after decoding. This existing identity is exposed unchanged for the scaled marked-cycle generating function."))),
                 DescribeRole.Theorem))));
 
     private static StrataLint.Scribe.Formula V(string name) => F.Id(name);

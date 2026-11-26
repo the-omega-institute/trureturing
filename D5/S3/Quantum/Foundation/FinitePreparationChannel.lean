@@ -75,20 +75,19 @@ theorem finite_preparation_quantum_channel
   obtain ⟨channel, hc⟩ := finite_kraus_quantum_channel K hK
   exact ⟨channel, fun X => (hc X).trans (haction X)⟩
 
-/-- Local preparation preserves all coherences of an arbitrary quantum spectator.
-The formula holds on the full input matrix algebra, with no support restriction. -/
-theorem finite_local_preparation_quantum_channel
-    {a b s : Type*} [Fintype a] [DecidableEq a] [Fintype b] [DecidableEq b]
-    [Fintype s] [DecidableEq s] (rho : a → DensityState b) :
+/-- A normalized Kraus family acts on every block with the spectator left intact. -/
+theorem finite_local_kraus_quantum_channel
+    {a b s k : Type*} [Fintype a] [DecidableEq a] [Fintype b] [DecidableEq b]
+    [Fintype s] [DecidableEq s] [Fintype k]
+    (K : k → Matrix b a ℂ) (hK : (∑ p, (K p).conjTranspose * K p) = 1) :
     ∃ channel : QuantumChannel (s × a) (s × b),
       ∀ (X : Matrix (s × a) (s × a) ℂ) (r t : s × b),
         CStarMatrix.ofMatrix.symm
           (channel.toCompletelyPositiveMap (CStarMatrix.ofMatrix X)) r t =
-        ∑ i, X (r.1, i) (t.1, i) * CStarMatrix.ofMatrix.symm (rho i).1 r.2 t.2 := by
+        (∑ p, K p * (of fun i j => X (r.1, i) (t.1, j)) * (K p).conjTranspose) r.2 t.2 := by
   classical
-  obtain ⟨K, hK, haction⟩ := preparation_kraus rho
-  let L (p : a × b) : Matrix (s × b) (s × a) ℂ := (1 : Matrix s s ℂ) ⊗ₖ K p
-  have hterm (p : a × b) : (L p).conjTranspose * L p =
+  let L (p : k) : Matrix (s × b) (s × a) ℂ := (1 : Matrix s s ℂ) ⊗ₖ K p
+  have hterm (p : k) : (L p).conjTranspose * L p =
       (1 : Matrix s s ℂ) ⊗ₖ ((K p).conjTranspose * K p) := by
     dsimp [L]
     rw [Matrix.conjTranspose_kronecker, Matrix.conjTranspose_one,
@@ -106,7 +105,7 @@ theorem finite_local_preparation_quantum_channel
   intro X r t
   rw [hc]
   let B : Matrix a a ℂ := fun i j => X (r.1, i) (t.1, j)
-  have hblock (p : a × b) : (L p * X * (L p).conjTranspose) r t =
+  have hblock (p : k) : (L p * X * (L p).conjTranspose) r t =
       (K p * B * (K p).conjTranspose) r.2 t.2 := by
     change (∑ u : s × a, (∑ v : s × a, L p r v * X v u) * star (L p t u)) =
       ∑ u : a, (∑ v : a, K p r.2 v * X (r.1, v) (t.1, u)) * star (K p t.2 u)
@@ -116,9 +115,23 @@ theorem finite_local_preparation_quantum_channel
         (∑ p, K p * B * (K p).conjTranspose) r.2 t.2 := by
       simp only [Matrix.sum_apply]
       exact Finset.sum_congr rfl fun p _ => hblock p
-    _ = _ := by
-      rw [haction B]
-      simp [B, Matrix.sum_apply, Matrix.smul_apply, smul_eq_mul]
+
+/-- Local preparation preserves all coherences of an arbitrary quantum spectator.
+The formula holds on the full input matrix algebra, with no support restriction. -/
+theorem finite_local_preparation_quantum_channel
+    {a b s : Type*} [Fintype a] [DecidableEq a] [Fintype b] [DecidableEq b]
+    [Fintype s] [DecidableEq s] (rho : a → DensityState b) :
+    ∃ channel : QuantumChannel (s × a) (s × b),
+      ∀ (X : Matrix (s × a) (s × a) ℂ) (r t : s × b),
+        CStarMatrix.ofMatrix.symm
+          (channel.toCompletelyPositiveMap (CStarMatrix.ofMatrix X)) r t =
+        ∑ i, X (r.1, i) (t.1, i) * CStarMatrix.ofMatrix.symm (rho i).1 r.2 t.2 := by
+  classical
+  obtain ⟨K, hK, haction⟩ := preparation_kraus rho
+  obtain ⟨channel, hc⟩ := finite_local_kraus_quantum_channel (s := s) K hK
+  refine ⟨channel, fun X r t => ?_⟩
+  rw [hc, haction]
+  simp [Matrix.sum_apply, Matrix.smul_apply, smul_eq_mul]
 
 #print axioms finite_preparation_quantum_channel
 #print axioms finite_local_preparation_quantum_channel

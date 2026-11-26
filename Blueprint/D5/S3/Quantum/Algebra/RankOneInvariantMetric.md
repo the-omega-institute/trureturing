@@ -4,7 +4,21 @@
 
 A positive invariant metric and a centralizer line force dimension one or three.
 
-**Theorem 1.1 (The dimension dichotomy).**
+**Theorem 1.1 (An orthonormal frame at the minimum positive frequency).**
+
+$$\forall L: \operatorname{Type},\ [\operatorname{NormedAddCommGroup}\left(L\right)],\ [\operatorname{InnerProductSpace}\left(\mathbb{R}, L\right)],\ [\operatorname{FiniteDimensional}\left(\mathbb{R}, L\right)],\ br: \operatorname{LinearMap}\left(\mathbb{R}, L, \operatorname{LinearMap}\left(\mathbb{R}, L, L\right)\right),\ a: L,\ ((\forall z: L,\ br(z,z)=0) \land (\forall x,y,z: L,\ br(x,br(y,z))=br(br(x,y),z)+br(y,br(x,z))) \land \operatorname{norm}\left(a\right)=1 \land (\forall x,y,z: L,\ \operatorname{inner}\left(br(x,y), z\right)=-\operatorname{inner}\left(y, br(x,z)\right)) \land (\forall z: L,\ br(a,z)=0 \Rightarrow \exists c: \mathbb{R},\ z=c\cdot a) \land br(a)\neq 0) \Rightarrow \exists m: \mathbb{R},\ \exists u,v: L,\ 0<m \land \operatorname{norm}\left(u\right)=1 \land \operatorname{norm}\left(v\right)=1 \land \operatorname{inner}\left(a, u\right)=0 \land \operatorname{inner}\left(a, v\right)=0 \land \operatorname{inner}\left(u, v\right)=0 \land br(a,u)=m\cdot v \land br(a,v)=-m\cdot u \land br(u,v)=m\cdot a \land (\forall q: \mathbb{R},\ \forall x: L,\ 0<q \land x\neq 0 \land br(a,br(a,x))=-q^{2}\cdot x \Rightarrow m\leq q)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Algebra/RankOneInvariantMetric.min_frame` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Let L be a finite-dimensional real inner product space and br a bilinear operation on L. Assume br(z,z)=0 and the derivation identity br(x,br(y,z))=br(br(x,y),z)+br(y,br(x,z)) for every x,y,z. Fix a unit vector a. Assume the inner product is invariant, in the precise form inner(br(x,y),z)=-inner(y,br(x,z)), that every z with br(a,z)=0 is a real multiple of a, and that the linear map br(a) is nonzero.
+
+There are a positive real number m and unit vectors u,v such that a,u,v are pairwise orthogonal, br(a,u)=m v, br(a,v)=-m u, and br(u,v)=m a. Moreover, m is the least positive rotation frequency: for every positive real q and every nonzero x with br(a,br(a,x))=-(q squared)x, one has m at most q. The finite spectral decomposition supplies a minimum positive frequency and a unit eigenvector; invariance, the derivation identity and the centralizer condition determine the third bracket.
+
+**Theorem 1.2 (The dimension dichotomy).**
 
 $$\forall K: \operatorname{Type},\ [\operatorname{LieRing}\left(K\right)],\ [\operatorname{LieAlgebra}\left(\mathbb{R}, K\right)],\ [\operatorname{FiniteDimensional}\left(\mathbb{R}, K\right)],\ B: \operatorname{InnerProductSpaceCore}\left(\mathbb{R}, K\right),\ a: K,\ (\forall x,y,z:K,\ B([x,y],z)=-B(y,[x,z])) \land a\neq0 \land (\forall z:K,\ [a,z]=0 \Rightarrow \exists c:\mathbb{R},\ z=c\cdot a) \Rightarrow \operatorname{finrank}_{\mathbb{R}}(K)=1 \lor \operatorname{finrank}_{\mathbb{R}}(K)=3$$
 
@@ -27,4 +41,5 @@ This algebraic theorem supplies the dimension lemma used by the one-point recipr
 ## References
 
 - Truth anchor: `D5/S3/Quantum/Algebra/RankOneInvariantMetric.finrank_eq_one_or_three`
+- Truth anchor: `D5/S3/Quantum/Algebra/RankOneInvariantMetric.min_frame`
 - Dependency: [D5/S3/QuadraticForms/PositiveDefiniteWilliamson](../../QuadraticForms/PositiveDefiniteWilliamson.md)

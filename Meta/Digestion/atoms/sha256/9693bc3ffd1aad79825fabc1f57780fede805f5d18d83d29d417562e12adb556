@@ -1,6 +1,0 @@
-`AlexKontorovich/PrimeNumberTheoremAnd` 的当前 `main` 中：
-
-- `MediumPNT.lean` 可见最终 `MediumPNT` theorem；本次文件级检索未发现 `sorry`。其误差规模约为 $Y\exp(-(\log Y)^{1/10})$，属于已闭合的中等强度 PNT。
-- `StrongPNT.lean` 至少仍有两个活 `sorry`，包括 `LogDerivZetaLogSquaredBoundSmallt`，以及 `I3NewBound` 附近的缺口。
-- 因此，诚实状态是“MediumPNT 文件已闭合；原来的 classical strong-error 目标在该仓主线中未完成”，而不是给出一个没有语义的完成百分比。
-

@@ -1,6 +1,0 @@
-Finite symbolic inversion
-uses normal codes with every rank at least $t$; subtraction is represented
-by a natural index $q$ and the equation $q+t=n$, never truncated subtraction.
-Thus each $f_i$ remains a finite native expression with a finite Presburger
-partition of parameter space.
-

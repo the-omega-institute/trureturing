@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:495a29be1f856bec113f3dff35ac7d5a77a91719afadc4a2b4a58374db53e1d6
-  normalized_sha256: sha256:495a29be1f856bec113f3dff35ac7d5a77a91719afadc4a2b4a58374db53e1d6
-cas_ref: sha256:495a29be1f856bec113f3dff35ac7d5a77a91719afadc4a2b4a58374db53e1d6
-coverage_gids:
-  - gid: D5/S3/Observer/Separation/CongruenceClosureDuality.dual_congruence_repair_laws
-    target_statement_id: sha256:7ab4cdc3d00d0da4859adafbea12f3eac81bee8776c11ec6faf667a0c1a3605e
-receipts:
-  unresolved_subitems: []

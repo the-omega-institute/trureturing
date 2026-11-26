@@ -1,6 +1,0 @@
-## 已在仓内的材料(逐条复核过)
-
-`colossalClosure` 及 `colossal_closure_factorization`、`dvd_colossal_closure`、`colossal_closure_dvd_of_dvd_colossally_abundant`、`colossal_closure_is_colossally_abundant`(`GoldenColossalClosure`,已冻结);`goldenUpperPrice`、`goldenLowerPrice`、`golden_upper_price_spec`、`IsColossallyAbundant`(`GoldenResourcePriceInterval`,已冻结);`goldenPositiveLayerCount`、`optimal_layer_count_spec`、`positive_part_sum_finite_support`(`GoldenResourceOptimalLayerCount`,已冻结);`golden_missing_prime_threshold_iff_of_isLeast`(`GoldenSmallestMissingPrime`,已冻结)。
-
-**仓内没有的**:任何把「某整除区间内存在极大丰数」写成判据的声明。检索方式记录在案:在 `D5/S3/Arith/GoldenResource/` 下检索 `ColossallyAbundant` 的定理位置,只命中其定义处;`goldenPositiveLayerCount` 虽已存在,但只在阈值价格 \(L(B)\) 处使用,没有对任意价格的形式。
-

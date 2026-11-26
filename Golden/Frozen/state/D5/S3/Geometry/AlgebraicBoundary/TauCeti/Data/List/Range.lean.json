@@ -1,0 +1,1 @@
+{"statement_id":"sha256:68a65541588c7d150ccbbc31baed11558399d97243ad6f58275674cb7d24dc94","declarations":[{"declaration_name_key":"ns(ns(n0,4:List),22:map_reverse_range_succ)","kind":"theorem"},{"declaration_name_key":"ns(ns(n0,4:List),37:map_reverse_range_eq_replicate_append)","kind":"theorem"}]}

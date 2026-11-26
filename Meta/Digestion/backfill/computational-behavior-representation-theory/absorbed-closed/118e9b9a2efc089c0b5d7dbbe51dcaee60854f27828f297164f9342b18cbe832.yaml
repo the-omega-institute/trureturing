@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:118e9b9a2efc089c0b5d7dbbe51dcaee60854f27828f297164f9342b18cbe832
-  normalized_sha256: sha256:118e9b9a2efc089c0b5d7dbbe51dcaee60854f27828f297164f9342b18cbe832
-cas_ref: sha256:118e9b9a2efc089c0b5d7dbbe51dcaee60854f27828f297164f9342b18cbe832
-coverage_gids:
-  - gid: D5/S3/ObserverMemory/Prediction/QuantizedWordApproximation.quantized_word_approximation
-    target_statement_id: sha256:db558860efce3e51dc636b67110128dae41e0a952c870894fd70f6f7efedd469
-receipts:
-  unresolved_subitems: []

@@ -1,9 +1,0 @@
-### Boundaries and next quantitative problems
-
-A valid finite frame of nonreal off-line orbits is an input; existence of an off-line zero is never asserted. An empty frame is zero-dimensional. A nonempty frame is required for an actual negative test.
-
-The constant and selected depth are classical and frame dependent. No computable estimate in minimum node separation, frame size, support radius, or height is established. Convolution depth may enlarge support. No uniform support window over all frames, infinite negative-index stability, prime-side coercivity, RH, or stronger zero-density theorem is claimed.
-
-Next load-bearing goals are to package the actual full mixed Gram as a Hermitian matrix and identify its negative inertia with the realized test dimension, then derive explicit interpolation-conditioning and support-growth bounds and independently verifiable prime/Archimedean margins.
-
-

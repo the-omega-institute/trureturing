@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:8c2b05ce29f931c365b5609f167318ae21dc5c7265eee0a5d67b753e64fd7c4c
-  normalized_sha256: sha256:8c2b05ce29f931c365b5609f167318ae21dc5c7265eee0a5d67b753e64fd7c4c
-cas_ref: sha256:8c2b05ce29f931c365b5609f167318ae21dc5c7265eee0a5d67b753e64fd7c4c
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/Dialectics/DeterministicInterfaceEquivalence.EffectiveDescent
-    target_statement_id: sha256:9f0e7dd003d1b5fcd73547ee5cd48ff34294862933ba3569d0528e0ca98ca0b1
-receipts:
-  unresolved_subitems: []

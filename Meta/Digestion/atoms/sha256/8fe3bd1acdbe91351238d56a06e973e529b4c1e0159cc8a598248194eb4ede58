@@ -1,6 +1,0 @@
-**定理 266.6（先在二份取得原仿射PSD坐标）。** 存在保单位实线性序同构 $\alpha_2:V_2\to\operatorname{Herm}_s(\mathbb C)$，使 $\alpha_2(p_v)=P_v$，$s=r^2\ge4$；此处 $v$ 仍是原第一因子的同一正交标签。
-
-证明。266.5给每个正交纯点对之和等于其实际二元面的两倍中心。完整正交基可由有限次二维酉旋转连接，每步只改变同一个二维支持中的一对，所以完整frame的原和 $S=\sum_i p_i$ 与基无关。对任一原正泛函 $f$，$v\mapsto f(p_v)$ 是非负frame function，总和恒为 $f(S)$。先以子空间内的正交基和定义基无关的投影测度，再直接复用有限维Gleason定理[Q266G, Theorem3.3]；非零 $f$ 以 $f(S)>0$ 归一，零泛函单列。由于 $s\ge4$，没有二维例外，得到唯一 $A_f\succeq0$，使 $f(p_v)=\operatorname{Tr}(A_fP_v)$。
-
-原单位是有限维对偶序单位，任意实线性泛函都是两个正泛函之差；Gleason唯一性使 $f\mapsto A_f$ 线性延拓。取其转置 $\pi:\operatorname{Herm}_s\to V_2$，有 $\pi(P_v)=p_v$，因而 $\pi(\operatorname{PSD}_s)=C_2$。266.3给两载体同维 $s^2$，纯点张成再给 $\pi$ 可逆。$u_2(p_v)=1$ 使 $A_{u_2}=I_s$，所以逆映射 $\alpha_2=\pi^{-1}$ 保单位。共同测量没有作为本步前件；它在原序同构成立后才取得。$\square$
-

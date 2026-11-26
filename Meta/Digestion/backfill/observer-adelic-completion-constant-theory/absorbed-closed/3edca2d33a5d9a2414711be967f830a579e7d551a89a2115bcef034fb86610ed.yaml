@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:3edca2d33a5d9a2414711be967f830a579e7d551a89a2115bcef034fb86610ed
-  normalized_sha256: sha256:3edca2d33a5d9a2414711be967f830a579e7d551a89a2115bcef034fb86610ed
-cas_ref: sha256:3edca2d33a5d9a2414711be967f830a579e7d551a89a2115bcef034fb86610ed
-coverage_gids:
-  - gid: D5/S3/Observer/AgencyHolonomy/OrderedPrimeHolonomyCasimir.ordered_prime_holonomy_casimir
-    target_statement_id: sha256:43bc482127b43ec0d949dc2fdbf51427d32f1586a90de7a4b145a90a427c8d14
-receipts:
-  unresolved_subitems: []

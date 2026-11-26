@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:032ec8b1f8b40b0c82ef83803b82475aba68ba33252801358a8ada3c9cec558d
-  normalized_sha256: sha256:032ec8b1f8b40b0c82ef83803b82475aba68ba33252801358a8ada3c9cec558d
-cas_ref: sha256:032ec8b1f8b40b0c82ef83803b82475aba68ba33252801358a8ada3c9cec558d
-coverage_gids:
-  - gid: D5/S3/Factorization/IdealClassGroups/ClassGroupQuotientUniversality.class_group_quotient_universality
-    target_statement_id: sha256:b04c63bcca6ee70870c831d1241cade8494e048a2d974f844f4a44895d1072de
-receipts:
-  unresolved_subitems: []

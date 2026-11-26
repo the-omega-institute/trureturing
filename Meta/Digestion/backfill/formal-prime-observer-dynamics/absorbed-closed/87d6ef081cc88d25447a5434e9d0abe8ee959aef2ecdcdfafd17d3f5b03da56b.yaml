@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:87d6ef081cc88d25447a5434e9d0abe8ee959aef2ecdcdfafd17d3f5b03da56b
-  normalized_sha256: sha256:87d6ef081cc88d25447a5434e9d0abe8ee959aef2ecdcdfafd17d3f5b03da56b
-cas_ref: sha256:87d6ef081cc88d25447a5434e9d0abe8ee959aef2ecdcdfafd17d3f5b03da56b
-coverage_gids:
-  - gid: D5/S3/Arith/Congruence/HorizontalJointKernel.horizontal_joint_kernel
-    target_statement_id: sha256:4ec617e7d365ed2e47a3e2544cc33899b1d60784c1f5b4f666a6fb0b497859ca
-receipts:
-  unresolved_subitems: []

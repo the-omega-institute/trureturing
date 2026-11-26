@@ -53,7 +53,6 @@ import Mathlib.Tactic
 /-! Pair labels alone determine the column transfer. -/
 open scoped BigOperators
 namespace D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177PairTransfer
-open D5.S3.Combinatorics.TraceAvoidingArrays
 
 def Proper {n : ℕ} (P : Fin 4 × Fin n → Fin 3) : Prop :=
   ∀ (j : Fin n) (h : j.val + 1 < n) (r s : Fin 4),
@@ -66,7 +65,7 @@ def L (n : ℕ) : ℕ :=
 
 abbrev Col := Fin 3 × Fin 3 × Fin 3 × Fin 3
 def column (c : Col) : Fin 4 → Fin 3 := ![c.1, c.2.1, c.2.2.1, c.2.2.2]
-private def compatible (a b : Col) : Prop :=
+def compatible (a b : Col) : Prop :=
   ∀ r s : Fin 4, (r.val ≤ s.val + 1 ∧ s.val ≤ r.val + 1) → column a r ≠ column b s
 private instance instDecidableCompatible (a b : Col) : Decidable (compatible a b) :=
   inferInstanceAs (Decidable (∀ _ _, _ → _))
@@ -80,7 +79,7 @@ def cls (c : Col) : Fin 14 :=
   else if b = d then
     (if a = e then 8 else if b = e then 9 else 10)
   else if a = e then 11 else if b = e then 12 else 13
-private def Q : Matrix (Fin 14) (Fin 14) ℤ :=
+def Q : Matrix (Fin 14) (Fin 14) ℤ :=
   ![![2,2,2,2,0,2,2,0,2,2,0,0,0,0],
     ![1,0,0,1,0,1,0,0,0,1,0,0,0,0],
     ![1,0,0,0,0,0,0,0,0,1,0,0,0,0],
@@ -129,7 +128,7 @@ private theorem representative_rows : ∀ i s : Fin 14,
     decide +kernel
   intro i s
   exact congrFun (List.ofFn_inj.mp (congrFun (List.ofFn_inj.mp h) i)) s
-private theorem quotient_rows (b : Col) (s : Fin 14) :
+theorem quotient_rows (b : Col) (s : Fin 14) :
     (∑ c : Col, if compatible b c ∧ cls c = s then (1 : ℤ) else 0) = Q (cls b) s := by
   obtain ⟨e, he⟩ := class_rep b
   calc
@@ -149,7 +148,11 @@ set_option maxHeartbeats 10000000 in
 private theorem initial_weights : ∀ s : Fin 14,
     (∑ a : Col, ∑ b : Col,
       if compatible a b ∧ cls b = s then (1 : ℤ) else 0) = weights s := by
-  decide +kernel
+  intro s
+  simp_rw [quotient_rows]
+  have h : ∀ s : Fin 14, (∑ a : Col, Q (cls a) s) = weights s := by
+    decide +kernel
+  exact h s
 
 def gridEquiv (n : ℕ) : (Fin 4 × Fin n → Fin 3) ≃ (Fin n → Col) where
   toFun P j := (P (0,j), P (1,j), P (2,j), P (3,j))
@@ -218,7 +221,7 @@ private theorem count_transfer (n : ℕ) :
 
 end CountBridge
 
-private def W : Fin 8 → Fin 14 → ℤ :=
+def W : Fin 8 → Fin 14 → ℤ :=
   ![![1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     ![16, 4, 2, 4, 0, 2, 1, 0, 1, 4, 1, 0, 0, 0],
     ![68, 26, 20, 25, 0, 20, 16, 0, 16, 26, 4, 0, 0, 0],
@@ -228,16 +231,16 @@ private def W : Fin 8 → Fin 14 → ℤ :=
     ![74072, 24864, 17727, 22885, 0, 17727, 13306, 0, 13306, 24864, 4026, 0, 0, 0],
     ![417502, 139548, 98936, 127826, 0, 98936, 74072, 0, 74072, 139548, 22885, 0, 0, 0]]
 
-private def coefficients : Fin 6 → ℤ := ![4, 2, -25, -3, 16, 3]
+def coefficients : Fin 6 → ℤ := ![4, 2, -25, -3, 16, 3]
 private theorem table_zero : W 0 = (1 : Fin 14 → ℤ) := by
   exact List.ofFn_inj.mp rfl
 private theorem table_steps : ∀ k : Fin 7, W k.succ = Q.mulVec (W k.castSucc) := by
   intro k
   fin_cases k <;> exact List.ofFn_inj.mp rfl
-private theorem powers_table : ∀ k : Fin 8,
+theorem powers_table : ∀ k : Fin 8,
     (Q^k.val).mulVec (1 : Fin 14 → ℤ) = W k :=
   TransferMatrix.tabulatedPowers Q 7 W table_zero table_steps
-private theorem power_polynomial : (Q^(1+6)).mulVec (1 : Fin 14 → ℤ) =
+theorem power_polynomial : (Q^(1+6)).mulVec (1 : Fin 14 → ℤ) =
     ∑ j : Fin 6, coefficients j • (Q^(1+j.val)).mulVec (1 : Fin 14 → ℤ) := by
   rw [show 1+6 = (7 : Fin 8).val from rfl, powers_table]
   have hh (j : Fin 6) : (Q^(1+j.val)).mulVec (1 : Fin 14 → ℤ) =

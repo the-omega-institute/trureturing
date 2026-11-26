@@ -56,6 +56,17 @@ internal sealed class HannaSelfSubstitutionIntegralityDocument : IScribeDocument
                     + "a finite degree bound.",
                 DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
                 new OpenProblemResolutionClaim(ProblemSlugRef.Create("hannasubst"), ResolutionKind.Proved)),
+            Describe.Lean(DescribeId.Create("hanna-series-valued-dwork"),
+                DeclarationHandle.Create(Prefix + "exp_logSum_integral_of_divisibility"),
+                H("Series-valued Dwork integrality"), StatementSource.FromAuthor(Disp(SeriesDworkFormula())),
+                AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(
+                    "For an integer-series family f, suppose that for every prime p and positive n, "
+                    + "p^v_p(n) divides f(n)-f(n/p)(X^p) when p divides n, and divides f(n) otherwise. "
+                    + "Then the formal exponential of Sum_{n>=1} f(n)*X^n/n has integer coefficients. "
+                    + "The degree-N logarithmic coefficient is Sum_{n=1}^N coeff(N-n,f(n))/n. "
+                    + "These are arbitrary series-valued weights, not just constant ghosts. "
+                    + "This theorem supplies the shifted weighted-diagonal argument for Hanna A155201."))),
+                DescribeRole.Theorem),
             Node("power_lift", "Divisibility lifting for powers", Disp(PowerLiftFormula()),
                 "In any commutative ring R, if p divides U-V, then p^(padicValNat(p,m)+1) divides U^m-V^m for every natural m. Here p is any natural number. Ideal congruence power lifting and the divisibility of m by p^padicValNat(p,m) give the conclusion. No unit or coprimality hypothesis is required. This supplies the exponent-changing step for HannaA181076Integrality.",
                 DescribeRole.Lemma, AssessedProvenance.FromRepo(Source)),
@@ -69,6 +80,21 @@ internal sealed class HannaSelfSubstitutionIntegralityDocument : IScribeDocument
                     + "HannaSelfSubstitutionIntegralityA157675.result. The identity and "
                     + "integrality hold at every natural degree.",
                 DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+
+    private static Formula SeriesDworkFormula()
+    {
+        var f=V("f"); var p=V("p"); var n=V("n"); var ips=Call("PowerSeries",Int());
+        var correction=Seq(V("if"),Sp,Divides(p,n),Sp,V("then"),Sp,
+            App(Q("PowerSeries","subst"),Pow(V("X"),p),
+                App(f,new Formula.Fraction(n,p))),Sp,V("else"),Sp,D(0));
+        var hypothesis=All("p",Nat(),Imp(App(Q("Nat","Prime"),p),All("n",Nat(),Imp(
+            new Formula.Relation(n,FormulaRelationOperator.NotEqual,D(0)),
+            Divides(Pow(Cast(p,ips),Call("padicValNat",p,n)),Subtract(App(f,n),correction))))));
+        var mapped=Lambda("n",Nat(),App(Q("PowerSeries","map"),
+            App(Q("Int","castRingHom"),Rat()),App(f,n)));
+        return All("f",Seq(Nat(),Sp,To,Sp,ips),Imp(Parenthesized(hypothesis),
+            Integral(Exponential(Call("logSum",mapped)))));
+    }
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
         DescribeRole role, AssessedProvenance provenance, OpenProblemResolutionClaim? resolution = null) => Describe.Lean(

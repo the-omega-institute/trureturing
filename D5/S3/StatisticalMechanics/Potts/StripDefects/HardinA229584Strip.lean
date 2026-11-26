@@ -70,7 +70,7 @@ def a (n : ℕ) : ℕ :=
   (Finset.univ.filter fun A : Fin n × Fin 6 → Fin 3 =>
     defects horizontal antidiagonal (List.ofFn fun i j => A (i, j)) = 1 ∧ Normal A).card
 
-private theorem edge (r t : Row) : bondDefects antidiagonal r t = cross (boundary r) t := by
+theorem edge (r t : Row) : bondDefects antidiagonal r t = cross (boundary r) t := by
   unfold cross bondDefects
   apply congrArg Finset.card
   ext e
@@ -80,15 +80,15 @@ private theorem edge (r t : Row) : bondDefects antidiagonal r t = cross (boundar
     rfl
   · simp [he]
 
-private theorem class_relabel (e : Equiv.Perm (Fin 3)) (p : Boundary) (d : ℕ) :
+theorem class_relabel (e : Equiv.Perm (Fin 3)) (p : Boundary) (d : ℕ) :
     cl (e ∘ p) d = cl p d := by
   simp only [cl, Function.comp_apply, e.injective.eq_iff]
 
-private theorem horizontal_relabel (e : Equiv.Perm (Fin 3)) (r : Row) :
+theorem horizontal_relabel (e : Equiv.Perm (Fin 3)) (r : Row) :
     bondDefects horizontal (e ∘ r) (e ∘ r) = bondDefects horizontal r r := by
   simp only [bondDefects, Function.comp_apply, e.injective.eq_iff]
 
-private theorem cross_relabel (e : Equiv.Perm (Fin 3)) (p : Boundary) (r : Row) :
+theorem cross_relabel (e : Equiv.Perm (Fin 3)) (p : Boundary) (r : Row) :
     cross (e ∘ p) (e ∘ r) = cross p r := by
   unfold cross bondDefects
   apply congrArg Finset.card
@@ -188,7 +188,7 @@ private theorem count_transfer (n : ℕ) :
   · exact finite_certificate.2.2.2.1
   · exact finite_certificate.2.2.2.2.1
 
-private theorem powers_table (i : Fin 8) : forward T initial i.val = W i := by
+theorem powers_table (i : Fin 8) : forward T initial i.val = W i := by
   induction i using Fin.induction with
   | zero => exact finite_certificate.2.2.2.2.2.1.1.symm
   | succ i ih =>
@@ -198,7 +198,7 @@ private theorem powers_table (i : Fin 8) : forward T initial i.val = W i := by
     rw [ih]
     exact (finite_certificate.2.2.2.2.2.1.2 i).symm
 
-private theorem polynomial_relation :
+theorem polynomial_relation :
     forward T initial (1 + 6) =
       ∑ j : Fin 6, (![-6561, 14580, -12150, 4662, -805, 50] j : ℤ) • forward T initial (1 + j.val) := by
   rw [powers_table ⟨7, by omega⟩]

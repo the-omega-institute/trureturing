@@ -1,8 +1,0 @@
-## 一、更正
-
-第四十一节的产地段写着:某研究席称仓内已有 `GoldenResource/GoldenFixedPoint.lean` 及其中的 `Gobs_greatest_golden_divisor`、`b_fixed_iff`、`Gobs_dvd_of_dvd`,并据此推出「最小极大丰倍数 ⊣ 最大黄金因子」的伴随;该节称「**全树检索证实这三个声明与该文件都不存在**」,并据此**不收**该伴随及其下游。
-
-**该断言为假,三个声明与该文件都存在,且已冻结。**
-
-| 项 | 读数 |
-|---|---|

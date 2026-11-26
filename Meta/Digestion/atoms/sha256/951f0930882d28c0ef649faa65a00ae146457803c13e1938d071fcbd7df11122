@@ -1,6 +1,0 @@
-其中实数 $H_j$ 按如下有限整数容量约束取值：
-
-* 对 $j\in J_+$，选择整数 $r_j\ge1$，并取 $0\le H_j\le\log r_j$。
-* 对 $j\in J_-$，选择整数 $m_j\ge1$，令 $r_j=2m_j$，并取 $\log2\le H_j\le\log(2m_j)$。
-* 对 $\{j,k\}\in\mathcal P$，选择整数 $r_j=r_k\ge1$，并取 $H_j=H_k\in[0,\log r_j]$。
-

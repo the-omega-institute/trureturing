@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:89705050ba0c09108d77480fba058064a56c91eb8d0bbc6bdabbcc5eb0dff073
-  normalized_sha256: sha256:89705050ba0c09108d77480fba058064a56c91eb8d0bbc6bdabbcc5eb0dff073
-cas_ref: sha256:89705050ba0c09108d77480fba058064a56c91eb8d0bbc6bdabbcc5eb0dff073
-coverage_gids:
-  - gid: D5/S3/TotalVariation/Pinsker.totalVariation
-    target_statement_id: sha256:417383b2f5f4a4f7c56881e521c516e431c6f287d2d24996ca4ec3797e2e61f3
-receipts:
-  unresolved_subitems: []

@@ -83,7 +83,7 @@ private theorem original_whole_balls_eq_of_two
     exclusion C u a = exclusion C u b := by
   exact SingleLabelNormalBody.equal_of_two_points hclosed hstrict hgen hB a b hxy hx hy
 
-private theorem repeated_ball_isolated
+theorem repeated_ball_isolated
     (hclosed : IsClosed (C : Set V))
     (hstrict : ∀ x ∈ C, x ≠ 0 → 0 < u x)
     (hgen : Submodule.span ℝ (C : Set V) = ⊤) (hB : exclusionBalls C u)

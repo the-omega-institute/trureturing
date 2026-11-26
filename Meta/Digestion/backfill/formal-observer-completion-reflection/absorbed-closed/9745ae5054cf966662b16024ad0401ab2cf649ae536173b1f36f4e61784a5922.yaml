@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:9745ae5054cf966662b16024ad0401ab2cf649ae536173b1f36f4e61784a5922
-  normalized_sha256: sha256:9745ae5054cf966662b16024ad0401ab2cf649ae536173b1f36f4e61784a5922
-cas_ref: sha256:9745ae5054cf966662b16024ad0401ab2cf649ae536173b1f36f4e61784a5922
-coverage_gids:
-  - gid: D5/S3/Quantum/Entanglement/SinglePrimeVisibleSpace.single_prime_visible_space
-    target_statement_id: sha256:d473d8fd6293fb1283399e9cffe9e8df2d625824012f77a1f5f061ddffff3cde
-receipts:
-  unresolved_subitems: []

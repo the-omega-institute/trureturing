@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:974080a791adc29157a981a50ebe6d110cc641e5b99d49e070ccbadefbd437fa
-  normalized_sha256: sha256:974080a791adc29157a981a50ebe6d110cc641e5b99d49e070ccbadefbd437fa
-cas_ref: sha256:974080a791adc29157a981a50ebe6d110cc641e5b99d49e070ccbadefbd437fa
-coverage_gids:
-  - gid: D5/S3/Divergence/CauchyMeasureEntropy.cauchy_poisson_coarse_graining
-    target_statement_id: sha256:1e4cc89b75f096587f84d5086e07af2952221fab31a353d9e07412cfb9dbae34
-receipts:
-  unresolved_subitems: []

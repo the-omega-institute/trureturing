@@ -142,5 +142,6 @@ The dimension theorem supplies the three-dimensional faithful range. For a posit
 - Truth anchor: `D5/S3/Quantum/Algebra/OriginalCompactReciprocity.original_exponential_rigidity`
 - Truth anchor: `D5/S3/Quantum/Algebra/OriginalCompactReciprocity.original_group_rigidity`
 - Truth anchor: `D5/S3/Quantum/Algebra/OriginalCompactReciprocity.original_rigidity`
+- Dependency: [D5/S3/Quantum/Algebra/Comparison/LineReflectionGeneration](Comparison/LineReflectionGeneration.md)
 - Dependency: [D5/S3/Quantum/Algebra/OriginalCompactActionMetric](OriginalCompactActionMetric.md)
 - Dependency: [D5/S3/Quantum/Algebra/RankOneInvariantMetric](RankOneInvariantMetric.md)

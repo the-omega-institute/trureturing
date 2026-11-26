@@ -351,7 +351,7 @@ attribute [local instance] PiNat.metricSpace
 distributivity of `log` over the product; when some `p k = 0` both sides vanish (the product is
 `0`, and on the right each summand carries the vanishing product factor; the convention
 `Real.log 0 = 0` keeps the `k`-summand `0 * 0 = 0`). -/
-private theorem negMulLog_prod_eq_sum {n : ℕ} (p : Fin n → ℝ) :
+theorem negMulLog_prod_eq_sum {n : ℕ} (p : Fin n → ℝ) :
     Real.negMulLog (∏ k, p k) = ∑ k, (∏ j, p j) * (-Real.log (p k)) := by
   by_cases hzero : ∃ k, p k = 0
   · obtain ⟨k₀, hk₀⟩ := hzero
@@ -374,7 +374,7 @@ the single-symbol entropy `∑ a, negMulLog (p a)`: the `k`-th coordinate carrie
 factor while every other coordinate marginalizes to `∑ a, p a = 1`. This is the combinatorial core
 shared verbatim by the one-sided (`ksEntropySeq_coordPartition_bern_eq`) and two-sided
 (`ksEntropySeq_coordPartitionZ_bernZ_eq`) Bernoulli per-`n` entropy computations. -/
-private theorem sum_prod_mul_neg_log_eq_sum_negMulLog {β : Type*} [Fintype β] (p : β → ℝ)
+theorem sum_prod_mul_neg_log_eq_sum_negMulLog {β : Type*} [Fintype β] (p : β → ℝ)
     (hp : ∑ a, p a = 1) (n : ℕ) (k : Fin n) :
     ∑ f : Fin n → β, (∏ j, p (f j)) * (-Real.log (p (f k))) = ∑ a, Real.negMulLog (p a) := by
   classical

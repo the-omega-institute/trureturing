@@ -1,5 +1,0 @@
-source_id = "fib-atom-escape-witness-depth-and-robust-whitebox"
-path = "docs/develop/theory/FIB_ATOM_ESCAPE_WITNESS_DEPTH_AND_ROBUST_WHITEBOX.md"
-atomizer = "generic-v1"
-genre_registry_check = "no-registry"
-unregistered_genres = []

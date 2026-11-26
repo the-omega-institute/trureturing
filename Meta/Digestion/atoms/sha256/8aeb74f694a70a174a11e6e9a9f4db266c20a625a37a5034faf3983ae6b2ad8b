@@ -1,8 +1,0 @@
-设 \(D\) 是 law 空间上的区分度，例如：
-
-* total variation；
-* Hellinger；
-* trace distance；
-* 某种有界风险差；
-* 可操作判别优势。
-

@@ -24,7 +24,7 @@ open Matrix Filter
 attribute [local instance low] Classical.propDecidable
 open scoped Topology ComplexConjugate
 
-private lemma window_commute (n : ℕ) (_hn : Even n) (hsize : 4 ≤ n)
+lemma window_commute (n : ℕ) (_hn : Even n) (hsize : 4 ≤ n)
     (i j : Fin n) (_hi : i.val % 2 = 0) (_hj : j.val % 2 = 0) :
     Commute (windowSuperoperator n i) (windowSuperoperator n j) := by
   change windowSuperoperator n i * windowSuperoperator n j =
@@ -39,7 +39,7 @@ private lemma window_commute (n : ℕ) (_hn : Even n) (hsize : 4 ≤ n)
 
 
 set_option backward.isDefEq.respectTransparency false in
-private lemma exponential_idempotent {k : Type} [Fintype k] [DecidableEq k]
+lemma exponential_idempotent {k : Type} [Fintype k] [DecidableEq k]
     (e : Matrix k k ℂ) (he : IsIdempotentElem e) (t : ℝ) :
     NormedSpace.exp ((t : ℂ) • (e - 1)) =
       (Real.exp (-t) : ℂ) • (1 : Matrix k k ℂ) +
@@ -286,7 +286,7 @@ private lemma gauge_flip (n : ℕ) (hn : Even n) (x : Fin n → Fin 2) :
     (-1 : ℂ) ^ (1 * ∑ j : Fin n, (x j).val * (x (site j 1)).val)
   simpa only [one_mul] using he
 
-private lemma sum_gauged_zero (n : ℕ) :
+lemma sum_gauged_zero (n : ℕ) :
     (∑ x : Fin n → Fin 2, gaugedUnit n (fun _ => 0) x) =
       (1 : Matrix (Fin n → Fin 2) (Fin n → Fin 2) ℂ) := by
   delta gaugedUnit
@@ -297,7 +297,7 @@ private lemma sum_gauged_zero (n : ℕ) :
   simp only [show (fun _ : Fin n => (0 : Fin 2)) = 0 from rfl, add_zero]
   exact Matrix.sum_single_one
 
-private lemma sum_gauged_one (n : ℕ) (hn : Even n) :
+lemma sum_gauged_one (n : ℕ) (hn : Even n) :
     (∑ x : Fin n → Fin 2, gaugedUnit n (fun _ => 1) x) = czxUnitary n := by
   ext u v
   change (∑ x : Fin n → Fin 2,
@@ -460,7 +460,7 @@ private lemma symmetry_trace (n : ℕ) (hn : 0 < n) :
     ∑ j : Fin n, (z j).val * (z (site j 1)).val) from rfl]
   rw [Matrix.diagonal_mul, flip_diagonal n hn, mul_zero]
 
-private lemma tensor_x_unitary (n : ℕ) : tensorX n * (tensorX n)ᴴ = 1 := by
+lemma tensor_x_unitary (n : ℕ) : tensorX n * (tensorX n)ᴴ = 1 := by
   have hf (x : Fin n → Fin 2) : (fun j => (x j + 1) + 1) = x := by
     funext j
     exact (open scoped Fin.CommRing in CharTwo.add_cancel_right (x j) 1)

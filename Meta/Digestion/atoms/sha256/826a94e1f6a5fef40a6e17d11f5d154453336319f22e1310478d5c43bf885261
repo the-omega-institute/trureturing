@@ -1,2 +1,0 @@
-**来源 1560.2（项目中的决策接口）。** 比较使用 `D5/S3/Estimation/SequentialDecisionRisk/FiniteDeficiencyRiskTransfer.lean` 和 `D5/S3/Estimation/DecisionRisk/FiniteBayesRiskDominanceCriterion.lean` 的实际源码。前者的风险与缺陷使用非负扩展实数下确界，并以概率先验、随机实验及 $[0,1]$ 损失给转移；后者以实数 Bayes 成本下确界表达全部有限行动、概率先验及实值损失的准确支配判据。本文的猜测任务具有有限非空行动集，最佳决策由每个标签选取最大联合质量直接取得，没有借下确界符号暗中宣告任意任务存在最优行动。源码阅读不是当前 kernel 或 axiom 闭包验证。
-

@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:82db5e16412bb8248d50e5bf8cfbe19dd7dafc78d33e9bcee014f458640edaff
-  normalized_sha256: sha256:82db5e16412bb8248d50e5bf8cfbe19dd7dafc78d33e9bcee014f458640edaff
-cas_ref: sha256:82db5e16412bb8248d50e5bf8cfbe19dd7dafc78d33e9bcee014f458640edaff
-coverage_gids:
-  - gid: D5/S3/ObserverMemory/Dynamics/ObservableKrylovGrowthBound.observableKrylov
-    target_statement_id: sha256:558deb199587992555d641af73fc431cbc7cecee8065e8de49d4bddec17ae8b6
-receipts:
-  unresolved_subitems: []

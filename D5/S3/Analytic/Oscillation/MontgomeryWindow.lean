@@ -37,28 +37,28 @@ def AveragedMontgomeryLower (S : Spectrum) : Prop :=
   ∀ ε : ℝ, 0 < ε → ∀ᶠ T : ℝ in atTop,
     2 / 3 - ε ≤ ∫ α in (17 : ℝ)..19, montgomery S α T
 
-private def h (v : ℝ) : ℝ := Real.exp (-2 * |v|)
+def exponentialWeight (v : ℝ) : ℝ := Real.exp (-2 * |v|)
 
-private lemma h_integrable : Integrable h := by
+lemma exponentialWeight_integrable : Integrable exponentialWeight := by
   have hi := Zeta23.EF.integrable_exp_neg_abs_half
   have hs := hi.comp_mul_left' (show (4 : ℝ) ≠ 0 by norm_num)
-  have he : (fun v : ℝ => (Real.exp (-|4 * v| / 2) : ℂ)) = fun v => (h v : ℂ) := by
+  have he : (fun v : ℝ => (Real.exp (-|4 * v| / 2) : ℂ)) = fun v => (exponentialWeight v : ℂ) := by
     funext v
-    simp only [abs_mul, abs_of_pos (show (0 : ℝ) < 4 by norm_num), h]
+    simp only [abs_mul, abs_of_pos (show (0 : ℝ) < 4 by norm_num), exponentialWeight]
     congr 2
     ring
   rw [he] at hs
-  have hh := Complex.reCLM.integrable_comp (φ := fun v : ℝ => (h v : ℂ)) hs
+  have hh := Complex.reCLM.integrable_comp (φ := fun v : ℝ => (exponentialWeight v : ℂ)) hs
   simpa only [Complex.reCLM_apply, Complex.ofReal_re] using hh
 
-private lemma h_transform (t : ℝ) :
-    (∫ v : ℝ, (h v : ℂ) * Complex.exp (-Complex.I * t * v)) =
+private lemma exponentialWeight_transform (t : ℝ) :
+    (∫ v : ℝ, (exponentialWeight v : ℂ) * Complex.exp (-Complex.I * t * v)) =
       ((4 / (4 + t ^ 2) : ℝ) : ℂ) := by
   have he (v : ℝ) :
       (Real.exp (-|4 * v| / 2) : ℂ) *
         Complex.exp (-Complex.I * ((t / 4 : ℝ) : ℂ) * (4 * v : ℝ)) =
-      (h v : ℂ) * Complex.exp (-Complex.I * t * v) := by
-    simp only [abs_mul, abs_of_pos (show (0 : ℝ) < 4 by norm_num), h]
+      (exponentialWeight v : ℂ) * Complex.exp (-Complex.I * t * v) := by
+    simp only [abs_mul, abs_of_pos (show (0 : ℝ) < 4 by norm_num), exponentialWeight]
     congr 1
     · congr 2; ring
     · congr 1; push_cast; ring
@@ -74,19 +74,19 @@ private lemma h_transform (t : ℝ) :
     exact_mod_cast (show (4 : ℝ) + t ^ 2 ≠ 0 by positivity)
   field_simp
 
-private lemma h_cosine (t y : ℝ) :
-    (∫ v : ℝ, h v * Real.cos (t * (y - v))) =
+lemma exponentialWeight_cosine (t y : ℝ) :
+    (∫ v : ℝ, exponentialWeight v * Real.cos (t * (y - v))) =
       (4 / (4 + t ^ 2)) * Real.cos (t * y) := by
   have hc := D5.S3.Analytic.Fourier.AngularFejerKernel.cosine_convolution
-    h_integrable h_transform t y
+    exponentialWeight_integrable exponentialWeight_transform t y
   calc
-    _ = ∫ u : ℝ, h (y - u) * Real.cos (t * (y - (y - u))) :=
+    _ = ∫ u : ℝ, exponentialWeight (y - u) * Real.cos (t * (y - (y - u))) :=
       (integral_sub_left_eq_self
-        (fun v : ℝ => h v * Real.cos (t * (y - v))) volume y).symm
+        (fun v : ℝ => exponentialWeight v * Real.cos (t * (y - v))) volume y).symm
     _ = _ := by simpa only [sub_sub_cancel, mul_comm] using hc
 
-private lemma h_mass : (∫ v : ℝ, h v) = 1 := by
-  simpa using h_cosine 0 0
+private lemma exponentialWeight_mass : (∫ v : ℝ, exponentialWeight v) = 1 := by
+  simpa using exponentialWeight_cosine 0 0
 
 lemma hardCos_continuous (S : Spectrum) (M : ℝ) : Continuous (hardCos S M) := by
   have he : hardCos S M = fun y =>
@@ -102,12 +102,12 @@ private lemma hardCos_bound (S : Spectrum) (M y : ℝ) : |hardCos S M y| ≤ S.N
     show 2 * (M / 2) = M by ring, abs_neg, hardCos] using
     D5.S3.Analytic.Laplace.QuantitativeFejerBoundary.polePolynomial_bound S (M / 2) y
 
-private lemma h_mul_cos_integrable (t y : ℝ) :
-    Integrable (fun v : ℝ => h v * Real.cos (t * (y - v))) :=
-  h_integrable.mul_bdd (c := 1) (by fun_prop)
+lemma exponentialWeight_mul_cos_integrable (t y : ℝ) :
+    Integrable (fun v : ℝ => exponentialWeight v * Real.cos (t * (y - v))) :=
+  exponentialWeight_integrable.mul_bdd (c := 1) (by fun_prop)
     (Eventually.of_forall fun _ => by simpa only [Real.norm_eq_abs] using Real.abs_cos_le_one _)
 
-private def pairCos (t y : ℝ) : ℝ :=
+def pairCos (t y : ℝ) : ℝ :=
   (4 / (4 + t ^ 2)) * Real.cos (t * y)
 
 private def sumFrequency (S : Spectrum) (M y : ℝ) : ℝ :=
@@ -115,7 +115,7 @@ private def sumFrequency (S : Spectrum) (M y : ℝ) : ℝ :=
     (S.mult j : ℝ) * (S.mult k : ℝ) * pairCos (S.gamma j + S.gamma k) y
 
 private lemma smoothed_square (S : Spectrum) (M y : ℝ) :
-    2 * (∫ v : ℝ, h v * hardCos S M (y - v) ^ 2) =
+    2 * (∫ v : ℝ, exponentialWeight v * hardCos S M (y - v) ^ 2) =
       (∑ j ∈ S.cut M, ∑ k ∈ S.cut M,
         (S.mult j : ℝ) * (S.mult k : ℝ) * pairCos (S.gamma j - S.gamma k) y) +
       sumFrequency S M y := by
@@ -136,19 +136,19 @@ private lemma smoothed_square (S : Spectrum) (M y : ℝ) :
     ring
   have hi (j k : S.index) : Integrable (fun v : ℝ =>
       (S.mult j : ℝ) * (S.mult k : ℝ) *
-        (h v * Real.cos ((S.gamma j - S.gamma k) * (y - v)) +
-         h v * Real.cos ((S.gamma j + S.gamma k) * (y - v)))) :=
-    ((h_mul_cos_integrable _ _).add (h_mul_cos_integrable _ _)).const_mul _
+        (exponentialWeight v * Real.cos ((S.gamma j - S.gamma k) * (y - v)) +
+         exponentialWeight v * Real.cos ((S.gamma j + S.gamma k) * (y - v)))) :=
+    ((exponentialWeight_mul_cos_integrable _ _).add (exponentialWeight_mul_cos_integrable _ _)).const_mul _
   calc
-    _ = ∫ v : ℝ, h v * (2 * hardCos S M (y - v) ^ 2) := by
+    _ = ∫ v : ℝ, exponentialWeight v * (2 * hardCos S M (y - v) ^ 2) := by
       rw [← integral_const_mul]
       congr 1
       funext v
       ring
     _ = ∫ v : ℝ, ∑ j ∈ S.cut M, ∑ k ∈ S.cut M,
         (S.mult j : ℝ) * (S.mult k : ℝ) *
-          (h v * Real.cos ((S.gamma j - S.gamma k) * (y - v)) +
-           h v * Real.cos ((S.gamma j + S.gamma k) * (y - v))) := by
+          (exponentialWeight v * Real.cos ((S.gamma j - S.gamma k) * (y - v)) +
+           exponentialWeight v * Real.cos ((S.gamma j + S.gamma k) * (y - v))) := by
       apply integral_congr_ae
       filter_upwards [] with v
       rw [hp, Finset.mul_sum]
@@ -161,10 +161,10 @@ private lemma smoothed_square (S : Spectrum) (M y : ℝ) :
     _ = _ := by
       rw [integral_finsetSum _ (fun j _ => integrable_finsetSum _ (fun k _ => hi j k))]
       simp_rw [integral_finsetSum _ (fun k _ => hi _ k), integral_const_mul,
-        integral_add (h_mul_cos_integrable _ _) (h_mul_cos_integrable _ _), h_cosine]
+        integral_add (exponentialWeight_mul_cos_integrable _ _) (exponentialWeight_mul_cos_integrable _ _), exponentialWeight_cosine]
       simp only [sumFrequency, pairCos, mul_add, Finset.sum_add_distrib]
 
-private lemma montgomery_normalization (S : Spectrum) {M : ℝ} (hM : 1 < M) (y : ℝ) :
+lemma montgomery_normalization (S : Spectrum) {M : ℝ} (hM : 1 < M) (y : ℝ) :
     (∑ j ∈ S.cut M, ∑ k ∈ S.cut M,
       (S.mult j : ℝ) * (S.mult k : ℝ) * pairCos (S.gamma j - S.gamma k) y) =
       M * Real.log M / (2 * Real.pi) * montgomery S (y / Real.log M) M := by
@@ -319,7 +319,7 @@ private lemma crossBudget_small (S : Spectrum) (hN : CountAsymptotic S)
   linarith
 
 private lemma h_tail {L : ℝ} (hL : 0 ≤ L) :
-    (∫ v in {v : ℝ | L < |v|}, h v) = Real.exp (-2 * L) := by
+    (∫ v in {v : ℝ | L < |v|}, exponentialWeight v) = Real.exp (-2 * L) := by
   have he : {v : ℝ | L < |v|} = Iio (-L) ∪ Ioi L := by
     ext v
     simp only [mem_ofPred_eq, mem_union, mem_Iio, mem_Ioi, lt_abs]
@@ -332,21 +332,21 @@ private lemma h_tail {L : ℝ} (hL : 0 ≤ L) :
     intro v hv hw
     simp only [mem_Iio, mem_Ioi] at hv hw
     linarith)
-  rw [he, setIntegral_union hd measurableSet_Ioi h_integrable.integrableOn
-    h_integrable.integrableOn, ← integral_Iic_eq_integral_Iio]
-  have hl : (∫ v in Iic (-L), h v) = Real.exp (-2 * L) / 2 := by
+  rw [he, setIntegral_union hd measurableSet_Ioi exponentialWeight_integrable.integrableOn
+    exponentialWeight_integrable.integrableOn, ← integral_Iic_eq_integral_Iio]
+  have hl : (∫ v in Iic (-L), exponentialWeight v) = Real.exp (-2 * L) / 2 := by
     rw [setIntegral_congr_fun measurableSet_Iic
-      (show EqOn h (fun v : ℝ => Real.exp (2*v)) (Iic (-L)) from by
+      (show EqOn exponentialWeight (fun v : ℝ => Real.exp (2*v)) (Iic (-L)) from by
       intro v hv
-      dsimp [h]
+      dsimp [exponentialWeight]
       rw [abs_of_nonpos (by have hv' : v ≤ -L := hv; linarith)]
       congr 1; ring), integral_exp_mul_Iic (by norm_num : (0 : ℝ) < 2)]
     congr 2; ring
-  have hr : (∫ v in Ioi L, h v) = Real.exp (-2 * L) / 2 := by
+  have hr : (∫ v in Ioi L, exponentialWeight v) = Real.exp (-2 * L) / 2 := by
     rw [setIntegral_congr_fun measurableSet_Ioi
-      (show EqOn h (fun v : ℝ => Real.exp (-2*v)) (Ioi L) from by
+      (show EqOn exponentialWeight (fun v : ℝ => Real.exp (-2*v)) (Ioi L) from by
       intro v hv
-      dsimp [h]
+      dsimp [exponentialWeight]
       rw [abs_of_nonneg (hL.trans (le_of_lt hv))]),
       integral_exp_mul_Ioi (by norm_num : (-2 : ℝ) < 0)]
     ring
@@ -354,7 +354,7 @@ private lemma h_tail {L : ℝ} (hL : 0 ≤ L) :
   ring
 
 private lemma smoothed_localization (S : Spectrum) (M : ℝ) {L : ℝ} (hL : 0 ≤ L) :
-    (∫ y in (17 * L)..(19 * L), ∫ v : ℝ, h v * hardCos S M (y - v) ^ 2) ≤
+    (∫ y in (17 * L)..(19 * L), ∫ v : ℝ, exponentialWeight v * hardCos S M (y - v) ^ 2) ≤
       (∫ y in (16 * L)..(20 * L), hardCos S M y ^ 2) +
         2 * L * (S.N M : ℝ) ^ 2 * Real.exp (-2 * L) := by
   let f : ℝ → ℝ := fun y => hardCos S M y ^ 2
@@ -368,13 +368,13 @@ private lemma smoothed_localization (S : Spectrum) (M : ℝ) {L : ℝ} (hL : 0 �
   have hcd : 16 * L ≤ 20 * L := by nlinarith
   let W : ℝ := ∫ y in Icc (16 * L) (20 * L), f y
   have hW : 0 ≤ W := integral_nonneg hf0
-  have hp : Integrable (fun p : ℝ × ℝ => h p.2 * f (p.1 - p.2))
+  have hp : Integrable (fun p : ℝ × ℝ => exponentialWeight p.2 * f (p.1 - p.2))
       ((volume.restrict (Icc (17 * L) (19 * L))).prod volume) := by
-    apply ((integrableOn_const (C := (S.N M : ℝ) ^ 2) (by simp)).mul_prod h_integrable).mono'
-      (by have hc : Continuous (fun p : ℝ × ℝ => h p.2 * f (p.1 - p.2)) := by dsimp [h]; fun_prop
+    apply ((integrableOn_const (C := (S.N M : ℝ) ^ 2) (by simp)).mul_prod exponentialWeight_integrable).mono'
+      (by have hc : Continuous (fun p : ℝ × ℝ => exponentialWeight p.2 * f (p.1 - p.2)) := by dsimp [exponentialWeight]; fun_prop
           exact hc.aestronglyMeasurable)
     filter_upwards [] with p
-    have hh : 0 ≤ h p.2 := Real.exp_nonneg _
+    have hh : 0 ≤ exponentialWeight p.2 := Real.exp_nonneg _
     rw [Real.norm_eq_abs, abs_of_nonneg (mul_nonneg hh (hf0 _))]
     exact (mul_le_mul_of_nonneg_left (hfB _) hh).trans_eq (mul_comm _ _)
   have hinner (v : ℝ) : (∫ y in Icc (17 * L) (19 * L), f (y - v)) ≤
@@ -401,32 +401,32 @@ private lemma smoothed_localization (S : Spectrum) (M : ℝ) {L : ℝ} (hL : 0 �
         ← integral_Icc_eq_integral_Ioc]
       exact setIntegral_mono_set hf.integrableOn_Icc (Eventually.of_forall hf0)
         (Eventually.of_forall (fun y hy => ⟨by linarith [hy.1, hv'.2], by linarith [hy.2, hv'.1]⟩))
-  have himajor : Integrable (fun v : ℝ => h v *
+  have himajor : Integrable (fun v : ℝ => exponentialWeight v *
       (W + if L < |v| then 2 * L * (S.N M : ℝ) ^ 2 else 0)) := by
-    have hi := (h_integrable.mul_const (2 * L * (S.N M : ℝ) ^ 2)).indicator
+    have hi := (exponentialWeight_integrable.mul_const (2 * L * (S.N M : ℝ) ^ 2)).indicator
       (isOpen_lt (f := fun _ : ℝ => L) continuous_const continuous_abs).measurableSet
-    convert (h_integrable.mul_const W).add hi using 1
+    convert (exponentialWeight_integrable.mul_const W).add hi using 1
     funext v
     simp only [indicator_apply, Pi.add_apply, mem_ofPred_eq]
     split_ifs <;> ring
-  have hpinner : Integrable (fun v : ℝ => h v * ∫ y in Icc (17 * L) (19 * L), f (y-v)) := by
+  have hpinner : Integrable (fun v : ℝ => exponentialWeight v * ∫ y in Icc (17 * L) (19 * L), f (y-v)) := by
     simpa only [integral_const_mul] using hp.integral_prod_right
   have hbound := integral_mono hpinner himajor
-    (fun v => mul_le_mul_of_nonneg_left (hinner v) (show 0 ≤ h v from Real.exp_nonneg _))
-  have hemajor : (∫ v : ℝ, h v * (W + if L < |v| then 2 * L * (S.N M : ℝ) ^ 2 else 0)) =
+    (fun v => mul_le_mul_of_nonneg_left (hinner v) (show 0 ≤ exponentialWeight v from Real.exp_nonneg _))
+  have hemajor : (∫ v : ℝ, exponentialWeight v * (W + if L < |v| then 2 * L * (S.N M : ℝ) ^ 2 else 0)) =
       W + 2 * L * (S.N M : ℝ) ^ 2 * Real.exp (-2 * L) := by
-    have hi := (h_integrable.mul_const (2 * L * (S.N M : ℝ) ^ 2)).indicator
+    have hi := (exponentialWeight_integrable.mul_const (2 * L * (S.N M : ℝ) ^ 2)).indicator
       (isOpen_lt (f := fun _ : ℝ => L) continuous_const continuous_abs).measurableSet
-    have he : (fun v : ℝ => h v * (W + if L < |v| then 2 * L * (S.N M : ℝ) ^ 2 else 0)) =
-        (fun v => h v * W) + {v : ℝ | L < |v|}.indicator
-          (fun v => h v * (2 * L * (S.N M : ℝ) ^ 2)) := by
+    have he : (fun v : ℝ => exponentialWeight v * (W + if L < |v| then 2 * L * (S.N M : ℝ) ^ 2 else 0)) =
+        (fun v => exponentialWeight v * W) + {v : ℝ | L < |v|}.indicator
+          (fun v => exponentialWeight v * (2 * L * (S.N M : ℝ) ^ 2)) := by
       funext v
       simp only [Pi.add_apply, indicator_apply, mem_ofPred_eq]
       split_ifs <;> ring
     rw [he]
-    change (∫ v : ℝ, h v * W + {v : ℝ | L < |v|}.indicator
-      (fun v => h v * (2 * L * (S.N M : ℝ) ^ 2)) v) = _
-    rw [integral_add (h_integrable.mul_const W) hi, integral_mul_const, h_mass,
+    change (∫ v : ℝ, exponentialWeight v * W + {v : ℝ | L < |v|}.indicator
+      (fun v => exponentialWeight v * (2 * L * (S.N M : ℝ) ^ 2)) v) = _
+    rw [integral_add (exponentialWeight_integrable.mul_const W) hi, integral_mul_const, exponentialWeight_mass,
       integral_indicator
         (isOpen_lt (f := fun _ : ℝ => L) continuous_const continuous_abs).measurableSet,
       integral_mul_const, h_tail hL]
@@ -434,8 +434,8 @@ private lemma smoothed_localization (S : Spectrum) (M : ℝ) {L : ℝ} (hL : 0 �
   rw [hemajor] at hbound
   rw [intervalIntegral.integral_of_le hab, ← integral_Icc_eq_integral_Ioc,
     integral_integral_swap hp]
-  have he : (∫ v : ℝ, ∫ y in Icc (17 * L) (19 * L), h v * f (y - v)) =
-      ∫ v : ℝ, h v * ∫ y in Icc (17 * L) (19 * L), f (y-v) := by
+  have he : (∫ v : ℝ, ∫ y in Icc (17 * L) (19 * L), exponentialWeight v * f (y - v)) =
+      ∫ v : ℝ, exponentialWeight v * ∫ y in Icc (17 * L) (19 * L), f (y-v) := by
     simp_rw [integral_const_mul]
   rw [he]
   simpa only [W, intervalIntegral.integral_of_le hcd, integral_Icc_eq_integral_Ioc, f] using hbound
@@ -472,7 +472,7 @@ private lemma smoothed_window_lower (S : Spectrum) (hN : CountAsymptotic S)
     ∀ᶠ M : ℝ in atTop,
       (1 / (16 * Real.pi)) * M * Real.log M ^ 2 ≤
         ∫ y in (17 * Real.log M)..(19 * Real.log M),
-          ∫ v : ℝ, h v * hardCos S M (y-v) ^ 2 := by
+          ∫ v : ℝ, exponentialWeight v * hardCos S M (y-v) ^ 2 := by
   let c : ℝ := 1 / (48 * Real.pi)
   have hc : 0 < c := by dsimp [c]; positivity
   filter_upwards [hMont (1/3) (by norm_num), crossBudget_small S hN hc,
@@ -487,7 +487,7 @@ private lemma smoothed_window_lower (S : Spectrum) (hN : CountAsymptotic S)
       M * Real.log M / (2 * Real.pi) * montgomery S (y / Real.log M) M) :=
     ((montgomery_continuous S M).comp (continuous_id.div_const _)).const_mul _
   have heq : 2 * (∫ y in (17 * Real.log M)..(19 * Real.log M),
-      ∫ v : ℝ, h v * hardCos S M (y-v) ^ 2) =
+      ∫ v : ℝ, exponentialWeight v * hardCos S M (y-v) ^ 2) =
       (M * Real.log M ^ 2 / (2 * Real.pi)) *
         (∫ α in (17 : ℝ)..19, montgomery S α M) +
       (∫ y in (17 * Real.log M)..(19 * Real.log M), sumFrequency S M y) := by

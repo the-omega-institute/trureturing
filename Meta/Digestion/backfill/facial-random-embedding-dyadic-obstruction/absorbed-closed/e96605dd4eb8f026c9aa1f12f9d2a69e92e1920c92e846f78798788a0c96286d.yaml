@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:e96605dd4eb8f026c9aa1f12f9d2a69e92e1920c92e846f78798788a0c96286d
-  normalized_sha256: sha256:e96605dd4eb8f026c9aa1f12f9d2a69e92e1920c92e846f78798788a0c96286d
-cas_ref: sha256:e96605dd4eb8f026c9aa1f12f9d2a69e92e1920c92e846f78798788a0c96286d
-coverage_gids:
-  - gid: D5/S3/Combinatorics/FacialRandomEmbeddings/K4SignedRotation.result
-    target_statement_id: sha256:17126475eafa80ea4a74a35a7a8d8fa5fd1a68624bc52d00d43d1be4607a7d34
-receipts:
-  unresolved_subitems: []

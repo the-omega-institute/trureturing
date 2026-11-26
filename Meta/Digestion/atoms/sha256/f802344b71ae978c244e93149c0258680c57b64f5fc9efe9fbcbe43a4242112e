@@ -1,9 +1,0 @@
-**Proof.** Induct over the finite event: the common seed and equal response
-prefix give the same next action, then the same next response and update. The
-output record is equal on $E$. Its restricted law is dominated by each source
-law; taking the greatest common dominated measure gives the meet. ∎
-
-This is the stochastic counterpart of same-source event preservation. It does
-not say that all sourcewise optimal resource tails are jointly attainable; the
-common seed and one rule are the joint-realizability condition.
-

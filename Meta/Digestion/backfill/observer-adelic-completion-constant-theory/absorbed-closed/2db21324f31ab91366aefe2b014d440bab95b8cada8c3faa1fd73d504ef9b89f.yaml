@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:2db21324f31ab91366aefe2b014d440bab95b8cada8c3faa1fd73d504ef9b89f
-  normalized_sha256: sha256:2db21324f31ab91366aefe2b014d440bab95b8cada8c3faa1fd73d504ef9b89f
-cas_ref: sha256:2db21324f31ab91366aefe2b014d440bab95b8cada8c3faa1fd73d504ef9b89f
-coverage_gids:
-  - gid: D5/S0/Asymptotics/MetallicMinimum.metallic_value_minimal_nontrivial
-    target_statement_id: sha256:1ce969f4d45227805aafed674b3c4eb9d9a983d66edc44d3e832974395482407
-receipts:
-  unresolved_subitems: []

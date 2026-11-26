@@ -148,7 +148,7 @@ private theorem halfEnergy_eq_signedOddWeight_half (D : LatticeData) (d : Index 
 
 /-- Derived from the original monomial theorem by polynomial expansion.
 H is constrained only by its two inverse laws, never by a metric. -/
-private theorem L_zero_of_homogeneous_int (D : LatticeData)
+theorem L_zero_of_homogeneous_int (D : LatticeData)
     (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
     (hHG : H * gramComplex D = 1) (hGH : gramComplex D * H = 1)
     (p : Oscillator D) (z : ℤ)

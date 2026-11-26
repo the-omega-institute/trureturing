@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:d95d61a7577e85fa26b2167b3b07e8761d8aa3df53a717daace5a956ef1c5fb6
-  normalized_sha256: sha256:d95d61a7577e85fa26b2167b3b07e8761d8aa3df53a717daace5a956ef1c5fb6
-cas_ref: sha256:d95d61a7577e85fa26b2167b3b07e8761d8aa3df53a717daace5a956ef1c5fb6
-coverage_gids:
-  - gid: D5/S3/Fourier/CharacterSelection/BinaryCharacterCodeDuality.character_code_eq_relation_space_orthogonal
-    target_statement_id: sha256:88718e2da760f19b401a288bd5a0a123c5bc1e59421fd070e6bbbc335721ffc2
-receipts:
-  unresolved_subitems: []

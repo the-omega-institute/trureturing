@@ -1,0 +1,64 @@
+name: Use a compatible previous Lean Release
+description: Select or recover the pinned Release used to seed a protected publication
+inputs:
+  operation:
+    description: select-base or install-base
+    required: true
+  mode:
+    description: production or verification
+    required: true
+  previous-commit-only:
+    description: Verify rolling publication from a strictly older source
+    default: 'false'
+  tag:
+    description: Previously selected tag to install
+    default: ''
+  producer:
+    description: Previously selected producer commit
+    default: ''
+  manifest:
+    description: Previously selected manifest digest
+    default: ''
+outputs:
+  found:
+    description: A compatible snapshot was found
+    value: ${{ steps.base.outputs.found }}
+  tag:
+    description: Selected Release tag
+    value: ${{ steps.base.outputs.tag }}
+  producer:
+    description: Selected producer commit
+    value: ${{ steps.base.outputs.producer }}
+  manifest:
+    description: Selected manifest digest
+    value: ${{ steps.base.outputs.manifest_sha256 }}
+runs:
+  using: composite
+  steps:
+    - id: base
+      shell: bash
+      env:
+        OPERATION: ${{ inputs.operation }}
+        RELEASE_MODE: ${{ inputs.mode }}
+        PREVIOUS_COMMIT_ONLY: ${{ inputs.previous-commit-only }}
+        PREVIOUS_TAG: ${{ inputs.tag }}
+        PREVIOUS_SHA: ${{ inputs.producer }}
+        PREVIOUS_MANIFEST: ${{ inputs.manifest }}
+      run: |
+        case "$RELEASE_MODE" in
+          production) ref=refs/heads/dev ;;
+          verification) ref="$GITHUB_REF" ;;
+          *) exit 2 ;;
+        esac
+        args=(--mode "$RELEASE_MODE" --source-ref "$ref" --source-commit "$(git rev-parse HEAD)")
+        case "$OPERATION" in
+          select-base)
+            if [[ "$PREVIOUS_COMMIT_ONLY" == true ]]; then args+=(--previous-commit-only); fi
+            ;;
+          install-base)
+            [[ -n "$PREVIOUS_TAG" && -n "$PREVIOUS_SHA" && -n "$PREVIOUS_MANIFEST" ]]
+            args+=(--tag "$PREVIOUS_TAG" --producer "$PREVIOUS_SHA" --manifest-sha256 "$PREVIOUS_MANIFEST")
+            ;;
+          *) exit 2 ;;
+        esac
+        python3 tools/scripts/worktree/lean_cache_release.py "$OPERATION" "${args[@]}"

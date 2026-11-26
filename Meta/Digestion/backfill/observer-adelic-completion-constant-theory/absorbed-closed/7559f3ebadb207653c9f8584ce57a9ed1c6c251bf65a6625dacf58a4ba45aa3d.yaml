@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:7559f3ebadb207653c9f8584ce57a9ed1c6c251bf65a6625dacf58a4ba45aa3d
-  normalized_sha256: sha256:7559f3ebadb207653c9f8584ce57a9ed1c6c251bf65a6625dacf58a4ba45aa3d
-cas_ref: sha256:7559f3ebadb207653c9f8584ce57a9ed1c6c251bf65a6625dacf58a4ba45aa3d
-coverage_gids:
-  - gid: D5/S3/Analytic/Adelic/FiniteToroidalFrameReconstruction.finite_toroidal_frame_reconstruction
-    target_statement_id: sha256:452a48824c2999ee190c07c4f153a27f81c77cdfb76dab4e17c54b6a21d9168f
-receipts:
-  unresolved_subitems: []

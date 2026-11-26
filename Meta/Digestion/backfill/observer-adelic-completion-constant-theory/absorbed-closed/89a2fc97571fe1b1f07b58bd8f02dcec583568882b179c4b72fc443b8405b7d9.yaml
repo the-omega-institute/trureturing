@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:89a2fc97571fe1b1f07b58bd8f02dcec583568882b179c4b72fc443b8405b7d9
-  normalized_sha256: sha256:89a2fc97571fe1b1f07b58bd8f02dcec583568882b179c4b72fc443b8405b7d9
-cas_ref: sha256:89a2fc97571fe1b1f07b58bd8f02dcec583568882b179c4b72fc443b8405b7d9
-coverage_gids:
-  - gid: D5/S3/Analytic/Isolation/PositiveDeterminantCoefficientCompactness.positive_determinant_coefficient_compactness
-    target_statement_id: sha256:806b5a211d7991ec362eb5930ddd752d25d7d356f3fc6e882b64dc1aaf13f54a
-receipts:
-  unresolved_subitems: []

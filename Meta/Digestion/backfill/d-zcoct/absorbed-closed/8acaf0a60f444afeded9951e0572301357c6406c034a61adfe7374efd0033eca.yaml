@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:8acaf0a60f444afeded9951e0572301357c6406c034a61adfe7374efd0033eca
-  normalized_sha256: sha256:8acaf0a60f444afeded9951e0572301357c6406c034a61adfe7374efd0033eca
-cas_ref: sha256:8acaf0a60f444afeded9951e0572301357c6406c034a61adfe7374efd0033eca
-coverage_gids:
-  - gid: D5/S3/Weil/PrimeAddress/VonMangoldtRecurrence.vonMangoldt_no_eventual_complex_linear_recurrence
-    target_statement_id: sha256:ca7e9efff8c11d746a31dd8402501291f7adc556b5d766dc63c4eb0dde37b051
-receipts:
-  unresolved_subitems: []

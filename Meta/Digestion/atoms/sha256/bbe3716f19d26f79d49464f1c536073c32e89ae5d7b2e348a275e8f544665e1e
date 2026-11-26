@@ -1,5 +1,0 @@
-**定理 124.8（误差趋零与唯一连续延拓的等价）。** 对固定有限 $d\ge1$ 和任意 $T:X_{\rm fs}\to\mathcal D_d$，以下四项等价：
-
-1. $\lim_{k\to\infty}e_k(T)=0$。
-2. $\lim_{k\to\infty}\omega_k(T)=0$。
-3. $T:(X_{\rm fs},p)\to(\mathcal D_d,D)$ 一致连续，即

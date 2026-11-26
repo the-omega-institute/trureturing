@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:b0c9cb8afb90b1ead13d718338a8e23181ab97fa2e39ccd34d780db917db8daf
-  normalized_sha256: sha256:b0c9cb8afb90b1ead13d718338a8e23181ab97fa2e39ccd34d780db917db8daf
-cas_ref: sha256:b0c9cb8afb90b1ead13d718338a8e23181ab97fa2e39ccd34d780db917db8daf
-coverage_gids:
-  - gid: D5/S3/Observer/AgencyHolonomy/PrimeFrequencyPhaseFlow.fourier_phase_character_laws
-    target_statement_id: sha256:02823f254b402c74572c51a80be747cc216a299828612a45227575f01d264a95
-receipts:
-  unresolved_subitems: []

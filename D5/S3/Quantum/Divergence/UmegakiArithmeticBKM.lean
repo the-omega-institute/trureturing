@@ -47,10 +47,10 @@ private lemma affine_pos (a b u : ℝ) (ha : 0 < a) (hb : 0 < b)
   · have hp : 0 < 1-u := sub_pos.mpr (lt_of_le_of_ne hu.2 h)
     exact add_pos_of_pos_of_nonneg (mul_pos hp ha) (mul_nonneg hu.1 hb.le)
 
-private def matrixHS : Matrix ι ι ℂ ≃ₗ[ℂ] HSOp (EuclideanSpace ℂ ι) :=
+def matrixHS : Matrix ι ι ℂ ≃ₗ[ℂ] HSOp (EuclideanSpace ℂ ι) :=
   Matrix.toEuclideanLin.trans hsLinearMapEquiv.symm
 
-private lemma arithmetic_apply (Z X : Matrix ι ι ℂ) (u : ℝ) :
+lemma arithmetic_apply (Z X : Matrix ι ι ℂ) (u : ℝ) :
     hsArithmeticMap Z u (matrixHS X) =
       matrixHS ((1-u) • (Z * X) + u • (X * Z)) := by
   apply hsLinearMapEquiv.injective
@@ -151,7 +151,7 @@ private lemma inverseCandidate_left (Z : Matrix ι ι ℂ) (hZ : Z.PosDef) (u : 
   rw [matrixHS.symm_apply_apply, arithmetic_apply, schurInverse_left Z X hZ u hu]
   rfl
 
-private lemma hsArithmeticMap_isInvertible (Z : Matrix ι ι ℂ) (u : ℝ) (hZ : Z.PosDef)
+lemma hsArithmeticMap_isInvertible (Z : Matrix ι ι ℂ) (u : ℝ) (hZ : Z.PosDef)
     (hu : u ∈ Set.Icc (0 : ℝ) 1) :
     (hsArithmeticMap Z u).IsInvertible := by
   let M := hsArithmeticMap Z u
@@ -189,7 +189,7 @@ private lemma hsArithmeticMap_inverse_apply (Z X : Matrix ι ι ℂ) (u : ℝ) (
       HSOp (EuclideanSpace ℂ ι) => F (matrixHS X)) hleft
   simpa [M, Q, inverseCandidate, ContinuousLinearMap.comp_apply] using h.symm
 
-private lemma affineKernel_integrable (a b : ℝ) (ha : 0 < a) (hb : 0 < b) :
+lemma affineKernel_integrable (a b : ℝ) (ha : 0 < a) (hb : 0 < b) :
     IntervalIntegrable (fun u : ℝ => ((1-u)*a+u*b)⁻¹) volume 0 1 := by
   apply ContinuousOn.intervalIntegrable
   simp only [Set.uIcc_of_le zero_le_one]
@@ -222,7 +222,7 @@ private lemma affineKernel_eq_pair (a b : ℝ) (ha : 0 < a) (hb : 0 < b) :
     field_simp
     ring
 
-private lemma hsInner_matrix (X Y : Matrix ι ι ℂ) :
+lemma hsInner_matrix (X Y : Matrix ι ι ℂ) :
     inner ℂ (ofOp ((Matrix.toEuclideanCLM (n := ι) (𝕜 := ℂ)) X))
       (matrixHS Y) = (Xᴴ * Y).trace := by
   change inner ℂ (ofOp ((Matrix.toEuclideanCLM (n := ι) (𝕜 := ℂ)) X))
@@ -265,7 +265,7 @@ private lemma trace_hadjoint_resolvent (Z H : Matrix ι ι ℂ) (hZ : Z.PosDef)
   rw [hcyc]
   simpa [R, U, one_div, _root_.mul_inv_rev, mul_comm, mul_left_comm, mul_assoc] using h
 
-private lemma hs_pair_spectral (Z H : Matrix ι ι ℂ) (hZ : Z.PosDef) (u : ℝ)
+lemma hs_pair_spectral (Z H : Matrix ι ι ℂ) (hZ : Z.PosDef) (u : ℝ)
     (hu : u ∈ Set.Icc (0 : ℝ) 1) :
     Complex.re (inner ℂ
       (ofOp ((Matrix.toEuclideanCLM (n := ι) (𝕜 := ℂ)) H))

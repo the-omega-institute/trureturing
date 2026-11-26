@@ -1,4 +1,0 @@
-**来源 1200.1（解析结果与项目结构）。** 第 1181–1189 节使用第 1170 节的权重界、乘积概率展开、凸性及有限容量补全，给出所列解析推导。单一来源质量与完整来源熵仍按前述共同信息文献的定义分别使用；本批没有将新列的峰值公式和摘要极值归称为那些论文的既有完整结论，也不作原创申报。另核读 Yu–Tan，[*Common Information, Noise Stability, and Their Extensions*, arXiv:2211.01788v1](https://arxiv.org/abs/2211.01788v1)，第 7.3 节、命题 7.3.1 及证明，PDF 第 117–119 页。该命题将二元单次生成的无穷阶 Rényi 来源熵与最大可容纳乘积质量联系，并用点质量补全余量；本批未将其二元陈述直接冒称为这里的全部奇偶极值公式。该文使用以二为底的量，本卷熵采用自然对数；概率权重本身不因换底而改变。
-
-项目核读 `D5/S3/ConceptDynamics/Sufficiency/QueryFamilyIdentification.lean` 与 `D5/S3/ConceptDynamics/RefinementFactorization/SufficiencyEscapeEquivalence.lean`，保留联合查询、实际读数像与非空条件的范围。源代码阅读不等于当前 kernel 或 axiom 闭包验证。
-

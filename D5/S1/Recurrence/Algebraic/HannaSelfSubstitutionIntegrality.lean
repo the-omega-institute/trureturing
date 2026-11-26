@@ -29,7 +29,7 @@ power_lift: proof_shape: bind-only; escape_witness: none; consumers: D5.S1.Recur
 rescale_frobenius: proof_shape: bind-only; escape_witness: none; consumers: D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.preserve_integer_ghost.
 logSum_sub: proof_shape: bind-only; escape_witness: none; consumers: D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.exp_logSum_integral_of_divisibility.
 logSum_subst_power: proof_shape: bind-only; escape_witness: none; consumers: D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.exp_logSum_integral_of_divisibility.
-exp_logSum_integral_of_divisibility: proof_shape: bind-only; escape_witness: none; consumers: D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.preserve_integer_ghost.
+exp_logSum_integral_of_divisibility: proof_shape: bind-only; escape_witness: none; consumers: D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.preserve_integer_ghost, D5.S1.Recurrence.Algebraic.HannaA155201BivariateIntegrality.result.
 preserve_integer_ghost: proof_shape: bind-only; escape_witness: none; consumers: D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.result.
 integral_input_ghost: proof_shape: bind-only; escape_witness: none; consumers: D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.result.
 result: proof_shape: bind-only; escape_witness: none; consumers: D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegralityA157675.result.
@@ -289,7 +289,7 @@ private theorem logSum_subst_power (p : ℕ) (hp : p ≠ 0) (f : ℕ → PowerSe
       simp [hnn]
     · simp [hpn]
 
-private theorem exp_logSum_integral_of_divisibility
+theorem exp_logSum_integral_of_divisibility
     (f : ℕ → PowerSeries ℤ)
     (hf : ∀ p : ℕ, p.Prime → ∀ n : ℕ, n ≠ 0 →
       (p : PowerSeries ℤ) ^ padicValNat p n ∣

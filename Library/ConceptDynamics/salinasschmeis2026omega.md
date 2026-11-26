@@ -16,7 +16,7 @@ triage: anchor
 
 Conventions and Notation on page 2 states: “An $\omega$-chain of a poset $P$ is a subset of $P$ that is order-isomorphic to $\omega$ under the ordering inherited from $P$.”
 
-Question 2.3 on page 2 asks: “Given a poset $P$ with no maximal element, when can the maximal family $\mathcal{D}$ of disjoint $\omega$-chains in $P$ given by Lemma $\ref{spanning_set}$ be taken such that $\bigcup \mathcal{D}=P$? That is, when can $P$ be partitioned into $\omega$-chains?”
+Question 2.3 on page 3 asks: “Given a poset $P$ with no maximal element, when can the maximal family $\mathcal{D}$ of disjoint $\omega$-chains in $P$ given by Lemma $\ref{spanning_set}$ be taken such that $\bigcup \mathcal{D}=P$? That is, when can $P$ be partitioned into $\omega$-chains?”
 
 Question 2.32 on page 14 states: “Let $P$ be a poset. Does there exist a minimal extension $Q$ of $P$ which can be partitioned into $\omega$-chains? Here by minimal we mean that if $Q'$ is any extension of $P$ which can be partitioned into $\omega$-chains, then $Q$ is order-isomorphic to a subposet of $Q'$.”
 

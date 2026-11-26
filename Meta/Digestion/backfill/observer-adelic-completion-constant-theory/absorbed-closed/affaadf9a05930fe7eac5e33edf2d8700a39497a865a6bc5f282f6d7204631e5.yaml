@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:affaadf9a05930fe7eac5e33edf2d8700a39497a865a6bc5f282f6d7204631e5
-  normalized_sha256: sha256:affaadf9a05930fe7eac5e33edf2d8700a39497a865a6bc5f282f6d7204631e5
-cas_ref: sha256:affaadf9a05930fe7eac5e33edf2d8700a39497a865a6bc5f282f6d7204631e5
-coverage_gids:
-  - gid: D5/S3/Arith/Lattices/FiveModularLatticeSimilarity.five_modular_lattice_similarity
-    target_statement_id: sha256:2356984cc2616e24b3900b7890d68b8d45fae36edde70b261d02b2e9dde9487a
-receipts:
-  unresolved_subitems: []

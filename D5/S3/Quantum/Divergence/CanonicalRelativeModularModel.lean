@@ -117,6 +117,85 @@ def actual_kraus_representation (Φ : QuantumChannel a b) : ActualKrausRepresent
 
 #print axioms actual_kraus_representation
 
+section KrausAdjoint
+variable {α : Type u} {β : Type v} {κ : Type*}
+  [Fintype α] [DecidableEq α] [Fintype β] [DecidableEq β]
+  [Fintype κ] [DecidableEq κ]
+
+/-- The trace adjoint associated with a Kraus family. -/
+def krausAdjoint (kraus : κ → Matrix β α ℂ) (Y : Matrix β β ℂ) : Matrix α α ℂ :=
+  ∑ c, (kraus c)ᴴ * Y * kraus c
+
+theorem krausAdjoint_star (kraus : κ → Matrix β α ℂ) (Y : Matrix β β ℂ) :
+    krausAdjoint kraus Yᴴ = (krausAdjoint kraus Y)ᴴ := by
+  simp only [krausAdjoint, Matrix.conjTranspose_sum, Matrix.conjTranspose_mul,
+    Matrix.conjTranspose_conjTranspose, Matrix.mul_assoc]
+
+/-- The Kraus column in output-index-first coordinates. -/
+def krausColumn (kraus : κ → Matrix β α ℂ) : Matrix (β × κ) α ℂ :=
+  fun bc i => kraus bc.2 bc.1 i
+
+theorem krausColumn_isometry (kraus : κ → Matrix β α ℂ)
+    (hkraus : (∑ c, (kraus c)ᴴ * kraus c) = 1) :
+    (krausColumn kraus)ᴴ * krausColumn kraus = 1 := by
+  rw [← hkraus]
+  ext i j
+  change (∑ bc : β × κ, star (kraus bc.2 bc.1 i) * kraus bc.2 bc.1 j) =
+    (∑ c, (kraus c)ᴴ * kraus c) i j
+  simp only [Matrix.sum_apply, Matrix.mul_apply, Matrix.conjTranspose_apply, Fintype.sum_prod_type]
+  rw [Finset.sum_comm]
+
+theorem krausAdjoint_compression (kraus : κ → Matrix β α ℂ) (Y : Matrix β β ℂ) :
+    (krausColumn kraus)ᴴ * Matrix.blockDiagonal (fun _ : κ => Y) * krausColumn kraus =
+      krausAdjoint kraus Y := by
+  ext i j
+  rw [krausAdjoint, Matrix.sum_apply]
+  change (∑ bc : β × κ, (∑ bd : β × κ, star (kraus bd.2 bd.1 i) *
+    (if bd.2 = bc.2 then Y bd.1 bc.1 else 0)) * kraus bc.2 bc.1 j) =
+      ∑ c : κ, ∑ x : β, (∑ y : β, star (kraus c y i) * Y y x) * kraus c x j
+  simp only [Fintype.sum_prod_type, mul_ite, mul_zero, Finset.sum_ite_eq', Finset.mem_univ, if_true]
+  rw [Finset.sum_comm]
+
+private theorem krausAdjoint_schwarz (kraus : κ → Matrix β α ℂ)
+    (hkraus : (∑ c, (kraus c)ᴴ * kraus c) = 1) (Y : Matrix β β ℂ) :
+    (krausAdjoint kraus Y)ᴴ * krausAdjoint kraus Y ≤ krausAdjoint kraus (Yᴴ * Y) := by
+  let W := krausColumn kraus
+  have hW : Wᴴ * W = 1 := krausColumn_isometry kraus hkraus
+  have schwarz (Y : Matrix (β × κ) (β × κ) ℂ) : (Wᴴ * Y * W)ᴴ * (Wᴴ * Y * W) ≤ Wᴴ * (Yᴴ * Y) * W := by
+    have hid : (W * Wᴴ) * (W * Wᴴ) = W * Wᴴ := by
+      calc
+        (W * Wᴴ) * (W * Wᴴ) = W * (Wᴴ * W) * Wᴴ := by
+          simp only [Matrix.mul_assoc]
+        _ = W * Wᴴ := by rw [hW, Matrix.mul_one]
+    have hp : (1 - W * Wᴴ)ᴴ * (1 - W * Wᴴ) = 1 - W * Wᴴ := by
+      rw [Matrix.conjTranspose_sub, Matrix.conjTranspose_one, Matrix.conjTranspose_mul, Matrix.conjTranspose_conjTranspose]
+      simp only [Matrix.mul_sub, Matrix.sub_mul, Matrix.one_mul, Matrix.mul_one, hid]; abel
+    have hpos : (1 - W * Wᴴ).PosSemidef := by
+      rw [← hp]; exact Matrix.posSemidef_conjTranspose_mul_self _
+    have hfactor := hpos.mul_mul_conjTranspose_same (Wᴴ * Yᴴ); apply Matrix.le_iff.mpr; simpa only [Matrix.conjTranspose_mul, Matrix.conjTranspose_conjTranspose,
+      Matrix.mul_sub, Matrix.sub_mul, Matrix.mul_one, Matrix.mul_assoc] using hfactor
+  have h := schwarz (Matrix.blockDiagonal (fun _ : κ => Y))
+  change ((krausColumn kraus)ᴴ * _ * krausColumn kraus)ᴴ *
+    ((krausColumn kraus)ᴴ * _ * krausColumn kraus) ≤ (krausColumn kraus)ᴴ * _ * krausColumn kraus at h
+  rw [Matrix.blockDiagonal_conjTranspose, ← Matrix.blockDiagonal_mul,
+    krausAdjoint_compression, krausAdjoint_compression] at h
+  exact h
+
+end KrausAdjoint
+
+omit [Nonempty a] [Nonempty b] in
+/-- The canonical normalized Kraus adjoint pairs with the actual channel. -/
+theorem actual_kraus_trace_pair (Φ : QuantumChannel a b)
+    (X : Matrix a a ℂ) (Y : Matrix b b ℂ) :
+    (X * krausAdjoint (actual_kraus_representation Φ).kraus Y).trace =
+      (CStarMatrix.ofMatrix.symm (Φ.toCompletelyPositiveMap (CStarMatrix.ofMatrix X)) * Y).trace := by
+  rw [(actual_kraus_representation Φ).haction X, krausAdjoint, Matrix.mul_sum,
+    Matrix.sum_mul, Matrix.trace_sum, Matrix.trace_sum]
+  apply Finset.sum_congr rfl
+  intro c _
+  let K := (actual_kraus_representation Φ).kraus c
+  simpa only [Matrix.mul_assoc] using Matrix.trace_mul_cycle (X * Kᴴ) Y K
+
 /-- The actual Kraus family and density spectral witnesses used by the supported DPI proof. -/
 structure SupportedRelativeModularData (Φ : QuantumChannel a b) (ρ σ : DensityState a) where
   kraus : Fin (Fintype.card b) × Fin (Fintype.card a) → Matrix b a ℂ
@@ -234,49 +313,18 @@ def supported_relative_modular_model (Φ : QuantumChannel a b) (ρ σ : DensityS
   let kraus := representation.kraus
   have hkraus := representation.hkraus
   have haction := representation.haction
-  let κ := Fin (Fintype.card b) × Fin (Fintype.card a); let Ψ := fun Y : Matrix b b ℂ => ∑ c, (kraus c)ᴴ * Y * kraus c; have adjointStar (Y : Matrix b b ℂ) : Ψ Yᴴ = (Ψ Y)ᴴ := by
-    simp only [Ψ, Matrix.conjTranspose_sum, Matrix.conjTranspose_mul, Matrix.conjTranspose_conjTranspose, Matrix.mul_assoc]
-
-  have schwarzFamily
-      {α : Type u} {β : Type v} {κ : Type} [Fintype α] [DecidableEq α] [Fintype β] [DecidableEq β] [Fintype κ] [DecidableEq κ] (kraus : κ → Matrix β α ℂ)
-      (hkraus : (∑ c, (kraus c)ᴴ * kraus c) = 1) :
-      let Ψ := fun Y : Matrix β β ℂ => ∑ c, (kraus c)ᴴ * Y * kraus c
-      ∀ Y, (Ψ Y)ᴴ * Ψ Y ≤ Ψ (Yᴴ * Y) := by
-    classical
-    let Ψ := fun Y : Matrix β β ℂ => ∑ c, (kraus c)ᴴ * Y * kraus c; change ∀ Y, (Ψ Y)ᴴ * Ψ Y ≤ Ψ (Yᴴ * Y); let W : Matrix (β × κ) α ℂ := fun bc i => kraus bc.2 bc.1 i
-    have hW : Wᴴ * W = 1 := by
-      have heq : Wᴴ * W = ∑ c, (kraus c)ᴴ * kraus c := by
-        ext i j; change (∑ bc : β × κ, star (kraus bc.2 bc.1 i) * kraus bc.2 bc.1 j) = (∑ c, (kraus c)ᴴ * kraus c) i j
-        simp only [Matrix.sum_apply, Matrix.mul_apply, Matrix.conjTranspose_apply, Fintype.sum_prod_type]
-        rw [Finset.sum_comm]
-      rw [heq, hkraus]
-    have action (Y : Matrix β β ℂ) : Wᴴ * Matrix.blockDiagonal (fun _ : κ => Y) * W = Ψ Y := by
-      ext i j; dsimp only [Ψ]; rw [Matrix.sum_apply]; change (∑ bc : β × κ, (∑ bd : β × κ, star (kraus bd.2 bd.1 i) * (if bd.2 = bc.2 then Y bd.1 bc.1 else 0)) * kraus bc.2 bc.1 j) =
-        ∑ c : κ, ∑ x : β, (∑ y : β, star (kraus c y i) * Y y x) * kraus c x j
-      simp only [Fintype.sum_prod_type, mul_ite, mul_zero, Finset.sum_ite_eq', Finset.mem_univ, if_true]
-      rw [Finset.sum_comm]
-    have schwarz (Y : Matrix (β × κ) (β × κ) ℂ) : (Wᴴ * Y * W)ᴴ * (Wᴴ * Y * W) ≤ Wᴴ * (Yᴴ * Y) * W := by
-      have hid : (W * Wᴴ) * (W * Wᴴ) = W * Wᴴ := by
-        calc
-          (W * Wᴴ) * (W * Wᴴ) = W * (Wᴴ * W) * Wᴴ := by
-            simp only [Matrix.mul_assoc]
-          _ = W * Wᴴ := by rw [hW, Matrix.mul_one]
-      have hp : (1 - W * Wᴴ)ᴴ * (1 - W * Wᴴ) = 1 - W * Wᴴ := by
-        rw [Matrix.conjTranspose_sub, Matrix.conjTranspose_one, Matrix.conjTranspose_mul, Matrix.conjTranspose_conjTranspose]
-        simp only [Matrix.mul_sub, Matrix.sub_mul, Matrix.one_mul, Matrix.mul_one, hid]; abel
-      have hpos : (1 - W * Wᴴ).PosSemidef := by
-        rw [← hp]; exact Matrix.posSemidef_conjTranspose_mul_self _
-      have hfactor := hpos.mul_mul_conjTranspose_same (Wᴴ * Yᴴ); apply Matrix.le_iff.mpr; simpa only [Matrix.conjTranspose_mul, Matrix.conjTranspose_conjTranspose,
-        Matrix.mul_sub, Matrix.sub_mul, Matrix.mul_one, Matrix.mul_assoc] using hfactor
-    intro Y; have h := schwarz (Matrix.blockDiagonal (fun _ : κ => Y)); rw [Matrix.blockDiagonal_conjTranspose, ← Matrix.blockDiagonal_mul, action, action] at h
-    exact h
-  have schwarzRight : ∀ Y : Matrix b b ℂ, (Ψ Y)ᴴ * Ψ Y ≤ Ψ (Yᴴ * Y) := by
-      simpa only [Ψ] using schwarzFamily (α := a) (β := b) (κ := κ) kraus hkraus
+  let κ := Fin (Fintype.card b) × Fin (Fintype.card a)
+  let Ψ := krausAdjoint kraus
+  have adjointStar (Y : Matrix b b ℂ) : Ψ Yᴴ = (Ψ Y)ᴴ :=
+    krausAdjoint_star kraus Y
+  have schwarzRight (Y : Matrix b b ℂ) : (Ψ Y)ᴴ * Ψ Y ≤ Ψ (Yᴴ * Y) :=
+    krausAdjoint_schwarz kraus hkraus Y
   have schwarzLeft (Y : Matrix b b ℂ) : Ψ Y * (Ψ Y)ᴴ ≤ Ψ (Y * Yᴴ) := by
     simpa only [adjointStar, Matrix.conjTranspose_conjTranspose] using schwarzRight Yᴴ
-  have tracePair (X : Matrix a a ℂ) (Y : Matrix b b ℂ) : Matrix.trace (X * Ψ Y) = Matrix.trace (CStarMatrix.ofMatrix.symm (Φ.toCompletelyPositiveMap (CStarMatrix.ofMatrix X)) * Y) := by
-    rw [haction X]; change Matrix.trace (X * (∑ c, (kraus c)ᴴ * Y * kraus c)) = _; rw [Matrix.mul_sum, Matrix.sum_mul, Matrix.trace_sum, Matrix.trace_sum]; apply Finset.sum_congr rfl
-    intro c _; simpa only [Matrix.mul_assoc] using Matrix.trace_mul_cycle (X * (kraus c)ᴴ) Y (kraus c)
+  have tracePair (X : Matrix a a ℂ) (Y : Matrix b b ℂ) :
+      (X * Ψ Y).trace =
+        (CStarMatrix.ofMatrix.symm (Φ.toCompletelyPositiveMap (CStarMatrix.ofMatrix X)) * Y).trace :=
+    actual_kraus_trace_pair Φ X Y
   have quadratic (X : Matrix a a ℂ) (y : b → ℂ) : star y ⬝ᵥ (∑ c, kraus c * X * (kraus c)ᴴ) *ᵥ y = ∑ c, star ((kraus c)ᴴ *ᵥ y) ⬝ᵥ X *ᵥ ((kraus c)ᴴ *ᵥ y) := by
     rw [Matrix.sum_mulVec, dotProduct_sum]; apply Finset.sum_congr rfl; intro c _; rw [← Matrix.mulVec_mulVec, ← Matrix.mulVec_mulVec, dotProduct_mulVec]
     have hv : star y ᵥ* kraus c = star ((kraus c)ᴴ *ᵥ y) := by
@@ -469,7 +517,7 @@ def supported_relative_modular_model (Φ : QuantumChannel a b) (ρ σ : DensityS
     dsimp only [spectralX]; rw [Matrix.sum_mulVec]; apply Finset.sum_congr rfl; intro lk _; rw [Matrix.smul_mulVec, outerAction, smul_smul]
   have adjointSpectralAction (x : L × K → ℂ) (i : I) : Ψ (spectralX x) *ᵥ u i = ∑ c : κ, ∑ lk : L × K, (x lk / (Real.sqrt (pk lk.2) : ℂ) * (star (z lk.2) ⬝ᵥ (kraus c *ᵥ u i))) •
               ((kraus c)ᴴ *ᵥ w lk.1) := by
-    dsimp only [Ψ]; rw [Matrix.sum_mulVec]; apply Finset.sum_congr rfl; intro c _; rw [← Matrix.mulVec_mulVec, ← Matrix.mulVec_mulVec, spectralAction, Matrix.mulVec_sum]
+    dsimp only [Ψ, krausAdjoint]; rw [Matrix.sum_mulVec]; apply Finset.sum_congr rfl; intro c _; rw [← Matrix.mulVec_mulVec, ← Matrix.mulVec_mulVec, spectralAction, Matrix.mulVec_sum]
     apply Finset.sum_congr rfl; intro lk _; rw [Matrix.mulVec_smul]
   have coordinateAction (x : L × K → ℂ) (ji : J × I) : (V *ᵥ x) ji = (Real.sqrt (ri ji.2) : ℂ) * (star (v ji.1) ⬝ᵥ (Ψ (spectralX x) *ᵥ u ji.2)) := by
     rw [adjointSpectralAction, dotProduct_sum]; simp only [dotProduct_sum, dotProduct_smul, Finset.mul_sum]; change (∑ lk : L × K, ((Real.sqrt (ri ji.2) / Real.sqrt (pk lk.2) : ℂ) *

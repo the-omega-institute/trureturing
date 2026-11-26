@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:ed88570a8c3bdeb64b38307dd553ad37509fb93919e85ae7488d8a54fb8cf1e5
-  normalized_sha256: sha256:ed88570a8c3bdeb64b38307dd553ad37509fb93919e85ae7488d8a54fb8cf1e5
-cas_ref: sha256:ed88570a8c3bdeb64b38307dd553ad37509fb93919e85ae7488d8a54fb8cf1e5
-coverage_gids:
-  - gid: D5/S3/Analytic/PrimeProducts/PrimePrecisionEntropyContraction.prime_precision_entropy_contraction
-    target_statement_id: sha256:1ba8a35c0ba2faee666b33ea59cafbdc0cb0c119fc35e91186b0a99ce18cb009
-receipts:
-  unresolved_subitems: []

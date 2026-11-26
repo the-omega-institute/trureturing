@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:2431d2381ca56775936513b15d1df43592eec383721c1c36f45f0da1559f6114
-  normalized_sha256: sha256:2431d2381ca56775936513b15d1df43592eec383721c1c36f45f0da1559f6114
-cas_ref: sha256:2431d2381ca56775936513b15d1df43592eec383721c1c36f45f0da1559f6114
-coverage_gids:
-  - gid: D5/S1/Digit/ZeckendorfResidueTransducer.zeckendorfResidueTransducer_correct
-    target_statement_id: sha256:1dffe269d2cf4a174a418e5a1db8cfb4c764744f42cdae9e22886b1e72b34753
-receipts:
-  unresolved_subitems: []

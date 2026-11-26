@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:7cb6705fba4418675bdada77cf1323466aeb0e1851ca78c63e27b9a089e2c026
-  normalized_sha256: sha256:7cb6705fba4418675bdada77cf1323466aeb0e1851ca78c63e27b9a089e2c026
-cas_ref: sha256:7cb6705fba4418675bdada77cf1323466aeb0e1851ca78c63e27b9a089e2c026
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/RefinementFactorization/InjectiveInterfaceTargetFactorization.injective_interface_factors_every_target
-    target_statement_id: sha256:26fe25d4a47a5c8ce9ee14bf47db6bb72a3b1fde1f6b73eda75b153e14c5add3
-receipts:
-  unresolved_subitems: []

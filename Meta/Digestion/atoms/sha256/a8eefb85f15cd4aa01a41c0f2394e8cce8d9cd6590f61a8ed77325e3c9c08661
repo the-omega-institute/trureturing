@@ -1,7 +1,0 @@
-仓库层面，最新审计仍指出完整链缺少：
-
-1. 该实轴非零结论的公共可导入 owner；
-2. completed-\(\xi\) 在完整测试空间上的 canonical Weil distribution；
-3. canonical distribution 与枚举无关零点和的识别；
-4. 与 finite prime-power expression 的正式连接。
-

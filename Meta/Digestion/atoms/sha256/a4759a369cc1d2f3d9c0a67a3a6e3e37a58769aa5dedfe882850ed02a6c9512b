@@ -1,2 +1,0 @@
-**已验读数**:\(\mathrm{Gobs}(\gcd)=\gcd(\mathrm{Gobs},\mathrm{Gobs})\) 在 \(m,n<260\) 上反例数 **0**;\(\mathrm{Gobs}(\mathrm{lcm})=\mathrm{lcm}(\mathrm{Gobs},\mathrm{Gobs})\) 在 \(m,n<160\) 上反例数 **0**;\(\mathrm{Gobs}\) 非乘性的最小反例为 \((2,4)\):\(\mathrm{Gobs}(2)\cdot\mathrm{Gobs}(4)=8\) 而 \(\mathrm{Gobs}(8)=4\);\(\star\) 非结合的见证如 H-3 所列。全部以精确整数算得。
-

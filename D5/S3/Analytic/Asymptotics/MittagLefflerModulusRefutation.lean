@@ -22,8 +22,9 @@ Frozen boundary after same-delivery expansion (declaration statement_id):
 The public result is the designated refutation result (`basis=refutes`) and is exempt from
 four-slot escape registration (CLAUDE.md §3.9).
 The source conventions are literal; CompletelyMonotoneOn is reused from its existing owner.
-The endpoint contour argument gives a fixed point for every alpha in (1,2),
-then beta-continuity extends the strict inequality to a closed beta interval.
+The endpoint contour argument gives, for every alpha in (1,2), a radius beyond which every
+point of the ray fails (source_endpoint_eventually, consumed by source_endpoint_failure); then
+beta-continuity extends the strict inequality to a closed beta interval.
 -/
 
 import D5.S3.Analytic.Asymptotics.MittagLefflerBarnesKernel
@@ -671,10 +672,11 @@ theorem ray_parameters {α : ℝ} (hα : 1 < α) (hα2 : α < 2) :
   · rw [Complex.sq_norm]
     simp [Complex.normSq_apply, rayDirection] <;> ring
 
-/-- The two endpoint limits produce one finite nonreal point for each alpha. -/
-theorem source_endpoint_failure {E : ℝ → ℝ → ℂ → ℂ} (hE : IsSourceSeries E)
+/-- Beyond some radius the whole ray fails: for every `r > R` the modulus on the tilted ray is
+strictly below the value on the negative axis. -/
+theorem source_endpoint_eventually {E : ℝ → ℝ → ℂ → ℂ} (hE : IsSourceSeries E)
     {α : ℝ} (hα : 1 < α) (hα2 : α < 2) :
-    ∃ r : ℝ, 0 < r ∧
+    ∃ R : ℝ, 0 < R ∧ ∀ r : ℝ, R < r →
       ‖E α (α - 1) ((r : ℂ) * rayDirection α)‖ <
         (E α (α - 1) (((r : ℂ) * rayDirection α).re : ℂ)).re := by
   obtain ⟨ht, hw, hm, hre, hnorm⟩ := ray_parameters hα hα2
@@ -696,9 +698,9 @@ theorem source_endpoint_failure {E : ℝ → ℝ → ℂ → ℂ} (hE : IsSource
     · rw [norm_div, norm_pow, Complex.norm_real, Real.norm_eq_abs, abs_of_pos hc, hnorm]
   have hgap : endpointCoefficient α / (1 + rayTilt α ^ 2) < endpointCoefficient α :=
     div_lt_self hc (by nlinarith [sq_pos_of_pos ht])
-  obtain ⟨r, hr, hstrict⟩ := ((eventually_gt_atTop (0 : ℝ)).and
-    (hray'.eventually_lt haxis' hgap)).exists
-  refine ⟨r, hr, ?_⟩
+  obtain ⟨R0, hR0⟩ := Filter.eventually_atTop.mp (hray'.eventually_lt haxis' hgap)
+  refine ⟨max R0 1, lt_max_of_lt_right one_pos, fun r hr => ?_⟩
+  have hstrict := hR0 r (le_of_lt (lt_of_le_of_lt (le_max_left _ _) hr))
   have hre' : (((r : ℂ) * rayDirection α).re : ℂ) = (-r : ℂ) := by
     simp [Complex.mul_re, hre]
   rw [hre']
@@ -706,6 +708,15 @@ theorem source_endpoint_failure {E : ℝ → ℝ → ℂ → ℂ} (hE : IsSource
   have hle := le_of_not_gt hnot
   have hmul := mul_le_mul_of_nonneg_left hle (sq_nonneg r)
   exact (not_lt_of_ge hmul) hstrict
+
+/-- The two endpoint limits produce one finite nonreal point for each alpha. -/
+theorem source_endpoint_failure {E : ℝ → ℝ → ℂ → ℂ} (hE : IsSourceSeries E)
+    {α : ℝ} (hα : 1 < α) (hα2 : α < 2) :
+    ∃ r : ℝ, 0 < r ∧
+      ‖E α (α - 1) ((r : ℂ) * rayDirection α)‖ <
+        (E α (α - 1) (((r : ℂ) * rayDirection α).re : ℂ)).re := by
+  obtain ⟨R, hR, h⟩ := source_endpoint_eventually hE hα hα2
+  exact ⟨R + 1, by linarith, h (R + 1) (by linarith)⟩
 
 /-- One point is chosen at the endpoint, then beta-continuity supplies a closed
 interval of failures at that same point. This holds for every alpha in (1,2). -/

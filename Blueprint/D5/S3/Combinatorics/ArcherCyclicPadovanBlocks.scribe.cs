@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics;
 internal sealed class ArcherCyclicPadovanBlocksDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/ArcherCyclicPadovanBlocks.";
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Combinatorics/archer2024pattern");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/PermutationPatterns/archer2024pattern");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "A lower block of a separated interval permutation occupies the initial interval.",

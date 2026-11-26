@@ -4,7 +4,79 @@
 
 Actual supported modular coordinates are shared by the original DPI and fixed Petz equality.
 
-**Theorem 1.1 (The real quadratic form of a real diagonal matrix).**
+**Definition 1.1 (Kraus trace adjoint).**
+
+Lean statement: `D5/S3/Quantum/Divergence/CanonicalRelativeModularModel.krausAdjoint`
+
+*Formalization.* `D5/S3/Quantum/Divergence/CanonicalRelativeModularModel.krausAdjoint` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Sum the output matrix compressed by each Kraus operator. The supported modular model and the reference scalarizer both use this sum.
+
+**Definition 1.2 (Output-index-first Kraus column).**
+
+Lean statement: `D5/S3/Quantum/Divergence/CanonicalRelativeModularModel.krausColumn`
+
+*Formalization.* `D5/S3/Quantum/Divergence/CanonicalRelativeModularModel.krausColumn` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Collect the Kraus entries into a column on the product of the output and Kraus carriers.
+
+**Theorem 1.3 (Adjoint and conjugate transpose).**
+
+Lean statement: `D5/S3/Quantum/Divergence/CanonicalRelativeModularModel.krausAdjoint_star`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Divergence/CanonicalRelativeModularModel.krausAdjoint_star` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The canonical Kraus adjoint preserves conjugate transpose. The modular model and the blockwise reference adjoint apply this identity.
+
+**Theorem 1.4 (Isometry of the normalized Kraus column).**
+
+Lean statement: `D5/S3/Quantum/Divergence/CanonicalRelativeModularModel.krausColumn_isometry`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Divergence/CanonicalRelativeModularModel.krausColumn_isometry` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The normalized Kraus sum is exactly the Gram matrix of this column, so the column is an isometry.
+
+**Theorem 1.5 (Kraus adjoint by block compression).**
+
+Lean statement: `D5/S3/Quantum/Divergence/CanonicalRelativeModularModel.krausAdjoint_compression`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Divergence/CanonicalRelativeModularModel.krausAdjoint_compression` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Compress a block-diagonal repetition of the output matrix by the Kraus column. The original Schwarz proof and the reference amplification use the same compression.
+
+**Theorem 1.6 (Trace pairing with the actual channel).**
+
+Lean statement: `D5/S3/Quantum/Divergence/CanonicalRelativeModularModel.actual_kraus_trace_pair`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Divergence/CanonicalRelativeModularModel.actual_kraus_trace_pair` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Cycle each Kraus summand in the ordinary complex trace to pair the actual channel action with its canonical adjoint.
+
+**Theorem 1.7 (The real quadratic form of a real diagonal matrix).**
 
 $$\forall n \in \mathit{Type} u,\; [\operatorname{Fintype}\left(n\right)] [\operatorname{DecidableEq}\left(n\right)] \forall d \in n \to \mathbb{R},\; \forall y \in n \to \mathbb{C},\; (\operatorname{dotProduct}\left(\operatorname{star}\left(y\right), \mathit{Matrix}.\mathit{mulVec}\left(\mathit{Matrix}.\mathit{diagonal}\left(\mathit{fun} i \mapsto (d\left(i\right):\mathbb{C})\right), y\right)\right)).\mathit{re} = \sum_{i} d\left(i\right) \cdot \left\lVert y\left(i\right) \right\rVert^{2}$$
 
@@ -18,7 +90,7 @@ For every finite index type, real weights and complex vector, the real part of t
 
 ∀ {n : Type u} [Fintype n] [DecidableEq n] (d : n → ℝ) (y : n → ℂ), (star y ⬝ᵥ (Matrix.diagonal (fun i => (d i : ℂ)) *ᵥ y)).re = ∑ i, d i * ‖y i‖ ^ 2.
 
-**Definition 1.2 (Actual supported relative modular model).**
+**Definition 1.8 (Actual supported relative modular model).**
 
 Lean statement: `D5/S3/Quantum/Divergence/CanonicalRelativeModularModel.supported_relative_modular_model`
 
@@ -30,7 +102,7 @@ Lean statement: `D5/S3/Quantum/Divergence/CanonicalRelativeModularModel.supporte
 
 For the same actual Phi, rho and sigma with input support containment, this constructor returns their relative modular coordinates, output support, exact same fixed Kraus family, both Schwarz inequalities, trace pairing, norm saturation and exact canonical entropy readouts. These facts are proved by the original DPI construction. The original DPI consumes this model and retains its original statement; CanonicalPetzEquality consumes it to derive recovery. This struct does not assume entropy equality or recovery.
 
-**Definition 1.3 (Choose Kraus coordinates once from the channel).**
+**Definition 1.9 (Choose Kraus coordinates once from the channel).**
 
 Lean statement: `D5/S3/Quantum/Divergence/CanonicalRelativeModularModel.actual_kraus_representation`
 
@@ -55,7 +127,13 @@ Define S(Y)=sigma^(1/4) Psi(tau^(-1/4) Y tau^(-1/4)) sigma^(1/4). The preceding 
 ## References
 
 - Truth anchor: `D5/S3/Quantum/Divergence/CanonicalRelativeModularModel.actual_kraus_representation`
+- Truth anchor: `D5/S3/Quantum/Divergence/CanonicalRelativeModularModel.actual_kraus_trace_pair`
 - Truth anchor: `D5/S3/Quantum/Divergence/CanonicalRelativeModularModel.diagonal_quadratic_form`
+- Truth anchor: `D5/S3/Quantum/Divergence/CanonicalRelativeModularModel.krausAdjoint`
+- Truth anchor: `D5/S3/Quantum/Divergence/CanonicalRelativeModularModel.krausAdjoint_compression`
+- Truth anchor: `D5/S3/Quantum/Divergence/CanonicalRelativeModularModel.krausAdjoint_star`
+- Truth anchor: `D5/S3/Quantum/Divergence/CanonicalRelativeModularModel.krausColumn`
+- Truth anchor: `D5/S3/Quantum/Divergence/CanonicalRelativeModularModel.krausColumn_isometry`
 - Truth anchor: `D5/S3/Quantum/Divergence/CanonicalRelativeModularModel.supported_relative_modular_model`
 - Dependency: [D5/S3/Quantum/Divergence/SupportAwareRelativeEntropy](SupportAwareRelativeEntropy.md)
 - Dependency: [D5/S3/Quantum/Dynamics/EntropyProductionCoherenceDeletionIdentity](../Dynamics/EntropyProductionCoherenceDeletionIdentity.md)

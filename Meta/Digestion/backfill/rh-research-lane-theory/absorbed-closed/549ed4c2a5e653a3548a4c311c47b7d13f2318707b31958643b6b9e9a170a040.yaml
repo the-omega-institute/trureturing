@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:549ed4c2a5e653a3548a4c311c47b7d13f2318707b31958643b6b9e9a170a040
-  normalized_sha256: sha256:549ed4c2a5e653a3548a4c311c47b7d13f2318707b31958643b6b9e9a170a040
-cas_ref: sha256:549ed4c2a5e653a3548a4c311c47b7d13f2318707b31958643b6b9e9a170a040
-coverage_gids:
-  - gid: D5/S3/Weil/GoldenCriticalSpectrum/GoldenCriticalRadius.all_critical_iff_all_unit_radius
-    target_statement_id: sha256:1542e46956c51c45e85cd4da6c0fb7b709d17042744dfc691742b703b97a6326
-receipts:
-  unresolved_subitems: []

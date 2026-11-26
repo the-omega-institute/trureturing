@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:e8f412f99d63e0378ce2b4f01c2d0676e775b505d4f6d5cc0f22ff1ecc256b15
-  normalized_sha256: sha256:e8f412f99d63e0378ce2b4f01c2d0676e775b505d4f6d5cc0f22ff1ecc256b15
-cas_ref: sha256:e8f412f99d63e0378ce2b4f01c2d0676e775b505d4f6d5cc0f22ff1ecc256b15
-coverage_gids:
-  - gid: D5/S3/Zeros/PochhammerDeformation/LinearFactor.linear_factor_preserves_unit_interval
-    target_statement_id: sha256:0e9c60b07e43206fb020d3f3d6953bfae379f434af08202a7a1874fe352d03d3
-receipts:
-  unresolved_subitems: []

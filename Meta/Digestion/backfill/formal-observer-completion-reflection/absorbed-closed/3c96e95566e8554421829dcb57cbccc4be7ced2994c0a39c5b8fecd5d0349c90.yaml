@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:3c96e95566e8554421829dcb57cbccc4be7ced2994c0a39c5b8fecd5d0349c90
-  normalized_sha256: sha256:3c96e95566e8554421829dcb57cbccc4be7ced2994c0a39c5b8fecd5d0349c90
-cas_ref: sha256:3c96e95566e8554421829dcb57cbccc4be7ced2994c0a39c5b8fecd5d0349c90
-coverage_gids:
-  - gid: D5/S3/ObserverMemory/RefinementClosure/ContinuousBehaviorClosureStability.continuous_dynamics_preserves_behavior_closure
-    target_statement_id: sha256:7b2233ea0e0709a1764c34d22154bb1a635c8b35c8bd7ccfaad041d44f9e343d
-receipts:
-  unresolved_subitems: []

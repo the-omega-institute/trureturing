@@ -1,9 +1,0 @@
-**Definition 1.2 (old serial service).** The old menu acts on the same field and law throughout the run.
-
-| Command | Actual successor field | Complete declared reply |
-| --- | --- | --- |
-| Reset | $0$ on all $N$ coordinates | a fixed acknowledgement |
-| Add$(j,u)$, $1\le j\le b$, $u\in\mathbb Q$ | $x+u e_{\ell_j}$ | a fixed acknowledgement |
-| Tick | $Tx$ | a fixed acknowledgement |
-| Read$(j)$, $1\le j\le b$ | $x$ | the exact signed rational $x_{\ell_j}$ |
-| Hold | $x$, with source advancement prevented during local processing | a fixed acknowledgement |

@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:b978e2c92d23fa1aad81c9150959b8084a1eb039c83952283ecb7a7b4eb4a2fb
-  normalized_sha256: sha256:b978e2c92d23fa1aad81c9150959b8084a1eb039c83952283ecb7a7b4eb4a2fb
-cas_ref: sha256:b978e2c92d23fa1aad81c9150959b8084a1eb039c83952283ecb7a7b4eb4a2fb
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/TargetRisk/JointResourceSafetyCriterion.jointly_attainable_caps_characterize_resource_safety
-    target_statement_id: sha256:de3a52a5af0d4ee5ab8bb980e4f7a786b90d14491dc69e645ae6f167f0252231
-receipts:
-  unresolved_subitems: []

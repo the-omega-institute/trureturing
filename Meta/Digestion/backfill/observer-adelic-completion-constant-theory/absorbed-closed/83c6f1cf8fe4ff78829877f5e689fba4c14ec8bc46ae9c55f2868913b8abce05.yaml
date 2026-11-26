@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:83c6f1cf8fe4ff78829877f5e689fba4c14ec8bc46ae9c55f2868913b8abce05
-  normalized_sha256: sha256:83c6f1cf8fe4ff78829877f5e689fba4c14ec8bc46ae9c55f2868913b8abce05
-cas_ref: sha256:83c6f1cf8fe4ff78829877f5e689fba4c14ec8bc46ae9c55f2868913b8abce05
-coverage_gids:
-  - gid: D5/S3/Zeros/ZetaIdentities.riemann_zeta_euler_product
-    target_statement_id: sha256:8a6cfa904ccee3ca7d79986be035825fefe99cb8ec32e0fabea4f2da7266295d
-receipts:
-  unresolved_subitems: []

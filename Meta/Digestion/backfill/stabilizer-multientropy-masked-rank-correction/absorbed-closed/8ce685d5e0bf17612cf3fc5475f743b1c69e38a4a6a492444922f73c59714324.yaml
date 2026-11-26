@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:8ce685d5e0bf17612cf3fc5475f743b1c69e38a4a6a492444922f73c59714324
-  normalized_sha256: sha256:8ce685d5e0bf17612cf3fc5475f743b1c69e38a4a6a492444922f73c59714324
-cas_ref: sha256:8ce685d5e0bf17612cf3fc5475f743b1c69e38a4a6a492444922f73c59714324
-coverage_gids:
-  - gid: D5/S3/Combinatorics/Graph/Walks/NoEvenCycleRank.rank_eq_twice_maximum_matching
-    target_statement_id: sha256:1913142e55e146fd857ec49b26fa71bdc60b2f185bbd6edaf70e94d164d14d97
-receipts:
-  unresolved_subitems: []

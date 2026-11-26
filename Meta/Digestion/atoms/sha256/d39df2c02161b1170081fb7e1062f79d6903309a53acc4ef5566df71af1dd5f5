@@ -1,6 +1,0 @@
-**来源 1220.1（概率、几何与项目）。** Yu–Tan，[*Common Information, Noise Stability, and Their Extensions*, arXiv:2211.01788v1](https://arxiv.org/abs/2211.01788v1)，第 7.3 节、命题 7.3.1 及证明，PDF 第 117–119 页，给出两变量来源模型中零阶、一阶及无穷阶的对应。其对数底为二，本卷统一改用自然对数；最大概率质量的数值不变。本文字中的多坐标说明列出了点质量补全的实际关系，不将论文原命题的对象范围改写成已经覆盖所有新结论。
-
-Gensheimer–Dietz–Kraft–Ruzika–Wehn，[*A Reduced-Complexity Projection Algorithm for ADMM-based LP Decoding*, arXiv:1901.03240v1](https://arxiv.org/abs/1901.03240v1)，第 IV 节、定理 2 及其证明，核读了奇偶多面体、禁止集不等式与最小代价符号翻转。没有执行该文算法或把其数值结果当作本卷实验。
-
-项目核读 `D5/S3/RenyiDivergence/Basic.lean` 与 `D5/S3/RenyiDivergence/OrderInfinityLimit.lean`，保留支撑条件及总函数端点的解释边界。源码阅读不是当前 kernel 或 axiom 闭包核验。峰值调节、准确摘要共同实现、两张来源的阶交点与稀疏密度等号，由正文解析推导承担，不作原创申报。
-

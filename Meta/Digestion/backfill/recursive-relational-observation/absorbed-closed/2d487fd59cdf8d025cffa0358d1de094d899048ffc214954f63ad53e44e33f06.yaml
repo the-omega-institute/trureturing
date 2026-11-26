@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:2d487fd59cdf8d025cffa0358d1de094d899048ffc214954f63ad53e44e33f06
-  normalized_sha256: sha256:2d487fd59cdf8d025cffa0358d1de094d899048ffc214954f63ad53e44e33f06
-cas_ref: sha256:2d487fd59cdf8d025cffa0358d1de094d899048ffc214954f63ad53e44e33f06
-coverage_gids:
-  - gid: D5/S3/ObserverMemory/InverseLimits/FiniteCofilteredLimit.finite_cofiltered_limit_nonempty
-    target_statement_id: sha256:469bbcf6b74214f920f6b8355e8e333fc9a28b0094320c599ede19d0233530fe
-receipts:
-  unresolved_subitems: []

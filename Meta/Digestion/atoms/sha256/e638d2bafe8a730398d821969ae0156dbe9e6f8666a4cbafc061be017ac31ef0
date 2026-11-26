@@ -1,2 +1,0 @@
-**仓内没有的**:任何把「某整除区间内存在极大丰数」写成判据的声明。检索方式记录在案:在 `D5/S3/Arith/GoldenResource/` 下检索 `ColossallyAbundant` 的定理位置,只命中其定义处;`goldenPositiveLayerCount` 虽已存在,但只在阈值价格 \(L(B)\) 处使用,没有对任意价格的形式。
-

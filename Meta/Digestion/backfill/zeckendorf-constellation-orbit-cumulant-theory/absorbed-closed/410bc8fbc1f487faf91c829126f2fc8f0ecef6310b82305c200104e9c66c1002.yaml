@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:410bc8fbc1f487faf91c829126f2fc8f0ecef6310b82305c200104e9c66c1002
-  normalized_sha256: sha256:410bc8fbc1f487faf91c829126f2fc8f0ecef6310b82305c200104e9c66c1002
-cas_ref: sha256:410bc8fbc1f487faf91c829126f2fc8f0ecef6310b82305c200104e9c66c1002
-coverage_gids:
-  - gid: D5/S0/Automata/TypedPartialDFAOOverBase.sparse_global_model_implies_prefix_model
-    target_statement_id: sha256:27180662c1e9156f3adbd61beeced377f7cb1e1ffb38918722e94740d6e0a4b9
-receipts:
-  unresolved_subitems: []

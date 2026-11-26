@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:faaeca00f2d3773c54afbdaf253c6d40e6c045e37aa82d719a07784f74198bef
-  normalized_sha256: sha256:faaeca00f2d3773c54afbdaf253c6d40e6c045e37aa82d719a07784f74198bef
-cas_ref: sha256:faaeca00f2d3773c54afbdaf253c6d40e6c045e37aa82d719a07784f74198bef
-coverage_gids:
-  - gid: D5/S3/ObserverMemory/Refinement/EffectiveImageKernelCriterion.refinement_iff_kernel_inclusion_on_effective_images
-    target_statement_id: sha256:193d220cc6a5d27164608f594fb595513c2d11228a0cd00502a9141b88531525
-receipts:
-  unresolved_subitems: []

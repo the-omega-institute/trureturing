@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:b97b4996ec5b46724ac1abb13461d3cd6ec4e3e8adce3a84c09a06cae36725c1
-  normalized_sha256: sha256:b97b4996ec5b46724ac1abb13461d3cd6ec4e3e8adce3a84c09a06cae36725c1
-cas_ref: sha256:b97b4996ec5b46724ac1abb13461d3cd6ec4e3e8adce3a84c09a06cae36725c1
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/SufficiencyQuotient/TargetFamilyMinimalQuotient.target_family_minimal_quotient
-    target_statement_id: sha256:3affb404c3b655f0559fccedb688d9ea650c33f95ddf16b076594f0a38d4b6a7
-receipts:
-  unresolved_subitems: []

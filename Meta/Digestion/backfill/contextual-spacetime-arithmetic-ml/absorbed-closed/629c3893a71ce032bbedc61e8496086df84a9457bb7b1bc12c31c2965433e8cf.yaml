@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:629c3893a71ce032bbedc61e8496086df84a9457bb7b1bc12c31c2965433e8cf
-  normalized_sha256: sha256:629c3893a71ce032bbedc61e8496086df84a9457bb7b1bc12c31c2965433e8cf
-cas_ref: sha256:629c3893a71ce032bbedc61e8496086df84a9457bb7b1bc12c31c2965433e8cf
-coverage_gids:
-  - gid: D5/S3/Observer/Bridges/FixedPointSemiconjugacy.semiconjugacy_iterate
-    target_statement_id: sha256:d925b0a03eb440508589360a671b3b29b136c88a64c45172573ff4b582305aec
-receipts:
-  unresolved_subitems: []

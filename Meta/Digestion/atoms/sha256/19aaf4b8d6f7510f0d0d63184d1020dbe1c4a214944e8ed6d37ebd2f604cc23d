@@ -1,9 +1,0 @@
-\[
-\mathcal M_H(\sigma)
-=
-\sum_{A\subseteq H}
-M_A(\sigma)\varepsilon_A,
-\]
-
-其中：
-

@@ -1,2 +1,0 @@
-**Counterexample 42.3 (unrestricted signs are invisible).** If $S$ is diagonal with entries $\pm1$ and $S e_0=e_0$, then $STS$ has the same spectral order and root behavior as $T$, by the state map $x\mapsto Sx$. On a path its links are $s_i s_{i+1}b_i$. Flipping one nonroot sign changes at least one link but changes no endpoint impulse or root-control response. Positive links fix exactly the orientation used in Proposition 37.3; endpoint behavior alone does not recover unrestricted link signs.
-

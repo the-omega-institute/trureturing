@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:0bcd3b6399c604b0812f2c7bae87429b17f71f217ee50d7660481fb4133fa61d
-  normalized_sha256: sha256:0bcd3b6399c604b0812f2c7bae87429b17f71f217ee50d7660481fb4133fa61d
-cas_ref: sha256:0bcd3b6399c604b0812f2c7bae87429b17f71f217ee50d7660481fb4133fa61d
-coverage_gids:
-  - gid: D5/S3/Weil/TestFunctions/PaleyWienerGauge.paleyWienerGauge
-    target_statement_id: sha256:c842b09231b43d73809915436712afc822a2ac9f6f62a39a7fd95ba4c19cb841
-receipts:
-  unresolved_subitems: []

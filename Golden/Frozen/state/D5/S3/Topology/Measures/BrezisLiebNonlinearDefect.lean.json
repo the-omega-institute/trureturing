@@ -1,0 +1,1 @@
+{"statement_id":"sha256:70e1aaf5b2c9015ac7255beacf4aefea8f1a59ec46810ea23ded5ccb891d0821","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),8:Topology),8:Measures),25:BrezisLiebNonlinearDefect),28:brezis_lieb_nonlinear_defect)","kind":"theorem","libraries":["Batteries","Init","Lean","Mathlib","Std"]}]}

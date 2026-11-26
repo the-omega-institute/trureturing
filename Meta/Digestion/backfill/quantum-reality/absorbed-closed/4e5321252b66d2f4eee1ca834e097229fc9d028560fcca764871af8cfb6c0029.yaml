@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:4e5321252b66d2f4eee1ca834e097229fc9d028560fcca764871af8cfb6c0029
-  normalized_sha256: sha256:4e5321252b66d2f4eee1ca834e097229fc9d028560fcca764871af8cfb6c0029
-cas_ref: sha256:4e5321252b66d2f4eee1ca834e097229fc9d028560fcca764871af8cfb6c0029
-coverage_gids:
-  - gid: D5/S3/Quantum/Dynamics/PositivePauliClockOrder.positive_clock_coefficients
-    target_statement_id: sha256:40f3649155dc4e97dfdb6e3b37f23886028fe68c34875b4dd19b45af1f2cac3f
-receipts:
-  unresolved_subitems: []

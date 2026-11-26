@@ -14,7 +14,7 @@ $$\operatorname{binom}\left(m, j\right) = \operatorname{if} j < 0 \operatorname{
 
 *Commentary.*
 
-For a natural number m and an integer j, binom(m, j) is zero when j is negative and the binomial coefficient C(m, j) otherwise, so it also vanishes when j exceeds m. Sums of binomial coefficients over integer ranges use it to drop the terms with a negative lower index.
+For a natural number m and an integer j, binom(m, j) uses C(m, j) on the nonnegative constructor and zero on the negative constructor. The strict binomial coefficient satisfies Pascal's recurrence, including the cases j = 0 and j > m. The executable standard interface supports existing sums over integer ranges.
 
 **Definition 1.2 (The integer ballot coefficient).**
 

@@ -1,4 +1,0 @@
-**推论 10.2（Finite dimensions are unbounded across exact horizons）。** No single finite environment dimension can satisfy (9.1) for every horizon. In particular, for $N=16$ the terminal pure minimum from Theorem 8.2 is four, whereas every common-prefix realization, including arbitrary mixed initial densities, has $d\ge\lceil\sqrt{17}\rceil=5$. At this horizon the fully labelled construction below uses $62$ dimensions and the endpoint-sharing construction uses $61$; these are upper bounds, not optima.
-
-**证明。** Letting $N$ increase in (10.1) rules out a fixed finite $d$. For $N=16$, (10.1) gives $d^2\ge17$. The terminal statement is a separate rank-of-one-channel contract and is therefore not contradicted. $\square$
-

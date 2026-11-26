@@ -1,8 +1,0 @@
-需要同时满足：
-
-1. 一维能量编码无碰撞；
-2. 有一整族连续探针；
-3. composite histories 可以 Möbius/cumulant 反演；
-4. 产品发散区有另一张完成图表；
-5. finite-resolution separation 可控。
-

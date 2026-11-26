@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:be25ba48809c81d8a38d6c406efca90cadd1fadecb9698befc5b91a053211165
-  normalized_sha256: sha256:be25ba48809c81d8a38d6c406efca90cadd1fadecb9698befc5b91a053211165
-cas_ref: sha256:be25ba48809c81d8a38d6c406efca90cadd1fadecb9698befc5b91a053211165
-coverage_gids:
-  - gid: D5/S3/Observer/GoldenPrimeCircle/CayleyCauchyLimit.cayley_cauchy_limit
-    target_statement_id: sha256:994e6784de48f6e65703e1556a2a41fb8fa55f9096c7d92c1b2d0e7f4d130579
-receipts:
-  unresolved_subitems: []

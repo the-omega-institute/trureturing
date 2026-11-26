@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:de488bb4cb58e275cd103c3fe5fa51164c7456b838eeb59d6ad768393a3a615e
-  normalized_sha256: sha256:de488bb4cb58e275cd103c3fe5fa51164c7456b838eeb59d6ad768393a3a615e
-cas_ref: sha256:de488bb4cb58e275cd103c3fe5fa51164c7456b838eeb59d6ad768393a3a615e
-coverage_gids:
-  - gid: D5/S3/ArithSums/TwoPointSlabSupport.corner_estimate
-    target_statement_id: sha256:97d9bfee2d19d7120ccdf01971bc4a4c773c144c8be804c5de373afb6034b814
-receipts:
-  unresolved_subitems: []

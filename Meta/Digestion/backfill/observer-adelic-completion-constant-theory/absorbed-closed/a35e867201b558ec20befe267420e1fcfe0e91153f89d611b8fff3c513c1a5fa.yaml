@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:a35e867201b558ec20befe267420e1fcfe0e91153f89d611b8fff3c513c1a5fa
-  normalized_sha256: sha256:a35e867201b558ec20befe267420e1fcfe0e91153f89d611b8fff3c513c1a5fa
-cas_ref: sha256:a35e867201b558ec20befe267420e1fcfe0e91153f89d611b8fff3c513c1a5fa
-coverage_gids:
-  - gid: D5/S3/Weil/TestFunctions/EvenTestFunctionFiniteInterpolation.evenPolynomialDifferential
-    target_statement_id: sha256:3e8a584c6ee0ddff507bfb56ac0bf6e50a6f9689e902c0b890a337eac7e8aeea
-receipts:
-  unresolved_subitems: []

@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:914b09a38b35ed8bc607cd4295c52598e4cac3acb8d240494f382c75acc82bfb
-  normalized_sha256: sha256:914b09a38b35ed8bc607cd4295c52598e4cac3acb8d240494f382c75acc82bfb
-cas_ref: sha256:914b09a38b35ed8bc607cd4295c52598e4cac3acb8d240494f382c75acc82bfb
-coverage_gids:
-  - gid: D5/S3/Observer/Linear/GainRayJets.jetMap_bijective
-    target_statement_id: sha256:3d621ddee8141efb3e7a9f14a582c065fd48c9ca42c602377016904961b59157
-receipts:
-  unresolved_subitems: []

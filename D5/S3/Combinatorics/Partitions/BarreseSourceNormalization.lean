@@ -38,7 +38,7 @@ def normalizedColumnsEquiv : YoungDiagram ≃ PositiveColumns where
     · intro x hx
       exact b.property.2 x (List.mem_reverse.mp hx)
 
-private theorem column_cell (b : PositiveColumns) (r : ℕ) (i : Fin b.val.length) :
+theorem column_cell (b : PositiveColumns) (r : ℕ) (i : Fin b.val.length) :
     r < b.val[i.val] ↔ i.rev.val < (normalizedColumnsEquiv.symm b).rowLen r := by
   change r < b.val[i.val] ↔ i.rev.val <
     (YoungDiagram.ofRowLens b.val.reverse b.property.1.reverse).transpose.rowLen r
@@ -59,7 +59,7 @@ private theorem column_cell (b : PositiveColumns) (r : ℕ) (i : Fin b.val.lengt
     change r < b.val.reverse[i.rev.val] at h
     simpa only [hrev] using h
 
-private theorem columns_row_bound (b : PositiveColumns) (r : ℕ) :
+theorem columns_row_bound (b : PositiveColumns) (r : ℕ) :
     (normalizedColumnsEquiv.symm b).rowLen r ≤ b.val.length := by
   by_contra! h
   have hm := YoungDiagram.mem_iff_lt_rowLen.mpr h
@@ -98,7 +98,8 @@ abbrev LFiber (m : ℕ) (c : List ℕ) :=
   {b : PositiveColumns // (∀ x ∈ c, 0 < x) ∧
     ∀ p : ℕ, columnLevel m b p = c.reverse.getD p 0}
 
-private def sourceShapeEquiv (m : ℕ) (c : List ℕ) (hc : ∀ x ∈ c, 0 < x) :
+/-- Positive source level data and the existing unrestricted Young-diagram fiber. -/
+def sourceShapeEquiv (m : ℕ) (c : List ℕ) (hc : ∀ x ∈ c, 0 < x) :
     LFiber m c ≃ ShapeFiber m c.reverse :=
   normalizedColumnsEquiv.symm.subtypeEquiv (fun b => by
     constructor
@@ -125,7 +126,7 @@ theorem source2015_count (m : ℕ) (hm : 0 < m) (c : List ℕ) :
   · haveI : IsEmpty (LFiber (r+1) c) := ⟨fun b => hc b.property.1⟩
     simp
 
-private theorem column_anti (m : ℕ) (b : PositiveColumns) : Antitone (columnLevel m b) := by
+theorem column_anti (m : ℕ) (b : PositiveColumns) : Antitone (columnLevel m b) := by
   intro p q hpq
   rw [columnLevel_shape, columnLevel_shape]
   apply Finset.sum_le_sum

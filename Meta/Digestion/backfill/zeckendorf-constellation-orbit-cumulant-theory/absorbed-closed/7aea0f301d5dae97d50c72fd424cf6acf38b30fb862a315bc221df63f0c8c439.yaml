@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:7aea0f301d5dae97d50c72fd424cf6acf38b30fb862a315bc221df63f0c8c439
-  normalized_sha256: sha256:7aea0f301d5dae97d50c72fd424cf6acf38b30fb862a315bc221df63f0c8c439
-cas_ref: sha256:7aea0f301d5dae97d50c72fd424cf6acf38b30fb862a315bc221df63f0c8c439
-coverage_gids:
-  - gid: D5/S3/Analytic/GoldenEulerBetaZeckendorf.golden_euler_beta_zeckendorf
-    target_statement_id: sha256:82e46adce7449276ff4fd15959e245b95c37922a636a16b7c4cee3659328435b
-receipts:
-  unresolved_subitems: []

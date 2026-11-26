@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:73939df09961687cb4759045196e04f36ebc25d6e8ced2096597192476e10b1a
-  normalized_sha256: sha256:73939df09961687cb4759045196e04f36ebc25d6e8ced2096597192476e10b1a
-cas_ref: sha256:73939df09961687cb4759045196e04f36ebc25d6e8ced2096597192476e10b1a
-coverage_gids:
-  - gid: D5/S1/Recurrence/Raney/ExactRunRecordSpectrum.raney_all_prime_exact_run_record_spectrum
-    target_statement_id: sha256:0121d38c68ff36d72e9674342a09a20c4b9e5e565f64e5d10c575062e9f9a8da
-receipts:
-  unresolved_subitems: []

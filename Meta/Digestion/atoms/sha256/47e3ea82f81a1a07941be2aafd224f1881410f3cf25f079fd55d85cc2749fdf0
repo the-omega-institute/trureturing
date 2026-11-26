@@ -1,6 +1,0 @@
-文献背景仅在下列明确条件下使用：
-
-- [Lundholm–Svensson，Clifford algebra, geometric algebra, and applications，arXiv:0907.5356v1，§§2.1–2.3](https://arxiv.org/abs/0907.5356v1) 的商代数满足 $v^2=q(v)$、$vw+wv=2\beta_q(v,w)$，乘法结合，标准等级对合保持乘法。它支持本章沿用的代数约定，未给本树族的恢复阈值。
-- [Panteleev，Preset Distinguishing Sequences and Diameter of Transformation Semigroups，arXiv:1412.0034v1，页1–2](https://arxiv.org/abs/1412.0034v1) 明确假设已知有限确定性 Mealy 转移／输出表，输入和输出字母表有限，转移、输出为全函数，并区分成对可辨与一个统一预设区分序列。这里不引入其全输入、复位或序列长度界；成对行为商辨识不能代替本章的合法自适应初始目标取得。
-- [van den Bos–Vaandrager，State Identification for Labeled Transition Systems with Inputs and Outputs，arXiv:1907.11034v2，定义12–20、图3、页10–12](https://arxiv.org/abs/1907.11034v2) 要求测试与给定 suspension automaton 的可用输入和全部输出相容，按完整可观察终止轨迹定义区分；图3展示每种初始选择都会合并必要状态对而不存在统一自适应区分图。它提供成熟的破坏性识别背景，本章四源仍单独证明实际入族、全部正上下文守卫及原始目标碰撞；不转入 suspension 语义或另加测试端口。
-

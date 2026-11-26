@@ -1,0 +1,43 @@
+# Exact positive expansivity of glued sheets
+
+## Abstract
+
+Exact positive expansivity of glued sheets
+
+Gangloff, Guillon and Oprocha ask which one-dimensional continua admit finitely positively expansive systems in Question 3.2 of arXiv:2310.17241v1. The result below determines the expansion order of the finite-sheet construction over a positively expansive base.
+
+For a nonnegative function on the base, take the graphs of its first N nonnegative integer multiples in the product with the real line. Forward invariance of the zero set makes the maps on the graphs agree. Continuous graph maps paste along their closed overlaps. Surjectivity lifts on each sheet, and the union is compact for continuous height over a compact base.
+
+**Theorem 1.1 (Forward distance within a fiber).**
+
+Lean statement: `D5/S1/Dynamics/Shadowing/InvarianceGluedSheets.dist_iterate_lift`
+
+*Proof.* Machine-checked in Lean as `D5/S1/Dynamics/Shadowing/InvarianceGluedSheets.dist_iterate_lift` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+At each forward time, two points over one base point are separated by the absolute gap of their sheet labels times the height at the corresponding base iterate. This formula includes the time at which the sheets meet and every later time.
+
+**Theorem 1.2 (The expansion order is one or N).**
+
+Lean statement: `D5/S1/Dynamics/Shadowing/InvarianceGluedSheets.exact_order_infDist`
+
+*Proof.* Machine-checked in Lean as `D5/S1/Dynamics/Shadowing/InvarianceGluedSheets.exact_order_infDist` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Let the base be positively expansive, let K be nonempty, compact and forward invariant, and use distance to K as the height. For N at least two there is a positive radius at which each strict forward Bowen ball has at most N points, because it lies in one fiber.
+
+The graph union is positively expansive exactly when some open neighborhood of K contains an entire forward orbit only if that orbit starts in K. In the complementary case, each positive radius admits a fiber with N distinct points whose forward iterates are all pairwise closer than that radius. The least finite expansion order in this case is N.
+
+This gives the dynamical criterion for the gluing construction. The one-dimensional continuum classification in Question 3.2 remains open.
+
+## References
+
+- Truth anchor: `D5/S1/Dynamics/Shadowing/InvarianceGluedSheets.dist_iterate_lift`
+- Truth anchor: `D5/S1/Dynamics/Shadowing/InvarianceGluedSheets.exact_order_infDist`
+- Dependency: [D5/S1/Dynamics/Shadowing/IntervalObstruction/Basic](IntervalObstruction/Basic.md)

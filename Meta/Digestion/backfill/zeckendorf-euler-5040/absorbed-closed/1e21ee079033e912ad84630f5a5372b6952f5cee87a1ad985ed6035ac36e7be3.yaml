@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:1e21ee079033e912ad84630f5a5372b6952f5cee87a1ad985ed6035ac36e7be3
-  normalized_sha256: sha256:1e21ee079033e912ad84630f5a5372b6952f5cee87a1ad985ed6035ac36e7be3
-cas_ref: sha256:1e21ee079033e912ad84630f5a5372b6952f5cee87a1ad985ed6035ac36e7be3
-coverage_gids:
-  - gid: D5/S3/Constants/NewtonHankelRealRootCriterion.newtonHankel_posSemidef_iff_roots_real
-    target_statement_id: sha256:a36bbd970246a4caa14c8228e07f2136901711fd7edf52061c5407e47d74727d
-receipts:
-  unresolved_subitems: []

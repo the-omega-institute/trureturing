@@ -1,0 +1,17 @@
+# Entire-boundary minima and arbitrary finite-degree divisibility.
+
+## Abstract
+
+Entire-boundary minima and arbitrary finite-degree divisibility.
+
+Let C be an actual closed convex cone with nonempty interior in a finite real coordinate carrier. Let q be a nonzero homogeneous polynomial of positive degree that vanishes on the entire ambient boundary and has minimum total degree among all nonzero boundary equations. Then an arbitrary real polynomial r vanishes on that entire boundary if and only if q divides r. Neither q nor r has a fixed degree bound, and r need not be homogeneous. No principality, semialgebraicity, boundary chart, classification or interior nonvanishing is supplied as an assumption.
+
+A nonzero polynomial cannot vanish throughout the nonempty open interior. Choose an actual interior direction e with q(e) nonzero, and construct the transverse coordinate equivalence of BoundaryCoordinates. In the resulting univariate polynomial with transverse polynomial coefficients, the coefficient of the homogeneous degree of q is the nonzero real constant q(e). For each irreducible factor f of q, write q=fg. Minimum total degree forces g to be nonzero at some actual boundary point: otherwise g itself would be a boundary equation of smaller degree. The transformed factor f has positive univariate degree, since a constant factor would divide the unit leading coefficient and hence be a unit, contradicting irreducibility.
+
+BoundaryElimination then proves that this transformed irreducible factor divides every transformed boundary equation of arbitrary finite degree. The actual ring equivalence returns divisibility in the original polynomial ring. The minimum equation is squarefree, and the pinned Mathlib radical and normalized-factor theorems combine all irreducible factor divisibilities to give q dividing r. The converse follows by evaluation. ConeMinimumBranch consumes this theorem for its selected, positively oriented actual minimum, so that this same polynomial is the reduced principal boundary generator rather than only a boundary-covering polynomial.
+
+This algebraic proof bypasses the semialgebraic route to principality. It does not prove the separate assertion that every cone with a nonzero finite-degree boundary equation is semialgebraic. The source lemma's semialgebraic conclusion still requires an admissible Lean owner for finite semialgebraic components and closure stability, together with the actual component-to-cone application. The radial continuity clause has the pinned Mathlib gaugeRescaleHomeomorph owner; its explicit application to the constructed compact base remains a separate assembly obligation.
+
+## References
+
+- Dependency: [D5/S3/Geometry/AlgebraicBoundary/BoundaryCoordinates](BoundaryCoordinates.md)

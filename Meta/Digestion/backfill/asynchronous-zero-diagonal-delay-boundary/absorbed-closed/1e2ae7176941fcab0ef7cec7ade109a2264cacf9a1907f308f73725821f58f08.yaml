@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:1e2ae7176941fcab0ef7cec7ade109a2264cacf9a1907f308f73725821f58f08
-  normalized_sha256: sha256:1e2ae7176941fcab0ef7cec7ade109a2264cacf9a1907f308f73725821f58f08
-cas_ref: sha256:1e2ae7176941fcab0ef7cec7ade109a2264cacf9a1907f308f73725821f58f08
-coverage_gids:
-  - gid: D5/S3/Quantum/Matrix/AsynchronousTwoBlockRadius.two_block_radius
-    target_statement_id: sha256:fc643eaa36b7af2af1493779f94a95e0a47e5dfd647152d2d9d7e54d28c22ee6
-receipts:
-  unresolved_subitems: []

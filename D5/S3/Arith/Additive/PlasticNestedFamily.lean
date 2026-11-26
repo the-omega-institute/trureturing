@@ -9,7 +9,9 @@
 import D5.S3.Arith.Additive.PlasticPowerCollisions
 import Mathlib.NumberTheory.Real.GoldenRatio
 
-/-! Native real power sets for the complete original nested-family theorem. -/
+/-! Native real power sets for the complete original nested-family theorem.
+
+Escape audit for `golden_sum_lower`: https://github.com/the-omega-institute/trureturing/issues/26203. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -73,7 +75,7 @@ private theorem golden_sorted (s : ℝ) (hs : 1 < s) (hsq : s ^ 2 = s+1)
     (by omega) (by omega) (by omega) hn
   omega
 
-private theorem golden_sum_lower (s : ℝ) (hs : 1 < s) (hsq : s ^ 2 = s+1)
+theorem golden_sum_lower (s : ℝ) (hs : 1 < s) (hsq : s ^ 2 = s+1)
     (n : ℕ) (hn : 7 ≤ n) :
     n*(n+1)/2 ≤
       (((Finset.Icc (0:ℤ) ((n:ℤ)-1)).image (fun e => s ^ e)) +

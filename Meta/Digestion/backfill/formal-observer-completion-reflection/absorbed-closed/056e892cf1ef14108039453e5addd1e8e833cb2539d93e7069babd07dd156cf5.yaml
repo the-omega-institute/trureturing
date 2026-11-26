@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:056e892cf1ef14108039453e5addd1e8e833cb2539d93e7069babd07dd156cf5
-  normalized_sha256: sha256:056e892cf1ef14108039453e5addd1e8e833cb2539d93e7069babd07dd156cf5
-cas_ref: sha256:056e892cf1ef14108039453e5addd1e8e833cb2539d93e7069babd07dd156cf5
-coverage_gids:
-  - gid: D5/S3/Observer/LinearMemory/DualGramConditionNumber.dual_gram_condition_number
-    target_statement_id: sha256:ca2cfeb3a44478cd4c4e573739a3686d88e874ffd61de3ce051044457deec579
-receipts:
-  unresolved_subitems: []

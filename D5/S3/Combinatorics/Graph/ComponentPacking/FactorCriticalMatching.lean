@@ -18,6 +18,9 @@ Direct frozen dependencies:
   FD6: D5/S3/StatisticalMechanics/DimerVirialFourthDifferenceRefutation; Lean name: D5.S3.StatisticalMechanics.DimerVirialFourthDifferenceRefutation.matchingsIn_eq_empty; statement_id: sha256:6e3d64271bc2e696a5b673dc46b49301e394f50043ba30f3b5cc607ae06192ad
   FD7: D5/S3/Zeros/Convolution/MatchingFiber; Lean name: D5.S3.Zeros.Convolution.MatchingFiber.Matching; statement_id: sha256:5985a336685d711a5801b13ec52b3d5ee14d0dce784d74ec1904eb78c9002586
   FD8: D5/S3/StatisticalMechanics/DimerVirialFourthDifferenceRefutation; Lean name: _private.D5.S3.StatisticalMechanics.DimerVirialFourthDifferenceRefutation.0.D5.S3.StatisticalMechanics.DimerVirialFourthDifferenceRefutation.instDecidableEdgeDisjointOfFintypeOfDecidableEq; statement_id: sha256:952bfdb17a40231ac661e796e06d8c3f298519cca124948548158522043dac66
+Published count suppliers: matchingCount_eq_cnt, matchingCount_eq_zero_of_card_lt and
+  matchingNumber_le are consumed by MatchingPartition's native partition, finite-support
+  argument and sharp_gap_attained, respectively. Their original proofs are reused.
 Utility none: the matching, parity and Hall arguments are uniform in the finite carriers; no finite certificate or enumeration settles a fixed instance.
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/20094
 IsAlmostRegular: proof_shape: bind-only; escape_witness: none; consumers: D5.S3.Combinatorics.Graph.ComponentPacking.AhanjidehEkimYildizZ.AEYInfimum.Z_eq_of_attainment, D5.S3.Combinatorics.Graph.ComponentPacking.AhanjidehEkimYildizZ.AEYLowerDense.lower_or_exception, D5.S3.Combinatorics.Graph.ComponentPacking.AhanjidehEkimYildizZ.AEYLowerDense.no_small_dense, D5.S3.Combinatorics.Graph.ComponentPacking.AhanjidehEkimYildizZ.ExceptionalLower.lower, D5.S3.Combinatorics.Graph.ComponentPacking.AhanjidehEkimYildizZ.ExceptionalLower.no_order_59, D5.S3.Combinatorics.Graph.ComponentPacking.AhanjidehEkimYildizZ.Z, D5.S3.Combinatorics.Graph.ComponentPacking.AhanjidehEkimYildizZ.result, D5.S3.Combinatorics.Graph.ComponentPacking.AhanjidehEkimYildizZUpper.AEYUpperAttainment.attainment, FactorCriticalOrder.almost_regular_order_eq; Direct frozen dependencies: none
@@ -86,7 +89,7 @@ open Classical
 open Finset
 open D5.S3.StatisticalMechanics.DimerVirialFourthDifferenceRefutation
 /-- The frozen matching count equals the owner's finite matching enumeration for every graph. -/
-private theorem matchingCount_eq_cnt {n : ℕ} (G : SimpleGraph (Fin n))
+theorem matchingCount_eq_cnt {n : ℕ} (G : SimpleGraph (Fin n))
     [DecidableRel G.Adj] (i : ℕ) : matchingCount G i = cnt G.edgeFinset i := by
   all_goals
     classical
@@ -120,7 +123,7 @@ private theorem matchingCount_eq_cnt {n : ℕ} (G : SimpleGraph (Fin n))
         right_inv := fun S => rfl }
 
 /-- No matching can cover more vertices than the graph has. -/
-private theorem matchingCount_eq_zero_of_card_lt {n : ℕ} (G : SimpleGraph (Fin n))
+theorem matchingCount_eq_zero_of_card_lt {n : ℕ} (G : SimpleGraph (Fin n))
     [DecidableRel G.Adj] (i : ℕ) (hi : n < 2 * i) : matchingCount G i = 0 := by
   all_goals
     have hz : matchingsIn G.edgeFinset i = ∅ :=
@@ -132,7 +135,7 @@ private theorem matchingCount_eq_zero_of_card_lt {n : ℕ} (G : SimpleGraph (Fin
     rw [hz, Finset.card_empty]
 
 /-- The binding matching number is at most half the graph's order. -/
-private theorem matchingNumber_le {n : ℕ} (G : SimpleGraph (Fin n)) [DecidableRel G.Adj] :
+theorem matchingNumber_le {n : ℕ} (G : SimpleGraph (Fin n)) [DecidableRel G.Adj] :
     matchingNumber G ≤ n / 2 := by
   all_goals
     unfold matchingNumber

@@ -1,9 +1,11 @@
 ---
 name: codex-formalize
-description: Use when asked to formalize mathematics in this repository, either closing an open digestion atom or writing new D5 Lean and its Blueprint Scribe directly when the content has no atom.
+description: Use when asked to formalize mathematics in this repository, using D5 Lean, Blueprint Scribe and repository-local freeze evidence.
 ---
 
 # Codex Formalization Workflow
+
+Use the common interface to compile one source on both backends. `OmegaMathlib` is the checked strict subset of pinned Mathlib. If a consumer needs the full official API, import `OmegaBuild.Commands`, put `compile_only_with_mathlib` after the imports, and use Mathlib directly. All modules importing that consumer inherit the choice. [Two compilable examples](../../src/README.md#选择编译后端)
 
 ## Install
 
@@ -35,33 +37,9 @@ An unfinished registration must not be reported as `declared_validated`. If regi
 
 Helpers in `Reg`, `Interface` and `Impl` create no recursive D5 audit target and retain their existing checks. Reuse with no new Lean declaration creates no audit target. Reg proofs are audit evidence, not a new mathematical GID/Scribe/deposit/utility obligation.
 
-## Retiring completed intake
-
-Use [atom-retirement](../atom-retirement/SKILL.md) when the requested result is removal of terminal atoms or archival/deletion of their theory input. It owns whole-source retirement after the existing cover/settle/decompose writers establish completion. Formalization alone does not authorize deleting Lean declarations. An unproved proposition remains open; difficulty, missing prerequisites or resource limits do not make it nonpropositional.
-
 ## State machine
 
-**Pure digestion route** (`CLAUDE.md` §1.2). A delivery that adds or first-freezes no D5 declaration is a pure digestion task. Such a task covers with existing frozen declarations, settles or clears nonpropositional or upstream-only atoms, decomposes into the ledger, or makes a §4.3 private-only exposure with canonical repin and registration. Run Step 0, then:
-- skip Steps 1–2 and 4–7: run the canonical writers (`make cover` / `cover-batch`, `make settle` / `make -C tools settle-batch` / `make settle-clear`, `make decompose`) and commit their delta;
-- per-sentence probes, evidence archives and live-closure readings are not required, and no review triplet, evidence seat or repair seat is dispatched;
-- in Step 8, open the PR with `AUTO_MERGE=0` and merge once the writers exited 0 and the required checks are green on the exact head; the required checks, including `current`, carry §4.3 consumer validation;
-- account for every atom encountered by the selection that led to this route; each has a canonical writer result or a named mathematical or writer blocker with its next handling. A bare `open`, recommendation, skip, defer, or unexecuted handoff is not processing.
-
-All other deliveries follow the steps below.
-
-### Encountered digestion set
-
-When topic selection uses digestion, the encountered set is the atoms returned or examined by `search-atoms`, plus context and child atoms actually read through `show-atom` or `atom-context`. It includes rejected and unsuitable candidates and is limited to that selection; it is not a global backlog sweep. Before a route-specific exit, process every encountered atom through the existing route that its content permits:
-
-- use `make cover` or `cover-batch` for an exact existing frozen declaration after reading the required context and prerequisites;
-- use `make settle`, `make -C tools settle-batch`, or `make settle-clear` only where the current writer permits a genuinely nonpropositional or upstream-only closure; an unresolved proposition remains mathematically `open`;
-- use `make decompose` for mixed or multi-clause atoms, then process the parent and every resulting child to clause-complete chain state;
-- write admissible new D5 content and use its normal deposit and coverage route when no existing result closes the clause.
-
-Unsuitability alone never supplies a proof or a nonpropositional settlement. A missing writer outcome or a genuine mathematical gap remains an explicitly named blocker with concrete next handling, and prevents claiming that all encountered atoms were processed. The pure digestion route stays minimal: canonical writers and their required checks suffice, with no process archive or extra review.
-
-Follow these steps in order. Do not pass a step until its postcondition holds.
-
+The [source theories repository](https://github.com/the-omega-institute/trureturing-source-theories/tree/dev) owns intake, selection by atom, coverage, settlement and retirement. An atom can supply the statement of a main-repository task. Record its source reference when relevant.
 ### 0. Establish the environment and isolation
 
 Observation-only requests, including source/atom inspection and issue work, follow CLAUDE.md §6.1 in the main checkout or a suitable existing worktree without creating a worktree or running a build. Do not run the mutation steps below for such a request; if a chosen inspection command requires building the CLI, report that prerequisite or use available source reads instead of treating the build as read-only.
@@ -89,27 +67,17 @@ pwd -P && git rev-parse --show-toplevel && make -C tools dotnet
 
 Re-read the current `export PATH` from `tools/scripts/local-harness-gate.sh` for every mutation task rather than trusting a list quoted elsewhere; its `/usr/sbin` entry must survive because the report supervisor requires `lsof`, which lives there. Confirm the reused tree with the same `pwd -P` / `git rev-parse --show-toplevel` check. When creating, the `make worktree` output is JSON whose `path` field names the created path; substitute that value for `<created-path-from-output>` and work only there.
 
-Build through the canonical `make -C tools dotnet` door because `make show-atom` runs the Release CLI with `--no-build`.
+Build the harness with `make -C tools dotnet`.
 
-Before any deposit, require `git status --short` to print nothing except the intended formalization changes. Prefer a fully clean tree before beginning the task. Deposit and cover only update the working tree; inspect their resulting delta and commit it through the normal repository workflow.
+Before any deposit, require `git status --short` to print nothing except the intended formalization changes. Prefer a fully clean tree before beginning the task. Deposit updates the working tree; inspect their resulting delta and commit it through the normal repository workflow.
 
-Postcondition for mutation tasks: the pinned toolchain is on PATH; `pwd -P` and `git rev-parse --show-toplevel` agree with the reused or created isolated lane; `make -C tools dotnet` has built the CLI so `make show-atom` succeeds; and no unrelated or unexplained change is present.
+Confirm the isolated lane and pinned tools before editing.
 
-### 1. Choose one primary target and account for the selection
+### 1. Select the primary statement
 
-The target is either an open atom or, when the content has no atom, a statement source: a preregistered issue, a published source, or the dispatcher's brief, quoted verbatim.
+Use the statement from the assigned issue, external source or source-theories atom. Preserve every hypothesis and conclusion clause except where the strongest-statement rule below removes a hypothesis or strengthens the conclusion; never weaken either, except as the false-source rule below requires. Deposit accepts the declaration GID for every source.
 
-For automatic target selection, use `make search-atoms SOURCE=<source-id-or-path> SELECTION=default-dispatch`. This reads the current source-owned choice; a source with `default_dispatch = "excluded"` supplies no default candidates. Recheck cached candidates in this mode at emission, using CLI `search-atoms --selection default-dispatch --atom-id <id>` (repeat `--atom-id` for a batch). The source choice does not assert proof, coverage, nonpropositional status or readiness.
-
-For an explicitly requested source or atom target, use `make search-atoms SOURCE=<source-id-or-path>` to inspect stored ATOM paths, including opted-out sources. Explicit inspection, decompose, cover and deposit remain available; an active source can read and reuse children owned by an opted-out source. Read a chosen ATOM and its context with:
-
-```sh
-make show-atom ATOM_ID=<id>
-```
-
-Search reports stored paths and states. Read the ATOM and its context before choosing an elementary, self-contained primary target. If digestion was used, apply the encountered-set rule above to every returned or read atom before reporting a route exit; do not turn an unsuitable candidate into an unowned open item.
-
-The required delivery surfaces are the D5 Lean module and its Blueprint Scribe (`CLAUDE.md` §1.2). Before starting, check with `make show-atom`/`make atom-context` whether the content already has an atom: if it does, deposit and cover that atom in the same delivery; if it does not, write the D5 Lean and Scribe directly and freeze through `make deposit-uncovered`. Do not add a theory volume or run `make ingest` as a precondition for formalization. A target with no atom is still judged by §3.2 proof shape and admission basis, §3.3 utility and §3.7 literature status.
+Aim at the strongest correct statement (`CLAUDE.md` §3.10). The formal target must imply the source claim, with the weakest hypotheses and the strongest conclusion provable within this delivery: an equivalence or a complete classification where the converse holds and is in reach, exact constants and scope. A strengthening that needs new machinery or goes beyond the preregistered criteria is a new candidate (§3.6), not part of this target. A hypothesis, instance argument or binder that neither the statement nor the proof uses, or that follows from the others, is removed before delivery. When the source claim is false or overstated, record the counterexample or the missing condition and formalize the nearest true statement, the one that adds the weakest sufficient condition or cuts the conclusion back to exactly what holds; never prove a weaker statement to accommodate the source, and never rewrite a false claim into a vacuously true one. The settlement of an external named problem still states the published claim verbatim (§3.2) or its literal negation (§3.4); its strongest true replacement is a separate candidate. A change to a preregistered statement is recorded on its issue first (the new statement, how it relates to the old one, the fallback if it fails); then continue without waiting for a reply, and redo the registration, utility header and report of the same delivery for the amended statement. Strengthening exempts nothing and creates no target: a strongest form that only instantiates, projects or normalizes frozen or pinned upstream results is still bind-only (§3.2) and is cited, not added, and a source claim that a frozen declaration or pinned upstream result already covers is reused under §3.2, however much it could be strengthened.
 
 Triage the claim class before committing to it; each class below is named by landed outcomes, not speculation:
 
@@ -120,7 +88,7 @@ Triage the claim class before committing to it; each class below is named by lan
 - **Do not encode — institutional/philosophical prose clauses** (governance clauses, postmortem narratives, interpretive premises): they have no mathematical content, and encoding them as generic set/logic predicates is how thin deposits happen. Report them as not-formalizable prose rather than dressing them in Lean.
 - **Do not attempt without a machinery plan — heavy universal claims** (representation theorems, general-dimension obstructions): landed lanes on these either time out or fabricate. If the machinery gap is real, `open` naming the gap is the valuable output.
 
-Postcondition: one primary target is selected and its claim class is named in the report; the statement source is retained, either the verified `make show-atom` output of the atom or the verbatim statement source of a target with no atom. When digestion was used, every encountered atom has a canonical route result or a named blocker with concrete next handling.
+Retain the statement source and the primary target in the hand-off.
 
 ### 2. Echo the statement before proving it
 
@@ -128,11 +96,15 @@ Follow `agents/echo-template.md`. Write a clause-level mapping from every quanti
 
 If an ambiguity cannot be resolved without weakening the claim, stop and report the result as `open`.
 
-Postcondition: every source clause has one intended Lean counterpart, or the task has ended as `open` with the ambiguity named.
+Postcondition: every source clause has one intended Lean counterpart or is recorded as removed, strengthened or corrected under `CLAUDE.md` §3.10, or the task has ended as `open` with the ambiguity named.
 
 ### 3. Search the library before proving
 
-Apply `CLAUDE.md` 11, "library before proof." Search pinned mathlib and the repository's `D5/` declarations for the complete statement and for lemmas that close its dependencies. Record every query verbatim and record whether it hit.
+Apply `CLAUDE.md` 11, "library before proof." Search the frozen D5 declarations for a match and prefer `src/OmegaMath/` for a constructive proof. Check its `OmegaInit` foundations and the pinned Mathlib for the exact statement and prerequisites. Record every query verbatim and record whether it hit.
+
+For an existing formalization migrating to strict Omega mathematics, use the [migration skill](../omega-math-migration/SKILL.md) to update the original owner and verify its dependencies. Keep consumer references on the consumer side.
+
+When strict support requires a Mathlib port, place it under `strict/OmegaMathlib/`, preserve the upstream defining path and prefix the declaration name with `Omega.`. Place original reusable mathematics under `src/OmegaMath/` beside the relevant topic with `Omega original.` as the first line of the module documentation. Import the narrowest applicable module from D5. Use the strict scoped audit from [the library guide](../../src/README.md). D5 owns problem-specific applications and their frozen book citations. For example, the general positive-scaling proof lives in `OmegaMath.Projective` as `Omega.Projective.kappa_scale`. A D5 citation can reuse it directly. Determine axiom use from the individual frozen declaration's measured closure.
 
 Check the bind path first: the cheapest faithful discharge is an existing frozen theorem, and dozens of residues have been discharged with zero new Lean. If a frozen declaration already covers the residue leg verbatim, use the canonical coverage route naming that declaration and the evidence, not a new module or a recommendation for another worker. If the writer cannot run, name that blocker and its next command; do not claim the atom is processed.
 
@@ -187,8 +159,6 @@ theorem`; the other carried its bucket's 24-file count, its implementation base 
 went where it did. That kind of sentence belongs in the pull request body, which is where the
 provenance account is required anyway.
 
-The cost of getting this wrong is a whole redo, not an edit: the coverage receipt binds the Scribe
-bytes, so prose fixed after `make cover` invalidates the deposit and the lane pays for a second one.
 Read the prose once before depositing and ask of every sentence whether it would still make sense to a
 reader who has never heard of this repository's ledger.
 
@@ -209,7 +179,7 @@ Before creating the new module, set `lean_dir` to its target directory and `blue
 limit=$(sed -nE 's/.*DirectoryFileLimit = ([0-9]+);.*/\1/p' tools/StrataLint.Engine/Rules/RepositoryRules.Structure.cs); test -n "$limit"; lean_count=$(git ls-files "$lean_dir" | awk 'END { print NR+0 }'); blueprint_count=$(git ls-files "$blueprint_dir" | awk '!/\.md$/ { n++ } END { print n+0 }'); printf 'limit %s\n%s %s\n%s %s\n' "$limit" "$lean_dir" "$lean_count" "$blueprint_dir" "$blueprint_count"; test $((lean_count + 1)) -le "$limit" && test $((blueprint_count + 1)) -le "$limit"
 ```
 
-Committed Blueprint `.md` renderer oracles are excluded from capacity, but `.scribe.cs` sources count. If the natural target directory is full, do not place the module in a semantically wrong directory to evade the limit: split the bucket, register the new domain in `Meta/domains.yaml`, place the module in the new directory, and carry the protected-surface cost for the conservative-extension gate to judge. A protected-surface change is priced work, not a stopping condition. Reserve `open` for what is genuinely unresolvable, such as an ambiguity that cannot be settled without weakening the claim or a proof that will not close, never for work that merely costs more.
+Committed Blueprint `.md` renderer oracles are excluded from capacity, but `.scribe.cs` sources count. If the natural target directory is full, do not place the module in a semantically wrong directory to evade the limit. Split the bucket instead: create a topical sub-bucket under the same parent directory, with its mirrored `Blueprint/` directory and, for the registration source, its mirrored `Reg/D5/` directory, place the module there, and move nothing (see "Artifact shape"). A split is ordinary work, not a stopping condition. Reserve `open` for what is genuinely unresolvable, such as an ambiguity that cannot be settled without weakening the claim or a proof that will not close, never for work that merely costs more.
 
 Iterate on the source artifacts, then run the canonical door when they are ready:
 
@@ -234,9 +204,11 @@ Obtain exact statement, axiom and material evidence through
 needed). Targets must be explicit and nonempty; the scope includes their named utility inputs, and Lake owns each import closure and incremental
 compilation. Run `make emit PATHS=<NUL-separated selected Lean/Scribe paths>` to generate the
 canonical projections; it builds only the selected Scribe Lean inputs, their named utility inputs and imports. Never hand-write
-a mirror or placeholder. `deposit`/`deposit-uncovered`/`cover` derive their scope from the GID, and
-`cover-batch` from all batch GIDs. Coverage also selects existing targets of those atoms and their transitive chain atoms, checking current identities before writing. These local doors require no full report or full build. CI and
-explicit whole-repository verification retain their required scope. Do not run full compilation unless an explicit whole-repository request or a concrete integration obligation cannot be met by scoped checks. State the need and pass `FULL_BUILD=1` in every full-build invocation (`make lean FULL_BUILD=1`, `make lean-report FULL_BUILD=1`, `make test FULL_BUILD=1`, `make warm-donor FULL_BUILD=1`), including indirect entries and any gate selected by `make gate-plan` that triggers a full build. Direct scripts use a command-local `FULL_BUILD=1` environment assignment. Make full-build entries and their direct scripts reject calls without `FULL_BUILD=1`; cache failure, retries and final verification do not supply permission to broaden scope. Required CI does not require a duplicate local full build.
+a mirror or placeholder. In the main checkout, `deposit` and `deposit-uncovered` select the module from the GID.
+After the declaration is frozen on main's `dev`, run `make cover ATOM_ID=… GID=…` or
+`make cover-batch ATOMS=…` in the source theories checkout. The coverage writer resolves the main
+branch once per invocation and records the frozen declaration for each atom. CI and
+explicit whole-repository verification retain their required scope. Do not run full compilation unless an explicit whole-repository request or a concrete integration obligation cannot be met by scoped checks. State the need and pass `FULL_BUILD=1` in every full-build invocation (`make lean FULL_BUILD=1`, `make warm-donor FULL_BUILD=1`), including indirect entries and any gate selected by `make gate-plan` that triggers a full build. Direct scripts use a command-local `FULL_BUILD=1` environment assignment. Make full-build entries and their direct scripts reject calls without `FULL_BUILD=1`; cache failure, retries and final verification do not supply permission to broaden scope. Required CI does not require a duplicate local full build.
 
 Scoped deposit retains SL-031's compiled utility checks. A target's named utility references
 (consumer, instance, premises, result and claim) add their modules and import closures to the scope.
@@ -262,11 +234,11 @@ Postcondition: every checklist item has evidence and none is `ASSUMED-UNVERIFIED
 
 If any checklist item cannot be evidenced, end the task as `open` with no deposit, carrying the Step 8 evidence: statement echo, search trace, failed approaches with reasons, and machine diagnostics.
 
-### 7. Deposit and cover, then identify the complete publication unit
+### 7. Freeze the module and identify the publication unit
 
 Checkpoint with `make worktree-checkpoint MESSAGE=FILE` after every recoverable unit of work, before long checks, before hand-off and before normal end. Label unfinished snapshots WIP in the message. A checkpoint certifies saved bytes only; it does not certify tests passed, publication or merge. Use no heartbeat or empty commits. Local WIP checkpoints may precede producer completion; the complete publication boundary below applies before publishing the unit.
 
-Only after Step 6 and an independent pre-freeze review pass, freeze through deposit and cover. The
+Only after Step 6 and an independent pre-freeze review pass, freeze through deposit. The
 pre-freeze review is a read-only seat that did not produce the module; it checks the mirror, source
 fidelity and the per-declaration judgement form against the unfrozen tree; it passes when every blocking
 finding it lists is resolved in the tree that goes through the doors. In the two-stage pipeline of
@@ -275,29 +247,12 @@ judgement-form seat between Stage A and the Stage-B doors. The sshx review tripl
 architecture) follows the doors in that order and must pass before merge; a pure digestion delivery
 (pure digestion route above) has no review triplet. If a review needs an early
 draft, first complete the publication boundary below and use Step 8 to publish the draft with freeze
-and cover still pending; return here after that review.
+still pending; return here after that review.
 
-```sh
-make deposit ATOM_ID=<id> GID=<D5/Path/Module.theorem_name>
-make cover ATOM_ID=<id> GID=<gid>
+make deposit GID=<D5/Path/Module.theorem_name>
 ```
 
-For a target with no atom, freeze without coverage:
-
-```sh
-make deposit-uncovered GID=<D5/Path/Module.theorem_name>
-```
-
-Deposit and cover operate on the same working tree and may land in the same pull request. Neither
-command commits automatically. Checkpoint their recoverable changes locally under the WIP rule above,
-including before long checks and hand-off.
-
-`make deposit`, `make deposit-uncovered` and `make cover` must exit 0. Judge commands by their raw exit code, never elapsed time
-or quiet output. Do not pipe a judgment command through formatting that hides its exit; run it bare,
-or capture `$?` immediately before formatting.
-
-If `make deposit`, `make deposit-uncovered` or `make cover` exits nonzero, stop and end as `open`. Report the failed command and exit code, machine diagnostics, touched paths, and the actual resulting tree state; deposit and cover do not commit their changes.
-
+Check the command’s exit status. On failure, report the diagnostic and actual working-tree state. Checkpoint recoverable changes.
 **Publication boundary, including early review drafts.** Before publishing a logical
 formalization unit, finish every intended source and its canonical committed projections. Identify the
 publication base (the commit preceding this unit's first checkpoint) and the publication tip (the
@@ -345,25 +300,8 @@ handoff procedure remains an agent/review obligation. Source fidelity, the no-wr
 explicit registration exception above, the independent pre-freeze review and the review triplet
 before merge still apply.
 
-**The theorem you cover with must own the clause unconditionally.** Before `make cover`, list the
-atom's clauses and the chosen theorem's explicit hypotheses side by side, and for each hypothesis name
-the sentence of the atom that supplies it. A hypothesis the atom neither states nor implies makes the
-cover weaker than the source claim — the digestion-side precedents below say the same thing, but a
-deposit lane reaches `make cover` without ever reading them, which is how this class landed twice.
-The specific trap both times: the discharging fact was **already frozen in the same directory**, so
-the unconditional statement cost no new mathematics and was simply not written. Landed cases: a
-parity atom bound to `..._of_generating_function` while the module already proved the unconditional
-form, and a price atom bound to `..._of_isLeast_missing_prime` while `exists_smallest_missing_prime_threshold`
-was frozen two files away. In both, the fix was one composed public theorem and a re-aimed edge, and in
-both the module was already frozen, so the fix cost a full redo. If the difference is a hypothesis some
-frozen theorem discharges, expose the composed unconditional theorem and cover that.
-
-Postcondition: deposit and cover exited 0 after review (or are explicitly pending for an early review
-draft); current-input `filemap-conform` exited 0; the complete intended source-and-projection delta
-was inspected across the checkpoints and index and in the cumulative diff between the identified
-publication base and publication tip; and the worktree is clean. An
-incomplete producer or failed publication check is reported with diagnostics, without publishing the
-incomplete unit.
+Source-owned coverage can cite the frozen declaration after publication. Confirm the exact hypotheses when relating the theorem to its source.
+Before publication, verify the complete source and projection diff across the selected checkpoints.
 
 ### 8. Push and open the pull request, or report `open`
 
@@ -402,6 +340,8 @@ Before Step 7, the producing seat must answer every item with concrete evidence.
 - Deposit substance: for a module introducing a new definition, name the theorem(s) that make the definition earn its freeze (instantiation against existing repository structures, an independent-sides characterization, or a citable property), and show the module's connection to the existing machinery its vocabulary names. Anonymous `example`s do not discharge this item; see the thin-deposit taxonomy above.
 - Duplicate search: cite the Step 3 trace showing this is not a renamed duplicate of a mathlib or `D5/` declaration.
 - Clause fidelity: place the authoritative atom clauses beside the Lean clauses one-to-one, mapping every clause to an exact Lean binder, hypothesis, or conclusion. The dropped-or-weakened set must be empty; any weakening, omission, or unresolved ambiguity forces `open` before deposit.
+- For an OmegaMath citation, expand the carrier and equality at the use site. Check the premise that would justify each change of domain or representation. A rational rotation matrix need not have a rational unit-spinor lift. Verify worked examples and manual deductions against their stated definitions. For a zero-axiom claim about the current build, measure the compiled declaration on the named backend. For a claim about a frozen version, read that version’s matching declaration entry. [OmegaMath publication rule](../../docs/develop/spec/golden-ledger-repo-spec.md#omega-claim-fidelity)
+
 - Rendered-statement fidelity: read the emitted Blueprint `.md` for this document and compare its displayed statement against the Lean declaration symbol by symbol; use a neighbouring landed mirror as a shape check.
   The formula DSL and writer own tokens that can be valid LaTeX and structurally accepted yet mean something different from the theorem, so `emit` exiting 0 is not evidence that the rendering is faithful.
   A mismatch blocks deposit; resolve it against `tools/StrataLint.Scribe/Ast/FormulaDsl.cs` and `tools/StrataLint.Scribe/Writers/LatexWriter.cs`, or end the task `open`.
@@ -426,7 +366,7 @@ Every entry below names a failure class that actually occurred in landed rounds 
 
 ### Artifact shape
 
-- **No new top-level domain for one module (three landed rejections in one day).** When your module's natural parent directory is at its file limit, the repository convention is a SPLIT BUCKET under that parent (`Parent/NewBucket/`, split-only, no moves), recorded in the stratum's MAP file (split-history entry AND bucket-catalog line; create the stratum MAP and register it as a governance document if the stratum has none), with any new group name registered where the precedent registers it. Reuse an existing bucket whenever ownership genuinely fits (a symmetry theorem belongs in the existing `Symmetry/` bucket, not a new sibling). Registering a fresh top-level domain in `Meta/domains.yaml` for a single module is the anti-pattern: every instance was struck down by review and relocated.
+- **No new top-level domain for one module (three landed rejections in one day).** When your module's natural parent directory is at its file limit, the repository convention is a SPLIT BUCKET under that parent (`Parent/NewBucket/`, split-only, no moves), named for the topic it holds (a CamelCase segment that repeats neither the domain name nor its parent segment) and mirrored under `Blueprint/` and, for registration sources, `Reg/D5/`; the directory file limit applies to each of these directories. The directory tree is the only record of the split: write no MAP file, index or bucket catalog (committed cross-partition aggregates are forbidden, CLAUDE.md §4.5). A sub-bucket is a subdomain segment and needs no `Meta/domains.yaml` entry; only the domain directly under the stratum is registered there. Reuse an existing bucket whenever ownership genuinely fits (a symmetry theorem belongs in the existing `Symmetry/` bucket, not a new sibling). Registering a fresh top-level domain in `Meta/domains.yaml` for a single module is the anti-pattern: every instance was struck down by review and relocated.
 - **FromLean is only legal for projector-registered shapes (five-statement landed rejection).** A lane once used `StatementSource.FromLean()` for all five of its Describes; the kernel projector returned Unprojectable for every one (`Finset`, a repo predicate, `LT.lt`, `DirichletCharacter`, `Nat.Prime` are all outside the registered shapes), the emitter exited 1, and no Blueprint mirror existed for the fidelity gate. `FromAuthor` with a typed Disp formula is the DEFAULT; before even considering FromLean, verify the statement's every constituent is projector-registered — when in doubt, FromAuthor. Then run the emit and READ the produced `.md`: a missing mirror blocks deposit by itself.
 
 - **Header law (three landed violations; corrected 2026-09-06 for the `utility:` line).** The header sits at byte zero and `digest:` is a SINGLE line ending ` -/` — it is the LAST header line, not necessarily line 6. The owner is `RepositoryRules.HeaderPattern`, whose exact shape is `GID` / `generality: [GIE]` / `mirror-B` / `mirror-E` / `anchors: [...]` / **optional `utility:`** / `digest: … -/`. So the header is SIX lines without `utility:` and SEVEN with it, and `utility:` sits between `anchors:` and `digest:` — that position is fixed by the pattern, not a convention. A wrapped digest is a violation; ` -/` alone on its own line is the same violation. Copy the shape from a CURRENT tracked neighbour (an older neighbour may predate `utility:`), then verify your file's last header line ends with ` -/`.
@@ -441,8 +381,8 @@ Every entry below names a failure class that actually occurred in landed rounds 
   ```
   **Landed precedent (2026-09-06, #5827).** A deposit whose Scribe used `FromLiterature(AlaogluErdos)` shipped a note with `doi:` in the frontmatter and no `## Verified locator` section. `DESCRIBE_STATUS` came back `red=1 observe=3865` — **the 3865 `OPEN projection` lines are pre-existing observations, not the failure**; the single RED was this locator. Cost: one full CI round trip. Verify the three conditions mechanically before you push, not by eye.
 - **`utility:` is machine-judged by SL-031.** The selected scope is present byte-changed D5 content that was not frozen on the protected baseline, together with first-freeze modules. Every selected module, including `none`, needs its current non-error Lean report. The header field sits between `anchors:` and `digest:`. Missing or malformed input blocks admission.
-  The current grammar is `utility: none` or `utility: kind=<K>; basis=<B>[; instance=<GID>][; premises=<GID>[,<GID>…]][; result=<GID>][; claim=<GID>]`. Optional fields occur in that order; the parser permits 2–6 fields and rejects duplicate keys. `K` is `bounded-enumeration`, `checker`, `numeric-reduction` or `certified-instance`. `B` is `consumer=<declaration GID>`, `refutes=<atom|task|gid target>` or `terminal=<atom|task|gid target>`.
-  Ordinary certified instances and bounded enumeration require `refutes`. Refutations require both `claim` and `result`, the literal compiled types `Prop` and `Not claim`, and the accepted kernel/axiom evidence. A valid refutation bypasses the non-refutation checker-instance and reduction-premise requirements. Otherwise a checker needs `instance`, and a numeric reduction needs `premises` with `basis=consumer`. FirstFreeze additionally checks exact atom coverage for `refutes=atom` and import reachability for `consumer`. See spec A5.1 for the current admission contract.
+  The current grammar is `utility: none` or `utility: kind=<K>; basis=<B>[; instance=<GID>][; premises=<GID>[,<GID>…]][; result=<GID>][; claim=<GID>]`. Optional fields occur in that order; the parser permits 2–6 fields and rejects duplicate keys. `K` is `bounded-enumeration`, `checker`, `numeric-reduction` or `certified-instance`. `B` is `consumer=<declaration GID>`, `refutes=<task|gid target>` or `terminal=<task|gid target>`.
+  Ordinary certified instances and bounded enumeration require `refutes`. Refutations require both `claim` and `result`, the literal compiled types `Prop` and `Not claim`, and the accepted kernel/axiom evidence. A valid refutation bypasses the non-refutation checker-instance and reduction-premise requirements. Otherwise a checker needs `instance`, and a numeric reduction needs `premises` with `basis=consumer`. FirstFreeze additionally checks import reachability for `consumer`. See spec A5.1 for the current admission contract.
 - **Generality tag follows the weakest import and the module's nature (two landed blockers).** A concrete-instance module (fixed modulus, fixed witness set) is `generality: I`; a general theorem module is `G`; a `G` tag on a file importing `I`-level facts is a violation. Compare your nearest landed neighbors before writing the tag.
 - **Every displayed formula is closed.** A Describe formula for a public definition binds all of that definition's parameters with their types — `∀ (V : Type) (G : SimpleGraph V) (C : Finset V), condense G C = …`, not a body with `V`, `G`, `C` free. Lean instance arguments (`[Fintype V]`, `[DecidableEq V]`, `[Group G]`) are rendered as anonymous bracket items, `Seq(…, OpenBracket, Call("Fintype", v), CloseBracket, …)`, never as named binders: `All("FV", Call("Fintype", v), …)` introduces `FV` and never uses it. Every named binder occurs in its body. Check all three by reading the emitted `.md` formula by formula before any door.
 - **Validate the complete import scope.** Lean compilation and scope validation include every imported `D5.*` module and the explicitly named utility inputs. Dependency edges come from source imports and are not stored in state records. Closed imports may be unregistered; state membership is not an import prerequisite.
@@ -459,23 +399,19 @@ A landed pull request consisting of one generic one-line `def` plus two `simp`-t
 - **Bind-only modules are thin deposits (escape witness).** Scope: any module path with no state record on the protected base for which the candidate adds the first state record; classify the COMPLETE included declaration set that record lists — the `make deposit` anchor GID does not change the classification. For every public theorem, record in the Step 8 report: `proof_shape: content | bind-only`; its DIRECT frozen public dependencies as GID + `statement_id` (pinned-Mathlib declarations are not frozen dependencies, but a conclusion obtained from a Mathlib lemma by direct instantiation is still not a witness); its `escape_witness` — one precisely stated new intermediate proposition whose proving declaration lies in the theorem's elaborated transitive constant-dependency closure, is NOT obtained from those dependencies by instantiation, projection or normalization, is neither definitionally equivalent to nor an alias/restatement of the theorem's conclusion, and lies on a LIVE derivation path to that conclusion (after ζ/β/ι reduction and removal of dead or projection-discarded proof terms; `(And.intro h frozen).2`-style smuggling is not a witness — if the conclusion is reachable by bind-only operations without it, it is not a witness); and `admission_basis`. A witness may take two forms: (1) a distinct intermediate proposition satisfying all four conditions, or (2) the public conclusion itself when it is produced on the live proof path by a named non-bind-only computation or construction (a `decide`/`norm_num` decision of a new numeric fact, an explicit witness construction, a new estimate chain) and the same counterfactual holds (bind-only operations cannot reach the conclusion without it) — do not manufacture an otherwise unneeded intermediate proposition. No witness ⇒ `bind-only`; `escape-witness` may be the admission basis only when at least one public theorem is classified `content` with such a witness. Source-line counts are non-load-bearing readings, never the criterion. A first-freeze module with no admission basis must not be deposited: stop before `make deposit` and report `open` with reason `proof_shape: bind-only`. Each bind-only companion in an admitted module must name its atom/obligation and a directed edge with both endpoints and consumer→prerequisite direction (the companion is a prerequisite of the escape-bearing theorem, or the escape-bearing theorem is a prerequisite of the companion, or a pre-registered named use); unrelated bind-only declarations may not ride along. If the witness observed after the probe differs from the one preregistered, re-preregister a new version; never relabel after the fact.
 - **The pull-request body is evidence, not decoration.** Carry the clause-mapping echo, the search trace, and the explicit honest-partial disclosure (what is asserted, what remains open) in the pull-request body. An empty body on a deposit pull request hides exactly the thinness these gates exist to catch.
 
-### Cover and ATOM processing
-
-Use `show-atom` and `atom-context` to read every selected or examined ATOM and its source context. A cover attempt must verify the exact Lean declaration, current frozen state, and the atom's prerequisites. Successful coverage is written through `cover-atom`; a failed attempt leaves a named writer blocker and its next handling, not a completed atom. Use `decompose-atom` when a mixed or multi-clause ATOM needs child processing, then process the parent and every child to clause-complete chain state. Lean proof, freeze, deposit, cover, settle, and the ATOM's local chain state remain the required delivery surface. No bare `open`, recommendation, skip, defer, or unexecuted handoff satisfies the encountered-set obligation; a proposition that remains unresolved stays mathematically `open`.
-
 ### Moving base (multiple drivers, hourly-advancing dev)
 
 Several machines drive this repository concurrently and `dev` advances roughly hourly; three landed incidents define the discipline:
 
 - **Merge `origin/dev` and verify before changing the working tree**: the only trustworthy sync check is `git merge-base --is-ancestor origin/dev HEAD` — a piped or prettified merge command has silently failed and sent validation onto a stale base.
 - **A capacity or baseline red may be the baseline's fault, not yours**: a candidate diffed against an older base once made another driver's new file look like this lane's twelfth — the remedy was merging newer `dev` and re-pushing, not restructuring. Before treating a structural red as yours, re-sync and re-run.
-- **The remote branch may have been advanced by automation** (update-branch bots): if push is rejected, fetch the branch itself and follow the repository's merge-only synchronization policy. Never force-push. Checkpoint recoverable deposit and cover changes locally, including before long checks and hand-off; publish only after Step 7's complete publication boundary, identified by its base, tip and cumulative diff.
+- **The remote branch may have been advanced by automation** (update-branch bots): if push is rejected, fetch the branch itself and follow the repository's merge-only synchronization policy. Never force-push. Checkpoint recoverable changes in their owning repositories, including before long checks and hand-off; publish only after Step 7's complete publication boundary, identified by its base, tip and cumulative diff.
 
 ### Process honesty
 
 - **Never claim a build result without its exit code.** A seat once reported `lake` green while the build failed; since then the dispatcher re-runs the build at collection and a false green is a terminal lane offense. Report the command and the exit code; quiet output and elapsed time are not evidence.
 - **Recompute every number you copy.** A value taken from a brief, an issue, a search result or another seat (a certificate bound, a table entry, a count) is recomputed from its definition before it is written into Lean, Scribe, a dossier or a PR body, and the recomputation command is reported.
-- **Never hand-edit `Meta/Digestion/**`.** Use the canonical `cover`, `settle`, and `decompose` writers for encountered atoms; a writer or capability blocker is named with its next handling. The same applies to `Golden/Frozen/**`.
+- Use the canonical deposit writer for `Golden/Frozen/**`.
 - **When a dispatcher assigns output paths, write exactly those.** `result.json` (a conclusion envelope, no logs inline) and `done.sentinel` at the assigned paths are the deliverable; your final prose message is not. A sentinel written while you keep running is worse than no sentinel — write it last, then stop.
 
 ## Prohibitions
@@ -488,9 +424,8 @@ Several machines drive this repository concurrently and `dev` advances roughly h
 - Never add a declaration to a frozen state member; this is a formalization discipline. State records contain all included module declarations; SL-008 checks the pin and declaration list against the current report and reports pin changes as Observe, with no cross-tree declaration-set monotonicity or invariance gate.
 - Never modify the judge during formalization (CLAUDE.md §1.2 「形式化不改判官」): a formalization lane changes only content surfaces (D5, Blueprint, Reg declaration sources and content templates, digestion ledger, theory volumes); `tools/**` (StrataLint, lean-inspector, report producers and schedulers, scripts), the judge Interface/Impl packages, `.github/**` and other admission surfaces are out of scope. If the judge is wrong or blocks you, open or reuse an issue with the verdict and readings, report the blocker, and continue other mathematical work; do not carry a judge fix in the delivery.
 - Never exceed directory capacity; `tools/StrataLint.Engine/Rules/RepositoryRules.Structure.cs` owns this rule.
-- Never edit `Meta/Digestion/**` directly; use the canonical `cover`, `settle`, and `decompose` writers for encountered atoms, and name any writer or capability blocker with its next handling.
 - Never weaken the echoed statement to make a proof close; the statement echo and this fidelity gate own that obligation.
-- Never deposit a first-freeze module without `admission_basis: escape-witness`; `CLAUDE.md` §3.2 owns the rule. A wholly bind-only module has no admission basis, even with an atom requirement or promised downstream consumer.
+- Identify the applicable first-freeze admission basis in `CLAUDE.md` §3.2. For a book citation of an existing OmegaMath theorem, apply the publication rule in §3.2 and record the actual book location, the missing D5 GID and the original proof. Otherwise a wholly bind-only module has no admission basis, even with an atom requirement or promised downstream consumer.
 - Never invent a "needs human review" outcome; `CLAUDE.md` 22 forbids human-review gates outright.
 
 ## What this skill does not own
@@ -499,6 +434,6 @@ Several machines drive this repository concurrently and `dev` advances roughly h
 - Capacity limits are owned by `tools/StrataLint.Engine/Rules/RepositoryRules.Structure.cs`.
 - Lean header shape is owned by the live harness and demonstrated by current tracked neighbours.
 - Import direction is owned by the repository specification and its StrataLint rules.
-- Admission, freezing, coverage, and status are owned by the canonical `make` doors and `tools/`.
+- Main owns admission and freezing. The source theories repository owns atom coverage and digestion status.
 
 This skill names each concern's owner without reproducing its definitions or thresholds. The prohibitions above are pointers that carry the owner's name. Discover each concern's current form from its owner; the harness is the judge.

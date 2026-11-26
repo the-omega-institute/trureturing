@@ -1,8 +1,0 @@
- For k independent such samples,
-
-$$\Pr\left(\operatorname{lcm}(d_1,\ldots,d_k)=r\right)
-=\prod_{p\mid r}(1-p^{-k}). \tag{4.3}$$
-
-Proof. The least common multiple misses a prime's full exponent exactly when all numerators are divisible by that prime. Independent uniform residues, and then the Chinese remainder theorem over the distinct prime divisors of r, give the product. The empty product for r=1 is one. QED.
-
-This identity concerns ideal eigenphase labels. An implemented finite binary clock yields approximations with the distribution (4.2). For a supplied bound r<=R and Q=2^m>=2R^2, a nearest clock outcome is within circular error 1/(2Q)<1/(2r^2), so continued fractions recover the reduced j/r, with the usual treatment of the 0/1 wraparound. 

@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:f34c5f52e4d1ea58e09efbe51b38962f81ca2b649be4db6170b06bfdb7d0ebbc
-  normalized_sha256: sha256:f34c5f52e4d1ea58e09efbe51b38962f81ca2b649be4db6170b06bfdb7d0ebbc
-cas_ref: sha256:f34c5f52e4d1ea58e09efbe51b38962f81ca2b649be4db6170b06bfdb7d0ebbc
-coverage_gids:
-  - gid: D5/S3/Divergence/ProductAdditivity.kl_divergence_product_additive
-    target_statement_id: sha256:43d0563aa5e8e8832540828a6320b50f91460e590e3151915beb42492bd5e31b
-receipts:
-  unresolved_subitems: []

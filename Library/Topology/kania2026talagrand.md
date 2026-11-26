@@ -938,3 +938,22 @@ Official acceptance and worldwide uniqueness are not claimed; officialSolved
 remains zero. Problem 8.1 and the full Cp metrizable quotient problem remain
 outside this theorem. The information registration remains unfinished under
 issue 21750; exact-source Reg reconstruction is not declared_validated.
+
+## Finite fibres on the actual CH compactum
+
+`TalagrandFiniteFibres.actual_finite_to_one` takes any continuous map
+from `SignedOrdinalRealization.finalPrefix hCH`'s limit space to a
+Hausdorff space with finite fibres. Its fibre cardinalities admit a
+uniform natural-number bound, and the set of image points with at least
+two preimages is finite. The proof uses the actual Grothendieck, point
+sequence and disjoint closed-copy conclusions of the CH construction.
+The uniform bound follows by separating all pairs of selected points in
+increasingly large fibres on one subsequence and passing to a common
+cluster tuple. Infinitely many nonsingleton fibres of maximal recurring
+size would give two disjoint homeomorphic infinite closed subsets.
+
+The finite-fibre theorem is a repository deduction from the actual CH
+construction. In the pointwise-quotient problem it applies to the
+evaluation map on convergent block-average tests when its fibres are
+finite. Finiteness of the fibres of that specific evaluation map remains
+open.

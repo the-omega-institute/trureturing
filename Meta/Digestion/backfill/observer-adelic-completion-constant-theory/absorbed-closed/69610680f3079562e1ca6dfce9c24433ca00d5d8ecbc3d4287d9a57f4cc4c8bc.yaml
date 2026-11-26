@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:69610680f3079562e1ca6dfce9c24433ca00d5d8ecbc3d4287d9a57f4cc4c8bc
-  normalized_sha256: sha256:69610680f3079562e1ca6dfce9c24433ca00d5d8ecbc3d4287d9a57f4cc4c8bc
-cas_ref: sha256:69610680f3079562e1ca6dfce9c24433ca00d5d8ecbc3d4287d9a57f4cc4c8bc
-coverage_gids:
-  - gid: D5/S3/Factorization/Combinatorics/PrimeWordOccupationDescent.order_descent_criterion
-    target_statement_id: sha256:1fbe3e0ec19fd0aced2b91bb74a6642522e34e1611d1e91436bd2b6533329b50
-receipts:
-  unresolved_subitems: []

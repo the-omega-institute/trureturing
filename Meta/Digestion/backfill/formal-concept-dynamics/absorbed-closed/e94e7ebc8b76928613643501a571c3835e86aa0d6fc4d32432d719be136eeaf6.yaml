@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:e94e7ebc8b76928613643501a571c3835e86aa0d6fc4d32432d719be136eeaf6
-  normalized_sha256: sha256:e94e7ebc8b76928613643501a571c3835e86aa0d6fc4d32432d719be136eeaf6
-cas_ref: sha256:e94e7ebc8b76928613643501a571c3835e86aa0d6fc4d32432d719be136eeaf6
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/ObservationOrder/BayesPlausibility.bayes_plausibility
-    target_statement_id: sha256:805f593124e32327bddf582bb8faff124e67108de658dad6b2de31bf1c22f867
-receipts:
-  unresolved_subitems: []

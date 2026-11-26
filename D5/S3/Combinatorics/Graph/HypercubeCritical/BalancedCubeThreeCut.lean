@@ -24,7 +24,8 @@ open D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCriticalSpectrum
 open D5.S3.Combinatorics.Graph.HypercubeCritical.HuangIntegralNormGap (Q9)
 open private huangMatrix cubeParity cubeParity_ne_of_adj from
   D5.S3.Combinatorics.Graph.HypercubeSubQuorum
-open private inside_equation switching_sq matrix_support from
+open BalancedCriticalSpectrum (switching_sq)
+open private inside_equation matrix_support from
   D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCriticalSpectrum
 open private intCoeff intA evenPart oddPart residual parts_add intA_sub intA_mul
   intA_square intA_cast intCoeff_cast matrix_zero_of_not_adj intCoeff_zero_of_not_adj

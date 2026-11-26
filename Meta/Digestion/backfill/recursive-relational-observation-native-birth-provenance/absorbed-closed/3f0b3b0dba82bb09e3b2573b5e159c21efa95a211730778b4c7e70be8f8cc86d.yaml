@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:3f0b3b0dba82bb09e3b2573b5e159c21efa95a211730778b4c7e70be8f8cc86d
-  normalized_sha256: sha256:3f0b3b0dba82bb09e3b2573b5e159c21efa95a211730778b4c7e70be8f8cc86d
-cas_ref: sha256:3f0b3b0dba82bb09e3b2573b5e159c21efa95a211730778b4c7e70be8f8cc86d
-coverage_gids:
-  - gid: D5/S3/Arith/FibonacciAtomic/Observer/NativeFullRootFeasibility.native_full_root_feasibility
-    target_statement_id: sha256:97f891096cee4e020f8f5b26c6bfd24d730d9e087bc2e84413edeabcbe1e3d35
-receipts:
-  unresolved_subitems: []

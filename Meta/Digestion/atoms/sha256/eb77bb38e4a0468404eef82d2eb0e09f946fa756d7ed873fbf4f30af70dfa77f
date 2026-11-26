@@ -1,8 +1,0 @@
-**定义 107.1（相干比较合同）。** 给两个已确定相位的实际酉实现 $U,V$，另外供应共同控制位上的操作
-
-$$
-W_{U,V}=|0\rangle\langle0|\otimes U+|1\rangle\langle1|\otimes V,
-$$
-
-以及控制的 $|+\rangle$ 准备与 $X$ 测量。普通通道 $\operatorname{Ad}_U$ 本身不包含这个实现合同。
-

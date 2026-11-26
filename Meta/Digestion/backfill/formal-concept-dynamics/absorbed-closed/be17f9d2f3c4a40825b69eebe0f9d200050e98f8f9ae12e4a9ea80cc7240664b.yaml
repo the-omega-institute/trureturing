@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:be17f9d2f3c4a40825b69eebe0f9d200050e98f8f9ae12e4a9ea80cc7240664b
-  normalized_sha256: sha256:be17f9d2f3c4a40825b69eebe0f9d200050e98f8f9ae12e4a9ea80cc7240664b
-cas_ref: sha256:be17f9d2f3c4a40825b69eebe0f9d200050e98f8f9ae12e4a9ea80cc7240664b
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/Secrecy/SubthresholdCoalitionLearnsNothing.subthreshold_coalition_learns_nothing
-    target_statement_id: sha256:83592aedf5b7f34dedf1172ab27f26eca26f7af8d670733f7d48aaa49f05269f
-receipts:
-  unresolved_subitems: []

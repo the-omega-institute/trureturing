@@ -1,9 +1,0 @@
-**定理 178.2（二元递归、共同确认与尖锐有限检查界）。** 对每个 $p\in P$，以下条件等价：
-
-1. $\mathsf Z_2(p)$；
-2. $D_p$ 是凸集；
-3. 存在 $e_p\in\mathcal F_p$，使 $D_p=K\cap\ker e_p$；空面允许；
-4. 存在同一张 $e_p\in\mathcal F_p$，同时消去全部 $N_p$；
-5. 任意有限纯零配方 $q_i\in N_p$、$a_i\ge0$、$\sum_i a_i=1$ 都满足 $T_p(\sum_i a_iq_i)=0$；
-6. 只对 $1\le k\le d-1$ 及 $q_1,\ldots,q_k\in N_p$ 检查 $T_p(k^{-1}\sum_iq_i)=0$。
-

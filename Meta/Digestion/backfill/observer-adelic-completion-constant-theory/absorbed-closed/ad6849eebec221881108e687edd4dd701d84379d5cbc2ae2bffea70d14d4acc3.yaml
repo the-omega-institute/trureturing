@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:ad6849eebec221881108e687edd4dd701d84379d5cbc2ae2bffea70d14d4acc3
-  normalized_sha256: sha256:ad6849eebec221881108e687edd4dd701d84379d5cbc2ae2bffea70d14d4acc3
-cas_ref: sha256:ad6849eebec221881108e687edd4dd701d84379d5cbc2ae2bffea70d14d4acc3
-coverage_gids:
-  - gid: D5/S3/Weil/TestFunctions/WhiteToHaarIdentity.white_to_haar_identity
-    target_statement_id: sha256:be1f2b7324dd090647fd3f168db4fa8059907c92df9587f55b7f3f6b84de416d
-receipts:
-  unresolved_subitems: []

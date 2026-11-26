@@ -21,10 +21,10 @@ attribute [local instance] Classical.propDecidable
 open D5.S3.Combinatorics.Graph.Hypercube
 open BalancedCriticalSpectrum (Q flip IsBalanced)
 open BalancedCubeLowerBound (coordinateSlice)
-open private adjacent_exists_flip from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeGirth
-open private directions directions_card regular_directions exterior_even from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeComponentBoundary
+open D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeComponentBoundary
+  (directions regular_directions exterior_even)
+open private adjacent_exists_flip from D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeGirth
+open BalancedCubeComponentBoundary (directions_card)
 private abbrev Coord := Fin 9
 private abbrev Face := Finset Coord
 private def occupied (x : Q 9) : Face := Finset.univ.filter fun i => x i = true

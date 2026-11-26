@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:60998c202e0d0d9f15c4f5d0e7592cb602d60d7eeb2549ea00f1e6b0fdc6c617
-  normalized_sha256: sha256:60998c202e0d0d9f15c4f5d0e7592cb602d60d7eeb2549ea00f1e6b0fdc6c617
-cas_ref: sha256:60998c202e0d0d9f15c4f5d0e7592cb602d60d7eeb2549ea00f1e6b0fdc6c617
-coverage_gids:
-  - gid: D5/S0/Conventions/InvolutionDecomposition.involution_even_odd_decomposition
-    target_statement_id: sha256:5ba9a72fd2ffb87a9ad498d406487625d05c3f4767137f166512d6d931534400
-receipts:
-  unresolved_subitems: []

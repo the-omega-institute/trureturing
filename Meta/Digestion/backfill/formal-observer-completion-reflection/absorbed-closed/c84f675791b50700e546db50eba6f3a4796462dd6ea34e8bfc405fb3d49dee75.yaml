@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:c84f675791b50700e546db50eba6f3a4796462dd6ea34e8bfc405fb3d49dee75
-  normalized_sha256: sha256:c84f675791b50700e546db50eba6f3a4796462dd6ea34e8bfc405fb3d49dee75
-cas_ref: sha256:c84f675791b50700e546db50eba6f3a4796462dd6ea34e8bfc405fb3d49dee75
-coverage_gids:
-  - gid: D5/S3/Observer/Budget/AdaptiveEarlyStoppingLimits.adaptive_worst_case_depth_information_lower_bound
-    target_statement_id: sha256:32888d53aef1d0ee64506b54e0250873175e2a148df4a510d5f113e80916e589
-receipts:
-  unresolved_subitems: []

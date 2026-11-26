@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:638c827b64a56a8df1f51c21e44e59e528944f39c8acc02149d5edf8b69d2e62
-  normalized_sha256: sha256:638c827b64a56a8df1f51c21e44e59e528944f39c8acc02149d5edf8b69d2e62
-cas_ref: sha256:638c827b64a56a8df1f51c21e44e59e528944f39c8acc02149d5edf8b69d2e62
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/RefinementFactorization/CompatiblePrecisionTowerMonotonicity.compatible_precision_tower_monotonicity
-    target_statement_id: sha256:6472327b61ec71ad2de01f125bf36eba5b419d4b9e7f462054e53919f7137cd3
-receipts:
-  unresolved_subitems: []

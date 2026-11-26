@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:f76b259c9cee9b69d4b1988b01723ac33efdd59476fe1103fad87c9282eea4d7
-  normalized_sha256: sha256:f76b259c9cee9b69d4b1988b01723ac33efdd59476fe1103fad87c9282eea4d7
-cas_ref: sha256:f76b259c9cee9b69d4b1988b01723ac33efdd59476fe1103fad87c9282eea4d7
-coverage_gids:
-  - gid: D5/S3/Arith/FibonacciRank.fibonacci_entry_point
-    target_statement_id: sha256:cb723385a81b5685d65e8dea810894ef7ad83d2ee8a1855a9b34e573a090e19d
-receipts:
-  unresolved_subitems: []

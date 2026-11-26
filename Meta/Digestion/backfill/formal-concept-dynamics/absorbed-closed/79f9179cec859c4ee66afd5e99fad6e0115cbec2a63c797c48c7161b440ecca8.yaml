@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:79f9179cec859c4ee66afd5e99fad6e0115cbec2a63c797c48c7161b440ecca8
-  normalized_sha256: sha256:79f9179cec859c4ee66afd5e99fad6e0115cbec2a63c797c48c7161b440ecca8
-cas_ref: sha256:79f9179cec859c4ee66afd5e99fad6e0115cbec2a63c797c48c7161b440ecca8
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/Audits/MinimumAuditSetCover.minimum_audit_set_is_set_cover
-    target_statement_id: sha256:14e12650ccb5a9f2c7dbd5d141a4a3c4b7225e6b189e7025a9b014e3e407553d
-receipts:
-  unresolved_subitems: []

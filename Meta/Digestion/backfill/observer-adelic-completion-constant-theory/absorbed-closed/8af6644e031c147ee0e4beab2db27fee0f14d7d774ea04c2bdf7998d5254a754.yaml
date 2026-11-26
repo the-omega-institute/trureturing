@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:8af6644e031c147ee0e4beab2db27fee0f14d7d774ea04c2bdf7998d5254a754
-  normalized_sha256: sha256:8af6644e031c147ee0e4beab2db27fee0f14d7d774ea04c2bdf7998d5254a754
-cas_ref: sha256:8af6644e031c147ee0e4beab2db27fee0f14d7d774ea04c2bdf7998d5254a754
-coverage_gids:
-  - gid: D5/S3/Weil/ZetaBridge/SpectralConcentrationPositivity.spectral_concentration_positivity_certificate
-    target_statement_id: sha256:bbea2190eb2accc117ea12f8a1c0e421eb88a771b95795e22127fc6e53713c23
-receipts:
-  unresolved_subitems: []

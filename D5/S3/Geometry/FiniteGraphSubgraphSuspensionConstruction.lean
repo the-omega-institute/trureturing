@@ -24,7 +24,7 @@ note identifies their original references and the scope of this construction.
 -/
 
 noncomputable section
-open Set Topology CategoryTheory
+open Set Topology
 open scoped BigOperators unitInterval ContinuousMap
 
 namespace D5.S3.Geometry.FiniteGraphSubgraphSuspension

@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:614c67ddd929539acdbfd6303ccccbdad18acc5fa92b4645252dc7a3ec4adc15
-  normalized_sha256: sha256:614c67ddd929539acdbfd6303ccccbdad18acc5fa92b4645252dc7a3ec4adc15
-cas_ref: sha256:614c67ddd929539acdbfd6303ccccbdad18acc5fa92b4645252dc7a3ec4adc15
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/InterventionLaws/BlockInterventionalLawFactorization.block_interventional_law_factorization
-    target_statement_id: sha256:83df9462d02baabbbaad08114fb2336ae603ca2db780b253669a39afb49723bd
-receipts:
-  unresolved_subitems: []

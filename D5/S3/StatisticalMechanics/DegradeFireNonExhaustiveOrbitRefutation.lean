@@ -9,6 +9,7 @@
 
 import D5.S3.Geometry.FiniteCoordinateTruncation
 import Mathlib.LinearAlgebra.Matrix.Circulant
+import Mathlib.LinearAlgebra.Matrix.Notation
 
 /-! A saturated degrade-and-fire flow with a non-exhaustive periodic trajectory. -/
 

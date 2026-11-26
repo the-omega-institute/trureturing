@@ -1,0 +1,144 @@
+name: Cache Release Publish
+
+on:
+  schedule:
+    - cron: '0 */6 * * *'
+  workflow_dispatch:
+    inputs:
+      shard_mib:
+        description: Compressed capacity per module shard in MiB
+        required: false
+        type: number
+        default: 256
+
+permissions: {}
+env:
+  STRATALINT_LEAN_CACHE_RELEASE_TIMEOUT_SECONDS: '21600'
+concurrency:
+  group: lean-cache-generation-publisher-v1
+  queue: max
+  cancel-in-progress: false
+
+jobs:
+  pin:
+    if: >-
+      github.ref == 'refs/heads/dev' && github.ref_protected &&
+      (github.event_name == 'schedule' || (github.actor == 'loning' && github.triggering_actor == 'loning'))
+    runs-on: ubuntu-24.04-arm
+    permissions:
+      contents: read
+      actions: read
+    outputs:
+      source: ${{ steps.pin.outputs.source }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.workflow_sha }}
+          sparse-checkout-cone-mode: false
+          sparse-checkout: /.github/actions/lean-cache-shards/pin-source.py
+          persist-credentials: false
+      - id: pin
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 .github/actions/lean-cache-shards/pin-source.py
+      - if: steps.pin.outputs.upload == 'true'
+        uses: actions/upload-artifact@v6
+        with:
+          name: generation-pin-${{ github.run_id }}
+          path: ${{ runner.temp }}/pin/source
+
+  plan:
+    needs: pin
+    runs-on: ubuntu-24.04-arm
+    permissions:
+      contents: write
+      actions: read
+    outputs:
+      matrix: ${{ steps.shards.outputs.matrix }}
+      has_work: ${{ steps.shards.outputs.has_work }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ needs.pin.outputs.source }}
+          persist-credentials: false
+      - run: python3 .github/scripts/install-tools.py
+      - id: keys
+        run: python3 tools/scripts/worktree/lean_actions.py keys --repository "$GITHUB_WORKSPACE" --layers dependency
+      - name: Restore the pinned Lean toolchain
+        uses: actions/cache@v5
+        continue-on-error: true
+        with:
+          path: ~/.elan
+          key: ${{ steps.keys.outputs.elan_key }}
+      - name: Ensure the pinned Lean header parser is on PATH
+        run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
+      - uses: actions/setup-dotnet@v5
+        with:
+          global-json-file: global.json
+          cache: false
+      - name: Plan changes by module prefix
+        id: shards
+        env:
+          STRATALINT_CACHE_WRITES: 'true'
+          GH_TOKEN: ${{ github.token }}
+          SHARD_MIB: ${{ inputs.shard_mib || vars.LEAN_MODULE_SHARD_MIB || 256 }}
+        uses: ./.github/actions/lean-cache-shards
+        with:
+          operation: module-plan
+      - uses: actions/upload-artifact@v6
+        with:
+          name: module-plan-${{ github.run_id }}
+          path: ${{ runner.temp }}/module-plan.json
+          if-no-files-found: error
+          overwrite: true
+
+  compile:
+    needs: [pin, plan]
+    if: needs.plan.outputs.has_work == 'true'
+    permissions:
+      contents: write
+      actions: read
+    uses: ./.github/workflows/ci-lean-generation-compile.yml
+    with:
+      source: ${{ needs.pin.outputs.source }}
+      matrix: ${{ needs.plan.outputs.matrix }}
+
+  publish:
+    needs: [pin, plan, compile]
+    if: >-
+      !cancelled() && needs.plan.result == 'success' &&
+      (needs.compile.result == 'success' ||
+       (needs.plan.outputs.has_work == 'false' && needs.compile.result == 'skipped'))
+    permissions:
+      contents: write
+      actions: read
+    runs-on: ubuntu-24.04-arm
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ needs.pin.outputs.source }}
+          persist-credentials: false
+      - run: python3 .github/scripts/install-tools.py
+      - uses: actions/download-artifact@v8
+        with:
+          name: module-plan-${{ github.run_id }}
+          path: ${{ runner.temp }}
+          digest-mismatch: error
+      - name: Publish the versioned module index
+        env:
+          GH_TOKEN: ${{ github.token }}
+          STRATALINT_CACHE_WRITES: 'true'
+        uses: ./.github/actions/lean-cache-shards
+        with:
+          operation: module-finish
+
+  verify:
+    needs: [pin, publish]
+    if: ${{ !cancelled() && needs.publish.result == 'success' }}
+    permissions:
+      contents: read
+      actions: read
+    uses: ./.github/workflows/ci-lean-module-verify.yml
+    with:
+      source: ${{ needs.pin.outputs.source }}
+      published: true

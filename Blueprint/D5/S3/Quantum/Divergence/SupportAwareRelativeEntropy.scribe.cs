@@ -11,6 +11,12 @@ internal sealed class SupportAwareRelativeEntropyDocument : IScribeDocumentDefin
             + "outside support inclusion.",
         H("Support-Aware Quantum Relative Entropy"),
         Blocks(
+            Describe.Lean(DescribeId.Create("support-of-posdef"),
+                DeclarationHandle.Create("D5/S3/Quantum/Divergence/SupportAwareRelativeEntropy.support_of_posDef"),
+                H("A faithful second state has full support"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("A positive definite matrix has zero nullspace. Its density state therefore contains the support of every first state."))),
+                DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("extended-relative-entropy-top-iff"),
                 DeclarationHandle.Create("D5/S3/Quantum/Divergence/SupportAwareRelativeEntropy.extendedQuantumRelativeEntropy_eq_top_iff"),

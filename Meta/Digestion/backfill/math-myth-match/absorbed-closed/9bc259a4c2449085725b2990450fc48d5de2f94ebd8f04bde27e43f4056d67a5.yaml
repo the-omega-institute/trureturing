@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:9bc259a4c2449085725b2990450fc48d5de2f94ebd8f04bde27e43f4056d67a5
-  normalized_sha256: sha256:9bc259a4c2449085725b2990450fc48d5de2f94ebd8f04bde27e43f4056d67a5
-cas_ref: sha256:9bc259a4c2449085725b2990450fc48d5de2f94ebd8f04bde27e43f4056d67a5
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/RefinementGeometry/StableObservationInverseLimit.stable_observation_inverse_limit_laws
-    target_statement_id: sha256:4390915ac7955bd1c8d761db5becd5de23c5cac87b4501279c4dc0f1792997c7
-receipts:
-  unresolved_subitems: []

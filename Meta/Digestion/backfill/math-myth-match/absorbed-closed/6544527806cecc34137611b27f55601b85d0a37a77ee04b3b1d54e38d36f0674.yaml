@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:6544527806cecc34137611b27f55601b85d0a37a77ee04b3b1d54e38d36f0674
-  normalized_sha256: sha256:6544527806cecc34137611b27f55601b85d0a37a77ee04b3b1d54e38d36f0674
-cas_ref: sha256:6544527806cecc34137611b27f55601b85d0a37a77ee04b3b1d54e38d36f0674
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/Information/MarginalActionEntropyCausalContrast.marginal_action_entropy_causal_contrast
-    target_statement_id: sha256:542764660b5a9aa8a3064f96df65c0fb96065377e9a4d203bd746f0f546976e3
-receipts:
-  unresolved_subitems: []

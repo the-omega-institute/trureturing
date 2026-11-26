@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:9cfc18a558e1c6c35075935782a4f4aac3cfd387b06b42b353f491409ce4e2ac
-  normalized_sha256: sha256:9cfc18a558e1c6c35075935782a4f4aac3cfd387b06b42b353f491409ce4e2ac
-cas_ref: sha256:9cfc18a558e1c6c35075935782a4f4aac3cfd387b06b42b353f491409ce4e2ac
-coverage_gids:
-  - gid: D5/S3/Factorization/PrimePowers/PrimeExponentLanguageComplete.prime_exponent_language_complete
-    target_statement_id: sha256:8102369cd1bde6ea08ba929deef874f5b4e7698f337a971e2c31d89e6511edc7
-receipts:
-  unresolved_subitems: []

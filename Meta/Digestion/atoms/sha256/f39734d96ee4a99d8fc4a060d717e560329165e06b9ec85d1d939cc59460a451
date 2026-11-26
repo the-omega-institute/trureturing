@@ -1,7 +1,0 @@
-这正是研究稀缺对象的对偶方案：
-
-* 不在复平面随机寻找点；
-* 读取负时间 impulse；
-* 采样成 moment sequence；
-* 用有限 Hankel 秩和 Prony 递归恢复它。
-

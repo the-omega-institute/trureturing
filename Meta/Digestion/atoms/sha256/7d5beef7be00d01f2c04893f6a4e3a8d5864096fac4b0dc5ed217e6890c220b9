@@ -1,9 +1,0 @@
-这是一条比“证明所有 Weil 测试正”更具结构的目标：
-
-* \(\psi_a^{*N}\) 具有可计算卷积递推；
-* \(\cos(tx)\) 只引入两个中心频包；
-* \(Q(-\partial^2)\) 是有限阶微分；
-* prime jump energy 可转化为有限个平移相关；
-* Archimedean jump energy可以利用仓库现有正 kernel；
-* support 半径精确为 \(Na\)。
-

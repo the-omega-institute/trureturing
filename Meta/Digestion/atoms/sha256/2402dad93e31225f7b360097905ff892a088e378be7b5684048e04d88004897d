@@ -1,4 +1,0 @@
-**Lemma 12.2 (square interpolation).** Arbitrary Euler jets through order $d$ at $\phi,\psi$ and a value at $1$ specify a unique polynomial of degree at most $2m$. The same holds for $D+1$ jets.
-
-**Proof.** There are $2m+1$ coefficients and conditions. In the homogeneous system, triangularity gives roots of multiplicity $m$ at both spectral nodes and a root at the distinct node $1$. A nonzero polynomial would have degree at least $2m+1$, impossible. The linear map is injective between equal finite dimensions and hence bijective. $\square$
-

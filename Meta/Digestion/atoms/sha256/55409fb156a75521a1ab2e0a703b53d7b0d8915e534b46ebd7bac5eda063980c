@@ -1,7 +1,0 @@
-## 13.6 检索收据(述而不作)
-
-- **本仓 D5(先库后证)**:`git grep -n -i -E "^(theorem|def|structure) [A-Za-z_.]*(honest|balanced|beauty|aesthetic|survivor)" -- 'D5/**/*.lean'`——命中仅 `D5/S0/Tower/Champions/*` 的 `golden_*survivor*` 族(动力系统幸存管,与本卷无关);无既有「账本/主张/账平/美序」声明。`git grep -l -E "ClosureOperator|OrderHom\.gfp|OrderHom\.lfp" -- 'D5/**/*.lean'`——命中 5 模块(`S0/Diagonal/Lawvere/TheoryIsConsequenceFixedPoint`、`S1/Dynamics/KnasterTarski`、`S1/FixedPoints/MaximalForwardInvariantSubkernel`、`S3/ConceptDynamics/Closure/DefinitionClosureOperator`、`S3/ConceptDynamics/Closure/SourceClosureLaws`),X-C、X-I 须先复用。
-- **钉版 mathlib(本机 `.lake/packages/mathlib`,Lean 4.33.0)**:`ClosureOperator`(`Mathlib/Order/Closure.lean:60`)、`OrderHom.gfp`(`Mathlib/Order/FixedPoints.lean:54`)、`Equiv.Perm.closure_isSwap`(`Mathlib/GroupTheory/Perm/Sign.lean:121`)三者 grep 命中;loogle/leansearch 未查。
-- **既有理论卷**:读 FCD §19、§51、§94、§187、§195、66.6;OSUV 全卷;OTT 全卷;GFPT 第一部与 5.1;DECT 第十四部;PZG「永恒主题」与观察 6.67 引注;GICT 卷头与定义/定理编号样式。母仓 `CLAUDE.md` 全文。
-- **联网**(2026-09-10):对 13.4 表中标 `literature-attested` 的条目逐条检索出版信息,收据为搜索结果中的出版社/期刊页面(Springer、Cambridge Core、jstage、arXiv、Project Euclid、PhilPapers);未检索哲学期刊中「不动点 + 真善美」组合形的既有文献,故 13.4 末段标 `suspected-novel`。
-

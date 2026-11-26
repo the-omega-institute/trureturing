@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:b57ebb940e1c4e9d605b4d0093325a9ff38da9435b94535317f53a7338958df9
-  normalized_sha256: sha256:b57ebb940e1c4e9d605b4d0093325a9ff38da9435b94535317f53a7338958df9
-cas_ref: sha256:b57ebb940e1c4e9d605b4d0093325a9ff38da9435b94535317f53a7338958df9
-coverage_gids:
-  - gid: D5/S3/Quantum/Fibers/OriginalControlSurvivalInstability.oscillatory_original_controls
-    target_statement_id: sha256:9604a508993ef949096a10f6044a5a3ae3542a1d404be8edc1bec5afb9c1385d
-receipts:
-  unresolved_subitems: []

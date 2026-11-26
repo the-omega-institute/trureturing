@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:24b292d525cf68e9de6c259ed4ee322d5bd3d2ea61a7b46798711c3ca4d4a6f0
-  normalized_sha256: sha256:24b292d525cf68e9de6c259ed4ee322d5bd3d2ea61a7b46798711c3ca4d4a6f0
-cas_ref: sha256:24b292d525cf68e9de6c259ed4ee322d5bd3d2ea61a7b46798711c3ca4d4a6f0
-coverage_gids:
-  - gid: D5/S3/Quantum/PredictionDepth/FiniteSequentialCompletenessDepth.finite_sequential_completeness_depth
-    target_statement_id: sha256:31fe6a53a42a631899fbd1e85bbb34c09bdae56dc125b5d3635d0a318c2ed397
-receipts:
-  unresolved_subitems: []

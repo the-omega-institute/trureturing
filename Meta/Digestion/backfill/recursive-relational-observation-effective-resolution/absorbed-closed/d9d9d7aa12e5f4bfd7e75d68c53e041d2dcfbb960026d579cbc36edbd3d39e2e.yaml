@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:d9d9d7aa12e5f4bfd7e75d68c53e041d2dcfbb960026d579cbc36edbd3d39e2e
-  normalized_sha256: sha256:d9d9d7aa12e5f4bfd7e75d68c53e041d2dcfbb960026d579cbc36edbd3d39e2e
-cas_ref: sha256:d9d9d7aa12e5f4bfd7e75d68c53e041d2dcfbb960026d579cbc36edbd3d39e2e
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/RefinementGeometry/InverseLimitCompletion.stateThread_bijective_iff_complete_and_separates
-    target_statement_id: sha256:0d91e3985a546087c4546dca2294ef335dd71c20c631faf7a03219fc58d6456e
-receipts:
-  unresolved_subitems: []

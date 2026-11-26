@@ -1,2 +1,0 @@
-- GUARD reads (SLHC.11.5); an accepted guard changes only the mode to
-  VALUE. A rejected guard goes to ERROR.

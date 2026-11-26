@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:ab433b5f80159cbff7c5f326edc5a5650affa45fe7bf4cef8d8b6bd1af080d4b
-  normalized_sha256: sha256:ab433b5f80159cbff7c5f326edc5a5650affa45fe7bf4cef8d8b6bd1af080d4b
-cas_ref: sha256:ab433b5f80159cbff7c5f326edc5a5650affa45fe7bf4cef8d8b6bd1af080d4b
-coverage_gids:
-  - gid: D5/S3/ObserverMemory/RefinementClosure/CompletionKernelGreatestFixedPoint.completion_kernel_is_greatest_fixed_point
-    target_statement_id: sha256:f166f1eaa98c749b4a65f2b502a08e1353dc1423eb69245b1931106b3f8b30b7
-receipts:
-  unresolved_subitems: []

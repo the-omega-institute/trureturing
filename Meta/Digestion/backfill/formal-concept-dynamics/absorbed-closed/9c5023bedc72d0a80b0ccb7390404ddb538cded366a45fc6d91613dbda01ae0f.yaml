@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:9c5023bedc72d0a80b0ccb7390404ddb538cded366a45fc6d91613dbda01ae0f
-  normalized_sha256: sha256:9c5023bedc72d0a80b0ccb7390404ddb538cded366a45fc6d91613dbda01ae0f
-cas_ref: sha256:9c5023bedc72d0a80b0ccb7390404ddb538cded366a45fc6d91613dbda01ae0f
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/Topology/UniversalT0QuotientComplete.universal_t0_quotient_complete
-    target_statement_id: sha256:1947511834eb23aa4ae6591094286762201e5d5c2036e2e13e21e135948fbd3b
-receipts:
-  unresolved_subitems: []

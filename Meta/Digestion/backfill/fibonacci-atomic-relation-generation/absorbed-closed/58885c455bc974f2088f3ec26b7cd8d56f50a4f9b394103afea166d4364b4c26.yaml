@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:58885c455bc974f2088f3ec26b7cd8d56f50a4f9b394103afea166d4364b4c26
-  normalized_sha256: sha256:58885c455bc974f2088f3ec26b7cd8d56f50a4f9b394103afea166d4364b4c26
-cas_ref: sha256:58885c455bc974f2088f3ec26b7cd8d56f50a4f9b394103afea166d4364b4c26
-coverage_gids:
-  - gid: D5/S3/Arith/GoldenResource/ActualReserve/HarmonicReference.actual_local_le_reference_maximum
-    target_statement_id: sha256:bb92ec9a217d2c8c4a61ce603ff133465d2ae5d5dcd3203700daeb9db1a96ad2
-receipts:
-  unresolved_subitems: []

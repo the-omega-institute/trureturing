@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:03a03a38886220f14c9d9dfb09fe5322d32be2ede4c187f626329cb48f805d65
-  normalized_sha256: sha256:03a03a38886220f14c9d9dfb09fe5322d32be2ede4c187f626329cb48f805d65
-cas_ref: sha256:03a03a38886220f14c9d9dfb09fe5322d32be2ede4c187f626329cb48f805d65
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/DecisionValueScale/OptimalFiberAlignmentUnderdetermination.proxy_optimal_tie_precludes_principal_guarantee
-    target_statement_id: sha256:82b8576a581b879b842be3bd00e555630885417d478c78520bb4dbf7fce6b358
-receipts:
-  unresolved_subitems: []

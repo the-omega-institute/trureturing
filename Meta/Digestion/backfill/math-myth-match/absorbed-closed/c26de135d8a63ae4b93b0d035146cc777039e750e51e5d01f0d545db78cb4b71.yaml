@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:c26de135d8a63ae4b93b0d035146cc777039e750e51e5d01f0d545db78cb4b71
-  normalized_sha256: sha256:c26de135d8a63ae4b93b0d035146cc777039e750e51e5d01f0d545db78cb4b71
-cas_ref: sha256:c26de135d8a63ae4b93b0d035146cc777039e750e51e5d01f0d545db78cb4b71
-coverage_gids:
-  - gid: D5/S3/ObserverMemory/Trajectories/FutureItineraryShift.future_itinerary_shift
-    target_statement_id: sha256:78e92a33352a77543701ac4de19a1fba8717ec08003964d4c885c551ba6bd6e6
-receipts:
-  unresolved_subitems: []

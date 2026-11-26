@@ -58,10 +58,23 @@ $$\operatorname{claim}$$
 
 Fixed-support box Davenport ratios converge to the largest augmented sign determinant in every positive dimension.
 
+**Theorem 1.5 (Signed cofactors under a ring homomorphism).**
+
+$$\forall (R S : \operatorname{Type}) (\operatorname{CommRing} R) (\operatorname{CommRing} S) (d : \mathbb{N}), \forall (f : \operatorname{RingHom}(R,S)) (M : \operatorname{Matrix} (\operatorname{Fin} d) (\operatorname{Fin} (d+1)) R) (j : \operatorname{Fin} (d+1)), \operatorname{cofactor}(\operatorname{map}(M,f),j) = f(\operatorname{cofactor}(M,j))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Lattices/GirardPlagneBoxLimit.cofactor_map` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Applying the homomorphism entrywise commutes with each signed cofactor.
+
 ## References
 
 - Truth anchor: `D5/S3/Arith/Lattices/GirardPlagneBoxLimit.D`
 - Truth anchor: `D5/S3/Arith/Lattices/GirardPlagneBoxLimit.claim`
+- Truth anchor: `D5/S3/Arith/Lattices/GirardPlagneBoxLimit.cofactor_map`
 - Truth anchor: `D5/S3/Arith/Lattices/GirardPlagneBoxLimit.girard_plagne_box_limit`
 - Truth anchor: `D5/S3/Arith/Lattices/GirardPlagneBoxLimit.result`
 - Dependency: [D5/S3/Arith/Lattices/CubeSimplexDeterminant](CubeSimplexDeterminant.md)

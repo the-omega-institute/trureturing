@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:47fa364cf51f84bb52e78c8afd761e90e42580265468ebe17abb1325ca7c8726
-  normalized_sha256: sha256:47fa364cf51f84bb52e78c8afd761e90e42580265468ebe17abb1325ca7c8726
-cas_ref: sha256:47fa364cf51f84bb52e78c8afd761e90e42580265468ebe17abb1325ca7c8726
-coverage_gids:
-  - gid: D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/LiteralModel.joint_history_realization
-    target_statement_id: sha256:856c42574c3786429ea70c4632796de91f9e52dcfbc82cf2a7ea61242edbb9b5
-receipts:
-  unresolved_subitems: []

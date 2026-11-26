@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:6a9e21c69cebc1dbd5c8660b70175e75407486a97e71c7c37254166776f0c1ba
-  normalized_sha256: sha256:6a9e21c69cebc1dbd5c8660b70175e75407486a97e71c7c37254166776f0c1ba
-cas_ref: sha256:6a9e21c69cebc1dbd5c8660b70175e75407486a97e71c7c37254166776f0c1ba
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/Experiments/ExperimentRefinementGainMonotone.experiment_refinement_gain_monotone
-    target_statement_id: sha256:106fdcc7b39286c4c0c01b47ac7436eda521d0c57bcea7a9636efde605f9fa6b
-receipts:
-  unresolved_subitems: []

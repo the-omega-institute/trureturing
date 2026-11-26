@@ -1,3 +1,5 @@
+import D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+import D5.S3.StatisticalMechanics.Potts.KingDefects.KingGrid
 import D5.S3.StatisticalMechanics.Potts.KingDefects.KingPath
 import Reg.Support.UniverseSingleReadout
 import LeanInformationAuditInterface.Contract.Registration
@@ -6,6 +8,7 @@ import LeanInformationAuditInterface.Contract.Registration
 namespace Reg.D5.S3.StatisticalMechanics.Potts.KingDefects.KingPath
 
 open _root_.D5.S3.StatisticalMechanics.Potts.KingDefects
+
 open _root_.D5.S3.StatisticalMechanics.Potts.KingDefects.KingPath
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit

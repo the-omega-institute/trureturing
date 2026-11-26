@@ -51,7 +51,7 @@ def children {V : Type*} [Fintype V] [DecidableEq V]
     (P : Finpartition (univ : Finset V)) (upper : Finset V) : Finset P.parts :=
   P.parts.attach.filter fun lower => lower.val ⊆ upper
 
-private theorem children_self
+theorem children_self
     {V : Type*} [Fintype V] [DecidableEq V]
     (P : Finpartition (univ : Finset V)) (upper : P.parts) :
     children P upper.val = {upper} := by
@@ -66,13 +66,13 @@ private theorem children_self
     exact Subset.rfl
 
 /- Refinement gives every lower block a unique containing upper block. -/
-private noncomputable def parentBlock
+noncomputable def parentBlock
     {V : Type*} [Fintype V] [DecidableEq V]
     {P Q : Finpartition (univ : Finset V)} (hPQ : P ≤ Q)
     (lower : P.parts) : Q.parts :=
   ⟨(hPQ lower.property).choose, (hPQ lower.property).choose_spec.1⟩
 
-private theorem parentBlock_eq_of_subset
+theorem parentBlock_eq_of_subset
     {V : Type*} [Fintype V] [DecidableEq V]
     {P Q : Finpartition (univ : Finset V)} (hPQ : P ≤ Q)
     (lower : P.parts) (upper : Q.parts) (hsub : lower.val ⊆ upper.val) :
@@ -100,7 +100,7 @@ private theorem parentBlock_trans
       ((hPQ lower.property).choose_spec.2 hvertex))
     ((hPQ.trans hQR lower.property).choose_spec.2 hvertex)
 
-private theorem parentBlock_mem_children
+theorem parentBlock_mem_children
     {V : Type*} [Fintype V] [DecidableEq V]
     {P Q R : Finpartition (univ : Finset V)}
     (hPQ : P ≤ Q) (hQR : Q ≤ R) (upper : R.parts)
@@ -113,7 +113,7 @@ private theorem parentBlock_mem_children
   rw [← hparent, ← parentBlock_trans hPQ hQR lower]
   exact (hQR (parentBlock hPQ lower).property).choose_spec.2
 
-private theorem children_parent_fiber
+theorem children_parent_fiber
     {V : Type*} [Fintype V] [DecidableEq V]
     {P Q R : Finpartition (univ : Finset V)}
     (hPQ : P ≤ Q) (upper : R.parts) {middle : Q.parts}

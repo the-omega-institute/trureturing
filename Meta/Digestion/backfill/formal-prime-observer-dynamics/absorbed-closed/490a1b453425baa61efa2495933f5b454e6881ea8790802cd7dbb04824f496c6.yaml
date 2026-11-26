@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:490a1b453425baa61efa2495933f5b454e6881ea8790802cd7dbb04824f496c6
-  normalized_sha256: sha256:490a1b453425baa61efa2495933f5b454e6881ea8790802cd7dbb04824f496c6
-cas_ref: sha256:490a1b453425baa61efa2495933f5b454e6881ea8790802cd7dbb04824f496c6
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/Faithfulness/LocalGlobalResidualCriterion.local_global_residual_empty_iff_joint_injective
-    target_statement_id: sha256:e337b3681f90a46d65874ab5bf8b58421736ffc55e170405db3efa5593b58b53
-receipts:
-  unresolved_subitems: []

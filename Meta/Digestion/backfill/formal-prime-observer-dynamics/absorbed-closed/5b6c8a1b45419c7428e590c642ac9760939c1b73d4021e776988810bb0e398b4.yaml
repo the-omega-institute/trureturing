@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:5b6c8a1b45419c7428e590c642ac9760939c1b73d4021e776988810bb0e398b4
-  normalized_sha256: sha256:5b6c8a1b45419c7428e590c642ac9760939c1b73d4021e776988810bb0e398b4
-cas_ref: sha256:5b6c8a1b45419c7428e590c642ac9760939c1b73d4021e776988810bb0e398b4
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/Prediction/ConditionalExpectationOptimality.conditional_expectation_minimizes_mean_square_error
-    target_statement_id: sha256:175cbda8900241b1ce0ee3b33437e6609007801f015b1eee2d0501ae56b0bd01
-receipts:
-  unresolved_subitems: []

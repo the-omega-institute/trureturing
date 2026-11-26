@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:8b75d916da8d8472a9adb6452c680e9a111da81d79c866a042af289da5ec563b
-  normalized_sha256: sha256:8b75d916da8d8472a9adb6452c680e9a111da81d79c866a042af289da5ec563b
-cas_ref: sha256:8b75d916da8d8472a9adb6452c680e9a111da81d79c866a042af289da5ec563b
-coverage_gids:
-  - gid: D5/S1/Words/AdmissibleWords/KBonacciIntegerInterval.integer_value_interval_bijection
-    target_statement_id: sha256:ad7002d75c846bffad176ec7e50f11c2e7aa3ef5d6b698c3f9130c28e27a94cc
-receipts:
-  unresolved_subitems: []

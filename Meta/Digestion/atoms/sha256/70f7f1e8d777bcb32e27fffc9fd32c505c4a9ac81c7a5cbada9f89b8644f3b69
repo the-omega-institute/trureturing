@@ -1,8 +1,0 @@
-**约定 2.4（交错阵的标准事实）。** 设 $K$ 是特征 $2$ 的域,$A\in K^{m\times m}$ 交错,即对称且对角为零;$H(A)$ 是 $[m]$ 上以 $\{uv:\ A_{uv}\ne0\}$ 为边集的支撑图;$A[S]$ 是行列都取自 $S$ 的主子阵。以下标准事实作为引用步骤使用,不是本卷的条目:(i) Pfaffian 的完美匹配展开在特征 $2$ 中没有符号,且含非边的项为零,故 $|S|$ 为偶数时 $\operatorname{Pf}(A[S])=\sum_{\mathfrak m\in\mathrm{PM}(H(A)[S])}\prod_{uv\in\mathfrak m}A_{uv}$,空集的 Pfaffian 为 $1$;(ii) Cayley 恒等式 $\det A[S]=\operatorname{Pf}(A[S])^2$,而 $|S|$ 为奇数时 $\det A[S]=0$;(iii) $\operatorname{rank}A=\max\{|S|:\ \det A[S]\ne0\}$。(iii) 的证明是:若 $\det A[S]\ne0$ 则 $\operatorname{rank}A\ge|S|$;反之取 $S$ 使 $A$ 中以 $S$ 为指标的行构成行空间的一组基,$T$ 为其补,则存在 $X$ 使 $A_{T,\bullet}=XA_{S,\bullet}$,特别地 $A_{T,S}=XA_{S,S}$,由对称性 $A_{S,T}=A_{T,S}^{\mathsf T}=A_{S,S}X^{\mathsf T}$,于是 $A_{S,\bullet}=A_{S,S}\,[\,I\mid X^{\mathsf T}\,]$,其秩 $|S|$ 不超过 $\operatorname{rank}A_{S,S}$,故 $A[S]$ 可逆。合起来得
-
-$$
-\operatorname{rank}_KA=\max\Big\{|S|:\ S\subseteq[m],\ \sum_{\mathfrak m\in\mathrm{PM}(H(A)[S])}\ \prod_{uv\in\mathfrak m}A_{uv}\ne0\Big\}\le2\,\nu(H(A)).\tag{2.4}
-$$
-
-另用到:$\mathbb F_2$ 上矩阵的秩在域扩张下不变;分块对角阵的秩是各块秩之和;非零交错阵的秩至少为 $2$(取一个非零元 $A_{uv}$,则 $\det A[\{u,v\}]=A_{uv}^2\ne0$)。
-

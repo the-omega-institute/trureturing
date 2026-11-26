@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:95633b808b685be5dd9bf11320f78b1a766c8b9353b2ec2d8edc39777c5caf4a
-  normalized_sha256: sha256:95633b808b685be5dd9bf11320f78b1a766c8b9353b2ec2d8edc39777c5caf4a
-cas_ref: sha256:95633b808b685be5dd9bf11320f78b1a766c8b9353b2ec2d8edc39777c5caf4a
-coverage_gids:
-  - gid: D5/S3/Factorization/Solenoid/AllPrimeRegisterExactSequence.all_prime_register_short_exact
-    target_statement_id: sha256:594c21a53f2a6f413ac90d3f77e6d83f9155aeadb467263ee471f9d5873565bb
-receipts:
-  unresolved_subitems: []

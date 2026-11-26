@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:983a6dfedc0af43a2575760e3f320a280f4199faa2db22bfaa19c4ac40b9b379
-  normalized_sha256: sha256:983a6dfedc0af43a2575760e3f320a280f4199faa2db22bfaa19c4ac40b9b379
-cas_ref: sha256:983a6dfedc0af43a2575760e3f320a280f4199faa2db22bfaa19c4ac40b9b379
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/Communication/HeterogeneousFiberMisclassification.heterogeneous_fiber_forces_misclassification
-    target_statement_id: sha256:3a1b050d4ce2ca80a01df438f769ab9b37afe745c00332c27fef2f7c7a7a720f
-receipts:
-  unresolved_subitems: []

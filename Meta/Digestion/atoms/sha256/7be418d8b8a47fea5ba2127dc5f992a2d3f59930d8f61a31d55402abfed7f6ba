@@ -1,6 +1,0 @@
-**引理 3.4（任意域上的节点步）。** 设 $K$ 是域,$H\in K^{n\times n}$ 对称,$n\ge2$,$j$ 是下标,$\lambda_0\in K$。则存在 $z\in K^n\setminus\{0\}$ 使 $Hz=\lambda_0z$ 且 $z_j=0$,当且仅当 $\lambda_0$ 同时是 $\det(\lambda I-H)$ 与 $\det(\lambda I-H^{(j)})$ 的根。
-
-**证明。** 记 $\langle x,y\rangle=\sum_ix_iy_i$,它是 $K^n$ 上的非退化对称双线性型;对子空间 $W$ 有 $(W^{\perp})^{\perp}=W$。对对称矩阵 $S$,$(\operatorname{im}S)^{\perp}=\ker S^{\top}=\ker S$,故 $\operatorname{im}S=(\ker S)^{\perp}$。
-
-若 $Hz=\lambda_0z$,$z\ne0$,$z_j=0$,则 $\lambda_0$ 是 $H$ 的本征值;删去第 $j$ 个坐标得 $z'\ne0$,且对 $i\ne j$ 有 $(H^{(j)}z')_i=(Hz)_i=\lambda_0z_i$,故 $\lambda_0$ 也是 $H^{(j)}$ 的本征值。反之,设 $\lambda_0$ 是两者的根,取 $H^{(j)}$ 的本征向量 $y'\in K^{n-1}$,在第 $j$ 位补 $0$ 得 $y$。则 $(H-\lambda_0I)y=\gamma e_j$,$\gamma=\sum_kH_{jk}y_k$。若 $\gamma=0$,$y$ 即所求。若 $\gamma\ne0$,则 $e_j\in\operatorname{im}(H-\lambda_0I)=(\ker(H-\lambda_0I))^{\perp}$,于是非零核 $\ker(H-\lambda_0I)$ 中每个 $z$ 都满足 $z_j=\langle z,e_j\rangle=0$。∎
-

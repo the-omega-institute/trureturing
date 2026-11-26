@@ -1,8 +1,0 @@
-**事实一:该单调性此前已在仓内,且已冻结。** `D5/S3/Arith/GoldenResource/GoldenSmallestMissingPrime` 中的
-
-$$
-\texttt{golden\_layer\_marginal\_one\_strictAnti}:\quad p,q\ \text{素},\ p<q\ \Longrightarrow\ \rho(q,1)<\rho(p,1)
-$$
-
-已是冻结定理,其中 \(\rho\) 即本卷 \(\eta\) 约定下的首层边际。
-

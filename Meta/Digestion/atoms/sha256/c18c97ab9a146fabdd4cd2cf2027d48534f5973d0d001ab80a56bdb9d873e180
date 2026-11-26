@@ -1,4 +1,0 @@
-## 17. Information and testing from one actual stationary history
-
-This section compares the two actual output laws supplied by Theorems 11.5 and 15.3. The observer receives consecutive bits of one of these laws, starting at a stationary time, and the model promise specifies which two laws are possible. The residual is a known part of the alternative model. A small residual bounds finite-window change in Section 15; the question here is how many actual bits can distinguish that change at a prescribed risk. The initial waiting time and the last incomplete gap belong to this question.
-

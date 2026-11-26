@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:d137f948ab57af4b1da107652e34d0c8c24e987501a09383ca297491c37725bb
-  normalized_sha256: sha256:d137f948ab57af4b1da107652e34d0c8c24e987501a09383ca297491c37725bb
-cas_ref: sha256:d137f948ab57af4b1da107652e34d0c8c24e987501a09383ca297491c37725bb
-coverage_gids:
-  - gid: D5/S3/Weil/ZetaLinear/RankTrace.re_trace_mul_comm
-    target_statement_id: sha256:6dafb203613c4082ce7e8ba5edd0d7e87f53c4d5668d5f88f3e1908fad96164b
-receipts:
-  unresolved_subitems: []

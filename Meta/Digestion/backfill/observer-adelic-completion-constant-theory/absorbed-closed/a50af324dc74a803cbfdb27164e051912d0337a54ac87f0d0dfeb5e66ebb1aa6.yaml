@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:a50af324dc74a803cbfdb27164e051912d0337a54ac87f0d0dfeb5e66ebb1aa6
-  normalized_sha256: sha256:a50af324dc74a803cbfdb27164e051912d0337a54ac87f0d0dfeb5e66ebb1aa6
-cas_ref: sha256:a50af324dc74a803cbfdb27164e051912d0337a54ac87f0d0dfeb5e66ebb1aa6
-coverage_gids:
-  - gid: D5/S3/Weil/Scattering/BodeWidthCriterion.bode_width_criterion
-    target_statement_id: sha256:6dcc3b30d3899a22308733b81a05d2062c95d01290a4513911cbfc1dfd79a686
-receipts:
-  unresolved_subitems: []

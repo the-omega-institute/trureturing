@@ -4,7 +4,19 @@
 
 Exact fixed-length decks recover every shorter scattered count.
 
-**Theorem 1.1 (scatteredCount_eq_count_sublistsLen).**
+**Theorem 1.1 (sublistsLen perm of exactKDeck eq).**
+
+$$\forall (\operatorname{A} : \operatorname{Type}) [\operatorname{DecidableEq} \operatorname{A}] [\operatorname{Fintype} \operatorname{A}] (\operatorname{k} : \operatorname{Nat}) (\operatorname{left} \operatorname{right} : \operatorname{List} \operatorname{A}), \operatorname{exactKDeck} \operatorname{k} \operatorname{left} = \operatorname{exactKDeck} \operatorname{k} \operatorname{right} \to \operatorname{List}.\operatorname{Perm} (\operatorname{left}.\operatorname{sublistsLen} \operatorname{k}) (\operatorname{right}.\operatorname{sublistsLen} \operatorname{k})$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Words/Complexity/ExactDecks/Growth/ExactDeckCore.sublistsLen_perm_of_exactKDeck_eq` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Equality of exact decks gives a permutation of the lists of scattered subwords of the selected length.
+
+**Theorem 1.2 (scatteredCount_eq_count_sublistsLen).**
 
 $$\forall (A: \operatorname{Type}), ([\operatorname{DecidableEq} A] \to (\forall (\operatorname{pattern}: \operatorname{List} A), (\forall (\operatorname{source}: \operatorname{List} A), (\operatorname{scatteredCount} \operatorname{pattern} \operatorname{source} = (\operatorname{source}.\operatorname{sublistsLen} \operatorname{pattern}.\operatorname{length}) . \operatorname{count} \operatorname{pattern}))))$$
 
@@ -20,7 +32,7 @@ The formula relates a word's constant runs and its scattered-subword counts.
 
 The exact-deck objects formalize the source paper's actual vectors of all length-k scattered-subword counts. The repository bridge first proves that, at a common source length, exact k-deck equality recovers every shorter count and is equivalent to equality of the full cutoff Magnus vector.
 
-**Definition 1.2 (An actual exact k-deck).**
+**Definition 1.3 (An actual exact k-deck).**
 
 $$\forall k,source,pattern,\operatorname{length}\left(pattern\right)= k\Rightarrow\operatorname{exactKDeck}\left(k, source, pattern\right) = \operatorname{scatteredCount}\left(pattern, source\right)$$
 
@@ -32,7 +44,7 @@ $$\forall k,source,pattern,\operatorname{length}\left(pattern\right)= k\Rightarr
 
 For finite A, exactKDeck k source is the function sending each actual pattern of length exactly k to its scatteredCount in source.
 
-**Definition 1.3 (Decks realized at one source length).**
+**Definition 1.4 (Decks realized at one source length).**
 
 $$\forall A,k,n, \operatorname{exactKDeckImage}\left(A, k, n\right) = \operatorname{image}\left(\operatorname{exactKDeck}\left(k\right), \operatorname{wordsOfLength}\left(A, n\right)\right)$$
 
@@ -44,7 +56,7 @@ $$\forall A,k,n, \operatorname{exactKDeckImage}\left(A, k, n\right) = \operatorn
 
 exactKDeckImage A k n is the finite image of exactKDeck k on all actual words over A of length exactly n.
 
-**Theorem 1.4 (Exact decks recover all shorter counts).**
+**Theorem 1.5 (Exact decks recover all shorter counts).**
 
 $$\forall k,n,left,right,pattern, \operatorname{length}\left(left\right) = n\land\operatorname{length}\left(right\right) = n\land k\leq n\land\operatorname{length}\left(pattern\right)\leq k\land\operatorname{exactKDeck}\left(k, left\right) = \operatorname{exactKDeck}\left(k, right\right)\Rightarrow\operatorname{scatteredCount}\left(pattern, left\right) = \operatorname{scatteredCount}\left(pattern, right\right)$$
 
@@ -58,7 +70,7 @@ $$\forall k,n,left,right,pattern, \operatorname{length}\left(left\right) = n\lan
 
 For finite A with decidable equality, common length n, k<=n, and a pattern of length at most k, equality of exactKDeck k for the two source words implies equality of that pattern's scattered counts.
 
-**Theorem 1.5 (Exact-deck and cutoff equality coincide).**
+**Theorem 1.6 (Exact-deck and cutoff equality coincide).**
 
 $$\forall k,n,left,right, \operatorname{length}\left(left\right) = n\land\operatorname{length}\left(right\right) = n\land k\leq n\Rightarrow\operatorname{exactKDeck}\left(k, left\right) = \operatorname{exactKDeck}\left(k, right\right)\iff\operatorname{cutoffMagnus}\left(k, left\right) = \operatorname{cutoffMagnus}\left(k, right\right)$$
 
@@ -79,6 +91,7 @@ For finite A, source words of the same length n, and k<=n, equality of their act
 - Truth anchor: `D5/S1/Words/Complexity/ExactDecks/Growth/ExactDeckCore.exactKDeck_eq_iff_cutoffMagnus_eq_of_common_length`
 - Truth anchor: `D5/S1/Words/Complexity/ExactDecks/Growth/ExactDeckCore.scatteredCount_eq_count_sublistsLen`
 - Truth anchor: `D5/S1/Words/Complexity/ExactDecks/Growth/ExactDeckCore.scatteredCount_eq_of_exactKDeck_eq`
+- Truth anchor: `D5/S1/Words/Complexity/ExactDecks/Growth/ExactDeckCore.sublistsLen_perm_of_exactKDeck_eq`
 - Dependency: [D5/S1/Words/Complexity/PositivePairs/Coefficients/CutoffCoefficientAlgebra](../../PositivePairs/Coefficients/CutoffCoefficientAlgebra.md)
 - Dependency: [D5/S1/Words/Complexity/PositivePairs/Coefficients/MagnusWordCoefficients](../../PositivePairs/Coefficients/MagnusWordCoefficients.md)
 - Dependency: [D5/S1/Words/Complexity/PositivePairs/Coefficients/PositivePairFiltration](../../PositivePairs/Coefficients/PositivePairFiltration.md)

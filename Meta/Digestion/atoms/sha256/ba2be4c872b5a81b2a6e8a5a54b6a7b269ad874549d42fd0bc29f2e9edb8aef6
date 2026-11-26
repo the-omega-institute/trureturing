@@ -1,6 +1,0 @@
-**定理 2.2（失败证书—横截数等价）。** 对任意 $C\subseteq D$，以下命题等价：
-
-1. $V(C)=\varnothing$；
-2. 对每个 $M\in\mathfrak M$，$C\cap F_M\ne\varnothing$；
-3. $C$ 是失败超图 $\mathcal H(D,t;\mathfrak M)$ 的横截。
-

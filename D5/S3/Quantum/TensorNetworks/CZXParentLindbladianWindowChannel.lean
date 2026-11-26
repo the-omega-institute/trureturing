@@ -589,7 +589,8 @@ private lemma window_single_insert (n : ℕ) (hn : 4 ≤ n) (i : Fin n)
   simp only [map_sum, hs, map_smul, insertWindow_single]
 private def windowBits {n : ℕ} (i : Fin n) (x : Fin n → Fin 2) : Fin 4 → Fin 2 :=
   fun k => x (site i k.val)
-private def middleUpdate {n : ℕ} (i : Fin n) (x : Fin n → Fin 2)
+/-- Replace the two middle bits of a cyclic four-site window. -/
+def middleUpdate {n : ℕ} (i : Fin n) (x : Fin n → Fin 2)
     (b c : Fin 2) : Fin n → Fin 2 :=
   Function.update (Function.update x (site i 1) b) (site i 2) c
 private lemma site_zero {n : ℕ} (i : Fin n) : site i 0 = i := by

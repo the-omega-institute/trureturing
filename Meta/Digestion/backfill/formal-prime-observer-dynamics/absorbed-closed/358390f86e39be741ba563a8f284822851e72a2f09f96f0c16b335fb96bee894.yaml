@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:358390f86e39be741ba563a8f284822851e72a2f09f96f0c16b335fb96bee894
-  normalized_sha256: sha256:358390f86e39be741ba563a8f284822851e72a2f09f96f0c16b335fb96bee894
-cas_ref: sha256:358390f86e39be741ba563a8f284822851e72a2f09f96f0c16b335fb96bee894
-coverage_gids:
-  - gid: D5/S3/Analytic/Zeta/EulerLogBridge.expectedLog_eq_tsum_prime
-    target_statement_id: sha256:8da7d58703adb8ece137a6f16897fc5e06db5f7743a258924b9149e61064bb01
-receipts:
-  unresolved_subitems: []

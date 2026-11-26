@@ -26,18 +26,18 @@ def a (t : ℝ) : ℝ := log t ^ 2 / (1 + log t)
 /-- The positive derivative of `a`; its integral on a half-line is infinite. -/
 def v (t : ℝ) : ℝ := log t * (log t + 2) / (t * (1 + log t) ^ 2)
 
-private lemma a_pos {t : ℝ} (ht : 1 < t) : 0 < a t := by
+lemma a_pos {t : ℝ} (ht : 1 < t) : 0 < a t := by
   have hl : 0 < log t := log_pos ht
   unfold a
   positivity
 
-private lemma v_nonneg {t : ℝ} (ht : 1 < t) : 0 ≤ v t := by
+lemma v_nonneg {t : ℝ} (ht : 1 < t) : 0 ≤ v t := by
   have ht0 : 0 < t := lt_trans zero_lt_one ht
   have hl : 0 < log t := log_pos ht
   unfold v
   positivity
 
-private lemma v_le_inv {t : ℝ} (ht : 1 < t) : v t ≤ 1 / t := by
+lemma v_le_inv {t : ℝ} (ht : 1 < t) : v t ≤ 1 / t := by
   have ht0 : 0 < t := lt_trans zero_lt_one ht
   have hl : 0 < log t := log_pos ht
   have hd : 0 < 1 + log t := by linarith
@@ -272,7 +272,7 @@ theorem inverse {k : ℝ → ℝ} {x : ℝ} (hx : 2 ≤ x)
 private lemma log_ge_one {t : ℝ} (ht : exp 1 ≤ t) : 1 ≤ log t := by
   simpa only [log_exp] using log_le_log (exp_pos 1) ht
 
-private lemma reciprocal_sqrt_eq_rpow {t : ℝ} (ht : 0 < t) :
+lemma reciprocal_sqrt_eq_rpow {t : ℝ} (ht : 0 < t) :
     (1 / t) / sqrt t = t ^ (-(3 / 2 : ℝ)) := by
   calc
     (1 / t) / sqrt t = t ^ (-1 : ℝ) * t ^ (-(1 / 2 : ℝ)) := by
@@ -293,7 +293,7 @@ private lemma v_div_sqrt_log_le {t : ℝ} (ht : exp 1 ≤ t) :
       div_le_div_of_nonneg_left (by positivity) hs (by nlinarith)
     _ = t ^ (-(3 / 2 : ℝ)) := reciprocal_sqrt_eq_rpow ht0
 
-private lemma integral_rpow_neg_three_halves {x : ℝ} (hx : 0 < x) :
+lemma integral_rpow_neg_three_halves {x : ℝ} (hx : 0 < x) :
     (∫ t in Ioi x, t ^ (-(3 / 2 : ℝ))) = 2 / sqrt x := by
   calc
     (∫ t in Ioi x, t ^ (-(3 / 2 : ℝ))) =

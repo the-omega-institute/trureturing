@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:e78fd9f20dfed7636cb3ae195ca6142e4960df513850e016adb0aef4421be3e7
-  normalized_sha256: sha256:e78fd9f20dfed7636cb3ae195ca6142e4960df513850e016adb0aef4421be3e7
-cas_ref: sha256:e78fd9f20dfed7636cb3ae195ca6142e4960df513850e016adb0aef4421be3e7
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/Epistemic/VacuousOmniscience.empty_fiber_knows_everything
-    target_statement_id: sha256:3f4babe58c5648bb05737eded201e151fb887cf26e28d206a412746eb942aa9a
-receipts:
-  unresolved_subitems: []

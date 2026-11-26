@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:0564a69f69fa698b94397c296f1d8c6415a81530a1475b3c07ba16be04edb946
-  normalized_sha256: sha256:0564a69f69fa698b94397c296f1d8c6415a81530a1475b3c07ba16be04edb946
-cas_ref: sha256:0564a69f69fa698b94397c296f1d8c6415a81530a1475b3c07ba16be04edb946
-coverage_gids:
-  - gid: D5/S3/Factorization/Periods/CrtPeriodComposition.phase_period_crt_composition
-    target_statement_id: sha256:e22f6ef0a0ff361aed2163c3ffb56d7e67ac873e7e366831efa617ed7b2c0949
-receipts:
-  unresolved_subitems: []

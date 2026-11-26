@@ -17,7 +17,8 @@ The [primary preprint, arXiv:0811.1067v2](https://arxiv.org/pdf/0811.1067v2),
 Definitions 4.2–4.3 and Lemma 4.4, pp. 16–18, specifies coboundaries,
 weight-dependent adjoints and the identity of two consecutive coboundaries
 with zero. Its divergence convention is minus the gradient adjoint.
-Theorems 4.7–4.8, pp. 18–20, supply the orthogonal decomposition;
+Theorem 4.7 gives the weighted orthogonal Hodge decomposition, and
+Theorem 4.8 gives the unweighted Helmholtz specialization.
 Theorem 5.1, pp. 21–22, applies the weighted normal equations to ranking.
 The inner product in equation (14) uses positive weights on the edges
 actually retained; zero weights denote absent edges.
@@ -35,3 +36,13 @@ These are classical intermediate inputs to the
 [five-edge weighted seam lift and clock obstruction](../../docs/develop/theory/AURIC_FIB_ATOM_STATIC_SEAMS_TRANSITION_CIRCULATION_AND_FIBONACCI_TOGGLE_CYCLES.md),
 Section 15. The paper's ranking residual is not an independently supplied
 observer error, probability flux, clock cost or physical force.
+
+## Verified locator
+
+The journal DOI is <https://doi.org/10.1007/s10107-010-0419-x> and the
+arXiv record is <https://arxiv.org/abs/0811.1067>.
+
+In arXiv:0811.1067v2, pp. 16–19 contain Definitions 4.2–4.3 and Lemma 4.4
+for coboundaries and adjoints, Theorem 4.7 for the weighted Hodge
+decomposition, and Theorem 4.8 for the unweighted Helmholtz specialization.
+Theorem 5.1 on p. 21 gives the ranking normal equations.

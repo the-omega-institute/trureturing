@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:f3ee967d5c4c48839b27a00235a99b2875e4a8891568233441af20fc3dc4852f
-  normalized_sha256: sha256:f3ee967d5c4c48839b27a00235a99b2875e4a8891568233441af20fc3dc4852f
-cas_ref: sha256:f3ee967d5c4c48839b27a00235a99b2875e4a8891568233441af20fc3dc4852f
-coverage_gids:
-  - gid: D5/S1/Solenoid/StreamlineDecomposition.existsUnique_normalized_streamline
-    target_statement_id: sha256:696d196b38377e1a0c2927b0759d8e3db0d24eb2a9b9f5d09620aefe2178922b
-receipts:
-  unresolved_subitems: []

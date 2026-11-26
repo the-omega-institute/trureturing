@@ -23,7 +23,8 @@ open private negative_step
   from D5.S3.Combinatorics.Circle.FourNegative.FourNegativeEventualJointLift
 open private Gates
   from D5.S3.Combinatorics.Circle.FourNegative.Adjacent.FourNegativeAdjacentDoubleSchedule
-open private label lift_order marked_word ladder_sum
+open ThreeNegativeEqualOuterJointLift (label lift_order marked_word)
+open private ladder_sum
   from D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
 
 private def oldValue (s t i : ℕ) : ℤ :=

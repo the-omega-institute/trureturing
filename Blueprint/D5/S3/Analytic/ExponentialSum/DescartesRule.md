@@ -20,7 +20,21 @@ If at least one coefficient is nonzero, every finite set Z consisting of zeros o
 
 After removing zero terms, choose a constant c strictly between the exponents at a coefficient sign reversal. Multiplication by exp(-ct) preserves zeros. Its derivative has coefficients a(i)(mu(i)-c), whose variation count is exactly V-1. Induction on V and Rolle's theorem give the bound. When V is zero, all terms have the same strict sign.
 
-**Theorem 1.2 (Zeros without a sign reversal).**
+**Theorem 1.2 (A prescribed stationary zero).**
+
+Lean statement: `D5/S3/Analytic/ExponentialSum/DescartesRule.zero_bound_with_stationary_root`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/ExponentialSum/DescartesRule.zero_bound_with_stationary_root` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Assume some coefficient is nonzero and every point of the finite set Z is a zero of F. If the derivative of F also vanishes at a point z of Z, then the cardinality of Z plus one is at most V.
+
+Multiplication by the normalizing exponential preserves stationarity at z because F(z) is zero. The normalized derivative vanishes at z and, by Rolle's theorem, at an interior point between each pair of consecutive points of Z. For example, coefficients (1, −2, 1) and exponents (0, −1, −2) give F(t) = (1 − exp(−t))². With Z = {0}, the bound is attained with two sign variations.
+
+**Theorem 1.3 (Zeros without a sign reversal).**
 
 Lean statement: `D5/S3/Analytic/ExponentialSum/DescartesRule.sign_crossing_bound`
 
@@ -34,7 +48,7 @@ Under the same assumptions, add to the cardinality of Z the number of its points
 
 The proof first establishes the stronger bound that charges each stationary zero one additional unit. The normalized derivative has a zero between consecutive prescribed zeros and at every prescribed stationary zero. These sets are disjoint. A nonzero derivative at a zero forces a uniform strict sign reversal, giving the stated conclusion.
 
-**Theorem 1.3 (Exact signs at saturation).**
+**Theorem 1.4 (Exact signs at saturation).**
 
 Lean statement: `D5/S3/Analytic/ExponentialSum/DescartesRule.exact_sign`
 
@@ -53,3 +67,4 @@ Saturation excludes every additional zero and every stationary prescribed zero. 
 - Truth anchor: `D5/S3/Analytic/ExponentialSum/DescartesRule.exact_sign`
 - Truth anchor: `D5/S3/Analytic/ExponentialSum/DescartesRule.sign_crossing_bound`
 - Truth anchor: `D5/S3/Analytic/ExponentialSum/DescartesRule.zero_bound`
+- Truth anchor: `D5/S3/Analytic/ExponentialSum/DescartesRule.zero_bound_with_stationary_root`

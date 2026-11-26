@@ -35,8 +35,6 @@ open private High graph side graph_degree side_card actual_partition high_partit
   high_graph_girth from
   D5.S3.Combinatorics.Graph.HypercubeCritical.SymmetricHighGraph
 
-open private SimpleGraph.cycle_iso_of_connected_degree_le_two from
-  D5.S3.Combinatorics.Graph.Brooks.General
 open private small_two_regular_cycle from
   D5.S3.Combinatorics.Graph.HypercubeCritical.SmallRegularCycle
 

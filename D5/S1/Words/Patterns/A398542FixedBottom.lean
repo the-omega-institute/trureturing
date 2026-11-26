@@ -94,6 +94,13 @@ structure Shuffle (m k : ℕ) where
   lower_mono : StrictMono (fun i => positions (Sum.inl i))
   upper_mono : StrictMono (fun i => positions (Sum.inr i))
 
+/-- The ordered positions determine the shuffle. -/
+theorem Shuffle.positions_injective {m k : ℕ} :
+    Function.Injective (Shuffle.positions : Shuffle m k → _) := by
+  rintro ⟨a, ha, ha'⟩ ⟨b, hb, hb'⟩ hab
+  cases hab
+  rfl
+
 /-- Extract the ordered interleaving by the literal value cut. -/
 def extractShuffle {m k : ℕ} (w : Equiv.Perm (Fin (m + k))) : Shuffle m k where
   positions := (Equiv.sumCongr (lowerOrder w).toEquiv (upperOrder w).toEquiv).trans
@@ -174,11 +181,7 @@ def insertionEquiv (m k : ℕ) :
         rintro (i | i)
         · exact congrFun enumL i
         · exact congrFun enumU i
-      have extShuffle : ∀ a b : Shuffle m k, a.positions = b.positions → a = b := by
-        rintro ⟨a, ha, ha'⟩ ⟨b, hb, hb'⟩ hab
-        cases hab
-        rfl
-      exact extShuffle _ _ he
+      exact Shuffle.positions_injective he
     exact Prod.ext (Prod.ext hb hub) hs
   right_inv w := by
     apply Equiv.ext
@@ -363,11 +366,7 @@ def gapEquiv (m k : ℕ) : Shuffle m k ≃ {g : Fin k → Fin (m + 1) // Monoton
       rintro (i | j)
       · exact congrFun hl i
       · exact hu j
-    have extShuffle : ∀ a b : Shuffle m k, a.positions = b.positions → a = b := by
-      rintro ⟨a, ha, ha'⟩ ⟨b, hb, hb'⟩ hab
-      cases hab
-      rfl
-    exact extShuffle _ _ he
+    exact Shuffle.positions_injective he
 
 
 /-- Minimum lower value before gap `g`; the empty prefix has sentinel value `m`. -/

@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:856001f1ed99eca1c676de01ae5f923816214dc1266407563a3fe8b0b5f4ebcf
-  normalized_sha256: sha256:856001f1ed99eca1c676de01ae5f923816214dc1266407563a3fe8b0b5f4ebcf
-cas_ref: sha256:856001f1ed99eca1c676de01ae5f923816214dc1266407563a3fe8b0b5f4ebcf
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/DecisionValue/CompleteInputDeterminism.complete_input_agreement_excludes_deterministic_disagreement
-    target_statement_id: sha256:92ae3b9227b0cef4c30c3ce93685ad76204fdb9279faf8117f959bced5f361e4
-receipts:
-  unresolved_subitems: []

@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:34902c582b463a6cb90320d5402f05e89ff14c0c494a256636cb0ee549eb704d
-  normalized_sha256: sha256:34902c582b463a6cb90320d5402f05e89ff14c0c494a256636cb0ee549eb704d
-cas_ref: sha256:34902c582b463a6cb90320d5402f05e89ff14c0c494a256636cb0ee549eb704d
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/RefinementAlgebra/DominanceEventAlgebraCharacterization.complete_dominance_event_algebra_characterization
-    target_statement_id: sha256:83c34cdd0ee65a7c57398f4c9f9cd5714ebc43817ee3a26014a7f7827ad4e0ae
-receipts:
-  unresolved_subitems: []

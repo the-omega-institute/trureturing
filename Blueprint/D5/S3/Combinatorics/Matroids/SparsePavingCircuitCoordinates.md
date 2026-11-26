@@ -1,0 +1,75 @@
+# Circuit Coordinates for Sparse Paving Cores
+
+## Abstract
+
+Signed circuit equations for a family of omitted bases.
+
+**Theorem 1.1 (Constructing the core from separated omissions).**
+
+Lean statement: `D5/S3/Combinatorics/Matroids/SparsePavingCircuitCoordinates.exists_sparse_paving_core`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Matroids/SparsePavingCircuitCoordinates.exists_sparse_paving_core` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+In positive rank below the ground size, declare the rank-sized sets outside the omitted family to be bases. If a candidate exchange gives an omitted set, select an element of the second basis outside that set. The resulting exchange differs from the first one and shares its rank-minus-one face, so the sparsity condition permits it.
+
+**Theorem 1.2 (Omitted coefficients and uniform deletion rows).**
+
+Lean statement: `D5/S3/Combinatorics/Matroids/SparsePavingCircuitCoordinates.mem_weightedCircuitResidues_iff`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Matroids/SparsePavingCircuitCoordinates.mem_weightedCircuitResidues_iff` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+All bases have the stated rank. Any two distinct excluded sets of that size have intersection of cardinality at most the rank minus two. The weighted residue group comprises the chains supported on the rank-sized subsets that vanish on the excluded sets, have zero weighted boundary, and satisfy every signed deletion row on a subset of size one greater than the rank. At most one excluded set lies in such a subset. Its contraction row replaces the corresponding uniform row up to an overall sign.
+
+**Theorem 1.3 (The alternating-form description).**
+
+Lean statement: `D5/S3/Combinatorics/Matroids/SparsePavingCircuitCoordinates.sparse_paving_weighted_forms_equiv`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Matroids/SparsePavingCircuitCoordinates.sparse_paving_weighted_forms_equiv` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+In a basis on which the covector takes the value one, the uniform deletion rows give covector multiplication and the weighted boundary gives vector insertion. Both operations vanish, and each omitted basis sets the corresponding alternating coefficient to zero.
+
+**Theorem 1.4 (The face coefficient as a form on differences).**
+
+Lean statement: `D5/S3/Combinatorics/Matroids/SparsePavingCircuitCoordinates.wedge_coordinate_zero_iff_differences`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Matroids/SparsePavingCircuitCoordinates.wedge_coordinate_zero_iff_differences` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+On a basis where the covector takes value one, choose any representative vertex of the face. Subtract it from the other vertices to obtain vectors in the kernel of the covector. The face coefficient of the covector product vanishes exactly when the lower-degree alternating form vanishes on these differences.
+
+**Theorem 1.5 (Simultaneous omitted equations after pivot elimination).**
+
+Lean statement: `D5/S3/Combinatorics/Matroids/SparsePavingCircuitCoordinates.sparse_paving_pivot_forms_equiv`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Matroids/SparsePavingCircuitCoordinates.sparse_paving_pivot_forms_equiv` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Eliminate a pivot to express circuit residues as lower-degree forms. Weighted insertion and insertion of the pivot both vanish, and the scalar readout of the weights annihilates the form. Each omitted basis imposes one additional vanishing equation on differences from any representative of that basis.
+
+## References
+
+- Truth anchor: `D5/S3/Combinatorics/Matroids/SparsePavingCircuitCoordinates.exists_sparse_paving_core`
+- Truth anchor: `D5/S3/Combinatorics/Matroids/SparsePavingCircuitCoordinates.mem_weightedCircuitResidues_iff`
+- Truth anchor: `D5/S3/Combinatorics/Matroids/SparsePavingCircuitCoordinates.sparse_paving_pivot_forms_equiv`
+- Truth anchor: `D5/S3/Combinatorics/Matroids/SparsePavingCircuitCoordinates.sparse_paving_weighted_forms_equiv`
+- Truth anchor: `D5/S3/Combinatorics/Matroids/SparsePavingCircuitCoordinates.wedge_coordinate_zero_iff_differences`
+- Dependency: [D5/S3/Combinatorics/Matroids/PuncturedCircuitCoordinates](PuncturedCircuitCoordinates.md)
+- Dependency: [D5/S3/Combinatorics/Matroids/PuncturedCircuitSplit](PuncturedCircuitSplit.md)

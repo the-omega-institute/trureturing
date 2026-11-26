@@ -5,21 +5,30 @@
    anchors: []
    digest: Boolean swap changes every value selected along a self-application diagonal. -/
 
-import Mathlib.Data.Bool.Basic
+module
+prelude
+public import OmegaInit.Core
 
 namespace D5.S0.Conventions.DiagonalSwap
 
+open Omega
+
 /-- Applying the Boolean swap to a value selected on the self-application
 diagonal changes that value. -/
-theorem swap_changes_self_diagonal {Index : Type*} (assignment : Index -> Index -> Bool) :
-    forall index, Not (Bool.not (assignment index index) = assignment index index) := by
-  intro index
-  exact Bool.not_ne_self (assignment index index)
+public theorem swap_changes_self_diagonal {Index : Type u} (assignment : Index → Index → Bool) :
+    ∀ index, Not (Eq (Bool.rec (motive := fun _ => Bool) .true .false (assignment index index))
+      (assignment index index)) :=
+  fun index =>
+    have distinct : Not (Eq Bool.false Bool.true) :=
+      fun h => Eq.subst (motive := Bool.rec (motive := fun _ => Prop) True False) h True.intro
+    Bool.rec (motive := fun b => Not (Eq (Bool.rec (motive := fun _ => Bool) .true .false b) b))
+      (fun h => distinct h.symm) distinct (assignment index index)
 
 /-- A concrete inhabited index domain for the diagonal statement. -/
-example : Nonempty PUnit := inferInstance
+example : Exists (fun _ : Bool => True) := Exists.intro .false True.intro
 
 /-- Boolean-valued binary assignments exist on an inhabited index domain. -/
-example : Nonempty (PUnit -> PUnit -> Bool) := ⟨fun _ _ => false⟩
+example : Exists (fun _ : Bool → Bool → Bool => True) :=
+  Exists.intro (fun _ _ => .false) True.intro
 
 end D5.S0.Conventions.DiagonalSwap

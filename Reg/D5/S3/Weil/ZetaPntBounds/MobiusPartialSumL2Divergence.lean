@@ -1,5 +1,6 @@
 import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
+import Reg.Support.SingleDependentReadout
 import D5.S3.Weil.ZetaPntBounds.MobiusPartialSumL2Divergence
 
 /-! Source-bound observations of the original four public statements. -/
@@ -355,5 +356,83 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   options := #[]
 
 end Mobius
+
+namespace InitialMellin
+
+abbrev signature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℂ) (fun _ => ℂ)
+
+def actual : Realization signature :=
+  realize signature (fun _ _ z => 1 / z) (fun e => nomatch e)
+
+private def rejected : Realization signature :=
+  realize signature (fun _ _ z => 1 / z + 1) (fun e => nomatch e)
+
+def arena : Arena where
+  signature := signature
+  Law R := ∀ {s : ℂ} (_hs : 0 < s.re),
+    s * mobiusMellin s = R.readout () () (riemannZeta (s + 1))
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have hs : 0 < (1 : ℂ).re := by norm_num
+  have hbad := h hs
+  let z : ℂ := 1 / riemannZeta ((1 : ℂ) + 1)
+  change (1 : ℂ) * mobiusMellin 1 = z + 1 at hbad
+  have hshift : z + 1 = z + 0 := by
+    rw [add_zero]
+    exact hbad.symm.trans (initial_mellin_identity hs)
+  exact one_ne_zero (add_left_cancel hshift)
+
+private theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨(), (1 : ℂ), (2 : ℂ), ?_⟩
+  change (1 : ℂ) / 1 ≠ 1 / 2
+  intro h
+  have hz : (1 : ℂ) = 2 := by
+    simpa only [one_div, inv_inv] using congrArg (fun z : ℂ => z⁻¹) h
+  norm_num at hz
+
+def family : Registration arena (type_of% (@initial_mellin_identity)) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@initial_mellin_identity, rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law actual rejected rejected_law
+  dependence := dependence
+
+def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+    (@initial_mellin_identity) (Realization signature) Unit Unit where
+  unitName := `D5.S3.Weil.ZetaPntBounds.MobiusPartialSumL2Divergence.initial_mellin_identity.audit
+  realizationName := `Reg.D5.S3.Weil.ZetaPntBounds.MobiusPartialSumL2Divergence.InitialMellin.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ z => 1 / z) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Weil.ZetaPntBounds.MobiusPartialSumL2Divergence
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end InitialMellin
 
 end Reg.D5.S3.Weil.ZetaPntBounds.MobiusPartialSumL2Divergence

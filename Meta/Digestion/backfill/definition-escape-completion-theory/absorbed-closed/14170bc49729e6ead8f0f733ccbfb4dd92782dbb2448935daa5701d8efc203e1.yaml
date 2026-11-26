@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:14170bc49729e6ead8f0f733ccbfb4dd92782dbb2448935daa5701d8efc203e1
-  normalized_sha256: sha256:14170bc49729e6ead8f0f733ccbfb4dd92782dbb2448935daa5701d8efc203e1
-cas_ref: sha256:14170bc49729e6ead8f0f733ccbfb4dd92782dbb2448935daa5701d8efc203e1
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/RefinementFactorization/SufficiencyEscapeEquivalence.sufficiency_escape_equivalence_tfae
-    target_statement_id: sha256:99bb4a2706dfd9a112dfc0dd3a452050f6200870e9f648756362d6b8ab7b1411
-receipts:
-  unresolved_subitems: []

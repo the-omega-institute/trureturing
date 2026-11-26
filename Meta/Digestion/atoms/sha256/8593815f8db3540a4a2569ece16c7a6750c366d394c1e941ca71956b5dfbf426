@@ -1,8 +1,0 @@
-**Proof.** The old $L$ subtree alpha maps to beta; the old right beta leaf
-expands and its newborn $RL$ also has value beta. With the single old marker
-$x$, repair gives $\langle x,E\rangle$, and inverse parsing gives
-$\langle x,\beta\rangle=R_P(v)$. Replacing both members of the current
-class by beta instead gives the full tree $\langle\alpha,\beta\rangle$
-after parsing and removes the old $L$ hole. It is therefore not the
-predecessor row. $\square$
-

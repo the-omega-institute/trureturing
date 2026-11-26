@@ -1,4 +1,0 @@
-**Corollary 6.4 (a two-value gap-two classification).** If $N_1=N_2+2$, then the minimum is $7+N_2$ when the criterion in Theorem 6.3 is feasible, and $8+N_2$ otherwise. More generally, under $N_1\ge N_2+2$, its infeasibility gives the extra lower bound $N_{\mathrm{gen}}\ge8+N_2$.
-
-**Proof (6.4).** Theorem 4.3 gives at least $7+N_2$, and Theorem 6.3 decides whether that integer is attainable. If it is not, integrality gives the next lower integer. In the gap-two case the reused upper is exactly $6+N_1=8+N_2$. This is an exact existential classification, not an analytical elimination of the criterion for every real parameter. $\square$
-

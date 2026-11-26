@@ -1,8 +1,0 @@
-必须同时使用：
-
-* Rouché 零点计数；
-* 局部一致收敛；
-* multiplicity tracking；
-* transfer-function pole/zero cancellation；
-* pseudospectral stability。
-

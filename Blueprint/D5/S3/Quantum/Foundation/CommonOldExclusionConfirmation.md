@@ -64,7 +64,19 @@ Lean statement: `D5/S3/Quantum/Foundation/CommonOldExclusionConfirmation.oldCent
 
 The chosen affine chart maps zero to the old center c_p. Reflection preserves the whole ball. The main theorem proves that every symmetry center equals this point, so the center is independent of the chart.
 
-**Definition 1.6 (The actual full-zero confirmer family).**
+**Theorem 1.6 (Whole original reflection and pure antipodes).**
+
+Lean statement: `D5/S3/Quantum/Foundation/CommonOldExclusionConfirmation.old_geometry`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Foundation/CommonOldExclusionConfirmation.old_geometry` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Under the original closedness, strict positivity, generating span and EB3 hypotheses, for every original pure p the chosen oldCenter lies in the whole D(p), reflection x mapped to twice oldCenter minus x preserves that whole ball, and every original pure q in D(p) has an original pure reflected partner r in D(p) with q+r=2 oldCenter. The fixed-sphere diameter bound uses these original reflected partners and identifies oldCenter with ContinuousFrameSum.center by whole-ball center uniqueness.
+
+**Definition 1.7 (The actual full-zero confirmer family).**
 
 Lean statement: `D5/S3/Quantum/Foundation/CommonOldExclusionConfirmation.fullZeroEffects`
 
@@ -76,7 +88,7 @@ Lean statement: `D5/S3/Quantum/Foundation/CommonOldExclusionConfirmation.fullZer
 
 A_p is exactly the continuous-dual representation of FixedZeroObstruction.fullZeroConfirmers: an original full-interval effect confirming p and vanishing at every mixed point of the complete D_p.
 
-**Definition 1.7 (Distance from a complete confirmer fiber).**
+**Definition 1.8 (Distance from a complete confirmer fiber).**
 
 Lean statement: `D5/S3/Quantum/Foundation/CommonOldExclusionConfirmation.zeroFiberDistance`
 
@@ -88,7 +100,7 @@ Lean statement: `D5/S3/Quantum/Foundation/CommonOldExclusionConfirmation.zeroFib
 
 The distance is the minimum, over all e in the whole F_a, of the actual dual norm distance from e to the whole A_p. The outer minimum is attained. No specified effect or selector is part of this definition.
 
-**Theorem 1.8 (Complete original X125.2 and X125.3).**
+**Theorem 1.9 (Complete original X125.2 and X125.3).**
 
 Lean statement: `D5/S3/Quantum/Foundation/CommonOldExclusionConfirmation.common_old_exclusion_confirmation`
 
@@ -176,6 +188,7 @@ In particular, any convergent old-ball slopes of actual moving confirmers lie in
 - Truth anchor: `D5/S3/Quantum/Foundation/CommonOldExclusionConfirmation.kappa`
 - Truth anchor: `D5/S3/Quantum/Foundation/CommonOldExclusionConfirmation.oldCenter`
 - Truth anchor: `D5/S3/Quantum/Foundation/CommonOldExclusionConfirmation.oldChart`
+- Truth anchor: `D5/S3/Quantum/Foundation/CommonOldExclusionConfirmation.old_geometry`
 - Truth anchor: `D5/S3/Quantum/Foundation/CommonOldExclusionConfirmation.wholeMaximum`
 - Truth anchor: `D5/S3/Quantum/Foundation/CommonOldExclusionConfirmation.zeroFiberDistance`
 - Dependency: [D5/S3/Quantum/Foundation/OriginalWidthContact](OriginalWidthContact.md)

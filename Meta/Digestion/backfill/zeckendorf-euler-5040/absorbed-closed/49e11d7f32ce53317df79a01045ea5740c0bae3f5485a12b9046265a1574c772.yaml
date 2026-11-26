@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:49e11d7f32ce53317df79a01045ea5740c0bae3f5485a12b9046265a1574c772
-  normalized_sha256: sha256:49e11d7f32ce53317df79a01045ea5740c0bae3f5485a12b9046265a1574c772
-cas_ref: sha256:49e11d7f32ce53317df79a01045ea5740c0bae3f5485a12b9046265a1574c772
-coverage_gids:
-  - gid: D5/S1/Ledger/GenerationArrowOfTime.length_eq_log_generatedNumber
-    target_statement_id: sha256:e9d60b57612f95962690a753a5c831618404a36e8d3f443ad36c4004a31233f7
-receipts:
-  unresolved_subitems: []

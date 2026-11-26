@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:253e6d4d64c9f0d920bdf3fe8c8a20f65ca5d475c4242a622c9c840ff49e5b1f
-  normalized_sha256: sha256:253e6d4d64c9f0d920bdf3fe8c8a20f65ca5d475c4242a622c9c840ff49e5b1f
-cas_ref: sha256:253e6d4d64c9f0d920bdf3fe8c8a20f65ca5d475c4242a622c9c840ff49e5b1f
-coverage_gids:
-  - gid: D5/S3/Weil/WeilObservables/WeilEvaluationExactObservableRange.truncatedZeroSum_mixed_eq_reducedMirrorForm
-    target_statement_id: sha256:e78d773b4b440fe1fbc20ac6e3d8fc6a0203c7d8f50d46b8c0172f1928bed425
-receipts:
-  unresolved_subitems: []

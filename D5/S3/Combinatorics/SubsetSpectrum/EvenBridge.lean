@@ -6,6 +6,8 @@
    utility: none
    digest: Even subset spectra determine total and full spectra in odd length. -/
 
+/- Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/30704 -/
+
 import Mathlib.Algebra.BigOperators.Group.Finset.Powerset
 import Mathlib.Algebra.Ring.Parity
 import Mathlib.Data.Real.Basic
@@ -68,7 +70,7 @@ private lemma odd_insert_sum (s : Finset α) (a : α) (ha : a ∉ s)
   simp only [Finset.card_insert_of_notMem hat, Nat.odd_add_one, Nat.not_odd_iff_even]
 
 omit [DecidableEq α] in
-private lemma parity_counts (s : Finset α) (hs : s.Nonempty) :
+lemma parity_counts (s : Finset α) (hs : s.Nonempty) :
     (∑ _t ∈ evenSubsets s, (1 : ℝ)) = 2 ^ (s.card - 1) ∧
       (∑ _t ∈ oddSubsets s, (1 : ℝ)) = 2 ^ (s.card - 1) := by
   classical

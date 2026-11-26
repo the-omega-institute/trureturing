@@ -6,13 +6,15 @@
    utility: none
    digest: TauCeti port: Alternating and finite Euler sums; sphere-homology support. -/
 
-import Mathlib.Algebra.BigOperators.Fin
-import Mathlib.Algebra.BigOperators.GroupWithZero.Action
-import Mathlib.Algebra.BigOperators.Intervals
-import Mathlib.Algebra.Ring.NegOnePow
-import Mathlib.Data.Int.Interval
-import Mathlib.Tactic.Abel
-import Mathlib.Tactic.Ring
+module
+
+public import Mathlib.Algebra.BigOperators.Fin
+public import Mathlib.Algebra.BigOperators.GroupWithZero.Action
+public import Mathlib.Algebra.BigOperators.Intervals
+public import Mathlib.Algebra.Ring.NegOnePow
+public import Mathlib.Data.Int.Interval
+public import Mathlib.Tactic.Abel
+public import Mathlib.Tactic.Ring
 
 /-!
 This file is a source port adapted from TauCetiProject/TauCeti at immutable
@@ -42,7 +44,7 @@ differentials. It also provides finite Euler sums for explicitly supported `ℤ`
 including support independence, additivity, and translation of the grading.
 -/
 
-public section
+@[expose] public section
 
 namespace TauCeti
 

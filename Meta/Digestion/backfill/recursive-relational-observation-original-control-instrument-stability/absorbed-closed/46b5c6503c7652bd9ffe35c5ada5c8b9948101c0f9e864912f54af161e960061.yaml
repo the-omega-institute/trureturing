@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:46b5c6503c7652bd9ffe35c5ada5c8b9948101c0f9e864912f54af161e960061
-  normalized_sha256: sha256:46b5c6503c7652bd9ffe35c5ada5c8b9948101c0f9e864912f54af161e960061
-cas_ref: sha256:46b5c6503c7652bd9ffe35c5ada5c8b9948101c0f9e864912f54af161e960061
-coverage_gids:
-  - gid: D5/S3/Quantum/Fibers/OriginalDensityStability.complete_output_convergence
-    target_statement_id: sha256:985a3b0d9e445156bf6c884a3be8c172265d6f1ab51ffc03dd8e88688668f5f4
-receipts:
-  unresolved_subitems: []

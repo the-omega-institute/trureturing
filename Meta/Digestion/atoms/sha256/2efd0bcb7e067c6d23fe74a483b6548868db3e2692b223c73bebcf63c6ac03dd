@@ -1,9 +1,0 @@
-**定义 181.5（二阶确认的序相容）。** 在181.1的背景内，要求存在选择 $E_F\in\mathcal U(F)$，对全部 $F,G\in\mathfrak F_2$ 满足
-
-$$
-\boxed{\qquad F\subseteq G\quad\Longrightarrow\quad E_F\le E_G.\qquad}
-\tag{181.8}
-$$
-
-记为 $\mathsf O_2$。反向包含无需另加：若 $E_F\le E_G$，在 $F$ 的每个点评价便得 $E_G=1$，所以 $F\subseteq G$。唯一非平凡的保序义务是纯单点包含于二元球；没有要求所有球单位由同一条选定直径构造，也没有声称这些效应为序 join 或正投影。
-

@@ -1,6 +1,0 @@
-所以：
-
-* 时域坐标是 offsets \(h\)；
-* 频域坐标是 additive characters \(a/p\)；
-* singular series 是所有局部频率闭环的 Euler 装配。
-

@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:44ee67891c756389c419b6e102968f159a1f7e05f626700bb861d73915537546
-  normalized_sha256: sha256:44ee67891c756389c419b6e102968f159a1f7e05f626700bb861d73915537546
-cas_ref: sha256:44ee67891c756389c419b6e102968f159a1f7e05f626700bb861d73915537546
-coverage_gids:
-  - gid: D5/S3/Arith/GoldenResource/DivisorAssociationFiber.fiberEquiv
-    target_statement_id: sha256:ebbceda5f905c834f8e5acca37efa6820a8d4e3ac8e9173da3458f0d99cbc961
-receipts:
-  unresolved_subitems: []

@@ -148,7 +148,7 @@ Lean statement: `D5/S1/Words/Patterns/A398542FixedBottom.Shuffle`
 
 *Commentary.*
 
-For all m,k, Shuffle(m,k) consists of an equivalence from the disjoint sum Fin(m) plus Fin(k) to Fin(m+k), strictly increasing on each summand separately. Both summands may be empty.
+For all m,k, Shuffle(m,k) consists of an equivalence from the disjoint sum Fin(m) plus Fin(k) to Fin(m+k), strictly increasing on each summand separately. Both summands may be empty. Equality of the position equivalences determines equality of the shuffles by proof irrelevance for the two increasing-order conditions.
 
 **Definition 1.13 (Extract the two ordered position sets).**
 

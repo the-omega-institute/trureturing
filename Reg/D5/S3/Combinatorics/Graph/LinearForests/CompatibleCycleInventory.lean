@@ -249,5 +249,171 @@ def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   familyRecord := none
   options := #[]
 end Forest
+
+namespace InventoryZero
+
+private abbrev ZeroParams := Σ C : Type u, Σ _ : C → Bool, Σ _ : Bool, Bool
+
+private abbrev signature : Signature where
+  Params := ZeroParams.{u}
+  State p := p.1 → Bool
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℕ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+private def actual : Realization signature.{u} :=
+  realize signature (fun _ p d => inventory p.2.1 d p.2.2.1 p.2.2.2) (fun e => nomatch e)
+
+private def zero : Realization signature.{u} :=
+  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+
+private abbrev arena : Arena where
+  signature := signature.{u}
+  Law R := ∀ {C : Type u} [Finite C] (s d : C → Bool) (a b : Bool),
+    R.readout () ⟨C, s, a, b⟩ d = 0 →
+    ∀ x, s x = a → d x = b → False
+
+private theorem rejectsZero : ¬ arena.{u}.Law zero := by
+  intro h
+  exact h (C := ULift.{u} Unit) (fun _ => false) (fun _ => false)
+    false false rfl ⟨()⟩ rfl rfl
+
+private theorem dependence : ObservationalDependence signature.{u} actual := by
+  intro _
+  let C := ULift.{u} Unit
+  let s : C → Bool := fun _ => false
+  refine ⟨⟨C, s, false, false⟩, (fun _ => false), (fun _ => true), ?_⟩
+  change inventory s (fun _ => false) false false ≠ inventory s (fun _ => true) false false
+  simp [inventory, s, C, Nat.card_eq_fintype_card]
+
+def evidence : Registration arena.{u} (type_of% (@inventory_zero.{u})) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@inventory_zero.{u}, zero, rejectsZero⟩
+  sensitivity := ⟨fun i => ⟨zero, fun j hj => (hj (Subsingleton.elim j i)).elim,
+    rfl, rejectsZero⟩, fun e => nomatch e⟩
+  dependence := dependence
+
+def registration :
+    Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@inventory_zero.{u}) (Realization signature.{u}) Unit Unit where
+  unitName := `Reg.D5.S3.Combinatorics.Graph.LinearForests.CompatibleCycleInventory.inventory_zero
+  realizationName :=
+    `Reg.D5.S3.Combinatorics.Graph.LinearForests.CompatibleCycleInventory.InventoryZero.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena.{u}⟩
+  objectArena := .source ⟨arena.{u}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena.{u} ⟨evidence.{u}⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ p d => inventory p.2.1 d p.2.2.1 p.2.2.2)
+    (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Combinatorics.Graph.LinearForests.CompatibleCycleInventory
+    definition := none
+    coordinates := #[0, 2, 4, 5]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "domain", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["fn", "fn", "arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end InventoryZero
+
+namespace SideTransport
+
+universe v
+
+private abbrev signature : Signature where
+  Params := Σ A : Type v, Bool
+  State p := p.1 → Bool
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℕ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+private def actual : Realization signature.{v} :=
+  realize signature (fun _ p s => Nat.card (Side s p.2)) (fun e => nomatch e)
+
+private def zero : Realization signature.{v} :=
+  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+
+private abbrev arena : Arena where
+  signature := signature.{v}
+  Law R := ∀ {C : Type u} {A : Type v} (e : C ≃ A) (s : A → Bool) (a : Bool),
+    Nat.card (Side (s ∘ e) a) = R.readout () ⟨A, a⟩ s
+
+private def oneEquiv : ULift.{u} Unit ≃ ULift.{v} Unit :=
+  Equiv.ulift.trans Equiv.ulift.symm
+
+private theorem rejectsZero : ¬ arena.{u, v}.Law zero := by
+  intro h
+  have he := h oneEquiv.{u, v} (fun _ => false) false
+  simpa [Side, zero, realize, Nat.card_eq_fintype_card] using he
+
+private theorem dependence : ObservationalDependence signature.{v} actual := by
+  intro _
+  refine ⟨⟨ULift.{v} Unit, false⟩, (fun _ => false), (fun _ => true), ?_⟩
+  simp [actual, realize, Side, Nat.card_eq_fintype_card]
+
+def evidence : Registration arena.{u, v} (type_of% (@side_transport.{u, v})) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@side_transport.{u, v}, zero, rejectsZero⟩
+  sensitivity := ⟨fun i => ⟨zero, fun j hj => (hj (Subsingleton.elim j i)).elim,
+    rfl, rejectsZero⟩, fun e => nomatch e⟩
+  dependence := dependence
+
+def registration :
+    Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@side_transport.{u, v}) (Realization signature.{v}) Unit Unit where
+  unitName := `Reg.D5.S3.Combinatorics.Graph.LinearForests.CompatibleCycleInventory.side_transport
+  realizationName :=
+    `Reg.D5.S3.Combinatorics.Graph.LinearForests.CompatibleCycleInventory.SideTransport.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena.{u, v}⟩
+  objectArena := .source ⟨arena.{u, v}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena.{u, v} ⟨evidence.{u, v}⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ p s => Nat.card (Side s p.2)) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Combinatorics.Graph.LinearForests.CompatibleCycleInventory
+    definition := none
+    coordinates := #[1, 4]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["arg", "fn", "arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end SideTransport
 end
 end Reg.D5.S3.Combinatorics.Graph.LinearForests.CompatibleCycleInventory

@@ -1,5 +1,0 @@
-因此
-$$
-q_h^+=2^k+\prod_p(\min(A_p,h)+1)
--\prod_p\max(0,\min(A_p,h)-A_p+2).
-$$

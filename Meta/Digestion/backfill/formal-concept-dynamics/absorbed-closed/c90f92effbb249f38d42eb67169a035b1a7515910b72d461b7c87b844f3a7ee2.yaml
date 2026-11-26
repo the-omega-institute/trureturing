@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:c90f92effbb249f38d42eb67169a035b1a7515910b72d461b7c87b844f3a7ee2
-  normalized_sha256: sha256:c90f92effbb249f38d42eb67169a035b1a7515910b72d461b7c87b844f3a7ee2
-cas_ref: sha256:c90f92effbb249f38d42eb67169a035b1a7515910b72d461b7c87b844f3a7ee2
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/Attribution/SymmetricEventNoUniqueCulprit.symmetric_event_admits_no_equivariant_culprit
-    target_statement_id: sha256:ee9823dc81037c2e299fe3d3211c7df9e8078fef0a8938f895cfdbcf08dd9da3
-receipts:
-  unresolved_subitems: []

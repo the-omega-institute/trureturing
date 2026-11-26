@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:90a2756582f49985aa85e7ce16db658386ab1f48ac3337e206a9cd21356bf777
-  normalized_sha256: sha256:90a2756582f49985aa85e7ce16db658386ab1f48ac3337e206a9cd21356bf777
-cas_ref: sha256:90a2756582f49985aa85e7ce16db658386ab1f48ac3337e206a9cd21356bf777
-coverage_gids:
-  - gid: D5/S3/Fourier/TorusGeneratorRigidity.result
-    target_statement_id: sha256:44e13e0a2a7a95b25a4bec98b6d21d73ae02a1a35959330ef50faa95f06e37f0
-receipts:
-  unresolved_subitems: []

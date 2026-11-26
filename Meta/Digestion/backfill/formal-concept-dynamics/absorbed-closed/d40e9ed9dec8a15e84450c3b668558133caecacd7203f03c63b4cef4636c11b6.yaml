@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:d40e9ed9dec8a15e84450c3b668558133caecacd7203f03c63b4cef4636c11b6
-  normalized_sha256: sha256:d40e9ed9dec8a15e84450c3b668558133caecacd7203f03c63b4cef4636c11b6
-cas_ref: sha256:d40e9ed9dec8a15e84450c3b668558133caecacd7203f03c63b4cef4636c11b6
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/Sufficiency/AdditiveDescentDefectChainLaw.additive_descent_defect_chain_law
-    target_statement_id: sha256:6528c149a8b2a448eaf0c70d3808a22bc4ff6df2931d435c12622dbf1d6ab02b
-receipts:
-  unresolved_subitems: []

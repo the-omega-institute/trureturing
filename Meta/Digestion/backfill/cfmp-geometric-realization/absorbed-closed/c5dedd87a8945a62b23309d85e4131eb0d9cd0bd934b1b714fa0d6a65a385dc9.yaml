@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:c5dedd87a8945a62b23309d85e4131eb0d9cd0bd934b1b714fa0d6a65a385dc9
-  normalized_sha256: sha256:c5dedd87a8945a62b23309d85e4131eb0d9cd0bd934b1b714fa0d6a65a385dc9
-cas_ref: sha256:c5dedd87a8945a62b23309d85e4131eb0d9cd0bd934b1b714fa0d6a65a385dc9
-coverage_gids:
-  - gid: D5/S3/Geometry/Hyperideal/TwoLengthAngleSum.two_length_angle_sum
-    target_statement_id: sha256:38a8fe2363dddfb09ebe3027139dde93d4f19d10438498d09881c34be659c739
-receipts:
-  unresolved_subitems: []

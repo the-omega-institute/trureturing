@@ -1,1 +1,0 @@
-| Winskel，*Event Structures*（1987） | 用事件出现及因果依赖描述过程，对应本卷 $(E,\prec)$ 的因果层 | 本卷没有冲突关系，允许任意选择 $A\subseteq\Omega$；这些选择不冒充事件结构的合法配置，§1 已给补集不保持向下闭的例子 | DOI [10.1007/3-540-17906-2_31](https://doi.org/10.1007/3-540-17906-2_31)。文献陈述 `literature-attested`；对照 `repo-derived`

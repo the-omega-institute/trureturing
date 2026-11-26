@@ -654,13 +654,17 @@ open ActualKernelLocalPositivity
 private def L (z : ℂ) : ℂ :=
   ∫ t : ℝ in Ioi 0, Complex.exp (-z * t) * (K t : ℂ)
 
-private theorem K_eq_linearKernel {t : ℝ} (ht : 0 < t) : K t = linearKernel t := by
+/-- On the positive axis the arithmetic kernel equals the normalized real zero series. -/
+theorem K_eq_linearKernel {t : ℝ} (ht : 0 < t) :
+    K t = Real.exp (-t / 2) * (actualH t).re := by
+  change K t = linearKernel t
   rw [linearKernel_arithmetic ht]
   simp only [K, abs_of_pos ht]
 
 private theorem K_complex {t : ℝ} (ht : 0 < t) :
     (K t : ℂ) = Complex.exp (-(t : ℂ) / 2) * actualH t := by
-  rw [K_eq_linearKernel ht, linearKernel_complex]
+  rw [K_eq_linearKernel ht]
+  exact linearKernel_complex t
 
 private theorem exponential_moment {b : ℝ} (hb : b < 0) (n : ℕ) :
     IntegrableOn (fun t : ℝ => t ^ n * Real.exp (b * t)) (Ioi 0) := by
@@ -689,6 +693,7 @@ private theorem laplace_integrable
   · apply (linearKernel_laplace_integrable hright).congr
     filter_upwards [ae_restrict_mem measurableSet_Ioi] with t ht
     rw [K_eq_linearKernel ht]
+    rfl
   · obtain ⟨C, _, hC⟩ := hsub (z.re / 2) (by linarith)
     have hmajor : IntegrableOn
         (fun t : ℝ => C * Real.exp ((-(z.re / 2)) * t)) (Ioi 0) :=

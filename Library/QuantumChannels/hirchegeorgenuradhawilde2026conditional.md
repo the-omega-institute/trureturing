@@ -8,7 +8,26 @@ url: https://arxiv.org/abs/2608.27171v1
 claim: "For a quantum channel N and a generalized divergence D, the conditional contraction coefficient is η^Δ_D(N) := sup over |R| and ρ_RA ≠ σ_RA of [D((id ⊗ N)(ρ_RA)‖(id ⊗ N)(σ_RA)) − D(ρ_R‖σ_R)] / [D(ρ_RA‖σ_RA) − D(ρ_R‖σ_R)] (Eq. (2.14)), optimized over pairs with a strictly positive finite denominator (Remark 2). The hockey-stick divergence is E_γ(ρ‖σ) := Tr(ρ − γσ)_+ (Eq. (5.1)). For the trace distance (γ = 1), η^c_Tr(N) and η^Δ_Tr(N) are optimized by orthogonal states (Proposition 8). §9 asks whether, for the hockey-stick divergence, the optimization can be restricted to orthogonal states, which would imply monotonicity of the coefficient in γ."
 strata_touched:
   - D5/S3/Quantum/Divergence/ConditionalHockeyStickOrthogonalReduction
+  - D5/S3/Quantum/Divergence/ConditionalExpansion/BellCenteredConditionalTraceGap
+  - D5/S3/Quantum/Divergence/ConditionalExpansion/ReverseDoeblinRefutation
+  - D5/S3/Quantum/Divergence/ConditionalExpansion/DerivativeFreeHarmonicCongruence
+  - D5/S3/Quantum/Divergence/ConditionalExpansion/FilteredChannelConditionalGap
+  - D5/S3/Quantum/Divergence/CompleteHockeyStickRefutation
+  - D5/S3/Quantum/Divergence/CompleteHockeyStickBasisSupport
+  - D5/S3/Quantum/Divergence/CompleteHockeyStickChoiSupport
+  - D5/S3/Quantum/Divergence/CompleteHockeyStickChoiConverse
+  - D5/S3/Quantum/Divergence/CompleteHockeyStick/NonlinearCurve
   - D5/S3/Quantum/Divergence/FaithfulConditionalGap
+  - D5/S3/Quantum/Divergence/UmegakiChannelSupportedExtension
+  - D5/S3/Quantum/Divergence/UmegakiSupportedMoorePenrose
+  - D5/S3/Quantum/Divergence/ConditionalExpansion/BellKernelLimit
+  - D5/S3/Quantum/Divergence/ConditionalExpansion/DirectBellKrausRecovery
+  - D5/S3/Quantum/Divergence/ConditionalExpansion/HeraldedRecoveryUpperBound
+  - D5/S3/Quantum/Divergence/ConditionalExpansion/HeraldedRecoveryLowerBound
+  - D5/S3/Quantum/Divergence/ConditionalExpansion/SharpFilteredRecoveryFactor
+  - D5/S3/Quantum/Divergence/ConditionalExpansion/FilteredBellKernelUpperBound
+  - D5/S3/Quantum/Divergence/ConditionalExpansion/FilteredBellRestriction
+  - D5/S3/Quantum/Divergence/ConditionalExpansion/DattaHolevoExactBenchmark
 license: citation-only
 triage: anchor
 ---
@@ -26,12 +45,19 @@ Source: https://arxiv.org/abs/2608.27171v1
 No DOI or journal reference is listed in the arXiv metadata. The text was read from the PDF https://arxiv.org/pdf/2608.27171v1:
 - p. 8, Definition 2, Eqs. (2.12)–(2.14);
 - p. 9, Remark 2;
+- §2.5, Definition 3, Eq. (2.42), conditional expansion;
 - p. 37, §5, Eqs. (5.1)–(5.2);
-- p. 40, Proposition 8;
+- p. 40, Proposition 8 and Remark 6;
+- §5, Theorem 6, Eq. (5.17), and Proposition 9, Eq. (5.26);
+- §5, paragraph immediately after Proposition 9, conditional reverse Doeblin question;
+- §5, Proposition 10, Eqs. (5.38)–(5.39), classical witness family;
 - p. 72, §9, the first open problem.
 - p. 72, §9, the second open problem (faithful-divergence separation).
+- p. 72, §9, the fourth bullet (nonlinear strong data processing with references).
 
 ## Source statements
+
+Definition 2, Eq. (2.13) (p. 8), gives the complete coefficient as the supremum of joint output-to-input divergence ratios over arbitrary finite reference systems and pairs with equal reference marginals.
 
 Definition 2 (p. 8): "the conditional contraction coefficient as η∆_D(N) := sup_{|R|, ρRA≠σRA} [D((id ⊗ N)(ρRA)∥(id ⊗ N)(σRA)) − D(ρR∥σR)] / [D(ρRA∥σRA) − D(ρR∥σR)]. (2.14)"
 
@@ -55,6 +81,180 @@ The repository proves two statements:
 
 In the formal numerator, the subtracted reference marginals are taken of the output states (id ⊗ N)ρ and (id ⊗ N)σ; they equal ρ_R and σ_R because N is trace preserving.
 
+## Conditional trace-distance expansion
+
+Equation (2.42) takes the infimum of the conditional retention ratio over all
+finite references and pairs with strictly positive denominator. Theorem 6,
+Eq. (5.17), preserves conditional trace-distance ratios under orthogonal
+reduction. Proposition 9, Eq. (5.26), applies this to the conditional expansion
+infimum.
+[Eq. (2.42)](https://arxiv.org/html/2608.27171v1#S2.EGx43) ·
+[Theorem 6](https://arxiv.org/html/2608.27171v1#Thmtheorem6) ·
+[Proposition 9](https://arxiv.org/html/2608.27171v1#Thmproposition9)
+
+`ConditionalExpansion.BellCenteredConditionalTraceGap.bell_padded_gap`
+gives a repository-derived orthogonal pair on a reference of size $d+1$,
+where $d$ is the input dimension. For the Bell projector $P$, let $C=I-P$,
+$D=d^2-1$, and $0<\varepsilon\le D$.
+The input gap is $\varepsilon/D$ and the conditional trace-distance ratio is
+$\operatorname{Tr}[(\varepsilon\operatorname{amp}_N(P)-\operatorname{amp}_N(C))_+]/\varepsilon$,
+where $\operatorname{amp}_N=\operatorname{id}\otimes N$. The output gap and the
+ratio for this pair each vanish exactly when
+$\varepsilon\operatorname{amp}_N(P)\le\operatorname{amp}_N(C)$ in Loewner order.
+Under this domination the pair attains zero in the orthogonal ratio set.
+
+The paragraph immediately after Proposition 9 asks whether the reverse Doeblin
+lower bound for complete trace-distance expansion extends to conditional
+expansion.
+[Text after Proposition 9](https://arxiv.org/html/2608.27171v1#S5.p13)
+
+The reverse Doeblin coefficient is the infimum of feasible weights $p$ for
+which a CPTP postprocessor degrades $N$ to $Z\mapsto (1-p)Z+p\operatorname{Tr}(Z)X$
+with $X$ Hermitian. The proposed lower bound by one minus this infimum is
+equivalent to bounding every admissible conditional ratio below by $1-p$ for
+every feasible weight in $[0,1]$.
+[George et al., arXiv:2503.22823v3, (6.54)](https://arxiv.org/html/2503.22823v3#S6.E54) ·
+[(6.55)](https://arxiv.org/html/2503.22823v3#S6.E55) ·
+[Proposition 33](https://arxiv.org/html/2503.22823v3#Thmproposition33)
+
+`ConditionalExpansion.ReverseDoeblinRefutation.result` proves that the
+pointwise bound is false. For qubit half-depolarization, the identity
+postprocessor realizes $p=1/2$ and $X=I/2$ on all input matrices. With a qubit
+reference and joint diagonals $(1,0,0,0)$ and $(0,1/4,3/4,0)$ in reference-first
+order, the input, reference and output trace distances are $1$, $3/4$ and $3/4$.
+The denominator is $1/4$ and the conditional ratio is zero, violating the
+lower bound of $1/2$ from this feasible weight.
+
+The classical pair formulas (5.38)–(5.39) in the proof of Proposition 10
+give the formal witness at $\gamma=4$ after relabeling both binary systems.
+The trace-distance evaluation uses those formulas independently of the
+crossover parameter relation used in Proposition 10.
+[Proposition 10](https://arxiv.org/html/2608.27171v1#Thmproposition10)
+
+Hirche's 2024 proof of vanishing ordinary hockey-stick expansion for qubit
+depolarization also implies the conditional trace-distance failure. For input
+states $\alpha,\beta$, give the first state weight $1/\gamma$ on $\alpha$ and
+the remaining weight on a second reference flag. Place all of $\beta$ on the
+first flag of the other state. The joint trace distance minus the reference
+distance is $E_\gamma(\alpha\|\beta)/\gamma$, before and after the channel.
+[Hirche, Appendix B-B, Eqs. (B.10)–(B.16)](https://arxiv.org/abs/2405.00105v2)
+
+The repository's harmonic congruence inequality uses the effect formula in
+Eq. (5.2). For a Hermitian matrix $X$, a projection $Q$, and a positive
+definite matrix $W$ commuting with $Q$, set $S=W^{1/2}$ and
+$B=QX_+Q+(I-Q)X_-(I-Q)$. If $\delta=\operatorname{Tr} B>0$, the result bounds
+$\operatorname{Tr}(SXS)_-+\operatorname{Tr}(QSXS)$ below by
+$\delta^2/\operatorname{Tr}(W^{-1}B)$. Taking $Q$ from the negative spectrum
+of the reference marginal makes this a matrix estimate for the conditional
+gap in Eq. (2.42). The argument uses orthogonality of two modified ranges.
+[Eq. (5.2)](https://arxiv.org/html/2608.27171v1#S5.E2)
+
+`FilteredChannelConditionalGap` constructs the finite CPTP channel
+$N_G(X)=G^{1/2}(X\otimes I_E/e)G^{1/2}$ for $G>0$ and
+$\operatorname{Tr}_E(G)/e=I_A$, where $e=\dim E>0$. For every Hermitian
+joint input and every finite reference, its conditional negative-trace gap
+is at least $1/k$ times the input gap if $L=\operatorname{Tr}_E(G^{-1})/e\le kI_A$
+and $k>0$. With nonempty input, $k=\|L\|_\infty$ gives a lower bound on every
+admissible conditional hockey-stick ratio, including trace distance at
+$\gamma=1$. This is a repository-derived bound for the conditional
+optimization of Eq. (2.42). The complete bound in George et al.,
+Proposition 33, Eqs. (6.56)–(6.60), uses equal reference marginals.
+The sharp comparison and attainment for the Datta–Holevo family are established below.
+[Eq. (2.42)](https://arxiv.org/html/2608.27171v1#S2.EGx43) ·
+[George et al., Proposition 33](https://arxiv.org/html/2503.22823v3#Thmproposition33)
+
+## Complete hockey-stick contraction
+
+`CompleteHockeyStickRefutation.refutes_monotonicity_and_orthogonal_reduction`
+gives a binary measure-and-prepare channel with complete coefficient at most
+$3/5$ at $\gamma=1$ and at least $9/10$ at $\gamma=2$. The orthogonal-input
+complete coefficient is at most $3/5$ for every $\gamma\ge 1$. This answers
+Remark 6 on $[1,\infty)$ and the complete-coefficient case of the first
+question in §9. Both upper bounds quantify over all finite quantum references.
+The lower bound uses two-dimensional input, output and reference systems.
+
+Eriksson, *Common support and complete contraction with quantum side information*,
+v3, §6.4, gives an earlier complete Umegaki ratio above its trace endpoint for
+a different channel. Integrating the two ordered hockey-stick divergences
+gives the qualitative failure of endpoint monotonicity as a consequence of
+that earlier result. The Lean theorem gives an explicit rational witness at
+$\gamma=2$ with no relative-entropy step. [Eriksson, v3](https://airr.science/papers/ARR-2026-564FZ70CSN83KACD/versions/v3/)
+
+`CompleteHockeyStickBasisSupport.result` gives a sufficient condition for a
+unit complete coefficient at every fixed $\gamma>1$. For a finite channel with
+at least two computational basis states, intersect the supports of their
+outputs. If the intersection is zero, equal-marginal witnesses approach
+retention one with a reference of input dimension. The simplex uses Eriksson's
+common-support construction in §6 with input blocks calibrated directly for
+the fixed hockey-stick parameter. A fixed-parameter CQ saturation
+statement also follows from Eriksson’s §§6.2–6.3 estimates. For $t>1$,
+completing the square in the two active input coordinates gives
+$E_t(\rho\Vert\sigma)\le4nt\beta/(t-1)$. His graph effect has
+$p\sim4n\beta$ and $q=o(\beta)$, so $p-tq$ gives a limiting ratio
+of at least $(t-1)/t$. For any fixed $\gamma>1$, mixing the first
+input toward the second by weight $(\gamma-1)/(t-1)$ on the first
+input preserves the ratio for $t\ge\gamma$. Sending $t$ to infinity
+gives the saturation statement. [Eriksson, v3](https://airr.science/papers/ARR-2026-564FZ70CSN83KACD/versions/v3/)
+
+`CompleteHockeyStickChoiSupport.result` proves unit complete contraction for
+each fixed $\gamma>1$ when the normalized Choi support of a finite channel
+contains no full reference factor over a nonzero output vector. A finite
+family of reference-unitary translates of the Choi state has zero common
+support. Computational-basis preparation of the corresponding Bell states
+transfers the ratios from the fixed-parameter simplex theorem while
+preserving the common reference marginal. Eriksson v3, Theorem 6.1, gives
+the Umegaki criterion for finite classical-input channels and provides the
+simplex mechanism used in the basis-support step.
+[Eriksson, v3](https://airr.science/papers/ARR-2026-564FZ70CSN83KACD/versions/v3/)
+
+The exhibited positive-weight bound in George, Hirche, Nuradha and Wilde,
+*Quantum Doeblin Coefficients: Interpretations and Applications*, v3,
+Proposition 31, gives an upper bound of $1-p$ for a channel with a
+replacement component of weight $p$ at every $\gamma\ge 1$. Their §9.2
+Question 1 concerns the bound using the Hermitian Doeblin coefficient.
+[arXiv:2503.22823v3](https://arxiv.org/abs/2503.22823v3)
+
+`CompleteHockeyStickChoiConverse.exists_replacement_of_choi_support`
+constructs a pure replacement of weight $0<p<1$ and a finite CPTP residual
+whenever the normalized Choi support contains every reference basis slice
+over a common nonzero output vector. The construction bounds the Gram
+matrix of slice preimages under the positive Choi square root, subtracts
+the weighted replacement Choi matrix, and normalizes the positive residual.
+Trace preservation gives Kraus completeness for the residual and hence
+the channel decomposition on all input matrices.
+
+`CompleteHockeyStickChoiConverse.coefficient_lt_one_of_choi_support`
+applies Proposition 31's exhibited-weight bound for every $\gamma\ge 1$.
+`CompleteHockeyStickChoiConverse.coefficient_lt_one_iff` combines this
+implication with Choi support saturation. For every finite CPTP channel
+with nonempty input and each fixed $\gamma>1$, the complete coefficient
+is strictly below one exactly when the full reference slice condition holds.
+Both branches use the static Choi matrix of the channel.
+
+## Complete nonlinear hockey-stick curve
+
+The fourth bullet of §9 proposes nonlinear strong data-processing inequalities
+with reference systems. The ordinary curve in Nuradha, George and Hirche,
+Eq. (4.1), maximizes output divergence under an input divergence budget.
+The complete curve uses every finite reference and joint density pairs with
+equal reference marginals. [arXiv:2512.16778v1](https://arxiv.org/abs/2512.16778v1)
+
+`quadratic_loss_near_zero` fixes $\gamma>1$ and assumes that the Kraus products
+span the input matrix algebra and the normalized Choi support contains no
+full reference fiber over a nonzero output vector. For the complete curve
+$F_\gamma$, there are $c,C,\delta>0$ with
+$c a^2\le a-F_\gamma(a)\le C a^2$ for $0<a\le\delta$.
+
+The span gives a matrix-unit lift bound independent of the reference dimension.
+Ordered reference marginals of the two parts of the input difference give
+purifications related by a contraction. Lifting that contraction and splitting
+its overlap with an output effect bounds the output divergence at every finite
+reference dimension. In the other direction, the Choi orbit gives a preparation
+with zero common output support. Eriksson's simplex and graph effect
+(§§6.2–6.3), calibrated at the fixed hockey-stick parameter, yield output
+divergence at least $a/(1+D a)$ on one finite reference for all small budgets.
+The curve estimate applies in this channel class near zero. [Eriksson, v3](https://airr.science/papers/ARR-2026-564FZ70CSN83KACD/versions/v3/)
+
 ## Faithful-divergence separation
 
 The second bullet of §9, printed p. 72, asks:
@@ -69,4 +269,136 @@ $$
 \eta^c_D(N)\le\frac14<\frac5{12}\le\eta^\Delta_D(N).
 $$
 
-The uniform complete bound includes arbitrary finite quantum references, including off-diagonal reference blocks. The conditional witness consists of actual density states on $\mathrm{Fin}\,3\times\mathrm{Fin}\,2$. No reference cutoff, relative-entropy resolution or exact optimum is asserted. The [problem dossier](../../Problems/hirche-george-nuradha-wilde-2026-faithful-conditional-gap.md) gives the construction, quantifiers and audit boundary.
+The uniform complete bound includes arbitrary finite quantum references, including off-diagonal reference blocks. The conditional witness consists of actual density states on $\mathrm{Fin}\,3\times\mathrm{Fin}\,2$. The squared trace-distance result applies without a reference cutoff and establishes the displayed coefficient bounds. The [problem dossier](../../Problems/hirche-george-nuradha-wilde-2026-faithful-conditional-gap.md) gives the construction, quantifiers and audit boundary.
+
+### Relative entropy on the finite support branch
+
+`UmegakiChannelSupportedExtension.conditionalCoefficient_eq_completeCoefficient`
+rules out the relative-entropy instance of the strict separation in the second
+bullet of §9. For each finite CPTP channel, the complete and conditional
+Umegaki coefficients of Definition 2, Eqs. (2.13) and (2.14), coincide on the
+finite support branch with the strictly positive finite denominators of Remark
+2. Both coefficients range over all finite reference dimensions and arbitrary
+joint density states satisfying the respective conditions. Support containment
+of the joint input pair makes the joint divergence finite. Amplified and erasure
+data processing carry containment to the joint output and the marginal
+pairs. Trace preservation identifies the output reference marginals with the
+input reference marginals.
+
+The companion metric result proves
+$$
+c_0 = \eta^c_{D}(N) = \eta^\Delta_{D}(N) = \sup_{t\in[0,1]} c_t,
+\qquad 0 \le c_t \le \eta^c_D(N) \quad (t\in[0,1]),
+$$
+where $D$ denotes Umegaki relative entropy. At each $t$, the metric ratios use
+faithful joint input bases and complex directions of zero partial trace with
+positive input inverse form. At the actual channel output the direction belongs
+to the range of the corresponding arithmetic operator, so the numerator is
+the real Hilbert–Schmidt pairing against its supported Moore–Penrose preimage.
+The supremum over the interval is attained at $t=0$.
+
+## Heralded exact recovery from the Bell kernel
+
+For input dimension $d\ge2$, let $P$ be the normalized Bell projector and
+let $Q$ project onto the kernel of $\operatorname{amp}_N(I-P)$.
+`HeraldedRecoveryUpperBound` constructs a completely positive,
+trace-nonincreasing operation from the columns of $Q$. Its composition
+with $N$ is $p\,\mathrm{id}$ on all matrices with
+$p=\operatorname{Re}\operatorname{Tr}(Q\operatorname{amp}_N(P))/d^2$.
+The Bell kernel limit gives orthogonal density pairs on $d+1$ reference
+coordinates with positive input gaps and ratios below $d^2p+\varepsilon$
+for every $\varepsilon>0$. Thus the conditional expansion infimum is at
+most $d^2$ times the optimal heralded exact recovery probability.
+
+Bény and Oreshkov's postprocessing-order duality gives the related
+replacement-weight characterization on the complementary channel by
+complementing an erasure channel. The quantitative bound here concerns
+the conditional expansion coefficient of Eq. (2.42).
+[Eq. (2.42)](https://arxiv.org/html/2608.27171v1#S2.EGx43) ·
+[Bény and Oreshkov, Theorem 2](https://arxiv.org/abs/1103.0649v3)
+
+`heralded_recovery_coefficient_comparison` bounds the conditional expansion
+coefficient $\eta$ between $p_{\rm rec}$ and $d^2p_{\rm rec}$, where
+$p_{\rm rec}$ is the supremum of success probabilities for finite Kraus
+operations whose composition with $N$ is $p\,\mathrm{id}$ on every input
+matrix. The lower bound controls the positive trace on the success and
+failure branches for every finite reference. The comparison holds for
+every hockey-stick parameter $\gamma\ge1$, including trace distance at
+$\gamma=1$, and also for the orthogonally restricted ratio set. In particular,
+the output retains a uniformly positive fraction of the conditional
+contrast exactly when it admits a heralded exact recovery with positive
+success probability. This characterizes recoverability from the channel
+output and its success flag in the finite-dimensional model.
+
+## Sharpness of the dimension-square factor
+
+`sharp_factor_witness` proves that, for every finite input dimension $d\ge2$
+and real $C<d^2$, there is an $a\in(0,1)$ and a channel $N$ given by the
+normalized filter action with $G=aP+b(I-P)$, where $P$ is the normalized
+Bell projector and $b=(d^2-a)/(d^2-1)$. This is the complementary
+depolarizing filter of Datta and Holevo, *Complementarity and additivity
+for depolarizing channels*, arXiv:quant-ph/0510145, §3, Eqs. (11) and (16).
+Every finite exact heralded Kraus recovery of this channel has weight
+$p\le a$, and every admissible conditional ratio is bounded below by
+$h=a(d^2-a)/(1+(d^2-2)a)$. The parameter $a$ is chosen so that $Ca<h$.
+The theorem gives strict inequalities $Ca<\eta$ for the orthogonal
+trace-distance infimum and every full hockey-stick infimum at $\gamma\ge1$,
+over arbitrary finite references. For $C\ge0$, $p_{\rm rec}\le a$ implies
+$Cp_{\rm rec}\le Ca<\eta$, establishing the sharpness of $d^2$ in the universal
+comparison. For $C<0$ the positive infimum also exceeds $Cp_{\rm rec}$.
+The sharpness argument applies the known filter family to the conditional
+expansion coefficient of Hirche, George, Nuradha and Wilde, Eq. (2.42).
+The related recovery duality is due to Bény and Oreshkov, Theorem 2.
+
+[Datta and Holevo, §3, Eqs. (11), (16)](https://arxiv.org/abs/quant-ph/0510145) ·
+[Hirche, George, Nuradha and Wilde, Eq. (2.42)](https://arxiv.org/html/2608.27171v1#S2.EGx43) ·
+[Bény and Oreshkov, Theorem 2](https://arxiv.org/abs/1103.0649v3)
+
+## Bell-kernel upper bound for normalized filters
+
+Let $N_G(X)=G^{1/2}(X\otimes I_E/e)G^{1/2}$, where $G>0$ on
+$A\otimes E$, $d=\dim A\ge2$, $e=\dim E>0$, and
+$\operatorname{Tr}_E(G)/e=I_A$. Set $M=\operatorname{Tr}_A(G^{-1})/d$.
+The theorem `filtered_channel_bell_upper_bound` bounds the conditional
+expansion infimum above by $\operatorname{Tr}(M^{-1})/e$ for every
+$\gamma\ge1$, with the same bound on orthogonally restricted ratios.
+It evaluates the filtered Bell output on the kernel projection of the
+filtered Bell complement and uses the padded Bell pairs. The inverse
+input marginal $L=\operatorname{Tr}_E(G^{-1})/e$ supplies the lower bound
+$1/\lVert L\rVert_\infty$ from the harmonic congruence estimate.
+
+`compressed_filter_ratios_subset` proves that every admissible ratio for
+the compression of $G$ to an isometric input subspace also occurs for
+the full channel. `threeByTwo_strict_bell_bound` uses a diagonal filter
+with rows $(1/2,3/2)$, $(3/2,1/2)$, and $(1,1)$. The inverse input
+marginal gives the lower bound $3/4$. Compression to the first two
+input coordinates gives the matching upper bound $3/4$. The Bell upper
+bound for the full input is $9/11$, strictly greater than the actual
+conditional trace-distance expansion coefficient.
+
+The coefficient is the finite-reference infimum of Definition 3,
+Eq. (2.42), in Hirche, George, Nuradha and Wilde.
+[Eq. (2.42)](https://arxiv.org/html/2608.27171v1#S2.EGx43)
+
+## Exact Datta–Holevo filter benchmark
+
+For finite input dimension $d\ge2$ and $0<a<1$, let $P$ be the normalized
+Bell projector, $b=(d^2-a)/(d^2-1)$ and $G=aP+b(I-P)$. This is the
+complementary depolarizing filter of Datta and Holevo, arXiv:quant-ph/0510145,
+§3, Eqs. (11) and (16). For any channel with action
+$N(X)=G^{1/2}(X\otimes I/d)G^{1/2}$,
+`DattaHolevoExactBenchmark.sharp_family_expansion_eq` proves that the
+finite-reference conditional expansion infimum of Eq. (2.42) equals
+$\operatorname{harmonicParameter}(d,a)=a(d^2-a)/(1+(d^2-2)a)$ for every
+$\gamma\ge1$ and both orthogonality flags. Factor-swap symmetry identifies
+the inverse marginals, making the filter lower bound and Bell-kernel upper
+bound equal. The companion theorems `sharp_family_recovery_attains` and
+`sharp_family_recovery_sup_eq` prove that the optimal finite exact heralded
+Kraus recovery probability equals $a$ and is attained by the inverse-filter
+coordinate slices with effect $aG^{-1}\le I$. The related complementary-channel
+replacement-weight characterization follows from Bény and Oreshkov's
+postprocessing duality, Theorem 2.
+
+[Datta and Holevo, §3, Eqs. (11), (16)](https://arxiv.org/abs/quant-ph/0510145) ·
+[Hirche, George, Nuradha and Wilde, Eq. (2.42)](https://arxiv.org/html/2608.27171v1#S2.EGx43) ·
+[Bény and Oreshkov, Theorem 2](https://arxiv.org/abs/1103.0649v3)

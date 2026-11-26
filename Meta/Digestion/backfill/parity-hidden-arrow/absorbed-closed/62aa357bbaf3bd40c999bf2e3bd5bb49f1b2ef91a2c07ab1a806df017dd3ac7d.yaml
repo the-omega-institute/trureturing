@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:62aa357bbaf3bd40c999bf2e3bd5bb49f1b2ef91a2c07ab1a806df017dd3ac7d
-  normalized_sha256: sha256:62aa357bbaf3bd40c999bf2e3bd5bb49f1b2ef91a2c07ab1a806df017dd3ac7d
-cas_ref: sha256:62aa357bbaf3bd40c999bf2e3bd5bb49f1b2ef91a2c07ab1a806df017dd3ac7d
-coverage_gids:
-  - gid: D5/S3/Estimation/TimeArrow/SinglePeakLogLikelihoodCovariance.exact_single_peak_log_likelihood_covariances
-    target_statement_id: sha256:099d67eef1ac2fc16a9d7dffd1ce551e2c64c181efb946a390382d75129c82a3
-receipts:
-  unresolved_subitems: []

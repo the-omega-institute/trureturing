@@ -30,7 +30,7 @@ open D5.S3.ConceptDynamics.ConceptJoinUniversal
 open D5.S3.ConceptDynamics.Information.ConditionalLogicalImpurity
 
 /-- The mass in one concept fiber carrying one target value. -/
-private noncomputable def targetFiberMass {X B A : Type*}
+noncomputable def targetFiberMass {X B A : Type*}
     (mu : PMF X) (concept : Concept X B) (target : Concept X A)
     (b : B) (a : A) : ENNReal := by
   classical
@@ -95,7 +95,7 @@ private theorem targetFiberMass_eq_zero_of_conceptFiberMass_eq_zero
   exact nonpos_iff_eq_zero.mp <|
     hzero ▸ targetFiberMass_le_conceptFiberMass mu concept target b a
 
-private theorem targetFiberMass_tsum
+theorem targetFiberMass_tsum
     {X B A : Type*} (mu : PMF X) (concept : Concept X B)
     (target : Concept X A) (b : B) :
     (∑' a, targetFiberMass mu concept target b a) =
@@ -202,7 +202,7 @@ private theorem pairDisagreement_add_targetSquares
     by_cases htarget : target x = target y <;>
     simp [hcx, hcy, htarget]
 
-private noncomputable def collisionScore {X B A : Type*}
+noncomputable def collisionScore {X B A : Type*}
     (mu : PMF X) (concept : Concept X B) (target : Concept X A) : ENNReal :=
   ∑' b, ∑' a,
     targetFiberMass mu concept target b a ^ 2 /
@@ -246,7 +246,7 @@ private theorem fiber_impurity_add_collision
       ENNReal.mul_div_cancel_right hzero
         (conceptFiberMass_ne_top mu concept b)]
 
-private theorem conceptFiberMass_tsum_all
+theorem conceptFiberMass_tsum_all
     {X B : Type*} (mu : PMF X) (concept : Concept X B) :
     (∑' b, conceptFiberMass mu concept b) = 1 := by
   classical
@@ -263,7 +263,7 @@ private theorem conceptFiberMass_tsum_all
         simp [Set.indicator, Ne.symm hne]
     _ = 1 := mu.tsum_coe
 
-private theorem impurity_add_collision
+theorem impurity_add_collision
     {X B A : Type*} (mu : PMF X) (concept : Concept X B)
     (target : Concept X A) :
     conditionalLogicalImpurity mu concept target +

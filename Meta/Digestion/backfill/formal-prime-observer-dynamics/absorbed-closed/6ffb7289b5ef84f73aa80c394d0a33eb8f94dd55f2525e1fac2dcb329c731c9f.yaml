@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:6ffb7289b5ef84f73aa80c394d0a33eb8f94dd55f2525e1fac2dcb329c731c9f
-  normalized_sha256: sha256:6ffb7289b5ef84f73aa80c394d0a33eb8f94dd55f2525e1fac2dcb329c731c9f
-cas_ref: sha256:6ffb7289b5ef84f73aa80c394d0a33eb8f94dd55f2525e1fac2dcb329c731c9f
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/Causal/FiniteEventCouplingSharpBounds.event_coupling_dual_certificate
-    target_statement_id: sha256:294cd54bb674d4cfb8a31f96dc9eebcd70ca459e477e0d6a6064414d9673905b
-receipts:
-  unresolved_subitems: []

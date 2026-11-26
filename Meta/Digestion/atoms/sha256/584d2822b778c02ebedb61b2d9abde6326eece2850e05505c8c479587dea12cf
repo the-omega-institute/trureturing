@@ -1,4 +1,0 @@
-**例 340.6（parity 任务的单一最小概念）。** 对 \(k\) 个组件的 parity 任务，若所有真子集访问都不能恢复该任务而全集可以恢复，则
-\[
-\operatorname{MinAcc}(\{\phi_{\mathrm{parity}}\})
-=

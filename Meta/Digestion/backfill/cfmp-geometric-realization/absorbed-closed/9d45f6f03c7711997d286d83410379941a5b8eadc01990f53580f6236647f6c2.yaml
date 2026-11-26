@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:9d45f6f03c7711997d286d83410379941a5b8eadc01990f53580f6236647f6c2
-  normalized_sha256: sha256:9d45f6f03c7711997d286d83410379941a5b8eadc01990f53580f6236647f6c2
-cas_ref: sha256:9d45f6f03c7711997d286d83410379941a5b8eadc01990f53580f6236647f6c2
-coverage_gids:
-  - gid: D5/S3/Geometry/Hyperideal/IridescentTetrahedronColoring.rainbow_iff_opposite_balanced_and_distinct
-    target_statement_id: sha256:0fcb69576d495bb7bd8406190830afee3cfddc5bf3b6dc368806451b7c2dd9ef
-receipts:
-  unresolved_subitems: []

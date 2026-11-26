@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:1f73d3217980b18364d0973fbef0aae26bc2225c6290912daa4cb75da1561958
-  normalized_sha256: sha256:1f73d3217980b18364d0973fbef0aae26bc2225c6290912daa4cb75da1561958
-cas_ref: sha256:1f73d3217980b18364d0973fbef0aae26bc2225c6290912daa4cb75da1561958
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/Reversibility/OpportunityLossValueReversal.opportunity_loss_can_reverse_waiting_value
-    target_statement_id: sha256:ad549c1be3353d7f69867a4a5114b9d5d28f8be1647d26bd6f6474d039f71569
-receipts:
-  unresolved_subitems: []

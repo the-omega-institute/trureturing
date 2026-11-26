@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:de043f640f0be412b44392983773de0e980df34cf06f7de056985b484ea997ee
-  normalized_sha256: sha256:de043f640f0be412b44392983773de0e980df34cf06f7de056985b484ea997ee
-cas_ref: sha256:de043f640f0be412b44392983773de0e980df34cf06f7de056985b484ea997ee
-coverage_gids:
-  - gid: D5/S3/Weil/FiniteWindowExponentialAgreement.finite_window_exponential_agreement
-    target_statement_id: sha256:af9df40819fc33a914db8442dc367d79c1deac9b2f70ca90e54aab9016b3d996
-receipts:
-  unresolved_subitems: []

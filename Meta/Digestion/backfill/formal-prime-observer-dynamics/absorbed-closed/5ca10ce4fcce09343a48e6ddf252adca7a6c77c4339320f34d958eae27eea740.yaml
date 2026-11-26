@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:5ca10ce4fcce09343a48e6ddf252adca7a6c77c4339320f34d958eae27eea740
-  normalized_sha256: sha256:5ca10ce4fcce09343a48e6ddf252adca7a6c77c4339320f34d958eae27eea740
-cas_ref: sha256:5ca10ce4fcce09343a48e6ddf252adca7a6c77c4339320f34d958eae27eea740
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/Representation/IdentityJordanFullGroupTrace.full_group_trace_two
-    target_statement_id: sha256:5c49209d3127f4ce37fe0aca3933dd71ca2f2486c0374d64a5b683311314dac0
-receipts:
-  unresolved_subitems: []

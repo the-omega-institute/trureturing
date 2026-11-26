@@ -28,7 +28,35 @@ The actual critical shape counts give total right-shape weight t and total termi
 
 A common marked-cycle stream is not yet a reconstructed infinite permutation. This result does not prove equality of actual history events across different caps, all position or label cutoff observations, the low-removal and terminal-type joint distribution, or the conditional predictable hazard. Literal position and label transport, the precycle filtration and the occupation and marginal discrepancy hypotheses remain separate mathematical requirements.
 
+**Theorem 1.2 (Exact finite coordinate box for a prefix cylinder).**
+
+$$\operatorname{cyl}\left(gamma\right) = \operatorname{Box}\left(k, gamma\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Words/Patterns/Separable/ActualCycleLaw.box` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For each natural k and each actual tuple gamma of length k, Box(k,gamma) is the set of streams whose coordinates at indices i<k equal the corresponding gamma mark. In set-product notation, the index set is range(k) and the coordinate constraint at i is equality to nth(gamma,i), for every witness that i<k.
+
+The equality is extensional: cylinder membership gives each coordinate constraint, and a box member supplies each finite-index equality. At k=0 both sides are the full stream space. This is the existing prefix box identity, exposed unchanged so the next-coordinate hazard proof can consume it directly.
+
+**Theorem 1.3 (Decoding preserves the size of a fixed-count cycle).**
+
+$$\operatorname{size}\left(\operatorname{decode}\left(p\right)\right) = \operatorname{size}\left(p\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Words/Patterns/Separable/ActualCycleLaw.decode_size` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every starting sign and removal count, each fixed-count code p has the same total shape size after decoding. This existing identity is exposed unchanged for the scaled marked-cycle generating function.
+
 ## References
 
 - Truth anchor: `D5/S1/Words/Patterns/Separable/ActualCycleLaw.actual_countable_cycle_law`
+- Truth anchor: `D5/S1/Words/Patterns/Separable/ActualCycleLaw.box`
+- Truth anchor: `D5/S1/Words/Patterns/Separable/ActualCycleLaw.decode_size`
 - Dependency: [D5/S1/Words/Patterns/Separable/ActualCycles](ActualCycles.md)

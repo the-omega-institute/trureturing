@@ -38,9 +38,9 @@ rev_lo: proof_shape=bind-only; consumers=KingGrid.reflect_mono
 rev_hi: proof_shape=bind-only; consumers=KingGrid.reflect_mono
 reflect_mono: proof_shape=bind-only; consumers=KingGrid.reflectDefectEquiv
 reflectDefectEquiv: proof_shape=bind-only; consumers=KingDifference.N_reflect,KingHorizontal.horizontal_count_row_reflect,KingHorizontal.row_reflect_raw
-UsesThree: proof_shape=bind-only; consumers=KingGrid.canonical_count_three,KingGrid.labelled_eq_twentyFour,KingGrid.oneDefect_usesThree,KingGrid.perm_ext_three
+UsesThree: proof_shape=bind-only; consumers=KingGrid.perm_ext_three
 perm_ext_three: proof_shape=bind-only; consumers=KingGrid.canonical_count_three
-canonical_count_three: proof_shape=bind-only; consumers=KingGrid.labelled_eq_twentyFour
+canonical_count_three: proof_shape=bind-only; consumers=KingTwoGrid.labelled_eq_twentyFour
 oneDefect_usesThree: proof_shape=bind-only; consumers=KingGrid.labelled_eq_twentyFour
 blockEdges: proof_shape=bind-only; consumers=KingGrid.goodBlock_surjective,KingGrid.oneDefect_surjective
 corner: proof_shape=bind-only; consumers=KingGrid.goodBlock_surjective
@@ -49,6 +49,7 @@ oneDefect_surjective: proof_shape=bind-only; consumers=KingGrid.labelled_eq_twen
 labelled_eq_twentyFour: proof_shape=bind-only; consumers=KingDifference.fields_eq_six_canonical
 -/
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233166KingStrip
+import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical
 import D5.S3.Topology.QuandleMarkovColoring
 import Mathlib.Tactic.DeriveFintype
 import Mathlib.Data.Fin.Rev
@@ -275,7 +276,7 @@ def reflectDefectEquiv {n k : ℕ} {C : Type*} (e : Edge n k) :
       rw [reflect_mono, reflectEdge.injective.eq_iff] at h
       exact h)
 
-private def UsesThree {X : Type*} (f : X → Fin 4) : Prop :=
+def UsesThree {X : Type*} (f : X → Fin 4) : Prop :=
   ∃ a b c, f a ≠ f b ∧ f a ≠ f c ∧ f b ≠ f c
 
 private theorem perm_ext_three {X : Type*} (f : X → Fin 4) (hf : UsesThree f)
@@ -305,7 +306,7 @@ private theorem perm_ext_three {X : Type*} (f : X → Fin 4) (hf : UsesThree f)
     omega
   exact (inv_mul_eq_one.mp he).symm
 
-private theorem canonical_count_three {X : Type*} [Finite X] [LinearOrder X]
+theorem canonical_count_three {X : Type*} [Finite X] [LinearOrder X]
     (S : (X → Fin 4) → Prop)
     (hinv : ∀ p : Equiv.Perm (Fin 4), ∀ f, S (p ∘ f) ↔ S f)
     (hthree : ∀ f, S f → UsesThree f) :

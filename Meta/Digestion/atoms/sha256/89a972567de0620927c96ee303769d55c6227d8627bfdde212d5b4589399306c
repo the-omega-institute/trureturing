@@ -1,8 +1,0 @@
-**Theorem 2.1 (minimum placements by a bounded enlargement).** Choose any spanning tree $T=(V,E_T)$ of $G$. Set
-
-$$
- J=E\setminus E_T,\qquad
- X=\bigcup_{e\in J}e,\qquad r=|X|\leq2q,\qquad D=D_k(G).
- \tag{2.1}
-$$
-

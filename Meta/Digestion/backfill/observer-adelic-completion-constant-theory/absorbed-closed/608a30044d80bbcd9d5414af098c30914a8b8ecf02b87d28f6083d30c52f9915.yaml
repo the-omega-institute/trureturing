@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:608a30044d80bbcd9d5414af098c30914a8b8ecf02b87d28f6083d30c52f9915
-  normalized_sha256: sha256:608a30044d80bbcd9d5414af098c30914a8b8ecf02b87d28f6083d30c52f9915
-cas_ref: sha256:608a30044d80bbcd9d5414af098c30914a8b8ecf02b87d28f6083d30c52f9915
-coverage_gids:
-  - gid: D5/S3/Weil/TestFunctions/LiCurvatureFourierRepresentation.li_curvature_fourier_representation
-    target_statement_id: sha256:e0296a5b73488389255814b3835feb05f3d85dab433d3b8e2af5df1e0bcda2b1
-receipts:
-  unresolved_subitems: []

@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:68524cdedcde0ebad188c466a594600093ba76543865313a638a78a897bcd5d3
-  normalized_sha256: sha256:68524cdedcde0ebad188c466a594600093ba76543865313a638a78a897bcd5d3
-cas_ref: sha256:68524cdedcde0ebad188c466a594600093ba76543865313a638a78a897bcd5d3
-coverage_gids:
-  - gid: D5/S3/Estimation/DecisionRisk/LawRepresentationCanonicalQuotient.law_determining_representation_refines_canonical_law_quotient
-    target_statement_id: sha256:fa4431d35bd4541d779ca4f66cf33da5af2d8436321c23cee9fd2e1b91115412
-receipts:
-  unresolved_subitems: []

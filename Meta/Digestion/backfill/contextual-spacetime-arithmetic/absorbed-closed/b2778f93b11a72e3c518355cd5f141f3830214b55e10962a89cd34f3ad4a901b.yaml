@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:b2778f93b11a72e3c518355cd5f141f3830214b55e10962a89cd34f3ad4a901b
-  normalized_sha256: sha256:b2778f93b11a72e3c518355cd5f141f3830214b55e10962a89cd34f3ad4a901b
-cas_ref: sha256:b2778f93b11a72e3c518355cd5f141f3830214b55e10962a89cd34f3ad4a901b
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/Spacetime/ComplementCharge.complementBalanced_readout
-    target_statement_id: sha256:5279dd78ef40b0c74665db3a8caa2f278f5f6414ff0eaa24dfd13787e625bce5
-receipts:
-  unresolved_subitems: []

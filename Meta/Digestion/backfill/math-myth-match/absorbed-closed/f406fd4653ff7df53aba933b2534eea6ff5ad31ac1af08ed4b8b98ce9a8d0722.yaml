@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:f406fd4653ff7df53aba933b2534eea6ff5ad31ac1af08ed4b8b98ce9a8d0722
-  normalized_sha256: sha256:f406fd4653ff7df53aba933b2534eea6ff5ad31ac1af08ed4b8b98ce9a8d0722
-cas_ref: sha256:f406fd4653ff7df53aba933b2534eea6ff5ad31ac1af08ed4b8b98ce9a8d0722
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/Decision/MixedFiberZeroErrorImpossible.mixed_fiber_zero_error_impossible
-    target_statement_id: sha256:aa23eb4a9c1f68f97bad6e53f42c579dc76cf037e9bcfdfab941b9ddf5a2ccd4
-receipts:
-  unresolved_subitems: []

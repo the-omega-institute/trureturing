@@ -54,14 +54,8 @@ theorem weighted_alternating_odd_divisor_sum_bound (n : ℕ) :
       calc
         _ = ((d:ℤ)*((n/d:ℕ):ℤ))*(f d*f (n/d)) := by ring
         _ = _ := by rw [hc]
-    have hprefix (X : ℕ) : (∑ b ∈ Ioc 0 X, f b) = (((X + 1) / 2 % 2 : ℕ) : ℤ) := by
-      induction X with
-      | zero => simp
-      | succ X ih =>
-          rw [Finset.sum_Ioc_succ_top (by omega : 0 ≤ X), ih, hf,
-            ZMod.χ₄_nat_eq_if_mod_four]
-          have hX := Nat.mod_lt X (by decide : 0 < 4)
-          interval_cases h : X % 4 <;> split_ifs <;> omega
+    have hprefix (X : ℕ) : (∑ b ∈ Ioc 0 X, f b) = (((X + 1) / 2 % 2 : ℕ) : ℤ) :=
+      D5.S3.PrimeGaps.ChiFourWeightedMangoldt.sum_chi_four_prefix X
     have hgprefix (X : ℕ) : (∑ b ∈ Ioc 0 X, g b) =
         if (X+1)/2%2=0 then -(((X+1)/2 : ℕ):ℤ) else (((X+1)/2 : ℕ):ℤ) := by
       induction X with

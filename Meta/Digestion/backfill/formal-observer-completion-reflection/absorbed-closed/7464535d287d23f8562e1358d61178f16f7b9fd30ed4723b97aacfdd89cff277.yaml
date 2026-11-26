@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:7464535d287d23f8562e1358d61178f16f7b9fd30ed4723b97aacfdd89cff277
-  normalized_sha256: sha256:7464535d287d23f8562e1358d61178f16f7b9fd30ed4723b97aacfdd89cff277
-cas_ref: sha256:7464535d287d23f8562e1358d61178f16f7b9fd30ed4723b97aacfdd89cff277
-coverage_gids:
-  - gid: D5/S3/QuantumBounds/CHSHWitness.bell_chsh_value
-    target_statement_id: sha256:89019a365c8d3c65512995702fdcc4f90c3a21cc538a37962cd90d3a8cfaf0af
-receipts:
-  unresolved_subitems: []

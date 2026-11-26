@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:5daa5abe23f2b95a3da49e876c386e0f11a22356f345cc717c5310ce4660ede9
-  normalized_sha256: sha256:5daa5abe23f2b95a3da49e876c386e0f11a22356f345cc717c5310ce4660ede9
-cas_ref: sha256:5daa5abe23f2b95a3da49e876c386e0f11a22356f345cc717c5310ce4660ede9
-coverage_gids:
-  - gid: D5/S3/Observer/AgencyHolonomy/MemoryTransport.transportWord_nil
-    target_statement_id: sha256:e8f8133e9fba35b4ebe8664365fb80f6d9fb7ec9b3d6da9acc56110f52e4809f
-receipts:
-  unresolved_subitems: []

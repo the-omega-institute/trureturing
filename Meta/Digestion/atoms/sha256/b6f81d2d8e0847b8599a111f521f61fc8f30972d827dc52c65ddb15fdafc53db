@@ -1,8 +1,0 @@
-### 23.1 成熟框架与本仓推导的边界
-
-分层代数、上下文等价、群代数与仿射空间采用成熟框架，不称新颖。§17.2 已核读收据中的 Burris/Sankappanavar、Pitts、Mathlib 在线有限支撑卷积仍分别支持这些背景概念；它们不直接承担本批的 CSA 特定摘要证明。另使用 caller 在批准计划中提供的核读结论：
-
-| 来源 | 精确范围与使用边界 |
-| --- | --- |
-| J. S. Milne, *Algebraic Groups* (2017)，[§12b，pp. 230–231](https://www.jmilne.org/math/Books/iAG2017.pdf) | `literature-attested`：域系数的有限生成阿贝尔群代数背景；不是本文整数系数单位分类的证明。 |
-| Jean Gallier，[geomcs-v2.pdf](https://www.cis.upenn.edu/~jean/gbooks/geomcs-v2.pdf)，作者 2025-10-09 版 §2.1，pp. 18–19 | `literature-attested`：实系数仿射空间与点/向量区分；不冒称该页直接证明整数 torsor 定理。 |

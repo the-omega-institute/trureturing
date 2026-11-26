@@ -827,5 +827,5 @@ For S:Sequence K L and any fallback complex D, S.frames.getD 0 D = K. The append
 - Truth anchor: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.sequenceRetraction_inclusion`
 - Truth anchor: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.terminalPair`
 - Truth anchor: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.terminalPair_retained`
-- Dependency: [D5/S3/Geometry/FiniteComponentClosure/Models](FiniteComponentClosure/Models.md)
 - Dependency: [D5/S3/Geometry/FiniteElementaryCollapse](FiniteElementaryCollapse.md)
+- Dependency: [D5/S3/Geometry/FiniteVertexCylinder](FiniteVertexCylinder.md)

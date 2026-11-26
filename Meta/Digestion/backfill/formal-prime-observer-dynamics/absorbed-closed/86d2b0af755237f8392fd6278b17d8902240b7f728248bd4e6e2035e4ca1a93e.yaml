@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:86d2b0af755237f8392fd6278b17d8902240b7f728248bd4e6e2035e4ca1a93e
-  normalized_sha256: sha256:86d2b0af755237f8392fd6278b17d8902240b7f728248bd4e6e2035e4ca1a93e
-cas_ref: sha256:86d2b0af755237f8392fd6278b17d8902240b7f728248bd4e6e2035e4ca1a93e
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/InterventionLaws/SingleWorldPerfectInterventionLaw.all_single_world_perfect_intervention_laws_agree
-    target_statement_id: sha256:548e72a157ec9e48f15031e325d4e5066e0c5c6c43d10693330051bfa2ed6101
-receipts:
-  unresolved_subitems: []

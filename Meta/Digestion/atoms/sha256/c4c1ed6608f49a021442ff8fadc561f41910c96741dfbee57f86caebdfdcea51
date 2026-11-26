@@ -1,4 +1,0 @@
-- `Gametheory/Brouwer.lean`: `size_bound_key` and `Brouwer`.
-
-The standalone collision declaration is retired in this receiving unit; its representative-selection argument is applied directly at the three live consuming proof sites.
-

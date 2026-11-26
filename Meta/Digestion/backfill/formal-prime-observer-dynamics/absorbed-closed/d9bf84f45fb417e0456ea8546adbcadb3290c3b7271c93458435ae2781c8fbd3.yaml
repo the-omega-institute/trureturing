@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:d9bf84f45fb417e0456ea8546adbcadb3290c3b7271c93458435ae2781c8fbd3
-  normalized_sha256: sha256:d9bf84f45fb417e0456ea8546adbcadb3290c3b7271c93458435ae2781c8fbd3
-cas_ref: sha256:d9bf84f45fb417e0456ea8546adbcadb3290c3b7271c93458435ae2781c8fbd3
-coverage_gids:
-  - gid: D5/S3/Observer/Refinement/DependentFinitePrimeTimeTomography.dependent_finite_prime_time_tomography
-    target_statement_id: sha256:7b5d8e1c64010965eb6cb67eef736697949452a4075ec0505722195db05a3e83
-receipts:
-  unresolved_subitems: []

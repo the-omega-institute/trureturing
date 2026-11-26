@@ -1,9 +1,0 @@
-**引理 6.7（参数导数的二阶余项界）。** 对上述全部参数及 $u\ge0$，
-
-$$
-\left\|\partial_\kappa e^{uL_\kappa}-uL'_\kappa\right\|_\infty
-\le u^2\|L_\kappa\|_\infty\|L'_\kappa\|_\infty
-\le\frac{4u^2}{\epsilon^3}.
-\tag{6.23}
-$$
-

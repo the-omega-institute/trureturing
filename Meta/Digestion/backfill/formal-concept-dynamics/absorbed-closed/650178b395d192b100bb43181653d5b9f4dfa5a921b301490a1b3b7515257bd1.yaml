@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:650178b395d192b100bb43181653d5b9f4dfa5a921b301490a1b3b7515257bd1
-  normalized_sha256: sha256:650178b395d192b100bb43181653d5b9f4dfa5a921b301490a1b3b7515257bd1
-cas_ref: sha256:650178b395d192b100bb43181653d5b9f4dfa5a921b301490a1b3b7515257bd1
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/Control/FiniteHorizonReachability.controlPredecessor
-    target_statement_id: sha256:f5134bb85137039d91844590ba68ee8bfd396f9bf1109be5ed30b45b30e7d146
-receipts:
-  unresolved_subitems: []

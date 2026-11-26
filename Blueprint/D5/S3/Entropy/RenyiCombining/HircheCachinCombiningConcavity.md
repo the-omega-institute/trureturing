@@ -94,14 +94,80 @@ Fix 0<v<1. Differentiation gives the entropy-coordinate derivative R(t)=v f(vt)/
 
 At v=0 the transported function is constant, and at v=1 it is the identity. These two cases include the endpoint values of y. The proof therefore covers both closed-coordinate boundaries without endpoint inverse derivatives. For 0 < alpha < 1 the negative-n certificate gives the opposite elasticity sign. At alpha = 1 the binary Shannon entropy derivative is minus artanh(t), with strictly increasing elasticity t/((1-t^2)artanh(t)). For 1 < alpha <= 5/4, put n=alpha-1 and C(z)=n sqrt(z) coth(n artanh(sqrt(z))), D(z)=C(z)+nz. The desingularized even analytic quotient supplies the initial first and second derivative signs. The Riccati identity and its differentiated equation preclude a first zero of C'', and imply D'<0. Thus 1-2zD'/D is strictly increasing. This reverses the slope-ratio sign and yields closed-interval convexity.
 
+**Definition 1.7 (inverseBias).**
+
+$$\forall (\alpha : \mathbb{R}), (\forall (x : \mathbb{R}), (inverseBias \alpha x = (1 - 2 \cdot hInv \alpha x)))$$
+
+*Formalization.* `D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.inverseBias` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The displayed equality defines the entropy-coordinate function.
+
+**Theorem 1.8 (psi strictAntiOn).**
+
+$$\forall (\alpha : \mathbb{R}), ((0 < \alpha) \implies (StrictAntiOn (psi \alpha) (Icc 0 1)))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.psi_strictAntiOn` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The displayed derivative or order property holds throughout the indicated real interval.
+
+**Theorem 1.9 (inverseBias spec).**
+
+$$\forall (\alpha : \mathbb{R}), (\forall (x : \mathbb{R}), ((0 < \alpha) \implies ((x \in Icc 0 (Real . log 2)) \implies (inverseBias \alpha x \in Icc 0 1 \land psi \alpha (inverseBias \alpha x) = x))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.inverseBias_spec` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The displayed derivative or order property holds throughout the indicated real interval.
+
+**Theorem 1.10 (bias combining).**
+
+$$\forall (\alpha : \mathbb{R}), (\forall (x : \mathbb{R}), (\forall (y : \mathbb{R}), (G \alpha x y = psi \alpha (inverseBias \alpha y \cdot inverseBias \alpha x))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.bias_combining` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The displayed derivative or order property holds throughout the indicated real interval.
+
+**Theorem 1.11 (inverseBias anti).**
+
+$$\forall (\alpha : \mathbb{R}), ((0 < \alpha) \implies (AntitoneOn (inverseBias \alpha) (Icc 0 (Real . log 2))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.inverseBias_anti` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The displayed derivative or order property holds throughout the indicated real interval.
+
 ## References
 
 - Truth anchor: `D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.G`
+- Truth anchor: `D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.bias_combining`
 - Truth anchor: `D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.claim`
 - Truth anchor: `D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.h`
 - Truth anchor: `D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.hInv`
+- Truth anchor: `D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.inverseBias`
+- Truth anchor: `D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.inverseBias_anti`
+- Truth anchor: `D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.inverseBias_spec`
+- Truth anchor: `D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.psi_strictAntiOn`
 - Truth anchor: `D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.result`
 - Truth anchor: `D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.star`
 - Dependency: [D5/S3/Entropy/RenyiCombining/BinaryRenyiCombining](BinaryRenyiCombining.md)
 - Dependency: [D5/S3/Entropy/RenyiCombining/CachinConvexBranch](CachinConvexBranch.md)
 - Dependency: [D5/S3/Entropy/RenyiCombining/CachinElasticityMonotone](CachinElasticityMonotone.md)
+- Dependency: [D5/S3/QuantumChannels/ContractionSpectrumOrder](../../QuantumChannels/ContractionSpectrumOrder.md)

@@ -95,7 +95,7 @@ private theorem trace_square_two (M : Matrix (Fin 2) (Fin 2) ℂ) :
   norm_num [pow_two] at h
   linear_combination -h
 
-private theorem sqrt_trace_square_two (M : Matrix (Fin 2) (Fin 2) ℂ)
+theorem sqrt_trace_square_two (M : Matrix (Fin 2) (Fin 2) ℂ)
     (hM : M.PosSemidef) :
     (trace (CFC.sqrt M)).re ^ 2 = (trace M).re + 2 * Real.sqrt M.det.re := by
   have hR := (CFC.sqrt_nonneg M).posSemidef
@@ -283,7 +283,7 @@ private theorem cayley_trace_two (M : Matrix (Fin 2) (Fin 2) ℂ) :
   norm_num [pow_two] at h
   exact (sub_eq_iff_eq_add.mp h.symm)
 
-private theorem sqrt_times_trace_two (M : Matrix (Fin 2) (Fin 2) ℂ)
+theorem sqrt_times_trace_two (M : Matrix (Fin 2) (Fin 2) ℂ)
     (hM : M.PosSemidef) :
     ((trace (CFC.sqrt M)).re : ℂ) • CFC.sqrt M =
       M + (Real.sqrt M.det.re : ℂ) • (1 : Matrix (Fin 2) (Fin 2) ℂ) := by

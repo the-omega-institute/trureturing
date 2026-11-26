@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:4e6407266a2e568dea2ef16ec46f0e8796a88a071a0a3cc192cbb28d642391a2
-  normalized_sha256: sha256:4e6407266a2e568dea2ef16ec46f0e8796a88a071a0a3cc192cbb28d642391a2
-cas_ref: sha256:4e6407266a2e568dea2ef16ec46f0e8796a88a071a0a3cc192cbb28d642391a2
-coverage_gids:
-  - gid: D5/S3/Weil/Pick/GoldenHorizonMatching.golden_horizon_matching
-    target_statement_id: sha256:f20aec306a060440c10316565b8234a455b457b446da81bc383b6512c678b1f7
-receipts:
-  unresolved_subitems: []

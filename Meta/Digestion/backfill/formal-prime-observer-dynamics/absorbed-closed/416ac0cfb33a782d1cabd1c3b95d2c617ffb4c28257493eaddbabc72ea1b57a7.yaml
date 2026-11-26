@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:416ac0cfb33a782d1cabd1c3b95d2c617ffb4c28257493eaddbabc72ea1b57a7
-  normalized_sha256: sha256:416ac0cfb33a782d1cabd1c3b95d2c617ffb4c28257493eaddbabc72ea1b57a7
-cas_ref: sha256:416ac0cfb33a782d1cabd1c3b95d2c617ffb4c28257493eaddbabc72ea1b57a7
-coverage_gids:
-  - gid: D5/S3/Factorization/Embeddings/FiniteValuationPortraitObjectLayer.principal_fractional_ideal_reconstruction
-    target_statement_id: sha256:1df75d8f791eae7efd043699b1be9adcaf1321bc1c06c62ae13029c1047fdd29
-receipts:
-  unresolved_subitems: []

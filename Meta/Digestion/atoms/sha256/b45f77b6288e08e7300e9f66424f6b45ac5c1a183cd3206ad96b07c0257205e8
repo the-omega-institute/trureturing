@@ -1,7 +1,0 @@
-**命题 79.14（分开 $Q$ 的一百三十六态表）。** 取第75.18节的完整 $K_0$ 表，删除读取态 $Q$ 及其六个单位尾态；引入 $Q_a,Q_b$，尾长分别为三、六。仅将下列读取行替换或新增，其他读取行逐字采用第75.18节 $K_0$ 的行，初态仍为 $S$：
-
-| 79.分Q读取行 | 数字零 | 数字一 | 数字二 |
-| --- | --- | --- | --- |
-| 79.分Q的S | $\langle Q_a,3\rangle$ | $\langle Q_b,6\rangle$ | $\langle O,6\rangle$ |
-| 79.分Q的Qa | $\langle T0,3\rangle$ | $\langle T1,6\rangle$ | $H_0$ |
-| 79.分Q的Qb | $H_0$ | $\langle T1,6\rangle$ | $\langle T2,6\rangle$ |

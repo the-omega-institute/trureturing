@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:3dcc48a8c6edf984c8cde4357d3bc264dd48165f0b8593d88108486184ee9ca2
-  normalized_sha256: sha256:3dcc48a8c6edf984c8cde4357d3bc264dd48165f0b8593d88108486184ee9ca2
-cas_ref: sha256:3dcc48a8c6edf984c8cde4357d3bc264dd48165f0b8593d88108486184ee9ca2
-coverage_gids:
-  - gid: D5/S3/Observer/Budget/ActualDyadicDeadlineLabelSupport.actual_all_history_coloring_iff
-    target_statement_id: sha256:c24dab6d015a5b3b93ee26c9f3e03cec4ec060636ef0d0440209fb564d13fc3f
-receipts:
-  unresolved_subitems: []

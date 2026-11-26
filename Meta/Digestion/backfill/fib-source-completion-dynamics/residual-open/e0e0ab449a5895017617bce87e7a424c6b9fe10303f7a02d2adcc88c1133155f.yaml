@@ -1,7 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:e0e0ab449a5895017617bce87e7a424c6b9fe10303f7a02d2adcc88c1133155f
-  normalized_sha256: sha256:e0e0ab449a5895017617bce87e7a424c6b9fe10303f7a02d2adcc88c1133155f
-cas_ref: sha256:e0e0ab449a5895017617bce87e7a424c6b9fe10303f7a02d2adcc88c1133155f
-coverage_gids: []
-receipts:
-  unresolved_subitems: []

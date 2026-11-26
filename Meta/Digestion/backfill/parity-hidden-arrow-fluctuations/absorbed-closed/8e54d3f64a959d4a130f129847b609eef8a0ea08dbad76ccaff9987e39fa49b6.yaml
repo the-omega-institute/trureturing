@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:8e54d3f64a959d4a130f129847b609eef8a0ea08dbad76ccaff9987e39fa49b6
-  normalized_sha256: sha256:8e54d3f64a959d4a130f129847b609eef8a0ea08dbad76ccaff9987e39fa49b6
-cas_ref: sha256:8e54d3f64a959d4a130f129847b609eef8a0ea08dbad76ccaff9987e39fa49b6
-coverage_gids:
-  - gid: D5/S3/Estimation/TimeArrow/NativeProductPoisson.native_product_poisson
-    target_statement_id: sha256:1a96cfdbcc2b2ff276a13f88323f12a54e49a5c02e58ce8bb6325451f597aa12
-receipts:
-  unresolved_subitems: []

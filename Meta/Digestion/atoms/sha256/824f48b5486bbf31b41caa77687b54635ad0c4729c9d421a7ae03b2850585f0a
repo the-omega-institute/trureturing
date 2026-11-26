@@ -1,4 +1,0 @@
-### 0.2 文献定位
-
-Galois 连接的格论背景可追溯至 Birkhoff 的 *Lattice Theory*（第 3 版，1967）；有限自动机的状态商与 Myhill–Nerode 理论见 Myhill 的 *Finite automata and the representation of events*（1957）和 Nerode 的 *Linear automaton transformations*（1958）；非自适应探针选择的加权集合覆盖属于 Karp 的 *Reducibility among combinatorial problems*（1972）所列组合优化框架。它们支撑本卷的通用工具，不支撑本卷关于 FIB 或机器学习接口的候选综合；后者仍保持 `open`。
-

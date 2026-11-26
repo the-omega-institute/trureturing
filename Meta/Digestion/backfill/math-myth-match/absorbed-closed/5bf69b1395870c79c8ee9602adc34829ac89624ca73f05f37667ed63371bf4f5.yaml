@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:5bf69b1395870c79c8ee9602adc34829ac89624ca73f05f37667ed63371bf4f5
-  normalized_sha256: sha256:5bf69b1395870c79c8ee9602adc34829ac89624ca73f05f37667ed63371bf4f5
-cas_ref: sha256:5bf69b1395870c79c8ee9602adc34829ac89624ca73f05f37667ed63371bf4f5
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/Evidence/EvidenceFourPhaseLaw.finite_classical_four_phase_law
-    target_statement_id: sha256:70e3fd8961bdf7d4dc5632c36aeaaad955dd5cd392294da2e2aa87401e1f7c28
-receipts:
-  unresolved_subitems: []

@@ -1,9 +1,0 @@
-\[
-\operatorname{ShiftRes}(e,e')
-=
-\left\{
-v:
-K_{v,e}\neq K_{v,e'}
-\right\}.
-\]
-

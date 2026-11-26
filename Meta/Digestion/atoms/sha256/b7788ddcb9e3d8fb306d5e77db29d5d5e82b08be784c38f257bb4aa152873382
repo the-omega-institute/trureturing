@@ -1,1 +1,0 @@
-| Nicholas F. Travers, *Exponential Bounds for Convergence of Entropy Rate Approximations in Hidden Markov Models Satisfying a Path-Mergeability Condition*, arXiv:1211.6181v2，Section 3.1 equation (5)、Lemmas 1–2、Section 3.2 Definition 8、Lemma 5 | 提供 (5.5) 的 good-set 概率与 flag 条件收缩、以及路径合并到互素分组长度的范围。熵率结论未被替换为输出擦除结论；原 edge-emitting clock、分组词矩阵和反向律映射按 (5.2)、(5.7)–(5.8) 明确核对。 

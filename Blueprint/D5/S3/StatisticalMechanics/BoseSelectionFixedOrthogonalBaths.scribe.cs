@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 namespace StrataLint.Scribe.Blueprint.D5.S3.StatisticalMechanics;
 internal sealed class BoseSelectionFixedOrthogonalBathsDocument : IScribeDocumentDefinition
 {
@@ -24,6 +26,11 @@ internal sealed class BoseSelectionFixedOrthogonalBathsDocument : IScribeDocumen
                 H("increasingSpectrum"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text("For a Hermitian matrix of any finite dimension over an RCLike field, reverse the library descending real eigenvalue enumeration. Multiplicities remain; strict monotonicity is a separate hypothesis."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("increasingspectrum-of-charpoly"),
+                DeclarationHandle.Create("D5/S3/StatisticalMechanics/BoseSelectionFixedOrthogonalBaths.increasingSpectrum_of_charpoly"),
+                H("Increasing spectrum from the characteristic polynomial"), StatementSource.FromAuthor(Disp(SpectrumFromCharpoly())),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("For a Hermitian matrix over an RCLike field, a monotone real vector whose linear factors multiply to the characteristic polynomial is exactly the increasing spectrum, including multiplicities."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("lagrangeprojector"),
                 DeclarationHandle.Create("D5/S3/StatisticalMechanics/BoseSelectionFixedOrthogonalBaths.lagrangeProjector"),
                 H("lagrangeProjector"), StatementSource.WithoutFormula(),
@@ -74,4 +81,30 @@ internal sealed class BoseSelectionFixedOrthogonalBathsDocument : IScribeDocumen
                 H("fixedBath_local_exponent"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text("For every dimension n at least five, RCLike field and fixed Hermitian H whose cubic rates satisfy StrictFiveCertificate on the first five indices, there is an open set I of real exponents containing three. For each d in I the same fixed matrix and baths have normalized first-five selection, rank four and global normalized uniqueness. The set may depend on H; it need not be connected or positive as stated, but intersecting with the positive reals and taking an interval about three gives the source local physical claim. No common radius or simultaneous matrix/exponent neighborhood is asserted."))), DescribeRole.Theorem))));
+    private static Formula V(string name) => F.Id(name);
+    private static Formula Op(string name) => Seq(Operatorname, Grp(V(name)));
+    private static Formula Call(string name, params Formula[] args) => App(Op(name), args);
+    private static Formula Qualified(string owner, string name) => Seq(Op(owner), Dot, Op(name));
+    private static Formula QCall(string owner, string name, params Formula[] args) => App(Qualified(owner, name), args);
+    private static Formula App(Formula function, params Formula[] args) => new Formula.Apply(function, [.. args]);
+    private static Formula Parenthesized(Formula body) => Seq(Open, body, Close);
+    private static Formula All(string name, Formula type, Formula body) => new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), type, body);
+    private static Formula Eqn(Formula left, Formula right) => new Formula.Relation(left, FormulaRelationOperator.Equal, right);
+    private static Formula Imp(Formula left, Formula right) => new Formula.Logic(Parenthesized(left), FormulaLogicOperator.Implies, Parenthesized(right));
+    private static Formula SpectrumFromCharpoly()
+    {
+        Formula index = Call("Fin", V("n"));
+        Formula vector = Seq(index, Sp, To, Sp, new Formula.NamedConstant(FormulaIdentifier.Create("Real")));
+        Formula factor = new Formula.Binary(Qualified("Polynomial", "X"), FormulaBinaryOperator.Subtract,
+            QCall("Polynomial", "C", Parenthesized(Seq(QCall("RCLike", "ofReal", App(V("e"), V("i"))), Sp, Colon, Sp, V("K")))));
+        Formula product = Seq(new Formula.Subscript(Prod, Seq(V("i"), Sp, Colon, Sp, index)), Sp, Parenthesized(factor));
+        Formula conclusion = Eqn(QCall("BoseSelectionFixedOrthogonalBaths", "increasingSpectrum", V("hH")), V("e"));
+        Formula body = Imp(Call("Monotone", V("e")), Imp(Eqn(Seq(V("H"), Dot, Op("charpoly")), product), conclusion));
+        body = All("e", vector, body);
+        body = All("hH", QCall("Matrix", "IsHermitian", V("H")), body);
+        body = All("H", Call("Matrix", index, index, V("K")), body);
+        body = All("n", new Formula.NamedConstant(FormulaIdentifier.Create("Nat")), body);
+        return All("K", new Formula.NamedConstant(FormulaIdentifier.Create("Type")), Seq(OpenBracket, Call("RCLike", V("K")), CloseBracket, Sp, body));
+    }
+
 }

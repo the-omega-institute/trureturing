@@ -1,6 +1,0 @@
-**命题 52（混合语言的精确观察核，repo-derived）。** 对 $a=(p,\epsilon,r,n)$、$a'=(p',\epsilon',r',n')$，将下表两行接到命题 48 的八行更新表，仍采用该命题的 $a\diamond_t a'$、同格系数相加和端点约定：
-
-| 新操作 | 剖面格推送 | 推送系数 |
-| --- | --- | --- |
-| $F_BX$ | $(a,b,U)\mapsto(a,b\mathbf1_B(n,p),U)$ | 原系数不变 |
-| $M_P(X,Y)$ | $((a,b,U),(a',b',U'))\mapsto(a\diamond_t a',bb'\mathbf1_P((n,p),(n',p')),\{a\diamond_t a'\})$ | 两输入格的系数之积 |

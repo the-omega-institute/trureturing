@@ -29,6 +29,16 @@ internal sealed class DyadicExtendedStirlingBlockDocument : IScribeDocumentDefin
                 + "Every column used by these positive-domain recurrences is at least one, so their values are independent of the zero-column convention. "
                 + "The definition uses the source scalar recursion and initial values, without assuming the block identity.",
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
+            Node("T_one", "First column",
+                All("n", Eqn(Call("T", V("n"), D(1)), D(1))),
+                "The first column is one for every natural row, including row zero.",
+                DescribeRole.Lemma, AssessedProvenance.FromLiterature(Source)),
+            Node("T_odd", "Odd row recurrence", ParityRecurrence(even: false),
+                "For every natural parent row and every column at least two, the odd row uses the two indicated parent entries.",
+                DescribeRole.Lemma, AssessedProvenance.FromLiterature(Source)),
+            Node("T_even", "Positive even row recurrence", ParityRecurrence(even: true),
+                "For a positive parent row and a column at least two, subtract the rational correction using the preceding even-row and parent entries.",
+                DescribeRole.Lemma, AssessedProvenance.FromLiterature(Source)),
             Node("g", "The dyadic valuation", All("n", Eqn(Call("g", V("n")), Call("padicValNat", D(2), V("n")))),
                 "The map g:N -> N is padicValNat 2. For n>0 it is the exponent of the highest power of two dividing n, OEIS A007814(n). "
                 + "The natural-valued convention at zero is g(0)=0.",
@@ -89,6 +99,21 @@ internal sealed class DyadicExtendedStirlingBlockDocument : IScribeDocumentDefin
         return All("n", All("k", Eqn(Call("T", n, k),
             Call("ite", Eqn(k, D(0)), D(0), Call("ite", Eqn(k, D(1)), D(1),
                 Call("ite", Eqn(n, D(0)), Call("ite", Eqn(k, D(2)), D(1), D(0)), step))))));
+    }
+    private static Formula ParityRecurrence(bool even)
+    {
+        var m = V("m");
+        var k = V("k");
+        var prev = NatSub(k, D(1));
+        var evenRow = Mul(D(2), m);
+        var parentTerms = Add(Mul(Cast(k), Call("T", m, k)), Call("T", m, prev));
+        var equality = even
+            ? Eqn(Call("T", evenRow, k), Sub(parentTerms,
+                new Formula.Fraction(Add(Call("T", evenRow, prev), Call("T", m, prev)), Sub(Cast(k), D(1)))))
+            : Eqn(Call("T", Add(evenRow, D(1)), k), parentTerms);
+        var columnGuard = Imp(Leq(D(2), k), equality);
+        var positive = new Formula.Relation(D(0), FormulaRelationOperator.LessThan, m);
+        return All("m", All("k", even ? Imp(positive, columnGuard) : columnGuard));
     }
     private static Formula Result()
     {

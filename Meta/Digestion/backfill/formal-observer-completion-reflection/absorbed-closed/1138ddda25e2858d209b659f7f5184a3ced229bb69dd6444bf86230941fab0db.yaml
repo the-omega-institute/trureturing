@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:1138ddda25e2858d209b659f7f5184a3ced229bb69dd6444bf86230941fab0db
-  normalized_sha256: sha256:1138ddda25e2858d209b659f7f5184a3ced229bb69dd6444bf86230941fab0db
-cas_ref: sha256:1138ddda25e2858d209b659f7f5184a3ced229bb69dd6444bf86230941fab0db
-coverage_gids:
-  - gid: D5/S3/Observer/Refinement/StateProtocolQuotientOrderCommutation.state_protocol_quotient_order_commutes
-    target_statement_id: sha256:32afe0f0514fc476a8e8c451a625a8a52f91646f27cf3e9df5e3cf4d23879286
-receipts:
-  unresolved_subitems: []

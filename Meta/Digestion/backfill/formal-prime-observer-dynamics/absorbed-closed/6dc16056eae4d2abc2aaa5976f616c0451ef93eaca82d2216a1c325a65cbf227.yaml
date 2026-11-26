@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:6dc16056eae4d2abc2aaa5976f616c0451ef93eaca82d2216a1c325a65cbf227
-  normalized_sha256: sha256:6dc16056eae4d2abc2aaa5976f616c0451ef93eaca82d2216a1c325a65cbf227
-cas_ref: sha256:6dc16056eae4d2abc2aaa5976f616c0451ef93eaca82d2216a1c325a65cbf227
-coverage_gids:
-  - gid: D5/S3/Factorization/IdealClassGroups/IdealIdentityPrincipalityGeneratorLayers.class_group_layer_detects_principality
-    target_statement_id: sha256:f2c6ec5de148f0a0f3312c193d5ebb8e9dc5e8e8224a916564e8983465b6eb9a
-receipts:
-  unresolved_subitems: []

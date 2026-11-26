@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:42bff5f96fcb52113bc78596db2e4853ab7dfa4bae528c697d6a1b25ac452ac5
-  normalized_sha256: sha256:42bff5f96fcb52113bc78596db2e4853ab7dfa4bae528c697d6a1b25ac452ac5
-cas_ref: sha256:42bff5f96fcb52113bc78596db2e4853ab7dfa4bae528c697d6a1b25ac452ac5
-coverage_gids:
-  - gid: D5/S3/Weil/ZetaLinear/SchurComplementAssociativity.schur_complement_associativity
-    target_statement_id: sha256:67a8097be9167f022a4c3c5411c764f075d678ad63999dd16c7d3bd3e33e6249
-receipts:
-  unresolved_subitems: []

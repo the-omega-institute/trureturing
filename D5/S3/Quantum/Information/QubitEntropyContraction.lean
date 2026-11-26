@@ -6,6 +6,9 @@
    utility: none
    digest: Quadratic contraction of actual equal-spectrum qubit Holevo entropy. -/
 
+/- Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/30706 -/
+
+import D5.S3.Quantum.Divergence.VonNeumannEntropyPinching
 import D5.S3.Quantum.Information.QubitNormalFormState
 import Mathlib.Analysis.SpecialFunctions.BinaryEntropy
 import Mathlib.Analysis.SpecialFunctions.Sqrt
@@ -18,8 +21,8 @@ open Set _root_.Matrix
 open scoped ComplexOrder MatrixOrder
 open D5.S3.Quantum.Information.PartialTraceMutualInformation
 
-private def radialEntropy (u : ℝ) : ℝ := Real.binEntropy ((1 + Real.sqrt u) / 2)
-private def logRatio (r : ℝ) : ℝ := Real.log (1 + r) - Real.log (1 - r)
+def radialEntropy (u : ℝ) : ℝ := Real.binEntropy ((1 + Real.sqrt u) / 2)
+def logRatio (r : ℝ) : ℝ := Real.log (1 + r) - Real.log (1 - r)
 
 private lemma logRatio_deriv {r : ℝ} (hr : r ∈ Ioo (-1 : ℝ) 1) :
     HasDerivAt logRatio (2 / (1 - r ^ 2)) r := by
@@ -57,7 +60,7 @@ private lemma logRatio_bound {r : ℝ} (hr : r ∈ Ico (0 : ℝ) 1) :
   have h := hm (by norm_num : (0 : ℝ) ∈ Ico 0 1) hr hr.1
   simpa [g, logRatio, sub_nonneg] using h
 
-private lemma radial_deriv {u : ℝ} (hu : u ∈ Ioo (0 : ℝ) 1) :
+lemma radial_deriv {u : ℝ} (hu : u ∈ Ioo (0 : ℝ) 1) :
     HasDerivAt radialEntropy (-logRatio (Real.sqrt u) / (4 * Real.sqrt u)) u := by
   have hs : 0 < Real.sqrt u := Real.sqrt_pos.mpr hu.1
   have hs1 : Real.sqrt u < 1 := (Real.sqrt_lt' (by norm_num)).mpr (by nlinarith [hu.2])
@@ -73,7 +76,7 @@ private lemma radial_deriv {u : ℝ} (hu : u ∈ Ioo (0 : ℝ) 1) :
     Real.log_div (by positivity : 1 + Real.sqrt u ≠ 0) (by norm_num)]
   ring
 
-private lemma radial_deriv2 {u : ℝ} (hu : u ∈ Ioo (0 : ℝ) 1) :
+lemma radial_deriv2 {u : ℝ} (hu : u ∈ Ioo (0 : ℝ) 1) :
     HasDerivAt (fun u => -logRatio (Real.sqrt u) / (4 * Real.sqrt u))
       ((logRatio (Real.sqrt u) - 2 * Real.sqrt u / (1 - u)) /
         (8 * Real.sqrt u ^ 3)) u := by
@@ -92,7 +95,7 @@ private lemma radial_deriv2 {u : ℝ} (hu : u ∈ Ioo (0 : ℝ) 1) :
   field_simp
   <;> ring
 
-private lemma radial_concave : ConcaveOn ℝ (Icc (0 : ℝ) 1) radialEntropy := by
+lemma radial_concave : ConcaveOn ℝ (Icc (0 : ℝ) 1) radialEntropy := by
   apply concaveOn_of_hasDerivWithinAt2_nonpos (convex_Icc 0 1)
     ((Real.binEntropy_continuous.comp (by fun_prop)).continuousOn)
     (fun u hu => (radial_deriv (by simpa using hu)).hasDerivWithinAt)
@@ -155,5 +158,4 @@ theorem qubit_holevo_contraction {x z t : ℝ} (hdisk : x ^ 2 + z ^ 2 ≤ 1)
   dsimp only [radialEntropy] at h
   constructor <;> linarith [h.1, h.2]
 
-#print axioms qubit_holevo_contraction
 end D5.S3.Quantum.Information.QubitEntropyContraction

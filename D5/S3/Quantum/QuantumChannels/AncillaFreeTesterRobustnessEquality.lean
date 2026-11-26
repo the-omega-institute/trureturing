@@ -91,7 +91,8 @@ private theorem povm_tensor_tester {y x j : Type} [Fintype y] [DecidableEq y]
   refine ⟨fun a => (hm.1 a).kronecker hρ.1, ρ, hρ, ?_⟩
   rw [kronecker_sum, hm.2]
 
-private theorem partialTraceRight_sum {y x j : Type} [Fintype x] [Fintype j]
+/-- The right partial trace distributes over finite sums. -/
+theorem partialTraceRight_sum {y x j : Type*} [Fintype x] [Fintype j]
     (t : j → Matrix (y × x) (y × x) ℂ) :
     partialTraceRight (∑ a, t a) = ∑ a, partialTraceRight (t a) := by
   ext a b

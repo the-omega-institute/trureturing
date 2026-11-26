@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:bf9e43afff4449c2bf836ccf95eee4b52545388f351841f8e907de7096440a20
-  normalized_sha256: sha256:bf9e43afff4449c2bf836ccf95eee4b52545388f351841f8e907de7096440a20
-cas_ref: sha256:bf9e43afff4449c2bf836ccf95eee4b52545388f351841f8e907de7096440a20
-coverage_gids:
-  - gid: D5/S3/Zeros/Symmetry/MultiscaleFingerprintAppend.two_scale_collision_separation
-    target_statement_id: sha256:c017fb0af1ab33469cf8d90321f0378b80b3f902549fd8f678f566ce773cc533
-receipts:
-  unresolved_subitems: []

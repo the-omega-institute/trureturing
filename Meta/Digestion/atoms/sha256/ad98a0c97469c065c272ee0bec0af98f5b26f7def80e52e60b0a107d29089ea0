@@ -1,9 +1,0 @@
-**Definition 7.1 (one separately specified fixed ten-state table).** Install five Reads $C_1,C'_1,C_2,C_3,C_4$ and five whole-row Halts $H_0,\ldots,H_4$. Each $H_j$ stores the entire $R_j$ of §2. For $j=1,\ldots,4$, Read $C_j$ queries $p_{b_j}$, has alpha successor $H_j$, and has successor $C_{j+1}$ for each of beta, branch and absent when $j<4$, or $H_0$ for each when $j=4$. The duplicate $C'_1$ has exactly the same literal and all four successors as $C_1$. Let
-
-$$
-T_{10}:\quad e_0=C_1,\quad e_1=C'_1,\quad L=4.
-\tag{FTC.18}
-$$
-
-The entries are distinct installed records carrying the original labels. The duplicate counts. Every state, word, successor and whole output stays fixed across the validation family.
-

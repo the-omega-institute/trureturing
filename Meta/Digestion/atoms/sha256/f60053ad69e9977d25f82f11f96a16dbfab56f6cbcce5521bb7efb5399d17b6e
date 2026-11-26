@@ -1,6 +1,0 @@
-**Theorem 16.4 (Necessary filters and a boundary infinite fiber).** The cubic equation alone does not certify a world. Also the restriction $z\ne A$ in Theorem 16.3 cannot simply be removed.
-
-Proof. For either $E$, take $b=1$, $A=24$, $C=z=Y=p=v=0$ and $d=0$. All $B_i,G_i$ and $H_E$ vanish, but the first odd equation reads $0=24K$, which is impossible.
-
-For the second assertion take $b=1$, $A=z=p=24$, $C=168/5$, $Y=48/5$ and $v=96$ for $E=J$ or $v=120$ for $E=M$. For every $0<r<1$ use $P_1(r)$, $g=h$, $d=24$ from Definition 15.1. Equation (15.4) has all three early odd samples zero. Its even rows give exactly these $C,Y,v$. The gain is nonzero and all sources are legal and distinct. Thus this is an infinite complete-world child at fixed $b$ when $z=A$. ∎
-

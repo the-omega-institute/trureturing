@@ -16,13 +16,13 @@ entrypoint = ".github/workflows/ci-current.yml"
 
 
 [[roots]]
-root_id = "ci-current.yml/required"
+root_id = "ci-current.yml/filemap"
 entrypoint = ".github/workflows/ci-current.yml"
 
 
 [[roots]]
-root_id = "ci-unit.yml/run"
-entrypoint = ".github/workflows/ci-unit.yml"
+root_id = "ci-current.yml/required"
+entrypoint = ".github/workflows/ci-current.yml"
 
 
 [[roots]]

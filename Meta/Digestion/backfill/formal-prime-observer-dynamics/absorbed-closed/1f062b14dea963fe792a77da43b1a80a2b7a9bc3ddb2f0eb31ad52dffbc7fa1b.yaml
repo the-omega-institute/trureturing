@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:1f062b14dea963fe792a77da43b1a80a2b7a9bc3ddb2f0eb31ad52dffbc7fa1b
-  normalized_sha256: sha256:1f062b14dea963fe792a77da43b1a80a2b7a9bc3ddb2f0eb31ad52dffbc7fa1b
-cas_ref: sha256:1f062b14dea963fe792a77da43b1a80a2b7a9bc3ddb2f0eb31ad52dffbc7fa1b
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/Representation/IdentityJordanFullGroupTrace.rho_unipotent_integer_power
-    target_statement_id: sha256:5d42359978a182ac60e474c00244956f8c4f334fb7c7237fe751d47f8a8a09de
-receipts:
-  unresolved_subitems: []

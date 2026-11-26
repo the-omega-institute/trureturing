@@ -78,7 +78,7 @@ private theorem unitary_divisor_product {N d : ℕ} (hn : N ≠ 0) (hd : d ∣ N
   have hf := Nat.factorization_eq_of_coprime_left hc (List.mem_toFinset.mp hq)
   simpa [Nat.mul_div_cancel' hd] using hf.symm
 
-private theorem unitarySum_le_product (N : ℕ) (hn : N ≠ 0) :
+theorem unitarySum_le_product (N : ℕ) (hn : N ≠ 0) :
     unitarySum N ≤ ∏ q ∈ N.primeFactors, (q ^ N.factorization q + 1) := by
   let D := N.divisors.filter (fun d => Nat.Coprime d (N / d))
   let g := fun F : Finset ℕ => ∏ q ∈ F, q ^ N.factorization q
@@ -101,7 +101,7 @@ private theorem unitarySum_le_product (N : ℕ) (hn : N ≠ 0) :
       · intros; exact Nat.zero_le _
     _ = _ := (prod_add_one _).symm
 
-private theorem squarefreeSum_eq_product (N : ℕ) (hn : N ≠ 0) :
+theorem squarefreeSum_eq_product (N : ℕ) (hn : N ≠ 0) :
     squarefreeSum N = ∏ q ∈ N.primeFactors, (q + 1) := by
   rw [squarefreeSum, Nat.sum_divisors_filter_squarefree hn, Nat.factors_eq]
   simpa only [List.toFinset_coe, Nat.toFinset_factors, Finset.prod_val, id_eq] using

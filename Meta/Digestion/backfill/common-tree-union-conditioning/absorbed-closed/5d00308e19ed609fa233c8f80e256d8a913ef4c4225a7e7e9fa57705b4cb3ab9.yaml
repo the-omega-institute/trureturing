@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:5d00308e19ed609fa233c8f80e256d8a913ef4c4225a7e7e9fa57705b4cb3ab9
-  normalized_sha256: sha256:5d00308e19ed609fa233c8f80e256d8a913ef4c4225a7e7e9fa57705b4cb3ab9
-cas_ref: sha256:5d00308e19ed609fa233c8f80e256d8a913ef4c4225a7e7e9fa57705b4cb3ab9
-coverage_gids:
-  - gid: D5/S3/Arith/Congruence/ConditionalComparison/CommonTreeUnion.law
-    target_statement_id: sha256:9fafdf10c39985e3dd962220a9ecd87dd0c0d58069d36bbcfa99241cc08a5cf3
-receipts:
-  unresolved_subitems: []

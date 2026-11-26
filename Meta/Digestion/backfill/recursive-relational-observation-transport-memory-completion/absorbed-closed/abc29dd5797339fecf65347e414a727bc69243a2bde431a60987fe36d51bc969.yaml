@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:abc29dd5797339fecf65347e414a727bc69243a2bde431a60987fe36d51bc969
-  normalized_sha256: sha256:abc29dd5797339fecf65347e414a727bc69243a2bde431a60987fe36d51bc969
-cas_ref: sha256:abc29dd5797339fecf65347e414a727bc69243a2bde431a60987fe36d51bc969
-coverage_gids:
-  - gid: D5/S3/DivergenceSupport/ShadowOfIdentity.cauchy_schwarz_of_lagrange_gram
-    target_statement_id: sha256:7e410dfdd5127907bf1a88dcd00c4d0accc9f8643bab94b983ed91f7efca560b
-receipts:
-  unresolved_subitems: []

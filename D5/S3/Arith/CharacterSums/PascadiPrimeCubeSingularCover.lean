@@ -134,7 +134,7 @@ theorem quadratic_singular_resultant_zero (f g : ℤ[X]) (b p : ℤ) (J₁ J₂ 
   exact (not_lt_of_ge hle') (hbnd.trans_lt hgap)
 
 
-private def bracket {R : Type*} [CommRing R] (a b c : Fin 3 → R) : R :=
+def bracket {R : Type*} [CommRing R] (a b c : Fin 3 → R) : R :=
   Matrix.det !![a 0, b 0, c 0; a 1, b 1, c 1; a 2, b 2, c 2]
 
 /-- A fixed Dixon matrix gives the universal integer residual, including Δ = 0. -/
@@ -206,7 +206,7 @@ theorem actual_residual_resultant {R : Type*} [CommRing R] (l m q r s : Fin 3 �
   norm_num
   ring
 
-private theorem bracket_scale {R : Type*} [CommRing R] (a b c : Fin 3 → R)
+theorem bracket_scale {R : Type*} [CommRing R] (a b c : Fin 3 → R)
     (x y z : R) : bracket (fun i => x * a i) (fun i => y * b i) (fun i => z * c i) =
       x * y * z * bracket a b c := by
   simp [bracket, Matrix.det_fin_three]
@@ -222,7 +222,7 @@ private theorem residual_scale {R : Type*} [CommRing R] (l m q r s : Fin 3 → R
 
 set_option maxHeartbeats 1000000 in
 -- Normalize the fixed-degree determinant identity.
-private theorem residual_translate {R : Type*} [CommRing R] (l m q r s : Fin 3 → R)
+theorem residual_translate {R : Type*} [CommRing R] (l m q r s : Fin 3 → R)
     (b : R) :
     residual (fun i => l i + b * m i) m (fun i => q i + b * r i + b ^ 2 * s i)
       (fun i => r i + 2 * b * s i) s = residual l m q r s := by
@@ -360,7 +360,7 @@ theorem actual_residual_dvd_fifth (l m q r s : Fin 3 → ℤ) (p : ℕ)
       (by simpa only [← ZMod.intCast_zmod_eq_zero_iff_dvd] using hunit.ne_zero)
   exact (hcop.pow (m := 5) (n := 9)).dvd_of_dvd_mul_left hdiv
 
-private theorem bracket_uniform_bound (a b c : Fin 3 → ℝ) (C : ℝ)
+theorem bracket_uniform_bound (a b c : Fin 3 → ℝ) (C : ℝ)
     (ha : ∀ i, |a i| ≤ C) (hb : ∀ i, |b i| ≤ C) (hc : ∀ i, |c i| ≤ C) :
     |bracket a b c| ≤ 6 * C ^ 3 := by
   have h := Matrix.det_le (A := (!![a 0,b 0,c 0; a 1,b 1,c 1; a 2,b 2,c 2]))

@@ -1,7 +1,0 @@
-**定义 113.1（仅输出系统的确定恢复任务）。** 固定整数 $m\ge0$ 个周期，每个周期及各周期间均满足假设111.1的独立同参条件，令 $\lambda=\eta^{2m}$；零周期按空复合取 $\lambda=1$。恢复只可使用输出量子位上的固定确定 CPTP 映射 $\mathcal R$，无输入副本、错误档案、环境访问或量子旁路。定义
-
-$$
-\epsilon(\mathcal R)=\sup_{\varrho\text{为量子位密度态}}
-\frac12\|\mathcal R\mathcal F_\eta^m(\varrho)-\varrho\|_1.
-$$
-

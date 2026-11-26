@@ -95,7 +95,7 @@ are recorded in the implementation report.
 - [proved: D5/S3/Combinatorics/Graph/StarFormingDissociationRefutation.result]
   Conjecture 4.2 is false: the displayed bipartite graph satisfies
   β₂ ≤ 5 and SF₂ ≥ 6.
-- [proved: D5/S3/Combinatorics/Graph/StarFormingDissociationRefutation.starForming_two_iff]
+- [proved: D5/S3/Combinatorics/Graph/StarForming/Foundations/Invariants.starForming_two_iff]
   Lemma 2.2's two-star local criterion is equivalent to Definition 2.1
   for arbitrary vertex types with decidable equality and adjacency.
 - [computed: Python, enumerate all 1024 vertex masks with the displayed

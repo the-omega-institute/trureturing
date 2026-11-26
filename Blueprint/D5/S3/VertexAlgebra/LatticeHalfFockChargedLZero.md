@@ -50,7 +50,19 @@ Lean statement: `D5/S3/VertexAlgebra/LatticeHalfFockChargedLZero.actualInverse_r
 
 The original gramComplex times actualInverse is the identity. This visibility-only exposure preserves the statement and proof body and is consumed by the original charged L1 contraction and tensor-current commutator, with rank zero and indefinite forms retained.
 
-**Theorem 1.3 (The original tensor current L0 law).**
+**Theorem 1.3 (The original homogeneous oscillator L0 law).**
+
+Lean statement: `D5/S3/VertexAlgebra/LatticeHalfFockChargedLZero.L_zero_of_homogeneous_int`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeHalfFockChargedLZero.L_zero_of_homogeneous_int` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+On an oscillator polynomial of signed odd weight z, L(0) for the given two-sided inverse Gram matrix acts by rank(D)/16 + z/2. OriginalFourMInputs uses this equality on homogeneous tensor inputs. OriginalHalfCurrentTransport uses it on homogeneous inputs and on each weighted-homogeneous monomial.
+
+**Theorem 1.4 (The original tensor current L0 law).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticeHalfFockChargedLZero.tensor_current_L_zero_commutator`
 
@@ -62,7 +74,7 @@ Lean statement: `D5/S3/VertexAlgebra/LatticeHalfFockChargedLZero.tensor_current_
 
 For every original tensor current, the commutator with the exact actual inverse zero mode is minus frequency k times that current. The in-place private inverse laws and existing oscillator commutator prove it; ActualEnergyCovariance consumes it in the normal-word induction.
 
-**Theorem 1.4 (The original all-state charged L0 commutator).**
+**Theorem 1.5 (The original all-state charged L0 commutator).**
 
 $$\operatorname{L0}\left(D, hu\right)\operatorname{A}\left(a, e\right)-\operatorname{A}\left(a, e\right)\operatorname{L0}\left(D, hu\right)=\frac{e+\operatorname{B}\left(a, a\right)}{2}\operatorname{A}\left(a, e\right)$$
 
@@ -78,6 +90,7 @@ For all D:LatticeData, hu:IsUnit D.G.det, a:Charge D and e:Int, the displayed eq
 
 ## References
 
+- Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockChargedLZero.L_zero_of_homogeneous_int`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockChargedLZero.actualInverse_left`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockChargedLZero.actualInverse_right`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockChargedLZero.charged_tensor_L_zero_commutator`

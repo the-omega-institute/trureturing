@@ -7,6 +7,8 @@ doi: null
 url: https://cs.uwaterloo.ca/~watrous/TQI/TQI.pdf
 claim: Spectral functional calculus, partial trace, isometric entropy invariance and the definition of mutual information give the coherent-copy marginals, Gibbs logarithm, uniform-reference entropy identity and unbiased-pinching account by explicit standard substitutions.
 strata_touched:
+  - D5/S3/Quantum/Measurement/Auric/ProjectiveRecord
+  - D5/S3/Quantum/Measurement/Auric/CompleteRecordBudget
   - D5/S3/Quantum/Information/CoherentCopyCorrelationTax
   - D5/S3/Quantum/Information/PartialTraceMutualInformation
   - D5/S3/Quantum/Information/CorrelatedGibbsEnergyIdentity
@@ -87,6 +89,27 @@ The repository's proof obtains this equality by subtracting two previously
 proved pinching identities; that implementation choice does not change the
 standard mathematical statement or attribute that proof route to the book.
 
+## Coherent projective records with prescribed probabilities
+
+For a complete finite PVM with projections E_j, the recording isometry is
+Wψ = Σ_j E_jψ ⊗ |j⟩. Corollary 2.27, p. 89 (PDF 97), equations
+(2.129)–(2.130), gives the finite-dimensional channel dilation in which the
+E_j are a complete Kraus family. With input ρ the joint state is WρW†.
+Its system marginal is the unread PVM pinching and its record marginal
+is diagonal with q_j = Tr(E_j ρ). The partial trace calculation uses
+orthogonality and cyclicity for the off-diagonal record entries.
+Proposition 5.19 gives the joint entropy S(ρ).
+
+For the fixed-law AURIC problem the input is a rank-r projection divided
+by r and has constant diagonal on each coordinate fiber. The project
+derives the sharp pinching gain B/r with the original record law q
+held fixed, including in the corank calculation. The same input gives
+mutual information H(q) + B/r and conditional entropy −B/r for the
+coherent joint state. The optimization uses rank-capped effects,
+Fourier factors and the trace certificates for the resulting three
+effects. Li–Poon and Massey give the prescribed-block spectral context.
+[Li–Poon](../HilbertOperators/lipoon2003principalsubmatrices.md) · [Massey](../HilbertOperators/massey2010noncommutativeschurhorn.md)
+
 ## Gibbs logarithm and the uniform reference
 
 Let H = sum_k h_k Pi_k be Hermitian. By (1.145), exp(H) has eigenvalues
@@ -151,3 +174,22 @@ any consequence. Those historical attributions, if inferred, are
 `ASSUMED-UNVERIFIED`. The book is cited for the stated definitions and
 propositions; the copy construction and unbiased/Gibbs substitutions above
 are explicit standard deductions, not quotations of same-named theorems.
+
+## Coarse phase records and the complementary flag
+
+For the pure phase signal with entries tᵢuⱼᵢ, the pinching of Definition 4.4
+(p. 203, PDF p. 211, Eqs. (4.7)–(4.8)) has one nonzero rank-one summand per
+positive-weight fiber. Its eigenvalue is q_b = Σ_{c(i)=b} tᵢ². Definition 5.17
+(pp. 265–266, PDF pp. 273–274) gives H(q), with a zero term for every unused
+or zero-weight outcome. The input lies in the span of the normalized nonzero
+masked vectors. Equations (1.145) and (5.85) then give the finite trace
+evaluation of the same H(q) for support-aware relative entropy. The
+extension to the coarse phase PVM is proved in the accompanying Lean module.
+
+For the actual copy |i⟩ ↦ |i⟩⊗|c(i)⟩, Eq. (2.34) (p. 68, PDF p. 76)
+gives the pinched residual and the common diagonal environment state diag(q).
+A. S. Holevo defines the entropy difference ΔH in §2 on arXiv PDF p. 2 and
+displays it in Eq. (5) on p. 3. All conditional environment states here are
+identical, so that difference is zero for every prior. This calculation
+uses only a finite static state and readout.
+[Holevo primary manuscript](https://arxiv.org/abs/quant-ph/9611023v1) · [DOI 10.1109/18.651037](https://doi.org/10.1109/18.651037)

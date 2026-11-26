@@ -1,7 +1,0 @@
-## 9. Fixed-shift completed coding and the free-state boundary
-
-The fixed-power normalization has a sound finite part, but its completion must
-keep a distinction between a syntactic terminal-free graph state and a chosen
-leafless value. The distinction is needed before any claim about all solutions,
-all retained definitions, or effective joint support is made.
-

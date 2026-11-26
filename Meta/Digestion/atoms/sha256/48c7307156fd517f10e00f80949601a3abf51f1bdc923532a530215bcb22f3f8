@@ -1,8 +1,0 @@
-参考：
-
-- Connes, Consani, Moscovici, arXiv:2511.22755v1. https://arxiv.org/html/2511.22755v1
-- Connes, arXiv:2602.04022v1. https://arxiv.org/html/2602.04022v1
-- Cancès et al., *Guaranteed a posteriori bounds for eigenvalues and eigenvectors: multiplicities and clusters*, arXiv:2008.04140. https://arxiv.org/abs/2008.04140
-- PR #5882 actual `CoerciveDualCertificate.lean` at `65339a3acbe99e661c6955dbb21728c4c62dfe76`; #6029 actual `WeilOrthogonalTrialPrecision.lean` at `a00b579d8202bc839cb780ee1159b2a49b0592e4`; loning #5326 actual theory at `3beb435bf9ca8aa35aa6079ea4033a9c2e6c9007`.
-
-

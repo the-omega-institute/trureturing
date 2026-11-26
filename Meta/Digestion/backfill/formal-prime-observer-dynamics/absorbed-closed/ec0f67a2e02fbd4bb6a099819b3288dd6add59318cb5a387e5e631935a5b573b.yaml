@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:ec0f67a2e02fbd4bb6a099819b3288dd6add59318cb5a387e5e631935a5b573b
-  normalized_sha256: sha256:ec0f67a2e02fbd4bb6a099819b3288dd6add59318cb5a387e5e631935a5b573b
-cas_ref: sha256:ec0f67a2e02fbd4bb6a099819b3288dd6add59318cb5a387e5e631935a5b573b
-coverage_gids:
-  - gid: D5/S3/Analytic/Boundary/ZetaPrimeProductCommonBoundary.zeta_prime_product_common_boundary
-    target_statement_id: sha256:26cbde49429817eb5f9916249f68cd1dc05f6be82743f96bc337dc8b685d5c43
-receipts:
-  unresolved_subitems: []

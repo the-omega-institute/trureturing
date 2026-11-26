@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:53387b9987a5231e5827d08701aad8ad397d877206493a10a343bdb586403fb9
-  normalized_sha256: sha256:53387b9987a5231e5827d08701aad8ad397d877206493a10a343bdb586403fb9
-cas_ref: sha256:53387b9987a5231e5827d08701aad8ad397d877206493a10a343bdb586403fb9
-coverage_gids:
-  - gid: D5/S3/Weil/TestFunctions/FiniteMomentElimination.weilTest_tsupport_subset_Ioo
-    target_statement_id: sha256:b73dceba6eb45b5e5ca0c7db923c7946c5fa61d19f2d68d5d6580998f625ecb9
-receipts:
-  unresolved_subitems: []

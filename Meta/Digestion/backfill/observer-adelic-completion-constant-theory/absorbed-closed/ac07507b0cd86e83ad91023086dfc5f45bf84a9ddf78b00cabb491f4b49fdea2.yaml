@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:ac07507b0cd86e83ad91023086dfc5f45bf84a9ddf78b00cabb491f4b49fdea2
-  normalized_sha256: sha256:ac07507b0cd86e83ad91023086dfc5f45bf84a9ddf78b00cabb491f4b49fdea2
-cas_ref: sha256:ac07507b0cd86e83ad91023086dfc5f45bf84a9ddf78b00cabb491f4b49fdea2
-coverage_gids:
-  - gid: D5/S3/CompletionDynamics/ObserverJet/ScalarCouplingSelection.scalar_coupling_selection_rule
-    target_statement_id: sha256:b4213738a6710336377f7bfcdbdc22d73bd36f7547f183fde41a42737d0b933a
-receipts:
-  unresolved_subitems: []

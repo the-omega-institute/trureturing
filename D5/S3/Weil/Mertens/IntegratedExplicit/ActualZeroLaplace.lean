@@ -266,7 +266,7 @@ theorem actualH_continuous : Continuous actualH := by
   exact hc.continuousAt (isOpen_Iio.mem_nhds (by simp))
 
 /-- Finite analytic-order fibers are transported without deleting occurrences. -/
-private theorem occurrence_hasSum {f : ℂ → ℂ} {z : ℂ}
+theorem occurrence_hasSum {f : ℂ → ℂ} {z : ℂ}
     (h : HasSum (fun n : ℕ => (actualData.multiplicity n : ℂ) *
       f (actualData.zero n)) z) :
     HasSum (fun k : ℕ => f (actualZero k)) z := by

@@ -1,6 +1,0 @@
-**Theorem 50.2 (full real-world semantics and polynomial bit decision).** There is a deterministic finite-bit algorithm for every $k,d\ge0$ and every input of Definition 49.1 which returns separately:
-
-1. whether $\mathcal W_\delta(y)$ is nonempty;
-2. for each $\nu\in\{12,21\}$, whether its original source entry is unbounded on $\mathcal W_\delta(y)$;
-3. for each failed direction, the valid finite bound $P_\nu\le U$ for every original compatible real world. If the class is empty, it instead reports emptiness and may return the vacuous bound zero.
-

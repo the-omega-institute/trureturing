@@ -6,6 +6,8 @@
    utility: none
    digest: Exact fixed-length decks recover every shorter scattered count. -/
 
+/- Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/23567. -/
+
 /- Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/19498; scatteredCount_eq_count_sublistsLen. -/
 
 import D5.S1.Words.Complexity.PositivePairs.Coefficients.CutoffCoefficientAlgebra
@@ -210,7 +212,7 @@ noncomputable def exactKDeckImage [Fintype A] (k n : ℕ) :
     (fun source : {source : List A // source.length = n} ↦
       exactKDeck k source.1)
 
-private theorem sublistsLen_perm_of_exactKDeck_eq [Fintype A]
+theorem sublistsLen_perm_of_exactKDeck_eq [Fintype A]
     (k : ℕ) (left right : List A)
     (hdeck : exactKDeck k left = exactKDeck k right) :
     List.Perm (left.sublistsLen k) (right.sublistsLen k) := by

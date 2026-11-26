@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:d06d6007ba4735de55e434082e657fcf916d3a27bfe5c64b05516827c325cc64
-  normalized_sha256: sha256:d06d6007ba4735de55e434082e657fcf916d3a27bfe5c64b05516827c325cc64
-cas_ref: sha256:d06d6007ba4735de55e434082e657fcf916d3a27bfe5c64b05516827c325cc64
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/Attribution/StabilizerSelectorObstruction.no_equivariant_selector_of_stabilizer_without_fixed_action
-    target_statement_id: sha256:a097fe57b668b604c4ed22ed29726ce6ff6b0e438c6dda349f9f9bc47efe27ae
-receipts:
-  unresolved_subitems: []

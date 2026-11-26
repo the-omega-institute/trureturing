@@ -493,7 +493,7 @@ private theorem suffix_sum {j n : ℕ} (hj : 3 ≤ j) (hn : 0 < n)
   · intro h _
     rfl
 
-private theorem out_step (n : ℕ) :
+theorem out_step (n : ℕ) :
     beattyOut (n + 1) = beattyOut n ∨ beattyOut (n + 1) = beattyOut n + 1 := by
   have hreach := (beatty_threshold (n + 1) (beattyOut (n + 1))).mpr le_rfl
   have hlo := (beatty_threshold n (beattyOut (n + 1))).mp (by omega)

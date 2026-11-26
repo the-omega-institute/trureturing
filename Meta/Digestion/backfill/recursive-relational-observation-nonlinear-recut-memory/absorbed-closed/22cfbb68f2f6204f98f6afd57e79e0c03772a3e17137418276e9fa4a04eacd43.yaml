@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:22cfbb68f2f6204f98f6afd57e79e0c03772a3e17137418276e9fa4a04eacd43
-  normalized_sha256: sha256:22cfbb68f2f6204f98f6afd57e79e0c03772a3e17137418276e9fa4a04eacd43
-cas_ref: sha256:22cfbb68f2f6204f98f6afd57e79e0c03772a3e17137418276e9fa4a04eacd43
-coverage_gids:
-  - gid: D5/S3/ObserverMemory/StrictAnchoredBoundary.strict_anchored_specialization
-    target_statement_id: sha256:8e12560442ef672042b970336dec669f3084ed00894c29df8a0e9eeeb15c2643
-receipts:
-  unresolved_subitems: []

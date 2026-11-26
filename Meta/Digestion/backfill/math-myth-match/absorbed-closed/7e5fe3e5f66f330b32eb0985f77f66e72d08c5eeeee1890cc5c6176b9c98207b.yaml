@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:7e5fe3e5f66f330b32eb0985f77f66e72d08c5eeeee1890cc5c6176b9c98207b
-  normalized_sha256: sha256:7e5fe3e5f66f330b32eb0985f77f66e72d08c5eeeee1890cc5c6176b9c98207b
-cas_ref: sha256:7e5fe3e5f66f330b32eb0985f77f66e72d08c5eeeee1890cc5c6176b9c98207b
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/Contracts/ContractRefinement.strong_contract_refines_weak
-    target_statement_id: sha256:eec00e2b3a40608744e9cb95b4082b30771f44592a6509155ff7b6f4b0c21110
-receipts:
-  unresolved_subitems: []

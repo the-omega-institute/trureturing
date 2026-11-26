@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:41efa693a4855929abdef11f1b6405a316f3ee73fd9b038d98269a0b22c5215f
-  normalized_sha256: sha256:41efa693a4855929abdef11f1b6405a316f3ee73fd9b038d98269a0b22c5215f
-cas_ref: sha256:41efa693a4855929abdef11f1b6405a316f3ee73fd9b038d98269a0b22c5215f
-coverage_gids:
-  - gid: D5/S3/Quantum/FiniteDimensional.qubit_weyl_star
-    target_statement_id: sha256:be07b0533dfdb8741136a43d8272fd7a664770fb9b4a851805c5db573532362d
-receipts:
-  unresolved_subitems: []

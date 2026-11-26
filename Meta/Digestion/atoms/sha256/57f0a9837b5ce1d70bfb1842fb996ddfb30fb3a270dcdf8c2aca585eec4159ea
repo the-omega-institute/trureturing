@@ -1,7 +1,0 @@
-## 2. Effective arithmetic and a target-independent projective sweep
-
-Write $\|X\|_F=(\sum_{a,b}|X_{ab}|^2)^{1/2}$ for the Frobenius norm and
-$\|X\|_{\rm op}$ for the operator norm. We use
-$\|X\|_{\rm op}\le\|X\|_F$, unitary invariance of both norms, and
-$\|P-Q\|_F\le\sqrt2<2$ for rank-one orthogonal projections.
-

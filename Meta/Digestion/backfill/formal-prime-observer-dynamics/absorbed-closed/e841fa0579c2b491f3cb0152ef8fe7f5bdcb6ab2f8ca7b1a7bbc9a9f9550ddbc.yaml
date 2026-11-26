@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:e841fa0579c2b491f3cb0152ef8fe7f5bdcb6ab2f8ca7b1a7bbc9a9f9550ddbc
-  normalized_sha256: sha256:e841fa0579c2b491f3cb0152ef8fe7f5bdcb6ab2f8ca7b1a7bbc9a9f9550ddbc
-cas_ref: sha256:e841fa0579c2b491f3cb0152ef8fe7f5bdcb6ab2f8ca7b1a7bbc9a9f9550ddbc
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/RefinementGeometry/DynamicIndistinguishabilityCoordinatewise.coordinateUpdate_iterate_apply
-    target_statement_id: sha256:1b0280f447034445547cd00a53efc42aa7b705c642192a0aa84c1132c3b43cf7
-receipts:
-  unresolved_subitems: []

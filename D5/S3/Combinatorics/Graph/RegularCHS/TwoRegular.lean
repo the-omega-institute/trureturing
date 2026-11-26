@@ -609,9 +609,6 @@ end D5.S3.Combinatorics.Graph.RegularCHS.TwoRegular
 
 
 
-open private SimpleGraph.cycle_iso_of_connected_degree_le_two from
-  D5.S3.Combinatorics.Graph.Brooks.General
-
 namespace D5.S3.Combinatorics.Graph.RegularCHS.TwoRegular
 
 /-- A two-regular graph dominates the cycle in every CHS coefficient. -/

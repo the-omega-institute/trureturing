@@ -1,8 +1,0 @@
-**Proof.**
-For positive $\tau_n$ use (104.3) and Theorem 100.2 with
-$\lambda_n=\tau_n/N_n$. At zero or on zero subsequences use
-(92.5) and the uniform bounded-parameter assertion (100.3).
-The simultaneous condition $\tau_n/N_n\to0$ is retained at the
-unbounded Laplace endpoint; it is not needed for the density
-statements. $\square$
-

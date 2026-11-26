@@ -1,4 +1,0 @@
-### 证明
-
-\(1\Leftrightarrow2\) 是 \(B^2=\operatorname{im}d_1\) 的定义。若 \(F\in B^2\)，则 \(d_2F=d_2d_1g=0\)，且 \([F]=0\)，所以 \(2\Rightarrow3\)。若 \(F\in Z^2\) 且 \([F]=0\)，按商群定义 \(F\in B^2\)，于是 \(3\Rightarrow2\)。证毕。
-

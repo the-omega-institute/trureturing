@@ -1,6 +1,0 @@
-它控制：
-
-- prime rapidity 的放大 $F_k\delta\Delta\omega$；
-- 分辨小 $|\delta\Delta\omega|$ 所需的黄金 memory depth；
-- prime-power exponent 的稀疏 shell factorization。
-

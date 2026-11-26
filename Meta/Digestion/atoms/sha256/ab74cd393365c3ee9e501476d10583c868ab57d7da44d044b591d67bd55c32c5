@@ -1,2 +1,0 @@
-**定义 3.1(主张)**。一个主张是二元组 $(P,\sigma)$,$P\in\mathcal P$(或经验命题,见 3.3),$\sigma$ 是主张的状态,取值于 $\{\mathsf{frozen},\mathsf{refuted},\mathsf{open},\mathsf{unverified}\}$。主体在时刻 $t$ 的主张集记 $\mathcal U_t$;主张记录**只追加**:$\mathcal U_t\subseteq\mathcal U_{t+1}$。对同一 $P$ 的多条主张按时间序取**最新者** $\mathrm{last}_t(P)$。
-

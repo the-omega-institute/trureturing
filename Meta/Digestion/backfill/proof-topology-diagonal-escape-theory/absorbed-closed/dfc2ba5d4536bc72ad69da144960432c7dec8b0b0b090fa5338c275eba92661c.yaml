@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:dfc2ba5d4536bc72ad69da144960432c7dec8b0b0b090fa5338c275eba92661c
-  normalized_sha256: sha256:dfc2ba5d4536bc72ad69da144960432c7dec8b0b0b090fa5338c275eba92661c
-cas_ref: sha256:dfc2ba5d4536bc72ad69da144960432c7dec8b0b0b090fa5338c275eba92661c
-coverage_gids:
-  - gid: D5/S3/Arith/FactorialRatio/BalaChebyshevThreeDivisibility.bala_three_integrality
-    target_statement_id: sha256:c57217aaec61eff090c2825941da5edca3cd659be9966be248f701c5185937eb
-receipts:
-  unresolved_subitems: []

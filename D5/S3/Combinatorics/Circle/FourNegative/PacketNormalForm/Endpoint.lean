@@ -20,8 +20,7 @@ open private strip_of_prefix from D5.S3.Combinatorics.Circle.FourNegative.Packet
 open private DataCertificate from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Certificate
 open private physical_packet_equivalence
   from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Equivalence
-open private label lift_order marked_word
-  from D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
+open ThreeNegativeEqualOuterJointLift (label lift_order marked_word)
 
 private def oldMass (a b c d : ℕ) (P : Finset ℕ) : ℤ :=
   ∑ r : Fin 4, base a b c d r * weightedMask b c d P r

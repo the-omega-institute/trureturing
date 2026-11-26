@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:599a8c4130dfcb5811c945893d2c73243473e75b6bf3a5f7b5aed8cd6b64e81e
-  normalized_sha256: sha256:599a8c4130dfcb5811c945893d2c73243473e75b6bf3a5f7b5aed8cd6b64e81e
-cas_ref: sha256:599a8c4130dfcb5811c945893d2c73243473e75b6bf3a5f7b5aed8cd6b64e81e
-coverage_gids:
-  - gid: D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryTrialEnergy.actual_stopping_trial_energy
-    target_statement_id: sha256:6ad07c740bdb95a450c2411eb0d6562011aa16fc6dd5a83dd24682c82acefbc9
-receipts:
-  unresolved_subitems: []

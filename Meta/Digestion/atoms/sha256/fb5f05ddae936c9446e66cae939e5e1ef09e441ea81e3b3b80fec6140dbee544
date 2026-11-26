@@ -1,9 +1,0 @@
-项目已经机器闭合：
-
-* universal solenoid 的可见投影、稠密实流与兼容坐标；
-* compatible congruence data 恰为投影核，且投影满射；
-* 隐藏 \(p\)-进方向的连续运动必为常值；
-* 连续 Solenoid 路径唯一分解为实 lift 与固定隐藏偏移；
-* 可见单位闭环对应非零隐藏单位偏移；
-* 黄金单位格点 \(\zeta\) 具有 \(\eta\mapsto-\eta\) 反射和 \(2\log\varphi\) 周期。
-

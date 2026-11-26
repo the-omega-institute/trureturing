@@ -182,7 +182,7 @@ private theorem logDeriv_self {n : ℕ} (m : Matrix (Fin n) (Fin n) ℂ) (hm : m
   exact sub_eq_zero.mp hx
 
 attribute [-instance] instTopologicalSpaceMatrix Matrix.instUniformSpace in
-private theorem logDeriv_smul {n : ℕ} (m X : Matrix (Fin n) (Fin n) ℂ) (c : ℝ) :
+theorem logDeriv_smul {n : ℕ} (m X : Matrix (Fin n) (Fin n) ℂ) (c : ℝ) :
     D5.S3.Divergence.LogDerivTrace.logDeriv m (c•X)=
       c•D5.S3.Divergence.LogDerivTrace.logDeriv m X := by
   unfold D5.S3.Divergence.LogDerivTrace.logDeriv
@@ -262,7 +262,7 @@ open Matrix MeasureTheory
 open scoped Topology ComplexOrder MatrixOrder Matrix.Norms.L2Operator
 
 attribute [-instance] instTopologicalSpaceMatrix Matrix.instUniformSpace in
-private theorem matrix_log_resolvent_integral {n : ℕ} (m : Matrix (Fin n) (Fin n) ℂ)
+theorem matrix_log_resolvent_integral {n : ℕ} (m : Matrix (Fin n) (Fin n) ℂ)
     (hm : m.PosDef) :
     IntegrableOn (fun t : ℝ => (1+t)⁻¹•(1 : Matrix (Fin n) (Fin n) ℂ)-(m+t•1)⁻¹) (Set.Ioi 0) ∧
     (∫ t in Set.Ioi (0 : ℝ), (1+t)⁻¹•(1 : Matrix (Fin n) (Fin n) ℂ)-(m+t•1)⁻¹)=CFC.log m := by

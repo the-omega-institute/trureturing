@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:70ce0b47ed1498231fddbdbe68545155188a75539dda127d1d3ffda6b5c9140f
-  normalized_sha256: sha256:70ce0b47ed1498231fddbdbe68545155188a75539dda127d1d3ffda6b5c9140f
-cas_ref: sha256:70ce0b47ed1498231fddbdbe68545155188a75539dda127d1d3ffda6b5c9140f
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/Sufficiency/MinimalPredictiveCompletionQuotient.minimal_predictive_completion_quotient
-    target_statement_id: sha256:9eac329b7fb6f9fe2fdcbc4deb045fba36c0ab5b8b9ca5681fea563082955ceb
-receipts:
-  unresolved_subitems: []

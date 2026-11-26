@@ -1,8 +1,0 @@
-**Example 45.4 (a nonempty delay interval).** The promised native path
-
-$$
-T=\begin{pmatrix}3/4&1/8\\1/8&3/4\end{pmatrix}
-$$
-
-has eigenvalues $5/8,7/8$ and primitive polynomial $q(z)=64z^2-96z+35$. Thus $N=2$, $a=64$ and $h=96$. Every integer menu bound $64\le H<96$ has eventual collisions by Theorem 45.2, although lengths at most three are injective. The example illustrates the distinction between the leading-coefficient threshold and the first possible degree; the quantified assertions do not depend on this example.
-

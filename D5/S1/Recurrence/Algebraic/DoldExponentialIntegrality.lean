@@ -296,7 +296,7 @@ private theorem powerSeries_expand_zmod {p : ℕ} [Fact p.Prime] (F : PowerSerie
   exact (PowerSeries.expand_apply p (Fact.out : Nat.Prime p).ne_zero F).trans
     (D5.S1.Recurrence.Invariants.CubicFifteenSubstitutionParity.prime_power_subst p F).symm
 
-private def IsRIntegralPS (r : ℕ) (F : PowerSeries ℚ) : Prop :=
+def IsRIntegralPS (r : ℕ) (F : PowerSeries ℚ) : Prop :=
   ∀ n : ℕ, IsRIntegralRat r ((PowerSeries.coeff (R := ℚ) n) F)
 
 private theorem IsRIntegralPS.one (r : ℕ) : IsRIntegralPS r 1 := fun n => by
@@ -319,7 +319,7 @@ private theorem IsRIntegralPS.mul {r : ℕ} {F G : PowerSeries ℚ}
 
   exact IsRIntegralRat.sum fun ⟨i, j⟩ _ => (hF i).mul_coprime (hG j)
 
-private theorem IsRIntegralPS.pow {r : ℕ} {F : PowerSeries ℚ} (hF : IsRIntegralPS r F)
+theorem IsRIntegralPS.pow {r : ℕ} {F : PowerSeries ℚ} (hF : IsRIntegralPS r F)
     (k : ℕ) : IsRIntegralPS r (F ^ k) := by
   induction k with
   | zero => simpa using IsRIntegralPS.one r
@@ -674,7 +674,7 @@ namespace D5.S1.Recurrence.Algebraic.DoldExponentialIntegrality
 open PowerSeries Finset
 open D5.S1.Recurrence.Algebraic.HannaLogarithmicPowerClosure (IntegralSeries)
 
-private theorem localRat_iff_val_nonneg (p : ℕ) (hp : p.Prime) (q : ℚ) :
+theorem localRat_iff_val_nonneg (p : ℕ) (hp : p.Prime) (q : ℚ) :
     IsRIntegralRat p q ↔ 0 ≤ padicValRat p q := by
   letI : Fact p.Prime := ⟨hp⟩
   have hd0 : q.den ≠ 0 := q.den_nz
@@ -702,7 +702,7 @@ private theorem integral_of_local (f : PowerSeries ℚ)
   exact ⟨(coeff n f).num, ((Rat.den_eq_one_iff _).mp hd).symm⟩
 
 
-private theorem expSeries_coeff (h : PowerSeries ℚ) (hh : constantCoeff h = 0) (n : ℕ) :
+theorem expSeries_coeff (h : PowerSeries ℚ) (hh : constantCoeff h = 0) (n : ℕ) :
     coeff n ((PowerSeries.subst h (exp ℚ))) =
       ∑ j ∈ range (n + 1), coeff n (h ^ j) / (j.factorial : ℚ) := by
   classical

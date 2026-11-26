@@ -24,8 +24,7 @@ open LatticeGeneratingFieldLocality LatticeHalfFock
 open LatticeHalfFockChargedCoefficients LatticeHalfFockChargedTensorCoefficients
 open LatticeHalfFockGradedTrace LatticeInvolution
 open HalfFock.LatticeHalfFockParityField LatticeHalfFockParityT
-open private L_zero_of_homogeneous_int from
-  D5.S3.VertexAlgebra.LatticeHalfFockChargedLZero
+open LatticeHalfFockChargedLZero (L_zero_of_homogeneous_int)
 open private actualInputBasis actual_input_basis_expansion actual_input_basis_energy from
   D5.S3.VertexAlgebra.TwistedGround.MixedJacobiFinite
 open private oddWeight_sign from D5.S3.VertexAlgebra.LatticeHalfFockParityT
