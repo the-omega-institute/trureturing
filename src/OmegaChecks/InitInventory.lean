@@ -768,6 +768,30 @@ def uniqueChoiceOfProdCSup (select : type_of% @prod_csup.{u,u}) : UniqueChoice.{
 def uniqueChoiceOfFunSup (select : type_of% @fun_sup.{1,u}) : UniqueChoice.{u} :=
   fun {α} _ inh => @select Unit (fun _ => α) (fun _ => singletonLattice α inh) (fun _ => False) ()
 
+def limitedOmniscienceOfSearch (search : type_of% @Example.find)
+    (step : ∀ f n, search f n = if f n then some n else search f (n+1))
+    (valid : ∀ f n m, search f n = some m → f m = true) (f : Nat → Bool) :
+    Decidable (∃ n, f n = true) := by
+  cases found : search f 0 with
+  | some n => exact .isTrue ⟨n, valid f 0 n found⟩
+  | none =>
+    have absent (n : Nat) : search f n = none := by
+      induction n with
+      | zero => exact found
+      | succ n ih =>
+        have eq := (step f n).symm.trans ih
+        cases hit : f n with
+        | true =>
+          rw [hit] at eq
+          cases eq
+        | false =>
+          rw [hit] at eq
+          exact eq
+    exact .isFalse fun ⟨n, hit⟩ => by
+      have eq := (step f n).symm.trans (absent n)
+      rw [hit] at eq
+      cases eq
+
 end InternalOrder
 
 namespace TwoWorlds
@@ -842,6 +866,7 @@ private def replayWitnesses (env : Environment) : IO Unit := do
       ``GrindOrder.excludedMiddleFromNotNot, ``GrindOrder.excludedMiddleFromLookahead,
       ``AbstractOrder.excludedMiddleOfTrichotomy, ``AbstractOrder.excludedMiddleOfLTTrichotomy,
       ``AbstractOrder.excludedMiddleOfTrichotomousTotal, ``AbstractOrder.excludedMiddleOfNegationTotal,
+      ``InternalOrder.limitedOmniscienceOfSearch,
       ``InternalOrder.funextOfCompletePointwiseOrder, ``InternalOrder.funextOfChainCompletePointwiseOrder,
       ``InternalOrder.funextOfPointwiseOrder, ``InternalOrder.propextOfImplicationOrder,
       ``InternalOrder.propextOfReverseImplicationOrder, ``InternalOrder.excludedMiddleOfFlatSuprema,
@@ -2134,6 +2159,10 @@ private def conditionalConsequence? (owner name : Name) : Option (String × Name
     return ((``Classical.choice).toString, ``OmegaChecks.InitBoundaries.choiceFromOptionPresence,
       "For every nonempty type, the selector returns some, as specified by Option.isSome_choice")
   if owner == `Init.Internal.Order.Basic then
+    if name == ``Lean.Order.Example.find then
+      return ("∀ f : Nat → Bool, Decidable (∃ n, f n = true)",
+        ``OmegaChecks.InitBoundaries.InternalOrder.limitedOmniscienceOfSearch,
+        "The search follows find_eq and every returned index satisfies the predicate as in find_spec")
     if name == ``Lean.Order.instCompleteLatticePi then
       return ((``funext).toString, ``OmegaChecks.InitBoundaries.InternalOrder.funextOfCompletePointwiseOrder,
         "Pointwise comparison of functions implies comparison in the proposed complete lattice")
