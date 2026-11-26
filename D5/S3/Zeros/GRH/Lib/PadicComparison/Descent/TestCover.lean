@@ -57,8 +57,9 @@ lemma exists_cell_over {B} [CommRing.{0} B] {m} (_ : IsPrime m) (h : IsSMulRegul
     (@h · 0), rfl⟩⟩).map (algebraMap ..)).mul_left_cancel (by simpa using congr($e.1)))))
   have := S.preValuationRing π.toMulHom
   have := (isDomain_iff_noZeroDivisors_and_nontrivial _).2 ⟨⟨or_iff_not_imp_right.2 ∘ fun e h ↦
-    eq_zero_of_forall_pow_dvd fun n ↦ (dvd_total ..).resolve_right fun ⟨_, d⟩ ↦ h (r.pow n
-    (by simp_all [mul_right_comm]))⟩, _ ^ 1, π 1, (N p hp <| by simpa using pow_dvd_iff.1 ·.dvd)⟩
+    eq_zero_of_forall_pow_dvd fun n ↦ (dvd_total ..).resolve_right fun witness ↦ by
+      rcases witness with ⟨_, d⟩
+      exact h (r.pow n (by simp_all [mul_right_comm]))⟩, _ ^ 1, π 1, (N p hp <| by simpa using pow_dvd_iff.1 ·.dvd)⟩
   ⟨_, _, @.mk _ _ _ _ ⟨⟩ isAdicComplete (((IsTest.pi).of_surjective Q).of_surjective S)
     (r.ne one_ne_zero ∘ by simp), π.comp (γ.comp
     (.pi fun _ ↦ .comp (.codRestrict _ _ g) _)), (N · · <| S.isLocalHom.1 _ · |>.dvd)⟩

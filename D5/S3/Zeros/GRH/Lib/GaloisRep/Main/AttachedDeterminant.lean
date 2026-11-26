@@ -126,7 +126,7 @@ lemma exists_step_of_local_char {E} [Field E] [EmbeddedNumberField E] [CMType E]
   simp [← hA.ncard_above_mul_relIndex (QZChar.ker (QZChar.symmetrise ν)), Nat.prime_mul_iff,
     Set.ext_iff, LE.le] at hp hg₀
   use ν, u, (nonempty_weilData_of_unramified fun v e ↦
-    QZChar.not_dvd_differentIdeal_stepField _ (h · ?_)).some <;> grind [below_star]
+    QZChar.not_dvd_differentIdeal_stepField _ (h · ?_)).some <;> grind -zetaDelta -abstractProof [below_star]
 
 open IsDedekindDomain HeightOneSpectrum Nat ZMod decompGroup QuadField algebraMap
 
