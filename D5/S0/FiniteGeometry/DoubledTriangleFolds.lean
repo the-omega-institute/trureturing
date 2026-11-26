@@ -267,6 +267,54 @@ private theorem mem_incidentCorners (v : Point n 0) (s : Bool) (f : Face n) :
   · cases hs : f.1 <;> simp [incidentCorners, hb, mem_sheetCorners, hs]
   · simp [incidentCorners, hb, mem_sheetCorners]
 
+private theorem sheetCorners_nodup (v : Point n 0) (s : Bool) :
+    (sheetCorners v s).Nodup := by
+  by_cases hx : v.x = 0 <;> by_cases hy : v.y = 0 <;> by_cases hz : v.z = 0 <;>
+    simp [sheetCorners, atUp, atDown, bump, bumpPair, Point.coord, hx, hy, hz,
+      Nat.pos_iff_ne_zero, Nat.succ_le_iff, List.nodup_cons, Point.mk.injEq] <;> omega
+
+private theorem incidentCorners_nodup (v : Point n 0) (s : Bool) :
+    (incidentCorners v s).Nodup := by
+  by_cases hb : v.boundary
+  · rw [incidentCorners, if_pos hb, List.nodup_append', List.disjoint_left]
+    refine ⟨sheetCorners_nodup v false, sheetCorners_nodup v true, ?_⟩
+    intro f hf hg
+    exact Bool.false_ne_true (((mem_sheetCorners v false f).mp hf).1.symm.trans
+      ((mem_sheetCorners v true f).mp hg).1)
+  · simpa only [incidentCorners, ite_eq_right hb] using sheetCorners_nodup v s
+
+/-- The planar endpoint coordinates of a labelled edge. A boundary endpoint
+is shared, according to the same boundary rule as in `incidentCorners`. -/
+def edgeEndpoints (e : Edge n) : Point n 0 × Point n 0 :=
+  let t : Cell n := .inl e.val.1
+  match e.val.2.1 with
+  | .x => (cornerVertex t .y, cornerVertex t .z)
+  | .y => (cornerVertex t .z, cornerVertex t .x)
+  | .z => (cornerVertex t .x, cornerVertex t .y)
+
+private theorem crosses_iff_endpoints (e : Edge n) (r : Cut n) :
+    Crosses e r ↔
+      ((edgeEndpoints e).1.coord r.1 = r.2.val ∧
+        (edgeEndpoints e).2.coord r.1 = r.2.val + 1) ∨
+      ((edgeEndpoints e).2.coord r.1 = r.2.val ∧
+        (edgeEndpoints e).1.coord r.1 = r.2.val + 1) := by
+  obtain ⟨⟨p, a, s⟩, he⟩ := e
+  obtain ⟨c, k⟩ := r
+  cases a <;> cases c <;>
+    simp [Crosses, edgeEndpoints, cornerVertex, Point.coord, bump] <;> omega
+
+private theorem edge_seam_iff_endpoints (e : Edge n) :
+    e.val.1.coord e.val.2.1 = 0 ↔
+      ∃ a, (edgeEndpoints e).1.coord a = 0 ∧ (edgeEndpoints e).2.coord a = 0 := by
+  obtain ⟨⟨p, c, s⟩, he⟩ := e
+  constructor
+  · intro h
+    refine ⟨c, ?_⟩
+    cases c <;> exact ⟨h, h⟩
+  · rintro ⟨a, ha, hb⟩
+    cases c <;> cases a <;>
+      simp [edgeEndpoints, cornerVertex, Point.coord, bump] at ha hb ⊢ <;> omega
+
 private def signed (b : Bool) : Int := if b then 1 else -1
 
 private theorem signed_balance (C : Coloring n) (fs : List (Face n)) :
@@ -322,18 +370,20 @@ private theorem ring_next_start {C : Coloring n} {r : Ring n} {b : Bool} (hC : G
     ∀ s, C (up s ((r.next hw).U 0 (Nat.zero_le _))) = b := by
   let v : Point n 0 := ⟨r.level + 1, 0, r.width, by have := r.size; omega⟩
   have hv := good_balance hC v false
-  have h₁ := h.1 false 0 (Nat.zero_le _)
-  have h₂ := h.1 true 0 (Nat.zero_le _)
-  have h₃ := h.2 false 0 hw
-  have h₄ := h.2 true 0 hw
-  simp [Ring.U, Ring.D] at h₁ h₂ h₃ h₄
-  simp [incidentCorners, Point.boundary, sheetCorners, atUp, atDown, bump, bumpPair,
-    Point.coord, v, hw, Nat.succ_le_iff, h₁, h₂, h₃, h₄] at hv
+  have hcorners : incidentCorners v false =
+      [up false (r.U 0 (Nat.zero_le _)), up false ((r.next hw).U 0 (Nat.zero_le _)),
+        down false (r.D 0 hw), up true (r.U 0 (Nat.zero_le _)),
+        up true ((r.next hw).U 0 (Nat.zero_le _)), down true (r.D 0 hw)] := by
+    simp [incidentCorners, Point.boundary, sheetCorners, atUp, atDown, bump, bumpPair,
+      Point.coord, v, hw, Nat.succ_le_iff, Ring.U, Ring.D, Ring.next]
+  rw [hcorners] at hv
+  simp only [List.map_cons, List.map_nil, List.sum_cons, List.sum_nil,
+    h.1 false 0 (Nat.zero_le _), h.1 true 0 (Nat.zero_le _), h.2 false 0 hw,
+    h.2 true 0 hw] at hv
   have hsum : (3 : Int) ∣ signed b * 4 +
       signed (C (up false ((r.next hw).U 0 (Nat.zero_le _)))) +
       signed (C (up true ((r.next hw).U 0 (Nat.zero_le _)))) := by
     convert hv using 1
-    simp [Ring.next, Ring.U]
     omega
   have hcol := aligned_from_four hsum
   intro s
@@ -348,20 +398,23 @@ private theorem ring_next_step {C : Coloring n} {r : Ring n} {b : Bool} (hC : Go
     C (up s ((r.next (by omega)).U (j+1) (by simp [Ring.next]; omega))) = b := by
   let v : Point n 0 := ⟨r.level + 1, j+1, r.width - (j+1), by have := r.size; omega⟩
   have hv := good_balance hC v s
-  have h₁ := h.1 s (j+1) (by omega)
-  have h₂ := h.2 s (j+1) hj
-  have h₃ := h.2 s j (by omega)
-  have hz : 0 < r.width - (j+1) := by omega
-  have hd : r.width - (j+1) - 1 = r.width - (j+1+1) := by omega
-  have hd' : r.width - 1 - (j+1) = r.width - (j+1) - 1 := by omega
-  have hu : r.width - 1 - j = r.width - (j+1) := by omega
-  simp [Ring.U, Ring.D] at h₁ h₂ h₃
-  simp [Ring.U, Ring.next, hu] at hs
-  simp [incidentCorners, Point.boundary, sheetCorners, atUp, atDown, bump, bumpPair,
-    Point.coord, v, hz, Nat.ne_of_gt hz, hd, Nat.succ_le_iff, h₁, h₂, h₃, hs] at hv
+  have hz : 0 < r.width - (j + 1) := by omega
+  have hd : r.width - (j + 1) - 1 = r.width - (j + 1 + 1) := by omega
+  have hd' : r.width - 1 - (j + 1) = r.width - (j + 1) - 1 := by omega
+  have hu : r.width - 1 - j = r.width - (j + 1) := by omega
+  have hcorners : incidentCorners v s =
+      [up s (r.U (j + 1) (by omega)),
+        up s ((r.next (by omega)).U j (by simp [Ring.next]; omega)),
+        up s ((r.next (by omega)).U (j + 1) (by simp [Ring.next]; omega)),
+        down s ((r.next (by omega)).D j (by simp [Ring.next]; omega)),
+        down s (r.D (j + 1) hj), down s (r.D j (by omega))] := by
+    simp [incidentCorners, Point.boundary, sheetCorners, atUp, atDown, bump, bumpPair,
+      Point.coord, v, hz, Nat.ne_of_gt hz, Nat.succ_le_iff, Ring.U, Ring.D, Ring.next, hd, hd', hu]
+  rw [hcorners] at hv
+  simp only [List.map_cons, List.map_nil, List.sum_cons, List.sum_nil,
+    h.1 s (j + 1) (by omega), h.2 s (j + 1) hj, h.2 s j (by omega), hs] at hv
   apply aligned_from_four
   convert hv using 1
-  simp [Ring.next, Ring.U, Ring.D, hd', hd]
   omega
 
 private theorem ring_next_mono {C : Coloring n} {r : Ring n} {b : Bool} (hC : Good C)
