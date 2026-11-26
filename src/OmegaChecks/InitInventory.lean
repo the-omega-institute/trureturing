@@ -589,6 +589,28 @@ def uniqueChoiceOfBot (select : type_of% @Lean.Order.bot.{u}) : UniqueChoice.{u}
   letI : CCPO α := singletonCCPO α inh
   exact select
 
+def uniqueChoiceOfLfp (select : type_of% @lfp.{u}) : UniqueChoice.{u} :=
+  fun {α} _ inh => @select α (singletonLattice α inh) id
+
+def uniqueChoiceOfMonotoneLfp (select : type_of% @lfp_monotone.{u}) : UniqueChoice.{u} :=
+  fun {α} _ inh => @select α (singletonLattice α inh) id (fun _ _ h => h)
+
+def uniqueChoiceOfFix (select : type_of% @fix.{u}) : UniqueChoice.{u} :=
+  fun {α} _ inh => @select α (singletonCCPO α inh) id (fun _ _ h => h)
+
+def uniqueChoiceOfProdSup (select : type_of% @prod_sup.{u,u}) : UniqueChoice.{u} :=
+  fun {α} _ inh =>
+    let lattice := singletonLattice α inh
+    (@select α α lattice lattice (fun _ => False)).1
+
+def uniqueChoiceOfProdCSup (select : type_of% @prod_csup.{u,u}) : UniqueChoice.{u} :=
+  fun {α} _ inh =>
+    let order := singletonCCPO α inh
+    (@select α α order order (fun _ => False) (fun _ _ denied => denied.elim)).1
+
+def uniqueChoiceOfFunSup (select : type_of% @fun_sup.{1,u}) : UniqueChoice.{u} :=
+  fun {α} _ inh => @select Unit (fun _ => α) (fun _ => singletonLattice α inh) (fun _ => False) ()
+
 end InternalOrder
 
 namespace TwoWorlds
@@ -663,6 +685,9 @@ private def replayWitnesses (env : Environment) : IO Unit := do
       ``InternalOrder.propextOfReverseImplicationOrder, ``InternalOrder.excludedMiddleOfFlatSuprema,
       ``InternalOrder.excludedMiddleOfOptionCCPO, ``InternalOrder.excludedMiddleOfFlatCCPO,
       ``InternalOrder.excludedMiddleOfFlatCSup,
+      ``InternalOrder.uniqueChoiceOfLfp, ``InternalOrder.uniqueChoiceOfMonotoneLfp,
+      ``InternalOrder.uniqueChoiceOfFix, ``InternalOrder.uniqueChoiceOfProdSup,
+      ``InternalOrder.uniqueChoiceOfProdCSup, ``InternalOrder.uniqueChoiceOfFunSup,
       ``InternalOrder.uniqueChoiceOfBot, ``InternalOrder.uniqueChoiceOfChainSup, ``InternalOrder.uniqueChoiceOfSup,
       ``AbstractOrder.excludedMiddleOfLawfulLT, ``AbstractOrder.weakMiddleOfTotalNot,
       ``AbstractOrder.weakMiddleOfLinearPreorder, ``AbstractOrder.weakMiddleOfLinearOrder,
@@ -1644,6 +1669,27 @@ private def reductionPaths (official strict full : Environment) : NameMap (List 
 missing official interface in the completeness check. -/
 private def logicalConsequence? (owner name : Name) : Option (Name × Name) := do
   match owner, name with
+  | `Init.Internal.Order.Basic, ``Lean.Order.inf =>
+    return (``OmegaChecks.InitBoundaries.InternalOrder.UniqueChoice,
+      ``OmegaChecks.InitBoundaries.InternalOrder.uniqueChoiceOfSup)
+  | `Init.Internal.Order.Basic, ``Lean.Order.lfp =>
+    return (``OmegaChecks.InitBoundaries.InternalOrder.UniqueChoice,
+      ``OmegaChecks.InitBoundaries.InternalOrder.uniqueChoiceOfLfp)
+  | `Init.Internal.Order.Basic, ``Lean.Order.lfp_monotone =>
+    return (``OmegaChecks.InitBoundaries.InternalOrder.UniqueChoice,
+      ``OmegaChecks.InitBoundaries.InternalOrder.uniqueChoiceOfMonotoneLfp)
+  | `Init.Internal.Order.Basic, ``Lean.Order.fix =>
+    return (``OmegaChecks.InitBoundaries.InternalOrder.UniqueChoice,
+      ``OmegaChecks.InitBoundaries.InternalOrder.uniqueChoiceOfFix)
+  | `Init.Internal.Order.Basic, ``Lean.Order.prod_sup =>
+    return (``OmegaChecks.InitBoundaries.InternalOrder.UniqueChoice,
+      ``OmegaChecks.InitBoundaries.InternalOrder.uniqueChoiceOfProdSup)
+  | `Init.Internal.Order.Basic, ``Lean.Order.prod_csup =>
+    return (``OmegaChecks.InitBoundaries.InternalOrder.UniqueChoice,
+      ``OmegaChecks.InitBoundaries.InternalOrder.uniqueChoiceOfProdCSup)
+  | `Init.Internal.Order.Basic, ``Lean.Order.fun_sup =>
+    return (``OmegaChecks.InitBoundaries.InternalOrder.UniqueChoice,
+      ``OmegaChecks.InitBoundaries.InternalOrder.uniqueChoiceOfFunSup)
   | `Init.Internal.Order.Basic, ``Lean.Order.CompleteLattice.sup =>
     return (``OmegaChecks.InitBoundaries.InternalOrder.UniqueChoice,
       ``OmegaChecks.InitBoundaries.InternalOrder.uniqueChoiceOfSup)
