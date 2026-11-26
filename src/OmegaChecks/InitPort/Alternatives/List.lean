@@ -482,4 +482,45 @@ public theorem List.insertIdx_toArray : type_of% @_root_.List.insertIdx_toArray 
   unfold Array.insertIdx
   exact (insertLoopCongr i l.length (List.push_toArray l a) (by rw [Array.size_push, List.size_toArray]; exact Nat.lt_succ_self _) hj).trans loop
 
+private theorem readAfterInsert (xs : List α) (a : α) (i k : Nat) (order : i ≤ k)
+    (has : k + 1 < (xs.insertIdx i a).length) (old : k < xs.length) :
+    (xs.insertIdx i a)[k+1] = xs[k] := by
+  induction i generalizing xs k with
+  | zero => rfl
+  | succ i ih =>
+    cases xs with
+    | nil => exact (Nat.not_succ_le_zero _ old).elim
+    | cons x xs =>
+      cases k with
+      | zero => exact (Nat.not_succ_le_zero _ order).elim
+      | succ k => exact ih xs k (Nat.le_of_succ_le_succ order) (Nat.lt_of_succ_lt_succ has) (Nat.lt_of_succ_lt_succ old)
+
+public theorem List.getElem_insertIdx_of_gt : type_of% @_root_.List.getElem_insertIdx_of_gt := by
+  intro α l a i j less bound
+  cases j with
+  | zero => exact (Nat.not_succ_le_zero _ less).elim
+  | succ k =>
+    apply readAfterInsert l a i k (Nat.le_of_lt_succ less) bound
+
+public theorem List.getElem_insertIdx_self : type_of% @_root_.List.getElem_insertIdx_self := by
+  intro α l a i bound
+  induction i generalizing l with
+  | zero => rfl
+  | succ i ih =>
+    cases l with
+    | nil => exact (Nat.not_succ_le_zero _ bound).elim
+    | cons x xs => exact ih (Nat.lt_of_succ_lt_succ bound)
+
+public theorem List.getElem_insertIdx_of_lt : type_of% @_root_.List.getElem_insertIdx_of_lt := by
+  intro α l a i j before bound
+  induction i generalizing l j with
+  | zero => exact (Nat.not_succ_le_zero _ before).elim
+  | succ i ih =>
+    cases l with
+    | nil => exact (Nat.not_succ_le_zero _ bound).elim
+    | cons x xs =>
+      cases j with
+      | zero => rfl
+      | succ j => exact ih (Nat.lt_of_succ_lt_succ before) (Nat.lt_of_succ_lt_succ bound)
+
 end OmegaChecks.InitPort.Alternatives
