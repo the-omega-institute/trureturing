@@ -2,6 +2,9 @@ module
 public import Lean
 import Lean.Replay
 import all Lean.Util.CollectAxioms
+public import OmegaChecks.InitInventory.PointerObservations
+import all OmegaChecks.InitInventory.PointerObservations
+meta import OmegaChecks.InitInventory.PointerObservations
 public import OmegaChecks.InitInventory.Quotient
 import all OmegaChecks.InitInventory.Quotient
 meta import OmegaChecks.InitInventory.Quotient
@@ -66,6 +69,7 @@ private def replayWitnesses (env : Environment) : IO Unit := do
     ClassicalConsequences.witnesses.map Prod.snd ++
     BooleanReflection.witnesses.map (fun row => row.2.2) ++
     WeakRingOrder.witnesses.map (fun row => row.2.2) ++
+    [``PointerObservations.address, ``PointerObservations.pointerEquality, ``PointerObservations.listPointerEquality] ++
     [``HeterogeneousQuotient.hrecOn, ``HeterogeneousQuotient.hrecOnSetoid,
      ``HeterogeneousQuotient.soundOfPairCoherence, ``HeterogeneousQuotient.setoidSoundOfPairCoherence] ++
     [``ConstructorNormalization.propextOfDecision, ``ConstructorNormalization.addCancelOfSucc,

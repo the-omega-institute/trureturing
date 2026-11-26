@@ -322,6 +322,16 @@ private def logicalConsequence? (owner name : Name) : Option (Name × Name) := d
 
 /-- The conclusion uses the indicated semantic agreement in addition to the public type. -/
 private def conditionalConsequence? (owner name : Name) : Option (String × Name × String) := do
+  if owner == `Init.Util then
+    if name == ``ptrAddrUnsafe then
+      return ("False", ``OmegaChecks.InitBoundaries.PointerObservations.address,
+        "Native addresses distinguish two simultaneously live equal lists")
+    if name == ``ptrEq then
+      return ("False", ``OmegaChecks.InitBoundaries.PointerObservations.pointerEquality,
+        "Native pointer identity distinguishes an alias from an equal, separately allocated list")
+    if name == ``ptrEqList then
+      return ("False", ``OmegaChecks.InitBoundaries.PointerObservations.listPointerEquality,
+        "Elementwise pointer identity distinguishes singleton lists containing equal allocations")
   if owner == `Init.Core && name == ``Quot.hrecOn then
     return ((``Quot.sound).toString, ``OmegaChecks.InitBoundaries.HeterogeneousQuotient.soundOfPairCoherence,
       "The pinned reduction through Quot.indep identifies pairs of related representatives at the unit motive")
