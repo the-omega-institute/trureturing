@@ -40,7 +40,7 @@ def reflectionPairing (K : X → X → ℝ) (f g : X → ℂ) : ℂ :=
   ∑ x, ∑ y, (K x y : ℂ) * (star (f y) * g x)
 
 /-- The unperturbed pairing is a single squared norm. -/
-theorem product_reflection_positivity (w : X → ℝ) (f : X → ℂ) :
+private theorem product_reflection_positivity (w : X → ℝ) (f : X → ℂ) :
     reflectionPairing (fun x y => w x * w y) f f =
       (↑(‖∑ x, (w x : ℂ) * f x‖ ^ 2) : ℂ) := by
   rw [Complex.sq_norm, ← Complex.mul_conj]
@@ -376,7 +376,7 @@ def boundaryEntry (p : CrossingPlaquette L × Fin N × Fin N)
   ρ (U (.inl (0, p.1.1, p.1.2))) p.2.1 p.2.2
 
 omit [NeZero L] [Fintype G] in
-theorem crossing_plaquette_factorization (x y : HalfConfig T L G) (p : CrossingPlaquette L) :
+private theorem crossing_plaquette_factorization (x y : HalfConfig T L G) (p : CrossingPlaquette L) :
     (holonomyTrace ρ (crossingPlaquetteHolonomy (x, y, 1) p)).re =
       ∑ i : Fin N, ∑ j : Fin N,
         (boundaryEntry ρ (p, i, j) x * star (boundaryEntry ρ (p, i, j) y)).re := by
@@ -487,7 +487,7 @@ open Matrix
 open D5.S3.StatisticalMechanics.ZTwoHighTemperatureExpansion
 
 /-- The Boltzmann factor of a single sign. -/
-theorem ising_boltzmann_expansion (β s : ℝ) (hs : s = 1 ∨ s = -1) :
+private theorem ising_boltzmann_expansion (β s : ℝ) (hs : s = 1 ∨ s = -1) :
     Real.exp (β * s) = Real.cosh β * (1 + Real.tanh β * s) := by
   have h : Real.cosh β * Real.tanh β = Real.sinh β := by
     rw [Real.tanh_eq_sinh_div_cosh, mul_comm, div_mul_cancel₀ _ (Real.cosh_pos β).ne']
@@ -542,7 +542,7 @@ theorem wilsonExpectation_eq_surfaceRatio (M : Matrix P E (ZMod 2)) (β : ℝ)
   exact mul_ne_zero (pow_ne_zero _ (Real.cosh_pos β).ne') (pow_ne_zero _ two_ne_zero)
 
 omit [DecidableEq E] in
-theorem one_le_closedSurfaceSum (M : Matrix P E (ZMod 2)) {t : ℝ} (ht : 0 ≤ t) :
+private theorem one_le_closedSurfaceSum (M : Matrix P E (ZMod 2)) {t : ℝ} (ht : 0 ≤ t) :
     1 ≤ surfaceSum M t 0 := by
   have hzero : (0 : P → ZMod 2) ∈ fillings M 0 := by simp [fillings]
   simpa [surfaceSum, plaquetteSupport] using
