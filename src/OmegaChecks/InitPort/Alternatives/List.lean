@@ -60,4 +60,63 @@ public theorem List.foldr_eq_foldrM {α : Type u} {β : Type v} {f : α → β �
     l.foldr f b = (l.foldrM (m := Id) (pure <| f · ·) b).run :=
   List.foldl_reverse.symm.trans List.foldl_eq_foldlM
 
+public theorem List.mem_filter : type_of% @_root_.List.mem_filter := by
+  intro α p xs x
+  induction xs with
+  | nil => exact ⟨fun h => (List.not_mem_nil h).elim, fun h => (List.not_mem_nil h.1).elim⟩
+  | cons a xs ih =>
+    by_cases h : p a = true
+    · rw [List.filter_cons_of_pos h]
+      constructor
+      · intro m
+        cases List.mem_cons.mp m with
+        | inl eq => exact ⟨List.mem_cons.mpr (.inl eq), eq.symm ▸ h⟩
+        | inr rest => exact ⟨.tail _ (ih.mp rest).1, (ih.mp rest).2⟩
+      · intro ⟨m, hit⟩
+        cases List.mem_cons.mp m with
+        | inl eq => exact List.mem_cons.mpr (.inl eq)
+        | inr tail => exact .tail _ (ih.mpr ⟨tail, hit⟩)
+    · rw [List.filter_cons_of_neg h]
+      constructor
+      · intro m
+        exact ⟨.tail _ (ih.mp m).1, (ih.mp m).2⟩
+      · intro ⟨m, hit⟩
+        cases List.mem_cons.mp m with
+        | inl eq => exact (h (eq ▸ hit)).elim
+        | inr tail => exact ih.mpr ⟨tail, hit⟩
+
+public theorem List.mem_filterMap : type_of% @_root_.List.mem_filterMap := by
+  intro α β f xs b
+  induction xs with
+  | nil => exact ⟨fun m => (List.not_mem_nil m).elim, fun ⟨_, m, _⟩ => (List.not_mem_nil m).elim⟩
+  | cons a xs ih =>
+    cases h : f a with
+    | none =>
+      rw [List.filterMap_cons_none h]
+      constructor
+      · intro m
+        obtain ⟨x, t, hit⟩ := ih.mp m
+        exact ⟨x, .tail _ t, hit⟩
+      · intro ⟨x, m, hit⟩
+        cases List.mem_cons.mp m with
+        | inl eq =>
+          cases eq
+          cases h.symm.trans hit
+        | inr tail => exact ih.mpr ⟨x, tail, hit⟩
+    | some v =>
+      rw [List.filterMap_cons_some h]
+      constructor
+      · intro m
+        cases List.mem_cons.mp m with
+        | inl eq => exact ⟨a, .head _, eq.symm ▸ h⟩
+        | inr tail =>
+          obtain ⟨x, t, hit⟩ := ih.mp tail
+          exact ⟨x, .tail _ t, hit⟩
+      · intro ⟨x, m, hit⟩
+        cases List.mem_cons.mp m with
+        | inl eq =>
+          cases eq
+          exact List.mem_cons.mpr (.inl (Option.some.inj (hit.symm.trans h)))
+        | inr tail => exact .tail _ (ih.mpr ⟨x, tail, hit⟩)
+
 end OmegaChecks.InitPort.Alternatives

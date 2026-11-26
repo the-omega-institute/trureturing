@@ -123,4 +123,58 @@ public theorem Array.all_toList : type_of% @_root_.Array.all_toList := by
     obtain ⟨i, hi, eq⟩ := List.mem_iff_getElem.mp m
     exact eq ▸ Array.all_eq_true.mp h i hi
 
+public theorem Array.mem_filter : type_of% @_root_.Array.mem_filter := by
+  intro α p xs a
+  have lists := _root_.Array.toList_filter (p := p) (xs := xs)
+  constructor
+  · intro m
+    have h := List.mem_filter.mp (Eq.subst (motive := (a ∈ ·)) lists (_root_.Array.mem_def.mp m))
+    exact ⟨_root_.Array.mem_def.mpr h.1, h.2⟩
+  · intro ⟨m, hit⟩
+    exact _root_.Array.mem_def.mpr (Eq.subst (motive := (a ∈ ·)) lists.symm
+      (List.mem_filter.mpr ⟨_root_.Array.mem_def.mp m, hit⟩))
+
+public theorem Array.mem_filterMap : type_of% @_root_.Array.mem_filterMap := by
+  intro α β f xs b
+  have lists := _root_.Array.toList_filterMap (f := f) (xs := xs)
+  constructor
+  · intro m
+    obtain ⟨x, t, h⟩ := List.mem_filterMap.mp
+      (Eq.subst (motive := (b ∈ ·)) lists (_root_.Array.mem_def.mp m))
+    exact ⟨x, _root_.Array.mem_def.mpr t, h⟩
+  · intro ⟨x, m, hit⟩
+    exact _root_.Array.mem_def.mpr (Eq.subst (motive := (b ∈ ·)) lists.symm
+      (List.mem_filterMap.mpr ⟨x, _root_.Array.mem_def.mp m, hit⟩))
+
+public theorem Array.all_eq_false : type_of% @_root_.Array.all_eq_false := by
+  intro α p xs
+  rw [_root_.Array.all_eq_not_any_not]
+  constructor
+  · intro none
+    obtain ⟨i, hi, h⟩ := Array.any_eq_true.mp (Bool.ne_false_iff.mp (Bool.not_eq.mp none))
+    exact ⟨i, hi, Bool.not_eq.mp h⟩
+  · intro ⟨i, hi, h⟩
+    exact Bool.not_eq.mpr (Bool.ne_false_iff.mpr (Array.any_eq_true.mpr ⟨i, hi, Bool.not_eq.mpr h⟩))
+
+public theorem Array.any_eq_false' : type_of% @_root_.Array.any_eq_false' := by
+  intro α p xs
+  constructor
+  · intro none x member witness
+    exact Bool.eq_false_iff.mp none (_root_.Array.any_eq_true'.mpr ⟨x, member, witness⟩)
+  · intro every
+    apply Bool.eq_false_iff.mpr
+    intro found
+    obtain ⟨x, m, hit⟩ := _root_.Array.any_eq_true'.mp found
+    exact every x m hit
+
+public theorem Array.all_eq_false' : type_of% @_root_.Array.all_eq_false' := by
+  intro α p xs
+  constructor
+  · intro some
+    obtain ⟨i, hi, fail⟩ := Array.all_eq_false.mp some
+    exact ⟨xs[i], _root_.Array.mem_def.mpr (List.mem_iff_getElem.mpr ⟨i, hi, rfl⟩), fail⟩
+  · intro ⟨x, m, fail⟩
+    obtain ⟨i, hi, eq⟩ := List.mem_iff_getElem.mp (_root_.Array.mem_def.mp m)
+    exact Array.all_eq_false.mpr ⟨i, hi, eq.symm ▸ fail⟩
+
 end OmegaChecks.InitPort.Alternatives
