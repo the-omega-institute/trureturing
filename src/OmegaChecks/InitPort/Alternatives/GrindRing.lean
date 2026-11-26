@@ -789,4 +789,32 @@ public theorem Lean.Grind.CommRing.lt_mul :
   rw [NatModule.nsmul_zero] at scaled
   exact scaled
 
+
+public theorem Lean.Grind.LinearOrder.lt_of_not_le :
+    type_of% @_root_.Lean.Grind.LinearOrder.lt_of_not_le := by
+  intro α _ _ _ _ a b h
+  cases Std.le_total (a := a) (b := b) with
+  | inl ab => exact False.elim (h ab)
+  | inr ba => exact Std.lt_iff_le_and_not_ge.mpr ⟨ba, h⟩
+
+public theorem Lean.Grind.CommRing.not_le_norm :
+    type_of% @_root_.Lean.Grind.CommRing.not_le_norm := by
+  intro α _ _ _ _ _ _ ctx a b p cert h
+  exact _root_.Lean.Grind.CommRing.lt_norm ctx b a p cert (LinearOrder.lt_of_not_le h)
+
+public theorem Lean.Grind.CommRing.one_eq_zero_unsat :
+    type_of% @_root_.Lean.Grind.CommRing.one_eq_zero_unsat := by
+  intro α _ ctx p cert zero
+  have possibilities := Bool.or_eq_true_iff.mp
+    (show (p.beq' (.num 1) || p.beq' (.num (-1))) = true from cert)
+  cases possibilities with
+  | inl one =>
+    rw [polyEqOfBeq one, Poly.denote, Ring.intCast_one] at zero
+    exact Field.zero_ne_one zero.symm
+  | inr neg =>
+    rw [polyEqOfBeq neg, Poly.denote, Ring.intCast_neg, Ring.intCast_one] at zero
+    have h := congrArg Neg.neg zero
+    rw [AddCommGroup.neg_neg, AddCommGroup.neg_zero] at h
+    exact Field.zero_ne_one h.symm
+
 end OmegaChecks.InitPort.Alternatives
