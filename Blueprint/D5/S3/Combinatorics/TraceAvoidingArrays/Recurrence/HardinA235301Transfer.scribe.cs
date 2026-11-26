@@ -22,7 +22,6 @@ internal sealed class HardinA235301TransferDocument : IScribeDocumentDefinition
     private static readonly Formula S = F.Id("s");
     private static readonly Formula Ht = F.Id("h");
     private static readonly Formula W = F.Id("w");
-    private static readonly Formula Empty = Seq(OpenBracket, CloseBracket);
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Weighted transfer of stress-three boundary words.",
@@ -93,9 +92,6 @@ internal sealed class HardinA235301TransferDocument : IScribeDocumentDefinition
             Data("value", "value", "Acceptance at fixed width", Value(),
                 "This integer sum counts words starting at zero whose consecutive column edges are "
                 + "all present in the mask. Test-bit returns a Boolean."),
-            Lemma("eval-nil", "eval_nil", "Empty history",
-                All(A, Type, All(Fn, Arrow(A, Integers), Eqn(Eval(Empty, Fn), D(0)))),
-                "The empty history has zero evaluation."),
             Lemma("eval-append", "eval_append", "Concatenated histories",
                 OnHistory(All(Ys, HistA, All(Fn, Arrow(A, Integers),
                     Eqn(Eval(Append(Xs, Ys), Fn), Seq(Eval(Xs, Fn), Plus, Eval(Ys, Fn)))))),

@@ -40,8 +40,10 @@ private lemma residual_zero_for_mask (h : ℕ) (f : ℕ → ℤ) :
   let e (h : ℕ) := evalHist (residualHist h) (fun s => f s.mask)
   have bases : e 0 = 0 ∧ e 1 = 0 := by
     constructor
-    · simp only [e, ← eval_group, initial_certificate.2.1, eval_nil]
-    · simp only [e, ← eval_group, initial_certificate.2.2, eval_nil]
+    · simp only [e, ← eval_group, initial_certificate.2.1]
+      rfl
+    · simp only [e, ← eval_group, initial_certificate.2.2]
+      rfl
   have main (h : ℕ) : e h = 0 ∧ e (h + 1) = 0 := by
     induction h with
     | zero => exact bases

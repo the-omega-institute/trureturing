@@ -105,8 +105,6 @@ abbrev Hist (α : Type) := List (α × ℤ)
 def evalHist {α : Type} (xs : Hist α) (f : α → ℤ) : ℤ :=
   (xs.map fun (s, x) => x * f s).sum
 
-@[simp] lemma eval_nil {α : Type} (f : α → ℤ) : evalHist [] f = 0 := rfl
-
 @[simp] private lemma eval_cons {α : Type} (xs : Hist α) (f : α → ℤ) (s : α) (x : ℤ) :
     evalHist ((s, x)::xs) f = x * f s + evalHist xs f := rfl
 
@@ -120,7 +118,7 @@ def scaleHist {α : Type} (c : ℤ) (xs : Hist α) : Hist α :=
 @[simp] lemma eval_scale {α : Type} (xs : Hist α) (f : α → ℤ) (c : ℤ) :
     evalHist (scaleHist c xs) f = c * evalHist xs f := by
   induction xs with
-  | nil => simp [scaleHist]
+  | nil => simp [scaleHist, evalHist]
   | cons pair tail ih =>
     obtain ⟨s, x⟩ := pair
     change (c * x) * f s + evalHist (scaleHist c tail) f =
