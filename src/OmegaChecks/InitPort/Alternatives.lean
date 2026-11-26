@@ -26,6 +26,7 @@ public import OmegaChecks.InitPort.Alternatives.Indexing
 public import OmegaChecks.InitPort.Alternatives.Integer
 public import OmegaChecks.InitPort.Alternatives.InternalOrder
 public import OmegaChecks.InitPort.Alternatives.List
+public import OmegaChecks.InitPort.Alternatives.ListMinMaxIdx
 public import OmegaChecks.InitPort.Alternatives.ListRange
 public import OmegaChecks.InitPort.Alternatives.ListZip
 public import OmegaChecks.InitPort.Alternatives.Logic
