@@ -151,6 +151,29 @@ theorem dneFromOpenRange (range : type_of% (@Std.Rxo.size_pos_iff_lt.{0}))
 theorem excludedMiddleFromDNE (dne : ∀ p : Prop, ¬¬p → p) (p : Prop) : p ∨ ¬p :=
   dne _ fun neither => neither (.inr fun hp => neither (.inl hp))
 
+/-- The comparison from the upper Boolean point back to the lower point can encode any proposition. -/
+theorem dneOfNotLT (notLT : type_of% (@Std.not_lt.{0})) (p : Prop) (nn : ¬¬p) : p := by
+  let le (a b : Bool) : Prop := Bool.rec (motive := fun _ => Prop) True (Bool.rec (motive := fun _ => Prop) p True b) a
+  letI : LE Bool := ⟨le⟩
+  letI : LT Bool := ⟨fun a b => le a b ∧ ¬le b a⟩
+  letI : Std.Total (α := Bool) (· ≤ ·) := ⟨fun a =>
+    Bool.rec (motive := fun a => ∀ b, le a b ∨ le b a)
+      (fun _ => Or.inl True.intro)
+      (Bool.rec (motive := fun b => le true b ∨ le b true) (Or.inr True.intro) (Or.inl True.intro)) a⟩
+  letI : Std.LawfulOrderLT Bool := ⟨fun _ _ => Iff.rfl⟩
+  exact (@notLT Bool _ _ _ _ false true).mp (fun h => nn h.2)
+
+theorem excludedMiddleOfNotLT (notLT : type_of% (@Std.not_lt.{0})) (p : Prop) : p ∨ ¬p :=
+  excludedMiddleFromDNE (dneOfNotLT (@notLT)) p
+
+/-- On a singleton both comparisons can express the same arbitrary proposition. -/
+theorem excludedMiddleOfNotLTIff (notLT : type_of% (@Std.not_lt_iff_not_le_or_ge.{0}))
+    (p : Prop) : p ∨ ¬p := by
+  letI : LE Unit := ⟨fun _ _ => p⟩
+  letI : LT Unit := ⟨fun _ _ => p ∧ ¬p⟩
+  letI : Std.LawfulOrderLT Unit := ⟨fun _ _ => Iff.rfl⟩
+  exact ((@notLT Unit _ _ _ () ()).mp (fun h => h.2 h.1)).elim Or.inr Or.inl
+
 namespace TwoWorlds
 
 /-- Kripke implication on the chain `false ≤ true`. -/
@@ -214,7 +237,8 @@ private def replayWitnesses (env : Environment) : IO Unit := do
   let official ← importModules #[{module := `Lean}] {} (level := .private)
   let mut terms : Std.HashMap Name ConstantInfo := {}
   let mut todo := (reductions.map fun (_, _, _, witness) => witness) ++
-    [``dneFromClosedRange, ``dneFromOpenRange, ``excludedMiddleFromDNE, ``TwoWorlds.countermodel]
+    [``dneFromClosedRange, ``dneFromOpenRange, ``excludedMiddleFromDNE, ``excludedMiddleOfNotLT,
+      ``excludedMiddleOfNotLTIff, ``TwoWorlds.countermodel]
   while let n :: more := todo do
     todo := more
     if terms.contains n then continue
@@ -746,13 +770,15 @@ private def reductionPaths (official strict full : Environment) : NameMap (List 
 /-- Additional logical consequences with separate proof terms. These do not discharge a
 missing official interface in the completeness check. -/
 private def logicalConsequence? (owner name : Name) : Option (Name × Name) := do
-  guard (owner == `Init.Data.String.Lemmas.Pattern.Basic)
-  let witness ← match name with
-    | ``String.Slice.Pattern.Model.IsMatch.exists_isLongestMatch =>
+  let witness ← match owner, name with
+    | `Init.Data.Order.Lemmas, ``Std.not_lt => some ``OmegaChecks.InitBoundaries.excludedMiddleOfNotLT
+    | `Init.Data.Order.Lemmas, ``Std.not_lt_iff_not_le_or_ge =>
+      some ``OmegaChecks.InitBoundaries.excludedMiddleOfNotLTIff
+    | `Init.Data.String.Lemmas.Pattern.Basic, ``String.Slice.Pattern.Model.IsMatch.exists_isLongestMatch =>
       some `OmegaChecks.InitInventory.StringPatterns.excludedMiddleOfLongest
-    | ``String.Slice.Pattern.Model.IsRevMatch.exists_isLongestRevMatch =>
+    | `Init.Data.String.Lemmas.Pattern.Basic, ``String.Slice.Pattern.Model.IsRevMatch.exists_isLongestRevMatch =>
       some `OmegaChecks.InitInventory.StringPatterns.excludedMiddleOfRevLongest
-    | _ => none
+    | _, _ => none
   return (``Classical.em, witness)
 
 private def inventory (lib : System.FilePath) (visible strict full : Environment) (modules : Array Name)
