@@ -65,3 +65,4 @@ The three clauses answer both families in Question 5.4 on printed and PDF page 2
 - Truth anchor: `D5/S3/Combinatorics/Graph/LeapGroups/SchachnerUdellQuestion54.prismParity`
 - Truth anchor: `D5/S3/Combinatorics/Graph/LeapGroups/SchachnerUdellQuestion54.result`
 - Dependency: [D5/S3/Combinatorics/Graph/HypercubeCritical/ComponentBoundary/Placement/CubicContactDistance](../HypercubeCritical/ComponentBoundary/Placement/CubicContactDistance.md)
+- Dependency: [D5/S3/Combinatorics/Graph/HypercubeSubQuorum](../HypercubeSubQuorum.md)

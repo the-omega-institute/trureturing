@@ -7,7 +7,6 @@ doi: 10.48550/arXiv.2610.18463
 url: https://arxiv.org/pdf/2610.18463v1
 claim: "Question 5.4 asks for the leap groups of the prism and hypercube families."
 strata_touched:
-  - D5/S3/Combinatorics/Graph/LeapGroups/LeapGroup
   - D5/S3/Combinatorics/Graph/LeapGroups/SchachnerUdellQuestion54
 license: citation-only
 triage: anchor

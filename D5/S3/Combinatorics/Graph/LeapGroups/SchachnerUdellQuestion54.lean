@@ -6,7 +6,9 @@
    utility: none
    digest: Leap groups of all prisms and positive-dimensional cubes. -/
 
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Placement.CubicContactDistance
+import D5.S3.Combinatorics.Graph.HypercubeSubQuorum
 import Mathlib.Combinatorics.SimpleGraph.Circulant
 import Mathlib.GroupTheory.Perm.Sign
 import OmegaMath.Combinatorics.Graph.LeapGroup
@@ -17,6 +19,9 @@ open Equiv Set MulAction Pointwise SimpleGraph Finset
 open D5.S3.Combinatorics.Graph.Hypercube D5.S3.Combinatorics.Graph.LeapGroups.LeapGroup
 open D5.S3.Combinatorics.Graph.HypercubeCritical
 open D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Placement
+
+open private cubeParity cubeParity_ne_of_adj from D5.S3.Combinatorics.Graph.HypercubeSubQuorum
+local notation "boolCubeParity" => cubeParity
 
 namespace D5.S3.Combinatorics.Graph.LeapGroups.SchachnerUdellQuestion54
 
@@ -210,14 +215,6 @@ private def cubeFlip {n : ℕ} (i : Fin n) : Perm (Fin n → Bool) where
   left_inv x := BalancedCriticalSpectrum.flip_flip x i
   right_inv x := BalancedCriticalSpectrum.flip_flip x i
 
-@[simp] private theorem cubeFlip_apply {n : ℕ} (i : Fin n) (x : Fin n → Bool) (j : Fin n) :
-    cubeFlip i x j = if j = i then !x j else x j := by
-  change BalancedCriticalSpectrum.flip x i j = _
-  by_cases h : j = i
-  · subst j
-    simp
-  · simp [BalancedCriticalSpectrum.flip, h]
-
 @[simp] private theorem cubeFlip_symm {n : ℕ} (i : Fin n) : (cubeFlip i).symm = cubeFlip i := by
   ext x j
   rfl
@@ -243,19 +240,26 @@ private theorem cube_double_flip_swap {n : ℕ} (i j : Fin n) (x : Fin n → Boo
     rw [he]
     exact (cubeFlip_hop j x).symm
 
+private def bitToZMod : Bool →+ ZMod 2 where
+  toFun b := if b then 1 else 0
+  map_zero' := rfl
+  map_add' a b := by cases a <;> cases b <;> decide
+
+private theorem cubeParity_eq_map {n : ℕ} (x : Fin n → Bool) :
+    cubeParity x = bitToZMod (boolCubeParity x) := by
+  unfold cubeParity
+  change _ = bitToZMod (∑ i, x i)
+  rw [map_sum]
+  rfl
+
 private theorem cubeParity_flip {n : ℕ} (i : Fin n) (x : Fin n → Bool) :
     cubeParity (cubeFlip i x) = cubeParity x + 1 := by
-  unfold cubeParity
-  rw [← Finset.sum_erase_add _ _ (Finset.mem_univ i),
-      ← Finset.sum_erase_add _ _ (Finset.mem_univ i)]
-  have he : (∑ j ∈ Finset.univ.erase i, if cubeFlip i x j then (1 : ZMod 2) else 0) =
-      ∑ j ∈ Finset.univ.erase i, if x j then 1 else 0 := by
-    apply Finset.sum_congr rfl
-    intro j hj
-    simp [Finset.ne_of_mem_erase hj]
-  rw [he]
-  simp only [cubeFlip_apply]
-  cases x i <;> simp [add_assoc, CharTwo.add_self_eq_zero (1 : ZMod 2)]
+  change cubeParity (BalancedCriticalSpectrum.flip x i) = _
+  rw [cubeParity_eq_map, cubeParity_eq_map]
+  have h := cubeParity_ne_of_adj (BalancedCriticalSpectrum.flip_adj x i)
+  generalize hx : boolCubeParity x = a at h ⊢
+  generalize hy : boolCubeParity (BalancedCriticalSpectrum.flip x i) = b at h ⊢
+  cases a <;> cases b <;> first | contradiction | decide
 
 private theorem cube_adj_iff {n : ℕ} (x y : Fin n → Bool) :
     (hypercube n).Adj x y ↔ ∃ i, y = cubeFlip i x := by
