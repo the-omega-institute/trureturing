@@ -1,6 +1,7 @@
 module
 
 public import Init.Data.Int.DivMod.Lemmas
+public import Init.Data.Int.Gcd
 
 namespace OmegaChecks.InitPort.Alternatives
 
@@ -317,5 +318,23 @@ public theorem Int.tdiv_le_tdiv : type_of% @_root_.Int.tdiv_le_tdiv := by
   | succ d ih =>
     rw [Int.natCast_succ, ← Int.add_assoc, Int.add_one_tdiv_of_pos pos]
     split <;> omega
+
+public theorem Int.ediv_gcd_ne_zero_of_ne_zero_left : type_of% @_root_.Int.ediv_gcd_ne_zero_of_ne_zero_left :=
+  fun b nz q => nz (Int.eq_zero_of_ediv_eq_zero (Int.gcd_dvd_left _ b) q)
+
+public theorem Int.ediv_gcd_ne_zero_of_ne_zero_right : type_of% @_root_.Int.ediv_gcd_ne_zero_of_ne_zero_right :=
+  fun a nz q => nz (Int.eq_zero_of_ediv_eq_zero (Int.gcd_dvd_right a _) q)
+
+public theorem Int.gcd_ne_zero_left : type_of% @_root_.Int.gcd_ne_zero_left :=
+  fun nz g => nz (Int.eq_zero_of_gcd_eq_zero_left g)
+
+public theorem Int.gcd_ne_zero_right : type_of% @_root_.Int.gcd_ne_zero_right :=
+  fun nz g => nz (Int.eq_zero_of_gcd_eq_zero_right g)
+
+public theorem Int.pow_dvd_pow_iff : type_of% @_root_.Int.pow_dvd_pow_iff := by
+  intro a b n nz
+  apply Int.natAbs_dvd_natAbs.symm.trans
+  rw [Int.natAbs_pow, Int.natAbs_pow]
+  exact (Nat.pow_dvd_pow_iff nz).trans Int.natAbs_dvd_natAbs
 
 end OmegaChecks.InitPort.Alternatives

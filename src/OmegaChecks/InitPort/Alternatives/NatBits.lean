@@ -93,4 +93,23 @@ public theorem Nat.zero_or : type_of% @_root_.Nat.zero_or := by
   rw [_root_.Nat.testBit_or, _root_.Nat.zero_testBit]
   rfl
 
+public theorem Nat.and_one_is_mod : type_of% @_root_.Nat.and_one_is_mod :=
+  fun x => Nat.and_two_pow_sub_one_eq_mod x 1
+
+public theorem Nat.or_mod_two_eq_one : type_of% @_root_.Nat.or_mod_two_eq_one := by
+  intro a b
+  apply Nat.mod_two_eq_one_iff_testBit_zero.trans
+  rw [Nat.testBit_or]
+  exact Bool.or_eq_true_iff.trans (or_congr Nat.mod_two_eq_one_iff_testBit_zero.symm Nat.mod_two_eq_one_iff_testBit_zero.symm)
+
+public theorem Nat.left_le_or : type_of% @_root_.Nat.left_le_or := by
+  intro n m
+  refine Nat.le_of_testBit fun i bit => ?_
+  rw [Nat.testBit_or, bit, Bool.true_or]
+
+public theorem Nat.right_le_or : type_of% @_root_.Nat.right_le_or := by
+  intro n m
+  refine Nat.le_of_testBit fun i bit => ?_
+  rw [Nat.testBit_or, bit, Bool.or_true]
+
 end OmegaChecks.InitPort.Alternatives

@@ -300,4 +300,16 @@ public theorem Nat.pow_dvd_pow_iff : type_of% @_root_.Nat.pow_dvd_pow_iff := by
   rw [Nat.pow_gcd_pow]
   exact (Nat.pow_left_inj nonzero).trans Nat.gcd_eq_left_iff_dvd
 
+public theorem Nat.mul_min_mul_right : type_of% @_root_.Nat.mul_min_mul_right := by
+  intro a b c
+  rcases Nat.le_total a b with ab | ba
+  · rw [Nat.min_eq_left ab, Nat.min_eq_left (Nat.mul_le_mul_right c ab)]
+  · rw [Nat.min_eq_right ba, Nat.min_eq_right (Nat.mul_le_mul_right c ba)]
+
+public theorem Nat.mul_max_mul_right : type_of% @_root_.Nat.mul_max_mul_right := by
+  intro a b c
+  rcases Nat.le_total a b with ab | ba
+  · rw [Nat.max_eq_right ab, Nat.max_eq_right (Nat.mul_le_mul_right c ab)]
+  · rw [Nat.max_eq_left ba, Nat.max_eq_left (Nat.mul_le_mul_right c ba)]
+
 end OmegaChecks.InitPort.Alternatives
