@@ -8,9 +8,9 @@ import all Init.Data.String.Lemmas.FindPos
 import all Init.Data.String.Pattern.Pred
 import all Init.Data.String.Pattern.Basic
 import all Init.Data.String.Defs
-public import OmegaChecks.InitPort.Alternatives.StringEncoding
+public import OmegaChecks.InitPort.Alternatives.StringPattern.Encoding
 public import OmegaChecks.InitPort.Alternatives.StringPattern
-public import OmegaChecks.InitPort.Alternatives.StringPatternTakeDrop
+public import OmegaChecks.InitPort.Alternatives.StringPattern.TakeDrop
 public import OmegaChecks.InitPort.Alternatives.StringSearch
 public import OmegaChecks.InitPort.Alternatives.StringTransforms
 

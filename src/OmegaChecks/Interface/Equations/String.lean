@@ -16,7 +16,7 @@ import all Init.Data.String.Pattern.Basic
 import all Init.Data.String.Substring
 public import OmegaChecks.InitPort.Alternatives.StringSearch
 public import OmegaChecks.InitPort.Alternatives.StringPattern
-import all OmegaChecks.InitPort.Alternatives.StringPattern
+import all OmegaChecks.InitPort.Alternatives.StringPattern.Searchers
 import all Init.Data.String.Pattern.String
 
 /-! Pointwise agreement of finite slice operations with the official iterator operations. -/
