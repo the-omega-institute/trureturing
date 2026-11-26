@@ -1,6 +1,7 @@
 import Lean
 import Lean.Replay
 import OmegaChecks.InitCompiler.Proofs
+import OmegaChecks.InitCompiler.Recursion
 import OmegaChecks.InitPort.Alternatives
 
 open Lean
@@ -92,6 +93,7 @@ structure Context where
   literalProofs : NameMap ConstantInfo
   alternatives : NameMap ConstantInfo
   proofRules : NameMap ConstantInfo
+  recursionRule : ConstantInfo
   output : IO.FS.Handle
 
 abbrev M := ReaderT Context (StateRefT State IO)
@@ -425,6 +427,9 @@ partial def visit (n : Name) : M Bool := do
   if !decided.equal rewritten then
     if (← attempt (OmegaChecks.InitCompiler.constructiveCasts c.source decided c.proofRules)) matches .added then
       return ← record n .added
+  let recursive ← OmegaChecks.InitCompiler.Recursion.specialize c.source c.recursionRule ci decided
+  if !recursive.equal decided then
+    if (← attempt recursive) matches .added then return ← record n .added
   if let some certified := comparisonProofs c.source c.literalProofs decided n then
     -- Rechecking the closed proof of comparison costs proportionally more than
     -- applying the original opaque theorem; its bound remains deterministic.
@@ -455,6 +460,7 @@ def writeMonolithic (base : Environment) (final : Kernel.Environment)
   IO.println s!"Wrote {cs.size} kernel declarations to {output / "OmegaImported.olean"}"
 
 def run (strictPath artifacts : System.FilePath) (outPath : String) (exclude : System.FilePath) (modules : List Name) : IO Unit := do
+  let recursionRule ← OmegaChecks.InitCompiler.Recursion.loadRule
   let alternatives ← OmegaChecks.InitPort.loadAlternatives
   let ruleModule := `OmegaChecks.InitCompiler.ProofRules
   let ruleEnv ← importModules #[{module := ruleModule}] {} (level := .private)
@@ -495,7 +501,7 @@ def run (strictPath artifacts : System.FilePath) (outPath : String) (exclude : S
   let excluded := exclusions.foldl (init := ({} : NameMap String)) fun acc (n, r) => acc.insert n.toName r
   let maxHeartbeats := (← IO.getEnv "OMEGA_PORT_HEARTBEATS").bind String.toNat? |>.getD 5000
   let literalProofs ← loadLiteralProofs strictPath
-  let ctx := {source,base,publicNames,excluded,output,maxHeartbeats,literalProofs,alternatives,proofRules : Context}
+  let ctx := {source,base,publicNames,excluded,output,maxHeartbeats,literalProofs,alternatives,proofRules,recursionRule : Context}
   let action : M Unit := do
     for owner in source.header.moduleNames, data in source.header.moduleData do
       if owner.getRoot == `Init then
