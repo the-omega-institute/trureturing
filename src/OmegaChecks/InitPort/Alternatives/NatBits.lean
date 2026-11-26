@@ -40,6 +40,25 @@ public theorem Bool.not_ite_eq_false_eq_true : type_of% @_root_.Bool.not_ite_eq_
   | isTrue _ => change (¬ b = false) ↔ b = true; cases b <;> decide
   | isFalse _ => change (¬ c = true) ↔ c = false; cases c <;> decide
 
+public theorem Bool.decide_and : type_of% @_root_.Bool.decide_and := by
+  intro p q dpq dp dq
+  cases dp with
+  | isFalse hp =>
+    exact decide_eq_false fun h => hp h.1
+  | isTrue hp =>
+    cases dq with
+    | isFalse hq => exact decide_eq_false fun h => hq h.2
+    | isTrue hq => exact decide_eq_true ⟨hp, hq⟩
+
+public theorem Bool.decide_or : type_of% @_root_.Bool.decide_or := by
+  intro p q dpq dp dq
+  cases dp with
+  | isTrue hp => exact decide_eq_true (Or.inl hp)
+  | isFalse hp =>
+    cases dq with
+    | isTrue hq => exact decide_eq_true (Or.inr hq)
+    | isFalse hq => exact decide_eq_false fun h => h.elim hp hq
+
 public theorem Nat.mod_two_bne_zero : type_of% @_root_.Nat.mod_two_bne_zero := by
   intro a
   cases Nat.mod_two_eq_zero_or_one a with
