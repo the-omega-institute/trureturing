@@ -107,9 +107,9 @@ private theorem normalPair_join_complement (s : ℂ) (hs : s ≠ 0) (i j : ℤ)
   · simp only [normalPair, complementPair, ite_eq_right h, LinearMap.comp_apply,
       mode_join_complement s hs j hj, mode_join_complement s hs i hi]
 
-private def integerIndices : Set ℤ := {k | (3 : ℤ) ∣ k}
+def integerIndices : Set ℤ := {k | (3 : ℤ) ∣ k}
 
-private theorem noninteger_partner (m k : ℤ) (hk : k ∈ integerIndicesᶜ) :
+theorem noninteger_partner (m k : ℤ) (hk : k ∈ integerIndicesᶜ) :
     ¬ (3 : ℤ) ∣ 3 * m - k := by
   intro h
   apply hk
@@ -117,7 +117,7 @@ private theorem noninteger_partner (m k : ℤ) (hk : k ∈ integerIndicesᶜ) :
   have hd := dvd_sub (dvd_mul_right (3 : ℤ) m) h
   simpa using hd
 
-private theorem complementPair_finiteSupport (m : ℤ) (Q : ComplementFock) :
+theorem complementPair_finiteSupport (m : ℤ) (Q : ComplementFock) :
     (integerIndicesᶜ ∩ Function.support
       (fun k : ℤ => complementPair (3 * m - k) k Q)).Finite := by
   have hfinite := (Set.finite_Ioo _ _).subset
@@ -305,7 +305,7 @@ theorem fractionalVirasoro_vacuum (m : ℤ) (hm : 0 ≤ m) :
 def fractionalCurrent (r : ℤ) : Module.End ℂ ComplementFock :=
   sqrtThree⁻¹ • complementMode r
 
-private theorem inverse_scale_sq : sqrtThree⁻¹ * sqrtThree⁻¹ = (3 : ℂ)⁻¹ := by
+theorem inverse_scale_sq : sqrtThree⁻¹ * sqrtThree⁻¹ = (3 : ℂ)⁻¹ := by
   rw [← pow_two, inv_pow, sqrtThree_sq]
 
 private theorem split_fractionalCurrent (r : ℤ) (hr : ¬ (3 : ℤ) ∣ r) :

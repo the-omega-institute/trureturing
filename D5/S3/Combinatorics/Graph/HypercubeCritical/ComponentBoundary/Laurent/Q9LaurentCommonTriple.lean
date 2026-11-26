@@ -81,7 +81,7 @@ private theorem mem_star {e : Axes} {c x : Q 9} :
     x ∈ star e c ↔ ∃ i : Fin 3, cubeFlip c (e (.inl i)) = x := by
   simp [star]
 
-private theorem star_card (e : Axes) (c : Q 9) : (star e c).card = 3 := by
+theorem star_card (e : Axes) (c : Q 9) : (star e c).card = 3 := by
   rw [star, card_image_of_injective, card_univ, Fintype.card_fin]
   exact (flip_injective c).comp (e.injective.comp Sum.inl_injective)
 
