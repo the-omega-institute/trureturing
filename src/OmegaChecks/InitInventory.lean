@@ -175,6 +175,41 @@ theorem excludedMiddleOfNotLTIff (notLT : type_of% (@Std.not_lt_iff_not_le_or_ge
   letI : Std.LawfulOrderLT Unit := ⟨fun _ _ => Iff.rfl⟩
   exact ((@notLT Unit _ _ _ () ()).mp (fun h => h.2 h.1)).elim Or.inr Or.inl
 
+namespace GrindOrder
+
+private def relation (p : Prop) (a b : Bool) : Prop :=
+  Bool.rec (motive := fun _ => Prop) True (Bool.rec (motive := fun _ => Prop) p True b) a
+
+/-- A linear preorder can encode an arbitrary proposition in its reverse comparison. -/
+theorem excludedMiddleFromComparison
+    (compare : type_of% (@Lean.Grind.Order.le_of_not_lt.{0})) (p : Prop) : p ∨ ¬p := by
+  apply excludedMiddleFromDNE _ p
+  intro q nn
+  letI : LE Bool := ⟨relation q⟩
+  letI : LT Bool := ⟨fun a b => relation q a b ∧ ¬ relation q b a⟩
+  letI : Std.LawfulOrderLT Bool := ⟨fun _ _ => Iff.rfl⟩
+  letI : Std.IsLinearPreorder Bool := {
+    le_refl := by intro a; cases a <;> exact True.intro
+    le_trans := by
+      intro a b c ab bc
+      cases a <;> cases b <;> cases c <;> first | exact True.intro | exact ab | exact bc
+    le_total := by
+      intro a b
+      cases a <;> cases b <;> first | exact Or.inl True.intro | exact Or.inr True.intro
+  }
+  exact @compare Bool _ _ _ _ false true (fun lt => nn lt.2)
+
+theorem excludedMiddleFromImplication (imp : type_of% @Lean.Grind.imp_eq) (p : Prop) : p ∨ ¬p :=
+  ((imp p p).mp id).elim Or.inr Or.inl
+
+theorem excludedMiddleFromNotNot (nn : type_of% @Lean.Grind.not_not) (p : Prop) : p ∨ ¬p :=
+  (nn (p ∨ ¬p)).mp fun neither => neither (.inr fun hp => neither (.inl hp))
+
+theorem excludedMiddleFromLookahead (look : type_of% @Lean.Grind.of_lookahead) (p : Prop) : p ∨ ¬p :=
+  (look (p ∨ ¬p) fun neither => neither (.inr fun hp => neither (.inl hp))).mpr True.intro
+
+end GrindOrder
+
 namespace TwoWorlds
 
 /-- Kripke implication on the chain `false ≤ true`. -/
@@ -239,7 +274,8 @@ private def replayWitnesses (env : Environment) : IO Unit := do
   let mut terms : Std.HashMap Name ConstantInfo := {}
   let mut todo := (reductions.map fun (_, _, _, witness) => witness) ++
     [``dneFromClosedRange, ``dneFromOpenRange, ``excludedMiddleFromDNE, ``excludedMiddleOfNotLT,
-      ``excludedMiddleOfNotLTIff, ``TwoWorlds.countermodel]
+      ``excludedMiddleOfNotLTIff, ``GrindOrder.excludedMiddleFromComparison, ``GrindOrder.excludedMiddleFromImplication,
+      ``GrindOrder.excludedMiddleFromNotNot, ``GrindOrder.excludedMiddleFromLookahead, ``TwoWorlds.countermodel]
   while let n :: more := todo do
     todo := more
     if terms.contains n then continue
@@ -900,6 +936,10 @@ private def logicalConsequence? (owner name : Name) : Option (Name × Name) := d
       `OmegaChecks.InitInventory.StringPatterns.weakExcludedMiddleOfRevMatchAtNone)
   | _, _ => pure ()
   let witness ← match owner, name with
+    | `Init.Grind.Order, ``Lean.Grind.Order.le_of_not_lt => some ``OmegaChecks.InitBoundaries.GrindOrder.excludedMiddleFromComparison
+    | `Init.Grind.Norm, ``Lean.Grind.imp_eq => some ``OmegaChecks.InitBoundaries.GrindOrder.excludedMiddleFromImplication
+    | `Init.Grind.Norm, ``Lean.Grind.not_not => some ``OmegaChecks.InitBoundaries.GrindOrder.excludedMiddleFromNotNot
+    | `Init.Grind.Lemmas, ``Lean.Grind.of_lookahead => some ``OmegaChecks.InitBoundaries.GrindOrder.excludedMiddleFromLookahead
     | `Init.Data.Order.Lemmas, ``Std.not_lt => some ``OmegaChecks.InitBoundaries.excludedMiddleOfNotLT
     | `Init.Data.Order.Lemmas, ``Std.not_lt_iff_not_le_or_ge =>
       some ``OmegaChecks.InitBoundaries.excludedMiddleOfNotLTIff
