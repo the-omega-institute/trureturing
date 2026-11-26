@@ -4,6 +4,8 @@ Released under Apache 2.0 license as described in the file LICENSE.
 -/
 module
 import all Init.Data.String.Lemmas.Pattern.TakeDrop.Basic
+import all Init.Data.String.Lemmas.Pattern.TakeDrop.Char
+import all Init.Data.String.Lemmas.Pattern.TakeDrop.String
 import all Init.Data.String.Slice
 import all Init.Data.String.Basic
 
@@ -139,6 +141,37 @@ public theorem endsWith_iff : type_of% @_root_.String.Slice.Pattern.Model.endsWi
     | true => rfl
     | false => exact ((_root_.String.Slice.Pattern.Model.endsWith_eq_false_iff.mp e) h).elim
 
+private theorem positionBeq {s : String.Slice} (p q : s.Pos) :
+    @decide (p = q) (_root_.String.Slice.instDecidableEqPos p q) = true ↔ p = q :=
+  ⟨of_decide_eq_true, decide_eq_true⟩
+
+public theorem all_eq_true_iff : type_of% @_root_.String.Slice.Pattern.Model.all_eq_true_iff := by
+  intro ρ pat model instancePattern lawful s
+  rw [_root_.String.Slice.all_eq_skipPrefixWhile_beq]
+  apply (positionBeq _ _).trans
+  apply (Pos.skipWhile_eq_iff pat s.startPos s.endPos).trans
+  refine ⟨And.left, fun chain => ⟨chain, ?_⟩⟩
+  cases eq : s.endPos.skip? pat with
+  | none => exact Or.inl (_root_.String.Slice.Pattern.Model.Pos.skip?_eq_none_iff.mp eq)
+  | some pos =>
+    have found := _root_.String.Slice.Pattern.Model.Pos.skip?_eq_some_iff.mp eq
+    have endpoint : pos = s.endPos := (_root_.String.Slice.Pos.endPos_le _).mp found.le
+    exact Or.inr (endpoint ▸ found)
+
+public theorem revAll_eq_true_iff : type_of% @_root_.String.Slice.Pattern.Model.revAll_eq_true_iff := by
+  intro ρ pat model instancePattern lawful s
+  rw [_root_.String.Slice.revAll_eq_skipSuffixWhile_beq]
+  apply (positionBeq _ _).trans
+  apply (Pos.revSkipWhile_eq_iff pat s.startPos s.endPos).trans
+  refine ⟨And.left, fun chain => ⟨chain, ?_⟩⟩
+  cases eq : s.startPos.revSkip? pat with
+  | none => exact Or.inl (_root_.String.Slice.Pattern.Model.Pos.revSkip?_eq_none_iff.mp eq)
+  | some pos =>
+    have found := _root_.String.Slice.Pattern.Model.Pos.revSkip?_eq_some_iff.mp eq
+    have endpoint : pos = s.startPos := _root_.String.Slice.Pos.ext (String.Pos.Raw.ext
+      (Nat.le_antisymm found.le (_root_.String.Slice.Pos.startPos_le _)))
+    exact Or.inr (endpoint ▸ found)
+
 end OmegaChecks.InitPort.Alternatives.String.Slice.Pattern.Model
 
 namespace OmegaChecks.InitPort.Alternatives.String.Slice
@@ -178,5 +211,71 @@ public theorem Pos.revSkip?_cast : type_of% @_root_.String.Slice.Pos.revSkip?_ca
 public theorem Pos.revSkip?_congr : type_of% @_root_.String.Slice.Pos.revSkip?_congr := by
   intro ρ pat model instancePattern lawful s t eq pos
   exact (Pos.revSkip?_cast (pat := pat) eq.symm (pos := pos.cast eq))
+
+end OmegaChecks.InitPort.Alternatives.String.Slice
+
+namespace OmegaChecks.InitPort.Alternatives.String.Slice
+
+private theorem falseOfPositive {b : Bool} {p : Prop} (h : b = true ↔ p) :
+    b = false ↔ ¬p := by
+  cases b with
+  | false => exact ⟨fun _ yes => Bool.noConfusion (h.mpr yes), fun _ => rfl⟩
+  | true => exact ⟨(fun eq => nomatch eq), fun no => (no (h.mp rfl)).elim⟩
+
+public theorem endsWith_char_iff_exists_append : type_of% @_root_.String.Slice.endsWith_char_iff_exists_append := by
+  intro c s
+  apply Pattern.Model.endsWith_iff.trans
+  apply _root_.String.Slice.Pattern.Model.Char.revMatchesAt_iff_splits.trans
+  constructor
+  · rintro ⟨before, after, split⟩
+    exact ⟨before, (_root_.String.Slice.splits_endPos_iff.mp split).1.symm⟩
+  · rintro ⟨before, eq⟩
+    exact ⟨before, "", _root_.String.Slice.splits_endPos_iff.mpr ⟨eq.symm, rfl⟩⟩
+
+public theorem startsWith_slice_eq_false_iff : type_of% @_root_.String.Slice.startsWith_slice_eq_false_iff := by
+  intro pat s
+  exact falseOfPositive _root_.String.Slice.startsWith_slice_iff
+
+public theorem startsWith_string_eq_false_iff : type_of% @_root_.String.Slice.startsWith_string_eq_false_iff := by
+  intro pat s
+  exact falseOfPositive _root_.String.Slice.startsWith_string_iff
+
+public theorem startsWith_char_eq_false_iff_forall_append : type_of% @_root_.String.Slice.startsWith_char_eq_false_iff_forall_append := by
+  intro c s
+  exact (falseOfPositive _root_.String.Slice.startsWith_char_iff_exists_append).trans
+    ⟨fun h t eq => h ⟨t, eq⟩, fun h ⟨t, eq⟩ => h t eq⟩
+
+public theorem all_char_iff : type_of% @_root_.String.Slice.all_char_iff := by
+  intro pat s
+  exact Pattern.Model.all_eq_true_iff.trans
+    _root_.String.Slice.Pattern.Model.Char.isLongestMatchAtChain_startPos_endPos_iff_toList
+
+public theorem all_slice_iff : type_of% @_root_.String.Slice.all_slice_iff := by
+  intro pat s
+  exact Pattern.Model.all_eq_true_iff.trans
+    _root_.String.Slice.Pattern.Model.ForwardSliceSearcher.isLongestMatchAtChain_startPos_endPos_iff
+
+public theorem endsWith_slice_eq_false_iff : type_of% @_root_.String.Slice.endsWith_slice_eq_false_iff := by
+  intro pat s
+  exact falseOfPositive _root_.String.Slice.endsWith_slice_iff
+
+public theorem endsWith_string_eq_false_iff : type_of% @_root_.String.Slice.endsWith_string_eq_false_iff := by
+  intro pat s
+  exact falseOfPositive _root_.String.Slice.endsWith_string_iff
+
+public theorem endsWith_char_eq_false_iff_forall_append : type_of% @_root_.String.Slice.endsWith_char_eq_false_iff_forall_append := by
+  intro c s
+  exact (falseOfPositive _root_.String.Slice.endsWith_char_iff_exists_append).trans
+    ⟨fun h t eq => h ⟨t, eq⟩, fun h ⟨t, eq⟩ => h t eq⟩
+
+public theorem revAll_char_iff : type_of% @_root_.String.Slice.revAll_char_iff := by
+  intro pat s
+  exact Pattern.Model.revAll_eq_true_iff.trans
+    _root_.String.Slice.Pattern.Model.Char.isLongestRevMatchAtChain_startPos_endPos_iff_toList
+
+public theorem revAll_slice_iff : type_of% @_root_.String.Slice.revAll_slice_iff := by
+  intro pat s
+  exact Pattern.Model.revAll_eq_true_iff.trans
+    _root_.String.Slice.Pattern.Model.ForwardSliceSearcher.isLongestRevMatchAtChain_startPos_endPos_iff
 
 end OmegaChecks.InitPort.Alternatives.String.Slice
