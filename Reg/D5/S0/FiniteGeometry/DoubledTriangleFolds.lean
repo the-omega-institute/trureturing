@@ -95,7 +95,7 @@ noncomputable def audit :
       path := #["body", "body", "body", "fn", "arg", "arg", "fn", "arg"]
       stateBinder := 2
       functionOperand := false
-      stateOperand := some #["arg"]
+      stateOperand := none
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
