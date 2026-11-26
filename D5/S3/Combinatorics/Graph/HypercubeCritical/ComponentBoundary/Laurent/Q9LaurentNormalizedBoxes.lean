@@ -414,7 +414,8 @@ private theorem map_transverse {e : Axes} {B : Block} (h : Disjoint B (commonAxe
     | inl j => exact (disjoint_left.mp h hi (mem_image.mpr ⟨j, mem_univ _, rfl⟩)).elim
     | inr j => exact mem_map.mpr ⟨j, mem_filter.mpr ⟨mem_univ _, hi⟩, rfl⟩
 
-private theorem exists_other {P : Partition} {S : Block} (hP : IsTriplePartition P) (hS : S ∈ P) :
+/-- A given block of a three-block partition has a distinct companion block. -/
+theorem exists_other {P : Partition} {S : Block} (hP : IsTriplePartition P) (hS : S ∈ P) :
     ∃ A ∈ P, A ≠ S := by
   have hlt : ({S} : Partition).card < P.card := by simp [hP.card_eq]
   obtain ⟨A, hA, hne⟩ := exists_mem_notMem_of_card_lt_card hlt

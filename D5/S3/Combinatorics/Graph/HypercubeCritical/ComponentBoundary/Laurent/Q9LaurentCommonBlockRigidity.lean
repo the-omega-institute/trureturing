@@ -29,8 +29,6 @@ open Q9LaurentCommonTriple (Axes commonAxes inside outside UniqueCommonNeighbor
 open Q9LaurentGainPartition (Side Exponent LaurentIdentity pathEnd)
 open Q9CutBoxRigidity (Point Box HasHeight)
 open Q3StarHeight (isLeaf)
-open private exists_other from D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Laurent.Q9LaurentNormalizedBoxes
-open private exists_third_block from D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Laurent.Q9LaurentDirectionTypes
 
 private abbrev Split := Fin 3 ⊕ Fin 3 ≃ Fin 6
 
