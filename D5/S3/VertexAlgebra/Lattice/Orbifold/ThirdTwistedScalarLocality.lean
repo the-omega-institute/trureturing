@@ -1,11 +1,3 @@
-/- GID: D5/S3/VertexAlgebra/Lattice/Orbifold/ThirdTwistedScalarLocality
-   generality: I
-   mirror-B: D5/B/S3/VertexAlgebra/Lattice/Orbifold/ThirdTwistedScalarLocality
-   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: []
-   utility: none
-   digest: Homogeneous finite numerator clearing for the order-three scalar contraction. -/
-
 import D5.S3.VertexAlgebra.Lattice.Orbifold.ThirdTwistedContractionReciprocity
 import Mathlib.Algebra.MvPolynomial.Eval
 import Mathlib.Data.Fin.VecNotation
@@ -81,7 +73,7 @@ private theorem cubic_factorization {R : Type*} [CommRing R] (C : ℂ →+* R)
 
 /-- The actual locality multiplier clears the homogeneous rational contraction.
 The field may contain independent indeterminates for the two cover variables. -/
-private theorem homogeneousContraction_clear {K : Type*} [Field K] (C : ℂ →+* K)
+theorem homogeneousContraction_clear {K : Type*} [Field K] (C : ℂ →+* K)
     (u : ℂˣ) (hu : IsPrimitiveRoot u 3) (a b : Charge D) (N : ℕ)
     (hN : ∀ j ∈ Finset.range 3, 0 ≤ (N : ℤ) + contractionOrbitExponent D g a b j)
     (x y : K) (hxy : x ^ 3 - y ^ 3 ≠ 0) :
@@ -133,7 +125,7 @@ theorem rationalContraction_clear_homogeneous
 def clearedContractionTaylorPolynomial (u : ℂˣ) (a b : Charge D) (N : ℕ) : Polynomial ℂ :=
   MvPolynomial.eval₂Hom Polynomial.C ![1, Polynomial.X] (clearedContractionNumerator D g u a b N)
 
-private theorem rationalContraction_X_clear
+theorem rationalContraction_X_clear
     (u : ℂˣ) (hu : IsPrimitiveRoot u 3) (a b : Charge D) (N : ℕ)
     (hN : ∀ j ∈ Finset.range 3, 0 ≤ (N : ℤ) + contractionOrbitExponent D g a b j) :
     (1 - RatFunc.X ^ 3) ^ N * rationalContraction D g u a b RatFunc.X =
@@ -160,7 +152,7 @@ private theorem rationalContraction_X_clear
 
 /-- The cleared Taylor expansion is the same numerator as in the rational
 identity. The unexpanded scalar product uses the existing binomial units. -/
-private theorem binomialContraction_X_clear
+theorem binomialContraction_X_clear
     (u : ℂˣ) (hu : IsPrimitiveRoot u 3) (a b : Charge D) (N : ℕ)
     (hN : ∀ j ∈ Finset.range 3, 0 ≤ (N : ℤ) + contractionOrbitExponent D g a b j) :
     (1 - PowerSeries.X ^ 3) ^ N *
@@ -229,18 +221,19 @@ theorem binomialContraction_clear_homogeneous {R : Type*} [CommRing R]
   rw [hpow]
   simp only [Units.val_pow_eq_pow_val, hf, RingHom.comp_apply, e]
 
+open P48qTwistedChargeAction (lattice)
+
 local notation "ζ" => ThirdTwistedChargeCocycle.zeta
 
-/-- The generic scalar contraction exponential after clearing in the ratio coordinate. -/
-theorem scalar_contraction_X_clear (a b : Charge D) (N : ℕ)
+/-- The native contraction exponential after clearing in the ratio coordinate. -/
+theorem scalar_contraction_X_clear (a b : Charge lattice) (N : ℕ)
     (hN : ∀ j ∈ Finset.range 3,
-      0 ≤ (N : ℤ) + contractionOrbitExponent D g a b j) :
-    (1 - PowerSeries.X ^ 3) ^ N *
-        (PowerSeries.exp ℂ).subst (contractionExponent D g (ζ : ℂ) a b) =
-      (clearedContractionTaylorPolynomial D g ζ a b N : PowerSeries ℂ) := by
-  rw [scalar_contraction D g (ζ : ℂ) a b]
+      0 ≤ (N : ℤ) + bilinear lattice ((P48qTwistedChargeAction.g^[j]) a) b) :
+    (1 - PowerSeries.X ^ 3) ^ N * (PowerSeries.exp ℂ).subst (contractionExponent a b) =
+      (clearedContractionTaylorPolynomial lattice P48qTwistedChargeAction.g ζ a b N : PowerSeries ℂ) := by
+  rw [scalar_contraction]
   simpa only [Units.val_pow_eq_pow_val] using
-    binomialContraction_X_clear D g ζ
+    binomialContraction_X_clear lattice P48qTwistedChargeAction.g ζ
       ThirdTwistedChargeCocycle.zeta_primitive a b N hN
 
 end

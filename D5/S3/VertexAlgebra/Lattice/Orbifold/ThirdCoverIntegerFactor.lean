@@ -21,7 +21,7 @@ set_option autoImplicit false
 
 noncomputable section
 
-namespace D5.S3.VertexAlgebra.Lattice.Orbifold.ThirdCoverIntegerFactor
+namespace D5.S3.VertexAlgebra.ThirdCoverIntegerFactor
 
 open MvPolynomial PolynomialFockSugawaraSupport
 open scoped TensorProduct
@@ -206,6 +206,28 @@ theorem mode_join_tmul {s : ℂ} (hsq : s ^ 2 = 3) (r : ℤ)
     rw [← ht, map_mul, join_X_tmul_one, ← smul_mul_assoc, smul_smul,
       mul_inv_cancel₀ hs, one_smul]
 
+/-- The normalized cover mode acts by the ordinary mode on every pure tensor. -/
+theorem normalizedMode_join_tmul {s : ℂ} (hsq : s ^ 2 = 3) (r : ℤ)
+    (P : Fock) (Q : ComplementFock) :
+    Lattice.Orbifold.ThirdCoverVirasoro.current s⁻¹ (3 * r)
+      (join s (ne_zero_of_sq_eq_three hsq) (P ⊗ₜ[ℂ] Q)) =
+      join s (ne_zero_of_sq_eq_three hsq) (mode r P ⊗ₜ[ℂ] Q) := by
+  rw [Lattice.Orbifold.ThirdCoverVirasoro.current, LinearMap.smul_apply, mode_join_tmul hsq,
+    smul_smul,
+    inv_mul_cancel₀ (ne_zero_of_sq_eq_three hsq), one_smul]
+
+/-- The mode intertwiner as an equality of endomorphisms on the full tensor product. -/
+theorem split_normalizedMode {s : ℂ} (hsq : s ^ 2 = 3) (r : ℤ) :
+    (split s (ne_zero_of_sq_eq_three hsq)).toLinearEquiv.conj
+      (Lattice.Orbifold.ThirdCoverVirasoro.current s⁻¹ (3 * r)) =
+      TensorProduct.map (mode r) LinearMap.id := by
+  apply TensorProduct.ext'
+  intro P Q
+  change split s _ (Lattice.Orbifold.ThirdCoverVirasoro.current s⁻¹ (3 * r)
+    (join s _ (P ⊗ₜ[ℂ] Q))) = _
+  rw [normalizedMode_join_tmul hsq, TensorProduct.map_tmul, LinearMap.id_apply]
+  exact (join s _).symm_apply_apply _
+
 /-- Normal ordering is preserved by multiplication of both mode indices by three. -/
 theorem normalPair_join_tmul {s : ℂ} (hsq : s ^ 2 = 3) (i j : ℤ)
     (P : Fock) (Q : ComplementFock) :
@@ -301,4 +323,4 @@ theorem split_integerSugawara {s : ℂ} (hsq : s ^ 2 = 3) (m : ℤ) :
   rw [integerSugawara_join_tmul hsq, TensorProduct.map_tmul, LinearMap.id_apply]
   exact (join s _).symm_apply_apply _
 
-end D5.S3.VertexAlgebra.Lattice.Orbifold.ThirdCoverIntegerFactor
+end D5.S3.VertexAlgebra.ThirdCoverIntegerFactor

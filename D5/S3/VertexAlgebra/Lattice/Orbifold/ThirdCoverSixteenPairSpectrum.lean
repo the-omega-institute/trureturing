@@ -1,32 +1,12 @@
-/- GID: D5/S3/VertexAlgebra/Lattice/Orbifold/ThirdCoverSixteenPairSpectrum
-   generality: I
-   mirror-B: D5/B/S3/VertexAlgebra/Lattice/Orbifold/ThirdCoverSixteenPairSpectrum
-   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: []
-   utility: none
-   digest: Sixteen independent fractional oscillator zero modes, their exact point spectrum and ground line. -/
-
 import D5.S3.VertexAlgebra.Lattice.Orbifold.ThirdCoverGroundSpectrum
+import D5.S3.VertexAlgebra.Lattice.Orbifold.ThirdEigenspacePairingDraft
 import Mathlib.Algebra.BigOperators.Field
-import Mathlib.LinearAlgebra.Eigenspace.Basic
 import Mathlib.LinearAlgebra.FiniteDimensional.Basic
 import Mathlib.RingTheory.MvPolynomial.Basic
 import Mathlib.Tactic.LinearCombination
 import Mathlib.Tactic.NormNum
 
-/-!
-The moving oscillator zero mode for the sixteen complementary pairs in the
-order-three P48q calculation. Each pair carries the two nonzero residue grids,
-at frequencies `(k.val + 1) / 3`. The opposite-frequency Heisenberg pairing
-uses Bakalov and Kac, *Twisted Modules over Lattice Vertex Algebras*,
-arXiv:math/0402315v1, (4.23), as in `ThirdCoverComplement`.
-
-The oscillator energy comes from the explicit native Fock monomial calculation
-in `PolynomialFockLZeroSpectrum.lZero_spectrum`. The ordinary vacuum slice of
-the cover splitting gives `ThirdCoverGroundSpectrum.fractionalVirasoro_zero_monomial`,
-with the native energy divided by three and the cover shift `1 / 9` per pair.
-Here that calculation acts on each independent moving polynomial factor.
--/
+/-! The moving oscillator zero mode in Nebe's dual pair coordinates. -/
 
 set_option autoImplicit false
 
@@ -36,6 +16,7 @@ namespace D5.S3.VertexAlgebra.Lattice.Orbifold.ThirdCoverSixteenPairSpectrum
 
 open MvPolynomial Module.End
 open ThirdCoverIntegerFactor ThirdCoverComplement ThirdCoverGroundSpectrum
+open ThirdEigenspacePairing
 
 /-- The first coordinate indexes the dual lattice pair. The second indexes
 the native oscillator frequencies in the two nonzero residue classes. -/
@@ -200,21 +181,6 @@ theorem fractionalLZero_eigenvalue {P : MovingFock} {a : ℂ} (hP : P ≠ 0)
     simpa using h d
   exact ⟨totalOccupationEnergy d, (eigenvalue_of_nonzero_coeff heig hd).symm⟩
 
-/-- The point spectrum consists exactly of the nonnegative integer shifts by thirds of `16 / 9`. -/
-theorem fractionalLZero_eigenvalue_iff (a : ℂ) :
-    (∃ P : MovingFock, P ≠ 0 ∧ fractionalLZero P = a • P) ↔
-      ∃ n : ℕ, a = (16 / 9 : ℂ) + (n : ℂ) / 3 := by
-  constructor
-  · rintro ⟨P, hP, heig⟩
-    exact fractionalLZero_eigenvalue hP heig
-  · rintro ⟨n, rfl⟩
-    let d : Occupation := Finsupp.single (0, ⟨0, by decide⟩) n
-    refine ⟨monomial d 1, ?_, ?_⟩
-    · exact fun h => one_ne_zero (monomial_eq_zero.mp h)
-    · have hd : totalOccupationEnergy d = n := by
-        simp [d, totalOccupationEnergy, Finsupp.sum_single_index]
-      rw [fractionalLZero_monomial, hd]
-
 private theorem fractionalLZero_one : fractionalLZero (1 : MovingFock) = (16 / 9 : ℂ) • 1 := by
   simpa [totalOccupationEnergy] using fractionalLZero_monomial (0 : Occupation) (1 : ℂ)
 
@@ -257,14 +223,31 @@ theorem fractionalLZero_minimum :
     rw [hx]
     exact le_add_of_nonneg_right (div_nonneg (Nat.cast_nonneg n) (by norm_num))
 
+/-- In the actual Nebe bases the same index labels a dual pair, so its two
+residue grids give one lifted fractional oscillator. -/
+theorem p48q_fractionalLZero_spectrum {ζ : ℂ} (hζ : IsPrimitiveRoot ζ 3) :
+    (∀ i j : Fin 16,
+      p48qForm (p48qBasis hζ i) (p48qOppositeBasis hζ j) = if i = j then 1 else 0) ∧
+    (∀ (i : Fin 16) (Q : ComplementFock) (R : MvPolynomial (OtherVariable i) ℂ),
+      pairLZero i (rename (Prod.mk i) Q * rename Subtype.val R) =
+        rename (Prod.mk i) (fractionalVirasoro 0 Q) * rename Subtype.val R) ∧
+    (∀ (d : Occupation) (a : ℂ), fractionalLZero (monomial d a) =
+      ((16 / 9 : ℂ) + (totalOccupationEnergy d : ℂ) / 3) • monomial d a) ∧
+    IsLeast {x : ℝ | ∃ P : MovingFock, P ≠ 0 ∧ fractionalLZero P = (x : ℂ) • P} (16 / 9) ∧
+    fractionalLZero.eigenspace (16 / 9 : ℂ) =
+      Submodule.span ℂ ({(1 : MovingFock)} : Set MovingFock) ∧
+    Module.finrank ℂ (fractionalLZero.eigenspace (16 / 9 : ℂ)) = 1 :=
+  ⟨p48q_pair_bases hζ, pairLZero_separated, fractionalLZero_monomial,
+    fractionalLZero_minimum, fractionalLZero_ground_eigenspace, fractionalLZero_ground_finrank⟩
+
 #print axioms pairLZero_monomial
 #print axioms pairLZero_separated
 #print axioms fractionalLZero_monomial
 #print axioms fractionalLZero_coeff
 #print axioms fractionalLZero_eigenvalue
-#print axioms fractionalLZero_eigenvalue_iff
 #print axioms fractionalLZero_minimum
 #print axioms fractionalLZero_ground_eigenspace
 #print axioms fractionalLZero_ground_finrank
+#print axioms p48q_fractionalLZero_spectrum
 
 end D5.S3.VertexAlgebra.Lattice.Orbifold.ThirdCoverSixteenPairSpectrum

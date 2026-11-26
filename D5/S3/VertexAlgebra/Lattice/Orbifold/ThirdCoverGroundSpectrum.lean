@@ -4,11 +4,10 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Fractional zero-mode monomial weights, the exact point spectrum and the ground line. -/
+   digest: Fractional zero-mode monomial weights, the ground line and the least eigenvalue. -/
 
 import D5.S3.VertexAlgebra.Lattice.Orbifold.ThirdCoverComplement
 import D5.S3.VertexAlgebra.PolynomialFockLZeroSpectrum
-import Mathlib.Data.Finsupp.Weight
 
 /-!
 The ground line and monomial weights of the concrete third-cover complement.
@@ -40,16 +39,20 @@ private theorem energy_mapDomain (d : Complement →₀ ℕ) :
 
 @[simp] theorem occupationEnergy_eq_zero_iff (d : Complement →₀ ℕ) :
     occupationEnergy d = 0 ↔ d = 0 := by
-  letI : Finsupp.NonTorsionWeight ℕ (fun k : Complement => k.val + 1) :=
-    ⟨by
-      intro r k h
-      rw [nsmul_eq_mul] at h
-      exact (Nat.mul_eq_zero.mp h).resolve_right (Nat.succ_ne_zero k.val)⟩
-  have hw : Finsupp.weight (fun k : Complement => k.val + 1) d = occupationEnergy d := by
-    simp only [Finsupp.weight_apply, occupationEnergy, Nat.nsmul_eq_mul]
-    exact Finsupp.sum_congr fun k _ => Nat.mul_comm _ _
-  rw [← hw]
-  exact Finsupp.weight_eq_zero_iff_eq_zero (fun k : Complement => k.val + 1)
+  constructor
+  · intro hd
+    apply Finsupp.ext
+    intro k
+    change d k = 0
+    by_contra hk
+    have hle : (k.val + 1) * d k ≤ occupationEnergy d :=
+      Finset.single_le_sum (f := fun j : Complement => (j.val + 1) * d j)
+        (fun _ _ => Nat.zero_le _) (Finsupp.mem_support_iff.mpr hk)
+    have hpos := Nat.mul_pos (Nat.succ_pos k.val) (Nat.pos_of_ne_zero hk)
+    rw [hd] at hle
+    exact Nat.not_lt_of_ge hle hpos
+  · rintro rfl
+    simp [occupationEnergy]
 
 private theorem nativeLZero_monomial (d : ℕ →₀ ℕ) (a : ℂ) :
     L 0 (monomial d a) = (energy d : ℂ) • monomial d a := by
@@ -143,31 +146,22 @@ theorem fractionalVirasoro_zero_ground_eigenspace :
     simpa [LinearMap.mem_ker, LinearMap.sub_apply, LinearMap.smul_apply,
       LinearMap.id_apply, sub_eq_zero] using hvac
 
-/-- The point spectrum is exactly the nonnegative integer shifts by thirds of `1 / 9`. -/
-theorem fractionalVirasoro_zero_eigenvalue (a : ℂ) :
-    (∃ Q : ComplementFock, Q ≠ 0 ∧ fractionalVirasoro 0 Q = a • Q) ↔
-      ∃ n : ℕ, a = (1 / 9 : ℂ) + (n : ℂ) / 3 := by
+/-- The eigenvalue of any nonzero eigenvector is a nonnegative occupation shift of `1 / 9`. -/
+theorem fractionalVirasoro_zero_eigenvalue {Q : ComplementFock} {a : ℂ} (hQ : Q ≠ 0)
+    (heig : fractionalVirasoro 0 Q = a • Q) :
+    ∃ n : ℕ, a = (1 / 9 : ℂ) + (n : ℂ) / 3 := by
   classical
-  constructor
-  · rintro ⟨Q, hQ, heig⟩
-    obtain ⟨d, hd⟩ : ∃ d : Complement →₀ ℕ, Q.coeff d ≠ 0 := by
-      by_contra! h
-      apply hQ
-      apply MvPolynomial.ext
-      intro d
-      simpa using h d
-    exact ⟨occupationEnergy d, (eigenvalue_eq_of_coeff_ne_zero heig hd).symm⟩
-  · rintro ⟨n, rfl⟩
-    let d : Complement →₀ ℕ := Finsupp.single ⟨0, by decide⟩ n
-    refine ⟨monomial d 1, ?_, ?_⟩
-    · exact fun h => one_ne_zero (monomial_eq_zero.mp h)
-    · have hd : occupationEnergy d = n := by
-        simp [d, occupationEnergy, Finsupp.sum_single_index]
-      rw [fractionalVirasoro_zero_monomial, hd]
+  obtain ⟨d, hd⟩ : ∃ d : Complement →₀ ℕ, Q.coeff d ≠ 0 := by
+    by_contra! h
+    apply hQ
+    apply MvPolynomial.ext
+    intro d
+    simpa using h d
+  exact ⟨occupationEnergy d, (eigenvalue_eq_of_coeff_ne_zero heig hd).symm⟩
 
 theorem fractionalVirasoro_zero_eigenvalue_lower_bound {Q : ComplementFock} {a : ℂ}
     (hQ : Q ≠ 0) (heig : fractionalVirasoro 0 Q = a • Q) : (1 / 9 : ℝ) ≤ a.re := by
-  obtain ⟨n, rfl⟩ := (fractionalVirasoro_zero_eigenvalue a).mp ⟨Q, hQ, heig⟩
+  obtain ⟨n, rfl⟩ := fractionalVirasoro_zero_eigenvalue hQ heig
   simp only [Complex.add_re, Complex.div_ofNat_re, Complex.one_re, Complex.natCast_re]
   exact le_add_of_nonneg_right (div_nonneg (Nat.cast_nonneg n) (by norm_num))
 
