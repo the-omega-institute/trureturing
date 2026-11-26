@@ -755,4 +755,72 @@ public theorem List.isPrefixOf_toArray : type_of% @_root_.List.isPrefixOf_toArra
         rw [List.isPrefixOf_cons_cons, ← ih (ys := ys) (fun small => fits (Nat.succ_le_succ small))]
         exact (Bool.and_false _).symm
 
+private def zipListInto [Monad m] (f : α → β → m γ) : List α → List β → Array γ → m (Array γ)
+  | a :: as, b :: bs, acc => f a b >>= fun c => zipListInto f as bs (acc.push c)
+  | _, _, acc => pure acc
+
+private theorem zipRightNil [Monad m] (f : α → β → m γ) (xs : List α) :
+    zipListInto f xs [] = pure := by
+  cases xs <;> rfl
+
+private theorem zipArrayLists [Monad m] (as : Array α) (bs : Array β) (f : α → β → m γ) (i : Nat) :
+    Array.zipWithMAux as bs f i = zipListInto f (as.toList.drop i) (bs.toList.drop i) := by
+  let measure (s : (_ : Nat) ×' Array γ) : Nat := PSigma.casesOn s fun i _ => as.size - i
+  let act (s : (_ : Nat) ×' Array γ) (recur : ∀ t, measure t < measure s → m (Array γ)) :=
+    PSigma.casesOn (motive := fun x => (∀ t, measure t < measure x → m (Array γ)) → m (Array γ))
+      s (fun j acc recur =>
+        if ha : j < as.size then
+          if hb : j < bs.size then
+            f as[j] bs[j] >>= fun c => recur ⟨j+1, acc.push c⟩ (Nat.sub_succ_lt_self _ _ ha)
+          else pure acc
+        else pure acc) recur
+  have same (fuel j : Nat) (h : as.size - j < fuel) :
+      (fun acc : Array γ => WellFounded.Nat.fix.go measure act fuel ⟨j, acc⟩ h) =
+      zipListInto f (as.toList.drop j) (bs.toList.drop j) := by
+    induction fuel generalizing j with
+    | zero => exact False.elim (Nat.not_lt_zero _ h)
+    | succ fuel ih =>
+      dsimp only [WellFounded.Nat.fix.go, act]
+      by_cases ha : j < as.size
+      · apply (dependentBranch ha _ _).trans
+        rw [List.drop_eq_getElem_cons (l := as.toList) (i := j) ha]
+        by_cases hb : j < bs.size
+        · apply (dependentBranch hb _ _).trans
+          rw [List.drop_eq_getElem_cons (l := bs.toList) (i := j) hb]
+          exact congrArg (fun tail (acc : Array γ) => f as[j] bs[j] >>= fun c => tail (acc.push c))
+            (ih (j+1) (Nat.lt_of_lt_of_le (Nat.sub_succ_lt_self _ _ ha) (Nat.le_of_lt_succ h)))
+        · rw [List.drop_of_length_le (Nat.le_of_not_gt hb), zipRightNil]
+          exact dependentElse hb _ _
+      · rw [List.drop_of_length_le (Nat.le_of_not_gt ha)]
+        exact dependentElse ha _ _
+  delta Array.zipWithMAux Array.zipWithMAux._unary WellFounded.Nat.fix
+  have fuel : as.size - i < WellFounded.Nat.eager (as.size - i + 1) := by
+    unfold WellFounded.Nat.eager
+    split <;> exact Nat.lt_succ_self _
+  exact same _ i fuel
+
+public theorem List.zipWithMAux_toArray_succ : type_of% @_root_.List.zipWithMAux_toArray_succ := by
+  intro m α β γ mon as bs f i acc
+  rw [zipArrayLists, zipArrayLists]
+  change zipListInto f (as.drop (i+1)) (bs.drop (i+1)) acc =
+    zipListInto f (as.tail.drop i) (bs.tail.drop i) acc
+  rw [List.drop_tail, List.drop_tail]
+
+public theorem List.zipWithMAux_toArray_succ' : type_of% @_root_.List.zipWithMAux_toArray_succ' := by
+  intros
+  rw [zipArrayLists, zipArrayLists]
+  rfl
+
+public theorem Array.zipWithMAux.eq_1 : type_of% @_root_.Array.zipWithMAux.eq_1 := by
+  intro α β γ m mon as bs f i acc
+  rw [zipArrayLists]
+  by_cases ha : i < as.size
+  · rw [dite_eq_left ha, List.drop_eq_getElem_cons (l := as.toList) (i := i) ha]
+    by_cases hb : i < bs.size
+    · rw [dite_eq_left hb, List.drop_eq_getElem_cons (l := bs.toList) (i := i) hb]
+      exact congrArg (fun tail => f as[i] bs[i] >>= fun c => tail (acc.push c)) (zipArrayLists as bs f (i+1)).symm
+    · rw [dite_eq_right hb, List.drop_of_length_le (Nat.le_of_not_gt hb), zipRightNil]
+  · rw [dite_eq_right ha, List.drop_of_length_le (Nat.le_of_not_gt ha)]
+    rfl
+
 end OmegaChecks.InitPort.Alternatives
