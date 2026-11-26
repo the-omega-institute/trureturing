@@ -5,6 +5,9 @@ public import Init.Data.Range.Polymorphic.Iterators
 public import Init.Data.Iterators.Combinators.Monadic.Take
 public import Init.Data.Iterators.Lemmas.Consumers.Loop
 import Init.Data.Iterators.Lemmas.Basic
+public import Init.Data.Iterators.Lemmas.Combinators.Attach
+import all Init.Data.Iterators.Combinators.Monadic.Attach
+import Init.Data.Iterators.Lemmas.Combinators.Monadic.Attach
 public import Init.Data.Iterators.Lemmas.Combinators.Append
 public import Init.Data.Iterators.Lemmas.Combinators.FilterMap
 import all Init.Data.Iterators.Combinators.Monadic.FilterMap
@@ -1021,5 +1024,26 @@ public theorem Std.Iter.toList_uLift {α β : Type u} [Iterator α Id β] {it : 
     | yield next out h => exact congrArg (List.cons (ULift.up out)) (ihy h)
     | skip next h => exact ihs h
     | done h => rfl
+
+private theorem collectAttach {α β : Type w} [Iterator α Id β] [Finite α Id] {P : β → Prop}
+    (it : IterM (α := α) Id β) (hP : ∀ out, it.IsPlausibleIndirectOutput out → P out) :
+    (collectInto (it.attachWith P hP) #[]).toList.unattach = (collectInto it #[]).toList := by
+  induction it using (Finite.wf (α := α) (m := Id) (β := β)).induction with
+  | h it ih =>
+    rw [collectList_eq (it.attachWith P hP), collectList_eq it, IterM.step_attachWith]
+    dsimp only [Functor.map, Id.run]
+    rw [Shrink.inflate_deflate]
+    cases it.step.inflate using PlausibleIterStep.casesOn with
+    | yield next out h =>
+      exact congrArg (List.cons out) (ih next ⟨_, rfl, h⟩ (fun x hx => hP x (.indirect ⟨_, rfl, h⟩ hx)))
+    | skip next h =>
+      exact ih next ⟨_, rfl, h⟩ (fun x hx => hP x (.indirect ⟨_, rfl, h⟩ hx))
+    | done h => rfl
+
+public theorem Std.Iter.unattach_toList_attachWith {α β : Type w} {P : β → Prop} [Iterator α Id β]
+    {it : Iter (α := α) β} {hP} [Finite α Id] :
+    (Std.Iter.Total.toList (it.attachWith P hP).ensureTermination).unattach =
+      Std.Iter.Total.toList it.ensureTermination := by
+  exact collectAttach it.toIterM (fun out h => hP out (Iter.isPlausibleIndirectOutput_iff_isPlausibleIndirectOutput_toIterM.mpr h))
 
 end OmegaChecks.InitPort.Alternatives
