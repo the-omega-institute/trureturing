@@ -168,4 +168,74 @@ public theorem List.getLast?_attach : type_of% @_root_.List.getLast?_attach := b
   intro α xs
   exact List.getLast?_attachWith
 
+public theorem List.map_inj_right : type_of% @_root_.List.map_inj_right := by
+  intro α β l l' f injective
+  constructor
+  · intro eq
+    apply _root_.List.ext_getElem
+    · have len := congrArg _root_.List.length eq
+      simpa only [_root_.List.length_map] using len
+    · intro i hi hj
+      apply injective
+      have value := congrArg (fun xs => xs[i]?) eq
+      rw [_root_.List.getElem?_eq_getElem (show i < (l.map f).length by rw [_root_.List.length_map]; exact hi),
+        _root_.List.getElem?_eq_getElem (show i < (l'.map f).length by rw [_root_.List.length_map]; exact hj),
+        _root_.List.getElem_map, _root_.List.getElem_map] at value
+      exact Option.some.inj value
+  · intro eq
+    exact congrArg (_root_.List.map f) eq
+
+public theorem List.map_filterMap : type_of% @_root_.List.map_filterMap := by
+  intro α β γ f g xs
+  induction xs with
+  | nil => rfl
+  | cons a as ih =>
+    rw [_root_.List.filterMap_cons, _root_.List.filterMap_cons]
+    cases f a <;> simp only [Option.map, _root_.List.map_cons, ih]
+
+private theorem filterMapValues {p : α → Prop} {f : α → Option β} {g : Subtype p → Option β}
+    (xs : List (Subtype p)) (step : ∀ x, g x = f x.val) :
+    xs.filterMap g = (xs.map Subtype.val).filterMap f :=
+  List.filterMap_subtype (fun x h => step ⟨x,h⟩)
+
+private theorem valueOfPbind {p : β → Prop} (o : Option β) (h : ∀ x, o = some x → p x) :
+    (o.pbind (fun x e => some (⟨x, h x e⟩ : Subtype p))).map Subtype.val = o := by
+  cases o <;> rfl
+
+public theorem List.attach_filterMap : type_of% @_root_.List.attach_filterMap := by
+  intro α β xs f
+  apply (List.map_inj_right (f := Subtype.val) (fun _ _ => Subtype.ext)).mp
+  rw [_root_.List.attach_map_subtype_val, List.map_filterMap]
+  apply Eq.symm
+  apply Eq.trans (filterMapValues xs.attach (f := f) _)
+  · rw [_root_.List.attach_map_subtype_val]
+  · intro x
+    exact valueOfPbind _ _
+
+private theorem projectFilter (p : α → Bool) (xs : List α) {q : α → Prop}
+    (g : Subtype q → Option α) (H : ∀ x, g x = if p x.val then some x.val else none)
+    (ys : List (Subtype q)) (eq : ys.map Subtype.val = xs) : ys.filterMap g = xs.filter p := by
+  have via := filterMapValues (f := fun x => if p x then some x else none) ys H
+  rw [eq] at via
+  apply via.trans
+  clear via eq
+  induction xs with
+  | nil => rfl
+  | cons a as ih =>
+    rw [_root_.List.filterMap_cons, _root_.List.filter_cons]
+    cases p a <;> simp only [Bool.false_eq_true, ite_false, ite_true, ih]
+
+public theorem List.attach_filter : type_of% @_root_.List.attach_filter := by
+  intro α xs p
+  apply (List.map_inj_right (f := Subtype.val) (fun _ _ => Subtype.ext)).mp
+  rw [_root_.List.attach_map_subtype_val, List.map_filterMap]
+  apply Eq.symm
+  apply projectFilter p xs _ _ xs.attach (_root_.List.attach_map_subtype_val xs)
+  intro x
+  by_cases h : p x.val = true
+  · rw [dite_eq_left h, ite_eq_left h]
+    rfl
+  · rw [dite_eq_right h, ite_eq_right h]
+    rfl
+
 end OmegaChecks.InitPort.Alternatives
