@@ -148,7 +148,7 @@ proof_shape: determinant_reindex: bind-only; consumers=determinant_cq_bound
 proof_shape: determinant_cq_bound: bind-only; consumers=result
 -/
 
-import D5.S3.Combinatorics.Hypergraphs.FinnerProductMeasure
+import OmegaMath.MeasureTheory.Integral.FiniteProduct
 import D5.S3.Quantum.Subentropy.POVMGram
 import D5.S3.Quantum.Measurement.FiniteDetectionDarkSpace
 import D5.S3.Quantum.Subentropy.Basic
@@ -164,6 +164,7 @@ namespace D5.S3.Quantum.Measurement.ConditionalSubentropyGuessingBound
 open D5.S3.Geometry.AlphaGeometry.PositiveSimplexGeometryAndMixing (chart)
 open ProbabilityTheory
 set_option autoImplicit false
+set_option Elab.async false
 set_option backward.isDefEq.respectTransparency false
 open Matrix MeasureTheory ProbabilityTheory
 open scoped ComplexOrder
@@ -195,7 +196,7 @@ open scoped ENNReal
 set_option backward.isDefEq.respectTransparency false in
 private lemma lintegral_fin_prod {n : ℕ} {E : Fin n → Type*} {mE : ∀ i, MeasurableSpace (E i)} (μ : (i : Fin n) → Measure (E i)) [∀ i, SigmaFinite (μ i)] (f : (i : Fin n) → E i → ℝ≥0∞) (hf : ∀ i, Measurable (f i)) :
     (∫⁻ x, ∏ i, f i (x i) ∂Measure.pi μ) = ∏ i, ∫⁻ x, f i x ∂μ i := by
-  exact D5.S3.Combinatorics.Hypergraphs.FinnerProductMeasure.lintegral_fin_prod μ f hf
+  exact Omega.MeasureTheory.lintegral_fin_prod μ f hf
 private lemma pi_withDensity_fin {n : ℕ} {E : Fin n → Type*} {mE : ∀ i, MeasurableSpace (E i)} (μ : (i : Fin n) → Measure (E i)) [∀ i, SigmaFinite (μ i)] (f : (i : Fin n) → E i → ℝ≥0∞) (hf : ∀ i, Measurable (f i))
     [∀ i, SigmaFinite ((μ i).withDensity (f i))] : Measure.pi (fun i => (μ i).withDensity (f i)) = (Measure.pi μ).withDensity (fun x => ∏ i, f i (x i)) :=
   by

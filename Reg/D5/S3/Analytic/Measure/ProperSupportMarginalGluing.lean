@@ -157,7 +157,7 @@ abbrev equalityArena : Arena where
           ∏ i ∈ S j, h i (x i)))
 
 theorem equality_source_bridge :
-    (type_of% @finner_equality_iff_common_profiles.{u,v,w}) ↔
+    (type_of% @finner_equality_iff_common_profiles.{w,u,v}) ↔
       equalityArena.{u,v,w}.Law actual := Iff.rfl
 
 private theorem equalityRejectedLaw : ¬ equalityArena.{u,v,w}.Law rejected := by
@@ -177,10 +177,10 @@ private theorem equalityRejectedLaw : ¬ equalityArena.{u,v,w}.Law rejected := b
   simpa [rejected, realize] using hr
 
 def equalityFamily : Registration equalityArena.{u,v,w}
-    (type_of% @finner_equality_iff_common_profiles.{u,v,w}) where
+    (type_of% @finner_equality_iff_common_profiles.{w,u,v}) where
   actual := actual
   bridge := equality_source_bridge
-  variation := ⟨@finner_equality_iff_common_profiles.{u,v,w}, rejected, equalityRejectedLaw⟩
+  variation := ⟨@finner_equality_iff_common_profiles.{w,u,v}, rejected, equalityRejectedLaw⟩
   sensitivity := by
     constructor
     · intro role
@@ -191,7 +191,7 @@ def equalityFamily : Registration equalityArena.{u,v,w}
   dependence := dependence
 
 def equalityRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@finner_equality_iff_common_profiles.{u,v,w})
+    (@finner_equality_iff_common_profiles.{w,u,v})
     (Realization signature.{u,v}) Unit Unit where
   unitName := `D5.S3.Analytic.Measure.ProperSupportMarginalGluing.finner_equality_iff_common_profiles.__information_unit
   realizationName := `Reg.D5.S3.Analytic.Measure.ProperSupportMarginalGluing.equalityFamily
