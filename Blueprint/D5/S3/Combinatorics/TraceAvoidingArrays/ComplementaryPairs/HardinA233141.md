@@ -50,6 +50,10 @@ $$\operatorname{PowerSeries.mk}\left(\lambda n: Nat \mapsto (\operatorname{Finse
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/ComplementaryPairs/HardinA233141.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/hardin233141` (proved) by `D5/S3/Combinatorics/TraceAvoidingArrays/ComplementaryPairs/HardinA233141.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hardin233141","declaration_gid":"D5/S3/Combinatorics/TraceAvoidingArrays/ComplementaryPairs/HardinA233141.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* R. H. Hardin; Colin Barker; OEIS Foundation Inc. (2013). *OEIS A233141: complementary exclusion on a six-colour two-column strip*. URL: <https://oeis.org/A233141>.

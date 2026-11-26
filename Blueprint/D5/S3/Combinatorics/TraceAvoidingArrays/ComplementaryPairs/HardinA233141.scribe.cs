@@ -47,7 +47,9 @@ internal sealed class HardinA233141Document : IScribeDocumentDefinition
                         + "25, -134, 134, -25, 1 in decreasing lag order. Coefficient comparison, including index zero, "
                         + "gives the polynomial product identity. The denominator has constant coefficient one, "
                         + "allowing its inverse in the rational formal power series ring."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("hardin233141"),
+                    ResolutionKind.Proved)))));
 
     private static Formula LegalFormula() => All("n", V("Nat"), All("A", ArrayType(V("n")),
         Iff(Call("Legal", V("A")), LegalBody())));
