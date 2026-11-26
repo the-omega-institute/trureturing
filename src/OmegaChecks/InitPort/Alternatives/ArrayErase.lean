@@ -281,4 +281,35 @@ public theorem Array.flatten_filter_ne_empty : type_of% @_root_.Array.flatten_fi
       | cons x xs => exact decide_eq_true (fun e => List.cons_ne_nil x xs (congrArg Array.toList e))
   exact (congrArg Array.flatten same).trans Array.flatten_filter_not_isEmpty
 
+public theorem Array.flatten_eq_push_iff : type_of% @_root_.Array.flatten_eq_push_iff := by
+  intro α xss ys y
+  constructor
+  · intro eq
+    induction len : xss.size using Nat.strongRecOn generalizing xss with
+    | ind n ih =>
+      by_cases zero : xss.size = 0
+      · have empty := Array.eq_empty_of_size_eq_zero zero
+        rw [empty, Array.flatten_empty] at eq
+        exact (Array.push_ne_empty eq.symm).elim
+      · obtain ⟨pre, last, rfl⟩ := Array.eq_push_of_size_ne_zero zero
+        rw [Array.flatten_push] at eq
+        by_cases empty : last.size = 0
+        · have smaller : pre.size < n := by rw [←len, Array.size_push]; exact Nat.lt_succ_self _
+          obtain rfl := Array.eq_empty_of_size_eq_zero empty
+          rw [Array.append_empty] at eq
+          obtain ⟨as, bs, cs, shape, emptyTail, prefixEq⟩ := ih _ smaller eq rfl
+          refine ⟨as, bs, cs.push #[], ?_, ?_, prefixEq⟩
+          · rw [shape, Array.push_append]
+          · intro xs mem
+            exact (Array.mem_push.mp mem).elim (emptyTail _) id
+        · obtain ⟨bs, c, rfl⟩ := Array.eq_push_of_size_ne_zero empty
+          rw [Array.append_push] at eq
+          have cEq := Array.back_eq_of_push_eq eq
+          cases cEq
+          exact ⟨pre, bs, #[], Array.append_empty.symm,
+            fun xs mem => (Array.not_mem_empty _ mem).elim, (Array.pop_eq_of_push_eq eq).symm⟩
+  · rintro ⟨as, bs, cs, rfl, emptyTail, rfl⟩
+    rw [Array.flatten_append, Array.flatten_eq_empty_iff.mpr emptyTail, Array.append_empty,
+      Array.flatten_push, Array.append_push]
+
 end OmegaChecks.InitPort.Alternatives
