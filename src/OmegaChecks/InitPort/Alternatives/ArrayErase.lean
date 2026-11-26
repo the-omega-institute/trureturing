@@ -68,22 +68,33 @@ public theorem List.set_eraseIdx_gt : type_of% @_root_.List.set_eraseIdx_gt := b
 
 public theorem List.mem_eraseIdx_iff_getElem? : type_of% @_root_.List.mem_eraseIdx_iff_getElem? := by
   intro α x xs k
-  constructor
-  · intro mem
-    obtain ⟨i, val⟩ := _root_.List.mem_iff_getElem?.mp mem
-    rw [List.getElem?_eraseIdx] at val
-    by_cases h : i < k
-    · exact ⟨i, Nat.ne_of_lt h, (ite_eq_left h).symm.trans val⟩
-    · exact ⟨i+1, Nat.ne_of_gt (Nat.lt_succ_of_le (Nat.le_of_not_gt h)), (ite_eq_right h).symm.trans val⟩
-  · intro ⟨i, ne, val⟩
-    apply _root_.List.mem_iff_getElem?.mpr
-    by_cases h : i < k
-    · exact ⟨i, List.getElem?_eraseIdx.trans ((ite_eq_left h).trans val)⟩
-    · have greater := Nat.lt_of_le_of_ne (Nat.le_of_not_gt h) (Ne.symm ne)
-      cases i with
-      | zero => exact (Nat.not_lt_zero _ greater).elim
-      | succ j =>
-        exact ⟨j, List.getElem?_eraseIdx.trans ((ite_eq_right (Nat.not_lt_of_ge (Nat.le_of_lt_succ greater))).trans val)⟩
+  induction xs generalizing k with
+  | nil =>
+    exact ⟨(fun h => nomatch h), (fun ⟨i, ne, h⟩ => nomatch h)⟩
+  | cons a xs ih =>
+    cases k with
+    | zero =>
+      constructor
+      · intro mem
+        obtain ⟨i, e⟩ := List.mem_iff_getElem?.mp mem
+        exact ⟨i+1, Nat.succ_ne_zero _, e⟩
+      · rintro ⟨i, ne, e⟩
+        cases i with
+        | zero => exact (ne rfl).elim
+        | succ i => exact List.mem_iff_getElem?.mpr ⟨i, e⟩
+    | succ k =>
+      constructor
+      · intro mem
+        rcases List.mem_cons.mp mem with rfl | tail
+        · exact ⟨0, Nat.zero_ne_add_one _, rfl⟩
+        · obtain ⟨i, ne, e⟩ := (ih (k := k)).mp tail
+          exact ⟨i+1, fun eq => ne (Nat.succ.inj eq), e⟩
+      · rintro ⟨i, ne, e⟩
+        cases i with
+        | zero =>
+          have same : a = x := Option.some.inj e
+          exact same ▸ List.Mem.head _
+        | succ i => exact List.Mem.tail _ ((ih (k := k)).mpr ⟨i, fun h => ne (congrArg Nat.succ h), e⟩)
 
 public theorem List.mem_eraseIdx_iff_getElem : type_of% @_root_.List.mem_eraseIdx_iff_getElem := by
   intro α x xs k
