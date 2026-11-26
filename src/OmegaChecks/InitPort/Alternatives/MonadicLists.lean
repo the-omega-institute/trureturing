@@ -259,4 +259,96 @@ public theorem List.flatMapM_subtype : type_of% @_root_.List.flatMapM_subtype :=
         (congrArg (fun v => step v (List.flatMapM.loop g xs.unattach)) (hf a.1 a.2))
   exact congrFun (loop xs) []
 
+
+private def forInNext [Monad m] (action : β → m (ForInStep β)) (tail : β → m β) (b : β) : m β :=
+  action b >>= fun | .done v => pure v | .yield v => tail v
+
+private theorem listForInReindex [Monad m] {as : List α} {bs : List γ} (map : α → γ)
+    (f : (x : α) → x ∈ as → β → m (ForInStep β))
+    (g : (x : γ) → x ∈ bs → β → m (ForInStep β))
+    (same : ∀ a ha hb, f a ha = g (map a) hb) (xs : List α) (ys : List γ)
+    (related : xs.map map = ys) (left : ∃ s, s ++ xs = as) (right : ∃ s, s ++ ys = bs) :
+    (fun b => List.forIn'.loop as f xs b left) = fun b => List.forIn'.loop bs g ys b right := by
+  subst ys
+  induction xs with
+  | nil => rfl
+  | cons a xs ih =>
+    let leftMem : a ∈ as := by
+      obtain ⟨s, rfl⟩ := left
+      exact List.mem_append_right s List.mem_cons_self
+    let rightMem : map a ∈ bs := by
+      obtain ⟨s, rfl⟩ := right
+      exact List.mem_append_right s List.mem_cons_self
+    have leftTail : ∃ s, s ++ xs = as := by
+      obtain ⟨s, rfl⟩ := left
+      exact ⟨s ++ [a], (List.append_assoc ..)⟩
+    have rightTail : ∃ s, s ++ xs.map map = bs := by
+      obtain ⟨s, rfl⟩ := right
+      exact ⟨s ++ [map a], (List.append_assoc ..)⟩
+    exact (congrArg (forInNext (f a leftMem)) (ih leftTail rightTail)).trans
+      (congrArg (fun head => forInNext head _) (same a leftMem rightMem))
+
+public theorem List.forIn'_cons : type_of% @_root_.List.forIn'_cons := by
+  intro m α β mon a xs f b
+  let tail (x : α) (hx : x ∈ xs) := f x (List.mem_cons_of_mem a hx)
+  have same := listForInReindex id f tail (fun _ _ _ => rfl) xs xs (List.map_id xs)
+    (show ∃ s, s ++ xs = a :: xs from ⟨[a], rfl⟩) ⟨[], rfl⟩
+  exact congrFun (congrArg (forInNext (f a List.mem_cons_self)) same) b
+
+public theorem List.forIn_cons : type_of% @_root_.List.forIn_cons := by
+  intro m α β mon f a xs b
+  exact List.forIn'_cons (fun a _ => f a) b
+
+public theorem List.forIn'_map : type_of% @_root_.List.forIn'_map := by
+  intro m α β γ init mon law xs g f
+  exact congrFun (listForInReindex g (fun a h => f (g a) (List.mem_map_of_mem h))
+    f (fun _ _ _ => rfl) xs (xs.map g) rfl ⟨[], rfl⟩ ⟨[], rfl⟩).symm init
+
+public theorem List.forIn_map : type_of% @_root_.List.forIn_map := by
+  intro m α β γ init mon law xs g f
+  exact List.forIn'_map _ (fun x _ => f x)
+
+
+private theorem arrayListForIn [Monad m] (l : List α)
+    (f : (a : α) → a ∈ l.toArray → β → m (ForInStep β)) (rest : List α)
+    (k : Nat) (length : l.length = rest.length + k) (drop : l.drop k = rest)
+    (suffix : ∃ s, s ++ rest = l) :
+    Array.forIn'.loop l.toArray f rest.length (Nat.le.intro length.symm) =
+      fun b => List.forIn'.loop l (fun a h => f a (List.mem_toArray.mpr h)) rest b suffix := by
+  induction rest generalizing k with
+  | nil => rfl
+  | cons a rest ih =>
+    have nextLength : l.length = rest.length + (k+1) := by
+      rw [length, List.length_cons, Nat.succ_add]
+      rfl
+    have hk : k < l.length := by
+      rw [nextLength]
+      exact Nat.le_add_left _ _
+    have pair := (List.drop_eq_getElem_cons hk).symm.trans drop
+    have tail := (List.cons.inj pair).2
+    have first := (List.cons.inj pair).1
+    subst a
+    have idx : l.toArray.size - 1 - rest.length = k := by
+      rw [List.size_toArray, length, List.length_cons, Nat.succ_add, Nat.succ_sub_one, Nat.add_sub_cancel_left]
+    have suff : ∃ s, s ++ rest = l := by
+      obtain ⟨s, hs⟩ := suffix
+      exact ⟨s ++ [l[k]], (List.append_assoc ..).trans hs⟩
+    have bound : l.toArray.size - 1 - rest.length < l.toArray.size := idx ▸ hk
+    have indexValue : l.toArray[l.toArray.size - 1 - rest.length] = l[k] := by
+      simp only [List.getElem_toArray]
+      exact idx ▸ rfl
+    have head (x y : α) (hx : x ∈ l.toArray) (hy : y ∈ l.toArray) (e : x = y) : f x hx = f y hy := by
+      subst y
+      rfl
+    exact (congrArg (forInNext _) (ih _ nextLength tail suff)).trans
+      (congrArg (fun action => forInNext action _) (head _ _ _ _ indexValue))
+
+public theorem List.forIn'_toArray : type_of% @_root_.List.forIn'_toArray := by
+  intro m α β mon l b f
+  exact congrFun (arrayListForIn l f l 0 rfl rfl ⟨[], rfl⟩) b
+
+public theorem List.forIn_toArray : type_of% @_root_.List.forIn_toArray := by
+  intro m α β mon l b f
+  exact List.forIn'_toArray l b (fun a _ => f a)
+
 end OmegaChecks.InitPort.Alternatives
