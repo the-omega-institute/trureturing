@@ -2,6 +2,7 @@ module
 import all Init.Data.List.MinMaxIdx
 import all Init.Data.List.MinMaxOn
 import Init.Data.List.MinMax
+import all Init.Data.Array.MinMax
 
 /-! Nonemptiness and ordering of list extrema, proved using only membership and order laws. -/
 
@@ -54,5 +55,41 @@ public theorem List.apply_minOn_le_apply_minOn_of_subset :
     type_of% @_root_.List.apply_minOn_le_apply_minOn_of_subset := by
   intro β α le dec order xs ys f subset nonempty
   exact _root_.List.apply_minOn_le_of_mem (subset _root_.List.minOn_mem)
+
+private theorem foldAfterHead (f : β → α → β) (x : α) (xs : List α) (init : β) :
+    (x :: xs).toArray.foldl f init 1 = xs.foldl f init := by
+  rw [Array.foldl_eq_foldl_extract, ← Array.foldl_toList, Array.toList_extract]
+  change (xs.take (xs.length + 1 - 1)).foldl f init = xs.foldl f init
+  rw [Nat.add_sub_cancel, List.take_length]
+
+public theorem List.min_toArray : type_of% @_root_.List.min_toArray := by
+  intro α inst xs h
+  cases xs with
+  | nil => exact (h rfl).elim
+  | cons a as => exact foldAfterHead min a as a
+
+public theorem List.max_toArray : type_of% @_root_.List.max_toArray := by
+  intro α inst xs h
+  cases xs with
+  | nil => exact (h rfl).elim
+  | cons a as => exact foldAfterHead max a as a
+
+public theorem List.min?_toArray : type_of% @_root_.List.min?_toArray := by
+  intro α inst xs
+  cases xs with
+  | nil => rfl
+  | cons a as =>
+    unfold Array.min?
+    rw [dite_eq_left (fun e => List.cons_ne_nil a as (congrArg Array.toList e))]
+    exact congrArg some List.min_toArray
+
+public theorem List.max?_toArray : type_of% @_root_.List.max?_toArray := by
+  intro α inst xs
+  cases xs with
+  | nil => rfl
+  | cons a as =>
+    unfold Array.max?
+    rw [dite_eq_left (fun e => List.cons_ne_nil a as (congrArg Array.toList e))]
+    exact congrArg some List.max_toArray
 
 end OmegaChecks.InitPort.Alternatives

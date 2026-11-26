@@ -133,6 +133,55 @@ public theorem Array.foldl_toList : type_of% @_root_.Array.foldl_toList := by
   rw [dite_eq_left (Nat.le_refl _)]
   exact (foldLeftLoop f xs xs.size 0 (Nat.le_refl _) b).symm
 
+private theorem liftTrueBranch {p : Prop} [d : Decidable p] (h : p)
+    (yes : p → β → γ) (no : ¬p → β → γ) :
+    (fun b => if hp : p then yes hp b else no hp b) = yes h := by
+  cases d with
+  | isTrue => rfl
+  | isFalse reject => exact (reject h).elim
+
+private theorem constantBranches {p : Prop} [d : Decidable p] (f : β → γ) :
+    (fun b => if p then f b else f b) = f := by cases d <;> rfl
+
+private theorem foldLoopZero [Monad m] (f : β → α → m β) (xs : _root_.Array α) (limit j : Nat)
+    (bound : limit ≤ xs.size) :
+    _root_.Array.foldlM.loop f xs limit bound 0 j = pure := by
+  exact constantBranches (p := j < limit) _
+
+private theorem foldLoopSucc [Monad m] (f : β → α → m β) (xs : _root_.Array α) (limit i j : Nat)
+    (bound : limit ≤ xs.size) (inside : j < limit) :
+    _root_.Array.foldlM.loop f xs limit bound (i+1) j =
+      fun b => f b (xs[j]'(Nat.lt_of_lt_of_le inside bound)) >>=
+        _root_.Array.foldlM.loop f xs limit bound i (j+1) := by
+  apply liftTrueBranch (p := j < limit) inside
+
+private theorem foldExtractLoop [Monad m] (f : β → α → m β) (xs : _root_.Array α)
+    (start stop : Nat) (i k : Nat) (w : i + k = (xs.extract start stop).size) :
+    _root_.Array.foldlM.loop f xs (min stop xs.size) (Nat.min_le_right ..) i (start + k) =
+      _root_.Array.foldlM.loop f (xs.extract start stop) _ (Nat.le_refl _) i k := by
+  induction i generalizing k with
+  | zero => rw [foldLoopZero, foldLoopZero]
+  | succ i ih =>
+    have room : k < (xs.extract start stop).size := by omega
+    have lt : start + k < min stop xs.size := by
+      rw [Array.size_extract] at room
+      omega
+    rw [foldLoopSucc _ _ _ _ _ _ lt, foldLoopSucc _ _ _ _ _ _ room,
+      Array.getElem_extract, Nat.add_assoc, ih (k+1) ((Nat.succ_add ..).symm.trans w)]
+
+public theorem Array.foldlM_start_stop : type_of% @_root_.Array.foldlM_start_stop := by
+  intro α β m monad xs f b start stop
+  have aligned := foldExtractLoop f xs start stop (xs.extract start stop).size 0 rfl
+  have point := congrFun aligned b
+  unfold _root_.Array.foldlM
+  rw [dite_eq_left (Nat.le_refl (xs.extract start stop).size)]
+  dsimp only
+  split
+  · rename_i within
+    simpa only [Nat.sub_zero, Array.size_extract, Nat.min_eq_left within, Nat.add_zero] using point
+  · rename_i past
+    simpa only [Nat.sub_zero, Array.size_extract, Nat.min_eq_right (Nat.le_of_not_ge past), Nat.add_zero] using point
+
 private theorem takeNext {α : Type u} (xs : List α) (i : Nat) (h : i < xs.length) :
     xs.take i ++ [xs[i]] = xs.take (i+1) := by
   induction xs generalizing i with
