@@ -7,6 +7,7 @@
    digest: Each quaternion generator has fixed-point-free defect order 2^64. -/
 
 import D5.S3.VertexAlgebra.TwistedGround.BarnesWall.Rank128Lattice
+import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
 
 /-! The integral rows in the Barnes–Wall Gauss calculation are the coordinate
 actions of the Pauli generators on the normalized tensor basis of
