@@ -72,9 +72,8 @@ def parse_pin(data):
     pin = json.loads(data, object_pairs_hook=unique_fields)
     if (not isinstance(pin, dict)
             or not {"version", "sha256"} <= pin.keys()
-            or not pin.keys() <= {"version", "sha256", "workflow_sha", "source_sha", "previous_pin"}
+            or not pin.keys() <= {"version", "sha256", "source_sha", "previous_pin"}
             or not all(isinstance(value, str) for value in pin.values())
-            or ("workflow_sha" in pin and not re.fullmatch(SHA, pin["workflow_sha"]))
             or ("previous_pin" in pin and not re.fullmatch(SHA, pin["previous_pin"]))
             or not re.fullmatch(r"v[0-9]+\.[0-9]+\.[0-9]+(?:-[0-9A-Za-z.-]+)?", pin["version"])
             or not re.fullmatch(r"[0-9a-f]{64}", pin["sha256"])):

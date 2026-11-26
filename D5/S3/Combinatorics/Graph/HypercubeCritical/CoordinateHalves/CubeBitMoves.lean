@@ -51,8 +51,7 @@ namespace D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.CubeBitMo
 
 open D5.S3.Combinatorics.Graph.Hypercube
 open BalancedCriticalSpectrum (flip_adj)
-open private adjacent_exists_flip from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeGirth
+open BalancedCubeGirth (adjacent_exists_flip)
 
 /-- Flip coordinate `i` of a nine-dimensional cube vertex. -/
 def toggle (x : BitVec 9) (i : Fin 9) : BitVec 9 :=
