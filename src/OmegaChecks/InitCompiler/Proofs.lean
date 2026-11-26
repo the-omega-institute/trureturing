@@ -2,6 +2,7 @@ module
 
 public import Lean
 import OmegaChecks.InitCompiler.ProofRules
+import OmegaChecks.InitCompiler.Equivalence
 
 /-! Translate proof terms from the pinned Init environment into the strict namespace. -/
 
@@ -159,12 +160,19 @@ private partial def transport? (source : Environment) (back : Bool) (p q eq inpu
 
 /-- Specialize fully applied casts in the official proof term before translating
 its constants. Every resulting term still goes through the destination kernel. -/
-public def constructiveCasts (source : Environment) (body : Expr) (rules : NameMap ConstantInfo := {}) :
-    Expr := Id.run do
+public def constructiveCasts (source : Environment) (body : Expr) (rules : NameMap ConstantInfo := {})
+    (useEquivalences := false) : Expr := Id.run do
+  let mapProof := fun back p q h x => do
+    if useEquivalences then
+      if let some iff := logicalEquivalence? source p q h then
+        return mkApp4 (mkConst (if back then `Iff.mpr else `Iff.mp)) p q iff x
+    transport? source back p q h x 32
   let equiv := fun (a b h : Expr) => do
+    if useEquivalences then
+      if let some iff := logicalEquivalence? source a b h then return iff
     let direction := fun rev dom => do
       let lift := fun (e : Expr) => e.liftLooseBVars 0 1
-      let proof ← transport? source rev (lift a) (lift b) (lift h) (mkBVar 0) 32
+      let proof ← mapProof rev (lift a) (lift b) (lift h) (mkBVar 0)
       return Expr.lam `hp dom proof .default
     return mkApp4 (mkConst `Iff.intro) a b (← direction false a) (← direction true b)
   let rewrite := fun (e : Expr) => do
@@ -185,20 +193,20 @@ public def constructiveCasts (source : Environment) (body : Expr) (rules : NameM
       let args := #[α, b, c, x, y, x, y, db, dc, ← equiv b c h,
         sameBranch c x, sameBranch (mkApp (mkConst `Not) c) y]
       return ((← rule.value? (allowOpaque := true)).instantiateLevelParams rule.levelParams us).beta args
-    | `Eq.mpr_prop, _, #[p, q, h, x] => transport? source true p q h x 32
+    | `Eq.mpr_prop, _, #[p, q, h, x] => mapProof true p q h x
     | `Eq.mpr_not, _, #[p, q, h, x] =>
       let lift := fun (e : Expr) => e.liftLooseBVars 0 1
-      let term ← transport? source false (lift p) (lift q) (lift h) (mkBVar 0) 32
+      let term ← mapProof false (lift p) (lift q) (lift h) (mkBVar 0)
       return Expr.lam `hp p ((lift x).beta #[term]) .default
     | `ite_eq_left_of_eq_true, _, #[α, p, dec, t, f, h]
     | `dite_eq_left_of_eq_true, _, #[α, p, dec, t, f, h] =>
-      let hp ← transport? source true p (mkConst `True) h (mkConst `True.intro) 32
+      let hp ← mapProof true p (mkConst `True) h (mkConst `True.intro)
       let lemma := if n == `ite_eq_left_of_eq_true then `if_pos else `dif_pos
       return mkApp6 (mkConst lemma us) p dec hp α t f
     | `ite_eq_right_of_eq_false, _, #[α, p, dec, t, f, h]
     | `dite_eq_right_of_eq_false, _, #[α, p, dec, t, f, h] =>
-      let proof ← transport? source false (p.liftLooseBVars 0 1) (mkConst `False)
-        (h.liftLooseBVars 0 1) (mkBVar 0) 32
+      let proof ← mapProof false (p.liftLooseBVars 0 1) (mkConst `False)
+        (h.liftLooseBVars 0 1) (mkBVar 0)
       let lemma := if n == `ite_eq_right_of_eq_false then `if_neg else `dif_neg
       return mkApp6 (mkConst lemma us) p dec (.lam `hp p proof .default) α t f
     | `congrFun, _, #[_, _, _, _, h, a] | `congrFun', _, #[_, _, _, _, h, a] =>
@@ -206,23 +214,23 @@ public def constructiveCasts (source : Environment) (body : Expr) (rules : NameM
       return h.getAppArgs[4]!.beta #[a]
     | `Eq.mp, [.zero], #[p, q, h, x] | `Eq.mpr, [.zero], #[p, q, h, x]
     | `cast, [.zero], #[p, q, h, x] =>
-      transport? source (n == `Eq.mpr) p q h x 32
+      mapProof (n == `Eq.mpr) p q h x
     | `of_eq_true, _, #[p, h] =>
-      transport? source true p (mkConst `True) h (mkConst `True.intro) 32
+      mapProof true p (mkConst `True) h (mkConst `True.intro)
     | `Iff.of_eq, _, #[p, q, h] => equiv p q h
     | `Eq.ndrec, .zero :: _, #[.sort .zero, p, motive, x, q, h]
     | `Eq.rec, .zero :: _, #[.sort .zero, p, motive, x, q, h] =>
       let left := if n == `Eq.rec then motive.beta #[p, mkApp2 (mkConst `Eq.refl [.succ .zero]) (.sort .zero) p]
         else motive.beta #[p]
       let right := if n == `Eq.rec then motive.beta #[q, h] else motive.beta #[q]
-      if left == p && right == q then transport? source false p q h x 32
+      if left == p && right == q then mapProof false p q h x
       else
         let lifted ← congrIff? p q (← equiv p q h) left right
         return mkApp4 (mkConst `Iff.mp) left right lifted x
     | `of_eq_false, _, #[p, h] =>
       let hp := mkBVar 0
-      let proof ← transport? source false (p.liftLooseBVars 0 1) (mkConst `False)
-        (h.liftLooseBVars 0 1) hp 32
+      let proof ← mapProof false (p.liftLooseBVars 0 1) (mkConst `False)
+        (h.liftLooseBVars 0 1) hp
       return Expr.lam `hp p proof .default
     | _, _, _ => none
   let mut term := body

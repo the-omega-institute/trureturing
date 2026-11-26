@@ -418,6 +418,9 @@ partial def visit (n : Name) : M Bool := do
   let rewritten := OmegaChecks.InitCompiler.constructiveCasts c.source body c.proofRules
   if !rewritten.equal body then
     if (← attempt rewritten) matches .added then return ← record n .added
+  let congruent := OmegaChecks.InitCompiler.constructiveCasts c.source body c.proofRules true
+  if !congruent.equal rewritten && !congruent.equal body then
+    if (← attempt congruent) matches .added then return ← record n .added
   let decided ← OmegaChecks.InitCompiler.decidableProof c.source rewritten
   if !decided.equal rewritten then
     if (← attempt (OmegaChecks.InitCompiler.constructiveCasts c.source decided c.proofRules)) matches .added then
