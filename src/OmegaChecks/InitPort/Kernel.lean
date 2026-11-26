@@ -180,6 +180,42 @@ private def compactNonzeroPowers (source : Environment) (type : Expr) : Expr :=
     let one := mkApp (mkConst `Nat.instNeZeroSucc) (mkNatLit 1)
     return mkApp3 (mkConst `Nat.instNeZeroHPow) (mkNatLit 2) (mkNatLit size.log2) one
 
+/-- Compare the underlying naturals for order instances whose strict implementation
+computes through Nat.le. The target kernel checks those conversions and the complete proof. -/
+private def orderTruthProof? (source : Environment) (proofs : NameMap ConstantInfo)
+    (type : Expr) : IO (Option Expr) := do
+  let goal := type.getForallBody
+  let #[_, rel, value] := goal.getAppArgs | return none
+  unless goal.isAppOf `Eq && (value.isConstOf `True || value.isConstOf `False) &&
+      (rel.isAppOf `LE.le || rel.isAppOf `LT.lt) do return none
+  let truth := value.isConstOf `True
+  let action : MetaM (Option Expr) := Meta.forallTelescope type fun xs result => do
+    let some h := xs.back? | return none
+    let ht ← Meta.inferType h
+    let #[_, test, bit] := ht.getAppArgs | return none
+    let #[p, dec] := test.getAppArgs | return none
+    unless ht.isAppOf `Eq && test.isAppOf `Decidable.decide &&
+        bit.isConstOf (if truth then `Bool.true else `Bool.false) do return none
+    let relation := result.getAppArgs[1]!
+    let #[α, _, a, b] := relation.getAppArgs | return none
+    let some numType := α.getAppFn.constName? | return none
+    let convert : Option (Expr → Expr) := match numType with
+      | `Nat => some id
+      | `Fin => some (mkApp (mkAppN (mkConst `Fin.val) α.getAppArgs))
+      | `BitVec => some (mkApp (mkAppN (mkConst `BitVec.toNat) α.getAppArgs))
+      | `UInt8 | `UInt16 | `UInt32 | `UInt64 | `USize | `Char => some (mkApp (mkConst (numType ++ `toNat)))
+      | _ => none
+    let some asNat := convert | return none
+    let lo := if relation.isAppOf `LT.lt then mkApp (mkConst `Nat.succ) (asNat a) else asNat a
+    let rule := if truth then `OmegaLiteralProofs.leTrue else `OmegaLiteralProofs.leFalse
+    let extract := if truth then `of_decide_eq_true else `of_decide_eq_false
+    let induction := ((proofs.find? rule).get!.value! (allowOpaque := true)).replace fun
+      | .const n ls => some (.const (n.replacePrefix `Omega .anonymous) ls)
+      | _ => none
+    let body := mkApp3 induction lo (asNat b) (mkApp3 (mkConst extract) p dec h)
+    return some (← Meta.mkLambdaFVars xs body)
+  action.run' |>.toIO' {fileName := "<natural order truth>", fileMap := default} {env := source}
+
 private def comparisonProofs (source : Environment) (proofs : NameMap ConstantInfo)
     (body : Expr) (owner : Name) : Option Expr := Id.run do
   let earlier (lemma : Name) := match source.getModuleIdxFor? lemma, source.getModuleIdxFor? owner with
@@ -488,6 +524,9 @@ partial def visit (n : Name) : M Bool := do
     if !candidate.equal alt then
       if let some certified := comparisonProofs c.source c.literalProofs candidate n then
         if (← attempt certified (40 * c.maxHeartbeats)) matches .added then return ← record n .added
+  if ci.isTheorem then
+    if let some proof ← orderTruthProof? c.source c.literalProofs type then
+      if (← attempt proof) matches .added then return ← record n .added
   let result ← attempt body
   if result matches .added then return ← record n result
   let rewritten := OmegaChecks.InitCompiler.constructiveCasts c.source body c.proofRules

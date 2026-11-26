@@ -7,7 +7,7 @@ import all OmegaInit.Prelude
 
 noncomputable section
 set_option allowUnsafeReducibility true
-attribute [local semireducible] Omega.Nat.add Omega.Nat.mul
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Nat.le
 
 namespace OmegaLiteralProofs
 open Omega
@@ -49,5 +49,18 @@ public theorem digitBounds (a b : Nat) (h : Nat.lt a b) :
   Nat.le_trans (Nat.le.step (Nat.le_refl (Nat.succ (double a)))) (bounds a b h)
 
 public theorem raiseBound (a b : Nat) (h : Nat.lt a b) : Nat.lt a (Nat.succ b) := Nat.le.step h
+
+/-- The strict natural comparison reduces to True or False when its constructors are exposed. -/
+public theorem leTrue (a b : Nat) : Nat.le a b → Omega.Eq (Nat.le a b) True :=
+  Nat.rec (motive := fun a => ∀ b, Nat.le a b → Omega.Eq (Nat.le a b) True)
+    (fun _ _ => Omega.rfl)
+    (fun n ih => Nat.rec (motive := fun b => Nat.le n.succ b → Omega.Eq (Nat.le n.succ b) True)
+      (fun h => False.elim h) (fun b _ => ih b)) a b
+
+public theorem leFalse (a b : Nat) : (Nat.le a b → False) → Omega.Eq (Nat.le a b) False :=
+  Nat.rec (motive := fun a => ∀ b, (Nat.le a b → False) → Omega.Eq (Nat.le a b) False)
+    (fun _ h => False.elim (h True.intro))
+    (fun n ih => Nat.rec (motive := fun b => (Nat.le n.succ b → False) → Omega.Eq (Nat.le n.succ b) False)
+      (fun _ => Omega.rfl) (fun b _ => ih b)) a b
 
 end OmegaLiteralProofs
