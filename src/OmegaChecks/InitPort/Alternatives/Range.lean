@@ -6,6 +6,7 @@ public import Init.Data.Range.Polymorphic.UInt
 import all Init.Data.Range.Polymorphic.Internal.SignedBitVec
 import all Init.Data.Range.Polymorphic.SInt
 import all Init.Data.Char.Ordinal
+import all Init.Data.Range.Polymorphic.Char
 import Init.Data.BitVec.Lemmas
 
 /-! Successor and size laws for ranges of naturals, integers, and finite indices. -/
@@ -820,5 +821,19 @@ public theorem Char.succ?._proof_3 :
   have inc : (c.val + 1).toNat = c.val.toNat + 1 :=
     (UInt32.toNat_add _ _).trans (Nat.mod_eq_of_lt (Char.isValidUInt32 _ valid))
   exact inc.symm ▸ valid
+
+public theorem Char.instIsAlwaysFinite_2 : Rxi.IsAlwaysFinite Char where
+  finite c := by
+    refine ⟨Char.numCodePoints, ?_⟩
+    rw [_root_.Char.pRangeSuccMany?_eq, _root_.Char.succMany?_eq]
+    have stop : c.ordinal.addNat? Char.numCodePoints = none :=
+      _root_.Fin.addNat?_eq_none_iff.mpr (Nat.le_add_left _ _)
+    exact congrArg (Option.map Char.ofOrdinal) stop
+
+public theorem Char.instIsAlwaysFinite : Rxc.IsAlwaysFinite Char :=
+  closedOfFiniteEnumeration Char.instIsAlwaysFinite_2
+
+public theorem Char.instIsAlwaysFinite_1 : Rxo.IsAlwaysFinite Char :=
+  openOfFiniteEnumeration Char.instIsAlwaysFinite_2
 
 end OmegaChecks.InitPort.Alternatives
