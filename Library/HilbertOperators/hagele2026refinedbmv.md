@@ -18,6 +18,9 @@ strata_touched:
   - D5/S3/Quantum/Analysis/RefinedBMV44
   - D5/S3/Quantum/Analysis/RefinedBMV33
   - D5/S3/Quantum/Analysis/RefinedBMV/Tracial/Bound
+  - D5/S3/Quantum/Analysis/RefinedBMV/Tracial/SingularFourCycle
+  - D5/S3/Quantum/Analysis/RefinedBMV/Tracial/SingularCycleAllocation
+  - D5/S3/Quantum/Analysis/RefinedBMV/Tracial/ArithmeticProgression
   - D5/S3/Quantum/Analysis/RefinedBMVLowerBound
   - D5/S3/Quantum/Analysis/RefinedBMV43
   - D5/S3/Quantum/Analysis/RefinedBMV43Kernel
@@ -174,6 +177,22 @@ product lower comparison. The related arXiv results 0802.1153,
 positive measures for fixed occurrences and a pinched comparison,
 respectively. Historical priority for the spectral result has not
 been established.
+
+## Four-cycle compensation with a zero spectral value
+
+For each positive integer degree, the four-label scalar deficit with a
+zero label is bounded by the sum of the geometric means of the two
+opposite pairs of backtracking deficits. The theorem includes coincident
+labels and additional zeros. It uses an exact reciprocal identity for
+complete homogeneous polynomials. A change of beta-binomial counting
+law with a uniform relative-entropy bound controls the remaining
+centering term.
+
+In finite complex matrix spaces, the spectral coupling graph can use arbitrary eigenvalue multiplicities. If it is triangle-free, each two-edge path has at most one simple four-cycle completion, and every supported simple four-cycle meets the zero spectrum, the balanced trace is bounded by the four-copy word mean for every positive integer degree and Hermitian second factor. Opposite backtracks are allocated by cyclic Cauchy–Schwarz. The two-label terms use the binary conditioning bound.
+
+## Equally spaced logarithmic knots
+
+The four-point continuum comparison holds strictly on the arithmetic progression of log knots `3t,t,−t,−3t` for every positive spacing `t`. Uniform simplex integration gives third divided differences with confluent values for the repeated knots. Nonnegative initial values of a finite differential recurrence certify the discriminant bound `(3/100) exp(−6t) t^4`.
 
 ## Sharp conditioning for four-copy Gram blocks
 
