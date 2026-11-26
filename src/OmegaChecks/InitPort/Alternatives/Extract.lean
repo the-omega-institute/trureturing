@@ -81,6 +81,14 @@ public theorem Array.toList_extract : type_of% @_root_.Array.toList_extract := b
     exact (List.take_of_length_le (Nat.le_of_eq len)).trans
       (List.take_of_length_le (Nat.le_trans (Nat.le_of_eq len) (Nat.sub_le_sub_right past start))).symm
 
+public theorem Array.getElem_extract_loop_ge : type_of% @_root_.Array.getElem_extract_loop_ge := by
+  intro α i xs ys size start hge h
+  have eqList := List.getElem_of_eq (extractLoopList xs size start ys) h
+  apply eqList.trans
+  rw [List.getElem_append_right hge, List.getElem_take, List.getElem_drop]
+  apply getElem_congr_idx
+  exact (Nat.add_sub_assoc hge start).symm
+
 public theorem Array.getElem_extract : type_of% @_root_.Array.getElem_extract := by
   intro α i xs start stop h
   have same := List.getElem_of_eq (Array.toList_extract (xs := xs) (start := start) (stop := stop)) h

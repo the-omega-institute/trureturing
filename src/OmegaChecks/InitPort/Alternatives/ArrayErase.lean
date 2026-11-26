@@ -1,9 +1,10 @@
 module
+public import Init.Data.Array.Count
 public import Init.Data.Array.Erase
 public import Init.Data.Vector.Erase
 import all Init.Data.List.Nat.Erase
 
-/-! Transfer indexed erasure and update laws through the array's list representation. -/
+/-! Transfer array erasure, counting, and update laws through the list representation. -/
 namespace OmegaChecks.InitPort.Alternatives
 
 public theorem List.getElem?_eraseIdx : type_of% @_root_.List.getElem?_eraseIdx := by
@@ -228,5 +229,56 @@ public theorem Array.eraseIdx_ne_empty_iff : type_of% @_root_.Array.eraseIdx_ne_
   intro α xs i h
   rw [← Array.size_pos_iff, Array.size_eraseIdx]
   omega
+
+public theorem Array.size_eq_countP_add_countP : type_of% @_root_.Array.size_eq_countP_add_countP := by
+  intro α p xs
+  rw [← Array.countP_toList, ← Array.countP_toList]
+  exact List.length_eq_countP_add_countP p
+
+public theorem Array.filter_eq : type_of% @_root_.Array.filter_eq := by
+  intro α beq law dec xs a
+  apply Array.toList_inj.mp
+  rw [Array.toList_filter, Array.toList_replicate, ← Array.count_toList]
+  exact List.filter_eq a
+
+public theorem Array.count_replace : type_of% @_root_.Array.count_replace := by
+  intro α beq law a b c xs
+  simp only [Array.count_eq_countP, Array.countP_replace]
+
+public theorem List.length_filter_lt_length_iff_exists : type_of% @_root_.List.length_filter_lt_length_iff_exists := by
+  intro α p l
+  rw [← List.countP_eq_length_filter]
+  have total := List.length_eq_countP_add_countP p (l := l)
+  have countPos := @List.countP_pos_iff α l (fun x => decide (¬p x))
+  constructor
+  · intro lt
+    have positive : 0 < l.countP (fun x => decide (¬p x)) := by omega
+    obtain ⟨x, mem, h⟩ := countPos.mp positive
+    exact ⟨x, mem, of_decide_eq_true h⟩
+  · rintro ⟨x, mem, h⟩
+    have positive := countPos.mpr ⟨x, mem, decide_eq_true h⟩
+    omega
+
+public theorem Array.size_filter_lt_size_iff_exists : type_of% @_root_.Array.size_filter_lt_size_iff_exists := by
+  intro α xs p
+  cases xs with
+  | mk l =>
+    rw [List.filter_toArray, List.size_toArray, List.size_toArray, List.length_filter_lt_length_iff_exists]
+    exact ⟨fun ⟨x, mem, h⟩ => ⟨x, List.mem_toArray.mpr mem, h⟩,
+      fun ⟨x, mem, h⟩ => ⟨x, List.mem_toArray.mp mem, h⟩⟩
+
+public theorem Array.flatten_filter_ne_empty : type_of% @_root_.Array.flatten_filter_ne_empty := by
+  intro α dec xss
+  have same : (xss.filter fun xs => xs ≠ #[]) = (xss.filter fun xs => !xs.isEmpty) := by
+    apply Array.toList_inj.mp
+    rw [Array.toList_filter, Array.toList_filter]
+    apply List.filter_congr
+    intro x _
+    cases x with
+    | mk l =>
+      cases l with
+      | nil => exact decide_eq_false (fun h => h rfl)
+      | cons x xs => exact decide_eq_true (fun e => List.cons_ne_nil x xs (congrArg Array.toList e))
+  exact (congrArg Array.flatten same).trans Array.flatten_filter_not_isEmpty
 
 end OmegaChecks.InitPort.Alternatives
