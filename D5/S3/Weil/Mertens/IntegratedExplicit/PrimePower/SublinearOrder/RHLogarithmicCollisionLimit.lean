@@ -100,8 +100,8 @@ private theorem wholeFejerLimit
     (hη : ∀ᶠ n : ℕ in atTop, 0 < η n)
     (hA : Tendsto A atTop atTop)
     (hwin : ∀ᶠ n : ℕ in atTop,
-      A n ^ 2 * pairMoment (g n) (w n) 4 ≤ 6 * (n:ℝ) * pairMoment (g n) (w n) 2 ^ 2) :
-    let s (n : ℕ) : ℝ := Real.sqrt ((n:ℝ) * pairMoment (g n) (w n) 2 / 2)
+      A n ^ 2 * pairMoment (g n) (w n) 4 ≤ 6 * (n : ℝ) * pairMoment (g n) (w n) 2 ^ 2) :
+    let s (n : ℕ) : ℝ := Real.sqrt ((n : ℝ) * pairMoment (g n) (w n) 2 / 2)
     let H (n : ℕ) (t : ℝ) : ℝ := K (η n) t * ‖complexScore (g n) (w n) t‖^(2*n)
     Tendsto (fun n : ℕ => η n / s n) atTop (𝓝 0) →
     Tendsto (fun n : ℕ => η n * R n) atTop atTop →
@@ -113,7 +113,7 @@ private theorem wholeFejerLimit
   intro s H hρ hR htail
   have hs : ∀ᶠ n : ℕ in atTop, 0 < s n := by
     filter_upwards [hM, eventually_gt_atTop (0:ℕ)] with n hn hdeg
-    have hdeg' : 0 < (n:ℝ) := by exact_mod_cast hdeg
+    have hdeg' : 0 < (n : ℝ) := by exact_mod_cast hdeg
     exact Real.sqrt_pos.2 (by positivity)
   have hcenter := central_fejer_gaussian_limit g w
     (hw.mono fun _ hn i j => mul_nonneg (hn i) (hn j)) hW hM
@@ -414,7 +414,7 @@ private theorem harmonic_full_fejer_limit (rh : RiemannHypothesis) (T η : ℕ �
       nlinarith only [hp, hb]
     exact (le_max_right 1 B).trans ((le_div_iff₀ hTpos).2
       ((sq_le_sq₀ (mul_nonneg hB.le hTpos.le) hs.1.le).1 hs'))
-  have hwin : ∀ᶠ n : ℕ in atTop, A n ^ 2 * P n 4 ≤ 6 * (n:ℝ) * P n 2 ^ 2 := by
+  have hwin : ∀ᶠ n : ℕ in atTop, A n ^ 2 * P n 4 ≤ 6 * (n : ℝ) * P n 2 ^ 2 := by
     filter_upwards [hT.eventually_gt_atTop 1, hn, hPair, hscale] with n hTn hn hp hs
     have hb : P n 4 ≤ (T n)^2 * P n 2 := hp.2.2.2.2.2.2
     calc
@@ -565,5 +565,6 @@ theorem harmonic_zeta_collision_limit (rh : RiemannHypothesis) (C : ℝ) (hC : 0
   unfold harmonicProbability
   rw [normalized_collision_eq_div_mass]
   rw [div_mul_div_comm]
+  rfl
 
 end D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower.SublinearOrder.RHLogarithmicCollisionLimit
