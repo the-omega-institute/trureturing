@@ -1,10 +1,20 @@
 module
 public import Init.Data.Slice.Array.Lemmas
+import all Init.Data.Slice.Array.Iterator
 public import Init.Data.Slice.List.Lemmas
 import all Init.Data.Slice.List.Basic
+import all Init.Data.Iterators.Combinators.Monadic.Take
+import all Init.Data.Iterators.Combinators.Monadic.FlatMap
+import all Init.Data.Iterators.Combinators.Monadic.FilterMap
+import all Init.Data.Iterators.Combinators.FlatMap
+public import Init.Data.Iterators.Lemmas.Combinators.FlatMap
 public import Init.Data.Iterators.Lemmas.Combinators.Take
+import all Init.Data.Iterators.Combinators.Monadic.ULift
+public import Init.Data.Iterators.Lemmas.Combinators.ULift
 
-/-! Slice lengths follow from their endpoints, and identity-monad laws reduce pointwise. -/
+/-! Slice lengths from endpoints and pure iterator reductions from their step constructors. -/
+
+open Std Std.Iterators Std.Iterators.Types
 
 namespace OmegaChecks.InitPort.Alternatives
 
@@ -197,5 +207,68 @@ public theorem ListSlice.size_mkSlice_ric {xs : ListSlice α} {hi : Nat} :
   rw [_root_.ListSlice.mkSlice_ric_eq_mkSlice_rco, ListSlice.size_mkSlice_rco, Nat.sub_zero]
 
 end ListSize
+
+public theorem Std.Iter.step_take : type_of% @_root_.Std.Iter.step_take := by
+  intro α β _ n it
+  apply Subtype.ext
+  cases n with
+  | zero =>
+    exact congrArg (fun s => (IterM.Step.toPure s).val) Shrink.inflate_deflate
+  | succ n =>
+    unfold Iter.step IterM.step
+    dsimp only [Iter.take, IterM.take, Take.instIterator, IterM.step, Iterator.step,
+      Iter.toIterM, IterM.toIter, pure, Bind.bind, Id.run]
+    generalize Shrink.inflate (Iterator.step { internalState := it.internalState : IterM (α := α) Id β}) = q
+    cases q using PlausibleIterStep.casesOn <;>
+      exact congrArg (fun s => (IterM.Step.toPure s).val) Shrink.inflate_deflate
+
+public theorem Std.Iter.step_flatMapAfter : type_of% @_root_.Std.Iter.step_flatMapAfter := by
+  intro α β α₂ γ _ _ f outer inner
+  apply Subtype.ext
+  cases inner with
+  | none =>
+    unfold Iter.step IterM.step
+    dsimp only [Iter.flatMapAfter, IterM.flatMapAfter, IterM.flattenAfter, Flatten.instIterator,
+      IterM.map, IterM.mapWithPostcondition, IterM.InternalCombinators.map,
+      Iterators.Types.Map, Iterators.Types.Map.instIterator, Iterators.Types.Map.instIterator._aux_3,
+      Iterators.Types.FilterMap.instIterator, IterM.step, Iterator.step, Iter.toIterM, IterM.toIter,
+      Option.map, Functor.map, pure, Bind.bind, monadLift, Id.run]
+    generalize Shrink.inflate (Iterator.step { internalState := outer.internalState : IterM (α := α) Id β}) = q
+    cases q using PlausibleIterStep.casesOn <;>
+      dsimp only [PostconditionT.map, PostconditionT.pure, bind, pure, Functor.map] <;>
+      erw [Shrink.inflate_deflate] <;>
+      exact congrArg (fun s => (IterM.Step.toPure s).val) Shrink.inflate_deflate
+  | some inner =>
+    unfold Iter.step IterM.step
+    dsimp only [Iter.flatMapAfter, IterM.flatMapAfter, IterM.flattenAfter, Flatten.instIterator,
+      IterM.step, Iterator.step, Iter.toIterM, IterM.toIter, Option.map, Functor.map, pure, Bind.bind, Id.run]
+    generalize Shrink.inflate (Iterator.step { internalState := inner.internalState : IterM (α := α₂) Id γ}) = q
+    cases q using PlausibleIterStep.casesOn <;>
+      exact congrArg (fun s => (IterM.Step.toPure s).val) Shrink.inflate_deflate
+
+public theorem Std.Iter.step_uLift : type_of% @_root_.Std.Iter.step_uLift := by
+  intro α β _ it
+  apply Subtype.ext
+  unfold Iter.step IterM.step
+  dsimp only [Iter.uLift, IterM.uLift, ULiftIterator.instIterator, IterM.step, Iterator.step,
+    Iter.toIterM, IterM.toIter, ULiftT.run, pure, Bind.bind, monadLift, Id.run]
+  refine Eq.trans (congrArg (fun s => (IterM.Step.toPure (it := it.uLift.toIterM) s).val) Shrink.inflate_deflate) ?_
+  dsimp only [IterM.Step.toPure]
+  generalize Shrink.inflate (Iterator.step { internalState := it.internalState : IterM (α := α) Id β}) = q
+  cases q using PlausibleIterStep.casesOn <;> rfl
+
+public theorem SubarrayIterator.instFinitelessRelation._proof_2 :
+    type_of% (private_decl% @_root_.SubarrayIterator.instFinitelessRelation._proof_2) := by
+  intro α it next h
+  obtain ⟨s, nextEq, stepEq⟩ := h
+  rcases it with ⟨⟨xs⟩⟩
+  change s = SubarrayIterator.step _ at stepEq
+  subst s
+  dsimp only [SubarrayIterator.step] at nextEq
+  split at nextEq
+  · cases Option.some.inj nextEq
+    change xs.stop - (xs.start + 1) < xs.stop - xs.start
+    omega
+  · cases nextEq
 
 end OmegaChecks.InitPort.Alternatives
