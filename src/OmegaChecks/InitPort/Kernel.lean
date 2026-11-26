@@ -88,6 +88,7 @@ structure State where
   env : Kernel.Environment
   results : Std.HashMap Name Outcome := {}
   visiting : NameSet := {}
+  proofsByType : Std.HashMap Expr (List Name) := {}
 
 structure Context where
   source : Environment
@@ -213,6 +214,11 @@ def describe : Outcome → String × Option Name
   | .added => ("added", none)
   | .blocked s n => (s,n)
 
+/-- Index proved statements independently of the compiler's universe parameter names. -/
+private def theoremKey (ci : ConstantInfo) : Expr :=
+  ci.type.instantiateLevelParams ci.levelParams
+    ((List.range ci.numLevelParams).map fun i => Level.param (.num .anonymous i))
+
 def record (name : Name) (outcome : Outcome) : M Bool := do
   let c ← read
   let owner := moduleOf c.source name |>.getD .anonymous
@@ -221,7 +227,12 @@ def record (name : Name) (outcome : Outcome) : M Bool := do
     diagnostic, (cause.map Name.toString).getD ""]).compress
   c.output.flush
   modify fun s => { s with results := s.results.insert name outcome, visiting := s.visiting.erase name }
-  return match outcome with | .blocked .. => false | _ => true
+  if outcome matches .blocked .. then return false
+  if let some ci := c.source.find? name then
+    if ci.isTheorem && !name.isInternal then
+      let key := theoremKey ci
+      modify fun s => {s with proofsByType := s.proofsByType.insert key (name :: s.proofsByType.getD key [])}
+  return true
 
 /-- Compare the entire generated kernel entry, including the iota rules of recursors. -/
 def expectGenerated (ci : ConstantInfo) : Option ConstantInfo := Id.run do
@@ -448,6 +459,12 @@ partial def visit (n : Name) : M Bool := do
     -- Rechecking the closed proof of comparison costs proportionally more than
     -- applying the original opaque theorem; its bound remains deterministic.
     if (← attempt certified (40 * c.maxHeartbeats)) matches .added then return ← record n .added
+  if ci.isTheorem then
+    for previous in (← get).proofsByType.getD (theoremKey ci) [] do
+      let some thm := c.source.find? previous | continue
+      if thm.numLevelParams == ci.numLevelParams then
+        if (← attempt (mkConst previous (ci.levelParams.map Level.param))) matches .added then
+          return ← record n .added
   if ← alternateProof ci then return true
   if ci.isTheorem then
     if let some term ← OmegaChecks.InitCompiler.finiteProof? c.source ci.type then
