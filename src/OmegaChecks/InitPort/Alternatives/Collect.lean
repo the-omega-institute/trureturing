@@ -2,6 +2,7 @@ module
 
 public import Init.Data.Range.Polymorphic.Iterators
 public import Init.Data.Iterators.Combinators.Monadic.Take
+public import Init.Data.Range.Polymorphic.Instances
 
 /-! Finite consumers have a well-founded relation in their own interface. -/
 
@@ -78,6 +79,65 @@ public theorem Std.Iterators.Types.Take.instFinite {α : Type u} {m : Type u →
   cases h with
   | inl hp => exact positive n hp inner
   | inr hf => exact finiteInner hf inner n (Or.inr hf)
+
+public theorem Std.IteratorLoop.wellFounded_of_productive.{w, v, x} :
+    type_of% @_root_.Std.IteratorLoop.wellFounded_of_productive.{w, v, x} := by
+  intro γ α β m _ _ _ P hp
+  apply Subrelation.wf (r := InvImage (IterM.IsPlausibleSkipSuccessorOf (α := α) (m := m)) Prod.fst)
+  · intro p' p h
+    rcases h with ⟨_, _, hy⟩ | ⟨hs, _⟩
+    · exact Bool.noConfusion (hp hy)
+    · exact hs
+  · exact InvImage.wf _ Productive.wf
+
+public theorem Std.Rxc.size_eq_zero_iff_not_le : type_of% @_root_.Std.Rxc.size_eq_zero_iff_not_le := by
+  intro α _ _ _ _ lo hi
+  refine ⟨fun hzero hle => ?_, Rxc.LawfulHasSize.size_eq_zero_of_not_le lo hi⟩
+  cases hs : UpwardEnumerable.succ? lo with
+  | none => exact Nat.noConfusion (hzero.symm.trans
+      (Rxc.LawfulHasSize.size_eq_one_of_succ?_eq_none (h := hle) (h' := hs)))
+  | some next => exact Nat.noConfusion (hzero.symm.trans
+      (Rxc.LawfulHasSize.size_eq_succ_of_succ?_eq_some (h := hle) (h' := hs)))
+
+public theorem Std.Rxo.size_eq_zero_iff_not_le : type_of% @_root_.Std.Rxo.size_eq_zero_iff_not_le := by
+  intro α _ _ _ _ lo hi
+  refine ⟨fun hzero hlt => ?_, Rxo.LawfulHasSize.size_eq_zero_of_not_le lo hi⟩
+  cases hs : UpwardEnumerable.succ? lo with
+  | none => exact Nat.noConfusion (hzero.symm.trans
+      (Rxo.LawfulHasSize.size_eq_one_of_succ?_eq_none (h := hlt) (h' := hs)))
+  | some next => exact Nat.noConfusion (hzero.symm.trans
+      (Rxo.LawfulHasSize.size_eq_succ_of_succ?_eq_some (h := hlt) (h' := hs)))
+
+public theorem Std.Rxo.LawfulHasSize.of_closed :
+    type_of% @_root_.Std.Rxo.LawfulHasSize.of_closed := by
+  intro α _ _ _ _ _ _ _ _ _ _ _
+  letI : _root_.Std.Rxo.HasSize α := _root_.Std.Rxo.HasSize.ofClosed
+  constructor
+  · intro lo hi hnlt
+    change Rxc.HasSize.size lo hi - 1 = 0
+    by_cases hle : lo ≤ hi
+    · cases hs : UpwardEnumerable.succ? lo with
+      | none => rw [Rxc.LawfulHasSize.size_eq_one_of_succ?_eq_none (h := hle) (h' := hs)]
+      | some b =>
+        have hlt : lo < b := UpwardEnumerable.lt_iff.mpr ⟨0,
+          (UpwardEnumerable.succMany?_one (a := lo)).trans hs⟩
+        have hnle : ¬ b ≤ hi := fun hb => hnlt (lt_of_lt_of_le hlt hb)
+        rw [Rxc.LawfulHasSize.size_eq_succ_of_succ?_eq_some (h := hle) (h' := hs),
+          Rxc.LawfulHasSize.size_eq_zero_of_not_le (h := hnle)]
+    · rw [Rxc.LawfulHasSize.size_eq_zero_of_not_le (h := hle)]
+  · intro lo hi hlt hs
+    obtain ⟨n, hn⟩ := UpwardEnumerable.lt_iff.mp hlt
+    rw [UpwardEnumerable.succMany?_add_one_eq_succ?_bind_succMany?, hs] at hn
+    cases hn
+  · intro lo hi next hlt hs
+    change Rxc.HasSize.size lo hi - 1 = Rxc.HasSize.size next hi - 1 + 1
+    have hle := le_of_lt hlt
+    obtain ⟨n, hn⟩ := UpwardEnumerable.lt_iff.mp hlt
+    rw [UpwardEnumerable.succMany?_add_one_eq_succ?_bind_succMany?, hs] at hn
+    have hnext : next ≤ hi := UpwardEnumerable.le_iff.mpr ⟨n, hn⟩
+    have hpos := Nat.pos_of_ne_zero fun h => (_root_.Std.Rxc.size_eq_zero_iff_not_le.mp h) hnext
+    rw [Rxc.LawfulHasSize.size_eq_succ_of_succ?_eq_some (h := hle) (h' := hs)]
+    exact (Nat.sub_add_cancel hpos).symm
 
 variable {α β : Type u} [Iterator α Id β] [Finite α Id]
 
