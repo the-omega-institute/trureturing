@@ -4,6 +4,7 @@ public import Lean
 public import OmegaChecks.InitPort.Alternatives.Array
 public import OmegaChecks.InitPort.Alternatives.Constraint
 public import OmegaChecks.InitPort.Alternatives.Extract
+public import OmegaChecks.InitPort.Alternatives.GeneratedProofs
 public import OmegaChecks.InitPort.Alternatives.Integer
 public import OmegaChecks.InitPort.Alternatives.List
 public import OmegaChecks.InitPort.Alternatives.NatBits
@@ -25,7 +26,10 @@ public def loadAlternatives : IO (NameMap ConstantInfo) := do
     unless owner != scope && scope.isPrefixOf owner do continue
     let localMatcher := fun n => isPrivateName n && env.getModuleIdxFor? n == env.getModuleIdx? owner
     for ci in data.constants do
-      unless scope.isPrefixOf ci.name && !ci.name.isInternalOrNum && !ci.name.hasMacroScopes &&
+      let namedProof := match ci.name with
+        | .str _ component => ci.isTheorem && component.startsWith "_proof_"
+        | _ => false
+      unless scope.isPrefixOf ci.name && (!ci.name.isInternalOrNum || namedProof) && !ci.name.hasMacroScopes &&
           !ci.isUnsafe && !ci.isPartial do continue
       let some body := ci.value? (allowOpaque := true) | continue
       let body ← (Meta.deltaExpand body localMatcher (allowOpaque := true)).toIO'
@@ -40,7 +44,13 @@ public def loadAlternatives : IO (NameMap ConstantInfo) := do
 /-- Names shared between alternatives refer to the implementations at their official sites.
 The caller checks each candidate against the full original type in the target kernel. -/
 public def alternativeBody? (alternatives : NameMap ConstantInfo) (official : ConstantInfo) : Option Expr := do
-  let ci ← alternatives.find? official.name
+  let ci ← alternatives.find? official.name <|> do
+    guard official.isTheorem
+    let user ← privateToUserName? official.name
+    let ci ← alternatives.find? user
+    guard (ci.isTheorem && ci.numLevelParams == official.numLevelParams)
+    guard (ci.type.instantiateLevelParams ci.levelParams (official.levelParams.map Level.param) == official.type)
+    return ci
   guard (ci.numLevelParams == official.numLevelParams)
   let body ← ci.value? (allowOpaque := true)
   let body := body.instantiateLevelParams ci.levelParams (official.levelParams.map Level.param)
