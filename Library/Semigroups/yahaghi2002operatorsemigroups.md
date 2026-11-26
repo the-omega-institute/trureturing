@@ -16,7 +16,9 @@ triage: anchor
 
 Bamdad Reza Yahaghi, PhD thesis, Dalhousie University, August 2002.
 
-## Source scope
+## Verified locator
+
+Source PDF: https://dal.scholaris.ca/bitstreams/d3c9f1ef-bef0-46d6-a7d1-03940bf895be/download
 
 Chapter 4 fixes finite-dimensional **left** vector spaces over division rings
 on printed page 105 (PDF page 117). Corollary 4.2.3, identified as Levitzki's
