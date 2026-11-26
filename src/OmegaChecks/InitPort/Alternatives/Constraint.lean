@@ -101,4 +101,64 @@ public theorem Lean.Omega.Constraint.scale_sat :
       · exact all_map (k * ·) (fun a => decide (a ≤ t)) (fun a => decide (k * t ≤ a))
           (fun _ ha => decide_eq_true (Int.mul_le_mul_of_nonpos_left nonpos (of_decide_eq_true ha))) _ bounds.1
 
+public theorem Lean.Omega.Constraint.neg_sat :
+    type_of% @_root_.Lean.Omega.Constraint.neg_sat := by
+  intro c t h
+  have a : c.lowerBound.sat t ∧ c.upperBound.sat t := of_decide_eq_true h
+  apply decide_eq_true
+  constructor
+  · exact all_map Neg.neg (fun y => decide (t ≤ y)) (fun y => decide (y ≤ -t))
+      (fun _ hy => decide_eq_true (Int.neg_le_neg (of_decide_eq_true hy))) _ a.2
+  · exact all_map Neg.neg (fun x => decide (x ≤ t)) (fun x => decide (-t ≤ x))
+      (fun _ hx => decide_eq_true (Int.neg_le_neg (of_decide_eq_true hx))) _ a.1
+
+public theorem Lean.Omega.Constraint.div_sat :
+    type_of% @_root_.Lean.Omega.Constraint.div_sat := by
+  intro c t k n h w
+  have pos : (0 : Int) < k := Int.ofNat_lt.mpr (Nat.pos_of_ne_zero n)
+  have a : c.lowerBound.sat t ∧ c.upperBound.sat t := of_decide_eq_true w
+  apply decide_eq_true
+  constructor
+  · apply all_map (fun x : Int => -((-x) / k)) (fun x => decide (x ≤ t)) (fun x => decide (x ≤ t / k)) _ _ a.1
+    intro x p
+    apply decide_eq_true
+    apply Int.le_of_sub_nonneg
+    rw [Int.sub_neg, ← Int.add_ediv_of_dvd_left h]
+    exact (Int.ediv_nonneg_iff_of_pos pos).mpr (Int.sub_nonneg_of_le (of_decide_eq_true p))
+  · apply all_map (fun y : Int => y / k) (fun y => decide (t ≤ y)) (fun y => decide (t / k ≤ y)) _ _ a.2
+    intro y p
+    apply decide_eq_true
+    apply Int.le_of_sub_nonneg
+    rw [← Int.sub_ediv_of_dvd _ h]
+    exact (Int.ediv_nonneg_iff_of_pos pos).mpr (Int.sub_nonneg_of_le (of_decide_eq_true p))
+
+public theorem Lean.Omega.normalize_sat : type_of% @_root_.Lean.Omega.normalize_sat := by
+  intro s x v w
+  dsimp [_root_.Lean.Omega.normalizeConstraint, _root_.Lean.Omega.normalizeCoeffs,
+    _root_.Lean.Omega.normalize, _root_.Lean.Omega.normalize?]
+  split
+  · rename_i g
+    split
+    · rfl
+    · rename_i no
+      have z : Coeffs.dot x v = 0 := IntList.dot_eq_zero_of_left_eq_zero (IntList.gcd_eq_zero.mp g)
+      exact False.elim (no (Eq.subst (motive := fun t => s.sat t = true) z w))
+  · rename_i g
+    split
+    · exact w
+    · exact _root_.Lean.Omega.Constraint.div_sat' g w
+
+public theorem Lean.Omega.tidy_sat : type_of% @_root_.Lean.Omega.tidy_sat := by
+  intro s x v w
+  dsimp [_root_.Lean.Omega.tidyConstraint, _root_.Lean.Omega.tidyCoeffs, _root_.Lean.Omega.tidy, _root_.Lean.Omega.tidy?]
+  split
+  · split
+    · exact w
+    · rename_i hn
+      rcases _root_.Lean.Omega.normalize?_eq_some hn with ⟨rfl, rfl⟩
+      exact Lean.Omega.normalize_sat w
+  · rename_i hp
+    rcases _root_.Lean.Omega.positivize?_eq_some hp with ⟨rfl, rfl⟩
+    exact Lean.Omega.normalize_sat (_root_.Lean.Omega.positivize_sat w)
+
 end OmegaChecks.InitPort.Alternatives
