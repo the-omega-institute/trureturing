@@ -24,6 +24,10 @@ $$\forall V \in Type,\; \forall G \in \operatorname{SimpleGraph}\left(V\right),\
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/LinearForests/OneJoinedPathTrees.oneJoined_iff_spineCut` (`✓ std3`). ∎
 
+*Resolves.* `Problems/pinzon-et-al-2026-one-joined-path-trees` (proved) by `D5/S3/Combinatorics/Graph/LinearForests/OneJoinedPathTrees.oneJoined_iff_spineCut`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"pinzon-et-al-2026-one-joined-path-trees","declaration_gid":"D5/S3/Combinatorics/Graph/LinearForests/OneJoinedPathTrees.oneJoined_iff_spineCut","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Daniel Pinzon; Daniel Pragel; Joshua Roberts; Zack Marshall; Olivia Strain (2026). *Monoid Representation of the Determinants of the Adjacency Matrices of 1-joined Path Graphs*. URL: <https://arxiv.org/abs/2611.34794v1>.
