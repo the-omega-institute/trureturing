@@ -52,20 +52,6 @@ private theorem printedQ_eq9 : printedQ = 9 := by decide
 def claim : Prop :=
   ∀ s, SourceGreedy 5 21 s → HasGapPreperiod s printedQ
 
-/-- The universal assertion of Conjecture 9, with Q denoting the Definition 8 function. -/
-private def Conjecture9 (Q : Nat → Nat → Nat) : Prop :=
-  ∀ f d, 0 < f → 0 < d → ∀ s, SourceGreedy f (f + d) s → HasGapPreperiod s (Q d f)
-
-/-- The formula is required only on the Definition 8(e), (k1) branch used here. -/
-private theorem full_conjecture_implies_claim {Q : Nat → Nat → Nat}
-    (hfull : Conjecture9 Q)
-    (hQ : ∀ f, 5 ≤ f → Q ((f + 1) + 1 * (2 * f)) f = definition8_e_k1 f) :
-    claim := by
-  intro s hs
-  have hpre := hfull 5 16 (by decide) (by decide) s hs
-  have hvalue : Q 16 5 = printedQ := hQ 5 (by decide)
-  rwa [hvalue] at hpre
-
 /-! ### Residue classification modulo 56 -/
 
 set_option maxRecDepth 1000000
