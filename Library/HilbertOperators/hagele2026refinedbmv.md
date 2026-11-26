@@ -10,6 +10,7 @@ strata_touched:
   - D5/S3/Quantum/Analysis/RefinedBMV84
   - D5/S3/Quantum/Analysis/RefinedBMV/NineFour
   - D5/S3/Quantum/Analysis/RefinedBMV/TenFour
+  - D5/S3/Quantum/Analysis/RefinedBMV/ThirteenFour
   - D5/S3/Quantum/Analysis/RefinedBMV/NearScalar/WordMean
   - D5/S3/Quantum/Analysis/RefinedBMV/SingularFourth/ZeroSpectrumProduct
   - D5/S3/Quantum/Analysis/RefinedBMV/BinaryGramConditioning
@@ -130,6 +131,20 @@ Independent rational review checked all 73 cyclic coefficients and the
 three Gram factorizations. Historical priority remains unverified after
 bounded searches covering arXiv:2611.00129, 0802.1153, 2611.03208,
 2610.31851 and 2611.23122.
+
+## Thirteen copies of the first factor
+
+At (13,4), the mean of the real parts of the 2,380 ordered word traces
+dominates the real part of the trace of `(A^(13/4) B)^4` for PSD A and
+Hermitian B in every finite complex dimension, including singular A.
+Hägele formulates the product comparison for positive semidefinite
+factors in Section 1. The proof uses an A-weighted
+rational Gram matrix on 28 half-words with 18 positive factorization
+weights. The cyclic coefficient identity compares the mean with the
+trace of the word with gaps (4,3,3,3). Two trace Cauchy–Schwarz
+inequalities give the fractional-power bound. The dyadic comparison
+from Lemma 2 gives the lower bound by the real part of the trace of
+`exp(13H + 4K)` for the same word mean on `exp H` and `exp K`.
 
 ## Four copies of the second factor near the identity
 
