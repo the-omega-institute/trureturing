@@ -74,6 +74,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           STRATALINT_CACHE_WRITES: 'true'
           MODULE_LANE: ${{ matrix.lane }}
+          LEAN_NUM_THREADS: '1'
         uses: ./.github/actions/lean-cache-shards
         with:
           operation: module-worker
