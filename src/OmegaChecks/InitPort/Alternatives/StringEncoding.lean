@@ -420,32 +420,38 @@ private theorem tailBytes_encodeChar (c : Char) : tailBytes (String.utf8EncodeCh
 public theorem ByteArray.utf8DecodeChar?.isInvalidContinuationByte_getElem_utf8EncodeChar_one_of_utf8Size_eq_two :
     type_of% (private_decl% @_root_.ByteArray.utf8DecodeChar?.isInvalidContinuationByte_getElem_utf8EncodeChar_one_of_utf8Size_eq_two) := by
   intro c size
-  apply tailBytes_encodeChar c 1 _ (by decide)
+  have bound : 1 < (String.utf8EncodeChar c).length := (String.length_utf8EncodeChar c).trans size ▸ (by decide : 1 < 2)
+  exact tailBytes_encodeChar c 1 bound (by decide)
 
 public theorem ByteArray.utf8DecodeChar?.isInvalidContinuationByte_getElem_utf8EncodeChar_one_of_utf8Size_eq_three :
     type_of% (private_decl% @_root_.ByteArray.utf8DecodeChar?.isInvalidContinuationByte_getElem_utf8EncodeChar_one_of_utf8Size_eq_three) := by
   intro c size
-  apply tailBytes_encodeChar c 1 _ (by decide)
+  have bound : 1 < (String.utf8EncodeChar c).length := (String.length_utf8EncodeChar c).trans size ▸ (by decide : 1 < 3)
+  exact tailBytes_encodeChar c 1 bound (by decide)
 
 public theorem ByteArray.utf8DecodeChar?.isInvalidContinuationByte_getElem_utf8EncodeChar_two_of_utf8Size_eq_three :
     type_of% (private_decl% @_root_.ByteArray.utf8DecodeChar?.isInvalidContinuationByte_getElem_utf8EncodeChar_two_of_utf8Size_eq_three) := by
   intro c size
-  apply tailBytes_encodeChar c 2 _ (by decide)
+  have bound : 2 < (String.utf8EncodeChar c).length := (String.length_utf8EncodeChar c).trans size ▸ (by decide : 2 < 3)
+  exact tailBytes_encodeChar c 2 bound (by decide)
 
 public theorem ByteArray.utf8DecodeChar?.isInvalidContinuationByte_getElem_utf8EncodeChar_one_of_utf8Size_eq_four :
     type_of% (private_decl% @_root_.ByteArray.utf8DecodeChar?.isInvalidContinuationByte_getElem_utf8EncodeChar_one_of_utf8Size_eq_four) := by
   intro c size
-  apply tailBytes_encodeChar c 1 _ (by decide)
+  have bound : 1 < (String.utf8EncodeChar c).length := (String.length_utf8EncodeChar c).trans size ▸ (by decide : 1 < 4)
+  exact tailBytes_encodeChar c 1 bound (by decide)
 
 public theorem ByteArray.utf8DecodeChar?.isInvalidContinuationByte_getElem_utf8EncodeChar_two_of_utf8Size_eq_four :
     type_of% (private_decl% @_root_.ByteArray.utf8DecodeChar?.isInvalidContinuationByte_getElem_utf8EncodeChar_two_of_utf8Size_eq_four) := by
   intro c size
-  apply tailBytes_encodeChar c 2 _ (by decide)
+  have bound : 2 < (String.utf8EncodeChar c).length := (String.length_utf8EncodeChar c).trans size ▸ (by decide : 2 < 4)
+  exact tailBytes_encodeChar c 2 bound (by decide)
 
 public theorem ByteArray.utf8DecodeChar?.isInvalidContinuationByte_getElem_utf8EncodeChar_three_of_utf8Size_eq_four :
     type_of% (private_decl% @_root_.ByteArray.utf8DecodeChar?.isInvalidContinuationByte_getElem_utf8EncodeChar_three_of_utf8Size_eq_four) := by
   intro c size
-  apply tailBytes_encodeChar c 3 _ (by decide)
+  have bound : 3 < (String.utf8EncodeChar c).length := (String.length_utf8EncodeChar c).trans size ▸ (by decide : 3 < 4)
+  exact tailBytes_encodeChar c 3 bound (by decide)
 
 public theorem String.Pos.Raw.IsValid.append_right : type_of% @_root_.String.Pos.Raw.IsValid.append_right := by
   intro s p valid t
