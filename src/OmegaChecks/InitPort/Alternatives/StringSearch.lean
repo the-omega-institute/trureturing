@@ -244,6 +244,44 @@ public theorem String.Pos.Splits.of_prev : type_of% @_root_.String.Pos.Splits.of
   rw [both.1]
   exact String.Pos.splits_prev_right p hp
 
+public theorem String.Slice.splits_singleton_right_iff : type_of% @_root_.String.Slice.splits_singleton_right_iff := by
+  intro s p c t
+  constructor
+  · intro split
+    have endSplit := s.splits_endPos
+    rw [split.eq_append] at endSplit
+    have ne := endSplit.ne_startPos_of_singleton
+    have previous := String.Slice.Pos.Splits.prev endSplit
+    rw [String.append_empty] at previous
+    have eqPos := split.pos_eq previous
+    have charEq := (previous.eq (_root_.String.Slice.splits_prev_endPos (h := ne))).2
+    exact ⟨ne, eqPos, (_root_.String.singleton_inj.mp charEq).symm, split.eq_append⟩
+  · rintro ⟨ne, rfl, rfl, eq⟩
+    have endSplit := s.splits_endPos
+    rw [eq] at endSplit
+    have previous := String.Slice.Pos.Splits.prev endSplit
+    rw [String.append_empty] at previous
+    exact previous
+
+public theorem String.splits_singleton_right_iff : type_of% @_root_.String.splits_singleton_right_iff := by
+  intro s p c t
+  constructor
+  · intro split
+    have endSplit : s.endPos.Splits (t ++ String.singleton c) "" :=
+      Eq.mp (congrArg (fun t => s.endPos.Splits t "") split.eq_append) s.splits_endPos
+    have ne := endSplit.ne_startPos_of_singleton
+    have previous := String.Pos.Splits.prev endSplit
+    rw [String.append_empty] at previous
+    have eqPos := split.pos_eq previous
+    have charEq := (previous.eq (_root_.String.splits_prev_endPos (h := ne))).2
+    exact ⟨ne, eqPos, (_root_.String.singleton_inj.mp charEq).symm, split.eq_append⟩
+  · rintro ⟨ne, rfl, rfl, eq⟩
+    have endSplit : s.endPos.Splits (t ++ String.singleton ((s.endPos.prev ne).get _root_.String.Pos.prev_ne_endPos)) "" :=
+      Eq.mp (congrArg (fun t => s.endPos.Splits t "") eq) s.splits_endPos
+    have previous := String.Pos.Splits.prev endSplit
+    rw [String.append_empty] at previous
+    exact previous
+
 public theorem String.Slice.front?_eq : type_of% @_root_.String.Slice.front?_eq := by
   intro s
   by_cases ends : s.startPos = s.endPos
