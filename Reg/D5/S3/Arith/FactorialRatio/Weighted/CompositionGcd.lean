@@ -20,6 +20,42 @@ open Finset
 open scoped Nat
 open scoped NumberField
 
+/-- Expand shared source metadata into literal registrations at the family's own universes. -/
+local macro "sourceAudit" "(" target:term "," unitName:term "," realizationName:term ","
+    sourceArena:term "," family:term "," readout:term "," escapeFrom:term ","
+    definition:term "," coordinates:term "," path:term "," stateBinder:term ","
+    stateOperand:term ")" : term =>
+  `(({
+    unitName := $unitName
+    realizationName := $realizationName
+    realizationSource := none
+    generated := false
+    arena := .source ⟨$sourceArena⟩
+    objectArena := .source ⟨$sourceArena⟩
+    catalog := .anonymous
+    localNames := false
+    realization := .source $sourceArena ⟨$family⟩
+    correspondence := { stage := .evidence, objectStage := .evidence }
+    bundleNonempty := .absent
+    readout := $readout
+    variation := .absent
+    sensitivity := .absent
+    partialSensitivity := none
+    escapeFrom := $escapeFrom
+    sourceSelection := some {
+      owner := `D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd
+      definition := $definition
+      coordinates := $coordinates
+      readouts := #[{
+        path := $path
+        stateBinder := $stateBinder
+        functionOperand := false
+        stateOperand := $stateOperand
+        booleanPredicate := false }] }
+    continuation := .unknown
+    familyRecord := none
+    options := #[] } : Contract.Registration $target _ _ _))
+
 abbrev Params := Σ _ : ℕ, ℕ
 abbrev weightSignature := Reg.Support.SingleDependentReadout.signature Params
   (fun _ => ℕ → ℕ → ℕ) (fun _ => ℕ)
@@ -68,36 +104,18 @@ def family : Registration arena (type_of% @simultaneous_floor_minimum) where
   dependence := dependence
 
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-    (@simultaneous_floor_minimum) (Realization signature) Type Unit where
-  unitName := `D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd.simultaneous_floor_minimum.__information_unit
-  realizationName := `Reg.D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd.Minimum.family
-  realizationSource := none
-  generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
-  catalog := .anonymous
-  localNames := false
-  realization := .source arena ⟨family⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .absent
-  readout := some (realize signature (fun _ w q => floorMinimum w.1 w.2 q) (fun e => nomatch e))
-  variation := .absent
-  sensitivity := .absent
-  partialSensitivity := none
-  escapeFrom := some ℕ
-  sourceSelection := some {
-    owner := `D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd
-    definition := none
-    coordinates := #[0, 1]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "arg", "body", "arg", "body", "body", "arg"]
-      stateBinder := 0
-      functionOperand := false
-      stateOperand := some #["arg"]
-      booleanPredicate := false }] }
-  continuation := .unknown
-  familyRecord := none
-  options := #[]
+    (@simultaneous_floor_minimum) (Realization signature) Type Unit :=
+  sourceAudit (@simultaneous_floor_minimum,
+    `D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd.simultaneous_floor_minimum.__information_unit,
+    `Reg.D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd.Minimum.family,
+    arena, family,
+    (some (realize signature (fun _ w q => floorMinimum w.1 w.2 q) (fun e => nomatch e))),
+    (some ℕ),
+    none,
+    #[0, 1],
+    #["body", "body", "body", "body", "body", "arg", "body", "arg", "body", "body", "arg"],
+    0,
+    (some #["arg"]))
 
 end Minimum
 
@@ -122,36 +140,18 @@ def family : Registration arena (type_of% @weighted_composition_gcd) where
   dependence := weightDependence
 
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-    (@weighted_composition_gcd) (Realization weightSignature) Type Unit where
-  unitName := `D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd.weighted_composition_gcd.__information_unit
-  realizationName := `Reg.D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd.WeightedGcd.family
-  realizationSource := none
-  generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
-  catalog := .anonymous
-  localNames := false
-  realization := .source arena ⟨family⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .absent
-  readout := some (realize weightSignature (fun _ w c => weightedTail w.1 w.2 c) (fun e => nomatch e))
-  variation := .absent
-  sensitivity := .absent
-  partialSensitivity := none
-  escapeFrom := some (ℕ → ℕ → ℕ)
-  sourceSelection := some {
-    owner := `D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd
-    definition := none
-    coordinates := #[0, 1]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "arg"]
-      stateBinder := 3
-      functionOperand := false
-      stateOperand := none
-      booleanPredicate := false }] }
-  continuation := .unknown
-  familyRecord := none
-  options := #[]
+    (@weighted_composition_gcd) (Realization weightSignature) Type Unit :=
+  sourceAudit (@weighted_composition_gcd,
+    `D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd.weighted_composition_gcd.__information_unit,
+    `Reg.D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd.WeightedGcd.family,
+    arena, family,
+    (some (realize weightSignature (fun _ w c => weightedTail w.1 w.2 c) (fun e => nomatch e))),
+    (some (ℕ → ℕ → ℕ)),
+    none,
+    #[0, 1],
+    #["body", "body", "body", "body", "arg"],
+    3,
+    none)
 
 end WeightedGcd
 
@@ -181,36 +181,18 @@ def family : Registration arena (type_of% @exact_certificate_is_universal) where
   dependence := weightDependence
 
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-    (@exact_certificate_is_universal) (Realization weightSignature) Type Unit where
-  unitName := `D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd.exact_certificate_is_universal.__information_unit
-  realizationName := `Reg.D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd.Certificate.family
-  realizationSource := none
-  generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
-  catalog := .anonymous
-  localNames := false
-  realization := .source arena ⟨family⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .absent
-  readout := some (realize weightSignature (fun _ w c => weightedTail w.1 w.2 c) (fun e => nomatch e))
-  variation := .absent
-  sensitivity := .absent
-  partialSensitivity := none
-  escapeFrom := some (ℕ → ℕ → ℕ)
-  sourceSelection := some {
-    owner := `D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd
-    definition := none
-    coordinates := #[0, 1]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "arg"]
-      stateBinder := 6
-      functionOperand := false
-      stateOperand := none
-      booleanPredicate := false }] }
-  continuation := .unknown
-  familyRecord := none
-  options := #[]
+    (@exact_certificate_is_universal) (Realization weightSignature) Type Unit :=
+  sourceAudit (@exact_certificate_is_universal,
+    `D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd.exact_certificate_is_universal.__information_unit,
+    `Reg.D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd.Certificate.family,
+    arena, family,
+    (some (realize weightSignature (fun _ w c => weightedTail w.1 w.2 c) (fun e => nomatch e))),
+    (some (ℕ → ℕ → ℕ)),
+    none,
+    #[0, 1],
+    #["body", "body", "body", "body", "body", "body", "body", "arg"],
+    6,
+    none)
 
 end Certificate
 
@@ -239,36 +221,18 @@ def family : Registration arena (type_of% @exists_small_universal_certificate) w
   dependence := weightDependence
 
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-    (@exists_small_universal_certificate) (Realization weightSignature) Type Unit where
-  unitName := `D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd.exists_small_universal_certificate.__information_unit
-  realizationName := `Reg.D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd.SmallCertificate.family
-  realizationSource := none
-  generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
-  catalog := .anonymous
-  localNames := false
-  realization := .source arena ⟨family⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .absent
-  readout := some (realize weightSignature (fun _ w c => weightedTail w.1 w.2 c) (fun e => nomatch e))
-  variation := .absent
-  sensitivity := .absent
-  partialSensitivity := none
-  escapeFrom := some (ℕ → ℕ → ℕ)
-  sourceSelection := some {
-    owner := `D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd
-    definition := none
-    coordinates := #[0, 1]
-    readouts := #[{
-      path := #["body", "body", "body", "arg", "body", "arg", "arg", "arg", "body", "arg"]
-      stateBinder := 4
-      functionOperand := false
-      stateOperand := none
-      booleanPredicate := false }] }
-  continuation := .unknown
-  familyRecord := none
-  options := #[]
+    (@exists_small_universal_certificate) (Realization weightSignature) Type Unit :=
+  sourceAudit (@exists_small_universal_certificate,
+    `D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd.exists_small_universal_certificate.__information_unit,
+    `Reg.D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd.SmallCertificate.family,
+    arena, family,
+    (some (realize weightSignature (fun _ w c => weightedTail w.1 w.2 c) (fun e => nomatch e))),
+    (some (ℕ → ℕ → ℕ)),
+    none,
+    #[0, 1],
+    #["body", "body", "body", "arg", "body", "arg", "arg", "arg", "body", "arg"],
+    4,
+    none)
 
 end SmallCertificate
 
@@ -314,38 +278,18 @@ def family : Registration arena (type_of% @rationalPrimeIdeal_ne_bot) where
   dependence := dependence
 
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-    (@rationalPrimeIdeal_ne_bot) (Realization signature) Type Unit where
-  unitName :=
-    `D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd.NumberFieldNorm.rationalPrimeIdeal_ne_bot.__information_unit
-  realizationName :=
-    `Reg.D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd.RationalPrimeIdeal.Nonzero.family
-  realizationSource := none
-  generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
-  catalog := .anonymous
-  localNames := false
-  realization := .source arena ⟨family⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ p => rationalPrimeIdeal p) (fun e => nomatch e))
-  variation := .absent
-  sensitivity := .absent
-  partialSensitivity := none
-  escapeFrom := some ℕ
-  sourceSelection := some {
-    owner := `D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd
-    definition := none
-    coordinates := #[]
-    readouts := #[{
-      path := #["body", "body", "arg", "fn", "arg"]
-      stateBinder := 0
-      functionOperand := false
-      stateOperand := none
-      booleanPredicate := false }] }
-  continuation := .unknown
-  familyRecord := none
-  options := #[]
+    (@rationalPrimeIdeal_ne_bot) (Realization signature) Type Unit :=
+  sourceAudit (@rationalPrimeIdeal_ne_bot,
+    `D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd.NumberFieldNorm.rationalPrimeIdeal_ne_bot.__information_unit,
+    `Reg.D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd.RationalPrimeIdeal.Nonzero.family,
+    arena, family,
+    (some (realize signature (fun _ _ p => rationalPrimeIdeal p) (fun e => nomatch e))),
+    (some ℕ),
+    none,
+    #[],
+    #["body", "body", "arg", "fn", "arg"],
+    0,
+    none)
 
 end Nonzero
 
@@ -367,38 +311,18 @@ def family : Registration arena (type_of% @rationalPrimeIdeal_isPrime) where
   dependence := dependence
 
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-    (@rationalPrimeIdeal_isPrime) (Realization signature) Type Unit where
-  unitName :=
-    `D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd.NumberFieldNorm.rationalPrimeIdeal_isPrime.__information_unit
-  realizationName :=
-    `Reg.D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd.RationalPrimeIdeal.Primality.family
-  realizationSource := none
-  generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
-  catalog := .anonymous
-  localNames := false
-  realization := .source arena ⟨family⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ p => rationalPrimeIdeal p) (fun e => nomatch e))
-  variation := .absent
-  sensitivity := .absent
-  partialSensitivity := none
-  escapeFrom := some ℕ
-  sourceSelection := some {
-    owner := `D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd
-    definition := none
-    coordinates := #[]
-    readouts := #[{
-      path := #["body", "body", "arg"]
-      stateBinder := 0
-      functionOperand := false
-      stateOperand := none
-      booleanPredicate := false }] }
-  continuation := .unknown
-  familyRecord := none
-  options := #[]
+    (@rationalPrimeIdeal_isPrime) (Realization signature) Type Unit :=
+  sourceAudit (@rationalPrimeIdeal_isPrime,
+    `D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd.NumberFieldNorm.rationalPrimeIdeal_isPrime.__information_unit,
+    `Reg.D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd.RationalPrimeIdeal.Primality.family,
+    arena, family,
+    (some (realize signature (fun _ _ p => rationalPrimeIdeal p) (fun e => nomatch e))),
+    (some ℕ),
+    none,
+    #[],
+    #["body", "body", "arg"],
+    0,
+    none)
 
 end Primality
 end RationalPrimeIdeal
@@ -453,42 +377,22 @@ def family : Registration arena.{u} (type_of% @number_field_norm_and_complement.
   dependence := Reg.D5.S3.Arith.FactorialRatio.Weighted.IdealTail.dependence
 
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-    (@number_field_norm_and_complement.{u}) (Realization signature.{u}) Type Unit where
-  unitName :=
-    `D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd.NumberFieldNorm.number_field_norm_and_complement.__information_unit
-  realizationName :=
-    `Reg.D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd.NumberFieldGcd.family
-  realizationSource := none
-  generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
-  catalog := .anonymous
-  localNames := false
-  realization := .source arena ⟨family⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .absent
-  readout := some (realize signature (fun _ p M => by
-    letI := p.field
-    letI := p.numberField
-    exact weightedTail p.head M (normWeight p.carrier)) (fun e => nomatch e))
-  variation := .absent
-  sensitivity := .absent
-  partialSensitivity := none
-  escapeFrom := some ℕ
-  sourceSelection := some {
-    owner := `D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd
-    definition := none
-    coordinates := #[0, 3]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body",
-        "arg", "arg", "arg", "fn", "arg", "arg"]
-      stateBinder := 4
-      functionOperand := false
-      stateOperand := none
-      booleanPredicate := false }] }
-  continuation := .unknown
-  familyRecord := none
-  options := #[]
+    (@number_field_norm_and_complement.{u}) (Realization signature.{u}) Type Unit :=
+  sourceAudit (@number_field_norm_and_complement.{u},
+    `D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd.NumberFieldNorm.number_field_norm_and_complement.__information_unit,
+    `Reg.D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd.NumberFieldGcd.family,
+    arena, family,
+    (some (realize signature (fun _ p M => by
+      letI := p.field
+      letI := p.numberField
+      exact weightedTail p.head M (normWeight p.carrier)) (fun e => nomatch e))),
+    (some ℕ),
+    none,
+    #[0, 3],
+    #["body", "body", "body", "body", "body", "body",
+        "arg", "arg", "arg", "fn", "arg", "arg"],
+    4,
+    none)
 
 end NumberFieldGcd
 
@@ -539,36 +443,18 @@ def family : Registration arena (type_of% @weightedValue_ne_zero) where
   dependence := dependence
 
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-    (@weightedValue_ne_zero) (Realization signature) Type Unit where
-  unitName := `D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd.weightedValue_ne_zero.__information_unit
-  realizationName := `Reg.D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd.ValueNonzero.family
-  realizationSource := none
-  generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
-  catalog := .anonymous
-  localNames := false
-  realization := .source arena ⟨family⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .absent
-  readout := some (realize signature (fun _ H z => weightedValue H z.1 z.2) (fun e => nomatch e))
-  variation := .absent
-  sensitivity := .absent
-  partialSensitivity := none
-  escapeFrom := none
-  sourceSelection := some {
-    owner := `D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd
-    definition := none
-    coordinates := #[0]
-    readouts := #[{
-      path := #["body", "body", "body", "arg", "fn", "arg"]
-      stateBinder := 1
-      functionOperand := false
-      stateOperand := none
-      booleanPredicate := false }] }
-  continuation := .unknown
-  familyRecord := none
-  options := #[]
+    (@weightedValue_ne_zero) (Realization signature) Type Unit :=
+  sourceAudit (@weightedValue_ne_zero,
+    `D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd.weightedValue_ne_zero.__information_unit,
+    `Reg.D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd.ValueNonzero.family,
+    arena, family,
+    (some (realize signature (fun _ H z => weightedValue H z.1 z.2) (fun e => nomatch e))),
+    none,
+    none,
+    #[0],
+    #["body", "body", "body", "arg", "fn", "arg"],
+    1,
+    none)
 
 end ValueNonzero
 
@@ -618,36 +504,18 @@ def family : Registration arena (type_of% @weightedTail_ne_zero) where
   dependence := dependence
 
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-    (@weightedTail_ne_zero) (Realization signature) Type Unit where
-  unitName := `D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd.weightedTail_ne_zero.__information_unit
-  realizationName := `Reg.D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd.TailNonzero.family
-  realizationSource := none
-  generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
-  catalog := .anonymous
-  localNames := false
-  realization := .source arena ⟨family⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .absent
-  readout := some (realize signature (fun _ z c => weightedTail z.1 z.2 c) (fun e => nomatch e))
-  variation := .absent
-  sensitivity := .absent
-  partialSensitivity := none
-  escapeFrom := none
-  sourceSelection := some {
-    owner := `D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd
-    definition := none
-    coordinates := #[0, 1]
-    readouts := #[{
-      path := #["body", "body", "body", "arg", "fn", "arg"]
-      stateBinder := 2
-      functionOperand := false
-      stateOperand := none
-      booleanPredicate := false }] }
-  continuation := .unknown
-  familyRecord := none
-  options := #[]
+    (@weightedTail_ne_zero) (Realization signature) Type Unit :=
+  sourceAudit (@weightedTail_ne_zero,
+    `D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd.weightedTail_ne_zero.__information_unit,
+    `Reg.D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd.TailNonzero.family,
+    arena, family,
+    (some (realize signature (fun _ z c => weightedTail z.1 z.2 c) (fun e => nomatch e))),
+    none,
+    none,
+    #[0, 1],
+    #["body", "body", "body", "arg", "fn", "arg"],
+    2,
+    none)
 
 end TailNonzero
 
@@ -704,36 +572,18 @@ def family : Registration arena (type_of% @prime_product_factorization) where
   dependence := dependence
 
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-    (@prime_product_factorization) (Realization signature) Type Unit where
-  unitName := `D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd.prime_product_factorization.__information_unit
-  realizationName := `Reg.D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd.PrimeProduct.family
-  realizationSource := none
-  generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
-  catalog := .anonymous
-  localNames := false
-  realization := .source arena ⟨family⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .absent
-  readout := some (realize signature (fun _ z p => (∏ q ∈ z.1, q ^ z.2 q).factorization p) (fun e => nomatch e))
-  variation := .absent
-  sensitivity := .absent
-  partialSensitivity := none
-  escapeFrom := none
-  sourceSelection := some {
-    owner := `D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd
-    definition := none
-    coordinates := #[0, 1]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "fn", "arg"]
-      stateBinder := 3
-      functionOperand := false
-      stateOperand := none
-      booleanPredicate := false }] }
-  continuation := .unknown
-  familyRecord := none
-  options := #[]
+    (@prime_product_factorization) (Realization signature) Type Unit :=
+  sourceAudit (@prime_product_factorization,
+    `D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd.prime_product_factorization.__information_unit,
+    `Reg.D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd.PrimeProduct.family,
+    arena, family,
+    (some (realize signature (fun _ z p => (∏ q ∈ z.1, q ^ z.2 q).factorization p) (fun e => nomatch e))),
+    none,
+    none,
+    #[0, 1],
+    #["body", "body", "body", "body", "fn", "arg"],
+    3,
+    none)
 
 end PrimeProduct
 
@@ -791,36 +641,18 @@ def family : Registration arena (type_of% @weightedTail_factorization) where
   dependence := dependence
 
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-    (@weightedTail_factorization) (Realization signature) Type Unit where
-  unitName := `D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd.weightedTail_factorization.__information_unit
-  realizationName := `Reg.D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd.TailFactorization.family
-  realizationSource := none
-  generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
-  catalog := .anonymous
-  localNames := false
-  realization := .source arena ⟨family⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .absent
-  readout := some (realize signature (fun _ z w => (weightedTail z.1 z.2 w.1).factorization w.2) (fun e => nomatch e))
-  variation := .absent
-  sensitivity := .absent
-  partialSensitivity := none
-  escapeFrom := none
-  sourceSelection := some {
-    owner := `D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd
-    definition := none
-    coordinates := #[0, 1]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "fn", "arg"]
-      stateBinder := 2
-      functionOperand := false
-      stateOperand := none
-      booleanPredicate := false }] }
-  continuation := .unknown
-  familyRecord := none
-  options := #[]
+    (@weightedTail_factorization) (Realization signature) Type Unit :=
+  sourceAudit (@weightedTail_factorization,
+    `D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd.weightedTail_factorization.__information_unit,
+    `Reg.D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd.TailFactorization.family,
+    arena, family,
+    (some (realize signature (fun _ z w => (weightedTail z.1 z.2 w.1).factorization w.2) (fun e => nomatch e))),
+    none,
+    none,
+    #[0, 1],
+    #["body", "body", "body", "body", "body", "fn", "arg"],
+    2,
+    none)
 
 end TailFactorization
 
@@ -872,36 +704,18 @@ def family : Registration arena (type_of% @weightedTail_constant) where
   dependence := dependence
 
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-    (@weightedTail_constant) (Realization signature) Type Unit where
-  unitName := `D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd.weightedTail_constant.__information_unit
-  realizationName := `Reg.D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd.TailConstant.family
-  realizationSource := none
-  generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
-  catalog := .anonymous
-  localNames := false
-  realization := .source arena ⟨family⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .absent
-  readout := some (realize signature (fun _ z d => weightedTail z.1 z.2 (fun _ _ => d)) (fun e => nomatch e))
-  variation := .absent
-  sensitivity := .absent
-  partialSensitivity := none
-  escapeFrom := none
-  sourceSelection := some {
-    owner := `D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd
-    definition := none
-    coordinates := #[0, 1]
-    readouts := #[{
-      path := #["body", "body", "body", "fn", "arg"]
-      stateBinder := 2
-      functionOperand := false
-      stateOperand := none
-      booleanPredicate := false }] }
-  continuation := .unknown
-  familyRecord := none
-  options := #[]
+    (@weightedTail_constant) (Realization signature) Type Unit :=
+  sourceAudit (@weightedTail_constant,
+    `D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd.weightedTail_constant.__information_unit,
+    `Reg.D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd.TailConstant.family,
+    arena, family,
+    (some (realize signature (fun _ z d => weightedTail z.1 z.2 (fun _ _ => d)) (fun e => nomatch e))),
+    none,
+    none,
+    #[0, 1],
+    #["body", "body", "body", "fn", "arg"],
+    2,
+    none)
 
 end TailConstant
 
@@ -955,36 +769,18 @@ def family : Registration arena (type_of% @weightedTail_add) where
   dependence := dependence
 
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-    (@weightedTail_add) (Realization signature) Type Unit where
-  unitName := `D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd.weightedTail_add.__information_unit
-  realizationName := `Reg.D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd.TailAdd.family
-  realizationSource := none
-  generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
-  catalog := .anonymous
-  localNames := false
-  realization := .source arena ⟨family⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .absent
-  readout := some (realize signature (fun _ z w => weightedTail z.1 z.2 (fun p j => w.1 p j + w.2 p j)) (fun e => nomatch e))
-  variation := .absent
-  sensitivity := .absent
-  partialSensitivity := none
-  escapeFrom := none
-  sourceSelection := some {
-    owner := `D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd
-    definition := none
-    coordinates := #[0, 1]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "arg"]
-      stateBinder := 2
-      functionOperand := false
-      stateOperand := none
-      booleanPredicate := false }] }
-  continuation := .unknown
-  familyRecord := none
-  options := #[]
+    (@weightedTail_add) (Realization signature) Type Unit :=
+  sourceAudit (@weightedTail_add,
+    `D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd.weightedTail_add.__information_unit,
+    `Reg.D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd.TailAdd.family,
+    arena, family,
+    (some (realize signature (fun _ z w => weightedTail z.1 z.2 (fun p j => w.1 p j + w.2 p j)) (fun e => nomatch e))),
+    none,
+    none,
+    #[0, 1],
+    #["body", "body", "body", "body", "arg"],
+    2,
+    none)
 
 end TailAdd
 
@@ -1068,39 +864,21 @@ def family : Registration arena.{u} (type_of% @NumberFieldNorm.fullRingFactorial
   dependence := dependence
 
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-    (@NumberFieldNorm.fullRingFactorialIdeal_norm.{u}) (Realization signature.{u}) Type Unit where
-  unitName := `D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd.NumberFieldNorm.fullRingFactorialIdeal_norm.__information_unit
-  realizationName := `Reg.D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd.FullNorm.family
-  realizationSource := none
-  generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
-  catalog := .anonymous
-  localNames := false
-  realization := .source arena ⟨family⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .absent
-  readout := some (realize signature (fun _ z n => by
-    letI := z.field
-    letI := z.numberField
-    exact (NumberFieldNorm.fullRingFactorialIdeal z.carrier n).absNorm) (fun e => nomatch e))
-  variation := .absent
-  sensitivity := .absent
-  partialSensitivity := none
-  escapeFrom := none
-  sourceSelection := some {
-    owner := `D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd
-    definition := none
-    coordinates := #[0, 3]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "fn", "arg"]
-      stateBinder := 4
-      functionOperand := false
-      stateOperand := none
-      booleanPredicate := false }] }
-  continuation := .unknown
-  familyRecord := none
-  options := #[]
+    (@NumberFieldNorm.fullRingFactorialIdeal_norm.{u}) (Realization signature.{u}) Type Unit :=
+  sourceAudit (@NumberFieldNorm.fullRingFactorialIdeal_norm.{u},
+    `D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd.NumberFieldNorm.fullRingFactorialIdeal_norm.__information_unit,
+    `Reg.D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd.FullNorm.family,
+    arena, family,
+    (some (realize signature (fun _ z n => by
+      letI := z.field
+      letI := z.numberField
+      exact (NumberFieldNorm.fullRingFactorialIdeal z.carrier n).absNorm) (fun e => nomatch e))),
+    none,
+    none,
+    #[0, 3],
+    #["body", "body", "body", "body", "body", "body", "fn", "arg"],
+    4,
+    none)
 
 end FullNorm
 
@@ -1159,39 +937,21 @@ def family : Registration arena.{u} (type_of% @NumberFieldNorm.complement_eq_wei
   dependence := dependence
 
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-    (@NumberFieldNorm.complement_eq_weightedValue.{u}) (Realization signature.{u}) Type Unit where
-  unitName := `D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd.NumberFieldNorm.complement_eq_weightedValue.__information_unit
-  realizationName := `Reg.D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd.ComplementValue.family
-  realizationSource := none
-  generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
-  catalog := .anonymous
-  localNames := false
-  realization := .source arena ⟨family⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .absent
-  readout := some (realize signature (fun _ z n => by
-    letI := z.field
-    letI := z.numberField
-    exact (NumberFieldNorm.fullRingFactorialIdeal z.carrier n).absNorm) (fun e => nomatch e))
-  variation := .absent
-  sensitivity := .absent
-  partialSensitivity := none
-  escapeFrom := none
-  sourceSelection := some {
-    owner := `D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd
-    definition := some { owner := `D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd, name := `D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd.NumberFieldNorm.normComplement, path := #["body", "body", "body", "body"] }
-    coordinates := #[0, 3]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "arg"]
-      stateBinder := 4
-      functionOperand := false
-      stateOperand := none
-      booleanPredicate := false }] }
-  continuation := .unknown
-  familyRecord := none
-  options := #[]
+    (@NumberFieldNorm.complement_eq_weightedValue.{u}) (Realization signature.{u}) Type Unit :=
+  sourceAudit (@NumberFieldNorm.complement_eq_weightedValue.{u},
+    `D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd.NumberFieldNorm.complement_eq_weightedValue.__information_unit,
+    `Reg.D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd.ComplementValue.family,
+    arena, family,
+    (some (realize signature (fun _ z n => by
+      letI := z.field
+      letI := z.numberField
+      exact (NumberFieldNorm.fullRingFactorialIdeal z.carrier n).absNorm) (fun e => nomatch e))),
+    none,
+    (some { owner := `D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd, name := `D5.S3.Arith.FactorialRatio.Weighted.CompositionGcd.NumberFieldNorm.normComplement, path := #["body", "body", "body", "body"] }),
+    #[0, 3],
+    #["body", "body", "body", "body", "arg"],
+    4,
+    none)
 
 end ComplementValue
 

@@ -1,5 +1,5 @@
 /- GID: D5/S3/Arith/FactorialRatio/Compression/OptimizedEntropy
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Arith/FactorialRatio/Compression/OptimizedEntropy
    mirror-E: none(waiver:symbolic-entropy-analysis)
    anchors: [mathlib/module/Mathlib.Analysis.SumIntegralComparisons, mathlib/module/Mathlib.Analysis.SpecialFunctions.BinaryEntropy]
