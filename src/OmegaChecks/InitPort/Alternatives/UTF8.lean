@@ -1085,4 +1085,98 @@ public theorem BitVec.append_assoc : type_of% @_root_.BitVec.append_assoc := by
   rw [BitVec.toNat_cast, BitVec.toNat_append, BitVec.toNat_append, BitVec.toNat_append, BitVec.toNat_append,
     Nat.shiftLeft_or_distrib, ← Nat.shiftLeft_add, Nat.or_assoc]
 
+open _root_.ByteArray.utf8DecodeChar? in
+public theorem ByteArray.validateUTF8At_eq_isSome_utf8DecodeChar? :
+    type_of% @_root_.ByteArray.validateUTF8At_eq_isSome_utf8DecodeChar? := by
+  intro b i
+  unfold ByteArray.validateUTF8At ByteArray.utf8DecodeChar?
+  split
+  · split
+    · rfl
+    · exact verify₁_eq_isSome_assemble₁
+    · split
+      · exact verify₂_eq_isSome_assemble₂
+      · rfl
+    · split
+      · exact verify₃_eq_isSome_assemble₃
+      · rfl
+    · split
+      · exact verify₄_eq_isSome_assemble₄
+      · rfl
+  · rfl
+
+open _root_.ByteArray.utf8DecodeChar? in
+public theorem ByteArray.utf8DecodeChar?.verify₃_eq_isSome_assemble₃ :
+    type_of% (private_decl% @_root_.ByteArray.utf8DecodeChar?.verify₃_eq_isSome_assemble₃) := by
+  intro w x y
+  unfold verify₃ assemble₃
+  dsimp only
+  split
+  · rfl
+  · split <;> rename_i cut
+    · exact decide_eq_false (fun ok => UInt32.not_le.mpr cut ok.1)
+    · split <;> rename_i gap
+      · exact decide_eq_false (fun ok => ok.2.elim (UInt32.not_lt.mpr gap.1) (UInt32.not_lt.mpr gap.2))
+      · apply decide_eq_true
+        refine ⟨UInt32.not_lt.mp cut, ?_⟩
+        by_cases before : (assemble₃Unchecked w x y) < 0xd800
+        · exact Or.inl before
+        · exact Or.inr (UInt32.not_le.mp (fun below => gap ⟨UInt32.not_lt.mp before, below⟩))
+
+open _root_.ByteArray.utf8DecodeChar? in
+public theorem ByteArray.utf8DecodeChar?.verify₄_eq_isSome_assemble₄ :
+    type_of% (private_decl% @_root_.ByteArray.utf8DecodeChar?.verify₄_eq_isSome_assemble₄) := by
+  intro w x y z
+  unfold verify₄ assemble₄
+  dsimp only
+  split
+  · rfl
+  · split <;> rename_i cut
+    · exact decide_eq_false (fun ok => Nat.not_le_of_lt cut ok.1)
+    · split <;> rename_i last
+      · exact decide_eq_false (fun ok => Nat.not_le_of_lt last ok.2)
+      · exact decide_eq_true ⟨Nat.le_of_not_lt cut, Nat.le_of_not_lt last⟩
+
+private theorem validationAtEq (b : ByteArray) {i j : Nat} (pos : i = j) (hi : i ≤ b.size) (hj : j ≤ b.size) :
+    ByteArray.validateUTF8.go b i hi = ByteArray.validateUTF8.go b j hj := by
+  cases pos
+  rfl
+
+private theorem validation_agrees (b : ByteArray) (fuel i : Nat) (hi : i ≤ b.size) (acc : Array Char)
+    (room : b.size - i ≤ fuel) :
+    (ByteArray.utf8Decode?.go b i acc hi).isSome = ByteArray.validateUTF8.go b i hi := by
+  induction fuel generalizing i acc with
+  | zero =>
+    have stop := Nat.not_lt_of_ge (Nat.le_of_sub_eq_zero (Nat.le_zero.mp room))
+    rw [ByteArray.utf8Decode?.go.eq_1, ByteArray.validateUTF8.go.eq_def, ite_eq_right stop, dite_eq_right stop]
+    rfl
+  | succ n ih =>
+    rw [ByteArray.utf8Decode?.go.eq_1, ByteArray.validateUTF8.go.eq_def]
+    by_cases ahead : i < b.size
+    · rw [ite_eq_left ahead, dite_eq_left ahead]
+      split <;> rename_i code
+      · split <;> rename_i valid
+        · rfl
+        · have invalid := (ByteArray.validateUTF8At_eq_isSome_utf8DecodeChar? (b := b) (i := i)).trans
+            (congrArg Option.isSome code)
+          cases valid.symm.trans invalid
+      · rename_i c
+        split <;> rename_i valid
+        · have live := (ByteArray.validateUTF8At_eq_isSome_utf8DecodeChar? (b := b) (i := i)).trans
+            (congrArg Option.isSome code)
+          cases valid.symm.trans live
+        · have witness : (b.utf8DecodeChar? i).isSome := (congrArg Option.isSome code).trans rfl
+          have head : b.utf8DecodeChar i witness = c := Option.get_of_eq_some witness code
+          have width := (congrArg Char.utf8Size head.symm).trans (ByteArray.utf8Size_utf8DecodeChar (h := witness))
+          have next := ByteArray.le_size_of_utf8DecodeChar?_eq_some code
+          have smaller := Nat.sub_lt_sub_left ahead (Nat.lt_add_of_pos_right c.utf8Size_pos)
+          exact (ih (i + c.utf8Size) next (acc.push c) (Nat.le_of_lt_succ (Nat.lt_of_lt_of_le smaller room))).trans
+            (validationAtEq b (congrArg (i + ·) width) _ _)
+    · rw [ite_eq_right ahead, dite_eq_right ahead]
+      rfl
+
+public theorem ByteArray.isSome_utf8Decode?Go_eq_validateUTF8Go :
+    type_of% @_root_.ByteArray.isSome_utf8Decode?Go_eq_validateUTF8Go :=
+  fun {b i acc hi} => validation_agrees b (b.size - i) i hi acc (Nat.le_refl _)
+
 end OmegaChecks.InitPort.Alternatives
