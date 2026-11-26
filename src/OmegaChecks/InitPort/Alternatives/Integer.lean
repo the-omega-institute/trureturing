@@ -436,4 +436,26 @@ public theorem Dyadic.ble_iff_toRat : type_of% @_root_.Dyadic.ble_iff_toRat := b
   exact (_root_.Dyadic.blt_eq_false_iff (x := y) (y := x)).symm.trans
     (Bool.eq_false_iff.trans ((not_congr (Dyadic.blt_iff_toRat (x := y) (y := x))).trans Rat.not_lt))
 
+public theorem Dyadic.not_lt : type_of% @_root_.Dyadic.not_lt := by
+  intro x y
+  exact (not_congr (Dyadic.blt_iff_toRat (x := x) (y := y))).trans (Rat.not_lt.trans Dyadic.ble_iff_toRat.symm)
+
+public theorem Dyadic.not_le : type_of% @_root_.Dyadic.not_le := by
+  intro x y
+  exact (not_congr (Dyadic.ble_iff_toRat (x := x) (y := y))).trans (Rat.not_le.trans Dyadic.blt_iff_toRat.symm)
+
+public theorem Dyadic.instLawfulOrderLT : type_of% @_root_.Dyadic.instLawfulOrderLT where
+  lt_iff a b := by
+    constructor
+    · intro lt
+      have nle := Dyadic.not_le.mpr lt
+      exact ⟨(_root_.Dyadic.le_total a b).resolve_right nle, nle⟩
+    · exact fun h => Dyadic.not_le.mp h.2
+
+public theorem Dyadic.neg_ofIntWithPrec : type_of% @_root_.Dyadic.neg_ofIntWithPrec := by
+  intro i prec
+  apply _root_.Dyadic.toRat_inj.mp
+  rw [_root_.Dyadic.toRat_neg, _root_.Dyadic.toRat_ofIntWithPrec_eq_mul_two_pow,
+    _root_.Dyadic.toRat_ofIntWithPrec_eq_mul_two_pow, Rat.intCast_neg, Rat.neg_mul]
+
 end OmegaChecks.InitPort.Alternatives
