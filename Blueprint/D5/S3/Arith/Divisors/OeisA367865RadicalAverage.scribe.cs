@@ -32,7 +32,10 @@ internal sealed class OeisA367865RadicalAverageDocument : IScribeDocumentDefinit
                         + "Mathlib's Möbius square identity therefore turns the left side into the same "
                         + "totient-weighted divisor sum. The proof is the direct rational composition of "
                         + "these identities."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("oeis-a367865-radical-average"),
+                    ResolutionKind.Proved)))));
 
     private static Formula MainFormula()
     {

@@ -10,6 +10,10 @@ $$\forall n\in \mathbb{N}, 1\le n \Rightarrow \sum_{d\in\operatorname{Nat}.\oper
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/Divisors/OeisA367865RadicalAverage.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a367865-radical-average` (proved) by `D5/S3/Arith/Divisors/OeisA367865RadicalAverage.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a367865-radical-average","declaration_gid":"D5/S3/Arith/Divisors/OeisA367865RadicalAverage.result","resolution_kind":"proved"} -->
+
 *Citation.* OEIS Foundation Inc. (2026). *OEIS A367865*. URL: <https://oeis.org/A367865>.
 
 *Commentary.*
