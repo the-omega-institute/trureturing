@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S0/FiniteGeometry/DoubledTriangleFolds
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [lit/fernando2026goodcolorings]
+   anchors: []
    utility: none
    digest: Minimum-fold good colorings of doubled triangles have uniformly opposite sheets. -/
 
@@ -10,7 +10,6 @@ module
 
 public import Mathlib.Data.Fintype.BigOperators
 import Mathlib.Algebra.Order.BigOperators.Group.Finset
-import Mathlib.Data.Fintype.EquivFin
 import OmegaBuild.Commands
 
 /-! # Fold minima of doubled triangular subdivisions -/
@@ -102,17 +101,6 @@ instance (p : Point n 0) : Decidable p.boundary := by unfold Point.boundary; inf
 def bump (a b : Axis) : ℕ := if a = b then 1 else 0
 def bumpPair (a b : Axis) : ℕ := if a = b then 0 else 1
 
-/-- An up corner is indexed by the coordinate increased by one. A down corner
-is indexed by the coordinate omitted from the two increases. -/
-def cornerVertex (t : Cell n) (a : Axis) : Point n 0 :=
-  match t with
-  | .inl p =>
-    ⟨p.x + bump a .x, p.y + bump a .y, p.z + bump a .z,
-      by have := p.total; cases a <;> simp [bump] <;> omega⟩
-  | .inr p =>
-    ⟨p.x + bumpPair a .x, p.y + bumpPair a .y, p.z + bumpPair a .z,
-      by have := p.total; cases a <;> simp [bumpPair] <;> omega⟩
-
 def atUp (v : Point n 0) (s : Bool) (a : Axis) : Option (Face n) :=
   if h : 0 < v.coord a then
     some (up s ⟨v.x - bump a .x, v.y - bump a .y, v.z - bump a .z,
@@ -140,8 +128,8 @@ def black (C : Coloring n) (faces : List (Face n)) : Int :=
 def white (C : Coloring n) (faces : List (Face n)) : Int :=
   faces.countP (fun f => !C f)
 
-/-- At each glued vertex, the number of black corners minus the number of
-white corners is divisible by three. -/
+/-- At each quotient vertex, including each sheet interior vertex, the number
+of black corners minus the number of white corners is divisible by three. -/
 def Good (C : Coloring n) : Prop :=
   ∀ v s, (3 : Int) ∣ (black C (incidentCorners v s) - white C (incidentCorners v s))
 
@@ -154,7 +142,7 @@ abbrev Edge (n : ℕ) :=
 instance (p : Point n 1 × Axis × Bool) :
     Decidable (p.1.coord p.2.1 = 0 → p.2.2 = false) := inferInstance
 
-def edge (p : Point n 1) (a : Axis) (s : Bool) : Edge n :=
+private def edge (p : Point n 1) (a : Axis) (s : Bool) : Edge n :=
   ⟨(p, a, if p.coord a = 0 then false else s), by simp +contextual⟩
 
 def below (p : Point n 1) (a : Axis) (h : p.coord a ≠ 0) : Point n 2 :=
@@ -202,118 +190,6 @@ private theorem edgeFaces_seam (p : Point n 1) (a : Axis) (h : p.coord a = 0)
 private theorem edgeFaces_inside (p : Point n 1) (a : Axis) (h : p.coord a ≠ 0)
     (s : Bool) : edgeFaces (edge p a s) = (up s p, down s (below p a h)) := by
   simp [edgeFaces, edge, h]
-
-private theorem atUp_iff (v : Point n 0) (s : Bool) (a : Axis) (p : Point n 1) :
-    atUp v s a = some (up s p) ↔ cornerVertex (.inl p) a = v := by
-  cases v with
-  | mk x y z hv =>
-    cases p with
-    | mk i j k hp =>
-      cases a <;>
-        simp only [atUp, Point.coord, bump, cornerVertex,
-          reduceCtorEq, if_true, if_false, Nat.add_zero, Nat.sub_zero] <;>
-        split <;> simp <;> omega
-
-private theorem atDown_iff (v : Point n 0) (s : Bool) (a : Axis) (p : Point n 2) :
-    atDown v s a = some (down s p) ↔ cornerVertex (.inr p) a = v := by
-  cases v with
-  | mk x y z hv =>
-    cases p with
-    | mk i j k hp =>
-      cases a <;>
-        simp only [atDown, bumpPair, cornerVertex,
-          reduceCtorEq, if_true, if_false, Nat.add_zero, Nat.sub_zero, Nat.zero_le, true_and] <;>
-        split <;> simp [bumpPair] at * <;> omega
-
-private theorem mem_sheetCorners (v : Point n 0) (s : Bool) (f : Face n) :
-    f ∈ sheetCorners v s ↔ f.1 = s ∧ ∃ a, cornerVertex f.2 a = v := by
-  obtain ⟨t, p⟩ := f
-  have hUp (a : Axis) : ∀ f, atUp v s a = some f → ∃ q, f = up s q := by
-    intro f hf
-    unfold atUp at hf
-    split at hf
-    · exact ⟨_, (Option.some.inj hf).symm⟩
-    · cases hf
-  have hDown (a : Axis) : ∀ f, atDown v s a = some f → ∃ q, f = down s q := by
-    intro f hf
-    unfold atDown at hf
-    split at hf
-    · exact ⟨_, (Option.some.inj hf).symm⟩
-    · cases hf
-  constructor
-  · intro h
-    obtain ⟨o, ho, hf⟩ := List.mem_filterMap.mp h
-    simp only [id_eq, List.mem_cons, List.not_mem_nil, or_false] at ho
-    rcases ho with rfl | rfl | rfl | rfl | rfl | rfl
-    all_goals first
-      | obtain ⟨q, hq⟩ := hUp _ _ (by simpa using hf)
-        cases hq
-        exact ⟨rfl, _, (atUp_iff _ _ _ _).mp hf⟩
-      | obtain ⟨q, hq⟩ := hDown _ _ (by simpa using hf)
-        cases hq
-        exact ⟨rfl, _, (atDown_iff _ _ _ _).mp hf⟩
-  · rintro ⟨rfl, a, h⟩
-    cases p with
-    | inl p =>
-      exact List.mem_filterMap.mpr ⟨atUp v t a, by cases a <;> simp,
-        (atUp_iff _ _ _ _).mpr h⟩
-    | inr p =>
-      exact List.mem_filterMap.mpr ⟨atDown v t a, by cases a <;> simp,
-        (atDown_iff _ _ _ _).mpr h⟩
-
-private theorem mem_incidentCorners (v : Point n 0) (s : Bool) (f : Face n) :
-    f ∈ incidentCorners v s ↔ (v.boundary ∨ f.1 = s) ∧ ∃ a, cornerVertex f.2 a = v := by
-  by_cases hb : v.boundary
-  · cases hs : f.1 <;> simp [incidentCorners, hb, mem_sheetCorners, hs]
-  · simp [incidentCorners, hb, mem_sheetCorners]
-
-private theorem sheetCorners_nodup (v : Point n 0) (s : Bool) :
-    (sheetCorners v s).Nodup := by
-  by_cases hx : v.x = 0 <;> by_cases hy : v.y = 0 <;> by_cases hz : v.z = 0 <;>
-    simp [sheetCorners, atUp, atDown, bump, bumpPair, Point.coord, hx, hy, hz,
-      Nat.pos_iff_ne_zero, Nat.succ_le_iff, List.nodup_cons, Point.mk.injEq] <;> omega
-
-private theorem incidentCorners_nodup (v : Point n 0) (s : Bool) :
-    (incidentCorners v s).Nodup := by
-  by_cases hb : v.boundary
-  · rw [incidentCorners, if_pos hb, List.nodup_append', List.disjoint_left]
-    refine ⟨sheetCorners_nodup v false, sheetCorners_nodup v true, ?_⟩
-    intro f hf hg
-    exact Bool.false_ne_true (((mem_sheetCorners v false f).mp hf).1.symm.trans
-      ((mem_sheetCorners v true f).mp hg).1)
-  · simpa only [incidentCorners, ite_eq_right hb] using sheetCorners_nodup v s
-
-/-- The planar endpoint coordinates of a labelled edge. A boundary endpoint
-is shared, according to the same boundary rule as in `incidentCorners`. -/
-def edgeEndpoints (e : Edge n) : Point n 0 × Point n 0 :=
-  let t : Cell n := .inl e.val.1
-  match e.val.2.1 with
-  | .x => (cornerVertex t .y, cornerVertex t .z)
-  | .y => (cornerVertex t .z, cornerVertex t .x)
-  | .z => (cornerVertex t .x, cornerVertex t .y)
-
-private theorem crosses_iff_endpoints (e : Edge n) (r : Cut n) :
-    Crosses e r ↔
-      ((edgeEndpoints e).1.coord r.1 = r.2.val ∧
-        (edgeEndpoints e).2.coord r.1 = r.2.val + 1) ∨
-      ((edgeEndpoints e).2.coord r.1 = r.2.val ∧
-        (edgeEndpoints e).1.coord r.1 = r.2.val + 1) := by
-  obtain ⟨⟨p, a, s⟩, he⟩ := e
-  obtain ⟨c, k⟩ := r
-  cases a <;> cases c <;>
-    simp [Crosses, edgeEndpoints, cornerVertex, Point.coord, bump] <;> omega
-
-private theorem edge_seam_iff_endpoints (e : Edge n) :
-    e.val.1.coord e.val.2.1 = 0 ↔
-      ∃ a, (edgeEndpoints e).1.coord a = 0 ∧ (edgeEndpoints e).2.coord a = 0 := by
-  obtain ⟨⟨p, c, s⟩, he⟩ := e
-  constructor
-  · intro h
-    refine ⟨c, ?_⟩
-    cases c <;> exact ⟨h, h⟩
-  · rintro ⟨a, ha, hb⟩
-    cases c <;> cases a <;>
-      simp [edgeEndpoints, cornerVertex, Point.coord, bump] at ha hb ⊢ <;> omega
 
 private def signed (b : Bool) : Int := if b then 1 else -1
 
