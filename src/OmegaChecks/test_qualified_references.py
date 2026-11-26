@@ -5,6 +5,7 @@ from pathlib import Path
 import subprocess
 import tempfile
 
+from portable import backend_plan
 from strict_lake import ROOT, strict_config
 
 
@@ -138,7 +139,7 @@ def computational_cases(backend):
                                  "public def D5.observed (n k : Omega.Nat) : Omega.Nat := helper n k\n"), []
 
 
-def check_case(lean, label, path, sources, errors, *, ports=PORTS, expected_count=None):
+def check_case(lean, label, path, sources, errors, *, ports=PORTS, expected_count=None, read_plan=False):
     with tempfile.TemporaryDirectory(prefix="omega-refs-") as temp:
         directory = Path(temp)
         search = os.pathsep.join([temp, path])
@@ -150,7 +151,11 @@ def check_case(lean, label, path, sources, errors, *, ports=PORTS, expected_coun
             index = file.with_suffix(".ilean")
             subprocess.run([lean, "-R", temp, "-o", file.with_suffix(".olean"), "-i", index, file],
                            cwd=ROOT, env={**os.environ, "LEAN_PATH": search}, check=True)
-            records.append([module, str(file), str(index)])
+            records.append(dict(moduleName=module, source=str(file), index=str(index), mathlibOnly=False))
+        if read_plan:
+            skipped = backend_plan(search, [r["moduleName"] for r in records])["mathlibOnly"]
+            for record in records:
+                record["mathlibOnly"] = record["moduleName"] in skipped
         request = directory / "request.json"
         request.write_text(json.dumps(records))
         environment = os.environ.copy()
@@ -166,6 +171,23 @@ def check_case(lean, label, path, sources, errors, *, ports=PORTS, expected_coun
             summary = f"Verified {expected_count} qualified standard references on the {label} backend."
             if result.stdout.strip() != summary:
                 raise AssertionError(f"expected {summary!r}, got {message!r}")
+
+
+def check_mathlib_only(lean, path):
+    port = "OmegaMathlib.Data.Nat.Fib.Basic"
+    marked = ("D5.OfficialOrigin", "module\npublic import OmegaBuild.Commands\n" +
+              f"public import {port}\ncompile_only_with_mathlib\n")
+    header = "module\npublic import D5.OfficialOrigin\n"
+    use = "public def observed (n : Nat) : Nat := Nat.fib n + OmegaMathlib.Nat.fib n\n"
+    # Keep the spelling and source position identical when the local namespace shadows the port.
+    column = use.index("OmegaMathlib.Nat.fib") + 1
+    forged = [f":7:{column}: OmegaMathlib.Nat.fib requires Nat.fib",
+              "in Mathlib.Data.Nat.Fib.Basic at this occurrence"]
+    for namespace, errors in [("Independent", []), ("OmegaMathlib", forged)]:
+        body = (header + f"namespace Shadow.{namespace}.Nat\npublic def fib (n : Nat) := n\n"
+                f"end Shadow.{namespace}.Nat\nnamespace Shadow\n" + use + "end Shadow\n")
+        check_case(lean, "official", path, [marked, ("D5.OfficialConsumer", body)], errors,
+                   ports=[port], expected_count=None if errors else 1, read_plan=True)
 
 
 def check():
@@ -203,6 +225,8 @@ def check():
         valid = ("D5.FibConsumer", f"module\nprelude\npublic import {PORTS[0]}\n"
                  "public def D5.observed (n : Omega.Nat) := OmegaMathlib.Nat.Prime n\n")
         check_case(lean, label, path, [sibling, valid], [], ports=[PORTS[0]], expected_count=2)
+        if label == "official":
+            check_mathlib_only(lean, path)
         print(f"Checked occurrence fixtures on {label}", flush=True)
 
 

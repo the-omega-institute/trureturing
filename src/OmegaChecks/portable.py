@@ -606,7 +606,8 @@ def check(only, backend="mathlib", destination=None, *, frozen=None, discovered=
                 files = [n for n in checked_refs if n not in skipped] if label == "strict" else checked_refs
                 if not files:
                     continue
-                records = [(name, str(sources[name]), str(stage.joinpath(*name.split(".")).with_suffix(".ilean")))
+                records = [dict(moduleName=name, source=str(sources[name]), mathlibOnly=name in skipped,
+                                index=str(stage.joinpath(*name.split(".")).with_suffix(".ilean")))
                            for name in files]
                 request = Path(temp) / f"{label}-references.json"
                 request.write_text(json.dumps(records))

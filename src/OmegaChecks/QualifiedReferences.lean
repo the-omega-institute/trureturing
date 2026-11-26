@@ -46,6 +46,7 @@ private structure Ports where
   objects : NameMap Port := {}
   byLeaf : Std.HashMap String (Array Port) := {}
   equivalents : NameMap Name := {}
+  allowNative : Bool := false
 
 /-- Only alias entries owned by compiled, admitted port modules can confer standard identity. -/
 private def admittedPorts (env : Environment) (official : Bool) : IO Ports := do
@@ -123,6 +124,7 @@ private def indexEquivalentObjects (env : Environment) (ports : Ports) (project 
 
 private def sensitive? (catalog : Environment) (ports : Ports) (project : NameSet)
     (name : Name) : Option Name := do
+  guard (!(ports.allowNative && ports.objects.contains name))
   if let some port := ports.equivalents.find? name then return port
   let idx ← catalog.getModuleIdxFor? name
   guard (project.contains catalog.header.moduleNames[idx]!)
@@ -238,7 +240,7 @@ private def checkFile (moduleName : Name) (source index : System.FilePath)
   let relevantRefs := refs.references.toList.any fun (id, info) => Id.run do
     let .const owner name := id | return false
     if info.usages.isEmpty then return false
-    if ports.objects.contains name.toName then return true
+    if !ports.allowNative && ports.objects.contains name.toName then return true
     unless project.contains owner.toName do return false
     if let .str _ leaf := name.toName then
       if ports.byLeaf.contains leaf then return true
@@ -286,6 +288,7 @@ private def checkFile (moduleName : Name) (source index : System.FilePath)
           let actual := name.toName
           if let some port := ports.objects.find? actual then
             if port.owner == owner.toName then
+              if ports.allowNative then continue
               throw <| IO.userError s!"{source}:{pos.start.line+1}:{pos.start.character+1}: {parent} uses {actual} from {owner}; qualify this identifier as {port.alias}"
           let spelling := part.getId.eraseMacroScopes
           if project.contains owner.toName &&
@@ -313,31 +316,40 @@ private def checkFile (moduleName : Name) (source index : System.FilePath)
     checkElaborated source text state.commands sourceEnv opts published data.isModule marks catalog ports project
   return some count
 
+private structure ReferenceFile where
+  moduleName : String
+  source : String
+  index : String
+  mathlibOnly : Bool
+  deriving FromJson
+
 private structure ReplayPlan where
   files : Array String
   portModules : Array String
   deriving FromJson, ToJson
 
 /-- The scan uses exactly the same compiled declarations and identifier test as a replay. -/
-private unsafe def runChecks (backend path : String) (files : Array (Array String))
+private unsafe def runChecks (backend path : String) (files : Array ReferenceFile)
     (portModules : List String) (scanOnly : Bool) (only : Option String := none) : IO (Nat × ReplayPlan) := do
   searchPathRef.set (System.SearchPath.parse path)
   let mut count := 0
   let mut replay := #[]
   enableInitializersExecution
-  let selected := files.filter fun row => only.all (fun name => row[0]? == some name)
+  let selected := files.filter fun file => only.all (· == file.moduleName)
   if only.isSome && selected.size != 1 then throw <| IO.userError s!"expected one manifest entry for {only}"
-  let modules := (portModules ++ selected.toList.filterMap (·[0]?)).eraseDups
+  let modules := (portModules ++ selected.toList.map (·.moduleName)).eraseDups
   let catalog ← importModules (modules.toArray.map fun name => {module := name.toName, importAll := true}) {}
   let ports ← admittedPorts catalog (backend == "official")
-  let project := files.foldl (init := ({} : NameSet)) fun names row =>
-    if let some name := row[0]? then names.insert name.toName else names
+  let project := files.foldl (init := ({} : NameSet)) fun names file => names.insert file.moduleName.toName
   let ports ← (indexEquivalentObjects catalog ports project).run' |>.toIO'
     {fileName := "<standard object identity>", fileMap := default} {env := catalog}
-  for row in selected do
-    let #[name, source, refs] := row | throw <| IO.userError "expected module, source and ilean paths"
+  for file in selected do
+    let name := file.moduleName
+    if file.mathlibOnly && backend != "official" then
+      throw <| IO.userError s!"Mathlib-only module {name} cannot have strict references"
     enableInitializersExecution
-    let some n ← checkFile name.toName source refs catalog ports project scanOnly | do
+    let some n ← checkFile name.toName file.source file.index catalog
+        { ports with allowNative := file.mathlibOnly } project scanOnly | do
       if only.isSome then throw <| IO.userError s!"compiled replay selection changed for {name}"
       continue
     if scanOnly then replay := replay.push name else count := count + n
@@ -370,7 +382,7 @@ unsafe def main (args : List String) : IO Unit := do
     | _ => (none, none, args)
   let backend :: path :: request :: portModules := input | throw <| IO.userError "expected backend, search path and input manifest"
   unless backend == "strict" || backend == "official" do throw <| IO.userError s!"unknown backend {backend}"
-  let files : Array (Array String) ← IO.ofExcept (Json.parse (← IO.FS.readFile request) >>= fromJson?)
+  let files : Array ReferenceFile ← IO.ofExcept (Json.parse (← IO.FS.readFile request) >>= fromJson?)
   if let some file := resultFile then
     let (count, selected) ← runChecks backend path files portModules only.isNone only
     IO.FS.writeFile file (if only.isNone then toJson selected else toJson count).compress
