@@ -41,8 +41,7 @@ open private edge edge_sq edge_curvature from
   D5.S3.Combinatorics.Graph.HypercubeCritical.HuangCubeCovariance
 open private fullRow_zero from
   D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Q9SignedFragmentBoundary
-open private exists_both_parity_supported_of_signed_defect_singular from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Placement.Q9ActualMinimumDisplacements
+open Q9ActualMinimumDisplacements (exists_both_parity_supported_of_signed_defect_singular)
 open private component_connected from
   D5.S3.Combinatorics.Graph.HypercubeCritical.Translation.Q9TranslationAperiodicity
 open private componentFinset_disjoint componentFinset_neighbor_closed from
