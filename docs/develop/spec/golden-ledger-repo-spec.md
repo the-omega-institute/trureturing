@@ -483,7 +483,7 @@ Truth Release 按 A14.2 发布冻结声明最近一次测量的库根与公理�
 
 `publish-truth-release` 的 `repository_dispatch` 可在 `client_payload.source_commit` 指定 40 位小写十六进制提交字符串。工作流在检出前验证该提交位于受保护 `dev` 事件提交的第一父链上（含事件提交自身）。该提交须已有可读取的普通模块 Release。
 
-Truth Release 直接信任已发布的报告。读取器按索引指定的物理 Release 标签与资产名读取分片，仅复制逐模块报告 ZIP。源码钉版的 Inspector 和 Scribe 用于汇总报告与生成资源，工作流独立钉住的 `trureturing-tools` 发布器负责生成 DAG 与 truth bundle。发布阶段无需安装 Lean、恢复编译器产物、重新验证报告或编译 Lean 项目。发布清单的 `required_checks` 为空。归档发布到 GHCR，`truth-release-<digest>` GitHub Release 提供同一归档、发布坐标与 `DAG.md`。
+Truth Release 直接信任已发布的报告。已有同一来源的正式 Truth Release 时直接返回其发布坐标。对新来源，读取最近发布且来源为当前提交祖先的正式 Truth Release，并按其发布坐标找到当时的普通模块索引。两个索引的报告有效键相同的模块复用上次发布的原始报告行。新增或报告键变化的模块从当前索引指定的物理 Release 分片提取 ZIP，移除的模块退出当前报告。首次发布或缺少兼容基线时，读取当前发布的全部适用报告。源码钉版的 Inspector 汇总当前模块报告。Scribe 从普通 Actions 缓存恢复由上次构建保留的资源包和输入信息，按当前源码更新资源；支持该缓存的构建成功后以当前来源提交为键保存。工作流独立钉住的 `trureturing-tools` 发布器负责生成 DAG 与 truth bundle。发布阶段无需安装 Lean、恢复编译器产物、重新验证报告或编译 Lean 项目。发布清单的 `required_checks` 为空。归档发布到 GHCR，`truth-release-<digest>` GitHub Release 提供同一归档、发布坐标与 `DAG.md`。
 
 
 <a id="a22-ci-cache-flow"></a>
