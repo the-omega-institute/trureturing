@@ -227,4 +227,32 @@ public theorem Rat.add_mul : type_of% @_root_.Rat.add_mul := by
   · conv => lhs; simp only [Nat.mul_comm, Nat.mul_left_comm]
     conv => rhs; simp only [Nat.mul_comm, Nat.mul_left_comm]
 
+public theorem Rat.le_total : type_of% @_root_.Rat.le_total := by
+  intro a b
+  exact (Int.le_total (a.num * b.den) (b.num * a.den)).elim
+    (fun h => Or.inl ((Rat.le_iff _ _).mpr h)) (fun h => Or.inr ((Rat.le_iff _ _).mpr h))
+
+public theorem Rat.le_refl : type_of% @_root_.Rat.le_refl :=
+  fun {a} => (Rat.le_iff a a).mpr (Int.le_refl _)
+
+public theorem Rat.le_antisymm : type_of% @_root_.Rat.le_antisymm := by
+  intro a b hab hba
+  have cross := Int.le_antisymm ((Rat.le_iff _ _).mp hab) ((Rat.le_iff _ _).mp hba)
+  have fractions := (Rat.divInt_eq_divInt_iff (fun h => a.den_nz (Int.ofNat.inj h))
+    (fun h => b.den_nz (Int.ofNat.inj h))).mpr cross
+  exact (Rat.num_divInt_den a).symm.trans (fractions.trans (Rat.num_divInt_den b))
+
+public theorem Rat.le_trans : type_of% @_root_.Rat.le_trans := by
+  intro a b c hab hbc
+  apply (Rat.le_iff _ _).mpr
+  apply Int.le_of_not_gt
+  intro wrong
+  have h₁ := Int.mul_le_mul_of_nonneg_right ((Rat.le_iff _ _).mp hab) (Int.natCast_nonneg c.den)
+  have h₂ := Int.mul_le_mul_of_nonneg_right ((Rat.le_iff _ _).mp hbc) (Int.natCast_nonneg a.den)
+  have h₃ := Int.mul_lt_mul_of_pos_right wrong (Int.natCast_pos.mpr (Nat.pos_of_ne_zero b.den_nz))
+  rw [Int.mul_right_comm b.num] at h₂
+  rw [Int.mul_right_comm c.num] at h₂
+  rw [Int.mul_right_comm a.num] at h₁
+  exact Int.not_le_of_gt h₃ (Int.le_trans h₁ h₂)
+
 end OmegaChecks.InitPort.Alternatives
