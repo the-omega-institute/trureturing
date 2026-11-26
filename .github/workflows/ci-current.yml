@@ -105,7 +105,7 @@ jobs:
       - name: Verify the changed generation transport
         shell: bash
         run: |
-          if grep -zEq '^(Meta/tools-release.json$|\.github/(actions/lean-(cache-shards|compile-layer)/|workflows/(ci-current|ci-lean-generation-compile|lean-cache-publish|cache-release-publish)\.yml$))' "$RUNNER_TEMP/changed-paths"; then
+          if grep -zEq '^(Meta/tools-release.json$|\.github/(actions/lean-(cache-shards|compile-layer)/|workflows/(ci-current|ci-lean-generation-compile|ci-lean-module-verify|ci-publication-verify|lean-cache-publish|cache-release-publish|truth-release-publish)\.yml$))' "$RUNNER_TEMP/changed-paths"; then
             node --test .github/actions/lean-cache-shards/test-generation.mjs
           fi
       - name: Cache the tools used by the protected base snapshot
@@ -300,7 +300,7 @@ jobs:
           if [[ -s "$targets" ]]; then
             echo "targets-file=$targets" >> "$GITHUB_OUTPUT"
           fi
-      - name: Restore the published compiler shards for the selected modules
+      - name: Restore the published shards for the selected modules
         if: steps.cache_scope.outputs.targets-file != ''
         continue-on-error: true
         uses: ./.github/actions/lean-cache-shards
@@ -443,7 +443,12 @@ jobs:
           DEPENDENCY_KEY: ${{ steps.dependency.outputs.cache-matched-key }}
           DEPENDENCY_OUTCOME: ${{ steps.dependency.outcome }}
         run: python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --layers dependency --dependency-key "$DEPENDENCY_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME"
-      - name: Restore the published compiler shards for Omega
+      - if: steps.omega_scope.outputs.targets-file != ''
+        uses: actions/setup-dotnet@v5
+        with:
+          global-json-file: global.json
+          cache: false
+      - name: Restore the published module shards for Omega
         if: steps.omega_scope.outputs.targets-file != ''
         continue-on-error: true
         uses: ./.github/actions/lean-cache-shards

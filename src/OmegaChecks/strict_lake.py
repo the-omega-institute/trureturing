@@ -13,7 +13,7 @@ COMMON_SRC = ROOT / ".lake/omega-common-src"
 INSPECTOR = ROOT / "tools/lean-inspector-interface"
 
 
-def foundation_config(source_dir, build_dir, label):
+def foundation_config(source_dir, build_dir, label, *, use_init_compiler=False):
     source = (ROOT / "lakefile.toml").read_text()
     # Preserve the package, compiler options, manifest and all targets of the official build.
     # Verify the generated TOML against the intended configuration before using it.
@@ -30,13 +30,24 @@ def foundation_config(source_dir, build_dir, label):
         lib["srcDir"] = source_dir
         header = f'name = "{lib["name"]}"\nsrcDir = '
         source = source.replace(header + '"src"', header + json.dumps(source_dir))
+    if use_init_compiler:
+        # The elaborator is a build input. The compiled prelude has no Lean imports.
+        compiler = {"name": "OmegaChecks.InitCompiler", "srcDir": "src"}
+        expected["lean_lib"].append(compiler)
+        source += '\n[[lean_lib]]\nname = "OmegaChecks.InitCompiler"\nsrcDir = "src"\n'
+        omega_init = next(lib for lib in libraries if lib["name"] == "OmegaInit")
+        # Build the shared library once before independent module facets load it.
+        omega_init["needs"] = ["OmegaChecks.InitCompiler:shared"]
+        omega_init["plugins"] = ["OmegaChecks.InitCompiler:shared"]
+        source = source.replace('name = "OmegaInit"\n', 'name = "OmegaInit"\n'
+                                'needs = ["OmegaChecks.InitCompiler:shared"]\nplugins = ["OmegaChecks.InitCompiler:shared"]\n')
     if tomllib.loads(source) != expected:
-        raise ValueError("strict Lake overlay differs outside its foundation source and build directories")
+        raise ValueError("unexpected strict Lake configuration")
     return write_config(f"omega-{label}.toml", source)
 
 
 def strict_config():
-    return foundation_config("strict", BUILD, "strict")
+    return foundation_config("strict", BUILD, "strict", use_init_compiler=True)
 
 
 def write_config(name, source):

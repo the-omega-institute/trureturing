@@ -55,7 +55,7 @@ private theorem posTrace_mono {X Y : Matrix n n ℂ} (hX : X.IsHermitian)
   rw [hmass, rtrace_sub] at ht
   linarith [twice_posTrace X hX, twice_posTrace Y hY]
 
-private theorem effect_le_posTrace {X M : Matrix n n ℂ} (hX : X.IsHermitian)
+theorem effect_le_posTrace {X M : Matrix n n ℂ} (hX : X.IsHermitian)
     (hM : 0 ≤ M) (hI : M ≤ 1) : rtrace (M * X) ≤ posTrace X := by
   have h₁ := trace_mul_nonneg_of_posSemidef
     (sub_nonneg.mpr hI).posSemidef (CFC.posPart_nonneg X).posSemidef
@@ -86,7 +86,7 @@ def completeCoefficient {A B : Type} [Fintype A] [DecidableEq A]
     [Fintype B] [DecidableEq B] (N : QuantumChannel A B) (γ : ℝ) (orth : Bool) : ℝ :=
   sSup (insert 0 (completeRatios N γ orth))
 
-private theorem amp_psd {A B R : Type*} [Fintype A] [DecidableEq A]
+theorem amp_psd {A B R : Type*} [Fintype A] [DecidableEq A]
     [Fintype B] [DecidableEq B] [Fintype R] [DecidableEq R]
     (N : QuantumChannel A B) {X : Matrix (R × A) (R × A) ℂ}
     (hX : X.PosSemidef) : (amp N X).PosSemidef := by
@@ -124,17 +124,20 @@ private theorem E_contract {A B R : Type*} [Fintype A] [DecidableEq A]
   unfold E
   linarith
 
-private theorem ratios_bounded {A B : Type} [Fintype A] [DecidableEq A]
-    [Fintype B] [DecidableEq B] (N : QuantumChannel A B) (γ : ℝ) (orth : Bool) :
-    BddAbove (insert 0 (completeRatios N γ orth)) := by
-  refine ⟨1, ?_⟩
-  intro x hx
+theorem ratio_le_one {A B : Type} [Fintype A] [DecidableEq A]
+    [Fintype B] [DecidableEq B] (N : QuantumChannel A B) (γ : ℝ) (orth : Bool)
+    {x : ℝ} (hx : x ∈ insert 0 (completeRatios N γ orth)) : x ≤ 1 := by
   rcases Set.mem_insert_iff.mp hx with rfl | hx
   · norm_num
   · rcases hx with ⟨R, fR, dR, ρ, σ, hρ, _, hσ, _, _, _, hd, rfl⟩
     letI := fR
     letI := dR
     exact (div_le_one hd).mpr (E_contract N γ hρ hσ)
+
+private theorem ratios_bounded {A B : Type} [Fintype A] [DecidableEq A]
+    [Fintype B] [DecidableEq B] (N : QuantumChannel A B) (γ : ℝ) (orth : Bool) :
+    BddAbove (insert 0 (completeRatios N γ orth)) :=
+  ⟨1, fun _ h => ratio_le_one N γ orth h⟩
 
 private def ray {n : Type*} (v : n → ℂ) : Matrix n n ℂ := vecMulVec v (star v)
 

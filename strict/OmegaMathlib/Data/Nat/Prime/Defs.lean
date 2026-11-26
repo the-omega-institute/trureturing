@@ -40,11 +40,11 @@ end Omega.Nat
 
 -- Generated standard references (portable.py --regenerate-facades).
 public section
+namespace OmegaMathlib
+export _root_.Omega (Nat.Prime.eq_one_or_self_of_dvd Nat.Prime.one_lt Nat.Prime.two_le)
+end OmegaMathlib
 namespace OmegaMathlib.Nat
 export _root_.Omega.Nat (Prime prime_def)
 end OmegaMathlib.Nat
-namespace OmegaMathlib.Nat.Prime
-export _root_.Omega.Nat.Prime (eq_one_or_self_of_dvd one_lt two_le)
-end OmegaMathlib.Nat.Prime
 end
 -- End generated standard references.

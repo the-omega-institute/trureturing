@@ -71,7 +71,9 @@ private def checkUpstreamNames (strict publicStrict : Environment) : IO Unit := 
     let some idx := reference.getModuleIdxFor? counterpart
       | throw <| IO.userError s!"missing official declaration {counterpart} in {owner} for {name}"
     let actual := reference.header.moduleNames[idx]!
-    unless actual == owner do
+    unless OmegaChecks.Interface.declaredIn reference counterpart owner do
+      if actual == owner then
+        throw <| IO.userError s!"the active official declaration {counterpart} differs from the entry stored in {owner}"
       throw <| IO.userError s!"official owner of {counterpart} is {actual}, expected {owner}"
   let reexports ← OmegaChecks.ModuleSurface.check publicStrict
   OmegaChecks.Interface.check strict publicStrict reference (bindings ++ reexports)

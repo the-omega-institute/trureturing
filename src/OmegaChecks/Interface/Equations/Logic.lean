@@ -53,4 +53,8 @@ public theorem Nat.mul (a b : Nat) :
     rw [ih]
     exact (_root_.Nat.mul_succ a b).symm
 
+/-- The strict elimination principle for nonemptiness characterizes the official proposition. -/
+public theorem Nonempty (α : Sort u) : (∀ p : Prop, (α → p) → p) = _root_.Nonempty α :=
+  propext ⟨fun h => h _ _root_.Nonempty.intro, fun h _ f => h.elim f⟩
+
 end OmegaChecks.Interface.Equations

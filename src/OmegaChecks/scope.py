@@ -76,12 +76,14 @@ def discover(changed_file):
         raise ValueError(f"invalid NUL-separated changed paths: {changed_file}")
     paths = set(raw.decode().split("\0")) - {""}
     changed = {path: name for path in paths if (name := module_path(path))}
-    shared = paths & SHARED
+    shared = (paths & SHARED) | {path for path in paths if path == "src/OmegaChecks/InitCompiler.lean"
+                                or path.startswith(("src/OmegaChecks/InitCompiler/", "src/OmegaChecks/InitPort/"))}
     reg_inputs = paths & REG_INPUTS
     if not (changed or shared or reg_inputs):
         return plan({}, {}, set(), set(), [], [])
     _, graph = import_graph("lean", with_reg=True)
-    _, official_basis = import_graph("lean", ("src/OmegaInit*.lean", "src/OmegaMathlib*.lean"),
+    _, official_basis = import_graph("lean", ("src/OmegaInit.lean", "src/OmegaInit/*.lean",
+                                             "src/OmegaMathlib.lean", "src/OmegaMathlib/*.lean"),
                                      official_basis=True)
     missing = {name for path, name in changed.items() if not (ROOT / path).is_file()}
     if missing:

@@ -175,7 +175,7 @@ def regenerate_facades():
     with tempfile.TemporaryDirectory(dir=ROOT / ".lake", prefix="port-exports-") as temporary:
         stage = Path(temporary)
         inputs, build_dir = stage / "sources", stage / "build"
-        config = foundation_config(str(inputs), str(build_dir), stage.name)
+        config = foundation_config(str(inputs), str(build_dir), stage.name, use_init_compiler=True)
         pending = {}
         originals = {}
         try:
@@ -519,6 +519,7 @@ def check(only, backend="mathlib", destination=None, *, frozen=None, discovered=
     tracked = set()
     if backend != "mathlib":
         tracked.update(strict_sources.values())
+        tracked.update(sources[name] for name in closure(graph, ["OmegaChecks.InitCompiler"]))
     if backend != "strict":
         tracked.update(official_sources.values())
     tracked.update(ROOT / file for file in ("lakefile.toml", "lake-manifest.json", "lean-toolchain"))
