@@ -138,6 +138,20 @@ public theorem Array.toList_flatten : type_of% @_root_.Array.toList_flatten := b
   exact (congrArg _root_.Array.toList (Array.foldl_toList (fun acc xs : _root_.Array α => acc ++ xs)).symm).trans
     (flattenFold xss.toList #[])
 
+private theorem listRoundtrip {α : Type u} (xss : List (List α)) :
+    (xss.map List.toArray).map _root_.Array.toList = xss := by
+  induction xss with
+  | nil => rfl
+  | cons xs xss ih => exact congrArg (xs :: ·) ih
+
+public theorem Array.flatten_toArray_map_toArray : type_of% @_root_.Array.flatten_toArray_map_toArray := by
+  intro α xss
+  exact _root_.Array.ext' (_root_.Array.toList_flatten.trans (congrArg List.flatten (listRoundtrip xss)))
+
+public theorem Array.flatten_map_toArray_toArray : type_of% @_root_.Array.flatten_map_toArray_toArray := by
+  intro α xss
+  exact (congrArg _root_.Array.flatten (_root_.Array.ext' _root_.Array.toList_map)).trans Array.flatten_toArray_map_toArray
+
 private theorem pushTail {α : Type u} (acc : _root_.Array α) (x : α) (rest : List α) :
     (acc.push x).toList ++ rest = acc.toList ++ x :: rest :=
   (congrArg (· ++ rest) _root_.Array.toList_push).trans (List.append_assoc ..)
