@@ -1217,6 +1217,26 @@ private def logicalConsequence? (owner name : Name) : Option (Name × Name) := d
     | _, _ => none
   return (``Classical.em, witness)
 
+/-- The conclusion uses the indicated semantic agreement in addition to the public type. -/
+private def conditionalConsequence? (owner name : Name) : Option (String × Name × String) := do
+  if owner == `Init.Data.String.Lemmas.Pattern.Split.Basic && name == ``String.Slice.Pattern.Model.split then
+    return ("OmegaChecks.InitInventory.StringPatterns.WeakExcludedMiddle",
+      `OmegaChecks.InitInventory.StringPatterns.weakExcludedMiddleOfOfficialSplit,
+      "Pointwise agreement with Model.split (split_endPos, split_eq_of_isLongestMatchAt, split_eq_of_not_matchesAt)")
+  let (witness, behavior) ← match owner, name with
+    | `Init.Data.String.Iter.Basic, ``Std.Iter.toStringList =>
+      some (``OmegaChecks.InitBoundaries.Collector.limitedOmniscienceFromStringList, "it.toStringList")
+    | `Init.Data.String.Iter.Basic, ``Std.Iter.toStringArray =>
+      some (``OmegaChecks.InitBoundaries.Collector.limitedOmniscienceFromStringArray, "it.toStringArray")
+    | `Init.Data.String.Iter.Intercalate, ``Std.Iter.joinString =>
+      some (``OmegaChecks.InitBoundaries.Collector.limitedOmniscienceFromStringJoin, "String.join (it.toList.map toString)")
+    | `Init.Data.String.Iter.Intercalate, ``Std.Iter.intercalateString =>
+      some (``OmegaChecks.InitBoundaries.Collector.limitedOmniscienceFromStringIntercalate,
+        "s.copy.intercalate (it.toList.map toString) for every separator s")
+    | _, _ => none
+  return ("∀ f : Nat → Bool, Decidable (∃ n, f n = true)", witness,
+    "On every finite iterator it the result equals " ++ behavior)
+
 private def inventory (lib : System.FilePath) (visible strict full : Environment) (modules : Array Name)
     (gaps : Option IO.FS.Handle) : CoreM Json := do
   let official ← getEnv
@@ -1240,7 +1260,7 @@ private def inventory (lib : System.FilePath) (visible strict full : Environment
   let mut directAxioms := 0
   let mut withAxioms := 0
   if let some file := gaps then
-    file.putStrLn "module\tdeclaration\tkind\tunsafe\tpartial\tupstreamAxioms\timpliesAxiom\treductionWitness\tlogicalConsequence\tlogicalConsequenceWitness"
+    file.putStrLn "module\tdeclaration\tkind\tunsafe\tpartial\tupstreamAxioms\timpliesAxiom\treductionWitness\tlogicalConsequence\tlogicalConsequenceWitness\trequiredBehavior"
   for owner in modules do
     let some idx := visible.getModuleIdx? owner | throwError "missing official module {owner}"
     let publicNames := visible.header.moduleData[idx]!.constNames.filter publicName
@@ -1261,7 +1281,10 @@ private def inventory (lib : System.FilePath) (visible strict full : Environment
       let some info := localDecls.find? name | throwError "missing declaration {owner}/{name}"
       let some (_, axioms) := localAxioms.binSearch (name, #[]) (fun a b => Name.quickLt a.1 b.1)
         | throwError "missing official axiom closure for {owner}/{name}"
-      let consequence := logicalConsequence? owner name
+      let conditional := conditionalConsequence? owner name
+      let consequence := (logicalConsequence? owner name).map (fun (target, witness) => (target.toString, witness))
+        <|> conditional.map (fun (target, witness, _) => (target, witness))
+      let behavior := conditional.map (fun (_, _, premise) => premise)
       let boundary := boundaries[(owner, name)]?
       if boundary.isSome then certifiedSites := certifiedSites + 1
       let strictName := `Omega ++ name
@@ -1276,7 +1299,7 @@ private def inventory (lib : System.FilePath) (visible strict full : Environment
             declarationKind info, toString info.isUnsafe, toString info.isPartial,
             String.intercalate "," (axioms.toList.map Name.toString),
             (boundary.map (·.1.toString)).getD "", (boundary.map (·.2.toString)).getD "",
-            (consequence.map (·.1.toString)).getD "", (consequence.map (·.2.toString)).getD ""]
+            (consequence.map Prod.fst).getD "", (consequence.map (·.2.toString)).getD "", behavior.getD ""]
       if info.isAxiom then
         directAxioms := directAxioms + 1
         axiomUnique := axiomUnique.insert name
@@ -1296,7 +1319,8 @@ private def inventory (lib : System.FilePath) (visible strict full : Environment
         ("strictModule", toJson (strictOwner.map Name.toString))]
       rows := rows.push <| match consequence with
         | some (target, witness) => row.mergeObj <| Json.mkObj [
-            ("logicalConsequence", toJson target.toString), ("logicalConsequenceWitness", toJson witness.toString)]
+            ("logicalConsequence", toJson target), ("logicalConsequenceWitness", toJson witness.toString),
+            ("requiredBehavior", toJson behavior)]
         | none => row
   unless certifiedSites == boundaries.size do throwError "missing registered public definition site"
   let summary := Json.mkObj [("declarations", toJson rows.size), ("directAxioms", toJson directAxioms),
