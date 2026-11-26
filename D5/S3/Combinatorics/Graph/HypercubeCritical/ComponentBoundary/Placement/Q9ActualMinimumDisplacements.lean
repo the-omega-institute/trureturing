@@ -92,7 +92,7 @@ private theorem signed_defect_singular_opposite
 open Classical in
 /-- A connected balanced cubic support with singular signed defect on `false`
 has exact ambient support on either parity, with weighted image inside the support. -/
-private theorem exists_both_parity_supported_of_signed_defect_singular
+theorem exists_both_parity_supported_of_signed_defect_singular
     (C : Finset (Q 9))
     (hr : ((hypercube 9).induce (C : Set (Q 9))).IsRegularOfDegree 3)
     (hc : ((hypercube 9).induce (C : Set (Q 9))).Connected)

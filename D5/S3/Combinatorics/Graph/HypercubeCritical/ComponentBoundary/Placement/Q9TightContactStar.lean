@@ -30,8 +30,7 @@ open Q9TightContactComplement (minimum_contact_flip_complement minimum_contact_c
 open Q9SignedFragmentBoundary (signedFragment card_add_abs_le)
 open private cubeParity_ne_of_adj from D5.S3.Combinatorics.Graph.HypercubeSubQuorum
 open Q9WeightedSaturation (defect signedBiadjacency)
-open private exists_both_parity_supported_of_signed_defect_singular from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Placement.Q9ActualMinimumDisplacements
+open Q9ActualMinimumDisplacements (exists_both_parity_supported_of_signed_defect_singular)
 open private edge edge_sq edge_reciprocal edge_curvature from
   D5.S3.Combinatorics.Graph.HypercubeCritical.HuangCubeCovariance
 open private fullRow_zero from
