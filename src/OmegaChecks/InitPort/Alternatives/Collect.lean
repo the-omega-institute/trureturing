@@ -3,6 +3,8 @@ module
 public import Init.Data.Range.Polymorphic.Iterators
 public import Init.Data.Iterators.Combinators.Monadic.Take
 public import Init.Data.Iterators.Lemmas.Consumers.Loop
+public import Init.Data.Iterators.Lemmas.Combinators.FilterMap
+import all Init.Data.Iterators.Combinators.Monadic.FilterMap
 public import Init.Data.Range.Polymorphic.Instances
 public import Init.Data.Range.Polymorphic.Map
 
@@ -109,6 +111,60 @@ public theorem Std.Iterators.Types.Take.instFinite {α : Type u} {m : Type u →
   cases h with
   | inl hp => exact positive n hp inner
   | inr hf => exact finiteInner hf inner n (Or.inr hf)
+
+public theorem Std.Iter.step_map : type_of% @_root_.Std.Iter.step_map := by
+  intro α β γ _ it f
+  apply Subtype.ext
+  unfold Iter.step IterM.step
+  dsimp only [Iter.map, IterM.map, IterM.mapWithPostcondition, IterM.InternalCombinators.map,
+    Iterators.Types.Map, Iterators.Types.Map.instIterator, Iterators.Types.Map.instIterator._aux_3,
+    Iterators.Types.FilterMap.instIterator, IterM.step, Iterator.step,
+    Iter.toIterM, IterM.toIter, pure, Bind.bind, monadLift, Id.run] at *
+  generalize Shrink.inflate (Iterator.step { internalState := it.internalState : IterM (α := α) Id β}) = q
+  cases q using PlausibleIterStep.casesOn <;>
+    dsimp only [PostconditionT.map, PostconditionT.pure, bind, pure, Functor.map]
+  all_goals
+    refine Eq.trans (congrArg (fun s => (IterM.Step.toPure s).val) Shrink.inflate_deflate) ?_
+    rfl
+
+public theorem Std.Iter.step_filterMap : type_of% @_root_.Std.Iter.step_filterMap := by
+  intro α β γ _ it f
+  apply Subtype.ext
+  unfold Iter.step IterM.step
+  dsimp only [Iter.filterMap, IterM.filterMap, IterM.filterMapWithPostcondition, IterM.InternalCombinators.filterMap,
+    Iterators.Types.FilterMap.instIterator, IterM.step, Iterator.step,
+    Iter.toIterM, IterM.toIter, pure, Bind.bind, monadLift, Id.run] at *
+  generalize Shrink.inflate (Iterator.step { internalState := it.internalState : IterM (α := α) Id β}) = q
+  cases q using PlausibleIterStep.casesOn
+  case' yield next out h =>
+    cases hf : f out <;> dsimp only [PostconditionT.pure, pure] <;> simp only [hf]
+  all_goals
+    refine Eq.trans (congrArg (fun s => (IterM.Step.toPure s).val) Shrink.inflate_deflate) ?_
+    first
+    | rfl
+    | dsimp only [IterM.Step.toPure, IterStep.mapIterator]
+      split <;> rename_i hx <;> cases hf.symm.trans hx <;> rfl
+
+public theorem Std.Iter.val_step_filter : type_of% @_root_.Std.Iter.val_step_filter := by
+  intro α β _ it f
+  change (it.filterMap (fun b => if f b then some b else none)).step.val = _
+  rw [_root_.Std.Iter.val_step_filterMap]
+  cases it.step.val with
+  | yield next out => dsimp only; cases hf : f out <;> rfl
+  | skip _ => rfl
+  | done => rfl
+
+public theorem Std.Iter.step_filter : type_of% @_root_.Std.Iter.step_filter := by
+  intro α β _ it f
+  apply Subtype.ext
+  rw [_root_.Std.Iter.val_step_filter]
+  cases it.step using PlausibleIterStep.casesOn
+  case yield next out h =>
+    dsimp only
+    by_cases hf : f out = true
+    · rw [ite_eq_left hf, dite_eq_left hf]; rfl
+    · rw [ite_eq_right hf, dite_eq_right hf]; rfl
+  all_goals rfl
 
 public theorem Std.Iter.isPlausibleStep_iff_step_eq : type_of% @_root_.Std.Iter.isPlausibleStep_iff_step_eq := by
   intro α β _ _ _ it step
