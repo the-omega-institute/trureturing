@@ -2,6 +2,8 @@ module
 public import Init.Data.Range.Polymorphic.Nat
 public import Init.Data.Range.Polymorphic.Int
 public import Init.Data.Range.Polymorphic.Fin
+public import Init.Data.Range.Polymorphic.BitVec
+import Init.Data.BitVec.Lemmas
 
 /-! Successor and size laws for ranges of naturals, integers, and finite indices. -/
 
@@ -231,6 +233,127 @@ public theorem Fin.instLawfulHasSize_2 {n : Nat} : Rxi.LawfulHasSize (Fin n) whe
     have eq := (_root_.Fin.addNat?_eq_some_iff.mp h).2
     change n - a.val = n - b.val + 1
     have below := b.isLt
+    omega
+
+private theorem bitNextValue {w : Nat} (x : BitVec w) :
+    (x + 1).toNat = (x.toNat + 1) % 2^w := by
+  exact Nat.add_mod_mod _ _ _
+
+private theorem bitAddStops {w : Nat} (x : BitVec w) :
+    x + 1 = 0 ↔ x.toNat = 2 ^ w - 1 := by
+  have bound : x.toNat < 2 ^ w := x.isLt
+  have pos := Nat.two_pow_pos w
+  constructor
+  · intro eq
+    by_cases beyond : 2^w ≤ x.toNat + 1
+    · omega
+    · have zero := congrArg BitVec.toNat eq
+      rw [bitNextValue, Nat.mod_eq_of_lt (Nat.lt_of_not_ge beyond)] at zero
+      change x.toNat + 1 = 0 at zero
+      omega
+  · intro endValue
+    apply BitVec.eq_of_toNat_eq
+    rw [bitNextValue, show x.toNat + 1 = 2^w by omega, Nat.mod_self]
+    rfl
+
+public theorem BitVec.succ?_eq_none : type_of% @_root_.BitVec.succ?_eq_none := by
+  intro w x
+  change (if x + 1 = 0 then none else some (x + 1)) = none ↔ _
+  by_cases stop : x + 1 = 0
+  · rw [ite_eq_left stop]
+    exact ⟨fun _ => (bitAddStops x).mp stop, fun _ => rfl⟩
+  · rw [ite_eq_right stop]
+    exact ⟨(fun h => nomatch h), fun h => (stop ((bitAddStops x).mpr h)).elim⟩
+
+public theorem BitVec.succ?_eq_some : type_of% @_root_.BitVec.succ?_eq_some := by
+  intro w x y
+  change (if x + 1 = 0 then none else some (x + 1)) = some y ↔ _
+  have bound : x.toNat < 2 ^ w := x.isLt
+  by_cases stop : x + 1 = 0
+  · rw [ite_eq_left stop]
+    have atEnd := (bitAddStops x).mp stop
+    exact ⟨(fun h => nomatch h), fun ⟨lt, _⟩ => (Nat.lt_irrefl _ (atEnd ▸ lt)).elim⟩
+  · rw [ite_eq_right stop]
+    have before : x.toNat < 2^w - 1 := by
+      exact Nat.lt_of_le_of_ne (by omega) (fun h => stop ((bitAddStops x).mpr h))
+    have inc : (x + 1).toNat = x.toNat + 1 := (bitNextValue x).trans (Nat.mod_eq_of_lt (by omega))
+    constructor
+    · intro h
+      cases Option.some.inj h
+      exact ⟨before, inc⟩
+    · rintro ⟨_, eq⟩
+      exact congrArg some (BitVec.eq_of_toNat_eq (inc.trans eq.symm))
+
+private theorem bitManyEq {w k : Nat} {x y : BitVec w} :
+    succMany? k x = some y ↔ y.toNat = x.toNat + k := by
+  change (if h : x.toNat + k < 2^w then some (BitVec.ofNatLT _ h) else none) = some y ↔ _
+  by_cases inside : x.toNat + k < 2^w
+  · rw [dite_eq_left inside]
+    exact ⟨fun h => (congrArg BitVec.toNat (Option.some.inj h)).symm,
+      fun h => congrArg some (BitVec.eq_of_toNat_eq h.symm)⟩
+  · rw [dite_eq_right inside]
+    exact ⟨(fun h => nomatch h), fun h => (inside (h ▸ y.isLt)).elim⟩
+
+public theorem BitVec.instLawfulUpwardEnumerable {w : Nat} : LawfulUpwardEnumerable (BitVec w) where
+  ne_of_lt a b := by
+    rintro ⟨k, h⟩ rfl
+    have impossible := bitManyEq.mp h
+    omega
+  succMany?_zero _ := bitManyEq.mpr rfl
+  succMany?_add_one k a := by
+    cases mid : succMany? k a with
+    | none =>
+      cases last : succMany? (k + 1) a with
+      | none => rfl
+      | some b =>
+        have eq := bitManyEq.mp last
+        have bound := b.isLt
+        have inside : a.toNat + k < 2^w := by omega
+        have found := (bitManyEq (x := a) (y := BitVec.ofNatLT _ inside) (k := k)).mpr rfl
+        rw [mid] at found
+        cases found
+    | some b =>
+      have eq := bitManyEq.mp mid
+      change succMany? (k + 1) a = succ? b
+      cases last : succ? b with
+      | some c =>
+        have inc := (BitVec.succ?_eq_some.mp last).2
+        exact bitManyEq.mpr (by omega)
+      | none =>
+        have atEnd := BitVec.succ?_eq_none.mp last
+        cases endValue : succMany? (k + 1) a with
+        | none => rfl
+        | some c =>
+          have inc := bitManyEq.mp endValue
+          have bound := c.isLt
+          omega
+
+public theorem BitVec.instRxcLawfulHasSize {w : Nat} : Rxc.LawfulHasSize (BitVec w) where
+  size_eq_zero_of_not_le lo hi h := by
+    change ¬lo.toNat ≤ hi.toNat at h
+    change hi.toNat + 1 - lo.toNat = 0
+    omega
+  size_eq_one_of_succ?_eq_none lo hi le h := by
+    have endValue := BitVec.succ?_eq_none.mp h
+    have limit := hi.isLt
+    change lo.toNat ≤ hi.toNat at le
+    change hi.toNat + 1 - lo.toNat = 1
+    omega
+  size_eq_succ_of_succ?_eq_some lo hi b le h := by
+    have inc := (BitVec.succ?_eq_some.mp h).2
+    change lo.toNat ≤ hi.toNat at le
+    change hi.toNat + 1 - lo.toNat = hi.toNat + 1 - b.toNat + 1
+    omega
+
+public theorem BitVec.instRxiLawfulHasSize {w : Nat} : Rxi.LawfulHasSize (BitVec w) where
+  size_eq_one_of_succ?_eq_none a h := by
+    have endValue := BitVec.succ?_eq_none.mp h
+    have pos := Nat.two_pow_pos w
+    change 2^w - a.toNat = 1
+    omega
+  size_eq_succ_of_succ?_eq_some a b h := by
+    obtain ⟨bound, inc⟩ := BitVec.succ?_eq_some.mp h
+    change 2^w - a.toNat = 2^w - b.toNat + 1
     omega
 
 end OmegaChecks.InitPort.Alternatives
