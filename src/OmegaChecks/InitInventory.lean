@@ -130,6 +130,29 @@ def choiceFromRepeatM (loop : type_of% (@repeatM.{u,u})) : type_of% (@Classical.
 
 /- Specialize each range interface to a singleton. Its comparison expresses any proposition
 and its size is one. Double negation is exactly what the zero-size law needs. -/
+namespace VectorExistence
+
+private theorem appendOne (l : List α) (x : α) : (l.concat x).length = l.length + 1 := by
+  induction l with
+  | nil => rfl
+  | cons a tail ih => exact congrArg Nat.succ ih
+private def push (xs : Vector α n) (x : α) : Vector α (n+1) :=
+  ⟨xs.toArray.push x, (appendOne xs.toArray.toList x).trans (congrArg Nat.succ xs.size_toArray)⟩
+/-- The size proof in the official push operation is irrelevant to definitional equality. -/
+def DecideSucc : Type 1 := ∀ {α : Type} {n : Nat} (P : Vector α (n+1) → Prop),
+  [Decidable (∀ (x : α) (xs : Vector α n), ¬ P (push xs x))] → Decidable (∃ xs, P xs)
+example : (type_of% (@Vector.instDecidableExistsVectorSucc.{0})) = DecideSucc := rfl
+theorem emOfVectorSucc (existsDec : DecideSucc) (p : Prop) : p ∨ ¬p := by
+  let goal := p ∨ ¬p
+  have nn : ¬¬goal := fun ng => ng (.inr fun hp => ng (.inl hp))
+  let reject : Decidable (∀ (_ : Unit) (_ : Vector Unit 0), ¬goal) :=
+    .isFalse fun h => nn (h () ⟨#[], rfl⟩)
+  cases @existsDec Unit 0 (fun _ => goal) reject with
+  | isTrue yes => exact yes.elim fun _ hp => hp
+  | isFalse no => exact (nn (fun hp => no ⟨⟨#[()], rfl⟩, hp⟩)).elim
+
+end VectorExistence
+
 theorem dneFromClosedRange (range : type_of% (@Std.Rxc.size_pos_iff_le.{0}))
     (p : Prop) (nn : ¬¬p) : p := by
   letI : LE Unit := ⟨fun _ _ => p⟩
@@ -429,7 +452,7 @@ private def replayWitnesses (env : Environment) : IO Unit := do
   let official ← importModules #[{module := `Lean}] {} (level := .private)
   let mut terms : Std.HashMap Name ConstantInfo := {}
   let mut todo := (reductions.map fun (_, _, _, witness) => witness) ++
-    [``dneFromClosedRange, ``dneFromOpenRange, ``excludedMiddleFromDNE, ``excludedMiddleOfNotLT,
+    [``VectorExistence.emOfVectorSucc, ``dneFromClosedRange, ``dneFromOpenRange, ``excludedMiddleFromDNE, ``excludedMiddleOfNotLT,
       ``excludedMiddleOfNotLTIff, ``GrindOrder.excludedMiddleFromComparison, ``GrindOrder.excludedMiddleFromImplication,
       ``GrindOrder.excludedMiddleFromNotNot, ``GrindOrder.excludedMiddleFromLookahead,
       ``AbstractOrder.excludedMiddleOfTrichotomy, ``AbstractOrder.excludedMiddleOfLTTrichotomy,
@@ -1397,6 +1420,7 @@ private def logicalConsequence? (owner name : Name) : Option (Name × Name) := d
       `OmegaChecks.InitInventory.StringPatterns.weakExcludedMiddleOfRevMatchAtNone)
   | _, _ => pure ()
   let witness ← match owner, name with
+    | `Init.Data.Vector.Lemmas, ``Vector.instDecidableExistsVectorSucc => some ``OmegaChecks.InitBoundaries.VectorExistence.emOfVectorSucc
     | `Init.Grind.Order, ``Lean.Grind.Order.le_of_not_lt => some ``OmegaChecks.InitBoundaries.GrindOrder.excludedMiddleFromComparison
     | `Init.Grind.Norm, ``Lean.Grind.imp_eq => some ``OmegaChecks.InitBoundaries.GrindOrder.excludedMiddleFromImplication
     | `Init.Grind.Norm, ``Lean.Grind.not_not => some ``OmegaChecks.InitBoundaries.GrindOrder.excludedMiddleFromNotNot
