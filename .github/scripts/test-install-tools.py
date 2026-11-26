@@ -1,5 +1,6 @@
 """Exercise tools pin admission with the GitHub objects seen by the required check."""
 
+import base64
 import importlib.util
 import json
 from pathlib import Path
@@ -163,6 +164,7 @@ class ConsumerGit(unittest.TestCase):
         self.lock = self.repo / installer.PIN
         self.lock.parent.mkdir()
         (self.repo / ".gitattributes").write_bytes((installer.ROOT / ".gitattributes").read_bytes())
+        self.before_pin = self.commit()
         self.original_pin = {"version": "v0.1.0", "sha256": DIGEST}
         self.original = self.commit(self.original_pin)
         self.baseline = self.blob(self.original)
@@ -207,20 +209,36 @@ class ConsumerGit(unittest.TestCase):
         self.fail(f"unexpected API call {repo}/{endpoint}")
 
     def graphql(self, *args):
-        snapshots = {}
-        for key, commit in re.findall(r'(c\d+):object\(oid:"([0-9a-f]{40})"\)', args[-1]):
-            blob = self.blob(commit)
-            parents = self.git("show", "-s", "--format=%P", commit).stdout.split()
-            parent_entries = [self.blob(parent) for parent in parents]
-            snapshots[key] = {"oid": commit, "file": {"oid": blob, "mode": 0o100644} if blob else None,
-                              "parents": {"nodes": [{"file": {"oid": oid, "mode": 0o100644} if oid else None}
-                                                    for oid in parent_entries]}}
-        return {"data": {"repository": snapshots}}
+        def commit_node(commit):
+            tree = self.git("rev-parse", f"{commit}^{{tree}}").stdout.strip()
+            return {"oid": commit, "tree": {"oid": tree}}
 
-    def verify(self, *, event="pull_request", checkout=None):
+        query = args[-1]
+        objects = {}
+        for key, oid in re.findall(r'(o\d+):object\(oid:"([0-9a-f]{40})"\)', query):
+            if "... on Commit" in query:
+                parents = self.git("show", "-s", "--format=%P", oid).stdout.split()
+                objects[key] = commit_node(oid) | {
+                    "parents": {"nodes": [commit_node(parent) for parent in parents],
+                                "totalCount": len(parents), "pageInfo": {"hasNextPage": False}},
+                }
+            elif "... on Tree" in query:
+                entries = []
+                for record in self.git("ls-tree", "-z", oid).stdout.split("\0")[:-1]:
+                    fields, name = record.split("\t", 1)
+                    mode, _, target = fields.split()
+                    entries.append({"nameRaw": base64.b64encode(name.encode()).decode(),
+                                    "mode": int(mode, 8), "oid": target})
+                objects[key] = {"oid": oid, "entries": entries}
+            else:
+                self.fail("unexpected GraphQL object selection")
+        self.assertTrue(objects)
+        return {"data": {"repository": objects}}
+
+    def verify(self, *, event="pull_request", checkout=None, graphql=None):
         with (patch.object(installer, "ROOT", checkout or self.repo),
               patch.object(installer, "api", side_effect=self.api),
-              patch.object(installer, "github", side_effect=self.graphql),
+              patch.object(installer, "github", side_effect=graphql or self.graphql),
               patch.object(installer, "verify_adopted_source") as source):
             installer.verify_adoption(event, installer.CONSUMER)
             return source
@@ -316,16 +334,82 @@ class ConsumerGit(unittest.TestCase):
 
     def test_content_pr_can_merge_dev_across_a_tools_adoption(self):
         adopted = self.commit(self.a)
+        next_adoption = self.commit(self.b | {"previous_pin": self.blob(adopted)})
         self.checkout(self.original)
         (self.repo / "content").write_text("content before adoption")
         self.commit()
         self.merge(adopted)
         (self.repo / "content").write_text("content after adoption")
         content = self.commit()
-        self.checkout(adopted)
-        self.dev = adopted
+        self.checkout(next_adoption)
+        self.dev = next_adoption
         self.merge(content)
         self.verify().assert_not_called()
+
+    def test_content_pr_can_inherit_absence_before_merging_the_first_pin(self):
+        self.checkout(self.before_pin)
+        self.lock.parent.mkdir()
+        (self.lock.parent / "notes.文").write_text("branch started before tools were pinned")
+        (self.lock.parent / "notes").mkdir()
+        (self.lock.parent / "notes" / "content").touch()
+        self.commit()
+        self.commit()
+        self.commit()
+        self.merge(self.original)
+        refreshed = self.git("rev-parse", "HEAD").stdout.strip()
+        self.checkout(self.original)
+        self.merge(refreshed)
+        self.verify().assert_not_called()
+
+    def test_history_rejects_incomplete_or_mismatched_git_objects(self):
+        first = self.commit()
+        head = self.commit()
+        tree = self.git("rev-parse", f"{head}:Meta").stdout.strip()
+        self.checkout(self.original)
+        self.merge(head)
+
+        def corrupt(query, field, value):
+            def response(*args):
+                result = self.graphql(*args)
+                if query == "errors" and "... on Commit" in args[-1]:
+                    result["errors"] = [{"type": "NOT_FOUND"}]
+                for key, obj in result["data"]["repository"].items():
+                    if query == "tree" and obj["oid"] == tree:
+                        if field == "entries" and value == "duplicate":
+                            obj["entries"].append(obj["entries"][0])
+                        else:
+                            obj[field] = value
+                    if query == "parents" and obj["oid"] == head:
+                        obj["parents"][field] = value
+                    if query == "commit" and obj["oid"] == first:
+                        result["data"]["repository"][key] = value
+                return result
+            return response
+
+        for query, field, value, message in (
+            ("errors", "", None, "could not inspect"),
+            ("commit", "", None, "missing or mismatched"),
+            ("parents", "nodes", [], "incomplete consumer parents"),
+            ("parents", "pageInfo", {"hasNextPage": True}, "incomplete consumer parents"),
+            ("parents", "nodes", [{"oid": first, "tree": {"oid": tree}}], "inconsistent consumer commit tree"),
+            ("tree", "oid", ROOT_PIN, "missing or mismatched"),
+            ("tree", "entries", None, "missing entries"),
+            ("tree", "entries", [], "incomplete or inconsistent entries"),
+            ("tree", "entries", "duplicate", "malformed entries"),
+        ):
+            with self.subTest(query=query, field=field, value=value), self.assertRaisesRegex(ValueError, message):
+                self.verify(graphql=corrupt(query, field, value))
+
+    def test_history_rejects_nonregular_pin(self):
+        self.lock.unlink()
+        self.lock.symlink_to("other.json")
+        self.commit()
+        self.lock.unlink()
+        candidate = self.commit(self.original_pin)
+        self.checkout(self.original)
+        self.merge(candidate)
+        with self.assertRaisesRegex(ValueError, "must be a regular file"):
+            self.verify()
 
     def test_missing_wrong_and_stale_predecessors_are_rejected(self):
         for edited in (self.original_pin | {"version": "v0.1.2"}, self.a | {"previous_pin": ROOT_PIN}):
