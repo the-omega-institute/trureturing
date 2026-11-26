@@ -1,6 +1,7 @@
 module
 public import Init.SimpLemmas
 public import Init.Sym.Lemmas
+public import Init.Data.Sum.Lemmas
 
 namespace OmegaChecks.InitPort.Alternatives
 
@@ -20,5 +21,13 @@ public theorem Lean.Sym.ite_of_decide_eq_true_congr :
 public theorem Lean.Sym.ite_of_decide_eq_false_congr :
     type_of% @_root_.Lean.Sym.ite_of_decide_eq_false_congr :=
   fun {_} _ {_} _ _ _ h {_ ht} => ite_eq_right (fun hc => of_decide_eq_false ht (h.mp hc))
+
+public theorem Sum.elim_eq_iff : type_of% @_root_.Sum.elim_eq_iff := by
+  intro α β γ u u' v v'
+  constructor
+  · intro e
+    exact ⟨congrArg (fun f => f ∘ Sum.inl) e, congrArg (fun f => f ∘ Sum.inr) e⟩
+  · rintro ⟨rfl, rfl⟩
+    rfl
 
 end OmegaChecks.InitPort.Alternatives
