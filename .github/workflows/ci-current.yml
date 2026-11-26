@@ -105,7 +105,7 @@ jobs:
       - name: Verify the changed generation transport
         shell: bash
         run: |
-          if grep -zEq '^(Meta/tools-release.json$|\.github/(actions/lean-(cache-shards|compile-layer)/|scripts/read-module-reports\.py$|workflows/(ci-current|ci-lean-generation-compile|ci-lean-module-verify|ci-publication-verify|lean-cache-publish|cache-release-publish|truth-release-publish)\.yml$))' "$RUNNER_TEMP/changed-paths"; then
+          if grep -zEq '^(Meta/tools-release.json$|\.github/(actions/lean-(cache-shards|compile-layer)/|scripts/read-module-reports\.py$|workflows/(ci-current|ci-lean-generation-compile|ci-lean-module-verify|ci-publication-verify|cache-release-publish|truth-release-publish)\.yml$))' "$RUNNER_TEMP/changed-paths"; then
             node --test .github/actions/lean-cache-shards/test-generation.mjs
           fi
       - name: Cache the tools used by the protected base snapshot
@@ -263,9 +263,7 @@ jobs:
         run: python3 tools/scripts/workflow/ci_checks.py current lean-plan --scope-file "$RUNNER_TEMP/current-lean-plan.json"
       - id: keys
         if: ${{ !cancelled() && steps.lean_plan.outputs.needs_lean == 'true' }}
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: python3 tools/scripts/worktree/lean_actions.py keys --repository "$GITHUB_WORKSPACE"
+        run: python3 tools/scripts/worktree/lean_actions.py keys --repository "$GITHUB_WORKSPACE" --layers dependency
       - id: elan
         if: ${{ !cancelled() && steps.keys.outputs.elan_key != '' }}
         continue-on-error: true
@@ -318,9 +316,14 @@ jobs:
         name: Check current and delta with affected Lean and Scribe inputs
         if: ${{ !cancelled() && steps.lean_plan.outcome == 'success' && (steps.lean_plan.outputs.builds_lean == 'false' || steps.lean_seeds.outcome == 'success') }}
         env:
-          LEAN_NUM_THREADS: '1'
           CI_BASE: ${{ steps.entry.outputs.base }}
-        run: python3 tools/scripts/workflow/ci_checks.py current pr-lean --scope-file "$RUNNER_TEMP/current-lean-plan.json"
+        run: |
+          # Lake schedules independent modules. Each project compiler uses -j1.
+          LEAN_NUM_THREADS="$(nproc)"
+          if (( LEAN_NUM_THREADS > 2 )); then LEAN_NUM_THREADS=2; fi
+          export LEAN_NUM_THREADS
+          bash .github/actions/lean-compile-layer/measure.sh --compile \
+            python3 tools/scripts/workflow/ci_checks.py current pr-lean --scope-file "$RUNNER_TEMP/current-lean-plan.json"
       - id: checked
         name: Confirm selected current checks succeeded
         run: echo 'unit=current' >> "$GITHUB_OUTPUT"
@@ -408,9 +411,7 @@ jobs:
           CI_CHANGED_PATHS_FILE: ${{ runner.temp }}/changed-paths
         run: bash tools/scripts/workflow/ci-entry.sh
       - id: keys
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: python3 tools/scripts/worktree/lean_actions.py keys --repository "$GITHUB_WORKSPACE"
+        run: python3 tools/scripts/worktree/lean_actions.py keys --repository "$GITHUB_WORKSPACE" --layers dependency
       - id: elan
         if: ${{ !cancelled() && steps.keys.outputs.elan_key != '' }}
         continue-on-error: true

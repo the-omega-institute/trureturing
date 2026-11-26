@@ -273,11 +273,6 @@ theorem finite_certificate : (a 9 : ℤ) =
   apply scale_recurrence 5 (by decide)
   exact HardinA233259PairTransferRecurrence.recurrence 0
 
-section
--- Keep the result source literal while elaborating the legacy spelling to its owner.
-local notation "HardinA233259PairTransfer.recurrence" =>
-  HardinA233259PairTransferRecurrence.recurrence
-
 /-- Hardin's recurrence with the index shift exposing every predecessor. -/
 theorem result (n : ℕ) : (a (n+9) : ℤ) =
     160 * (a (n+8) : ℤ) - 6144 * (a (n+7) : ℤ) +
@@ -286,9 +281,7 @@ theorem result (n : ℕ) : (a (n+9) : ℤ) =
   | zero => exact finite_certificate
   | succ n =>
     have h := scale_recurrence (n+6) (by omega)
-      (HardinA233259PairTransfer.recurrence (n+1))
+      (HardinA233259PairTransferRecurrence.recurrence (n+1))
     simpa only [Nat.add_assoc] using h
-
-end
 
 end D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233259Strip
