@@ -310,4 +310,153 @@ public theorem Int64.minValue_div_neg_one : type_of% @_root_.Int64.minValue_div_
   rw [_root_.Int64.toBitVec_div, _root_.Int64.toBitVec_minValue, _root_.Int64.toBitVec_neg, _root_.Int64.toBitVec_one,
     _root_.BitVec.intMin_sdiv_neg_one]
 
+public theorem BitVec.ofInt_iSizeToInt : type_of% @_root_.BitVec.ofInt_iSizeToInt := by
+  intro x
+  rw [← _root_.ISize.toInt_toBitVec]
+  exact _root_.BitVec.ofInt_toInt
+
+public theorem ISize.toNatClampNeg_lt_two_pow_numBits : type_of% @_root_.ISize.toNatClampNeg_lt_two_pow_numBits := by
+  intro x
+  exact (Int.toNat_lt' (Nat.two_pow_pos _)).mpr (_root_.ISize.toInt_lt_two_pow_numBits x)
+
+public theorem ISize.toInt_bmod_two_pow_numBits : type_of% @_root_.ISize.toInt_bmod_two_pow_numBits := by
+  intro x
+  exact (_root_.BitVec.toInt_ofInt _).symm.trans ((congrArg _root_.BitVec.toInt (BitVec.ofInt_iSizeToInt x)).trans
+    (_root_.ISize.toInt_toBitVec x))
+
+public theorem Int8.toInt_bmod_two_pow_numBits : type_of% @_root_.Int8.toInt_bmod_two_pow_numBits := by
+  intro x
+  rw [← _root_.Int8.toInt_toISize x]
+  exact ISize.toInt_bmod_two_pow_numBits _
+
+public theorem Int16.toInt_bmod_two_pow_numBits : type_of% @_root_.Int16.toInt_bmod_two_pow_numBits := by
+  intro x
+  rw [← _root_.Int16.toInt_toISize x]
+  exact ISize.toInt_bmod_two_pow_numBits _
+
+public theorem Int32.toInt_bmod_two_pow_numBits : type_of% @_root_.Int32.toInt_bmod_two_pow_numBits := by
+  intro x
+  rw [← _root_.Int32.toInt_toISize x]
+  exact ISize.toInt_bmod_two_pow_numBits _
+
+public theorem Int8.ofNat_le_iff_le : type_of% @_root_.Int8.ofNat_le_iff_le := by
+  intro a b ha hb
+  apply _root_.Int8.le_iff_toInt_le.trans
+  rw [_root_.Int8.toInt_ofNat_of_lt ha, _root_.Int8.toInt_ofNat_of_lt hb]
+  exact Int.ofNat_le
+
+public theorem Int8.ofNat_lt_iff_lt : type_of% @_root_.Int8.ofNat_lt_iff_lt := by
+  intro a b ha hb
+  apply _root_.Int8.lt_iff_toInt_lt.trans
+  rw [_root_.Int8.toInt_ofNat_of_lt ha, _root_.Int8.toInt_ofNat_of_lt hb]
+  exact Int.ofNat_lt
+
+public theorem Int16.ofNat_le_iff_le : type_of% @_root_.Int16.ofNat_le_iff_le := by
+  intro a b ha hb
+  apply _root_.Int16.le_iff_toInt_le.trans
+  rw [_root_.Int16.toInt_ofNat_of_lt ha, _root_.Int16.toInt_ofNat_of_lt hb]
+  exact Int.ofNat_le
+
+public theorem Int16.ofNat_lt_iff_lt : type_of% @_root_.Int16.ofNat_lt_iff_lt := by
+  intro a b ha hb
+  apply _root_.Int16.lt_iff_toInt_lt.trans
+  rw [_root_.Int16.toInt_ofNat_of_lt ha, _root_.Int16.toInt_ofNat_of_lt hb]
+  exact Int.ofNat_lt
+
+public theorem Int16.ofInt_tdiv : type_of% @_root_.Int16.ofInt_tdiv := by
+  intro a b ha₁ ha₂ hb₁ hb₂
+  have repr (z : Int) (lo : Int16.minValue.toInt ≤ z) (hi : z ≤ Int16.maxValue.toInt) :
+      (Int16.ofInt z).toInt = z := @_root_.Int16.toInt_ofIntLE z lo hi
+  apply _root_.Int16.toInt.inj
+  rw [_root_.Int16.toInt_ofInt, _root_.Int16.toInt_div, repr a ha₁ ha₂, repr b hb₁ hb₂]
+
+public theorem Int16.ofInt_tmod : type_of% @_root_.Int16.ofInt_tmod := by
+  intro a b ha₁ ha₂ hb₁ hb₂
+  have repr (z : Int) (lo : Int16.minValue.toInt ≤ z) (hi : z ≤ Int16.maxValue.toInt) :
+      (Int16.ofInt z).toInt = z := @_root_.Int16.toInt_ofIntLE z lo hi
+  apply _root_.Int16.toInt.inj
+  rw [_root_.Int16.toInt_ofInt]
+  conv => rhs; rw [← _root_.Int16.toInt_bmod_size, _root_.Int16.toInt_mod, repr a ha₁ ha₂, repr b hb₁ hb₂]
+
+public theorem Int32.ofNat_le_iff_le : type_of% @_root_.Int32.ofNat_le_iff_le := by
+  intro a b ha hb
+  apply _root_.Int32.le_iff_toInt_le.trans
+  rw [_root_.Int32.toInt_ofNat_of_lt ha, _root_.Int32.toInt_ofNat_of_lt hb]
+  exact Int.ofNat_le
+
+public theorem Int32.ofNat_lt_iff_lt : type_of% @_root_.Int32.ofNat_lt_iff_lt := by
+  intro a b ha hb
+  apply _root_.Int32.lt_iff_toInt_lt.trans
+  rw [_root_.Int32.toInt_ofNat_of_lt ha, _root_.Int32.toInt_ofNat_of_lt hb]
+  exact Int.ofNat_lt
+
+public theorem Int32.ofInt_tdiv : type_of% @_root_.Int32.ofInt_tdiv := by
+  intro a b ha₁ ha₂ hb₁ hb₂
+  have repr (z : Int) (lo : Int32.minValue.toInt ≤ z) (hi : z ≤ Int32.maxValue.toInt) :
+      (Int32.ofInt z).toInt = z := @_root_.Int32.toInt_ofIntLE z lo hi
+  apply _root_.Int32.toInt.inj
+  rw [_root_.Int32.toInt_ofInt, _root_.Int32.toInt_div, repr a ha₁ ha₂, repr b hb₁ hb₂]
+
+public theorem Int32.ofInt_tmod : type_of% @_root_.Int32.ofInt_tmod := by
+  intro a b ha₁ ha₂ hb₁ hb₂
+  have repr (z : Int) (lo : Int32.minValue.toInt ≤ z) (hi : z ≤ Int32.maxValue.toInt) :
+      (Int32.ofInt z).toInt = z := @_root_.Int32.toInt_ofIntLE z lo hi
+  apply _root_.Int32.toInt.inj
+  rw [_root_.Int32.toInt_ofInt]
+  conv => rhs; rw [← _root_.Int32.toInt_bmod_size, _root_.Int32.toInt_mod, repr a ha₁ ha₂, repr b hb₁ hb₂]
+
+public theorem Int64.ofNat_le_iff_le : type_of% @_root_.Int64.ofNat_le_iff_le := by
+  intro a b ha hb
+  apply _root_.Int64.le_iff_toInt_le.trans
+  rw [_root_.Int64.toInt_ofNat_of_lt ha, _root_.Int64.toInt_ofNat_of_lt hb]
+  exact Int.ofNat_le
+
+public theorem Int64.ofNat_lt_iff_lt : type_of% @_root_.Int64.ofNat_lt_iff_lt := by
+  intro a b ha hb
+  apply _root_.Int64.lt_iff_toInt_lt.trans
+  rw [_root_.Int64.toInt_ofNat_of_lt ha, _root_.Int64.toInt_ofNat_of_lt hb]
+  exact Int.ofNat_lt
+
+public theorem Int64.ofInt_tdiv : type_of% @_root_.Int64.ofInt_tdiv := by
+  intro a b ha₁ ha₂ hb₁ hb₂
+  have repr (z : Int) (lo : Int64.minValue.toInt ≤ z) (hi : z ≤ Int64.maxValue.toInt) :
+      (Int64.ofInt z).toInt = z := @_root_.Int64.toInt_ofIntLE z lo hi
+  apply _root_.Int64.toInt.inj
+  rw [_root_.Int64.toInt_ofInt, _root_.Int64.toInt_div, repr a ha₁ ha₂, repr b hb₁ hb₂]
+
+public theorem Int64.ofInt_tmod : type_of% @_root_.Int64.ofInt_tmod := by
+  intro a b ha₁ ha₂ hb₁ hb₂
+  have repr (z : Int) (lo : Int64.minValue.toInt ≤ z) (hi : z ≤ Int64.maxValue.toInt) :
+      (Int64.ofInt z).toInt = z := @_root_.Int64.toInt_ofIntLE z lo hi
+  apply _root_.Int64.toInt.inj
+  rw [_root_.Int64.toInt_ofInt]
+  conv => rhs; rw [← _root_.Int64.toInt_bmod_size, _root_.Int64.toInt_mod, repr a ha₁ ha₂, repr b hb₁ hb₂]
+
+public theorem ISize.ofNat_le_iff_le : type_of% @_root_.ISize.ofNat_le_iff_le := by
+  intro a b ha hb
+  apply _root_.ISize.le_iff_toInt_le.trans
+  rw [_root_.ISize.toInt_ofNat_of_lt_two_pow_numBits ha, _root_.ISize.toInt_ofNat_of_lt_two_pow_numBits hb]
+  exact Int.ofNat_le
+
+public theorem ISize.ofNat_lt_iff_lt : type_of% @_root_.ISize.ofNat_lt_iff_lt := by
+  intro a b ha hb
+  apply _root_.ISize.lt_iff_toInt_lt.trans
+  rw [_root_.ISize.toInt_ofNat_of_lt_two_pow_numBits ha, _root_.ISize.toInt_ofNat_of_lt_two_pow_numBits hb]
+  exact Int.ofNat_lt
+
+public theorem ISize.ofInt_tdiv : type_of% @_root_.ISize.ofInt_tdiv := by
+  intro a b ha₁ ha₂ hb₁ hb₂
+  have repr (z : Int) (lo : ISize.minValue.toInt ≤ z) (hi : z ≤ ISize.maxValue.toInt) :
+      (ISize.ofInt z).toInt = z := @_root_.ISize.toInt_ofIntLE z lo hi
+  apply _root_.ISize.toInt.inj
+  rw [_root_.ISize.toInt_ofInt, _root_.ISize.toInt_div, repr a ha₁ ha₂, repr b hb₁ hb₂]
+
+public theorem ISize.ofInt_tmod : type_of% @_root_.ISize.ofInt_tmod := by
+  intro a b ha₁ ha₂ hb₁ hb₂
+  have repr (z : Int) (lo : ISize.minValue.toInt ≤ z) (hi : z ≤ ISize.maxValue.toInt) :
+      (ISize.ofInt z).toInt = z := @_root_.ISize.toInt_ofIntLE z lo hi
+  apply _root_.ISize.toInt.inj
+  rw [_root_.ISize.toInt_ofInt]
+  conv => rhs; rw [← _root_.ISize.toInt_bmod_size, _root_.ISize.toInt_mod, repr a ha₁ ha₂, repr b hb₁ hb₂]
+
 end OmegaChecks.InitPort.Alternatives
