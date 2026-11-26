@@ -9,6 +9,7 @@
 module
 
 public import Mathlib.Data.Fintype.BigOperators
+import Mathlib.Algebra.Order.BigOperators.Group.Finset
 import Mathlib.Data.Fintype.EquivFin
 import OmegaBuild.Commands
 
@@ -457,5 +458,195 @@ private theorem ring_two_folds {C : Coloring n} (hC : Good C) (r : Ring n) :
   have he' := mem_cutFolds.mpr ⟨fold_of_ne e (fun heq => by rw [heq] at hdec; omega), he⟩
   have hf' := mem_cutFolds.mpr ⟨fold_of_ne f (fun hfq => by rw [hfq] at hinc; omega), hf⟩
   exact Finset.one_lt_card.mpr ⟨e, he', f, hf', fun hEq => by rw [hEq] at hdec; omega⟩
+
+private theorem Point.rotate_boundary (v : Point n 0) :
+    (Point.rotate v).boundary ↔ v.boundary := by
+  simp [Point.rotate, Point.boundary, or_left_comm, or_comm]
+
+private theorem atUp_rotate (v : Point n 0) (s : Bool) (a : Axis) :
+    atUp (Point.rotate v) s (Axis.rotate a) = (atUp v s a).map rotateFace := by
+  cases a <;> simp [atUp, Point.rotate, Axis.rotate, Point.coord, bump, rotateFace]
+
+private theorem atDown_rotate (v : Point n 0) (s : Bool) (a : Axis) :
+    atDown (Point.rotate v) s (Axis.rotate a) = (atDown v s a).map rotateFace := by
+  cases a <;>
+    simp [atDown, Point.rotate, Axis.rotate, bumpPair, rotateFace, and_comm]
+
+private def optionSign (C : Coloring n) (f : Option (Face n)) : Int :=
+  f.elim 0 (fun f => signed (C f))
+
+private theorem sum_filterMap (C : Coloring n) (fs : List (Option (Face n))) :
+    ((fs.filterMap id).map (fun f => signed (C f))).sum = (fs.map (optionSign C)).sum := by
+  induction fs with
+  | nil => rfl
+  | cons a fs ih =>
+    change ((fs.filterMap (fun f => f)).map _).sum = _ at ih
+    cases a <;> simp [optionSign, ih]
+
+private theorem sheet_balance_rotate (C : Coloring n) (v : Point n 0) (s : Bool) :
+    ((sheetCorners v s).map (fun f => signed (C (rotateFace f)))).sum =
+    ((sheetCorners (Point.rotate v) s).map (fun f => signed (C f))).sum := by
+  have h (f : Option (Face n)) :
+      optionSign C (f.map rotateFace) = optionSign (fun a => C (rotateFace a)) f := by
+    cases f <;> rfl
+  have hx : Axis.rotate .x = .z := rfl
+  have hy : Axis.rotate .y = .x := rfl
+  have hz : Axis.rotate .z = .y := rfl
+  have hUx := atUp_rotate v s .x
+  have hUy := atUp_rotate v s .y
+  have hUz := atUp_rotate v s .z
+  have hDx := atDown_rotate v s .x
+  have hDy := atDown_rotate v s .y
+  have hDz := atDown_rotate v s .z
+  simp only [hx, hy, hz] at hUx hUy hUz hDx hDy hDz
+  simp only [sheetCorners, sum_filterMap, List.map_cons, List.map_nil, List.sum_cons,
+    List.sum_nil, hUx, hUy, hUz, hDx, hDy, hDz, h]
+  -- The cyclic permutation changes only the order of summation.
+  omega
+
+private theorem good_rotate {C : Coloring n} (hC : Good C) :
+    Good (fun f => C (rotateFace f)) := by
+  intro v s
+  rw [signed_balance]
+  have hv := good_balance hC (Point.rotate v) s
+  by_cases hb : v.boundary <;>
+    simpa [incidentCorners, Point.rotate_boundary, hb, List.map_append, List.sum_append,
+      sheet_balance_rotate] using hv
+
+private def rotateEdge : Edge n ≃ Edge n where
+  toFun e := ⟨(Point.rotate e.val.1, Axis.rotate e.val.2.1, e.val.2.2), by
+    intro h
+    apply e.property
+    exact (Point.rotate_coord _ _).symm.trans h⟩
+  invFun e := ⟨(Point.rotate.symm e.val.1, Axis.rotate.symm e.val.2.1, e.val.2.2), by
+    intro h
+    apply e.property
+    have he := Point.rotate_coord (Point.rotate.symm e.val.1) (Axis.rotate.symm e.val.2.1)
+    simpa using he.trans h⟩
+  left_inv e := by
+    apply Subtype.ext
+    simp
+  right_inv e := by
+    apply Subtype.ext
+    simp
+
+private theorem rotateEdge_mk (p : Point n 1) (a : Axis) (s : Bool) :
+    rotateEdge (edge p a s) = edge (Point.rotate p) (Axis.rotate a) s := by
+  apply Subtype.ext
+  simp [rotateEdge, edge, Point.rotate_coord]
+
+private theorem edge_eta (e : Edge n) : edge e.val.1 e.val.2.1 e.val.2.2 = e := by
+  rcases e with ⟨⟨p, a, s⟩, he⟩
+  apply Subtype.ext
+  by_cases h : p.coord a = 0
+  · have hs : s = false := he h
+    subst s
+    simp [edge, h]
+  · simp [edge, h]
+
+private theorem below_rotate (p : Point n 1) (a : Axis) (h : p.coord a ≠ 0) :
+    below (Point.rotate p) (Axis.rotate a) (by simpa only [Point.rotate_coord] using h) =
+      Point.rotate (below p a h) := by
+  cases a <;> rfl
+
+private theorem edgeFaces_rotate (e : Edge n) :
+    edgeFaces (rotateEdge e) = ((rotateFace (edgeFaces e).1), rotateFace (edgeFaces e).2) := by
+  rw [← edge_eta e, rotateEdge_mk]
+  by_cases h : e.val.1.coord e.val.2.1 = 0
+  · rw [edgeFaces_seam _ _ h, edgeFaces_seam _ _ (by simpa only [Point.rotate_coord] using h)]
+    rfl
+  · rw [edgeFaces_inside _ _ h,
+      edgeFaces_inside _ _ (by simpa only [Point.rotate_coord] using h), below_rotate]
+    rfl
+
+private theorem fold_rotate {C : Coloring n} {e : Edge n} :
+    Fold (fun f => C (rotateFace f)) e ↔ Fold C (rotateEdge e) := by
+  simp only [Fold, edgeFaces_rotate]
+
+private def rotateCut : Cut n ≃ Cut n := Axis.rotate.prodCongr (Equiv.refl (Fin n))
+
+private theorem crosses_rotate {e : Edge n} {r : Cut n} :
+    Crosses (rotateEdge e) (rotateCut r) ↔ Crosses e r := by
+  simp [Crosses, rotateEdge, rotateCut, Point.rotate_coord]
+
+private theorem cut_card_rotate (C : Coloring n) (r : Cut n) :
+    (cutFolds (fun f => C (rotateFace f)) r).card = (cutFolds C (rotateCut r)).card := by
+  apply Finset.card_bij (fun e _ => rotateEdge e)
+  · intro e he
+    have h := mem_cutFolds.mp he
+    exact mem_cutFolds.mpr ⟨fold_rotate.mp h.1, crosses_rotate.mpr h.2⟩
+  · intro _ _ _ _ h
+    exact rotateEdge.injective h
+  · intro e he
+    refine ⟨rotateEdge.symm e, ?_, rotateEdge.apply_symm_apply e⟩
+    have h := mem_cutFolds.mp he
+    exact mem_cutFolds.mpr ⟨fold_rotate.mpr (by simpa using h.1),
+      crosses_rotate.mp (by simpa using h.2)⟩
+
+private theorem every_cut_two_folds {C : Coloring n} (hC : Good C) (cut : Cut n) :
+    2 ≤ (cutFolds C cut).card := by
+  obtain ⟨a, k⟩ := cut
+  let r : Ring n := ⟨k.val, n - (k.val + 1), by have := k.isLt; omega⟩
+  have hr : r.cut = (.x, k) := rfl
+  cases a with
+  | x => exact hr ▸ ring_two_folds hC r
+  | y =>
+    have h := ring_two_folds (good_rotate (good_rotate hC)) r
+    rw [cut_card_rotate (fun f => C (rotateFace f)), cut_card_rotate C, hr] at h
+    exact h
+  | z =>
+    have h := ring_two_folds (good_rotate hC) r
+    rw [cut_card_rotate C, hr] at h
+    exact h
+
+private theorem axis_univ : (Finset.univ : Finset Axis) = {.x, .y, .z} := rfl
+
+private theorem card_cut : Fintype.card (Cut n) = 3 * n := by
+  have hc : Fintype.card Axis = 3 := by decide
+  simp [Fintype.card_prod, hc]
+
+private theorem edge_cut_sum (e : Edge n) :
+    (∑ r : Cut n, if Crosses e r then (1 : ℕ) else 0) = 2 := by
+  rw [Fintype.sum_prod_type]
+  have h (a : Axis) : (∑ k : Fin n, if Crosses e (a, k) then (1 : ℕ) else 0) =
+      if e.val.2.1 ≠ a then 1 else 0 := by
+    by_cases ha : e.val.2.1 = a
+    · simp [Crosses, ha]
+    · let k : Fin n := ⟨e.val.1.coord a, by
+        have := e.val.1.total
+        cases a <;> simp [Point.coord] <;> omega⟩
+      rw [Finset.sum_eq_single k]
+      · simp [Crosses, ha, k]
+      · intro j _ hj
+        have hj' : e.val.1.coord a ≠ j.val := fun h => hj (Fin.ext h.symm)
+        simp [Crosses, hj']
+      · simp
+  simp only [h]
+  rw [axis_univ]
+  cases e.val.2.1 <;> simp
+
+private theorem cut_fold_sum (C : Coloring n) :
+    (∑ r : Cut n, (cutFolds C r).card) = foldCount C * 2 := by
+  simp only [cutFolds, Finset.card_eq_sum_ones, Finset.sum_filter]
+  rw [Finset.sum_comm]
+  simp [edge_cut_sum, foldCount]
+
+private theorem minimum_bound {C : Coloring n} (hC : Good C) : 3 * n ≤ foldCount C := by
+  have h : (∑ _ : Cut n, (2 : ℕ)) ≤ ∑ r : Cut n, (cutFolds C r).card :=
+    Finset.sum_le_sum (fun r _ => every_cut_two_folds hC r)
+  rw [cut_fold_sum] at h
+  simp only [Finset.sum_const, Finset.card_univ, card_cut, Nat.nsmul_eq_mul] at h
+  omega
+
+private theorem exact_cuts {C : Coloring n} (hC : Good C) (hcount : foldCount C = 3 * n)
+    (r : Cut n) : (cutFolds C r).card = 2 := by
+  have hmin := every_cut_two_folds hC r
+  by_contra hne
+  have hlt : (∑ _ : Cut n, (2 : ℕ)) < ∑ q : Cut n, (cutFolds C q).card :=
+    Finset.sum_lt_sum (fun q _ => every_cut_two_folds hC q)
+      ⟨r, Finset.mem_univ _, by omega⟩
+  rw [cut_fold_sum, hcount] at hlt
+  simp only [Finset.sum_const, Finset.card_univ, card_cut, Nat.nsmul_eq_mul] at hlt
+  omega
 
 end D5.S0.FiniteGeometry.DoubledTriangleFolds
