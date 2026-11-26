@@ -1,4 +1,5 @@
 module
+import Init.LawfulBEqTactics
 public import Init.Data.String.Pattern.String
 public import Init.Data.Iterators.Combinators.Monadic.Take
 import all Init.Data.ByteArray.Lemmas
@@ -7,6 +8,11 @@ import all Init.Data.String.Basic
 import all Init.Data.String.Decode
 import all Init.Data.String.Pattern.String
 namespace OmegaChecks.InitPort.Alternatives
+
+public theorem DerivingHelpers.and_true_curry : type_of% @_root_.DerivingHelpers.and_true_curry := by
+  intro a b P f
+  cases a <;> cases b <;> exact fun h => by first | exact f rfl rfl | nomatch h
+
 public theorem String.Slice.Pattern.ForwardSliceSearcher.buildTable._proof_16 :
     type_of% (private_decl% @String.Slice.Pattern.ForwardSliceSearcher.buildTable._proof_16) := by
   intro pat i hi
