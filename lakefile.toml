@@ -59,7 +59,6 @@ srcDir = "src"
 [[lean_lib]]
 name = "GRH"
 srcDir = "src"
-roots = ["OmegaMath.NumberTheory.GRH"]
 moreLeanArgs = ["--tstack=400000"]
 
 [lean_lib.leanOptions]
