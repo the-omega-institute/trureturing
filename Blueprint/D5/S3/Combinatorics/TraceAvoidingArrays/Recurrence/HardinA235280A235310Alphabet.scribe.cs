@@ -13,6 +13,21 @@ internal sealed class HardinA235280A235310AlphabetDocument : IScribeDocumentDefi
         H("Hardin's constant-stress alphabet comparisons"),
         Blocks(
             new DocumentBlock.Section(H("Source GID"), Blocks(Paragraph(Ref(Owner)))),
+            Describe.Lean(DescribeId.Create("indexed-grid"), DeclarationHandle.Create(Owner + ".Grid"),
+                H("Indexed grids"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Grid(M,n,k) consists of functions from Fin (n+1) × Fin (k+1) "
+                    + "to Fin (M+1)."))),
+                DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("block-sum"), DeclarationHandle.Create(Owner + ".block"),
+                H("Contiguous block sum"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The block at (r,c) sums the entries in rows r and r+1 "
+                    + "and columns c and c+1."))),
+                DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("sum-d-grid"), DeclarationHandle.Create(Owner + ".Low"),
+                H("Grids of block sum d"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Low(d,a) requires the natural sum of the four entries "
+                    + "in every contiguous block of a to equal d."))),
+                DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("literal-count"), DeclarationHandle.Create(Owner + ".C"),
                 H("Literal indexed count"), StatementSource.FromAuthor(Disp(LiteralCountDefinition())),
                 AssessedProvenance.FromRepo(),
@@ -24,6 +39,25 @@ internal sealed class HardinA235280A235310AlphabetDocument : IScribeDocumentDefi
                 + "across a shared edge, so the sum is uniform. Global complementation pairs the two "
                 + "classes. Every entry in the low class is at most d, and restricting the alphabet "
                 + "gives the exact count as twice the cardinality of the sum-d class over Fin (d+1).")),
+            Describe.Lean(DescribeId.Create("fixed-deficit-equiv"),
+                DeclarationHandle.Create(Owner + ".fixedDeficitEquiv"),
+                H("Fixed-deficit equivalence"), StatementSource.FromAuthor(Disp(FixedDeficitStatement())),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The successor indices n+1 and k+1 give n+2 rows and k+2 columns. "
+                    + "Legal(S,a) is the absolute diagonal difference condition in every "
+                    + "contiguous block. Sum denotes the tagged disjoint union.")),
+                    Paragraph(Text("Checkerboard complementation gives block sums d and 4M−d. "
+                    + "The gap exceeds the change possible across a shared edge, so the sum is uniform. "
+                    + "The first copy comes from the low class. Global complementation sends the high "
+                    + "class to the low class for the second copy. Every entry in a low-class grid "
+                    + "is at most d, so both copies use the alphabet 0 through d."))),
+                DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("fixed-deficit-count"), DeclarationHandle.Create(Owner + ".count_eq"),
+                H("Count at fixed deficit"), StatementSource.FromAuthor(Disp(FixedDeficitCountStatement())),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For positive n and k, the two block-sum classes give equal "
+                    + "contributions after restriction to the alphabet 0 through d."))),
+                DescribeRole.Theorem),
             Endpoint("a235280", "A235280", "hardin2014a235280", "hardin-a235280-alphabet-comparison",
                 Comparison((4, 5), (5, 7), (6, 9)), "The common deficit is three. The NAME count is C(4, 5, n, k)."),
             Endpoint("a235310", "A235310", "hardin2014a235310", "hardin-a235310-alphabet-comparison",
@@ -66,6 +100,24 @@ internal sealed class HardinA235280A235310AlphabetDocument : IScribeDocumentDefi
             Equal(Call("C", m, s, n, k), App(Qualified("Nat", "card"), arrays)))));
     }
 
+    private static Formula FixedDeficitStatement()
+    {
+        var m = V("M");
+        var d = V("d");
+        var n = Add(V("n"), D(1));
+        var k = Add(V("k"), D(1));
+        var a = V("a");
+        Formula Subtype(Formula maximum, Formula condition) =>
+            Seq(OpenBrace, a, Colon, Sp, Call("Grid", maximum, n, k), Sp, Mid, Sp, condition, CloseBrace);
+        var stress = new Formula.Binary(new Formula.Binary(D(2), FormulaBinaryOperator.Multiply, m),
+            FormulaBinaryOperator.Subtract, d);
+        var legal = Subtype(m, Call("Legal", stress, a));
+        var low = Subtype(d, Call("Low", d, a));
+        var codomain = Call("Sum", low, low);
+        return All("M", V("Nat"), All("d", V("Nat"), ForDimensions(
+            ImpliesFrom(Seq(d, Sp, Lt, Sp, m), Seq(legal, Sp, Equiv, Sp, codomain)))));
+    }
+
     private static Formula Comparison((byte Max, byte Stress) first, (byte Max, byte Stress) second,
         (byte Max, byte Stress) third)
     {
@@ -76,6 +128,23 @@ internal sealed class HardinA235280A235310AlphabetDocument : IScribeDocumentDefi
             Parenthesized(Equal(Count(second), Count(third))));
         return ForDimensions(ImpliesFrom(Seq(D(1), Sp, Le, Sp, n),
             ImpliesFrom(Seq(D(1), Sp, Le, Sp, k), equalities)));
+    }
+
+    private static Formula FixedDeficitCountStatement()
+    {
+        var m = V("M");
+        var d = V("d");
+        var n = V("n");
+        var k = V("k");
+        var a = V("a");
+        var stress = new Formula.Binary(new Formula.Binary(D(2), FormulaBinaryOperator.Multiply, m),
+            FormulaBinaryOperator.Subtract, d);
+        var low = Seq(OpenBrace, a, Colon, Sp, Call("Grid", d, n, k), Sp, Mid, Sp, Call("Low", d, a), CloseBrace);
+        var twice = new Formula.Binary(D(2), FormulaBinaryOperator.Multiply, App(Qualified("Nat", "card"), low));
+        return All("M", V("Nat"), All("d", V("Nat"), ForDimensions(
+            ImpliesFrom(Seq(d, Sp, Lt, Sp, m),
+                ImpliesFrom(Seq(D(1), Sp, Le, Sp, n),
+                    ImpliesFrom(Seq(D(1), Sp, Le, Sp, k), Equal(Call("C", m, stress, n, k), twice)))))));
     }
 
     private static Formula ForDimensions(Formula body) => All("n", V("Nat"), All("k", V("Nat"), body));
