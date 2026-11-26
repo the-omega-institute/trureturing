@@ -270,6 +270,66 @@ public theorem revMatchesAt_cast_iff : type_of% @_root_.String.Slice.Pattern.Mod
   · rintro ⟨⟨q, matched⟩⟩
     exact ⟨⟨q.cast eq, (isLongestRevMatchAt_cast_iff eq).mpr matched⟩⟩
 
+private theorem miss_iff {α : Type} {out : Option α} {matchExists : Prop}
+    (sound : ∀ p, out = some p → matchExists) (complete : matchExists → ∃ p, out = some p) :
+    out = none ↔ ¬matchExists :=
+  ⟨fun empty matched => (complete matched).elim (fun _ found => nomatch empty.symm.trans found),
+    fun miss => by cases eq : out with
+    | none => rfl
+    | some p => exact (miss (sound p eq)).elim⟩
+
+public theorem not_matchesAt_endPos : type_of% @_root_.String.Slice.Pattern.Model.not_matchesAt_endPos := by
+  rintro ρ pat i strict s ⟨p, matched⟩
+  exact Nat.not_lt_of_ge p.isValidForSlice.le_utf8ByteSize matched.lt
+
+public theorem not_revMatchesAt_startPos : type_of% @_root_.String.Slice.Pattern.Model.not_revMatchesAt_startPos := by
+  rintro ρ pat i strict s ⟨p, matched⟩
+  exact Nat.not_lt_zero p.offset.byteIdx matched.lt
+
+public theorem LawfulForwardPatternModel.skipPrefix?_sliceFrom_eq_none_iff :
+    type_of% @_root_.String.Slice.Pattern.Model.LawfulForwardPatternModel.skipPrefix?_sliceFrom_eq_none_iff := by
+  intro ρ pat inst model law s start
+  apply miss_iff
+  · intro p found
+    have matched := (_root_.String.Slice.Pattern.Model.LawfulForwardPatternModel.skipPrefix?_eq_some_iff p).mp found
+    exact ⟨⟨_, matched.isLongestMatchAt_ofSliceFrom⟩⟩
+  · rintro ⟨⟨p, matched⟩⟩
+    exact ⟨_, (_root_.String.Slice.Pattern.Model.LawfulForwardPatternModel.skipPrefix?_eq_some_iff _).mpr
+      matched.isLongestMatch_sliceFrom⟩
+
+public theorem LawfulBackwardPatternModel.skipSuffix?_sliceTo_eq_none_iff :
+    type_of% @_root_.String.Slice.Pattern.Model.LawfulBackwardPatternModel.skipSuffix?_sliceTo_eq_none_iff := by
+  intro ρ pat inst model law s stop
+  apply miss_iff
+  · intro p found
+    have matched := (_root_.String.Slice.Pattern.Model.LawfulBackwardPatternModel.skipSuffix?_eq_some_iff p).mp found
+    exact ⟨⟨_, matched.isLongestRevMatchAt_ofSliceTo⟩⟩
+  · rintro ⟨⟨p, matched⟩⟩
+    exact ⟨_, (_root_.String.Slice.Pattern.Model.LawfulBackwardPatternModel.skipSuffix?_eq_some_iff _).mpr
+      matched.isLongestRevMatch_sliceTo⟩
+
+public theorem LawfulForwardPatternModel.skipPrefix?_eq_none_iff :
+    type_of% @_root_.String.Slice.Pattern.Model.LawfulForwardPatternModel.skipPrefix?_eq_none_iff := by
+  intro ρ pat inst model law s
+  apply miss_iff
+  · intro p found
+    have matched := (_root_.String.Slice.Pattern.Model.LawfulForwardPatternModel.skipPrefix?_eq_some_iff p).mp found
+    exact ⟨⟨p, _root_.String.Slice.Pattern.Model.isLongestMatchAt_startPos_iff.mpr matched⟩⟩
+  · rintro ⟨⟨p, matched⟩⟩
+    exact ⟨p, (_root_.String.Slice.Pattern.Model.LawfulForwardPatternModel.skipPrefix?_eq_some_iff p).mpr
+      (_root_.String.Slice.Pattern.Model.isLongestMatchAt_startPos_iff.mp matched)⟩
+
+public theorem LawfulBackwardPatternModel.skipSuffix?_eq_none_iff :
+    type_of% @_root_.String.Slice.Pattern.Model.LawfulBackwardPatternModel.skipSuffix?_eq_none_iff := by
+  intro ρ pat inst model law s
+  apply miss_iff
+  · intro p found
+    have matched := (_root_.String.Slice.Pattern.Model.LawfulBackwardPatternModel.skipSuffix?_eq_some_iff p).mp found
+    exact ⟨⟨p, _root_.String.Slice.Pattern.Model.isLongestRevMatchAt_endPos_iff.mpr matched⟩⟩
+  · rintro ⟨⟨p, matched⟩⟩
+    exact ⟨p, (_root_.String.Slice.Pattern.Model.LawfulBackwardPatternModel.skipSuffix?_eq_some_iff p).mpr
+      (_root_.String.Slice.Pattern.Model.isLongestRevMatchAt_endPos_iff.mp matched)⟩
+
 end String.Slice.Pattern.Model
 
 public theorem String.Slice.eqIgnoreAsciiCase.go._unary._proof_3 :
