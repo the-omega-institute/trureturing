@@ -717,4 +717,27 @@ public theorem Std.Iter.mem_toList_iff_isPlausibleIndirectOutput :
           exact (ihs plausible).mpr tail
         | done => cases toNext
 
+public theorem Std.Iter.getElem?_toList_eq_atIdxSlow? {α β : Type u} [Iterator α Id β] [Finite α Id]
+    {it : Iter (α := α) β} {k : Nat} :
+    (Std.Iter.Total.toList it.ensureTermination)[k]? = Std.Iter.Total.atIdxSlow? k it.ensureTermination := by
+  induction it using _root_.Std.Iter.inductSteps generalizing k with
+  | step it ihy ihs =>
+    rw [Std.Iter.toList_eq_match_step, Std.Iter.atIdxSlow?_eq_match]
+    cases it.step using PlausibleIterStep.casesOn with
+    | yield next out h => cases k with
+      | zero => rfl
+      | succ k => exact ihy h
+    | skip next h => exact ihs h
+    | done h => exact List.getElem?_nil
+
+public theorem Std.Iter.toList_eq_of_atIdxSlow?_eq {α₁ α₂ β : Type u}
+    [Iterator α₁ Id β] [Finite α₁ Id] [Iterator α₂ Id β] [Finite α₂ Id]
+    {it₁ : Iter (α := α₁) β} {it₂ : Iter (α := α₂) β}
+    (h : ∀ k, Std.Iter.Total.atIdxSlow? k it₁.ensureTermination = Std.Iter.Total.atIdxSlow? k it₂.ensureTermination) :
+    Std.Iter.Total.toList it₁.ensureTermination = Std.Iter.Total.toList it₂.ensureTermination := by
+  apply List.ext_getElem?
+  intro k
+  exact (Std.Iter.getElem?_toList_eq_atIdxSlow? (it := it₁)).trans
+    ((h k).trans (Std.Iter.getElem?_toList_eq_atIdxSlow? (it := it₂)).symm)
+
 end OmegaChecks.InitPort.Alternatives

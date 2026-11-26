@@ -1,4 +1,6 @@
 module
+public import Init.Data.Iterators.Lemmas.Consumers.Access
+import all Init.Data.Iterators.Consumers.Total
 public import Init.Data.Iterators.Consumers.Access
 import all Init.Data.Iterators.Consumers.Monadic.Loop
 public import Init.Data.Slice.Array.Iterator
@@ -60,5 +62,22 @@ public noncomputable def Std.Iter.Total.atIdxSlow? {α β : Type u} [Iterator α
       apply Prod.Lex.right
       exact IterM.TerminationMeasures.Productive.rel_of_skip h)
     | .done _ => none) ⟨it.it, n⟩
+
+
+public theorem Std.Iter.atIdxSlow?_eq_match {α β : Type u} [Iterator α Id β] [Productive α Id]
+    {n : Nat} {it : Iter (α := α) β} :
+    Std.Iter.Total.atIdxSlow? n it.ensureTermination =
+      IterStep.casesOn (motive := fun _ => Option β) it.step.val
+        (fun next out => Nat.casesOn n (some out) (fun k => Std.Iter.Total.atIdxSlow? k next.ensureTermination))
+        (fun next => Std.Iter.Total.atIdxSlow? n next.ensureTermination) none := by
+  conv =>
+    lhs
+    unfold Std.Iter.Total.atIdxSlow?
+    rw [WellFounded.fix_eq]
+  dsimp only [Iter.ensureTermination]
+  cases it.step using PlausibleIterStep.casesOn with
+  | yield next out h => cases n <;> rfl
+  | skip next h => rfl
+  | done h => rfl
 
 end OmegaChecks.InitPort.Alternatives
