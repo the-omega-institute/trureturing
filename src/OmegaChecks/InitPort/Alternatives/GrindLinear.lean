@@ -78,4 +78,92 @@ public theorem Int.Internal.Linear.le_unsat :
   | num n =>
     exact Int.not_le_of_gt (of_decide_eq_true bad) le
 
+
+private theorem unscaleNonpos {α : Type u} [IntModule α] [LE α] [Std.IsLinearOrder α]
+    [OrderedAdd α] (a : α) {k : Nat} (pos : 0 < k) (scaled : k • a ≤ 0) : a ≤ 0 := by
+  cases Std.le_total (a := a) (b := 0) with
+  | inl nonpos => exact nonpos
+  | inr nonneg =>
+    have step := OrderedAdd.nsmul_le_nsmul_of_le_of_le_of_nonneg (k₁ := 1) (k₂ := k)
+      (x := a) (y := a) pos (Std.le_refl a) nonneg
+    rw [NatModule.one_nsmul] at step
+    exact Std.le_trans step scaled
+
+public theorem Lean.Grind.Linarith.le_coeff :
+    type_of% @_root_.Lean.Grind.Linarith.le_coeff := by
+  intro α _ _ _ _ _ _ ctx p q k cert scaled
+  have both := Bool.and_eq_true_iff.mp (show (decide (0 < k) && p == q.mul k) = true from cert)
+  rw [eq_of_beq both.2, Poly.denote'_eq_denote, Poly.denote_mul, IntModule.zsmul_natCast_eq_nsmul] at scaled
+  rw [Poly.denote'_eq_denote]
+  exact unscaleNonpos _ (of_decide_eq_true both.1) scaled
+
+public theorem Lean.Grind.Linarith.lt_coeff :
+    type_of% @_root_.Lean.Grind.Linarith.lt_coeff := by
+  intro α _ _ _ _ _ _ ctx p q k cert scaled
+  have both := Bool.and_eq_true_iff.mp (show (decide (0 < k) && p == q.mul k) = true from cert)
+  rw [eq_of_beq both.2, Poly.denote'_eq_denote, Poly.denote_mul, IntModule.zsmul_natCast_eq_nsmul] at scaled
+  rw [Poly.denote'_eq_denote]
+  exact Std.lt_iff_le_and_not_ge.mpr
+    ⟨unscaleNonpos _ (of_decide_eq_true both.1) (Preorder.le_of_lt scaled),
+      fun nonneg => (Std.lt_iff_le_and_not_ge.mp scaled).2 (OrderedAdd.nsmul_nonneg nonneg)⟩
+
+public theorem Lean.Grind.Linarith.diseq_split :
+    type_of% @_root_.Lean.Grind.Linarith.diseq_split := by
+  intro α _ _ _ _ _ _ ctx p q cert diff
+  have eq := eq_of_beq (show (q == p.mul (-1)) = true from cert)
+  rw [Poly.denote'_eq_denote] at diff
+  rw [Poly.denote'_eq_denote, eq, Poly.denote'_eq_denote, Poly.denote_mul, IntModule.neg_zsmul,
+      IntModule.one_zsmul]
+  cases Std.le_total (a := p.denote ctx) (b := 0) with
+  | inl nonpos => exact Or.inl (Std.lt_iff_le_and_not_ge.mpr ⟨nonpos, fun nonneg => diff (Std.le_antisymm nonpos nonneg)⟩)
+  | inr nonneg =>
+    have pos := Std.lt_iff_le_and_not_ge.mpr ⟨nonneg, fun nonpos => diff (Std.le_antisymm nonpos nonneg)⟩
+    have h := OrderedAdd.neg_lt_iff (a := p.denote ctx) (b := 0)
+    rw [AddCommGroup.neg_zero] at h
+    exact Or.inr (h.mpr pos)
+
+open _root_.Int.Internal.Linear
+
+public theorem Int.Internal.Linear.cdiv_eq_div_of_divides :
+    type_of% @_root_.Int.Internal.Linear.cdiv_eq_div_of_divides := by
+  intro a b zero
+  unfold cdiv
+  rw [Int.neg_ediv_of_dvd (Int.dvd_of_emod_eq_zero zero), Int.neg_neg]
+
+public theorem Int.Internal.Linear.cmod_eq_zero_iff_emod_eq_zero :
+    type_of% @_root_.Int.Internal.Linear.cmod_eq_zero_iff_emod_eq_zero := by
+  intro a b
+  constructor
+  · intro h
+    have h' := congrArg Neg.neg h
+    change -(-((-a) % b)) = -(0 : Int) at h'
+    rw [Int.neg_neg] at h'
+    exact Int.emod_eq_zero_of_dvd (Int.dvd_neg.mp (Int.dvd_of_emod_eq_zero h'))
+  · intro h
+    change -((-a) % b) = 0
+    rw [Int.emod_eq_zero_of_dvd (Int.dvd_neg.mpr (Int.dvd_of_emod_eq_zero h))]
+    rfl
+
+public theorem Int.Internal.Linear.Poly.denote_div_eq_of_divAll :
+    type_of% @_root_.Int.Internal.Linear.Poly.denote_div_eq_of_divAll := by
+  intro ctx p k divisible
+  induction p with
+  | num n =>
+    have d : n % k = 0 := eq_of_beq divisible
+    change cdiv n k * k = n
+    rw [← cdiv_eq_div_of_divides d]
+    exact Int.ediv_mul_cancel_of_emod_eq_zero d
+  | add n x p ih =>
+    have both := Bool.and_eq_true_iff.mp (show
+      (@BEq.beq Int (@instBEqOfDecidableEq Int Int.instDecidableEq) (n % k) 0 && p.divAll k) = true from divisible)
+    change ((n/k) * x.denote ctx + (p.div k).denote ctx) * k = n * x.denote ctx + p.denote ctx
+    rw [Int.add_mul, Int.mul_right_comm (n/k) (x.denote ctx) k,
+        Int.ediv_mul_cancel_of_emod_eq_zero (eq_of_beq both.1), ih both.2]
+
+public theorem Int.Internal.Linear.dvd_unsat :
+    type_of% @_root_.Int.Internal.Linear.dvd_unsat := by
+  intro ctx k p cert divides
+  rw [_root_.Int.Internal.Linear.Poly.denote'_eq_denote] at divides
+  exact (bne_iff_ne.mp cert) (Int.emod_eq_zero_of_dvd (_root_.Int.Internal.Linear.Poly.gcd_dvd_const divides))
+
 end OmegaChecks.InitPort.Alternatives
