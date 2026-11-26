@@ -8,7 +8,9 @@
 
 
 import D5.S3.Arith.FactorialRatio.CompactFactorialGcd
+import OmegaBuild.Commands
 import OmegaMath.Arithmetic.CompactFloor
+import OmegaMathlib.Data.Nat.Prime.Defs
 import Mathlib.Data.Nat.ModEq
 import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.NormNum
@@ -239,7 +241,7 @@ theorem compactExcess_factorization {r s p : ℕ} (hr : 2 ≤ r) (hs : s < r ^ 2
 /-- The legal parameter `floor(kp/r)` gives the local large-prime estimate.
 Only the first prime power contributes because `r < p` and `s < r^2`. -/
 theorem local_prime_excess_bound {r s p k : ℕ} (hr : 2 ≤ r)
-    (hs : s < r ^ 2) (hp : p.Prime) (hrp : r < p) (hkp : k * p ≤ s)
+    (hs : s < r ^ 2) (hp : (native% OmegaMathlib.Nat.Prime) p) (hrp : r < p) (hkp : k * p ≤ s)
     (hk : 1 ≤ k) :
     ((compactExcess r s).factorization p : ℝ) ≤
       2 * (k : ℝ) + 2 * (r : ℝ) ^ 2 / ((k : ℝ) * p) := by
@@ -429,7 +431,7 @@ ordinary compact budget. The hypotheses concern the sum of the two weights
 at each prime power, so independently selected minimizing parameters are
 never identified with one another. -/
 theorem weighted_shared_budget {r s C : ℕ} (hr : 2 ≤ r) (hs : s < r ^ 2)
-    (P : Finset ℕ) (hP : ∀ p ∈ P, p.Prime) (c d : ℕ → ℕ → ℕ)
+    (P : Finset ℕ) (hP : ∀ p ∈ P, (native% OmegaMathlib.Nat.Prime) p) (c d : ℕ → ℕ → ℕ)
     (hc : ∀ p ∈ P, ∀ j ∈ Ico 1 (Nat.log p s + 1), c p j + d p j ≤ C) :
     weightedExcess r s P c * weightedExcess r s P d ∣ compactExcess r s ^ C := by
   classical

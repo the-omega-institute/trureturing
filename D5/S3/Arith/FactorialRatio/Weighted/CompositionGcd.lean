@@ -10,7 +10,9 @@ module
 
 public import D5.S3.Arith.FactorialRatio.RankOneLCMGcd
 public import D5.S3.Arith.FactorialRatio.CompactFactorialGcd
+public import OmegaBuild.Commands
 public import OmegaMath.Arithmetic.WeightedFactorialGcd
+public import OmegaMathlib.Data.Nat.Prime.Defs
 public import OmegaChecks.NatCorrespondence
 public import Mathlib.NumberTheory.PrimeCounting
 public import Mathlib.NumberTheory.Padics.PadicVal.Basic
@@ -229,7 +231,7 @@ private theorem saturation_of_factorial_equality {H M p : ℕ}
     simp [floorProfile, floorMinimum, hzero, hazero]
 
 /-- A prime has one composition minimizing every one of its power-floor sums. -/
-public theorem simultaneous_floor_minimum (H M p : ℕ) (hMH : M ≤ H) (hp : p.Prime) :
+public theorem simultaneous_floor_minimum (H M p : ℕ) (hMH : M ≤ H) (hp : (native% OmegaMathlib.Nat.Prime) p) :
     ∃ a : Fin (M + 1) → ℕ, (∑ i, a i) = H - M ∧
       ∀ j : ℕ, 0 < j → floorProfile (p ^ j) a = floorMinimum H M (p ^ j) := by
   obtain ⟨a, ha, heq⟩ := RankOneLCMGcd.exists_factorization_eq H M p hMH hp
@@ -268,7 +270,7 @@ public theorem weightedTail_ne_zero (H M : ℕ) (c : ℕ → ℕ → ℕ) :
   exact pow_ne_zero _ (Nat.mem_primesLE.mp hp).2.ne_zero
 
 public theorem prime_product_factorization (P : Finset ℕ) (e : ℕ → ℕ)
-    (hP : ∀ p ∈ P, p.Prime) (p : ℕ) :
+    (hP : ∀ p ∈ P, (native% OmegaMathlib.Nat.Prime) p) (p : ℕ) :
     (∏ q ∈ P, q ^ e q).factorization p = if p ∈ P then e p else 0 := by
   rw [Nat.factorization_prod_apply (fun q hq => pow_ne_zero _ (hP q hq).ne_zero)]
   by_cases hp : p ∈ P
@@ -700,12 +702,12 @@ local instance ringOfIntegersInfinite : Infinite (𝓞 K) :=
 @[expose] public noncomputable def normComplement (n : ℕ) : ℕ :=
   (n !) ^ Module.finrank ℚ K / (fullRingFactorialIdeal K n).absNorm
 
-public theorem rationalPrimeIdeal_ne_bot {p : ℕ} (hp : p.Prime) :
+public theorem rationalPrimeIdeal_ne_bot {p : ℕ} (hp : (native% OmegaMathlib.Nat.Prime) p) :
     rationalPrimeIdeal p ≠ ⊥ := by
   simpa [rationalPrimeIdeal, Ideal.span_singleton_eq_bot] using
     (show (p : ℤ) ≠ 0 by exact_mod_cast hp.ne_zero)
 
-public theorem rationalPrimeIdeal_isPrime {p : ℕ} (hp : p.Prime) :
+public theorem rationalPrimeIdeal_isPrime {p : ℕ} (hp : (native% OmegaMathlib.Nat.Prime) p) :
     (rationalPrimeIdeal p).IsPrime := by
   apply (Ideal.span_singleton_prime (show (p : ℤ) ≠ 0 by exact_mod_cast hp.ne_zero)).mpr
   exact Nat.prime_iff_prime_int.mp hp
@@ -878,7 +880,7 @@ public theorem complement_eq_weightedValue (H n : ℕ) (hn : n ≤ H) :
 
 /-- Full-ring Euler factorial ideals, their integral complements, and both composition gcds. -/
 public theorem number_field_norm_and_complement (H M : ℕ) (hMH : M ≤ H) :
-    (∀ p : ℕ, p.Prime → ∀ j : ℕ, normWeight K p j ≤ Module.finrank ℚ K) ∧
+    (∀ p : ℕ, (native% OmegaMathlib.Nat.Prime) p → ∀ j : ℕ, normWeight K p j ≤ Module.finrank ℚ K) ∧
     (∀ n ≤ H, fullRingFactorialIdeal K n = residueFactorialIdeal K H n) ∧
     (∀ n ≤ H, (fullRingFactorialIdeal K n).absNorm * normComplement K n =
       (n !) ^ Module.finrank ℚ K) ∧

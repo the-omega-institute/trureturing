@@ -81,7 +81,7 @@ def rejected : Realization signature :=
   realize signature (fun _ _ _ => 1) (fun e => nomatch e)
 abbrev arena : Arena where
   signature := signature
-  Law R := ∀ (H M p : ℕ), M ≤ H → p.Prime →
+  Law R := ∀ (H M p : ℕ), M ≤ H → (native% OmegaMathlib.Nat.Prime) p →
     ∃ a : Fin (M + 1) → ℕ, (∑ i, a i) = H - M ∧
       ∀ j : ℕ, 0 < j → floorProfile (p ^ j) a = R.readout () ⟨H, M⟩ (p ^ j)
 private theorem rejected_law : ¬ arena.Law rejected := by
@@ -264,7 +264,7 @@ namespace Nonzero
 
 abbrev arena : Arena where
   signature := signature
-  Law R := ∀ {p : ℕ}, p.Prime → R.readout () () p ≠ ⊥
+  Law R := ∀ {p : ℕ}, (native% OmegaMathlib.Nat.Prime) p → R.readout () () p ≠ ⊥
 
 private theorem rejected_law : ¬ arena.Law zeroIdeal := by
   intro h
@@ -297,7 +297,7 @@ namespace Primality
 
 abbrev arena : Arena where
   signature := signature
-  Law R := ∀ {p : ℕ}, p.Prime → (R.readout () () p).IsPrime
+  Law R := ∀ {p : ℕ}, (native% OmegaMathlib.Nat.Prime) p → (R.readout () () p).IsPrime
 
 private theorem rejected_law : ¬ arena.Law unitIdeal := by
   intro h
@@ -340,7 +340,7 @@ abbrev rejected := Reg.D5.S3.Arith.FactorialRatio.Weighted.IdealTail.rejected.{u
 def arena : Arena where
   signature := signature.{u}
   Law R := ∀ (K : Type u) [F : Field K] [N : NumberField K] (H M : ℕ), M ≤ H →
-    (∀ p : ℕ, p.Prime → ∀ j : ℕ, normWeight K p j ≤ Module.finrank ℚ K) ∧
+    (∀ p : ℕ, (native% OmegaMathlib.Nat.Prime) p → ∀ j : ℕ, normWeight K p j ≤ Module.finrank ℚ K) ∧
     (∀ n ≤ H, fullRingFactorialIdeal K n = residueFactorialIdeal K H n) ∧
     (∀ n ≤ H, (fullRingFactorialIdeal K n).absNorm * normComplement K n =
       (n !) ^ Module.finrank ℚ K) ∧
@@ -539,7 +539,7 @@ def rejected : Realization signature :=
 
 abbrev arena : Arena where
   signature := signature
-  Law R := ∀ (P : Finset ℕ) (e : ℕ → ℕ), (∀ p ∈ P, p.Prime) → ∀ p : ℕ,
+  Law R := ∀ (P : Finset ℕ) (e : ℕ → ℕ), (∀ p ∈ P, (native% OmegaMathlib.Nat.Prime) p) → ∀ p : ℕ,
     R.readout () (P, e) p = if p ∈ P then e p else 0
 
 private theorem rejected_law : ¬ arena.Law rejected := by

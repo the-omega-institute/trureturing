@@ -47,7 +47,7 @@ def rejected : Realization signature :=
 
 abbrev arena : Arena where
   signature := signature
-  Law R := ∀ (r s p k : ℕ), 2 ≤ r → s < r ^ 2 → p.Prime → r < p →
+  Law R := ∀ (r s p k : ℕ), 2 ≤ r → s < r ^ 2 → (native% OmegaMathlib.Nat.Prime) p → r < p →
     k * p ≤ s → 1 ≤ k →
       (R.readout () (r, p, k) s : ℝ) ≤
         2 * (k : ℝ) + 2 * (r : ℝ) ^ 2 / ((k : ℝ) * p)
@@ -240,7 +240,7 @@ def rejected (role : Bool) : Realization signature :=
 abbrev arena : Arena where
   signature := signature
   Law R := ∀ (r s C : ℕ), 2 ≤ r → s < r ^ 2 →
-    ∀ (P : Finset ℕ), (∀ p ∈ P, p.Prime) → ∀ (c d : Weights),
+    ∀ (P : Finset ℕ), (∀ p ∈ P, (native% OmegaMathlib.Nat.Prime) p) → ∀ (c d : Weights),
       (∀ p ∈ P, ∀ j ∈ Finset.Ico 1 (Nat.log p s + 1), c p j + d p j ≤ C) →
       R.readout false (r, s, C, P) (c, d) * R.readout true (r, s, C, P) (c, d) ∣
         compactExcess r s ^ C
