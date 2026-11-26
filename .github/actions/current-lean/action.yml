@@ -4,10 +4,10 @@ inputs:
   batch:
     required: false
     description: Restore inputs for this report batch, or for the complete scope when omitted.
-  verify-bundles:
+  mode:
     required: false
-    default: 'false'
-    description: Prepare the scope verifier for reports produced on other runners.
+    default: build
+    description: Prepare a batch build, its plan, or the final report verifier.
 runs:
   using: composite
   steps:
@@ -26,7 +26,7 @@ runs:
       shell: bash
       run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
     - id: dependency
-      if: inputs.verify-bundles != 'true' && steps.keys.outputs.dependency_key != ''
+      if: inputs.mode == 'build' && steps.keys.outputs.dependency_key != ''
       continue-on-error: true
       uses: actions/cache/restore@v5
       with:
@@ -34,7 +34,7 @@ runs:
         key: ${{ steps.keys.outputs.dependency_key }}
         restore-keys: ${{ steps.keys.outputs.dependency_restore_prefix }}
     - name: Prepare the verifier with the pinned package sources
-      if: inputs.verify-bundles == 'true'
+      if: inputs.mode == 'verify'
       shell: bash
       run: |
         producer="$(bash tools/scripts/workflow/judge-lean-producer.sh tools/StrataLint.Cli/bin/Release/net10.0)"
@@ -45,14 +45,14 @@ runs:
         echo "STRATALINT_LEAN_PRODUCER_DLL=$producer" >> "$GITHUB_ENV"
         python3 tools/scripts/workflow/ci_compute.py run -- lake --no-cache --no-build -d tools/lean-inspector-reg env true
     - name: Install the restored Lean dependencies
-      if: inputs.verify-bundles != 'true'
+      if: inputs.mode == 'build'
       shell: bash
       env:
         DEPENDENCY_KEY: ${{ steps.dependency.outputs.cache-matched-key }}
         DEPENDENCY_OUTCOME: ${{ steps.dependency.outcome }}
       run: python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --layers dependency --dependency-key "$DEPENDENCY_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME"
     - id: cache_scope
-      if: inputs.verify-bundles != 'true'
+      if: inputs.mode == 'build'
       shell: bash
       env:
         BATCH: ${{ inputs.batch }}
