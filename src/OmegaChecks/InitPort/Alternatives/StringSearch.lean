@@ -5,6 +5,7 @@ import all Init.Data.String.Lemmas.Pattern.Basic
 import all Init.Data.ByteArray.Lemmas
 import all Init.Data.String.Pattern.Basic
 import all Init.Data.String.Slice
+import all Init.Data.String.Substring
 
 /-! Byte comparison and matching in a string slice. -/
 
@@ -443,5 +444,11 @@ public theorem String.Slice.Pattern.ToBackwardSearcher.DefaultBackwardSearcher.f
 
 @[expose] public def String.Internal.anyImpl (s : String) (p : Char → Bool) : Bool :=
   s.toList.any p
+
+@[expose] public def Substring.Raw.posOf (s : Substring.Raw) (c : Char) : String.Pos.Raw :=
+  (s.toSlice?.map fun t => String.Internal.posOfImpl t.copy c).getD ⟨s.bsize⟩
+
+@[expose] public def Substring.Raw.any (s : Substring.Raw) (p : Char → Bool) : Bool :=
+  s.toSlice?.get!.copy.toList.any p
 
 end OmegaChecks.InitPort.Alternatives
