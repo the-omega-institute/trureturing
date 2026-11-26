@@ -88,13 +88,17 @@ class ScopeTests(unittest.TestCase):
         skipped = {"OmegaChecks.Marked": ["OmegaChecks.Marked"],
                    "OmegaChecks.Inherited": ["OmegaChecks.Inherited", "OmegaChecks.Marked"]}
         with patch.object(check, "library_graph", return_value=graph), \
-             patch.object(check, "library_mathlib_only", return_value=skipped):
+             patch.object(check, "library_mathlib_only", return_value=skipped), \
+             patch.object(check.portable, "output", return_value="/official"), \
+             patch.object(check, "run") as official:
             for entry in (check.check_library, check.check_incremental):
                 with self.subTest(entry=entry), patch.object(check, "build", side_effect=StopIteration) as build:
                     # Stop at the first build request, before probes modify files or run the auditor.
                     with self.assertRaises(StopIteration):
                         entry()
                     build.assert_called_once_with(["OmegaChecks.Sibling"])
+                    if entry == check.check_library:
+                        official.assert_any_call(check.AUDIT, "--publication-layers", "/official", "OmegaMath.Base")
 
     def test_current_builds_backend_programs_officially_and_tests_mixed_selections(self):
         graph = {"OmegaBuild.Commands": set(), "OmegaBuild.Plan": {"OmegaBuild.Commands"},
