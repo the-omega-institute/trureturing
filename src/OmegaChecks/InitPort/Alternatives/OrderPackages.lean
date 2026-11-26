@@ -105,17 +105,44 @@ public theorem Std.max_eq_ite_isGE_compare : type_of% @_root_.Std.max_eq_ite_isG
   · next h => exact LawfulOrderLeftLeaningMax.max_eq_left _ _ (isGE_compare.mp h)
   · next h => exact LawfulOrderLeftLeaningMax.max_eq_right _ _ (fun he => h (isGE_compare.mpr he))
 
-public theorem Std.LawfulOrderLT.of_ord : type_of% @_root_.Std.LawfulOrderLT.of_ord := by
-  intro α ord lt le law h
-  refine ⟨fun a b => (h a b).trans ?_⟩
-  constructor
-  · intro x
-    exact ⟨isLE_compare.mp (x ▸ rfl), fun y => Bool.noConfusion (x ▸ isGE_compare.mpr y)⟩
-  · intro ⟨f, r⟩
-    cases x : compare a b with
-    | lt => rfl
-    | eq => exact False.elim (r (isGE_compare.mp (x ▸ rfl)))
-    | gt => exact False.elim (Bool.noConfusion (x ▸ isLE_compare.mpr f))
+private theorem comparisonLT {α : Type u} [Ord α] [LE α] [LawfulOrderOrd α] (a b : α) :
+    compare a b = .lt ↔ a ≤ b ∧ ¬ b ≤ a := by
+  have bits (o : Ordering) : o = .lt ↔ o.isLE = true ∧ ¬ o.isGE = true := by
+    cases o <;> decide
+  exact (bits _).trans (and_congr (isLE_compare (a := a)) (not_congr (isGE_compare (a := a))))
+
+private theorem comparisonGT {α : Type u} [Ord α] [LE α] [LawfulOrderOrd α] (a b : α) :
+    compare a b = .gt ↔ b ≤ a ∧ ¬ a ≤ b := by
+  have bits (o : Ordering) : o = .gt ↔ o.isGE = true ∧ ¬ o.isLE = true := by
+    cases o <;> decide
+  exact (bits _).trans (and_congr (isGE_compare (a := a)) (not_congr (isLE_compare (a := a))))
+
+public theorem Std.LawfulOrderLT.of_ord : type_of% @_root_.Std.LawfulOrderLT.of_ord :=
+  fun _ _ _ _ _ h => ⟨fun a b => (h a b).trans (comparisonLT a b)⟩
+
+public theorem Std.compare_eq_lt : type_of% @_root_.Std.compare_eq_lt :=
+  fun {_} _ _ _ _ _ {a b} => (comparisonLT a b).trans (LawfulOrderLT.lt_iff a b).symm
+
+public theorem Std.compare_eq_gt : type_of% @_root_.Std.compare_eq_gt :=
+  fun {_} _ _ _ _ _ {a b} => (comparisonGT a b).trans (LawfulOrderLT.lt_iff b a).symm
+
+public theorem Std.instLawfulOrderLT_ofOrd : type_of% @_root_.Std.instLawfulOrderLT_ofOrd := by
+  intro α ord le law
+  letI := LT.ofOrd α
+  exact ⟨comparisonLT⟩
+
+public theorem Std.instLawfulOrderBEq_ofOrd : type_of% @_root_.Std.instLawfulOrderBEq_ofOrd := by
+  intro α ord le law
+  letI := BEq.ofOrd α
+  refine ⟨fun a b => ?_⟩
+  change decide (compare a b = .eq) = true ↔ a ≤ b ∧ b ≤ a
+  exact (Iff.intro of_decide_eq_true decide_eq_true).trans (compareEqual a b)
+
+@[instance_reducible] public def DecidableLT.ofOrd : type_of% @_root_.DecidableLT.ofOrd :=
+  fun _ _ _ _ _ _ a b => if h : compare a b = .lt then
+    isTrue (Std.compare_eq_lt.mp h)
+  else
+    isFalse fun lt => h (Std.compare_eq_lt.mpr lt)
 
 private theorem swapOfBits (x y : Ordering) (f : x.isLE = y.isGE) (r : x.isGE = y.isLE) :
     x = y.swap := by
