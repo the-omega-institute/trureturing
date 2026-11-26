@@ -3,6 +3,8 @@ public import Init.Internal.Order.Basic
 import all Init.Internal.Order.Basic
 public import Init.Internal.Order.Lemmas
 import all Init.Internal.Order.Lemmas
+import all Init.Data.Array.Basic
+public meta import Lean.Elab.Term.TermElabM
 meta import Lean
 
 /-! Pointwise orders and monotone operations. -/
@@ -49,6 +51,11 @@ private theorem productSupremum {α : Sort u} {β : Sort v} [PartialOrder α] [P
       (fun p : α ×' β => c (p.1, p.2))
     exact ⟨(p.1, p.2), Prod.is_sup_of_pprod hp⟩
 
+set_option linter.unusedVariables false in
+public theorem admissible_const_true {α : Sort u} [CCPO α] :
+    ∀ (c : α → Prop) (hc : chain c), (∀ x, c x → True) → True :=
+  fun _ _ _ => trivial
+
 public theorem Functor.monotone_map {m : Type u → Type v} [Monad m] [∀ t, PartialOrder (m t)] [MonoBind m]
     {α β : Type u} {γ : Type w} [PartialOrder γ] [LawfulMonad m]
     (f : γ → m α) (g : α → β) (hf : monotone f) : monotone fun x => g <$> f x := by
@@ -83,6 +90,126 @@ private meta def expandPointwise (e : Expr) : MetaM Expr :=
     let ci ← getConstInfo name
     let expanded := (ci.instantiateValueLevelParams! levels (allowOpaque := true)).beta args
     return .visit (← withTransparency .all (whnf expanded)))
+
+open Lean Elab Term in
+local elab "pointwise_type% " t:term : term => do
+  expandPointwise (← elabTerm t none)
+
+namespace OmegaChecks.InitPort.Alternatives.Lean.Order
+
+private theorem bindSteps {m : Type u → Type v} [Bind m] [∀ t, PartialOrder (m t)] [MonoBind m]
+    {α β : Type u} {a b : m α} {f g : α → m β} (ab : a ⊑ b) (fg : ∀ t, f t ⊑ g t) :
+    a >>= f ⊑ b >>= g :=
+  PartialOrder.rel_trans (MonoBind.bind_mono_left ab) (MonoBind.bind_mono_right fg)
+
+public theorem monotone_dite : pointwise_type% (type_of% @_root_.Lean.Order.monotone_dite) := by
+  intro α β _ _ c d f g hf hg x y xy
+  cases d with
+  | isTrue h => exact hf x y xy h
+  | isFalse h => exact hg x y xy h
+
+public theorem Seq.monotone_seq : type_of% @_root_.Lean.Order.Seq.monotone_seq := by
+  intro m _ _ _ α β γ _ _ f g hg hf x y xy
+  change (g x <*> f x) ⊑ (g y <*> f y)
+  rw [← bind_map, ← bind_map]
+  exact bindSteps (hg x y xy) fun z => Functor.monotone_map f z hf x y xy
+
+public theorem Array.monotone_modifyM :
+    pointwise_type% (type_of% @_root_.Lean.Order.Array.monotone_modifyM) := by
+  intro m _ _ _ α γ _ xs i f hf x y xy
+  change xs.modifyM i (f x) ⊑ xs.modifyM i (f y)
+  unfold _root_.Array.modifyM
+  by_cases h : i < xs.size
+  · rw [dite_eq_left h, dite_eq_left h]
+    exact MonoBind.bind_mono_left (hf x y xy _)
+  · rw [dite_eq_right h, dite_eq_right h]
+
+public theorem Array.monotone_foldlM_loop :
+    pointwise_type% (type_of% @_root_.Lean.Order.Array.monotone_foldlM_loop) := by
+  intro m _ _ _ α β γ _ f xs stop bound i j b hf x y xy
+  change _root_.Array.foldlM.loop (f x) xs stop bound i j b ⊑ _root_.Array.foldlM.loop (f y) xs stop bound i j b
+  induction i generalizing j b with
+  | zero =>
+    unfold _root_.Array.foldlM.loop
+    by_cases hj : j < stop
+    · rw [dite_eq_left hj] <;> exact PartialOrder.rel_refl
+    · rw [dite_eq_right hj] <;> exact PartialOrder.rel_refl
+  | succ i ih =>
+    unfold _root_.Array.foldlM.loop
+    by_cases hj : j < stop
+    · rw [dite_eq_left hj, dite_eq_left hj]
+      exact bindSteps (hf x y xy _ _) (fun z => ih _ z)
+    · rw [dite_eq_right hj, dite_eq_right hj] <;> exact PartialOrder.rel_refl
+
+public theorem Array.monotone_foldrM_fold :
+    pointwise_type% (type_of% @_root_.Lean.Order.Array.monotone_foldrM_fold) := by
+  intro m _ _ _ α β γ _ f xs stop i bound b hf x y xy
+  change _root_.Array.foldrM.fold (f x) xs stop i bound b ⊑ _root_.Array.foldrM.fold (f y) xs stop i bound b
+  induction i generalizing b with
+  | zero =>
+    unfold _root_.Array.foldrM.fold
+    split <;> exact PartialOrder.rel_refl
+  | succ i ih =>
+    unfold _root_.Array.foldrM.fold
+    split
+    · exact PartialOrder.rel_refl
+    · exact bindSteps (hf x y xy _ _) (fun z => ih _ z)
+
+public theorem Array.monotone_findSomeRevM? :
+    pointwise_type% (type_of% @_root_.Lean.Order.Array.monotone_findSomeRevM?) := by
+  intro m _ _ _ α β γ _ f xs hf x y xy
+  suffices ∀ i (h : i ≤ xs.size), _root_.Array.findSomeRevM?.find (f x) xs i h ⊑
+      _root_.Array.findSomeRevM?.find (f y) xs i h by exact this _ _
+  intro i h
+  induction i with
+  | zero => exact PartialOrder.rel_refl
+  | succ i ih =>
+    apply bindSteps (hf x y xy _)
+    intro z
+    cases z with
+    | none => exact ih _
+    | some _ => exact PartialOrder.rel_refl
+
+public theorem Array.monotone_foldlM :
+    pointwise_type% (type_of% @_root_.Lean.Order.Array.monotone_foldlM) := by
+  intro m _ _ _ α β γ _ f b xs start stop hf x y xy
+  change xs.foldlM (f x) b start stop ⊑ xs.foldlM (f y) b start stop
+  unfold _root_.Array.foldlM
+  split <;> exact Array.monotone_foldlM_loop f xs _ _ _ _ b hf x y xy
+
+public theorem Array.monotone_foldrM :
+    pointwise_type% (type_of% @_root_.Lean.Order.Array.monotone_foldrM) := by
+  intro m _ _ _ α β γ _ f b xs start stop hf x y xy
+  change xs.foldrM (f x) b start stop ⊑ xs.foldrM (f y) b start stop
+  unfold _root_.Array.foldrM
+  split <;> split
+  all_goals first | exact PartialOrder.rel_refl | exact Array.monotone_foldrM_fold f xs _ _ _ b hf x y xy
+
+public theorem Array.monotone_anyM_loop :
+    pointwise_type% (type_of% @_root_.Lean.Order.Array.monotone_anyM_loop) := by
+  intro γ _ m _ _ _ α f xs stop bound j hf x y xy
+  change _root_.Array.anyM.loop (f x) xs stop bound j ⊑ _root_.Array.anyM.loop (f y) xs stop bound j
+  induction j using _root_.Array.anyM.loop.induct (h := bound) with
+  | case2 j hj =>
+    rw [_root_.Array.anyM.loop.eq_def, _root_.Array.anyM.loop.eq_def (p := f y),
+      dite_eq_right hj, dite_eq_right hj]
+  | case1 j hj _ ih =>
+    rw [_root_.Array.anyM.loop.eq_def, _root_.Array.anyM.loop.eq_def (p := f y),
+      dite_eq_left hj, dite_eq_left hj]
+    apply bindSteps (hf x y xy _)
+    intro result
+    cases result with
+    | false => exact ih
+    | true => exact PartialOrder.rel_refl
+
+public theorem Array.monotone_anyM :
+    pointwise_type% (type_of% @_root_.Lean.Order.Array.monotone_anyM) := by
+  intro γ _ m _ _ _ α f xs start stop hf x y xy
+  change xs.anyM (f x) start stop ⊑ xs.anyM (f y) start stop
+  unfold _root_.Array.anyM
+  split <;> exact Array.monotone_anyM_loop f xs _ _ _ hf x y xy
+
+end OmegaChecks.InitPort.Alternatives.Lean.Order
 
 open Lean Meta Elab Command in
 run_meta do
