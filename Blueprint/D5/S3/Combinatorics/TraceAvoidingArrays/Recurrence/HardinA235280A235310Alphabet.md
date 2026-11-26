@@ -20,7 +20,7 @@ $$\forall M: Nat, (\forall S: Nat, (\forall n: Nat, (\forall k: Nat, (\operatorn
 
 The coordinates are ordered. Each legal filling contributes once. The contiguous block condition tests the absolute difference of the two integer sums.
 
-For a fixed deficit d and M greater than d, checkerboard complementation sends stress 2M−d to block sums d and 4M−d. The gap is greater than the change possible across a shared edge, so the sum is uniform. Global complementation pairs the two classes. Every entry in the low class is at most d, and restricting the alphabet gives the exact count as twice the cardinality of the sum-d class over Fin (d+1).
+For positive n and k, a fixed deficit d, and M greater than d, checkerboard complementation sends stress 2M−d to block sums d and 4M−d. The gap is greater than the change possible across a shared edge, so the sum is uniform. Global complementation pairs the two classes. Every entry in the low class is at most d, and restricting the alphabet gives the exact count as twice the cardinality of the sum-d class over Fin (d+1).
 
 **Theorem 1.2 (A235280 alphabet comparison).**
 
@@ -55,4 +55,5 @@ The common deficit is four. The NAME count is C(5, 6, n, k). The COMMENT specifi
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinA235280A235310Alphabet.C`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinA235280A235310Alphabet.a235280`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinA235280A235310Alphabet.a235310`
+- Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinA235289Alphabet](HardinA235289Alphabet.md)
 - Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinA235289Recurrence](HardinA235289Recurrence.md)
