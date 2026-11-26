@@ -32,6 +32,25 @@ private partial def translate (rename : Name → Name) (e : Expr) : Expr := Id.r
 private def same (env : Environment) (lhs rhs : Expr) : Bool :=
   Kernel.isDefEqGuarded env {} lhs rhs
 
+/-- Check each closed literal expansion where it appears. Reducing an enclosing
+fuel-based recursor merely to compare its body can expand millions of steps. -/
+private partial def sameLiterals (env : Environment) (lhs rhs : Expr) : Bool := Id.run do
+  if lhs.equal rhs then return true
+  let go := sameLiterals env
+  match lhs, rhs with
+  | _, .lit lit =>
+    if lhs.hasLooseBVars || lhs.hasFVar || lhs.hasMVar then return false
+    let type := mkConst (match lit with | .natVal _ => `Nat | .strVal _ => `String)
+    return (Kernel.check env {} lhs).toOption.any (same env type) && same env lhs rhs
+  | .app f a, .app g b => return go f g && go a b
+  | .lam n d b i, .lam m e c j | .forallE n d b i, .forallE m e c j =>
+    return n == m && i == j && go d e && go b c
+  | .letE n d v b i, .letE m e w c j =>
+    return n == m && i == j && go d e && go v w && go b c
+  | .proj n i a, .proj m j b => return n == m && i == j && go a b
+  | .mdata x a, .mdata y b => return x == y && go a b
+  | _, _ => return false
+
 private def lookup (env : Environment) (name : Name) : IO ConstantInfo := do
   let some info := env.find? name | throw <| IO.userError s!"missing interface declaration {name}"
   return info
@@ -167,7 +186,7 @@ where
       | .defnInfo _, .defnInfo y => some y.value
       | .opaqueInfo x, .opaqueInfo y => if x.isUnsafe == y.isUnsafe then some y.value else none
       | _, _ => none
-    let identical := original.any (body.equal ·)
+    let identical := original.any (sameLiterals reference body ·)
     unless identical do
       if let .error _ := Kernel.check reference {} body then
         throw <| IO.userError s!"ill-typed translated definition for {src.name}"

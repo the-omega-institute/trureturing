@@ -97,8 +97,8 @@ private def officialDeclaration (stx : Syntax) : CommandElabM (Environment × Co
   let owner := (← getMainModule).replacePrefix `OmegaInit `Init
   liftCoreM <| withExporting do
     if let some record := getStructureInfo? src name then
-      if !record.parentInfo.isEmpty || isClass src name then
-        throwError "expected an inductive or a flat non-class record"
+      if !record.parentInfo.isEmpty then
+        throwError "expected an inductive or a flat record"
     let (decl, ctors) ← sourceGroup src owner name
     let .inductDecl _ _ types _ := decl | unreachable!
     Lean.addDecl decl
@@ -106,5 +106,10 @@ private def officialDeclaration (stx : Syntax) : CommandElabM (Environment × Co
     for typ in types do
       Meta.MetaM.run' <| mkCasesOn typ.name
       Meta.MetaM.run' <| mkRecOn typ.name
+    let some idx := src.getModuleIdx? owner | throwError "missing owner {owner}"
+    for cls in classExtension.getModuleEntries src idx do
+      if types.any (·.name == omegaName cls.name) then
+        -- Use the registration from the owning module, including its out parameters.
+        modifyEnv fun env => classExtension.addEntry env {cls with name := omegaName cls.name}
 
 end OmegaChecks.InitCompiler
