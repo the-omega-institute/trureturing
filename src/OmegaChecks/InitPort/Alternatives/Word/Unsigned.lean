@@ -497,4 +497,15 @@ public theorem USize.ofInt_neg_one : type_of% @_root_.USize.ofInt_neg_one := by
   exact congrArg Neg.neg ((usize_toBitVec_ofInt 1).symm.trans
     (congrArg _root_.USize.toBitVec USize.ofInt_one))
 
+public theorem UInt64.toUSize_ofNatClamp_of_le : type_of% @_root_.UInt64.toUSize_ofNatClamp_of_le := by
+  intro n hn
+  apply _root_.USize.toNat.inj
+  rw [_root_.UInt64.toNat_toUSize, _root_.UInt64.toNat_ofNatClamp_of_le hn, _root_.USize.toNat_ofNatLT]
+  exact pred_mod_of_dvd _root_.USize.size_pos (Nat.two_pow_pos 64) USize.size_dvd_uInt64Size
+
+public theorem USize.ofNat_uInt64Size_sub_one : type_of% @_root_.USize.ofNat_uInt64Size_sub_one := by
+  apply _root_.USize.toNat.inj
+  exact _root_.USize.toNat_ofNat'.trans ((pred_mod_of_dvd _root_.USize.size_pos (Nat.two_pow_pos 64)
+    USize.size_dvd_uInt64Size).trans _root_.USize.toNat_ofNatLT.symm)
+
 end OmegaChecks.InitPort.Alternatives
