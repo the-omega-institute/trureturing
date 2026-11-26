@@ -40,9 +40,9 @@ private theorem derive_clause {f g : Sat.Fmla} {c : Sat.Clause}
     (h : Derives f g) (hc : g.proof c) : f.proof c :=
   fun v hv => hc v (h v hv)
 
-private partial def collect (ctx : Expr) (clauses : Array (Nat × Clause)) (f : Expr)
+private def collect (ctx : Expr) (clauses : Array (Nat × Clause)) (f : Expr)
     (start stop : Nat) : Expr :=
-  if stop - start = 1 then
+  if stop - start ≤ 1 then
     let clause := clauses[start]!.2
     mkApp3 (mkConst ``derive_one) ctx clause.expr clause.proof
   else
@@ -51,6 +51,8 @@ private partial def collect (ctx : Expr) (clauses : Array (Nat × Clause)) (f : 
     let b := f.appArg!
     mkApp5 (mkConst ``derive_and) ctx a b
       (collect ctx clauses a start middle) (collect ctx clauses b middle stop)
+termination_by stop - start
+decreasing_by all_goals omega
 
 private def pack (name : Name) (ctx : Expr) (clauses : Array (Nat × Clause))
     (db : Std.HashMap Nat Clause) : MetaM (Std.HashMap Nat Clause) := do
