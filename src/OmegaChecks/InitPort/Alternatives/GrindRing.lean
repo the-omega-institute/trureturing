@@ -817,4 +817,79 @@ public theorem Lean.Grind.CommRing.one_eq_zero_unsat :
     rw [AddCommGroup.neg_neg, AddCommGroup.neg_zero] at h
     exact Field.zero_ne_one h.symm
 
+
+public theorem Lean.Grind.OrderedAdd.neg_le_iff :
+    type_of% @_root_.Lean.Grind.OrderedAdd.neg_le_iff := by
+  intro α _ _ _ _ a b
+  have left := OrderedAdd.add_le_left_iff (a := -a) (b := b) a
+  have right := OrderedAdd.add_le_left_iff (a := -b) (b := a) b
+  rw [AddCommGroup.neg_add_cancel, AddCommMonoid.add_comm b a] at left
+  rw [AddCommGroup.neg_add_cancel] at right
+  exact left.trans right.symm
+
+public theorem Lean.Grind.OrderedAdd.le_neg_iff :
+    type_of% @_root_.Lean.Grind.OrderedAdd.le_neg_iff := by
+  intro α _ _ _ _ a b
+  have h := OrderedAdd.neg_le_iff (a := -a) (b := -b)
+  rw [AddCommGroup.neg_neg, AddCommGroup.neg_neg] at h
+  exact h
+
+public theorem Lean.Grind.OrderedAdd.neg_nonneg_iff :
+    type_of% @_root_.Lean.Grind.OrderedAdd.neg_nonneg_iff := by
+  intro α _ _ _ _ a
+  have h := OrderedAdd.le_neg_iff (a := 0) (b := a)
+  rw [AddCommGroup.neg_zero] at h
+  exact h
+
+public theorem Lean.Grind.OrderedAdd.neg_lt_iff :
+    type_of% @_root_.Lean.Grind.OrderedAdd.neg_lt_iff := by
+  intro α _ _ _ _ _ _ a b
+  have left := OrderedAdd.add_lt_left_iff (a := -a) (b := b) a
+  have right := OrderedAdd.add_lt_left_iff (a := -b) (b := a) b
+  rw [AddCommGroup.neg_add_cancel, AddCommMonoid.add_comm b a] at left
+  rw [AddCommGroup.neg_add_cancel] at right
+  exact left.trans right.symm
+
+public theorem Lean.Grind.OrderedAdd.lt_neg_iff :
+    type_of% @_root_.Lean.Grind.OrderedAdd.lt_neg_iff := by
+  intro α _ _ _ _ _ _ a b
+  have h := OrderedAdd.neg_lt_iff (a := -a) (b := -b)
+  rw [AddCommGroup.neg_neg, AddCommGroup.neg_neg] at h
+  exact h
+
+public theorem Lean.Grind.OrderedAdd.neg_pos_iff :
+    type_of% @_root_.Lean.Grind.OrderedAdd.neg_pos_iff := by
+  intro α _ _ _ _ _ _ a
+  have h := OrderedAdd.lt_neg_iff (a := 0) (b := a)
+  rw [AddCommGroup.neg_zero] at h
+  exact h
+
+public theorem Lean.Grind.OrderedAdd.zsmul_pos_iff :
+    type_of% @_root_.Lean.Grind.OrderedAdd.zsmul_pos_iff := by
+  intro α _ _ _ _ _ _ k a h
+  cases k with
+  | ofNat n =>
+    change 0 < (↑n : Int) • a ↔ 0 < (↑n : Int)
+    rw [IntModule.zsmul_natCast_eq_nsmul]
+    have pos := OrderedAdd.nsmul_lt_nsmul_iff n h
+    rw [NatModule.nsmul_zero] at pos
+    exact pos.trans Int.natCast_pos.symm
+  | negSucc n =>
+    constructor
+    · intro pos
+      change 0 < -(↑(n+1) : Int) • a at pos
+      rw [IntModule.neg_zsmul] at pos
+      have neg := OrderedAdd.neg_pos_iff.mp pos
+      have nonneg := OrderedAdd.zsmul_nonneg (Int.natCast_nonneg (n+1)) (Preorder.le_of_lt h)
+      exact False.elim ((Std.lt_iff_le_and_not_ge.mp neg).2 nonneg)
+    · intro bad
+      exact False.elim ((Int.not_lt.mpr (Int.le_of_lt (Int.negSucc_lt_zero n))) bad)
+
+public theorem Lean.Grind.OrderedAdd.zsmul_neg_iff :
+    type_of% @_root_.Lean.Grind.OrderedAdd.zsmul_neg_iff := by
+  intro α _ _ _ _ _ _ k a h
+  have pos := OrderedAdd.zsmul_pos_iff k (OrderedAdd.neg_pos_iff.mpr h)
+  rw [IntModule.zsmul_neg] at pos
+  exact OrderedAdd.neg_pos_iff.symm.trans pos
+
 end OmegaChecks.InitPort.Alternatives
