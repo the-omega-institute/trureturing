@@ -5,6 +5,16 @@ import all Init.Data.Dyadic.Basic
 
 namespace OmegaChecks.InitPort.Alternatives
 
+public theorem Int.lt_asymm : type_of% @_root_.Int.lt_asymm :=
+  fun h => Int.not_lt.mpr (Int.le_of_lt h)
+
+public theorem Int.natAbs_eq_iff_mul_eq_zero : type_of% @_root_.Int.natAbs_eq_iff_mul_eq_zero := by
+  intro a n
+  apply Int.natAbs_eq_iff.trans
+  apply Iff.trans ?_ Int.mul_eq_zero.symm
+  rw [← Int.sub_neg]
+  exact or_congr Int.sub_eq_zero.symm Int.sub_eq_zero.symm
+
 public theorem Int.natAbs_ediv_of_dvd {a b : Int} (hab : b ∣ a) :
     (a / b).natAbs = a.natAbs / b.natAbs := by
   have mul : (a / b).natAbs * b.natAbs = a.natAbs :=
