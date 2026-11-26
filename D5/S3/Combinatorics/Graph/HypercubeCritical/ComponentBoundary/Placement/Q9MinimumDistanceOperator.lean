@@ -423,6 +423,74 @@ private theorem mem_minimumDisplacements
       ⟨Finset.mem_product.mpr ⟨hx, hy⟩, hpar, hdist⟩, he⟩
 
 open Classical in
+private theorem minimum_displacements_three_extensions
+    (C D : Finset (Q 9)) (b : Bool) (d : ℕ)
+    (hsep : ∀ x ∈ C, ∀ y ∈ D, d ≤ hammingDist x y)
+    (hC : ∀ i, ∃ f : Q 9 → ℝ,
+      (∀ z, f z ≠ 0 ↔ z ∈ C ∧ parity z = b) ∧
+      (∀ z ∉ C, weightedLinear (fun k => if k = i then 2 else 1) f z = 0))
+    (hD : ∀ c, ∃ g : Q 9 → ℝ,
+      (∀ z, g z ≠ 0 ↔ z ∈ D ∧ parity z = c) ∧
+      (∀ z ∉ D, weightedLinear (fun _ => 1) g z = 0)) :
+    ∀ T ∈ minimumDisplacements C D b d, ∀ i ∈ T,
+      ∃ a j k : Fin 9, a ≠ j ∧ a ≠ k ∧ j ≠ k ∧
+        (∀ l ∈ ({a, j, k} : Finset (Fin 9)),
+          l ∉ T.erase i ∧ insert l (T.erase i) ∈ minimumDisplacements C D b d) := by
+  intro T hT i hi
+  obtain ⟨x, hx, y, hy, hxb, hdist, he⟩ := mem_minimumDisplacements.mp hT
+  let ridge := (T.erase i).toList
+  have hlen : ridge.length + 1 = d := by
+    dsimp [ridge]
+    rw [Finset.length_toList, Finset.card_erase_add_one hi, ← he]
+    exact hdist
+  have hnd : ridge.Nodup := Finset.nodup_toList _
+  have hs : ∀ u ∈ C, ∀ v ∈ D, ridge.length + 1 ≤ hammingDist u v := by
+    rw [hlen]
+    exact hsep
+  have hxi : RidgeContact C D b ridge i x :=
+    ⟨by simp [ridge], hx, hxb, (first_is_flip_word T he hi).symm ▸ hy⟩
+  obtain ⟨f, hf, hAf⟩ := hC i
+  obtain ⟨g, hg, hAg⟩ := hD (!(wordParity ridge b))
+  obtain ⟨z, hzx, hz, hzcell⟩ :=
+    minimum_distance_contact_has_companion hnd hs f g hf hg hAf hAg hxi
+  have hdiff : 1 < (differingAxes z x).card := by
+    change 1 < hammingDist z x
+    have h0 : hammingDist z x ≠ 0 := fun h => hzx (hammingDist_eq_zero.mp h)
+    have h1 : hammingDist z x ≠ 1 := fun h =>
+      cubeParity_ne_of_adj (show (D5.S3.Combinatorics.Graph.Hypercube.hypercube 9).Adj z x
+        from h) (hz.2.2.1.trans hxb.symm)
+    omega
+  obtain ⟨j, hj, k, hk, hjk⟩ := Finset.one_lt_card.mp hdiff
+  have ha (l : Fin 9) (hl : l ∈ differingAxes z x) :
+      RidgeActiveAxis C D b ridge l ∧ l ≠ i := by
+    by_contra h
+    exact (Finset.mem_filter.mp hl).2 (hzcell l h)
+  obtain ⟨hja, hji⟩ := ha j hj
+  obtain ⟨hka, hki⟩ := ha k hk
+  refine ⟨i, j, k, hji.symm, hki.symm, hjk, ?_⟩
+  intro l hl
+  have hactive : RidgeActiveAxis C D b ridge l := by
+    simp only [Finset.mem_insert, Finset.mem_singleton] at hl
+    rcases hl with rfl | rfl | rfl
+    · exact ⟨x, hxi⟩
+    · exact hja
+    · exact hka
+  obtain ⟨u, hlu, hu, hub, hv⟩ := hactive
+  let v := flip (ridge.foldl flip u) l
+  have hdv : hammingDist u v = d := (RidgeContact.hammingDist_eq hs
+    (show RidgeContact C D b ridge l u from ⟨hlu, hu, hub, hv⟩)).trans hlen
+  have hlridge : l ∉ T.erase i := by simpa only [ridge, Finset.mem_toList] using hlu
+  have hword : (ridge ++ [l]).Nodup := by
+    rw [List.nodup_append]
+    refine ⟨hnd, by simp, ?_⟩
+    intro a ha z hz heq
+    exact hlu ((heq.trans (List.mem_singleton.mp hz)) ▸ ha)
+  have hdiffv : differingAxes u v = insert l (T.erase i) := by
+    have heq := differingAxes_foldl_flip (ridge ++ [l]) hword u
+    simpa [v, ridge, Finset.union_comm] using heq
+  exact ⟨hlridge, mem_minimumDisplacements.mpr ⟨u, hu, v, hv, hub, hdv, hdiffv⟩⟩
+
+open Classical in
 /-- At a nonempty minimum contact parity, weighted support forces at least
 `(d + 2).choose 2` distinct displacements. At equality they are the complete
 family of `d`-subsets of one set of `d + 2` coordinate axes. -/
@@ -443,58 +511,6 @@ theorem minimum_displacements_card_and_equality
   · intro T hT
     obtain ⟨x, _, y, _, _, hdist, rfl⟩ := mem_minimumDisplacements.mp hT
     exact hdist
-  · intro T hT i hi
-    obtain ⟨x, hx, y, hy, hxb, hdist, he⟩ := mem_minimumDisplacements.mp hT
-    let ridge := (T.erase i).toList
-    have hlen : ridge.length + 1 = d := by
-      dsimp [ridge]
-      rw [Finset.length_toList, Finset.card_erase_add_one hi, ← he]
-      exact hdist
-    have hnd : ridge.Nodup := Finset.nodup_toList _
-    have hs : ∀ u ∈ C, ∀ v ∈ D, ridge.length + 1 ≤ hammingDist u v := by
-      rw [hlen]
-      exact hsep
-    have hxi : RidgeContact C D b ridge i x :=
-      ⟨by simp [ridge], hx, hxb, (first_is_flip_word T he hi).symm ▸ hy⟩
-    obtain ⟨f, hf, hAf⟩ := hC i
-    obtain ⟨g, hg, hAg⟩ := hD (!(wordParity ridge b))
-    obtain ⟨z, hzx, hz, hzcell⟩ :=
-      minimum_distance_contact_has_companion hnd hs f g hf hg hAf hAg hxi
-    have hdiff : 1 < (differingAxes z x).card := by
-      change 1 < hammingDist z x
-      have h0 : hammingDist z x ≠ 0 := fun h => hzx (hammingDist_eq_zero.mp h)
-      have h1 : hammingDist z x ≠ 1 := fun h =>
-        cubeParity_ne_of_adj (show (D5.S3.Combinatorics.Graph.Hypercube.hypercube 9).Adj z x
-          from h) (hz.2.2.1.trans hxb.symm)
-      omega
-    obtain ⟨j, hj, k, hk, hjk⟩ := Finset.one_lt_card.mp hdiff
-    have ha (l : Fin 9) (hl : l ∈ differingAxes z x) :
-        RidgeActiveAxis C D b ridge l ∧ l ≠ i := by
-      by_contra h
-      exact (Finset.mem_filter.mp hl).2 (hzcell l h)
-    obtain ⟨hja, hji⟩ := ha j hj
-    obtain ⟨hka, hki⟩ := ha k hk
-    refine ⟨i, j, k, hji.symm, hki.symm, hjk, ?_⟩
-    intro l hl
-    have hactive : RidgeActiveAxis C D b ridge l := by
-      simp only [Finset.mem_insert, Finset.mem_singleton] at hl
-      rcases hl with rfl | rfl | rfl
-      · exact ⟨x, hxi⟩
-      · exact hja
-      · exact hka
-    obtain ⟨u, hlu, hu, hub, hv⟩ := hactive
-    let v := flip (ridge.foldl flip u) l
-    have hdv : hammingDist u v = d := (RidgeContact.hammingDist_eq hs
-      (show RidgeContact C D b ridge l u from ⟨hlu, hu, hub, hv⟩)).trans hlen
-    have hlridge : l ∉ T.erase i := by simpa only [ridge, Finset.mem_toList] using hlu
-    have hword : (ridge ++ [l]).Nodup := by
-      rw [List.nodup_append]
-      refine ⟨hnd, by simp, ?_⟩
-      intro a ha z hz heq
-      exact hlu ((heq.trans (List.mem_singleton.mp hz)) ▸ ha)
-    have hdiffv : differingAxes u v = insert l (T.erase i) := by
-      have heq := differingAxes_foldl_flip (ridge ++ [l]) hword u
-      simpa [v, ridge, Finset.union_comm] using heq
-    exact ⟨hlridge, mem_minimumDisplacements.mpr ⟨u, hu, v, hv, hub, hdv, hdiffv⟩⟩
+  · exact minimum_displacements_three_extensions C D b d hsep hC hD
 
 end D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Placement.Q9MinimumDistanceOperator
