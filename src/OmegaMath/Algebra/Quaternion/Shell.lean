@@ -293,5 +293,147 @@ theorem shell_compress_of_eq (s : Int) {p q a : Quaternion} (hp : p.IsPure) (hq 
     ((congrArg (fun k : Int => (scale (t.add t) (shell s p a v)).add (scale k (shell s.neg q a v)))
       (Int.sub_eq_zero.mpr hs)).trans (add_scale_zero _ _))
 
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
+private theorem triangle_pairs_mk (α s x1 x2 x3 y1 y2 y3 z1 z2 z3 : Int) :
+    let p := Quaternion.mk Int.zero x1 x2 x3
+    let q := Quaternion.mk Int.zero y1 y2 y3
+    let r := Quaternion.mk Int.zero z1 z2 z3
+    let S := scalar s
+    let S' := scalar s.neg
+    let c1 := pairFst α S r S p
+    let d1 := pairSnd S r S p
+    let c2 := pairFst α S q c1 d1
+    let d2 := pairSnd S q c1 d1
+    let t := s.mul ((s.mul s).add (α.mul (((p.dot q).add (q.dot r)).add (r.dot p))))
+    let l := α.mul (p.dot (q.mul r))
+    let δ := ((p.dot p).mul α).sub (s.mul s)
+    And (Eq (pairFst α S p c2 d2) ((scale (t.add t) S).add
+        ((scale (l.add l) (scale α.neg p)).add (scale δ (pairFst α S' r S' q)))))
+      (Eq (pairSnd S p c2 d2) ((scale (t.add t) p).add
+        ((scale (l.add l) S).add (scale δ (pairSnd S' r S' q))))) :=
+  let values := Values.cons α (Values.cons s
+    (triple x1 x2 x3 (triple y1 y2 y3 (triple z1 z2 z3 .nil))))
+  let A := Expr.var Nat.zero
+  let s' := Expr.var Nat.zero.succ
+  let P := pure Nat.zero.succ.succ
+  let Q := pure n5
+  let R := pure n3.succ.succ.succ.succ.succ
+  let S := Coordinates.scalar s'
+  let S' := Coordinates.scalar s'.neg
+  let C1 := cfst A S R S P
+  let D1 := csnd S R S P
+  let C2 := cfst A S Q C1 D1
+  let D2 := csnd S Q C1 D1
+  let T := s'.mul ((s'.mul s').add (A.mul (((P.dot Q).add (Q.dot R)).add (R.dot P))))
+  let L := A.mul (P.dot (Q.mul R))
+  let Δ := ((P.dot P).mul A).sub (s'.mul s')
+  let lhs := cfst A S P C2 D2
+  let rhs := cadd (S.scale (T.add T)) (cadd ((P.scale A.neg).scale (L.add L))
+    ((cfst A S' R S' Q).scale Δ))
+  let lhs' := csnd S P C2 D2
+  let rhs' := cadd (P.scale (T.add T)) (cadd (S.scale (L.add L)) ((csnd S' R S' Q).scale Δ))
+  And.intro
+    (ext (lhs.w.sound rhs.w values rfl) (lhs.x.sound rhs.x values rfl)
+      (lhs.y.sound rhs.y values rfl) (lhs.z.sound rhs.z values rfl))
+    (ext (lhs'.w.sound rhs'.w values rfl) (lhs'.x.sound rhs'.x values rfl)
+      (lhs'.y.sound rhs'.y values rfl) (lhs'.z.sound rhs'.z values rfl))
+
+/-- Shell triangle identity without norm conditions. For pure `p`, `q`, `r`, `a`, any integer
+`s`, any quaternion `v` and `z = P_p v`,
+`P_p P_q P_r z = 2 s (s² + N(a) (p·q + q·r + r·p)) z + 2 N(a) [p, q, r] (z a)
+  + (N(p) N(a) - s²) P_{-s,r,a} P_{-s,q,a} v`,
+where `[p, q, r] = p · (q r)` is the triple product of the three pure quaternions. -/
+theorem shell_triangle (s : Int) {p q r a : Quaternion} (hp : p.IsPure) (hq : q.IsPure)
+    (hr : r.IsPure) (ha : a.IsPure) (v : Quaternion) :
+    let z := shell s p a v
+    let t := s.mul ((s.mul s).add ((a.dot a).mul (((p.dot q).add (q.dot r)).add (r.dot p))))
+    let l := (a.dot a).mul (p.dot (q.mul r))
+    let δ := ((p.dot p).mul (a.dot a)).sub (s.mul s)
+    Eq (shell s p a (shell s q a (shell s r a z)))
+      ((scale (t.add t) z).add ((scale (l.add l) (z.mul a)).add
+        (scale δ (shell s.neg r a (shell s.neg q a v))))) :=
+  let S := scalar s
+  let S' := scalar s.neg
+  let α := a.dot a
+  let z := shell s p a v
+  let t := s.mul ((s.mul s).add (α.mul (((p.dot q).add (q.dot r)).add (r.dot p))))
+  let l := α.mul (p.dot (q.mul r))
+  let δ := ((p.dot p).mul α).sub (s.mul s)
+  let stmt := fun P Q R : Quaternion =>
+    let c1 := pairFst α S R S P
+    let d1 := pairSnd S R S P
+    let c2 := pairFst α S Q c1 d1
+    let d2 := pairSnd S Q c1 d1
+    let t := s.mul ((s.mul s).add (α.mul (((P.dot Q).add (Q.dot R)).add (R.dot P))))
+    let l := α.mul (P.dot (Q.mul R))
+    let δ := ((P.dot P).mul α).sub (s.mul s)
+    And (Eq (pairFst α S P c2 d2) ((scale (t.add t) S).add
+        ((scale (l.add l) (scale α.neg P)).add (scale δ (pairFst α S' R S' Q)))))
+      (Eq (pairSnd S P c2 d2) ((scale (t.add t) P).add
+        ((scale (l.add l) S).add (scale δ (pairSnd S' R S' Q)))))
+  have pairs : stmt p q r :=
+    Eq.subst (motive := fun P => stmt P q r) (eq_mk_of_isPure hp).symm
+      (Eq.subst (motive := fun Q => stmt (Quaternion.mk Int.zero p.x p.y p.z) Q r)
+        (eq_mk_of_isPure hq).symm
+        (Eq.subst (motive := fun R => stmt (Quaternion.mk Int.zero p.x p.y p.z)
+            (Quaternion.mk Int.zero q.x q.y q.z) R)
+          (eq_mk_of_isPure hr).symm
+          (triangle_pairs_mk α s p.x p.y p.z q.x q.y q.z r.x r.y r.z)))
+  let c1 := pairFst α S r S p
+  let d1 := pairSnd S r S p
+  let c2 := pairFst α S q c1 d1
+  let d2 := pairSnd S q c1 d1
+  have hz : Eq z (pairAct a S p v) := shell_eq_pairAct s p a v
+  have step1 : Eq (shell s r a z) (pairAct a c1 d1 v) :=
+    (congrArg (shell s r a) hz).trans
+      ((shell_eq_pairAct s r a _).trans (pairAct_pairAct ha S r S p v))
+  have step2 : Eq (shell s q a (shell s r a z)) (pairAct a c2 d2 v) :=
+    (congrArg (shell s q a) step1).trans
+      ((shell_eq_pairAct s q a _).trans (pairAct_pairAct ha S q c1 d1 v))
+  have left : Eq (shell s p a (shell s q a (shell s r a z)))
+      (pairAct a (pairFst α S p c2 d2) (pairSnd S p c2 d2) v) :=
+    (congrArg (shell s p a) step2).trans
+      ((shell_eq_pairAct s p a _).trans (pairAct_pairAct ha S p c2 d2 v))
+  have defect : Eq (shell s.neg r a (shell s.neg q a v))
+      (pairAct a (pairFst α S' r S' q) (pairSnd S' r S' q) v) :=
+    (congrArg (shell s.neg r a) (shell_eq_pairAct s.neg q a v)).trans
+      ((shell_eq_pairAct s.neg r a _).trans (pairAct_pairAct ha S' r S' q v))
+  have right : Eq ((scale (t.add t) z).add ((scale (l.add l) (z.mul a)).add
+        (scale δ (shell s.neg r a (shell s.neg q a v)))))
+      (pairAct a ((scale (t.add t) S).add
+          ((scale (l.add l) (scale α.neg p)).add (scale δ (pairFst α S' r S' q))))
+        ((scale (t.add t) p).add ((scale (l.add l) S).add (scale δ (pairSnd S' r S' q)))) v) :=
+    (Eq.map₂ add
+      ((congrArg (scale (t.add t)) hz).trans (scale_pairAct (t.add t) a S p v))
+      ((Eq.map₂ add
+        ((congrArg (fun u : Quaternion => scale (l.add l) (u.mul a)) hz).trans
+          ((congrArg (scale (l.add l)) (pairAct_mul ha S p v)).trans
+            (scale_pairAct (l.add l) a (scale α.neg p) S v)))
+        ((congrArg (scale δ) defect).trans (scale_pairAct δ a _ _ v))).trans
+        (pairAct_add a _ _ _ _ v))).trans
+    (pairAct_add a _ _ _ _ v)
+  left.trans ((Eq.map₂ (fun c' d' => pairAct a c' d' v) pairs.left pairs.right).trans right.symm)
+
+/-- On the shell `s² = N(p) N(a)` the defect vanishes:
+`P_p P_q P_r P_p v = 2 s (s² + N(a) (p·q + q·r + r·p)) P_p v + 2 N(a) [p, q, r] (P_p v) a`.
+No norm condition on `q` or `r` is needed. -/
+theorem shell_triangle_of_eq (s : Int) {p q r a : Quaternion} (hp : p.IsPure) (hq : q.IsPure)
+    (hr : r.IsPure) (ha : a.IsPure) (hs : Eq (s.mul s) ((p.dot p).mul (a.dot a)))
+    (v : Quaternion) :
+    let z := shell s p a v
+    let t := s.mul ((s.mul s).add ((a.dot a).mul (((p.dot q).add (q.dot r)).add (r.dot p))))
+    let l := (a.dot a).mul (p.dot (q.mul r))
+    Eq (shell s p a (shell s q a (shell s r a z)))
+      ((scale (t.add t) z).add (scale (l.add l) (z.mul a))) :=
+  let z := shell s p a v
+  let t := s.mul ((s.mul s).add ((a.dot a).mul (((p.dot q).add (q.dot r)).add (r.dot p))))
+  let l := (a.dot a).mul (p.dot (q.mul r))
+  (shell_triangle s hp hq hr ha v).trans
+    ((congrArg (fun k : Int => (scale (t.add t) z).add ((scale (l.add l) (z.mul a)).add
+        (scale k (shell s.neg r a (shell s.neg q a v)))))
+      (Int.sub_eq_zero.mpr hs.symm)).trans
+      (congrArg ((scale (t.add t) z).add) (add_scale_zero _ _)))
+
 end Quaternion
 end Omega
