@@ -9,6 +9,11 @@ import Init.Data.Array.Lemmas
 
 namespace OmegaChecks.InitPort.Alternatives
 
+public theorem Array.map_const : type_of% @_root_.Array.map_const := by
+  intro α β xs b
+  apply Array.ext'
+  exact Array.toList_map.trans (_root_.List.map_const.trans Array.toList_replicate.symm)
+
 @[expose] public def Array.eraseIdx {α : Type u} (xs : _root_.Array α) (i : Nat) (_h : i < xs.size) :
     _root_.Array α := ⟨xs.toList.eraseIdx i⟩
 

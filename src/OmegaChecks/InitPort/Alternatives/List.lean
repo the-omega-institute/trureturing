@@ -5,6 +5,12 @@ public import Init.Data.List.Lemmas
 
 namespace OmegaChecks.InitPort.Alternatives
 
+public theorem List.map_const : type_of% @_root_.List.map_const := by
+  intro α β xs b
+  induction xs with
+  | nil => rfl
+  | cons a xs ih => exact (congrArg (b :: ·) ih).trans List.replicate_succ.symm
+
 public theorem List.any_eq_true {α : Type u} {p : α → Bool} {l : _root_.List α} :
     l.any p = true ↔ ∃ x, x ∈ l ∧ p x = true := by
   induction l with
