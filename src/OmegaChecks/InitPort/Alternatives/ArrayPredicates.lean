@@ -1,4 +1,5 @@
 module
+import all Init.Data.Array.Basic
 import Init.Data.Array.Lemmas
 
 /-! Constructive interval specifications for short-circuit array predicates. -/
@@ -176,5 +177,48 @@ public theorem Array.all_eq_false' : type_of% @_root_.Array.all_eq_false' := by
   · intro ⟨x, m, fail⟩
     obtain ⟨i, hi, eq⟩ := List.mem_iff_getElem.mp (_root_.Array.mem_def.mp m)
     exact Array.all_eq_false.mpr ⟨i, hi, eq.symm ▸ fail⟩
+
+private theorem shortCircuitCongr {m : Type → Type w} [Monad m] {a b c d : m Bool}
+    (first : a = b) (rest : c = d) :
+    (a >>= fun test => if test then pure true else c) = (b >>= fun test => if test then pure true else d) := by
+  cases first
+  cases rest
+  rfl
+
+private theorem sameAnyLoop {α : Type u} {m : Type → Type w} [Monad m]
+    (p q : α → m Bool) (agree : ∀ a, p a = q a) (xs : _root_.Array α) (stop : Nat)
+    (limit : stop ≤ xs.size) (fuel start : Nat) (space : stop ≤ fuel + start) :
+    _root_.Array.anyM.loop p xs stop limit start = _root_.Array.anyM.loop q xs stop limit start := by
+  induction fuel generalizing start with
+  | zero =>
+    have done : ¬start < stop := Nat.not_lt_of_ge ((Nat.zero_add start) ▸ space)
+    rw [_root_.Array.anyM.loop.eq_def, _root_.Array.anyM.loop.eq_def (p := q) (j := start)]
+    rw [dite_eq_right done, dite_eq_right done]
+  | succ n ih =>
+    rw [_root_.Array.anyM.loop.eq_def, _root_.Array.anyM.loop.eq_def (p := q) (j := start)]
+    by_cases valid : start < stop
+    · rw [dite_eq_left valid, dite_eq_left valid]
+      have room : stop ≤ n + (start + 1) := Eq.subst (motive := (stop ≤ ·)) (Nat.succ_add n start) space
+      exact shortCircuitCongr (agree (xs[start]'(Nat.lt_of_lt_of_le valid limit))) (ih (start+1) room)
+    · rw [dite_eq_right valid, dite_eq_right valid]
+
+public theorem Array.anyM_congr : type_of% @_root_.Array.anyM_congr := by
+  intro m α a b c d inst xs ys eq p q point lo hi
+  cases eq
+  cases lo
+  cases hi
+  unfold _root_.Array.anyM
+  split
+  · exact sameAnyLoop p q point xs _ _ _ _ (Nat.le_add_right _ _)
+  · exact sameAnyLoop p q point xs _ _ _ _ (Nat.le_add_right _ _)
+
+public theorem Array.allM_congr : type_of% @_root_.Array.allM_congr := by
+  intro m α a b c d inst xs ys eq p q point lo hi
+  cases eq
+  cases lo
+  cases hi
+  let neg (value : m Bool) : m Bool := do return !(← value)
+  exact congrArg neg (Array.anyM_congr rfl (p := fun x => neg (p x)) (q := fun x => neg (q x))
+    (fun x => congrArg neg (point x)) rfl rfl)
 
 end OmegaChecks.InitPort.Alternatives

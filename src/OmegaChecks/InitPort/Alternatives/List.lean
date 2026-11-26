@@ -119,4 +119,42 @@ public theorem List.mem_filterMap : type_of% @_root_.List.mem_filterMap := by
           exact List.mem_cons.mpr (.inl (Option.some.inj (hit.symm.trans h)))
         | inr tail => exact .tail _ (ih.mpr ⟨x, tail, hit⟩)
 
+public theorem List.head_eq_iff_head?_eq_some : type_of% @_root_.List.head_eq_iff_head?_eq_some := by
+  intro α a xs h
+  cases xs with
+  | nil => exact (h rfl).elim
+  | cons _ _ => exact ⟨congrArg some, Option.some.inj⟩
+
+public theorem List.filter_reverse : type_of% @_root_.List.filter_reverse := by
+  intro α p xs
+  induction xs with
+  | nil => rfl
+  | cons a xs ih =>
+    rw [List.reverse_cons, List.filter_append, ih]
+    by_cases h : p a = true
+    · rw [List.filter_cons_of_pos h, List.filter_cons_of_pos h, List.reverse_cons]
+      rfl
+    · rw [List.filter_cons_of_neg h, List.filter_cons_of_neg h]
+      exact List.append_nil _
+
+public theorem List.filterMap_filterMap : type_of% @_root_.List.filterMap_filterMap := by
+  intro α β γ f g xs
+  induction xs with
+  | nil => rfl
+  | cons a xs ih =>
+    cases fa : f a with
+    | none =>
+      have rhs : (f a).bind g = none := (congrArg (Option.bind · g) fa)
+      rw [List.filterMap_cons_none fa, List.filterMap_cons_none (f := fun x => (f x).bind g) rhs]
+      exact ih
+    | some b =>
+      have bind : (f a).bind g = g b := congrArg (Option.bind · g) fa
+      cases gb : g b with
+      | none =>
+        rw [List.filterMap_cons_some fa, List.filterMap_cons_none gb, List.filterMap_cons_none (f := fun x => (f x).bind g) (bind.trans gb)]
+        exact ih
+      | some c =>
+        rw [List.filterMap_cons_some fa, List.filterMap_cons_some gb, List.filterMap_cons_some (f := fun x => (f x).bind g) (bind.trans gb)]
+        exact congrArg (c :: ·) ih
+
 end OmegaChecks.InitPort.Alternatives
