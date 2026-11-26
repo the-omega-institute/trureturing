@@ -642,4 +642,93 @@ public theorem Array.mapM_subtype : type_of% @_root_.Array.mapM_subtype := by
       exact (congrArg (step (f a)) ih).trans (congrArg (fun val => step val _) (h a.1 a.2))
   exact congrFun (same xs.toList) #[]
 
+public theorem List.flatMapM.loop.eq_def : type_of% @_root_.List.flatMapM.loop.eq_def := by
+  intro m mon α β f xs acc
+  cases xs <;> rfl
+
+
+public theorem List.foldlM_filterMap : type_of% @_root_.List.foldlM_filterMap := by
+  intro m α β γ mon law f g xs init
+  let step (b : γ) (a : α) := match f a with | some x => g b x | none => pure b
+  have loop (xs : List α) (acc : m γ) :
+      (acc >>= (fun b => (xs.filterMap f).foldlM g b)) = acc >>= fun b => xs.foldlM step b := by
+    induction xs generalizing acc with
+    | nil => rfl
+    | cons a xs ih =>
+      rw [List.filterMap_cons]
+      cases h : f a with
+      | none =>
+        have head : (fun b => step b a) = pure := by dsimp only [step]; rw [h]
+        change (_ >>= _) = acc >>= fun b => step b a >>= fun c => xs.foldlM step c
+        rw [← bind_assoc, head, bind_pure]
+        exact ih acc
+      | some x =>
+        have head : (fun b => step b a) = fun b => g b x := by dsimp only [step]; rw [h]
+        change (acc >>= fun b => g b x >>= fun c => (xs.filterMap f).foldlM g c) =
+          acc >>= fun b => step b a >>= fun c => xs.foldlM step c
+        rw [← bind_assoc, ← bind_assoc, head]
+        exact ih _
+  have result := loop xs (pure init)
+  rw [pure_bind, pure_bind] at result
+  exact result
+
+public theorem List.foldlM_filter : type_of% @_root_.List.foldlM_filter := by
+  intro m α β mon law p g xs init
+  let step (b : β) (a : α) := if p a then g b a else pure b
+  have loop (xs : List α) (acc : m β) :
+      (acc >>= (fun b => (xs.filter p).foldlM g b)) = acc >>= fun b => xs.foldlM step b := by
+    induction xs generalizing acc with
+    | nil => rfl
+    | cons a xs ih =>
+      rw [List.filter_cons]
+      cases h : p a with
+      | false =>
+        have head : (fun b => step b a) = pure := by dsimp only [step]; rw [h]; rfl
+        change (_ >>= _) = acc >>= fun b => step b a >>= fun c => xs.foldlM step c
+        rw [← bind_assoc, head, bind_pure]
+        exact ih acc
+      | true =>
+        have head : (fun b => step b a) = fun b => g b a := by dsimp only [step]; rw [h]; rfl
+        change (acc >>= fun b => g b a >>= fun c => (xs.filter p).foldlM g c) =
+          acc >>= fun b => step b a >>= fun c => xs.foldlM step c
+        rw [← bind_assoc, ← bind_assoc, head]
+        exact ih _
+  have result := loop xs (pure init)
+  rw [pure_bind, pure_bind] at result
+  exact result
+
+public theorem List.foldrM_filter : type_of% @_root_.List.foldrM_filter := by
+  intros
+  rw [List.foldrM, ← List.filter_reverse, List.foldlM_filter]
+  rfl
+
+public theorem List.foldrM_filterMap : type_of% @_root_.List.foldrM_filterMap := by
+  intros
+  rw [List.foldrM, ← List.filterMap_reverse, List.foldlM_filterMap]
+  rfl
+
+public theorem Array.foldlM_filter : type_of% @_root_.Array.foldlM_filter := by
+  intros
+  subst_vars
+  rw [← Array.foldlM_toList, ← Array.foldlM_toList, Array.toList_filter]
+  exact List.foldlM_filter
+
+public theorem Array.foldlM_filterMap : type_of% @_root_.Array.foldlM_filterMap := by
+  intros
+  subst_vars
+  rw [← Array.foldlM_toList, ← Array.foldlM_toList, Array.toList_filterMap]
+  exact List.foldlM_filterMap
+
+public theorem Array.foldrM_filter : type_of% @_root_.Array.foldrM_filter := by
+  intros
+  subst_vars
+  rw [← Array.foldrM_toList, ← Array.foldrM_toList, Array.toList_filter]
+  exact List.foldrM_filter
+
+public theorem Array.foldrM_filterMap : type_of% @_root_.Array.foldrM_filterMap := by
+  intros
+  subst_vars
+  rw [← Array.foldrM_toList, ← Array.foldrM_toList, Array.toList_filterMap]
+  exact List.foldrM_filterMap
+
 end OmegaChecks.InitPort.Alternatives
