@@ -198,4 +198,78 @@ public theorem List.getLast_range' : type_of% @_root_.List.getLast_range' := by
   subst n
   exact nonempty rfl
 
+public theorem List.find?_range'_eq_some : type_of% @_root_.List.find?_range'_eq_some := by
+  intro s n i p
+  induction n generalizing s with
+  | zero =>
+    constructor
+    · intro none
+      cases none
+    · intro ⟨_, mem, _⟩
+      cases mem
+  | succ n ih =>
+    rw [_root_.List.range'_succ]
+    by_cases test : p s = true
+    · rw [_root_.List.find?_cons_of_pos test]
+      constructor
+      · intro hit
+        cases Option.some.inj hit
+        exact ⟨test, .head _, fun j lo hi => (Nat.not_lt_of_ge lo hi).elim⟩
+      · intro ⟨_, mem, before⟩
+        cases mem with
+        | head => rfl
+        | tail _ tail =>
+          have lo := (List.mem_range'_1.mp tail).1
+          exact ((notBool _).mpr (before s (Nat.le_refl _) lo) test).elim
+    · rw [_root_.List.find?_cons_of_neg test]
+      constructor
+      · intro hit
+        obtain ⟨atIndex, mem, before⟩ := ih.mp hit
+        refine ⟨atIndex, .tail _ mem, fun j lo hi => ?_⟩
+        cases Nat.eq_or_lt_of_le lo with
+        | inl eq => exact eq ▸ (notBool _).mp test
+        | inr lt => exact before j lt hi
+      · intro ⟨atIndex, mem, before⟩
+        apply ih.mpr
+        cases mem with
+        | head => exact (test atIndex).elim
+        | tail _ tail => exact ⟨atIndex, tail, fun j lo => before j (Nat.le_trans (Nat.le_succ _) lo)⟩
+
+public theorem List.find?_range_eq_some : type_of% @_root_.List.find?_range_eq_some := by
+  intro n i p
+  rw [_root_.List.range_eq_range']
+  constructor
+  · intro hit
+    obtain ⟨yes, mem, before⟩ := List.find?_range'_eq_some.mp hit
+    exact ⟨yes, mem, fun j => before j (Nat.zero_le _)⟩
+  · intro ⟨yes, mem, before⟩
+    exact List.find?_range'_eq_some.mpr ⟨yes, mem, fun j _ => before j⟩
+
+public theorem List.zipIdx_eq_append_iff : type_of% @_root_.List.zipIdx_eq_append_iff := by
+  intro α l₁ l₂ l k
+  constructor
+  · intro split
+    induction l₁ generalizing l k with
+    | nil => exact ⟨[], l, rfl, rfl, split.symm⟩
+    | cons x xs ih =>
+      obtain ⟨a, as, rfl, rfl, tail⟩ := List.zipIdx_eq_cons_iff.mp split
+      obtain ⟨front, back, rfl, left, right⟩ := ih tail.symm
+      refine ⟨a :: front, back, rfl, congrArg (_ :: ·) left, ?_⟩
+      rw [right, _root_.List.length_cons]
+      apply congrArg (back.zipIdx ·)
+      omega
+  · rintro ⟨as, bs, rfl, rfl, rfl⟩
+    exact _root_.List.zipIdx_append
+
+public theorem List.reverse_range' : type_of% @_root_.List.reverse_range' := by
+  intro s n
+  apply _root_.List.ext_getElem
+  · rw [_root_.List.length_reverse, _root_.List.length_map, _root_.List.length_range', _root_.List.length_range]
+  · intro i ha hb
+    rw [_root_.List.getElem_reverse, _root_.List.getElem_range', _root_.List.getElem_map,
+      _root_.List.getElem_range, Nat.one_mul]
+    rw [_root_.List.length_map, _root_.List.length_range] at hb
+    rw [_root_.List.length_range']
+    omega
+
 end OmegaChecks.InitPort.Alternatives
