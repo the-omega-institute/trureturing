@@ -23,12 +23,19 @@ internal sealed class IrwinA138099HookSumDocument : IScribeDocumentDefinition
             Node("WalkState", "Position and leg counters", WalkStateFormula(), "WalkState has exactly the three fields cell, leg and used, of the displayed types. The field used counts steps already taken on the current leg.", DescribeRole.Definition, AssessedProvenance.FromRepo(Source)),
             Node("advance", "One step and a possible turn", Advance(), "The direction d determines the next position p. A completed leg advances the leg counter and resets used; otherwise used increases by one. Every leg has positive length.", DescribeRole.Definition, AssessedProvenance.FromRepo(Source)),
             Node("walk", "The literal unit-step walk", Walk(), "Cell zero is (0,0). Applying advance repeatedly gives the cells of the displayed spiral in their insertion order.", DescribeRole.Definition, AssessedProvenance.FromRepo(Source)),
+            PublicWalkNode("frame", "Affine lattice frame", FrameFormula(), "Translate a coordinate pair after scaling both coordinates by the same integer.", DescribeRole.Definition),
+            PublicWalkNode("layer_walk", "The two legs after an odd or even square start", LayerWalk(), "Starting at the indicated walk state, the next two legs follow the two displayed coordinate offsets in the appropriate signed frame.", DescribeRole.Theorem),
             Node("IsSourceSpiral", "Spiral diagrams", SourceSpiral(), ConjectureQuote + " The source's diagram, in its unpaginated FORMULA block, starts Empty, o, oo. Here T 0 is empty and T(n+1) inserts cell n of the walk. No reordering of rows or cells is performed.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("hookLength", "Ordinary hooks in occupied cells", HookLength(), ConjectureQuote + " The ordinary hook contains its own cell, the occupied cells strictly to its right in its row, and the occupied cells strictly below it in its column. The formula is used for c in D when summing hooks; holes are allowed.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("hookSum", "The sum of all hooks", HookSum(), ConjectureQuote + " This finite sum uses the occupied cells themselves, including the empty sum zero.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("claim", "The source assertion with existence", IffTo(F.Id("claim"), ClaimBody()), ConjectureQuote + " This is the complete sentence in Irwin's unpaginated FORMULA block. The arithmetic and spiral sequences both exist, and the identity holds for every pair of such sequences and every positive index. The first two conjuncts assert existence rather than assume it.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "The hook-sum identity at every positive index", ClaimBody(), "Inserting a fresh cell increases the total hook sum by one plus the old row and column sizes. After m squared cells the walk fills an m by m square. Its next m cells form one boundary strip and its next m+1 cells form the other. Their increments are m+j, exactly the entries of source rows 2m and 2m+1. The first singleton is handled separately. Row addresses also construct a source arithmetic sequence, and the insertion recursion constructs and uniquely determines the source spiral.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source), new OpenProblemResolutionClaim(ProblemSlugRef.Create("irwin-a138099"), ResolutionKind.Proved))),
         []));
+
+    private static DocumentBlock PublicWalkNode(string name, string title, Formula formula, string prose, DescribeRole role) =>
+        Describe.Lean(DescribeId.Create("irwin-a138099-" + name.Replace('_', '-')), DeclarationHandle.Create(Prefix + name),
+            H(title), StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromRepo(Source),
+            Blocks(Paragraph(Text(prose))), role);
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
         DescribeRole role, AssessedProvenance provenance, OpenProblemResolutionClaim? resolution = null) =>
@@ -157,5 +164,33 @@ internal sealed class IrwinA138099HookSumDocument : IScribeDocumentDefinition
         Formula universal = All("a", Arrow(Nats, Nats), All("T", Arrow(Nats, Diagrams),
             Imp(Call("IsSourceSequence", a), Imp(Call("IsSourceSpiral", T), All("n", Nats, Imp(LeTo(D(1), n), equality))))));
         return And(arithmeticExists, And(spiralExists, universal));
+    }
+
+    private static Formula Mul(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Multiply, b);
+
+    private static Formula FrameFormula()
+    {
+        var o = F.Id("o");
+        var s = F.Id("s");
+        var u = F.Id("u");
+        return All("o", Cells, All("s", Ints, All("u", Cells,
+            EqTo(Call("frame", o, s, u), Add(o, Mul(Pair(s, s), u))))));
+    }
+
+    private static Formula LayerWalk()
+    {
+        var m = F.Id("m");
+        var o = F.Id("o");
+        var t = F.Id("t");
+        var sq = Mul(m, m);
+        var twice = Mul(D(2), m);
+        var minusOne = Seq(Minus, D(1));
+        var sign = Ite(EqTo(Mod(m, D(2)), D(0)), Cast(minusOne), D(1));
+        var first = All("t", Nats, Imp(LtTo(t, m), EqTo(Call("walk", Add(sq, t)),
+            State(Call("frame", o, sign, Pair(minusOne, Cast(t))), Sub(twice, D(1)), t))));
+        var second = All("t", Nats, Imp(LeTo(t, m), EqTo(Call("walk", Add(Add(sq, m), t)),
+            State(Call("frame", o, sign, Pair(Sub(Cast(t), D(1)), Cast(m))), twice, t))));
+        var start = EqTo(Call("walk", Sub(sq, D(1))), State(o, Sub(twice, D(2)), Sub(m, D(1))));
+        return All("m", Nats, Imp(LeTo(D(1), m), All("o", Cells, Imp(start, And(first, second)))));
     }
 }
