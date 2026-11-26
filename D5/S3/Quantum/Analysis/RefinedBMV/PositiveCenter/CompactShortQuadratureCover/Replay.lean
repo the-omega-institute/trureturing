@@ -29,6 +29,121 @@ open private coeffAdd coeffScale from
 open private quadratureParameterRow quadratureShiftBound from
   D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.ShortQuadrature.CompactShortJointLower
 
+open private coeffSum from
+  D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.MomentPolynomial
+open private marginalDensity marginalWeight marginalQuadratureTailBound jointDensityTailBound from
+  D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.ShortQuadrature.CompactShortJointLower
+
+private def rawPrefix (f : ℕ → List ℚ) : List (List ℚ) :=
+  (List.range 36).map f
+
+-- Quotation supplies data for the equalities below. Each equality is checked by the kernel.
+local elab "quoteQuadraturePrefix% " t:term : term => do
+  let type := Lean.toTypeExpr (α := List (List Rat))
+  let e ← Lean.Elab.Term.elabTermEnsuringType t type
+  Lean.Elab.Term.synthesizeSyntheticMVarsNoPostponing
+  let value ← unsafe Lean.Meta.evalExpr (List (List Rat)) type (← Lean.instantiateMVars e)
+  return Lean.toExpr value
+
+private def prefixRow (cs : List (List ℚ)) (f : ℕ → List ℚ) (n : ℕ) : List ℚ :=
+  match cs[n]? with
+  | some row => row
+  | none => f n
+
+private theorem prefixRow_rawPrefix (f : ℕ → List ℚ) (n : ℕ) :
+    prefixRow (rawPrefix f) f n = f n := by
+  unfold prefixRow rawPrefix
+  rw [List.getElem?_map]
+  by_cases h : n < 36
+  · simp only [List.getElem?_range h, Option.map_some]
+  · rw [List.getElem?_eq_none (by simpa using Nat.le_of_not_gt h)]
+    rfl
+
+private def jointFormula (i : Fin 3) : ℕ → List ℚ :=
+  quadratureParameterRow (shortJointDensityRow i) 0 (fun _ ↦ 1)
+
+private def marginalFormula (j : ℕ) : ℕ → List ℚ :=
+  quadratureParameterRow marginalDensity (j + 2) (marginalWeight j)
+
+private def jointPrefix : Fin 3 → List (List ℚ)
+  | 0 => quoteQuadraturePrefix% rawPrefix (jointFormula 0)
+  | 1 => quoteQuadraturePrefix% rawPrefix (jointFormula 1)
+  | 2 => quoteQuadraturePrefix% rawPrefix (jointFormula 2)
+
+private def marginalPrefix : ℕ → List (List ℚ)
+  | 0 => quoteQuadraturePrefix% rawPrefix (marginalFormula 0)
+  | 1 => quoteQuadraturePrefix% rawPrefix (marginalFormula 1)
+  | 2 => quoteQuadraturePrefix% rawPrefix (marginalFormula 2)
+  | _ + 3 => []
+
+set_option maxRecDepth 20000 in
+set_option maxHeartbeats 0 in
+private theorem jointPrefix_eq (i : Fin 3) : jointPrefix i = rawPrefix (jointFormula i) := by
+  fin_cases i <;> decide +kernel
+
+set_option maxRecDepth 20000 in
+set_option maxHeartbeats 0 in
+private theorem marginalPrefix_eq : ∀ i : Fin 3, marginalPrefix i.val = rawPrefix (marginalFormula i.val) := by
+  intro i
+  fin_cases i <;> decide +kernel
+
+private def jointRows (i : Fin 3) (n : ℕ) : List ℚ :=
+  prefixRow (jointPrefix i) (jointFormula i) n
+
+private def marginalRows (j n : ℕ) : List ℚ :=
+  prefixRow (marginalPrefix j) (marginalFormula j) n
+
+private theorem jointRows_eq (i : Fin 3) : jointRows i = jointFormula i := by
+  funext n
+  rw [jointRows, jointPrefix_eq, prefixRow_rawPrefix]
+
+private theorem marginalRows_eq (j : ℕ) : marginalRows j = marginalFormula j := by
+  funext n
+  unfold marginalRows
+  by_cases h : j < 3
+  · have he : marginalPrefix j = rawPrefix (marginalFormula j) := marginalPrefix_eq ⟨j, h⟩
+    rw [he, prefixRow_rawPrefix]
+  · cases j with
+    | zero => omega
+    | succ j =>
+      cases j with
+      | zero => omega
+      | succ j =>
+        cases j with
+        | zero => omega
+        | succ j => rfl
+
+private def shiftedRows (rows : ℕ → List ℚ) (terms : ℕ) (center : ℚ) (m : ℕ) :
+    List ℚ :=
+  coeffSum (fun j =>
+    let n := m + j
+    coeffScale ((n.choose m : ℚ) * center ^ (n - m)) (rows n)) (terms - m)
+
+private theorem jointModel_eq (i : Fin 3) (upper radius width center : ℚ)
+    (terms order : ℕ) (H X : Model) :
+    shortJointClosedQuadratureModel i upper radius width center terms order H X =
+      ((Model.series order (fun m ↦ Model.horner
+          (shiftedRows (jointRows i) terms center m) H) X).widen
+        (quadratureShiftBound upper radius width (jointRows i) terms order)).widen
+          (jointDensityTailBound (shortJointDensityRow i) upper radius terms) := by
+  rw [jointRows_eq]
+  rfl
+
+private theorem marginalModel_eq (upper radius width center : ℚ)
+    (j terms order : ℕ) (H X : Model) :
+    marginalClosedQuadratureModel upper radius width center j terms order H X =
+      ((Model.series order (fun m ↦ Model.horner
+          (shiftedRows (marginalRows j) terms center m) H) X).widen
+        (quadratureShiftBound upper radius width (marginalRows j) terms order)).widen
+          (marginalQuadratureTailBound upper radius j terms) := by
+  rw [marginalRows_eq]
+  rfl
+
+attribute [scoped cbv_eval] jointModel_eq marginalModel_eq
+
+scoped cbv_simproc cbv_eval stageShiftedCachedRow (shiftedRows _ _ _ _) :=
+  stageLiteral (List Rat) (limitStatementSize := true)
+
 scoped cbv_simproc cbv_eval stageParameterRow (quadratureParameterRow _ _ _ _) :=
   stageLiteral (List Rat) (limitStatementSize := true)
 scoped cbv_simproc cbv_eval stageShiftedRow (shiftedQuadratureParameterRow _ _ _ _ _ _) :=
