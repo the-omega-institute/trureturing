@@ -299,4 +299,34 @@ public theorem String.head_toList : type_of% @_root_.String.head_toList := by
     unfold ByteArray.utf8DecodeChar
     exact (Option.get_of_eq_some _ dec).symm
 
+public theorem String.startPos_eq_endPos_iff : type_of% @_root_.String.startPos_eq_endPos_iff := by
+  intro s
+  constructor
+  · intro eq
+    exact String.utf8ByteSize_eq_zero_iff.mp (congrArg (fun p : s.Pos => p.offset.byteIdx) eq.symm)
+  · rintro rfl
+    rfl
+
+public theorem String.toList_eq_nil_iff : type_of% @_root_.String.toList_eq_nil_iff := by
+  intro s
+  exact ⟨fun nil => String.ofList_toList.symm.trans (congrArg String.ofList nil), fun eq => eq ▸ String.toList_empty⟩
+
+public theorem String.isSome_utf8DecodeChar?_zero : type_of% @_root_.String.isSome_utf8DecodeChar?_zero := by
+  intro s ne
+  rcases String.Pos.Raw.isValid_iff_isSome_utf8DecodeChar?.mp s.startPos.isValid with endEq | valid
+  · exact (ne (String.rawEndPos_eq_zero_iff.mp endEq.symm)).elim
+  · exact valid
+
+public theorem String.eq_singleton_append : type_of% @_root_.String.eq_singleton_append := by
+  intro s ne
+  obtain ⟨xs, rfl⟩ := s.exists_eq_ofList
+  cases xs with
+  | nil => exact (ne rfl).elim
+  | cons c cs =>
+    refine ⟨String.ofList cs, ?_⟩
+    have char := String.get_startPos ne
+    simp only [String.toList_ofList, List.head_cons] at char
+    rw [char, String.singleton_eq_ofList, ← String.ofList_append]
+    rfl
+
 end OmegaChecks.InitPort.Alternatives
