@@ -694,4 +694,65 @@ public theorem BitVec.setWidth_eq_extractLsb' : type_of% @_root_.BitVec.setWidth
   apply BitVec.toNat_inj.mp
   rw [BitVec.toNat_setWidth, BitVec.extractLsb'_toNat, Nat.shiftRight_zero]
 
+private theorem maskFromFields {b : UInt8} {w k : Nat} {tag : BitVec w} {field : BitVec k}
+    (size : w + k = 8) (fields : b.toBitVec = (tag ++ field).cast size)
+    (mask value : UInt8) (zero : mask.toNat % 2^k = 0)
+    (result : 2 ^ k * (tag.toNat &&& (mask.toNat / 2^k)) = value.toNat) : b &&& mask = value := by
+  have parts := congrArg BitVec.toNat fields
+  rw [UInt8.toNat_toBitVec, BitVec.toNat_cast, BitVec.toNat_append, Nat.shiftLeft_eq,
+    Nat.mul_comm tag.toNat, ← Nat.two_pow_add_eq_or_of_lt field.isLt, Nat.add_comm] at parts
+  apply UInt8.toNat_inj.mp
+  rw [UInt8.toNat_and, parts]
+  exact (highestBits field.isLt zero).trans result
+
+public theorem ByteArray.utf8DecodeChar?.parseFirstByte_utf8EncodeChar_eq_done :
+    type_of% (private_decl% @_root_.ByteArray.utf8DecodeChar?.parseFirstByte_utf8EncodeChar_eq_done) := by
+  intro c size
+  have bound : 0 < (String.utf8EncodeChar c).length := (String.length_utf8EncodeChar c).trans size ▸ (by decide : 0 < 1)
+  let b := (String.utf8EncodeChar c)[0]'bound
+  have fields : b.toBitVec = 0#1 ++ c.val.toBitVec.extractLsb' 0 7 := (private_decl% @_root_.String.toBitVec_getElem_utf8EncodeChar_zero_of_utf8Size_eq_one) size
+  change parseFirstByte b = _
+  unfold parseFirstByte
+  rw [maskFromFields (tag := 0#1) (k := 7) rfl fields 128 0 rfl rfl]
+  rfl
+
+public theorem ByteArray.utf8DecodeChar?.parseFirstByte_utf8EncodeChar_eq_oneMore :
+    type_of% (private_decl% @_root_.ByteArray.utf8DecodeChar?.parseFirstByte_utf8EncodeChar_eq_oneMore) := by
+  intro c size
+  have bound : 0 < (String.utf8EncodeChar c).length := (String.length_utf8EncodeChar c).trans size ▸ (by decide : 0 < 2)
+  let b := (String.utf8EncodeChar c)[0]'bound
+  have fields : b.toBitVec = 6#3 ++ c.val.toBitVec.extractLsb' 6 5 := (private_decl% @_root_.String.toBitVec_getElem_utf8EncodeChar_zero_of_utf8Size_eq_two) size
+  change parseFirstByte b = _
+  unfold parseFirstByte
+  rw [maskFromFields (tag := 6#3) (k := 5) rfl fields 128 128 rfl rfl]
+  rw [maskFromFields (tag := 6#3) (k := 5) rfl fields 224 192 rfl rfl]
+  rfl
+
+public theorem ByteArray.utf8DecodeChar?.parseFirstByte_utf8EncodeChar_eq_twoMore :
+    type_of% (private_decl% @_root_.ByteArray.utf8DecodeChar?.parseFirstByte_utf8EncodeChar_eq_twoMore) := by
+  intro c size
+  have bound : 0 < (String.utf8EncodeChar c).length := (String.length_utf8EncodeChar c).trans size ▸ (by decide : 0 < 3)
+  let b := (String.utf8EncodeChar c)[0]'bound
+  have fields : b.toBitVec = 14#4 ++ c.val.toBitVec.extractLsb' 12 4 := (private_decl% @_root_.String.toBitVec_getElem_utf8EncodeChar_zero_of_utf8Size_eq_three) size
+  change parseFirstByte b = _
+  unfold parseFirstByte
+  rw [maskFromFields (tag := 14#4) (k := 4) rfl fields 128 128 rfl rfl]
+  rw [maskFromFields (tag := 14#4) (k := 4) rfl fields 224 224 rfl rfl]
+  rw [maskFromFields (tag := 14#4) (k := 4) rfl fields 240 224 rfl rfl]
+  rfl
+
+public theorem ByteArray.utf8DecodeChar?.parseFirstByte_utf8EncodeChar_eq_threeMore :
+    type_of% (private_decl% @_root_.ByteArray.utf8DecodeChar?.parseFirstByte_utf8EncodeChar_eq_threeMore) := by
+  intro c size
+  have bound : 0 < (String.utf8EncodeChar c).length := (String.length_utf8EncodeChar c).trans size ▸ (by decide : 0 < 4)
+  let b := (String.utf8EncodeChar c)[0]'bound
+  have fields : b.toBitVec = 30#5 ++ c.val.toBitVec.extractLsb' 18 3 := (private_decl% @_root_.String.toBitVec_getElem_utf8EncodeChar_zero_of_utf8Size_eq_four) size
+  change parseFirstByte b = _
+  unfold parseFirstByte
+  rw [maskFromFields (tag := 30#5) (k := 3) rfl fields 128 128 rfl rfl]
+  rw [maskFromFields (tag := 30#5) (k := 3) rfl fields 224 224 rfl rfl]
+  rw [maskFromFields (tag := 30#5) (k := 3) rfl fields 240 240 rfl rfl]
+  rw [maskFromFields (tag := 30#5) (k := 3) rfl fields 248 240 rfl rfl]
+  rfl
+
 end OmegaChecks.InitPort.Alternatives
