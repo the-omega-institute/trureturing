@@ -74,4 +74,32 @@ public theorem Array.mapM_pure : type_of% @_root_.Array.mapM_pure := by
   rw [run]
   exact congrArg pure (Array.ext' _root_.Array.toList_map.symm)
 
+public theorem Array.map_toList_inj : type_of% @_root_.Array.map_toList_inj := by
+  intro m α mon law xs ys
+  have cancel (as : m (Array α)) : List.toArray <$> (Array.toList <$> as) = as := by
+    rw [Functor.map_map]
+    exact id_map' as
+  exact ⟨fun h => (cancel xs).symm.trans ((congrArg (fun as => List.toArray <$> as) h).trans (cancel ys)),
+    congrArg (fun as => Array.toList <$> as)⟩
+
+public theorem Array.foldlM_wfParam : type_of% @_root_.Array.foldlM_wfParam := by
+  intros
+  rw [Array.unattach_attach]
+  rfl
+
+public theorem Array.foldrM_wfParam : type_of% @_root_.Array.foldrM_wfParam := by
+  intros
+  rw [Array.unattach_attach]
+  rfl
+
+public theorem Array.filterMapM_wfParam : type_of% @_root_.Array.filterMapM_wfParam := by
+  intros
+  rw [Array.unattach_attach]
+  rfl
+
+public theorem Array.flatMapM_wfParam : type_of% @_root_.Array.flatMapM_wfParam := by
+  intros
+  rw [Array.unattach_attach]
+  rfl
+
 end OmegaChecks.InitPort.Alternatives
