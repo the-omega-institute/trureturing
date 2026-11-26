@@ -563,4 +563,84 @@ public theorem Int.Internal.Linear.Poly.denote'_eq_denote :
       rw [Int.one_mul]
       exact (Int.Internal.Linear.Poly.denote'_go_eq_denote ..).trans (Int.add_comm ..)
 
+open _root_.Int.Internal.Linear in
+public theorem Int.Internal.Linear.Poly.mul_k_eq_mul : type_of% @_root_.Int.Internal.Linear.Poly.mul_k_eq_mul := by
+  intro k p
+  unfold Poly.mul_k Poly.mul
+  rw [← _root_.Int.beq'_eq_beq]
+  cases _root_.Int.beq' k 0 with
+  | true => rfl
+  | false =>
+    induction p with
+    | num => rfl
+    | add c x t ih => exact congrArg (Poly.add (k*c) x) ih
+
+open _root_.Int.Internal.Linear in
+private theorem combineScaled {ctx : Context} (fuel : Nat) (a b : Int) (p q : Poly) :
+    (Poly.combine_mul_k' fuel a b p q).denote ctx = a * p.denote ctx + b * q.denote ctx := by
+  induction fuel generalizing p q with
+  | zero =>
+    change ((p.mul a).append (q.mul b)).denote ctx = _
+    rw [Poly.denote_append, Poly.denote_mul, Poly.denote_mul]
+  | succ fuel ih =>
+    cases p <;> cases q
+    · rfl
+    · rename_i c l y q
+      change (b*l) * y.denote ctx + (Poly.combine_mul_k' fuel a b (.num c) q).denote ctx = a*c + b * (l * y.denote ctx + q.denote ctx)
+      simp only [ih, Poly.denote, Int.mul_add, Int.mul_assoc]
+      ac_rfl
+    · rename_i k x p l
+      change (a*k) * x.denote ctx + (Poly.combine_mul_k' fuel a b p (.num l)).denote ctx = a * (k * x.denote ctx + p.denote ctx) + b*l
+      simp only [ih, Poly.denote, Int.mul_add, Int.mul_assoc]
+      ac_rfl
+    · rename_i k x p l y q
+      change Poly.denote ctx (Bool.rec _ _ (x.beq y)) = _
+      cases same : x.beq y with
+      | false =>
+        change Poly.denote ctx (Bool.rec _ _ (y.blt x)) = _
+        cases y.blt x with
+        | false =>
+          change (b*l) * y.denote ctx + (Poly.combine_mul_k' fuel a b (.add k x p) q).denote ctx = _
+          simp only [ih, Poly.denote, Int.mul_add, Int.mul_assoc]
+          ac_rfl
+        | true =>
+          change (a*k) * x.denote ctx + (Poly.combine_mul_k' fuel a b p (.add l y q)).denote ctx = _
+          simp only [ih, Poly.denote, Int.mul_add, Int.mul_assoc]
+          ac_rfl
+      | true =>
+        cases Nat.eq_of_beq_eq_true same
+        change Poly.denote ctx (Bool.rec _ _ (Int.beq' (a*k+b*l) 0)) = _
+        cases zero : Int.beq' (a*k+b*l) 0 with
+        | false =>
+          change (a*k+b*l) * x.denote ctx + (Poly.combine_mul_k' fuel a b p q).denote ctx = _
+          simp only [ih, Poly.denote, Int.mul_add, Int.add_mul, Int.mul_assoc]
+          ac_rfl
+        | true =>
+          have hz : a*k+b*l = 0 := eq_of_beq ((_root_.Int.beq'_eq_beq ..).symm.trans zero)
+          change (Poly.combine_mul_k' fuel a b p q).denote ctx = _
+          rw [ih]
+          change _ = a * (k * x.denote ctx + p.denote ctx) + b * (l * x.denote ctx + q.denote ctx)
+          rw [Int.mul_add, Int.mul_add, ←Int.mul_assoc, ←Int.mul_assoc]
+          calc
+            _ = (a*k+b*l) * x.denote ctx + (a * p.denote ctx + b * q.denote ctx) := by
+              rw [hz, Int.zero_mul, Int.zero_add]
+            _ = _ := by rw [Int.add_mul]; ac_rfl
+
+open _root_.Int.Internal.Linear in
+public theorem Int.Internal.Linear.Poly.denote_combine_mul_k : type_of% @_root_.Int.Internal.Linear.Poly.denote_combine_mul_k := by
+  intro ctx a b p q
+  unfold Poly.combine_mul_k
+  cases za : Int.beq' a 0 with
+  | true =>
+    cases eq_of_beq ((_root_.Int.beq'_eq_beq ..).symm.trans za)
+    rw [Int.zero_mul, Int.zero_add]
+    exact (congrArg (Poly.denote ctx) (Int.Internal.Linear.Poly.mul_k_eq_mul ..)).trans (Poly.denote_mul ..)
+  | false =>
+    cases zb : Int.beq' b 0 with
+    | true =>
+      cases eq_of_beq ((_root_.Int.beq'_eq_beq ..).symm.trans zb)
+      rw [Int.zero_mul, Int.add_zero]
+      exact (congrArg (Poly.denote ctx) (Int.Internal.Linear.Poly.mul_k_eq_mul ..)).trans (Poly.denote_mul ..)
+    | false => exact combineScaled ..
+
 end OmegaChecks.InitPort.Alternatives
