@@ -85,7 +85,7 @@ private theorem graph_degree_leading (m : ℕ) (rowLength : Fin n → ℕ)
   have hp0 : p ≠ 0 := by
     intro hz
     have hc := hcount 0
-    rw [hz, coeff_zero, card_indepSetFinset_ferrers_zero] at hc
+    rw [hz, coeff_zero, card_indepSetFinset_zero] at hc
     norm_num at hc
   refine ⟨hupper.antisymm (max_le hcolumns hrows), ?_⟩
   apply lt_of_le_of_ne _ (leadingCoeff_ne_zero.mpr hp0).symm
@@ -123,20 +123,21 @@ theorem result : claim := by
   obtain ⟨hd, hl⟩ := graph_degree_leading m rowLength hrow
   have hdpos : 0 < d := (hpos 0).trans_le (le_max_left _ _)
   have hr : sumResultant p = r := congrArg _ hp
+  have hp0 : p ≠ 0 := leadingCoeff_ne_zero.mp hl.ne'
   obtain ⟨hrd, hrl⟩ := sumResultant_degree_leading
-    (Int.castRingHom ℂ) Int.cast_injective p (leadingCoeff_ne_zero.mp hl.ne')
-  have hclosed := closed_iff_sumResultant_coeff_nonneg p hl
-  have hstrict := strict_iff_sumResultant_coeff_nonneg p hl
+    (Int.castRingHom ℂ) Int.cast_injective p hp0
+  have hclosed := closed_iff_sumResultant_coeff_nonneg p hp0
+  have hstrict := strict_iff_sumResultant_coeff_nonneg p hp0
   change p.natDegree = d at hd
   rw [hr, hd] at hrd hrl hclosed hstrict
   refine ⟨hp, fun j => coeff_independencePolynomial_eq_card_indepSetFinset G j,
-    card_indepSetFinset_ferrers_zero rowLength, fun j =>
+    card_indepSetFinset_zero G, fun j =>
       card_indepSetFinset_ferrers_succ rowLength hrow j,
     hdpos, hd, hl, hrd, hrl, hclosed, ?_, ?_⟩
   swap
   · change (independencePolynomial (graph m rowLength) univ).coeff 0 = 1
     simp only [coeff_independencePolynomial_eq_card_indepSetFinset,
-      card_indepSetFinset_ferrers_zero, Nat.cast_one]
+      card_indepSetFinset_zero, Nat.cast_one]
   intro hscan
   constructor
   · intro hzero

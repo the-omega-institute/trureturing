@@ -208,7 +208,7 @@ private theorem eval₂_int_conj (p : ℤ[X]) (z : ℂ)
 /-- Closed stability is equivalent to finitely many nonnegative integer coefficients of
 the pairwise-sum resultant. The scan includes degrees zero through `(natDegree p)^2`. -/
 theorem closed_iff_sumResultant_coeff_nonneg
-    (p : ℤ[X]) (hp : 0 < p.leadingCoeff) :
+    (p : ℤ[X]) (hp : p ≠ 0) :
     (∀ z : ℂ, p.eval₂ (Int.castRingHom ℂ) z = 0 → z.re ≤ 0) ↔
       ∀ j : Fin (p.natDegree ^ 2 + 1), 0 ≤ (sumResultant p).coeff j.val := by
   let f := Int.castRingHom ℂ
@@ -216,12 +216,13 @@ theorem closed_iff_sumResultant_coeff_nonneg
   have hf : Function.Injective f := Int.cast_injective
   have hg : Function.Injective g := Int.cast_injective
   have hcomp : Complex.ofRealHom.comp g = f := Subsingleton.elim _ _
-  have hp0 := leadingCoeff_ne_zero.mp hp.ne'
-  obtain ⟨hdegree, hleading⟩ := sumResultant_degree_leading f hf p hp0
-  have hl : 0 < (sumResultant p).leadingCoeff := hleading.symm ▸ pow_pos hp _
+  obtain ⟨hdegree, hleading⟩ := sumResultant_degree_leading f hf p hp
+  have hl : 0 < (sumResultant p).leadingCoeff := by
+    rw [hleading, pow_mul]
+    exact pow_pos (sq_pos_iff.mpr (leadingCoeff_ne_zero.mpr hp)) _
   have hc (z : ℂ) : (sumResultant p).eval₂ f z = 0 ↔
       ∃ u v : ℂ, p.eval₂ f u = 0 ∧ p.eval₂ f v = 0 ∧ u + v = z :=
-    eval2_sumResultant_eq_zero_iff f hf p hp0 z
+    eval2_sumResultant_eq_zero_iff f hf p hp z
   constructor
   · intro hpclosed j
     have hl' : 0 < ((sumResultant p).map g).leadingCoeff := by
@@ -258,18 +259,17 @@ theorem closed_iff_sumResultant_coeff_nonneg
 
 /-- For strict stability, the same coefficient test also requires a positive constant term. -/
 theorem strict_iff_sumResultant_coeff_nonneg
-    (p : ℤ[X]) (hp : 0 < p.leadingCoeff) :
+    (p : ℤ[X]) (hp : p ≠ 0) :
     (∀ z : ℂ, p.eval₂ (Int.castRingHom ℂ) z = 0 → z.re < 0) ↔
       (∀ j : Fin (p.natDegree ^ 2 + 1), 0 ≤ (sumResultant p).coeff j.val) ∧
         0 < (sumResultant p).coeff 0 := by
   let f := Int.castRingHom ℂ
   have hf : Function.Injective f := Int.cast_injective
-  have hp0 := leadingCoeff_ne_zero.mp hp.ne'
   have htest := closed_iff_sumResultant_coeff_nonneg p hp
   have hzero :
       (sumResultant p).coeff 0 = 0 ↔
         ∃ u v : ℂ, p.eval₂ f u = 0 ∧ p.eval₂ f v = 0 ∧ u + v = 0 := by
-    rw [← eval2_sumResultant_eq_zero_iff f hf p hp0, eval₂_at_zero]
+    rw [← eval2_sumResultant_eq_zero_iff f hf p hp, eval₂_at_zero]
     exact map_eq_zero_iff f hf |>.symm
   constructor
   · intro hstrict

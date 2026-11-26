@@ -224,9 +224,11 @@ theorem coeff_independencePolynomial_eq_card_indepSetFinset {α : Type*}
   rw [← hsets]
   simp [independencePolynomial, partition]
 
-@[simp] theorem card_indepSetFinset_ferrers_zero (rowLength : Fin n → ℕ) :
-    ((graph m rowLength).indepSetFinset 0).card = 1 := by
-  have hzero : (graph m rowLength).indepSetFinset 0 = {∅} := by
+/-- The empty subset is the unique independent set of size zero. -/
+@[simp] theorem card_indepSetFinset_zero {α : Type*}
+    [Fintype α] [DecidableEq α] (G : SimpleGraph α) [DecidableRel G.Adj] :
+    (G.indepSetFinset 0).card = 1 := by
+  have hzero : G.indepSetFinset 0 = {∅} := by
     ext S
     simp only [SimpleGraph.mem_indepSetFinset_iff, mem_singleton,
       SimpleGraph.isNIndepSet_iff, Finset.card_eq_zero]
