@@ -2,14 +2,11 @@ name: Restore Lean Release build seeds
 description: Restore optional Actions material for a Release producer
 inputs:
   mode:
-    description: Automatic selection, legacy project cache, or a complete, partial, absent, or parallel build
+    description: Automatic, complete, partial, absent, previous Release, or parallel build seed
     required: true
   previous-base:
     description: Release identity selected for an incremental publication
     default: ''
-  publication-mode:
-    description: Protected production or integration verification
-    default: production
   cache-keys:
     description: JSON outputs from the Actions cache key selector
     required: true
@@ -70,20 +67,11 @@ runs:
         rm -rf -- "$RUNNER_TEMP/lean-release-checkpoint-in/payload"
     - id: sharded
       if: contains(fromJSON('["auto","complete","partial"]'), inputs.mode) && (steps.resumed.outputs.available == '' || steps.resumed.outputs.available == '0')
-      continue-on-error: true
+      continue-on-error: ${{ inputs.mode == 'auto' }}
       uses: ./.github/actions/lean-cache-shards
       with:
-        operation: restore
-        require-complete: ${{ inputs.mode == 'complete' }}
+        operation: restore-published
         targets: ${{ inputs.mode == 'partial' && 'D5.S0.Tower.GoldenGapWord' || '' }}
-    - id: project
-      if: fromJSON(inputs.cache-keys || '{}').project_key != '' && (inputs.mode == 'legacy' || (inputs.mode == 'auto' && (steps.sharded.outputs.available == '' || steps.sharded.outputs.available == '0')))
-      continue-on-error: true
-      uses: actions/cache/restore@v5
-      with:
-        path: ${{ fromJSON(inputs.cache-keys || '{}').project_archive_path }}
-        key: ${{ fromJSON(inputs.cache-keys || '{}').project_key }}
-        restore-keys: ${{ fromJSON(inputs.cache-keys || '{}').project_restore_prefix }}
     - name: Validate and install the selected seeds
       shell: bash
       env:
@@ -93,15 +81,13 @@ runs:
         RESUMED: ${{ steps.resumed.outputs.available || '0' }}
         DEPENDENCY_KEY: ${{ steps.dependency.outputs.cache-matched-key }}
         DEPENDENCY_OUTCOME: ${{ steps.dependency.outcome }}
-        PROJECT_KEY: ${{ steps.project.outputs.cache-matched-key }}
-        PROJECT_OUTCOME: ${{ steps.project.outcome }}
       run: |
         if [[ "$RESUMED" == 0 ]]; then
           case "$HANDOFF" in
-            auto|legacy) ;;
+            auto) ;;
             complete) [[ "$AVAILABLE" =~ ^[1-9][0-9]*$ && "$COMPLETE" == true ]] ;;
             partial)
-              [[ "$AVAILABLE" =~ ^[1-9][0-9]*$ && "$COMPLETE" == false ]]
+              [[ "$AVAILABLE" =~ ^[1-9][0-9]*$ && "$COMPLETE" == true ]]
               test -s .lake/build/lib/lean/D5/S0/Tower/GoldenGapWord.olean
               ;;
             none|parallel|release) [[ ! -e .lake/build ]] ;;
@@ -111,16 +97,8 @@ runs:
           [[ "$RESUMED" =~ ^[1-9][0-9]*$ && ( "$HANDOFF" == none || "$HANDOFF" == partial ) ]]
         fi
         echo "LEAN_RELEASE_HANDOFF seed=$HANDOFF available=$AVAILABLE complete=$COMPLETE resumed=$RESUMED"
-        args=(--dependency-key "$DEPENDENCY_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME")
-        if [[ "$AVAILABLE" == 0 && "$RESUMED" == 0 ]]; then
-          args+=(--project-key "$PROJECT_KEY" --project-outcome "$PROJECT_OUTCOME")
-        else
-          args+=(--layers dependency)
-        fi
-        python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" "${args[@]}"
-        if [[ "$COMPLETE" == true ]]; then
-          echo 'STRATALINT_ACTIONS_CACHE_SEEDED=1' >> "$GITHUB_ENV"
-        fi
+        python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --layers dependency \
+          --dependency-key "$DEPENDENCY_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME"
     - name: Prepare cold dependencies for the compiled layers
       if: inputs.mode == 'parallel' || inputs.mode == 'release'
       shell: bash
@@ -137,7 +115,6 @@ runs:
       uses: ./.github/actions/lean-release-base
       with:
         operation: install-base
-        mode: ${{ inputs.publication-mode }}
         tag: ${{ fromJSON(inputs.previous-base || '{}').tag }}
         producer: ${{ fromJSON(inputs.previous-base || '{}').producer }}
         manifest: ${{ fromJSON(inputs.previous-base || '{}').manifest }}

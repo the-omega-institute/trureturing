@@ -25,8 +25,7 @@ open private huangMatrix huangMatrix_symmetric from
   D5.S3.Combinatorics.Graph.HypercubeSubQuorum
 open private matrix_flip_zero matrix_flip_succ from
   D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCriticalSpectrum
-open private adjacent_exists_flip from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeGirth
+open BalancedCubeGirth (adjacent_exists_flip)
 
 /-- Reuse the literal grid rows with explicit Boolean polarity reversal. -/
 def falseRows {d : ℕ} (x : Q (d * d)) (b : Fin d) : Finset (Fin d) :=

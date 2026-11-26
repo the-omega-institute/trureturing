@@ -41,8 +41,7 @@ open private other_high_of_low_neighbor from
   D5.S3.Combinatorics.Graph.HypercubeCritical.SymmetricLowPartners
 open private degree_three_root_identity from
   D5.S3.Combinatorics.Graph.HypercubeCritical.SymmetricTwentyTwoLocal
-open private adjacent_exists_flip from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeGirth
+open BalancedCubeGirth (adjacent_exists_flip)
 
 attribute [local instance] Classical.propDecidable
 
