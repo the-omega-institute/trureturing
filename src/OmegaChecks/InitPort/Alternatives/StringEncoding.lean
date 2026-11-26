@@ -284,4 +284,20 @@ public theorem String.Pos.Raw.isValid_iff_isSome_utf8DecodeChar? :
     · exact String.Pos.Raw.isValid_iff_isUTF8FirstByte.mpr (Or.inr
         ⟨ByteArray.lt_size_of_isSome_utf8DecodeChar? decodes, ByteArray.isUTF8FirstByte_of_isSome_utf8DecodeChar? decodes⟩)
 
+public theorem String.Pos.Raw.IsValid.append_left : type_of% @_root_.String.Pos.Raw.IsValid.append_left := by
+  intro t p h s
+  apply String.Pos.Raw.isValid_iff_isValidUTF8_extract_zero.mpr
+  constructor
+  · change s.utf8ByteSize + p.byteIdx ≤ (s ++ t).utf8ByteSize
+    rw [String.utf8ByteSize_append]
+    exact Nat.add_le_add_left h.le_utf8ByteSize _
+  · change ((s.toByteArray ++ t.toByteArray).extract 0 (s.toByteArray.size + p.byteIdx)).IsValidUTF8
+    rw [ByteArray.extract_append, Nat.zero_sub, Nat.add_sub_cancel_left]
+    have all : s.toByteArray.extract 0 (s.toByteArray.size + p.byteIdx) = s.toByteArray := by
+      exact Nat.max_eq_left (Nat.le_add_right ..) ▸ @ByteArray.extract_zero_max_size s.toByteArray (s.toByteArray.size + p.byteIdx)
+    rw [all]
+    obtain ⟨a, ha⟩ := s.isValidUTF8
+    obtain ⟨b, hb⟩ := h.isValidUTF8_extract_zero
+    exact ⟨a ++ b, by rw [ha, hb, List.utf8Encode_append]⟩
+
 end OmegaChecks.InitPort.Alternatives

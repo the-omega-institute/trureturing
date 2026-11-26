@@ -1,6 +1,8 @@
 module
 import all Init.Data.String.Basic
 import all Init.Data.String.FindPos
+import all Init.Data.String.Lemmas.FindPos
+import all Init.Data.String.Pattern.Pred
 import all Init.Data.String.Defs
 public import OmegaChecks.InitPort.Alternatives.StringEncoding
 
@@ -202,5 +204,28 @@ public theorem String.Slice.posLE._proof_1 : type_of% @_root_.String.Slice.posLE
 public theorem String.Slice.posLE._proof_2 : type_of% @_root_.String.Slice.posLE._proof_2 := by
   intro off ne
   exact Nat.sub_lt (Nat.pos_of_ne_zero (fun eq => ne (String.Pos.Raw.ext eq))) (by decide)
+
+public theorem String.Slice.offset_posLE_le : type_of% @_root_.String.Slice.offset_posLE_le := by
+  intro s p
+  change (s.posLE p).offset.byteIdx ≤ p.byteIdx
+  induction p using String.Slice.posLE.induct (s := s) with
+  | case1 off valid =>
+    rw [String.Slice.posLE.eq_def, dite_eq_left valid]
+    exact Nat.le_refl _
+  | case2 off invalid _ ih =>
+    rw [String.Slice.posLE.eq_def, dite_eq_right invalid]
+    exact Nat.le_trans ih (Nat.sub_le off.byteIdx 1)
+
+public theorem String.Slice.Pos.prev_lt : type_of% @_root_.String.Slice.Pos.prev_lt := by
+  intro s p ne
+  have bound := String.Slice.offset_posLE_le (s := s) (p := p.offset.dec)
+  have pos : 0 < p.offset.byteIdx := Nat.pos_of_ne_zero (fun eq => ne (String.Slice.Pos.ext (String.Pos.Raw.ext eq)))
+  exact Nat.lt_of_le_of_lt bound (Nat.sub_lt pos (by decide))
+
+public theorem String.Slice.Pattern.CharPred.instBackwardPatternForallCharBool._proof_3 :
+    type_of% @_root_.String.Slice.Pattern.CharPred.instBackwardPatternForallCharBool._proof_3 := by
+  intro s ne eq
+  have lt := String.Slice.Pos.prev_lt (p := s.endPos) (h := (String.Slice.startPos_ne_endPos ne).symm)
+  exact Nat.ne_of_lt lt (congrArg (fun p : s.Pos => p.offset.byteIdx) eq)
 
 end OmegaChecks.InitPort.Alternatives
