@@ -124,6 +124,11 @@ private theorem splitAtFirst (l : List Char) (i : Nat) (hi : i < l.utf8Encode.si
       refine ⟨c :: a, b, rfl, ?_⟩
       rw [List.utf8Encode_cons, ByteArray.size_append, ← eq, Nat.add_sub_of_le le]
 
+public theorem String.Pos.Raw.IsValid.isValidUTF8_extract_utf8ByteSize :
+    type_of% @_root_.String.Pos.Raw.IsValid.isValidUTF8_extract_utf8ByteSize := by
+  intro s off valid
+  exact String.Pos.isValidUTF8_extract ⟨off, valid⟩ s.endPos
+
 public theorem String.Pos.Raw.isValid_iff_isUTF8FirstByte :
     type_of% @_root_.String.Pos.Raw.isValid_iff_isUTF8FirstByte := by
   intro s p
@@ -132,7 +137,7 @@ public theorem String.Pos.Raw.isValid_iff_isUTF8FirstByte :
     by_cases eq : p = s.rawEndPos
     · exact Or.inl eq
     · have lt := Nat.lt_of_le_of_ne valid.le_utf8ByteSize (fun h => eq (String.Pos.Raw.ext h))
-      have suffix := valid.isValidUTF8_extract_utf8ByteSize
+      have suffix := String.Pos.Raw.IsValid.isValidUTF8_extract_utf8ByteSize valid
       have pos : 0 < (s.toByteArray.extract p.byteIdx s.utf8ByteSize).size := by
         rw [ByteArray.size_extract, String.size_toByteArray, Nat.min_self]
         exact Nat.sub_pos_of_lt lt
