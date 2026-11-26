@@ -300,4 +300,12 @@ public def List.ListSlice.repr {α : Type u} [Repr α] (s : ListSlice α) : Std.
 @[instance_reducible] public def List.instToStringListSlice {α : Type u} [ToString α] : ToString (ListSlice α) :=
   ⟨fun s => toString (listSliceContents s).toArray⟩
 
+public theorem Std.Iterators.Types.Flatten.IsPlausibleStep.outerYield_flatMapM_pure :
+    type_of% @_root_.Std.Iterators.Types.Flatten.IsPlausibleStep.outerYield_flatMapM_pure := by
+  intros α β α₂ γ m _ _ _ _ _ _ f it it' inner out h returns
+  apply Flatten.IsPlausibleStep.outerYield_flatMapM (b := out)
+  · apply FilterMap.PlausibleStep.yieldSome h
+    exact ⟨⟨out, rfl⟩, rfl⟩
+  · exact returns
+
 end OmegaChecks.InitPort.Alternatives
