@@ -205,6 +205,9 @@ jobs:
       - name: Build the judge
         if: steps.judge.outputs.judge-hit != 'true'
         run: python3 tools/scripts/workflow/ci_checks.py current build-judge
+      - uses: ./.github/actions/current-lean
+        with:
+          verify-bundles: 'true'
       - name: Check current and delta with all report bundles
         env:
           CHECK_DELTA: ${{ inputs.delta }}
