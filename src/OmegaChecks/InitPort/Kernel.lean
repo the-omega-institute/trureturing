@@ -548,7 +548,8 @@ def run (strictPath artifacts : System.FilePath) (outPath : String) (exclude : S
   let ruleModule := `OmegaChecks.InitCompiler.ProofRules
   let ruleEnv ← importModules #[{module := ruleModule}] {} (level := .private)
   let mut proofRules := {}
-  for name in #[`iteCongr, `diteCongr, `forallDomain, `decideCongr, `natBEq, `intBEq, `intBNe, `intBLt, `intBLe, `polyBEq] do
+  for name in #[`iteCongr, `diteCongr, `forallDomain, `decideCongr, `natBEq, `intBEq, `intBNe, `intBLt, `intBLe,
+                `polyBEq, `ringPowerBEq, `ringMonBEq, `ringPolyBEq] do
     let some info := ruleEnv.find? (ruleModule ++ name) | throw <| IO.userError s!"missing proof rule {name}"
     let .thmInfo th := info | throw <| IO.userError s!"expected a theorem for {name}"
     let localRule := fun n => ruleEnv.getModuleIdxFor? n == ruleEnv.getModuleIdx? ruleModule

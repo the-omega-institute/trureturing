@@ -1,6 +1,7 @@
 module
 public import Init.Core
 import all Init.Data.Int.Linear
+import all Init.Grind.Ring.CommSolver
 
 namespace OmegaChecks.InitCompiler.ProofRules
 
@@ -92,5 +93,43 @@ public theorem intBLe (a b : Int) : a.ble' b = true ↔ a ≤ b := by
     cases b with
     | ofNat m => exact ⟨fun _ => Int.le_trans (Int.negSucc_le_zero n) (Int.natCast_nonneg m), fun _ => rfl⟩
     | negSucc m => exact (Iff.intro Nat.le_of_ble_eq_true Nat.ble_eq_true_of_le).trans negNatLe.symm
+
+open Lean.Grind.CommRing
+
+private theorem powerBeqSame (p q : Power) : p.beq' q = (p == q) := by
+  cases p; cases q; rfl
+
+private theorem monBeqSame (m n : Mon) : m.beq' n = (m == n) := by
+  induction m generalizing n with
+  | unit => cases n <;> rfl
+  | mult p m ih =>
+    cases n with
+    | unit => rfl
+    | mult q n =>
+      change (p.beq' q && m.beq' n) = ((p == q) && (m == n))
+      rw [powerBeqSame, ih]
+
+private theorem ringPolyBeqSame (p q : Poly) : p.beq' q = (p == q) := by
+  induction p generalizing q with
+  | num k =>
+    cases q with
+    | num l => exact Int.beq'_eq_beq k l
+    | add => rfl
+  | add k m p ih =>
+    cases q with
+    | num => rfl
+    | add l n q =>
+      change (Int.beq' k l && (m.beq' n && p.beq' q)) = _
+      rw [Int.beq'_eq_beq, monBeqSame, ih]
+      rfl
+
+public theorem ringPowerBEq (p q : Power) : p.beq' q = true ↔ p = q := by
+  rw [powerBeqSame]; exact beq_iff_eq
+
+public theorem ringMonBEq (m n : Mon) : m.beq' n = true ↔ m = n := by
+  rw [monBeqSame]; exact beq_iff_eq
+
+public theorem ringPolyBEq (p q : Poly) : p.beq' q = true ↔ p = q := by
+  rw [ringPolyBeqSame]; exact beq_iff_eq
 
 end OmegaChecks.InitCompiler.ProofRules
