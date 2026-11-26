@@ -58,13 +58,13 @@ For a finite simple graph G, selecting the degree-k monomials keeps precisely th
 
 $$\Vert\operatorname{indepSetFinset}\left(G, 0\right)\Vert=1$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/HardCore/FerrersGraphCount.card_indepSetFinset_ferrers_zero` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/HardCore/FerrersGraphCount.card_indepSetFinset_zero` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
 *Commentary.*
 
-The empty subset is the unique independent set of size zero.
+For every finite simple graph G, the empty subset is the unique independent set of size zero.
 
 **Theorem 1.6 (Independent sets of positive size).**
 
@@ -84,7 +84,7 @@ The row lengths are nonincreasing. For each possible least row i, choose k addit
 
 - Truth anchor: `D5/S3/StatisticalMechanics/HardCore/FerrersGraphCount.Vertex`
 - Truth anchor: `D5/S3/StatisticalMechanics/HardCore/FerrersGraphCount.card_indepSetFinset_ferrers_succ`
-- Truth anchor: `D5/S3/StatisticalMechanics/HardCore/FerrersGraphCount.card_indepSetFinset_ferrers_zero`
+- Truth anchor: `D5/S3/StatisticalMechanics/HardCore/FerrersGraphCount.card_indepSetFinset_zero`
 - Truth anchor: `D5/S3/StatisticalMechanics/HardCore/FerrersGraphCount.coeff_independencePolynomial_eq_card_indepSetFinset`
 - Truth anchor: `D5/S3/StatisticalMechanics/HardCore/FerrersGraphCount.graph`
 - Truth anchor: `D5/S3/StatisticalMechanics/HardCore/FerrersGraphCount.independencePolynomial_ferrers`

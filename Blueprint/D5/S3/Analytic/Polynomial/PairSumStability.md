@@ -58,7 +58,7 @@ $$(\forall z\in\mathbb{C}, p\left(z\right)=0\implies\Re z\le0)\iff(\forall 0\le 
 
 *Commentary.*
 
-Here p has integer coefficients and positive leading coefficient. Real linear factors and conjugate quadratics give nonnegative coefficients for a closed-stable resultant. Any root of p with positive real part pairs with its conjugate to give a positive real resultant root, which the coefficient signs exclude.
+Here p is a nonzero integer polynomial. The leading coefficient of the resultant is positive because it is an even power of the nonzero leading coefficient of p. Real linear factors and conjugate quadratics give nonnegative coefficients for a closed-stable resultant. Any root of p with positive real part pairs with its conjugate to give a positive real resultant root, which the coefficient signs exclude.
 
 **Theorem 1.5 (Strict stability).**
 
@@ -72,7 +72,7 @@ $$(\forall z\in\mathbb{C}, p\left(z\right)=0\implies\Re z<0)\iff((\forall 0\le j
 
 *Commentary.*
 
-For integer p with positive leading coefficient, the same scan and a positive constant coefficient exclude pair sums equal to zero. An imaginary-axis root of p pairs with its conjugate at zero.
+For a nonzero integer polynomial p, the same scan and a positive constant coefficient exclude pair sums equal to zero. An imaginary-axis root of p pairs with its conjugate at zero.
 
 ## References
 
