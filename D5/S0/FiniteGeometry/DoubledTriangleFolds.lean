@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S0/FiniteGeometry/DoubledTriangleFolds
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: []
+   anchors: [lit/fernando2026goodcolorings]
    utility: none
    digest: Minimum-fold good colorings of doubled triangles have uniformly opposite sheets. -/
 
@@ -202,6 +202,70 @@ private theorem edgeFaces_seam (p : Point n 1) (a : Axis) (h : p.coord a = 0)
 private theorem edgeFaces_inside (p : Point n 1) (a : Axis) (h : p.coord a ≠ 0)
     (s : Bool) : edgeFaces (edge p a s) = (up s p, down s (below p a h)) := by
   simp [edgeFaces, edge, h]
+
+private theorem atUp_iff (v : Point n 0) (s : Bool) (a : Axis) (p : Point n 1) :
+    atUp v s a = some (up s p) ↔ cornerVertex (.inl p) a = v := by
+  cases v with
+  | mk x y z hv =>
+    cases p with
+    | mk i j k hp =>
+      cases a <;>
+        simp only [atUp, Point.coord, bump, cornerVertex,
+          reduceCtorEq, if_true, if_false, Nat.add_zero, Nat.sub_zero] <;>
+        split <;> simp <;> omega
+
+private theorem atDown_iff (v : Point n 0) (s : Bool) (a : Axis) (p : Point n 2) :
+    atDown v s a = some (down s p) ↔ cornerVertex (.inr p) a = v := by
+  cases v with
+  | mk x y z hv =>
+    cases p with
+    | mk i j k hp =>
+      cases a <;>
+        simp only [atDown, bumpPair, cornerVertex,
+          reduceCtorEq, if_true, if_false, Nat.add_zero, Nat.sub_zero, Nat.zero_le, true_and] <;>
+        split <;> simp [bumpPair] at * <;> omega
+
+private theorem mem_sheetCorners (v : Point n 0) (s : Bool) (f : Face n) :
+    f ∈ sheetCorners v s ↔ f.1 = s ∧ ∃ a, cornerVertex f.2 a = v := by
+  obtain ⟨t, p⟩ := f
+  have hUp (a : Axis) : ∀ f, atUp v s a = some f → ∃ q, f = up s q := by
+    intro f hf
+    unfold atUp at hf
+    split at hf
+    · exact ⟨_, (Option.some.inj hf).symm⟩
+    · cases hf
+  have hDown (a : Axis) : ∀ f, atDown v s a = some f → ∃ q, f = down s q := by
+    intro f hf
+    unfold atDown at hf
+    split at hf
+    · exact ⟨_, (Option.some.inj hf).symm⟩
+    · cases hf
+  constructor
+  · intro h
+    obtain ⟨o, ho, hf⟩ := List.mem_filterMap.mp h
+    simp only [id_eq, List.mem_cons, List.not_mem_nil, or_false] at ho
+    rcases ho with rfl | rfl | rfl | rfl | rfl | rfl
+    all_goals first
+      | obtain ⟨q, hq⟩ := hUp _ _ (by simpa using hf)
+        cases hq
+        exact ⟨rfl, _, (atUp_iff _ _ _ _).mp hf⟩
+      | obtain ⟨q, hq⟩ := hDown _ _ (by simpa using hf)
+        cases hq
+        exact ⟨rfl, _, (atDown_iff _ _ _ _).mp hf⟩
+  · rintro ⟨rfl, a, h⟩
+    cases p with
+    | inl p =>
+      exact List.mem_filterMap.mpr ⟨atUp v t a, by cases a <;> simp,
+        (atUp_iff _ _ _ _).mpr h⟩
+    | inr p =>
+      exact List.mem_filterMap.mpr ⟨atDown v t a, by cases a <;> simp,
+        (atDown_iff _ _ _ _).mpr h⟩
+
+private theorem mem_incidentCorners (v : Point n 0) (s : Bool) (f : Face n) :
+    f ∈ incidentCorners v s ↔ (v.boundary ∨ f.1 = s) ∧ ∃ a, cornerVertex f.2 a = v := by
+  by_cases hb : v.boundary
+  · cases hs : f.1 <;> simp [incidentCorners, hb, mem_sheetCorners, hs]
+  · simp [incidentCorners, hb, mem_sheetCorners]
 
 private def signed (b : Bool) : Int := if b then 1 else -1
 
