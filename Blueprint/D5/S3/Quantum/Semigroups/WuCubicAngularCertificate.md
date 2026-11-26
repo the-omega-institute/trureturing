@@ -177,4 +177,5 @@ When q = n and 0 ≤ m ≤ n ≤ 1, A₁, B₁, Z₀, Z₂, L₀, L and μ vanis
 - Truth anchor: `D5/S3/Quantum/Semigroups/WuCubicAngularCertificate.repeated_middle_angular_bound`
 - Dependency: [D5/S3/Quantum/Semigroups/WuCubicCoupledCuts](WuCubicCoupledCuts.md)
 - Dependency: [D5/S3/Quantum/Semigroups/WuCubicOperatorBridge](WuCubicOperatorBridge.md)
+- Dependency: [D5/S3/Quantum/Semigroups/WuCubicSharpLongCrossing](WuCubicSharpLongCrossing.md)
 - Dependency: [D5/S3/Quantum/Semigroups/WuCubicSignedTransfer](WuCubicSignedTransfer.md)
