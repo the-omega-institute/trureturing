@@ -678,7 +678,7 @@ workflow/脚本/make 永久不得物化或执行 base 树代码,不得以兜底/
 
 **项目缓存的本地恢复。** dev 主检出使用 `make lean-cache-from-github-without-mathlib` 优先从已发布的模块索引恢复编译产物。已有私有 build 可显式指定 `REFRESH_STALE=1` 替换。linked worktree 用 `make lean-cache-ensure FULL_BUILD=1` 从热的主检出播种。显式候选 Release 验证按 spec A22 执行。
 
-普通 PR 和受保护分支 push 的 required CI 为选中的每批目标运行 `lean-report-prepare` 和 `lean-report-scoped`，报告覆盖目标、utility 输入及 import 闭包。Truth Release 使用 `make lean-cache-prepare FULL_BUILD=1` 准备发布所需的编译产物和模块报告。
+普通 PR 和受保护分支 push 的 required CI 为选中的每批目标运行 `lean-report-prepare` 和 `lean-report-scoped`，报告覆盖目标、utility 输入及 import 闭包。Truth Release 从已发布的模块分片读取报告，报告键与上次发布相同时复用已有报告行。
 
 **Start with compatible reuse** according to section 6.1. In particular, observation-only tasks need no new tree or cache preparation. For edits or builds that write, validate and reuse a suitable linked tree first. Use `make worktree` with explicit `DEST` when isolation is needed.
 
