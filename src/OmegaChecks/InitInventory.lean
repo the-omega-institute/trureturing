@@ -712,6 +712,62 @@ def limitedOmniscienceFromMonadicReverse (collect : type_of% (@Std.IterM.toListR
   limitedOmniscienceFromReverse (fun it => (collect it.toIterM).run)
     (fun it => (correct it.toIterM).trans Iter.toListRev_eq_toListRev_toIterM.symm) f
 
+/-- Rendering every output as one character makes the string length count the iterator's outputs. -/
+@[instance_reducible] private def markerString (β : Type) : ToString β := ⟨fun _ => String.singleton 'x'⟩
+
+def limitedOmniscienceFromStringList (collect : type_of% @Std.Iter.toStringList)
+    (correct : ∀ {α β : Type} [Iterator α Id β] [Finite α Id] [ToString β] (it : Iter (α := α) β),
+      collect it = it.toStringList) (f : Nat → Bool) : Decidable (∃ n, f n = true) := by
+  apply limitedOmniscienceFromLength (f := f) (fun {α β} [Iterator α Id β] it =>
+    letI := markerString β
+    (collect it).length)
+  intro α β inst fin it
+  letI := markerString β
+  rw [correct, Iter.toStringList, Iter.toList_map, List.length_map]
+
+def limitedOmniscienceFromStringArray (collect : type_of% @Std.Iter.toStringArray)
+    (correct : ∀ {α β : Type} [Iterator α Id β] [Finite α Id] [ToString β] (it : Iter (α := α) β),
+      collect it = it.toStringArray) (f : Nat → Bool) : Decidable (∃ n, f n = true) := by
+  apply limitedOmniscienceFromStringList (fun it => (collect it).toList) _ f
+  intro α β inst fin fmt it
+  rw [correct, Iter.toStringArray, Iter.toStringList, Iter.toList_toArray]
+
+private theorem markerLength (xs : List β) :
+    (String.join (xs.map (fun _ => String.singleton 'x'))).toList.length = xs.length := by
+  rw [String.toList_join]
+  induction xs with
+  | nil => rfl
+  | cons a as ih =>
+    rw [List.map_cons, List.flatMap_cons, String.toList_singleton, List.singleton_append]
+    exact congrArg Nat.succ ih
+
+def limitedOmniscienceFromStringJoin (join : type_of% @Std.Iter.joinString)
+    (correct : ∀ {α β : Type} [Iterator α Id β] [Finite α Id] [ToString β] (it : Iter (α := α) β),
+      join it = String.join (it.toList.map toString)) (f : Nat → Bool) : Decidable (∃ n, f n = true) := by
+  apply limitedOmniscienceFromLength (f := f) (fun {α β} [Iterator α Id β] it =>
+    letI := markerString β
+    (join it).toList.length)
+  intro α β inst fin it
+  letI := markerString β
+  rw [correct]
+  exact markerLength _
+
+def limitedOmniscienceFromStringIntercalate (join : type_of% @Std.Iter.intercalateString)
+    (correct : ∀ {α β : Type} [Iterator α Id β] [Finite α Id] [ToString β]
+      (s : String.Slice) (it : Iter (α := α) β), join s it = s.copy.intercalate (it.toList.map toString))
+    (f : Nat → Bool) : Decidable (∃ n, f n = true) := by
+  apply limitedOmniscienceFromStringJoin (fun it => join "".toSlice it) _ f
+  intro α β inst fin fmt it
+  rw [correct, String.copy_toSlice]
+  generalize it.toList.map toString = xs
+  induction xs with
+  | nil => exact String.intercalate_nil.trans String.join_nil.symm
+  | cons x xs ih =>
+    rw [String.join_cons, ← ih]
+    cases xs with
+    | nil => rw [String.intercalate_singleton, String.intercalate_nil, String.append_empty]
+    | cons y ys => rw [String.intercalate_cons_cons, String.append_empty]
+
 private def indexStep (f : Nat → Bool) (it : IterM (α := Option Nat) Id Nat) :
     IterStep (IterM (α := Option Nat) Id Nat) Nat :=
   match it.internalState with
