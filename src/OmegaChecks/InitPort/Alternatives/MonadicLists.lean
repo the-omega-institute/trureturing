@@ -2,6 +2,7 @@ module
 public import Init.Data.Array.Monadic
 import all Init.Data.Array.Basic
 public import Init.Data.List.Monadic
+import all Init.Data.List.ToArray
 import all Init.Data.List.Control
 import Init.Data.List.Attach
 
@@ -350,5 +351,127 @@ public theorem List.forIn'_toArray : type_of% @_root_.List.forIn'_toArray := by
 public theorem List.forIn_toArray : type_of% @_root_.List.forIn_toArray := by
   intro m α β mon l b f
   exact List.forIn'_toArray l b (fun a _ => f a)
+
+
+public theorem List.forM_toArray' : type_of% @_root_.List.forM_toArray' := by
+  intro m α stop mon l f h
+  subst stop
+  rw [Array.forM, _root_.List.foldlM_toArray]
+  induction l with
+  | nil => rfl
+  | cons a xs ih =>
+    have same : (fun b : PUnit => xs.foldlM (fun _ => f) b) = fun _ : PUnit => xs.forM f := by
+      exact congrArg (fun val (_ : PUnit) => val) ih
+    exact congrArg (fun tail => f a >>= tail) same
+
+public theorem List.forIn'_loop_toArray._proof_1 :
+    type_of% @_root_.List.forIn'_loop_toArray._proof_1 := by
+  intro α l i a h
+  apply List.mem_toArray.mpr
+  exact List.take_append_drop (l.length - i) l ▸ List.mem_append_right (l.take (l.length - i)) h
+
+public theorem List.forIn'_loop_toArray : type_of% @_root_.List.forIn'_loop_toArray := by
+  intro m α β mon l f i h b
+  let k := l.length - i
+  let xs := l.drop k
+  have len : xs.length = i := by
+    rw [List.length_drop]
+    exact Nat.sub_sub_self h
+  have decomposition : l.length = xs.length + k := by
+    rw [len, Nat.add_comm]
+    exact (Nat.sub_add_cancel h).symm
+  have suffix : ∃ s, s ++ xs = l := ⟨l.take k, List.take_append_drop ..⟩
+  have first := arrayListForIn l f xs k decomposition rfl suffix
+  have second := listForInReindex id (fun a (mem : a ∈ l) => f a (List.mem_toArray.mpr mem))
+    (fun a (mem : a ∈ xs) => f a (List.forIn'_loop_toArray._proof_1 l i a mem))
+    (fun _ _ _ => rfl) xs xs (List.map_id xs) suffix ⟨[], rfl⟩
+  have result := congrFun (first.trans second) b
+  have move (j i : Nat) (hj : j ≤ l.length) (hi : i ≤ l.length) (e : j = i) :
+      Array.forIn'.loop l.toArray f i hi b = Array.forIn'.loop l.toArray f j hj b := by
+    subst i
+    rfl
+  exact (move _ _ _ _ len).trans result
+
+
+public theorem Array.findM?_pure : type_of% @_root_.Array.findM?_pure := by
+  intro α m mon law p xs
+  cases xs with
+  | mk l =>
+    rw [Array.findM?, List.forIn_toArray, _root_.List.find?_toArray]
+    induction l with
+    | nil => rw [List.forIn_nil, pure_bind]; rfl
+    | cons a l ih =>
+      rw [List.forIn_cons, pure_bind]
+      cases hp : p a with
+      | false =>
+        rw [ite_eq_right Bool.false_ne_true, pure_bind, List.find?_cons, hp]
+        exact ih
+      | true => rw [ite_eq_left rfl, pure_bind, pure_bind, List.find?_cons, hp]
+
+public theorem Array.findSomeM?_pure : type_of% @_root_.Array.findSomeM?_pure := by
+  intro m α β mon law f xs
+  cases xs with
+  | mk l =>
+    rw [Array.findSomeM?, List.forIn_toArray, _root_.List.findSome?_toArray]
+    induction l with
+    | nil => rw [List.forIn_nil, pure_bind]; rfl
+    | cons a l ih =>
+      rw [List.forIn_cons, pure_bind]
+      cases hp : f a with
+      | none =>
+        rw [pure_bind, List.findSome?_cons, hp]
+        exact ih
+      | some b => rw [pure_bind, pure_bind, List.findSome?_cons, hp]
+
+
+public theorem Array.idRun_forIn'_yield_eq_foldl : type_of% @_root_.Array.idRun_forIn'_yield_eq_foldl := by
+  intros
+  exact _root_.Array.forIn'_pure_yield_eq_foldl _ _
+
+public theorem Array.idRun_forIn_yield_eq_foldl : type_of% @_root_.Array.idRun_forIn_yield_eq_foldl := by
+  intros
+  exact _root_.Array.forIn_pure_yield_eq_foldl _ _
+
+public theorem Array.forM_append : type_of% @_root_.Array.forM_append := by
+  intro m α mon law xs ys f
+  cases xs with
+  | mk xs =>
+    cases ys with
+    | mk ys =>
+      rw [List.append_toArray, _root_.List.forM_toArray, _root_.List.forM_toArray, _root_.List.forM_toArray]
+      exact List.forM_append
+
+private theorem foldActions [Monad m] {f g : β → α → m β}
+    (same : ∀ a, (fun b => f b a) = fun b => g b a) (xs : List α) :
+    (fun b => xs.foldlM f b) = fun b => xs.foldlM g b := by
+  induction xs with
+  | nil => rfl
+  | cons a xs ih =>
+    let step (head : β → m β) (tail : β → m β) (b : β) := head b >>= tail
+    exact (congrArg (step (fun b => f b a)) ih).trans (congrArg (fun head => step head _) (same a))
+
+public theorem Array.filterM_congr : type_of% @_root_.Array.filterM_congr := by
+  intro α m mon xs ys e p q h
+  subst ys
+  rw [Array.filterM, Array.filterM, ← Array.foldlM_toList, ← Array.foldlM_toList]
+  exact congrFun (foldActions (fun a => by rw [h a]) xs.toList) _
+
+public theorem Array.filterRevM_congr : type_of% @_root_.Array.filterRevM_congr := by
+  intro α m mon xs ys e p q h
+  subst ys
+  rw [Array.filterRevM, Array.filterRevM, Array.foldrM_eq_reverse_foldlM_toList, Array.foldrM_eq_reverse_foldlM_toList]
+  exact congrArg (Functor.map Array.reverse) (congrFun (foldActions (fun a => by rw [h a]) xs.toList.reverse) _)
+
+public theorem Array.filterMapM_congr : type_of% @_root_.Array.filterMapM_congr := by
+  intro m α β mon xs ys e f g h
+  subst ys
+  rw [Array.filterMapM, Array.filterMapM, ← Array.foldlM_toList, ← Array.foldlM_toList]
+  exact congrFun (foldActions (fun a => by rw [h a]) xs.toList) _
+
+public theorem Array.flatMapM_congr : type_of% @_root_.Array.flatMapM_congr := by
+  intro m α β mon xs ys e f g h
+  subst ys
+  rw [Array.flatMapM, Array.flatMapM, ← Array.foldlM_toList, ← Array.foldlM_toList]
+  exact congrFun (foldActions (fun a => by rw [h a]) xs.toList) _
 
 end OmegaChecks.InitPort.Alternatives
