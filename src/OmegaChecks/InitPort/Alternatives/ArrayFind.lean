@@ -221,4 +221,104 @@ public theorem Array.findIdx?_take : type_of% @_root_.Array.findIdx?_take := by
   cases xs with
   | mk xs => rw [List.take_toArray, List.findIdx?_toArray, List.findIdx?_toArray]; exact List.findIdx?_take
 
+public theorem Array.findFinIdx?_append : type_of% @_root_.Array.findFinIdx?_append := by
+  intro α xs ys p
+  apply (Option.map_inj_right (f := Fin.val) (fun _ _ => Fin.eq_of_val_eq)).mp
+  rw [← Array.findIdx?_eq_map_findFinIdx?_val, Array.findIdx?_append,
+    Array.findIdx?_eq_map_findFinIdx?_val, Array.findIdx?_eq_map_findFinIdx?_val]
+  cases xs.findFinIdx? p <;> cases ys.findFinIdx? p <;> first | rfl | exact congrArg some (Nat.add_comm ..)
+
+public theorem Array.findFinIdx?_push : type_of% @_root_.Array.findFinIdx?_push := by
+  intro α xs a p
+  apply (Option.map_inj_right (f := Fin.val) (fun _ _ => Fin.eq_of_val_eq)).mp
+  rw [← Array.findIdx?_eq_map_findFinIdx?_val, Array.findIdx?_push, Array.findIdx?_eq_map_findFinIdx?_val]
+  cases xs.findFinIdx? p <;> cases p a <;> rfl
+
+public theorem Array.findIdx?_eq_bind_find?_idxOf? : type_of% @_root_.Array.findIdx?_eq_bind_find?_idxOf? := by
+  intro α _ _ xs p
+  cases xs with
+  | mk xs =>
+    rw [List.findIdx?_toArray, List.find?_toArray, List.findIdx?_eq_bind_find?_idxOf?]
+    cases xs.find? p with
+    | none => rfl
+    | some a => exact (List.idxOf?_toArray a xs).symm
+
+public theorem Array.findFinIdx?_eq_bind_find?_finIdxOf? : type_of% @_root_.Array.findFinIdx?_eq_bind_find?_finIdxOf? := by
+  intro α _ _ xs p
+  apply (Option.map_inj_right (f := Fin.val) (fun _ _ => Fin.eq_of_val_eq)).mp
+  rw [← Array.findIdx?_eq_map_findFinIdx?_val, _root_.Array.findIdx?_eq_bind_find?_idxOf?]
+  cases xs.find? p with
+  | none => rfl
+  | some a => exact Array.idxOf?_eq_map_finIdxOf?_val
+
+public theorem Array.findIdx_eq_getD_bind_find?_idxOf? : type_of% @_root_.Array.findIdx_eq_getD_bind_find?_idxOf? := by
+  intros
+  rw [_root_.Array.findIdx_eq_getD_findIdx?, _root_.Array.findIdx?_eq_bind_find?_idxOf?]
+
+public theorem Array.find?_replicate_eq_none_iff : type_of% @_root_.Array.find?_replicate_eq_none_iff := by
+  intros
+  rw [← List.toArray_replicate, List.find?_toArray]
+  exact _root_.List.find?_replicate_eq_none_iff
+
+public theorem List.min_findIdx_findIdx : type_of% @_root_.List.min_findIdx_findIdx := by
+  intro α xs p q
+  induction xs with
+  | nil => rfl
+  | cons x xs ih =>
+    rw [List.findIdx_cons, List.findIdx_cons, List.findIdx_cons]
+    cases p x <;> cases q x <;> simp only [Bool.false_or, Bool.true_or, Bool.false_eq_true, ite_false, ite_true,
+      Nat.zero_min, Nat.min_zero, Nat.add_min_add_right, ih]
+
+public theorem Array.find?_filter : type_of% @_root_.Array.find?_filter := by
+  intro α xs p q
+  rw [← Array.find?_toList, Array.toList_filter, _root_.List.find?_filter, ← Array.find?_toList]
+
+public theorem Array.findIdx?_eq_some_le_of_findIdx?_eq_some : type_of% @_root_.Array.findIdx?_eq_some_le_of_findIdx?_eq_some := by
+  intro α xs p q implies i hit
+  cases xs with
+  | mk xs =>
+    rw [List.findIdx?_toArray] at hit ⊢
+    apply _root_.List.findIdx?_eq_some_le_of_findIdx?_eq_some _ hit
+    exact fun x mem => implies x (List.mem_toArray.mpr mem)
+
+public theorem Array.find?_flatten_eq_some_iff : type_of% @_root_.Array.find?_flatten_eq_some_iff := by
+  intro α xss p a
+  rw [Array.find?_flatten, Array.findSome?_eq_some_iff]
+  constructor
+  · rintro ⟨pre, row, post, eq, hit, absent⟩
+    obtain ⟨ok, left, right, rfl, misses⟩ := Array.find?_eq_some_iff_append.mp hit
+    exact ⟨ok, pre, left, right, post, eq,
+      fun ys mem x hx => flipped.mpr (Array.find?_eq_none.mp (absent ys mem) x hx), misses⟩
+  · rintro ⟨ok, pre, left, right, post, eq, misses, absent⟩
+    exact ⟨pre, left.push a ++ right, post, eq,
+      Array.find?_eq_some_iff_append.mpr ⟨ok, left, right, rfl, absent⟩,
+      fun ys mem => Array.find?_eq_none.mpr (fun x hx => flipped.mp (misses ys mem x hx))⟩
+
+public theorem List.findIdx?_eq_some_le_of_findIdx?_eq_some : type_of% @_root_.List.findIdx?_eq_some_le_of_findIdx?_eq_some := by
+  intro α xs p q implies i hit
+  obtain ⟨hi, eq⟩ := List.findIdx?_eq_some_iff_findIdx_eq.mp hit
+  have le := Nat.le_trans (List.findIdx_le_findIdx implies) (Nat.le_of_eq eq)
+  exact ⟨xs.findIdx q, le, List.findIdx?_eq_some_iff_findIdx_eq.mpr ⟨Nat.lt_of_le_of_lt le hi, rfl⟩⟩
+
+private theorem mapSearch {xs : List α} {p q : α → Bool} (h : ∀ x, p x = q x) : xs.findIdx? p = xs.findIdx? q := by
+  induction xs with
+  | nil => rfl
+  | cons x xs ih => rw [List.findIdx?_cons, List.findIdx?_cons, h]; cases q x <;> first | rfl | exact congrArg (Option.map Nat.succ) ih
+
+public theorem Array.findIdx?_flatten : type_of% @_root_.Array.findIdx?_flatten := by
+  intro α xss p
+  cases xss using Array.array₂_induction with
+  | of rows =>
+    simp only [Array.flatten_toArray_map_toArray, List.findIdx?_toArray, List.findIdx?_flatten, List.findIdx?_map]
+    rw [mapSearch (xs := rows) (q := (fun ys => ys.any p) ∘ List.toArray) (fun ys => (List.any_toArray (p := p) (l := ys)).symm)]
+    cases rows.findIdx? ((fun ys => ys.any p) ∘ List.toArray) with
+    | none => rfl
+    | some i =>
+      simp only [Option.map_some]
+      have lengths := List.map_congr_left (l := rows.take i) (f := fun ys => ys.toArray.size) (g := List.length) (fun _ _ => List.size_toArray)
+      simp only [List.take_toArray, List.map_toArray, List.sum_toArray, ← List.map_take,
+        List.map_map, List.getElem?_toArray, List.getElem?_map, Function.comp_def, lengths]
+      cases rows[i]? with
+      | none => rfl
+      | some row => simp only [Option.map_some, Option.getD_some, List.findIdx_toArray]
 end OmegaChecks.InitPort.Alternatives

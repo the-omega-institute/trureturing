@@ -1,4 +1,5 @@
 module
+public import OmegaChecks.InitPort.Alternatives.VectorFind
 public import OmegaChecks.InitPort.Alternatives.VectorNested
 import all Init.Data.Vector.Basic
 import Init.Data.Vector.Lemmas

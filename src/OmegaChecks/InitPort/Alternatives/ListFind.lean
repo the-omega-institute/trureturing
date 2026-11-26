@@ -200,5 +200,54 @@ public theorem List.getLast_filter : type_of% @_root_.List.getLast_filter := by
   exact Option.some.inj ((_root_.List.getLast?_eq_some_getLast ‹_›).symm.trans
     (_root_.List.getLast?_filter.trans (Option.some_get _).symm))
 
+public theorem List.findFinIdx?_append : type_of% @_root_.List.findFinIdx?_append := by
+  intro α xs ys p
+  apply sameFinOption
+  rw [← List.findIdx?_eq_map_findFinIdx?_val, List.findIdx?_append,
+    List.findIdx?_eq_map_findFinIdx?_val, List.findIdx?_eq_map_findFinIdx?_val]
+  cases xs.findFinIdx? p <;> cases ys.findFinIdx? p <;> first | rfl | exact congrArg some (Nat.add_comm ..)
+
+public theorem List.findIdx?_flatten : type_of% @_root_.List.findIdx?_flatten := by
+  intro α rows p
+  induction rows with
+  | nil => rfl
+  | cons xs rows ih =>
+    rw [List.flatten_cons, List.findIdx?_append, List.findIdx?_cons]
+    cases hit : xs.any p with
+    | true =>
+      rw [List.findIdx?_eq_some_of_exists (List.any_eq_true.mp hit)]
+      exact congrArg some (Nat.zero_add _).symm
+    | false =>
+      have absent := List.findIdx?_eq_none_iff.mpr (fun x hx =>
+        Bool.eq_false_iff.mpr (List.any_eq_false.mp hit x hx))
+      rw [absent, ih]
+      cases rows.findIdx? (·.any p) with
+      | none => rfl
+      | some i =>
+        change some ((_ + _) + xs.length) = some ((xs.length + _) + _)
+        exact congrArg some ((Nat.add_comm _ xs.length).trans (Nat.add_assoc ..).symm)
+
+private theorem offsetSearch (xs : List α) (p : α → Bool) (k : Nat) :
+    (xs.zipIdx k).findSome? (fun pair => if p pair.1 then some pair.2 else none) =
+      (xs.findIdx? p).map (fun i => k + i) := by
+  induction xs generalizing k with
+  | nil => rfl
+  | cons x xs ih =>
+    rw [List.zipIdx_cons, List.findSome?_cons, List.findIdx?_cons]
+    cases h : p x with
+    | true => rfl
+    | false =>
+      change (xs.zipIdx (k + 1)).findSome? _ = ((xs.findIdx? p).map Nat.succ).map _
+      rw [ih]
+      cases xs.findIdx? p with
+      | none => rfl
+      | some n => exact congrArg some (Nat.succ_add k n)
+
+public theorem List.findIdx?_eq_findSome?_zipIdx : type_of% @_root_.List.findIdx?_eq_findSome?_zipIdx := by
+  intro α xs p
+  have e := (offsetSearch xs p 0).symm
+  cases hit : xs.findIdx? p with
+  | none => rw [hit] at e; exact e
+  | some i => rw [hit] at e; exact (congrArg some (Nat.zero_add i).symm).trans e
 
 end OmegaChecks.InitPort.Alternatives
