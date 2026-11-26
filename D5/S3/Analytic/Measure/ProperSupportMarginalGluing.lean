@@ -9,7 +9,7 @@
 module
 
 public import OmegaBuild.Commands
-public import Mathlib.Probability.Independence.Integration
+public import D5.S3.Combinatorics.Hypergraphs.FinnerProductMeasure
 import D5.S3.Analytic.Measure.ProductSupportIntersection
 
 compile_only_with_mathlib
@@ -68,14 +68,28 @@ private lemma integral_coordinate_product (s : Finset I) (h : ∀ i, X i → ℝ
     (∫⁻ x, ∏ i ∈ s, h i (x i) ∂MeasureTheory.Measure.pi μ) =
       ∏ i ∈ s, ∫⁻ t, h i t ∂μ i := by
   classical
-  rw [ProbabilityTheory.lintegral_prod_eq_prod_lintegral_of_indepFun
-    (μ := MeasureTheory.Measure.pi μ) s
-    (fun (i : I) (x : ∀ i, X i) => h i (x i))
-    (ProbabilityTheory.iIndepFun_pi (fun i => (hm i).aemeasurable))
-    (fun i => (hm i).comp (measurable_pi_apply i))]
-  apply prod_congr rfl
-  intro i hi
-  exact (measurePreserving_eval μ i).lintegral_comp (hm i)
+  have H (h : ∀ i, X i → ℝ≥0∞) (hm : ∀ i, Measurable (h i)) :
+      (∫⁻ x, ∏ i, h i (x i) ∂MeasureTheory.Measure.pi μ) =
+        ∏ i, ∫⁻ t, h i t ∂μ i := by
+    let e := (Fintype.equivFin I).symm
+    rw [← (measurePreserving_piCongrLeft μ e).lintegral_comp_emb
+      (MeasurableEquiv.measurableEmbedding _)]
+    simp only [← e.prod_comp, MeasurableEquiv.coe_piCongrLeft,
+      Equiv.piCongrLeft_apply_apply]
+    exact D5.S3.Combinatorics.Hypergraphs.FinnerProductMeasure.lintegral_fin_prod (fun i => μ (e i))
+      (fun i => h (e i)) (fun i => hm (e i))
+  let g : ∀ i, X i → ℝ≥0∞ := fun i t => if i ∈ s then h i t else 1
+  have hg (i : I) : Measurable (g i) := by
+    dsimp [g]
+    split_ifs <;> fun_prop
+  have hp (x : ∀ i, X i) : (∏ i, g i (x i)) = ∏ i ∈ s, h i (x i) :=
+    prod_ite_mem_eq s (fun i => h i (x i))
+  rw [← funext hp, H g hg]
+  have hi (i : I) : (∫⁻ t, g i t ∂μ i) = if i ∈ s then (∫⁻ t, h i t ∂μ i) else 1 := by
+    dsimp [g]
+    split_ifs <;> simp
+  simp_rw [hi]
+  exact prod_ite_mem_eq s (fun i => ∫⁻ t, h i t ∂μ i)
 
 private lemma marginal_coordinate_product [DecidableEq I] (s : Finset I)
     (h : ∀ i, X i → ℝ≥0∞) (hm : ∀ i, Measurable (h i))

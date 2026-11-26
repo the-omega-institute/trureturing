@@ -13,6 +13,21 @@ internal sealed class FinnerProductMeasureDocument : IScribeDocumentDefinition
         "under one product probability law.",
         H("Finner's inequality on product probability spaces"),
         Blocks(
+            Describe.Lean(DescribeId.Create("finite-coordinate-product-integral"),
+                DeclarationHandle.Create(Prefix + "lintegral_fin_prod"),
+                H("Product integrals of separate coordinate functions"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromLiterature(Source),
+                Blocks(Paragraph(Text(
+                    "For any natural n, measurable spaces E_i indexed by Fin n, sigma-finite " +
+                    "measures mu_i and measurable ENNReal functions a_i on E_i, the integral " +
+                    "of product_i a_i(x_i) under Measure.pi(mu_i) equals the product of " +
+                    "their separate integrals. No probability, positivity or finiteness " +
+                    "of those integrals is required. The empty product is included. " +
+                    "The proof uses the measure-preserving finite-Pi decomposition and " +
+                    "binary Tonelli, including the ENNReal convention zero times infinity " +
+                    "equal to zero. This same product-integral statement supports coordinate " +
+                    "density products and the identification of normalized coordinate " +
+                    "profiles by marginal integration."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("finner-product-measure"),
                 DeclarationHandle.Create(Prefix + "finner_product_measure"),
                 H("Fractional hypergraph inequality"),
