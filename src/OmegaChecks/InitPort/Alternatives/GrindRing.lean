@@ -375,4 +375,133 @@ public theorem Lean.Grind.CommRing.Power.eq_of_revlex :
       | lt => rw [hw] at h; contradiction
       | gt => rw [hw] at h; contradiction
 
+
+public theorem Lean.Grind.CommRing.Poly.combine_k_eq_combine :
+    type_of% @_root_.Lean.Grind.CommRing.Poly.combine_k_eq_combine := by
+  intro p q
+  unfold Poly.combine_k Poly.combine
+  generalize hugeFuel = fuel
+  induction fuel generalizing p q with
+  | zero => rfl
+  | succ f ih =>
+    cases p with
+    | num a =>
+      cases q with
+      | num b => rfl
+      | add b n q => exact Poly.addConst_k_eq_addConst ..
+    | add a m p =>
+      cases q with
+      | num b => exact Poly.addConst_k_eq_addConst ..
+      | add b n q =>
+        dsimp only [Poly.combine.go]
+        rw [Mon.grevlex_k_eq_grevlex m n]
+        cases h : m.grevlex n with
+        | lt => exact congrArg (Poly.add b n) (ih (.add a m p) q)
+        | gt => exact congrArg (Poly.add a m) (ih p (.add b n q))
+        | eq =>
+          rw [Int.beq'_eq_beq (Int.add a b) 0, ih p q]
+          cases @BEq.beq Int (@instBEqOfDecidableEq Int Int.instDecidableEq) (a+b) 0 <;> rfl
+
+private theorem polyCongr (f : Poly → Poly → Poly) {a b c d : Poly} (i : a = b) (j : c = d) :
+    f a c = f b d := i ▸ j ▸ rfl
+
+public theorem Lean.Grind.CommRing.Expr.toPoly_k_eq_toPoly :
+    type_of% @_root_.Lean.Grind.CommRing.Expr.toPoly_k_eq_toPoly := by
+  intro e
+  induction e with
+  | num | intCast | natCast | var => rfl
+  | neg a ih => exact (Poly.mulConst_k_eq_mulConst ..).trans (congrArg (Poly.mulConst (-1)) ih)
+  | add a b i j => exact (Poly.combine_k_eq_combine ..).trans (polyCongr Poly.combine i j)
+  | sub a b i j =>
+    exact (Poly.combine_k_eq_combine ..).trans (polyCongr Poly.combine i
+      ((Poly.mulConst_k_eq_mulConst ..).trans (congrArg (Poly.mulConst (-1)) j)))
+  | mul a b i j => exact polyCongr Poly.mul i j
+  | pow a k ih =>
+    cases k with
+    | zero => cases a <;> rfl
+    | succ k =>
+      cases a <;> first | rfl | exact congrArg (fun v => Poly.pow v (k+1)) ih
+
+
+private theorem powerEqOfBeq {p q : Power} (h : p.beq' q) : p = q := by
+  cases p with
+  | mk x k =>
+    cases q with
+    | mk y l =>
+      have both := Bool.and_eq_true_iff.mp (show (x.beq y && k.beq l) = true from h)
+      cases Nat.eq_of_beq_eq_true both.1
+      cases Nat.eq_of_beq_eq_true both.2
+      rfl
+
+private theorem monEqOfBeq {m n : Mon} (h : m.beq' n) : m = n := by
+  induction m generalizing n with
+  | unit => cases n <;> first | rfl | contradiction
+  | mult p m ih =>
+    cases n with
+    | unit => contradiction
+    | mult q n =>
+      have both := Bool.and_eq_true_iff.mp (show (p.beq' q && m.beq' n) = true from h)
+      cases powerEqOfBeq both.1
+      cases ih both.2
+      rfl
+
+private theorem intEqOfBeq {a b : Int} (h : Int.beq' a b) : a = b := by
+  rw [Int.beq'_eq_beq] at h
+  exact eq_of_beq h
+
+private theorem polyEqOfBeq {p q : Poly} (h : p.beq' q) : p = q := by
+  induction p generalizing q with
+  | num a =>
+    cases q with
+    | num b => exact congrArg Poly.num (intEqOfBeq h)
+    | add => contradiction
+  | add a m p ih =>
+    cases q with
+    | num => contradiction
+    | add b n q =>
+      have both := Bool.and_eq_true_iff.mp
+        (show (Int.beq' a b && (m.beq' n && p.beq' q)) = true from h)
+      have tails := Bool.and_eq_true_iff.mp both.2
+      cases intEqOfBeq both.1
+      cases monEqOfBeq tails.1
+      cases ih tails.2
+      rfl
+
+public theorem Lean.Grind.CommRing.Stepwise.mul :
+    type_of% @_root_.Lean.Grind.CommRing.Stepwise.mul := by
+  intro α _ ctx p₁ k p cert h
+  cases polyEqOfBeq (p := p₁.mulConst_k k) (q := p) cert
+  rw [Poly.mulConst_k_eq_mulConst, Poly.denote_mulConst, h, Semiring.mul_zero]
+
+public theorem Lean.Grind.CommRing.Stepwise.superpose :
+    type_of% @_root_.Lean.Grind.CommRing.Stepwise.superpose := by
+  intro α _ ctx k₁ m₁ p₁ k₂ m₂ p₂ p cert h₁ h₂
+  cases polyEqOfBeq (p := (p₁.mulMon_k k₁ m₁).combine_k (p₂.mulMon_k k₂ m₂)) (q := p) cert
+  rw [Poly.combine_k_eq_combine, Poly.mulMon_k_eq_mulMon, Poly.mulMon_k_eq_mulMon,
+      Poly.denote_combine, Poly.denote_mulMon, Poly.denote_mulMon, h₁, h₂,
+      Semiring.mul_zero, Semiring.mul_zero, Semiring.add_zero]
+
+public theorem Lean.Grind.CommRing.Stepwise.simp :
+    type_of% @_root_.Lean.Grind.CommRing.Stepwise.simp := by
+  intro α _ ctx k₁ p₁ k₂ m₂ p₂ p cert h₁ h₂
+  cases polyEqOfBeq (p := (p₁.mulConst_k k₁).combine_k (p₂.mulMon_k k₂ m₂)) (q := p) cert
+  rw [Poly.combine_k_eq_combine, Poly.mulMon_k_eq_mulMon, Poly.mulConst_k_eq_mulConst,
+      Poly.denote_combine, Poly.denote_mulMon, Poly.denote_mulConst, h₁, h₂,
+      Semiring.mul_zero, Semiring.mul_zero, Semiring.add_zero]
+
+public theorem Lean.Grind.CommRing.Stepwise.d_step1 :
+    type_of% @_root_.Lean.Grind.CommRing.Stepwise.d_step1 := by
+  intro α _ ctx k init p₁ k₂ m₂ p₂ p cert h₁ h₂
+  rw [polyEqOfBeq (p := p) (q := p₁.combine_k (p₂.mulMon_k k₂ m₂)) cert,
+      Poly.combine_k_eq_combine, Poly.mulMon_k_eq_mulMon, Poly.denote_combine,
+      Poly.denote_mulMon, h₂, Semiring.mul_zero, Semiring.add_zero, h₁]
+
+public theorem Lean.Grind.CommRing.Stepwise.d_stepk :
+    type_of% @_root_.Lean.Grind.CommRing.Stepwise.d_stepk := by
+  intro α _ ctx k₁ k init p₁ k₂ m₂ p₂ p cert h₁ h₂
+  rw [polyEqOfBeq (p := p) (q := (p₁.mulConst_k k₁).combine_k (p₂.mulMon_k k₂ m₂)) cert,
+      Poly.combine_k_eq_combine, Poly.mulMon_k_eq_mulMon, Poly.mulConst_k_eq_mulConst,
+      Poly.denote_combine, Poly.denote_mulMon, Poly.denote_mulConst, h₂,
+      Semiring.mul_zero, Semiring.add_zero, Ring.intCast_mul, Semiring.mul_assoc, h₁]
+
 end OmegaChecks.InitPort.Alternatives
