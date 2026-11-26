@@ -8,6 +8,11 @@ open Lean.Grind Lean.Grind.CommRing
 namespace OmegaChecks.InitPort.Alternatives
 
 open _root_.Lean.Grind.Ring.OfSemiring in
+@[instance_reducible] public def Lean.Grind.CommRing.OfCommSemiring.instIntCastQ :
+    type_of% @_root_.Lean.Grind.CommRing.OfCommSemiring.instIntCastQ :=
+  fun {_} _ _ => ⟨intCast⟩
+
+open _root_.Lean.Grind.Ring.OfSemiring in
 public theorem Lean.Grind.Ring.OfSemiring.toQ_zero {α : Type u} [Semiring α] :
     toQ (0 : α) = natCast (α := α) 0 :=
   congrArg (fun x : α => Q.mk (x, 0)) (Semiring.natCast_zero (α := α)).symm
