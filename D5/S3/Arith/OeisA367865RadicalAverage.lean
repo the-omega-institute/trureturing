@@ -6,11 +6,16 @@
    utility: none
    digest: Exact rational radical-average identity for OEIS A367865. -/
 
-import D5.S3.Arith.RoldanCirculantEnergyP2Q3
+import Mathlib.Data.Nat.Totient
 import Mathlib.NumberTheory.ArithmeticFunction.Moebius
 import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.Data.Nat.Totient
-import Mathlib.Algebra.BigOperators.Intervals
+import Mathlib.Tactic.FieldSimp
+
+/-!
+# OEIS A367865 radical-average identity
+
+The escape audit remains unfinished. See https://github.com/the-omega-institute/trureturing/issues/34659.
+-/
 
 open scoped BigOperators ArithmeticFunction.Moebius
 open ArithmeticFunction
@@ -99,28 +104,6 @@ private theorem gcd_sum (m : ℕ) (hm : 0 < m) :
       intro d hd
       ring
 
-private theorem sum_periodic (f : ℕ → ℚ) (g q : ℕ) (hf : Function.Periodic f g) :
-    ∑ k ∈ Finset.range (q * g), f k =
-      (q : ℚ) * ∑ k ∈ Finset.range g, f k := by
-  induction q with
-  | zero => simp
-  | succ q ih =>
-      rw [Nat.succ_mul, Finset.sum_range_add, ih]
-      have hblock : ∀ k, f (q * g + k) = f k := by
-        intro k
-        simpa [Nat.add_comm] using hf.nat_mul q k
-      simp_rw [hblock]
-      simp [Nat.cast_add, add_mul]
-
-private theorem icc_range (n : ℕ) (f : ℕ → ℚ) (hfn : f 0 = f n) :
-    ∑ k ∈ Finset.Icc 1 n, f k = ∑ k ∈ Finset.range n, f k := by
-  rw [show Finset.Icc 1 n = Finset.Ico 1 (n + 1) by ext k; simp,
-    Finset.sum_Ico_eq_sum_range]
-  simp only [Nat.add_sub_cancel, Nat.add_comm 1]
-  have hfull := (Finset.sum_range_succ' f n).symm.trans (Finset.sum_range_succ f n)
-  rw [hfn] at hfull
-  exact add_right_cancel hfull
-
 private theorem radical_sum (n : ℕ) (hn : 0 < n) :
     ∑ k ∈ Finset.Icc 1 n,
       ((UniqueFactorizationMonoid.radical (n * k) : ℕ) : ℚ) /
@@ -131,23 +114,33 @@ private theorem radical_sum (n : ℕ) (hn : 0 < n) :
   let m := UniqueFactorizationMonoid.radical n
   have hm : 0 < m := Nat.radical_pos n
   have hmn : m ∣ n := UniqueFactorizationMonoid.radical_dvd_self
+  let q := n / m
+  have hqm : q * m = n := Nat.div_mul_cancel hmn
   let f : ℕ → ℚ := fun k => ((m / Nat.gcd m k : ℕ) : ℚ)
   have hper : Function.Periodic f m := by
     exact (Nat.periodic_gcd m).comp (fun e => ((m / e : ℕ) : ℚ))
   have hzero : f 0 = f n := by
-    dsimp [f]
-    rw [Nat.gcd_zero_right, Nat.div_self hm,
-      (Nat.gcd_eq_left_iff_dvd.mpr hmn), Nat.div_self hm]
+    rw [← hqm]
+    exact (hper.nat_mul_eq q).symm
   have hsum :
       (∑ k ∈ Finset.range n, f k) =
         (n : ℚ) / m * ∑ k ∈ Finset.range m, f k := by
     calc
-      (∑ k ∈ Finset.range n, f k) =
-          ∑ k ∈ Finset.range ((n / m) * m), f k := by rw [Nat.div_mul_cancel hmn]
-      _ = ((n / m : ℕ) : ℚ) * ∑ k ∈ Finset.range m, f k :=
-        sum_periodic f m (n / m) hper
+      (∑ k ∈ Finset.range n, f k) = ∑ k : Fin (q * m), f k := by
+        rw [Fin.sum_univ_eq_sum_range, hqm]
+      _ = ∑ ij : Fin q × Fin m, f ij.2 := by
+        symm
+        refine Fintype.sum_equiv finProdFinEquiv _ _ (fun ij => ?_)
+        change f (ij.2 : ℕ) = f ((ij.2 : ℕ) + m * (ij.1 : ℕ))
+        rw [Nat.mul_comm m]
+        exact (hper.nat_mul (ij.1 : ℕ) ij.2).symm
+      _ = (q : ℚ) * ∑ k ∈ Finset.range m, f k := by
+        rw [Fintype.sum_prod_type]
+        simp only [Finset.sum_const, Finset.card_univ, Fintype.card_fin,
+          nsmul_eq_mul, Fin.sum_univ_eq_sum_range]
       _ = (n : ℚ) / (m : ℚ) * ∑ k ∈ Finset.range m, f k := by
-        rw [Nat.cast_div hmn (by exact_mod_cast hm.ne')]
+        rw [show (q : ℚ) = (n : ℚ) / (m : ℚ) from
+          Nat.cast_div hmn (by exact_mod_cast hm.ne')]
   calc
     (∑ k ∈ Finset.Icc 1 n,
         ((UniqueFactorizationMonoid.radical (n * k) : ℕ) : ℚ) /
@@ -157,7 +150,10 @@ private theorem radical_sum (n : ℕ) (hn : 0 < n) :
           intro k hk
           dsimp [f, m]
           exact radical_quotient n k hn (Finset.mem_Icc.mp hk).1
-    _ = ∑ k ∈ Finset.range n, f k := icc_range n f hzero
+    _ = ∑ k ∈ Finset.range n, f k := by
+      rw [← Finset.Ico_add_one_right_eq_Icc, Finset.sum_Ico_succ_top hn,
+        Finset.sum_range_eq_add_Ico f hn, hzero]
+      exact add_comm _ _
     _ = (n : ℚ) / (m : ℚ) * ∑ k ∈ Finset.range m, f k := hsum
     _ = (n : ℚ) / (m : ℚ) *
         ∑ d ∈ m.divisors, (d : ℚ) * (Nat.totient d : ℚ) := by
@@ -203,15 +199,9 @@ private theorem divisor_mobius_sq (n : ℕ) (hn : 0 < n) :
       apply Finset.sum_congr rfl
       intro d hd
       have hsd := Squarefree.squarefree_of_dvd (Nat.mem_divisors.mp hd).1 hsqm
-      rw [ArithmeticFunction.moebius_apply_of_squarefree hsd]
-      have hneg : ((((-1 : ℤ) ^ cardFactors d : ℤ) : ℚ) ^ 2) = 1 := by
-        rcases neg_one_pow_eq_or ℤ (cardFactors d) with h | h
-        · rw [h]
-          norm_num
-        · rw [h]
-          norm_num
-      rw [hneg]
-      ring
+      have hsq : (((ArithmeticFunction.moebius d : ℤ) : ℚ) ^ 2) = 1 := by
+        exact_mod_cast ArithmeticFunction.moebius_sq_eq_one_of_squarefree hsd
+      rw [hsq, mul_one]
 
 /-- OEIS A367865, including the case `n = 1`. -/
 theorem result (n : ℕ) (hn : 0 < n) :

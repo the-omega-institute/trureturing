@@ -23,4 +23,3 @@ The squarefree radical m has exactly the squarefree divisors of n. Mathlib's Mö
 ## References
 
 - Truth anchor: `D5/S3/Arith/OeisA367865RadicalAverage.result`
-- Dependency: [D5/S3/Arith/RoldanCirculantEnergyP2Q3](RoldanCirculantEnergyP2Q3.md)
