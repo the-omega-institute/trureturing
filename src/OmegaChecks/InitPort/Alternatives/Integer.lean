@@ -2,6 +2,7 @@ module
 public import Init.Data.Int.DivMod.Lemmas
 public import Init.Data.Int.Pow
 import all Init.Data.Dyadic.Basic
+import all Init.Data.Int.Linear
 
 namespace OmegaChecks.InitPort.Alternatives
 
@@ -507,5 +508,59 @@ public theorem Rat.toRat_toDyadic : type_of% @_root_.Rat.toRat_toDyadic := by
     have prod := (congrArg (· * mkRat 1 (2^(p+1))) rep).symm.trans
       (_root_.Rat.mkRat_mul_mkRat x.num 1 x.den (2^(p+1)))
     rw [prod, Int.mul_one, floor_mk _ _ (Nat.mul_ne_zero x.den_nz positive)]
+
+public theorem Int.beq'_eq_beq : type_of% @_root_.Int.beq'_eq_beq := by
+  intro a b
+  apply Bool.eq_iff_iff.mpr
+  constructor
+  · intro h
+    apply beq_iff_eq.mpr
+    cases a <;> cases b
+    · exact congrArg _root_.Int.ofNat (Nat.eq_of_beq_eq_true h)
+    · exact nomatch h
+    · exact nomatch h
+    · exact congrArg _root_.Int.negSucc (Nat.eq_of_beq_eq_true h)
+  · intro h
+    cases eq_of_beq h
+    cases a <;> exact Nat.beq_refl _
+
+private theorem trueIntBEq {a b : Int} (h : Int.beq' a b = true) : a = b :=
+  eq_of_beq ((Int.beq'_eq_beq ..).symm.trans h)
+
+public theorem Int.Internal.Linear.Poly.denote'_go_eq_denote :
+    type_of% @_root_.Int.Internal.Linear.Poly.denote'_go_eq_denote := by
+  intro ctx p
+  induction p with
+  | num k =>
+    intro r
+    change (Bool.rec (r + k) r (Int.beq' k 0)) = k + r
+    cases h : Int.beq' k 0 with
+    | false => exact Int.add_comm ..
+    | true => cases trueIntBEq h; exact (Int.zero_add r).symm
+  | add k v p ih =>
+    intro r
+    change Bool.rec _ _ (Int.beq' k 1) = k * v.denote ctx + p.denote ctx + r
+    have reorder (a b c : Int) : a + (c + b) = (b + a) + c :=
+      (congrArg (a + ·) (Int.add_comm c b)).trans ((Int.add_assoc ..).symm.trans (congrArg (· + c) (Int.add_comm a b)))
+    cases h : Int.beq' k 1 with
+    | false => exact (ih _).trans (reorder ..)
+    | true =>
+      cases trueIntBEq h
+      rw [Int.one_mul]
+      exact (ih _).trans (reorder ..)
+
+public theorem Int.Internal.Linear.Poly.denote'_eq_denote :
+    type_of% @_root_.Int.Internal.Linear.Poly.denote'_eq_denote := by
+  intro ctx p
+  cases p with
+  | num k => rfl
+  | add k v p =>
+    change Bool.rec _ _ (Int.beq' k 1) = k * v.denote ctx + p.denote ctx
+    cases h : Int.beq' k 1 with
+    | false => exact (Int.Internal.Linear.Poly.denote'_go_eq_denote ..).trans (Int.add_comm ..)
+    | true =>
+      cases trueIntBEq h
+      rw [Int.one_mul]
+      exact (Int.Internal.Linear.Poly.denote'_go_eq_denote ..).trans (Int.add_comm ..)
 
 end OmegaChecks.InitPort.Alternatives
