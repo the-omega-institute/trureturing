@@ -17,7 +17,7 @@ import D5.S3.Analytic.Measure.ProductSupportIntersection
 @[expose] public section
 
 open MeasureTheory Function Finset Filter
-open scoped ENNReal BigOperators Classical
+open scoped ENNReal BigOperators
 
 noncomputable section
 set_option autoImplicit false
@@ -27,6 +27,7 @@ namespace D5.S3.Combinatorics.Hypergraphs.FinnerEquality
 variable {I : Type*} [Fintype I] {X : I → Type*} [∀ i, MeasurableSpace (X i)]
     (μ : ∀ i, MeasureTheory.Measure (X i)) [∀ i, IsProbabilityMeasure (μ i)]
 
+omit [Fintype I] in
 private lemma marginal_fixed [DecidableEq I] (u : Finset I)
     {f : (∀ i, X i) → ℝ≥0∞} {S : Set I} (hd : DependsOn f S)
     (hu : Disjoint S (u : Set I)) : lmarginal μ u f = f := by
@@ -41,6 +42,7 @@ private lemma marginal_fixed [DecidableEq I] (u : Finset I)
   simp_rw [hc]
   simp
 
+omit [Fintype I] in
 private lemma marginal_idem [DecidableEq I] (u : Finset I)
     (f : (∀ i, X i) → ℝ≥0∞) :
     lmarginal μ u (lmarginal μ u f) = lmarginal μ u f := by
@@ -49,21 +51,15 @@ private lemma marginal_idem [DecidableEq I] (u : Finset I)
     exact lmarginal_congr μ f hxy
   · exact disjoint_compl_left
 
-private lemma integral_marginal [DecidableEq I] (u : Finset I)
-    {f : (∀ i, X i) → ℝ≥0∞} (hf : Measurable f) :
-    (∫⁻ x, lmarginal μ u f x ∂MeasureTheory.Measure.pi μ) =
-      ∫⁻ x, f x ∂MeasureTheory.Measure.pi μ :=
-  lintegral_eq_of_lmarginal_eq u (hf.lmarginal μ) hf (marginal_idem μ u f)
-
+omit [Fintype I] in
 private lemma marginal_absorb_singleton [DecidableEq I] (u : Finset I)
     {f : (∀ i, X i) → ℝ≥0∞} (hf : Measurable f) {k : I} (hk : k ∈ u) :
     lmarginal μ u (lmarginal μ {k} f) = lmarginal μ u f := by
   conv_lhs => rw [← insert_erase hk,
     lmarginal_insert' _ (hf.lmarginal μ) (notMem_erase k u)]
   conv_rhs => rw [← insert_erase hk, lmarginal_insert' _ hf (notMem_erase k u)]
-  change lmarginal μ (u.erase k) (lmarginal μ {k} (lmarginal μ {k} f)) =
-    lmarginal μ (u.erase k) (lmarginal μ {k} f)
-  rw [marginal_idem]
+  simpa only [lmarginal_singleton] using
+    congrArg (lmarginal μ (u.erase k)) (marginal_idem μ {k} f)
 
 private lemma integral_coordinate_product (s : Finset I) (h : ∀ i, X i → ℝ≥0∞)
     (hm : ∀ i, Measurable (h i)) :
@@ -76,8 +72,8 @@ private lemma integral_coordinate_product (s : Finset I) (h : ∀ i, X i → ℝ
     let e := (Fintype.equivFin I).symm
     rw [← (measurePreserving_piCongrLeft μ e).lintegral_comp_emb
       (MeasurableEquiv.measurableEmbedding _)]
-    simp_rw [← e.prod_comp, MeasurableEquiv.coe_piCongrLeft,
-      Function.comp_def, Equiv.piCongrLeft_apply_apply]
+    simp only [← e.prod_comp, MeasurableEquiv.coe_piCongrLeft,
+      Equiv.piCongrLeft_apply_apply]
     exact FinnerProductMeasure.lintegral_fin_prod (fun i => μ (e i))
       (fun i => h (e i)) (fun i => hm (e i))
   let g : ∀ i, X i → ℝ≥0∞ := fun i t => if i ∈ s then h i t else 1
@@ -118,23 +114,23 @@ private lemma marginal_coordinate_product [DecidableEq I] (s : Finset I)
     have hk : updateFinset x u y k = x k := by simp [u, updateFinset]
     rw [hk]
     congr 1
-    rw [prod_coe_sort]
+    change (∏ i ∈ u, g i (updateFinset x u y i)) = _
+    rw [← prod_coe_sort u (fun i => g i (updateFinset x u y i))]
     apply prod_congr rfl
     intro i hiu
-    simp only [u] at hiu
-    simp [updateFinset, hiu]
+    simp [updateFinset, i.property]
   change (∫⁻ y : ∀ i : u, X i, ∏ i, g i (updateFinset x u y i)
     ∂MeasureTheory.Measure.pi (fun i : u => μ i)) = _
   simp_rw [he]
-  rw [lintegral_const_mul _ (Finset.measurable_fun_prod _
-    (fun i _ => (gm i).comp (measurable_pi_apply i)))]
+  rw [lintegral_const_mul _ (show Measurable
+    (fun y : ∀ i : u, X i => ∏ i : u, g i (y i)) from
+      Finset.measurable_fun_prod _ (fun i _ => (gm i).comp (measurable_pi_apply i)))]
   have hi' : (∫⁻ y : ∀ i : u, X i, ∏ i : u, g i (y i)
       ∂MeasureTheory.Measure.pi (fun i : u => μ i)) = 1 := by
     rw [integral_coordinate_product (fun i : u => μ i) univ
       (fun i : u => g i) (fun i => gm i)]
     simp [gi]
   rw [hi', mul_one]
-  rfl
 
 private lemma profile_integral [DecidableEq I]
     {f : (∀ i, X i) → ℝ≥0∞} (hf : Measurable f)
@@ -144,6 +140,7 @@ private lemma profile_integral [DecidableEq I]
   rw [← lmarginal_insert _ hf (notMem_erase i univ), insert_erase (mem_univ i)]
   simpa using hi
 
+omit [∀ i, IsProbabilityMeasure (μ i)] in
 private lemma profile_evaluation [DecidableEq I]
     (f : (∀ i, X i) → ℝ≥0∞) (a x : ∀ i, X i) (i : I) :
     lmarginal μ (univ.erase i) f (update a i (x i)) =
@@ -165,9 +162,12 @@ private lemma canonical_factor [DecidableEq I] (S : Finset I)
   have H := D5.S3.Analytic.Measure.ProductSupportIntersection.marginal_congr_ae μ
     (univ.erase k) hf (Finset.measurable_fun_prod _
       (fun i _ => (hm i).comp (measurable_pi_apply i))) he
-  simpa only [marginal_coordinate_product μ S h hm hi k, if_pos hk] using H
+  change lmarginal μ (univ.erase k) f =ᵐ[MeasureTheory.Measure.pi μ]
+    lmarginal μ (univ.erase k) (fun x => ∏ i ∈ S, h i (x i)) at H
+  rw [marginal_coordinate_product μ S h hm hi k] at H
+  simpa only [ite_eq_left hk] using H
 
-private lemma proper_assembly [DecidableEq I] {J : Type*} [Fintype J]
+private lemma proper_assembly [DecidableEq I] {J : Type*}
     (s : Finset I) (S : J → Finset I) (f : J → (∀ i, X i) → ℝ≥0∞)
     (hf : ∀ j, Measurable (f j)) (hd : ∀ j, DependsOn (f j) (S j))
     (hi : ∀ j, ∫⁻ x, f j x ∂MeasureTheory.Measure.pi μ = 1)
@@ -187,7 +187,9 @@ private lemma proper_assembly [DecidableEq I] {J : Type*} [Fintype J]
     if his : ∃ j, i ∈ S j then lmarginal μ (univ.erase i) (f (p i his)) (update a i t) else 1
   have hm (i : I) : Measurable (h i) := by
     dsimp [h]
-    split_ifs <;> fun_prop
+    split_ifs with his
+    · exact ((hf (p i his)).lmarginal μ).comp (measurable_update a)
+    · exact measurable_const
   have hu (i : I) : ∫⁻ t, h i t ∂μ i = 1 := by
     dsimp [h]
     split_ifs with his
@@ -197,7 +199,7 @@ private lemma proper_assembly [DecidableEq I] {J : Type*} [Fintype J]
   intro j
   have hn : ∃ k ∈ s, k ∉ S j := by
     by_contra H
-    push_neg at H
+    push Not at H
     exact hp j (Subset.antisymm (hs j) H)
   obtain ⟨k, hks, hkj⟩ := hn
   obtain ⟨g, gm, gu, ge⟩ := hl k hks
@@ -213,7 +215,7 @@ private lemma proper_assembly [DecidableEq I] {J : Type*} [Fintype J]
     rw [marginal_absorb_singleton μ _ (hf _) hki] at H
     filter_upwards [H] with x hx
     dsimp [h]
-    rw [dif_pos his, profile_evaluation]
+    rw [dite_eq_left his, profile_evaluation]
     exact hx
   have hprod : (fun x : ∀ i, X i => ∏ i ∈ S j, h i (x i)) =ᵐ[MeasureTheory.Measure.pi μ]
       (fun x => ∏ i ∈ S j, g i (x i)) := by
@@ -231,7 +233,7 @@ private lemma proper_assembly [DecidableEq I] {J : Type*} [Fintype J]
 one common normalized factorization of all original proper-support rows.
 The hypotheses provide actual factorizations under the original product law. -/
 theorem exists_common_profiles_of_deleted_marginal_factorizations [DecidableEq I]
-    {J : Type*} [Fintype J] (s : Finset I) (S : J → Finset I)
+    {J : Type*} (s : Finset I) (S : J → Finset I)
     (f : J → (∀ i, X i) → ℝ≥0∞)
     (hf : ∀ j, Measurable (f j)) (hd : ∀ j, DependsOn (f j) (S j))
     (hpos : ∀ j, 0 < ∫⁻ x, f j x ∂MeasureTheory.Measure.pi μ)
@@ -280,7 +282,8 @@ theorem exists_common_profiles_of_deleted_marginal_factorizations [DecidableEq I
   intro j
   filter_upwards [he j] with x hx
   have hh := congrArg (m j * ·) hx
-  simpa only [q, ← mul_assoc, ENNReal.mul_inv_cancel (hpos j).ne' (hfin j), one_mul]
-    using hh
+  change m j * ((m j)⁻¹ * f j x) = _ at hh
+  rw [← mul_assoc, ENNReal.mul_inv_cancel (hpos j).ne' (hfin j), one_mul] at hh
+  exact hh
 
 end D5.S3.Combinatorics.Hypergraphs.FinnerEquality

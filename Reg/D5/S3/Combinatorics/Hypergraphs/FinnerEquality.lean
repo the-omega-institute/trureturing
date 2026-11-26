@@ -10,7 +10,7 @@ set_option autoImplicit false
 open MeasureTheory Function Finset Filter LeanInformationAudit
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.Combinatorics.Hypergraphs.FinnerEquality
-open scoped ENNReal BigOperators Classical
+open scoped ENNReal BigOperators
 
 namespace Reg.D5.S3.Combinatorics.Hypergraphs.FinnerEquality
 universe u v w
@@ -35,7 +35,7 @@ abbrev arena : Arena where
   signature := signature.{u,v}
   Law R := ∀ {I : Type u} [Fintype I] {X : I → Type v} [∀ i, MeasurableSpace (X i)]
     (μ : ∀ i, MeasureTheory.Measure (X i)) [∀ i, IsProbabilityMeasure (μ i)]
-    [DecidableEq I] {J : Type w} [Fintype J] (s : Finset I) (S : J → Finset I)
+    [DecidableEq I] {J : Type w} (s : Finset I) (S : J → Finset I)
     (f : J → (∀ i, X i) → ℝ≥0∞),
     (∀ j, Measurable (f j)) → (∀ j, DependsOn (f j) (S j)) →
     (∀ j, 0 < ∫⁻ x, f j x ∂MeasureTheory.Measure.pi μ) →

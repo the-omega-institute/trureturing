@@ -228,3 +228,23 @@ the almost-everywhere common density. No mathematical originality is claimed.
 This criterion applies to normalized factors on a common measure. It supplies
 no recovery theorem across conditional slices of zero mass and does not prove
 the common-coordinate-profile classification for Finner's full marginal chain.
+
+## Proper-support assembly in the stability proof
+
+Directly read proof: https://arxiv.org/html/2610.29041v1#S2.SS1
+
+Bennett and Oh, Section 2.1, first consider the case in which every support is
+proper. Deleting a coordinate outside a target row leaves that row unchanged.
+The lower-dimensional factorization supplies coordinate profiles given by the
+one-coordinate marginals of fixed incident rows. Marginal composition identifies
+these profiles independently of the coordinate deleted. Every proper-support row
+can therefore use the same family. The exact gluing implication takes concrete
+normalized factorizations of the deleted marginals as premises; it does not assume
+positive slice masses.
+
+The full-support branch of the source separates full-support rows, rescales the
+proper-row weights by the positive remaining incidence budget, and uses a global
+Holder step. At exact equality, simultaneous almost-everywhere substitution
+replaces the stability estimates for products. A proof of marginal gluing alone
+does not establish either that full-support reduction or the complete induction
+from the original saturation hypothesis.
