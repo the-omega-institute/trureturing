@@ -8,6 +8,7 @@ import all Init.Data.String.Lemmas.Pattern.Char
 import all Init.Data.String.Lemmas.Pattern.Pred
 import all Init.Data.String.Pattern.Pred
 import all Init.Data.String.Pattern.String
+import all OmegaChecks.InitPort.Alternatives.Array
 import all OmegaChecks.InitPort.Alternatives.FiniteLoop
 public import OmegaChecks.InitPort.Alternatives.StringEncoding
 
@@ -711,3 +712,78 @@ public theorem instLawfulToBackwardSearcherModelCharDefaultBackwardSearcherForal
       (pat := (· == c)) s)
 
 end OmegaChecks.InitPort.Alternatives.String.Slice.Pattern.Model.Char
+
+namespace OmegaChecks.InitPort.Alternatives.String.Slice.Pattern.Model.ForwardSliceSearcher
+
+public theorem prefixFunction.go._proof_1 :
+    type_of% (private_decl% @_root_.String.Slice.Pattern.Model.ForwardSliceSearcher.prefixFunction.go._proof_1) := by
+  intro pat stack bound k miss atZero
+  subst k
+  exact miss ((private_decl% _root_.String.Slice.Pattern.Model.ForwardSliceSearcher.partialMatch_zero) bound)
+
+public theorem prefixFunction.go._proof_3 :
+    type_of% (private_decl% @_root_.String.Slice.Pattern.Model.ForwardSliceSearcher.prefixFunction.go._proof_3) :=
+  private_decl% @_root_.String.Slice.Pattern.Model.ForwardSliceSearcher.prefixFunction.go._proof_1
+
+open _root_.String.Slice.Pattern.Model.ForwardSliceSearcher
+
+public theorem prefixFunction.le_go_iff :
+    type_of% (private_decl% @_root_.String.Slice.Pattern.Model.ForwardSliceSearcher.prefixFunction.le_go_iff) := by
+  intro pat stack bound k limit
+  delta prefixFunction.go
+  let P (n largest : Nat) := k ≤ largest ↔ ∃ i, k ≤ i ∧ i ≤ n ∧ PartialMatch pat pat i (stack + 1)
+  apply (private_decl% OmegaChecks.InitPort.Alternatives.fixInvariant) (P := P)
+  intro n cont ih
+  dsimp only [P]
+  by_cases hit : PartialMatch pat pat n (stack + 1)
+  · rw [dite_eq_left hit]
+    exact ⟨fun h => ⟨_, h, Nat.le_refl _, hit⟩, fun ⟨a, lo, hi, _⟩ => Nat.le_trans lo hi⟩
+  · rw [dite_eq_right hit]
+    cases n with
+    | zero => exact (hit (partialMatch_zero bound)).elim
+    | succ n =>
+      have prev := ih n (Nat.lt_succ_self n)
+      constructor
+      · intro h
+        obtain ⟨a, lo, hi, yes⟩ := prev.mp h
+        exact ⟨a, lo, Nat.le_succ_of_le hi, yes⟩
+      · rintro ⟨a, lo, hi, yes⟩
+        refine prev.mpr ⟨a, lo, ?_, yes⟩
+        exact Nat.le_of_lt_succ (Nat.lt_of_le_of_ne hi (fun eq => by
+          subst a
+          exact hit yes))
+
+public theorem le_prefixFunction_iff :
+    type_of% (private_decl% @_root_.String.Slice.Pattern.Model.ForwardSliceSearcher.le_prefixFunction_iff) := by
+  intro k pat stack bound
+  exact (private_decl% _root_.String.Slice.Pattern.Model.ForwardSliceSearcher.prefixFunction.le_go_iff)
+
+public theorem prefixFunction_le_iff :
+    type_of% (private_decl% @_root_.String.Slice.Pattern.Model.ForwardSliceSearcher.prefixFunction_le_iff) := by
+  intro k pat stack bound
+  constructor
+  · intro le j hj hst hit
+    exact Nat.not_lt_of_ge le (Nat.lt_of_lt_of_le hj ((private_decl% _root_.String.Slice.Pattern.Model.ForwardSliceSearcher.le_prefixFunction_iff).mpr ⟨_, Nat.le_refl _, hst, hit⟩))
+  · intro maximal
+    apply Nat.le_of_not_lt
+    intro gt
+    obtain ⟨j, lo, hi, hit⟩ := (private_decl% _root_.String.Slice.Pattern.Model.ForwardSliceSearcher.le_prefixFunction_iff).mp (Nat.le_refl (prefixFunction pat stack bound))
+    exact maximal _ (Nat.lt_of_lt_of_le gt lo) hi hit
+
+public theorem prefixFunction_eq_iff :
+    type_of% (private_decl% @_root_.String.Slice.Pattern.Model.ForwardSliceSearcher.prefixFunction_eq_iff) := by
+  intro k pat stack bound
+  constructor
+  · intro eq
+    subst k
+    have limit := Nat.le_refl (prefixFunction pat stack bound)
+    have maximal := (private_decl% _root_.String.Slice.Pattern.Model.ForwardSliceSearcher.prefixFunction_le_iff).mp limit
+    obtain ⟨j, lo, hi, hit⟩ := (private_decl% _root_.String.Slice.Pattern.Model.ForwardSliceSearcher.le_prefixFunction_iff).mp limit
+    obtain eq | lt := Nat.eq_or_lt_of_le lo
+    · subst j
+      exact ⟨hi, hit, maximal⟩
+    · exact (maximal _ lt hi hit).elim
+  · rintro ⟨hi, hit, maximal⟩
+    exact Nat.le_antisymm ((private_decl% _root_.String.Slice.Pattern.Model.ForwardSliceSearcher.prefixFunction_le_iff).mpr maximal) ((private_decl% _root_.String.Slice.Pattern.Model.ForwardSliceSearcher.le_prefixFunction_iff).mpr ⟨_, Nat.le_refl _, hi, hit⟩)
+
+end OmegaChecks.InitPort.Alternatives.String.Slice.Pattern.Model.ForwardSliceSearcher
