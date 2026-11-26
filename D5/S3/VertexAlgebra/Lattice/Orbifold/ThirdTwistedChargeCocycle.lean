@@ -35,7 +35,8 @@ set_option autoImplicit false
 namespace D5.S3.VertexAlgebra.Lattice.Orbifold.ThirdTwistedChargeCocycle
 
 open LatticeGeneratingFieldLocality
-open LatticeActualGeneratorLocality (bilinear_add_right epsilon_skew)
+open LatticeActualGeneratorLocality
+  (bilinear_add_right epsilon_add_left epsilon_add_right epsilon_skew)
 open LatticeFiniteNegativeGeneration (bilinear_symmetric)
 open CyclicIsometryLift (orbitNorm)
 
@@ -105,19 +106,50 @@ private theorem bilinear_sub_left (D : LatticeData) (a b t : Charge D) :
     bilinear D (a - b) t = bilinear D a t - bilinear D b t := by
   simp [bilinear, sub_mul, Finset.sum_sub_distrib]
 
+theorem c_normalized (D : LatticeData) (g : Charge D ≃+ Charge D) (a : Charge D) :
+    c D g 0 a = 1 ∧ c D g a 0 = 1 := by
+  simp [c, B, epsilonUnit, lowerCocycleExponent, bilinear]
+
+theorem c_add_left (D : LatticeData) (g : Charge D ≃+ Charge D) (a b t : Charge D) :
+    c D g (a + b) t = c D g a t * c D g b t := by
+  have hε : epsilonUnit D (a + b) t = epsilonUnit D a t * epsilonUnit D b t := by
+    apply Units.ext
+    simpa only [Units.val_mul, coe_epsilonUnit] using epsilon_add_left D a b t
+  have hB : B D g (a + b) t = B D g a t * B D g b t := by
+    simp only [B, map_add, bilinear_add_left, Int.neg_add, zpow_add]
+    exact (congrArg (· * _) (mul_mul_mul_comm _ _ _ _)).trans (mul_mul_mul_comm _ _ _ _)
+  simp only [c, hε, hB, mul_inv]
+  exact mul_mul_mul_comm _ _ _ _
+
+theorem c_add_right (D : LatticeData) (g : Charge D ≃+ Charge D) (a b t : Charge D) :
+    c D g a (b + t) = c D g a b * c D g a t := by
+  have hε : epsilonUnit D a (b + t) = epsilonUnit D a b * epsilonUnit D a t := by
+    apply Units.ext
+    simpa only [Units.val_mul, coe_epsilonUnit] using epsilon_add_right D a b t
+  have hB : B D g a (b + t) = B D g a b * B D g a t := by
+    simp only [B, bilinear_add_right, Int.neg_add, zpow_add]
+    exact (congrArg (· * _) (mul_mul_mul_comm _ _ _ _)).trans (mul_mul_mul_comm _ _ _ _)
+  simp only [c, hε, hB, mul_inv]
+  exact mul_mul_mul_comm _ _ _ _
+
 section Isometry
 
 variable (D : LatticeData) (g : Charge D ≃+ Charge D)
 variable (hg : ∀ a b, bilinear D (g a) (g b) = bilinear D a b)
 variable (h3 : ∀ a, g (g (g a)) = a)
 
+include hg in
+/-- Applying the isometry to both charges preserves the product factor. -/
+theorem B_isometry (a b : Charge D) : B D g (g a) (g b) = B D g a b := by
+  simp only [B, hg a b, hg (g a) b, hg (g (g a)) b]
+
 include hg h3 in
-private theorem pairing_shift_one (a b : Charge D) :
+theorem pairing_shift_one (a b : Charge D) :
     bilinear D a (g b) = bilinear D (g (g a)) b := by
   simpa only [h3 a] using hg (g (g a)) b
 
 include hg h3 in
-private theorem pairing_shift_two (a b : Charge D) :
+theorem pairing_shift_two (a b : Charge D) :
     bilinear D a (g (g b)) = bilinear D (g a) b := by
   simpa only [h3 b] using (hg a (g (g b))).symm
 
@@ -158,7 +190,7 @@ private theorem c_swap_div (a b : Charge D) :
   rw [mul_div_mul_comm, inv_div_inv, epsilonUnit_swap_div, B_swap_div D g hg h3,
     mul_zpow, inv_zpow', ← mul_assoc, ← zpow_add]
 
-private theorem orbitNorm_three (a : Charge D) :
+theorem orbitNorm_three (a : Charge D) :
     orbitNorm D g 3 a = a + g a + g (g a) := by
   simp [orbitNorm, Finset.sum_range_succ, Function.iterate_succ_apply']
 
@@ -192,7 +224,7 @@ theorem commutator_difference_eq_one_iff (a b : Charge D) :
     Nat.cast_ofNat, dvd_neg]
 
 include hg h3 in
-private theorem orbitNorm_pairing (a b : Charge D) :
+theorem orbitNorm_pairing (a b : Charge D) :
     bilinear D (orbitNorm D g 3 a) b = bilinear D a (orbitNorm D g 3 b) := by
   simp only [orbitNorm_three, bilinear_add_left, bilinear_add_right,
     pairing_shift_one D g hg h3 a b, pairing_shift_two D g hg h3 a b]
