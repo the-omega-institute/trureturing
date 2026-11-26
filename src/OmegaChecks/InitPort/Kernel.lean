@@ -2,6 +2,7 @@ import Lean
 import Lean.Replay
 import OmegaChecks.InitCompiler.Proofs
 import OmegaChecks.InitCompiler.Recursion
+import OmegaChecks.InitCompiler.FiniteCollectors
 import OmegaChecks.InitPort.Alternatives
 import OmegaChecks.InitPort.Arithmetic
 import OmegaChecks.InitPort.NativeQuot
@@ -307,13 +308,18 @@ def record (name : Name) (outcome : Outcome) : M Bool := do
   return true
 
 /-- Compare the entire generated kernel entry, including the iota rules of recursors. -/
-def expectGenerated (ci : ConstantInfo) : Option ConstantInfo := Id.run do
+def expectGenerated (src : Environment) (ci : ConstantInfo) : IO (Option ConstantInfo) := do
+  let newType ← OmegaChecks.InitCompiler.finiteCollectors src ci.type
   let ren := portName
-  let val (v : ConstantVal) := {v with name := ren v.name, type := translate ren v.type}
+  let val (v : ConstantVal) := {v with name := ren v.name, type := translate ren newType}
   match ci with
   | .inductInfo v => return some <| .inductInfo { v with toConstantVal := val v.toConstantVal, ctors := v.ctors.map ren, all := v.all.map ren }
   | .ctorInfo v => return some <| .ctorInfo { v with toConstantVal := val v.toConstantVal, induct := ren v.induct }
-  | .recInfo v => return some <| .recInfo { v with toConstantVal := val v.toConstantVal, all := v.all.map ren, rules := v.rules.map fun r => {r with ctor := ren r.ctor, rhs := translate ren r.rhs} }
+  | .recInfo v =>
+    let rules ← v.rules.mapM fun r => do
+      let rhs ← OmegaChecks.InitCompiler.finiteCollectors src r.rhs
+      pure {r with ctor := ren r.ctor, rhs := translate ren rhs}
+    return some <| .recInfo {v with toConstantVal := val v.toConstantVal, all := v.all.map ren, rules}
   | _ => return none
 
 /-- The original kernel erases typeclass output markers while generating recursors.
@@ -335,7 +341,7 @@ structure Family where
   externals : NameSet
   generated : Array Name
 
-def family (src : Environment) (i : InductiveVal) : Except String Family := do
+def family (src : Environment) (i : InductiveVal) : ExceptT String IO Family := do
   let rename := portName
   let mut types := []
   let mut deps : NameSet := {}
@@ -350,8 +356,9 @@ def family (src : Environment) (i : InductiveVal) : Except String Family := do
       let some (.ctorInfo cv) := src.find? k | throw "missing constructor"
       if cv.isUnsafe || invalidExpr cv.type then throw "inadmissible constructor"
       names := names.push k
-      deps := deps ++ usedConstants cv.type
-      ctors := ctors ++ [{name := rename k, type := translate rename cv.type : Constructor}]
+      let ctorType ← liftM (m := IO) (OmegaChecks.InitCompiler.finiteCollectors src cv.type)
+      deps := deps ++ usedConstants ctorType
+      ctors := ctors ++ [{name := rename k, type := translate rename ctorType : Constructor}]
     let recn := n ++ `rec
     names := names.push recn
     types := types ++ [{name := rename n, type := translate rename v.type, ctors : InductiveType}]
@@ -445,7 +452,7 @@ partial def visit (n : Name) : M Bool := do
       return ← record n (.blocked "unverified seed name or wrong seed owner")
     return ← record n .existing
   if let some generated := (← get).env.find? dest then
-    if agrees (← get).env (expectGenerated ci) (some generated) then return ← record n .added
+    if agrees (← get).env (← expectGenerated c.source ci) (some generated) then return ← record n .added
     return ← record n (.blocked "target name collision")
   if n == Meta.mkSmartUnfoldingNameFor n.getPrefix then
     if c.base.contains (portName n.getPrefix) then
@@ -460,7 +467,7 @@ partial def visit (n : Name) : M Bool := do
   if ci.isAxiom then return ← record n (.blocked "axiom")
   if (ci.isUnsafe && !boundedBorrowedRead ci) || ci.isPartial then return ← record n (.blocked "unsafe/partial")
   if let .inductInfo i := ci then
-    let .ok f := family c.source i | return ← record n (.blocked "malformed family")
+    let .ok f ← (family c.source i).run | return ← record n (.blocked "malformed family")
     if let some member := f.generated.find? (fun member => c.excluded.contains member) then
       return ← record n (.blocked "unavailable family member" (some member))
     modify fun s => {s with visiting := s.visiting.insert n}
@@ -473,7 +480,7 @@ partial def visit (n : Name) : M Bool := do
     | .ok env =>
       for orig in f.generated do
         let some spec := c.source.find? orig | return ← record n (.blocked "missing family result" (some orig))
-        if !agrees env (expectGenerated spec) (env.find? (portName orig)) then
+        if !agrees env (← expectGenerated c.source spec) (env.find? (portName orig)) then
           return ← record n (.blocked "generated kernel entry mismatch" (some orig))
       modify fun s => {s with env}
       return ← record n .added
@@ -481,14 +488,15 @@ partial def visit (n : Name) : M Bool := do
     let parent := match ci with | .ctorInfo v => v.induct | .recInfo v => v.all.head! | _ => Name.anonymous
     if !(← visit parent) then return ← record n (.blocked "unavailable family" (some parent))
     if let some generated := (← get).env.find? dest then
-      if agrees (← get).env (expectGenerated ci) (some generated) then return ← record n .added
+      if agrees (← get).env (← expectGenerated c.source ci) (some generated) then return ← record n .added
     return ← record n (.blocked "generated kernel entry mismatch" (some parent))
   if !(ci matches .thmInfo _ | .defnInfo _ | .opaqueInfo _) then
     return ← record n (.blocked "requires inductive family or primitive")
   modify fun s => {s with visiting := s.visiting.insert n}
   -- A dependent type can contain a proof emitted by simp. Keep its official
   -- conversion class and let the target kernel check the replacement.
-  let compact ← OmegaChecks.InitCompiler.namedLogicalProjections c.source (compactNonzeroBounds c.source n ci.type)
+  let specialized ← OmegaChecks.InitCompiler.finiteCollectors c.source ci.type
+  let compact ← OmegaChecks.InitCompiler.namedLogicalProjections c.source (compactNonzeroBounds c.source n specialized)
   let mut type := if !compact.equal ci.type && Kernel.isDefEqGuarded c.source {} ci.type compact then compact else ci.type
   for dep in usedConstants type do
     if !(← visit dep) then
@@ -511,6 +519,7 @@ partial def visit (n : Name) : M Bool := do
       break
   let some body := ci.value? (allowOpaque := true) | return ← record n (.blocked "no kernel body")
   let checkValue (value : Expr) (budget : Nat) : M Outcome := do
+    let value ← OmegaChecks.InitCompiler.finiteCollectors c.source value
     let value ← OmegaChecks.InitCompiler.namedLogicalProjections c.source value
     for dep in usedConstants value do
       if !(← visit dep) then return .blocked "unavailable dependency" (some dep)

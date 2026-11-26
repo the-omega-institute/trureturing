@@ -5,6 +5,8 @@ public import OmegaChecks.InitPort.Alternatives.StringTransforms
 import all OmegaChecks.InitPort.Alternatives.StringTransforms
 import all Init.Data.String.Iterate
 import all Init.Data.String.Extra
+import all Init.Data.Iterators.Consumers.Collect
+import all Init.Data.Iterators.Consumers.Total
 public import Init.Data.String.Lemmas.Iterate
 public import Init.Data.String.Lemmas.Pattern.Find.Char
 public import Init.Data.String.Lemmas.Pattern.Find.Pred
@@ -141,5 +143,26 @@ public theorem String.removeLeadingSpaces (s : String) :
   dsimp only
   rw [loops]
   cases (s.startPos.find? p).bind _root_.String.Pos.next? <;> rfl
+
+open _root_.String.Slice.Pattern _root_.String.Slice.Pattern.Model
+
+private theorem finiteListField {α β : Type u} [Std.Iterator α Id β] [Std.Iterators.Finite α Id]
+    (it : Std.Iter (α := α) β) : it.ensureTermination.toList = it.toList := rfl
+
+/-- The forward searcher's finite collection yields exactly the pinned model field. -/
+public theorem forwardSearcherFiniteField {ρ : Type} (pat : ρ) [PatternModel pat] {σ : String.Slice → Type}
+    [ToForwardSearcher pat σ] [∀ s, Std.Iterator (σ s) Id (SearchStep s)]
+    [∀ s, Std.Iterators.Finite (σ s) Id] (s : String.Slice) :
+    IsValidSearchFrom pat s.startPos (ToForwardSearcher.toSearcher pat s).ensureTermination.toList =
+      IsValidSearchFrom pat s.startPos (ToForwardSearcher.toSearcher pat s).toList :=
+  congrArg (IsValidSearchFrom pat s.startPos) (finiteListField _)
+
+/-- The backward searcher's finite collection yields exactly the pinned model field. -/
+public theorem backwardSearcherFiniteField {ρ : Type} (pat : ρ) [PatternModel pat] {σ : String.Slice → Type}
+    [ToBackwardSearcher pat σ] [∀ s, Std.Iterator (σ s) Id (SearchStep s)]
+    [∀ s, Std.Iterators.Finite (σ s) Id] (s : String.Slice) :
+    IsValidRevSearchFrom pat s.endPos (ToBackwardSearcher.toSearcher pat s).ensureTermination.toList =
+      IsValidRevSearchFrom pat s.endPos (ToBackwardSearcher.toSearcher pat s).toList :=
+  congrArg (IsValidRevSearchFrom pat s.endPos) (finiteListField _)
 
 end OmegaChecks.Interface.Equations
