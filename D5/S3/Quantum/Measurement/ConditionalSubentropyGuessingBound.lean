@@ -192,11 +192,15 @@ def claim : Prop :=
     (∀ x, (A x).PosSemidef) → (∑ x, (A x).trace) = 1 → ∀ (hXB : (blockDiagonal A).IsHermitian) (hB : (∑ x, A x).IsHermitian), subentropy (blockDiagonal A) hXB - subentropy (∑ x, A x) hB ≤ -Real.log (pGuess A)
 open MeasureTheory Set
 open scoped ENNReal
+set_option backward.isDefEq.respectTransparency false in
+private lemma lintegral_fin_prod {n : ℕ} {E : Fin n → Type*} {mE : ∀ i, MeasurableSpace (E i)} (μ : (i : Fin n) → Measure (E i)) [∀ i, SigmaFinite (μ i)] (f : (i : Fin n) → E i → ℝ≥0∞) (hf : ∀ i, Measurable (f i)) :
+    (∫⁻ x, ∏ i, f i (x i) ∂Measure.pi μ) = ∏ i, ∫⁻ x, f i x ∂μ i := by
+  exact D5.S3.Combinatorics.Hypergraphs.FinnerProductMeasure.lintegral_fin_prod μ f hf
 private lemma pi_withDensity_fin {n : ℕ} {E : Fin n → Type*} {mE : ∀ i, MeasurableSpace (E i)} (μ : (i : Fin n) → Measure (E i)) [∀ i, SigmaFinite (μ i)] (f : (i : Fin n) → E i → ℝ≥0∞) (hf : ∀ i, Measurable (f i))
     [∀ i, SigmaFinite ((μ i).withDensity (f i))] : Measure.pi (fun i => (μ i).withDensity (f i)) = (Measure.pi μ).withDensity (fun x => ∏ i, f i (x i)) :=
   by
   apply Measure.pi_eq; intro s hs
-  rw [withDensity_apply _ (MeasurableSet.univ_pi hs), Measure.restrict_pi_pi, D5.S3.Combinatorics.Hypergraphs.FinnerProductMeasure.lintegral_fin_prod (fun i => (μ i).restrict (s i)) f hf]
+  rw [withDensity_apply _ (MeasurableSet.univ_pi hs), Measure.restrict_pi_pi, lintegral_fin_prod (fun i => (μ i).restrict (s i)) f hf]
   apply Finset.prod_congr rfl; intro i _
   exact (withDensity_apply (μ := μ i) (f i) (hs i)).symm
 open Matrix MeasureTheory Set
