@@ -1,12 +1,14 @@
 module
 import all OmegaChecks.InitPort.Alternatives.FiniteLoop
 import all Init.Data.String.Iterate
+import all Init.Data.String.Lemmas.Iterate
+import all Init.Data.String.Termination
 import all Init.Data.Char.Basic
 import Init.Data.UInt.Lemmas
 import all Init.Data.String.Modify
 import all Init.Data.String.Lemmas.Intercalate
 
-/-! Termination of character mapping and intercalation of nonempty lists. -/
+/-! Character traversal, cursor membership, mapping and intercalation. -/
 
 namespace OmegaChecks.InitPort.Alternatives
 
@@ -83,5 +85,84 @@ public theorem String.intercalate_append_of_ne_nil :
   forIn s b f :=
     @ForIn.forIn m _ Char (@Std.instForInIterOfMonadOfIteratorLoopId _ _ m _ _ finiteIteratorLoop)
       _ s.chars b f
+
+public theorem String.Slice.Model.revPositionsFrom._proof_3 :
+    type_of% (private_decl% @_root_.String.Slice.Model.revPositionsFrom._proof_3) := by
+  intro s p h
+  exact _root_.String.Slice.Pos.prev_lt (h := h)
+
+public theorem String.Slice.Model.mem_positionsFrom : type_of% @_root_.String.Slice.Model.mem_positionsFrom := by
+  intro s p q
+  induction p using _root_.String.Slice.Pos.next_induction with
+  | endPos =>
+    rw [_root_.String.Slice.Model.positionsFrom_endPos]
+    exact ⟨(fun h => nomatch h), fun h => (q.2 ((_root_.String.Slice.Pos.endPos_le _).mp h)).elim⟩
+  | next p hp ih =>
+    rw [_root_.String.Slice.Model.positionsFrom_eq_cons hp, List.mem_cons, ih, _root_.String.Slice.Pos.next_le_iff_lt]
+    constructor
+    · rintro (eq | lt)
+      · cases eq
+        exact Nat.le_refl _
+      · exact Nat.le_of_lt lt
+    · intro le
+      rcases Nat.lt_or_eq_of_le le with lt | eq
+      · exact Or.inr lt
+      · exact Or.inl (Subtype.ext (_root_.String.Slice.Pos.ext (String.Pos.Raw.ext eq.symm)))
+
+public theorem String.Slice.Model.mem_positionsFrom_startPos :
+    type_of% @_root_.String.Slice.Model.mem_positionsFrom_startPos := by
+  intro s q
+  exact String.Slice.Model.mem_positionsFrom.mpr (_root_.String.Slice.Pos.startPos_le _)
+
+public theorem String.Model.revPositionsFrom._proof_3 :
+    type_of% (private_decl% @_root_.String.Model.revPositionsFrom._proof_3) := by
+  intro s p h
+  exact _root_.String.Pos.prev_lt (h := h)
+
+public theorem String.Model.mem_positionsFrom : type_of% @_root_.String.Model.mem_positionsFrom := by
+  intro s p q
+  induction p using _root_.String.Pos.next_induction with
+  | endPos =>
+    rw [_root_.String.Model.positionsFrom_endPos]
+    exact ⟨(fun h => nomatch h), fun h => (q.2 ((_root_.String.Pos.endPos_le _).mp h)).elim⟩
+  | next p hp ih =>
+    rw [_root_.String.Model.positionsFrom_eq_cons hp, List.mem_cons, ih, _root_.String.Pos.next_le_iff_lt]
+    constructor
+    · rintro (eq | lt)
+      · cases eq
+        exact Nat.le_refl _
+      · exact Nat.le_of_lt lt
+    · intro le
+      rcases Nat.lt_or_eq_of_le le with lt | eq
+      · exact Or.inr lt
+      · exact Or.inl (Subtype.ext (_root_.String.Pos.ext (String.Pos.Raw.ext eq.symm)))
+
+public theorem String.Model.mem_positionsFrom_startPos :
+    type_of% @_root_.String.Model.mem_positionsFrom_startPos := by
+  intro s q
+  exact String.Model.mem_positionsFrom.mpr (_root_.String.Pos.startPos_le _)
+
+public theorem String.Model.map_get_positionsFrom_of_splits :
+    type_of% @_root_.String.Model.map_get_positionsFrom_of_splits := by
+  intro s p left right hp
+  induction p using _root_.String.Pos.next_induction generalizing left right with
+  | next p h ih =>
+    obtain ⟨tail, rfl⟩ := hp.exists_eq_singleton_append h
+    rw [_root_.String.Model.positionsFrom_eq_cons h, List.map_cons, String.toList_append,
+      String.toList_singleton, List.singleton_append, ih hp.next]
+  | endPos =>
+    obtain ⟨_, rfl⟩ := (_root_.String.splits_endPos_iff.mp hp)
+    rw [_root_.String.Model.positionsFrom_endPos]
+    rfl
+
+public theorem String.mem_toList_iff_exists_get : type_of% @_root_.String.mem_toList_iff_exists_get := by
+  intro s c
+  rw [← _root_.String.Model.map_get_positionsFrom_startPos]
+  constructor
+  · intro mem
+    obtain ⟨pos, _, got⟩ := List.mem_map.mp mem
+    exact ⟨pos.val, pos.property, got⟩
+  · rintro ⟨pos, h, rfl⟩
+    exact List.mem_map.mpr ⟨⟨pos, h⟩, String.Model.mem_positionsFrom_startPos, rfl⟩
 
 end OmegaChecks.InitPort.Alternatives
