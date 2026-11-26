@@ -239,4 +239,21 @@ public theorem List.getElem_mapFinIdx_go : type_of% @_root_.List.getElem_mapFinI
           (Nat.lt_of_lt_of_eq w (_root_.List.length_mapFinIdx_go.trans h.symm))
         exact (getElem_congr_idx (c := a :: bs) (w := inBounds) ds).symm
 
+
+private theorem mapIndexLoop {α : Type u} {β : Type v} (as : List α) (f : Nat → α → β)
+    (rest : List α) (acc : Array β) (h : rest.length + acc.size = as.length) :
+    List.mapIdx.go f rest acc = List.mapFinIdx.go as (fun i a _ => f i a) rest acc h := by
+  induction rest generalizing acc with
+  | nil => rfl
+  | cons a rest ih => exact ih (acc.push (f acc.size a)) _
+
+public theorem List.mapIdx_eq_mapFinIdx : type_of% @_root_.List.mapIdx_eq_mapFinIdx :=
+  fun {_ _ l f} => mapIndexLoop l f l #[] _
+
+public theorem List.getElem_mapIdx : type_of% @_root_.List.getElem_mapIdx := by
+  intro α β l f i h
+  exact (getElem_congr_coll (c := List.mapIdx f l) (i := i) (w := h) (List.mapIdx_eq_mapFinIdx (l := l) (f := f))).trans
+    _root_.List.getElem_mapFinIdx
+
+
 end OmegaChecks.InitPort.Alternatives

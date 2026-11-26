@@ -347,4 +347,20 @@ public theorem Vector.zipWith._proof_1 : type_of% @_root_.Vector.zipWith._proof_
   intro α β γ n f as bs
   rw [Array.size_zipWith, as.size_toArray, bs.size_toArray, Nat.min_self]
 
+public theorem Array.toList_mapIdx : type_of% @_root_.Array.toList_mapIdx := by
+  intro β γ f xs
+  apply List.ext_getElem
+  · exact _root_.Array.size_mapIdx.trans _root_.List.length_mapIdx.symm
+  · intro i hi hj
+    exact (_root_.Array.getElem_mapIdx hi).trans (List.getElem_mapIdx (h := hj)).symm
+
+public theorem List.mapIdx_toArray : type_of% @_root_.List.mapIdx_toArray := by
+  intro α β f l
+  exact Array.ext' Array.toList_mapIdx
+
+public theorem List.mapFinIdx_toArray : type_of% @_root_.List.mapFinIdx_toArray := by
+  intro α β l f
+  exact Array.ext' _root_.Array.toList_mapFinIdx
+
+
 end OmegaChecks.InitPort.Alternatives
