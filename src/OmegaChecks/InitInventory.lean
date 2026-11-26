@@ -459,6 +459,54 @@ theorem funextFromMapCongr
   letI : Functor read := ⟨fun h x a => h (x a), fun c _ _ => c⟩
   exact @combine read α β _ (fun a => a) f g pointwise
 
+namespace RangeMap
+
+open Std.PRange
+
+
+@[instance_reducible] private def successor {T : Type w} (f : T → T) : UpwardEnumerable T where
+  succ? x := some (f x)
+  succMany? _ x := some x
+
+private theorem endomorphisms {T : Type w}
+    (commutes : type_of% @UpwardEnumerable.Map.succ?_toFun'.{w,w})
+    {f g : T → T} (agree : ∀ x, f x = g x) : f = g := by
+  let φ : @UpwardEnumerable.Map T T (successor g) (successor f) :=
+    @UpwardEnumerable.Map.mk T T (successor g) (successor f) id (fun {_ _} h => h)
+      (fun x => congrArg some (agree x)) (fun _ _ => rfl)
+  have e := @commutes T T (successor g) (successor f) φ
+  exact congrArg (fun k x => (k x).getD x) e
+
+private def graphStep {α : Sort u} {β : α → Sort v} (f : (x : α) → β x)
+    (x : PLift (PSum α (PSigma β))) : PLift (PSum α (PSigma β)) :=
+  PSum.casesOn x.down (fun a => ⟨.inr ⟨a, f a⟩⟩) (fun _ => x)
+
+/-- The function equality for successor-preserving maps entails dependent function extensionality. -/
+public theorem funextFromSuccMap (commutes : type_of% @UpwardEnumerable.Map.succ?_toFun'.{max 1 u v, max 1 u v}) :
+    type_of% @funext.{u,v} := by
+  intro α β f g agree
+  have stepEq : graphStep f = graphStep g := endomorphisms
+    (T := PLift (PSum α (PSigma β))) (f := graphStep f) (g := graphStep g) commutes (by
+    rintro ⟨x⟩
+    cases x with
+    | inl a => exact congrArg (fun y => PLift.up (.inr ⟨a, y⟩ : PSum α (PSigma β))) (agree a)
+    | inr => rfl)
+  let graph (h : (a : α) → β a) (a : α) : PSigma β := ⟨a, h a⟩
+  let observe (k : PLift (PSum α (PSigma β)) → PLift (PSum α (PSigma β))) (a : α) : PSigma β :=
+    PSum.casesOn (k ⟨.inl a⟩).down (fun _ => ⟨a, f a⟩) id
+  have graphEq : graph f = graph g := congrArg observe stepEq
+  let unpack (t : {t : α → PSigma β // ∀ x, (t x).1 = x}) (a : α) : β a :=
+    (t.property a) ▸ (t.val a).2
+  exact congrArg unpack (Subtype.ext (a1 := ⟨graph f, fun _ => rfl⟩)
+    (a2 := ⟨graph g, fun _ => rfl⟩) graphEq)
+
+open Lean in
+run_cmd
+  unless (← collectAxioms ``funextFromSuccMap).isEmpty do
+    throwError "the range-map extensionality witness depends on axioms"
+
+end RangeMap
+
 namespace Collector
 
 open Std Std.Iterators
@@ -925,6 +973,8 @@ private def reductionPaths (official strict full : Environment) : NameMap (List 
 missing official interface in the completeness check. -/
 private def logicalConsequence? (owner name : Name) : Option (Name × Name) := do
   match owner, name with
+  | `Init.Data.Range.Polymorphic.Map, ``Std.PRange.UpwardEnumerable.Map.succ?_toFun' =>
+    return (``funext, ``OmegaChecks.InitBoundaries.RangeMap.funextFromSuccMap)
   | `Init.Core, ``Quotient.sound => return (``funext, ``OmegaChecks.InitBoundaries.funextFromQuotientSound)
   | `Init.Core, ``Pi.instSubsingleton => return (``funext, ``OmegaChecks.InitBoundaries.funextFromPiSubsingleton)
   | `Init.Core, ``instSubsingletonSquash => return (``funext, ``OmegaChecks.InitBoundaries.funextFromSquashSubsingleton)
