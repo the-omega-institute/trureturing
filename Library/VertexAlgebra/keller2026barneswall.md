@@ -10,7 +10,13 @@ strata_touched:
   - D5/S3/VertexAlgebra/TwistedGround/BarnesWall/Q8TraceSign
   - D5/S3/VertexAlgebra/TwistedGround/BarnesWall/Rank128Lattice
   - D5/S3/VertexAlgebra/TwistedGround/BarnesWall/Q8GroundTrace
+  - D5/S3/VertexAlgebra/TwistedGround/BarnesWall/PauliRows
+  - D5/S3/VertexAlgebra/TwistedGround/BarnesWall/CyclicEtaTrace
+  - D5/S3/VertexAlgebra/TwistedGround/BarnesWall/CoherentTraceSign
   - D5/S3/HomologicalAlgebra/BarnesWallQ8CohomologyDetector
+  - D5/S3/HomologicalAlgebra/BarnesWallQ8CyclicGauge
+  - D5/S3/HomologicalAlgebra/InflatedCubicCandidate
+  - D5/S3/HomologicalAlgebra/QuaternionCandidateRestriction
 license: citation-only
 triage: anchor
 ---
@@ -36,6 +42,13 @@ calculation for the specified $E(7)$ action. Conjecture 5.2 concerns the
 vanishing chiral anomaly and the existence of a central charge 128
 holomorphic orbifold of Virasoro gap four.
 
+Roberts's 2025 dissertation supplies the lift to the twisted group algebra
+and the linearization of the defect representation at ranks 8, 32, and 128.
+Chapters 7 and 8 concern these results in twisted group algebras and
+projective representations. Conjecture 5.2 concerns the degree-three
+chiral anomaly of the VOA action.
+[Roberts, pp. 4–5 and Chs. 7–8](https://hdl.handle.net/10150/677567)
+
 Ji and Tian's Theorem 6.1 proves that the chiral anomaly is inflated from
 the elementary abelian quotient of $E(7)$. In their full CFT the two
 pullbacks of the chiral classes coincide and cancel. In the holomorphic
@@ -60,9 +73,30 @@ In the VOA argument, the order-four cyclic trivializations determine the
 relative phases of the three centralizer actions through the cyclic modular
 $S$ transform. Their physical trace product has positive sign, which
 selects the zero class. This identification uses the cyclic trace and
-equivariantization theorems in the literature. The Lean statements cover
-the finite Gauss sum, the covariant ground-space operators, and the
-cohomological detector.
+equivariantization theorems in the literature. The Lean development also
+computes the three rank-128 Pauli defect determinants and checks the cyclic
+cochain and its transport signs. The Dedekind eta calculation extracts the
+coefficient $2^{32}$ from the modularly transformed quotient. The resulting
+Lean theorem forces the zero candidate given the physical modular identity,
+the ground coefficient limit for that character, and transport of its cyclic
+action to the covariant ground-space operators.
 [van Ekeren–Möller–Scheithauer, Theorem 5.13](https://arxiv.org/abs/1507.08142v3) ·
 [McRae, Theorem 4.17](https://arxiv.org/abs/1910.13226v2) ·
 [Gelaki–Naidu–Nikshych, Theorem 3.5](https://arxiv.org/abs/0905.3117)
+
+## Reduction to two inflated classes
+
+For a split elementary abelian two-group in any rank with at least two
+hyperbolic pairs, the cyclic diagonal of a normalized three-cocycle
+has degree at most three. Triviality on the lifted involution subgroups
+makes the diagonal vanish on the quadratic zero cone. Its polynomial
+then factors as the split quadratic form times an affine linear
+function. The central coordinate of the sign extension provides an
+explicit primitive for the inflated linear term. Over circle
+coefficients this leaves two possible representatives, indexed by a bit.
+[Ji–Tian, Theorem 6.1](https://arxiv.org/abs/2611.23231v1)
+
+In the standard split extension, two coordinate slots support a
+quaternion subgroup. Restricting the trilinear representative to this
+subgroup gives the quaternion detector above. Its bar-cycle evaluation
+separates the two candidates, so the bit is unique.
