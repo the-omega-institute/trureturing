@@ -93,29 +93,44 @@ private def declarationKind : ConstantInfo → String
   | .ctorInfo _ => "constructor"
   | .recInfo _ => "recursor"
 
-/-- One shortest implementation-body dependency path to a strict definition sealed
-under ordinary import whose official implementation is publicly visible. -/
-private def reductionPaths (official strict full : Environment) : NameMap (List Name) := Id.run do
+/-- The pinned Lean evaluator can calculate these on closed natural numbers
+even when the public constant has no definition body (notably Nat.gcd). -/
+private def officialReduction (env : Environment) (n : Name) : Option String := do
+  let info ← env.find? n
+  if #[`Nat.succ, `Nat.add, `Nat.sub, `Nat.mul, `Nat.div, `Nat.mod, `Nat.pow, `Nat.gcd,
+       `Nat.beq, `Nat.ble, `Nat.land, `Nat.lor, `Nat.xor, `Nat.shiftLeft, `Nat.shiftRight].contains n then
+    return "builtin natural-number reduction"
+  match info with
+  | .defnInfo _ => return "public definition body"
+  | .recInfo _ => return "recursor computation rule"
+  | .ctorInfo _ => return "constructor computation rule"
+  | .inductInfo _ => return "primitive inductive type"
+  | _ => none
+
+/-- One shortest implementation-body path to a sealed strict implementation
+whose official counterpart has a public computation rule or inductive interface. -/
+private def reductionPaths (official strict full : Environment) : NameMap (List Name × String) := Id.run do
   let mut users : NameMap (Array Name) := {}
-  let mut paths : NameMap (List Name) := {}
+  let mut paths : NameMap (List Name × String) := {}
   let mut todo := #[]
   for (n, info) in full.constants.toList do
-    let .defnInfo value := info | continue
+    let some value := info.value? (allowOpaque := true) | continue
     if !(strict.find? n).any (· matches .defnInfo _) then
-      if (official.find? (n.replacePrefix `Omega .anonymous)).any (· matches .defnInfo _) then
-        paths := paths.insert n [n]
+      if let some rule := officialReduction official (n.replacePrefix `Omega .anonymous) then
+        paths := paths.insert n ([n], rule)
         todo := todo.push n
-    else
-      for dep in value.value.getUsedConstantsAsSet do
+    if info matches .defnInfo _ | .opaqueInfo _ then
+      for dep in value.getUsedConstantsAsSet do
         users := users.insert dep ((users.getD dep #[]).push n)
   todo := todo.qsort Name.lt
   let mut i := 0
   while h : i < todo.size do
     let dependency := todo[i]
     i := i + 1
+    let some (path, rule) := paths.get? dependency | continue
     for n in (users.getD dependency #[]).qsort Name.lt do
       unless paths.contains n do
-        paths := paths.insert n (n :: paths.getD dependency [])
+        paths := paths.insert n (n :: path, rule)
         todo := todo.push n
   return paths
 
@@ -180,12 +195,13 @@ private def inventory (lib : System.FilePath) (visible strict full : Environment
       if !axioms.isEmpty then
         withAxioms := withAxioms + 1
         withAxiomsUnique := withAxiomsUnique.insert name
-      let reduction := if matched then (reductions.getD strictName []).map Name.toString else []
+      let reduction := if matched then reductions.get? strictName else none
       rows := rows.push <| Json.mkObj [
         ("name", toJson name.toString), ("module", toJson owner.toString),
         ("kind", toJson (declarationKind info)), ("unsafe", toJson info.isUnsafe), ("partial", toJson info.isPartial),
         ("matchingNameAndModule", toJson matched),
-        ("publicReductionBoundary", toJson reduction),
+        ("publicReductionBoundary", toJson ((reduction.map Prod.fst).getD []).toArray),
+        ("officialReductionMechanism", toJson (reduction.map Prod.snd)),
         ("axioms", toJson (axioms.map Name.toString)),
         ("impliesAxiom", toJson ((boundaries.get? name).map Name.toString)),
         ("strictModule", toJson (strictOwner.map Name.toString))]

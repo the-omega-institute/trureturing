@@ -1,5 +1,6 @@
 """Run from anywhere in this checkout. --incremental temporarily edits two clean sources."""
 import argparse
+import csv
 from functools import cache
 import hashlib
 import json
@@ -510,7 +511,7 @@ def check_generated_init():
     with tempfile.TemporaryDirectory(prefix="omega-generated-init-") as directory:
         product = Path(directory) / "port"
         run(sys.executable, "-B", SRC / "OmegaChecks/InitPort/build.py", product,
-            "Init.Prelude", "Init.Data.List.Impl", "Init.Data.List.TakeDrop")
+            "Init.Prelude", "Init.Data.List.Impl", "Init.Data.List.TakeDrop", "Init.Data.Nat.Coprime")
         environment = {**ENV, "LEAN_PATH": str(product / "lib")}
         # The upstream addition helper must preserve the strict seed's definitional reduction.
         source = ("module\nprelude\nimport all OmegaInit.Prelude\n"
@@ -534,6 +535,24 @@ example {α : Type} (a : α) :
             for name in names:
                 if f"'{name}' does not depend on any axioms" not in result.stdout:
                     raise RuntimeError(f"{module}: {result.stdout}")
+        # GCD has a builtin reduction even though its public official body is sealed.
+        coprime = "example : Nat.Coprime (.succ (.succ .zero)) (.succ (.succ (.succ .zero))) := rfl\n"
+        official_import = "module\nprelude\nimport Init.Data.Nat.Coprime\n"
+        subprocess.run([ENV["LEAN"], "--stdin"], cwd=ROOT, text=True, check=True,
+                       input=official_import + coprime, env={**ENV, "LEAN_PATH": ""})
+        strict_import = "module\nprelude\nimport OmegaInit.Data.Nat.Coprime\nopen Omega\n"
+        strict = subprocess.run([ENV["LEAN"], "--stdin"], cwd=ROOT, text=True, capture_output=True,
+                                input=strict_import + coprime, env=environment)
+        if strict.returncode:
+            if "Nat.gcd" not in strict.stdout or "not exposed" not in strict.stdout:
+                raise RuntimeError(strict.stdout + strict.stderr)
+            run(sys.executable, "-B", SRC / "OmegaChecks/InitPort/report.py", product)
+            with (product / "init-public-reductions.tsv").open() as stream:
+                boundaries = {row["declaration"]: row for row in csv.DictReader(stream, delimiter="\t")}
+            row = boundaries["Nat.Coprime"]
+            if (row["strictDependencyPath"] != "Omega.Nat.Coprime -> Omega.Nat.gcd" or
+                    row["officialReductionMechanism"] != "builtin natural-number reduction"):
+                raise RuntimeError(f"Unreported public reduction difference: {row}")
 
 
 def full_check(incremental=False):

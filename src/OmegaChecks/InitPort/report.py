@@ -72,11 +72,13 @@ def report(product):
         reductions = stage / "init-public-reductions.tsv"
         with reductions.open("w", newline="") as f:
             writer = csv.writer(f, delimiter="\t", lineterminator="\n")
-            writer.writerow(["module", "declaration", "sealedDefinition", "strictDependencyPath"])
+            writer.writerow(["module", "declaration", "sealedDefinition", "strictDependencyPath",
+                             "officialReductionMechanism"])
             for row in official["declarations"]:
                 path = row["publicReductionBoundary"]
                 if path:
-                    writer.writerow([row["module"], row["name"], path[-1], " -> ".join(path)])
+                    writer.writerow([row["module"], row["name"], path[-1], " -> ".join(path),
+                                     row["officialReductionMechanism"]])
         reductions.replace(product / reductions.name)
         inventory.replace(product / inventory.name)
         output.replace(product / output.name)
