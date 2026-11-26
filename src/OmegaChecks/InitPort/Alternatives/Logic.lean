@@ -1,4 +1,5 @@
 module
+public import Init.WFComputable
 public import Init.SimpLemmas
 public import Init.PropLemmas
 public import Init.Sym.Lemmas
@@ -121,5 +122,8 @@ public theorem Bool.dite_true_right_eq_false : type_of% @_root_.Bool.dite_true_r
   cases d with
   | isTrue h => exact ⟨fun e => ⟨h, e⟩, fun ⟨_, e⟩ => e⟩
   | isFalse n => exact ⟨Bool.noConfusion, fun ⟨h, _⟩ => (n h).elim⟩
+
+@[expose] public noncomputable def Acc.recC : type_of% @_root_.Acc.recC := @_root_.Acc.rec
+public theorem Acc.rec_eq_recC : @_root_.Acc.rec = @Acc.recC := rfl
 
 end OmegaChecks.InitPort.Alternatives

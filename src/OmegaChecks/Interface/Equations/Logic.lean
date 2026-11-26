@@ -1,5 +1,6 @@
 module
 
+public import Init.WFComputable
 public import Init.Core
 public import Init.Internal.Order.Basic
 import all Init.Internal.Order.Basic
@@ -69,5 +70,12 @@ public theorem Nat.mul (a b : Nat) :
 /-- The strict elimination principle for nonemptiness characterizes the official proposition. -/
 public theorem Nonempty (α : Sort u) : (∀ p : Prop, (α → p) → p) = _root_.Nonempty α :=
   propext ⟨fun h => h _ _root_.Nonempty.intro, fun h _ f => h.elim f⟩
+
+public theorem Acc.recC.{v,u} {α : Sort u} {r : α → α → Prop} {motive : (a : α) → Acc r a → Sort v}
+    (step : (x : α) → (h : ∀ y, r y x → Acc r y) →
+      ((y : α) → (hr : r y x) → motive y (h y hr)) → motive x (.intro x h))
+    {a : α} (t : Acc r a) :
+    @_root_.Acc.rec α r motive step a t = @_root_.Acc.recC α r motive step a t :=
+  congrArg (fun k => @k α r motive step a t) _root_.Acc.rec_eq_recC
 
 end OmegaChecks.Interface.Equations
