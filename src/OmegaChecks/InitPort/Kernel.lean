@@ -157,19 +157,31 @@ private def numeral? (source : Environment) (expr : Expr) (fuel : Nat := 4) : Op
   numeral? source body fuel
 
 private def comparisonProofs (source : Environment) (proofs : NameMap ConstantInfo)
-    (body : Expr) (canUsePowMonotonicity : Bool) : Option Expr := Id.run do
+    (body : Expr) (owner : Name) : Option Expr := Id.run do
+  let earlier (lemma : Name) := match source.getModuleIdxFor? lemma, source.getModuleIdxFor? owner with
+    | some provider, some current => provider.toNat < current.toNat
+    | _, _ => false
   let result := body.replace fun e => Id.run do
     unless e.getAppFn.isConstOf `of_decide_eq_true do return none
     let some p := e.getAppArgs[0]? | return none
+    let asProof := mkApp (mkConst `id [.zero]) p
+    if p.getAppFn.isConstOf `Eq then
+      let #[α, a, b] := p.getAppArgs | return none
+      unless α.isConstOf `Nat do return none
+      let some x := numeral? source a | return none
+      let some y := numeral? source b | return none
+      unless x == y && x ≥ 32 do return none
+      return some <| mkApp asProof (mkApp2 (mkConst `Eq.refl [.succ .zero]) α a)
     let strict := p.getAppFn.isConstOf `LT.lt
     unless strict || p.getAppFn.isConstOf `LE.le do return none
     let #[α, _, a, b] := p.getAppArgs | return none
-    unless α.consumeMData.isConstOf `Nat do return none
     let some x := numeral? source a | return none
     let some y := numeral? source b | return none
     unless (if strict then x < y else x ≤ y) && y ≥ 32 do return none
-    let asProof := mkApp (mkConst `id [.zero]) p
-    if canUsePowMonotonicity && !strict && x > 0 && y > 0 && y.log2 < 128 &&
+    let word := strict && α.isConstOf `UInt32 && x == 0 && y < 2 ^ 32 &&
+      earlier `UInt32.ofNatLT_lt_of_lt
+    unless α.consumeMData.isConstOf `Nat || word do return none
+    if !strict && earlier `Nat.pow_le_pow_right && x > 0 && y > 0 && y.log2 < 128 &&
         2 ^ x.log2 == x && 2 ^ y.log2 == y then
       return some <| mkApp asProof <| mkApp5 (mkConst `Nat.pow_le_pow_right) (mkRawNatLit 2)
         (mkConst `True.intro) (mkRawNatLit x.log2) (mkRawNatLit y.log2) (mkConst `True.intro)
@@ -177,6 +189,9 @@ private def comparisonProofs (source : Environment) (proofs : NameMap ConstantIn
       else if strict then binaryLt x y
       else mkApp5 (mkConst `Omega.Nat.le_trans) (natTerm x) (mkApp (mkConst `Omega.Nat.succ) (natTerm x))
         (natTerm y) (mkApp (mkConst `Omega.Nat.le_succ) (natTerm x)) (binaryLt x y)
+    let cert := if word then mkApp5 (mkConst `Omega.UInt32.ofNatLT_lt_of_lt) (natTerm x) (natTerm y)
+        (binaryLt x (2 ^ 32)) (binaryLt y (2 ^ 32)) cert
+      else cert
     let cert := inlineLiteralProofs proofs cert
     return some <| mkApp asProof <| cert.replace fun
       | .const n us => some (.const (n.replacePrefix `Omega .anonymous) us)
@@ -402,10 +417,7 @@ partial def visit (n : Name) : M Bool := do
   if !decided.equal rewritten then
     if (← attempt (OmegaChecks.InitCompiler.constructiveCasts c.source decided)) matches .added then
       return ← record n .added
-  let canUsePowMonotonicity := match c.source.getModuleIdxFor? `Nat.pow_le_pow_right, c.source.getModuleIdxFor? n with
-    | some provider, some owner => provider.toNat < owner.toNat
-    | _, _ => false
-  if let some certified := comparisonProofs c.source c.literalProofs decided canUsePowMonotonicity then
+  if let some certified := comparisonProofs c.source c.literalProofs decided n then
     -- Rechecking the closed proof of comparison costs proportionally more than
     -- applying the original opaque theorem; its bound remains deterministic.
     if (← attempt certified (40 * c.maxHeartbeats)) matches .added then return ← record n .added
