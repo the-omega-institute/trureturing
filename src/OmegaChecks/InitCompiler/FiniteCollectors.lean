@@ -1,5 +1,6 @@
 module
 public import Lean
+import Init.Data.Iterators.Consumers.Access
 import Init.Data.Iterators.Consumers.Collect
 import Init.Data.Iterators.Consumers.Total
 import Init.Data.Slice.Operations
@@ -14,9 +15,18 @@ private def pureCollectors := [``Std.Iter.toArray, ``Std.Iter.toList, ``Std.Iter
 private def monadicCollectors := [``Std.IterM.toArray, ``Std.IterM.toList, ``Std.IterM.toListRev]
 private def sliceCollectors := [``Std.Slice.toArray, ``Std.Slice.toList, ``Std.Slice.toListRev]
 
+private def consumerArity? (head : Name) : Option Nat :=
+  if pureCollectors.contains head then some 4
+  else if head == ``Std.Iter.atIdxSlow? then some 5
+  else if monadicCollectors.contains head || sliceCollectors.contains head then some 6
+  else none
+
 private def specializeCollector (e : Expr) : MetaM (Option Expr) := do
   let some head := e.getAppFn.constName? | return none
   let args := e.getAppArgs
+  if head == ``Std.Iter.atIdxSlow? && args.size == 5 then
+    let it ← mkAppOptM ``Std.Iter.ensureTermination #[args[0]!, args[1]!, args[4]!]
+    return some (← mkAppOptM ``Std.Iter.Total.atIdxSlow? #[args[0]!, args[1]!, args[2]!, none, args[3]!, it])
   if pureCollectors.contains head && args.size == 4 then
     let it ← mkAppOptM ``Std.Iter.ensureTermination #[args[0]!, args[1]!, args[3]!]
     let method := head.replacePrefix ``Std.Iter ``Std.Iter.Total
@@ -31,13 +41,11 @@ private def specializeCollector (e : Expr) : MetaM (Option Expr) := do
   return none
 
 public def finiteCollectors (env : Environment) (input : Expr) (withinImplementation := false) : IO Expr := do
-  unless input.getUsedConstants.any (fun n =>
-    pureCollectors.contains n || monadicCollectors.contains n || sliceCollectors.contains n) do return input
+  unless input.getUsedConstants.any (fun n => (consumerArity? n).isSome) do return input
   let rewrite : MetaM Expr := Meta.transform input (pre := fun sub => do
     let some head := sub.getAppFn.constName? | return .continue
     let isSlice := sliceCollectors.contains head
-    unless isSlice || pureCollectors.contains head || monadicCollectors.contains head do return .continue
-    let arity := if pureCollectors.contains head then 4 else 6
+    let some arity := consumerArity? head | return .continue
     -- Rewrites under congrArg often pass the collection function without its final argument.
     unless sub.getAppNumArgs == arity || sub.getAppNumArgs + 1 == arity do return .continue
     try
