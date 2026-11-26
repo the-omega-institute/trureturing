@@ -576,6 +576,78 @@ def limitedOmniscienceFromLookup (lookup : type_of% (@Std.Iter.atIdxSlow?.{0}))
       cases Option.some.inj (h.symm.trans ((correct 0 it).trans hj))
       exact Bool.noConfusion (e.symm.trans sign)
 
+open Std.Iterators.Types
+
+/-- Identity mapping carries an arbitrary input iterator through the map loop without
+changing its number of outputs. -/
+def limitedOmniscienceFromMapLoop (loop : type_of% (@Map.instIteratorLoop.{0,0,0,0,0}))
+    (correct : ∀ {α β : Type} [inst : Iterator α Id β] [Finite α Id],
+      @loop α β β Id Id Id _ _ inst (fun _ => monadLift) (fun b => pure b) =
+        @Map.instIteratorLoop α β β Id Id Id _ _ inst (fun _ => monadLift) (fun b => pure b))
+    (f : Nat → Bool) : Decidable (∃ n, f n = true) := by
+  apply limitedOmniscienceFromLength (f := f) (fun {α β} [inst : Iterator α Id β] it =>
+    letI := @loop α β β Id Id Id _ _ inst (fun _ => monadLift) (fun b => pure b)
+    (it.map id).length)
+  intro α β inst finite it
+  rw [correct]
+  letI : IteratorLoop α Id Id := .defaultImplementation
+  exact Iter.length_map.trans Iter.length_toList_eq_length.symm
+
+/-- Attaching the constantly true predicate keeps every original output. -/
+def limitedOmniscienceFromAttachLoop (loop : type_of% (@Attach.instIteratorLoop.{0,0,0,0}))
+    (correct : ∀ {α β : Type} [inst : Iterator α Id β] [Finite α Id],
+      @loop α β Id _ Id _ (fun _ => True) inst = @Attach.instIteratorLoop α β Id _ Id _ (fun _ => True) inst)
+    (f : Nat → Bool) : Decidable (∃ n, f n = true) := by
+  apply limitedOmniscienceFromLength (f := f) (fun {α β} [inst : Iterator α Id β] it =>
+    letI := @loop α β Id _ Id _ (fun _ => True) inst
+    (it.attachWith (fun _ => True) (fun _ _ => trivial)).length)
+  intro α β inst finite it
+  rw [correct]
+  letI : IteratorLoop α Id Id := .defaultImplementation
+  exact Iter.length_attachWith.trans Iter.length_toList_eq_length.symm
+
+/-- Universe lifting keeps every output, including for a same-universe lift. -/
+def limitedOmniscienceFromULiftLoop (loop : type_of% (@ULiftIterator.instIteratorLoop.{0,0,0,0,0,0}))
+    (correct : ∀ {α β : Type} [inst : Iterator α Id β] [Finite α Id],
+      @loop α Id Id β (fun _ => monadLift) Id _ _ inst =
+        @ULiftIterator.instIteratorLoop α Id Id β (fun _ => monadLift) Id _ _ inst)
+    (f : Nat → Bool) : Decidable (∃ n, f n = true) := by
+  apply limitedOmniscienceFromLength (f := f) (fun {α β} [inst : Iterator α Id β] it =>
+    letI := @loop α Id Id β (fun _ => monadLift) Id _ _ inst
+    it.uLift.length)
+  intro α β inst finite it
+  rw [correct]
+  letI : IteratorLoop α Id Id := .defaultImplementation
+  exact Iter.length_uLift.trans Iter.length_toList_eq_length.symm
+
+/-- A filter-map that returns every element preserves the output count. -/
+def limitedOmniscienceFromFilterMapLoop (loop : type_of% (@FilterMap.instIteratorLoop.{0,0,0,0,0}))
+    (correct : ∀ {α β : Type} [inst : Iterator α Id β] [Finite α Id],
+      @loop α β β Id Id Id _ _ inst (fun _ => monadLift) (fun b => pure (some b)) =
+        @FilterMap.instIteratorLoop α β β Id Id Id _ _ inst (fun _ => monadLift) (fun b => pure (some b)))
+    (f : Nat → Bool) : Decidable (∃ n, f n = true) := by
+  apply limitedOmniscienceFromLength (f := f) (fun {α β} [inst : Iterator α Id β] it =>
+    letI := @loop α β β Id Id Id _ _ inst (fun _ => monadLift) (fun b => pure (some b))
+    (it.filterMap some).length)
+  intro α β inst finite it
+  rw [correct]
+  letI := FilterMap.instIteratorLoop (α := α) (β := β) (γ := β) (m := Id) (n := Id) (o := Id)
+    (lift := fun _ => monadLift) (f := fun b => pure (some b))
+  exact Iter.length_toList_eq_length.symm.trans
+    (congrArg List.length ((Iter.toList_filterMap (it := it) (f := some)).trans (List.filterMap_some ..)))
+
+/-- Appending an empty list iterator preserves the entire input. -/
+def limitedOmniscienceFromAppendLoop (loop : type_of% (@Append.instIteratorLoop.{0,0,0,0}))
+    (correct : ∀ {α β : Type} [inst : Iterator α Id β] [Finite α Id],
+      @loop Id β α (ListIterator β) Id _ _ inst _ = @Append.instIteratorLoop Id β α (ListIterator β) Id _ _ inst _)
+    (f : Nat → Bool) : Decidable (∃ n, f n = true) := by
+  apply limitedOmniscienceFromLength (f := f) (fun {α β} [inst : Iterator α Id β] it =>
+    letI := @loop Id β α (ListIterator β) Id _ _ inst _
+    (it.append ([] : List β).iter).length)
+  intro α β inst finite it
+  rw [correct]
+  simp only [← Iter.length_toList_eq_length, Iter.toList_append, List.toList_iter, List.append_nil]
+
 end Collector
 
 end OmegaChecks.InitBoundaries
