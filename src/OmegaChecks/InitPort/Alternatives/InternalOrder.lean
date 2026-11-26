@@ -49,24 +49,6 @@ private theorem productSupremum {α : Sort u} {β : Sort v} [PartialOrder α] [P
       (fun p : α ×' β => c (p.1, p.2))
     exact ⟨(p.1, p.2), Prod.is_sup_of_pprod hp⟩
 
-public theorem monotone_bind (m : Type u → Type v) [Bind m] [∀ α, PartialOrder (m α)] [MonoBind m]
-    {α β : Type u} {γ : Sort w} [PartialOrder γ]
-    (f : γ → m α) (g : γ → α → m β) (hf : monotone f)
-    (hg : ∀ x y : γ, x ⊑ y → ∀ a, g x a ⊑ g y a) :
-    monotone fun x => f x >>= g x :=
-  fun x y h => PartialOrder.rel_trans (MonoBind.bind_mono_left (hf x y h))
-    (MonoBind.bind_mono_right (hg x y h))
-
-public theorem monotone_dite {α : Sort u} {β : Sort v} [PartialOrder α] [PartialOrder β]
-    (c : Prop) [d : Decidable c] (f : α → c → β) (g : α → ¬ c → β)
-    (hf : ∀ x y : α, x ⊑ y → ∀ h, f x h ⊑ f y h)
-    (hg : ∀ x y : α, x ⊑ y → ∀ h, g x h ⊑ g y h) :
-    monotone fun x => dite c (f x) (g x) := by
-  intro x y xy
-  cases d with
-  | isTrue h => exact hf x y xy h
-  | isFalse h => exact hg x y xy h
-
 public theorem Functor.monotone_map {m : Type u → Type v} [Monad m] [∀ t, PartialOrder (m t)] [MonoBind m]
     {α β : Type u} {γ : Type w} [PartialOrder γ] [LawfulMonad m]
     (f : γ → m α) (g : α → β) (hf : monotone f) : monotone fun x => g <$> f x := by
@@ -92,7 +74,8 @@ private meta def expandPointwise (e : Expr) : MetaM Expr :=
     let args := node.getAppArgs
     let affected (arg : Expr) := (arg.find? fun t => t.isConstOf ``Order.instOrderPi ||
       t.isConstOf ``Order.ImplicationOrder.instOrder ||
-      t.isConstOf ``Order.ReverseImplicationOrder.instOrder).isSome
+      t.isConstOf ``Order.ReverseImplicationOrder.instOrder || t.isConstOf ``Order.instPartialOrderReaderT ||
+      t.isConstOf ``Order.instPartialOrderStateT || t.isConstOf ``Order.instPartialOrderStateRefT').isSome
     unless args.any affected do return .continue
     if projection then
       let result ← withTransparency .all (whnf node)
@@ -105,7 +88,8 @@ open Lean Meta Elab Command in
 run_meta do
   let env ← getEnv
   let orderLemmas := env.header.moduleData[(env.getModuleIdx? `Init.Internal.Order.Lemmas).get!.toNat]!
-  let basicLemmas := #[``Order.monotone_apply, ``Order.monotone_of_monotone_apply,
+  let basicLemmas := #[``Order.monotone_bind, ``Order.monotone_dite, ``Order.monotone_readerTRun,
+    ``Order.monotone_stateTRun, ``Order.monotone_stateRefT'Run, ``Order.monotone_apply, ``Order.monotone_of_monotone_apply,
     ``Order.chain_apply, ``Order.is_meet_pi, ``Order.ImplicationOrder.is_meet_and,
     ``Order.ReverseImplicationOrder.is_meet_or, ``Order.implication_order_monotone_and,
     ``Order.implication_order_monotone_or, ``Order.implication_order_monotone_exists,
