@@ -25,9 +25,10 @@ private theorem pair_adj : pairGraph.Adj a b := by
   exact (by decide : (0 : Fin 2) ≠ 1) (congrArg ULift.down h)
 
 private theorem pair_chordal : pairGraph.{u}.IsChordal := by
-  have h : pairGraph.{u}.IsAcyclic := IsAcyclic.of_card_le_two (by simp)
-  intro _ p hp _
-  exact (h p hp).elim
+  intro _ p hp hlen
+  have h : p.support.tail.length ≤ 2 := hp.support_nodup.length_le_card.trans (by simp)
+  rw [List.length_tail, p.length_support] at h
+  omega
 
 private theorem pair_cliques (n : ℕ) (hn : 2 ≤ n) :
     ∀ C : Set Pair.{u}, pairGraph.IsClique C → C.ncard ≤ n := by
@@ -302,5 +303,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   options := #[]
 
 end CliqueSeven
+
+end
 
 end Reg.D5.S3.Combinatorics.Graph.Chordal.MultiIdentitySimplicialBanach
