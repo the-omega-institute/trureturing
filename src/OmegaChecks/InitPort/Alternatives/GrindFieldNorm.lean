@@ -67,4 +67,49 @@ public theorem Lean.Grind.Field.NormNum.ofRat_mul' : type_of% @_root_.Lean.Grind
       Field.div_eq_mul_inv, Field.div_eq_mul_inv, Semiring.mul_assoc, Semiring.mul_assoc,
       CommSemiring.mul_left_comm (b.num : α)]
 
+private theorem ofRatZero {α : Type u} [Field α] : (ofRat 0 : α) = 0 := by
+  change (Int.cast (R := α) 0) / (Nat.cast (R := α) 1) = 0
+  rw [Field.div_eq_mul_inv, Ring.intCast_zero, Semiring.zero_mul]
+
+private theorem ofRatOne {α : Type u} [Field α] : (ofRat 1 : α) = 1 := by
+  change (Int.cast (R := α) 1) / (Nat.cast (R := α) 1) = 1
+  rw [Field.div_eq_mul_inv, Ring.intCast_one, Semiring.natCast_one, Field.inv_one, Semiring.mul_one]
+
+private theorem ofRatInverse {α : Type u} [Field α] [IsCharP α 0] (a : Rat) :
+    (ofRat a⁻¹ : α) = (ofRat a)⁻¹ := by
+  by_cases zero : a = 0
+  · rw [zero, Rat.inv_zero, ofRatZero, Field.inv_zero]
+  · apply Field.eq_inv_of_mul_eq_one
+    rw [← _root_.Lean.Grind.Field.NormNum.ofRat_mul, Rat.inv_mul_cancel a zero, ofRatOne]
+
+public theorem Lean.Grind.Field.NormNum.ofRat_div : type_of% @_root_.Lean.Grind.Field.NormNum.ofRat_div := by
+  intro α _ _ a b
+  rw [Rat.div_def, _root_.Lean.Grind.Field.NormNum.ofRat_mul, ofRatInverse, Field.div_eq_mul_inv]
+
+public theorem Lean.Grind.Field.NormNum.ofRat_zpow : type_of% @_root_.Lean.Grind.Field.NormNum.ofRat_zpow := by
+  intro α _ _ a n
+  cases n with
+  | ofNat n =>
+    rw [Int.ofNat_eq_natCast, Rat.zpow_natCast, Field.zpow_natCast, _root_.Lean.Grind.Field.NormNum.ofRat_npow]
+  | negSucc n =>
+    change ofRat (a ^ (-((n+1 : Nat) : Int))) = (ofRat a : α) ^ (-((n+1 : Nat) : Int))
+    rw [Rat.zpow_neg, ofRatInverse, Field.zpow_neg, Rat.zpow_natCast, Field.zpow_natCast,
+        _root_.Lean.Grind.Field.NormNum.ofRat_npow]
+
+public theorem Lean.Grind.Field.NormNum.ofRat_npow' : type_of% @_root_.Lean.Grind.Field.NormNum.ofRat_npow' := by
+  intro α _ a ha n
+  have denominator (j : Nat) : (((a^j).den : Nat) : α) ≠ 0 := by
+    rw [Rat.den_pow, Semiring.natCast_pow]
+    induction j with
+    | zero =>
+      rw [Semiring.pow_zero]
+      exact fun e => Field.zero_ne_one e.symm
+    | succ j ih =>
+      rw [Semiring.pow_succ]
+      exact productNonzero ih ha
+  induction n with
+  | zero => rw [Rat.pow_zero, ofRatOne, Semiring.pow_zero]
+  | succ n ih =>
+    rw [Rat.pow_succ, _root_.Lean.Grind.Field.NormNum.ofRat_mul' (denominator n) ha, ih, Semiring.pow_succ]
+
 end OmegaChecks.InitPort.Alternatives
