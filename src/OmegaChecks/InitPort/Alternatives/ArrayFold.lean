@@ -178,4 +178,28 @@ public theorem List.foldl_flip_cons_eq_append' : type_of% @_root_.List.foldl_fli
   exact (_root_.List.foldl_flip_cons_eq_append (l := xs) (f := id)).trans
     (congrArg (fun ys => ys.reverse ++ acc) (_root_.List.map_id xs))
 
+
+
+public theorem Array.foldlM_reverse : type_of% @_root_.Array.foldlM_reverse := by
+  intros
+  rw [← Array.foldlM_toList, ← Array.foldrM_toList, Array.toList_reverse]
+  exact List.foldlM_reverse
+
+public theorem Array.foldrM_reverse : type_of% @_root_.Array.foldrM_reverse := by
+  intros
+  rw [← Array.foldrM_toList, ← Array.foldlM_toList, Array.toList_reverse]
+  exact List.foldrM_reverse
+
+public theorem Array.foldlM_reverse' : type_of% @_root_.Array.foldlM_reverse' := by
+  intro m α β mon xs f b stop w
+  subst stop
+  exact (congrArg (fun bound => xs.reverse.foldlM f b 0 bound) Array.size_reverse.symm).trans
+    (_root_.Array.foldlM_reverse (xs := xs))
+
+public theorem Array.foldrM_reverse' : type_of% @_root_.Array.foldrM_reverse' := by
+  intro m α β mon xs f b start w
+  subst start
+  exact (congrArg (fun bound => xs.reverse.foldrM f b bound 0) Array.size_reverse.symm).trans
+    (_root_.Array.foldrM_reverse (xs := xs))
+
 end OmegaChecks.InitPort.Alternatives

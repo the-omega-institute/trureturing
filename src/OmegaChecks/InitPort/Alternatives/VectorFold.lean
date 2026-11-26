@@ -60,4 +60,17 @@ public theorem Vector.foldr_flatten : type_of% @_root_.Vector.foldr_flatten := b
   unfold _root_.Vector.foldr _root_.Vector.flatten
   rw [_root_.Array.foldr_flatten, _root_.Array.foldr_map]
 
+
+public theorem Vector.foldlM_reverse : type_of% @_root_.Vector.foldlM_reverse := by
+  intros
+  exact Array.foldlM_reverse
+
+public theorem Vector.foldrM_reverse : type_of% @_root_.Vector.foldrM_reverse := by
+  intros
+  exact Array.foldrM_reverse
+
+public theorem Vector.foldrM_push : type_of% @_root_.Vector.foldrM_push := by
+  intros
+  exact Array.foldrM_push
+
 end OmegaChecks.InitPort.Alternatives

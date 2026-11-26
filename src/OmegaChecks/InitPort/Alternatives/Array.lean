@@ -338,6 +338,31 @@ private theorem foldReversePrefix [Monad m] (f : α → β → m β) (xs : _root
       ← takeNext xs.toList i bound, List.reverse_concat]
     rfl
 
+private theorem foldrAsList [Monad m] (f : α → β → m β) (xs : _root_.Array α) :
+    (fun b => xs.foldrM f b) = fun b => xs.toList.reverse.foldlM (fun acc a => f a acc) b := by
+  unfold _root_.Array.foldrM
+  apply (liftTrueBranch (p := xs.size ≤ xs.size) (Nat.le_refl _) _ _).trans
+  apply (conditionalFunctions ..).trans
+  by_cases h : 0 < xs.size
+  · rw [ite_eq_left h, foldReversePrefix]
+    exact congrArg (fun l : List α => fun b => l.reverse.foldlM (fun acc a => f a acc) b) (takeAll xs.toList)
+  · rw [ite_eq_right h]
+    obtain ⟨l⟩ := xs
+    cases l with
+    | nil => rfl
+    | cons a as => exact (h (Nat.zero_lt_succ _)).elim
+
+public theorem Array.foldrM_push : type_of% @_root_.Array.foldrM_push := by
+  intro m α β mon f b xs a
+  rw [_root_.Array.foldrM_eq_reverse_foldlM_toList, _root_.Array.toList_push, List.reverse_concat]
+  exact congrArg (fun cont => f a b >>= cont) (foldrAsList f xs).symm
+
+public theorem Array.foldrM_push' : type_of% @_root_.Array.foldrM_push' := by
+  intro m α β mon f b xs a start h
+  subst start
+  exact (congrArg (fun k => (xs.push a).foldrM f b k 0) (_root_.Array.size_push a).symm).trans
+    (_root_.Array.foldrM_push (xs := xs))
+
 public theorem Array.foldrM_eq_reverse_foldlM_toList.aux :
     type_of% @_root_.Array.foldrM_eq_reverse_foldlM_toList.aux := by
   intro m α β monad f xs b i h
