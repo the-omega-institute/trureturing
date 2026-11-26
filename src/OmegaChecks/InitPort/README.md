@@ -28,6 +28,10 @@ example (a : α) (b : β) : Omega.Eq (Prod.fst (Prod.mk a b)) a := Omega.rfl
 
 这个独立制品用于内核类型检查、证明和定义归约。新生成声明的原生可执行代码、语法扩展、实例搜索和结构字段语法均不在移植覆盖范围内。
 
+`Omega.withPtrAddrUnsafe` 的返回值通过逐输入证明核对。官方实现把对象的机器地址传给回调 `k`，其参数 `h` 证明任意两个地址产生相同结果。严格实现调用 `Omega.withPtrAddr`。校验器读取官方的 `@[implemented_by]` 登记、两端签名和实际计算体，用 `h` 证明每个机器地址所得的值都等于严格实现的结果。[返回值核验](Address.lean) · [官方指针回调](https://github.com/leanprover/lean4/blob/v4.35.0/src/Init/Util.lean#L102)
+
+`Array.anyMUnsafe` 的机器字索引需要运行时数组长度上界。内核允许取 `xs := (List.replicate USize.size ()).toArray`。从零开始搜索整个数组时，机器循环将结束索引转换为 `USize.ofNat USize.size = 0`，首轮就返回 `false`。对同一个数学数组，安全参考 `Array.anyM` 在恒真的 `Id` 谓词下返回 `true`。这项差异限定了可证明对应的输入范围。[官方数组循环](https://github.com/leanprover/lean4/blob/v4.35.0/src/Init/Data/Array/Basic.lean#L936) · [机器字回绕](https://github.com/leanprover/lean4/blob/v4.35.0/src/Init/Data/UInt/Lemmas.lean#L291)
+
 公开覆盖清单按官方定义模块和声明名逐项列出，重复生成的名字在各自模块有独立记录。
 `init-inventory.json` 的 `summary` 按模块与名字的组合计数，`uniqueNames` 按名字去重。
 全量构建也编译可单独导入的 OmegaMath 和 OmegaMathlib 源文件，一同审计它们的传递依赖。
