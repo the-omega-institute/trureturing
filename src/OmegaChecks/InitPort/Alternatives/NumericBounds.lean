@@ -1,4 +1,5 @@
 module
+public import OmegaChecks.InitPort.Alternatives.SequenceExtrema
 public import Init.Data.List.Nat.Sum
 public import Init.Data.List.Int.Sum
 public import Init.Data.Array.Nat
