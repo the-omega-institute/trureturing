@@ -778,6 +778,14 @@ private def logicalConsequence? (owner name : Name) : Option (Name × Name) := d
       some `OmegaChecks.InitInventory.StringPatterns.excludedMiddleOfLongest
     | `Init.Data.String.Lemmas.Pattern.Basic, ``String.Slice.Pattern.Model.IsRevMatch.exists_isLongestRevMatch =>
       some `OmegaChecks.InitInventory.StringPatterns.excludedMiddleOfRevLongest
+    | `Init.Data.String.Lemmas.Pattern.Basic, ``String.Slice.Pattern.Model.matchesAt_iff_exists_isMatch =>
+      some `OmegaChecks.InitInventory.StringPatterns.excludedMiddleOfMatchesAt
+    | `Init.Data.String.Lemmas.Pattern.Basic, ``String.Slice.Pattern.Model.revMatchesAt_iff_exists_isRevMatch =>
+      some `OmegaChecks.InitInventory.StringPatterns.excludedMiddleOfRevMatchesAt
+    | `Init.Data.String.Lemmas.Pattern.Basic, ``String.Slice.Pattern.Model.matchAt?_eq_some_iff =>
+      some `OmegaChecks.InitInventory.StringPatterns.excludedMiddleOfMatchAtSome
+    | `Init.Data.String.Lemmas.Pattern.Basic, ``String.Slice.Pattern.Model.revMatchAt?_eq_some_iff =>
+      some `OmegaChecks.InitInventory.StringPatterns.excludedMiddleOfRevMatchAtSome
     | _, _ => none
   return (``Classical.em, witness)
 
