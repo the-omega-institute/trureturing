@@ -62,7 +62,7 @@ $$\operatorname{PowerSeries.mk}\left(\lambda n: Nat \mapsto (\operatorname{Finse
 
 The width_counting_bridge of HardinA233251TriangleStrip identifies the literal count with the continuation transfer for width two. The two first-use flags and two row colours give 144 states. The integer transfer matrix has an entry one exactly when a legal next row updates the flags and row colours to the destination state, and zero otherwise.
 
-The six certified continuation vectors establish a degree-five relation after one transfer step on every state. TransferMatrix.scalarRelationShift propagates it to all subsequent continuations. The first six positive counts are 2, 16, 225, 3727, 65120 and 1158334. The recurrence for index at least six has signed coefficients 25, -134, 134, -25, 1 in decreasing lag order. Coefficient comparison, including index zero, gives the polynomial product identity. The denominator has constant coefficient one, allowing its inverse in the rational formal power series ring.
+The six certified continuation vectors establish a degree-five relation after one transfer step on every state. TransferMatrix.scalarRelationShift propagates it to all subsequent continuations. The first six positive counts are 2, 16, 225, 3727, 65120 and 1158334. The recurrence for index at least six has signed coefficients 25, -134, 134, -25, 1 for lags one through five, respectively. Coefficient comparison, including index zero, gives the polynomial product identity. The denominator has constant coefficient one, allowing its inverse in the rational formal power series ring.
 
 ## References
 

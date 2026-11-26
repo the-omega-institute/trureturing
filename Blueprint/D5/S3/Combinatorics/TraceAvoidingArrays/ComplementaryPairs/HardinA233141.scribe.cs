@@ -44,7 +44,7 @@ internal sealed class HardinA233141Document : IScribeDocumentDefinition
                         + "transfer step on every state. TransferMatrix.scalarRelationShift propagates it to all "
                         + "subsequent continuations. The first six positive counts are 2, 16, 225, 3727, 65120 and "
                         + "1158334. The recurrence for index at least six has signed coefficients "
-                        + "25, -134, 134, -25, 1 in decreasing lag order. Coefficient comparison, including index zero, "
+                        + "25, -134, 134, -25, 1 for lags one through five, respectively. Coefficient comparison, including index zero, "
                         + "gives the polynomial product identity. The denominator has constant coefficient one, "
                         + "allowing its inverse in the rational formal power series ring."))),
                 DescribeRole.Theorem,
