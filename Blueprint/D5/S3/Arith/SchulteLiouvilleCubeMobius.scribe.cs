@@ -146,9 +146,9 @@ internal sealed class SchulteLiouvilleCubeMobiusDocument : IScribeDocumentDefini
     private static Formula PowerLiftAtPower()
     {
         Formula k = F.Id("k"), f = F.Id("f"), m = F.Id("m");
-        return Disp(All("k", Naturals(), Implication(Ne(k, D(0)),
-            All("f", ArithmeticFunctions(), All("m", Naturals(),
-                Equal(Call(Lift(k, f), Pow(m, k)), Call(f, m))))));
+        Formula value = Equal(Call(Lift(k, f), Pow(m, k)), Call(f, m));
+        Formula coefficients = All("f", ArithmeticFunctions(), All("m", Naturals(), value));
+        return Disp(All("k", Naturals(), Implication(Ne(k, D(0)), coefficients)));
     }
 
     private static Formula PowerLiftOutsidePowers()
@@ -176,9 +176,10 @@ internal sealed class SchulteLiouvilleCubeMobiusDocument : IScribeDocumentDefini
     {
         Formula k = F.Id("k"), f = F.Id("f"), p = F.Id("p"), e = F.Id("e");
         Formula quotient = Call(Qualified("Nat", "div"), e, k);
-        return Disp(All("k", Naturals(), Implication(Ne(k, D(0)),
-            All("f", ArithmeticFunctions(), OnPrimePowers(Equal(Call(Lift(k, f), Pow(p, e)),
-                If(Divides(k, e), Call(f, Pow(p, quotient)), D(0)))))));
+        Formula value = Equal(Call(Lift(k, f), Pow(p, e)),
+            If(Divides(k, e), Call(f, Pow(p, quotient)), D(0)));
+        Formula coefficients = All("f", ArithmeticFunctions(), OnPrimePowers(value));
+        return Disp(All("k", Naturals(), Implication(Ne(k, D(0)), coefficients)));
     }
 
     private static Formula ConvolutionOnPrimePowers()
@@ -194,16 +195,17 @@ internal sealed class SchulteLiouvilleCubeMobiusDocument : IScribeDocumentDefini
     private static Formula MoebiusLiftOnPrimePowers()
     {
         Formula k = F.Id("k"), p = F.Id("p"), e = F.Id("e");
-        return Disp(All("k", Naturals(), Implication(Ne(k, D(0)), OnPrimePowers(
-            Equal(Call(Lift(k, Named(Mu)), Pow(p, e)),
-                Subtract(If(Equal(e, D(0)), D(1), D(0)), If(Equal(e, k), D(1), D(0)))))));
+        Formula difference = Subtract(If(Equal(e, D(0)), D(1), D(0)), If(Equal(e, k), D(1), D(0)));
+        Formula value = Equal(Call(Lift(k, Named(Mu)), Pow(p, e)), difference);
+        return Disp(All("k", Naturals(), Implication(Ne(k, D(0)), OnPrimePowers(value))));
     }
 
     private static Formula ZetaLiftOnPrimePowers()
     {
         Formula k = F.Id("k"), p = F.Id("p"), e = F.Id("e");
-        return Disp(All("k", Naturals(), Implication(Ne(k, D(0)), OnPrimePowers(
-            Equal(Call(Lift(k, IntZeta()), Pow(p, e)), If(Divides(k, e), D(1), D(0))))));
+        Formula zeta = Call(Qualified("ArithmeticFunction", "natCoe"), Qualified("ArithmeticFunction", "zeta"));
+        Formula value = Equal(Call(Lift(k, zeta), Pow(p, e)), If(Divides(k, e), D(1), D(0)));
+        return Disp(All("k", Naturals(), Implication(Ne(k, D(0)), OnPrimePowers(value))));
     }
 
     private static Formula ResultFormula()

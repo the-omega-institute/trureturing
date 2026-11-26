@@ -90,7 +90,7 @@ internal sealed class KarttunenParityDirichletConvolutionsDocument : IScribeDocu
             Parenthesized(And(Parenthesized(first), Parenthesized(second)))));
     }
 
-    private static Formula DivisorCountSum(Formula n) => Sum(n, "m", Call("g", F.Id("m")));
+    private static Formula DivisorCountSum(Formula n) => Sum(n, "d", Call("g", Dv));
     private static Formula AllN(Formula formula) =>
         new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create("n"), F.Id("Nat"), formula);
     private static Formula Lambda(string name, Formula type, Formula body) =>

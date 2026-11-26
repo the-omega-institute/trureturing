@@ -188,7 +188,21 @@ $$\forall n \in Nat,\; 0 < n \Rightarrow 2 \cdot \operatorname{b}\left(n\right) 
 
 Swap the two factors. Each off-diagonal orbit has two entries; the unique fixed pair is (n,n). Thus 2b(n)=tau(n^2)+1. This derives the formula from the rational solution definition, including x=y=2n.
 
-**Theorem 1.14 (The complete convolution for every positive integer).**
+**Theorem 1.14 (Range of the signed and unsigned products).**
+
+$$\forall f \in \operatorname{Finsupp}\left(Nat, Nat\right),\; \forall s \in \operatorname{Finset}\left(Nat\right),\; (\operatorname{Finset}.\operatorname{prod}\left(s, (fun p \mapsto (if (\operatorname{Nat}.\operatorname{mod}\left(f\left(p\right), 4\right) \le 1) then 1 else 0))\right) = 0 \land \operatorname{Finset}.\operatorname{prod}\left(s, (fun p \mapsto (if (\operatorname{Nat}.\operatorname{mod}\left(f\left(p\right), 4\right) = 0) then 1 else (if (\operatorname{Nat}.\operatorname{mod}\left(f\left(p\right), 4\right) = 1) then -1 else 0)))\right) = 0) \lor (\operatorname{Finset}.\operatorname{prod}\left(s, (fun p \mapsto (if (\operatorname{Nat}.\operatorname{mod}\left(f\left(p\right), 4\right) \le 1) then 1 else 0))\right) = 1 \land (\operatorname{Finset}.\operatorname{prod}\left(s, (fun p \mapsto (if (\operatorname{Nat}.\operatorname{mod}\left(f\left(p\right), 4\right) = 0) then 1 else (if (\operatorname{Nat}.\operatorname{mod}\left(f\left(p\right), 4\right) = 1) then -1 else 0)))\right) = 1 \lor \operatorname{Finset}.\operatorname{prod}\left(s, (fun p \mapsto (if (\operatorname{Nat}.\operatorname{mod}\left(f\left(p\right), 4\right) = 0) then 1 else (if (\operatorname{Nat}.\operatorname{mod}\left(f\left(p\right), 4\right) = 1) then -1 else 0)))\right) = -1))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Divisors/OeisA252505FourthPowerFreeConvolution.signedProductsRange` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* The OEIS Foundation Inc. (2026). *OEIS A252505 and the linked unit-fraction and inverse sequences*. URL: <https://oeis.org/A252505>.
+
+*Commentary.*
+
+The unsigned factor detects residues zero and one modulo four. The signed factor has value one at residue zero and minus one at residue one. All other residues make both factors zero. With every index in the two supported residue classes the unsigned product is one and the signed product is one or minus one.
+
+**Theorem 1.15 (The complete convolution for every positive integer).**
 
 $$\forall n \in Nat,\; 1 \le n \Rightarrow \operatorname{a}\left(n\right) = \operatorname{Finset}.\operatorname{sum}\left(\operatorname{Nat}.\operatorname{divisors}\left(n\right), (fun d \mapsto \operatorname{b}\left(d\right) \cdot \operatorname{c}\left(\operatorname{Nat}.\operatorname{div}\left(n, d\right)\right))\right)$$
 
@@ -219,6 +233,7 @@ Encode divisors by all exponent vectors below the factorization of n. The fourth
 - Truth anchor: `D5/S3/Arith/Divisors/OeisA252505FourthPowerFreeConvolution.g`
 - Truth anchor: `D5/S3/Arith/Divisors/OeisA252505FourthPowerFreeConvolution.h`
 - Truth anchor: `D5/S3/Arith/Divisors/OeisA252505FourthPowerFreeConvolution.result`
+- Truth anchor: `D5/S3/Arith/Divisors/OeisA252505FourthPowerFreeConvolution.signedProductsRange`
 - Truth anchor: `D5/S3/Arith/Divisors/OeisA252505FourthPowerFreeConvolution.tau`
 - Truth anchor: `D5/S3/Arith/Divisors/OeisA252505FourthPowerFreeConvolution.unit_fraction_count`
 - Truth anchor: `D5/S3/Arith/Divisors/OeisA252505FourthPowerFreeConvolution.unit_fraction_divisor_formula`

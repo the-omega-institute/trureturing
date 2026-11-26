@@ -209,6 +209,16 @@ private def hfun : ArithmeticFunction ℤ :=
   ⟨OeisA252505FourthPowerFreeConvolution.h,
     by simp [OeisA252505FourthPowerFreeConvolution.h]⟩
 
+open Classical in
+private theorem Q_value (k n : ℕ) (hk : k ≠ 0) (hn : n ≠ 0) :
+    (SchulteLiouvilleCubeMobius.liftPow k ArithmeticFunction.zeta) n = if ∃ d : ℕ, d ^ k = n then 1 else 0 := by
+  classical
+  by_cases h : ∃ d : ℕ, d ^ k = n
+  · obtain ⟨d, hd⟩ := h
+    rw [ite_eq_left ⟨d, hd⟩, ← hd, SchulteLiouvilleCubeMobius.liftPow_apply_pow k hk]
+    simp [ArithmeticFunction.natCoe_apply, ne_zero_pow hk (show d ^ k ≠ 0 from hd.symm ▸ hn)]
+  · rw [ite_eq_right h, SchulteLiouvilleCubeMobius.liftPow_apply_nonpow _ _ _ h]
+
 private theorem g_eq_ceil (n : ℕ) :
     (g n : ℤ) = (⌈(OeisA252505FourthPowerFreeConvolution.tau n : ℚ) / 2⌉₊ : ℤ) := by
   by_cases hn : n = 0
@@ -217,12 +227,8 @@ private theorem g_eq_ceil (n : ℕ) :
   have hg := two_g n hn
   have hb : (SchulteLiouvilleCubeMobius.liftPow 2 ArithmeticFunction.zeta) n = 0 ∨
       (SchulteLiouvilleCubeMobius.liftPow 2 ArithmeticFunction.zeta) n = 1 := by
-    by_cases he : ∃ m : ℕ, m ^ 2 = n
-    · obtain ⟨m, rfl⟩ := he
-      right
-      rw [SchulteLiouvilleCubeMobius.liftPow_apply_pow 2 (by decide)]
-      simp [ArithmeticFunction.natCoe_apply, ne_zero_pow (by decide : 2 ≠ 0) hn]
-    · exact Or.inl (SchulteLiouvilleCubeMobius.liftPow_apply_nonpow 2 _ _ he)
+    rw [Q_value 2 n (by decide) hn]
+    split <;> simp
   rw [Int.natCast_ceil_eq_ceil (by positivity)]
   have hm := Rat.ceil_natCast_div_natCast (OeisA252505FourthPowerFreeConvolution.tau n) 2
   norm_num only [Nat.cast_ofNat] at hm
@@ -256,7 +262,7 @@ private theorem two_hfun : (2 : ℤ) • hfun =
       (ArithmeticFunction.zeta : ArithmeticFunction ℤ) *
         (ArithmeticFunction.zeta : ArithmeticFunction ℤ) ^ 2 by ring,
     ArithmeticFunction.coe_zeta_mul_apply, ArithmeticFunction.coe_zeta_mul_apply]
-  rw [hfun_literal, Nat.cast_sum, Finset.mul_sum, ← Finset.sum_add_distrib]
+  rw [hfun_literal, H, Nat.cast_sum, Finset.mul_sum, ← Finset.sum_add_distrib]
   apply Finset.sum_congr rfl
   intro d hd
   rw [tau_value]
@@ -293,15 +299,6 @@ private theorem M2_isMultiplicative : (SchulteLiouvilleCubeMobius.liftPow 2 Arit
   SchulteLiouvilleCubeMobius.liftPow_isMultiplicative 2 (by decide) _ ArithmeticFunction.isMultiplicative_moebius
 private theorem W_isMultiplicative : (ArithmeticFunction.moebius.pmul ArithmeticFunction.moebius).IsMultiplicative :=
   ArithmeticFunction.isMultiplicative_moebius.pmul ArithmeticFunction.isMultiplicative_moebius
-
-private theorem Q_value (k n : ℕ) (hk : k ≠ 0) (hn : n ≠ 0) :
-    (SchulteLiouvilleCubeMobius.liftPow k ArithmeticFunction.zeta) n = if ∃ d : ℕ, d ^ k = n then 1 else 0 := by
-  classical
-  by_cases h : ∃ d : ℕ, d ^ k = n
-  · obtain ⟨d, hd⟩ := h
-    rw [ite_eq_left ⟨d, hd⟩, ← hd, SchulteLiouvilleCubeMobius.liftPow_apply_pow k hk]
-    simp [ArithmeticFunction.natCoe_apply, ne_zero_pow hk (show d ^ k ≠ 0 from hd.symm ▸ hn)]
-  · rw [ite_eq_right h, SchulteLiouvilleCubeMobius.liftPow_apply_nonpow _ _ _ h]
 
 private theorem convolution_Q (f : ArithmeticFunction ℤ) (k n : ℕ) (hk : 0 < k)
     (hn : n ≠ 0) :
@@ -398,10 +395,8 @@ private theorem Q_four_mul_D2 : (SchulteLiouvilleCubeMobius.liftPow 4 Arithmetic
 private theorem moebius_prime_pow_delta (p e : ℕ) (hp : p.Prime) :
     ArithmeticFunction.moebius (p ^ e) =
       (if e = 0 then 1 else 0) - (if e = 1 then 1 else 0) := by
-  by_cases h : e = 0
-  · subst e; simp
-  · rw [ArithmeticFunction.moebius_apply_prime_pow hp h]
-    by_cases h1 : e = 1 <;> simp [h,h1]
+  simpa [SchulteLiouvilleCubeMobius.liftPow] using
+    (SchulteLiouvilleCubeMobius.lift_moebius_prime_pow 1 (by decide) p e hp)
 
 private theorem mu_squared_prime_pow (p e : ℕ) (hp : p.Prime) :
     (ArithmeticFunction.moebius * ArithmeticFunction.moebius) (p ^ e) =

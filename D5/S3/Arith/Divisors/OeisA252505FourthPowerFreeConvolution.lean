@@ -513,7 +513,8 @@ private theorem gamma_law (f : ℕ →₀ ℕ) :
   classical
   have hh := signedProductsRange f f.support
   unfold Gamma P
-  rcases hh with ⟨hs,hr⟩ | ⟨hs,hr|hr⟩ <;> simp only [Finsupp.prod] at * <;> rw [hs,hr] <;> norm_num
+  simp only [Finsupp.prod, S, R]
+  rcases hh with ⟨hs, hr⟩ | ⟨hs, hr | hr⟩ <;> rw [hs, hr] <;> norm_num
 
 private theorem hbox_parity (f : ℕ →₀ ℕ) : Hbox f % 2 = Gamma f := by
   have hf := hbox_formula f
