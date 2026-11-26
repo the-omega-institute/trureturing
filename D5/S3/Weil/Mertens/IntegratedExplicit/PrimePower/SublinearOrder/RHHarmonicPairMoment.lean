@@ -36,7 +36,7 @@ theorem cutoff_mono (rh : RiemannHypothesis) {T U : ℝ} (h : T ≤ U) :
     positiveCutoff rh T ⊆ positiveCutoff rh U := fun j hj =>
   (cutoff_mem rh U j).mpr (((cutoff_mem rh T j).mp hj).trans h)
 
-private theorem upper_weight (rh : RiemannHypothesis) {T : ℝ} (hT : 1 ≤ T)
+theorem upper_weight (rh : RiemannHypothesis) {T : ℝ} (hT : 1 ≤ T)
     {j : PositiveZetaZero} (hj : j ∈ positiveCutoff rh T \ positiveCutoff rh (T * (3 / 4))) :
     ((zetaSpectrum rh).mult j : ℝ)/(2*T) ≤ harmonicWeight j := by
   have hi := Finset.mem_sdiff.mp hj
