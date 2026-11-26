@@ -285,6 +285,35 @@ private theorem takeAll {α : Type u} (xs : List α) : xs.take xs.length = xs :=
   | nil => rfl
   | cons x xs ih => exact congrArg (x :: ·) ih
 
+private theorem foldReversePrefix [Monad m] (f : α → β → m β) (xs : _root_.Array α)
+    (i : Nat) (bound : i ≤ xs.size) :
+    _root_.Array.foldrM.fold f xs 0 i bound =
+      fun b => (xs.toList.take i).reverse.foldlM (fun acc a => f a acc) b := by
+  induction i with
+  | zero => rfl
+  | succ i ih =>
+    rw [foldBefore _ _ _ _ _ (Nat.zero_lt_succ _), ih (Nat.le_of_lt bound),
+      ← takeNext xs.toList i bound, List.reverse_concat]
+    rfl
+
+public theorem Array.foldrM_eq_reverse_foldlM_toList.aux :
+    type_of% @_root_.Array.foldrM_eq_reverse_foldlM_toList.aux := by
+  intro m α β monad f xs b i h
+  exact (congrFun (foldReversePrefix f xs i h) b).symm
+
+public theorem Array.foldrM_eq_reverse_foldlM_toList :
+    type_of% @_root_.Array.foldrM_eq_reverse_foldlM_toList := by
+  intro m α β monad f b xs
+  unfold _root_.Array.foldrM
+  rw [dite_eq_left (Nat.le_refl _)]
+  by_cases nonempty : 0 < xs.size
+  · rw [ite_eq_left nonempty, foldReversePrefix]
+    exact congrArg (fun l : List α => l.reverse.foldlM (fun acc a => f a acc) b) (takeAll xs.toList)
+  · obtain ⟨l⟩ := xs
+    cases l with
+    | nil => rfl
+    | cons a as => exact (nonempty (Nat.zero_lt_succ _)).elim
+
 private theorem foldRightLoop {α : Type u} {β : Type v} (f : α → β → β) (xs : _root_.Array α)
     (i : Nat) (h : i ≤ xs.size) (b : β) :
     (_root_.Array.foldrM.fold (m := Id) (fun a b => pure (f a b)) xs 0 i h b).run =
