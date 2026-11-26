@@ -1,5 +1,6 @@
 module
 public import Init.Data.List.Impl
+public import Init.Data.List.Sort.Impl
 
 /-! Pointwise computation of the list implementations at their pinned entry points. -/
 
@@ -72,5 +73,17 @@ public theorem List.zipIdxTR {α : Type u} (xs : List α) (n : Nat) :
 public theorem List.intercalateTR {α : Type u} (sep : List α) (xs : List (List α)) :
     _root_.List.intercalate sep xs = _root_.List.intercalateTR sep xs := by
   rw [_root_.List.intercalate_eq_intercalateTR]
+
+public theorem List.MergeSort.Internal.mergeTR {α : Type u} (xs ys : List α) (le : α → α → Bool) :
+    _root_.List.merge xs ys le = _root_.List.MergeSort.Internal.mergeTR xs ys le := by
+  rw [_root_.List.MergeSort.Internal.merge_eq_mergeTR]
+
+public theorem List.MergeSort.Internal.mergeSortTR {α : Type u} (xs : List α) (le : α → α → Bool) :
+    _root_.List.mergeSort xs le = _root_.List.MergeSort.Internal.mergeSortTR xs le := by
+  rw [_root_.List.MergeSort.Internal.mergeSort_eq_mergeSortTR]
+
+public theorem List.MergeSort.Internal.mergeSortTR₂ {α : Type u} (xs : List α) (le : α → α → Bool) :
+    _root_.List.mergeSort xs le = _root_.List.MergeSort.Internal.mergeSortTR₂ xs le := by
+  rw [_root_.List.MergeSort.Internal.mergeSort_eq_mergeSortTR₂]
 
 end OmegaChecks.Interface.Equations

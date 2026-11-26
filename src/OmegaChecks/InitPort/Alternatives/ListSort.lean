@@ -1,4 +1,5 @@
 module
+public import Init.Data.List.Sort.Impl
 public import Init.Data.List.Sort.Lemmas
 import all Init.Data.List.Sort.Lemmas
 import all Init.Data.List.Sort.Basic
@@ -208,5 +209,23 @@ public theorem List.sublist_mergeSort : type_of% @_root_.List.sublist_mergeSort 
     have no := prior b inLeft
     rw [yes] at no
     exact Bool.noConfusion no
+
+@[expose] public def List.MergeSort.Internal.mergeTR : type_of% @_root_.List.MergeSort.Internal.mergeTR :=
+  @_root_.List.merge
+
+public theorem List.MergeSort.Internal.merge_eq_mergeTR :
+    @_root_.List.merge = @List.MergeSort.Internal.mergeTR := rfl
+
+@[expose] public def List.MergeSort.Internal.mergeSortTR : type_of% @_root_.List.MergeSort.Internal.mergeSortTR :=
+  @_root_.List.mergeSort
+
+public theorem List.MergeSort.Internal.mergeSort_eq_mergeSortTR :
+    @_root_.List.mergeSort = @List.MergeSort.Internal.mergeSortTR := rfl
+
+@[expose] public def List.MergeSort.Internal.mergeSortTR₂ : type_of% @_root_.List.MergeSort.Internal.mergeSortTR₂ :=
+  @_root_.List.mergeSort
+
+public theorem List.MergeSort.Internal.mergeSort_eq_mergeSortTR₂ :
+    @_root_.List.mergeSort = @List.MergeSort.Internal.mergeSortTR₂ := rfl
 
 end OmegaChecks.InitPort.Alternatives
