@@ -372,4 +372,56 @@ public theorem BitVec.signExtend_neg_of_ne_intMin : type_of% @_root_.BitVec.sign
   change _root_.BitVec.ofInt w (-b).toInt = -_root_.BitVec.ofInt w b.toInt
   rw [BitVec.toInt_neg_of_ne_intMin nonmin, _root_.BitVec.ofInt_neg]
 
+public theorem BitVec.getLsbD_last : type_of% @_root_.BitVec.getLsbD_last := by
+  intro w x
+  cases w with
+  | zero => rw [_root_.BitVec.eq_nil x]; rfl
+  | succ w =>
+    change x.toNat.testBit w = decide (2 ^ w ≤ x.toNat)
+    by_cases large : 2 ^ w ≤ x.toNat
+    · rw [decide_eq_true large]
+      exact Nat.testBit_of_two_pow_le_and_two_pow_add_one_gt large x.isLt
+    · rw [decide_eq_false large]
+      exact Nat.testBit_lt_two_pow (Nat.lt_of_not_ge large)
+
+public theorem BitVec.msb_eq_false_iff_two_mul_lt : type_of% @_root_.BitVec.msb_eq_false_iff_two_mul_lt := by
+  intro w x
+  cases w with
+  | zero => rw [_root_.BitVec.eq_nil x]; decide
+  | succ w =>
+    rw [_root_.BitVec.msb_eq_decide]
+    change decide (2 ^ w ≤ x.toNat) = false ↔ 2*x.toNat < 2^(w+1)
+    rw [Nat.pow_succ]
+    constructor
+    · intro eq
+      exact Nat.lt_of_lt_of_eq (Nat.mul_lt_mul_of_pos_left (Nat.lt_of_not_ge (of_decide_eq_false eq)) Nat.zero_lt_two)
+        (Nat.mul_comm _ _)
+    · intro lt
+      apply decide_eq_false
+      intro high
+      rw [Nat.mul_comm (2^w)] at lt
+      exact Nat.not_le_of_gt lt (Nat.mul_le_mul_left 2 high)
+
+public theorem BitVec.msb_eq_true_iff_two_mul_ge : type_of% @_root_.BitVec.msb_eq_true_iff_two_mul_ge := by
+  intro w x
+  constructor
+  · intro yes
+    apply Nat.le_of_not_gt
+    intro small
+    exact Bool.noConfusion (yes.symm.trans (BitVec.msb_eq_false_iff_two_mul_lt.mpr small))
+  · intro large
+    cases h : x.msb with
+    | true => rfl
+    | false => exact False.elim (Nat.not_lt_of_ge large (BitVec.msb_eq_false_iff_two_mul_lt.mp h))
+
+public theorem BitVec.toInt_eq_msb_cond : type_of% @_root_.BitVec.toInt_eq_msb_cond := by
+  intro w x
+  cases h : x.msb with
+  | true =>
+    rw [_root_.BitVec.toInt, ite_eq_right (Nat.not_lt_of_ge (BitVec.msb_eq_true_iff_two_mul_ge.mp h))]
+    rfl
+  | false =>
+    rw [_root_.BitVec.toInt, ite_eq_left (BitVec.msb_eq_false_iff_two_mul_lt.mp h)]
+    rfl
+
 end OmegaChecks.InitPort.Alternatives
