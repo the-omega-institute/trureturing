@@ -38,7 +38,7 @@ internal sealed class CommonWitnessCompactnessDocument : IScribeDocumentDefiniti
                     + "The single-equation theorem in ConjugacyNormalForm gives prefix comparability "
                     + "of any two anchor witnesses. Two distinct shared witnesses transport a "
                     + "third row through the cyclic centralizer: residuals commute with the "
-                    + "anchor right word, and the frozen centralizer classification transfers "
+                    + "anchor right word, and the cyclic centralizer classification transfers "
                     + "commutation to the row under test. If a row has at most one shared anchor "
                     + "witness, a finite three-row union forces all such unique candidates to "
                     + "agree. Rows with empty first component are neutral by length cancellation. "
