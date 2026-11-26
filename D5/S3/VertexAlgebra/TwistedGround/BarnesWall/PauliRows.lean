@@ -9,9 +9,9 @@
 import D5.S3.VertexAlgebra.TwistedGround.BarnesWall.Rank128Lattice
 import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
 
-/-! The integral rows in the Barnes–Wall Gauss calculation are the coordinate
-actions of the Pauli generators on the normalized tensor basis of
-arXiv:2411.13646v2, Appendix A.1. -/
+/-! The ambient Pauli action is given by signed coordinate permutations.
+The three quaternion generators have a fixed-point-free determinant of
+absolute value `2 ^ 64` at rank 128. -/
 
 compile_only_with_mathlib
 
@@ -19,81 +19,8 @@ set_option autoImplicit false
 
 namespace D5.S3.VertexAlgebra.TwistedGround.BarnesWall.PauliRows
 
-open Q8TraceSign (Word integralRow)
-open Rank128Lattice (B)
+open Q8TraceSign (Word)
 open Matrix
-
-open private rowExponent rowFactor from
-  D5.S3.VertexAlgebra.TwistedGround.BarnesWall.Rank128Lattice
-
-private def basisNumerator (u k : Word) : ℤ :=
-  if k.val &&& u.val = k.val then 2 ^ rowExponent u else 0
-
-private theorem B_eq_numerator (u k : Word) :
-    B u k = (basisNumerator u k : ℚ) / 4 := by
-  by_cases h : k.val &&& u.val = k.val
-  · simp [B, basisNumerator, rowFactor, h, Int.cast_pow]
-  · simp [B, basisNumerator, h]
-
-private theorem row_sum_eq_numerator (row : List (Word × ℤ)) (k : Word) :
-    (row.map fun e => (e.2 : ℚ) * B e.1 k).sum =
-      (((row.map fun e => e.2 * basisNumerator e.1 k).sum : ℤ) : ℚ) / 4 := by
-  induction row with
-  | nil => simp
-  | cons e row ih =>
-    simp only [List.map_cons, List.sum_cons, Int.cast_add, Int.cast_mul, add_div]
-    rw [ih, B_eq_numerator, mul_div_assoc]
-
-private def rowNumerator (mask : ℕ) (isSign : Bool) (u k : Word) : ℤ :=
-  ((integralRow mask isSign u).map fun e => e.2 * basisNumerator e.1 k).sum
-
-private def signExponent (mask : ℕ) (k : Word) : ℕ :=
-  if k.val.testBit (if mask = 64 then 6 else 5) then 1 else 0
-
-set_option maxHeartbeats 0 in
--- This check fixes one basis word and ranges over the ambient coordinates.
-set_option maxRecDepth 4096 in
-private theorem numerator_X_check : ∀ u k : Word,
-    rowNumerator 64 false u k = basisNumerator u (Fin.ofNat 128 (k.val ^^^ 64)) ∧
-    rowNumerator 32 false u k = basisNumerator u (Fin.ofNat 128 (k.val ^^^ 32)) := by
-  intro u
-  fin_cases u <;> decide +kernel
-
-set_option maxHeartbeats 0 in
--- This check evaluates the two coordinate signs for each fixed basis word.
-set_option maxRecDepth 4096 in
-private theorem numerator_Z_check : ∀ u k : Word,
-    rowNumerator 64 true u k = (-1 : ℤ) ^ signExponent 64 k * basisNumerator u k ∧
-    rowNumerator 32 true u k = (-1 : ℤ) ^ signExponent 32 k * basisNumerator u k := by
-  intro u
-  fin_cases u <;> decide +kernel
-
-/-- Pauli X on either selected tensor slot permutes the ambient coordinates
-by xor with the mask. -/
-theorem integralRow_X {mask : ℕ} (hmask : mask = 64 ∨ mask = 32) (u k : Word) :
-    ((integralRow mask false u).map fun e => (e.2 : ℚ) * B e.1 k).sum =
-      B u (Fin.ofNat 128 (k.val ^^^ mask)) := by
-  have h : rowNumerator mask false u k = basisNumerator u (Fin.ofNat 128 (k.val ^^^ mask)) := by
-    rcases hmask with rfl | rfl
-    · exact (numerator_X_check u k).1
-    · exact (numerator_X_check u k).2
-  rw [row_sum_eq_numerator]
-  change (rowNumerator mask false u k : ℚ) / 4 = _
-  rw [h, B_eq_numerator]
-
-/-- Pauli Z on either selected tensor slot multiplies each ambient coordinate
-by the sign of its selected bit. -/
-theorem integralRow_Z {mask : ℕ} (hmask : mask = 64 ∨ mask = 32) (u k : Word) :
-    ((integralRow mask true u).map fun e => (e.2 : ℚ) * B e.1 k).sum =
-      (-1 : ℚ) ^ (if k.val.testBit (if mask = 64 then 6 else 5) then (1 : ℕ) else 0) * B u k := by
-  have h : rowNumerator mask true u k = (-1 : ℤ) ^ signExponent mask k * basisNumerator u k := by
-    rcases hmask with rfl | rfl
-    · exact (numerator_Z_check u k).1
-    · exact (numerator_Z_check u k).2
-  rw [row_sum_eq_numerator]
-  change (rowNumerator mask true u k : ℚ) / 4 = (-1 : ℚ) ^ signExponent mask k * B u k
-  simp only [h, B_eq_numerator, Int.cast_mul, Int.cast_pow, Int.cast_neg, Int.cast_one,
-    mul_div_assoc]
 
 private def flip (mask : ℕ) (u : Word) : Word := Fin.ofNat 128 (u.val ^^^ mask)
 
@@ -218,7 +145,5 @@ theorem defect_abs_det (r : Fin 3) : |(1 - generatorMatrix r).det| = (2 : ℚ) ^
   exact (pow_left_inj₀ (abs_nonneg _) (by positivity) (by decide)).mp hp
 
 #print axioms defect_abs_det
-#print axioms integralRow_X
-#print axioms integralRow_Z
 
 end D5.S3.VertexAlgebra.TwistedGround.BarnesWall.PauliRows

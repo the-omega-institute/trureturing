@@ -1,8 +1,8 @@
-# The Pauli action on the Barnes–Wall tensor basis
+# The ambient Pauli action at rank 128
 
 ## Abstract
 
-The Pauli action on the Barnes–Wall tensor basis
+The ambient Pauli action at rank 128
 
 **Theorem 1.1 (Each quaternion generator has fixed-point-free defect order 2^64).**
 
@@ -16,7 +16,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/BarnesWall/PauliRows.defect_a
 
 *Commentary.*
 
-The signed coordinate permutations agree with the sparse integral rows of the tensor basis. Each generator squares to negative identity and is skew-symmetric. The determinant of the product of its displacement with its transpose gives the defect order.
+The three ambient generators act by signed permutations of the tensor coordinates. Each generator squares to negative identity and is skew-symmetric. The determinant of the product of its displacement with its transpose gives the defect order.
 
 ## References
 

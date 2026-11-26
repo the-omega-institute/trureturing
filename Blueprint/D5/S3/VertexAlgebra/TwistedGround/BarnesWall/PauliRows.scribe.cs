@@ -5,8 +5,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.VertexAlgebra.TwistedGround.BarnesWa
 internal sealed class BarnesWallPauliRowsDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "The Pauli action on the Barnes–Wall tensor basis",
-        H("The Pauli action on the Barnes–Wall tensor basis"),
+        "The ambient Pauli action at rank 128",
+        H("The ambient Pauli action at rank 128"),
         Blocks(Describe.Lean(
             DescribeId.Create("barnes-wall-paulirows"),
             DeclarationHandle.Create("D5/S3/VertexAlgebra/TwistedGround/BarnesWall/PauliRows.defect_abs_det"),
@@ -15,7 +15,7 @@ internal sealed class BarnesWallPauliRowsDocument : IScribeDocumentDefinition
             AssessedProvenance.FromRepo(
                 LibraryNoteRef.Create("D5/L/VertexAlgebra/keller2026barneswall")),
             Blocks(Paragraph(Text(
-                "The signed coordinate permutations agree with the sparse integral rows of the tensor basis. " +
+                "The three ambient generators act by signed permutations of the tensor coordinates. " +
                 "Each generator squares to negative identity and is skew-symmetric. The determinant " +
                 "of the product of its displacement with its transpose gives the defect order."))),
             DescribeRole.Theorem))));
