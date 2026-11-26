@@ -927,6 +927,33 @@ public theorem Std.Iter.atIdxSlow?_take {α β}
       · rw [if_pos hl]; rfl
       · rw [if_neg hl]; rfl
 
+public theorem Std.Iter.toList_append {α₁ α₂ β : Type w}
+    [Iterator α₁ Id β] [Iterator α₂ Id β] [Finite α₁ Id] [Finite α₂ Id]
+    {it₁ : Iter (α := α₁) β} {it₂ : Iter (α := α₂) β} :
+    Std.Iter.Total.toList (it₁.append it₂).ensureTermination =
+      Std.Iter.Total.toList it₁.ensureTermination ++ Std.Iter.Total.toList it₂.ensureTermination := by
+  apply List.ext_getElem?
+  intro k
+  rw [Std.Iter.getElem?_toList_eq_atIdxSlow?, Std.Iter.atIdxSlow?_append, List.getElem?_append,
+    Std.Iter.getElem?_toList_eq_atIdxSlow?, Std.Iter.getElem?_toList_eq_atIdxSlow?]
+
+public theorem Std.Iter.toListRev_append {α₁ α₂ β : Type w}
+    [Iterator α₁ Id β] [Iterator α₂ Id β] [Finite α₁ Id] [Finite α₂ Id]
+    {it₁ : Iter (α := α₁) β} {it₂ : Iter (α := α₂) β} :
+    (Std.IterM.Total.toListRev (it₁.append it₂).toIterM.ensureTermination).run =
+      (Std.IterM.Total.toListRev it₂.toIterM.ensureTermination).run ++ (Std.IterM.Total.toListRev it₁.toIterM.ensureTermination).run := by
+  rw [Std.Iter.toListRev_eq (it := it₁.append it₂), Std.Iter.toListRev_eq (it := it₂), Std.Iter.toListRev_eq (it := it₁)]
+  exact (congrArg List.reverse (Std.Iter.toList_append (it₁ := it₁) (it₂ := it₂))).trans List.reverse_append
+
+public theorem Std.Iter.toArray_append {α₁ α₂ β : Type w}
+    [Iterator α₁ Id β] [Iterator α₂ Id β] [Finite α₁ Id] [Finite α₂ Id]
+    {it₁ : Iter (α := α₁) β} {it₂ : Iter (α := α₂) β} :
+    (Std.IterM.Total.toArray (it₁.append it₂).toIterM.ensureTermination).run =
+      (Std.IterM.Total.toArray it₁.toIterM.ensureTermination).run ++ (Std.IterM.Total.toArray it₂.toIterM.ensureTermination).run := by
+  apply Array.ext'
+  rw [Array.toList_append]
+  exact Std.Iter.toList_append (it₁ := it₁) (it₂ := it₂)
+
 end IndexCombinators
 
 end OmegaChecks.InitPort.Alternatives
