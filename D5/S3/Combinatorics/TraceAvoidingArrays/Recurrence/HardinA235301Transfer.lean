@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinA235301Transfer
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
-   utility: kind=numeric-reduction; basis=consumer=D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinA235301Recurrence.hardin_a235301; premises=D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinA235301Certificate.initial_certificate
+   utility: kind=numeric-reduction; basis=consumer=D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinA235301Recurrence.hardin_a235301; premises=D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinA235301Certificate.initial_certificate,D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinA235301Transfer.eval_residual_succ
    digest: Exact weighted row transfer and mask-dependent acceptance. -/
 
 import D5.S3.Combinatorics.TraceAvoidingArrays.Recurrence.HardinA235301Encoding
@@ -18,7 +18,7 @@ open scoped BigOperators
 
 set_option warningAsError true
 
-private def index (p : Bool) (a b : Fin 6) : ℕ := 36 * p.toNat + 6 * a.val + b.val
+def index (p : Bool) (a b : Fin 6) : ℕ := 36 * p.toNat + 6 * a.val + b.val
 
 private def masks : Array Nat := #[
   270217008436777545, 128071114403398412, 54900814598112142,
@@ -60,7 +60,7 @@ private theorem rowMask_spec (p q : Bool) (a b c d : Fin 6) :
   decide +kernel
 
 
-private def par (n : ℕ) : Bool := decide (n % 2 = 1)
+def par (n : ℕ) : Bool := decide (n % 2 = 1)
 
 private lemma par_toNat (n : ℕ) : (par n).toNat = n % 2 := by
   by_cases h : n % 2 = 1
@@ -68,7 +68,7 @@ private lemma par_toNat (n : ℕ) : (par n).toNat = n % 2 := by
   · simp [par, h]
     omega
 
-private lemma par_succ (n : ℕ) : par (n + 1) = !(par n) := by
+lemma par_succ (n : ℕ) : par (n + 1) = !(par n) := by
   have inj : Function.Injective Bool.toNat := by
     intro a b hab
     cases a <;> cases b <;> first | rfl | contradiction

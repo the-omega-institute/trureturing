@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinA235290DiagonalRecurrence
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
-   utility: none
+   utility: kind=numeric-reduction; basis=consumer=D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinA235290DiagonalRecurrence.hardin_a235290; premises=D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinA235301Recurrence.hardin_a235301,D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinA235301Transfer.count_transfer,D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinA235301Certificate.initial_path_eq
    digest: Hardin's eleven-lag recurrence for literal stress-three square arrays. -/
 
 /-
@@ -22,9 +22,7 @@ namespace D5.S3.Combinatorics.TraceAvoidingArrays.Recurrence.HardinA235290Diagon
 open D5.S3.Combinatorics.TraceAvoidingArrays.Recurrence.HardinA235280A235310Alphabet (C)
 open D5.S3.Combinatorics.TraceAvoidingArrays.Recurrence.HardinA235301Encoding (Word)
 open D5.S3.Combinatorics.TraceAvoidingArrays.Recurrence.HardinA235301Transfer (index par par_succ Hist State evalHist path count_transfer value)
-open D5.S3.Combinatorics.TraceAvoidingArrays.Recurrence.HardinA235301Certificate
-  (v1 v2 v3 v4 v5 v6 v7 v8 v9 v10
-    v1_path v2_path v3_path v4_path v5_path v6_path v7_path v8_path v9_path v10_path)
+open D5.S3.Combinatorics.TraceAvoidingArrays.Recurrence.HardinA235301Certificate (initialPath initial_path_eq)
 open D5.S3.Combinatorics.TraceAvoidingArrays.Recurrence.HardinA235301Recurrence (hardin_a235301)
 open scoped BigOperators
 
@@ -320,80 +318,12 @@ private theorem checkedResidual (i j : Fin 10) :
     diagonalResidual rectangleTable (i.val + 1) (j.val + 1) = 0 := by
   fin_cases i <;> revert j <;> decide +kernel
 
-private theorem checkedSeed1 (j : Fin 10) :
-    (C 3 3 1 (j.val + 1) : ℤ) = rectangleTable 1 (j.val + 1) := by
-  rw [← fastCountFrom_path _ _ (by decide) (by omega), v1_path]
-  exact (by decide +kernel : ∀ k : Fin 10,
-    fastCountFrom v1 (k.val + 1) = rectangleTable 1 (k.val + 1)) j
-
-private theorem checkedSeed2 (j : Fin 10) :
-    (C 3 3 2 (j.val + 1) : ℤ) = rectangleTable 2 (j.val + 1) := by
-  rw [← fastCountFrom_path _ _ (by decide) (by omega), v2_path]
-  exact (by decide +kernel : ∀ k : Fin 10,
-    fastCountFrom v2 (k.val + 1) = rectangleTable 2 (k.val + 1)) j
-
-private theorem checkedSeed3 (j : Fin 10) :
-    (C 3 3 3 (j.val + 1) : ℤ) = rectangleTable 3 (j.val + 1) := by
-  rw [← fastCountFrom_path _ _ (by decide) (by omega), v3_path]
-  exact (by decide +kernel : ∀ k : Fin 10,
-    fastCountFrom v3 (k.val + 1) = rectangleTable 3 (k.val + 1)) j
-
-private theorem checkedSeed4 (j : Fin 10) :
-    (C 3 3 4 (j.val + 1) : ℤ) = rectangleTable 4 (j.val + 1) := by
-  rw [← fastCountFrom_path _ _ (by decide) (by omega), v4_path]
-  exact (by decide +kernel : ∀ k : Fin 10,
-    fastCountFrom v4 (k.val + 1) = rectangleTable 4 (k.val + 1)) j
-
-private theorem checkedSeed5 (j : Fin 10) :
-    (C 3 3 5 (j.val + 1) : ℤ) = rectangleTable 5 (j.val + 1) := by
-  rw [← fastCountFrom_path _ _ (by decide) (by omega), v5_path]
-  exact (by decide +kernel : ∀ k : Fin 10,
-    fastCountFrom v5 (k.val + 1) = rectangleTable 5 (k.val + 1)) j
-
-private theorem checkedSeed6 (j : Fin 10) :
-    (C 3 3 6 (j.val + 1) : ℤ) = rectangleTable 6 (j.val + 1) := by
-  rw [← fastCountFrom_path _ _ (by decide) (by omega), v6_path]
-  exact (by decide +kernel : ∀ k : Fin 10,
-    fastCountFrom v6 (k.val + 1) = rectangleTable 6 (k.val + 1)) j
-
-private theorem checkedSeed7 (j : Fin 10) :
-    (C 3 3 7 (j.val + 1) : ℤ) = rectangleTable 7 (j.val + 1) := by
-  rw [← fastCountFrom_path _ _ (by decide) (by omega), v7_path]
-  exact (by decide +kernel : ∀ k : Fin 10,
-    fastCountFrom v7 (k.val + 1) = rectangleTable 7 (k.val + 1)) j
-
-private theorem checkedSeed8 (j : Fin 10) :
-    (C 3 3 8 (j.val + 1) : ℤ) = rectangleTable 8 (j.val + 1) := by
-  rw [← fastCountFrom_path _ _ (by decide) (by omega), v8_path]
-  exact (by decide +kernel : ∀ k : Fin 10,
-    fastCountFrom v8 (k.val + 1) = rectangleTable 8 (k.val + 1)) j
-
-private theorem checkedSeed9 (j : Fin 10) :
-    (C 3 3 9 (j.val + 1) : ℤ) = rectangleTable 9 (j.val + 1) := by
-  rw [← fastCountFrom_path _ _ (by decide) (by omega), v9_path]
-  exact (by decide +kernel : ∀ k : Fin 10,
-    fastCountFrom v9 (k.val + 1) = rectangleTable 9 (k.val + 1)) j
-
-private theorem checkedSeed10 (j : Fin 10) :
-    (C 3 3 10 (j.val + 1) : ℤ) = rectangleTable 10 (j.val + 1) := by
-  rw [← fastCountFrom_path _ _ (by decide) (by omega), v10_path]
-  exact (by decide +kernel : ∀ k : Fin 10,
-    fastCountFrom v10 (k.val + 1) = rectangleTable 10 (k.val + 1)) j
-
 /-- The sparse transfer computes each of the hundred initial literal counts. -/
 private theorem checkedSeed (i j : Fin 10) :
     (C 3 3 (i.val + 1) (j.val + 1) : ℤ) = rectangleTable (i.val + 1) (j.val + 1) := by
-  fin_cases i
-  · exact checkedSeed1 j
-  · exact checkedSeed2 j
-  · exact checkedSeed3 j
-  · exact checkedSeed4 j
-  · exact checkedSeed5 j
-  · exact checkedSeed6 j
-  · exact checkedSeed7 j
-  · exact checkedSeed8 j
-  · exact checkedSeed9 j
-  · exact checkedSeed10 j
+  rw [← fastCountFrom_path _ _ (by omega) (by omega), initial_path_eq]
+  revert j
+  fin_cases i <;> decide +kernel
 
 end
 

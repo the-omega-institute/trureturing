@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinA235301Recurrence
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
-   utility: kind=numeric-reduction; basis=consumer=D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinA235301Recurrence.hardin_a235301; premises=D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinA235301Certificate.initial_certificate
+   utility: kind=numeric-reduction; basis=consumer=D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinA235301Recurrence.hardin_a235301; premises=D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinA235301Certificate.initial_certificate,D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinA235301Transfer.eval_residual_succ
    digest: Hardin A235301 common order-ten recurrence on both axes. -/
 
 import D5.S3.Combinatorics.TraceAvoidingArrays.Recurrence.HardinA235301Certificate

@@ -816,4 +816,21 @@ theorem initial_certificate :
   rw [residual0, residual1, residual2]
   exact ⟨hiddenRelation, grouped0, grouped1⟩
 
+/-- Transfer histograms for heights one through ten. -/
+def initialPath : Fin 10 → Hist State := ![v1, v2, v3, v4, v5, v6, v7, v8, v9, v10]
+
+/-- The stored histograms agree with the row transfer at their respective heights. -/
+theorem initial_path_eq (i : Fin 10) : path (i.val + 1) = initialPath i := by
+  fin_cases i
+  · exact v1_path
+  · exact v2_path
+  · exact v3_path
+  · exact v4_path
+  · exact v5_path
+  · exact v6_path
+  · exact v7_path
+  · exact v8_path
+  · exact v9_path
+  · exact v10_path
+
 end D5.S3.Combinatorics.TraceAvoidingArrays.Recurrence.HardinA235301Certificate
