@@ -2,8 +2,6 @@ module
 
 public import Init.Data.Array.Lemmas
 public import Init.Data.Vector.Lex
-import Init.Data.Slice.Array.Lemmas
-import all Init.Data.Slice.Array.Iterator
 
 /-! Pointwise correspondence between the strict list-backed array operations and pinned Init. -/
 
@@ -14,14 +12,6 @@ public theorem Array.lex {α : Type u} [BEq α] (xs ys : Array α) (lt : α → 
 
 public theorem Vector.lex {α : Type u} {n : Nat} [BEq α] (xs ys : Vector α n) (lt : α → α → Bool) :
     xs.toArray.lex ys.toArray lt = xs.lex ys lt := _root_.Vector.lex_toArray
-
-public theorem Subarray.copy {α : Type u} (s : Subarray α) :
-    s.array.extract s.start s.stop = _root_.Subarray.copy s :=
-  Array.ext' (_root_.Subarray.toList_eq.symm.trans _root_.Subarray.toList_toArray.symm)
-
-public theorem Array.ofSubarray {α : Type u} (s : Subarray α) :
-    s.array.extract s.start s.stop = _root_.Array.ofSubarray s :=
-  Array.ext' (_root_.Subarray.toList_eq.symm.trans _root_.Subarray.toList_toArray.symm)
 
 public theorem Array.append {α : Type u} (as bs : Array α) :
     _root_.Array.mk (List.append as.toList bs.toList) = _root_.Array.append as bs :=

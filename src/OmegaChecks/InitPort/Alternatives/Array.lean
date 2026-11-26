@@ -20,12 +20,6 @@ import all Init.Data.Vector.Basic
 
 namespace OmegaChecks.InitPort.Alternatives
 
-public def Subarray.copy {α : Type u} (s : Subarray α) : Array α :=
-  s.array.extract s.start s.stop
-
-public def Array.ofSubarray {α : Type u} (s : Subarray α) : Array α :=
-  s.array.extract s.start s.stop
-
 public theorem Array.mem_dite_empty_left : type_of% @_root_.Array.mem_dite_empty_left := by
   intro α p x _ xs
   by_cases h : p
