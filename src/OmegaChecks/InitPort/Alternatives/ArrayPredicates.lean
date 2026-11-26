@@ -221,4 +221,44 @@ public theorem Array.allM_congr : type_of% @_root_.Array.allM_congr := by
   exact congrArg neg (Array.anyM_congr rfl (p := fun x => neg (p x)) (q := fun x => neg (q x))
     (fun x => congrArg neg (point x)) rfl rfl)
 
+public theorem Array.any_eq' : type_of% @_root_.Array.any_eq' := by
+  intros
+  exact Bool.eq_iff_iff.mpr (_root_.Array.any_eq_true'.trans decide_eq_true_iff.symm)
+
+public theorem Array.all_eq : type_of% @_root_.Array.all_eq := by
+  intros
+  exact Bool.eq_iff_iff.mpr (_root_.Array.all_eq_true.trans decide_eq_true_iff.symm)
+
+public theorem Array.all_eq' : type_of% @_root_.Array.all_eq' := by
+  intros
+  exact Bool.eq_iff_iff.mpr (_root_.Array.all_eq_true'.trans decide_eq_true_iff.symm)
+
+public theorem Array.decide_exists_mem : type_of% @_root_.Array.decide_exists_mem := by
+  intro α xs p _
+  apply Bool.eq_iff_iff.mpr
+  refine decide_eq_true_iff.trans (Iff.trans ?_ _root_.Array.any_eq_true'.symm)
+  exact ⟨fun ⟨x, mem, h⟩ => ⟨x, mem, decide_eq_true h⟩,
+    fun ⟨x, mem, h⟩ => ⟨x, mem, of_decide_eq_true h⟩⟩
+
+public theorem Array.decide_forall_mem : type_of% @_root_.Array.decide_forall_mem := by
+  intro α xs p _
+  apply Bool.eq_iff_iff.mpr
+  refine decide_eq_true_iff.trans (Iff.trans ?_ _root_.Array.all_eq_true'.symm)
+  exact ⟨fun h x mem => decide_eq_true (h x mem), fun h x mem => of_decide_eq_true (h x mem)⟩
+
+public theorem Array.any_beq' : type_of% @_root_.Array.any_beq' := by
+  intro α a _ _ xs
+  exact (_root_.Array.any_congr (xs := xs) rfl (fun x => BEq.comm (a := x) (b := a)) rfl rfl).trans
+    _root_.Array.any_beq
+
+public theorem Array.all_bne' : type_of% @_root_.Array.all_bne' := by
+  intro α a _ _ xs
+  exact (_root_.Array.all_congr (xs := xs) rfl (fun x => bne_comm (a := x) (b := a)) rfl rfl).trans
+    _root_.Array.all_bne
+
+public theorem Array.any_eq_not_all_not : type_of% @_root_.Array.any_eq_not_all_not := by
+  intro α xs p
+  rw [_root_.Array.all_eq_not_any_not, Bool.not_not]
+  exact _root_.Array.any_congr rfl (fun x => (Bool.not_not (p x)).symm) rfl rfl
+
 end OmegaChecks.InitPort.Alternatives
