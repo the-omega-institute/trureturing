@@ -43,7 +43,8 @@ the text extraction.
 > number-theoretic fact that has not been verified in this paper and is not
 > claimed here.
 
-The staged theorem proves this local identity for $k\ge1$, $m\ge0$ and
-$3\nmid q$. It includes $q=1$ through the empty LCM convention. The paper
+The theorem proves this local identity for $k,m\in\mathbb N$ with $3\nmid q$.
+This condition implies $k>0$ because $3\mid 0$. The theorem includes $k=1$,
+where $q=1$, through the empty LCM convention. The paper
 treats $q=1$ separately in Theorem 8.19. For $q>1$, substituting the identity
 into the paper’s global formula yields $2^m q$.

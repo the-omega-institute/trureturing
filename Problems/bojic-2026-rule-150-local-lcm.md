@@ -16,7 +16,7 @@ Ana Bojić, *Semisimple–Unipotent Decomposition and the Exact Order of a Linea
 
 > The general order formula developed in this paper (Theorem 8.19, Section 8) is stated for all $n$ with $3\nmid n$; whether it reduces to Kaneko’s result exactly when $q=2^k-1$ depends on whether the local semisimple orders $m_i$ satisfy $\operatorname{lcm}(m_2,\ldots,m_r)=q$ for that family—a number-theoretic fact that has not been verified in this paper and is not claimed here.
 
-For all $k,m\in\mathbb N$ with $k>0$, set $q=2^k-1$ and $n=2^m q$, and assume $3\nmid q$. Since 3 is coprime to $2^m$, this is the paper’s invertibility condition $3\nmid n$. For each distinct monic irreducible factor $f$ of $X^q-1$ over $\mathbb F_2$ other than $X+1$, take the semisimple part of the actual Rule 150 multiplier $G=1+X+X^{n-1}$ in $\mathbb F_2[X]/(f^{2^m})$. The LCM of the multiplicative orders of these parts is $q$. At $q=1$ the index set is empty and the LCM is 1. Theorem 8.19 gives a separate global period formula for $q=1$.
+For all $k,m\in\mathbb N$, set $q=2^k-1$ and $n=2^m q$, and assume $3\nmid q$. This implies $k>0$ because $3\mid 0$. Since 3 is coprime to $2^m$, this is the paper’s invertibility condition $3\nmid n$. For each distinct monic irreducible factor $f$ of $X^q-1$ over $\mathbb F_2$ other than $X+1$, take the semisimple part of the actual Rule 150 multiplier $G=1+X+X^{n-1}$ in $\mathbb F_2[X]/(f^{2^m})$. The LCM of the multiplicative orders of these parts is $q$. At $k=1$ we have $q=1$, the index set is empty and the LCM is 1. Theorem 8.19 gives a separate global period formula for $q=1$.
 
 ## Motivation
 
@@ -32,7 +32,7 @@ In each primary quotient the Lean construction raises the image of $G$ to $(2^k)
 
 ## Falsifier
 
-An admissible pair $k>0$, $m\geq0$, $3\nmid (2^k-1)$ for which the LCM of the specified native primary semisimple orders differs from $2^k-1$ would refute the identity. Source correspondence requires the actual cyclic multiplier, the primary thickness $2^m$, exclusion of precisely the trivial factor $X+1$, and the empty LCM at $q=1$.
+A pair $k,m\in\mathbb N$ with $3\nmid (2^k-1)$ for which the LCM of the specified native primary semisimple orders differs from $2^k-1$ would refute the identity. Source correspondence requires the actual cyclic multiplier, the primary thickness $2^m$, exclusion of precisely the trivial factor $X+1$, and the empty LCM at $q=1$.
 
 ## Evidence
 

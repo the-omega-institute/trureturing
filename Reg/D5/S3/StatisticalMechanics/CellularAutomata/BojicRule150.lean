@@ -19,7 +19,7 @@ private theorem order_witness :
   classical
   by_contra! h
   have hseven : (nontrivialFactors 7).lcm (fun f => orderOf (semisimplePart 3 0 f)) = 7 :=
-    semisimpleOrder_lcm 3 0 (by decide) (by decide)
+    semisimpleOrder_lcm 3 0 (by decide)
   have hdiv : (nontrivialFactors 7).lcm (fun f => orderOf (semisimplePart 3 0 f)) ∣ 1 := by
     apply Finset.lcm_dvd_iff.mpr
     intro f hf
@@ -42,12 +42,12 @@ private def rejected : Realization signature :=
 
 abbrev arena : Arena where
   signature := signature
-  Law R := ∀ (k m : ℕ), 0 < k → ¬ 3 ∣ 2 ^ k - 1 →
+  Law R := ∀ (k m : ℕ), ¬ 3 ∣ 2 ^ k - 1 →
     R.readout () ⟨k, m⟩ (fun f => orderOf (semisimplePart k m f)) = 2 ^ k - 1
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  have hbad : (0 : ℕ) = 1 := h 1 0 (by decide) (by decide)
+  have hbad : (0 : ℕ) = 1 := h 1 0 (by decide)
   exact Nat.zero_ne_one hbad
 
 private theorem dependence : ObservationalDependence signature actual := by
@@ -55,7 +55,7 @@ private theorem dependence : ObservationalDependence signature actual := by
   refine ⟨⟨3, 0⟩, (fun f => orderOf (semisimplePart 3 0 f)), (fun _ => 1), ?_⟩
   change (nontrivialFactors 7).lcm _ ≠ (nontrivialFactors 7).lcm (fun _ => 1)
   have hactual : (nontrivialFactors 7).lcm (fun f => orderOf (semisimplePart 3 0 f)) = 7 :=
-    semisimpleOrder_lcm 3 0 (by decide) (by decide)
+    semisimpleOrder_lcm 3 0 (by decide)
   have hvar : (nontrivialFactors 7).lcm (fun _ => 1) = 1 := by
     apply Nat.dvd_antisymm
     · exact Finset.lcm_dvd_iff.mpr (fun _ _ => dvd_rfl)
@@ -101,7 +101,7 @@ def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     definition := none
     coordinates := #[0, 1]
     readouts := #[{
-      path := #["body", "body", "body", "body", "fn", "arg", "fn"]
+      path := #["body", "body", "body", "fn", "arg", "fn"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none
@@ -126,7 +126,7 @@ private def rejected : Realization signature :=
 
 abbrev arena : Arena where
   signature := signature
-  Law R := ∀ (k m : ℕ), 0 < k → ¬ 3 ∣ 2 ^ k - 1 → ∀ {f : P},
+  Law R := ∀ (k m : ℕ), ¬ 3 ∣ 2 ^ k - 1 → ∀ {f : P},
     f ∈ factors (2 ^ k - 1) →
       R.readout () ⟨k, m, f⟩ (semisimplePart k m f) =
         orderOf (project f (multiplier (2 ^ m * (2 ^ k - 1))))
@@ -134,8 +134,8 @@ abbrev arena : Arena where
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   obtain ⟨f, hf, horder⟩ := order_witness
-  have hactual := @semisimplePart_order 3 0 (by decide) (by decide) f hf
-  have hbad := @h 3 0 (by decide) (by decide) f hf
+  have hactual := @semisimplePart_order 3 0 (by decide) f hf
+  have hbad := @h 3 0 (by decide) f hf
   change (1 : ℕ) = _ at hbad
   exact horder (hactual.trans hbad.symm)
 
@@ -182,9 +182,9 @@ def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   sourceSelection := some {
     owner := `D5.S3.StatisticalMechanics.CellularAutomata.BojicRule150
     definition := none
-    coordinates := #[0, 1, 4]
+    coordinates := #[0, 1, 3]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "fn", "arg"]
+      path := #["body", "body", "body", "body", "body", "fn", "arg"]
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["arg"]
@@ -209,7 +209,7 @@ private def rejected : Realization signature :=
 
 abbrev arena : Arena where
   signature := signature
-  Law R := ∀ (k m : ℕ), 0 < k → ¬ 3 ∣ 2 ^ k - 1 → ∀ {f : P},
+  Law R := ∀ (k m : ℕ), ¬ 3 ∣ 2 ^ k - 1 → ∀ {f : P},
     f ∈ factors (2 ^ k - 1) →
       R.readout () ⟨k, m, f⟩ (localMultiplier (2 ^ m * (2 ^ k - 1)) f m)
           (semisimplePart k m f) ∧
@@ -219,7 +219,7 @@ abbrev arena : Arena where
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   obtain ⟨f, hf, _⟩ := order_witness
-  exact (@h 3 0 (by decide) (by decide) f hf).1
+  exact (@h 3 0 (by decide) f hf).1
 
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
@@ -227,7 +227,7 @@ private theorem dependence : ObservationalDependence signature actual := by
   let g : Local f 0 := localMultiplier 7 f 0
   let s : Local f 0 := semisimplePart 3 0 f
   have hs : IsSemisimplePart (f := f) (m := 0) g s :=
-    (@semisimplePart_spec 3 0 (by decide) (by decide) f hf).1
+    (@semisimplePart_spec 3 0 (by decide) f hf).1
   have hne : s ≠ 1 := by
     intro h
     exact horder (by simp [← show s = semisimplePart 3 0 f from rfl, h])
@@ -275,9 +275,9 @@ def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   sourceSelection := some {
     owner := `D5.S3.StatisticalMechanics.CellularAutomata.BojicRule150
     definition := none
-    coordinates := #[0, 1, 4]
+    coordinates := #[0, 1, 3]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "fn", "arg", "fn", "fn"]
+      path := #["body", "body", "body", "body", "body", "fn", "arg", "fn", "fn"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none

@@ -23,7 +23,7 @@ internal sealed class BojicRule150Document : IScribeDocumentDefinition
             Operatorname, Grp(F.Id("ord")), Open, semisimple, Close);
         return Disp(Seq(
             Forall, Sp, k, Comma, m, Sp, InMacro, Sp, naturals, Comma, Sp,
-            k, Sp, Gt, Sp, D(0), Sp, Land, Sp, Neg, Open, D(3), Sp, Mid, Sp, q, Close,
+            Neg, Open, D(3), Sp, Mid, Sp, q, Close,
             Sp, Implies, Sp, lcm, Sp, Eq, Sp, q));
     }
 
@@ -39,19 +39,22 @@ internal sealed class BojicRule150Document : IScribeDocumentDefinition
             AssessedProvenance.FromRepo(Source),
             Blocks(
                 Paragraph(Text(
-                    "Let k and m be natural numbers with k positive. Set q = 2^k − 1 "
-                    + "and assume that 3 does not divide q. Put n = 2^m q. For each distinct "
+                    "For natural numbers k and m, set q = 2^k − 1 and assume that 3 does "
+                    + "not divide q. This forces k to be positive, since 3 divides 0. "
+                    + "Put n = 2^m q. For each distinct "
                     + "monic irreducible factor f of X^q − 1 over F₂ besides X + 1, take "
                     + "the class of G = 1 + X + X^(n − 1) in F₂[X]/(f^(2^m)). "
                     + "The formula uses S_q for this set of factors and u_(k,m,f) for the "
-                    + "odd-order semisimple part of the class indexed by f. For q = 1 "
-                    + "the index set is empty and its LCM is 1.")),
+                    + "odd-order semisimple part of the class indexed by f. At k = 1, "
+                    + "q = 1 and the index set is empty. Its LCM is 1.")),
                 Paragraph(Text(
                     "Section 2.3 leaves this identity open. Theorem 8.8 describes the "
                     + "semisimple part, and Theorem 8.19 uses the local odd orders in the "
                     + "global period formula for q > 1. The formal construction takes "
-                    + "the power G^((2^k)^m) in each primary quotient. Its odd order "
-                    + "equals the order of G modulo f.")),
+                    + "the power G^((2^k)^m) in each primary quotient. It is the unique "
+                    + "odd-order unit whose product with a cofactor 1 + ν gives the local "
+                    + "multiplier, where ν is nilpotent and reduces to zero modulo f. "
+                    + "Its order equals the order of G modulo f.")),
                 Paragraph(Text(
                     "Frobenius gives q as a common exponent in the residue fields. "
                     + "If d is the LCM of the residue orders, then X^q − 1 divides "
