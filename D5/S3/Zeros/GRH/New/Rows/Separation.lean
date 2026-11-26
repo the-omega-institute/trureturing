@@ -88,8 +88,8 @@ lemma exists_isFlat n [Fintype n] (hn : 4 ≤ Fintype.card n ∧ Fintype.card n 
   D.t ∧ 2 ∣ Fintype.card n := by simp; grind) (χ : AutChar.tameChars D.finite_isChosen.toFinset) :
   ∃ p : D.Pair, (rankTwist p.ν n = χ.1.1 ∧ p.ψ = χ.1.2) ∧ p.IsFlat n := ⟨⟨_, _, _, Fintype.card
   n / 2, by simpa using! χ.2.1.mul (hasWeight_upsilonU1_pow _).inv, by simp_all [χ.2.2], by
-    grind, fun _ ↦ le_rfl, fun _ ↦
-  .trans (mod_cast by lia) (D.le_of_hasLogBound : ↑D.t ≤ _)⟩, by simp [rankTwist]; lia⟩
+    grind -zetaDelta -abstractProof, fun _ ↦ le_rfl, fun _ ↦
+  .trans (mod_cast by lia -zetaDelta -abstractProof) (D.le_of_hasLogBound : ↑D.t ≤ _)⟩, by simp [rankTwist]; lia -zetaDelta -abstractProof⟩
 
 /-- For a pair p of rank one for j (`Data.Pair.IsRankOne`), the squared norm of the untwisted form
 `Data.Pair.trivialLift`, as a constant family, has height (`HeightLe`) at most B₀ − ∑_τ st(w₀(τ)),

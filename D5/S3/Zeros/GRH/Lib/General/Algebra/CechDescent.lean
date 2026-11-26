@@ -216,7 +216,7 @@ lemma cech_descent_step (st : StepwiseFourLemma f) {r} (h₀ : BijectiveUpTo (f 
     (shortExact_cokerBoundary.2.isIso_f_iff.2 (.of_epi_eq_zero _ (freeAb.hom_ext fun _ ↦
     (proj_boundary_of_eq_zero ⟨_, ⟨⟩, ·.1.1.2.choose_spec⟩)))) ≪≫ freeAb.mapIso (noWitness _)) h₀
     (show BijectiveUpTo (f (abCoker (boundary R (0 + 2)))) _ from (r - 1).rec (by tauto)
-    (fun r i h m ↦ H (freeAb.mapIso (e _)) (.refl _) (h _) (by grind [BijectiveUpTo])) h 0)
+    (fun r i h m ↦ H (freeAb.mapIso (e _)) (.refl _) (h _) (by grind -abstractProof [BijectiveUpTo])) h 0)
 
 /-- Čech descent: if the maps f obey the five and four lemmas (`Devissage`) and are
 bijective in all degrees on Z of every fibre power of p: E → Y, E included, then they are so

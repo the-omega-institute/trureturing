@@ -228,12 +228,12 @@ lemma QuadField.exists_latticeModule_eq_scaledIdeal 𝔠 : ∃ C u, CMLattice.la
       mt AddSubgroupClass.subset_union.1 (·.rec (key rfl) (key (conj_re _)))
   obtain ⟨_, ⟨c⟩⟩ := mt (k 1 (c₀ d) _) h.2.1,
     IsSepClosed.exists_pow_nat_eq (3 * ℘[L 1] (l / 2) ^ 2 - (L 1).g₂ / 4) 4
-  lift c to ℂˣ using .mk0 _ (by grind [weierstrass_disc_ne_zero, derivWeierstrassP_eq_zero_iff,
+  lift c to ℂˣ using .mk0 _ (by grind -zetaDelta -abstractProof [weierstrass_disc_ne_zero, derivWeierstrassP_eq_zero_iff,
     → derivWeierstrassP_sq])
   refine ⟨⟨L c, c * (l / 2), _, ?_, (·.choose_spec ▸ k c _), ?_, ?_, ?_, cpow_ofNat_inv_pow ..⟩, _,
     Submodule.ext (m c)⟩ <;> simp [↓m, mem_scaledIdeal, weierstrassP, g₂, L, G,
     latticeEquiv_symm_apply, ← (latticeEquivProd _).symm.tsum_eq, ← mul_add,
-    mul_left_comm _ c.1, ← mul_sub, mul_pow, ← sub_mul, tsum_mul_right] at * <;> grind [c.ne_zero]
+    mul_left_comm _ c.1, ← mul_sub, mul_pow, ← sub_mul, tsum_mul_right] at * <;> grind -zetaDelta -abstractProof [c.ne_zero]
 
 omit [PrimeSevenModEight d] in
 lemma QuadField.exists_eq_scaledIdeal_mul_of_mk_eq_one {𝔠} (h : ClassGroup.mk _ 𝔠 = 1) N : ∃ u, N =

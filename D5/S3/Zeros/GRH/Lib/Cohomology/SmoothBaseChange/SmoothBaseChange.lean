@@ -100,7 +100,9 @@ lemma isCohomEquiv_generic_fibre {A : ClosurePlace} {p : ℕ} [Fact p.Prime] (hp
     simpa using! eq_top_mono ((map_mono (by intro; simp +contextual [radical, mem_span_singleton,
       (J ▸ Valuation.integer.integers _ : (Valued.v.comap j).Integers A).dvd_iff_le,
       isUnit_iff_dvd_one, (exists_pow_lt_of_lt_one ..).imp fun _ ↦ le_of_lt])).trans (map_radical_le
-      (I := span {a.1}) _)) y.2)⟩⟩).imp fun _ ⟨_, s, _, k, B⟩ ↦ by exact ⟨_, s, rfl, fun d _ f e ↦
+      (I := span {a.1}) _)) y.2)⟩⟩).imp fun _ witness ↦ by
+      rcases witness with ⟨_, s, _, k, B⟩
+      exact ⟨_, s, rfl, fun d _ f e ↦
     (k d ⟨⟩ f congr(⟨⟨CommAlgCat.ofHom $(IsLocalization.algHom_ext A⁰ (by ext))⟩⟩)).imp fun _ ⟨⟨_,
     rfl⟩, n⟩ ↦ ⟨⟨by simpa using congr($e.1).symm, rfl⟩, by tauto⟩, B⟩).trans_iff (c := .id _)).trans
     ((isCohomEquiv_iff_isBijective.symm.trans (relFreeAb.isCohomEquiv_iff_subsingleton _)).trans

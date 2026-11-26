@@ -46,7 +46,7 @@ theorem card_mul_pow_le [Finite M] {k U N I ι} [NeZero N] (s : SplitPlaces m N 
     (m (.inl ⟨v, v.2.1⟩))) ((hA v).exists_isFrob _).choose)) (by intros; ext <;> simp <;> abel)
   choose f hf e using fun a : F.ker ↦ a.1.1.2.elim fun ⟨b, u⟩ C ↦
     trivialisedCocycles.exists_mem_of_orbit_reps (PlaceAboveS.bijective_orbits _ N hA) b (u · ∘
-    .imp (by grind) ∘ (s.mem_inertia_iff _).1) a.1.2 (by
+    .imp (by grind -zetaDelta -abstractProof) ∘ (s.mem_inertia_iff _).1) a.1.2 (by
     rintro ⟨v, n⟩ g e <;> injections
     · exact sub_eq_zero.1 (byCases (congr($(a.2).1 ⟨v, ·⟩ |>.1 ⟨g, ‹_›⟩)) fun h ↦
         Z1.eq_zero_on_decompGroup (⟨_, b⟩ - M.coboundary _) (hA v) (choose_spec _)
@@ -59,7 +59,7 @@ theorem card_mul_pow_le [Finite M] {k U N I ι} [NeZero N] (s : SplitPlaces m N 
   simpa [Nat.card_fun, Nat.card_pi, ← ncard_sdiff_add_ncard_of_subset (t := T) hT, pow_add,
     ← S.prod_attach, add_rotate (ncard _), ← mul_assoc] using! F.ker.card_mul_index.ge.trans
     (mul_le_mul' (hk.2.trans' (Nat.card_le_card_of_injective (⟨_, hf ·⟩) fun _ _ _ ↦ by
-    ext <;> grind)) ((AddSubgroup.index_ker F).trans_le F.range.card_le_card_addGroup))
+    ext <;> grind -zetaDelta -abstractProof)) ((AddSubgroup.index_ker F).trans_le F.range.card_le_card_addGroup))
 
 /-- Relations at split primes. For U fixing M and μ_m, without complex conjugations, there are
 split primes, Frobenii φ_i and elements γ_i such that each family (n_i) with ∑ n_i(x(γ_i)) =
