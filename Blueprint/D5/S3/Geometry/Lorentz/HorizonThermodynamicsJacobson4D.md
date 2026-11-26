@@ -26,7 +26,7 @@ $$\forall U \in \operatorname{Set}\left(\mathbb{R}^{4}\right),\; \forall R \in (
 
 *Commentary.*
 
-On the preconnected open domain U, the coupling is c and the matrix fields R and T are symmetric. Their entries are differentiable at each point. Write E = R − trη(R)η/2 and p = (R − cT)₀₀, so cT − R = pη. The contracted derivative div uses Σₐ ηₐₐ ∂ₐ in the first slot of each matrix field. The Bianchi and conservation equations force each coordinate derivative of p + trη(R)/2 to vanish. That scalar is locally constant and hence constant on U. This is the flat-chart form of the algebraic closure in Jacobson's Thermodynamics of Spacetime (1995), culminating in his Eq. (6).
+On the preconnected open domain U, the coupling is c and the matrix fields R and T are symmetric. Their entries are differentiable at each point. Write E = R − trη(R)η/2 and p = (R − cT)₀₀. Null-cone rigidity applied to the symmetric residual gives cT − R = pη on U. The contracted derivative div uses Σₐ ηₐₐ ∂ₐ in the first slot of each matrix field. The Bianchi and conservation equations force each coordinate derivative of p + trη(R)/2 to vanish. That scalar is locally constant and hence constant on U. This is the flat-chart form of the algebraic closure in Jacobson's Thermodynamics of Spacetime (1995), culminating in his Eq. (6).
 
 **Theorem 1.3 (Vacuum cosmological-constant indeterminacy).**
 
@@ -86,7 +86,7 @@ $$\forall a \in \mathbb{R},\; \forall b \in \mathbb{R},\; \forall f \in (\mathbb
 
 *Commentary.*
 
-The expansion f vanishes on an open interval, so its derivative there vanishes. The Raychaudhuri equation and nonnegative Ricci flux p force both p and the shear s to vanish. The Sachs equation then forces the Weyl tidal component w driving that shear to vanish on the same interval.
+The expansion f vanishes on an open interval, so its derivative there vanishes. Nonzero shear would give a strictly negative expansion derivative. With shear zero, Raychaudhuri gives zero Ricci flux p. The Sachs equation then forces the Weyl tidal component w driving that shear to vanish on the same interval.
 
 **Theorem 1.8 (Stationary QFC and QNEC).**
 
@@ -98,7 +98,7 @@ $$\forall G \in \mathbb{R},\; \forall t \in \mathbb{R},\; \forall f \in (\mathbb
 
 *Commentary.*
 
-For one affine generator, take area A, expansion f, shear s, flux p, and outside entropy S. The first derivative of A is fA near the evaluation parameter t. At zero expansion and shear the second derivative of the area is −A(t)p(t). With A(t)>0 and G>0, the sign of the second generalized entropy variation gives the single-generator stationary bound. The normalized quantum expansion has the same derivative sign at this point since A′(t)=0. The positive factor 8πG converts the Ricci flux to null stress. This is the stationary diagonal relation considered by Bousso et al. in Quantum Focusing (2016), §5.2.
+For one affine generator, take area A, expansion f, shear s, flux p, and outside entropy S. The first derivative of A is fA near the evaluation parameter t. At zero expansion and shear the second derivative of the area is −A(t)p(t). With A(t)>0 and G>0, the sign of the second generalized entropy variation gives the single-generator stationary bound. The normalized quantum expansion has the same derivative sign at this point since A′(t)=0. The Ricci flux is 8πG times the null stress. This is the stationary diagonal relation considered by Bousso et al. in Quantum Focusing (2016), §5.2.
 
 **Theorem 1.9 (Area assigned to basis pinching).**
 

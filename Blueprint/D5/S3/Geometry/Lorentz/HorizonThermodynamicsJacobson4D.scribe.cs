@@ -26,7 +26,8 @@ internal sealed class HorizonThermodynamicsJacobson4DDocument : IScribeDocumentD
             Result("bianchi-closure", "jacobson_bianchi_einstein_equation", "One integration constant",
                 "On the preconnected open domain U, the coupling is c and the matrix fields R and T are symmetric. Their entries "
                 + "are differentiable at each point. Write E = R − trη(R)η/2 and "
-                + "p = (R − cT)₀₀, so cT − R = pη. The contracted derivative div uses "
+                + "p = (R − cT)₀₀. Null-cone rigidity applied to the symmetric residual gives cT − R = pη on U. "
+                + "The contracted derivative div uses "
                 + "Σₐ ηₐₐ ∂ₐ in the first slot of each matrix field. "
                 + "The Bianchi and conservation equations force each coordinate derivative of p + trη(R)/2 to vanish. "
                 + "That scalar is locally constant and hence constant on U. This is the flat-chart form of "
@@ -55,7 +56,7 @@ internal sealed class HorizonThermodynamicsJacobson4DDocument : IScribeDocumentD
                 Sharpness()),
             Result("stationary-rigidity", "stationary_horizon_shear_weyl_rigidity", "Stationary optical rigidity",
                 "The expansion f vanishes on an open interval, so its derivative there vanishes. "
-                + "The Raychaudhuri equation and nonnegative Ricci flux p force both p and the shear s to vanish. "
+                + "Nonzero shear would give a strictly negative expansion derivative. With shear zero, Raychaudhuri gives zero Ricci flux p. "
                 + "The Sachs equation then forces the Weyl tidal component w driving that shear to vanish on the same interval.",
                 Stationary()),
             Result("stationary-qnec", "qfc_iff_qnec_at_stationary_horizon", "Stationary QFC and QNEC",
@@ -64,7 +65,7 @@ internal sealed class HorizonThermodynamicsJacobson4DDocument : IScribeDocumentD
                 + "At zero expansion and shear the second derivative of the area is −A(t)p(t). "
                 + "With A(t)>0 and G>0, the sign of the second generalized entropy variation gives the "
                 + "single-generator stationary bound. The normalized quantum expansion has the same derivative sign "
-                + "at this point since A′(t)=0. The positive factor 8πG converts the Ricci flux to null stress. "
+                + "at this point since A′(t)=0. The Ricci flux is 8πG times the null stress. "
                 + "This is the stationary diagonal relation considered by Bousso et al. in Quantum Focusing (2016), §5.2.",
                 Quantum()),
             Result("clausius-pinching", "clausius_area_monotonicity_from_record_pinching",

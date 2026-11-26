@@ -376,11 +376,13 @@ theorem stationary_horizon_shear_weyl_rigidity
     have hNear : θ =ᶠ[𝓝 t] (fun _ => 0) := by
       filter_upwards [isOpen_Ioo.mem_nhds ht] with s hs
       exact hstationary s hs
-    have hEq := (hθ t ht).unique ((hasDerivAt_const t (0 : ℝ)).congr_of_eventuallyEq hNear)
-    rw [hstationary t ht] at hEq
-    have hnorm : ‖σ t‖ = 0 := by
-      nlinarith [hNEC t ht, sq_nonneg ‖σ t‖]
-    exact ⟨by simp [hnorm] at hEq; linarith, norm_eq_zero.mp hnorm⟩
+    have hzero := (hasDerivAt_const t (0 : ℝ)).congr_of_eventuallyEq hNear
+    have hshear : σ t = 0 := by
+      by_contra hne
+      have hstrict := (raychaudhuri_monotonic_focusing θ σ Φ t (hθ t ht) (hNEC t ht)).2.2 hne
+      simpa [hzero.deriv, hstationary t ht] using hstrict
+    have hEq := (hθ t ht).unique hzero
+    exact ⟨by simpa [hstationary t ht, hshear] using hEq, hshear⟩
   intro t ht
   have hNear : σ =ᶠ[𝓝 t] (fun _ => 0) := by
     filter_upwards [isOpen_Ioo.mem_nhds ht] with s hs
