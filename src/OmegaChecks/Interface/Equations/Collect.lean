@@ -4,10 +4,12 @@ import all Init.Data.Iterators.Consumers.Access
 
 public import OmegaChecks.InitPort.Alternatives.Collect
 import all OmegaChecks.InitPort.Alternatives.Collect
+import all OmegaChecks.InitPort.Alternatives.Collect.Steps
 import all OmegaChecks.InitPort.Alternatives.IteratorSlice
 import all OmegaChecks.InitPort.Alternatives.FiniteLoop
 public import OmegaChecks.InitPort.Alternatives.Range
 import all OmegaChecks.InitPort.Alternatives.Range
+import all OmegaChecks.InitPort.Alternatives.Range.Characters
 import all Init.Data.Iterators.Consumers.Monadic.Loop
 import all Init.Data.Iterators.Producers.Monadic.List
 import all Init.Data.Slice.Array.Iterator
