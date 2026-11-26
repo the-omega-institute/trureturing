@@ -144,7 +144,11 @@ def strict_build(args):
                     selections[target].add(name)
     all_roots = set().union(*selections.values())
     graph = strict_import_graph("lean", all_roots)
-    skipped = library_mathlib_only(graph, all_roots & graph.keys())
+    no_build = "--no-build" in options
+    try:
+        skipped = library_mathlib_only(graph, all_roots & graph.keys(), no_build=no_build)
+    except subprocess.CalledProcessError as error:
+        return error.returncode
     if not skipped:
         return subprocess.call([*lake, "build", *args], cwd=ROOT)
     targets = []
@@ -163,7 +167,7 @@ def strict_build(args):
         # their strict jobs are skipped. --no-build exits 3 for an unbuilt facet.
         result = subprocess.run(["lake", "--no-build", "build", *skipped_facets],
                                 cwd=ROOT, capture_output=True, text=True)
-        if result.returncode not in (0, 3):
+        if result.returncode and (no_build or result.returncode != 3):
             sys.stderr.write(result.stdout + result.stderr)
             return result.returncode
     targets.extend("+" + name for name in terminal_modules(graph, eligible))

@@ -74,14 +74,15 @@ def library_backend_candidates(graph, names):
     return [name for name in names if root(name) in STRICT or (name in reachable and root(name) != "OmegaBuild")]
 
 
-def library_mathlib_only(graph, targets):
+def library_mathlib_only(graph, targets, *, no_build=False):
     candidates = library_backend_candidates(graph, closure(graph, targets))
     if not candidates:
         return {}
     # A strict import edge can be absent on the official side. Build every input to the planner.
-    run("lake", "build", *("+" + name for name in candidates))
+    build_options = ["--no-build"] if no_build else []
+    run("lake", *build_options, "build", *("+" + name for name in candidates))
     official_path = portable.output("lake", "env", "printenv", "LEAN_PATH").strip()
-    return portable.backend_plan(official_path, candidates)["mathlibOnly"]
+    return portable.backend_plan(official_path, candidates, no_build=no_build)["mathlibOnly"]
 
 
 def check_library(selected=()):

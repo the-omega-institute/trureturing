@@ -81,11 +81,12 @@ def closure(graph, roots):
     return list(TopologicalSorter({n: graph[n] & seen for n in sorted(seen)}).static_order())
 
 
-def backend_plan(official_path, names, environment=None):
+def backend_plan(official_path, names, environment=None, *, no_build=False):
     """Read backend restrictions from the exact official artifacts about to be consumed."""
     if not names:
         return {"mathlibOnly": {}, "declarations": []}
-    subprocess.run(["lake", "build", "omegaBackendPlan"], cwd=ROOT, env=environment, check=True)
+    build_options = ["--no-build"] if no_build else []
+    subprocess.run(["lake", *build_options, "build", "omegaBackendPlan"], cwd=ROOT, env=environment, check=True)
     plan = json.loads(output(ROOT / ".lake/build/bin/omegaBackendPlan", official_path, *names, env=environment))
     for name, chain in plan["mathlibOnly"].items():
         if name not in names or not chain or chain[0] != name:

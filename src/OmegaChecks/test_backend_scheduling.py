@@ -11,6 +11,53 @@ from strict_lake import ROOT
 
 
 class BackendScheduling(unittest.TestCase):
+    def test_no_build_checks_cold_warm_and_stale_artifacts(self):
+        with tempfile.TemporaryDirectory(prefix="omega-no-build-") as directory:
+            project = Path(directory)
+            for filename in ("lakefile.toml", "lake-manifest.json", "lean-toolchain"):
+                shutil.copyfile(ROOT / filename, project / filename)
+            shutil.copytree(ROOT / "src/OmegaBuild", project / "src/OmegaBuild")
+            scripts = project / "src/OmegaChecks"
+            scripts.mkdir()
+            for source in (ROOT / "src/OmegaChecks").glob("*.py"):
+                shutil.copyfile(source, scripts / source.name)
+            (project / ".lake").mkdir()
+            (project / ".lake/packages").symlink_to((ROOT / ".lake/packages").resolve(), target_is_directory=True)
+            (project / "D5").mkdir()
+            marked = project / "D5/Marked.lean"
+            marked.write_text("import OmegaBuild.Commands\ncompile_only_with_mathlib\ndef answer := 42\n")
+            (project / "D5/Plain.lean").write_text("def plain := 7\n")
+            subprocess.run(["git", "init", "--quiet"], cwd=project, check=True)
+            wrapper = [sys.executable, "-B", "src/OmegaChecks/strict_lake.py"]
+            def run(args, expected):
+                result = subprocess.run(args, cwd=project, capture_output=True, text=True)
+                self.assertEqual(result.returncode, expected, result.stdout + result.stderr)
+
+            build = project / ".lake/build"
+            official = build / "lib/lean/D5/Marked.olean"
+            planner = build / "bin/omegaBackendPlan"
+            strict = build / "omega-strict/lib/lean/D5"
+            run(["lake", "build", "--no-build", "+D5.Marked"], 3)
+            run([*wrapper, "build", "--no-build", "+D5.Marked"], 3)
+            self.assertFalse(official.exists())
+            self.assertFalse(planner.exists())
+            run(["lake", "build", "+D5.Marked"], 0)
+            stamp = official.stat().st_mtime_ns
+            run([*wrapper, "--no-build", "build", "+D5.Marked"], 3)
+            self.assertFalse(planner.exists())
+            run(["lake", "build", "omegaBackendPlan"], 0)
+            run([*wrapper, "build", "--no-build", "+D5.Marked"], 0)
+            run([*wrapper, "build", "--no-build", "+D5.Marked:c.o"], 3)
+            self.assertEqual(stamp, official.stat().st_mtime_ns)
+            self.assertFalse((strict / "Marked.olean").exists())
+            run([*wrapper, "build", "--no-build", "+D5.Plain"], 3)
+            self.assertFalse((strict / "Plain.olean").exists())
+            run([*wrapper, "build", "+D5.Plain"], 0)
+            run([*wrapper, "build", "--no-build", "+D5.Plain"], 0)
+            marked.write_text(marked.read_text().replace("42", "43"))
+            run([*wrapper, "build", "--no-build", "+D5.Marked"], 3)
+            self.assertEqual(stamp, official.stat().st_mtime_ns)
+
     def test_marker_changes_and_transitive_targets(self):
         with tempfile.TemporaryDirectory(prefix="omega-scheduling-") as directory:
             project = Path(directory)
