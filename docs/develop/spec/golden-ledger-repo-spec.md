@@ -299,6 +299,12 @@ SL-008 检查当前树中的每个状态片:路径与 schema 合规,对应模块
 
 **A14.7 冻结状态的消费者。** 独立读取器须接受 A14.2 的历史与带注记记录。展示依赖信息的消费者依 A14.2 区分字段缺省与 `[]`。冻结读写器往返序列化历史规范文件时须逐字节相同。理论源仓按模块 pin 和声明身份核对覆盖目标并记录实际来源提交，须在发布带注记记录前具备读取兼容性。
 
+<a id="omega-claim-fidelity"></a>
+
+**OmegaMath 陈述与证据的忠实性（语义评审）。** 引用定理时，在所引版本核对实际类型和有关定义，保留载体、等价关系、量词、定义域、必要前提与结论。若对任意目标都取有理参数原像，须证明满射；若经稠密性与连续性延拓，则核对延拓定理的前提。认定标量特征标递推等于实际算子迹，须说明表示对应；由射线等价得到规范代表元相等，须说明规范化依据。显式说明该步来自哪条 Lean 声明、书面推导或附加假设。对于手推公式、数值示例与互动画面，按各自声明的定义域、运算次序与数据类型复算。若反例推翻推广，把引文用于其成立的范围，并同步修正依赖该推广的图表、译文和示例。
+
+发布者按 A14.2 读取同一声明的官方和严格测量。`declarations[].axioms` 属于该条声明的官方测量，`declarations[].strict_omega.axioms` 属于已对照的严格声明。字段缺省按 A14.7 处理。说明当前构建时使用该后端当前编译产物的测量，说明历史版本时引用对应版本的记录。报告空内核重放时给出实际入口、根及闭包，报告 D5 冻结证据时指出实际测量和对照范围。
+
 **A14.8 TOWER 引导边界。** TOWER 不保存或验证 `genesis_event` 的事件存在性见证。bootstrap 保留其 commit/PR 外部信任根边界及 `ASSUMED-UNVERIFIED` 状态,不以状态摘要替代事件见证。
 
 **A14.9 Inspector-owned report artifacts.** `lean-report-inputs.json` is the sole FILEMAP-registered report input manifest. Its strict JSON schema selects report modules, Inspector sources, configuration and the `lean-report` / `scribe-content` producer scopes through explicit include/exclude patterns. The optional `dependency_sources` path set registers additional local Lean sources that may occur in reported modules' native compiler dependencies; absence declares no additional local inputs. It is an allowed source inventory, not a producer compatibility fingerprint. Required registrations without files, malformed or duplicate fields, unsafe paths and unsupported schema identifiers fail with a named diagnostic. The manifest contains no judge semantic version. Module evidence and origins contain no global judge version. The report format identifier determines strict wire acceptance, input coordinates, all module report traces. Extraction semantics or report format changes update that identifier and re-extract every module. Judge implementation and rule changes retain historical reports; changed registration and contract inputs are reassessed through their compiler dependency closures. Missing required evidence or old wire shape rejects with no older-version reader. Neither judge source bytes nor a producer implementation digest defines evidence validity. The reader `tools/scripts/report/lean-report-selection.py` expands only those registrations, with no MSBuild evaluation or script/call-graph discovery. The existing Scribe projection and describe checks consume the registered scope, including deleted paths.
@@ -477,7 +483,7 @@ Truth Release 按 A14.2 发布冻结声明最近一次测量的库根与公理�
 
 `publish-truth-release` 的 `repository_dispatch` 可在 `client_payload.source_commit` 指定 40 位小写十六进制提交字符串。工作流在检出前验证该提交位于受保护 `dev` 事件提交的第一父链上（含事件提交自身）。该提交须已有可读取的普通模块 Release。
 
-Truth Release 直接信任已发布的报告。读取器按索引指定的物理 Release 标签与资产名读取分片，仅复制逐模块报告 ZIP。源码钉版的 Inspector 和 Scribe 用于汇总报告与生成资源，工作流独立钉住的 `trureturing-tools` 发布器负责生成 DAG 与 truth bundle。发布阶段无需安装 Lean、恢复编译器产物、重新验证报告或编译 Lean 项目。发布清单的 `required_checks` 为空。归档发布到 GHCR，`truth-release-<digest>` GitHub Release 提供同一归档、发布坐标与 `DAG.md`。
+Truth Release 直接信任已发布的报告。已有同一来源的正式 Truth Release 时直接返回其发布坐标。对新来源，读取最近发布且来源为当前提交祖先的正式 Truth Release，并按其发布坐标找到当时的普通模块索引。两个索引的报告有效键相同的模块复用上次发布的原始报告行。新增或报告键变化的模块从当前索引指定的物理 Release 分片提取 ZIP，移除的模块退出当前报告。首次发布或缺少兼容基线时，读取当前发布的全部适用报告。源码钉版的 Inspector 汇总当前模块报告。Scribe 从普通 Actions 缓存恢复由上次构建保留的资源包和输入信息，按当前源码更新资源；支持该缓存的构建成功后以当前来源提交为键保存。工作流独立钉住的 `trureturing-tools` 发布器负责生成 DAG 与 truth bundle。发布阶段无需安装 Lean、恢复编译器产物、重新验证报告或编译 Lean 项目。发布清单的 `required_checks` 为空。归档发布到 GHCR，`truth-release-<digest>` GitHub Release 提供同一归档、发布坐标与 `DAG.md`。
 
 
 <a id="a22-ci-cache-flow"></a>
