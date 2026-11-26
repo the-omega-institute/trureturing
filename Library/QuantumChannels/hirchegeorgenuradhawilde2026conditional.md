@@ -25,6 +25,9 @@ strata_touched:
   - D5/S3/Quantum/Divergence/ConditionalExpansion/HeraldedRecoveryUpperBound
   - D5/S3/Quantum/Divergence/ConditionalExpansion/HeraldedRecoveryLowerBound
   - D5/S3/Quantum/Divergence/ConditionalExpansion/SharpFilteredRecoveryFactor
+  - D5/S3/Quantum/Divergence/ConditionalExpansion/FilteredBellKernelUpperBound
+  - D5/S3/Quantum/Divergence/ConditionalExpansion/FilteredBellRestriction
+  - D5/S3/Quantum/Divergence/ConditionalExpansion/DattaHolevoExactBenchmark
 license: citation-only
 triage: anchor
 ---
@@ -156,7 +159,7 @@ admissible conditional hockey-stick ratio, including trace distance at
 $\gamma=1$. This is a repository-derived bound for the conditional
 optimization of Eq. (2.42). The complete bound in George et al.,
 Proposition 33, Eqs. (6.56)–(6.60), uses equal reference marginals.
-Attainment and the sharp comparison with heralded recovery remain unformalized.
+The sharp comparison and attainment for the Datta–Holevo family are established below.
 [Eq. (2.42)](https://arxiv.org/html/2608.27171v1#S2.EGx43) ·
 [George et al., Proposition 33](https://arxiv.org/html/2503.22823v3#Thmproposition33)
 
@@ -346,6 +349,55 @@ comparison. For $C<0$ the positive infimum also exceeds $Cp_{\rm rec}$.
 The sharpness argument applies the known filter family to the conditional
 expansion coefficient of Hirche, George, Nuradha and Wilde, Eq. (2.42).
 The related recovery duality is due to Bény and Oreshkov, Theorem 2.
+
+[Datta and Holevo, §3, Eqs. (11), (16)](https://arxiv.org/abs/quant-ph/0510145) ·
+[Hirche, George, Nuradha and Wilde, Eq. (2.42)](https://arxiv.org/html/2608.27171v1#S2.EGx43) ·
+[Bény and Oreshkov, Theorem 2](https://arxiv.org/abs/1103.0649v3)
+
+## Bell-kernel upper bound for normalized filters
+
+Let $N_G(X)=G^{1/2}(X\otimes I_E/e)G^{1/2}$, where $G>0$ on
+$A\otimes E$, $d=\dim A\ge2$, $e=\dim E>0$, and
+$\operatorname{Tr}_E(G)/e=I_A$. Set $M=\operatorname{Tr}_A(G^{-1})/d$.
+The theorem `filtered_channel_bell_upper_bound` bounds the conditional
+expansion infimum above by $\operatorname{Tr}(M^{-1})/e$ for every
+$\gamma\ge1$, with the same bound on orthogonally restricted ratios.
+It evaluates the filtered Bell output on the kernel projection of the
+filtered Bell complement and uses the padded Bell pairs. The inverse
+input marginal $L=\operatorname{Tr}_E(G^{-1})/e$ supplies the lower bound
+$1/\lVert L\rVert_\infty$ from the harmonic congruence estimate.
+
+`compressed_filter_ratios_subset` proves that every admissible ratio for
+the compression of $G$ to an isometric input subspace also occurs for
+the full channel. `threeByTwo_strict_bell_bound` uses a diagonal filter
+with rows $(1/2,3/2)$, $(3/2,1/2)$, and $(1,1)$. The inverse input
+marginal gives the lower bound $3/4$. Compression to the first two
+input coordinates gives the matching upper bound $3/4$. The Bell upper
+bound for the full input is $9/11$, strictly greater than the actual
+conditional trace-distance expansion coefficient.
+
+The coefficient is the finite-reference infimum of Definition 3,
+Eq. (2.42), in Hirche, George, Nuradha and Wilde.
+[Eq. (2.42)](https://arxiv.org/html/2608.27171v1#S2.EGx43)
+
+## Exact Datta–Holevo filter benchmark
+
+For finite input dimension $d\ge2$ and $0<a<1$, let $P$ be the normalized
+Bell projector, $b=(d^2-a)/(d^2-1)$ and $G=aP+b(I-P)$. This is the
+complementary depolarizing filter of Datta and Holevo, arXiv:quant-ph/0510145,
+§3, Eqs. (11) and (16). For any channel with action
+$N(X)=G^{1/2}(X\otimes I/d)G^{1/2}$,
+`DattaHolevoExactBenchmark.sharp_family_expansion_eq` proves that the
+finite-reference conditional expansion infimum of Eq. (2.42) equals
+$\operatorname{harmonicParameter}(d,a)=a(d^2-a)/(1+(d^2-2)a)$ for every
+$\gamma\ge1$ and both orthogonality flags. Factor-swap symmetry identifies
+the inverse marginals, making the filter lower bound and Bell-kernel upper
+bound equal. The companion theorems `sharp_family_recovery_attains` and
+`sharp_family_recovery_sup_eq` prove that the optimal finite exact heralded
+Kraus recovery probability equals $a$ and is attained by the inverse-filter
+coordinate slices with effect $aG^{-1}\le I$. The related complementary-channel
+replacement-weight characterization follows from Bény and Oreshkov's
+postprocessing duality, Theorem 2.
 
 [Datta and Holevo, §3, Eqs. (11), (16)](https://arxiv.org/abs/quant-ph/0510145) ·
 [Hirche, George, Nuradha and Wilde, Eq. (2.42)](https://arxiv.org/html/2608.27171v1#S2.EGx43) ·
