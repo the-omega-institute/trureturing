@@ -26,7 +26,7 @@ private def Exponents.plus (a b : Exponents) : Exponents :=
 private def Exponents.sup (a b : Exponents) : Exponents :=
   ⟨max a.p b.p, max a.x b.x, max a.y b.y, max a.u b.u, max a.v b.v⟩
 
-private def Exponents.bounded (a b : Exponents) : Prop :=
+def Exponents.bounded (a b : Exponents) : Prop :=
   a.p ≤ b.p ∧ a.x ≤ b.x ∧ a.y ≤ b.y ∧ a.u ≤ b.u ∧ a.v ≤ b.v
 
 private theorem Exponents.bounded_trans {a b c : Exponents}
@@ -46,7 +46,7 @@ private theorem Exponents.bounded_sup_left (a b : Exponents) : a.bounded (a.sup 
 private theorem Exponents.bounded_sup_right (a b : Exponents) : b.bounded (a.sup b) :=
   ⟨le_max_right _ _, le_max_right _ _, le_max_right _ _, le_max_right _ _, le_max_right _ _⟩
 
-private def coeffMass (ts : List Term) : ℤ :=
+def coeffMass (ts : List Term) : ℤ :=
   (ts.map fun t => |t.coefficient|).sum
 
 private def rawProduct (as bs : List Term) : List Term :=
@@ -55,7 +55,7 @@ private def rawProduct (as bs : List Term) : List Term :=
 private def rawNegation (ts : List Term) : List Term :=
   ts.map fun t => ⟨t.exponents, -t.coefficient⟩
 
-private structure BoundedExpansion where
+structure BoundedExpansion where
   terms : List Term
   degree : Exponents
   mass : ℤ
@@ -63,7 +63,7 @@ private structure BoundedExpansion where
   mass_bound : coeffMass terms ≤ mass
   mass_nonneg : 0 ≤ mass
 
-private def BoundedExpansion.single (e : Exponents) (z : ℤ) : BoundedExpansion where
+def BoundedExpansion.single (e : Exponents) (z : ℤ) : BoundedExpansion where
   terms := [⟨e, z⟩]
   degree := e
   mass := |z|
@@ -150,15 +150,15 @@ section Semantics
 
 variable {R : Type*} [CommRing R] (p x y u v : R)
 
-private def BoundedExpansion.eval (a : BoundedExpansion) : R :=
+def BoundedExpansion.eval (a : BoundedExpansion) : R :=
   evalTerms p x y u v a.terms
 
-private theorem eval_bounded_add (a b : BoundedExpansion) :
+theorem eval_bounded_add (a b : BoundedExpansion) :
     (a + b).eval p x y u v = a.eval p x y u v + b.eval p x y u v := by
   change evalTerms p x y u v (a.terms ++ b.terms) = _
   simp [BoundedExpansion.eval, evalTerms]
 
-private theorem eval_bounded_sub (a b : BoundedExpansion) :
+theorem eval_bounded_sub (a b : BoundedExpansion) :
     (a - b).eval p x y u v = a.eval p x y u v - b.eval p x y u v := by
   change evalTerms p x y u v (a.terms ++ rawNegation b.terms) = _
   simp only [BoundedExpansion.eval, evalTerms, List.map_append, List.sum_append,
@@ -169,7 +169,7 @@ private theorem eval_bounded_sub (a b : BoundedExpansion) :
   | nil => simp
   | cons t ts ih => simp [ih, Term.eval, add_comm]
 
-private theorem eval_bounded_mul (a b : BoundedExpansion) :
+theorem eval_bounded_mul (a b : BoundedExpansion) :
     (a * b).eval p x y u v = a.eval p x y u v * b.eval p x y u v := by
   change evalTerms p x y u v (rawProduct a.terms b.terms) = _
   simp only [BoundedExpansion.eval]
@@ -189,7 +189,7 @@ private theorem eval_bounded_mul (a b : BoundedExpansion) :
     simp only [Term.eval, Exponents.plus, pow_add, Int.cast_mul]
     ring
 
-private theorem eval_bounded_single (e : Exponents) (z : ℤ) :
+theorem eval_bounded_single (e : Exponents) (z : ℤ) :
     (BoundedExpansion.single e z).eval p x y u v = (z : R) *
       (p ^ e.p * x ^ e.x * y ^ e.y * u ^ e.u * v ^ e.v) := by
   simp [BoundedExpansion.single, BoundedExpansion.eval, evalTerms, Term.eval]
@@ -199,7 +199,7 @@ private theorem eval_bounded_nat (n : ℕ) :
   change (BoundedExpansion.single ⟨0, 0, 0, 0, 0⟩ n).eval p x y u v = _
   simp [eval_bounded_single]
 
-private theorem eval_bounded_pow (a : BoundedExpansion) (n : ℕ) :
+theorem eval_bounded_pow (a : BoundedExpansion) (n : ℕ) :
     (a ^ n).eval p x y u v = a.eval p x y u v ^ n := by
   induction n with
   | zero =>
