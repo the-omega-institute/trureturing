@@ -22,8 +22,7 @@ namespace D5.S3.Combinatorics.Graph.HypercubeCritical.AsymmetricSliceNonEmbeddin
 
 open D5.S3.Combinatorics.Graph.Hypercube
 open D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCriticalSpectrum (Q flip)
-open private adjacent_exists_flip from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeGirth
+open BalancedCubeGirth (adjacent_exists_flip)
 
 -- Labels: 0 X1, 1 X2, 2 Y1, 3 Y2, 4 a, 5 b, 6 c, 7 d, 8 e, 9 f,
 -- 10 low0, 11 low1, 12 low2, 13 low3, 14 low4, 15 low5, 16 low6,

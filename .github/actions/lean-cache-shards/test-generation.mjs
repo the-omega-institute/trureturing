@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
-import { mkdir, mkdtemp, readdir, readFile, rm, symlink, writeFile } from 'node:fs/promises';
+import { mkdir, mkdtemp, readdir, readFile, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { test } from 'node:test';
@@ -18,7 +18,7 @@ async function fixture(t) {
   t.after(() => rm(root, { recursive: true, force: true }));
   const bin = join(root, 'bin');
   const sdk = join(bin, 'sdk');
-  await mkdir(join(sdk, 'internal'), { recursive: true });
+  await mkdir(sdk, { recursive: true });
   // Install a recording cache SDK at exactly the path resolved by the action.
   await writeFile(join(bin, 'npm'), `#!/bin/sh
 set -eu
@@ -26,8 +26,6 @@ echo install >> "$(dirname "$0")/installs"
 mkdir -p node_modules/@actions/cache
 cp -R "$(dirname "$0")/sdk" node_modules/@actions/cache/lib
 `, { mode: 0o755 });
-  await writeFile(join(sdk, 'internal/cacheUtils.js'),
-    'exports.getCompressionMethod = async () => "zstd"; exports.getCacheVersion = () => "sdk-version";\n');
   await writeFile(join(sdk, 'cache.js'), `
 const fs = require("node:fs");
 const assert = require("node:assert/strict");
@@ -40,14 +38,11 @@ exports.restoreCache = async function(paths, key, prefixes, options) {
     if (!options?.lookupOnly) fs.copyFileSync(storage, paths[0]);
     return key;
   }
-  const path = key.startsWith("lean-shard-index-")
-    ? (key.includes("-snapshot-") ? "build/lean-cache/shards/index.json"
-      : "build/lean-cache/shards/payload/" + key.split("-").pop() + ".tar.gz") : wire;
-  assert.deepEqual(paths, [path]);
+  assert.deepEqual(paths, [wire]);
   assert.deepEqual(prefixes, []);
   fs.appendFileSync("requests", "get " + key + "\\n");
   if (!fs.existsSync(key)) return undefined;
-  if (!options?.lookupOnly) { fs.mkdirSync(require("node:path").dirname(path), {recursive: true}); fs.copyFileSync(key, path); }
+  if (!options?.lookupOnly) fs.copyFileSync(key, wire);
   return key;
 };
 exports.saveCache = async function(paths, key) {
@@ -69,7 +64,6 @@ exports.saveCache = async function(paths, key) {
     GITHUB_OUTPUT: join(root, 'outputs'),
     GITHUB_SHA: 'b'.repeat(40),
     GH_TOKEN: 'test',
-    PYTHONPATH: process.env.LEAN_GENERATION_TEST_TOOLS || fileURLToPath(new URL('../../../tools/scripts/worktree', import.meta.url)),
     GITHUB_REF: 'refs/heads/dev',
     GITHUB_REF_PROTECTED: 'true',
     GITHUB_REPOSITORY: 'owner/repo',
@@ -130,82 +124,6 @@ test('publisher retries verify existing bytes and conflicting contents fail', as
   assert.equal(conflict.status, 1);
   assert.match(conflict.stderr, /corrupt Actions generation index/);
   assert.equal((await requests()).split('\n').filter(line => line.startsWith('put ')).length, 1);
-});
-
-test('migration pins the newest complete verified owner and checks each streamed payload', async t => {
-  const { root, requests, run } = await fixture(t);
-  await symlink(fileURLToPath(new URL('../../', import.meta.url)), join(root, '.github'));
-  await mkdir(join(root, 'tools/scripts/worktree'), { recursive: true });
-  const hash = value => createHash('sha256').update(value).digest('hex');
-  const prefix = 'lean-shard-index-v1-' + hash('{}') + '-';
-  const material = prefix + 'material-' + digest;
-  const commit = 'a'.repeat(40);
-  const group = hash('[["A"]]');
-  const inventory = [];
-  const row = (key, id) => ({ key, version: 'sdk-version', ref: 'refs/heads/dev',
-    created_at: '2026-01-0' + id + 'T12:00:00Z' });
-  for (const id of ['1', '2', '3']) {
-    const key = prefix + 'snapshot-' + id + '-1';
-    const index = {
-      state: id === '3' ? 'resume' : 'complete', binding: {},
-      owner: { commit, ref: 'refs/heads/dev', run: id, attempt: '1' },
-      entries: { [group]: id === '2' ? 'e'.repeat(64) : digest },
-      required: { [group]: ['lib/lean/A.olean'] }, layout: { [group]: [['A']] },
-      sources: { A: digest }, fingerprints: { [group]: digest },
-    };
-    await writeFile(join(root, key), JSON.stringify(index));
-    inventory.push(row(key, id));
-  }
-  inventory.push(row(material, '1'));
-  await writeFile(join(root, 'bin/git'), '#!/bin/sh\necho "' + 'b'.repeat(40) + '"\n', { mode: 0o755 });
-  await writeFile(join(root, material), bytes);
-  await writeFile(join(root, 'inventory'), inventory.map(i => JSON.stringify(i)).join('\n'));
-  await writeFile(join(root, 'bin/gh'), `#!/bin/sh
-case "$*" in
-  *git/ref/tags/lean-generation-bootstrap-v1*) if test -f pin-ref; then cat pin-ref; else echo '{"status":"404"}'; exit 1; fi ;;
-  *git/blobs*--method*) jq '. + {sha:"blob",size:(.content|@base64d|length)}' > seed-blob; echo '{"sha":"blob"}' ;;
-  *git/tags*--method*) jq '. + {object:{sha:.object,type:.type}}' > seed-tag; echo '{"sha":"tag"}' ;;
-  *git/refs*--method*) jq '. + {object:{sha:.sha,type:"tag"}}' > pin-ref; cat pin-ref ;;
-  *git/tags/tag*) cat seed-tag ;;
-  *git/blobs/blob*) cat seed-blob ;;
-  *actions/caches*) cat inventory ;;
-  *branches/dev*) echo '{"protected":true,"commit":{"sha":"${commit}"}}' ;;
-  *actions/runs/1/attempts/1*) echo '{"id":1,"run_attempt":1,"status":"completed","conclusion":"success","event":"push","head_branch":"dev","head_sha":"${commit}","head_repository":{"full_name":"owner/repo"},"path":".github/workflows/lean-cache-publish.yml"}' ;;
-  *compare/*) echo '{"ancestor":"${commit}"}' ;;
-  *) exit 2 ;;
-esac
-`, { mode: 0o755 });
-  const chosen = run('schedule', 'latest-seed');
-  assert.equal(chosen.status, 0, chosen.stderr);
-  const base = join(root, 'lean-generation-base');
-  const pin = JSON.parse(await readFile(join(base, 'seed.json')));
-  assert.equal(pin.key, prefix + 'snapshot-1-1');
-  assert.equal(pin.index_sha256, hash(await readFile(join(base, 'index.json'))));
-  await rm(join(root, pin.key));
-  await rm(join(root, 'inventory'));
-  await rm(base, { recursive: true });
-  const retry = run('schedule', 'latest-seed');
-  assert.equal(retry.status, 0, retry.stderr);
-  assert.deepEqual(JSON.parse(await readFile(join(base, 'seed.json'))), pin);
-  assert.equal(hash(await readFile(join(base, 'index.json'))), pin.index_sha256);
-  await writeFile(join(root, 'tools/scripts/worktree/lean_generation_seed.py'), `
-import json
-from pathlib import Path
-print(json.dumps({"request": ["${digest}"]}), flush=True)
-verified = json.loads(input())
-assert verified == (["${digest}"] if not Path("corrupt").exists() else [])
-assert Path("build/lean-cache/shards/payload/${digest}.tar.gz").is_file()
-print(json.dumps({"result": {"verified": len(verified)}}), flush=True)
-`);
-  const migration = run('schedule', 'migrate-seed');
-  assert.equal(migration.status, 0, migration.stderr);
-  await assert.rejects(readFile(join(root, 'build/lean-cache/shards/payload', digest + '.tar.gz')), { code: 'ENOENT' });
-  await writeFile(join(root, material), 'corrupt bytes');
-  await writeFile(join(root, 'corrupt'), '');
-  const corrupt = run('schedule', 'migrate-seed');
-  assert.equal(corrupt.status, 0, corrupt.stderr);
-  assert.match(corrupt.stdout, /"verified":0/);
-  assert.doesNotMatch(await requests(), /^put /m);
 });
 
 test('publisher pins dev directly and recovers the original source on retry', async t => {
@@ -362,7 +280,7 @@ command = sys.argv[1]
 args = dict(zip(sys.argv[2::2], sys.argv[3::2]))
 assert os.environ["LEAN_MODULE_ACTIONS_CACHE"] == "1"
 if command == "plan":
-    assert "--prepare-release" in sys.argv
+    assert sys.argv[-1] == "--prepare-release" and len(sys.argv) == 7
     assert args["--capacity"] == str(32 * 1024**2)
     Path(args["--output"]).write_text("planned")
 elif command == "worker":
@@ -376,6 +294,7 @@ elif command == "restore":
     if "--version" in args:
         assert args["--version"] == "lean-modules-" + "b" * 40
         Path("pinned-restore").write_text(args["--version"])
+        print('{"requested":1,"restored":1}')
     else:
         sys.exit(3)
 else:
@@ -394,10 +313,13 @@ else:
   const restored = run('push', 'restore-published');
   assert.equal(restored.status, 0, restored.stderr);
   assert.match(restored.stdout, /No published module cache yet/);
+  assert.equal(await readFile(env.GITHUB_OUTPUT, 'utf8'), 'available=0\ncomplete=false\n');
+  await rm(env.GITHUB_OUTPUT);
   env.INPUT_VERSION = 'lean-modules-' + 'b'.repeat(40);
   const pinned = run('push', 'restore-published');
   assert.equal(pinned.status, 0, pinned.stderr);
   assert.equal(await readFile(join(root, 'pinned-restore'), 'utf8'), env.INPUT_VERSION);
+  assert.equal(await readFile(env.GITHUB_OUTPUT, 'utf8'), 'available=1\ncomplete=true\n');
   const publisher = await readFile(new URL('../../workflows/cache-release-publish.yml', import.meta.url), 'utf8');
   assert.doesNotMatch(publisher, /plan-reports|build-reports|facet-plan/);
   assert.match(publisher, /needs: \[pin, publish\][\s\S]*uses: .\/\.github\/workflows\/ci-lean-module-verify.yml[\s\S]*published: true/);
@@ -415,4 +337,30 @@ test('the published module reader requires the restored report before invoking L
     assert.ok(files.includes('test -s "$report' + suffix + '"'), suffix);
   }
   assert.match(verification.slice(prepare), /make lean-report-scoped[\s\S]*extracted_modules == 0/);
+});
+
+test('published cache outputs count restored modules within the requested scope', async t => {
+  const { root, env, run } = await fixture(t);
+  const dir = join(root, 'tools/scripts/worktree');
+  await mkdir(dir, { recursive: true });
+  await writeFile(join(dir, 'lean_module_cache.py'), `
+import os, sys
+assert sys.argv[1:] == ["restore", "--targets", "D5.A"]
+print("Fetching compiler inputs", flush=True)
+print(os.environ["RESTORE_RESULT"])
+`);
+  env.INPUT_TARGETS = 'D5.A';
+  for (const [requested, restored, complete] of [[4, 4, true], [4, 2, false], [4, 0, false], [0, 0, false]]) {
+    env.RESTORE_RESULT = JSON.stringify({ requested, restored });
+    const result = run('push', 'restore-published');
+    assert.equal(result.status, 0, result.stderr);
+    assert.match(result.stdout, /Fetching compiler inputs/);
+    assert.equal(await readFile(env.GITHUB_OUTPUT, 'utf8'), `available=${restored}\ncomplete=${complete}\n`);
+    await rm(env.GITHUB_OUTPUT);
+  }
+  env.RESTORE_RESULT = JSON.stringify({ requested: 2, restored: 3 });
+  const invalid = run('push', 'restore-published');
+  assert.equal(invalid.status, 1);
+  assert.match(invalid.stderr, /invalid published module restore counts/);
+  await assert.rejects(readFile(env.GITHUB_OUTPUT), { code: 'ENOENT' });
 });

@@ -316,8 +316,7 @@ open Q9IsotropicHuang (parity)
 open Q9LaurentGainPartition (Side LaurentIdentity Exponent)
 open private cubeParity cubeParity_ne_of_adj from
   D5.S3.Combinatorics.Graph.HypercubeSubQuorum
-open private adjacent_exists_flip from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeGirth
+open BalancedCubeGirth (adjacent_exists_flip)
 open private flip_parity from
   D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Q9LaurentGainPartition
 
@@ -528,8 +527,7 @@ open Q9LaurentGainPartition (Side PathAt pathEnd reversePath)
 open Q9LaurentCommonTriple (Axes commonAxes outside)
 open private mem_twoStepPaths pathEnd_reverse from
   D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Q9LaurentGainPartition
-open private adjacent_exists_flip from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeGirth
+open BalancedCubeGirth (adjacent_exists_flip)
 open private outside_flip from
   D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Laurent.Q9LaurentCommonTriple
 
