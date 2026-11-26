@@ -233,9 +233,52 @@ public theorem List.head_takeWhile : type_of% @_root_.List.head_takeWhile := by
     | false => exact (present (by simp only [List.takeWhile_cons, head, Bool.false_eq_true, ite_false])).elim
     | true => simp only [List.takeWhile_cons, head, ite_true, List.head_cons]
 
+public theorem List.filter_replicate : type_of% @_root_.List.filter_replicate := by
+  intro n α a p
+  cases test : p a with
+  | true =>
+    induction n with
+    | zero => rfl
+    | succ n ih => rw [List.replicate_succ, List.filter_cons, ite_eq_left test]; exact congrArg (List.cons a) ih
+  | false =>
+    have absent : ¬ p a := fun yes => Bool.noConfusion (test.symm.trans yes)
+    induction n with
+    | zero => rfl
+    | succ n ih => rw [List.replicate_succ, List.filter_cons, ite_eq_right absent]; exact ih
+
+public theorem List.takeWhile_replicate : type_of% @_root_.List.takeWhile_replicate := by
+  intro α n a p
+  cases test : p a with
+  | true =>
+    induction n with
+    | zero => rfl
+    | succ n ih => rw [List.replicate_succ, List.takeWhile_cons, ite_eq_left test]; exact congrArg (List.cons a) ih
+  | false =>
+    have absent : ¬ p a := fun yes => Bool.noConfusion (test.symm.trans yes)
+    cases n with
+    | zero => rfl
+    | succ n => rw [List.replicate_succ, List.takeWhile_cons, ite_eq_right absent]; rfl
+
 public theorem List.dropWhile_replicate : type_of% @_root_.List.dropWhile_replicate := by
   intro α n a p
-  rw [List.dropWhile_replicate_eq_filter_not, List.filter_replicate]
+  cases test : p a with
+  | true =>
+    induction n with
+    | zero => rfl
+    | succ n ih => rw [List.replicate_succ, List.dropWhile_cons, ite_eq_left test]; exact ih
+  | false =>
+    have absent : ¬ p a := fun yes => Bool.noConfusion (test.symm.trans yes)
+    cases n with
+    | zero => rfl
+    | succ n => rw [List.replicate_succ, List.dropWhile_cons, ite_eq_right absent]; rfl
+
+public theorem List.takeWhile_replicate_eq_filter : type_of% @_root_.List.takeWhile_replicate_eq_filter := by
+  intro α n a p
+  rw [List.takeWhile_replicate, List.filter_replicate]
+
+public theorem List.dropWhile_replicate_eq_filter_not : type_of% @_root_.List.dropWhile_replicate_eq_filter_not := by
+  intro α n a p
+  rw [List.dropWhile_replicate, List.filter_replicate]
   cases p a <;> rfl
 
 public theorem List.replace_takeWhile : type_of% @_root_.List.replace_takeWhile := by
