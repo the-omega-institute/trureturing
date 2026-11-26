@@ -469,6 +469,17 @@ public theorem List.findIdx?_eq_none_iff : type_of% @_root_.List.findIdx?_eq_non
         · exact ih.mp miss x tail
       · exact fun every => ih.mpr (fun x hx => every x (List.mem_cons_of_mem _ hx))
 
+private theorem recoverFinIndex {n : Nat} (o : Option (Fin n)) (indices : Option Nat)
+    (values : indices = o.map Fin.val) (bound : ∀ i, indices = some i → i < n) :
+    o = indices.pmap (fun i hi => ⟨i, bound i hi⟩) (fun _ hi => hi) := by
+  subst indices
+  cases o <;> rfl
+
+public theorem List.findFinIdx?_eq_pmap_findIdx? : type_of% @_root_.List.findFinIdx?_eq_pmap_findIdx? := by
+  intro α xs p
+  exact recoverFinIndex _ _ _root_.List.findIdx?_eq_map_findFinIdx?_val
+    (fun _ hit => (List.findIdx?_eq_some_iff_findIdx_eq.mp hit).1)
+
 public theorem List.findFinIdx?_cons : type_of% @_root_.List.findFinIdx?_cons := by
   intro α p x xs
   apply (Option.map_inj_right (f := Fin.val) (fun _ _ => Fin.eq_of_val_eq)).mp
