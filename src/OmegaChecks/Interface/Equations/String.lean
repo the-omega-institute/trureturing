@@ -11,6 +11,9 @@ import all Init.Data.String.Slice
 import all Init.Data.String.Pattern.Basic
 import all Init.Data.String.Substring
 public import OmegaChecks.InitPort.Alternatives.StringSearch
+public import OmegaChecks.InitPort.Alternatives.StringPattern
+import all OmegaChecks.InitPort.Alternatives.StringPattern
+import all Init.Data.String.Pattern.String
 
 /-! Pointwise agreement of finite slice operations with the official iterator operations. -/
 
@@ -117,5 +120,10 @@ public theorem String.Slice.RevByteIterator.instForInCharOfMonad {m : Type u →
   congr 1
   funext β s b f
   rw [finiteIteratorLoop_eq]
+
+public theorem String.Slice.Pattern.ForwardSliceSearcher.instIteratorLoopIdSearchStep {s : String.Slice} :
+    @OmegaChecks.InitPort.Alternatives.String.Slice.Pattern.ForwardSliceSearcher.instIteratorLoopIdSearchStep s =
+      @_root_.String.Slice.Pattern.ForwardSliceSearcher.instIteratorLoopIdSearchStep s :=
+  finiteIteratorLoop_eq
 
 end OmegaChecks.Interface.Equations

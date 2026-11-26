@@ -3,6 +3,8 @@ import all Init.Data.String.Lemmas.Pattern.String.Basic
 import all Init.Data.String.Lemmas.Pattern.Char
 import all Init.Data.String.Lemmas.Pattern.Pred
 import all Init.Data.String.Pattern.Pred
+import all Init.Data.String.Pattern.String
+import all OmegaChecks.InitPort.Alternatives.FiniteLoop
 public import OmegaChecks.InitPort.Alternatives.StringEncoding
 
 /-! UTF-8 byte comparisons, search traces and character predicate patterns. -/
@@ -226,3 +228,48 @@ public theorem isValidRevSearchFrom_iff_isValidRevSearchFrom_beq :
 end Char
 
 end OmegaChecks.InitPort.Alternatives.String.Slice.Pattern.Model
+
+namespace OmegaChecks.InitPort.Alternatives.String.Slice.Pattern.ForwardSliceSearcher
+
+public theorem finitenessRelation._proof_2 :
+    type_of% (private_decl% @_root_.String.Slice.Pattern.ForwardSliceSearcher.finitenessRelation._proof_2) := by
+  intro s it it' successor
+  obtain ⟨step, next, valid⟩ := successor
+  cases step
+  all_goals try
+    cases next
+    revert valid
+    obtain ⟨state⟩ := it
+    cases state with
+    | emptyBefore pos =>
+      rintro (⟨_, advance⟩ | done)
+      · change Option.lt _ it'.internalState.toOption _
+        rw [advance]
+        exact Prod.Lex.right _ (Nat.zero_lt_succ 0)
+      · change Option.lt _ it'.internalState.toOption _
+        rw [done]
+        exact True.intro
+    | emptyAt pos h =>
+      rintro ⟨newPos, lt, advance⟩
+      change Option.lt _ it'.internalState.toOption _
+      rw [advance]
+      exact Prod.Lex.left _ _ ((_root_.String.Slice.Pos.lt_iff_remainingBytes_lt ..).mp lt)
+    | proper needle table ht stackPos needlePos hn =>
+      rintro (⟨sp, np, _, advance, (lt | ⟨rfl, lt⟩)⟩ | done)
+      · change Option.lt _ it'.internalState.toOption _
+        rw [advance]
+        exact Prod.Lex.left _ _ lt
+      · change Option.lt _ it'.internalState.toOption _
+        rw [advance]
+        exact Prod.Lex.right _ lt
+      · change Option.lt _ it'.internalState.toOption _
+        rw [done]
+        exact True.intro
+    | atEnd => exact False.elim
+  cases next
+
+@[instance_reducible] public noncomputable def instIteratorLoopIdSearchStep :
+    type_of% @_root_.String.Slice.Pattern.ForwardSliceSearcher.instIteratorLoopIdSearchStep :=
+  fun {_} => finiteIteratorLoop
+
+end OmegaChecks.InitPort.Alternatives.String.Slice.Pattern.ForwardSliceSearcher
