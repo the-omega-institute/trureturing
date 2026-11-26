@@ -345,6 +345,95 @@ theorem dneFromOpenRange (range : type_of% (@Std.Rxo.size_pos_iff_lt.{0}))
 theorem excludedMiddleFromDNE (dne : ∀ p : Prop, ¬¬p → p) (p : Prop) : p ∨ ¬p :=
   dne _ fun neither => neither (.inr fun hp => neither (.inl hp))
 
+namespace ClassicalConsequences
+
+theorem ofByCases (cases : type_of% @Classical.byCases) : type_of% @Classical.em :=
+  fun _ => cases Or.inl Or.inr
+
+theorem ofContradiction (dne : type_of% @Classical.byContradiction) : type_of% @Classical.em :=
+  excludedMiddleFromDNE fun _ => dne
+
+theorem ofNotNot (law : type_of% @Classical.not_not) : type_of% @Classical.em :=
+  excludedMiddleFromDNE fun _ => law.mp
+
+private theorem ofDecision {p : Prop} : Decidable p → p ∨ ¬p
+  | .isTrue yes => .inl yes
+  | .isFalse no => .inr no
+
+theorem ofPropDecidable (dec : type_of% @Classical.propDecidable) : type_of% @Classical.em :=
+  fun p => ofDecision (dec p)
+
+theorem ofInhabitedDecision (dec : type_of% @Classical.decidableInhabited) : type_of% @Classical.em :=
+  fun p => ofDecision (dec p).default
+
+theorem ofNonemptyDecision (dec : type_of% @Classical.instNonemptyDecidable) : type_of% @Classical.em :=
+  fun p => (dec p).elim ofDecision
+
+theorem ofDecidableNot (transfer : type_of% @Classical.decidable_of_decidable_not) : type_of% @Classical.em :=
+  excludedMiddleFromDNE fun p nn => match @transfer p (.isFalse nn) with
+    | .isTrue hp => hp
+    | .isFalse np => (nn np).elim
+
+theorem ofNotForall (law : type_of% @Classical.not_forall.{0}) : type_of% @Classical.em :=
+  excludedMiddleFromDNE fun p nn => ((@law p (fun _ => False)).mp nn).elim fun hp _ => hp
+
+theorem ofNotForallNot (law : type_of% @Classical.not_forall_not.{1}) : type_of% @Classical.em :=
+  excludedMiddleFromDNE fun p nn =>
+    ((@law Unit (fun _ => p)).mp (fun denied => nn (denied ()))).elim fun _ hp => hp
+
+theorem ofNotExistsNot (law : type_of% @Classical.not_exists_not.{1}) : type_of% @Classical.em :=
+  excludedMiddleFromDNE fun p nn =>
+    (@law Unit (fun _ => p)).mp (fun ex => ex.elim fun _ np => nn np) ()
+
+theorem ofForallOrExists (law : type_of% @Classical.forall_or_exists_not.{1}) : type_of% @Classical.em :=
+  fun p => (@law Unit (fun _ => p)).elim (fun all => .inl (all ())) (fun ex => ex.elim fun _ np => .inr np)
+
+theorem ofExistsOrForall (law : type_of% @Classical.exists_or_forall_not.{1}) : type_of% @Classical.em :=
+  fun p => (@law Unit (fun _ => p)).elim (fun ex => ex.elim fun _ hp => .inl hp) (fun none => .inr (none ()))
+
+theorem ofOrImpLeft (law : type_of% @Classical.or_iff_not_imp_left) : type_of% @Classical.em :=
+  fun p => (@law p (¬p)).mpr id
+
+theorem ofOrImpRight (law : type_of% @Classical.or_iff_not_imp_right) : type_of% @Classical.em :=
+  fun p => ((@law (¬p) p).mpr id).elim Or.inr Or.inl
+
+theorem ofNotImp (law : type_of% @Classical.not_imp) : type_of% @Classical.em :=
+  excludedMiddleFromDNE fun p nn => ((@law p False).mp nn).1
+
+theorem ofNotIff (law : type_of% @Classical.not_iff) : type_of% @Classical.em :=
+  excludedMiddleFromDNE fun p nn =>
+    ((@law False p).mp (fun equiv => nn equiv.mpr)).mp id
+
+theorem ofImpLeft (law : type_of% @Classical.imp_iff_left_iff) : type_of% @Classical.em :=
+  fun p => (@law (¬p) p).mp ⟨fun np _ => np, fun both hp => both hp hp⟩
+
+theorem ofImpRight (law : type_of% @Classical.imp_iff_right_iff) : type_of% @Classical.em :=
+  fun p => (@law p (¬p)).mp ⟨fun both hp => both hp hp, fun np _ => np⟩
+
+theorem ofAndOrImp (law : type_of% @Classical.and_or_imp) : type_of% @Classical.em :=
+  fun p => ((@law p True False).mpr (fun _ => .inl trivial)).elim (fun yes => .inl yes.1) Or.inr
+
+theorem ofTwoImplications (law : type_of% @Classical.imp_and_neg_imp_iff) : type_of% @Classical.em :=
+  fun p => (law p).mp ⟨Or.inl, Or.inr⟩
+
+theorem ofExcludedMiddle (law : type_of% @Classical.em) : type_of% @Classical.em := law
+
+/-- Names are paired with reductions so the gap report and the fresh replay use the same witnesses. -/
+def witnesses : List (Name × Name) := [
+  (``Classical.byCases, ``ofByCases), (``Classical.byContradiction, ``ofContradiction),
+  (``Classical.not_not, ``ofNotNot), (``Classical.propDecidable, ``ofPropDecidable),
+  (``Classical.decidableInhabited, ``ofInhabitedDecision), (``Classical.instNonemptyDecidable, ``ofNonemptyDecision),
+  (``Classical.decidable_of_decidable_not, ``ofDecidableNot), (``Classical.not_forall, ``ofNotForall),
+  (``Classical.not_forall_not, ``ofNotForallNot), (``Classical.not_exists_not, ``ofNotExistsNot),
+  (``Classical.forall_or_exists_not, ``ofForallOrExists), (``Classical.exists_or_forall_not, ``ofExistsOrForall),
+  (``Classical.or_iff_not_imp_left, ``ofOrImpLeft), (``Classical.or_iff_not_imp_right, ``ofOrImpRight),
+  (``Classical.not_imp, ``ofNotImp), (``Classical.not_imp_iff_and_not, ``ofNotImp),
+  (``Classical.not_iff, ``ofNotIff), (``Classical.imp_iff_left_iff, ``ofImpLeft),
+  (``Classical.imp_iff_right_iff, ``ofImpRight), (``Classical.and_or_imp, ``ofAndOrImp),
+  (``Classical.imp_and_neg_imp_iff, ``ofTwoImplications), (``Classical.em, ``ofExcludedMiddle)]
+
+end ClassicalConsequences
+
 namespace LexicographicOrder
 
 /-- Lexicographic comparison of one-element sequences can represent any proposition. -/
@@ -929,6 +1018,7 @@ private def replayWitnesses (env : Environment) : IO Unit := do
   let official ← importModules #[{module := `Lean}] {} (level := .private)
   let mut terms : Std.HashMap Name ConstantInfo := {}
   let mut todo := (reductions.map fun (_, _, _, witness) => witness) ++
+    ClassicalConsequences.witnesses.map Prod.snd ++
     [``LexicographicOrder.ofListNotLE, ``LexicographicOrder.ofArrayNotLE, ``LexicographicOrder.ofVectorNotLE,
       ``FiniteMembership.ofRunDecomposition, ``FiniteMembership.ofRunInduction,
       ``FiniteMembership.ofListMember, ``FiniteMembership.ofArrayMember,
@@ -2482,6 +2572,9 @@ private def logicalConsequence? (owner name : Name) : Option (Name × Name) := d
     return (`OmegaChecks.InitInventory.StringPatterns.WeakExcludedMiddle,
       `OmegaChecks.InitInventory.StringPatterns.weakExcludedMiddleOfRevMatchAtNone)
   | _, _ => pure ()
+  if owner == `Init.Classical then
+    if let some witness := OmegaChecks.InitBoundaries.ClassicalConsequences.witnesses.lookup name then
+      return (``Classical.em, witness)
   let witness ← match owner, name with
     | `Init.Data.List.Lex, ``List.not_le | `Init.Data.List.Lex, `List.not_le_iff_gt =>
       some ``OmegaChecks.InitBoundaries.LexicographicOrder.ofListNotLE
