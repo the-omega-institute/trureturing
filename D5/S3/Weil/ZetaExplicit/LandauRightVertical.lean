@@ -280,7 +280,8 @@ theorem norm_right_vertical_integral {x V : ℝ} (hx : 1 < x) (hV : 1 < V) :
     let c := 1 + (Real.log (3 * x))⁻¹
     ‖∫ t in 1..V, (x : ℂ) ^ ((c : ℂ) + (t : ℂ) * I) *
       (- deriv riemannZeta ((c : ℂ) + (t : ℂ) * I) / riemannZeta ((c : ℂ) + (t : ℂ) * I))‖ ≤
-        400 * (V * Real.log (2 * x) + x * (Real.log (2 * x))^2) := by
+        let logHeight := Real.log
+        400 * (V * logHeight (2 * x) + x * (logHeight (2 * x))^2) := by
   let c := 1 + (Real.log (3 * x))⁻¹
   let k := (round x).toNat
   let N := ⌊2 * x⌋₊
