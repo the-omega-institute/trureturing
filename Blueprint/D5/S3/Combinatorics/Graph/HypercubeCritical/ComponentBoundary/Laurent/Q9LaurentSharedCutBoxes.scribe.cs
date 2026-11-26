@@ -9,7 +9,7 @@ internal sealed class Q9LaurentSharedCutBoxesDocument : IScribeDocumentDefinitio
     private const string Owner = Boundary + "Q9LaurentSharedCutBoxes.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "The common height and odd incidence of transverse boxes determine their cut.",
+        "A family of balanced transverse cut boxes connected by overlaps has a common center and a single unordered cut if the boxes share an integer height with the stated offset law and each occupied point has odd multiplicity.",
         H("Rigidity of transverse cut boxes"),
         Blocks(
             Describe.Lean(
@@ -24,14 +24,14 @@ internal sealed class Q9LaurentSharedCutBoxesDocument : IScribeDocumentDefinitio
                 DeclarationHandle.Create(Owner + "same_cut_of_connected_odd_box_fibers"),
                 H("Odd incidence determines the unordered cut"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("Overlaps propagate the center. The Hamming distance between the cut membership signatures of two axes counts the boxes containing the corresponding translated pair. Distinct signatures therefore have opposite parity, which forces all nonconstant cuts to separate the same pairs."))),
+                Blocks(Paragraph(Text("Assume the cut boxes are balanced and any two are linked by a chain of overlaps, all boxes share an integer height with the stated offset law, and each occupied point lies in an odd number of boxes. The overlap chains propagate a common center throughout the family. The Hamming distance between the cut membership signatures of two axes counts the boxes containing the corresponding translated pair. Distinct signatures therefore have opposite parity, which forces all nonconstant cuts to separate the same pairs."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("q9-shared-cut-actual-stars"),
                 DeclarationHandle.Create(Owner + "same_cut_of_realized_common_star_boxes"),
                 H("Common stars give odd fibers in the quotient"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("Assume every transverse component projects to a balanced cut box, the boxes share an integer height with the stated offset law, and each two-step move stays in its component or preserves the projection. Each occupied point then lies in exactly three boxes indexed by distinct transverse components. The three leaves of a common star differ in the deleted coordinates, which are fixed within a component. This supplies the odd incidence needed to treat the common-block branch of the Laurent approach to Hong, Wu and Xia’s Problem 2."))),
+                Blocks(Paragraph(Text("Assume the common-star cover induces a connected subgraph of the nine-dimensional cube and the encoded projection of each transverse component is exactly the point set of its balanced cut box. The boxes share an integer height with the stated offset law, and each two-step move between side vertices stays in its component or preserves the projection. These moves connect the family of boxes by overlaps. Each occupied point then lies in exactly three boxes indexed by distinct transverse components. The three leaves of a common star differ in the deleted coordinates, which are fixed within a component. This supplies the odd incidence needed to treat the common-block branch of the Laurent approach to Hong, Wu and Xia’s Problem 2."))),
                 DescribeRole.Theorem)),
         [DocumentEdge.Dependency.Create(GidRef.Create(Boundary + "Q9LaurentTransverseFibers"))]));
 }

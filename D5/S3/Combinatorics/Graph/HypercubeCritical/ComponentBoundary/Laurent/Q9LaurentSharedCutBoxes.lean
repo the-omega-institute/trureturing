@@ -6,6 +6,7 @@
    utility: none
    digest: Odd multiplicities and common integer height force one balanced cut in a connected family of transverse boxes. -/
 
+import D5.S3.Combinatorics.Graph.HereditaryFlip.Metric
 import D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Laurent.Q9LaurentTransverseFibers
 import Mathlib.Data.Finset.SymmDiff
 import Mathlib.Tactic.Tauto
@@ -258,36 +259,7 @@ namespace D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary
 open Finset
 open scoped symmDiff
 
-private theorem card_add_card_eq_card_symmDiff_add_twice_inter {ι : Type*}
-    [DecidableEq ι] (A B : Finset ι) :
-    A.card + B.card = (A ∆ B).card + 2 * (A ∩ B).card := by
-  have hdis : Disjoint (A \ B) (B \ A) := by
-    apply disjoint_left.mpr
-    intro i hi hj
-    exact (mem_sdiff.mp hi).2 (mem_sdiff.mp hj).1
-  rw [Finset.symmDiff_def, card_union_of_disjoint hdis]
-  have hA := card_sdiff_add_card_inter A B
-  have hB := card_sdiff_add_card_inter B A
-  rw [inter_comm B A] at hB
-  omega
-
-/-- Pairwise odd symmetric differences separate a finite family of
-membership signatures into at most two signatures. The separating map is
-cardinality modulo two. -/
-theorem card_le_two_of_odd_symmDiff {ι : Type*} [DecidableEq ι] (F : Finset (Finset ι))
-    (h : ∀ A ∈ F, ∀ B ∈ F, A ≠ B → (A ∆ B).card % 2 = 1) : F.card ≤ 2 := by
-  let parity (A : Finset ι) : Fin 2 := ⟨A.card % 2, Nat.mod_lt _ (by decide)⟩
-  have hInj : (F : Set (Finset ι)).InjOn parity := by
-    intro A hA B hB heq
-    by_contra hne
-    have hParity := congrArg Fin.val heq
-    change A.card % 2 = B.card % 2 at hParity
-    have hOdd := h A hA B hB hne
-    have hsum := card_add_card_eq_card_symmDiff_add_twice_inter A B
-    omega
-  have hcard := card_le_card_of_injOn parity
-    (t := (univ : Finset (Fin 2))) (fun _ _ => mem_univ _) hInj
-  simpa only [card_univ, Fintype.card_fin] using hcard
+open D5.S3.Combinatorics.Graph.HereditaryFlip.Metric (card_symmDiff_eq)
 
 open scoped Classical in
 /-- If every separated pair is cut an odd number of times, all nonconstant
@@ -310,7 +282,7 @@ theorem same_separation_of_odd_cut_multiplicity {α ι : Type*} [Fintype ι]
       cases cut k u <;> cases cut k v <;> decide
     have hmult := hodd u v (hdiff ▸ Finset.symmDiff_nonempty.mpr hne)
     rw [← hdiff] at hmult
-    have hsum := card_add_card_eq_card_symmDiff_add_twice_inter (code u) (code v)
+    have hsum := card_symmDiff_eq (code u) (code v)
     change (code u).card % 2 = (code v).card % 2 at hp
     omega
   have same (k : ι) {u v : α} (h : parity u = parity v) : cut k u = cut k v := by
@@ -410,10 +382,8 @@ open BalancedCriticalSpectrum (Q)
 open D5.S3.Combinatorics.Graph.Hypercube (hypercube)
 open Q9LaurentCommonTriple (Axes inside outside commonAxes UniqueCommonNeighbor fiber star)
 open Q9LaurentGainPartition (Side)
-open private mem_transverseSide from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Laurent.Q9LaurentTransverseFibers
-open private star_card from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Laurent.Q9LaurentCommonTriple
+
+open Q9LaurentCommonTriple (star_card)
 
 private theorem eq_of_charts {e : Axes} {x y : Q 9}
     (hi : inside e x = inside e y) (ho : outside e x = outside e y) :
