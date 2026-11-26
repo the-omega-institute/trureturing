@@ -11,6 +11,7 @@ strata_touched:
   - D5/S3/Quantum/Divergence/CompleteHockeyStickRefutation
   - D5/S3/Quantum/Divergence/CompleteHockeyStickBasisSupport
   - D5/S3/Quantum/Divergence/CompleteHockeyStickChoiSupport
+  - D5/S3/Quantum/Divergence/CompleteHockeyStickChoiConverse
   - D5/S3/Quantum/Divergence/FaithfulConditionalGap
   - D5/S3/Quantum/Divergence/UmegakiChannelSupportedExtension
   - D5/S3/Quantum/Divergence/UmegakiSupportedMoorePenrose
@@ -106,12 +107,29 @@ the Umegaki criterion for finite classical-input channels and provides the
 simplex mechanism used in the basis-support step.
 [Eriksson, v3](https://airr.science/papers/ARR-2026-564FZ70CSN83KACD/versions/v3/)
 
-The positive Doeblin bound in George, Hirche, Nuradha and Wilde,
+The exhibited positive-weight bound in George, Hirche, Nuradha and Wilde,
 *Quantum Doeblin Coefficients: Interpretations and Applications*, v3,
-Definition 7 and Proposition 31, supplies the complementary literature
-bound for channels with a positive replacement component. Their §9.2
+Proposition 31, gives an upper bound of $1-p$ for a channel with a
+replacement component of weight $p$ at every $\gamma\ge 1$. Their §9.2
 Question 1 concerns the bound using the Hermitian Doeblin coefficient.
 [arXiv:2503.22823v3](https://arxiv.org/abs/2503.22823v3)
+
+`CompleteHockeyStickChoiConverse.exists_replacement_of_choi_support`
+constructs a pure replacement of weight $0<p<1$ and a finite CPTP residual
+whenever the normalized Choi support contains every reference basis slice
+over a common nonzero output vector. The construction bounds the Gram
+matrix of slice preimages under the positive Choi square root, subtracts
+the weighted replacement Choi matrix, and normalizes the positive residual.
+Trace preservation gives Kraus completeness for the residual and hence
+the channel decomposition on all input matrices.
+
+`CompleteHockeyStickChoiConverse.coefficient_lt_one_of_choi_support`
+applies Proposition 31's exhibited-weight bound for every $\gamma\ge 1$.
+`CompleteHockeyStickChoiConverse.coefficient_lt_one_iff` combines this
+implication with Choi support saturation. For every finite CPTP channel
+with nonempty input and each fixed $\gamma>1$, the complete coefficient
+is strictly below one exactly when the full reference slice condition holds.
+Both branches use the static Choi matrix of the channel.
 
 ## Faithful-divergence separation
 
