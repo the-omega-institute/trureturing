@@ -364,13 +364,14 @@ public theorem Dyadic.toRat_inj : type_of% @_root_.Dyadic.toRat_inj := by
     exact rounded
   · exact congrArg _root_.Dyadic.toRat
 
+private theorem shiftLeft_mul_zpow (num : Int) (d : Nat) (k e : Int) (aligned : (d : Int) + -k = -e) :
+    ((num <<< d : Int) : Rat) * (2 : Rat) ^ (-k) = (num : Rat) * 2 ^ (-e) := by
+  rw [_root_.Int.shiftLeft_eq, Rat.intCast_mul, Rat.intCast_pow, Rat.mul_assoc]
+  change (num : Rat) * ((2 : Rat) ^ (d : Int) * 2 ^ (-k)) = _
+  rw [← Rat.zpow_add (by decide : (2 : Rat) ≠ 0), aligned]
+
 public theorem Dyadic.toRat_add : type_of% @_root_.Dyadic.toRat_add := by
   intro x y
-  have shift (num : Int) (d : Nat) (k e : Int) (aligned : (d : Int) + -k = -e) :
-      ((num <<< d : Int) : Rat) * (2 : Rat) ^ (-k) = (num : Rat) * 2 ^ (-e) := by
-    rw [_root_.Int.shiftLeft_eq, Rat.intCast_mul, Rat.intCast_pow, Rat.mul_assoc]
-    change (num : Rat) * ((2 : Rat) ^ (d : Int) * 2 ^ (-k)) = _
-    rw [← Rat.zpow_add (by decide : (2 : Rat) ≠ 0), aligned]
   cases x with
   | zero => exact (Rat.zero_add _).symm
   | ofOdd a k ha =>
@@ -387,14 +388,52 @@ public theorem Dyadic.toRat_add : type_of% @_root_.Dyadic.toRat_add := by
       · rename_i d eq
         rw [_root_.Dyadic.toRat_ofOdd_eq_mul_two_pow, Rat.intCast_add, Rat.add_mul]
         apply congrArg ((a : Rat) * 2 ^ (-k) + ·)
-        apply shift
+        apply shiftLeft_mul_zpow
         change Int.ofNat d.succ + -k = -e
         rw [← eq]
         omega
       · rename_i d eq
         rw [_root_.Dyadic.toRat_ofOdd_eq_mul_two_pow, Rat.intCast_add, Rat.add_mul]
         apply congrArg (· + (b : Rat) * 2 ^ (-e))
-        apply shift
+        apply shiftLeft_mul_zpow
         omega
+
+public theorem Dyadic.blt_iff_toRat : type_of% @_root_.Dyadic.blt_iff_toRat := by
+  intro x y
+  have pos (k : Int) : (0 : Rat) < 2 ^ k := Rat.zpow_pos (by decide)
+  have dec (a b : Int) : decide (a < b) = true ↔ a < b := ⟨of_decide_eq_true, decide_eq_true⟩
+  cases x with
+  | zero =>
+    cases y with
+    | zero => decide
+    | ofOdd b e hb =>
+      rw [_root_.Dyadic.toRat_ofOdd_eq_mul_two_pow]
+      change decide (0 < b) = true ↔ (0 : Rat) < b * 2 ^ (-e)
+      exact (dec 0 b).trans (_root_.Rat.intCast_pos.symm.trans (Rat.mul_pos_iff_of_pos_right (pos _)).symm)
+  | ofOdd a k ha =>
+    cases y with
+    | zero =>
+      rw [_root_.Dyadic.toRat_ofOdd_eq_mul_two_pow]
+      change decide (a < 0) = true ↔ (a : Rat) * 2 ^ (-k) < 0
+      exact (dec a 0).trans (_root_.Rat.intCast_neg_iff.symm.trans (Rat.mul_neg_iff_of_pos_right (pos _)).symm)
+    | ofOdd b e hb =>
+      rw [_root_.Dyadic.blt, _root_.Dyadic.toRat_ofOdd_eq_mul_two_pow, _root_.Dyadic.toRat_ofOdd_eq_mul_two_pow]
+      split
+      · rename_i d h
+        have aligned : (d : Int) + -e = -k := by
+          change Int.ofNat d + -e = -k
+          rw [← h]
+          omega
+        rw [← shiftLeft_mul_zpow a d e k aligned]
+        exact (dec _ _).trans (Rat.intCast_lt_intCast.symm.trans (Rat.mul_lt_mul_right (pos _)).symm)
+      · rename_i d h
+        have aligned : ((d+1 : Nat) : Int) + -k = -e := by omega
+        rw [← shiftLeft_mul_zpow b (d+1) k e aligned]
+        exact (dec _ _).trans (Rat.intCast_lt_intCast.symm.trans (Rat.mul_lt_mul_right (pos _)).symm)
+
+public theorem Dyadic.ble_iff_toRat : type_of% @_root_.Dyadic.ble_iff_toRat := by
+  intro x y
+  exact (_root_.Dyadic.blt_eq_false_iff (x := y) (y := x)).symm.trans
+    (Bool.eq_false_iff.trans ((not_congr (Dyadic.blt_iff_toRat (x := y) (y := x))).trans Rat.not_lt))
 
 end OmegaChecks.InitPort.Alternatives
