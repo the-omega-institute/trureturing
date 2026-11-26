@@ -240,9 +240,6 @@ public theorem String.Pos.isValidUTF8_extract : type_of% @_root_.String.Pos.isVa
   · rw [ByteArray.extract_eq_empty_iff.2 (Nat.le_trans (Nat.min_le_left ..) (Nat.le_of_not_le h))]
     exact ByteArray.isValidUTF8_empty
 
-@[expose] public def String.Internal.toArray (s : String) : Array Char :=
-  s.toByteArray.utf8Decode?.getD #[]
-
 private theorem same_decode (a b : ByteArray) (i j : Nat)
     (bound : ∀ k, i + k < a.size ↔ j + k < b.size)
     (byte : ∀ k (hi : i + k < a.size) (hj : j + k < b.size), a[i + k] = b[j + k]) :
@@ -410,6 +407,77 @@ public theorem ByteArray.utf8Decode?go_eq_utf8Decode?go_extract :
     i 0 hi (Nat.zero_le _) acc #[] (Nat.le_refl _) (_root_.ByteArray.extract_zero_size.symm)
   rw [Array.append_empty] at same
   exact same
+
+public theorem ByteArray.utf8Decode?_utf8Encode_singleton_append :
+    type_of% @_root_.ByteArray.utf8Decode?_utf8Encode_singleton_append := by
+  intro tail c
+  let b := [c].utf8Encode ++ tail
+  have hsize : [c].utf8Encode.size = c.utf8Size := by
+    rw [List.utf8Encode_singleton, List.size_toByteArray, _root_.String.length_utf8EncodeChar]
+  have first : b.utf8DecodeChar? 0 = some c := _root_.List.utf8DecodeChar?_utf8Encode_singleton_append
+  have fits := _root_.ByteArray.le_size_of_utf8DecodeChar?_eq_some first
+  have hpos : 0 < b.size := Nat.lt_of_lt_of_le c.utf8Size_pos (by simpa only [Nat.zero_add] using fits)
+  show b.utf8Decode? = _
+  unfold _root_.ByteArray.utf8Decode?
+  rw [_root_.ByteArray.utf8Decode?.go.eq_1 b, ite_eq_left hpos]
+  split
+  · rename_i noneEq
+    cases noneEq.symm.trans first
+  · rename_i d someEq
+    cases Option.some.inj (someEq.symm.trans first)
+    have rest : b.extract (0 + c.utf8Size) b.size = tail.extract 0 tail.size := by
+      rw [_root_.ByteArray.extract_zero_size, Nat.zero_add]
+      exact _root_.ByteArray.extract_append_eq_right hsize.symm _root_.ByteArray.size_append
+    have same := decode_same_suffix (b.size - (0 + c.utf8Size)) (a := b) (b := tail)
+      (0 + c.utf8Size) 0 fits (Nat.zero_le _) #[c] #[] (Nat.le_refl _) rest
+    rw [Array.append_empty] at same
+    exact same
+
+private theorem decode_encoded_tail (xs : List Char) {b : ByteArray} (i : Nat) (hi : i ≤ b.size)
+    (acc : Array Char) (suffix : b.extract i b.size = xs.utf8Encode) :
+    ByteArray.utf8Decode?.go b i acc hi = some (acc.toList ++ xs).toArray := by
+  have measured : (b.extract i b.size).size = b.size - i :=
+    ByteArray.size_extract.trans (congrArg (· - i) (Nat.min_self _))
+  induction xs generalizing i acc with
+  | nil =>
+    have stop : b.size - i = 0 := measured.symm.trans (congrArg ByteArray.size suffix)
+    rw [ByteArray.utf8Decode?.go.eq_1, ite_eq_right (Nat.not_lt_of_ge (Nat.le_of_sub_eq_zero stop)),
+      List.append_nil, Array.toArray_toList]
+  | cons c xs ih =>
+    have headSize : [c].utf8Encode.size = c.utf8Size := by
+      rw [List.utf8Encode_singleton, List.size_toByteArray, String.length_utf8EncodeChar]
+    have code : b.utf8DecodeChar? i = some c := by
+      rw [_root_.ByteArray.utf8DecodeChar?_eq_utf8DecodeChar?_extract, suffix,
+        List.utf8DecodeChar?_utf8Encode_cons]
+    have next := ByteArray.le_size_of_utf8DecodeChar?_eq_some code
+    have hpos : i < b.size :=
+      Nat.lt_of_lt_of_le (Nat.lt_add_of_pos_right c.utf8Size_pos) next
+    have rest : b.extract (i + c.utf8Size) b.size = xs.utf8Encode := calc
+      _ = (b.extract i b.size).extract c.utf8Size (b.extract i b.size).size := by
+        rw [ByteArray.extract_extract, measured, Nat.add_sub_of_le hi, Nat.min_self]
+      _ = _ := by
+        rw [suffix, List.utf8Encode_cons, ByteArray.extract_append_eq_right headSize.symm]
+        exact ByteArray.size_append
+    rw [ByteArray.utf8Decode?.go.eq_1, ite_eq_left hpos]
+    split
+    · rename_i failed
+      cases failed.symm.trans code
+    · rename_i d got
+      cases Option.some.inj (got.symm.trans code)
+      rw [ih _ next (acc.push c) rest (ByteArray.size_extract.trans
+        (congrArg (· - _) (Nat.min_self _))), Array.toList_push, List.append_assoc]
+      rfl
+
+public theorem List.utf8Decode?_utf8Encode : type_of% @_root_.List.utf8Decode?_utf8Encode := by
+  intro l
+  exact decode_encoded_tail l 0 (Nat.zero_le _) #[] ByteArray.extract_zero_size
+
+public theorem String.Internal.toArray._proof_1 :
+    type_of% (private_decl% @_root_.String.Internal.toArray._proof_1) := by
+  intro s
+  obtain ⟨l, h⟩ := s.isValidUTF8
+  rw [h, _root_.List.utf8Decode?_utf8Encode]
+  rfl
 
 public theorem Nat.two_pow_add_eq_or_of_lt : type_of% @_root_.Nat.two_pow_add_eq_or_of_lt := by
   intro i b small a
