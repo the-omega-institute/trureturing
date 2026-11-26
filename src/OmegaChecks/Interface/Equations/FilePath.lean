@@ -5,6 +5,9 @@ import all OmegaChecks.Interface.Equations.Collect
 import all OmegaChecks.InitPort.Alternatives.FiniteLoop
 import all Init.Data.String.Search
 import all Init.System.FilePath
+import all Init.Data.String.Iter.Basic
+import all Init.Data.Iterators.Consumers.Total
+import all Init.Data.Iterators.Consumers.Collect
 import Init.Data.String.Lemmas.Pattern.Char
 import all Init.Data.String.Pattern.Char
 import all Init.Data.String.Pattern.Pred
@@ -52,5 +55,10 @@ public theorem System.FilePath.extension (p : FilePath) :
   simp only [_root_.String.revFind?, _root_.String.Slice.revFind?_char_eq_revFind?_beq]
   generalize ((fname.toSlice.revFind? (· == '.')).map String.Pos.ofToSlice |>.map String.Pos.offset) = pos
   rcases pos with _ | ⟨_ | _⟩ <;> rfl
+
+public theorem System.FilePath.components (p : FilePath) :
+    OmegaChecks.InitPort.Alternatives.System.FilePath.components p = p.components := by
+  unfold OmegaChecks.InitPort.Alternatives.System.FilePath.components _root_.System.FilePath.components
+  rfl
 
 end OmegaChecks.Interface.Equations

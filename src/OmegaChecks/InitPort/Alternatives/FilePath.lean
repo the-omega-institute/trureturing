@@ -6,6 +6,9 @@ Authors: Leonardo de Moura, Sebastian Ullrich
 module
 public import Init.System.FilePath
 import all Init.System.FilePath
+import Init.Data.Iterators.Consumers.Total
+import Init.Data.String.Iter
+import Init.Data.String.Pattern.String
 import all OmegaChecks.InitPort.Alternatives.FiniteLoop
 import Init.Data.String.Pattern.Char
 import Init.Data.String.Pattern.Pred
@@ -48,5 +51,8 @@ public noncomputable def extension (p : FilePath) : Option String :=
     | some 0 => none
     | some pos => some (String.Pos.Raw.extract fname (pos + '.') fname.rawEndPos)
     | none => none
+
+public noncomputable def components (p : FilePath) : List String :=
+  ((p.normalize.toString.split pathSeparator.toString).map ToString.toString).ensureTermination.toList
 
 end OmegaChecks.InitPort.Alternatives.System.FilePath
