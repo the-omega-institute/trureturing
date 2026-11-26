@@ -33,7 +33,9 @@ internal sealed class HardinA235291RecurrenceDocument : IScribeDocumentDefinitio
                     + "Thus (X²−6)(X²−8) annihilates the transfer after the first step, for "
                     + "arbitrary terminal weights. Taking unit terminal weights and summing over "
                     + "first rows gives the signed recurrence for the number of arrays."))),
-            DescribeRole.Theorem))));
+            DescribeRole.Theorem,
+            new OpenProblemResolutionClaim(
+                ProblemSlugRef.Create("hardin-a235291-two-column-recurrence"), ResolutionKind.Proved)))));
 
     private static Formula Recurrence()
     {
