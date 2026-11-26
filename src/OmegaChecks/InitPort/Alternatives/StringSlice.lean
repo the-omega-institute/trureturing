@@ -1,5 +1,6 @@
 module
 import all Init.Data.String.Basic
+import all Init.Data.String.FindPos
 import all Init.Data.String.Defs
 public import OmegaChecks.InitPort.Alternatives.StringEncoding
 
@@ -186,5 +187,20 @@ public theorem String.Pos.Raw.isValidForSlice_eq_true_iff :
   split <;> rename_i h
   · exact boundaryCheck _ h
   · exact outsideCheck h
+
+public theorem String.Slice.Pos.isUTF8FirstByte_byte :
+    type_of% @_root_.String.Slice.Pos.isUTF8FirstByte_byte := by
+  intro s pos ne
+  obtain atEnd | ⟨_, first⟩ := String.Pos.Raw.isValidForSlice_iff_isUTF8FirstByte.mp pos.isValidForSlice
+  · exact (ne (String.Slice.Pos.ext atEnd)).elim
+  · exact first
+
+public theorem String.Slice.posLE._proof_1 : type_of% @_root_.String.Slice.posLE._proof_1 := by
+  rintro s off invalid rfl
+  exact invalid s.startPos.isValidForSlice
+
+public theorem String.Slice.posLE._proof_2 : type_of% @_root_.String.Slice.posLE._proof_2 := by
+  intro off ne
+  exact Nat.sub_lt (Nat.pos_of_ne_zero (fun eq => ne (String.Pos.Raw.ext eq))) (by decide)
 
 end OmegaChecks.InitPort.Alternatives

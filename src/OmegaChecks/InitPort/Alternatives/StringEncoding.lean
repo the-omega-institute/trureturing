@@ -20,6 +20,18 @@ public theorem BitVec.extractLsb'_append_eq_left : type_of% @_root_.BitVec.extra
   rw [BitVec.extractLsb'_toNat, BitVec.toNat_append, Nat.shiftRight_or_distrib,
     Nat.shiftLeft_shiftRight, Nat.shiftRight_eq_zero _ _ b.isLt, Nat.or_zero, Nat.mod_eq_of_lt a.isLt]
 
+public theorem BitVec.extractLsb'_append_eq_of_le :
+    type_of% @_root_.BitVec.extractLsb'_append_eq_of_le := by
+  intro v w hi lo start len bound
+  apply BitVec.toNat_inj.mp
+  rw [BitVec.extractLsb'_toNat, BitVec.extractLsb'_toNat, BitVec.toNat_append]
+  have high : (hi.toNat <<< w ||| lo.toNat) >>> w = hi.toNat := by
+    rw [Nat.shiftRight_or_distrib, Nat.shiftLeft_shiftRight, Nat.shiftRight_eq_zero _ _ lo.isLt, Nat.or_zero]
+  have offset : start = w + (start - w) := (Nat.add_sub_of_le bound).symm
+  exact congrArg (fun n => n % 2 ^ len)
+    (((congrArg (fun pos => (hi.toNat <<< w ||| lo.toNat) >>> pos) offset).trans (Nat.shiftRight_add ..)).trans
+      (congrArg (· >>> (start - w)) high))
+
 public theorem Nat.testBit_mod_two_pow : type_of% @_root_.Nat.testBit_mod_two_pow := by
   intro x j i
   by_cases lt : i < j
