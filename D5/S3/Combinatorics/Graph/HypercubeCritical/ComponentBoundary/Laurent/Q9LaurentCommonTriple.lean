@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Graph/HypercubeCritical/ComponentBoundary/Laurent/Q9LaurentCommonTriple
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/module/Mathlib.Algebra.BigOperators.Group.Finset.Basic]
+   anchors: [mathlib/module/Mathlib.Algebra.Order.BigOperators.Group.Finset]
    utility: none
    digest: A shared Laurent direction triple forces three-point fibers and descends the complementary integer height. -/
 
