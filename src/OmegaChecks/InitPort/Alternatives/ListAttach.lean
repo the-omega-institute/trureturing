@@ -147,4 +147,25 @@ public theorem List.unattach_flatten : type_of% @_root_.List.unattach_flatten :=
     change (a ++ as.flatten).map Subtype.val = a.unattach ++ (as.map _root_.List.unattach).flatten
     exact (_root_.List.map_append ..).trans (congrArg (a.unattach ++ ·) ih)
 
+private theorem pbindAtSome {p : α → Prop} {o : Option α} {a : α}
+    (eq : o = some a) (H : ∀ x, o = some x → p x) :
+    o.pbind (fun x e => some (⟨x, H x e⟩ : Subtype p)) = some ⟨a, H a eq⟩ := by
+  cases eq
+  rfl
+
+public theorem List.getLast?_attachWith : type_of% @_root_.List.getLast?_attachWith := by
+  intro α p xs H
+  cases xs with
+  | nil => rfl
+  | cons a as =>
+    let h : (a :: as).attachWith p H ≠ [] := by intros h; cases h
+    have left := (_root_.List.getLast?_eq_some_getLast h)
+    have right := (_root_.List.getLast?_eq_some_getLast (l := a :: as) (by intros h; cases h))
+    rw [left, _root_.List.getLast_attachWith]
+    exact (pbindAtSome right (fun x e => H x (_root_.List.mem_of_getLast? e))).symm
+
+public theorem List.getLast?_attach : type_of% @_root_.List.getLast?_attach := by
+  intro α xs
+  exact List.getLast?_attachWith
+
 end OmegaChecks.InitPort.Alternatives
