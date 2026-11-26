@@ -1046,4 +1046,88 @@ public theorem Std.Iter.unattach_toList_attachWith {α β : Type w} {P : β → 
       Std.Iter.Total.toList it.ensureTermination := by
   exact collectAttach it.toIterM (fun out h => hP out (Iter.isPlausibleIndirectOutput_iff_isPlausibleIndirectOutput_toIterM.mpr h))
 
+section FlatMapOutput
+
+local macro "outputs[" it:term "]" : term => `(Std.Iter.Total.toList (Iter.ensureTermination $it))
+
+private theorem innerOutputs {α α₂ β γ : Type w} [Iterator α Id β] [Iterator α₂ Id γ]
+    [Finite α Id] [Finite α₂ Id] (f : β → Iter (α := α₂) γ) (outer : Iter (α := α) β)
+    (inner : Iter (α := α₂) γ) :
+    outputs[outer.flatMapAfter f (some inner)] = outputs[inner] ++ outputs[outer.flatMapAfter f none] := by
+  induction inner using _root_.Std.Iter.inductSteps with
+  | step i ihy ihs =>
+    rw [Std.Iter.toList_eq_match_step (it := outer.flatMapAfter f (some i)),
+      Std.Iter.toList_eq_match_step (it := i), Std.Iter.step_flatMapAfter]
+    dsimp only
+    cases i.step using PlausibleIterStep.casesOn with
+    | yield next out h => exact congrArg (List.cons out) (ihy h)
+    | skip next h => exact ihs h
+    | done h => rfl
+
+public theorem Std.Iter.toList_flatMapAfter {α α₂ β γ : Type w} [Iterator α Id β] [Iterator α₂ Id γ]
+    [Finite α Id] [Finite α₂ Id] {f : β → Iter (α := α₂) γ} {it₁ : Iter (α := α) β}
+    {it₂ : Option (Iter (α := α₂) γ)} :
+    outputs[it₁.flatMapAfter f it₂] = Option.casesOn it₂
+      outputs[it₁.map fun b => outputs[f b]].flatten
+      (fun inner => outputs[inner] ++ outputs[it₁.map fun b => outputs[f b]].flatten) := by
+  have emptyInner (it : Iter (α := α) β) :
+      outputs[it.flatMapAfter f none] = outputs[it.map fun b => outputs[f b]].flatten := by
+    induction it using _root_.Std.Iter.inductSteps with
+    | step i ihy ihs =>
+      rw [Std.Iter.toList_eq_match_step (it := i.flatMapAfter f none), Std.Iter.step_flatMapAfter,
+        Std.Iter.toList_eq_match_step (it := i.map _), Std.Iter.step_map]
+      cases i.step using PlausibleIterStep.casesOn with
+      | yield next out h =>
+        exact (innerOutputs f next (f out)).trans (congrArg (outputs[f out] ++ ·) (ihy h))
+      | skip next h => exact ihs h
+      | done h => rfl
+  cases it₂ with
+  | none => exact emptyInner it₁
+  | some inner => exact (innerOutputs f it₁ inner).trans (congrArg (outputs[inner] ++ ·) (emptyInner it₁))
+
+local macro "arrayOutputs[" it:term "]" : term => `((Std.IterM.Total.toArray (IterM.ensureTermination (Iter.toIterM $it))).run)
+
+public theorem Std.Iter.toList_flatMap {α α₂ β γ : Type w} [Iterator α Id β] [Iterator α₂ Id γ]
+    [Finite α Id] [Finite α₂ Id] [Iterator α Id β] [Iterator α₂ Id γ] [Finite α Id] [Finite α₂ Id]
+    {f : β → Iter (α := α₂) γ} {it₁ : Iter (α := α) β} :
+    outputs[it₁.flatMap f] = outputs[it₁.map fun b => outputs[f b]].flatten :=
+  Std.Iter.toList_flatMapAfter (f := f) (it₁ := it₁) (it₂ := none)
+
+private theorem mappedArrays {α α₂ β γ : Type w} [Iterator α Id β] [Iterator α₂ Id γ]
+    [Finite α Id] [Finite α₂ Id] (f : β → Iter (α := α₂) γ) (it : Iter (α := α) β) :
+    outputs[it.map fun b => outputs[f b]] = outputs[it.map fun b => arrayOutputs[f b]].map Array.toList := by
+  induction it using _root_.Std.Iter.inductSteps with
+  | step i ihy ihs =>
+    rw [Std.Iter.toList_eq_match_step (it := i.map fun b => outputs[f b]), Std.Iter.step_map,
+      Std.Iter.toList_eq_match_step (it := i.map fun b => arrayOutputs[f b]), Std.Iter.step_map]
+    cases i.step using PlausibleIterStep.casesOn with
+    | yield next out h => exact congrArg (List.cons outputs[f out]) (ihy h)
+    | skip next h => exact ihs h
+    | done h => rfl
+
+public theorem Std.Iter.toArray_flatMapAfter {α α₂ β γ : Type w} [Iterator α Id β] [Iterator α₂ Id γ]
+    [Finite α Id] [Finite α₂ Id] {f : β → Iter (α := α₂) γ} {it₁ : Iter (α := α) β} {it₂ : Option (Iter (α := α₂) γ)} :
+    arrayOutputs[it₁.flatMapAfter f it₂] = Option.casesOn it₂
+      arrayOutputs[it₁.map fun b => arrayOutputs[f b]].flatten
+      (fun inner => arrayOutputs[inner] ++ arrayOutputs[it₁.map fun b => arrayOutputs[f b]].flatten) := by
+  apply Array.ext'
+  cases it₂ with
+  | none =>
+    change outputs[it₁.flatMapAfter f none] = (arrayOutputs[it₁.map fun b => arrayOutputs[f b]].flatten).toList
+    rw [Std.Iter.toList_flatMapAfter, Array.toList_flatten]
+    exact congrArg List.flatten (mappedArrays f it₁)
+  | some inner =>
+    change outputs[it₁.flatMapAfter f (some inner)] =
+      (arrayOutputs[inner] ++ arrayOutputs[it₁.map fun b => arrayOutputs[f b]].flatten).toList
+    rw [Std.Iter.toList_flatMapAfter, Array.toList_append, Array.toList_flatten]
+    exact congrArg (fun x => outputs[inner] ++ List.flatten x) (mappedArrays f it₁)
+
+public theorem Std.Iter.toArray_flatMap {α α₂ β γ : Type w} [Iterator α Id β] [Iterator α₂ Id γ]
+    [Finite α Id] [Finite α₂ Id] [Iterator α Id β] [Iterator α₂ Id γ] [Finite α Id] [Finite α₂ Id]
+    {f : β → Iter (α := α₂) γ} {it₁ : Iter (α := α) β} :
+    arrayOutputs[it₁.flatMap f] = arrayOutputs[it₁.map fun b => arrayOutputs[f b]].flatten :=
+  Std.Iter.toArray_flatMapAfter (f := f) (it₁ := it₁) (it₂ := none)
+
+end FlatMapOutput
+
 end OmegaChecks.InitPort.Alternatives
