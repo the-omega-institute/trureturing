@@ -175,4 +175,16 @@ public theorem Std.PRange.instIsAlwaysFiniteInt_1 : Rxo.IsAlwaysFinite Int :=
 public theorem Std.PRange.instIsAlwaysFiniteInt : Rxc.IsAlwaysFinite Int :=
   ⟨fun lo hi => ⟨((hi + 1) - lo).toNat, Int.not_le_of_gt (reachUpper lo (hi + 1))⟩⟩
 
+public theorem Std.PRange.UpwardEnumerable.le_iff_lt_or_eq :
+    type_of% @_root_.Std.PRange.UpwardEnumerable.le_iff_lt_or_eq := by
+  intro α en law a b
+  constructor
+  · rintro ⟨k, h⟩
+    cases k with
+    | zero => exact Or.inr (Option.some.inj (_root_.Std.PRange.UpwardEnumerable.succMany?_zero.symm.trans h))
+    | succ k => exact Or.inl ⟨k, h⟩
+  · rintro (lt | rfl)
+    · exact Std.PRange.UpwardEnumerable.le_of_lt lt
+    · exact ⟨0, _root_.Std.PRange.UpwardEnumerable.succMany?_zero⟩
+
 end OmegaChecks.InitPort.Alternatives
