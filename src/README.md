@@ -154,7 +154,8 @@ example (a b : Nat) : Eq (Nat.add a b) (Nat.add b a) := Nat.add_comm a b
 ```sh
 lake test -- OmegaInit
 mkdir -p .lake/build/omega-checks
-lean --run src/OmegaChecks/InitInventory.lean .lake/build/omega-strict/lib/lean \
+lake build +OmegaChecks.InitInventory
+lake env lean --run src/OmegaChecks/InitInventory.lean .lake/build/omega-strict/lib/lean \
   .lake/build/omega-checks/init-inventory.json .lake/build/omega-checks/init-gaps.tsv
 ```
 
