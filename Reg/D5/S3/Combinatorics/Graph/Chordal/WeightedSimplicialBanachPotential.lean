@@ -30,7 +30,8 @@ private theorem pair_adj : pairGraph.Adj a b := by
 
 private theorem pair_chordal : pairGraph.{u}.IsChordal := by
   have h : pairGraph.{u}.IsAcyclic := IsAcyclic.of_card_le_two (by simp)
-  exact fun _ hp _ => (h _ hp).elim
+  intro _ p hp _
+  exact (h p hp).elim
 
 private theorem pair_cliques : ∀ C : Set Pair.{u}, pairGraph.IsClique C → C.ncard ≤ 2 + 1 := by
   intro C _
@@ -73,8 +74,9 @@ example : radius 3 = (1 + Real.sqrt 5)/2 ∧ (1 + Real.sqrt 5)/2 < 5/3 ∧ (5/3 
     rw [Real.sqrt_eq_iff_eq_sq (by norm_num) (by positivity)]
     nlinarith
   refine ⟨?_, by linarith, by norm_num⟩
-  norm_num [radius, h20, max_eq_right (show (1 : ℝ) ≤ (1+2*Real.sqrt 5)/4 by linarith)]
-  ring
+  norm_num [radius, h20]
+  apply max_eq_right
+  linarith
 
 example :
     radius 4 = (3 + Real.sqrt 33)/4 ∧ (3 + Real.sqrt 33)/4 < 7/3 ∧ (7/3 : ℝ) < 20/7 := by
@@ -273,7 +275,7 @@ private theorem uniform_nonneg (S : Set V) (x : V) : 0 ≤ uniform S x := by
 
 private theorem uniform_total {S : Set V} (hS : S.Nonempty) : ∑ x, uniform S x = 1 := by
   classical
-  have hpos : (0 : ℝ) < S.ncard := by exact_mod_cast Set.ncard_pos.mpr hS
+  have hpos : (0 : ℝ) < S.ncard := by exact_mod_cast hS.ncard_pos
   have he : (Finset.univ.filter fun x => x ∈ S) = S.toFinite.toFinset := by ext x; simp
   simp only [uniform, ← Finset.sum_filter, he, Finset.sum_const, nsmul_eq_mul,
     ← Set.ncard_eq_toFinset_card]
@@ -287,28 +289,28 @@ private theorem separator_mass_uniform (hK₀ : ∀ a, (K a).Nonempty)
   classical
   let M : ℝ := max (K a).ncard (K b).ncard
   have hM : 0 < M := by
-    have h : (0 : ℝ) < (K a).ncard := by exact_mod_cast Set.ncard_pos.mpr (hK₀ a)
+    have h : (0 : ℝ) < (K a).ncard := by exact_mod_cast (hK₀ a).ncard_pos
     exact h.trans_le (by dsimp [M]; exact_mod_cast le_max_left (K a).ncard (K b).ncard)
-  have hspos : (0 : ℝ) < (K a ∩ K b).ncard := by exact_mod_cast Set.ncard_pos.mpr hs
+  have hspos : (0 : ℝ) < (K a ∩ K b).ncard := by exact_mod_cast hs.ncard_pos
   calc
     1/c ≤ ((K a ∩ K b).ncard : ℝ) / M :=
       (div_le_div_iff₀ (by linarith) hM).2 (by simpa [M, mul_comm] using hsize)
     _ = ∑ x ∈ (K a ∩ K b).toFinite.toFinset, 1/M := by
-      simp [Finset.sum_const, nsmul_eq_mul, ← Set.ncard_eq_toFinset_card, div_eq_mul_inv]
+      simp only [Finset.sum_const, nsmul_eq_mul, ← Set.ncard_eq_toFinset_card, div_eq_mul_inv]
     _ ≤ _ := Finset.sum_le_sum fun x hx => by
       have hx' : x ∈ K a ∩ K b := by simpa using hx
       simp only [uniform, hx'.1, hx'.2, ite_true, le_min_iff]
       constructor
-      · exact one_div_le_one_div_of_le (by exact_mod_cast Set.ncard_pos.mpr (hK₀ a))
+      · exact one_div_le_one_div_of_le (by exact_mod_cast (hK₀ a).ncard_pos)
           (by dsimp [M]; exact_mod_cast le_max_left (K a).ncard (K b).ncard)
-      · exact one_div_le_one_div_of_le (by exact_mod_cast Set.ncard_pos.mpr (hK₀ b))
+      · exact one_div_le_one_div_of_le (by exact_mod_cast (hK₀ b).ncard_pos)
           (by dsimp [M]; exact_mod_cast le_max_right (K a).ncard (K b).ncard)
 
 private theorem separator_coefficient {S : Set V} (hS : S.Nonempty)
     {δ M : ℝ} (hδ : 0 ≤ δ) (hM : 1 - M ≤ δ) :
     (1 - 1 / (S.ncard : ℝ)) * (1 - M) ≤ (1 - 1 / (S.ncard : ℝ)) * δ := by
   have hpos : (1 : ℝ) ≤ S.ncard := by
-    exact_mod_cast Nat.succ_le_of_lt (Set.ncard_pos.mpr hS)
+    exact_mod_cast Nat.succ_le_of_lt (hS.ncard_pos)
   apply mul_le_mul_of_nonneg_left hM
   exact sub_nonneg.mpr ((div_le_iff₀ (by linarith : (0 : ℝ) < S.ncard)).2 (by linarith))
 
@@ -351,7 +353,8 @@ example (hK : IsCliqueTree T G K) (hsep : ∀ a b, T.Adj a b → (K a ∩ K b).N
     (fun a => uniform_nonneg (K a)) (fun a x hx => by simp [uniform, hx])
     (fun a => uniform_total (hK₀ a)) _ hδ hd 2 hD g ε hε hskew htri
   refine ⟨φ, fun x y hxy => ?_⟩
-  convert (hφ x y hxy).1 using 1 <;> norm_num <;> ring
+  have he : (1 + 4 * (((2+1)/2 : ℕ) : ℝ) * (1 - 1/c)) = 5 - 4/c := by norm_num; ring
+  simpa only [he] using (hφ x y hxy).1
 
 example : (5 : ℝ) - 4/2 = 3 ∧ (5 : ℝ) - 4/(4/3) = 2 := by norm_num
 
@@ -382,8 +385,10 @@ private theorem degree_probability (hsep : ∀ a b, T.Adj a b → (K a ∩ K b).
     · simp only [π, h, if_true, ← Finset.sum_div]
       rw [Finset.sum_comm]
       have hsum : ∑ j ∈ N a, ∑ x, uniform (K a ∩ K j) x = (N a).card := by
-        rw [← Finset.sum_const_one]
-        exact Finset.sum_congr rfl fun j hj => uniform_total (hsep _ _ ((mem a j).1 hj))
+        calc
+          _ = ∑ _ ∈ N a, (1 : ℝ) := Finset.sum_congr rfl fun j hj =>
+            uniform_total (hsep _ _ ((mem a j).1 hj))
+          _ = _ := by simp [nsmul_eq_mul]
       rw [hsum, div_self (pos h).ne']
     · simpa [π, h] using uniform_total (hK₀ a)
   refine ⟨π, hnon, hsupp, htotal, ?_⟩
@@ -391,10 +396,12 @@ private theorem degree_probability (hsep : ∀ a b, T.Adj a b → (K a ∩ K b).
       1 / ((b : ℝ) * ((K a ∩ K j).ncard : ℝ)) ≤ π a x := by
     have hj := (mem a j).2 h
     have hn : (N a).Nonempty := ⟨j, hj⟩
-    have hb' : (N a).card ≤ b := by simp [N, ← Set.ncard_eq_toFinset_card, hdeg]
-    have hsep' : (0 : ℝ) < (K a ∩ K j).ncard := by exact_mod_cast Set.ncard_pos.mpr ⟨x, hx⟩
+    have hb' : (N a).card ≤ b := by
+      rw [show (N a).card = (T.neighborSet a).ncard from (Set.ncard_eq_toFinset_card ..).symm]
+      exact hdeg a
+    have hsep' : (0 : ℝ) < (K a ∩ K j).ncard := by exact_mod_cast (show (K a ∩ K j).Nonempty from ⟨x, hx⟩).ncard_pos
     have hsum : uniform (K a ∩ K j) x ≤ ∑ i ∈ N a, uniform (K a ∩ K i) x :=
-      Finset.single_le_sum (fun i _ => uniform_nonneg _ _) hj
+      Finset.single_le_sum (fun i _ => uniform_nonneg (K a ∩ K i) x) hj
     calc
       _ = (1 / ((K a ∩ K j).ncard : ℝ)) / (b : ℝ) := by ring
       _ ≤ (1 / ((K a ∩ K j).ncard : ℝ)) / ((N a).card : ℝ) :=
@@ -404,7 +411,7 @@ private theorem degree_probability (hsep : ∀ a b, T.Adj a b → (K a ∩ K b).
         exact div_le_div_of_nonneg_right (by simpa [uniform, hx] using hsum) (pos hn).le
   intro a j h
   have hsep' : ((K a ∩ K j).ncard : ℝ) ≠ 0 := by
-    exact_mod_cast (Set.ncard_pos.mpr (hsep a j h)).ne'
+    exact_mod_cast ((hsep a j h).ncard_pos).ne'
   have hb' : (b : ℝ) ≠ 0 := by exact_mod_cast (show b ≠ 0 by omega)
   calc
     _ = ∑ x ∈ (K a ∩ K j).toFinite.toFinset,
@@ -413,8 +420,9 @@ private theorem degree_probability (hsep : ∀ a b, T.Adj a b → (K a ∩ K b).
           field_simp
     _ ≤ _ := Finset.sum_le_sum fun x hx => by
       have hx' : x ∈ K a ∩ K j := by simpa using hx
-      exact le_min (lb a j h x hx') (by simpa [Set.inter_comm (K j) (K a)] using
-        lb j a h.symm x (by simpa [Set.inter_comm (K j) (K a)] using hx'))
+      refine le_min (lb a j h x hx') ?_
+      rw [Set.inter_comm (K a) (K j)]
+      exact lb j a h.symm x ⟨hx'.2, hx'.1⟩
 
 private theorem degree_fit (hK : IsCliqueTree T G K)
     (hsep : ∀ a b, T.Adj a b → (K a ∩ K b).Nonempty) (hK₀ : ∀ a, (K a).Nonempty)
@@ -439,13 +447,13 @@ private theorem degree_fit (hK : IsCliqueTree T G K)
   let d := B.max' hB
   have hd₀ : 0 ≤ d := Finset.le_max' B 0 (Finset.mem_insert_self _ _)
   have hdδ : d < δ := by
-    apply (Finset.max'_lt_iff _).2
+    apply (Finset.max'_lt_iff B hB).2
     intro c hc
     rcases Finset.mem_insert.mp hc with rfl | hc
     · exact hδ
     obtain ⟨⟨a,j⟩, ha, rfl⟩ := Finset.mem_image.mp hc
     have h := (Finset.mem_filter.mp ha).2
-    have hpos : (0 : ℝ) < (K a ∩ K j).ncard := by exact_mod_cast Set.ncard_pos.mpr (hsep a j h)
+    have hpos : (0 : ℝ) < (K a ∩ K j).ncard := by exact_mod_cast (hsep a j h).ncard_pos
     exact mul_lt_of_lt_one_left hδ (by linarith [one_div_pos.mpr hpos])
   have hd (a j : I) (h : T.Adj a j) :
       (1 - 1 / ((K a ∩ K j).ncard : ℝ)) *
@@ -476,5 +484,7 @@ example (hK : IsCliqueTree T G K) (hsep : ∀ a b, T.Adj a b → (K a ∩ K b).N
   exact ⟨1+2*d, by norm_num at hd; linarith, φ, fun x y h => (hf x y h).2 le_rfl⟩
 
 end OccurrenceExamples
+
+end
 
 end Reg.D5.S3.Combinatorics.Graph.Chordal.WeightedSimplicialBanachPotential

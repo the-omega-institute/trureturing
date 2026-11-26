@@ -105,16 +105,16 @@ private theorem radius_parameters (k : ℕ) (hk : 2 ≤ k) :
   let q := (a - 1 + b) / 4
   let R := max (a - 2) q
   change 1 ≤ R ∧ a - 2 ≤ R ∧ 0 ≤ 1 - (a - 1) * (1 / (1 + R)) ∧ _
-  have ha : 2 ≤ a := by exact_mod_cast hk
+  have ha : 2 ≤ a := by
+    change (2 : ℝ) ≤ (k : ℝ)
+    exact_mod_cast hk
   have hb : 0 ≤ b := Real.sqrt_nonneg _
   have hb2 : b^2 = (a + 3)^2 - 16 := Real.sq_sqrt (by nlinarith)
   have hb3 : 3 ≤ b := by nlinarith [sq_nonneg (a - 2)]
   have hq : 1 ≤ q := by dsimp [q]; linarith
   have hroot : 2*q^2 - (a - 1)*q - (a - 1) = 0 := by dsimp [q]; nlinarith
   have hbmax : b ≤ 3*(a - 1) := by
-    by_contra! h
-    have hc : (3*(a - 1))^2 < b^2 := by nlinarith [mul_pos (show 0 < b - 3*(a-1) by linarith)
-      (show 0 < b + 3*(a-1) by linarith)]
+    apply (Real.sqrt_le_left (by linarith : 0 ≤ 3*(a-1))).2
     nlinarith [mul_nonneg (show 0 ≤ a - 1 by linarith) (show 0 ≤ a - 2 by linarith)]
   have hRmax : R ≤ a - 1 := max_le (by linarith) (by dsimp [q]; linarith)
   have hRq : q ≤ R := le_max_right _ _
@@ -122,14 +122,16 @@ private theorem radius_parameters (k : ℕ) (hk : 2 ≤ k) :
   have hRk : a - 2 ≤ R := le_max_left _ _
   have hn : 0 < 1 + R := by linarith
   have hpoly : 0 ≤ 2*R^2 - (a - 1)*R - (a - 1) := by
-    have hp : 0 ≤ 2*(R+q) - (a - 1) := by dsimp [q] at *; linarith
+    have hp : 0 ≤ 2*(R+q) - (a - 1) := by dsimp only [q] at hRq ⊢; linarith
     nlinarith [mul_nonneg (sub_nonneg.mpr hRq) hp]
   refine ⟨hR, hRk, ?_, ?_, ?_, ?_⟩
   · apply sub_nonneg.mpr
     rw [mul_one_div, div_le_iff₀ hn]
     linarith
-  · apply (sub_le_iff_le_add).2
-    rw [← add_mul, mul_one_div, le_div_iff₀ hn]
+  · change 1 - (a - 1) * (1 / (1 + R)) ≤ 1 / (1 + R)
+    have hm : a / (1 + R) = 1 / (1 + R) + (a - 1) * (1 / (1 + R)) := by ring
+    have hle : 1 ≤ a / (1 + R) := (le_div_iff₀ hn).2 (by linarith)
+    rw [hm] at hle
     linarith
   · rw [sub_mul, one_mul, div_mul_cancel₀ _ hn.ne']; ring
   · rw [show (a - 1) * (1 / (1 + R)) + (2 * (1 / (1 + R)) -
@@ -151,12 +153,14 @@ private theorem weight_total [DecidableEq V] {k : ℕ} {s t : ℝ} {A : Finset V
       exact_mod_cast (Finset.card_erase_add_one ha).trans hc
     have hs : ∑ x ∈ A.erase a, predecessorWeight k s t A a x =
         ((A.erase a).card : ℝ) * s := by
-      rw [← Finset.sum_const, nsmul_eq_mul]
-      exact Finset.sum_congr rfl fun x hx => by
-        simp [predecessorWeight, hc, Finset.ne_of_mem_erase hx]
+      calc
+        _ = ∑ _ ∈ A.erase a, s := Finset.sum_congr rfl fun x hx => by
+          simp [predecessorWeight, hc, Finset.ne_of_mem_erase hx]
+        _ = _ := by simp [nsmul_eq_mul]
     rw [hs]
     simp only [predecessorWeight, hc, ite_true, ht]
-    nlinarith
+    rw [show ((A.erase a).card : ℝ) = (k : ℝ) - 1 by linarith]
+    ring
   · have hpos : (A.card : ℝ) ≠ 0 := by exact_mod_cast (Finset.card_ne_zero.mpr ⟨a, ha⟩)
     simp [predecessorWeight, hc, nsmul_eq_mul, hpos]
 
@@ -168,7 +172,7 @@ private theorem erase_weighted_sum [DecidableEq V] {k : ℕ} {s t : ℝ} {A P : 
     ‖∑ x ∈ A, s • f x‖ ≤ (2*s-t)*B := by
   have hc := Finset.card_le_card hAP
   by_cases hP : P.card = k
-  · obtain ⟨z, hzP, hzA⟩ := Finset.exists_mem_notMem_of_card_lt (s := A) (t := P) (by omega)
+  · obtain ⟨z, hzP, hzA⟩ := Finset.exists_mem_notMem_of_card_lt_card (s := A) (t := P) (by omega)
     have hEq : insert z A = P := Finset.eq_of_subset_of_card_le
       (Finset.insert_subset hzP hAP) (by rw [Finset.card_insert_of_notMem hzA]; omega)
     have hsum : ∑ x ∈ P, s • f x = (s-t) • f b := by
@@ -250,10 +254,12 @@ private theorem ordered_fit [Fintype V] [DecidableEq V]
           have rid (y : V) : p x + g x a - (p y + g y a) = res p x y + f y := by
             dsimp [res, f]; abel
           have hsum : res q x a = ∑ y ∈ A, weight a y • (res p x y + f y) := by
-            rw [res_new hx, ← neg_sub (p x + g x a) m, ← center_sum (total a hne)]
+            rw [res_new hx, ← neg_sub m (p x + g x a)]
+            change -((∑ y ∈ P a, weight a y • (p y + g y a)) - (p x + g x a)) = _
+            rw [← center_sum (total a hne)]
             simp only [← Finset.sum_neg_distrib, ← smul_neg, neg_sub, rid]
             rw [← (P a).sum_erase_add _ hx]
-            simp [res, f, skew_diag g hskew]
+            simp [A, res, f, skew_diag g hskew]
           have adj (y : V) (hy : y ∈ A) : G.Adj x y :=
             hcl a hx (Finset.mem_of_mem_erase hy) (Finset.ne_of_mem_erase hy).symm
           have hres (y : V) (hy : y ∈ A) : ‖res p x y‖ ≤ R*ε :=
@@ -309,14 +315,16 @@ private theorem ordered_fit [Fintype V] [DecidableEq V]
               · have hp : 0 < ((P a).card : ℝ) := by exact_mod_cast hne.card_pos
                 have hb : ((P a).card : ℝ) ≤ (k : ℝ)-1 := by
                   have hcard : (P a).card + 1 ≤ k := by have := hk a; omega
-                  exact_mod_cast (show (P a).card ≤ k - 1 by omega)
+                  have hcast : ((P a).card : ℝ) + 1 ≤ (k : ℝ) := by exact_mod_cast hcard
+                  linarith
                 have hi : (1 : ℝ) ≤ (1/(P a).card)*(1+R) := by
                   rw [div_mul_eq_mul_div, le_div_iff₀ hp]
                   linarith
                 simp only [weight, predecessorWeight, hc, ite_false]
                 nlinarith
             rw [hsum]
-            refine (weighted_norm (nonneg a) (fun y hy => (norm_add_le _ _).trans ?_)).trans ?_
+            refine (weighted_norm (B := R * ε + ε) (fun y _ => nonneg a y)
+              (fun y hy => (norm_add_le _ _).trans ?_)).trans ?_
             · linarith [hres y hy, hdef y hy]
             · rw [hmass, show R*ε+ε = (1+R)*ε by ring, ← mul_assoc]
               exact mul_le_mul_of_nonneg_right hw hε
@@ -324,12 +332,12 @@ private theorem ordered_fit [Fintype V] [DecidableEq V]
         · intro x y hx hy hxy
           by_cases hya : y = a
           · subst y
-            exact edge_new x ((hP x a).2 ⟨lt_of_le_of_ne (by omega) (fun e => hxy.ne (hr (e.trans ha.symm))), hxy⟩)
+            exact edge_new x ((hP x a).2 ⟨lt_of_le_of_ne (by omega) (fun e => hxy.ne (hr e)), hxy⟩)
           · by_cases hxa : x = a
             · subst x
               rw [show res q a y = -res q y a from reverse_residual g q hskew y a, norm_neg]
               exact edge_new y ((hP y a).2 ⟨lt_of_le_of_ne (by omega)
-                (fun e => hya (hr (e.trans ha.symm))), hxy.symm⟩)
+                (fun e => hya (hr e)), hxy.symm⟩)
             · have hx' : r x < n := by
                   have : r x ≠ n := fun e => hxa (hr (e.trans ha.symm))
                   omega
@@ -347,13 +355,17 @@ private theorem ordered_fit [Fintype V] [DecidableEq V]
           · have hy' : r y < n := by
               have : r y ≠ n := fun hh => e (hr (hh.trans ha.symm))
               omega
-            rw [Finset.sum_congr rfl (fun x hx => by
-              have hx' : r x < n := (mem_rank hx).trans hy'
-              simp only [res, hq hx', hq hy'])]
-            exact hzero y hy'
-      · exact ⟨p, fun x y hx hy => hfit x y (by have := fun h => hex ⟨x, h⟩; omega)
-          (by have := fun h => hex ⟨y, h⟩; omega),
-          fun y hy => hzero y (by have := fun h => hex ⟨y, h⟩; omega)⟩
+            calc
+              _ = ∑ x ∈ P y, weight y x • res p x y := by
+                apply Finset.sum_congr rfl
+                intro x hx
+                have hx' : r x < n := (mem_rank hx).trans hy'
+                simp only [res, hq hx', hq hy']
+              _ = 0 := hzero y hy'
+      · have old (x : V) (hx : r x < n + 1) : r x < n := by
+          have hne : r x ≠ n := fun h => hex ⟨x, h⟩
+          omega
+        exact ⟨p, fun x y hx hy => hfit x y (old x hx) (old y hy), fun y hy => hzero y (old y hy)⟩
   obtain ⟨p, hp, -⟩ := bound ((Finset.univ : Finset V).sup r + 1)
   exact ⟨p, fun x y => hp x y (Nat.lt_succ_of_le (Finset.le_sup (Finset.mem_univ x)))
     (Nat.lt_succ_of_le (Finset.le_sup (Finset.mem_univ y)))⟩
@@ -480,7 +492,7 @@ private theorem occurrence_center [Finite I] (hK : IsCliqueTree T G K)
       omega
     · have hdist := distance_across_branches hK.isTree hab hp hq hbp hbq
       have hsum := hD x₀ y ((memA _).1 hx₀) ((memA _).1 hy)
-      have htri := hK.isTree.connected.dist_triangle b a y
+      have htri : T.dist b y ≤ T.dist b a + T.dist a y := hK.isTree.connected.dist_triangle
       rw [dist_eq_one_iff_adj.mpr hab.symm] at htri
       omega
   have := hmin b hb
@@ -522,6 +534,7 @@ private theorem sep_card [Finite V] (a b : I) :
   (Set.ncard_eq_toFinset_card _ (K a ∩ K b).toFinite).symm
 
 private theorem weighted_bags [Fintype V] (hK : IsCliqueTree T G K)
+    (hsep : ∀ a b, T.Adj a b → (K a ∩ K b).Nonempty)
     (π : I → V → ℝ) (hπ : ∀ a x, 0 ≤ π a x) (hsupp : ∀ a x, x ∉ K a → π a x = 0)
     (htotal : ∀ a, ∑ x, π a x = 1) {α d ε : ℝ} (hε : 0 ≤ ε)
     (hα : ∀ a u v, u ∈ K a → v ∈ K a → G.Adj u v → 1 - π a u - π a v ≤ α)
@@ -551,7 +564,6 @@ private theorem weighted_bags [Fintype V] (hK : IsCliqueTree T G K)
     exact htri z u v (hK.clique a hz hu hzu) (hK.clique a hu hv h) (hK.clique a hz hv hzv)
   have res (a : I) (u v : V) : g u v - (p a v - p a u) = ∑ z, π a z • F u v z := by
     simp only [F, smul_sub, Finset.sum_sub_distrib, ← Finset.sum_smul, htotal, one_smul, p]
-    rw [Finset.sum_sub_distrib]
   let gain (a b : I) : E :=
     ((separator K a b).card : ℝ)⁻¹ • ∑ x ∈ separator K a b, (p a x - p b x)
   have hrev (a b : I) : gain b a = -gain a b := by
@@ -623,7 +635,9 @@ private theorem weighted_bags [Fintype V] (hK : IsCliqueTree T G K)
           ((∑ z, π a z • F u v z) - ∑ z, m z • F u v z) by rw [← res, ← res]; abel]
       exact (norm_sub_le _ _).trans (by linarith)
     let f (v : V) := (p b u - p a u) - (p b v - p a v)
-    have hSc : (0 : ℝ) < S.card := by exact_mod_cast Finset.card_pos.mpr ⟨u, huS⟩
+    have hSc : (0 : ℝ) < S.card := by
+      obtain ⟨z, hz⟩ := hsep a b hab
+      exact_mod_cast (Finset.card_pos.mpr ⟨z, mem_separator.mpr hz⟩ : 0 < S.card)
     have hshift : ψ b u - ψ a u = (S.card : ℝ)⁻¹ • ∑ v ∈ S.erase u, f v := by
       have hfull : (S.card : ℝ)⁻¹ • (∑ v ∈ S, f v) =
           p b u - p a u + gain a b := by
@@ -648,7 +662,9 @@ private theorem weighted_bags [Fintype V] (hK : IsCliqueTree T G K)
         field_simp
         <;> ring
       _ ≤ 2*d*ε := by
-        have hz : (1 - 1/(S.card : ℝ))*M ≤ d := by simpa [S, M, sep_card, separator] using hd a b hab
+        have hz : (1 - 1/(S.card : ℝ))*M ≤ d := by
+          rw [show S.card = (K a ∩ K b).ncard from sep_card a b]
+          exact hd a b hab
         exact mul_le_mul_of_nonneg_right (mul_le_mul_of_nonneg_left hz (by norm_num)) hε
 
 private theorem midpoint_occurrences [Finite I] (hK : IsCliqueTree T G K)
@@ -662,7 +678,7 @@ private theorem midpoint_occurrences [Finite I] (hK : IsCliqueTree T G K)
   have adjacent (x : V) {a b : I} (ha : x ∈ K a) (hb : x ∈ K b) (hne : a ≠ b) :
       T.Adj a b := by
     apply dist_eq_one_iff_adj.mp
-    have hz := (hK.isTree.connected a b).pos_dist_of_ne hne
+    have hz := hK.isTree.connected.pos_dist_of_ne hne
     have h := hD x a b ha hb
     omega
   let a (x : V) := (hK.cover x).choose
@@ -709,7 +725,7 @@ theorem cliqueTree_occurrenceCenter_banach_potential
     (hsep : ∀ a b, T.Adj a b → (K a ∩ K b).Nonempty)
     (π : I → V → ℝ) (hπ : ∀ a x, 0 ≤ π a x)
     (hsupp : ∀ a x, x ∉ K a → π a x = 0) (htotal : ∀ a, ∑ x, π a x = 1)
-    (α d : ℝ) (hα₀ : 0 ≤ α) (hd₀ : 0 ≤ d)
+    (α d : ℝ) (_hα₀ : 0 ≤ α) (hd₀ : 0 ≤ d)
     (hα : ∀ a u v, u ∈ K a → v ∈ K a → G.Adj u v → 1 - π a u - π a v ≤ α)
     (hd : ∀ a b, T.Adj a b →
       (1 - 1 / ((K a ∩ K b).ncard : ℝ)) *
@@ -722,7 +738,7 @@ theorem cliqueTree_occurrenceCenter_banach_potential
       ‖g u v - (φ v - φ u)‖ ≤ (α + 4 * (((D+1)/2 : ℕ) : ℝ) * d) * ε ∧
       (D ≤ 1 → ‖g u v - (φ v - φ u)‖ ≤ (α + 2*d) * ε) := by
   classical
-  obtain ⟨ψ, hfit, hshift⟩ := weighted_bags hK π hπ hsupp htotal hε hα hd g hskew htri
+  obtain ⟨ψ, hfit, hshift⟩ := weighted_bags hK hsep π hπ hsupp htotal hε hα hd g hskew htri
   by_cases hsmall : D ≤ 1
   · obtain ⟨φ, hclose⟩ := midpoint_occurrences hK ψ (mul_nonneg hd₀ hε)
       (fun a b h x hx => by simpa [mul_assoc] using hshift a b h x hx) hsmall hD
