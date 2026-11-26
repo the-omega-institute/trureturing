@@ -29,8 +29,7 @@ open BalancedCriticalSpectrum (flip_adj)
 open BalancedCubeLowerBound (coordinateSlice)
 open private cubeParity cubeParity_ne_of_adj from
   D5.S3.Combinatorics.Graph.HypercubeSubQuorum
-open private adjacent_exists_flip from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeGirth
+open BalancedCubeGirth (adjacent_exists_flip)
 open private mismatchSet weight centeredHeight height_step height_span
     induced_degree_eq_neighbor_card lower_bound_neighbor_closed from
   D5.S3.Combinatorics.Graph.HypercubeCritical.EightUniformHeightSpan
