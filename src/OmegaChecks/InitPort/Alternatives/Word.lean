@@ -347,4 +347,29 @@ public theorem BitVec.setWidth_neg_of_le : type_of% @_root_.BitVec.setWidth_neg_
   rw [← _root_.BitVec.setWidth_add x (-x) h, _root_.BitVec.add_right_neg, _root_.BitVec.setWidth_zero,
     _root_.BitVec.add_right_neg]
 
+public theorem BitVec.signExtend_eq_setWidth_of_le : type_of% @_root_.BitVec.signExtend_eq_setWidth_of_le := by
+  intro w x v hv
+  apply _root_.BitVec.eq_of_toInt_eq
+  exact (BitVec.toInt_signExtend_eq_toNat_bmod_of_le hv).trans (_root_.BitVec.toInt_setWidth x).symm
+
+public theorem BitVec.signExtend_neg_of_le : type_of% @_root_.BitVec.signExtend_neg_of_le := by
+  intro v w h b
+  rw [BitVec.signExtend_eq_setWidth_of_le _ h, BitVec.signExtend_eq_setWidth_of_le _ h,
+    BitVec.setWidth_neg_of_le h]
+
+public theorem BitVec.toInt_neg_of_ne_intMin : type_of% @_root_.BitVec.toInt_neg_of_ne_intMin := by
+  intro w x nonmin
+  cases w with
+  | zero => exact False.elim (nonmin ((_root_.BitVec.eq_nil x).trans (_root_.BitVec.eq_nil _).symm))
+  | succ w =>
+    apply _root_.BitVec.toInt_neg_of_not_negOverflow
+    intro h
+    have e : x.toInt = -(2 : Int) ^ ((w+1)-1) := eq_of_beq h
+    exact nonmin (_root_.BitVec.eq_of_toInt_eq (e.trans (_root_.BitVec.toInt_intMin_of_pos (Nat.zero_lt_succ w)).symm))
+
+public theorem BitVec.signExtend_neg_of_ne_intMin : type_of% @_root_.BitVec.signExtend_neg_of_ne_intMin := by
+  intro v w b nonmin
+  change _root_.BitVec.ofInt w (-b).toInt = -_root_.BitVec.ofInt w b.toInt
+  rw [BitVec.toInt_neg_of_ne_intMin nonmin, _root_.BitVec.ofInt_neg]
+
 end OmegaChecks.InitPort.Alternatives
