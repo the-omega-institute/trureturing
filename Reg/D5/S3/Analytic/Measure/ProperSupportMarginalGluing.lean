@@ -77,11 +77,14 @@ private theorem rejected_law : ¬ arena.{u,v,w}.Law rejected := by
     refine ⟨fun _ _ => 1, fun _ => measurable_const, ?_, ?_⟩
     · intro i; simp
     · intro j
-      simp [lmarginal]
+      filter_upwards [] with x
+      change (∫⁻ _y : (∀ i : ({k} : Finset I), X i), (1 : ℝ≥0∞)
+        ∂MeasureTheory.Measure.pi (fun i : ({k} : Finset I) => μ i)) = _
+      simp
   obtain ⟨h, hm, hu, he⟩ := law μ (univ : Finset I) (fun _ : J => ∅)
     (fun _ _ => (1 : ℝ≥0∞)) (fun _ => measurable_const)
-    (fun _ => dependsOn_const 1) (by intro j; simp) (by intro j; simp)
-    (by intro j; exact empty_subset _) (by intro j; simp) hl
+    (fun _ => dependsOn_const (1 : ℝ≥0∞)) (by intro j; simp) (by intro j; simp)
+    (by intro j; exact empty_subset _) (by intro j; exact Finset.univ_nonempty.ne_empty.symm) hl
   have H := he (⟨()⟩ : J)
   have hn : ¬ ((0 : ℝ≥0∞) = 1) := by norm_num
   simpa [rejected, realize] using H
