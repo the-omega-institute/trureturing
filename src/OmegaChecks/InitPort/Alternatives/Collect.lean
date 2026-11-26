@@ -136,6 +136,61 @@ public theorem Std.Rxo.size_eq_zero_iff_not_le : type_of% @_root_.Std.Rxo.size_e
   | some next => exact Nat.noConfusion (hzero.symm.trans
       (Rxo.LawfulHasSize.size_eq_succ_of_succ?_eq_some (h := hlt) (h' := hs)))
 
+private theorem finiteRangeOfSize [UpwardEnumerable α] [LawfulUpwardEnumerable α]
+    (within : α → Prop) (size : α → Nat)
+    (zero : ∀ lo, size lo = 0 ↔ ¬ within lo)
+    (step : ∀ lo next, within lo → UpwardEnumerable.succ? lo = some next → size lo = size next + 1)
+    (lo : α) : (UpwardEnumerable.succMany? (size lo) lo).elim True (fun a => ¬ within a) := by
+  generalize hn : size lo = n
+  induction n generalizing lo with
+  | zero =>
+    rw [UpwardEnumerable.succMany?_zero]
+    exact (zero lo).mp hn
+  | succ n ih =>
+    rw [UpwardEnumerable.succMany?_add_one_eq_succ?_bind_succMany?]
+    cases hs : UpwardEnumerable.succ? lo with
+    | none => exact True.intro
+    | some next =>
+      apply ih
+      apply Decidable.byContradiction
+      intro hne
+      have outside : ¬ within lo := fun h => hne (Nat.succ.inj ((step lo next h hs).symm.trans hn))
+      exact Nat.noConfusion (((zero lo).mpr outside).symm.trans hn)
+
+public theorem Std.Rxc.instIsAlwaysFiniteOfLawfulHasSize :
+    type_of% @_root_.Std.Rxc.instIsAlwaysFiniteOfLawfulHasSize := by
+  intro α _ _ _ _ _
+  refine ⟨fun lo hi => ⟨Rxc.HasSize.size lo hi, ?_⟩⟩
+  exact finiteRangeOfSize (· ≤ hi) (fun a => Rxc.HasSize.size a hi)
+    (fun _ => _root_.Std.Rxc.size_eq_zero_iff_not_le)
+    (fun a b => Rxc.LawfulHasSize.size_eq_succ_of_succ?_eq_some a hi b) lo
+
+public theorem Std.Rxo.instIsAlwaysFiniteOfLawfulHasSize :
+    type_of% @_root_.Std.Rxo.instIsAlwaysFiniteOfLawfulHasSize := by
+  intro α _ _ _ _ _
+  refine ⟨fun lo hi => ⟨Rxo.HasSize.size lo hi, ?_⟩⟩
+  exact finiteRangeOfSize (· < hi) (fun a => Rxo.HasSize.size a hi)
+    (fun _ => _root_.Std.Rxo.size_eq_zero_iff_not_le)
+    (fun a b => Rxo.LawfulHasSize.size_eq_succ_of_succ?_eq_some a hi b) lo
+
+public theorem Std.Rxi.instIsAlwaysFiniteOfLawfulHasSize :
+    type_of% @_root_.Std.Rxi.instIsAlwaysFiniteOfLawfulHasSize := by
+  intro α _ _ _ _ _
+  constructor
+  intro lo
+  refine ⟨Rxi.HasSize.size lo, ?_⟩
+  generalize hn : Rxi.HasSize.size lo = n
+  induction n generalizing lo with
+  | zero =>
+    cases hs : UpwardEnumerable.succ? lo with
+    | none => exact Nat.noConfusion (hn.symm.trans (Rxi.LawfulHasSize.size_eq_one_of_succ?_eq_none lo hs))
+    | some next => exact Nat.noConfusion (hn.symm.trans (Rxi.LawfulHasSize.size_eq_succ_of_succ?_eq_some lo next hs))
+  | succ n ih =>
+    rw [UpwardEnumerable.succMany?_add_one_eq_succ?_bind_succMany?]
+    cases hs : UpwardEnumerable.succ? lo with
+    | none => rfl
+    | some next => exact ih next (Nat.succ.inj ((Rxi.LawfulHasSize.size_eq_succ_of_succ?_eq_some lo next hs).symm.trans hn))
+
 public theorem Std.Rxo.LawfulHasSize.of_closed :
     type_of% @_root_.Std.Rxo.LawfulHasSize.of_closed := by
   intro α _ _ _ _ _ _ _ _ _ _ _
