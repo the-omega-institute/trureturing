@@ -88,6 +88,23 @@ jobs:
             echo "parallel=true" >> "$GITHUB_OUTPUT"
             echo "matrix=$(jq -c . <<< "$matrix")" >> "$GITHUB_OUTPUT"
           fi
+      - name: Install the pinned parser for parallel planning
+        if: steps.batches.outputs.parallel == 'true'
+        uses: ./.github/actions/current-lean
+        with:
+          mode: plan
+      - name: Read the published module index for parallel planning
+        if: steps.batches.outputs.parallel == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 tools/scripts/worktree/lean_module_cache.py index --output "$RUNNER_TEMP/current-module-index.json"
+      - name: Balance report batches against the published inputs
+        if: steps.batches.outputs.parallel == 'true'
+        run: |
+          STRATALINT_LEAN_PRODUCER_DLL="$(bash tools/scripts/workflow/judge-lean-producer.sh tools/StrataLint.Cli/bin/Release/net10.0)"
+          export STRATALINT_LEAN_PRODUCER_DLL
+          python3 tools/scripts/workflow/ci_compute.py run -- \
+            python3 tools/scripts/workflow/ci_pr_lean.py "$RUNNER_TEMP/changed-paths" --read-plan "$RUNNER_TEMP/current-lean-plan.json" --balance-plan "$RUNNER_TEMP/current-module-index.json"
       - name: Share the plan with the report batches
         if: steps.batches.outputs.parallel == 'true'
         uses: actions/upload-artifact@v4
@@ -241,7 +258,7 @@ jobs:
         run: python3 tools/scripts/workflow/ci_checks.py current build-judge
       - uses: ./.github/actions/current-lean
         with:
-          verify-bundles: 'true'
+          mode: verify
       - name: Check current and delta with all report bundles
         env:
           CHECK_DELTA: ${{ inputs.delta }}
