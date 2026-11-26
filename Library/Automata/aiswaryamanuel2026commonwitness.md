@@ -28,6 +28,8 @@ The word argument uses cancellation and cyclic centralizers, with classical case
 
 The cited paper states the finite-alphabet version and is used as a literature locator and source boundary. The arbitrary-universe, arbitrary-alphabet List statement, the global-orientation disjunction, and the edge cases are kernel-checked here. No compact topological model, finite alphabet instance, pairwise-only replacement, infinite-word endpoint, or group-element statement is used.
 
+The theorem `commonWitness_iff_three` strengthens the local test to finite subrelations of cardinality at most three, allowing each subrelation to choose its own orientation. Its signed anchor argument combines the inner transport theorem with the sandwich identity: an inner word `x` and an outer word `y` yield the inner word `x ++ y ++ x`. Empty words receive only one signed representation. Two distinct common signed words then transport every signed anchor word. Each row's restriction on the anchor witnesses is consequently either a singleton or the whole anchor witness set, and triples force coherence of any singleton restriction. Proposition 13 supplies related common-witness rigidity, while Lemma 6 is an all-finite compactness result. The three-row bound is not attributed to the paper; no literature novelty or sharpness claim is made.
+
 ## License
 
 Citation and mathematical paraphrase only. No source prose, figures, or external proof code are copied, and public availability of the preprint is not treated as a permissive code license.
