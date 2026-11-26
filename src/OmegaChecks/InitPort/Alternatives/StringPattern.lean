@@ -343,6 +343,24 @@ public theorem isValidRevSearchFrom_iff_isValidRevSearchFrom_beq :
   exact ⟨reverseSearch _root_.String.Slice.Pattern.Model.Char.isLongestRevMatchAt_iff_isLongestRevMatchAt_beq,
     reverseSearch _root_.String.Slice.Pattern.Model.Char.isLongestRevMatchAt_iff_isLongestRevMatchAt_beq.symm⟩
 
+public theorem instLawfulForwardPatternModelChar :
+    type_of% @_root_.String.Slice.Pattern.Model.Char.instLawfulForwardPatternModelChar := by
+  intro c
+  constructor
+  intro s pos
+  exact (_root_.String.Slice.Pattern.Model.LawfulForwardPatternModel.skipPrefix?_eq_some_iff
+    (pat := fun x => x == c) pos).trans
+    _root_.String.Slice.Pattern.Model.Char.isLongestMatch_iff_isLongestMatch_beq.symm
+
+public theorem instLawfulBackwardPatternModelChar :
+    type_of% @_root_.String.Slice.Pattern.Model.Char.instLawfulBackwardPatternModelChar := by
+  intro c
+  constructor
+  intro s pos
+  exact (_root_.String.Slice.Pattern.Model.LawfulBackwardPatternModel.skipSuffix?_eq_some_iff
+    (pat := fun x => x == c) pos).trans
+    _root_.String.Slice.Pattern.Model.Char.isLongestRevMatch_iff_isLongestRevMatch_beq.symm
+
 end Char
 
 end OmegaChecks.InitPort.Alternatives.String.Slice.Pattern.Model
