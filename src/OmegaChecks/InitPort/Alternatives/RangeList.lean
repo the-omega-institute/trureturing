@@ -1,5 +1,5 @@
 module
-public import OmegaChecks.InitPort.Alternatives.RangeLoop
+public import OmegaChecks.InitPort.Alternatives.RangeLoopEndpoints
 public import Init.Data.Range.Polymorphic.Lemmas
 import all Init.Data.Range.Polymorphic.Lemmas
 import Init.Data.Iterators.Lemmas.Basic
