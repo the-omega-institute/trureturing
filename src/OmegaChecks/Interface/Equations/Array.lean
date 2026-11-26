@@ -2,10 +2,16 @@ module
 
 public import Init.Data.Array.Lemmas
 public import Init.Data.Vector.Lex
+public import OmegaChecks.InitPort.Alternatives.ByteArray
+import all OmegaChecks.InitPort.Alternatives.ByteArray
 
 /-! Pointwise correspondence between the strict list-backed array operations and pinned Init. -/
 
 namespace OmegaChecks.Interface.Equations
+
+public theorem ByteArray.fastAppend (a b : ByteArray) :
+    OmegaChecks.InitPort.Alternatives.ByteArray.fastAppend a b = a.fastAppend b :=
+  _root_.ByteArray.fastAppend_eq.symm
 
 public theorem Array.lex {α : Type u} [BEq α] (xs ys : Array α) (lt : α → α → Bool) :
     xs.toList.lex ys.toList lt = xs.lex ys lt := _root_.Array.lex_toList

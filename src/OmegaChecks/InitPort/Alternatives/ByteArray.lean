@@ -1,12 +1,12 @@
 module
 import all Init.Data.ByteArray.Basic
+import all Init.Data.ByteArray.Lemmas
 
 /-! Computation rules for byte-array append and conversion to a list. -/
 
 namespace OmegaChecks.InitPort.Alternatives
 
-public theorem ByteArray.fastAppend_eq : type_of% @_root_.ByteArray.fastAppend_eq := by
-  intro a b
+private theorem copyAtEnd (a b : ByteArray) : b.copySlice 0 a a.size b.size false = a.append b := by
   apply _root_.ByteArray.ext
   apply Array.ext'
   change (((a.data.extract 0 a.data.size ++ b.data.extract 0 (0 + b.data.size)) ++
@@ -14,6 +14,17 @@ public theorem ByteArray.fastAppend_eq : type_of% @_root_.ByteArray.fastAppend_e
       a.data.toList ++ b.data.toList)
   rw [Nat.zero_add, Array.extract_size, Array.extract_size,
     Array.extract_empty_of_size_le_start (Nat.le_add_right ..), Array.append_empty, Array.toList_append]
+
+public def ByteArray.fastAppend : type_of% @_root_.ByteArray.fastAppend :=
+  @_root_.ByteArray.append
+
+public theorem ByteArray.fastAppend_eq_copySlice {a b : ByteArray} :
+    ByteArray.fastAppend a b = b.copySlice 0 a a.size b.size false :=
+  (copyAtEnd a b).symm
+
+public theorem _root_.OmegaChecks.InitPort.AlternativeEquations.ByteArray.fastAppend.eq_1 (a b : ByteArray) :
+    ByteArray.fastAppend a b = b.copySlice 0 a a.size b.size false :=
+  (copyAtEnd a b).symm
 
 private theorem atFuel {α : Sort u} {C : α → Sort v} (measure : α → Nat)
     (step : (x : α) → ((y : α) → InvImage (· < ·) measure y x → C y) → C x)

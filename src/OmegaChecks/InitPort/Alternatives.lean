@@ -57,12 +57,18 @@ open Lean
 
 namespace OmegaChecks.InitPort
 
+private def equationScope := `OmegaChecks.InitPort.AlternativeEquations
+
+private def officialName (name : Name) : Name :=
+  if equationScope.isPrefixOf name then name.replacePrefix equationScope .anonymous
+  else name.replacePrefix `OmegaChecks.InitPort.Alternatives .anonymous
+
 private def officialNames (orders : NameMap (List Nat)) (expr : Expr) : Expr :=
   expr.replace fun
     | .const name levels =>
-      if (`OmegaChecks.InitPort.Alternatives).isPrefixOf name then
+      if (`OmegaChecks.InitPort.Alternatives).isPrefixOf name || equationScope.isPrefixOf name then
         let levels := (orders.find? name).map (fun order => order.map (levels[·]!)) |>.getD levels
-        some (.const (name.replacePrefix `OmegaChecks.InitPort.Alternatives .anonymous) levels)
+        some (.const (officialName name) levels)
       else none
     | _ => none
 
@@ -81,7 +87,8 @@ private def officialLevelArgs (env : Environment) (alt official : ConstantInfo) 
   if Kernel.isDefEqGuarded env {} (type.instantiateLevelParams alt.levelParams args) official.type then return args
   return positional
 
-/-- Register the bodies of named alternatives under their official declaration names. -/
+/-- Register named alternatives. The sibling namespace `AlternativeEquations` allows a
+proof of the original defining equation when Lean reserves its name for a replacement definition. -/
 public def loadAlternatives : IO (NameMap ConstantInfo) := do
   let scope := `OmegaChecks.InitPort.Alternatives
   let env ← importModules #[{module := scope}] {} (level := .private)
@@ -95,15 +102,23 @@ public def loadAlternatives : IO (NameMap ConstantInfo) := do
       let namedProof := match ci.name with
         | .str _ component => ci.isTheorem && component.startsWith "_proof_"
         | _ => false
-      unless scope.isPrefixOf ci.name && (!ci.name.isInternalOrNum || namedProof) && !ci.name.hasMacroScopes &&
+      let equation := equationScope.isPrefixOf ci.name
+      unless (scope.isPrefixOf ci.name || equation) && (!ci.name.isInternalOrNum || namedProof) && !ci.name.hasMacroScopes &&
           !ci.isUnsafe && !ci.isPartial do continue
       let some body := ci.value? (allowOpaque := true) | continue
       let body ← (Meta.deltaExpand body localMatcher (allowOpaque := true)).toIO'
         {fileName := "<constructive alternative>", fileMap := default} {env}
-      let name := ci.name.replacePrefix scope .anonymous
+      let name := officialName ci.name
       let official := (env.find? name).filter (fun entry => entry.numLevelParams == ci.numLevelParams)
       let params := official.map (·.levelParams) |>.getD ci.levelParams
       let args := official.map (officialLevelArgs env ci) |>.getD (ci.levelParams.map Level.param)
+      if equation then
+        let some target := official | throw <| IO.userError s!"missing official equation for {ci.name}"
+        unless ci.isTheorem && target.isTheorem && (Meta.declFromEqLikeName env name).isSome do
+          throw <| IO.userError s!"expected an official defining equation for {ci.name}"
+      if let some other := alternatives.find? name then
+        if other.name != ci.name then
+          throw <| IO.userError s!"ambiguous constructive alternatives {other.name} and {ci.name} for {name}"
       if args != params.map Level.param then
         let order := params.map fun param => args.idxOf (.param param)
         orders := orders.insert ci.name order
@@ -122,6 +137,10 @@ public def loadAlternatives : IO (NameMap ConstantInfo) := do
     | .thmInfo v => .thmInfo {v with type := officialNames orders v.type, value := officialNames orders v.value}
     | .defnInfo v => .defnInfo {v with type := officialNames orders v.type, value := officialNames orders v.value}
     | other => other
+    if equationScope.isPrefixOf ci.name then
+      let some target := env.find? name | throw <| IO.userError s!"missing official equation {name}"
+      unless Kernel.isDefEqGuarded env {} value.type target.type do
+        throw <| IO.userError s!"constructive equation {ci.name} does not match the complete type of {name}"
     aligned := aligned.insert name value
   return aligned
 

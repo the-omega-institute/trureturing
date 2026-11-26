@@ -63,7 +63,7 @@ private def instanceEntries (source : Environment) (idx : ModuleIdx) (available 
 
 /-- Definitions with pointwise computation equations checked by the interface audit. -/
 private def sealedImplementation (n : Name) : Bool :=
-  [`Char.succ?, `Std.Iter.Total.atIdxSlow?, `Std.IterM.Total.toArray, `Std.IterM.Total.toListRev, `Std.Iterators.Types.Take.Rel,
+  [`ByteArray.fastAppend, `Char.succ?, `Std.Iter.Total.atIdxSlow?, `Std.IterM.Total.toArray, `Std.IterM.Total.toListRev, `Std.Iterators.Types.Take.Rel,
     `instSliceSizeListSliceData, `List.instAppendListSlice,
     `List.instToStringListSlice, `instIteratorLoopSubarrayIteratorIdOfMonad,
     `Std.Iterators.Types.ListIterator.instIteratorLoop,
