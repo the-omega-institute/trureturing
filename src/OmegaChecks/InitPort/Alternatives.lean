@@ -4,6 +4,9 @@ public import Lean
 public import OmegaChecks.InitPort.Alternatives.Array
 public import OmegaChecks.InitPort.Alternatives.Constraint
 public import OmegaChecks.InitPort.Alternatives.Extract
+public import OmegaChecks.InitPort.Alternatives.Integer
+public import OmegaChecks.InitPort.Alternatives.List
+public import OmegaChecks.InitPort.Alternatives.Range
 public import OmegaChecks.InitPort.Alternatives.Word
 
 /-! Read constructive alternatives without importing their environment into the generated library. -/
