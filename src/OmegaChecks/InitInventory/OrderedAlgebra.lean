@@ -1,0 +1,330 @@
+module
+public import Lean
+import Lean.Replay
+import all Lean.Util.CollectAxioms
+public import OmegaChecks.InitInventory.Logic
+
+public section
+
+open Lean
+namespace OmegaChecks.InitBoundaries
+universe u v w z
+
+namespace WeakRingOrder
+
+open Lean.Grind Std
+
+def PositiveMultipliers : Prop := ∀ {R : Type u} [Field R] [LE R] [LT R] [LawfulOrderLT R]
+  [IsLinearOrder R] [OrderedRing R] {a b c : R}, 0 < c → a ≤ b → a*c ≤ b*c
+
+theorem fromPosRight (f : type_of% @Field.IsOrdered.mul_le_mul_iff_of_pos_right.{u}) :
+    PositiveMultipliers.{u} := fun {_} _ _ _ _ _ _ {_ _ _} h => (f h).mpr
+
+theorem fromPosLeft (f : type_of% @Field.IsOrdered.mul_le_mul_iff_of_pos_left.{u}) :
+    PositiveMultipliers.{u} := by
+  intro R _ _ _ _ _ _ a b c pos le
+  rw [CommSemiring.mul_comm a, CommSemiring.mul_comm b]
+  exact (f pos).mpr le
+
+theorem fromDivision (f : type_of% @Field.IsOrdered.le_mul_inv_iff_mul_le.{u}) :
+    PositiveMultipliers.{u} := by
+  intro R _ _ _ _ _ _ a b c pos le
+  apply (f a (b*c) pos).mp
+  have nz : c ≠ 0 := fun eq =>
+    ((Std.LawfulOrderLT.lt_iff _ _).mp pos).2 (eq ▸ Std.IsPreorder.le_refl _)
+  rwa [Semiring.mul_assoc, Field.mul_inv_cancel nz, Semiring.mul_one]
+
+def NonnegativeProducts : Prop := ∀ {R : Type u} [Ring R] [LE R] [LT R] [IsPartialOrder R]
+  [OrderedRing R] [LawfulOrderLT R] {a b : R}, 0 ≤ a → 0 ≤ b → 0 ≤ a*b
+
+theorem fromLeft (f : type_of% @OrderedRing.mul_le_mul_of_nonneg_left.{u}) : NonnegativeProducts.{u} := by
+  intro R _ _ _ _ _ _ a b ha hb
+  have prod := f hb ha
+  rwa [Semiring.mul_zero] at prod
+
+theorem fromRight (f : type_of% @OrderedRing.mul_le_mul_of_nonneg_right.{u}) : NonnegativeProducts.{u} := by
+  intro R _ _ _ _ _ _ a b ha hb
+  have prod := f ha hb
+  rwa [Semiring.zero_mul] at prod
+
+private theorem toNegative {R : Type u} [Ring R] [LE R] [LT R] [IsPartialOrder R] [OrderedRing R]
+    {a : R} (h : 0 ≤ a) : -a ≤ 0 := by
+  have shift := (OrderedAdd.add_le_left_iff (-a)).mp h
+  rwa [AddCommMonoid.zero_add, AddCommGroup.add_neg_cancel] at shift
+
+private theorem eqOfRightSums {R : Type u} [Ring R] {a b t : R} (h : a+t = b+t) : a = b := by
+  have eq := congrArg (· + -t) h
+  rwa [AddCommMonoid.add_assoc, AddCommMonoid.add_assoc, AddCommGroup.add_neg_cancel,
+    AddCommMonoid.add_zero, AddCommMonoid.add_zero] at eq
+
+private theorem doubleNegativeProduct {R : Type u} [Ring R] (a b : R) : (-a)*(-b) = a*b := by
+  apply eqOfRightSums (t := (-a)*b)
+  rw [← Semiring.left_distrib, AddCommGroup.neg_add_cancel, Semiring.mul_zero,
+    ← Semiring.right_distrib, AddCommGroup.add_neg_cancel, Semiring.zero_mul]
+
+theorem fromLeftNeg (f : type_of% @OrderedRing.mul_le_mul_of_nonpos_left.{u}) : NonnegativeProducts.{u} := by
+  intro R _ _ _ _ _ _ a b ha hb
+  have prod := f (toNegative hb) (toNegative ha)
+  rwa [Semiring.mul_zero, doubleNegativeProduct] at prod
+
+theorem fromRightNeg (f : type_of% @OrderedRing.mul_le_mul_of_nonpos_right.{u}) : NonnegativeProducts.{u} := by
+  intro R _ _ _ _ _ _ a b ha hb
+  have prod := f (toNegative ha) (toNegative hb)
+  rwa [Semiring.zero_mul, doubleNegativeProduct] at prod
+
+theorem fromTwoNonpositive (f : type_of% @OrderedRing.mul_nonneg_of_nonpos_of_nonpos.{u}) :
+    NonnegativeProducts.{u} := by
+  intro R _ _ _ _ _ _ a b ha hb
+  have prod := f (toNegative ha) (toNegative hb)
+  rwa [doubleNegativeProduct] at prod
+
+private theorem negateLE {R : Type u} [Ring R] [LE R] [LT R] [IsPartialOrder R] [OrderedRing R]
+    {a b : R} (le : a ≤ b) : -b ≤ -a := by
+  apply (OrderedAdd.add_le_left_iff b).mpr
+  rw [AddCommGroup.neg_add_cancel]
+  apply (OrderedAdd.add_le_left_iff a).mpr
+  rw [AddCommMonoid.zero_add, AddCommMonoid.add_comm (-a) b, AddCommMonoid.add_assoc,
+    AddCommGroup.neg_add_cancel, AddCommMonoid.add_zero]
+  exact le
+
+private theorem doubleNeg {R : Type u} [Ring R] (a : R) : -(-a) = a := by
+  apply eqOfRightSums (t := -a)
+  rw [AddCommGroup.neg_add_cancel, AddCommGroup.add_neg_cancel]
+
+private theorem positiveNeg {R : Type u} [Ring R] [LE R] [LT R] [IsPartialOrder R]
+    [OrderedRing R] [LawfulOrderLT R] {a : R} (h : 0 < a) : -a < 0 := by
+  obtain ⟨ha, na⟩ := (LawfulOrderLT.lt_iff _ _).mp h
+  refine (LawfulOrderLT.lt_iff _ _).mpr ⟨toNegative ha, fun contra => na ?_⟩
+  have shift := (OrderedAdd.add_le_left_iff a).mp contra
+  rwa [AddCommMonoid.zero_add, AddCommGroup.neg_add_cancel] at shift
+
+private theorem mulNegative {R : Type u} [Ring R] (a b : R) : a * (-b) = -(a*b) := by
+  apply eqOfRightSums (t := a*b)
+  rw [← Semiring.left_distrib, AddCommGroup.neg_add_cancel, Semiring.mul_zero, AddCommGroup.neg_add_cancel]
+
+private theorem nonnegOfNegLE {R : Type u} [Ring R] [LE R] [LT R] [IsPartialOrder R] [OrderedRing R]
+    {r : R} (le : -r ≤ 0) : 0 ≤ r := by
+  have eq := (OrderedAdd.add_le_left_iff r).mp le
+  rwa [AddCommGroup.neg_add_cancel, AddCommMonoid.zero_add] at eq
+
+theorem fromNegRight (f : type_of% @Field.IsOrdered.mul_le_mul_iff_of_neg_right.{u}) :
+    PositiveMultipliers.{u} := by
+  intro R _ _ _ _ _ _ a b c pos le
+  have h := (f (positiveNeg pos)).mpr le
+  rw [mulNegative, mulNegative] at h
+  have h' := negateLE h
+  rwa [doubleNeg, doubleNeg] at h'
+
+theorem fromNegLeft (f : type_of% @Field.IsOrdered.mul_le_mul_iff_of_neg_left.{u}) :
+    PositiveMultipliers.{u} := by
+  intro R _ _ _ _ _ _ a b c pos le
+  have h := (f (positiveNeg pos)).mpr le
+  rw [CommSemiring.mul_comm (-c) b, CommSemiring.mul_comm (-c) a, mulNegative, mulNegative] at h
+  have h' := negateLE h
+  rwa [doubleNeg, doubleNeg] at h'
+
+theorem fromMixedRight (f : type_of% @OrderedRing.mul_nonpos_of_nonneg_of_nonpos.{u}) :
+    NonnegativeProducts.{u} := by
+  intro R _ _ _ _ _ _ a b ha hb
+  have h := f ha (toNegative hb)
+  rw [mulNegative] at h
+  exact nonnegOfNegLE h
+
+theorem fromMixedLeft (f : type_of% @OrderedRing.mul_nonpos_of_nonpos_of_nonneg.{u}) :
+    NonnegativeProducts.{u} := by
+  intro R _ _ _ _ _ _ a b ha hb
+  have h := f (toNegative ha) hb
+  have opposite : (-a)*b = -(a*b) := by
+    apply eqOfRightSums (t := a*b)
+    rw [← Semiring.right_distrib, AddCommGroup.neg_add_cancel, Semiring.zero_mul, AddCommGroup.neg_add_cancel]
+  exact nonnegOfNegLE (opposite ▸ h)
+
+private theorem negativeNonzero {R : Type u} [Field R] [LE R] [LT R] [LawfulOrderLT R]
+    [IsLinearOrder R] [OrderedRing R] {c : R} (neg : c < 0) : c ≠ 0 := by
+  rintro rfl
+  exact ((Std.LawfulOrderLT.lt_iff _ _).mp neg).2 (Std.IsPreorder.le_refl _)
+
+theorem fromNegativeDivision (f : type_of% @Field.IsOrdered.le_mul_inv_iff_le_mul_of_neg.{u}) :
+    PositiveMultipliers.{u} := by
+  intro R _ _ _ _ _ _ a b c pos le
+  have neg := positiveNeg pos
+  have h := (f a (b*(-c)) neg).mp (by
+    rwa [Semiring.mul_assoc, Field.mul_inv_cancel (negativeNonzero neg), Semiring.mul_one])
+  rw [mulNegative, mulNegative] at h
+  have h' := negateLE h
+  rwa [doubleNeg, doubleNeg] at h'
+
+theorem fromNegativeDivisionLeft (f : type_of% @Field.IsOrdered.mul_inv_le_iff_mul_le_of_neg.{u}) :
+    PositiveMultipliers.{u} := by
+  intro R _ _ _ _ _ _ a b c pos le
+  have neg := positiveNeg pos
+  have h := (f (a*(-c)) b neg).mp (by
+    rwa [Semiring.mul_assoc, Field.mul_inv_cancel (negativeNonzero neg), Semiring.mul_one])
+  rw [mulNegative, mulNegative] at h
+  have h' := negateLE h
+  rwa [doubleNeg, doubleNeg] at h'
+
+/-- Opposite weak signs of a nonnegative element and its reciprocal force the reciprocal to vanish. -/
+def OppositeSigns : Prop := ∀ {R : Type u} [Field R] [LE R] [LT R] [LawfulOrderLT R]
+  [IsLinearOrder R] [OrderedRing R] {a : R}, 0 ≤ a → a⁻¹ ≤ 0 → a⁻¹ = 0
+
+theorem fromInverseNonneg (f : type_of% @Field.IsOrdered.inv_nonneg_iff.{u}) :
+    OppositeSigns.{u} := fun {_} _ _ _ _ _ _ {_} ha h => IsPartialOrder.le_antisymm _ _ h (f.mpr ha)
+
+theorem fromInverseNonpos (f : type_of% @Field.IsOrdered.inv_nonpos_iff.{u}) :
+    OppositeSigns.{u} := by
+  intro R _ _ _ _ _ _ a ha hi
+  have zero : a = 0 := IsPartialOrder.le_antisymm _ _ (f.mp hi) ha
+  rw [zero, Field.inv_zero]
+
+/-- Squares of elements with a chosen weak sign are nonnegative even in a partial order. -/
+def SignedSquare : Prop := ∀ {R : Type u} [Ring R] [LE R] [LT R] [IsPartialOrder R]
+  [OrderedRing R] [LawfulOrderLT R] {a : R}, (0 ≤ a ∨ a ≤ 0) → 0 ≤ a*a
+
+theorem signedSquareOfProduct (f : type_of% @OrderedRing.mul_nonneg.{u}) : SignedSquare.{u} := by
+  intro R _ _ _ _ _ _ a sign
+  cases sign with
+  | inl ha => exact f ha ha
+  | inr ha =>
+    have h := (OrderedAdd.add_le_left_iff (-a)).mp ha
+    rw [AddCommGroup.add_neg_cancel, AddCommMonoid.zero_add] at h
+    have pos := f h h
+    rwa [doubleNegativeProduct] at pos
+
+def LinearSquare : Prop := ∀ {R : Type u} [Ring R] [LE R] [LT R] [LawfulOrderLT R]
+  [IsLinearOrder R] [OrderedRing R] (a : R), 0 ≤ a*a
+
+theorem squareOfProductSigns (f : type_of% @OrderedRing.mul_nonneg_iff.{u}) : LinearSquare.{u} := by
+  intro R _ _ _ _ _ _ a
+  cases IsLinearPreorder.le_total (0 : R) a with
+  | inl h => exact f.mpr (.inl ⟨h, h⟩)
+  | inr h => exact f.mpr (.inr ⟨h, h⟩)
+
+/-- Every finite sum of squares belongs to the weakly nonnegative cone. -/
+def SumOfSquares : Prop := ∀ {R : Type u} [Ring R] [LE R] [LT R] [LawfulOrderLT R]
+  [IsLinearOrder R] [OrderedRing R] (xs : List R),
+    (0 : R) ≤ xs.foldr (fun x total => x^2 + total) (0 : R)
+
+theorem sumsOfSquares (f : type_of% @OrderedRing.sq_nonneg.{u}) : SumOfSquares.{u} := by
+  intro R _ _ _ _ _ _ xs
+  induction xs with
+  | nil => exact IsPreorder.le_refl (0 : R)
+  | cons x xs ih =>
+    have step := (OrderedAdd.add_le_left_iff (xs.foldr (fun x s => x^2 + s) (0 : R))).mp (f (a := x))
+    rw [AddCommMonoid.zero_add] at step
+    exact IsPreorder.le_trans _ _ _ ih step
+
+def witnesses : List (Name × (Name × Name)) := [
+  (``Field.IsOrdered.mul_le_mul_iff_of_pos_left, ``PositiveMultipliers, ``fromPosLeft),
+  (``Field.IsOrdered.mul_le_mul_iff_of_pos_right, ``PositiveMultipliers, ``fromPosRight),
+  (``Field.IsOrdered.mul_le_mul_iff_of_neg_left, ``PositiveMultipliers, ``fromNegLeft),
+  (``Field.IsOrdered.mul_le_mul_iff_of_neg_right, ``PositiveMultipliers, ``fromNegRight),
+  (``Field.IsOrdered.le_mul_inv_iff_mul_le, ``PositiveMultipliers, ``fromDivision),
+  (``Field.IsOrdered.le_mul_inv_iff_le_mul_of_neg, ``PositiveMultipliers, ``fromNegativeDivision),
+  (``Field.IsOrdered.mul_inv_le_iff_mul_le_of_neg, ``PositiveMultipliers, ``fromNegativeDivisionLeft),
+  (``Field.IsOrdered.inv_nonpos_iff, ``OppositeSigns, ``fromInverseNonpos),
+  (``Field.IsOrdered.inv_nonneg_iff, ``OppositeSigns, ``fromInverseNonneg),
+  (``OrderedRing.mul_le_mul_of_nonneg_left, ``NonnegativeProducts, ``fromLeft),
+  (``OrderedRing.mul_le_mul_of_nonneg_right, ``NonnegativeProducts, ``fromRight),
+  (``OrderedRing.mul_le_mul_of_nonpos_left, ``NonnegativeProducts, ``fromLeftNeg),
+  (``OrderedRing.mul_le_mul_of_nonpos_right, ``NonnegativeProducts, ``fromRightNeg),
+  (``OrderedRing.mul_nonneg_of_nonpos_of_nonpos, ``NonnegativeProducts, ``fromTwoNonpositive),
+  (``OrderedRing.mul_nonpos_of_nonneg_of_nonpos, ``NonnegativeProducts, ``fromMixedRight),
+  (``OrderedRing.mul_nonpos_of_nonpos_of_nonneg, ``NonnegativeProducts, ``fromMixedLeft),
+  (``OrderedRing.mul_nonneg, ``SignedSquare, ``signedSquareOfProduct),
+  (``OrderedRing.mul_nonneg_iff, ``LinearSquare, ``squareOfProductSigns),
+  (``OrderedRing.sq_nonneg, ``SumOfSquares, ``sumsOfSquares)]
+
+end WeakRingOrder
+
+namespace NaturalCancellation
+
+open Nat.Internal.Linear
+
+/-- Two slots in the official linear expression evaluator. -/
+private abbrev pairCtx (a b : Nat) : Context := .branch 1 (.leaf a) (.leaf b)
+private abbrev plusOne (i : Nat) : Nat.Internal.Linear.Expr := .add (.var i) (.num 1)
+
+/-- Removing one successor from each side preserves the proposition itself. -/
+def SuccLeEq := ∀ a b : Nat, (a.succ ≤ b.succ) = (a ≤ b)
+
+theorem exprEq (rule : type_of% @Expr.of_cancel_eq) : type_of% @Nat.succ.injEq := by
+  intro a b
+  exact rule (pairCtx a b) (plusOne 0) (plusOne 1) (.var 0) (.var 1) rfl
+
+theorem exprLe (rule : type_of% @Expr.of_cancel_le) : SuccLeEq := by
+  intro a b
+  exact rule (pairCtx a b) (plusOne 0) (plusOne 1) (.var 0) (.var 1) rfl
+
+theorem exprNormEq (rule : type_of% @ExprCnstr.eq_of_toNormPoly_eq) : type_of% @Nat.succ.injEq := by
+  intro a b
+  exact rule (pairCtx a b) ⟨true, plusOne 0, plusOne 1⟩ ⟨true, .var 0, .var 1⟩ rfl
+
+theorem exprNorm (rule : type_of% @ExprCnstr.denote_toNormPoly) : type_of% @Nat.succ.injEq := by
+  intro a b
+  have h := (rule (pairCtx a b) ⟨true, plusOne 0, plusOne 1⟩).symm
+  change (a.succ = b.succ) = (1 * a = 1 * b) at h
+  rwa [Nat.one_mul, Nat.one_mul] at h
+
+private abbrev polyPlus (i : Nat) : Poly := [(1, i), (1, fixedVar)]
+
+theorem polyEq (rule : type_of% @Poly.denote_eq_cancel_eq) : type_of% @Nat.succ.injEq := by
+  intro a b
+  have h := (rule (pairCtx a b) (polyPlus 0) (polyPlus 1)).symm
+  change ((1 * a) + 1 = (1 * b) + 1) = (1 * a = 1 * b) at h
+  rwa [Nat.one_mul, Nat.one_mul] at h
+
+theorem polyLe (rule : type_of% @Poly.denote_le_cancel_eq) : SuccLeEq := by
+  intro a b
+  have h := (rule (pairCtx a b) (polyPlus 0) (polyPlus 1)).symm
+  change ((1 * a) + 1 ≤ (1 * b) + 1) = (1 * a ≤ 1 * b) at h
+  rwa [Nat.one_mul, Nat.one_mul] at h
+
+
+/-- Strict comparison reflects the same successor cancellation. -/
+def SuccLtEq := ∀ a b : Nat, (a.succ < b.succ) = (a < b)
+
+theorem exprLt (rule : type_of% @Expr.of_cancel_lt) : SuccLtEq := by
+  intro a b
+  exact rule (pairCtx a b) (plusOne 0) (plusOne 1) (.var 0) (.var 1) rfl
+
+end NaturalCancellation
+
+namespace IntegerCancellation
+
+open Int.Internal.Linear
+
+private abbrev pairCtx (a b : Int) : Context := .branch 1 (.leaf a) (.leaf b)
+private abbrev plusOne (i : Nat) : Int.Internal.Linear.Expr := .add (.var i) (.num 1)
+def AddOneEq := ∀ a b : Int, (a + 1 = b + 1) = (a = b)
+def AddOneLE := ∀ a b : Int, (a + 1 ≤ b + 1) = (a ≤ b)
+private abbrev difference : Poly := .add (-1) 1 (.add 1 0 (.num 0))
+
+
+theorem eqVar (rule : type_of% @norm_eq_var) : AddOneEq := by
+  intro a b
+  exact rule (pairCtx b a) (plusOne 1) (plusOne 0) 1 0 rfl
+
+theorem eqNorm (rule : type_of% @norm_eq) : AddOneEq := by
+  intro a b
+  exact (rule (pairCtx a b) (plusOne 0) (plusOne 1) difference rfl).trans
+    (rule (pairCtx a b) (.var 0) (.var 1) difference rfl).symm
+
+theorem leNorm (rule : type_of% @norm_le) : AddOneLE := by
+  intro a b
+  exact (rule (pairCtx a b) (plusOne 0) (plusOne 1) difference rfl).trans
+    (rule (pairCtx a b) (.var 0) (.var 1) difference rfl).symm
+
+theorem eqCoeff (rule : type_of% @norm_eq_coeff) : AddOneEq := by
+  intro a b
+  exact (rule (pairCtx a b) (plusOne 0) (plusOne 1) difference 1 rfl).trans
+    (rule (pairCtx a b) (.var 0) (.var 1) difference 1 rfl).symm
+
+theorem leCoeff (rule : type_of% @norm_le_coeff) : AddOneLE := by
+  intro a b
+  exact (rule (pairCtx a b) (plusOne 0) (plusOne 1) difference 1 rfl).trans
+    (rule (pairCtx a b) (.var 0) (.var 1) difference 1 rfl).symm
+
+end IntegerCancellation
+
+end OmegaChecks.InitBoundaries

@@ -66,7 +66,8 @@ def report(product, require_complete=False):
     with tempfile.TemporaryDirectory(dir=product) as work:
         stage = Path(work)
         inventory = stage / "init-inventory.json"
-        subprocess.run(["lean", "--run", HERE.parent / "InitInventory.lean", product / "lib", inventory],
+        subprocess.run(["lake", "build", "+OmegaChecks.InitInventory"], cwd=ROOT, check=True)
+        subprocess.run(["lake", "env", "lean", "--run", HERE.parent / "InitInventory.lean", product / "lib", inventory],
                        cwd=ROOT, check=True)
         official = json.loads(inventory.read_text())
         reduction_count, unresolved = check_coverage(official)
