@@ -5,6 +5,7 @@ public import OmegaChecks.InitPort.Alternatives.VectorNested
 public import OmegaChecks.InitPort.Alternatives.VectorNumeric
 import all Init.Data.Vector.Basic
 import Init.Data.Vector.Lemmas
+import Init.Data.Vector.Monadic
 
 /-! Fixed-length array lookup, replacement and decision laws. -/
 
@@ -110,5 +111,50 @@ public theorem Vector.getElem_replace_of_ne : type_of% @_root_.Vector.getElem_re
   intro α _ _ n a b xs i hi miss
   obtain ⟨data, rfl⟩ := xs
   exact _root_.Array.getElem_replace_of_ne (h := hi) miss
+
+
+public theorem Vector.anyM_congr : type_of% @_root_.Vector.anyM_congr := by
+  intro m α n inst xs ys rfl p q h
+  exact Array.anyM_congr (xs := xs.toArray) rfl h rfl rfl
+
+public theorem Vector.allM_congr : type_of% @_root_.Vector.allM_congr := by
+  intro m α n inst xs ys rfl p q h
+  exact Array.allM_congr (xs := xs.toArray) rfl h rfl rfl
+
+public theorem Vector.foldlM_map : type_of% @_root_.Vector.foldlM_map := by
+  intros
+  unfold Vector.foldlM
+  rw [Vector.toArray_map, Array.size_map]
+  exact Array.foldlM_map (w := rfl)
+
+public theorem Vector.foldrM_map : type_of% @_root_.Vector.foldrM_map := by
+  intros
+  unfold Vector.foldrM
+  rw [Vector.toArray_map, Array.size_map]
+  exact Array.foldrM_map (w := rfl)
+
+private theorem attachWithFromAttach {xs : Vector α n} {q : α → Prop} (h : ∀ a ∈ xs, q a) :
+    xs.attachWith q h = xs.attach.map (fun x => ⟨x.val, h _ x.property⟩) := by
+  apply Vector.ext
+  intro i hi
+  exact Subtype.ext (by rw [Vector.getElem_map, Vector.getElem_attach, Vector.getElem_attachWith])
+
+public theorem Vector.foldlM_attachWith : type_of% @_root_.Vector.foldlM_attachWith := by
+  intro m α n β mon xs q H f b
+  rw [attachWithFromAttach H]
+  exact Vector.foldlM_map
+
+public theorem Vector.foldrM_attachWith : type_of% @_root_.Vector.foldrM_attachWith := by
+  intro m α n β mon law xs q H f b
+  rw [attachWithFromAttach H]
+  exact Vector.foldrM_map
+
+public theorem Vector.idRun_forIn'_yield_eq_foldl : type_of% @_root_.Vector.idRun_forIn'_yield_eq_foldl := by
+  intros
+  exact Vector.forIn'_pure_yield_eq_foldl (m := Id) _ _
+
+public theorem Vector.idRun_forIn_yield_eq_foldl : type_of% @_root_.Vector.idRun_forIn_yield_eq_foldl := by
+  intros
+  exact Vector.forIn_pure_yield_eq_foldl (m := Id) _ _
 
 end OmegaChecks.InitPort.Alternatives

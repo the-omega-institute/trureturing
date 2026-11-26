@@ -1,6 +1,8 @@
 module
 import all Init.Data.Array.OfFn
+import all Init.Data.Vector.Basic
 import all Init.Data.Vector.OfFn
+import Init.Data.Vector.Monadic
 public import Init.Data.Array.Monadic
 import all Init.Data.Array.Basic
 public import Init.Data.List.Monadic
@@ -927,5 +929,70 @@ public theorem Vector.ofFnM_pure_comp : type_of% @_root_.Vector.ofFnM_pure_comp 
 public theorem Vector.idRun_ofFnM : type_of% @_root_.Vector.idRun_ofFnM := by
   intro α n f
   exact _root_.Vector.ofFnM_pure_comp (m := Id)
+
+public theorem Vector.mapM_pure : type_of% @_root_.Vector.mapM_pure := by
+  intro m α n β mon law xs f
+  let agrees (p : (k : Nat) ×' (_ : k ≤ n) ×' Vector β k) (out : m (Vector β n)) :=
+    (∀ j (hj : j < p.1), p.2.2[j] = f (xs[j]'(Nat.lt_of_lt_of_le hj p.2.1))) →
+      out = pure (xs.map f)
+  delta _root_.Vector.mapM _root_.Vector.mapM.go _root_.Vector.mapM.go._unary
+  apply fixInvariant _ agrees
+  · rintro ⟨k, hk, acc⟩ recur ih
+    dsimp only [agrees]
+    intro prefixAgree
+    by_cases h : k < n
+    · rw [dite_eq_left h, pure_bind]
+      apply ih
+      intro j hj
+      by_cases old : j < k
+      · exact (Vector.getElem_push_lt old).trans (prefixAgree j old)
+      · have last : j = k := Nat.le_antisymm (Nat.le_of_lt_succ hj) (Nat.le_of_not_lt old)
+        subst j
+        exact Vector.getElem_push_eq
+    · rw [dite_eq_right h]
+      apply congrArg pure
+      apply Vector.ext
+      intro j hj
+      rw [Vector.getElem_cast, Vector.getElem_map]
+      exact prefixAgree j _
+  · intro j hj
+    exact False.elim (Nat.not_lt_zero _ hj)
+
+private theorem mapVectorEffects [Monad m] (xs : Vector α n) (ys : Vector β n)
+    (f : α → m γ) (g : β → m γ) (same : ∀ i (hi : i < n), f xs[i] = g ys[i]) :
+    xs.mapM f = ys.mapM g := by
+  let State := (i : Nat) ×' (_ : i ≤ n) ×' Vector γ i
+  let measure (s : State) : Nat := s.casesOn fun i t => t.casesOn fun _ _ => n - i
+  let step (read : Fin n → m γ) (s : State) (next : ∀ t, measure t < measure s → m (Vector γ n)) :=
+    s.casesOn (motive := fun s => (∀ t, measure t < measure s → m (Vector γ n)) → m (Vector γ n))
+      (fun i t => t.casesOn (motive := fun t => (∀ s, measure s < measure ⟨i, t⟩ → m (Vector γ n)) → m (Vector γ n))
+        fun hi acc next => if inside : i < n then read ⟨i, inside⟩ >>= fun val =>
+          next ⟨i+1, inside, acc.push val⟩ (Nat.sub_succ_lt_self _ _ inside)
+        else pure (acc.cast (Nat.le_antisymm hi (Nat.le_of_not_gt inside)))) next
+  let left (i : Fin n) := f xs[i.val]
+  let right (i : Fin n) := g ys[i.val]
+  have eq (fuel i : Nat) (hi : i ≤ n) (enough : n - i < fuel) :
+      (fun acc => WellFounded.Nat.fix.go measure (step left) fuel ⟨i, hi, acc⟩ enough) =
+      (fun acc => WellFounded.Nat.fix.go measure (step right) fuel ⟨i, hi, acc⟩ enough) := by
+    induction fuel generalizing i with
+    | zero => exact (Nat.not_lt_zero _ enough).elim
+    | succ fuel ih =>
+      dsimp only [WellFounded.Nat.fix.go, step]
+      by_cases inside : i < n
+      · apply (dependentBranch inside _ _).trans
+        apply Eq.trans _ (dependentBranch inside _ _).symm
+        dsimp only [left, right]
+        rw [same i inside]
+        exact congrArg (fun cont acc => g ys[i] >>= fun val => cont (Vector.push acc val))
+          (ih (i+1) inside (Nat.lt_of_lt_of_le (Nat.sub_succ_lt_self _ _ inside) (Nat.le_of_lt_succ enough)))
+      · apply (dependentElse inside _ _).trans
+        symm
+        apply dependentElse inside
+  delta _root_.Vector.mapM _root_.Vector.mapM.go _root_.Vector.mapM.go._unary WellFounded.Nat.fix
+  exact congrFun (eq _ 0 (Nat.zero_le _) (by rw [WellFounded.Nat.eager_eq]; exact Nat.lt_succ_self _)) #v[]
+
+public theorem Vector.mapM_map : type_of% @_root_.Vector.mapM_map := by
+  intro m α β γ n mon law f g xs
+  exact mapVectorEffects (xs.map f) xs g (g ∘ f) fun i hi => congrArg g (Vector.getElem_map f hi)
 
 end OmegaChecks.InitPort.Alternatives
