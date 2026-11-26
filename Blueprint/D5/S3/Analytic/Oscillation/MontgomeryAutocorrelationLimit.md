@@ -20,8 +20,23 @@ The quotient tends to the square of the integral of the test plus its Fourier en
 
 Bounded discrepancy bounds the number of atoms in each scaled distance shell. Rapid decay of the autocorrelation controls the shell sum of the change from the Lorentz pair weight to one. After counting normalization the cost tends to zero.
 
+**Theorem 1.2 (Unweighted autocorrelation from convergence against fixed tests).**
+
+Lean statement: `D5/S3/Analytic/Oscillation/MontgomeryAutocorrelationLimit.spectral_unweighted_limit_of_test_limit`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/Oscillation/MontgomeryAutocorrelationLimit.spectral_unweighted_limit_of_test_limit` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For the same spectrum, assume that for every fixed real Schwartz test with Fourier support on the unit band, integrating the Montgomery profile against its squared Fourier modulus tends to the square of the test integral plus the Fourier energy weighted by absolute frequency. If a single bound controls the two-term counting discrepancy at every real height at least two pi, the unweighted autocorrelation sum of that test has the same limit after division by H log H over two pi.
+
+The Fourier integral equals the normalized Lorentz-weighted autocorrelation at the same cutoff. The bound on the number of ordinates per scaled distance shell makes the normalized cost of removing the Lorentz weight tend to zero.
+
 ## References
 
 - Truth anchor: `D5/S3/Analytic/Oscillation/MontgomeryAutocorrelationLimit.spectral_unweighted_limit`
+- Truth anchor: `D5/S3/Analytic/Oscillation/MontgomeryAutocorrelationLimit.spectral_unweighted_limit_of_test_limit`
 - Dependency: [D5/S3/Analytic/Oscillation/MontgomeryWindow](MontgomeryWindow.md)
 - Dependency: [D5/S3/Analytic/Oscillation/SmoothedSpectrumCounting](SmoothedSpectrumCounting.md)
