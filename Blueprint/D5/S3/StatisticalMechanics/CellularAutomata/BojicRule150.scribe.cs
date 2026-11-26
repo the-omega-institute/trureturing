@@ -58,5 +58,8 @@ internal sealed class BojicRule150Document : IScribeDocumentDefinition
                     + "(1 + X + X²)^d − X^d. The nonzero polynomial on the right has "
                     + "degree at most 2d. Thus q ≤ 2d, and q/d is an odd integer, "
                     + "so d = q."))),
-            DescribeRole.Theorem))));
+            DescribeRole.Theorem,
+            openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                ProblemSlugRef.Create("bojic-2026-rule-150-local-lcm"),
+                ResolutionKind.Proved)))));
 }
