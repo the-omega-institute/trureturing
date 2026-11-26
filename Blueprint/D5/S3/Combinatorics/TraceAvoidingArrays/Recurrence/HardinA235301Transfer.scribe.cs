@@ -28,6 +28,14 @@ internal sealed class HardinA235301TransferDocument : IScribeDocumentDefinition
         "Weighted transfer of stress-three boundary words.",
         H("Weighted row transfer"),
         Blocks(
+            Data("index", "index", "Column edge index", EdgeIndex(),
+                "A mask bit represents the parity and ordered pair of letters of a column edge."),
+            Data("par", "par", "Parity of an index", All(F.Id("n"), Nat,
+                Eqn(Call("par", F.Id("n")), Call("decide", Par(Eqn(Call("mod", F.Id("n"), D(2)), D(1)))))),
+                "The Boolean is true at odd indices."),
+            Lemma("par-succ", "par_succ", "Parity of the successor", All(F.Id("n"), Nat,
+                Eqn(Call("par", Seq(F.Id("n"), Plus, D(1))), Call("not", Call("par", F.Id("n"))))),
+                "Each step in the column continuation count flips the parity."),
             Data("state", "State", "Transfer state", Typed(State, Type),
                 "The record fields are parity of type Bool, last of type Fin 6, and mask of type Nat. "
                 + "The mask stores the surviving column edges, indexed by parity and the two letters."),
@@ -116,6 +124,17 @@ internal sealed class HardinA235301TransferDocument : IScribeDocumentDefinition
                 "By the boundary-word equivalence, each row word contributes the number of compatible "
                 + "column words. At positive width, a discarded state has zero contribution.",
                 DescribeRole.Theorem))));
+
+    private static Formula EdgeIndex()
+    {
+        var p = F.Id("p");
+        var a = F.Id("a");
+        var b = F.Id("b");
+        var letter = Call("Fin", D(6));
+        return All(p, F.Id("Bool"), All(a, letter, All(b, letter,
+            Eqn(Call("index", p, a, b), Seq(D(3, 6), Cdot, Sp, Call("toNat", p), Plus,
+                D(6), Cdot, Sp, Call("val", a), Plus, Call("val", b))))));
+    }
 
     private static Formula Value()
     {

@@ -160,5 +160,71 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 1, 0, 0, 0, 0, 0}
 
 end Normalize
 
+namespace Parity
+
+private abbrev signature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℕ) (fun _ => Bool)
+
+private def actual : Realization signature :=
+  realize signature (fun _ _ i => par i) (fun e => nomatch e)
+
+private def rejected : Realization signature :=
+  realize signature (fun _ _ _ => false) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ n : ℕ, par (n + 1) = !(R.readout () () n)
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro law
+  exact (by decide : par 2 ≠ true) (law 1)
+
+private theorem actual_dependence : ObservationalDependence signature actual := by
+  intro role
+  cases role
+  exact ⟨(), 0, 1, (by decide +kernel : par 0 ≠ par 1)⟩
+
+def family : Registration arena (type_of% @par_succ) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨par_succ, rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law actual rejected rejected_law
+  dependence := actual_dependence
+
+def audit : Contract.Registration.{0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+    (@par_succ) (Realization signature) Type Unit where
+  unitName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.Recurrence.HardinA235301Transfer.Parity.auditUnit
+  realizationName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.Recurrence.HardinA235301Transfer.Parity.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ i => par i) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Combinatorics.TraceAvoidingArrays.Recurrence.HardinA235301Transfer
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "arg", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end Parity
+
 end
 end Reg.D5.S3.Combinatorics.TraceAvoidingArrays.Recurrence.HardinA235301Transfer

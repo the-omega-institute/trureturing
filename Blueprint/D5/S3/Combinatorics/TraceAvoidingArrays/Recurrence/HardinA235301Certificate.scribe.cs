@@ -17,7 +17,21 @@ internal sealed class HardinA235301CertificateDocument : IScribeDocumentDefiniti
             Blocks(Paragraph(Text("The kernel checks three identities on signed histories. The third residual "
                 + "is the normalized concatenation of the preceding two with coefficients minus three and "
                 + "minus two. Grouping the first two histories by mask gives the empty list in each case."))),
-            DescribeRole.Theorem))));
+            DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("initial-path"),
+                DeclarationHandle.Create(Owner + ".initialPath"), H("Initial transfer histories"),
+                StatementSource.FromAuthor(Disp(Seq(F.Id("initialPath"), Colon, Sp, Call("Fin", D(1, 0)),
+                    Sp, To, Sp, Call("Hist", F.Id("State"))))), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The entries are the stored histories for heights one through ten."))),
+                DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("initial-path-eq"),
+                DeclarationHandle.Create(Owner + ".initial_path_eq"), H("Correctness of the initial histories"),
+                StatementSource.FromAuthor(Disp(Seq(Forall, Sp, F.Id("i"), Colon, Sp, Call("Fin", D(1, 0)),
+                    Comma, Sp, Eqn(Call("path", Seq(Call("val", F.Id("i")), Plus, D(1))),
+                        Call("initialPath", F.Id("i")))))), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Each entry uses the corresponding checked row-transfer identity. "
+                    + "The square recurrence uses these histories to compute the initial literal counts."))),
+                DescribeRole.Theorem))));
 
     private static Formula Statement()
     {
