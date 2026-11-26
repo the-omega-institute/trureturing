@@ -649,4 +649,185 @@ private theorem exact_cuts {C : Coloring n} (hC : Good C) (hcount : foldCount C 
   simp only [Finset.sum_const, Finset.card_univ, card_cut, Nat.nsmul_eq_mul] at hlt
   omega
 
+private theorem zero_side_folds {C : Coloring n} (hC : Good C) (hn : 0 < n)
+    (hcard : (cutFolds C (.x, ⟨0, hn⟩)).card = 2)
+    (p : Point n 1) (hp : p.x = 0) : Fold C (edge p .x false) := by
+  let r : Ring n := ⟨0, n - 1, by omega⟩
+  let p₀ := r.U 0 (Nat.zero_le _)
+  let p₁ := r.U r.width (le_refl _)
+  let e₀ := edge p₀ .y false
+  let e₁ := edge p₁ .z false
+  have h₀ : p₀.coord .y = 0 := rfl
+  have h₁ : p₁.coord .z = 0 := Nat.sub_self _
+  have opp₀ : C (up false p₀) ≠ C (up true p₀) := by
+    exact corner_opposite (good_rotate hC) (Point.rotate.symm p₀) rfl rfl
+  have opp₁ : C (up false p₁) ≠ C (up true p₁) := by
+    exact corner_opposite (good_rotate (good_rotate hC))
+      (Point.rotate.symm (Point.rotate.symm p₁)) (Nat.sub_self _) rfl
+  have he₀ : e₀ ∈ cutFolds C r.cut :=
+    mem_cutFolds.mpr ⟨by simpa only [e₀, Fold, edgeFaces_seam _ _ h₀] using opp₀,
+      ring_crosses _ (by decide) _⟩
+  have he₁ : e₁ ∈ cutFolds C r.cut :=
+    mem_cutFolds.mpr ⟨by simpa only [e₁, Fold, edgeFaces_seam _ _ h₁] using opp₁,
+      ring_crosses _ (by decide) _⟩
+  have hne : e₀ ≠ e₁ := by
+    intro h
+    have : Axis.y = Axis.z := congrArg (fun e : Edge n => e.val.2.1) h
+    cases this
+  have hcut : cutFolds C r.cut = {e₀, e₁} := by
+    apply (Finset.eq_of_subset_of_card_le (Finset.insert_subset he₀ (Finset.singleton_subset_iff.mpr he₁)) _).symm
+    change (cutFolds C (.x, ⟨0, hn⟩)).card ≤ _
+    rw [hcard]
+    have hm : e₀ ∉ ({e₁} : Finset (Edge n)) := by simpa using hne
+    simp [Finset.card_insert_of_notMem hm]
+  have internal (e : Edge n) (hc : Crosses e r.cut)
+      (hi : e.val.1.coord e.val.2.1 ≠ 0) : ¬ Fold C e := by
+    intro hfold
+    have he := mem_cutFolds.mpr ⟨hfold, hc⟩
+    rw [hcut] at he
+    rcases Finset.mem_insert.mp he with he | he
+    · exact hi (he.symm ▸ h₀)
+    · have he' := Finset.mem_singleton.mp he
+      exact hi (he'.symm ▸ h₁)
+  have colors (s : Bool) (j : ℕ) (hj : j ≤ r.width) :
+      C (up s (r.U j hj)) = C (up s p₀) := by
+    induction j with
+    | zero => rfl
+    | succ j ih =>
+      have hj' : j < r.width := by omega
+      have hz := internal (edge (r.U j (by omega)) .z s) (ring_crosses _ (by decide) _)
+        (by change r.width - j ≠ 0; omega)
+      have hy := internal (edge (r.U (j+1) hj) .y s) (ring_crosses _ (by decide) _)
+        (by change j+1 ≠ 0; omega)
+      have hz' : C (up s (r.U j (by omega))) = C (down s (r.D j hj')) :=
+        not_not.mp (by simpa only [Fold, ring_edge_z hj' s] using hz)
+      have hy' : C (up s (r.U (j+1) hj)) = C (down s (r.D j hj')) :=
+        not_not.mp (by simpa only [Fold, ring_edge_y hj' s] using hy)
+      exact hy'.trans (hz'.symm.trans (ih (by omega)))
+  have hpy : p.y ≤ r.width := by
+    have := p.total
+    change p.y ≤ n - 1
+    omega
+  have hp' : r.U p.y hpy = p := by
+    apply Point.ext
+    · exact hp.symm
+    · rfl
+    · have := p.total
+      change n - 1 - p.y = p.z
+      omega
+  have hf := colors false p.y hpy
+  have hb := colors true p.y hpy
+  rw [hp'] at hf hb
+  simp only [Fold, edgeFaces_seam _ .x hp]
+  exact fun he => opp₀ (hf.symm.trans (he.trans hb))
+
+private theorem every_seam_fold {C : Coloring n} (hC : Good C) (hn : 0 < n)
+    (htotal : foldCount C = 3 * n) (p : Point n 1) (a : Axis) (h : p.coord a = 0) :
+    Fold C (edge p a false) := by
+  let cut : Cut n := (.x, ⟨0, hn⟩)
+  cases a with
+  | x => exact zero_side_folds hC hn (exact_cuts hC htotal cut) p h
+  | y =>
+    let C' : Coloring n := fun f => C (rotateFace f)
+    have hc : (cutFolds (fun f => C' (rotateFace f)) cut).card = 2 := by
+      rw [cut_card_rotate C', cut_card_rotate C]
+      exact exact_cuts hC htotal _
+    have hfold := zero_side_folds (good_rotate (good_rotate hC)) hn hc
+      (Point.rotate.symm (Point.rotate.symm p)) h
+    have hfold' := (fold_rotate (C := C')).mp hfold
+    have hfold'' := (fold_rotate (C := C)).mp hfold'
+    simpa [rotateEdge_mk, Axis.rotate] using hfold''
+  | z =>
+    have hc : (cutFolds (fun f => C (rotateFace f)) cut).card = 2 := by
+      rw [cut_card_rotate C]
+      exact exact_cuts hC htotal _
+    have hfold := zero_side_folds (good_rotate hC) hn hc (Point.rotate.symm p) h
+    apply fold_rotate.mp at hfold
+    simpa [rotateEdge_mk, Axis.rotate] using hfold
+
+private def seamPoint (k : Fin n) (a : Axis) : Point n 1 :=
+  match a with
+  | .x => ⟨0, k.val, n - (k.val + 1), by have := k.isLt; omega⟩
+  | .y => ⟨n - (k.val + 1), 0, k.val, by have := k.isLt; omega⟩
+  | .z => ⟨k.val, n - (k.val + 1), 0, by have := k.isLt; omega⟩
+
+private theorem seamPoint_zero (k : Fin n) (a : Axis) : (seamPoint k a).coord a = 0 := by
+  cases a <;> rfl
+
+private def seamEmbedding : Cut n ↪ Edge n where
+  toFun r := edge (seamPoint r.2 r.1) r.1 false
+  inj' := by
+    rintro ⟨a,k⟩ ⟨b,l⟩ h
+    have hab : a = b := congrArg (fun e : Edge n => e.val.2.1) h
+    subst b
+    have hp : seamPoint k a = seamPoint l a := congrArg (fun e : Edge n => e.val.1) h
+    apply congrArg (fun i : Fin n => (a, i))
+    apply Fin.ext
+    cases a
+    · exact congrArg Point.y hp
+    · exact congrArg Point.z hp
+    · exact congrArg Point.x hp
+
+private def seams : Finset (Edge n) := Finset.univ.map seamEmbedding
+
+private theorem card_seams : (seams (n := n)).card = 3 * n := by
+  rw [seams, Finset.card_map, Finset.card_univ, card_cut]
+
+private theorem mem_seams {e : Edge n} : e ∈ seams ↔ e.val.1.coord e.val.2.1 = 0 := by
+  constructor
+  · intro h
+    obtain ⟨⟨a,k⟩, _, rfl⟩ := Finset.mem_map.mp h
+    exact seamPoint_zero k a
+  · intro he
+    let p := e.val.1
+    let a := e.val.2.1
+    have hs := e.property he
+    have hr : edge p a false = e := by
+      simpa only [hs] using edge_eta e
+    have hex : ∃ k : Fin n, seamPoint k a = p := by
+      have ht := p.total
+      cases ha : a with
+      | x =>
+        have h : p.x = 0 := by
+          have hp : p.coord a = 0 := he
+          rw [ha] at hp
+          exact hp
+        refine ⟨⟨p.y, by omega⟩, Point.ext h.symm rfl ?_⟩
+        change n - (p.y + 1) = p.z
+        omega
+      | y =>
+        have h : p.y = 0 := by
+          have hp : p.coord a = 0 := he
+          rw [ha] at hp
+          exact hp
+        refine ⟨⟨p.z, by omega⟩, Point.ext ?_ h.symm rfl⟩
+        change n - (p.z + 1) = p.x
+        omega
+      | z =>
+        have h : p.z = 0 := by
+          have hp : p.coord a = 0 := he
+          rw [ha] at hp
+          exact hp
+        refine ⟨⟨p.x, by omega⟩, Point.ext rfl ?_ h.symm⟩
+        change n - (p.x + 1) = p.y
+        omega
+    obtain ⟨k,hk⟩ := hex
+    refine Finset.mem_map.mpr ⟨(a,k), Finset.mem_univ _, ?_⟩
+    change edge (seamPoint k a) a false = e
+    rw [hk, hr]
+
+private theorem folds_eq_seams {C : Coloring n} (hC : Good C) (hn : 0 < n)
+    (hcount : foldCount C = 3 * n) : folds C = seams := by
+  apply (Finset.eq_of_subset_of_card_le _ _).symm
+  · intro e he
+    have h := mem_seams.mp he
+    have hs := e.property h
+    have hf := every_seam_fold hC hn hcount e.val.1 e.val.2.1 h
+    have hr : edge e.val.1 e.val.2.1 false = e := by
+      simpa only [hs] using edge_eta e
+    rw [hr] at hf
+    simpa [folds] using hf
+  · rw [card_seams, ← hcount]
+    exact le_rfl
+
 end D5.S0.FiniteGeometry.DoubledTriangleFolds
