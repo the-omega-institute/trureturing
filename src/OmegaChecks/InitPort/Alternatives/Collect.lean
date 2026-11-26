@@ -5,6 +5,10 @@ public import Init.Data.Iterators.Combinators.Monadic.Take
 public import Init.Data.Iterators.Lemmas.Consumers.Loop
 public import Init.Data.Iterators.Lemmas.Combinators.FilterMap
 import all Init.Data.Iterators.Combinators.Monadic.FilterMap
+import all Init.Data.Iterators.Consumers.Monadic.Total
+import all Init.Data.Iterators.Consumers.Total
+import all Init.Data.Range.Polymorphic.RangeIterator
+import all Init.Data.Range.Polymorphic.Iterators
 public import Init.Data.Range.Polymorphic.Instances
 public import Init.Data.Range.Polymorphic.Map
 
@@ -20,15 +24,20 @@ private theorem collectorWF {α β σ : Type u} {m : Type u → Type v}
       (fun p : (_ : IterM (α := α) m β) ×' σ => p.1.finitelyManySteps!)) :=
   InvImage.wf _ (IterM.TerminationMeasures.instWellFoundedRelationFinite (α := α) (m := m)).wf
 
-public noncomputable def Std.IterM.Total.toArray
+private noncomputable def collectArrayFrom
     {α : Type u} {m : Type u → Type v} {β : Type u} [Monad m] [Iterator α m β]
-    [Finite α m] (it : IterM.Total (α := α) m β) : m (Array β) :=
+    [Finite α m] (it : IterM (α := α) m β) (acc : Array β) : m (Array β) :=
   (collectorWF (α := α) (β := β) (m := m) (σ := Array β)).fix (C := fun _ => m (Array β))
     (fun p recur => do
       match (← p.1.step).inflate with
       | .yield next out h => recur ⟨next, p.2.push out⟩ (IterM.TerminationMeasures.Finite.rel_of_yield h)
       | .skip next h => recur ⟨next, p.2⟩ (IterM.TerminationMeasures.Finite.rel_of_skip h)
-      | .done _ => return p.2) ⟨it.it, #[]⟩
+      | .done _ => return p.2) ⟨it, acc⟩
+
+public noncomputable def Std.IterM.Total.toArray
+    {α : Type u} {m : Type u → Type v} {β : Type u} [Monad m] [Iterator α m β]
+    [Finite α m] (it : IterM.Total (α := α) m β) : m (Array β) :=
+  collectArrayFrom it.it #[]
 
 public noncomputable def Std.IterM.Total.toListRev
     {α : Type u} {m : Type u → Type v} {β : Type u} [Monad m] [Iterator α m β]
@@ -40,9 +49,9 @@ public noncomputable def Std.IterM.Total.toListRev
       | .skip next h => recur ⟨next, p.2⟩ (IterM.TerminationMeasures.Finite.rel_of_skip h)
       | .done _ => return p.2) ⟨it.it, []⟩
 
-public def Std.IterM.Total.toList {α : Type u} {m : Type u → Type v} {β : Type u} [Monad m]
+public noncomputable def Std.IterM.Total.toList {α : Type u} {m : Type u → Type v} {β : Type u} [Monad m]
     [Iterator α m β] [Finite α m] (it : IterM.Total (α := α) m β) : m (List β) :=
-  Array.toList <$> _root_.Std.IterM.Total.toArray it
+  Array.toList <$> Std.IterM.Total.toArray it
 
 /-- A decreasing countdown suffices. At equal countdowns, a finite inner iterator
 also allows yielding steps to contribute to the decrease. -/
@@ -401,20 +410,20 @@ public def Std.Iter.Total.toArray (it : Iter.Total (α := α) β) : Array β :=
 public def Std.Iter.Total.toListRev (it : Iter.Total (α := α) β) : List β :=
   it.it.toIterM.ensureTermination.toListRev.run
 
-public def Std.Iter.Total.toList (it : Iter.Total (α := α) β) : List β :=
-  it.it.toIterM.ensureTermination.toList.run
+public noncomputable def Std.Iter.Total.toList (it : Iter.Total (α := α) β) : List β :=
+  (Std.IterM.Total.toList it.it.toIterM.ensureTermination).run
 
-public def Std.Rcc.toList [LE α] [DecidableLE α] [UpwardEnumerable α]
+public noncomputable def Std.Rcc.toList [LE α] [DecidableLE α] [UpwardEnumerable α]
     [LawfulUpwardEnumerable α] [Rxc.IsAlwaysFinite α] (r : Rcc α) : List α :=
-  (_root_.Std.Rcc.Internal.iter r).ensureTermination.toList
+  Std.Iter.Total.toList (_root_.Std.Rcc.Internal.iter r).ensureTermination
 
 public def Std.Rcc.toArray [LE α] [DecidableLE α] [UpwardEnumerable α]
     [LawfulUpwardEnumerable α] [Rxc.IsAlwaysFinite α] (r : Rcc α) : Array α :=
   (_root_.Std.Rcc.Internal.iter r).ensureTermination.toArray
 
-public def Std.Rco.toList [LT α] [DecidableLT α] [UpwardEnumerable α]
+public noncomputable def Std.Rco.toList [LT α] [DecidableLT α] [UpwardEnumerable α]
     [LawfulUpwardEnumerable α] [Rxo.IsAlwaysFinite α] (r : Rco α) : List α :=
-  (_root_.Std.Rco.Internal.iter r).ensureTermination.toList
+  Std.Iter.Total.toList (_root_.Std.Rco.Internal.iter r).ensureTermination
 
 public def Std.Rco.toArray [LT α] [DecidableLT α] [UpwardEnumerable α]
     [LawfulUpwardEnumerable α] [Rxo.IsAlwaysFinite α] (r : Rco α) : Array α :=
@@ -428,17 +437,17 @@ public def Std.Rci.toArray [UpwardEnumerable α]
     [LawfulUpwardEnumerable α] [Rxi.IsAlwaysFinite α] (r : Rci α) : Array α :=
   (_root_.Std.Rci.Internal.iter r).ensureTermination.toArray
 
-public def Std.Roc.toList [LE α] [DecidableLE α] [UpwardEnumerable α]
+public noncomputable def Std.Roc.toList [LE α] [DecidableLE α] [UpwardEnumerable α]
     [LawfulUpwardEnumerable α] [Rxc.IsAlwaysFinite α] (r : Roc α) : List α :=
-  (_root_.Std.Roc.Internal.iter r).ensureTermination.toList
+  Std.Iter.Total.toList (_root_.Std.Roc.Internal.iter r).ensureTermination
 
 public def Std.Roc.toArray [LE α] [DecidableLE α] [UpwardEnumerable α]
     [LawfulUpwardEnumerable α] [Rxc.IsAlwaysFinite α] (r : Roc α) : Array α :=
   (_root_.Std.Roc.Internal.iter r).ensureTermination.toArray
 
-public def Std.Roo.toList [LT α] [DecidableLT α] [UpwardEnumerable α]
+public noncomputable def Std.Roo.toList [LT α] [DecidableLT α] [UpwardEnumerable α]
     [LawfulUpwardEnumerable α] [Rxo.IsAlwaysFinite α] (r : Roo α) : List α :=
-  (_root_.Std.Roo.Internal.iter r).ensureTermination.toList
+  Std.Iter.Total.toList (_root_.Std.Roo.Internal.iter r).ensureTermination
 
 public def Std.Roo.toArray [LT α] [DecidableLT α] [UpwardEnumerable α]
     [LawfulUpwardEnumerable α] [Rxo.IsAlwaysFinite α] (r : Roo α) : Array α :=
@@ -452,17 +461,17 @@ public def Std.Roi.toArray [UpwardEnumerable α]
     [LawfulUpwardEnumerable α] [Rxi.IsAlwaysFinite α] (r : Roi α) : Array α :=
   (_root_.Std.Roi.Internal.iter r).ensureTermination.toArray
 
-public def Std.Ric.toList [Least? α] [LE α] [DecidableLE α] [UpwardEnumerable α]
+public noncomputable def Std.Ric.toList [Least? α] [LE α] [DecidableLE α] [UpwardEnumerable α]
     [LawfulUpwardEnumerable α] [Rxc.IsAlwaysFinite α] (r : Ric α) : List α :=
-  (_root_.Std.Ric.Internal.iter r).ensureTermination.toList
+  Std.Iter.Total.toList (_root_.Std.Ric.Internal.iter r).ensureTermination
 
 public def Std.Ric.toArray [Least? α] [LE α] [DecidableLE α] [UpwardEnumerable α]
     [LawfulUpwardEnumerable α] [Rxc.IsAlwaysFinite α] (r : Ric α) : Array α :=
   (_root_.Std.Ric.Internal.iter r).ensureTermination.toArray
 
-public def Std.Rio.toList [Least? α] [LT α] [DecidableLT α] [UpwardEnumerable α]
+public noncomputable def Std.Rio.toList [Least? α] [LT α] [DecidableLT α] [UpwardEnumerable α]
     [LawfulUpwardEnumerable α] [Rxo.IsAlwaysFinite α] (r : Rio α) : List α :=
-  (_root_.Std.Rio.Internal.iter r).ensureTermination.toList
+  Std.Iter.Total.toList (_root_.Std.Rio.Internal.iter r).ensureTermination
 
 public def Std.Rio.toArray [Least? α] [LT α] [DecidableLT α] [UpwardEnumerable α]
     [LawfulUpwardEnumerable α] [Rxo.IsAlwaysFinite α] (r : Rio α) : Array α :=
@@ -475,5 +484,104 @@ public def Std.Rii.toList [UpwardEnumerable α] [Least? α] (r : Rii α)
 public def Std.Rii.toArray {α} [UpwardEnumerable α] [Least? α] (r : Rii α)
     [Iterator (Rxi.Iterator α) Id α] [Finite (Rxi.Iterator α) Id] : Array α :=
   (_root_.Std.Rii.Internal.iter r).ensureTermination.toArray
+
+private noncomputable def collectInto {α β : Type u} [Iterator α Id β] [Finite α Id]
+    (it : IterM (α := α) Id β) (acc : Array β) : Array β :=
+  collectArrayFrom it acc
+
+private theorem collectInto_eq {α β : Type u} [Iterator α Id β] [Finite α Id]
+    (it : IterM (α := α) Id β) (acc : Array β) :
+    collectInto it acc = match it.step.run.inflate with
+      | .yield next out _ => collectInto next (acc.push out)
+      | .skip next _ => collectInto next acc
+      | .done _ => acc := by
+  unfold collectInto collectArrayFrom
+  rw [WellFounded.fix_eq]
+  dsimp only [bind, Id.run]
+  cases it.step.inflate using PlausibleIterStep.casesOn <;> rfl
+
+private theorem collectInto_prefix {α β : Type u} [Iterator α Id β] [Finite α Id]
+    (it : IterM (α := α) Id β) (pref acc : Array β) :
+    collectInto it (pref ++ acc) = pref ++ collectInto it acc := by
+  induction it using (Finite.wf (α := α) (m := Id) (β := β)).induction generalizing acc with
+  | h it ih =>
+    rw [collectInto_eq it (pref ++ acc), collectInto_eq it acc]
+    cases it.step.run.inflate using PlausibleIterStep.casesOn with
+    | yield next out h =>
+      exact (congrArg (collectInto next) (Array.append_push ..).symm).trans
+        (ih next (IterM.isPlausibleSuccessorOf_of_yield h) _)
+    | skip next h => exact ih next (IterM.isPlausibleSuccessorOf_of_skip h) _
+    | done _ => rfl
+
+private theorem collectList_eq {α β : Type u} [Iterator α Id β] [Finite α Id]
+    (it : IterM (α := α) Id β) :
+    (collectInto it #[]).toList = match it.step.run.inflate.val with
+      | .yield next out => out :: (collectInto next #[]).toList
+      | .skip next => (collectInto next #[]).toList
+      | .done => [] := by
+  rw [collectInto_eq it]
+  cases it.step.run.inflate using PlausibleIterStep.casesOn with
+  | yield next out h =>
+    change (collectInto next #[out]).toList = _
+    have e := collectInto_prefix next #[out] #[]
+    rw [Array.append_empty] at e
+    exact (congrArg Array.toList e).trans Array.toList_append
+  | skip next h => rfl
+  | done _ => rfl
+
+
+private theorem realStepRxo {α : Type u} [UpwardEnumerable α] [LT α] [DecidableLT α] (it : IterM (α := Rxo.Iterator α) Id α) : it.step.run.inflate.val = Rxo.Iterator.Monadic.step it :=
+    congrArg Subtype.val (Shrink.inflate_deflate (x := ⟨Rxo.Iterator.Monadic.step it, rfl⟩) (α := PlausibleIterStep it.IsPlausibleStep))
+
+private theorem realStepRxc {α : Type u} [UpwardEnumerable α] [LE α] [DecidableLE α] (it : IterM (α := Rxc.Iterator α) Id α) : it.step.run.inflate.val = Rxc.Iterator.Monadic.step it :=
+    congrArg Subtype.val (Shrink.inflate_deflate (x := ⟨Rxc.Iterator.Monadic.step it, rfl⟩) (α := PlausibleIterStep it.IsPlausibleStep))
+
+public theorem Std.Rco.toList_eq_ite_roo {α : Type u} {r : Rco α} [UpwardEnumerable α] [LT α] [DecidableLT α]
+    [LawfulUpwardEnumerable α] [Rxo.IsAlwaysFinite α] [LawfulUpwardEnumerableLT α] :
+    OmegaChecks.InitPort.Alternatives.Std.Rco.toList r = if r.lower < r.upper then r.lower :: Std.Roo.toList ⟨r.lower, r.upper⟩ else [] := by
+  change (collectInto (_root_.Std.Rco.Internal.iter r).toIterM #[]).toList = _
+  rw [collectList_eq]
+  rw [realStepRxo]
+  dsimp only [Rxo.Iterator.Monadic.step, _root_.Std.Rco.Internal.iter, Iter.toIterM]
+  by_cases hw : r.lower < r.upper
+  · rw [ite_eq_left hw, ite_eq_left hw]
+    rfl
+  · rw [ite_eq_right hw, ite_eq_right hw]
+
+public theorem Std.Rcc.toList_eq_ite_roc {α : Type u} {r : Rcc α} [LE α] [DecidableLE α] [UpwardEnumerable α]
+    [LawfulUpwardEnumerable α] [LawfulUpwardEnumerableLE α] [Rxc.IsAlwaysFinite α] :
+    OmegaChecks.InitPort.Alternatives.Std.Rcc.toList r = if r.lower ≤ r.upper then r.lower :: Std.Roc.toList ⟨r.lower, r.upper⟩ else [] := by
+  change (collectInto (_root_.Std.Rcc.Internal.iter r).toIterM #[]).toList = _
+  rw [collectList_eq]
+  rw [realStepRxc]
+  dsimp only [Rxc.Iterator.Monadic.step, _root_.Std.Rcc.Internal.iter, Iter.toIterM]
+  by_cases hw : r.lower ≤ r.upper
+  · rw [ite_eq_left hw, ite_eq_left hw]
+    rfl
+  · rw [ite_eq_right hw, ite_eq_right hw]
+
+public theorem Std.Roo.toList_eq_match_rco {α : Type u} {r : Roo α} [UpwardEnumerable α] [LT α] [DecidableLT α]
+    [LawfulUpwardEnumerable α] [LawfulUpwardEnumerableLT α] [Rxo.IsAlwaysFinite α] :
+    Std.Roo.toList r = (UpwardEnumerable.succ? r.lower).elim [] (fun next => Std.Rco.toList ⟨next, r.upper⟩) := by
+  change (collectInto (_root_.Std.Roo.Internal.iter r).toIterM #[]).toList = _
+  dsimp only [_root_.Std.Roo.Internal.iter, Iter.toIterM]
+  cases hn : UpwardEnumerable.succ? r.lower with
+  | none =>
+    rw [collectList_eq]
+    rw [realStepRxo]
+    rfl
+  | some next => rfl
+
+public theorem Std.Roc.toList_eq_match_rcc {α : Type u} {r : Roc α} [LE α] [DecidableLE α] [UpwardEnumerable α]
+    [LawfulUpwardEnumerable α] [LawfulUpwardEnumerableLE α] [Rxc.IsAlwaysFinite α] :
+    Std.Roc.toList r = (UpwardEnumerable.succ? r.lower).elim [] (fun next => Std.Rcc.toList ⟨next, r.upper⟩) := by
+  change (collectInto (_root_.Std.Roc.Internal.iter r).toIterM #[]).toList = _
+  dsimp only [_root_.Std.Roc.Internal.iter, Iter.toIterM]
+  cases hn : UpwardEnumerable.succ? r.lower with
+  | none =>
+    rw [collectList_eq]
+    rw [realStepRxc]
+    rfl
+  | some next => rfl
 
 end OmegaChecks.InitPort.Alternatives

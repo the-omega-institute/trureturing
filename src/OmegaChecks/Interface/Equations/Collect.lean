@@ -13,7 +13,7 @@ namespace OmegaChecks.Interface.Equations
 public theorem Std.IterM.Total.toArray {α : Type u} {m : Type u → Type v} {β : Type u}
     [Monad m] [Iterator α m β] [Finite α m] (it : IterM.Total (α := α) m β) :
     OmegaChecks.InitPort.Alternatives.Std.IterM.Total.toArray it = it.toArray := by
-  unfold OmegaChecks.InitPort.Alternatives.Std.IterM.Total.toArray
+  unfold OmegaChecks.InitPort.Alternatives.Std.IterM.Total.toArray OmegaChecks.InitPort.Alternatives.collectArrayFrom
     _root_.Std.IterM.Total.toArray IterM.toArray IterM.toArray.go
   rw [WellFounded.extrinsicFix₂_eq_fix (OmegaChecks.InitPort.Alternatives.collectorWF (σ := Array β))]
   congr 1
