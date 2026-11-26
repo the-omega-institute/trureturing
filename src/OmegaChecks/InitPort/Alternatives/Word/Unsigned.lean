@@ -526,7 +526,7 @@ public theorem USize.sizeOf : type_of% @_root_.USize.sizeOf := fun ⟨x⟩ => wo
 
 public theorem Char.sizeOf : type_of% @_root_.Char.sizeOf := by
   intro ⟨x, _⟩
-  change 1 + _root_.sizeOf x = x.toNat + 4
+  change 1 + SizeOf.sizeOf x = x.toNat + 4
   rw [UInt32.sizeOf, Nat.one_add]
 
 end OmegaChecks.InitPort.Alternatives
