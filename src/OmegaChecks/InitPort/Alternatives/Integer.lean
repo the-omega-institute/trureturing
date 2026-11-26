@@ -56,4 +56,48 @@ public theorem Int.natAbs_ediv (a b : Int) :
           hd (Int.neg_dvd.mpr (Int.dvd_neg.mpr (Int.ofNat_dvd.mpr (Nat.dvd_of_mod_eq_zero h))))
         exact (congrArg Nat.succ (Nat.succ_div_of_mod_ne_zero rem)).symm
 
+public theorem Int.tdiv_eq_ediv : type_of% @_root_.Int.tdiv_eq_ediv := by
+  intro a b
+  cases a with
+  | ofNat m =>
+    have positive : 0 ≤ Int.ofNat m := Int.natCast_nonneg m
+    rw [ite_eq_left (Or.inl positive), Int.add_zero]
+    exact Int.tdiv_eq_ediv_of_nonneg (Int.natCast_nonneg m)
+  | negSucc m =>
+    have neg := Int.not_le_of_gt (Int.negSucc_lt_zero m)
+    cases b with
+    | ofNat b =>
+      cases b with
+      | zero =>
+        change (Int.negSucc m).tdiv 0 = Int.negSucc m / 0 + ite _ 0 (Int.sign 0)
+        rw [Int.tdiv_zero, Int.ediv_zero, Int.sign_zero, ite_self, Int.add_zero]
+      | succ n =>
+        by_cases hd : Int.ofNat n.succ ∣ Int.negSucc m
+        · rw [ite_eq_left (Or.inr hd), Int.add_zero]
+          apply Int.neg_ofNat_eq_negSucc_iff.mpr
+          exact Nat.succ_div_of_mod_eq_zero (Nat.mod_eq_zero_of_dvd (Int.ofNat_dvd.mp (Int.dvd_neg.mp hd)))
+        · rw [ite_eq_right (fun h => h.elim neg hd)]
+          have rem : (m+1) % (n+1) ≠ 0 := fun e => hd (Int.dvd_neg.mpr (Int.ofNat_dvd.mpr (Nat.dvd_of_mod_eq_zero e)))
+          have same := Nat.succ_div_of_mod_ne_zero rem
+          change -((m.succ / n.succ : Nat) : Int) = Int.negSucc (m / n.succ) + 1
+          rw [same]
+          let q := m / n.succ
+          change -(q : Int) = -((q : Int) + 1) + 1
+          rw [Int.neg_add, Int.add_assoc, Int.add_left_neg, Int.add_zero]
+    | negSucc n =>
+      by_cases hd : Int.negSucc n ∣ Int.negSucc m
+      · rw [ite_eq_left (Or.inr hd), Int.add_zero]
+        exact congrArg Int.ofNat (Nat.succ_div_of_mod_eq_zero (Nat.mod_eq_zero_of_dvd
+          (Int.ofNat_dvd.mp (Int.dvd_neg.mp (Int.neg_dvd.mp hd)))))
+      · rw [ite_eq_right (fun h => h.elim neg hd)]
+        have rem : (m+1) % (n+1) ≠ 0 := fun e => hd (Int.neg_dvd.mpr
+          (Int.dvd_neg.mpr (Int.ofNat_dvd.mpr (Nat.dvd_of_mod_eq_zero e))))
+        have same := Nat.succ_div_of_mod_ne_zero rem
+        change ((m.succ / n.succ : Nat) : Int) = ((m / n.succ : Nat) : Int) + 1 + -1
+        rw [same, Int.add_assoc, Int.add_right_neg, Int.add_zero]
+
+public theorem Int.ediv_eq_tdiv : type_of% @_root_.Int.ediv_eq_tdiv := by
+  intro a b
+  rw [Int.tdiv_eq_ediv, Int.add_sub_cancel]
+
 end OmegaChecks.InitPort.Alternatives
