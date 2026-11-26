@@ -1,4 +1,5 @@
 module
+import all Init.Grind.Ring.Basic
 import all Init.Grind.Ring.Field
 import all Init.Grind.Ordered.Ring
 
@@ -145,5 +146,98 @@ public theorem Lean.Grind.OrderedRing.sq_pos : type_of% @_root_.Lean.Grind.Order
   | inr le =>
     have neg := Std.lt_iff_le_and_not_ge.mpr ⟨le, fun ge => nz (Std.le_antisymm le ge)⟩
     exact OrderedRing.mul_pos_of_neg_of_neg neg neg
+
+
+private theorem congruentNumerals {α : Type u} [Ring α] (p : Nat)
+    (criterion : ∀ t : Nat, OfNat.ofNat (α := α) t = 0 ↔ t % p = 0)
+    {x y : Nat} (le : y ≤ x) : OfNat.ofNat (α := α) x = OfNat.ofNat y ↔ x % p = y % p := by
+  have sub := (private_decl% _root_.Lean.Grind.IsCharP.mk'_aux) p le
+  have ofSub := (Ring.ofNat_sub (α := α) le).symm
+  exact AddCommGroup.sub_eq_zero_iff.symm.trans <|
+    (Iff.of_eq (congrArg (fun t : α => t = 0) ofSub)).trans <|
+    (criterion (x-y)).trans (sub.trans Nat.mod_eq_mod_iff.symm)
+
+set_option linter.defProp false in
+@[instance_reducible] public def Lean.Grind.IsCharP.mk' : type_of% @_root_.Lean.Grind.IsCharP.mk' := by
+  intro p α ring criterion
+  constructor
+  intro x y
+  cases Nat.le_total y x with
+  | inl le => exact congruentNumerals p criterion le
+  | inr le =>
+    have h := congruentNumerals p criterion le
+    exact ⟨fun e => (h.mp e.symm).symm, fun e => (h.mpr e.symm).symm⟩
+
+set_option linter.defProp false in
+@[instance_reducible] public def Lean.Grind.OrderedRing.instIsCharPOfNatNatOfLawfulOrderLT :
+    type_of% @_root_.Lean.Grind.OrderedRing.instIsCharPOfNatNatOfLawfulOrderLT := by
+  intro α ring le lt law pre ord
+  constructor
+  intro x y
+  rw [Nat.mod_zero, Nat.mod_zero]
+  constructor
+  · intro e
+    have cast := (Semiring.ofNat_eq_natCast x).symm.trans (e.trans (Semiring.ofNat_eq_natCast y))
+    exact Nat.le_antisymm
+      (OrderedRing.le_of_natCast_le_natCast (R := α) x y (cast ▸ Std.le_refl _))
+      (OrderedRing.le_of_natCast_le_natCast (R := α) y x (cast ▸ Std.le_refl _))
+  · rintro rfl
+    rfl
+
+private theorem strictSign {α : Type u} [Ring α] [LE α] [LT α] [Std.LawfulOrderLT α]
+    [Std.IsLinearOrder α] {a : α} (nz : a ≠ 0) : 0 < a ∨ a < 0 := by
+  cases Std.le_total (a := 0) (b := a) with
+  | inl le => exact .inl (Std.lt_iff_le_and_not_ge.mpr ⟨le, fun ge => nz (Std.le_antisymm ge le)⟩)
+  | inr le => exact .inr (Std.lt_iff_le_and_not_ge.mpr ⟨le, fun ge => nz (Std.le_antisymm le ge)⟩)
+
+public theorem Lean.Grind.OrderedRing.mul_pos_iff : type_of% @_root_.Lean.Grind.OrderedRing.mul_pos_iff := by
+  intro α _ _ _ _ _ _ a b
+  constructor
+  · intro pos
+    have nz : a * b ≠ 0 := fun eq => (Preorder.lt_irrefl 0) (eq ▸ pos)
+    have na : a ≠ 0 := fun eq => nz ((congrArg (· * b) eq).trans (Semiring.zero_mul _))
+    have nb : b ≠ 0 := fun eq => nz ((congrArg (a * ·) eq).trans (Semiring.mul_zero _))
+    have notNeg : ¬ a*b < 0 := Preorder.not_gt_of_lt pos
+    cases strictSign na with
+    | inl pa =>
+      cases strictSign nb with
+      | inl pb => exact .inl ⟨pa,pb⟩
+      | inr nb => exact False.elim (notNeg (OrderedRing.mul_neg_of_pos_of_neg pa nb))
+    | inr na =>
+      cases strictSign nb with
+      | inl pb => exact False.elim (notNeg (OrderedRing.mul_neg_of_neg_of_pos na pb))
+      | inr nb => exact .inr ⟨na,nb⟩
+  · rintro (⟨pa,pb⟩ | ⟨na,nb⟩)
+    · exact OrderedRing.mul_pos pa pb
+    · exact OrderedRing.mul_pos_of_neg_of_neg na nb
+
+private theorem natPowerUnit {α : Type u} [Field α] (a : α) (nz : a ≠ 0) (n : Nat) :
+    (a ^ n) * (a⁻¹ ^ n) = 1 := by
+  induction n with
+  | zero => rw [Semiring.pow_zero, Semiring.pow_zero, Semiring.one_mul]
+  | succ n ih =>
+    rw [Semiring.pow_succ, Semiring.pow_succ, Semiring.mul_assoc, CommSemiring.mul_left_comm a,
+      Field.mul_inv_cancel nz, Semiring.mul_one, ih]
+
+public theorem Lean.Grind.Field.zpow_add_one : type_of% @_root_.Lean.Grind.Field.zpow_add_one := by
+  intro α _ a nz n
+  cases n with
+  | ofNat n => exact Field.zpow_succ a n
+  | negSucc n =>
+    have eq : (Int.negSucc n) + 1 = -(n : Int) := by cases n <;> rfl
+    rw [eq, Field.zpow_neg, Field.zpow_natCast]
+    change (a ^ n)⁻¹ = a ^ (-((n+1 : Nat) : Int)) * a
+    rw [Field.zpow_neg, Field.zpow_natCast]
+    have inv (j : Nat) : ((a ^ j)⁻¹ : α) = a⁻¹ ^ j := by
+      apply Eq.symm
+      apply Field.eq_inv_of_mul_eq_one
+      exact (CommSemiring.mul_comm ..).trans (natPowerUnit a nz j)
+    rw [inv, inv, Semiring.pow_succ, Semiring.mul_assoc, Field.inv_mul_cancel nz, Semiring.mul_one]
+
+public theorem Lean.Grind.Field.zpow_sub_one : type_of% @_root_.Lean.Grind.Field.zpow_sub_one := by
+  intro α _ a nz n
+  have e := congrArg (fun t : α => t * a⁻¹) (Field.zpow_add_one nz (n-1))
+  rw [Int.sub_add_cancel, Semiring.mul_assoc, Field.mul_inv_cancel nz, Semiring.mul_one] at e
+  exact e.symm
 
 end OmegaChecks.InitPort.Alternatives
