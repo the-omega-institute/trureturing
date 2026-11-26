@@ -1,4 +1,5 @@
 module
+public import OmegaChecks.InitPort.Alternatives.ArrayFind
 
 public import Init.Data.Array.Basic
 public import Init.Data.Nat.Basic
