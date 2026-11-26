@@ -419,4 +419,14 @@ public theorem Int.Internal.Linear.eq_norm_expr : type_of% @_root_.Int.Internal.
   intro ctx lhs rhs p cert eq
   rw [intNormDifference ctx lhs rhs p cert, eq, Int.sub_self]
 
+public theorem Int.Internal.Linear.norm_le : type_of% @_root_.Int.Internal.Linear.norm_le := by
+  intro ctx lhs rhs p cert
+  rw [intNormDifference ctx lhs rhs p cert]
+  apply congrArg Int.NonNeg
+  rw [Int.zero_sub, Int.neg_sub]
+
+public theorem Int.Internal.Linear.norm_dvd : type_of% @_root_.Int.Internal.Linear.norm_dvd := by
+  intro ctx k e p cert
+  exact congrArg (fun value : Int => k ∣ value) (_root_.Int.Internal.Linear.Expr.eq_of_norm_eq ctx e p cert)
+
 end OmegaChecks.InitPort.Alternatives
