@@ -1,0 +1,73 @@
+name: Restore Lean inputs for the current check
+description: Install the pinned toolchain and restore the published shards selected by the plan.
+inputs:
+  batch:
+    required: false
+    description: Restore inputs for this report batch, or for the complete scope when omitted.
+  mode:
+    required: false
+    default: build
+    description: Prepare a batch build, its plan, or the final report verifier.
+runs:
+  using: composite
+  steps:
+    - id: keys
+      shell: bash
+      env:
+        GH_TOKEN: ${{ github.token }}
+      run: python3 tools/scripts/worktree/lean_actions.py keys --repository "$GITHUB_WORKSPACE"
+    - if: steps.keys.outputs.elan_key != ''
+      continue-on-error: true
+      uses: actions/cache/restore@v5
+      with:
+        path: ~/.elan
+        key: ${{ steps.keys.outputs.elan_key }}
+    - name: Install the pinned Lean toolchain
+      shell: bash
+      run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
+    - id: dependency
+      if: inputs.mode == 'build' && steps.keys.outputs.dependency_key != ''
+      continue-on-error: true
+      uses: actions/cache/restore@v5
+      with:
+        path: ${{ steps.keys.outputs.dependency_archive_path }}
+        key: ${{ steps.keys.outputs.dependency_key }}
+        restore-keys: ${{ steps.keys.outputs.dependency_restore_prefix }}
+    - name: Prepare the verifier with the pinned package sources
+      if: inputs.mode == 'verify'
+      shell: bash
+      run: |
+        producer="$(bash tools/scripts/workflow/judge-lean-producer.sh tools/StrataLint.Cli/bin/Release/net10.0)"
+        if [[ -z "$producer" ]]; then
+          python3 tools/scripts/workflow/ci_compute.py run -- dotnet build tools/StrataLint.Lean/StrataLint.Lean.csproj -c Release --nologo
+          producer="$GITHUB_WORKSPACE/tools/StrataLint.Lean/bin/Release/net10.0/StrataLint.Lean.dll"
+        fi
+        echo "STRATALINT_LEAN_PRODUCER_DLL=$producer" >> "$GITHUB_ENV"
+        python3 tools/scripts/workflow/ci_compute.py run -- lake --no-cache --no-build -d tools/lean-inspector-reg env true
+    - name: Install the restored Lean dependencies
+      if: inputs.mode == 'build'
+      shell: bash
+      env:
+        DEPENDENCY_KEY: ${{ steps.dependency.outputs.cache-matched-key }}
+        DEPENDENCY_OUTCOME: ${{ steps.dependency.outcome }}
+      run: python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --layers dependency --dependency-key "$DEPENDENCY_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME"
+    - id: cache_scope
+      if: inputs.mode == 'build'
+      shell: bash
+      env:
+        BATCH: ${{ inputs.batch }}
+      run: |
+        batch=()
+        if [[ -n "$BATCH" ]]; then batch=(--batch "$BATCH"); fi
+        targets="$RUNNER_TEMP/lean-cache-targets"
+        python3 tools/scripts/workflow/ci_pr_lean.py "$RUNNER_TEMP/changed-paths" --cache-targets --read-plan "$RUNNER_TEMP/current-lean-plan.json" "${batch[@]}" > "$targets"
+        if [[ -s "$targets" ]]; then echo "targets-file=$targets" >> "$GITHUB_OUTPUT"; fi
+    - name: Restore the published shards for the selected modules
+      if: steps.cache_scope.outputs.targets-file != ''
+      continue-on-error: true
+      uses: ./.github/actions/lean-cache-shards
+      env:
+        GH_TOKEN: ${{ github.token }}
+      with:
+        operation: restore-published
+        targets-file: ${{ steps.cache_scope.outputs.targets-file }}
