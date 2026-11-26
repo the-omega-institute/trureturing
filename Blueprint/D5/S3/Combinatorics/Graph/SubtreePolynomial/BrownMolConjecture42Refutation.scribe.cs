@@ -69,7 +69,9 @@ internal sealed class BrownMolConjecture42RefutationDocument : IScribeDocumentDe
                         "Jin, Ma and Wang, arXiv:2608.07898v2, repeat the translated annulus as Conjecture 5.1. "
                         + "Their Theorem 1.3 proves the separate origin-centered upper bound "
                         + "|z| ≤ 1 + (n−1)^(1/(n−1))."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("brown-mol-2018-conjecture-4-2"), ResolutionKind.Refuted)))));
 
     private static Formula Named(string name) => Seq(Operatorname, Grp(F.Id(name)));
     private static Formula Call(Formula name, params Formula[] args) => new Formula.Apply(name, [.. args]);

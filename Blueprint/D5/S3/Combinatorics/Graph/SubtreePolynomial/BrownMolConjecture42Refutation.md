@@ -34,6 +34,10 @@ $$\neg \operatorname{Conjecture42}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/SubtreePolynomial/BrownMolConjecture42Refutation.conjecture42_false` (`✓ std3`). ∎
 
+*Resolves.* `Problems/brown-mol-2018-conjecture-4-2` (refuted) by `D5/S3/Combinatorics/Graph/SubtreePolynomial/BrownMolConjecture42Refutation.conjecture42_false`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"brown-mol-2018-conjecture-4-2","declaration_gid":"D5/S3/Combinatorics/Graph/SubtreePolynomial/BrownMolConjecture42Refutation.conjecture42_false","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Jason I. Brown; Lucas Mol (2018). *On the roots of the subtree polynomial*. URL: <https://arxiv.org/abs/1810.08655v1>.
