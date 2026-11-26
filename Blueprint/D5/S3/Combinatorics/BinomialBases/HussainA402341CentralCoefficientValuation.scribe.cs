@@ -41,7 +41,9 @@ internal sealed class HussainA402341CentralCoefficientValuationDocument : IScrib
                             + "the central binomial coefficient with valuation s_2(m). Every other "
                             + "contribution is divisible by 2^(1+s_2(m)). The sum therefore has the "
                             + "valuation of its central binomial term."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("oeis-a402341-hussain-central-coefficient-valuation"), ResolutionKind.Proved)))));
 
     private static Formula Statement()
     {

@@ -12,6 +12,10 @@ $$\forall n \in \mathbb{N},\; \operatorname{Even}\left(n\right) \Rightarrow \lef
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/BinomialBases/HussainA402341CentralCoefficientValuation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a402341-hussain-central-coefficient-valuation` (proved) by `D5/S3/Combinatorics/BinomialBases/HussainA402341CentralCoefficientValuation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a402341-hussain-central-coefficient-valuation","declaration_gid":"D5/S3/Combinatorics/BinomialBases/HussainA402341CentralCoefficientValuation.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Sajid Khan Hussain (2026). *OEIS A402341, central coefficients of powers of a sixteen-term geometric polynomial*. URL: <https://oeis.org/A402341>.
