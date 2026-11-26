@@ -421,20 +421,30 @@ private def exposeDecidableTheorems (source : Environment) (body : Expr) : Expr 
 
 /-- Recover decidable case splits and eliminate a chosen witness directly into a
 proposition when the conclusion is independent of that witness. -/
-public def decidableProof (source : Environment) (body : Expr) : IO Expr := do
+public def decidableProof (source : Environment) (body : Expr) (rules : NameMap ConstantInfo := {}) : IO Expr := do
   let body := exposeDecidableTheorems source body
   let classical := [`Classical.em, `Classical.byCases, `Classical.byContradiction, `Classical.propDecidable]
   let deps := body.getUsedConstants
+  let orderRules := [`Std.not_lt, `Std.not_lt_iff_not_le_or_ge]
   let usesChoice := deps.any nonemptyChoices.contains || deps.any [`Classical.choose, `Classical.choose_spec,
     `Exists.choose, `Exists.choose_spec, `Classical.indefiniteDescription].contains
-  unless usesChoice || deps.any classical.contains do return body
+  unless usesChoice || deps.any classical.contains || deps.any orderRules.contains do return body
   let action : MetaM Expr := Meta.transform body (post := fun e => do
     if usesChoice then
       let without ← eliminateChoice e
       if without != e then return .done without
-    let .const name _ := e.getAppFn | return .done e
-    unless classical.contains name do return .done e
+    let .const name us := e.getAppFn | return .done e
     let args := e.getAppArgs
+    if orderRules.contains name then
+      let count := if name == `Std.not_lt then 7 else 6
+      unless args.size == count do return .done e
+      let some rule := rules.find? (if name == `Std.not_lt then `notLtDecidable else `notLtOrDecidable)
+        | return .done e
+      let reverse := mkApp4 (mkConst `LE.le us) args[0]! args[2]! args[count-1]! args[count-2]!
+      let some dec ← Meta.synthInstance? (mkApp (mkConst `Decidable) reverse) | return .done e
+      let value := (rule.value! (allowOpaque := true)).instantiateLevelParams rule.levelParams us
+      return .done (value.beta (args.push dec))
+    unless classical.contains name do return .done e
     let some p := args[0]? | return .done e
     let some dec ← Meta.synthInstance? (mkApp (mkConst `Decidable) p) | return .done e
     let mapArgs (term : Expr) (consumed : Nat) := mkAppN term (args.extract consumed args.size)

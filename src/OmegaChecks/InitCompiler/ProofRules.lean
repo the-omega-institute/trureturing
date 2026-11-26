@@ -5,6 +5,26 @@ import all Init.Grind.Ring.CommSolver
 
 namespace OmegaChecks.InitCompiler.ProofRules
 
+/-- A decision on the reverse comparison suffices at a call to the total-order law. -/
+public theorem notLtDecidable {α : Type u} [LT α] [LE α] [Std.Total (α := α) (· ≤ ·)]
+    [Std.LawfulOrderLT α] {a b : α} [Decidable (b ≤ a)] : ¬ a < b ↔ b ≤ a := by
+  refine ⟨fun hn => ?_, Std.not_lt_of_ge⟩
+  by_cases reverse : b ≤ a
+  · exact reverse
+  · exact (hn (Std.lt_iff_le_and_not_ge.mpr ⟨Std.le_of_not_ge reverse, reverse⟩)).elim
+
+/-- A decidable reverse comparison also splits the strict-order law without totality. -/
+public theorem notLtOrDecidable {α : Type u} [LT α] [LE α] [Std.LawfulOrderLT α]
+    {a b : α} [Decidable (b ≤ a)] : ¬ a < b ↔ ¬ a ≤ b ∨ b ≤ a := by
+  constructor
+  · intro hn
+    by_cases reverse : b ≤ a
+    · exact .inr reverse
+    · exact .inl (fun forward => hn (Std.lt_iff_le_and_not_ge.mpr ⟨forward, reverse⟩))
+  · rintro (no | reverse) lt
+    · exact no (Std.lt_iff_le_and_not_ge.mp lt).1
+    · exact (Std.lt_iff_le_and_not_ge.mp lt).2 reverse
+
 /-- Conditional congruence consumes just the two implications between the guards. -/
 public theorem iteCongr {α : Sort u} {b c : Prop} {x y s t : α} [Decidable b] [Decidable c]
     (h : b ↔ c) (yes : c → x = s) (no : ¬c → y = t) :

@@ -443,7 +443,7 @@ partial def visit (n : Name) : M Bool := do
   for dep in usedConstants type do
     if !(← visit dep) then
       let rewritten := OmegaChecks.InitCompiler.constructiveCasts c.source ci.type c.proofRules true
-      let rewritten ← OmegaChecks.InitCompiler.decidableProof c.source rewritten
+      let rewritten ← OmegaChecks.InitCompiler.decidableProof c.source rewritten c.proofRules
       if rewritten == ci.type || (Kernel.check c.source {} rewritten).toOption.isNone ||
           !Kernel.isDefEqGuarded c.source {} ci.type rewritten then
         return ← record n (.blocked "unavailable dependency" (some dep))
@@ -472,7 +472,7 @@ partial def visit (n : Name) : M Bool := do
     let mut candidate := alt
     if ci.isTheorem && (result matches .blocked _ (some _)) then
       let simplified := OmegaChecks.InitCompiler.constructiveCasts c.source alt c.proofRules true
-      candidate ← OmegaChecks.InitCompiler.decidableProof c.source simplified
+      candidate ← OmegaChecks.InitCompiler.decidableProof c.source simplified c.proofRules
       if !candidate.equal alt then
         if (← attempt candidate) matches .added then return ← record n .added
     if let some certified := comparisonProofs c.source c.literalProofs alt n then
@@ -488,7 +488,7 @@ partial def visit (n : Name) : M Bool := do
   let congruent := OmegaChecks.InitCompiler.constructiveCasts c.source body c.proofRules true
   if !congruent.equal rewritten && !congruent.equal body then
     if (← attempt congruent) matches .added then return ← record n .added
-  let decided ← OmegaChecks.InitCompiler.decidableProof c.source rewritten
+  let decided ← OmegaChecks.InitCompiler.decidableProof c.source rewritten c.proofRules
   if !decided.equal rewritten then
     if (← attempt (OmegaChecks.InitCompiler.constructiveCasts c.source decided c.proofRules)) matches .added then
       return ← record n .added
@@ -553,7 +553,7 @@ def run (strictPath artifacts : System.FilePath) (outPath : String) (exclude : S
   let ruleModule := `OmegaChecks.InitCompiler.ProofRules
   let ruleEnv ← importModules #[{module := ruleModule}] {} (level := .private)
   let mut proofRules := {}
-  for name in #[`iteCongr, `diteCongr, `forallDomain, `decideCongr, `natBEq, `intBEq, `intBNe, `intBLt, `intBLe,
+  for name in #[`notLtDecidable, `notLtOrDecidable, `iteCongr, `diteCongr, `forallDomain, `decideCongr, `natBEq, `intBEq, `intBNe, `intBLt, `intBLe,
                 `polyBEq, `ringPowerBEq, `ringMonBEq, `ringPolyBEq] do
     let some info := ruleEnv.find? (ruleModule ++ name) | throw <| IO.userError s!"missing proof rule {name}"
     let .thmInfo th := info | throw <| IO.userError s!"expected a theorem for {name}"
