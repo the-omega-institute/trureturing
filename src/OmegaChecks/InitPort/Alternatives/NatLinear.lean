@@ -1,6 +1,7 @@
 module
 
 public import Init.Data.Nat.Internal.Linear
+public import Init.Data.Nat.Simproc
 
 open Nat.Internal.Linear
 
@@ -194,5 +195,25 @@ public theorem Nat.Internal.Linear.Poly.denote_le_cancel_eq (ctx : Context) (p q
     compareProp (p.denote ctx) (q.denote ctx) :=
   compareOfIff ⟨_root_.Nat.Internal.Linear.Poly.of_denote_le_cancel,
     _root_.Nat.Internal.Linear.Poly.denote_le_cancel⟩
+
+public theorem Nat.Simproc.add_le_add_le (a c : Nat) {b d : Nat} (h : b ≤ d) :
+    compareProp (a+b) (c+d) = compareProp a (c + (d-b)) := by
+  apply compareOfIff
+  rw [← Nat.add_sub_assoc h]
+  exact (Nat.le_sub_iff_add_le (Nat.le_trans h (Nat.le_add_left d c))).symm
+
+public theorem Nat.Simproc.add_le_add_ge (a c : Nat) {b d : Nat} (h : b ≥ d) :
+    compareProp (a+b) (c+d) = compareProp (a + (b-d)) c := by
+  apply compareOfIff
+  rw [← Nat.add_sub_assoc h]
+  exact Nat.sub_le_iff_le_add.symm
+
+public theorem Nat.Simproc.add_le_gt (a : Nat) {b c : Nat} (h : b > c) :
+    compareProp (a+b) c = False :=
+  compareFalse _ _ (Nat.not_le_of_gt (Nat.lt_of_lt_of_le h (Nat.le_add_left b a)))
+
+public theorem Nat.Simproc.le_add_le (a : Nat) {b c : Nat} (h : a ≤ c) :
+    compareProp a (b+c) = True :=
+  compareTrue _ _ (Nat.le_trans h (Nat.le_add_left c b))
 
 end OmegaChecks.InitPort.Alternatives
