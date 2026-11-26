@@ -61,6 +61,27 @@ private theorem finiteRxiLoop_eq [UpwardEnumerable α] [LawfulUpwardEnumerable �
     symm
     apply WellFounded.extrinsicFix₃_eq_fix
 
+public theorem Std.Rxc.Iterator.instIteratorLoop [UpwardEnumerable α] [LE α] [DecidableLE α]
+    [LawfulUpwardEnumerable α] [LawfulUpwardEnumerableLE α] {n : Type u → Type w} [Monad n] :
+    OmegaChecks.InitPort.Alternatives.Std.Rxc.Iterator.instIteratorLoop (α := α) (n := n) = _root_.Std.Rxc.Iterator.instIteratorLoop := by
+  letI := closedFinite (α := α)
+  exact finiteRxcLoop_eq
+
+public theorem Std.Rxc.Iterator.instIteratorLoop.loop [UpwardEnumerable α] [LE α] [DecidableLE α]
+    [LawfulUpwardEnumerable α] [LawfulUpwardEnumerableLE α] {n : Type u → Type w} [Monad n] :
+    @OmegaChecks.InitPort.Alternatives.Std.Rxc.Iterator.instIteratorLoop.loop α _ _ _ _ _ n _ = @_root_.Std.Rxc.Iterator.instIteratorLoop.loop α _ _ _ _ _ n _ := by
+  funext γ Pl large closed upper acc next h f
+  unfold OmegaChecks.InitPort.Alternatives.Std.Rxc.Iterator.instIteratorLoop.loop finiteRxcLoop.loop _root_.Std.Rxc.Iterator.instIteratorLoop.loop
+  letI : Nonempty γ := ⟨acc⟩
+  symm
+  apply WellFounded.extrinsicFix₃_eq_fix
+
+public theorem Std.Rxo.Iterator.instIteratorLoop [UpwardEnumerable α] [LT α] [DecidableLT α]
+    [LawfulUpwardEnumerable α] [LawfulUpwardEnumerableLT α] {n : Type u → Type w} [Monad n] :
+    OmegaChecks.InitPort.Alternatives.Std.Rxo.Iterator.instIteratorLoop (α := α) (n := n) = _root_.Std.Rxo.Iterator.instIteratorLoop := by
+  letI := openFinite (α := α)
+  exact finiteRxoLoop_eq
+
 public theorem Std.Rcc.instForIn'InferInstanceMembershipOfLawfulUpwardEnumerableOfLawfulUpwardEnumerableLEOfMonadOfFiniteIteratorId {m} [UpwardEnumerable α]
     [LE α] [DecidableLE α] [LawfulUpwardEnumerable α] [LawfulUpwardEnumerableLE α]
     [Monad m] [Finite (Rxc.Iterator α) Id] :

@@ -155,6 +155,47 @@ variable {α : Type u}
       dsimp only
       rw [hs]
 
+/-- A reachable inclusive upper endpoint has no later successor inside the range. -/
+private theorem closedFinite {α : Type u} [UpwardEnumerable α] [LawfulUpwardEnumerable α]
+    [LE α] [DecidableLE α] [LawfulUpwardEnumerableLE α] : Rxc.IsAlwaysFinite α where
+  finite lo hi := by
+    by_cases inside : lo ≤ hi
+    · obtain ⟨n, reach⟩ := UpwardEnumerable.le_iff.mp inside
+      refine ⟨n + 1, ?_⟩
+      rw [succMany?_add_one, reach, Option.bind_some]
+      cases step : UpwardEnumerable.succ? hi with
+      | none => exact True.intro
+      | some after => exact fun le =>
+          UpwardEnumerable.not_ge_of_lt (UpwardEnumerable.lt_succ? step) (UpwardEnumerable.le_iff.mp le)
+    · exact ⟨0, by rw [succMany?_zero]; exact inside⟩
+
+/-- The witness for the strict comparison reaches the first excluded endpoint. -/
+private theorem openFinite {α : Type u} [UpwardEnumerable α] [LawfulUpwardEnumerable α]
+    [LT α] [DecidableLT α] [LawfulUpwardEnumerableLT α] : Rxo.IsAlwaysFinite α where
+  finite lo hi := by
+    by_cases inside : lo < hi
+    · obtain ⟨n, reach⟩ := UpwardEnumerable.lt_iff.mp inside
+      exact ⟨n + 1, by rw [reach]; exact fun lt => UpwardEnumerable.lt_irrefl (UpwardEnumerable.lt_iff.mp lt)⟩
+    · exact ⟨0, by rw [succMany?_zero]; exact inside⟩
+
+@[instance_reducible] public noncomputable def Std.Rxc.Iterator.instIteratorLoop
+    [UpwardEnumerable α] [LE α] [DecidableLE α] [LawfulUpwardEnumerable α] [LawfulUpwardEnumerableLE α]
+    {n : Type u → Type w} [Monad n] : IteratorLoop (Rxc.Iterator α) Id n :=
+  letI := closedFinite (α := α)
+  finiteRxcLoop
+
+public noncomputable def Std.Rxc.Iterator.instIteratorLoop.loop :
+    type_of% @_root_.Std.Rxc.Iterator.instIteratorLoop.loop := by
+  intro α enum order dec law compat n mon
+  letI := closedFinite (α := α)
+  exact finiteRxcLoop.loop
+
+@[instance_reducible] public noncomputable def Std.Rxo.Iterator.instIteratorLoop
+    [UpwardEnumerable α] [LT α] [DecidableLT α] [LawfulUpwardEnumerable α] [LawfulUpwardEnumerableLT α]
+    {n : Type u → Type w} [Monad n] : IteratorLoop (Rxo.Iterator α) Id n :=
+  letI := openFinite (α := α)
+  finiteRxoLoop
+
 @[instance_reducible] public noncomputable def Std.Rcc.instForIn'InferInstanceMembershipOfLawfulUpwardEnumerableOfLawfulUpwardEnumerableLEOfMonadOfFiniteIteratorId {m} [UpwardEnumerable α]
     [LE α] [DecidableLE α] [LawfulUpwardEnumerable α] [LawfulUpwardEnumerableLE α]
     [Monad m] [Finite (Rxc.Iterator α) Id] :
