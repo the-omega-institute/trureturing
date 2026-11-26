@@ -301,4 +301,29 @@ public theorem Int64.toInt_maxValue : type_of% @_root_.Int64.toInt_maxValue :=
 public theorem Int64.toInt_maxValue_add_one : type_of% @_root_.Int64.toInt_maxValue_add_one :=
   (congrArg (· + 1) Int64.toInt_maxValue).trans (Int.sub_add_cancel ..)
 
+public theorem BitVec.toInt_signExtend_of_le : type_of% @_root_.BitVec.toInt_signExtend_of_le := by
+  intro w v x h
+  cases v with
+  | zero =>
+    have zero := Nat.eq_zero_of_le_zero h
+    subst w
+    rw [_root_.BitVec.eq_nil x]
+    rfl
+  | succ v =>
+    have bound : (2 : Int) ^ (w-1) ≤ 2 ^ (v+1-1) := Int.ofNat_le.mpr
+      (Nat.pow_le_pow_right (Nat.zero_lt_two) (Nat.sub_le_sub_right h 1))
+    exact _root_.BitVec.toInt_ofInt_eq_self (Nat.zero_lt_succ v)
+      (Int.le_trans (Int.neg_le_neg bound) (_root_.BitVec.le_toInt x))
+      (Int.lt_of_lt_of_le (_root_.BitVec.toInt_lt (x := x)) bound)
+
+public theorem BitVec.toInt_signExtend_eq_toInt_bmod_of_le :
+    type_of% @_root_.BitVec.toInt_signExtend_eq_toInt_bmod_of_le :=
+  fun _ _ => _root_.BitVec.toInt_ofInt _
+
+public theorem BitVec.toInt_signExtend_eq_toNat_bmod_of_le :
+    type_of% @_root_.BitVec.toInt_signExtend_eq_toNat_bmod_of_le := by
+  intro w v x hv
+  rw [BitVec.toInt_signExtend_eq_toInt_bmod_of_le x hv, _root_.BitVec.toInt_eq_toNat_bmod,
+    Int.bmod_bmod_of_dvd (Nat.pow_dvd_pow _ hv)]
+
 end OmegaChecks.InitPort.Alternatives
