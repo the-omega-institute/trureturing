@@ -1,6 +1,6 @@
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Combinatorics.Hypergraphs.FinnerEquality
-import Reg.Support.DependentFamily
+import D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 
 /-! The dependent state retains arbitrary coordinate types. The law retains the
 complete product-measure telescope and all concrete marginal-factorization data. -/

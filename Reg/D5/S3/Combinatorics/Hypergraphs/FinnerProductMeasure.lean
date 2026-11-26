@@ -1,6 +1,6 @@
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Combinatorics.Hypergraphs.FinnerProductMeasure
-import Reg.Support.DependentFamily
+import D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 
 noncomputable section
 set_option autoImplicit false
