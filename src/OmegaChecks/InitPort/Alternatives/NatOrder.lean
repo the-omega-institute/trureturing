@@ -6,6 +6,18 @@ import all Init.Data.Nat.Lemmas
 
 namespace OmegaChecks.InitPort.Alternatives
 
+public theorem Nat.mod_two_eq_zero_or_one : type_of% @_root_.Nat.mod_two_eq_zero_or_one := by
+  intro n
+  have classify (r : Nat) (small : r < 2) : r = 0 ∨ r = 1 := by
+    cases r with
+    | zero => exact Or.inl rfl
+    | succ r =>
+      cases r with
+      | zero => exact Or.inr rfl
+      | succ r =>
+        exact False.elim (Nat.not_lt_zero r (Nat.lt_of_succ_lt_succ (Nat.lt_of_succ_lt_succ small)))
+  exact classify (n % 2) (Nat.mod_lt n (Nat.zero_lt_succ 1))
+
 public theorem Nat.exists_ne_zero : type_of% @_root_.Nat.exists_ne_zero := by
   intro P
   constructor
