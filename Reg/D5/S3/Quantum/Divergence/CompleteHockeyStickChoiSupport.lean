@@ -14,11 +14,13 @@ open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.Quantum.Foundation.FiniteStateChannel
 open _root_.D5.S3.Quantum.Divergence.CompleteHockeyStickRefutation (completeCoefficient)
 open _root_.D5.S3.Quantum.Foundation.FiniteDiamondDistance (pureState)
-open _root_.D5.S3.Quantum.Divergence.ConditionalHockeyStickOrthogonalReduction (act)
+open _root_.D5.S3.Quantum.Divergence.ConditionalHockeyStickOrthogonalReduction (act E amp ptr)
 open _root_.D5.S3.Quantum.Divergence.CompleteHockeyStickChoiSupport
-  (result coefficient_le_of_replacement)
+  (result coefficient_le_of_replacement exists_budget_witness)
 open UnitaryReconstruction.LiuWildChoiObstruction
   (bell diagonalVector normalizedChoi pairMatrix)
+
+open private E_contract from D5.S3.Quantum.Divergence.CompleteHockeyStickRefutation
 
 namespace Reg.D5.S3.Quantum.Divergence.CompleteHockeyStickChoiSupport
 
@@ -192,3 +194,101 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
 end ReplacementBound
 
 end Reg.D5.S3.Quantum.Divergence.CompleteHockeyStickChoiSupport
+
+namespace Reg.D5.S3.Quantum.Divergence.CompleteHockeyStickChoiSupport.Budget
+
+abbrev signature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℝ) (fun _ => ℝ → Prop)
+
+private def actual : Realization signature :=
+  realize signature (fun _ _ x y => x ≤ y) (fun e => nomatch e)
+
+private def rejected : Realization signature :=
+  realize signature (fun _ _ _ D => D = -1) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ {A B : Type} [Fintype A] [DecidableEq A] [Fintype B] [DecidableEq B]
+    [Nonempty A] (N : QuantumChannel A B) (γ : ℝ) (_hγ : 1 < γ)
+    (_hS : ∀ v : B → ℂ, (∀ i : A, (fun p : A × B => if p.1 = i then v p.2 else 0) ∈
+      (pairMatrix (normalizedChoi N)).mulVecLin.range) → v = 0),
+    ∃ (S : Type) (fS : Fintype S) (dS : DecidableEq S),
+      letI := fS
+      letI := dS
+      ∃ δ D : ℝ, 0 < δ ∧ R.readout () () 0 D ∧ ∀ a : ℝ, 0 < a → a ≤ δ →
+        ∃ ρ σ : Matrix (S × A) (S × A) ℂ,
+          ρ.PosSemidef ∧ ρ.trace = 1 ∧ σ.PosSemidef ∧ σ.trace = 1 ∧ ptr ρ = ptr σ ∧
+          0 < E γ ρ σ ∧ E γ ρ σ ≤ a ∧ a / (1 + D * a) ≤ E γ (amp N ρ) (amp N σ)
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  let N := identity
+  obtain ⟨S, fS, dS, δ, D, hδ, hD, hbudget⟩ := h N 2 (by norm_num) identity_support
+  letI := fS
+  letI := dS
+  let a : ℝ := min δ (1 / 2)
+  have ha : 0 < a := lt_min hδ (by norm_num)
+  obtain ⟨ρ, σ, hρ, _, hσ, _, _, _, hi, hpay⟩ := hbudget a ha (min_le_left _ _)
+  have hhalf : a ≤ 1 / 2 := min_le_right _ _
+  have hd : 0 < 1 + D * a := by rw [hD]; linarith
+  have hg : a < a / (1 + D * a) := by
+    apply (lt_div_iff₀ hd).mpr
+    rw [hD]
+    nlinarith only [sq_pos_of_pos ha]
+  exact (not_lt_of_ge hi) (hg.trans_le (hpay.trans (E_contract N 2 hρ hσ)))
+
+private theorem sensitivity : Sensitivity arena actual :=
+  _root_.Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected rejected_law
+
+private theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨(), 0, 1, ?_⟩
+  intro h
+  have he : (1 : ℝ) ≤ 0 := (congrFun h 0).mp le_rfl
+  exact (not_le.mpr zero_lt_one) he
+
+def family : Registration arena (type_of% @exists_budget_witness) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@exists_budget_witness, rejected, rejected_law⟩
+  sensitivity := sensitivity
+  dependence := dependence
+
+def audit : Contract.Registration.{
+    _, _, _, 0, 0, 0, _, _, _, _, _, 0}
+    (@exists_budget_witness) (Realization signature) Unit Unit where
+  unitName := `D5.S3.Quantum.Divergence.CompleteHockeyStickChoiSupport.exists_budget_witness.__information_unit
+  realizationName := `Reg.D5.S3.Quantum.Divergence.CompleteHockeyStickChoiSupport.Budget.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ x y => x ≤ y) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Divergence.CompleteHockeyStickChoiSupport
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg",
+        "body", "arg", "body", "arg", "body", "arg", "body", "arg", "body", "arg",
+        "fn", "arg", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms audit
+
+end Reg.D5.S3.Quantum.Divergence.CompleteHockeyStickChoiSupport.Budget
