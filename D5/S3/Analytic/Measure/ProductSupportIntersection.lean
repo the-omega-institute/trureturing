@@ -66,7 +66,7 @@ lemma marginal_congr_ae [DecidableEq I] (s : Finset I) {f g : (∀ i, X i) → �
   simp [e, hne] at hy
 
 omit [Fintype I] [∀ i, IsProbabilityMeasure (μ i)] in
-lemma marginal_depends [DecidableEq I] (u : Finset I) {f : (∀ i, X i) → ℝ≥0∞}
+private lemma marginal_depends [DecidableEq I] (u : Finset I) {f : (∀ i, X i) → ℝ≥0∞}
     {S : Set I} (hd : DependsOn f S) : DependsOn (lmarginal μ u f) (S \ u) := by
   classical
   intro x y hxy

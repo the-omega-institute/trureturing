@@ -11,13 +11,12 @@ module
 public import D5.S3.Combinatorics.Hypergraphs.FinnerProductMeasure
 public import D5.S3.Analytic.Measure.NormalizedHolderEquality
 import D5.S3.Analytic.Measure.ProductSupportIntersection
-import Mathlib.Probability.Independence.Integration
 
 /-! # Balanced Finner equality and canonical coordinate marginals -/
 
 @[expose] public section
 
-open MeasureTheory Function Finset Filter ProbabilityTheory
+open MeasureTheory Function Finset Filter
 open scoped ENNReal BigOperators Classical
 
 noncomputable section
@@ -70,12 +69,29 @@ private lemma integral_coordinate_product (s : Finset I) (h : ∀ i, X i → ℝ
     (hm : ∀ i, Measurable (h i)) :
     (∫⁻ x, ∏ i ∈ s, h i (x i) ∂MeasureTheory.Measure.pi μ) =
       ∏ i ∈ s, ∫⁻ t, h i t ∂μ i := by
-  rw [lintegral_prod_eq_prod_lintegral_of_indepFun s _
-    (iIndepFun_pi (fun i => (hm i).aemeasurable))
-    (fun i => (hm i).comp (measurable_pi_apply i))]
-  apply prod_congr rfl
-  intro i _
-  exact (measurePreserving_eval μ i).lintegral_comp (hm i).aemeasurable
+  classical
+  have H (h : ∀ i, X i → ℝ≥0∞) (hm : ∀ i, Measurable (h i)) :
+      (∫⁻ x, ∏ i, h i (x i) ∂MeasureTheory.Measure.pi μ) =
+        ∏ i, ∫⁻ t, h i t ∂μ i := by
+    let e := (Fintype.equivFin I).symm
+    rw [← (measurePreserving_piCongrLeft μ e).lintegral_comp_emb
+      (MeasurableEquiv.measurableEmbedding _)]
+    simp_rw [← e.prod_comp, MeasurableEquiv.coe_piCongrLeft,
+      Function.comp_def, Equiv.piCongrLeft_apply_apply]
+    exact FinnerProductMeasure.lintegral_fin_prod (fun i => μ (e i))
+      (fun i => h (e i)) (fun i => hm (e i))
+  let g : ∀ i, X i → ℝ≥0∞ := fun i t => if i ∈ s then h i t else 1
+  have hg (i : I) : Measurable (g i) := by
+    dsimp [g]
+    split_ifs <;> fun_prop
+  have hp (x : ∀ i, X i) : (∏ i, g i (x i)) = ∏ i ∈ s, h i (x i) :=
+    prod_ite_mem_eq s (fun i => h i (x i))
+  rw [← funext hp, H g hg]
+  have hi (i : I) : (∫⁻ t, g i t ∂μ i) = if i ∈ s then (∫⁻ t, h i t ∂μ i) else 1 := by
+    dsimp [g]
+    split_ifs <;> simp
+  simp_rw [hi]
+  exact prod_ite_mem_eq s (fun i => ∫⁻ t, h i t ∂μ i)
 
 private lemma marginal_coordinate_product [DecidableEq I] (s : Finset I)
     (h : ∀ i, X i → ℝ≥0∞) (hm : ∀ i, Measurable (h i))
@@ -119,48 +135,6 @@ private lemma marginal_coordinate_product [DecidableEq I] (s : Finset I)
     simp [gi]
   rw [hi', mul_one]
   rfl
-
-private lemma normalized_marginal_saturation [DecidableEq I]
-    {J : Type*} [Fintype J] (S : J → Set I)
-    (f : J → (∀ i, X i) → ℝ≥0∞) (w : J → ℝ)
-    (hf : ∀ j, Measurable (f j)) (hd : ∀ j, DependsOn (f j) (S j))
-    (hw : ∀ j, 0 ≤ w j)
-    (hb : ∀ i, ∑ j ∈ univ.filter (fun j => i ∈ S j), w j ≤ 1)
-    (hi : ∀ j, ∫⁻ x, f j x ∂MeasureTheory.Measure.pi μ = 1)
-    (he : ∫⁻ x, ∏ j, f j x ^ w j ∂MeasureTheory.Measure.pi μ = 1)
-    (u : Finset I) :
-    (∫⁻ x, ∏ j, lmarginal μ u (f j) x ^ w j ∂MeasureTheory.Measure.pi μ) = 1 ∧
-    lmarginal μ u (fun x => ∏ j, f j x ^ w j) =ᵐ[MeasureTheory.Measure.pi μ]
-      (fun x => ∏ j, lmarginal μ u (f j) x ^ w j) := by
-  have hF : Measurable (fun x => ∏ j, f j x ^ w j) :=
-    Finset.measurable_fun_prod _ (fun j _ => (hf j).pow_const _)
-  have hG : Measurable (fun x => ∏ j, lmarginal μ u (f j) x ^ w j) :=
-    Finset.measurable_fun_prod _ (fun j _ => ((hf j).lmarginal μ).pow_const _)
-  have hm := FinnerProductMeasure.marginal_estimate μ S f w hf hd hw hb u
-  have hm' : (∫⁻ x, lmarginal μ u (fun x => ∏ j, f j x ^ w j) x
-      ∂MeasureTheory.Measure.pi μ) = 1 := (integral_marginal μ u hF).trans he
-  have hu := FinnerProductMeasure.finner_product_measure μ
-    (fun j => S j \ (u : Set I)) (fun j => lmarginal μ u (f j)) w
-    (fun j => (hf j).lmarginal μ)
-    (fun j => D5.S3.Analytic.Measure.ProductSupportIntersection.marginal_depends μ u (hd j))
-    hw
-  have hub : ∀ i, ∑ j ∈ univ.filter (fun j => i ∈ S j \ (u : Set I)), w j ≤ 1 := by
-    intro i
-    by_cases h : i ∈ u
-    · simp [h]
-    · simpa [h] using hb i
-  have hi' (j : J) : ∫⁻ x, lmarginal μ u (f j) x ∂MeasureTheory.Measure.pi μ = 1 :=
-    (integral_marginal μ u (hf j)).trans (hi j)
-  have he' : (∫⁻ x, ∏ j, lmarginal μ u (f j) x ^ w j
-      ∂MeasureTheory.Measure.pi μ) = 1 := by
-    apply le_antisymm
-    · simpa [hi'] using hu hub
-    · rw [← hm']
-      exact lintegral_mono hm
-  refine ⟨he', ?_⟩
-  apply (lintegral_eq_iff_ae_eq_of_ae_le (by rw [hm']; exact ENNReal.one_ne_top)
-    hG.aemeasurable (Eventually.of_forall hm)).mp
-  rw [hm', he']
 
 private lemma profile_integral [DecidableEq I]
     {f : (∀ i, X i) → ℝ≥0∞} (hf : Measurable f)
