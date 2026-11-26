@@ -144,4 +144,14 @@ public theorem Std.LinearOrderPackage.ofOrd._proof_2 :
       have ab := _root_.Std.le_of_not_ge (fun ba => notBA ((args.lawfulOrderOrd.isGE_compare a b).mpr ba))
       exact ⟨fun bc => ⟨_root_.Std.le_trans ab bc, bc⟩, And.right⟩
 
+public theorem Std.instTransNotLtOfLawfulOrderLTOfTotalOfLe._proof_1 :
+    type_of% @_root_.Std.instTransNotLtOfLawfulOrderLTOfTotalOfLe._proof_1 := by
+  intro α lt le lawful total transitive
+  have reverse {a b : α} (notLT : ¬ a < b) : ¬ ¬ b ≤ a := by
+    intro notLE
+    exact notLT (_root_.Std.lt_iff_le_and_not_ge.mpr ⟨(total.total a b).resolve_right notLE, notLE⟩)
+  intro a b c ab bc ac
+  exact reverse ab (fun ba => reverse bc (fun cb =>
+    (_root_.Std.lt_iff_le_and_not_ge.mp ac).2 (transitive.trans cb ba)))
+
 end OmegaChecks.InitPort.Alternatives
