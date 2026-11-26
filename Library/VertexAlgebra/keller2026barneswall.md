@@ -16,6 +16,7 @@ strata_touched:
   - D5/S3/HomologicalAlgebra/BarnesWallQ8CohomologyDetector
   - D5/S3/HomologicalAlgebra/BarnesWallQ8CyclicGauge
   - D5/S3/HomologicalAlgebra/InflatedCubicCandidate
+  - D5/S3/HomologicalAlgebra/QuaternionCandidateRestriction
 license: citation-only
 triage: anchor
 ---
@@ -94,3 +95,8 @@ function. The central coordinate of the sign extension provides an
 explicit primitive for the inflated linear term. Over circle
 coefficients this leaves two possible representatives, indexed by a bit.
 [Ji–Tian, Theorem 6.1](https://arxiv.org/abs/2611.23231v1)
+
+In the standard split extension, two coordinate slots support a
+quaternion subgroup. Restricting the trilinear representative to this
+subgroup gives the quaternion detector above. Its bar-cycle evaluation
+separates the two candidates, so the bit is unique.
