@@ -23,16 +23,16 @@ noncomputable section
 
 namespace D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower.SublinearOrder.RHHarmonicPairMoment
 
-private theorem weight_nonneg (j : PositiveZetaZero) : 0 ≤ harmonicWeight j := by
+theorem weight_nonneg (j : PositiveZetaZero) : 0 ≤ harmonicWeight j := by
   have hp : 0 < ordinate j := j.property.2
   unfold harmonicWeight
   positivity
 
-private theorem cutoff_mem (rh : RiemannHypothesis) (T : ℝ) (j : PositiveZetaZero) :
+theorem cutoff_mem (rh : RiemannHypothesis) (T : ℝ) (j : PositiveZetaZero) :
     j ∈ positiveCutoff rh T ↔ ordinate j ≤ T := by
   simp [positiveCutoff,Spectrum.cut,zetaSpectrum,ordinate]
 
-private theorem cutoff_mono (rh : RiemannHypothesis) {T U : ℝ} (h : T ≤ U) :
+theorem cutoff_mono (rh : RiemannHypothesis) {T U : ℝ} (h : T ≤ U) :
     positiveCutoff rh T ⊆ positiveCutoff rh U := fun j hj =>
   (cutoff_mem rh U j).mpr (((cutoff_mem rh T j).mp hj).trans h)
 

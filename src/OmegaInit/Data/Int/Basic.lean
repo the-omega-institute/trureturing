@@ -8,7 +8,7 @@ namespace Omega
 export _root_ (Int)
 end Omega
 namespace Omega.Int
-export _root_.Int (NonNeg add le lt mul natAbs neg negOfNat negSucc ofNat rec recOn sub subNatNat)
+export _root_.Int (NonNeg add le lt mul natAbs neg negOfNat negSucc ofNat rec recOn sign sub subNatNat toNat)
 end Omega.Int
 namespace Omega.Int.NonNeg
 export _root_.Int.NonNeg (mk rec recOn)
