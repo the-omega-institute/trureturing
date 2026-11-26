@@ -496,4 +496,195 @@ public theorem String.Slice.Pattern.ToBackwardSearcher.DefaultBackwardSearcher.i
   intro ρ pat s iter ne
   exact String.Slice.isEmpty_sliceTo_eq_false_iff.mpr ne
 
+public theorem String.Pos.next_le_of_lt : type_of% @_root_.String.Pos.next_le_of_lt := by
+  intro s p q h lt
+  exact _root_.String.Slice.Pos.next_le_of_lt (p := p.toSlice) (q := q.toSlice) lt
+
+private theorem ltIffLeOfReverse {a b c d : Nat} (reverse : b ≤ a ↔ d < c) : a < b ↔ c ≤ d :=
+  ⟨fun lt => Nat.le_of_not_gt (fun gt => Nat.not_le_of_gt lt (reverse.mpr gt)),
+    fun le => Nat.lt_of_not_ge (fun ge => Nat.not_lt_of_ge le (reverse.mp ge))⟩
+
+public theorem String.Slice.Pos.lt_next_iff_le : type_of% @_root_.String.Slice.Pos.lt_next_iff_le := by
+  intro s p q h
+  exact ltIffLeOfReverse (_root_.String.Slice.Pos.next_le_iff_lt (p := q) (q := p) (h := h))
+
+public theorem String.Pos.lt_next_iff_le : type_of% @_root_.String.Pos.lt_next_iff_le := by
+  intro s p q h
+  exact ltIffLeOfReverse (_root_.String.Pos.next_le_iff_lt (p := q) (q := p) (h := h))
+
+public theorem String.Pos.offset_lt_rawEndPos_iff : type_of% @_root_.String.Pos.offset_lt_rawEndPos_iff := by
+  intro s p
+  exact String.Pos.lt_endPos_iff p
+
+public theorem String.Slice.Pos.sliceFrom_le_iff : type_of% @_root_.String.Slice.Pos.sliceFrom_le_iff := by
+  intro s start p q bound
+  exact Nat.sub_le_iff_le_add'
+
+public theorem String.Slice.Pos.slice_le_iff : type_of% @_root_.String.Slice.Pos.slice_le_iff := by
+  intro s start stop ordered p q lower upper
+  exact Nat.sub_le_iff_le_add'
+
+public theorem String.Slice.Pos.slice_lt_iff : type_of% @_root_.String.Slice.Pos.slice_lt_iff := by
+  intro s start stop ordered p q lower upper
+  exact Nat.sub_lt_iff_lt_add' lower
+
+public theorem String.Slice.Pos.lt_slice_iff : type_of% @_root_.String.Slice.Pos.lt_slice_iff := by
+  intro s start stop ordered p q lower upper
+  exact Nat.lt_sub_iff_add_lt'
+
+public theorem String.Slice.Pos.le_slice_iff : type_of% @_root_.String.Slice.Pos.le_slice_iff := by
+  intro s start stop ordered p q lower upper
+  exact Nat.le_sub_iff_add_le' lower
+
+public theorem String.Pos.sliceFrom_le_iff : type_of% @_root_.String.Pos.sliceFrom_le_iff := by
+  intro s start p q bound
+  exact Nat.sub_le_iff_le_add'
+
+public theorem String.Pos.slice_le_iff : type_of% @_root_.String.Pos.slice_le_iff := by
+  intro s start stop ordered p q lower upper
+  exact Nat.sub_le_iff_le_add'
+
+public theorem String.Pos.slice_lt_iff : type_of% @_root_.String.Pos.slice_lt_iff := by
+  intro s start stop ordered p q lower upper
+  exact Nat.sub_lt_iff_lt_add' lower
+
+public theorem String.Pos.lt_slice_iff : type_of% @_root_.String.Pos.lt_slice_iff := by
+  intro s start stop ordered p q lower upper
+  exact Nat.lt_sub_iff_add_lt'
+
+public theorem String.Pos.le_slice_iff : type_of% @_root_.String.Pos.le_slice_iff := by
+  intro s start stop ordered p q lower upper
+  exact Nat.le_sub_iff_add_le' lower
+
+public theorem String.Slice.Pos.ofSlice_lt_iff : type_of% @_root_.String.Slice.Pos.ofSlice_lt_iff := by
+  intro s start stop ordered p q
+  have left := @_root_.String.Slice.Pos.le_ofSlice s start stop ordered p
+  have right := @_root_.String.Slice.Pos.ofSlice_le s start stop ordered p
+  constructor
+  · intro bound upper
+    have lower : start ≤ q := Nat.le_of_lt (Nat.lt_of_le_of_lt left bound)
+    exact ⟨lower, (String.Slice.Pos.lt_slice_iff (h₀ := lower) (h₁ := upper)).mpr bound⟩
+  · intro within
+    by_cases upper : q ≤ stop
+    · obtain ⟨lower, inner⟩ := within upper
+      exact (String.Slice.Pos.lt_slice_iff (h₀ := lower) (h₁ := upper)).mp inner
+    · exact Nat.lt_of_le_of_lt right (Nat.lt_of_not_ge upper)
+
+public theorem String.Slice.Pos.ofSlice_le_iff : type_of% @_root_.String.Slice.Pos.ofSlice_le_iff := by
+  intro s start stop ordered p q
+  have left := @_root_.String.Slice.Pos.le_ofSlice s start stop ordered p
+  have right := @_root_.String.Slice.Pos.ofSlice_le s start stop ordered p
+  constructor
+  · intro bound upper
+    have lower : start ≤ q := Nat.le_trans left bound
+    exact ⟨lower, (String.Slice.Pos.le_slice_iff (h₀ := lower) (h₁ := upper)).mpr bound⟩
+  · intro within
+    by_cases upper : q ≤ stop
+    · obtain ⟨lower, inner⟩ := within upper
+      exact (String.Slice.Pos.le_slice_iff (h₀ := lower) (h₁ := upper)).mp inner
+    · exact Nat.le_trans right (Nat.le_of_lt (Nat.lt_of_not_ge upper))
+
+public theorem String.Pos.ofSlice_lt_iff : type_of% @_root_.String.Pos.ofSlice_lt_iff := by
+  intro s start stop ordered p q
+  exact String.Slice.Pos.ofSlice_lt_iff (p₀ := start.toSlice) (p₁ := stop.toSlice) (p := p) (q := q.toSlice)
+
+public theorem String.Pos.ofSlice_le_iff : type_of% @_root_.String.Pos.ofSlice_le_iff := by
+  intro s start stop ordered p q
+  exact String.Slice.Pos.ofSlice_le_iff (p₀ := start.toSlice) (p₁ := stop.toSlice) (p := p) (q := q.toSlice)
+
+public theorem String.Slice.Pos.ofSliceFrom_ne_startPos : type_of% @_root_.String.Slice.Pos.ofSliceFrom_ne_startPos := by
+  intro s start p ne
+  have inner := (String.Slice.Pos.startPos_lt_iff p).mpr ne
+  exact (String.Slice.Pos.startPos_lt_iff _).mp
+    (Nat.lt_of_lt_of_le inner (Nat.le_add_left p.offset.byteIdx start.offset.byteIdx))
+
+public theorem String.Slice.Pos.ne_startPos_of_sliceFrom_ne_startPos : type_of% @_root_.String.Slice.Pos.ne_startPos_of_sliceFrom_ne_startPos := by
+  intro s p start bound ne
+  have inner := (String.Slice.Pos.startPos_lt_iff _).mpr ne
+  exact (String.Slice.Pos.startPos_lt_iff p).mp (Nat.lt_of_lt_of_le inner (Nat.sub_le ..))
+
+public theorem String.Slice.Pos.ofSlice_ne_startPos : type_of% @_root_.String.Slice.Pos.ofSlice_ne_startPos := by
+  intro s start stop ordered p ne
+  have inner := (String.Slice.Pos.startPos_lt_iff p).mpr ne
+  exact (String.Slice.Pos.startPos_lt_iff _).mp
+    (Nat.lt_of_lt_of_le inner (Nat.le_add_left p.offset.byteIdx start.offset.byteIdx))
+
+public theorem String.Slice.Pos.ne_startPos_of_slice_ne_startPos : type_of% @_root_.String.Slice.Pos.ne_startPos_of_slice_ne_startPos := by
+  intro s p start stop lower upper ne
+  have inner := (String.Slice.Pos.startPos_lt_iff _).mpr ne
+  exact (String.Slice.Pos.startPos_lt_iff p).mp (Nat.lt_of_lt_of_le inner (Nat.sub_le ..))
+
+public theorem String.Pos.ofSliceFrom_ne_startPos : type_of% @_root_.String.Pos.ofSliceFrom_ne_startPos := by
+  intro s start p ne
+  intro atStart
+  apply String.Slice.Pos.ofSliceFrom_ne_startPos (p₀ := start.toSlice) (p := p) ne
+  exact String.Slice.Pos.ext (congrArg String.Pos.offset atStart)
+
+public theorem String.Pos.ne_startPos_of_sliceFrom_ne_startPos : type_of% @_root_.String.Pos.ne_startPos_of_sliceFrom_ne_startPos := by
+  intro s p start bound ne
+  intro atStart
+  apply String.Slice.Pos.ne_startPos_of_sliceFrom_ne_startPos (p₀ := start.toSlice) (p := p.toSlice) (h₀ := bound) ne
+  exact String.Slice.Pos.ext (congrArg String.Pos.offset atStart)
+
+public theorem String.Pos.ofSlice_ne_startPos : type_of% @_root_.String.Pos.ofSlice_ne_startPos := by
+  intro s start stop ordered p ne
+  intro atStart
+  apply String.Slice.Pos.ofSlice_ne_startPos (p₀ := start.toSlice) (p₁ := stop.toSlice) (p := p) ne
+  exact String.Slice.Pos.ext (congrArg String.Pos.offset atStart)
+
+public theorem String.Pos.ne_startPos_of_slice_ne_startPos : type_of% @_root_.String.Pos.ne_startPos_of_slice_ne_startPos := by
+  intro s p start stop lower upper ne
+  intro atStart
+  apply String.Slice.Pos.ne_startPos_of_slice_ne_startPos (p₀ := start.toSlice) (p₁ := stop.toSlice) (p := p.toSlice) ne
+  exact String.Slice.Pos.ext (congrArg String.Pos.offset atStart)
+
+public theorem String.Slice.Pos.lt_ofSliceTo_iff : type_of% @_root_.String.Slice.Pos.lt_ofSliceTo_iff := by
+  intro s stop p q
+  exact ⟨fun lt => ⟨Nat.le_trans (Nat.le_of_lt lt) (_root_.String.Slice.Pos.ofSliceTo_le (pos := p)), lt⟩,
+    fun ⟨_, lt⟩ => lt⟩
+
+public theorem String.Slice.Pos.ofSliceTo_le_iff : type_of% @_root_.String.Slice.Pos.ofSliceTo_le_iff := by
+  intro s stop p q
+  refine ⟨fun le _ => le, fun all => Nat.le_of_not_gt (fun gt => ?_)⟩
+  obtain ⟨bound, inner⟩ := String.Slice.Pos.lt_ofSliceTo_iff.mp gt
+  exact Nat.not_lt_of_ge (all bound) inner
+
+public theorem String.Pos.ofSliceTo_le_iff : type_of% @_root_.String.Pos.ofSliceTo_le_iff := by
+  intro s stop p q
+  exact String.Slice.Pos.ofSliceTo_le_iff (p₀ := stop.toSlice) (p := p) (q := q.toSlice)
+
+public theorem String.Slice.Pos.le_ofSliceFrom_iff : type_of% @_root_.String.Slice.Pos.le_ofSliceFrom_iff := by
+  intro s start p q
+  refine ⟨fun outer lower => (String.Slice.Pos.sliceFrom_le_iff (h := lower)).mpr outer, fun all => ?_⟩
+  by_cases lower : start ≤ q
+  · exact (String.Slice.Pos.sliceFrom_le_iff (h := lower)).mp (all lower)
+  · exact Nat.le_trans (Nat.le_of_lt (Nat.lt_of_not_ge lower)) (_root_.String.Slice.Pos.le_ofSliceFrom (pos := p))
+
+public theorem String.Pos.le_ofSliceFrom_iff : type_of% @_root_.String.Pos.le_ofSliceFrom_iff := by
+  intro s start p q
+  exact String.Slice.Pos.le_ofSliceFrom_iff (p₀ := start.toSlice) (p := p) (q := q.toSlice)
+
+public theorem String.Pos.ofSliceTo_ne_endPos : type_of% @_root_.String.Pos.ofSliceTo_ne_endPos := by
+  intro s stop p ne
+  have inner : p.offset.byteIdx < (s.sliceTo stop).utf8ByteSize := (String.Slice.Pos.lt_endPos_iff p).mpr ne
+  rw [String.utf8ByteSize_sliceTo] at inner
+  exact (String.Pos.lt_endPos_iff _).mp (Nat.lt_of_lt_of_le inner stop.isValid.le_utf8ByteSize)
+
+public theorem String.Pos.ne_endPos_of_sliceTo_ne_endPos : type_of% @_root_.String.Pos.ne_endPos_of_sliceTo_ne_endPos := by
+  intro s p stop bound ne atEnd
+  exact String.Pos.ofSliceTo_ne_endPos (p := stop.sliceTo p bound) ne
+    (String.Pos.ext (congrArg String.Pos.offset atEnd))
+
+public theorem String.Pos.ofSlice_ne_endPos : type_of% @_root_.String.Pos.ofSlice_ne_endPos := by
+  intro s start stop ordered p ne
+  have inner : p.offset.byteIdx < (s.slice start stop ordered).utf8ByteSize := (String.Slice.Pos.lt_endPos_iff p).mpr ne
+  rw [String.utf8ByteSize_slice] at inner
+  exact (String.Pos.lt_endPos_iff _).mp
+    (Nat.lt_of_lt_of_le (Nat.lt_sub_iff_add_lt'.mp inner) stop.isValid.le_utf8ByteSize)
+
+public theorem String.Pos.ne_endPos_of_slice_ne_endPos : type_of% @_root_.String.Pos.ne_endPos_of_slice_ne_endPos := by
+  intro s p start stop lower upper ne atEnd
+  exact String.Pos.ofSlice_ne_endPos (p := p.slice start stop lower upper) ne
+    ((_root_.String.Pos.ofSlice_slice (h₁ := lower) (h₂ := upper)).trans atEnd)
+
 end OmegaChecks.InitPort.Alternatives
