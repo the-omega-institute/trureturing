@@ -51,10 +51,38 @@ private theorem productSupremum {α : Sort u} {β : Sort v} [PartialOrder α] [P
       (fun p : α ×' β => c (p.1, p.2))
     exact ⟨(p.1, p.2), Prod.is_sup_of_pprod hp⟩
 
-set_option linter.unusedVariables false in
-public theorem admissible_const_true {α : Sort u} [CCPO α] :
-    ∀ (c : α → Prop) (hc : chain c), (∀ x, c x → True) → True :=
-  fun _ _ _ => trivial
+@[expose] public def admissible {α : Sort u} [CCPO α] (P : α → Prop) : Prop :=
+  ∀ (c : α → Prop), chain c → (∀ x, c x → P x) → ∀ s, is_sup c s → P s
+
+public theorem admissible_const_true {α : Sort u} [CCPO α] : admissible (fun (_ : α) => True) :=
+  fun _ _ _ _ _ => trivial
+
+public theorem admissible_and {α : Sort u} [CCPO α] (P Q : α → Prop)
+    (hadm₁ : admissible P) (hadm₂ : admissible Q) : admissible (fun x => P x ∧ Q x) :=
+  fun c hc h s hs => ⟨hadm₁ c hc (fun x hx => (h x hx).1) s hs,
+    hadm₂ c hc (fun x hx => (h x hx).2) s hs⟩
+
+public theorem admissible_pi {α : Sort u} [CCPO α] {β : Sort v} (P : α → β → Prop)
+    (hadm₁ : ∀ y, admissible (fun x => P x y)) : admissible (fun x => ∀ y, P x y) :=
+  fun c hc h s hs y => hadm₁ y c hc (fun x hx => h x hx y) s hs
+
+public theorem admissible_pprod_fst {α : Sort u} {β : Sort v} [CCPO α] [CCPO β] (P : α → Prop)
+    (hadm : admissible P) : admissible (fun (x : α ×' β) => P x.1) := by
+  intro c hc h s hs
+  obtain ⟨a, ha⟩ := CCPO.has_csup (PProd.chain.chain_fst hc)
+  obtain ⟨b, hb⟩ := CCPO.has_csup (PProd.chain.chain_snd hc)
+  have same := is_sup_unique hs (productSupremum ha hb)
+  cases same
+  exact hadm _ (PProd.chain.chain_fst hc) (fun i ⟨j, hij⟩ => h ⟨i, j⟩ hij) a ha
+
+public theorem admissible_pprod_snd {α : Sort u} {β : Sort v} [CCPO α] [CCPO β] (P : β → Prop)
+    (hadm : admissible P) : admissible (fun (x : α ×' β) => P x.2) := by
+  intro c hc h s hs
+  obtain ⟨a, ha⟩ := CCPO.has_csup (PProd.chain.chain_fst hc)
+  obtain ⟨b, hb⟩ := CCPO.has_csup (PProd.chain.chain_snd hc)
+  have same := is_sup_unique hs (productSupremum ha hb)
+  cases same
+  exact hadm _ (PProd.chain.chain_snd hc) (fun j ⟨i, hij⟩ => h ⟨i, j⟩ hij) b hb
 
 public theorem Functor.monotone_map {m : Type u → Type v} [Monad m] [∀ t, PartialOrder (m t)] [MonoBind m]
     {α β : Type u} {γ : Type w} [PartialOrder γ] [LawfulMonad m]

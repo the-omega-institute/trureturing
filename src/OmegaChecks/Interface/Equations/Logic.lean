@@ -1,8 +1,21 @@
 module
 
 public import Init.Core
+public import Init.Internal.Order.Basic
+import all Init.Internal.Order.Basic
 
 namespace OmegaChecks.Interface.Equations
+
+open _root_.Lean.Order in
+public theorem Lean.Order.admissible {α : Sort u} [CCPO α] (P : α → Prop) :
+    (∀ (c : α → Prop), chain c → (∀ x, c x → P x) → ∀ s, is_sup c s → P s) =
+      _root_.Lean.Order.admissible P := by
+  apply propext
+  constructor
+  · intro close c hc h
+    exact close c hc h _ (CCPO.csup_spec hc)
+  · intro close c hc h s hs
+    exact is_sup_unique (CCPO.csup_spec hc) hs ▸ close c hc h
 
 /-- The public conjunction interface represents standard conjunction. -/
 public theorem And (a b : Prop) : (∀ r : Prop, (a → b → r) → r) = (a ∧ b) :=
