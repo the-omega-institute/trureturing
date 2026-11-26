@@ -10,6 +10,10 @@ $$\forall n,k\in\mathbb{N}, (1\le n \land 3\le k) \implies ((\exists q\in\mathbb
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/Recurrence/MandalMohanFibonacciPowerMean.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/mandal-mohan-fibonacci-power-means-1-19` (proved) by `D5/S3/Arith/Recurrence/MandalMohanFibonacciPowerMean.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"mandal-mohan-fibonacci-power-means-1-19","declaration_gid":"D5/S3/Arith/Recurrence/MandalMohanFibonacciPowerMean.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Sagar Mandal and Mohan (2026). *Integral Means of Fibonacci Numbers: Divisibility, Density, and Arithmetic Structure*. DOI: [10.48550/arXiv.2611.32519](https://doi.org/10.48550/arXiv.2611.32519). URL: <https://arxiv.org/html/2611.32519v1#S1.Thmtheorem19>.

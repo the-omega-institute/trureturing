@@ -45,7 +45,10 @@ internal sealed class MandalMohanFibonacciPowerMeanDocument : IScribeDocumentDef
                     + "than one and coprime to 24. At length three it would have to be a power "
                     + "of three. Reduction modulo eight and factorization of a difference of "
                     + "squares then force the exponent to be two."))),
-            DescribeRole.Theorem))));
+            DescribeRole.Theorem,
+            new OpenProblemResolutionClaim(
+                ProblemSlugRef.Create("mandal-mohan-fibonacci-power-means-1-19"),
+                ResolutionKind.Proved)))));
 
     private static Formula Claim()
     {
