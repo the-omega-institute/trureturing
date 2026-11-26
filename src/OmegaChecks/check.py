@@ -100,7 +100,15 @@ def check_library(selected=()):
     if not selected or "OmegaChecks.Audit" in selected:
         modules = sorted(name for name in graph if root(name) in STRICT)
     else:
-        modules = [name for name in closure(graph, selected) if root(name) in STRICT]
+        libraries = set(selected) & STRICT
+        inputs = set(selected) | {name for name in graph if root(name) in libraries}
+        modules = [name for name in closure(graph, inputs) if root(name) in STRICT]
+    publication = [name for name in modules if root(name) in {"OmegaMath", "OmegaMathlib"}]
+    if publication:
+        run("lake", "build", *("+" + name for name in publication))
+        official_path = portable.output("lake", "env", "printenv", "LEAN_PATH").strip()
+        run("lake", "build", "omegaAudit")
+        run(AUDIT, "--publication-layers", official_path, *publication)
     targets = set(modules) | set(selected)
     if not selected:
         # Build every external witness against the actual strict implementation.
@@ -166,9 +174,44 @@ def check_audits():
             source_file.write_text(source)
             lean("-R", tmp, "-o", tmp / f"{name}.olean", source_file)
             audit(name, ["OmegaInit.Prelude", name], [tmp, LIB], reason)
+    check_publication_layers()
     check_standard_admission()
     check_module_surface()
     check_consumer_exports()
+
+
+def check_publication_layers():
+    # Each backend can independently acquire an unused private edge. An ordinary D5
+    # importer is valid even when the same environment contains its upstream library.
+    direct = "OmegaMathlib.LayerFixture"
+    transitive = "OmegaMath.IsolatedLayerFixture"
+    downstream = "D5.LayerConsumer"
+    seed = "D5.LayerSeed"
+    helper = "LayerFixture.Helper"
+    official = audit_environment()
+    with tempfile.TemporaryDirectory(prefix="omega-layers-") as directory:
+        paths = {}
+        for clean in (True, False):
+            base = Path(directory) / ("clean" if clean else "bad")
+            for name, deps in [(seed, []), (helper, [seed]), (direct, [] if clean else [seed]),
+                               (transitive, [] if clean else [helper]), (downstream, [seed, transitive])]:
+                file = base.joinpath(*name.split(".")).with_suffix(".lean")
+                file.parent.mkdir(parents=True, exist_ok=True)
+                file.write_text("module\nprelude\n" + "".join(f"import {dep}\n" for dep in deps))
+                subprocess.run([ENV["LEAN"], "-R", base, "-o", file.with_suffix(".olean"), file],
+                               cwd=ROOT, env={**ENV, "LEAN_PATH": str(base)}, check=True)
+            paths[clean] = str(base) + os.pathsep
+        good_strict = paths[True] + ENV["LEAN_PATH"]
+        good_official = paths[True] + official["LEAN_PATH"]
+        run(AUDIT, "--consumer", good_strict, good_official, downstream)
+        for name, expected in [(direct, f"{direct} -> {seed}"),
+                               (transitive, f"{transitive} -> {helper} -> {seed}")]:
+            for strict, standard in [(paths[False] + ENV["LEAN_PATH"], good_official),
+                                     (good_strict, paths[False] + official["LEAN_PATH"])]:
+                result = subprocess.run([AUDIT, "--consumer", strict, standard, name], cwd=ROOT,
+                                        text=True, capture_output=True)
+                if result.returncode == 0 or f"forbidden D5 dependency: {expected}" not in result.stderr:
+                    raise RuntimeError(f"Expected D5 isolation failure {expected}: {result.stdout}{result.stderr}")
 
 
 def check_consumer_exports():
