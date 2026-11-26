@@ -6,16 +6,9 @@
    utility: none
    digest: Strict quantitative sharpness and an angular neighborhood for round quaternion reconstruction on four vertices. -/
 
-import D5.S3.Combinatorics.Graph.Chordal.RoundQuaternionK4Bounds
-import Mathlib.Analysis.Convex.Deriv
-import Mathlib.Analysis.Real.Pi.Bounds
-import Mathlib.Analysis.SpecialFunctions.Complex.Arg
-import Mathlib.Analysis.SpecialFunctions.Sqrt
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Bounds
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.InverseDeriv
+import D5.S3.Combinatorics.Graph.Chordal.Reconstruction.RoundQuaternionLocalScorePerturbation
 
-/-! The cyclic quarter turn has a quantitative strict fit gap under transverse and
-axial perturbations. The angular chart enters this regime by weighted variance. -/
+/-! A quantitative strict fit near the cyclic quarter turn, and its weighted-variance angular region. -/
 
 noncomputable section
 
@@ -25,446 +18,630 @@ open scoped Quaternion InnerProductSpace
 namespace RoundQuaternionLocalSharpness
 
 open RoundQuaternionK4Bounds
-open D5.S3.Quantum.AURICOmega.QuaternionComparisonModel (unitI coe_unitary_eq_sphere)
+open D5.S3.Quantum.AURICOmega.QuaternionComparisonModel (unitI inner_eq_components)
 
 local notation "U" => unitary ℍ[ℝ]
 
-/-- The three spokes and the diagonal carry the identity gain. -/
-def hubGaugedGains (A : Fin 3 → U) : Fin 4 → Fin 4 → U :=
-  ![![1, 1, 1, 1], ![1, 1, A 0, (A 2)⁻¹], ![1, (A 0)⁻¹, 1, A 1],
-    ![1, A 2, (A 1)⁻¹, 1]]
+private def phaseFactor (q : ℂ) : ℂ :=
+  Complex.exp ((↑(-Complex.arg (q * (zeta - 1)) / 2) : ℂ) * Complex.I)
 
-/-- The face maximum uses the three spoke triangles and the cyclic rim triangle. -/
-def hubMaxDefect (A : Fin 3 → U) : ℝ :=
-  max (max (roundDist 1 (A 0)) (max (roundDist 1 (A 1)) (roundDist 1 (A 2))))
-    (roundDist (A 0 * A 1 * A 2) 1)
+private theorem phaseFactor_norm (q : ℂ) : ‖phaseFactor q‖ = 1 :=
+  Complex.norm_exp_ofReal_mul_I _
 
-/-- The ratio of the sharp quarter-turn fit radius to its triangle defect. -/
-def cStar : ℝ := 2 * quarterError / π
+private theorem phaseFactor_align (q : ℂ) :
+    (phaseFactor q ^ 2 * q) * (zeta - 1) = (↑(√3 * ‖q‖) : ℂ) := by
+  let z := q * (zeta - 1)
+  let l := phaseFactor q
+  change (l ^ 2 * q) * (zeta - 1) = _
+  have hs : l ^ 2 = Complex.exp (-(↑(Complex.arg z) * Complex.I)) := by
+    rw [pow_two]
+    change Complex.exp ((↑(-Complex.arg z / 2) : ℂ) * Complex.I) *
+      Complex.exp ((↑(-Complex.arg z / 2) : ℂ) * Complex.I) = _
+    rw [← Complex.exp_add]
+    congr 1
+    push_cast
+    ring
+  have hz : ‖zeta - 1‖ = √3 := by
+    have h3 : (√3 : ℝ)^2 = 3 := Real.sq_sqrt (by norm_num)
+    rw [← sq_eq_sq₀ (norm_nonneg _) (Real.sqrt_nonneg _), Complex.sq_norm,
+      Complex.normSq_apply]
+    norm_num [zeta, Complex.sub_re, Complex.sub_im]
+    nlinarith
+  rw [mul_assoc, show q * (zeta - 1) = z by rfl, hs]
+  conv_lhs => rw [← Complex.norm_mul_exp_arg_mul_I z, mul_left_comm,
+    ← Complex.exp_add, neg_add_cancel, Complex.exp_zero, mul_one]
+  congr 1
+  rw [show ‖z‖ = ‖q‖ * ‖zeta - 1‖ by exact norm_mul _ _, hz, mul_comm]
 
-private theorem unit_norm (a : U) : ‖(a : ℍ[ℝ])‖ = 1 :=
-  CStarRing.norm_coe_unitary a
+private def axisConjugator (l : ℂ) (hl : ‖l‖ = 1) : U :=
+  asUnit (quatPair l 0) (by simp [local_normSq_pair, hl])
 
-private def asUnit (a : ℍ[ℝ]) (ha : normSq a = 1) : U :=
-  ⟨a, by
-    rw [← SetLike.mem_coe, coe_unitary_eq_sphere, mem_sphere_zero_iff_norm]
-    rw [normSq_eq_norm_mul_self] at ha
-    nlinarith [norm_nonneg a]⟩
+private theorem phase_coords (l z w : ℂ) (hl : ‖l‖ = 1) (a : U)
+    (ha : (a : ℍ[ℝ]) = quatPair z w) :
+    (conjugate (axisConjugator l hl) a : ℍ[ℝ]) = quatPair z (l ^ 2 * w) := by
+  have h : l.re ^ 2 + l.im ^ 2 = 1 := by
+    have hs := Complex.sq_norm l
+    rw [hl, Complex.normSq_apply] at hs
+    nlinarith
+  change quatPair l 0 * (a : ℍ[ℝ]) * star (quatPair l 0) = _
+  rw [ha]
+  ext <;> simp only [quatPair, Quaternion.re_mul, Quaternion.imI_mul,
+    Quaternion.imJ_mul, Quaternion.imK_mul, Quaternion.re_star,
+    Quaternion.imI_star, Quaternion.imJ_star, Quaternion.imK_star,
+    Complex.zero_re, Complex.zero_im, Complex.mul_re, Complex.mul_im, pow_two] <;>
+    first | linear_combination (norm := ring) z.re * h
+          | linear_combination (norm := ring) z.im * h | ring
 
-private theorem re_comm (x y : ℍ[ℝ]) : (x * y).re = (y * x).re := by
-  simp only [Quaternion.re_mul]
-  ring
+/-- The explicit rim potential uses the Fourier modes after phase normalization and then
+transports the result back to the original quaternion coordinates. -/
+def quarterLocalPotential (p q : ℂ) : Fin 4 → U :=
+  let l := phaseFactor q
+  let C := axisConjugator l (phaseFactor_norm q)
+  conjugate C⁻¹ ∘ phasedPotential (l ^ 2 * p) (l ^ 2 * q)
 
-private theorem re_cyclic (x y z : ℍ[ℝ]) : (x * y * z).re = (y * z * x).re := by
-  rw [mul_assoc, re_comm x]
+private theorem fitRadius_range (A : Fin 3 → U) (hc₀ : 0 ≤ cStar) (hc₁ : cStar ≤ 1) :
+    cStar * hubMaxDefect A ∈ Set.Icc 0 π := by
+  have he₀ : 0 ≤ hubMaxDefect A :=
+    (Real.arccos_nonneg _).trans (le_max_right _ _)
+  have he₁ : hubMaxDefect A ≤ π := by
+    unfold hubMaxDefect roundDist
+    simp only [max_le_iff]
+    exact ⟨⟨arccos_le_pi _, arccos_le_pi _, arccos_le_pi _⟩, arccos_le_pi _⟩
+  exact ⟨mul_nonneg hc₀ he₀, (mul_le_of_le_one_left he₀ hc₁).trans he₁⟩
 
-private theorem dist_trace (a b : U) :
-    roundDist a b = arccos (((a * b⁻¹ : U) : ℍ[ℝ]).re) := by
-  rw [roundDist, Quaternion.inner_def, Submonoid.coe_mul, ← Unitary.star_eq_inv, Unitary.coe_star]
-
-private theorem hub_reverse (A : Fin 3 → U) (i j : Fin 4) :
-    hubGaugedGains A j i = (hubGaugedGains A i j)⁻¹ := by
-  fin_cases i <;> fin_cases j <;> simp [hubGaugedGains]
-
-private theorem hub_faces (A : Fin 3 → U) :
-    DefectLE (hubGaugedGains A) (hubMaxDefect A) ∧
-    ∃ i j k : Fin 4, i ≠ j ∧ j ≠ k ∧ i ≠ k ∧
-      roundDist (hubGaugedGains A i j * hubGaugedGains A j k)
-        (hubGaugedGains A i k) = hubMaxDefect A := by
-  let g := hubGaugedGains A
-  let a := roundDist 1 (A 0)
-  let b := roundDist 1 (A 1)
-  let c := roundDist 1 (A 2)
-  let d := roundDist (A 0 * A 1 * A 2) 1
-  have h01 : roundDist (g 0 1 * g 1 2) (g 0 2) = a := by
-    simp [g, a, hubGaugedGains, roundDist, real_inner_comm]
-  have h02 : roundDist (g 0 2 * g 2 3) (g 0 3) = b := by
-    simp [g, b, hubGaugedGains, roundDist, real_inner_comm]
-  have h03 : roundDist (g 0 3 * g 3 1) (g 0 1) = c := by
-    simp [g, c, hubGaugedGains, roundDist, real_inner_comm]
-  have h12 : roundDist (g 1 2 * g 2 3) (g 1 3) = d := by
-    simp [g, d, hubGaugedGains, dist_trace]
-  have t (i j k : Fin 4) :
-      roundDist (g i j * g j k) (g i k) =
-        arccos (((g i j * g j k * g k i : U) : ℍ[ℝ]).re) := by
-    rw [dist_trace, hub_reverse A i k]
-  have cycle (i j k : Fin 4) :
-      roundDist (g j k * g k i) (g j i) = roundDist (g i j * g j k) (g i k) := by
-    rw [t, t, Submonoid.coe_mul, Submonoid.coe_mul, Submonoid.coe_mul, Submonoid.coe_mul]
-    rw [re_cyclic (g i j : ℍ[ℝ])]
-  have reverse (i j k : Fin 4) :
-      roundDist (g k j * g j i) (g k i) = roundDist (g i j * g j k) (g i k) := by
-    rw [t, t, hub_reverse A j k, hub_reverse A i j, hub_reverse A k i]
-    rw [← mul_inv_rev, ← mul_inv_rev, ← Unitary.star_eq_inv, Unitary.coe_star, Quaternion.re_star]
-    rw [Submonoid.coe_mul, Submonoid.coe_mul, Submonoid.coe_mul, Submonoid.coe_mul]
-    rw [re_cyclic (g k i : ℍ[ℝ])]
-  have exactFace (i j k : Fin 4) (hij : i ≠ j) (hjk : j ≠ k) (hik : i ≠ k) :
-      let e := roundDist (g i j * g j k) (g i k)
-      e = a ∨ e = b ∨ e = c ∨ e = d := by
-    fin_cases i <;> fin_cases j <;> fin_cases k
-    all_goals first | exact (hij rfl).elim | exact (hjk rfl).elim | exact (hik rfl).elim | skip
-    all_goals dsimp only
-    all_goals first
-      | exact Or.inl h01 | exact Or.inr (Or.inl h02)
-      | exact Or.inr (Or.inr (Or.inl h03)) | exact Or.inr (Or.inr (Or.inr h12))
-      | (rw [cycle]; exact Or.inl h01 <|> exact Or.inr (Or.inl h02) <|>
-           exact Or.inr (Or.inr (Or.inl h03)) <|> exact Or.inr (Or.inr (Or.inr h12)))
-      | (rw [cycle, cycle]; exact Or.inl h01 <|> exact Or.inr (Or.inl h02) <|>
-           exact Or.inr (Or.inr (Or.inl h03)) <|> exact Or.inr (Or.inr (Or.inr h12)))
-      | (rw [reverse]; exact Or.inl h01 <|> exact Or.inr (Or.inl h02) <|>
-           exact Or.inr (Or.inr (Or.inl h03)) <|> exact Or.inr (Or.inr (Or.inr h12)))
-      | (rw [reverse, cycle]; exact Or.inl h01 <|> exact Or.inr (Or.inl h02) <|>
-           exact Or.inr (Or.inr (Or.inl h03)) <|> exact Or.inr (Or.inr (Or.inr h12)))
-      | (rw [reverse, cycle, cycle]; exact Or.inl h01 <|> exact Or.inr (Or.inl h02) <|>
-           exact Or.inr (Or.inr (Or.inl h03)) <|> exact Or.inr (Or.inr (Or.inr h12)))
-  refine ⟨⟨hub_reverse A, ?_, ?_⟩, ?_⟩
-  · intro i
-    fin_cases i <;> rfl
-  · intro i j k hij hjk hik
-    change roundDist (g i j * g j k) (g i k) ≤ max (max a (max b c)) d
-    rcases exactFace i j k hij hjk hik with h | h | h | h
-    · exact h.le.trans ((le_max_left _ _).trans (le_max_left _ _))
-    · exact h.le.trans ((le_max_left _ _).trans ((le_max_right _ _).trans (le_max_left _ _)))
-    · exact h.le.trans ((le_max_right _ _).trans ((le_max_right _ _).trans (le_max_left _ _)))
-    · exact h.le.trans (le_max_right _ _)
-  · change ∃ i j k : Fin 4, i ≠ j ∧ j ≠ k ∧ i ≠ k ∧
-      roundDist (g i j * g j k) (g i k) = max (max a (max b c)) d
-    rcases max_choice (max a (max b c)) d with h | h
-    · rw [h]
-      rcases max_choice a (max b c) with h | h
-      · exact ⟨0, 1, 2, by decide, by decide, by decide, h01.trans h.symm⟩
-      · rw [h]
-        rcases max_choice b c with h | h
-        · exact ⟨0, 2, 3, by decide, by decide, by decide, h02.trans h.symm⟩
-        · exact ⟨0, 3, 1, by decide, by decide, by decide, h03.trans h.symm⟩
-    · exact ⟨1, 2, 3, by decide, by decide, by decide, h12.trans h.symm⟩
-
-
-private def conjugate (C a : U) : U := C * a * C⁻¹
-
-private theorem conj_mul (C a b : U) :
-    conjugate C (a * b) = conjugate C a * conjugate C b := by
-  unfold conjugate
-  group
-
-private theorem conj_inv (C a : U) :
-    conjugate C a⁻¹ = (conjugate C a)⁻¹ := by
-  unfold conjugate
-  group
-
-private theorem conj_one (C : U) : conjugate C 1 = 1 := by
-  simp [conjugate]
-
-private theorem conj_cancel (C a : U) : conjugate C⁻¹ (conjugate C a) = a := by
-  unfold conjugate
-  group
-
-private theorem conj_trace (C a : U) :
-    ((conjugate C a : U) : ℍ[ℝ]).re = (a : ℍ[ℝ]).re := by
-  change (((C : ℍ[ℝ]) * (a : ℍ[ℝ])) * (↑(C⁻¹) : ℍ[ℝ])).re = _
-  rw [← re_cyclic (↑(C⁻¹) : ℍ[ℝ]), ← Submonoid.coe_mul,
-    inv_mul_cancel, OneMemClass.coe_one, one_mul]
-
-private theorem conj_inner (C a b : U) :
-    ⟪(conjugate C a : ℍ[ℝ]), (conjugate C b : ℍ[ℝ])⟫_ℝ =
-      ⟪(a : ℍ[ℝ]), (b : ℍ[ℝ])⟫_ℝ := by
-  simp only [Quaternion.inner_def]
-  change ((↑(conjugate C a * (conjugate C b)⁻¹) : ℍ[ℝ])).re =
-    (↑(a * b⁻¹) : ℍ[ℝ]).re
-  rw [← conj_inv, ← conj_mul, conj_trace]
-
-private theorem conj_dist (C a b : U) :
-    roundDist (conjugate C a) (conjugate C b) = roundDist a b := by
-  simp only [roundDist, conj_inner]
-
-private theorem conjugate_hub (C : U) (A : Fin 3 → U) (i j : Fin 4) :
-    hubGaugedGains (conjugate C ∘ A) i j = conjugate C (hubGaugedGains A i j) := by
-  fin_cases i <;> fin_cases j <;> simp [hubGaugedGains, conj_one, conj_inv]
-
-private theorem conjugate_hubMaxDefect (C : U) (A : Fin 3 → U) :
-    hubMaxDefect (conjugate C ∘ A) = hubMaxDefect A := by
-  have h₁ (a : U) : roundDist 1 (conjugate C a) = roundDist 1 a := by
-    simpa only [conj_one] using conj_dist C 1 a
-  have h₂ (a : U) : roundDist (conjugate C a) 1 = roundDist a 1 := by
-    simpa only [conj_one] using conj_dist C a 1
-  simp only [hubMaxDefect, Function.comp_apply, ← conj_mul, h₁, h₂]
-
-private theorem conjugate_fits (C : U) (g : Fin 4 → Fin 4 → U) (φ : Fin 4 → U) (R : ℝ) :
-    Fits (fun i j => conjugate C (g i j)) (conjugate C ∘ φ) R ↔ Fits g φ R := by
-  simp only [Fits, Function.comp_apply, ← conj_inv, ← conj_mul, conj_dist]
-
-private theorem score_ge_iff {a b : U} {R : ℝ} (hR : R ∈ Set.Icc 0 π) :
-    roundDist a b ≤ R ↔ cos R ≤ ⟪(a : ℍ[ℝ]), (b : ℍ[ℝ])⟫_ℝ := by
-  have ha := abs_le.mp (by simpa only [unit_norm, mul_one] using
-    abs_real_inner_le_norm (a : ℍ[ℝ]) (b : ℍ[ℝ]))
+private theorem zero_parameters {p q : ℂ} {η : Fin 3 → ℝ} :
+    ‖q‖ / 200 + (3/100) * (‖p‖ ^ 2 + etaMax η) = 0 ↔
+      p = 0 ∧ q = 0 ∧ η = 0 := by
   constructor
   · intro h
-    have hh := Real.strictAntiOn_cos.antitoneOn ⟨arccos_nonneg _, arccos_le_pi _⟩ hR h
-    simpa only [roundDist, cos_arccos ha.1 ha.2] using hh
-  · intro h
-    exact (arccos_le_arccos h).trans_eq (arccos_cos hR.1 hR.2)
+    have hE := local_eta_nonneg η
+    have hp : ‖p‖ ^ 2 = 0 := by nlinarith [norm_nonneg q, sq_nonneg ‖p‖]
+    have hq : ‖q‖ = 0 := by nlinarith [norm_nonneg q, sq_nonneg ‖p‖]
+    have hη : etaMax η = 0 := by nlinarith [norm_nonneg q, sq_nonneg ‖p‖]
+    refine ⟨pow_eq_zero hp |> norm_eq_zero.mp, norm_eq_zero.mp hq, funext fun j => ?_⟩
+    exact abs_eq_zero.mp (le_antisymm ((local_abs_eta η j).trans_eq hη) (abs_nonneg _))
+  · rintro ⟨rfl, rfl, rfl⟩
+    norm_num [etaMax]
 
-private theorem strict_fit_of_scores {g : Fin 4 → Fin 4 → U} {φ : Fin 4 → U} {R δ : ℝ}
-    (hR : R ∈ Set.Icc 0 π) (hd : 0 < δ)
-    (hs : ∀ i j, i ≠ j → cos R + δ ≤
-      ⟪(g i j : ℍ[ℝ]), (↑((φ i)⁻¹ * φ j) : ℍ[ℝ])⟫_ℝ) :
-    ∃ s < R, Fits g φ s := by
-  let k := cos R + δ
-  have hk₁ : k ≤ 1 := (hs 0 1 (by decide)).trans (by
-    simpa only [unit_norm, mul_one] using real_inner_le_norm
-      (g 0 1 : ℍ[ℝ]) (↑((φ 0)⁻¹ * φ 1) : ℍ[ℝ]))
-  have hk₀ : -1 ≤ k := by linarith [neg_one_le_cos R]
-  refine ⟨arccos k, ?_, fun i j hij => arccos_le_arccos (hs i j hij)⟩
-  rw [← arccos_cos hR.1 hR.2]
-  exact strictAntiOn_arccos ⟨neg_one_le_cos R, cos_le_one R⟩ ⟨hk₀, hk₁⟩
-    (lt_add_of_pos_right _ hd)
+private theorem quarter_defect_exact :
+    hubMaxDefect (fun _ => unitI) = π / 2 := by
+  have hSpoke : roundDist 1 unitI = π / 2 := by
+    rw [roundDist, inner_eq_components]
+    norm_num [unitI, Real.arccos_zero]
+  have hRim : roundDist (unitI * unitI * unitI) 1 = π / 2 := by
+    rw [dist_trace, inv_one, mul_one]
+    norm_num [unitI, Real.arccos_zero, Submonoid.coe_mul,
+      Quaternion.re_mul, Quaternion.imI_mul, Quaternion.imJ_mul, Quaternion.imK_mul]
+  simp [hubMaxDefect, hSpoke, hRim]
 
-/-- The primitive third root of unity with positive imaginary part. -/
-def zeta : ℂ := ⟨-1/2, Real.sqrt 3 / 2⟩
-
-private def rimPhase (j : Fin 3) : ℂ := ![1, star zeta, zeta] j
-
-/-- The two nonconstant Fourier modes of the transverse rim coordinates. -/
-def transverse (p q : ℂ) (j : Fin 3) : ℂ :=
-  p * star (rimPhase j) + q * rimPhase j
-
-/-- The complex-pair coordinates of a quaternion in the frame \(1,I,J,IJ\). -/
-def quatPair (z h : ℂ) : ℍ[ℝ] := ⟨z.re, z.im, h.re, h.im⟩
-
-/-- The maximum absolute scalar perturbation on the rim. -/
-def etaMax (η : Fin 3 → ℝ) : ℝ := max |η 0| (max |η 1| |η 2|)
-
-/-- The Fourier and scalar perturbation threshold. -/
-def localR : ℝ := 3/50
-
-private theorem local_abs_eta (η : Fin 3 → ℝ) (j : Fin 3) : |η j| ≤ etaMax η := by
-  fin_cases j <;> unfold etaMax
-  · exact le_max_left _ _
-  · exact (le_max_left _ _).trans (le_max_right _ _)
-  · exact (le_max_right _ _).trans (le_max_right _ _)
-
-private theorem local_eta_nonneg (η : Fin 3 → ℝ) : 0 ≤ etaMax η :=
-  (abs_nonneg (η 0)).trans (local_abs_eta η 0)
-
-private theorem local_normSq_pair (z h : ℂ) :
-    normSq (quatPair z h) = ‖z‖ ^ 2 + ‖h‖ ^ 2 := by
-  rw [Complex.sq_norm, Complex.sq_norm]
-  simp only [normSq_def', Complex.normSq_apply, quatPair]
-  ring
-
-private theorem local_sq_complex (x y : ℝ) : ‖(⟨x, y⟩ : ℂ)‖ ^ 2 = x ^ 2 + y ^ 2 := by
-  rw [Complex.sq_norm, Complex.normSq_apply]
-  ring
-
-private theorem local_norm_pair (z h : ℂ) :
-    ‖quatPair z h‖ ^ 2 = ‖z‖ ^ 2 + ‖h‖ ^ 2 := by
-  rw [← local_normSq_pair, normSq_eq_norm_mul_self, pow_two]
-
-private theorem local_phase_norm (j : Fin 3) : ‖rimPhase j‖ = 1 := by
-  have hz : ‖zeta‖ = 1 := by
-    have h3 : (Real.sqrt 3) ^ 2 = 3 := Real.sq_sqrt (by norm_num)
-    have h := local_sq_complex (-1/2) (Real.sqrt 3 / 2)
-    change ‖zeta‖ ^ 2 = _ at h
-    nlinarith [norm_nonneg zeta]
-  fin_cases j <;> simp [rimPhase, Complex.star_def, hz, Complex.norm_conj]
-
-private theorem local_pair_sub (z h z' h' : ℂ) :
-    quatPair z h - quatPair z' h' = quatPair (z - z') (h - h') := by
-  ext <;> rfl
-
-private def localT : ℝ := Real.sqrt 3 / 3
-private def localS : ℝ := Real.sqrt 2 * Real.sqrt 3 / 3
-private def localAlpha : ℝ := Real.sqrt 3 / 12
-private def localLinear : ℝ := Real.sqrt 2 * Real.sqrt 3 / 6
-private def localInvS : ℝ := Real.sqrt 2 * Real.sqrt 3 / 4
-
-private theorem local_constant_squares :
-    localT ^ 2 = 1/3 ∧ localS ^ 2 = 2/3 ∧ localAlpha ^ 2 = 1/48 ∧
-      localLinear ^ 2 = 1/6 ∧ localInvS ^ 2 = 3/8 := by
-  have h2 : (Real.sqrt 2) ^ 2 = 2 := Real.sq_sqrt (by norm_num)
-  have h3 : (Real.sqrt 3) ^ 2 = 3 := Real.sq_sqrt (by norm_num)
-  norm_num [localT, localS, localAlpha, localLinear, localInvS, div_pow, mul_pow, h2, h3]
-
-private theorem local_constant_values :
-    localT = 1 / Real.sqrt 3 ∧ localS = Real.sqrt (2/3) ∧ localLinear = 1 / Real.sqrt 6 := by
-  have h3 : (Real.sqrt 3) ^ 2 = 3 := Real.sq_sqrt (by norm_num)
-  have h6 : (Real.sqrt 6) ^ 2 = 6 := Real.sq_sqrt (by norm_num)
-  refine ⟨?_, ?_, ?_⟩
-  · apply (eq_div_iff (by positivity : Real.sqrt 3 ≠ 0)).2
-    unfold localT
-    nlinarith
-  · have hs : (Real.sqrt (2/3)) ^ 2 = 2/3 := Real.sq_sqrt (by norm_num)
-    nlinarith [local_constant_squares.2.1, show 0 ≤ localS by unfold localS; positivity,
-      Real.sqrt_nonneg (2/3)]
-  · apply (eq_div_iff (by positivity : Real.sqrt 6 ≠ 0)).2
-    have h := local_constant_squares.2.2.2.1
-    have hsq : (localLinear * Real.sqrt 6)^2 = 1 := by rw [mul_pow, h, h6]; norm_num
-    nlinarith [show 0 ≤ localLinear * Real.sqrt 6 by unfold localLinear; positivity]
-
-private theorem local_constant_bounds :
-    577/1000 < localT ∧ localT < 5774/10000 ∧ 815/1000 < localS ∧ localS < 817/1000 ∧
-    0 < localAlpha ∧ localAlpha < 145/1000 ∧ 408/1000 < localLinear ∧
-    localLinear < 409/1000 := by
-  obtain ⟨hT, hS, hα, hL, _⟩ := local_constant_squares
-  have ht : 0 < localT := by unfold localT; positivity
-  have hs : 0 < localS := by unfold localS; positivity
-  have ha : 0 < localAlpha := by unfold localAlpha; positivity
-  have hl : 0 < localLinear := by unfold localLinear; positivity
-  exact ⟨by nlinarith, by nlinarith, by nlinarith, by nlinarith, ha,
-    by nlinarith, by nlinarith, by nlinarith⟩
-
-private def rimPrev (j : Fin 3) : Fin 3 := j - 1
-private def rimNext (j : Fin 3) : Fin 3 := j + 1
-
-private def localB (p : ℂ) (j : Fin 3) : ℝ :=
-  localLinear * (p * rimPhase (rimPrev j)).re
-private def localTau (p : ℂ) (j : Fin 3) : ℝ := Real.sqrt 3 * localB p j
-
-private def localF (p : ℂ) (j : Fin 3) : ℝ :=
-  let x := p.re
-  let y := p.im
-  ![Real.sqrt 3 * (x ^ 2 - y ^ 2) / 96 + x*y/16,
-    Real.sqrt 3 * (x ^ 2 - y ^ 2) / 96 - x*y/16,
-    -Real.sqrt 3 * (x ^ 2 - y ^ 2) / 48] j
-
-private def localPsi (p : ℂ) (j : Fin 3) : ℝ := localF p j - localF p (rimPrev j)
-private def localFibre (p : ℂ) (j : Fin 3) : ℝ := localS * (localTau p j + localPsi p j)
-private def localReal (p q : ℂ) : ℝ := localT + localLinear * ‖q‖ - localAlpha * ‖p‖^2
-private def localRadicand (p q : ℂ) (j : Fin 3) : ℝ :=
-  1 - localReal p q ^ 2 - localB p j ^ 2 - localFibre p j ^ 2
-
-private def localRim (p q : ℂ) (j : Fin 3) : ℍ[ℝ] :=
-  quatPair ⟨localReal p q, localB p j⟩
-    (rimPhase j * ⟨Real.sqrt (localRadicand p q j), localFibre p j⟩)
-
-private theorem local_rim_unit (p q : ℂ) (j : Fin 3) (h : 0 ≤ localRadicand p q j) :
-    normSq (localRim p q j) = 1 := by
-  simp only [localRim, local_normSq_pair, norm_mul, local_phase_norm, one_mul,
-    local_sq_complex, Real.sq_sqrt h, localRadicand]
-  ring
-
-private def localUnitRim (p q : ℂ) (j : Fin 3) : U :=
-  if h : 0 ≤ localRadicand p q j then asUnit (localRim p q j) (local_rim_unit p q j h)
-  else 1
-
-/-- The hub potential is \(1\). The rim potentials use the phased transverse coordinates. -/
-def quarterLocalPotential (p q : ℂ) : Fin 4 → U :=
-  ![1, localUnitRim p q 0, localUnitRim p q 1, localUnitRim p q 2]
-
-private theorem local_b_bound (p : ℂ) (j : Fin 3) : |localB p j| ≤ localLinear * ‖p‖ := by
-  have h := Complex.abs_re_le_norm (p * rimPhase (rimPrev j))
-  rw [norm_mul, local_phase_norm, mul_one] at h
-  have hl : 0 ≤ localLinear := by unfold localLinear; positivity
-  simpa only [localB, abs_mul, abs_of_nonneg hl] using mul_le_mul_of_nonneg_left h hl
-
-private theorem local_psi_bound (p : ℂ) (j : Fin 3) : |localPsi p j| ≤ ‖p‖ ^ 2 / 16 := by
-  let x := p.re
-  let y := p.im
-  let a := x ^ 2 - y ^ 2
-  let b := 2*x*y
-  have h : a ^ 2 + b ^ 2 = ‖p‖ ^ 4 := by
-    rw [show ‖p‖ ^ 4 = (‖p‖ ^ 2) ^ 2 by ring, Complex.sq_norm, Complex.normSq_apply]
-    dsimp [a, b, x, y]
+/-- The exact triangle defect controls the error of the explicit local potential, with a
+quantitative improvement for every nonzero Fourier or scalar perturbation. -/
+theorem quarterLocal_strictFit (A : Fin 3 → U) (p q : ℂ) (η γ : Fin 3 → ℝ)
+    (hA : ∀ j, (A j : ℍ[ℝ]) = quatPair ⟨-η j, γ j⟩ (transverse p q j))
+    (hγ : ∀ j, γ j = √(1 - (η j)^2 - ‖transverse p q j‖^2))
+    (hγpos : ∀ j, 0 < γ j)
+    (hp : ‖p‖ ≤ localR) (hq : ‖q‖ ≤ localR) (he : etaMax η ≤ localR) :
+    let g := hubGaugedGains A
+    let e := hubMaxDefect A
+    let φ := quarterLocalPotential p q
+    DefectLE g e ∧
+    (∃ i j k : Fin 4, i ≠ j ∧ j ≠ k ∧ i ≠ k ∧ roundDist (g i j * g j k) (g i k) = e) ∧
+    (∀ i j, i ≠ j → cos (cStar * e) + ‖q‖ / 200 + (3/100) * (‖p‖^2 + etaMax η) ≤
+      ⟪(g i j : ℍ[ℝ]), (↑((φ i)⁻¹ * φ j) : ℍ[ℝ])⟫_ℝ) ∧
+    Fits g φ (cStar * e) ∧
+    (¬ (p = 0 ∧ q = 0 ∧ η = 0) → ∃ R < cStar * e, Fits g φ R) ∧
+    (p = 0 ∧ q = 0 ∧ η = 0 → ∀ ψ R, R < cStar * e → ¬ Fits g ψ R) := by
+  let l := phaseFactor q
+  let C := axisConjugator l (phaseFactor_norm q)
+  let p' := l^2*p
+  let q' := l^2*q
+  let A' := conjugate C ∘ A
+  let φ' := phasedPotential p' q'
+  have hl : ‖l‖ = 1 := phaseFactor_norm q
+  have hnp : ‖p'‖ = ‖p‖ := by simp [p', norm_mul, norm_pow, hl]
+  have hnq : ‖q'‖ = ‖q‖ := by simp [q', norm_mul, norm_pow, hl]
+  have hw j : transverse p' q' j = l^2 * transverse p q j := by
+    unfold transverse p' q'
     ring
-  have h3 : (Real.sqrt 3) ^ 2 = 3 := Real.sq_sqrt (by norm_num)
-  have bound (c d : ℝ) (hc : c ^ 2 + d ^ 2 = (1/16 : ℝ) ^ 2) :
-      |c*a + d*b| ≤ ‖p‖^2/16 := by
-    apply (sq_le_sq₀ (abs_nonneg _) (by positivity)).1
-    rw [sq_abs]
-    nlinarith [sq_nonneg (c*b-d*a), congrArg₂ (· * ·) hc h]
-  fin_cases j
-  · convert bound (Real.sqrt 3 / 32) (1/32) (by rw [div_pow, h3]; norm_num) using 1
-    congr 1
-    norm_num [localPsi, localF, rimPrev, a, b, x, y]
+  have hA' j : (A' j : ℍ[ℝ]) = quatPair ⟨-η j, γ j⟩ (transverse p' q' j) := by
+    rw [hw]
+    exact phase_coords l _ _ hl (A j) (hA j)
+  have hγ' j : γ j = √(1 - (η j)^2 - ‖transverse p' q' j‖^2) := by
+    rw [hw, norm_mul, norm_pow, hl, one_pow, one_mul, ← hγ]
+  have hphase : q' * (zeta-1) = (↑(√3*‖q'‖) : ℂ) := by
+    rw [hnq]
+    exact phaseFactor_align q
+  have hs i j (hij : i ≠ j) := local_minScore
+    (hnp ▸ hp) (hnq ▸ hq) he hγ' hA' hphase i j hij
+  have hdef := quarterLocal_defectLower A η γ p q hA hγpos hp hq he
+  have hfit := fitRadius_range A (by linarith [cStar_bounds.1])
+    (by linarith [cStar_bounds.2.1])
+  let δ := ‖q‖/200 + (3/100)*(‖p‖^2 + etaMax η)
+  have hδ : 0 ≤ δ := by dsimp [δ]; positivity [local_eta_nonneg η]
+  have hscore i j (hij : i ≠ j) :
+      cos (cStar * hubMaxDefect A) + δ ≤
+        ⟪(hubGaugedGains A i j : ℍ[ℝ]),
+          (↑((quarterLocalPotential p q i)⁻¹ * quarterLocalPotential p q j) : ℍ[ℝ])⟫_ℝ := by
+    have hb := hs i j hij
+    rw [hnp, hnq] at hb
+    change _ ≤ ⟪(hubGaugedGains A' i j : ℍ[ℝ]), ((φ' i)⁻¹ * φ' j : U)⟫_ℝ at hb
+    rw [conjugate_hub] at hb
+    rw [show φ' i = conjugate C (quarterLocalPotential p q i) by
+      simpa [quarterLocalPotential, Function.comp_apply, inv_inv] using
+        (conj_cancel C⁻¹ (φ' i)).symm,
+      show φ' j = conjugate C (quarterLocalPotential p q j) by
+        simpa [quarterLocalPotential, Function.comp_apply, inv_inv] using
+          (conj_cancel C⁻¹ (φ' j)).symm,
+      ← conj_inv, ← conj_mul, conj_inner] at hb
+    rw [hubMaxDefect_eq_asin A η (fun j => congrArg Quaternion.re (hA j))]
+    have hb' := hb
+    rw [pure_score_estimates.constant_values.1, pure_score_estimates.constant_values.2.2] at hb'
+    simpa only [δ, add_assoc] using localMargin
+      ⟨norm_nonneg _, hp⟩ ⟨norm_nonneg _, hq⟩ (local_eta_nonneg η) hdef.1.le hdef.2
+      (by simpa [localAlpha, div_eq_mul_inv, mul_comm, localR] using hb')
+  rcases hub_faces A with ⟨hfaces, hattain⟩
+  refine ⟨hfaces, hattain, ?_, ?_, ?_, ?_⟩
+  · intro i j hij
+    simpa only [δ, add_assoc] using hscore i j hij
+  · intro i j hij
+    exact (score_ge_iff hfit).mpr (le_trans (le_add_of_nonneg_right hδ) (hscore i j hij))
+  · intro hn
+    exact strict_fit_of_scores hfit (lt_of_le_of_ne hδ (Ne.symm (mt zero_parameters.mp hn))) hscore
+  · rintro ⟨rfl, rfl, rfl⟩ ψ R hR hf
+    have hA0 : A = fun _ => unitI := by
+      funext j
+      apply Subtype.ext
+      rw [hA, hγ]
+      simp [transverse, quatPair, unitI]
+    rw [hA0, quarter_defect_exact] at hR
+    have hθ : cStar * (π / 2) = quarterError := by
+      unfold cStar
+      field_simp [Real.pi_ne_zero]
+    rw [hθ] at hR
+    subst A
+    obtain ⟨i, j, hij, hmin⟩ := quarter_turn_sharp.2.2.1 ψ
+    exact (not_lt_of_ge (hmin.trans (hf i j hij))) hR
+
+private def chartTheta (a b c : ℝ) : Fin 3 → ℝ := ![a, b, c]
+
+private def chartDir (u v w : ℝ) : Fin 3 → ℍ[ℝ] :=
+  ![⟨0, 1, 0, 0⟩, ⟨0, cos u, sin u, 0⟩, ⟨0, cos v, sin v * cos w, sin v * sin w⟩]
+
+private theorem chartDir_re (u v w : ℝ) (j : Fin 3) : (chartDir u v w j).re = 0 := by
+  fin_cases j <;> rfl
+
+private theorem chartDir_norm (u v w : ℝ) (j : Fin 3) : ‖chartDir u v w j‖ = 1 := by
+  have h : normSq (chartDir u v w j) = 1 := by
+    fin_cases j <;> simp [chartDir, normSq_def']
+    · nlinarith [sin_sq_add_cos_sq u]
+    · linear_combination (sin v)^2 * sin_sq_add_cos_sq w + sin_sq_add_cos_sq v
+  rw [normSq_eq_norm_mul_self] at h
+  nlinarith [norm_nonneg (chartDir u v w j)]
+
+private def chartRim (a b c u v w : ℝ) (j : Fin 3) : U :=
+  let θ := chartTheta a b c j
+  asUnit (⟨cos θ, 0, 0, 0⟩ + sin θ • chartDir u v w j) (by
+    have hn := chartDir_norm u v w j
+    have hd : normSq (chartDir u v w j) = 1 := by
+      rw [normSq_eq_norm_mul_self, hn, mul_one]
+    simp only [normSq_def', chartDir_re] at hd
+    simp only [normSq_def', Quaternion.re_add, Quaternion.imI_add, Quaternion.imJ_add,
+      Quaternion.imK_add, Quaternion.re_smul, Quaternion.imI_smul, Quaternion.imJ_smul,
+      Quaternion.imK_smul, smul_eq_mul, chartDir_re, mul_zero, zero_add, add_zero]
+    linear_combination (sin θ)^2 * hd + sin_sq_add_cos_sq θ)
+
+/-- The three rim gains in the ordered spherical chart, with all angles in radians. -/
+def chartGains (a b c u v w : ℝ) : Fin 4 → Fin 4 → U :=
+  hubGaugedGains (chartRim a b c u v w)
+
+private theorem chart_sin_cos {θ : ℝ} (hθ : |θ - π / 2| ≤ 17 * π / 900) :
+    499 / 500 ≤ sin θ ∧ sin θ ≤ 1 ∧ |cos θ| ≤ localR := by
+  have hangle : |θ - π / 2| ≤ (3 / 50 : ℝ) := by linarith [Real.pi_lt_d6]
+  have hsq : (θ - π / 2)^2 ≤ (3 / 50 : ℝ)^2 := by
+    simpa [sq_abs] using pow_le_pow_left₀ (abs_nonneg (θ - π / 2)) hangle 2
+  refine ⟨?_, sin_le_one _, ?_⟩
+  · rw [← cos_sub_pi_div_two]
+    linarith [one_sub_sq_div_two_le_cos (x := θ - π / 2)]
+  · rw [← abs_neg (cos θ), ← sin_sub_pi_div_two]
+    exact (abs_sin_le_abs (x := θ - π / 2)).trans hangle
+
+private theorem chart_chord (u v w : ℝ) (hu : 0 ≤ u) (hv : 0 ≤ v) :
+    ‖chartDir u v w 0 - chartDir u v w 1‖ ≤ u ∧
+    ‖chartDir u v w 0 - chartDir u v w 2‖ ≤ v ∧
+    ‖chartDir u v w 1 - chartDir u v w 2‖ ≤ u + v := by
+  let d := chartDir u v w
+  have h₁ : ‖d 0 - d 1‖ ≤ u := by
+    apply (sq_le_sq₀ (norm_nonneg _) hu).mp
+    rw [pow_two ‖d 0 - d 1‖, ← normSq_eq_norm_mul_self]
+    simp [d, chartDir, normSq_def']
+    nlinarith [sin_sq_add_cos_sq u, one_sub_sq_div_two_le_cos (x := u)]
+  have h₂ : ‖d 0 - d 2‖ ≤ v := by
+    apply (sq_le_sq₀ (norm_nonneg _) hv).mp
+    rw [pow_two ‖d 0 - d 2‖, ← normSq_eq_norm_mul_self]
+    have he : normSq (d 0 - d 2) = 2 - 2 * cos v := by
+      simp [d, chartDir, normSq_def']
+      linear_combination (sin v)^2 * sin_sq_add_cos_sq w + sin_sq_add_cos_sq v
+    rw [he]
+    linarith [one_sub_sq_div_two_le_cos (x := v)]
+  refine ⟨h₁, h₂, ?_⟩
+  have h := norm_sub_le (d 1) (d 0) (d 2)
+  rw [norm_sub_rev (d 1) (d 0)] at h
+  exact h.trans (add_le_add h₁ h₂)
+
+private def chartRotate (C : U) : ℍ[ℝ] →ₗᵢ[ℝ] ℍ[ℝ] where
+  toLinearMap := (LinearMap.mulRight ℝ (↑(C⁻¹) : ℍ[ℝ])).comp
+    (LinearMap.mulLeft ℝ (↑C : ℍ[ℝ]))
+  norm_map' := fun x => by
+    simp [LinearMap.comp_apply, LinearMap.mulRight_apply, LinearMap.mulLeft_apply,
+      norm_mul, unit_norm]
+
+/-- The normalized imaginary sum gives an explicit quaternion aligning its axis with I. -/
+private theorem chartRotate_axis (x : ℍ[ℝ]) (hx : x.re = 0)
+    (hn : ‖x‖ = 1) (hi : 0 < x.imI) :
+    ∃ C : U, chartRotate C x = (unitI : ℍ[ℝ]) := by
+  let I : ℍ[ℝ] := unitI
+  let y := I + x
+  have hne : y ≠ 0 := by
+    intro h
+    have hh := congrArg Quaternion.imI h
+    change 1 + x.imI = 0 at hh
+    linarith
+  have hnp : 0 < ‖y‖ := norm_pos_iff.mpr hne
+  have hx2 : x * x = (-1 : ℍ[ℝ]) := by
+    simpa [pow_two, normSq_eq_norm_mul_self, hn] using (sq_eq_neg_normSq.mpr hx)
+  have hi2 : I * I = (-1 : ℍ[ℝ]) := by
+    ext <;> norm_num [I, unitI, Quaternion.re_mul, Quaternion.imI_mul,
+      Quaternion.imJ_mul, Quaternion.imK_mul]
+  have hmul : y * x = I * y := by
+    dsimp [y]
+    rw [add_mul, mul_add, hx2, hi2, add_comm]
+  let z : ℍ[ℝ] := ‖y‖⁻¹ • y
+  have hz : ‖z‖ = 1 := by
+    simp [z, norm_smul, Real.norm_eq_abs, abs_inv, abs_of_pos hnp, hnp.ne']
+  let C := asUnit z (by rw [normSq_eq_norm_mul_self, hz, mul_one])
+  have hzmul : z * x = I * z := by
+    simp only [z, smul_mul_assoc, mul_smul_comm, hmul]
+  refine ⟨C, ?_⟩
+  change z * x * ↑(C⁻¹) = I
+  rw [hzmul, mul_assoc]
+  change I * ↑(C * C⁻¹) = I
+  simp
+
+private theorem chartRotate_real (C : U) (x : ℍ[ℝ]) : (chartRotate C x).re = x.re := by
+  change ((C : ℍ[ℝ]) * x * ↑(C⁻¹)).re = x.re
+  rw [re_cyclic, re_cyclic]
+  change ((↑(C⁻¹ * C) : ℍ[ℝ]) * x).re = x.re
+  simp
+
+private theorem chartRotate_scalar (C : U) (r : ℝ) :
+    chartRotate C (⟨r, 0, 0, 0⟩ : ℍ[ℝ]) = ⟨r, 0, 0, 0⟩ := by
+  rw [show (⟨r, 0, 0, 0⟩ : ℍ[ℝ]) = r • (1 : ℍ[ℝ]) by ext <;> simp,
+    map_smul]
+  have h : chartRotate C (1 : ℍ[ℝ]) = 1 := by
+    change (C : ℍ[ℝ]) * 1 * ↑(C⁻¹) = 1
+    rw [mul_one]
+    change (↑(C * C⁻¹) : ℍ[ℝ]) = 1
+    simp
+  rw [h]
+
+private def chartTransverse (x : ℍ[ℝ]) : ℂ := ⟨x.imJ, x.imK⟩
+
+private theorem chartTransverse_sub (x y : ℍ[ℝ]) :
+    chartTransverse (x - y) = chartTransverse x - chartTransverse y :=
+  Complex.ext (by simp [chartTransverse]) (by simp [chartTransverse])
+
+private theorem chartTransverse_norm (x : ℍ[ℝ]) : ‖chartTransverse x‖ ≤ ‖x‖ := by
+  apply (sq_le_sq₀ (norm_nonneg _) (norm_nonneg _)).mp
+  rw [Complex.sq_norm, pow_two ‖x‖, ← normSq_eq_norm_mul_self]
+  simp [chartTransverse, Complex.normSq_apply, normSq_def']
+  nlinarith [sq_nonneg x.re, sq_nonneg x.imI]
+
+private theorem chart_variance (s : Fin 3 → ℝ) (x : Fin 3 → ℂ)
+    (hs : ∀ j, 499 / 500 ≤ s j ∧ s j ≤ 1)
+    (hz : s 0 • x 0 + s 1 • x 1 + s 2 • x 2 = 0) (u v : ℝ)
+    (hu : 0 ≤ u) (hv : 0 ≤ v)
+    (h01 : ‖x 0 - x 1‖ ≤ u) (h02 : ‖x 0 - x 2‖ ≤ v)
+    (h12 : ‖x 1 - x 2‖ ≤ u + v) :
+    ‖s 0 • x 0‖^2 + ‖s 1 • x 1‖^2 + ‖s 2 • x 2‖^2 ≤
+      (u^2 + v^2 + (u + v)^2) / (2 + 499 / 500) := by
+  let S := s 0 + s 1 + s 2
+  let V := s 0 * ‖x 0‖^2 + s 1 * ‖x 1‖^2 + s 2 * ‖x 2‖^2
+  let K : ℝ := 2 + 499 / 500
+  have hpos (j) : 0 < s j := by linarith [(hs j).1]
+  have hS : 0 < S := by dsimp [S]; positivity [hpos 0, hpos 1, hpos 2]
+  have hK : 0 < K := by norm_num [K]
+  have hvard :
+      S * V = s 0 * s 1 * ‖x 0 - x 1‖^2 + s 0 * s 2 * ‖x 0 - x 2‖^2 +
+        s 1 * s 2 * ‖x 1 - x 2‖^2 := by
+    have hr := congrArg Complex.re hz
+    have hi := congrArg Complex.im hz
+    simp only [Complex.add_re, Complex.add_im, Complex.smul_re, Complex.smul_im,
+      smul_eq_mul, Complex.zero_re, Complex.zero_im] at hr hi
+    simp only [S, V, Complex.sq_norm, Complex.normSq_apply, Complex.sub_re, Complex.sub_im]
+    linear_combination
+      (s 0 * (x 0).re + s 1 * (x 1).re + s 2 * (x 2).re) * hr +
+      (s 0 * (x 0).im + s 1 * (x 1).im + s 2 * (x 2).im) * hi
+  have hc {a b c : ℝ} (ha : 0 ≤ a) (hb : 0 ≤ b) (ha' : a ≤ 1)
+      (hb' : b ≤ 1) (hc : 499 / 500 ≤ c) : a * b * K ≤ a + b + c := by
+    have hab₁ := mul_le_of_le_one_right ha hb'
+    have hab₂ := mul_le_of_le_one_left hb ha'
+    have hab₃ := hab₁.trans ha'
+    dsimp [K]
+    linarith
+  have hp (i j : Fin 3) (m : ℝ) (hm : 0 ≤ m) (hd : ‖x i - x j‖ ≤ m)
+      (hsum : s i * s j * K ≤ S) :
+      s i * s j * ‖x i - x j‖^2 * K ≤ S * m^2 := by
+    have hd2 := pow_le_pow_left₀ (norm_nonneg _) hd 2
+    calc
+      _ = s i * s j * K * ‖x i - x j‖^2 := by ring
+      _ ≤ s i * s j * K * m^2 := mul_le_mul_of_nonneg_left hd2 (by positivity [hpos i, hpos j])
+      _ ≤ S * m^2 := mul_le_mul_of_nonneg_right hsum (by positivity)
+  have h0 := hp 0 1 u hu h01 (hc (hpos 0).le (hpos 1).le (hs 0).2 (hs 1).2 (hs 2).1)
+  have h1 := hp 0 2 v hv h02 (by
+    dsimp [S]
+    linarith [hc (hpos 0).le (hpos 2).le (hs 0).2 (hs 2).2 (hs 1).1])
+  have h2 := hp 1 2 (u+v) (add_nonneg hu hv) h12 (by
+    dsimp [S]
+    linarith [hc (hpos 1).le (hpos 2).le (hs 1).2 (hs 2).2 (hs 0).1])
+  have hV : V ≤ (u^2 + v^2 + (u+v)^2) / K := by
+    rw [le_div_iff₀ hK, ← mul_le_mul_iff_left₀ hS]
+    linear_combination h0 + h1 + h2 + K * hvard
+  have hsq (j : Fin 3) : ‖s j • x j‖^2 ≤ s j * ‖x j‖^2 := by
+    rw [norm_smul, Real.norm_eq_abs, abs_of_pos (hpos j), mul_pow]
+    exact mul_le_mul_of_nonneg_right (by
+      simpa [pow_two] using mul_le_of_le_one_right (hpos j).le (hs j).2) (sq_nonneg _)
+  exact (add_le_add (add_le_add (hsq 0) (hsq 1)) (hsq 2)).trans hV
+
+private theorem chartFourier (x : Fin 3 → ℂ) (h : x 0 + x 1 + x 2 = 0) :
+    ∃ p q : ℂ, (∀ j, transverse p q j = x j) ∧
+      3 * (‖p‖^2 + ‖q‖^2) = ‖x 0‖^2 + ‖x 1‖^2 + ‖x 2‖^2 := by
+  let t := √3
+  let a := (x 0).re
+  let b := (x 0).im
+  let c := (x 1).re
+  let d := (x 1).im
+  let p : ℂ := ⟨a/2 + (b+2*d)*t/6, b/2 - (a+2*c)*t/6⟩
+  let q : ℂ := ⟨a/2 - (b+2*d)*t/6, b/2 + (a+2*c)*t/6⟩
+  have hx : x 2 = -(x 0 + x 1) := by
+    apply eq_neg_iff_add_eq_zero.mpr
+    simpa only [add_comm (x 2)] using h
+  have ht : t^2 = 3 := sq_sqrt (by norm_num)
+  refine ⟨p, q, ?_, ?_⟩
+  · intro j
+    fin_cases j <;> apply Complex.ext <;>
+      simp [p, q, transverse, rimPhase, zeta, t, hx,
+        Complex.star_def, Complex.mul_re, Complex.mul_im, a, b, c, d] <;>
+      ring_nf <;> norm_num [Real.sq_sqrt] <;> ring
+  · simp only [p, q, Complex.sq_norm, Complex.normSq_apply, hx, Complex.neg_re,
+      Complex.neg_im, Complex.add_re, Complex.add_im]
+    change _ = a * a + b * b + (c * c + d * d) + (-(a+c) * -(a+c) + -(b+d) * -(b+d))
+    ring_nf
+    rw [ht]
     ring
 
-  · convert bound 0 (-1/16) (by norm_num) using 1
-    congr 1
-    norm_num [localPsi, localF, rimPrev, a, b, x, y]
-    ring
-  · convert bound (-Real.sqrt 3 / 32) (1/32) (by rw [div_pow, neg_pow, h3]; norm_num) using 1
-    congr 1
-    norm_num [localPsi, localF, rimPrev, a, b, x, y]
-    ring
+private theorem chartRim_center (w : ℝ) :
+    chartRim (π / 2) (π / 2) (π / 2) 0 0 w = fun _ => unitI := by
+  funext j
+  apply Subtype.ext
+  fin_cases j <;> ext <;> simp [chartRim, chartTheta, chartDir, asUnit, unitI]
 
-
-private theorem local_b_sq (p : ℂ) (j : Fin 3) : localB p j ^ 2 ≤ ‖p‖ ^ 2 / 6 := by
-  have h := (sq_le_sq₀ (abs_nonneg _) (by unfold localLinear; positivity)).2
-    (local_b_bound p j)
-  rwa [sq_abs, mul_pow, local_constant_squares.2.2.2.1, ← div_eq_inv_mul] at h
-
-private theorem local_psi_sq (p : ℂ) (j : Fin 3) : localPsi p j ^ 2 ≤ ‖p‖ ^ 4 / 256 := by
-  have h := (sq_le_sq₀ (abs_nonneg _) (by positivity)).2 (local_psi_bound p j)
-  rw [sq_abs] at h
-  calc
-    _ ≤ (‖p‖ ^ 2 / 16) ^ 2 := h
-    _ = _ := by ring
-
-private theorem local_tau_bound (p : ℂ) (j : Fin 3) : |localTau p j| ≤ (71/100) * ‖p‖ := by
-  have hs : (Real.sqrt 3) ^ 2 = 3 := Real.sq_sqrt (by norm_num)
-  apply (sq_le_sq₀ (abs_nonneg _) (by positivity)).1
-  rw [sq_abs, localTau, mul_pow, hs]
-  calc
-    _ ≤ 3 * (‖p‖^2/6) := by gcongr; exact local_b_sq p j
-    _ ≤ _ := by nlinarith [sq_nonneg ‖p‖]
-
-private theorem local_cross (p : ℂ) (j : Fin 3) :
-    |2 * localS^2 * localTau p j * localPsi p j| ≤ (3/50) * ‖p‖^3 := by
-  rw [local_constant_squares.2.1]
-  calc
-    _ = (4/3) * |localTau p j| * |localPsi p j| := by
-      rw [abs_mul, abs_mul, abs_of_nonneg (by norm_num : (0:ℝ) ≤ 2 * (2/3))]
-      ring
-    _ ≤ (4/3) * ((71/100) * ‖p‖) * (‖p‖^2/16) := by
-      gcongr
-      · exact local_tau_bound p j
-      · exact local_psi_bound p j
-    _ ≤ _ := by nlinarith [show 0 ≤ ‖p‖^3 by positivity]
-
-private theorem local_fibre_sq (p : ℂ) (hp : ‖p‖ ≤ localR) (j : Fin 3) :
-    localB p j ^ 2 + localFibre p j ^ 2 ≤ (51/100) * ‖p‖^2 := by
-  have h3 : (Real.sqrt 3) ^ 2 = 3 := Real.sq_sqrt (by norm_num)
-  have he : localB p j ^ 2 + localFibre p j ^ 2 = 3 * localB p j ^ 2 +
-      2 * localS^2 * localTau p j * localPsi p j + (2/3) * localPsi p j ^ 2 := by
-    have hτ : localTau p j ^ 2 = 3 * localB p j ^ 2 := by rw [localTau, mul_pow, h3]
-    simp only [localFibre, mul_pow, local_constant_squares.2.1, add_sq, hτ]
-    ring
-  unfold localR at hp
-  rw [he]
-  have hp3 : ‖p‖^3 ≤ (3/50) * ‖p‖^2 := by
-    rw [pow_succ, mul_comm (‖p‖ ^ 2)]
-    gcongr
-  have hp4 : ‖p‖^4 ≤ (3/50)^2 * ‖p‖^2 := by
-    rw [show ‖p‖^4 = ‖p‖^2 * ‖p‖^2 by ring]
-    gcongr
-  have hcross := (abs_le.mp (local_cross p j)).2
-  nlinarith only [local_b_sq p j, local_psi_sq p j, hcross, hp3, hp4, sq_nonneg ‖p‖]
-
-private theorem local_real_bounds (p q : ℂ) (hp : ‖p‖ ≤ localR) (hq : ‖q‖ ≤ localR) :
-    0 < localReal p q ∧ localReal p q < 603/1000 := by
-  obtain ⟨htl, htu, _, _, hα, hαu, hll, hlu⟩ := local_constant_bounds
-  have hprod : localLinear * ‖q‖ ≤ (409/1000) * localR := by gcongr
-  have hprod' : localAlpha * ‖p‖^2 ≤ (145/1000) * localR^2 := by gcongr
-  unfold localReal localR at *
-  exact ⟨by linarith [mul_nonneg hll.le (norm_nonneg q)],
-    by linarith [mul_nonneg hα.le (sq_nonneg ‖p‖)]⟩
-
-private theorem local_radicand_bound (p q : ℂ) (hp : ‖p‖ ≤ localR) (hq : ‖q‖ ≤ localR)
-    (j : Fin 3) : (795/1000)^2 < localRadicand p q j := by
-  obtain ⟨ha, ha'⟩ := local_real_bounds p q hp hq
-  have hs := (sq_lt_sq₀ ha.le (by norm_num : 0 ≤ (603/1000:ℝ))).2 ha'
-  have hp' := (sq_le_sq₀ (norm_nonneg p) (by unfold localR; positivity)).2 hp
-  have hb := local_fibre_sq p hp j
-  unfold localRadicand
-  norm_num [localR] at hp'
-  linarith
-
-private theorem local_unit_rim_coe (p q : ℂ) (hp : ‖p‖ ≤ localR) (hq : ‖q‖ ≤ localR)
-    (j : Fin 3) : ((localUnitRim p q j : U) : ℍ[ℝ]) = localRim p q j := by
-  rw [localUnitRim, dif_pos ((by norm_num : (0:ℝ) ≤ (795/1000)^2).trans
-    (local_radicand_bound p q hp hq j).le)]
+private theorem chart_center (w : ℝ) :
+    chartGains (π / 2) (π / 2) (π / 2) 0 0 w = quarterGains := by
+  rw [chartGains, chartRim_center]
   rfl
 
+private theorem chartAlignment (a b c u v w : ℝ)
+    (ha : |a - π/2| ≤ 17*π/900) (hb : |b - π/2| ≤ 17*π/900)
+    (hc : |c - π/2| ≤ 17*π/900)
+    (hu : 0 ≤ u) (hv : 0 ≤ v) (huv : u + v < π/2)
+    (hsize : u^2 + v^2 + (u+v)^2 ≤ (4497/500) * localR^2) :
+    ∃ C : U, ∃ p q : ℂ, ∃ η : Fin 3 → ℝ,
+      (∀ j, (↑(conjugate C (chartRim a b c u v w j)) : ℍ[ℝ]) =
+        quatPair ⟨-η j, √(1 - (η j)^2 - ‖transverse p q j‖^2)⟩ (transverse p q j)) ∧
+      (∀ j, 0 < √(1 - (η j)^2 - ‖transverse p q j‖^2)) ∧
+      ‖p‖ ≤ localR ∧ ‖q‖ ≤ localR ∧ etaMax η ≤ localR ∧
+      (p = 0 ∧ q = 0 ∧ η = 0 →
+        a = π/2 ∧ b = π/2 ∧ c = π/2 ∧ u = 0 ∧ v = 0) := by
+  let θ := chartTheta a b c
+  let d := chartDir u v w
+  let s : Fin 3 → ℝ := fun j => sin (θ j)
+  let η : Fin 3 → ℝ := fun j => -cos (θ j)
+  let m := s 0 • d 0 + s 1 • d 1 + s 2 • d 2
+  have hθ (j : Fin 3) : |θ j - π / 2| ≤ 17 * π / 900 := by
+    fin_cases j
+    · exact ha
+    · exact hb
+    · exact hc
+  have hs (j : Fin 3) : 499/500 ≤ s j ∧ s j ≤ 1 := by
+    obtain ⟨hl, hu, _⟩ := chart_sin_cos (hθ j)
+    exact ⟨hl, hu⟩
+  have hspos (j) : 0 < s j := by linarith [(hs j).1]
+  have hη (j : Fin 3) : |η j| ≤ localR := by
+    simpa [η] using (chart_sin_cos (hθ j)).2.2
+  obtain ⟨h01, h02, h12⟩ := chart_chord u v w hu hv
+  have hsmall : u + v < 1 := by
+    by_contra! h
+    have hh := mul_nonneg (show 0 ≤ u + v - 1 by linarith)
+      (show 0 ≤ u + v + 1 by linarith)
+    norm_num [localR] at hsize
+    nlinarith only [hsize, hh, sq_nonneg u, sq_nonneg v]
+  have hd (i j : Fin 3) : ‖d i - d j‖ ≤ 1 := by
+    fin_cases i <;> fin_cases j <;>
+      first | simp | exact h01.trans (by linarith) | exact h02.trans (by linarith)
+      | exact h12.trans hsmall.le | (rw [norm_sub_rev]; first
+        | exact h01.trans (by linarith) | exact h02.trans (by linarith) | exact h12.trans hsmall.le)
+  have hdot (i j : Fin 3) : 0 < ⟪d i, d j⟫_ℝ := by
+    have hq := pow_le_pow_left₀ (norm_nonneg (d i - d j)) (hd i j) 2
+    have hn (k) : ‖d k‖ = 1 := chartDir_norm u v w k
+    rw [norm_sub_sq_real, hn i, hn j] at hq
+    linarith
+  have hm (j : Fin 3) : 0 < ⟪m, d j⟫_ℝ := by
+    simp only [m, inner_add_left, real_inner_smul_left]
+    positivity [hspos 0, hspos 1, hspos 2, hdot 0 j, hdot 1 j, hdot 2 j]
+  have hm0 : m ≠ 0 := by
+    intro he
+    simpa [he] using hm 0
+  have hmr : m.re = 0 := by simp [m, d, chartDir_re]
+  have hmi : 0 < m.imI := by
+    simpa [d, chartDir,
+      D5.S3.Quantum.AURICOmega.QuaternionComparisonModel.inner_eq_components] using hm 0
+  let axis := ‖m‖⁻¹ • m
+  have hmn : 0 < ‖m‖ := norm_pos_iff.mpr hm0
+  have hAxisNorm : ‖axis‖ = 1 := by
+    simp [axis, norm_smul, Real.norm_eq_abs, abs_inv, abs_of_pos hmn, hmn.ne']
+  obtain ⟨C, hC⟩ := chartRotate_axis axis (by simp [axis, hmr]) hAxisNorm
+    (by simp [axis]; positivity [hmi])
+  let rot := chartRotate C
+  let f : Fin 3 → ℍ[ℝ] := fun j => rot (d j)
+  let x : Fin 3 → ℂ := fun j => chartTransverse (f j)
+  have hM : rot m = ‖m‖ • (unitI : ℍ[ℝ]) := by
+    change chartRotate C m = _
+    rw [← hC, map_smul]
+    simp [axis, smul_smul, hmn.ne']
+  have hmcoord : s 0 • f 0 + s 1 • f 1 + s 2 • f 2 = ‖m‖ • (unitI : ℍ[ℝ]) := by
+    simpa [rot, m, f, map_smul, map_add] using hM
+  have hsum : s 0 • x 0 + s 1 • x 1 + s 2 • x 2 = 0 := by
+    apply Complex.ext
+    · simpa [x, chartTransverse, unitI] using congrArg Quaternion.imJ hmcoord
+    · simpa [x, chartTransverse, unitI] using congrArg Quaternion.imK hmcoord
+  have hfpos (j : Fin 3) : 0 < (f j).imI := by
+    have hdot := hm j
+    rw [← (chartRotate C).inner_map_map, show chartRotate C m = ‖m‖ • (unitI : ℍ[ℝ])
+      from hM, real_inner_smul_left] at hdot
+    change 0 < ‖m‖ * ⟪(unitI : ℍ[ℝ]), f j⟫_ℝ at hdot
+    have hh := pos_of_mul_pos_right hdot hmn.le
+    simpa [unitI, D5.S3.Quantum.AURICOmega.QuaternionComparisonModel.inner_eq_components] using hh
+  have hpair (i j : Fin 3) : ‖x i - x j‖ ≤ ‖d i - d j‖ := by
+    rw [show x i - x j = chartTransverse (rot (d i - d j)) by
+      simp [x, f, rot, map_sub, chartTransverse_sub]]
+    exact (chartTransverse_norm _).trans ((chartRotate C).norm_map _).le
+  obtain ⟨p, q, hpq, hvard⟩ := chartFourier (fun j => s j • x j) hsum
+  have hvbd := chart_variance s x hs hsum u v hu hv
+    ((hpair 0 1).trans h01) ((hpair 0 2).trans h02) ((hpair 1 2).trans h12)
+  rw [← hvard] at hvbd
+  have hpqbd : ‖p‖^2 + ‖q‖^2 ≤ localR^2 := by
+    norm_num [localR] at hsize hvbd ⊢
+    linarith
+  have hA (j : Fin 3) : (↑(conjugate C (chartRim a b c u v w j)) : ℍ[ℝ]) =
+      ⟨cos (θ j), 0, 0, 0⟩ + s j • f j := by
+    change chartRotate C (⟨cos (θ j), 0, 0, 0⟩ + s j • d j) = _
+    rw [map_add, chartRotate_scalar, map_smul]
+  have hftr (j : Fin 3) : chartTransverse (↑(conjugate C (chartRim a b c u v w j)) : ℍ[ℝ]) =
+      transverse p q j := by
+    rw [hA, hpq]
+    exact Complex.ext (by simp [x, chartTransverse]) (by simp [x, chartTransverse])
+  have hfre (j) : (f j).re = 0 := by
+    dsimp [f, rot]
+    rw [chartRotate_real, chartDir_re]
+  have hroot (j : Fin 3) : √(1 - (η j)^2 - ‖transverse p q j‖^2) = s j * (f j).imI := by
+    have hn : normSq (↑(conjugate C (chartRim a b c u v w j)) : ℍ[ℝ]) = 1 := by
+      rw [normSq_eq_norm_mul_self, unit_norm, mul_one]
+    have hd : 1 - (η j)^2 - ‖transverse p q j‖^2 = (s j * (f j).imI)^2 := by
+      rw [← hftr, hA, Complex.sq_norm]
+      rw [hA, normSq_def'] at hn
+      simp only [Complex.normSq_apply, chartTransverse, Quaternion.re_add, Quaternion.re_smul,
+        Quaternion.imI_add, Quaternion.imJ_add, Quaternion.imK_add, Quaternion.imI_smul,
+        Quaternion.imJ_smul, Quaternion.imK_smul, hfre, smul_eq_mul, mul_zero, add_zero,
+        zero_add, η, neg_sq] at hn ⊢
+      nlinarith
+    rw [hd, sqrt_sq (mul_pos (hspos j) (hfpos j)).le]
+  refine ⟨C, p, q, η, ?_, ?_, ?_, ?_, ?_, ?_⟩
+  · intro j
+    rw [hA, hroot, hpq]
+    ext <;> simp [quatPair, x, chartTransverse, η, hfre]
+  · intro j
+    rw [hroot]
+    exact mul_pos (hspos j) (hfpos j)
+  · exact (sq_le_sq₀ (norm_nonneg _) (by norm_num [localR])).mp (by linarith [sq_nonneg ‖q‖])
+  · exact (sq_le_sq₀ (norm_nonneg _) (by norm_num [localR])).mp (by linarith [sq_nonneg ‖p‖])
+  · exact max_le (hη 0) (max_le (hη 1) (hη 2))
+  · rintro ⟨hp, hq, he⟩
+    have hAngle (j : Fin 3) : θ j = π/2 := by
+      have hzero : η j = 0 := congrFun he j
+      change -cos (θ j) = 0 at hzero
+      apply strictAntiOn_cos.injOn
+      · have hh := abs_le.mp (hθ j)
+        exact ⟨by linarith [hh.1, pi_pos], by linarith [hh.2, pi_pos]⟩
+      · exact ⟨by positivity, by linarith [pi_pos]⟩
+      · simpa using hzero
+    have hzero (j : Fin 3) : x j = 0 := by
+      have hh : s j • x j = 0 := by simpa [hp, hq, transverse] using (hpq j).symm
+      exact (smul_eq_zero.mp hh).resolve_left (hspos j).ne'
+    have hfI (j : Fin 3) : f j = (unitI : ℍ[ℝ]) := by
+      have hre := hfre j
+      have hrj : (f j).imJ = 0 := congrArg Complex.re (hzero j)
+      have hri : (f j).imK = 0 := congrArg Complex.im (hzero j)
+      have hn : normSq (f j) = 1 := by
+        rw [normSq_eq_norm_mul_self, show ‖f j‖ = 1 by
+          exact ((chartRotate C).norm_map _).trans (chartDir_norm u v w j), mul_one]
+      rw [normSq_def', hre, hrj, hri] at hn
+      have hi : (f j).imI = 1 := by nlinarith [hfpos j]
+      ext <;> simp [unitI, hre, hrj, hri, hi]
+    have hsame (j : Fin 3) : d j = d 0 := by
+      exact (chartRotate C).injective ((hfI j).trans (hfI 0).symm)
+    have hsinU : sin u = 0 := congrArg Quaternion.imJ (hsame 1)
+    have hsinV : sin v = 0 := by
+      have hj : sin v * cos w = 0 := congrArg Quaternion.imJ (hsame 2)
+      have hk : sin v * sin w = 0 := congrArg Quaternion.imK (hsame 2)
+      by_contra hne
+      rcases mul_eq_zero.mp hj with h | h
+      · exact hne h
+      · rcases mul_eq_zero.mp hk with h' | h'
+        · exact hne h'
+        · have hs := sin_sq_add_cos_sq w
+          rw [h, h'] at hs
+          norm_num at hs
+    exact ⟨hAngle 0, hAngle 1, hAngle 2,
+      (sin_eq_zero_iff_of_lt_of_lt (by linarith [pi_pos]) (by linarith [pi_pos])).mp hsinU,
+      (sin_eq_zero_iff_of_lt_of_lt (by linarith [pi_pos]) (by linarith [pi_pos])).mp hsinV⟩
 
+/-- The exact maximum triangle defect of the chart gain assignment. -/
+def chartMaxDefect (a b c u v w : ℝ) : ℝ :=
+  hubMaxDefect (chartRim a b c u v w)
+
+/-- Weighted variance puts each chart point in the strict-fit region. -/
+theorem quarterLocal_angularRegion (a b c u v w : ℝ)
+    (ha : |a - π/2| ≤ 17*π/900) (hb : |b - π/2| ≤ 17*π/900)
+    (hc : |c - π/2| ≤ 17*π/900) (hu : 0 ≤ u) (hv : 0 ≤ v) (huv : u + v < π/2)
+    (hsize : u^2 + v^2 + (u+v)^2 ≤ (4497/500) * localR^2) :
+    let g := chartGains a b c u v w
+    let e := chartMaxDefect a b c u v w
+    let center := a = π/2 ∧ b = π/2 ∧ c = π/2 ∧ u = 0 ∧ v = 0
+    DefectLE g e ∧
+    (∃ i j k : Fin 4, i ≠ j ∧ j ≠ k ∧ i ≠ k ∧ roundDist (g i j * g j k) (g i k) = e) ∧
+    (∃ φ, Fits g φ (cStar * e) ∧ (¬ center → ∃ R < cStar * e, Fits g φ R)) ∧
+    (center → ∀ ψ R, R < cStar * e → ¬ Fits g ψ R) := by
+  let A := chartRim a b c u v w
+  obtain ⟨C, p, q, η, hA, hγpos, hp, hq, he, hz⟩ :=
+    chartAlignment a b c u v w ha hb hc hu hv huv hsize
+  obtain ⟨_, _, _, hf, hs, _⟩ := quarterLocal_strictFit (conjugate C ∘ A) p q η
+    (fun j => √(1-(η j)^2-‖transverse p q j‖^2)) hA (fun _ => rfl) hγpos hp hq he
+  dsimp only at hf hs
+  rw [conjugate_hubMaxDefect] at hf hs
+  let φ := conjugate C⁻¹ ∘ quarterLocalPotential p q
+  have transport (R : ℝ) (h : Fits (hubGaugedGains (conjugate C ∘ A))
+      (quarterLocalPotential p q) R) : Fits (hubGaugedGains A) φ R := by
+    apply (conjugate_fits C (hubGaugedGains A) φ R).mp
+    convert h using 2
+    · funext i j
+      exact (conjugate_hub C A i j).symm
+    · funext i
+      simpa [φ, Function.comp_apply] using conj_cancel C⁻¹ (quarterLocalPotential p q i)
+  have faces := hub_faces A
+  refine ⟨faces.1, faces.2, ⟨φ, transport _ hf, ?_⟩, ?_⟩
+  · intro hn
+    obtain ⟨R, hR, hF⟩ := hs (mt hz hn)
+    exact ⟨R, hR, transport R hF⟩
+  · rintro ⟨rfl, rfl, rfl, rfl, rfl⟩ ψ R hl hF
+    rw [chart_center] at hF
+    have hA₀ : chartRim (π/2) (π/2) (π/2) 0 0 w = fun _ => unitI := by
+      funext j
+      apply Subtype.ext
+      fin_cases j <;> ext <;> simp [chartRim, chartTheta, chartDir, asUnit, unitI]
+    rw [chartMaxDefect, hA₀, quarter_defect_exact, show cStar * (π / 2) = quarterError by
+      unfold cStar
+      field_simp [Real.pi_ne_zero]] at hl
+    obtain ⟨i, j, hi, hj⟩ := quarter_turn_sharp.2.2.1 ψ
+    exact hl.not_ge (hj.trans (hF i j hi))
 
 end RoundQuaternionLocalSharpness
