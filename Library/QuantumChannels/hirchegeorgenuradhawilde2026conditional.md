@@ -8,6 +8,7 @@ url: https://arxiv.org/abs/2608.27171v1
 claim: "For a quantum channel N and a generalized divergence D, the conditional contraction coefficient is η^Δ_D(N) := sup over |R| and ρ_RA ≠ σ_RA of [D((id ⊗ N)(ρ_RA)‖(id ⊗ N)(σ_RA)) − D(ρ_R‖σ_R)] / [D(ρ_RA‖σ_RA) − D(ρ_R‖σ_R)] (Eq. (2.14)), optimized over pairs with a strictly positive finite denominator (Remark 2). The hockey-stick divergence is E_γ(ρ‖σ) := Tr(ρ − γσ)_+ (Eq. (5.1)). For the trace distance (γ = 1), η^c_Tr(N) and η^Δ_Tr(N) are optimized by orthogonal states (Proposition 8). §9 asks whether, for the hockey-stick divergence, the optimization can be restricted to orthogonal states, which would imply monotonicity of the coefficient in γ."
 strata_touched:
   - D5/S3/Quantum/Divergence/ConditionalHockeyStickOrthogonalReduction
+  - D5/S3/Quantum/Divergence/ConditionalExpansion/ReverseDoeblinRefutation
   - D5/S3/Quantum/Divergence/CompleteHockeyStickRefutation
   - D5/S3/Quantum/Divergence/CompleteHockeyStickBasisSupport
   - D5/S3/Quantum/Divergence/CompleteHockeyStickChoiSupport
@@ -33,8 +34,11 @@ Source: https://arxiv.org/abs/2608.27171v1
 No DOI or journal reference is listed in the arXiv metadata. The text was read from the PDF https://arxiv.org/pdf/2608.27171v1:
 - p. 8, Definition 2, Eqs. (2.12)–(2.14);
 - p. 9, Remark 2;
+- §2.5, Definition 3, Eq. (2.42), conditional expansion;
 - p. 37, §5, Eqs. (5.1)–(5.2);
 - p. 40, Proposition 8 and Remark 6;
+- §5, paragraph immediately after Proposition 9, conditional reverse Doeblin question;
+- §5, Proposition 10, Eqs. (5.38)–(5.39), classical witness family;
 - p. 72, §9, the first open problem.
 - p. 72, §9, the second open problem (faithful-divergence separation).
 - p. 72, §9, the fourth bullet (nonlinear strong data processing with references).
@@ -64,6 +68,46 @@ The repository proves two statements:
 - S_γ(N) = S_δ(N) for all γ, δ ≥ 1, so η^Δ_{E_γ}(N) does not depend on γ ≥ 1.
 
 In the formal numerator, the subtracted reference marginals are taken of the output states (id ⊗ N)ρ and (id ⊗ N)σ; they equal ρ_R and σ_R because N is trace preserving.
+
+## Conditional trace-distance expansion
+
+Equation (2.42) takes the infimum of the conditional retention ratio over all
+finite references and pairs with strictly positive denominator. The paragraph
+immediately after Proposition 9 asks whether the reverse Doeblin lower bound
+for complete trace-distance expansion extends to conditional expansion.
+[Eq. (2.42)](https://arxiv.org/html/2608.27171v1#S2.EGx43) ·
+[Text after Proposition 9](https://arxiv.org/html/2608.27171v1#S5.p13)
+
+The reverse Doeblin coefficient is the infimum of feasible weights $p$ for
+which a CPTP postprocessor degrades $N$ to $Z\mapsto (1-p)Z+p\operatorname{Tr}(Z)X$
+with $X$ Hermitian. The proposed lower bound by one minus this infimum is
+equivalent to bounding every admissible conditional ratio below by $1-p$ for
+every feasible weight in $[0,1]$.
+[George et al., arXiv:2503.22823v3, (6.54)](https://arxiv.org/html/2503.22823v3#S6.E54) ·
+[(6.55)](https://arxiv.org/html/2503.22823v3#S6.E55) ·
+[Proposition 33](https://arxiv.org/html/2503.22823v3#Thmproposition33)
+
+`ConditionalExpansion.ReverseDoeblinRefutation.result` proves that the
+pointwise bound is false. For qubit half-depolarization, the identity
+postprocessor realizes $p=1/2$ and $X=I/2$ on all input matrices. With a qubit
+reference and joint diagonals $(1,0,0,0)$ and $(0,1/4,3/4,0)$ in reference-first
+order, the input, reference and output trace distances are $1$, $3/4$ and $3/4$.
+The denominator is $1/4$ and the conditional ratio is zero, violating the
+lower bound of $1/2$ from this feasible weight.
+
+The classical pair formulas (5.38)–(5.39) in the proof of Proposition 10
+give the formal witness at $\gamma=4$ after relabeling both binary systems.
+The trace-distance evaluation uses those formulas independently of the
+crossover parameter relation used in Proposition 10.
+[Proposition 10](https://arxiv.org/html/2608.27171v1#Thmproposition10)
+
+Hirche's 2024 proof of vanishing ordinary hockey-stick expansion for qubit
+depolarization also implies the conditional trace-distance failure. For input
+states $\alpha,\beta$, give the first state weight $1/\gamma$ on $\alpha$ and
+the remaining weight on a second reference flag. Place all of $\beta$ on the
+first flag of the other state. The joint trace distance minus the reference
+distance is $E_\gamma(\alpha\|\beta)/\gamma$, before and after the channel.
+[Hirche, Appendix B-B, Eqs. (B.10)–(B.16)](https://arxiv.org/abs/2405.00105v2)
 
 ## Complete hockey-stick contraction
 
