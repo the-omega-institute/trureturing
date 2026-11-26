@@ -588,4 +588,29 @@ public theorem String.Pos.Raw.isValid_singleton : type_of% @_root_.String.Pos.Ra
         String.Pos.Raw.ext (eq.trans String.utf8ByteSize_singleton.symm)
       exact atEnd ▸ String.Pos.Raw.isValid_rawEndPos
 
+private theorem firstOfTag (w : UInt8) (valid : parseFirstByte w ≠ .invalid) : w.IsUTF8FirstByte := by
+  unfold parseFirstByte at valid
+  split at valid <;> rename_i h₁
+  · exact Or.inl (eq_of_beq h₁)
+  · split at valid <;> rename_i h₂
+    · exact Or.inr (Or.inl (eq_of_beq h₂))
+    · split at valid <;> rename_i h₃
+      · exact Or.inr (Or.inr (Or.inl (eq_of_beq h₃)))
+      · split at valid <;> rename_i h₄
+        · exact Or.inr (Or.inr (Or.inr (eq_of_beq h₄)))
+        · exact (valid rfl).elim
+
+public theorem ByteArray.isUTF8FirstByte_of_isSome_utf8DecodeChar? :
+    type_of% @_root_.ByteArray.isUTF8FirstByte_of_isSome_utf8DecodeChar? := by
+  intro b i ok
+  apply firstOfTag
+  intro invalid
+  have lt : i < b.size := ByteArray.lt_size_of_isSome_utf8DecodeChar? ok
+  unfold ByteArray.utf8DecodeChar? at ok
+  rw [dite_eq_left lt] at ok
+  split at ok
+  · cases ok
+  all_goals rename_i tag
+  all_goals cases tag.symm.trans invalid
+
 end OmegaChecks.InitPort.Alternatives
