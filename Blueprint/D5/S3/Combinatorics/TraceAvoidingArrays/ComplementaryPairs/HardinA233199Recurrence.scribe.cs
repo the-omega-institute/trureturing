@@ -44,7 +44,9 @@ internal sealed class HardinA233199RecurrenceDocument : IScribeDocumentDefinitio
                         + "count at height n uses power n minus one, yielding all ten signed lags with onset twelve. "
                         + "The recurrence interprets the counts and arithmetic in the integers, and its lag "
                         + "indices in the natural numbers."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("hardin233199"), ResolutionKind.Proved)))));
 
     private static Formula LiteralCount()
     {

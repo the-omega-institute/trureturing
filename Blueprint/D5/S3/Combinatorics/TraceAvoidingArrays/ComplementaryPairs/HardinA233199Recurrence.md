@@ -22,6 +22,10 @@ $$\forall (n: \operatorname{Nat}), 12 \le n \Rightarrow (\operatorname{D5}.\oper
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/ComplementaryPairs/HardinA233199Recurrence.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/hardin233199` (proved) by `D5/S3/Combinatorics/TraceAvoidingArrays/ComplementaryPairs/HardinA233199Recurrence.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hardin233199","declaration_gid":"D5/S3/Combinatorics/TraceAvoidingArrays/ComplementaryPairs/HardinA233199Recurrence.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* R. H. Hardin; OEIS Foundation Inc. (2013). *OEIS A233199: normalized eight-colour arrays of width five*. URL: <https://oeis.org/A233199>.
