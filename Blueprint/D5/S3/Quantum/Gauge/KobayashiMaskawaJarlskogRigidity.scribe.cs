@@ -12,6 +12,9 @@ internal sealed class KobayashiMaskawaJarlskogRigidityDocument : IScribeDocument
     private static readonly LibraryNoteRef Jarlskog =
         LibraryNoteRef.Create("D5/L/Quantum/jarlskog1985commutator");
 
+    private static readonly LibraryNoteRef Unistochastic =
+        LibraryNoteRef.Create("D5/L/Quantum/dunklzyczkowski2009unistochastic");
+
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Quark mixing phases and gauge beta coefficients constrain the generation count.",
         H("Quark mixing and the generation count"),
@@ -51,20 +54,20 @@ internal sealed class KobayashiMaskawaJarlskogRigidityDocument : IScribeDocument
                 "For every three-dimensional unitary V, the products V₀ⱼ times the conjugates of V₁ⱼ form a closed triangle "
                 + "with perimeter at most one. Twice the area is the absolute imaginary quartet. "
                 + "Heron's identity and the arithmetic–geometric mean inequality bound the area.",
-                Seq(Bar, J(F.Id("V")), Bar, Leq, SharpConstant())),
+                Seq(Bar, J(F.Id("V")), Bar, Leq, SharpConstant()), Unistochastic),
             Node("fourier-attainment", "fourier3_attains_max_jarlskog", "Fourier attainment",
                 "The entries of F₃ are ω to the power jk divided by √3, where "
                 + "ω = −1/2 + i√3/2. This matrix is unitary and its chosen quartet has "
                 + "positive imaginary part.",
-                Seq(Fourier(), InMacro, F.Id("U"), Open, D(3), Close, Sp, Land, Sp,
-                    Bar, J(Fourier()), Bar, Eq, SharpConstant())),
+                Seq(Fourier(), Sp, InMacro, Sp, F.Id("U"), Open, D(3), Close, Sp, Land, Sp,
+                    Bar, J(Fourier()), Bar, Eq, SharpConstant()), Unistochastic),
             Node("three-generations-reality", "u3_jarlskog_zero_iff_real_rephasable",
                 "Vanishing and real representatives",
                 "A three-dimensional unitary matrix satisfies J(V) = 0 exactly when "
                 + "norm-one row and column phases make every entry real. If some row has "
                 + "three nonzero entries, it fixes the column phases. Otherwise, two rows "
                 + "with two nonzero entries must have the same support, since orthogonal "
-                + "rows cannot have exactly one common nonzero entry."),
+                + "rows cannot have exactly one common nonzero entry.", source: Unistochastic),
             Node("commutator-determinant", "jarlskog_commutator_det", "Mass commutator determinant",
                 "Let Hᵤ = Uᵤ diag(dᵤ) Uᵤ† and H_d = U_d diag(d_d) U_d†, where both U are "
                 + "three-dimensional unitary matrices and both diagonals are real. Set "
