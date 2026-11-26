@@ -132,4 +132,112 @@ public theorem ByteArray.le_size_of_utf8DecodeChar?_eq_some :
   | case8 => intro h; cases h
   | case9 => intro h; cases h
 
+private def firstWidth : List UInt8 → Nat
+  | [] => 0
+  | b :: _ => if b.toNat < 128 then 1 else if b.toNat < 224 then 2 else if b.toNat < 240 then 3 else 4
+
+private theorem width_two {v : Nat} (bs : List UInt8) :
+    firstWidth (UInt8.ofNat (v % 32 + 192) :: bs) = 2 := by
+  have upper := Nat.add_lt_add_right (Nat.mod_lt v (by decide : 0 < 32)) 192
+  have lower : 192 ≤ v % 32 + 192 := Nat.le_add_left ..
+  dsimp only [firstWidth]
+  rw [UInt8.toNat_ofNat_of_lt' (Nat.lt_trans upper (by decide : 224 < 256)),
+    ite_eq_right (Nat.not_lt_of_ge (Nat.le_trans (by decide : 128 ≤ 192) lower)), ite_eq_left upper]
+private theorem width_three {v : Nat} (bs : List UInt8) :
+    firstWidth (UInt8.ofNat (v % 16 + 224) :: bs) = 3 := by
+  have upper := Nat.add_lt_add_right (Nat.mod_lt v (by decide : 0 < 16)) 224
+  have lower : 224 ≤ v % 16 + 224 := Nat.le_add_left ..
+  dsimp only [firstWidth]
+  rw [UInt8.toNat_ofNat_of_lt' (Nat.lt_trans upper (by decide : 240 < 256)),
+    ite_eq_right (Nat.not_lt_of_ge (Nat.le_trans (by decide : 128 ≤ 224) lower)),
+    ite_eq_right (Nat.not_lt_of_ge lower), ite_eq_left upper]
+private theorem width_four {v : Nat} (bs : List UInt8) :
+    firstWidth (UInt8.ofNat (v % 8 + 240) :: bs) = 4 := by
+  have upper := Nat.add_lt_add_right (Nat.mod_lt v (by decide : 0 < 8)) 240
+  have lower : 240 ≤ v % 8 + 240 := Nat.le_add_left ..
+  dsimp only [firstWidth]
+  rw [UInt8.toNat_ofNat_of_lt' (Nat.lt_trans upper (by decide : 248 < 256)),
+    ite_eq_right (Nat.not_lt_of_ge (Nat.le_trans (by decide : 128 ≤ 240) lower)),
+    ite_eq_right (Nat.not_lt_of_ge (Nat.le_trans (by decide : 224 ≤ 240) lower)),
+    ite_eq_right (Nat.not_lt_of_ge lower)]
+
+private theorem width_encode (c : Char) (bs : List UInt8) :
+    firstWidth (String.utf8EncodeChar c ++ bs) = (String.utf8EncodeChar c).length := by
+  dsimp only [String.utf8EncodeChar]
+  split
+  · rename_i h
+    dsimp only [List.cons_append, List.nil_append, firstWidth]
+    rw [UInt8.toNat_ofNat_of_lt' (Nat.lt_of_le_of_lt h (by decide : 127 < 256)), ite_eq_left (Nat.lt_succ_of_le h)]
+    rfl
+  · split
+    · exact width_two _
+    · split
+      · exact width_three _
+      · exact width_four _
+
+private def bytes (a : ByteArray) := a.data.toList
+
+private theorem bytes_append (a b : ByteArray) : bytes (a ++ b) = bytes a ++ bytes b := by
+  unfold bytes
+  rw [ByteArray.data_append, Array.toList_append]
+
+private theorem bytes_singleton (c : Char) : bytes [c].utf8Encode = String.utf8EncodeChar c := by
+  rw [List.utf8Encode_singleton]
+  unfold bytes
+  rw [List.data_toByteArray, List.toList_toArray]
+
+private theorem remove_prefix (l m : List Char) (tail : List UInt8)
+    (eq : bytes l.utf8Encode ++ tail = bytes m.utf8Encode) : ∃ t : List Char, tail = bytes t.utf8Encode := by
+  induction l generalizing m tail with
+  | nil => exact ⟨m, eq⟩
+  | cons c l ih =>
+    rw [List.utf8Encode_cons, bytes_append, bytes_singleton, List.append_assoc] at eq
+    cases m with
+    | nil =>
+      have nilByte : bytes ([] : List Char).utf8Encode = [] := rfl
+      rw [nilByte] at eq
+      have hn : String.utf8EncodeChar c ≠ [] := by
+        dsimp only [String.utf8EncodeChar]
+        split
+        · intro h; cases h
+        · split
+          · intro h; cases h
+          · split <;> intro h <;> cases h
+      have e : (String.utf8EncodeChar c).length = 0 := (width_encode c _).symm.trans (congrArg firstWidth eq)
+      exact False.elim (hn (List.eq_nil_of_length_eq_zero e))
+    | cons d m =>
+      rw [List.utf8Encode_cons, bytes_append, bytes_singleton] at eq
+      have same : (String.utf8EncodeChar c).length = (String.utf8EncodeChar d).length :=
+        (width_encode c _).symm.trans ((congrArg firstWidth eq).trans (width_encode d _))
+      have cut := congrArg (List.drop (String.utf8EncodeChar c).length) eq
+      rw [List.drop_left, same, List.drop_left] at cut
+      exact ih m _ cut
+
+
+private theorem bytes_extract (b : ByteArray) (i j : Nat) :
+    bytes (b.extract i j) = ((bytes b).drop i).take (j - i) := by
+  unfold bytes
+  rw [ByteArray.data_extract, Array.toList_extract]
+
+private theorem join_slices (l : List UInt8) {i j : Nat} (h : i ≤ j) :
+    l.take i ++ (l.drop i).take (j - i) = l.take j := by
+  rw [List.take_drop, Nat.add_sub_of_le h]
+  have start : (l.take j).take i = l.take i := List.take_take.trans (congrArg (fun n => l.take n) (Nat.min_eq_left h))
+  rw [← start, List.take_append_drop]
+
+public theorem String.Pos.isValidUTF8_extract : type_of% @_root_.String.Pos.isValidUTF8_extract := by
+  intro s a b
+  by_cases h : a.offset.byteIdx ≤ b.offset.byteIdx
+  · obtain ⟨l, hl⟩ := a.isValid.isValidUTF8_extract_zero
+    obtain ⟨m, hm⟩ := b.isValid.isValidUTF8_extract_zero
+    have start := congrArg bytes hl
+    have stop := congrArg bytes hm
+    rw [bytes_extract, List.drop_zero, Nat.sub_zero] at start stop
+    have split := join_slices (bytes s.toByteArray) h
+    rw [start, stop] at split
+    obtain ⟨t, ht⟩ := remove_prefix l m _ split
+    exact ⟨t, ByteArray.ext (Array.ext' ((bytes_extract ..).trans ht))⟩
+  · rw [ByteArray.extract_eq_empty_iff.2 (Nat.le_trans (Nat.min_le_left ..) (Nat.le_of_not_le h))]
+    exact ByteArray.isValidUTF8_empty
+
 end OmegaChecks.InitPort.Alternatives
