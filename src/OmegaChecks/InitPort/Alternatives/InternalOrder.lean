@@ -209,6 +209,31 @@ public theorem Array.monotone_anyM :
   unfold _root_.Array.anyM
   split <;> exact Array.monotone_anyM_loop f xs _ _ _ hf x y xy
 
+private theorem fuelMonotone {α : Sort u} {β : Sort v} [PartialOrder β] (measure : α → Nat)
+    (left right : (x : α) → ((y : α) → InvImage (· < ·) measure y x → β) → β)
+    (step : ∀ x f g, (∀ y h, f y h ⊑ g y h) → left x f ⊑ right x g) (x : α) :
+    WellFounded.Nat.fix measure left x ⊑ WellFounded.Nat.fix measure right x := by
+  suffices ∀ fuel x (h : measure x < fuel),
+      WellFounded.Nat.fix.go measure left fuel x h ⊑ WellFounded.Nat.fix.go measure right fuel x h by
+    exact this _ x _
+  intro fuel
+  induction fuel with
+  | zero => exact fun _ h => (Nat.not_succ_le_zero _ h).elim
+  | succ _ ih => exact fun x _ => step x _ _ fun y _ => ih y _
+
+public theorem Array.monotone_mapM :
+    pointwise_type% (type_of% @_root_.Lean.Order.Array.monotone_mapM) := by
+  intro m _ _ _ α β γ _ xs f hf x y xy
+  change xs.mapM (f x) ⊑ xs.mapM (f y)
+  delta _root_.Array.mapM _root_.Array.mapM.map _root_.Array.mapM.map._unary
+  apply fuelMonotone
+  intro ⟨i, bs⟩ left right next
+  dsimp only
+  split
+  · apply bindSteps (hf x y xy _)
+    exact fun b => next ⟨i + 1, bs.push b⟩ _
+  · exact PartialOrder.rel_refl
+
 end OmegaChecks.InitPort.Alternatives.Lean.Order
 
 open Lean Meta Elab Command in
