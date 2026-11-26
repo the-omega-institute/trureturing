@@ -40,7 +40,7 @@ Lean statement: `D5/S3/Quantum/Gauge/KobayashiMaskawaJarlskogRigidity.u2_all_qua
 
 *Commentary.*
 
-For every two-dimensional unitary matrix, all quartets have zero imaginary part. Their values agree with the quartets of a real representative.
+For every two-dimensional unitary matrix, all quartets have zero imaginary part. The sum of the imaginary parts over the two column choices vanishes, and the quartet with repeated columns is real.
 
 **Theorem 1.4 (A nonreal quartet requires three generations).**
 

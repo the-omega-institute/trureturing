@@ -182,28 +182,27 @@ private theorem quartet_im_sum_row {n : ℕ} {V : Matrix (Fin n) (Fin n) ℂ}
   simp only [← Complex.im_sum, h, ← Finset.mul_sum, col_inner hV l j, ite_eq_right (Ne.symm hjl),
     mul_zero, Complex.zero_im]
 
+/-- In dimension two, each row-orthogonality relation leaves one imaginary quartet. -/
+theorem u2_all_quartets_real {V : Matrix (Fin 2) (Fin 2) ℂ}
+    (hV : V ∈ unitaryGroup (Fin 2) ℂ) (i j k l : Fin 2) :
+    (quartet V i j k l).im = 0 := by
+  have h := quartet_im_sum_col hV i j k
+  rw [Fin.sum_univ_two] at h
+  have hdiag := quartet_im_diag_col V i j k
+  fin_cases j <;> fin_cases l <;> simp_all
+
 /-- Every two-dimensional unitary mixing matrix admits a real representative. -/
 theorem u2_real_rephasable {V : Matrix (Fin 2) (Fin 2) ℂ} (hV : V ∈ unitaryGroup (Fin 2) ℂ) :
     ∃ α β, IsUnitPhases α ∧ IsUnitPhases β ∧
       ∀ i j, (biRephase α β V i j).im = 0 := by
-  have hq i j k l : (quartet V i j k l).im = 0 := by
-    have h := quartet_im_sum_col hV i j k
-    rw [Fin.sum_univ_two] at h
-    have hdiag := quartet_im_diag_col V i j k
-    fin_cases j <;> fin_cases l <;> simp_all
   by_cases h : ∃ r, ∀ j, V r j ≠ 0
   · obtain ⟨r, hr⟩ := h
-    exact real_rephase_of_pivot V r (fun _ j k _ _ _ => ⟨hr j, hr k⟩) hq
+    exact real_rephase_of_pivot V r (fun _ j k _ _ _ => ⟨hr j, hr k⟩) (u2_all_quartets_real hV)
   push Not at h
-  apply real_rephase_of_pivot V 0 _ hq
+  apply real_rephase_of_pivot V 0 _ (u2_all_quartets_real hV)
   intro i j k hjk hj hk
   obtain ⟨l, hl⟩ := h i
   fin_cases j <;> fin_cases k <;> fin_cases l <;> simp_all
-
-theorem u2_all_quartets_real {V : Matrix (Fin 2) (Fin 2) ℂ}
-    (hV : V ∈ unitaryGroup (Fin 2) ℂ) (i j k l : Fin 2) :
-    (quartet V i j k l).im = 0 :=
-  quartet_real_of_rephasable (u2_real_rephasable hV) i j k l
 
 /-- A nonreal quartet in a unitary mixing matrix requires at least three generations. -/
 theorem cp_violation_requires_three_generations {n : ℕ} {V : Matrix (Fin n) (Fin n) ℂ}

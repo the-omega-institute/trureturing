@@ -34,7 +34,7 @@ internal sealed class KobayashiMaskawaJarlskogRigidityDocument : IScribeDocument
                 source: KobayashiMaskawa),
             Node("two-generation-quartets", "u2_all_quartets_real", "Quartets in dimension two",
                 "For every two-dimensional unitary matrix, all quartets have zero imaginary part. "
-                + "Their values agree with the quartets of a real representative."),
+                + "The sum of the imaginary parts over the two column choices vanishes, and the quartet with repeated columns is real."),
             Node("three-generation-lower-bound", "cp_violation_requires_three_generations",
                 "A nonreal quartet requires three generations",
                 "If a finite-dimensional unitary matrix has a quartet with nonzero imaginary "
