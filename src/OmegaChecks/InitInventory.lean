@@ -322,6 +322,12 @@ private def logicalConsequence? (owner name : Name) : Option (Name × Name) := d
 
 /-- The conclusion uses the indicated semantic agreement in addition to the public type. -/
 private def conditionalConsequence? (owner name : Name) : Option (String × Name × String) := do
+  if owner == `Init.Core && name == ``Quot.hrecOn then
+    return ((``Quot.sound).toString, ``OmegaChecks.InitBoundaries.HeterogeneousQuotient.soundOfPairCoherence,
+      "The pinned reduction through Quot.indep identifies pairs of related representatives at the unit motive")
+  if owner == `Init.Core && name == ``Quotient.hrecOn then
+    return ((``Quotient.sound).toString, ``OmegaChecks.InitBoundaries.HeterogeneousQuotient.setoidSoundOfPairCoherence,
+      "The pinned reduction through Quot.indep identifies pairs of setoid-related representatives at the unit motive")
   if owner == `Init.Core && name == ``instDecidableEqOfIff then
     return ((``propext).toString, ``OmegaChecks.InitBoundaries.ConstructorNormalization.propextOfDecision,
       "A positive decision of p ↔ q produces a positive decision of p = q")

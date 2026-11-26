@@ -2,6 +2,9 @@ module
 public import Lean
 import Lean.Replay
 import all Lean.Util.CollectAxioms
+public import OmegaChecks.InitInventory.Quotient
+import all OmegaChecks.InitInventory.Quotient
+meta import OmegaChecks.InitInventory.Quotient
 public import OmegaChecks.InitInventory.Logic
 import all OmegaChecks.InitInventory.Logic
 meta import OmegaChecks.InitInventory.Logic
@@ -63,6 +66,8 @@ private def replayWitnesses (env : Environment) : IO Unit := do
     ClassicalConsequences.witnesses.map Prod.snd ++
     BooleanReflection.witnesses.map (fun row => row.2.2) ++
     WeakRingOrder.witnesses.map (fun row => row.2.2) ++
+    [``HeterogeneousQuotient.hrecOn, ``HeterogeneousQuotient.hrecOnSetoid,
+     ``HeterogeneousQuotient.soundOfPairCoherence, ``HeterogeneousQuotient.setoidSoundOfPairCoherence] ++
     [``ConstructorNormalization.propextOfDecision, ``ConstructorNormalization.addCancelOfSucc,
      ``ConstructorNormalization.prefixEqualityOfCons] ++
     [``EmbeddingRange.ofExists, ``EmbeddingRange.ofLeftInverse,
@@ -102,7 +107,13 @@ private def replayWitnesses (env : Environment) : IO Unit := do
     if terms.contains n then continue
     let some ci := (official.find? n).orElse fun _ => env.find? n
       | throw <| IO.userError s!"missing witness dependency {n}"
-    if ci.isAxiom || ci.isUnsafe || ci.isPartial || ci matches .quotInfo _ then
+    if let .quotInfo _ := ci then
+      -- Replay regenerates the four native primitives from the kernel quotient declaration.
+      -- Quot.sound is a separate axiom and still fails the following check.
+      unless [`Quot, `Quot.mk, `Quot.ind, `Quot.lift].contains n &&
+          official.getModuleIdxFor? n == official.getModuleIdx? `Init.Prelude do
+        throw <| IO.userError s!"unexpected quotient primitive in a boundary witness: {n}"
+    if ci.isAxiom || ci.isUnsafe || ci.isPartial then
       throw <| IO.userError s!"forbidden dependency in a boundary witness: {n}"
     terms := terms.insert n ci
     todo := ci.getUsedConstantsAsSet.toList ++ todo
