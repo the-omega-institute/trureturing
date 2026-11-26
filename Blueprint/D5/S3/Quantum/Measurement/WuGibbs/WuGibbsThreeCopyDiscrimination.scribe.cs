@@ -1,10 +1,10 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Measurement;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Measurement.WuGibbs;
 
 internal sealed class WuGibbsThreeCopyDiscriminationDocument : IScribeDocumentDefinition
 {
-    private const string Owner = "D5/S3/Quantum/Measurement/WuGibbsThreeCopyDiscrimination.";
+    private const string Owner = "D5/S3/Quantum/Measurement/WuGibbs/WuGibbsThreeCopyDiscrimination.";
     private static readonly LibraryNoteRef Wu = LibraryNoteRef.Create("D5/L/SpinModels/wu2026sharp");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(

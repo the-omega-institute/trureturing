@@ -1,6 +1,6 @@
-/- GID: D5/S3/Quantum/Measurement/WuGibbsThreeCopyDiscrimination
+/- GID: D5/S3/Quantum/Measurement/WuGibbs/WuGibbsThreeCopyDiscrimination
    generality: I
-   mirror-B: D5/B/S3/Quantum/Measurement/WuGibbsThreeCopyDiscrimination
+   mirror-B: D5/B/S3/Quantum/Measurement/WuGibbs/WuGibbsThreeCopyDiscrimination
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none

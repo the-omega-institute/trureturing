@@ -1,5 +1,5 @@
 import LeanInformationAuditInterface.Contract.Registration
-import D5.S3.Quantum.Measurement.WuGibbsThreeCopyDiscrimination
+import D5.S3.Quantum.Measurement.WuGibbs.WuGibbsThreeCopyDiscrimination
 import Reg.Support.SingleDependentReadout
 
 /-! Source-bound observations of the state trace, payoff bounds and transpose identities. -/
@@ -71,7 +71,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Quantum.Measurement.WuGibbsThreeCopyDiscrimination
+    owner := `D5.S3.Quantum.Measurement.WuGibbs.WuGibbsThreeCopyDiscrimination
     definition := none
     coordinates := #[]
     readouts := #[{
@@ -161,7 +161,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Quantum.Measurement.WuGibbsThreeCopyDiscrimination
+    owner := `D5.S3.Quantum.Measurement.WuGibbs.WuGibbsThreeCopyDiscrimination
     definition := none
     coordinates := #[]
     readouts := #[{
@@ -231,7 +231,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Quantum.Measurement.WuGibbsThreeCopyDiscrimination
+    owner := `D5.S3.Quantum.Measurement.WuGibbs.WuGibbsThreeCopyDiscrimination
     definition := none
     coordinates := #[]
     readouts := #[{
@@ -295,7 +295,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Quantum.Measurement.WuGibbsThreeCopyDiscrimination
+    owner := `D5.S3.Quantum.Measurement.WuGibbs.WuGibbsThreeCopyDiscrimination
     definition := none
     coordinates := #[]
     readouts := #[{
@@ -361,7 +361,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Quantum.Measurement.WuGibbsThreeCopyDiscrimination
+    owner := `D5.S3.Quantum.Measurement.WuGibbs.WuGibbsThreeCopyDiscrimination
     definition := none
     coordinates := #[]
     readouts := #[{

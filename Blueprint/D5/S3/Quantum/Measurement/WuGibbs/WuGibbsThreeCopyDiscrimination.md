@@ -8,9 +8,9 @@ Let ρ(x,z) = (I + zZ + xX)/2 on the active qubit. Write D for the difference ρ
 
 **Theorem 1.1 (Normalized three-copy hypotheses).**
 
-Lean statement: `D5/S3/Quantum/Measurement/WuGibbsThreeCopyDiscrimination.threeCopy_states`
+Lean statement: `D5/S3/Quantum/Measurement/WuGibbs/WuGibbsThreeCopyDiscrimination.threeCopy_states`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/WuGibbsThreeCopyDiscrimination.threeCopy_states` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/WuGibbs/WuGibbsThreeCopyDiscrimination.threeCopy_states` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -22,9 +22,9 @@ For real x and z with x² + z² < 1, both tensor powers are positive definite an
 
 **Theorem 1.2 (Exact Helstrom bias and unique effect).**
 
-Lean statement: `D5/S3/Quantum/Measurement/WuGibbsThreeCopyDiscrimination.threeCopy_helstrom`
+Lean statement: `D5/S3/Quantum/Measurement/WuGibbs/WuGibbsThreeCopyDiscrimination.threeCopy_helstrom`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/WuGibbsThreeCopyDiscrimination.threeCopy_helstrom` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/WuGibbs/WuGibbsThreeCopyDiscrimination.threeCopy_helstrom` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -36,9 +36,9 @@ For x > 0 and x² + z² < 1, set b = x(√(1 + z² + z⁴) + (1 − x² − z²)
 
 **Theorem 1.3 (Invariance of the density difference).**
 
-Lean statement: `D5/S3/Quantum/Measurement/WuGibbsThreeCopyDiscrimination.difference_firstTranspose`
+Lean statement: `D5/S3/Quantum/Measurement/WuGibbs/WuGibbsThreeCopyDiscrimination.difference_firstTranspose`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/WuGibbsThreeCopyDiscrimination.difference_firstTranspose` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/WuGibbs/WuGibbsThreeCopyDiscrimination.difference_firstTranspose` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -50,9 +50,9 @@ For all real x and z, Γ(D) = D because the single-qubit factors are symmetric i
 
 **Theorem 1.4 (Exact change of the sign entry).**
 
-Lean statement: `D5/S3/Quantum/Measurement/WuGibbsThreeCopyDiscrimination.sign_firstTranspose_entry`
+Lean statement: `D5/S3/Quantum/Measurement/WuGibbs/WuGibbsThreeCopyDiscrimination.sign_firstTranspose_entry`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/WuGibbsThreeCopyDiscrimination.sign_firstTranspose_entry` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/WuGibbs/WuGibbsThreeCopyDiscrimination.sign_firstTranspose_entry` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -64,9 +64,9 @@ Partial transposition exchanges the (000,111) and (100,011) entries. For every r
 
 **Theorem 1.5 (Strict PPT payoff bound).**
 
-Lean statement: `D5/S3/Quantum/Measurement/WuGibbsThreeCopyDiscrimination.threeCopy_ppt_lt`
+Lean statement: `D5/S3/Quantum/Measurement/WuGibbs/WuGibbsThreeCopyDiscrimination.threeCopy_ppt_lt`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/WuGibbsThreeCopyDiscrimination.threeCopy_ppt_lt` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/WuGibbs/WuGibbsThreeCopyDiscrimination.threeCopy_ppt_lt` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -80,13 +80,13 @@ Figure 5 of Conlon et al., arXiv:2408.06678v2, includes a numerical comparison o
 
 ## References
 
-- Truth anchor: `D5/S3/Quantum/Measurement/WuGibbsThreeCopyDiscrimination.difference_firstTranspose`
-- Truth anchor: `D5/S3/Quantum/Measurement/WuGibbsThreeCopyDiscrimination.sign_firstTranspose_entry`
-- Truth anchor: `D5/S3/Quantum/Measurement/WuGibbsThreeCopyDiscrimination.threeCopy_helstrom`
-- Truth anchor: `D5/S3/Quantum/Measurement/WuGibbsThreeCopyDiscrimination.threeCopy_ppt_lt`
-- Truth anchor: `D5/S3/Quantum/Measurement/WuGibbsThreeCopyDiscrimination.threeCopy_states`
-- Dependency: [D5/S3/Quantum/Entanglement/AbsolutePPT/Bipartite](../Entanglement/AbsolutePPT/Bipartite.md)
-- Dependency: [D5/S3/Quantum/Foundation/FiniteTraceDistance](../Foundation/FiniteTraceDistance.md)
-- Dependency: [D5/S3/Quantum/Matrix/AbedNikolaevaNovikovAFDensityBound](../Matrix/AbedNikolaevaNovikovAFDensityBound.md)
-- Dependency: [D5/S3/Quantum/Matrix/SpectralPower](../Matrix/SpectralPower.md)
-- Dependency: [D5/S3/Quantum/QuantumChannels/PositiveFilterTransposeRefutation](../QuantumChannels/PositiveFilterTransposeRefutation.md)
+- Truth anchor: `D5/S3/Quantum/Measurement/WuGibbs/WuGibbsThreeCopyDiscrimination.difference_firstTranspose`
+- Truth anchor: `D5/S3/Quantum/Measurement/WuGibbs/WuGibbsThreeCopyDiscrimination.sign_firstTranspose_entry`
+- Truth anchor: `D5/S3/Quantum/Measurement/WuGibbs/WuGibbsThreeCopyDiscrimination.threeCopy_helstrom`
+- Truth anchor: `D5/S3/Quantum/Measurement/WuGibbs/WuGibbsThreeCopyDiscrimination.threeCopy_ppt_lt`
+- Truth anchor: `D5/S3/Quantum/Measurement/WuGibbs/WuGibbsThreeCopyDiscrimination.threeCopy_states`
+- Dependency: [D5/S3/Quantum/Entanglement/AbsolutePPT/Bipartite](../../Entanglement/AbsolutePPT/Bipartite.md)
+- Dependency: [D5/S3/Quantum/Foundation/FiniteTraceDistance](../../Foundation/FiniteTraceDistance.md)
+- Dependency: [D5/S3/Quantum/Matrix/AbedNikolaevaNovikovAFDensityBound](../../Matrix/AbedNikolaevaNovikovAFDensityBound.md)
+- Dependency: [D5/S3/Quantum/Matrix/SpectralPower](../../Matrix/SpectralPower.md)
+- Dependency: [D5/S3/Quantum/QuantumChannels/PositiveFilterTransposeRefutation](../../QuantumChannels/PositiveFilterTransposeRefutation.md)
