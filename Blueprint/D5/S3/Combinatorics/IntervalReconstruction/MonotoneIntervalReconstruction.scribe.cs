@@ -1,18 +1,18 @@
 using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.IntervalReconstruction;
 
 internal sealed class MonotoneIntervalReconstructionDocument : IScribeDocumentDefinition
 {
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Combinatorics/hegyvari2026consecutivesums");
+        LibraryNoteRef.Create("D5/L/FiniteGeometry/hegyvari2026consecutivesums");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Unlabelled interval sums determine every nonnegative nondecreasing real list of length at least three.",
         H("Reconstruction from full interval sums"),
         Blocks(Describe.Lean(DescribeId.Create("monotone-interval-reconstruction"),
-            DeclarationHandle.Create("D5/S3/Combinatorics/MonotoneIntervalReconstruction.result"),
+            DeclarationHandle.Create("D5/S3/Combinatorics/IntervalReconstruction/MonotoneIntervalReconstruction.result"),
             H("Zeros, equal entries and coincident observations"),
             StatementSource.FromAuthor(Disp(Statement())), AssessedProvenance.FromRepo(Source),
             Blocks(
@@ -58,7 +58,7 @@ internal sealed class MonotoneIntervalReconstructionDocument : IScribeDocumentDe
                     + "initialization and residual-minimum proof route for positive strictly "
                     + "increasing integer lists. The real, zero and weak-order extension "
                     + "here is derived in this repository. The source and scope are recorded "
-                    + "in Library/Combinatorics/hegyvari2026consecutivesums.md. This theorem "
+                    + "in Library/FiniteGeometry/hegyvari2026consecutivesums.md. This theorem "
                     + "claims mathematical uniqueness only; it makes no arithmetic-operation, "
                     + "bit-complexity or RAM bound and does not solve general Turnpike. "
                     + "The bounded source and Lean search does not establish worldwide novelty."))),

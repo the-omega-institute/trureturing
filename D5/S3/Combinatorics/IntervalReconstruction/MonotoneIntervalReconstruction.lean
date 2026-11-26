@@ -1,6 +1,6 @@
-/- GID: D5/S3/Combinatorics/MonotoneIntervalReconstruction
+/- GID: D5/S3/Combinatorics/IntervalReconstruction/MonotoneIntervalReconstruction
    generality: G
-   mirror-B: D5/B/S3/Combinatorics/MonotoneIntervalReconstruction
+   mirror-B: D5/B/S3/Combinatorics/IntervalReconstruction/MonotoneIntervalReconstruction
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: [lake/module/OmegaMath.Combinatorics.MonotoneIntervalReconstruction]
    utility: none
@@ -10,7 +10,7 @@ import OmegaMath.Combinatorics.MonotoneIntervalReconstruction
 
 /-! Book citation of the real, weakly monotone interval reconstruction theorem. -/
 
-namespace D5.S3.Combinatorics.MonotoneIntervalReconstruction
+namespace D5.S3.Combinatorics.IntervalReconstruction.MonotoneIntervalReconstruction
 
 /-- Every interval contributes once, including coincident sums, with both endpoints included. -/
 theorem result (A B : List ℝ)
@@ -21,4 +21,4 @@ theorem result (A B : List ℝ)
       Omega.MonotoneIntervalReconstruction.listObservations B) : A = B :=
   Omega.MonotoneIntervalReconstruction.list_reconstruct A B hA ha hb hsA hsB he
 
-end D5.S3.Combinatorics.MonotoneIntervalReconstruction
+end D5.S3.Combinatorics.IntervalReconstruction.MonotoneIntervalReconstruction

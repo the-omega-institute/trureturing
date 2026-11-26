@@ -7,7 +7,7 @@ doi: null
 url: https://arxiv.org/abs/2611.30462v1
 claim: "Proposition 4.1 reconstructs a positive strictly increasing integer list of length at least three from the multiset of its inclusive consecutive interval sums of length at least two."
 strata_touched:
-  - D5/S3/Combinatorics/MonotoneIntervalReconstruction
+  - D5/S3/Combinatorics/IntervalReconstruction/MonotoneIntervalReconstruction
 license: CC0-1.0
 triage: anchor
 ---
