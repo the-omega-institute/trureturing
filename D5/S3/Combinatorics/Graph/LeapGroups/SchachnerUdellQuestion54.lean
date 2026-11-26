@@ -6,9 +6,8 @@
    utility: none
    digest: Leap groups of all prisms and positive-dimensional cubes. -/
 
-import Batteries.Tactic.OpenPrivate
+import D5.S3.Arith.FibonacciAtomic.Observer.SparseLiteralParityReadLowerBound
 import D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Placement.CubicContactDistance
-import D5.S3.Combinatorics.Graph.HypercubeSubQuorum
 import Mathlib.Combinatorics.SimpleGraph.Circulant
 import Mathlib.GroupTheory.Perm.Sign
 import OmegaMath.Combinatorics.Graph.LeapGroup
@@ -20,8 +19,7 @@ open D5.S3.Combinatorics.Graph.Hypercube D5.S3.Combinatorics.Graph.LeapGroups.Le
 open D5.S3.Combinatorics.Graph.HypercubeCritical
 open D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Placement
 
-open private cubeParity cubeParity_ne_of_adj from D5.S3.Combinatorics.Graph.HypercubeSubQuorum
-local notation "boolCubeParity" => cubeParity
+open D5.S3.Arith.FibonacciAtomic.Observer
 
 namespace D5.S3.Combinatorics.Graph.LeapGroups.SchachnerUdellQuestion54
 
@@ -240,25 +238,30 @@ private theorem cube_double_flip_swap {n : ℕ} (i j : Fin n) (x : Fin n → Boo
     rw [he]
     exact (cubeFlip_hop j x).symm
 
-private def bitToZMod : Bool →+ ZMod 2 where
-  toFun b := if b then 1 else 0
-  map_zero' := rfl
-  map_add' a b := by cases a <;> cases b <;> decide
+private def bitToZMod (b : Bool) : ZMod 2 := if b then 1 else 0
 
 private theorem cubeParity_eq_map {n : ℕ} (x : Fin n → Bool) :
-    cubeParity x = bitToZMod (boolCubeParity x) := by
-  unfold cubeParity
-  change _ = bitToZMod (∑ i, x i)
-  rw [map_sum]
-  rfl
+    cubeParity x = bitToZMod (SparseLiteralParityReadLowerBound.parity x) := by
+  have hcast : cubeParity x = ((∑ i, (x i).toNat : ℕ) : ZMod 2) := by
+    rw [cubeParity, Nat.cast_sum]
+    apply Finset.sum_congr rfl
+    intro i _
+    cases x i <;> rfl
+  have hval := (congrArg ZMod.val hcast).trans (ZMod.val_natCast 2 _)
+  unfold SparseLiteralParityReadLowerBound.parity
+  rw [← hval]
+  rcases (Fin.exists_fin_two (p := (cubeParity x = ·))).mp ⟨cubeParity x, rfl⟩ with h | h <;>
+    rw [h] <;> rfl
 
 private theorem cubeParity_flip {n : ℕ} (i : Fin n) (x : Fin n → Bool) :
     cubeParity (cubeFlip i x) = cubeParity x + 1 := by
   change cubeParity (BalancedCriticalSpectrum.flip x i) = _
   rw [cubeParity_eq_map, cubeParity_eq_map]
-  have h := cubeParity_ne_of_adj (BalancedCriticalSpectrum.flip_adj x i)
-  generalize hx : boolCubeParity x = a at h ⊢
-  generalize hy : boolCubeParity (BalancedCriticalSpectrum.flip x i) = b at h ⊢
+  have h : SparseLiteralParityReadLowerBound.parity (BalancedCriticalSpectrum.flip x i) ≠
+      SparseLiteralParityReadLowerBound.parity x :=
+    SparseLiteralParityReadLowerBound.parity_flip x i
+  generalize hx : SparseLiteralParityReadLowerBound.parity x = a at h ⊢
+  generalize hy : SparseLiteralParityReadLowerBound.parity (BalancedCriticalSpectrum.flip x i) = b at h ⊢
   cases a <;> cases b <;> first | contradiction | decide
 
 private theorem cube_adj_iff {n : ℕ} (x y : Fin n → Bool) :
