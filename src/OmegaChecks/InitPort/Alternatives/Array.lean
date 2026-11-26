@@ -579,7 +579,7 @@ public theorem Array.toList_zipWithAll : type_of% @_root_.Array.toList_zipWithAl
 
 public theorem List.zipWithAll_toArray : type_of% @_root_.List.zipWithAll_toArray := by
   intro α β γ f xs ys
-  exact _root_.Array.ext' Array.toList_zipWithAll
+  exact _root_.Array.ext' (zipWithAllList f xs.toArray ys.toArray 0 #[])
 
 private theorem zipWithList {α : Type u} {β : Type v} {γ : Type w}
     (as : Array α) (bs : Array β) (f : α → β → γ) (i : Nat) (acc : Array γ) :
@@ -610,12 +610,12 @@ public theorem Array.toList_zipWith : type_of% @_root_.Array.toList_zipWith := b
   exact zipWithList as bs f 0 #[]
 
 public theorem List.zipWith_toArray : type_of% @_root_.List.zipWith_toArray := by
-  intro α β γ f xs ys
-  exact _root_.Array.ext' Array.toList_zipWith
+  intro α β γ xs ys f
+  exact _root_.Array.ext' (zipWithList xs.toArray ys.toArray f 0 #[])
 
 public theorem List.zip_toArray : type_of% @_root_.List.zip_toArray := by
   intro α β xs ys
-  exact _root_.Array.ext' Array.toList_zipWith
+  exact _root_.Array.ext' (zipWithList xs.toArray ys.toArray Prod.mk 0 #[])
 
 public theorem Array.size_zipWith : type_of% @_root_.Array.size_zipWith := by
   intro α β γ as bs f

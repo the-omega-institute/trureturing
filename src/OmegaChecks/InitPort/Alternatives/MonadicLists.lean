@@ -731,4 +731,28 @@ public theorem Array.foldrM_filterMap : type_of% @_root_.Array.foldrM_filterMap 
   rw [← Array.foldrM_toList, ← Array.foldrM_toList, Array.toList_filterMap]
   exact List.foldrM_filterMap
 
+public theorem List.push_toArray_fun : type_of% @_root_.List.push_toArray_fun := by
+  intro α xs
+  have concat (xs : List α) : List.concat xs = fun a => xs ++ [a] := by
+    induction xs with
+    | nil => rfl
+    | cons a xs ih => exact congrArg (fun tail b => a :: tail b) ih
+  exact congrArg (fun k a => List.toArray (k a)) (concat xs)
+
+public theorem List.isPrefixOf_toArray : type_of% @_root_.List.isPrefixOf_toArray := by
+  intro α beq xs ys
+  rw [Array.isPrefixOf]
+  by_cases fits : xs.length ≤ ys.length
+  · rw [dite_eq_left (show xs.toArray.size ≤ ys.toArray.size from fits)]
+    exact _root_.List.isPrefixOfAux_toArray_zero xs ys fits
+  · rw [dite_eq_right (show ¬xs.toArray.size ≤ ys.toArray.size from fits)]
+    induction xs generalizing ys with
+    | nil => exact False.elim (fits (Nat.zero_le _))
+    | cons a xs ih =>
+      cases ys with
+      | nil => rfl
+      | cons b ys =>
+        rw [List.isPrefixOf_cons_cons, ← ih (ys := ys) (fun small => fits (Nat.succ_le_succ small))]
+        exact (Bool.and_false _).symm
+
 end OmegaChecks.InitPort.Alternatives
