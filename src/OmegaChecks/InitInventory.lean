@@ -3,6 +3,7 @@ public import Lean
 import Lean.Replay
 import all Lean.Util.CollectAxioms
 import all Init.Data.Slice.Operations
+import all Init.Data.Iterators.Basic
 import all Init.Grind.Ring.Envelope
 
 public section
@@ -459,10 +460,33 @@ theorem funextFromMapCongr
   letI : Functor read := ⟨fun h x a => h (x a), fun c _ _ => c⟩
   exact @combine read α β _ (fun a => a) f g pointwise
 
+private def graphStep {α : Sort u} {β : α → Sort v} (f : (x : α) → β x)
+    (x : PLift (PSum α (PSigma β))) : PLift (PSum α (PSigma β)) :=
+  PSum.casesOn x.down (fun a => ⟨.inr ⟨a, f a⟩⟩) (fun _ => x)
+
+/-- Equal endomorphisms identify dependent sections by their graphs. -/
+private theorem funextFromEndomorphisms
+    (ext : ∀ {T : Type (max 1 u v)} {f g : T → T}, (∀ x, f x = g x) → f = g) :
+    type_of% @funext.{u,v} := by
+  intro α β f g agree
+  have stepEq : graphStep f = graphStep g := ext
+    (T := PLift (PSum α (PSigma β))) (f := graphStep f) (g := graphStep g) (by
+    rintro ⟨x⟩
+    cases x with
+    | inl a => exact congrArg (fun y => PLift.up (.inr ⟨a, y⟩ : PSum α (PSigma β))) (agree a)
+    | inr => rfl)
+  let graph (h : (a : α) → β a) (a : α) : PSigma β := ⟨a, h a⟩
+  let observe (k : PLift (PSum α (PSigma β)) → PLift (PSum α (PSigma β))) (a : α) : PSigma β :=
+    PSum.casesOn (k ⟨.inl a⟩).down (fun _ => ⟨a, f a⟩) id
+  have graphEq : graph f = graph g := congrArg observe stepEq
+  let unpack (t : {t : α → PSigma β // ∀ x, (t x).1 = x}) (a : α) : β a :=
+    (t.property a) ▸ (t.val a).2
+  exact congrArg unpack (Subtype.ext (a1 := ⟨graph f, fun _ => rfl⟩)
+    (a2 := ⟨graph g, fun _ => rfl⟩) graphEq)
+
 namespace RangeMap
 
 open Std.PRange
-
 
 @[instance_reducible] private def successor {T : Type w} (f : T → T) : UpwardEnumerable T where
   succ? x := some (f x)
@@ -477,28 +501,10 @@ private theorem endomorphisms {T : Type w}
   have e := @commutes T T (successor g) (successor f) φ
   exact congrArg (fun k x => (k x).getD x) e
 
-private def graphStep {α : Sort u} {β : α → Sort v} (f : (x : α) → β x)
-    (x : PLift (PSum α (PSigma β))) : PLift (PSum α (PSigma β)) :=
-  PSum.casesOn x.down (fun a => ⟨.inr ⟨a, f a⟩⟩) (fun _ => x)
-
 /-- The function equality for successor-preserving maps entails dependent function extensionality. -/
 public theorem funextFromSuccMap (commutes : type_of% @UpwardEnumerable.Map.succ?_toFun'.{max 1 u v, max 1 u v}) :
-    type_of% @funext.{u,v} := by
-  intro α β f g agree
-  have stepEq : graphStep f = graphStep g := endomorphisms
-    (T := PLift (PSum α (PSigma β))) (f := graphStep f) (g := graphStep g) commutes (by
-    rintro ⟨x⟩
-    cases x with
-    | inl a => exact congrArg (fun y => PLift.up (.inr ⟨a, y⟩ : PSum α (PSigma β))) (agree a)
-    | inr => rfl)
-  let graph (h : (a : α) → β a) (a : α) : PSigma β := ⟨a, h a⟩
-  let observe (k : PLift (PSum α (PSigma β)) → PLift (PSum α (PSigma β))) (a : α) : PSigma β :=
-    PSum.casesOn (k ⟨.inl a⟩).down (fun _ => ⟨a, f a⟩) id
-  have graphEq : graph f = graph g := congrArg observe stepEq
-  let unpack (t : {t : α → PSigma β // ∀ x, (t x).1 = x}) (a : α) : β a :=
-    (t.property a) ▸ (t.val a).2
-  exact congrArg unpack (Subtype.ext (a1 := ⟨graph f, fun _ => rfl⟩)
-    (a2 := ⟨graph g, fun _ => rfl⟩) graphEq)
+    type_of% @funext.{u,v} :=
+  funextFromEndomorphisms (endomorphisms commutes)
 
 open Lean in
 run_cmd
@@ -506,6 +512,85 @@ run_cmd
     throwError "the range-map extensionality witness depends on axioms"
 
 end RangeMap
+
+namespace IteratorLoopCongruence
+
+open Std Std.Iterators
+
+private abbrev State := ULift.{u} Bool
+
+private def wrap {α : Type u} (x : α) : Shrink α :=
+  cast (congrFun (Std.Internal.idOpaque (α := Type u)).property.symm α) x
+
+@[instance_reducible] private def itInst (T : Type u) : Iterator State.{u} Id T where
+  IsPlausibleStep it step := match step with
+    | .done => True
+    | .yield next _ => it.internalState.down = true ∧ next.internalState.down = false
+    | .skip _ => False
+  step _ := wrap ⟨.done, trivial⟩
+
+private theorem finite (T : Type u) : letI := itInst T; Finite State.{u} Id := by
+  letI := itInst T
+  apply Finite.of_finitenessRelation
+  let measure := fun it : IterM (α := State.{u}) Id T => Bool.toNat it.internalState.down
+  refine ⟨InvImage Nat.lt measure, InvImage.wf _ Nat.lt_wfRel.wf, ?_⟩
+  intro it next h
+  obtain ⟨step, dest, h⟩ := h
+  cases step with
+  | yield j b =>
+    cases Option.some.inj dest
+    change it.internalState.down = true ∧ next.internalState.down = false at h
+    change next.internalState.down.toNat < it.internalState.down.toNat
+    rw [h.1, h.2]
+    exact Nat.zero_lt_one
+  | skip j => contradiction
+  | done => cases dest
+
+@[instance_reducible] private def reading (T : Type u) :
+    letI := itInst T; IteratorLoop State.{u} Id (ReaderM T) := by
+  letI := itInst T
+  refine ⟨fun _ γ Pl it init f x => ?_⟩
+  cases active : it.internalState.down with
+  | false => exact init
+  | true =>
+    have out : it.IsPlausibleIndirectOutput x :=
+      .direct ⟨⟨⟨false⟩⟩, ⟨active, rfl⟩⟩
+    exact ForInStep.casesOn (f x out init x).val id id
+
+private theorem endomorphisms (combine : type_of% (@Iter.forIn_congr.{u,u}))
+    {T : Type u} {f g : T → T} (agree : ∀ x, f x = g x) : f = g := by
+  letI := itInst T
+  letI := finite T
+  letI := reading T
+  let i : Iter (α := State.{u}) T := ⟨⟨true⟩⟩
+  let finish (y : T) : ReaderM T (ForInStep (Option T)) := fun _ => .done (some y)
+  have eq := combine (ita := i) (itb := i) rfl (b := (none : Option T)) rfl
+    (f := fun x _ => finish (f x)) (g := fun x _ => finish (g x)) (fun x _ => congrArg finish (agree x))
+  exact congrArg (fun (k : T → Option T) x => (k x).getD x) eq
+
+
+/-- Membership-dependent loop congruence specializes to ordinary loop congruence. -/
+private theorem forgetMembership (combine : type_of% (@Iter.forIn'_congr.{u,u})) :
+    type_of% (@Iter.forIn_congr.{u,u}) := by
+  intro α β m monad iterator fin loop γ ita itb w b b' hb f g agree
+  cases w
+  exact combine rfl hb (fun a _ c => agree a c)
+
+/-- A loop on a reader can select an output at each argument of the reader. -/
+public theorem funextFromCongr (combine : type_of% @Iter.forIn_congr.{max 1 u v, max 1 u v}) :
+    type_of% @funext.{u,v} :=
+  funextFromEndomorphisms (endomorphisms combine)
+
+public theorem funextFromCongr' (combine : type_of% @Iter.forIn'_congr.{max 1 u v, max 1 u v}) :
+    type_of% @funext.{u,v} :=
+  funextFromCongr (forgetMembership combine)
+
+open Lean in
+run_cmd
+  for n in [``funextFromCongr, ``funextFromCongr'] do
+    unless (← collectAxioms n).isEmpty do throwError "iterator congruence witness {n} uses axioms"
+
+end IteratorLoopCongruence
 
 namespace Collector
 
@@ -1029,6 +1114,10 @@ private def reductionPaths (official strict full : Environment) : NameMap (List 
 missing official interface in the completeness check. -/
 private def logicalConsequence? (owner name : Name) : Option (Name × Name) := do
   match owner, name with
+  | `Init.Data.Iterators.Lemmas.Consumers.Loop, ``Std.Iter.forIn_congr =>
+    return (``funext, ``OmegaChecks.InitBoundaries.IteratorLoopCongruence.funextFromCongr)
+  | `Init.Data.Iterators.Lemmas.Consumers.Loop, ``Std.Iter.forIn'_congr =>
+    return (``funext, ``OmegaChecks.InitBoundaries.IteratorLoopCongruence.funextFromCongr')
   | `Init.Data.Range.Polymorphic.Map, ``Std.PRange.UpwardEnumerable.Map.succ?_toFun' =>
     return (``funext, ``OmegaChecks.InitBoundaries.RangeMap.funextFromSuccMap)
   | `Init.Core, ``Quotient.sound => return (``funext, ``OmegaChecks.InitBoundaries.funextFromQuotientSound)
