@@ -20,6 +20,9 @@ strata_touched:
   - D5/S3/Quantum/Divergence/FaithfulConditionalGap
   - D5/S3/Quantum/Divergence/UmegakiChannelSupportedExtension
   - D5/S3/Quantum/Divergence/UmegakiSupportedMoorePenrose
+  - D5/S3/Quantum/Divergence/ConditionalExpansion/BellKernelLimit
+  - D5/S3/Quantum/Divergence/ConditionalExpansion/DirectBellKrausRecovery
+  - D5/S3/Quantum/Divergence/ConditionalExpansion/HeraldedRecoveryUpperBound
 license: citation-only
 triage: anchor
 ---
@@ -288,3 +291,23 @@ positive input inverse form. At the actual channel output the direction belongs
 to the range of the corresponding arithmetic operator, so the numerator is
 the real Hilbert–Schmidt pairing against its supported Moore–Penrose preimage.
 The supremum over the interval is attained at $t=0$.
+
+## Heralded exact recovery from the Bell kernel
+
+For input dimension $d\ge2$, let $P$ be the normalized Bell projector and
+let $Q$ project onto the kernel of $\operatorname{amp}_N(I-P)$.
+`HeraldedRecoveryUpperBound` constructs a completely positive,
+trace-nonincreasing operation from the columns of $Q$. Its composition
+with $N$ is $p\,\mathrm{id}$ on all matrices with
+$p=\operatorname{Re}\operatorname{Tr}(Q\operatorname{amp}_N(P))/d^2$.
+The Bell kernel limit gives orthogonal density pairs on $d+1$ reference
+coordinates with positive input gaps and ratios below $d^2p+\varepsilon$
+for every $\varepsilon>0$. Thus the conditional expansion infimum is at
+most $d^2$ times the optimal heralded exact recovery probability.
+
+Bény and Oreshkov's postprocessing-order duality gives the related
+replacement-weight characterization on the complementary channel by
+complementing an erasure channel. The quantitative bound here concerns
+the conditional expansion coefficient of Eq. (2.42).
+[Eq. (2.42)](https://arxiv.org/html/2608.27171v1#S2.EGx43) ·
+[Bény and Oreshkov, Theorem 2](https://arxiv.org/abs/1103.0649v3)
