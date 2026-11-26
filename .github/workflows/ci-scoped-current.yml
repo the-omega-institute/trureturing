@@ -36,7 +36,6 @@ permissions:
 
 env:
   CI_BASE: ${{ inputs.base }}
-  LEAN_NUM_THREADS: '1'
   STRATALINT_ACCEPT_COLD_BUILD: '1'
   STRATALINT_CACHE_WRITES: 'false'
 
@@ -114,6 +113,8 @@ jobs:
         run: python3 tools/scripts/workflow/ci_checks.py current check-delta
       - name: Check current and delta with affected Lean and Scribe inputs
         if: ${{ !cancelled() && steps.batches.outcome == 'success' && steps.batches.outputs.parallel != 'true' && (steps.lean_plan.outputs.builds_lean == 'false' || steps.lean.outcome == 'success') }}
+        env:
+          LEAN_NUM_THREADS: '1'
         run: |
           python3 tools/scripts/workflow/ci_checks.py current pr-lean --scope-file "$RUNNER_TEMP/current-lean-plan.json"
       - id: checked
@@ -163,6 +164,9 @@ jobs:
       - name: Check the Lean batch
         env: *parallel_budget
         run: |
+          LEAN_NUM_THREADS="$(nproc)"
+          if (( LEAN_NUM_THREADS > 2 )); then LEAN_NUM_THREADS=2; fi
+          export LEAN_NUM_THREADS
           python3 tools/scripts/workflow/ci_parallel_compute.py run --remaining "$PLANNER_REMAINING" --epoch "$PLANNER_EPOCH" --count "$BATCH_COUNT" -- \
             bash .github/actions/lean-compile-layer/measure.sh --compile \
             python3 tools/scripts/workflow/ci_pr_lean.py "$RUNNER_TEMP/changed-paths" --read-plan "$RUNNER_TEMP/current-lean-plan.json" --batch "$BATCH" --artifacts "$RUNNER_TEMP/current-reports"
