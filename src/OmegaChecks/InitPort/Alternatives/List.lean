@@ -1,6 +1,8 @@
 module
 public import Init.Data.List.Lemmas
 import Init.Data.List.Impl
+import all Init.Data.List.Control
+import Init.Data.List.Monadic
 
 /-! Structural proofs for boolean predicates and folds over strict lists. -/
 
@@ -11,6 +13,17 @@ public theorem List.map_const : type_of% @_root_.List.map_const := by
   induction xs with
   | nil => rfl
   | cons a xs ih => exact (congrArg (b :: ·) ih).trans List.replicate_succ.symm
+
+private theorem mapLoopId (f : α → Id β) (xs : List α) (acc : List β) :
+    (List.mapM.loop f xs acc).run = acc.reverse ++ xs.map (fun x => (f x).run) := by
+  induction xs generalizing acc with
+  | nil => exact (List.append_nil _).symm
+  | cons a xs ih =>
+    change (List.mapM.loop f xs ((f a).run :: acc)).run = acc.reverse ++ ((f a).run :: xs.map (fun x => (f x).run))
+    exact (ih _).trans ((congrArg (· ++ xs.map (fun x => (f x).run)) List.reverse_cons).trans (List.append_assoc ..))
+
+public theorem List.idRun_mapM : type_of% @_root_.List.idRun_mapM :=
+  fun {_ _ xs f} => mapLoopId f xs []
 
 public theorem List.find?_append : type_of% @_root_.List.find?_append := by
   intro α p xs ys
