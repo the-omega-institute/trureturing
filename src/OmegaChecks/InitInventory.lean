@@ -2,6 +2,8 @@ module
 public import Lean
 import Lean.Replay
 import all Lean.Util.CollectAxioms
+import all Init.Data.Array.Basic
+import all Init.Prelude
 import all Init.Data.Slice.Operations
 import all Init.Data.Iterators.Basic
 import all Init.Grind.Ring.Envelope
@@ -139,6 +141,101 @@ def choiceFromRepeatM (loop : type_of% (@repeatM.{u,u})) : type_of% (@Classical.
 
 /- Specialize each range interface to a singleton. Its comparison expresses any proposition
 and its size is one. Double negation is exactly what the zero-size law needs. -/
+namespace FiniteMembership
+
+/-- Any two elements of a type have either equal or unequal values. -/
+def EqualityCases : Prop := ∀ {α : Type u} (a b : α), a = b ∨ a ≠ b
+
+theorem ofListMember (branch : type_of% (@List.eq_or_ne_mem_of_mem.{u})) : EqualityCases.{u} := by
+  intro α a b
+  exact (branch (a := a) (b := b) (l := [a]) (.tail _ (.head _))).imp_right And.left
+
+theorem ofArrayMember (branch : type_of% (@Array.eq_or_ne_mem_of_mem.{u})) : EqualityCases.{u} := by
+  intro α a b
+  have mem : a ∈ (#[a].push b) := ⟨.head _⟩
+  exact (branch mem).imp_right And.left
+
+theorem ofFirstListMember (split : type_of% (@List.eq_append_cons_of_mem.{u})) : EqualityCases.{u} := by
+  intro α a b
+  obtain ⟨before, after, eq, absent⟩ := split (a := a) (xs := [b,a]) (.tail _ (.head _))
+  cases before with
+  | nil => exact .inl (List.cons.inj eq).1.symm
+  | cons c cs =>
+    have same := (List.cons.inj eq).1
+    exact .inr fun e => absent ((e.trans same) ▸ List.Mem.head _)
+
+/-- Appending cannot change the first entry of a nonempty array. -/
+private theorem pushKeepsHead {α : Type u} {acc : Array α} {a v : α}
+    (h : acc.toList.head? = some v) : (acc.push a).toList.head? = some v := by
+  cases acc with
+  | mk l => cases l with
+    | nil => cases h
+    | cons c cs => exact h
+
+private theorem appendKeepsHead {α : Type u} {xs ys : Array α} {v : α}
+    (h : xs.toList.head? = some v) : (xs ++ ys).toList.head? = some v := by
+  have loop (fuel j : Nat) (acc : Array α) (head : acc.toList.head? = some v) :
+      (Array.foldlM.loop (m := Id) (fun a x => pure (a.push x)) ys ys.size
+        (Nat.le_refl _) fuel j acc).run.toList.head? = some v := by
+    induction fuel generalizing j acc with
+    | zero =>
+      unfold Array.foldlM.loop
+      split <;> exact head
+    | succ fuel ih =>
+      unfold Array.foldlM.loop
+      split
+      · exact ih (j+1) _ (pushKeepsHead head)
+      · exact head
+  change (Array.foldl (fun a x => a.push x) xs ys).toList.head? = some v
+  unfold Array.foldl Array.foldlM
+  rw [dite_eq_left (Nat.le_refl _)]
+  exact loop ys.size 0 xs h
+
+theorem ofFirstArrayMember (split : type_of% (@Array.eq_push_append_of_mem.{u})) : EqualityCases.{u} := by
+  intro α a b
+  have mem : a ∈ #[b,a] := ⟨.tail _ (.head _)⟩
+  obtain ⟨⟨before⟩, after, eq, absent⟩ := split mem
+  have eqHead := congrArg (fun xs => xs.toList.head?) eq
+  cases before with
+  | nil => exact .inl (Option.some.inj (eqHead.trans (appendKeepsHead rfl))).symm
+  | cons c cs =>
+    have same : b = c := Option.some.inj (eqHead.trans (appendKeepsHead (pushKeepsHead rfl)))
+    exact .inr fun e => absent ⟨(e.trans same) ▸ List.Mem.head _⟩
+
+theorem ofRunDecomposition (split : type_of% (@List.eq_replicate_or_eq_replicate_append_cons.{u})) :
+    EqualityCases.{u} := by
+  intro α a b
+  rcases split [a, b] with emp | ⟨n, c, eq, positive⟩ | ⟨n, c, d, rest, eq, positive, apart⟩
+  · cases emp
+  · cases n with
+    | zero => cases positive
+    | succ n => cases n with
+      | zero => cases eq
+      | succ n =>
+        have heads := List.cons.inj eq
+        exact .inl (heads.1.trans (List.cons.inj heads.2).1.symm)
+  · cases n with
+    | zero => cases positive
+    | succ n => cases n with
+      | zero =>
+        have heads := List.cons.inj eq
+        exact .inr fun h => apart (heads.1.symm.trans (h.trans (List.cons.inj heads.2).1))
+      | succ n =>
+        have heads := List.cons.inj eq
+        exact .inl (heads.1.trans (List.cons.inj heads.2).1.symm)
+
+theorem ofRunInduction (rec : type_of% (@List.replicateRecOn.{u})) : EqualityCases.{u} := by
+  apply ofRunDecomposition
+  intro α l
+  apply rec l
+  · exact .inl rfl
+  · intro a n h
+    exact .inr (.inl ⟨n, a, rfl, h⟩)
+  · intro a b n l ne pos _
+    exact .inr (.inr ⟨n, a, b, l, rfl, pos, ne⟩)
+
+end FiniteMembership
+
 namespace VectorExistence
 
 private theorem appendOne (l : List α) (x : α) : (l.concat x).length = l.length + 1 := by
@@ -676,7 +773,10 @@ private def replayWitnesses (env : Environment) : IO Unit := do
   let official ← importModules #[{module := `Lean}] {} (level := .private)
   let mut terms : Std.HashMap Name ConstantInfo := {}
   let mut todo := (reductions.map fun (_, _, _, witness) => witness) ++
-    [``choiceFromOptionPresence, ``VectorExistence.emOfVectorSucc, ``dneFromClosedRange, ``dneFromOpenRange, ``excludedMiddleFromDNE, ``excludedMiddleOfNotLT,
+    [``FiniteMembership.ofRunDecomposition, ``FiniteMembership.ofRunInduction,
+      ``FiniteMembership.ofListMember, ``FiniteMembership.ofArrayMember,
+      ``FiniteMembership.ofFirstListMember, ``FiniteMembership.ofFirstArrayMember,
+      ``choiceFromOptionPresence, ``VectorExistence.emOfVectorSucc, ``dneFromClosedRange, ``dneFromOpenRange, ``excludedMiddleFromDNE, ``excludedMiddleOfNotLT,
       ``excludedMiddleOfNotLTIff, ``GrindOrder.excludedMiddleFromComparison, ``GrindOrder.excludedMiddleFromImplication,
       ``GrindOrder.excludedMiddleFromNotNot, ``GrindOrder.excludedMiddleFromLookahead,
       ``AbstractOrder.excludedMiddleOfTrichotomy, ``AbstractOrder.excludedMiddleOfLTTrichotomy,
@@ -1694,6 +1794,24 @@ private def reductionPaths (official strict full : Environment) : NameMap (List 
 missing official interface in the completeness check. -/
 private def logicalConsequence? (owner name : Name) : Option (Name × Name) := do
   match owner, name with
+  | `Init.Data.List.Lemmas, ``List.eq_replicate_or_eq_replicate_append_cons =>
+    return (``OmegaChecks.InitBoundaries.FiniteMembership.EqualityCases,
+      ``OmegaChecks.InitBoundaries.FiniteMembership.ofRunDecomposition)
+  | `Init.Data.List.Lemmas, ``List.replicateRecOn =>
+    return (``OmegaChecks.InitBoundaries.FiniteMembership.EqualityCases,
+      ``OmegaChecks.InitBoundaries.FiniteMembership.ofRunInduction)
+  | `Init.Data.List.Lemmas, ``List.eq_or_ne_mem_of_mem =>
+    return (``OmegaChecks.InitBoundaries.FiniteMembership.EqualityCases,
+      ``OmegaChecks.InitBoundaries.FiniteMembership.ofListMember)
+  | `Init.Data.Array.Lemmas, ``Array.eq_or_ne_mem_of_mem =>
+    return (``OmegaChecks.InitBoundaries.FiniteMembership.EqualityCases,
+      ``OmegaChecks.InitBoundaries.FiniteMembership.ofArrayMember)
+  | `Init.Data.List.Lemmas, ``List.eq_append_cons_of_mem =>
+    return (``OmegaChecks.InitBoundaries.FiniteMembership.EqualityCases,
+      ``OmegaChecks.InitBoundaries.FiniteMembership.ofFirstListMember)
+  | `Init.Data.Array.Lemmas, ``Array.eq_push_append_of_mem =>
+    return (``OmegaChecks.InitBoundaries.FiniteMembership.EqualityCases,
+      ``OmegaChecks.InitBoundaries.FiniteMembership.ofFirstArrayMember)
   | `Init.Internal.Order.Basic, ``Lean.Order.inf =>
     return (``OmegaChecks.InitBoundaries.InternalOrder.UniqueChoice,
       ``OmegaChecks.InitBoundaries.InternalOrder.uniqueChoiceOfSup)
