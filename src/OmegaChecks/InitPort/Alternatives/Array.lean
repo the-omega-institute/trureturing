@@ -4,6 +4,7 @@ public import OmegaChecks.InitPort.Alternatives.ArrayErase
 public import OmegaChecks.InitPort.Alternatives.ArrayLex
 public import OmegaChecks.InitPort.Alternatives.ArrayFind
 public import OmegaChecks.InitPort.Alternatives.ArrayMapIdx
+public import OmegaChecks.InitPort.Alternatives.VectorNested
 
 public import Init.Data.Array.Basic
 public import Init.Data.Nat.Basic
@@ -534,5 +535,14 @@ public theorem List.mapFinIdx_toArray : type_of% @_root_.List.mapFinIdx_toArray 
   intro α β l f
   exact Array.ext' _root_.Array.toList_mapFinIdx
 
+
+public theorem Array.toList_modify : type_of% @_root_.Array.toList_modify := by
+  intro α xs f i
+  apply _root_.List.ext_getElem
+  · rw [_root_.List.length_modify]
+    exact _root_.Array.size_modify
+  · intro j left right
+    rw [_root_.Array.getElem_toList, _root_.Array.getElem_modify, _root_.List.getElem_modify]
+    rfl
 
 end OmegaChecks.InitPort.Alternatives
