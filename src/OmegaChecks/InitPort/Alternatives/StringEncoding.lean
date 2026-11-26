@@ -383,4 +383,68 @@ public theorem ByteArray.utf8DecodeChar?_utf8EncodeChar_append :
         Nat.reducePow, Nat.reduceMod, gt_iff_lt, Char.toNat_val]
       omega
 
+private theorem encodedContinuation (x : Fin 64) :
+    _root_.ByteArray.utf8DecodeChar?.isInvalidContinuationByte (UInt8.ofNat (x.val + 128)) = false := by
+  have masked : UInt8.ofNat (x.val + 128) &&& 192 = 128 := by
+    apply UInt8.toNat_inj.mp
+    rw [UInt8.toNat_and, UInt8.toNat_ofNat_of_lt' (Nat.lt_of_lt_of_le (Nat.add_lt_add_right x.isLt 128) (by decide))]
+    exact highestBits (tag := 2) (mask := 192) (k := 6) x.isLt rfl
+  unfold _root_.ByteArray.utf8DecodeChar?.isInvalidContinuationByte
+  rw [masked]
+  rfl
+
+private def tailBytes (bytes : List UInt8) : Prop :=
+  ∀ i (h : i < bytes.length), 0 < i → _root_.ByteArray.utf8DecodeChar?.isInvalidContinuationByte bytes[i] = false
+
+private theorem tailBytes_encodeChar (c : Char) : tailBytes (String.utf8EncodeChar c) := by
+  unfold String.utf8EncodeChar
+  dsimp only
+  split
+  · intro i bound pos
+    exact (Nat.not_le_of_lt pos (Nat.le_of_lt_succ bound)).elim
+  · split
+    · intro i bound pos
+      match i, bound with
+      | 0, _ => exact (Nat.lt_irrefl 0 pos).elim
+      | 1, _ => exact encodedContinuation ⟨_, Nat.mod_lt _ (by decide)⟩
+    · split
+      · intro i bound pos
+        match i, bound with
+        | 0, _ => exact (Nat.lt_irrefl 0 pos).elim
+        | 1, _ | 2, _ => exact encodedContinuation ⟨_, Nat.mod_lt _ (by decide)⟩
+      · intro i bound pos
+        match i, bound with
+        | 0, _ => exact (Nat.lt_irrefl 0 pos).elim
+        | 1, _ | 2, _ | 3, _ => exact encodedContinuation ⟨_, Nat.mod_lt _ (by decide)⟩
+
+public theorem ByteArray.utf8DecodeChar?.isInvalidContinuationByte_getElem_utf8EncodeChar_one_of_utf8Size_eq_two :
+    type_of% (private_decl% @_root_.ByteArray.utf8DecodeChar?.isInvalidContinuationByte_getElem_utf8EncodeChar_one_of_utf8Size_eq_two) := by
+  intro c size
+  apply tailBytes_encodeChar c 1 _ (by decide)
+
+public theorem ByteArray.utf8DecodeChar?.isInvalidContinuationByte_getElem_utf8EncodeChar_one_of_utf8Size_eq_three :
+    type_of% (private_decl% @_root_.ByteArray.utf8DecodeChar?.isInvalidContinuationByte_getElem_utf8EncodeChar_one_of_utf8Size_eq_three) := by
+  intro c size
+  apply tailBytes_encodeChar c 1 _ (by decide)
+
+public theorem ByteArray.utf8DecodeChar?.isInvalidContinuationByte_getElem_utf8EncodeChar_two_of_utf8Size_eq_three :
+    type_of% (private_decl% @_root_.ByteArray.utf8DecodeChar?.isInvalidContinuationByte_getElem_utf8EncodeChar_two_of_utf8Size_eq_three) := by
+  intro c size
+  apply tailBytes_encodeChar c 2 _ (by decide)
+
+public theorem ByteArray.utf8DecodeChar?.isInvalidContinuationByte_getElem_utf8EncodeChar_one_of_utf8Size_eq_four :
+    type_of% (private_decl% @_root_.ByteArray.utf8DecodeChar?.isInvalidContinuationByte_getElem_utf8EncodeChar_one_of_utf8Size_eq_four) := by
+  intro c size
+  apply tailBytes_encodeChar c 1 _ (by decide)
+
+public theorem ByteArray.utf8DecodeChar?.isInvalidContinuationByte_getElem_utf8EncodeChar_two_of_utf8Size_eq_four :
+    type_of% (private_decl% @_root_.ByteArray.utf8DecodeChar?.isInvalidContinuationByte_getElem_utf8EncodeChar_two_of_utf8Size_eq_four) := by
+  intro c size
+  apply tailBytes_encodeChar c 2 _ (by decide)
+
+public theorem ByteArray.utf8DecodeChar?.isInvalidContinuationByte_getElem_utf8EncodeChar_three_of_utf8Size_eq_four :
+    type_of% (private_decl% @_root_.ByteArray.utf8DecodeChar?.isInvalidContinuationByte_getElem_utf8EncodeChar_three_of_utf8Size_eq_four) := by
+  intro c size
+  apply tailBytes_encodeChar c 3 _ (by decide)
+
 end OmegaChecks.InitPort.Alternatives
