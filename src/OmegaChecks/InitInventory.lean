@@ -261,6 +261,145 @@ run_cmd
       throwError "invalid axiom reduction for {owner}/{name}"
   replayWitnesses env
 
+namespace Collector
+
+open Std Std.Iterators
+
+private def next (f : Nat → Bool) (it : IterM (α := Nat) Id Unit) : IterStep (IterM (α := Nat) Id Unit) Unit :=
+  match f it.internalState with
+  | true => .done
+  | false => .yield ⟨it.internalState + 1⟩ ()
+
+@[instance_reducible] private def searchIterator (f : Nat → Bool) : Iterator Nat Id Unit where
+  IsPlausibleStep it s := s = next f it
+  step it := pure (.deflate ⟨next f it, rfl⟩)
+
+private def search (k : Nat) : Iter (α := Nat) Unit := ⟨k⟩
+
+private theorem signal_after {f : Nat → Bool} (sticky : ∀ i, f i = true → f (i+1) = true)
+    {n : Nat} (hit : f n = true) {k : Nat} (le : n ≤ k) : f k = true := by
+  induction le with
+  | refl => exact hit
+  | step _ ih => exact sticky _ ih
+
+private theorem searchFinite {f : Nat → Bool} (sticky : ∀ i, f i = true → f (i+1) = true)
+    {n : Nat} (hit : f n = true) :
+    letI := searchIterator f
+    Finite Nat Id := by
+  letI := searchIterator f
+  apply Finite.of_finitenessRelation
+  refine ⟨InvImage Nat.lt (fun it : IterM (α := Nat) Id Unit => n - it.internalState),
+    InvImage.wf _ Nat.lt_wfRel.wf, ?_⟩
+  intro it it' h
+  obtain ⟨s, dest, step⟩ := h
+  change s = next f it at step
+  subst s
+  dsimp only [next] at dest
+  cases e : f it.internalState with
+  | true => rw [e] at dest; cases dest
+  | false =>
+    rw [e] at dest
+    cases Option.some.inj dest
+    have lt : it.internalState < n := Nat.lt_of_not_ge fun ge => Bool.noConfusion (e.symm.trans (signal_after sticky hit ge))
+    change n - (it.internalState + 1) < n - it.internalState
+    omega
+
+private theorem searchStep (f : Nat → Bool) (k : Nat) :
+    letI := searchIterator f
+    (search k).step.val = (match f k with | true => .done | false => .yield (search (k+1)) ()) := by
+  letI := searchIterator f
+  change (IterM.Step.toPure (it := (search k).toIterM) (Shrink.inflate (Shrink.deflate _))).val = _
+  refine Eq.trans (congrArg (fun q => (IterM.Step.toPure (it := (search k).toIterM) q).val) Shrink.inflate_deflate) ?_
+  cases e : f k <;> simp only [search, next, IterM.Step.toPure, IterStep.mapIterator,
+    Iter.toIterM, IterM.toIter, e] <;> rfl
+
+private theorem length_hits {f : Nat → Bool} (sticky : ∀ i, f i = true → f (i+1) = true)
+    {n : Nat} (hit : f n = true)
+    (len : Nat → Nat)
+    (unroll : ∀ k, len k = (match f k with | true => 0 | false => (len (k+1)).succ))
+    (k : Nat) : f (k + len k) = true := by
+  generalize h : n - k = fuel
+  induction fuel generalizing k with
+  | zero =>
+    have yes := signal_after sticky hit (Nat.le_of_sub_eq_zero h)
+    have l := unroll k
+    rw [yes] at l
+    simpa only [l, Nat.add_zero] using yes
+  | succ fuel ih =>
+    have l := unroll k
+    cases e : f k with
+    | true => rw [e] at l; simpa only [l, Nat.add_zero] using e
+    | false =>
+      rw [e] at l
+      change len k = (len (k+1)).succ at l
+      have eq : n - (k+1) = fuel := by omega
+      have out := ih (k+1) eq
+      exact (congrArg f (by omega : k + len k = k + 1 + len (k + 1))).trans out
+
+private def seen (f : Nat → Bool) : Nat → Bool
+  | 0 => f 0
+  | n+1 => seen f n || f (n+1)
+
+private theorem seenSticky (f : Nat → Bool) (n : Nat) (h : seen f n = true) :
+    seen f (n+1) = true := by rw [seen, h]; rfl
+
+private theorem seen_of_hit (f : Nat → Bool) (n : Nat) (hit : f n = true) :
+    seen f n = true := by
+  cases n with
+  | zero => exact hit
+  | succ n => rw [seen, hit, Bool.or_true]
+
+private theorem hit_of_seen (f : Nat → Bool) (n : Nat) (h : seen f n = true) : ∃ k, f k = true := by
+  induction n with
+  | zero => exact ⟨0, h⟩
+  | succ n ih =>
+    cases eq : f (n+1) with
+    | true => exact ⟨n+1, eq⟩
+    | false => exact ih (by simpa only [seen, eq, Bool.or_false] using h)
+
+/-- A decider for all Boolean streams cannot examine a bounded prefix at the all-false stream. -/
+theorem noContinuousSignalDecider
+    (answer : (Nat → Bool) → Bool)
+    (correct : ∀ f, answer f = true ↔ ∃ n, f n = true)
+    (stable : ∃ k, ∀ f : Nat → Bool, (∀ i, i < k → f i = false) →
+      answer f = answer (fun _ => false)) : False := by
+  obtain ⟨k, same⟩ := stable
+  let spike (i : Nat) := Nat.beq i k
+  have yes := (correct spike).mpr ⟨k, Nat.beq_refl k⟩
+  have noSignal : ¬ ∃ n : Nat, false = true := fun ⟨_, h⟩ => Bool.noConfusion h
+  apply noSignal
+  apply (correct (fun _ => false)).mp
+  have agree (i : Nat) (lt : i < k) : spike i = false := by
+    cases eq : spike i with
+    | false => rfl
+    | true => exact False.elim ((Nat.ne_of_lt lt) (Nat.eq_of_beq_eq_true eq))
+  exact (same spike agree).symm.trans yes
+
+/-- Agreement with the official collector on finite iterators gives the limited principle
+of omniscience for arbitrary Boolean streams. -/
+def limitedOmniscienceFromCollector (collect : type_of% (@Std.Iter.toList.{0}))
+    (correct : ∀ {α β : Type} [Iterator α Id β] [Finite α Id] (it : Iter (α := α) β),
+      collect it = it.toList) (f : Nat → Bool) : Decidable (∃ n, f n = true) := by
+  let g := seen f
+  letI := searchIterator g
+  let len := fun k => (collect (search k)).length
+  cases h : g (len 0) with
+  | true => exact isTrue (hit_of_seen f _ h)
+  | false =>
+    refine isFalse fun ⟨n, hit⟩ => ?_
+    have gHit := seen_of_hit f n hit
+    letI := searchFinite (seenSticky f) gHit
+    have unroll (k : Nat) : len k = (match g k with | true => 0 | false => (len (k+1)).succ) := by
+      unfold len
+      rw [correct (search k), Iter.toList_eq_match_step, searchStep]
+      cases e : g k with
+      | true => rfl
+      | false => exact congrArg Nat.succ (congrArg List.length (correct (search (k+1))).symm)
+    have result := length_hits (seenSticky f) gHit len unroll 0
+    exact Bool.noConfusion (h.symm.trans (by simpa only [Nat.zero_add] using result))
+
+end Collector
+
 end OmegaChecks.InitBoundaries
 
 private def installedModules (dir : System.FilePath) (root : Name) : IO (Array Name) := do
