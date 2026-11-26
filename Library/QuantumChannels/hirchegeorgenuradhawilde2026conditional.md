@@ -11,6 +11,7 @@ strata_touched:
   - D5/S3/Quantum/Divergence/ConditionalExpansion/BellCenteredConditionalTraceGap
   - D5/S3/Quantum/Divergence/ConditionalExpansion/ReverseDoeblinRefutation
   - D5/S3/Quantum/Divergence/ConditionalExpansion/DerivativeFreeHarmonicCongruence
+  - D5/S3/Quantum/Divergence/ConditionalExpansion/FilteredChannelConditionalGap
   - D5/S3/Quantum/Divergence/CompleteHockeyStickRefutation
   - D5/S3/Quantum/Divergence/CompleteHockeyStickBasisSupport
   - D5/S3/Quantum/Divergence/CompleteHockeyStickChoiSupport
@@ -139,6 +140,20 @@ $\delta^2/\operatorname{Tr}(W^{-1}B)$. Taking $Q$ from the negative spectrum
 of the reference marginal makes this a matrix estimate for the conditional
 gap in Eq. (2.42). The argument uses orthogonality of two modified ranges.
 [Eq. (5.2)](https://arxiv.org/html/2608.27171v1#S5.E2)
+
+`FilteredChannelConditionalGap` constructs the finite CPTP channel
+$N_G(X)=G^{1/2}(X\otimes I_E/e)G^{1/2}$ for $G>0$ and
+$\operatorname{Tr}_E(G)/e=I_A$, where $e=\dim E>0$. For every Hermitian
+joint input and every finite reference, its conditional negative-trace gap
+is at least $1/k$ times the input gap if $L=\operatorname{Tr}_E(G^{-1})/e\le kI_A$
+and $k>0$. With nonempty input, $k=\|L\|_\infty$ gives a lower bound on every
+admissible conditional hockey-stick ratio, including trace distance at
+$\gamma=1$. This is a repository-derived bound for the conditional
+optimization of Eq. (2.42). The complete bound in George et al.,
+Proposition 33, Eqs. (6.56)–(6.60), uses equal reference marginals.
+Attainment and the sharp comparison with heralded recovery remain unformalized.
+[Eq. (2.42)](https://arxiv.org/html/2608.27171v1#S2.EGx43) ·
+[George et al., Proposition 33](https://arxiv.org/html/2503.22823v3#Thmproposition33)
 
 ## Complete hockey-stick contraction
 
