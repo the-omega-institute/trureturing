@@ -168,6 +168,17 @@ private def numeral? (source : Environment) (expr : Expr) (fuel : Nat := 4) : Op
   let body ← ci.value?
   numeral? source body fuel
 
+/-- A word bound often elaborates to a successor instance at a large decimal literal.
+Use the power-of-two instance so the strict kernel can check the index by binary reduction. -/
+private def compactNonzeroPowers (source : Environment) (type : Expr) : Expr :=
+  type.replace fun e => do
+    guard (e.isAppOfArity `Nat.instNeZeroSucc 1)
+    let n ← numeral? source e.getAppArgs[0]!
+    let size := n + 1
+    guard (size ≥ 256 && size == 2 ^ size.log2)
+    let one := mkApp (mkConst `Nat.instNeZeroSucc) (mkNatLit 1)
+    return mkApp3 (mkConst `Nat.instNeZeroHPow) (mkNatLit 2) (mkNatLit size.log2) one
+
 private def comparisonProofs (source : Environment) (proofs : NameMap ConstantInfo)
     (body : Expr) (owner : Name) : Option Expr := Id.run do
   let earlier (lemma : Name) := match source.getModuleIdxFor? lemma, source.getModuleIdxFor? owner with
@@ -427,8 +438,9 @@ partial def visit (n : Name) : M Bool := do
   modify fun s => {s with visiting := s.visiting.insert n}
   -- A dependent type can contain a proof emitted by simp. Keep its official
   -- conversion class and let the target kernel check the replacement.
-  let mut type := ci.type
-  for dep in usedConstants ci.type do
+  let compact := compactNonzeroPowers c.source ci.type
+  let mut type := if !compact.equal ci.type && Kernel.isDefEqGuarded c.source {} ci.type compact then compact else ci.type
+  for dep in usedConstants type do
     if !(← visit dep) then
       let rewritten := OmegaChecks.InitCompiler.constructiveCasts c.source ci.type c.proofRules true
       let rewritten ← OmegaChecks.InitCompiler.decidableProof c.source rewritten
