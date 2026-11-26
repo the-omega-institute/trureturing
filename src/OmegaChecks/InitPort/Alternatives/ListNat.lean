@@ -1,4 +1,5 @@
 module
+public import OmegaChecks.InitPort.Alternatives.NumericBounds
 public import Init.Data.List.Nat.Count
 public import Init.Data.List.Nat.Prod
 public import Init.Data.List.Nat.Sum
