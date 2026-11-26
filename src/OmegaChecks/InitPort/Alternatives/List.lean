@@ -262,7 +262,7 @@ public theorem List.getElem_mapIdx : type_of% @_root_.List.getElem_mapIdx := by
 
 public theorem List.instLawfulBEq : type_of% @_root_.List.instLawfulBEq := by
   intro α inst lawful
-  constructor
+  refine @LawfulBEq.mk _ _ (@_root_.List.instReflBEq α inst (@LawfulBEq.toReflBEq α inst lawful)) ?_
   intro a
   induction a with
   | nil =>
@@ -275,9 +275,30 @@ public theorem List.instLawfulBEq : type_of% @_root_.List.instLawfulBEq := by
     cases b with
     | nil => exact nomatch h
     | cons y ys =>
-      obtain ⟨hx,ht⟩ := Bool.and_eq_true_iff.mp h
-      cases eq_of_beq hx
-      exact congrArg (_root_.List.cons x) (ih ht)
+      change ((x == y) && (xs == ys)) = true at h
+      cases hx : (x == y) with
+      | false => rw [hx] at h; cases h
+      | true =>
+        rw [hx] at h
+        cases eq_of_beq hx
+        exact congrArg (_root_.List.cons x) (ih h)
+
+public theorem List.of_concat_eq_concat : type_of% @_root_.List.of_concat_eq_concat := by
+  intro α as bs a b
+  induction as generalizing bs with
+  | nil =>
+    cases bs with
+    | nil => exact fun h => ⟨rfl, (List.cons.inj h).1⟩
+    | cons y ys => cases ys <;> intro h <;> cases h
+  | cons x xs ih =>
+    cases bs with
+    | nil => cases xs <;> intro h <;> cases h
+    | cons y ys =>
+      intro h
+      obtain ⟨rfl, tail⟩ := List.cons.inj h
+      obtain ⟨rfl, last⟩ := ih tail
+      exact ⟨rfl, last⟩
+
 public theorem List.mem_replicate : type_of% @_root_.List.mem_replicate := by
   intro α a b n
   induction n with
