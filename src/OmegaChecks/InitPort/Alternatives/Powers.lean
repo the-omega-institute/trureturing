@@ -91,4 +91,25 @@ public theorem Rat.mul_inv_cancel : type_of% @_root_.Rat.mul_inv_cancel := by
       rw [Int.mul_comm a.num]
       exact Rat.divInt_self' (Int.mul_ne_zero denominator numerator)
 
+public theorem Rat.inv_inv : type_of% @_root_.Rat.inv_inv := by
+  intro a
+  by_cases zero : a = 0
+  · subst a
+    rw [Rat.inv_zero, Rat.inv_zero]
+  · exact Rat.inv_eq_of_mul_eq_one (Rat.inv_mul_cancel a zero)
+
+public theorem Rat.zpow_add_one : type_of% @_root_.Rat.zpow_add_one := by
+  intro q hq m
+  cases m with
+  | ofNat n => exact Rat.pow_succ q n
+  | negSucc n =>
+    cases n with
+    | zero =>
+      change q ^ (0 : Nat) = (q ^ (1 : Nat))⁻¹ * q
+      rw [Rat.pow_zero, Rat.pow_one, Rat.inv_mul_cancel q hq]
+    | succ n =>
+      change (q ^ (n+1))⁻¹ = (q ^ ((n+1)+1))⁻¹ * q
+      rw [Rat.pow_succ q (n+1), Rat.inv_mul_rev, Rat.mul_comm q⁻¹,
+        Rat.mul_assoc, Rat.inv_mul_cancel q hq, Rat.mul_one]
+
 end OmegaChecks.InitPort.Alternatives
