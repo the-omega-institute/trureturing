@@ -27,6 +27,7 @@ public import OmegaChecks.InitPort.Alternatives.List
 public import OmegaChecks.InitPort.Alternatives.ListRange
 public import OmegaChecks.InitPort.Alternatives.ListZip
 public import OmegaChecks.InitPort.Alternatives.Logic
+public import OmegaChecks.InitPort.Alternatives.Monad
 public import OmegaChecks.InitPort.Alternatives.Name
 public import OmegaChecks.InitPort.Alternatives.NatBits
 public import OmegaChecks.InitPort.Alternatives.NatDigits
@@ -41,7 +42,6 @@ public import OmegaChecks.InitPort.Alternatives.Powers
 public import OmegaChecks.InitPort.Alternatives.Range
 public import OmegaChecks.InitPort.Alternatives.RangeFinite
 public import OmegaChecks.InitPort.Alternatives.Rational
-public import OmegaChecks.InitPort.Alternatives.State
 public import OmegaChecks.InitPort.Alternatives.UTF8
 public import OmegaChecks.InitPort.Alternatives.StringSlice
 public import OmegaChecks.InitPort.Alternatives.SubarrayFold
