@@ -152,7 +152,7 @@ theorem exponential_boltzmann_reflection_positivity
     simp only [hn, mul_zero, tsum_zero]
 
 /-- On two configurations the sign observable has exactly the indicated negative pairing. -/
-theorem negative_coupling_rp_counterexample (β : ℝ) (hβ : β < 0) :
+private theorem negative_coupling_rp_counterexample (β : ℝ) (hβ : β < 0) :
     let f : Bool → ℂ := fun x => if x then 1 else -1
     let z := reflectionPairing (boltzmann (fun _ => 0) (fun _ : Unit => f) (fun _ => 1) β) f f
     z = (↑(4 * Real.sinh β) : ℂ) ∧ (4 * Real.sinh β : ℝ) < 0 := by
@@ -163,6 +163,28 @@ theorem negative_coupling_rp_counterexample (β : ℝ) (hβ : β < 0) :
   · rw [Real.sinh_eq]
     have h := Real.exp_lt_exp.mpr (show β < -β by linarith)
     linarith
+
+/-- The nonnegative coupling range is exact for finite feature Boltzmann kernels. -/
+theorem exponential_boltzmann_rp_iff (β : ℝ) :
+    (∀ (Y J : Type) [Fintype Y] [Fintype J] (w S : Y → ℝ)
+      (A : J → Y → ℂ) (c : J → ℝ), (∀ i, 0 ≤ c i) → ∀ f : Y → ℂ,
+        0 ≤ (reflectionPairing (fun x y => w x * w y * boltzmann S A c β x y) f f).re ∧
+          (reflectionPairing (fun x y => w x * w y * boltzmann S A c β x y) f f).im = 0) ↔
+      0 ≤ β := by
+  constructor
+  · intro pos
+    by_contra! hβ
+    let f : Bool → ℂ := fun x => if x then 1 else -1
+    have h := (pos Bool Unit (fun _ => 1) (fun _ => 0) (fun _ => f) (fun _ => 1)
+      (fun _ => zero_le_one) f).1
+    simp only [one_mul] at h
+    obtain ⟨heq, hneg⟩ := negative_coupling_rp_counterexample β hβ
+    change reflectionPairing (boltzmann (fun _ => 0) (fun _ : Unit => f) (fun _ => 1) β) f f =
+      (↑(4 * Real.sinh β) : ℂ) at heq
+    rw [heq, Complex.ofReal_re] at h
+    exact (not_lt_of_ge h) hneg
+  · intro hβ Y J _ _ w S A c hc f
+    exact exponential_boltzmann_reflection_positivity w S A c β hc hβ f
 
 private theorem reflectionPairing_cauchy_schwarz (K : X → X → ℝ)
     (hs : ∀ x y, K x y = K y x) (hp : ∀ f, 0 ≤ (reflectionPairing K f f).re)
@@ -294,7 +316,7 @@ private theorem half_trace_gauge (k : HalfSite T L → G) (U : HalfConfig T L G)
       holonomyTrace_conj]
   · simp only [halfPlaquetteHolonomy, halfGauge, halfEndpoints, square_gauge, holonomyTrace_conj]
 
-theorem plaquette_trace_gauge_invariant (k : Site T L → G) (U : GaugeConfig T L G)
+private theorem plaquette_trace_gauge_invariant (k : Site T L → G) (U : GaugeConfig T L G)
     (p : Plaquette T L) :
     holonomyTrace ρ (plaquetteHolonomy (gaugeTransform k U) p) =
       holonomyTrace ρ (plaquetteHolonomy U p) := by
@@ -312,7 +334,7 @@ def wilsonAction [NeZero L] (U : GaugeConfig T L G) : ℝ :=
   halfWilsonAction ρ U.1 + halfWilsonAction ρ U.2.1 +
     ∑ p : CrossingPlaquette L, (holonomyTrace ρ (crossingPlaquetteHolonomy U p)).re
 
-theorem wilson_action_gauge_invariant [NeZero L] (k : Site T L → G) (U : GaugeConfig T L G) :
+private theorem wilson_action_gauge_invariant [NeZero L] (k : Site T L → G) (U : GaugeConfig T L G) :
     wilsonAction ρ (gaugeTransform k U) = wilsonAction ρ U := by
   have hc (p : CrossingPlaquette L) :
       holonomyTrace ρ (crossingPlaquetteHolonomy (gaugeTransform k U) p) =
@@ -337,7 +359,7 @@ def temporalGaugeFiber (c : CrossingConfig L G) :
     (Equiv.refl _)
 
 /-- The explicit time-constant half gauge fixes all crossing links. -/
-theorem temporalGauge_transform (c : CrossingConfig L G) (h : HalfConfig T L G × HalfConfig T L G) :
+private theorem temporalGauge_transform (c : CrossingConfig L G) (h : HalfConfig T L G × HalfConfig T L G) :
     gaugeTransform (temporalGauge c) (h.1, h.2, c) =
       ((temporalGaugeFiber c h).1, (temporalGaugeFiber c h).2, 1) := by
   refine Prod.ext rfl (Prod.ext ?_ ?_)
@@ -532,7 +554,7 @@ private theorem wilsonSpinSum_eq (M : Matrix P E (ZMod 2)) (β : ℝ) (c : E →
   rw [sum_sgn_mul_prod_one_add_eq M (fun _ => Real.tanh β) c, mul_assoc]
   simp only [surfaceSum, fillings, plaquetteSupport, Finset.prod_const]
 
-theorem wilsonExpectation_eq_surfaceRatio (M : Matrix P E (ZMod 2)) (β : ℝ)
+private theorem wilsonExpectation_eq_surfaceRatio (M : Matrix P E (ZMod 2)) (β : ℝ)
     (c : E → ZMod 2) :
     wilsonExpectation M β c = surfaceSum M (Real.tanh β) c / surfaceSum M (Real.tanh β) 0 := by
   have hzero := wilsonSpinSum_eq M β 0
