@@ -68,6 +68,7 @@ private def sealedImplementation (n : Name) : Bool :=
     `List.instToStringListSlice, `instIteratorLoopSubarrayIteratorIdOfMonad,
     `Std.Iterators.Types.ListIterator.instIteratorLoop,
     `String.Slice.ByteIterator.instIteratorLoopUInt8OfMonad,
+    `String.Slice.Pattern.ForwardSliceSearcher.instIteratorLoopIdSearchStep,
     `String.Slice.PosIterator.instIteratorLoopSubtypePosNeEndPosOfMonad,
     `String.Slice.RevByteIterator.instIteratorLoopUInt8OfMonad,
     `String.Slice.RevByteIterator.instForInCharOfMonad,
