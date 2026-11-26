@@ -319,4 +319,49 @@ public theorem Dyadic.ofOdd_eq_ofIntWithPrec : type_of% @_root_.Dyadic.ofOdd_eq_
   · rw [tz]
     exact (Int.sub_zero k).symm
 
+public theorem Rat.toDyadic_mkRat : type_of% @_root_.Rat.toDyadic_mkRat := by
+  intro a b prec
+  by_cases hb : b = 0
+  · subst b
+    rw [Rat.mkRat_zero, Nat.zero_shiftLeft]
+    change _ = Dyadic.ofIntWithPrec ((a <<< prec.toNat) / (0 : Int)) prec
+    rw [Int.ediv_zero]
+    cases prec with
+    | ofNat k =>
+      change Dyadic.ofIntWithPrec ((0 <<< k : Int) / 1) _ = _
+      rw [Nat.zero_shiftLeft]
+      rfl
+    | negSucc k =>
+      change Dyadic.ofIntWithPrec ((0 : Int) / _) _ = _
+      rw [Int.zero_ediv]
+  · rcases h : mkRat a b with ⟨n, d, hnz, hr⟩
+    obtain ⟨m, hm, rfl, rfl⟩ := Rat.mkRat_num_den hb h
+    have mpos : (0 : Int) ≤ m := Int.natCast_nonneg _
+    have mnz : (m : Int) ≠ 0 := fun e => hm (Int.ofNat.inj e)
+    cases prec with
+    | ofNat k =>
+      simp only [_root_.Rat.toDyadic, Int.ofNat_eq_natCast, Int.toNat_natCast, Int.toNat_neg_natCast,
+        Nat.shiftLeft_zero, Int.natCast_mul]
+      rw [Int.mul_comm (d : Int), ← Int.ediv_ediv_of_nonneg mpos, ← Int.shiftLeft_mul, Int.mul_ediv_cancel _ mnz]
+    | negSucc k =>
+      simp only [_root_.Rat.toDyadic, Int.natCast_shiftLeft, Int.negSucc_eq, ← Int.natCast_add_one,
+        Int.toNat_neg_natCast, Int.shiftLeft_zero, Int.neg_neg, Int.toNat_natCast, Int.natCast_mul]
+      rw [Int.mul_comm (d : Int), ← Int.mul_shiftLeft, ← Int.ediv_ediv_of_nonneg mpos, Int.mul_ediv_cancel _ mnz]
+
+public theorem Dyadic.toRat_inj : type_of% @_root_.Dyadic.toRat_inj := by
+  intro x y
+  constructor
+  · intro eq
+    let prec : Int := max (x.precision.getD 0) (y.precision.getD 0)
+    have bound (v : Dyadic) (le : v.precision.getD 0 ≤ prec) : v.precision ≤ some prec := by
+      cases v with
+      | zero => trivial
+      | ofOdd _ _ _ => exact le
+    have first := _root_.Dyadic.roundDown_eq_self_of_le (bound x (Int.le_max_left _ _))
+    have second := _root_.Dyadic.roundDown_eq_self_of_le (bound y (Int.le_max_right _ _))
+    have rounded := congrArg (fun r : Rat => r.toDyadic prec) eq
+    rw [_root_.Dyadic.toDyadic_toRat, _root_.Dyadic.toDyadic_toRat, first, second] at rounded
+    exact rounded
+  · exact congrArg _root_.Dyadic.toRat
+
 end OmegaChecks.InitPort.Alternatives
