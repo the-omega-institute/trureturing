@@ -836,4 +836,85 @@ public theorem Char.instIsAlwaysFinite : Rxc.IsAlwaysFinite Char :=
 public theorem Char.instIsAlwaysFinite_1 : Rxo.IsAlwaysFinite Char :=
   openOfFiniteEnumeration Char.instIsAlwaysFinite_2
 
+private def packScalar (cut gap n : Nat) := if n < cut then n else n - gap
+private def unpackScalar (cut gap i : Nat) := if i < cut then i else i + gap
+
+private theorem packUnpack (cut gap i : Nat) : packScalar cut gap (unpackScalar cut gap i) = i := by
+  by_cases small : i < cut
+  · rw [unpackScalar, ite_eq_left small, packScalar, ite_eq_left small]
+  · rw [unpackScalar, ite_eq_right small, packScalar, ite_eq_right (by omega), Nat.add_sub_cancel]
+
+private theorem unpackPack {cut gap n : Nat} (valid : n < cut ∨ cut + gap ≤ n) :
+    unpackScalar cut gap (packScalar cut gap n) = n := by
+  cases valid with
+  | inl small => rw [packScalar, ite_eq_left small, unpackScalar, ite_eq_left small]
+  | inr large =>
+    rw [packScalar, ite_eq_right (by omega), unpackScalar, ite_eq_right (by omega)]
+    exact Nat.sub_add_cancel (by omega)
+
+private theorem packMono {cut gap n m : Nat} (valid : m < cut ∨ cut + gap ≤ m) (le : n ≤ m) :
+    packScalar cut gap n ≤ packScalar cut gap m := by
+  unfold packScalar
+  split <;> split <;> omega
+
+private theorem unpackMono {cut gap n m : Nat} (le : n ≤ m) :
+    unpackScalar cut gap n ≤ unpackScalar cut gap m := by
+  unfold unpackScalar
+  split <;> split <;> omega
+
+private theorem charCut : (0xd800 : UInt32).toNat = 0xd800 := UInt32.toNat_ofNat_of_lt (by decide)
+
+private theorem charValid (c : Char) : c.val.toNat < 0xd800 ∨ 0xd800 + Char.numSurrogates ≤ c.val.toNat := by
+  obtain small | ⟨high, _⟩ := c.valid
+  · exact Or.inl small
+  · have base : (0xd800 : Nat) + 2048 = 0xe000 := doubleBitsAdd 27 1 11
+    have limit : 0xdfff + 1 = (0xe000 : Nat) := lowOnesSucc 6 13
+    exact Or.inr ((limit.trans base.symm) ▸ high)
+
+public theorem Char.coe_ordinal : type_of% @_root_.Char.coe_ordinal := by
+  intro c
+  by_cases h : c.val < 0xd800
+  · simp only [_root_.Char.ordinal, h, dite_true, ite_true]
+  · simp only [_root_.Char.ordinal, h, dite_false, ite_false]
+
+private theorem charPacked (c : Char) : c.ordinal.val = packScalar 0xd800 Char.numSurrogates c.val.toNat := by
+  rw [Char.coe_ordinal]
+  unfold packScalar
+  have h : c.val < 0xd800 ↔ c.val.toNat < 0xd800 := charCut ▸ UInt32.lt_iff_toNat_lt
+  by_cases inside : c.val < 0xd800
+  · rw [ite_eq_left inside, ite_eq_left (h.mp inside)]
+  · rw [ite_eq_right inside, ite_eq_right (fun ht => inside (h.mpr ht))]
+
+private theorem charUnpacked (i : Fin Char.numCodePoints) :
+    (Char.ofOrdinal i).val.toNat = unpackScalar 0xd800 Char.numSurrogates i.val := by
+  unfold _root_.Char.ofOrdinal unpackScalar
+  by_cases h : i.val < 0xd800
+  · rw [dite_eq_left h, ite_eq_left h]
+    exact UInt32.toNat_ofNatLT
+  · rw [dite_eq_right h, ite_eq_right h]
+    exact UInt32.toNat_ofNatLT
+
+public theorem Char.ofOrdinal_ordinal : type_of% @_root_.Char.ofOrdinal_ordinal := by
+  intro c
+  apply Char.ext
+  apply UInt32.toNat.inj
+  rw [charUnpacked, charPacked, unpackPack (charValid c)]
+
+public theorem Char.ordinal_ofOrdinal : type_of% @_root_.Char.ordinal_ofOrdinal := by
+  intro i
+  apply Fin.ext
+  rw [charPacked, charUnpacked, packUnpack]
+
+public theorem Char.ordinal_le_of_le : type_of% @_root_.Char.ordinal_le_of_le := by
+  intro a b h
+  change a.ordinal.val ≤ b.ordinal.val
+  rw [charPacked, charPacked]
+  exact packMono (charValid b) h
+
+public theorem Char.ofOrdinal_le_of_le : type_of% @_root_.Char.ofOrdinal_le_of_le := by
+  intro a b h
+  change (Char.ofOrdinal a).val.toNat ≤ (Char.ofOrdinal b).val.toNat
+  rw [charUnpacked, charUnpacked]
+  exact unpackMono h
+
 end OmegaChecks.InitPort.Alternatives
