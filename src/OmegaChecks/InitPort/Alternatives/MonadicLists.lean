@@ -592,8 +592,8 @@ private theorem dependentElse [d : Decidable p] (h : ¬p) (yes : α → p → β
   | isTrue hp => exact False.elim (h hp)
   | isFalse => rfl
 
-private theorem mapArrayList [Monad m] (xs : Array α) (f : α → m β) :
-    xs.mapM f = mapListInto f xs.toList #[] := by
+private theorem mapArrayLoop [Monad m] (xs : Array α) (f : α → m β) (j : Nat) :
+    (fun acc => _root_.Array.mapM.map f xs j acc) = mapListInto f (xs.toList.drop j) := by
   let measure (s : (_ : Nat) ×' Array β) : Nat := PSigma.casesOn s fun i _ => xs.size - i
   let act (s : (_ : Nat) ×' Array β) (recur : ∀ t, measure t < measure s → m (Array β)) :=
     PSigma.casesOn (motive := fun x => (∀ t, measure t < measure x → m (Array β)) → m (Array β))
@@ -615,11 +615,40 @@ private theorem mapArrayList [Monad m] (xs : Array α) (f : α → m β) :
           (ih (i+1) (Nat.lt_of_lt_of_le (Nat.sub_succ_lt_self _ _ bound) (Nat.le_of_lt_succ h)))
       · rw [List.drop_of_length_le (Nat.le_of_not_gt bound)]
         exact dependentElse bound _ _
-  delta Array.mapM Array.mapM.map Array.mapM.map._unary WellFounded.Nat.fix
-  have fuel : xs.size - 0 < WellFounded.Nat.eager (xs.size - 0 + 1) := by
+  delta Array.mapM.map Array.mapM.map._unary WellFounded.Nat.fix
+  have fuel : xs.size - j < WellFounded.Nat.eager (xs.size - j + 1) := by
     unfold WellFounded.Nat.eager
     split <;> exact Nat.lt_succ_self _
-  exact congrFun (same _ 0 fuel) #[]
+  exact same _ j fuel
+
+private theorem mapArrayList [Monad m] (xs : Array α) (f : α → m β) :
+    xs.mapM f = mapListInto f xs.toList #[] :=
+  congrFun (mapArrayLoop xs f 0) #[]
+
+public theorem Array.mapM.map.eq_def : type_of% @_root_.Array.mapM.map.eq_def := by
+  intro α β m inst f xs i acc
+  rw [congrFun (mapArrayLoop xs f i) acc]
+  by_cases h : i < xs.size
+  · rw [dite_eq_left h, List.drop_eq_getElem_cons (l := xs.toList) (i := i) h]
+    exact congrArg (fun tail => f xs[i] >>= fun b => tail (acc.push b)) (mapArrayLoop xs f (i+1)).symm
+  · rw [dite_eq_right h, List.drop_of_length_le (Nat.le_of_not_gt h)]
+    rfl
+
+public theorem Array.map.eq_1 : type_of% @_root_.Array.map.eq_1 := by
+  intro α β f xs
+  have finish (l : List α) (acc : Array β) :
+      mapListInto (m := Id) (pure ∘ f) l acc = (acc.toList ++ l.map f).toArray := by
+    induction l generalizing acc with
+    | nil => exact congrArg _root_.List.toArray (_root_.List.append_nil _).symm
+    | cons a l ih =>
+      refine (ih (acc.push (f a))).trans ?_
+      apply _root_.Array.ext'
+      change (acc.push (f a)).toList ++ l.map f = acc.toList ++ (f a :: l.map f)
+      rw [_root_.Array.toList_push, _root_.List.append_assoc]
+      rfl
+  apply Eq.symm
+  exact (mapArrayList (m := Id) xs (pure ∘ f)).trans ((finish xs.toList #[]).trans
+    (_root_.Array.ext' _root_.Array.toList_map.symm))
 
 public theorem Array.mapM_map : type_of% @_root_.Array.mapM_map := by
   intro m α β γ mon law f g xs
