@@ -22,6 +22,17 @@ public theorem Lean.Grind.Ring.OfSemiring.toQ_ofNat {α : Type u} [Semiring α] 
     toQ (OfNat.ofNat (α := α) n) = natCast (α := α) n :=
   congrArg (fun x : α => Q.mk (x, 0)) (Semiring.ofNat_eq_natCast n)
 
+open _root_.Lean.Grind.Ring.OfSemiring in
+public theorem Lean.Grind.Ring.OfSemiring.toQ_add {α : Type u} [Semiring α] (a b : α) :
+    toQ (a + b) = Q.mk (a + b, (0 : α) + 0) :=
+  congrArg (fun x : α => Q.mk (a + b, x)) (Semiring.add_zero 0).symm
+
+open _root_.Lean.Grind.Ring.OfSemiring in
+public theorem Lean.Grind.Ring.OfSemiring.toQ_mul {α : Type u} [Semiring α] (a b : α) :
+    toQ (a * b) = Q.mk (a * b + (0 : α) * 0, a * 0 + 0 * b) := by
+  rw [Semiring.zero_mul, Semiring.mul_zero, Semiring.zero_mul, Semiring.add_zero, Semiring.add_zero]
+  rfl
+
 private theorem smallerTail (p : Power) (m : Mon) : sizeOf m < sizeOf (Mon.mult p m) :=
   Nat.lt_add_of_pos_left (Nat.lt_of_lt_of_le Nat.zero_lt_one (Nat.le_add_right 1 (sizeOf p)))
 

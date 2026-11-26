@@ -13,6 +13,18 @@ public theorem Lean.Grind.IntModule.OfNatModule.toQ_zero {α : Type u} [NatModul
   unfold toQ zero
   rfl
 
+open _root_.Lean.Grind.IntModule.OfNatModule in
+public theorem Lean.Grind.IntModule.OfNatModule.toQ_add {α : Type u} [NatModule α] (a b : α) :
+    toQ (a + b) = Q.mk (a + b, (0 : α) + 0) := by
+  rw [AddCommMonoid.add_zero]
+  rfl
+
+open _root_.Lean.Grind.IntModule.OfNatModule in
+public theorem Lean.Grind.IntModule.OfNatModule.toQ_smul {α : Type u} [NatModule α] (n : Nat) (a : α) :
+    toQ (n • a) = Q.mk (n • a, n • (0 : α)) := by
+  rw [NatModule.nsmul_zero]
+  rfl
+
 public theorem Lean.Grind.Linarith.Poly.denoteN_add : type_of% @_root_.Lean.Grind.Linarith.Poly.denoteN_add := by
   intro α _ ctx k x p h
   cases k with
