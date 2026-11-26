@@ -211,6 +211,17 @@ theorem excludedMiddleFromLookahead (look : type_of% @Lean.Grind.of_lookahead) (
 
 end GrindOrder
 
+/-- Every inhabited proposition is equal to True. -/
+def InhabitedPropExt := ∀ p : Prop, p → p = True
+
+theorem inhabitedPropExtOfProofHEq (proofHEq : type_of% @proof_irrel_heq) :
+    InhabitedPropExt :=
+  fun _ hp => type_eq_of_heq (proofHEq hp True.intro)
+
+theorem inhabitedPropExtOfEqTrue (eqTrue : type_of% @eq_true_eq_id) :
+    InhabitedPropExt :=
+  fun p hp => ((congrFun eqTrue p).mpr hp).symm
+
 namespace OptionalIndex
 
 /-- Equivalent decidable propositions are equal. -/
@@ -400,6 +411,7 @@ private def replayWitnesses (env : Environment) : IO Unit := do
       ``AbstractOrder.excludedMiddleOfTrichotomousTotal, ``AbstractOrder.excludedMiddleOfNegationTotal,
       ``AbstractOrder.excludedMiddleOfLawfulLT, ``AbstractOrder.weakMiddleOfTotalNot,
       ``AbstractOrder.weakMiddleOfLinearPreorder, ``AbstractOrder.weakMiddleOfLinearOrder,
+      ``inhabitedPropExtOfProofHEq, ``inhabitedPropExtOfEqTrue,
       ``OptionalIndex.decidablePropExtOfIsSome, ``TwoWorlds.countermodel]
   while let n :: more := todo do
     todo := more
@@ -1266,6 +1278,10 @@ private def logicalConsequence? (owner name : Name) : Option (Name × Name) := d
   | `Init.Core, ``Quotient.sound => return (``funext, ``OmegaChecks.InitBoundaries.funextFromQuotientSound)
   | `Init.Core, ``Pi.instSubsingleton => return (``funext, ``OmegaChecks.InitBoundaries.funextFromPiSubsingleton)
   | `Init.Core, ``instSubsingletonSquash => return (``funext, ``OmegaChecks.InitBoundaries.funextFromSquashSubsingleton)
+  | `Init.PropLemmas, ``proof_irrel_heq =>
+    return (``OmegaChecks.InitBoundaries.InhabitedPropExt, ``OmegaChecks.InitBoundaries.inhabitedPropExtOfProofHEq)
+  | `Init.PropLemmas, ``eq_true_eq_id =>
+    return (``OmegaChecks.InitBoundaries.InhabitedPropExt, ``OmegaChecks.InitBoundaries.inhabitedPropExtOfEqTrue)
   | `Init.GetElem, ``isSome_getElem? =>
     return (``OmegaChecks.InitBoundaries.OptionalIndex.DecidablePropExt, ``OmegaChecks.InitBoundaries.OptionalIndex.decidablePropExtOfIsSome)
   | `Init.Data.Order.Lemmas, ``Std.Asymm.total_not =>
