@@ -3,11 +3,14 @@ import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qFixedCurrentCasimir
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qFixedCurrentIterate
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qMovingCurrentZero
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qTwistedStateEnergy
+import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qConcreteNeutralConformalMode
+import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qNativeMonodromy
 
 /-!
-The actual P48q lattice conformal state's twisted mode at cover index `3`.
-The comparison and ground spectrum are conditional on the Bakalov–Kac
-current-pair iterates and the current and vacuum restrictions of the state field.
+The actual P48q lattice conformal state has coefficient `totalLZero`
+at cover exponent `-6` in the native Wick field. The abstract signed-mode
+comparison uses the Bakalov–Kac current-pair iterates and the current and
+vacuum restrictions of the state field.
 -/
 
 set_option autoImplicit false
@@ -107,6 +110,124 @@ theorem native_conformal_ground_spectrum :
   exact totalLZero_vacuum_spectrum
 
 end
+
+section NativeField
+
+open scoped VertexOperator
+open P48qAllJetWickField (allJetCoeff nativeField pairWeight singletonWeight singletonWeight_first)
+open P48qArbitraryWickRecursion (normalWick_two)
+open P48qConcreteNeutralConformalMode (conformalState conformal_coeff_neg_six_eq_totalLZero)
+open P48qJetContractions (pairJetCoeff_one_one)
+open P48qJetNormalOrdering (normalOrderedCoeff normalOrderedCoeff_allFirst
+  normalOrderedField_coeff normalOrderedField_nil)
+open P48qQuadraticStateField (correction correction_eq currentProduct movingGram_swap
+  neutralStates neutralStateField neutralStateField_pair_coeff)
+open P48qThirdTwistedField (Cartan)
+open P48qTwistedGeneratorVacuum (concreteChargedField_zero_coeff)
+open P48qTwistedHeisenberg (movingGram project projectAt projectAt_eq_fourier
+  project_action project_of_action)
+open ThirdEigenspacePairing (p48qForm)
+
+open private formSymmetric from
+  D5.S3.VertexAlgebra.Lattice.Orbifold.P48qThirdTwistedField
+open private project_adjoint from
+  D5.S3.VertexAlgebra.Lattice.Orbifold.P48qTwistedHeisenberg
+open private contraction_at_zero normalOrderedSecondCoeff_zero_charge from
+  D5.S3.VertexAlgebra.Lattice.Orbifold.P48qChargedTwoCurrentIterate
+open private currentPolynomial currentPair_eq_polynomial from
+  D5.S3.VertexAlgebra.Lattice.Orbifold.P48qQuadraticStateField
+open private nativeCoeff nativeCoeff_jetWord from
+  D5.S3.VertexAlgebra.Lattice.Orbifold.P48qNativeMonodromy
+open private conformalState_decomposition from
+  D5.S3.VertexAlgebra.Lattice.Orbifold.P48qConcreteNeutralConformalMode
+
+local notation "ζ" => (ThirdTwistedChargeCocycle.zeta : ℂ)
+
+private theorem moving_pairing (u v : Cartan) :
+    p48qForm (projectAt 1 u) (projectAt 2 v) = movingGram 1 u v := by
+  have hζ : ζ ^ 3 = 1 :=
+    (IsPrimitiveRoot.coe_units_iff.mpr ThirdTwistedChargeCocycle.zeta_primitive).pow_eq_one
+  have hζ₂ : (ζ ^ 2) ^ 3 = 1 := by rw [pow_right_comm, hζ, one_pow]
+  unfold movingGram
+  rw [projectAt_eq_fourier 1 u, projectAt_eq_fourier 2 v]
+  change p48qForm (project (ζ ^ 1) u) (project (ζ ^ 2) v) = p48qForm (project (ζ ^ 1) u) v
+  simp only [pow_one]
+  calc
+    _ = p48qForm u (project (ζ ^ 2) v) := by
+      rw [project_adjoint ζ hζ,
+        project_of_action _ hζ₂ _ (project_action _ hζ₂ v)]
+    _ = _ := (project_adjoint ζ hζ u v).symm
+
+private theorem first_pairWeight (u v : Cartan) :
+    pairWeight (u, 1) (v, 1) = correction u v := by
+  have h₂ : p48qForm (projectAt 2 u) (projectAt 1 v) = movingGram 2 u v :=
+    (formSymmetric.eq _ _).trans ((moving_pairing v u).trans (movingGram_swap v u))
+  simp only [pairWeight, PNat.val_ofNat, pairJetCoeff_one_one, moving_pairing, h₂, correction_eq]
+  ring
+
+set_option maxRecDepth 100000 in
+set_option maxHeartbeats 1000000 in
+-- Coefficient comparison reduces the all-jet recursion and the neutral subtype field.
+private theorem allJetCoeff_firstPair_zero_charge (u v : Cartan) (k : ℤ) :
+    allJetCoeff 0 k [(u, 1), (v, 1)] =
+      HVertexOperator.coeff (neutralStateField (currentProduct u v 0)) k := by
+  rw [allJetCoeff, normalWick_two]
+  change normalOrderedCoeff 0 (k + 3 * (2 - 2)) [(u, 1), (v, 1)] +
+    singletonWeight 0 (v, 1) • normalOrderedCoeff 0 (k + 3 * (2 - 1)) [(u, 1)] +
+    singletonWeight 0 (u, 1) • normalOrderedCoeff 0 (k + 3 * (2 - 1)) [(v, 1)] +
+    (singletonWeight 0 (u, 1) * singletonWeight 0 (v, 1) + pairWeight (u, 1) (v, 1)) •
+      normalOrderedCoeff 0 (k + 3 * (2 - 0)) [] = _
+  simp only [singletonWeight_first, contraction_at_zero, neg_zero, zero_smul, zero_mul,
+    add_zero, zero_add, first_pairWeight,
+    show (3 : ℤ) * (2 - 2) = 0 by decide, show (3 : ℤ) * (2 - 0) = 6 by decide]
+  have hnormal := normalOrderedCoeff_allFirst 0 k [u, v]
+  change normalOrderedCoeff 0 k [(u, 1), (v, 1)] = _ at hnormal
+  rw [hnormal, P48qSignedNormalWord.normalOrderedCoeff_pair,
+    normalOrderedSecondCoeff_zero_charge, ← normalOrderedField_coeff, normalOrderedField_nil,
+    concreteChargedField_zero_coeff]
+  have hpair := neutralStateField_pair_coeff u v (-k - 6)
+  rw [show -(-k - 6) - 6 = k by omega] at hpair
+  rw [hpair]
+  by_cases hk : k + 6 = 0
+  · rw [ite_eq_left hk, ite_eq_left (show -k - 6 = 0 by omega)]
+    rfl
+  · simp only [ite_eq_right hk, ite_eq_right (show -k - 6 ≠ 0 by omega), smul_zero]
+
+set_option maxRecDepth 100000 in
+private theorem nativeField_pair (u v : Cartan) :
+    nativeField (currentPair u v) = neutralStateField (currentProduct u v 0) := by
+  apply HVertexOperator.coeff_inj
+  funext k
+  have h := nativeCoeff_jetWord 0 k [(u, 1), (v, 1)] []
+  change nativeCoeff 0 k ((currentPolynomial u * (currentPolynomial v * 1)) * 1) =
+    allJetCoeff 0 k [(u, 1), (v, 1)] at h
+  simp only [mul_one] at h
+  rw [currentPair_eq_polynomial]
+  change nativeCoeff 0 k (currentPolynomial u * currentPolynomial v) = _
+  rw [h, allJetCoeff_firstPair_zero_charge]
+
+set_option maxRecDepth 100000 in
+/-- The coefficient of `x⁻⁶` (`z⁻²` for `z = x³`) in the native Wick field
+of the actual conformal state is the Fock energy operator on the full carrier. -/
+theorem native_conformal_coeff_neg_six_eq_totalLZero :
+    HVertexOperator.coeff (nativeField (omega lattice (actualInverse lattice))) (-6) =
+      totalLZero := by
+  have hpair (u v : Cartan) :
+      (nativeField.comp neutralStates.subtype) (currentProduct u v 0) =
+        neutralStateField (currentProduct u v 0) :=
+    nativeField_pair u v
+  have hfield : nativeField (omega lattice (actualInverse lattice)) =
+      neutralStateField conformalState := by
+    change (nativeField.comp neutralStates.subtype) conformalState = _
+    rw [conformalState_decomposition]
+    simp only [map_add, map_smul, map_sum, hpair]
+  rw [hfield, conformal_coeff_neg_six_eq_totalLZero]
+
+#print axioms allJetCoeff_firstPair_zero_charge
+#print axioms nativeField_pair
+#print axioms native_conformal_coeff_neg_six_eq_totalLZero
+
+end NativeField
 
 end D5.S3.VertexAlgebra.Lattice.Orbifold.P48qNativeConformalZero
 
