@@ -7,6 +7,7 @@ public import OmegaChecks.InitPort.Alternatives.ListAttach
 public import OmegaChecks.InitPort.Alternatives.ListEndpoints
 public import OmegaChecks.InitPort.Alternatives.ListErase
 public import OmegaChecks.InitPort.Alternatives.ListFind
+public import OmegaChecks.InitPort.Alternatives.ListFilter
 public import OmegaChecks.InitPort.Alternatives.ListCount
 public import OmegaChecks.InitPort.Alternatives.ListLex
 public import OmegaChecks.InitPort.Alternatives.ListMapIdx
