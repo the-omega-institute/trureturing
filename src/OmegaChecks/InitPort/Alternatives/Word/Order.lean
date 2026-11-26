@@ -109,4 +109,59 @@ public theorem BitVec.smulOverflow_assoc : type_of% @_root_.BitVec.smulOverflow_
   unfold _root_.BitVec.smulOverflow
   rw [BitVec.toInt_mul_of_not_smulOverflow hx, BitVec.toInt_mul_of_not_smulOverflow hy, Int.mul_assoc]
 
+public theorem BitVec.slt_zero_iff_msb_cond : type_of% @_root_.BitVec.slt_zero_iff_msb_cond := by
+  intro w x
+  apply _root_.BitVec.slt_iff_toInt_lt.trans
+  rw [_root_.BitVec.toInt_zero]
+  exact _root_.BitVec.toInt_neg_iff.trans _root_.BitVec.msb_eq_true_iff_two_mul_ge.symm
+
+public theorem BitVec.slt_zero_eq_msb : type_of% @_root_.BitVec.slt_zero_eq_msb := by
+  intro w x
+  exact Bool.eq_iff_iff.mpr BitVec.slt_zero_iff_msb_cond
+
+public theorem BitVec.sdiv_self : type_of% @_root_.BitVec.sdiv_self := by
+  intro w x
+  if zero : x = 0#w then
+    rw [ite_eq_left (beq_iff_eq.mpr zero), zero, _root_.BitVec.sdiv_zero]
+  else
+    rw [ite_eq_right (fun h => zero (eq_of_beq h))]
+    rw [_root_.BitVec.sdiv_eq]
+    cases sign : x.msb with
+    | false => exact _root_.BitVec.udiv_self.trans (ite_eq_right (fun eq => zero (eq_of_beq eq)))
+    | true => exact _root_.BitVec.udiv_self.trans (ite_eq_right (fun eq =>
+        zero (_root_.BitVec.neg_eq_zero_iff.mp (eq_of_beq eq))))
+
+public theorem BitVec.toFin_srem : type_of% @_root_.BitVec.toFin_srem := by
+  intro w x y
+  rw [_root_.BitVec.srem_eq]
+  cases hx : x.msb <;> cases hy : y.msb <;> rfl
+
+public theorem BitVec.intMin_le_iff_msb_eq_true : type_of% @_root_.BitVec.intMin_le_iff_msb_eq_true := by
+  intro w x pos
+  apply _root_.BitVec.le_def.trans
+  rw [_root_.BitVec.toNat_intMin_of_pos pos]
+  exact decide_eq_true_iff.symm.trans ((@_root_.BitVec.msb_eq_decide w x).symm ▸ Iff.rfl)
+
+public theorem BitVec.neg_le_intMin_of_msb_eq_true : type_of% @_root_.BitVec.neg_le_intMin_of_msb_eq_true := by
+  intro w x sign
+  cases w with
+  | zero => exact _root_.BitVec.le_of_zero_length rfl
+  | succ w =>
+    apply _root_.BitVec.le_def.mpr
+    rw [_root_.BitVec.toNat_neg_of_pos (_root_.BitVec.pos_of_msb sign), _root_.BitVec.toNat_intMin_of_pos (Nat.zero_lt_succ w)]
+    have lower := _root_.BitVec.le_toNat_of_msb_true sign
+    change 2^w ≤ x.toNat at lower
+    change 2^(w+1)-x.toNat ≤ 2^w
+    rw [Nat.pow_succ, Nat.mul_two]
+    omega
+
+public theorem BitVec.toNat_shiftLeft_or_toNat_lt_two_pow_add : type_of% @_root_.BitVec.toNat_shiftLeft_or_toNat_lt_two_pow_add := by
+  intro m n x y
+  rw [← _root_.BitVec.toNat_append]
+  exact (x ++ y).isLt
+
+public theorem BitVec.toFin_append : type_of% @_root_.BitVec.toFin_append := by
+  intro m n x y
+  exact Fin.eq_of_val_eq (_root_.BitVec.toNat_append ..)
+
 end OmegaChecks.InitPort.Alternatives

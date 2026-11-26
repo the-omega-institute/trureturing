@@ -327,4 +327,62 @@ public theorem BitVec.getMsbD_sshiftRight : type_of% @_root_.BitVec.getMsbD_sshi
       exact congrArg x.getLsbD (by omega)
   else rw [_root_.BitVec.getMsbD_of_ge _ _ (Nat.le_of_not_gt inside), decide_eq_false inside, Bool.false_and]
 
+public theorem BitVec.getElem?_eq_none_iff : type_of% @_root_.BitVec.getElem?_eq_none_iff := by
+  intro w n x
+  rw [_root_.BitVec.getElem?_eq]
+  if inRange : n < w then
+    rw [dite_eq_left inRange]
+    exact ⟨fun eq => False.elim (Option.some_ne_none _ eq), fun ge => False.elim (Nat.not_le_of_lt inRange ge)⟩
+  else
+    rw [dite_eq_right inRange]
+    exact ⟨fun _ => Nat.le_of_not_gt inRange, fun _ => rfl⟩
+
+public theorem BitVec.none_eq_getElem?_iff : type_of% @_root_.BitVec.none_eq_getElem?_iff := by
+  intro w n x
+  exact eq_comm.trans BitVec.getElem?_eq_none_iff
+
+public theorem BitVec.getMsb?_of_ge : type_of% @_root_.BitVec.getMsb?_of_ge := by
+  intro w x i ge
+  rw [_root_.BitVec.getMsb?_eq_getLsb?, ite_eq_right (Nat.not_lt_of_ge ge)]
+
+public theorem BitVec.eq_of_getMsbD_eq : type_of% @_root_.BitVec.eq_of_getMsbD_eq := by
+  intro w x y h
+  apply _root_.BitVec.eq_of_getLsbD_eq
+  intro i hi
+  rw [_root_.BitVec.getLsbD_eq_getMsbD, _root_.BitVec.getLsbD_eq_getMsbD, decide_eq_true hi,
+    Bool.true_and, Bool.true_and]
+  exact h _ (by omega)
+
+public theorem BitVec.getMsbD_setWidth_add : type_of% @_root_.BitVec.getMsbD_setWidth_add := by
+  intro w k i x hi
+  rw [BitVec.getMsbD_setWidth, decide_eq_true (show w+k-w ≤ i by omega), Bool.true_and]
+  exact congrArg x.getMsbD (by omega)
+
+public theorem BitVec.getLsbD_rotateRightAux_of_lt : type_of% @_root_.BitVec.getLsbD_rotateRightAux_of_lt := by
+  intro w x r i hi
+  rw [_root_.BitVec.rotateRightAux, _root_.BitVec.getLsbD_or, _root_.BitVec.getLsbD_ushiftRight,
+    BitVec.getLsbD_shiftLeft, decide_eq_true hi, Bool.not_true, Bool.and_false, Bool.false_and, Bool.or_false]
+
+public theorem BitVec.getLsbD_rotateRight_of_lt : type_of% @_root_.BitVec.getLsbD_rotateRight_of_lt := by
+  intro w x r i hr
+  rw [_root_.BitVec.rotateRight_eq_rotateRightAux_of_lt hr]
+  if hi : i < w-r then
+    rw [ite_eq_left hi, BitVec.getLsbD_rotateRightAux_of_lt hi]
+  else rw [ite_eq_right hi, _root_.BitVec.getLsbD_rotateRightAux_of_ge (Nat.le_of_not_gt hi)]
+
+public theorem BitVec.getLsbD_rotateRight : type_of% @_root_.BitVec.getLsbD_rotateRight := by
+  intro w x r i
+  cases w with
+  | zero =>
+    rw [_root_.BitVec.getLsbD_of_ge _ _ (Nat.zero_le i), Nat.zero_sub, ite_eq_right (Nat.not_lt_zero _),
+      decide_eq_false (Nat.not_lt_zero i), Bool.false_and]
+  | succ w =>
+    rw [← _root_.BitVec.rotateRight_mod_eq_rotateRight, BitVec.getLsbD_rotateRight_of_lt (Nat.mod_lt _ (Nat.zero_lt_succ _))]
+
+public theorem BitVec.getElem_rotateRight : type_of% @_root_.BitVec.getElem_rotateRight := by
+  intro w x r i hi
+  rw [← _root_.BitVec.getLsbD_eq_getElem hi, BitVec.getLsbD_rotateRight, decide_eq_true hi, Bool.true_and]
+  if head : i < w - r % w then rw [ite_eq_left head, dite_eq_left head]; rfl
+  else rw [ite_eq_right head, dite_eq_right head]; rfl
+
 end OmegaChecks.InitPort.Alternatives
