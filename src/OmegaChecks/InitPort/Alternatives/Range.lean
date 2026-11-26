@@ -544,4 +544,177 @@ public theorem ISize.instIsAlwaysFinite : Rxc.IsAlwaysFinite ISize :=
 public theorem ISize.instRxoIsAlwaysFinite : Rxo.IsAlwaysFinite ISize :=
   openOfFiniteEnumeration ISize.instRxiIsAlwaysFinite
 
+private theorem signedSizeLaws {α : Type u} [UpwardEnumerable α] [LE α] [LT α]
+    [Rxc.HasSize α] [Rxo.HasSize α] [Rxi.HasSize α]
+    (value : α → Int) (limit : Int) (below : ∀ x, value x < limit)
+    (le : ∀ a b, a ≤ b ↔ value a ≤ value b) (lt : ∀ a b, a < b ↔ value a < value b)
+    (closedSize : ∀ a b, Rxc.HasSize.size a b = (value b + 1 - value a).toNat)
+    (openSize : ∀ a b, Rxo.HasSize.size a b = (value b + 1 - value a).toNat - 1)
+    (tailSize : ∀ a, Rxi.HasSize.size a = (limit - value a).toNat)
+    (endStep : ∀ a, value a = limit - 1 → succ? a = none)
+    (nextStep : ∀ a, value a < limit - 1 → ∃ b, succ? a = some b ∧ value b = value a + 1) :
+    Rxc.LawfulHasSize α ∧ Rxo.LawfulHasSize α ∧ Rxi.LawfulHasSize α := by
+  have stop {a} (h : succ? a = none) : value a = limit - 1 := by
+    by_cases before : value a < limit - 1
+    · obtain ⟨_, step, _⟩ := nextStep a before
+      rw [h] at step
+      cases step
+    · have bound := below a
+      omega
+  have inc {a b} (h : succ? a = some b) : value b = value a + 1 := by
+    by_cases last : value a = limit - 1
+    · rw [endStep a last] at h
+      cases h
+    · have bound := below a
+      obtain ⟨_, found, eq⟩ := nextStep a (by omega)
+      cases Option.some.inj (found.symm.trans h)
+      exact eq
+  refine ⟨⟨?_, ?_, ?_⟩, ⟨?_, ?_, ?_⟩, ⟨?_, ?_⟩⟩
+  · intro a b denied
+    rw [closedSize]
+    have h : ¬ value a ≤ value b := fun p => denied ((le a b).mpr p)
+    exact Int.toNat_eq_zero.mpr (by omega)
+  · intro a b ok stopped
+    rw [closedSize]
+    have eq := stop stopped
+    have lower := (le a b).mp ok
+    have upper := below b
+    omega
+  · intro a b c ok step
+    rw [closedSize, closedSize]
+    have eq := inc step
+    have lower := (le a b).mp ok
+    omega
+  · intro a b denied
+    rw [openSize]
+    have h : ¬value a < value b := fun p => denied ((lt a b).mpr p)
+    omega
+  · intro a b ok stopped
+    have eq := stop stopped
+    have lower := (lt a b).mp ok
+    have upper := below b
+    omega
+  · intro a b c ok step
+    rw [openSize, openSize]
+    have eq := inc step
+    have lower := (lt a b).mp ok
+    omega
+  · intro a stopped
+    rw [tailSize]
+    have eq := stop stopped
+    omega
+  · intro a b step
+    rw [tailSize, tailSize]
+    have eq := inc step
+    have upper := below b
+    omega
+
+private theorem signedPowerSizes {α : Type u} [UpwardEnumerable α] [LE α] [LT α] [DecidableEq α]
+    [Rxc.HasSize α] [Rxo.HasSize α] [Rxi.HasSize α]
+    (value : α → Int) (k : Nat) (low : α) (addOne : α → α)
+    (inj : ∀ {a b}, value a = value b → a = b)
+    (below : ∀ a, value a < (2 : Int)^k) (above : ∀ a, -(2 : Int)^k ≤ value a)
+    (minValue : value low = -(2 : Int)^k)
+    (addValue : ∀ a, value (addOne a) = (value a + 1).bmod (2^(k+1)))
+    (next : ∀ a, succ? a = if addOne a = low then none else some (addOne a))
+    (le : ∀ a b, a ≤ b ↔ value a ≤ value b) (lt : ∀ a b, a < b ↔ value a < value b)
+    (closedSize : ∀ a b, Rxc.HasSize.size a b = (value b + 1 - value a).toNat)
+    (openSize : ∀ a b, Rxo.HasSize.size a b = (value b + 1 - value a).toNat - 1)
+    (tailSize : ∀ a, Rxi.HasSize.size a = ((2 : Int)^k - value a).toNat) :
+    Rxc.LawfulHasSize α ∧ Rxo.LawfulHasSize α ∧ Rxi.LawfulHasSize α := by
+  let half := 2^k
+  have pos : 0 < half := Nat.two_pow_pos k
+  have cast : (2 : Int)^k = (half : Int) := (Int.natCast_pow 2 k).symm
+  have full : 2^(k+1) = half + half := (Nat.pow_succ 2 k).trans (Nat.mul_two _)
+  apply signedSizeLaws value ((2 : Int)^k) below le lt closedSize openSize tailSize
+  · intro a last
+    rw [next]
+    apply ite_eq_left
+    apply inj
+    rw [addValue, full, minValue, cast]
+    rw [cast] at last
+    calc
+      _ = (-(half : Int) + ↑(half + half)).bmod (half + half) :=
+        congrArg (fun z : Int => z.bmod (half + half)) (by omega)
+      _ = (-(half : Int)).bmod (half + half) := Int.add_bmod_right _ _
+      _ = _ := Int.bmod_eq_of_le_mul_two (by omega) (by omega)
+  · intro a before
+    have lowBound := above a
+    rw [cast] at before lowBound
+    have eq : value (addOne a) = value a + 1 := by
+      rw [addValue, full]
+      exact Int.bmod_eq_of_le_mul_two (by omega) (by omega)
+    refine ⟨addOne a, ?_, eq⟩
+    rw [next]
+    apply ite_eq_right
+    intro wrap
+    have bad := eq.symm.trans ((congrArg value wrap).trans (minValue.trans (congrArg Neg.neg cast)))
+    omega
+
+private theorem Int8SizeLaws : Rxc.LawfulHasSize Int8 ∧ Rxo.LawfulHasSize Int8 ∧ Rxi.LawfulHasSize Int8 := by
+  apply signedPowerSizes Int8.toInt 7 _root_.Int8.minValueSealed (· + 1) Int8.toInt.inj
+    Int8.toInt_lt Int8.le_toInt
+    ((congrArg Int8.toInt _root_.Int8.minValueSealed_def).trans Int8.toInt_minValue) ?_
+    (fun _ => rfl) (fun _ _ => Int8.le_iff_toInt_le) (fun _ _ => Int8.lt_iff_toInt_lt)
+    (fun _ _ => rfl) (fun _ _ => rfl) (fun _ => rfl)
+  intro a
+  exact (Int8.toInt_add _ _).trans (congrArg (fun z : Int => (a.toInt + z).bmod _) (show Int8.toInt 1 = 1 from rfl))
+
+public theorem Int8.instRxcLawfulHasSize : Rxc.LawfulHasSize Int8 := Int8SizeLaws.1
+public theorem Int8.instRxoLawfulHasSize : Rxo.LawfulHasSize Int8 := Int8SizeLaws.2.1
+public theorem Int8.instRxiLawfulHasSize : Rxi.LawfulHasSize Int8 := Int8SizeLaws.2.2
+
+private theorem Int16SizeLaws : Rxc.LawfulHasSize Int16 ∧ Rxo.LawfulHasSize Int16 ∧ Rxi.LawfulHasSize Int16 := by
+  apply signedPowerSizes Int16.toInt 15 _root_.Int16.minValueSealed (· + 1) Int16.toInt.inj
+    Int16.toInt_lt Int16.le_toInt
+    ((congrArg Int16.toInt _root_.Int16.minValueSealed_def).trans Int16.toInt_minValue) ?_
+    (fun _ => rfl) (fun _ _ => Int16.le_iff_toInt_le) (fun _ _ => Int16.lt_iff_toInt_lt)
+    (fun _ _ => rfl) (fun _ _ => rfl) (fun _ => rfl)
+  intro a
+  exact (Int16.toInt_add _ _).trans (congrArg (fun z : Int => (a.toInt + z).bmod _) (show Int16.toInt 1 = 1 from rfl))
+
+public theorem Int16.instRxcLawfulHasSize : Rxc.LawfulHasSize Int16 := Int16SizeLaws.1
+public theorem Int16.instRxoLawfulHasSize : Rxo.LawfulHasSize Int16 := Int16SizeLaws.2.1
+public theorem Int16.instRxiLawfulHasSize : Rxi.LawfulHasSize Int16 := Int16SizeLaws.2.2
+
+private theorem Int32SizeLaws : Rxc.LawfulHasSize Int32 ∧ Rxo.LawfulHasSize Int32 ∧ Rxi.LawfulHasSize Int32 := by
+  apply signedPowerSizes Int32.toInt 31 _root_.Int32.minValueSealed (· + 1) Int32.toInt.inj
+    Int32.toInt_lt Int32.le_toInt
+    ((congrArg Int32.toInt _root_.Int32.minValueSealed_def).trans Int32.toInt_minValue) ?_
+    (fun _ => rfl) (fun _ _ => Int32.le_iff_toInt_le) (fun _ _ => Int32.lt_iff_toInt_lt)
+    (fun _ _ => rfl) (fun _ _ => rfl) (fun _ => rfl)
+  intro a
+  exact (Int32.toInt_add _ _).trans (congrArg (fun z : Int => (a.toInt + z).bmod _) (show Int32.toInt 1 = 1 from rfl))
+
+public theorem Int32.instRxcLawfulHasSize : Rxc.LawfulHasSize Int32 := Int32SizeLaws.1
+public theorem Int32.instRxoLawfulHasSize : Rxo.LawfulHasSize Int32 := Int32SizeLaws.2.1
+public theorem Int32.instRxiLawfulHasSize : Rxi.LawfulHasSize Int32 := Int32SizeLaws.2.2
+
+private theorem Int64SizeLaws : Rxc.LawfulHasSize Int64 ∧ Rxo.LawfulHasSize Int64 ∧ Rxi.LawfulHasSize Int64 := by
+  apply signedPowerSizes Int64.toInt 63 _root_.Int64.minValueSealed (· + 1) Int64.toInt.inj
+    Int64.toInt_lt Int64.le_toInt
+    ((congrArg Int64.toInt _root_.Int64.minValueSealed_def).trans Int64.toInt_minValue) ?_
+    (fun _ => rfl) (fun _ _ => Int64.le_iff_toInt_le) (fun _ _ => Int64.lt_iff_toInt_lt)
+    (fun _ _ => rfl) (fun _ _ => rfl) (fun _ => rfl)
+  intro a
+  exact (Int64.toInt_add _ _).trans (congrArg (fun z : Int => (a.toInt + z).bmod _) (show Int64.toInt 1 = 1 from rfl))
+
+public theorem Int64.instRxcLawfulHasSize : Rxc.LawfulHasSize Int64 := Int64SizeLaws.1
+public theorem Int64.instRxoLawfulHasSize : Rxo.LawfulHasSize Int64 := Int64SizeLaws.2.1
+public theorem Int64.instRxiLawfulHasSize : Rxi.LawfulHasSize Int64 := Int64SizeLaws.2.2
+
+private theorem ISizeSizeLaws : Rxc.LawfulHasSize ISize ∧ Rxo.LawfulHasSize ISize ∧ Rxi.LawfulHasSize ISize := by
+  apply signedPowerSizes ISize.toInt (System.Platform.numBits - 1) _root_.ISize.minValueSealed (· + 1) ISize.toInt.inj
+    ISize.toInt_lt_two_pow_numBits ISize.two_pow_numBits_le_toInt
+    ((congrArg ISize.toInt _root_.ISize.minValueSealed_def).trans ISize.toInt_minValue) ?_
+    (fun _ => rfl) (fun _ _ => ISize.le_iff_toInt_le) (fun _ _ => ISize.lt_iff_toInt_lt)
+    (fun _ _ => rfl) (fun _ _ => rfl) (fun _ => rfl)
+  intro a
+  rw [ISize.toInt_add, show ISize.toInt 1 = 1 from ISize.toInt_ofNat_of_lt (by decide),
+    Nat.sub_add_cancel System.Platform.numBits_pos]
+
+public theorem ISize.instRxcLawfulHasSize : Rxc.LawfulHasSize ISize := ISizeSizeLaws.1
+public theorem ISize.instRxoLawfulHasSize : Rxo.LawfulHasSize ISize := ISizeSizeLaws.2.1
+public theorem ISize.instRxiLawfulHasSize : Rxi.LawfulHasSize ISize := ISizeSizeLaws.2.2
+
 end OmegaChecks.InitPort.Alternatives
