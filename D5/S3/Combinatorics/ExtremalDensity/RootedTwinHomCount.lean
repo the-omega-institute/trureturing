@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/ExtremalDensity/RootedTwinHomCount
    mirror-E: none(waiver:formal-unit-only)
-   anchors: [mathlib/module/Mathlib.Combinatorics.Digraph.Basic, mathlib/module/Mathlib.SetTheory.Cardinal.Finite]
+   anchors: [lake/module/OmegaMath.Combinatorics.RootedTwinHomCount]
    utility: none
    digest: The fixed-centre homomorphism count of two rooted copies is at most a quarter square. -/
 
