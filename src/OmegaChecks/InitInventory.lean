@@ -84,6 +84,13 @@ private def reductionPaths (official strict full : Environment) : NameMap (List 
 /-- Additional logical consequences with separate proof terms. These do not discharge a
 missing official interface in the completeness check. -/
 private def logicalConsequence? (owner name : Name) : Option (Name × Name) := do
+  if owner == `Init.Classical || owner == `Init.Prelude then
+    let result := ``OmegaChecks.InitBoundaries.PropositionalChoice.Selection
+    match owner, name with
+    | `Init.Classical, ``Classical.axiomOfChoice => return (result, ``OmegaChecks.InitBoundaries.PropositionalChoice.ofChoice)
+    | `Init.Classical, ``Classical.skolem => return (result, ``OmegaChecks.InitBoundaries.PropositionalChoice.ofSkolem)
+    | `Init.Prelude, ``Pi.instNonempty => return (result, ``OmegaChecks.InitBoundaries.PropositionalChoice.ofProducts)
+    | _, _ => pure ()
   if owner == `Init.System.ST || owner == `Init.Control.StateRef then
     if let some (_, _, witness) := OmegaChecks.InitBoundaries.ReferenceSelection.witnesses.find?
         (fun entry => entry.1 == owner && entry.2.1 == name) then

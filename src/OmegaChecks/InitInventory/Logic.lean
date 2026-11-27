@@ -385,6 +385,29 @@ theorem dneFromOpenRange (range : type_of% (@Std.Rxo.size_pos_iff_lt.{0}))
 theorem excludedMiddleFromDNE (dne : ∀ p : Prop, ¬¬p → p) (p : Prop) : p ∨ ¬p :=
   dne _ fun neither => neither (.inr fun hp => neither (.inl hp))
 
+namespace PropositionalChoice
+
+/-- Existence of one selector for all nonempty sorts at this universe. -/
+abbrev Selection := Nonempty (type_of% (@Classical.choice.{u}))
+
+private def unliftChoice (select : (t : NonemptyType.{u}) → t.type) : type_of% (@Classical.choice.{u}) :=
+  fun {α} h => (select ⟨PLift α, h.elim fun a => ⟨⟨a⟩⟩⟩).down
+
+theorem ofProducts (product : type_of% (@Pi.instNonempty.{u+2,u+1})) : Selection.{u} := by
+  have inhabited (t : NonemptyType.{u}) : Nonempty t.type := t.property
+  exact (@product NonemptyType (fun t => t.type) inhabited).elim fun select => ⟨unliftChoice select⟩
+
+theorem ofChoice (choose : type_of% (@Classical.axiomOfChoice.{u+2,u+1})) : Selection.{u} := by
+  have entries (t : NonemptyType.{u}) : ∃ _ : t.type, True :=
+    t.property.elim fun x => ⟨x, trivial⟩
+  obtain ⟨select, _⟩ := choose entries
+  exact ⟨unliftChoice select⟩
+
+theorem ofSkolem (split : type_of% (@Classical.skolem.{u+2,u+1})) : Selection.{u} :=
+  ofChoice (@split _ _ _ |>.mp)
+
+end PropositionalChoice
+
 namespace ClassicalConsequences
 
 theorem ofByCases (cases : type_of% @Classical.byCases) : type_of% @Classical.em :=
