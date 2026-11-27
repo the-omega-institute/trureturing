@@ -94,6 +94,12 @@ def check_coverage(official):
                     or row.get("logicalConsequence") != "False"
                     or row.get("logicalConsequenceWitness") != "OmegaChecks.InitBoundaries.FactoryCarriers.noGetCast"):
                 raise ValueError("invalid pinned reduction boundary for ShareCommon.StateFactory.get")
+        elif owner == "Init.Data.ByteArray.Basic" and name in {"ByteArray.forInUnsafe.loop", "ByteArray.foldlMUnsafe.fold"}:
+            law = "noForInBound" if name == "ByteArray.forInUnsafe.loop" else "noFoldBranchBound"
+            if (reduction_axiom != "lcProof" or port or axiom or not row.get("unsafe")
+                    or row.get("logicalConsequence") != "False"
+                    or row.get("logicalConsequenceWitness") != "OmegaChecks.InitBoundaries.ByteArrayReads." + law):
+                raise ValueError(f"invalid byte array read boundary for {name}")
         elif reduction_axiom:
             raise ValueError(f"unexpected kernel reduction axiom for {owner}/{name}")
         runtime = row.get("runtimeConflictWitness")

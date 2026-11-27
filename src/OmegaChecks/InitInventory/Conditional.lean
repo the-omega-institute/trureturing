@@ -61,7 +61,7 @@ public def conditionalConsequence? (owner name : Name) : Option (String × Name 
       return ("False", ``OmegaChecks.InitBoundaries.ByteArrayReads.noForInBound,
         "The uget read has an in-bounds index whenever i < sz for the independently supplied sz")
     if name == `ByteArray.foldlMUnsafe.fold then
-      return ("False", ``OmegaChecks.InitBoundaries.ByteArrayReads.noFoldBound,
+      return ("False", ``OmegaChecks.InitBoundaries.ByteArrayReads.noFoldBranchBound,
         "The uget read has an in-bounds index whenever i differs from the independently supplied stop")
   if owner == `Init.Data.Array.Basic && [`Array.mapMUnsafe, `Array.mapFinIdxMUnsafe].contains name then
     let witness := if name == `Array.mapMUnsafe then ``OmegaChecks.InitBoundaries.ArrayCasts.map

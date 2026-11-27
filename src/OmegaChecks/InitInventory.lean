@@ -658,6 +658,8 @@ private def inventory (lib strictDir : System.FilePath) (visible strict full wit
         some <$> OmegaChecks.InitInventory.UnsafeCast.reductionAxiom official
       else if owner == `Init.ShareCommon && name == `ShareCommon.StateFactory.get then
         some <$> OmegaChecks.InitInventory.UnsafeCast.factoryReductionAxiom official witnesses
+      else if owner == `Init.Data.ByteArray.Basic && [`ByteArray.forInUnsafe.loop, `ByteArray.foldlMUnsafe.fold].contains name then
+        some <$> (OmegaChecks.InitBoundaries.ByteArrayReads.readAxiom witnesses info).run'
       else pure none
       let constructorIff := OmegaChecks.InitInventory.hasStrictConstructorIff official full info
       let operand := OmegaChecks.InitBoundaries.ChoiceOperands.operand? owner info
@@ -869,8 +871,10 @@ def main (args : List String) : IO Unit := do
     | _ => throw <| IO.userError "expected at most one gaps TSV file"
   let sysroot ← findSysroot
   initSearchPath sysroot
-  let witnesses ← importModules #[{module := `OmegaChecks.InitInventory.ChoiceOperands}, {module := `OmegaChecks.InitInventory.Quotient},
-    {module := `OmegaChecks.InitInventory.RefinedQuotient}, {module := `OmegaChecks.InitInventory.StateFactory}] {} (level := .private)
+  let witnesses ← importModules #[
+    {module := `OmegaChecks.InitInventory.ChoiceOperands}, {module := `OmegaChecks.InitInventory.Quotient},
+    {module := `OmegaChecks.InitInventory.RefinedQuotient}, {module := `OmegaChecks.InitInventory.StateFactory},
+    {module := `OmegaChecks.InitInventory.ByteArrayReads}] {} (level := .private)
   let lib ← getLibDir sysroot
   searchPathRef.set [lib]
   let modules ← installedModules lib `Init
