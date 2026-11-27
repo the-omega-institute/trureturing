@@ -8,6 +8,7 @@ meta import OmegaChecks.InitInventory.Logic
 meta import OmegaChecks.InitInventory.Reductions
 import Lean.Replay
 import all Lean.Util.CollectAxioms
+import all Lean.Environment
 public import OmegaChecks.InitInventory.Reductions
 public import OmegaChecks.InitInventory.TransformerLaws
 public import OmegaChecks.InitInventory.Traversal
@@ -671,6 +672,27 @@ private def nativeSummary (sites : Array NativeSite) : Json :=
     ("strictDeclarations", toJson (sites.filter (·.strictDeclaration)).size),
     ("strictSignatures", toJson (sites.filter (·.strictSignature)).size)]
 
+/-- A name in the unchanged official type that the kernel reports missing after
+erasing exactly that axiom. An equivalent reformulation can use different proof terms. -/
+private def checkedTypeAxioms (official : Environment) (info : ConstantInfo)
+    (closure : Array Name) : CoreM (Array Name) := do
+  if closure.isEmpty then return #[]
+  let used := info.type.getUsedConstants
+  let direct := closure.filter fun name => used.contains name && (official.find? name).any (·.isAxiom)
+  if direct.isEmpty then return #[]
+  let _ ← ofExceptKernelException (Kernel.check official {} info.type)
+  let core := official.toKernelEnv
+  let constants := core.constants
+  for name in direct do
+    let without := Environment.ofKernelEnv {core with constants := {constants with
+        map₁ := constants.map₁.erase name, map₂ := constants.map₂.erase name}}
+    match Kernel.check without {} info.type with
+    | .error (.unknownConstant _ missing) =>
+      unless missing == name do throwError "checking {info.name} without {name} missed {missing}"
+    | .error err => throwError "checking {info.name} without {name}: {err.toMessageData {}}"
+    | .ok _ => throwError "the unchanged type of {info.name} checked without {name}"
+  return direct
+
 private def inventory (lib : System.FilePath) (visible strict full : Environment) (modules : Array Name)
     (gaps : Option IO.FS.Handle) (observedRuntime : List String) : CoreM Json := do
   let official ← getEnv
@@ -696,7 +718,7 @@ private def inventory (lib : System.FilePath) (visible strict full : Environment
   let mut nativeByModule := #[]
   let mut allNative := #[]
   if let some file := gaps then
-    file.putStrLn "module\tdeclaration\tkind\tunsafe\tpartial\tupstreamAxioms\timpliesAxiom\treductionWitness\tlogicalConsequence\tlogicalConsequenceWitness\trequiredBehavior\tabstractedDependency\truntimeConflictWitness\tequationOperand\toperandImpliesAxiom\toperandReductionWitness"
+    file.putStrLn "module\tdeclaration\tkind\tunsafe\tpartial\tupstreamAxioms\timpliesAxiom\treductionWitness\tlogicalConsequence\tlogicalConsequenceWitness\trequiredBehavior\tabstractedDependency\truntimeConflictWitness\tequationOperand\toperandImpliesAxiom\toperandReductionWitness\tunchangedTypeAxioms"
   for owner in modules do
     let some idx := visible.getModuleIdx? owner | throwError "missing official module {owner}"
     let publicNames := visible.header.moduleData[idx]!.constNames.filter publicName
@@ -721,6 +743,7 @@ private def inventory (lib : System.FilePath) (visible strict full : Environment
       let some info := localDecls.find? name | throwError "missing declaration {owner}/{name}"
       let some (_, axioms) := localAxioms.binSearch (name, #[]) (fun a b => Name.quickLt a.1 b.1)
         | throwError "missing official axiom closure for {owner}/{name}"
+      let typeAxioms ← checkedTypeAxioms official info axioms
       let operand := OmegaChecks.InitBoundaries.ChoiceOperands.operand? owner info
       let conditional := conditionalConsequence? owner name
       let consequence := (logicalConsequence? owner name).map (fun (target, witness) => (target.toString, witness))
@@ -748,7 +771,8 @@ private def inventory (lib : System.FilePath) (visible strict full : Environment
             (boundary.map (·.1.toString)).getD "", (boundary.map (·.2.toString)).getD "",
             (consequence.map Prod.fst).getD "", (consequence.map (·.2.toString)).getD "", behavior.getD "",
             selector.getD "", runtimeConflict.getD "", (operand.map (·.name.toString)).getD "",
-            (operand.map fun _ => (``Classical.choice).toString).getD "", (operand.map (·.witness.toString)).getD ""]
+            (operand.map fun _ => (``Classical.choice).toString).getD "", (operand.map (·.witness.toString)).getD "",
+            String.intercalate "," (typeAxioms.toList.map Name.toString)]
       if info.isAxiom then
         directAxioms := directAxioms + 1
         axiomUnique := axiomUnique.insert name
@@ -771,6 +795,8 @@ private def inventory (lib : System.FilePath) (visible strict full : Environment
         moduleNative := moduleNative.push ⟨matched, hasSig⟩
         pure (row.setObjVal! "strictNativeSignature" (toJson hasSig))
       else pure row
+      let row := if typeAxioms.isEmpty then row else
+        row.setObjVal! "unchangedTypeAxioms" (toJson (typeAxioms.map Name.toString))
       let row := match selector with
         | some dep => row.setObjVal! "abstractedDependency" (toJson dep)
         | none => row
