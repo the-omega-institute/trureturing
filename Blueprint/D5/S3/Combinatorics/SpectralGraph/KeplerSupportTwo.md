@@ -174,6 +174,10 @@ $$\forall V \in Type,\; \forall [\operatorname{Fintype}\left(V\right)], \forall 
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/KeplerSupportTwo.graphwise_count` (`✓ std3`). ∎
 
+*Resolves.* `Problems/kepler-2026-remark-4-3-support-two-count` (proved) by `D5/S3/Combinatorics/SpectralGraph/KeplerSupportTwo.graphwise_count`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"kepler-2026-remark-4-3-support-two-count","declaration_gid":"D5/S3/Combinatorics/SpectralGraph/KeplerSupportTwo.graphwise_count","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Garrett Kepler (2026). *Some Spectral Properties of the Bα Matrix of a Graph*. DOI: [10.48550/arXiv.2607.25221](https://doi.org/10.48550/arXiv.2607.25221). URL: <https://arxiv.org/abs/2607.25221v1>.

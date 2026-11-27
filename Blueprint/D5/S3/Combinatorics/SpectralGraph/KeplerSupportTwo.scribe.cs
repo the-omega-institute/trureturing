@@ -76,7 +76,10 @@ internal sealed class KeplerSupportTwoDocument : IScribeDocumentDefinition
                     Paragraph(Text("The outside rows give (2α − 1) times the difference of the two adjacency entries. The inside rows give the eigenvalue (1 − α)d − (2α − 1)ε, where d is the common degree and ε indicates the edge within the pair. A class C contributes a pair for each two-element subset. The two oriented darts of each support realize the two opposite signed vectors. Empty and singleton carriers give zero in both counts.")),
                     Paragraph(Text("The source resolution scope is the fixed-graph question in Remark 4.3 together with the Bα definition in Definition 1.5. The Lean result covers every finite simple undirected graph represented by a Mathlib SimpleGraph and every real α, so the source interval [0,1], α = 0, α = 1/2 and α = 1 are included.")),
                     Paragraph(Text("The verified output ends with the exact unordered-support class sum and the exact factor-of-two signed-vector count. Theorems 4.1 and 4.2 supply source context. Their correction, the labeled-graph enumeration, union bound, limiting proportion and half-parameter all-graphs statement lie outside this result."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("kepler-2026-remark-4-3-support-two-count"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Definition(string name, string title, Formula formula, string prose,
         AssessedProvenance? provenance = null) =>
