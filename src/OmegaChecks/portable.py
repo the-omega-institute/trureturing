@@ -81,12 +81,19 @@ def closure(graph, roots):
     return list(TopologicalSorter({n: graph[n] & seen for n in sorted(seen)}).static_order())
 
 
-def backend_plan(official_path, names, environment=None):
+def backend_plan(official_path, names, environment=None, *, prepared=False):
     """Read backend restrictions from the exact official artifacts about to be consumed."""
     if not names:
         return {"mathlibOnly": {}, "declarations": []}
-    subprocess.run(["lake", "build", "omegaBackendPlan"], cwd=ROOT, env=environment, check=True)
-    plan = json.loads(output(ROOT / ".lake/build/bin/omegaBackendPlan", official_path, *names, env=environment))
+    if prepared:
+        # Run main from the selector module restored with these official artifacts.
+        env = {**(os.environ if environment is None else environment), "LEAN_PATH": official_path}
+        raw = output("lean", "--stdin", "--run", "OmegaBackendPlan.lean", official_path, *names,
+                     input="import OmegaBuild.Plan\n", env=env)
+    else:
+        subprocess.run(["lake", "build", "omegaBackendPlan"], cwd=ROOT, env=environment, check=True)
+        raw = output(ROOT / ".lake/build/bin/omegaBackendPlan", official_path, *names, env=environment)
+    plan = json.loads(raw)
     for name, chain in plan["mathlibOnly"].items():
         if name not in names or not chain or chain[0] != name:
             raise RuntimeError(f"invalid backend restriction for {name}: {chain}")
