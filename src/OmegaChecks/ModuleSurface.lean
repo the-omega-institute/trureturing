@@ -188,6 +188,12 @@ private def checkElaboration (env full : Environment) (reference? : Option Envir
       | `Nat.mul => pure (`OmegaInit.Prelude, "lean_nat_mul")
       | `Nat.pow => pure (`OmegaInit.Prelude, "lean_nat_pow")
       | `Nat.decEq => pure (`OmegaInit.Prelude, "lean_nat_dec_eq")
+      | `Omega.ST.Prim.Ref.put => do
+        let args := #[(IR.IRType.erased, false), (.erased, false), (.tobject, true), (.tobject, false)]
+        InitPort.NativeState.verify full n (args.push (.tobject, false)) .object "omega_st_ref_put"
+        if let some ref := reference? then
+          InitPort.NativeState.verify ref `ST.Prim.Ref.put (args.push (.void, false)) .tagged "lean_st_ref_put"
+        pure (`OmegaInit.System.ST, "omega_st_ref_put")
       | `Omega.ST.Prim.Ref.swap => pure (`OmegaInit.System.ST, "omega_st_ref_swap")
       | `Omega.IO.rand => pure (`OmegaInit.Data.Random, "omega_io_rand")
       | `Omega.ST.Prim.Ref.modify => pure (`OmegaInit.System.ST, "omega_st_ref_modify")
