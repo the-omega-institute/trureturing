@@ -280,6 +280,9 @@ def generate(stage, product, seed, roots, excluded, original_seed):
     control_objects = compile_generated(stage, product, graph, original_seed.parents[1] / "ir",
                                         original_seed=original_seed, before_owner={"OmegaInit.ShareCommon": install_sharing},
                                         check_mixed=has_interfaces(inventory, mixed_interfaces),
+                                        check_names=has_interfaces(inventory, {"Init.Prelude": {
+                                            "Lean.Name.append", "Lean.addMacroScope", "Lean.extractMacroScopes",
+                                            "Lean.MacroScopesView.review"}}),
                                         check_strings=has_interfaces(inventory, string_interfaces),
                                         check_list_search=has_interfaces(inventory, {
                                             "Init.Data.List.Control": {"List.anyM", "List.allM"},

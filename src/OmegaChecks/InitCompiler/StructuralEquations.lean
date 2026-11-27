@@ -74,12 +74,12 @@ public def checkConstructorEquations (name : Name) (levelParams : List Name) (ty
                 compare ((args.push val) ++ tail)
           return false
       if ← Meta.forallTelescope ctorType fun fields _ => checkArg (mkAppN ctor fields) then continue
-      -- A nested pattern can also inspect a recursive field. Rebuild its dependent suffix
-      -- under each field constructor before comparing the completed applications.
+      -- A nested pattern can inspect a constructor field, such as the name at the head of a list.
+      -- Rebuild the dependent suffix for each constructor of that field before comparing the results.
       let mut matchesField := false
       for i in [:ctorType.getForallArity] do
         if ← Meta.forallBoundedTelescope ctorType (some i) fun priorFields next => do
-          unless next.isForall && (← Meta.whnf next.bindingDomain!).getAppFn.isConstOf indName do return false
+          unless next.isForall do return false
           return ← forallConstructors next.bindingDomain! fun value =>
             Meta.forallTelescope (next.bindingBody!.instantiate1 value) fun suffix _ =>
               checkArg (mkAppN ctor (priorFields.push value ++ suffix)) then

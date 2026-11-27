@@ -4,6 +4,30 @@ extern lean_obj_res runtime_initialize_GeneratedControlConsumer(uint8_t);
 extern uint8_t omega_generated_except(uint8_t, uint8_t);
 extern uint8_t omega_generated_option(uint8_t, uint8_t);
 extern uint8_t omega_generated_state(uint8_t, uint8_t);
+#ifdef OMEGA_TEST_NAMES
+#include "strict_name.h"
+extern lean_obj_res omega_test_scoped_name(lean_obj_arg, lean_obj_arg, lean_obj_arg, uint8_t);
+extern lean_obj_res l_Lean_addMacroScope(lean_obj_arg, lean_obj_arg, lean_obj_arg);
+extern lean_obj_res l_Lean_Name_append(lean_obj_arg, lean_obj_arg);
+
+static int check_scoped_name(b_lean_obj_arg left, b_lean_obj_arg right, unsigned scope, uint8_t on_left) {
+    lean_inc(left);
+    lean_inc(left);
+    lean_inc(right);
+    lean_inc(right);
+    lean_object *scoped = l_Lean_addMacroScope(left, left, lean_unsigned_to_nat(scope));
+    scoped = l_Lean_addMacroScope(right, scoped, lean_usize_to_nat((size_t)scope + 1));
+    lean_object *expected = on_left ? l_Lean_Name_append(scoped, right) : l_Lean_Name_append(right, scoped);
+    lean_object *strict = omega_test_scoped_name(omega_name_from_lean(left), omega_name_from_lean(right),
+                                                 lean_unsigned_to_nat(scope), on_left);
+    lean_object *actual = omega_name_to_lean(strict);
+    int equal = lean_name_eq(actual, expected);
+    lean_dec(actual);
+    lean_dec(strict);
+    lean_dec(expected);
+    return equal;
+}
+#endif
 #ifdef OMEGA_TEST_MIXED
 extern lean_obj_res runtime_initialize_GeneratedMixedConsumer(uint8_t);
 extern uint8_t omega_mixed_or(uint8_t, uint8_t);
@@ -57,6 +81,16 @@ int main(void) {
     if (!check_scalars(0xd800, 0x110000, invalid, sizeof invalid)) return 15;
 #endif
     lean_io_mark_end_initialization();
+#ifdef OMEGA_TEST_NAMES
+    lean_object *left = lean_name_mk_numeral(lean_name_mk_string(lean_box(0), lean_mk_string("左")), lean_box(13));
+    lean_object *right = lean_name_mk_string(lean_box(0), lean_mk_string("module"));
+    for (uint8_t side = 0; side <= 1; ++side) {
+        if (!check_scoped_name(left, right, 0, side) || !check_scoped_name(right, left, 4096, side) ||
+            !check_scoped_name(right, right, 37, side)) return 16;
+    }
+    lean_dec(left);
+    lean_dec(right);
+#endif
     for (uint8_t x = 0; x <= 1; x++) {
         for (uint8_t y = 0; y <= 1; y++) {
             if (omega_generated_except(x, y) != (x || y)) return 2;

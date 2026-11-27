@@ -98,7 +98,7 @@ def check_runtime_ir(stage, library, adapter, consumer):
 
 def compile_generated(stage, product, graph, seed_ir, owners=None, *, original_seed=None, before_owner=None,
                       check_strings=True, check_literals=True, check_mixed=True, check_rat=True, check_bootstrap=True,
-                      check_list_search=True, check_decoding=True):
+                      check_list_search=True, check_decoding=True, check_names=True):
     """Compile generated owners in import order and preserve the native symbols of existing owners."""
     requested = set(graph if owners is None else owners)
     selected = [owner for owner in TopologicalSorter(graph).static_order()
@@ -304,6 +304,11 @@ def compile_generated(stage, product, graph, seed_ir, owners=None, *, original_s
         run("lean", "-R", STRICT_SOURCES, "-c", mixed, STRICT_SOURCES / "GeneratedMixedConsumer.lean",
             env={**os.environ, "LEAN_PATH": str(library)})
         extra = ["-DOMEGA_TEST_MIXED", mixed]
+        if check_names and literals.is_file():
+            names = sources / "name-scope-consumer.c"
+            run("lean", "-R", STRICT_SOURCES, "-c", names, STRICT_SOURCES / "NameScopeConsumer.lean",
+                env={**os.environ, "LEAN_PATH": str(library)})
+            extra += ["-DOMEGA_TEST_NAMES", names]
     if literals.exists() and check_literals:
         client = sources / "literal-consumer.c"
         run("lean", "-R", STRICT_SOURCES, "-c", client, STRICT_SOURCES / "LiteralConsumer.lean",
