@@ -1,12 +1,13 @@
 module
 
-public import OmegaChecks.InitPort.Translation
+public import OmegaChecks.InitPort.PointerList
+public import OmegaChecks.InitPort.PointerHash
 import all OmegaChecks.InitPort.ReferencePut
 
 open Lean
 namespace OmegaChecks.InitPort.PointerComparison
 
-public def names := [`ptrEq, `withPtrEqUnsafe, `ShareCommon.Object.ptrEq]
+public def names := [`ptrEq, `withPtrEqUnsafe, `ShareCommon.Object.ptrEq, `ptrEqList]
 
 public def hasBorrowedABI (env : Environment) (name : Name) (strict : Bool) : Bool := Id.run do
   unless names.contains name do return false
@@ -27,6 +28,8 @@ private def lambdaBody (type body : Expr) : Expr := match type with
 public def isOriginal (ci : ConstantInfo) (strict : Bool) : Bool := Id.run do
   let .defnInfo d := ci | return false
   let name := if strict then InitKernelPort.originalName d.name else d.name
+  if name == PointerHash.name then return PointerHash.isOriginal ci strict
+  if name == `ptrEqList then return PointerList.isOriginal ci strict
   unless names.contains name && d.safety == .unsafe && d.all == [d.name] do return false
   let shared := name == `ShareCommon.Object.ptrEq
   let level ← match d.levelParams with
@@ -65,11 +68,12 @@ public def replay (checked installed : Kernel.Environment) (constants : Std.Hash
     match env.addDeclCore 0 1000 (.defnDecl d) none with
     | .ok next => pure next
     | .error e => throw <| IO.userError s!"kernel rejected {d.name}: {← e.toMessageData {} |>.toString}"
-  for name in names do
+  for name in names ++ [PointerHash.name] do
     let some ci := constants[InitKernelPort.portName name]? | continue
     unless isOriginal ci true do throw <| IO.userError s!"invalid transparent pointer comparison {name}"
     let .defnInfo d := ci | throw <| IO.userError s!"expected definition {name}"
-    safe ← add safe {d with safety := .safe}
+    if name == `ptrEqList then PointerList.check safe d
+    else safe ← add safe {d with safety := .safe}
     actual ← add actual d
   return actual
 

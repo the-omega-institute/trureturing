@@ -127,7 +127,8 @@ def compile_generated(stage, product, graph, seed_ir, owners=None, *, original_s
                       check_sharing=None, check_macro_reader=False,
                       check_strings=True, check_string_marks=False, check_byte_marks=False, check_literals=True, check_mixed=True, check_rat=True, check_bootstrap=True,
                       check_list_search=True, check_decoding=True, check_names=True, check_toolchain=True, check_thunks=False, check_persistent=False, check_exclusive=False,
-                      check_guarded_pointer=False, check_effects=False, check_address=False, check_pointer_comparison=False, check_shared_pointer=False):
+                      check_guarded_pointer=False, check_effects=False, check_address=False, check_pointer_comparison=False, check_shared_pointer=False,
+                      check_list_pointer=False, check_pointer_hash=False):
     """Compile generated owners in import order and preserve the native symbols of existing owners."""
     requested = set(graph if owners is None else owners)
     selected = [owner for owner in TopologicalSorter(graph).static_order()
@@ -290,6 +291,8 @@ def compile_generated(stage, product, graph, seed_ir, owners=None, *, original_s
     observations = [(check_persistent, "OmegaInit.System.IO", "Persistent", "Omega.Runtime.markPersistent"),
                     (check_address, "OmegaInit.Util", "Address", "Omega.ptrAddrUnsafe"),
                     (check_exclusive, "OmegaInit.Util", "Exclusive", "Omega.isExclusiveUnsafe"),
+                    (check_list_pointer, "OmegaInit.Util", "ListPointer", "Omega.ptrEqList"),
+                    (check_pointer_hash, "OmegaInit.ShareCommon", "PointerHash", "Omega.ShareCommon.Object.ptrHash"),
                     (check_shared_pointer, "OmegaInit.ShareCommon", "SharedPointer", "Omega.ShareCommon.Object.ptrEq"),
                     (check_pointer_comparison, "OmegaInit.Util", "PointerComparison", "Omega.ptrEq"),
                     (check_guarded_pointer, "OmegaInit.Util", "GuardedPointer", None),

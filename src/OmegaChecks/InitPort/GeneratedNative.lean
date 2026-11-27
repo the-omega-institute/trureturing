@@ -279,10 +279,21 @@ private def checkCallSignatures : Pass := Pass.mkPerDeclaration `checkCallSignat
       | _ => pure ()
   return decl
 
+/-- Supply the two pinned borrowed parameters before Lean infers ownership and emits reference counts. -/
+private def listPointerBorrows : Pass := Pass.mkPerDeclaration `listPointerBorrows .impure fun decl => do
+  if decl.name != `Omega.ptrEqList then return decl
+  let #[type, xs, ys] := decl.params | throwError "unexpected list comparison arity"
+  return {decl with params := #[type, ← xs.updateBorrow true, ← ys.updateBorrow true]}
+
 private def compileOwner (source : Environment) (partialCode : NameMap DefinitionVal) (groups : Array InductiveVal) (words order : Array Name) : CoreM Unit := do
   let strict ← getEnv
   let manager ← PassInstaller.run (← getPassManager)
     (.installBefore .impure `explicitBoxing (fun _ => checkCallSignatures))
+  let manager ← if order.contains `Omega.ptrEqList then do
+    unless OmegaChecks.InitPort.PointerComparison.hasBorrowedABI source `ptrEqList false do
+      throwError "unexpected pinned list comparison ownership"
+    PassInstaller.run manager (.installBefore .impure `inferBorrow (fun _ => listPointerBorrows))
+  else pure manager
   modifyEnv fun env => passManagerExt.setState env ((passManagerExt.getState env).1, manager)
   -- ToLCNF replaces nested proofs with this marker while inferring erased argument types.
   -- Only compiler extensions are serialized. Check equations in the original environment.
@@ -358,7 +369,8 @@ private def compileOwner (source : Environment) (partialCode : NameMap Definitio
       (← compileDeclsRef.get) #[n] opts
       unless (← CompilerM.run (getLocalDeclAt? n .impure)).isSome do throwError "missing effect-runner code for {n}"
       continue
-    if ← missingRuntimeDependency source n then continue
+    let recursive := if n == `Omega.ptrEqList then n else Name.anonymous
+    if ← missingRuntimeDependency source n recursive then continue
     let before ← Core.saveState
     try
       modifyEnv fun env => privateConstKindsExt.insert env n .defn

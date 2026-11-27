@@ -719,6 +719,13 @@ private def inventory (lib : System.FilePath) (visible strict full witnesses : E
             OmegaChecks.InitPort.PointerComparison.hasBorrowedABI official name false &&
             OmegaChecks.InitPort.PointerComparison.hasBorrowedABI full name true do
           throwError "invalid public, private or native pointer comparison {strictName}"
+      let pointerHash := matched && owner == `Init.ShareCommon && name == OmegaChecks.InitPort.PointerHash.name
+      if pointerHash then
+        let some dst := full.find? strictName | throwError "missing pointer hash body {strictName}"
+        unless (strict.find? strictName).any (·.isUnsafe) && officialSigs.contains name && strictSigs.contains strictName &&
+            OmegaChecks.InitPort.PointerHash.isOriginal info false && OmegaChecks.InitPort.PointerHash.isOriginal dst true &&
+            OmegaChecks.InitPort.PointerHash.checkABI official false && OmegaChecks.InitPort.PointerHash.checkABI full true do
+          throwError "invalid public, private or native pointer hash {strictName}"
       let effectRunner := matched && owner == `Init.System.IO && OmegaChecks.InitPort.EffectRun.names.contains name
       if effectRunner then
         let some dst := full.find? strictName | throwError "missing effect runner body {strictName}"
@@ -779,6 +786,7 @@ private def inventory (lib : System.FilePath) (visible strict full witnesses : E
             ("operandImpliesAxiom", toJson (``Classical.choice).toString), ("operandReductionWitness", toJson op.witness.toString)]
         | none => row
       let row := if let some target := endpointType then row.setObjVal! "specializedEndpointType" (toJson target) else row
+      let row := if pointerHash then row.setObjVal! "checkedPointerHash" (toJson true) else row
       let row := if pointerComparison then row.setObjVal! "checkedPointerComparison" (toJson true) else row
       let row := if effectRunner then row.setObjVal! "checkedEffectRunner" (toJson true) else row
       let row := match checkedUnsafeRuntime with

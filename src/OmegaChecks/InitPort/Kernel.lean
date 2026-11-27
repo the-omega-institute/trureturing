@@ -628,6 +628,7 @@ partial def visit (n : Name) : M Bool := do
     let value ← OmegaChecks.InitCompiler.finiteCollectors c.source value (withinImplementation := true)
     let value ← OmegaChecks.InitCompiler.namedLogicalProjections c.source value
     for dep in usedConstants value do
+      if dep == n && OmegaChecks.InitPort.PointerList.isOriginal ci false then continue
       if !(← visit dep) then return .blocked "unavailable dependency" (some dep)
     let .ok decl := translateDecl ci type value | return .blocked "open term"
     let check := if budget == c.maxHeartbeats then checkWithRetry else checkDecl

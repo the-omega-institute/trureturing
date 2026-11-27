@@ -132,16 +132,21 @@ def check_coverage(official):
             raise ValueError(f"inconsistent checked unsafe runtime for {owner}/{name}")
         comparison = row.get("checkedPointerComparison", False)
         expected_comparison = port and site in {
-            ("Init.Util", "ptrEq"), ("Init.Util", "withPtrEqUnsafe"), ("Init.ShareCommon", "ShareCommon.Object.ptrEq")}
+            ("Init.Util", "ptrEq"), ("Init.Util", "withPtrEqUnsafe"), ("Init.Util", "ptrEqList"),
+            ("Init.ShareCommon", "ShareCommon.Object.ptrEq")}
         if comparison is not expected_comparison or (comparison and
                 (row["kind"] != "definition" or not row.get("unsafe") or not runtime)):
             raise ValueError(f"inconsistent checked pointer comparison for {owner}/{name}")
+        pointer_hash = row.get("checkedPointerHash", False)
+        if pointer_hash is not (port and site == ("Init.ShareCommon", "ShareCommon.Object.ptrHash")) or (pointer_hash and
+                (row["kind"] != "definition" or not row.get("unsafe") or not runtime)):
+            raise ValueError(f"inconsistent checked pointer hash for {owner}/{name}")
         effect = row.get("checkedEffectRunner", False)
         if effect is not (port and site in EFFECT_RUNNERS) or (effect and
                 (row["kind"] != "definition" or not row.get("unsafe") or not runtime)):
             raise ValueError(f"inconsistent checked effect runner for {owner}/{name}")
         if port:
-            if axiom or witness or (runtime and not (unsafe_runtime or effect or comparison)) or row["strictModule"] != "Omega" + owner:
+            if axiom or witness or (runtime and not (unsafe_runtime or effect or comparison or pointer_hash)) or row["strictModule"] != "Omega" + owner:
                 raise ValueError(f"inconsistent strict match for {owner}/{name}")
             matched += 1
         elif axiom:
