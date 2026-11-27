@@ -29,7 +29,7 @@ mobGP | bind-only | none | none | claim,mobGP_eq,result
 cylinder | bind-only | none | none | claim,cylinder_dist,geodesic_ordered,gp_turn,gp_good5,equal_row_geodesic,five_strict_rows,gp_card_le_five,geodesic_split,separated_gp,no_horizontal,legal_columns,no_five_mobile,mobile_card_le_four,pair_step,pair_rotate,pair_all_rotations,shift_step,row_shift,all_row_pairs,four_mobile,result
 claim | bind-only | none | none | result
 cycle_dist | bind-only | F1,F2,F3 | none | cylinder_dist,delta_triangle
-path_dist | bind-only | F2 | none | cylinder_dist
+path_dist | bind-only | none | none | cylinder_dist
 cylinder_dist | bind-only | F1,F2,F3 | none | geodesic_ordered,equal_row_geodesic,geodesic_split
 Turn | bind-only | F1 | none | goodFiveDecidable,rigidity7,rigidity10,rigidity,word_six7,word_six10,six_obstruction,gp_good5,gp_card_le_five
 turnDecidable | bind-only | F1 | none | goodFiveDecidable,word_six7,word_six10
@@ -113,6 +113,7 @@ four_mobile | content | F1,F2,F3 | none | result
 result | content | F1,F2,F3 | none | settling result
 -/
 
+import OmegaMath.Combinatorics.Graph.GraphDistance
 import Mathlib.Data.Finset.Sort
 import D5.S3.Combinatorics.Graph.Walks.MatchingCliqueCycle
 import Mathlib.Data.Fin.VecNotation
@@ -164,32 +165,8 @@ private theorem cycle_dist {r : ℕ} (hr : 3 ≤ r) (x z : Fin r) :
   exact cycle_distance k x z
 
 private theorem path_dist {s : ℕ} (y t : Fin s) :
-    (SimpleGraph.pathGraph s).dist y t = Nat.dist y.val t.val := by
-  have : NeZero s := Fin.neZero y
-  apply (WellCoveredPowerCliqueProduct.distance_certificate
-    (SimpleGraph.pathGraph s) (fun u v => Nat.dist u.val v.val) ?_ ?_ ?_).2
-  · intro u v
-    constructor
-    · intro h; apply Fin.ext; exact Nat.eq_of_dist_eq_zero h
-    · intro h; subst v; exact by simp [Nat.dist]
-  · intro u v w h
-    rw [SimpleGraph.pathGraph_adj] at h
-    simp only [Nat.dist]
-    omega
-  · intro u v h
-    have hu := u.isLt
-    have hv := v.isLt
-    by_cases huv : u.val < v.val
-    · refine ⟨⟨u.val + 1, by omega⟩, ?_, ?_⟩
-      · simp [SimpleGraph.pathGraph_adj]
-      · simp only [Nat.dist]
-        omega
-    · refine ⟨⟨u.val - 1, by simp only [Nat.dist] at h; omega⟩, ?_, ?_⟩
-      · simp only [SimpleGraph.pathGraph_adj]
-        simp only [Nat.dist] at h
-        omega
-      · simp only [Nat.dist] at *
-        omega
+    (SimpleGraph.pathGraph s).dist y t = Nat.dist y.val t.val :=
+  OmegaMath.Combinatorics.Graph.GraphDistance.pathGraph_dist y t
 
 private theorem cylinder_dist {r s : ℕ} (hr : 3 ≤ r) (x z : Fin r) (y t : Fin s) :
     (cylinder r s).dist (x,y) (z,t) = WellCoveredPowerCliqueProduct.cycleMetric r x z + Nat.dist y.val t.val := by
