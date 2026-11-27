@@ -1,6 +1,7 @@
 import Lean
 import OmegaChecks.InitCompiler.Layout
 import OmegaChecks.InitCompiler.Proofs
+import OmegaChecks.InitCompiler.CompilerMarkers
 
 /-! Elaborate pinned Init declarations in strict prelude modules. -/
 
@@ -77,7 +78,18 @@ private def officialDeclaration (stx : Syntax) : CommandElabM (Environment × Co
       | _ => throwError "this proof needs a constructive implementation"
     if isProtected src info.name then modifyEnv (addProtected · target.name)
 
-@[command_parser, builtin_command_parser] def portDefinition := leading_parser "port_definition " >> ident
+@[command_parser, builtin_command_parser] def portCompilerMarkers := leading_parser "port_compiler_markers"
+
+@[builtin_command_elab portCompilerMarkers] def elabPortCompilerMarkers : CommandElab := fun _ => do
+  unless (← getMainModule) == `OmegaInit.Prelude do throwError "expected OmegaInit.Prelude"
+  for name in OmegaChecks.InitPort.CompilerMarkers.names do
+    let .opaqueInfo marker := OmegaChecks.InitPort.CompilerMarkers.declaration name | unreachable!
+    let .ok checked := (← getEnv).addDeclCore 0 1000 (.opaqueDecl marker) none
+      | throwError "kernel rejected native compiler marker {name}"
+    setEnv checked
+
+@[command_parser, builtin_command_parser] def portDefinition := leading_parser
+  "port_definition " >> ident >> optional " with_native_code"
 
 @[builtin_command_elab portDefinition] def elabPortDefinition : CommandElab := fun stx => do
   let (src, .defnInfo defn) ← officialDeclaration stx[1] | throwError "expected a safe definition"
@@ -86,6 +98,7 @@ private def officialDeclaration (stx : Syntax) : CommandElabM (Environment × Co
     let type ← ofExcept (translateProofTerm src defn.type)
     let name := omegaName defn.name
     Lean.addDecl (.defnDecl {defn with name, type, value, all := defn.all.map omegaName}) (forceExpose := true)
+    unless stx[2].isNone do Lean.compileDecls #[name]
     setReducibilityStatus name (getReducibilityStatusCore src defn.name)
     if isProtected src defn.name then modifyEnv (addProtected · name)
 

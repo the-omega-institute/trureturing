@@ -9,8 +9,13 @@ noncomputable section
 
 @[expose] public section
 
+port_compiler_markers
+
 port_inductive Option
 port_inductive List
+port_inductive Prod
+port_definition Prod.fst with_native_code
+port_definition Prod.snd with_native_code
 port_inductive PProd
 port_definition PProd.fst
 port_definition PProd.snd

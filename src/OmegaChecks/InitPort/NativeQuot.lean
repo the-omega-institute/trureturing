@@ -1,6 +1,6 @@
 module
 public import Lean
-public import OmegaChecks.InitPort.CompilerMarkers
+public import OmegaChecks.InitCompiler.CompilerMarkers
 
 open Lean
 

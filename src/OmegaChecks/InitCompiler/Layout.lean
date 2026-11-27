@@ -14,7 +14,8 @@ public def compilerLayouts (types ctors : Array Name) : CoreM Unit := do
     -- The compiler queries the erased type markers when computing constructor layouts.
     -- Their bodies and declarations are local to this compiler calculation.
     for n in [`lcAny, `lcErased, `lcVoid] do
-      Lean.addDecl (.opaqueDecl {name := n, levelParams := [], type := .sort (.succ .zero), value := .sort .zero, isUnsafe := false})
+      unless (← getEnv).contains n do
+        Lean.addDecl (.opaqueDecl {name := n, levelParams := [], type := .sort (.succ .zero), value := .sort .zero, isUnsafe := false})
     compileInductives types
     return ← getEnv
   for n in types do
