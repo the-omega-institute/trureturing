@@ -314,7 +314,7 @@ theorem harmonic_long_deficit_of_cutoff_deficit (rh : RiemannHypothesis)
         d * ((zetaSpectrum rh).N Y : ℝ) ≤ ((zetaSpectrum rh).N Y : ℝ) -
           ‖∑ j ∈ (zetaSpectrum rh).cut Y,
             ((zetaSpectrum rh).mult j : ℂ) * phase ((zetaSpectrum rh).gamma j) t‖) :
-    ∀ A > (1 : ℝ), ∃ d > (0 : ℝ), ∀ᶠ Y : ℝ in atTop,
+    ∃ d > (0 : ℝ), ∀ A > (1 : ℝ), ∀ᶠ Y : ℝ in atTop,
       ∀ t : ℝ, Real.log Y ≤ |t| → |t| ≤ A * Real.log Y →
         d / Real.log Y ≤
           1 - ‖complexScore (harmonicOrdinate rh Y) (harmonicProbability rh Y) t‖ := by
@@ -326,8 +326,8 @@ theorem harmonic_long_deficit_of_cutoff_deficit (rh : RiemannHypothesis)
   obtain ⟨d, hd, hdeficit⟩ := hcutoff
   have hmass : Tendsto (fun Y : ℝ => harmonicMass rh Y / (Real.log Y)^2) atTop (𝓝 (c/2)) := by
     convert harmonic_mass_limit rh using 2 <;> dsimp [c] <;> ring
-  intro A hA
   refine ⟨d / 4, by positivity, ?_⟩
+  intro A hA
   filter_upwards [hdeficit A hA, hN.eventually_const_lt (show c / 2 < c by linarith),
     hmass.eventually_lt_const (show c / 2 < c by linarith), eventually_gt_atTop (1 : ℝ)]
     with Y hdef hn hm hY
@@ -399,9 +399,10 @@ private theorem harmonic_long_deficit_of_threshold (rh : RiemannHypothesis)
     ∀ A > (1 : ℝ), ∃ d > (0 : ℝ), ∀ᶠ Y : ℝ in atTop,
       ∀ t : ℝ, Real.log Y ≤ |t| → |t| ≤ A * Real.log Y →
         d / Real.log Y ≤
-          1 - ‖complexScore (harmonicOrdinate rh Y) (harmonicProbability rh Y) t‖ :=
-  harmonic_long_deficit_of_cutoff_deficit rh
+          1 - ‖complexScore (harmonicOrdinate rh Y) (harmonicProbability rh Y) t‖ := by
+  obtain ⟨d, hd, hlong⟩ := harmonic_long_deficit_of_cutoff_deficit rh
     (cutoff_fractional_deficit _ (zetaSpectrum_countAsymptotic rh) hpair)
+  exact fun A hA => ⟨d, hd, hlong A hA⟩
 
 private theorem critical_window_deficit (rh : RiemannHypothesis) (A : ℝ) {d : ℝ}
     (hlong : ∀ᶠ H : ℝ in atTop, ∀ t : ℝ, Real.log H ≤ |t| → |t| ≤ A * Real.log H →

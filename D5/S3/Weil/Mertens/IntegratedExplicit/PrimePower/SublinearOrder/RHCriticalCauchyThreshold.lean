@@ -47,10 +47,11 @@ theorem harmonic_zeta_critical_collision_limit_of_cauchy_cap (rh : RiemannHypoth
     Tendsto (fun n : ℕ => scale n *
       tailCollisionMass (fun j : ↥(positiveCutoff rh (T n)) => ordinate j.1)
         (fun j => harmonicWeight j.1) n (η n) /
-        (η n * harmonicMass rh (T n)^(2*n))) atTop (𝓝 (1 / Real.sqrt Real.pi)) :=
-  harmonic_zeta_critical_collision_limit_of_long_deficit rh
-    (harmonic_long_deficit_of_cutoff_deficit rh
-      (fractional_deficit_of_cauchy_cap _ (zetaSpectrum_countAsymptotic rh) hκ hκmax hcorr))
+        (η n * harmonicMass rh (T n)^(2*n))) atTop (𝓝 (1 / Real.sqrt Real.pi)) := by
+  obtain ⟨d, hd, hlong⟩ := harmonic_long_deficit_of_cutoff_deficit rh
+    (fractional_deficit_of_cauchy_cap _ (zetaSpectrum_countAsymptotic rh) hκ hκmax hcorr)
+  exact harmonic_zeta_critical_collision_limit_of_long_deficit rh
+    (fun A hA => ⟨d, hd, hlong A hA⟩)
     T η hT hη hh hresolution
 
 end D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower.SublinearOrder.RHCriticalCauchyThreshold
