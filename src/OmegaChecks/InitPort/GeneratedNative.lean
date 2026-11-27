@@ -130,6 +130,25 @@ private def compileNatRec (source strict : Environment) (d : DefinitionVal) : Co
     return body
   compileEquation source d.name {d with name, all := [name], value := body, safety := .safe}
 
+/-- Compile the natural recursor under a temporary callable name. Both constructor
+equations are checked on its alias and every caller is definitionally equal after unfolding. -/
+private def compileRecursorCall (source strict : Environment) (d : DefinitionVal) : CoreM Unit := do
+  let helper := d.name ++ `_nativeNatRec
+  let some (.recInfo recInfo) := strict.find? `Nat.rec | return
+  let levels := recInfo.levelParams.map Level.param
+  let value ← withEnv strict <| Meta.MetaM.run' <| Meta.forallTelescope recInfo.type fun args _ =>
+    Meta.mkLambdaFVars args (mkAppN (mkConst `Nat.rec levels) args)
+  let alias : DefinitionVal := {
+    name := helper, levelParams := recInfo.levelParams, type := recInfo.type, value := value
+    hints := .regular 1, safety := .safe, all := [helper] }
+  let .ok checked := strict.addDeclCore 0 4096 (.defnDecl alias) none | throwError "invalid natural recursor alias"
+  let body := d.value.replace fun e => if e.isConstOf `Nat.rec then some (mkConst helper e.constLevels!) else none
+  unless Kernel.isDefEqGuarded checked {} d.value body do throwError "natural recursor alias changed {d.name}"
+  Lean.addDecl (.defnDecl alias) (forceExpose := true)
+  compileNatRec source checked alias
+  let name := Compiler.mkUnsafeRecName d.name
+  compileEquation source d.name {d with name, all := [name], value := body, safety := .safe}
+
 /-- A recursive eliminator also performs plain case analysis when a branch ignores all
 its induction hypotheses. Retain the constructor fields and all outer variable bindings. -/
 private def withoutHypotheses (branch : Expr) : Nat → Nat → Option Expr
@@ -176,7 +195,9 @@ private def compileStructural (source strict : Environment) (n : Name) : CoreM U
   let recName := Compiler.mkUnsafeRecName original
   let hasEquations := original.getRoot == `List || original.getRoot == `Array
   let some (.defnInfo d) := if hasEquations then source.find? recName else none | do
-    if let some (.defnInfo strictDef) := strict.find? n then compileCases source strict strictDef
+    if let some (.defnInfo strictDef) := strict.find? n then
+      if strictDef.value.getUsedConstants.contains `Nat.rec then compileRecursorCall source strict strictDef
+      else compileCases source strict strictDef
     return
   unless d.safety == .partial && d.all == [recName] do return
   let name := InitKernelPort.portName recName
