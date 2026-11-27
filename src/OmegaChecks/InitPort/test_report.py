@@ -64,6 +64,16 @@ class CoverageTest(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "incomplete axiom reduction"):
             check_coverage(inventory(site("Init.Core", "t", impliesAxiom="propext")))
 
+    def test_safe_reduction_leaves_an_unsafe_declaration_open(self):
+        cast = site("Init.Prelude", "unsafeCast", kind="definition", unsafe=True,
+                    impliesAxiom="sorryAx", reductionWitness="sorryAxFromUnsafeCast")
+        take = site("Init.System.ST", "ST.Prim.Ref.take", kind="opaque", unsafe=True,
+                    strictImpliesAxiom="Classical.choice.{1}",
+                    strictSelectionWitness="OmegaStrictReference.ST.Prim.Ref.take")
+        reductions, open_sites = check_coverage(inventory(cast, take))
+        self.assertEqual(reductions, 0)
+        self.assertEqual(open_sites, [(r["module"], r["name"]) for r in (cast, take)])
+
     def test_runtime_conflict_requires_live_observation_and_matching_contradiction(self):
         attributes = dict(kind="opaque", unsafe=True, logicalConsequence="False",
                           logicalConsequenceWitness="address", requiredBehavior="distinguish equal lists")

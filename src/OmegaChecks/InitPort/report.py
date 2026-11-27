@@ -125,7 +125,9 @@ def check_coverage(official):
             matched += 1
         elif axiom:
             direct += 1
-        elif witness or strict:
+        elif (witness or strict) and not row.get("unsafe"):
+            # These Lean reductions take a value usable by safe code. The kernel
+            # prohibits supplying an unsafe implementation to such a witness.
             reductions += 1
         elif not endpoint and not argument and path != "Quot.sound":
             unresolved.append(site)
