@@ -27,6 +27,8 @@ strata_touched:
   - D5/S3/Topology/GraphSubdivisionIntervals
   - D5/S3/Topology/GraphSubdivisionHalves
   - D5/S3/Topology/GraphSubdivisionNullhomotopy
+  - D5/S3/Topology/GraphSubdivisionPositions
+  - D5/S3/Topology/GeometricGraphTermination
   - D5/S3/Topology/RankedCofaceContiguity
   - D5/S3/Topology/CofaceComparisonObstruction
   - D5/S3/Topology/CofaceTriangleCollapse
@@ -965,6 +967,16 @@ base to its root image. The classical edge-path description of the
 fundamental group gives finite move witnesses for this choice.
 The Lean theorem takes those witnesses as hypotheses. This is the
 fixed-target step for the three-dimensional approach to Question 6.3.
+
+For a geometric nullhomotopy there is also a direct construction.
+Place the subdivided graph vertices at dyadic points on their old edges.
+The pullbacks of the target vertex stars have a common Lebesgue number
+on the homotopy cylinder. A fine time mesh gives contiguous consecutive
+rows because the labels on each subdivided face at adjacent times all
+belong to a single target face. The bottom row is contiguous to every
+selection from the original supports, and the top row is constant.
+The Lean theorem `GeometricGraphTermination.realized_graph_map_contracts`
+uses this construction with the affine realization of a simplicial graph map.
 
 ## Coface comparisons in the four-dimensional approach
 
