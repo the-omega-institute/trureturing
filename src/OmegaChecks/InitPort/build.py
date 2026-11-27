@@ -304,6 +304,8 @@ def main():
     parser.add_argument("output", type=Path, help="new directory for the audited module tree and inventory")
     parser.add_argument("modules", nargs="*", help="official Init roots (default: every installed Init module)")
     parser.add_argument("--seed", type=Path, default=DEFAULT_SEED, help="compiled strict OmegaInit seed")
+    parser.add_argument("--isolated-only", action="store_true",
+                        help="publish only the independently replayed library for prelude consumers")
     parser.add_argument("--exclude", action="append", default=[],
                         help="omit a generated candidate; declarations already in the seed cannot be excluded")
     parser.add_argument("--require-complete", action="store_true",
@@ -333,15 +335,16 @@ def main():
         if not args.modules:
             report(product, require_complete=args.require_complete)
             omegamath.build(product, product / "lib", args.j, product / "omegamath-audit.txt")
-        library = product / "lib"
-        hosted = product / "hosted"
-        make_view(library, hosted, foundation_files(library))
-        link_other_roots(library, hosted)
-        consumer = roots[0].replace("Init", "OmegaInit", 1) if args.modules else "OmegaMath"
-        probe = f"import {consumer}\n"
-        if consumer == "OmegaMath" or consumer == "OmegaInit.Prelude":
-            probe += "example {p q : Prop} (h : Omega.And p q) : p := Omega.And.left h\n"
-        run("lean", "--stdin", text=True, input=probe, env={**os.environ, "LEAN_PATH": str(hosted)})
+        if not args.isolated_only:
+            library = product / "lib"
+            hosted = product / "hosted"
+            make_view(library, hosted, foundation_files(library))
+            link_other_roots(library, hosted)
+            consumer = roots[0].replace("Init", "OmegaInit", 1) if args.modules else "OmegaMath"
+            probe = f"import {consumer}\n"
+            if consumer == "OmegaMath" or consumer == "OmegaInit.Prelude":
+                probe += "example {p q : Prop} (h : Omega.And p q) : p := Omega.And.left h\n"
+            run("lean", "--stdin", text=True, input=probe, env={**os.environ, "LEAN_PATH": str(hosted)})
         product.rename(target)
 
 

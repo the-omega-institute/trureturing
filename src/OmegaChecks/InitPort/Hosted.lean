@@ -68,15 +68,22 @@ private def project (source output : System.FilePath) (env pinned : Environment)
     for (alias, target) in aliasExtension.getModuleEntries env idx (level := level) do
       let target := if moved.contains target then `Omega ++ target else target
       if alias != target then metadata := addAlias metadata alias target
-    let mut entries := data.entries.filter (·.1 != aliasExtension.name)
+    let renamed := fun n => if moved.contains n then `Omega ++ n else n
+    for n in protectedExt.getModuleEntries env idx (level := level) do
+      metadata := addProtected metadata (renamed n)
+    for (n, status) in reducibilityCoreExt.getModuleEntries env idx (level := level) do
+      metadata := reducibilityCoreExt.addEntry (asyncDecl := renamed n) metadata (renamed n, status)
+    let replaced := #[aliasExtension.name, protectedExt.name, reducibilityCoreExt.name]
+    let mut entries := data.entries.filter fun e => !replaced.contains e.1
     let mut redirects := #[]
     for n in data.constNames do
       if moved.contains n && (env.find? n).any (· matches .defnInfo _) then
         metadata := Compiler.implementedByAttr.ext.addEntry (asyncDecl := `Omega ++ n) metadata (`Omega ++ n, n)
         redirects := redirects.push (`Omega ++ n)
     -- Keep every pre-existing compiler entry and add the same native calls used by the isolated library.
-    let dataMeta ← mkModuleData metadata level
-    entries := entries ++ dataMeta.entries.filter (fun e => e.1 == aliasExtension.name)
+    -- The input entries are already restricted to this visibility level.
+    let dataMeta ← mkModuleData metadata .private
+    entries := entries ++ dataMeta.entries.filter (fun e => replaced.contains e.1 && !e.2.isEmpty)
     for (ext, more) in dataMeta.entries do
       if ext == Compiler.implementedByAttr.ext.name && !more.isEmpty then
         let earlier := (entries.find? (·.1 == ext)).map Prod.snd |>.getD #[]

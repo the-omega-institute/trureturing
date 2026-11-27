@@ -20,7 +20,7 @@ example (a : α) (b : β) : Omega.Eq (Prod.fst (Prod.mk a b)) a := Omega.rfl
 
 生成的 `OmegaInit.Prelude` 提供 `Omega.Quot`、`Omega.Quot.mk`、`Omega.Quot.ind` 和 `Omega.Quot.lift`。普通导入支持两个消去子的构造子归约。Lean 内核按固定的根名称识别商类型和等式，在打开 `Omega` 命名空间的外部代码中可用 `Omega.Eq` 指定移植的等式。
 
-普通 Lean 文件可直接写 `import OmegaInit.Prelude`，使用 `LEAN_PATH=.lake/init-port/hosted lean Example.lean`。`hosted/` 保留移植声明，按类型和实现核对同名根对象后复用钉版 `Init` 的定义。`lib/` 是带 `prelude` 的独立内核入口，零公理审计和空环境重放读取此目录。仓库种子构建也提供普通导入入口 `python3 src/OmegaChecks/strict_lake.py env lean Example.lean`。
+普通 Lean 文件可直接写 `import OmegaInit.Prelude`，使用 `LEAN_PATH=.lake/init-port/hosted lean Example.lean`。`hosted/` 复用相同的官方根声明，保留 `Omega.Nat.div`、`Omega.Nat.mod` 和 `Omega.Nat.gcd` 自身的计算定义。原生调用使用逐一核验的全输入等式证书。生成器在宿主内核中重新检查传递依赖和各模块中的重复证明。`lib/` 是带 `prelude` 的独立内核入口，零公理审计和空环境重放读取此目录。`--isolated-only` 可单独生成该入口。仓库种子构建也提供普通导入入口 `python3 src/OmegaChecks/strict_lake.py env lean Example.lean`。
 
 位置参数接受一个或多个官方模块名。省略这些参数会扫描钉版工具链的所有 `Init` 模块，包括需要单独导入的模块。构建整个库可运行 `python3 src/OmegaChecks/InitPort/build.py .lake/init-port-all`。加上 `--seed PATH` 可选择另一个已编译的严格种子，默认读取 `.lake/build/omega-strict/lib/lean`。工具把种子的编译文件复制到独立临时目录，随后从钉版官方模块逐个翻译依赖、证明项、定义、归纳族和递归器。每个候选声明都在 Lean 内核中检查。环境变量 `OMEGA_PORT_HEARTBEATS` 为每个候选声明指定原始心跳预算，默认 5000。
 
