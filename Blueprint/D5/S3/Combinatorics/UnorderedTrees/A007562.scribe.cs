@@ -108,7 +108,10 @@ internal sealed class A007562Document : IScribeDocumentDefinition
                     + "normalization. From size two on, every tree has a root child and the parity "
                     + "condition is the literal planted condition. There is one rooted isomorphism class "
                     + "on one vertex. Its literal planted count is zero and the other two counts are one."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("oeis-a007562-parity-leaf-child"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Definition(string id, string name, string title, Formula formula, string prose,
         params LibraryNoteRef[] acknowledgements) =>
