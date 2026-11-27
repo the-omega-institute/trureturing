@@ -674,7 +674,7 @@ workflow/脚本/make 永久不得物化或执行 base 树代码,不得以兜底/
 
 ### 8.3 worktree 与 Lean 缓存入口
 
-**普通 CI 与受保护分支缓存。** PR 和 push 按候选的实际变更编译选定 Lean 目标与依赖，执行对应 Scribe 和测试检查，并只读恢复缓存。受保护的 `dev` 非删除 push 触发独立整库缓存刷新作业，与手动 build 共用仓库级串行队列。用 `make pr-watch PR=<编号> HEAD_SHA=<完整提交 SHA>` 等待固定提交的 required 检查，同一 PR 的同一提交只启动一个等待任务。失败时读取对应 job 的诊断。见 [spec A22](docs/develop/spec/golden-ledger-repo-spec.md#a22-ci-cache-flow)。
+**普通 CI 与受保护分支缓存。** PR 和 push 按候选的实际变更编译选定 Lean 目标与依赖，执行对应 Scribe 和测试检查，并只读恢复缓存。受保护的 `dev` 非删除 push 触发独立整库缓存刷新作业，与手动 build 共用仓库级串行队列。固定 PR head，按第 8.7 条等待承载 required 检查的 GitHub Actions 运行，再按第 8.11 条核对整组检查。失败时读取对应 job 的诊断。见 [spec A22](docs/develop/spec/golden-ledger-repo-spec.md#a22-ci-cache-flow)。
 
 **项目缓存的本地恢复。** dev 主检出使用 `make lean-cache-from-github-without-mathlib` 恢复项目编译产物与原生模块报告。已有私有 build 可显式指定 `REFRESH_STALE=1` 替换。linked worktree 用 `make lean-cache-ensure FULL_BUILD=1` 从热的主检出播种。显式候选 Release 验证按 spec A22 执行。
 
@@ -709,9 +709,7 @@ workflow/脚本/make 永久不得物化或执行 base 树代码,不得以兜底/
 
 ### 8.7 原生同步等待与外部轮询边界
 
-**等待 PR required checks 一律按第 8.11 条。** 同一 PR 的当前 head 只用一个仓库原生 watcher。禁止用 `gh pr checks --watch`、`gh run watch`、API 或自写循环等待这组检查。watcher 不可用时，该 head 的检查结论记为未验证。
-
-**等待单次 GitHub Actions 运行。** Release 发布、缓存重建和合入后首次 push 等场景，确认 run ID 后，在一个宿主后台作业中执行 `gh run watch <run-id> --exit-status`。同一 run 复用这个 watcher，收到完成通知后读取退出结果。不要在 watcher 外反复调用宿主的 `wait`、`gh run view` 或另起等待循环。
+**等待 GitHub Actions CI。** 对 PR、Release、缓存重建及合入后 push，先从对应提交和事件的检查链接确认 run ID，再用一个宿主后台作业执行 `gh run watch <run-id> --interval 300 --exit-status`，每五分钟刷新一次，直到运行结束。复用同一 run 的等待作业，失败时读取失败 job 的日志。一个 PR 有多条必需 workflow 时分别跟踪，按第 8.11 条核对完整检查集与当前 head。
 
 **其他等待有原生同步阻塞原语时就使用它。** 用一个宿主后台作业运行对应原语，如子进程 `wait` 或 make。
 
@@ -742,7 +740,7 @@ Lean LSP 内置 `lean --server`,无需另装;C# 由官方 `csharp-lsp`(`lspServe
 
 **PR 器**:`pr.sh` 为 `open`/`watch` 双动词;`make pr HEAD=b MESSAGE=file [AUTO_MERGE=0] [DRAFT=1]`(pr-open 同义) 用一个消息文件(首行标题,其余正文)传全部调用方字节,标题/正文都不经 make/shell 展开。先按显式 HEAD 解析远端分支并冻结其 SHA,再在同一有界前台进程内 create → App-token 隔离 → 默认 arm auto-merge → 等 required CI,可辨退出码返回。`AUTO_MERGE=0` 不 arm 但仍等 CI;`DRAFT=1` 传 `--draft`,创建成功输出 PR 号后返回,不 arm、不等 CI,优先于 `AUTO_MERGE=1`。直调 `pr.sh open` 仍由显式 `--auto-merge` 开启自动合并,`--draft` 同样优先;`make pr-watch PR=n HEAD_SHA=<40-hex-sha>` 复用同能力,直调须给 `--head-sha`。缺值即 usage 错误,不得用调用工作树 HEAD 或首次 PR 快照补值。每次查询同时核对 PR head 与固定 commit 的检查归属;旧 head 快照只等,不得判红绿或 CLOSED,超时仍返回 124。身份缺失/矛盾、GraphQL 部分错误或上下文分页未完整取得均属查询不可用。stdout 的终态行 `PR_WATCH_RESULT` 给出 PR 编号、固定 head 和 outcome，适用时还给出检查名称和状态。实际 check ID、run ID 和 attempt 由作业终止后的核验取得。调用方用一个宿主后台作业同步调用,认退出码;无常驻进程/租约/重算链/冲突分类器。
 
-**每个 PR 的当前 head 只用一个等待作业。** 非草稿 `make pr` 自带固定 head 的 required checks 等待。确认 PR 的当前 head 后，若同一 PR、同一 SHA 已有 `make pr` 或 `pr-watch` 等待作业，按第 8.8 条续接其宿主原生句柄并收取退出结果。若该 PR 和 SHA 没有等待作业，用一个宿主后台作业运行 `make pr-watch PR=<编号> HEAD_SHA=<40 位提交 SHA>`。换 head 时先确认新的当前 SHA，再按同一规则续接或启动。终态只适用于作业固定的 head。
+**核对 PR 的 required checks。** 对固定 head 的每条 GitHub Actions 运行按第 8.7 条等待。若 `make pr` 或 `pr-watch` 已在跟踪该 head 的整组检查，续接已有后台作业。合并前确认 PR 当前 head 与候选 SHA 相同，核对该提交的全部 required checks（含外部检查）的终态。head 更新后按新提交重新确认检查归属。
 
 **每小时恢复巡检读取一次队列快照，取完所有页。** 快照用于发现待恢复项，逐 PR 的 required checks 仍按上述作业等待。作业终止后可按固定 head、事件、run ID 和 attempt 核验结论。实际合并和该合并提交的首次 `dev` push 按第 6.1 条单独核验，首次 push 的 workflow 按第 8.7 条等待其确切 run。
 
