@@ -2,30 +2,53 @@
 
 ## Abstract
 
-Disjoint close pairs amplify local phase defects into the ordered Lorentz sum. The finite result is stated for a finite collection of copies, so repeated ordinates remain separate rows and the cutoff is inclusive.
+Disjoint close-pair defects amplify into a strict Lorentz cap under a zero-phase bound.
 
 **Theorem 1.1 (Finite matching defect inequality).**
 
-Lean statement `D5/S3/Analytic/Oscillation/MontgomeryMatchingCap.finite_matching_defect`.
+Lean statement: `D5/S3/Analytic/Oscillation/MontgomeryMatchingCap.finite_matching_defect`
 
-*Proof.* Machine-checked in Lean. ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/Oscillation/MontgomeryMatchingCap.finite_matching_defect` (`✓ std3`). ∎
 
-Let `lorentzKernel d = 4 / (4 + d²)` and `phaseResidual a b = 1 - cos(a-b)`. A matching consists of two maps from a finite pair set to row owners. Each map is injective on the matching and the two images are disjoint. If the pair endpoints are at distance at most one, every column in the first endpoint's inclusive closed radius-one neighborhood is at distance at most two from both endpoints. Both Lorentz weights are therefore at least one half.
+*Source.* Repository-derived.
 
-For three unit phases on the circle, the squared triangle inequality gives
-`phaseResidual(a,c) + phaseResidual(b,c) ≥ phaseResidual(a,b)/2`.
-The two endpoint rows consequently contribute at least one quarter of the pair residual per neighborhood copy. Injectivity and cross-disjointness allow these row contributions to be summed without duplication. A row budget bounds the zero-phase Lorentz sum, giving the stated defect cap.
+*Commentary.*
 
-**Theorem 1.2 (Multiplicity and normalized conditional cap).**
+A finite collection of copies carries the inclusive closed radius-one neighborhoods. Two injective endpoint maps with disjoint row owners amplify the pair residual by the squared triangle inequality on the circle.
 
-Lean statements `D5/S3/Analytic/Oscillation/MontgomeryMatchingCap.spectrum_matching_defect` and `D5/S3/Analytic/Oscillation/MontgomeryMatchingCap.strict_normalized_cap_of_matching`.
+The Lorentz weight is at least one half for both endpoint rows and every column in the first endpoint neighborhood. Summing nonnegative rows without duplication gives the ordered defect bound.
 
-The finite sigma type `Σ j, Fin (mult j)` expands every retained multiplicity copy through the inclusive cutoff. Counting its fibers rewrites the finite pair sum exactly as the existing `MontgomeryCountUpper.pairSum`. If at least `c₁ H log H` disjoint pairs have residual at least `c₂`, and each first-endpoint neighborhood has at least `c₃ log H` copies, the matching defect has normalized size at least `c₁ c₂ c₃ / 4`.
+**Theorem 1.2 (Defect for a spectrum with multiplicities).**
 
-The conditional cap theorem takes the row budget and its normalized baseline as hypotheses. The baseline may exceed the target coefficient by the matching margin, which the finite defect removes. The row budget is the local form supplied by the existing Lorentz interval upper-bound machinery. Actual hypotheses that produce these close-pair families for the zeta spectrum remain open.
+Lean statement: `D5/S3/Analytic/Oscillation/MontgomeryMatchingCap.spectrum_matching_defect`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/Oscillation/MontgomeryMatchingCap.spectrum_matching_defect` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The finite set of sigma-indexed copies counts each ordinate with its multiplicity through the inclusive cutoff. The copy-sum expansion identifies the ordered deficit with the difference of the Montgomery sums at zero and at the tested frequency.
+
+**Theorem 1.3 (Conditional normalized cap).**
+
+Lean statement: `D5/S3/Analytic/Oscillation/MontgomeryMatchingCap.strict_normalized_cap_of_matching`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/Oscillation/MontgomeryMatchingCap.strict_normalized_cap_of_matching` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For a cutoff above one, lower bounds proportional to the cutoff times its logarithm for the matching size and to its logarithm for the neighborhood copy counts, together with a nonnegative phase residual lower bound, give a normalized saving of at least one quarter of the product of their three constants.
+
+A zero-phase bound within that saving of the desired cap yields a strict cap when the chosen margin is positive. Obtaining sufficiently many such close pairs with a uniform phase residual for actual zeta zeros across a long frequency band remains open.
 
 ## References
 
-- Truth anchors `D5/S3/Analytic/Oscillation/MontgomeryMatchingCap.finite_matching_defect` and `D5/S3/Analytic/Oscillation/MontgomeryMatchingCap.strict_normalized_cap_of_matching`.
-- Dependency `D5/S3/Analytic/Oscillation/MontgomeryCountUpper`.
-- The inclusive multiplicity-copy representation is `D5.S3.Analytic.Oscillation.SmoothedSpectrumCounting.CutDensity.copies`.
+- Truth anchor: `D5/S3/Analytic/Oscillation/MontgomeryMatchingCap.finite_matching_defect`
+- Truth anchor: `D5/S3/Analytic/Oscillation/MontgomeryMatchingCap.spectrum_matching_defect`
+- Truth anchor: `D5/S3/Analytic/Oscillation/MontgomeryMatchingCap.strict_normalized_cap_of_matching`
+- Dependency: [D5/S3/Analytic/Oscillation/MontgomeryAutocorrelationLimit](MontgomeryAutocorrelationLimit.md)
+- Dependency: [D5/S3/Analytic/Oscillation/MontgomeryCountUpper](MontgomeryCountUpper.md)
+- Dependency: [D5/S3/Analytic/Oscillation/SmoothedSpectrumCounting](SmoothedSpectrumCounting.md)
