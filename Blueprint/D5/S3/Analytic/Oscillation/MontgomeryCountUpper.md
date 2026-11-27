@@ -18,7 +18,19 @@ Lean statement: `D5/S3/Analytic/Oscillation/MontgomeryCountUpper.count_asymptoti
 
 If |N(Y)−M(Y)| is bounded for all sufficiently large Y, then N(Y)/(Y log Y) tends to c. Use the normalized count limit with mean scale log(Y)/(2π), then rescale the limit by c.
 
-**Theorem 1.2 (A uniform bound on the leading coefficient).**
+**Theorem 1.2 (A bound from the count through the cutoff).**
+
+Lean statement: `D5/S3/Analytic/Oscillation/MontgomeryCountUpper.abs_pairSum_le_of_local_discrepancy`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/Oscillation/MontgomeryCountUpper.abs_pairSum_le_of_local_discrepancy` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Fix Y > 1 and 1 ≤ A ≤ Y. If |N(x)−M(x)| ≤ D for every x between A and Y, then |G_Y(t)| ≤ N(Y)(2πc log Y + N(A) + 2D + c) for every real t. The cutoff interval contains both count evaluations for every Lorentz superlevel interval. The triangle inequality and |cos| ≤ 1 bound the absolute sum.
+
+**Theorem 1.3 (A uniform bound on the leading coefficient).**
 
 Lean statement: `D5/S3/Analytic/Oscillation/MontgomeryCountUpper.pairSum_le_of_bounded_discrepancy`
 
@@ -36,6 +48,7 @@ Bound each cosine by one, then sum the row bound with the outer multiplicities. 
 
 ## References
 
+- Truth anchor: `D5/S3/Analytic/Oscillation/MontgomeryCountUpper.abs_pairSum_le_of_local_discrepancy`
 - Truth anchor: `D5/S3/Analytic/Oscillation/MontgomeryCountUpper.count_asymptotic_of_bounded_discrepancy`
 - Truth anchor: `D5/S3/Analytic/Oscillation/MontgomeryCountUpper.pairSum_le_of_bounded_discrepancy`
 - Dependency: [D5/S3/Analytic/Oscillation/MontgomeryWindow](MontgomeryWindow.md)

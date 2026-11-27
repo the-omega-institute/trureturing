@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.RotationAvoidance;
 internal sealed class RotationAvoidanceDefsDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/RotationAvoidance/RotationAvoidanceDefs.";
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Combinatorics/egecioglu2026rotations");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/PermutationPatterns/egecioglu2026rotations");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Permutations whose first k rotations avoid a fixed pattern are compared by their cardinalities and the complement and reverse symmetries of patterns of length four.",

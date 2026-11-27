@@ -16,6 +16,10 @@ internal sealed class AlbrightKemenyEdgeDerivativeRefutationDocument : IScribeDo
             Paragraph(Text("The edge weight varies by a real parameter t, and weighted degrees vary with it. Kemeny's constant is the sum of reciprocals of the nonzero eigenvalues of the normalized Laplacian, counted with multiplicity.")),
             Node("adj", "One-edge perturbation", "paramAdj", ParamAdjFormula(),
                 "Section 2, page 3, states: “Aksoy et al. in [2] represented M(t) = A + tB where A is the adjacency matrix of a graph G and B is a symmetric matrix representing a collection of edges.” It continues: “We will not restrict B and instead have B be a symmetric matrix representing any collection of edges denoted EC.” Section 1, page 3, states: “Here, we assume all unweighted edges have weight 1 and all non-edges have weight 0.” For vertices a and b, B is the sum of the two matrix units at (a,b) and (b,a); the vertex set is Fin n.", AssessedProvenance.FromLiterature(Source)),
+            Node("edge-degrees", "Perturbation degree rates", "edgeDegrees", EdgeDegreesFormula(),
+                "The two single-coordinate functions add one contribution at each endpoint. The definition includes a = b, when the rate at the common endpoint is two.", AssessedProvenance.FromRepo(Source)),
+            Node("param-adj-degrees", "Row sums of the perturbed adjacency", "paramAdj_degrees", ParamAdjDegreesFormula(),
+                "Any function d giving the unperturbed row sums can be used as the baseline. For every real t, the row-sum increment is t times the endpoint rate. The identity also applies to coincident endpoints.", AssessedProvenance.FromRepo(Source), DescribeRole.Theorem),
             Node("lap", "Normalized Laplacian", "normLap", NormLapFormula(),
                 "Section 1, page 3, states: “The normalized Laplacian matrix of a graph is given by L = I − D^{−1/2} A D^{−1/2} where A is the adjacency matrix and D is the degree diagonal matrix.” The displayed entries use the row sums of A for those degrees, including for the perturbed adjacency matrix.", AssessedProvenance.FromLiterature(Source)),
             Node("kemeny", "Kemeny's constant", "kemeny", KemenyFormula(),
@@ -81,6 +85,29 @@ internal sealed class AlbrightKemenyEdgeDerivativeRefutationDocument : IScribeDo
             V("t"), Sp, Cdot, Sp, edge);
         return All("n", Nat(), GraphBinders(All("a", FinN(), All("b", FinN(), All("t", Real(),
             Eqn(Call("paramAdj", V("G"), V("a"), V("b"), V("t")), rhs))))));
+    }
+
+    private static Formula EdgeDegreesFormula() =>
+        All("n", Nat(), All("a", FinN(), All("b", FinN(),
+            Eqn(Call("edgeDegrees", V("a"), V("b")),
+                Seq(QCall("Pi", "single", V("a"), D(1)), Sp, Plus, Sp,
+                    QCall("Pi", "single", V("b"), D(1)))))));
+
+    private static Formula ParamAdjDegreesFormula()
+    {
+        Formula d = V("d");
+        Formula i = V("i");
+        Formula j = V("j");
+        Formula t = V("t");
+        Formula adjacency = QCall("SimpleGraph", "adjMatrix", V("G"), Real());
+        Formula perturbation = Call("paramAdj", V("G"), V("a"), V("b"), t);
+        Formula baseline = All("i", FinN(), Eqn(SumOver("j", App(adjacency, i, j)), App(d, i)));
+        Formula rate = App(Call("edgeDegrees", V("a"), V("b")), i);
+        Formula rowSum = Eqn(SumOver("j", App(perturbation, i, j)),
+            Seq(App(d, i), Sp, Plus, Sp, t, Cdot, rate));
+        return All("n", Nat(), GraphBinders(All("a", FinN(), All("b", FinN(),
+            All("d", new Formula.TypeArrow(FinN(), Real()),
+                Imp(baseline, All("t", Real(), All("i", FinN(), rowSum))))))));
     }
 
     private static Formula NormLapFormula()
