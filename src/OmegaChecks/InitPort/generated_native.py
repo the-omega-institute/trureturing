@@ -98,7 +98,7 @@ def check_runtime_ir(stage, library, adapter, consumer):
 
 def compile_generated(stage, product, graph, seed_ir, owners=None, *, original_seed=None, before_owner=None,
                       check_strings=True, check_literals=True, check_mixed=True, check_rat=True, check_bootstrap=True,
-                      check_list_search=True, check_decoding=True, check_names=True, check_toolchain=True):
+                      check_list_search=True, check_decoding=True, check_names=True, check_toolchain=True, check_thunks=False):
     """Compile generated owners in import order and preserve the native symbols of existing owners."""
     requested = set(graph if owners is None else owners)
     selected = [owner for owner in TopologicalSorter(graph).static_order()
@@ -235,6 +235,16 @@ def compile_generated(stage, product, graph, seed_ir, owners=None, *, original_s
                     raise ValueError(f"missing native dependency {owner}")
             inputs.append(obj)
         return inputs
+
+    if check_thunks and "OmegaInit.Core" in selected:
+        dependencies = reachable(["OmegaInit.Core"])
+        if dependencies.issubset(selected) and all(seed_files[d].is_file() for d in dependencies & seed_owners):
+            client = stage / "thunk-consumer.c"
+            run("lean", "-R", STRICT_SOURCES, "-c", client, STRICT_SOURCES / "ThunkConsumer.lean",
+                env={**os.environ, "LEAN_PATH": str(library)})
+            app = stage / "check-thunk"
+            run("leanc", client, HERE / "consumers" / "thunk_consumer.c", *dependency_objects(dependencies), "-o", app)
+            run(app, timeout=30)
 
     if len(string_sources) == len(string_modules) and check_strings:
         list_client = stage / "string-list-consumer.c"

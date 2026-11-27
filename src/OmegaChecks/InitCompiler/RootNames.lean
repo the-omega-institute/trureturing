@@ -10,6 +10,10 @@ by their root names. These objects remain inductives, constructors and recursors
 public def taskPrimitives : Array Name :=
   #[`Task, `Task.pure, `Task.get, `Task.rec, `Task.recOn, `Task.casesOn]
 
+/-- The compiler lowers raw thunk case analysis to the memoizing root getter. -/
+public def thunkPrimitives : Array Name :=
+  #[`Thunk, `Thunk.mk, `Thunk.fn, `Thunk.get, `Thunk.pure, `Thunk.rec, `Thunk.recOn, `Thunk.casesOn]
+
 /-- Lean recognizes these annotations by their literal head constants before reduction. -/
 public def binderAnnotations := #[`optParam, `outParam, `semiOutParam]
 
@@ -36,7 +40,8 @@ public def natPrimitives := #[
   `instHAdd, `instOfNatNat, `rfl]
 
 private def primitiveName (name : Name) :=
-  [`Nat.div, `Nat.mod, `Nat.gcd].contains name || taskPrimitives.contains name || binderAnnotations.contains name || natPrimitives.contains name
+  [`Nat.div, `Nat.mod, `Nat.gcd].contains name || taskPrimitives.contains name || thunkPrimitives.contains name ||
+    binderAnnotations.contains name || natPrimitives.contains name
 
 /-- The resolver looks up generated theorem names under their physical parent before consulting aliases. -/
 private def reservedEquation : Name → Bool
@@ -49,7 +54,7 @@ public def usesRoot (name : Name) := primitiveName name || reservedEquation name
 public def isPrimitive (owner name : Name) : Bool :=
   (owner == `OmegaInit.Data.Nat.Gcd && name == `Nat.gcd) ||
   (owner.getRoot == `OmegaInit && reservedEquation name) ||
-  (owner == `OmegaInit.Core && taskPrimitives.contains name) ||
+  (owner == `OmegaInit.Core && (taskPrimitives.contains name || thunkPrimitives.contains name)) ||
   (owner == `OmegaInit.Prelude && (binderAnnotations.contains name || natPrimitives.contains name || [`Nat.div, `Nat.mod].contains name))
 
 /-- Method lookup uses the structure's physical namespace, even when callers spell its alias. -/

@@ -1,5 +1,6 @@
 module
 import all Lean.Environment
+import all Lean.Structure
 import OmegaChecks.InitCompiler.StructuralEquations
 meta import OmegaChecks.InitCompiler.StructuralEquations
 import all Lean.OriginalConstKind
@@ -298,6 +299,16 @@ private def compileOwner (source : Environment) (partialCode : NameMap Definitio
         IO.println s!"cannot compile pinned partial definition {n}: {← e.toMessageData.toString}"
         before.restore
       continue
+    if n == `Thunk.fn then
+      -- Raw builtin projections lower back to the named field. Use the pinned
+      -- fnImpl computation so the named field forces the memoized value once.
+      let some (.defnInfo field) := strict.find? n | throwError "missing thunk field"
+      let some (.defnInfo impl) := strict.find? `Omega.Thunk.fnImpl | throwError "missing thunk getter implementation"
+      let value := impl.value.instantiateLevelParams impl.levelParams (field.levelParams.map Level.param)
+      unless Kernel.isDefEqGuarded strict {} field.value value do throwError "incorrect thunk field implementation"
+      let name := Compiler.mkUnsafeRecName n
+      compileEquation source n {field with name, all := [name], value, safety := .safe}
+      continue
     if n == `Omega.Lean.RArray.get && (← getImpureSignature? `Omega.Lean.RArray.getImpl).isSome then
       let impl := `Omega.Lean.RArray.getImpl
       let some (.defnInfo d) := strict.find? n | throwError "missing reflected array lookup"
@@ -428,6 +439,9 @@ private unsafe def install (source publicSource : Environment) (lib out : System
   let mut context ← localEnv env owner (locals ++ words ++ candidates)
   -- Compiler tags stored under the imported module index need local entries while compiling.
   for n in locals ++ candidates do
+    if n == `Thunk then
+      let some info := getStructureInfo? env n | throw <| IO.userError "missing thunk structure fields"
+      context := structureExt.addEntry context info
     let upstream := InitKernelPort.originalName n
     let macroMatchers := [`Lean.expandMacros.match_1, `Lean.Syntax.setTailInfo.match_1, `Lean.Syntax.structEq._sparseCasesOn_2]
     if owner == `OmegaInit.Meta.Defs && (privateToUserName? upstream).any macroMatchers.contains then

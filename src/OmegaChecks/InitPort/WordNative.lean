@@ -178,6 +178,12 @@ public def usesStringExport (n : Name) : Bool :=
   bootstrapStringOp n && ![`String.Internal.next, `String.Internal.get, `String.Internal.atEnd,
     `String.Internal.getUTF8Byte, `String.Internal.ugetUTF8Byte, `String.Internal.length, `String.Internal.append].contains n
 
+private def thunkExtern : Name → Option String
+  | `Thunk.mk => some "lean_mk_thunk"
+  | `Thunk.pure => some "lean_thunk_pure"
+  | `Thunk.get => some "lean_thunk_get_own"
+  | _ => none
+
 public def supported (source : Environment) (owner name : Name) : Bool :=
   let method := name.updatePrefix .anonymous
   let widths := [`toUInt8, `toUInt16, `toUInt32, `toUInt64, `toUSize, `toInt8, `toInt16, `toInt32, `toInt64, `toISize]
@@ -214,7 +220,8 @@ public def supported (source : Environment) (owner name : Name) : Bool :=
     [`neg, `add, `sub, `mul, `decEq, `decLe, `decLt, `decNonneg, `natAbs, `ediv, `emod, `tdiv, `tmod, `divExact].contains method
   let primitive := ((word? name.getPrefix).isSome && name.getPrefix != `Char && (ops ++ widths).contains method) ||
     (name.getPrefix == `Bool && widths.contains method)
-  (owner == `OmegaInit.Util && debugPrimitive name && isExtern source name) ||
+  (owner == `OmegaInit.Core && (thunkExtern name).isSome) ||
+    (owner == `OmegaInit.Util && debugPrimitive name && isExtern source name) ||
     (owner == `OmegaInit.System.Uri && uriFunction name) ||
     (owner == `OmegaInit.Data.ToString.Name && renderName name) ||
     (owner == `OmegaInit.Data.String.Substring && rawStringFunction name) ||
@@ -243,7 +250,8 @@ public def install (names : Array Name) : CoreM Unit := do
   for n in names do
     unless (← getEnv).find? n matches some (.ctorInfo _) do
       modifyEnv fun e => privateConstKindsExt.insert e n .defn
-    modifyEnv fun e => externAttr.ext.addEntry (asyncDecl := n) e (n, ⟨[.standard `all (symbol n)]⟩)
+    let entry := (thunkExtern n).getD (symbol n)
+    modifyEnv fun e => externAttr.ext.addEntry (asyncDecl := n) e (n, ⟨[.standard `all entry]⟩)
     (← compileDeclsRef.get) #[n] {}
 
 private def layout (env : Environment) (name : Name) : IO Unit := do
@@ -332,6 +340,14 @@ private def separatorWrapper (source strict : Environment) (n official : Name) :
 /-- Check both sides of the call and generate its ownership conversions from their stored IR. -/
 public def wrapper (source strict : Environment) (n : Name) : IO String := do
   let official := InitKernelPort.originalName n
+  if let some entry := thunkExtern official then
+    let read := official == `Thunk.get
+    let args := #[(IR.IRType.erased, false), (if read then .object else .tobject, read)]
+    let out := if read then IR.IRType.tobject else .object
+    unless n == official && (source.find? n).map (·.type) == (strict.find? n).map (·.type) do
+      throw <| IO.userError s!"unexpected primitive thunk interface {n}"
+    for env in [source, strict] do verify env n args out entry
+    return ""
   if IONative.supported official then return ← IONative.wrapper source strict n (symbol n)
   if MacroNative.supported official then return ← MacroNative.wrapper source strict n (symbol n)
   if monadicSeparator official then return ← separatorWrapper source strict n official
