@@ -8,8 +8,8 @@ public import Mathlib.Data.Fintype.BigOperators
 Omega original.
 
 Finite transportation in conical commutative refinement monoids.
-The finite-family construction is the transportation argument of Atserias,
-"Consistency and witnesses for annotated relations", Theorem 1 and Section 6.
+The finite-family construction is the transportation argument of Atserias and
+Kolaitis, "Consistency Witnesses for Annotated Relations", Theorem 1 and Section 6.
 -/
 
 compile_only_with_mathlib
