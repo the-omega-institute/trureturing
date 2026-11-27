@@ -56,9 +56,25 @@ public def helper := mkPrivateNameCore owner `Std.IterM.DefaultConsumers.forInWi
 public def strictHelper := mkPrivateNameCore (owner.replacePrefix `Init `OmegaInit)
   `Omega.Std.IterM.DefaultConsumers.forInWithWF
 
+/-- A finite iterator supplies termination for every callback, so the entire default
+instance is represented by its checked well-founded projection. -/
+public def specializeFiniteDefault? (sub : Expr) : MetaM (Option Expr) := do
+  unless sub.getAppFn.isConstOf ``IteratorLoop.defaultImplementation do return none
+  let #[β, α, m, n, monad, iter] := sub.getAppArgs | return none
+  let constraint ← Meta.mkAppOptM ``Finite #[α, m, β, iter]
+  let some fin ← Meta.synthInstance? constraint | return none
+  let constructor := mkAppN (mkConst ``IteratorLoop.mk sub.getAppFn.constLevels!) #[α, m, β, iter, n]
+  let .forallE _ field _ _ ← Meta.whnf (← Meta.inferType constructor) | return none
+  Meta.forallBoundedTelescope field (some 6) fun xs _ => do
+    let #[lift, γ, pl, it, init, f] := xs | return none
+    let wf ← Meta.mkAppOptM ``IteratorLoop.wellFounded_of_finite #[m, α, β, γ, iter, fin, pl]
+    let call ← Meta.mkAppOptM helper #[α, m, β, iter, n, monad, lift, γ, pl, wf, it, init, f]
+    return some (mkApp constructor (← Meta.mkLambdaFVars xs call))
+
 /-- The source alias unfolds to the original projection. Only calls carrying the exact local
 termination witness can be expressed through it. -/
 public def specialize? (sub : Expr) : MetaM (Option Expr) := do
+  if sub.getAppFn.isConstOf ``IteratorLoop.defaultImplementation then return ← specializeFiniteDefault? sub
   unless sub.getAppFn.isConstOf ``IteratorLoop.forIn do return none
   let #[α, m, β, iter, n, loop, lift, γ, pl, it, init, f] := sub.getAppArgs | return none
   unless loop.getAppFn.isConstOf ``IteratorLoop.defaultImplementation do return none

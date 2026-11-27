@@ -12,6 +12,12 @@ open Std Std.Iterators
 
 namespace OmegaChecks.InitPort.Alternatives
 
+public theorem Std.instLawfulIteratorLoopDefaultImplementation :
+    type_of% @_root_.Std.instLawfulIteratorLoopDefaultImplementation :=
+  fun {β} α m n mm mn iter _ =>
+    @_root_.Std.LawfulIteratorLoop.mk β α m n mm mn iter
+      (@_root_.Std.IteratorLoop.defaultImplementation β α m n mn iter) (fun _ _ _ _ _ _ _ _ => rfl)
+
 private noncomputable def finiteForIn {α β : Type w} {m : Type w → Type w'} [Iterator α m β] [Finite α m]
     {n : Type x → Type x'} [Monad n] (lift : ∀ γ δ, (γ → n δ) → m γ → n δ)
     (γ : Type x) (Pl : β → γ → ForInStep γ → Prop) (it : IterM (α := α) m β) (init : γ)
