@@ -175,7 +175,7 @@ private theorem signedSupport_length (a : Fin 24 → F3)
     change ({23, 0, 1} : Finset (Fin 24)).card = 3
     decide +kernel
   rw [← hfree, List.toFinset_card_of_nodup (freeSlopes_nodup.filter _), hanchors] at hcard
-  simpa only [signedSupport, List.length_map] using hcard
+  simpa [signedSupport, rowSupport, hammingNorm, List.length_map] using hcard
 
 /-- A normalized row with three occupied anchors and `k` other occupied slopes
 is included in the finite list. The remaining `Fin 24` coordinates are exactly
