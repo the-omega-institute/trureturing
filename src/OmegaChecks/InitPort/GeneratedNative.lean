@@ -1,5 +1,7 @@
 module
 import all Lean.Environment
+import all Lean.OriginalConstKind
+import Lean.Compiler.LCNF.ToDecl
 import Lean.Compiler.LCNF.Main
 import Lean.Compiler.LCNF.PhaseExt
 import Lean.Compiler.LCNF.EmitC
@@ -56,13 +58,31 @@ private def originalName (n : Name) : Name := Id.run do
 /-- Use the published strict calling conventions of runtime operands before boxing higher-order calls. -/
 private def missingRuntimeDependency (source : Environment) (n : Name) : CoreM Bool := do
   let some body := (← getEnv).find? n >>= (·.value?) | return false
+  let mut missing : NameSet := {}
+  let env ← getEnv
   for dep in body.getUsedConstants do
+    -- Constructor applications lower directly using the owning inductive's strict layout.
+    if let some (.ctorInfo ctor) := env.find? dep then
+      if (monoTypeExt.find? env ctor.induct).isSome then continue
     let original := originalName dep
     if (isExtern source original || (getImplementedBy? source original).isSome ||
         (getSigCore? source impureSigExt original).isSome) &&
         (← getImpureSignature? dep).isNone then
-      return true
-  return false
+      missing := missing.insert dep
+  if missing.isEmpty then return false
+  -- The compiler has erased proof arguments and types in the executable let-values.
+  let before ← Core.saveState
+  try
+    let decl ← CompilerM.run (toDecl n)
+    let visit : StateM Bool Unit := decl.value.forCodeM fun (root : Code .pure) => root.forM fun (code : Code .pure) => do
+      if let .let binding _ := code then
+        if let .const dep .. := binding.value then
+          if missing.contains dep then modify fun _ => true
+    return (visit.run false).2
+  catch _ =>
+    return true
+  finally
+    before.restore
 
 private def compileOwner (source : Environment) (groups : Array InductiveVal) (order : Array Name) : CoreM Unit := do
   compileLayoutsInOrder groups
@@ -70,6 +90,7 @@ private def compileOwner (source : Environment) (groups : Array InductiveVal) (o
     if ← missingRuntimeDependency source n then continue
     let before ← Core.saveState
     try
+      modifyEnv fun env => privateConstKindsExt.insert env n .defn
       (← compileDeclsRef.get) #[n] {}
       -- Type aliases and proof-only definitions have no executable declaration.
       unless (← CompilerM.run (getLocalDeclAt? n .impure)).isSome do before.restore
@@ -137,7 +158,7 @@ private unsafe def install (source publicSource : Environment) (lib out : System
     for n in (declOrderExt.getState st.env).1 do
       if oldNative.contains n then throw <| IO.userError s!"native symbol collision at {n}"
     emitOwner st.env owner part.imports ctx (modToFilePath out owner "c")
-    writeCode lib owner st.env (layouts ++ codeExtensions)
+    writeCode lib owner st.env (layouts ++ codeExtensions ++ #[privateConstKindsExt.name])
     let fresh ← importModules #[{module := owner}] {} (level := .exported)
     let actual := NameSet.ofList ((impureSigExt.getModuleEntries fresh (fresh.getModuleIdx? owner).get!).map (·.name)).toList
     let originalOwner := owner.replacePrefix `OmegaInit `Init
