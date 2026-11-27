@@ -16,6 +16,57 @@ namespace OmegaChecks.InitPort.Alternatives.String.Slice.Pattern.Model
 
 open _root_.String.Slice.Pattern.Model
 
+private theorem optionOfStep {α : Type} {P : Prop} {ok : P → Prop} {step : P → α}
+    [Decidable (∃ h, ok h)] (result : Option α)
+    (spec : ∀ q, result = some q ↔ ∃ h, q = step h ∧ ok h) :
+    result = if h : ∃ h, ok h then some (step h.1) else none := by
+  split
+  · rename_i yes
+    obtain ⟨hp, tested⟩ := yes
+    exact (spec _).mpr ⟨hp, rfl, tested⟩
+  · rename_i no
+    cases eq : result with
+    | none => rfl
+    | some q =>
+      obtain ⟨hp, _, tested⟩ := (spec q).mp eq
+      exact (no ⟨hp, tested⟩).elim
+
+public theorem Char.matchAt?_eq : type_of% @_root_.String.Slice.Pattern.Model.Char.matchAt?_eq := by
+  intro s pos pat
+  refine _root_.String.Slice.Pattern.Model.Pos.skip?_eq_matchAt? |>.symm.trans (optionOfStep _ ?_)
+  intro q
+  exact _root_.String.Slice.Pattern.Model.Pos.skip?_eq_some_iff.trans _root_.String.Slice.Pattern.Model.Char.isLongestMatchAt_iff
+
+public theorem Char.revMatchAt?_eq : type_of% @_root_.String.Slice.Pattern.Model.Char.revMatchAt?_eq := by
+  intro s pos pat
+  refine _root_.String.Slice.Pattern.Model.Pos.revSkip?_eq_revMatchAt? |>.symm.trans (optionOfStep _ ?_)
+  intro q
+  exact _root_.String.Slice.Pattern.Model.Pos.revSkip?_eq_some_iff.trans _root_.String.Slice.Pattern.Model.Char.isLongestRevMatchAt_iff
+
+public theorem CharPred.matchAt?_eq : type_of% @_root_.String.Slice.Pattern.Model.CharPred.matchAt?_eq := by
+  intro s pos pat
+  refine _root_.String.Slice.Pattern.Model.Pos.skip?_eq_matchAt? |>.symm.trans (optionOfStep _ ?_)
+  intro q
+  exact _root_.String.Slice.Pattern.Model.Pos.skip?_eq_some_iff.trans _root_.String.Slice.Pattern.Model.CharPred.isLongestMatchAt_iff
+
+public theorem CharPred.revMatchAt?_eq : type_of% @_root_.String.Slice.Pattern.Model.CharPred.revMatchAt?_eq := by
+  intro s pos pat
+  refine _root_.String.Slice.Pattern.Model.Pos.revSkip?_eq_revMatchAt? |>.symm.trans (optionOfStep _ ?_)
+  intro q
+  exact _root_.String.Slice.Pattern.Model.Pos.revSkip?_eq_some_iff.trans _root_.String.Slice.Pattern.Model.CharPred.isLongestRevMatchAt_iff
+
+public theorem CharPred.Decidable.matchAt?_eq : type_of% @_root_.String.Slice.Pattern.Model.CharPred.Decidable.matchAt?_eq := by
+  intro s pos pat inst
+  refine _root_.String.Slice.Pattern.Model.Pos.skip?_eq_matchAt? |>.symm.trans (optionOfStep _ ?_)
+  intro q
+  exact _root_.String.Slice.Pattern.Model.Pos.skip?_eq_some_iff.trans _root_.String.Slice.Pattern.Model.CharPred.Decidable.isLongestMatchAt_iff
+
+public theorem CharPred.Decidable.revMatchAt?_eq : type_of% @_root_.String.Slice.Pattern.Model.CharPred.Decidable.revMatchAt?_eq := by
+  intro s pos pat inst
+  refine _root_.String.Slice.Pattern.Model.Pos.revSkip?_eq_revMatchAt? |>.symm.trans (optionOfStep _ ?_)
+  intro q
+  exact _root_.String.Slice.Pattern.Model.Pos.revSkip?_eq_some_iff.trans _root_.String.Slice.Pattern.Model.CharPred.Decidable.isLongestRevMatchAt_iff
+
 public theorem Pos.skipWhile_eq_iff : type_of% @_root_.String.Slice.Pattern.Model.Pos.skipWhile_eq_iff := by
   intro ρ pat model instancePattern lawful s a b
   fun_induction _root_.String.Slice.Pos.skipWhile with
