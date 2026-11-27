@@ -55,6 +55,7 @@ def reductions : List (Name × Name × Name × Name) := [
   (`Init.Core, `eq_iff_iff, `propext, ``propextFromEqIffIff),
   (`Init.Core, `Iff.subst, `propext, ``propextFromIffSubst),
   (`Init.Core, `Eq.propIntro, `propext, ``propextFromPropIntro),
+  (`Init.Core, `instDecidableEqOfIff, `propext, ``ConstructorNormalization.propextOfDecision),
   (`Init.Ext, `propext_iff, `propext, ``propextFromPropextIff),
   (`Init.Classical, `Classical.propComplete, `propext, ``propextFromPropComplete),
   (`Init.PropLemmas, `ite_iff_left_iff, `propext, ``propextFromIteIffLeft),
@@ -182,6 +183,10 @@ private def orderReductionType (source target : ConstantInfo) : MetaM Expr := do
         let allComparisons ← Meta.mkForallFVars #[p, q] admission
         Meta.mkForallFVars #[port] (← mkArrow allComparisons target.type)
 
+private abbrev agreesOnEquivalentProps (port reference : type_of% @instDecidableEqOfIff) :=
+  ∀ (p q : Prop) (h : p ↔ q),
+    @decide (p = q) (@port p q (.isTrue h)) = @decide (p = q) (@reference p q (.isTrue h))
+
 run_cmd
   let env ← getEnv
   let mut seen := Std.HashSet.emptyWithCapacity
@@ -203,6 +208,10 @@ run_cmd
       Elab.Command.liftCoreM <| Meta.MetaM.run' <| optionLawReductionType source target levels
     else if owner == `Init.Internal.Order.Basic && InternalOrder.implicationOrders.lookup name == some witness then
       Elab.Command.liftCoreM <| Meta.MetaM.run' <| orderReductionType source target
+    else if source.name == ``instDecidableEqOfIff then
+      Elab.Command.liftCoreM <| Meta.MetaM.run' <| Meta.withLocalDeclD `port source.type fun port => do
+        let agreement := mkApp2 (mkConst ``agreesOnEquivalentProps) port (mkConst source.name)
+        Meta.mkForallFVars #[port] (← mkArrow agreement target.type)
     else do
       -- The source may be specialized to a particular universe tuple when constructing the axiom.
       let .forallE _ input _ _ := proof.type | throwError "missing argument of {witness}"
