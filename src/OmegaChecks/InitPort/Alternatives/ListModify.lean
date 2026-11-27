@@ -1,4 +1,5 @@
 module
+import Init.Data.List.Nat.Perm
 import all Init.Data.List.Nat.Modify
 import all Init.Data.List.Basic
 
@@ -172,5 +173,57 @@ public theorem List.modify_eraseIdx_of_lt : type_of% @_root_.List.modify_eraseId
 public theorem List.modify_eraseIdx_of_ge : type_of% @_root_.List.modify_eraseIdx_of_ge := by
   intro α f i j xs ge
   exact (_root_.List.eraseIdx_modify_of_lt f (j+1) i xs (Nat.lt_succ_of_le ge)).symm
+
+public theorem List.set_append_left : type_of% @_root_.List.set_append_left := by
+  intro α s t i x bound
+  induction s generalizing i with
+  | nil => exact (Nat.not_succ_le_zero _ bound).elim
+  | cons a s ih =>
+    cases i with
+    | zero => rfl
+    | succ i => exact congrArg (a :: ·) (ih i (Nat.le_of_succ_le_succ bound))
+
+public theorem List.set_append_right : type_of% @_root_.List.set_append_right := by
+  intro α s t i x past
+  induction s generalizing i with
+  | nil => rw [List.length_nil, Nat.sub_zero]; rfl
+  | cons a s ih =>
+    cases i with
+    | zero => exact (Nat.not_succ_le_zero _ past).elim
+    | succ i =>
+      rw [List.length_cons, Nat.succ_sub_succ_eq_sub]
+      exact congrArg (a :: ·) (ih i (Nat.le_of_succ_le_succ past))
+
+public theorem List.set_append : type_of% @_root_.List.set_append := by
+  intro α i x s t
+  by_cases before : i < s.length
+  · rw [ite_eq_left before]
+    exact _root_.List.set_append_left i x before
+  · rw [ite_eq_right before]
+    exact _root_.List.set_append_right i x (Nat.le_of_not_lt before)
+
+/-- Swapping the head with an element at a valid tail position is a permutation. -/
+private theorem permHeadSet (xs : List α) (a : α) (i : Nat) (h : i < xs.length) :
+    List.Perm (xs[i] :: xs.set i a) (a :: xs) := by
+  induction xs generalizing i with
+  | nil => exact (Nat.not_succ_le_zero _ h).elim
+  | cons b xs ih =>
+    cases i with
+    | zero => exact List.Perm.swap a b xs
+    | succ i =>
+      have step := ih i (Nat.le_of_succ_le_succ h)
+      exact (List.Perm.swap b _ _).trans ((List.Perm.cons b step).trans (List.Perm.swap a b xs))
+
+public theorem List.set_set_perm : type_of% @_root_.List.set_set_perm := by
+  intro α xs i j hi hj
+  induction xs generalizing i j with
+  | nil => exact (Nat.not_succ_le_zero _ hi).elim
+  | cons a xs ih =>
+    cases i <;> cases j
+    case zero.zero => exact List.Perm.refl _
+    case zero.succ j => exact permHeadSet xs a j (Nat.le_of_succ_le_succ hj)
+    case succ.zero i => exact permHeadSet xs a i (Nat.le_of_succ_le_succ hi)
+    case succ.succ i j =>
+      exact List.Perm.cons a (ih (Nat.le_of_succ_le_succ hi) (Nat.le_of_succ_le_succ hj))
 
 end OmegaChecks.InitPort.Alternatives
