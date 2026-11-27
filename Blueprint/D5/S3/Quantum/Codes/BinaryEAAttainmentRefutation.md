@@ -26,4 +26,4 @@ The lower weight bound gives at most three zeros in every nonradical word. The r
 
 - Truth anchor: `D5/S3/Quantum/Codes/BinaryEAAttainmentRefutation.result`
 - Dependency: [D5/S3/Quantum/Codes/BinaryEAAttainmentBridge](BinaryEAAttainmentBridge.md)
-- Dependency: [D5/S3/Quantum/Codes/BinaryEAShortening](BinaryEAShortening.md)
+- Dependency: [D5/S3/Quantum/Codes/BinaryEAShorteningLengthSeven](BinaryEAShorteningLengthSeven.md)
