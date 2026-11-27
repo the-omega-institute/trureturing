@@ -7,10 +7,10 @@ internal sealed class RobinEffectiveLargeBandDocument : IScribeDocumentDefinitio
     private const string Prefix = "D5/S3/Arith/Robin/PriceRecord/Effective/RobinEffectiveLargeBand.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "The actual weighted zero bound and explicit arithmetic prove the effective Robin inequality above 5040.",
+        "The effective Robin inequality above 5040 follows when every actual zero occurrence lies on the critical line.",
         H("Effective Robin inequality above 5040"),
         Blocks(
-            Paragraph(Text("The proof applies the full prime-power ledger to the same integer and real cutoff supplied by the attained failure minimum. The tangent rows cover log height through 101. The five exact prime rosters cover real cutoffs from 100 through 10000. For z ≥ 10000, Abel summation and the weighted zero bound give the prime-square band a normalized surplus of at least 17692481023/192060000000.")),
+            Paragraph(Text("The proof applies the full prime-power ledger to the same integer and real cutoff supplied by the attained failure minimum. The tangent rows cover log height through 101. The five exact prime rosters cover real cutoffs from 100 through 10000. When every actual zero occurrence lies on the critical line, Abel summation and the weighted zero bound give the prime band a normalized surplus of at least 17692481023/192060000000 for z ≥ 10000.")),
             Describe.Lean(DescribeId.Create("large-band"), DeclarationHandle.Create(Prefix + "normalized_prime_band_large"),
                 H("Strict reserve for large cutoffs"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("If every actual zero occurrence has real part 1/2, then for every real z ≥ 10000 the normalized prime-band surplus strictly exceeds the combined error and curvature budget (1 + 1/log z)/20 + 2/√z + (1 + 1/log z)/(8z√z)."))), DescribeRole.Theorem),
