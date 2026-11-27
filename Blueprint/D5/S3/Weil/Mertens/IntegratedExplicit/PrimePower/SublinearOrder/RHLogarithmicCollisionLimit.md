@@ -24,7 +24,7 @@ On 1/T_n<=|t|<=log(T_n), the reciprocal-time, periodic-phase and Landau bounds g
 
 Relative Fejer truncation controls the part beyond log(T_n). The resulting Fejer limit holds for every fixed positive multiple of epsilon_n, so the normalized ramp profile has limit x^2/(2 sqrt(pi)) near x=1. Its derivative gives the inclusive hard-band limit by the two-sided secant theorem. The multinomial normalization divides the original pair weights by W(T_n)^(2n).
 
-Gonek's uniform Landau formula supplies the assumed envelope at the literature level. Its Lean formalization remains a separate obligation. For bounded epsilon_n log(T_n), the relative tail estimate used here does not tend to zero.
+The actual_cutoff_landau_envelope theorem supplies the assumed envelope under RH. For bounded epsilon_n log(T_n), the relative tail estimate used here does not tend to zero.
 
 ## References
 

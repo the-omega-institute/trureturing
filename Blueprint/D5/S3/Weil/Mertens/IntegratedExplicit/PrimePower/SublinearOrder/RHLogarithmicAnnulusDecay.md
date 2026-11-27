@@ -4,7 +4,7 @@
 
 A positive harmonic phase deficit forces decay of the normalized annulus integral.
 
-Assume RH. Let H collect the hypotheses B>=1, c>0, T_n tending to infinity, eventual positivity of epsilon_n, and (log T_n)^2/n tending to zero. For all sufficiently large cutoff heights T, require normalized harmonic score magnitude at most 1-c/log(T) whenever 1/T<=|t|<=B log(T). Let I_n(R) integrate the Fejer kernel of parameter epsilon_n times the score magnitude to power 2n over the interval from -R to R. The scale s_n is the square root of n times the normalized second pair moment divided by two.
+Assume RH. Let H collect the hypotheses B>=1, c>0, T_n tending to infinity, eventual positivity of epsilon_n, (log T_n)^2/n tending to zero, and the following phase-deficit condition. For all sufficiently large cutoff heights T, require normalized harmonic score magnitude at most 1-c/log(T) whenever 1/T<=|t|<=B log(T). Let I_n(R) integrate the Fejer kernel of parameter epsilon_n times the score magnitude to power 2n over the interval from -R to R. The scale s_n is the square root of n times the normalized second pair moment divided by two.
 
 **Theorem 1.1 (Decay with an arbitrary positive deficit coefficient).**
 

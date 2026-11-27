@@ -1,7 +1,11 @@
 import OmegaBuild.Commands
 import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
 
-/-! Lower bounds for the weighted energy of a peak with controlled slope. -/
+/-!
+Omega original.
+
+Lower bounds for the weighted energy of a peak with controlled slope.
+-/
 
 compile_only_with_mathlib
 

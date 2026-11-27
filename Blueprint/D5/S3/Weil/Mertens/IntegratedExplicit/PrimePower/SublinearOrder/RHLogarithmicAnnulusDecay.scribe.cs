@@ -9,7 +9,7 @@ internal sealed class RHLogarithmicAnnulusDecayDocument : IScribeDocumentDefinit
         "A positive harmonic phase deficit forces decay of the normalized annulus integral.",
         H("Harmonic logarithmic annulus decay"),
         Blocks(
-            Paragraph(Text("Assume RH. Let H collect the hypotheses B>=1, c>0, T_n tending to infinity, eventual positivity of epsilon_n, and (log T_n)^2/n tending to zero. For all sufficiently large cutoff heights T, require normalized harmonic score magnitude at most 1-c/log(T) whenever 1/T<=|t|<=B log(T). Let I_n(R) integrate the Fejer kernel of parameter epsilon_n times the score magnitude to power 2n over the interval from -R to R. The scale s_n is the square root of n times the normalized second pair moment divided by two.")),
+            Paragraph(Text("Assume RH. Let H collect the hypotheses B>=1, c>0, T_n tending to infinity, eventual positivity of epsilon_n, (log T_n)^2/n tending to zero, and the following phase-deficit condition. For all sufficiently large cutoff heights T, require normalized harmonic score magnitude at most 1-c/log(T) whenever 1/T<=|t|<=B log(T). Let I_n(R) integrate the Fejer kernel of parameter epsilon_n times the score magnitude to power 2n over the interval from -R to R. The scale s_n is the square root of n times the normalized second pair moment divided by two.")),
             Describe.Lean(DescribeId.Create("harmonic-multiple-log-annulus-limit-of-deficit"),
                 DeclarationHandle.Create(
                     "D5/S3/Weil/Mertens/IntegratedExplicit/PrimePower/SublinearOrder/RHLogarithmicAnnulusDecay" +
