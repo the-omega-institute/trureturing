@@ -92,7 +92,7 @@ theorem Function.id_comp.{u, v} {α : Sort u} {β : Sort v} (f : α → β) :
   Eq (Function.comp id f) f :=
   Omega.rfl
 
-def Empty.elim.{u} {C : Sort u} : Empty → C := Empty.rec
+def Empty.elim.{u} {C : Sort u} : Empty → C := fun x => Empty.casesOn (fun _ => C) x
 
 def PEmpty.elim.{u, v} {C : Sort u} : PEmpty.{v} → C :=
   let motive : PEmpty → Prop := fun _ => False; fun a => False.elim (PEmpty.rec (motive := motive) a)
@@ -462,3 +462,46 @@ port_proof decidable_of_decidable_of_iff._proof_1
 port_definition decidable_of_decidable_of_iff with_native_code
 port_proof decidable_of_decidable_of_eq._proof_1
 port_definition decidable_of_decidable_of_eq with_native_code
+
+port_definition instDecidableEqProd.match_1 with_native_code
+port_proof instDecidableEqProd._proof_1
+port_definition instDecidableEqProd with_native_code
+port_definition instDecidableEqSum.decEq.match_1 with_native_code
+port_proof instDecidableEqSum.decEq._proof_1
+port_definition Sum.noConfusionType
+port_definition Sum.noConfusion
+port_definition Sum.inl.noConfusion
+port_proof instDecidableEqSum.decEq._proof_3
+port_proof instDecidableEqSum.decEq._proof_4
+port_proof instDecidableEqSum.decEq._proof_5
+port_proof instDecidableEqSum.decEq._proof_2
+port_definition Sum.inr.noConfusion
+port_proof instDecidableEqSum.decEq._proof_6
+port_definition instDecidableEqSum.decEq with_native_code
+port_definition instDecidableEqSum with_native_code
+port_definition instDecidableEqPEmpty with_native_code
+port_definition instDecidableEqEmpty with_native_code
+port_definition Subtype.instDecidableEq.match_1 with_native_code
+port_proof Subtype.instDecidableEq._proof_3
+port_proof Subtype.instDecidableEq._proof_1
+port_definition Subtype.instDecidableEq with_native_code
+port_definition Prod.lexLt
+port_proof Prod.lexLtDec._proof_1
+port_definition Prod.lexLtDec with_native_code
+port_inductive Equivalence
+port_inductive Setoid
+port_proof equivalence_true
+port_definition Setoid.trivial with_native_code
+port_inductive ReflBEq
+port_inductive LawfulBEq
+port_definition instDecidableEqOfLawfulBEq.match_1 with_native_code
+port_proof ReflBEq.rfl
+port_proof BEq.rfl
+port_proof not_eq_of_beq_eq_false
+port_proof LawfulBEq.toReflBEq
+port_proof LawfulBEq.eq_of_beq
+port_proof instDecidableEqOfLawfulBEq._proof_1
+port_definition instDecidableEqOfLawfulBEq with_native_code
+port_definition instDecidableIff.match_1 with_native_code
+port_proof instDecidableIff._proof_1
+port_definition instDecidableIff with_native_code

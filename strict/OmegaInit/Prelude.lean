@@ -291,8 +291,11 @@ set_option linter.unusedVariables.funArgs false in
 abbrev PUnit.casesOn.{v,u} {motive : (t : PUnit.{u}) → Sort v} (t : PUnit)
     (unit : motive PUnit.unit) : motive t := PUnit.rec unit t
 
-abbrev Empty.casesOn (motive : (t : Empty) → Sort u) (t : Empty) : motive t :=
-  Empty.rec motive t
+end Omega
+
+port_definition Empty.casesOn with_native_code
+
+namespace Omega
 
 abbrev PEmpty.casesOn.{v,u} (motive : (t : PEmpty.{u}) → Sort v) (t : PEmpty) : motive t :=
   PEmpty.rec motive t
@@ -957,3 +960,11 @@ port_proof instDecidableEqList._proof_6
 port_definition instDecidableEqList with_native_code
 port_definition List.instDecidableEqNil with_native_code
 port_definition List.instDecidableNilEq with_native_code
+
+port_definition Prod.noConfusionType
+port_definition Prod.noConfusion
+port_definition Subtype.noConfusionType
+port_definition Subtype.noConfusion
+port_definition instDecidableOr.match_3 with_native_code
+port_definition instDecidableOr.match_1 with_native_code
+port_proof instDecidableOr._proof_1

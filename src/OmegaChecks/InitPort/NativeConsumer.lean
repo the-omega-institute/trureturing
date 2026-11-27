@@ -177,6 +177,19 @@ public def optionalListEmpty (x y : Omega.Bool) : Omega.Bool :=
   let xs := Omega.Bool.casesOn (motive := fun _ => Omega.List Omega.Bool) x .nil (.cons y .nil)
   @Omega.Decidable.decide _ (Omega.List.instDecidableNilEq xs)
 
+public def pairEqual (x y : Omega.Bool) : Omega.Bool :=
+  let same := @Omega.instDecidableEqProd Omega.Bool Omega.Bool Omega.instDecidableEqBool Omega.instDecidableEqBool
+  @Omega.Decidable.decide _ (same (Omega.Prod.mk x y) (Omega.Prod.mk y x))
+
+public def sumEqual (x y : Omega.Bool) : Omega.Bool :=
+  let tag := fun b => Omega.Bool.casesOn (motive := fun _ => Omega.Sum Omega.Bool Omega.Bool) b (.inl .true) (.inr .true)
+  @Omega.Decidable.decide _ (@Omega.instDecidableEqSum Omega.Bool Omega.Bool Omega.instDecidableEqBool
+    Omega.instDecidableEqBool (tag x) (tag y))
+
+public def subtypeEqual (x y : Omega.Bool) : Omega.Bool :=
+  let mk := fun b => Omega.Subtype.mk (p := fun _ : Omega.Bool => Omega.True) b Omega.True.intro
+  @Omega.Decidable.decide _ (@Omega.Subtype.instDecidableEq _ _ Omega.instDecidableEqBool (mk x) (mk y))
+
 public def disjunction (x y : Omega.Bool) : Omega.Bool := Omega.strictOr x y
 public def conjunction (x y : Omega.Bool) : Omega.Bool := Omega.strictAnd x y
 "
@@ -210,6 +223,7 @@ unsafe def main (args : List String) : IO Unit := do
       (`word16Equal, BEq.beq), (`word32Le, fun x y => !x || y), (`word64Equal, BEq.beq),
       (`byteBufferSecond, second), (`updatedLookup, second), (`outsideLookup, second),
       (`slicedLookup, second), (`listEqual, BEq.beq), (`optionalListEmpty, fun x _ => !x),
+      (`pairEqual, BEq.beq), (`sumEqual, BEq.beq), (`subtypeEqual, BEq.beq),
       (`disjunction, or), (`conjunction, and)]
     for (name, expected) in checks do
       let some ci := env.find? name | throw <| IO.userError s!"missing {name}"
