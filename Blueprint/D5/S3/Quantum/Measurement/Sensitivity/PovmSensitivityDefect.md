@@ -6,9 +6,9 @@ An exact four-term sensitivity loss for a prescribed finite POVM.
 
 **Theorem 1.1 (Four contributions to the loss).**
 
-Lean statement: `D5/S3/Quantum/Information/PovmSensitivityDefect.sensitivity_decomposition`
+Lean statement: `D5/S3/Quantum/Measurement/Sensitivity/PovmSensitivityDefect.sensitivity_decomposition`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/PovmSensitivityDefect.sensitivity_decomposition` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/Sensitivity/PovmSensitivityDefect.sensitivity_decomposition` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -16,13 +16,13 @@ Lean statement: `D5/S3/Quantum/Information/PovmSensitivityDefect.sensitivity_dec
 
 *Commentary.*
 
-At a full-rank state with positive outcome masses, weight the POVM effects by their Born probability derivatives divided by their masses. The loss from the BKM cost to the scalar sensitivity splits into a squared BKM distance, a logarithmic-mean gap, a sum of positive POVM sandwiches, and the squared residual of the classical score projection. The logarithmic-mean gap controls one third of the squared Frobenius norm of the commutator with the square root of the state.
+At a full-rank state with positive outcome masses, weight the POVM effects by their Born probability derivatives divided by their masses. Subtract the squared readout slope divided by the score's second moment from the BKM cost. The slope and the normalized term vanish at zero second moment. The loss splits into a squared BKM distance, a logarithmic-mean gap, a sum of positive POVM sandwiches, and the squared residual of the classical score projection. The logarithmic-mean gap controls one third of the squared Frobenius norm of the commutator with the square root of the state.
 
 **Theorem 1.2 (Sensitivity for reverse relative entropy).**
 
-Lean statement: `D5/S3/Quantum/Information/PovmSensitivityDefect.reverseKL_decomposition`
+Lean statement: `D5/S3/Quantum/Measurement/Sensitivity/PovmSensitivityDefect.reverseKL_decomposition`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/PovmSensitivityDefect.reverseKL_decomposition` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/Sensitivity/PovmSensitivityDefect.reverseKL_decomposition` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -34,9 +34,9 @@ Use the centered score one minus the reference mass divided by the Born mass. Th
 
 **Theorem 1.3 (Sensitivity for forward relative entropy).**
 
-Lean statement: `D5/S3/Quantum/Information/PovmSensitivityDefect.forwardKL_decomposition`
+Lean statement: `D5/S3/Quantum/Measurement/Sensitivity/PovmSensitivityDefect.forwardKL_decomposition`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/PovmSensitivityDefect.forwardKL_decomposition` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/Sensitivity/PovmSensitivityDefect.forwardKL_decomposition` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -48,9 +48,10 @@ Use the log ratio of Born and reference masses centered by relative entropy. Wit
 
 ## References
 
-- Truth anchor: `D5/S3/Quantum/Information/PovmSensitivityDefect.forwardKL_decomposition`
-- Truth anchor: `D5/S3/Quantum/Information/PovmSensitivityDefect.reverseKL_decomposition`
-- Truth anchor: `D5/S3/Quantum/Information/PovmSensitivityDefect.sensitivity_decomposition`
-- Dependency: [D5/S3/Divergence/ClassicalDPI](../../Divergence/ClassicalDPI.md)
-- Dependency: [D5/S3/Quantum/Information/ComplementaryCorrelations/AnchorMeasurementBKM](ComplementaryCorrelations/AnchorMeasurementBKM.md)
-- Dependency: [D5/S3/Quantum/ProcessReconstruction/LiuWildProductProbes](../ProcessReconstruction/LiuWildProductProbes.md)
+- Truth anchor: `D5/S3/Quantum/Measurement/Sensitivity/PovmSensitivityDefect.forwardKL_decomposition`
+- Truth anchor: `D5/S3/Quantum/Measurement/Sensitivity/PovmSensitivityDefect.reverseKL_decomposition`
+- Truth anchor: `D5/S3/Quantum/Measurement/Sensitivity/PovmSensitivityDefect.sensitivity_decomposition`
+- Dependency: [D5/S3/Divergence/ClassicalDPI](../../../Divergence/ClassicalDPI.md)
+- Dependency: [D5/S3/Quantum/Divergence/MaximalHockeyStickQuadratic](../../Divergence/MaximalHockeyStickQuadratic.md)
+- Dependency: [D5/S3/Quantum/Information/ComplementaryCorrelations/AnchorMeasurementBKM](../../Information/ComplementaryCorrelations/AnchorMeasurementBKM.md)
+- Dependency: [D5/S3/Quantum/ProcessReconstruction/LiuWildProductProbes](../../ProcessReconstruction/LiuWildProductProbes.md)
