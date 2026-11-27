@@ -267,6 +267,15 @@ def generate(stage, product, seed, roots, excluded, original_seed):
     def install_sharing():
         sharing.extend(install_state_runtime(stage, product, artifact, "ShareCommon", "share_common"))
 
+    def check_sharing(objects):
+        required = {"Init.ShareCommon": {"ShareCommon.StateFactory.mk", "ShareCommon.State.mk",
+                                         "ShareCommon.State.shareCommon", "ShareCommonM.run"}}
+        if sharing and has_interfaces(inventory, required):
+            if objects is None:
+                check_runtime_ir(stage, artifact, "ShareCommon", "ShareCommon")
+            else:
+                check_state_consumer(stage, artifact, "ShareCommon", "share_common", objects)
+
     string_interfaces = {
         "Init.Data.String.Bootstrap": {"String.push", "String.mk", "String.Internal.length",
                                        "String.Internal.extract", "String.Internal.append"},
@@ -277,45 +286,40 @@ def generate(stage, product, seed, roots, excluded, original_seed):
     }
     mixed_interfaces = {"Init.Prelude": {"Lean.Macro.instMonadQuotationMacroM", "Lean.Syntax",
                                           "Lean.Syntax.getNumArgs", "Lean.defaultMaxRecDepth"}}
-    control_objects = compile_generated(stage, product, graph, original_seed.parents[1] / "ir",
-                                        original_seed=original_seed, before_owner={"OmegaInit.ShareCommon": install_sharing},
-                                        check_mixed=has_interfaces(inventory, mixed_interfaces),
-                                        check_thunks=has_interfaces(inventory, {"Init.Core": {
-                                            "Thunk.mk", "Thunk.pure", "Thunk.get", "Thunk.map", "Thunk.bind",
-                                            "Thunk.fn", "Thunk.fnImpl", "instInhabitedThunk"}}),
-                                        check_names=has_interfaces(inventory, {"Init.Prelude": {
-                                            "Lean.Name.append", "Lean.addMacroScope", "Lean.extractMacroScopes",
-                                            "Lean.MacroScopesView.review"}}),
-                                        check_toolchain=has_interfaces(inventory, {"Init.Meta.Defs": {
-                                            "Lean.getGithash", "Lean.githash", "Lean.version.getSpecialDesc",
-                                            "Lean.version.specialDesc", "Lean.version.getIsRelease", "Lean.version.isRelease",
-                                            "Lean.Internal.isStage0", "Lean.Internal.hasLLVMBackend"}}),
-                                        check_strings=has_interfaces(inventory, string_interfaces),
-                                        check_list_search=has_interfaces(inventory, {
-                                            "Init.Data.List.Control": {"List.anyM", "List.allM"},
-                                            "Init.Control.Id": {"Id.instMonad"},
-                                            "Init.Prelude": {"ite"},
-                                        }),
-                                        check_decoding=has_interfaces(inventory, {
-                                            "Init.Data.String.Basic": {"ByteArray.utf8Decode?", "String.Pos.Raw.get?"},
-                                            "Init.Data.String.Decode": {"ByteArray.utf8DecodeChar?", "String.utf8EncodeCharFast"},
-                                        }),
-                                        check_bootstrap=has_interfaces(inventory, {"Init.Data.String.Bootstrap": {
-                                            "String.Internal.nextWhile", "Substring.Raw.Internal.takeWhile",
-                                            "String.Internal.foldl", "String.push", "Substring.Raw.Internal.toString",
-                                            "String.Internal.intercalate"}}),
-                                        check_rat=has_interfaces(inventory, {
-                                            "Init.Data.Rat.Basic": {"mkRat", "instReprRat", "instToStringRat"},
-                                            "Init.Data.String.Defs": {"String.append"},
-                                            "Init.Data.Nat.Gcd": {"Nat.gcd"},
-                                        }),
-                                        check_literals=has_interfaces(inventory, {"Init.Prelude": {"String.ofList", "Char.ofNat"}}))
-    sharing_interfaces = {"Init.ShareCommon": {"ShareCommon.StateFactory.mk", "ShareCommon.State.mk", "ShareCommon.State.shareCommon", "ShareCommonM.run"}}
-    if sharing and has_interfaces(inventory, sharing_interfaces):
-        if control_objects is None:
-            check_runtime_ir(stage, artifact, "ShareCommon", "ShareCommon")
-        else:
-            check_state_consumer(stage, artifact, "ShareCommon", "share_common", [*sharing, *control_objects])
+    compile_generated(stage, product, graph, original_seed.parents[1] / "ir",
+                      original_seed=original_seed, before_owner={"OmegaInit.ShareCommon": install_sharing},
+                      check_sharing=check_sharing,
+                      check_mixed=has_interfaces(inventory, mixed_interfaces),
+                      check_thunks=has_interfaces(inventory, {"Init.Core": {
+                          "Thunk.mk", "Thunk.pure", "Thunk.get", "Thunk.map", "Thunk.bind",
+                          "Thunk.fn", "Thunk.fnImpl", "instInhabitedThunk"}}),
+                      check_names=has_interfaces(inventory, {"Init.Prelude": {
+                          "Lean.Name.append", "Lean.addMacroScope", "Lean.extractMacroScopes",
+                          "Lean.MacroScopesView.review"}}),
+                      check_toolchain=has_interfaces(inventory, {"Init.Meta.Defs": {
+                          "Lean.getGithash", "Lean.githash", "Lean.version.getSpecialDesc",
+                          "Lean.version.specialDesc", "Lean.version.getIsRelease", "Lean.version.isRelease",
+                          "Lean.Internal.isStage0", "Lean.Internal.hasLLVMBackend"}}),
+                      check_strings=has_interfaces(inventory, string_interfaces),
+                      check_list_search=has_interfaces(inventory, {
+                          "Init.Data.List.Control": {"List.anyM", "List.allM"},
+                          "Init.Control.Id": {"Id.instMonad"},
+                          "Init.Prelude": {"ite"},
+                      }),
+                      check_decoding=has_interfaces(inventory, {
+                          "Init.Data.String.Basic": {"ByteArray.utf8Decode?", "String.Pos.Raw.get?"},
+                          "Init.Data.String.Decode": {"ByteArray.utf8DecodeChar?", "String.utf8EncodeCharFast"},
+                      }),
+                      check_bootstrap=has_interfaces(inventory, {"Init.Data.String.Bootstrap": {
+                          "String.Internal.nextWhile", "Substring.Raw.Internal.takeWhile",
+                          "String.Internal.foldl", "String.push", "Substring.Raw.Internal.toString",
+                          "String.Internal.intercalate"}}),
+                      check_rat=has_interfaces(inventory, {
+                          "Init.Data.Rat.Basic": {"mkRat", "instReprRat", "instToStringRat"},
+                          "Init.Data.String.Defs": {"String.append"},
+                          "Init.Data.Nat.Gcd": {"Nat.gcd"},
+                      }),
+                      check_literals=has_interfaces(inventory, {"Init.Prelude": {"String.ofList", "Char.ofNat"}}))
     with (product / "audit.txt").open("w") as log:
         audit = ROOT / ".lake/build/bin/omegaAudit"
         checked = subprocess.run(["lake", "env", audit, "--exact-roots", artifact, *graph, "--", *closure],

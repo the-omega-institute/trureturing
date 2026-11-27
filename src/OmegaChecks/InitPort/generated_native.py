@@ -97,6 +97,7 @@ def check_runtime_ir(stage, library, adapter, consumer):
 
 
 def compile_generated(stage, product, graph, seed_ir, owners=None, *, original_seed=None, before_owner=None,
+                      check_sharing=None,
                       check_strings=True, check_literals=True, check_mixed=True, check_rat=True, check_bootstrap=True,
                       check_list_search=True, check_decoding=True, check_names=True, check_toolchain=True, check_thunks=False):
     """Compile generated owners in import order and preserve the native symbols of existing owners."""
@@ -140,9 +141,8 @@ def compile_generated(stage, product, graph, seed_ir, owners=None, *, original_s
             string_sources.append(source)
             if owner not in seed_owners:
                 modes[owner] = "mixed="
-    state_ref = "OmegaInit.Control.StateRef"
-    if state_ref in selected and (stage / "state_ref.c").is_file() and state_ref not in seed_owners:
-        modes[state_ref] = "mixed="
+    runtime_sources = {"OmegaInit.Control.StateRef": "state_ref.c", "OmegaInit.Dynamic": "type-name.c",
+                       "OmegaInit.ShareCommon": "share_common.c"}
     literals = stage / "literal.c"
     macro_source = stage / "macro-methods.c"
     if "OmegaInit.Prelude" in selected:
@@ -173,10 +173,14 @@ def compile_generated(stage, product, graph, seed_ir, owners=None, *, original_s
             pending.clear()
 
     for request in requests:
-        callback = callbacks.get(request.split("=")[-1])
+        owner = request.split("=")[-1]
+        callback = callbacks.get(owner)
         if callback:
             flush()
             callback()
+        if owner in runtime_sources and owner not in seed_owners and (stage / runtime_sources[owner]).is_file():
+            modes[owner] = "mixed="
+            request = "mixed=" + owner
         pending.append(request)
         if len(pending) == 32:
             flush()
@@ -235,6 +239,12 @@ def compile_generated(stage, product, graph, seed_ir, owners=None, *, original_s
                     raise ValueError(f"missing native dependency {owner}")
             inputs.append(obj)
         return inputs
+
+    share_owner = "OmegaInit.ShareCommon"
+    if check_sharing and share_owner in selected:
+        dependencies = reachable([share_owner])
+        complete = dependencies.issubset(selected) and all(seed_files[d].is_file() for d in dependencies & seed_owners)
+        check_sharing(dependency_objects(dependencies) if complete else None)
 
     if check_thunks and "OmegaInit.Core" in selected:
         dependencies = reachable(["OmegaInit.Core"])
