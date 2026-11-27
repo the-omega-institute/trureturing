@@ -3,10 +3,11 @@
    mirror-B: D5/B/S3/Combinatorics/Turnpike/ContainmentRankBounds
    mirror-E: none
    anchors: []
-   digest: Every realized distance has its whole multiplicity block within containment rank bounds. -/
+   digest: Used distance rank blocks obey containment bounds. -/
 module
 public import OmegaMath.Combinatorics.Turnpike.ContainmentRankBounds
 
+/-! Known containment rank bounds with unused-label histogram support. -/
 @[expose] public section
 namespace D5.S3.Combinatorics.Turnpike.ContainmentRankBounds
 open Omega.Turnpike
@@ -24,3 +25,4 @@ theorem containment_rank_bounds {n d : ℕ} {y : Fin d → ℝ} {mu : Fin d → 
   Omega.Turnpike.containment_rank_bounds hy hx e q heq
 
 end D5.S3.Combinatorics.Turnpike.ContainmentRankBounds
+
