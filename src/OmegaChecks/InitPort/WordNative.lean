@@ -80,6 +80,8 @@ private def defsStringFunction (n : Name) : Bool :=
   [`String.intercalate, `String.Internal.intercalateImpl, `String.pushn, `String.Internal.pushnImpl,
    `String.Slice.getUTF8Byte, `String.Slice.getUTF8Byte!, `String.Slice.Pos.byte].contains n
 
+private def floatArrayIndex (n : Name) : Bool := n == `FloatArray.get! || n == `FloatArray.set!
+
 private def basicStringFunction (n : Name) : Bool :=
   let method := n.updatePrefix .anonymous
   (n.getPrefix == `String && [`fromUTF8!, `pos?, `pos!, `substrEq, `replaceStartEnd!, `slice!].contains method) ||
@@ -181,6 +183,7 @@ public def supported (source : Environment) (owner name : Name) : Bool :=
     [`land, `lor, `xor, `shiftLeft, `shiftRight].contains method
   let logarithm := owner == `OmegaInit.Data.Nat.Log2 && name == `Nat.log2
   let wordRepr := owner == `OmegaInit.Data.Repr && name == `USize.repr
+  let floatIndex := owner == `OmegaInit.Data.FloatArray.Basic && floatArrayIndex name
   let byteOp := owner == `OmegaInit.Data.ByteArray.Basic && name.getPrefix == `ByteArray &&
     [`uget, `get, `get!, `uset, `set, `set!, `usize, `copySlice, `beq, `decEq, `hash].contains method
   let platform := owner == `OmegaInit.System.Platform && [`System.Platform.getIsWindows, `System.Platform.getIsOSX,
@@ -218,7 +221,7 @@ public def supported (source : Environment) (owner name : Name) : Bool :=
     `OmegaInit.Data.RArray, `OmegaInit.Data.Nat.Internal.Linear, `OmegaInit.Data.Nat.Fold, `OmegaInit.Data.Fin.Lemmas].contains owner && IndexedNative.supported name) ||
     ([`OmegaInit.Data.Float.Model.Float, `OmegaInit.Data.Float.Model.Float32].contains owner && modelOperation name) ||
     ([`OmegaInit.Prelude, `OmegaInit.Meta.Defs].contains owner && SyntaxPositionNative.supported name) ||
-    ((base || intPrimitive || platform || version || byteOp || textCompare || modular || stringOp || wordRepr || bitwise || logarithm || (inOwner && primitive)) && isExtern source name) ||
+    ((base || intPrimitive || platform || version || floatIndex || byteOp || textCompare || modular || stringOp || wordRepr || bitwise || logarithm || (inOwner && primitive)) && isExtern source name) ||
     ((intOwner || [`OmegaInit.Data.Dyadic.Basic, `OmegaInit.Data.ByteArray.Extra, `OmegaInit.Data.ByteArray.Basic, `OmegaInit.Data.Int.Repr, `OmegaInit.Data.Repr, `OmegaInit.Data.Nat.Bitwise.Basic, `OmegaInit.Data.BitVec.Basic].contains owner || [`OmegaInit.Data.UInt.Basic, `OmegaInit.Data.SInt.Basic].contains owner) && usesPinnedFunction name)
 
 private def symbol (n : Name) := (n.replacePrefix `Omega .anonymous).mangle "omega_word_"
@@ -323,6 +326,31 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
   if IndexedNative.supported official then return ← IndexedNative.wrapper source strict n (symbol n)
   if SyntaxPositionNative.supported official then return ← SyntaxPositionNative.wrapper source strict n (symbol n)
   let some ci := source.find? official | throw <| IO.userError s!"unknown word primitive {official}"
+  if floatArrayIndex official then
+    let some target := strict.find? n | throw <| IO.userError s!"missing strict float array index {n}"
+    unless target.type == InitKernelPort.translate InitKernelPort.portName ci.type do
+      throw <| IO.userError s!"different float array index type at {n}"
+    checkFloatLayout strict `Float
+    IndexedNative.checkDataTypes source strict [`List]
+    for name in [`Omega.FloatArray, `Omega.Array] do
+      let some (some field) := impureTrivialStructureInfoExt.find? strict name
+        | throw <| IO.userError s!"missing list representation in {name}"
+      unless field.fieldIdx == 0 do throw <| IO.userError s!"incorrect list field in {name}"
+    let read := official == `FloatArray.get!
+    let some (.extern _ args ret ⟨[.standard `all pinned]⟩) := IR.findEnvDecl source official
+      | throw <| IO.userError s!"missing pinned float array primitive: {official}"
+    let some (.extern _ actual out ⟨[.standard `all entry]⟩) := IR.findEnvDecl strict n
+      | throw <| IO.userError s!"missing strict float array primitive: {n}"
+    let pinnedArgs : Array IR.IRType := if read then #[.object, .tobject] else #[.object, .tobject, .float]
+    let borrows := if read then #[true, true] else #[false, true, false]
+    unless pinned == (if read then "lean_float_array_get" else "lean_float_array_set") &&
+        args.map (·.ty) == pinnedArgs && args.map (·.borrow) == borrows &&
+        ret == (if read then .float else .object) && out == .tobject && actual.size == args.size &&
+        actual.all (·.ty == .tobject) && actual.map (·.borrow) == borrows && entry == symbol n do
+      throw <| IO.userError s!"unexpected float array indexing ABI: {n} {actual.map fun a => (a.ty, a.borrow)}"
+    let params := if read then "lean_object *xs, lean_object *i" else "lean_object *xs, lean_object *i, lean_object *v"
+    let call := if read then "omega_float_list_get(xs, i)" else "omega_float_list_set(xs, i, v)"
+    return s!"\n#include \"strict_float_array.h\"\nLEAN_EXPORT lean_obj_res {entry}({params}) \{ return {call}; }\n"
   if bootstrapStringOp official || basicStringExtern official || pinnedStringFunction official || syntaxTreeFunction official then
     let some strictInfo := strict.find? n | throw <| IO.userError s!"missing strict string operation {n}"
     unless strictInfo.type == InitKernelPort.translate InitKernelPort.portName ci.type do
