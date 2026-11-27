@@ -5,7 +5,12 @@
    anchors: []
    digest: On the binary alphabet every non-degenerate fractional self-map has exactly one of four self-application fates, and the live fate holds precisely for the golden φ-family, whose discriminant is 5. -/
 
-import Mathlib
+import Mathlib.Data.Fintype.Basic
+import Mathlib.Data.Fintype.Sigma
+import Mathlib.Data.Rat.Cast.Order
+import Mathlib.Tactic.DeriveFintype
+import Mathlib.Tactic.FinCases
+import Mathlib.Tactic.NormNum
 
 namespace D5.S0.Diagonal.SelfApplicationFates
 
