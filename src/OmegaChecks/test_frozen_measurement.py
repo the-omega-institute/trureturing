@@ -96,8 +96,13 @@ class FrozenMeasurement(unittest.TestCase):
             self.assertEqual(row["strict_omega"]["axioms"], [])
             self.assertEqual(row["strict_omega"]["libraries"], ["OmegaInit", "OmegaMath"])
             self.assertNotEqual(row["strict_omega"]["statement_type_address"], row["statementTypeAddress"])
+            eliminators = [row for row in private_inductive["declarations"]
+                           if row["nameKey"].endswith((",11:noConfusion)", ",15:noConfusionType)"))]
+            self.assertEqual(len(eliminators), 2)
+            for row in eliminators:
+                self.assertEqual(row["strict_omega"]["axioms"], [])
             generated = [row for row in private_inductive["declarations"] if row.get("officialDerivedOnly")]
-            self.assertTrue(any("noConfusion" in row["nameKey"] for row in generated))
+            self.assertTrue(any("sizeOf_spec" in row["nameKey"] for row in generated))
             self.assertTrue(all(row["includeInStatement"] and "strict_omega" not in row for row in generated))
             self.assertTrue(all("strict_omega" in row for row in private_inductive["declarations"]
                                 if row["includeInStatement"] and row not in generated))

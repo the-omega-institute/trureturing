@@ -534,6 +534,10 @@ port_proof noConfusionEnum._proof_1
 port_proof noConfusionEnum._proof_2
 port_definition noConfusionEnum with_native_code
 
+namespace Omega
+export _root_ (noConfusionTypeEnum noConfusionEnum)
+end Omega
+
 namespace Omega.Lean
 public opaque opaqueId {α : Sort u} (x : α) : α := x
 end Omega.Lean

@@ -24,6 +24,21 @@ private def sameImplementation (ported pinned : ConstantInfo) : Bool := Id.run d
     return (a.rules.zip b.rules).all (fun (x, y) => x.rhs.equal y.rhs)
   return true
 
+/-- The literal enum eliminator uses the isolated implementation of False.elim.
+Unfold that helper at each actual universe and check its entire body in the pinned kernel. -/
+private def sameEnumEliminator (isolated pinned : Environment) (ported official : ConstantInfo) : Bool := Id.run do
+  unless ported.name == `noConfusionEnum && ported.name == official.name &&
+      ported.levelParams == official.levelParams && ported.type.equal official.type do return false
+  let some (.defnInfo elim) := isolated.find? `Omega.False.elim | return false
+  let .defnInfo raw := ported | return false
+  let .defnInfo original := official | return false
+  let value := raw.value.replace fun e => match e with
+    | .const `Omega.False.elim us => some (elim.value.instantiateLevelParams elim.levelParams us)
+    | _ => none
+  let .ok type := Kernel.check pinned {} value | return false
+  return Kernel.isDefEqGuarded pinned {} type original.type &&
+    Kernel.isDefEqGuarded pinned {} value original.value
+
 private def physicalRoot (name : Name) : Bool :=
   name.getRoot != `Omega && !(`_private.OmegaInit).isPrefixOf name
 
@@ -57,7 +72,7 @@ private def project (source output : System.FilePath) (env pinned : Environment)
   for ci in strict[2]!.constants do
     unless owner.getRoot == `OmegaInit && physicalRoot ci.name && !moved.contains ci.name do continue
     if let some target := pinned.find? ci.name then
-      unless sameImplementation ci target do throw <| IO.userError s!"incompatible physical root {owner}/{ci.name}"
+      unless sameImplementation ci target || sameEnumEliminator env pinned ci target do throw <| IO.userError s!"incompatible physical root {owner}/{ci.name}"
       shared := shared.insert ci.name
   let affected := strict[2]!.constants.any fun ci => moved.contains ci.name || ci.getUsedConstantsAsSet.toArray.any moved.contains
   if shared.isEmpty && !affected then return
