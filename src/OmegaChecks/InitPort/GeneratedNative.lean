@@ -285,6 +285,16 @@ private def compileOwner (source : Environment) (partialCode : NameMap Definitio
   let some (.axiomInfo marker) := source.find? `lcProof | throwError "missing pinned proof erasure marker"
   unless marker.isUnsafe && !strict.contains marker.name do throwError "unexpected proof erasure marker"
   Lean.addDecl (.axiomDecl marker)
+  -- Init.LetFun imports no Prelude. Its universe-polymorphic argument and result
+  -- need the compiler's boxed and erased type markers while lowering its checked term.
+  if order.contains `Omega.letFun then
+    for name in [`lcErased, `lcAny] do
+      unless strict.contains name do
+        let type := mkSort (.succ .zero)
+        let some (.axiomInfo decl) := source.find? name | throwError "missing compiler type marker {name}"
+        unless decl.isUnsafe && decl.type == type && decl.levelParams.isEmpty do
+          throwError "unexpected compiler type marker {name}"
+        Lean.addDecl (.opaqueDecl {name, levelParams := [], type, value := mkSort .zero, isUnsafe := false, all := [name]})
   let newFloatArray := groups.any (·.name == `Omega.FloatArray) && words.contains `Omega.FloatArray.mk
   if newFloatArray then OmegaChecks.InitPort.FloatArrayNative.prepareLayout
   compileLayoutsInOrder groups

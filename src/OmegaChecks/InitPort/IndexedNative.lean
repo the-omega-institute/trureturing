@@ -21,7 +21,8 @@ private def listTraversal (n : Name) : Bool :=
   [`List.filterMapTR, `List.flatMapTR, `List.flattenTR, `List.intercalateTR, `List.reduceOption].contains n
 
 public def supported (n : Name) : Bool :=
-  linear n || quotientEliminator n || listTraversal n || n == `List.mapMonoM ||
+  linear n || quotientEliminator n || listTraversal n ||
+  [`List.mapMonoM, `List.flatMapMTR.loop, `BitVec.flattenListFast].contains n ||
   [`Acc.recC, `Acc.ndrecC, `Acc.ndrecOnC, `WellFounded.fixFC,
    `Lean.Grind.CommRing.Mon.revlexWF, `Lean.Grind.CommRing.Mon.revlexFuel, `Lean.Grind.CommRing.Mon.revlex,
    `Lean.Grind.CommRing.Mon.grevlex, `Lean.Grind.CommRing.Power.revlex,
@@ -65,6 +66,14 @@ public def wrapper (source strict : Environment) (n : Name) (symbol : String) : 
   let some target := strict.find? n | throw <| IO.userError s!"missing strict indexed eliminator {n}"
   unless target.type == InitKernelPort.translate InitKernelPort.portName ci.type do
     throw <| IO.userError s!"indexed eliminator type mismatch: {n}"
+  if official == `List.flatMapMTR.loop then
+    checkDataTypes source strict [`List, `Monad, `Applicative, `Pure, `Functor, `Seq, `SeqLeft, `SeqRight, `Bind]
+  if official == `BitVec.flattenListFast then
+    checkDataTypes source strict [`List]
+    for name in [`Omega.BitVec, `Omega.Fin] do
+      let some (some field) := impureTrivialStructureInfoExt.find? strict name
+        | throw <| IO.userError s!"missing strict bit vector field {name}"
+      unless field.fieldIdx == 0 do throw <| IO.userError s!"bit vector field has wrong position {name}"
   if linear official then checkDataTypes source strict [`Prod, `Option, `List, `Nat.Internal.Linear.Expr]
   if listTraversal official then checkDataTypes source strict [`List, `Option]
   if official.getPrefix == `Lean.Grind.CommRing.Mon || official == `Lean.Grind.CommRing.Power.revlex then
