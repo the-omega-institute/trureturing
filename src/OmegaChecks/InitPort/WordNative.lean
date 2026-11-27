@@ -4,6 +4,7 @@ public import OmegaChecks.InitPort.NativeState
 import OmegaChecks.InitPort.IONative
 import OmegaChecks.InitPort.MacroNative
 import OmegaChecks.InitPort.SyntaxPositionNative
+import OmegaChecks.InitPort.FloatArrayNative
 import OmegaChecks.InitPort.IndexedNative
 import OmegaChecks.InitPort.ByteFoldNative
 import OmegaChecks.InitPort.Translation
@@ -234,7 +235,8 @@ private def symbol (n : Name) := (n.replacePrefix `Omega .anonymous).mangle "ome
 public def install (names : Array Name) : CoreM Unit := do
   unless names.isEmpty do checkNativeNat (← getEnv)
   for n in names do
-    modifyEnv fun e => privateConstKindsExt.insert e n .defn
+    unless (← getEnv).find? n matches some (.ctorInfo _) do
+      modifyEnv fun e => privateConstKindsExt.insert e n .defn
     modifyEnv fun e => externAttr.ext.addEntry (asyncDecl := n) e (n, ⟨[.standard `all (symbol n)]⟩)
     (← compileDeclsRef.get) #[n] {}
 
@@ -348,6 +350,8 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
         res == out && f == params[4]!.x && q == params[3]!.x do
       throw <| IO.userError "incompatible quotient eliminator ABI"
     return s!"\nLEAN_EXPORT lean_obj_res {entry}(lean_obj_arg q, lean_obj_arg f) \{ return lean_apply_1(f, q); }\n"
+  if FloatArrayNative.operations.contains official && FloatArrayNative.boxed strict then
+    return ← FloatArrayNative.wrapper source strict n (symbol n)
   if floatArrayIndex official then
     let some target := strict.find? n | throw <| IO.userError s!"missing strict float array index {n}"
     unless target.type == InitKernelPort.translate InitKernelPort.portName ci.type do

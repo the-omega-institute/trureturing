@@ -9,6 +9,8 @@ import Lean.Compiler.LCNF.PhaseExt
 import Lean.Compiler.IR.EmitUtil
 import Lean.Compiler.LCNF.EmitC
 import Lean.Compiler.ImplementedByAttr
+meta import OmegaChecks.InitPort.FloatArrayNative
+import OmegaChecks.InitPort.FloatArrayNative
 meta import OmegaChecks.InitPort.WordNative
 import OmegaChecks.InitPort.WordNative
 meta import OmegaChecks.InitPort.NativeState
@@ -282,7 +284,10 @@ private def compileOwner (source : Environment) (partialCode : NameMap Definitio
   let some (.axiomInfo marker) := source.find? `lcProof | throwError "missing pinned proof erasure marker"
   unless marker.isUnsafe && !strict.contains marker.name do throwError "unexpected proof erasure marker"
   Lean.addDecl (.axiomDecl marker)
+  let newFloatArray := groups.any (·.name == `Omega.FloatArray) && words.contains `Omega.FloatArray.mk
+  if newFloatArray then OmegaChecks.InitPort.FloatArrayNative.prepareLayout
   compileLayoutsInOrder groups
+  if newFloatArray then OmegaChecks.InitPort.FloatArrayNative.finishLayout
   OmegaChecks.InitPort.WordNative.install words
   for n in order do
     if let some code := partialCode.find? n then
@@ -374,9 +379,12 @@ private unsafe def install (source publicSource : Environment) (lib out : System
   -- when a detached seed uses a separately defined unary Nat.
   let unaryNat := (env.find? `Omega.Nat).any (· matches .inductInfo _)
   let largeWordSizes := [`UInt16.size, `UInt32.size, `UInt64.size, `USize.size]
+  let floatArray := owner == `OmegaInit.Data.FloatArray.Basic && !unaryNat &&
+    (OmegaChecks.InitPort.FloatArrayNative.boxed env || (monoTypeExt.find? env `Omega.FloatArray).isNone)
   for ci in part.constants do
     if !onlyLayouts && !unaryNat && !oldNative.contains ci.name && !ci.isUnsafe && !ci.isPartial &&
-        OmegaChecks.InitPort.WordNative.supported source owner (InitKernelPort.originalName ci.name) then
+        (OmegaChecks.InitPort.WordNative.supported source owner (InitKernelPort.originalName ci.name) ||
+         (floatArray && OmegaChecks.InitPort.FloatArrayNative.operations.contains (InitKernelPort.originalName ci.name))) then
       words := words.push ci.name
       continue
     match ci with
