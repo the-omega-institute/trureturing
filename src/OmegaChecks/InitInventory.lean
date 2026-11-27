@@ -370,6 +370,27 @@ private def logicalConsequence? (owner name : Name) : Option (Name × Name) := d
   | `Init.Data.Array.Lex.Lemmas, ``Array.lt_of_le_of_lt =>
     return (``OmegaChecks.InitBoundaries.FiniteMembership.EqualityCases,
       ``OmegaChecks.InitBoundaries.AbstractOrder.equalityCasesOfArrayComparison)
+  | `Init.Data.Order.LemmasExtra, `Std.instCommutativeMinOfLawfulOrderLeftLeaningMinOfIsLinearOrder =>
+    return (``OmegaChecks.InitBoundaries.AbstractOrder.StableEquality,
+      ``OmegaChecks.InitBoundaries.AbstractOrder.stableEqualityOfCommutativeMin)
+  | `Init.Data.Order.Lemmas, `Std.instMinEqOrOfLawfulOrderLeftLeaningMin =>
+    return (``OmegaChecks.InitBoundaries.AbstractOrder.StableEquality,
+      ``OmegaChecks.InitBoundaries.AbstractOrder.stableEqualityOfMinEqOr)
+  | `Init.Data.Order.Lemmas, `Std.instMaxEqOrOfLawfulOrderLeftLeaningMax =>
+    return (``OmegaChecks.InitBoundaries.AbstractOrder.StableEquality,
+      ``OmegaChecks.InitBoundaries.AbstractOrder.stableEqualityOfMaxEqOr)
+  | `Init.Data.Order.Lemmas, `Std.instLawfulOrderMinOfIsLinearPreorderOfLawfulOrderLeftLeaningMin =>
+    return (``OmegaChecks.InitBoundaries.AbstractOrder.StableEquality,
+      ``OmegaChecks.InitBoundaries.AbstractOrder.stableEqualityOfOrderMin)
+  | `Init.Data.Order.Lemmas, `Std.instLawfulOrderMaxOfIsLinearPreorderOfLawfulOrderLeftLeaningMax =>
+    return (``OmegaChecks.InitBoundaries.AbstractOrder.StableEquality,
+      ``OmegaChecks.InitBoundaries.AbstractOrder.stableEqualityOfOrderMax)
+  | `Init.Data.Order.Lemmas, `Std.instTrichotomousLtOfLawfulOrderLTOfTotalOfAntisymmLe =>
+    return (``OmegaChecks.InitBoundaries.AbstractOrder.StableEquality,
+      ``OmegaChecks.InitBoundaries.AbstractOrder.stableEqualityOfTrichotomousLT)
+  | `Init.Data.Order.Lemmas, `Std.instTotalNotLtOfLawfulOrderLTOfLe =>
+    return (`OmegaChecks.InitInventory.StringPatterns.WeakExcludedMiddle,
+      ``OmegaChecks.InitBoundaries.AbstractOrder.weakMiddleOfTotalNotLT)
   | `Init.Data.List.Lex, ``List.le_total =>
     return (`OmegaChecks.InitInventory.StringPatterns.WeakExcludedMiddle, ``OmegaChecks.InitBoundaries.AbstractOrder.weakMiddleOfListTotal)
   | `Init.Data.List.Lex, ``List.instTotalLeOfAsymmLt =>

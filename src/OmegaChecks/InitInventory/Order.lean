@@ -168,6 +168,88 @@ theorem stableEqualityOfGrindComparison (le : type_of% @Lean.Grind.LinearOrder.l
   exact eqOfReverse (le (a := leftEnd a b) (b := rightEnd a b)
     (fun lt => nn fun eq => lt.2 (Or.inl eq.symm)))
 
+private theorem endpointsEqualWhenEqual (h : a = b) (x y : Endpoints a b) : x = y := by
+  subst b
+  exact Subtype.ext ((x.property.elim id id).trans (y.property.elim id id).symm)
+
+private theorem endpointsInseparable (nn : ¬¬ a = b) (x y : Endpoints a b) : ¬¬ x = y :=
+  fun no => nn fun eq => no (endpointsEqualWhenEqual eq x y)
+
+/-- Choosing the left operand obeys the left-leaning rules whenever no two endpoints
+can be distinguished by a proof of inequality. -/
+private theorem leftMinimum (nn : ¬¬ a = b) :
+    letI := orderEndpoints a b
+    letI : Min (Endpoints a b) := ⟨fun x _ => x⟩
+    LawfulOrderLeftLeaningMin (Endpoints a b) := by
+  letI := orderEndpoints a b
+  letI : Min (Endpoints a b) := ⟨fun x _ => x⟩
+  exact ⟨fun _ _ _ => rfl, fun x y no => (endpointsInseparable nn x y fun eq => no (Or.inl (congrArg Subtype.val eq))).elim⟩
+
+private theorem leftMaximum (nn : ¬¬ a = b) :
+    letI := orderEndpoints a b
+    letI : Max (Endpoints a b) := ⟨fun x _ => x⟩
+    LawfulOrderLeftLeaningMax (Endpoints a b) := by
+  letI := orderEndpoints a b
+  letI : Max (Endpoints a b) := ⟨fun x _ => x⟩
+  exact ⟨fun _ _ _ => rfl, fun x y no => (endpointsInseparable nn y x fun eq => no (Or.inl (congrArg Subtype.val eq))).elim⟩
+
+theorem stableEqualityOfCommutativeMin (law : type_of% @Std.instCommutativeMinOfLawfulOrderLeftLeaningMinOfIsLinearOrder.{u}) :
+    StableEquality.{u} := by
+  intro α a b nn
+  letI := orderEndpoints a b
+  letI := endpointsLinear a b
+  letI : Min (Endpoints a b) := ⟨fun x _ => x⟩
+  letI := leftMinimum nn
+  exact congrArg Subtype.val (law.comm (leftEnd a b) (rightEnd a b))
+
+theorem stableEqualityOfOrderMin (law : type_of% @Std.instLawfulOrderMinOfIsLinearPreorderOfLawfulOrderLeftLeaningMin.{u}) :
+    StableEquality.{u} := by
+  intro α a b nn
+  letI := orderEndpoints a b
+  letI := endpointsLinear a b
+  letI : Min (Endpoints a b) := ⟨fun x _ => x⟩
+  letI := leftMinimum nn
+  exact eqOfReverse (((law.le_min_iff (rightEnd a b) (rightEnd a b) (leftEnd a b)).mp (Or.inl rfl)).2)
+
+theorem stableEqualityOfOrderMax (law : type_of% @Std.instLawfulOrderMaxOfIsLinearPreorderOfLawfulOrderLeftLeaningMax.{u}) :
+    StableEquality.{u} := by
+  intro α a b nn
+  letI := orderEndpoints a b
+  letI := endpointsLinear a b
+  letI : Max (Endpoints a b) := ⟨fun x _ => x⟩
+  letI := leftMaximum nn
+  exact eqOfReverse (((law.max_le_iff (leftEnd a b) (rightEnd a b) (leftEnd a b)).mp (Or.inl rfl)).2)
+
+theorem stableEqualityOfMinEqOr (law : type_of% @Std.instMinEqOrOfLawfulOrderLeftLeaningMin.{u}) :
+    StableEquality.{u} := by
+  intro α a b nn
+  letI : LE (Endpoints a b) := ⟨fun x _ => leftEnd a b = x⟩
+  letI : Min (Endpoints a b) := ⟨fun _ _ => leftEnd a b⟩
+  letI : LawfulOrderLeftLeaningMin (Endpoints a b) :=
+    ⟨fun _ _ h => h, fun x _ no => (endpointsInseparable nn (leftEnd a b) x no).elim⟩
+  exact congrArg Subtype.val ((law.min_eq_or (rightEnd a b) (rightEnd a b)).elim id id)
+
+theorem stableEqualityOfMaxEqOr (law : type_of% @Std.instMaxEqOrOfLawfulOrderLeftLeaningMax.{u}) :
+    StableEquality.{u} := by
+  intro α a b nn
+  letI : LE (Endpoints a b) := ⟨fun _ x => leftEnd a b = x⟩
+  letI : Max (Endpoints a b) := ⟨fun _ _ => leftEnd a b⟩
+  letI : LawfulOrderLeftLeaningMax (Endpoints a b) :=
+    ⟨fun _ _ h => h, fun x _ no => (endpointsInseparable nn (leftEnd a b) x no).elim⟩
+  exact congrArg Subtype.val ((law.max_eq_or (rightEnd a b) (rightEnd a b)).elim id id)
+
+theorem stableEqualityOfTrichotomousLT (law : type_of% @Std.instTrichotomousLtOfLawfulOrderLTOfTotalOfAntisymmLe.{u}) :
+    StableEquality.{u} := by
+  intro α a b nn
+  letI := orderEndpoints a b
+  letI := strictEndpoints a b
+  letI := endpointsLinear a b
+  letI := endpointsLT a b
+  let tri : Trichotomous (α := Endpoints a b) (· < ·) := @law (Endpoints a b) _ _ _
+    ⟨(endpointsLinear a b).le_total⟩ ⟨(endpointsLinear a b).le_antisymm⟩
+  exact congrArg Subtype.val (tri.trichotomous (leftEnd a b) (rightEnd a b)
+    (fun h => nn fun eq => h.2 (Or.inl eq.symm))
+    (fun h => h.2 (endpointsForward a b)))
 
 private abbrev SingletonAntisym := ∀ {T : Type u} [LT T] [LE T] [IsLinearOrder T] [LawfulOrderLT T]
   (x y : T), [x] ≤ [y] → [y] ≤ [x] → x = y
@@ -314,6 +396,15 @@ private theorem signedAsymm (p : Prop) : Std.Asymm (signed p) := by
 private theorem signedTri (p : Prop) : Std.Trichotomous (signed p) := by
   refine ⟨fun a b f r => ?_⟩
   cases a <;> cases b <;> first | rfl | exact (r f).elim | exact (f r).elim
+
+set_option linter.deprecated false in
+theorem weakMiddleOfTotalNotLT (total : type_of% @Std.instTotalNotLtOfLawfulOrderLTOfLe.{0}) (p : Prop) :
+    ¬p ∨ ¬¬p := by
+  letI : LE Bool := ⟨signed p⟩
+  letI : LT Bool := ⟨signed p⟩
+  letI : Std.LawfulOrderLT Bool := ⟨fun a b =>
+    ⟨fun h => ⟨h, (signedAsymm p).asymm a b h⟩, And.left⟩⟩
+  exact (@total Bool _ _ _).total false true
 
 theorem weakMiddleOfTotalNot (total : type_of% (@Std.Asymm.total_not.{1})) (p : Prop) :
     ¬p ∨ ¬¬p :=
