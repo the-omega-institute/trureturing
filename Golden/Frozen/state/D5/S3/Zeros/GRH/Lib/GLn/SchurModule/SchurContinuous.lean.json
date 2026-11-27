@@ -1,1 +1,0 @@
-{"statement_id":"sha256:61967eae581533e90036003f2a7bf8591debe3b8c472ae2f2ca2b333cd8fb49a","declarations":[{"declaration_name_key":"ns(n0,16:continuous_schur)","kind":"theorem","libraries":["Aesop","Batteries","Init","Lean","Mathlib","Std"],"axioms":["Classical.choice","Quot.sound","propext"]}]}

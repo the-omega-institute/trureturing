@@ -25,8 +25,7 @@ set_option maxRecDepth 4096
 namespace D5.S3.VertexAlgebra.Lattice.Orbifold.P48qNormImageCertificate
 
 open P48qFixedRankCertificate (nebeOrderThree nebeOrderThree_cube)
-open private nebeSquare nebeSquare_eq dotOfFn_eq from
-  D5.S3.VertexAlgebra.Lattice.Orbifold.P48qFixedRankCertificate
+open P48qFixedRankCertificate (nebeSquare nebeSquare_eq dotOfFn_eq)
 
 local notation "A" => nebeOrderThree
 

@@ -272,7 +272,7 @@ private def nebeSquareData : Array (Array ℤ) := #[
 ]
 
 /-- Candidate square of the raw table, established by the product certificate below. -/
-private def nebeSquare : Matrix (Fin 48) (Fin 48) ℤ :=
+def nebeSquare : Matrix (Fin 48) (Fin 48) ℤ :=
   fun i j => (nebeSquareData.getD i.val #[]).getD j.val 0
 
 private def nebeColumnsDataRow0 : Array ℤ := #[-6, -1, -19, 6, -8, -4, -12, 5, 4, -9, 13, 11, -1, -4, -2, 20, 0, 2, -8, 4, 0, -1, 4, -4, 1, -13, -3, 0, -26, 12, 2, -5, 12, 3, 0, 2, 21, 4, -22, -1, -5, 4, -8, 13, -3, 7, 20, 0]
@@ -347,7 +347,7 @@ private theorem sumOfFn_eq {n : ℕ} (f : Fin n → ℤ) :
   | zero => simp
   | succ n ih => rw [List.ofFn_succ, List.sum_cons, Fin.sum_univ_succ, ih]
 
-private theorem dotOfFn_eq {n : ℕ} (f g : Fin n → ℤ) :
+theorem dotOfFn_eq {n : ℕ} (f g : Fin n → ℤ) :
     (List.zipWith (· * ·) (List.ofFn f) (List.ofFn g)).sum = ∑ i, f i * g i := by
   induction n with
   | zero => simp
@@ -586,7 +586,7 @@ private theorem squareRow_47 :
     mulRow (nebeOrderThreeData.getD 47 #[]) = List.ofFn (nebeSquare (47 : Fin 48)) := by
   decide +kernel
 
-private theorem nebeSquare_eq : nebeOrderThree * nebeOrderThree = nebeSquare := by
+theorem nebeSquare_eq : nebeOrderThree * nebeOrderThree = nebeSquare := by
   apply mul_eq_of_row_checks nebeOrderThreeData nebeOrderThree nebeSquare (fun _ _ => rfl) nebeOrderThreeData_shape
   intro i
   fin_cases i
