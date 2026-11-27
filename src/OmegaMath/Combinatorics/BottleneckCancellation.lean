@@ -184,36 +184,3 @@ theorem complement_bound {X : Type*} {Y : Type*} {M : Type*} [PseudoMetricSpace 
   simpa [mul_add, add_mul, add_assoc, add_comm, add_left_comm] using h
 
 end Omega.BottleneckCancellation
-
--- Transient exact application and boundary checks.
-#print axioms Omega.BottleneckCancellation.complement_bound
-
-example : ∃ f : {x : Fin 2 // x ∉ ({1} : Finset (Fin 2))} ≃
-    {y : Fin 2 // y ∉ ({0} : Finset (Fin 2))},
-    ∀ x, dist ((2 : ℝ) * x.1.val) (1 + 2 * (f x).1.val) ≤ 3 := by
-  let d : ({1} : Finset (Fin 2)) ≃ ({0} : Finset (Fin 2)) := {
-    toFun := fun _ => ⟨0, by simp⟩
-    invFun := fun _ => ⟨1, by simp⟩
-    left_inv := by intro x; apply Subtype.ext; exact (Finset.mem_singleton.mp x.2).symm
-    right_inv := by intro x; apply Subtype.ext; exact (Finset.mem_singleton.mp x.2).symm }
-  have he : ∀ x : Fin 2, dist ((2 : ℝ) * x.val) (1 + 2 * x.val) ≤ 1 := by
-    intro x
-    rw [Real.dist_eq]
-    have : (2 : ℝ) * x.val - (1 + 2 * x.val) = -1 := by ring
-    rw [this]; norm_num
-  have hd : ∀ u : ({1} : Finset (Fin 2)),
-      dist ((2 : ℝ) * u.1.val) (1 + 2 * (d u).1.val) ≤ 1 := by
-    intro u
-    have hu : (u : Fin 2) = 1 := Finset.mem_singleton.mp u.2
-    norm_num [d, hu, Real.dist_eq]
-  convert Omega.BottleneckCancellation.complement_bound
-    (fun x : Fin 2 => (2 : ℝ) * x.val) (fun y : Fin 2 => 1 + (2 : ℝ) * y.val)
-    (Equiv.refl _) {1} {0} d 1 1 (by norm_num) (by norm_num) he hd using 1 <;> norm_num
-
-example {M : Type*} [PseudoMetricSpace M] (a b : Fin 0 → M) (ε η : ℝ)
-    (hε : 0 ≤ ε) (hη : 0 ≤ η) :
-    ∃ f : {x : Fin 0 // x ∉ (∅ : Finset (Fin 0))} ≃
-      {y : Fin 0 // y ∉ (∅ : Finset (Fin 0))},
-      ∀ x : {x : Fin 0 // x ∉ (∅ : Finset (Fin 0))}, dist (a x) (b (f x)) ≤ ε := by
-  simpa using Omega.BottleneckCancellation.complement_bound a b (Equiv.refl _)
-    ∅ ∅ (Equiv.refl _) ε η hε hη (fun x => Fin.elim0 x) (fun u => Fin.elim0 u)
