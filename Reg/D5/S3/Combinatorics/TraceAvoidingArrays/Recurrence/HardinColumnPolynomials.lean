@@ -1,5 +1,5 @@
 import LeanInformationAuditInterface.Contract.Registration
-import Reg.Support.HardinLagAudit
+import Reg.Support.Hardin.LagAudit
 import D5.S3.Combinatorics.TraceAvoidingArrays.Recurrence.HardinColumnPolynomials
 
 /-! The per-column readout in the full six-row continuation sum. -/
