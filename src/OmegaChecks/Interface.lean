@@ -4,6 +4,7 @@ import OmegaChecks.InitPort.NativeQuot
 import OmegaChecks.InitPort.WordFold
 import OmegaChecks.InitPort.WordForIn
 import OmegaChecks.InitPort.SyntaxArray
+import OmegaChecks.InitPort.BorrowedIndex
 import OmegaChecks.InitPort.ArrayWord
 import OmegaChecks.InitPort.Address
 import OmegaChecks.InitPort.ArrayModify
@@ -203,6 +204,12 @@ private def compare (reference : Environment) (rename : Name → Name) (src dst 
       return deps ++ x.value.getUsedConstants
     deps := deps ++ x.value.getUsedConstants
     compareDefinitionBody
+  | .opaqueInfo x, .opaqueInfo y =>
+    if foundation.isSome && !x.isUnsafe && y.name == `Array.get!InternalBorrowed then
+      OmegaChecks.InitPort.BorrowedIndex.check reference y (liftTerm x.value)
+      return deps ++ x.value.getUsedConstants
+    compareDefinitionBody
+    deps := deps ++ x.value.getUsedConstants
   | .defnInfo _, _ | .opaqueInfo _, _ =>
     compareDefinitionBody
     deps := deps ++ (src.value! (allowOpaque := true)).getUsedConstants

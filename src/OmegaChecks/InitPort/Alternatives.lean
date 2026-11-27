@@ -9,6 +9,7 @@ public import OmegaChecks.InitPort.Alternatives.ArrayReverse
 public import OmegaChecks.InitPort.Alternatives.ArraySort
 public import OmegaChecks.InitPort.Alternatives.ArrayWord
 public import OmegaChecks.InitPort.Alternatives.ArrayZip
+public import OmegaChecks.InitPort.Alternatives.BorrowedIndex
 public import OmegaChecks.InitPort.Alternatives.Collect
 public import OmegaChecks.InitPort.Alternatives.Constraint
 public import OmegaChecks.InitPort.Alternatives.Extract

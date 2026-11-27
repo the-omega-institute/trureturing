@@ -487,14 +487,17 @@ partial def visit (n : Name) : M Bool := do
       | return ← record n (.blocked "kernel rejected logical reference")
     modify fun s => {s with env}
     return ← record n .added
-  if n == `Array.anyMUnsafe || OmegaChecks.InitPort.WordFold.supported n ||
+  if n == `Array.get!InternalBorrowed || n == `Array.anyMUnsafe || OmegaChecks.InitPort.WordFold.supported n ||
       OmegaChecks.InitPort.WordForIn.supported n || OmegaChecks.InitPort.SyntaxArray.supported n then
-    let .defnInfo native := ci | return ← record n (.blocked "missing native array implementation")
+    let safe ← match ci with
+      | .defnInfo native => pure (.defnInfo {native with safety := .safe})
+      | .opaqueInfo native => pure (.opaqueInfo {native with isUnsafe := false})
+      | _ => return ← record n (.blocked "missing native array implementation")
     let some body := OmegaChecks.InitPort.alternativeBody? c.alternatives ci
       | return ← record n (.blocked "missing safe array implementation")
     for dep in usedConstants ci.type ++ usedConstants body do
       unless ← visit dep do return ← record n (.blocked "unavailable safe array implementation dependency" (some dep))
-    let .ok decl := translateDecl (.defnInfo {native with safety := .safe}) ci.type body
+    let .ok decl := translateDecl safe ci.type body
       | return ← record n (.blocked "invalid safe array implementation")
     let .ok env ← checkWithRetry (← get).env decl c.maxHeartbeats
       | return ← record n (.blocked "kernel rejected safe array implementation")
