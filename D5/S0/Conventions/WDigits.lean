@@ -6,19 +6,49 @@
    digest: W digits use Fibonacci weights and the unique nonadjacent Zeckendorf representation. -/
 
 import Mathlib.Data.Nat.Fib.Zeckendorf
+import OmegaMath.Arithmetic.WDigits
 
 namespace D5.S0.Conventions
+
+section StrictWeights
+
+open Omega.Arithmetic.WDigits (wValue)
+
+theorem wValue_zero : Omega.Eq (wValue .zero) Omega.Nat.one :=
+  Omega.Arithmetic.WDigits.wValue_zero
+
+theorem wValue_one : Omega.Eq (wValue Omega.Nat.one) Omega.Nat.one.succ :=
+  Omega.Arithmetic.WDigits.wValue_one
+
+theorem wValue_two : Omega.Eq (wValue Omega.Nat.one.succ) Omega.Nat.one.succ.succ :=
+  Omega.Arithmetic.WDigits.wValue_two
+
+theorem wValue_add_two (index : Omega.Nat) :
+    Omega.Eq (wValue index.succ.succ) ((wValue index).add (wValue index.succ)) :=
+  Omega.Arithmetic.WDigits.wValue_add_two index
+
+end StrictWeights
 
 /-- The zero-based W weight sequence `1, 2, 3, 5, ...`. -/
 def wValue (index : ℕ) : ℕ := Nat.fib (index + 2)
 
-@[simp] theorem wValue_zero : wValue 0 = 1 := rfl
-@[simp] theorem wValue_one : wValue 1 = 2 := rfl
-@[simp] theorem wValue_two : wValue 2 = 3 := rfl
+@[simp] theorem wValue_zero_nat : wValue 0 = 1 := rfl
+@[simp] theorem wValue_one_nat : wValue 1 = 2 := rfl
+@[simp] theorem wValue_two_nat : wValue 2 = 3 := rfl
 
-theorem wValue_add_two (index : ℕ) :
+theorem wValue_add_two_nat (index : ℕ) :
     wValue (index + 2) = wValue index + wValue (index + 1) := by
-  simpa [wValue, Nat.add_assoc] using (Nat.fib_add_two (n := index + 2))
+  let step (pair : Nat × Nat) := (pair.2, pair.1 + pair.2)
+  have commute (n : Nat) (pair : Nat × Nat) :
+      (step^[n]) (step pair) = step ((step^[n]) pair) := by
+    induction n generalizing pair with
+    | zero => rfl
+    | succ n ih => exact ih (step pair)
+  have advance (n : Nat) : (step^[n + 1]) (0, 1) = step ((step^[n]) (0, 1)) :=
+    commute n (0, 1)
+  change ((step^[index + 2 + 1 + 1]) (0, 1)).1 =
+    ((step^[index + 2]) (0, 1)).1 + ((step^[index + 2 + 1]) (0, 1)).1
+  rw [advance (index + 2 + 1), advance (index + 2)]
 
 /-- Canonical W digits, stored as the occupied Fibonacci indices used by mathlib. -/
 def wdigits (n : ℕ) : List ℕ := Nat.zeckendorf n
