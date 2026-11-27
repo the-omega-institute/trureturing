@@ -64,14 +64,14 @@ private instance (rows : Vector (List (Fin 17)) 17) : DecidableRel (adjacent row
 
 private def graphB : SimpleGraph (Fin 17) where
   Adj := adjacent neighborsB
-  symm := fun {i j} => (show ∀ i j, adjacent neighborsB i j → adjacent neighborsB j i
-    from by decide) i j
+  symm := ⟨fun i j => (show ∀ i j, adjacent neighborsB i j → adjacent neighborsB j i
+    from by decide) i j⟩
   loopless := ⟨by decide⟩
 
 private def graphC : SimpleGraph (Fin 17) where
   Adj := adjacent neighborsC
-  symm := fun {i j} => (show ∀ i j, adjacent neighborsC i j → adjacent neighborsC j i
-    from by decide) i j
+  symm := ⟨fun i j => (show ∀ i j, adjacent neighborsC i j → adjacent neighborsC j i
+    from by decide) i j⟩
   loopless := ⟨by decide⟩
 
 private instance : DecidableRel graphB.Adj :=
@@ -108,13 +108,14 @@ adjacency matrices whose ordinary product is the all-ones matrix minus the ident
 theorem result :
     ∃ H K : SimpleGraph (Fin 17),
       ∃ (dH : DecidableRel H.Adj) (dK : DecidableRel K.Adj),
+        letI : DecidableRel H.Adj := dH
+        letI : DecidableRel K.Adj := dK
         H.adjMatrix ℤ * K.adjMatrix ℤ = (Matrix.of 1 - 1) ∧
         (¬ ∀ i j, ∃ e : H ≃g H, e i = j) ∧
         (¬ ∀ i j, ∃ e : K ≃g K, e i = j) := by
   refine ⟨graphB, graphC, inferInstance, inferInstance, ?_, ?_, ?_⟩
-  · rw [← adjMatrix_completeGraph_eq_of_one_sub_one]
-    ext i j
-    rw [product_entry, adjMatrix_apply, completeGraph_adj]
+  · ext i j
+    rw [product_entry, Matrix.sub_apply, Matrix.one_apply]
     by_cases hij : i = j <;> simp [hij]
   · intro h
     obtain ⟨e, he⟩ := h 0 1
