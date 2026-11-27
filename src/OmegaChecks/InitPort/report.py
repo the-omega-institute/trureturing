@@ -193,6 +193,13 @@ def verify_complete(official, product, reductions, unresolved):
         examples = ", ".join(f"{owner}/{name}" for owner, name in missing_native[:3])
         raise ValueError(f"{len(missing_native)} matched definitions lack their official native signatures. "
                          f"Examples: {examples}. See init-inventory.json.")
+    safety_mismatches = [(row["module"], row["name"]) for row in official["declarations"]
+                         if row["matchingNameAndModule"] and
+                         (row.get("strictUnsafe") is not row["unsafe"] or row.get("strictPartial") is not row["partial"])]
+    if safety_mismatches:
+        examples = ", ".join(f"{owner}/{name}" for owner, name in safety_mismatches[:3])
+        raise ValueError(f"{len(safety_mismatches)} matched definitions differ in safety or partiality. "
+                         f"Examples: {examples}. See init-inventory.json.")
     # Never accept an old audit log or a same-name strict declaration as a certificate.
     # Audit the product actually being presented, against all installed official module roots.
     lib = product / "lib"

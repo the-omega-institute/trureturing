@@ -586,7 +586,7 @@ private def checkedTypeAxioms (official : Environment) (info : ConstantInfo)
     | .ok _ => throwError "the unchanged type of {info.name} checked without {name}"
   return direct
 
-private def inventory (lib : System.FilePath) (visible strict full witnesses : Environment) (modules : Array Name)
+private def inventory (lib strictDir : System.FilePath) (visible strict full witnesses : Environment) (modules : Array Name)
     (gaps : Option IO.FS.Handle) (observedRuntime observedPacked : List String) : CoreM Json := do
   let official ← getEnv
   let reductions := reductionPaths visible strict full
@@ -633,6 +633,15 @@ private def inventory (lib : System.FilePath) (visible strict full witnesses : E
     let strictIdx := strict.getModuleIdx? expected
     let strictNames := strictIdx.map fun i =>
       NameSet.ofList strict.header.moduleData[i]!.constNames.toList
+    let strictLocal : NameMap ConstantInfo ← match full.getModuleIdx? expected with
+      | none => pure {}
+      | some i => do
+        let defs ← if publicNames.any duplicateNames.contains then do
+          let path := modToFilePath strictDir expected "olean"
+          let parts ← readModuleDataParts #[path, path.addExtension "server", path.addExtension "private"]
+          pure (parts.map (·.1))[2]!.constants
+        else pure full.header.moduleData[i]!.constants
+        pure (defs.foldl (fun m c => m.insert c.name c) {})
     let officialSigs := nativeSignatures visible idx
     let strictSigs := (strictIdx.map (nativeSignatures strict)).getD {}
     let mut moduleNative : Array NativeSite := #[]
@@ -697,6 +706,10 @@ private def inventory (lib : System.FilePath) (visible strict full witnesses : E
       if boundary.isSome then certifiedSites := certifiedSites + 1
       let strictName := if OmegaChecks.InitCompiler.RootNames.isPrimitive expected name then name else `Omega ++ name
       let matched := strictNames.any (·.contains strictName)
+      let strictInfo ← if matched then do
+        let some dst := strictLocal.find? strictName | throwError "missing strict implementation {expected}/{strictName}"
+        pure (some dst)
+      else pure none
       let observer := (owner == `Init.Util && [`isExclusiveUnsafe, `ptrAddrUnsafe].contains name) ||
         (owner == `Init.ShareCommon && [`ShareCommon.Object.eq, `ShareCommon.Object.hash].contains name)
       let checkedUnsafeRuntime ← if matched && observer then do
@@ -761,6 +774,7 @@ private def inventory (lib : System.FilePath) (visible strict full witnesses : E
         ("name", toJson name.toString), ("module", toJson owner.toString),
         ("kind", toJson (declarationKind info)), ("unsafe", toJson info.isUnsafe), ("partial", toJson info.isPartial),
         ("matchingNameAndModule", toJson matched),
+        ("strictUnsafe", toJson (strictInfo.map (·.isUnsafe))), ("strictPartial", toJson (strictInfo.map (·.isPartial))),
         ("publicReductionBoundary", toJson ((reduction.map Prod.fst).getD []).toArray),
         ("officialReductionMechanism", toJson (reduction.map Prod.snd)),
         ("axioms", toJson (axioms.map Name.toString)),
@@ -862,6 +876,6 @@ def main (args : List String) : IO Unit := do
     | "true" => pure ("isExclusiveUnsafe" :: pointers ++ effects)
     | "false" => pure (pointers ++ effects)
     | other => throw <| IO.userError s!"unexpected native exclusivity observation: {other}"
-  let result ← (inventory lib visible strict full witnesses modules gaps observedRuntime packed).toIO' {fileName := "<Init inventory>", fileMap := default} {env := official}
+  let result ← (inventory lib strictDir visible strict full witnesses modules gaps observedRuntime packed).toIO' {fileName := "<Init inventory>", fileMap := default} {env := official}
   IO.FS.writeFile outputPath (result.compress ++ "\n")
   IO.println (← IO.ofExcept (result.getObjVal? "summary")).compress

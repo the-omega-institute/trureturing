@@ -8,6 +8,7 @@ from report import check_coverage, verify_complete
 
 def site(owner, name, **attributes):
     return {"module": owner, "name": name, "kind": "theorem", "matchingNameAndModule": False,
+            "unsafe": False, "partial": False, "strictUnsafe": False, "strictPartial": False,
             "strictModule": None, "impliesAxiom": None, "reductionWitness": None, **attributes}
 
 
@@ -18,6 +19,13 @@ def inventory(*rows):
 
 
 class CoverageTest(unittest.TestCase):
+    def test_completion_checks_safety_and_partiality_at_matching_sites(self):
+        for flags in ({"unsafe": True}, {"strictUnsafe": True}, {"partial": True}, {"strictPartial": None}):
+            with self.subTest(flags=flags):
+                data = inventory(site("Init.Core", "f", matchingNameAndModule=True, strictModule="OmegaInit.Core", **flags))
+                with self.assertRaisesRegex(ValueError, "1 matched definitions differ in safety or partiality"):
+                    verify_complete(data, Path("product"), *check_coverage(data))
+
     def test_same_name_other_owner_and_implementation_axioms_leave_a_gap(self):
         data = inventory(
             site("Init.A", "a", kind="axiom"),
