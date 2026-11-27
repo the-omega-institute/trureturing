@@ -198,6 +198,7 @@ public def supported (source : Environment) (owner name : Name) : Bool :=
     [`land, `lor, `xor, `shiftLeft, `shiftRight].contains method
   let logarithm := owner == `OmegaInit.Data.Nat.Log2 && name == `Nat.log2
   let wordRepr := owner == `OmegaInit.Data.Repr && name == `USize.repr
+  let arraySet := owner == `OmegaInit.Data.Array.Set && name == `Array.set!
   let floatIndex := owner == `OmegaInit.Data.FloatArray.Basic && floatArrayIndex name
   let byteOp := owner == `OmegaInit.Data.ByteArray.Basic && name.getPrefix == `ByteArray &&
     [`uget, `get, `get!, `uset, `set, `set!, `usize, `copySlice, `beq, `decEq, `hash].contains method
@@ -240,7 +241,7 @@ public def supported (source : Environment) (owner name : Name) : Bool :=
     `OmegaInit.Data.RArray, `OmegaInit.Data.Nat.Internal.Linear, `OmegaInit.Data.Nat.Fold, `OmegaInit.Data.Fin.Lemmas].contains owner && IndexedNative.supported name) ||
     ([`OmegaInit.Data.Float.Model.Float, `OmegaInit.Data.Float.Model.Float32].contains owner && modelOperation name) ||
     ([`OmegaInit.Prelude, `OmegaInit.Meta.Defs].contains owner && SyntaxPositionNative.supported name) ||
-    ((base || intPrimitive || platform || version || floatIndex || byteOp || textCompare || modular || stringOp || wordRepr || bitwise || logarithm || (inOwner && primitive)) && isExtern source name) ||
+    ((base || intPrimitive || platform || version || arraySet || floatIndex || byteOp || textCompare || modular || stringOp || wordRepr || bitwise || logarithm || (inOwner && primitive)) && isExtern source name) ||
     ((intOwner || [`OmegaInit.Data.Dyadic.Basic, `OmegaInit.Data.ByteArray.Extra, `OmegaInit.Data.ByteArray.Basic, `OmegaInit.Data.Int.Repr, `OmegaInit.Data.Repr, `OmegaInit.Data.Nat.Bitwise.Basic, `OmegaInit.Data.BitVec.Basic].contains owner || [`OmegaInit.Data.UInt.Basic, `OmegaInit.Data.SInt.Basic].contains owner) && usesPinnedFunction name)
 
 private def symbol (n : Name) := (n.replacePrefix `Omega .anonymous).mangle "omega_word_"
@@ -374,6 +375,23 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
     return s!"\nLEAN_EXPORT lean_obj_res {entry}(lean_obj_arg q, lean_obj_arg f) \{ return lean_apply_1(f, q); }\n"
   if FloatArrayNative.operations.contains official && FloatArrayNative.boxed strict then
     return ← FloatArrayNative.wrapper source strict n (symbol n)
+  if official == `Array.set! then
+    let some target := strict.find? n | throw <| IO.userError "missing strict array update"
+    unless target.type == InitKernelPort.translate InitKernelPort.portName ci.type do
+      throw <| IO.userError "different strict array update type"
+    let some (some field) := impureTrivialStructureInfoExt.find? strict `Omega.Array
+      | throw <| IO.userError "strict array does not erase to its list"
+    IndexedNative.checkDataTypes source strict [`List]
+    let some (.extern _ args .object ⟨[.standard `all "lean_array_set"]⟩) := IR.findEnvDecl source official
+      | throw <| IO.userError "missing pinned array update primitive"
+    let some (.extern _ actual .tobject ⟨[.standard `all entry]⟩) := IR.findEnvDecl strict n
+      | throw <| IO.userError "missing strict array update primitive"
+    unless field.fieldIdx == 0 && args.map (·.ty) == #[.erased, .object, .tobject, .tobject] &&
+        actual.map (·.ty) == #[.erased, .tobject, .tobject, .tobject] &&
+        args.map (·.borrow) == #[false, false, true, false] &&
+        actual.map (·.borrow) == args.map (·.borrow) && entry == symbol n do
+      throw <| IO.userError s!"incompatible array update ABI: {args.map fun a => (a.ty, a.borrow)}/{actual.map fun a => (a.ty, a.borrow)}"
+    return s!"\n#include \"strict_array_set.h\"\nLEAN_EXPORT lean_obj_res {entry}(lean_obj_arg xs, b_lean_obj_arg i, lean_obj_arg v) \{ return omega_array_list_set_bang(xs, i, v); }\n"
   if floatArrayIndex official then
     let some target := strict.find? n | throw <| IO.userError s!"missing strict float array index {n}"
     unless target.type == InitKernelPort.translate InitKernelPort.portName ci.type do
