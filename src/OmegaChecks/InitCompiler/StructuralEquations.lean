@@ -57,21 +57,34 @@ public def checkConstructorEquations (name : Name) (levelParams : List Name) (ty
       throwError "expected a nonempty unindexed inductive family"
     for ctorName in ind.ctors do
       let ctor := mkAppN (mkConst ctorName us) family.getAppArgs
-      Meta.forallTelescope (← Meta.inferType ctor) fun fields _ => do
-        let arg := mkAppN ctor fields
+      let ctorType ← Meta.inferType ctor
+      let checkArg := fun (arg : Expr) => do
         let fn := mkConst name levels
         let args := before.push arg
         let remaining := rest.bindingBody!.instantiate1 arg
         let compare := fun (xs : Array Expr) => do
           return Kernel.isDefEqGuarded (← getEnv) (← getLCtx) (mkAppN fn xs) (mkAppN body xs)
         Meta.forallTelescope remaining fun suffix _ => do
-          if ← compare (args ++ suffix) then return
+          if ← compare (args ++ suffix) then return true
           if let #[index] := suffix then
-            if ← checkFinEquations fn body args index then return
+            if ← checkFinEquations fn body args index then return true
           if remaining.isForall then
-            if ← forallConstructors remaining.bindingDomain! (fun val =>
+            return ← forallConstructors remaining.bindingDomain! fun val =>
               Meta.forallTelescope (remaining.bindingBody!.instantiate1 val) fun tail _ =>
-                compare ((args.push val) ++ tail)) then return
-          throwError "recursive equation does not match {name} at {ctorName}"
+                compare ((args.push val) ++ tail)
+          return false
+      if ← Meta.forallTelescope ctorType fun fields _ => checkArg (mkAppN ctor fields) then continue
+      -- A nested pattern can also inspect a recursive field. Rebuild its dependent suffix
+      -- under each field constructor before comparing the completed applications.
+      let mut matchesField := false
+      for i in [:ctorType.getForallArity] do
+        if ← Meta.forallBoundedTelescope ctorType (some i) fun priorFields next => do
+          unless next.isForall && (← Meta.whnf next.bindingDomain!).getAppFn.isConstOf indName do return false
+          return ← forallConstructors next.bindingDomain! fun value =>
+            Meta.forallTelescope (next.bindingBody!.instantiate1 value) fun suffix _ =>
+              checkArg (mkAppN ctor (priorFields.push value ++ suffix)) then
+          matchesField := true
+          break
+      unless matchesField do throwError "recursive equation does not match {name} at {ctorName}"
 
 end OmegaChecks.InitCompiler
