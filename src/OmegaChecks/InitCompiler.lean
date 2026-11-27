@@ -131,6 +131,9 @@ private def officialDeclaration (stx : Syntax) : CommandElabM (Environment × Co
     let (decl, ctors) ← sourceGroup src owner name
     let .inductDecl _ _ types _ := decl | unreachable!
     Lean.addDecl decl
+    for exported in types.toArray.map (·.name) ++ ctors do
+      if isProtected src (exported.replacePrefix `Omega .anonymous) then
+        modifyEnv (addProtected · exported)
     compilerLayouts (types.toArray.map (·.name)) ctors
     for typ in types do
       Meta.MetaM.run' <| mkCasesOn typ.name

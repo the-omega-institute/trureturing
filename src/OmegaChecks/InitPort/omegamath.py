@@ -76,6 +76,11 @@ example (p : Omega.Prod Omega.Nat Omega.Nat) (b : Omega.Nat) :
 example {p q : Prop} (h : Omega.And p q) : p := h.left
 example {p q : Prop} (pq : p → q) (qp : q → p) : Omega.Iff p q := { mp := pq, mpr := qp }
 example {p q : Prop} (h : Omega.Iff p q) : q → p := h.mpr
+example {n m : Omega.Nat} (h : Omega.Nat.le n m) :
+    Omega.Or (Omega.Eq n m) (Omega.Nat.lt n m) :=
+  match h with
+  | .refl => .inl Omega.rfl
+  | .step g => .inr (Omega.Nat.succ_le_succ g)
 example {p q : Prop} (h : Omega.Or p q) : Omega.Or q p :=
   match h with
   | .inl a => .inr a

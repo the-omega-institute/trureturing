@@ -7,8 +7,11 @@ open Lean
 namespace OmegaChecks.InitPort.NativeQuot
 
 private def primitives := #[`Quot, `Quot.mk, `Quot.ind, `Quot.lift]
-private def matcherNames := #[`PProd.mk, `HEq, `Unit, `Unit.unit]
-private def kernelNames := #[`Eq, `Eq.refl, `Eq.rec] ++ primitives
+private def matcherNames := #[`PProd.mk, `Unit, `Unit.unit]
+private def equalitySupport := #[
+  `rfl, `Eq.symm, `Eq.ndrec, `HEq, `HEq.refl, `HEq.rec,
+  `Eq.subst, `cast, `heq_of_eq, `eq_of_heq]
+private def kernelNames := #[`Eq, `Eq.refl, `Eq.rec] ++ equalitySupport ++ primitives
 private def fixedNames := kernelNames ++ matcherNames
 
 /-- Root names required by the kernel, pattern elaborator and native compiler. -/
@@ -30,8 +33,10 @@ private def matcherAlias (ci : ConstantInfo) : ConstantInfo :=
 private def officialSupport : IO (Array ConstantInfo) := do
   let lib ← getLibDir (← findSysroot)
   let path := modToFilePath lib `Init.Prelude "olean"
-  let (data, _) ← readModuleData path
+  let modules ← readModuleDataParts #[path, path.addExtension "server", path.addExtension "private"]
+  let dataByLevel := modules.map Prod.fst
   fixedNames.mapM fun n => do
+    let data := if equalitySupport.contains n then dataByLevel[2]! else dataByLevel[0]!
     let some ci := data.constants.find? (·.name == n)
       | throw <| IO.userError s!"missing pinned kernel declaration {n}"
     return if matcherNames.contains n then matcherAlias ci else ci

@@ -104,75 +104,46 @@ namespace Nat
 @[no_expose] protected def sub : Nat → Nat → Nat :=
   fun a => Nat.rec a (fun _ r => pred r)
 
-/-- Comparison by removing one successor from both sides. -/
-@[no_expose] protected def le (n : Nat) : Nat → Prop :=
-  Nat.rec (motive := fun _ => Nat → Prop) (fun _ => True)
-    (fun _ smaller n => Nat.rec (motive := fun _ => Prop) False (fun k _ => smaller k) n) n
+end Nat
+end Omega
+
+port_inductive Nat.le
+
+namespace Omega
+namespace Nat
 
 protected def lt (n m : Nat) : Prop := Nat.le (succ n) m
 
-theorem zero_le (n : Nat) : Nat.le zero n := True.intro
+theorem zero_le (n : Nat) : Nat.le zero n :=
+  Nat.rec (motive := fun k => Nat.le zero k) Nat.le.refl (fun _ h => Nat.le.step h) n
 
-theorem succ_le_succ {n m : Nat} : Nat.le n m → Nat.le (succ n) (succ m) := fun h => h
+theorem succ_le_succ {n m : Nat} : Nat.le n m → Nat.le (succ n) (succ m) := fun h =>
+  Nat.le.rec (motive := fun k _ => Nat.le (succ n) (succ k)) Nat.le.refl
+    (fun _ ih => Nat.le.step ih) h
 
-theorem le_of_succ_le_succ {n m : Nat} : Nat.le (succ n) (succ m) → Nat.le n m := fun h => h
+private theorem weakenLeft {n m : Nat} (h : Nat.le (succ n) m) : Nat.le n m :=
+  Nat.le.rec (motive := fun k _ => Nat.le n k) (Nat.le.step Nat.le.refl)
+    (fun _ ih => Nat.le.step ih) h
 
-theorem not_succ_le_zero (n : Nat) : Not (Nat.le (succ n) zero) := fun h => h
+theorem le_of_succ_le_succ {n m : Nat} : Nat.le (succ n) (succ m) → Nat.le n m := fun h =>
+  Nat.le.rec (n := succ n) (motive := fun k _ => Nat.le n (pred k)) Nat.le.refl (fun evidence _ => weakenLeft evidence) h
 
-protected theorem le_refl (n : Nat) : Nat.le n n :=
-  Nat.rec (motive := fun k => Nat.le k k) True.intro (fun _ h => h) n
+theorem not_succ_le_zero (n : Nat) : Not (Nat.le (succ n) zero) := fun h =>
+  Nat.le.rec (n := succ n) (motive := fun k _ => Nat.casesOn (motive := fun _ => Prop) k False (fun _ => True))
+    True.intro (fun _ _ => True.intro) h
 
-theorem le.refl {n : Nat} : Nat.le n n := Nat.le_refl n
-
-theorem le.step {n m : Nat} : Nat.le n m → Nat.le n (succ m) := fun h =>
-  (Nat.rec (motive := fun i => ∀ m, Nat.le i m → Nat.le i (succ m))
-    (fun _ _ => True.intro)
-    (fun n step m => Nat.rec (motive := fun x₀ => Nat.le (succ n) x₀ → Nat.le (succ n) (succ x₀))
-      (fun h => False.elim h) (fun x₀ _ => step x₀) m) n) m h
+protected theorem le_refl (n : Nat) : Nat.le n n := Nat.le.refl
 
 protected theorem le_trans {n m k : Nat} : Nat.le n m → Nat.le m k → Nat.le n k := fun h g =>
-  (Nat.rec (motive := fun n => ∀ m k, Nat.le n m → Nat.le m k → Nat.le n k)
-    (fun _ _ _ _ => True.intro)
-    (fun n trans m => Nat.rec (motive := fun m => ∀ k, Nat.le (succ n) m → Nat.le m k → Nat.le (succ n) k)
-      (fun _ h _ => False.elim h)
-      (fun m _ k => Nat.rec (motive := fun k =>
-        Nat.le (succ n) (succ m) → Nat.le (succ m) k → Nat.le (succ n) k)
-        (fun _ g => g) (fun k _ => trans m k) k) m) n) m k h g
+  Nat.le.rec (motive := fun k _ => Nat.le n k) h (fun _ ih => Nat.le.step ih) g
 
 protected theorem le_antisymm {n m : Nat} (h₁ : Nat.le n m) (h₂ : Nat.le m n) : Eq n m :=
   (Nat.rec (motive := fun n => ∀ m, Nat.le n m → Nat.le m n → Eq n m)
     (fun m => Nat.rec (motive := fun m => Nat.le zero m → Nat.le m zero → Eq zero m)
-      (fun _ _ => rfl) (fun _ _ _ h₁ => False.elim h₁) m)
-    (fun n antisymm m => Nat.rec (motive := fun m => Nat.le (succ n) m → Nat.le m (succ n) → Eq (succ n) m)
-      (fun h₁ _ => False.elim h₁)
-      (fun m _ h₁ h₂ => congrArg succ (antisymm m h₁ h₂)) m) n) m h₁ h₂
-
-/-- Induct upward from the lower bound. Cancellation of two successors reduces
-the lower bound, while preserving the predicate on the upper bound. -/
-private theorem fromLowerBound (n : Nat) :
-    ∀ (P : Nat → Prop), P n → (∀ m, Nat.le n m → P m → P (succ m)) →
-      ∀ a, Nat.le n a → P a :=
-  Nat.rec (motive := fun n =>
-      ∀ (P : Nat → Prop), P n → (∀ m, Nat.le n m → P m → P (succ m)) →
-        ∀ a, Nat.le n a → P a)
-    (fun P start step a _ =>
-      Nat.rec (motive := P) start (fun m ih => step m (zero_le m) ih) a)
-    (fun n smaller P start step a =>
-      Nat.rec (motive := fun a => Nat.le (succ n) a → P a)
-        (fun h => False.elim (not_succ_le_zero n h))
-        (fun b _ h => smaller (fun k => P (succ k)) start
-          (fun m hm ih => step (succ m) (succ_le_succ hm) ih) b (le_of_succ_le_succ h)) a) n
-
-private theorem leRec {n : Nat} {motive : (a : Nat) → Nat.le n a → Prop}
-    (refl : motive n Nat.le.refl)
-    (step : ∀ {m : Nat} (h : Nat.le n m), motive m h → motive (succ m) (Nat.le.step h))
-    {a : Nat} (t : Nat.le n a) : motive a t :=
-  fromLowerBound n (fun m => ∀ h : Nat.le n m, motive m h) (fun _ => refl)
-    (fun _ h ih _ => step h (ih h)) a t t
-
-port_proof Nat.le.rec using leRec
-port_proof Nat.le.casesOn
-port_proof Nat.le.recOn
+      (fun _ _ => rfl) (fun k _ _ h => False.elim (not_succ_le_zero k h)) m)
+    (fun n smaller m => Nat.rec (motive := fun m => Nat.le (succ n) m → Nat.le m (succ n) → Eq (succ n) m)
+      (fun h _ => False.elim (not_succ_le_zero n h))
+      (fun m _ h g => congrArg succ (smaller m (le_of_succ_le_succ h) (le_of_succ_le_succ g))) m) n) m h₁ h₂
 
 theorem succ_sub_succ_eq_sub (n m : Nat) : Eq (Nat.sub (succ n) (succ m)) (Nat.sub n m) :=
   Nat.rec (motive := fun i => Eq (pred (Nat.sub (succ n) i)) (Nat.sub n i))
@@ -187,7 +158,7 @@ theorem succ_sub_succ_eq_sub (n m : Nat) : Eq (Nat.sub (succ n) (succ m)) (Nat.s
 @[no_expose] protected def pow (m : Nat) : Nat → Nat :=
   Nat.rec (succ zero) (fun _ p => Nat.mul p m)
 
-attribute [irreducible] Nat.add Nat.mul Nat.sub Nat.le Nat.pred Nat.pow
+attribute [irreducible] Nat.add Nat.mul Nat.sub Nat.pred Nat.pow
 
 end Nat
 
@@ -615,7 +586,6 @@ end
 
 -- Lean's pattern elaborator uses these root names for patterns, cases and argument-free branches.
 public abbrev PProd.mk.{u,v} := @Omega.PProd.mk.{u,v}
-public abbrev HEq.{u} := @Omega.HEq.{u}
 public abbrev Unit := Omega.Unit
 public abbrev Unit.unit := Omega.Unit.unit
 
@@ -791,7 +761,7 @@ port_definition instMinNat with_native_code
 port_definition Decidable.falseTrueCases with_native_code
 namespace Omega
 
-attribute [local semireducible] Nat.beq Nat.pred Nat.le
+attribute [local semireducible] Nat.beq Nat.pred
 
 public theorem Nat.decEq._proof_1 (n m : Nat) : Bool.Reflects (Nat.beq n m) (Eq n m) :=
   have separate (k : Nat) (h : Eq Nat.zero (Nat.succ k)) : False :=

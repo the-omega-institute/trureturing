@@ -19,7 +19,7 @@ noncomputable section
 
 @[expose] public section
 
-attribute [local semireducible] Omega.Nat.add Omega.Nat.le
+attribute [local semireducible] Omega.Nat.add
 
 namespace Omega.Nat
 
@@ -48,12 +48,12 @@ private theorem fib_succ_pos (n : Nat) : Nat.lt zero (fib n.succ) :=
 theorem fib_pos {n : Nat} : Iff (Nat.lt zero (fib n)) (Nat.lt zero n) :=
   Nat.rec (motive := fun n => Iff (Nat.lt zero (fib n)) (Nat.lt zero n))
     (Iff.intro (fun h => h) (fun h => h))
-    (fun n _ => Iff.intro (fun _ => zero_le n) (fun _ => fib_succ_pos n)) n
+    (fun n _ => Iff.intro (fun _ => succ_le_succ (zero_le n)) (fun _ => fib_succ_pos n)) n
 
 theorem fib_lt_fib_succ {n : Nat} (hn : Nat.le zero.succ.succ n) : Nat.lt (fib n) (fib n.succ) :=
   (Nat.rec (motive := fun n => Nat.le zero.succ.succ n → Nat.lt (fib n) (fib n.succ))
-    (fun h => False.elim h)
-    (fun n _ h => Nat.add_le_add_left ((fib_pos (n := n)).mpr h) (fib n.succ)) n) hn
+    (fun h => False.elim (not_succ_le_zero zero.succ h))
+    (fun n _ h => Nat.add_le_add_left ((fib_pos (n := n)).mpr (le_of_succ_le_succ h)) (fib n.succ)) n) hn
 
 attribute [irreducible] fib
 
