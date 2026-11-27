@@ -1,4 +1,4 @@
-"""Build eligible targets with the strict foundations. Other Lake commands inspect the raw overlay."""
+"""Build and audit the isolated foundations and expose their ordinary Lean import view."""
 import json
 import os
 from pathlib import Path
@@ -46,8 +46,19 @@ def foundation_config(source_dir, build_dir, label):
     return write_config(f"omega-{label}.toml", source)
 
 
+def isolated_config():
+    return foundation_config("strict", BUILD, "isolated")
+
+
 def strict_config():
-    return foundation_config("strict", BUILD, "strict")
+    """Ordinary `lake env` consumers share the pinned host's physical declarations."""
+    from hosted import cached_view
+
+    base = ROOT / BUILD / "lib/lean"
+    kernel = isolated_config()
+    view = cached_view(base, ["lake", "-f", kernel])
+    raw = kernel.read_text()
+    return write_config("omega-strict.toml", "leanLibDir = " + json.dumps(str(view)) + "\n" + raw)
 
 
 def write_config(name, source):
@@ -64,7 +75,7 @@ def lake_layout(strict, with_reg, common_dir=None):
     label = "common" if common_dir else "strict"
     build_dir = ".lake/build/omega-common" if common_dir else BUILD
     overlay = (foundation_config(str(common_dir), build_dir, label) if common_dir else
-               strict_config() if strict else None)
+               isolated_config() if strict else None)
     command = ["lake", "-f", overlay] if overlay else ["lake"]
     libraries = {"": ROOT / (build_dir if overlay else ".lake/build") / "lib/lean"}
     if not with_reg:
@@ -104,7 +115,7 @@ def strict_build(args):
     from portable import closure, root
     from scope import module_path
 
-    lake = ["lake", "-f", strict_config()]
+    lake = ["lake", "-f", isolated_config()]
     config = tomllib.loads((ROOT / "lakefile.toml").read_text())
     package = config["name"]
     libraries = {lib["name"] for lib in config["lean_lib"]}
@@ -175,5 +186,9 @@ if __name__ == "__main__":
     if "build" in args and not {"-h", "--help"}.intersection(args):
         index = args.index("build")
         if all(option.startswith("-") for option in args[:index]):
-            sys.exit(strict_build([*args[:index], *args[index + 1:]]))
-    sys.exit(subprocess.call(["lake", "-f", strict_config(), *args], cwd=ROOT))
+            ret = strict_build([*args[:index], *args[index + 1:]])
+            if ret == 0:
+                strict_config()
+            sys.exit(ret)
+    config = strict_config() if "env" in args else isolated_config()
+    sys.exit(subprocess.call(["lake", "-f", config, *args], cwd=ROOT))

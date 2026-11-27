@@ -10,7 +10,7 @@ from pathlib import Path
 import shutil
 import subprocess
 import tempfile
-from strict_lake import BUILD, COMMON_SRC, INSPECTOR, lake_layout, strict_config
+from strict_lake import BUILD, COMMON_SRC, INSPECTOR, lake_layout, isolated_config
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -151,7 +151,7 @@ def regenerate_facades():
     basis = sorted(name for name in graph if root(name) in BASIS)
     if not BASIS.issubset(basis):
         raise RuntimeError("strict foundation roots are missing")
-    subprocess.run(["lake", "-f", strict_config(), "build", *("+" + name for name in basis)],
+    subprocess.run(["lake", "-f", isolated_config(), "build", *("+" + name for name in basis)],
                    cwd=ROOT, check=True)
     generated, _ = derived_facades(lean, ROOT / BUILD / "lib/lean", basis,
                                 output("lake", "env", "printenv", "LEAN_PATH").strip())

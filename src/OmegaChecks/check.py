@@ -12,7 +12,7 @@ import tempfile
 import portable
 import scope as affected_scope
 from portable import BASIS, closure, import_graph, root
-from strict_lake import BUILD, COMMON_SRC, lake_layout, strict_config
+from strict_lake import BUILD, COMMON_SRC, lake_layout, strict_config, isolated_config
 
 ROOT = Path(__file__).resolve().parents[2]
 LIB = ROOT / BUILD / "lib/lean"
@@ -34,7 +34,7 @@ def run(*args):
 
 
 def build(targets):
-    run("lake", "-f", strict_config(), "build", *("+" + target for target in targets))
+    run("lake", "-f", isolated_config(), "build", *("+" + target for target in targets))
 
 
 def strict_import_graph(lean, targets=()):
@@ -120,7 +120,7 @@ def check_library(selected=()):
 
 def lake_environment():
     script = "import json, os; print(json.dumps(dict(os.environ)))"
-    output = subprocess.run(["lake", "-f", strict_config(), "env", sys.executable, "-c", script], cwd=ROOT,
+    output = subprocess.run(["lake", "-f", isolated_config(), "env", sys.executable, "-c", script], cwd=ROOT,
                             stdout=subprocess.PIPE, text=True, check=True).stdout
     return json.loads(output)
 
@@ -168,7 +168,10 @@ def check_audits():
         ]:
             source_file = tmp / f"{name}.lean"
             source_file.write_text(source)
-            lean("-R", tmp, "-o", tmp / f"{name}.olean", source_file)
+            if name == "ImplicitInit":
+                run("lake", "-f", strict_config(), "env", "lean", "-R", tmp, "-o", tmp / f"{name}.olean", source_file)
+            else:
+                lean("-R", tmp, "-o", tmp / f"{name}.olean", source_file)
             audit(name, ["OmegaInit.Prelude", name], [tmp, LIB], reason)
     check_standard_admission()
     check_module_surface()
@@ -182,24 +185,26 @@ def check_consumer_exports():
     alias = "namespace Visible\nexport A (item)\nend Visible\n"
     generated = "public inductive Choice where | first | second\n"
     size_of = ("public import Init\npublic import OmegaInit.Prelude\n"
-               "public structure Wrapper where value : Omega.Nat\n"
-               "public noncomputable def derivedSize : Nat := sizeOf (Wrapper.mk Omega.Nat.zero.succ)\n")
+               "public structure Wrapper where value : Omega.Option Omega.Nat\n"
+               "public noncomputable def derivedSize : Nat := sizeOf (Wrapper.mk Omega.Option.none)\n")
     field = ("public import OmegaInit.Prelude\npublic section\n"
-             "abbrev FieldReceiver := Omega.Nat\n"
-             "def Omega.Nat.projectField (value : FieldReceiver) := value\n")
-    field_alias = "namespace Nat\nexport _root_.Omega.Nat (projectField)\nend Nat\n"
-    alias_method = (field.replace("def Omega.Nat.", "def Example.")
-                    + "namespace Omega.Nat\nexport _root_.Example (projectField)\nend Omega.Nat\n")
+             "abbrev FieldReceiver := Omega.Option Omega.Nat\n"
+             "def Omega.Option.projectField (value : FieldReceiver) := value\n")
+    field_alias = "namespace Option\nexport _root_.Omega.Option (projectField)\nend Option\n"
+    alias_method = (field.replace("def Omega.Option.", "def Example.")
+                    + "namespace Omega.Option\nexport _root_.Example (projectField)\nend Omega.Option\n")
     official = audit_environment()
+    hosted_path = portable.output("lake", "-f", strict_config(), "env", "printenv", "LEAN_PATH").strip()
+    hosted = {**ENV, "LEAN_PATH": hosted_path}
     with tempfile.TemporaryDirectory(prefix="omega-exports-") as directory:
         tmp = Path(directory)
         for strict_code, official_code, error, marker in [
             (field + field_alias, field + field_alias, False, "Compared"),
-            (field, field, True, "field resolution mismatch for Omega.Nat.projectField"),
-            (alias_method, alias_method, True, "field resolution mismatch for Omega.Nat.projectField"),
-            ((field + field_alias).replace("projectField", "gcd"),
-             (field + field_alias).replace("projectField", "gcd"), True,
-             "field resolution mismatch for Omega.Nat.gcd"),
+            (field, field, True, "field resolution mismatch for Omega.Option.projectField"),
+            (alias_method, alias_method, True, "field resolution mismatch for Omega.Option.projectField"),
+            ((field + field_alias).replace("projectField", "filter"),
+             (field + field_alias).replace("projectField", "filter"), True,
+             "field resolution mismatch for Omega.Option.filter"),
             (local + alias, local + alias, False, "Compared"),
             (local + alias, local, True, "missing consumer alias Visible.item for A.item"),
             (local, local + alias, True, "additional official-side consumer alias Visible.item for A.item"),
@@ -226,7 +231,8 @@ def check_consumer_exports():
              "additional official-side consumer export Choice.ctorIdx"),
         ]:
             paths = []
-            for side, header, body, env in [("strict", "module\nprelude\n", strict_code, ENV),
+            strict_env = hosted if strict_code.startswith("public import Init\n") else ENV
+            for side, header, body, env in [("strict", "module\nprelude\n", strict_code, strict_env),
                                             ("official", "module\n", official_code, official)]:
                 base = tmp / side
                 base.mkdir(exist_ok=True)
@@ -277,7 +283,7 @@ def check_fibonacci_reduction():
     profiles = {"publication": (False, None), "common": (False, COMMON_SRC), "strict": (True, None)}
     module = "OmegaMathlib.Data.Nat.Fib.Basic"
     for mode, (strict, common_dir) in profiles.items():
-        lake, _ = lake_layout(strict, False, common_dir)
+        lake = ["lake", "-f", strict_config()] if strict else lake_layout(False, False, common_dir)[0]
         path = subprocess.check_output([*lake, "env", "printenv", "LEAN_PATH"], cwd=ROOT, text=True).strip()
         for header in ("", "module\n"):
             prefix = header + f"import {module}\n"

@@ -6,6 +6,7 @@ from path_io_test import check_paths
 from generated_native import check_runtime_ir, compile_generated
 import json
 import omegamath
+from hosted import foundation_files, link_other_roots, make_view
 import os
 from pathlib import Path
 from report import report
@@ -324,6 +325,15 @@ def main():
         if not args.modules:
             report(product, require_complete=args.require_complete)
             omegamath.build(product, product / "lib", args.j, product / "omegamath-audit.txt")
+        library = product / "lib"
+        hosted = product / "hosted"
+        make_view(library, hosted, foundation_files(library))
+        link_other_roots(library, hosted)
+        consumer = roots[0].replace("Init", "OmegaInit", 1) if args.modules else "OmegaMath"
+        probe = f"import {consumer}\n"
+        if consumer == "OmegaMath" or consumer == "OmegaInit.Prelude":
+            probe += "example {p q : Prop} (h : Omega.And p q) : p := Omega.And.left h\n"
+        run("lean", "--stdin", text=True, input=probe, env={**os.environ, "LEAN_PATH": str(hosted)})
         product.rename(target)
 
 
