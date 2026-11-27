@@ -48,7 +48,7 @@ private partial def dependencies (env : Environment) (partialCode : NameMap Defi
   if !(localNames.contains n) || (← get).contains n then return #[]
   modify (·.insert n)
   let some ci := env.find? n | return #[]
-  let some body := (partialCode.find? n).map (·.value) <|> ci.value? | return #[]
+  let some body := (partialCode.find? n).map (·.value) <|> ci.value? (allowOpaque := true) | return #[]
   let mut prior := #[]
   for dep in ci.type.getUsedConstants ++ body.getUsedConstants do
     prior := prior ++ (← dependencies env partialCode localNames dep)
@@ -401,11 +401,19 @@ private unsafe def install (source publicSource : Environment) (lib out : System
       if missing then
         groups := groups.push i
         locals := locals ++ family
-    | .opaqueInfo _ =>
+    | .opaqueInfo dst =>
       if !onlyLayouts && !oldNative.contains ci.name then
         if let some d := pinnedPartialCode? source ci then
           candidates := candidates.push ci.name
           partialCode := partialCode.insert ci.name d
+        else
+          let official := InitKernelPort.originalName ci.name
+          if let some (.opaqueInfo src) := source.find? official then
+            if let some (.fdecl _ #[] .erased (.ret .erased) ..) := IR.findEnvDecl source official then
+              let tr := InitKernelPort.translate InitKernelPort.portName
+              if !src.isUnsafe && !dst.isUnsafe && src.levelParams == dst.levelParams &&
+                  tr src.type == dst.type && tr src.value == dst.value then
+                candidates := candidates.push ci.name
     | .defnInfo d =>
       if onlyLayouts || oldNative.contains d.name || ci.isUnsafe || ci.isPartial then continue
       let upstream := InitKernelPort.originalName d.name
