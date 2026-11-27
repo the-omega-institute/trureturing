@@ -192,7 +192,7 @@ theorem row_parts (d : YoungDiagram) (H : ℕ) (hH : d.colLen 0 ≤ H) :
         YoungDiagram.rowLens] using
         Multiset.sum_map_singleton ((Finset.range (d.colLen 0)).val.map d.rowLen)
 
-private theorem one_cell_row {A B : YoungDiagram} {c : ℕ × ℕ}
+theorem one_cell_row {A B : YoungDiagram} {c : ℕ × ℕ}
     (h : A.cells \ B.cells = {c}) : A.rowLen c.1 = c.2 + 1 := by
   have hc : c ∈ A ∧ c ∉ B := by
     have : c ∈ A.cells \ B.cells := by rw [h]; simp
@@ -227,7 +227,7 @@ private theorem one_cell_other_rows {A B : YoungDiagram} {c d : ℕ × ℕ}
     rw [hBA] at hm
     exact hid (congrArg Prod.fst (Finset.mem_singleton.mp hm))
 
-private theorem one_cell_lower_row {A B : YoungDiagram} {c : ℕ × ℕ}
+theorem one_cell_lower_row {A B : YoungDiagram} {c : ℕ × ℕ}
     (h : A.cells \ B.cells = {c}) : B.rowLen c.1 = c.2 := by
   have hc : c ∈ A ∧ c ∉ B := by
     have : c ∈ A.cells \ B.cells := by rw [h]; simp

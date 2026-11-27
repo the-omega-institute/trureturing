@@ -117,3 +117,187 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   options := #[{ name := `autoImplicit, value := .bool false }]
 
 end Reg.D5.S3.Combinatorics.Partitions.LyudogovskiyTransfers
+
+namespace Reg.D5.S3.Combinatorics.Partitions.LyudogovskiyTransfers
+
+open LeanInformationAudit
+open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+open _root_.D5.S3.Combinatorics.Partitions.LyudogovskiySimplex
+
+
+/-- A single cell above the empty diagram supplies the intervention witness. -/
+private def singleCell : YoungDiagram := YoungDiagram.ofRowLens [1] (by decide)
+
+private theorem singleCell_sdiff :
+    singleCell.cells \ (⊥ : YoungDiagram).cells = {(0, 0)} := by
+  decide
+
+namespace OneCellRow
+
+abbrev signature : Signature where
+  Params := Unit
+  State _ := ℕ × ℕ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℕ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature :=
+  realize signature (fun _ _ c => c.2) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ c => c.2 + 1) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ {A B : YoungDiagram} {c : ℕ × ℕ},
+    A.cells \ B.cells = {c} → A.rowLen c.1 = R.readout () () c + 1
+
+private theorem source_bridge : (type_of% (@one_cell_row)) ↔ arena.Law actual := Iff.rfl
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro law
+  have correct : singleCell.rowLen 0 = 1 := one_cell_row singleCell_sdiff
+  have changed := law singleCell_sdiff
+  change singleCell.rowLen 0 = 2 at changed
+  omega
+
+private theorem dependence : ObservationalDependence signature actual := by
+  intro role
+  exact ⟨(), (0, 0), (0, 1), Nat.zero_ne_one⟩
+
+def familyRegistration : Registration arena (type_of% (@one_cell_row)) where
+  actual := actual
+  bridge := source_bridge
+  variation := ⟨source_bridge.mp (@one_cell_row), rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j hj
+      exact (hj (Subsingleton.elim _ _)).elim
+    · intro e
+      exact nomatch e
+  dependence := dependence
+
+def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+    (@one_cell_row) (Realization signature) Unit Unit where
+  unitName := `D5.S3.Combinatorics.Partitions.LyudogovskiySimplex.one_cell_row.__information_unit
+  realizationName := `Reg.D5.S3.Combinatorics.Partitions.LyudogovskiyTransfers.OneCellRow.familyRegistration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨familyRegistration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature actual.readout actual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Combinatorics.Partitions.LyudogovskiyTransfers
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "arg", "fn", "arg"]
+      stateBinder := 2
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[{ name := `autoImplicit, value := .bool false }]
+
+end OneCellRow
+
+namespace OneCellLowerRow
+
+abbrev signature : Signature where
+  Params := Unit
+  State _ := ℕ × ℕ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℕ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature :=
+  realize signature (fun _ _ c => c.2) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ c => c.2 + 1) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ {A B : YoungDiagram} {c : ℕ × ℕ},
+    A.cells \ B.cells = {c} → B.rowLen c.1 = R.readout () () c
+
+private theorem source_bridge : (type_of% (@one_cell_lower_row)) ↔ arena.Law actual := Iff.rfl
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro law
+  have correct : (⊥ : YoungDiagram).rowLen 0 = 0 := one_cell_lower_row singleCell_sdiff
+  have changed := law singleCell_sdiff
+  change (⊥ : YoungDiagram).rowLen 0 = 1 at changed
+  omega
+
+private theorem dependence : ObservationalDependence signature actual := by
+  intro role
+  exact ⟨(), (0, 0), (0, 1), Nat.zero_ne_one⟩
+
+def familyRegistration : Registration arena (type_of% (@one_cell_lower_row)) where
+  actual := actual
+  bridge := source_bridge
+  variation := ⟨source_bridge.mp (@one_cell_lower_row), rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j hj
+      exact (hj (Subsingleton.elim _ _)).elim
+    · intro e
+      exact nomatch e
+  dependence := dependence
+
+def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+    (@one_cell_lower_row) (Realization signature) Unit Unit where
+  unitName := `D5.S3.Combinatorics.Partitions.LyudogovskiySimplex.one_cell_lower_row.__information_unit
+  realizationName := `Reg.D5.S3.Combinatorics.Partitions.LyudogovskiyTransfers.OneCellLowerRow.familyRegistration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨familyRegistration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature actual.readout actual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Combinatorics.Partitions.LyudogovskiyTransfers
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "arg"]
+      stateBinder := 2
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[{ name := `autoImplicit, value := .bool false }]
+
+end OneCellLowerRow
+
+end Reg.D5.S3.Combinatorics.Partitions.LyudogovskiyTransfers
