@@ -34,9 +34,9 @@ int main(void) {
     if (lean_io_result_is_error(status)) return 1;
     lean_dec(status);
     lean_io_mark_end_initialization();
-    if (!shares(l_Lean_ShareCommon_objectFactory, 4, 4) ||
-        !shares(l_Lean_ShareCommon_objectFactory, 4, 5)) return 2;
-    if (!shares(l_Lean_ShareCommon_persistentObjectFactory, 5, 5) ||
-        !shares(l_Lean_ShareCommon_persistentObjectFactory, 5, 6)) return 3;
+    if (!shares(l_Lean_ShareCommon_objectFactory, 0, 0) ||
+        !shares(l_Lean_ShareCommon_objectFactory, 0, 1)) return 2;
+    if (!shares(l_Lean_ShareCommon_persistentObjectFactory, 1, 1) ||
+        !shares(l_Lean_ShareCommon_persistentObjectFactory, 1, 0)) return 3;
     return 0;
 }
