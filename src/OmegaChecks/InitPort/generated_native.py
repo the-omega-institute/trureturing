@@ -98,7 +98,7 @@ def check_runtime_ir(stage, library, adapter, consumer):
 
 def compile_generated(stage, product, graph, seed_ir, owners=None, *, original_seed=None, before_owner=None,
                       check_strings=True, check_literals=True, check_mixed=True, check_rat=True, check_bootstrap=True,
-                      check_list_search=True):
+                      check_list_search=True, check_decoding=True):
     """Compile generated owners in import order and preserve the native symbols of existing owners."""
     requested = set(graph if owners is None else owners)
     selected = [owner for owner in TopologicalSorter(graph).static_order()
@@ -221,7 +221,8 @@ def compile_generated(stage, product, graph, seed_ir, owners=None, *, original_s
             env={**os.environ, "LEAN_PATH": str(library)})
         dependencies = reachable([string_owner])
         missing = sorted(name for name in dependencies & seed_owners if not seed_files[name].is_file())
-        if missing or (owners is not None and not dependencies.issubset(selected)):
+        complete = not missing and (owners is None or dependencies.issubset(selected))
+        if not complete:
             # Detached and selectively compiled products need only the string adapters for this consumer.
             inputs = string_sources
         else:
@@ -230,9 +231,18 @@ def compile_generated(stage, product, graph, seed_ir, owners=None, *, original_s
         run("leanc", "-I", HERE, list_client, HERE / "string_list_consumer.c", *inputs, "-o", application)
         run(application)
         shim = stage / ("string-extern" + (sysconfig.get_config_var("SHLIB_SUFFIX") or ".so"))
-        run("leanc", "-shared", "-fPIC", "-DLEAN_EXPORTING", "-I", HERE, *string_sources, "-o", shim)
-        run("lake", "env", "lean", "--load-dynlib=" + str(shim), "--run", HERE / "StringListIRConsumer.lean",
-            library, stage)
+        if complete and check_decoding:
+            run("leanc", "-shared", "-fPIC", "-DLEAN_EXPORTING", *inputs, "-o", shim)
+            initializer = init_suffix(stage / "string-list.c")
+            if initializer is None:
+                raise ValueError("missing strict String.Basic initializer")
+            loader = f"--plugin={shim}=runtime_initialize_{initializer}"
+            options = ["--decode"]
+        else:
+            run("leanc", "-shared", "-fPIC", "-DLEAN_EXPORTING", "-I", HERE, *string_sources, "-o", shim)
+            loader = "--load-dynlib=" + str(shim)
+            options = []
+        run("lake", "env", "lean", loader, "--run", HERE / "StringListIRConsumer.lean", library, stage, *options)
     search_owner = "OmegaInit.Data.List.Control"
     if check_list_search and search_owner in objects and literals.is_file():
         dependencies = reachable([search_owner, "OmegaInit.Control.Id"])

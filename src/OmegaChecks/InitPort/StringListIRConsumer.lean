@@ -6,7 +6,10 @@ open Lean
 private def encode (s : String) : List Nat := s.toUTF8.data.toList.map UInt8.toNat
 
 public unsafe def main (args : List String) : IO Unit := do
-  let [lib, dir] := args | throw <| IO.userError "expected library and consumer directory"
+  let (lib, dir, decode) ← match args with
+    | [lib, dir] => pure (lib, dir, false)
+    | [lib, dir, "--decode"] => pure (lib, dir, true)
+    | _ => throw <| IO.userError "expected library and consumer directory, optionally followed by --decode"
   searchPathRef.set [lib, dir]
   let env ← importModules #[{module := `StringListConsumer, importAll := true}] {} (level := .private)
   let raw ← IO.ofExcept <| env.evalConst (List Nat → List Nat) {} `raw
@@ -55,3 +58,23 @@ public unsafe def main (args : List String) : IO Unit := do
       [0xf4, 0x8f, 0xbf, 0xbf], encode "é中🙂"] do
     let bytes := ByteArray.mk (bs.map Nat.toUInt8).toArray
     unless valid bs == bytes.validateUTF8 do throw <| IO.userError s!"strict UTF-8 validation differs for {bs}"
+
+  if decode then
+    let codepoint ← IO.ofExcept <| env.evalConst (List Nat → Nat → Option Nat) {} `Omega.ByteArray.utf8DecodeChar?
+    let allChars ← IO.ofExcept <| env.evalConst (List Nat → Option (List Nat)) {} `Omega.ByteArray.utf8Decode?
+    let get? ← IO.ofExcept <| env.evalConst (List Nat → Nat → Option Nat) {} `Omega.String.Pos.Raw.get?
+    let encodeChar ← IO.ofExcept <| env.evalConst (Nat → List Nat) {} `Omega.String.utf8EncodeCharFast
+    for input in [[], [0], [0xc0, 0xaf], [0x80], [0xc3], [0xed, 0xa0, 0x80], [0xf4, 0x8f, 0xbf, 0xbf], encode "é中🙂"] do
+      let bytes := ByteArray.mk (input.map Nat.toUInt8).toArray
+      unless allChars input == bytes.utf8Decode?.map (fun a => a.toList.map Char.toNat) do
+        throw <| IO.userError s!"strict UTF-8 decoding differs at {input}"
+      for i in List.range (input.length + 2) do
+        unless codepoint input i == (bytes.utf8DecodeChar? i).map Char.toNat do
+          throw <| IO.userError s!"strict UTF-8 code point differs at byte {i} of {input}"
+    for s in strings do
+      for i in List.range (s.utf8ByteSize + 2) do
+        unless get? (encode s) i == ((String.Pos.Raw.mk i).get? s).map Char.toNat do
+          throw <| IO.userError s!"strict optional character differs at byte {i} of {repr s}"
+      for c in s.toList do
+        unless encodeChar c.toNat == (String.utf8EncodeCharFast c).map UInt8.toNat do
+          throw <| IO.userError s!"strict UTF-8 encoding differs at scalar {c.toNat}"

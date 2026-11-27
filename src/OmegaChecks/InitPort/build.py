@@ -286,6 +286,10 @@ def generate(stage, product, seed, roots, excluded, original_seed):
                                             "Init.Control.Id": {"Id.instMonad"},
                                             "Init.Prelude": {"ite"},
                                         }),
+                                        check_decoding=has_interfaces(inventory, {
+                                            "Init.Data.String.Basic": {"ByteArray.utf8Decode?", "String.Pos.Raw.get?"},
+                                            "Init.Data.String.Decode": {"ByteArray.utf8DecodeChar?", "String.utf8EncodeCharFast"},
+                                        }),
                                         check_bootstrap=has_interfaces(inventory, {"Init.Data.String.Bootstrap": {
                                             "String.Internal.nextWhile", "Substring.Raw.Internal.takeWhile",
                                             "String.Internal.foldl", "String.push", "Substring.Raw.Internal.toString",
