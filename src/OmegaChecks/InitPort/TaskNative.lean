@@ -29,12 +29,9 @@ private def checkOperands (env : Environment) : IO Unit := do
     let some d := Compiler.LCNF.ctorLayoutExt.find? env n | throw <| IO.userError s!"missing runtime layout {n}"
     unless d.ctorInfo.cidx == tag && d.ctorInfo.size == fields && d.ctorInfo.usize == 0 &&
         d.ctorInfo.ssize == 0 && d.fieldInfo.size == fields do throw <| IO.userError s!"incorrect task operand layout {n}"
-  check `Omega.Nat.zero 0 0
-  check `Omega.Nat.succ 1 1
+  checkPriorityLayout env
   check `Omega.Bool.false 0 0
   check `Omega.Bool.true 1 0
-  let some succ := Compiler.LCNF.ctorLayoutExt.find? env `Omega.Nat.succ | throw <| IO.userError "missing successor"
-  let #[.object 0 _] := succ.fieldInfo | throw <| IO.userError "incorrect priority predecessor"
 
 /-- At both visibility levels each surface name resolves to its kernel primitive. -/
 private def checkPrimitiveNames (env : Environment) : IO Unit := do

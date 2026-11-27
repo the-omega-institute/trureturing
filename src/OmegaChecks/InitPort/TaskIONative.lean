@@ -7,11 +7,15 @@ import Lean
 open Lean OmegaChecks.InitPort.NativeState
 
 private def entries := #[(`IO.getTaskState, "get_task_state"), (`IO.hasFinished, "task_has_finished"),
-  (`IO.wait, "wait"), (`IO.waitAny, "wait_any"), (`IO.cancel, "cancel"), (`IO.checkCanceled, "check_canceled")]
+  (`IO.wait, "wait"), (`IO.waitAny, "wait_any"), (`IO.cancel, "cancel"), (`IO.checkCanceled, "check_canceled"),
+  (`BaseIO.asTask, "as_task"), (`BaseIO.mapTask, "map_task"), (`BaseIO.bindTask, "bind_task")]
 
 private def inputs (name : Name) (strict : Bool) : Array (IR.IRType × Bool) :=
   let world := (if strict then IR.IRType.tobject else .void, false)
-  if name == `IO.checkCanceled then #[world]
+  if name == `BaseIO.asTask then #[(.erased, false), (.object, false), (.tobject, false), world]
+  else if name == `BaseIO.mapTask || name == `BaseIO.bindTask then
+    #[(.erased, false), (.erased, false), (.object, false), (.object, false), (.tobject, false), (.uint8, false), world]
+  else if name == `IO.checkCanceled then #[world]
   else if name == `IO.waitAny then #[(.erased, false), (.tobject, true), (.erased, false), world]
   else #[(.erased, false), (.object, name != `IO.wait && !(name == `IO.hasFinished && strict)), world]
 
@@ -24,7 +28,9 @@ private def checkLayouts (env : Environment) (names : Array Name) : IO Unit := d
   if names.contains `Omega.IO.getTaskState then
     for (n, tag) in #[(`Omega.IO.TaskState.waiting, 0), (`Omega.IO.TaskState.running, 1), (`Omega.IO.TaskState.finished, 2)] do
       check n tag 0
-  if names.contains `Omega.IO.hasFinished || names.contains `Omega.IO.checkCanceled then
+  let schedules := names.any (`Omega.BaseIO).isPrefixOf
+  if schedules then checkPriorityLayout env
+  if schedules || names.contains `Omega.IO.hasFinished || names.contains `Omega.IO.checkCanceled then
     check `Omega.Bool.false 0 0
     check `Omega.Bool.true 1 0
   unless names.contains `Omega.IO.waitAny do return
@@ -45,7 +51,8 @@ public unsafe def main (args : List String) : IO Unit := do
       unless reduced.map (fun p => (p.ty, p.borrow)) == #[(.object, true), (.void, false)] do
         throw <| IO.userError "unexpected borrowed task query"
     else
-      let ret := if n == `IO.cancel then IR.IRType.tagged
+      let ret := if (`BaseIO).isPrefixOf n then IR.IRType.object
+        else if n == `IO.cancel then .tagged
         else if n == `IO.wait || n == `IO.waitAny then .tobject else .uint8
       verify original n (inputs n false) ret ("lean_io_" ++ sym)
   searchPathRef.set [lib]

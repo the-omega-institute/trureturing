@@ -87,7 +87,7 @@ def compile_tasks(stage, product, artifact, inventory, raw):
     native = product / "native"
     native.mkdir(exist_ok=True)
     obj = native / "task.o"
-    run("leanc", "-DLEAN_EXPORTING", "-c", bridge, "-o", obj)
+    run("leanc", "-DLEAN_EXPORTING", "-I", HERE, "-c", bridge, "-o", obj)
     with inventory.open() as stream:
         installed = {name for mod, name, _, status, _ in map(json.loads, stream)
                      if mod == "Init.Core" and status in {"added", "existing"}}
@@ -116,7 +116,7 @@ def compile_state_runtime(stage, product, artifact, inventory, tool, filename, r
         run("leanc", "-DLEAN_EXPORTING", "-I", stage, "-c", HERE / "promise_result_d.c", "-o", pinned_object)
         extra_sources = [*extra_sources, pinned_object]
     obj = native / (filename + ".o")
-    run("leanc", "-DLEAN_EXPORTING", "-c", bridge, "-o", obj)
+    run("leanc", "-DLEAN_EXPORTING", "-I", HERE, "-c", bridge, "-o", obj)
     with inventory.open() as stream:
         installed = {(mod, name) for mod, name, _, status, _ in map(json.loads, stream)
                      if status in {"added", "existing"}}
@@ -217,7 +217,8 @@ def generate(stage, product, seed, roots, excluded):
         }, [product / "native" / "reference.o"])
     if "OmegaInit.System.IO" in graph:
         compile_state_runtime(stage, product, artifact, inventory, "TaskIO", "task_io", {
-            "Init.System.IO": {"IO.getTaskState", "IO.hasFinished", "IO.wait", "IO.waitAny", "IO.cancel", "IO.checkCanceled"},
+            "Init.System.IO": {"IO.getTaskState", "IO.hasFinished", "IO.wait", "IO.waitAny", "IO.cancel", "IO.checkCanceled",
+                               "BaseIO.asTask", "BaseIO.mapTask", "BaseIO.bindTask"},
         })
     if "OmegaInit.System.Promise" in graph:
         compile_state_runtime(stage, product, artifact, inventory, "Promise", "promise", {

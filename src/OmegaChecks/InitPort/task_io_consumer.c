@@ -8,6 +8,9 @@ extern lean_obj_res omega_io_smoke_wait(lean_obj_arg, lean_obj_arg, lean_obj_arg
 extern lean_obj_res omega_io_smoke_any(lean_obj_arg, lean_obj_arg, lean_obj_arg, lean_obj_arg);
 extern lean_obj_res omega_io_smoke_cancel(lean_obj_arg, lean_obj_arg, lean_obj_arg);
 extern lean_obj_res omega_io_smoke_canceled(lean_obj_arg);
+extern lean_obj_res omega_io_smoke_launch(lean_obj_arg, lean_obj_arg, lean_obj_arg);
+extern lean_obj_res omega_io_smoke_map(lean_obj_arg, lean_obj_arg, lean_obj_arg);
+extern lean_obj_res omega_io_smoke_bind(lean_obj_arg, lean_obj_arg, lean_obj_arg);
 extern lean_obj_res lean_io_promise_new(void);
 extern lean_obj_res lean_io_promise_result_opt(b_lean_obj_arg);
 extern lean_obj_res lean_io_promise_resolve(lean_obj_arg, b_lean_obj_arg);
@@ -28,6 +31,51 @@ static lean_obj_res observe_cancellation(lean_obj_arg started, lean_obj_arg gate
     lean_dec(lean_task_get_own(gate));
     lean_object *world = lean_box(31);
     return value(omega_io_smoke_canceled(world), world);
+}
+
+static lean_obj_res signal_after_gate(lean_obj_arg gate, lean_obj_arg done, lean_obj_arg world) {
+    lean_dec(lean_task_get_own(gate));
+    lean_inc(world);
+    lean_dec(lean_io_promise_resolve(world, done));
+    lean_dec(done);
+    lean_object *out = lean_alloc_ctor(0, 2, 0);
+    lean_ctor_set(out, 0, lean_box(0));
+    lean_ctor_set(out, 1, world);
+    return out;
+}
+
+static void check_effect_scheduling(lean_obj_arg type) {
+    lean_object *world = lean_mk_string("task-world");
+    lean_object *gate = lean_io_promise_new(), *done = lean_io_promise_new();
+    lean_object *observed = lean_io_promise_result_opt(done);
+    lean_object *action = lean_alloc_closure((void *)signal_after_gate, 3, 2);
+    lean_closure_set(action, 0, lean_io_promise_result_opt(gate));
+    lean_closure_set(action, 1, done);
+    lean_inc(world);
+    lean_dec(value(omega_io_smoke_launch(type, action, world), world));
+    lean_dec(lean_io_promise_resolve(lean_box(0), gate));
+    lean_dec(gate);
+    lean_object *ran = lean_task_get_own(observed);
+    if (lean_obj_tag(ran) != 1 || lean_ctor_get(ran, 0) != world) exit(14);
+    lean_dec(ran);
+
+    lean_object *source = lean_io_promise_new(), *pending = lean_io_promise_result_opt(source);
+    lean_inc(world);
+    lean_object *mapped = value(omega_io_smoke_map(type, pending, world), world);
+    lean_inc(world);
+    lean_object *bound = value(omega_io_smoke_bind(type, mapped, world), world);
+    lean_dec(lean_io_promise_resolve(lean_mk_string("payload"), source));
+    lean_dec(source);
+    lean_object *result = lean_task_get_own(bound), *cursor = result;
+    for (unsigned i = 0; i < 3; ++i) {
+        if (lean_obj_tag(cursor) != 1) exit(15);
+        cursor = lean_ctor_get(cursor, 0);
+    }
+    lean_object *expected = lean_mk_string("payload");
+    if (!lean_string_eq(cursor, expected)) exit(16);
+    lean_dec(expected);
+    lean_dec(result);
+    lean_dec(world);
 }
 
 int main(void) {
@@ -78,7 +126,8 @@ int main(void) {
     lean_dec(lean_io_promise_resolve(lean_box(0), release));
     lean_dec(release);
     if (value(omega_io_smoke_wait(type, cancellable, world), world) != lean_box(1)) return 12;
+    check_effect_scheduling(type);
     lean_finalize_task_manager();
-    puts("Strict task I/O passed pending, finished, wait-any and cooperative cancellation checks");
+    puts("Strict task I/O passed all task states, wait-any, cancellation and effectful scheduling checks");
     return 0;
 }

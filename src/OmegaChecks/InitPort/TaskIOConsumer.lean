@@ -19,3 +19,13 @@ public import OmegaInit.System.IO
 
 @[export omega_io_smoke_canceled] public def canceled (world : Omega.Void Omega.IO.RealWorld) :=
   Omega.IO.checkCanceled world
+
+@[export omega_io_smoke_launch] public def launch {α : Type} (act : Omega.BaseIO α) :=
+  Omega.BaseIO.asTask act (Omega.Nat.succ Omega.Nat.zero)
+
+@[export omega_io_smoke_map] public def mapTask {α : Type} (t : Omega.Task α) :=
+  Omega.BaseIO.mapTask (fun a world => ⟨Omega.Option.some a, world⟩) t Omega.Nat.zero Omega.Bool.false
+
+@[export omega_io_smoke_bind] public def bindTask {α : Type} (t : Omega.Task α) :=
+  Omega.BaseIO.bindTask t (fun a world => ⟨Omega.Task.pure (Omega.Option.some a), world⟩)
+    Omega.Nat.zero Omega.Bool.true

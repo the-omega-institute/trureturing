@@ -83,6 +83,15 @@ public def verify (env : Environment) (n : Name) (args : Array (IR.IRType × Boo
   unless params.map (fun p => (p.ty, p.borrow)) == args && result == ret &&
     symbolData == ⟨[.standard `all symbol]⟩ do throw <| IO.userError s!"native ABI mismatch for {n}"
 
+/-- Both pure and effectful task scheduling convert strict unary priorities to the runtime ABI. -/
+public def checkPriorityLayout (env : Environment) : IO Unit := do
+  for (n, tag, fields) in #[(`Omega.Nat.zero, 0, 0), (`Omega.Nat.succ, 1, 1)] do
+    let some d := ctorLayoutExt.find? env n | throw <| IO.userError s!"missing native priority layout {n}"
+    unless d.ctorInfo.cidx == tag && d.ctorInfo.size == fields && d.ctorInfo.usize == 0 &&
+        d.ctorInfo.ssize == 0 && d.fieldInfo.size == fields do throw <| IO.userError s!"incorrect priority layout {n}"
+  let some succ := ctorLayoutExt.find? env `Omega.Nat.succ | throw <| IO.userError "missing successor"
+  let #[.object 0 _] := succ.fieldInfo | throw <| IO.userError "incorrect priority predecessor"
+
 /-- The native state adapters construct ST.Out with the result followed by the strict world. -/
 public unsafe def installStateLayout (lib : System.FilePath) (env : Environment) : IO Unit := do
   let state ← compileLayouts env `Omega.ST.Out
