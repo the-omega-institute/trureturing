@@ -50,6 +50,43 @@ run_cmd
   for n in [``funextFromQuotientSound, ``funextFromPiSubsingleton, ``funextFromSquashSubsingleton] do
     unless (← collectAxioms n).isEmpty do throwError "function extensionality witness {n} uses axioms"
 
+namespace MeasuredRecursion
+
+/-- The root returns a dependent function, and each child returns its value at that point. -/
+private def Result {α : Type u} (B : α → Type u) : Option α → Type u
+  | none => (x : α) → B x
+  | some x => B x
+
+private def branch {α : Type u} {B : α → Type u} (empty : α → False) (f : (x : α) → B x) :
+    (a : Option α) → ((b : Option α) → InvImage (· < ·) (fun _ => 0) b a → Result B b) → Result B a
+  | none, rec => fun x => rec (some x) (empty x).elim
+  | some x, _ => f x
+
+/-- Any two dependent functions with an empty domain are equal. -/
+def EmptyDomainExtensionality : Prop :=
+  ∀ {α : Type u} {B : α → Type u}, (α → False) → ∀ f g : (x : α) → B x, f = g
+
+theorem ofFuelCongruence (go : type_of% @WellFounded.Nat.fix.go_congr.{u+1, u+1}) :
+    EmptyDomainExtensionality.{u} := by
+  intro α B empty f g
+  have step (k : (x : α) → B x) : (fun x => (empty x).elim) = k :=
+    go (motive := Result B) (fun _ => 0) (branch empty k)
+      none 1 2 (by decide) (by decide)
+  exact (step f).symm.trans (step g)
+
+theorem ofFixEquation (eq : type_of% @WellFounded.Nat.fix_eq.{u+1, u+1}) :
+    EmptyDomainExtensionality.{u} := by
+  intro α B empty f g
+  have step (k : (x : α) → B x) : (fun x => (empty x).elim) = k :=
+    eq (motive := Result B) (fun _ => 0) (branch empty k) none
+  exact (step f).symm.trans (step g)
+
+run_cmd
+  for n in [``ofFuelCongruence, ``ofFixEquation] do
+    unless (← collectAxioms n).isEmpty do throwError "measured recursion witness {n} uses axioms"
+
+end MeasuredRecursion
+
 namespace Envelope
 
 open _root_.Lean.Grind _root_.Lean.Grind.Ring.OfSemiring

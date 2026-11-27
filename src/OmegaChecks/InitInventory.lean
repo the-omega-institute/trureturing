@@ -98,6 +98,13 @@ private def reductionPaths (official strict full : Environment) : NameMap (List 
 /-- Additional logical consequences with separate proof terms. These do not discharge a
 missing official interface in the completeness check. -/
 private def logicalConsequence? (owner name : Name) : Option (Name × Name) := do
+  if owner == `Init.WF then
+    if name == ``WellFounded.Nat.fix.go_congr then
+      return (``OmegaChecks.InitBoundaries.MeasuredRecursion.EmptyDomainExtensionality,
+        ``OmegaChecks.InitBoundaries.MeasuredRecursion.ofFuelCongruence)
+    if name == ``WellFounded.Nat.fix_eq then
+      return (``OmegaChecks.InitBoundaries.MeasuredRecursion.EmptyDomainExtensionality,
+        ``OmegaChecks.InitBoundaries.MeasuredRecursion.ofFixEquation)
   if owner == `Init.Data.Iterators.PostconditionMonad then
     match name with
     | ``Std.Iterators.PostconditionT.bind_pure =>
