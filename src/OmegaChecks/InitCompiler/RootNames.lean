@@ -35,19 +35,20 @@ public def natPrimitives := #[
   `Unit, `Unit.unit, `absurd, `cast, `cond, `cond.match_1, `eq_of_heq, `heq_of_eq, `instAddNat,
   `instHAdd, `instOfNatNat, `rfl]
 
-/-- Lean resolves reserved equation and congruence names before source aliases
-when their parent is a physical declaration. Keep the pinned generated names. -/
-private def reservedEquations := #[
-  `Eq.congr_simp, `HEq.congr_simp, `Decidable.intro.congr_simp, `Eq.ndrec_symm.congr_simp,
-  `cast.congr_simp, `absurd.congr_simp, `Nat.beq.eq_def, `Nat.beq.eq_1, `Nat.beq.eq_2,
-  `Nat.beq.eq_3, `Nat.beq.eq_4, `OfNat.ofNat.eq_1, `cond.eq_1, `cond.eq_2, `id.eq_1]
+private def primitiveName (name : Name) :=
+  name == `Nat.gcd || taskPrimitives.contains name || binderAnnotations.contains name || natPrimitives.contains name
 
-public def usesRoot (name : Name) :=
-  name == `Nat.gcd || taskPrimitives.contains name || binderAnnotations.contains name || natPrimitives.contains name || reservedEquations.contains name
+/-- The resolver looks up generated theorem names under their physical parent before consulting aliases. -/
+private def reservedEquation : Name → Bool
+  | .str parent suffix =>
+    primitiveName parent && (Meta.isEqnLikeSuffix suffix || suffix == "congr_simp")
+  | _ => false
+
+public def usesRoot (name : Name) := primitiveName name || reservedEquation name
 
 public def isPrimitive (owner name : Name) : Bool :=
   (owner == `OmegaInit.Data.Nat.Gcd && name == `Nat.gcd) ||
-  (owner.getRoot == `OmegaInit && reservedEquations.contains name) ||
+  (owner.getRoot == `OmegaInit && reservedEquation name) ||
   (owner == `OmegaInit.Core && taskPrimitives.contains name) ||
   (owner == `OmegaInit.Prelude && (binderAnnotations.contains name || natPrimitives.contains name))
 
