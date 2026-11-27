@@ -22,6 +22,10 @@ $$\neg \operatorname{claim}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Hypergraphs/BoseTriplingBurningRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/burgess-et-al-2026-bose-tripling-burning` (refuted) by `D5/S3/Combinatorics/Hypergraphs/BoseTriplingBurningRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"burgess-et-al-2026-bose-tripling-burning","declaration_gid":"D5/S3/Combinatorics/Hypergraphs/BoseTriplingBurningRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Andrea C. Burgess, Peter H. Danziger, Caleb W. Jones, Trent G. Marbach, and David A. Pike (2026). *Burning Steiner Triple Systems*. URL: <https://arxiv.org/html/2608.25627v1>.

@@ -36,7 +36,10 @@ internal sealed class BoseTriplingBurningRefutationDocument : IScribeDocumentDef
                     + "The certified ordinary schedules have lengths 5 and 6. At most 8 points burn in four rounds, and counting pairs in the "
                     + "preceding burned set gives at most 37 in five rounds. Order 13 lies strictly between consecutive admissible orders "
                     + "in each geometric family, namely 7 and 15 for projective systems and 9 and 27 for affine systems."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("burgess-et-al-2026-bose-tripling-burning"),
+                    ResolutionKind.Refuted)))));
 
     private static Formula Named(string name) => Seq(Operatorname, Grp(F.Id(name)));
     private static Formula Call(string name, params Formula[] args) => new Formula.Apply(Named(name), [.. args]);
