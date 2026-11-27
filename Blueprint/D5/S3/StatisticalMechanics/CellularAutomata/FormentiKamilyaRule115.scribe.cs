@@ -29,7 +29,10 @@ internal sealed class FormentiKamilyaRule115Document : IScribeDocumentDefinition
                 H("Least period nine is impossible"),
                 StatementSource.FromAuthor(Disp(Seq(Neg, Sp, Named(F.Id("claim"))))), AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text("Question 1 on printed p. 97 asks ‘For RESOCA 115, in the context of finite configurations, are all multiple of 3 periods?’ The claim requires a configuration for every positive multiple p of three, both initial layers finitely supported, with a p-step return and no earlier positive return. At p = 9 the preceding theorem forces a return at 3, contradicting least period nine."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("formenti-kamilya-2026-resoca-115-question-1"),
+                    ResolutionKind.Refuted)))));
 
     private static Formula Named(params Formula[] parts) => Seq(Operatorname, Grp(parts));
 
