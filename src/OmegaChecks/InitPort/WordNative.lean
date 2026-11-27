@@ -92,6 +92,8 @@ private def sliceStringFunction (n : Name) : Bool :=
   n == `String.Slice.lines.lineMap || (n.getPrefix == `String.Slice &&
     [`trimAsciiStart, `trimAsciiEnd, `trimAscii, `intercalate, `isInt, `toInt?, `toInt!, `toName].contains (n.updatePrefix .anonymous))
 
+private def renderName (n : Name) : Bool := [`Lean.Name.escapePart, `Lean.Name.toStringWithSep, `Lean.Name.toStringWithToken].contains n
+
 private def metaLiteralFunction (n : Name) : Bool :=
   n == `Substring.Raw.toName || (n.getPrefix == `Lean.Syntax &&
     [`decodeNatLitVal?, `decodeScientificLitVal?, `decodeNameLit, `decodeStrLit, `decodeStrLitAux,
@@ -102,7 +104,7 @@ private def syntaxTreeFunction (n : Name) : Bool :=
     [`getHead?, `setHeadInfoAux, `setTailInfoAux, `findAux, `structEq, `isToken, `hasArgs, `isAtom, `isNone,
      `isIdOrAtom?, `isLit?].contains (n.updatePrefix .anonymous))
 
-private def pinnedStringFunction (n : Name) : Bool := defsStringFunction n || basicStringFunction n || decodeStringFunction n || sliceStringFunction n || metaLiteralFunction n || n == `String.toName
+private def pinnedStringFunction (n : Name) : Bool := renderName n || defsStringFunction n || basicStringFunction n || decodeStringFunction n || sliceStringFunction n || metaLiteralFunction n || n == `String.toName
 
 private def debugPrimitive (n : Name) : Bool := [`dbgTrace, `dbgTraceIfShared, `dbgSleep, `dbgStackTrace].contains n
 
@@ -171,6 +173,7 @@ public def supported (source : Environment) (owner name : Name) : Bool :=
   let primitive := ((word? name.getPrefix).isSome && name.getPrefix != `Char && (ops ++ widths).contains method) ||
     (name.getPrefix == `Bool && widths.contains method)
   (owner == `OmegaInit.Util && debugPrimitive name && isExtern source name) ||
+    (owner == `OmegaInit.Data.ToString.Name && renderName name) ||
     (owner == `OmegaInit.Data.String.Defs && defsStringFunction name) ||
     (owner == `OmegaInit.Data.String.Basic && basicStringFunction name) ||
     (owner == `OmegaInit.Data.String.Decode && decodeStringFunction name) ||
@@ -320,6 +323,16 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
       if passesErased then args := args.push "lean_box(0)"
       continue
     let arg := "a" ++ toString i
+    let plainDom := if dom.isAppOfArity `optParam 2 then dom.getAppArgs[0]! else dom
+    if renderName official && plainDom.isForall then
+      unless plainDom.bindingDomain! == mkConst `String && plainDom.bindingBody! == mkConst `Bool &&
+          a.ty == .object && b.ty == .object && !a.borrow do throw <| IO.userError "invalid name token predicate"
+      hasString := true
+      decls := decls.push ((if b.borrow then "b_lean_obj_arg " else "lean_obj_arg ") ++ arg)
+      if b.borrow then prepare := prepare ++ s!"  lean_inc({arg});\n"
+      prepare := prepare ++ s!"  lean_object *token = lean_alloc_closure((void *)omega_name_token, 2, 1);\n  lean_closure_set(token, 0, {arg});\n"
+      args := args.push "token"
+      continue
     if debugPrimitive official && (dom.isForall || dom.isBVar) then
       -- The runtime either returns the polymorphic payload or invokes its continuation with Unit.unit.
       let payload := official == `dbgTraceIfShared && dom == .bvar (i - 1)
@@ -634,6 +647,11 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
     hasString := true
     prepare := prepare ++ s!"  lean_object *optional = {call};\n"
     pure ("lean_obj_res", "omega_optional_from_lean(optional, " ++ (if scalar then "omega_char_from_lean)" else "omega_char_array_from_lean)"))
+  else if official == `Lean.Name.escapePart then do
+    unless type == mkApp (mkConst `Option [.zero]) (mkConst `String) && ret == .tobject && result == .tobject do
+      throw <| IO.userError "incorrect escaped name result ABI"
+    IndexedNative.checkDataTypes source strict [`Option]
+    pure ("lean_obj_res", s!"omega_optional_from_lean({call}, omega_string_from_lean)")
   else if official == `String.Slice.toInt? then do
     unless type == mkApp (mkConst `Option [.zero]) (mkConst `Int) && ret == .tobject && result == .tobject do
       throw <| IO.userError "incorrect optional integer ABI"

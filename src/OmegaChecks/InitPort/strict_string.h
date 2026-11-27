@@ -91,6 +91,13 @@ static lean_obj_res omega_char_array_from_lean(b_lean_obj_arg array) {
     return out;
 }
 
+/* The pinned Name printer applies its strict token predicate to assembled native text. */
+static lean_obj_res omega_name_token(lean_obj_arg predicate, lean_obj_arg native) {
+    lean_object *s = omega_string_from_lean(native);
+    lean_dec(native);
+    return lean_apply_1(predicate, s);
+}
+
 static lean_obj_res omega_optional_from_lean(lean_obj_arg value, lean_obj_res (*convert)(b_lean_obj_arg)) {
     if (lean_is_scalar(value)) return value;
     lean_object *result = lean_alloc_ctor(1, 1, 0);
