@@ -140,7 +140,11 @@ private def modifyStringFunction (n : Name) : Bool :=
 private def errorString (n : Name) : Bool :=
   [`IO.Error.fopenErrorToString, `IO.Error.otherErrorToString].contains n
 
-private def pinnedStringFunction (n : Name) : Bool := errorString n || modifyStringFunction n || rawStringFunction n || renderName n || defsStringFunction n || basicStringFunction n || decodeStringFunction n || sliceStringFunction n || metaLiteralFunction n || n == `String.toName
+private def uriFunction (n : Name) : Bool :=
+  [`System.Uri.UriEscape.decodeUri, `System.Uri.UriEscape.uriEscapeAsciiChar,
+   `System.Uri.pathToUri, `System.Uri.fileUriToPath?].contains n
+
+private def pinnedStringFunction (n : Name) : Bool := uriFunction n || errorString n || modifyStringFunction n || rawStringFunction n || renderName n || defsStringFunction n || basicStringFunction n || decodeStringFunction n || sliceStringFunction n || metaLiteralFunction n || n == `String.toName
 
 private def debugPrimitive (n : Name) : Bool := [`dbgTrace, `dbgTraceIfShared, `dbgSleep, `dbgStackTrace].contains n
 
@@ -211,6 +215,7 @@ public def supported (source : Environment) (owner name : Name) : Bool :=
   let primitive := ((word? name.getPrefix).isSome && name.getPrefix != `Char && (ops ++ widths).contains method) ||
     (name.getPrefix == `Bool && widths.contains method)
   (owner == `OmegaInit.Util && debugPrimitive name && isExtern source name) ||
+    (owner == `OmegaInit.System.Uri && uriFunction name) ||
     (owner == `OmegaInit.Data.ToString.Name && renderName name) ||
     (owner == `OmegaInit.Data.String.Substring && rawStringFunction name) ||
     (owner == `OmegaInit.Data.String.Defs && defsStringFunction name) ||
@@ -695,11 +700,15 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
       args := args.push s!"slice{i}"
       if a.borrow then cleanup := cleanup ++ s!"  lean_dec(slice{i});\n"
       unless b.borrow do cleanup := cleanup ++ s!"  lean_dec({arg});\n"
-    else if [`String, `ByteArray].contains dom && a.ty == .object && b.ty == .tobject then
+    else if [`String, `ByteArray, `System.FilePath].contains dom && a.ty == .object && b.ty == .tobject then
       checkStrictString strict
       hasString := true
       decls := decls.push ((if b.borrow then "b_lean_obj_arg " else "lean_obj_arg ") ++ arg)
-      let convert := if dom == `String then "omega_string_to_lean" else "omega_bytes_to_lean"
+      if dom == `System.FilePath then
+        for (e, path) in [(source, dom), (strict, `Omega ++ dom)] do
+          let some (some f) := impureTrivialStructureInfoExt.find? e path | throw <| IO.userError s!"expected one file path field {path}"
+          unless f.fieldIdx == 0 do throw <| IO.userError s!"unexpected file path field {path}"
+      let convert := if dom == `ByteArray then "omega_bytes_to_lean" else "omega_string_to_lean"
       prepare := prepare ++ s!"  lean_object *string{i} = {convert}({arg});\n"
       args := args.push s!"string{i}"
       -- The byte reader's public C primitive borrows both inputs, also for its deprecated alias.
@@ -836,9 +845,10 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
     hasString := true
     prepare := prepare ++ s!"  lean_object *optional = {call};\n"
     pure ("lean_obj_res", "omega_optional_from_lean(optional, " ++ (if scalar then "omega_char_from_lean)" else "omega_char_array_from_lean)"))
-  else if official == `Lean.Name.escapePart then do
-    unless type == mkApp (mkConst `Option [.zero]) (mkConst `String) && ret == .tobject && result == .tobject do
-      throw <| IO.userError "incorrect escaped name result ABI"
+  else if [`Lean.Name.escapePart, `System.Uri.fileUriToPath?].contains official then do
+    let payload := if official == `Lean.Name.escapePart then `String else `System.FilePath
+    unless type == mkApp (mkConst `Option [.zero]) (mkConst payload) && ret == .tobject && result == .tobject do
+      throw <| IO.userError s!"incorrect optional text result {n}"
     IndexedNative.checkDataTypes source strict [`Option]
     pure ("lean_obj_res", s!"omega_optional_from_lean({call}, omega_string_from_lean)")
   else if official == `String.Slice.toInt? then do
