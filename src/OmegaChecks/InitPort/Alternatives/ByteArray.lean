@@ -54,4 +54,10 @@ public theorem ByteArray.toList.loop.eq_def : type_of% @_root_.ByteArray.toList.
     dsimp only [WellFounded.Nat.fix.go, PSigma.casesOn]
     rw [dite_eq_right hi, List.unattach_reverse, List.unattach_attach]
 
+public theorem ByteArray.toList.loop._unary.eq_def :
+    type_of% @_root_.ByteArray.toList.loop._unary.eq_def := by
+  intro bs p
+  cases p with
+  | mk i acc => with_unfolding_all exact ByteArray.toList.loop.eq_def bs i acc
+
 end OmegaChecks.InitPort.Alternatives

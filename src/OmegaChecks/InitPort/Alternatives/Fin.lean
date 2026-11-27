@@ -252,6 +252,22 @@ private theorem negativeBranch {p : Prop} [d : Decidable p] (hp : ¬p) {α β : 
   | isTrue h => exact (hp h).elim
   | isFalse => rfl
 
+public theorem Fin.foldlM.loop._unary.eq_def :
+    type_of% (private_decl% @_root_.Fin.foldlM.loop._unary.eq_def) := by
+  intro m α inst n f p
+  obtain ⟨a, i⟩ := p
+  dsimp only
+  by_cases h : i < n
+  · rw [dite_eq_left h]
+    with_unfolding_all exact congrFun (foldlMLt f h) a
+  · rw [dite_eq_right h]
+    have e := congrFun (unfoldFoldl n f i (Nat.succ 0) (by change n - i + 1 = 1; omega)) a
+    with_unfolding_all change foldlM.loop n f a i = pure a
+    exact e.trans (by
+      delta foldlFuel WellFounded.Nat.fix.go
+      dsimp only
+      rw [dite_eq_right h])
+
 private theorem foldlMEnd [Monad m] {n : Nat} (f : α → Fin n → m α) :
     (fun a => foldlM.loop n f a n) = pure := by
   rw [unfoldFoldl n f n 1 (by omega)]

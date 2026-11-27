@@ -60,6 +60,23 @@ public theorem prefixFunction.le_go_iff :
           subst a
           exact hit yes))
 
+public theorem prefixFunction.go.eq_def :
+    type_of% (private_decl% @_root_.String.Slice.Pattern.Model.ForwardSliceSearcher.prefixFunction.go.eq_def) := by
+  intro pat stack bound k
+  let go := prefixFunction.go pat stack bound
+  have spec (a n) : a ≤ go n ↔ ∃ i, a ≤ i ∧ i ≤ n ∧ PartialMatch pat pat i (stack + 1) :=
+    prefixFunction.le_go_iff
+  by_cases hit : PartialMatch pat pat k (stack + 1)
+  · rw [dite_eq_left hit]
+    obtain ⟨i, hi, hk, _⟩ := (spec (go k) k).mp (Nat.le_refl _)
+    exact Nat.le_antisymm (Nat.le_trans hi hk) ((spec k k).mpr ⟨k, Nat.le_refl _, Nat.le_refl _, hit⟩)
+  · rw [dite_eq_right hit]
+    obtain ⟨i, hi, hk, yes⟩ := (spec (go k) k).mp (Nat.le_refl _)
+    have before : i < k := Nat.lt_of_le_of_ne hk (fun e => hit (e ▸ yes))
+    obtain ⟨j, hj, prev, yes'⟩ := (spec (go (k - 1)) (k - 1)).mp (Nat.le_refl _)
+    exact Nat.le_antisymm ((spec (go k) (k - 1)).mpr ⟨i, hi, by omega, yes⟩)
+      ((spec (go (k - 1)) k).mpr ⟨j, hj, Nat.le_trans prev (Nat.sub_le ..), yes'⟩)
+
 public theorem le_prefixFunction_iff :
     type_of% (private_decl% @_root_.String.Slice.Pattern.Model.ForwardSliceSearcher.le_prefixFunction_iff) := by
   intro k pat stack bound
