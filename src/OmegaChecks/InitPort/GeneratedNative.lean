@@ -6,6 +6,8 @@ import Lean.Compiler.LCNF.Main
 import Lean.Compiler.LCNF.PhaseExt
 import Lean.Compiler.LCNF.EmitC
 import Lean.Compiler.ImplementedByAttr
+meta import OmegaChecks.InitPort.WordNative
+import OmegaChecks.InitPort.WordNative
 meta import OmegaChecks.InitPort.NativeState
 import OmegaChecks.InitPort.NativeState
 meta import OmegaChecks.InitPort.Translation
@@ -84,8 +86,9 @@ private def missingRuntimeDependency (source : Environment) (n : Name) : CoreM B
   finally
     before.restore
 
-private def compileOwner (source : Environment) (groups : Array InductiveVal) (order : Array Name) : CoreM Unit := do
+private def compileOwner (source : Environment) (groups : Array InductiveVal) (words order : Array Name) : CoreM Unit := do
   compileLayoutsInOrder groups
+  OmegaChecks.InitPort.WordNative.install words
   for n in order do
     if ← missingRuntimeDependency source n then continue
     let before ← Core.saveState
@@ -119,6 +122,7 @@ private unsafe def install (source publicSource : Environment) (lib out : System
   let mut groups := #[]
   let mut locals := #[]
   let mut candidates := #[]
+  let mut words := #[]
   -- These eager word cardinalities require 65,536 through 2^64 successor cells
   -- when a detached seed uses a separately defined unary Nat.
   let unaryNat := (env.find? `Omega.Nat).any (· matches .inductInfo _)
@@ -142,6 +146,9 @@ private unsafe def install (source publicSource : Environment) (lib out : System
       if onlyLayouts || oldNative.contains d.name || ci.isUnsafe || ci.isPartial then continue
       let upstream := originalName d.name
       if unaryNat && largeWordSizes.contains upstream then continue
+      if !unaryNat && OmegaChecks.InitPort.WordNative.supported source owner upstream then
+        words := words.push d.name
+        continue
       if isExtern source upstream || (getImplementedBy? source upstream).isSome then continue
       candidates := candidates.push d.name
     | _ => continue
@@ -149,7 +156,7 @@ private unsafe def install (source publicSource : Environment) (lib out : System
   let localNames := NameSet.ofList candidates.toList
   let order : Array Name := Id.run <|
     (candidates.foldlM (fun acc n => return acc ++ (← dependencies env localNames n)) #[]).run' {}
-  let mut context ← localEnv env owner (locals ++ candidates)
+  let mut context ← localEnv env owner (locals ++ words ++ candidates)
   -- Compiler tags stored under the imported module index need local entries while compiling.
   for n in locals ++ candidates do
     if isAuxRecursor env n then context := markAuxRecursor context n
@@ -158,13 +165,17 @@ private unsafe def install (source publicSource : Environment) (lib out : System
     if let some proj := env.getProjectionFnInfo? n then
       context := addProjectionFnInfo context n proj.ctorName proj.numParams proj.i proj.fromClass
   let ctx : Core.Context := {fileName := "<generated native Init>", fileMap := default, options := Elab.async.set {} false}
-  let (_, st) ← (compileOwner source groups order).toIO ctx {env := context}
+  let (_, st) ← (compileOwner source groups words order).toIO ctx {env := context}
   if onlyLayouts then
     writeCode lib owner st.env layouts
   else
     for n in (declOrderExt.getState st.env).1 do
       if oldNative.contains n then throw <| IO.userError s!"native symbol collision at {n}"
-    emitOwner st.env owner part.imports ctx (modToFilePath out owner "c")
+    let file := modToFilePath out owner "c"
+    emitOwner st.env owner part.imports ctx file
+    unless words.isEmpty do
+      IO.FS.withFile file .append fun h => do
+        for n in words do h.putStr (← OmegaChecks.InitPort.WordNative.wrapper source st.env n)
     writeCode lib owner st.env (layouts ++ codeExtensions ++ #[privateConstKindsExt.name])
     let fresh ← importModules #[{module := owner}] {} (level := .exported)
     let actual := NameSet.ofList ((impureSigExt.getModuleEntries fresh (fresh.getModuleIdx? owner).get!).map (·.name)).toList
