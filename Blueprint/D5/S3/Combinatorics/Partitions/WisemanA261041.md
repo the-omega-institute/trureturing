@@ -96,6 +96,10 @@ $$\forall (n: \mathbb{N}), \operatorname{Nat.card}\left(\operatorname{Left}\left
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Partitions/WisemanA261041.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/wiseman-a261041` (proved) by `D5/S3/Combinatorics/Partitions/WisemanA261041.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"wiseman-a261041","declaration_gid":"D5/S3/Combinatorics/Partitions/WisemanA261041.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Gus Wiseman (2019). *OEIS A261041, comment on partial and full set partitions*. URL: <https://oeis.org/A261041/internal>.
