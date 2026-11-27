@@ -10,11 +10,11 @@ internal sealed class PrunedSubsetProjectionObstructionDocument : IScribeDocumen
     private static LibraryNoteRef Source =>
         LibraryNoteRef.Create("D5/L/FiniteGeometry/elder2026turnpike");
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "A realizable seven-point assignment satisfies every subset cut and has no full triangle lift.",
+        "An assignment for a realizable seven-point input satisfies every subset cut and has no full triangle lift.",
         H("All subset cuts do not complete the pruned spine projection"),
         Blocks(
             Paragraph(Text("The ordered numerical relation and triangle marginals follow Elder, Marçais and Kingsford, WABI "
-                + "2026, Section 5, Proposition 10 and System 11. DOI: 10.4230/LIPIcs.WABI.2026.20, CC BY 4.0. The "
+                + "2026, Sections 3.1–3.3, Proposition 10 and System 11. DOI: 10.4230/LIPIcs.WABI.2026.20, CC BY 4.0. The "
                 + "exact rank-pruned all-subset comparison and seven-point countercertificate are "
                 + "repository-derived internal mathematics. No external named conjecture, priority, minimum-size or "
                 + "algorithmic-performance claim is made.")),

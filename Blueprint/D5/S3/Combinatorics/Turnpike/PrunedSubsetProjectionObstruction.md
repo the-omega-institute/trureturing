@@ -2,9 +2,9 @@
 
 ## Abstract
 
-A realizable seven-point assignment satisfies every subset cut and has no full triangle lift.
+An assignment for a realizable seven-point input satisfies every subset cut and has no full triangle lift.
 
-The ordered numerical relation and triangle marginals follow Elder, Marçais and Kingsford, WABI 2026, Section 5, Proposition 10 and System 11. DOI: 10.4230/LIPIcs.WABI.2026.20, CC BY 4.0. The exact rank-pruned all-subset comparison and seven-point countercertificate are repository-derived internal mathematics. No external named conjecture, priority, minimum-size or algorithmic-performance claim is made.
+The ordered numerical relation and triangle marginals follow Elder, Marçais and Kingsford, WABI 2026, Sections 3.1–3.3, Proposition 10 and System 11. DOI: 10.4230/LIPIcs.WABI.2026.20, CC BY 4.0. The exact rank-pruned all-subset comparison and seven-point countercertificate are repository-derived internal mathematics. No external named conjecture, priority, minimum-size or algorithmic-performance claim is made.
 
 Publication indices are one-based; Lean subtracts one. I contains every interval i<j, Delta every triangle i<j<k, and S every endpoint-spine triangle (1,j,k). Admissible inputs have n≥3, d≥1, strictly decreasing positive real y, and positive integer multiplicities mu whose sum is choose(n,2). Realizes(y,mu,x) requires a strictly increasing real ruler and its entire distance multiset with exactly those multiplicities. This is an input premise; no fractional P is assumed to be the distance assignment of a ruler.
 
