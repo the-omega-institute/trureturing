@@ -137,6 +137,84 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
 
 end PathUpper
 
+namespace ExplicitPathUpper
+
+abbrev signature := SingleDependentReadout.signature Unit (fun _ => ℝ) (fun _ => ℝ)
+
+def actual : Realization signature :=
+  realize signature (fun _ _ ε => (4/3 : ℝ) * ε) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => -1) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ {E : Type u} [SeminormedAddCommGroup E] [NormedSpace ℝ E]
+    (n : ℕ) (g : Fin n → Fin n → E) (ε : ℝ) (_hε : 0 ≤ ε)
+    (_hg : ∀ i j, g j i = -g i j)
+    (_ht : ∀ i j k, (pathPowerThree n).Adj i j → (pathPowerThree n).Adj j k →
+      (pathPowerThree n).Adj i k → ‖g i j + g j k - g i k‖ ≤ ε),
+    ∀ i j, (pathPowerThree n).Adj i j →
+      ‖g i j - (pathPowerThree_causal_potential n g j - pathPowerThree_causal_potential n g i)‖ ≤
+        R.readout () () ε
+
+private theorem rejected_law : ¬ arena.{u}.Law rejected := by
+  intro h
+  let g : Fin 2 → Fin 2 → ULift.{u} ℝ := fun _ _ => 0
+  let φ := pathPowerThree_causal_potential 2 g
+  have adj : (pathPowerThree 2).Adj (0 : Fin 2) 1 := by
+    change (0 : Fin 2) ≠ 1 ∧ (0 : ℕ) ≤ 1 + 3 ∧ (1 : ℕ) ≤ 0 + 3
+    decide
+  have he := h 2 g 0 le_rfl (by simp [g]) (by simp [g]) 0 1 adj
+  change ‖(0 : ULift.{u} ℝ) - (φ 1 - φ 0)‖ ≤ -1 at he
+  linarith only [he, norm_nonneg ((0 : ULift.{u} ℝ) - (φ 1 - φ 0))]
+
+def family : Registration arena.{u} (type_of% (@pathPowerThree_causal_potential_error.{u})) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@pathPowerThree_causal_potential_error.{u}, rejected, rejected_law⟩
+  sensitivity := SingleDependentReadout.sensitivity arena.Law actual rejected rejected_law
+  dependence := by
+    intro _
+    refine ⟨(), 0, 1, ?_⟩
+    norm_num [actual, realize]
+
+def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+    (@pathPowerThree_causal_potential_error.{u}) (Realization signature) Unit Unit where
+  unitName := `SimpleGraph.pathPowerThree_causal_potential_error.__information_unit
+  realizationName :=
+    `Reg.D5.S3.Combinatorics.Graph.Chordal.ThreeTreeBanachSharpBounds.ExplicitPathUpper.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena.{u}⟩
+  objectArena := .source ⟨arena.{u}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature actual.readout actual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Combinatorics.Graph.Chordal.ThreeTreeBanachSharpBounds
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body",
+        "body", "body", "body", "body", "arg"]
+      stateBinder := 5
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end ExplicitPathUpper
+
 namespace PathLower
 
 abbrev signature := SingleDependentReadout.signature Unit (fun _ => ℕ) (fun _ => ℝ)

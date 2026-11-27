@@ -45,14 +45,24 @@ private theorem skew_diag (g : α → α → E) (hg : ∀ i j, g j i = -g i j) (
   have h : (2 : ℝ) • g i i = 0 := by rw [two_smul, ← sub_neg_eq_add, ← hg i i, sub_self]
   exact (smul_eq_zero.mp h).resolve_left (by norm_num)
 
-/-- A causal potential on a third power of a path obtained from the three most recent
-triangle differences after integrating the nearest-neighbour gains. -/
-theorem pathPowerThree_banach_upper_four_thirds (n : ℕ) (g : Fin n → Fin n → E)
+/-- Integrate the adjacent gains, then add the sum of the local corrections on the prefix. -/
+noncomputable def pathPowerThree_causal_potential (n : ℕ) (g : Fin n → Fin n → E) (i : Fin n) : E :=
+  let c := clamp (Nat.zero_lt_of_lt i.isLt)
+  let I := integrate fun j => g (c j) (c (j+1))
+  let f (j k : ℕ) := g (c j) (c k) - (I k - I j)
+  let a (j : ℕ) := f j (j+2)
+  let b (j : ℕ) := f j (j+3)
+  let ψ (j : ℕ) := (1/3 : ℝ) • (b j - a j + a (j+1))
+  I (i.val+2) + integrate ψ i.val
+
+/-- The explicitly integrated causal potential controls the error on all three edge lengths. -/
+theorem pathPowerThree_causal_potential_error (n : ℕ) (g : Fin n → Fin n → E)
     (ε : ℝ) (hε : 0 ≤ ε) (hg : ∀ i j, g j i = -g i j)
     (ht : ∀ i j k, (pathPowerThree n).Adj i j → (pathPowerThree n).Adj j k →
       (pathPowerThree n).Adj i k → ‖g i j + g j k - g i k‖ ≤ ε) :
-    ∃ φ : Fin n → E, ∀ i j, (pathPowerThree n).Adj i j →
-      ‖g i j - (φ j - φ i)‖ ≤ (4/3 : ℝ) * ε := by
+    ∀ i j, (pathPowerThree n).Adj i j →
+      ‖g i j - (pathPowerThree_causal_potential n g j - pathPowerThree_causal_potential n g i)‖ ≤
+        (4/3 : ℝ) * ε := by
   by_cases hn : 0 < n
   · let c := clamp hn
     let I := integrate fun i => g (c i) (c (i+1))
@@ -134,12 +144,23 @@ theorem pathPowerThree_banach_upper_four_thirds (n : ℕ) (g : Fin n → Fin n �
           (add_le_add ((norm_add_le _ _).trans
             (add_le_add ((norm_add_le _ _).trans (add_le_add hb₁ hb₂)) (hab' (x+1)))) (hab x))
         linarith
-    refine ⟨φ, fun i j hij => ?_⟩
+    change ∀ i j, (pathPowerThree n).Adj i j → ‖g i j - (φ j - φ i)‖ ≤ _
+    intro i j hij
     rcases lt_or_gt_of_ne (fun e => hij.ne (Fin.ext e)) with h | h
     · exact forward h hij.2.2
     · rw [show g i j - (φ j - φ i) = -(g j i - (φ i - φ j)) by rw [hg j i]; abel, norm_neg]
       exact forward h hij.2.1
-  · exact ⟨fun _ => 0, fun i _ _ => False.elim (hn (Nat.zero_lt_of_lt i.isLt))⟩
+  · intro i _ _
+    exact False.elim (hn (Nat.zero_lt_of_lt i.isLt))
+
+/-- The explicit causal potential gives an existential reconstruction bound. -/
+theorem pathPowerThree_banach_upper_four_thirds (n : ℕ) (g : Fin n → Fin n → E)
+    (ε : ℝ) (hε : 0 ≤ ε) (hg : ∀ i j, g j i = -g i j)
+    (ht : ∀ i j k, (pathPowerThree n).Adj i j → (pathPowerThree n).Adj j k →
+      (pathPowerThree n).Adj i k → ‖g i j + g j k - g i k‖ ≤ ε) :
+    ∃ φ : Fin n → E, ∀ i j, (pathPowerThree n).Adj i j →
+      ‖g i j - (φ j - φ i)‖ ≤ (4/3 : ℝ) * ε :=
+  ⟨pathPowerThree_causal_potential n g, pathPowerThree_causal_potential_error n g ε hε hg ht⟩
 
 end PathUpper
 
@@ -787,6 +808,7 @@ theorem cliqueFour_banach_coefficient_bounds :
 end ExtremalConstants
 
 #print axioms IsChordal.exists_cliqueFour_banach_gain_potential_polygon
+#print axioms pathPowerThree_causal_potential_error
 #print axioms pathPowerThree_banach_upper_four_thirds
 #print axioms pathPowerThree_banach_lower_four_thirds
 #print axioms pathPowerThree_banach_sup_four_thirds

@@ -20,9 +20,15 @@ internal sealed class ThreeTreeBanachSharpBoundsDocument : IScribeDocumentDefini
             Entry("third-power-of-a-path", "pathPowerThree", "The path graph",
                 All("n", Naturals, Eq(Path(V("n")), Call("pathPower", V("n"), D(3)))),
                 "The graph joins distinct indices at distance at most three.", DescribeRole.Definition),
+            Entry("causal-potential", "pathPowerThree_causal_potential",
+                "The causal potential on a path", CausalDefinition(),
+                "Extend the vertex indices by repeating the endpoints, with the original vertex zero at index two. Write I for the integral of the adjacent gains in this indexing, starting at zero. Write val(i) for the natural index of a vertex i. Subtract the gradient of I and denote the remaining gains of lengths two and three by a and b. Write J(g,k) for the sum over natural indices j less than k of (b(j) minus a(j) plus a(j+1)) divided by three term by term.", DescribeRole.Definition),
+            Entry("causal-potential-error", "pathPowerThree_causal_potential_error",
+                "Error of the causal path potential", PathUpper(causal: true),
+                "Integrate along the adjacent edges, then subtract that gradient. Call the remaining gains on lengths two and three a and b. Clamp the indices at the endpoints, and index the increments by the ordinary vertex indices. The increment from i to i+1 is one third of the sum of b at i minus two, minus a at i minus two, plus a at i minus one. The residuals on lengths one, two, and three sum two, three, and four terms respectively, each bounded by the triangle tolerance, and divide by three."),
             Entry("path-causal-upper", "pathPowerThree_banach_upper_four_thirds",
-                "A causal path potential", PathUpper(),
-                "Integrate along the adjacent edges, then subtract that gradient. Call the remaining gains on lengths two and three a and b. Clamp the indices at the endpoints, and give the new potential the increment at i equal to one third of b at i minus two, minus a at i minus two, plus a at i minus one. The residuals on lengths one, two, and three sum two, three, and four terms respectively, each bounded by the triangle tolerance, and divide by three."),
+                "Existence of a path potential", PathUpper(),
+                "Choose the causal potential from the preceding theorem."),
             Entry("hexagonal-target", "pathHexagon", "The hexagonal plane",
                 All("x", Arrow(Call("Fin", D(3)), Reals), new Formula.Logic(
                     new Formula.Relation(V("x"), FormulaRelationOperator.MemberOf, V("Hex")), FormulaLogicOperator.Iff,
@@ -77,10 +83,13 @@ internal sealed class ThreeTreeBanachSharpBoundsDocument : IScribeDocumentDefini
     private static Formula Instance(string name, params Formula[] args) => Seq(OpenBracket, Call(name, args), CloseBracket, Sp);
     private static Formula Path(Formula n) => Call("P", n);
 
-    private static Formula Uniform(Formula graph, Formula vertices, Formula radius)
+    private static Formula Uniform(Formula graph, Formula vertices, Formula radius, Formula? pathSize = null)
     {
         var target = V("E"); var gain = V("g"); var epsilon = V("e");
-        var fit = Some("p", Arrow(vertices, target), Call("fit", graph, gain, V("p"), Mul(Par(radius), epsilon)));
+        var edgeBound = Mul(Par(radius), epsilon);
+        var fit = pathSize is null
+            ? Some("p", Arrow(vertices, target), Call("fit", graph, gain, V("p"), edgeBound))
+            : Call("fit", graph, gain, Call("causal", pathSize, gain), edgeBound);
         var hypotheses = Imp(Le(D(0), epsilon),
             Imp(Call("skew", vertices, gain), Imp(Call("flat", graph, gain, epsilon), fit)));
         var gains = All("g", Arrow(vertices, Arrow(vertices, target)), All("e", Reals, hypotheses));
@@ -98,7 +107,19 @@ internal sealed class ThreeTreeBanachSharpBoundsDocument : IScribeDocumentDefini
                 Uniform(graph, vertices, PolygonRadius)))))));
     }
 
-    private static Formula PathUpper() => All("n", Naturals, Uniform(Path(V("n")), Call("Fin", V("n")), FourThirds));
+    private static Formula PathUpper(bool causal = false) => All("n", Naturals,
+        Uniform(Path(V("n")), Call("Fin", V("n")), FourThirds, causal ? V("n") : null));
+
+    private static Formula CausalDefinition()
+    {
+        var n = V("n"); var target = V("E"); var i = V("i"); var g = V("g");
+        var vertices = Call("Fin", n);
+        var index = Call("val", i);
+        var formula = Eq(Call("causal", n, g, i), Add(Call("I", g, Add(index, D(2))), Call("J", g, index)));
+        var gains = All("g", Arrow(vertices, Arrow(vertices, target)), All("i", vertices, formula));
+        var instances = Seq(Instance("SeminormedAddCommGroup", target), Instance("NormedSpace", Reals, target), gains);
+        return All("n", Naturals, All("v", Call("Universe"), All("E", Call("Type", V("v")), instances)));
+    }
 
     private static Formula PathLower()
     {

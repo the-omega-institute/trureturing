@@ -32,7 +32,31 @@ $$\forall n \in \mathbb{N},\; \operatorname{P}\left(n\right) = \operatorname{pat
 
 The graph joins distinct indices at distance at most three.
 
-**Theorem 1.3 (A causal path potential).**
+**Definition 1.3 (The causal potential on a path).**
+
+$$\forall n \in \mathbb{N},\; \forall v \in \operatorname{Universe},\; \forall E \in \operatorname{Type}\left(v\right),\; [\operatorname{SeminormedAddCommGroup}\left(E\right)] [\operatorname{NormedSpace}\left(\mathbb{R}, E\right)] \forall g \in \operatorname{Fin}\left(n\right) \to \left(\operatorname{Fin}\left(n\right) \to E\right),\; \forall i \in \operatorname{Fin}\left(n\right),\; \operatorname{causal}\left(n, g, i\right) = \operatorname{I}\left(g, \operatorname{val}\left(i\right)+2\right)+\operatorname{J}\left(g, \operatorname{val}\left(i\right)\right)$$
+
+*Formalization.* `D5/S3/Combinatorics/Graph/Chordal/ThreeTreeBanachSharpBounds.pathPowerThree_causal_potential` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Extend the vertex indices by repeating the endpoints, with the original vertex zero at index two. Write I for the integral of the adjacent gains in this indexing, starting at zero. Write val(i) for the natural index of a vertex i. Subtract the gradient of I and denote the remaining gains of lengths two and three by a and b. Write J(g,k) for the sum over natural indices j less than k of (b(j) minus a(j) plus a(j+1)) divided by three term by term.
+
+**Theorem 1.4 (Error of the causal path potential).**
+
+$$\forall n \in \mathbb{N},\; \forall v \in \operatorname{Universe},\; \forall E \in \operatorname{Type}\left(v\right),\; [\operatorname{SeminormedAddCommGroup}\left(E\right)] [\operatorname{NormedSpace}\left(\mathbb{R}, E\right)] \forall g \in \operatorname{Fin}\left(n\right) \to \left(\operatorname{Fin}\left(n\right) \to E\right),\; \forall e \in \mathbb{R},\; (0 \le e) \Rightarrow ((\operatorname{skew}\left(\operatorname{Fin}\left(n\right), g\right)) \Rightarrow ((\operatorname{flat}\left(\operatorname{P}\left(n\right), g, e\right)) \Rightarrow (\operatorname{fit}\left(\operatorname{P}\left(n\right), g, \operatorname{causal}\left(n, g\right), (\frac{4}{3}) \cdot e\right))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Chordal/ThreeTreeBanachSharpBounds.pathPowerThree_causal_potential_error` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Integrate along the adjacent edges, then subtract that gradient. Call the remaining gains on lengths two and three a and b. Clamp the indices at the endpoints, and index the increments by the ordinary vertex indices. The increment from i to i+1 is one third of the sum of b at i minus two, minus a at i minus two, plus a at i minus one. The residuals on lengths one, two, and three sum two, three, and four terms respectively, each bounded by the triangle tolerance, and divide by three.
+
+**Theorem 1.5 (Existence of a path potential).**
 
 $$\forall n \in \mathbb{N},\; \forall v \in \operatorname{Universe},\; \forall E \in \operatorname{Type}\left(v\right),\; [\operatorname{SeminormedAddCommGroup}\left(E\right)] [\operatorname{NormedSpace}\left(\mathbb{R}, E\right)] \forall g \in \operatorname{Fin}\left(n\right) \to \left(\operatorname{Fin}\left(n\right) \to E\right),\; \forall e \in \mathbb{R},\; (0 \le e) \Rightarrow ((\operatorname{skew}\left(\operatorname{Fin}\left(n\right), g\right)) \Rightarrow ((\operatorname{flat}\left(\operatorname{P}\left(n\right), g, e\right)) \Rightarrow (\exists p \in \operatorname{Fin}\left(n\right) \to E,\; \operatorname{fit}\left(\operatorname{P}\left(n\right), g, p, (\frac{4}{3}) \cdot e\right))))$$
 
@@ -42,9 +66,9 @@ $$\forall n \in \mathbb{N},\; \forall v \in \operatorname{Universe},\; \forall E
 
 *Commentary.*
 
-Integrate along the adjacent edges, then subtract that gradient. Call the remaining gains on lengths two and three a and b. Clamp the indices at the endpoints, and give the new potential the increment at i equal to one third of b at i minus two, minus a at i minus two, plus a at i minus one. The residuals on lengths one, two, and three sum two, three, and four terms respectively, each bounded by the triangle tolerance, and divide by three.
+Choose the causal potential from the preceding theorem.
 
-**Definition 1.4 (The hexagonal plane).**
+**Definition 1.6 (The hexagonal plane).**
 
 $$\forall x \in \operatorname{Fin}\left(3\right) \to \mathbb{R},\; x \in Hex \Leftrightarrow \operatorname{x}\left(0\right)+\operatorname{x}\left(1\right)+\operatorname{x}\left(2\right) = 0$$
 
@@ -56,7 +80,7 @@ $$\forall x \in \operatorname{Fin}\left(3\right) \to \mathbb{R},\; x \in Hex \Le
 
 The norm is the restriction of the supremum norm on the three coordinates.
 
-**Theorem 1.5 (A finite planar lower bound).**
+**Theorem 1.7 (A finite planar lower bound).**
 
 $$\forall m \in \mathbb{N},\; (1 \le m) \Rightarrow (\exists g \in \operatorname{Fin}\left(3 \cdot m+3\right) \to \left(\operatorname{Fin}\left(3 \cdot m+3\right) \to Hex\right),\; (\operatorname{skew}\left(\operatorname{Fin}\left(3 \cdot m+3\right), g\right)) \land ((\operatorname{flat}\left(\operatorname{P}\left(3 \cdot m+3\right), g, 1\right)) \land (\forall p \in \operatorname{Fin}\left(3 \cdot m+3\right) \to Hex,\; \exists i \in \operatorname{Fin}\left(3 \cdot m+3\right),\; \exists j \in \operatorname{Fin}\left(3 \cdot m+3\right),\; (\operatorname{Adj}\left(\operatorname{P}\left(3 \cdot m+3\right), i, j\right)) \land (\frac{4 \cdot \operatorname{real}\left(m\right)}{3 \cdot \operatorname{real}\left(m\right)+4} \le \operatorname{err}\left(g, p, i, j\right)))))$$
 
@@ -68,7 +92,7 @@ $$\forall m \in \mathbb{N},\; (1 \le m) \Rightarrow (\exists g \in \operatorname
 
 The length-three gain is two thirds in every coordinate except the initial index modulo three, where it is minus four thirds. A length-two gain averages the current and previous length-three gains. Adjacent gains vanish. Sum the residuals along each of the three length-three residue classes, taking its corresponding coordinate. The zero coordinate sums at the two middle endpoints leave four adjacent-edge differences. If M bounds the residuals, the resulting inequality is four times m at most three times m plus four, multiplied by M.
 
-**Theorem 1.6 (Supremum over path lengths).**
+**Theorem 1.8 (Supremum over path lengths).**
 
 $$\operatorname{sup}\left((n:\mathbb{N} \mapsto \operatorname{CBan}\left(n, 3\right))\right) = \frac{4}{3}$$
 
@@ -80,7 +104,7 @@ $$\operatorname{sup}\left((n:\mathbb{N} \mapsto \operatorname{CBan}\left(n, 3\ri
 
 Here CBan is the infimum of nonnegative uniform reconstruction coefficients at unit defect for the indicated path power. The causal formula supplies a common upper bound. The planar lower bounds approach it as the residue classes lengthen.
 
-**Definition 1.7 (The clique-four coefficient).**
+**Definition 1.9 (The clique-four coefficient).**
 
 $$S = \operatorname{inf}\left(\operatorname{Good}\right)$$
 
@@ -92,7 +116,7 @@ $$S = \operatorname{inf}\left(\operatorname{Good}\right)$$
 
 Good is the set of nonnegative real coefficients giving a uniform potential bound at unit triangle defect for every finite chordal graph of clique number at most four and every real Banach target. S is the infimum of Good.
 
-**Theorem 1.8 (The clique-four interval).**
+**Theorem 1.10 (The clique-four interval).**
 
 $$(\frac{4}{3} \le S) \land ((S \le \frac{72537}{50000}) \land (\frac{72537}{50000} < \frac{3}{2}))$$
 
@@ -114,5 +138,7 @@ Every admissible coefficient bounds the finite hexagonal examples because these 
 - Truth anchor: `D5/S3/Combinatorics/Graph/Chordal/ThreeTreeBanachSharpBounds.pathPowerThree_banach_lower_four_thirds`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Chordal/ThreeTreeBanachSharpBounds.pathPowerThree_banach_sup_four_thirds`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Chordal/ThreeTreeBanachSharpBounds.pathPowerThree_banach_upper_four_thirds`
+- Truth anchor: `D5/S3/Combinatorics/Graph/Chordal/ThreeTreeBanachSharpBounds.pathPowerThree_causal_potential`
+- Truth anchor: `D5/S3/Combinatorics/Graph/Chordal/ThreeTreeBanachSharpBounds.pathPowerThree_causal_potential_error`
 - Dependency: [D5/S3/Combinatorics/Graph/Chordal/EliminationForest](EliminationForest.md)
 - Dependency: [D5/S3/Combinatorics/Graph/Chordal/SimplicialAndIntervalPotential](SimplicialAndIntervalPotential.md)
