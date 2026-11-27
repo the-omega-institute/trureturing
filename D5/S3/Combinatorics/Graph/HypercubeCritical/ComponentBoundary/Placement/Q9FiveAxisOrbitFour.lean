@@ -14,7 +14,7 @@ namespace D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Placemen
 
 set_option maxHeartbeats 0 in
 set_option maxRecDepth 50000 in
-replay_five_axis_case 4 inputSatisfied impossible 18239559042205298535
+replay_five_axis_case 4 inputSatisfied impossible 3655872253828109303
   (include_str "../../../../../../../Evidence/D5/S3/Combinatorics/Graph/HypercubeCritical/ComponentBoundary/Placement/Q9FiveAxisOrbitFour.result.json")
 
 #print axioms impossible

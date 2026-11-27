@@ -172,7 +172,7 @@ elab "replay_five_axis_case_two " satisfied:ident impossible:ident fingerprint:n
       addDecl <| .thmDecl {name := impossibleName, levelParams := [], type, value}
 
 set_option maxHeartbeats 0 in
-replay_five_axis_case_two inputSatisfied impossible 13171248004244952123
+replay_five_axis_case_two inputSatisfied impossible 5725599280514972879
   (include_str "../../../../../../../Evidence/D5/S3/Combinatorics/Graph/HypercubeCritical/ComponentBoundary/Placement/Q9FiveAxisOrbitTwo.result.json")
 
 #print axioms impossible
