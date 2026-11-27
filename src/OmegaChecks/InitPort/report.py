@@ -110,10 +110,14 @@ def check_coverage(official):
             raise ValueError(f"uncertified representative quotient counterexample for {owner}/{name}")
         if refuter:
             target = path or name
-            suffix = {"Quotient.sound": "refuteSound", "instSubsingletonSquash": "refuteSquash"}.get(target)
+            decision = target == "Quotient.decidableEq"
+            suffix = {"Quotient.sound": "refuteSound", "instSubsingletonSquash": "refuteSquash",
+                      "Quotient.decidableEq": "refutePositiveDecision"}.get(target)
+            expected_kind = "definition" if path or decision else "theorem"
             if (owner != "Init.Core" or not suffix or certified_model != (target, refuter) or
                     refuter != "OmegaChecks.InitBoundaries.RepresentativeQuotient." + suffix or
-                    (path and path != "Quotient.sound") or (not path and row["kind"] != "theorem") or
+                    (path and path != "Quotient.sound") or row["kind"] != expected_kind or
+                    (decision and (row.get("logicalConsequence") != "funext" or not row.get("requiredBehavior"))) or
                     row.get("unsafe") or row.get("partial") or port or witness or strict or runtime or endpoint or argument):
                 raise ValueError(f"inconsistent representative quotient counterexample for {owner}/{name}")
         if runtime and (axiom or witness or not row.get("unsafe") or
@@ -176,7 +180,7 @@ def verify_complete(official, product, reductions, unresolved):
                          f"{reductions} checked axiom reductions, {runtime} unmatched sites with observed conflicts for pure replacements, "
                          f"{endpoints} official statements with choice-valued equality endpoints, "
                          f"{formations} official statements requiring an axiom to supply a quotient argument, "
-                         f"{models} statements or required paths refuted in the representative quotient model. "
+                         f"{models} statements, required paths or computations refuted in the representative quotient model. "
                          f"Examples: {examples}. See init-gaps.tsv.")
     missing_native = [(row["module"], row["name"]) for row in official["declarations"]
                       if row["matchingNameAndModule"] and row.get("strictNativeSignature") is False]

@@ -219,6 +219,20 @@ class CoverageTest(unittest.TestCase):
                     with self.assertRaisesRegex(ValueError, "uncertified transport path"):
                         check_coverage(inventory(row) | (certificates | {"certifiedTransportPaths": []}))
 
+    def test_quotient_decision_counterexample_requires_its_computation(self):
+        name = "Quotient.decidableEq"
+        proof = "OmegaChecks.InitBoundaries.RepresentativeQuotient.refutePositiveDecision"
+        row = site("Init.Core", name, kind="definition", logicalConsequence="funext",
+                   requiredBehavior="true on the distinct representatives", representativeRefuter=proof)
+        certificate = {"certifiedRepresentativeRefutations": [["Init.Core", name, name, proof]]}
+        self.assertEqual(check_coverage(inventory(row) | certificate), (0, []))
+        plain = row.copy()
+        del plain["representativeRefuter"]
+        self.assertEqual(check_coverage(inventory(plain)), (0, [("Init.Core", name)]))
+        for changed in ({"requiredBehavior": None}, {"kind": "theorem"}, {"logicalConsequence": "False"}):
+            with self.subTest(changed=changed), self.assertRaisesRegex(ValueError, "inconsistent representative"):
+                check_coverage(inventory(row | changed) | certificate)
+
     def test_strict_choice_requires_a_checked_target_and_an_unimplemented_site(self):
         row = site("Init.System.ST", "ST.Prim.Ref.get", strictImpliesAxiom="Classical.choice.{1}",
                    strictSelectionWitness="OmegaStrictReference.ST.Prim.Ref.get")

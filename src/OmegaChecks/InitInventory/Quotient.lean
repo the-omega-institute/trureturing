@@ -276,22 +276,33 @@ public theorem refuteSound
 public theorem refuteSquash (law : ∀ {α : Type}, Subsingleton α) : False :=
   Bool.noConfusion ((@law Bool).allEq false true)
 
+/-- In the representative interpretation, every equality decision on the two Booleans
+must answer false, even when the setoid relates every pair. -/
+public theorem refutePositiveDecision
+    (classify : ∀ {α : Type} {s : Setoid α} [∀ a b : α, Decidable (s.r a b)], DecidableEq α)
+    (positive : @decide (false = true)
+      (@classify Bool (Setoid.trivial Bool) (fun _ _ => isTrue trivial) false true) = true) : False :=
+  Bool.noConfusion (@of_decide_eq_true _
+    (@classify Bool (Setoid.trivial Bool) (fun _ _ => isTrue trivial) false true) positive)
+
 open Lean
 
 private def primitives : List (Name × Name) :=
   [(``Quot, ``carrier), (``Quot.mk, ``point), (``Quot.ind, ``induction), (``Quot.lift, ``lift)]
 
-private def interpret (official : Environment) (type : Expr) : Expr := Id.run do
+private def expand (env : Environment) (type : Expr) (names : List Name) : Expr := Id.run do
   let mut e := type
-  -- Unfold in dependency order, directly from the pin. All remaining constants
-  -- of these two statements are shared with the quotient-free kernel.
-  for name in [``Squash, ``Quotient.mk, ``Quotient] do
+  for name in names do
     e := e.replace fun t => do
       let .const n levels := t | none
       guard (n == name)
-      let ci ← official.find? name
+      let ci ← env.find? name
       return ci.instantiateValueLevelParams! levels
-  return e.replace fun t => do
+  return e
+
+private def interpret (official : Environment) (type : Expr) : Expr :=
+  let e := expand official type [``Squash, ``Quotient.mk, ``Quotient]
+  e.replace fun t => do
     let .const n levels := t | none
     let (_, target) ← primitives.find? (·.1 == n)
     return mkConst target levels
@@ -316,6 +327,7 @@ public def refuter? (owner name : Name) : Option Name := do
   guard (owner == `Init.Core)
   if name == ``Quotient.sound then some ``refuteSound
   else if name == ``instSubsingletonSquash then some ``refuteSquash
+  else if name == ``Quotient.decidableEq then some ``refutePositiveDecision
   else none
 
 /-- Check the interpreted primitive signatures and the Bool counterexample against
@@ -323,11 +335,27 @@ the physical statement of the selected declaration. Replay every term of this
 argument in an environment that does not contain the quotient primitives. -/
 public def certify (official witnesses : Environment) (source : ConstantInfo) (refuter : Name) : IO Unit := do
   let some proof := witnesses.find? refuter | throw <| IO.userError s!"missing {refuter}"
-  unless source.isTheorem && source.numLevelParams == 1 do
+  let decision := source.name == ``Quotient.decidableEq
+  unless (if decision then source matches .defnInfo _ else source.isTheorem) && source.numLevelParams == 1 do
     throw <| IO.userError s!"unexpected signature at {source.name}"
   let type := interpret official (source.type.instantiateLevelParams source.levelParams [.one])
+  let expected ← if decision then do
+    let some observation := witnesses.find? ``QuotientDecision.officialPositive
+      | throw <| IO.userError "missing equality decision observation"
+    let equation := expand witnesses observation.type [``QuotientDecision.point, ``QuotientDecision.interval]
+    let some (_, lhs, rhs) := equation.eq? | throw <| IO.userError "expected an observation equation"
+    unless rhs.isConstOf ``Bool.true && lhs.getUsedConstantsAsSet.contains source.name do
+      throw <| IO.userError "expected positive observation of the pinned equality decision"
+    let .ok observed := Kernel.whnf official {} lhs | throw <| IO.userError "unreducible equality decision"
+    unless observed.equal rhs do throw <| IO.userError "unexpected pinned equality decision"
+    let translated := interpret official equation
+    let decisionVar := mkFVar ⟨`representativeEqualityDecision⟩
+    let abstracted := (translated.replace fun t =>
+      if t == mkConst source.name [.one] then some decisionVar else none).abstract #[decisionVar]
+    pure <| Expr.forallE `classify type (.forallE `positive abstracted (mkConst ``False) .default) .default
+  else pure <| Expr.forallE .anonymous type (mkConst ``False) .default
   let clean ← replayBoundaryDependencies official witnesses (refuter :: ``lift_mk :: ``induction_mk ::
-    primitives.map Prod.snd ++ type.getUsedConstantsAsSet.toList)
+    primitives.map Prod.snd ++ expected.getUsedConstantsAsSet.toList)
   if primitives.any fun p => clean.contains p.1 then
     throw <| IO.userError "representative interpretation still depends on native quotients"
   for (original, replacement) in primitives do
@@ -339,7 +367,6 @@ public def certify (official witnesses : Environment) (source : ConstantInfo) (r
     if original == ``Quot.ind || original == ``Quot.lift then
       (Meta.MetaM.run' (checkComputation clean dst)).toIO'
         {fileName := "<quotient representative computation>", fileMap := default} {env := clean}
-  let expected := Expr.forallE .anonymous type (mkConst ``False) .default
   if let .error _ := Kernel.check clean {} expected then
     throw <| IO.userError s!"ill-formed counterexample for {source.name}"
   unless Kernel.isDefEqGuarded clean {} proof.type expected do
