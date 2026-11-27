@@ -1,0 +1,499 @@
+import D5.S3.Quantum.Semigroups.WuCubicOperatorNormalization
+import D5.S3.Quantum.Semigroups.WuCubicTranslationEnergy
+import D5.S3.Quantum.Divergence.GibbsCubicSignedMoment
+import D5.S3.Quantum.Divergence.GibbsCubicJensenAbsorption
+import Mathlib.Analysis.Calculus.Deriv.MeanValue
+
+/-! The derivative of the Wu cubic deficit along conditioned scalar translations. -/
+
+compile_only_with_mathlib
+
+set_option autoImplicit false
+set_option relaxedAutoImplicit false
+
+noncomputable section
+
+open Matrix Set
+open scoped BigOperators ComplexOrder MatrixOrder
+
+namespace D5.S3.Quantum.Semigroups.WuCubicConditionedTranslation
+
+open WuCubicOperatorBridge (D G GInv Mat Occupation)
+open WuCubicOperatorNormalization (operatorDeficit)
+open WuCubicTranslationEnergy (base baseEntry sandwich translate cubicEnergy V V₁
+  cubicEnergy_hasDerivAt_degree cubicEnergy_deriv_ge)
+open WuRepeatedMiddleCubic (alpha)
+open D5.S3.Quantum.Divergence.GibbsCubicTranslationEntropy
+  (cubicEntropy spectralRatio spectralWeight)
+open D5.S3.Quantum.Divergence.GibbsCubicSignedMoment
+  (spectralPair_centeredMoments spectralPair_squareEntropy_le)
+open D5.S3.Quantum.Divergence.GibbsCubicJensenAbsorption (focal_cubicEntropy_slope)
+open D5.S3.Quantum.Divergence.SpectralCeilingRelativeEntropy
+  (overlap trace_cfc_product overlap_weighted_row)
+open private G_pow_six GInv_mul_G G_mul_GInv rootScale rootRatio_sq rootValue
+  rootScale_pos rootValue_pos from D5.S3.Quantum.Semigroups.WuCubicOperatorBridge
+open private gibbsOccupation gibbsLow gibbsHigh from
+  D5.S3.Quantum.Semigroups.WuRepeatedMiddleCubic
+open private base_diagonal sandwich_translate from
+  D5.S3.Quantum.Semigroups.WuCubicTranslationEnergy
+open private sum_normSq_eq_trace from D5.S3.Quantum.Divergence.GibbsCubicJensenAbsorption
+
+/-- The embedded translate is `G r * translate A t * G r`. -/
+def embedded (r : ℝ) (A : Mat) (t : ℝ) : Mat := t • base r + sandwich r A
+
+/-- The signed third central moment of the spectral pair law. -/
+def C (r : ℝ) (A : Mat) : ℝ := ((sandwich r A) ^ 3).trace.re
+
+/-- The Hilbert–Schmidt residual in the compensated Jensen gap. -/
+def residual (r : ℝ) (A : Mat) (t : ℝ) : Mat :=
+  let M := embedded r A t
+  let S := (base r * M ^ 2).trace.re
+  M - (((M ^ 3).trace.re / S : ℝ) : ℂ) • base r
+
+/-- The actual Hermitian spectrum lies in an enclosure of positive upper endpoint
+and lower-to-upper ratio at least `2/3`. -/
+def Conditioned (M : Mat) : Prop :=
+  ∃ (hM : M.IsHermitian) (mmin mmax : ℝ),
+    0 < mmax ∧ (2 / 3 : ℝ) ≤ mmin / mmax ∧
+      ∀ i, hM.eigenvalues i ∈ Icc mmin mmax
+
+private theorem posDef_of_spectral_bounds {M : Mat} (hM : M.IsHermitian)
+    {mmin mmax : ℝ} (hmmax : 0 < mmax) (hρ : (2 / 3 : ℝ) ≤ mmin / mmax)
+    (hbounds : ∀ i, hM.eigenvalues i ∈ Icc mmin mmax) : M.PosDef := by
+  have hmmin := (mul_pos (by norm_num : (0 : ℝ) < 2 / 3) hmmax).trans_le
+    ((le_div_iff₀ hmmax).mp hρ)
+  exact hM.posDef_iff_eigenvalues_pos.mpr fun i => hmmin.trans_le (hbounds i).1
+
+/-- The thermal endpoints of `B = G²`, in ordinary-trace normalization. -/
+def bmin (r : ℝ) : ℝ := rootScale r ^ 2
+
+def bmax (r : ℝ) : ℝ := bmin r * r ^ 2
+
+theorem bmin_pos {r : ℝ} (hr : 1 ≤ r) : 0 < bmin r :=
+  pow_pos (rootScale_pos (zero_le_one.trans hr)) 2
+
+theorem bmax_div_bmin {r : ℝ} (hr : 1 ≤ r) : bmax r / bmin r = r ^ 2 := by
+  rw [bmax, mul_comm, mul_div_cancel_right₀ _ (bmin_pos hr).ne']
+
+private theorem baseEntry_levels {r : ℝ} (hr : 1 ≤ r) (i : Occupation) :
+    baseEntry r i = ![bmin r, bmin r * r, bmin r * r, bmax r] (finProdFinEquiv i) := by
+  obtain ⟨i, j⟩ := i
+  fin_cases i <;> fin_cases j <;>
+    simp [baseEntry, rootValue, finProdFinEquiv, bmin, bmax, mul_pow,
+      rootRatio_sq (zero_le_one.trans hr)]
+
+private theorem base_spectrum (r : ℝ) : spectrum ℝ (base r) = Set.range (baseEntry r) := by
+  ext x
+  rw [base_diagonal, ← spectrum.algebraMap_mem_iff ℂ, spectrum_diagonal]
+  change ((x : ℂ) ∈ Set.range (fun i => (baseEntry r i : ℂ))) ↔ _
+  simp only [Set.mem_range, Complex.ofReal_inj]
+
+/-- Both ends of the thermal enclosure are attained by the physical matrix. -/
+theorem base_spectral_endpoints {r : ℝ} (hr : 1 ≤ r) :
+    IsLeast (spectrum ℝ (base r)) (bmin r) ∧
+      IsGreatest (spectrum ℝ (base r)) (bmax r) := by
+  rw [base_spectrum]
+  have hr2 : r ≤ r ^ 2 := by
+    simpa only [pow_two, one_mul] using
+      mul_le_mul_of_nonneg_right hr (zero_le_one.trans hr)
+  have hlo : bmin r ≤ bmin r * r := by
+    simpa only [mul_one] using mul_le_mul_of_nonneg_left hr (bmin_pos hr).le
+  have hhi : bmin r * r ≤ bmax r := mul_le_mul_of_nonneg_left hr2 (bmin_pos hr).le
+  have hbounds (i : Occupation) : baseEntry r i ∈ Icc (bmin r) (bmax r) := by
+    obtain ⟨i, j⟩ := i
+    rw [baseEntry_levels hr]
+    fin_cases i <;> fin_cases j <;>
+      simp [finProdFinEquiv, hlo, hhi, hlo.trans hhi]
+  constructor
+  · refine ⟨⟨(0, 0), ?_⟩, ?_⟩
+    · simp [baseEntry_levels hr, finProdFinEquiv]
+    · rintro _ ⟨i, rfl⟩
+      exact (hbounds i).1
+  · refine ⟨⟨(1, 1), ?_⟩, ?_⟩
+    · simp [baseEntry_levels hr, finProdFinEquiv]
+    · rintro _ ⟨i, rfl⟩
+      exact (hbounds i).2
+
+private theorem base_posDef {r : ℝ} (hr : 1 ≤ r) : (base r).PosDef := by
+  rw [base_diagonal]
+  exact Matrix.PosDef.diagonal fun i => Complex.zero_lt_real.mpr (pow_pos (rootValue_pos hr i) 2)
+
+private theorem base_bounds {r : ℝ} (hr : 1 ≤ r) (i : Occupation) :
+    (base_posDef hr).isHermitian.eigenvalues i ∈ Icc (bmin r) (bmax r) := by
+  obtain ⟨hl, hu⟩ := base_spectral_endpoints hr
+  have hi := (base_posDef hr).isHermitian.eigenvalues_mem_spectrum_real i
+  exact ⟨hl.2 hi, hu.2 hi⟩
+
+private theorem base_cube {r : ℝ} (hr : 1 ≤ r) : base r ^ 3 = D r := by
+  simpa only [base, ← pow_mul] using G_pow_six hr
+
+private theorem base_cube_trace {r : ℝ} (hr : 1 ≤ r) : (base r ^ 3).trace.re = 1 := by
+  have hmass : gibbsLow r + gibbsHigh r = 1 := by
+    have hr0 : 0 < r := zero_lt_one.trans_le hr
+    unfold gibbsHigh gibbsLow
+    field_simp [(show 0 < 1 + r ^ 3 by positivity).ne']
+  rw [base_cube hr]
+  simp only [D, Matrix.trace_diagonal, Fintype.sum_prod_type, Fin.sum_univ_two,
+    Complex.add_re, Complex.ofReal_re]
+  change gibbsLow r * gibbsLow r + gibbsLow r * gibbsHigh r +
+    (gibbsHigh r * gibbsLow r + gibbsHigh r * gibbsHigh r) = 1
+  calc
+    _ = (gibbsLow r + gibbsHigh r) ^ 2 := by ring
+    _ = 1 := by rw [hmass, one_pow]
+
+private theorem base_center {r : ℝ} (hr : 1 ≤ r) {A : Mat} (hcenter : (D r * A).trace = 0) :
+    (base r ^ 2 * sandwich r A).trace.re = 0 := by
+  have htrace : (base r ^ 2 * sandwich r A).trace = (D r * A).trace := by
+    calc
+      _ = (G r ^ 5 * A * G r).trace := by
+        congr 1
+        unfold base sandwich
+        noncomm_ring
+      _ = _ := by rw [Matrix.trace_mul_cycle, ← pow_succ' (G r) 5, G_pow_six hr]
+  rw [htrace, hcenter, Complex.zero_re]
+
+private theorem embedded_trace_mean {r : ℝ} (hr : 1 ≤ r) {A : Mat}
+    (hcenter : (D r * A).trace = 0) (t : ℝ) :
+    (base r ^ 2 * embedded r A t).trace.re = t := by
+  rw [embedded, mul_add, mul_smul_comm, Matrix.trace_add, Complex.add_re,
+    Matrix.trace_smul, Complex.smul_re, smul_eq_mul, ← pow_succ (base r) 2,
+    base_cube_trace hr, base_center hr hcenter, mul_one, add_zero]
+
+/-- Centering forces any translate proportional to `B` to have zero direction. -/
+theorem residual_trace_pos {r t : ℝ} (hr : 1 ≤ r) {A : Mat}
+    (hcenter : (D r * A).trace = 0) (hA0 : A ≠ 0) :
+    ((residual r A t)ᴴ * residual r A t).trace.re > 0 := by
+  let H := residual r A t
+  let M := embedded r A t
+  let γ : ℝ := (M ^ 3).trace.re / (base r * M ^ 2).trace.re
+  have hH : H ≠ 0 := by
+    intro hz
+    have hM : M = (γ : ℂ) • base r := sub_eq_zero.mp hz
+    have hsmul : (γ : ℂ) • base r = γ • base r := by
+      ext i j
+      simp only [Matrix.smul_apply, Complex.real_smul, smul_eq_mul]
+    rw [hsmul] at hM
+    have hmean := embedded_trace_mean hr hcenter t
+    change (base r ^ 2 * M).trace.re = t at hmean
+    rw [hM, mul_smul_comm, Matrix.trace_smul, Complex.smul_re, smul_eq_mul,
+      ← pow_succ (base r) 2, base_cube_trace hr, mul_one] at hmean
+    have hU : sandwich r A = 0 := by
+      rw [hmean] at hM
+      exact add_left_cancel (hM.trans (add_zero (t • base r)).symm)
+    apply hA0
+    calc
+      A = (GInv r * G r) * A * (G r * GInv r) := by
+        rw [GInv_mul_G hr, G_mul_GInv hr, one_mul, mul_one]
+      _ = GInv r * sandwich r A * GInv r := by simp only [sandwich, mul_assoc]
+      _ = 0 := by rw [hU, mul_zero, zero_mul]
+  change 0 < (Hᴴ * H).trace.re
+  rw [← sum_normSq_eq_trace]
+  apply Finset.sum_pos'
+  · exact fun _ _ => Complex.normSq_nonneg _
+  · have hex : ∃ i j, H i j ≠ 0 := by
+      by_contra! hzero
+      exact hH (Matrix.ext fun i j => hzero i j)
+    obtain ⟨i, j, hij⟩ := hex
+    have hnorm : Complex.normSq (H i j) ≠ 0 := fun h => hij (Complex.normSq_eq_zero.mp h)
+    exact ⟨(i, j), Finset.mem_univ _, lt_of_le_of_ne (Complex.normSq_nonneg _) hnorm.symm⟩
+
+/-- The literal Wu coefficient is positive, including at the tracial endpoint. -/
+theorem alpha_pos {r : ℝ} (hr : 1 ≤ r) : 0 < alpha r := by
+  rcases eq_or_lt_of_le hr with h | h
+  · rw [← h]
+    norm_num [alpha]
+  have hr0 : 0 < r := zero_lt_one.trans h
+  have hnum : 0 < r ^ 2 - 1 := by nlinarith only [h, sq_nonneg (r - 1)]
+  rw [alpha, if_neg (ne_of_gt h)]
+  exact div_pos (mul_pos (by norm_num) hnum) (mul_pos (by positivity) (Real.log_pos h))
+
+private theorem variance_nonneg {r : ℝ} (hr : 1 ≤ r) {A : Mat} (hA : A.IsHermitian) :
+    0 ≤ V r A := by
+  rw [WuCubicTranslationEnergy.V_eq_entries r A hA]
+  refine Finset.sum_nonneg fun i _ => Finset.sum_nonneg fun j _ => ?_
+  have hi : 0 < baseEntry r i := pow_pos (rootValue_pos hr i) 2
+  have hj : 0 < baseEntry r j := pow_pos (rootValue_pos hr j) 2
+  unfold WuCubicTranslationEnergy.pairWeight
+  exact mul_nonneg (by positivity) (Complex.normSq_nonneg _)
+
+private theorem operatorDeficit_translate_eq {r : ℝ} (hr : 1 ≤ r) (A : Mat) (t : ℝ) :
+    operatorDeficit r (translate A t) =
+      cubicEnergy r (translate A t) - alpha r * cubicEntropy (base r) (embedded r A t) := by
+  have hm : sandwich r (translate A t) = embedded r A t := sandwich_translate r A t
+  have hm' : G r * translate A t * G r = embedded r A t := hm
+  unfold operatorDeficit cubicEnergy
+  simp only [hm, hm', cubicEntropy, base_cube hr, Matrix.mul_sub, Matrix.trace_sub,
+    Complex.sub_re] <;> ring
+
+/-- The derivative exists at a conditioned translate, with the signed cubic
+moment and the full positive coefficient of the Hilbert–Schmidt residual. -/
+theorem operatorDeficit_hasDerivAt_conditioned {r t : ℝ} {A : Mat}
+    (hr₀ : 1049 / 1000 ≤ r) (hr₁ : r ≤ 6 / 5) (ht : 0 < t)
+    (hA : A.IsHermitian) (hcenter : (D r * A).trace = 0)
+    (hcond : Conditioned (embedded r A t)) :
+    ∃ d, HasDerivAt (fun s : ℝ => operatorDeficit r (translate A s)) d t ∧
+      (9 / 4 : ℝ) * (2 * V r A - V₁ r A) - alpha r * (6 * V r A + 2 * C r A / t) +
+        3 * alpha r * (bmin r / 18) * ((residual r A t)ᴴ * residual r A t).trace.re ≤ d := by
+  have hr : 1 ≤ r := (by norm_num : (1 : ℝ) ≤ 1049 / 1000).trans hr₀
+  obtain ⟨hHerm, mmin, mmax, hmmax, hρ, hbounds⟩ := hcond
+  let M := embedded r A t
+  have hM : M.PosDef := posDef_of_spectral_bounds hHerm hmmax hρ hbounds
+  have hb := bmin_pos hr
+  have hbmax : bmin r ≤ bmax r := (base_bounds hr (0, 0)).1.trans (base_bounds hr (0, 0)).2
+  have hκ : bmax r / bmin r ≤ 36 / 25 := by
+    rw [bmax_div_bmin hr]
+    calc
+      _ ≤ (6 / 5 : ℝ) ^ 2 := pow_le_pow_left₀ (zero_le_one.trans hr) hr₁ 2
+      _ = _ := by norm_num
+  obtain ⟨_, d, hd, hdupper⟩ := focal_cubicEntropy_slope (base_posDef hr) hM
+    (base_cube_trace hr) hb hbmax hmmax (base_bounds hr) hbounds hκ hρ
+  have hE := spectralPair_squareEntropy_le (base r) (sandwich r A) ht (base_posDef hr)
+    hM.posSemidef (base_cube_trace hr) (base_center hr hcenter)
+  have hgap : d / 3 + (bmin r / 18) * ((residual r A t)ᴴ * residual r A t).trace.re ≤
+      2 * V r A + (2 / (3 * t)) * C r A := by
+    exact (le_sub_iff_add_le.mp hdupper).trans hE
+  have hd' : HasDerivAt (fun s : ℝ => cubicEntropy (base r) (embedded r A s)) d t := by
+    have hshift : HasDerivAt (fun s : ℝ => s - t) 1 t := (hasDerivAt_id t).sub_const t
+    have h := hd.comp_of_eq t hshift (sub_self t).symm
+    have heq : (fun s : ℝ => cubicEntropy (base r) (M + s • base r)) ∘ (fun s => s - t) =
+        fun s => cubicEntropy (base r) (embedded r A s) := by
+      funext s
+      dsimp only [Function.comp_apply, M, embedded]
+      congr 1
+      rw [sub_smul]
+      abel
+    rwa [heq, mul_one] at h
+  have he := cubicEnergy_hasDerivAt_degree hr A hA t
+  have henergy := cubicEnergy_deriv_ge hr A hA hcenter t
+  rw [he.deriv] at henergy
+  refine ⟨_, ?_, ?_⟩
+  · simp_rw [operatorDeficit_translate_eq hr]
+    exact he.sub (hd'.const_mul (alpha r))
+  · have halg : 3 * ((2 / (3 * t)) * C r A) = 2 * C r A / t := by
+      field_simp [ht.ne'] <;> ring
+    have hdupper' : d ≤ 6 * V r A + 2 * C r A / t -
+        3 * ((bmin r / 18) * ((residual r A t)ᴴ * residual r A t).trace.re) := by
+      rw [← halg]
+      linarith only [hgap]
+    have hscaled := mul_le_mul_of_nonneg_left hdupper' (alpha_pos hr).le
+    calc
+      _ = (9 / 4 : ℝ) * (2 * V r A - V₁ r A) -
+          alpha r * (6 * V r A + 2 * C r A / t -
+            3 * ((bmin r / 18) * ((residual r A t)ᴴ * residual r A t).trace.re)) := by ring
+      _ ≤ _ := sub_le_sub henergy hscaled
+
+/-- Lower bound on the literal deficit derivative in the residual temperature band. -/
+theorem operatorDeficit_deriv_ge_conditioned {r t : ℝ} {A : Mat}
+    (hr₀ : 1049 / 1000 ≤ r) (hr₁ : r ≤ 6 / 5) (ht : 0 < t)
+    (hA : A.IsHermitian) (hcenter : (D r * A).trace = 0)
+    (hcond : Conditioned (embedded r A t)) :
+    (3 / 2 : ℝ) * V r A - (9 / 4 : ℝ) * V₁ r A - max (C r A) 0 / t +
+        3 * alpha r * (bmin r / 18) * ((residual r A t)ᴴ * residual r A t).trace.re ≤
+      deriv (fun s : ℝ => operatorDeficit r (translate A s)) t := by
+  have hr : 1 ≤ r := (by norm_num : (1 : ℝ) ≤ 1049 / 1000).trans hr₀
+  have hα := alpha_pos hr
+  have hhalf := (WuCubicOccupationTaylor.alpha_bounds_of_one_le hr).2
+  have hV := variance_nonneg hr hA
+  have hquad : alpha r * (6 * V r A) ≤ 3 * V r A := by
+    calc
+      _ ≤ (1 / 2 : ℝ) * (6 * V r A) := mul_le_mul_of_nonneg_right hhalf (by positivity)
+      _ = _ := by ring
+  have hcub : alpha r * (2 * C r A / t) ≤ max (C r A) 0 / t := by
+    have hmax : 0 ≤ max (C r A) 0 := le_max_right _ _
+    calc
+      _ ≤ alpha r * (2 * max (C r A) 0 / t) :=
+        mul_le_mul_of_nonneg_left (div_le_div_of_nonneg_right
+          (mul_le_mul_of_nonneg_left (le_max_left _ _) (by norm_num)) ht.le) hα.le
+      _ ≤ (1 / 2 : ℝ) * (2 * max (C r A) 0 / t) :=
+        mul_le_mul_of_nonneg_right hhalf (by positivity)
+      _ = _ := by ring
+  obtain ⟨d, hd, hbound⟩ := operatorDeficit_hasDerivAt_conditioned hr₀ hr₁ ht hA hcenter hcond
+  rw [hd.deriv]
+  rw [mul_add] at hbound
+  linarith only [hbound, hquad, hcub]
+
+/-- The upper cutoff of the actual spectral pair yields the pointwise signed
+third-moment estimate, even when the cubic moment is negative. -/
+theorem C_le_spectralUpper_sub_mul_variance {r t mmax : ℝ} {A : Mat}
+    (hr : 1 ≤ r) (hcenter : (D r * A).trace = 0) (hmmax : 0 ≤ mmax)
+    (hM : (embedded r A t).IsHermitian) (hupper : ∀ j, hM.eigenvalues j ≤ mmax) :
+    C r A ≤ (mmax / bmin r - t) * V r A := by
+  let hB := base_posDef hr
+  let pi := spectralWeight hB.isHermitian hM
+  let x := spectralRatio hB.isHermitian hM
+  obtain ⟨_, _, hsecond, hthird⟩ := spectralPair_centeredMoments (base r) (sandwich r A) t
+    hB hM (base_cube_trace hr) (base_center hr hcenter)
+  change (∑ p, pi p * (x p - t) ^ 2) = V r A at hsecond
+  change (∑ p, pi p * (x p - t) ^ 3) = C r A at hthird
+  rw [← hthird, ← hsecond, Finset.mul_sum]
+  refine Finset.sum_le_sum fun p _ => ?_
+  have hpi : 0 ≤ pi p :=
+    mul_nonneg (pow_nonneg (hB.eigenvalues_pos p.1).le 3) (sq_nonneg _)
+  have hx : x p ≤ mmax / bmin r :=
+    (div_le_div_of_nonneg_right (hupper p.2) (hB.eigenvalues_pos p.1).le).trans
+      (div_le_div_of_nonneg_left hmmax (bmin_pos hr) (base_bounds hr p.1).1)
+  rw [mul_left_comm (mmax / bmin r - t)]
+  apply mul_le_mul_of_nonneg_left _ hpi
+  calc
+    _ = (x p - t) * (x p - t) ^ 2 := by ring
+    _ ≤ _ := mul_le_mul_of_nonneg_right (sub_le_sub_right hx t) (sq_nonneg _)
+
+private theorem thermal_trace_square {r : ℝ} (hr : 1 ≤ r) :
+    bmin r * (base r ^ 2).trace.re = ((1 + r ^ 2) / (1 + r ^ 3)) ^ 2 := by
+  have hr0 : 0 < r := zero_lt_one.trans_le hr
+  have hg : 0 ≤ gibbsLow r := by unfold gibbsLow; positivity
+  have hpow : bmin r ^ 3 = ((1 + r ^ 3)⁻¹) ^ 2 := by
+    rw [bmin, ← pow_mul]
+    change rootScale r ^ 6 = _
+    rw [rootScale, ← Real.rpow_mul_natCast hg,
+      show (1 / 3 : ℝ) * (6 : ℝ) = (2 : ℕ) by norm_num, Real.rpow_natCast] <;>
+      simp [gibbsLow, one_div]
+  have htrace : (base r ^ 2).trace.re = bmin r ^ 2 * (1 + r ^ 2) ^ 2 := by
+    simp only [base_diagonal, Matrix.diagonal_pow, Pi.pow_apply, ← Complex.ofReal_pow,
+      Matrix.trace_diagonal, Complex.re_sum, Complex.ofReal_re, Fintype.sum_prod_type,
+      Fin.sum_univ_two]
+    simp [baseEntry_levels hr, finProdFinEquiv, bmax] <;> ring
+  rw [htrace, ← mul_assoc, ← pow_succ' (bmin r) 2, hpow, div_eq_mul_inv, mul_pow]
+  exact mul_comm _ _
+
+private theorem thermal_trace_square_ge {r : ℝ} (hr : 1 ≤ r) (hr₁ : r ≤ 6 / 5) :
+    (4 / 5 : ℝ) ≤ bmin r * (base r ^ 2).trace.re := by
+  have hr0 : 0 < r := zero_lt_one.trans_le hr
+  have ha : 0 < 1 + r ^ 2 := by positivity
+  have hb : 0 < 1 + r ^ 3 := by positivity
+  have hrsq : r ^ 2 ≤ (6 / 5 : ℝ) ^ 2 := pow_le_pow_left₀ hr0.le hr₁ 2
+  have hf : r ^ 2 / (1 + r ^ 2) ≤ 36 / 61 := by
+    apply (div_le_iff₀ ha).mpr
+    linarith only [hrsq]
+  have hfactor : (r - 1) * (r ^ 2 / (1 + r ^ 2)) ≤ (1 / 5 : ℝ) * (36 / 61) :=
+    mul_le_mul (by linarith only [hr₁]) hf (by positivity) (by norm_num)
+  have hq : (1 + r ^ 3) / (1 + r ^ 2) = 1 + (r - 1) * (r ^ 2 / (1 + r ^ 2)) := by
+    field_simp [ha.ne'] <;> ring
+  have hqle : (1 + r ^ 3) / (1 + r ^ 2) ≤ 341 / 305 := by
+    rw [hq]
+    linarith only [hfactor]
+  have hsq := pow_le_pow_left₀ (div_nonneg hb.le ha.le) hqle 2
+  have hsq' : (1 + r ^ 3) ^ 2 / (1 + r ^ 2) ^ 2 ≤ (5 / 4 : ℝ) := by
+    rw [← div_pow]
+    exact hsq.trans (by norm_num)
+  have hcross := (div_le_iff₀ (pow_pos ha 2)).mp hsq'
+  rw [thermal_trace_square hr, div_pow]
+  apply (le_div_iff₀ (pow_pos hb 2)).mpr
+  linarith only [hcross]
+
+private theorem spectral_min_mul_trace_square_le {r t mmin : ℝ} {A : Mat}
+    (hr : 1 ≤ r) (hcenter : (D r * A).trace = 0) (hM : (embedded r A t).IsHermitian)
+    (hlower : ∀ j, mmin ≤ hM.eigenvalues j) :
+    mmin * (base r ^ 2).trace.re ≤ t := by
+  let hB := (base_posDef hr).isHermitian
+  let b := hB.eigenvalues
+  let w := overlap hB hM
+  have htrace : (base r ^ 2).trace.re = ∑ i, b i ^ 2 := by
+    rw [← cfc_pow_id (R := ℝ) (base r) 2 hB]
+    exact D5.S3.Resource.LogDet.PathSpectralClassical.trace_cfc_eq_sum (base r) hB _
+  have hmean := trace_cfc_product (base r) (embedded r A t) hB hM (fun z => z ^ 2) id
+  rw [cfc_pow_id (base r) 2 hB, cfc_id ℝ (embedded r A t) hM,
+    embedded_trace_mean hr hcenter] at hmean
+  calc
+    _ = mmin * ∑ i, ∑ j, b i ^ 2 * w i j :=
+      congrArg (mmin * ·) (htrace.trans (overlap_weighted_row hB hM (fun i => b i ^ 2)).symm)
+    _ ≤ ∑ i, ∑ j, b i ^ 2 * hM.eigenvalues j * w i j := by
+      rw [Finset.mul_sum]
+      refine Finset.sum_le_sum fun i _ => ?_
+      rw [Finset.mul_sum]
+      refine Finset.sum_le_sum fun j _ => ?_
+      calc
+        _ ≤ hM.eigenvalues j * (b i ^ 2 * w i j) :=
+          mul_le_mul_of_nonneg_right (hlower j) (mul_nonneg (sq_nonneg _) (sq_nonneg _))
+        _ = _ := by ring
+    _ = t := hmean.symm
+
+/-- In the conditioned band the signed cubic moment divided by `t` is at most
+`7/8` of the ordinary trace variance. -/
+theorem C_div_le_seven_eighths_variance {r t : ℝ} {A : Mat}
+    (hr₀ : 1049 / 1000 ≤ r) (hr₁ : r ≤ 6 / 5) (ht : 0 < t)
+    (hcenter : (D r * A).trace = 0) (hcond : Conditioned (embedded r A t)) :
+    C r A / t ≤ (7 / 8 : ℝ) * V r A := by
+  have hr : 1 ≤ r := (by norm_num : (1 : ℝ) ≤ 1049 / 1000).trans hr₀
+  obtain ⟨hM, mmin, mmax, hmmax, hρ, hbounds⟩ := hcond
+  have hmin := (le_div_iff₀ hmmax).mp hρ
+  have hmean := spectral_min_mul_trace_square_le hr hcenter hM (fun j => (hbounds j).1)
+  have hb := bmin_pos hr
+  have hthermal := thermal_trace_square_ge hr hr₁
+  have htrace : 0 ≤ (base r ^ 2).trace.re := by
+    by_contra! h
+    exact (not_lt_of_ge ((by norm_num : (0 : ℝ) ≤ 4 / 5).trans hthermal))
+      (mul_neg_of_pos_of_neg hb h)
+  have hscaled : (4 / 5 : ℝ) * ((2 / 3 : ℝ) * mmax) ≤ t * bmin r := by
+    calc
+      _ ≤ (bmin r * (base r ^ 2).trace.re) * ((2 / 3 : ℝ) * mmax) :=
+        mul_le_mul_of_nonneg_right hthermal (by positivity)
+      _ = ((2 / 3 : ℝ) * mmax * (base r ^ 2).trace.re) * bmin r := by ring
+      _ ≤ (mmin * (base r ^ 2).trace.re) * bmin r :=
+        mul_le_mul_of_nonneg_right (mul_le_mul_of_nonneg_right hmin htrace) hb.le
+      _ ≤ _ := mul_le_mul_of_nonneg_right hmean hb.le
+  have hR : mmax / bmin r ≤ (15 / 8 : ℝ) * t := by
+    apply (div_le_iff₀ hb).mpr
+    nlinarith only [hscaled]
+  let hB := base_posDef hr
+  have hV : 0 ≤ V r A := by
+    obtain ⟨_, _, hsecond, _⟩ := spectralPair_centeredMoments (base r) (sandwich r A) t
+      hB hM (base_cube_trace hr) (base_center hr hcenter)
+    change (∑ p, spectralWeight hB.isHermitian hM p *
+      (spectralRatio hB.isHermitian hM p - t) ^ 2) = V r A at hsecond
+    rw [← hsecond]
+    exact Finset.sum_nonneg fun p _ => mul_nonneg
+      (mul_nonneg (pow_nonneg (hB.eigenvalues_pos p.1).le 3) (sq_nonneg _)) (sq_nonneg _)
+  apply (div_le_iff₀ ht).mpr
+  calc
+    _ ≤ (mmax / bmin r - t) * V r A :=
+      C_le_spectralUpper_sub_mul_variance hr hcenter hmmax.le hM (fun j => (hbounds j).2)
+    _ ≤ ((15 / 8 : ℝ) * t - t) * V r A :=
+      mul_le_mul_of_nonneg_right (sub_le_sub_right hR t) hV
+    _ = _ := by ring
+
+/-- The derivative is strictly positive in either degree sector, including the
+two threshold equalities. -/
+theorem operatorDeficit_deriv_pos_conditioned {r t : ℝ} {A : Mat}
+    (hr₀ : 1049 / 1000 ≤ r) (hr₁ : r ≤ 6 / 5) (ht : 0 < t)
+    (hA : A.IsHermitian) (hcenter : (D r * A).trace = 0) (hA0 : A ≠ 0)
+    (hcond : Conditioned (embedded r A t))
+    (hdegree : V₁ r A ≤ (5 / 18 : ℝ) * V r A ∨
+      (C r A ≤ 0 ∧ V₁ r A ≤ (2 / 3 : ℝ) * V r A)) :
+    0 < deriv (fun s : ℝ => operatorDeficit r (translate A s)) t := by
+  have hr : 1 ≤ r := (by norm_num : (1 : ℝ) ≤ 1049 / 1000).trans hr₀
+  have hgap : 0 < 3 * alpha r * (bmin r / 18) * ((residual r A t)ᴴ * residual r A t).trace.re :=
+    mul_pos (mul_pos (mul_pos (by norm_num) (alpha_pos hr))
+      (div_pos (bmin_pos hr) (by norm_num))) (residual_trace_pos hr hcenter hA0)
+  have hmain := operatorDeficit_deriv_ge_conditioned hr₀ hr₁ ht hA hcenter hcond
+  have hbulk : 0 ≤ (3 / 2 : ℝ) * V r A - (9 / 4 : ℝ) * V₁ r A - max (C r A) 0 / t := by
+    rcases hdegree with hdegree | ⟨hC, hdegree⟩
+    · have hc := C_div_le_seven_eighths_variance hr₀ hr₁ ht hcenter hcond
+      have hV := variance_nonneg hr hA
+      have hmax : max (C r A) 0 / t ≤ (7 / 8 : ℝ) * V r A := by
+        rw [div_le_iff₀ ht]
+        exact max_le ((div_le_iff₀ ht).mp hc) (by positivity)
+      linarith only [hdegree, hmax]
+    · rw [max_eq_right hC, zero_div, sub_zero]
+      linarith only [hdegree]
+  exact (add_pos_of_nonneg_of_pos hbulk hgap).trans_le hmain
+
+/-- At fixed residual temperature the literal deficit is strictly increasing
+on an interval of positive, conditioned translations. -/
+theorem operatorDeficit_strictMonoOn_conditioned {r lo hi : ℝ} {A : Mat}
+    (hr₀ : 1049 / 1000 ≤ r) (hr₁ : r ≤ 6 / 5)
+    (hA : A.IsHermitian) (hcenter : (D r * A).trace = 0) (hA0 : A ≠ 0)
+    (hdegree : V₁ r A ≤ (5 / 18 : ℝ) * V r A ∨
+      (C r A ≤ 0 ∧ V₁ r A ≤ (2 / 3 : ℝ) * V r A))
+    (hinterval : ∀ t ∈ Icc lo hi, 0 < t ∧ Conditioned (embedded r A t)) :
+    StrictMonoOn (fun t : ℝ => operatorDeficit r (translate A t)) (Icc lo hi) := by
+  apply strictMonoOn_of_deriv_pos (convex_Icc lo hi)
+  · intro t ht
+    obtain ⟨ht₀, hcond⟩ := hinterval t ht
+    obtain ⟨_, hd, _⟩ := operatorDeficit_hasDerivAt_conditioned hr₀ hr₁ ht₀ hA hcenter hcond
+    exact hd.continuousAt.continuousWithinAt
+  · intro t ht
+    obtain ⟨ht₀, hcond⟩ := hinterval t (interior_subset ht)
+    exact operatorDeficit_deriv_pos_conditioned hr₀ hr₁ ht₀ hA hcenter hA0 hcond hdegree
+
+end D5.S3.Quantum.Semigroups.WuCubicConditionedTranslation
