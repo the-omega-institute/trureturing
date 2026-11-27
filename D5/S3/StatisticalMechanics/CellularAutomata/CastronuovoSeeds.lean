@@ -410,6 +410,7 @@ private theorem positive_seed_cases :
       orbit (ringStep phi) t.val ringSeed i = decodeMask (ringTable t i) := by
     funext u
     obtain ⟨x, y, rfl⟩ := assignment_surjective u
+    dsimp only [ringTable]
     fin_cases t <;> fin_cases i <;> cases x <;> cases y <;> rfl
   constructor
   · refine ⟨5, ringSeed, ⟨by decide, ring_seed_alphabet⟩, ring_seed_simple, ?_⟩
