@@ -33,7 +33,10 @@ internal sealed class OlairezCountDocument : IScribeDocumentDefinition
                 StatementSource.FromAuthor(CountFormula()),
                 AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text("Every source point corresponds to one terminal prefix of length n, and every such prefix recovers one source point. The sum counts the prefixes with multiplicity across states. Taking k = 1 gives the undilated count, and k = 0 gives the singleton at the origin. This resolves the lattice-point alternative of Question 6.1. An explicit Ehrhart coefficient formula remains open here."))),
-                DescribeRole.Theorem),
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("olairez-2026-dihedral-permutohedron-lattice-points"),
+                    ResolutionKind.Proved)),
             Describe.Lean(
                 DescribeId.Create("olairez-count-four-one"),
                 DeclarationHandle.Create(Module + ".recurrence_four_one"),
