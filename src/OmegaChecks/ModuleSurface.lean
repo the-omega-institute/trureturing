@@ -125,6 +125,10 @@ private def checkStructures (port ref : Environment) (owner : Name) (idx : Modul
           (privateToUserName n).replacePrefix `Omega .anonymous
     return n.replacePrefix `Omega .anonymous
   for s in structureExt.getModuleEntries port idx do
+    let some (.inductInfo ind) := port.find? s.structName
+      | throw <| IO.userError s!"registered structure {s.structName} is not an inductive type in {owner}"
+    unless ind.ctors.length == 1 do
+      throw <| IO.userError s!"registered structure {s.structName} must have one constructor in {owner}"
     let some target := getStructureInfo? ref (rename s.structName)
       | throw <| IO.userError s!"unknown public structure {s.structName} in {owner}"
     unless port.getModuleIdxFor? s.structName == some idx &&
@@ -141,11 +145,13 @@ private def checkStructures (port ref : Environment) (owner : Name) (idx : Modul
       unless rename p.structName == q.structName && p.subobject == q.subobject && rename p.projFn == q.projFn do
         throw <| IO.userError s!"structure parent mismatch for {s.structName}.{p.projFn}"
   for (name, info) in projectionFnInfoExt.getModuleEntries port idx do
+    let some (.ctorInfo ctor) := port.find? info.ctorName
+      | throw <| IO.userError s!"projection {name} has no constructor {info.ctorName} in {owner}"
     let some target := ref.getProjectionFnInfo? (rename name)
       | throw <| IO.userError s!"unmatched projection {name} in {owner}"
     unless port.getModuleIdxFor? name == some idx &&
         ref.getModuleIdxFor? (rename name) == ref.getModuleIdx? (counterpart owner) &&
-        port.contains info.ctorName && rename info.ctorName == target.ctorName &&
+        info.i < ctor.numFields && info.numParams == ctor.numParams && rename info.ctorName == target.ctorName &&
         info.numParams == target.numParams && info.i == target.i && info.fromClass == target.fromClass do
       throw <| IO.userError s!"projection metadata mismatch for {name} in {owner}"
 
