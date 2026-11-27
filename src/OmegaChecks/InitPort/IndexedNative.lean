@@ -13,8 +13,12 @@ private def linear (n : Name) : Bool :=
   [`Expr.toPoly.go, `Poly.insert, `Poly.cancelAux, `Poly.norm.go, `Poly.isNum?, `Poly.isZero, `Poly.isNonZero, `instBEqExpr.beq,
    `Poly.toExpr.go].any fun suffix => n == p ++ suffix
 
+private def quotientEliminator (n : Name) : Bool :=
+  [`Quot.hrecOn, `Quotient.hrecOn, `Quotient.lift, `Quotient.liftOn, `Quotient.liftOn₂,
+   `Quotient.lift₂, `Squash.lift].contains n
+
 public def supported (n : Name) : Bool :=
-  linear n || n == `List.mapMonoM ||
+  linear n || quotientEliminator n || n == `List.mapMonoM ||
   [`Lean.Grind.CommRing.Mon.revlexWF, `Lean.Grind.CommRing.Mon.revlexFuel, `Lean.Grind.CommRing.Mon.revlex,
    `Lean.Grind.CommRing.Mon.grevlex, `Lean.Grind.CommRing.Power.revlex,
    `Lean.RArray.getImpl, `Fin.cases, `Fin.induction, `Fin.induction.go, `Fin.inductionOn, `Fin.reverseInduction,
