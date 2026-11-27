@@ -55,6 +55,9 @@ meta import OmegaChecks.InitInventory.EnvelopeOrder
 public import OmegaChecks.InitInventory.Extensionality
 import all OmegaChecks.InitInventory.Extensionality
 meta import OmegaChecks.InitInventory.Extensionality
+public import OmegaChecks.InitInventory.EqualityNormalization
+import all OmegaChecks.InitInventory.EqualityNormalization
+meta import OmegaChecks.InitInventory.EqualityNormalization
 public import OmegaChecks.InitInventory.Logic
 import all OmegaChecks.InitInventory.Logic
 meta import OmegaChecks.InitInventory.Logic
