@@ -52,7 +52,7 @@ private theorem summable_shifted_gaussian {a : ℝ} (ha : 0 < a) (x : ℝ) :
   simp only [Complex.add_re, ← Complex.ofReal_pow, ← Complex.ofReal_mul, Complex.ofReal_re]
   ring
 
-private theorem gaussian_poisson {α : ℝ} (hα : 0 < α) (θ : ℝ) :
+theorem gaussian_poisson {α : ℝ} (hα : 0 < α) (θ : ℝ) :
     (∑' j : ℤ, Complex.exp ((↑(-α * (j : ℝ) ^ 2) : ℂ) +
         (↑((j : ℝ) * θ) : ℂ) * Complex.I)) =
       (↑((1 / Real.sqrt (α / Real.pi)) * ∑' j : ℤ,
