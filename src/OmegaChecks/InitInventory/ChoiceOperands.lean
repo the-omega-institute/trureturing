@@ -4,6 +4,7 @@ import all Init.Classical
 import all Init.WFExtrinsicFix
 import all Init.While
 import all Init.Data.Option.Lemmas
+import all Init.Control.Lawful.MonadAttach.Lemmas
 public import OmegaChecks.InitInventory.Logic
 import all OmegaChecks.InitInventory.Logic
 
@@ -31,6 +32,7 @@ private def fixWitness? : Name → Option Name
 private def congruenceWitness? (operand : Name) : Option Name :=
   match operand with
   | ``Classical.choice => some ``fromChoice
+  | ``Classical.ofNonempty => some ``choiceFromOfNonempty
   | ``Classical.choose => some ``choiceFromChoose
   | ``Exists.choose => some ``choiceFromExistsChoose
   | other => fixWitness? other
