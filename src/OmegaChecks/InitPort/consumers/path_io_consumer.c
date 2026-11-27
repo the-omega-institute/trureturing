@@ -1,5 +1,7 @@
 #include <lean/lean.h>
-#include "strict_nat.h"
+#include "strict_string.h"
+extern size_t strlen(const char *);
+extern int memcmp(const void *, const void *, size_t);
 extern lean_obj_res runtime_initialize_PathIOConsumer(uint8_t);
 extern lean_obj_res omega_test_path_env(lean_obj_arg, lean_obj_arg);
 extern lean_obj_res omega_test_path_create(lean_obj_arg, lean_obj_arg);
@@ -32,26 +34,15 @@ extern lean_obj_res omega_test_line(lean_obj_arg, lean_obj_arg);
 extern lean_obj_res omega_test_put(lean_obj_arg, lean_obj_arg, lean_obj_arg);
 
 static lean_object *encode(const char *s) {
-    const char *end = s;
-    while (*end) ++end;
-    lean_object *xs = lean_box(0);
-    while (end > s) {
-        lean_object *node = lean_alloc_ctor(1, 2, 0);
-        lean_ctor_set(node, 0, omega_nat_from_uint64((unsigned char)*--end));
-        lean_ctor_set(node, 1, xs);
-        xs = node;
-    }
-    return xs;
+    return omega_string_wrap(omega_bytes_from_data((const unsigned char *)s, strlen(s)), 0);
 }
 
-static int text_equals(b_lean_obj_arg bytes, const char *text) {
-    while (!lean_is_scalar(bytes) && *text) {
-        b_lean_obj_arg n = lean_ctor_get(bytes, 0);
-        unsigned value = lean_unbox(n);
-        if (value != (unsigned char)*text++) return 0;
-        bytes = lean_ctor_get(bytes, 1);
-    }
-    return lean_is_scalar(bytes) && !*text;
+static int text_equals(b_lean_obj_arg strict, const char *text) {
+    lean_object *native = omega_string_to_lean(strict);
+    int same = lean_string_size(native) == strlen(text) + 1 &&
+               memcmp(lean_string_cstr(native), text, strlen(text)) == 0;
+    lean_dec(native);
+    return same;
 }
 
 static int path_result(lean_obj_arg out, unsigned tag, const char *path) {
@@ -92,7 +83,7 @@ static int handle_io(const char *path) {
     if (!path_result(omega_test_put(h, encode("héλ界\n"), w), 0, 0)) return 0;
     lean_object *bytes = lean_alloc_ctor(1, 2, 0);
     lean_ctor_set(bytes, 0, lean_box(0));
-    lean_ctor_set(bytes, 1, encode("\xff"));
+    lean_ctor_set(bytes, 1, omega_bytes_from_data((const unsigned char *)"\xff", 1));
     lean_inc(h);
     if (!path_result(omega_test_write(h, bytes, w), 0, 0) ||
         !file_ok(omega_test_flush, h) || !file_ok(omega_test_rewind, h)) return 0;
@@ -104,7 +95,8 @@ static int handle_io(const char *path) {
     if (lean_obj_tag(out)) return 0;
     bytes = lean_ctor_get(out, 0);
     int ok = !lean_is_scalar(bytes) && lean_ctor_get(bytes, 0) == lean_box(0) &&
-        text_equals(lean_ctor_get(bytes, 1), "\xff");
+        !lean_is_scalar(lean_ctor_get(bytes, 1)) && lean_ctor_get(lean_ctor_get(bytes, 1), 0) == lean_box(255) &&
+        lean_ctor_get(lean_ctor_get(bytes, 1), 1) == lean_box(0);
     lean_dec(out);
     return ok;
 }

@@ -1,6 +1,8 @@
 import Lean
+import OmegaChecks.InitPort.NativeState
+meta import OmegaChecks.InitPort.NativeState
 
-open Lean
+open Lean OmegaChecks.InitPort.NativeState
 
 /-- Check the getters in the initialized shared library used by ordinary IR consumers. -/
 unsafe def main (args : List String) : IO Unit := do
@@ -10,10 +12,10 @@ unsafe def main (args : List String) : IO Unit := do
   for (getter, value, expected) in [
       (`Omega.Lean.getGithash, `Omega.Lean.githash, Lean.githash),
       (`Omega.Lean.version.getSpecialDesc, `Omega.Lean.version.specialDesc, Lean.version.specialDesc)] do
-    let get ← IO.ofExcept <| env.evalConst (Unit → List Nat) {} getter
-    let stored ← IO.ofExcept <| env.evalConst (List Nat) {} value
+    let get ← IO.ofExcept <| env.evalConst (Unit → StringRepr) {} getter
+    let stored ← IO.ofExcept <| env.evalConst StringRepr {} value
     let bytes := expected.toUTF8.data.toList.map UInt8.toNat
-    unless get () == bytes && stored == bytes do throw <| IO.userError s!"incorrect pinned {getter} or {value}"
+    unless (get ()).bytes == bytes && stored.bytes == bytes do throw <| IO.userError s!"incorrect pinned {getter} or {value}"
   for (getter, expected) in [(`Omega.Lean.version.getIsRelease, Lean.version.isRelease),
       (`Omega.Lean.Internal.isStage0, Lean.Internal.isStage0 ()),
       (`Omega.Lean.Internal.hasLLVMBackend, Lean.Internal.hasLLVMBackend ())] do

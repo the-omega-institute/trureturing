@@ -1,15 +1,37 @@
 #pragma once
 #include "strict_byte_array.h"
 
-static lean_obj_res omega_string_to_lean(b_lean_obj_arg bytes) {
-    lean_object *array = omega_bytes_to_lean(bytes);
+/* Field zero is the public UTF-8 byte projection. The extra byte records linearity. */
+static lean_obj_res omega_string_wrap(lean_obj_arg bytes, uint8_t marked) {
+    lean_object *text = lean_alloc_ctor(0, 1, 1);
+    lean_ctor_set(text, 0, bytes);
+    lean_ctor_set_uint8(text, sizeof(void *), marked);
+    return text;
+}
+
+static lean_obj_res omega_string_to_lean(b_lean_obj_arg text) {
+    lean_object *array = omega_bytes_to_lean(lean_ctor_get(text, 0));
     lean_object *s = lean_mk_string_from_bytes_unchecked((const char *)lean_sarray_cptr(array), lean_sarray_size(array));
     lean_dec(array);
+    if (lean_ctor_get_uint8(text, sizeof(void *))) s = lean_string_mark_linear(s);
     return s;
 }
 
 static lean_obj_res omega_string_from_lean(b_lean_obj_arg s) {
-    return omega_bytes_from_data((const unsigned char *)lean_string_cstr(s), lean_string_size(s) - 1);
+    lean_object *bytes = omega_bytes_from_data((const unsigned char *)lean_string_cstr(s), lean_string_size(s) - 1);
+    return omega_string_wrap(bytes, lean_string_is_marked_linear(s));
+}
+
+/* Native operations receiving an owned argument must observe the strict reference's exclusivity. */
+static lean_obj_res omega_string_take_native(lean_obj_arg text, lean_object **alias) {
+    lean_object *native = omega_string_to_lean(text);
+    *alias = NULL;
+    if (!lean_is_exclusive(text)) {
+        lean_inc(native);
+        *alias = native;
+    }
+    lean_dec(text);
+    return native;
 }
 
 /* Convert the string field while preserving both byte offsets. The caller owns the new record. */

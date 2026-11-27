@@ -69,7 +69,7 @@ int main(void) {
 #endif
 #ifdef OMEGA_TEST_LITERALS
     lean_object *empty = omega_mixed_empty_string(0);
-    if (empty != lean_box(0)) return 11;
+    if (lean_is_scalar(empty) || lean_ctor_get(empty, 0) != lean_box(0) || lean_ctor_get_uint8(empty, sizeof(void *))) return 11;
     lean_dec(empty);
     const unsigned char nul_latin[] = {0x00, 0xc3, 0xa9};
     const unsigned char cjk_emoji[] = {0xe4, 0xb8, 0xad, 0xf0, 0x9f, 0x99, 0x82};

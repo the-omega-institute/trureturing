@@ -1,15 +1,17 @@
 module
 import Lean
+import OmegaChecks.InitPort.NativeState
+meta import OmegaChecks.InitPort.NativeState
 
 open Lean
 
-private abbrev Bytes := List Nat
-private def encode (s : String) : Bytes := s.toUTF8.data.toList.map fun b => b.toNat
+open OmegaChecks.InitPort.NativeState (StringRepr)
+open OmegaChecks.InitPort.NativeState.StringRepr (encode)
 
 private inductive Status where
   | ok
-  | existsAlready (filename : Option Bytes) (code : Nat) (details : Bytes)
-  | missing (filename : Bytes) (code : Nat) (details : Bytes)
+  | existsAlready (filename : Option StringRepr) (code : Nat) (details : StringRepr)
+  | missing (filename : StringRepr) (code : Nat) (details : StringRepr)
   | other
 deriving BEq
 
@@ -22,10 +24,10 @@ private def unpack (r : Outcome α) : IO α :=
   | .ok a _ => pure a
   | .error _ _ => throw <| IO.userError "unexpected strict path exception"
 
-private abbrev PathOp := Bytes → Unit → Status × Unit
+private abbrev PathOp := StringRepr → Unit → Status × Unit
 
 -- The host interpreter must execute each call at its place in the IO sequence.
-@[noinline] private def perform (op : PathOp) (path : Bytes) : IO Status := do
+@[noinline] private def perform (op : PathOp) (path : StringRepr) : IO Status := do
   let arg ← IO.mkRef path
   return (op (← arg.get) ()).1
 
@@ -35,7 +37,7 @@ private abbrev PathOp := Bytes → Unit → Status × Unit
 
 /-- Strict handles are the reference-counted upstream handles. File contents cross the byte and text encodings. -/
 private unsafe def checkHandle (env : Environment) (file : String) : IO Unit := do
-  let openFile ← IO.ofExcept <| env.evalConst (Bytes → Unit → Outcome IO.FS.Handle) {} `fileOpen
+  let openFile ← IO.ofExcept <| env.evalConst (StringRepr → Unit → Outcome IO.FS.Handle) {} `fileOpen
   let h ← unpack (openFile (encode file) ())
   let unitOp (n : Name) : IO Unit := do
     let act ← IO.ofExcept <| env.evalConst (IO.FS.Handle → Unit → Status × Unit) {} n
@@ -48,19 +50,19 @@ private unsafe def checkHandle (env : Environment) (file : String) : IO Unit := 
   unless ← unpack (← withHandle tryLock h) do throw <| IO.userError "file lock unavailable"
   unitOp `fileUnlock
   unitOp `fileTruncate
-  let put ← IO.ofExcept <| env.evalConst (IO.FS.Handle → Bytes → Unit → Status × Unit) {} `filePut
-  let write ← IO.ofExcept <| env.evalConst (IO.FS.Handle → Bytes → Unit → Status × Unit) {} `fileWrite
+  let put ← IO.ofExcept <| env.evalConst (IO.FS.Handle → StringRepr → Unit → Status × Unit) {} `filePut
+  let write ← IO.ofExcept <| env.evalConst (IO.FS.Handle → List Nat → Unit → Status × Unit) {} `fileWrite
   let text := "héλ界\n"
-  let bytes : Bytes := [0, 255]
+  let bytes : List Nat := [0, 255]
   unless (← withHandle (fun h => put h (encode text)) h).1 == .ok &&
       (← withHandle (fun h => write h bytes) h).1 == .ok do throw <| IO.userError "text or binary write failed"
   unitOp `fileFlush
   unless (← IO.FS.readBinFile file) == text.toUTF8 ++ ByteArray.mk #[0, 255] do
     throw <| IO.userError "bytes on disk differ from strict writes"
   unitOp `fileRewind
-  let getLine ← IO.ofExcept <| env.evalConst (IO.FS.Handle → Unit → Outcome Bytes) {} `fileLine
+  let getLine ← IO.ofExcept <| env.evalConst (IO.FS.Handle → Unit → Outcome StringRepr) {} `fileLine
   unless (← unpack (← withHandle getLine h)) == encode text do throw <| IO.userError "unexpected file line"
-  let read ← IO.ofExcept <| env.evalConst (IO.FS.Handle → Nat → Unit → Outcome Bytes) {} `fileRead
+  let read ← IO.ofExcept <| env.evalConst (IO.FS.Handle → Nat → Unit → Outcome (List Nat)) {} `fileRead
   let readBytes (size : Nat) := withHandle (fun h => read h size) h
   unless (← unpack (← readBytes 0)).isEmpty && (← unpack (← readBytes 9)) == bytes &&
       (← unpack (← readBytes 1)).isEmpty do throw <| IO.userError "wrong binary read or EOF"
@@ -69,13 +71,13 @@ public unsafe def main (args : List String) : IO Unit := do
   let [library, consumer, oldName, newName, file, link, root] := args | throw <| IO.userError "expected library, consumer and fixture paths"
   searchPathRef.set [library, consumer]
   let env ← importModules #[{module := `PathIOConsumer, importAll := true}] {} (level := .private)
-  let getEnv ← IO.ofExcept <| env.evalConst (Bytes → Unit → Option Bytes × Unit) {} `pathEnv
+  let getEnv ← IO.ofExcept <| env.evalConst (StringRepr → Unit → Option StringRepr × Unit) {} `pathEnv
   unless (getEnv (encode "OMEGA_PATH_TEST_VALUE") ()).1 == some (encode "héλ界") &&
       (getEnv (encode "OMEGA_PATH_TEST_ABSENT") ()).1 == none do throw <| IO.userError "wrong environment value"
   let mk ← IO.ofExcept <| env.evalConst PathOp {} `pathCreate
   let rm ← IO.ofExcept <| env.evalConst PathOp {} `pathRemoveDir
   let unlink ← IO.ofExcept <| env.evalConst PathOp {} `pathRemoveFile
-  let rename ← IO.ofExcept <| env.evalConst (Bytes → PathOp) {} `pathRename
+  let rename ← IO.ofExcept <| env.evalConst (StringRepr → PathOp) {} `pathRename
   let old := encode oldName
   let newPath := encode newName
   unless (← perform mk old) == .ok do throw <| IO.userError "strict createDir failed"
@@ -88,14 +90,14 @@ public unsafe def main (args : List String) : IO Unit := do
     unless duplicate == .existsAlready (name.map encode) code.toNat (encode msg) do throw <| IO.userError "changed alreadyExists fields"
   unless (← perform (rename old) newPath) == .ok && (← perform rm newPath) == .ok do
     throw <| IO.userError "rename or directory removal failed"
-  let hardLink ← IO.ofExcept <| env.evalConst (Bytes → PathOp) {} `pathHardLink
+  let hardLink ← IO.ofExcept <| env.evalConst (StringRepr → PathOp) {} `pathHardLink
   let setCwd ← IO.ofExcept <| env.evalConst PathOp {} `pathSetCwd
-  let cwd ← IO.ofExcept <| env.evalConst (Unit → Outcome Bytes) {} `pathCwd
-  let processCwd ← IO.ofExcept <| env.evalConst (Unit → Outcome Bytes) {} `pathProcessCwd
-  let app ← IO.ofExcept <| env.evalConst (Unit → Outcome Bytes) {} `pathApp
-  let tmp ← IO.ofExcept <| env.evalConst (Unit → Outcome Bytes) {} `pathTempDir
-  let canonical ← IO.ofExcept <| env.evalConst (Bytes → Unit → Outcome Bytes) {} `pathReal
-  let entries ← IO.ofExcept <| env.evalConst (Bytes → Unit → Outcome (List (Bytes × Bytes))) {} `pathList
+  let cwd ← IO.ofExcept <| env.evalConst (Unit → Outcome StringRepr) {} `pathCwd
+  let processCwd ← IO.ofExcept <| env.evalConst (Unit → Outcome StringRepr) {} `pathProcessCwd
+  let app ← IO.ofExcept <| env.evalConst (Unit → Outcome StringRepr) {} `pathApp
+  let tmp ← IO.ofExcept <| env.evalConst (Unit → Outcome StringRepr) {} `pathTempDir
+  let canonical ← IO.ofExcept <| env.evalConst (StringRepr → Unit → Outcome StringRepr) {} `pathReal
+  let entries ← IO.ofExcept <| env.evalConst (StringRepr → Unit → Outcome (List (StringRepr × StringRepr))) {} `pathList
   let before := (← IO.currentDir).toString
   unless (← perform setCwd (encode root)) == .ok do throw <| IO.userError "setCurrentDir failed"
   try

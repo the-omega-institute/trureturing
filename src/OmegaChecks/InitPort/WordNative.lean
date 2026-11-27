@@ -708,12 +708,17 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
         for (e, path) in [(source, dom), (strict, `Omega ++ dom)] do
           let some (some f) := impureTrivialStructureInfoExt.find? e path | throw <| IO.userError s!"expected one file path field {path}"
           unless f.fieldIdx == 0 do throw <| IO.userError s!"unexpected file path field {path}"
-      let convert := if dom == `ByteArray then "omega_bytes_to_lean" else "omega_string_to_lean"
-      prepare := prepare ++ s!"  lean_object *string{i} = {convert}({arg});\n"
+      let borrowed := a.borrow || target == "lean_string_get_byte_fast"
+      if dom != `ByteArray && !borrowed then
+        if b.borrow then prepare := prepare ++ s!"  lean_inc({arg});\n"
+        prepare := prepare ++ s!"  lean_object *alias{i};\n  lean_object *string{i} = omega_string_take_native({arg}, &alias{i});\n"
+        cleanup := cleanup ++ s!"  if (alias{i}) lean_dec_ref(alias{i});\n"
+      else
+        let convert := if dom == `ByteArray then "omega_bytes_to_lean" else "omega_string_to_lean"
+        prepare := prepare ++ s!"  lean_object *string{i} = {convert}({arg});\n"
+        if borrowed then cleanup := cleanup ++ s!"  lean_dec(string{i});\n"
+        unless b.borrow do cleanup := cleanup ++ s!"  lean_dec({arg});\n"
       args := args.push s!"string{i}"
-      -- The byte reader's public C primitive borrows both inputs, also for its deprecated alias.
-      if a.borrow || target == "lean_string_get_byte_fast" then cleanup := cleanup ++ s!"  lean_dec(string{i});\n"
-      unless b.borrow do cleanup := cleanup ++ s!"  lean_dec({arg});\n"
     else if dom == `Substring.Raw && a.ty == .object && b.ty == .object then
       hasString := true
       decls := decls.push ((if b.borrow then "b_lean_obj_arg " else "lean_obj_arg ") ++ arg)

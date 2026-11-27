@@ -43,7 +43,7 @@ static int check_text(b_lean_obj_arg a, b_lean_obj_arg b) {
     if (!same_text(omega_test_string_push(omega_string_from_lean(a), lean_box(0x1f642)),
                    lean_string_push(a, 0x1f642))) return 0;
     lean_inc(a);
-    if (!same_text(omega_test_string_utf8(omega_string_from_lean(a)), a)) return 0;
+    if (!same_text(omega_string_wrap(omega_test_string_utf8(omega_string_from_lean(a)), 0), a)) return 0;
     lean_object *start = lean_box(1), *stop = lean_box(3);
     return same_text(omega_test_string_extract(omega_string_from_lean(a), start, stop),
                      lean_string_utf8_extract(a, start, stop));
@@ -109,7 +109,7 @@ int main(void) {
         !check_operations(native, native) || !check_operations(empty_string, empty_string)) return 7;
     lean_dec(empty_string);
     static const unsigned char overlong[] = {0xc0, 0xaf};
-    if (!check_positions(native) || !omega_test_string_valid_bytes(omega_string_from_lean(native)) ||
+    if (!check_positions(native) || !omega_test_string_valid_bytes(omega_bytes_from_data((const unsigned char *)text, sizeof text - 1)) ||
         omega_test_string_valid_bytes(omega_bytes_from_data(overlong, sizeof overlong))) return 10;
     lean_object *s = omega_string_from_lean(native);
     lean_inc(s);
@@ -131,7 +131,7 @@ int main(void) {
     lean_dec(native);
     lean_dec(again);
     if (!same) return 5;
-    lean_object *empty = omega_string_scalars(lean_box(0));
+    lean_object *empty = omega_string_scalars(omega_string_wrap(lean_box(0), 0));
     if (empty != lean_box(0)) return 6;
     lean_dec(empty);
     return 0;

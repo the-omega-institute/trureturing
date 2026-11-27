@@ -27,10 +27,17 @@ LEAN_EXPORT lean_obj_res omega_string_of_list(lean_obj_arg chars) {
 }
 
 LEAN_EXPORT lean_obj_res omega_string_byte_size(b_lean_obj_arg bytes) {
-    return lean_usize_to_nat(omega_bytes_size(bytes));
+    return lean_usize_to_nat(omega_bytes_size(lean_ctor_get(bytes, 0)));
 }
 
-LEAN_EXPORT lean_obj_res omega_string_to_bytes(lean_obj_arg bytes) {
+LEAN_EXPORT lean_obj_res omega_string_of_bytes(lean_obj_arg bytes) {
+    return omega_string_wrap(bytes, 0);
+}
+
+LEAN_EXPORT lean_obj_res omega_string_to_bytes(lean_obj_arg text) {
+    lean_object *bytes = lean_ctor_get(text, 0);
+    lean_inc(bytes);
+    lean_dec(text);
     return bytes;
 }
 

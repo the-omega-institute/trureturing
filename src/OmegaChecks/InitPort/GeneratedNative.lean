@@ -63,7 +63,9 @@ private partial def compileLayoutsInOrder (groups : Array InductiveVal) : CoreM 
   for group in groups do
     let before ← Core.saveState
     try
+      if group.name == `Omega.String then OmegaChecks.InitPort.NativeState.prepareStringLayout
       (← compileDeclsRef.get) group.all.toArray {}
+      if group.name == `Omega.String then OmegaChecks.InitPort.NativeState.finishStringLayout
       for name in group.all do
         unless (monoTypeExt.find? (← getEnv) name).isSome do throwError "no compiled layout for {name}"
     catch ex =>

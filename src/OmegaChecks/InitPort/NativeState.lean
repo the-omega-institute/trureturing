@@ -79,11 +79,29 @@ public def compile (env : Environment) (work : CoreM Unit) : IO Environment := d
   let (_, s) ← work.toIO ctx {env}
   return s.env
 
+/-- Keep the UTF-8 field in slot zero and preserve the boxed calling convention of String. -/
+public def prepareStringLayout : CoreM Unit := do
+  modifyEnv fun env =>
+    let env := trivialStructureInfoExt.insert env `Omega.String none
+    let env := impureTrivialStructureInfoExt.insert env `Omega.String none
+    impureTypeExt.insert env `Omega.String ImpureType.tobject
+
+public def finishStringLayout : CoreM Unit := do
+  let name := `Omega.String.ofByteArray
+  let some layout := ctorLayoutExt.find? (← getEnv) name | throwError "missing string constructor"
+  unless layout.ctorInfo.size == 1 && layout.ctorInfo.ssize == 0 && layout.ctorInfo.usize == 0 &&
+      layout.ctorInfo.cidx == 0 && (layout.fieldInfo matches #[.object 0 _, .erased]) do
+    throwError s!"unexpected string constructor layout {layout.ctorInfo.size} {layout.ctorInfo.ssize} {layout.ctorInfo.usize} {layout.fieldInfo.map (fun f => toString (format f))}"
+  modifyEnv fun env => ctorLayoutExt.insert env name {layout with ctorInfo := {layout.ctorInfo with ssize := 1}}
+
 public def compileLayouts (env : Environment) (name : Name) : IO Environment := do
   let some (.inductInfo ind) := env.find? name | throw <| IO.userError s!"missing inductive {name}"
   let idx := (env.getModuleIdxFor? name).get!
   let contextEnv ← localEnv env env.header.moduleNames[idx]! (#[name] ++ ind.ctors.toArray)
-  compile contextEnv do (← compileDeclsRef.get) #[name] {}
+  compile contextEnv do
+    if name == `Omega.String then prepareStringLayout
+    (← compileDeclsRef.get) #[name] {}
+    if name == `Omega.String then finishStringLayout
 
 public def verify (env : Environment) (n : Name) (args : Array (IR.IRType × Bool))
     (ret : IR.IRType) (symbol : String) : IO Unit := do
@@ -117,10 +135,23 @@ public def checkStrictBytes (env : Environment) : IO Unit := do
   unless cons.ctorInfo.cidx == 1 && cons.ctorInfo.size == 2 && cons.ctorInfo.usize == 0 &&
       cons.ctorInfo.ssize == 0 do throw <| IO.userError "incorrect byte list tag or size"
 
-/-- String currently erases to its UTF-8 byte array. -/
+/-- Matching host layout for the interpreter tests that call strict string code by name. -/
+public structure StringRepr where
+  bytes : List Nat
+  mark : UInt8 := 0
+deriving BEq
+
+public def StringRepr.encode (s : String) : StringRepr := ⟨s.toUTF8.data.toList.map UInt8.toNat, 0⟩
+
+/-- Each string owns a distinct record whose first field is its UTF-8 byte array. -/
 public def checkStrictString (env : Environment) : IO Unit := do
   checkStrictBytes env
-  checkErasedField env `Omega.String
+  unless (impureTrivialStructureInfoExt.find? env `Omega.String) matches some none do
+    throw <| IO.userError "String must preserve its runtime identity"
+  let some ctor := ctorLayoutExt.find? env `Omega.String.ofByteArray | throw <| IO.userError "missing string constructor"
+  unless ctor.ctorInfo.cidx == 0 && ctor.ctorInfo.size == 1 && ctor.ctorInfo.usize == 0 &&
+      ctor.ctorInfo.ssize == 1 && (ctor.fieldInfo matches #[.object 0 _, .erased]) do
+    throw <| IO.userError "unexpected strict String layout"
 
 /-- The native state adapters construct ST.Out with the result followed by the strict world. -/
 public unsafe def installStateLayout (lib : System.FilePath) (env : Environment) : IO Unit := do

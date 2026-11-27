@@ -83,7 +83,7 @@ extension kinds therefore require a correspondence before a port can expose them
 private def supportedExtension (name : Name) : Bool :=
   [-- Compiled interface registrations checked by the port and kernel-interface audits.
    externAttr.ext.name, aliasExtension.name, classExtension.name, Meta.instanceExtension.ext.name, Meta.simpExtension.ext.name, auxRecExt.name, noConfusionExt.name, Meta.completionBlackListExt.name,
-   protectedExt.name, matchPatternAttr.ext.name, Elab.Term.elabAsElim.ext.name, reducibilityCoreExt.name,
+   protectedExt.name, matchPatternAttr.ext.name, Elab.Term.elabAsElim.ext.name, neverExtractAttr.ext.name, reducibilityCoreExt.name,
    privateToUserName structureExt.name, projectionFnInfoExt.name,
    -- Module provenance, compiled representation and kernel bookkeeping in the pinned toolchain.
    `Lean.namespacesExt, `Lean.noncomputableExt, `Lean.Compiler.inlineAttrs, `Lean.exportedAxiomsExt,
@@ -229,6 +229,9 @@ private def checkElaboration (env full : Environment) (reference? : Option Envir
       | `Omega.String.Internal.extract => pure (`OmegaInit.Data.String.Bootstrap, "omega_string_extract")
       | `Omega.String.mk => pure (`OmegaInit.Data.String.Bootstrap, "omega_string_of_list")
       | `Omega.String.append => pure (`OmegaInit.Data.String.Defs, "omega_string_append")
+      | `Omega.String.markLinear => pure (`OmegaInit.Data.String.Defs, "omega_string_mark")
+      | `Omega.String.propagateMark => pure (`OmegaInit.Data.String.Defs, "omega_string_propagate")
+      | `Omega.String.ofByteArray => pure (`OmegaInit.Prelude, "omega_string_of_bytes")
       | `Omega.String.toUTF8 => pure (`OmegaInit.Data.String.Defs, "omega_string_utf8")
       | `Omega.String.data => pure (`OmegaInit.Data.String.Basic, "omega_string_data")
       | `Omega.String.decidableLT => pure (`OmegaInit.Data.String.Basic, "omega_string_dec_lt")
@@ -450,6 +453,8 @@ def check (strict : Environment) (full? : Option Environment := none) : IO (Arra
           throw <| IO.userError s!"protected modifier mismatch for {name} in {official}"
         if hasMatchPatternAttribute strict name && !hasMatchPatternAttribute reference translated then
           throw <| IO.userError s!"unmatched match_pattern attribute for {name} in {official}"
+        if hasNeverExtractAttribute strict name != hasNeverExtractAttribute reference translated then
+          throw <| IO.userError s!"never_extract mismatch for {name} in {official}"
         if Elab.Term.elabAsElim.hasTag strict name && !Elab.Term.elabAsElim.hasTag reference translated then
           throw <| IO.userError s!"unmatched elab_as_elim attribute for {name} in {official}"
         if let some (alias, target) := OmegaChecks.InitCompiler.RootNames.aliasFor? translated then

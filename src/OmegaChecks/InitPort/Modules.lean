@@ -61,7 +61,7 @@ private def elaboratorEntries (source seed : Environment) (idx : ModuleIdx) (own
   let mut env := (← mkEmptyEnvironment).setMainModule owner
   let names (original inherited : Array Name) :=
     NameSet.ofList (inherited ++ (original.map renamed).filter available.contains).toList
-  for attr in #[matchPatternAttr, Elab.Term.elabAsElim] do
+  for attr in #[matchPatternAttr, Elab.Term.elabAsElim, neverExtractAttr] do
     let inherited := (seed.getModuleIdx? owner).map (fun old => attr.ext.getModuleEntries seed old (level := level))
     for name in names (attr.ext.getModuleEntries source idx (level := level)) (inherited.getD #[]) do
       env := attr.ext.addEntry (asyncDecl := name) env name
@@ -89,7 +89,7 @@ private def elaboratorEntries (source seed : Environment) (idx : ModuleIdx) (own
   -- been filtered to this level, so export the assembled tags without filtering again.
   let data ← mkModuleData env .private
   return data.entries.filter fun e =>
-    #[matchPatternAttr.ext.name, Elab.Term.elabAsElim.ext.name, auxRecExt.name, aliasExtension.name].contains e.1
+    #[matchPatternAttr.ext.name, Elab.Term.elabAsElim.ext.name, neverExtractAttr.ext.name, auxRecExt.name, aliasExtension.name].contains e.1
 
 /-- A structure literal needs its field order, inherited projections and binder information. -/
 private def structureEntries (source port : Environment) (idx : ModuleIdx) (owner : Name)
@@ -314,7 +314,7 @@ unsafe def main (args : List String) : IO Unit := do
         !selected.contains e.1 && e.1 != Meta.instanceExtension.ext.name &&
         e.1 != structureExt.name && e.1 != projectionFnInfoExt.name &&
         e.1 != matchPatternAttr.ext.name && e.1 != Elab.Term.elabAsElim.ext.name &&
-        e.1 != auxRecExt.name && e.1 != aliasExtension.name)) ++ replacement ++ instances ++ structures ++ tags
+        e.1 != neverExtractAttr.ext.name && e.1 != auxRecExt.name && e.1 != aliasExtension.name)) ++ replacement ++ instances ++ structures ++ tags
       let mut entries := entries
       if let some compiled := nameCode then
         let generated ← OmegaChecks.InitPort.TypeName.publicCompilerEntries compiled
