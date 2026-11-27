@@ -14,6 +14,8 @@ strata_touched:
   - D5/S3/Topology/SmallPosetSubdivisionCategory
   - D5/S3/Topology/FiniteCategoricalCoverCertificate
   - D5/S3/Topology/SmallAcyclicCategoricalCovers
+  - D5/S3/Topology/ThirteenPointStructuralCategoricalCovers
+  - D5/S3/Topology/SmallSubdivisionCategoricalCovers
   - D5/S3/Topology/CrossedExtremalProfiles
   - D5/S3/Topology/RelativeDerivedContiguity
   - D5/S3/Topology/BarycentricGraphDistance
@@ -767,3 +769,171 @@ at least two. The simplicial and finite-space comparisons transfer
 the bound at the next subdivision. The componentwise bounds add.
 [Question 6.3 and the comparison inequalities](https://arxiv.org/html/2609.39615v1#S6)
 · [Simplicial approximation of homotopies](https://arxiv.org/abs/1701.07612)
+
+## Thirteen-point cores and the first possible counterexamples
+
+Question 6.3 holds through thirteen points. A connected space of
+weak category one has a core whose order complex is mod-two acyclic.
+At thirteen points a core with at most two maxima has an ordinary
+two-cover. With at least three maxima the exhaustive search gives
+12,282 mod-two acyclic core classes. Of these, 12,229 have an ordinary
+two-cover. The other 53 have two categorical induced vertex parts.
+The subdivision transfer turns each partition into a lower
+two-cover of the second subdivision.
+
+In those 53 classes the ordinary category is three in 51 cases and
+four in two. All the mod-two acyclic classes in this census have
+contractible realizations. A spanning tree in the order complex gives
+the edge presentation of its fundamental group. Substituting a
+generator that occurs exactly once in a relator eliminates that
+generator and its relation. These substitutions eliminate every
+generator. Integral elimination in the higher boundary matrices gives
+only unit pivots, so the boundary images are saturated. The mod-two
+homology test then forces zero reduced integral homology. Hurewicz
+and Whitehead give contractibility. This identifies the category
+triples of the 53 classes as (1,2,3) and (1,2,4).
+
+For completeness the census orders the intermediate points by their
+sets of lower and upper extrema, refining ties by a topological
+ordering. It enumerates predecessor ideals within the orders admitted
+by these profiles. Among all labels of the extrema, one minimizes the
+sorted profile rows lexicographically. Swapping a first inverted
+pair of columns in the lower or upper masks decreases this sequence.
+This permits pruning by column order while preserving every
+isomorphism class. Optional opposite-extrema relations never lie in
+a triangle of the order complex. A cycle through an optional relation
+would give nonzero mod-two first homology. Thus the optional
+relations form a tree after contracting the forced components.
+The Euler characteristic fixes their number, and the boundary
+matrices check acyclicity. An unpruned optional-edge search gives
+the same stream of 107,928 labeled presentations. Stable color
+refinement followed by permutations within its classes decides
+isomorphism exactly.
+
+For weak category at least two, ordinary category at most four is
+enough for Question 6.3. The double-strictness classification uses
+a stronger structural comparison. Five or more maxima leave an
+extremal partition into two categorical domains. With four maxima,
+all but the profiles (3,4,6) and (4,4,5), in the order minima, maxima,
+and middle points, also yield this partition. In these last two
+profiles the catalogue of remaining incidence orders has 73 classes.
+The two domains for 72 classes separate the minima from the maxima.
+Adding optional comparisons from minima to maxima then preserves the
+induced orders of both domains and every inequality in their
+contractions. The last order is dual to the face poset of the
+projective plane with K4 as its graph and its three quadrilateral
+cycles as two-cells. Its weak category is three by cup-length and
+dimension. Ordinary category is at most four, so it cannot have
+both gaps strict.
+
+The new Lean module checks the 53 and 72 categorical vertex
+partitions and the lifting under optional opposite-extrema
+comparisons. Enumeration completeness, order isomorphism,
+contractibility, and the exact ordinary-category tests use the
+mathematical and computational arguments above.
+[Question 6.3](https://arxiv.org/html/2609.39615v1#S6)
+
+## A four-cover through forty-one points
+
+Every connected finite poset of at most forty-one points has a
+categorical lower cover by at most four parts after its second
+ordinary subdivision. Thus the factor-two conjecture in this range
+can fail only for a connected component of weak category one.
+
+Pass to a core. Let a, b, and m count its minima, maxima, and
+intermediate points. At most four extrema on either side give the
+result by the principal lower covers and subdivision of the dual.
+Otherwise a,b ≥ 5. Every middle point has at least two minima
+below it and at least two maxima above it. A minimum p and maximum
+q specify two categorical blocks. The first uses all maxima and
+middles above p. The second uses all minima and the remaining
+middles below q. Within each block collapse the middle points
+and the extrema incident to them toward the common bound. The
+other extrema are isolated in the induced block and can move
+independently to an ambient constant.
+
+If the remainder has at most twelve points, two additional
+categorical parts suffice. Every connected core on at most twelve
+points has a two-cover at depth two. When one extrema count is
+three, a popular bound sees all but at most two middle points.
+With at least four extrema on the other side there is at most one
+leftover. When both counts are three the leftover pair shares an
+opposite bound. With at least four extrema on both sides, a common
+bound for all but one middle suffices except for the four-middle
+case with four extrema on each side, handled by the crossed
+matching and cycle argument. The cases of at most two extrema
+use the principal covers and duality. Core retractions preserve
+the depth-two result. For a disconnected remainder, reuse the
+two cover indices across its components and move their constants
+along paths in the connected ambient poset.
+
+To assemble the cover, for each vertex block take the flags of
+chains meeting that block. Intersection with the block retracts
+the chain poset onto its chains. The comparable maps induce
+contiguities after subdivision. Pull back the two lower covers
+of the remainder along this retraction at depth two. Every flag
+is covered since the least chain of the flag meets some block.
+
+Suppose that every choice of p and q leaves at least thirteen
+middles. Greedy averaging leaves at most
+$m(1-2/a)(1-2/b)$. For $s=a+b$, this is at most
+$(41-s)(1-4/s)^2$. That function is below thirteen at $s=22$
+and decreasing thereafter. By duality take $a\le b$, hence
+$a\le10$ and $a\le b\le21-a$. Every minimum meets at most
+$m-\lceil 13b/(b-2)\rceil$ middle points, or a choice of an
+opposite maximum would leave fewer than thirteen. The excess
+of lower incidences over $2m$ is at most
+$(a-2)(41-a-b)-a(13+\lceil26/(b-2)\rceil)$.
+Maximizing over the allowed values of $b$ gives
+$-4,2,6,8,8,0$ for $a=5,6,7,8,9,10$. Check $b=a$ and the
+breakpoints $6,7,8,9,11,15$ in range, since the expression
+decreases between breakpoints.
+
+At most four middles therefore have at least four minima
+below them. With four, their lower profile sizes are four and
+all other sizes are two. With three, the three profiles have
+at least twelve incidences among at most ten minima. Choose
+$p$ below two and $q$ above the remaining one if necessary.
+With one or two, choose $p$ below the first and $q$ above the
+second if necessary. The residual lower profiles now have at
+most two sizes. Points of a fixed size are categorical because
+comparable points have identical lower profiles. Send each
+point to a chosen minimum below it and move the constants of
+its comparability components to one ambient point. Thus the
+residual profiles give the last two blocks.
+[The finite-space category comparisons](https://arxiv.org/html/2609.39615v1#S2)
+
+## Fourteen-point counterexample exclusion
+
+Question 6.3 holds through fourteen points. At weak category one the
+order complex of a connected core is contractible, so it is mod-two
+acyclic. With at most two maxima, principal lower sets already give
+a two-cover. With at least three maxima, the same profile, optional
+comparison, and homology enumeration gives 2,404,458 presentations.
+
+For 2,403,824 of these presentations there is a minimum $p$ and maximum
+$q$ such that every middle point lies above $p$ or below $q$. Put
+the middles above $p$ with all maxima and put the remaining middles with
+all minima. The first induced domain contracts by lowering the assigned
+middles and their incident maxima to $p$. Other maxima are isolated in
+that domain and can move independently along ambient paths. The second
+domain uses the dual contraction toward $q$.
+
+The remaining 634 presentations give 52 isomorphism classes under
+exact directed-graph isomorphism. Each class has two induced categorical
+parts. The Lean checker verifies their 910 order-map changes and
+transfers each partition to a categorical lower two-cover of the
+second ordinary subdivision. The enumeration and isomorphism
+classification are external calculations.
+
+A separate pass deduplicates the full acyclic census by canonical
+order tables and finds 206,265 classes. It constructs ordinary
+two-covers for 204,596 classes and directly verifies categorical
+partitions for the other 1,669. These checks confirm the bound without
+using the common-extrema test to discard classes.
+
+The four-cover above handles
+components of weak category at least two. Passing to cores and adding
+over connected components excludes any counterexample with fewer than
+fifteen points. The unrestricted inequality remains open.
+[Question 6.3](https://arxiv.org/html/2609.39615v1#S6)

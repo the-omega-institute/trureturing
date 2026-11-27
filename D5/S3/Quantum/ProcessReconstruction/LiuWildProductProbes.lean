@@ -276,7 +276,8 @@ structure FinitePOVM (a Ω : Type*) [Fintype a] [DecidableEq a] [Fintype Ω] whe
 def bornMass (E : FinitePOVM a Ω) (A : Matrix a a ℂ) (o : Ω) : ℝ :=
   (E.effect o * A).trace.re
 
-private theorem sum_bornMass (E : FinitePOVM a Ω) (A : Matrix a a ℂ) :
+/-- Summing the Born masses of a complete measurement gives the real trace. -/
+theorem sum_bornMass (E : FinitePOVM a Ω) (A : Matrix a a ℂ) :
     ∑ o, bornMass E A o = A.trace.re := by
   unfold bornMass
   rw [← Complex.re_sum, ← Matrix.trace_sum, ← Finset.sum_mul, E.complete, Matrix.one_mul]
