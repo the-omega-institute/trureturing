@@ -566,7 +566,9 @@ def check_generated_init():
     with tempfile.TemporaryDirectory(prefix="omega-generated-init-") as directory:
         product = Path(directory) / "port"
         run(sys.executable, "-B", SRC / "OmegaChecks/InitPort/build.py", product,
-            "Init.Prelude", "Init.Data.List.Impl", "Init.Data.List.TakeDrop", "Init.Data.Nat.Coprime")
+            "Init.Prelude", "Init.Data.Function", "Init.Data.List.Impl", "Init.Data.List.TakeDrop",
+            "Init.Data.Nat.Coprime")
+        run("lean", "--run", SRC / "OmegaChecks/InitPort/NativeConsumer.lean", product / "lib")
         environment = {**ENV, "LEAN_PATH": str(product / "lib")}
         quotient = """module
 prelude
