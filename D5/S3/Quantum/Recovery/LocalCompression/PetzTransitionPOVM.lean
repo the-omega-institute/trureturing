@@ -49,6 +49,10 @@ variable {b d e : Type*} [Fintype b] [Fintype d] [Fintype e]
 private theorem inner_eq_trace (X Y : Matrix d d ℂ) :
     inner ℂ X Y = (Xᴴ * Y).trace := rfl
 
+private theorem inner_self_eq_frobenius_sq (X : Matrix d d ℂ) :
+    inner ℂ X X = ((‖X‖ ^ 2 : ℝ) : ℂ) :=
+  (inner_eq_trace X X).trans (frobenius_norm_sq_eq_trace X).symm
+
 /-- The two spectral projections, with `true` denoting the positive sign. -/
 def spectralProjector [DecidableEq d] (H : Matrix d d ℂ) : Bool → Matrix d d ℂ
   | true => (1 / 2 : ℝ) • (1 + H)
@@ -104,7 +108,8 @@ private theorem normalizedAmplification_norm [DecidableEq b] [Nonempty b]
   change ‖(Real.sqrt (Fintype.card b : ℝ))⁻¹ • ((1 : Matrix b b ℂ) ⊗ₖ q)‖ ^ 2 = _
   have hI : ‖(1 : Matrix b b ℂ)‖ ^ 2 = (Fintype.card b : ℝ) := by
     apply Complex.ofReal_injective
-    simp [frobenius_norm_sq_eq_trace, Matrix.trace_one]
+    rw [frobenius_norm_sq_eq_trace, Matrix.conjTranspose_one, Matrix.one_mul,
+      Matrix.trace_one, Complex.ofReal_natCast]
   rw [inv_sqrt_smul_norm_sq _ hb, frobenius_sq_kronecker, hI,
     mul_comm (Fintype.card b : ℝ), mul_div_cancel_right₀ _ hb.ne']
 
@@ -157,9 +162,7 @@ private theorem transitionEffect_inner [DecidableEq d] (H : Matrix d d ℂ)
     inner ℂ (transition H o (J q)) (J q) =
         inner ℂ (transition H o (transition H o (J q))) (J q) := by rw [hid]
     _ = inner ℂ (transition H o (J q)) (transition H o (J q)) := hp.isSymmetric _ _
-    _ = _ := by
-      simpa only [Complex.ofReal_pow, transition, LinearMap.mulLeftRight_apply] using
-        (inner_self_eq_norm_sq_to_K (𝕜 := ℂ) (transition H o (J q)))
+    _ = _ := inner_self_eq_frobenius_sq (transition H o (J q))
 
 private theorem transition_povm [DecidableEq d] (H : Matrix d d ℂ)
     (hH : H.IsHermitian) (hHsq : H * H = 1)
@@ -206,7 +209,10 @@ theorem normalized_transition_povm [DecidableEq b] [DecidableEq e] [Nonempty b]
 def normalizedBlockAmplification :
     Matrix e e ℂ →ₗ[ℂ] Matrix (e ⊕ e) (e ⊕ e) ℂ where
   toFun q := (Real.sqrt 2)⁻¹ • Matrix.fromBlocks q 0 0 q
-  map_add' X Y := by simp [smul_add, Matrix.fromBlocks_add]
+  map_add' X Y := by
+    change (Real.sqrt 2)⁻¹ • Matrix.fromBlocks (X + Y) 0 0 (X + Y) =
+      (Real.sqrt 2)⁻¹ • Matrix.fromBlocks X 0 0 X + (Real.sqrt 2)⁻¹ • Matrix.fromBlocks Y 0 0 Y
+    rw [← smul_add, Matrix.fromBlocks_add, add_zero]
   map_smul' z X := by
     simp only [RingHom.id_apply]
     calc
@@ -310,27 +316,33 @@ theorem physical_transition_residual_povm (a : Matrix e e ℂ) (U : Matrix.unita
     have hq : inner ℂ (((1 / 32 : ℂ) • (1 : Matrix e e ℂ →ₗ[ℂ] Matrix e e ℂ)) q) q =
         ((‖q‖ ^ 2 / 32 : ℝ) : ℂ) := by
       rw [LinearMap.smul_apply, Module.End.one_apply, inner_smul_left,
-        inner_self_eq_norm_sq_to_K]
-      rw [show star (1 / 32 : ℂ) = (1 / 32 : ℂ) by norm_num]
+        inner_self_eq_frobenius_sq, starRingEnd_apply, star_div₀, star_one, star_ofNat]
       push_cast <;> ring
     rw [LinearMap.sub_apply, inner_sub_left, hweight, hq, ← Complex.ofReal_sub]
-    exact ⟨by simp, by simpa using sub_nonneg.mpr hbound⟩
+    constructor
+    · rw [RCLike.re_to_complex, Complex.ofReal_re]
+    · simpa only [RCLike.re_to_complex, Complex.ofReal_re] using sub_nonneg.mpr hbound
   have hFpos (o : Bool × Bool) : (fairPairEffect (e := e) o).IsPositive := by
     unfold fairPairEffect
     split
     · exact LinearMap.isPositive_one.smul_of_nonneg (by norm_num [Complex.le_def])
     · exact LinearMap.isPositive_zero
   have hFsum : (∑ o, fairPairEffect (e := e) o) = 1 := by
-    simp [Fintype.sum_prod_type, Fintype.sum_bool, fairPairEffect] <;> module
+    simp only [Fintype.sum_prod_type, Fintype.sum_bool]
+    change ((1 / 2 : ℂ) • (1 : Matrix e e ℂ →ₗ[ℂ] Matrix e e ℂ) + 0) +
+      (0 + (1 / 2 : ℂ) • 1) = 1
+    rw [add_zero, zero_add, ← add_smul, show (1 / 2 : ℂ) + 1 / 2 = 1 by norm_num, one_smul]
   have hRpos (o : Bool × Bool) : (R o).IsPositive := by
     change ((16 / 15 : ℂ) • (E o - (1 / 16 : ℂ) • fairPairEffect o)).IsPositive
     apply LinearMap.IsPositive.smul_of_nonneg _ (by norm_num [Complex.le_def] : (0 : ℂ) ≤ 16 / 15)
     rcases o with ⟨s, t⟩
+    change (E (s, t) - (1 / 16 : ℂ) • (if s = t then (1 / 2 : ℂ) • 1 else 0)).IsPositive
     by_cases h : s = t
     · subst t
-      simpa only [fairPairEffect, if_pos rfl, smul_smul,
-        show (1 / 16 : ℂ) * (1 / 2) = 1 / 32 by norm_num] using hfloor s
-    · simpa only [fairPairEffect, if_neg h, smul_zero, sub_zero] using hEpos (s, t)
+      rw [ite_eq_left rfl, smul_smul, show (1 / 16 : ℂ) * (1 / 2) = 1 / 32 by norm_num]
+      exact hfloor s
+    · rw [ite_eq_right h, smul_zero, sub_zero]
+      exact hEpos (s, t)
   have hRsum : (∑ o, R o) = 1 := by
     change (∑ o, (16 / 15 : ℂ) • (E o - (1 / 16 : ℂ) • fairPairEffect o)) = 1
     rw [← Finset.smul_sum, Finset.sum_sub_distrib, ← Finset.smul_sum, hEsum, hFsum]
@@ -358,8 +370,9 @@ private theorem flagged_transition_blocks [DecidableEq d] (H : Matrix d d ℂ)
   have hproj (u : Bool) :
       spectralProjector (Matrix.fromBlocks H 0 0 (-H)) u =
         Matrix.fromBlocks (spectralProjector H u) 0 0 (spectralProjector H (!u)) := by
-    cases u <;> simp [spectralProjector, hI, sub_eq_add_neg, Matrix.fromBlocks_neg,
-      Matrix.fromBlocks_add, Matrix.fromBlocks_smul]
+    cases u <;> simp only [Bool.not, spectralProjector, hI, sub_eq_add_neg,
+      Matrix.fromBlocks_neg, Matrix.fromBlocks_add, Matrix.fromBlocks_smul,
+      neg_zero, neg_neg, zero_add, smul_zero]
   simp only [transition, LinearMap.mulLeftRight_apply, hproj, Matrix.fromBlocks_multiply,
     Matrix.zero_mul, Matrix.mul_zero, zero_add, add_zero]
 

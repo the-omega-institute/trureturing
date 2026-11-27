@@ -276,14 +276,13 @@ private theorem hasDerivAt_mul_coth {x : ℝ} (hx : 0 < x) :
     funext y
     rw [coth, mul_div_assoc']
   rw [heq]
-  convert h using 1
   have hnum : (1 * Real.cosh x + x * Real.sinh x) * Real.sinh x -
       (x * Real.cosh x) * Real.cosh x = Real.sinh x * Real.cosh x - x := by
     calc
       _ = Real.sinh x * Real.cosh x -
           x * (Real.cosh x ^ 2 - Real.sinh x ^ 2) := by ring
       _ = _ := by rw [Real.cosh_sq_sub_sinh_sq]; ring
-  rw [hnum]
+  simpa only [id_eq, hnum] using h
 
 private theorem strictMonoOn_mul_coth :
     StrictMonoOn (fun x : ℝ => x * coth x) (Set.Ioi 0) := by

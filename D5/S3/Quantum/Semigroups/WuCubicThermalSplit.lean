@@ -1,3 +1,4 @@
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Quantum.Semigroups.WuCubicThermalBohrGap
 import Mathlib.Analysis.Calculus.Deriv.Comp
 import Mathlib.Analysis.Calculus.Deriv.Slope
@@ -44,13 +45,13 @@ private theorem hasDerivAt_g {beta : ℝ} (hbeta : 0 < beta) :
           Real.sinh (beta / 3) ^ 2) / 3) beta := by
     convert (hasDerivAt_mul_coth (x := beta / 3) (by positivity)).comp beta
       ((hasDerivAt_id beta).div_const 3) using 1 <;>
-      (try funext y) <;> simp only [Function.comp_apply] <;> ring
+      (try funext y) <;> (try simp only [Function.comp_apply, id_eq]) <;> ring
   have hsix : HasDerivAt (fun y : ℝ => (y / 6) * coth (y / 6))
       (((Real.sinh (beta / 6) * Real.cosh (beta / 6) - beta / 6) /
           Real.sinh (beta / 6) ^ 2) / 6) beta := by
     convert (hasDerivAt_mul_coth (x := beta / 6) (by positivity)).comp beta
       ((hasDerivAt_id beta).div_const 6) using 1 <;>
-      (try funext y) <;> simp only [Function.comp_apply] <;> ring
+      (try funext y) <;> (try simp only [Function.comp_apply, id_eq]) <;> ring
   have hsum :=
     ((hthree.const_mul (1 / 6 : ℝ)).add (hsix.const_mul (1 / 3 : ℝ)))
   have hsum' : HasDerivAt
@@ -104,21 +105,21 @@ theorem degreeOneCoefficient_hasDerivAt_cap {beta : ℝ} (hbeta : 0 < beta) :
       (capSplitSlope beta) 0 := by
   have hratio : HasDerivAt (fun v : ℝ => g v / g beta)
       (deriv g beta / g beta) beta := by
-    have h := (hasDerivAt_g hbeta).div (hasDerivAt_const beta (g beta))
-      (g_pos hbeta.le).ne'
-    refine h.congr_deriv ?_
-    field_simp [(g_pos hbeta.le).ne'] <;> ring
+    rw [(hasDerivAt_g hbeta).deriv]
+    exact (hasDerivAt_g hbeta).div_const (g beta)
   have hcosh : HasDerivAt (fun v : ℝ => Real.cosh (v / 6))
       (Real.sinh (beta / 6) / 6) beta := by
     convert (Real.hasDerivAt_cosh (beta / 6)).comp beta
       ((hasDerivAt_id beta).div_const 6) using 1 <;>
-      (try funext y) <;> simp only [Function.comp_apply] <;> ring
+      (try funext y) <;> (try simp only [Function.comp_apply, id_eq]) <;> ring
   have hcoeff : HasDerivAt (fun v : ℝ => degreeOneCoefficient beta v)
       (-capSplitSlope beta) beta := by
     have h := ((hcosh.const_mul (9 / 4 : ℝ)).mul
       ((hasDerivAt_const beta (1 : ℝ)).sub hratio))
     refine h.congr_deriv ?_
-    unfold degreeOneCoefficient capSplitSlope
+    unfold capSplitSlope
+    change 9 / 4 * (Real.sinh (beta / 6) / 6) * (1 - g beta / g beta) +
+      9 / 4 * Real.cosh (beta / 6) * (0 - deriv g beta / g beta) = _
     rw [div_self (g_pos hbeta.le).ne']
     ring
   have hshift := hcoeff.comp_of_eq 0
@@ -156,12 +157,13 @@ theorem degreeOneCoefficient_linear_bounds {beta : ℝ} (hbeta : 0 < beta) :
   obtain ⟨epsilon₀, hepsilon₀, hquot₀⟩ :=
     (mem_nhdsGT_iff_exists_Ioo_subset' (show (0 : ℝ) < 1 by norm_num)).mp hquot_mem
   let epsilon := min (epsilon₀ / 2) beta
-  have hepsilon : 0 < epsilon := lt_min (by linarith) hbeta
+  have hepsilon₀_pos : 0 < epsilon₀ := hepsilon₀
+  have hepsilon : 0 < epsilon := lt_min (half_pos hepsilon₀_pos) hbeta
   refine ⟨epsilon, hepsilon, ?_⟩
   intro delta hdelta hdeltaε
   by_cases hdelta_zero : delta = 0
   · subst delta
-    simpa [F, degreeOneCoefficient_at_cap hbeta]
+    simp [degreeOneCoefficient_at_cap hbeta]
   have hdelta_pos : 0 < delta := lt_of_le_of_ne hdelta (Ne.symm hdelta_zero)
   have hdelta_half : delta ≤ epsilon₀ / 2 :=
     hdeltaε.trans (min_le_left _ _)
