@@ -1,10 +1,17 @@
 /- GID: D5/S3/Combinatorics/UnorderedTrees/ForkDecoration
    generality: I
    mirror-B: D5/B/S3/Combinatorics/UnorderedTrees/ForkDecoration
-   mirror-E: none(waiver:unordered-tree-fork-decoration)
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: Normalized leaf decorations classify the actual qualifying unordered rooted trees. -/
+
+/-
+admission_basis: escape-witness
+card_weighted: proof_shape: content; escape_witness: classification.
+The size-preserving equivalence uses actual representatives, and tip symmetry with sorted offsets makes the data unique.
+Live consumers: ForkCount.count_by_arms.
+-/
 
 import D5.S3.Combinatorics.UnorderedTrees.LeafDecoration
 import Mathlib.SetTheory.Cardinal.Finite

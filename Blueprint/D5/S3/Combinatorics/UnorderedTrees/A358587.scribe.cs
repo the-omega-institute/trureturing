@@ -20,12 +20,12 @@ internal sealed class A358587Document : IScribeDocumentDefinition
             AssessedProvenance.FromRepo(Source),
             Blocks(
                 Paragraph(Text(
-                    "For each natural n, Tₙ is the set of classes of parent maps on Fin n under "
+                    "For each natural n, the qualifying set consists of the classes of parent maps on Fin n under "
                     + "root-preserving vertex isomorphisms, restricted to trees whose vertex height "
                     + "equals their number of internal vertices. The children are unordered. "
                     + "A singleton has vertex height one and zero internal vertices.")),
                 Paragraph(Text(
-                    "Pruning the original leaves leaves a unique fork with one short arm. "
+                    "Pruning the original leaves gives a unique fork. At least one arm has length one, and both have length one when c=0. "
                     + "The leaf counts on its spine and tips recover the original isomorphism class. "
                     + "For equal arms the sorted tip counts have the form m+1 and m+d+1, including "
                     + "the diagonal d=0. For unequal arms the two tip counts vary independently. "
@@ -35,44 +35,52 @@ internal sealed class A358587Document : IScribeDocumentDefinition
                     + "series over the integers. The displayed denominator has constant coefficient "
                     + "one. The signed recurrence follows by comparing coefficients above degree "
                     + "seven after multiplication by that denominator."))),
-            DescribeRole.Theorem,
-            new OpenProblemResolutionClaim(
-                ProblemSlugRef.Create("oeis-a358587-unordered-rooted-trees"),
-                ResolutionKind.Proved)))));
+            DescribeRole.Theorem))));
 
     private static Formula ResultFormula()
     {
         var n = F.Id("n");
-        var x = F.Id("x");
-        var set = new Formula.Subscript(F.Id("T"), n);
-        var cardinal = Seq(Operatorname, Grp(F.Id("Finite")), Open, set, Close, Sp, Land, Sp,
-            Count(n), Sp, Eq, Sp, Lvert, Sp, set, Rvert);
-        var coefficients = Seq(Sum, Underscore, Grp(F.Id("k"), Eq, D(0)), Caret, Grp(Infty));
-        var series = Seq(coefficients, Sp, Count(F.Id("k")),
-            new Formula.Power(x, F.Id("k")));
-        var numerator = Seq(new Formula.Power(x, D(5)), Open,
-            new Formula.Power(x, D(2)), Minus, x, Plus, D(1), Close);
+        var k = F.Id("k");
+        var x = F.Id("X");
+        var t = F.Id("T");
+        var set = Seq(OpenBrace, t, Colon, Sp, Call("TreeClass", n), Sp, Mid, Sp,
+            Equal(Call("classHeight", t), Call("classInternalCount", t)), CloseBrace);
+        var sum = new Formula.Subscript(Seq(Sum, Caret, Grp(Infty)), Equal(k, D(0)));
+        var series = Seq(sum, Sp, IntegerCount(k), new Formula.Power(x, k));
+        var numerator = Seq(new Formula.Power(x, D(5)),
+            Parenthesized(Seq(new Formula.Power(x, D(2)), Minus, x, Plus, D(1))));
         var denominator = Seq(
-            new Formula.Power(Seq(Open, x, Minus, D(1), Close), D(2)),
-            Open, x, Plus, D(1), Close,
-            new Formula.Power(Seq(Open, D(2), x, Minus, D(1), Close), D(2)));
+            new Formula.Power(Parenthesized(Seq(x, Minus, D(1))), D(2)),
+            Parenthesized(Seq(x, Plus, D(1))),
+            new Formula.Power(Parenthesized(Seq(D(2), x, Minus, D(1))), D(2)));
         var recurrence = Seq(D(5), Previous(1), Minus, D(7), Previous(2),
             Minus, Previous(3), Plus, D(8), Previous(4), Minus, D(4), Previous(5));
-        return Disp(new Formula.Aligned([
-            Seq(Forall, Sp, n, Sp, InMacro, Sp, Mathbb, Grp(F.Id("N")), Comma, Quad, Amp, cardinal),
-            Seq(Amp, Land, Sp, Count(D(0)), Eq, D(0)),
-            Seq(Amp, Land, Sp, series, Sp, Eq, Sp, new Formula.Fraction(numerator, denominator)),
-            Seq(Amp, Land, Sp, Open, Count(D(1)), Comma, Count(D(2)), Comma,
-                Count(D(3)), Comma, Count(D(4)), Comma, Count(D(5)), Comma,
-                Count(D(6)), Comma, Count(D(7)), Close, Sp, Eq, Sp,
-                Open, D(0), Comma, D(0), Comma, D(0), Comma, D(0), Comma,
-                D(1), Comma, D(4), Comma, D(1, 4), Close),
-            Seq(Amp, Land, Sp, Open, n, Gt, D(7), Sp, Implies, Sp,
-                Count(n), Sp, Eq, Sp, recurrence, Close)
-        ]));
+        var body = new Formula.Aligned([
+            Seq(Amp, Parenthesized(And(Call("Finite", set), Equal(Count(n), Call("ncard", set))))),
+            Seq(Amp, Land, Sp, Equal(Count(D(0)), D(0))),
+            Seq(Amp, Land, Sp, Equal(series, new Formula.Fraction(numerator, denominator))),
+            Seq(Amp, Land, Sp, Parenthesized(Seq(
+                Equal(Count(D(1)), D(0)), Land, Sp, Equal(Count(D(2)), D(0)), Land, Sp,
+                Equal(Count(D(3)), D(0)), Land, Sp, Equal(Count(D(4)), D(0)), Land, Sp,
+                Equal(Count(D(5)), D(1)), Land, Sp, Equal(Count(D(6)), D(4)), Land, Sp,
+                Equal(Count(D(7)), D(1, 4))))),
+            Seq(Amp, Land, Sp, Parenthesized(new Formula.Logic(
+                new Formula.Relation(D(7), FormulaRelationOperator.LessThan, n),
+                FormulaLogicOperator.Implies, Equal(IntegerCount(n), recurrence))))
+        ]);
+        return Disp(new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create("n"),
+            Seq(Mathbb, Grp(F.Id("N"))), Parenthesized(body)));
     }
 
-    private static Formula Count(Formula index) => Seq(F.Id("a"), Open, index, Close);
-
-    private static Formula Previous(byte offset) => Count(Seq(F.Id("n"), Minus, D(offset)));
+    private static Formula Parenthesized(Formula value) => Seq(Left, Open, value, Right, Close);
+    private static Formula Equal(Formula left, Formula right) =>
+        new Formula.Relation(left, FormulaRelationOperator.Equal, right);
+    private static Formula And(Formula left, Formula right) =>
+        new Formula.Logic(left, FormulaLogicOperator.And, right);
+    private static Formula Call(string name, params Formula[] arguments) =>
+        new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. arguments]);
+    private static Formula Count(Formula index) => Call("a", index);
+    private static Formula IntegerCount(Formula index) => Parenthesized(Seq(Count(index),
+        Sp, Colon, Sp, new Formula.Integers()));
+    private static Formula Previous(byte offset) => IntegerCount(Seq(F.Id("n"), Minus, D(offset)));
 }

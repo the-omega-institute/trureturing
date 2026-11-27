@@ -1,18 +1,35 @@
 /- GID: D5/S3/Combinatorics/UnorderedTrees/A358587
    generality: I
    mirror-B: D5/B/S3/Combinatorics/UnorderedTrees/A358587
-   mirror-E: none(waiver:unordered-tree-fork-count)
+   mirror-E: none(waiver:external-open-problem-resolution)
    anchors: [mathlib/module/Mathlib.RingTheory.PowerSeries.WellKnown]
    utility: none
    digest: Wu's generating function and recurrence for actual unordered rooted trees. -/
 
+/-
+admission_basis: open-problem-resolution (#34765; Proved)
+result: proof_shape: content; escape_witness: actual_series;
+  consumers: none (designated external open-problem settlement).
+The exact result packages the actual quotient count, the integer-valued formal
+series identity, the initial values and the cutoff recurrence. Its live proof
+path consumes ForkDecoration.classification and ForkCount.count_by_arms.
+The supporting declarations are retained only when they have live consumers.
+Frozen dependencies through ParentTree (module pins):
+  D5/S1/FixedPoints/TransientTrees/RootedVertexClassification
+    sha256:fe0cf20f4d330be5a426aed58fdb71099864005cd6afbf79b2620c7cf3f8994a
+  D5/S1/FixedPoints/TransientTrees/RootedVertexReconstruction
+    sha256:f075c0c20434bf2e3cfe8d2d7ac8165cc7621f3195c96c0585c0c320e3e704db
+  D5/S1/FixedPoints/RootedTransientTreeClassification
+    sha256:1c160de8c440839266be52882a6259fe4fced39bb165ba7b753494b0c6302a85
+Pinned Mathlib supplies the remaining algebraic and finite-cardinality facts.
+Per-declaration proof shape and live consumers are recorded in the handoff.
+Escape audit remains unfinished under the external open-problem-resolution route.
+-/
+
 import D5.S3.Combinatorics.UnorderedTrees.ForkCount
-import Mathlib.Data.Set.Card
 import Mathlib.RingTheory.PowerSeries.WellKnown
 import Mathlib.RingTheory.PowerSeries.Substitution
 import Mathlib.RingTheory.PowerSeries.Inverse
-import Mathlib.Tactic.Ring
-import Mathlib.Tactic.LinearCombination
 
 /-! Chai Wah Wu's generating function and recurrence for OEIS A358587. -/
 

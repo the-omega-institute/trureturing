@@ -1,15 +1,20 @@
 /- GID: D5/S3/Combinatorics/UnorderedTrees/LeafDecoration
    generality: G
    mirror-B: D5/B/S3/Combinatorics/UnorderedTrees/LeafDecoration
-   mirror-E: none(waiver:unordered-tree-leaf-decoration)
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: Internal trees and leaf fibre cardinalities reconstruct actual unordered rooted trees. -/
 
+/-
+admission_basis: escape-witness
+extendIso: proof_shape: content; escape_witness: assemble.
+The partition of original vertices by internality and leaf parent gives an explicit bijection. Its conjugation with the fibrewise equivalences extends the core map while preserving every parent edge.
+Live consumers: iso_iff_fibres and ForkDecoration.model_surjective.
+-/
+
 import D5.S3.Combinatorics.UnorderedTrees.OneFork
 import Mathlib.Data.Fintype.BigOperators
-import Mathlib.Data.Fintype.Sigma
-import Mathlib.Data.Fintype.EquivFin
 
 /-! Reversible leaf decoration of rooted parent trees. -/
 
@@ -43,7 +48,7 @@ private def assembleVertex {V : Type u} (T : Tree V) :
   | .inr ⟨_, z⟩ => z.val
 
 /-- The vertex partition into internal vertices and original leaves grouped by their parents. -/
-def assemble {V : Type u} (T : Tree V) (hr : Internal T T.root) :
+private def assemble {V : Type u} (T : Tree V) (hr : Internal T T.root) :
     Core T ⊕ (Σ p : Core T, LeafFibre T p) ≃ V :=
   Equiv.ofBijective (assembleVertex T) (by
     constructor
@@ -65,14 +70,8 @@ def assemble {V : Type u} (T : Tree V) (hr : Internal T T.root) :
       · have hxr : x ≠ T.root := fun h => hx (h.symm ▸ hr)
         exact ⟨.inr ⟨⟨T.parent x, ⟨x, hxr, rfl⟩⟩, ⟨x, hx, hxr, rfl⟩⟩, rfl⟩)
 
-@[simp] theorem assemble_internal {V : Type u} (T : Tree V) (hr : Internal T T.root)
-    (p : Core T) : assemble T hr (.inl p) = p.val := rfl
-
-@[simp] theorem assemble_leaf {V : Type u} (T : Tree V) (hr : Internal T T.root)
-    (p : Core T) (z : LeafFibre T p) : assemble T hr (.inr ⟨p, z⟩) = z.val := rfl
-
 /-- An isomorphism of original trees restricts to their internal subtrees. -/
-def restrictIso {V : Type u} {W : Type v} {T : Tree V} {S : Tree W}
+private def restrictIso {V : Type u} {W : Type v} {T : Tree V} {S : Tree W}
     {hr : Internal T T.root} {hs : Internal S S.root} (e : Iso T S) :
     Iso (prune T hr) (prune S hs) where
   equiv := internalEquiv e
@@ -80,7 +79,7 @@ def restrictIso {V : Type u} {W : Type v} {T : Tree V} {S : Tree W}
   parent_eq p := Subtype.ext (e.parent_eq p.val)
 
 /-- Each original leaf fibre is carried bijectively onto the image vertex's fibre. -/
-def leafIso {V : Type u} {W : Type v} {T : Tree V} {S : Tree W}
+private def leafIso {V : Type u} {W : Type v} {T : Tree V} {S : Tree W}
     (e : Iso T S) (p : Core T) : LeafFibre T p ≃ LeafFibre S (internalEquiv e p) :=
   e.equiv.subtypeEquiv (by
     intro x
@@ -130,10 +129,6 @@ theorem iso_iff_fibres {V : Type u} {W : Type v} [Fintype V] [Fintype W]
     obtain ⟨f, _⟩ := extendIso e h
     exact ⟨f⟩
 
-theorem card_assemble {V : Type u} [Fintype V] (T : Tree V) (hr : Internal T T.root) :
-    Fintype.card V = Fintype.card (Core T) + ∑ p : Core T, Fintype.card (LeafFibre T p) := by
-  rw [← Fintype.card_congr (assemble T hr), Fintype.card_sum, Fintype.card_sigma]
-
 /-- The carrier obtained by attaching a finite fibre of fresh leaves at each vertex. -/
 abbrev Inflated {V : Type u} (k : V → ℕ) := V ⊕ (Σ p : V, Fin (k p))
 
@@ -167,7 +162,7 @@ theorem internal_inflate {V : Type u} (T : Tree V) (k : V → ℕ)
     exact ⟨.inl q, fun h => hq.1 (Sum.inl.inj h), congrArg Sum.inl hq.2⟩
   · exact ⟨.inr ⟨p, ⟨0, hk p hp⟩⟩, by simp [inflate], rfl⟩
 
-theorem terminal_inflate {V : Type u} (T : Tree V) (k : V → ℕ) (z : Σ p : V, Fin (k p)) :
+private theorem terminal_inflate {V : Type u} (T : Tree V) (k : V → ℕ) (z : Σ p : V, Fin (k p)) :
     ¬ Internal (inflate T k) (.inr z) := by
   rintro ⟨x, _, h⟩
   cases x <;> cases h

@@ -6,7 +6,7 @@ Deleting all original leaves of a finite rooted tree with an internal root leave
 
 **Definition 1.1 (The internal-vertex subtree).**
 
-$$\operatorname{prune}\left(T, h\right)$$
+$$\forall \left(V: Type\right) \left(T: \operatorname{Tree}\left(V\right)\right) , \left(\forall hr: \operatorname{Internal}\left(T, \operatorname{root}\left(T\right)\right), \left(\operatorname{prune}\left(T, hr\right) \in \operatorname{Tree}\left(\{v: V \mid \operatorname{Internal}\left(T, v\right)\}\right)\right)\right)$$
 
 *Formalization.* `D5/S3/Combinatorics/UnorderedTrees/LeafPruning.prune` (`✓ std3`).
 
@@ -14,11 +14,11 @@ $$\operatorname{prune}\left(T, h\right)$$
 
 *Commentary.*
 
-Assume h says that the root of T has a child. The pruned carrier is precisely the subtype of original internal vertices. Its parent map is the original parent map restricted to this subtype, and its root is the original root. The parent of every nonroot vertex is internal; at the root closure follows from h. Parent iteration commutes with the subtype inclusion, proving that every retained vertex still reaches the root.
+The parent map restricts to the original internal vertices and fixes the original root. Parent iteration commutes with subtype inclusion, so retained vertices still reach the root.
 
 **Theorem 1.2 (The target equality supplies the internal root).**
 
-$$\operatorname{height}\left(T\right)=\operatorname{internalCount}\left(T\right) \to \operatorname{Internal}\left(T, \operatorname{root}\left(T\right)\right)$$
+$$\forall \left(V: Type\right) [\operatorname{Fintype}\left(V\right)] \left(T: \operatorname{Tree}\left(V\right)\right) , \left(\operatorname{height}\left(T\right) = \operatorname{internalCount}\left(T\right) \Rightarrow \operatorname{Internal}\left(T, \operatorname{root}\left(T\right)\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/UnorderedTrees/LeafPruning.qualifying_root` (`✓ std3`). ∎
 
@@ -26,11 +26,11 @@ $$\operatorname{height}\left(T\right)=\operatorname{internalCount}\left(T\right)
 
 *Commentary.*
 
-Vertex-height is positive. Thus equality with the internal-vertex count supplies an internal vertex and one of its nonroot children. On the path from that child to the root, the last nonroot vertex is a child of the root. Consequently every tree satisfying the equality can be pruned on a nonempty rooted carrier; the singleton does not create an exceptional qualifying case.
+Positive vertex-height supplies an internal vertex and a nonroot child. The last nonroot vertex on the path from that child to the root is a child of the root.
 
 **Theorem 1.3 (The exact pruning reduction).**
 
-$$\operatorname{height}\left(T\right)=\operatorname{height}\left(\operatorname{prune}\left(T, h\right)\right)+1 \land (\operatorname{height}\left(T\right)=\operatorname{internalCount}\left(T\right) \iff \operatorname{card}\left(\operatorname{Internal}\left(T\right)\right)=\operatorname{height}\left(\operatorname{prune}\left(T, h\right)\right)+1)$$
+$$\forall \left(V: Type\right) [\operatorname{Fintype}\left(V\right)] \left(T: \operatorname{Tree}\left(V\right)\right) , \left(\forall hr: \operatorname{Internal}\left(T, \operatorname{root}\left(T\right)\right), \left(\operatorname{height}\left(T\right) = \operatorname{height}\left(\operatorname{prune}\left(T, hr\right)\right)+1 \land \left(\operatorname{height}\left(T\right) = \operatorname{internalCount}\left(T\right) \Leftrightarrow \operatorname{card}\left(\{v: V \mid \operatorname{Internal}\left(T, v\right)\}\right) = \operatorname{height}\left(\operatorname{prune}\left(T, hr\right)\right)+1\right)\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/UnorderedTrees/LeafPruning.pruning_reduction` (`✓ std3`). ∎
 
@@ -38,7 +38,7 @@ $$\operatorname{height}\left(T\right)=\operatorname{height}\left(\operatorname{p
 
 *Commentary.*
 
-For every finite vertex type and every rooted parent tree T whose root is internal, pruning lowers vertex-height by exactly one. Depth is unchanged on retained vertices because all parent iterates agree. Every nonroot original vertex lies one level below an internal parent, giving the upper height bound. Conversely each retained vertex has a child one level below it, giving the reverse bound. The pruned vertex cardinality is the original internal-vertex count, so the equality defining the counting problem becomes size of the pruned tree equals its vertex-height plus one.
+Depth is unchanged on retained vertices. Every nonroot vertex lies one level below an internal parent, and each internal vertex has a child one level below it. The pruned vertex cardinality is the original internal-vertex count.
 
 ## References
 

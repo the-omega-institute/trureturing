@@ -7,38 +7,62 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.UnorderedTrees;
 internal sealed class LeafPruningDocument : IScribeDocumentDefinition
 {
     private const string Owner = "D5/S3/Combinatorics/UnorderedTrees/LeafPruning.";
+    private static Formula T => F.Id("T");
+    private static Formula RootInternal => Call("Internal", T, Call("root", T));
+    private static Formula Core => Seq(OpenBrace, F.Id("v"), Colon, Sp, F.Id("V"), Sp, Mid,
+        Sp, Call("Internal", T, F.Id("v")), CloseBrace);
+    private static Formula Pruned => Call("prune", T, F.Id("hr"));
+    private static Formula SizeEquality => Eqn(Call("height", T), Call("internalCount", T));
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Deleting all original leaves of a finite rooted tree with an internal root leaves the actual internal-vertex subtree and lowers vertex-height by one.",
         H("Leaf pruning of actual rooted trees"),
         Blocks(
             Node("prune", "The internal-vertex subtree", "prune",
-                Disp(Call("prune", F.Id("T"), F.Id("h"))),
-                "Assume h says that the root of T has a child. The pruned carrier is precisely the subtype of original internal vertices. Its parent map is the original parent map restricted to this subtype, and its root is the original root. The parent of every nonroot vertex is internal; at the root closure follows from h. Parent iteration commutes with the subtype inclusion, proving that every retained vertex still reaches the root.",
+                WithRoot(new Formula.Relation(Pruned, FormulaRelationOperator.MemberOf, Call("Tree", Core))),
+                "The parent map restricts to the original internal vertices and fixes the original root. Parent iteration commutes with subtype inclusion, so retained vertices still reach the root.",
                 DescribeRole.Definition),
             Node("qualifying", "The target equality supplies the internal root", "qualifying_root",
-                Disp(Seq(Call("height", F.Id("T")), Eq, Call("internalCount", F.Id("T")),
-                    Sp, To, Sp, Call("Internal", F.Id("T"), Call("root", F.Id("T"))))),
-                "Vertex-height is positive. Thus equality with the internal-vertex count supplies an internal vertex and one of its nonroot children. On the path from that child to the root, the last nonroot vertex is a child of the root. Consequently every tree satisfying the equality can be pruned on a nonempty rooted carrier; the singleton does not create an exceptional qualifying case.",
+                new Formula.Logic(SizeEquality, FormulaLogicOperator.Implies, RootInternal),
+                "Positive vertex-height supplies an internal vertex and a nonroot child. The last nonroot vertex on the path from that child to the root is a child of the root.",
                 DescribeRole.Theorem),
-            Node("reduction", "The exact pruning reduction", "pruning_reduction",
-                Disp(Seq(Call("height", F.Id("T")), Eq,
-                    Call("height", Call("prune", F.Id("T"), F.Id("h"))), Plus, D(1),
-                    Sp, Land, Sp, Open,
-                    Call("height", F.Id("T")), Eq, Call("internalCount", F.Id("T")),
-                    Sp, Iff, Sp,
-                    Call("card", Call("Internal", F.Id("T"))), Eq,
-                    Call("height", Call("prune", F.Id("T"), F.Id("h"))), Plus, D(1), Close)),
-                "For every finite vertex type and every rooted parent tree T whose root is internal, pruning lowers vertex-height by exactly one. Depth is unchanged on retained vertices because all parent iterates agree. Every nonroot original vertex lies one level below an internal parent, giving the upper height bound. Conversely each retained vertex has a child one level below it, giving the reverse bound. The pruned vertex cardinality is the original internal-vertex count, so the equality defining the counting problem becomes size of the pruned tree equals its vertex-height plus one.",
+            Node("reduction", "The exact pruning reduction", "pruning_reduction", Reduction(),
+                "Depth is unchanged on retained vertices. Every nonroot vertex lies one level below an internal parent, and each internal vertex has a child one level below it. The pruned vertex cardinality is the original internal-vertex count.",
                 DescribeRole.Theorem))));
 
+    private static Formula Reduction()
+    {
+        var successor = Seq(Call("height", Pruned), Plus, D(1));
+        var criterion = new Formula.Logic(SizeEquality, FormulaLogicOperator.Iff, Eqn(Call("card", Core), successor));
+        return WithRoot(Seq(Eqn(Call("height", T), successor), Sp, Land, Sp, Parenthesized(criterion)));
+    }
+    private static Formula WithRoot(Formula body) => Seq(Forall, Sp, F.Id("hr"), Colon, Sp,
+        RootInternal, Comma, Sp, Parenthesized(body));
+    private static Formula Parenthesized(Formula value) => Seq(Left, Open, value, Right, Close);
+    private static Formula Eqn(Formula left, Formula right) => new Formula.Relation(left, FormulaRelationOperator.Equal, right);
     private static Formula Call(string name, params Formula[] arguments) =>
-        new Formula.Apply(Seq(Operatorname, Grp(F.Id(name))), [.. arguments]);
+        new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. arguments]);
+
+    private static Formula Parameter(string name, Formula type) =>
+        Parenthesized(Seq(F.Id(name), Colon, Sp, type));
+    private static Formula Finite(Formula carrier) =>
+        Seq(OpenBracket, Call("Fintype", carrier), CloseBracket);
+    private static Formula For(Formula body, params Formula[] parameters) =>
+        Seq(Forall, Sp, Seq(parameters.Select(parameter => Seq(parameter, Sp)).ToArray()), Comma, Sp,
+            Parenthesized(body));
+
+    private static Formula Scope(string name, Formula body)
+    {
+        var v = F.Id("V");
+        var carrier = Parameter("V", F.Id("Type"));
+        var tree = Parameter("T", Call("Tree", v));
+        return name == "prune" ? For(body, carrier, tree) : For(body, carrier, Finite(v), tree);
+    }
 
     private static DocumentBlock Node(string id, string title, string declaration,
         Formula formula, string prose, DescribeRole role) =>
         Describe.Lean(DescribeId.Create("leaf-pruning-" + id),
             DeclarationHandle.Create(Owner + declaration), H(title),
-            StatementSource.FromAuthor(formula), AssessedProvenance.FromRepo(),
+            StatementSource.FromAuthor(Disp(Scope(declaration, formula))), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(prose))), role);
 }
