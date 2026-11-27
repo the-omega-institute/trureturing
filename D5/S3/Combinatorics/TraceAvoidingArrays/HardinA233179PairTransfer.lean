@@ -72,9 +72,9 @@ def L (n : ℕ) : ℕ :=
 abbrev Col := Fin 3 × Fin 3 × Fin 3 × Fin 3 × Fin 3 × Fin 3
 def column (c : Col) : Fin 6 → Fin 3 :=
   ![c.1,c.2.1,c.2.2.1,c.2.2.2.1,c.2.2.2.2.1,c.2.2.2.2.2]
-private def compatible (a b : Col) : Prop :=
+def compatible (a b : Col) : Prop :=
   ∀ r s : Fin 6, (r.val ≤ s.val + 1 ∧ s.val ≤ r.val + 1) → column a r ≠ column b s
-private instance instDecidableCompatible (a b : Col) : Decidable (compatible a b) :=
+instance instDecidableCompatible (a b : Col) : Decidable (compatible a b) :=
   inferInstanceAs (Decidable (∀ _ _, _ → _))
 def orbit (c : Col) : Fin 122 :=
   if column c 1 = column c 0 then (if column c 2 = column c 0 then (if column c 3 = column c 0 then
@@ -140,7 +140,7 @@ private def liveClass : Fin 122 → Fin 51 :=
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 34, 35, 36, 37, 38, 0, 0, 0, 0, 39, 40, 0, 41, 42, 43, 0,
     44, 45, 0, 0, 0, 0, 46, 47, 48, 49, 50, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     0, 0, 0, 0, 0, 0, 0, 0]
-private def cls (c : Col) : Fin 51 := liveClass (orbit c)
+def cls (c : Col) : Fin 51 := liveClass (orbit c)
 def representatives : Fin 122 → Col :=
   ![(0,0,0,0,0,0), (0,0,0,0,0,1), (0,0,0,0,1,0), (0,0,0,0,1,1), (0,0,0,0,1,2), (0,0,0,1,0,0),
     (0,0,0,1,0,1), (0,0,0,1,0,2), (0,0,0,1,1,0), (0,0,0,1,1,1), (0,0,0,1,1,2), (0,0,0,1,2,0),
@@ -163,7 +163,7 @@ def representatives : Fin 122 → Col :=
     (0,1,2,1,1,1), (0,1,2,1,1,2), (0,1,2,1,2,0), (0,1,2,1,2,1), (0,1,2,1,2,2), (0,1,2,2,0,0),
     (0,1,2,2,0,1), (0,1,2,2,0,2), (0,1,2,2,1,0), (0,1,2,2,1,1), (0,1,2,2,1,2), (0,1,2,2,2,0),
     (0,1,2,2,2,1), (0,1,2,2,2,2)]
-private def Q : Matrix (Fin 51) (Fin 51) ℤ :=
+def Q : Matrix (Fin 51) (Fin 51) ℤ :=
   ![![0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], ![0, 2, 2, 2, 2, 2, 2, 2, 2, 0, 2,
     2, 0, 2, 2, 2, 2, 2, 2, 0, 0, 0, 2, 2, 0, 2, 2, 0, 0, 2, 2, 2, 2, 0, 2, 2, 0, 2, 2, 2, 2, 2, 2,
@@ -336,7 +336,7 @@ private theorem representative_rows : ∀ i : Fin 122, ∀ s : Fin 51,
   apply Finset.sum_congr rfl
   intro c _
   split_ifs <;> simp_all
-private theorem quotient_rows (b : Col) (s : Fin 51) :
+theorem quotient_rows (b : Col) (s : Fin 51) :
     (∑ c : Col, if compatible b c ∧ cls c = s then (1 : ℤ) else 0) = Q (cls b) s := by
   obtain ⟨e, he⟩ := class_rep b
   calc
@@ -669,7 +669,7 @@ private def W : Fin 26 → Fin 51 → ℤ :=
     216283073911199614490507150, 120455948732445168403168094, 139506210310967936325381176,
     92759048358730299106292287, 62195594820347592919227965, 6198429361788033191115545,
     62195594820347592919227965, 85733922097233700915693103]]
-private def coefficients : Fin 24 → ℤ := ![420, -906, -9672, 19997, 81406, -166928, -312941, 690388,
+def coefficients : Fin 24 → ℤ := ![420, -906, -9672, 19997, 81406, -166928, -312941, 690388,
     557502, -1524689, -363389, 1850161, -155206, -1225001, 333692, 426135, -161805, -75471, 32291,
     7168, -2896, -365, 103, 7]
 private theorem table_zero : W 0 = (1 : Fin 51 → ℤ) := by exact List.ofFn_inj.mp rfl
@@ -679,7 +679,7 @@ private theorem table_steps : ∀ k : Fin 25, W k.succ = Q.mulVec (W k.castSucc)
 private theorem powers_table : ∀ k : Fin 26,
     (Q^k.val).mulVec (1 : Fin 51 → ℤ) = W k :=
   TransferMatrix.tabulatedPowers Q 25 W table_zero table_steps
-private theorem power_polynomial : (Q^(1+24)).mulVec (1 : Fin 51 → ℤ) =
+theorem power_polynomial : (Q^(1+24)).mulVec (1 : Fin 51 → ℤ) =
     ∑ j : Fin 24, coefficients j • (Q^(1+j.val)).mulVec (1 : Fin 51 → ℤ) := by
   rw [show 1+24 = (25 : Fin 26).val from rfl, powers_table]
   have hh (j : Fin 24) : (Q^(1+j.val)).mulVec (1 : Fin 51 → ℤ) =
