@@ -168,4 +168,74 @@ theorem digit_eq_zero_iff {m h : ℕ} (hh : 2 ≤ h) {u v : Fin m → ℕ}
     · simp [hi] at hu hv
       simp [digit, hu, hv]
 
+/-- The signed radix code with base one more than the width of the digit interval. -/
+def radixCode {m : ℕ} (h : ℕ) (u v : Fin m → ℕ) : ℤ :=
+  ∑ i, digit h u v i * ((h : ℤ) ^ 2 + 1) ^ i.val
+
+private theorem digit_bounds {m h : ℕ} (hh : 2 ≤ h) {u v : Fin m → ℕ}
+    (huv : (∑ i, (u i + v i)) = h) (i : Fin m) :
+    -((h : ℤ) - 1) * h ≤ digit h u v i ∧ digit h u v i ≤ h := by
+  have hlocal : u i + v i ≤ h := by
+    rw [← huv]
+    exact Finset.single_le_sum (f := fun j => u j + v j)
+      (fun _ _ => Nat.zero_le _) (Finset.mem_univ i)
+  have hu : (u i : ℤ) ≤ h := by omega
+  have hv : (v i : ℤ) ≤ h := by omega
+  have hcoef : 0 ≤ (h : ℤ) - 1 := by omega
+  unfold digit
+  constructor
+  · linarith [mul_le_mul_of_nonneg_left hv hcoef, Int.natCast_nonneg (u i)]
+  · linarith [mul_nonneg hcoef (Int.natCast_nonneg (v i))]
+
+private theorem natAbs_lt_of_digit_bounds {h : ℕ} {x y : ℤ}
+    (hx : -((h : ℤ) - 1) * h ≤ x ∧ x ≤ h)
+    (hy : -((h : ℤ) - 1) * h ≤ y ∧ y ≤ h) :
+    (x - y).natAbs < ((h : ℤ) ^ 2 + 1).natAbs := by
+  have hB : 0 ≤ (h : ℤ) ^ 2 + 1 := by positivity
+  have hcast : ((x - y).natAbs : ℤ) < (((h : ℤ) ^ 2 + 1).natAbs : ℤ) := by
+    rw [Int.ofNat_natAbs_of_nonneg hB]
+    rcases le_total 0 (x - y) with hp | hn
+    · rw [Int.ofNat_natAbs_of_nonneg hp]
+      linarith [hx.2, hy.1]
+    · rw [Int.ofNat_natAbs_of_nonpos hn]
+      linarith [hy.2, hx.1]
+  exact_mod_cast hcast
+
+/-- For multiplicities of weight `h`, equality of codes is equality of digit vectors. -/
+theorem radixCode_eq_iff {m h : ℕ} (hh : 2 ≤ h) {u v u' v' : Fin m → ℕ}
+    (huv : (∑ i, (u i + v i)) = h) (huv' : (∑ i, (u' i + v' i)) = h) :
+    radixCode h u v = radixCode h u' v' ↔ digit h u v = digit h u' v' := by
+  have hB : 1 < (h : ℤ) ^ 2 + 1 := by
+    have hh' : 0 < (h : ℤ) := by omega
+    have hsq : 0 < (h : ℤ) ^ 2 := pow_pos hh' _
+    omega
+  constructor
+  · exact signed_radix_injective hB _ _ (fun i =>
+      natAbs_lt_of_digit_bounds (digit_bounds hh huv i) (digit_bounds hh huv' i))
+  · intro heq
+    simp only [radixCode, heq]
+
+/-- The zero radix code occurs exactly for the multiplicities of a prescribed point. -/
+theorem radixCode_eq_zero_iff {m h : ℕ} (hh : 2 ≤ h) {u v : Fin m → ℕ}
+    (huv : (∑ i, (u i + v i)) = h) :
+    radixCode h u v = 0 ↔ ∃ j : Fin m, ∀ i,
+      u i = (if i = j then h - 1 else 0) ∧ v i = (if i = j then 1 else 0) := by
+  rw [← digit_eq_zero_iff hh huv]
+  have hh' : 0 < (h : ℤ) := by omega
+  have hB : 1 < (h : ℤ) ^ 2 + 1 := by
+    have hsq : 0 < (h : ℤ) ^ 2 := pow_pos hh' _
+    omega
+  have hz : -((h : ℤ) - 1) * h ≤ (0 : ℤ) ∧ (0 : ℤ) ≤ h := by
+    constructor
+    · have hcoef : 0 ≤ (h : ℤ) - 1 := by omega
+      exact mul_nonpos_of_nonpos_of_nonneg (neg_nonpos.mpr hcoef) hh'.le
+    · exact hh'.le
+  constructor
+  · intro hc
+    apply signed_radix_injective hB (digit h u v) (0 : Fin m → ℤ)
+      (fun i => natAbs_lt_of_digit_bounds (digit_bounds hh huv i) hz)
+    simpa [radixCode] using hc
+  · intro hd
+    simp [radixCode, hd]
+
 end D5.S3.Arith.NathansonProblem15
