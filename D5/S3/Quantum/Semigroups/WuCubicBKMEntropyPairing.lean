@@ -20,7 +20,8 @@ open D5.S3.Quantum.Recovery.BKMPowerPullback (omega_cube)
 open D5.S3.Quantum.Recovery.BKMRelativeDensity (omega continuous_mpow)
 open D5.S3.Quantum.Recovery.BKMSpectralVariance
   (logMean logMean_self logMean_mul_logRatio omegaLinear omega_trace_eq_trace_mul)
-open WuCubicHotInnerDiagonalHessian (entropyPairKernel shiftHessian physical_trace_quadratic_sub_charges)
+open WuCubicHotInnerDiagonalHessian
+  (entropyPairKernel shiftHessian physical_trace_quadratic_sub_charges)
 
 variable {n : Type*} [Fintype n] [DecidableEq n]
 
@@ -42,13 +43,13 @@ private theorem logMean_mul_logTangentCoefficient {x y : ℝ} (hx : 0 < x) (hy :
     logMean x y * logTangentCoefficient x y = 3 := by
   by_cases hxy : x = y
   · subst y
-    rw [logMean_self hx, logTangentCoefficient, if_pos rfl]
+    rw [logMean_self hx, logTangentCoefficient, ite_eq_left rfl]
     calc
       _ = 3 * (x / x) := by ring
       _ = _ := by rw [div_self hx.ne', mul_one]
   · have hmean : logMean x y * (Real.log x - Real.log y) = x - y := by
       simpa only [Real.log_div hx.ne' hy.ne'] using logMean_mul_logRatio hx hy
-    rw [logTangentCoefficient, if_neg hxy]
+    rw [logTangentCoefficient, ite_eq_right hxy]
     calc
       _ = 3 * (logMean x y * (Real.log x - Real.log y) / (x - y)) := by ring
       _ = _ := by rw [hmean, div_self (sub_ne_zero.mpr hxy), mul_one]
@@ -59,8 +60,9 @@ private theorem omega_diagonal_entry (x : n → ℝ) (hx : ∀ i, 0 < x i)
   let B := diagℝ x
   have hB : B.PosDef := Matrix.posDef_diagonal_iff.mpr (fun k => by exact_mod_cast hx k)
   have hpow (s : ℝ) : mpow B s = diagℝ (fun k => x k ^ s) := by
-    simpa only [mpow, B, Function.comp_apply] using
-      Matrix.cfc_diagonal_real (𝕜 := ℂ) x (fun a : ℝ => a ^ s)
+    rw [mpow]
+    refine (Matrix.cfc_diagonal_real (𝕜 := ℂ) x (fun a : ℝ => a ^ s)).trans ?_
+    exact congrArg Matrix.diagonal (funext fun _ => rfl)
   have hc := continuous_mpow B hB
   have hsub : Continuous (fun s : ℝ => 1 - s) := continuous_const.sub continuous_id
   have hint : IntervalIntegrable (fun s : ℝ => mpow B s * X * mpow B (1 - s)) volume 0 1 :=
@@ -88,7 +90,8 @@ theorem omega_cube_logTangent (x : n → ℝ) (hx : ∀ i, 0 < x i) (U : Matrix 
       Complex.real_smul, Complex.ofReal_ofNat]
   change omega (B ^ 3) (logTangent x U) = cubicTangent B U
   rw [omega_cube hB, homega, cubicTangent]
-  simp only [mul_smul_comm, smul_mul_assoc, ← smul_add, smul_smul, one_div] <;> norm_num
+  simp only [mul_smul_comm, smul_mul_assoc, ← smul_add, smul_smul, one_div]
+  norm_num
 
 private theorem cubicTangent_diagonal_entry (x : n → ℝ) (U : Matrix n n ℂ) (i j : n) :
     cubicTangent (diagℝ x) U i j = ((x i ^ 2 + x i * x j + x j ^ 2 : ℝ) : ℂ) * U i j := by
@@ -101,7 +104,7 @@ private theorem logTangentCoefficient_comm (x y : ℝ) :
   by_cases hxy : x = y
   · subst y
     rfl
-  · simp only [logTangentCoefficient, if_neg hxy, if_neg hxy.symm]
+  · simp only [logTangentCoefficient, ite_eq_right hxy, ite_eq_right (Ne.symm hxy)]
     rw [show Real.log y - Real.log x = -(Real.log x - Real.log y) by ring,
       show y - x = -(x - y) by ring, mul_neg, neg_div_neg_eq]
 
@@ -109,9 +112,10 @@ private theorem entropyPairKernel_factor {x y : ℝ} (hx : 0 < x) (hy : 0 < y) :
     (x ^ 2 + x * y + y ^ 2) * logTangentCoefficient x y = entropyPairKernel x y := by
   by_cases hxy : x = y
   · subst y
-    rw [logTangentCoefficient, if_pos rfl, entropyPairKernel, if_pos rfl]
-    field_simp [hx.ne'] <;> ring
-  · rw [logTangentCoefficient, if_neg hxy, entropyPairKernel, if_neg hxy,
+    rw [logTangentCoefficient, ite_eq_left rfl, entropyPairKernel, ite_eq_left rfl]
+    field_simp [hx.ne']
+    ring
+  · rw [logTangentCoefficient, ite_eq_right hxy, entropyPairKernel, ite_eq_right hxy,
       Real.log_div hx.ne' hy.ne']
     ring
 
@@ -146,6 +150,7 @@ theorem physical_trace_quadratic_eq_half_pairing (x : n → ℝ) (hx : ∀ i, 0 
   rw [trace_cubicTangent_mul_logTangent x hx U hU]
   exact physical_trace_quadratic_sub_charges x hx U hU
 
+omit [DecidableEq n] in
 private theorem trace_real_smul (c : ℝ) (A : Matrix n n ℂ) :
     (c • A).trace.re = c * A.trace.re := by
   rw [Matrix.trace_smul, Complex.smul_re, smul_eq_mul]
@@ -167,7 +172,8 @@ theorem centered_bkm_pairing (x : n → ℝ) (hx : ∀ i, 0 < x i)
         L.trace.re ^ 2 / ρ.trace.re := by
   intro B ρ L V c L₀ V₀
   have hρ : ρ = diagℝ (fun i => x i ^ 3) := by
-    simp only [ρ, B, Matrix.diagonal_pow, Complex.ofReal_pow] <;> rfl
+    simp only [ρ, B, Matrix.diagonal_pow, Complex.ofReal_pow]
+    rfl
   have hx₃ (i : n) : 0 < x i ^ 3 := pow_pos (hx i) _
   have hpos : ρ.PosDef := by
     rw [hρ]
@@ -179,7 +185,7 @@ theorem centered_bkm_pairing (x : n → ℝ) (hx : ∀ i, 0 < x i)
     by_cases hij : i = j
     · subst j
       simp [logMean_self (hx₃ i)]
-    · simp [Matrix.one_apply, Matrix.diagonal_apply, hij]
+    · simp [hij]
   have hL : omega ρ V = L := omega_cube_logTangent x hx U
   have hρV : (ρ * V).trace = L.trace := by
     rw [← omega_trace_eq_trace_mul hpos, hL]
