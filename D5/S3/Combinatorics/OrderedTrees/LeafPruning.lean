@@ -758,7 +758,7 @@ theorem count_eq_zero_of_lt_five (n : ℕ) (hn : n < 5) : count n = 0 := by
   obtain ⟨d, b, l, r, _, _, _, hcoord, _⟩ := actual_count_coordinates t hmatch
   omega
 
-/-- Size and free-gap count for every decoration of a skeleton of size `u + 3`. -/
+/-- Size and free-gap count for a decoration whose skeleton belongs to `skeletons u`. -/
 theorem decoration_weight (d : Decoration) (u : ℕ) (hs : d.skeleton ∈ skeletons u) :
     d.inflate.vertices = u + 5 + d.gapTotal ∧ d.slots = 2 * u + 5 := by
   obtain ⟨hvertices, hexcess⟩ := ((skeletons_spec u).1 d.skeleton).mp hs
