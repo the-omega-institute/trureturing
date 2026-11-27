@@ -246,6 +246,76 @@ LEAN_EXPORT lean_obj_res omega_io_symlink_metadata(b_lean_obj_arg path, lean_obj
     return unary_path(lean_io_symlink_metadata, path, world, strict_metadata);
 }
 
+extern lean_obj_res lean_io_process_spawn(lean_obj_arg);
+extern lean_obj_res lean_io_process_child_wait(b_lean_obj_arg, b_lean_obj_arg);
+extern lean_obj_res lean_io_process_child_try_wait(b_lean_obj_arg, b_lean_obj_arg);
+extern lean_obj_res lean_io_process_child_kill(b_lean_obj_arg, b_lean_obj_arg);
+extern lean_obj_res lean_io_process_child_take_stdin(b_lean_obj_arg, lean_obj_arg);
+extern uint32_t lean_io_process_child_pid(b_lean_obj_arg, lean_obj_arg);
+
+static lean_obj_res process_option(b_lean_obj_arg value, decoder convert) {
+    if (lean_is_scalar(value)) return lean_box(0);
+    lean_object *some = lean_alloc_ctor(1, 1, 0);
+    lean_ctor_set(some, 0, convert(lean_ctor_get(value, 0)));
+    return some;
+}
+
+static lean_obj_res native_env_pair(b_lean_obj_arg pair) {
+    lean_object *out = lean_alloc_ctor(0, 2, 0);
+    lean_ctor_set(out, 0, omega_string_to_lean(lean_ctor_get(pair, 0)));
+    lean_ctor_set(out, 1, process_option(lean_ctor_get(pair, 1), omega_string_to_lean));
+    return out;
+}
+
+static lean_obj_res native_process_array(b_lean_obj_arg list, decoder convert) {
+    lean_object *out = lean_mk_empty_array();
+    for (; !lean_is_scalar(list); list = lean_ctor_get(list, 1))
+        out = lean_array_push(out, convert(lean_ctor_get(list, 0)));
+    return out;
+}
+
+LEAN_EXPORT lean_obj_res omega_io_process_spawn(lean_obj_arg args, lean_obj_arg world) {
+    lean_object *native = lean_alloc_ctor(0, 5, 2);
+    lean_ctor_set(native, 0, retain_value(lean_ctor_get(args, 0)));
+    lean_ctor_set(native, 1, omega_string_to_lean(lean_ctor_get(args, 1)));
+    lean_ctor_set(native, 2, native_process_array(lean_ctor_get(args, 2), omega_string_to_lean));
+    lean_ctor_set(native, 3, process_option(lean_ctor_get(args, 3), omega_string_to_lean));
+    lean_ctor_set(native, 4, native_process_array(lean_ctor_get(args, 4), native_env_pair));
+    size_t offset = 5 * sizeof(void*);
+    lean_ctor_set_uint8(native, offset, lean_ctor_get_uint8(args, offset));
+    lean_ctor_set_uint8(native, offset + 1, lean_ctor_get_uint8(args, offset + 1));
+    lean_dec(args);
+    return strict_result(lean_io_process_spawn(native), world, retain_value);
+}
+
+static lean_obj_res strict_u32(b_lean_obj_arg value) {
+    return lean_uint32_to_nat(lean_unbox_uint32(value));
+}
+
+static lean_obj_res strict_optional_u32(b_lean_obj_arg value) {
+    return process_option(value, strict_u32);
+}
+
+LEAN_EXPORT lean_obj_res omega_io_process_child_wait(b_lean_obj_arg cfg, b_lean_obj_arg child, lean_obj_arg world) {
+    return strict_result(lean_io_process_child_wait(cfg, child), world, strict_u32);
+}
+
+LEAN_EXPORT lean_obj_res omega_io_process_child_try_wait(b_lean_obj_arg cfg, b_lean_obj_arg child, lean_obj_arg world) {
+    return strict_result(lean_io_process_child_try_wait(cfg, child), world, strict_optional_u32);
+}
+
+LEAN_EXPORT lean_obj_res omega_io_process_child_kill(b_lean_obj_arg cfg, b_lean_obj_arg child, lean_obj_arg world) {
+    return strict_result(lean_io_process_child_kill(cfg, child), world, strict_unit);
+}
+
+LEAN_EXPORT lean_obj_res omega_io_process_child_take_stdin(b_lean_obj_arg cfg, lean_obj_arg child, lean_obj_arg world) {
+    return strict_result(lean_io_process_child_take_stdin(cfg, child), world, retain_value);
+}
+
+LEAN_EXPORT lean_obj_res omega_io_process_child_pid(b_lean_obj_arg cfg, lean_obj_arg child) {
+    return lean_uint32_to_nat(lean_io_process_child_pid(cfg, child));
+}
+
 extern lean_obj_res lean_io_exit(uint8_t);
 extern lean_obj_res lean_io_force_exit(uint8_t);
 
