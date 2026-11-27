@@ -1,0 +1,1 @@
+{"statement_id":"sha256:0cb9747c730371ce333a204adef0c3aa58ae6ea2287cfa25a0c076906607954a","declarations":[{"declaration_name_key":"ns(ns(n0,1:H),15:sigma_bijective)","kind":"theorem","libraries":["Aesop","Batteries","Init","Lean","Mathlib","Std"],"axioms":["Classical.choice","Quot.sound","propext"]}]}
