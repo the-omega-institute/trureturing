@@ -24,9 +24,9 @@ private def erased (env : Environment) (value : Expr) : MetaM Expr := do
 and hides the concrete unit carrier. Ordinary imports additionally seal the family. -/
 public def checkAbstraction (env : Environment) : IO Unit := do
   let token (region : Name) := mkApp (mkConst `Omega.Void) (mkConst region)
-  let a := token `Omega.Bool
-  let b := token `Omega.Nat
-  let unit := mkConst `Omega.PUnit [.succ .zero]
+  let a := token `Bool
+  let b := token `Nat
+  let unit := mkConst `PUnit [.succ .zero]
   for type in #[a, b, unit] do
     unless (Kernel.check env {} type).isOk do throw <| IO.userError "ill-typed state region check"
   if Kernel.isDefEqGuarded env {} a b || Kernel.isDefEqGuarded env {} a unit then

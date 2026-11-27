@@ -23,8 +23,7 @@ static lean_object *encode(const char *s) {
 static int text_equals(b_lean_obj_arg bytes, const char *text) {
     while (!lean_is_scalar(bytes) && *text) {
         b_lean_obj_arg n = lean_ctor_get(bytes, 0);
-        unsigned value = 0;
-        while (!lean_is_scalar(n)) { ++value; n = lean_ctor_get(n, 0); }
+        unsigned value = lean_unbox(n);
         if (value != (unsigned char)*text++) return 0;
         bytes = lean_ctor_get(bytes, 1);
     }

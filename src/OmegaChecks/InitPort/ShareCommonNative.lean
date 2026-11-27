@@ -39,7 +39,7 @@ public unsafe def main (args : List String) : IO Unit := do
         let built ← NativeState.compileLayouts env name
         NativeState.writeCode lib env.header.moduleNames[(env.getModuleIdxFor? name).get!]! built NativeState.layouts
     let env ← importModules #[{module := api.privateOwner, importAll := true}] {}
-    NativeState.checkPriorityLayout env
+    NativeState.checkNativeNat env
     for (n, ctor) in [(`Omega.UInt64, `ofBitVec), (`Omega.BitVec, `ofFin), (`Omega.Fin, `mk),
         (`Omega.Hashable, `mk), (`Omega.BEq, `mk)] do
       let some (some info) := Compiler.LCNF.impureTrivialStructureInfoExt.find? env n

@@ -3,22 +3,13 @@ import Lean
 
 open Lean
 
-private inductive Unary where
-  | zero
-  | succ (n : Unary)
-deriving BEq
-
-private def fromNat : Nat → Unary
-  | 0 => .zero
-  | n + 1 => .succ (fromNat n)
-
-private abbrev Bytes := List Unary
-private def encode (s : String) : Bytes := s.toUTF8.data.toList.map fun b => fromNat b.toNat
+private abbrev Bytes := List Nat
+private def encode (s : String) : Bytes := s.toUTF8.data.toList.map fun b => b.toNat
 
 private inductive Status where
   | ok
-  | existsAlready (filename : Option Bytes) (code : Unary) (details : Bytes)
-  | missing (filename : Bytes) (code : Unary) (details : Bytes)
+  | existsAlready (filename : Option Bytes) (code : Nat) (details : Bytes)
+  | missing (filename : Bytes) (code : Nat) (details : Bytes)
   | other
 deriving BEq
 
@@ -49,7 +40,7 @@ public unsafe def main (args : List String) : IO Unit := do
     throw <| IO.userError "expected duplicate directory"
   catch e =>
     let .alreadyExists name code msg := e | throw e
-    unless duplicate == .existsAlready (name.map encode) (fromNat code.toNat) (encode msg) do throw <| IO.userError "changed alreadyExists fields"
+    unless duplicate == .existsAlready (name.map encode) code.toNat (encode msg) do throw <| IO.userError "changed alreadyExists fields"
   unless (← perform (rename old) newPath) == .ok && (← perform rm newPath) == .ok && (← perform unlink (encode file)) == .ok do
     throw <| IO.userError "rename, directory removal or file removal failed"
   let missing ← perform unlink (encode file)
@@ -58,4 +49,4 @@ public unsafe def main (args : List String) : IO Unit := do
     throw <| IO.userError "expected missing file"
   catch e =>
     let .noFileOrDirectory name code msg := e | throw e
-    unless missing == .missing (encode name) (fromNat code.toNat) (encode msg) do throw <| IO.userError "changed noFileOrDirectory fields"
+    unless missing == .missing (encode name) code.toNat (encode msg) do throw <| IO.userError "changed noFileOrDirectory fields"

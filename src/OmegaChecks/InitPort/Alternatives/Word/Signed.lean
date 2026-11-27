@@ -4,6 +4,23 @@ public import OmegaChecks.InitPort.Alternatives.Word.Limits
 
 namespace OmegaChecks.InitPort.Alternatives
 
+private theorem int8_bmod_of_large (x : _root_.Int8) (m : Nat) (wide : (256 : Int) ≤ m) :
+    x.toInt.bmod m = x.toInt := by
+  apply Int.bmod_eq_of_le_mul_two
+  · rw [Int.mul_comm]
+    exact Int.le_trans (Int.neg_le_neg wide) (BitVec.le_two_mul_toInt (x := x.toBitVec))
+  · rw [Int.mul_comm]
+    exact Int.lt_of_lt_of_le (BitVec.two_mul_toInt_lt (x := x.toBitVec)) wide
+
+public theorem Int8.toInt_bmod_65536 : type_of% @_root_.Int8.toInt_bmod_65536 :=
+  fun x => int8_bmod_of_large x 65536 (by decide)
+
+public theorem Int8.toInt_bmod_4294967296 : type_of% @_root_.Int8.toInt_bmod_4294967296 :=
+  fun x => int8_bmod_of_large x 4294967296 (by decide)
+
+public theorem Int8.toInt_bmod_18446744073709551616 : type_of% @_root_.Int8.toInt_bmod_18446744073709551616 :=
+  fun x => int8_bmod_of_large x 18446744073709551616 (by decide)
+
 public theorem Int16.toInt_lt : type_of% @_root_.Int16.toInt_lt := by
   intro x
   rw [← _root_.Int16.toInt_toBitVec]

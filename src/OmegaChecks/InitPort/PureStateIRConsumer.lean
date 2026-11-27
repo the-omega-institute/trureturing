@@ -7,7 +7,7 @@ public unsafe def main (args : List String) : IO Unit := do
   let [lib, dir] := args | throw <| IO.userError "expected strict library and consumer directory"
   searchPathRef.set [lib, dir]
   let env ← importModules #[{module := `PureStateConsumer, importAll := true}] {} (level := .private)
-  let b := mkConst `Omega.Bool
+  let b := mkConst `Bool
   let result := mkApp2 (mkConst `Omega.Except [.zero, .zero]) b b
   let arrows (count : Nat) (codomain : Expr) := Nat.repeat (fun t => .forallE .anonymous b t .default) count codomain
   for (name, ty) in [(`pureState, arrows 1 b), (`stateInstances, arrows 1 b),
