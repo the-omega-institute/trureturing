@@ -112,6 +112,17 @@ private theorem homContracts {le : Fin n → Fin n → Bool} (h : ValidOrder le)
       · exact .symm _ _ (.rel _ _ fun x => hd x.val x.property)
     exact .trans _ _ _ hstep (ih hg hn)
 
+/-- The checked zigzag makes the indicated induced subposet categorical. -/
+theorem categorical_of_table {le : Fin n → Fin n → Bool} (h : ValidOrder le)
+    {U : Fin n → Bool} {c : Fin n} {steps : List (Fin n → Fin n)}
+    (hfence : Contracts le U c id steps) :
+    letI : PartialOrder (Fin n) := tableOrder le h
+    Categorical {x | U x = true} := by
+  letI : PartialOrder (Fin n) := tableOrder le h
+  refine ⟨c, ?_⟩
+  have hf : MonotoneOn le U id := fun _ _ _ _ hx => hx
+  exact homContracts h hf hfence
+
 /-- An ordinary two-piece categorical cover certified directly by the
 inclusion-to-constant zigzags on its two lower sets. -/
 theorem hasCategoricalCover_of_tables (le : Fin n → Fin n → Bool) (h : ValidOrder le)
@@ -123,8 +134,6 @@ theorem hasCategoricalCover_of_tables (le : Fin n → Fin n → Bool) (h : Valid
   let : PartialOrder (Fin n) := tableOrder le h
   refine ⟨fun i => {x | U i x = true}, ?_, hcover⟩
   intro i
-  refine ⟨fun x y hxy hy => hlow i _ _ hxy hy, c i, ?_⟩
-  have hf : MonotoneOn le (U i) id := fun _ _ _ _ hx => hx
-  exact homContracts h hf (hfence i)
+  exact ⟨fun x y hxy hy => hlow i _ _ hxy hy, categorical_of_table h (hfence i)⟩
 
 end D5.S3.Topology.FiniteCategoricalCoverCertificate
