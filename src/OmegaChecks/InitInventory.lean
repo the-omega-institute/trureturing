@@ -513,6 +513,12 @@ private def conditionalConsequence? (owner name : Name) : Option (String × Name
       | _ => none
     return ("False", witness, "The same read action returns n and n+1 around an update to its reference cell")
   if owner == `Init.ShareCommon then
+    if name == ``ShareCommon.Object.eq then
+      return ("False", ``OmegaChecks.InitBoundaries.PointerObservations.packedPayloadEquality,
+        "A pure packing of nested lists preserves native payload comparison on an alias and an equal list with a separately allocated child")
+    if name == ``ShareCommon.Object.hash then
+      return ("False", ``OmegaChecks.InitBoundaries.PointerObservations.packedPayloadHash,
+        "A pure packing of nested lists preserves native payload hashes on equal lists with separately allocated children")
     if name == ``ShareCommon.Object.ptrEq then
       return ("False", ``OmegaChecks.InitBoundaries.PointerObservations.objectPointerEquality,
         "Pointer identity distinguishes an alias from a separately allocated NonScalar with the same Nat field")

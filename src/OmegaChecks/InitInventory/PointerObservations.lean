@@ -54,7 +54,18 @@ public theorem objectPointerHash (read : type_of% @ShareCommon.Object.ptrHash)
   obtain ⟨a, b, eq, different⟩ := observed
   exact different (congrArg read eq)
 
+public theorem packedPayloadEquality (read : type_of% @ShareCommon.Object.eq) (pack : List (List Nat) → NonScalar)
+    (observed : ∃ a b, a = b ∧ read (pack a) (pack a) ≠ read (pack a) (pack b)) : False := by
+  obtain ⟨a, b, eq, different⟩ := observed
+  exact different (congrArg (fun t => read (pack a) (pack t)) eq)
+
+public theorem packedPayloadHash (read : type_of% @ShareCommon.Object.hash) (pack : List (List Nat) → NonScalar)
+    (observed : ∃ a b, a = b ∧ read (pack a) ≠ read (pack b)) : False := by
+  obtain ⟨a, b, eq, different⟩ := observed
+  exact different (congrArg (fun t => read (pack t)) eq)
+
 @[noinline] private def singleton (n : Nat) : List Nat := [n]
+@[noinline] private def nested (xs : List Nat) : List (List Nat) := [xs]
 @[noinline] private def reversed (xs : List Nat) : List Nat := xs.reverse
 
 -- A large Nat is boxed. Compute the same field value by two independent allocations.
@@ -78,11 +89,26 @@ public unsafe def observe (seed : Nat) : IO (List String) := do
   let x := object (seed % 17)
   let y := equalObject (seed % 17)
   unless x.val == y.val do throw <| IO.userError "expected equal NonScalar fields"
+  unless ShareCommon.Object.eq x y && ShareCommon.Object.hash x == ShareCommon.Object.hash y do
+    throw <| IO.userError "expected equal large Nat payloads"
+  let leaf₁ : NonScalar := unsafeCast a
+  let leaf₂ : NonScalar := unsafeCast b
+  unless !ptrEq a b && ShareCommon.Object.eq leaf₁ leaf₂ &&
+      ShareCommon.Object.hash leaf₁ == ShareCommon.Object.hash leaf₂ do
+    throw <| IO.userError "expected separate singleton lists with identical scalar payloads"
+  let outer₁ := nested a
+  let outer₂ := nested b
+  unless decide (outer₁ = outer₂) do throw <| IO.userError "expected equal nested lists"
+  let packed₁ : NonScalar := unsafeCast outer₁
+  let packed₂ : NonScalar := unsafeCast outer₂
+  unless ShareCommon.Object.eq packed₁ packed₁ do throw <| IO.userError "expected identical object payloads"
   let results := [("ptrAddrUnsafe", ptrAddrUnsafe a != ptrAddrUnsafe b),
     ("ptrEq", ptrEq a a != ptrEq a b), ("ptrEqList", ptrEqList [a] [a] != ptrEqList [a] [b]),
     ("withPtrEqUnsafe", compareTagged (@withPtrEqUnsafe) a a && !compareTagged (@withPtrEqUnsafe) a b),
     ("ShareCommon.Object.ptrEq", ShareCommon.Object.ptrEq x x != ShareCommon.Object.ptrEq x y),
-    ("ShareCommon.Object.ptrHash", ShareCommon.Object.ptrHash x != ShareCommon.Object.ptrHash y)]
+    ("ShareCommon.Object.ptrHash", ShareCommon.Object.ptrHash x != ShareCommon.Object.ptrHash y),
+    ("ShareCommon.Object.eq", !ShareCommon.Object.eq packed₁ packed₂),
+    ("ShareCommon.Object.hash", ShareCommon.Object.hash packed₁ != ShareCommon.Object.hash packed₂)]
   return (results.filter Prod.snd).map Prod.fst
 
 end OmegaChecks.InitBoundaries.PointerObservations

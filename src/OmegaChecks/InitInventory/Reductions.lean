@@ -143,7 +143,8 @@ private def replayWitnesses (env : Environment) : IO Unit := do
     [``PointerObservations.exclusivity, ``EffectObservations.base, ``EffectObservations.eio, ``EffectObservations.io,
       ``ArrayCasts.map, ``ArrayCasts.mapIndexed, ``ByteArrayReads.noForInBound, ``ByteArrayReads.noFoldBound,
       ``PointerObservations.address, ``PointerObservations.pointerEquality, ``PointerObservations.listPointerEquality,
-      ``PointerObservations.guardedPointerEquality, ``PointerObservations.objectPointerEquality, ``PointerObservations.objectPointerHash] ++
+      ``PointerObservations.guardedPointerEquality, ``PointerObservations.objectPointerEquality, ``PointerObservations.objectPointerHash,
+      ``PointerObservations.packedPayloadEquality, ``PointerObservations.packedPayloadHash] ++
     [``HeterogeneousQuotient.hrecOn, ``HeterogeneousQuotient.hrecOnSetoid,
      ``HeterogeneousQuotient.soundOfPairCoherence, ``HeterogeneousQuotient.setoidSoundOfPairCoherence,
      ``HeterogeneousQuotient.firstOfCoherence, ``QuotientDecision.ofSound,
