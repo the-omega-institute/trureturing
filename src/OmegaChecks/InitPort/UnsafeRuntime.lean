@@ -5,6 +5,7 @@ public import OmegaChecks.InitPort.Persistent
 public import OmegaChecks.InitPort.ReferencePut
 public import OmegaChecks.InitPort.PointerComparison
 public import OmegaChecks.InitPort.TypeName
+public import OmegaChecks.InitPort.UnsafeImplementation
 import Lean.Compiler.BorrowedAnnotation
 
 open Lean
@@ -81,11 +82,12 @@ private def originalOpaque (ci : ConstantInfo) (strict : Bool) : Bool :=
   isExclusive ci strict || isAddress ci strict || isShareCommonObject ci strict
 
 public def isOriginal (ci : ConstantInfo) (strict : Bool) : Bool :=
-  TypeName.isUnsafeConversion ci strict || Persistent.isOriginal ci strict || originalOpaque ci strict || PointerComparison.isOriginal ci strict || ReferencePut.isOriginal ci strict || EffectRun.isOriginal ci strict
+  (strict && UnsafeImplementation.isImplementation ci) || TypeName.isUnsafeConversion ci strict || Persistent.isOriginal ci strict || originalOpaque ci strict || PointerComparison.isOriginal ci strict || ReferencePut.isOriginal ci strict || EffectRun.isOriginal ci strict
 
 /-- Replay the checked library before installing each pinned opaque at its original unsafe boundary. -/
 public def replay (constants : Std.HashMap Name ConstantInfo) : IO Kernel.Environment := do
   let mut base ← TypeName.replay (← Persistent.replay constants) constants
+  base ← UnsafeImplementation.replay base constants
   let mut checked := base
   for upstream in [`ptrAddrUnsafe, `isExclusiveUnsafe, `ShareCommon.Object.eq, `ShareCommon.Object.hash] do
     let some ci := constants[InitKernelPort.portName upstream]? | continue

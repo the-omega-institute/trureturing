@@ -51,14 +51,14 @@ public unsafe def main (args : List String) : IO Unit := do
     let logical := if name == impl then `Lean.Macro.getMethods else name
     if name == impl then
       let some (.defnInfo alias) := strict.find? target | throw <| IO.userError s!"missing strict alias {target}"
-      unless alias.safety == .safe && alias.value == mkConst (rename logical) do
+      unless alias.safety == .unsafe && alias.value == mkConst (rename logical) do
         throw <| IO.userError s!"incorrect strict body for {target}"
     else
       unless entry matches .opaqueInfo _ do throw <| IO.userError s!"expected opaque {target}"
     let some (.defnInfo pinned) := source.find? impl | throw <| IO.userError s!"missing {impl}"
     let some template := source.find? code >>= (·.value?) | throw <| IO.userError s!"missing {code}"
     unless Compiler.getImplementedBy? source logical == some impl && pinned.safety == .unsafe &&
-        Kernel.isDefEqGuarded source {} pinned.value template && !entry.isUnsafe do
+        Kernel.isDefEqGuarded source {} pinned.value template && entry.isUnsafe == (name == impl) do
       throw <| IO.userError s!"incorrect runtime implementation of {name}"
     let entry : DefinitionVal := {pinned with
       name := target

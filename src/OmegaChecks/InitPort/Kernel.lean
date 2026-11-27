@@ -428,6 +428,12 @@ private def alternateProof (ci : ConstantInfo) (sourceType : Expr) : M Bool := d
     return ← record ci.name .added
   return false
 
+private def keepImplementationSafety (n : Name) (decl : Declaration) : Declaration :=
+  match decl with
+  | .defnDecl d => if OmegaChecks.InitPort.UnsafeImplementation.supported n then
+      .defnDecl {d with safety := .unsafe} else decl
+  | _ => decl
+
 partial def visit (n : Name) : M Bool := do
   let c ← read
   if let some result := (← get).results[n]? then
@@ -473,7 +479,7 @@ partial def visit (n : Name) : M Bool := do
     unless ← visit name do return ← record n (.blocked "unavailable logical reference" (some name))
     let safe := ConstantInfo.defnInfo {native with safety := .safe}
     let .ok decl := translateDecl safe ci.type reference | return ← record n (.blocked "invalid logical reference")
-    let .ok env ← checkWithRetry (← get).env decl c.maxHeartbeats
+    let .ok env ← checkWithRetry (← get).env (keepImplementationSafety n decl) c.maxHeartbeats
       | return ← record n (.blocked "kernel rejected logical reference")
     modify fun s => {s with env}
     return ← record n .added
@@ -568,7 +574,7 @@ partial def visit (n : Name) : M Bool := do
       unless ← visit dep do return ← record n (.blocked "unavailable safe array implementation dependency" (some dep))
     let .ok decl := translateDecl safe ci.type body
       | return ← record n (.blocked "invalid safe array implementation")
-    let .ok env ← checkWithRetry (← get).env decl c.maxHeartbeats
+    let .ok env ← checkWithRetry (← get).env (keepImplementationSafety n decl) c.maxHeartbeats
       | return ← record n (.blocked "kernel rejected safe array implementation")
     modify fun s => {s with env}
     return ← record n .added
