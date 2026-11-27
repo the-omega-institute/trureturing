@@ -61,7 +61,7 @@ public def supported (source : Environment) (owner name : Name) : Bool :=
   let widths := [`toUInt8, `toUInt16, `toUInt32, `toUInt64, `toUSize, `toInt8, `toInt16, `toInt32, `toInt64, `toISize]
   let ops := [`add, `sub, `mul, `div, `mod, `land, `lor, `xor, `complement, `neg,
               `shiftLeft, `shiftRight, `log2, `abs, `toInt, `ofInt, `decLt, `decLe, `decEq, `toNat, `ofNat, `ofNatLT, `ofNat32]
-  let base := owner == `OmegaInit.Prelude && name == `System.Platform.getNumBits
+  let base := owner == `OmegaInit.Prelude && [`System.Platform.getNumBits, `Lean.Name.beq, `mixHash].contains name
   let inOwner := [`OmegaInit.Prelude, `OmegaInit.Data.UInt.BasicAux, `OmegaInit.Data.UInt.Basic, `OmegaInit.Data.UInt.Log2,
                   `OmegaInit.Data.SInt.Basic].contains owner
   let intOwner := [`OmegaInit.Data.Int.Basic, `OmegaInit.Data.Int.DivMod.Basic].contains owner
@@ -136,6 +136,7 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
   let mut prepare := ""
   let mut cleanup := ""
   let mut hasString := false
+  let mut hasName := false
   for (a, b) in params.zip actual, i in [:params.size] do
     let .forallE _ dom body _ := type | throw <| IO.userError s!"expected argument {i} of {n}"
     type := body
@@ -196,6 +197,23 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
       args := args.push arg
       if b.borrow && !a.borrow then prepare := prepare ++ s!"  lean_inc({arg});\n"
       if a.borrow && !b.borrow then cleanup := cleanup ++ s!"  lean_dec({arg});\n"
+    else if dom == `Lean.Name && a.ty == .tobject && b.ty == .tobject && a.borrow then
+      checkStrictString strict
+      unless getExportNameFor? source `Lean.Name.mkStr == some `lean_name_mk_string &&
+          getExportNameFor? source `Lean.Name.mkNum == some `lean_name_mk_numeral do
+        throw <| IO.userError "unexpected pinned name constructors"
+      for (name, tag) in [(`Omega.Lean.Name.anonymous, 0), (`Omega.Lean.Name.str, 1), (`Omega.Lean.Name.num, 2)] do
+        let some l := ctorLayoutExt.find? strict name | throw <| IO.userError s!"missing strict name layout: {name}"
+        let valid := if tag == 0 then l.fieldInfo.isEmpty else
+          match l.fieldInfo with | #[.object 0 _, .object 1 _] => true | _ => false
+        unless valid && l.ctorInfo.cidx == tag && l.ctorInfo.size == l.fieldInfo.size &&
+            l.ctorInfo.usize == 0 && l.ctorInfo.ssize == 0 do throw <| IO.userError s!"invalid strict name layout: {name}"
+      hasName := true
+      decls := decls.push ((if b.borrow then "b_lean_obj_arg " else "lean_obj_arg ") ++ arg)
+      prepare := prepare ++ s!"  lean_object *name{i} = omega_name_to_lean({arg});\n"
+      args := args.push s!"name{i}"
+      cleanup := cleanup ++ s!"  lean_dec(name{i});\n"
+      unless b.borrow do cleanup := cleanup ++ s!"  lean_dec({arg});\n"
     else if dom == `String && a.ty == .object && b.ty == .tobject then
       checkStrictString strict
       hasString := true
@@ -286,7 +304,7 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
       pure <| header ++ s!"extern {ty} {target}({String.intercalate ", " (List.replicate params.size ty)});\n"
   else if official == `System.Platform.getNumBits then
     pure "\nextern lean_obj_res lean_system_platform_nbits(lean_obj_arg);\n" else pure ""
-  let header := if hasString || dom == `String then "\n#include \"strict_string.h\"\n" else ""
+  let header := if hasName then "\n#include \"strict_name.h\"\n" else if hasString || dom == `String then "\n#include \"strict_string.h\"\n" else ""
   return header ++ proto ++ helper ++ s!"\nLEAN_EXPORT {output} {adapter}({String.intercalate ", " decls.toList}) \{\n{prepare}  {output} r = {value};\n{cleanup}  return r;\n}\n"
 
 end OmegaChecks.InitPort.WordNative
