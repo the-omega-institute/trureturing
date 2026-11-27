@@ -18,7 +18,7 @@ internal sealed class LyudogovskiyDimensionJumpDocument : IScribeDocumentDefinit
         var nat = F.Seq(F.Mathbb, F.Grp(F.Id("N")));
         var size = Sub(new Formula.Binary(D(3), FormulaBinaryOperator.Multiply, k), D(1));
         var difference = Sub(Apply("int", Apply("dim", p)), Apply("int", Apply("dim", q)));
-        var absoluteDifference = Seq(Left, Vert, difference, Right, Vert);
+        var absoluteDifference = Seq(Lvert, Sp, difference, Sp, Rvert);
         var bound = All("n", nat, Implies(Less(D(0), n),
             All("p", Apply("Partition", n), All("q", Apply("Partition", n),
                 Implies(Apply("Adj", n, p, q), LessEqual(absoluteDifference, D(2)))))));
