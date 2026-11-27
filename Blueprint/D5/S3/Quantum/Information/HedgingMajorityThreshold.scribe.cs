@@ -64,13 +64,14 @@ internal sealed class HedgingMajorityThresholdDocument : IScribeDocumentDefiniti
                     + "numbers. The assertion concerns strict majorities; it makes no "
                     + "characterization for k <= n/2."),
             Describe.Lean(
-                DescribeId.Create("hedging-retained-trace"), DeclarationHandle.Create(Prefix + "trace_retained"),
-                H("The retained-factor trace pairing"),
-                StatementSource.FromAuthor(Disp(RetainedTraceFormula())), AssessedProvenance.FromRepo(Source),
+                DescribeId.Create("hedging-retained-trace"),
+                DeclarationHandle.Create(Prefix + "trace_retained"),
+                H("The trace pairing of a retained observable"),
+                StatementSource.FromAuthor(Disp(RetainedTraceFormula())),
+                AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "For arbitrary finite index types A and B, tracing X against the operator I ⊗ D "
-                        + "equals tracing the first-factor partial trace of X against D. "
-                        + "No positivity or Hermiticity hypothesis is required.")))),
+                    "The joint trace of an observable on the second factor equals its trace pairing with the partial trace over the first factor."))),
+                DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("hedging-majority-result"),
                 DeclarationHandle.Create(Prefix + "result"),
@@ -120,6 +121,22 @@ internal sealed class HedgingMajorityThresholdDocument : IScribeDocumentDefiniti
             StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromLiterature(Source),
             Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
 
+    private static Formula RetainedTraceFormula()
+    {
+        var a = X("A"); var b = X("B"); var x = X("X"); var d = X("D");
+        var multiplication = Seq(LambdaLower, Sp, X("u"), Sp, X("v"), Sp, Mapsto, Sp,
+            Mul(X("u"), X("v")));
+        var kronecker = Seq(Operatorname, Grp(Seq(X("Matrix"), Dot, X("kroneckerMap"))));
+        var body = Equal(Call("trace", Mul(At(kronecker, multiplication,
+            Typed(D(1), MatrixType(a)), d), x)),
+            Call("trace", Mul(d, Call("partialTraceFirst", x))));
+        var instances = Seq(OpenBracket, Call("Fintype", a), CloseBracket, Sp,
+            OpenBracket, Call("DecidableEq", a), CloseBracket, Sp,
+            OpenBracket, Call("Fintype", b), CloseBracket, Sp);
+        return All(a, Named("Type"), All(b, Named("Type"), Seq(instances,
+            All(x, MatrixType(ProductType(a, b)), All(d, MatrixType(b), body)))));
+    }
+
     private static Formula X(string name) => F.Id(name);
     private static Formula Named(string name) => Seq(Operatorname, Grp(X(name)));
     private static Formula At(Formula function, params Formula[] arguments) =>
@@ -164,18 +181,6 @@ internal sealed class HedgingMajorityThresholdDocument : IScribeDocumentDefiniti
     private static Formula Shared(Formula n) => new Formula.Subscript(Psi, Seq(n, Comma, Alpha));
     private static Formula Winning() => new Formula.Subscript(X("v"), Theta);
     private static Formula Projection(Formula b) => new Formula.Subscript(X("P"), Seq(b, Comma, Theta));
-
-    private static Formula RetainedTraceFormula()
-    {
-        var a = X("A"); var b = X("B"); var x = X("X"); var d = X("D");
-        var body = All(x, MatrixType(ProductType(a, b)), All(d, MatrixType(b),
-            Equal(Call("trace", Mul(Call("kronecker", Typed(D(1), MatrixType(a)), d), x)),
-                Call("trace", Mul(d, Call("partialTraceFirst", x))))));
-        body = Seq(OpenBracket, Call("Fintype", a), CloseBracket, Sp,
-            OpenBracket, Call("DecidableEq", a), CloseBracket, Sp,
-            OpenBracket, Call("Fintype", b), CloseBracket, Sp, body);
-        return All(a, Named("Type"), All(b, Named("Type"), body));
-    }
 
     private static Formula SharedAmplitudeFormula()
     {
