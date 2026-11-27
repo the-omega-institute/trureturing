@@ -251,6 +251,7 @@ def check_consumer_exports():
 
 
 def check_representation():
+    run("lake", "build", "+OmegaMathlib.Data.Nat.Fib.Basic")
     # Legacy importers load private .olean data. Cover ordinary elaboration in both file formats.
     examples = [
         ("p", "Omega.And.left h", None),
