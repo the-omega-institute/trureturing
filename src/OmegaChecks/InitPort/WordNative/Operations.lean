@@ -7,6 +7,7 @@ import OmegaChecks.InitPort.MacroNative
 import OmegaChecks.InitPort.SyntaxPositionNative
 import OmegaChecks.InitPort.FloatArrayNative
 import OmegaChecks.InitPort.IndexedNative
+import OmegaChecks.InitPort.BorrowedNative
 import OmegaChecks.InitPort.ByteFoldNative
 
 /-! Select the pinned Init operations handled by native word wrappers. -/
@@ -195,6 +196,7 @@ public def supported (source : Environment) (owner name : Name) (boxedFloatArray
     [`land, `lor, `xor, `shiftLeft, `shiftRight].contains method
   let logarithm := owner == `OmegaInit.Data.Nat.Log2 && name == `Nat.log2
   let wordRepr := owner == `OmegaInit.Data.Repr && name == `USize.repr
+  let borrowed := (owner == `OmegaInit.Prelude || owner == `OmegaInit.Data.Array.Basic) && (BorrowedNative.symbol? name).isSome
   let arraySet := owner == `OmegaInit.Data.Array.Set && name == `Array.set!
   let floatIndex := owner == `OmegaInit.Data.FloatArray.Basic && floatArrayIndex name
   let byteOp := owner == `OmegaInit.Data.ByteArray.Basic && name.getPrefix == `ByteArray &&
@@ -241,7 +243,7 @@ public def supported (source : Environment) (owner name : Name) (boxedFloatArray
     `OmegaInit.Data.RArray, `OmegaInit.Data.Nat.Internal.Linear, `OmegaInit.Data.Nat.Fold, `OmegaInit.Data.Fin.Lemmas].contains owner && IndexedNative.supported name) ||
     ([`OmegaInit.Data.Float.Model.Float, `OmegaInit.Data.Float.Model.Float32].contains owner && modelOperation name) ||
     ([`OmegaInit.Prelude, `OmegaInit.Meta.Defs].contains owner && SyntaxPositionNative.supported name) ||
-    ((base || intPrimitive || platform || version || arraySet || floatIndex || byteOp || textCompare || modular || stringOp || wordRepr || bitwise || logarithm || (inOwner && primitive)) && isExtern source name) ||
+    ((base || intPrimitive || platform || version || borrowed || arraySet || floatIndex || byteOp || textCompare || modular || stringOp || wordRepr || bitwise || logarithm || (inOwner && primitive)) && isExtern source name) ||
     ((intOwner || [`OmegaInit.Data.Dyadic.Basic, `OmegaInit.Data.ByteArray.Extra, `OmegaInit.Data.ByteArray.Basic, `OmegaInit.Data.Int.Repr, `OmegaInit.Data.Repr, `OmegaInit.Data.Nat.Bitwise.Basic, `OmegaInit.Data.BitVec.Basic].contains owner || [`OmegaInit.Data.UInt.Basic, `OmegaInit.Data.SInt.Basic].contains owner) && usesPinnedFunction name)
 
 end OmegaChecks.InitPort.WordNative

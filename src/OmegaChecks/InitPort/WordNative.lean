@@ -162,6 +162,7 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
   if IONative.supported official then return ← IONative.wrapper source strict n (symbol n)
   if MacroNative.supported official then return ← MacroNative.wrapper source strict n (symbol n)
   if monadicSeparator official then return ← SeparatorNative.wrapper source strict n official (symbol n)
+  if (BorrowedNative.symbol? official).isSome then return ← BorrowedNative.wrapper source strict n (symbol n)
   if ByteFoldNative.supported official then return ← ByteFoldNative.wrapper source strict n (symbol n)
   if IndexedNative.supported official then return ← IndexedNative.wrapper source strict n (symbol n)
   if SyntaxPositionNative.supported official then return ← SyntaxPositionNative.wrapper source strict n (symbol n)

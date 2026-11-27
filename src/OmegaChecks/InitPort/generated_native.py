@@ -127,7 +127,7 @@ def compile_generated(stage, product, graph, seed_ir, owners=None, *, original_s
                       check_sharing=None, check_macro_reader=False, check_macro_writer=False, check_syntax_array=False,
                       check_strings=True, check_string_marks=False, check_byte_marks=False, check_literals=True, check_mixed=True, check_rat=True, check_bootstrap=True,
                       check_list_search=True, check_decoding=True, check_names=True, check_toolchain=True, check_thunks=False, check_persistent=False, check_exclusive=False,
-                      check_guarded_pointer=False, check_effects=False, check_address=False, check_pointer_comparison=False, check_shared_pointer=False,
+                      check_guarded_pointer=False, check_effects=False, check_borrowed_arrays=False, check_address=False, check_pointer_comparison=False, check_shared_pointer=False,
                       check_list_pointer=False, check_pointer_hash=False, check_address_callback=False, check_dynamic=False):
     """Compile generated owners in import order and preserve the native symbols of existing owners."""
     requested = set(graph if owners is None else owners)
@@ -275,6 +275,17 @@ def compile_generated(stage, product, graph, seed_ir, owners=None, *, original_s
                     raise ValueError(f"missing native dependency {owner}")
             inputs.append(obj)
         return inputs
+
+    array_owner = "OmegaInit.Data.Array.Basic"
+    if check_borrowed_arrays and array_owner in selected:
+        required = reachable([array_owner])
+        if required.issubset(selected) and all(seed_files[d].is_file() for d in required & seed_owners):
+            app = stage / "check-borrowed-arrays"
+            consumer = stage / "borrowed-array-consumer.c"
+            run("lean", "-R", STRICT_SOURCES, "-c", consumer, STRICT_SOURCES / "BorrowedArrayConsumer.lean",
+                env={**os.environ, "LEAN_PATH": str(library)})
+            run("leanc", consumer, HERE / "consumers/borrowed_array_consumer.c", *dependency_objects(required), "-o", app)
+            run(app)
 
     share_owner = "OmegaInit.ShareCommon"
     if check_sharing and share_owner in selected:

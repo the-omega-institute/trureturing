@@ -322,6 +322,10 @@ def generate(stage, product, seed, roots, excluded, original_seed):
                       check_guarded_pointer=has_interfaces(inventory, {"Init.Util": {"withPtrEq"}}),
                       check_address=has_interfaces(inventory, {"Init.Util": {"ptrAddrUnsafe"}}),
                       check_exclusive=has_interfaces(inventory, {"Init.Util": {"isExclusiveUnsafe"}}),
+                      check_borrowed_arrays=has_interfaces(inventory, {
+                          "Init.Prelude": {"Array.getInternalBorrowed", "Array.get!InternalBorrowed"},
+                          "Init.Data.Array.Basic": {"Array.ugetBorrowed"},
+                      }),
                       check_effects=has_interfaces(inventory, {"Init.System.IO": {"unsafeBaseIO", "unsafeEIO", "unsafeIO"}}),
                       check_persistent=has_interfaces(inventory, {"Init.System.IO": {"Runtime.markPersistent"}}),
                       check_mixed=has_interfaces(inventory, mixed_interfaces),
