@@ -35,6 +35,9 @@ strata_touched:
   - D5/S3/Topology/RetractionCoordinate
   - D5/S3/Topology/StableCategory/TetrahedralGraphIteration
   - D5/S3/Topology/StableCategory/TetrahedralCategoricalCover
+  - D5/S3/Topology/BarycentricRealization
+  - D5/S3/Topology/StableCategory/FourPieceCategoricalCover
+  - D5/S3/Topology/StableCategory/DimensionFourCategoricalColour
 license: citation-only
 triage: anchor
 ---
@@ -1084,3 +1087,32 @@ contiguity contractions. The original edge carriers transport them
 to the synchronously subdivided ambient complex. Taking the face
 neighbourhoods that meet the two final colours gives categorical lower
 sets in an ordinary iterated chain poset.
+
+The relative theorem applies to a nonempty subcomplex with a proper
+four-rank colouring and a nullhomotopic realization inclusion in a
+finite ambient complex with connected one-skeleton. It gives two
+subcomplexes covering an ordinary subdivision of the source. Both
+inclusions contract by contiguity in the ambient at that same depth.
+This allows a categorical region of dimension at most three to be
+split while keeping its contractions in a higher-dimensional ambient.
+
+## Four categorical pieces from a star assignment
+
+Suppose a finite complex has dimension at most four and every closed
+vertex star can be assigned to one of two subcomplexes with nullhomotopic
+realization inclusions. The first barycentric subdivision separates
+the mixed-label and five-vertex faces from the remaining faces. Each
+induced region has dimension at most three. On every monochromatic flag,
+the old label set is constant, including at the isolated pure top faces.
+The realization map sends a flag to the weighted average of its face
+barycentres. It identifies every subdivided subcomplex with the original
+one and permits the supplied homotopies to glue on the open fibres of
+the label sets. In a connected ambient, the two relative two-piece covers
+then pull back by the face intersections at a common ordinary subdivision
+depth. The Lean theorem gives four categorical lower sets in the face
+poset at that depth.
+
+For a connected complex of weak category two, the Lebesgue number of
+the two categorical opens and the shrinking barycentric mesh give such
+a star assignment after an initial subdivision. This last passage from
+the open cover to the star assignment is a geometric deduction.
