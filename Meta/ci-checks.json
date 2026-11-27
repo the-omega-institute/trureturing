@@ -6,7 +6,8 @@
       "directory_capacity_exempt_roots": [
         "OmegaMathlib",
         "src/OmegaMathlib",
-        "src/OmegaMath"
+        "src/OmegaMath",
+        "src/OmegaChecks/InitPort"
       ],
       "materials": [
         "global.json",
