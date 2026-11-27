@@ -91,11 +91,17 @@ class CoverageTest(unittest.TestCase):
         row = site("Init.While", "Classical.choice.congr_simp", equationOperand="Classical.choice",
                    operandImpliesAxiom="Classical.choice", operandReductionWitness="fromChoice",
                    specializedEndpointType="Classical.choice")
-        self.assertEqual(check_coverage(inventory(row)), (0, []))
+        certificate = {"certifiedChoiceEndpoints": [("Init.While", row["name"], "fromChoice")]}
+        self.assertEqual(check_coverage(inventory(row) | certificate), (0, []))
+        fake = site("Init.ByCases", "ite.congr_simp", equationOperand="ite",
+                    operandImpliesAxiom="Classical.choice", operandReductionWitness="doesNotExist",
+                    specializedEndpointType="Classical.choice")
+        with self.assertRaisesRegex(ValueError, "uncertified specialized equality endpoint"):
+            check_coverage(inventory(row, fake) | certificate)
         for mismatch in ({"kind": "definition"}, {"equationOperand": "other"}, {"operandReductionWitness": None},
                          {"specializedEndpointType": "propext"}, {"matchingNameAndModule": True}):
             with self.subTest(mismatch=mismatch), self.assertRaisesRegex(ValueError, "equality endpoint"):
-                check_coverage(inventory({**row, **mismatch}))
+                check_coverage(inventory({**row, **mismatch}) | certificate)
 
     def test_strict_choice_requires_a_checked_target_and_an_unimplemented_site(self):
         row = site("Init.System.ST", "ST.Prim.Ref.get", strictImpliesAxiom="Classical.choice.{1}",

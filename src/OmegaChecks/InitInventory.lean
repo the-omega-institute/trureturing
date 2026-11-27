@@ -560,6 +560,7 @@ private def inventory (lib : System.FilePath) (visible strict full witnesses : E
       if publicName n then
         if names.contains n then duplicateNames := duplicateNames.insert n
         names := names.insert n
+  let mut certifiedEndpoints : Array (String × String × String) := #[]
   let mut certifiedSites := 0
   let mut matchedUnique : NameSet := {}
   let mut axiomUnique : NameSet := {}
@@ -606,6 +607,9 @@ private def inventory (lib : System.FilePath) (visible strict full witnesses : E
             (Meta.MetaM.run' certify).toIO' {fileName := "<official equality endpoints>", fileMap := default} {env := witnesses}
             pure (some "Classical.choice")
         | none => pure none
+      if endpointType.isSome then
+        if let some op := operand then
+          certifiedEndpoints := certifiedEndpoints.push (owner.toString, name.toString, op.witness.toString)
       let conditional := OmegaChecks.InitInventory.conditionalConsequence? owner name
       let direct := (logicalConsequence? owner name).map (fun (target, witness) => (target.toString, witness))
       let consequence := conditional.map (fun (target, witness, _) => (target, witness)) <|> direct
@@ -695,7 +699,7 @@ private def inventory (lib : System.FilePath) (visible strict full witnesses : E
   let unique := Json.mkObj [("declarations",toJson names.size), ("directAxioms",toJson axiomUnique.size),
     ("withAxioms",toJson withAxiomsUnique.size), ("matchingNameAndModule",toJson matchedUnique.size)]
   return Json.mkObj [("schemaVersion", toJson 4), ("uniqueNames", unique), ("leanVersion", toJson Lean.versionString), ("leanCommit", toJson Lean.githash),
-    ("nativeByModule", Json.mkObj nativeByModule.toList),
+    ("nativeByModule", Json.mkObj nativeByModule.toList), ("certifiedChoiceEndpoints", toJson certifiedEndpoints),
     ("modules", toJson (modules.map Name.toString)), ("summary", summary), ("declarations", .arr rows)]
 
 def main (args : List String) : IO Unit := do

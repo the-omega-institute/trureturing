@@ -16,6 +16,10 @@ STRICT_SOURCES = ROOT / "strict/OmegaChecks/InitPort"
 def check_coverage(official):
     """Count physical sites from the fresh Lean inventory, including repeated names."""
     modules = set(official["modules"])
+    certificates = official.get("certifiedChoiceEndpoints", [])
+    by_site = {(owner, name): witness for owner, name, witness in certificates}
+    if len(by_site) != len(certificates):
+        raise ValueError("repeated specialized equality endpoint certificate")
     sites = set()
     direct = 0
     matched = 0
@@ -38,6 +42,9 @@ def check_coverage(official):
             raise ValueError(f"inconsistent strict choice reduction for {owner}/{name}")
         runtime = row.get("runtimeConflictWitness")
         endpoint = row.get("specializedEndpointType")
+        certificate = by_site.pop(site, None)
+        if bool(endpoint) != bool(certificate) or (endpoint and certificate != row.get("operandReductionWitness")):
+            raise ValueError(f"uncertified specialized equality endpoint for {owner}/{name}")
         if endpoint and (endpoint != "Classical.choice" or row["kind"] != "theorem" or
                          name != str(row.get("equationOperand")) + ".congr_simp" or
                          row.get("operandImpliesAxiom") != endpoint or not row.get("operandReductionWitness") or
@@ -57,6 +64,8 @@ def check_coverage(official):
             reductions += 1
         elif not runtime and not endpoint:
             unresolved.append(site)
+    if by_site:
+        raise ValueError("specialized equality endpoint certificate has no definition site")
     summary = official["summary"]
     if (not sites or not modules or len(sites) != summary["declarations"] or
             matched != summary["matchingNameAndModule"] or direct != summary["directAxioms"]):
