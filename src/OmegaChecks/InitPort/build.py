@@ -267,6 +267,9 @@ def generate(stage, product, seed, roots, excluded, original_seed):
         sharing.extend(install_state_runtime(stage, product, artifact, "ShareCommon", "share_common"))
 
     string_interfaces = {
+        "Init.Data.String.Bootstrap": {"String.push", "String.mk", "String.Internal.length",
+                                       "String.Internal.extract", "String.Internal.append"},
+        "Init.Data.String.Defs": {"String.append", "String.toUTF8"},
         "Init.Prelude": {"String.ofList", "String.utf8ByteSize", "String.toByteArray", "String.decEq", "String.hash"},
         "Init.Data.String.Basic": {"String.toList", "String.data", "String.decidableLT", "ByteArray.validateUTF8",
                                    *(f"String.Pos.Raw.{n}" for n in ("get", "next", "prev", "atEnd", "isValid"))},

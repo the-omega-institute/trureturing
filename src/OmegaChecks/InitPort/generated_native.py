@@ -120,19 +120,25 @@ def compile_generated(stage, product, graph, seed_ir, owners=None, *, original_s
     modes = {owner: "mixed=" if seed_files[owner].is_file() else "layouts=" for owner in seed_owners}
     env = {**os.environ, "LEAN_ABORT_ON_PANIC": "1"}
     callbacks = before_owner or {}
-    literals = stage / "literal.c"
-    if "OmegaInit.Prelude" in selected:
-        run("lake", "env", "lean", "--run", HERE / "LiteralNative.lean", library, literals, "OmegaInit.Prelude", env=env)
-        if literals.exists():
-            compile_object((literals, product / "native/literal.o"))
     string_owner = "OmegaInit.Data.String.Basic"
-    strings = stage / "string-list.c"
-    if string_owner in selected:
-        run("lake", "env", "lean", "--run", HERE / "LiteralNative.lean", library, strings, string_owner, env=env)
-        if strings.exists():
-            compile_object((strings, product / "native/string-list.o"))
-            if string_owner not in seed_owners:
-                modes[string_owner] = "mixed="
+    string_modules = {
+        "OmegaInit.Prelude": "literal",
+        "OmegaInit.Data.String.Bootstrap": "string-bootstrap",
+        "OmegaInit.Data.String.Defs": "string-defs",
+        string_owner: "string-list",
+    }
+    string_sources = []
+    for owner, filename in string_modules.items():
+        if owner not in selected:
+            continue
+        source = stage / (filename + ".c")
+        run("lake", "env", "lean", "--run", HERE / "LiteralNative.lean", library, source, owner, env=env)
+        if source.exists():
+            compile_object((source, product / "native" / (filename + ".o")))
+            string_sources.append(source)
+            if owner not in seed_owners:
+                modes[owner] = "mixed="
+    literals = stage / "literal.c"
     requests = [modes.get(owner, "") + owner for owner in selected]
     if owners is not None and "OmegaInit.Control.State" in requested and "OmegaInit.Control.Basic" not in requested:
         requests.insert(0, "layouts=OmegaInit.Control.Basic")
@@ -189,15 +195,15 @@ def compile_generated(stage, product, graph, seed_ir, owners=None, *, original_s
                 pending.extend(graph.get(owner, ()))
         return seen
 
-    if strings.exists() and literals.exists() and check_strings:
+    if len(string_sources) == len(string_modules) and check_strings:
         list_client = stage / "string-list-consumer.c"
         run("lean", "-R", HERE, "-o", stage / "StringListConsumer.olean", "-c", list_client, HERE / "StringListConsumer.lean",
             env={**os.environ, "LEAN_PATH": str(library)})
         dependencies = reachable([string_owner])
         missing = sorted(name for name in dependencies & seed_owners if not seed_files[name].is_file())
         if missing or (owners is not None and not dependencies.issubset(selected)):
-            # Detached and selectively compiled products need only the two adapters for this consumer.
-            inputs = [literals, strings]
+            # Detached and selectively compiled products need only the string adapters for this consumer.
+            inputs = string_sources
         else:
             inputs = []
             for owner in sorted(dependencies):
@@ -217,7 +223,7 @@ def compile_generated(stage, product, graph, seed_ir, owners=None, *, original_s
         run("leanc", "-I", HERE, list_client, HERE / "string_list_consumer.c", *inputs, "-o", application)
         run(application)
         shim = stage / ("string-extern" + (sysconfig.get_config_var("SHLIB_SUFFIX") or ".so"))
-        run("leanc", "-shared", "-fPIC", "-DLEAN_EXPORTING", "-I", HERE, literals, strings, "-o", shim)
+        run("leanc", "-shared", "-fPIC", "-DLEAN_EXPORTING", "-I", HERE, *string_sources, "-o", shim)
         run("lake", "env", "lean", "--load-dynlib=" + str(shim), "--run", HERE / "StringListIRConsumer.lean",
             library, stage)
     if not set(CONTROL).issubset(selected):

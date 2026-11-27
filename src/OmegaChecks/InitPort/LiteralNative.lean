@@ -19,10 +19,33 @@ private def positionOps : List (Name × String × String × IR.IRType × IR.IRTy
   cursor `atEnd "omega_string_at_end" "lean_string_utf8_at_end" .uint8 .uint8 ++
   [(`String.Pos.Raw.isValid, "omega_string_valid_pos", "lean_string_is_valid_pos", .uint8, .uint8)]
 
+private structure TextOp where
+  name : Name
+  symbol : String
+  pinned : String
+  args : Array (IR.IRType × Bool)
+  result : IR.IRType
+
+private def textOps (owner : Name) : List TextOp :=
+  let appendArgs := #[(IR.IRType.object, false), (.object, true)]
+  match owner with
+  | `OmegaInit.Data.String.Bootstrap => [
+    ⟨`String.push, "omega_string_push", "lean_string_push", #[(.object, false), (.uint32, false)], .object⟩,
+    ⟨`String.Internal.length, "omega_string_length", "lean_string_length", #[(.object, true)], .tobject⟩,
+    ⟨`String.Internal.append, "omega_string_append", "lean_string_append", appendArgs, .object⟩,
+    ⟨`String.Internal.extract, "omega_string_extract", "lean_string_utf8_extract",
+      #[(.object, true), (.tobject, true), (.tobject, true)], .object⟩,
+    ⟨`String.mk, "omega_string_of_list", "lean_string_mk", #[(.tobject, false)], .object⟩]
+  | `OmegaInit.Data.String.Defs => [
+    ⟨`String.append, "omega_string_append", "lean_string_append", appendArgs, .object⟩,
+    ⟨`String.toUTF8, "omega_string_utf8", "lean_string_to_utf8", #[(.object, true)], .object⟩]
+  | _ => []
+
 public unsafe def main (args : List String) : IO Unit := do
   let [lib, out, ownerArg] := args | throw <| IO.userError "expected strict library, native output and module"
   let owner := ownerArg.toName
-  unless owner == `OmegaInit.Prelude || owner == `OmegaInit.Data.String.Basic do
+  let extra := textOps owner
+  unless owner == `OmegaInit.Prelude || owner == `OmegaInit.Data.String.Basic || !extra.isEmpty do
     throw <| IO.userError s!"unsupported string owner {owner}"
   let official ← importModules #[{module := owner.replacePrefix `OmegaInit `Init, importAll := true}] {}
   verify official `String.ofList #[(.tobject, false)] .object "lean_string_mk"
@@ -41,10 +64,12 @@ public unsafe def main (args : List String) : IO Unit := do
     verify official `ByteArray.validateUTF8 #[(.object, true)] .uint8 "lean_string_validate_utf8"
     for (name, _, symbol, sourceResult, _) in positionOps do
       verify official name #[(.object, true), (.tobject, true)] sourceResult symbol
+  for op in extra do verify official op.name op.args op.result op.pinned
   searchPathRef.set [lib]
   let read := importModules #[{module := owner, importAll := true : Import}] {}
   let mut env ← read
-  let names := if owner == `OmegaInit.Prelude then
+  let names := if !extra.isEmpty then extra.map fun op => (`Omega ++ op.name, op.symbol)
+  else if owner == `OmegaInit.Prelude then
     [(`Omega.String.ofList, "omega_string_of_list"), (`Omega.Char.ofNat, "omega_char_of_nat"),
      (`Omega.String.utf8ByteSize, "omega_string_byte_size"), (`Omega.String.toByteArray, "omega_string_to_bytes"),
      (`Omega.String.decEq, "omega_string_dec_eq"), (`Omega.String.hash, "omega_string_hash")]
@@ -85,7 +110,9 @@ public unsafe def main (args : List String) : IO Unit := do
       modifyEnv fun e => externAttr.ext.addEntry (asyncDecl := n) e (n, ⟨[.standard `all symbol]⟩)
       (← compileDeclsRef.get) #[n] {}
   for (n, symbol) in names do
-    if let some (_, _, _, _, strictResult) := positionOps.find? (fun (name, _, _, _, _) => n == `Omega ++ name) then
+    if let some op := extra.find? (fun op => n == `Omega ++ op.name) then
+      verify compiled n (op.args.map fun (_, borrow) => (.tobject, borrow)) .tobject symbol
+    else if let some (_, _, _, _, strictResult) := positionOps.find? (fun (name, _, _, _, _) => n == `Omega ++ name) then
       verify compiled n #[(.tobject, true), (.tobject, true)] strictResult symbol
     else if n == `Omega.ByteArray.validateUTF8 then
       verify compiled n #[(.tobject, true)] .uint8 symbol
@@ -95,5 +122,9 @@ public unsafe def main (args : List String) : IO Unit := do
       let borrow := n == `Omega.String.utf8ByteSize || n == `Omega.String.hash
       verify compiled n #[(.tobject, borrow)] .tobject symbol
   writeCode lib owner compiled (codeExtensions ++ #[privateConstKindsExt.name])
-  let source := if owner == `OmegaInit.Prelude then "literal_runtime.c" else "string_list_runtime.c"
-  emitBridge compiled owner (System.FilePath.mk "src/OmegaChecks/InitPort" / source) out
+  let source : String := match owner with
+    | `OmegaInit.Prelude => "literal_runtime.c"
+    | `OmegaInit.Data.String.Bootstrap => "string_bootstrap_runtime.c"
+    | `OmegaInit.Data.String.Defs => "string_defs_runtime.c"
+    | _ => "string_list_runtime.c"
+  emitBridge compiled owner (some (System.FilePath.mk "src/OmegaChecks/InitPort" / System.FilePath.mk source)) out

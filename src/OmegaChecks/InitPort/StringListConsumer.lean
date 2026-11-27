@@ -45,3 +45,19 @@ public def endAt (s : Omega.String) (i : Nat) : Bool := Omega.String.Pos.Raw.atE
 
 @[export omega_test_string_valid_pos]
 public def validAt (s : Omega.String) (i : Nat) : Bool := Omega.String.Pos.Raw.isValid s ⟨i⟩
+
+@[export omega_test_string_push]
+public def pushChar (s : Omega.String) (c : Omega.Char) : Omega.String := Omega.String.push s c
+
+@[export omega_test_string_append]
+public def appendText (a b : Omega.String) : Omega.String := Omega.String.append a b
+
+@[export omega_test_string_length]
+public def textLength (s : Omega.String) : Nat := Omega.String.Internal.length s
+
+@[export omega_test_string_extract]
+public def extractText (s : Omega.String) (a b : Nat) : Omega.String :=
+  Omega.String.Internal.extract s ⟨a⟩ ⟨b⟩
+
+@[export omega_test_string_utf8]
+public def textUTF8 (s : Omega.String) : Omega.ByteArray := Omega.String.toUTF8 s
