@@ -306,6 +306,7 @@ def generate(stage, product, seed, roots, excluded, original_seed):
                       original_seed=original_seed, before_owner={"OmegaInit.ShareCommon": install_sharing},
                       check_sharing=check_sharing,
                       check_macro_reader=has_interfaces(inventory, {"Init.Prelude": {"Lean.Macro.getMethodsImp"}}),
+                      check_shared_pointer=has_interfaces(inventory, {"Init.ShareCommon": {"ShareCommon.Object.ptrEq"}}),
                       check_pointer_comparison=has_interfaces(inventory, {"Init.Util": {"ptrEq", "withPtrEqUnsafe"}}),
                       check_guarded_pointer=has_interfaces(inventory, {"Init.Util": {"withPtrEq"}}),
                       check_address=has_interfaces(inventory, {"Init.Util": {"ptrAddrUnsafe"}}),

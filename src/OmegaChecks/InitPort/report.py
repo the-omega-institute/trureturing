@@ -111,7 +111,8 @@ def check_coverage(official):
                  (owner == "Init.Util" and not runtime))):
             raise ValueError(f"inconsistent checked unsafe runtime for {owner}/{name}")
         comparison = row.get("checkedPointerComparison", False)
-        expected_comparison = port and owner == "Init.Util" and name in {"ptrEq", "withPtrEqUnsafe"}
+        expected_comparison = port and site in {
+            ("Init.Util", "ptrEq"), ("Init.Util", "withPtrEqUnsafe"), ("Init.ShareCommon", "ShareCommon.Object.ptrEq")}
         if comparison is not expected_comparison or (comparison and
                 (row["kind"] != "definition" or not row.get("unsafe") or not runtime)):
             raise ValueError(f"inconsistent checked pointer comparison for {owner}/{name}")

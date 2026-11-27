@@ -6,14 +6,15 @@ import all OmegaChecks.InitPort.ReferencePut
 open Lean
 namespace OmegaChecks.InitPort.PointerComparison
 
-public def names := [`ptrEq, `withPtrEqUnsafe]
+public def names := [`ptrEq, `withPtrEqUnsafe, `ShareCommon.Object.ptrEq]
 
 public def hasBorrowedABI (env : Environment) (name : Name) (strict : Bool) : Bool := Id.run do
   unless names.contains name do return false
   let target := if strict then InitKernelPort.portName name else name
   let some (.fdecl _ args .uint8 ..) := IR.findEnvDecl env target | return false
-  let values := #[(IR.IRType.erased, false), (.tobject, true), (.tobject, true)]
-  let expected := if name == `ptrEq then values else values ++ #[(.object, false), (.erased, false)]
+  let objects := #[(IR.IRType.tobject, true), (.tobject, true)]
+  let values := if name == `ShareCommon.Object.ptrEq then objects else #[(.erased, false)] ++ objects
+  let expected := if name == `withPtrEqUnsafe then values ++ #[(.object, false), (.erased, false)] else values
   return args.map (fun p => (p.ty, p.borrow)) == expected
 
 private def argument (n : Name) (ty body : Expr) := Expr.forallE n ty body .default
@@ -25,18 +26,21 @@ private def lambdaBody (type body : Expr) : Expr := match type with
 /-- The pinned transparent terms use word equality and the guarded callback on Unit. -/
 public def isOriginal (ci : ConstantInfo) (strict : Bool) : Bool := Id.run do
   let .defnInfo d := ci | return false
-  let [u] := d.levelParams | return false
   let name := if strict then InitKernelPort.originalName d.name else d.name
   unless names.contains name && d.safety == .unsafe && d.all == [d.name] do return false
-  let level := Level.param u
+  let shared := name == `ShareCommon.Object.ptrEq
+  let level ← match d.levelParams with
+    | [] => if shared then pure Level.zero else return false
+    | [u] => if shared then return false else pure (Level.param u)
+    | _ => return false
   let bl := mkConst `Bool
   let yes := mkConst `Bool.true
   let word := mkConst `USize
   let unit := mkConst `Unit
   let unitValue := mkConst `Unit.unit
-  let (result, body) := if name == `ptrEq then
+  let (result, body) := if name != `withPtrEqUnsafe then
     let beq := mkApp2 (mkConst `instBEqOfDecidableEq [0]) word (mkConst `instDecidableEqUSize)
-    let addr := mkApp (mkConst `ptrAddrUnsafe [level]) (.bvar 2)
+    let addr := mkApp (mkConst `ptrAddrUnsafe [level]) (if shared then mkConst `ShareCommon.Object else .bvar 2)
     (bl, mkApp4 (mkConst `BEq.beq [0]) word beq (mkApp addr (.bvar 1)) (mkApp addr (.bvar 0)))
   else
     let equal := mkApp3 (mkConst `Eq [.succ level]) (.bvar 3) (.bvar 2) (.bvar 1)
@@ -46,8 +50,9 @@ public def isOriginal (ci : ConstantInfo) (strict : Bool) : Bool := Id.run do
     let test := mkApp3 (mkConst `ptrEq [level]) (.bvar 4) (.bvar 3) (.bvar 2)
     let decide := mkApp2 (mkConst `instDecidableEqBool) test yes
     (callbacks, mkApp5 (mkConst `ite [1]) bl (eqTrue test) decide yes (mkApp (.bvar 1) unitValue))
-  let ty := Expr.forallE `α (.sort (.succ level)) (argument `a (.bvar 0)
-    (argument `b (.bvar 1) result)) .implicit
+  let ty := if shared then
+      argument `a (mkConst `ShareCommon.Object) (argument `b (mkConst `ShareCommon.Object) result)
+    else Expr.forallE `α (.sort (.succ level)) (argument `a (.bvar 0) (argument `b (.bvar 1) result)) .implicit
   let tr := InitKernelPort.translate (if strict then InitKernelPort.portName else id)
   return ReferencePut.sameTerm d.type (tr ty) && ReferencePut.sameTerm d.value (tr (lambdaBody ty body))
 

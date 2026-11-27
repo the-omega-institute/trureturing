@@ -699,7 +699,8 @@ private def inventory (lib : System.FilePath) (visible strict full witnesses : E
           throwError "invalid public, private or native observation {strictName}"
         pure (some symbol)
       else pure none
-      let pointerComparison := matched && owner == `Init.Util && OmegaChecks.InitPort.PointerComparison.names.contains name
+      let pointerComparison := matched && OmegaChecks.InitPort.PointerComparison.names.contains name &&
+        owner == (if name == `ShareCommon.Object.ptrEq then `Init.ShareCommon else `Init.Util)
       if pointerComparison then
         let some dst := full.find? strictName | throwError "missing pointer comparison body {strictName}"
         unless (strict.find? strictName).any (·.isUnsafe) && officialSigs.contains name && strictSigs.contains strictName &&
