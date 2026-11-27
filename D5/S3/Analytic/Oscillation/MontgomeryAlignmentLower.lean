@@ -29,7 +29,7 @@ private abbrev threshold : ℝ := 2 * Real.pi * c ^ 2
 
 private theorem lower_of_alignment (S : Spectrum) {Y R t : ℝ} (hY : 1 < Y)
     (hR : 0 ≤ R)
-    (halign : ∀ j ∈ S.cut Y, Real.sin (S.gamma j * t) = 1) :
+    (halign : ∀ i ∈ S.cut Y, ∀ j ∈ S.cut Y, Real.cos ((S.gamma i - S.gamma j) * t) = 1) :
     (2 * Real.pi) / (Y + 2 * R) *
       ((Real.pi⁻¹ * (2 * Real.arctan R)) * (S.N Y : ℝ)) ^ 2 ≤
         Y * Real.log Y / (2 * Real.pi) * montgomery S (t / Real.log Y) Y := by
@@ -52,20 +52,14 @@ private theorem lower_of_alignment (S : Spectrum) {Y R t : ℝ} (hY : 1 < Y)
   intro i hi
   apply Finset.sum_congr rfl
   intro j hj
-  have hcos (k : S.index) (hk : k ∈ S.cut Y) : Real.cos (S.gamma k * t) = 0 := by
-    have h := Real.sin_sq_add_cos_sq (S.gamma k * t)
-    rw [halign k hk] at h
-    nlinarith
-  have hphase : Real.cos ((S.gamma i - S.gamma j) * t) = 1 := by
-    rw [sub_mul, Real.cos_sub, hcos i hi, hcos j hj, halign i hi, halign j hj]
-    norm_num
-  simp [pairCos, hphase, a, Complex.mul_re]
+  simp [pairCos, halign i hi j hj, a, Complex.mul_re]
 
-/-- Under the counting asymptotic, exact sine alignment forces the ordered Lorentz pair sum above
+/-- Under the counting asymptotic, exact phase alignment forces the ordered Lorentz pair sum above
 any coefficient strictly below the Cauchy threshold at every sufficiently large cutoff. -/
-theorem eventually_montgomery_gt_of_sine_alignment (S : Spectrum) (hN : CountAsymptotic S)
+theorem eventually_montgomery_gt_of_phase_alignment (S : Spectrum) (hN : CountAsymptotic S)
     {κ : ℝ} (hκ : κ < threshold) :
-    ∀ᶠ Y : ℝ in atTop, ∀ t : ℝ, (∀ j ∈ S.cut Y, Real.sin (S.gamma j * t) = 1) →
+    ∀ᶠ Y : ℝ in atTop, ∀ t : ℝ,
+      (∀ i ∈ S.cut Y, ∀ j ∈ S.cut Y, Real.cos ((S.gamma i - S.gamma j) * t) = 1) →
       κ * (Y * Real.log Y ^ 2) <
         Y * Real.log Y / (2 * Real.pi) * montgomery S (t / Real.log Y) Y := by
   have hatan : Tendsto (fun Y : ℝ => Real.pi⁻¹ * (2 * Real.arctan (Real.sqrt Y)))
@@ -103,10 +97,10 @@ theorem eventually_montgomery_gt_of_sine_alignment (S : Spectrum) (hN : CountAsy
   calc
     κ * (Y * Real.log Y ^ 2) < L Y * (Y * Real.log Y ^ 2) :=
       mul_lt_mul_of_pos_right hLY (mul_pos hY0 (pow_pos (Real.log_pos hY) _))
-    _ ≤
-        Y * Real.log Y / (2 * Real.pi) * montgomery S (t / Real.log Y) Y := by rw [hL]; exact lower_of_alignment S hY hs.le ht
+    _ ≤ Y * Real.log Y / (2 * Real.pi) * montgomery S (t / Real.log Y) Y := by
+      rw [hL]
+      exact lower_of_alignment S hY hs.le ht
 
-
-#print axioms eventually_montgomery_gt_of_sine_alignment
+#print axioms eventually_montgomery_gt_of_phase_alignment
 
 end D5.S3.Analytic.Oscillation.MontgomeryAlignmentLower
