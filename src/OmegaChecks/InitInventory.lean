@@ -389,6 +389,13 @@ private def conditionalConsequence? (owner name : Name) : Option (String × Name
     if let some (proof, result) := observation then
       return ("∀ P : Prop, Decidable P", proof,
         s!"When x ≤ y on Bool is the constant proposition P, {result} exactly when P holds")
+  if owner == `Init.Data.ByteArray.Basic then
+    if name == `ByteArray.forInUnsafe.loop then
+      return ("False", ``OmegaChecks.InitBoundaries.ByteArrayReads.noForInBound,
+        "The uget read has an in-bounds index whenever i < sz for the independently supplied sz")
+    if name == `ByteArray.foldlMUnsafe.fold then
+      return ("False", ``OmegaChecks.InitBoundaries.ByteArrayReads.noFoldBound,
+        "The uget read has an in-bounds index whenever i differs from the independently supplied stop")
   if owner == `Init.Data.Array.Basic && [`Array.mapMUnsafe, `Array.mapFinIdxMUnsafe].contains name then
     let witness := if name == `Array.mapMUnsafe then ``OmegaChecks.InitBoundaries.ArrayCasts.map
       else ``OmegaChecks.InitBoundaries.ArrayCasts.mapIndexed

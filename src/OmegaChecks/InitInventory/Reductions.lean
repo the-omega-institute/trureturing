@@ -27,6 +27,9 @@ meta import OmegaChecks.InitInventory.EffectObservations
 public import OmegaChecks.InitInventory.ArrayCasts
 import all OmegaChecks.InitInventory.ArrayCasts
 meta import OmegaChecks.InitInventory.ArrayCasts
+public import OmegaChecks.InitInventory.ByteArrayReads
+import all OmegaChecks.InitInventory.ByteArrayReads
+meta import OmegaChecks.InitInventory.ByteArrayReads
 public import OmegaChecks.InitInventory.PointerObservations
 import all OmegaChecks.InitInventory.PointerObservations
 meta import OmegaChecks.InitInventory.PointerObservations
@@ -134,7 +137,7 @@ private def replayWitnesses (env : Environment) : IO Unit := do
     [``Envelope.funextFromCancellation, ``Envelope.funextFromEnvelopeRing,
       ``Envelope.funextFromEnvelopeCommRing, ``Envelope.funextFromEnvelopeIntModule] ++
     [``PointerObservations.exclusivity, ``EffectObservations.base, ``EffectObservations.eio, ``EffectObservations.io,
-      ``ArrayCasts.map, ``ArrayCasts.mapIndexed,
+      ``ArrayCasts.map, ``ArrayCasts.mapIndexed, ``ByteArrayReads.noForInBound, ``ByteArrayReads.noFoldBound,
       ``PointerObservations.address, ``PointerObservations.pointerEquality, ``PointerObservations.listPointerEquality,
       ``PointerObservations.guardedPointerEquality, ``PointerObservations.objectPointerEquality, ``PointerObservations.objectPointerHash] ++
     [``HeterogeneousQuotient.hrecOn, ``HeterogeneousQuotient.hrecOnSetoid,
