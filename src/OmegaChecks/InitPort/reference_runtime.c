@@ -1,8 +1,27 @@
 #include <lean/lean.h>
-LEAN_EXPORT lean_obj_res omega_st_mk_ref(lean_obj_arg value, lean_obj_arg world) {
-    lean_obj_res ref = lean_st_mk_ref(value);
+extern uint8_t lean_st_ref_ptr_eq(b_lean_obj_arg, b_lean_obj_arg);
+
+static lean_obj_res state_result(lean_obj_arg value, lean_obj_arg world) {
     lean_obj_res result = lean_alloc_ctor(0, 2, 0);
-    lean_ctor_set(result, 0, ref);
+    lean_ctor_set(result, 0, value);
     lean_ctor_set(result, 1, world);
     return result;
+}
+
+LEAN_EXPORT lean_obj_res omega_st_mk_ref(lean_obj_arg value, lean_obj_arg world) {
+    return state_result(lean_st_mk_ref(value), world);
+}
+
+LEAN_EXPORT lean_obj_res omega_st_ref_swap(b_lean_obj_arg ref, lean_obj_arg value, lean_obj_arg world) {
+    return state_result(lean_st_ref_swap(ref, value), world);
+}
+
+LEAN_EXPORT lean_obj_res omega_st_ref_set(lean_obj_arg ref, lean_obj_arg value, lean_obj_arg world) {
+    lean_dec(lean_st_ref_swap(ref, value));
+    lean_dec(ref);
+    return state_result(lean_box(0), world);
+}
+
+LEAN_EXPORT lean_obj_res omega_st_ref_ptr_eq(b_lean_obj_arg a, b_lean_obj_arg b, lean_obj_arg world) {
+    return state_result(lean_box(lean_st_ref_ptr_eq(a, b)), world);
 }

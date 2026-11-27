@@ -186,7 +186,7 @@ def generate(stage, product, seed, roots, excluded):
         compile_type_name(stage, product, artifact, inventory)
     if "OmegaInit.System.ST" in graph:
         compile_state_runtime(stage, product, artifact, inventory, "Reference", "reference",
-                              {"Init.System.ST": {"ST.Prim.mkRef"}})
+                              {"Init.System.ST": {"ST.Prim.mkRef", "ST.mkRef", "ST.Ref.swap", "ST.Ref.set", "ST.Ref.ptrEq"}})
     if "OmegaInit.System.Promise" in graph:
         compile_state_runtime(stage, product, artifact, inventory, "Promise", "promise", {
             "Init.System.Promise": {"IO.Promise.new", "IO.Promise.resolve", "IO.Promise.isResolved", "IO.Promise.result?", "IO.Promise.resultD"},

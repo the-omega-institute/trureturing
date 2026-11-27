@@ -47,6 +47,7 @@ public import OmegaChecks.InitPort.Alternatives.OrderPackages
 public import OmegaChecks.InitPort.Alternatives.Powers
 public import OmegaChecks.InitPort.Alternatives.Range
 public import OmegaChecks.InitPort.Alternatives.Range.Finite
+public import OmegaChecks.InitPort.Alternatives.ReferenceSwap
 public import OmegaChecks.InitPort.Alternatives.Rational
 public import OmegaChecks.InitPort.Alternatives.UTF8
 public import OmegaChecks.InitPort.Alternatives.Uri

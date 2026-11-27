@@ -4,6 +4,7 @@ import OmegaChecks.FieldMethods
 import OmegaChecks.InitPort.NativeQuot
 import OmegaChecks.InitPort.WordFold
 import OmegaChecks.InitPort.WordForIn
+import OmegaChecks.InitPort.ReferenceSwap
 import OmegaChecks.InitPort.LogicalHandle
 import OmegaChecks.InitPort.StateToken
 import OmegaChecks.InitPort.TypeName
@@ -240,6 +241,9 @@ private def compare (reference : Environment) (rename : Name → Name) (src dst 
     deps := deps ++ x.value.getUsedConstants
   | .opaqueInfo x, .opaqueInfo y =>
     if let some (strict, publicStrict) := foundation then
+      if y.name == `ST.Prim.Ref.swap then
+        OmegaChecks.InitPort.ReferenceSwap.check strict publicStrict reference y (liftTerm x.value)
+        return deps ++ x.value.getUsedConstants
       if let some api := (OmegaChecks.InitPort.LogicalHandle.forDecl? y.name).filter (fun api => y.name == api.allocator && !x.isUnsafe) then
         OmegaChecks.InitPort.LogicalHandle.checkBody api strict publicStrict reference y.name liftTerm x.value
         return deps ++ x.value.getUsedConstants
