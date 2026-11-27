@@ -4,8 +4,9 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Disjoint close-pair phase defects force a strict Lorentz cap under a conditional row budget. -/
+   digest: Disjoint close-pair phase defects force a strict Lorentz cap under a zero-phase bound. -/
 
+import D5.S3.Analytic.Oscillation.MontgomeryAutocorrelationLimit
 import D5.S3.Analytic.Oscillation.MontgomeryCountUpper
 import D5.S3.Analytic.Oscillation.SmoothedSpectrumCounting
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Bounds
@@ -26,7 +27,9 @@ open D5.S3.Analytic.Oscillation.MontgomeryCountUpper
 open D5.S3.Analytic.Oscillation.OrdinateCounting
 open D5.S3.Analytic.Oscillation.SmoothedSpectrumCounting
 
-def lorentzKernel (d : ℝ) : ℝ := 4 / (4 + d ^ 2)
+open D5.S3.Analytic.Oscillation.MontgomeryAutocorrelationLimit (copies_pair_sum)
+open D5.S3.Analytic.Oscillation.MontgomeryWindow (pairCos)
+open Omega.MeasureTheory.LorentzIntervalMass (kernel)
 
 def phaseResidual (a b : ℝ) : ℝ := 1 - Real.cos (a - b)
 
@@ -35,7 +38,7 @@ def localCopies {J : Type*} (s : Finset J) (gamma : J → ℝ) (u : J) : Finset 
 
 def finiteLorentzPairSum {J : Type*} (s : Finset J) (gamma : J → ℝ) (t : ℝ) : ℝ :=
   ∑ u ∈ s, ∑ v ∈ s,
-    lorentzKernel (gamma u - gamma v) * Real.cos (t * (gamma u - gamma v))
+    kernel (gamma u - gamma v) * Real.cos (t * (gamma u - gamma v))
 
 private lemma phaseResidual_nonneg (a b : ℝ) : 0 ≤ phaseResidual a b := by
   exact sub_nonneg.mpr (Real.cos_le_one _)
@@ -85,105 +88,72 @@ private lemma phaseResidual_triangle (a b c : ℝ) :
     rw [show c - b = -(b - c) by ring, Real.cos_neg]
   nlinarith
 
-private lemma lorentzKernel_nonneg (d : ℝ) : 0 ≤ lorentzKernel d := by
-  unfold lorentzKernel
-  positivity
-
-private lemma lorentzKernel_ge_half {d : ℝ} (hd : |d| ≤ 2) :
-    (1 / 2 : ℝ) ≤ lorentzKernel d := by
-  unfold lorentzKernel
+private lemma kernel_ge_half {d : ℝ} (hd : |d| ≤ 2) :
+    (1 / 2 : ℝ) ≤ kernel d := by
+  unfold kernel
   have hd2 : d ^ 2 ≤ 4 := by
     have h := (sq_le_sq).2 (show |d| ≤ |(2 : ℝ)| by simpa using hd)
     nlinarith
   apply (le_div_iff₀ (by positivity)).2
   nlinarith
 
-private lemma finite_pair_sum_zero_le {J : Type*} (s : Finset J) (gamma : J → ℝ) (t : ℝ)
-    (ρ : ℝ) (hrow : ∀ u ∈ s, ∑ v ∈ s, lorentzKernel (gamma u - gamma v) ≤ ρ) :
-    finiteLorentzPairSum s gamma 0 ≤ ρ * s.card := by
-  simp only [finiteLorentzPairSum, Real.cos_zero, zero_mul, mul_one]
-  calc
-    _ ≤ ∑ u ∈ s, ρ := Finset.sum_le_sum (fun u hu => hrow u hu)
-    _ = _ := by rw [Finset.sum_const, nsmul_eq_mul]; ring
-
 private lemma row_pair_defect_lower {J : Type*} (s : Finset J) (gamma : J → ℝ)
-    (t : ℝ) (u v : J) (hu : u ∈ s) (hv : v ∈ s)
+    (t : ℝ) (u v : J)
     (huv : |gamma u - gamma v| ≤ 1) :
-    (∑ k ∈ s, lorentzKernel (gamma u - gamma k) * phaseResidual (t * gamma u) (t * gamma k)) +
-      (∑ k ∈ s, lorentzKernel (gamma v - gamma k) * phaseResidual (t * gamma v) (t * gamma k)) ≥
+    (∑ k ∈ s, kernel (gamma u - gamma k) * phaseResidual (t * gamma u) (t * gamma k)) +
+      (∑ k ∈ s, kernel (gamma v - gamma k) * phaseResidual (t * gamma v) (t * gamma k)) ≥
       (1 / 4 : ℝ) * (localCopies s gamma u).card *
         phaseResidual (t * gamma u) (t * gamma v) := by
   have hlocal :
-      (∑ k ∈ localCopies s gamma u, lorentzKernel (gamma u - gamma k) *
+      (∑ k ∈ localCopies s gamma u, kernel (gamma u - gamma k) *
         phaseResidual (t * gamma u) (t * gamma k)) +
-        (∑ k ∈ localCopies s gamma u, lorentzKernel (gamma v - gamma k) *
+        (∑ k ∈ localCopies s gamma u, kernel (gamma v - gamma k) *
           phaseResidual (t * gamma v) (t * gamma k)) ≥
       (1 / 4 : ℝ) * (localCopies s gamma u).card *
         phaseResidual (t * gamma u) (t * gamma v) := by
-    have hterm (k : J) (hk : k ∈ localCopies s gamma u) :
-        (1 / 2 : ℝ) * phaseResidual (t * gamma u) (t * gamma k) +
-            (1 / 2 : ℝ) * phaseResidual (t * gamma v) (t * gamma k) ≥
-          (1 / 4 : ℝ) * phaseResidual (t * gamma u) (t * gamma v) := by
-      have hku : |gamma u - gamma k| ≤ 1 := by
-        simpa [localCopies, abs_sub_comm] using (Finset.mem_filter.mp hk).2
-      have hkv : |gamma v - gamma k| ≤ 2 := by
-        have htriangle := abs_sub_le (gamma v) (gamma u) (gamma k)
-        have huv' : |gamma v - gamma u| ≤ 1 := by simpa [abs_sub_comm] using huv
-        exact htriangle.trans (add_le_add huv' hku |>.trans (by norm_num))
-      have hweightu := lorentzKernel_ge_half (d := gamma u - gamma k)
-        (hku.trans (by norm_num : (1 : ℝ) ≤ 2))
-      have hweightv := lorentzKernel_ge_half (d := gamma v - gamma k) hkv
-      have hwu := mul_le_mul_of_nonneg_right hweightu
-        (phaseResidual_nonneg (t * gamma u) (t * gamma k))
-      have hwv := mul_le_mul_of_nonneg_right hweightv
-        (phaseResidual_nonneg (t * gamma v) (t * gamma k))
-      nlinarith [hwu, hwv, phaseResidual_triangle (t * gamma u) (t * gamma v) (t * gamma k)]
+    rw [← Finset.sum_add_distrib]
     calc
-      _ ≥ ∑ k ∈ localCopies s gamma u,
-          ((1 / 2 : ℝ) * phaseResidual (t * gamma u) (t * gamma k) +
-            (1 / 2 : ℝ) * phaseResidual (t * gamma v) (t * gamma k)) := by
-        rw [← Finset.sum_add_distrib]
-        apply Finset.sum_le_sum
-        intro k hk
-        have hweightu := lorentzKernel_ge_half (d := gamma u - gamma k)
-          (by
-            have h := (Finset.mem_filter.mp hk).2
-            simpa [abs_sub_comm] using h.trans (by norm_num : (1 : ℝ) ≤ 2))
-        have hweightv := lorentzKernel_ge_half (d := gamma v - gamma k) (by
-          have h := (Finset.mem_filter.mp hk).2
-          have htriangle := abs_sub_le (gamma v) (gamma u) (gamma k)
-          exact htriangle.trans (add_le_add (by simpa [abs_sub_comm] using huv)
-            (by simpa [abs_sub_comm] using h) |>.trans (by norm_num)))
-        have hwu := mul_le_mul_of_nonneg_right hweightu
-          (phaseResidual_nonneg (t * gamma u) (t * gamma k))
-        have hwv := mul_le_mul_of_nonneg_right hweightv
-          (phaseResidual_nonneg (t * gamma v) (t * gamma k))
-        nlinarith [hwu, hwv, phaseResidual_triangle (t * gamma u) (t * gamma v) (t * gamma k)]
       _ ≥ ∑ _k ∈ localCopies s gamma u,
           (1 / 4 : ℝ) * phaseResidual (t * gamma u) (t * gamma v) := by
         apply Finset.sum_le_sum
         intro k hk
-        exact hterm k hk
+        have hku : |gamma u - gamma k| ≤ 1 := by
+          simpa [localCopies, abs_sub_comm] using (Finset.mem_filter.mp hk).2
+        have hkv : |gamma v - gamma k| ≤ 2 := by
+          have htriangle := abs_sub_le (gamma v) (gamma u) (gamma k)
+          have huv' : |gamma v - gamma u| ≤ 1 := by simpa [abs_sub_comm] using huv
+          exact htriangle.trans (add_le_add huv' hku |>.trans (by norm_num))
+        have hwu := mul_le_mul_of_nonneg_right
+          (kernel_ge_half (hku.trans (by norm_num))) (phaseResidual_nonneg (t * gamma u) (t * gamma k))
+        have hwv := mul_le_mul_of_nonneg_right (kernel_ge_half hkv)
+          (phaseResidual_nonneg (t * gamma v) (t * gamma k))
+        nlinarith [hwu, hwv, phaseResidual_triangle (t * gamma u) (t * gamma v) (t * gamma k)]
       _ = _ := by rw [Finset.sum_const, nsmul_eq_mul]; ring
   calc
-    _ ≥ (∑ k ∈ localCopies s gamma u, lorentzKernel (gamma u - gamma k) *
+    _ ≥ (∑ k ∈ localCopies s gamma u, kernel (gamma u - gamma k) *
         phaseResidual (t * gamma u) (t * gamma k)) +
-        (∑ k ∈ localCopies s gamma u, lorentzKernel (gamma v - gamma k) *
+        (∑ k ∈ localCopies s gamma u, kernel (gamma v - gamma k) *
           phaseResidual (t * gamma v) (t * gamma k)) := by
       apply add_le_add
       · apply Finset.sum_le_sum_of_subset_of_nonneg
         · intro k hk
           exact (Finset.mem_filter.mp hk).1
         · intro k hk _
-          exact mul_nonneg (lorentzKernel_nonneg _) (phaseResidual_nonneg _ _)
+          apply mul_nonneg
+          · unfold kernel
+            positivity
+          · exact phaseResidual_nonneg _ _
       · apply Finset.sum_le_sum_of_subset_of_nonneg
         · intro k hk
           exact (Finset.mem_filter.mp hk).1
         · intro k hk _
-          exact mul_nonneg (lorentzKernel_nonneg _) (phaseResidual_nonneg _ _)
+          apply mul_nonneg
+          · unfold kernel
+            positivity
+          · exact phaseResidual_nonneg _ _
     _ ≥ _ := hlocal
 
-structure MatchingData (J P : Type*) (s : Finset J) (gamma : J → ℝ) (t : ℝ) where
+structure MatchingData (J P : Type*) (s : Finset J) (gamma : J → ℝ) where
   pairs : Finset P
   left : P → J
   right : P → J
@@ -194,12 +164,12 @@ structure MatchingData (J P : Type*) (s : Finset J) (gamma : J → ℝ) (t : ℝ
   cross_left_right : ∀ ⦃p q : P⦄, p ∈ pairs → q ∈ pairs → left p ≠ right q
   close : ∀ p ∈ pairs, |gamma (left p) - gamma (right p)| ≤ 1
 
-private def owner {J P : Type*} {s : Finset J} {gamma : J → ℝ} {t : ℝ}
-    (M : MatchingData J P s gamma t) (q : P × Bool) : J :=
+private def owner {J P : Type*} {s : Finset J} {gamma : J → ℝ}
+    (M : MatchingData J P s gamma) (q : P × Bool) : J :=
   if q.2 then M.right q.1 else M.left q.1
 
-private lemma owner_injective {J P : Type*} {s : Finset J} {gamma : J → ℝ} {t : ℝ}
-    (M : MatchingData J P s gamma t) :
+private lemma owner_injective {J P : Type*} {s : Finset J} {gamma : J → ℝ}
+    (M : MatchingData J P s gamma) :
     Set.InjOn (owner M) (↑(M.pairs.product (Finset.univ : Finset Bool))) := by
   intro x hx y hy heq
   rcases x with ⟨p, b⟩
@@ -217,8 +187,8 @@ private lemma owner_injective {J P : Type*} {s : Finset J} {gamma : J → ℝ} {
   · change M.left p = M.left q at heq
     exact Prod.ext (M.left_injective hp hq heq) rfl
 
-private lemma owner_mem {J P : Type*} {s : Finset J} {gamma : J → ℝ} {t : ℝ}
-    (M : MatchingData J P s gamma t) {q : P × Bool}
+private lemma owner_mem {J P : Type*} {s : Finset J} {gamma : J → ℝ}
+    (M : MatchingData J P s gamma) {q : P × Bool}
     (hq : q ∈ M.pairs.product (Finset.univ : Finset Bool)) : owner M q ∈ s := by
   rcases q with ⟨p, b⟩
   have hp := (Finset.mem_product.mp hq).1
@@ -228,8 +198,8 @@ private lemma owner_mem {J P : Type*} {s : Finset J} {gamma : J → ℝ} {t : �
   · change M.left p ∈ s
     exact M.left_mem p hp
 
-private lemma selected_sum {J P : Type*} [DecidableEq J] {s : Finset J} {gamma : J → ℝ} {t : ℝ}
-    (M : MatchingData J P s gamma t) (f : J → ℝ) :
+private lemma selected_sum {J P : Type*} [DecidableEq J] {s : Finset J} {gamma : J → ℝ}
+    (M : MatchingData J P s gamma) (f : J → ℝ) :
     (∑ u ∈ (M.pairs.product (Finset.univ : Finset Bool)).image (owner M), f u) =
       ∑ p ∈ M.pairs, (f (M.left p) + f (M.right p)) := by
   classical
@@ -242,16 +212,16 @@ private lemma selected_sum {J P : Type*} [DecidableEq J] {s : Finset J} {gamma :
   ring
 
 /-- Disjoint endpoint rows amplify their phase deficits by the local copy count. -/
-theorem finite_matching_defect {J P : Type*} [DecidableEq J]
+theorem finite_matching_defect {J P : Type*}
     {s : Finset J} {gamma : J → ℝ} {t : ℝ}
-    (M : MatchingData J P s gamma t) :
+    (M : MatchingData J P s gamma) :
     (1 / 4 : ℝ) * ∑ p ∈ M.pairs,
         (localCopies s gamma (M.left p)).card *
           phaseResidual (t * gamma (M.left p)) (t * gamma (M.right p)) ≤
       finiteLorentzPairSum s gamma 0 - finiteLorentzPairSum s gamma t := by
   classical
   let rowDefect (u : J) := ∑ v ∈ s,
-    lorentzKernel (gamma u - gamma v) * phaseResidual (t * gamma u) (t * gamma v)
+    kernel (gamma u - gamma v) * phaseResidual (t * gamma u) (t * gamma v)
   let selected : Finset J := (M.pairs.product (Finset.univ : Finset Bool)).image (owner M)
   have hselected : selected ⊆ s := by
     intro u hu
@@ -261,7 +231,10 @@ theorem finite_matching_defect {J P : Type*} [DecidableEq J]
     dsimp [rowDefect]
     apply Finset.sum_nonneg
     intro v hv
-    exact mul_nonneg (lorentzKernel_nonneg _) (phaseResidual_nonneg _ _)
+    apply mul_nonneg
+    · unfold kernel
+      positivity
+    · exact phaseResidual_nonneg _ _
   have hdefect_lower :
       (1 / 4 : ℝ) * ∑ p ∈ M.pairs,
         (localCopies s gamma (M.left p)).card *
@@ -271,7 +244,7 @@ theorem finite_matching_defect {J P : Type*} [DecidableEq J]
     apply Finset.sum_le_sum
     intro p hp
     have hpair := row_pair_defect_lower s gamma t (M.left p) (M.right p)
-      (M.left_mem p hp) (M.right_mem p hp) (M.close p hp)
+      (M.close p hp)
     dsimp [rowDefect]
     convert hpair using 1 <;> ring
   have hselected_le : ∑ u ∈ selected, rowDefect u ≤ ∑ u ∈ s, rowDefect u :=
@@ -298,61 +271,27 @@ theorem finite_matching_defect {J P : Type*} [DecidableEq J]
 
 open D5.S3.Analytic.Oscillation.MontgomeryCountUpper (pairSum)
 
-private lemma sum_copies {J : Type*} (s : Finset J) (m : J → ℕ) (q : J → ℝ) :
-    (∑ p ∈ CutDensity.copies s m, q p.1) =
-      ∑ j ∈ s, (m j : ℝ) * q j := by
-  rw [CutDensity.copies, Finset.sum_sigma]
-  simp [Fintype.card_fin]
-
-private lemma copies_pair_sum {S : Spectrum} {H t : ℝ} :
+private lemma copies_lorentz_pair_sum {S : Spectrum} {H t : ℝ} :
     finiteLorentzPairSum (CutDensity.copies (S.cut H) S.mult)
-      (fun p => S.gamma p.1) t = pairSum S H t := by
-  unfold finiteLorentzPairSum pairSum lorentzKernel
-  rw [sum_copies (S.cut H) S.mult
-    (fun j => ∑ r ∈ CutDensity.copies (S.cut H) S.mult,
-      (4 / (4 + (S.gamma j - S.gamma r.1) ^ 2)) *
-        Real.cos (t * (S.gamma j - S.gamma r.1)))]
-  apply Finset.sum_congr rfl
-  intro j hj
-  rw [sum_copies (S.cut H) S.mult (fun k =>
-    (4 / (4 + (S.gamma j - S.gamma k) ^ 2)) *
-      Real.cos (t * (S.gamma j - S.gamma k)))]
-  rw [Finset.mul_sum]
-  apply Finset.sum_congr rfl
-  intro k hk
-  simp [D5.S3.Analytic.Oscillation.MontgomeryWindow.pairCos]
-  ring
+      (fun p => S.gamma p.1) t = pairSum S H t :=
+  copies_pair_sum S H (fun j k => pairCos (S.gamma j - S.gamma k) t)
 
-theorem spectrum_matching_defect {S : Spectrum} {P : Type*} {H t ρ : ℝ}
+/-- The finite matching deficit for the ordered spectrum sum with multiplicities. -/
+theorem spectrum_matching_defect {S : Spectrum} {P : Type*} {H t : ℝ}
     (M : MatchingData (Σ j : S.index, Fin (S.mult j)) P
-      (CutDensity.copies (S.cut H) S.mult) (fun p => S.gamma p.1) t)
-    (hrow : ∀ u ∈ CutDensity.copies (S.cut H) S.mult,
-      ∑ v ∈ CutDensity.copies (S.cut H) S.mult,
-        lorentzKernel (S.gamma u.1 - S.gamma v.1) ≤ ρ) :
-    pairSum S H t ≤ ρ * (S.N H : ℝ) - (1 / 4 : ℝ) * ∑ p ∈ M.pairs,
+      (CutDensity.copies (S.cut H) S.mult) (fun p => S.gamma p.1)) :
+    (1 / 4 : ℝ) * ∑ p ∈ M.pairs,
       (localCopies (CutDensity.copies (S.cut H) S.mult)
         (fun q => S.gamma q.1) (M.left p)).card *
-          phaseResidual (t * S.gamma (M.left p).1) (t * S.gamma (M.right p).1) := by
-  classical
-  letI := Classical.decEq (Σ j : S.index, Fin (S.mult j))
-  have hdefect := finite_matching_defect M
-  have hzero := finite_pair_sum_zero_le (CutDensity.copies (S.cut H) S.mult)
-    (fun q => S.gamma q.1) t ρ hrow
-  simp only [copies_pair_sum] at hdefect hzero
-  have hcard : ((CutDensity.copies (S.cut H) S.mult).card : ℝ) = S.N H :=
-    copies_card S H
-  rw [hcard] at hzero
-  linarith [hdefect, hzero]
+          phaseResidual (t * S.gamma (M.left p).1) (t * S.gamma (M.right p).1) ≤
+      pairSum S H 0 - pairSum S H t := by
+  simpa only [copies_lorentz_pair_sum] using (finite_matching_defect (t := t) M)
 
 theorem strict_normalized_cap_of_matching {S : Spectrum} {P : Type*}
-    {H t ρ κ η c₁ c₂ c₃ : ℝ}
+    {H t κ η c₁ c₂ c₃ : ℝ}
     (M : MatchingData (Σ j : S.index, Fin (S.mult j)) P
-      (CutDensity.copies (S.cut H) S.mult) (fun p => S.gamma p.1) t)
-    (hrow : ∀ u ∈ CutDensity.copies (S.cut H) S.mult,
-      ∑ v ∈ CutDensity.copies (S.cut H) S.mult,
-        lorentzKernel (S.gamma u.1 - S.gamma v.1) ≤ ρ)
-    (hH : 1 < H) (hc₁ : 0 ≤ c₁) (hc₂ : 0 ≤ c₂) (hc₃ : 0 ≤ c₃)
-    (hη : 0 ≤ η)
+      (CutDensity.copies (S.cut H) S.mult) (fun p => S.gamma p.1))
+    (hH : 1 < H) (hc₂ : 0 ≤ c₂) (hc₃ : 0 ≤ c₃)
     (hpairs : c₁ * H * Real.log H ≤ (M.pairs.card : ℝ))
     (hres : ∀ p ∈ M.pairs,
       c₂ ≤ phaseResidual (t * S.gamma (M.left p).1) (t * S.gamma (M.right p).1))
@@ -360,13 +299,13 @@ theorem strict_normalized_cap_of_matching {S : Spectrum} {P : Type*}
       c₃ * Real.log H ≤
         (localCopies (CutDensity.copies (S.cut H) S.mult)
           (fun q => S.gamma q.1) (M.left p)).card)
-    (hbase : ρ * (S.N H : ℝ) ≤
-      (κ - η + c₁ * c₂ * c₃ / 4) * (H * Real.log H ^ 2))
-    (hscale : 0 < H * Real.log H ^ 2) :
+    (hbase : pairSum S H 0 ≤
+      (κ - η + c₁ * c₂ * c₃ / 4) * (H * Real.log H ^ 2)) :
     pairSum S H t / (H * Real.log H ^ 2) ≤ κ - η := by
   classical
-  letI := Classical.decEq (Σ j : S.index, Fin (S.mult j))
   have hlog : 0 < Real.log H := Real.log_pos hH
+  have hheight : 0 < H := lt_trans zero_lt_one hH
+  have hscale : 0 < H * Real.log H ^ 2 := by positivity
   have hterm (p : P) (hp : p ∈ M.pairs) :
       c₂ * (c₃ * Real.log H) ≤
         (localCopies (CutDensity.copies (S.cut H) S.mult)
@@ -401,19 +340,9 @@ theorem strict_normalized_cap_of_matching {S : Spectrum} {P : Type*}
         _ ≤ (M.pairs.card : ℝ) * (c₂ * (c₃ * Real.log H)) := hmul
         _ ≤ _ := by simpa [Finset.sum_const, nsmul_eq_mul] using hsum'
     nlinarith [hraw]
-  have hfinite := spectrum_matching_defect M hrow
-  have hupper : pairSum S H t ≤
-      (κ - η + c₁ * c₂ * c₃ / 4) * (H * Real.log H ^ 2) -
-        (c₁ * c₂ * c₃ / 4) * (H * Real.log H ^ 2) := by
-    calc
-      pairSum S H t ≤ ρ * (S.N H : ℝ) - (1 / 4 : ℝ) * ∑ p ∈ M.pairs,
-          (localCopies (CutDensity.copies (S.cut H) S.mult)
-            (fun q => S.gamma q.1) (M.left p)).card *
-            phaseResidual (t * S.gamma (M.left p).1) (t * S.gamma (M.right p).1) := hfinite
-      _ ≤ _ := by nlinarith [hbase, hsum]
+  have hfinite := spectrum_matching_defect (t := t) M
   apply (div_le_iff₀ hscale).2
-  have hδ : 0 ≤ c₁ * c₂ * c₃ / 4 := by positivity
-  nlinarith [mul_nonneg hδ hscale.le]
+  nlinarith only [hfinite, hbase, hsum]
 
 #print axioms spectrum_matching_defect
 #print axioms strict_normalized_cap_of_matching
