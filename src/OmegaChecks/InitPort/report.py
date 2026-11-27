@@ -30,6 +30,9 @@ UNSAFE_OBSERVERS = {
 }
 
 
+EFFECT_RUNNERS = {("Init.System.IO", name) for name in ("unsafeBaseIO", "unsafeEIO", "unsafeIO")}
+
+
 def check_coverage(official):
     """Count physical sites from the fresh Lean inventory, including repeated names."""
     modules = set(official["modules"])
@@ -106,8 +109,12 @@ def check_coverage(official):
                 (row["kind"] != "opaque" or not row.get("unsafe") or
                  (name == "isExclusiveUnsafe" and not runtime))):
             raise ValueError(f"inconsistent checked unsafe runtime for {owner}/{name}")
+        effect = row.get("checkedEffectRunner", False)
+        if effect is not (port and site in EFFECT_RUNNERS) or (effect and
+                (row["kind"] != "definition" or not row.get("unsafe") or not runtime)):
+            raise ValueError(f"inconsistent checked effect runner for {owner}/{name}")
         if port:
-            if axiom or witness or (runtime and not unsafe_runtime) or row["strictModule"] != "Omega" + owner:
+            if axiom or witness or (runtime and not (unsafe_runtime or effect)) or row["strictModule"] != "Omega" + owner:
                 raise ValueError(f"inconsistent strict match for {owner}/{name}")
             matched += 1
         elif axiom:

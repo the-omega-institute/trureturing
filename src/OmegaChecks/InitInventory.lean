@@ -6,6 +6,8 @@ meta import OmegaChecks.InitInventory.ConstructorIff
 meta import OmegaChecks.InitCompiler.RootNames
 import OmegaChecks.InitPort.UnsafeRuntime
 meta import OmegaChecks.InitPort.UnsafeRuntime
+import OmegaChecks.InitPort.EffectRun
+meta import OmegaChecks.InitPort.EffectRun
 import Lean.Compiler.LCNF.PhaseExt
 import OmegaChecks.InitInventory.Conditional
 meta import OmegaChecks.InitInventory.Conditional
@@ -694,6 +696,14 @@ private def inventory (lib : System.FilePath) (visible strict full witnesses : E
           throwError "invalid public, private or native observation {strictName}"
         pure (some symbol)
       else pure none
+      let effectRunner := matched && owner == `Init.System.IO && OmegaChecks.InitPort.EffectRun.names.contains name
+      if effectRunner then
+        let some dst := full.find? strictName | throwError "missing effect runner body {strictName}"
+        unless (strict.find? strictName).any (·.isUnsafe) && officialSigs.contains name &&
+            strictSigs.contains strictName && OmegaChecks.InitPort.EffectRun.isOriginal info false &&
+            OmegaChecks.InitPort.EffectRun.isOriginal dst true do
+          throwError "invalid public, private or native effect runner {strictName}"
+        if name == `unsafeBaseIO then OmegaChecks.InitPort.EffectRun.checkWorld full.toKernelEnv
       let strictOwner := if matched then some expected else none
       if matched then
         matchingNames := matchingNames + 1
@@ -745,6 +755,7 @@ private def inventory (lib : System.FilePath) (visible strict full witnesses : E
             ("operandImpliesAxiom", toJson (``Classical.choice).toString), ("operandReductionWitness", toJson op.witness.toString)]
         | none => row
       let row := if let some target := endpointType then row.setObjVal! "specializedEndpointType" (toJson target) else row
+      let row := if effectRunner then row.setObjVal! "checkedEffectRunner" (toJson true) else row
       let row := match checkedUnsafeRuntime with
         | some entry => row.setObjVal! "checkedUnsafeRuntime" (toJson entry)
         | none => row
