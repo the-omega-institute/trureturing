@@ -51,7 +51,7 @@ jobs:
         with:
           global-json-file: global.json
           cache: false
-      - name: Plan changes by module prefix
+      - name: Plan the missing publication targets
         id: shards
         env:
           STRATALINT_CACHE_WRITES: 'true'
