@@ -3,6 +3,7 @@ import Init.LawfulBEqTactics
 public import Init.Data.String.Pattern.String
 public import Init.Data.Iterators.Combinators.Monadic.Take
 import all Init.Data.ByteArray.Lemmas
+import all Init.Data.Char.Ordinal
 import all Init.Data.Iterators.Consumers.Access
 import all Init.Data.Iterators.Combinators.Monadic.Take
 import all Init.Data.List.BasicAux
@@ -79,6 +80,18 @@ public theorem Std.Iter.atIdxSlow?.induct_unfolding._unary :
 
 public theorem List.length_merge._unary : type_of% @_root_.List.length_merge._unary :=
   fun s p => _root_.List.length_merge s p.1 p.2
+
+public theorem ByteArray.utf8DecodeChar?.assemble₄_eq_some_iff_utf8EncodeChar_eq._proof_1_10 :
+    type_of% (private_decl% @_root_.ByteArray.utf8DecodeChar?.assemble₄_eq_some_iff_utf8EncodeChar_eq._proof_1_10) :=
+  fun h denied => denied h
+
+public theorem ByteArray.utf8DecodeChar?.le_val_assemble₄._proof_1_4 :
+    type_of% (private_decl% @_root_.ByteArray.utf8DecodeChar?.le_val_assemble₄._proof_1_4) :=
+  fun h denied => denied h
+
+public theorem Char.succ?_eq._proof_1_6 :
+    type_of% (private_decl% @_root_.Char.succ?_eq._proof_1_6) :=
+  fun h denied => denied (Nat.lt_succ_of_lt h)
 
 public theorem DerivingHelpers.and_true_curry : type_of% @_root_.DerivingHelpers.and_true_curry := by
   intro a b P f
