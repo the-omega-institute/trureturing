@@ -1,4 +1,5 @@
 module
+public import OmegaChecks.InitPort.Alternatives.BoolSearch
 
 public import Init.Data.List.Monadic
 import all Init.Data.List.Control
@@ -21,24 +22,24 @@ public theorem List.mapM_pure : type_of% @_root_.List.mapM_pure := by
       rfl
   exact loop xs []
 
-public theorem List.anyM_pure : type_of% @_root_.List.anyM_pure := by
-  intro m α mon law f xs
+public theorem List.anyM_pure {m : Type → Type u} {α : Type v} [Monad m] [LawfulMonad m]
+    {f : α → Bool} {xs : List α} : List.anyM (m := m) (fun a => pure (f a)) xs = pure (xs.any f) := by
   induction xs with
   | nil => rfl
-  | cons x xs ih =>
-    rw [List.anyM, pure_bind, List.any_cons]
-    cases he : f x with
+  | cons a xs ih =>
+    rw [List.anyM_cons, pure_bind, _root_.List.any_cons]
+    cases tested : f a with
     | false => exact ih
-    | true => rfl
+    | true => exact rfl
 
-public theorem List.allM_pure : type_of% @_root_.List.allM_pure := by
-  intro m α mon law f xs
+public theorem List.allM_pure {m : Type → Type u} {α : Type v} [Monad m] [LawfulMonad m]
+    {f : α → Bool} {xs : List α} : List.allM (m := m) (fun a => pure (f a)) xs = pure (xs.all f) := by
   induction xs with
   | nil => rfl
-  | cons x xs ih =>
-    rw [List.allM, pure_bind, List.all_cons]
-    cases he : f x with
-    | false => rfl
+  | cons a xs ih =>
+    rw [List.allM_cons, pure_bind, _root_.List.all_cons]
+    cases tested : f a with
+    | false => exact rfl
     | true => exact ih
 
 public theorem List.forIn_pure_yield_eq_foldl : type_of% @_root_.List.forIn_pure_yield_eq_foldl := by

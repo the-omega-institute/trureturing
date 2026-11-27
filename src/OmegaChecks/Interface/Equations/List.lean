@@ -1,10 +1,26 @@
 module
+public import OmegaChecks.InitPort.Alternatives.BoolSearch
 public import Init.Data.List.Impl
 public import Init.Data.List.Sort.Impl
 
 /-! Pointwise computation of the list implementations at their pinned entry points. -/
 
 namespace OmegaChecks.Interface.Equations
+
+public theorem List.anyM {m : Type → Type u} [Monad m] {α : Type v} (p : α → m Bool) (xs : List α) :
+    OmegaChecks.InitPort.Alternatives.List.anyM p xs = _root_.List.anyM p xs := by
+  induction xs with
+  | nil => exact _root_.List.anyM_nil.symm
+  | cons a xs ih =>
+    rw [OmegaChecks.InitPort.Alternatives.List.anyM_cons, _root_.List.anyM_cons, ih]
+
+public theorem List.allM {m : Type → Type u} [Monad m] {α : Type v} (p : α → m Bool) (xs : List α) :
+    OmegaChecks.InitPort.Alternatives.List.allM p xs = _root_.List.allM p xs := by
+  induction xs with
+  | nil => exact _root_.List.allM_nil.symm
+  | cons a xs ih =>
+    rw [OmegaChecks.InitPort.Alternatives.List.allM_cons, _root_.List.allM_cons, ih]
+
 
 public theorem List.appendTR {α : Type u} (xs ys : List α) :
     _root_.List.append xs ys = _root_.List.appendTR xs ys :=

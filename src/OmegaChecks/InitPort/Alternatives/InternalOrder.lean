@@ -1,4 +1,5 @@
 module
+public import OmegaChecks.InitPort.Alternatives.BoolSearch
 public import Init.Internal.Order.Basic
 import all Init.Internal.Order.Basic
 public import Init.Internal.Order.Lemmas
@@ -224,6 +225,34 @@ public theorem Array.monotone_foldrM :
   unfold _root_.Array.foldrM
   split <;> split
   all_goals first | exact PartialOrder.rel_refl | exact Array.monotone_foldrM_fold f xs _ _ _ b hf x y xy
+
+public theorem List.monotone_allM {γ : Type u} [PartialOrder γ] {m : Type → Type v}
+    [Monad m] [∀ α, PartialOrder (m α)] [MonoBind m] {α : Type} (f : γ → α → m Bool) (xs : List α)
+    (hmono : ∀ x y, x ⊑ y → (fun g k : α → m Bool => ∀ x, g x ⊑ k x) (f x) (f y)) :
+    monotone (fun x => OmegaChecks.InitPort.Alternatives.List.allM (f x) xs) := by
+  intro x y xy
+  induction xs with
+  | nil => exact PartialOrder.rel_refl
+  | cons a xs ih =>
+    apply bindSteps (hmono x y xy a)
+    intro result
+    cases result with
+    | false => exact PartialOrder.rel_refl
+    | true => exact ih
+
+public theorem List.monotone_anyM {γ : Type u} [PartialOrder γ] {m : Type → Type v}
+    [Monad m] [∀ α, PartialOrder (m α)] [MonoBind m] {α : Type} (f : γ → α → m Bool) (xs : List α)
+    (hmono : ∀ x y, x ⊑ y → (fun g k : α → m Bool => ∀ x, g x ⊑ k x) (f x) (f y)) :
+    monotone (fun x => OmegaChecks.InitPort.Alternatives.List.anyM (f x) xs) := by
+  intro x y xy
+  induction xs with
+  | nil => exact PartialOrder.rel_refl
+  | cons a xs ih =>
+    apply bindSteps (hmono x y xy a)
+    intro result
+    cases result with
+    | false => exact ih
+    | true => exact PartialOrder.rel_refl
 
 public theorem Array.monotone_anyM_loop :
     pointwise_type% (type_of% @_root_.Lean.Order.Array.monotone_anyM_loop) := by
