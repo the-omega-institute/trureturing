@@ -1,5 +1,5 @@
 /- GID: D5/S3/Quantum/Codes/BinaryEAShorteningLengthSeven
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Quantum/Codes/BinaryEAShorteningLengthSeven
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
