@@ -224,8 +224,16 @@ class ReportReaderTest(unittest.TestCase):
             [release("e", "5", isDraft=True), release("f", "6", isPrerelease=True)],
             [release("c", "4", tagName="other"), unrelated, expected],
         )]
-        with patch.object(reader.subprocess, "check_output", side_effect=[json.dumps(pages), "other", "a" * 40]):
-            self.assertEqual(reader.select_release("owner/repo", "d" * 40), expected)
+        with patch.object(reader.subprocess, "check_output", side_effect=[json.dumps(pages), "diverged", "ahead"]):
+            self.assertEqual(reader.select_release("owner/repo", "d" * 40), (expected, None))
+        # A retry can follow a failed publish job even after a newer source was released.
+        # Releases are ordered by publication time, which can differ from commit order.
+        with patch.object(reader.subprocess, "check_output", side_effect=[json.dumps(pages), "ahead", "behind"]):
+            self.assertEqual(reader.select_release("owner/repo", "d" * 40, retry=True), (None, expected))
+        with patch.object(reader.subprocess, "check_output", return_value=json.dumps(pages)):
+            self.assertEqual(reader.select_release("owner/repo", "b" * 40, retry=True), (None, unrelated))
+        with patch.object(reader.subprocess, "check_output", side_effect=[json.dumps(pages), "diverged", "ahead"]):
+            self.assertEqual(reader.select_release("owner/repo", "d" * 40, retry=True), (expected, None))
 
 
 if __name__ == "__main__":

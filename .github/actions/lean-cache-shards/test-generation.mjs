@@ -290,6 +290,9 @@ case "$*" in
   *git/matching-refs/heads/lean-modules-published) cat refs.json ;;
   *git/matching-refs/heads/lean-modules-published-report) cat report-refs.json ;;
   *branches/dev*) cat dev.json ;;
+  *compare/${first}...${latest}*--jq*) echo '${first}' ;;
+  *compare/${first}...${latest}*) echo '{"status":"ahead"}' ;;
+  *compare/${latest}...${first}*) cat retry-comparison.json ;;
   'release download '*) test "$3" = "lean-modules-$(cat release-source)" && cp index.json "$9/index.json" ;;
   'run download '*) cp pinned-source pin/source ;;
   *) exit 2 ;;
@@ -363,6 +366,19 @@ esac
   result = await invoke('7', '2');
   assert.equal(result.status, 0, result.stderr);
   assert.equal(await readFile(outputs, 'utf8'), 'source=' + first + '\nupload=false\n');
+  await json('report-refs.json', [{ ref: ref + '-report', object: { sha: latest } }]);
+  await json('retry-comparison.json', { status: 'behind' });
+  for (const args of [skipReport, ['--skip-published', 'compiler']]) {
+    result = await invoke('7', '2', args);
+    assert.equal(result.status, 0, result.stderr);
+    assert.equal(await readFile(outputs, 'utf8'), 'source=' + first + '\nupload=false\nsuperseded=true\n');
+    assert.equal((await readFile(join(root, 'pin/source'), 'utf8')).trim(), first);
+  }
+  await json('retry-comparison.json', { status: 'diverged' });
+  result = await invoke('7', '2', skipReport);
+  assert.notEqual(result.status, 0);
+  assert.match(result.stderr, /incompatible histories/);
+  await assert.rejects(readFile(outputs), { code: 'ENOENT' });
 });
 
 test('the truth reader copies only named report ZIPs from an inherited split Release', async t => {

@@ -55,7 +55,7 @@ def copy_reports(shard, members, destination):
         raise ValueError(f"report shard is missing {min(missing)}")
 
 
-def select_release(repository, source):
+def select_release(repository, source, *, retry=False):
     owner, name = repository.split("/")
     query = """
       query($owner: String!, $name: String!, $endCursor: String) {
@@ -76,16 +76,23 @@ def select_release(repository, source):
                       key=lambda r: r["publishedAt"], reverse=True)
     for release in releases:
         if release["tagCommit"]["oid"] == source:
-            return release
+            return None, release
+    predecessor = None
     for release in releases:
         previous = release["tagCommit"]["oid"]
-        ancestor = subprocess.check_output([
+        status = subprocess.check_output([
             "gh", "api", f"repos/{repository}/compare/{previous}...{source}?per_page=1",
-            "--jq", ".merge_base_commit.sha",
+            "--jq", ".status",
         ], text=True).strip()
-        if ancestor == previous:
-            return release
-    return None
+        if status == "behind":
+            return None, release
+        if status == "ahead" and predecessor is None:
+            predecessor = release
+            if not retry:
+                break
+        if status not in ("ahead", "diverged"):
+            raise ValueError(f"unexpected commit comparison: {status}")
+    return predecessor, None
 
 
 def load_report_index(path, version):
@@ -213,14 +220,16 @@ def read_reports(base, version, destination, *, base_directory=None, previous=No
 if __name__ == "__main__" and sys.argv[1:2] == ["select"]:
     parser = argparse.ArgumentParser(description="Select the published predecessor for a pinned source")
     parser.add_argument("source")
-    parser.add_argument("selection", type=Path)
+    parser.add_argument("selection", type=Path, nargs="?")
     args = parser.parse_args(sys.argv[2:])
-    release = select_release(os.environ["GITHUB_REPOSITORY"], args.source)
-    args.selection.write_text(json.dumps(release))
-    if release and release["tagCommit"]["oid"] == args.source:
-        print(f"Source {args.source} is published as {release['tagName']}", flush=True)
+    previous, covered = select_release(os.environ["GITHUB_REPOSITORY"], args.source,
+                                       retry=os.environ.get("GITHUB_RUN_ATTEMPT", "1") != "1")
+    if args.selection:
+        args.selection.write_text(json.dumps(previous))
+    if covered:
+        print(f"Source {args.source} is covered by {covered['tagName']} at {covered['tagCommit']['oid']}", flush=True)
         with Path(os.environ["GITHUB_OUTPUT"]).open("a") as output:
-            print("existing=" + release["tagName"], file=output)
+            print("existing=" + covered["tagName"], file=output)
 elif __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("base", help="GitHub Releases download URL prefix")

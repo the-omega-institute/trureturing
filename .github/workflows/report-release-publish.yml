@@ -25,6 +25,8 @@ concurrency:
      (github.event_name == 'workflow_dispatch' && github.actor == 'loning' && github.triggering_actor == 'loning')) &&
     'lean-report-generation-publisher-v1' || format('lean-report-skipped-{0}', github.run_id) }}
   cancel-in-progress: false
+  # A retry keeps its original source and must leave the newest pending event in the queue.
+  queue: ${{ github.run_attempt > 1 && 'max' || 'single' }}
 
 jobs:
   pin:
@@ -41,6 +43,7 @@ jobs:
     outputs:
       source: ${{ steps.pin.outputs.source }}
       already_published: ${{ steps.pin.outputs.already_published }}
+      superseded: ${{ steps.pin.outputs.superseded }}
     steps:
       - uses: actions/checkout@v5
         with:
@@ -60,7 +63,7 @@ jobs:
 
   publish:
     needs: pin
-    if: needs.pin.outputs.source != ''
+    if: needs.pin.outputs.source != '' && needs.pin.outputs.superseded != 'true'
     permissions:
       contents: write
       actions: read

@@ -112,13 +112,20 @@ def pin(*, published=None, skip_published=None):
             "--jq", ".merge_base_commit.sha"], text=True).strip()
         if ancestor != source:
             raise ValueError("pinned source is outside protected dev history")
-    already_published = skip_published and marker_source(skip_published) == source
+    marker = marker_source(skip_published) if skip_published else None
+    status = None
+    if marker and marker != source:
+        status = api(f"compare/{marker}...{source}?per_page=1")["status"]
+        if status not in ("ahead", "behind"):
+            raise ValueError(f"{skip_published} marker and pinned source have incompatible histories: {status}")
     file.write_text(source + "\n")
     with Path(os.environ["GITHUB_OUTPUT"]).open("a") as output:
         print(f"source={source}", file=output)
         print("upload=" + str(not prior).lower(), file=output)
-        if already_published:
+        if marker == source:
             print("already_published=true", file=output)
+        elif status == "behind":
+            print("superseded=true", file=output)
 
 
 if __name__ == "__main__":
