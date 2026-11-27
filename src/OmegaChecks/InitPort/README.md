@@ -32,6 +32,8 @@ example (a : α) (b : β) : Omega.Eq (Prod.fst (Prod.mk a b)) a := Omega.rfl
 
 若选定模块闭包包含 `Init.System.Promise`，生成器为已移植的 `Omega.IO.Promise.new`、`resolve`、`isResolved`、`result?` 和 `resultD` 生成原生入口。将消费者编译成 C 后，用 `leanc` 链接输出目录中的 `native/promise.o` 与 `native/promise-result-d.o`。后者的回调由钉版官方 Lean 定义编译。普通消费者可在兑现前取得结果任务。兑现后，字段投影、模式匹配和内核原始投影都读取第一次兑现的值。释放最后一个未兑现句柄后，`result?` 返回 `none`，`resultD` 返回传入的默认值。
 
+`ShareCommon.State.mk` 使用按工厂和宇宙层级索引的私有逻辑句柄。其原生入口调用钉版的 `ShareCommon.mkStateImpl`。构建 `Init.ShareCommon` 时，普通消费者使用两种官方哈希工厂，验证同一状态中的两份相等列表共享地址、不同列表保留各自的值。
+
 严格库用私有、不可计算的句柄构造 `ST.Prim.mkRef`，并保留公开的 `ST.RefPointed` 封装。构建 `Init.System.ST` 时，`native/reference.o` 提供引用分配、身份比较、写入和交换的原生入口。交换的逻辑常量保持不透明，原生入口调用钉版 `lean_st_ref_swap` 取得先前的值。普通消费者验证两枚引用的身份、交换返回旧值、写入后再交换取得新值和世界状态的传递。使用 `Omega.StateRefT'.set` 时，链接 `native/state_ref.o` 和 `native/reference.o`。
 
 `Omega.withPtrAddrUnsafe` 的返回值通过逐输入证明核对。官方实现把对象的机器地址传给回调 `k`，其参数 `h` 证明任意两个地址产生相同结果。严格实现调用 `Omega.withPtrAddr`。校验器读取官方的 `@[implemented_by]` 登记、两端签名和实际计算体，用 `h` 证明每个机器地址所得的值都等于严格实现的结果。[返回值核验](Address.lean) · [官方指针回调](https://github.com/leanprover/lean4/blob/v4.35.0/src/Init/Util.lean#L102)

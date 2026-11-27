@@ -734,7 +734,7 @@ def run (strictPath artifacts : System.FilePath) (outPath : String) (exclude : S
   let recursionRule ← OmegaChecks.InitCompiler.Recursion.loadRule
   let handleEnv ← importModules #[{module := `OmegaChecks.InitPort.LogicalHandle}] {} (level := .private)
   let mut handles : NameMap OmegaChecks.InitPort.LogicalHandle.Templates := {}
-  for api in [OmegaChecks.InitPort.LogicalHandle.promise, OmegaChecks.InitPort.LogicalHandle.referenceCell] do
+  for api in OmegaChecks.InitPort.LogicalHandle.apis do
     handles := handles.insert api.owner (← OmegaChecks.InitPort.LogicalHandle.templates api handleEnv)
   let typeNameTemplates ← OmegaChecks.InitPort.TypeName.templates (← importModules #[{module := `OmegaChecks.InitPort.TypeName}] {} (level := .private))
   let alternatives ← OmegaChecks.InitPort.loadAlternatives

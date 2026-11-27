@@ -1,5 +1,7 @@
 module
 public import Lean
+import OmegaChecks.InitPort.LogicalHandle
+meta import OmegaChecks.InitPort.LogicalHandle
 import OmegaChecks.InitCompiler.RootNames
 meta import OmegaChecks.InitCompiler.RootNames
 import OmegaChecks.InitPort.TypeName
@@ -197,8 +199,7 @@ unsafe def main (args : List String) : IO Unit := do
   let newDecls := monolith.header.moduleData[(monolith.getModuleIdx? `OmegaImported).get!]!
   let mut reverseNames : Std.HashMap Name Name := {}
   for (n, _) in source.constants.toList do reverseNames := reverseNames.insert (renamed n) n
-  let tokens := [(`Init.System.Promise, `IO.Promise.logicalToken), (`Init.System.ST, `ST.Ref.logicalToken)].map
-    fun (owner, name) => (mkPrivateNameCore owner name, owner)
+  let tokens := OmegaChecks.InitPort.LogicalHandle.apis.map (fun api => (api.tokenName, api.owner))
   let mut groups : NameMap (Array (Name × ConstantInfo)) := {}
   let mut generatedOwners : NameMap Name := {}
   for ci in newDecls.constants do

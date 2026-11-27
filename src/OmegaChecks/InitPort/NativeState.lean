@@ -101,10 +101,10 @@ public unsafe def installStateLayout (lib : System.FilePath) (env : Environment)
     throw <| IO.userError "ST.Out result disagrees with the native state adapter"
   writeCode lib `OmegaInit.System.ST state layouts
 
-/-- The emitted module contains the compiled entry points and has no imported initializers. -/
+/-- Emit the compiled entry points with their native initialization dependencies. -/
 public def emitBridge (compiled : Environment) (owner : Name) (runtime : Option System.FilePath)
-    (output : System.FilePath) : IO Unit := do
-  let env := Environment.ofKernelEnv {compiled.toKernelEnv with header.imports := #[], header.isModule := true}
+    (output : System.FilePath) (imports : Array Import := #[]) : IO Unit := do
+  let env := Environment.ofKernelEnv {compiled.toKernelEnv with header.imports := imports, header.isModule := true}
   -- C emission consults the attribute state for calls made inside boxed wrappers.
   let env := (externAttr.ext.setState env (externAttr.ext.getState compiled)).setModulePackage compiled.getModulePackage?
   let c ← (emitC owner).toIO' {fileName := "<strict runtime entry points>", fileMap := default} {env}

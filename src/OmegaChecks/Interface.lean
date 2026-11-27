@@ -225,9 +225,9 @@ private def compare (reference : Environment) (rename : Name → Name) (src dst 
         OmegaChecks.InitPort.TypeName.check strict publicStrict reference y.name (liftTerm x.value)
         return deps ++ x.value.getUsedConstants
       if let some api := (OmegaChecks.InitPort.LogicalHandle.forDecl? y.name).filter (fun api => y.name == api.pointed && x.safety == .safe) then
-        if api.pointed == `ST.RefPointed then
+        if !isPrivateName api.pointed then
           unless (← lookup publicStrict x.name).isAxiom && getReducibilityStatusCore strict x.name == .irreducible do
-            throw <| IO.userError "public reference handle carrier is not sealed"
+            throw <| IO.userError s!"public handle carrier {x.name} is not sealed"
         OmegaChecks.InitPort.LogicalHandle.checkBody api strict publicStrict reference y.name liftTerm x.value
         return deps ++ x.value.getUsedConstants
       if y.name == `Void.nonemptyType && x.safety == .safe then

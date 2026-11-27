@@ -16,7 +16,7 @@ def compile_generated(stage, product, graph, seed_ir, owners=CONTROL):
     """Add fresh owner objects to the staged product. Seed objects keep their existing owners."""
     requested = set(owners).intersection(graph)
     if not requested:
-        return
+        return []
     selected = [owner for owner in graph if owner in requested]
     sources = stage / "generated-native"
     library = product / "lib"
@@ -32,7 +32,7 @@ def compile_generated(stage, product, graph, seed_ir, owners=CONTROL):
         objects.append(obj)
 
     if not set(CONTROL).issubset(requested):
-        return
+        return []
     reachable = set()
     pending = list(CONTROL)
     while pending:
@@ -56,3 +56,4 @@ def compile_generated(stage, product, graph, seed_ir, owners=CONTROL):
     app = sources / "consumer"
     run("leanc", consumer, HERE / "generated_control_consumer.c", *objects, "-o", app)
     run(app)
+    return objects

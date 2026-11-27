@@ -227,7 +227,11 @@ def generate(stage, product, seed, roots, excluded, seed_ir):
             "Init.System.Promise": {"IO.Promise.new", "IO.Promise.resolve", "IO.Promise.isResolved", "IO.Promise.result?", "IO.Promise.resultD"},
             "Init.Core": {"Task.pure", "Task.get", "Task.map", "Task.bind"},
         }, [raw_task])
-    compile_generated(stage, product, graph, seed_ir)
+    control_objects = compile_generated(stage, product, graph, seed_ir)
+    if "OmegaInit.ShareCommon" in graph:
+        compile_state_runtime(stage, product, artifact, inventory, "ShareCommon", "share_common", {
+            "Init.ShareCommon": {"ShareCommon.State.mk", "ShareCommon.State.shareCommon", "ShareCommonM.run"},
+        }, control_objects)
     with (product / "audit.txt").open("w") as log:
         audit = ROOT / ".lake/build/bin/omegaAudit"
         checked = subprocess.run(["lake", "env", audit, "--exact-roots", artifact, *graph, "--", *closure],
