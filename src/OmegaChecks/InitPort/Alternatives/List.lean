@@ -361,6 +361,11 @@ public theorem List.of_concat_eq_concat : type_of% @_root_.List.of_concat_eq_con
       obtain ⟨rfl, last⟩ := ih tail
       exact ⟨rfl, last⟩
 
+public theorem List.of_concat_eq_concat._f :
+    type_of% @_root_.List.of_concat_eq_concat._f := by
+  intro α a b as _ bs eq
+  exact List.of_concat_eq_concat eq
+
 public theorem List.mem_replicate : type_of% @_root_.List.mem_replicate := by
   intro α a b n
   induction n with
