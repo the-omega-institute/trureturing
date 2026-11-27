@@ -308,6 +308,7 @@ def generate(stage, product, seed, roots, excluded, original_seed):
                       check_macro_reader=has_interfaces(inventory, {"Init.Prelude": {"Lean.Macro.getMethodsImp"}}),
                       check_guarded_pointer=has_interfaces(inventory, {"Init.Util": {"withPtrEq"}}),
                       check_exclusive=has_interfaces(inventory, {"Init.Util": {"isExclusiveUnsafe"}}),
+                      check_effects=has_interfaces(inventory, {"Init.System.IO": {"unsafeBaseIO", "unsafeEIO", "unsafeIO"}}),
                       check_persistent=has_interfaces(inventory, {"Init.System.IO": {"Runtime.markPersistent"}}),
                       check_mixed=has_interfaces(inventory, mixed_interfaces),
                       check_thunks=has_interfaces(inventory, {"Init.Core": {

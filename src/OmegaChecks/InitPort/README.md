@@ -48,7 +48,7 @@ example (a : α) (b : β) : Omega.Eq (Prod.fst (Prod.mk a b)) a := Omega.rfl
 
 严格库的 `Omega.isExclusiveUnsafe` 保留官方的 `unsafe opaque` 声明、内核默认值和借用参数。普通 Lean 声明调用它会被内核拒绝。原生入口读取堆对象的引用计数，调用方需传入有效的堆对象。盘点分别核对两端声明和原生签名，并保留要求纯函数区分等值输入时得到的条件反证。盘点器编译并运行原生观测程序。它分别读取运行时创建的单元素数组与内容相同的常量数组，检查元素为 0 和 1 时的两组输入。两组中都观测到前者独占、后者共享时，才登记与纯函数等式替换的冲突。可运行 `lake exe omegaPointerObservations --exclusivity` 复核。[运行时观测和内核证明](../InitInventory/PointerObservations.lean)
 
-对 `unsafeBaseIO`、`unsafeEIO` 和 `unsafeIO`，盘点器各执行两次同一个读取引用的动作。两次之间将引用值加一。原类型的纯函数对同一个动作只能返回同一个值。盘点器实际观测到不同的返回值后，将对应证明写入缺口表。[读数与内核证明](../InitInventory/EffectObservations.lean)
+严格库保留 `unsafeBaseIO`、`unsafeEIO` 和 `unsafeIO` 的官方类型和 `unsafe` 标记。`unsafeBaseIO` 从 `Void.mk` 使用的区域索引包取得实世界的初始状态，另两个操作使用官方包装体。内核按依赖次序单独重放这三个声明。官方与严格原生程序分别在写入前后执行同一组读取动作，并核对两种异常返回的载荷。纯函数对相同动作的等式替换约束由盘点器的条件定理记录。[读数与内核证明](../InitInventory/EffectObservations.lean)
 
 `Omega.Array.anyMUnsafe` 按官方机器字索引循环执行。自然数区间长度给出递归上界。每一步仍比较机器字，耗尽区间时两端必然相等，读取位置也在原数组内。即使数组长度达到 `USize.size`，这两个结论仍然成立。例如从零开始搜索恰有 `USize.size` 个元素的整个数组时，转换后的终点为零，循环立即返回 `false`。校验器把官方入口和递归分支逐一与全输入证明核对。[循环及证明](ArrayWord.lean) · [官方数组循环](https://github.com/leanprover/lean4/blob/v4.35.0/src/Init/Data/Array/Basic.lean#L936)
 

@@ -228,6 +228,12 @@ private def compare (reference : Environment) (rename : Name → Name) (src dst 
       if x.safety == .safe && y.safety == .unsafe && (y.name == `TypeName.mk || y.name == OmegaChecks.InitPort.TypeName.reader) then
         OmegaChecks.InitPort.TypeName.check strict publicStrict reference y.name (liftTerm x.value)
         return deps ++ x.value.getUsedConstants
+    if let some (strict, _) := foundation then
+      if y.name == `unsafeBaseIO then
+        unless OmegaChecks.InitPort.EffectRun.isOriginal src true && OmegaChecks.InitPort.EffectRun.isOriginal dst false do
+          throw <| IO.userError "unexpected unsafeBaseIO implementation"
+        OmegaChecks.InitPort.EffectRun.checkWorld strict.toKernelEnv
+        return deps ++ x.value.getUsedConstants
     if foundation.isSome && x.safety == .safe && y.name == `withPtrAddrUnsafe then
       OmegaChecks.InitPort.Address.check reference y (liftTerm x.value)
       return deps ++ x.value.getUsedConstants

@@ -347,6 +347,17 @@ private def compileOwner (source : Environment) (partialCode : NameMap Definitio
       let some (.defnInfo d) := strict.find? n | throwError "missing natural fixpoint recursion"
       compileNatRec source strict d
       continue
+    if OmegaChecks.InitPort.EffectRun.names.contains (InitKernelPort.originalName n) then
+      let some kind := getInlineAttribute? source (InitKernelPort.originalName n)
+        | throwError "missing pinned effect-runner inlining policy for {n}"
+      let expected := if n == `Omega.unsafeBaseIO then .noinline else .inline
+      unless kind == expected do throwError "unexpected pinned effect-runner inlining policy for {n}"
+      setEnv (← ofExcept (setInlineAttribute (← getEnv) n kind))
+      modifyEnv fun env => privateConstKindsExt.insert env n .defn
+      let opts := if n == `Omega.unsafeBaseIO then ({} : Options).setBool `compiler.extract_closed false else {}
+      (← compileDeclsRef.get) #[n] opts
+      unless (← CompilerM.run (getLocalDeclAt? n .impure)).isSome do throwError "missing effect-runner code for {n}"
+      continue
     if ← missingRuntimeDependency source n then continue
     let before ← Core.saveState
     try
@@ -440,7 +451,7 @@ private unsafe def install (source publicSource : Environment) (lib out : System
                   tr src.type == dst.type && tr src.value == dst.value then
                 candidates := candidates.push ci.name
     | .defnInfo d =>
-      if onlyLayouts || oldNative.contains d.name || ci.isUnsafe || ci.isPartial then continue
+      if onlyLayouts || oldNative.contains d.name || (ci.isUnsafe && !OmegaChecks.InitPort.EffectRun.isOriginal ci true) || ci.isPartial then continue
       let upstream := InitKernelPort.originalName d.name
       if unaryNat && largeWordSizes.contains upstream then continue
       if (isExtern source upstream || (getImplementedBy? source upstream).isSome) && !arrayDefinition upstream then continue

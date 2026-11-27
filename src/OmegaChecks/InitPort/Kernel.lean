@@ -785,6 +785,10 @@ def run (strictPath artifacts : System.FilePath) (outPath : String) (exclude : S
   let imports := allMods.map fun n => {module := n : Import}
   unsafe enableInitializersExecution
   let source ← importModules imports {} (loadExts := true) (level := .private)
+  if let some (.defnInfo runner) := source.find? `unsafeBaseIO then
+    unless OmegaChecks.InitPort.EffectRun.isOriginal (.defnInfo runner) false do
+      throw <| IO.userError "unexpected pinned unsafeBaseIO"
+    alternatives := alternatives.insert runner.name (.defnInfo {runner with value := OmegaChecks.InitPort.EffectRun.withInitialWorld runner.value})
   let source ← OmegaChecks.InitPort.LawfulLoop.addReference source loopTemplates
   let source ← OmegaChecks.InitPort.PatternMatch.addReferences source patternTemplates
   let mut referenceModels := {}

@@ -127,7 +127,7 @@ def compile_generated(stage, product, graph, seed_ir, owners=None, *, original_s
                       check_sharing=None, check_macro_reader=False,
                       check_strings=True, check_string_marks=False, check_byte_marks=False, check_literals=True, check_mixed=True, check_rat=True, check_bootstrap=True,
                       check_list_search=True, check_decoding=True, check_names=True, check_toolchain=True, check_thunks=False, check_persistent=False, check_exclusive=False,
-                      check_guarded_pointer=False):
+                      check_guarded_pointer=False, check_effects=False):
     """Compile generated owners in import order and preserve the native symbols of existing owners."""
     requested = set(graph if owners is None else owners)
     selected = [owner for owner in TopologicalSorter(graph).static_order()
@@ -289,7 +289,8 @@ def compile_generated(stage, product, graph, seed_ir, owners=None, *, original_s
 
     observations = [(check_persistent, "OmegaInit.System.IO", "Persistent", "Omega.Runtime.markPersistent"),
                     (check_exclusive, "OmegaInit.Util", "Exclusive", "Omega.isExclusiveUnsafe"),
-                    (check_guarded_pointer, "OmegaInit.Util", "GuardedPointer", None)]
+                    (check_guarded_pointer, "OmegaInit.Util", "GuardedPointer", None),
+                    (check_effects, "OmegaInit.System.IO", "EffectRun", "Omega.unsafeBaseIO")]
     for enabled, owner, client_name, declaration in observations:
         if not enabled or owner not in selected:
             continue
@@ -307,9 +308,21 @@ def compile_generated(stage, product, graph, seed_ir, owners=None, *, original_s
                 continue
             safe = consumer.read_text().replace("public unsafe def", "public def")
             result = subprocess.run(["lean", "--stdin"], input=safe, text=True, env=env, capture_output=True)
-            expected = f"uses unsafe declaration '{declaration}'"
-            if result.returncode == 0 or expected not in result.stdout + result.stderr:
-                raise ValueError(f"safe client did not reject {declaration}")
+            unsafe_names = [declaration] if client_name != "EffectRun" else [
+                "Omega.unsafeBaseIO", "Omega.unsafeEIO", "Omega.unsafeIO"]
+            for name in unsafe_names:
+                if result.returncode == 0 or f"uses unsafe declaration '{name}'" not in result.stdout + result.stderr:
+                    raise ValueError(f"safe client did not reject {name}")
+            if client_name == "EffectRun":
+                oracle = stage / "effect-oracle"
+                oracle.mkdir()
+                official = oracle / consumer.name
+                official.write_text(consumer.read_text().replace("OmegaInit.", "Init.").replace("Omega.", ""))
+                oracle_c = oracle / "consumer.c"
+                run("lean", "-R", oracle, "-c", oracle_c, official)
+                executable = oracle / "check"
+                run("leanc", oracle_c, HERE / "consumers/effectrun_consumer.c", "-o", executable)
+                run(executable)
 
     if (check_string_marks or check_byte_marks) and "OmegaInit.Data.String.Defs" in selected:
         required = reachable(["OmegaInit.Data.String.Defs"])
