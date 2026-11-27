@@ -106,11 +106,12 @@ public def loadAlternatives : IO (NameMap ConstantInfo) := do
     let localMatcher := fun n => isPrivateName n && (env.getModuleIdxFor? n).any fun i =>
       scope.isPrefixOf env.header.moduleNames[i]!
     for ci in data.constants do
-      let namedProof := match ci.name with
-        | .str _ component => ci.isTheorem && component.startsWith "_proof_"
+      let internalProof := ci.isTheorem && match ci.name with
+        | .str (.str _ "_unary") "eq_def" => true
+        | .str _ component => component.startsWith "_proof_"
         | _ => false
       let equation := equationScope.isPrefixOf ci.name
-      unless (scope.isPrefixOf ci.name || equation) && (!ci.name.isInternalOrNum || namedProof) && !ci.name.hasMacroScopes &&
+      unless (scope.isPrefixOf ci.name || equation) && (!ci.name.isInternalOrNum || internalProof) && !ci.name.hasMacroScopes &&
           !ci.isUnsafe && !ci.isPartial do continue
       let some body := ci.value? (allowOpaque := true) | continue
       let body ← (Meta.deltaExpand body localMatcher (allowOpaque := true)).toIO'
