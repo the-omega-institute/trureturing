@@ -28,6 +28,11 @@ internal sealed class RetractionCoordinateDocument : IScribeDocumentDefinition
                 "A main vertex supported on one old vertex keeps its endpoint value in every incident chart. " +
                 "These endpoint agreements glue the relative interval interpolation from the two-cut " +
                 "retraction to the map obtained by halving the chamber heights."),
+            Result("refined-main-retraction", "main_retraction_glued_refined",
+                "The main region factors through the finer edge charts",
+                "The full integer heights give a simplicial map to the fourth subdivision. " +
+                "Choosing a vertex of each face gives the comparison to the third subdivision. " +
+                "The relative contiguity comparison fixes the old endpoints."),
             Result("opposite-edge-for-extra-components", "extra_retraction_in_subdivided_edge",
                 "Each extra component retracts into one subdivided edge",
                 "A proper rank colouring is injective on each old face. The two opposite ranks " +
