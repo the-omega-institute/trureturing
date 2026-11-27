@@ -50,8 +50,7 @@ private theorem levels_update (x : Fin 3 → ℝ) (k : Fin 3) (t : ℝ) :
   funext i
   refine Fin.lastCases ?_ (fun j => ?_) i
   · simp only [levels, Fin.lastCases_last, Function.update_of_ne (Fin.castSucc_ne_last k).symm]
-  ·
-    by_cases hj : j = k
+  · by_cases hj : j = k
     · subst j
       simp [levels]
     · have hj' : j.castSucc ≠ k.castSucc := fun he => hj (Fin.castSucc_injective _ he)
@@ -190,7 +189,8 @@ private theorem levelSlice_hasDerivAt {r : ℝ} (hr : 1 ≤ r) (U : unitary Mat)
   have hvar := (((hasDerivAt_pow 3 t).const_mul (scalarCoeff r U k)).fun_add hjump).fun_add
     ((massEntropy_hasDerivAt (fixedMass_nonneg k hx) ht).const_mul (alpha r))
   have hmodel : HasDerivAt (varyingPart r U x k) (firstProfile r U x k t) t := by
-    simpa [varyingPart, firstProfile] using hvar
+    unfold varyingPart firstProfile
+    exact hvar
   apply (hmodel.add_const (levelSlice r U x k 0 - varyingPart r U x k 0)).congr_of_eventuallyEq
   filter_upwards [lt_mem_nhds ht] with u hu
   exact levelSlice_eq hr U hx k hu.le
@@ -227,14 +227,14 @@ private theorem levelSlice_continuousOn {r : ℝ} (hr : 1 ≤ r) (U : unitary Ma
     ContinuousOn (levelSlice r U x k) (Ici 0) := by
   have hjump : Continuous (fun t : ℝ => ∑ j ∈ otherLevels k,
       edge r (physicalFrame U) k.castSucc j (levels x j) t) := by
-    exact continuous_finset_sum _ fun j _ => continuous_iff_continuousAt.mpr fun t =>
+    exact continuous_finsetSum _ fun j _ => continuous_iff_continuousAt.mpr fun t =>
       (edge_hasDerivAt r (physicalFrame U) k.castSucc j (levels x j) t).continuousAt
   have hp : Continuous (varyingPart r U x k) :=
     ((continuous_const.mul (continuous_id.pow 3)).add hjump).add
       ((massEntropy_continuous (fixedMass x k)).const_mul (alpha r))
-  apply (hp.add continuous_const).continuousOn.congr
-  intro t ht
-  exact levelSlice_eq hr U hx k ht
+  have hK : Continuous (fun _ : ℝ => levelSlice r U x k 0 - varyingPart r U x k 0) :=
+    continuous_const
+  exact (hp.add hK).continuousOn.congr fun _ ht => levelSlice_eq hr U hx k ht
 
 private theorem entropy_second_upper {r A t : ℝ} (hr : 1 ≤ r)
     (hA : 0 ≤ A) (ht : 0 < t) (hT : A + t ^ 3 ≤ 4) :
@@ -282,10 +282,9 @@ private theorem incidence_le (U : unitary Mat) (k : Fin 3) :
   have hcol := col_weight V (physicalFrame_columns U) (physicalFrame_rows U) κ
   rw [← Finset.sum_erase_add _ _ (Finset.mem_univ κ)] at hrow hcol
   rw [Finset.sum_add_distrib]
-  exact (by
-    change (∑ j ∈ otherLevels k, weight V κ j) +
-      (∑ j ∈ otherLevels k, weight V j κ) ≤ 2
-    linarith only [hrow, hcol, weight_nonneg V κ κ])
+  change (∑ j ∈ Finset.univ.erase κ, weight V κ j) +
+    (∑ j ∈ Finset.univ.erase κ, weight V j κ) ≤ 2
+  linarith only [hrow, hcol, weight_nonneg V κ κ]
 
 /-- The upper pure second-derivative bound on the entire spectral cube.
 The two fixed levels can be zero and the varying level can coincide with either. -/
@@ -305,7 +304,8 @@ theorem levelSlice_deriv2_le (U : unitary Mat) {r : ℝ} (hr : r ∈ Icc (1 : �
       norm_num at hh hbHi
       linarith only [hh, hbHi, hmul]
     calc
-      _ ≤ 6 * t * (39 / 100) := mul_le_mul_of_nonneg_left hcoeff (by positivity)
+      _ ≤ 6 * t * (39 / 100) := mul_le_mul_of_nonneg_left hcoeff
+        (mul_nonneg (by norm_num) ht.1.le)
       _ ≤ _ := by nlinarith only [ht.2]
   have hjump :
       (∑ j ∈ otherLevels k, edgeSecond r V k.castSucc j (levels x j) t) ≤ 2 * (279 / 40 : ℝ) := by
@@ -314,7 +314,7 @@ theorem levelSlice_deriv2_le (U : unitary Mat) {r : ℝ} (hr : r ∈ Icc (1 : �
           (weight V k.castSucc j + weight V j k.castSucc) * (279 / 40 : ℝ) := by
       have hyj := mem_Icc_levels hx j
       have hh := edge_second_le V k.castSucc j hc hcHi he heHi
-        (low := 0) (b := 1) le_rfl ht.1.le ht.2 le_rfl hyj.1 hyj.2
+        (low := 0) (b := 1) le_rfl ht.1.le ht.2 ht.2 hyj.1 hyj.2
       norm_num at hh
       exact hh
     calc
