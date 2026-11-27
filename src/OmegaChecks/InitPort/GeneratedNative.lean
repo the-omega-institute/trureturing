@@ -90,6 +90,46 @@ private def missingRuntimeDependency (source : Environment) (n : Name) (recursiv
   finally
     before.restore
 
+/-- Install one checked unfolding equation for code generation. Only native compiler
+extensions are written to the product, so its kernel definition stays in the original owner. -/
+private def compileEquation (source : Environment) (n : Name) (d : DefinitionVal) : CoreM Unit := do
+  Lean.addDecl (.defnDecl d) (forceExpose := true)
+  if ← missingRuntimeDependency source d.name n then throwError "uncompiled recursive equation dependency of {n}"
+  modifyEnv (noncomputableExt.modifyState · (·.erase n))
+  modifyEnv fun env => privateConstKindsExt.insert env n .defn
+  (← compileDeclsRef.get) #[n] {}
+
+/-- The accessibility proof used by the kernel is erased at runtime. Take the executable
+unfolding directly from the axiom-free strict fixpoint equation. -/
+private def compileFix (source strict : Environment) (n eqName : Name) : CoreM Unit := do
+  let some (.defnInfo d) := strict.find? n | throwError "missing fixpoint {n}"
+  let some (.thmInfo _) := strict.find? eqName | return
+  let levels := d.levelParams.map Level.param
+  let body ← withEnv strict <| Meta.MetaM.run' <| Meta.forallTelescope d.type fun args _ => do
+    let proof := mkAppN (mkConst eqName levels) args
+    let .ok eq := Kernel.check strict (← getLCtx) proof | throwError "invalid fixpoint equation"
+    let some (_, lhs, rhs) := eq.eq? | throwError "expected a fixpoint equation"
+    unless Kernel.isDefEqGuarded strict (← getLCtx) lhs (mkAppN (mkConst n levels) args) do
+      throwError "unexpected left-hand side of {eqName}"
+    Meta.mkLambdaFVars args rhs
+  let name := Compiler.mkUnsafeRecName n
+  compileEquation source n {d with name, all := [name], value := body, safety := .safe}
+
+/-- Lower a saturated natural recursor on the last lambda parameter to a single constructor
+split. The successor branch calls the original function at its predecessor. -/
+private def compileNatRec (source strict : Environment) (d : DefinitionVal) : CoreM Unit := do
+  let name := Compiler.mkUnsafeRecName d.name
+  let body ← withEnv strict <| Meta.MetaM.run' <| Meta.lambdaTelescope d.value fun args rhs => do
+    unless rhs.isAppOfArity `Nat.rec 4 && args.back? == some rhs.appArg! do throwError "expected natural recursion"
+    let #[motive, base, step, fuel] := rhs.getAppArgs | throwError "invalid natural recursor"
+    let self := mkAppN (mkConst d.name (d.levelParams.map Level.param)) args.pop
+    let next ← Meta.withLocalDeclD `k (mkConst `Nat) fun k =>
+      Meta.mkLambdaFVars #[k] (mkApp2 step k (mkApp self k))
+    let body ← Meta.mkLambdaFVars args (mkApp4 (mkConst `Nat.casesOn rhs.getAppFn.constLevels!) motive fuel base next)
+    OmegaChecks.InitCompiler.checkConstructorEquations d.name d.levelParams d.type body (args.size - 1)
+    return body
+  compileEquation source d.name {d with name, all := [name], value := body, safety := .safe}
+
 /-- Reuse the pinned executable recursion only after the kernel identifies every constructor
 equation with the checked total function. The temporary declaration is excluded from the product. -/
 private def compileStructural (source strict : Environment) (n : Name) : CoreM Unit := do
@@ -108,11 +148,7 @@ private def compileStructural (source strict : Environment) (n : Name) : CoreM U
       withEnv strict <| Meta.MetaM.run' <| OmegaChecks.InitCompiler.checkConstructorEquations n d.levelParams type body i
     catch _ => continue
     let tmp := {d with name, all := [name], type, value := body, safety := .safe}
-    Lean.addDecl (.defnDecl tmp) (forceExpose := true)
-    if ← missingRuntimeDependency source name n then throwError "uncompiled recursive equation dependency of {n}"
-    modifyEnv (noncomputableExt.modifyState · (·.erase n))
-    modifyEnv fun env => privateConstKindsExt.insert env n .defn
-    (← compileDeclsRef.get) #[n] {}
+    compileEquation source n tmp
     return
 
 private def compileOwner (source : Environment) (groups : Array InductiveVal) (words order : Array Name) : CoreM Unit := do
@@ -125,6 +161,13 @@ private def compileOwner (source : Environment) (groups : Array InductiveVal) (w
   compileLayoutsInOrder groups
   OmegaChecks.InitPort.WordNative.install words
   for n in order do
+    if n == `Omega.WellFounded.fix || n == `Omega.WellFounded.fixF then
+      compileFix source strict n (n.appendAfter "_eq")
+      continue
+    if n == `Omega.WellFounded.Nat.fix.go then
+      let some (.defnInfo d) := strict.find? n | throwError "missing natural fixpoint recursion"
+      compileNatRec source strict d
+      continue
     if ← missingRuntimeDependency source n then continue
     let before ← Core.saveState
     try
@@ -144,11 +187,12 @@ private def compileOwner (source : Environment) (groups : Array InductiveVal) (w
   if (IR.collectUsedDecls compiled (IR.getDecls compiled)).contains marker.name then
     throwError "proof erasure marker survived in runtime code"
 
-/-- The strict array is a record containing a list. These checked source definitions
-implement its read and update operations on that representation. -/
+/-- The strict array is a record containing a list. Compile its safe reference definitions
+for indexing, updates and effectful traversals on that representation. -/
 private def arrayDefinition (n : Name) : Bool :=
   [`Array.set, `Array.uget, `Array.uset, `Array.usize, `Array.pop, `Array.replicate,
-   `Array.swap, `Array.swapIfInBounds].contains n
+   `Array.swap, `Array.swapIfInBounds, `Array.forIn', `Array.mapFinIdxM, `Array.mapM, `Array.modifyM,
+   `Array.foldlM, `Array.foldrM, `Array.anyM].contains n
 
 /-- Use ordinary module initialization so closed functions and imported modules are ready before calls. -/
 private def emitOwner (env : Environment) (owner : Name) (imports : Array Import)
@@ -200,7 +244,7 @@ private unsafe def install (source publicSource : Environment) (lib out : System
       if onlyLayouts || oldNative.contains d.name || ci.isUnsafe || ci.isPartial then continue
       let upstream := originalName d.name
       if unaryNat && largeWordSizes.contains upstream then continue
-      if (isExtern source upstream && !arrayDefinition upstream) || (getImplementedBy? source upstream).isSome then continue
+      if (isExtern source upstream || (getImplementedBy? source upstream).isSome) && !arrayDefinition upstream then continue
       candidates := candidates.push d.name
     | _ => continue
   if onlyLayouts && groups.isEmpty then return
