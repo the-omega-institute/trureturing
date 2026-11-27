@@ -43,7 +43,8 @@ theorem star_perspective_compact (x : ℝ) (hx : 0 < x) (hx1 : x < 1) :
   field_simp
   ring
 
-private theorem square_variance_identity (E : k → Matrix n n ℂ) (r : k → ℝ)
+/-- Expand the sum of the squared residuals for a complete family of effects. -/
+theorem square_variance_identity (E : k → Matrix n n ℂ) (r : k → ℝ)
     (hsum : ∑ i, E i = 1) :
     let M := ∑ i, r i • E i
     ∑ i, ((r i • (1 : Matrix n n ℂ) - M) * E i *
