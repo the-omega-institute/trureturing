@@ -77,7 +77,7 @@ attribute [local instance 2000] HardinA233251TriangleStrip.widthInstDecidableGoo
 attribute [local instance 2000] Pi.instFintype
 open HardinA233255ShapeSymmetry (full_row)
 
-private theorem class_fibres (s : Seen) (p : Boundary) (k : Fin 11) :
+theorem class_fibres (s : Seen) (p : Boundary) (k : Fin 11) :
     classCount s p k = ∑ q : Boundary,
       rowWeight s q * if (∀ j : Fin 5, q j.castSucc ≠ q j.succ) ∧
         (∀ j, p j ≠ q j) ∧ boundaryClass (rowFinish s q) q = k then 1 else 0 := by
