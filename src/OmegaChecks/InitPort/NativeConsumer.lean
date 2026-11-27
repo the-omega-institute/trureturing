@@ -87,6 +87,12 @@ public def listDisjunction (x y : Omega.Bool) : Omega.Bool :=
   let xs := Omega.List.append (Omega.List.cons x Omega.List.nil) (Omega.List.cons y Omega.List.nil)
   Omega.List.foldl Omega.strictOr .false (Omega.List.map (fun a => a) xs)
 
+public def naturalEqual (x y : Omega.Bool) : Omega.Bool :=
+  @Omega.Decidable.decide _ (Omega.Nat.decEq (asNat x) (asNat y))
+
+public def naturalLe (x y : Omega.Bool) : Omega.Bool :=
+  @Omega.Decidable.decide _ (Omega.Nat.decLe (asNat x) (asNat y))
+
 public def disjunction (x y : Omega.Bool) : Omega.Bool := Omega.strictOr x y
 public def conjunction (x y : Omega.Bool) : Omega.Bool := Omega.strictAnd x y
 "
@@ -114,7 +120,8 @@ unsafe def main (args : List String) : IO Unit := do
       (`stateSecond, second), (`optionFirst, first), (`composeSecond, second), (`mappedFirst, first),
       (`sumIndex, first), (`sumRight, or), (`boolEqual, BEq.beq), (`optionFiltered, and),
       (`controlResult, or), (`optionEqual, BEq.beq), (`someValue, and), (`attachedValue, and), (`liftedNumeral, or), (`lastElement, second),
-      (`arithmetic, first), (`listDisjunction, or), (`disjunction, or), (`conjunction, and)]
+      (`arithmetic, first), (`listDisjunction, or), (`naturalEqual, BEq.beq),
+      (`naturalLe, fun x y => !x || y), (`disjunction, or), (`conjunction, and)]
     for (name, expected) in checks do
       let some ci := env.find? name | throw <| IO.userError s!"missing {name}"
       unless Kernel.isDefEqGuarded env {} ci.type arity do throw <| IO.userError s!"invalid type of {name}"

@@ -549,6 +549,11 @@ port_definition Decidable.isTrue
 port_definition dite
 port_definition ite
 
+port_definition Nat.beq.match_1 with_native_code
+port_structural_code Nat.beq on_arg 1
+port_definition Nat.ble.match_1 with_native_code
+port_structural_code Nat.ble on_arg 1
+
 namespace Omega
 
 theorem instDecidableAnd._proof_1 {p q : Prop} [dp : Decidable p] [dq : Decidable q] :
@@ -773,3 +778,33 @@ port_structural_code Nat.pow on_arg 2
 port_structural_code Nat.sub on_arg 2
 port_definition instAddNat with_native_code
 port_structural_code List.length on_arg 2
+
+port_definition instMulNat with_native_code
+port_definition instNatPowNat with_native_code
+port_definition minOfLe with_native_code
+port_definition maxOfLe with_native_code
+port_definition instMinNat with_native_code
+port_definition Decidable.falseTrueCases with_native_code
+namespace Omega
+
+attribute [local semireducible] Nat.beq Nat.pred Nat.le
+
+public theorem Nat.decEq._proof_1 (n m : Nat) : Bool.Reflects (Nat.beq n m) (Eq n m) :=
+  have separate (k : Nat) (h : Eq Nat.zero (Nat.succ k)) : False :=
+    Nat.not_succ_le_zero k (Eq.subst (motive := fun t => Nat.le (Nat.succ k) t) h.symm (Nat.le_refl _))
+  have lift (b : Bool) (k l : Nat) (r : Bool.Reflects b (Eq k l)) :
+      Bool.Reflects b (Eq (Nat.succ k) (Nat.succ l)) :=
+    Bool.casesOn (motive := fun bit => Bool.Reflects bit (Eq k l) →
+        Bool.Reflects bit (Eq (Nat.succ k) (Nat.succ l))) b
+      (fun different equal => different (congrArg Nat.pred equal)) (fun equal => congrArg Nat.succ equal) r
+  Nat.rec (motive := fun k => ∀ l, Bool.Reflects (Nat.beq k l) (Eq k l))
+    (fun l => Nat.casesOn (motive := fun l => Bool.Reflects (Nat.beq Nat.zero l) (Eq Nat.zero l))
+      l Omega.rfl separate)
+    (fun k prior l => Nat.casesOn (motive := fun l =>
+        Bool.Reflects (Nat.beq (Nat.succ k) l) (Eq (Nat.succ k) l)) l
+      (fun h => separate k h.symm) (fun j => lift (Nat.beq k j) k j (prior j))) n m
+
+end Omega
+
+port_definition Nat.decEq with_native_code
+port_definition instDecidableEqNat with_native_code
