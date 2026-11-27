@@ -35,4 +35,6 @@ asks about the location of jumps. [Earlier question](https://arxiv.org/abs/2603.
 
 ## Verified locator
 
-https://arxiv.org/html/2603.29988v1#S8.Thmtheorem4
+DOI [10.48550/arXiv.2603.29988](https://doi.org/10.48550/arXiv.2603.29988).
+
+[arXiv version 1](https://arxiv.org/abs/2603.29988v1) · [Problem 8.4](https://arxiv.org/html/2603.29988v1#S8.Thmtheorem4)
