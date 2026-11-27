@@ -23,7 +23,10 @@ internal sealed class NontransitiveFactorsDocument : IScribeDocumentDefinition
                 Paragraph(Text("The two graphs share the labelled vertex set Fin 17. They have decidable adjacency, and adjMatrix uses integer entries. Matrix.of(1) has every entry equal to one, the subtracted 1 is the identity, and the product is ordinary matrix multiplication.")),
                 Paragraph(Text("The two graphs are defined by literal neighbor lists. The kernel checks symmetry, looplessness and the product entry at each ordered pair of vertices. Its value is zero on the diagonal and one off the diagonal.")),
                 Paragraph(Text("Reindexing an adjacency matrix by a graph automorphism fixes the matrix and commutes with powers. The third power of B has diagonal entries 2 and 0 at vertices 0 and 1. The fourth power of C has diagonal entries 40 and 42 at vertices 0 and 2. These entries count walks that return to their starting vertex at the specified length. Each pair of differing entries rules out an automorphism between the corresponding vertices."))),
-            DescribeRole.Theorem))));
+            DescribeRole.Theorem,
+            openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                ProblemSlugRef.Create("akbari-elahimanesh-miraftab-nontransitive-adjacency-factors"),
+                ResolutionKind.Proved)))));
 
     private static Formula Call(string name, params Formula[] arguments) =>
         new Formula.Apply(Seq(Operatorname, Grp(F.Id(name))), [.. arguments]);
