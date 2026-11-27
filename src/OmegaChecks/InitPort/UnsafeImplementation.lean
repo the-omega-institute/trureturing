@@ -3,6 +3,7 @@ public import OmegaChecks.InitPort.Translation
 import OmegaChecks.InitPort.LogicalHandle
 import OmegaChecks.InitPort.ReferenceModify
 import OmegaChecks.InitPort.SyntaxArray
+import OmegaChecks.InitPort.UnsafeUse
 
 open Lean
 
@@ -47,6 +48,7 @@ public def replay (base : Kernel.Environment) (constants : Std.HashMap Name Cons
     unless (env.addDeclCore 0 1000 (.defnDecl {d with safety := .safe}) none).isOk do
       throw <| IO.userError s!"invalid logical body of {n}"
     let .ok next := env.addDeclCore 0 1000 (.defnDecl d) none | throw <| IO.userError s!"invalid unsafe declaration {n}"
+    checkUnsafeUse next ci
     env := next
   return env
 

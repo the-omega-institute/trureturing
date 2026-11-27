@@ -1,5 +1,6 @@
 module
 public import OmegaChecks.InitPort.Translation
+import OmegaChecks.InitPort.UnsafeUse
 
 open Lean
 namespace OmegaChecks.InitPort.ArraySafety
@@ -29,18 +30,6 @@ public def verify (env : Kernel.Environment) (decl : Declaration) (limit : USize
   | _ => throw (.other "expected an array definition or opaque declaration")
   env.addDeclCore limit 1000 decl none
 
-/-- A safe consumer must fail specifically on this reference. An unsafe consumer can use it. -/
-private def checkUse (env : Kernel.Environment) (ci : ConstantInfo) : IO Unit := do
-  let alias : DefinitionVal := {
-    name := ci.name ++ `_checkConsumer, type := ci.type, levelParams := ci.levelParams
-    value := mkConst ci.name (ci.levelParams.map Level.param), hints := .opaque, safety := .safe}
-  let .error (.other msg) := env.addDeclCore 0 1000 (.defnDecl alias) none
-    | throw <| IO.userError s!"safe consumer did not fail on unsafe reference {ci.name}"
-  unless msg == s!"invalid declaration, it uses unsafe declaration '{ci.name}'" do
-    throw <| IO.userError s!"unexpected safe consumer rejection for {ci.name}: {msg}"
-  if let .error e := env.addDeclCore 0 1000 (.defnDecl {alias with safety := .unsafe}) none then
-    throw <| IO.userError s!"unsafe consumer of {ci.name}: {← e.toMessageData {} |>.toString}"
-
 public def replay (base : Kernel.Environment) (constants : Std.HashMap Name ConstantInfo) : IO Kernel.Environment := do
   let mut env := base
   for n in names do
@@ -52,7 +41,7 @@ public def replay (base : Kernel.Environment) (constants : Std.HashMap Name Cons
       | _ => throw <| IO.userError s!"invalid strict array operation: {n}"
     match verify env decl 0 with
     | .ok next =>
-      checkUse next ci
+      checkUnsafeUse next ci
       env := next
     | .error e => throw <| IO.userError s!"kernel rejected {n}: {← e.toMessageData {} |>.toString}"
   return env
