@@ -1,6 +1,7 @@
 import Mathlib.Algebra.BigOperators.Fin
 import Mathlib.Algebra.Group.Pointwise.Set.BigOperators
 import Mathlib.Algebra.Order.BigOperators.Group.Finset
+import Mathlib.Algebra.Order.Ring.Abs
 import Mathlib.Data.Int.Basic
 import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.Ring
@@ -334,5 +335,76 @@ theorem mem_range_iff_zero_code_sum {m h : ℕ} (hh : 2 ≤ h) (t : Fin m → �
     refine ⟨j, ?_⟩
     have hv (i : Fin m) := (hj i).2
     simpa [hv, apply_ite] using hsum
+
+private theorem abs_remainder_le {m h : ℕ} {U : ℤ} (hU : 0 ≤ U)
+    (t : Fin m → ℤ) (ht : ∀ i, |t i| ≤ U) {u v : Fin m → ℕ}
+    (huv : (∑ i, (u i + v i)) = h) :
+    |∑ i, (v i : ℤ) * t i| ≤ (h : ℤ) * U := by
+  have hv : (∑ i, v i) ≤ h := by
+    rw [← huv]
+    exact Finset.sum_le_sum (fun i _ => Nat.le_add_left _ _)
+  have hv' : (∑ i, (v i : ℤ)) ≤ (h : ℤ) := by exact_mod_cast hv
+  calc
+    _ ≤ ∑ i, |(v i : ℤ) * t i| := Finset.abs_sum_le_sum_abs _ _
+    _ ≤ ∑ i, (v i : ℤ) * U := by
+      apply Finset.sum_le_sum
+      intro i _
+      rw [abs_mul, abs_of_nonneg (Int.natCast_nonneg _)]
+      exact mul_le_mul_of_nonneg_left (ht i) (Int.natCast_nonneg _)
+    _ = (∑ i, (v i : ℤ)) * U := by rw [Finset.sum_mul]
+    _ ≤ _ := mul_le_mul_of_nonneg_right hv' hU
+
+private theorem separated_values {H d e r s : ℤ}
+    (hH : 0 ≤ H) (hr : |r| ≤ H) (hs : |s| ≤ H) (hd : d ≠ e) :
+    let M := 2 * H + 2
+    2 ≤ |(M * d + r) - (M * e + s)| := by
+  let M : ℤ := 2 * H + 2
+  change 2 ≤ |(M * d + r) - (M * e + s)|
+  have hM : 0 ≤ M := by dsimp [M]; omega
+  obtain ⟨hrLower, hrUpper⟩ := abs_le.mp hr
+  obtain ⟨hsLower, hsUpper⟩ := abs_le.mp hs
+  rcases lt_or_gt_of_ne hd with hlt | hgt
+  · have hgap : 1 ≤ e - d := by omega
+    have hscaled : M ≤ M * e - M * d := by
+      simpa only [mul_one, mul_sub] using mul_le_mul_of_nonneg_left hgap hM
+    have hbound : M = 2 * H + 2 := rfl
+    have hle : 2 ≤ -((M * d + r) - (M * e + s)) := by omega
+    exact hle.trans (neg_le_abs _)
+  · have hgap : 1 ≤ d - e := by omega
+    have hscaled : M ≤ M * d - M * e := by
+      simpa only [mul_one, mul_sub] using mul_le_mul_of_nonneg_left hgap hM
+    have hbound : M = 2 * H + 2 := rfl
+    have hle : 2 ≤ (M * d + r) - (M * e + s) := by omega
+    exact hle.trans (le_abs_self _)
+
+private theorem adjacent_mem_range {m h : ℕ} (hh : 2 ≤ h)
+    {U : ℤ} (hU : 0 ≤ U) (t : Fin m → ℤ) (ht : ∀ i, |t i| ≤ U) {x : ℤ}
+    (hx : x ∈ h • Set.range (radixGenerators h (2 * ((h : ℤ) * U) + 2) t))
+    (hx' : x + 1 ∈ h • Set.range (radixGenerators h (2 * ((h : ℤ) * U) + 2) t)) :
+    x ∈ Set.range t ∧ x + 1 ∈ Set.range t := by
+  obtain ⟨u, v, huv, heval⟩ := (mem_radixGenerators_iff t).mp hx
+  obtain ⟨u', v', huv', heval'⟩ := (mem_radixGenerators_iff t).mp hx'
+  have hcode : radixCode h u v = radixCode h u' v' := by
+    by_contra hne
+    have hsep := separated_values (mul_nonneg (Int.natCast_nonneg h) hU)
+      (abs_remainder_le hU t ht huv) (abs_remainder_le hU t ht huv') hne
+    dsimp at hsep
+    rw [heval, heval'] at hsep
+    have hdiff : x - (x + 1) = -1 := by omega
+    rw [hdiff, show |(-1 : ℤ)| = 1 by decide] at hsep
+    omega
+  have hpairs : (u, v) ≠ (u', v') := by
+    intro heq
+    obtain ⟨hu, hv⟩ := Prod.mk.inj heq
+    rw [← hu, ← hv, heval] at heval'
+    omega
+  have hdigit := digit_eq_zero_of_collision hh huv huv'
+    ((radixCode_eq_iff hh huv huv').mp hcode) hpairs
+  have hz : radixCode h u v = 0 := by simp [radixCode, hdigit]
+  have hz' : radixCode h u' v' = 0 := hcode.symm.trans hz
+  exact ⟨(mem_range_iff_zero_code_sum hh t x).mpr
+      ⟨u, v, huv, hz, by simpa [hz] using heval⟩,
+    (mem_range_iff_zero_code_sum hh t (x + 1)).mpr
+      ⟨u', v', huv', hz', by simpa [hz'] using heval'⟩⟩
 
 end D5.S3.Arith.NathansonProblem15
