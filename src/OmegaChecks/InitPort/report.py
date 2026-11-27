@@ -29,15 +29,20 @@ def check_coverage(official):
         witness, target = row["reductionWitness"], row["impliesAxiom"]
         if bool(witness) != bool(target):
             raise ValueError(f"incomplete axiom reduction for {owner}/{name}")
+        runtime = row.get("runtimeConflictWitness")
+        if runtime and (axiom or witness or not row.get("unsafe") or
+                        row.get("logicalConsequence") != "False" or
+                        row.get("logicalConsequenceWitness") != runtime or not row.get("requiredBehavior")):
+            raise ValueError(f"inconsistent runtime conflict for {owner}/{name}")
         if port:
-            if axiom or witness or row["strictModule"] != "Omega" + owner:
+            if axiom or witness or runtime or row["strictModule"] != "Omega" + owner:
                 raise ValueError(f"inconsistent strict match for {owner}/{name}")
             matched += 1
         elif axiom:
             direct += 1
         elif witness:
             reductions += 1
-        else:
+        elif not runtime:
             unresolved.append(site)
     summary = official["summary"]
     if (not sites or not modules or len(sites) != summary["declarations"] or
@@ -49,8 +54,10 @@ def check_coverage(official):
 def verify_complete(official, product, reductions, unresolved):
     if unresolved:
         examples = ", ".join(f"{owner}/{name}" for owner, name in unresolved[:3])
+        runtime = sum(bool(row.get("runtimeConflictWitness")) for row in official["declarations"])
         raise ValueError(f"{len(unresolved)} unresolved public non-axiom definition sites; "
-                         f"{reductions} checked axiom reductions. Examples: {examples}. See init-gaps.tsv.")
+                         f"{reductions} checked axiom reductions, {runtime} observed runtime conflicts. "
+                         f"Examples: {examples}. See init-gaps.tsv.")
     # Never accept an old audit log or a same-name strict declaration as a certificate.
     # Audit the product actually being presented, against all installed official module roots.
     lib = product / "lib"
@@ -91,7 +98,8 @@ def report(product, require_complete=False):
             writer = csv.writer(f, delimiter="\t", lineterminator="\n")
             writer.writerow(["module", "declaration", "kind", "unsafe", "partial", "upstreamAxioms",
                              "impliesAxiom", "firstDependencyPath", "reason", "reductionWitness",
-                             "logicalConsequence", "logicalConsequenceWitness", "requiredBehavior", "abstractedDependency"])
+                             "logicalConsequence", "logicalConsequenceWitness", "requiredBehavior", "abstractedDependency",
+                             "runtimeConflictWitness"])
             for row in official["declarations"]:
                 if row["matchingNameAndModule"] or row["kind"] == "axiom":
                     continue
@@ -124,7 +132,7 @@ def report(product, require_complete=False):
                                  str(row["partial"]).lower(), ",".join(row["axioms"]), row["impliesAxiom"],
                                  " -> ".join(path), " ".join(reason.splitlines()), row["reductionWitness"],
                                  row.get("logicalConsequence"), row.get("logicalConsequenceWitness"),
-                                 row.get("requiredBehavior"), row.get("abstractedDependency")])
+                                 row.get("requiredBehavior"), row.get("abstractedDependency"), row.get("runtimeConflictWitness")])
         reductions = stage / "init-public-reductions.tsv"
         with reductions.open("w", newline="") as f:
             writer = csv.writer(f, delimiter="\t", lineterminator="\n")
@@ -146,7 +154,7 @@ if __name__ == "__main__":
     cli = argparse.ArgumentParser(description=__doc__)
     cli.add_argument("product", type=Path, help="audited output from build.py")
     cli.add_argument("--require-complete", action="store_true",
-                     help="fail unless every official non-axiom site is ported or implies an axiom by a checked witness")
+                     help="require an implementation, checked axiom reduction or observed runtime contradiction for every site")
     args = cli.parse_args()
     try:
         report(args.product.resolve(), require_complete=args.require_complete)

@@ -50,6 +50,17 @@ class CoverageTest(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "incomplete axiom reduction"):
             check_coverage(inventory(site("Init.Core", "t", impliesAxiom="propext")))
 
+    def test_runtime_conflict_requires_live_observation_and_matching_contradiction(self):
+        attributes = dict(kind="opaque", unsafe=True, logicalConsequence="False",
+                          logicalConsequenceWitness="address", requiredBehavior="distinguish equal lists")
+        observed = site("Init.Util", "ptrAddrUnsafe", runtimeConflictWitness="address", **attributes)
+        conditional = site("Init.Util", "ptrEq", **attributes)
+        self.assertEqual(check_coverage(inventory(observed, conditional)), (0, [("Init.Util", "ptrEq")]))
+        for mismatch in ({"logicalConsequence": "funext"}, {"logicalConsequenceWitness": "other"},
+                         {"requiredBehavior": None}, {"unsafe": False}, {"kind": "axiom"}):
+            with self.subTest(mismatch=mismatch), self.assertRaisesRegex(ValueError, "runtime conflict"):
+                check_coverage(inventory({**observed, **mismatch}))
+
     def test_refuse_duplicate_definition_site(self):
         with self.assertRaisesRegex(ValueError, "repeated official definition site"):
             check_coverage(inventory(site("Init.A", "t"), site("Init.A", "t")))

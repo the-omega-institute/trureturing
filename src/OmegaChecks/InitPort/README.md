@@ -30,7 +30,7 @@ example (a : α) (b : β) : Omega.Eq (Prod.fst (Prod.mk a b)) a := Omega.rfl
 
 `Omega.withPtrAddrUnsafe` 的返回值通过逐输入证明核对。官方实现把对象的机器地址传给回调 `k`，其参数 `h` 证明任意两个地址产生相同结果。严格实现调用 `Omega.withPtrAddr`。校验器读取官方的 `@[implemented_by]` 登记、两端签名和实际计算体，用 `h` 证明每个机器地址所得的值都等于严格实现的结果。[返回值核验](Address.lean) · [官方指针回调](https://github.com/leanprover/lean4/blob/v4.35.0/src/Init/Util.lean#L102)
 
-`ptrAddrUnsafe`、`ptrEq` 和 `ptrEqList` 能区分内容相等的两个列表。运行 `lake env lean --run src/OmegaChecks/InitPort/PointerObservations.lean` 可在钉版 Lean 运行时复现。对原类型的任意纯函数，Lean 的等式替换要求这两组输入得到相同结果。三个声明的缺口记录分别列出对应的行为前提和矛盾证明。[内核证明](../InitInventory/PointerObservations.lean) · [运行时样例](PointerObservations.lean)
+`ptrAddrUnsafe`、`ptrEq` 和 `ptrEqList` 能区分内容相等的两个列表。运行 `lake env lean --run src/OmegaChecks/InitPort/PointerObservations.lean` 可在钉版 Lean 运行时复现。对原类型的任意纯函数，Lean 的等式替换要求这两组输入得到相同结果。每次盘点都在当前工具链执行观察。只有实际观测到不同返回值且源码中有针对该原类型的内核矛盾证明时，缺口记录才写入 `runtimeConflictWitness`。[内核证明](../InitInventory/PointerObservations.lean) · [运行时样例](PointerObservations.lean)
 
 `Array.anyMUnsafe` 的机器字索引需要运行时数组长度上界。内核允许取 `xs := (List.replicate USize.size ()).toArray`。从零开始搜索整个数组时，机器循环将结束索引转换为 `USize.ofNat USize.size = 0`，首轮就返回 `false`。对同一个数学数组，安全参考 `Array.anyM` 在恒真的 `Id` 谓词下返回 `true`。这项差异限定了可证明对应的输入范围。[官方数组循环](https://github.com/leanprover/lean4/blob/v4.35.0/src/Init/Data/Array/Basic.lean#L936) · [机器字回绕](https://github.com/leanprover/lean4/blob/v4.35.0/src/Init/Data/UInt/Lemmas.lean#L291)
 
@@ -45,7 +45,7 @@ example (a : α) (b : β) : Omega.Eq (Prod.fst (Prod.mk a b)) a := Omega.rfl
 
 直接运行盘点命令时，先执行 `lake build +OmegaChecks.InitInventory`，再执行 `lake env lean --run src/OmegaChecks/InitInventory.lean <lib> <inventory.json>`。以下完整性验收入口会自动准备所需模块。
 
-完整性验收从安装的钉版 Lean 和待验制品重新读取每个官方公开定义点。运行以下命令，退出码 0 表示全部非公理定义点已通过实际接口审计，或已在源码中逐项登记官方原类型推出公理的证明。遇到尚未解决的定义点，命令写出当前清单和缺口数，然后以退出码 1 结束。
+完整性验收从安装的钉版 Lean 和待验制品重新读取每个官方公开定义点。运行以下命令，退出码 0 表示全部非公理定义点已通过实际接口审计，或已在源码中逐项登记公理归约或运行时行为与纯函数等式替换相矛盾的证据。遇到尚未解决的定义点，命令写出当前清单和缺口数，然后以退出码 1 结束。
 
 ```sh
 python3 src/OmegaChecks/InitPort/report.py .lake/init-port-all --require-complete

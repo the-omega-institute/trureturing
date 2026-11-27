@@ -459,7 +459,7 @@ private def conditionalConsequence? (owner name : Name) : Option (String × Name
     "On every finite iterator it the result equals " ++ behavior)
 
 private def inventory (lib : System.FilePath) (visible strict full : Environment) (modules : Array Name)
-    (gaps : Option IO.FS.Handle) : CoreM Json := do
+    (gaps : Option IO.FS.Handle) (observedPointers : List String) : CoreM Json := do
   let official ← getEnv
   let reductions := reductionPaths visible strict full
   let boundaries : Std.HashMap (Name × Name) (Name × Name) := OmegaChecks.InitBoundaries.reductions.foldl
@@ -481,7 +481,7 @@ private def inventory (lib : System.FilePath) (visible strict full : Environment
   let mut directAxioms := 0
   let mut withAxioms := 0
   if let some file := gaps then
-    file.putStrLn "module\tdeclaration\tkind\tunsafe\tpartial\tupstreamAxioms\timpliesAxiom\treductionWitness\tlogicalConsequence\tlogicalConsequenceWitness\trequiredBehavior\tabstractedDependency"
+    file.putStrLn "module\tdeclaration\tkind\tunsafe\tpartial\tupstreamAxioms\timpliesAxiom\treductionWitness\tlogicalConsequence\tlogicalConsequenceWitness\trequiredBehavior\tabstractedDependency\truntimeConflictWitness"
   for owner in modules do
     let some idx := visible.getModuleIdx? owner | throwError "missing official module {owner}"
     let publicNames := visible.header.moduleData[idx]!.constNames.filter publicName
@@ -506,6 +506,10 @@ private def inventory (lib : System.FilePath) (visible strict full : Environment
       let consequence := (logicalConsequence? owner name).map (fun (target, witness) => (target.toString, witness))
         <|> conditional.map (fun (target, witness, _) => (target, witness))
       let behavior := conditional.map (fun (_, _, premise) => premise)
+      let runtimeConflict : Option String := do
+        guard (owner == `Init.Util && info.isUnsafe && observedPointers.contains name.toString)
+        let some ("False", witness, _) := conditional | none
+        return witness.toString
       let boundary := boundaries[(owner, name)]?
       let selector := if boundary.isSome && OmegaChecks.InitBoundaries.OptionSelector.usesSelector owner name then
         some (``Option.choice).toString else none
@@ -522,7 +526,8 @@ private def inventory (lib : System.FilePath) (visible strict full : Environment
             declarationKind info, toString info.isUnsafe, toString info.isPartial,
             String.intercalate "," (axioms.toList.map Name.toString),
             (boundary.map (·.1.toString)).getD "", (boundary.map (·.2.toString)).getD "",
-            (consequence.map Prod.fst).getD "", (consequence.map (·.2.toString)).getD "", behavior.getD "", selector.getD ""]
+            (consequence.map Prod.fst).getD "", (consequence.map (·.2.toString)).getD "", behavior.getD "",
+            selector.getD "", runtimeConflict.getD ""]
       if info.isAxiom then
         directAxioms := directAxioms + 1
         axiomUnique := axiomUnique.insert name
@@ -542,6 +547,9 @@ private def inventory (lib : System.FilePath) (visible strict full : Environment
         ("strictModule", toJson (strictOwner.map Name.toString))]
       let row := match selector with
         | some dep => row.setObjVal! "abstractedDependency" (toJson dep)
+        | none => row
+      let row := match runtimeConflict with
+        | some witness => row.setObjVal! "runtimeConflictWitness" (toJson witness)
         | none => row
       rows := rows.push <| match consequence with
         | some (target, witness) => row.mergeObj <| Json.mkObj [
@@ -584,6 +592,7 @@ def main (args : List String) : IO Unit := do
   for owner in strict.allImportedModuleNames do
     unless owner.getRoot == `OmegaInit do
       throw <| IO.userError s!"expected a strict OmegaInit build, found import {owner}"
-  let result ← (inventory lib visible strict full modules gaps).toIO' {fileName := "<Init inventory>", fileMap := default} {env := official}
+  let observedPointers ← unsafe OmegaChecks.InitBoundaries.PointerObservations.observe modules.size
+  let result ← (inventory lib visible strict full modules gaps observedPointers).toIO' {fileName := "<Init inventory>", fileMap := default} {env := official}
   IO.FS.writeFile outputPath (result.compress ++ "\n")
   IO.println (← IO.ofExcept (result.getObjVal? "summary")).compress
