@@ -43,3 +43,19 @@ private def observe (out : Omega.EST.Out Omega.IO.Error Omega.IO.RealWorld Omega
 @[export omega_test_path_app] public def pathApp (w : PathWorld) := Omega.IO.appPath w
 @[export omega_test_path_list] public def pathList (p : Omega.String) (w : PathWorld) :=
   Omega.System.FilePath.readDir ⟨p⟩ w
+
+@[export omega_test_open] public def fileOpen (p : Omega.String) (w : PathWorld) :=
+  Omega.IO.FS.Handle.mk ⟨p⟩ .readWrite w
+@[export omega_test_tty] public def fileTty (h : Omega.IO.FS.Handle) (w : PathWorld) := h.isTty w
+@[export omega_test_flush] public def fileFlush (h : Omega.IO.FS.Handle) (w : PathWorld) := observe (h.flush w)
+@[export omega_test_rewind] public def fileRewind (h : Omega.IO.FS.Handle) (w : PathWorld) := observe (h.rewind w)
+@[export omega_test_truncate] public def fileTruncate (h : Omega.IO.FS.Handle) (w : PathWorld) := observe (h.truncate w)
+@[export omega_test_unlock] public def fileUnlock (h : Omega.IO.FS.Handle) (w : PathWorld) := observe (h.unlock w)
+@[export omega_test_lock] public def fileLock (h : Omega.IO.FS.Handle) (w : PathWorld) := observe (h.lock .true w)
+@[export omega_test_try_lock] public def fileTryLock (h : Omega.IO.FS.Handle) (w : PathWorld) := h.tryLock .true w
+@[export omega_test_read] public def fileRead (h : Omega.IO.FS.Handle) (n : Omega.USize) (w : PathWorld) := h.read n w
+@[export omega_test_write] public def fileWrite (h : Omega.IO.FS.Handle) (buf : Omega.ByteArray) (w : PathWorld) :=
+  observe (h.write buf w)
+@[export omega_test_line] public def fileLine (h : Omega.IO.FS.Handle) (w : PathWorld) := h.getLine w
+@[export omega_test_put] public def filePut (h : Omega.IO.FS.Handle) (s : Omega.String) (w : PathWorld) :=
+  observe (h.putStr s w)

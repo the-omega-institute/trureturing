@@ -17,7 +17,19 @@ private def entries := #[(`IO.getEnv, "lean_io_getenv", "omega_io_get_env"),
   (`IO.appPath, "lean_io_app_path", "omega_io_app_path"), (`IO.currentDir, "lean_io_current_dir", "omega_io_current_dir"),
   (`IO.Process.getCurrentDir, "lean_io_process_get_current_dir", "omega_io_process_get_current_dir"),
   (`IO.Process.setCurrentDir, "lean_io_process_set_current_dir", "omega_io_process_set_current_dir"),
-  (`System.FilePath.readDir, "lean_io_read_dir", "omega_io_read_dir")]
+  (`System.FilePath.readDir, "lean_io_read_dir", "omega_io_read_dir"),
+  (`IO.FS.Handle.mk, "lean_io_prim_handle_mk", "omega_io_handle_mk"),
+  (`IO.FS.Handle.lock, "lean_io_prim_handle_lock", "omega_io_handle_lock"),
+  (`IO.FS.Handle.tryLock, "lean_io_prim_handle_try_lock", "omega_io_handle_try_lock"),
+  (`IO.FS.Handle.unlock, "lean_io_prim_handle_unlock", "omega_io_handle_unlock"),
+  (`IO.FS.Handle.isTty, "lean_io_prim_handle_is_tty", "omega_io_handle_is_tty"),
+  (`IO.FS.Handle.flush, "lean_io_prim_handle_flush", "omega_io_handle_flush"),
+  (`IO.FS.Handle.rewind, "lean_io_prim_handle_rewind", "omega_io_handle_rewind"),
+  (`IO.FS.Handle.truncate, "lean_io_prim_handle_truncate", "omega_io_handle_truncate"),
+  (`IO.FS.Handle.read, "lean_io_prim_handle_read", "omega_io_handle_read"),
+  (`IO.FS.Handle.write, "lean_io_prim_handle_write", "omega_io_handle_write"),
+  (`IO.FS.Handle.getLine, "lean_io_prim_handle_get_line", "omega_io_handle_get_line"),
+  (`IO.FS.Handle.putStr, "lean_io_prim_handle_put_str", "omega_io_handle_put_str")]
 
 private def decodeError (source strict : Environment) : IO String := do
   let some (.inductInfo errors) := source.find? `IO.Error | throw <| IO.userError "missing official IO.Error"
@@ -67,12 +79,14 @@ public unsafe def main (args : List String) : IO Unit := do
   let roots := entries.filter fun (n, _, _) => env.contains (`Omega ++ n)
   if roots.isEmpty then return
   let fs := roots.any fun (n, _, _) => n != `IO.getEnv
+  let handles := roots.any fun (n, _, _) => `IO.FS.Handle |>.isPrefixOf n
   let readDir := roots.any fun (n, _, _) => n == `System.FilePath.readDir
   let dicts := [`Omega.Fin, `Omega.BitVec, `Omega.UInt8, `Omega.Array, `Omega.ByteArray, `Omega.String] ++
-    (if fs then [`Omega.UInt32, `Omega.System.FilePath] else [])
+    (if fs then [`Omega.UInt32, `Omega.System.FilePath] else []) ++
+    (if roots.any (fun (n, _, _) => n == `IO.FS.Handle.read) then [`Omega.USize] else [])
   if !ir then
     for n in dicts ++ [`Omega.Option, `Omega.List, `Omega.ST.Out] ++ (if fs then [`Omega.EST.Out, `Omega.IO.Error] else []) ++
-        (if readDir then [`Omega.IO.FS.DirEntry] else []) do
+        (if readDir then [`Omega.IO.FS.DirEntry] else []) ++ (if handles then [`Omega.IO.FS.Mode] else []) do
       let env ← importModules imports {}
       if (monoTypeExt.find? env n).isSome then continue
       let some idx := env.getModuleIdxFor? n | throw <| IO.userError s!"missing owner for {n}"
@@ -91,6 +105,11 @@ public unsafe def main (args : List String) : IO Unit := do
     for f in l.fieldInfo, i in [:fields] do
       let .object j _ := f | throw <| IO.userError s!"expected boxed {n} field"
       unless i == j do throw <| IO.userError s!"unexpected {n} field position"
+  if handles then
+    for (n, tag) in [(`read, 0), (`write, 1), (`writeNew, 2), (`readWrite, 3), (`append, 4)] do
+      for (e, mode) in [(source, `IO.FS.Mode), (env, `Omega.IO.FS.Mode)] do
+        let some layout := ctorLayoutExt.find? e (mode ++ n) | throw <| IO.userError s!"missing mode {mode ++ n}"
+        unless layout.ctorInfo.cidx == tag && layout.fieldInfo.isEmpty do throw <| IO.userError s!"unexpected file mode {n}"
   if readDir then
     for (e, ctor) in [(env, `Omega.IO.FS.DirEntry.mk), (source, `IO.FS.DirEntry.mk)] do
       let some l := ctorLayoutExt.find? e ctor | throw <| IO.userError s!"missing layout for {ctor}"
@@ -104,6 +123,18 @@ public unsafe def main (args : List String) : IO Unit := do
       modifyEnv fun e => externAttr.ext.addEntry (asyncDecl := strict) e (strict, ⟨[.standard `all symbol]⟩)
       (← compileDeclsRef.get) #[strict] {}
   for (n, upstream, symbol) in roots do
+    if `IO.FS.Handle |>.isPrefixOf n then
+      let path := n == `IO.FS.Handle.mk
+      let obj := if path then IR.IRType.object else .tobject
+      let extra : Array (IR.IRType × Bool) :=
+        if [`IO.FS.Handle.mk, `IO.FS.Handle.lock, `IO.FS.Handle.tryLock].contains n then #[(.uint8, false)]
+        else if n == `IO.FS.Handle.read then #[(.usize, false)]
+        else if [`IO.FS.Handle.write, `IO.FS.Handle.putStr].contains n then #[(.object, true)] else #[]
+      verify source n (#[(obj, true)] ++ extra ++ #[(.void, false)])
+        (if n == `IO.FS.Handle.isTty then .uint8 else .object) upstream
+      let strict := extra.map fun (t, borrow) => (if t == .object || t == .usize then .tobject else t, borrow)
+      verify compiled (`Omega ++ n) (#[((.tobject : IR.IRType), true)] ++ strict ++ #[(.tobject, false)]) .object symbol
+      continue
     let count := if [`IO.FS.rename, `IO.FS.hardLink].contains n then 2
       else if [`IO.FS.createTempDir, `IO.appPath, `IO.currentDir, `IO.Process.getCurrentDir].contains n then 0 else 1
     let borrow := n != `IO.FS.realPath
