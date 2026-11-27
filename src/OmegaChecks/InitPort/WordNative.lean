@@ -28,7 +28,7 @@ private def word? (name : Name) : Option (String × IR.IRType) := match bitsType
 
 public def usesPinnedFunction (n : Name) : Bool :=
   let method := n.updatePrefix .anonymous
-  ((word? n.getPrefix).isSome && (method == `pow || (method == `ofInt && bitsType n.getPrefix == n.getPrefix))) ||
+  n == `Nat.bitwise || ((word? n.getPrefix).isSome && (method == `pow || (method == `ofInt && bitsType n.getPrefix == n.getPrefix))) ||
     (n.getPrefix == `Int && [`negOfNat, `subNatNat, `sign, `toNat, `pow, `fdiv, `fmod, `bdiv, `bmod].contains method)
 
 public def supported (source : Environment) (owner name : Name) : Bool :=
@@ -40,12 +40,15 @@ public def supported (source : Environment) (owner name : Name) : Bool :=
   let inOwner := [`OmegaInit.Prelude, `OmegaInit.Data.UInt.BasicAux, `OmegaInit.Data.UInt.Basic, `OmegaInit.Data.UInt.Log2,
                   `OmegaInit.Data.SInt.Basic].contains owner
   let intOwner := [`OmegaInit.Data.Int.Basic, `OmegaInit.Data.Int.DivMod.Basic].contains owner
+  let bitwise := owner == `OmegaInit.Data.Nat.Bitwise.Basic && name.getPrefix == `Nat &&
+    [`land, `lor, `xor, `shiftLeft, `shiftRight].contains method
+  let logarithm := owner == `OmegaInit.Data.Nat.Log2 && name == `Nat.log2
   let intPrimitive := intOwner && name.getPrefix == `Int &&
     [`neg, `add, `sub, `mul, `decEq, `decLe, `decLt, `decNonneg, `natAbs, `ediv, `emod, `tdiv, `tmod, `divExact].contains method
   let primitive := ((word? name.getPrefix).isSome && (ops ++ widths).contains method) ||
     (name.getPrefix == `Bool && widths.contains method)
-  ((base || intPrimitive || (inOwner && primitive)) && isExtern source name) ||
-    ((intOwner || [`OmegaInit.Data.UInt.Basic, `OmegaInit.Data.SInt.Basic].contains owner) && usesPinnedFunction name)
+  ((base || intPrimitive || bitwise || logarithm || (inOwner && primitive)) && isExtern source name) ||
+    ((intOwner || owner == `OmegaInit.Data.Nat.Bitwise.Basic || [`OmegaInit.Data.UInt.Basic, `OmegaInit.Data.SInt.Basic].contains owner) && usesPinnedFunction name)
 
 private def symbol (n : Name) := "omega_word_" ++ (n.replacePrefix `Omega .anonymous).toString.replace "." "_"
 
@@ -96,6 +99,22 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
     type := body
     if a.ty == .erased && b.ty == .erased then continue
     let arg := "a" ++ toString i
+    if official == `Nat.bitwise && i == 0 then
+      let bool := mkConst `Bool
+      let .forallE _ left (.forallE _ right out _) _ := dom.consumeMData | throw <| IO.userError "invalid bit operation type"
+      unless left == bool && right == bool && out == bool && a.ty == .object && b.ty == .object do
+        throw <| IO.userError "wrong binary bit operation closure ABI"
+      let some strictInfo := strict.find? n | throw <| IO.userError "missing strict bit operation"
+      let .forallE _ callback _ _ := strictInfo.type | throw <| IO.userError "invalid strict bit operation type"
+      unless callback == dom do throw <| IO.userError "strict bit operation uses another boolean type"
+      for (name, tag) in [(`Bool.false, 0), (`Bool.true, 1)] do
+        let some l := ctorLayoutExt.find? strict name | throw <| IO.userError s!"missing boolean layout: {name}"
+        unless l.ctorInfo.cidx == tag && l.fieldInfo.isEmpty do throw <| IO.userError s!"invalid boolean layout: {name}"
+      decls := decls.push ((if b.borrow then "b_lean_obj_arg " else "lean_obj_arg ") ++ arg)
+      args := args.push arg
+      if !a.borrow && b.borrow then prepare := prepare ++ s!"  lean_inc({arg});\n"
+      if a.borrow && !b.borrow then cleanup := cleanup ++ s!"  lean_dec({arg});\n"
+      continue
     let dom := dom.consumeMData.getAppFn.constName
     if let some (w, t) := word? dom then
       layout strict dom
@@ -153,7 +172,7 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
       | .uint32 => pure "uint32_t"
       | .uint64 => pure "uint64_t"
       | .usize => pure "size_t"
-      | .tobject | .tagged => pure "lean_object *"
+      | .object | .tobject | .tagged => pure "lean_object *"
       | _ => throw <| IO.userError s!"unexpected C type at {official}: {t}"
     let inputs ← (params.filter (·.ty != .erased)).mapM fun p => ctype p.ty
     pure s!"\nextern {← ctype ret} {target}({String.intercalate ", " inputs.toList});\n"
