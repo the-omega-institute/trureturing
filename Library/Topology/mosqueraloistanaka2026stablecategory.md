@@ -944,7 +944,7 @@ fifteen points. The unrestricted inequality remains open.
 
 ## Contiguity contractions of graph maps in a fixed target
 
-Choose paths from one ambient vertex to the images of the original graph
+For a finite graph, choose paths from one ambient vertex to the images of the original graph
 vertices. On every oriented edge, assume that triangle moves replace the
 mapped edge by the concatenation through the chosen ambient vertex.
 The Lean theorem `GraphSubdivisionNullhomotopy.supported_graph_map_contracts`
@@ -954,8 +954,10 @@ fixed target. Each old edge becomes an interval. First replace the edge maps
 relative to their endpoints. Then contract the two half paths sharing its
 midpoint simultaneously, including at vertices shared by several old edges.
 
-The classical edge-path description of the fundamental group supplies the
-hypothesis when each component of the graph induces the trivial map on
-fundamental groups and the vertex images lie in one ambient component.
-The Lean theorem takes the finite move witnesses directly. This is the
+If each graph component induces the trivial map on fundamental groups and
+the vertex images lie in one ambient component, choose the vertex paths
+using a spanning tree in each graph component and a path from the common
+base to its root image. The classical edge-path description of the
+fundamental group gives finite move witnesses for this choice.
+The Lean theorem takes those witnesses as hypotheses. This is the
 fixed-target step for the three-dimensional approach to Question 6.3.
