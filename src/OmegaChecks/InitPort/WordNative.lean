@@ -89,6 +89,9 @@ public def supported (source : Environment) (owner name : Name) : Bool :=
   let wordRepr := owner == `OmegaInit.Data.Repr && name == `USize.repr
   let byteOp := owner == `OmegaInit.Data.ByteArray.Basic && name.getPrefix == `ByteArray &&
     [`uget, `get, `get!, `uset, `set, `set!, `usize, `copySlice, `beq, `decEq, `hash].contains method
+  let platform := owner == `OmegaInit.System.Platform && [`System.Platform.getIsWindows, `System.Platform.getIsOSX,
+    `System.Platform.getIsLinux, `System.Platform.getIsEmscripten, `System.Platform.getTarget,
+    `System.Platform.Internal.getHardwareConcurrency].contains name
   let modular := (owner == `OmegaInit.Data.Nat.Div.Basic && name == `Nat.divExact) ||
     (owner == `OmegaInit.Data.Nat.PowMod && name == `Nat.powMod)
   let stringOp := owner == `OmegaInit.Data.String.Bootstrap && [`String.Internal.length, `String.Internal.append].contains name
@@ -102,7 +105,7 @@ public def supported (source : Environment) (owner name : Name) : Bool :=
     `OmegaInit.Data.Nat.Internal.Linear, `OmegaInit.Data.Fin.Lemmas].contains owner && IndexedNative.supported name) ||
     ([`OmegaInit.Data.Float.Model.Float, `OmegaInit.Data.Float.Model.Float32].contains owner && modelOperation name) ||
     (owner == `OmegaInit.Prelude && SyntaxPositionNative.supported name) ||
-    ((base || intPrimitive || byteOp || modular || stringOp || wordRepr || bitwise || logarithm || (inOwner && primitive)) && isExtern source name) ||
+    ((base || intPrimitive || platform || byteOp || modular || stringOp || wordRepr || bitwise || logarithm || (inOwner && primitive)) && isExtern source name) ||
     ((intOwner || [`OmegaInit.Data.ByteArray.Basic, `OmegaInit.Data.Int.Repr, `OmegaInit.Data.Repr, `OmegaInit.Data.Nat.Bitwise.Basic, `OmegaInit.Data.BitVec.Basic].contains owner || [`OmegaInit.Data.UInt.Basic, `OmegaInit.Data.SInt.Basic].contains owner) && usesPinnedFunction name)
 
 private def symbol (n : Name) := (n.replacePrefix `Omega .anonymous).mangle "omega_word_"
@@ -383,6 +386,10 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
       unless (ret == .float || ret == .float32) && params.all (·.ty == ret) do
         throw <| IO.userError s!"unexpected math library signature {target}"
       pure <| header ++ s!"extern {ty} {target}({String.intercalate ", " (List.replicate params.size ty)});\n"
+  else if [`System.Platform.getIsWindows, `System.Platform.getIsOSX, `System.Platform.getIsLinux,
+      `System.Platform.getIsEmscripten, `System.Platform.Internal.getHardwareConcurrency].contains official then
+    let t := if ret == .uint8 then "uint8_t" else "uint32_t"
+    pure s!"\nextern {t} {target}(lean_obj_arg);\n"
   else if official == `ByteArray.copySlice then
     pure "\nextern lean_obj_res lean_byte_array_copy_slice(b_lean_obj_arg, lean_obj_arg, lean_obj_arg, lean_obj_arg, lean_obj_arg, uint8_t);\n"
   else if official == `System.Platform.getNumBits then
