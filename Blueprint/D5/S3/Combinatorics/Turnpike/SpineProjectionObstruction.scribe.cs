@@ -26,6 +26,8 @@ internal sealed class SpineProjectionObstructionDocument : IScribeDocumentDefini
             Def("y", "turnpike-spine-values", "Distinct distance values", Vec(18,16,14,13,12,11,10,9,8,7,6,5,4,3,2,1)),
             Def("μ", "turnpike-spine-counts", "Positive multiplicities", Vec(1,1,1,1,1,1,1,2,2,1,1,2,2,2,1,1)),
             Def("ruler", "turnpike-spine-ruler", "An actual realizing ruler", Vec(0,4,7,8,13,16,18)),
+            Paragraph(Text("Realizability requires strict increase, a label for every actual interval difference, and the exact occurrence count of every label. These three conditions are satisfied by the displayed x, y and mu:")),
+            DisplayMath(RealizesBody()),
             Describe.Lean(DescribeId.Create("turnpike-spine-assignment"), DeclarationHandle.Create(Module + ".assignment"),
                 H("The fractional assignment"), StatementSource.FromAuthor(Disp(Equal(App(X("P"),X("e"),X("q")),
                     new Formula.Fraction(Add(App(Q("indicator"),Equal(X("q"),App(X("L"),X("e")))),App(Q("indicator"),Equal(X("q"),App(X("U"),X("e"))))),D(2))))),
@@ -57,6 +59,20 @@ internal sealed class SpineProjectionObstructionDocument : IScribeDocumentDefini
         body = Imp(All("a",Fin("d"),All("b",Fin("d"),Imp(LT(X("a"),X("b")),LT(App(X("y"),X("b")),App(X("y"),X("a")))))),body);
         body = Imp(LE(D(1),X("d")),body); body = Imp(LE(D(3),X("n")),body);
         return All("n",Nat(),All("d",Nat(),All("y",Arrow(Fin("d"),Real()),All("mu",Arrow(Fin("d"),Nat()),body))));
+    }
+    private static Formula RealizesBody()
+    {
+        Formula increasing = All("i",Fin("n"),All("j",Fin("n"),
+            Imp(LT(X("i"),X("j")),LT(App(X("x"),X("i")),App(X("x"),X("j")))));
+        Formula difference = Subtract(App(X("x"),App(Q("right"),X("e"))),
+            App(X("x"),App(Q("left"),X("e"))));
+        Formula labels = All("e",App(Q("I"),X("n")),
+            Some("q",Fin("d"),Equal(difference,App(X("y"),X("q")))));
+        Formula counts = All("q",Fin("d"),Equal(
+            SumOver("e",App(Q("I"),X("n")),
+                App(Q("indicator"),Equal(difference,App(X("y"),X("q"))))),
+            App(X("mu"),X("q"))));
+        return And(increasing,And(labels,counts));
     }
     private static Formula RelationBody() => Equal(X("R"),Seq(OpenBrace,Typed(Seq(X("a"),Comma,X("b"),Comma,X("c")),App(Q("cube"),Fin("d"))),Mid,
         And(Equal(Add(App(X("y"),X("a")),App(X("y"),X("b"))),App(X("y"),X("c"))),
