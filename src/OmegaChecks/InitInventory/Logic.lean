@@ -840,6 +840,51 @@ theorem ratLETrue (rule : type_of% @Lean.Sym.Rat.le_eq_true) : FalseEqualsFalse 
 theorem ratLEFalse (rule : type_of% @Lean.Sym.Rat.le_eq_false) : TrueEqualsFalse :=
   rule ratOne ratZero (by decide)
 
+/-- A single Boolean tag constructs every original signed-word comparison of this polarity
+and the corresponding strict rational comparison, at every input. -/
+theorem trueComparisons : TrueBit ↔
+    (type_of% @Lean.Sym.Int8.lt_eq_true) ∧ (type_of% @Lean.Sym.Int8.le_eq_true) ∧
+    (type_of% @Lean.Sym.Int16.lt_eq_true) ∧ (type_of% @Lean.Sym.Int16.le_eq_true) ∧
+    (type_of% @Lean.Sym.Int32.lt_eq_true) ∧ (type_of% @Lean.Sym.Int32.le_eq_true) ∧
+    (type_of% @Lean.Sym.Int64.lt_eq_true) ∧ (type_of% @Lean.Sym.Int64.le_eq_true) ∧
+    (type_of% @Lean.Sym.Rat.lt_eq_true) := by
+  constructor
+  · intro tag
+    repeat' apply And.intro
+    all_goals exact fun _ _ h => (matched (of_decide_eq_true h)).mpr tag
+  · intro rules
+    exact int8LTTrue rules.1
+
+/-- A single Boolean tag constructs every original signed-word comparison of this polarity
+and the corresponding strict rational comparison, at every input. -/
+theorem falseComparisons : FalseBit ↔
+    (type_of% @Lean.Sym.Int8.lt_eq_false) ∧ (type_of% @Lean.Sym.Int8.le_eq_false) ∧
+    (type_of% @Lean.Sym.Int16.lt_eq_false) ∧ (type_of% @Lean.Sym.Int16.le_eq_false) ∧
+    (type_of% @Lean.Sym.Int32.lt_eq_false) ∧ (type_of% @Lean.Sym.Int32.le_eq_false) ∧
+    (type_of% @Lean.Sym.Int64.lt_eq_false) ∧ (type_of% @Lean.Sym.Int64.le_eq_false) ∧
+    (type_of% @Lean.Sym.Rat.lt_eq_false) := by
+  constructor
+  · intro tag
+    repeat' apply And.intro
+    all_goals exact fun _ _ h => (mismatched (of_decide_eq_false h)).mpr tag
+  · intro rules
+    exact int8LTFalse rules.1
+
+theorem ratLETrueIff : (type_of% @Lean.Sym.Rat.le_eq_true) ↔ FalseEqualsFalse := by
+  refine ⟨ratLETrue, fun tag a b h => ?_⟩
+  have yes : b.blt a = false := of_decide_eq_true h
+  change (b.blt a = false) = True
+  rw [yes]
+  exact tag
+
+theorem ratLEFalseIff : (type_of% @Lean.Sym.Rat.le_eq_false) ↔ TrueEqualsFalse := by
+  refine ⟨ratLEFalse, fun tag a b h => ?_⟩
+  have no : ¬b.blt a = false := of_decide_eq_false h
+  change (b.blt a = false) = False
+  cases e : b.blt a with
+  | false => exact (no e).elim
+  | true => exact tag
+
 theorem decidablePropExtOfReflection (rule : type_of% @decide_eq_true_eq)
     : OptionalIndex.DecidablePropExt := by
   intro p q dp dq equiv
