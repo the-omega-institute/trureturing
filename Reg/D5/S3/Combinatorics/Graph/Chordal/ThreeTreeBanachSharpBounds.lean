@@ -14,7 +14,8 @@ example : (72537 / 50000 : ℝ) < 3 / 2 ∧ 3 / 2 < (Real.sqrt 17 - 1) / 2 := by
   have hs := Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 17)
   have hn := Real.sqrt_nonneg 17
   by_contra! h
-  nlinarith [mul_nonneg (show 0 ≤ 4 - Real.sqrt 17 by linarith) (show 0 ≤ 4 + Real.sqrt 17 by linarith)]
+  nlinarith [mul_nonneg (show 0 ≤ 4 - Real.sqrt 17 by linarith)
+    (show 0 ≤ 4 + Real.sqrt 17 by linarith)]
 
 example : (4 * 2 : ℝ) / (3 * 2 + 4) = 4 / 5 := by norm_num
 
@@ -73,7 +74,8 @@ def rejected : Realization signature :=
 abbrev arena : Arena where
   signature := signature
   Law R := ∀ {E : Type u} [SeminormedAddCommGroup E] [NormedSpace ℝ E]
-    (n : ℕ) (g : Fin n → Fin n → E) (ε : ℝ) (_hε : 0 ≤ ε) (_hg : ∀ i j, g j i = -g i j)
+    (n : ℕ) (g : Fin n → Fin n → E) (ε : ℝ) (_hε : 0 ≤ ε)
+    (_hg : ∀ i j, g j i = -g i j)
     (_ht : ∀ i j k, (pathPowerThree n).Adj i j → (pathPowerThree n).Adj j k →
       (pathPowerThree n).Adj i k → ‖g i j + g j k - g i k‖ ≤ ε),
     ∃ φ : Fin n → E, ∀ i j, (pathPowerThree n).Adj i j →
@@ -82,7 +84,9 @@ abbrev arena : Arena where
 private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
   obtain ⟨φ, hφ⟩ := h (E := ULift.{u} ℝ) 2 (fun _ _ => 0) 0 le_rfl (by simp) (by simp)
-  have adj : (pathPowerThree 2).Adj (0 : Fin 2) 1 := by decide
+  have adj : (pathPowerThree 2).Adj (0 : Fin 2) 1 := by
+    change (0 : Fin 2) ≠ 1 ∧ (0 : ℕ) ≤ 1 + 3 ∧ (1 : ℕ) ≤ 0 + 3
+    decide
   have he := hφ 0 1 adj
   change ‖(0 : ULift.{u} ℝ) - (φ 1 - φ 0)‖ ≤ -1 at he
   linarith only [he, norm_nonneg ((0 : ULift.{u} ℝ) - (φ 1 - φ 0))]
@@ -100,7 +104,8 @@ def family : Registration arena.{u} (type_of% (@pathPowerThree_banach_upper_four
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     (@pathPowerThree_banach_upper_four_thirds.{u}) (Realization signature) Unit Unit where
   unitName := `SimpleGraph.pathPowerThree_banach_upper_four_thirds.__information_unit
-  realizationName := `Reg.D5.S3.Combinatorics.Graph.Chordal.ThreeTreeBanachSharpBounds.PathUpper.family
+  realizationName :=
+    `Reg.D5.S3.Combinatorics.Graph.Chordal.ThreeTreeBanachSharpBounds.PathUpper.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena.{u}⟩
@@ -173,7 +178,8 @@ def family : Registration arena (type_of% (@pathPowerThree_banach_lower_four_thi
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     (@pathPowerThree_banach_lower_four_thirds) (Realization signature) Unit Unit where
   unitName := `SimpleGraph.pathPowerThree_banach_lower_four_thirds.__information_unit
-  realizationName := `Reg.D5.S3.Combinatorics.Graph.Chordal.ThreeTreeBanachSharpBounds.PathLower.family
+  realizationName :=
+    `Reg.D5.S3.Combinatorics.Graph.Chordal.ThreeTreeBanachSharpBounds.PathLower.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -248,10 +254,12 @@ private theorem rejected_law : ¬ arena.{u,v}.Law rejected := by
   change ‖(0 : ULift.{u} ℝ) - (φ j - φ i)‖ ≤ -1 at he
   linarith only [he, norm_nonneg ((0 : ULift.{u} ℝ) - (φ j - φ i))]
 
-def family : Registration arena.{u,v} (type_of% (@IsChordal.exists_cliqueFour_banach_gain_potential_polygon.{u,v})) where
+def family : Registration arena.{u,v}
+    (type_of% (@IsChordal.exists_cliqueFour_banach_gain_potential_polygon.{u,v})) where
   actual := actual
   bridge := Iff.rfl
-  variation := ⟨@IsChordal.exists_cliqueFour_banach_gain_potential_polygon.{u,v}, rejected, rejected_law⟩
+  variation := ⟨@IsChordal.exists_cliqueFour_banach_gain_potential_polygon.{u,v},
+    rejected, rejected_law⟩
   sensitivity := SingleDependentReadout.sensitivity arena.Law actual rejected rejected_law
   dependence := by
     intro _
@@ -259,9 +267,12 @@ def family : Registration arena.{u,v} (type_of% (@IsChordal.exists_cliqueFour_ba
     norm_num [actual, realize]
 
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-    (@IsChordal.exists_cliqueFour_banach_gain_potential_polygon.{u,v}) (Realization signature) Unit Unit where
-  unitName := `SimpleGraph.IsChordal.exists_cliqueFour_banach_gain_potential_polygon.__information_unit
-  realizationName := `Reg.D5.S3.Combinatorics.Graph.Chordal.ThreeTreeBanachSharpBounds.ChordalUpper.family
+    (@IsChordal.exists_cliqueFour_banach_gain_potential_polygon.{u,v})
+    (Realization signature) Unit Unit where
+  unitName :=
+    `SimpleGraph.IsChordal.exists_cliqueFour_banach_gain_potential_polygon.__information_unit
+  realizationName :=
+    `Reg.D5.S3.Combinatorics.Graph.Chordal.ThreeTreeBanachSharpBounds.ChordalUpper.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena.{u,v}⟩
