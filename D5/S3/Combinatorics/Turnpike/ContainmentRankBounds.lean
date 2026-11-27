@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/Combinatorics/Turnpike/ContainmentRankBounds
    mirror-E: none
    anchors: []
+   utility: none
    digest: Used distance rank blocks obey containment bounds. -/
 module
 public import OmegaMath.Combinatorics.Turnpike.ContainmentRankBounds
@@ -25,4 +26,3 @@ theorem containment_rank_bounds {n d : ℕ} {y : Fin d → ℝ} {mu : Fin d → 
   Omega.Turnpike.containment_rank_bounds hy hx e q heq
 
 end D5.S3.Combinatorics.Turnpike.ContainmentRankBounds
-
