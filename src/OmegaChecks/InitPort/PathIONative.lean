@@ -1,10 +1,49 @@
 module
 import all Lean.Compiler.LCNF.ToImpureType
 import all Lean.Compiler.LCNF.MonoTypes
+import OmegaChecks.InitPort.Translation
+meta import OmegaChecks.InitPort.Translation
 import OmegaChecks.InitPort.NativeState
 meta import OmegaChecks.InitPort.NativeState
 
 open Lean Compiler.LCNF OmegaChecks.InitPort.NativeState
+
+private def readFunctions := #[
+  (`IO.FS.readFile, "omega_io_read_file", "omega_string_from_lean"),
+  (`IO.FS.readBinFile, "omega_io_read_bin_file", "from_byte_array"),
+  (`IO.FS.lines, "omega_io_read_lines", "strict_string_array"),
+  (`IO.FS.Handle.lines, "omega_io_handle_lines", "strict_string_array"),
+  (`IO.FS.Handle.readToEnd, "omega_io_handle_read_to_end", "omega_string_from_lean"),
+  (`IO.FS.Handle.readBinToEnd, "omega_io_handle_read_bin_to_end", "from_byte_array"),
+  (`IO.FS.Handle.readBinToEndInto, "omega_io_handle_read_bin_into", "from_byte_array")]
+
+private def reads := readFunctions.map fun (name, symbol, _) => (name, "", symbol)
+
+private def readWrapper (source strict : Environment) (n : Name) (symbol decoder : String) : IO String := do
+  let some a := source.find? n | throw <| IO.userError s!"missing file reader {n}"
+  let some b := strict.find? (`Omega ++ n) | throw <| IO.userError s!"missing strict file reader {n}"
+  unless b.type == InitKernelPort.translate InitKernelPort.portName a.type do throw <| IO.userError s!"different file reader types {n}"
+  let some (.fdecl _ params .object ..) := IR.findEnvDecl source n | throw <| IO.userError s!"missing pinned file reader IR {n}"
+  let path := n.getPrefix != `IO.FS.Handle
+  let buffer := n == `IO.FS.Handle.readBinToEndInto
+  let extra := if buffer then #[(IR.IRType.object, false)] else #[]
+  let args := #[(if path then IR.IRType.object else .tobject, true)] ++ extra ++ #[(.void, false)]
+  unless params.map (fun p => (p.ty, p.borrow)) == args do throw <| IO.userError s!"unexpected pinned read signature {n}"
+  let some (.extern _ formals .object ⟨[.standard `all entry]⟩) := IR.findEnvDecl strict (`Omega ++ n)
+    | throw <| IO.userError s!"missing strict file reader ABI {n}"
+  unless formals.map (·.ty) == Array.replicate args.size .tobject && entry == symbol do
+    throw <| IO.userError s!"unexpected strict file reader signature {n}"
+  let target := getSymbolStem source n
+  let more := if buffer then ", lean_obj_arg bytes" else ""
+  let input := if path then "native" else "input"
+  let rest := if buffer then ", packed" else ""
+  let prepare := if path then "  lean_object *native = omega_string_to_lean(input);\n" else
+    if buffer then "  lean_object *packed = omega_bytes_to_lean(bytes);\n" else ""
+  let release := (if path then "  lean_dec(native);\n" else "") ++ (if !formals[0]!.borrow then "  lean_dec(input);\n" else "") ++
+    (if buffer && !formals[1]!.borrow then "  lean_dec(bytes);\n" else "") ++ (if formals.back!.borrow then "  lean_inc(world);\n" else "")
+  return s!"\nextern lean_obj_res {target}(b_lean_obj_arg input{more});\n" ++
+    s!"LEAN_EXPORT lean_obj_res {symbol}(b_lean_obj_arg input{more}, lean_obj_arg world) \{\n" ++
+    s!"{prepare}  lean_object *r = {target}({input}{rest});\n{release}  return strict_result(r, world, {decoder});\n}\n"
 
 private def entries := #[
   (`System.FilePath.metadata, "lean_io_metadata", "omega_io_metadata"),
@@ -106,7 +145,7 @@ public unsafe def main (args : List String) : IO Unit := do
   let owner := `OmegaInit.System.IO
   let imports := #[{module := owner, importAll := true : Import}]
   let env ← importModules imports {}
-  let roots := entries.filter fun (n, _, _) => env.contains (`Omega ++ n)
+  let roots := (entries ++ reads).filter fun (n, _, _) => env.contains (`Omega ++ n)
   if roots.isEmpty then return
   let fs := roots.any fun (n, _, _) => n != `IO.getEnv
   let handles := roots.any fun (n, _, _) => `IO.FS.Handle |>.isPrefixOf n
@@ -157,6 +196,7 @@ public unsafe def main (args : List String) : IO Unit := do
       modifyEnv fun e => externAttr.ext.addEntry (asyncDecl := strict) e (strict, ⟨[.standard `all symbol]⟩)
       (← compileDeclsRef.get) #[strict] {}
   for (n, upstream, symbol) in roots do
+    if readFunctions.any (·.1 == n) then continue
     if n == `IO.getRandomBytes then
       verify source n #[(.usize, false), (.void, false)] .object upstream
       verify compiled (`Omega ++ n) #[(.tobject, false), (.tobject, false)] .object symbol
@@ -188,9 +228,21 @@ public unsafe def main (args : List String) : IO Unit := do
   let existing := (externAttr.ext.getModuleEntries env idx).any fun (name, _) =>
     !(roots.any fun (n, _, _) => name == `Omega ++ n)
   let nativeOwner := if ir || existing then `StrictPathIO else owner
+  let usesPinnedReaders := roots.any fun (n, _, _) => readFunctions.any (·.1 == n)
   emitBridge compiled nativeOwner none file
+  if usesPinnedReaders then
+    let init := mkModuleInitializationFunctionName (phases := .runtime) nativeOwner compiled.getModulePackage?
+    let upstream := mkModuleInitializationFunctionName (phases := .runtime) `Init.System.IO
+      (source.getModuleIdx? `Init.System.IO >>= source.getModulePackageByIdx?)
+    let text ← IO.FS.readFile file
+    let decl := s!"LEAN_EXPORT lean_object* {init}(uint8_t builtin) \{"
+    let [before, after] := text.splitOn decl | throw <| IO.userError s!"missing native path initializer {init}"
+    IO.FS.writeFile file (before ++ s!"extern lean_obj_res {upstream}(uint8_t);\n" ++ decl ++
+      s!"\nlean_obj_res source = {upstream}(builtin);\nif (lean_io_result_is_error(source)) return source;\nlean_dec(source);\n" ++ after)
   let runtime ← IO.FS.readFile "src/OmegaChecks/InitPort/path_io_runtime.c"
   IO.FS.withFile file .append fun h => do
     if fs then h.putStrLn "#define OMEGA_PATH_IO_FS"
     h.putStr runtime
     if fs then h.putStr (← decodeError source env)
+    for (name, symbol, decoder) in readFunctions do
+      if roots.any (·.1 == name) then h.putStr (← readWrapper source compiled name symbol decoder)

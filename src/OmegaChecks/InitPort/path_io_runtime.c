@@ -188,6 +188,16 @@ LEAN_EXPORT lean_obj_res omega_io_handle_write(b_lean_obj_arg handle, b_lean_obj
 static lean_obj_res from_byte_array(b_lean_obj_arg buffer) {
     return omega_bytes_from_data(lean_sarray_cptr(buffer), lean_sarray_size(buffer));
 }
+static lean_obj_res strict_string_array(b_lean_obj_arg values) {
+    lean_object *list = lean_box(0);
+    for (size_t i = lean_array_size(values); i > 0; --i) {
+        lean_object *cons = lean_alloc_ctor(1, 2, 0);
+        lean_ctor_set(cons, 0, omega_string_from_lean(lean_array_get_core(values, i - 1)));
+        lean_ctor_set(cons, 1, list);
+        list = cons;
+    }
+    return list;
+}
 LEAN_EXPORT lean_obj_res omega_io_handle_read(b_lean_obj_arg handle, lean_obj_arg count, lean_obj_arg world) {
     size_t size = lean_usize_of_nat_mk(count);
     return strict_result(lean_io_prim_handle_read(handle, size), world, from_byte_array);
