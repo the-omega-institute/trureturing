@@ -102,13 +102,14 @@ private def checkSpecializations (env : Environment) (owner : Name) : IO Unit :=
 
 private def checkElaboration (env : Environment) (owner : Name) (idx : ModuleIdx) : IO Unit := do
   for (n, data) in externAttr.ext.getModuleEntries env idx do
-    let symbol ← match n with
-      | `Omega.IO.Promise.new => pure "omega_io_promise_new"
-      | `Omega.IO.Promise.resolve => pure "omega_io_promise_resolve"
-      | `Omega.IO.Promise.isResolved => pure "omega_io_promise_is_resolved"
+    let (expectedOwner, symbol) ← match n with
+      | `Omega.ST.Prim.mkRef => pure (`OmegaInit.System.ST, "omega_st_mk_ref")
+      | `Omega.IO.Promise.new => pure (`OmegaInit.System.Promise, "omega_io_promise_new")
+      | `Omega.IO.Promise.resolve => pure (`OmegaInit.System.Promise, "omega_io_promise_resolve")
+      | `Omega.IO.Promise.isResolved => pure (`OmegaInit.System.Promise, "omega_io_promise_is_resolved")
       | _ => throw <| IO.userError s!"unverified native symbol for {owner}/{n}"
-    unless owner == `OmegaInit.System.Promise && env.getModuleIdxFor? n == some idx &&
-        data == ⟨[.standard `all symbol]⟩ do throw <| IO.userError s!"invalid promise runtime entry {owner}/{n}"
+    unless owner == expectedOwner && env.getModuleIdxFor? n == some idx &&
+        data == ⟨[.standard `all symbol]⟩ do throw <| IO.userError s!"invalid native state entry {owner}/{n}"
   for (n, implementation) in Compiler.implementedByAttr.ext.getModuleEntries env idx do
     let reader := mkPrivateNameCore `OmegaInit.Dynamic `Omega.TypeName.typeNameImpl
     unless owner == `OmegaInit.Dynamic && n == `Omega.TypeName.typeName && implementation == reader &&
