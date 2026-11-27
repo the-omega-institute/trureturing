@@ -56,6 +56,13 @@ public theorem List.foldrM_append : type_of% @_root_.List.foldrM_append := by
   rw [List.reverse_append]
   exact _root_.List.foldlM_append
 
+public theorem List.foldrM_cons : type_of% @_root_.List.foldrM_cons := by
+  intro m α β _ _ a xs f b
+  unfold _root_.List.foldrM
+  rw [List.reverse_cons, _root_.List.foldlM_append]
+  change (xs.reverse.foldlM (fun acc x => f x acc) b >>= fun acc => f a acc >>= pure) = _
+  rw [← bind_assoc, bind_pure]
+
 public theorem List.foldlM_pure : type_of% @_root_.List.foldlM_pure := by
   intro m β α monad lawful f b xs
   induction xs generalizing b with
