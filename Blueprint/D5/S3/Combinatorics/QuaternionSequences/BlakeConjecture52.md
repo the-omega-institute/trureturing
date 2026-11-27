@@ -2,7 +2,7 @@
 
 ## Abstract
 
-Every quaternion sequence of length at least two has a nonzero off-period autocorrelation for each noncentral twist.
+Every Q₈-valued quaternion sequence of length at least two has a nonzero off-period autocorrelation for each noncentral twist in Q₈.
 
 **Definition 1.1 (The six noncentral twists).**
 

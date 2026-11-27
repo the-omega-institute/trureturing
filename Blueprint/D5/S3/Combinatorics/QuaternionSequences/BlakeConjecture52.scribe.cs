@@ -11,7 +11,7 @@ internal sealed class BlakeConjecture52Document : IScribeDocumentDefinition
         LibraryNoteRef.Create("D5/L/FiniteGroups/blake2026perfectquaternionsequences");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Every quaternion sequence of length at least two has a nonzero off-period autocorrelation for each noncentral twist.",
+        "Every Q₈-valued quaternion sequence of length at least two has a nonzero off-period autocorrelation for each noncentral twist in Q₈.",
         H("Blake's Noncentral Twist Conjecture"),
         Blocks(
             Definition("Noncentral", "The six noncentral twists", NoncentralFormula(),

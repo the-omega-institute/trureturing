@@ -4,7 +4,7 @@
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
    utility: none
-   digest: Every noncentral twist of a quaternion sequence has a nonzero off-period correlation. -/
+   digest: Q₈ sequences of length ≥ 2 have nonzero off-period correlation for each Q₈ noncentral twist. -/
 
 import OmegaBuild.Commands
 import Mathlib.Algebra.QuaternionBasis
@@ -279,22 +279,37 @@ private theorem leading_product {p q : (ZMod 2)[X]} {d : ℕ} (hd : 0 < d)
     (hp : ∀ j < d, p.coeff j = if j = d - 1 then 1 else 0)
     (hq : ∀ j < d, q.coeff j = if j = d - 1 then 1 else 0) :
     (p * q).coeff (2 * d - 2) = 1 := by
-  rw [coeff_mul, Finset.sum_eq_single (d - 1, d - 1)]
-  · change p.coeff (d - 1) * q.coeff (d - 1) = 1
-    rw [hp _ (by omega), hq _ (by omega), ite_eq_left rfl, one_mul]
-  · rintro ⟨i, j⟩ hmem hne
-    have hs : i + j = 2 * d - 2 := Finset.mem_antidiagonal.mp hmem
-    by_cases hi : i < d - 1
-    · change p.coeff i * q.coeff j = 0
-      rw [hp i (by omega), ite_eq_right hi.ne, zero_mul]
-    · have hj : j < d - 1 := by
-        by_contra! hh
-        apply hne
-        congr 1 <;> omega
-      change p.coeff i * q.coeff j = 0
-      rw [hq j (by omega), ite_eq_right hj.ne, mul_zero]
-  · intro hn
-    exact (hn (Finset.mem_antidiagonal.mpr (by dsimp; omega))).elim
+  have hpne : p ≠ 0 := by
+    intro hp0
+    have hpc := hp (d - 1) (by omega)
+    rw [hp0] at hpc
+    simp at hpc
+  have hqne : q ≠ 0 := by
+    intro hq0
+    have hqc := hq (d - 1) (by omega)
+    rw [hq0] at hqc
+    simp at hqc
+  have hpdeg : p.natTrailingDegree = d - 1 := by
+    apply le_antisymm
+    · apply natTrailingDegree_le_of_ne_zero
+      rw [hp (d - 1) (by omega)]
+      simp
+    · apply le_natTrailingDegree hpne
+      intro j hj
+      rw [hp j (by omega), ite_eq_right (by omega)]
+  have hqdeg : q.natTrailingDegree = d - 1 := by
+    apply le_antisymm
+    · apply natTrailingDegree_le_of_ne_zero
+      rw [hq (d - 1) (by omega)]
+      simp
+    · apply le_natTrailingDegree hqne
+      intro j hj
+      rw [hq j (by omega), ite_eq_right (by omega)]
+  rw [show 2 * d - 2 = p.natTrailingDegree + q.natTrailingDegree by omega,
+    coeff_mul_natTrailingDegree_add_natTrailingDegree]
+  change p.coeff p.natTrailingDegree * q.coeff q.natTrailingDegree = 1
+  rw [hpdeg, hqdeg, hp (d - 1) (by omega), hq (d - 1) (by omega)]
+  simp
 
 private theorem even_of_correlation_one_zero {M : ℕ} [NeZero M] (hM : 2 ≤ M)
     (s : Fin M → ℍ[ℤ]) (hs : ∀ r, IsQ8 (s r))
