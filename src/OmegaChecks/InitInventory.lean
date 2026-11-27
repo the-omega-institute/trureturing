@@ -1,5 +1,6 @@
 module
 public import Lean
+import Lean.Compiler.LCNF.PhaseExt
 meta import OmegaChecks.InitInventory.OrderedAlgebra
 meta import OmegaChecks.InitInventory.Order
 meta import OmegaChecks.InitInventory.Logic
@@ -633,6 +634,19 @@ private def conditionalConsequence? (owner name : Name) : Option (String × Name
   return ("∀ f : Nat → Bool, Decidable (∃ n, f n = true)", witness,
     "On every finite iterator it the result equals " ++ behavior)
 
+private def nativeSignatures (env : Environment) (idx : ModuleIdx) : NameSet :=
+  (Compiler.LCNF.impureSigExt.getModuleEntries env idx).foldl (fun acc sig => acc.insert sig.name) {}
+
+/-- One entry per public safe definition with a body and an official native signature. -/
+private structure NativeSite where
+  strictDeclaration : Bool
+  strictSignature : Bool
+
+private def nativeSummary (sites : Array NativeSite) : Json :=
+  Json.mkObj [("officialSignatures", toJson sites.size),
+    ("strictDeclarations", toJson (sites.filter (·.strictDeclaration)).size),
+    ("strictSignatures", toJson (sites.filter (·.strictSignature)).size)]
+
 private def inventory (lib : System.FilePath) (visible strict full : Environment) (modules : Array Name)
     (gaps : Option IO.FS.Handle) (observedRuntime : List String) : CoreM Json := do
   let official ← getEnv
@@ -655,6 +669,8 @@ private def inventory (lib : System.FilePath) (visible strict full : Environment
   let mut matchingNames := 0
   let mut directAxioms := 0
   let mut withAxioms := 0
+  let mut nativeByModule := #[]
+  let mut allNative := #[]
   if let some file := gaps then
     file.putStrLn "module\tdeclaration\tkind\tunsafe\tpartial\tupstreamAxioms\timpliesAxiom\treductionWitness\tlogicalConsequence\tlogicalConsequenceWitness\trequiredBehavior\tabstractedDependency\truntimeConflictWitness\tequationOperand\toperandImpliesAxiom\toperandReductionWitness"
   for owner in modules do
@@ -671,8 +687,12 @@ private def inventory (lib : System.FilePath) (visible strict full : Environment
     let localDecls : NameMap ConstantInfo := infos.foldl (fun m c => m.insert c.name c) {}
     let localAxioms := exportedAxiomsExt.getModuleEntries official privateIdx
     let expected := owner.replacePrefix `Init `OmegaInit
-    let strictNames := (strict.getModuleIdx? expected).map fun i =>
+    let strictIdx := strict.getModuleIdx? expected
+    let strictNames := strictIdx.map fun i =>
       NameSet.ofList strict.header.moduleData[i]!.constNames.toList
+    let officialSigs := nativeSignatures visible idx
+    let strictSigs := (strictIdx.map (nativeSignatures strict)).getD {}
+    let mut moduleNative : Array NativeSite := #[]
     for name in publicNames.qsort Name.lt do
       let some info := localDecls.find? name | throwError "missing declaration {owner}/{name}"
       let some (_, axioms) := localAxioms.binSearch (name, #[]) (fun a b => Name.quickLt a.1 b.1)
@@ -722,6 +742,11 @@ private def inventory (lib : System.FilePath) (visible strict full : Environment
         ("impliesAxiom", toJson (boundary.map (·.1.toString))),
         ("reductionWitness", toJson (boundary.map (·.2.toString))),
         ("strictModule", toJson (strictOwner.map Name.toString))]
+      let row ← if officialSigs.contains name && info.hasValue (allowOpaque := true) && !info.isUnsafe && !info.isPartial then do
+        let hasSig := matched && strictSigs.contains strictName
+        moduleNative := moduleNative.push ⟨matched, hasSig⟩
+        pure (row.setObjVal! "strictNativeSignature" (toJson hasSig))
+      else pure row
       let row := match selector with
         | some dep => row.setObjVal! "abstractedDependency" (toJson dep)
         | none => row
@@ -737,12 +762,16 @@ private def inventory (lib : System.FilePath) (visible strict full : Environment
             ("logicalConsequence", toJson target), ("logicalConsequenceWitness", toJson witness.toString),
             ("requiredBehavior", toJson behavior)]
         | none => row
+    allNative := allNative ++ moduleNative
+    nativeByModule := nativeByModule.push (owner.toString, nativeSummary moduleNative)
   unless certifiedSites == boundaries.size do throwError "missing registered public definition site"
   let summary := Json.mkObj [("declarations", toJson rows.size), ("directAxioms", toJson directAxioms),
-    ("withAxioms", toJson withAxioms), ("matchingNameAndModule", toJson matchingNames)]
+    ("withAxioms", toJson withAxioms), ("matchingNameAndModule", toJson matchingNames),
+    ("native", nativeSummary allNative)]
   let unique := Json.mkObj [("declarations",toJson names.size), ("directAxioms",toJson axiomUnique.size),
     ("withAxioms",toJson withAxiomsUnique.size), ("matchingNameAndModule",toJson matchedUnique.size)]
-  return Json.mkObj [("schemaVersion", toJson 3), ("uniqueNames", unique), ("leanVersion", toJson Lean.versionString), ("leanCommit", toJson Lean.githash),
+  return Json.mkObj [("schemaVersion", toJson 4), ("uniqueNames", unique), ("leanVersion", toJson Lean.versionString), ("leanCommit", toJson Lean.githash),
+    ("nativeByModule", Json.mkObj nativeByModule.toList),
     ("modules", toJson (modules.map Name.toString)), ("summary", summary), ("declarations", .arr rows)]
 
 def main (args : List String) : IO Unit := do

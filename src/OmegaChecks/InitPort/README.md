@@ -40,6 +40,7 @@ example (a : α) (b : β) : Omega.Eq (Prod.fst (Prod.mk a b)) a := Omega.rfl
 
 公开覆盖清单按官方定义模块和声明名逐项列出，重复生成的名字在各自模块有独立记录。
 `init-inventory.json` 的 `summary` 按模块与名字的组合计数，`uniqueNames` 按名字去重。
+对官方提供原生签名、有定义体且安全、全定义的公开声明，`strictNativeSignature` 记录严格库是否在同一模块打包了对应的 LCNF 签名。`nativeByModule` 和 `summary.native` 分别按模块和全库汇总官方签名数、已匹配声明数和严格库签名数。实际运行结果由编译后的消费用例验证。
 全量构建也编译可单独导入的 OmegaMath 和 OmegaMathlib 源文件，一同审计它们的传递依赖。
 缺口表的 `firstDependencyPath` 和 `reason` 记录本次移植实际遇到的阻塞。只有 `impliesAxiom` 非空的行另有内核证明，从该官方接口可推出所列公理。`logicalConsequence` 与 `logicalConsequenceWitness` 给出其他已验证的逻辑后果及其证明。`requiredBehavior` 非空时，证明还需要候选实现满足该项行为前提。
 
