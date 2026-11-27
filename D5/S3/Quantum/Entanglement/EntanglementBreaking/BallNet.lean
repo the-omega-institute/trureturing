@@ -8,6 +8,7 @@
 
 import OmegaBuild.Commands
 import Mathlib.MeasureTheory.Measure.Lebesgue.EqHaar
+import Mathlib.Topology.MetricSpace.CoveringNumbers
 
 compile_only_with_mathlib
 
