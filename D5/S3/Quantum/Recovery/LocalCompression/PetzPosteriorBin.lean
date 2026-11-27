@@ -58,18 +58,18 @@ private theorem weighted_rms_sub_mean_interval {ι : Type*} [Fintype ι]
     nlinarith only [htSq, hsecant, sq_nonneg (t - (lo + hi) / 2)]⟩
 
 /-- The weighted root mean square exceeds the arithmetic mean by at most
-`9 / (8 * L ^ 2)` on a square bin, including the bin with lower endpoint zero. -/
+`1 / (2 * L ^ 2)` on a square bin, including the bin with lower endpoint zero. -/
 theorem weighted_square_bin_rms_sub_mean_le {ι : Type*} [Fintype ι]
     (w y : ι → ℝ) (hw : ∀ i, 0 ≤ w i) (hsum : ∑ i, w i = 1)
     (a L : ℕ) (hL : 0 < L)
     (hy : ∀ i, ((a : ℝ) / L) ^ 2 ≤ y i ∧ y i ≤ (((a : ℝ) + 1) / L) ^ 2) :
     let gap := Real.sqrt (∑ i, w i * y i ^ 2) - ∑ i, w i * y i
-    0 ≤ gap ∧ gap ≤ 9 / (8 * (L : ℝ) ^ 2) := by
+    0 ≤ gap ∧ gap ≤ 1 / (2 * (L : ℝ) ^ 2) := by
   let k : ℝ := ((L : ℝ) ^ 2)⁻¹
   let lo : ℝ := (a : ℝ) ^ 2 * k
   let hi : ℝ := ((a : ℝ) + 1) ^ 2 * k
   let gap := Real.sqrt (∑ i, w i * y i ^ 2) - ∑ i, w i * y i
-  change 0 ≤ gap ∧ gap ≤ 9 / (8 * (L : ℝ) ^ 2)
+  change 0 ≤ gap ∧ gap ≤ 1 / (2 * (L : ℝ) ^ 2)
   have hLr : 0 < (L : ℝ) := Nat.cast_pos.mpr hL
   have hk : 0 < k := inv_pos.mpr (pow_pos hLr 2)
   have hlo : 0 ≤ lo := mul_nonneg (sq_nonneg _) hk.le
@@ -88,8 +88,7 @@ theorem weighted_square_bin_rms_sub_mean_le {ι : Type*} [Fintype ι]
   calc
     gap ≤ (1 / 2 : ℝ) * k :=
       le_of_mul_le_mul_left (hscaled.trans hwidth) (add_pos_of_nonneg_of_pos hlo hhi)
-    _ ≤ (9 / 8 : ℝ) * k := mul_le_mul_of_nonneg_right (by norm_num) hk.le
-    _ = 9 / (8 * (L : ℝ) ^ 2) := by
+    _ = 1 / (2 * (L : ℝ) ^ 2) := by
       simp only [k, div_eq_mul_inv, mul_inv_rev, mul_left_comm, mul_comm, mul_assoc]
 
 /-- The squared Euclidean distance between the coordinatewise root mean square
@@ -100,9 +99,9 @@ theorem weighted_square_bin_vector_sq_le {ι κ : Type*} [Fintype ι] [Fintype �
     (hy : ∀ j i, ((a j : ℝ) / L) ^ 2 ≤ y i j ∧
       y i j ≤ (((a j : ℝ) + 1) / L) ^ 2) :
     ∑ j, (Real.sqrt (∑ i, w i * (y i j) ^ 2) - ∑ i, w i * y i j) ^ 2 ≤
-      (Fintype.card κ : ℝ) * (9 / (8 * (L : ℝ) ^ 2)) ^ 2 := by
+      (Fintype.card κ : ℝ) * (1 / (2 * (L : ℝ) ^ 2)) ^ 2 := by
   calc
-    _ ≤ ∑ _j : κ, (9 / (8 * (L : ℝ) ^ 2)) ^ 2 := by
+    _ ≤ ∑ _j : κ, (1 / (2 * (L : ℝ) ^ 2)) ^ 2 := by
       apply Finset.sum_le_sum
       intro j _
       obtain ⟨hgap, hbound⟩ :=
