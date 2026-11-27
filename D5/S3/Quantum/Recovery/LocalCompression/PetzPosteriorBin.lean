@@ -76,7 +76,7 @@ theorem weighted_square_bin_rms_sub_mean_le {ι : Type*} [Fintype ι]
   have hhi : 0 < hi := mul_pos (by positivity) hk
   have hbins : ∀ i, lo ≤ y i ∧ y i ≤ hi := by
     intro i
-    simpa only [lo, hi, k, div_pow, div_eq_mul_inv] using hy i
+    simpa only [lo, hi, k, div_eq_mul_inv, mul_pow, inv_pow] using hy i
   obtain ⟨hgap, hscaled⟩ := weighted_rms_sub_mean_interval w y hw hsum hlo hbins
   refine ⟨hgap, ?_⟩
   have hwidth : (hi - lo) ^ 2 / 4 ≤ (lo + hi) * ((1 / 2 : ℝ) * k) := by
@@ -89,7 +89,7 @@ theorem weighted_square_bin_rms_sub_mean_le {ι : Type*} [Fintype ι]
     gap ≤ (1 / 2 : ℝ) * k :=
       le_of_mul_le_mul_left (hscaled.trans hwidth) (add_pos_of_nonneg_of_pos hlo hhi)
     _ = 1 / (2 * (L : ℝ) ^ 2) := by
-      simp only [k, div_eq_mul_inv, mul_inv_rev, mul_left_comm, mul_comm, mul_assoc]
+      simp only [k, div_eq_mul_inv, mul_inv_rev, mul_left_comm, mul_comm]
 
 /-- The squared Euclidean distance between the coordinatewise root mean square
 of the flag posteriors and their weighted mean. -/
