@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Topology/RankedFiberLabelObstruction
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/module/Mathlib.AlgebraicTopology.SimplicialComplex.Basic]
+   anchors: [mathlib/module/Mathlib.Data.Finset.Card, mathlib/module/Mathlib.Order.Preorder.Chain]
    utility: none
    digest: Rank bounds obstruct lifting required flags through comparison maps. -/
 
