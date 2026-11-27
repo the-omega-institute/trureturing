@@ -26,3 +26,8 @@ LEAN_EXPORT lean_obj_res omega_st_ref_set(lean_obj_arg ref, lean_obj_arg value, 
 LEAN_EXPORT lean_obj_res omega_st_ref_ptr_eq(b_lean_obj_arg a, b_lean_obj_arg b, lean_obj_arg world) {
     return state_result(lean_box(lean_st_ref_ptr_eq(a, b)), world);
 }
+
+LEAN_EXPORT lean_obj_res omega_state_ref_read_with_initial(lean_obj_arg initial, b_lean_obj_arg ref, lean_obj_arg world) {
+    lean_dec(initial);
+    return state_result(lean_st_ref_get(ref), world);
+}

@@ -4,6 +4,7 @@ public import OmegaChecks.InitCompiler.RootNames
 import OmegaChecks.InitPort.Translation
 import OmegaChecks.InitPort.WordNative
 import OmegaChecks.InitPort.BufferReference
+import OmegaChecks.InitPort.StateRunner
 import Lean.Elab.ParseImportsFast
 import Lean.Compiler.LCNF.SpecInfo
 import all Lean.Structure
@@ -230,7 +231,9 @@ private def checkElaboration (env full : Environment) (reference? : Option Envir
       | `Omega.String.toList => pure (`OmegaInit.Data.String.Basic, "omega_string_to_list")
       | `Omega.String.ofList => pure (`OmegaInit.Prelude, "omega_string_of_list")
       | _ => do
-        if let some op := InitPort.BufferReference.operations.find? (fun op => n == InitPort.BufferReference.strictName op) then
+        if n == InitKernelPort.portName InitPort.StateRunner.support then
+          pure (`OmegaInit.Control.StateRef, "omega_state_ref_read_with_initial")
+        else if let some op := InitPort.BufferReference.operations.find? (fun op => n == InitPort.BufferReference.strictName op) then
           pure (`OmegaInit.System.IO, "omega_buffer_" ++ op.getString!)
         else
           let original := InitKernelPort.originalName n
