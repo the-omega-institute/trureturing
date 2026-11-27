@@ -1,0 +1,465 @@
+import D5.S3.Quantum.Semigroups.WuCubicLowSpectrum.CapRows
+
+compile_only_with_mathlib
+
+set_option autoImplicit false
+set_option relaxedAutoImplicit false
+set_option maxRecDepth 8192
+set_option maxHeartbeats 1800000
+set_option linter.style.longLine false
+
+namespace D5.S3.Quantum.Semigroups.WuCubicLowSpectrum.CapCover46
+
+open D5.S3.Quantum.Semigroups.WuCubicLowSpectrum.Factored
+
+open WuCubicLowSpectrumCover (Box Tree)
+open private midpoint from D5.S3.Quantum.Semigroups.WuCubicLowSpectrumCover
+open private leftBox rightBox from D5.S0.Certificates.BoxCover.CheckedRationalBoxCover
+
+open D5.S3.Quantum.Semigroups.WuCubicLowSpectrum.CapRows (table)
+
+def cap111011111111Box : Box := ![(23 / 20, 6 / 5), (441 / 800, 63 / 100), (11 / 16, 3 / 4), (7 / 8, 1)]
+
+private def cap1110111111110Box : Box := ![(23 / 20, 6 / 5), (441 / 800, 63 / 100), (11 / 16, 3 / 4), (7 / 8, 15 / 16)]
+
+private def cap11101111111100Box : Box := ![(23 / 20, 47 / 40), (441 / 800, 63 / 100), (11 / 16, 3 / 4), (7 / 8, 15 / 16)]
+
+private def cap111011111111000Box : Box := ![(23 / 20, 47 / 40), (441 / 800, 189 / 320), (11 / 16, 3 / 4), (7 / 8, 15 / 16)]
+
+private def cap1110111111110000Box : Box := ![(23 / 20, 47 / 40), (441 / 800, 189 / 320), (11 / 16, 23 / 32), (7 / 8, 15 / 16)]
+
+private def cap1110111111110000Tree : Option PackedTree := decode 7 0x39561955d952d9529935d935b933d933b7a8d7a897a617a5d78ff78fd78e778e372a5b2a5329f729ef267b26772633262ef4c2f4baf472f46af1cef1c6f19ef196ac9aec9adc98cc98bc8d2c8d1c8b8c8b7bc7fbc7ebc67bc65bbdbbbdabbc1bbbfa6f51af512f4c2f4baf1fef1faf1cef1c6d2ced2c6d28ad282cffacff6cfcecfc6de985e97de8e5e8dde39de395e33de335a515a50da48da4859f9d9f959f3d9f35bd2fbd2ebd1bbd1abc72bc71bc66bc65b4a1b4a0b490b48fb3f2b3f1b3e6b3e5ad5e3fde3f5e39de38ddeddded5de75de6d9ff59fed9f9d9f8d9a8d9a7d9a259a1dbc73bc71bc67bc65bbcebbcdbbc1bbbfb3f3b3f1b3e7b3e5b344b343b338b337a88caaecaadca94ca93c9adc9acc99dc99cbd44bd43bd2ebd2dbc7ebc7dbc71bc70b955b955995279525935993579339933782b582b38291828f81af81ad81a1819f7056b05670523051f035f035b0343033ef50ef50af4b6f4b2f1f6f1f2f1c2f1bc00427079529952794f794f5933b9339931793157a5d7a5b7a357a3378e378e178cb78c972a4f2a4b29eb29e72673266f262b26270523051f04db04d70343033f032703200042760a460a3e09b609ae0686067e064e0645e96de965e8cde8c5e385e37de325e3188284e0d64d6e4d664cee4ce6468e4686462e4625e3f5e3ede38de385ded5decdde6dde65c9acc9abc99cc99bc8d0c8cfc8c4c8c3bc7dbc7cbc70bc6fbbd9bbd8bbccbbcbaf26772673262f262b2317231322df22daf1c6f1c2f196f192ef36ef32eefeeefae4ce64cde4c564c4e4626461e45b645ade385e37de325e31dde65de5dddf5dded68dea25ea1de975e96de3f5e3ede38de385a58da585a505a4fd9fed9fe59f8d9f85bd43bd42bd2dbd2cbc7dbc7cbc70bc6fb7dcb7dbb7cfb7ceb78ab789b784b78310009d6fb96fb76f9f6f9d6f156f136f096f076961695d693f693d67f967f767e167df43bd2ebd2dbd1abd19bc71bc70bc65bc64b4a0b49fb48fb48eb3f1b3f0b3e5b3e400109d7a5b7a597a337a3178e178df78c978c76f9f6f9d6f896f876f096f076efd6efaa0213adf3edf3adf12df0ede12de0eddfaddf6d27ed27ad236d232cfc2cfbecf92cf8c4042706af1faf1f6f1c6f1c2ef6aef66ef36ef32cff6cff2cfc6cfc2cd3ecd3acd0ecd0ade3ede3e5e385e37ddecddec5de65de5d9fe59fdd9f859f7d9a759a6d9a159a0d778e378e178cb78c9779b7799777f777d67e367e167cb67c966876685666f666d6f1c2f1bef192f18eef32ef2eeefaeef6cfc2cfbecf92cf8ecd0acd06ccdaccd6b443
+
+private theorem cap1110111111110000Accepted : Accepted table cap1110111111110000Box cap1110111111110000Tree := by
+  decide +kernel
+
+private def cap1110111111110001Box : Box := ![(23 / 20, 47 / 40), (441 / 800, 189 / 320), (23 / 32, 3 / 4), (7 / 8, 15 / 16)]
+
+private def cap1110111111110001Tree : Option PackedTree := decode 7 0x395b795b595959591938d938b937593737ac77ac57aaf7aab792d792b7915791372b2b2b232ac32abb26eb26e726bb26b6f55ef556f51af512f22af226f1fef1faac9c6c9c5c9aec9adc8e9c8e8c8d2c8d1bc96bc95bc7fbc7ebbf0bbefbbdbbbdaa6f58ef58af55ef556f25af256f22af226d336d32ed302d2fad052d04ed026d022deabdeaadea35ea25e455e44de3fde3f5a605a5f5a59da58da04da0459ff59fed5792d792b78ff78fd77e177df77b777b56829682767fd67fb66c566c366a3669f48cadacad9cac8cac7c9c5c9c4c9b9c9b8bd62bd61bd55bd54bc95bc94bc89bc88b95b395b1958f958d938993879371936f7ac37ac17aa97aa7792979277911790f5e5646563e5576556e4dce4dc64d6e4d65eaadeaa5ea25ea1de44de445e3f5e3edcac7cac6caadcaacc9b8c9b7c9acc9abc16bc16ac15ac159c0dec0ddc0d7c0d6b82d782d582b582b381bd81bb81af81ad7aa97aa77a877a857911790f78fb78f9435938b93879373936f91d191cf91bd91bb792b79277913790f77df77dd77cb77c9726e726df26b726af237b23772347233ef226f21ef1faf1f2ef96ef92ef6aef62a37ac57ac37aab7aa9792b79297913791169976995697d697b682768256811680f6f586f582f552f54ef252f24ef222f21ed32ad326d2f6d2f2d04ad046d01ed01abbd55bd54bd44bd43bc89bc88bc7ebc7db4beb4bdb4b1b4b0b408b407b3fdb3fcb7aa97aa77a877a857911790f78fb78f96fd16fcf6fb96fb76f216f1f6f156f136dfa2df9edf72df6ede42de3ede2ade26d2f6d2f2d2c2d2bad01ed01acff2cfee86af256f24ef226f21eefbeefbaef96ef92d04ed046d022d01acd86cd82cd6ecd6ade44de43de3f5e3e5df2ddf25ded5dec5a045a0359fed9fdd9add9ad59a7d9a6d443
+
+private theorem cap1110111111110001Accepted : Accepted table cap1110111111110001Box cap1110111111110001Tree := by
+  decide +kernel
+
+private def cap111011111111000Tree : Option PackedTree :=
+  PackedTree.split 2 <$> cap1110111111110000Tree <*> cap1110111111110001Tree
+
+private theorem cap111011111111000Accepted : Accepted table cap111011111111000Box cap111011111111000Tree := by
+  apply acceptedSplit 2
+  · have h : leftBox cap111011111111000Box 2 (midpoint cap111011111111000Box 2) = cap1110111111110000Box := by
+      funext i
+      fin_cases i <;> decide +kernel
+    simpa only [h] using cap1110111111110000Accepted
+  · have h : rightBox cap111011111111000Box 2 (midpoint cap111011111111000Box 2) = cap1110111111110001Box := by
+      funext i
+      fin_cases i <;> decide +kernel
+    simpa only [h] using cap1110111111110001Accepted
+
+private def cap111011111111001Box : Box := ![(23 / 20, 47 / 40), (189 / 320, 63 / 100), (11 / 16, 3 / 4), (7 / 8, 15 / 16)]
+
+private def cap1110111111110010Box : Box := ![(23 / 20, 47 / 40), (189 / 320, 63 / 100), (11 / 16, 23 / 32), (7 / 8, 15 / 16)]
+
+private def cap11101111111100100Box : Box := ![(23 / 20, 47 / 40), (189 / 320, 63 / 100), (11 / 16, 23 / 32), (7 / 8, 29 / 32)]
+
+private def cap111011111111001000Box : Box := ![(23 / 20, 93 / 80), (189 / 320, 63 / 100), (11 / 16, 23 / 32), (7 / 8, 29 / 32)]
+
+private def cap1110111111110010000Box : Box := ![(23 / 20, 93 / 80), (189 / 320, 1953 / 3200), (11 / 16, 23 / 32), (7 / 8, 29 / 32)]
+
+private def cap1110111111110010000Tree : Option PackedTree := decode 6 0x37ca37ca17c6b7c697a897a877a5d7a5b70e970e770bb70b96fbb6fb96fa16f9f6e1d2e1cee176e172df76df72df42df3ed69ed69ad642d63ed2c6d2c2d282d27c004270be50be4fbe34be33bdc1bdc0bdb0bdafb873b872b85cb85bb821b820b811b81050509d7b837b817b617b5f7a877a857a5b7a5770437041702370216fb96fb76f9f6f9d4dc39dc38dc335c32dc10dc105c0c5c0bdad35ad25acd5accda97da975a955a94db866b865b85cb85ab818b817b811b810b59ab599b58eb58db52ab529b524b523aae086e082e046e042df72df6edf3edf3ad4bed4bad492d48ed2c2d2bad27ed27a90ef8d6f8d2f87ef87af4baf4b6f46af466e176e172e13ae136df42df3edf16df12dc2edc2e5c275c26dbe85be7dbe2dbe25ac85ac7dabfdabf5a505a4fda47da4680204e17c697c677c3d7c3b7b617b5f7b477b4570b970b7709b7099702370217009700680813af6c2f6bef68ef68af4b6f4aef466f45ee046e042e012e00edf3edf3adf12df0a9b85cb85ab853b852b811b810b809b808b58eb58db586b585b524b523b51eb51db70a770a5709b709970137011700970076b0d6b0b6afd6afb6a3d6a3b6a336a3155c08dc085c025c01dbe7dbe75be25be15a925a91da8cda8c5a4fda4f5a46da45d21a
+
+private theorem cap1110111111110010000Accepted : Accepted table cap1110111111110010000Box cap1110111111110010000Tree := by
+  decide +kernel
+
+private def cap1110111111110010001Box : Box := ![(23 / 20, 93 / 80), (1953 / 3200, 63 / 100), (11 / 16, 23 / 32), (7 / 8, 29 / 32)]
+
+private def cap1110111111110010001Tree : Option PackedTree := decode 7 0x37f437f417f0d7f0b7de17ddf7db77db572c972c7729d729971c971c7719f719d6fbc2fbbefb6efb6af946f942f8d6f8d2e392e38ee33ee33ae1d2e1cee176e1729b964b963b94eb94cb8e4b8e3b8cfb8ceb6ceb6cdb6b4b6b3b62bb62ab618b617b71c971c7719f719d70e970e770bb70b96c576c556c316c2f6b4f6b4d6b216b1d48bfa0bf9ebf90bf8fbeefbeedbee4bee3b963b961b957b955b8e3b8e1b8d8b8d640444d7f217f1f7f0b7f097dc97dc77db57db172af72ab7299729771b171ad719d719b55f77df76df725f71df285f275f205f1fdc71dc70dc6c5c6b5c39dc38dc335c32802026bee4bee3bedabed8be40be3fbe34be32b8d8b8d6b8ceb8cdb866b865b85cb85aa8dcb1dcb15cabdcab5c71dc715c6c5c6bdb66db665b605b5fdb155b14db105b0fdb962b960b956b955b8e2b8e0b8d7b8d6b6ccb6cbb6bfb6beb629b628b61fb61eaee55ee556e532e52ee362e35ae33ae336db02dafadacedacad882d87ad85ed85aab8e3b8e1b8d8b8d6b873b871b866b865b62ab628b620b61eb5a6b5a4b59ab59940004d71b171ad719d719b70cd70cb70b970b56c416c3d6c2f6c2d6b356b336b1d6b1b510efe1afe16fdcefdcaf8d6f8d2f87ef87ae53ae536e502e4fee176e172e13ae134010275ca75ca65ca05c9fdc67dc675c60dc605b5a5b59db51db515b0c5b0bdb075b06db8cfb8ceb8c1b8c0b85db85cb84eb84db618b617b60eb60db590b58eb57fb57ea45fc2dfc25fbd5fbcdf6d5f6c5f685f67dca65ca5dca25ca1dc675c66dc635c62dbf7abf79bf72bf71bed0becfbecbbecab944b943b93fb93eb8c6b8c5b8c0b8bfaafb6afb62fb42fb3ef8d2f8caf89ef89ae33ae336e31ae316e172e16ae14ee14adf685f67df65df655f13df135f0f5f0edc635c62dc605c5fdc29dc295c26dc26546e532e52ee512e50ee33ae336e31ae316dacedacadaaedaaad85ed85ad84ad846dca25ca1dc9fdc9f5c635c62dc605c5fdb55db555b515b50db095b08db06db0655719d719b718d718b70b970b570a770a56c2f6c2d6c256c236b1d6b1b6b0d6b0b6e31ae316e302e2fee14ee14ae136e132d84ad846d836d832d61ad616d5fad5f6a21a
+
+private theorem cap1110111111110010001Accepted : Accepted table cap1110111111110010001Box cap1110111111110010001Tree := by
+  decide +kernel
+
+private def cap111011111111001000Tree : Option PackedTree :=
+  PackedTree.split 1 <$> cap1110111111110010000Tree <*> cap1110111111110010001Tree
+
+private theorem cap111011111111001000Accepted : Accepted table cap111011111111001000Box cap111011111111001000Tree := by
+  apply acceptedSplit 1
+  · have h : leftBox cap111011111111001000Box 1 (midpoint cap111011111111001000Box 1) = cap1110111111110010000Box := by
+      funext i
+      fin_cases i <;> decide +kernel
+    simpa only [h] using cap1110111111110010000Accepted
+  · have h : rightBox cap111011111111001000Box 1 (midpoint cap111011111111001000Box 1) = cap1110111111110010001Box := by
+      funext i
+      fin_cases i <;> decide +kernel
+    simpa only [h] using cap1110111111110010001Accepted
+
+private def cap111011111111001001Box : Box := ![(93 / 80, 47 / 40), (189 / 320, 63 / 100), (11 / 16, 23 / 32), (7 / 8, 29 / 32)]
+
+private def cap111011111111001001Tree : Option PackedTree := decode 7 0xe6cde6cd66bfe6bf65ff65fe65efe5eee1ab61aae1a0e1a06114e114610a6109dc356c355c341c340c2aec2adc299c298bfa1bfa0bf86bf85bef0beefbedbbedab855d855b8533853184538451842984277de17ddf7db77db57ca37ca17c6b7c6948cd9acd99cd8bcd8accb1ccb0cca5cca4c355c353c34ac349c2adc2abc2a2c2a1b9b179b159afd9afb994b994999339931869586938681867f854585438531852f56658e6586652e65265fe65fde5f5e5f56156e155e1516150e1146113610ee10e5cca5cca4cc99cc98cbebcbeacbddcbdcc2a2c2a1c298c297c21dc21cc213c212a8e1aae1a9e1a561a4e156e155e1516150dfd05fcf5fc85fc7df77df76df725f71802026c34ac349c340c33fc2a2c2a1c298c297bf90bf8fbf85bf84bee4bee3bedabed8ab0ab70aaf0a8b0a8708a3089b08770872fbbefbb6fb92fb8ef942f93af902f8fee1516150e14c614be10ee10e6109e1095f725f71df6d5f6c5f205f1fdf1a5f195443cd7fcd7ecd6ccd6bcbdfcbddcbc6cbc5c341c340c334c333c214c213c201c200b868386818669866784298427840384017f0d7f0b7ee77ee57c6b7c697c3f7c3d466bf66bee6b5e6b5664ce64c66456644e1a0619fe199e199614c614be145e1455cc99cc98cc8acc89cbddcbdccbc5cbc4c298c297c28bc28ac213c212c200c1fea70d030cff0ccf0ccb0a630a5f0a2f0a2afe16fe12fdcafdc6fb6afb66fb2efb2800127614c614be145e1456109e109610060ff5f6d5f6cdf65df655f1a5f19df0f5f0e80224e21acbfecbfccbdfcbddcaaecaadca94ca93c229c228c214c213c15bc15ac149c148b845384518429842782b782b5829382917ca37ca17c6b7c697a897a877a5d7a5b465fe65fde5eee5ee65ab65aae5a0e5a061146113e109e10960dbe0db60d1e0d100204ecb56cb55cb41cb40caadcaacca93ca92c1b7c1b6c1a3c1a2c15ac159c148c147a708a3089f084f084b06df06db068f068af942f93ef8d2f8cef706f702f6c2f6bd0142760dbe0db60d1e0d160ad60ace0a460a3dee0dee05ed85ed7dea1dea15e96de95d21e5efe5eee5e365e2e54a6549e53de53d610a6109e100e10060a4e0a4609be09b5c214c213c201c200c149c148c137c136be35be34be1fbe1ebd2ebd2dbd1abd19a32f772f732f172f132d072d032cc32cbf084f084b080307fb068f068b064f064ae5a0e5a065986597e549e549653d653ce0d1e0d160c9e0c960a460a3e09b609a5384278425840183fd83478345832783257c697c677c3d7c3b7b617b5f7b477b4400813b068f068b064f064b0523051f04db04d2f6c2f6bef68ef68af4b6f4aef466f45e90d1
+
+private theorem cap111011111111001001Accepted : Accepted table cap111011111111001001Box cap111011111111001001Tree := by
+  decide +kernel
+
+private def cap11101111111100100Tree : Option PackedTree :=
+  PackedTree.split 0 <$> cap111011111111001000Tree <*> cap111011111111001001Tree
+
+private theorem cap11101111111100100Accepted : Accepted table cap11101111111100100Box cap11101111111100100Tree := by
+  apply acceptedSplit 0
+  · have h : leftBox cap11101111111100100Box 0 (midpoint cap11101111111100100Box 0) = cap111011111111001000Box := by
+      funext i
+      fin_cases i <;> decide +kernel
+    simpa only [h] using cap111011111111001000Accepted
+  · have h : rightBox cap11101111111100100Box 0 (midpoint cap11101111111100100Box 0) = cap111011111111001001Box := by
+      funext i
+      fin_cases i <;> decide +kernel
+    simpa only [h] using cap111011111111001001Accepted
+
+private def cap11101111111100101Box : Box := ![(23 / 20, 47 / 40), (189 / 320, 63 / 100), (11 / 16, 23 / 32), (29 / 32, 15 / 16)]
+
+private def cap11101111111100101Tree : Option PackedTree := decode 6 0xe6cee6ce66c166c0e60065ffe5f0e5f05fd1dfd15fc45fc3df29df295f1bdf1b5cd9ccd9bcd81cd7fcbffcbfecbe0cbdfbfa2bfa1bf87bf86be52be51be36be35af360b360735bb35b72f872f832f232f1efe22fe1efdd6fdd2f8def8daf886f882e6c0e6bfe6b6e6b665f065efe5e3e5e35fc3dfc35fba5fb9df1b5f1adf105f0fd6b30032fff2f872f832ac32abf2a5b2a56f94ef94af8def8daf51af516f4c2f4bee5ffe5ff65f065efe557e557654ae54a5f295f28df1b5f1adea2dea25e97de975797c397c19791978f952d952b94fb94f97c6f7c6d7c437c417a617a5f7a397a3772f832f7f2f1f2f1b2a572a5329f329eef8daf8d6f882f87ef4bef4baf46ef46ab46fe8efe8afe22fe1ef94ef94af8def8dadb42db3edadedadad6a6d6a2d64ad646dfd15fd0dfc3dfc35f295f28df1b5f1adcb2dcb25ca7dca75c3adc3a5c2f5c2edb965b964b94fb94eb875b874b85eb85db6cfb6ceb6b6b6b4b5a8b5a7b591b590a1dfc45fc3dfbadfba5f1bdf1b5f10df105b5bdb5b5b52db525ac95ac8dac0dac05bf87bf86bf74bf73be36be35be20be1fb6b6b6b5b6a4b6a3b591b590b580b57f0040acd5f29df295f1bdf1b5ea35ea2de985e97dad4dad45ac95ac8da59da595a515a50dbe52be51be36be35bd45bd44bd2fbd2eb5a8b5a7b591b590b4b2b4b1b4a1b4a0aef8def8daf886f882f4c2f4bef472f46ed64ad646d606d602d28ad286d246d242df1b5f1adf105f0fde97de975e8dde8d5ac8dac85ac05abfda50da505a485a47d688
+
+private theorem cap11101111111100101Accepted : Accepted table cap11101111111100101Box cap11101111111100101Tree := by
+  decide +kernel
+
+private def cap1110111111110010Tree : Option PackedTree :=
+  PackedTree.split 3 <$> cap11101111111100100Tree <*> cap11101111111100101Tree
+
+private theorem cap1110111111110010Accepted : Accepted table cap1110111111110010Box cap1110111111110010Tree := by
+  apply acceptedSplit 3
+  · have h : leftBox cap1110111111110010Box 3 (midpoint cap1110111111110010Box 3) = cap11101111111100100Box := by
+      funext i
+      fin_cases i <;> decide +kernel
+    simpa only [h] using cap11101111111100100Accepted
+  · have h : rightBox cap1110111111110010Box 3 (midpoint cap1110111111110010Box 3) = cap11101111111100101Box := by
+      funext i
+      fin_cases i <;> decide +kernel
+    simpa only [h] using cap11101111111100101Accepted
+
+private def cap1110111111110011Box : Box := ![(23 / 20, 47 / 40), (189 / 320, 63 / 100), (23 / 32, 3 / 4), (7 / 8, 15 / 16)]
+
+private def cap11101111111100110Box : Box := ![(23 / 20, 47 / 40), (189 / 320, 63 / 100), (23 / 32, 3 / 4), (7 / 8, 29 / 32)]
+
+private def cap111011111111001100Box : Box := ![(23 / 20, 93 / 80), (189 / 320, 63 / 100), (23 / 32, 3 / 4), (7 / 8, 29 / 32)]
+
+private def cap1110111111110011000Box : Box := ![(23 / 20, 93 / 80), (189 / 320, 1953 / 3200), (23 / 32, 3 / 4), (7 / 8, 29 / 32)]
+
+private def cap1110111111110011000Tree : Option PackedTree := decode 5 0xdf43df435f365f35deb15eb0deaadeaa5ae95ae8dadedade5a65da655a5f5a5e800826be86be85be6bbe6abddfbddebdd2bdd1b89eb89db889b888b837b836b82db82cb7bbf7bbd7ba57ba37ac37ac17aa97aa7706f706d705b70596fe16fdf6fd16fcf4dc4f5c4edc44dc445c1bdc1b5c16dc165ae8dae85adddadd5aa0daa05a9cda9c5b837b836b82db82cb7f0b7efb7e8b7e7b541b540b539b538b4cab4c9b4bdb4bca43be6cbe6bbe51be50bd55bd54bd44bd43b88ab889b874b873b7e9b7e8b7ddb7dcb7115711370e970e76fd36fd16fbb6fb96b7b6b776b4f6b4d697d697b6963696145f35df355f285f27dee95ee8dee0dee05c44dc445c39dc395c16dc165c10dc1008084ebdd2bdd1bdc1bdc0bd54bd53bd43bd42b82db82cb821b820b7e8b7e7b7dcb7dba6e226e222e1cee1cae0b6e0b2e086e082d6eed6ead69ad696d4e6d4e2d4bed4b8404275c16dc165c10dc105bf45bf3dbee5bedda9cda9c5a97da975a5eda5e5a585a57521a
+
+private theorem cap1110111111110011000Accepted : Accepted table cap1110111111110011000Box cap1110111111110011000Tree := by
+  decide +kernel
+
+private def cap1110111111110011001Box : Box := ![(23 / 20, 93 / 80), (1953 / 3200, 63 / 100), (23 / 32, 3 / 4), (7 / 8, 29 / 32)]
+
+private def cap1110111111110011001Tree : Option PackedTree := decode 7 0x37fc37fc17f817f7f7e3d7e3b7e0d7e0b732f732d72fd72fb7221721f71f571f36fc7afc76fc1afc16fa1efa1af9b2f9aee442e43ee3eae3e6e27ee27ae22ae2269b997b996b97eb97db910b90fb8fab8f9b705b704b6e8b6e7b654b653b640b63fb7221721f71f571f3713f713d711571136ca96ca76c816c7f6ba56ba36b7b6b7748bfe0bfdfbfcfbfcebf1dbf1cbf11bf10b996b995b98bb98ab90fb90eb905b904b7fbf7fbd7f9d7f9b7e397e377e217e1f732b732973157313721d721b720972075dfe7dfe75fdfdfdf5f88df885f82df825cc5dcc55cbedcbe5c82dc825c7cdc7c5bfcebfcdbfbebfbdbf10bf0fbf04bf03b98ab989b97cb97bb904b903b8f8b8f7ad5f8edf8ddf88df87df435f42df3bdf3b5c87dc86dc82dc81dc4f5c4edc49dc495bf11bf0fbf05bf03be77be76be6bbe6ab905b903b8f9b8f7b893b892b889b888a8dccb5ccadcc5dcc55c87dc875c82dc825b825b81db7b5b7adb29db295b24db245b995b994b98ab989b90eb90db904b903b703b702b6f5b6f3b652b651b648b647aee62ee62ae5f6e5f2e416e412e3e6e3e2dbdadbd6db9edb9ad926d922d8fed8fadcc55cc4dcbe5cbddc825c81dc7c5c7bdb7adb79db735b72db245b23db1f5b1ed6ae43ee436e416e40ee27ae276e24ee24ad94ed946d926d91ed746d742d722d71edc82dc81dc7cdc7bdc49dc495c44dc445b24db23db1fdb1edae45ae3dadddadd5443bfc0bfbfbfa1bfa0bf06bf05bef0beefb97eb97db964b963b8fab8f9b8e4b8e3b7e0d7e0b7de17ddf7cd97cd77ca37ca171f571f371c971c77115711370e970e74dcbf5cbedcb25cb1dc7d5c7cdc725c71db745b73db675b66db205b1fdb15db155b8fab8f9b8e4b8e3b88ab889b874b873b640b63fb62bb62ab5bdb5bbb5a7b5a6a45fdfdfdf5fd85fd7df82df825f7d5f7cdcbedcbe5cb85cb7dc7cdc7c5c775c76dbfbebfbdbfafbfaebf04bf03bef9bef8b97cb97bb96fb96eb8f8b8f7b8edb8ecaefec2febefe82fe7efbeafbe6fbbefbbae5c2e5bee58ee58ae3bae3b6e38ee38adfd7dfd75fcfdfcedf7cdf7c5f775f76dcb7dcb75cb15cb05c76dc765c715c7056afc16fc0efbeafbe2f9aef9aaf97ef97ae3e6e3dee3bae3b2e226e222e1f6e1f2df7d5f7c5f77df76df2fdf2f5f285f275c775c765c71dc70dc3edc3e5c39dc3880082646e5f6e5f2e5c2e5bee3e6e3e2e3bae3b6db9edb9adb6edb6ad8fed8fad8d2d8cedcbe5cbddcb7dcb75c7c5c7bdc76dc765b735b72db6d5b6cdb1f5b1edb19db195772e172df72c772c571dd71db71c771c56db76db56d9b6d996c696c676c556c536e5bee5bae58ae582e3b6e3b2e38ae382db6adb66db32db2ed8ced8cad8a6d8a2b571f371ef71dd71d97113711170fb70f96c7f6c7b6c696c656b776b756b636b616e3bae3b2e38ee386e1f6e1f2e1cee1c6d8d2d8cad8aad8a2d6c6d6c2d69ad69040013221a
+
+private theorem cap1110111111110011001Accepted : Accepted table cap1110111111110011001Box cap1110111111110011001Tree := by
+  decide +kernel
+
+private def cap111011111111001100Tree : Option PackedTree :=
+  PackedTree.split 1 <$> cap1110111111110011000Tree <*> cap1110111111110011001Tree
+
+private theorem cap111011111111001100Accepted : Accepted table cap111011111111001100Box cap111011111111001100Tree := by
+  apply acceptedSplit 1
+  · have h : leftBox cap111011111111001100Box 1 (midpoint cap111011111111001100Box 1) = cap1110111111110011000Box := by
+      funext i
+      fin_cases i <;> decide +kernel
+    simpa only [h] using cap1110111111110011000Accepted
+  · have h : rightBox cap111011111111001100Box 1 (midpoint cap111011111111001100Box 1) = cap1110111111110011001Box := by
+      funext i
+      fin_cases i <;> decide +kernel
+    simpa only [h] using cap1110111111110011001Accepted
+
+private def cap111011111111001101Box : Box := ![(93 / 80, 47 / 40), (189 / 320, 63 / 100), (23 / 32, 3 / 4), (7 / 8, 29 / 32)]
+
+private def cap1110111111110011010Box : Box := ![(93 / 80, 47 / 40), (189 / 320, 1953 / 3200), (23 / 32, 3 / 4), (7 / 8, 29 / 32)]
+
+private def cap1110111111110011010Tree : Option PackedTree := decode 5 0xe61e661de60fe60f656d656ce5646563df43df435f365f35deb15eb0deaadeaa5cc3bcc3acc1ecc1dcb7dcb7ccb6acb69c257c256c23fc23ec1ddc1dcc1ccc1cbb96fb96f996d596d395b395b1958f958d83bb83b98399839782ef82ed82d782d54e12be12b611fe11f60eee0ee60e660e5df435f42df35df355eefdeef5ee95ee8dc1ddc1dcc1ccc1cbc177c176c16bc16abddfbddebdd2bdd1bd61bd60bd54bd53a43cc1fcc1ecbfecbfccac8cac7caaecaadc240c23fc229c228c16cc16bc15bc15ab8481847f8453845182d982d782b782b57cd97cd77ca37ca17aab7aa97a897a874660f660ee5fe65fde5b565b4e5ab65aae11fe11f61146113e0e660e5e0dbe0db00084ecb6acb69cb56cb55cac7cac6caadcaacc1ccc1cbc1b7c1b6c16bc16ac15ac159a708ff08fb08a3089f0733072f06df06daf9aef9aaf942f93ef74af746f706f7004042760e660e5e0dbe0db60b5e0b560ad60acdee95ee8dee0dee05eaa5ea9dea1dea1521a
+
+private theorem cap1110111111110011010Accepted : Accepted table cap1110111111110011010Box cap1110111111110011010Tree := by
+  decide +kernel
+
+private def cap1110111111110011011Box : Box := ![(93 / 80, 47 / 40), (1953 / 3200, 63 / 100), (23 / 32, 3 / 4), (7 / 8, 29 / 32)]
+
+private def cap1110111111110011011Tree : Option PackedTree := decode 7 0x39bbf9bbd9b7d9b7b98799877983f983d8731872f86eb86e984b184af8481847e00209b0e630e5f0dd70dcf0b9b0b970b2f0b2aff86ff82ff02fefefc7afc76fc1afc16e1736172e165e165612c612be120611fdf8f5f8edf835f82df43df435f365f35d23377b3777373b373333a3339f336f33670e5f0e570e1f0e170b970b8f0b630b580040f66e766e6e6dee6de666de66d66676666e1c3e1c361b9e1b9616c616be1656164dcdcdcdcccdbccdbbccdaccd9cccdccccc386c384c372c371c2d7c2d6c2c9c2c8ad66746673e66de66ce61de61d6616e6166172e171e16c616b612be12b6125e1255ccdbccd9cccecccccc2dcc2ccc1ecc1dc2d8c2d6c2cac2c8c24bc24ac23fc23ea8e1cbe1cb61c3e1c36172e172616c616bdff05fefdfe7dfe75f8edf8e5f88df885c396c395c386c384c2e4c2e3c2d7c2d6bfdfbfdebfcebfcdbf1cbf1bbf10bf0faf0e1f0e1b0dcf0dcb0b630b5f0b2b0b26ff3eff3afefefefafc46fc42fc16fc12e1c361c261b961b8e16be16b6164e1645fe75fe6dfdf5fdedf885f87df825f81d6b0b970b8f0b630b5b095f095b092f092afc76fc6efc46fc3efa1afa16f9def9dae16c616b616561646125e125611fe11f5f88df87df82df81df3bdf3b5f35df355443cdbecdbdcd9bcd9acc1fcc1ecbfecbfcc375c374c356c355c240c23fc229c22800404d86eb86e786ad86ab85978595855d855b7f817f7f7f437f417e0d7e0b7de17ddf70b2f0b2b0abb0ab7090308ff08a708a2fc1afc16fbc2fbbef9b2f9aef946f942919b7b9b799b579b55999d999b997d997b86e786e586c986c78595859385798577736f336ef36ab36a73337333332f732f30dcb0dc70d8f0d870b270b230aef0aeabcdabcda9cd9acd99ccbeccbcccb1ccb0c364c362c355c353c2bcc2bac2adc2ab00404cb333b333332fb32f3307b3077303b30370b2b0b230af30aeb08ff08fb08cf08cae65f665e6658e65866076606e5fe65fde15e615d6156e155e119e119611461135470dcf0dcb0d930d8f0b2b0b270af30aeefefefefafec2febefc16fc12fbeafbe6e1b961b8e1b1e1b0e164e164615de15d5fdf5fdedfd7dfd75f825f81df7cdf7c5786c986c786ab86a985798577855b85597f617f5f7f417f3f7df57df37ddf7ddd70d8f0d870d530d4f0aef0aeb0ab30aaefebefebafe7efe76fbe6fbe2fbbafbb6b58595859185798575847f847d846784657e0b7e077df57df17cd77cd57cbf7cbd70af30aeb0ab70aaf08cf08cb08a3089afbeafbe2fbbefbb6f97ef97af942f93aa21a
+
+private theorem cap1110111111110011011Accepted : Accepted table cap1110111111110011011Box cap1110111111110011011Tree := by
+  decide +kernel
+
+private def cap111011111111001101Tree : Option PackedTree :=
+  PackedTree.split 1 <$> cap1110111111110011010Tree <*> cap1110111111110011011Tree
+
+private theorem cap111011111111001101Accepted : Accepted table cap111011111111001101Box cap111011111111001101Tree := by
+  apply acceptedSplit 1
+  · have h : leftBox cap111011111111001101Box 1 (midpoint cap111011111111001101Box 1) = cap1110111111110011010Box := by
+      funext i
+      fin_cases i <;> decide +kernel
+    simpa only [h] using cap1110111111110011010Accepted
+  · have h : rightBox cap111011111111001101Box 1 (midpoint cap111011111111001101Box 1) = cap1110111111110011011Box := by
+      funext i
+      fin_cases i <;> decide +kernel
+    simpa only [h] using cap1110111111110011011Accepted
+
+private def cap11101111111100110Tree : Option PackedTree :=
+  PackedTree.split 0 <$> cap111011111111001100Tree <*> cap111011111111001101Tree
+
+private theorem cap11101111111100110Accepted : Accepted table cap11101111111100110Box cap11101111111100110Tree := by
+  apply acceptedSplit 0
+  · have h : leftBox cap11101111111100110Box 0 (midpoint cap11101111111100110Box 0) = cap111011111111001100Box := by
+      funext i
+      fin_cases i <;> decide +kernel
+    simpa only [h] using cap111011111111001100Accepted
+  · have h : rightBox cap11101111111100110Box 0 (midpoint cap11101111111100110Box 0) = cap111011111111001101Box := by
+      funext i
+      fin_cases i <;> decide +kernel
+    simpa only [h] using cap111011111111001101Accepted
+
+private def cap11101111111100111Box : Box := ![(23 / 20, 47 / 40), (189 / 320, 63 / 100), (23 / 32, 3 / 4), (29 / 32, 15 / 16)]
+
+private def cap11101111111100111Tree : Option PackedTree := decode 6 0xe6f0e6f066e066dfe61f661ee610e6105ff1dff15fe15fe0df455f44df375f36dcde0cddfcdbfcdbecc3dcc3ccc20cc1fbfe2bfe1bfc1bfc0be89be87be6dbe6caf370336ff367736733087308330032ffeff0aff06fe8efe8af9baf9b6f94ef94ae6dfe6df66ce66cde610660fe5ffe5ff5fe0dfe05fd15fd0df36df365f295f28d6b30fb30f33087307f2b6f2b6b2b2b2b22fa2afa1ef9baf9b2f58ef58af55ef556e610e610660065ffe5656564e5586557df375f36df29df295eabdeab5ea35ea2dcc20cc1fcbffcbfecac9cac8caafcaaebe6dbe6cbe52be51bd56bd55bd45bd44ad1bfe3bfe2bfc2bfc1be8abe89be6ebe6db707b706b6ebb6eab5d4b5d3b5c0b5bfb7fc57fc37f837f817d137d0f7cdb7cd96e0d6e0b6dd56dd36ba76ba56b7f6b7a002099dfe15fe0dfd1dfd15f375f36df29df295b75db755b685b67dae05adfdad4dad45bfc1bfc0bfa2bfa1be6dbe6cbe52be51b97fb97eb965b964b88bb88ab875b874b72ff72fd72cb72c97117711570eb70e96dd56dd16d9f6d9d6b7f6b7b6b516b4f4357d157d0f7cdd7cd97ac77ac57aaf7aab6ba96ba56b816b7d699b69976981697c00213af9baf9b6f94ef94af55ef55af51af516d702d6fed6a6d6a2d302d2fed2ced2cadf36df365f295f28deab5eaadea2dea25adfdadedad45ad3da5fda5f5a595a58d688
+
+private theorem cap11101111111100111Accepted : Accepted table cap11101111111100111Box cap11101111111100111Tree := by
+  decide +kernel
+
+private def cap1110111111110011Tree : Option PackedTree :=
+  PackedTree.split 3 <$> cap11101111111100110Tree <*> cap11101111111100111Tree
+
+private theorem cap1110111111110011Accepted : Accepted table cap1110111111110011Box cap1110111111110011Tree := by
+  apply acceptedSplit 3
+  · have h : leftBox cap1110111111110011Box 3 (midpoint cap1110111111110011Box 3) = cap11101111111100110Box := by
+      funext i
+      fin_cases i <;> decide +kernel
+    simpa only [h] using cap11101111111100110Accepted
+  · have h : rightBox cap1110111111110011Box 3 (midpoint cap1110111111110011Box 3) = cap11101111111100111Box := by
+      funext i
+      fin_cases i <;> decide +kernel
+    simpa only [h] using cap11101111111100111Accepted
+
+private def cap111011111111001Tree : Option PackedTree :=
+  PackedTree.split 2 <$> cap1110111111110010Tree <*> cap1110111111110011Tree
+
+private theorem cap111011111111001Accepted : Accepted table cap111011111111001Box cap111011111111001Tree := by
+  apply acceptedSplit 2
+  · have h : leftBox cap111011111111001Box 2 (midpoint cap111011111111001Box 2) = cap1110111111110010Box := by
+      funext i
+      fin_cases i <;> decide +kernel
+    simpa only [h] using cap1110111111110010Accepted
+  · have h : rightBox cap111011111111001Box 2 (midpoint cap111011111111001Box 2) = cap1110111111110011Box := by
+      funext i
+      fin_cases i <;> decide +kernel
+    simpa only [h] using cap1110111111110011Accepted
+
+private def cap11101111111100Tree : Option PackedTree :=
+  PackedTree.split 1 <$> cap111011111111000Tree <*> cap111011111111001Tree
+
+private theorem cap11101111111100Accepted : Accepted table cap11101111111100Box cap11101111111100Tree := by
+  apply acceptedSplit 1
+  · have h : leftBox cap11101111111100Box 1 (midpoint cap11101111111100Box 1) = cap111011111111000Box := by
+      funext i
+      fin_cases i <;> decide +kernel
+    simpa only [h] using cap111011111111000Accepted
+  · have h : rightBox cap11101111111100Box 1 (midpoint cap11101111111100Box 1) = cap111011111111001Box := by
+      funext i
+      fin_cases i <;> decide +kernel
+    simpa only [h] using cap111011111111001Accepted
+
+private def cap11101111111101Box : Box := ![(47 / 40, 6 / 5), (441 / 800, 63 / 100), (11 / 16, 3 / 4), (7 / 8, 15 / 16)]
+
+private def cap111011111111010Box : Box := ![(47 / 40, 6 / 5), (441 / 800, 189 / 320), (11 / 16, 3 / 4), (7 / 8, 15 / 16)]
+
+private def cap1110111111110100Box : Box := ![(47 / 40, 6 / 5), (441 / 800, 189 / 320), (11 / 16, 23 / 32), (7 / 8, 15 / 16)]
+
+private def cap1110111111110100Tree : Option PackedTree := decode 7 0xf8bd78bcf89ef89e781e781df805f8056ca06c9fec84ec846c146c13ebfe6bfddf03cf03bf00bf00aef30ef2fef12ef11d828d827d7fcd7fbd745d744d72ad729a7650364ff6493648f60a3609f604b60472ac32abb2a5b2a5326bb26b7267b2676ec926c91ec84ec846c096c08ebfe6bfde54b654a653ee53de4cf64cee4c664c5d5b051b04faff9aff7ae8bae89ae55ae53935d935b9319931791a591a39171916f48f179f178f15af159f03bf03af022f021d93fd93ed923d922d827d826d811d810be2f1e2efe2b3e2b1e075e073e043e041c307c305c2d1c2cfc14bc149c129c1277860f860b85a3859f829782938253824f64fb64f3648b6487609b60976043603e87e2b5e2b3e279e277e045e043e015e013b247b245b211b20fb023b021aff7aff57c567c563c4efc4ebc087c083c027c02385a3859f8543853f8253824f820b8206f0b470b3f0a870a7f04a7049f0417040ec916c90ec83ec836c086c07ebfd6bfcd0d781df81d78117810f797f7977791f7916c13ec136c08ec086ba26ba1eb9beb9b5f03af039f021f020ef2eef2def22ef21d826d825d810d80fd743d742d736d735afc08bc087c02bc027bc8fbc8bbc47bc43604760435fef5feb5cdf5cdb5ca75ca2f810f8107804f80477917790f7887787ec086c07ebfd6bfceb9b6b9aeb946b93d68ec9fec9f6c91ec916c13ec136c08ec0865576556e54a6549e4d6e4d664cee4ce5d93ed93cd922d921d826d825d810d80fd05cd05bd046d045cfb0cfafcfa4cfa3ba0b9a0b7a08da08b9f619f5f9f499f47955b955995279525935993579339933743d923d922d908d907d811d810d7fbd7faca94ca93ca7bca7ac99dc99cc98bc98abb245b243b20fb20db021b01faff5aff3a08da08ba065a0639f499f479f319f2f7411b411740cb40c73e933e8f3e633e5f2a4f2a4b29eb29e72673266f262b262686b609f609b604760435d135d0f5cdf5cdb26b726b3267726732347234323172312ec136c12ec086c07eba1eba16b9b6b9ae4d664d5e4ce64cde4686467e4626461d7b023b021aff7aff5ae6fae6dae53ae51933b933993179315918b9189916f916d76043603f5feb5fe75cdb5cd75ca35c9f2673266f262b26272313230f22db22d6b443
+
+private theorem cap1110111111110100Accepted : Accepted table cap1110111111110100Box cap1110111111110100Tree := by
+  decide +kernel
+
+private def cap1110111111110101Box : Box := ![(47 / 40, 6 / 5), (441 / 800, 189 / 320), (23 / 32, 3 / 4), (7 / 8, 15 / 16)]
+
+private def cap1110111111110101Tree : Option PackedTree := decode 7 0xf8da78d9f8bd78bcf82df82d781e781decbaecba6ca06c9fec22ec226c146c13df05bf05af03cf03bef48ef47ef30ef2fd845d844d828d827d75bd75ad745d744a765d765d3650364ff6117611360a3609f2b6f2b6b2ac32abb271b271726bb26b6ec22ec226c146c13ebadebad6ba2eba264e364e2e4d764d6e474e47464696468d23c6cfc6cbc667c663c16bc167c13bc13765d365cf6573656f6113610f60e760e2f8d978d8f8cc78cbf82cf82c7826f8266cb9ecb96cadecad6c21ec216c1c6c1bd7e333e331e2f3e2f1e09de09be077e075b2b9b2b7b27fb27db073b071b04fb04d7c663c65fc5e3c5dfc137c133c0ebc0e7656f656b64fb64f760e360df609b60940042735e0b5e0b1e09de099de8fde8dde79de77b089b085b073b06faeb5aeb3aea1ae9f7c13bc133c0efc0e7bcf3bcefbcbfbcb760e760df609f60975d435d3f5d135d0aa3b2e9b2e7b2b9b2b7b089b087b073b07195b595b39591958f938b938993739371765cf65cb656f656b610f610b60e360df2b672b632b1f2b1b2713270f26e326debd95cd95bd93fd93ed839d838d827d826cac8cac7caaecaadc9b9c9b8c9adc9acbb2b7b2b5b27db279b071b06fb04db04ba0e1a0dfa0b9a0b79f779f759f619f5f741c341bf4173416f3eef3eeb3ec33ebf2b1f2b1b2ab72ab326e326df26b326ae86b6113610b60e760df5d6b5d675d435d3f2717270f26e726df23a3239f237b2376ec1cec1bec13ec12eba86ba7eba26ba164dce4dbe4d6e4d5e46f646ee468e467d443
+
+private theorem cap1110111111110101Accepted : Accepted table cap1110111111110101Box cap1110111111110101Tree := by
+  decide +kernel
+
+private def cap111011111111010Tree : Option PackedTree :=
+  PackedTree.split 2 <$> cap1110111111110100Tree <*> cap1110111111110101Tree
+
+private theorem cap111011111111010Accepted : Accepted table cap111011111111010Box cap111011111111010Tree := by
+  apply acceptedSplit 2
+  · have h : leftBox cap111011111111010Box 2 (midpoint cap111011111111010Box 2) = cap1110111111110100Box := by
+      funext i
+      fin_cases i <;> decide +kernel
+    simpa only [h] using cap1110111111110100Accepted
+  · have h : rightBox cap111011111111010Box 2 (midpoint cap111011111111010Box 2) = cap1110111111110101Box := by
+      funext i
+      fin_cases i <;> decide +kernel
+    simpa only [h] using cap1110111111110101Accepted
+
+private def cap111011111111011Box : Box := ![(47 / 40, 6 / 5), (189 / 320, 63 / 100), (11 / 16, 3 / 4), (7 / 8, 15 / 16)]
+
+private def cap1110111111110110Box : Box := ![(47 / 40, 6 / 5), (189 / 320, 63 / 100), (11 / 16, 23 / 32), (7 / 8, 15 / 16)]
+
+private def cap11101111111101100Box : Box := ![(47 / 40, 6 / 5), (189 / 320, 63 / 100), (11 / 16, 23 / 32), (7 / 8, 29 / 32)]
+
+private def cap111011111111011000Box : Box := ![(47 / 40, 19 / 16), (189 / 320, 63 / 100), (11 / 16, 23 / 32), (7 / 8, 29 / 32)]
+
+private def cap111011111111011000Tree : Option PackedTree := decode 7 0xee6b6e6aee5e6e5ded5c6d5bed4b6d4ae971e9716966e96668ace8ac689f689edd2e3d2e2d2cdd2ccd159d158d13ed13dcd9bcd9acd7fcd7ecbfecbfccbdfcbdda37357735372ef72eb6e6b6e676e076e034b8b4b874b334b2f481b481747b747b2edcd6dccedc0edc06d5bed5b6d4aed49e9036902e8f6e8f668ac68abe89ee89e53a5c5a5c3a5ada5aba40da40ba3f3a3f19b359b339b179b1599639961994b994974b5b4b574b334b2f47e747e347b747b3362f362b35fb35f73297329332673262ad206d205d1f9d1f8d158d157d149d148ccb1ccb0cca5cca4cbfccbfbcbebcbeaba3f3a3f1a3dba3d9a293a291a27ba279994b99499933993197d797d597bb97b9510f72f372ef72bf72bb6a5b6a5769ef69eb35ff35fb35b335af2f7f2f7b2f1b2f14001276e5dee5d6e576e56edc0edc06db96db8e9666965e9616960e8f6e8f668eee8ee5db81db80db72db71da95da93da7ada79d1edd1ecd1ddd1dcd13dd13cd129d128a74b334b2f4b0b4b0747b747b34777477335fb35f735af35ab32673263322b3226e8f6e8f668eee8ee689ee89e6894e894664ce64c66456644e5eee5ee65e2e5e2521adab8dab7da96da95d93fd93ed923d922cbfecbfdcbdfcbdecaaecaadca94ca9300509db56fb56db52bb527b3e5b3e3b3adb3aba2b1a2afa27ba279a1a3a1a1a175a173767cb67c7675b675764fb64f3648b64874347434342eb42e74173416f411b41169d158d157d13dd13cd0d1d0d0d0bad0b9cbfccbfbcbddcbdccb56cb55cb41cb40ba1a3a1a1a175a173a0b9a0b7a08da08b96ad96ab96839681955b955995279525487b52db52bb4f7b4f5b247b245b211b20f97bf97bd978d978b9529952794f794f400813b6a576a4f69eb69e7675b67576707670344f744f344a744a342eb42e7429f429aeceb6ceaece0ece06c916c90ec83ec83685d685ce853e85368236822e8196818d3a27ba279a253a251a175a173a14fa14d97bb97b9978b9789968396819661965f742eb42e7429f429b411b411740cb40c72d072d032cc32cbf2a4f2a4b29eb29e690d1
+
+private theorem cap111011111111011000Accepted : Accepted table cap111011111111011000Box cap111011111111011000Tree := by
+  decide +kernel
+
+private def cap111011111111011001Box : Box := ![(19 / 16, 6 / 5), (189 / 320, 63 / 100), (11 / 16, 23 / 32), (7 / 8, 29 / 32)]
+
+private def cap111011111111011001Tree : Option PackedTree := decode 6 0x3ebb3ebb1eb81eb7fe647e645e60be609b9adb9abb979b977b571b56fb52db52b7d763d75fd6ffd6fbcc8bcc87cc13cc0f9463945f940f940b8b238b1f8abb8ab6f28c728bf281f28171dcf1dc71d071cfee6aee6a6e5dee5d6dcd6dccedc0edc05e3b9e3b8e3a0e39fe2c8e2c7e2aee2addb9adb99db81db80dab7dab6da95da93a43f5c0f5bff5b2f5b1f305f304f2ecf2ebdcbcdcbbdcafdcaeda96da95da7bda7abeb7feb7deb63eb61e609e607e5d7e5d5ca07ca05c9f7c9f5c55dc55bc533c5317940f940b93ef93eb8abb8ab78a678a6372ef72eb72bb72b76a576a5369eb69e40012706bcc8fcc8bcc17cc13c5e7c5e3c56bc5676ae36adf6a5b6a5764ff64fb648f648af9917990f9827981f8bc78bbf8acf8ac71647163f1577156f0c1f0c170b470b3de2c8e2c7e2aee2ade215e214e1f7e1f6dab7dab6da95da93d9f2d9f1d9d6d9d5bc42bc429c3efc3edc307c305c2d1c2cfb3e5b3e3b3adb3abb27db279b245b243487e60be609e5d9e5d7e2b5e2b3e279e277b52db52bb4f7b4f5b247b245b211b20f7cc13cc0fcbafcbabc567c563c4efc4eb8abb8ab78a678a6385a3859f8543853ef1577156f14cf14c70b470b3f0a870a7ed4aed4a6d3d6d3cec916c90ec83ec8300204e0d1
+
+private theorem cap111011111111011001Accepted : Accepted table cap111011111111011001Box cap111011111111011001Tree := by
+  decide +kernel
+
+private def cap11101111111101100Tree : Option PackedTree :=
+  PackedTree.split 0 <$> cap111011111111011000Tree <*> cap111011111111011001Tree
+
+private theorem cap11101111111101100Accepted : Accepted table cap11101111111101100Box cap11101111111101100Tree := by
+  apply acceptedSplit 0
+  · have h : leftBox cap11101111111101100Box 0 (midpoint cap11101111111101100Box 0) = cap111011111111011000Box := by
+      funext i
+      fin_cases i <;> decide +kernel
+    simpa only [h] using cap111011111111011000Accepted
+  · have h : rightBox cap11101111111101100Box 0 (midpoint cap11101111111101100Box 0) = cap111011111111011001Box := by
+      funext i
+      fin_cases i <;> decide +kernel
+    simpa only [h] using cap111011111111011001Accepted
+
+private def cap11101111111101101Box : Box := ![(47 / 40, 6 / 5), (189 / 320, 63 / 100), (11 / 16, 23 / 32), (29 / 32, 15 / 16)]
+
+private def cap11101111111101101Tree : Option PackedTree := decode 5 0xfaed7aecfae0fae079927991f9837982ee6c6e6b6e5f6e5e6d5d6d5c6d4c6d4b5f5c1f5c0f5b3f5b2f306f305f2edf2ecdcbedcbcdcb0dcafda98da96da7cda7babcc93cc8fcc1bcc17c5ebc5e7c56fc56b6aeb6ae36a636a5b650364ff6493648ef9837982f976f97678adf8ad789ef89e6d4c6d4b6d3e6d3dec926c91ec84ec845477363735f72fb72f76aeb6ae76a636a5f36773673360b360730032fff2f872f82ee6bee6b6e5eee5e6d5ced5c6d4bed4b66ce66cde6c0e6bfe5ffe5ff65f065efd7b97db979b961b95fb531b52db4f9b4f79b059b019add9ad997c397bf9791978c0081596d5d6d5c6d4c6d4b6ca06c9fec926c91e60065ff65f0e5efe5586557654b654a5da98da96da7cda7bd924d923d909d908cbe1cbdfcbc8cbc6ca96ca94ca7dca7ba88
+
+private theorem cap11101111111101101Accepted : Accepted table cap11101111111101101Box cap11101111111101101Tree := by
+  decide +kernel
+
+private def cap1110111111110110Tree : Option PackedTree :=
+  PackedTree.split 3 <$> cap11101111111101100Tree <*> cap11101111111101101Tree
+
+private theorem cap1110111111110110Accepted : Accepted table cap1110111111110110Box cap1110111111110110Tree := by
+  apply acceptedSplit 3
+  · have h : leftBox cap1110111111110110Box 3 (midpoint cap1110111111110110Box 3) = cap11101111111101100Box := by
+      funext i
+      fin_cases i <;> decide +kernel
+    simpa only [h] using cap11101111111101100Accepted
+  · have h : rightBox cap1110111111110110Box 3 (midpoint cap1110111111110110Box 3) = cap11101111111101101Box := by
+      funext i
+      fin_cases i <;> decide +kernel
+    simpa only [h] using cap11101111111101101Accepted
+
+private def cap1110111111110111Box : Box := ![(47 / 40, 6 / 5), (189 / 320, 63 / 100), (23 / 32, 3 / 4), (7 / 8, 15 / 16)]
+
+private def cap11101111111101110Box : Box := ![(47 / 40, 6 / 5), (189 / 320, 63 / 100), (23 / 32, 3 / 4), (7 / 8, 29 / 32)]
+
+private def cap111011111111011100Box : Box := ![(47 / 40, 19 / 16), (189 / 320, 63 / 100), (23 / 32, 3 / 4), (7 / 8, 29 / 32)]
+
+private def cap111011111111011100Tree : Option PackedTree := decode 7 0x3ba51ba4fb9edb9ebb5fbb5f9b5bbb5b9a643a641a5f9a5f7a31fa31da2e9a2e774c874c834bf34bef463f463b45d345cf377f377b36fb36f730f330ef307f307a8dd27dd26dd0add09dbe2dbe1dbcedbcdd320d31ed30bd30ad241d240d231d230bba15ba13b9ebb9e9b79db79bb773b771a617a615a5f7a5f5a463a461a447a44556df16df0eddceddc6d7e6d7ded6e6d6de920e9206911e91168c768c6e8b9e8b953a641a63da617a615a483a481a463a4619bbd9bbb9b9d9b9999d199cf99b799b374c2f4c2b4bef4beb48c748c3488f488b373b373336f736ef336f3367333b3332ad241d240d231d230d18ed18dd181d180cce8cce7ccdbccd9cc3bcc3acc2dcc2cba463a461a447a445a303a301a2e7a2e599b799b3999d9999985b9859983d983b510f73db73d7735b73576b776b736ae36adf4bf34bef4b8f4b8b45d345cf45674562e97e697de971e97168ba68b9e8ace8ac66df66dee6cde6cd660fe60f65ff65fe51b9ebb9e9b9c9b9c7b773b771b751b74fa5f7a5f5a5dda5dba447a445a429a42777393738f735773536ea36e9f6e6b6e674bbb4bb74b8b4b874853484f481b4816adbb9dbb8db9adb99dadcdadbdab7dab6d223d222d206d205d173d172d158d157a74bef4beb4bbb4bb7488f488b4853484f36f736ef36af36a7333b333332fb32f2e9776976e9716970e90a6909e9036902e6d5e6d4e6cd66cce65f665e6658e65855a447a445a429a427a2e7a2e5a2cba2c9999d9999997d9979983d983b981d981b74853484f481b4817459745934563455f32fb32f332c732c3303b30372ff32feea21adafddafcdadddadcd974d973d95cd95bcc3ccc3bcc1fcc1ecadacad9cac8cac7bb5f9b5f7b5b9b5b7b449b447b41bb419a31da31ba2e7a2e5a1f9a1f7a1d1a1cf76893688f6837683365cf65cb656f656b43f343ef43a3439f420b420741c341be9d18ed18dd173d172d0fcd0fbd0e8d0e7cc3bcc3acc1ecc1dcb7dcb7ccb6acb69ba1f9a1f7a1d1a1cfa105a103a0e1a0df96fb96f996d596d395b395b1958f958d487b5bbb5b9b571b56fb2b9b2b7b27fb27d983f983d97fd97fb9591958f955d955a00213b6b736b6f6adf6adb6837683367cb67c745cf45cb4563455f43a3439f43474342ed06ed066cf96cf8ecadecad6c9f6c9e68746873e868e86868386837e82e682dd3a2e7a2e5a2b1a2afa1d1a1cfa1a3a1a1983d983b97f997f796d596d396ad96ab743a3439f4347434341c341bf4173416f2dab2da72d5b2d572b1f2b1b2ab72ab290d1
+
+private theorem cap111011111111011100Accepted : Accepted table cap111011111111011100Box cap111011111111011100Tree := by
+  decide +kernel
+
+private def cap111011111111011101Box : Box := ![(19 / 16, 6 / 5), (189 / 320, 63 / 100), (23 / 32, 3 / 4), (7 / 8, 29 / 32)]
+
+private def cap111011111111011101Tree : Option PackedTree := decode 6 0xfb167b15fafbfafb79b779b6f9a279a1ee946e93ee7b6e7aed7eed7e6d6eed6e5f62bf62af5f6f5f5f489f488f455f454e561e560e531e530e411e410e3dbe3dabe913e911e8abe8a9e6dbe6d9e687e685c823c821c7b7c7b5c61dc61bc5d9c5d74f2b0f2b07298f2987208f20871edf1ed6e93ee936e7aee7a6df16df0eddceddc5e411e410e3dbe3dae30ee30de2ece2ebdbe2dbe1dbb9dbb8dafcdafbdadcdadba43f5f7f5f6f5d9f5d8f344f343f323f322dcf6dcf5dcd6dcd5dadddadcdab8dab7bebedebebebb1ebafe8abe8a9e871e86fca63ca61ca31ca2fc7b7c7b5c773c7717d157d153d0e3d0dfcd0fcd0bcc8bcc878f6f8f6b8ee78ee38bb38baf8b238b1e9e531e530e518e517e3dbe3dae3b9e3b8dcf5dcf4dcd5dcd4dbb9dbb8db9adb99bc7b7c7b5c773c771c5d9c5d7c591c58fb773b771b735b733b5b9b5b7b56fb56d486bcdbbcdb7cd13cd0fc6cfc6cbc667c6636bf76bf36b776b7365d365cf6573656ef9b6f9b679a1f9a178d978d8f8cc78cbf1877186f1767175f0d9f0d970cef0ce5e30ee30de2ece2ebe1b3e1b2e19de19cdafcdafbdadcdadbd973d972d95bd95aa1f9a279a1f991f99178ccf8cc78bcf8bc6d6eed6e6d5c6d5becae6cadec9fec9f5f343f342f322f321f198f197f178f177e2ece2ebe2c8e2c7e19de19ce183e182bc5d9c5d7c591c58fc467c465c42bc429b5b9b5b7b56fb56db41bb419b3e5b3e3788cf88cb8857885386778673860f860b6837683367cb67c7656f656b64fb64f290d1
+
+private theorem cap111011111111011101Accepted : Accepted table cap111011111111011101Box cap111011111111011101Tree := by
+  decide +kernel
+
+private def cap11101111111101110Tree : Option PackedTree :=
+  PackedTree.split 0 <$> cap111011111111011100Tree <*> cap111011111111011101Tree
+
+private theorem cap11101111111101110Accepted : Accepted table cap11101111111101110Box cap11101111111101110Tree := by
+  apply acceptedSplit 0
+  · have h : leftBox cap11101111111101110Box 0 (midpoint cap11101111111101110Box 0) = cap111011111111011100Box := by
+      funext i
+      fin_cases i <;> decide +kernel
+    simpa only [h] using cap111011111111011100Accepted
+  · have h : rightBox cap11101111111101110Box 0 (midpoint cap11101111111101110Box 0) = cap111011111111011101Box := by
+      funext i
+      fin_cases i <;> decide +kernel
+    simpa only [h] using cap111011111111011101Accepted
+
+private def cap11101111111101111Box : Box := ![(47 / 40, 6 / 5), (189 / 320, 63 / 100), (23 / 32, 3 / 4), (29 / 32, 15 / 16)]
+
+private def cap11101111111101111Tree : Option PackedTree := decode 5 0x3ec5bec59ebf1ebefe6dfe6dde68be689ba55ba51b9f1b9edb5ffb5fbb5bfb5bb7d7e3d7dfd76bd767cd17cd13cc93cc8f73e373db7363735b6b7f6b776aeb6ae2af36ff36ef345f344f1b4f1b3f19af199daffdafddadfdaddd975d974d95dd95cbe68be689e649e647e335e333e2f5e2f3b5bfb5bbb575b571b2bbb2b9b281b27f51dd2add29dcf8dcf7daffdafedadfdadecde1cde0cdc0cdbfcc3ecc3dcc21cc20bba53ba51b9efb9edb5fdb5fbb5bdb5bb9bc19bbf9b7f9b7d987b98799841983f5ee7c6e7bee6c6e6bed6fed6f6d5d6d5ce6e066dfe6cee6ce6610e610660065ffddcf7dcf6dcd7dcd6dadedadddab9dab8cdbfcdbecd9ccd9bcc20cc1fcbffcbfead6d7fed7eed6fed6eecbaecba6caeecae661f661e6610e60fe56de56d656565645dadfdadddabadab8d95dd95cd940d93fcc21cc1fcc00cbfecacacac8cab0caaea88
+
+private theorem cap11101111111101111Accepted : Accepted table cap11101111111101111Box cap11101111111101111Tree := by
+  decide +kernel
+
+private def cap1110111111110111Tree : Option PackedTree :=
+  PackedTree.split 3 <$> cap11101111111101110Tree <*> cap11101111111101111Tree
+
+private theorem cap1110111111110111Accepted : Accepted table cap1110111111110111Box cap1110111111110111Tree := by
+  apply acceptedSplit 3
+  · have h : leftBox cap1110111111110111Box 3 (midpoint cap1110111111110111Box 3) = cap11101111111101110Box := by
+      funext i
+      fin_cases i <;> decide +kernel
+    simpa only [h] using cap11101111111101110Accepted
+  · have h : rightBox cap1110111111110111Box 3 (midpoint cap1110111111110111Box 3) = cap11101111111101111Box := by
+      funext i
+      fin_cases i <;> decide +kernel
+    simpa only [h] using cap11101111111101111Accepted
+
+private def cap111011111111011Tree : Option PackedTree :=
+  PackedTree.split 2 <$> cap1110111111110110Tree <*> cap1110111111110111Tree
+
+private theorem cap111011111111011Accepted : Accepted table cap111011111111011Box cap111011111111011Tree := by
+  apply acceptedSplit 2
+  · have h : leftBox cap111011111111011Box 2 (midpoint cap111011111111011Box 2) = cap1110111111110110Box := by
+      funext i
+      fin_cases i <;> decide +kernel
+    simpa only [h] using cap1110111111110110Accepted
+  · have h : rightBox cap111011111111011Box 2 (midpoint cap111011111111011Box 2) = cap1110111111110111Box := by
+      funext i
+      fin_cases i <;> decide +kernel
+    simpa only [h] using cap1110111111110111Accepted
+
+private def cap11101111111101Tree : Option PackedTree :=
+  PackedTree.split 1 <$> cap111011111111010Tree <*> cap111011111111011Tree
+
+private theorem cap11101111111101Accepted : Accepted table cap11101111111101Box cap11101111111101Tree := by
+  apply acceptedSplit 1
+  · have h : leftBox cap11101111111101Box 1 (midpoint cap11101111111101Box 1) = cap111011111111010Box := by
+      funext i
+      fin_cases i <;> decide +kernel
+    simpa only [h] using cap111011111111010Accepted
+  · have h : rightBox cap11101111111101Box 1 (midpoint cap11101111111101Box 1) = cap111011111111011Box := by
+      funext i
+      fin_cases i <;> decide +kernel
+    simpa only [h] using cap111011111111011Accepted
+
+private def cap1110111111110Tree : Option PackedTree :=
+  PackedTree.split 0 <$> cap11101111111100Tree <*> cap11101111111101Tree
+
+private theorem cap1110111111110Accepted : Accepted table cap1110111111110Box cap1110111111110Tree := by
+  apply acceptedSplit 0
+  · have h : leftBox cap1110111111110Box 0 (midpoint cap1110111111110Box 0) = cap11101111111100Box := by
+      funext i
+      fin_cases i <;> decide +kernel
+    simpa only [h] using cap11101111111100Accepted
+  · have h : rightBox cap1110111111110Box 0 (midpoint cap1110111111110Box 0) = cap11101111111101Box := by
+      funext i
+      fin_cases i <;> decide +kernel
+    simpa only [h] using cap11101111111101Accepted
+
+private def cap1110111111111Box : Box := ![(23 / 20, 6 / 5), (441 / 800, 63 / 100), (11 / 16, 3 / 4), (15 / 16, 1)]
+
+private def cap1110111111111Tree : Option PackedTree := decode 7 0xfb17fb177aee7aedf8db78daf8be78bde6f1e6f166cfe6cf656ee56e65596558df62ef62df5dbf5daf1b5f1b4f17bf17add2bdd2adcd9dcd8d976d975d941d940bba57ba55b9b3b9b1b2edb2ebb283b2819bc59bc39b3d9b3b95b995b79563956143f5dcf5dbf5b5f5b4f17cf17bf13ff13ecd9fcd9ecd70cd6fcab2cab1ca7fca7ebebb7ebb5eb69eb67e2f7e2f5e27de27bb9b3b9b1b963b961b283b281b215b21377367736372c772c365076503642b6427367b367735bf35bb2ac72ac329fb29f686bc6dbc6d7c5f3c5efbd2bbd27bccbbcc72b772b732acb2ac723af23ab2353234ef8daf8da78bdf8bd77a4f7a47798f798656e656de558e55864756474e469e46957e2f9e2f7e27fe27dde65de63de29de279565956394ff94fd91a991a7917591737c5efc5ebc4fbc4f7bcc7bcc3bc4fbc4b65076503642b64275d1b5d175caf5caaeca0eca06c856c84eba36ba2eb95eb956558e558653f653ee469e469645ce45c50d1cde3cde2cd9fcd9ecaddcadccab2cab1b709b708b6d2b6d1b4cfb4ceb4b5b4b4b9bc59bc39b3d9b3b987f987d980398017fc97fc77f497f477d177d157ca97ca7730ff30fb300730032b732b6f2ac72ac2fa2efa2af952f94ef592f58ef51ef51a9bfe4bfe3bfa4bfa3be8bbe8abe54be53b708b707b6d1b6d0b5d5b5d4b5aab5a9b7d177d157ca97ca77ac97ac77a8f7a8d6bab6ba96b556b53699d699b696969674879b3f9b3d9ae19adf9565956394ff94fd6da56da36d4f6d4d696b6969692769257367b367735bf35bb300730032f272f22fe92fe8efddafdd6f952f94ef88af886e600e60065e4e5e46558e558653f653edf2a5f29df115f10dea3dea35e8ede8e537f497f477eed7eeb7ca97ca77c457c436da36da16d4d6d4b6b556b536b056b036f952f94ef88af886f51ef51af476f472d6aad6a6d60ad606d2d2d2ced24ad24690d656ee56e65596558e475e475646a6469da67da675a5ada5a59b259b1d9a9d9a95cadccadbcab1cab0c8eac8e9c8d3c8d2bd64bd63bd47bd46bbf1bbf0bbdcbbdbb7ac97ac77a8f7a8d77e377e177b977b7699d699b6969696766c766c566a566a343cab2cab1ca7fca7ec8d4c8d3c8bac8b9b4b5b4b4b493b492b353b352b33ab339b9563956194fd94fb91a791a5917391717a8f7a8d7a3b7a3977b977b7778577836f51ef51af476f472ef72ef6eef0aef06d2d2d2ced24ad246cd4acd46cce6cce28688
+
+private theorem cap1110111111111Accepted : Accepted table cap1110111111111Box cap1110111111111Tree := by
+  decide +kernel
+
+def cap111011111111Tree : Option PackedTree :=
+  PackedTree.split 3 <$> cap1110111111110Tree <*> cap1110111111111Tree
+
+theorem cap111011111111Accepted : Accepted table cap111011111111Box cap111011111111Tree := by
+  apply acceptedSplit 3
+  · have h : leftBox cap111011111111Box 3 (midpoint cap111011111111Box 3) = cap1110111111110Box := by
+      funext i
+      fin_cases i <;> decide +kernel
+    simpa only [h] using cap1110111111110Accepted
+  · have h : rightBox cap111011111111Box 3 (midpoint cap111011111111Box 3) = cap1110111111111Box := by
+      funext i
+      fin_cases i <;> decide +kernel
+    simpa only [h] using cap1110111111111Accepted
+
+end D5.S3.Quantum.Semigroups.WuCubicLowSpectrum.CapCover46
