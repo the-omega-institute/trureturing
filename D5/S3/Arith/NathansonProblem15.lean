@@ -254,7 +254,7 @@ private theorem mem_nsmul_range_iff_counts {ι : Type*} [Fintype ι] [DecidableE
     choose w hw using hf
     let s : Multiset ι := (Finset.univ : Finset (Fin h)).val.map w
     have hcard : s.card = h := by
-      simp [s, ← Finset.card_def]
+      simp [s]
     refine ⟨s.count, ?_, ?_⟩
     · exact (Multiset.sum_count_eq_card (s := Finset.univ)
         (fun i _ => Finset.mem_univ i)).trans hcard
@@ -286,5 +286,53 @@ theorem mem_labelled_sum_iff {m h : ℕ} {z : ℤ} (a b : Fin m → ℤ) :
     refine ⟨Sum.elim u v, ?_, ?_⟩
     · simpa [Fintype.sum_sum_type, Finset.sum_add_distrib] using hc
     · simpa [Fintype.sum_sum_type, Finset.sum_add_distrib, nsmul_eq_mul] using hs
+
+/-- The two generators for each prescribed point, kept distinct as labels. -/
+def radixGenerators {m : ℕ} (h : ℕ) (M : ℤ) (t : Fin m → ℤ) : Fin m ⊕ Fin m → ℤ :=
+  let a (i : Fin m) := M * ((h : ℤ) ^ 2 + 1) ^ i.val
+  Sum.elim a (fun i => t i - ((h : ℤ) - 1) * a i)
+
+/-- A sum of radix generators has a signed code and a remainder from the second labels. -/
+theorem mem_radixGenerators_iff {m h : ℕ} {M z : ℤ} (t : Fin m → ℤ) :
+    z ∈ h • Set.range (radixGenerators h M t) ↔
+      ∃ u v : Fin m → ℕ, (∑ i, (u i + v i)) = h ∧
+        M * radixCode h u v + (∑ i, (v i : ℤ) * t i) = z := by
+  unfold radixGenerators
+  dsimp only
+  rw [mem_labelled_sum_iff]
+  have heval (u v : Fin m → ℕ) :
+      (∑ i, ((u i : ℤ) * (M * ((h : ℤ) ^ 2 + 1) ^ i.val) +
+        (v i : ℤ) * (t i - ((h : ℤ) - 1) * (M * ((h : ℤ) ^ 2 + 1) ^ i.val)))) =
+      M * radixCode h u v + ∑ i, (v i : ℤ) * t i := by
+    rw [radixCode, Finset.mul_sum, ← Finset.sum_add_distrib]
+    apply Finset.sum_congr rfl
+    intro i _
+    unfold digit
+    ring
+  simp only [heval]
+
+/-- The values represented by zero-code multiplicities are exactly the prescribed points. -/
+theorem mem_range_iff_zero_code_sum {m h : ℕ} (hh : 2 ≤ h) (t : Fin m → ℤ) (z : ℤ) :
+    z ∈ Set.range t ↔
+      ∃ u v : Fin m → ℕ, (∑ i, (u i + v i)) = h ∧
+        radixCode h u v = 0 ∧ (∑ i, (v i : ℤ) * t i) = z := by
+  constructor
+  · rintro ⟨j, rfl⟩
+    let u (i : Fin m) := if i = j then h - 1 else 0
+    let v (i : Fin m) := if i = j then 1 else 0
+    have huv : (∑ i, (u i + v i)) = h := by
+      rw [Finset.sum_eq_single j]
+      · have hj : h - 1 + 1 = h := by omega
+        simpa [u, v] using hj
+      · intro i _ hi
+        simp [u, v, hi]
+      · simp
+    refine ⟨u, v, huv, (radixCode_eq_zero_iff hh huv).mpr ⟨j, fun _ => ⟨rfl, rfl⟩⟩, ?_⟩
+    simp [v, apply_ite]
+  · rintro ⟨u, v, huv, hzero, hsum⟩
+    obtain ⟨j, hj⟩ := (radixCode_eq_zero_iff hh huv).mp hzero
+    refine ⟨j, ?_⟩
+    have hv (i : Fin m) := (hj i).2
+    simpa [hv, apply_ite] using hsum
 
 end D5.S3.Arith.NathansonProblem15
