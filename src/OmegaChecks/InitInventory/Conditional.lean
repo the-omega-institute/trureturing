@@ -4,6 +4,7 @@ public import OmegaChecks.InitInventory.Reductions
 public import OmegaChecks.InitInventory.Collector
 public import OmegaChecks.InitInventory.StringPatterns
 public import OmegaChecks.InitInventory.StringSearchLoops
+public import OmegaChecks.InitInventory.StringSplitLoops
 
 open Lean
 namespace OmegaChecks.InitInventory
@@ -181,6 +182,18 @@ public def conditionalConsequence? (owner name : Name) : Option (String × Name 
     if name == ``Lean.Order.flat_csup then
       return ((``Classical.choice).toString, ``OmegaChecks.InitBoundaries.InternalOrder.choiceFromFlatPresence,
         "For nonempty α and the universal predicate on Option α with bottom none, the result has tag some, as in the pinned definition")
+  if owner == `Init.Data.String.Slice then
+    let witness := match name with
+      | ``String.Slice.SplitIterator.instIteratorLoopIdSubsliceOfMonad =>
+        some ``OmegaChecks.InitBoundaries.Collector.limitedOmniscienceFromSplitLoop
+      | ``String.Slice.SplitInclusiveIterator.instIteratorLoopIdOfMonad =>
+        some ``OmegaChecks.InitBoundaries.Collector.limitedOmniscienceFromInclusiveSplitLoop
+      | ``String.Slice.RevSplitIterator.instIteratorLoopOfMonad =>
+        some ``OmegaChecks.InitBoundaries.Collector.limitedOmniscienceFromReverseSplitLoop
+      | _ => none
+    if let some witness := witness then
+      return ("∀ f : Nat → Bool, Decidable (∃ n, f n = true)", witness,
+        "The identity-monad split loop is lawful on finite searchers, including repeated zero-width matches")
   if owner == `Init.Data.String.Pattern.Basic then
     if name == ``String.Slice.Pattern.ToForwardSearcher.DefaultForwardSearcher.instIteratorLoopIdSearchStep then
       return ("∀ f : Nat → Bool, Decidable (∃ n, f n = true)",
