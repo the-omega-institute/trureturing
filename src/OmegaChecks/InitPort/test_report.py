@@ -103,6 +103,22 @@ class CoverageTest(unittest.TestCase):
             with self.subTest(mismatch=mismatch), self.assertRaisesRegex(ValueError, "equality endpoint"):
                 check_coverage(inventory({**row, **mismatch}) | certificate)
 
+    def test_quotient_statement_formation_requires_an_independent_argument_certificate(self):
+        row = site("Init.Core", "Quot.liftIndepPr1", logicalConsequence="Quot.sound",
+                   logicalConsequenceWitness="soundOfLiftArgument", requiredBehavior="supply pair coherence")
+        site_key = (row["module"], row["name"])
+        self.assertEqual(check_coverage(inventory(row)), (0, [site_key]))
+        arg = "Quot.indepCoherent"
+        certificate = {"certifiedFormationArguments": [[*site_key, arg, "Quot.sound", "soundOfLiftArgument"]]}
+        row["formationArgument"] = arg
+        self.assertEqual(check_coverage(inventory(row) | certificate), (0, []))
+        with self.assertRaisesRegex(ValueError, "uncertified statement formation argument"):
+            check_coverage(inventory(row))
+        for mismatch in ({"logicalConsequenceWitness": "other"}, {"kind": "definition"},
+                         {"matchingNameAndModule": True}):
+            with self.subTest(mismatch=mismatch), self.assertRaisesRegex(ValueError, "statement formation argument"):
+                check_coverage(inventory(row | mismatch) | certificate)
+
     def test_strict_choice_requires_a_checked_target_and_an_unimplemented_site(self):
         row = site("Init.System.ST", "ST.Prim.Ref.get", strictImpliesAxiom="Classical.choice.{1}",
                    strictSelectionWitness="OmegaStrictReference.ST.Prim.Ref.get")

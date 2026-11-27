@@ -20,6 +20,10 @@ def check_coverage(official):
     by_site = {(owner, name): (operand, witness) for owner, name, operand, witness in certificates}
     if len(by_site) != len(certificates):
         raise ValueError("repeated specialized equality endpoint certificate")
+    arguments = official.get("certifiedFormationArguments", [])
+    by_argument = {(owner, name): (arg, target, witness) for owner, name, arg, target, witness in arguments}
+    if len(arguments) != len(by_argument):
+        raise ValueError("repeated statement formation argument certificate")
     sites = set()
     direct = 0
     matched = 0
@@ -51,6 +55,15 @@ def check_coverage(official):
                          row.get("operandImpliesAxiom") != endpoint or not row.get("operandReductionWitness") or
                          port or witness or strict or runtime):
             raise ValueError(f"inconsistent specialized equality endpoint for {owner}/{name}")
+        argument = row.get("formationArgument")
+        formation = by_argument.pop(site, None)
+        if bool(argument) != bool(formation) or (argument and formation !=
+                (argument, row.get("logicalConsequence"), row.get("logicalConsequenceWitness"))):
+            raise ValueError(f"uncertified statement formation argument for {owner}/{name}")
+        if argument and (site != ("Init.Core", "Quot.liftIndepPr1") or argument != "Quot.indepCoherent" or
+                         row["kind"] != "theorem" or row.get("logicalConsequence") != "Quot.sound" or
+                         not row.get("requiredBehavior") or port or witness or strict or runtime or endpoint):
+            raise ValueError(f"inconsistent statement formation argument for {owner}/{name}")
         if runtime and (axiom or witness or not row.get("unsafe") or
                         row.get("logicalConsequence") != "False" or
                         row.get("logicalConsequenceWitness") != runtime or not row.get("requiredBehavior")):
@@ -63,8 +76,10 @@ def check_coverage(official):
             direct += 1
         elif witness or strict:
             reductions += 1
-        elif not runtime and not endpoint:
+        elif not runtime and not endpoint and not argument:
             unresolved.append(site)
+    if by_argument:
+        raise ValueError("statement formation argument certificate has no definition site")
     if by_site:
         raise ValueError("specialized equality endpoint certificate has no definition site")
     summary = official["summary"]
@@ -79,9 +94,11 @@ def verify_complete(official, product, reductions, unresolved):
         examples = ", ".join(f"{owner}/{name}" for owner, name in unresolved[:3])
         runtime = sum(bool(row.get("runtimeConflictWitness")) for row in official["declarations"])
         endpoints = sum(bool(row.get("specializedEndpointType")) for row in official["declarations"])
+        formations = sum(bool(row.get("formationArgument")) for row in official["declarations"])
         raise ValueError(f"{len(unresolved)} unresolved public non-axiom definition sites; "
                          f"{reductions} checked axiom reductions, {runtime} observed runtime conflicts, "
-                         f"{endpoints} official statements with choice-valued equality endpoints. "
+                         f"{endpoints} official statements with choice-valued equality endpoints, "
+                         f"{formations} official statements requiring an axiom to supply a lift argument. "
                          f"Examples: {examples}. See init-gaps.tsv.")
     missing_native = [(row["module"], row["name"]) for row in official["declarations"]
                       if row["matchingNameAndModule"] and row.get("strictNativeSignature") is False]
@@ -163,7 +180,7 @@ def report(product, require_complete=False):
                              "runtimeConflictWitness", "equationOperand", "operandImpliesAxiom", "operandReductionWitness",
                              "unchangedTypeAxioms", "unsafePackedObservation", "strictImpliesAxiom", "strictSelectionWitness",
                              "unconditionalLogicalConsequence", "unconditionalLogicalConsequenceWitness",
-                             "specializedEndpointType", "strictConstructorIff"])
+                             "specializedEndpointType", "strictConstructorIff", "formationArgument"])
             for row in official["declarations"]:
                 if row["matchingNameAndModule"] or row["kind"] == "axiom":
                     continue
@@ -201,7 +218,8 @@ def report(product, require_complete=False):
                                  ",".join(row.get("unchangedTypeAxioms", [])), row.get("unsafePackedObservation"),
                                  row.get("strictImpliesAxiom"), row.get("strictSelectionWitness"),
                                  row.get("unconditionalLogicalConsequence"), row.get("unconditionalLogicalConsequenceWitness"),
-                                 row.get("specializedEndpointType"), "true" if row.get("strictConstructorIff") else ""])
+                                 row.get("specializedEndpointType"), "true" if row.get("strictConstructorIff") else "",
+                                 row.get("formationArgument")])
         reductions = stage / "init-public-reductions.tsv"
         with reductions.open("w", newline="") as f:
             writer = csv.writer(f, delimiter="\t", lineterminator="\n")

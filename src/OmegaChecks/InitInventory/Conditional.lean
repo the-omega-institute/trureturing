@@ -146,8 +146,8 @@ public def conditionalConsequence? (owner name : Name) : Option (String × Name 
       return ("False", ``OmegaChecks.InitBoundaries.PointerObservations.objectPointerHash,
         "Pointer hashes distinguish two simultaneously live NonScalar objects with the same Nat field")
   if owner == `Init.Core && name == ``Quot.liftIndepPr1 then
-    return ((``Quot.sound).toString, ``OmegaChecks.InitBoundaries.HeterogeneousQuotient.soundOfPairCoherence,
-      "The lift in the original result requires pair coherence for every motive, including the unit motive")
+    return ((``Quot.sound).toString, ``OmegaChecks.InitBoundaries.HeterogeneousQuotient.soundOfLiftArgument,
+      "The first projection in the original statement requires the lift's coherence argument at the constant unit motive")
   if owner == `Init.Core && name == ``Quotient.decidableEq then
     return ((``funext).toString, ``OmegaChecks.InitBoundaries.QuotientDecision.funextOfPositiveDecision,
       "The official equality decision computes true on the false and true representatives of the indiscrete Boolean quotient")

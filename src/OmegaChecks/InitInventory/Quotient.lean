@@ -1,6 +1,7 @@
 module
 public import OmegaChecks.InitPort.Alternatives.Logic.Quotient
 import all OmegaChecks.InitPort.Alternatives.Logic.Quotient
+public import OmegaChecks.InitInventory.Replay
 
 /-! The two public heterogeneous quotient eliminators have constructively inhabited types.
 The pinned abbreviations reduce through a pair whose first component is the quotient
@@ -68,6 +69,54 @@ public theorem officialFirst {α : Sort u} {r : α → α → Prop} {motive : Qu
     (f : (a : α) → motive (Quot.mk r a))
     (h : ∀ (a b : α) (p : r a b), Eq.ndrec (f a) (Quot.sound p) = f b) (q : Quot r) :
     firstOfCoherence f (Quot.indepCoherent f h) q = Quot.liftIndepPr1 f h q := rfl
+
+/-- The lift's coherence argument may use the original premise and the quotient point.
+Specialize them to reflexivity and the first representative's class. -/
+public theorem soundOfLiftArgument
+    (supply : ∀ {α : Sort u} {r : α → α → Prop},
+      (∀ (a b : α), r a b → () = ()) → (q : Quot r) →
+      ∀ (a b : α), r a b →
+        Quot.indep (motive := fun _ : Quot r => Unit) (fun _ => ()) a =
+          Quot.indep (motive := fun _ : Quot r => Unit) (fun _ => ()) b) :
+    type_of% @Quot.sound.{u} :=
+  soundOfPairCoherence fun {α} {r} a b rel =>
+    @supply α r (fun _ _ _ => rfl) (Quot.mk r a) a b rel
+
+open Lean Meta in
+/-- Infer the required argument type from the partially applied lift inside the pinned
+first projection. Quantify over all the locals in scope at that occurrence. -/
+public def certifyLiftArgument (official : Environment) (source : ConstantInfo) : MetaM Unit := do
+  let u := Level.param `u
+  let declared := source.type.instantiateLevelParams source.levelParams [u, .one]
+  forallBoundedTelescope declared (some 2) fun params body => do
+    let #[α, r] := params | throwError "unexpected parameters"
+    let qType := mkApp2 (mkConst ``Quot [u]) α r
+    let motive := Expr.lam `q qType (mkConst ``Unit) .default
+    let f := Expr.lam `a α (mkConst ``Unit.unit) .default
+    let .forallE _ _ rest _ := body | throwError "expected motive"
+    let .forallE _ _ rest _ := rest.instantiate1 motive | throwError "expected function"
+    forallTelescope (rest.instantiate1 f) fun xs eq => do
+      let #[h, q] := xs | throwError "expected coherence premise and quotient point"
+      let some (_, lhs, rhs) := eq.eq? | throwError "expected equality"
+      unless rhs == q && lhs.isAppOfArity ``PSigma.fst 3 do throwError "expected first projection"
+      let lifted := lhs.appArg!
+      unless lifted.isAppOfArity ``Quot.lift 6 && lifted.appArg! == q do
+        throwError "unexpected first projection argument"
+      let coherence := lifted.appFn!.appArg!
+      unless coherence.isAppOfArity ``Quot.indepCoherent 5 && coherence.appArg! == h do
+        throwError "unexpected coherence argument in the projection"
+      let env ← getEnv
+      let prefixType ← Lean.ofExceptKernelException (Kernel.check env (← getLCtx) lifted.appFn!.appFn!)
+      let .forallE _ required _ _ := (← whnf prefixType) | throwError "missing formation premise"
+      let actual ← Lean.ofExceptKernelException (Kernel.check env (← getLCtx) coherence)
+      unless Kernel.isDefEqGuarded env (← getLCtx) actual required do throwError "ingredient type mismatch"
+      let supplier ← mkForallFVars (params ++ xs) required
+      let target ← getConstInfo ``Quot.sound
+      let expected ← mkArrow supplier (target.type.instantiateLevelParams target.levelParams [u])
+      let witness ← getConstInfo ``soundOfLiftArgument
+      let ty := witness.type.instantiateLevelParams witness.levelParams [u]
+      unless Kernel.isDefEqGuarded env {} expected ty do throwError "wrong reduction of formation premise"
+      discard <| replayBoundaryDependencies official env [witness.name, ``firstOfCoherence]
 
 end OmegaChecks.InitBoundaries.HeterogeneousQuotient
 

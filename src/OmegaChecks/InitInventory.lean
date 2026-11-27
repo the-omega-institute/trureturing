@@ -8,6 +8,7 @@ import Lean.Compiler.LCNF.PhaseExt
 import OmegaChecks.InitInventory.Conditional
 meta import OmegaChecks.InitInventory.Conditional
 meta import OmegaChecks.InitInventory.ChoiceOperands
+import OmegaChecks.InitInventory.Quotient
 meta import OmegaChecks.InitInventory.OrderedAlgebra
 meta import OmegaChecks.InitInventory.Order
 meta import OmegaChecks.InitInventory.Logic
@@ -574,6 +575,7 @@ private def inventory (lib : System.FilePath) (visible strict full witnesses : E
         if names.contains n then duplicateNames := duplicateNames.insert n
         names := names.insert n
   let mut certifiedEndpoints : Array (Array String) := #[]
+  let mut certifiedFormationArguments : Array (Array String) := #[]
   let mut certifiedSites := 0
   let mut matchedUnique : NameSet := {}
   let mut axiomUnique : NameSet := {}
@@ -585,7 +587,7 @@ private def inventory (lib : System.FilePath) (visible strict full witnesses : E
   let mut nativeByModule := #[]
   let mut allNative := #[]
   if let some file := gaps then
-    file.putStrLn "module\tdeclaration\tkind\tunsafe\tpartial\tupstreamAxioms\timpliesAxiom\treductionWitness\tlogicalConsequence\tlogicalConsequenceWitness\trequiredBehavior\tabstractedDependency\truntimeConflictWitness\tequationOperand\toperandImpliesAxiom\toperandReductionWitness\tunchangedTypeAxioms\tunsafePackedObservation\tspecializedEndpointType\tunconditionalLogicalConsequence\tunconditionalLogicalConsequenceWitness\tstrictConstructorIff"
+    file.putStrLn "module\tdeclaration\tkind\tunsafe\tpartial\tupstreamAxioms\timpliesAxiom\treductionWitness\tlogicalConsequence\tlogicalConsequenceWitness\trequiredBehavior\tabstractedDependency\truntimeConflictWitness\tequationOperand\toperandImpliesAxiom\toperandReductionWitness\tunchangedTypeAxioms\tunsafePackedObservation\tspecializedEndpointType\tunconditionalLogicalConsequence\tunconditionalLogicalConsequenceWitness\tstrictConstructorIff\tformationArgument"
   for owner in modules do
     let some idx := visible.getModuleIdx? owner | throwError "missing official module {owner}"
     let publicNames := visible.header.moduleData[idx]!.constNames.filter publicName
@@ -625,6 +627,14 @@ private def inventory (lib : System.FilePath) (visible strict full witnesses : E
         if let some op := operand then
           certifiedEndpoints := certifiedEndpoints.push #[owner.toString, name.toString, op.name.toString, op.witness.toString]
       let conditional := OmegaChecks.InitInventory.conditionalConsequence? owner name
+      let formationArgument ← if owner == `Init.Core && name == ``Quot.liftIndepPr1 then do
+        let certify := OmegaChecks.InitBoundaries.HeterogeneousQuotient.certifyLiftArgument official info
+        (Meta.MetaM.run' certify).toIO' {fileName := "<official quotient lift argument>", fileMap := default} {env := witnesses}
+        certifiedFormationArguments := certifiedFormationArguments.push #[owner.toString, name.toString,
+          (``Quot.indepCoherent).toString, (``Quot.sound).toString,
+          (``OmegaChecks.InitBoundaries.HeterogeneousQuotient.soundOfLiftArgument).toString]
+        pure (some (``Quot.indepCoherent).toString)
+      else pure none
       let direct := (logicalConsequence? owner name).map (fun (target, witness) => (target.toString, witness))
       let consequence := conditional.map (fun (target, witness, _) => (target, witness)) <|> direct
       let behavior := conditional.map (fun (_, _, premise) => premise)
@@ -656,7 +666,8 @@ private def inventory (lib : System.FilePath) (visible strict full witnesses : E
             selector.getD "", runtimeConflict.getD "", (operand.map (·.name.toString)).getD "",
             (operand.map fun _ => (``Classical.choice).toString).getD "", (operand.map (·.witness.toString)).getD "",
             String.intercalate "," (typeAxioms.toList.map Name.toString), packedObservation.getD "", endpointType.getD "",
-            (additional.map Prod.fst).getD "", (additional.map (·.2.toString)).getD "", if constructorIff then "true" else ""]
+            (additional.map Prod.fst).getD "", (additional.map (·.2.toString)).getD "", if constructorIff then "true" else "",
+            formationArgument.getD ""]
       if info.isAxiom then
         directAxioms := directAxioms + 1
         axiomUnique := axiomUnique.insert name
@@ -679,6 +690,7 @@ private def inventory (lib : System.FilePath) (visible strict full witnesses : E
         moduleNative := moduleNative.push ⟨matched, hasSig⟩
         pure (row.setObjVal! "strictNativeSignature" (toJson hasSig))
       else pure row
+      let row := if let some argument := formationArgument then row.setObjVal! "formationArgument" (toJson argument) else row
       let row := if constructorIff then row.setObjVal! "strictConstructorIff" (toJson true) else row
       let row := if typeAxioms.isEmpty then row else
         row.setObjVal! "unchangedTypeAxioms" (toJson (typeAxioms.map Name.toString))
@@ -715,7 +727,7 @@ private def inventory (lib : System.FilePath) (visible strict full witnesses : E
     ("withAxioms",toJson withAxiomsUnique.size), ("matchingNameAndModule",toJson matchedUnique.size)]
   return Json.mkObj [("schemaVersion", toJson 4), ("uniqueNames", unique), ("leanVersion", toJson Lean.versionString), ("leanCommit", toJson Lean.githash),
     ("nativeByModule", Json.mkObj nativeByModule.toList), ("certifiedChoiceEndpoints", toJson certifiedEndpoints),
-    ("modules", toJson (modules.map Name.toString)), ("summary", summary), ("declarations", .arr rows)]
+    ("certifiedFormationArguments", toJson certifiedFormationArguments), ("modules", toJson (modules.map Name.toString)), ("summary", summary), ("declarations", .arr rows)]
 
 def main (args : List String) : IO Unit := do
   let strictDir :: outputPath :: rest := args | throw <| IO.userError "expected strict olean directory and output file"
@@ -727,7 +739,7 @@ def main (args : List String) : IO Unit := do
     | _ => throw <| IO.userError "expected at most one gaps TSV file"
   let sysroot ← findSysroot
   initSearchPath sysroot
-  let witnesses ← importModules #[{module := `OmegaChecks.InitInventory.ChoiceOperands}] {} (level := .private)
+  let witnesses ← importModules #[{module := `OmegaChecks.InitInventory.ChoiceOperands}, {module := `OmegaChecks.InitInventory.Quotient}] {} (level := .private)
   let lib ← getLibDir sysroot
   searchPathRef.set [lib]
   let modules ← installedModules lib `Init
