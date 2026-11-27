@@ -11,6 +11,36 @@ open Lean
 namespace OmegaChecks.InitBoundaries
 universe u v w z
 
+namespace SubsingletonState
+
+/-- Pointwise equality for maps out of a subsingleton state. -/
+def Extensionality : Prop := ∀ {σ α : Type u} [Subsingleton σ] {f g : σ → α},
+  (∀ s, f s = g s) → f = g
+
+private abbrev Graph {σ α : Type u} (f : σ → α) := (s : σ) × {y : α // y = f s}
+
+private theorem graphSubsingleton {σ α : Type u} [Subsingleton σ] (f : σ → α) : Subsingleton (Graph f) :=
+  ⟨fun ⟨s, y, hy⟩ ⟨t, z, hz⟩ => by
+    cases Subsingleton.elim s t
+    cases hy
+    cases hz
+    rfl⟩
+
+theorem ofState (state : type_of% @instSubsingletonStateM.{u}) : Extensionality.{u} := by
+  intro σ α _ f g h
+  letI := graphSubsingleton f
+  let left : StateM σ (Graph f) := fun s => (⟨s, f s, rfl⟩, s)
+  let right : StateM σ (Graph f) := fun s => (⟨s, g s, (h s).symm⟩, s)
+  exact congrArg (fun t : StateM σ (Graph f) => fun s => (t s).1.2.val)
+    ((state (σ := σ) (α := Graph f)).elim left right)
+
+theorem iffState : (type_of% @instSubsingletonStateM.{u}) ↔ Extensionality.{u} := by
+  refine ⟨ofState, ?_⟩
+  intro ext σ α _ _
+  exact ⟨fun f g => ext fun s => Prod.ext (Subsingleton.elim _ _) (Subsingleton.elim _ _)⟩
+
+end SubsingletonState
+
 namespace TransformerLaws
 
 /-- A pointwise identity can be applied in the error branch of both mapping and binding. -/

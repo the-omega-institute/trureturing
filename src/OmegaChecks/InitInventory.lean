@@ -269,6 +269,9 @@ private def logicalConsequence? (owner name : Name) : Option (Name × Name) := d
     return (``funext, ``OmegaChecks.InitBoundaries.TransformerLaws.fromMapInjectiveMonad)
   | `Init.Control.Lawful.Instances, ``ReaderT.instLawfulFunctor =>
     return (``funext, ``OmegaChecks.InitBoundaries.TransformerLaws.fromReaderTFunctor)
+  | `Init.Control.State, ``instSubsingletonStateM =>
+    return (``OmegaChecks.InitBoundaries.SubsingletonState.Extensionality,
+      ``OmegaChecks.InitBoundaries.SubsingletonState.ofState)
   | `Init.Control.Lawful.Instances, ``ReaderT.instLawfulApplicative =>
     return (``funext, ``OmegaChecks.InitBoundaries.TransformerLaws.fromReaderTApplicative)
   | `Init.Control.Lawful.Instances, ``ReaderT.instLawfulMonad =>
