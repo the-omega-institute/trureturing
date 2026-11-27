@@ -1,7 +1,7 @@
 module
 public import OmegaChecks.InitPort.BufferReference
 public import OmegaChecks.InitPort.StateRunner
-public import OmegaChecks.InitPort.ReferenceModify
+public import OmegaChecks.InitPort.CancelFlag
 
 open Lean
 namespace OmegaChecks.InitPort.ReferenceSpecialization
@@ -10,7 +10,7 @@ public def supportOwners := [(StateRunner.support, StateRunner.owner), (Referenc
   BufferReference.operations.map (fun op => (BufferReference.support op, BufferReference.owner))
 
 public def consumerOwner? (n : Name) : Option Name :=
-  if n == ReferenceModify.consumer then some ReferenceModify.owner
+  if n == ReferenceModify.consumer || n == CancelFlag.consumer then some ReferenceModify.owner
   else if StateRunner.consumers.contains n then some StateRunner.owner
   else if BufferReference.consumers.contains n then some BufferReference.owner
   else none
@@ -22,7 +22,8 @@ public def models (src templates : Environment) (owner : Name) : IO (Array Const
   throw <| IO.userError s!"unknown reference specialization owner {owner}"
 
 public def consumerBody (src templates : Environment) (d : DefinitionVal) : IO Expr :=
-  if d.name == ReferenceModify.consumer then ReferenceModify.body src templates d
+  if d.name == CancelFlag.consumer then CancelFlag.body src templates d
+  else if d.name == ReferenceModify.consumer then ReferenceModify.body src templates d
   else if StateRunner.consumers.contains d.name then StateRunner.body src templates d
   else BufferReference.consumerBody src d
 

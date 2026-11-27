@@ -730,7 +730,8 @@ def run (strictPath artifacts : System.FilePath) (outPath : String) (exclude : S
   let recursionRule ← OmegaChecks.InitCompiler.Recursion.loadRule
   let referenceTemplates ← importModules #[{module := `OmegaChecks.InitPort.BufferReference, importAll := true},
     {module := `OmegaChecks.InitPort.StateRunner, importAll := true},
-    {module := `OmegaChecks.InitPort.ReferenceModify, importAll := true}] {} (level := .private)
+    {module := `OmegaChecks.InitPort.ReferenceModify, importAll := true},
+    {module := `OmegaChecks.InitPort.CancelFlag, importAll := true}] {} (level := .private)
   let handleEnv ← importModules #[{module := `OmegaChecks.InitPort.LogicalHandle}] {} (level := .private)
   let mut handles : NameMap OmegaChecks.InitPort.LogicalHandle.Templates := {}
   for api in OmegaChecks.InitPort.LogicalHandle.apis do
