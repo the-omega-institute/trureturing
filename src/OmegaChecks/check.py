@@ -437,12 +437,13 @@ def check_standard_admission():
         prelude = "OmegaInit.Prelude"
         source = tmp / "OmegaInit/Prelude.lean"
         source.parent.mkdir()
-        source.write_text("module\nprelude\n@[expose] public section\nnamespace Omega\n"
+        source.write_text("module\nprelude\n@[expose] public section\nset_option genCtorIdx false\n"
                           "inductive Nat where\n  | zero\n  | succ (n : Nat)\n"
                           "@[no_expose] noncomputable def Nat.pred : Nat → Nat := Nat.rec Nat.zero (fun n _ => n)\n"
-                          "end Omega\n")
+                          "namespace Omega\nexport _root_ (Nat)\nend Omega\n"
+                          "namespace Omega.Nat\nexport _root_.Nat (zero succ rec pred)\nend Omega.Nat\n")
         lean("-R", tmp, "-o", source.with_suffix(".olean"), source)
-        audit(prelude, [prelude], [tmp], "legacy importer can unfold the hidden implementation of Omega.Nat.pred")
+        audit(prelude, [prelude], [tmp], "invalid Lean.OLeanLevel.private natural bootstrap declaration OmegaInit.Prelude/Nat.pred")
     with tempfile.TemporaryDirectory(prefix="omega-name-") as tmp:
         tmp = Path(tmp)
         for name, declaration, error in [
@@ -459,7 +460,10 @@ def check_standard_admission():
             source.parent.mkdir(parents=True, exist_ok=True)
             marker = "/-! Omega original. -/\n" if name == original else ""
             body = "" if declaration.startswith("axiom ") else " := ∀ p : Prop, p → p"
-            source.write_text(f"module\nprelude\n{marker}public {declaration} : Prop{body}\n")
+            field = declaration.removeprefix("def Omega.Nat.")
+            alias = (f"public section\nnamespace Nat\nexport Omega.Nat ({field})\nend Nat\n"
+                     if declaration.startswith("def Omega.Nat.") and field != "add" else "")
+            source.write_text(f"module\nprelude\n{marker}public {declaration} : Prop{body}\n{alias}")
             lean("-R", tmp, "-o", source.with_suffix(".olean"), source)
             audit(name, [name], [tmp], error)
     with tempfile.TemporaryDirectory(prefix="omega-interface-") as directory:
@@ -468,18 +472,18 @@ def check_standard_admission():
         always_prime.parent.mkdir(parents=True)
         always_prime.write_text("module\nprelude\npublic import OmegaInit.Prelude\n"
                                 "/-! Omega original. -/\n"
-                                "public def Omega.Nat.Prime (_ : Omega.Nat) : Prop := Omega.True\n")
+                                "public def Omega.Nat.Prime (_ : Omega.Nat) : Prop := Omega.True\npublic section\nnamespace Nat\nexport Omega.Nat (Prime)\nend Nat\n")
         lean("-R", tmp, "-o", always_prime.with_suffix(".olean"), always_prime)
         audit(prime, ["OmegaInit.Prelude", prime], [tmp, LIB], "certificate statement mismatch for Omega.Nat.Prime")
         fib = "OmegaMathlib.Data.Nat.Fib.Basic"
         altered = tmp / "OmegaMathlib/Data/Nat/Fib/Basic.lean"
         altered.parent.mkdir(parents=True)
         altered.write_text("module\nprelude\npublic import OmegaInit.Prelude\n"
-                           "public def Omega.Nat.fib (n : Omega.Nat) : Omega.Nat := n\n")
+                           "public def Omega.Nat.fib (n : Omega.Nat) : Omega.Nat := n\npublic section\nnamespace Nat\nexport Omega.Nat (fib)\nend Nat\n")
         lean("-R", tmp, "-o", altered.with_suffix(".olean"), altered)
         audit(fib, ["OmegaInit.Prelude", fib], [tmp, LIB], "certificate statement mismatch for Omega.Nat.fib")
         altered.write_text("module\nprelude\npublic import OmegaInit.Prelude\n"
-                           f"public noncomputable def Omega.Nat.fib (n : Omega.Nat) : Omega.Nat := {FIB_ITERATOR}\n")
+                           f"public noncomputable def Omega.Nat.fib (n : Omega.Nat) : Omega.Nat := {FIB_ITERATOR}\npublic section\nnamespace Nat\nexport Omega.Nat (fib)\nend Nat\n")
         lean("-R", tmp, "-o", altered.with_suffix(".olean"), altered)
         audit(fib, ["OmegaInit.Prelude", fib], [tmp, LIB],
               "legacy importer can unfold the hidden implementation of Omega.Nat.fib")
