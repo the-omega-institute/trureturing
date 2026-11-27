@@ -2,6 +2,7 @@
 import argparse
 from collections import Counter, defaultdict
 from graphlib import CycleError, TopologicalSorter
+from generated_native import compile_generated
 import json
 import omegamath
 import os
@@ -150,7 +151,7 @@ def compile_type_name(stage, product, artifact, inventory):
         run(app)
 
 
-def generate(stage, product, seed, roots, excluded):
+def generate(stage, product, seed, roots, excluded, seed_ir):
     transfer = stage / "transfer"
     artifact = product / "lib"
     inventory = product / "inventory.jsonl"
@@ -202,6 +203,7 @@ def generate(stage, product, seed, roots, excluded):
     graph = dict(json.loads((product / "modules.json").read_text()))
     closure = list(TopologicalSorter(graph).static_order())
     run("lake", "env", "lean", "--run", HERE / "ExportAxioms.lean", artifact, *graph)
+    compile_generated(stage, product, graph, seed_ir)
     raw_task = stage / "raw-task.c"
     if "OmegaInit.Core" in graph:
         compile_tasks(stage, product, artifact, inventory, raw_task)
@@ -266,7 +268,7 @@ def main():
         snapshot_seed(seed, stage / "seed")
         product = stage / "product"
         product.mkdir()
-        generate(stage, product, stage / "seed", roots, args.exclude)
+        generate(stage, product, stage / "seed", roots, args.exclude, seed.parents[1] / "ir")
         if not args.modules:
             report(product, require_complete=args.require_complete)
             omegamath.build(product, product / "lib", args.j, product / "omegamath-audit.txt")
