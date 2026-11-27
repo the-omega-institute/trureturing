@@ -52,24 +52,37 @@ namespace ShellCertificate
 
 open Polynomial
 
-def cadd (a b : Coordinates) : Coordinates := ⟨a.w.add b.w, a.x.add b.x, a.y.add b.y, a.z.add b.z⟩
+private def cadd (a b : Coordinates) : Coordinates := ⟨a.w.add b.w, a.x.add b.x, a.y.add b.y, a.z.add b.z⟩
 
-def pure (n : Nat) : Coordinates := ⟨.zero, .var n, .var n.succ, .var n.succ.succ⟩
+private def pure (n : Nat) : Coordinates := ⟨.zero, .var n, .var n.succ, .var n.succ.succ⟩
 
-def quad (a : Quaternion) (rest : Values) : Values :=
+private def quad (a : Quaternion) (rest : Values) : Values :=
   .cons a.w (.cons a.x (.cons a.y (.cons a.z rest)))
 
-def triple (x y z : Int) (rest : Values) : Values := .cons x (.cons y (.cons z rest))
+private def triple (x y z : Int) (rest : Values) : Values := .cons x (.cons y (.cons z rest))
 
-def cfst (A : Expr) (c d e f : Coordinates) : Coordinates := cadd (c.mul e) ((d.mul f).scale A.neg)
+private def cfst (A : Expr) (c d e f : Coordinates) : Coordinates := cadd (c.mul e) ((d.mul f).scale A.neg)
 
-def csnd (c d e f : Coordinates) : Coordinates := cadd (c.mul f) (d.mul e)
+private def csnd (c d e f : Coordinates) : Coordinates := cadd (c.mul f) (d.mul e)
 
-def n3 : Nat := Nat.zero.succ.succ.succ
-def n4 : Nat := n3.succ
-def n5 : Nat := n4.succ
-def n8 : Nat := n4.add n4
-def n12 : Nat := n8.add n4
+private def n3 : Nat := Nat.zero.succ.succ.succ
+private def n4 : Nat := n3.succ
+private def n5 : Nat := n4.succ
+private def n8 : Nat := n4.add n4
+private def n12 : Nat := n8.add n4
+
+private def cneg (a : Coordinates) : Coordinates := ⟨a.w.neg, a.x.neg, a.y.neg, a.z.neg⟩
+
+private def csub (a b : Coordinates) : Coordinates := cadd a (cneg b)
+
+private def czero : Coordinates := ⟨.zero, .zero, .zero, .zero⟩
+
+private def cunitI : Coordinates := ⟨.zero, .one, .zero, .zero⟩
+
+private def cunitJ : Coordinates := ⟨.zero, .zero, .one, .zero⟩
+
+private def cshell (S : Expr) (Q A V : Coordinates) : Coordinates :=
+  cadd (V.scale S) ((Q.mul V).mul A)
 
 end ShellCertificate
 
@@ -434,6 +447,173 @@ theorem shell_triangle_of_eq (s : Int) {p q r a : Quaternion} (hp : p.IsPure) (h
         (scale k (shell s.neg r a (shell s.neg q a v)))))
       (Int.sub_eq_zero.mpr hs.symm)).trans
       (congrArg ((scale (t.add t) z).add) (add_scale_zero _ _)))
+
+private def unitI : Quaternion := ⟨Int.zero, Int.one, Int.zero, Int.zero⟩
+
+private def unitJ : Quaternion := ⟨Int.zero, Int.zero, Int.one, Int.zero⟩
+
+private def defectS (s : Int) (q a w1 wi wj : Quaternion) : Int :=
+  let xi := (wi.sub (unitI.mul w1)).mul a.conj
+  let xj := (wj.sub (unitJ.mul w1)).mul a.conj
+  let y := w1.mul a.conj
+  let two := Int.one.add Int.one
+  (((((two.mul s).mul w1.w).neg.sub
+    (two.mul (((q.x.mul y.x).add (q.y.mul y.y)).add (q.z.mul y.z)))).add
+      (q.x.mul xj.z)).sub (q.y.mul xi.z)).add (q.z.mul xi.y)
+
+private def defectFacts (d s : Int) (q a : Quaternion) : Prop :=
+  let W := fun v : Quaternion => scale d (shell s.neg q a v)
+  let two := Int.one.add Int.one
+  let xi := ((W unitI).sub (unitI.mul (W one))).mul a.conj
+  let xj := ((W unitJ).sub (unitJ.mul (W one))).mul a.conj
+  And (Eq (defectS s q a (W one) (W unitI) (W unitJ)) (two.mul ((d.mul s).mul s)))
+    (And (Eq xj.z (two.mul ((d.mul (a.dot a)).mul q.x)))
+      (And (Eq xi.z.neg (two.mul ((d.mul (a.dot a)).mul q.y)))
+        (Eq xi.y (two.mul ((d.mul (a.dot a)).mul q.z)))))
+
+private def defectZero (s : Int) (q a : Quaternion) : Prop :=
+  let xi := (zero.sub (unitI.mul zero)).mul a.conj
+  let xj := (zero.sub (unitJ.mul zero)).mul a.conj
+  And (Eq (defectS s q a zero zero zero) Int.zero)
+    (And (Eq xj.z Int.zero) (And (Eq xi.z.neg Int.zero) (Eq xi.y Int.zero)))
+
+private def cdefectS (S : Expr) (Q A W1 Wi Wj : Coordinates) : Expr :=
+  let xi := (csub Wi (cunitI.mul W1)).mul A.conj
+  let xj := (csub Wj (cunitJ.mul W1)).mul A.conj
+  let y := W1.mul A.conj
+  let two := Expr.one.add Expr.one
+  (((((two.mul S).mul W1.w).neg.sub
+    (two.mul (((Q.x.mul y.x).add (Q.y.mul y.y)).add (Q.z.mul y.z)))).add
+      (Q.x.mul xj.z)).sub (Q.y.mul xi.z)).add (Q.z.mul xi.y)
+
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
+private theorem defect_facts_mk (d s q1 q2 q3 a1 a2 a3 : Int) :
+    defectFacts d s (Quaternion.mk Int.zero q1 q2 q3) (Quaternion.mk Int.zero a1 a2 a3) :=
+  let values := Values.cons d (Values.cons s (triple q1 q2 q3 (triple a1 a2 a3 .nil)))
+  let D := Expr.var Nat.zero
+  let S := Expr.var Nat.zero.succ
+  let Q := pure Nat.zero.succ.succ
+  let A := pure n5
+  let W := fun V : Coordinates => (cshell S.neg Q A V).scale D
+  let one' := Coordinates.scalar Expr.one
+  let two := Expr.one.add Expr.one
+  let xi := (csub (W cunitI) (cunitI.mul (W one'))).mul A.conj
+  let xj := (csub (W cunitJ) (cunitJ.mul (W one'))).mul A.conj
+  let N := A.dot A
+  And.intro ((cdefectS S Q A (W one') (W cunitI) (W cunitJ)).sound
+      (two.mul ((D.mul S).mul S)) values rfl)
+    (And.intro (xj.z.sound (two.mul ((D.mul N).mul Q.x)) values rfl)
+      (And.intro (xi.z.neg.sound (two.mul ((D.mul N).mul Q.y)) values rfl)
+        (xi.y.sound (two.mul ((D.mul N).mul Q.z)) values rfl)))
+
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
+private theorem defect_zero_mk (s q1 q2 q3 a1 a2 a3 : Int) :
+    defectZero s (Quaternion.mk Int.zero q1 q2 q3) (Quaternion.mk Int.zero a1 a2 a3) :=
+  let values := Values.cons s (triple q1 q2 q3 (triple a1 a2 a3 .nil))
+  let S := Expr.var Nat.zero
+  let Q := pure Nat.zero.succ
+  let A := pure n4
+  let xi := (csub czero (cunitI.mul czero)).mul A.conj
+  let xj := (csub czero (cunitJ.mul czero)).mul A.conj
+  And.intro ((cdefectS S Q A czero czero czero).sound .zero values rfl)
+    (And.intro (xj.z.sound .zero values rfl)
+      (And.intro (xi.z.neg.sound .zero values rfl) (xi.y.sound .zero values rfl)))
+
+private theorem defect_facts (d s : Int) {q a : Quaternion} (hq : q.IsPure) (ha : a.IsPure) :
+    And (defectFacts d s q a) (defectZero s q a) :=
+  Eq.subst (motive := fun Q => And (defectFacts d s Q a) (defectZero s Q a))
+    (eq_mk_of_isPure hq).symm
+    (Eq.subst (motive := fun A => And (defectFacts d s (Quaternion.mk Int.zero q.x q.y q.z) A)
+        (defectZero s (Quaternion.mk Int.zero q.x q.y q.z) A))
+      (eq_mk_of_isPure ha).symm
+      (And.intro (defect_facts_mk d s q.x q.y q.z a.x a.y a.z)
+        (defect_zero_mk s q.x q.y q.z a.x a.y a.z)))
+
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
+private theorem shell_neg_zero_zero (a v : Quaternion) : Eq (shell Int.zero.neg zero a v) zero :=
+  let values := quad a (quad v .nil)
+  let A := Coordinates.variables Nat.zero
+  let V := Coordinates.variables n4
+  let lhs := cshell Expr.zero.neg czero A V
+  ext (lhs.w.sound .zero values rfl) (lhs.x.sound .zero values rfl)
+    (lhs.y.sound .zero values rfl) (lhs.z.sound .zero values rfl)
+
+theorem eq_zero_of_add_eq_self {x y : Quaternion} (h : Eq (x.add y) x) : Eq y zero :=
+  let coordinate := fun (c d : Int) (e : Eq (c.add d) c) =>
+    Int.add_left_cancel (e.trans (Int.add_zero c).symm)
+  ext (coordinate x.w y.w (congrArg Quaternion.w h)) (coordinate x.x y.x (congrArg Quaternion.x h))
+    (coordinate x.y y.y (congrArg Quaternion.y h)) (coordinate x.z y.z (congrArg Quaternion.z h))
+
+theorem add_scale_zero_right (x : Quaternion) (k : Int) : Eq (x.add (scale k zero)) x :=
+  let coordinate := fun c : Int => (congrArg c.add (Int.mul_zero k)).trans (Int.add_zero c)
+  ext (coordinate x.w) (coordinate x.x) (coordinate x.y) (coordinate x.z)
+
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
+private theorem two_ne_zero : Not (Eq (Int.one.add Int.one) Int.zero) :=
+  Int.ofNat_succ_ne_zero (Nat.succ Nat.zero)
+
+/-- The compression identity holds for every `v` exactly on the shell `s² = N(p) N(a)` and in the
+degenerate case `s = 0`, `q = 0`. -/
+theorem shell_compress_iff (s : Int) {p q a : Quaternion} (hp : p.IsPure) (hq : q.IsPure)
+    (ha : a.IsPure) :
+    let t := (s.mul s).add ((a.dot a).mul (p.dot q))
+    Iff (∀ v : Quaternion,
+        Eq (shell s p a (shell s q a (shell s p a v))) (scale (t.add t) (shell s p a v)))
+      (Or (Eq (s.mul s) ((p.dot p).mul (a.dot a))) (And (Eq s Int.zero) (Eq q zero))) :=
+  let t := (s.mul s).add ((a.dot a).mul (p.dot q))
+  let δ := (s.mul s).sub ((p.dot p).mul (a.dot a))
+  let goal := Or (Eq (s.mul s) ((p.dot p).mul (a.dot a))) (And (Eq s Int.zero) (Eq q zero))
+  Iff.intro
+    (fun H =>
+      let W := fun v : Quaternion => scale δ (shell s.neg q a v)
+      have hW : ∀ v, Eq (W v) zero := fun v =>
+        eq_zero_of_add_eq_self ((shell_compress s hp hq ha v).symm.trans (H v))
+      have both := defect_facts δ s hq ha
+      have facts := both.left
+      have zeros := both.right
+      have hS : Eq (defectS s q a (W one) (W unitI) (W unitJ)) (defectS s q a zero zero zero) :=
+        (congrArg (fun w => defectS s q a w (W unitI) (W unitJ)) (hW one)).trans
+          (Eq.map₂ (defectS s q a zero) (hW unitI) (hW unitJ))
+      let X := fun (u w1 wu : Quaternion) => (wu.sub (u.mul w1)).mul a.conj
+      have hJ := Eq.map₂ (fun w1 wu => (X unitJ w1 wu).z) (hW one) (hW unitJ)
+      have hIz := Eq.map₂ (fun w1 wu => (X unitI w1 wu).z.neg) (hW one) (hW unitI)
+      have hIy := Eq.map₂ (fun w1 wu => (X unitI w1 wu).y) (hW one) (hW unitI)
+      let cancel := fun {c : Int} (h : Eq ((Int.one.add Int.one).mul c) Int.zero) =>
+        (Int.mul_eq_zero.mp h).elim (fun e => False.elim (two_ne_zero e)) (fun e => e)
+      have hδss := cancel (facts.left.symm.trans (hS.trans zeros.left))
+      have ofδ : Eq δ Int.zero → goal := fun e => Or.inl (Int.sub_eq_zero.mp e)
+      have caseS : Eq s Int.zero → goal := fun hs0 =>
+        have onShell : Eq (a.dot a) Int.zero → Eq (s.mul s) ((p.dot p).mul (a.dot a)) := fun hN =>
+          ((Eq.map₂ Int.mul hs0 hs0).trans (Int.zero_mul Int.zero)).trans
+            ((congrArg (p.dot p).mul hN).trans (Int.mul_zero (p.dot p))).symm
+        have coord : ∀ {c : Int}, Eq ((δ.mul (a.dot a)).mul c) Int.zero → Or goal (Eq c Int.zero) :=
+          fun h => (Int.mul_eq_zero.mp h).elim
+            (fun h' => (Int.mul_eq_zero.mp h').elim (fun e => Or.inl (ofδ e))
+              (fun hN => Or.inl (Or.inl (onShell hN))))
+            Or.inr
+        have h1 := coord (cancel (facts.right.left.symm.trans (hJ.trans zeros.right.left)))
+        have h2 := coord (cancel (facts.right.right.left.symm.trans
+          (hIz.trans zeros.right.right.left)))
+        have h3 := coord (cancel (facts.right.right.right.symm.trans
+          (hIy.trans zeros.right.right.right)))
+        h1.elim id (fun e1 => h2.elim id (fun e2 => h3.elim id (fun e3 =>
+          Or.inr (And.intro hs0 (ext hq e1 e2 e3)))))
+      (Int.mul_eq_zero.mp hδss).elim
+        (fun hδs => (Int.mul_eq_zero.mp hδs).elim ofδ caseS) caseS)
+    (fun h => h.elim
+      (fun hs v => shell_compress_of_eq s hp hq ha hs v)
+      (fun hz v =>
+        have vanish : Eq (shell s.neg q a v) zero :=
+          Eq.subst (motive := fun s' : Int => Eq (shell s'.neg q a v) zero) hz.left.symm
+            (Eq.subst (motive := fun q' : Quaternion => Eq (shell Int.zero.neg q' a v) zero)
+              hz.right.symm (shell_neg_zero_zero a v))
+        (shell_compress s hp hq ha v).trans
+          ((congrArg (fun w => (scale (t.add t) (shell s p a v)).add (scale δ w)) vanish).trans
+            (add_scale_zero_right _ δ))))
 
 end Quaternion
 end Omega
