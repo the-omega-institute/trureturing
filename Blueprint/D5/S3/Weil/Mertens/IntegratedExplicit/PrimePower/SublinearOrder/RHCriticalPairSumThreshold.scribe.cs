@@ -13,6 +13,13 @@ internal sealed class RHCriticalPairSumThresholdDocument : IScribeDocumentDefini
         Blocks(
             Paragraph(Text("The inclusive cutoff counts each positive ordinate with analytic multiplicity. Write N(Y) for this count and S_Y(t) for its phase sum. In G_Y(t), sum over all ordered pairs of retained ordinate labels, including the diagonal. The summand is the product of the two analytic multiplicities times 4 cos(t (gamma-gamma'))/(4+(gamma-gamma')^2). To obtain G_Y(t) from the normalized Montgomery function, evaluate at alpha=t/log(Y) and multiply by Y log(Y)/(2 pi).")),
             Paragraph(Text("Let c=1/(2 pi). The premise P asserts that a constant kappa in (0,2 c^2/3) satisfies G_Y(t)<=kappa Y log(Y)^2 uniformly on every fixed band log(Y)<=|t|<=A log(Y) for all sufficiently large Y, for each fixed A>1.")),
+            Describe.Lean(DescribeId.Create("harmonic-long-deficit-of-cutoff-deficit"),
+                DeclarationHandle.Create(Owner + ".harmonic_long_deficit_of_cutoff_deficit"),
+                H("Transfer from the inclusive cutoff to harmonic weights"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("Assume RH and a fixed positive fractional deficit of the multiplicity-weighted phase sum on every fixed logarithmic band. The normalized harmonic phase score has a deficit at least d/log(Y) with one d > 0 valid on every band for sufficiently large Y depending on the band. The harmonic coefficient per multiplicity is at least 1/(2Y), and the total harmonic mass is asymptotic to (c/2) log(Y)^2."))),
+                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("harmonic-zeta-critical-collision-limit-of-threshold"),
                 DeclarationHandle.Create(Owner + ".harmonic_zeta_critical_collision_limit_of_threshold"),
                 H("Critical Gaussian collision limit under the positive threshold"),
