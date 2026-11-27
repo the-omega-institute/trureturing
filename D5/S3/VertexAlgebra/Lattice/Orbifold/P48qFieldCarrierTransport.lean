@@ -197,6 +197,121 @@ open private lift_current currentStateLinear from
   D5.S3.VertexAlgebra.Lattice.Orbifold.P48qNativePairwiseLocality
 open private mem_fixed_iff from
   D5.S3.VertexAlgebra.Lattice.Orbifold.P48qMomentumEnergy
+open P48qThirdTwistedField (Mode creator annihilatorDual fixedDualBases)
+open P48qTwistedHeisenberg (project projectAt projectAt_eq_fourier project_action
+  annCoordinates creCoordinates positive_pairing project_negative_eq_sum mode modeLinear
+  mode_projectAt currentField_coeff)
+open P48qNativeMonodromy (nativeField_current)
+open ThirdEigenspacePairing (p48qForm p48qForm_nondegenerate)
+open private fourier_sum root_cube from
+  D5.S3.VertexAlgebra.Lattice.Orbifold.P48qNativePairwiseLocality
+open private fixedProjection formSymmetric from
+  D5.S3.VertexAlgebra.Lattice.Orbifold.P48qTwistedHeisenberg
+
+/-- The three current intertwiners on the actual target coefficients.
+Signed mode `k` is read at cover exponent `-k-3`. -/
+structure CurrentModeIntertwining (e : State ≃ₗ[ℂ] W)
+    (Y : NativeStates →ₗ[ℂ] VertexOperator ℂ W) : Prop where
+  creation (i : Mode) :
+    (HVertexOperator.coeff (Y (currentAlong lattice (creator fixedDualBases i)))
+      (-Int.negSucc i.2 - 3)).comp e.toLinearMap =
+      e.toLinearMap.comp (mode (creator fixedDualBases i) (Int.negSucc i.2))
+  annihilation (i : Mode) :
+    (HVertexOperator.coeff (Y (currentAlong lattice (annihilatorDual fixedDualBases i)))
+      (-Int.ofNat (i.2 + 1) - 3)).comp e.toLinearMap =
+      e.toLinearMap.comp (mode (annihilatorDual fixedDualBases i) (Int.ofNat (i.2 + 1)))
+  zero (u : Fixed) :
+    (HVertexOperator.coeff (Y (currentAlong lattice (u : Cartan))) (-3)).comp e.toLinearMap =
+      e.toLinearMap.comp (mode (u : Cartan) 0)
+
+private def currentCoefficient (Y : NativeStates →ₗ[ℂ] VertexOperator ℂ W) (k : ℤ) :
+    Cartan →ₗ[ℂ] Module.End ℂ W :=
+  (LinearMap.proj (-k - 3)).comp (HVertexOperator.coeff.comp (Y.comp currentStateLinear))
+
+private theorem currentCoefficient_projectAt (Y : NativeStates →ₗ[ℂ] VertexOperator ℂ W)
+    (hresidue : ∀ (v : Cartan) (s : ℤ),
+      σ (currentAlong lattice v) = ζ ^ s • currentAlong lattice v →
+      InResidueOn s (Y (currentAlong lattice v)))
+    (k : ℤ) (u : Cartan) :
+    currentCoefficient Y k (projectAt k u) = currentCoefficient Y k u := by
+  let r : Fin 3 := ⟨(k % 3).toNat, by omega⟩
+  have hr : (r.val : ℤ) = k % 3 := by
+    change (Int.toNat (k % 3) : ℤ) = k % 3
+    omega
+  have hsum : (∑ j : Fin 3, project (ζ ^ j.val) u) = u :=
+    fourier_sum u (p48qAction u) (p48qAction (p48qAction u))
+  calc
+    currentCoefficient Y k (projectAt k u) =
+        currentCoefficient Y k (project (ζ ^ r.val) u) := by rw [projectAt_eq_fourier]
+    _ = ∑ j : Fin 3, currentCoefficient Y k (project (ζ ^ j.val) u) := by
+      symm
+      apply Finset.sum_eq_single r
+      · intro j _ hj
+        let v := project (ζ ^ j.val) u
+        have hv : σ (currentAlong lattice v) =
+            ζ ^ ((j.val * 2 : ℕ) : ℤ) • currentAlong lattice v := by
+          rw [lift_current, zpow_natCast, pow_mul, project_action _ (root_cube j.val)]
+          exact currentStateLinear.map_smul _ _
+        have hoff : (-k - 3) % 3 ≠ ((j.val * 2 : ℕ) : ℤ) % 3 := by
+          intro h
+          apply hj
+          apply Fin.ext
+          have hjlt := j.isLt
+          have hrlt := r.isLt
+          omega
+        exact hresidue _ _ hv _ hoff
+      · simp
+    _ = currentCoefficient Y k u := by rw [← map_sum, hsum]
+
+private theorem project_positive_eq_sum (n : ℕ) (u : Cartan) :
+    projectAt (Int.ofNat (n + 1)) u =
+      ∑ i : Fin 16, annCoordinates u n i • annihilatorDual fixedDualBases (i, n) := by
+  apply sub_eq_zero.mp
+  apply p48qForm_nondegenerate.1
+  intro v
+  rw [LinearMap.BilinForm.sub_left, sub_eq_zero, positive_pairing, map_sum, LinearMap.sum_apply]
+  simp only [LinearMap.BilinForm.smul_left, creCoordinates, formSymmetric.eq v]
+
+/-- The creation, annihilation and fixed zero modes determine the entire target
+current field when the lift eigenstates have the prescribed cubic residue support. -/
+theorem targetCurrentField_eq_transport_of_basis_modes (e : State ≃ₗ[ℂ] W)
+    (Y : NativeStates →ₗ[ℂ] VertexOperator ℂ W)
+    (hmodes : CurrentModeIntertwining e Y)
+    (hresidue : ∀ (v : Cartan) (s : ℤ),
+      σ (currentAlong lattice v) = ζ ^ s • currentAlong lattice v →
+      InResidueOn s (Y (currentAlong lattice v)))
+    (u : Cartan) :
+    Y (currentAlong lattice u) = pullbackField e.symm (nativeField (currentAlong lattice u)) := by
+  have conj_eq {A : Module.End ℂ State} {B : Module.End ℂ W}
+      (h : B.comp e.toLinearMap = e.toLinearMap.comp A) : B = e.conj A := by
+    rw [LinearEquiv.conj_apply]
+    exact (e.eq_comp_toLinearMap_symm _ _).mpr h
+  let transported (k : ℤ) : Cartan →ₗ[ℂ] Module.End ℂ W :=
+    e.conj.toLinearMap.comp (modeLinear k)
+  have hmode (k : ℤ) : currentCoefficient Y k u = e.conj (mode u k) := by
+    rw [← currentCoefficient_projectAt Y hresidue k u, ← mode_projectAt u k]
+    change currentCoefficient Y k (projectAt k u) = transported k (projectAt k u)
+    cases k with
+    | negSucc n =>
+      rw [project_negative_eq_sum, map_sum, map_sum]
+      refine Finset.sum_congr rfl fun i _ => ?_
+      rw [map_smul, map_smul]
+      exact congrArg (_ • ·) (conj_eq (hmodes.creation (i, n)))
+    | ofNat n =>
+      cases n with
+      | zero => exact conj_eq (hmodes.zero (fixedProjection u))
+      | succ n =>
+        rw [project_positive_eq_sum, map_sum, map_sum]
+        refine Finset.sum_congr rfl fun i _ => ?_
+        rw [map_smul, map_smul]
+        exact congrArg (_ • ·) (conj_eq (hmodes.annihilation (i, n)))
+  apply HVertexOperator.coeff_inj
+  funext m
+  rw [pullbackField_coeff, LinearEquiv.symm_symm, nativeField_current, currentField_coeff]
+  have hk : -(-m - 3) - 3 = m := by omega
+  have h := hmode (-m - 3)
+  change HVertexOperator.coeff (Y (currentAlong lattice u)) (-(-m - 3) - 3) = _ at h
+  simpa only [hk] using h
 
 /-- The conformal field is determined by agreement on lift eigen-currents,
 residue support, and the cubic identity for pairs of lift eigen-currents. -/
@@ -305,12 +420,34 @@ theorem targetConformalMode_exact_eigenvalues_of_field_eq (e : State ≃ₗ[ℂ]
     refine ⟨e v, by simpa using hv, ?_⟩
     rw [LinearEquiv.conj_apply_apply, LinearEquiv.symm_apply_apply, heigen, map_smul]
 
+/-- The actual target conformal zero mode has the native point spectrum under
+the basis-mode intertwiners, cubic residue support and the current-pair identities. -/
+theorem targetConformalMode_exact_eigenvalues_of_basis_modes (e : State ≃ₗ[ℂ] W)
+    (Y : NativeStates →ₗ[ℂ] VertexOperator ℂ W)
+    (hmodes : CurrentModeIntertwining e Y)
+    (hresidue : ∀ (v : NativeStates) (t : ℤ), σ v = ζ ^ t • v → InResidueOn t (Y v))
+    (hborcherds : ∀ (u v : Cartan) (s t : ℤ),
+      σ (currentAlong lattice u) = ζ ^ s • currentAlong lattice u →
+      σ (currentAlong lattice v) = ζ ^ t • currentAlong lattice v →
+      ∃ N : ℕ, (∀ n ≥ (N : ℤ), mu lattice (currentAlong lattice u) n (currentAlong lattice v) = 0) ∧
+        TwistedBorcherdsOn Y (currentAlong lattice u) (currentAlong lattice v) s t N)
+    (a : ℂ) :
+    (∃ w : W, w ≠ 0 ∧ HVertexOperator.coeff (Y (omega lattice (actualInverse lattice))) (-6) w =
+      a • w) ↔ ∃ n : ℕ, a = 16 / 9 + (n : ℂ) / 3 :=
+  targetConformalMode_exact_eigenvalues_of_field_eq e Y
+    (targetConformalField_eq_transport_of_currents e Y
+      (fun u _ _ => targetCurrentField_eq_transport_of_basis_modes e Y hmodes
+        (fun v s => hresidue (currentAlong lattice v) s) u)
+      hresidue hborcherds) a
+
 run_cmd do
   for name in [``pullbackField, ``pullbackField_coeff, ``residueCoefficient_pullback,
       ``inResidueOn_pullback_iff, ``twistedBorcherdsOn_pullback_iff,
+      ``CurrentModeIntertwining, ``targetCurrentField_eq_transport_of_basis_modes,
       ``targetField_eq_transport_of_generators, ``targetConformalField_eq_transport_of_currents,
       ``targetConformalMode_ne_integer_of_field_eq, ``targetConformalMode_ne_integer_of_comparison,
-      ``targetConformalMode_exact_eigenvalues_of_field_eq] do
+      ``targetConformalMode_exact_eigenvalues_of_field_eq,
+      ``targetConformalMode_exact_eigenvalues_of_basis_modes] do
     let axioms ← Lean.collectAxioms name
     unless axioms.all (fun ax => [``propext, ``Classical.choice, ``Quot.sound].contains ax) do
       throwError "Unexpected axiom closure for {name}: {axioms}"
