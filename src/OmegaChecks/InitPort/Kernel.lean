@@ -149,8 +149,16 @@ private def inlineLiteralProofs (proofs : NameMap ConstantInfo) (e : Expr) : Exp
   let twice := ((proofs.find? `OmegaLiteralProofs.double).get!).value!
   return term.replace fun sub => if sub.isConstOf `OmegaLiteralProofs.double then some twice else none
 
+/-- Build small bounds using the constructors of the indexed Nat.le family. -/
+private def smallLe (a b : Nat) : Expr := Id.run do
+  let left := natTerm a
+  let mut proof := mkApp (mkConst `Omega.Nat.le.refl) left
+  for i in [a:b] do
+    proof := mkApp3 (mkConst `Omega.Nat.le.step) left (natTerm i) proof
+  return proof
+
 private partial def binaryLt (a b : Nat) : Expr := Id.run do
-  if a < 32 || b < 32 then return mkConst `Omega.True.intro
+  if b < 32 then return smallLe (a + 1) b
   let x := natTerm (a / 2)
   let y := natTerm (b / 2)
   let succ := mkApp (mkConst `Omega.Nat.succ)
@@ -249,6 +257,9 @@ private def comparisonProofs (source : Environment) (proofs : NameMap ConstantIn
   let earlier (lemma : Name) := match source.getModuleIdxFor? lemma, source.getModuleIdxFor? owner with
     | some provider, some current => provider.toNat < current.toNat
     | _, _ => false
+  let original := fun (term : Expr) => term.replace fun
+    | .const n us => some (.const (n.replacePrefix `Omega .anonymous) us)
+    | _ => none
   let result := body.replace fun e => Id.run do
     if e.isAppOfArity `of_eq_true 2 then
       let eq := e.getAppArgs[1]!
@@ -259,7 +270,7 @@ private def comparisonProofs (source : Environment) (proofs : NameMap ConstantIn
         let hi := dividend.log2
         if lo ≤ hi && hi ≤ 256 && 2^lo == divisor && 2^hi == dividend then
           return some (mkApp4 (mkConst `Nat.pow_dvd_pow) (mkRawNatLit lo) (mkRawNatLit hi)
-            (mkRawNatLit 2) (mkConst `True.intro))
+            (mkRawNatLit 2) (original (smallLe lo hi)))
     unless e.getAppFn.isConstOf `of_decide_eq_true do return none
     let some p := e.getAppArgs[0]? | return none
     let asProof := mkApp (mkConst `id [.zero]) p
@@ -282,7 +293,7 @@ private def comparisonProofs (source : Environment) (proofs : NameMap ConstantIn
     if !strict && earlier `Nat.pow_le_pow_right && x > 0 && y > 0 && y.log2 < 128 &&
         2 ^ x.log2 == x && 2 ^ y.log2 == y then
       return some <| mkApp asProof <| mkApp5 (mkConst `Nat.pow_le_pow_right) (mkRawNatLit 2)
-        (mkConst `True.intro) (mkRawNatLit x.log2) (mkRawNatLit y.log2) (mkConst `True.intro)
+        (original (smallLe 1 2)) (mkRawNatLit x.log2) (mkRawNatLit y.log2) (original (smallLe x.log2 y.log2))
     let cert := if x == y then mkApp (mkConst `Omega.Nat.le_refl) (natTerm x)
       else if strict then binaryLt x y
       else mkApp5 (mkConst `Omega.Nat.le_trans) (natTerm x) (mkApp (mkConst `Omega.Nat.succ) (natTerm x))
@@ -291,9 +302,7 @@ private def comparisonProofs (source : Environment) (proofs : NameMap ConstantIn
         (binaryLt x (2 ^ 32)) (binaryLt y (2 ^ 32)) cert
       else cert
     let cert := inlineLiteralProofs proofs cert
-    return some <| mkApp asProof <| cert.replace fun
-      | .const n us => some (.const (n.replacePrefix `Omega .anonymous) us)
-      | _ => none
+    return some <| mkApp asProof (original cert)
   return if result.equal body then none else some result
 
 def describe : Outcome → String × Option Name
