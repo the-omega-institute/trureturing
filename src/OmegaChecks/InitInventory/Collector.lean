@@ -217,6 +217,30 @@ def limitedOmniscienceFromSlice (collect : type_of% (@Std.Slice.toList.{0,0}))
   letI := ToIterator.of (γ := Slice (Iter (α := α) β)) α (fun s => s.internalRepresentation)
   exact correct (Slice.mk it)
 
+/-- An array-valued slice collector applies to a slice carrying the iterator itself. -/
+def limitedOmniscienceFromSliceArray (collect : type_of% (@Std.Slice.toArray.{0,0}))
+    (correct : ∀ {γ α β : Type} [ToIterator (Slice γ) Id α β] [Iterator α Id β]
+      [Finite α Id] (s : Slice γ), collect s = s.toArray) (f : Nat → Bool) :
+    Decidable (∃ n, f n = true) := by
+  apply limitedOmniscienceFromArray (f := f) (fun {α β} [Iterator α Id β] it =>
+    letI := ToIterator.of (γ := Slice (Iter (α := α) β)) α (fun s => s.internalRepresentation)
+    collect ⟨it⟩)
+  intro α β inst fin it
+  letI := ToIterator.of (γ := Slice (Iter (α := α) β)) α (fun s => s.internalRepresentation)
+  exact correct (Slice.mk it)
+
+/-- The corresponding reverse traversal of the slice returns the reverse iterator collection. -/
+def limitedOmniscienceFromSliceReverse (collect : type_of% (@Std.Slice.toListRev.{0,0}))
+    (correct : ∀ {γ α β : Type} [ToIterator (Slice γ) Id α β] [Iterator α Id β]
+      [Finite α Id] (s : Slice γ), collect s = s.toListRev) (f : Nat → Bool) :
+    Decidable (∃ n, f n = true) := by
+  apply limitedOmniscienceFromReverse (f := f) (fun {α β} [Iterator α Id β] it =>
+    letI := ToIterator.of (γ := Slice (Iter (α := α) β)) α (fun s => s.internalRepresentation)
+    collect ⟨it⟩)
+  intro α β inst fin it
+  letI := ToIterator.of (γ := Slice (Iter (α := α) β)) α (fun s => s.internalRepresentation)
+  exact correct (Slice.mk it)
+
 /-- Specializing monadic collection to the identity monad preserves the unrestricted pure interface. -/
 def limitedOmniscienceFromMonadicCollector (collect : type_of% (@Std.IterM.toList.{0,0}))
     (correct : ∀ {α β : Type} [Iterator α Id β] [Finite α Id] (it : IterM (α := α) Id β),

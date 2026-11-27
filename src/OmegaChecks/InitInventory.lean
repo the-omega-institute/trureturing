@@ -567,6 +567,12 @@ private def conditionalConsequence? (owner name : Name) : Option (String × Name
     | `Init.Data.Slice.Operations, ``Std.Slice.toList =>
       some (``OmegaChecks.InitBoundaries.Collector.limitedOmniscienceFromSlice,
         "the official result of the list of each slice whose underlying iterator is finite")
+    | `Init.Data.Slice.Operations, ``Std.Slice.toArray =>
+      some (``OmegaChecks.InitBoundaries.Collector.limitedOmniscienceFromSliceArray,
+        "the official array of each slice whose underlying iterator is finite")
+    | `Init.Data.Slice.Operations, ``Std.Slice.toListRev =>
+      some (``OmegaChecks.InitBoundaries.Collector.limitedOmniscienceFromSliceReverse,
+        "the official reversed list of each slice whose underlying iterator is finite")
     | `Init.Data.Iterators.Consumers.Access, ``Std.Iter.atIdxSlow? =>
       some (``OmegaChecks.InitBoundaries.Collector.limitedOmniscienceFromLookup,
         "the official result of the optional lookup at each natural index")
