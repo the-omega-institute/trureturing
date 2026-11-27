@@ -112,6 +112,18 @@ static lean_obj_res omega_string_predicate(lean_obj_arg f, lean_obj_arg c) {
     return lean_apply_1(f, lean_uint32_to_nat(scalar));
 }
 
+static lean_obj_res omega_raw_fold_left(lean_obj_arg f, lean_obj_arg acc, lean_obj_arg c) {
+    lean_object *scalar = omega_char_from_lean(c);
+    lean_dec(c);
+    return lean_apply_2(f, acc, scalar);
+}
+
+static lean_obj_res omega_raw_fold_right(lean_obj_arg f, lean_obj_arg c, lean_obj_arg acc) {
+    lean_object *scalar = omega_char_from_lean(c);
+    lean_dec(c);
+    return lean_apply_2(f, scalar, acc);
+}
+
 static lean_obj_res omega_string_fold_step(lean_obj_arg f, lean_obj_arg s, lean_obj_arg c) {
     lean_object *bytes = omega_string_from_lean(s);
     uint32_t scalar = lean_unbox_uint32(c);

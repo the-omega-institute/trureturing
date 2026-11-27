@@ -111,7 +111,11 @@ private def syntaxTreeFunction (n : Name) : Bool :=
     [`getHead?, `setHeadInfoAux, `setTailInfoAux, `findAux, `structEq, `isToken, `hasArgs, `isAtom, `isNone,
      `isIdOrAtom?, `isLit?, `isInterpolatedStrLit?, `mkApp, `mkCApp].contains (n.updatePrefix .anonymous))
 
-private def pinnedStringFunction (n : Name) : Bool := n == `Substring.Raw.toString || renderName n || defsStringFunction n || basicStringFunction n || decodeStringFunction n || sliceStringFunction n || metaLiteralFunction n || n == `String.toName
+private def rawFold (n : Name) : Bool := n == `Substring.Raw.foldl || n == `Substring.Raw.foldr
+
+private def rawStringFunction (n : Name) : Bool := rawFold n || [`Substring.Raw.all, `Substring.Raw.toString].contains n
+
+private def pinnedStringFunction (n : Name) : Bool := rawStringFunction n || renderName n || defsStringFunction n || basicStringFunction n || decodeStringFunction n || sliceStringFunction n || metaLiteralFunction n || n == `String.toName
 
 private def debugPrimitive (n : Name) : Bool := [`dbgTrace, `dbgTraceIfShared, `dbgSleep, `dbgStackTrace].contains n
 
@@ -181,7 +185,7 @@ public def supported (source : Environment) (owner name : Name) : Bool :=
     (name.getPrefix == `Bool && widths.contains method)
   (owner == `OmegaInit.Util && debugPrimitive name && isExtern source name) ||
     (owner == `OmegaInit.Data.ToString.Name && renderName name) ||
-    (owner == `OmegaInit.Data.String.Substring && name == `Substring.Raw.toString) ||
+    (owner == `OmegaInit.Data.String.Substring && rawStringFunction name) ||
     (owner == `OmegaInit.Data.String.Defs && defsStringFunction name) ||
     (owner == `OmegaInit.Data.String.Basic && basicStringFunction name) ||
     (owner == `OmegaInit.Data.String.Decode && decodeStringFunction name) ||
@@ -294,7 +298,7 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
     unless strictInfo.type == InitKernelPort.translate InitKernelPort.portName ci.type do
       throw <| IO.userError s!"strict string input type differs at {n}"
     checkStrictString strict
-    if official.getPrefix == `Substring.Raw.Internal || [`Substring.Raw.toName, `Substring.Raw.toString, `Lean.Syntax.splitNameLit].contains official then
+    if official.getPrefix == `Substring.Raw.Internal || rawStringFunction official || [`Substring.Raw.toName, `Lean.Syntax.splitNameLit].contains official then
       for (env, name, text) in [(source, `Substring.Raw.mk, ImpureType.object), (strict, `Omega.Substring.Raw.mk, ImpureType.tobject)] do
         let some fields := ctorLayoutExt.find? env name | throw <| IO.userError s!"missing substring record {name}"
         let #[.object 0 field, .object 1 start, .object 2 stop] := fields.fieldInfo | throw <| IO.userError "invalid substring fields"
@@ -373,9 +377,25 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
       prepare := prepare ++ s!"  lean_object *token = lean_alloc_closure((void *)omega_name_token, 2, 1);\n  lean_closure_set(token, 0, {arg});\n"
       args := args.push "token"
       continue
-    if debugPrimitive official && (dom.isForall || dom.isBVar) then
+    if rawFold official && dom.isForall then
+      let left := official == `Substring.Raw.foldl
+      let first := if left then mkBVar 0 else mkConst `Char
+      let second := if left then mkConst `Char else mkBVar 1
+      unless dom.bindingDomain! == first && dom.bindingBody!.isForall &&
+          dom.bindingBody!.bindingDomain! == second && dom.bindingBody!.bindingBody! == mkBVar 2 &&
+          a.ty == .tobject && (b.ty == .tobject || b.ty == .object) && !a.borrow do
+        throw <| IO.userError s!"invalid raw substring fold callback {n}"
+      layout strict `Char
+      hasString := true
+      decls := decls.push ((if b.borrow then "b_lean_obj_arg " else "lean_obj_arg ") ++ arg)
+      if b.borrow then prepare := prepare ++ s!"  lean_inc({arg});\n"
+      let step := if left then "omega_raw_fold_left" else "omega_raw_fold_right"
+      prepare := prepare ++ s!"  lean_object *step = lean_alloc_closure((void *){step}, 3, 1);\n  lean_closure_set(step, 0, {arg});\n"
+      args := args.push "step"
+      continue
+    if (debugPrimitive official || rawFold official) && (dom.isForall || dom.isBVar) then
       -- The runtime either returns the polymorphic payload or invokes its continuation with Unit.unit.
-      let payload := official == `dbgTraceIfShared && dom == .bvar (i - 1)
+      let payload := (official == `dbgTraceIfShared || rawFold official) && dom == .bvar (i - 1)
       let thunk := dom.isForall && dom.bindingDomain! == mkConst `Unit && dom.bindingBody! == .bvar i
       unless (payload || thunk) && a.ty == .tobject && (b.ty == .tobject || b.ty == .object) && !a.borrow do
         throw <| IO.userError s!"different debug continuation or payload ABI at {n}"
@@ -394,7 +414,7 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
       prepare := prepare ++ s!"  lean_object *predicate = lean_alloc_closure((void *){adapter}, 2, 1);\n  lean_closure_set(predicate, 0, {arg});\n"
       args := args.push "predicate"
       continue
-    if bootstrapStringOp official && dom.isForall then
+    if (bootstrapStringOp official || official == `Substring.Raw.all) && dom.isForall then
       let arrow := fun (a b : Expr) => Expr.forallE .anonymous a b .default
       let unary := arrow (mkConst `Char) (mkConst `Bool)
       let binary := arrow (mkConst `String) (arrow (mkConst `Char) (mkConst `String))
@@ -782,7 +802,7 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
     unless field.fieldIdx == 0 do throw <| IO.userError "invalid raw position layout"
     pure ("lean_obj_res", call)
   else if dom == `Nat && (ret == .tobject || ret == .tagged) && result == .tobject then pure ("lean_obj_res", call)
-  else if debugPrimitive official && type == .bvar (params.size - 1) && ret == .tobject && result == .tobject then
+  else if (debugPrimitive official || rawFold official) && type == .bvar (params.size - 1) && ret == .tobject && result == .tobject then
     pure ("lean_obj_res", call)
   else if dom == `Ordering && ret == .uint8 && result == .uint8 then do
     IndexedNative.checkDataTypes source strict [`Ordering]
