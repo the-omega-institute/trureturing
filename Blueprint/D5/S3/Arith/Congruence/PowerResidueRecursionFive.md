@@ -10,6 +10,10 @@ $$\forall n \in \mathbb{N},\; \operatorname{seq}\left(n\right) = 5 \Rightarrow 2
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/Congruence/PowerResidueRecursionFive.oeisA374911_valueFive_even` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a374911-value-five-parity` (proved) by `D5/S3/Arith/Congruence/PowerResidueRecursionFive.oeisA374911_valueFive_even`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a374911-value-five-parity","declaration_gid":"D5/S3/Arith/Congruence/PowerResidueRecursionFive.oeisA374911_valueFive_even","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* OEIS Foundation Inc. (2024). *OEIS A374911*. URL: <https://oeis.org/A374911>.

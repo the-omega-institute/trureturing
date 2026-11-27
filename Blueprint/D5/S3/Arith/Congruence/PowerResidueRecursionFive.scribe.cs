@@ -32,7 +32,10 @@ internal sealed class PowerResidueRecursionFiveDocument : IScribeDocumentDefinit
                 + "pair is three and two, so value five occurs exactly when the base-two "
                 + "remainder is a positive power of two and the base-three remainder "
                 + "is one. Base three then forces the least prime factor to be two."))),
-            DescribeRole.Theorem))));
+            DescribeRole.Theorem,
+            openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                ProblemSlugRef.Create("oeis-a374911-value-five-parity"),
+                ResolutionKind.Proved)))));
 
     private static Formula ResultFormula()
     {
