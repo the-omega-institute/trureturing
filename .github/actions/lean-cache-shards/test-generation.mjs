@@ -475,11 +475,13 @@ parser.add_argument("--prepare-release", action="store_true")
 parser.add_argument("--stage-only", action="store_true")
 parser.add_argument("--staged", action="store_true")
 parser.add_argument("--legacy-checkpoints", action="store_true")
+parser.add_argument("--compiler-dag", action="store_true")
 args = parser.parse_args()
 assert os.environ["LEAN_MODULE_ACTIONS_CACHE"] == "1"
 kind = os.environ["INPUT_KIND"]
 if args.command == "plan":
     assert args.kind == kind and args.prepare_release and int(args.capacity) == 32 * 1024**2
+    assert args.compiler_dag == (kind == "compiler")
     Path(args.output).write_text(kind)
 elif args.command == "worker":
     assert Path(args.plan).read_text() == kind and args.lane == "2"
