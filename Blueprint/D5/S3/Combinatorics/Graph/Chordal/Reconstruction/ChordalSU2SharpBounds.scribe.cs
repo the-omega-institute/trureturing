@@ -73,11 +73,11 @@ internal sealed class ChordalSU2SharpBoundsDocument : IScribeDocumentDefinition
         var w = F.Id("w");
         var delta = F.Id("delta");
         var product = Times(Apply("g", u, v), Apply("g", v, w));
-        return OnGraph(V, G, g, For("delta", Reals, Iff(Apply("SU2TriangleBound", G, g, delta),
-            For("u", V, For("v", V, For("w", V,
-                If(Apply("Adj", G, u, v), If(Apply("Adj", G, v, w), If(Apply("Adj", G, u, w),
-                    new Formula.Relation(Apply("d", product, Apply("g", u, w)),
-                        FormulaRelationOperator.LessThanOrEqual, delta)))))))));
+        var bound = new Formula.Relation(Apply("d", product, Apply("g", u, w)),
+            FormulaRelationOperator.LessThanOrEqual, delta);
+        var triangles = For("u", V, For("v", V, For("w", V,
+            If(Apply("Adj", G, u, v), If(Apply("Adj", G, v, w), If(Apply("Adj", G, u, w), bound))))));
+        return OnGraph(V, G, g, For("delta", Reals, Iff(Apply("SU2TriangleBound", G, g, delta), triangles)));
     }
 
     private static Formula FitsFormula()

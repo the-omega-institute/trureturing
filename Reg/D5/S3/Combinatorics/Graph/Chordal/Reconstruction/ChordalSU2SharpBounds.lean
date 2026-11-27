@@ -564,7 +564,7 @@ def cliqueFiveFamily : Registration cliqueFiveArena.{u} (type_of% (@SimpleGraph.
   dependence := halfPi_dependence
 
 def cliqueFiveRegistration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-    (@SimpleGraph.IsChordal.exists_cliqueFive_su2_gain_potential_half_pi.{u}) (Realization (closedHemisphereSignature)) Unit Unit where
+    (@SimpleGraph.IsChordal.exists_cliqueFive_su2_gain_potential_half_pi.{u}) (Realization closedHemisphereSignature.{u}) Unit Unit where
   unitName := `SimpleGraph.IsChordal.exists_cliqueFive_su2_gain_potential_half_pi.__information_unit
   realizationName := `Reg.D5.S3.Combinatorics.Graph.Chordal.Reconstruction.ChordalSU2SharpBounds.cliqueFiveFamily
   realizationSource := none
