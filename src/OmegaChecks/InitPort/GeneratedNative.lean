@@ -130,13 +130,36 @@ private def compileNatRec (source strict : Environment) (d : DefinitionVal) : Co
     return body
   compileEquation source d.name {d with name, all := [name], value := body, safety := .safe}
 
+/-- For nonrecursive unindexed inductives, `casesOn` and `rec` differ only in argument
+order. Validate the changed term against the full original kernel definition. -/
+private def compileCases (source strict : Environment) (d : DefinitionVal) : CoreM Unit := do
+  let body := d.value.replace fun e => do
+    let .const recName levels := e.getAppFn | none
+    let some (.recInfo r) := strict.find? recName | none
+    unless r.numIndices == 0 && r.numMotives == 1 && e.getAppNumArgs > r.getMajorIdx do none
+    let indName := r.getMajorInduct
+    let some (.inductInfo ind) := strict.find? indName | none
+    unless !ind.isRec && !ind.isNested && ind.all == [indName] && recName == indName ++ `rec do none
+    let casesName := indName ++ `casesOn
+    unless strict.contains casesName do none
+    let args := e.getAppArgs
+    let n := r.getMajorIdx
+    let m := r.getFirstMinorIdx
+    return mkAppN (mkConst casesName levels) (args[:m].toArray.push args[n]! ++ args[m:n].toArray ++ args[n+1:].toArray)
+  if body == d.value then return
+  unless Kernel.isDefEqGuarded strict {} d.value body do return
+  let name := Compiler.mkUnsafeRecName d.name
+  compileEquation source d.name {d with name, all := [name], value := body, safety := .safe}
+
 /-- Reuse the pinned executable recursion only after the kernel identifies every constructor
 equation with the checked total function. The temporary declaration is excluded from the product. -/
 private def compileStructural (source strict : Environment) (n : Name) : CoreM Unit := do
   let original := originalName n
-  unless original.getRoot == `List || original.getRoot == `Array do return
   let recName := Compiler.mkUnsafeRecName original
-  let some (.defnInfo d) := source.find? recName | return
+  let hasEquations := original.getRoot == `List || original.getRoot == `Array
+  let some (.defnInfo d) := if hasEquations then source.find? recName else none | do
+    if let some (.defnInfo strictDef) := strict.find? n then compileCases source strict strictDef
+    return
   unless d.safety == .partial && d.all == [recName] do return
   let name := InitKernelPort.portName recName
   let raw := InitKernelPort.translate InitKernelPort.portName d.value
