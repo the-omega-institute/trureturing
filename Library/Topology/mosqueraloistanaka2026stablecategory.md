@@ -1084,3 +1084,11 @@ contiguity contractions. The original edge carriers transport them
 to the synchronously subdivided ambient complex. Taking the face
 neighbourhoods that meet the two final colours gives categorical lower
 sets in an ordinary iterated chain poset.
+
+The relative theorem applies to a nonempty subcomplex with a proper
+four-rank colouring and a nullhomotopic realization inclusion in a
+finite ambient complex with connected one-skeleton. It gives two
+subcomplexes covering an ordinary subdivision of the source. Both
+inclusions contract by contiguity in the ambient at that same depth.
+This allows a categorical region of dimension at most three to be
+split while keeping its contractions in a higher-dimensional ambient.
