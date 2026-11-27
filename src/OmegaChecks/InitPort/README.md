@@ -58,7 +58,7 @@ example (a : α) (b : β) : Omega.Eq (Prod.fst (Prod.mk a b)) a := Omega.rfl
 
 `equationOperand` 记录官方等式左端直接调用的运算。Lean 按该处的宇宙参数核对 `operandReductionWitness` 的完整类型。给定这个运算的通用实现，即可构造 `operandImpliesAxiom`。对选择函数与递归算子的 `congr_simp` 定理，检查器还用相同谓词或递归步骤特化整个官方等式，核对其参数，再从左右两边分别抽出具有完整 `Classical.choice` 类型的函数。等式本身的可移植性继续按其独立证据结算。
 
-`init-public-reductions.tsv` 列出已移植声明到严格库封装实现的一条最短定义体依赖路径。`officialReductionMechanism` 记录钉版 Lean 的官方机制，包括公开定义体、自然数内建运算、归纳类型、构造子和递归器。盘点 JSON 同时保存路径 `publicReductionBoundary` 与机制。`Nat.Coprime` 的路径通向内建运算 `Nat.gcd`。`And.rec` 和 `Iff.rec` 在官方环境中使用递归器计算规则。具体输入是否需要走到路径终点取决于归约过程。
+`init-public-reductions.tsv` 列出已移植声明到严格库封装实现的一条最短定义体依赖路径。`officialReductionMechanism` 记录钉版 Lean 的官方机制，包括公开定义体、自然数内建运算、归纳类型、构造子和递归器。盘点 JSON 同时保存路径 `publicReductionBoundary` 与机制。严格库中的 `Nat.gcd` 保留了 Lean 内核识别的根名称。在普通导入中，`Nat.Coprime` 用到的最大公约数能直接在具体自然数上归约，包含大于 64 位的输入。`And.rec` 和 `Iff.rec` 在官方环境中使用递归器计算规则。具体输入是否需要走到路径终点取决于归约过程。
 
 例如，普通导入 `OmegaInit.Data.Nat.Div.Basic` 后可用 `Omega.Nat.div_zero` 证明除数为零的等式。若需直接归约严格实现，可 `import all OmegaInit.Prelude`，并在证明所在节设置 `attribute [local semireducible] Omega.Nat.div Omega.Nat.ble Omega.Nat.sub Omega.Nat.pred`。
 
