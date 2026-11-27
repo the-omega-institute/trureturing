@@ -1,5 +1,6 @@
 module
 
+import all Init.Data.UInt.Bitwise
 public import Init.Data.UInt.Bitwise
 public import Init.Data.SInt.Bitwise
 
@@ -307,5 +308,30 @@ public theorem UInt64.toUSize_shiftLeft_mod : type_of% @_root_.UInt64.toUSize_sh
     rw [UInt64.toNat_toUSize, width, USize.toNat_ofNat']
   rw [eq]
   exact (USize.shiftLeft_eq_shiftLeft_mod ..).symm
+
+public theorem UInt16.shiftLeft_add._proof_1_2 :
+    type_of% (private_decl% @_root_.UInt16.shiftLeft_add._proof_1_2) :=
+  fun hb hc impossible => impossible (Nat.lt_trans (Nat.add_lt_add hb hc)
+    (by decide : 32 < 65536))
+
+public theorem UInt32.shiftLeft_add._proof_1_2 :
+    type_of% (private_decl% @_root_.UInt32.shiftLeft_add._proof_1_2) :=
+  fun hb hc impossible => impossible (Nat.lt_trans (Nat.add_lt_add hb hc)
+    (by decide : 64 < 4294967296))
+
+public theorem UInt64.shiftLeft_add._proof_1_2 :
+    type_of% (private_decl% @_root_.UInt64.shiftLeft_add._proof_1_2) :=
+  fun hb hc impossible => impossible (Nat.lt_trans (Nat.add_lt_add hb hc)
+    (by decide : 128 < 18446744073709551616))
+
+public theorem USize.shiftLeft_add._proof_1_2 :
+    type_of% (private_decl% @_root_.USize.shiftLeft_add._proof_1_2) :=
+  fun hb hc impossible => impossible (Nat.lt_trans (Nat.add_lt_add hb hc)
+    (by decide : 64 < 4294967296))
+
+public theorem USize.shiftLeft_add._proof_1_3 :
+    type_of% (private_decl% @_root_.USize.shiftLeft_add._proof_1_3) :=
+  fun hb hc impossible => impossible (Nat.lt_trans (Nat.add_lt_add hb hc)
+    (by decide : 128 < 18446744073709551616))
 
 end OmegaChecks.InitPort.Alternatives

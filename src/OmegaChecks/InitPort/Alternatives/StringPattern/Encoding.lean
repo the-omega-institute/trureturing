@@ -866,4 +866,53 @@ public theorem ByteArray.utf8DecodeChar_extract_congr_of_le : type_of% (private_
   rw [← ByteArray.extract_eq_extract_append_extract j ij order] at second
   exact (Option.get_of_eq_some valid₁ first).trans (Option.get_of_eq_some valid₂ second).symm
 
+public theorem ByteArray.utf8DecodeChar?.assemble₂._proof_1 :
+    type_of% (private_decl% @_root_.ByteArray.utf8DecodeChar?.assemble₂._proof_1) :=
+  fun _ _ high impossible => impossible (Nat.lt_trans
+    (Nat.mul_lt_mul_of_pos_right high (by decide : 0 < 2 ^ 6)) (by decide : 2048 < 4294967296))
+
+public theorem ByteArray.utf8DecodeChar?.assemble₂._proof_2 :
+    type_of% (private_decl% @_root_.ByteArray.utf8DecodeChar?.assemble₂._proof_2) :=
+  fun _ _ high low impossible => impossible (Nat.lt_trans
+    (Nat.add_lt_add (Nat.mul_lt_mul_of_pos_left high (by decide : 0 < 2 ^ 6)) low)
+    (by decide : 2112 < 55296))
+
+public theorem ByteArray.utf8DecodeChar?.assemble₃_eq_some_of_toBitVec._proof_1_8 :
+    type_of% (private_decl% @_root_.ByteArray.utf8DecodeChar?.assemble₃_eq_some_of_toBitVec._proof_1_8) :=
+  fun bounds => bounds.2.elim (Nat.not_lt_of_ge bounds.1.1)
+    (fun hi => Nat.not_lt_of_ge bounds.1.2 hi.1)
+
+public theorem ByteArray.utf8DecodeChar?.assemble₄_eq_some_iff_utf8EncodeChar_eq._proof_1_13 :
+    type_of% (private_decl% @_root_.ByteArray.utf8DecodeChar?.assemble₄_eq_some_iff_utf8EncodeChar_eq._proof_1_13) :=
+  fun bound impossible => impossible (Nat.lt_of_le_of_lt bound (by decide : 1114111 < 2097152))
+
+public theorem ByteArray.utf8DecodeChar?.assemble₄_eq_some_of_toBitVec._proof_1_2 :
+    type_of% (private_decl% @_root_.ByteArray.utf8DecodeChar?.assemble₄_eq_some_of_toBitVec._proof_1_2) :=
+  fun bounds => Nat.not_lt_of_ge bounds.1 bounds.2
+
+public theorem ByteArray.utf8DecodeChar?.assemble₄_eq_some_of_toBitVec._proof_1_8 :
+    type_of% (private_decl% @_root_.ByteArray.utf8DecodeChar?.assemble₄_eq_some_of_toBitVec._proof_1_8) :=
+  fun bounds => bounds.2.elim
+    (fun lo => Nat.not_lt_of_ge (Nat.le_of_lt bounds.1) (Nat.lt_trans lo (by decide : 55296 < 1114111)))
+    (fun hi => Nat.not_lt_of_ge bounds.1 hi.2)
+
+public theorem Char.toNat_le._proof_1_1 :
+    type_of% (private_decl% @_root_.Char.toNat_le._proof_1_1) :=
+  fun ranges impossible => ranges.elim
+    (fun lower => impossible (Nat.le_trans (Nat.le_of_lt lower) (by decide : 55296 ≤ 1114111)))
+    (fun upper => impossible (Nat.le_of_lt_succ upper.2))
+
+public theorem Char.utf8Size_eq_four_iff._proof_1_4 :
+    type_of% (private_decl% @_root_.Char.utf8Size_eq_four_iff._proof_1_4) :=
+  fun bound impossible => impossible (Nat.le_trans bound (by decide : 127 ≤ 65535))
+
+public theorem Char.utf8Size_eq_four_iff._proof_1_5 :
+    type_of% (private_decl% @_root_.Char.utf8Size_eq_four_iff._proof_1_5) :=
+  fun _ bound impossible => impossible (Nat.le_trans bound (by decide : 2047 ≤ 65535))
+
+public theorem String.utf8EncodeChar_eq_utf8EncodeCharFast._proof_1_12 :
+    type_of% (private_decl% @_root_.String.utf8EncodeChar_eq_utf8EncodeCharFast._proof_1_12) :=
+  fun _ _ bound impossible => impossible ((Nat.div_lt_iff_lt_mul (by decide : 0 < 2 ^ 12)).mpr
+    (Nat.lt_of_le_of_lt bound (by decide : 65535 < 256 * 2 ^ 12)))
+
 end OmegaChecks.InitPort.Alternatives
