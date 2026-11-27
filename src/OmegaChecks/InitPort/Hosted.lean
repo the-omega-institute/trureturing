@@ -134,7 +134,7 @@ def main (args : List String) : IO Unit := do
         let name := if moved.contains t.name then `Omega ++ t.name else t.name
         let some canonical := terms[name]? | continue
         let body := renameTerm moved t.value
-        if canonical.value?.any (·.equal body) then continue
+        if (canonical.value? (allowOpaque := true)).any (·.equal body) then continue
         let kernel := Environment.ofKernelEnv checked
         let .ok type := Kernel.check kernel {} body | throw <| IO.userError s!"invalid hosted proof {name}"
         unless Kernel.isDefEqGuarded kernel {} type (renameTerm moved t.type) do
