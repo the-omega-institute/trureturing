@@ -1,0 +1,1 @@
+{"statement_id":"sha256:77fecf7996db3b2287f463e4e458bee6cbb1c95091a19ad9b386e28e4492fcde","declarations":[{"declaration_name_key":"ns(n0,7:weylRep)","kind":"def","libraries":["Aesop","Batteries","Init","Lean","Mathlib","Std"],"axioms":["Classical.choice","Quot.sound","propext"]}]}

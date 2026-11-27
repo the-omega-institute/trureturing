@@ -1,0 +1,1 @@
+{"statement_id":"sha256:d4e7ac592a0a5dd9d3f76545658a9b3998b7ce52b30cd11efec2c40dfc95a1a4","declarations":[{"declaration_name_key":"ns(n0,39:lintegral_cayleyDensity_skewColumnEquiv)","kind":"theorem","libraries":["Aesop","Batteries","Init","Lean","Mathlib","Std"],"axioms":["Classical.choice","Quot.sound","propext"]}]}

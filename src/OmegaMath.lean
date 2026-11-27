@@ -11,6 +11,7 @@ public import OmegaMath.Algebra.BigOperators.Range
 public import OmegaMath.Algebra.Group.Basic
 public import OmegaMath.Algebra.QuadraticExt
 public import OmegaMath.Algebra.Quaternion
+public import OmegaMath.Algebra.Quaternion.Shell
 public import OmegaMath.Arithmetic.ContinuedFraction
 public import OmegaMath.Arithmetic.DepthBudget
 public import OmegaMath.Arithmetic.Euclidean
