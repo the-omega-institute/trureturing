@@ -38,11 +38,11 @@ name = "OmegaMath"
 srcDir = "src"
 
 [[lean_lib]]
-name = "OmegaChecks.InitCompiler"
+name = "OmegaChecks"
 srcDir = "src"
 
 [[lean_lib]]
-name = "OmegaChecks"
+name = "OmegaChecks.InitCompiler"
 srcDir = "src"
 
 [[lean_lib]]
