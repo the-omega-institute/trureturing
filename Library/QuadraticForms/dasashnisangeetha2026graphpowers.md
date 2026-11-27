@@ -15,6 +15,8 @@ triage: anchor
 
 # Extremal adjacency and distance spectral radii of graph powers
 
+## Verified locator
+
 Version 1, 22 November 2026, §5, Question 5.1, printed p. 17.
 The inspected PDF has SHA-256
 `67be2ebf0919135649025a15c3d9aabc56aa03cc7895ac39325b54d39f7e3a15`.
