@@ -39,7 +39,7 @@ def main (args : List String) : IO Unit := do
   let owners ← OmegaChecks.ModuleSurface.officialModules strict lib
   let mut official := owners.map fun n => {module := n : Import}
   if roots.contains "OmegaInit" then
-    let sourceDir := System.FilePath.mk "strict"
+    let sourceDir ← IO.currentDir
     let mut downstream := #[]
     for file in ← (sourceDir / "OmegaMathlib").walkDir do
       if file.extension == some "lean" then
