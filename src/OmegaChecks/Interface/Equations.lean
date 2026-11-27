@@ -3,6 +3,7 @@ module
 import Init.Data.List.SplitOn.Basic
 public import OmegaChecks.Interface.Equations.List
 public import OmegaChecks.Interface.Equations.Logic
+public import OmegaChecks.InitPort.StateToken
 public import OmegaChecks.InitPort.FloatFraction
 public import OmegaChecks.Interface.Equations.Array
 public import OmegaChecks.Interface.Equations.Collect

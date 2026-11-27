@@ -3,6 +3,7 @@ import OmegaChecks.FieldMethods
 import OmegaChecks.InitPort.NativeQuot
 import OmegaChecks.InitPort.WordFold
 import OmegaChecks.InitPort.WordForIn
+import OmegaChecks.InitPort.StateToken
 import OmegaChecks.InitPort.SyntaxArray
 import OmegaChecks.InitPort.FloatFraction
 import OmegaChecks.InitPort.BorrowedIndex
@@ -205,7 +206,21 @@ private def compare (reference : Environment) (rename : Name → Name) (src dst 
       return deps ++ x.value.getUsedConstants
     deps := deps ++ x.value.getUsedConstants
     compareDefinitionBody
+  | .defnInfo x, .opaqueInfo y =>
+    if let some (strict, publicStrict) := foundation then
+      if y.name == `Void.nonemptyType && x.safety == .safe then
+        unless (← lookup publicStrict x.name).isAxiom && getReducibilityStatusCore strict x.name == .irreducible do
+          throw <| IO.userError "public state carrier is not abstract"
+        OmegaChecks.InitPort.StateToken.checkAbstraction strict
+        OmegaChecks.InitPort.StateToken.checkAbstraction publicStrict
+        OmegaChecks.InitPort.StateToken.check reference y (liftTerm x.value)
+        return deps ++ x.value.getUsedConstants
+    compareDefinitionBody
+    deps := deps ++ x.value.getUsedConstants
   | .opaqueInfo x, .opaqueInfo y =>
+    if foundation.isSome && !x.isUnsafe && y.name == `Void.mk then
+      OmegaChecks.InitPort.StateToken.check reference y (liftTerm x.value)
+      return deps ++ x.value.getUsedConstants
     if foundation.isSome && !x.isUnsafe && OmegaChecks.InitPort.FloatFraction.supported y.name then
       OmegaChecks.InitPort.FloatFraction.check reference y (liftTerm x.value)
       return deps ++ x.value.getUsedConstants

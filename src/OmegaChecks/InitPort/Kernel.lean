@@ -487,6 +487,18 @@ partial def visit (n : Name) : M Bool := do
       | return ← record n (.blocked "kernel rejected logical reference")
     modify fun s => {s with env}
     return ← record n .added
+  if n == `Void.nonemptyType then
+    let .opaqueInfo native := ci | return ← record n (.blocked "missing opaque state family")
+    let some body := OmegaChecks.InitPort.alternativeBody? c.alternatives ci
+      | return ← record n (.blocked "missing indexed state token package")
+    for dep in usedConstants ci.type ++ usedConstants body do
+      unless ← visit dep do return ← record n (.blocked "unavailable state token dependency" (some dep))
+    let family : DefinitionVal := {native.toConstantVal with value := body, hints := .regular 0, safety := .safe, all := [n]}
+    let .ok decl := translateDecl (.defnInfo family) ci.type body | return ← record n (.blocked "invalid state carrier")
+    let .ok env ← checkWithRetry (← get).env decl c.maxHeartbeats
+      | return ← record n (.blocked "kernel rejected state carrier")
+    modify fun s => {s with env}
+    return ← record n .added
   if n == `Array.get!InternalBorrowed || n == `Array.anyMUnsafe || OmegaChecks.InitPort.WordFold.supported n ||
       OmegaChecks.InitPort.WordForIn.supported n || OmegaChecks.InitPort.SyntaxArray.supported n then
     let safe ← match ci with

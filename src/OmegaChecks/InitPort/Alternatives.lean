@@ -50,6 +50,7 @@ public import OmegaChecks.InitPort.Alternatives.Range.Finite
 public import OmegaChecks.InitPort.Alternatives.Rational
 public import OmegaChecks.InitPort.Alternatives.UTF8
 public import OmegaChecks.InitPort.Alternatives.Uri
+public import OmegaChecks.InitPort.Alternatives.StateToken
 public import OmegaChecks.InitPort.Alternatives.StringSlice
 public import OmegaChecks.InitPort.Alternatives.SubarrayFold
 public import OmegaChecks.InitPort.Alternatives.SyntaxArray
