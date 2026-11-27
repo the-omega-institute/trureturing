@@ -12,7 +12,7 @@ $$\exists H,K : \operatorname{SimpleGraph}\left(\operatorname{Fin}\left(17\right
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Saieed Akbari, Mohamad Parsa Elahimanesh and Bobby Miraftab (2025). *On Prime Matrix Product Factorizations*. DOI: [10.48550/arXiv.2512.24864](https://doi.org/10.48550/arXiv.2512.24864). URL: <https://arxiv.org/html/2512.24864v1#S5.I1.i1>.
+*Acknowledgement.* Saieed Akbari, Mohamad Parsa Elahimanesh and Bobby Miraftab (2025). *On Prime Matrix Product Factorizations*. DOI: [10.48550/arXiv.2512.24864](https://doi.org/10.48550/arXiv.2512.24864). URL: <https://arxiv.org/html/2512.24864v1#S5>.
 
 *Commentary.*
 
