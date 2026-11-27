@@ -255,7 +255,10 @@ for indexing, updates and effectful traversals on that representation. -/
 private def arrayDefinition (n : Name) : Bool :=
   [`Array.set, `Array.uget, `Array.uset, `Array.usize, `Array.pop, `Array.replicate,
    `Array.swap, `Array.swapIfInBounds, `Array.forIn', `Array.mapFinIdxM, `Array.mapM, `Array.modifyM,
-   `Array.foldlM, `Array.foldrM, `Array.anyM].contains n
+   `Array.foldlM, `Array.foldrM, `Array.anyM,
+   `FloatArray.data, `FloatArray.emptyWithCapacity, `FloatArray.push, `FloatArray.size, `FloatArray.usize,
+   `FloatArray.uget, `FloatArray.get, `FloatArray.uset, `FloatArray.set, `FloatArray.forIn,
+   `FloatArray.foldlM].contains n
 
 /-- Use ordinary module initialization so closed functions and imported modules are ready before calls. -/
 private def emitOwner (env : Environment) (owner : Name) (imports : Array Import)
