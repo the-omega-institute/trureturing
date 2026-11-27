@@ -91,3 +91,5 @@ python3 src/OmegaChecks/InitPort/report.py .lake/init-port-all --require-complet
 同一检查也重放两世界 Kripke 反模型 `TwoWorlds.countermodel`。原子命题只在后继世界成立。根世界强制它的双重否定，也同时见证该命题及其否定都未被根世界强制。这排除了直觉主义命题逻辑中的双重否定消除和排中律。Sato 与 Garrigue 的 §4.2.2 在其依赖类型演算 CCω 中给出排中律反模型。§5 的归纳类型扩展覆盖列表。要用该结果判定 Lean 4.35 零公理内核中的不可导性，仍需证明模型支持该内核的一般归纳族、消去及定义等价规则。两个范围接口因此继续列入未解决项。[Kripke 语义与可靠性](https://plato.stanford.edu/entries/logic-intuitionistic/#KripBethSemaForIntuLogi) · [Sato 与 Garrigue 的模型](https://doi.org/10.1017/S0960129523000087)
 
 `Classical.not_and_iff_not_or_not` 的官方接口与弱排中律 `∀ p, ¬p ∨ ¬¬p` 可互推。三世界分叉 Kripke 模型中，一个叶子强制 `p`，另一个强制 `¬p`，因此根不强制弱排中律。空内核重放两个方向的转换和模型的可达关系、自反性、传递性、原子赋值单调性与根的反例。此反例适用于直觉主义命题逻辑；Lean 完整内核中的不可导性仍属于未解决项。
+
+`Classical.decide_not`、`Classical.ite_not` 和 `Classical.dite_not` 都接受 `Decidable (¬p)`，等式右端通过 `Classical.decidable_of_decidable_not` 取得 `Decidable p`。从官方类型中抽象出此转换函数后，三条等式均由无公理证明给出。实现这个对所有命题适用的转换函数可以推出排中律。

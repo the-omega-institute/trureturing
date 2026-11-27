@@ -481,6 +481,53 @@ theorem ofNegatedConjunction (law : type_of% @Lean.Grind.not_and) (p : Prop) : �
 
 end GrindQuantifiers
 
+namespace ClassicalDecisionEquations
+
+abbrev Transfer := type_of% @Classical.decidable_of_decidable_not
+theorem decideNot (transfer : Transfer) (p : Prop) [hn : Decidable (¬p)] :
+    @decide (¬p) hn = !(@decide p (@transfer p hn)) := by
+  generalize @transfer p hn = d
+  cases hn <;> cases d <;> first | rfl | contradiction
+
+private theorem dependent {α : Sort u} {p : Prop} (d : Decidable p) (hn : Decidable (¬p))
+    (x : ¬p → α) (y : ¬¬p → α) :
+    @dite α (¬p) hn x y = @dite α p d (fun h => y (fun n => n h)) x := by
+  cases hn <;> cases d <;> first | rfl | contradiction
+
+theorem diteNot (transfer : Transfer) {p : Prop} {α : Sort u} [hn : Decidable (¬p)]
+    (x : ¬p → α) (y : ¬¬p → α) :
+    @dite α (¬p) hn x y = @dite α p (@transfer p hn) (fun h => y (fun n => n h)) x :=
+  dependent (@transfer p hn) hn x y
+
+theorem iteNot (transfer : Transfer) {α : Sort u} (p : Prop) [hn : Decidable (¬p)] (x y : α) :
+    @ite α (¬p) hn x y = @ite α p (@transfer p hn) y x :=
+  dependent (@transfer p hn) hn (fun _ => x) (fun _ => y)
+
+def rules : List (Name × Name) := [
+  (``Classical.decide_not, ``decideNot), (``Classical.dite_not, ``diteNot), (``Classical.ite_not, ``iteNot)]
+
+/- Check the exact physical type with its decision transfer replaced by an arbitrary
+function of the same type, retaining all the other binders and both equality endpoints. -/
+run_cmd
+  let env ← getEnv
+  let some idx := env.getModuleIdx? `Init.Classical | throwError "missing Init.Classical"
+  let transfer ← getConstInfo ``Classical.decidable_of_decidable_not
+  for (name, witness) in rules do
+    let some source := env.header.moduleData[idx]!.constants.find? (·.name == name)
+      | throwError "missing decision equation {name}"
+    let proof ← getConstInfo witness
+    let levels := proof.levelParams.map Level.param
+    unless levels.length == source.numLevelParams do throwError "incorrect universes for {name}"
+    let original := source.type.instantiateLevelParams source.levelParams levels
+    unless original.getUsedConstantsAsSet.contains transfer.name do throwError "no decision transfer in {name}"
+    let expected ← Elab.Command.liftCoreM <| Meta.MetaM.run' <|
+      Meta.withLocalDeclD `port transfer.type fun port => do
+        let law := original.replace fun e => if e.isConstOf transfer.name then some port else none
+        Meta.mkForallFVars #[port] law
+    unless Kernel.isDefEqGuarded env {} expected proof.type do throwError "equation mismatch for {name}"
+
+end ClassicalDecisionEquations
+
 namespace ClassicalConsequences
 
 /-- De Morgan's law on a proposition and its negation yields weak excluded middle. -/

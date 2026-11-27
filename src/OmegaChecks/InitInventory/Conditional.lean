@@ -145,6 +145,9 @@ public def conditionalConsequence? (owner name : Name) : Option (String × Name 
     if name == ``ShareCommon.Object.ptrHash then
       return ("False", ``OmegaChecks.InitBoundaries.PointerObservations.objectPointerHash,
         "Pointer hashes distinguish two simultaneously live NonScalar objects with the same Nat field")
+  if owner == `Init.Classical && (OmegaChecks.InitBoundaries.ClassicalDecisionEquations.rules.lookup name).isSome then
+    return ((``Classical.em).toString, ``OmegaChecks.InitBoundaries.ClassicalConsequences.ofDecidableNot,
+      "The right-hand side supplies a decision for p from a decision for its negation at every proposition")
   if owner == `Init.Core && name == ``Quot.liftIndepPr1 then
     return ((``Quot.sound).toString, ``OmegaChecks.InitBoundaries.HeterogeneousQuotient.soundOfLiftArgument,
       "The first projection in the original statement requires the lift's coherence argument at the constant unit motive")
