@@ -1,5 +1,6 @@
 module
 
+public import OmegaChecks.InitPort.Alternatives.MonadicLists.Equations
 public import OmegaChecks.InitPort.Alternatives.MonadicLists.Folds
 import Init.Data.Array.Zip
 import all Init.Data.Array.OfFn
