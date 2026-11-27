@@ -106,7 +106,7 @@ private lemma heightTerm_summable (t x : ℝ) {y : ℝ} (ht : 0 < t) (hy : 0 < y
       _ = _ := by rw [← Real.exp_add]; congr 1; congr 1; ring
   exact ((summable (t / 2) x (by positivity) hy).mul_left (2 / y)).of_norm_bounded hb
 
-private def hexTurn : (ℤ × ℤ) ≃ (ℤ × ℤ) where
+def hexTurn : (ℤ × ℤ) ≃ (ℤ × ℤ) where
   toFun v := (v.2, -v.1 - v.2)
   invFun v := (-v.1 - v.2, v.1)
   left_inv v := by apply Prod.ext <;> dsimp <;> ring
@@ -118,7 +118,7 @@ private lemma hex_height_square : (Real.sqrt 3 / 2) ^ 2 = (3 : ℝ) / 4 := by
   rw [div_pow, Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 3)]
   norm_num
 
-private lemma hex_q_turn (v : ℤ × ℤ) :
+lemma hex_q_turn (v : ℤ × ℤ) :
     Q (1 / 2) (Real.sqrt 3 / 2) (hexTurn v) =
       Q (1 / 2) (Real.sqrt 3 / 2) v := by
   have hc0 := hex_height_pos.ne'
