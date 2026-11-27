@@ -764,6 +764,38 @@ def uniqueChoiceOfChainSup (select : type_of% @CCPO.csup.{u}) : UniqueChoice.{u}
   letI : CCPO α := singletonCCPO α inh
   exact select (chain_empty α)
 
+/-- Least upper bounds form a subsingleton by antisymmetry. An existence proof
+therefore suffices for the selector on subsingletons. -/
+private def selectSupremum (pick : UniqueChoice.{max 1 u}) {α : Sort u} [PartialOrder α]
+    (c : α → Prop) (h : ∃ s, is_sup c s) : {s : α // is_sup c s} := by
+  letI : Subsingleton {s : α // is_sup c s} :=
+    ⟨fun a b => Subtype.ext (is_sup_unique a.property b.property)⟩
+  exact @pick _ _ (h.elim fun s hs => ⟨⟨s, hs⟩⟩)
+
+def latticeSupOfUniqueChoice (pick : UniqueChoice.{max 1 u}) : type_of% @CompleteLattice.sup.{u} :=
+  fun {_} inst c => (selectSupremum (@pick) c (inst.has_sup c)).val
+
+theorem latticeSupOfUniqueChoice_spec (pick : UniqueChoice.{max 1 u}) {α : Sort u} [order : CompleteLattice α]
+    (c : α → Prop) : is_sup c (latticeSupOfUniqueChoice (@pick) c) :=
+  (selectSupremum (@pick) c (order.has_sup c)).property
+
+def chainSupOfUniqueChoice (pick : UniqueChoice.{max 1 u}) : type_of% @CCPO.csup.{u} :=
+  fun {_} inst {c} hc => (selectSupremum (@pick) c (inst.has_csup hc)).val
+
+theorem chainSupOfUniqueChoice_spec (pick : UniqueChoice.{max 1 u}) {α : Sort u} [order : CCPO α]
+    {c : α → Prop} (hc : chain c) : is_sup c (chainSupOfUniqueChoice (@pick) hc) :=
+  (selectSupremum (@pick) c (order.has_csup hc)).property
+
+theorem latticeSupIffUniqueChoice :
+    Nonempty (type_of% @CompleteLattice.sup.{u+1}) ↔ MereUniqueChoice.{u+1} :=
+  ⟨fun h => h.elim fun sup => ⟨@uniqueChoiceOfSup (@sup)⟩,
+   fun h => h.elim fun pick => ⟨@latticeSupOfUniqueChoice (@pick)⟩⟩
+
+theorem chainSupIffUniqueChoice :
+    Nonempty (type_of% @CCPO.csup.{u+1}) ↔ MereUniqueChoice.{u+1} :=
+  ⟨fun h => h.elim fun sup => ⟨@uniqueChoiceOfChainSup (@sup)⟩,
+   fun h => h.elim fun pick => ⟨@chainSupOfUniqueChoice (@pick)⟩⟩
+
 def uniqueChoiceOfBot (select : type_of% @Lean.Order.bot.{u}) : UniqueChoice.{u} := by
   intro α _ inh
   letI : CCPO α := singletonCCPO α inh
