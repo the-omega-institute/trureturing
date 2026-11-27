@@ -19,6 +19,7 @@ private unsafe def readTable (ctx : Lean.Macro.Context) (s : Lean.Macro.State) :
 private def readerCode := mkPrivateNameCore `OmegaChecks.InitPort.MacroMethodsNative `MacroMethodsNative.readTable
 
 private def operations := #[(`Lean.Macro.mkMethods, `Lean.Macro.mkMethodsImp, `Lean.Macro.mkMethodsImp),
+  (`Lean.Macro.mkMethodsImp, `Lean.Macro.mkMethodsImp, `Lean.Macro.mkMethodsImp),
   (`Lean.Macro.getMethods, `Lean.Macro.getMethodsImp, readerCode),
   (`Lean.Macro.getMethodsImp, `Lean.Macro.getMethodsImp, readerCode)]
 
@@ -48,7 +49,8 @@ public unsafe def main (args : List String) : IO Unit := do
   for (name, impl, code) in operations do
     let target := rename name
     let some entry := strict.find? target | continue
-    let logical := if name == impl then `Lean.Macro.getMethods else name
+    let logical := if name == `Lean.Macro.getMethodsImp then `Lean.Macro.getMethods
+      else if name == `Lean.Macro.mkMethodsImp then `Lean.Macro.mkMethods else name
     if name == impl then
       let some (.defnInfo alias) := strict.find? target | throw <| IO.userError s!"missing strict alias {target}"
       unless alias.safety == .unsafe && alias.value == mkConst (rename logical) do
@@ -87,7 +89,7 @@ public unsafe def main (args : List String) : IO Unit := do
     let some (.fdecl _ a r b i) := IR.findEnvDecl source impl | throw <| IO.userError s!"missing official code {impl}"
     let some (.fdecl _ a' r' b' i') := IR.findEnvDecl compiled target | throw <| IO.userError s!"missing code {target}"
     let sameABI := a.map (fun p => (p.ty, p.borrow)) == a'.map (fun p => (p.ty, p.borrow)) && r == r'
-    let expected := if name == `Lean.Macro.mkMethods then
+    let expected := if impl == `Lean.Macro.mkMethodsImp then
       match a, b, a', b' with
       | #[p], .inc x 1 _ false (.ret (.var y)), #[q], .inc u 1 _ false (.ret (.var v)) =>
         x == p.x && y == x && u == q.x && v == u

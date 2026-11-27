@@ -124,7 +124,7 @@ def check_linear_marks(stage, library, inputs, kind):
 
 
 def compile_generated(stage, product, graph, seed_ir, owners=None, *, original_seed=None, before_owner=None,
-                      check_sharing=None, check_macro_reader=False,
+                      check_sharing=None, check_macro_reader=False, check_macro_writer=False,
                       check_strings=True, check_string_marks=False, check_byte_marks=False, check_literals=True, check_mixed=True, check_rat=True, check_bootstrap=True,
                       check_list_search=True, check_decoding=True, check_names=True, check_toolchain=True, check_thunks=False, check_persistent=False, check_exclusive=False,
                       check_guarded_pointer=False, check_effects=False, check_address=False, check_pointer_comparison=False, check_shared_pointer=False,
@@ -186,6 +186,8 @@ def compile_generated(stage, product, graph, seed_ir, owners=None, *, original_s
                 env={**os.environ, "LEAN_PATH": str(library)})
             app = stage / "check-macro-methods"
             flags = ["-DCHECK_MACRO_METHODS_IMP"] if check_macro_reader else []
+            if check_macro_writer:
+                flags.append("-DCHECK_MACRO_MK_METHODS_IMP")
             run("leanc", *flags, macro_source, macro_client, HERE / "consumers" / "macro_methods_consumer.c", "-o", app)
             run(app)
             if literals.is_file():

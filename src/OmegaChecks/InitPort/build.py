@@ -311,6 +311,7 @@ def generate(stage, product, seed, roots, excluded, original_seed):
     compile_generated(stage, product, graph, original_seed.parents[1] / "ir",
                       original_seed=original_seed, before_owner={"OmegaInit.ShareCommon": install_sharing},
                       check_sharing=check_sharing,
+                      check_macro_writer=has_interfaces(inventory, {"Init.Prelude": {"Lean.Macro.mkMethodsImp"}}),
                       check_macro_reader=has_interfaces(inventory, {"Init.Prelude": {"Lean.Macro.getMethodsImp"}}),
                       check_list_pointer=has_interfaces(inventory, {"Init.Util": {"ptrEqList"}}),
                       check_pointer_hash=has_interfaces(inventory, {"Init.ShareCommon": {"ShareCommon.Object.ptrHash"}}),

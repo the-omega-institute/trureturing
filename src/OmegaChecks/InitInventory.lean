@@ -788,7 +788,7 @@ private def inventory (lib strictDir : System.FilePath) (visible strict full wit
         ("impliesAxiom", toJson (boundary.map (·.1.toString))),
         ("reductionWitness", toJson (boundary.map (·.2.toString))),
         ("strictModule", toJson (strictOwner.map Name.toString))]
-      let row ← if officialSigs.contains name && info.hasValue (allowOpaque := true) && !info.isUnsafe && !info.isPartial then do
+      let row ← if officialSigs.contains name && info.hasValue (allowOpaque := true) then do
         let hasSig := matched && strictSigs.contains strictName
         moduleNative := moduleNative.push ⟨matched, hasSig⟩
         pure (row.setObjVal! "strictNativeSignature" (toJson hasSig))

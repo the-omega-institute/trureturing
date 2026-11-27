@@ -2,6 +2,9 @@
 
 extern lean_obj_res runtime_initialize_MacroMethodsConsumer(uint8_t builtin);
 extern lean_obj_res omega_macro_methods_query(lean_obj_arg, lean_obj_arg, lean_obj_arg);
+#ifdef CHECK_MACRO_MK_METHODS_IMP
+extern lean_obj_res lp_trureturing_Omega_Lean_Macro_mkMethodsImp(b_lean_obj_arg);
+#endif
 #ifdef CHECK_MACRO_METHODS_IMP
 extern lean_obj_res lp_trureturing_Omega_Lean_Macro_getMethodsImp(b_lean_obj_arg, lean_obj_arg);
 #endif
@@ -25,6 +28,11 @@ int main(void) {
         lean_closure_set(callback, 0, lean_box(answer));
         lean_object *methods = lean_alloc_ctor(0, 5, 0);
         for (unsigned i = 0; i < 5; ++i) lean_ctor_set(methods, i, i == 2 ? callback : lean_box(0));
+#ifdef CHECK_MACRO_MK_METHODS_IMP
+        lean_object *handle = lp_trureturing_Omega_Lean_Macro_mkMethodsImp(methods);
+        if (handle != methods) return 4;
+        lean_dec(handle);
+#endif
         lean_object *context = lean_alloc_ctor(0, 6, 0);
         for (unsigned i = 0; i < 6; ++i) lean_ctor_set(context, i, lean_box(0));
         lean_object *state = lean_box(31 + answer);

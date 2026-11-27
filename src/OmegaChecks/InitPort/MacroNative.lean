@@ -12,7 +12,7 @@ open Lean
 namespace OmegaChecks.InitPort.MacroNative
 
 public def supported (name : Name) : Bool :=
-  [`Lean.TSyntaxArray.raw, `Lean.TSyntaxArray.mk].contains name || name.getPrefix == `Lean.Macro && [`getMethods, `expandMacro?, `getCurrNamespace, `hasDecl,
+  SyntaxArray.supported name || [`Lean.TSyntaxArray.raw, `Lean.TSyntaxArray.mk].contains name || name.getPrefix == `Lean.Macro && [`getMethods, `expandMacro?, `getCurrNamespace, `hasDecl,
     `resolveNamespace, `resolveGlobalName].contains (name.updatePrefix .anonymous)
 
 /-- These methods project the registered callback and pass its arguments through without
@@ -24,7 +24,7 @@ public def wrapper (source strict : Environment) (n : Name) (symbol : String) : 
   unless dst.type == InitKernelPort.translate InitKernelPort.portName src.type do
     throw <| IO.userError s!"different macro method types at {n}"
   if official.getPrefix == `Lean.TSyntaxArray then
-    let impl := official.appendAfter "Impl"
+    let impl := if SyntaxArray.supported official then official else official.appendAfter "Impl"
     let some (.defnInfo native) := source.find? impl | throw <| IO.userError s!"missing native syntax array conversion {impl}"
     SyntaxArray.checkRuntimeCast source native
     for name in [`Omega.Lean.TSyntax, `Omega.Array] do
