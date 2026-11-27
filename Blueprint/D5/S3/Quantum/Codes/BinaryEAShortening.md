@@ -2,7 +2,7 @@
 
 ## Abstract
 
-Surjective radical projections allow binary symplectic shortening. A spread rules out two successive rank-two shortenings at length seven. A conditional count rules out a rank-two radical site at length eight under the two-site rank bound.
+Surjective radical projections allow binary symplectic shortening. The spread and six-site Gram arguments rule out a rank-two radical site at length seven. A conditional count rules out a rank-two radical site at length eight under the two-site rank bound.
 
 **Theorem 1.1 (Shortening on a set of radical sites).**
 
@@ -64,7 +64,19 @@ $$\forall (H: \operatorname{Submodule}\left(\operatorname{ZMod}\left(2\right), (
 
 A rank-two radical site leaves dimensions two and six and a bound of two zeros outside the shortened radical. Any second surjective radical site would lift to a surjective joint projection on the two original sites, contradicting the length-seven spread obstruction.
 
-**Theorem 1.6 (Exclusion of a rank-two radical site at length eight).**
+**Theorem 1.6 (Exclusion of a rank-two radical site at length seven).**
+
+$$\forall (H: \operatorname{Submodule}\left(\operatorname{ZMod}\left(2\right), ((\operatorname{Fin}\left(7\right) \to \operatorname{ZMod}\left(2\right)) \times (\operatorname{Fin}\left(7\right) \to \operatorname{ZMod}\left(2\right)))\right)), \forall (U: \operatorname{Submodule}\left(\operatorname{ZMod}\left(2\right), ((\operatorname{Fin}\left(7\right) \to \operatorname{ZMod}\left(2\right)) \times (\operatorname{Fin}\left(7\right) \to \operatorname{ZMod}\left(2\right)))\right)), (H \le U) \Rightarrow \left((\operatorname{finrank}\left(\operatorname{ZMod}\left(2\right), H\right) = 4) \Rightarrow \left((\operatorname{finrank}\left(\operatorname{ZMod}\left(2\right), U\right) = 8) \Rightarrow \left((\forall (h: ((\operatorname{Fin}\left(7\right) \to \operatorname{ZMod}\left(2\right)) \times (\operatorname{Fin}\left(7\right) \to \operatorname{ZMod}\left(2\right)))), (h \in H) \Rightarrow \forall (u: ((\operatorname{Fin}\left(7\right) \to \operatorname{ZMod}\left(2\right)) \times (\operatorname{Fin}\left(7\right) \to \operatorname{ZMod}\left(2\right)))), (u \in U) \Rightarrow \operatorname{spForm}\left(7, h, u\right) = 0) \Rightarrow \left((\forall (x: ((\operatorname{Fin}\left(7\right) \to \operatorname{ZMod}\left(2\right)) \times (\operatorname{Fin}\left(7\right) \to \operatorname{ZMod}\left(2\right)))), (x \in U) \Rightarrow \left((\neg (x \in H)) \Rightarrow \operatorname{card}\left(\operatorname{zeroSites}\left(univ, x\right)\right) \le 3\right)) \Rightarrow \forall (i: \operatorname{Fin}\left(7\right)), (\operatorname{Surjective}\left(\operatorname{domRestrict}\left(\operatorname{site}\left(i\right), H\right)\right)) \Rightarrow False\right)\right)\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Codes/BinaryEAShortening.length_seven_no_rank_two_site` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+After shortening, a three-site projection excludes radical words of weight at most two and weight-three words supported on mixed radical types. Local symplectic coordinates leave either two triples or three pairs of types. In both profiles the Z projection has kernel equal to the radical and image equal to its annihilator. A weight-two Z vector in the two-triple profile permits three zeros after a radical shift. In the three-pair profile, shifts enforce pair mismatches and parity equations on the four Z-basis lifts. These equations make the symplectic Gram vanish. Lifting through the shortening then makes the original eight-dimensional code isotropic in dimension fourteen.
+
+**Theorem 1.7 (Exclusion of a rank-two radical site at length eight).**
 
 $$\forall (H: \operatorname{Submodule}\left(\operatorname{ZMod}\left(2\right), ((\operatorname{Fin}\left(8\right) \to \operatorname{ZMod}\left(2\right)) \times (\operatorname{Fin}\left(8\right) \to \operatorname{ZMod}\left(2\right)))\right)), \forall (U: \operatorname{Submodule}\left(\operatorname{ZMod}\left(2\right), ((\operatorname{Fin}\left(8\right) \to \operatorname{ZMod}\left(2\right)) \times (\operatorname{Fin}\left(8\right) \to \operatorname{ZMod}\left(2\right)))\right)), (H \le U) \Rightarrow \left((\operatorname{finrank}\left(\operatorname{ZMod}\left(2\right), H\right) = 4) \Rightarrow \left((\operatorname{finrank}\left(\operatorname{ZMod}\left(2\right), U\right) = 8) \Rightarrow \left((\forall (h: ((\operatorname{Fin}\left(8\right) \to \operatorname{ZMod}\left(2\right)) \times (\operatorname{Fin}\left(8\right) \to \operatorname{ZMod}\left(2\right)))), (h \in H) \Rightarrow \forall (u: ((\operatorname{Fin}\left(8\right) \to \operatorname{ZMod}\left(2\right)) \times (\operatorname{Fin}\left(8\right) \to \operatorname{ZMod}\left(2\right)))), (u \in U) \Rightarrow \operatorname{spForm}\left(8, h, u\right) = 0) \Rightarrow \left((\forall (x: ((\operatorname{Fin}\left(8\right) \to \operatorname{ZMod}\left(2\right)) \times (\operatorname{Fin}\left(8\right) \to \operatorname{ZMod}\left(2\right)))), (x \in U) \Rightarrow \left((\neg (x \in H)) \Rightarrow \operatorname{card}\left(\operatorname{zeroSites}\left(univ, x\right)\right) \le 3\right)) \Rightarrow \forall (i: \operatorname{Fin}\left(8\right)), (\operatorname{Surjective}\left(\operatorname{domRestrict}\left(\operatorname{site}\left(i\right), H\right)\right)) \Rightarrow \left((\forall (j: \operatorname{Fin}\left(8\right)), (j \ne i) \Rightarrow \operatorname{finrank}\left(\operatorname{ZMod}\left(2\right), \operatorname{range}\left(\operatorname{domRestrict}\left(\operatorname{restrictSites}\left(\{i, j\}\right), H\right)\right)\right) \le 3) \Rightarrow False\right)\right)\right)\right)\right)$$
 
@@ -80,6 +92,7 @@ Surjectivity at a second site of the shortened radical would lift to joint rank 
 
 - Truth anchor: `D5/S3/Quantum/Codes/BinaryEAShortening.five_site_gram_zero`
 - Truth anchor: `D5/S3/Quantum/Codes/BinaryEAShortening.length_eight_no_rank_two_site`
+- Truth anchor: `D5/S3/Quantum/Codes/BinaryEAShortening.length_seven_no_rank_two_site`
 - Truth anchor: `D5/S3/Quantum/Codes/BinaryEAShortening.length_seven_no_surjective_radical_pair`
 - Truth anchor: `D5/S3/Quantum/Codes/BinaryEAShortening.length_seven_rank_two_shortens_to_rank_one`
 - Truth anchor: `D5/S3/Quantum/Codes/BinaryEAShortening.seven_surviving_sites_no_rank_one_radical`
