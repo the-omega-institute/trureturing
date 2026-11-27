@@ -73,9 +73,9 @@ private theorem cut_mono (S : Spectrum) {a b : ℝ} (hab : a ≤ b) :
   simp only [Spectrum.cut, Set.Finite.mem_toFinset, Set.mem_ofPred_eq] at hj ⊢
   exact hj.trans hab
 
-private theorem interval_mass_le (S : Spectrum) {A D : ℝ}
-    (hA : 1 ≤ A) (hcount : ∀ Y ≥ A, |(S.N Y : ℝ) - mainTerm Y| ≤ D)
-    {Y u r : ℝ} (hY : A ≤ Y) (hY1 : 1 < Y) (hu : u ≤ Y) (hr : 0 ≤ r) :
+private theorem interval_mass_le (S : Spectrum) {A D Y u r : ℝ}
+    (hA : 1 ≤ A) (hcount : ∀ x, A ≤ x → x ≤ Y → |(S.N x : ℝ) - mainTerm x| ≤ D)
+    (hY : A ≤ Y) (hY1 : 1 < Y) (hu : u ≤ Y) (hr : 0 ≤ r) :
     (∑ j ∈ S.cut Y, if S.gamma j - u ∈ Icc (-r) r then (S.mult j : ℝ) else 0) ≤
       2 * (c * Real.log Y) * r + ((S.N A : ℝ) + 2 * D + c) := by
   classical
@@ -119,7 +119,7 @@ private theorem interval_mass_le (S : Spectrum) {A D : ℝ}
         rw [Finset.sum_union hdisj, Finset.sum_sdiff_eq_sub (cut_mono S hab)]
         simp only [Spectrum.N, Nat.cast_sum]
   have hcountDiff : (S.N b : ℝ) - (S.N a : ℝ) ≤ mainTerm b - mainTerm a + 2 * D := by
-    linarith [(abs_le.mp (hcount a haA)).1, (abs_le.mp (hcount b hbA)).2]
+    linarith [(abs_le.mp (hcount a haA (hab.trans hbY))).1, (abs_le.mp (hcount b hbA hbY)).2]
   have hmain := countMain_sub_le (by linarith : 0 < a) hab hbY
   have hslack : c * Real.log Y * δ = c := by dsimp [δ]; field_simp
   have hscale := mul_le_mul_of_nonneg_left hwidth (mul_nonneg c_pos.le hlog.le)
@@ -136,14 +136,17 @@ def pairSum (S : Spectrum) (Y t : ℝ) : ℝ :=
   ∑ j ∈ S.cut Y, ∑ k ∈ S.cut Y,
     (S.mult j : ℝ) * (S.mult k : ℝ) * pairCos (S.gamma j - S.gamma k) t
 
-private theorem pairSum_le (S : Spectrum) {A D : ℝ} (hA : 1 ≤ A)
-    (hcount : ∀ Y ≥ A, |(S.N Y : ℝ) - mainTerm Y| ≤ D)
-    {Y : ℝ} (hY : A ≤ Y) (hY1 : 1 < Y) (t : ℝ) :
-    pairSum S Y t ≤ (S.N Y : ℝ) *
+/-- Count control on the interval from the initial height through the cutoff bounds the
+absolute ordered pair sum. -/
+theorem abs_pairSum_le_of_local_discrepancy (S : Spectrum) {A D Y : ℝ} (hA : 1 ≤ A)
+    (hcount : ∀ x, A ≤ x → x ≤ Y → |(S.N x : ℝ) - mainTerm x| ≤ D)
+    (hY : A ≤ Y) (hY1 : 1 < Y) (t : ℝ) :
+    |pairSum S Y t| ≤ (S.N Y : ℝ) *
       (2 * Real.pi * (c * Real.log Y) + ((S.N A : ℝ) + 2 * D + c)) := by
   classical
   let B : ℝ := (S.N A : ℝ) + 2 * D + c
   unfold pairSum
+  refine (Finset.abs_sum_le_sum_abs _ _).trans ?_
   calc
     _ ≤ ∑ j ∈ S.cut Y, (S.mult j : ℝ) * (2 * Real.pi * (c * Real.log Y) + B) := by
       apply Finset.sum_le_sum
@@ -155,14 +158,15 @@ private theorem pairSum_le (S : Spectrum) {A D : ℝ} (hA : 1 ≤ A)
         (fun r hr => interval_mass_le S hA hcount hY hY1 hjY hr)
       apply le_trans _ (mul_le_mul_of_nonneg_left hrow (Nat.cast_nonneg _))
       rw [Finset.mul_sum]
+      refine (Finset.abs_sum_le_sum_abs _ _).trans ?_
       apply Finset.sum_le_sum
       intro k _
       rw [pairCos, kernel, show (S.gamma k - S.gamma j) ^ 2 =
-        (S.gamma j - S.gamma k) ^ 2 by ring, ← mul_assoc]
-      simpa only [mul_assoc] using mul_le_of_le_one_right
-        (show 0 ≤ (S.mult j : ℝ) * (S.mult k : ℝ) *
-          (4 / (4 + (S.gamma j - S.gamma k) ^ 2)) by positivity)
-        (Real.cos_le_one ((S.gamma j - S.gamma k) * t))
+        (S.gamma j - S.gamma k) ^ 2 by ring, ← mul_assoc, abs_mul, abs_of_nonneg (by positivity)]
+      have hweight : 0 ≤ (S.mult j : ℝ) * (S.mult k : ℝ) *
+          (4 / (4 + (S.gamma j - S.gamma k) ^ 2)) := by positivity
+      simpa only [mul_assoc] using
+        mul_le_of_le_one_right hweight (Real.abs_cos_le_one ((S.gamma j - S.gamma k) * t))
     _ = _ := by rw [← Finset.sum_mul]; simp only [B, Spectrum.N, Nat.cast_sum]
 
 /-- Bounded two-term discrepancy implies the normalized counting asymptotic. -/
@@ -205,7 +209,9 @@ theorem pairSum_le_of_bounded_discrepancy (S : Spectrum) {D : ℝ}
   intro t
   have hlog := Real.log_pos hY1
   have hY0 : 0 < Y := by linarith
-  apply (pairSum_le S hA (fun Z hZ => hA₀ Z ((le_max_right _ _).trans hZ)) hY hY1 t).trans
+  have hpair := abs_pairSum_le_of_local_discrepancy S hA
+    (fun Z hZ _ => hA₀ Z ((le_max_right _ _).trans hZ)) hY hY1 t
+  apply ((le_abs_self (pairSum S Y t)).trans hpair).trans
   change (S.N Y : ℝ) * (2 * Real.pi * (c * Real.log Y) + B) ≤ _
   calc
     _ = ((S.N Y : ℝ) / (Y * Real.log Y) * (2 * Real.pi * c + B / Real.log Y)) *

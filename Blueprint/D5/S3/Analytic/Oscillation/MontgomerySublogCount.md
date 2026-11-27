@@ -28,13 +28,12 @@ Lean statement: `D5/S3/Analytic/Oscillation/MontgomerySublogCount.pairSum_le_of_
 
 *Commentary.*
 
-For every ε > 0 and all sufficiently large Y, the inclusive ordered Lorentz pair sum at every real phase parameter is at most (2πc²+ε)Y(log Y)².
+For every ε > 0 and all sufficiently large Y, the absolute value of the inclusive ordered Lorentz pair sum at every real phase parameter is at most (2πc²+ε)Y(log Y)².
 
-Given η > 0, choose A so that the absolute count error is at most η log Y at every height from A through Y. Pad the left endpoint by 1/log Y and charge the early ordinates to N(A). The two endpoint errors are at most 2η log Y in total. Integration over the Lorentz kernel's superlevel intervals bounds each row, and the leading count converts the result into the uniform coefficient.
+Given η > 0, choose A so that the absolute count error is at most η log Y at every height from A through Y. Apply the finite-cutoff count bound with D = η log Y. The two endpoint errors contribute at most 2η log Y to each row. The leading count converts the row bound into the uniform coefficient by taking η sufficiently small.
 
 ## References
 
 - Truth anchor: `D5/S3/Analytic/Oscillation/MontgomerySublogCount.countAsymptotic_of_sublog`
 - Truth anchor: `D5/S3/Analytic/Oscillation/MontgomerySublogCount.pairSum_le_of_sublog_discrepancy`
 - Dependency: [D5/S3/Analytic/Oscillation/MontgomeryCountUpper](MontgomeryCountUpper.md)
-- Dependency: [D5/S3/Analytic/Oscillation/SpectrumPhaseCutoff](SpectrumPhaseCutoff.md)

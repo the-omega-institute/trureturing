@@ -24,7 +24,7 @@ internal sealed class MontgomerySublogCountDocument : IScribeDocumentDefinition
                 H("A uniform leading upper coefficient"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(
-                    Paragraph(Text("For every ε > 0 and all sufficiently large Y, the inclusive ordered Lorentz pair sum at every real phase parameter is at most (2πc²+ε)Y(log Y)².")),
-                    Paragraph(Text("Given η > 0, choose A so that the absolute count error is at most η log Y at every height from A through Y. Pad the left endpoint by 1/log Y and charge the early ordinates to N(A). The two endpoint errors are at most 2η log Y in total. Integration over the Lorentz kernel's superlevel intervals bounds each row, and the leading count converts the result into the uniform coefficient."))),
+                    Paragraph(Text("For every ε > 0 and all sufficiently large Y, the absolute value of the inclusive ordered Lorentz pair sum at every real phase parameter is at most (2πc²+ε)Y(log Y)².")),
+                    Paragraph(Text("Given η > 0, choose A so that the absolute count error is at most η log Y at every height from A through Y. Apply the finite-cutoff count bound with D = η log Y. The two endpoint errors contribute at most 2η log Y to each row. The leading count converts the row bound into the uniform coefficient by taking η sufficiently small."))),
                 DescribeRole.Theorem))));
 }
