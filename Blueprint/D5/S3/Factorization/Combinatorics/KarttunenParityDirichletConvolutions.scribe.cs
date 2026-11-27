@@ -70,15 +70,18 @@ internal sealed class KarttunenParityDirichletConvolutionsDocument : IScribeDocu
                 Equal(F.Id("claim"), Parenthesized(ClaimBody())), Conjectures),
             Node("result", "Both identities", ClaimBody(), AssessedProvenance.FromRepo(Source),
                 "Swapping the two factors counts diagonal pairs once and off-diagonal pairs twice. The prime-power convolution identities reduce both doubled sums to the same arithmetic function, whose values are zero or two. The coefficient C(1) is one and every later coefficient is even, so convolution by C preserves the residue modulo two.",
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("a369255-dirichlet"), ResolutionKind.Proved)))));
 
     private static DocumentBlock SourceDefinition(string name, string title, Formula formula, string prose) =>
         Node(name, title, formula, AssessedProvenance.FromLiterature(Source), prose, DescribeRole.Definition);
 
     private static DocumentBlock Node(string name, string title, Formula formula,
-        AssessedProvenance provenance, string prose, DescribeRole role) => Describe.Lean(
+        AssessedProvenance provenance, string prose, DescribeRole role,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create("a369255-" + name.ToLowerInvariant()), DeclarationHandle.Create(Prefix + name),
-            H(title), StatementSource.FromAuthor(Disp(formula)), provenance, Blocks(Paragraph(Text(prose))), role);
+            H(title), StatementSource.FromAuthor(Disp(formula)), provenance, Blocks(Paragraph(Text(prose))), role,
+            openProblemResolutionClaim: resolution);
 
     private static Formula ClaimBody()
     {

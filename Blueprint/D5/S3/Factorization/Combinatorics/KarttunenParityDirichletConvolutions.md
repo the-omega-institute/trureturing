@@ -82,6 +82,10 @@ $$\forall n \in Nat,\; (1 \le n) \Rightarrow ((((\operatorname{Nat}.\operatornam
 
 *Proof.* Machine-checked in Lean as `D5/S3/Factorization/Combinatorics/KarttunenParityDirichletConvolutions.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/a369255-dirichlet` (proved) by `D5/S3/Factorization/Combinatorics/KarttunenParityDirichletConvolutions.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"a369255-dirichlet","declaration_gid":"D5/S3/Factorization/Combinatorics/KarttunenParityDirichletConvolutions.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Antti Karttunen; Sequence Machine (2024). *OEIS A369255, two Dirichlet convolution conjectures*. URL: <https://oeis.org/A369255/internal>.
