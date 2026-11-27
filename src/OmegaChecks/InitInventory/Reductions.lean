@@ -176,7 +176,7 @@ private def replayWitnesses (env : Environment) : IO Unit := do
       ``InternalOrder.funextOfCompletePointwiseOrder, ``InternalOrder.funextOfChainCompletePointwiseOrder,
       ``InternalOrder.funextOfPointwiseOrder, ``InternalOrder.propextOfImplicationOrder,
       ``InternalOrder.propextOfReverseImplicationOrder, ``InternalOrder.excludedMiddleOfFlatSuprema,
-      ``InternalOrder.excludedMiddleOfFlatCSup,
+      ``InternalOrder.excludedMiddleOfFlatCSup, ``InternalOrder.flatCCPOIffEM, ``InternalOrder.optionCCPOIffEM,
       ``InternalOrder.uniqueSelectionOfCompletePi, ``InternalOrder.uniqueSelectionOfChainCompletePi,
       ``InternalOrder.uniqueChoiceOfLfp, ``InternalOrder.uniqueChoiceOfMonotoneLfp,
       ``InternalOrder.uniqueChoiceOfFix, ``InternalOrder.uniqueChoiceOfProdSup,

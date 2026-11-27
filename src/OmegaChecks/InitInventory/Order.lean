@@ -489,6 +489,48 @@ theorem excludedMiddleOfFlatCCPO (order : type_of% @Lean.Order.FlatOrder.instCCP
     (p : Prop) : p ∨ ¬p :=
   excludedMiddleOfDecisionChain (@order (Option (Decidable p)) none) some id (fun _ => rfl)
 
+/-- In a flat order a chain containing a nonbottom element has that element as its supremum.
+Otherwise excluded middle shows every member is the bottom. Both choices take place in Prop. -/
+@[instance_reducible] def flatCCPOOfEM (em : ∀ p : Prop, p ∨ ¬p) :
+    type_of% @FlatOrder.instCCPO.{u} := fun {α b} => {
+  toPartialOrder := FlatOrder.instOrder
+  has_csup := by
+    intro c ordered
+    cases em (∃ x, c x ∧ x ≠ b) with
+    | inl existsNonbottom =>
+      obtain ⟨s, member, above⟩ := existsNonbottom
+      refine ⟨s, fun x => ⟨?_, fun upper => upper s member⟩⟩
+      intro sx y hy
+      cases ordered y s hy member with
+      | inl ys => exact PartialOrder.rel_trans ys sx
+      | inr sy =>
+        change FlatOrder.rel s y at sy
+        cases sy with
+        | bot => exact (above rfl).elim
+        | refl => exact sx
+    | inr allBottom =>
+      refine ⟨b, fun x => ⟨?_, fun _ => FlatOrder.rel.bot⟩⟩
+      intro _ y hy
+      cases em (y = b) with
+      | inl same => cases same; exact FlatOrder.rel.bot
+      | inr above => exact (allBottom ⟨y, hy, above⟩).elim }
+
+@[instance_reducible] def optionCCPOOfEM (em : ∀ p : Prop, p ∨ ¬p) :
+    type_of% @Lean.Order.instCCPOOption.{u} :=
+  fun {α} => @flatCCPOOfEM.{u+1} em (Option α) none
+
+theorem flatCCPOIffEM : Nonempty (type_of% @FlatOrder.instCCPO.{1}) ↔ (∀ p : Prop, p ∨ ¬p) :=
+  ⟨fun h => h.elim fun order => excludedMiddleOfFlatCCPO (@order), fun em => ⟨@flatCCPOOfEM.{1} em⟩⟩
+
+theorem optionCCPOIffEM : Nonempty (type_of% @Lean.Order.instCCPOOption.{0}) ↔ (∀ p : Prop, p ∨ ¬p) :=
+  ⟨fun h => h.elim fun order => excludedMiddleOfOptionCCPO (@order), fun em => ⟨@optionCCPOOfEM.{0} em⟩⟩
+
+example (em : ∀ p : Prop, p ∨ ¬p) {α : Sort u} {b : α} :
+    (@flatCCPOOfEM em α b).toPartialOrder = FlatOrder.instOrder := rfl
+
+example (em : ∀ p : Prop, p ∨ ¬p) {α : Type u} :
+    (@optionCCPOOfEM em α).toPartialOrder = Lean.Order.instPartialOrderOption := rfl
+
 private theorem excludedMiddleOfStateResult {ε σ : Type} {p : Prop}
     (order : CCPO (EST ε σ (Option (Decidable p)))) : p ∨ ¬p := by
   obtain ⟨w⟩ := Void.instNonempty (σ := σ)
