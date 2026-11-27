@@ -103,7 +103,8 @@ private def monadicSeparator (n : Name) : Bool :=
   [`Array.mapSepElemsM, `Array.filterSepElemsM].contains n
 
 private def syntaxTreeFunction (n : Name) : Bool :=
-  [`Lean.mkIdent, `Lean.mkIdentFrom, `Lean.mkCIdentFrom, `Lean.HygieneInfo.mkIdent,
+  [`Lean.TSyntax.Compat.instCoeTailArraySyntaxTSepArray, `Lean.TSyntax.Compat.instCoeTailArraySyntaxTSyntaxArray,
+   `Lean.Syntax.instCoeOutTSyntaxArrayArray, `Lean.mkIdent, `Lean.mkIdentFrom, `Lean.mkCIdentFrom, `Lean.HygieneInfo.mkIdent,
    `Lean.TSyntax.getHexNumVal, `Lean.TSyntax.getHexNumSize, `Lean.TSyntax.getDocString,
    `Lean.Parser.Tactic.appendConfig, `Lean.Parser.Tactic.getConfigItems, `Lean.Parser.Tactic.mkOptConfig,
    `Array.mapSepElems, `Array.filterSepElems, `Lean.Syntax.TSepArray.getElems,
@@ -736,6 +737,17 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
     checkIntLayout strict
     IndexedNative.checkDataTypes source strict [`Option]
     pure ("lean_obj_res", s!"omega_optional_from_lean({call}, omega_int_from_lean)")
+  else if syntaxTreeFunction official && [`CoeOut, `CoeTail].contains dom && ret == .object && result == .object then do
+    for (env, cls) in [(source, dom), (strict, `Omega ++ dom)] do
+      let some (some field) := impureTrivialStructureInfoExt.find? env cls
+        | throw <| IO.userError s!"missing syntax coercion layout {cls}"
+      unless field.fieldIdx == 0 do throw <| IO.userError s!"invalid syntax coercion field {cls}"
+    let arrayLike (t : Expr) := [`Lean.TSyntaxArray, `Lean.Syntax.TSepArray].contains t.getAppFn.constName ||
+      (t.isAppOfArity `Array 1 && (t.getArg! 0).isConstOf `Lean.Syntax)
+    unless type.getAppNumArgs == 2 && type.getAppArgs.all arrayLike do throw <| IO.userError "unexpected syntax coercion endpoints"
+    prepare := prepare ++ "  lean_object *coerce = lean_alloc_closure((void *)omega_syntax_array_coe, 2, 1);\n"
+    prepare := prepare ++ s!"  lean_closure_set(coerce, 0, {call});\n"
+    pure ("lean_obj_res", "coerce")
   else if syntaxTreeFunction official && ([`Lean.TSyntaxArray, `Lean.Syntax.TSepArray].contains dom ||
       (dom == `Array && (type.getArg! 0).isConstOf `Lean.Syntax)) && ret == .object && result == .tobject then do
     prepare := prepare ++ s!"  lean_object *values = {call};\n"

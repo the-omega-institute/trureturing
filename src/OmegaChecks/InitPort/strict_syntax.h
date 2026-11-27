@@ -140,3 +140,12 @@ static lean_obj_res omega_syntax_map(lean_obj_arg f, lean_obj_arg stx) {
     lean_dec(mapped);
     return out;
 }
+
+static lean_obj_res omega_syntax_array_coe(lean_obj_arg coerce, lean_obj_arg values) {
+    lean_object *native = omega_syntax_array_to_lean(values);
+    lean_dec(values);
+    lean_object *converted = lean_apply_1(coerce, native);
+    lean_object *out = omega_syntax_array_from_lean(converted);
+    lean_dec(converted);
+    return out;
+}
