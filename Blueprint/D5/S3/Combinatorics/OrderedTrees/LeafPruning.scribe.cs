@@ -4,7 +4,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.OrderedTrees;
 
 internal sealed class LeafPruningDocument : IScribeDocumentDefinition
 {
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Combinatorics/wisemanwu2024a358588");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/RecurrenceAlgebraic/wisemanwu2024a358588");
     private const string Prefix = "D5/S3/Combinatorics/OrderedTrees/LeafPruning.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(

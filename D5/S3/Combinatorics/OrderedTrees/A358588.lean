@@ -24,93 +24,95 @@ open scoped PowerSeries BigOperators
 
 namespace D5.S3.Combinatorics.OrderedTrees.A358588
 
-private noncomputable def geom : ℤ⟦X⟧ := mk 1
-private def weighted : ℤ⟦X⟧ := mk (fun u ↦ 2 * (u : ℤ) + 1)
+private noncomputable def geometricSeries : ℤ⟦X⟧ := mk 1
+private def weightedGeometricSeries : ℤ⟦X⟧ := mk (fun u ↦ 2 * (u : ℤ) + 1)
 
-private theorem weighted_eq : weighted = 2 * geom ^ 2 - geom := by
+private theorem weightedGeometricSeries_eq : weightedGeometricSeries = 2 * geometricSeries ^ 2 - geometricSeries := by
   have hg := mk_one_pow_eq_mk_choose_add ℤ 1
-  change geom ^ 2 = _ at hg
+  change geometricSeries ^ 2 = _ at hg
   rw [hg]
   ext n
-  simp [weighted, geom, Nat.choose_one_right]
+  simp [weightedGeometricSeries, geometricSeries, Nat.choose_one_right]
   ring
 
-private theorem weighted_identity : (1 - X)^2 * weighted = 1 + X := by
-  have h : (1 - X) * geom = 1 := by
+private theorem weightedGeometricSeries_identity : (1 - X)^2 * weightedGeometricSeries = 1 + X := by
+  have h : (1 - X) * geometricSeries = 1 := by
     rw [mul_comm]
     exact mk_one_mul_one_sub_eq_one ℤ
-  rw [weighted_eq]
+  rw [weightedGeometricSeries_eq]
   calc
-    (1 - X)^2 * (2 * geom ^ 2 - geom)
-      = 2 * ((1 - X) * geom)^2 - (1 - X) * ((1 - X) * geom) := by ring
+    (1 - X)^2 * (2 * geometricSeries ^ 2 - geometricSeries)
+      = 2 * ((1 - X) * geometricSeries)^2 - (1 - X) * ((1 - X) * geometricSeries) := by ring
     _ = 1 + X := by rw [h]; ring
 
-private noncomputable def y : ℤ⟦X⟧ := X * geom^2
-private theorem has_y : HasSubst y := .of_constantCoeff_zero' (by simp [y])
-private noncomputable def proposed : ℤ⟦X⟧ := X^5 * geom^5 * weighted.subst y
+private noncomputable def skeletonArgument : ℤ⟦X⟧ := X * geometricSeries^2
+private theorem hasSubst_skeletonArgument : HasSubst skeletonArgument :=
+  .of_constantCoeff_zero' (by simp [skeletonArgument])
+private noncomputable def decorationSeries : ℤ⟦X⟧ :=
+  X^5 * geometricSeries^5 * weightedGeometricSeries.subst skeletonArgument
 
 private theorem rational_identity :
-    ((1 - X)^3 * (1 - 3 * X + X^2)^2) * proposed =
+    ((1 - X)^3 * (1 - 3 * X + X^2)^2) * decorationSeries =
       X^5 * (1 - X + X^2) := by
-  have h : (1 - X) * geom = 1 := by
+  have h : (1 - X) * geometricSeries = 1 := by
     rw [mul_comm]
     exact mk_one_mul_one_sub_eq_one ℤ
-  have hw : (1 - y)^2 * weighted.subst y = 1 + y := by
-    have hh := congrArg (substAlgHom (R := ℤ) has_y) weighted_identity
+  have hw : (1 - skeletonArgument)^2 * weightedGeometricSeries.subst skeletonArgument = 1 + skeletonArgument := by
+    have hh := congrArg (substAlgHom (R := ℤ) hasSubst_skeletonArgument) weightedGeometricSeries_identity
     simpa only [map_mul, map_pow, map_sub, map_one, map_add, substAlgHom_X, coe_substAlgHom] using hh
-  have hp : (1 - 3 * X + X^2) * geom^2 = 1 - y := by
-    have hh : ((1 - X) * geom)^2 = 1 := by rw [h, one_pow]
-    unfold y
+  have hp : (1 - 3 * X + X^2) * geometricSeries^2 = 1 - skeletonArgument := by
+    have hh : ((1 - X) * geometricSeries)^2 = 1 := by rw [h, one_pow]
+    unfold skeletonArgument
     linear_combination hh
-  have hq : (1 - X)^2 * (1 + y) = 1 - X + X^2 := by
-    have hh : ((1 - X) * geom)^2 = 1 := by rw [h, one_pow]
-    unfold y
+  have hq : (1 - X)^2 * (1 + skeletonArgument) = 1 - X + X^2 := by
+    have hh : ((1 - X) * geometricSeries)^2 = 1 := by rw [h, one_pow]
+    unfold skeletonArgument
     linear_combination X * hh
-  unfold proposed
+  unfold decorationSeries
   calc
-    _ = X^5 * (((1 - X) * geom) * ((1 - 3 * X + X^2) * geom^2)^2 *
-          ((1 - X)^2 * weighted.subst y)) := by ring
-    _ = X^5 * ((1 - X)^2 * ((1 - y)^2 * weighted.subst y)) := by rw [h, hp]; ring
+    _ = X^5 * (((1 - X) * geometricSeries) * ((1 - 3 * X + X^2) * geometricSeries^2)^2 *
+          ((1 - X)^2 * weightedGeometricSeries.subst skeletonArgument)) := by ring
+    _ = X^5 * ((1 - X)^2 * ((1 - skeletonArgument)^2 * weightedGeometricSeries.subst skeletonArgument)) := by rw [h, hp]; ring
     _ = X^5 * (1 - X + X^2) := by rw [hw, hq]
 
 private theorem finite_subst (j n : ℕ) (hj : j ≤ n) :
-    coeff j (weighted.subst y) =
-      coeff j (∑ u ∈ Finset.range (n + 1), C (2 * (u : ℤ) + 1) * y^u) := by
+    coeff j (weightedGeometricSeries.subst skeletonArgument) =
+      coeff j (∑ u ∈ Finset.range (n + 1), C (2 * (u : ℤ) + 1) * skeletonArgument^u) := by
   classical
-  rw [coeff_subst' has_y]
-  simp only [weighted, coeff_mk, smul_eq_mul, map_sum, coeff_C_mul]
+  rw [coeff_subst' hasSubst_skeletonArgument]
+  simp only [weightedGeometricSeries, coeff_mk, smul_eq_mul, map_sum, coeff_C_mul]
   apply finsum_eq_sum_of_support_subset
   intro u hu
   apply Finset.mem_range.mpr
   by_contra! h
   have hju : ¬ u ≤ j := by omega
-  simp [Function.mem_support, y, mul_pow, coeff_X_pow_mul', hju] at hu
+  simp [Function.mem_support, skeletonArgument, mul_pow, coeff_X_pow_mul', hju] at hu
 
 private theorem coeff_term (n u : ℕ) :
-    coeff n ((X^5 * geom^5) * (C (2 * (u : ℤ) + 1) * y^u)) =
+    coeff n ((X^5 * geometricSeries^5) * (C (2 * (u : ℤ) + 1) * skeletonArgument^u)) =
       if u + 5 ≤ n then (2 * (u : ℤ) + 1) * ((n + u - 1).choose (2 * u + 4) : ℤ)
       else 0 := by
   have hterm :
-      (X^5 * geom^5) * (C (2 * (u : ℤ) + 1) * y^u) =
-      C (2 * (u : ℤ) + 1) * (X^(u + 5) * geom^((2 * u + 4) + 1)) := by
-    unfold y
+      (X^5 * geometricSeries^5) * (C (2 * (u : ℤ) + 1) * skeletonArgument^u) =
+      C (2 * (u : ℤ) + 1) * (X^(u + 5) * geometricSeries^((2 * u + 4) + 1)) := by
+    unfold skeletonArgument
     rw [mul_pow, ← pow_mul, show 2 * u + 4 + 1 = 5 + 2 * u by omega, pow_add, pow_add]
     ring
   rw [hterm, coeff_C_mul, coeff_X_pow_mul']
   have hg := mk_one_pow_eq_mk_choose_add ℤ (2 * u + 4)
-  change geom ^ (2 * u + 4 + 1) = _ at hg
+  change geometricSeries ^ (2 * u + 4 + 1) = _ at hg
   rw [hg]
   by_cases hu : u + 5 ≤ n
   · simp only [hu, ite_true, coeff_mk]
     rw [show 2 * u + 4 + (n - (u + 5)) = n + u - 1 by omega]
   · simp [hu]
 
-private theorem actual_series : mk (fun n ↦ (count n : ℤ)) = proposed := by
+private theorem actual_series : mk (fun n ↦ (count n : ℤ)) = decorationSeries := by
   ext n
-  have he : coeff n proposed =
-      coeff n ((X^5 * geom^5) *
-        (∑ u ∈ Finset.range (n + 1), C (2 * (u : ℤ) + 1) * y^u)) := by
-    unfold proposed
+  have he : coeff n decorationSeries =
+      coeff n ((X^5 * geometricSeries^5) *
+        (∑ u ∈ Finset.range (n + 1), C (2 * (u : ℤ) + 1) * skeletonArgument^u)) := by
+    unfold decorationSeries
     rw [coeff_mul, coeff_mul]
     apply Finset.sum_congr rfl
     intro ij hij

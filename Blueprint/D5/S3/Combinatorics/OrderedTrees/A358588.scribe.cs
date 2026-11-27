@@ -1,12 +1,13 @@
 using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.OrderedTrees;
 
 internal sealed class A358588Document : IScribeDocumentDefinition
 {
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Combinatorics/wisemanwu2024a358588");
+        LibraryNoteRef.Create("D5/L/RecurrenceAlgebraic/wisemanwu2024a358588");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The actual ordered-tree counts satisfy Wu’s formal generating function and signed recurrence.",
@@ -43,14 +44,14 @@ internal sealed class A358588Document : IScribeDocumentDefinition
 
     private static Formula ResultFormula()
     {
-        var n = Id("n");
-        var x = Id("x");
-        var set = new Formula.Subscript(Id("T"), n);
-        var cardinal = Seq(Operatorname, Grp(Id("Finite")), Open, set, Close, Sp, Land, Sp,
-            Count(n), Sp, Eq, Sp, Vert, set, Vert);
-        var coefficients = Seq(Sum, Underscore, Grp(Id("k"), Eq, D(0)), Caret, Grp(Infty));
-        var series = Seq(coefficients, Sp, Count(Id("k")),
-            new Formula.Power(x, Id("k")));
+        var n = F.Id("n");
+        var x = F.Id("x");
+        var set = new Formula.Subscript(F.Id("T"), n);
+        var cardinal = Seq(Operatorname, Grp(F.Id("Finite")), Open, set, Close, Sp, Land, Sp,
+            Count(n), Sp, Eq, Sp, Lvert, Sp, set, Rvert);
+        var coefficients = Seq(Sum, Underscore, Grp(F.Id("k"), Eq, D(0)), Caret, Grp(Infty));
+        var series = Seq(coefficients, Sp, Count(F.Id("k")),
+            new Formula.Power(x, F.Id("k")));
         var numerator = Seq(new Formula.Power(x, D(5)), Open,
             Minus, new Formula.Power(x, D(2)), Plus, x, Minus, D(1), Close);
         var denominator = Seq(
@@ -61,7 +62,7 @@ internal sealed class A358588Document : IScribeDocumentDefinition
             Plus, D(5, 8), Previous(3), Minus, D(5, 8), Previous(4),
             Plus, D(3, 2), Previous(5), Minus, D(9), Previous(6), Plus, Previous(7));
         return Disp(new Formula.Aligned([
-            Seq(Forall, Sp, n, Sp, InMacro, Sp, Mathbb, Grp(Id("N")), Comma, Quad, Amp, cardinal),
+            Seq(Forall, Sp, n, Sp, InMacro, Sp, Mathbb, Grp(F.Id("N")), Comma, Quad, Amp, cardinal),
             Seq(Amp, Land, Sp, Count(D(0)), Eq, D(0)),
             Seq(Amp, Land, Sp, series, Sp, Eq, Sp, new Formula.Fraction(numerator, denominator)),
             Seq(Amp, Land, Sp, Open, Count(D(1)), Comma, Count(D(2)), Comma,
@@ -74,7 +75,7 @@ internal sealed class A358588Document : IScribeDocumentDefinition
         ]));
     }
 
-    private static Formula Count(Formula index) => Seq(Id("a"), Open, index, Close);
+    private static Formula Count(Formula index) => Seq(F.Id("a"), Open, index, Close);
 
-    private static Formula Previous(byte offset) => Count(Seq(Id("n"), Minus, D(offset)));
+    private static Formula Previous(byte offset) => Count(Seq(F.Id("n"), Minus, D(offset)));
 }

@@ -1,5 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.OrderedTrees;
 
@@ -30,10 +31,10 @@ internal sealed class LeafGapCountDocument : IScribeDocumentDefinition
 
     private static Formula CountFormula()
     {
-        var n = Id("n");
-        var u = Id("u");
+        var n = F.Id("n");
+        var u = F.Id("u");
         var sum = new Formula.Subscript(Sum, Seq(D(0), Sp, Leq, Sp, u, Sp, Lt, Sp, n, Minus, D(4)));
-        return Disp(Seq(Id("a"), Open, n, Close, Sp, Eq, Sp, sum, Sp,
+        return Disp(Seq(F.Id("a"), Open, n, Close, Sp, Eq, Sp, sum, Sp,
             Open, D(2), u, Plus, D(1), Close,
             new Formula.FunctionCall(FormulaIdentifier.Create("choose"),
                 [Seq(n, Plus, u, Minus, D(1)), Seq(D(2), u, Plus, D(4))])));
