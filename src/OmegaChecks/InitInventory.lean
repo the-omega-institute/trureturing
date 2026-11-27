@@ -557,7 +557,7 @@ private def logicalConsequence? (owner name : Name) : Option (Name × Name) := d
 private def nativeSignatures (env : Environment) (idx : ModuleIdx) : NameSet :=
   (Compiler.LCNF.impureSigExt.getModuleEntries env idx).foldl (fun acc sig => acc.insert sig.name) {}
 
-/-- One entry per public safe definition with a body and an official native signature. -/
+/-- One entry per public declaration with a body and an official native signature. -/
 private structure NativeSite where
   strictDeclaration : Bool
   strictSignature : Bool

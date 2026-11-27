@@ -72,9 +72,17 @@ class CoverageTest(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "incomplete axiom reduction"):
             check_coverage(inventory(site("Init.Core", "t", impliesAxiom="propext")))
 
-    def test_safe_reduction_leaves_an_unsafe_declaration_open(self):
+    def test_unsafe_cast_requires_its_pinned_kernel_reduction(self):
         cast = site("Init.Prelude", "unsafeCast", kind="definition", unsafe=True,
                     impliesAxiom="sorryAx", reductionWitness="sorryAxFromUnsafeCast")
+        with self.assertRaisesRegex(ValueError, "invalid pinned reduction"):
+            check_coverage(inventory(cast))
+        self.assertEqual(check_coverage(inventory({**cast, "kernelReductionAxiom": "lcProof"})),
+                         (0, [("Init.Prelude", "unsafeCast")]))
+
+    def test_safe_reduction_leaves_an_unsafe_declaration_open(self):
+        cast = site("Init.Prelude", "testUnsafe", kind="definition", unsafe=True,
+                    impliesAxiom="sorryAx", reductionWitness="sorryAxFromSafeImplementation")
         take = site("Init.System.ST", "ST.Prim.Ref.take", kind="opaque", unsafe=True,
                     strictImpliesAxiom="Classical.choice.{1}",
                     strictSelectionWitness="OmegaStrictReference.ST.Prim.Ref.take")
