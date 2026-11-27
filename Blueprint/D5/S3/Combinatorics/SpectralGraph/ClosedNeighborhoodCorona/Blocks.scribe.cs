@@ -6,7 +6,7 @@ internal sealed class CoronaBlocksDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/SpectralGraph/ClosedNeighborhoodCorona/Blocks.";
     private static readonly LibraryNoteRef SonarSrivastava =
-        LibraryNoteRef.Create("D5/L/GraphInvariants/sonarsrivastava2024closedneighbourhoodcorona");
+        LibraryNoteRef.Create("D5/L/AdjacencyProduct/sonarsrivastava2024closedneighbourhoodcorona");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The adjacency blocks and vertex degrees of the closed-neighborhood corona.",

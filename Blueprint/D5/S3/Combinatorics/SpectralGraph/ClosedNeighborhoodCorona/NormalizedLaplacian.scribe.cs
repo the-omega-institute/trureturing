@@ -7,7 +7,7 @@ internal sealed class NormalizedLaplacianDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/SpectralGraph/ClosedNeighborhoodCorona/NormalizedLaplacian.";
     private static readonly LibraryNoteRef Survey =
-        LibraryNoteRef.Create("D5/L/GraphInvariants/sasonkrupnikhamudberman2025spectraldetermination");
+        LibraryNoteRef.Create("D5/L/AdjacencyProduct/sasonkrupnikhamudberman2025spectraldetermination");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Adjacency-cospectral regular factors give normalized-Laplacian cospectral closed-neighborhood coronas in both orders.",
