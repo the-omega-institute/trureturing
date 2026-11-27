@@ -1,0 +1,147 @@
+name: Publish Lean module shards
+
+on:
+  workflow_call:
+    inputs:
+      source:
+        required: true
+        type: string
+      kind:
+        required: true
+        type: string
+      already_published:
+        required: true
+        type: boolean
+      shard_mib:
+        required: true
+        type: number
+
+permissions: {}
+
+env:
+  STRATALINT_LEAN_CACHE_RELEASE_TIMEOUT_SECONDS: '21600'
+
+jobs:
+  plan:
+    if: ${{ !inputs.already_published }}
+    runs-on: ubuntu-24.04-arm
+    permissions:
+      contents: write
+      actions: read
+    outputs:
+      matrix: ${{ steps.shards.outputs.matrix }}
+      has_work: ${{ steps.shards.outputs.has_work }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ inputs.source }}
+          persist-credentials: false
+      - run: python3 .github/scripts/install-tools.py
+      - id: keys
+        run: python3 tools/scripts/worktree/lean_actions.py keys --repository "$GITHUB_WORKSPACE" --layers dependency
+      - name: Restore the pinned Lean toolchain
+        uses: actions/cache@v5
+        continue-on-error: true
+        with:
+          path: ~/.elan
+          key: ${{ steps.keys.outputs.elan_key }}
+      - name: Ensure the pinned Lean header parser is on PATH
+        run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
+      - uses: actions/setup-dotnet@v5
+        with:
+          global-json-file: global.json
+          cache: false
+      - name: Plan changes by module prefix
+        id: shards
+        env:
+          STRATALINT_CACHE_WRITES: 'true'
+          GH_TOKEN: ${{ github.token }}
+          SHARD_MIB: ${{ inputs.shard_mib }}
+        uses: ./.github/actions/lean-cache-shards
+        with:
+          kind: ${{ inputs.kind }}
+          operation: module-plan
+      - uses: actions/upload-artifact@v6
+        with:
+          name: module-plan-${{ github.run_id }}
+          path: ${{ runner.temp }}/module-plan.json
+          if-no-files-found: error
+          overwrite: true
+
+  compile:
+    needs: plan
+    if: needs.plan.outputs.has_work == 'true'
+    permissions:
+      contents: write
+      actions: read
+    uses: ./.github/workflows/ci-lean-generation-compile.yml
+    with:
+      kind: ${{ inputs.kind }}
+      source: ${{ inputs.source }}
+      matrix: ${{ needs.plan.outputs.matrix }}
+
+  stage:
+    needs: [plan, compile]
+    if: >-
+      !cancelled() && needs.plan.result == 'success' &&
+      (needs.compile.result == 'success' ||
+       (needs.plan.outputs.has_work == 'false' && needs.compile.result == 'skipped'))
+    permissions:
+      contents: write
+      actions: read
+    runs-on: ubuntu-24.04-arm
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ inputs.source }}
+          persist-credentials: false
+      - run: python3 .github/scripts/install-tools.py
+      - uses: actions/download-artifact@v8
+        with:
+          name: module-plan-${{ github.run_id }}
+          path: ${{ runner.temp }}
+          digest-mismatch: error
+      - name: Stage and read back the immutable module index
+        env:
+          GH_TOKEN: ${{ github.token }}
+          STRATALINT_CACHE_WRITES: 'true'
+        uses: ./.github/actions/lean-cache-shards
+        with:
+          kind: ${{ inputs.kind }}
+          operation: module-stage
+
+  verify:
+    needs: stage
+    if: ${{ !cancelled() && (needs.stage.result == 'success' || (inputs.already_published && needs.stage.result == 'skipped')) }}
+    permissions:
+      contents: read
+      actions: read
+    uses: ./.github/workflows/ci-lean-module-verify.yml
+    with:
+      kind: ${{ inputs.kind }}
+      source: ${{ inputs.source }}
+      exact: true
+      staged: ${{ !inputs.already_published }}
+
+  promote:
+    needs: verify
+    if: ${{ !cancelled() && needs.verify.result == 'success' && !inputs.already_published }}
+    runs-on: ubuntu-24.04-arm
+    permissions:
+      contents: write
+      actions: read
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ inputs.source }}
+          persist-credentials: false
+      - run: python3 .github/scripts/install-tools.py
+      - name: Advance the verified publication
+        env:
+          GH_TOKEN: ${{ github.token }}
+          STRATALINT_CACHE_WRITES: 'true'
+        uses: ./.github/actions/lean-cache-shards
+        with:
+          kind: ${{ inputs.kind }}
+          operation: module-promote
+          version: ${{ format('lean-modules-{0}{1}', inputs.source, inputs.kind == 'report' && '-report' || '') }}
