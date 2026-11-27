@@ -9,6 +9,14 @@ public def firstValue (x y : Omega.Bool) : Omega.Bool :=
   Omega.Function.curry (fun p => Omega.Prod.fst p) x y
 public def secondValue (x y : Omega.Bool) : Omega.Bool :=
   Omega.Function.uncurry (fun _ y => y) (Omega.Prod.mk x y)
+
+public def additionFirst (x y : Omega.Bool) : Omega.Bool :=
+  @Omega.HAdd.hAdd _ _ _ (@Omega.instHAdd _ (Omega.Add.mk (fun a _ => a))) x y
+
+public def stateSecond (x y : Omega.Bool) : Omega.Bool :=
+  Omega.EStateM.Result.casesOn (motive := fun _ => Omega.Bool)
+    (@Omega.EStateM.run Omega.Bool Omega.Bool Omega.PUnit (Omega.EStateM.set y) x)
+    (fun _ s => s) (fun _ _ => x)
 "
 
 /-- Compile a fresh ordinary consumer and execute its packaged IR with both Boolean values. -/
@@ -28,12 +36,13 @@ unsafe def main (args : List String) : IO Unit := do
       throw <| IO.userError "unexpected Boolean representation"
     let b := mkConst `Omega.Bool
     let arity := .forallE `x b (.forallE `y b b .default) .default
-    for name in [`firstValue, `secondValue] do
+    for (name, selectFirst) in [(`firstValue, true), (`secondValue, false),
+        (`additionFirst, true), (`stateSecond, false)] do
       let some ci := env.find? name | throw <| IO.userError s!"missing {name}"
       unless Kernel.isDefEqGuarded env {} ci.type arity do throw <| IO.userError s!"invalid type of {name}"
       let fn ← IO.ofExcept <| env.evalConst (Bool → Bool → Bool) {} name
       for x in [false, true] do
         for y in [false, true] do
-          unless fn x y == (if name == `firstValue then x else y) do
+          unless fn x y == (if selectFirst then x else y) do
             throw <| IO.userError s!"invalid executable result for {name} at {x}, {y}"
 

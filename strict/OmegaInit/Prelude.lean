@@ -627,3 +627,80 @@ public abbrev PProd.mk.{u,v} := @Omega.PProd.mk.{u,v}
 public abbrev HEq.{u} := @Omega.HEq.{u}
 public abbrev Unit := Omega.Unit
 public abbrev Unit.unit := Omega.Unit.unit
+
+port_native_records Add, Mul, Div, Mod, Pow, NatPow, HomogeneousPow, SMul
+port_native_records HAdd, HMul, HDiv, HMod, HPow, HSMul
+port_native_records OrElse, AndThen, AndOp, XorOp, OrOp, Complement, ShiftLeft, ShiftRight
+port_native_records HOrElse, HAndThen, HAnd, HXor, HOr, HShiftLeft, HShiftRight
+
+port_definition instHAdd with_native_code
+port_definition instHMul with_native_code
+port_definition instHDiv with_native_code
+port_definition instHMod with_native_code
+port_definition instHPow with_native_code
+port_definition instHSMul with_native_code
+port_definition instPowNat with_native_code
+port_definition instHOrElseOfOrElse with_native_code
+port_definition instHAndThenOfAndThen with_native_code
+port_definition instHAndOfAndOp with_native_code
+port_definition instHXorOfXorOp with_native_code
+port_definition instHOrOfOrOp with_native_code
+port_definition instHShiftLeftOfShiftLeft with_native_code
+port_definition instHShiftRightOfShiftRight with_native_code
+
+port_native_records Inhabited, PLift, ULift, PULift, MProd
+port_native_records Bind, Pure, Functor, Seq, SeqLeft, SeqRight
+port_native_records MonadLift, MonadLiftT, MonadEval, MonadEvalT, MonadFunctor, MonadFunctorT
+port_native_records MonadReader, MonadReaderOf, MonadWithReader, MonadWithReaderOf
+port_native_records MonadState, MonadStateOf, MonadExcept, MonadExceptOf
+port_inductive Except
+port_inductive EStateM.Result
+port_definition EStateM
+port_native_records EStateM.Backtrackable
+port_definition instInhabitedSort with_native_code
+port_definition instInhabitedForall with_native_code
+port_definition instInhabitedBool.default with_native_code
+port_definition instInhabitedBool with_native_code
+port_definition instInhabitedNat with_native_code
+port_definition instInhabitedOption with_native_code
+port_definition instInhabitedList with_native_code
+port_definition instInhabitedULift with_native_code
+port_definition instInhabitedReaderT with_native_code
+port_definition instInhabitedExcept with_native_code
+port_definition instMonadLiftT with_native_code
+port_definition instMonadLiftTOfMonadLift with_native_code
+port_definition instMonadEvalOfMonadLift with_native_code
+port_definition instMonadEvalT with_native_code
+port_definition instMonadEvalTOfMonadEval with_native_code
+port_definition instMonadFunctorTOfMonadFunctor with_native_code
+port_definition monadFunctorRefl with_native_code
+port_definition throwThe with_native_code
+port_definition tryCatchThe with_native_code
+port_definition instMonadExceptOfMonadExceptOf with_native_code
+port_definition readThe with_native_code
+port_definition instMonadReaderOfMonadReaderOf with_native_code
+port_definition liftM with_native_code
+port_definition instMonadReaderOfOfMonadLift with_native_code
+port_definition withTheReader with_native_code
+port_definition instMonadWithReaderOfMonadWithReaderOf with_native_code
+port_definition instMonadWithReaderOfOfMonadFunctor with_native_code
+port_definition instMonadWithReaderOfReaderT with_native_code
+port_definition getThe with_native_code
+port_definition instMonadStateOfMonadStateOf with_native_code
+port_definition instMonadStateOfOfMonadLift with_native_code
+port_definition ReaderT.instMonadLift with_native_code
+port_definition ReaderT.instMonadExceptOf with_native_code
+port_definition ReaderT.instMonadFunctor with_native_code
+port_definition EStateM.pure with_native_code
+port_definition EStateM.set with_native_code
+port_definition EStateM.get with_native_code
+port_definition EStateM.modifyGet.match_1 with_native_code
+port_definition EStateM.modifyGet with_native_code
+port_definition EStateM.throw with_native_code
+port_definition EStateM.run with_native_code
+port_definition EStateM.dummyRestore with_native_code
+port_definition EStateM.dummySave with_native_code
+port_definition EStateM.nonBacktrackable with_native_code
+port_definition EStateM.instInhabitedResult with_native_code
+port_definition EStateM.instInhabited with_native_code
+port_definition EStateM.instMonadStateOf with_native_code

@@ -129,4 +129,17 @@ private def officialDeclaration (stx : Syntax) : CommandElabM (Environment × Co
         -- Use the registration from the owning module, including its out parameters.
         modifyEnv fun env => classExtension.addEntry env {cls with name := omegaName cls.name}
 
+/-- Elaborate a pinned, flat record and compile each of its actual projections. -/
+@[command_parser, builtin_command_parser] def portNativeRecords := leading_parser "port_native_records " >> sepBy1 ident ","
+
+@[builtin_command_elab portNativeRecords] def elabPortNativeRecords : CommandElab := fun stx => do
+  for id in stx[1].getSepArgs do
+    let (src, ci) ← officialDeclaration id
+    let some record := getStructureInfo? src ci.name | throwErrorAt id "expected an official record"
+    let type := mkIdentFrom id ci.name
+    elabCommand (← `(command| port_inductive $type:ident))
+    for field in record.fieldInfo do
+      let name := mkIdentFrom id field.projFn
+      elabCommand (← `(command| port_definition $name:ident with_native_code))
+
 end OmegaChecks.InitCompiler
