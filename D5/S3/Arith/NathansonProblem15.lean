@@ -1,4 +1,5 @@
 import Mathlib.Algebra.BigOperators.Fin
+import Mathlib.Algebra.Order.BigOperators.Group.Finset
 import Mathlib.Data.Int.Basic
 import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.Ring
@@ -62,5 +63,64 @@ theorem signed_radix_injective {m : ℕ} {B : ℤ} (hB : 1 < B)
       funext i
       refine Fin.cases h0 (fun j => ?_) i
       exact congrFun hfun j
+
+/-- The coefficient of a place in the radix expansion of a labelled sum. -/
+def digit {m : ℕ} (h : ℕ) (u v : Fin m → ℕ) (i : Fin m) : ℤ :=
+  (u i : ℤ) - ((h : ℤ) - 1) * (v i : ℤ)
+
+private theorem zero_off_of_sum_eq {m : ℕ} (f : Fin m → ℕ) (i : Fin m)
+    (hi : (∑ j, f j) = f i) {j : Fin m} (hj : j ≠ i) : f j = 0 := by
+  have hsplit := Finset.sum_erase_add Finset.univ f (Finset.mem_univ i)
+  rw [hi] at hsplit
+  have hrest : ∑ k ∈ Finset.univ.erase i, f k = 0 := by omega
+  exact (Finset.sum_eq_zero_iff_of_nonneg (fun k _ => Nat.zero_le (f k))).mp hrest j
+    (Finset.mem_erase.mpr ⟨hj, Finset.mem_univ j⟩)
+
+/-- A collision between distinct multiplicity pairs of total weight `h` has zero digits. -/
+theorem digit_eq_zero_of_collision {m h : ℕ} (hh : 2 ≤ h)
+    {u v u' v' : Fin m → ℕ}
+    (huv : (∑ i, (u i + v i)) = h)
+    (huv' : (∑ i, (u' i + v' i)) = h)
+    (heq : digit h u v = digit h u' v') (hne : (u, v) ≠ (u', v')) :
+    digit h u v = 0 := by
+  have hz {a b c d : Fin m → ℕ} (hcd : (∑ i, (c i + d i)) = h)
+      (hsame : digit h a b = digit h c d) (i : Fin m) (hlt : b i < d i) :
+      digit h c d = 0 := by
+    have hgap : (b i : ℤ) + 1 ≤ (d i : ℤ) := by omega
+    have hcoef : 0 ≤ (h : ℤ) - 1 := by omega
+    have hmul := mul_le_mul_of_nonneg_left hgap hcoef
+    have hdigit := congrFun hsame i
+    unfold digit at hdigit
+    have hc : (h : ℤ) - 1 ≤ (c i : ℤ) := by
+      rw [mul_add, mul_one] at hmul
+      linarith [Int.natCast_nonneg (a i)]
+    have hlocal : c i + d i ≤ h := by
+      rw [← hcd]
+      exact Finset.single_le_sum (f := fun j => c j + d j)
+        (fun _ _ => Nat.zero_le _) (Finset.mem_univ i)
+    have hc' : c i = h - 1 := by omega
+    have hd' : d i = 1 := by omega
+    have hfull : (∑ j, (c j + d j)) = c i + d i := by omega
+    funext j
+    change digit h c d j = 0
+    by_cases hj : j = i
+    · subst j
+      simp [digit, hd', show (c i : ℤ) = (h : ℤ) - 1 by omega]
+    · have hoff := zero_off_of_sum_eq (fun k => c k + d k) i hfull hj
+      simp [digit, show c j = 0 by omega, show d j = 0 by omega]
+  have hv : v ≠ v' := by
+    intro hv
+    apply hne
+    refine Prod.ext ?_ hv
+    change u = u'
+    funext i
+    have hi := congrFun heq i
+    rw [← hv] at hi
+    unfold digit at hi
+    omega
+  obtain ⟨i, hi⟩ := Function.ne_iff.mp hv
+  rcases lt_or_gt_of_ne hi with hlt | hgt
+  · exact heq.trans (hz huv' heq i hlt)
+  · exact hz huv heq.symm i hgt
 
 end D5.S3.Arith.NathansonProblem15
