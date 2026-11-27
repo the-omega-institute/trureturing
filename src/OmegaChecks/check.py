@@ -1,6 +1,5 @@
 """Run from anywhere in this checkout. --incremental temporarily edits two clean sources."""
 import argparse
-import csv
 from functools import cache
 import hashlib
 import json
@@ -610,18 +609,12 @@ example {α : Type} (a : α) :
         subprocess.run([ENV["LEAN"], "--stdin"], cwd=ROOT, text=True, check=True,
                        input=official_import + coprime, env={**ENV, "LEAN_PATH": ""})
         strict_import = "module\nprelude\nimport OmegaInit.Data.Nat.Coprime\nopen Omega\n"
-        strict = subprocess.run([ENV["LEAN"], "--stdin"], cwd=ROOT, text=True, capture_output=True,
-                                input=strict_import + coprime, env=environment)
-        if strict.returncode:
-            if "Nat.gcd" not in strict.stdout or "not exposed" not in strict.stdout:
-                raise RuntimeError(strict.stdout + strict.stderr)
-            run(sys.executable, "-B", SRC / "OmegaChecks/InitPort/report.py", product)
-            with (product / "init-public-reductions.tsv").open() as stream:
-                boundaries = {row["declaration"]: row for row in csv.DictReader(stream, delimiter="\t")}
-            row = boundaries["Nat.Coprime"]
-            if (row["strictDependencyPath"] != "Omega.Nat.Coprime -> Omega.Nat.gcd" or
-                    row["officialReductionMechanism"] != "builtin natural-number reduction"):
-                raise RuntimeError(f"Unreported public reduction difference: {row}")
+        subprocess.run([ENV["LEAN"], "--stdin"], cwd=ROOT, text=True, input=strict_import + coprime,
+                       env=environment, check=True)
+        large_gcd = ("example : Omega.Eq (Omega.Nat.gcd 18446744073709551616 27670116110564327424) "
+                     "9223372036854775808 := Omega.rfl\n")
+        subprocess.run([ENV["LEAN"], "--stdin"], cwd=ROOT, text=True, input=strict_import + large_gcd,
+                       env=environment, check=True)
 
 
 def full_check(incremental=False):

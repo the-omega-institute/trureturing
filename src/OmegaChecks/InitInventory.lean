@@ -68,8 +68,10 @@ private def reductionPaths (official strict full : Environment) : NameMap (List 
     let some value := info.value? (allowOpaque := true) | continue
     if !(strict.find? n).any (· matches .defnInfo _) then
       if let some rule := officialReduction official (n.replacePrefix `Omega .anonymous) then
-        paths := paths.insert n ([n], rule)
-        todo := todo.push n
+        -- Builtin arithmetic still reduces in an ordinary import when its pinned root name is present.
+        unless officialReduction strict n == some rule do
+          paths := paths.insert n ([n], rule)
+          todo := todo.push n
     if info matches .defnInfo _ | .opaqueInfo _ then
       for dep in value.getUsedConstantsAsSet do
         users := users.insert dep ((users.getD dep #[]).push n)

@@ -134,6 +134,7 @@ private def checkElaboration (env : Environment) (owner : Name) (idx : ModuleIdx
       | `Omega.IO.FS.removeFile => pure (`OmegaInit.System.IO, "omega_io_remove_file")
       | `Omega.IO.FS.rename => pure (`OmegaInit.System.IO, "omega_io_rename")
       | `Omega.Void.mk => pure (`OmegaInit.System.ST, "lean_void_mk")
+      | `Nat.gcd => pure (`OmegaInit.Data.Nat.Gcd, "lean_nat_gcd")
       | `Nat.ble => pure (`OmegaInit.Prelude, "lean_nat_dec_le")
       | `Nat.beq => pure (`OmegaInit.Prelude, "lean_nat_dec_eq")
       | `Nat.add => pure (`OmegaInit.Prelude, "lean_nat_add")

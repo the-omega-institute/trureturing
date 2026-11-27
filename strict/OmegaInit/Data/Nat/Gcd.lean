@@ -20,10 +20,12 @@ private def euclideanSteps : Nat → Nat → Nat → Nat :=
 
 /-- A Euclidean step strictly decreases the first positive argument, so its successor
 bounds the number of calls, including the final zero case. -/
-@[no_expose] def gcd (m n : Nat) : Nat :=
+@[extern "lean_nat_gcd", no_expose] def _root_.Nat.gcd (m n : @& Nat) : Nat :=
   Nat.rec (motive := fun _ => Nat → Nat → Nat) (fun _ b => b)
     (fun _ smaller a b => Nat.rec b (fun d _ => smaller (Nat.mod b (succ d)) (succ d)) a)
     (succ m) m n
+
+export _root_.Nat (gcd)
 
 attribute [local semireducible] Nat.mod
 

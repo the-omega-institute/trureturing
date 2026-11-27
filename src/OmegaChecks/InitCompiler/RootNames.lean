@@ -43,9 +43,10 @@ private def reservedEquations := #[
   `Nat.beq.eq_3, `Nat.beq.eq_4, `OfNat.ofNat.eq_1, `cond.eq_1, `cond.eq_2, `id.eq_1]
 
 public def usesRoot (name : Name) :=
-  taskPrimitives.contains name || binderAnnotations.contains name || natPrimitives.contains name || reservedEquations.contains name
+  name == `Nat.gcd || taskPrimitives.contains name || binderAnnotations.contains name || natPrimitives.contains name || reservedEquations.contains name
 
 public def isPrimitive (owner name : Name) : Bool :=
+  (owner == `OmegaInit.Data.Nat.Gcd && name == `Nat.gcd) ||
   (owner.getRoot == `OmegaInit && reservedEquations.contains name) ||
   (owner == `OmegaInit.Core && taskPrimitives.contains name) ||
   (owner == `OmegaInit.Prelude && (binderAnnotations.contains name || natPrimitives.contains name))
