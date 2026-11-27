@@ -330,6 +330,104 @@ private theorem finiteAnyToList {α β : Type u} [Iterator α Id β] [Finite α 
 
 open _root_.String.Slice _root_.String.Slice.Pattern _root_.String.Slice.Pattern.Model
 
+private theorem firstMatch {ρ : Type} {pat : ρ} [PatternModel pat] [StrictPatternModel pat]
+    {s : String.Slice} {p : s.Pos} {steps : List (SearchStep s)}
+    (valid : IsValidSearchFrom pat p steps) (q : s.Pos) :
+    steps.findSome? (fun | .matched pos _ => some pos | .rejected .. => none) = some q ↔
+      p ≤ q ∧ MatchesAt pat q ∧ ∀ r, p ≤ r → r < q → ¬ MatchesAt pat r := by
+  induction valid with
+  | endPos =>
+    refine ⟨(fun h => nomatch h), fun ⟨hle, hm, _⟩ => ?_⟩
+    exact (not_matchesAt_endPos ((Std.le_antisymm (Pos.le_endPos q) hle) ▸ hm)).elim
+  | @matched _ start stop hit tail ih =>
+    constructor
+    · intro eq
+      obtain rfl := Option.some.inj eq
+      exact ⟨Nat.le_refl _, hit.matchesAt, fun _ bound before =>
+        (Nat.not_lt_of_ge bound before).elim⟩
+    · rintro ⟨bound, _, first⟩
+      by_cases same : start = q
+      · cases same; rfl
+      · have lt : start < q := Std.lt_of_le_of_ne bound same
+        exact (first start (Nat.le_refl _) lt hit.matchesAt).elim
+  | @mismatched _ start stop lt miss tail ih =>
+    refine ih.trans ⟨?_, ?_⟩
+    · rintro ⟨bound, yes, first⟩
+      refine ⟨Nat.le_trans (Nat.le_of_lt lt) bound, yes, fun r lo hi => ?_⟩
+      by_cases below : stop ≤ r
+      · exact first r below hi
+      · exact miss r lo (Nat.lt_of_not_ge below)
+    · rintro ⟨bound, yes, first⟩
+      have after : stop ≤ q := Nat.le_of_not_gt fun before => miss q bound before yes
+      exact ⟨after, yes, fun r lo => first r (Nat.le_trans (Nat.le_of_lt lt) lo)⟩
+
+public theorem String.Slice.Pattern.Model.find?_eq_some_iff :
+    type_of% @_root_.String.Slice.Pattern.Model.find?_eq_some_iff := by
+  intro ρ pat model strict σ iter finite loop lawful search valid s pos
+  unfold _root_.String.Slice.find?
+  rw [← _root_.Std.Iter.findSome?_toList]
+  refine (firstMatch (LawfulToForwardSearcherModel.isValidSearchFrom_toList (pat := pat) s) pos).trans ?_
+  exact ⟨fun ⟨_, yes, first⟩ => ⟨yes, fun r => first r (Pos.startPos_le _)⟩,
+    fun ⟨yes, first⟩ => ⟨Pos.startPos_le _, yes, fun r _ => first r⟩⟩
+
+public theorem String.Slice.Pattern.Model.find?_eq_none_iff :
+    type_of% @_root_.String.Slice.Pattern.Model.find?_eq_none_iff := by
+  intro ρ pat model strict σ iter finite loop lawful search valid s
+  constructor
+  · intro no q
+    induction q using WellFounded.induction Pos.wellFounded_lt with
+    | h q ih =>
+      intro yes
+      have someMatch := (_root_.String.Slice.Pattern.Model.find?_eq_some_iff pat).mpr ⟨yes, ih⟩
+      exact nomatch (no.symm.trans someMatch)
+  · intro absent
+    cases eq : s.find? pat with
+    | none => rfl
+    | some q => exact (absent q ((_root_.String.Slice.Pattern.Model.find?_eq_some_iff pat).mp eq).1).elim
+
+public theorem String.Slice.Pattern.Model.contains_eq_true_iff :
+    type_of% @_root_.String.Slice.Pattern.Model.contains_eq_true_iff := by
+  intro ρ pat model strict σ iter finite loop lawful search valid s
+  rw [← _root_.String.Slice.isSome_find? pat]
+  cases eq : s.find? pat with
+  | none =>
+    exact ⟨(fun h => nomatch h), fun ⟨q, yes⟩ =>
+      ((_root_.String.Slice.Pattern.Model.find?_eq_none_iff pat).mp eq q yes).elim⟩
+  | some q =>
+    exact ⟨fun _ => ⟨q, ((_root_.String.Slice.Pattern.Model.find?_eq_some_iff pat).mp eq).1⟩,
+      fun _ => rfl⟩
+
+public theorem String.Slice.Pattern.Model.posFind?_eq_some_iff :
+    type_of% @_root_.String.Slice.Pattern.Model.posFind?_eq_some_iff := by
+  intro ρ pat model strict σ iter finite loop lawful search valid s p q
+  rw [_root_.String.Slice.Pos.find?_eq_find?_sliceFrom, Option.map_eq_some_iff]
+  constructor
+  · rintro ⟨r, found, rfl⟩
+    obtain ⟨matched, first⟩ := (_root_.String.Slice.Pattern.Model.find?_eq_some_iff pat).mp found
+    refine ⟨Pos.le_ofSliceFrom, matchesAt_iff_matchesAt_ofSliceFrom.mp matched, ?_⟩
+    intro x lo hi yes
+    apply first (Pos.sliceFrom p x lo) (Pos.sliceFrom_lt_iff.mpr hi)
+    apply matchesAt_iff_matchesAt_ofSliceFrom.mpr
+    exact Pos.ofSliceFrom_sliceFrom.symm ▸ yes
+  · rintro ⟨lo, matched, first⟩
+    refine ⟨Pos.sliceFrom p q lo, (_root_.String.Slice.Pattern.Model.find?_eq_some_iff pat).mpr ?_,
+      Pos.ofSliceFrom_sliceFrom⟩
+    refine ⟨matchesAt_iff_matchesAt_ofSliceFrom.mpr (Pos.ofSliceFrom_sliceFrom.symm ▸ matched), ?_⟩
+    intro x before yes
+    exact first _ Pos.le_ofSliceFrom (Pos.lt_sliceFrom_iff.mp before) (matchesAt_iff_matchesAt_ofSliceFrom.mp yes)
+
+public theorem String.Slice.Pattern.Model.posFind?_eq_none_iff :
+    type_of% @_root_.String.Slice.Pattern.Model.posFind?_eq_none_iff := by
+  intro ρ pat model strict σ iter finite loop lawful search valid s p
+  rw [_root_.String.Slice.Pos.find?_eq_find?_sliceFrom, Option.map_eq_none_iff,
+    _root_.String.Slice.Pattern.Model.find?_eq_none_iff]
+  constructor
+  · intro absent q lo yes
+    apply absent (Pos.sliceFrom p q lo)
+    exact matchesAt_iff_matchesAt_ofSliceFrom.mpr (Pos.ofSliceFrom_sliceFrom.symm ▸ yes)
+  · intro absent q yes
+    exact absent _ Pos.le_ofSliceFrom (matchesAt_iff_matchesAt_ofSliceFrom.mp yes)
+
 private theorem anyMatched {ρ : Type} {pat : ρ} [PatternModel pat] [StrictPatternModel pat]
     {s : String.Slice} {pos : s.Pos} {steps : List (SearchStep s)}
     (h : IsValidSearchFrom pat pos steps) :
