@@ -141,7 +141,9 @@ internal sealed class A007562Document : IScribeDocumentDefinition
     }
 
     private static Formula CountFormula(string name, string domain) =>
-        All(N, Nat, Equal(Call(name, N), Call("card", Call(domain, N))));
+        All(N, Nat, Equal(Call(name, N),
+            new Formula.Apply(Seq(Operatorname, Grp(Seq(F.Id("Nat"), Dot, F.Id("card")))),
+                [Call(domain, N)])));
 
     private static Formula ForTree(Formula body) =>
         All(V, Seq(Mathrm, Grp(F.Id("Type"))), All(T, Call("Tree", V), body));

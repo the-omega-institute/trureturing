@@ -131,11 +131,6 @@ private def forward {V : Type*} (T : Tree V) : Tree V where
       omega)
     (forward_rank_step T)
 
-private theorem forward_depth {V : Type*} (T : Tree V) (v : V) :
-    depth (forward T) v = (depth T v + 1) / 2 :=
-  depth_of_rank (forward T) (forwardRank T)
-    (by change (depth T T.root + 1) / 2 = 0; rw [depth_root]) (forward_rank_step T) v
-
 private theorem even_forward_parent {V : Type*} (T : Tree V) {v : V} (hv : v ≠ T.root) :
     Even (depth T ((forward T).parent v)) := by
   have hd := depth_parent T hv
