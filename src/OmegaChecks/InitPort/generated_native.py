@@ -97,7 +97,7 @@ def check_runtime_ir(stage, library, adapter, consumer):
 
 
 def compile_generated(stage, product, graph, seed_ir, owners=None, *, original_seed=None, before_owner=None,
-                      check_strings=True, check_literals=True, check_mixed=True):
+                      check_strings=True, check_literals=True, check_mixed=True, check_rat=True):
     """Compile generated owners in import order and preserve the native symbols of existing owners."""
     requested = set(graph if owners is None else owners)
     selected = [owner for owner in TopologicalSorter(graph).static_order()
@@ -196,6 +196,23 @@ def compile_generated(stage, product, graph, seed_ir, owners=None, *, original_s
                 pending.extend(graph.get(owner, ()))
         return seen
 
+    def dependency_objects(dependencies):
+        inputs = []
+        for owner in sorted(dependencies):
+            obj = objects.get(owner)
+            if obj is None:
+                suffix = owner.replace(".", "_")
+                adapter = adapters.get(suffix) or adapters.get("trureturing_" + suffix)
+                if adapter:
+                    obj = adapter[1]
+                elif seed_files[owner].is_file():
+                    obj = (stage / "original-native" / Path(*owner.split("."))).with_suffix(".o")
+                    compile_object((seed_files[owner], obj))
+                else:
+                    raise ValueError(f"missing native dependency {owner}")
+            inputs.append(obj)
+        return inputs
+
     if len(string_sources) == len(string_modules) and check_strings:
         list_client = stage / "string-list-consumer.c"
         run("lean", "-R", STRICT_SOURCES, "-o", stage / "StringListConsumer.olean", "-c", list_client,
@@ -207,20 +224,7 @@ def compile_generated(stage, product, graph, seed_ir, owners=None, *, original_s
             # Detached and selectively compiled products need only the string adapters for this consumer.
             inputs = string_sources
         else:
-            inputs = []
-            for owner in sorted(dependencies):
-                obj = objects.get(owner)
-                if obj is None:
-                    suffix = owner.replace(".", "_")
-                    adapter = adapters.get(suffix) or adapters.get("trureturing_" + suffix)
-                    if adapter:
-                        obj = adapter[1]
-                    elif seed_files[owner].is_file():
-                        obj = (stage / "original-native" / Path(*owner.split("."))).with_suffix(".o")
-                        compile_object((seed_files[owner], obj))
-                    else:
-                        raise ValueError(f"missing native string dependency {owner}")
-                inputs.append(obj)
+            inputs = dependency_objects(dependencies)
         application = stage / "check-string-list"
         run("leanc", "-I", HERE, list_client, HERE / "string_list_consumer.c", *inputs, "-o", application)
         run(application)
@@ -228,6 +232,19 @@ def compile_generated(stage, product, graph, seed_ir, owners=None, *, original_s
         run("leanc", "-shared", "-fPIC", "-DLEAN_EXPORTING", "-I", HERE, *string_sources, "-o", shim)
         run("lake", "env", "lean", "--load-dynlib=" + str(shim), "--run", HERE / "StringListIRConsumer.lean",
             library, stage)
+    rat_owner = "OmegaInit.Data.Rat.Basic"
+    if check_rat and rat_owner in objects:
+        dependencies = reachable([rat_owner])
+        available = all(seed_files[owner].is_file() for owner in dependencies & seed_owners)
+        # The literal bridge verifies that this product uses the physical kernel Nat and UTF-8 layout.
+        if available and dependencies.issubset(selected) and literals.is_file():
+            client = stage / "rat-format-consumer.c"
+            run("lean", "-R", STRICT_SOURCES, "-c", client, STRICT_SOURCES / "RatFormatConsumer.lean",
+                env={**os.environ, "LEAN_PATH": str(library)})
+            application = stage / "check-rat-format"
+            run("leanc", "-I", HERE, client, HERE / "rat_format_consumer.c", *dependency_objects(dependencies),
+                "-o", application)
+            run(application)
     if not set(CONTROL).issubset(selected):
         return []
 
