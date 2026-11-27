@@ -93,7 +93,7 @@ private def pinnedStringFunction (n : Name) : Bool := defsStringFunction n || ba
 public def usesPinnedFunction (n : Name) : Bool :=
   let method := n.updatePrefix .anonymous
   let trailing := n == `Int.trailingZeros || n == `Int.trailingZeros.aux
-  let bytes := [`ByteArray.toList.loop, `ByteArray.findIdx?.loop, `ByteArray.findFinIdx?.loop].contains n
+  let bytes := [`ByteArray.toUInt64LE!, `ByteArray.toUInt64BE!, `ByteArray.toList.loop, `ByteArray.findIdx?.loop, `ByteArray.findFinIdx?.loop].contains n
   let vector := n.getPrefix == `BitVec &&
     [`abs, `pow, `smod, `replicate, `reverse, `cpop, `cpopNatRec, `ctz, `clz, `clzAuxRec,
      `getLsbD, `getLsb, `getMsbD, `getMsb, `msb, `sdiv, `srem, `smtSDiv, `hash, `ofBoolListLE, `ofBoolListBE].contains method
@@ -158,7 +158,7 @@ public def supported (source : Environment) (owner name : Name) : Bool :=
     ([`OmegaInit.Data.Float.Model.Float, `OmegaInit.Data.Float.Model.Float32].contains owner && modelOperation name) ||
     (owner == `OmegaInit.Prelude && SyntaxPositionNative.supported name) ||
     ((base || intPrimitive || platform || byteOp || textCompare || modular || stringOp || wordRepr || bitwise || logarithm || (inOwner && primitive)) && isExtern source name) ||
-    ((intOwner || [`OmegaInit.Data.Dyadic.Basic, `OmegaInit.Data.ByteArray.Basic, `OmegaInit.Data.Int.Repr, `OmegaInit.Data.Repr, `OmegaInit.Data.Nat.Bitwise.Basic, `OmegaInit.Data.BitVec.Basic].contains owner || [`OmegaInit.Data.UInt.Basic, `OmegaInit.Data.SInt.Basic].contains owner) && usesPinnedFunction name)
+    ((intOwner || [`OmegaInit.Data.Dyadic.Basic, `OmegaInit.Data.ByteArray.Extra, `OmegaInit.Data.ByteArray.Basic, `OmegaInit.Data.Int.Repr, `OmegaInit.Data.Repr, `OmegaInit.Data.Nat.Bitwise.Basic, `OmegaInit.Data.BitVec.Basic].contains owner || [`OmegaInit.Data.UInt.Basic, `OmegaInit.Data.SInt.Basic].contains owner) && usesPinnedFunction name)
 
 private def symbol (n : Name) := (n.replacePrefix `Omega .anonymous).mangle "omega_word_"
 
