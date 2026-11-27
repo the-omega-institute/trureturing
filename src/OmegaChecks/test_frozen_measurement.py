@@ -148,8 +148,8 @@ class FrozenMeasurement(unittest.TestCase):
             self.assertEqual(result.read_bytes(), published)
 
     def check_crossed_artifacts(self, tmp):
-        name = MIXED
-        source = portable.SRC / (name.replace(".", "/") + ".lean")
+        name = TETRAHEDRON
+        source = portable.ROOT / (name.replace(".", "/") + ".lean")
         relative = Path(name.replace(".", "/") + ".olean")
         official = portable.ROOT / ".lake/build/lib/lean" / relative
         manifest = json.loads((portable.ROOT / "lake-manifest.json").read_text())

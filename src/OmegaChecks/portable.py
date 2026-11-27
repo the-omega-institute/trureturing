@@ -10,7 +10,7 @@ from pathlib import Path
 import shutil
 import subprocess
 import tempfile
-from strict_lake import BUILD, COMMON_SRC, INSPECTOR, lake_layout, isolated_config, mixed_modules
+from strict_lake import BUILD, COMMON_SRC, INSPECTOR, lake_layout, isolated_config, host_modules
 from hosted import foundation_files, make_view, fingerprint
 
 
@@ -209,7 +209,9 @@ def backend_artifacts(strict, with_reg, sources, stage, packages, lean, environm
     # Querying the facets builds the selected modules through the normal Lake graph.
     # Lake supplies both the actual source owner and the resulting olean in request order.
     targets = [f"+{name}:{facet}" for name in sources for facet in ("lean", "olean")]
-    resolved = [Path(p).resolve() for p in output(*lake, "query", *targets, env=environment).splitlines()]
+    resolved = []
+    if targets:
+        resolved = [Path(p).resolve() for p in output(*lake, "query", *targets, env=environment).splitlines()]
     expected_paths = []
     hashes = {}
     for name, source in sources.items():
@@ -242,8 +244,10 @@ def backend_artifacts(strict, with_reg, sources, stage, packages, lean, environm
     # Audit and publish these exact immutable bytes, even if another Lake build follows.
     if snapshots is not None:
         snapshots[stage] = artifact_snapshot(stage)
-    actual = output(lean, "--run", SRC / "OmegaChecks/Portable/ArtifactHashes.lean",
-                    input="\n".join(map(str, hashes)), env=environment).splitlines()
+    actual = []
+    if hashes:
+        actual = output(lean, "--run", SRC / "OmegaChecks/Portable/ArtifactHashes.lean",
+                        input="\n".join(map(str, hashes)), env=environment).splitlines()
     for (file, expected), observed in zip(hashes.items(), actual, strict=True):
         if expected != observed:
             raise RuntimeError(f"artifact differs from its Lake trace: {file}")
@@ -526,7 +530,9 @@ def check(only, backend="mathlib", destination=None, *, frozen=None, discovered=
             strict.mkdir()
             if strict_sources:
                 if backend == "both":
-                    mixed = mixed_modules(graph, strict_sources) & strict_sources.keys()
+                    # Host-only predecessors also import Init. They share the hosted
+                    # comparison with any Omega clients that depend on them.
+                    mixed = host_modules(graph, strict_sources) & strict_sources.keys()
                 isolated_sources = {n: p for n, p in strict_sources.items() if n not in mixed}
                 strict_path = backend_artifacts(True, with_reg, isolated_sources, strict, packages, lean,
                                                 environment, snapshots=snapshots)

@@ -133,7 +133,8 @@ def lake_layout(strict, with_reg, common_dir=None, hosted=None):
     return command, libraries
 
 
-def mixed_modules(graph, requested):
+def host_modules(graph, requested, *, require_omega=False):
+    """Find consumers of official imports, optionally requiring an Omega foundation as well."""
     from portable import closure, root
 
     with_omega = set()
@@ -144,7 +145,8 @@ def mixed_modules(graph, requested):
             with_omega.add(name)
         if deps & with_host or any(dep not in graph for dep in deps):
             with_host.add(name)
-    return {name for name in with_host & with_omega if root(name) not in {"OmegaInit", "OmegaMathlib", "OmegaMath"}}
+    selected = with_host & with_omega if require_omega else with_host
+    return {name for name in selected if root(name) not in {"OmegaInit", "OmegaMathlib", "OmegaMath"}}
 
 
 def build_profiles(graph, selections, options=(), original=None):
@@ -153,7 +155,7 @@ def build_profiles(graph, selections, options=(), original=None):
 
     foundations = {"OmegaInit", "OmegaMathlib", "OmegaMath"}
     requested = set().union(*selections.values()).intersection(graph)
-    mixed = mixed_modules(graph, requested)
+    mixed = host_modules(graph, requested, require_omega=True)
     lake = ["lake", "-f", isolated_config(), "build"]
     if not requested & mixed:
         return subprocess.call([*lake, *(original if original is not None else [*options, *selections])], cwd=ROOT)
