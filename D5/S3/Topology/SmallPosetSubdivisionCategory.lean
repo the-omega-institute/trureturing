@@ -12,6 +12,7 @@ public import D5.S3.Topology.SubdivisionCategoricalCover
 public import Mathlib.Order.Preorder.Finite
 import Mathlib.Data.Finset.Card
 import Mathlib.Data.Finset.Prod
+import Mathlib.Combinatorics.Pigeonhole
 import Mathlib.Tactic
 import OmegaBuild.Commands
 
@@ -312,6 +313,94 @@ theorem two_cover_of_four_intermediate [Fintype X] (root : X)
     · exact (Finset.mem_filter.mp hdlo.1).2
     · exact (Finset.mem_filter.mp hdlo.2).2
 
+/-- With five intermediate points, four upper extrema force a triple with a
+common upper bound. The complementary pair shares a lower bound among at most
+three lower extrema. The resulting partition gives a categorical two-cover. -/
+theorem two_cover_of_five_intermediate [Fintype X] (root : X)
+    (hconn : ∀ x, Relation.EqvGen (· ≤ ·) x root)
+    (I L U : Finset X) (hI : ∀ x, ¬ IsMin x → ¬ IsMax x → x ∈ I)
+    (hcard : I.card = 5) (hL : L.card ≤ 3) (hU : U.card ≤ 4)
+    (hlow : ∀ a ∈ I, ∃ x ∈ L, ∃ y ∈ L, x ≠ y ∧ x ≤ a ∧ y ≤ a)
+    (hhigh : ∀ a ∈ I, ∃ x ∈ U, ∃ y ∈ U, x ≠ y ∧ a ≤ x ∧ a ≤ y) :
+    HasCategoricalCover (PartialOrder.NonemptyFiniteChains
+      (PartialOrder.NonemptyFiniteChains X)) 2 := by
+  classical
+  let fst (a : I) : X := (hhigh a.val a.property).choose
+  let snd (a : I) : X := (hhigh a.val a.property).choose_spec.2.choose
+  let place (pair : I × Bool) : X := if pair.2 then fst pair.1 else snd pair.1
+  have hfst (a : I) : fst a ∈ U ∧ a.val ≤ fst a := by
+    have h := (hhigh a.val a.property).choose_spec
+    exact ⟨h.1, h.2.choose_spec.2.2.1⟩
+  have hsnd (a : I) : snd a ∈ U ∧ a.val ≤ snd a := by
+    have h := (hhigh a.val a.property).choose_spec.2.choose_spec
+    exact ⟨h.1, h.2.2.2⟩
+  have hdiff (a : I) : fst a ≠ snd a :=
+    (hhigh a.val a.property).choose_spec.2.choose_spec.2.1
+  have hplace (p : I × Bool) : place p ∈ U ∧ p.1.val ≤ place p := by
+    cases hp : p.2 <;> simp [place, hp, hfst, hsnd]
+  have hthreshold : U.card * 2 < (Finset.univ : Finset (I × Bool)).card := by
+    simp [Fintype.card_prod, hcard]
+    omega
+  obtain ⟨c, _, hc⟩ := Finset.exists_lt_card_fiber_of_mul_lt_card_of_maps_to
+    (s := Finset.univ) (f := place) (fun p _ => (hplace p).1) hthreshold
+  let fiber := (Finset.univ : Finset (I × Bool)).filter (fun p => place p = c)
+  let project (p : I × Bool) := p.1.val
+  have hinj : Set.InjOn project fiber := by
+    rintro ⟨a, i⟩ hi ⟨b, j⟩ hj heq
+    have hab : a = b := Subtype.ext heq
+    subst b
+    have hp : place (a, i) = place (a, j) :=
+      (Finset.mem_filter.mp hi).2.trans (Finset.mem_filter.mp hj).2.symm
+    cases i <;> cases j
+    · rfl
+    · exact (hdiff a (by simpa [place] using hp.symm)).elim
+    · exact (hdiff a (by simpa [place] using hp)).elim
+    · rfl
+  have himage : 3 ≤ (fiber.image project).card := by
+    rw [Finset.card_image_of_injOn hinj]
+    exact hc
+  obtain ⟨S, hS, hScard⟩ := Finset.exists_subset_card_eq himage
+  have hS' : ∀ x ∈ S, x ∈ I ∧ x ≤ c := by
+    intro x hx
+    obtain ⟨p, hp, rfl⟩ := Finset.mem_image.mp (hS hx)
+    exact ⟨p.1.property, (Finset.mem_filter.mp hp).2 ▸ (hplace p).2⟩
+  let T := I \ S
+  have hTcard : T.card = 2 := by
+    have h := Finset.card_sdiff_of_subset (show S ⊆ I from fun _ hx => (hS' _ hx).1)
+    change T.card = I.card - S.card at h
+    omega
+  obtain ⟨p, hp, q, hq, hpq⟩ := Finset.one_lt_card.mp (show 1 < T.card by omega)
+  have hTpq : T = {p, q} := by
+    symm
+    apply Finset.eq_of_subset_of_card_le _ (by simpa [hpq] using hTcard.le)
+    intro x hx
+    rcases (show x = p ∨ x = q by simpa using hx) with rfl | rfl <;> assumption
+  let below (x : X) := L.filter (· ≤ x)
+  have hBelow (x : X) (hx : x ∈ T) : 2 ≤ (below x).card := by
+    obtain ⟨u, hu, v, hv, huv, hux, hvx⟩ := hlow x (Finset.mem_sdiff.mp hx).1
+    exact Finset.one_lt_card.mpr ⟨u, Finset.mem_filter.mpr ⟨hu, hux⟩,
+      v, Finset.mem_filter.mpr ⟨hv, hvx⟩, huv⟩
+  have hUnion : (below p ∪ below q).card ≤ L.card :=
+    Finset.card_le_card (Finset.union_subset (Finset.filter_subset _ _) (Finset.filter_subset _ _))
+  have hCount := Finset.card_inter_add_card_union (below p) (below q)
+  obtain ⟨d, hd⟩ := Finset.card_pos.mp (show 0 < (below p ∩ below q).card by
+    have := hBelow p hp
+    have := hBelow q hq
+    omega)
+  have hdl := Finset.mem_inter.mp hd
+  apply partition_subdivides root hconn S T
+  · intro x hx hy
+    by_cases hxs : x ∈ S
+    · exact Or.inl hxs
+    · exact Or.inr (Finset.mem_sdiff.mpr ⟨hI x hx hy, hxs⟩)
+  · exact Or.inl ⟨c, fun x hx => (hS' x hx).2⟩
+  · left
+    refine ⟨d, ?_⟩
+    intro x hx
+    rcases (show x = p ∨ x = q by simpa [hTpq] using hx) with rfl | rfl
+    · exact (Finset.mem_filter.mp hdl.1).2
+    · exact (Finset.mem_filter.mp hdl.2).2
+
 private theorem min_below [Finite X] (x : X) : ∃ p : X, IsMin p ∧ p ≤ x := by
   obtain ⟨p, hpx, hp⟩ := Finite.exists_le_minimal (p := fun y : X => y ≤ x)
     (show x ≤ x from le_rfl)
@@ -395,15 +484,16 @@ theorem two_cover_of_at_most_two_minima [Fintype X] (root : X)
     · exact Or.inl h
     · exact Or.inr h
 
-/-- A connected beat-point-free poset with at most eleven points and at least
-four maximal points has a two-piece categorical cover after two subdivisions.
-This is the connected large-ordinary-category case of Conjecture 6.1. -/
-theorem two_cover_of_at_most_eleven_and_four_maxima [Fintype X] (root : X)
+/-- A connected beat-point-free poset on at most fourteen vertices has a
+two-cover after two subdivisions if at most seven vertices lie outside
+its set of maximal points and it has at least two maximal points. -/
+theorem two_cover_of_at_most_seven_nonmaximal [Fintype X] (root : X)
     (hconn : ∀ x, Relation.EqvGen (· ≤ ·) x root)
     (hdown : ∀ x : X, ¬ ∃ p : X, p < x ∧ ∀ y < x, y ≤ p)
     (hup : ∀ x : X, ¬ ∃ p : X, x < p ∧ ∀ y, x < y → p ≤ y)
-    (hn : Fintype.card X ≤ 11)
-    (U : Finset X) (hU : ∀ x : X, x ∈ U ↔ IsMax x) (hfour : 4 ≤ U.card) :
+    (hn : Fintype.card X ≤ 14)
+    (U : Finset X) (hU : ∀ x : X, x ∈ U ↔ IsMax x) (htwoMax : 2 ≤ U.card)
+    (hOutside : Fintype.card X ≤ U.card + 7) :
     HasCategoricalCover (PartialOrder.NonemptyFiniteChains
       (PartialOrder.NonemptyFiniteChains X)) 2 := by
   classical
@@ -453,5 +543,19 @@ theorem two_cover_of_at_most_eleven_and_four_maxima [Fintype X] (root : X)
     obtain ⟨x, y, hx, hy, hne, hax, hay⟩ :=
       two_minima_below_of_no_down_beat (X := Xᵒᵈ) hup ((hI a).mp ha).2
     exact ⟨x, (hU x).mpr hx, y, (hU y).mpr hy, hne, hax, hay⟩
+
+/-- A connected beat-point-free poset with at most eleven points and at least
+four maximal points has a two-piece categorical cover after two subdivisions.
+This is the connected large-ordinary-category case of Conjecture 6.1. -/
+theorem two_cover_of_at_most_eleven_and_four_maxima [Fintype X] (root : X)
+    (hconn : ∀ x, Relation.EqvGen (· ≤ ·) x root)
+    (hdown : ∀ x : X, ¬ ∃ p : X, p < x ∧ ∀ y < x, y ≤ p)
+    (hup : ∀ x : X, ¬ ∃ p : X, x < p ∧ ∀ y, x < y → p ≤ y)
+    (hn : Fintype.card X ≤ 11)
+    (U : Finset X) (hU : ∀ x : X, x ∈ U ↔ IsMax x) (hfour : 4 ≤ U.card) :
+    HasCategoricalCover (PartialOrder.NonemptyFiniteChains
+      (PartialOrder.NonemptyFiniteChains X)) 2 := by
+  exact two_cover_of_at_most_seven_nonmaximal root hconn hdown hup (by omega) U hU
+    (by omega) (by omega)
 
 end D5.S3.Topology.SmallPosetSubdivisionCategory
