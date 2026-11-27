@@ -60,7 +60,7 @@ jobs:
     if: needs.pin.outputs.source != '' && needs.pin.outputs.superseded != 'true'
     permissions:
       contents: write
-      actions: read
+      actions: write
     uses: ./.github/workflows/ci-lean-module-publication.yml
     with:
       already_published: ${{ needs.pin.outputs.already_published == 'true' }}
