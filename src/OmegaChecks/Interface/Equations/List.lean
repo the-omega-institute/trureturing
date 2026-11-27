@@ -6,6 +6,14 @@ public import Init.Data.List.Sort.Impl
 
 namespace OmegaChecks.Interface.Equations
 
+public theorem List.appendTR {α : Type u} (xs ys : List α) :
+    _root_.List.append xs ys = _root_.List.appendTR xs ys :=
+  congrFun (congrFun (congrFun _root_.List.append_eq_appendTR α) xs) ys
+
+public theorem List.lengthTR {α : Type u} (xs : List α) :
+    _root_.List.length xs = _root_.List.lengthTR xs :=
+  congrFun (congrFun _root_.List.length_eq_lengthTR α) xs
+
 public theorem List.filterMapTR {α : Type u} {β : Type v} (f : α → Option β) (xs : List α) :
     _root_.List.filterMap f xs = _root_.List.filterMapTR f xs := by
   rw [_root_.List.filterMap_eq_filterMapTR]

@@ -533,7 +533,8 @@ def lengthTRAux {α : Type u} : List α → Nat → Nat := fun xs n =>
     List.casesOn (motive := fun ys => List.below (motive := fun _ : List α => Nat → Nat) ys → Nat)
       ys (fun _ => acc) (fun _ _ prior => prior.fst (Nat.succ acc)) below) n
 
-def lengthTR {α : Type u} (as : List α) : Nat := lengthTRAux as Nat.zero
+@[no_expose] def lengthTR {α : Type u} (as : List α) : Nat := length as
+attribute [irreducible] lengthTR
 
 @[implicit_reducible] def flatten {α : Type u} : List (List α) → List α := fun l =>
   List.brecOn (motive := fun _ : List (List α) => List α) l (fun xs below =>

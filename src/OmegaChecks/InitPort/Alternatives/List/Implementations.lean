@@ -6,6 +6,26 @@ import all Init.Data.List.Impl
 
 namespace OmegaChecks.InitPort.Alternatives
 
+@[expose] public def List.appendTR : type_of% @_root_.List.appendTR := @_root_.List.append
+@[expose] public def List.lengthTR : type_of% @_root_.List.lengthTR := @_root_.List.length
+
+public theorem List.append_eq_appendTR : @_root_.List.append = @List.appendTR := rfl
+public theorem List.length_eq_lengthTR : @_root_.List.length = @List.lengthTR := rfl
+
+public theorem _root_.OmegaChecks.InitPort.AlternativeEquations.List.lengthTR.eq_1
+    {α : Type u} (xs : List α) : List.lengthTR xs = xs.lengthTRAux 0 :=
+  _root_.List.length_add_eq_lengthTRAux (n := 0)
+
+public theorem _root_.OmegaChecks.InitPort.AlternativeEquations.List.appendTR.eq_1
+    {α : Type u} (xs ys : List α) : List.appendTR xs ys = xs.reverse.reverseAux ys := by
+  change _root_.List.append xs ys = _root_.List.reverseAux (xs.reverseAux []) ys
+  induction xs with
+  | nil => rfl
+  | cons a xs ih =>
+    change a :: _root_.List.append xs ys = _root_.List.reverseAux (xs.reverseAux [a]) ys
+    rw [_root_.List.reverseAux_reverseAux]
+    exact congrArg (a :: ·) ih
+
 @[expose] public def List.filterMapTR : type_of% @_root_.List.filterMapTR := @_root_.List.filterMap
 
 public theorem List.filterMap_eq_filterMapTR : @_root_.List.filterMap = @List.filterMapTR := rfl

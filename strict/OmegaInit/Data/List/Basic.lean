@@ -147,9 +147,10 @@ end Omega.List
 port_proof List.reverseAux_nil by_reflexivity
 port_proof List.reverseAux_cons by_reflexivity
 
-port_definition List.appendTR
-
 namespace Omega.List
+
+@[no_expose] def appendTR {α : Type u} (as bs : List α) : List α := List.append as bs
+attribute [irreducible] appendTR
 
 def foldr {α : Type u} {β : Type v} (f : α → β → β) (init : β) (l : List α) : β :=
   List.brecOn (motive := fun _ : List α => β) l (fun xs below =>
