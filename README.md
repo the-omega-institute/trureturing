@@ -250,7 +250,7 @@ Two explicit boundaries live in [Hearts.lean](D5/X_Frontier/Hearts.lean):
 
 Both obligations remain open. Levent Alpöge’s proof establishes the classical
 Riemann hypothesis. The recommended Lean repository for that proof and Dirichlet
-GRH provides readable and compact editions. [Lean and Mathlib statement](https://leanprover-community.github.io/blog/posts/riemann-hypothesis/) · [lsernau/grh-lean](https://github.com/lsernau/grh-lean)
+GRH is maintained in the community’s primary repository [leanprover-community/riemann-hypothesis](https://github.com/leanprover-community/riemann-hypothesis). [Lean and Mathlib statement](https://leanprover-community.github.io/blog/posts/riemann-hypothesis/)
 
 ## First run
 
