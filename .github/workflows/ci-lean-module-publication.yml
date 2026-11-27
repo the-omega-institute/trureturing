@@ -80,7 +80,7 @@ jobs:
       source: ${{ inputs.source }}
       matrix: ${{ needs.plan.outputs.matrix }}
 
-  publish:
+  stage:
     needs: [plan, compile]
     if: >-
       !cancelled() && needs.plan.result == 'success' &&
@@ -101,18 +101,18 @@ jobs:
           name: module-plan-${{ github.run_id }}
           path: ${{ runner.temp }}
           digest-mismatch: error
-      - name: Publish the versioned module index
+      - name: Stage and read back the immutable module index
         env:
           GH_TOKEN: ${{ github.token }}
           STRATALINT_CACHE_WRITES: 'true'
         uses: ./.github/actions/lean-cache-shards
         with:
           kind: ${{ inputs.kind }}
-          operation: module-finish
+          operation: module-stage
 
   verify:
-    needs: publish
-    if: ${{ !cancelled() && (needs.publish.result == 'success' || (inputs.already_published && needs.publish.result == 'skipped')) }}
+    needs: stage
+    if: ${{ !cancelled() && (needs.stage.result == 'success' || (inputs.already_published && needs.stage.result == 'skipped')) }}
     permissions:
       contents: read
       actions: read
@@ -120,4 +120,28 @@ jobs:
     with:
       kind: ${{ inputs.kind }}
       source: ${{ inputs.source }}
-      published: true
+      exact: true
+      staged: ${{ !inputs.already_published }}
+
+  promote:
+    needs: verify
+    if: ${{ !cancelled() && needs.verify.result == 'success' && !inputs.already_published }}
+    runs-on: ubuntu-24.04-arm
+    permissions:
+      contents: write
+      actions: read
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ inputs.source }}
+          persist-credentials: false
+      - run: python3 .github/scripts/install-tools.py
+      - name: Advance the verified publication
+        env:
+          GH_TOKEN: ${{ github.token }}
+          STRATALINT_CACHE_WRITES: 'true'
+        uses: ./.github/actions/lean-cache-shards
+        with:
+          kind: ${{ inputs.kind }}
+          operation: module-promote
+          version: ${{ format('lean-modules-{0}{1}', inputs.source, inputs.kind == 'report' && '-report' || '') }}

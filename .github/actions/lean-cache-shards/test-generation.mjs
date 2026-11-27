@@ -456,6 +456,8 @@ parser.add_argument("command")
 for option in ["kind", "capacity", "output", "plan", "lane", "version", "targets-file"]:
     parser.add_argument("--" + option)
 parser.add_argument("--prepare-release", action="store_true")
+parser.add_argument("--stage-only", action="store_true")
+parser.add_argument("--staged", action="store_true")
 parser.add_argument("--legacy-checkpoints", action="store_true")
 args = parser.parse_args()
 assert os.environ["LEAN_MODULE_ACTIONS_CACHE"] == "1"
@@ -467,9 +469,14 @@ elif args.command == "worker":
     assert Path(args.plan).read_text() == kind and args.lane == "2"
     Path("shard").write_text(kind)
 elif args.command == "finish":
+    assert args.stage_only
     assert Path(args.plan).read_text() == Path("shard").read_text() == kind
     Path(args.output).write_text(kind)
+elif args.command == "promote":
+    assert args.kind == kind and Path("module-index.json").read_text() == kind
+    assert args.version == "lean-modules-" + "b" * 40 + ("-report" if kind == "report" else "")
 elif args.command == "restore":
+    assert args.staged == (os.environ.get("INPUT_STAGED") == "true")
     assert Path(args.targets_file).read_text() == "D5.A\\n"
     assert (args.kind or "") == kind
     if args.version is None or Path("missing-index").exists():
@@ -490,7 +497,7 @@ else:
   ]) {
     env.INPUT_KIND = kind;
     env.GITHUB_WORKFLOW_REF = 'owner/repo/.github/workflows/' + workflow + '@refs/heads/dev';
-    for (const operation of ['module-plan', 'module-worker', 'module-finish']) {
+    for (const operation of ['module-plan', 'module-worker', 'module-stage']) {
       const result = run(event, operation);
       assert.equal(result.status, 0, result.stderr);
     }
@@ -500,6 +507,13 @@ else:
     assert.equal(run('schedule', 'module-plan').status, 1);
     env.INPUT_KIND = kind;
     env.INPUT_VERSION = 'lean-modules-' + source + (kind === 'report' ? '-report' : '');
+    env.INPUT_STAGED = 'true';
+    const staged = run('workflow_run', 'restore-published');
+    assert.equal(staged.status, 0, staged.stderr);
+    delete env.INPUT_STAGED;
+    const promoted = run(event, 'module-promote');
+    assert.equal(promoted.status, 0, promoted.stderr);
+    assert.notEqual(run('pull_request', 'module-promote').status, 0);
     const pinned = run('pull_request', 'restore-published');
     assert.equal(pinned.status, 0, pinned.stderr);
     assert.equal(await readFile(join(root, 'pinned-restore'), 'utf8'), env.INPUT_VERSION);

@@ -30,6 +30,9 @@ inputs:
     description: Space-delimited project Lean modules whose imports are needed
   version:
     description: Immutable module Release to read during restore-published
+  staged:
+    description: Verify the specified immutable candidate before advancing its publication marker
+    default: 'false'
   targets-file:
     description: File of whitespace-delimited Lean modules for a scoped restore
 outputs:

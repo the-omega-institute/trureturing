@@ -426,6 +426,7 @@ async function runModuleCache() {
     if (targetsFile && !(await readFile(targetsFile, 'utf8')).trim()) return;
     args = ['restore'];
     if (kind) args.push('--kind', kind);
+    if (process.env.INPUT_STAGED === 'true') args.push('--staged');
     if (process.env.INPUT_VERSION) args.push('--version', process.env.INPUT_VERSION);
     if (targetsFile) args.push('--targets-file', targetsFile);
     else if (targets.length) args.push('--targets', ...targets);
@@ -442,8 +443,10 @@ async function runModuleCache() {
       const lane = process.env.MODULE_LANE;
       if (!/^(0|[1-9][0-9]*)$/.test(lane)) throw new Error('invalid module lane');
       args = ['worker', '--plan', plan, '--lane', lane, '--output', join(temp, 'module-worker')];
+    } else if (operation === 'module-stage') {
+      args = ['finish', '--stage-only', '--plan', plan, '--output', join(temp, 'module-index.json')];
     } else {
-      args = ['finish', '--plan', plan, '--output', join(temp, 'module-index.json')];
+      args = ['promote', '--kind', kind, '--version', process.env.INPUT_VERSION];
     }
   }
   try {
@@ -651,7 +654,7 @@ async function saveContinuation() {
 }
 
 async function main() {
-  if (['module-plan', 'module-worker', 'module-finish', 'restore-published'].includes(operation)) return runModuleCache();
+  if (['module-plan', 'module-worker', 'module-stage', 'module-promote', 'restore-published'].includes(operation)) return runModuleCache();
   if (operation === 'module-get' || operation === 'module-put') return moduleCacheEntry(...process.argv.slice(3));
   if (operation === 'generation-get' || operation === 'generation-put') {
     return generationIndex(process.argv[3], process.argv[4]);

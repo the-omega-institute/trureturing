@@ -6,8 +6,12 @@ on:
       source:
         required: true
         type: string
-      published:
-        description: Require artifacts from the exact published source
+      exact:
+        description: Require artifacts from the exact source
+        type: boolean
+        default: false
+      staged:
+        description: Verify the unpublished candidate of this kind
         type: boolean
         default: false
       kind:
@@ -36,7 +40,7 @@ jobs:
       - name: Install the pinned tools release
         run: python3 .github/scripts/install-tools.py
       - id: entry
-        if: ${{ !inputs.published }}
+        if: ${{ !inputs.exact }}
         name: Validate source and select cache transport changes
         env:
           CI_HIT_PATHS: |
@@ -55,24 +59,24 @@ jobs:
       - if: steps.entry.outputs.hit == 'true'
         name: Check read-only cache requests on hits and misses
         run: node --test .github/actions/lean-cache-shards/test-generation.mjs
-      - if: inputs.published || steps.entry.outputs.hit == 'true'
+      - if: inputs.exact || steps.entry.outputs.hit == 'true'
         id: keys
         run: python3 tools/scripts/worktree/lean_actions.py keys --repository "$GITHUB_WORKSPACE" --layers dependency
-      - if: inputs.published || steps.entry.outputs.hit == 'true'
+      - if: inputs.exact || steps.entry.outputs.hit == 'true'
         uses: actions/cache/restore@v5
         with:
           path: ~/.elan
           key: ${{ steps.keys.outputs.elan_key }}
-      - if: inputs.published || steps.entry.outputs.hit == 'true'
+      - if: inputs.exact || steps.entry.outputs.hit == 'true'
         run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
-      - if: inputs.published || steps.entry.outputs.hit == 'true'
+      - if: inputs.exact || steps.entry.outputs.hit == 'true'
         id: dependency
         uses: actions/cache/restore@v5
         with:
           path: ${{ steps.keys.outputs.dependency_archive_path }}
           key: ${{ steps.keys.outputs.dependency_key }}
           restore-keys: ${{ steps.keys.outputs.dependency_restore_prefix }}
-      - if: inputs.published || steps.entry.outputs.hit == 'true'
+      - if: inputs.exact || steps.entry.outputs.hit == 'true'
         name: Restore Lean dependencies
         env:
           DEPENDENCY_KEY: ${{ steps.dependency.outputs.cache-matched-key }}
@@ -80,12 +84,12 @@ jobs:
           STRATALINT_ACCEPT_COLD_BUILD: '1'
         run: |
           python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --layers dependency --dependency-key "$DEPENDENCY_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME"
-      - if: inputs.published || steps.entry.outputs.hit == 'true'
+      - if: inputs.exact || steps.entry.outputs.hit == 'true'
         uses: actions/setup-dotnet@v5
         with:
           global-json-file: global.json
           cache: false
-      - if: inputs.published || steps.entry.outputs.hit == 'true'
+      - if: inputs.exact || steps.entry.outputs.hit == 'true'
         name: Check the clean compiler and report destinations
         run: |
           report=".lake/build/lean-inspector/modules/$CACHE_SCOPE.zip"
@@ -93,7 +97,7 @@ jobs:
           test ! -e "$report"
           test ! -e "$report.hash"
           test ! -e "$report.trace"
-      - if: inputs.published
+      - if: inputs.exact
         name: Select the compiler inputs of the report scope
         env:
           PUBLICATION_KIND: ${{ inputs.kind }}
@@ -108,18 +112,19 @@ jobs:
               ;;
             *) exit 2 ;;
           esac
-      - if: inputs.published
-        name: Restore compilers from the exact published source
+      - if: inputs.exact
+        name: Restore compilers from the exact source
         uses: ./.github/actions/lean-cache-shards
         env:
           GH_TOKEN: ${{ github.token }}
         with:
           operation: restore-published
           kind: compiler
+          staged: ${{ inputs.staged && inputs.kind == 'compiler' }}
           version: ${{ format('lean-modules-{0}', inputs.source) }}
           targets-file: ${{ runner.temp }}/verification-compilers
-      - if: inputs.published
-        name: Verify the compiler delivered by the published shard
+      - if: inputs.exact
+        name: Verify the compiler delivered by the selected shard
         run: |
           module=".lake/build/lib/lean/${CACHE_SCOPE//.//}.olean"
           test -s "$module"
@@ -127,22 +132,23 @@ jobs:
             test -z "$(find .lake/build/lean-inspector/modules -type f -print -quit)"
           fi
           sha256sum "$module" > "$RUNNER_TEMP/restored-compiler.sha256"
-      - if: inputs.published && inputs.kind == 'compiler'
+      - if: inputs.exact && inputs.kind == 'compiler'
         name: Load the restored compiler with Lake
         run: lake --no-build build "+$CACHE_SCOPE:olean"
-      - if: (inputs.published && inputs.kind == 'report') || steps.entry.outputs.hit == 'true'
+      - if: (inputs.exact && inputs.kind == 'report') || steps.entry.outputs.hit == 'true'
         name: Restore the selected module through the CI reader
-        continue-on-error: ${{ !inputs.published }}
+        continue-on-error: ${{ !inputs.exact }}
         uses: ./.github/actions/lean-cache-shards
         env:
           GH_TOKEN: ${{ github.token }}
         with:
           operation: restore-published
           kind: ${{ inputs.kind }}
-          version: ${{ inputs.published && format('lean-modules-{0}-report', inputs.source) || '' }}
+          staged: ${{ inputs.staged }}
+          version: ${{ inputs.exact && format('lean-modules-{0}-report', inputs.source) || '' }}
           targets: ${{ env.CACHE_SCOPE }}
-      - if: inputs.published && inputs.kind == 'report'
-        name: Verify the report delivered by the published shard
+      - if: inputs.exact && inputs.kind == 'report'
+        name: Verify the report delivered by the selected shard
         run: |
           report=".lake/build/lean-inspector/modules/$CACHE_SCOPE.zip"
           test -s "$report"
@@ -150,7 +156,7 @@ jobs:
           test -s "$report.trace"
           sha256sum --check "$RUNNER_TEMP/restored-compiler.sha256"
           sha256sum "$report" > "$RUNNER_TEMP/restored-report.sha256"
-      - if: inputs.published && inputs.kind == 'report'
+      - if: inputs.exact && inputs.kind == 'report'
         name: Reuse the restored report with Lake
         shell: bash
         env:
