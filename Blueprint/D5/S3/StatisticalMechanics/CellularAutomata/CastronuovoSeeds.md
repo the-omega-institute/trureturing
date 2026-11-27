@@ -30,6 +30,10 @@ $$\exists n \in \mathbb{N}, \varphi \in \operatorname{LocalRule}\left(n\right), 
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/CellularAutomata/CastronuovoSeeds.question_5_9` (`✓ std3`). ∎
 
+*Resolves.* `Problems/castronuovo-dennunzio-margara-2026-question-5-9` (proved) by `D5/S3/StatisticalMechanics/CellularAutomata/CastronuovoSeeds.question_5_9`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"castronuovo-dennunzio-margara-2026-question-5-9","declaration_gid":"D5/S3/StatisticalMechanics/CellularAutomata/CastronuovoSeeds.question_5_9","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Niccolò Castronuovo, Alberto Dennunzio, Luciano Margara (2026). *Computing Functions Through the Orbits of Dynamical Systems: The Case of Cellular Automata*. DOI: [10.48550/arXiv.2610.34096](https://doi.org/10.48550/arXiv.2610.34096). URL: <https://arxiv.org/abs/2610.34096v1>.
@@ -43,6 +47,10 @@ Question 5.9 quantifies over one positive arity n, one Boolean local rule φ of 
 $$\exists n \in \mathbb{N}, \varphi \in \operatorname{LocalRule}\left(n\right), k \in \mathbb{N}, 0 < n \land 0 < k \land \operatorname{Universal}\left(\varphi, k\right) \land \neg\operatorname{StronglyUniversal}\left(\varphi, k\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/CellularAutomata/CastronuovoSeeds.question_5_6` (`✓ std3`). ∎
+
+*Resolves.* `Problems/castronuovo-dennunzio-margara-2026-question-5-6` (proved) by `D5/S3/StatisticalMechanics/CellularAutomata/CastronuovoSeeds.question_5_6`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"castronuovo-dennunzio-margara-2026-question-5-6","declaration_gid":"D5/S3/StatisticalMechanics/CellularAutomata/CastronuovoSeeds.question_5_6","resolution_kind":"proved"} -->
 
 *Source.* Repository-derived.
 
