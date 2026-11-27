@@ -1,5 +1,6 @@
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qNativeResidueIterate
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qNativeConformalZero
+import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qFullEnergySpectrum
 
 /-! Transport of the cubic twisted field comparison along a complex linear equivalence. -/
 
@@ -16,7 +17,8 @@ open P48qAllJetWickField (NativeStates nativeField)
 open P48qThirdTwistedField (Cartan State)
 open P48qTwistedChargeAction (lattice g g_cube g_isometry)
 open P48qNativeCurrentLocality (InResidue currentAlong)
-open P48qNativeResidueIterate (TwistedBorcherdsAt targetField_eq_nativeField_of_generators)
+open P48qNativeResidueIterate (TwistedBorcherdsAt targetField_eq_nativeField_of_generators
+  targetField_eq_nativeField_of_twisted_borcherds)
 open NativeStandardThirdLift (standardLift)
 open LatticeAllStateReconstruction (mu)
 
@@ -187,8 +189,94 @@ theorem targetField_eq_transport_of_generators (e : State ≃ₗ[ℂ] W)
 
 open HalfFockSpectralFiberSource (actualInverse)
 open LatticeActualConformalState (omega)
+open P48qChargedResidueProduct (mu_eigen)
+open P48qConformalVectorDecomposition (currentPair omega_decomposition)
+open P48qMomentumEnergy (Fixed fixedBasis fixedGramDual)
+open ThirdEigenspacePairing (p48qAction p48qBasis p48qOppositeBasis)
+open private lift_current currentStateLinear from
+  D5.S3.VertexAlgebra.Lattice.Orbifold.P48qNativePairwiseLocality
+open private mem_fixed_iff from
+  D5.S3.VertexAlgebra.Lattice.Orbifold.P48qMomentumEnergy
+
+/-- The conformal field is determined by agreement on lift eigen-currents,
+residue support, and the cubic identity for pairs of lift eigen-currents. -/
+theorem targetConformalField_eq_transport_of_currents (e : State ≃ₗ[ℂ] W)
+    (Y : NativeStates →ₗ[ℂ] VertexOperator ℂ W)
+    (hcurrent : ∀ (u : Cartan) (s : ℤ),
+      σ (currentAlong lattice u) = ζ ^ s • currentAlong lattice u →
+      Y (currentAlong lattice u) = pullbackField e.symm (nativeField (currentAlong lattice u)))
+    (hresidue : ∀ (v : NativeStates) (t : ℤ), σ v = ζ ^ t • v → InResidueOn t (Y v))
+    (hborcherds : ∀ (u v : Cartan) (s t : ℤ),
+      σ (currentAlong lattice u) = ζ ^ s • currentAlong lattice u →
+      σ (currentAlong lattice v) = ζ ^ t • currentAlong lattice v →
+      ∃ N : ℕ, (∀ n ≥ (N : ℤ), mu lattice (currentAlong lattice u) n (currentAlong lattice v) = 0) ∧
+        TwistedBorcherdsOn Y (currentAlong lattice u) (currentAlong lattice v) s t N) :
+    Y (omega lattice (actualInverse lattice)) =
+      pullbackField e.symm (nativeField (omega lattice (actualInverse lattice))) := by
+  have hpair (u v : Cartan) (s t : ℤ)
+      (hu : σ (currentAlong lattice u) = ζ ^ s • currentAlong lattice u)
+      (hv : σ (currentAlong lattice v) = ζ ^ t • currentAlong lattice v) :
+      Y (currentPair u v) = pullbackField e.symm (nativeField (currentPair u v)) := by
+    let a := currentAlong lattice u
+    let b := currentAlong lattice v
+    obtain ⟨N, hcut, hN⟩ := hborcherds u v s t hu hv
+    have hagree : pullbackField e (Y (currentPair u v)) = nativeField (currentPair u v) := by
+      exact targetField_eq_nativeField_of_twisted_borcherds ((pullbackField e).comp Y) a b s t
+        hu hv
+        (by rw [LinearMap.comp_apply, hcurrent u s hu, pullbackField_symm])
+        (by rw [LinearMap.comp_apply, hcurrent v t hv, pullbackField_symm])
+        (fun n => (inResidueOn_pullback_iff e (s + t) (Y (mu lattice a n b))).mpr
+          (hresidue _ (s + t) (mu_eigen a b s t n hu hv)))
+        ⟨N, hcut, (twistedBorcherdsOn_pullback_iff e Y a b s t N).mpr hN⟩ (-1)
+    rw [← hagree]
+    simpa only [LinearEquiv.symm_symm] using (pullbackField_symm e.symm (Y (currentPair u v))).symm
+  have hlift (u : Cartan) (s : ℤ) (hu : p48qAction u = ζ ^ s • u) :
+      σ (currentAlong lattice u) = ζ ^ s • currentAlong lattice u := by
+    rw [lift_current u, hu]
+    exact currentStateLinear.map_smul _ _
+  have hfixed (u : Fixed) : σ (currentAlong lattice u) = ζ ^ (0 : ℤ) • currentAlong lattice u :=
+    hlift u 0 (by simpa only [zpow_zero, one_smul] using (mem_fixed_iff u).mp u.property)
+  have hζ : IsPrimitiveRoot ζ 3 :=
+    IsPrimitiveRoot.coe_units_iff.mpr ThirdTwistedChargeCocycle.zeta_primitive
+  have hfixedPair (i : Fin 16) :
+      Y (currentPair (fixedBasis i) (fixedGramDual fixedBasis i)) =
+        pullbackField e.symm (nativeField (currentPair (fixedBasis i) (fixedGramDual fixedBasis i))) :=
+    hpair _ _ 0 0 (hfixed _) (hfixed _)
+  have hmovingPair (i : Fin 16) :
+      Y (currentPair (p48qBasis hζ i) (p48qOppositeBasis hζ i)) =
+        pullbackField e.symm (nativeField (currentPair (p48qBasis hζ i) (p48qOppositeBasis hζ i))) :=
+    hpair _ _ 1 2
+      (hlift _ 1 (by simpa only [zpow_one] using
+        Module.End.mem_eigenspace_iff.mp (p48qBasis hζ i).property))
+      (hlift _ 2 (by
+        rw [show ζ ^ (2 : ℤ) = ζ ^ (2 : ℕ) from zpow_natCast ζ 2]
+        exact Module.End.mem_eigenspace_iff.mp (p48qOppositeBasis hζ i).property))
+  rw [omega_decomposition hζ]
+  simp only [map_add, map_smul, map_sum, hfixedPair, hmovingPair]
+
 open P48qNativeConformalZero (native_conformal_coeff_neg_six_eq_totalLZero)
-open P48qTwistedStateEnergy (totalLZero_no_integer_eigenvalue)
+open P48qTwistedStateEnergy (totalLZero totalLZero_no_integer_eigenvalue)
+open P48qFullEnergySpectrum (totalLZero_exact_eigenvalues)
+
+private theorem targetConformalMode_eq_conj_of_field_eq (e : State ≃ₗ[ℂ] W)
+    (Y : NativeStates →ₗ[ℂ] VertexOperator ℂ W)
+    (hY : Y (omega lattice (actualInverse lattice)) =
+      pullbackField e.symm (nativeField (omega lattice (actualInverse lattice)))) :
+    HVertexOperator.coeff (Y (omega lattice (actualInverse lattice))) (-6) = e.conj totalLZero := by
+  rw [hY, pullbackField_coeff, native_conformal_coeff_neg_six_eq_totalLZero, LinearEquiv.symm_symm]
+
+/-- Agreement at the conformal vector excludes every integer eigenvalue. -/
+theorem targetConformalMode_ne_integer_of_field_eq (e : State ≃ₗ[ℂ] W)
+    (Y : NativeStates →ₗ[ℂ] VertexOperator ℂ W)
+    (hY : Y (omega lattice (actualInverse lattice)) =
+      pullbackField e.symm (nativeField (omega lattice (actualInverse lattice))))
+    (m : ℤ) (w : W) (hw : w ≠ 0) :
+    HVertexOperator.coeff (Y (omega lattice (actualInverse lattice))) (-6) w ≠
+      (m : ℂ) • w := by
+  intro h
+  rw [targetConformalMode_eq_conj_of_field_eq e Y hY, LinearEquiv.conj_apply_apply] at h
+  exact totalLZero_no_integer_eigenvalue m (e.symm w) (by simpa using hw)
+    (by simpa only [LinearEquiv.symm_apply_apply, map_smul] using congrArg e.symm h)
 
 /-- The transported actual conformal zero mode has no integer eigenvalue. -/
 theorem targetConformalMode_ne_integer_of_comparison (e : State ≃ₗ[ℂ] W)
@@ -196,18 +284,33 @@ theorem targetConformalMode_ne_integer_of_comparison (e : State ≃ₗ[ℂ] W)
     (hY : Y = (pullbackField e.symm).comp nativeField)
     (m : ℤ) (w : W) (hw : w ≠ 0) :
     HVertexOperator.coeff (Y (omega lattice (actualInverse lattice))) (-6) w ≠
-      (m : ℂ) • w := by
-  intro h
-  rw [hY, LinearMap.comp_apply, pullbackField_coeff,
-    native_conformal_coeff_neg_six_eq_totalLZero, LinearEquiv.symm_symm,
-    LinearEquiv.conj_apply_apply] at h
-  exact totalLZero_no_integer_eigenvalue m (e.symm w) (by simpa using hw)
-    (by simpa only [LinearEquiv.symm_apply_apply, map_smul] using congrArg e.symm h)
+      (m : ℂ) • w :=
+  targetConformalMode_ne_integer_of_field_eq e Y
+    (DFunLike.congr_fun hY (omega lattice (actualInverse lattice))) m w hw
+
+/-- Agreement at the conformal vector transports the exact complex point spectrum. -/
+theorem targetConformalMode_exact_eigenvalues_of_field_eq (e : State ≃ₗ[ℂ] W)
+    (Y : NativeStates →ₗ[ℂ] VertexOperator ℂ W)
+    (hY : Y (omega lattice (actualInverse lattice)) =
+      pullbackField e.symm (nativeField (omega lattice (actualInverse lattice)))) (a : ℂ) :
+    (∃ w : W, w ≠ 0 ∧ HVertexOperator.coeff (Y (omega lattice (actualInverse lattice))) (-6) w =
+      a • w) ↔ ∃ n : ℕ, a = 16 / 9 + (n : ℂ) / 3 := by
+  rw [targetConformalMode_eq_conj_of_field_eq e Y hY, ← totalLZero_exact_eigenvalues]
+  constructor
+  · rintro ⟨w, hw, heigen⟩
+    refine ⟨e.symm w, by simpa using hw, ?_⟩
+    rw [LinearEquiv.conj_apply_apply] at heigen
+    simpa only [LinearEquiv.symm_apply_apply, map_smul] using congrArg e.symm heigen
+  · rintro ⟨v, hv, heigen⟩
+    refine ⟨e v, by simpa using hv, ?_⟩
+    rw [LinearEquiv.conj_apply_apply, LinearEquiv.symm_apply_apply, heigen, map_smul]
 
 run_cmd do
   for name in [``pullbackField, ``pullbackField_coeff, ``residueCoefficient_pullback,
       ``inResidueOn_pullback_iff, ``twistedBorcherdsOn_pullback_iff,
-      ``targetField_eq_transport_of_generators, ``targetConformalMode_ne_integer_of_comparison] do
+      ``targetField_eq_transport_of_generators, ``targetConformalField_eq_transport_of_currents,
+      ``targetConformalMode_ne_integer_of_field_eq, ``targetConformalMode_ne_integer_of_comparison,
+      ``targetConformalMode_exact_eigenvalues_of_field_eq] do
     let axioms ← Lean.collectAxioms name
     unless axioms.all (fun ax => [``propext, ``Classical.choice, ``Quot.sound].contains ax) do
       throwError "Unexpected axiom closure for {name}: {axioms}"
