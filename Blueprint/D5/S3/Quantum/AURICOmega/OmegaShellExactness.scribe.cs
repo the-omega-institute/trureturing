@@ -11,7 +11,7 @@ internal sealed class OmegaShellExactnessDocument : IScribeDocumentDefinition
     public DocumentDefinition Create()
     {
         Formula s = F.Id("s"), p = F.Id("p"), q = F.Id("q"), r = F.Id("r"), a = F.Id("a");
-        Formula v = F.Id("v"), z = Shell(s, p, v), zero = F.Id("0");
+        Formula v = F.Id("v"), z = Shell(s, p, v), zero = D(0);
         Formula ss = Mul(s, s), alpha = Norm(a);
         Formula compress = Mul(D(2), Add(ss, Mul(alpha, Dot(p, q))));
         Formula triangle = Mul(Mul(D(2), s),
@@ -52,7 +52,7 @@ internal sealed class OmegaShellExactnessDocument : IScribeDocumentDefinition
     private static Formula Pure(Formula x, Formula y, Formula z) =>
         And(Call("pure", x), And(Call("pure", y), Call("pure", z)));
     private static Formula All(string variable, Formula body) =>
-        new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(variable), F.Id("ℍ_ℤ"), body);
+        new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(variable), F.Id("Quaternion"), body);
     private static Formula Add(Formula left, Formula right) => new Formula.Binary(left, FormulaBinaryOperator.Add, right);
     private static Formula Mul(Formula left, Formula right) => new Formula.Binary(left, FormulaBinaryOperator.Multiply, right);
     private static Formula Equal(Formula left, Formula right) => new Formula.Relation(left, FormulaRelationOperator.Equal, right);
