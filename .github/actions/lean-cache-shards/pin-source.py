@@ -24,23 +24,23 @@ def protected_tip(name):
     return branch["commit"]["sha"]
 
 
-def published_source():
-    payload = {}
-    if os.environ["GITHUB_EVENT_NAME"] == "repository_dispatch":
-        event = json.loads(Path(os.environ["GITHUB_EVENT_PATH"]).read_text())
-        payload = event.get("client_payload")
-        if payload is None:
-            payload = {}
-        if not isinstance(payload, dict):
-            raise ValueError("client_payload must be a JSON object")
-    if "source_commit" in payload:
-        source = payload["source_commit"]
-        tip = os.environ["GITHUB_SHA"]
-    else:
-        source = api("git/ref/heads/lean-modules-published")["object"]["sha"]
-        tip = protected_tip("dev")
+def marker_source(kind):
+    marker = "lean-modules-published" + ("-report" if kind == "report" else "")
+    refs = api("git/matching-refs/heads/" + marker)
+    matching = [row["object"]["sha"] for row in refs if row["ref"] == "refs/heads/" + marker]
+    if not matching:
+        return None
+    source, = matching
     if not isinstance(source, str) or not re.fullmatch(r"[0-9a-f]{40}", source):
         raise ValueError("source_commit must be a lowercase 40-hex string")
+    return source
+
+
+def published_source(kind):
+    source = marker_source(kind)
+    if source is None:
+        return None
+    tip = protected_tip("dev")
     if source != tip:
         comparison = api(f"compare/{source}...{tip}?per_page=1")
         ahead = comparison["ahead_by"]
@@ -60,10 +60,24 @@ def published_source():
             ], text=True).splitlines()
         if source not in first_parents:
             raise ValueError(error)
+    if kind == "compiler":
+        # The existing compiler marker can still address a combined-format release at rollout.
+        with tempfile.TemporaryDirectory(dir=os.environ["RUNNER_TEMP"]) as directory:
+            subprocess.run(["gh", "release", "download", "lean-modules-" + source, "--repo",
+                            os.environ["GITHUB_REPOSITORY"], "--pattern", "index.json",
+                            "--dir", directory], check=True)
+            index = json.loads((Path(directory) / "index.json").read_bytes())
+        if (index.get("schema") != "lean-module-shards-v1" or index.get("source") != source
+                or index.get("version") != "lean-modules-" + source):
+            raise ValueError("compiler marker and index differ")
+        if "kind" not in index:
+            return None
+        if index["kind"] != "compiler":
+            raise ValueError("expected a published compiler index")
     return source
 
 
-def pin(*, published=False):
+def pin(*, published=None, skip_published=None):
     run = os.environ["GITHUB_RUN_ID"]
     name = "generation-pin-" + run
     directory = Path(os.environ["RUNNER_TEMP"]) / "pin"
@@ -85,7 +99,11 @@ def pin(*, published=False):
             if artifacts or any(job["name"] == "pin" and job["conclusion"] == "success"
                                 for page in jobs for job in page["jobs"]):
                 raise ValueError("successful earlier work has lost its source pin")
-        source = published_source() if published else tip
+        source = published_source(published) if published else tip
+        if source is None:
+            with Path(os.environ["GITHUB_OUTPUT"]).open("a") as output:
+                print("source=\nupload=false", file=output)
+            return
     if len(source) != 40 or any(ch not in "0123456789abcdef" for ch in source):
         raise ValueError("invalid pinned commit")
     if tip is not None and source != tip:
@@ -94,13 +112,25 @@ def pin(*, published=False):
             "--jq", ".merge_base_commit.sha"], text=True).strip()
         if ancestor != source:
             raise ValueError("pinned source is outside protected dev history")
+    marker = marker_source(skip_published) if skip_published else None
+    status = None
+    if marker and marker != source:
+        status = api(f"compare/{marker}...{source}?per_page=1")["status"]
+        if status not in ("ahead", "behind"):
+            raise ValueError(f"{skip_published} marker and pinned source have incompatible histories: {status}")
     file.write_text(source + "\n")
     with Path(os.environ["GITHUB_OUTPUT"]).open("a") as output:
         print(f"source={source}", file=output)
         print("upload=" + str(not prior).lower(), file=output)
+        if marker == source:
+            print("already_published=true", file=output)
+        elif status == "behind":
+            print("superseded=true", file=output)
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--published", action="store_true", help="pin the Truth Release source")
-    pin(published=parser.parse_args().published)
+    parser.add_argument("--published", choices=("compiler", "report"), help="pin the upstream publication")
+    parser.add_argument("--skip-published", choices=("compiler", "report"), help="reuse the current publication")
+    args = parser.parse_args()
+    pin(published=args.published, skip_published=args.skip_published)

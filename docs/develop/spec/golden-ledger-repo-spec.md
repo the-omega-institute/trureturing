@@ -313,13 +313,13 @@ For admission, these template-evidence requirements apply only to A5.5's selecte
 
 The pinned `tools/lean-inspector` Lake package owns per-module row and material bundles under root `.lake/build/lean-inspector/modules`. Native module report facets trace the report format identifier, source bytes, private/server/import/transitive compiler artifacts, each module's authoritative utility record and external claim artifact closure; registered configuration identity belongs to aggregation. The Inspector executable must already be current according to its native Lake dependencies, but its job trace and registered producer implementation bytes are not report regeneration dependencies. Lean/Python/C#/script or Inspector Lake implementation edits reuse valid module artifacts. Contract edits rebuild and reassess affected Reg compiler closures; the same delivery migrates all uses and deletes old paths. Input membership uses the exact Contract.Discovery type heads and compiler owner rules, never module prefixes, path lists, source tokens or report-array contents. Discovery errors and illegal contracts are named failures, not empty membership. The small compiler input fact stores only type/owner/name projections and traces the compiler closure. Utility input is generated once per invocation. Each scoped request determines the modules to aggregate. Native Lake trace and artifact reuse select misses. The Inspector asks Lake through its native `noBuild` artifact operation, preserves each module's input/output traces, and composes the selected work through a shared native job. Expected internal misses become continuations; other failures and a caller's actual `--no-build` propagate. Batching selected misses shares import work without a second invalidation engine or per-miss blocking promise wait. Ordinary root defaults and audit builds remain required. Like an olean, a module report artifact is validated completely once, when it is produced; an artifact that fails is not written. Reuse is decided by its Lake trace alone, which includes the module's and its claims' compiler artifacts, so a changed olean invalidates exactly the dependent reports; a traced or cache-restored artifact is not validated again. Aggregation concatenates the traced rows in registered order and moves their deflated materials unchanged. Publication of a scoped aggregate checks the bundle envelope and input currency.
 
-面向受保护分支的 PR 和这些分支上的 push 共用定向 current。选中的每批报告目标先交给 `make lean-report-prepare LEAN_TARGETS=…`，再以相同目标运行 `make lean-report-scoped LEAN_TARGETS=…`。独立 Actions producer 用 `make lean-cache-prepare FULL_BUILD=1` 准备编译工件与原生模块报告。Lean 缓存 Release 只编译和运输项目编译工件。A22 定义运输及恢复边界。
+面向受保护分支的 PR 和这些分支上的 push 共用定向 current。选中的每批报告目标先交给 `make lean-report-prepare LEAN_TARGETS=…`，再以相同目标运行 `make lean-report-scoped LEAN_TARGETS=…`。Cache Release Publish 发布编译产物。Report Release Publish 固定一个已发布的编译索引，为同一源码生成原生模块报告并发布独立索引。运输及恢复边界见 A22。
 
 Inspector privately stages, canonically validates and publishes raw-v4 module rows and their declaration materials, including excluded helpers. Scoped bundles include digests, provenance and current-input attestation. Invalid required inputs, production validation failures and Lean failures remain failures. The existing coordinate/attestation wire fields `producer_sha256` and `repository_inspector_sha256` carry the report format token `SHA256("schema=stratalint-raw-lean-report-v4\n")`; they are not executable-byte evidence. Report source coordinates select only `report_modules`; Inspector sources remain registered producer provenance and native compiler inputs. Configuration digests retain their registered byte preimage. Interface contract sources are declared in the existing `config_inputs` inventory, and explicit preparation rebuilds the affected compiler outputs and the report facets reassess the dependent modules. Each native module bundle includes a strict origin record containing `module`, its singleton raw `report_sha256`, `input_projection`, `producer_sources_sha256` and `inspector_executable_sha256`, captured at generation. Origin sidecars contain no raw-source hash map. Lake's normal `transImports` supplies the dependency closure, constrained by `report_modules` and `dependency_sources`; unregistered local inputs fail explicitly during production. Fetched packages remain pinned by the registered toolchain/Lake configuration. The shell input verifier checks origin integrity, module membership and source-path ownership; publication staging checks only the bundle envelope and input coordinates. Producer-only files do not become input dependencies merely by being registered. The source fingerprint hashes the registered producer path/content digest inventory, including the canonical report-policy projection. Scoped aggregate provenance identifies the report format and retains these exact records in `module_origins`, keyed by module and checked against canonical singleton row bytes. Mixed generation origins are valid; publication may update only invocation mode and never relabel a reused row as produced by the current executable. Origin records are validated when each module artifact is produced; Lake trace reuse retains them. The shell input helper verifies scoped reports against the requested targets.
 
 The optional `report_execution` manifest declaration names the supported tools (`lake`, `lean`), their required registered identity file (`toolchain: "lean-toolchain"`), platform coordinates (`system`, `machine`) and explicit semantic environment variables. Report reuse binds the authored pin and those coordinates; it does not execute compiler version commands or require installed compiler binaries. Missing, changed or excluded pin registration cannot yield reusable evidence. CI restores optional project/dependency caches and installs the pinned toolchain as needed. CI and cache production own program compilation. Project cache preparation leaves native compiler and module artifacts. Scoped reports attest their selected inputs and materials.
 
-A22 的定向 current 按需恢复可用的 dependency/project/toolchain 缓存，为选中目标分批准备编译产物并生成局部报告。current 和适用的 delta 消费该批次清单中的局部报告，各 unit job 分别承担自己的测试或反证结果。独立 producer 运输项目编译产物与原生模块报告。定向聚合复用有效的原生模块产物。truth-release bundle 离线验证不选择 CI run 或下载报告。没有独立报告 cache/store、暂停后续跑协议、baseline adapter 或 delta/cohort planner。`ci-current.yml` 的 detect 只按其单元模式选工；Scribe current 消费 `Meta/ReportProducers/scribe-content.json`，不读 base。
+A22 的定向 current 独立恢复命中的编译产物与模块报告，为选中目标分批补建缺项并生成局部报告。current 和适用的 delta 消费该批次清单中的局部报告，各 unit job 分别承担自己的测试或反证结果。定向聚合复用有效的原生模块产物。truth-release bundle 离线验证只读取包内证据。`ci-current.yml` 的 detect 按其单元模式选工。Scribe current 消费 `Meta/ReportProducers/scribe-content.json`，不读 base。
 
 
 **Compiled contract production and inputs.** Production report generation reads each requested module and its imported declarations from serialized compiler artifacts through `RawArtifacts.Store`. It does not initialize extensions, construct an Environment, invoke elaboration or Meta, or run a content-supplied driver. Typed inputs are identified by their compiled Contract type heads and owner facts; constructor trees and safe constant references are decoded as data. Values requiring evaluation, missing parts, unknown layouts and read failures receive named diagnostics and have no fallback path. Each row is computed from its own artifact data. The raw reader checks compiler header identity and constant-table structure; native Lake traces select the compiler dependencies.
@@ -479,17 +479,19 @@ truth release bundle 的 manifest 以 schema 标签 `truth-release`（历史格�
 
 Truth Release 按 A14.2 发布冻结声明最近一次测量的库根与公理。消费方按来源快照、模块陈述 pin、声明名称键和种类对齐证据。DAG 与发布数据的「仅 Omega · 零公理」标记属于单条声明，判据为实测库根集合非空且包含于 `{OmegaInit, OmegaMath}`，同时 `axioms` 显式等于 `[]`。缺省字段保留其 A14.2 含义；同模块声明可得到不同结果。
 
-独占工作流 `truth-release-publish.yml` 在受保护的 `dev` 上运行。定时触发和未指定来源的手动触发从 `refs/heads/lean-modules-published` 固定最近一次完整发布的源码提交。该提交须位于当前受保护 `dev` 的第一父链上。源码检出和 `lean-modules-<提交>` 版本索引共用此提交。重跑沿用本次运行保存的 Actions 来源 pin。
+`truth-release-publish.yml` 在同仓受保护的 `dev` 上响应 Report Release Publish 成功事件，也可由定时或手动入口追赶最新发布。任务开始时从 `refs/heads/lean-modules-published-report` 取得最新完整报告索引的源码提交，核验其位于受保护 `dev` 的第一父链。工作流用该提交检出源码，读取 `lean-modules-<提交>-report/index.json`，重跑复用该次运行已保存的来源 pin。首次报告发布前工作流跳过构建。
 
-`publish-truth-release` 的 `repository_dispatch` 可在 `client_payload.source_commit` 指定 40 位小写十六进制提交字符串。工作流在检出前验证该提交位于受保护 `dev` 事件提交的第一父链上（含事件提交自身）。该提交须已有可读取的普通模块 Release。
-
-Truth Release 直接信任已发布的报告。已有同一来源的正式 Truth Release 时直接返回其发布坐标。对新来源，读取最近发布且来源为当前提交祖先的正式 Truth Release，并按其发布坐标找到当时的普通模块索引。两个索引的报告有效键相同的模块复用上次发布的原始报告行。新增或报告键变化的模块从当前索引指定的物理 Release 分片提取 ZIP，移除的模块退出当前报告。首次发布或缺少兼容基线时，读取当前发布的全部适用报告。源码钉版的 Inspector 汇总当前模块报告。Scribe 从普通 Actions 缓存恢复由上次构建保留的资源包和输入信息，按当前源码更新资源；支持该缓存的构建成功后以当前来源提交为键保存。工作流独立钉住的 `trureturing-tools` 发布器负责生成 DAG 与 truth bundle。发布阶段无需安装 Lean、恢复编译器产物、重新验证报告或编译 Lean 项目。发布清单的 `required_checks` 为空。归档发布到 GHCR，`truth-release-<digest>` GitHub Release 提供同一归档、发布坐标与 `DAG.md`。
+Truth Release 直接信任已发布的报告。已有同一来源的正式 Truth Release 时直接返回其发布坐标。对新来源，读取最近发布且来源为当前提交祖先的正式 Truth Release，按其发布坐标找到同一来源的独立报告索引。两个索引的报告有效键相同的模块复用上次发布的原始报告行。新增或报告键变化的模块从当前索引指定的物理 Release 分片提取 ZIP，移除的模块退出当前报告。首次发布、旧 Truth Release 尚无独立报告索引或基线格式不兼容时，读取当前完整报告集。下载分片须与当前索引登记的归档长度和 SHA-256 相符，并含全部所选 ZIP。源码钉版的 Inspector 汇总当前模块报告。Scribe 从普通 Actions 缓存恢复由上次构建保留的资源包和输入信息，按当前源码更新资源；支持该缓存的构建成功后以当前来源提交为键保存。工作流独立钉住的 `trureturing-tools` 发布器负责生成 DAG 与 truth bundle。发布阶段无需安装 Lean、恢复编译器产物、重新验证报告或编译 Lean 项目。发布清单的 `required_checks` 为空。归档发布到 GHCR，`truth-release-<digest>` GitHub Release 提供同一归档、发布坐标与 `DAG.md`。
 
 
 <a id="a22-ci-cache-flow"></a>
-**缓存角色与数据流。** 普通 push 在事件提交、PR 在 merge candidate 上计算模块编译和适用报告的输入键。读者固定版本索引，按模块名和依赖闭包选择分片。Actions 缓存使用可读的 mathlib 修订与模块前缀作为键；缓存服务未命中时可从索引指定的 Release 取回同一分片。读者恢复命中模块的编译产物和适用的逐模块报告，Lake 按当前输入补建缺失或过期的产物。
+**缓存角色与数据流。** 普通 push 在事件提交、PR 在 merge candidate 上计算模块编译和适用报告的输入键。作业分别解析编译与报告引用，按各自完整索引、模块名和依赖闭包恢复可复用的产物。两个引用可指向不同的源码提交。报告发布落后时，默认恢复按当前检出的报告输入键逐模块筛选已发布报告。显式指定版本时读取指定的索引。Actions 缓存未命中时，读者可从对应索引指定的物理 Release 取回同一分片。Lake 按当前检出的输入补建缺失或过期的编译产物及报告。
 
-定时或授权手动触发的 Cache Release Publish 在共享并发组内固定受保护 dev 提交。编译范围包含 Trureturing、Reg 及其导入的接口模块，以及 Omega 库、检查模块和严格、common 后端的下游闭包。分片沿命名空间分配到独立 runner，成功分片可立即保存，后续运行按成员及模块输入继续使用。每一版的完整索引引用该版新产物和历史版本中的未变分片。发布器回读版本索引后向前更新共享引用。Actions 缓存驱逐时，读者沿相同索引从 Release 回读。
+缓存、报告和 Truth 各用一个独占并发组。每组只运行一个发布，保留最新待办，运行中的发布继续完成。Cache Release Publish 在 `dev` push、定时或授权手动触发后固定受保护分支的源码。Report Release Publish 响应同仓 `dev` 编译缓存发布成功事件，也可定时或手动追赶。它从编译引用固定一个已正式发布的编译索引。Truth 从正式报告引用取源。每条流水线独立结算，报告失败保留上次成功的报告，编译缓存仍可继续发布和恢复。Truth 的构建与发布也独立于两个上游的后续工作。
+
+编译范围包含 Trureturing、Reg 及其导入的接口模块，以及 Omega 库、检查模块和严格、common 后端的下游闭包。成功分片按成员、输入和内容指纹保存。完整索引记录本版新分片以及继承分片的物理地址。编译与报告发布器各自暂存并回读完整索引。干净 runner 按确切版本恢复候选分片。编译验收读取恢复的编译产物；报告验收同时恢复同源编译输入，并验证定向 Inspector 没有重新提取报告。验收成功后，发布器最后向前更新自己的引用，下游据此选源。
+
+迁移期间，现有编译引用可以指向没有 `kind` 字段的混合索引。默认恢复可按各自输入键从该索引取回编译和报告，报告发布器也可迁移其中匹配的报告。报告 CD 等到编译引用指向 `kind: compiler` 的完整索引再固定源码。显式报告版本的校验和 Truth Release 只接受 `kind: report` 的独立报告索引。
 
 **本机 Lake 缓存与定向构建。** 干净的主 `dev` 经 `make warm-donor FULL_BUILD=1` 完成各 workspace 的预热。Lake 将可缓存的产物和输入映射写入本机原生 artifact cache，并在开发检出保留可供现有消费者使用的产物。定向构建和报告准备按各目标的依赖 trace 在本工作树中恢复或编译。定向报告只读取或恢复与 trace 相符的编译产物；Git 源码使用 manifest 钉版。定向入口在私有写锁下核对 pin 和探针，项目层为空时也可运行。独立全量缓存准备显式调用 `make lean-cache-ensure FULL_BUILD=1`，仅全量路径允许 donor clonefile。Release 与 Actions 恢复使用各自的入口。
 
@@ -511,7 +513,7 @@ source 在 judge cache 恢复后初始化余额；judge 与命中测试的 NuGet
 
 内容检查与基础设施行为测试分责：Lean、Scribe 及既有可执行源码全集的复制策略 guard 由 architecture 单元消费；普通内容变更不选择重量级 worktree 行为测试。worktree 实现、夹具及实际构建依赖变更仍由 `CI_UNITS` 显式选择行为测试，不通过运行时推导测试影响范围。原生报告的编译与模块 trace 仍是唯一增量权威；模块注册只建立 Lake 依赖，不逐模块同步等待编译输入分类；分类完成后由依赖 continuation 准备对应模块。保留原有输入 trace 和失败传播，不把判官程序身份混入报告 trace。共享程序构建与被选中的审计执行分责，缓存复用不免除审计。一次构建同时包含 Inspector 与下游审计程序时，在既有下游 Lake workspace 中共同构建，避免对同一程序闭包重复注册与缓存准备；单独 Inspector 或 Reg 入口保持原职责。Release 传输契约按既有 transport、verification 与本地/旧名 case 所有者分别执行，各组保留完整用例并独立使用原有子进程 hang guard；CI 单元选择、累计计算预算和功能判据不随分组改变。
 
-每个 job 的本地 `.lake/build` 承载编译、模块报告、聚合报告与材料。Actions cache 传输的原生路径由 `Meta/ci-cache-paths.json` 声明。Cache Release Publish 将编译产物与受检模块的报告共同发布。普通检查按变更范围恢复模块，Truth Release 直接读取已发布的报告 ZIP。required 同时核对 source、current 和各命中单元的真实结果。
+每个 job 的本地 `.lake/build` 承载编译、模块报告、聚合报告与材料。Actions cache 传输的原生路径由 `Meta/ci-cache-paths.json` 声明。普通检查按变更范围独立恢复编译与报告。Truth Release 读取正式报告分片中的 ZIP。required 同时核对 source、current 和各命中单元的真实结果。
 
 **触发、身份、读写与预算。** 表中写入资格还须满足下文工作量与成功条件；producer 不在 `required` 的 needs 中，不能替代实际选中的检查。
 
@@ -519,20 +521,25 @@ source 在 judge cache 恢复后初始化余额；judge 与命中测试的 NuGet
 | --- | --- | --- | --- |
 | PR | 固定 merge candidate，按 `M^1→M` 的路径选取 Lean、Scribe 与测试输入 | project、dependency、elan、judge 和 NuGet 全部只读 | current 与各 unit 默认累计计算 120m，各 job 平台上限 360m |
 | 普通 push 至 dev/integration-* | 固定 `HEAD=event.after`，按核验的事件范围选择 Lean、Scribe、源码 delta 与测试输入 | project、dependency、elan、judge 和 NuGet 全部只读 | current 与各 unit 默认累计计算 120m，各 job 平台上限 360m |
-| schedule 或授权的 workflow_dispatch | 在全局并发组中固定受保护 dev 提交并选择完整基线 | 独占写入分片检查点、CI 索引、Release 以及已发布代引用 | 编译与发布作业各自最多 360m |
+| Cache Release Publish | `dev` push、定时或授权手动触发时固定受保护 dev 源码 | 编译分片、索引及编译引用 | 分片编译和汇总作业各最多 360m |
+| Report Release Publish | 编译发布成功、定时或授权手动触发时固定最新正式编译索引 | 报告分片、索引及报告引用 | 分片报告生成和汇总作业各最多 360m |
+| DAG and truth release | 报告发布成功、定时或手动触发时固定最新正式报告索引 | GHCR 归档及镜像 GitHub Release | 构建最多 360m，发布最多 60m |
 | 本地取回 | 当前检出按所选模块及依赖计算输入键 | 本地 buildDir | 非 Actions job |
 
 普通 PR 和 push 的 `check-source` 执行 SL-003 容量检查、SL-015 路径策略和适用的基线诊断。命中定向准入时，`check-current` 和适用的 `check-delta` 共用变更路径与经验证的局部报告。Lean 规则检查选中模块及其依赖闭包，delta 按本次变更执行适用规则，包括测试拓扑及 SL-030/031/032。选中范围没有 Lean 目标时，可以使用零份报告。理论稿件与消化记录在独立理论仓接受该仓的检查。
 
-**状态与决策。** 每个普通 CI 作业固定一份可见的完整索引。首次发布前，缺项在当前作业按需编译。命中、未命中和 post-job 均只读共享 Project、NuGet、judge、elan 与依赖缓存。恢复失败时由本地构建及 required checks 给出结果。旧代与新代均可独立读取。
+**状态与决策。** 普通 CI 对每种可用的发布分别固定完整索引。首次发布、单侧缺项或恢复失败时，作业使用已恢复的产物并按需本地准备缺项。普通 PR、push 与其 post-job 对共享 Project、NuGet、judge、elan 与依赖缓存只读。required checks 裁定候选提交。
 
 **版本与存储地址**
 
 | 标识 | 用途 |
 | --- | --- |
-| `refs/heads/lean-modules-published` | 指向最近发布完整模块索引的源码提交。 |
-| `lean-modules-<源码提交>` | Release 版本标签。版本索引将每个模块映射到分片及实际持有它的 Release。 |
-| `<mathlib 版本号>-<模块前缀>.tar.gz` | Actions 缓存键与 Release 资产使用完全相同的名字。版本号取自 mathlib 锁定的 `inputRev`，例如 `v4.35.0-D5.S0.tar.gz`。父子前缀可共存，按模块归属读取。 |
+| `refs/heads/lean-modules-published` | 最新完整编译索引的受保护源码提交。 |
+| `refs/heads/lean-modules-published-report` | 最新完整报告索引的受保护源码提交。 |
+| `lean-modules-<源码提交>` | 发布编译索引 `index.json`，类型为 `compiler`。 |
+| `lean-modules-<源码提交>-report` | 发布报告索引 `index.json`，类型为 `report`，`compiler_version` 指向同一提交的编译版本。 |
+| `<mathlib 版本号>-<模块前缀>.tar.gz` | 编译分片的 Actions 缓存键与 Release 资产名。版本号取自 mathlib 的 `inputRev`，例如 `v4.35.0-D5.S0.tar.gz`。 |
+| `<编译分片键>-report` | 对应报告分片的独立缓存键与物理资产名。索引记录实际版本、资产名、成员、字节数与摘要，支持从历史版本或其分卷继承。 |
 | `lean-dependency-v4-…`、`elan-pinned-…` | 运输依赖与 Lean 工具链。 |
 | `stratalint-raw-lean-report-v4` | 由 `lean-report-selection.py:REPORT_FORMAT` 定义的报告格式。 |
 
@@ -540,9 +547,9 @@ source 在 judge cache 恢复后初始化余额；judge 与命中测试的 NuGet
 
 模块报告的复用条件为 Lake trace、utility 和报告格式。judge 编译缓存绑定其构建输入与配方。
 
-**分片容量与报告。** 小模块按点号命名空间归并。根据压缩后的大小递归拆分超限分片，单模块超限时独立保存。手动发布的 `shard_mib` 和定时发布的仓库变量 `LEAN_MODULE_SHARD_MIB` 可调整 256 MiB 默认容量。每片独立保存，未变的分片继承已有版本的地址。每个受检模块在同一分片中带有一份 `lean-inspector/modules/<完整模块名>.zip` 及其 Lake `.hash` 和 `.trace`。定向检查和冻结可按所选模块安装这些文件并复用与当前输入匹配的报告。Truth Release 直接读取 ZIP。
+**分片容量与报告。** 小模块按点号命名空间归并。编译分片按压缩后的大小递归拆分，单模块超限时独立保存。手动发布的 `shard_mib` 和定时发布的仓库变量 `LEAN_MODULE_SHARD_MIB` 可调整 256 MiB 默认容量。报告发布沿用同源编译索引的分片名，为受检成员生成 `lean-inspector/modules/<完整模块名>.zip` 及其 Lake `.hash`、`.trace`。编译与报告各自保存分片和索引。定向检查和冻结按所选模块恢复匹配的产物，Truth Release 按报告索引提取 ZIP。
 
-[普通 CI](../../../.github/workflows/ci-current.yml) · [并发分片](../../../.github/workflows/ci-lean-generation-compile.yml) · [手动与定时发布](../../../.github/workflows/cache-release-publish.yml)
+[普通 CI](../../../.github/workflows/ci-current.yml) · [编译发布](../../../.github/workflows/cache-release-publish.yml) · [报告发布](../../../.github/workflows/report-release-publish.yml) · [Truth 发布](../../../.github/workflows/truth-release-publish.yml)
 
 **退出与部署。** raw 0 为成功，1 为候选检查失败，2 为输入/基础设施失败，3 只表示 SL-022 保护面变更标注。只有其余义务已通过才可将 3 归一为 workflow 成功；make 配方失败会折叠为 2，报告时保留底层退出码与 Block 列表。缺失报告或无效 TRX 不得成为成功。
 

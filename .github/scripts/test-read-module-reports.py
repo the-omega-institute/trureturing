@@ -1,5 +1,6 @@
 """Incremental Truth Release reader fixtures."""
 
+import hashlib
 import importlib.util
 import io
 import json
@@ -26,8 +27,9 @@ def archive(path, files):
             tar.addfile(entry, io.BytesIO(data))
 
 
-def module(name, key):
-    return {"key": key, "report_inputs": [name], "compiler_input": "compiler-" + name}
+def module(name, key, owner):
+    return {"key": hashlib.sha256(key.encode()).hexdigest(), "report_inputs": [name],
+            "compiler_input": "compiler-" + name, "shard": owner}
 
 
 class ReportReaderTest(unittest.TestCase):
@@ -40,32 +42,20 @@ class ReportReaderTest(unittest.TestCase):
         self.enterContext(patch.dict(sys.modules, materials=SimpleNamespace(
             REPORT_SCHEMA=self.schema, canonical_json=self.canonical)))
         self.source = "b" * 40
-        self.current = "lean-modules-" + self.source
-        self.old = "lean-modules-" + "a" * 40
+        self.current = "lean-modules-" + self.source + "-report"
+        self.old = "lean-modules-" + "a" * 40 + "-report"
         self.tag = "truth-release-" + "f" * 64
         self.release = {"tagName": self.tag, "tagCommit": {"oid": "a" * 40}}
         self.base = self.root / "truth-base"
         self.destination = self.root / "reports"
         for tag in (self.current, self.old, self.tag):
             (self.root / tag).mkdir()
-        self.index = {
-            "schema": "lean-module-shards-v1", "mathlib": "mathlib",
-            "targets": {n: module(n, n) for n in ["Same", "Changed", "Added", "Moved"]},
-            "shards": {
-                "mixed": {"version": self.current, "asset": "mixed.tar.gz", "members": ["Same", "Changed"]},
-                "added": {"version": self.old, "asset": "added.tar.gz", "members": ["Moved", "Added"]},
-                "compiler": {"version": self.current, "asset": "absent.tar.gz", "members": ["Compiler"]},
-            },
-        }
-        self.index["targets"]["Compiler"] = {"key": "compiler", "compiler_input": "compiler"}
-        old = {**self.index, "targets": {n: module(n, n) for n in ["Same", "Changed", "Removed", "Moved"]}}
-        old["targets"]["Changed"]["key"] = "different-utility-closure"
+        self.index = self.make_index({"mixed": (self.current, ["Same", "Changed"]),
+                                      "added": (self.old, ["Moved", "Added"])})
+        old = self.make_index({"old": (self.old, ["Same", "Changed", "Removed", "Moved"])})
+        old["targets"]["Changed"] = module("Changed", "different-utility-closure", "old")
         self.write_index(self.current, self.index)
         self.write_index(self.old, old)
-        for row in self.index["shards"].values():
-            if row["members"] != ["Compiler"]:
-                archive(self.root / row["version"] / row["asset"],
-                        {"lean-inspector/modules/" + n + ".zip": n.encode() for n in row["members"]})
         coordinate = json.dumps({"release_digest": "sha256:" + "f" * 64, "source_commit": "a" * 40}).encode()
         (self.root / self.tag / reader.PUBLICATION).write_bytes(coordinate)
         files = dict.fromkeys(reader.BUNDLE_FILES, b"bundle-data")
@@ -74,8 +64,24 @@ class ReportReaderTest(unittest.TestCase):
         files[reader.PUBLICATION] = coordinate
         archive(self.root / self.tag / (self.tag + ".tar.gz"), files)
 
+    def make_index(self, groups):
+        targets, shards = {}, {}
+        for owner, (tag, names) in groups.items():
+            asset = owner + ".tar.gz-report"
+            path = self.root / tag / asset
+            archive(path, {"lean-inspector/modules/" + n + ".zip": n.encode() for n in names})
+            targets.update({n: module(n, n, owner) for n in names})
+            shards[owner] = {"version": tag, "key": asset, "asset": asset, "artifact_kind": "report",
+                             "sha256": hashlib.sha256(path.read_bytes()).hexdigest(), "bytes": path.stat().st_size,
+                             "members": names}
+        return {"schema": "lean-module-shards-v1", "kind": "report", "mathlib": "mathlib",
+                "targets": targets, "shards": shards}
+
     def write_index(self, tag, index):
-        (self.root / tag / "index.json").write_text(json.dumps(index))
+        (self.root / tag / "index.json").write_text(json.dumps({
+            "version": tag, "compiler_version": tag.removesuffix("-report"),
+            "source": reader.REPORT_TAG.fullmatch(tag)[1], **index,
+        }))
 
     def read(self, release):
         with patch.object(reader, "download", wraps=reader.download) as requests:
@@ -88,15 +94,15 @@ class ReportReaderTest(unittest.TestCase):
         self.assertEqual(json.loads((self.base / "reuse.json").read_text()), ["Moved", "Same"])
         self.assertEqual({p.name for p in self.base.iterdir()}, reader.BUNDLE_FILES | {"reuse.json"})
         self.assertEqual({p.name for p in self.destination.iterdir()}, {"Changed.zip", "Added.zip"})
-        self.assertEqual([asset for tag, asset in calls if asset.endswith(".tar.gz") and tag != self.tag],
-                         ["mixed.tar.gz", "added.tar.gz"])
+        self.assertEqual([asset for tag, asset in calls if asset.endswith("-report") and tag != self.tag],
+                         ["mixed.tar.gz-report", "added.tar.gz-report"])
 
     def test_all_keys_reused_in_new_source(self):
         self.write_index(self.old, self.index)
         _, calls = self.read(self.release)
         self.assertEqual(json.loads((self.base / "reuse.json").read_text()), ["Added", "Changed", "Moved", "Same"])
         self.assertFalse(list(self.destination.iterdir()))
-        self.assertFalse(any(asset.endswith(".tar.gz") and tag != self.tag for tag, asset in calls))
+        self.assertFalse(any(asset.endswith("-report") and tag != self.tag for tag, asset in calls))
 
     def test_same_source_needs_no_download(self):
         release = {**self.release, "tagCommit": {"oid": self.source}}
@@ -105,11 +111,41 @@ class ReportReaderTest(unittest.TestCase):
         self.assertEqual(calls, [])
         self.assertFalse(self.destination.exists())
 
+    def test_rejects_compiler_and_unrelated_report_indexes(self):
+        alternatives = [{"kind": "compiler"}, {"version": self.old}, {"compiler_version": self.old.removesuffix("-report")}]
+        for change in alternatives:
+            with self.subTest(change=change):
+                self.write_index(self.current, {**self.index, **change})
+                with self.assertRaisesRegex(ValueError, "invalid published report index"):
+                    self.read(None)
+
+    def test_rejects_compiler_shard_in_report_index(self):
+        self.index["shards"]["mixed"]["version"] = self.current.removesuffix("-report")
+        self.write_index(self.current, self.index)
+        with self.assertRaisesRegex(ValueError, "invalid report shard coordinate"):
+            self.read(None)
+
+    def test_missing_zip_in_verified_shard_is_an_error(self):
+        row = self.index["shards"]["mixed"]
+        path = self.root / self.current / row["asset"]
+        archive(path, {"lean-inspector/modules/Same.zip": b"report"})
+        row.update(bytes=path.stat().st_size, sha256=hashlib.sha256(path.read_bytes()).hexdigest())
+        self.write_index(self.current, self.index)
+        with self.assertRaisesRegex(ValueError, "missing lean-inspector/modules/Changed.zip"):
+            self.read(None)
+
+    def test_corrupt_report_asset_is_an_error(self):
+        row = self.index["shards"]["mixed"]
+        row["sha256"] = "0" * 64
+        self.write_index(self.current, self.index)
+        with self.assertRaisesRegex(ValueError, "differs from the index"):
+            self.read(None)
+
     def test_first_publication(self):
         _, calls = self.read(None)
         self.assertFalse(self.base.exists())
         self.assertEqual(len(list(self.destination.glob("*.zip"))), 4)
-        self.assertNotIn((self.current, "absent.tar.gz"), calls)
+        self.assertEqual([name for _, name in calls], ["index.json", "mixed.tar.gz-report", "added.tar.gz-report"])
 
     def test_incompatible_mathlib_uses_current_reports(self):
         self.write_index(self.old, {**self.index, "mathlib": "before-toolchain-update"})
@@ -148,7 +184,7 @@ class ReportReaderTest(unittest.TestCase):
         self.assertEqual(len(list(self.destination.glob("*.zip"))), 4)
 
     def test_all_inputs_changed_still_provides_compatible_base_files(self):
-        changed = {name: module(name, "changed-" + name) for name in self.index["targets"]}
+        changed = {name: module(name, "changed-" + name, row["shard"]) for name, row in self.index["targets"].items()}
         self.write_index(self.old, {**self.index, "targets": changed})
         self.read(self.release)
         self.assertEqual(json.loads((self.base / "reuse.json").read_text()), [])
@@ -188,8 +224,16 @@ class ReportReaderTest(unittest.TestCase):
             [release("e", "5", isDraft=True), release("f", "6", isPrerelease=True)],
             [release("c", "4", tagName="other"), unrelated, expected],
         )]
-        with patch.object(reader.subprocess, "check_output", side_effect=[json.dumps(pages), "other", "a" * 40]):
-            self.assertEqual(reader.select_release("owner/repo", "d" * 40), expected)
+        with patch.object(reader.subprocess, "check_output", side_effect=[json.dumps(pages), "diverged", "ahead"]):
+            self.assertEqual(reader.select_release("owner/repo", "d" * 40), (expected, None))
+        # A retry can follow a failed publish job even after a newer source was released.
+        # Releases are ordered by publication time, which can differ from commit order.
+        with patch.object(reader.subprocess, "check_output", side_effect=[json.dumps(pages), "ahead", "behind"]):
+            self.assertEqual(reader.select_release("owner/repo", "d" * 40, retry=True), (None, expected))
+        with patch.object(reader.subprocess, "check_output", return_value=json.dumps(pages)):
+            self.assertEqual(reader.select_release("owner/repo", "b" * 40, retry=True), (None, unrelated))
+        with patch.object(reader.subprocess, "check_output", side_effect=[json.dumps(pages), "diverged", "ahead"]):
+            self.assertEqual(reader.select_release("owner/repo", "d" * 40, retry=True), (expected, None))
 
 
 if __name__ == "__main__":
