@@ -76,6 +76,16 @@ example (p : Omega.Prod Omega.Nat Omega.Nat) (b : Omega.Nat) :
 example {p q : Prop} (h : Omega.And p q) : p := h.left
 example {p q : Prop} (pq : p → q) (qp : q → p) : Omega.Iff p q := { mp := pq, mpr := qp }
 example {p q : Prop} (h : Omega.Iff p q) : q → p := h.mpr
+example {p q : Prop} (h : Omega.Or p q) : Omega.Or q p :=
+  match h with
+  | .inl a => .inr a
+  | .inr b => .inl b
+example {α : Sort u} (h : Omega.Nonempty α) : Omega.Exists fun _ : α => Omega.True :=
+  match h with
+  | .intro a => .intro a Omega.True.intro
+example {α : Sort u} {P : α → Prop} (h : Omega.Exists P) : Omega.Nonempty α :=
+  match h with
+  | .intro a _ => .intro a
 example {p : Prop} (d : Omega.Decidable p) : Omega.Eq d d :=
     Omega.Decidable.falseTrueCases (fun _ => Omega.rfl) (fun _ => Omega.rfl) d
 example {p : Prop} (h : p) :

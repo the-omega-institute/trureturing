@@ -60,29 +60,16 @@ abbrev And.casesOn {a b : Prop} {motive : And a b → Sort u} (t : And a b)
     (intro : ∀ left right, motive (And.intro left right)) : motive t :=
   And.rec (motive := motive) intro t
 
-/-- Constructive disjunction with propositional elimination. -/
-@[no_expose] def Or (a b : Prop) : Prop := ∀ r : Prop, (a → r) → (b → r) → r
+inductive Or (a b : Prop) : Prop where
+  | inl (h : a) : Or a b
+  | inr (h : b) : Or a b
 
-namespace Or
-theorem inl {a b : Prop} (h : a) : Or a b := fun _ left _ => left h
-
-theorem inr {a b : Prop} (h : b) : Or a b := fun _ _ right => right h
-
-theorem elim {a b c : Prop} (h : Or a b) (left : a → c) (right : b → c) : c :=
-  h c left right
-theorem rec {a b : Prop} {motive : Or a b → Prop}
-    (inl : ∀ h, motive (Or.inl h)) (inr : ∀ h, motive (Or.inr h))
-    (t : Or a b) : motive t :=
-  t (motive t) inl inr
-
-abbrev casesOn {a b : Prop} {motive : Or a b → Prop} (t : Or a b)
+abbrev Or.casesOn {a b : Prop} {motive : Or a b → Prop} (t : Or a b)
     (inl : ∀ h, motive (Or.inl h)) (inr : ∀ h, motive (Or.inr h)) : motive t :=
   Or.rec (motive := motive) inl inr t
 
-protected abbrev recOn := @Or.casesOn
-end Or
-
-attribute [irreducible] Or
+theorem Or.elim {a b c : Prop} (h : Or a b) (left : a → c) (right : b → c) : c :=
+  Or.rec (motive := fun _ => c) left right h
 
 inductive Bool where
   | false
@@ -252,19 +239,15 @@ theorem Or.neg_resolve_left (h : Or (Not a) b) (ha : a) : b := h.elim (absurd ha
 
 theorem Or.neg_resolve_right (h : Or a (Not b)) (nb : b) : a := h.elim id (absurd nb)
 
-/-- Constructive nonemptiness with elimination into propositions. -/
-@[class, no_expose] def Nonempty (α : Sort u) : Prop := ∀ p : Prop, (α → p) → p
+class inductive Nonempty (α : Sort u) : Prop where
+  | intro (val : α) : Nonempty α
 
-theorem Nonempty.intro {α : Sort u} (val : α) : Nonempty α := fun _ f => f val
+abbrev Nonempty.casesOn {α : Sort u} {motive : (t : Nonempty α) → Prop}
+    (t : Nonempty α) (intro : ∀ val, motive (Nonempty.intro val)) : motive t :=
+  Nonempty.rec intro t
 
 protected theorem Nonempty.elim {α : Sort u} {p : Prop} (h₁ : Nonempty α) (h₂ : α → p) : p :=
-  h₁ p h₂
-
-theorem Nonempty.rec {α : Sort u} {motive : Nonempty α → Prop}
-    (intro : ∀ val, motive (Nonempty.intro val)) (t : Nonempty α) : motive t :=
-  t.elim intro
-
-attribute [irreducible] Nonempty
+  Nonempty.rec (motive := fun _ => p) h₂ h₁
 
 theorem eq_of_heq {α : Sort u} {a a' : α} (h : HEq a a') : Eq a a' :=
   let align : ∀ (α β : Sort u) (a : α) (b : β), HEq a b → (h : Eq α β) → Eq (cast h a) b :=
@@ -301,14 +284,6 @@ abbrev PEmpty.casesOn.{v,u} (motive : (t : PEmpty.{u}) → Sort v) (t : PEmpty) 
 abbrev Eq.casesOn.{v,u} := @Eq.recOn.{v,u}
 
 abbrev HEq.casesOn.{v,u} := @HEq.recOn.{v,u}
-
-protected abbrev Nonempty.recOn {α : Sort u} {motive : (t : Nonempty α) → Prop}
-    (t : Nonempty α) (intro : ∀ val, motive (Nonempty.intro val)) : motive t :=
-  Nonempty.rec intro t
-
-abbrev Nonempty.casesOn {α : Sort u} {motive : (t : Nonempty α) → Prop}
-    (t : Nonempty α) (intro : ∀ val, motive (Nonempty.intro val)) : motive t :=
-  Nonempty.rec intro t
 
 set_option linter.unusedVariables.funArgs false in
 protected abbrev Empty.noConfusionType (P : Sort u) (t t' : Empty) : Sort u :=

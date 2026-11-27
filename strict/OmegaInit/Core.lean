@@ -26,25 +26,16 @@ abbrev Iff.casesOn {a b : Prop} {motive : Iff a b → Sort u} (t : Iff a b)
     (intro : ∀ mp mpr, motive (Iff.intro mp mpr)) : motive t :=
   Iff.rec (motive := motive) intro t
 
-@[no_expose] def Exists {α : Sort u} (p : α → Prop) : Prop := ∀ r : Prop, (∀ w, p w → r) → r
-
-theorem Exists.intro {α : Sort u} {p : α → Prop} (w : α) (h : p w) : Exists p :=
-  fun _ use => use w h
-
-theorem Exists.elim {α : Sort u} {p : α → Prop} {b : Prop}
-    (h₁ : Exists p) (h₂ : ∀ a, p a → b) : b := h₁ b h₂
-
-theorem Exists.rec {α : Sort u} {p : α → Prop} {motive : Exists p → Prop}
-    (intro : ∀ w h, motive (Exists.intro w h)) (t : Exists p) : motive t :=
-  t (motive t) intro
+inductive Exists {α : Sort u} (p : α → Prop) : Prop where
+  | intro (w : α) (h : p w) : Exists p
 
 abbrev Exists.casesOn {α : Sort u} {p : α → Prop} {motive : Exists p → Prop}
     (t : Exists p) (intro : ∀ w h, motive (Exists.intro w h)) : motive t :=
   Exists.rec (motive := motive) intro t
 
-protected abbrev Exists.recOn.{u} := @Exists.casesOn.{u}
-
-attribute [irreducible] Exists
+theorem Exists.elim {α : Sort u} {p : α → Prop} {b : Prop}
+    (h₁ : Exists p) (h₂ : ∀ a, p a → b) : b :=
+  Exists.rec (motive := fun _ => b) h₂ h₁
 
 namespace Nat
 
