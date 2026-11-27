@@ -136,7 +136,10 @@ private def modifyStringFunction (n : Name) : Bool :=
   (n.getPrefix == `String.Pos && [`set, `pastSet, `toSetOfLE, `modify, `pastModify, `toModifyOfLE].contains (n.updatePrefix .anonymous)) ||
   [`String.Pos.Raw.set, `String.Pos.Raw.modify, `String.Internal.capitalizeImpl].contains n
 
-private def pinnedStringFunction (n : Name) : Bool := modifyStringFunction n || rawStringFunction n || renderName n || defsStringFunction n || basicStringFunction n || decodeStringFunction n || sliceStringFunction n || metaLiteralFunction n || n == `String.toName
+private def errorString (n : Name) : Bool :=
+  [`IO.Error.fopenErrorToString, `IO.Error.otherErrorToString].contains n
+
+private def pinnedStringFunction (n : Name) : Bool := errorString n || modifyStringFunction n || rawStringFunction n || renderName n || defsStringFunction n || basicStringFunction n || decodeStringFunction n || sliceStringFunction n || metaLiteralFunction n || n == `String.toName
 
 private def debugPrimitive (n : Name) : Bool := [`dbgTrace, `dbgTraceIfShared, `dbgSleep, `dbgStackTrace].contains n
 
@@ -215,6 +218,7 @@ public def supported (source : Environment) (owner name : Name) : Bool :=
     (owner == `OmegaInit.Data.String.Modify && modifyStringFunction name) ||
     (owner == `OmegaInit.Data.String.Slice && sliceStringFunction name) ||
     (owner == `OmegaInit.Meta.Defs && (name == `String.toName || metaLiteralFunction name || syntaxTreeFunction name || monadicSeparator name)) || isFloatCall source owner name ||
+    (owner == `OmegaInit.System.IOError && errorString name) ||
     (owner == `OmegaInit.System.IO && IONative.supported name) ||
     (owner == `OmegaInit.Prelude && (name == `Quot.liftOn || name == `Lean.Name.hash || MacroNative.supported name)) ||
     (owner == `OmegaInit.Data.ByteArray.Basic && ByteFoldNative.supported name) ||
@@ -595,6 +599,17 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
     let dom := if dom.isAppOfArity `optParam 2 then dom.getAppArgs[0]! else dom
     let syntaxArray := dom.getAppFn.constName == `Array &&
       [`Lean.Syntax, `Lean.TSyntax].contains (dom.getArg! 0).getAppFn.constName
+    if errorString official && dom.isAppOfArity `Option 1 then
+      unless (dom.getArg! 0).isConstOf `String && a.ty == .tobject && b.ty == .tobject do
+        throw <| IO.userError "unexpected error detail type"
+      IndexedNative.checkDataTypes source strict [`Option]
+      hasString := true
+      decls := decls.push ((if b.borrow then "b_lean_obj_arg " else "lean_obj_arg ") ++ arg)
+      prepare := prepare ++ s!"  lean_inc({arg});\n  lean_object *details = omega_optional_from_lean({arg}, omega_string_to_lean);\n"
+      args := args.push "details"
+      if a.borrow then cleanup := cleanup ++ "  lean_dec(details);\n"
+      unless b.borrow do cleanup := cleanup ++ s!"  lean_dec({arg});\n"
+      continue
     let dom := dom.getAppFn.constName
     if let some (w, t) := word? dom then
       layout strict dom
