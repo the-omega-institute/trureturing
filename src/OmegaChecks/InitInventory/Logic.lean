@@ -65,8 +65,22 @@ def fromArraySize (select : type_of% (@Option.choice.{u}))
   cases e : select α with
   | none => rw [e] at eq; contradiction
   | some a => rfl
+/-- An arbitrary well-typed witness for the dependent projection suffices.
+Eliminating the inhabited input into the tag proposition is constructive. -/
+def fromGetD (select : type_of% @Option.choice.{u})
+    (law : ∀ {α : Type u} {a : α}, ∃ h : (select α).isSome, (select α).getD a = (select α).get h) :
+    type_of% @Classical.choice.{u} :=
+  choiceFromOptionPresence select fun α ne => ne.elim fun a => (@law α a).elim fun h _ => h
+
+def fromGetBang (select : type_of% @Option.choice.{u})
+    (law : ∀ {α : Type u} [Inhabited α], ∃ h : (select α).isSome, (select α).get! = (select α).get h) :
+    type_of% @Classical.choice.{u} :=
+  choiceFromOptionPresence select fun α ne => ne.elim fun a => (@law α ⟨a⟩).elim fun h _ => h
+
 /-- For each law, every selector satisfying its exact public statement yields unrestricted choice. -/
 def laws : List (Name × Name × Name) := [
+  (`Init.Data.Option.Lemmas, ``Option.getD_choice, ``fromGetD),
+  (`Init.Data.Option.Lemmas, ``Option.get!_choice, ``fromGetBang),
   (`Init.Data.Option.Lemmas, ``Option.isSome_choice, ``fromSome),
   (`Init.Data.Option.Lemmas, ``Option.isSome_choice_iff_nonempty, ``fromSomeIff),
   (`Init.Data.Option.Lemmas, ``Option.choice_eq_none_iff_not_nonempty, ``fromNoneEq),

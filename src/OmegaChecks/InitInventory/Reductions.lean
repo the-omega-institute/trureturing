@@ -191,13 +191,27 @@ private def replayWitnesses (env : Environment) : IO Unit := do
     if let .ctorInfo ctor := ci then todo := ctor.induct :: todo
   discard <| (← mkEmptyEnvironment).toKernelEnv.replay terms
 
+/-- Abstract just the proof argument of the pinned right-hand `Option.get`.
+A port may provide any such proof with the stated equality. -/
+private def abstractGetWitness (type : Expr) : MetaM Expr :=
+  Meta.forallTelescope type fun params eq => do
+    let some (_, _, rhs) := eq.eq? | throwError "missing option equality"
+    unless rhs.isAppOfArity ``Option.get 3 do throwError "missing dependent option projection"
+    let argument := rhs.appArg!
+    Meta.withLocalDeclD `h (← Meta.inferType argument) fun h => do
+      let predicate ← Meta.mkLambdaFVars #[h] (mkApp eq.appFn! (mkApp rhs.appFn! h))
+      Meta.mkForallFVars params (← Meta.mkAppM ``Exists #[predicate])
+
 /-- Construct the law-to-axiom type with the public selector left arbitrary. -/
 private def optionLawReductionType (source target : ConstantInfo) (levels : List Level) :
     MetaM Expr := do
   let selector ← getConstInfo ``Option.choice
   unless levels.length == 1 && source.numLevelParams == 1 && selector.numLevelParams == 1 do
     throwError "unexpected universe arity for {source.name}"
-  let siteType := source.type.instantiateLevelParams source.levelParams levels
+  let original := source.type.instantiateLevelParams source.levelParams levels
+  let siteType ← if [``Option.getD_choice, ``Option.get!_choice].contains source.name then
+    abstractGetWitness original
+  else pure original
   let selectorConst := mkConst selector.name levels
   unless siteType.find? (· == selectorConst) |>.isSome do
     throwError "missing selector in {source.name}"
