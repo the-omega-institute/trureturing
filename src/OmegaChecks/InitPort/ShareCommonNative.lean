@@ -11,6 +11,7 @@ open Lean OmegaChecks.InitPort
 
 /-- Bind the opaque state allocator to its pinned implementation and keep the same sharing operation. -/
 public unsafe def main (args : List String) : IO Unit := do
+  let (interpreter, args) := if args.head? == some "--interpreter" then (true, args.drop 1) else (false, args)
   let [lib, output] := args | throw <| IO.userError "expected strict library and C output"
   let api := LogicalHandle.shareState
   let official ← importModules #[{module := api.owner}] {}
@@ -28,7 +29,7 @@ public unsafe def main (args : List String) : IO Unit := do
   let roots := [(api.allocator, api.nativeAllocator), (share, shareSymbol)].filter fun (n, _) => env.contains (`Omega ++ n)
   if roots.isEmpty then return
   let wrappers := [`ShareCommon.instInhabitedState, `ShareCommonT.run, `ShareCommonM.run].map (`Omega ++ ·)
-  let wrappers := wrappers.filter env.contains
+  let wrappers := if interpreter then [] else wrappers.filter env.contains
   let names := roots.map (fun (n, _) => `Omega ++ n) ++ wrappers
   let ctx ← NativeState.localEnv env api.privateOwner names.toArray
   let compiled ← NativeState.compile ctx do
@@ -44,5 +45,8 @@ public unsafe def main (args : List String) : IO Unit := do
       NativeState.verify compiled (`Omega ++ n) #[(.tobject, false)] .tobject symbol
     else
       NativeState.verify compiled (`Omega ++ n) shareArgs .object symbol
-  NativeState.writeCode lib api.privateOwner compiled (NativeState.codeExtensions ++ #[privateConstKindsExt.name])
-  NativeState.emitBridge compiled api.privateOwner none output #[{module := `OmegaInit.Control.State}]
+  if interpreter then
+    NativeState.emitBridge compiled `StrictShareCommonInterpreter none output
+  else
+    NativeState.writeCode lib api.privateOwner compiled (NativeState.codeExtensions ++ #[privateConstKindsExt.name])
+    NativeState.emitBridge compiled api.privateOwner none output #[{module := `OmegaInit.Control.State}]

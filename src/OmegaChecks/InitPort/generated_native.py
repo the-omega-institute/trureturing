@@ -5,6 +5,7 @@ from graphlib import TopologicalSorter
 import os
 from pathlib import Path
 import subprocess
+import sysconfig
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[2]
@@ -35,6 +36,19 @@ def match_cached_seed(owner, seed):
         if not original.is_file() or not cached.is_file() or not cmp(original, cached, shallow=False):
             return None
     return source
+
+
+def check_share_ir(stage, library):
+    check = stage / "share-ir"
+    check.mkdir()
+    source = check / "extern.c"
+    run("lake", "env", "lean", "--run", HERE / "ShareCommonNative.lean", "--interpreter", library, source)
+    shim = check / ("extern" + (sysconfig.get_config_var("SHLIB_SUFFIX") or ".so"))
+    run("leanc", "-shared", "-fPIC", "-DLEAN_EXPORTING", source, "-o", shim)
+    run("lean", "-R", HERE, "-o", check / "ShareCommonConsumer.olean", HERE / "ShareCommonConsumer.lean",
+        env={**os.environ, "LEAN_PATH": str(library)})
+    run("lake", "env", "lean", "--load-dynlib=" + str(shim), "--run", HERE / "ShareCommonIRConsumer.lean",
+        library, check)
 
 
 def compile_generated(stage, product, graph, seed_ir, owners=None, *, original_seed=None, before_owner=None):
