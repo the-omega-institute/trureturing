@@ -678,15 +678,18 @@ private def inventory (lib : System.FilePath) (visible strict full witnesses : E
       if boundary.isSome then certifiedSites := certifiedSites + 1
       let strictName := if OmegaChecks.InitCompiler.RootNames.isPrimitive expected name then name else `Omega ++ name
       let matched := strictNames.any (·.contains strictName)
-      let checkedUnsafeRuntime ← if matched && owner == `Init.Util && name == `isExclusiveUnsafe then do
-        let some dst := full.find? strictName | throwError "missing private exclusivity observation"
+      let observer := (owner == `Init.Util && name == `isExclusiveUnsafe) ||
+        (owner == `Init.ShareCommon && [`ShareCommon.Object.eq, `ShareCommon.Object.hash].contains name)
+      let checkedUnsafeRuntime ← if matched && observer then do
+        let some dst := full.find? strictName | throwError "missing private observation {strictName}"
+        let some symbol := OmegaChecks.InitPort.UnsafeRuntime.observerSymbol? official owner name false
+          | throwError "unexpected pinned observation ABI for {name}"
         unless (strict.find? strictName).any (·.isUnsafe) && officialSigs.contains name &&
-            strictSigs.contains strictName && OmegaChecks.InitPort.UnsafeRuntime.isExclusive info false &&
-            OmegaChecks.InitPort.UnsafeRuntime.isExclusive dst true &&
-            OmegaChecks.InitPort.UnsafeRuntime.exclusiveABI official false &&
-            OmegaChecks.InitPort.UnsafeRuntime.exclusiveABI full true do
-          throwError "invalid public, private or native interface of the unsafe exclusivity observation"
-        pure (some "lean_is_exclusive_obj")
+            strictSigs.contains strictName && OmegaChecks.InitPort.UnsafeRuntime.isOriginal info false &&
+            OmegaChecks.InitPort.UnsafeRuntime.isOriginal dst true &&
+            OmegaChecks.InitPort.UnsafeRuntime.observerSymbol? full owner name true == some symbol do
+          throwError "invalid public, private or native observation {strictName}"
+        pure (some symbol)
       else pure none
       let strictOwner := if matched then some expected else none
       if matched then

@@ -23,6 +23,13 @@ SELECTOR_SPECIFICATIONS = {
 }
 
 
+UNSAFE_OBSERVERS = {
+    ("Init.Util", "isExclusiveUnsafe"): "lean_is_exclusive_obj",
+    ("Init.ShareCommon", "ShareCommon.Object.eq"): "lean_sharecommon_eq",
+    ("Init.ShareCommon", "ShareCommon.Object.hash"): "lean_sharecommon_hash",
+}
+
+
 def check_coverage(official):
     """Count physical sites from the fresh Lean inventory, including repeated names."""
     modules = set(official["modules"])
@@ -94,10 +101,10 @@ def check_coverage(official):
                         row.get("logicalConsequenceWitness") != runtime or not row.get("requiredBehavior")):
             raise ValueError(f"inconsistent runtime conflict for {owner}/{name}")
         unsafe_runtime = row.get("checkedUnsafeRuntime")
-        checked_exclusivity = site == ("Init.Util", "isExclusiveUnsafe") and port
-        if bool(unsafe_runtime) != checked_exclusivity or (unsafe_runtime and
-                (unsafe_runtime != "lean_is_exclusive_obj" or row["kind"] != "opaque" or
-                 not row.get("unsafe") or not runtime)):
+        expected_runtime = UNSAFE_OBSERVERS.get(site) if port else None
+        if unsafe_runtime != expected_runtime or (unsafe_runtime and
+                (row["kind"] != "opaque" or not row.get("unsafe") or
+                 (name == "isExclusiveUnsafe" and not runtime))):
             raise ValueError(f"inconsistent checked unsafe runtime for {owner}/{name}")
         if port:
             if axiom or witness or (runtime and not unsafe_runtime) or row["strictModule"] != "Omega" + owner:

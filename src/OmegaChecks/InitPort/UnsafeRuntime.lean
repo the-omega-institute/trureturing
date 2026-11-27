@@ -43,6 +43,24 @@ public def isShareCommonObject (ci : ConstantInfo) (strict : Bool) : Bool := Id.
     return matchesDefaultOpaque ci upstream strict [] (arg `a (mkConst `UInt64)) `UInt64 `instInhabitedUInt64
   | _ => return false
 
+/-- Return the pinned runtime symbol after checking both the result representation and borrowing. -/
+public def observerSymbol? (env : Environment) (owner name : Name) (strict : Bool) : Option String := do
+  if owner == `Init.Util && name == `isExclusiveUnsafe then
+    guard (exclusiveABI env strict)
+    return "lean_is_exclusive_obj"
+  guard (owner == `Init.ShareCommon)
+  let isEq := name == `ShareCommon.Object.eq
+  guard (isEq || name == `ShareCommon.Object.hash)
+  let pinned := if isEq then "lean_sharecommon_eq" else "lean_sharecommon_hash"
+  let symbol := if strict && !isEq then "omega_share_common_object_hash" else pinned
+  let borrowed := (IR.IRType.tobject, true)
+  let args := if isEq then #[borrowed, borrowed] else #[borrowed]
+  let result := if isEq then .uint8 else if strict then .tobject else IR.IRType.uint64
+  let target := if strict then InitKernelPort.portName name else name
+  let .extern _ params out ⟨[.standard `all entry]⟩ ← IR.findEnvDecl env target | none
+  guard (entry == symbol && out == result && params.map (fun p => (p.ty, p.borrow)) == args)
+  return pinned
+
 private def originalOpaque (ci : ConstantInfo) (strict : Bool) : Bool :=
   isExclusive ci strict || isShareCommonObject ci strict
 

@@ -98,6 +98,17 @@ class CoverageTest(unittest.TestCase):
             with self.subTest(mismatch=mismatch), self.assertRaises(ValueError):
                 check_coverage(inventory(row | mismatch))
 
+    def test_share_observers_require_their_own_runtime_symbol(self):
+        for member in ("eq", "hash"):
+            row = site("Init.ShareCommon", f"ShareCommon.Object.{member}", kind="opaque", unsafe=True,
+                       matchingNameAndModule=True, strictModule="OmegaInit.ShareCommon",
+                       checkedUnsafeRuntime=f"lean_sharecommon_{member}")
+            self.assertEqual(check_coverage(inventory(row)), (0, []))
+            for change in ({"checkedUnsafeRuntime": None}, {"checkedUnsafeRuntime": "other"},
+                           {"unsafe": False}, {"matchingNameAndModule": False}):
+                with self.subTest(member=member, change=change), self.assertRaises(ValueError):
+                    check_coverage(inventory(row | change))
+
     def test_unsafe_packing_alone_leaves_declared_input_unresolved(self):
         row = site("Init.ShareCommon", "ShareCommon.Object.eq", kind="opaque", unsafe=True,
                    logicalConsequence="False", logicalConsequenceWitness="packedPayloadEquality",
