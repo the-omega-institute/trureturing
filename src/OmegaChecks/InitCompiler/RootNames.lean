@@ -36,7 +36,7 @@ public def natPrimitives := #[
   `instHAdd, `instOfNatNat, `rfl]
 
 private def primitiveName (name : Name) :=
-  name == `Nat.gcd || taskPrimitives.contains name || binderAnnotations.contains name || natPrimitives.contains name
+  [`Nat.div, `Nat.mod, `Nat.gcd].contains name || taskPrimitives.contains name || binderAnnotations.contains name || natPrimitives.contains name
 
 /-- The resolver looks up generated theorem names under their physical parent before consulting aliases. -/
 private def reservedEquation : Name → Bool
@@ -50,7 +50,7 @@ public def isPrimitive (owner name : Name) : Bool :=
   (owner == `OmegaInit.Data.Nat.Gcd && name == `Nat.gcd) ||
   (owner.getRoot == `OmegaInit && reservedEquation name) ||
   (owner == `OmegaInit.Core && taskPrimitives.contains name) ||
-  (owner == `OmegaInit.Prelude && (binderAnnotations.contains name || natPrimitives.contains name))
+  (owner == `OmegaInit.Prelude && (binderAnnotations.contains name || natPrimitives.contains name || [`Nat.div, `Nat.mod].contains name))
 
 /-- Method lookup uses the structure's physical namespace, even when callers spell its alias. -/
 public def aliasFor? (official : Name) : Option (Name × Name) :=

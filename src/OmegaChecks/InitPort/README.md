@@ -60,7 +60,7 @@ example (a : α) (b : β) : Omega.Eq (Prod.fst (Prod.mk a b)) a := Omega.rfl
 
 `init-public-reductions.tsv` 列出已移植声明到严格库封装实现的一条最短定义体依赖路径。`officialReductionMechanism` 记录钉版 Lean 的官方机制，包括公开定义体、自然数内建运算、归纳类型、构造子和递归器。盘点 JSON 同时保存路径 `publicReductionBoundary` 与机制。严格库中的 `Nat.gcd` 保留了 Lean 内核识别的根名称。在普通导入中，`Nat.Coprime` 用到的最大公约数能直接在具体自然数上归约，包含大于 64 位的输入。`And.rec` 和 `Iff.rec` 在官方环境中使用递归器计算规则。具体输入是否需要走到路径终点取决于归约过程。
 
-例如，普通导入 `OmegaInit.Data.Nat.Div.Basic` 后可用 `Omega.Nat.div_zero` 证明除数为零的等式。若需直接归约严格实现，可 `import all OmegaInit.Prelude`，并在证明所在节设置 `attribute [local semireducible] Omega.Nat.div Omega.Nat.ble Omega.Nat.sub Omega.Nat.pred`。
+例如，普通导入 `OmegaInit.Data.Nat.Div.Basic` 后可用 `Omega.Nat.div_zero` 证明除数为零的等式。对具体自然数，除法和求余均可用内核内建规则直接归约。若需在符号参数上展开严格定义体，可 `import all OmegaInit.Prelude`，并在证明所在节设置 `attribute [local semireducible] Omega.Nat.div Omega.Nat.ble Omega.Nat.sub Omega.Nat.pred`。
 
 直接运行盘点命令时，先执行 `lake build +OmegaChecks.InitInventory`，再执行 `lake env lean --run src/OmegaChecks/InitInventory.lean <lib> <inventory.json>`。以下完整性验收入口会自动准备所需模块。
 

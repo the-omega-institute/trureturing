@@ -26,7 +26,7 @@ public def supported (source : Environment) (owner name : Name) : Bool :=
   let widths := [`toUInt8, `toUInt16, `toUInt32, `toUInt64, `toUSize]
   let ops := [`add, `sub, `mul, `div, `mod, `land, `lor, `xor, `complement, `neg,
               `shiftLeft, `shiftRight, `decLt, `decLe, `decEq, `toNat, `ofNat, `ofNatLT, `ofNat32]
-  let base := owner == `OmegaInit.Prelude && [`Nat.div, `Nat.mod, `System.Platform.getNumBits].contains name
+  let base := owner == `OmegaInit.Prelude && name == `System.Platform.getNumBits
   let inOwner := [`OmegaInit.Prelude, `OmegaInit.Data.UInt.BasicAux, `OmegaInit.Data.UInt.Basic].contains owner
   let primitive := ((word? name.getPrefix).isSome && (ops ++ widths).contains method) ||
     (name.getPrefix == `Bool && widths.contains method)

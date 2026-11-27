@@ -267,18 +267,20 @@ theorem ble_eq_true_of_le {n m : Nat} (h : Nat.le n m) : Eq (Nat.ble n m) Bool.t
       (fun e => False.elim (not_succ_le_zero n e)) (fun k _ e => ih k (le_of_succ_le_succ e)) m) n m h
 
 /-- Subtract a positive divisor at most once per remaining fuel unit. -/
-@[no_expose] protected def div (x y : Nat) : Nat :=
+@[extern "lean_nat_div", no_expose] protected def _root_.Nat.div (x y : @& Nat) : Nat :=
   Nat.rec zero (fun d _ =>
     Nat.rec (motive := fun _ => Nat → Nat) (fun _ => zero)
       (fun _ previous n => Bool.rec zero (succ (previous (Nat.sub n (succ d)))) (Nat.ble (succ d) n))
       (succ x) x) y
 
-@[no_expose] protected def mod : Nat → Nat → Nat :=
-  fun x y => Nat.rec zero (fun k _ =>
+@[extern "lean_nat_mod", no_expose] protected def _root_.Nat.mod (x y : @& Nat) : Nat :=
+  Nat.rec zero (fun k _ =>
     Nat.rec (succ k) (fun d _ =>
       Nat.rec (motive := fun _ => Nat → Nat) (fun _ => zero)
         (fun _ previous n => Bool.rec n (previous (Nat.sub n (succ d))) (Nat.ble (succ d) n))
         (succ (succ k)) (succ k)) y) x
+
+export _root_.Nat (div mod)
 
 private theorem lt_of_ble_false (a : Nat) : ∀ b, Eq (Nat.ble b a) Bool.false → Nat.lt a b :=
   Nat.rec (motive := fun a => ∀ b, Eq (Nat.ble b a) Bool.false → Nat.lt a b)

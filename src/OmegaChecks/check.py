@@ -611,9 +611,14 @@ example {α : Type} (a : α) :
         strict_import = "module\nprelude\nimport OmegaInit.Data.Nat.Coprime\nopen Omega\n"
         subprocess.run([ENV["LEAN"], "--stdin"], cwd=ROOT, text=True, input=strict_import + coprime,
                        env=environment, check=True)
-        large_gcd = ("example : Omega.Eq (Omega.Nat.gcd 18446744073709551616 27670116110564327424) "
-                     "9223372036854775808 := Omega.rfl\n")
-        subprocess.run([ENV["LEAN"], "--stdin"], cwd=ROOT, text=True, input=strict_import + large_gcd,
+        large_arithmetic = """
+example : Omega.Eq (Omega.Nat.gcd 18446744073709551616 27670116110564327424) 9223372036854775808 := Omega.rfl
+example : Omega.Eq (Omega.Nat.div 1208925819614629174706177 65536) 18446744073709551616 := Omega.rfl
+example : Omega.Eq (Omega.Nat.mod 1208925819614629174706177 65536) 1 := Omega.rfl
+example : Omega.Eq (Omega.Nat.div 1208925819614629174706177 0) 0 := Omega.rfl
+example : Omega.Eq (Omega.Nat.mod 1208925819614629174706177 0) 1208925819614629174706177 := Omega.rfl
+"""
+        subprocess.run([ENV["LEAN"], "--stdin"], cwd=ROOT, text=True, input=strict_import + large_arithmetic,
                        env=environment, check=True)
 
 
