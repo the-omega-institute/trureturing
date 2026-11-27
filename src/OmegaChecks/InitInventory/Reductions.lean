@@ -2,6 +2,9 @@ module
 public import Lean
 import Lean.Replay
 import all Lean.Util.CollectAxioms
+public import OmegaChecks.InitInventory.MacroReferences
+import all OmegaChecks.InitInventory.MacroReferences
+meta import OmegaChecks.InitInventory.MacroReferences
 public import OmegaChecks.InitInventory.ReferenceSelection
 import all OmegaChecks.InitInventory.ReferenceSelection
 meta import OmegaChecks.InitInventory.ReferenceSelection
@@ -88,6 +91,7 @@ private def replayWitnesses (env : Environment) : IO Unit := do
   let mut terms : Std.HashMap Name ConstantInfo := {}
   let mut todo := (reductions.map fun (_, _, _, witness) => witness) ++
     ClassicalConsequences.witnesses.map Prod.snd ++
+    [``MacroReferences.noQueryRoundTrip, ``MacroReferences.noRoundTrip] ++
     ReferenceSelection.witnesses.map (fun row => row.2.2) ++
     BooleanReflection.witnesses.map (fun row => row.2.2) ++
     IntegerCancellation.witnesses.map (fun row => row.2.2) ++

@@ -384,6 +384,10 @@ private def conditionalConsequence? (owner name : Name) : Option (String × Name
       | _ => none
     return (target, witness,
       "On the Boolean additive monoid, the proposed structure computes the official negation on (true,false), addition of the swapped and original representatives, and zero")
+  if owner == `Init.Prelude && [``Lean.Macro.mkMethods, ``Lean.Macro.mkMethodsImp,
+      ``Lean.Macro.getMethods, ``Lean.Macro.getMethodsImp].contains name then
+    return ("False", ``OmegaChecks.InitBoundaries.MacroReferences.noQueryRoundTrip,
+      "The total packer and reader jointly preserve hasDecl for every Boolean callback on the packed reference in its own macro context")
   if owner == `Init.Util then
     if name == ``isExclusiveUnsafe then
       return ("False", ``OmegaChecks.InitBoundaries.PointerObservations.exclusivity,
