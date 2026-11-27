@@ -231,15 +231,6 @@ theorem p48qForm_nondegenerate : p48qForm.Nondegenerate := by
   rw [h, mul_zero] at hdet
   exact zero_ne_one hdet
 
-/-- The order-three average lies in the kernel of the action minus the identity. -/
-theorem p48qAverage_mem_fixed (x : Fin 48 → ℂ) :
-    (((3 : ℂ)⁻¹ • (1 + p48qAction + p48qAction ^ 2) : End ℂ (Fin 48 → ℂ)) x) ∈
-      LinearMap.ker (p48qAction - 1) := by
-  have h := component_mem p48qAction_cube (α := 1) (by simp) x
-  rw [eigenspace_def, one_smul] at h
-  simpa only [component, LinearMap.smul_apply, LinearMap.add_apply, Module.End.one_apply,
-    pow_two, Module.End.mul_apply, one_mul, one_smul] using h
-
 theorem p48q_movingPairing_isPerfPair (hζ : IsPrimitiveRoot ζ 3) :
     (movingPairing p48qAction p48qForm ζ).IsPerfPair :=
   movingPairing_isPerfPair p48qAction_cube hζ p48qForm_invariant p48qForm_nondegenerate

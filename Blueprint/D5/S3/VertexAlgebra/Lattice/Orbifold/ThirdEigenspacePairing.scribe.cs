@@ -70,14 +70,6 @@ internal sealed class ThirdEigenspacePairingDocument : IScribeDocumentDefinition
                 Blocks(Paragraph(Text("The integral left inverse remains a left inverse over the complex numbers. Taking determinants gives a product equal to one, so the complex Gram matrix is nonsingular and the bilinear form is nondegenerate."))),
                 DescribeRole.Theorem),
             Describe.Lean(
-                DescribeId.Create("p48q-fixed-average"),
-                DeclarationHandle.Create(Prefix + "p48qAverage_mem_fixed"),
-                H("The cyclic average is fixed"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(Nebe),
-                Blocks(Paragraph(Text("For every complex row x and the P48q action A, the vector (x + Ax + A²x)/3 belongs to the kernel of A − 1. Applying A cycles the three summands because A³ is the identity."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
                 DescribeId.Create("p48q-moving-pairing"),
                 DeclarationHandle.Create(Prefix + "p48q_movingPairing_isPerfPair"),
                 H("The P48q moving pairing is perfect"),

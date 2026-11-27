@@ -98,21 +98,7 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/Orbifold/ThirdEigenspacePairing.p48
 
 The integral left inverse remains a left inverse over the complex numbers. Taking determinants gives a product equal to one, so the complex Gram matrix is nonsingular and the bilinear form is nondegenerate.
 
-**Theorem 1.8 (The cyclic average is fixed).**
-
-Lean statement: `D5/S3/VertexAlgebra/Lattice/Orbifold/ThirdEigenspacePairing.p48qAverage_mem_fixed`
-
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Lattice/Orbifold/ThirdEigenspacePairing.p48qAverage_mem_fixed` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* Gabriele Nebe (2014). *A fourth extremal even unimodular lattice of dimension 48*. DOI: [10.1016/j.disc.2014.05.011](https://doi.org/10.1016/j.disc.2014.05.011). URL: <https://arxiv.org/abs/1312.3780v2>.
-
-*Commentary.*
-
-For every complex row x and the P48q action A, the vector (x + Ax + A²x)/3 belongs to the kernel of A − 1. Applying A cycles the three summands because A³ is the identity.
-
-**Theorem 1.9 (The P48q moving pairing is perfect).**
+**Theorem 1.8 (The P48q moving pairing is perfect).**
 
 Lean statement: `D5/S3/VertexAlgebra/Lattice/Orbifold/ThirdEigenspacePairing.p48q_movingPairing_isPerfPair`
 
@@ -126,7 +112,7 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/Orbifold/ThirdEigenspacePairing.p48
 
 For every primitive complex cube root ζ, the P48q Gram form restricts to a perfect pairing of the ζ eigenspace with the ζ² eigenspace. The cube, isometry and inverse identities supply the hypotheses of the general pairing theorem.
 
-**Theorem 1.10 (Each P48q moving eigenspace is totally isotropic).**
+**Theorem 1.9 (Each P48q moving eigenspace is totally isotropic).**
 
 Lean statement: `D5/S3/VertexAlgebra/Lattice/Orbifold/ThirdEigenspacePairing.p48q_moving_isotropic`
 
@@ -140,7 +126,7 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/Orbifold/ThirdEigenspacePairing.p48
 
 For every primitive complex cube root ζ, the Gram pairing of any two vectors from the ζ eigenspace is zero, and the same holds for two vectors from the ζ² eigenspace. The squared eigenvalues are respectively ζ² and ζ, both different from one.
 
-**Theorem 1.11 (Both moving eigenspaces have dimension sixteen).**
+**Theorem 1.10 (Both moving eigenspaces have dimension sixteen).**
 
 Lean statement: `D5/S3/VertexAlgebra/Lattice/Orbifold/ThirdEigenspacePairing.p48q_moving_finrank`
 
@@ -154,7 +140,7 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/Orbifold/ThirdEigenspacePairing.p48
 
 For every primitive complex cube root ζ, the ζ and ζ² eigenspaces each have complex dimension sixteen. The three distinct eigenspaces form a direct sum of total dimension forty-eight. The fixed-rank certificate gives sixteen fixed dimensions, and perfectness makes the two remaining dimensions equal.
 
-**Definition 1.12 (Basis for the residue-one currents).**
+**Definition 1.11 (Basis for the residue-one currents).**
 
 Lean statement: `D5/S3/VertexAlgebra/Lattice/Orbifold/ThirdEigenspacePairing.p48qBasis`
 
@@ -166,7 +152,7 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/Orbifold/ThirdEigenspacePairing.p48
 
 For each primitive complex cube root ζ, choose a basis indexed by Fin 16 of the ζ eigenspace, using its dimension.
 
-**Definition 1.13 (Dual basis for the residue-two currents).**
+**Definition 1.12 (Dual basis for the residue-two currents).**
 
 Lean statement: `D5/S3/VertexAlgebra/Lattice/Orbifold/ThirdEigenspacePairing.p48qOppositeBasis`
 
@@ -178,7 +164,7 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/Orbifold/ThirdEigenspacePairing.p48
 
 For each primitive complex cube root ζ, transport the coordinate dual of the chosen ζ basis to the ζ² eigenspace through the inverse of the linear equivalence induced by the flipped perfect pairing. The resulting basis uses the same Fin 16 indices.
 
-**Theorem 1.14 (The Gram matrix between the moving bases is the identity).**
+**Theorem 1.13 (The Gram matrix between the moving bases is the identity).**
 
 Lean statement: `D5/S3/VertexAlgebra/Lattice/Orbifold/ThirdEigenspacePairing.p48q_pair_bases`
 
@@ -196,7 +182,6 @@ For every primitive complex cube root ζ and indices i,j in Fin 16, pairing the 
 - Truth anchor: `D5/S3/VertexAlgebra/Lattice/Orbifold/ThirdEigenspacePairing.movingPairing`
 - Truth anchor: `D5/S3/VertexAlgebra/Lattice/Orbifold/ThirdEigenspacePairing.movingPairing_isPerfPair`
 - Truth anchor: `D5/S3/VertexAlgebra/Lattice/Orbifold/ThirdEigenspacePairing.p48qAction`
-- Truth anchor: `D5/S3/VertexAlgebra/Lattice/Orbifold/ThirdEigenspacePairing.p48qAverage_mem_fixed`
 - Truth anchor: `D5/S3/VertexAlgebra/Lattice/Orbifold/ThirdEigenspacePairing.p48qBasis`
 - Truth anchor: `D5/S3/VertexAlgebra/Lattice/Orbifold/ThirdEigenspacePairing.p48qForm`
 - Truth anchor: `D5/S3/VertexAlgebra/Lattice/Orbifold/ThirdEigenspacePairing.p48qForm_invariant`
