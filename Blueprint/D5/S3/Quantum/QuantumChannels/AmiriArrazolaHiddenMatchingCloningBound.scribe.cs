@@ -73,7 +73,10 @@ internal sealed class AmiriArrazolaHiddenMatchingCloningBoundDocument : IScribeD
                             + "condition on the channel is used.")),
                     Paragraph(Text(
                         "This theorem removes the n ≤ 14 restriction for equation (21). It does "
-                            + "not assert a uniform attaining channel or the paper's further protocol-security results.")))))));
+                            + "not assert a uniform attaining channel or the paper's further protocol-security results."))),
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("op-aa1610"), ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string id, string name, string title, Formula formula, string prose) =>
         Describe.Lean(DescribeId.Create("aa1610-" + id), DeclarationHandle.Create(Prefix + name),

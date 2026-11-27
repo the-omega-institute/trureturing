@@ -84,6 +84,10 @@ $$\forall (n: \mathbb{N}), ((2 \le n) \Rightarrow ((\operatorname{Even}\left(n\r
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/QuantumChannels/AmiriArrazolaHiddenMatchingCloningBound.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/op-aa1610` (proved) by `D5/S3/Quantum/QuantumChannels/AmiriArrazolaHiddenMatchingCloningBound.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"op-aa1610","declaration_gid":"D5/S3/Quantum/QuantumChannels/AmiriArrazolaHiddenMatchingCloningBound.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Ryan Amiri and Juan Miguel Arrazola (2016). *Quantum money with nearly optimal error tolerance*. DOI: [10.1103/PhysRevA.95.062334](https://doi.org/10.1103/PhysRevA.95.062334). URL: <https://arxiv.org/abs/1610.06345v1>.
