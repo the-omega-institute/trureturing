@@ -10,6 +10,10 @@ $$\neg (\forall p \in \mathbb{N},\; \operatorname{RealizesLeastPeriod}\left(p\ri
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/CellularAutomata/FormentiKamilyaRule115SquareClosure.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/formenti-kamilya-2026-resoca-115-question-2` (refuted) by `D5/S3/StatisticalMechanics/CellularAutomata/FormentiKamilyaRule115SquareClosure.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"formenti-kamilya-2026-resoca-115-question-2","declaration_gid":"D5/S3/StatisticalMechanics/CellularAutomata/FormentiKamilyaRule115SquareClosure.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Enrico Formenti, Supreeti Kamilya (2026). *The Curious Case of Reversible Elementary Second Order Cellular Automaton 115*. DOI: [10.4204/EPTCS.445.12](https://doi.org/10.4204/EPTCS.445.12). URL: <https://arxiv.org/abs/2606.13159v1>.

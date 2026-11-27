@@ -26,7 +26,10 @@ internal sealed class FormentiKamilyaRule115SquareClosureDocument : IScribeDocum
                 Blocks(
                     Paragraph(Text("Section 3, Question 2 on printed p. 97 asks “If p is a period for RESOCA 115, is p² also a period?” The update is the second-order rule from Equation (1) and Table 1. RealizesLeastPeriod(p) means that p is positive and some ordered pair of past and current Boolean layers on the integer line returns as a full pair after p steps, with no return at any positive q < p. The union of the two initial supports must be finite, as in Section 2.1. The two occurrences of RealizesLeastPeriod quantify their configurations independently.")),
                     Paragraph(Text("The all-zero pair has empty initial support. The theorem zero_period_three gives a return at three and excludes one and two. For any finite pair returning at nine, returns_three_of_returns_nine gives a return at three. Thus the implication in Question 2 fails at p = 3, since its consequent would require a pair with least period nine."))),
-                DescribeRole.Theorem)),
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("formenti-kamilya-2026-resoca-115-question-2"),
+                    ResolutionKind.Refuted))),
         [DocumentEdge.Dependency.Create(GidRef.Create(Rule))]));
 
     private static Formula SquareClosureRefuted()
