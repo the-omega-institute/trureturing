@@ -1,6 +1,6 @@
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Combinatorics.TraceAvoidingArrays.Recurrence.HardinLargeTransferCertificates
-import Reg.Support.HardinLagAudit
+import Reg.Support.Hardin.LagAudit
 
 /-! Source registrations for the full-state lag certificates. -/
 
