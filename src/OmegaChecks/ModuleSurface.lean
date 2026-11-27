@@ -1,5 +1,6 @@
 module
 public import Lean
+public import OmegaChecks.InitPort.TaskNames
 import Lean.Elab.ParseImportsFast
 import Lean.Compiler.LCNF.SpecInfo
 import all Lean.Structure
@@ -104,6 +105,9 @@ private def checkElaboration (env : Environment) (owner : Name) (idx : ModuleIdx
   for (n, data) in externAttr.ext.getModuleEntries env idx do
     let (expectedOwner, symbol) ← match n with
       | `Omega.ST.Prim.mkRef => pure (`OmegaInit.System.ST, "omega_st_mk_ref")
+      | `Task.pure => pure (`OmegaInit.Core, "lean_task_pure")
+      | `Task.get => pure (`OmegaInit.Core, "lean_task_get_own")
+      | `Omega.IO.Promise.result? => pure (`OmegaInit.System.Promise, "lean_io_promise_result_opt")
       | `Omega.IO.Promise.new => pure (`OmegaInit.System.Promise, "omega_io_promise_new")
       | `Omega.IO.Promise.resolve => pure (`OmegaInit.System.Promise, "omega_io_promise_resolve")
       | `Omega.IO.Promise.isResolved => pure (`OmegaInit.System.Promise, "omega_io_promise_is_resolved")
@@ -237,6 +241,7 @@ private def checkSimp (strict reference : Environment) (owner : Name) (idx : Mod
 /-- Check a port as seen by a consumer importing it alone. Re-exported foundation
 declarations and alias targets are mathematical roots, even in a declaration-free module. -/
 def check (strict : Environment) (full? : Option Environment := none) : IO (Array (Name × Name)) := do
+  let strict := withImportedAliases strict
   let mut roots : NameMap Name := {}
   for port in strict.allImportedModuleNames do
     if !isBasis port then continue
@@ -283,6 +288,10 @@ def check (strict : Environment) (full? : Option Environment := none) : IO (Arra
           throw <| IO.userError s!"unmatched match_pattern attribute for {name} in {official}"
         if Elab.Term.elabAsElim.hasTag strict name && !Elab.Term.elabAsElim.hasTag reference translated then
           throw <| IO.userError s!"unmatched elab_as_elim attribute for {name} in {official}"
+        if let some (alias, target) := OmegaChecks.InitPort.TaskNames.aliasFor? translated then
+          unless name == target && (aliasExtension.getModuleEntries strict idx).contains (alias, target) &&
+              ResolveName.resolveGlobalName strict {} .anonymous [] alias == [(target, [])] do
+            throw <| IO.userError s!"missing or ambiguous task alias {alias} for {target} in {owner}"
         roots := roots.insert name expected
       for (alias, target) in aliasExtension.getModuleEntries strict idx do
         let officialAlias := alias.replacePrefix `Omega .anonymous
@@ -290,7 +299,9 @@ def check (strict : Environment) (full? : Option Environment := none) : IO (Arra
         let resolved := ResolveName.resolveGlobalName reference {} .anonymous [] officialAlias
         let some originalOwner := reference.getModuleIdx? (counterpart owner)
           | throw <| IO.userError s!"missing owner of alias {alias} in {official}"
-        unless (aliasExtension.getModuleEntries reference originalOwner).contains (officialAlias, officialTarget) &&
+        let taskAlias := OmegaChecks.InitPort.TaskNames.aliasFor? officialTarget == some (alias, target) &&
+          strict.getModuleIdxFor? target == some idx && reference.getModuleIdxFor? officialTarget == some originalOwner
+        unless (taskAlias || (aliasExtension.getModuleEntries reference originalOwner).contains (officialAlias, officialTarget)) &&
             resolved == [(officialTarget, [])] do
           throw <| IO.userError s!"unmatched public alias {alias} for {target} exposed by {port} in {official}"
         let some home := strict.getModuleIdxFor? target | throw <| IO.userError s!"unknown alias target {target}"

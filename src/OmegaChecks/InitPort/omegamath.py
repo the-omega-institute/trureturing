@@ -102,7 +102,7 @@ def bothTrue : Omega.Bool → Omega.Bool → Omega.Bool
 example : Omega.Eq (bothTrue Omega.true Omega.true) Omega.true := Omega.rfl
 example : Omega.Eq (bothTrue Omega.false Omega.true) Omega.false := Omega.rfl
 """)
-    subprocess.run([lean, "--run", Path(__file__).with_name("RootImports.lean"),
+    subprocess.run(["lake", "env", "lean", "--run", Path(__file__).with_name("RootImports.lean"),
                     output, basis / "lib", *foundation], cwd=ROOT, check=True)
     audit = ROOT / ".lake/build/bin/omegaAudit"
     subprocess.run(["lake", "build", "omegaAudit", "+OmegaChecks.Interface.Equations"], cwd=ROOT, check=True)

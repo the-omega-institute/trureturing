@@ -1,5 +1,6 @@
 module
 public import Lean
+import OmegaChecks.InitPort.TaskNames
 import Lean.Compiler.LCNF.PhaseExt
 meta import OmegaChecks.InitInventory.OrderedAlgebra
 meta import OmegaChecks.InitInventory.Order
@@ -720,7 +721,7 @@ private def inventory (lib : System.FilePath) (visible strict full : Environment
       let selector := if boundary.isSome && OmegaChecks.InitBoundaries.OptionSelector.usesSelector owner name then
         some (``Option.choice).toString else none
       if boundary.isSome then certifiedSites := certifiedSites + 1
-      let strictName := `Omega ++ name
+      let strictName := if OmegaChecks.InitPort.TaskNames.isPrimitive expected name then name else `Omega ++ name
       let matched := strictNames.any (·.contains strictName)
       let strictOwner := if matched then some expected else none
       if matched then

@@ -1,4 +1,5 @@
 import Lean
+import OmegaChecks.InitPort.TaskNames
 
 open Lean
 
@@ -23,12 +24,18 @@ def main (args : List String) : IO Unit := do
       let originalIdx := (official.getModuleIdx? owner).get!
       let expected := (aliasExtension.getModuleEntries official originalIdx).filterMap fun (alias, target) =>
         if env.contains (`Omega ++ target) then some (`Omega ++ alias, `Omega ++ target) else none
+      let aliases := official.header.moduleData[originalIdx]!.constNames.filterMap fun n => do
+        let entry ← OmegaChecks.InitPort.TaskNames.aliasFor? n
+        guard (env.contains entry.2)
+        return entry
       let actual := (env.getModuleIdx? (owner.replacePrefix `Init `OmegaInit)).map fun idx =>
         aliasExtension.getModuleEntries env idx
-      unless actual.getD #[] == expected do
+      let actual := actual.getD #[]
+      unless (actual.filter (fun pair => !aliases.contains pair)) == expected &&
+          actual.size == expected.size + aliases.size && aliases.all actual.contains do
         throw <| IO.userError s!"exported aliases differ from {owner} under import {root}"
   for (name, _) in available.constants.toList do
-    unless name.getRoot == `Omega do continue
+    unless name.getRoot == `Omega || OmegaChecks.InitPort.TaskNames.primitives.contains name do continue
     let upstream := name.replacePrefix `Omega .anonymous
     unless original.contains upstream do continue
     let expected := official.contains upstream

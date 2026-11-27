@@ -127,6 +127,8 @@ OmegaMath
 
 `OmegaInit` 对照本仓钉版 Lean 的 `Init`。模块名前缀从 `Init` 换成 `OmegaInit`，公开声明在官方完整名字前加 `Omega.`。Lake 从 `src/` 解析模块路径。类型和运算按它们在官方编译产物中的声明位置组织。
 
+生成的严格库在 `OmegaInit.Core` 中保留六个内核名称，包括 `Task`、`Task.pure`、`Task.get`、`Task.rec`、`Task.recOn` 和 `Task.casesOn`。Lean 编译器用根名 `Task` 识别任务投影。普通源码使用对应的 `Omega.Task` 名称，元程序可先解析别名再按内核名称查环境。
+
 | 官方模块 | 官方声明 | 本仓源文件 | 本仓声明 |
 | --- | --- | --- | --- |
 | `Init.Prelude` | `Nat`、`Nat.add` | [Prelude.lean](../strict/OmegaInit/Prelude.lean) | `Omega.Nat`、`Omega.Nat.add` |

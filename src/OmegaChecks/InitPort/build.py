@@ -79,7 +79,7 @@ def cyclic_declarations(path):
     return rejected, list(order.static_order())
 
 
-def compile_state_runtime(stage, product, artifact, inventory, owner, tool, filename, required):
+def compile_state_runtime(stage, product, artifact, inventory, tool, filename, required, extra_sources=()):
     bridge = stage / (filename + ".c")
     run("lake", "env", "lean", "--run", HERE / (tool + "Native.lean"), artifact, bridge)
     if not bridge.exists():
@@ -89,14 +89,14 @@ def compile_state_runtime(stage, product, artifact, inventory, owner, tool, file
     obj = native / (filename + ".o")
     run("leanc", "-DLEAN_EXPORTING", "-c", bridge, "-o", obj)
     with inventory.open() as stream:
-        installed = {name for mod, name, _, status, _ in map(json.loads, stream)
-                     if mod == owner and status in {"added", "existing"}}
-    if required <= installed:
+        installed = {(mod, name) for mod, name, _, status, _ in map(json.loads, stream)
+                     if status in {"added", "existing"}}
+    if all((mod, name) in installed for mod, names in required.items() for name in names):
         consumer = stage / (filename + "-consumer.c")
         run("lean", "-R", HERE, "-c", consumer, HERE / (tool + "Consumer.lean"),
             env={**os.environ, "LEAN_PATH": str(artifact)})
         app = stage / (filename + "-consumer")
-        run("leanc", consumer, obj, HERE / (filename + "_consumer.c"), "-o", app)
+        run("leanc", consumer, obj, *extra_sources, HERE / (filename + "_consumer.c"), "-o", app)
         run(app)
 
 
@@ -173,14 +173,19 @@ def generate(stage, product, seed, roots, excluded):
     graph = dict(json.loads((product / "modules.json").read_text()))
     closure = list(TopologicalSorter(graph).static_order())
     run("lake", "env", "lean", "--run", HERE / "ExportAxioms.lean", artifact, *graph)
+    raw_task = stage / "raw-task.c"
+    if "OmegaInit.Core" in graph:
+        run("lake", "env", "lean", "--run", HERE / "TaskNative.lean", artifact, raw_task)
     if "OmegaInit.Dynamic" in graph:
         compile_type_name(stage, product, artifact, inventory)
     if "OmegaInit.System.ST" in graph:
-        compile_state_runtime(stage, product, artifact, inventory, "Init.System.ST", "Reference", "reference",
-                              {"ST.Prim.mkRef"})
+        compile_state_runtime(stage, product, artifact, inventory, "Reference", "reference",
+                              {"Init.System.ST": {"ST.Prim.mkRef"}})
     if "OmegaInit.System.Promise" in graph:
-        compile_state_runtime(stage, product, artifact, inventory, "Init.System.Promise", "Promise", "promise",
-                              {"IO.Promise.new", "IO.Promise.resolve", "IO.Promise.isResolved"})
+        compile_state_runtime(stage, product, artifact, inventory, "Promise", "promise", {
+            "Init.System.Promise": {"IO.Promise.new", "IO.Promise.resolve", "IO.Promise.isResolved", "IO.Promise.result?"},
+            "Init.Core": {"Task.pure", "Task.get", "Task.map", "Task.bind"},
+        }, [raw_task])
     with (product / "audit.txt").open("w") as log:
         audit = ROOT / ".lake/build/bin/omegaAudit"
         checked = subprocess.run(["lake", "env", audit, "--exact-roots", artifact, *graph, "--", *closure],

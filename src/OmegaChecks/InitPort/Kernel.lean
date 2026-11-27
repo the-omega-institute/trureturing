@@ -7,6 +7,7 @@ import OmegaChecks.InitPort.Alternatives
 import OmegaChecks.InitPort.Arithmetic
 import OmegaChecks.InitPort.LogicalHandle
 import OmegaChecks.InitPort.TypeName
+import OmegaChecks.InitPort.TaskNames
 import OmegaChecks.InitPort.NativeQuot
 import OmegaChecks.InitPort.Address
 import OmegaChecks.InitPort.WordFold
@@ -24,7 +25,8 @@ def moduleOf (env : Environment) (n : Name) : Option Name := do
 /-- Preserve the private name's lexical prefix even when a later module emits
 an equation for a declaration originally defined in a different module. -/
 def portName (n : Name) : Name :=
-  if let some user := privateToUserName? n then
+  if OmegaChecks.InitPort.TaskNames.primitives.contains n then n
+  else if let some user := privateToUserName? n then
     if let some lexical := privatePrefix? n then
       if (`_private.Init).isPrefixOf lexical && isPrivatePrefix lexical then
         lexical.replacePrefix `_private.Init `_private.OmegaInit ++ (`Omega ++ user)

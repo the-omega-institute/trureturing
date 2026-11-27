@@ -1,5 +1,7 @@
 module
 public import Lean
+import OmegaChecks.InitPort.TaskNames
+meta import OmegaChecks.InitPort.TaskNames
 import OmegaChecks.InitPort.TypeName
 meta import OmegaChecks.InitPort.TypeName
 import OmegaChecks.InitPort.NativeState
@@ -14,7 +16,8 @@ def officialModuleName (env : Environment) (n : Name) : Option Name := do
   return env.header.moduleNames[i]!
 
 def renamed (n : Name) : Name :=
-  if let some user := privateToUserName? n then
+  if OmegaChecks.InitPort.TaskNames.primitives.contains n then n
+  else if let some user := privateToUserName? n then
     if let some lexical := privatePrefix? n then
       if (`_private.Init).isPrefixOf lexical && isPrivatePrefix lexical then
         lexical.replacePrefix `_private.Init `_private.OmegaInit ++ (`Omega ++ user)
@@ -63,6 +66,9 @@ private def elaboratorEntries (source seed : Environment) (idx : ModuleIdx) (own
     env := markAuxRecursor env name
   let forOwner := fun t => source.getModuleIdxFor? t == some idx
   let mut aliases := #[]
+  for target in source.header.moduleData[idx]!.constNames do
+    if let some entry := OmegaChecks.InitPort.TaskNames.aliasFor? target then
+      if available.contains entry.2 then aliases := aliases.push entry
   for (alias, target) in aliasExtension.getModuleEntries source idx (level := level) do
     let port := renamed target
     if available.contains port || (!forOwner target && seed.contains port) then

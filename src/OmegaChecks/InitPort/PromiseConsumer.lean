@@ -13,3 +13,20 @@ public import OmegaInit.System.Promise
 @[export omega_smoke_is_resolved] public def isResolved {α : Type} (p : Omega.IO.Promise α)
     (s : Omega.Void Omega.IO.RealWorld) : Omega.ST.Out Omega.IO.RealWorld Omega.Bool :=
   p.isResolved s
+
+@[export omega_smoke_result] public def result {α : Type} (p : Omega.IO.Promise α) :
+    Omega.Task (Omega.Option α) := p.result?
+
+@[export omega_smoke_task_get] public def read {α : Type} (task : Omega.Task α) : α := task.get
+
+@[export omega_smoke_task_pattern] public def readPattern {α : Type} (task : Omega.Task α) : α :=
+  match task with | Omega.Task.pure value => value
+
+@[export omega_smoke_task_pure] public def pureTask {α : Type} (value : α) : Omega.Task α :=
+  Omega.Task.pure value
+
+-- Generalized field notation resolves methods through the physical structure namespace.
+#check fun (t : Omega.Task Omega.Bool) =>
+  (t.map (fun x => x) Omega.Task.Priority.default Omega.false : Omega.Task Omega.Bool)
+#check fun (t : Omega.Task Omega.Bool) =>
+  (t.bind (fun x => Omega.Task.pure x) Omega.Task.Priority.default Omega.false : Omega.Task Omega.Bool)

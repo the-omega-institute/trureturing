@@ -30,7 +30,7 @@ private def checkUpstreamNames (strict publicStrict : Environment) : IO Unit := 
     let owner := strict.header.moduleNames[idx]!
     if !isStrict owner || isPrivateName name || name.isInternal then continue
     if OmegaChecks.InitPort.NativeQuot.isSupport owner name then continue
-    unless name.getRoot == `Omega do
+    unless name.getRoot == `Omega || OmegaChecks.InitPort.TaskNames.isPrimitive owner name do
       throw <| IO.userError s!"public name outside Omega: {name} in {owner}"
     if owner.getRoot == `OmegaMath then continue
     let upstream := if owner.getRoot == `OmegaInit then `Init else `Mathlib
