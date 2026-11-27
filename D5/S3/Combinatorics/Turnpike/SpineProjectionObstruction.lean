@@ -6,8 +6,10 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Combinatorics/Turnpike/SpineProjectionObstruction.claim; result=D5/S3/Combinatorics/Turnpike/SpineProjectionObstruction.result; claim=D5/S3/Combinatorics/Turnpike/SpineProjectionObstruction.claim
    digest: A realizable seven-point input separates the full and spine assignment projections. -/
 
-import OmegaMath.Combinatorics.Turnpike.TriangleLP
-import Mathlib.Data.Fin.VecNotation
+module
+
+public import OmegaMath.Combinatorics.Turnpike.TriangleLP
+public import Mathlib.Data.Fin.VecNotation
 
 /-! # A fixed-assignment obstruction to the endpoint-spine relaxation
 
@@ -18,6 +20,7 @@ The projection comparison is the exact internal interpretation studied here;
 it is distinct from the scalar statement of Lemma 13.
 -/
 
+@[expose] public section
 namespace D5.S3.Combinatorics.Turnpike.SpineProjectionObstruction
 open Omega.Turnpike
 open scoped BigOperators
@@ -28,11 +31,11 @@ def claim : Prop :=
   ∀ (n d : ℕ) (y : Fin d → ℝ) (μ : Fin d → ℕ), Admissible n d y μ →
     Projection (n := n) y μ full = Projection (n := n) y μ spine
 
-private def values : Fin 16 → ℕ := ![18, 16, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
+def values : Fin 16 → ℕ := ![18, 16, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
 def y : Fin 16 → ℝ := fun q => values q
 def μ : Fin 16 → ℕ := ![1, 1, 1, 1, 1, 1, 1, 2, 2, 1, 1, 2, 2, 2, 1, 1]
 def ruler : Fin 7 → ℝ := ![0,4,7,8,13,16,18]
-private def leftLabel (e : Interval 7) : Fin 16 :=
+def leftLabel (e : Interval 7) : Fin 16 :=
   match e.1.1.val, e.1.2.val with
   | 0, 1 => 12
   | 0, 2 => 9
@@ -56,7 +59,7 @@ private def leftLabel (e : Interval 7) : Fin 16 :=
   | 4, 6 => 11
   | 5, 6 => 14
   | _, _ => 0
-private def rightLabel (e : Interval 7) : Fin 16 :=
+def rightLabel (e : Interval 7) : Fin 16 :=
   match e.1.1.val, e.1.2.val with
   | 0, 1 => 14
   | 0, 2 => 11
@@ -121,16 +124,21 @@ private def rawRight (τ : Triangle 7) : Fin 16 × Fin 16 × Fin 16 :=
 
 private theorem admissible : Admissible 7 16 y μ := by
   refine ⟨by norm_num, by norm_num, ?_, ?_, ?_, ?_⟩
-  · intro a b hab
-    fin_cases a <;> fin_cases b <;> norm_num [y, values] at *
-  · intro q; fin_cases q <;> norm_num [y, values]
-  · intro q; fin_cases q <;> norm_num [μ]
-  · decide
+  · have hv : StrictAnti values := by decide +kernel
+    intro a b hab
+    change (values b : ℝ) < (values a : ℝ)
+    exact_mod_cast hv hab
+  · have hv : ∀ q, 0 < values q := by decide +kernel
+    intro q
+    change (0 : ℝ) < (values q : ℝ)
+    exact_mod_cast hv q
+  · decide +kernel
+  · decide +kernel
 
 private theorem counts : ∀ q : Fin 16,
     (∑ e : Interval 7, ((if q = leftLabel e then 1 else 0) +
       (if q = rightLabel e then 1 else 0) : ℕ)) = 2 * μ q := by
-  decide
+  decide +kernel
 
 private theorem domain : AssignmentDomain μ assignment := by
   refine ⟨?_, ?_, ?_⟩
@@ -144,32 +152,47 @@ private theorem domain : AssignmentDomain μ assignment := by
 private theorem rawLeft_valid (τ : Triangle 7) (hs : spine τ) :
     y (rawLeft τ).1 + y (rawLeft τ).2.1 = y (rawLeft τ).2.2 ∧
       ((rawLeft τ).1 ≠ (rawLeft τ).2.1 ∨ 2 ≤ μ (rawLeft τ).1) := by
-  rcases τ with ⟨⟨i,j,k⟩,hij,hjk⟩
-  have hi : i = 0 := Fin.ext hs
-  subst i
-  fin_cases j <;> fin_cases k <;>
-    norm_num [rawLeft, y, values, μ] at *
+  have h : ∀ τ : Triangle 7, spine τ →
+      values (rawLeft τ).1 + values (rawLeft τ).2.1 = values (rawLeft τ).2.2 ∧
+      ((rawLeft τ).1 ≠ (rawLeft τ).2.1 ∨ 2 ≤ μ (rawLeft τ).1) := by
+        unfold spine
+        decide +kernel
+  refine ⟨?_, (h τ hs).2⟩
+  unfold y
+  exact_mod_cast (h τ hs).1
 
 private theorem rawRight_valid (τ : Triangle 7) (hs : spine τ) :
     y (rawRight τ).1 + y (rawRight τ).2.1 = y (rawRight τ).2.2 ∧
       ((rawRight τ).1 ≠ (rawRight τ).2.1 ∨ 2 ≤ μ (rawRight τ).1) := by
-  rcases τ with ⟨⟨i,j,k⟩,hij,hjk⟩
-  have hi : i = 0 := Fin.ext hs
-  subst i
-  fin_cases j <;> fin_cases k <;>
-    norm_num [rawRight, y, values, μ] at *
+  have h : ∀ τ : Triangle 7, spine τ →
+      values (rawRight τ).1 + values (rawRight τ).2.1 = values (rawRight τ).2.2 ∧
+      ((rawRight τ).1 ≠ (rawRight τ).2.1 ∨ 2 ≤ μ (rawRight τ).1) := by
+        unfold spine
+        decide +kernel
+  refine ⟨?_, (h τ hs).2⟩
+  unfold y
+  exact_mod_cast (h τ hs).1
 
 private theorem spine_marginals (τ : Triangle 7) (hs : spine τ) :
     (∀ q, mixture (rawLeft τ).1 (rawRight τ).1 q = assignment (first τ) q) ∧
     (∀ q, mixture (rawLeft τ).2.1 (rawRight τ).2.1 q = assignment (second τ) q) ∧
     (∀ q, mixture (rawLeft τ).2.2 (rawRight τ).2.2 q = assignment (outer τ) q) := by
-  rcases τ with ⟨⟨i,j,k⟩,hij,hjk⟩
-  have hi : i = 0 := Fin.ext hs
-  subst i
-  fin_cases j <;> fin_cases k <;>
-    norm_num at * <;>
-    simp [rawLeft,rawRight,assignment,leftLabel,rightLabel,first,second,outer,
-      mixture,atom,add_comm]
+  let agrees (a b : Fin 16) (e : Interval 7) :=
+    (a = leftLabel e ∧ b = rightLabel e) ∨ (a = rightLabel e ∧ b = leftLabel e)
+  have h : ∀ τ : Triangle 7, spine τ →
+      agrees (rawLeft τ).1 (rawRight τ).1 (first τ) ∧
+      agrees (rawLeft τ).2.1 (rawRight τ).2.1 (second τ) ∧
+      agrees (rawLeft τ).2.2 (rawRight τ).2.2 (outer τ) := by
+        dsimp only [agrees,spine]
+        decide +kernel
+  have use_agrees : ∀ a b e, agrees a b e →
+      ∀ q, mixture a b q = assignment e q := by
+    intro a b e he q
+    rcases he with ⟨rfl,rfl⟩ | ⟨rfl,rfl⟩
+    · rfl
+    · simp only [assignment,mixture,add_comm]
+  exact ⟨use_agrees _ _ _ (h τ hs).1,
+    use_agrees _ _ _ (h τ hs).2.1,use_agrees _ _ _ (h τ hs).2.2⟩
 
 private theorem spine_feasible : assignment ∈ Projection y μ spine := by
   classical
@@ -207,10 +230,52 @@ private theorem not_full : assignment ∉ Projection y μ full := by
   rw [ha 13,hb' 10,hc 7] at h
   norm_num [τ,first,second,outer,assignment,mixture,atom,leftLabel,rightLabel] at h
 
+private theorem realizable_counterexample :
+    ∃ (n d : ℕ) (y : Fin d → ℝ) (μ : Fin d → ℕ)
+      (x : Fin n → ℝ) (P : Assignment n d),
+      Admissible n d y μ ∧ Realizes y μ x ∧
+      P ∈ Projection y μ spine ∧ P ∉ Projection y μ full := by
+  let x : Fin 7 → ℕ := ![0,4,7,8,13,16,18]
+  let label : Interval 7 → Fin 16 := fun e =>
+    if e.1 = (1,2) then 13 else if e.1 = (2,3) then 15 else leftLabel e
+  have hx : ∀ i, ruler i = (x i : ℝ) := by
+    intro i
+    fin_cases i <;> norm_num [ruler,x]
+  have hmono : StrictMono x := by decide +kernel
+  have hd : ∀ e : Interval 7, x e.1.2 = x e.1.1 + values (label e) := by
+    decide +kernel
+  have hc : ∀ q : Fin 16,
+      (Finset.univ.filter fun e : Interval 7 => label e = q).card = μ q := by
+    decide +kernel
+  have hr : ∀ e : Interval 7, ruler e.1.2 - ruler e.1.1 = y (label e) := by
+    intro e
+    rw [hx,hx]
+    unfold y
+    have h := congrArg (fun k : ℕ => (k : ℝ)) (hd e)
+    push_cast at h
+    linarith
+  refine ⟨7,16,y,μ,ruler,assignment,admissible,?_,spine_feasible,not_full⟩
+  refine ⟨?_,?_,?_⟩
+  · intro i j hij
+    rw [hx,hx]
+    exact_mod_cast hmono hij
+  · intro e
+    exact ⟨label e,hr e⟩
+  · intro q
+    have heq : (Finset.univ.filter fun e : Interval 7 =>
+        ruler e.1.2 - ruler e.1.1 = y q) =
+        (Finset.univ.filter fun e : Interval 7 => label e = q) := by
+      apply Finset.filter_congr
+      intro e _
+      rw [hr e]
+      exact admissible.2.2.1.injective.eq_iff
+    rw [heq]
+    exact hc q
+
 /-- The universal fixed-assignment projection equality is false. -/
 theorem result : ¬ claim := by
   intro h
-  have he := h 7 16 y μ admissible
-  exact not_full (he.symm ▸ spine_feasible)
+  obtain ⟨n,d,y,μ,x,P,hadm,_,hs,hf⟩ := realizable_counterexample
+  exact hf ((h n d y μ hadm).symm ▸ hs)
 end
 end D5.S3.Combinatorics.Turnpike.SpineProjectionObstruction
