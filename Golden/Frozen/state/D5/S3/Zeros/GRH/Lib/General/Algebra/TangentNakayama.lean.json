@@ -1,0 +1,1 @@
+{"statement_id":"sha256:90dc2316922c16fccbbf71d9e6331cdea963819cb977f7db47d841bf1097bc7e","declarations":[{"declaration_name_key":"ns(n0,27:exists_mem_colon_of_tangent)","kind":"theorem","libraries":["Aesop","Batteries","Init","Lean","Mathlib","Std"],"axioms":["Classical.choice","Quot.sound","propext"]}]}
