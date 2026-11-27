@@ -123,7 +123,8 @@ private def replayWitnesses (env : Environment) : IO Unit := do
     [``DynamicRoundTrip.noRoundTrip, ``FactoryCarriers.noCarrierEmbedding] ++
     [``PropositionalChoice.ofChoice, ``PropositionalChoice.ofSkolem, ``PropositionalChoice.ofProducts] ++
     ReferenceSelection.witnesses.map (fun row => row.2.2) ++
-    [``ReferenceRoundTrip.alloc, ``ReferenceRoundTrip.primAlloc, ``ReferenceRoundTrip.set, ``ReferenceRoundTrip.primSet] ++
+    [``ReferenceRoundTrip.alloc, ``ReferenceRoundTrip.primAlloc, ``ReferenceRoundTrip.set, ``ReferenceRoundTrip.primSet,
+     ``ReferenceRoundTrip.modify, ``ReferenceRoundTrip.primModify] ++
     BooleanReflection.witnesses.map (fun row => row.2.2) ++
     OrderTags.equivalences.map (fun row => row.2.2) ++ [``OrderTags.propextFromOrderRules] ++
     [``RangeSize.emOfClosed, ``RangeSize.emOfOpen, ``RangeSize.closedOfEM, ``RangeSize.openOfEM] ++

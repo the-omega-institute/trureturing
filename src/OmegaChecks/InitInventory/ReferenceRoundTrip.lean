@@ -51,4 +51,17 @@ public theorem primSet (write : type_of% @ST.Prim.Ref.set) (read : type_of% @ST.
 public theorem set (write : type_of% @ST.Ref.set) (read : type_of% @ST.Ref.get) :
     readsWrittenValue (write (m := ST Unit)) (read (m := ST Unit)) → False := noWrite
 
+/-- Constant updates suffice to recover every payload in the world returned by a modifier. -/
+public def readsModifiedValue (update : ST.Ref Unit Callback → (Callback → Callback) → ST Unit Unit)
+    (read : ST.Ref Unit Callback → ST Unit Callback) : Prop :=
+  ∀ r f initial, (read r (update r (fun _ => f) initial).state).val = f
+
+public theorem primModify (update : type_of% @ST.Prim.Ref.modify) (read : type_of% @ST.Prim.Ref.get) :
+    readsModifiedValue update read → False :=
+  noWrite (write := fun r f => update r (fun _ => f))
+
+public theorem modify (update : type_of% @ST.Ref.modify) (read : type_of% @ST.Ref.get) :
+    readsModifiedValue (update (m := ST Unit)) (read (m := ST Unit)) → False :=
+  noWrite (write := fun r f => update (m := ST Unit) r (fun _ => f))
+
 end OmegaChecks.InitBoundaries.ReferenceRoundTrip

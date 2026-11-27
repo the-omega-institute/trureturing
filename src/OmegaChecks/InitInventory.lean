@@ -477,6 +477,11 @@ private def conditionalConsequence? (owner name : Name) : Option (String × Name
         else ``OmegaChecks.InitBoundaries.ReferenceRoundTrip.primSet
       return ("False", witness,
         "Reading the same handle in the world returned by a write recovers every stored callback on reference addresses and worlds")
+    if name == ``ST.Ref.modify || name == ``ST.Prim.Ref.modify then
+      let witness := if name == ``ST.Ref.modify then ``OmegaChecks.InitBoundaries.ReferenceRoundTrip.modify
+        else ``OmegaChecks.InitBoundaries.ReferenceRoundTrip.primModify
+      return ("False", witness,
+        "Reading the same handle in the world returned by a constant update recovers every stored callback on reference addresses and worlds")
   if owner == `Init.Dynamic && [``Dynamic.mk, ``Dynamic.get?].contains name then
     return ("False", ``OmegaChecks.InitBoundaries.DynamicRoundTrip.noRoundTrip,
       "The total writer and reader jointly recover every stored callback from Dynamic to Bool using the same monomorphic type tag")
