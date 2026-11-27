@@ -130,6 +130,30 @@ private def officialDeclaration (stx : Syntax) : CommandElabM (Environment × Co
         -- Use the registration from the owning module, including its out parameters.
         modifyEnv fun env => classExtension.addEntry env {cls with name := omegaName cls.name}
 
+
+/-- Bootstrap proof-valued records with the pinned projection-based eliminators even
+before the root PUnit used by Lean's ordinary structure elaborator is available. -/
+@[command_parser, builtin_command_parser] def portPropRecord := leading_parser "port_prop_record " >> ident
+
+@[builtin_command_elab portPropRecord] def elabPortPropRecord : CommandElab := fun stx => do
+  let id : Ident := ⟨stx[1]⟩
+  let (src, ci) ← officialDeclaration id
+  let some info := getStructureInfo? src ci.name | throwErrorAt id "expected an official record"
+  unless info.parentInfo.isEmpty && ci.type.getForallBody.isProp do
+    throwErrorAt id "expected a proof-valued record with no parent"
+  elabCommand (← `(command| port_inductive $id:ident))
+  let mut fields := #[]
+  for field in info.fieldNames do
+    let some entry := getFieldInfo? src ci.name field | throwErrorAt id "missing field {field}"
+    let some proj := src.getProjectionFnInfo? entry.projFn | throwErrorAt id "missing projection {field}"
+    let projection := mkIdentFrom id entry.projFn
+    elabCommand (← `(command| port_proof $projection:ident))
+    let strictName := omegaName entry.projFn
+    modifyEnv fun env => addProjectionFnInfo env strictName (omegaName proj.ctorName)
+      proj.numParams proj.i proj.fromClass
+    fields := fields.push {entry with projFn := strictName}
+  modifyEnv fun env => registerStructure env {structName := omegaName ci.name, fields}
+
 /-- Elaborate a pinned record and compile its projections in dependency order. -/
 @[command_parser, builtin_command_parser] def portNativeRecords := leading_parser "port_native_records " >> sepBy1 ident ","
 

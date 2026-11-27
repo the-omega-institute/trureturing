@@ -57,14 +57,11 @@ def False.elim {C : Sort u} (h : False) : C := False.casesOn (fun _ => C) h
 
 def Not (a : Prop) : Prop := a → False
 
-structure And (a b : Prop) : Prop where
-  intro ::
-  left : a
-  right : b
+end Omega
 
-abbrev And.casesOn {a b : Prop} {motive : And a b → Sort u} (t : And a b)
-    (intro : ∀ left right, motive (And.intro left right)) : motive t :=
-  intro t.1 t.2
+port_prop_record And
+
+namespace Omega
 
 inductive Or (a b : Prop) : Prop where
   | inl (h : a) : Or a b

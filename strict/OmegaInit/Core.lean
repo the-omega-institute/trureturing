@@ -17,14 +17,11 @@ port_inductive Sum
 
 namespace Omega
 
-structure Iff (a b : Prop) : Prop where
-  intro ::
-  mp : a → b
-  mpr : b → a
+end Omega
 
-abbrev Iff.casesOn {a b : Prop} {motive : Iff a b → Sort u} (t : Iff a b)
-    (intro : ∀ mp mpr, motive (Iff.intro mp mpr)) : motive t :=
-  intro t.1 t.2
+port_prop_record Iff
+
+namespace Omega
 
 inductive Exists {α : Sort u} (p : α → Prop) : Prop where
   | intro (w : α) (h : p w) : Exists p
