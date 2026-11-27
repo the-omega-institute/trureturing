@@ -175,7 +175,7 @@ public def supported (source : Environment) (owner name : Name) : Bool :=
     ([`OmegaInit.Grind.Ring.CommSolver, `OmegaInit.Data.Nat.Basic, `OmegaInit.Data.Nat.Div.Basic, `OmegaInit.Data.Nat.Lemmas,
     `OmegaInit.Data.RArray, `OmegaInit.Data.Nat.Internal.Linear, `OmegaInit.Data.Nat.Fold, `OmegaInit.Data.Fin.Lemmas].contains owner && IndexedNative.supported name) ||
     ([`OmegaInit.Data.Float.Model.Float, `OmegaInit.Data.Float.Model.Float32].contains owner && modelOperation name) ||
-    (owner == `OmegaInit.Prelude && SyntaxPositionNative.supported name) ||
+    ([`OmegaInit.Prelude, `OmegaInit.Meta.Defs].contains owner && SyntaxPositionNative.supported name) ||
     ((base || intPrimitive || platform || version || byteOp || textCompare || modular || stringOp || wordRepr || bitwise || logarithm || (inOwner && primitive)) && isExtern source name) ||
     ((intOwner || [`OmegaInit.Data.Dyadic.Basic, `OmegaInit.Data.ByteArray.Extra, `OmegaInit.Data.ByteArray.Basic, `OmegaInit.Data.Int.Repr, `OmegaInit.Data.Repr, `OmegaInit.Data.Nat.Bitwise.Basic, `OmegaInit.Data.BitVec.Basic].contains owner || [`OmegaInit.Data.UInt.Basic, `OmegaInit.Data.SInt.Basic].contains owner) && usesPinnedFunction name)
 

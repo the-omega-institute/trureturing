@@ -1,7 +1,7 @@
 #pragma once
 #include <lean/lean.h>
 
-typedef lean_obj_res (*omega_head_info_fn)(b_lean_obj_arg);
+typedef lean_obj_res (*omega_syntax_info_fn)(b_lean_obj_arg);
 typedef lean_obj_res (*omega_tail_position_fn)(b_lean_obj_arg, uint8_t);
 
 static lean_obj_res omega_position_pop(lean_object **stack) {
@@ -14,8 +14,8 @@ static lean_obj_res omega_position_pop(lean_object **stack) {
 /* The pinned queries inspect source information and traverse the children in source order
    or in reverse order. Query each node using an empty native array, then traverse its
    strict list of children if the pinned query did not find a position at that node. */
-static lean_obj_res omega_syntax_position(b_lean_obj_arg syntax, uint8_t canonical,
-                                          omega_head_info_fn head, omega_tail_position_fn tail) {
+static lean_obj_res omega_syntax_position(b_lean_obj_arg syntax, bool reverse, uint8_t canonical,
+                                          omega_syntax_info_fn info_query, omega_tail_position_fn tail) {
     lean_inc(syntax);
     lean_object *pending = lean_array_push(lean_mk_empty_array(), syntax);
     while (lean_array_size(pending) != 0) {
@@ -30,7 +30,7 @@ static lean_obj_res omega_syntax_position(b_lean_obj_arg syntax, uint8_t canonic
             lean_ctor_set(view, 1, lean_box(0));
             lean_ctor_set(view, 2, lean_mk_empty_array());
         }
-        lean_object *found = head != NULL ? head(view) : tail(view, canonical);
+        lean_object *found = info_query != NULL ? info_query(view) : tail(view, canonical);
         if (node) lean_dec(view);
         if (!lean_is_scalar(found)) {
             lean_dec(current);
@@ -39,7 +39,7 @@ static lean_obj_res omega_syntax_position(b_lean_obj_arg syntax, uint8_t canonic
         }
         if (node) {
             lean_object *children = lean_ctor_get(current, 2);
-            lean_object *forward = head != NULL ? lean_mk_empty_array() : NULL;
+            lean_object *forward = reverse ? NULL : lean_mk_empty_array();
             while (!lean_is_scalar(children)) {
                 lean_object *child = lean_ctor_get(children, 0);
                 lean_inc(child);
