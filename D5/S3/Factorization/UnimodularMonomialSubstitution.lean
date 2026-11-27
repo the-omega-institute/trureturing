@@ -5,7 +5,9 @@
    anchors: []
    digest: The determinant-one monomial substitution has an explicit inverse on nonzero pairs. -/
 
-import Mathlib
+import Mathlib.Basic.Complex.Basic
+import Mathlib.Tactic.FieldSimp
+import Mathlib.Tactic.NormNum
 
 namespace D5.S3.Factorization.UnimodularMonomialSubstitution
 
