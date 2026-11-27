@@ -223,6 +223,12 @@ public def conditionalConsequence? (owner name : Name) : Option (String × Name 
     if name == ``Lean.Order.instCCPOPi then
       return ((``funext).toString, ``OmegaChecks.InitBoundaries.InternalOrder.funextOfChainCompletePointwiseOrder,
         "Pointwise comparison of functions implies comparison in the proposed chain-complete order")
+    if name == ``Lean.Order.instPartialOrderReaderT then
+      return ((``funext).toString, ``OmegaChecks.InitBoundaries.InternalOrder.funextOfReaderOrder,
+        "For Id with the equality order, pointwise equal reader functions are related as in the pinned instance")
+    if name == ``Lean.Order.instPartialOrderStateT then
+      return ((``funext).toString, ``OmegaChecks.InitBoundaries.InternalOrder.funextOfStateOrder,
+        "For the constant family with the equality order, pointwise equal state functions are related as in the pinned instance")
     if name == ``Lean.Order.instOrderPi then
       return ((``funext).toString, ``OmegaChecks.InitBoundaries.InternalOrder.funextOfPointwiseOrder,
         "Pointwise comparison of functions implies comparison in the proposed order")

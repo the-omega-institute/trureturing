@@ -8,6 +8,7 @@ import all Init.Data.Order.LemmasExtra
 import Lean.Replay
 import all Lean.Util.CollectAxioms
 public import OmegaChecks.InitInventory.AbstractOrder
+public import OmegaChecks.InitInventory.Extensionality
 public import OmegaChecks.InitInventory.Logic
 import all OmegaChecks.InitInventory.Logic
 
@@ -438,6 +439,35 @@ theorem funextOfPointwiseOrder
     ⟨Eq, rfl, Eq.trans, fun h _ => h⟩
   exact (@order α β component).rel_antisymm (pointwise f g same)
     (pointwise g f fun a => (same a).symm)
+
+/-- Equality as an order exposes the relation computed by the transformer on endomorphisms. -/
+@[instance_reducible] private def equalityOrder (T : Type w) : PartialOrder T :=
+  ⟨Eq, rfl, Eq.trans, fun h _ => h⟩
+
+def ReaderPointwise (order : type_of% @instPartialOrderReaderT.{w,w}) : Prop :=
+  ∀ {T : Type w} (f g : T → T), (∀ t, f t = g t) → (@order Id T T (equalityOrder T)).rel f g
+
+example : ReaderPointwise @instPartialOrderReaderT.{w,w} := fun _ _ h => h
+
+theorem funextOfReaderOrder (order : type_of% @instPartialOrderReaderT.{max 1 u v,max 1 u v})
+    (pointwise : ReaderPointwise order) : type_of% @funext.{u,v} := by
+  apply funextFromEndomorphisms
+  intro T f g h
+  exact (@order Id T T (equalityOrder T)).rel_antisymm (pointwise f g h)
+    (pointwise g f fun t => (h t).symm)
+
+def StatePointwise (order : type_of% @instPartialOrderStateT.{w,w}) : Prop :=
+  ∀ {T : Type w} (f g : T → T), (∀ t, f t = g t) →
+    (@order (fun _ => T) T T (fun _ => equalityOrder T)).rel f g
+
+example : StatePointwise @instPartialOrderStateT.{w,w} := fun _ _ h => h
+
+theorem funextOfStateOrder (order : type_of% @instPartialOrderStateT.{max 1 u v,max 1 u v})
+    (pointwise : StatePointwise order) : type_of% @funext.{u,v} := by
+  apply funextFromEndomorphisms
+  intro T f g h
+  exact (@order (fun _ => T) T T (fun _ => equalityOrder T)).rel_antisymm (pointwise f g h)
+    (pointwise g f fun t => (h t).symm)
 
 theorem propextOfImplicationOrder (order : PartialOrder Prop)
     (rel : ∀ p q : Prop, (p → q) → order.rel p q) : type_of% @propext :=
