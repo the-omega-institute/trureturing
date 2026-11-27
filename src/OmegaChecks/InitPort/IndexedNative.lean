@@ -17,9 +17,13 @@ private def quotientEliminator (n : Name) : Bool :=
   [`Quot.hrecOn, `Quotient.hrecOn, `Quotient.lift, `Quotient.liftOn, `Quotient.liftOn₂,
    `Quotient.lift₂, `Squash.lift].contains n
 
+private def listTraversal (n : Name) : Bool :=
+  [`List.filterMapTR, `List.flatMapTR, `List.flattenTR, `List.intercalateTR, `List.reduceOption].contains n
+
 public def supported (n : Name) : Bool :=
-  linear n || quotientEliminator n || n == `List.mapMonoM ||
-  [`Lean.Grind.CommRing.Mon.revlexWF, `Lean.Grind.CommRing.Mon.revlexFuel, `Lean.Grind.CommRing.Mon.revlex,
+  linear n || quotientEliminator n || listTraversal n || n == `List.mapMonoM ||
+  [`Acc.recC, `Acc.ndrecC, `Acc.ndrecOnC, `WellFounded.fixFC,
+   `Lean.Grind.CommRing.Mon.revlexWF, `Lean.Grind.CommRing.Mon.revlexFuel, `Lean.Grind.CommRing.Mon.revlex,
    `Lean.Grind.CommRing.Mon.grevlex, `Lean.Grind.CommRing.Power.revlex,
    `Lean.RArray.getImpl, `Fin.cases, `Fin.induction, `Fin.induction.go, `Fin.inductionOn, `Fin.reverseInduction,
    `Fin.reverseInduction.go, `Fin.lastCases, `Fin.succRec, `Fin.succRecOn,
@@ -62,6 +66,7 @@ public def wrapper (source strict : Environment) (n : Name) (symbol : String) : 
   unless target.type == InitKernelPort.translate InitKernelPort.portName ci.type do
     throw <| IO.userError s!"indexed eliminator type mismatch: {n}"
   if linear official then checkDataTypes source strict [`Prod, `Option, `List, `Nat.Internal.Linear.Expr]
+  if listTraversal official then checkDataTypes source strict [`List, `Option]
   if official.getPrefix == `Lean.Grind.CommRing.Mon || official == `Lean.Grind.CommRing.Power.revlex then
     checkDataTypes source strict [`Lean.Grind.CommRing.Mon, `Lean.Grind.CommRing.Power, `Ordering]
   if official == `Lean.RArray.getImpl then checkDataTypes source strict [`Lean.RArray]
