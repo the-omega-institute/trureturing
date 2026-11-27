@@ -1,5 +1,5 @@
 module
-public import OmegaChecks.InitPort.Alternatives.ShortCircuit
+public import OmegaChecks.InitPort.Alternatives.Collect.ShortCircuit
 public import Init.Data.Iterators.Lemmas.Consumers.Access
 import Init.Data.Iterators.Lemmas.Consumers.Loop
 import Init.Data.Iterators.Lemmas.Monadic.Basic
