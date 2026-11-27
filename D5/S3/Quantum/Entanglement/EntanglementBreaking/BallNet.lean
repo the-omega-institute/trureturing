@@ -1,5 +1,5 @@
 /- GID: D5/S3/Quantum/Entanglement/EntanglementBreaking/BallNet
-   generality: I
+   generality: G
    mirror-B: D5/B/S3/Quantum/Entanglement/EntanglementBreaking/BallNet
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
@@ -97,4 +97,3 @@ theorem exists_finset_net_unitBall {E : Type*} [NormedAddCommGroup E] [NormedSpa
   exact le_of_mul_le_mul_right hvol hpos
 
 end D5.S3.Quantum.Entanglement.EntanglementBreaking
-

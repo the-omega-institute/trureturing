@@ -57,8 +57,7 @@ def IsDecomposable {a b : ℕ} (Φ : MatrixMap (Fin a) (Fin b) ℂ) : Prop :=
   ∃ P Q : MatrixMap (Fin a) (Fin b) ℂ,
     (∀ k : ℕ, 0 < k → (amplify k P).IsPositive) ∧
     (∀ k : ℕ, 0 < k →
-      (amplify k ((Matrix.transposeLinearEquiv (Fin b) (Fin b) ℂ ℂ).toLinearMap.comp Q)
-        ).IsPositive) ∧
+      (amplify k ((Matrix.transposeLinearEquiv (Fin b) (Fin b) ℂ ℂ).toLinearMap.comp Q)).IsPositive) ∧
     Φ = P + Q
 
 theorem inputChoi_decomposition {a b : ℕ} {Φ : MatrixMap (Fin a) (Fin b) ℂ}
@@ -153,4 +152,3 @@ theorem candidate_indecomposable {d : ℕ} (hd : 1 ≤ d)
   rw [inputChoi_fromInputChoi]
   have hd' : (0 : ℝ) < d := by exact_mod_cast (show 0 < d by omega)
   exact (candidate_trace_bound hd H htr henergy).trans_lt (neg_lt_zero.mpr (by positivity))
-

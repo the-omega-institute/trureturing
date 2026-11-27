@@ -138,7 +138,7 @@ namespace D5.S3.Quantum.Entanglement.EntanglementBreaking
 open Matrix
 open D5.S3.Quantum.Dynamics.KickedIsingNegativityRefutation (partialTranspose)
 
- theorem partialTranspose_signCubeSample {d : ℕ}
+theorem partialTranspose_signCubeSample {d : ℕ}
     (ω : HermitianSignIndex (PTIndex d) → Bool) :
     partialTranspose (signCubeSample ω) = signCubeSample (ptBitTransform ω) := by
   classical

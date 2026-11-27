@@ -148,4 +148,3 @@ theorem candidate_isKEB {k d : ℕ} (hk : 1 ≤ k) (hkd : k ≤ d)
   change separableCone ((A ⊗ₖ I) * choiCandidate H * (A ⊗ₖ I)ᴴ)
   rw [hKr, conjTranspose_mul, conjTranspose_conjTranspose]
   simpa only [Matrix.mul_assoc] using hsep
-

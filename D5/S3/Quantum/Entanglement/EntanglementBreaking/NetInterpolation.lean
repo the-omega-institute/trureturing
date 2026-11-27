@@ -258,4 +258,3 @@ theorem exists_full_sphere_quadratic_net (d : ℕ) :
     linarith only [hop]
 
 end D5.S3.Quantum.Entanglement.EntanglementBreaking
-

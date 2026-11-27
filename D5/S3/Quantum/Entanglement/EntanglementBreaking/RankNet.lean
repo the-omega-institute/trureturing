@@ -233,4 +233,3 @@ theorem exists_rank_sphere_net (d k : ℕ) (hkd : k ≤ d) :
     · rwa [frobenius_stiefel_mul (hP U₀ hU₀)]
 
 end D5.S3.Quantum.Entanglement.EntanglementBreaking
-

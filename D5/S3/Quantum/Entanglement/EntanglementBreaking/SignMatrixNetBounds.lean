@@ -120,4 +120,3 @@ theorem signCubeSample_partialTranspose_operator_tail_of_quadratic {d : ℕ} {t 
   exact hH.apply (i, l) (k, j)
 
 end D5.S3.Quantum.Entanglement.EntanglementBreaking
-

@@ -1,5 +1,5 @@
 /- GID: D5/S3/Quantum/Entanglement/EntanglementBreaking/RightIsometry
-   generality: I
+   generality: G
    mirror-B: D5/B/S3/Quantum/Entanglement/EntanglementBreaking/RightIsometry
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
@@ -84,4 +84,3 @@ theorem exists_right_isometry_factorization {k d : ℕ} (hkd : k ≤ d)
       simp [g, hz']
     _ = ∑ l : ↥t, g l.val := by simpa using (Finset.sum_attach t g).symm
     _ = ∑ l, g (f l) := (e.sum_comp (fun l => g l.val)).symm
-

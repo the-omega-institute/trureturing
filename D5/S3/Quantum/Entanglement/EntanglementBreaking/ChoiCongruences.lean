@@ -107,4 +107,3 @@ theorem isKEB_of_choi_congruences {a b k : ℕ} (Φ : MatrixMap (Fin a) (Fin b) 
       rfl
     simpa only [← amplify_vecMulVec, he] using h A
   exact ⟨fun _ hX => separable_isPosSemidef (hsep _ hX), hsep⟩
-
