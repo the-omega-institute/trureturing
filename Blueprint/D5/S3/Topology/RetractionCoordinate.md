@@ -51,4 +51,8 @@ A proper rank colouring is injective on each old face. The two opposite ranks pr
 - Truth anchor: `D5/S3/Topology/RetractionCoordinate.extra_retraction_in_subdivided_edge`
 - Truth anchor: `D5/S3/Topology/RetractionCoordinate.main_retraction_glued`
 - Truth anchor: `D5/S3/Topology/RetractionCoordinate.retractionHeight_of_rank_retraction`
+- Dependency: [D5/S3/Topology/IntervalSubdivisionCoordinates](IntervalSubdivisionCoordinates.md)
+- Dependency: [D5/S3/Topology/OrdinaryCollarRetraction](OrdinaryCollarRetraction.md)
+- Dependency: [D5/S3/Topology/OrdinaryTetrahedronCollar](OrdinaryTetrahedronCollar.md)
+- Dependency: [D5/S3/Topology/RankColouredTetrahedron](RankColouredTetrahedron.md)
 - Dependency: [D5/S3/Topology/RelativeIntervalChartGluing](RelativeIntervalChartGluing.md)
