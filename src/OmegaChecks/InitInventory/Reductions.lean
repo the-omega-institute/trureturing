@@ -130,7 +130,8 @@ private def replayWitnesses (env : Environment) : IO Unit := do
     ClassicalConsequences.witnesses.map Prod.snd ++
     [``MacroReferences.noQueryRoundTrip, ``MacroReferences.noRoundTrip] ++
     [``DynamicRoundTrip.noRoundTrip, ``FactoryCarriers.noCarrierEmbedding] ++
-    [``PropositionalChoice.ofChoice, ``PropositionalChoice.ofSkolem, ``PropositionalChoice.ofProducts] ++
+    [``PropositionalChoice.ofChoice, ``PropositionalChoice.ofSkolem, ``PropositionalChoice.ofProducts,
+     ``OptionSelector.decideFromSingleton, ``OptionSelector.decideFromDefault] ++
     ReferenceSelection.witnesses.map (fun row => row.2.2) ++
     [``ReferenceRoundTrip.alloc, ``ReferenceRoundTrip.primAlloc, ``ReferenceRoundTrip.set, ``ReferenceRoundTrip.primSet,
      ``ReferenceRoundTrip.modify, ``ReferenceRoundTrip.primModify] ++

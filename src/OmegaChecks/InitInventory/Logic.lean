@@ -38,6 +38,20 @@ end ExistentialConjunction
 
 namespace OptionSelector
 
+/-- On the subsingleton type of proofs of a proposition, the selector's tag decides it. -/
+def decideFromSingleton (select : type_of% @Option.choice.{0})
+    (law : ∀ {α : Type} [Subsingleton α] (a : α), select α = some a) (p : Prop) : Decidable p := by
+  cases h : select (PLift p) with
+  | some x => exact isTrue x.down
+  | none => exact isFalse fun hp => nomatch h.symm.trans (law (PLift.up hp))
+
+def decideFromDefault (select : type_of% @Option.choice.{0})
+    (law : ∀ {α : Type} [Subsingleton α] [Inhabited α], select α = some default) (p : Prop) : Decidable p :=
+  decideFromSingleton select (fun {α} sub a => @law α sub ⟨a⟩) p
+
+noncomputable example : ∀ p : Prop, Decidable p := decideFromSingleton Option.choice (@Option.choice_eq_some)
+noncomputable example : ∀ p : Prop, Decidable p := decideFromDefault Option.choice (@Option.choice_eq_default)
+
 def fromSome (select : type_of% (@Option.choice.{u}))
     (law : ∀ {α : Type u} [Nonempty α], (select α).isSome) :
     type_of% (@Classical.choice.{u}) := choiceFromOptionPresence select fun α h => @law α h

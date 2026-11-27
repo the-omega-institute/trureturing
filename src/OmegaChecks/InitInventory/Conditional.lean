@@ -12,6 +12,14 @@ namespace OmegaChecks.InitInventory
 
 /-- The conclusion uses the indicated semantic agreement in addition to the public type. -/
 public def conditionalConsequence? (owner name : Name) : Option (String × Name × String) := do
+  if owner == `Init.Data.Option.Lemmas then
+    let singletonLaw := match name with
+      | ``Option.choice_eq_some => some ``OmegaChecks.InitBoundaries.OptionSelector.decideFromSingleton
+      | ``Option.choice_eq_default => some ``OmegaChecks.InitBoundaries.OptionSelector.decideFromDefault
+      | _ => none
+    if let some witness := singletonLaw then
+      return ("∀ p : Prop, Decidable p", witness,
+        "The same option selector satisfies the stated singleton law on the type PLift p for every proposition p")
   if owner == `Init.Data.Order.Lemmas || owner == `Init.Data.Order.LemmasExtra then
     if name == ``Classical.Order.instLawfulOrderBEq then
       return ("∀ P : Prop, Decidable P", ``OmegaChecks.InitBoundaries.ClassicalOrderDecisions.fromLawfulBEq,
