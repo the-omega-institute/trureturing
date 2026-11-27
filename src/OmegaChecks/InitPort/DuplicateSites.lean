@@ -74,21 +74,27 @@ private def copyModule (dir : System.FilePath) (strict source : Environment)
     if isProtected source (n.replacePrefix `Omega .anonymous) then entries := addProtected entries n
   let protectedEntries := (← mkModuleData entries).entries.filter (·.1 == protectedExt.name)
   let mut output := #[]
-  for (part, _) in parts, (view, _) in views, path in files do
+  for (part, _) in parts, (view, _) in views, path in files, level in #[OLeanLevel.exported, .server, .private] do
+    let mut aliases := (← mkEmptyEnvironment).setMainModule owner
+    for entry in aliasExtension.getModuleEntries strict (strict.getModuleIdx? owner).get! (level := level) do
+      aliases := aliasExtension.addEntry aliases entry
     let mut constants := part.constants
     for n in names do
       let original := n.replacePrefix `Omega .anonymous
       let some upstream := view.constants.find? (·.name == original) | continue
       let some ci := strict.find? n | throw <| IO.userError s!"missing strict proof of {n}"
+      if let some entry := OmegaChecks.InitCompiler.RootNames.aliasFor? original then
+        if entry.2 == n then aliases := aliasExtension.addEntry aliases entry
       constants := constants.push <| if upstream.isAxiom then
         .axiomInfo {ci.toConstantVal with isUnsafe := false} else ci
     constants := constants.qsort fun a b => Name.quickLt a.name b.name
     let edges := part.imports ++ imports.map fun n => {module := n, isExported := false}
+    let aliasEntries := (← mkModuleData aliases .private).entries.filter (·.1 == aliasExtension.name)
     let data := { part with
       constants
       constNames := constants.map (·.name)
       imports := edges
-      entries := part.entries.filter (·.1 != protectedExt.name) ++ protectedEntries }
+      entries := part.entries.filter (fun e => e.1 != protectedExt.name && e.1 != aliasExtension.name) ++ protectedEntries ++ aliasEntries }
     output := output.push (path, data)
   saveModuleDataParts owner output
 

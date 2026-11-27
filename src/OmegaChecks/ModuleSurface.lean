@@ -372,7 +372,8 @@ def check (strict : Environment) (full? : Option Environment := none) : IO (Arra
         let some originalOwner := reference.getModuleIdx? (counterpart owner)
           | throw <| IO.userError s!"missing owner of alias {alias} in {official}"
         let rootAlias := OmegaChecks.InitCompiler.RootNames.aliasFor? officialTarget == some (alias, target) &&
-          strict.getModuleIdxFor? target == some idx && reference.getModuleIdxFor? officialTarget == some originalOwner
+          strict.header.moduleData[idx]!.constNames.contains target &&
+          reference.header.moduleData[originalOwner]!.constNames.contains officialTarget
         unless (rootAlias || (aliasExtension.getModuleEntries reference originalOwner).contains (officialAlias, officialTarget)) &&
             resolved == [(officialTarget, [])] do
           throw <| IO.userError s!"unmatched public alias {alias} for {target} exposed by {port} in {official}"
