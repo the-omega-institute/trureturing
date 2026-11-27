@@ -17,7 +17,7 @@ internal sealed class ContainmentRankBoundsDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(Module + ".containment_rank_bounds"),
                 H("Whole used blocks and original mask soundness"),
                 StatementSource.FromAuthor(Disp(Statement())),
-                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/FiniteGeometry/elder2026turnpike")),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/FiniteGeometry/elder2026turnpike")),
                 Blocks(
                     Paragraph(Text("Realizes(y,mu,x) is the existing predicate: x is strictly increasing; every interval difference equals some label y(q); and the cardinality of each entire interval fiber equals mu(q). The theorem assumes only this predicate, StrictAnti(y), and the displayed used-label equality. It quantifies over all natural n and d, all real y and x and all natural mu. There is no Admissible premise, n>=3 premise, positivity premise on every label, or positivity premise on every multiplicity. Unused bins may have zero multiplicity and negative values compatible with strict decrease. A used bin is positive by its inhabited fiber.")),
                     Paragraph(Text("The original RankAllowed(mu,e,q) is the intersection condition L(n,e)<=B(mu,q) and A(mu,q)<=U(n,e). The theorem proves the stronger whole-block inequalities L(n,e)<=A(mu,q) and B(mu,q)<=U(n,e), then derives the unchanged intersection predicate from positivity of the used multiplicity. It neither changes that predicate nor changes the rank mask or full/spine linear-programming objects.")),

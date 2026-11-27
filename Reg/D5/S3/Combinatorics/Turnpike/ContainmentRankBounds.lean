@@ -1,6 +1,5 @@
 import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
-import Reg.Support.SingleDependentReadout
 import D5.S3.Combinatorics.Turnpike.ContainmentRankBounds
 import Mathlib.Data.Fin.VecNotation
 
