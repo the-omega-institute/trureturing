@@ -1,6 +1,7 @@
 module
 import Lean
 import Lean.Replay
+import all OmegaChecks.InitCompiler.CompilerMarkers
 import all OmegaChecks.InitPort.NativeQuot
 import all Lean.Util.CollectAxioms
 
