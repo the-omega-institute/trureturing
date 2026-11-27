@@ -8,7 +8,7 @@ internal sealed class SilveiraContrerasTorsionRefutationDocument : IScribeDocume
     private const string Prefix =
         "D5/S3/Combinatorics/Graph/PowerGraphs/SilveiraContrerasTorsionRefutation.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/GraphInvariants/silveiracontreras2026powergraph");
+        LibraryNoteRef.Create("D5/L/Combinatorics/silveiracontreras2026powergraph");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "A torsion group with cyclic center has a disconnected proper generalized power graph.",

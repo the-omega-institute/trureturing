@@ -41,7 +41,7 @@ The witness $H\times C_2$ lies in Lean's `Type` (universe 0). It is countable be
 
 ## Evidence
 
-The Lean theorem proves the literal negation of the affirmative torsion statement. [Lean module](../D5/S3/Combinatorics/Graph/PowerGraphs/SilveiraContrerasTorsionRefutation.lean) · [Bibliography](../Library/GraphInvariants/silveiracontreras2026powergraph.md) · [#35024](https://github.com/the-omega-institute/trureturing/issues/35024)
+The Lean theorem proves the literal negation of the affirmative torsion statement. [Lean module](../D5/S3/Combinatorics/Graph/PowerGraphs/SilveiraContrerasTorsionRefutation.lean) · [Bibliography](../Library/Combinatorics/silveiracontreras2026powergraph.md) · [#35024](https://github.com/the-omega-institute/trureturing/issues/35024)
 
 ## Triage
 
