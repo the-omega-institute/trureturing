@@ -9,6 +9,8 @@
 import D5.S3.Arith.Congruence.PowerResidueRecursionFour
 import OmegaBuild.Commands
 
+/-! # Parity of the indices at value five in OEIS A374911 -/
+
 compile_only_with_mathlib
 
 namespace D5.S3.Arith.Congruence.PowerResidueRecursionFive
@@ -53,7 +55,7 @@ private theorem valueFive_characterization (n : ℕ) : seq n = 5 ↔
       have left := ih _ (Nat.mod_lt (2 ^ m) hm_pos)
       have right := ih _ (Nat.mod_lt (3 ^ m) hm_pos)
       have hrec : seq m = seq (2 ^ m % m) + seq (3 ^ m % m) := by
-        conv_lhs => rw [seq.eq_def, dif_neg hm]
+        conv_lhs => rw [seq.eq_def, dite_eq_right hm]
       have hne : seq m ≠ 2 := fun h => hm₁ ((seq_eq_two m).mp h)
       omega
   constructor
@@ -63,7 +65,7 @@ private theorem valueFive_characterization (n : ℕ) : seq n = 5 ↔
       have : n = 0 ∨ n = 1 := by omega
       rcases this with rfl | rfl <;> omega
     have hrec : seq n = seq (2 ^ n % n) + seq (3 ^ n % n) := by
-      conv_lhs => rw [seq.eq_def, dif_neg (by omega : n ≠ 0)]
+      conv_lhs => rw [seq.eq_def, dite_eq_right (by omega : n ≠ 0)]
     have left := lower_bound (2 ^ n % n)
     have right := lower_bound (3 ^ n % n)
     have left_ne_one : seq (2 ^ n % n) ≠ 1 := by
@@ -79,8 +81,8 @@ private theorem valueFive_characterization (n : ℕ) : seq n = 5 ↔
       omega
     have left_ne_two : seq (2 ^ n % n) ≠ 2 := by
       intro h
-      have hpow : Nat.ModEq n (2 ^ n) 1 :=
-        Nat.mod_eq_of_lt hn ▸ (seq_eq_two _).mp h
+      have hpow : Nat.ModEq n (2 ^ n) 1 := by
+        simpa [Nat.ModEq, Nat.mod_eq_of_lt hn] using (seq_eq_two _).mp h
       have hp := Nat.minFac_prime (by omega : n ≠ 1)
       have hmod := leastPrimeFactor_modEq_one_of_pow_self hn hpow
       have hd : n.minFac ∣ 1 := (Nat.modEq_iff_dvd' (by decide : 1 ≤ 2)).mp hmod.symm
@@ -111,7 +113,7 @@ private theorem valueFive_characterization (n : ℕ) : seq n = 5 ↔
       omega
     have left := (seq_eq_three _).mpr ⟨k, hk, h₂⟩
     have right := (seq_eq_two _).mpr h₃
-    conv_lhs => rw [seq.eq_def, dif_neg hn]
+    conv_lhs => rw [seq.eq_def, dite_eq_right hn]
     omega
 
 /-- Every index at which the original OEIS A374911 sequence takes value five is even. -/
