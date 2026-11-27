@@ -90,9 +90,9 @@ private def decodeStringFunction (n : Name) : Bool :=
 
 private def sliceStringFunction (n : Name) : Bool :=
   n == `String.Slice.lines.lineMap || (n.getPrefix == `String.Slice &&
-    [`trimAsciiStart, `trimAsciiEnd, `trimAscii, `intercalate, `isInt, `toInt?, `toInt!].contains (n.updatePrefix .anonymous))
+    [`trimAsciiStart, `trimAsciiEnd, `trimAscii, `intercalate, `isInt, `toInt?, `toInt!, `toName].contains (n.updatePrefix .anonymous))
 
-private def pinnedStringFunction (n : Name) : Bool := defsStringFunction n || basicStringFunction n || decodeStringFunction n || sliceStringFunction n
+private def pinnedStringFunction (n : Name) : Bool := defsStringFunction n || basicStringFunction n || decodeStringFunction n || sliceStringFunction n || n == `String.toName
 
 private def digitList (n : Name) : Bool := [`Nat.toSuperDigitsAux, `Nat.toSubDigitsAux].contains n
 
@@ -159,7 +159,8 @@ public def supported (source : Environment) (owner name : Name) : Bool :=
   (owner == `OmegaInit.Data.String.Defs && defsStringFunction name) ||
     (owner == `OmegaInit.Data.String.Basic && basicStringFunction name) ||
     (owner == `OmegaInit.Data.String.Decode && decodeStringFunction name) ||
-    (owner == `OmegaInit.Data.String.Slice && sliceStringFunction name) || isFloatCall source owner name ||
+    (owner == `OmegaInit.Data.String.Slice && sliceStringFunction name) ||
+    (owner == `OmegaInit.Meta.Defs && name == `String.toName) || isFloatCall source owner name ||
     (owner == `OmegaInit.Data.ByteArray.Basic && ByteFoldNative.supported name) ||
     ([`OmegaInit.Grind.Ring.CommSolver, `OmegaInit.Data.Nat.Basic, `OmegaInit.Data.Nat.Div.Basic, `OmegaInit.Data.Nat.Lemmas,
     `OmegaInit.Data.RArray, `OmegaInit.Data.Nat.Internal.Linear, `OmegaInit.Data.Nat.Fold, `OmegaInit.Data.Fin.Lemmas].contains owner && IndexedNative.supported name) ||
@@ -197,6 +198,20 @@ private def checkFloatLayout (env : Environment) (name : Name) : IO Unit := do
     let some (some field) := impureTrivialStructureInfoExt.find? env n
       | throw <| IO.userError s!"floating-point bits have no strict representation in {n}"
     unless field.fieldIdx == 0 do throw <| IO.userError s!"unexpected floating-point field in {n}"
+
+private def checkNameLayout (source strict : Environment) : IO Unit := do
+  checkStrictString strict
+  unless getExportNameFor? source `Lean.Name.mkStr == some `lean_name_mk_string &&
+      getExportNameFor? source `Lean.Name.mkNum == some `lean_name_mk_numeral do
+    throw <| IO.userError "unexpected pinned name constructors"
+  for (env, root) in [(source, `Lean.Name), (strict, `Omega.Lean.Name)] do
+    for (ctor, tag) in [(`anonymous, 0), (`str, 1), (`num, 2)] do
+      let name := root ++ ctor
+      let some l := ctorLayoutExt.find? env name | throw <| IO.userError s!"missing name layout {name}"
+      let valid := if tag == 0 then l.fieldInfo.isEmpty else
+        match l.fieldInfo with | #[.object 0 _, .object 1 _] => true | _ => false
+      unless valid && l.ctorInfo.cidx == tag && l.ctorInfo.size == l.fieldInfo.size &&
+          l.ctorInfo.usize == 0 && l.ctorInfo.ssize == 0 do throw <| IO.userError s!"invalid name layout: {name}"
 
 private def checkSliceLayout (source strict : Environment) : IO Unit := do
   for (env, ns) in [(source, Name.anonymous), (strict, `Omega)] do
@@ -403,16 +418,7 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
       if b.borrow && !borrowed then prepare := prepare ++ s!"  lean_inc({arg});\n"
       if borrowed && !b.borrow then cleanup := cleanup ++ s!"  lean_dec({arg});\n"
     else if dom == `Lean.Name && a.ty == .tobject && b.ty == .tobject && a.borrow then
-      checkStrictString strict
-      unless getExportNameFor? source `Lean.Name.mkStr == some `lean_name_mk_string &&
-          getExportNameFor? source `Lean.Name.mkNum == some `lean_name_mk_numeral do
-        throw <| IO.userError "unexpected pinned name constructors"
-      for (name, tag) in [(`Omega.Lean.Name.anonymous, 0), (`Omega.Lean.Name.str, 1), (`Omega.Lean.Name.num, 2)] do
-        let some l := ctorLayoutExt.find? strict name | throw <| IO.userError s!"missing strict name layout: {name}"
-        let valid := if tag == 0 then l.fieldInfo.isEmpty else
-          match l.fieldInfo with | #[.object 0 _, .object 1 _] => true | _ => false
-        unless valid && l.ctorInfo.cidx == tag && l.ctorInfo.size == l.fieldInfo.size &&
-            l.ctorInfo.usize == 0 && l.ctorInfo.ssize == 0 do throw <| IO.userError s!"invalid strict name layout: {name}"
+      checkNameLayout source strict
       hasName := true
       decls := decls.push ((if b.borrow then "b_lean_obj_arg " else "lean_obj_arg ") ++ arg)
       prepare := prepare ++ s!"  lean_object *name{i} = omega_name_to_lean({arg});\n"
@@ -464,6 +470,12 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
     layout strict dom
     unless ret == t && result == .tobject do throw <| IO.userError s!"incorrect word result at {n}"
     pure ("lean_obj_res", s!"lean_{w}_to_nat({call})")
+  else if dom == `Lean.Name && ret == .tobject && result == .tobject then do
+    checkNameLayout source strict
+    hasName := true
+    prepare := prepare ++ s!"  lean_object *name = {call};\n"
+    cleanup := cleanup ++ "  lean_dec(name);\n"
+    pure ("lean_obj_res", "omega_name_from_lean(name)")
   else if dom == `Int then do
     checkIntLayout strict
     unless (ret == .tobject || ret == .tagged) && result == .object do throw <| IO.userError s!"incorrect integer result at {n}"
