@@ -4,6 +4,7 @@ import OmegaChecks.InitCompiler.RootNames
 meta import OmegaChecks.InitCompiler.RootNames
 import Lean.Compiler.LCNF.PhaseExt
 import OmegaChecks.InitInventory.Conditional
+meta import OmegaChecks.InitInventory.Conditional
 meta import OmegaChecks.InitInventory.OrderedAlgebra
 meta import OmegaChecks.InitInventory.Order
 meta import OmegaChecks.InitInventory.Logic
