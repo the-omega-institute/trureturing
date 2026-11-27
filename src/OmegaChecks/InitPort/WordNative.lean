@@ -103,7 +103,8 @@ private def monadicSeparator (n : Name) : Bool :=
   [`Array.mapSepElemsM, `Array.filterSepElemsM].contains n
 
 private def syntaxTreeFunction (n : Name) : Bool :=
-  [`Lean.TSyntax.Compat.instCoeTailArraySyntaxTSepArray, `Lean.TSyntax.Compat.instCoeTailArraySyntaxTSyntaxArray,
+  [`Lean.instQuoteNameMkStr1._private_1,
+   `Lean.TSyntax.Compat.instCoeTailArraySyntaxTSepArray, `Lean.TSyntax.Compat.instCoeTailArraySyntaxTSyntaxArray,
    `Lean.Syntax.instCoeOutTSyntaxArrayArray, `Lean.mkIdent, `Lean.mkIdentFrom, `Lean.mkCIdentFrom, `Lean.HygieneInfo.mkIdent,
    `Lean.TSyntax.getHexNumVal, `Lean.TSyntax.getHexNumSize, `Lean.TSyntax.getDocString,
    `Lean.Parser.Tactic.appendConfig, `Lean.Parser.Tactic.getConfigItems, `Lean.Parser.Tactic.mkOptConfig,
