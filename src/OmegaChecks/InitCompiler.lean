@@ -2,6 +2,7 @@ import Lean
 import Lean.Compiler.LCNF.PhaseExt
 import Lean.Compiler.LCNF.PublicDeclsExt
 import Lean.Compiler.IR.CompilerM
+import OmegaChecks.InitCompiler.RootNames
 import OmegaChecks.InitCompiler.Layout
 import OmegaChecks.InitCompiler.Proofs
 import OmegaChecks.InitCompiler.CompilerMarkers
@@ -11,7 +12,7 @@ import OmegaChecks.InitCompiler.CompilerMarkers
 open Lean Parser Elab Command
 namespace OmegaChecks.InitCompiler
 
-private def omegaName (n : Name) := `Omega ++ n
+private def omegaName (n : Name) := if RootNames.usesRoot n then n else `Omega ++ n
 
 private partial def translate (e : Expr) : Expr :=
   e.replace fun

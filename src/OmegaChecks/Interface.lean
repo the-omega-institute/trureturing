@@ -1,5 +1,5 @@
 import Lean
-import OmegaChecks.InitPort.TaskNames
+import OmegaChecks.InitCompiler.RootNames
 import OmegaChecks.FieldMethods
 import OmegaChecks.InitPort.NativeQuot
 import OmegaChecks.InitPort.WordFold
@@ -345,7 +345,7 @@ def checkSites (strict publicStrict reference : Environment) (bindings : Array (
           | `OmegaMathlib => owner.replacePrefix `OmegaMathlib `Mathlib
           | _ => Name.anonymous
         if target.isAnonymous || ((privateToUserName dep).getRoot != `Omega &&
-            !OmegaChecks.InitPort.NativeQuot.isSupport owner dep && !OmegaChecks.InitPort.TaskNames.isPrimitive owner dep) then
+            !OmegaChecks.InitPort.NativeQuot.isSupport owner dep && !OmegaChecks.InitCompiler.RootNames.isPrimitive owner dep) then
           throw <| IO.userError s!"dependency outside the standard interface: {name} uses {dep} in {owner}"
         pending := pending.push (dep, target)
   return seen

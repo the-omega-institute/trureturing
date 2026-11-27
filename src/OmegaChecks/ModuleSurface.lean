@@ -1,6 +1,6 @@
 module
 public import Lean
-public import OmegaChecks.InitPort.TaskNames
+public import OmegaChecks.InitCompiler.RootNames
 import Lean.Elab.ParseImportsFast
 import Lean.Compiler.LCNF.SpecInfo
 import all Lean.Structure
@@ -289,10 +289,10 @@ def check (strict : Environment) (full? : Option Environment := none) : IO (Arra
           throw <| IO.userError s!"unmatched match_pattern attribute for {name} in {official}"
         if Elab.Term.elabAsElim.hasTag strict name && !Elab.Term.elabAsElim.hasTag reference translated then
           throw <| IO.userError s!"unmatched elab_as_elim attribute for {name} in {official}"
-        if let some (alias, target) := OmegaChecks.InitPort.TaskNames.aliasFor? translated then
+        if let some (alias, target) := OmegaChecks.InitCompiler.RootNames.aliasFor? translated then
           unless name == target && (aliasExtension.getModuleEntries strict idx).contains (alias, target) &&
               ResolveName.resolveGlobalName strict {} .anonymous [] alias == [(target, [])] do
-            throw <| IO.userError s!"missing or ambiguous task alias {alias} for {target} in {owner}"
+            throw <| IO.userError s!"missing or ambiguous source alias {alias} for {target} in {owner}"
         roots := roots.insert name expected
       for (alias, target) in aliasExtension.getModuleEntries strict idx do
         let officialAlias := alias.replacePrefix `Omega .anonymous
@@ -300,9 +300,9 @@ def check (strict : Environment) (full? : Option Environment := none) : IO (Arra
         let resolved := ResolveName.resolveGlobalName reference {} .anonymous [] officialAlias
         let some originalOwner := reference.getModuleIdx? (counterpart owner)
           | throw <| IO.userError s!"missing owner of alias {alias} in {official}"
-        let taskAlias := OmegaChecks.InitPort.TaskNames.aliasFor? officialTarget == some (alias, target) &&
+        let rootAlias := OmegaChecks.InitCompiler.RootNames.aliasFor? officialTarget == some (alias, target) &&
           strict.getModuleIdxFor? target == some idx && reference.getModuleIdxFor? officialTarget == some originalOwner
-        unless (taskAlias || (aliasExtension.getModuleEntries reference originalOwner).contains (officialAlias, officialTarget)) &&
+        unless (rootAlias || (aliasExtension.getModuleEntries reference originalOwner).contains (officialAlias, officialTarget)) &&
             resolved == [(officialTarget, [])] do
           throw <| IO.userError s!"unmatched public alias {alias} for {target} exposed by {port} in {official}"
         let some home := strict.getModuleIdxFor? target | throw <| IO.userError s!"unknown alias target {target}"

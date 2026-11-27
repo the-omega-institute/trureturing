@@ -1,6 +1,7 @@
 module
 
 public import Lean
+import OmegaChecks.InitCompiler.RootNames
 import OmegaChecks.InitCompiler.ProofRules
 import OmegaChecks.InitCompiler.Equivalence
 import OmegaChecks.InitCompiler.NatProofs
@@ -53,7 +54,7 @@ private partial def translateTerm (env : Environment) (visiting : NameSet) (term
     e.replace fun
       | .const n us =>
         if let some (params, body) := helpers[n]? then some (body.instantiateLevelParams params us)
-        else some (.const (`Omega ++ n) us)
+        else some (.const (if RootNames.usesRoot n then n else `Omega ++ n) us)
       | .proj n i x => some (.proj (`Omega ++ n) i (go x))
       | .lit (.natVal n) => some (natTerm n)
       | _ => none

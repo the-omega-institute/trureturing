@@ -17,7 +17,7 @@ private def checkPrimitiveNames (env : Environment) : IO Unit := do
   let some (.inductInfo task) := env.find? `Task | throw <| IO.userError "missing task inductive"
   unless task.ctors == [`Task.pure] && task.numParams == 1 && task.numIndices == 0 do
     throw <| IO.userError "unexpected task inductive"
-  for n in OmegaChecks.InitPort.TaskNames.primitives do
+  for n in OmegaChecks.InitCompiler.RootNames.taskPrimitives do
     unless env.contains n do continue
     let alias := `Omega ++ n
     unless !env.contains alias && env.getModuleIdxFor? n == some idx &&
@@ -54,7 +54,7 @@ unsafe def main (args : List String) : IO Unit := do
   unless env.contains `Task do return
   checkPrimitiveNames (← importModules #[{module := owner}] {} (level := .exported))
   checkPrimitiveNames (← importModules #[{module := owner, importAll := true}] {} (level := .private))
-  let names := OmegaChecks.InitPort.TaskNames.primitives.filter env.contains
+  let names := OmegaChecks.InitCompiler.RootNames.taskPrimitives.filter env.contains
   let context ← localEnv env owner names
   let compiled ← compile context do
     for (n, symbol) in #[(`Task.pure, "lean_task_pure"), (`Task.get, "lean_task_get_own")] do

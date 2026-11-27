@@ -33,3 +33,10 @@ public import OmegaInit.System.Promise
   (t.map (fun x => x) Omega.Task.Priority.default Omega.false : Omega.Task Omega.Bool)
 #check fun (t : Omega.Task Omega.Bool) =>
   (t.bind (fun x => Omega.Task.pure x) Omega.Task.Priority.default Omega.false : Omega.Task Omega.Bool)
+
+-- These calls exercise the literal binder annotations used by ordinary elaboration.
+example (task : Omega.Task Omega.Bool) (f : Omega.Bool → Omega.Bool) :
+    Omega.Eq (task.map f) (task.map f Omega.Task.Priority.default Omega.false) := Omega.rfl
+
+example (task : Omega.Task Omega.Bool) (f : Omega.Bool → Omega.Task Omega.Bool) :
+    Omega.Eq (task.bind f) (task.bind f Omega.Task.Priority.default Omega.false) := Omega.rfl

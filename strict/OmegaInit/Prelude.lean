@@ -9,6 +9,13 @@ noncomputable section
 
 @[expose] public section
 
+set_option linter.unusedVariables.funArgs false in
+@[reducible] def optParam (α : Sort u) (default : α) : Sort u := α
+
+@[reducible] def outParam (α : Sort u) : Sort u := α
+
+@[reducible] def semiOutParam (α : Sort u) : Sort u := α
+
 port_compiler_markers
 
 port_inductive Option
@@ -21,6 +28,8 @@ port_definition PProd.fst
 port_definition PProd.snd
 
 namespace Omega
+
+export _root_ (optParam outParam semiOutParam)
 
 /-- Equality and its eliminator are available in the strict environment. -/
 inductive Eq {α : Sort u} : α → α → Prop where
@@ -275,13 +284,6 @@ abbrev inferInstance {α : Sort u} [i : α] : α := i
 
 set_option checkBinderAnnotations false in
 abbrev «inferInstanceAs» (α : Sort u) [i : α] : α := i
-
-set_option linter.unusedVariables.funArgs false in
-@[reducible] def optParam (α : Sort u) (default : α) : Sort u := α
-
-@[reducible] def outParam (α : Sort u) : Sort u := α
-
-@[reducible] def semiOutParam (α : Sort u) : Sort u := α
 
 set_option linter.unusedVariables.funArgs false in
 @[reducible] def namedPattern {α : Sort u} (x a : α) (h : Eq x a) : α := a
