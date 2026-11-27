@@ -328,6 +328,12 @@ private def logicalConsequence? (owner name : Name) : Option (Name × Name) := d
 /-- The conclusion uses the indicated semantic agreement in addition to the public type. -/
 private def conditionalConsequence? (owner name : Name) : Option (String × Name × String) := do
   if owner == `Init.Grind.Ring.Envelope || owner == `Init.Grind.Module.Envelope then
+    if name == ``Lean.Grind.Ring.OfSemiring.instLEQOfOrderedAdd ||
+        name == ``Lean.Grind.IntModule.OfNatModule.instLEQOfOrderedAdd then
+      let witness := if owner == `Init.Grind.Ring.Envelope then ``OmegaChecks.InitBoundaries.EnvelopeOrder.propextFromRingOrder
+        else ``OmegaChecks.InitBoundaries.EnvelopeOrder.propextFromModuleOrder
+      return ((``propext).toString, witness,
+        "Over the two-element field, envelope cancellation identifies the diagonal with zero and the proposed order computes both off-diagonal comparisons in the translated preorder")
     let target := (``funext).toString
     if name == ``Lean.Grind.Ring.OfSemiring.neg_add_cancel ||
         name == ``Lean.Grind.IntModule.OfNatModule.neg_add_cancel then

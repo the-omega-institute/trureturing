@@ -8,6 +8,9 @@ meta import OmegaChecks.InitInventory.PointerObservations
 public import OmegaChecks.InitInventory.Quotient
 import all OmegaChecks.InitInventory.Quotient
 meta import OmegaChecks.InitInventory.Quotient
+public import OmegaChecks.InitInventory.EnvelopeOrder
+import all OmegaChecks.InitInventory.EnvelopeOrder
+meta import OmegaChecks.InitInventory.EnvelopeOrder
 public import OmegaChecks.InitInventory.Extensionality
 import all OmegaChecks.InitInventory.Extensionality
 meta import OmegaChecks.InitInventory.Extensionality
@@ -73,6 +76,9 @@ private def replayWitnesses (env : Environment) : IO Unit := do
     BooleanReflection.witnesses.map (fun row => row.2.2) ++
     IntegerCancellation.witnesses.map (fun row => row.2.2) ++
     WeakRingOrder.witnesses.map (fun row => row.2.2) ++
+    [``EnvelopeOrder.propextFromRingLift, ``EnvelopeOrder.propextFromModuleLift,
+      ``EnvelopeOrder.ringDiagonal, ``EnvelopeOrder.moduleDiagonal,
+      ``EnvelopeOrder.propextFromRingOrder, ``EnvelopeOrder.propextFromModuleOrder] ++
     [``Envelope.funextFromCancellation, ``Envelope.funextFromEnvelopeRing,
       ``Envelope.funextFromEnvelopeCommRing, ``Envelope.funextFromEnvelopeIntModule] ++
     [``PointerObservations.address, ``PointerObservations.pointerEquality, ``PointerObservations.listPointerEquality,
