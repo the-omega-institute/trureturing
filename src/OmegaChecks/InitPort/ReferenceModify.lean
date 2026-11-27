@@ -27,6 +27,16 @@ public def owner := `Init.System.ST
 public def consumer := `ST.Prim.Ref.modify
 public def support := mkPrivateNameCore owner `ST.Prim.Ref.readForModify
 
+public def implementation := `ST.Prim.Ref.modifyUnsafe
+
+public def checkImplementation (src : Environment) (native : DefinitionVal) (body : Expr) : IO Unit := do
+  let some (.defnInfo original) := src.find? consumer | throw <| IO.userError "missing atomic reference update"
+  unless native.name == implementation && native.safety == .unsafe && original.safety == .safe &&
+      src.getModuleIdxFor? native.name == src.getModuleIdx? owner && src.getModuleIdxFor? consumer == src.getModuleIdx? owner &&
+      Compiler.getImplementedBy? src consumer == some native.name && body == mkConst consumer &&
+      Kernel.isDefEqGuarded src {} original.type native.type do
+    throw <| IO.userError "unexpected implementation of the pinned atomic update"
+
 public def model (src templates : Environment) : IO ConstantInfo := do
   let some (.opaqueInfo r) := templates.find? ``read? | throw <| IO.userError "missing optional read template"
   let some (.defnInfo impl) := src.find? `ST.Prim.Ref.modifyUnsafe | throw <| IO.userError "missing atomic update"

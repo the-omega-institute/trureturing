@@ -213,6 +213,9 @@ private def compare (reference : Environment) (rename : Name → Name) (src dst 
       throw <| IO.userError s!"official declaration is not a proof for {src.name}"
   | .defnInfo x, .defnInfo y =>
     if let some (strict, publicStrict) := foundation then
+      if x.safety == .safe && y.name == OmegaChecks.InitPort.ReferenceModify.implementation then
+        OmegaChecks.InitPort.ReferenceModify.checkImplementation reference y (liftTerm x.value)
+        return deps ++ x.value.getUsedConstants
       if let some api := (OmegaChecks.InitPort.LogicalHandle.implementation? y.name).filter (fun _ => x.safety == .safe) then
         OmegaChecks.InitPort.LogicalHandle.checkImplementation api reference y (liftTerm x.value)
         return deps ++ x.value.getUsedConstants
