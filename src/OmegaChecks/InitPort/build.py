@@ -219,7 +219,7 @@ def generate(stage, product, seed, roots, excluded, seed_ir):
         }, [product / "native" / "reference.o"])
     if "OmegaInit.System.IO" in graph:
         compile_state_runtime(stage, product, artifact, inventory, "TaskIO", "task_io", {
-            "Init.System.IO": {"IO.getTaskState", "IO.hasFinished", "IO.wait", "IO.waitAny", "IO.cancel", "IO.checkCanceled",
+            "Init.System.IO": {"IO.getTaskState", "IO.hasFinished", "IO.wait", "IO.waitAny", "IO.waitAny'", "IO.cancel", "IO.checkCanceled",
                                *(f"{ns}.{name}" for ns in ("BaseIO", "EIO", "IO")
                                  for name in ("asTask", "mapTask", "bindTask", "chainTask", "mapTasks"))},
         })

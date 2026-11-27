@@ -75,3 +75,7 @@ public import OmegaInit.System.IO
   Omega.IO.mapTasks act ts Omega.Nat.zero Omega.Bool.true
 
 @[export omega_io_end_of_file] public def endOfFile (_ : Omega.Unit) := Omega.IO.Error.unexpectedEof
+
+@[export omega_io_smoke_remaining] public def firstWithRemaining {α : Type}
+    (head : Omega.Task α) (tail : Omega.List (Omega.Task α)) :=
+  Omega.IO.waitAny' (Omega.List.cons head tail) (Omega.Nat.zero_lt_succ _)

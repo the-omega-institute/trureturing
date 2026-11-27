@@ -153,3 +153,9 @@ LEAN_EXPORT lean_obj_res omega_io_except_map_tasks(lean_obj_arg action, lean_obj
     lean_object *fn = wrap_action((void *)continue_exception_action, 4, action, world);
     return state_result(l_EIO_mapTasks___redArg(fn, tasks, lean_box(omega_task_priority(prio)), sync), world);
 }
+
+extern lean_obj_res l_IO_waitAny_x27___redArg(lean_obj_arg);
+
+LEAN_EXPORT lean_obj_res omega_io_wait_any_rest(lean_obj_arg tasks, lean_obj_arg world) {
+    return state_result(l_IO_waitAny_x27___redArg(tasks), world);
+}

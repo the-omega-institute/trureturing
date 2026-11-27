@@ -128,6 +128,7 @@ private def checkElaboration (env : Environment) (owner : Name) (idx : ModuleIdx
       | `Omega.IO.getTaskState => pure (`OmegaInit.System.IO, "omega_io_get_task_state")
       | `Omega.IO.hasFinished => pure (`OmegaInit.System.IO, "omega_io_task_has_finished")
       | `Omega.IO.wait => pure (`OmegaInit.System.IO, "omega_io_wait")
+      | `Omega.IO.waitAny' => pure (`OmegaInit.System.IO, "omega_io_wait_any_rest")
       | `Omega.IO.waitAny => pure (`OmegaInit.System.IO, "omega_io_wait_any")
       | `Omega.IO.cancel => pure (`OmegaInit.System.IO, "omega_io_cancel")
       | `Omega.IO.checkCanceled => pure (`OmegaInit.System.IO, "omega_io_check_canceled")

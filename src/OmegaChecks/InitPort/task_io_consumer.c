@@ -24,6 +24,7 @@ extern lean_obj_res omega_smoke_IO_map(lean_obj_arg, lean_obj_arg, lean_obj_arg,
 extern lean_obj_res omega_smoke_IO_bind(lean_obj_arg, lean_obj_arg, lean_obj_arg, lean_obj_arg);
 extern lean_obj_res omega_smoke_IO_chain(lean_obj_arg, lean_obj_arg, lean_obj_arg, lean_obj_arg);
 extern lean_obj_res omega_smoke_IO_many(lean_obj_arg, lean_obj_arg, lean_obj_arg, lean_obj_arg);
+extern lean_obj_res omega_io_smoke_remaining(lean_obj_arg, lean_obj_arg, lean_obj_arg, lean_obj_arg);
 extern lean_obj_res lean_io_promise_new(void);
 extern lean_obj_res lean_io_promise_result_opt(b_lean_obj_arg);
 extern lean_obj_res lean_io_promise_resolve(lean_obj_arg, b_lean_obj_arg);
@@ -105,6 +106,33 @@ static lean_obj_res signal_value(lean_obj_arg done, lean_obj_arg value, lean_obj
     lean_ctor_set(out, 0, lean_box(0));
     lean_ctor_set(out, 1, world);
     return out;
+}
+
+static void check_remaining_tasks(lean_obj_arg type, lean_obj_arg world) {
+    lean_object *source = lean_io_promise_new(), *pending = lean_io_promise_result_opt(source);
+    lean_object *expected = lean_mk_string("first available");
+    lean_inc(expected);
+    lean_object *ready = lean_task_pure(expected);
+    /* The same pending handle occurs on both sides of the finished task. */
+    lean_inc(pending);
+    lean_inc(pending);
+    lean_object *tail = cons(ready, cons(pending, lean_box(0)));
+    lean_object *pair = value(omega_io_smoke_remaining(type, pending, tail, world), world);
+    if (lean_ctor_get(pair, 0) != expected) exit(26);
+    lean_object *rest = lean_ctor_get(pair, 1);
+    for (unsigned i = 0; i < 2; ++i) {
+        if (lean_obj_tag(rest) != 1 || lean_ctor_get(rest, 0) != pending) exit(27);
+        rest = lean_ctor_get(rest, 1);
+    }
+    if (rest != lean_box(0)) exit(28);
+    lean_dec(pair);
+    lean_dec(pending);
+    lean_dec(source);
+    lean_inc(expected);
+    pair = value(omega_io_smoke_remaining(type, lean_task_pure(expected), lean_box(0), world), world);
+    if (lean_ctor_get(pair, 0) != expected || lean_ctor_get(pair, 1) != lean_box(0)) exit(29);
+    lean_dec(pair);
+    lean_dec(expected);
 }
 
 static void check_composite_tasks(lean_obj_arg type, lean_obj_arg world) {
@@ -260,6 +288,7 @@ int main(void) {
     if (value(omega_io_smoke_wait(type, cancellable, world), world) != lean_box(1)) return 12;
     check_effect_scheduling(type);
     check_composite_tasks(type, world);
+    check_remaining_tasks(type, world);
     check_exception_tasks(true, type, world);
     check_exception_tasks(false, type, world);
     lean_finalize_task_manager();

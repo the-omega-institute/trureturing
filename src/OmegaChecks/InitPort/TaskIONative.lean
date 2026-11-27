@@ -9,7 +9,7 @@ import Lean
 open Lean OmegaChecks.InitPort.NativeState
 
 private def entries := #[(`IO.getTaskState, "get_task_state"), (`IO.hasFinished, "task_has_finished"),
-  (`IO.wait, "wait"), (`IO.waitAny, "wait_any"), (`IO.cancel, "cancel"), (`IO.checkCanceled, "check_canceled"),
+  (`IO.wait, "wait"), (`IO.waitAny, "wait_any"), (`IO.waitAny', "wait_any_rest"), (`IO.cancel, "cancel"), (`IO.checkCanceled, "check_canceled"),
   (`BaseIO.asTask, "as_task"), (`BaseIO.mapTask, "map_task"), (`BaseIO.bindTask, "bind_task"),
   (`BaseIO.chainTask, "chain_task"), (`BaseIO.mapTasks, "map_tasks")]
 
@@ -41,7 +41,8 @@ private def inputs (name : Name) (strict : Bool) : Array (IR.IRType × Bool) :=
   else if op == "mapTasks" then
     errorParam ++ #[(.erased, false), (.erased, false), (.object, false), (.tobject, false), (.tobject, false), (.uint8, false), world]
   else if name == `IO.checkCanceled then #[world]
-  else if name == `IO.waitAny then #[(.erased, false), (.tobject, true), (.erased, false), world]
+  else if name == `IO.waitAny || name == `IO.waitAny' then
+    #[(.erased, false), (.tobject, name == `IO.waitAny), (.erased, false), world]
   else #[(.erased, false), (.object, name != `IO.wait && !(name == `IO.hasFinished && strict)), world]
 
 private def checkLayouts (env : Environment) (names : Array Name) : IO Unit := do
@@ -66,7 +67,11 @@ private def checkLayouts (env : Environment) (names : Array Name) : IO Unit := d
       let #[.object 0 _, .object 1 _] := layout.fieldInfo | throw <| IO.userError s!"unexpected {n} field order"
     check `Omega.Except.error 0 1
     check `Omega.Except.ok 1 1
-  unless names.contains `Omega.IO.waitAny || names.any (·.getString! == "mapTasks") do return
+  if names.contains `Omega.IO.waitAny' then
+    check `Omega.Prod.mk 0 2
+    let some pair := Compiler.LCNF.ctorLayoutExt.find? env `Omega.Prod.mk | throw <| IO.userError "missing wait result pair"
+    let #[.object 0 _, .object 1 _] := pair.fieldInfo | throw <| IO.userError "incorrect pair field order"
+  unless names.contains `Omega.IO.waitAny || names.contains `Omega.IO.waitAny' || names.any (·.getString! == "mapTasks") do return
   check `Omega.List.nil 0 0
   check `Omega.List.cons 1 2
   let some cons := Compiler.LCNF.ctorLayoutExt.find? env `Omega.List.cons | throw <| IO.userError "missing task list"
@@ -77,7 +82,7 @@ public unsafe def main (args : List String) : IO Unit := do
   let original ← importModules #[{module := `Init.System.IO}] {}
   let entries := entries ++ exceptionEntries
   for (n, sym) in entries do
-    if sym.startsWith "except_" || n == `IO.hasFinished || n == `BaseIO.chainTask || n == `BaseIO.mapTasks then
+    if sym.startsWith "except_" || n == `IO.waitAny' || n == `IO.hasFinished || n == `BaseIO.chainTask || n == `BaseIO.mapTasks then
       let ret := if n == `IO.hasFinished then IR.IRType.uint8 else if n == `BaseIO.chainTask then .tagged else .object
       let some (.fdecl _ ps result _ _) := IR.findEnvDecl original n | throw <| IO.userError s!"missing compiled {n}"
       let args := inputs n false
