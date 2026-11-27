@@ -23,7 +23,12 @@ public unsafe def main (args : List String) : IO Unit := do
     throw <| IO.userError "unexpected Boolean representation"
   let apply ← IO.ofExcept <| env.evalConst
     (_root_.ShareCommon.StateFactory → List Bool → List Bool → List Bool × List Bool) {} `sharePair
-  for factory in [Lean.ShareCommon.objectFactory, Lean.ShareCommon.persistentObjectFactory] do
+  let some ci := env.find? `customFactory | throw <| IO.userError "missing strict custom factory"
+  let .forallE _ unit factoryTy .default := ci.type | throw <| IO.userError "expected a custom factory function"
+  unless unit == mkConst `Omega.PUnit [.succ .zero] && factoryTy == mkConst `Omega.ShareCommon.StateFactory do
+    throw <| IO.userError "unexpected strict custom factory interface"
+  let mk ← IO.ofExcept <| env.evalConst (PUnit.{1} → _root_.ShareCommon.StateFactory) {} `customFactory
+  for factory in [mk PUnit.unit, Lean.ShareCommon.objectFactory, Lean.ShareCommon.persistentObjectFactory] do
     for x in [false, true] do
       for y in [false, true] do
         let a ← singleton (← IO.mkRef x)

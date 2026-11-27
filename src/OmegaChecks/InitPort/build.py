@@ -248,7 +248,7 @@ def generate(stage, product, seed, roots, excluded, original_seed):
 
     control_objects = compile_generated(stage, product, graph, original_seed.parents[1] / "ir",
                                         original_seed=original_seed, before_owner={"OmegaInit.ShareCommon": install_sharing})
-    sharing_interfaces = {"Init.ShareCommon": {"ShareCommon.State.mk", "ShareCommon.State.shareCommon", "ShareCommonM.run"}}
+    sharing_interfaces = {"Init.ShareCommon": {"ShareCommon.StateFactory.mk", "ShareCommon.State.mk", "ShareCommon.State.shareCommon", "ShareCommonM.run"}}
     if sharing and has_interfaces(inventory, sharing_interfaces):
         if control_objects is None:
             check_share_ir(stage, artifact)

@@ -20,6 +20,12 @@ private def shareCarrier.{u} (s : ShareCommon.StateFactory) : NonemptyType.{u} :
 private noncomputable def shareAllocate.{u} (s : ShareCommon.StateFactory) : (shareCarrier.{u} s).type :=
   (shareToken s).2
 
+private noncomputable opaque factoryToken.{u} : (T : Type u) ×' T := ⟨PUnit, PUnit.unit⟩
+private def factoryCarrier.{u} : NonemptyType.{u} := ⟨factoryToken.1, ⟨factoryToken.2⟩⟩
+private def factoryRepresentative.{u} : NonemptyType.{u} := ⟨PUnit, ⟨PUnit.unit⟩⟩
+private noncomputable def makeFactory (_ : ShareCommon.StateFactoryBuilder) : factoryCarrier.{0}.type :=
+  factoryToken.2
+
 private structure Model (α : Type) where
   handle : carrier.type
   support : Nonempty α
@@ -48,7 +54,9 @@ public def referenceCell : API := ⟨`Init.System.ST, `ST.RefPointed, `ST.Prim.m
 
 public def shareState : API := ⟨`Init.ShareCommon, `ShareCommon.StatePointed, `ShareCommon.State.mk,
   `ShareCommon.State.logicalToken, "l_ShareCommon_mkStateImpl"⟩
-public def apis := [promise, referenceCell, shareState]
+public def shareFactory : API := ⟨`Init.ShareCommon, `ShareCommon.StateFactoryPointed, `ShareCommon.StateFactory.mk,
+  `ShareCommon.StateFactory.logicalToken, "l_ShareCommon_StateFactory_mkImpl"⟩
+public def apis := [promise, referenceCell, shareState, shareFactory]
 
 public def API.privateOwner (api : API) := api.owner.replacePrefix `Init `OmegaInit
 public def API.tokenName (api : API) := mkPrivateNameCore api.owner api.logicalToken
@@ -60,8 +68,8 @@ public def forToken? (n : Name) := apis.find? (fun api => n == api.strictToken)
 private def renameTemplate (api : API) (body : Expr) : Expr :=
   body.replace fun
     | .const n us =>
-      let name := if n == ``token || n == ``shareToken then api.tokenName
-        else if n == ``carrier || n == ``shareCarrier then api.pointed
+      let name := if n == ``token || n == ``shareToken || n == ``factoryToken then api.tokenName
+        else if n == ``carrier || n == ``shareCarrier || n == ``factoryCarrier then api.pointed
         else if n == ``Model then `IO.Promise
         else if n == ``Model.mk then mkPrivateNameCore api.owner `IO.Promise.mk
         else if n == ``Reference then `ST.Ref
@@ -77,7 +85,8 @@ public structure Templates where
 
 public def templates (api : API) (env : Environment) : IO Templates := do
   let (pkgName, familyName, allocName) :=
-    if api.owner == shareState.owner then (``shareToken, ``shareCarrier, ``shareAllocate)
+    if api.pointed == shareState.pointed then (``shareToken, ``shareCarrier, ``shareAllocate)
+    else if api.pointed == shareFactory.pointed then (``factoryToken, ``factoryCarrier, ``makeFactory)
     else (``token, ``carrier, if api.owner == promise.owner then ``allocate else ``allocateRef)
   let some (.opaqueInfo pkg) := env.find? pkgName | throw <| IO.userError "missing logical handle token"
   let some (.defnInfo family) := env.find? familyName | throw <| IO.userError "missing handle carrier"
@@ -113,9 +122,12 @@ public def checkBody (api : API) (strict publicStrict reference : Environment) (
     throw <| IO.userError "handle implementation differs from the checked logical model"
   checkToken api strict publicStrict reference renameTerm
   let some (.opaqueInfo original) := reference.find? api.pointed | throw <| IO.userError "missing official handle carrier"
-  let isShare := api.owner == shareState.owner
-  let model := if isShare then mkConst ``shareRepresentative (original.levelParams.map Level.param) else mkConst ``standardCarrier
-  let nativeMatches := if isShare then Compiler.getImplementedBy? reference api.allocator == some `ShareCommon.mkStateImpl
+  let indexed := api.pointed == shareState.pointed
+  let modelName := if indexed then ``shareRepresentative
+    else if api.pointed == shareFactory.pointed then ``factoryRepresentative else ``standardCarrier
+  let model := mkConst modelName (original.levelParams.map Level.param)
+  let nativeMatches := if indexed then Compiler.getImplementedBy? reference api.allocator == some `ShareCommon.mkStateImpl
+    else if api.pointed == shareFactory.pointed then Compiler.getImplementedBy? reference api.allocator == some `ShareCommon.StateFactory.mkImpl
     else getExternNameFor reference `c api.allocator == some api.nativeAllocator
   unless !original.isUnsafe && Kernel.isDefEqGuarded reference {} original.value model &&
       reference.getModuleIdxFor? name == reference.getModuleIdx? api.owner &&

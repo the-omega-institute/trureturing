@@ -1,6 +1,8 @@
 module
 import all Lean.Environment
 import all Lean.OriginalConstKind
+import all Lean.Compiler.LCNF.ToImpureType
+import all Lean.Compiler.LCNF.MonoTypes
 import Lean.Compiler.LCNF.EmitC
 import OmegaChecks.InitPort.NativeState
 meta import OmegaChecks.InitPort.NativeState
@@ -15,19 +17,47 @@ public unsafe def main (args : List String) : IO Unit := do
   let [lib, output] := args | throw <| IO.userError "expected strict library and C output"
   let api := LogicalHandle.shareState
   let official ← importModules #[{module := api.owner}] {}
-  let some impl := Compiler.getImplementedBy? official api.allocator | throw <| IO.userError "missing state allocator implementation"
-  let some (.fdecl _ args .tobject _ _) := IR.findEnvDecl official impl | throw <| IO.userError "missing native state allocator"
-  unless impl == `ShareCommon.mkStateImpl && args.map (fun a => (a.ty, a.borrow)) == #[(.tobject, false)] &&
-      impl.mangle (pre := "l_") == api.nativeAllocator do
-    throw <| IO.userError "unexpected native state allocator ABI"
+  let factory := LogicalHandle.shareFactory
+  for (handle, expected, input) in [(api, `ShareCommon.mkStateImpl, IR.IRType.tobject),
+      (factory, `ShareCommon.StateFactory.mkImpl, .object)] do
+    let some impl := Compiler.getImplementedBy? official handle.allocator | throw <| IO.userError s!"missing implementation of {handle.allocator}"
+    let some (.fdecl _ params .tobject _ _) := IR.findEnvDecl official impl | throw <| IO.userError s!"missing native implementation {impl}"
+    unless impl == expected && params.map (fun a => (a.ty, a.borrow)) == #[(input, false)] &&
+        impl.mangle (pre := "l_") == handle.nativeAllocator do
+      throw <| IO.userError s!"unexpected native ABI for {handle.allocator}"
   let share := `ShareCommon.State.shareCommon
   let shareSymbol := "lean_state_sharecommon"
   let shareArgs := #[(IR.IRType.erased, false), (.tobject, true), (.tobject, false), (.tobject, false)]
   NativeState.verify official share shareArgs .object shareSymbol
   searchPathRef.set [lib]
   let env ← importModules #[{module := api.privateOwner, importAll := true}] {}
-  let roots := [(api.allocator, api.nativeAllocator), (share, shareSymbol)].filter fun (n, _) => env.contains (`Omega ++ n)
+  let roots := [(api.allocator, api.nativeAllocator), (factory.allocator, "omega_share_common_factory_mk"), (share, shareSymbol)].filter fun (n, _) => env.contains (`Omega ++ n)
   if roots.isEmpty then return
+  if !interpreter && env.contains (`Omega ++ factory.allocator) then
+    for name in [`Omega.BEq, `Omega.Hashable] do
+      if (Compiler.LCNF.monoTypeExt.find? env name).isNone then
+        let built ← NativeState.compileLayouts env name
+        NativeState.writeCode lib env.header.moduleNames[(env.getModuleIdxFor? name).get!]! built NativeState.layouts
+    let env ← importModules #[{module := api.privateOwner, importAll := true}] {}
+    NativeState.checkPriorityLayout env
+    for (n, ctor) in [(`Omega.UInt64, `ofBitVec), (`Omega.BitVec, `ofFin), (`Omega.Fin, `mk),
+        (`Omega.Hashable, `mk), (`Omega.BEq, `mk)] do
+      let some (some info) := Compiler.LCNF.impureTrivialStructureInfoExt.find? env n
+        | throw <| IO.userError s!"{n} must erase to its data field"
+      unless info.ctorName == n ++ ctor && info.fieldIdx == 0 do
+        throw <| IO.userError s!"unexpected erased representation for {n}"
+    let builder := `Omega.ShareCommon.StateFactoryBuilder
+    let built ← NativeState.compileLayouts env builder
+    let some layout := Compiler.LCNF.ctorLayoutExt.find? built (builder ++ `mk) | throw <| IO.userError "missing strict factory builder layout"
+    let some upstream := Compiler.LCNF.ctorLayoutExt.find? official `ShareCommon.StateFactoryBuilder.mk | throw <| IO.userError "missing official factory builder layout"
+    for info in [layout, upstream] do
+      let #[.erased, .object 0 _, .object 1 _, .object 2 _, .erased,
+          .object 3 _, .object 4 _, .object 5 _] := info.fieldInfo
+        | throw <| IO.userError "factory callbacks differ from the native field order"
+      unless info.ctorInfo.cidx == 0 && info.ctorInfo.size == 6 && info.ctorInfo.usize == 0 && info.ctorInfo.ssize == 0 do
+        throw <| IO.userError "factory builder differs from the six-callback native layout"
+    NativeState.writeCode lib api.privateOwner built NativeState.layouts
+  let env ← importModules #[{module := api.privateOwner, importAll := true}] {}
   let wrappers := [`ShareCommon.instInhabitedState, `ShareCommonT.run, `ShareCommonM.run].map (`Omega ++ ·)
   let wrappers := if interpreter then [] else wrappers.filter env.contains
   let names := roots.map (fun (n, _) => `Omega ++ n) ++ wrappers
@@ -43,10 +73,13 @@ public unsafe def main (args : List String) : IO Unit := do
   for (n, symbol) in roots do
     if n == api.allocator then
       NativeState.verify compiled (`Omega ++ n) #[(.tobject, false)] .tobject symbol
+    else if n == factory.allocator then
+      NativeState.verify compiled (`Omega ++ n) #[(.object, false)] .tobject symbol
     else
       NativeState.verify compiled (`Omega ++ n) shareArgs .object symbol
+  let runtime := "src/OmegaChecks/InitPort/share_common_runtime.c"
   if interpreter then
-    NativeState.emitBridge compiled `StrictShareCommonInterpreter none output
+    NativeState.emitBridge compiled `StrictShareCommonInterpreter runtime output
   else
     NativeState.writeCode lib api.privateOwner compiled (NativeState.codeExtensions ++ #[privateConstKindsExt.name])
-    NativeState.emitBridge compiled api.privateOwner none output #[{module := `OmegaInit.Control.State}]
+    NativeState.emitBridge compiled api.privateOwner runtime output #[{module := `OmegaInit.Control.State}]

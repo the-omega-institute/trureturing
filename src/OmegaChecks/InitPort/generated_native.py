@@ -44,7 +44,7 @@ def check_share_ir(stage, library):
     source = check / "extern.c"
     run("lake", "env", "lean", "--run", HERE / "ShareCommonNative.lean", "--interpreter", library, source)
     shim = check / ("extern" + (sysconfig.get_config_var("SHLIB_SUFFIX") or ".so"))
-    run("leanc", "-shared", "-fPIC", "-DLEAN_EXPORTING", source, "-o", shim)
+    run("leanc", "-shared", "-fPIC", "-DLEAN_EXPORTING", "-I", HERE, source, "-o", shim)
     run("lean", "-R", HERE, "-o", check / "ShareCommonConsumer.olean", HERE / "ShareCommonConsumer.lean",
         env={**os.environ, "LEAN_PATH": str(library)})
     run("lake", "env", "lean", "--load-dynlib=" + str(shim), "--run", HERE / "ShareCommonIRConsumer.lean",

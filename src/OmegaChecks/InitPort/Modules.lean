@@ -309,9 +309,10 @@ unsafe def main (args : List String) : IO Unit := do
           let name (v : EnvExtensionEntry) := (unsafeCast v : Name × Unit).1
           let merged := old.foldl (init := extra) fun a v => if a.any (fun e => name e == name v) then a else a.push v
           entries := (entries.filter (·.1 != key)).push (key, merged.qsort (fun a b => (name a).quickLt (name b)))
-      if let some (n, _) := tokens.find? (fun (n, o) => i == 2 && o == official && cs.any (·.name == renamed n)) then
-        let strictToken := renamed n
-        let tags := addNoncomputable ((← mkEmptyEnvironment).setMainModule owner) strictToken
+      let hidden := tokens.filter fun (n, o) => i == 2 && o == official && cs.any (·.name == renamed n)
+      unless hidden.isEmpty do
+        let tags := hidden.foldl (init := (← mkEmptyEnvironment).setMainModule owner)
+          (fun env (n, _) => addNoncomputable env (renamed n))
         let tagged ← mkModuleData tags .private
         entries := entries ++ tagged.entries.filter (fun e => e.1 == noncomputableExt.name && !e.2.isEmpty)
       let extraConstNames := if nameCode.isSome then

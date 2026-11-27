@@ -481,7 +481,7 @@ partial def visit (n : Name) : M Bool := do
     return ← record n .added
   if let some api := OmegaChecks.InitPort.LogicalHandle.forDecl? n then
     let .opaqueInfo native := ci | return ← record n (.blocked "missing opaque handle declaration")
-    let some handle := c.handles.find? api.owner | throw <| IO.userError s!"missing handle templates for {api.owner}"
+    let some handle := c.handles.find? api.pointed | throw <| IO.userError s!"missing handle templates for {api.owner}"
     let isFamily := n == api.pointed
     let pkg := handle.package
     let body := if isFamily then handle.family else handle.allocation
@@ -697,7 +697,7 @@ def run (strictPath artifacts : System.FilePath) (outPath : String) (exclude : S
   let handleEnv ← importModules #[{module := `OmegaChecks.InitPort.LogicalHandle}] {} (level := .private)
   let mut handles : NameMap OmegaChecks.InitPort.LogicalHandle.Templates := {}
   for api in OmegaChecks.InitPort.LogicalHandle.apis do
-    handles := handles.insert api.owner (← OmegaChecks.InitPort.LogicalHandle.templates api handleEnv)
+    handles := handles.insert api.pointed (← OmegaChecks.InitPort.LogicalHandle.templates api handleEnv)
   let typeNameTemplates ← OmegaChecks.InitPort.TypeName.templates (← importModules #[{module := `OmegaChecks.InitPort.TypeName}] {} (level := .private))
   let alternatives ← OmegaChecks.InitPort.loadAlternatives
   let ruleModule := `OmegaChecks.InitCompiler.ProofRules

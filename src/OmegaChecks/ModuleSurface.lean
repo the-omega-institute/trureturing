@@ -104,6 +104,7 @@ private def checkSpecializations (env : Environment) (owner : Name) : IO Unit :=
 private def checkElaboration (env : Environment) (owner : Name) (idx : ModuleIdx) : IO Unit := do
   for (n, data) in externAttr.ext.getModuleEntries env idx do
     let (expectedOwner, symbol) ← match n with
+      | `Omega.ShareCommon.StateFactory.mk => pure (`OmegaInit.ShareCommon, "omega_share_common_factory_mk")
       | `Omega.ShareCommon.State.mk => pure (`OmegaInit.ShareCommon, "l_ShareCommon_mkStateImpl")
       | `Omega.ShareCommon.State.shareCommon => pure (`OmegaInit.ShareCommon, "lean_state_sharecommon")
       | `Omega.ST.Prim.Ref.swap => pure (`OmegaInit.System.ST, "omega_st_ref_swap")
