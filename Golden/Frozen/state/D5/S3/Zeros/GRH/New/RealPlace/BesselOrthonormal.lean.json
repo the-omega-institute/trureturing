@@ -1,0 +1,1 @@
+{"statement_id":"sha256:61aaf50a606475cf82b43746454096d4ce392ea668edecab6e0117c863f9dee8","declarations":[{"declaration_name_key":"ns(ns(n0,12:BesselSystem),11:orthonormal)","kind":"theorem","libraries":["Aesop","Batteries","Init","Lean","Mathlib","Std"],"axioms":["Classical.choice","Quot.sound","propext"]}]}

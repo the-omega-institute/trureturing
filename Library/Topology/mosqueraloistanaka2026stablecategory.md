@@ -23,6 +23,10 @@ strata_touched:
   - D5/S3/Topology/BarycentricBaseRigidity
   - D5/S3/Topology/ConnectedCategoryGraft
   - D5/S3/Topology/PathContiguity
+  - D5/S3/Topology/FixedTargetGraphTermination
+  - D5/S3/Topology/GraphSubdivisionIntervals
+  - D5/S3/Topology/GraphSubdivisionHalves
+  - D5/S3/Topology/GraphSubdivisionNullhomotopy
 license: citation-only
 triage: anchor
 ---
@@ -937,3 +941,23 @@ components of weak category at least two. Passing to cores and adding
 over connected components excludes any counterexample with fewer than
 fifteen points. The unrestricted inequality remains open.
 [Question 6.3](https://arxiv.org/html/2609.39615v1#S6)
+
+## Contiguity contractions of graph maps in a fixed target
+
+For a finite graph, choose paths from one ambient vertex to the images of the original graph
+vertices. On every oriented edge, assume that triangle moves replace the
+mapped edge by the concatenation through the chosen ambient vertex.
+The Lean theorem `GraphSubdivisionNullhomotopy.supported_graph_map_contracts`
+gives a common depth beyond which composing any selection from the original
+vertex supports with the graph map yields a contiguity contraction in the
+fixed target. Each old edge becomes an interval. First replace the edge maps
+relative to their endpoints. Then contract the two half paths sharing its
+midpoint simultaneously, including at vertices shared by several old edges.
+
+If each graph component induces the trivial map on fundamental groups and
+the vertex images lie in one ambient component, choose the vertex paths
+using a spanning tree in each graph component and a path from the common
+base to its root image. The classical edge-path description of the
+fundamental group gives finite move witnesses for this choice.
+The Lean theorem takes those witnesses as hypotheses. This is the
+fixed-target step for the three-dimensional approach to Question 6.3.
