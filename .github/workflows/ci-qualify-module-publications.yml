@@ -1,0 +1,57 @@
+name: Qualify compiler dependency scheduling
+
+on:
+  pull_request:
+    branches: [integration-ci-compiler-dependency-tests]
+
+permissions:
+  contents: read
+
+jobs:
+  checkpoint:
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 20
+    outputs:
+      checkpoints: ${{ steps.share.outputs.artifact-id }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          persist-credentials: false
+      - run: make install-tools
+      - run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
+      - name: Interrupt a real Lake build after three completed modules
+        run: python3 -B .github/scripts/probe-module-publications.py produce "$RUNNER_TEMP/checkpoints"
+      - uses: actions/upload-artifact@v6
+        id: share
+        with:
+          name: compiler-dag-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/checkpoints
+          if-no-files-found: error
+          retention-days: 3
+
+  resume:
+    runs-on: ubuntu-24.04-arm
+    needs: checkpoint
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          persist-credentials: false
+      - run: make install-tools
+      - run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
+      - uses: actions/download-artifact@v8
+        with:
+          artifact-ids: ${{ needs.checkpoint.outputs.checkpoints }}
+          path: ${{ runner.temp }}/checkpoints
+          merge-multiple: true
+      - name: Resume the saved plan and restore all four modules from its published index
+        run: python3 -B .github/scripts/probe-module-publications.py consume "$RUNNER_TEMP/checkpoints"
+      - name: Exercise simultaneous compilation, cross-source reuse and immutable plan recovery
+        env:
+          PYTHONPATH: tools/scripts/worktree
+        run: |
+          python3 -B -m unittest -v \
+            test_lean_module_cache.ModuleReleases.test_simultaneous_workers_publish_each_diamond_module_once \
+            test_lean_module_cache.ModuleReleases.test_cross_source_reuses_matching_member_of_interrupted_unit \
+            test_lean_module_cache.ModuleReleases.test_checkpoints_seen_child_first_release_descendants_after_ancestors \
+            test_lean_module_remote.VersionedShards.test_pinned_compiler_plan_is_reused_before_analyzing_the_checkout
