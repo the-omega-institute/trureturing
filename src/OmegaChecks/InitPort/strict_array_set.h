@@ -50,3 +50,49 @@ static lean_obj_res omega_array_list_set_bang(lean_obj_arg xs, b_lean_obj_arg in
     }
     return omega_array_list_set_at(xs, lean_unbox(index), value);
 }
+
+/* Apply the callback in index order. Keep the untouched suffix and copy a shared
+   prefix only when an element changes its pointer. */
+static lean_obj_res omega_array_list_map_mono(lean_obj_arg xs, lean_obj_arg f) {
+    lean_object *result = xs, *pending = xs, *last = NULL;
+    lean_object *scan = xs;
+    while (!lean_is_scalar(scan)) {
+        lean_object *old = lean_ctor_get(scan, 0);
+        lean_object *following = lean_ctor_get(scan, 1);
+        lean_inc(old);
+        lean_inc(f);
+        lean_object *mapped = lean_apply_1(f, old);
+        if (mapped == old) {
+            lean_dec(mapped);
+        } else {
+            for (;;) {
+                bool changed = pending == scan;
+                lean_object *cell = pending, *next = lean_ctor_get(pending, 1);
+                if (!lean_is_exclusive(pending)) {
+                    cell = lean_alloc_ctor(1, 2, 0);
+                    lean_inc(next);
+                    lean_ctor_set(cell, 1, next);
+                    if (!changed) {
+                        lean_object *head = lean_ctor_get(pending, 0);
+                        lean_inc(head);
+                        lean_ctor_set(cell, 0, head);
+                    }
+                    lean_dec_ref(pending);
+                } else if (changed) {
+                    lean_dec(lean_ctor_get(cell, 0));
+                }
+                if (last) lean_ctor_set(last, 1, cell);
+                else result = cell;
+                last = cell;
+                pending = next;
+                if (changed) {
+                    lean_ctor_set(cell, 0, mapped);
+                    break;
+                }
+            }
+        }
+        scan = following;
+    }
+    lean_dec(f);
+    return result;
+}

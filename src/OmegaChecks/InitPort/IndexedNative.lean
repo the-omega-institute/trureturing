@@ -25,7 +25,7 @@ private def listTraversal (n : Name) : Bool :=
 
 public def supported (n : Name) : Bool :=
   attachment n || linear n || quotientEliminator n || listTraversal n ||
-  [`withPtrEq, `ShareCommon.shareCommon', `List.mapMonoM, `List.flatMapMTR.loop, `List.splitOn, `List.splitOnPTR, `BitVec.flattenListFast].contains n ||
+  [`withPtrEq, `ShareCommon.shareCommon', `Array.mapMono, `List.mapMonoM, `List.flatMapMTR.loop, `List.splitOn, `List.splitOnPTR, `BitVec.flattenListFast].contains n ||
   [`Acc.recC, `Acc.ndrecC, `Acc.ndrecOnC, `WellFounded.fixFC,
    `Lean.Grind.CommRing.Mon.revlexWF, `Lean.Grind.CommRing.Mon.revlexFuel, `Lean.Grind.CommRing.Mon.revlex,
    `Lean.Grind.CommRing.Mon.grevlex, `Lean.Grind.CommRing.Power.revlex,
@@ -95,6 +95,22 @@ public def wrapper (source strict : Environment) (n : Name) (symbol : String) : 
   let some target := strict.find? n | throw <| IO.userError s!"missing strict indexed eliminator {n}"
   unless target.type == InitKernelPort.translate InitKernelPort.portName ci.type do
     throw <| IO.userError s!"indexed eliminator type mismatch: {n}"
+  if official == `Array.mapMono then
+    let some (.fdecl _ args .object ..) := IR.findEnvDecl source official
+      | throw <| IO.userError "missing pinned array map"
+    let some (.extern _ actual .tobject ⟨[.standard `all entry]⟩) := IR.findEnvDecl strict n
+      | throw <| IO.userError "missing strict array map"
+    let some (some field) := impureTrivialStructureInfoExt.find? strict `Omega.Array
+      | throw <| IO.userError "strict array map requires the list field"
+    checkDataTypes source strict [`List]
+    unless Compiler.getImplementedBy? source `Array.mapMonoM ==
+        some (mkPrivateNameCore `Init.Data.Array.BasicAux `mapMonoMImp) && field.fieldIdx == 0 &&
+        args.map (·.ty) == #[.erased, .object, .tobject] && args.all (!·.borrow) &&
+        actual.map (·.ty) == #[.erased, .tobject, .tobject] && entry == symbol do
+      throw <| IO.userError s!"unexpected monomorphic array map {actual.map fun p => (p.ty, p.borrow)}"
+    let keepXs := if actual[1]!.borrow then "lean_inc(xs); " else ""
+    let keepF := if actual[2]!.borrow then "lean_inc(f); " else ""
+    return s!"\n#include \"strict_array_set.h\"\nLEAN_EXPORT lean_obj_res {entry}(lean_obj_arg xs, lean_obj_arg f) \{ {keepXs}{keepF}return omega_array_list_map_mono(xs, f); }\n"
   if official == `ShareCommon.shareCommon' then
     let some (.extern _ pinned .tobject ⟨[.standard `all "lean_sharecommon_quick"]⟩) := IR.findEnvDecl source official
       | throw <| IO.userError "missing pinned object-sharing primitive"
