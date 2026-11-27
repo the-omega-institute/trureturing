@@ -311,14 +311,11 @@ variable {S T : Type*} [CommRing S] [CommRing T] [Algebra ℝ S] [Algebra ℝ T]
 
 /-- Transport a bracket along a real algebra equivalence. -/
 private def conjugate (e : S ≃ₐ[ℝ] T) (b : SkewBiderivation S) : SkewBiderivation T where
-  ham f := Derivation.mk'
-    (e.toLinearEquiv.toLinearMap.comp ((b.ham (e.symm f)).toLinearMap.comp e.symm.toLinearEquiv.toLinearMap))
-    (by
-      intro a d
-      change e (b.ham (e.symm f) (e.symm (a * d))) =
-        a * e (b.ham (e.symm f) (e.symm d)) + d * e (b.ham (e.symm f) (e.symm a))
-      rw [map_mul e.symm, leibniz_mul (b.ham (e.symm f)), map_add e,
-        map_mul e, map_mul e, e.apply_symm_apply, e.apply_symm_apply])
+  ham f := Derivation.liftOfRightInverse (f := e.toAlgHom) (f_inv := e.symm)
+    e.apply_symm_apply (by
+      intro a ha
+      have ha' : a = 0 := e.injective (by simpa using ha)
+      simp [ha'])
   skew f g := by
     change e (b.ham (e.symm f) (e.symm g)) = -e (b.ham (e.symm g) (e.symm f))
     rw [b.skew, map_neg e]

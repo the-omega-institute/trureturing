@@ -55,8 +55,7 @@ theorem inclC_X : inclC (n := n) (m := m) X = u - v := by
   abel
 
 theorem normal (a : A n m) : a = incl a.re + incl a.im * y := by
-  have he (p : B) (z : A n m) : p • z = incl p * z := by
-    apply QuadraticAlgebra.ext <;> simp [incl]
+  have he (p : B) (z : A n m) : p • z = incl p * z := Algebra.smul_def p z
   simpa only [y, he, mul_one] using (QuadraticAlgebra.re_smul_add_im_smul a).symm
 
 theorem y_sq : (y (n := n) (m := m)) ^ 2 = incl (rad n m) := by
