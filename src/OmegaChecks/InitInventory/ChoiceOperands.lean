@@ -26,21 +26,28 @@ private def fixWitness? : Name → Option Name
   | ``WellFounded.extrinsicFix₃ | ``WellFounded.partialExtrinsicFix₃ => some ``choiceFromFix₃
   | _ => none
 
+private def congruenceWitness? (operand : Name) : Option Name :=
+  match operand with
+  | ``Classical.choice => some ``fromChoice
+  | ``Classical.choose => some ``choiceFromChoose
+  | ``Exists.choose => some ``choiceFromExistsChoose
+  | other => fixWitness? other
+
 /-- Read the left value of the concluding equality directly from the defining module's type.
 The witness consumes the complete polymorphic operation used to state the equation. -/
 public def operand? (owner : Name) (source : ConstantInfo) : Option Operand := do
-  guard ([`Init.WFExtrinsicFix, `Init.While, `Init.Data.Option.Lemmas].contains owner)
+  guard (owner.getRoot == `Init)
   guard source.isTheorem
+  let congruence := source.name matches .str _ "congr_simp"
+  guard (owner == `Init.WFExtrinsicFix || congruence)
   let mut conclusion := source.type
   while conclusion.isForall do conclusion := conclusion.bindingBody!
   guard (conclusion.isAppOfArity ``Eq 3)
   let args := conclusion.getAppArgs
   guard args[0]!.getAppFn.isBVar
   let .const name levels := args[1]!.getAppFn | none
-  let witness? := if owner == `Init.WFExtrinsicFix then fixWitness? name
-    else if [`Init.While, `Init.Data.Option.Lemmas].contains owner &&
-        source.name == `Classical.choice.congr_simp && name == ``Classical.choice then some ``fromChoice
-    else none
+  let witness? := if congruence && source.name.getPrefix == name then congruenceWitness? name
+    else if owner == `Init.WFExtrinsicFix then fixWitness? name else none
   let witness ← witness?
   return ⟨name, witness, levels⟩
 
@@ -62,9 +69,9 @@ private def check (env : Environment) (owner : Name) (source : ConstantInfo) (op
 
 run_cmd
   let env ← getEnv
-  for owner in [`Init.WFExtrinsicFix, `Init.While, `Init.Data.Option.Lemmas] do
-    let some idx := env.getModuleIdx? owner | throwError "missing official module {owner}"
-    for source in env.header.moduleData[idx]!.constants do
+  for (owner, data) in env.header.moduleNames.zip env.header.moduleData do
+    unless owner.getRoot == `Init do continue
+    for source in data.constants do
       unless isPrivateName source.name || source.name.isInternalOrNum || source.name.hasMacroScopes do
         if let some operand := operand? owner source then
           if let .error msg := check env owner source operand then throwError "{msg}"
