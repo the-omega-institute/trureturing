@@ -11,7 +11,10 @@ Indices and captured callback arguments use the strict kernel Nat and the erased
 public def supported (n : Name) : Bool :=
   [`Fin.cases, `Fin.induction, `Fin.induction.go, `Fin.inductionOn, `Fin.reverseInduction,
    `Fin.reverseInduction.go, `Fin.lastCases, `Fin.succRec, `Fin.succRecOn,
-   `Nat.recAux, `Nat.recCompiled, `Nat.repeat, `Nat.repeatTR, `Nat.div.inductionOn, `Nat.mod.inductionOn].contains n
+   `Nat.recAux, `Nat.recCompiled, `Nat.repeat, `Nat.repeatTR, `Nat.div.inductionOn, `Nat.mod.inductionOn,
+   `Nat.decidableBallLTTR, `Nat.decidableExistsLE, `Nat.decidableExistsLTTR, `Nat.decidableBallLE,
+   `Nat.decidableExistsLT'TR, `Nat.allLTTR, `Nat.decidableExistsFin, `Nat.decidableForallFin,
+   `Nat.anyLTTR, `Nat.decidableExistsLE'].contains n
 
 private def objectType (t : IR.IRType) := t == .tobject || t == .object || t == .tagged
 
@@ -26,7 +29,10 @@ public def wrapper (source strict : Environment) (n : Name) (symbol : String) : 
     unless field.fieldIdx == 0 do throw <| IO.userError "unexpected strict Fin value slot"
   let some (.fdecl _ args ret ..) := IR.findEnvDecl source official | throw <| IO.userError s!"missing pinned native eliminator {official}"
   let some (.extern _ actual out ⟨[.standard `all entry]⟩) := IR.findEnvDecl strict n | throw <| IO.userError s!"missing generated eliminator {n}"
-  unless objectType ret && objectType out && args.size == actual.size && entry == symbol do
+  let result ← if objectType ret && objectType out then pure "lean_obj_res"
+    else if ret == .uint8 && out == .uint8 then pure "uint8_t"
+    else throw <| IO.userError s!"different indexed result representation: {n}"
+  unless args.size == actual.size && entry == symbol do
     throw <| IO.userError s!"incompatible indexed eliminator ABI: {n}"
   let mut operands := #[]
   let mut decls := #[]
@@ -47,7 +53,7 @@ public def wrapper (source strict : Environment) (n : Name) (symbol : String) : 
   let entry := cfg.getD (getSymbolStem source official)
   let proto := String.intercalate ", " (args.toList.map (fun _ => "lean_object *"))
   let call := s!"{entry}({String.intercalate ", " operands.toList})"
-  return s!"\nextern lean_obj_res {entry}({proto});\nLEAN_EXPORT lean_obj_res {symbol}({String.intercalate ", " decls.toList}) \{\n" ++
-    s!"{prepare}  lean_obj_res r = {call};\n{cleanup}  return r;\n}\n"
+  return s!"\nextern {result} {entry}({proto});\nLEAN_EXPORT {result} {symbol}({String.intercalate ", " decls.toList}) \{\n" ++
+    s!"{prepare}  {result} r = {call};\n{cleanup}  return r;\n}\n"
 
 end OmegaChecks.InitPort.IndexedNative
