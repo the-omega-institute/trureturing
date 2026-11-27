@@ -703,6 +703,58 @@ theorem inhabitedPropExtOfEqTrue (eqTrue : type_of% @eq_true_eq_id) :
     InhabitedPropExt :=
   fun p hp => ((congrFun eqTrue p).mpr hp).symm
 
+namespace GrindNormalization
+
+theorem normalizePositive (rule : type_of% @Lean.Grind.eq_true_eq) : InhabitedPropExt :=
+  fun p hp => (rule p).mpr hp
+
+theorem normalizeNegative (rule : type_of% @Lean.Grind.eq_false_eq) : RefutedPropExt :=
+  fun p hp => (rule p).mpr hp
+
+theorem normalizePositiveLeft (rule : type_of% @Lean.Grind.eq_eq_of_eq_true_left) : InhabitedPropExt :=
+  fun p hp => ((@rule True p rfl).mpr hp).symm
+
+theorem normalizePositiveRight (rule : type_of% @Lean.Grind.eq_eq_of_eq_true_right) : InhabitedPropExt :=
+  fun p hp => (@rule p True rfl).mpr hp
+
+/-- Lookahead classifies the inhabited case. Normalization of equality to False
+then supplies the refuted case required by classical propositional completeness. -/
+theorem completeIff :
+    (type_of% @Classical.propComplete) ↔
+      ((type_of% @Lean.Grind.of_lookahead) ∧ (type_of% @Lean.Grind.eq_false_eq)) := by
+  constructor
+  · intro complete
+    refine ⟨fun p nn => ?_, fun p => propextFromPropComplete complete ?_⟩
+    · cases complete p with
+      | inl pos => exact pos
+      | inr neg => exact (nn neg.mp).elim
+    · refine ⟨fun neg => neg.mp, fun np => ?_⟩
+      cases complete p with
+      | inl pos => exact (np (pos.mpr trivial)).elim
+      | inr neg => exact neg
+  · rintro ⟨look, norm⟩ p
+    cases GrindOrder.excludedMiddleFromLookahead look p with
+    | inl hp => exact Or.inl (look p (fun np => np hp))
+    | inr np => exact Or.inr (normalizeNegative norm p np)
+
+theorem propextOfLookaheadAndNegative (look : type_of% @Lean.Grind.of_lookahead)
+    (norm : type_of% @Lean.Grind.eq_false_eq) : type_of% @propext :=
+  propextFromPropComplete (completeIff.mpr ⟨look, norm⟩)
+
+/-- The non-dependent version suffices for the heterogeneous crossed congruence
+at the same universe. Heterogeneous equality elimination aligns both types. -/
+theorem crossedCongruences :
+    (type_of% @Lean.Grind.eq_congr'.{u}) ↔ (type_of% @Lean.Grind.heq_congr'.{u}) := by
+  constructor
+  · intro rule α β a₁ b₁ a₂ b₂ h₁ h₂
+    cases h₁
+    cases h₂
+    exact rule rfl rfl
+  · intro rule α a₁ b₁ a₂ b₂ h₁ h₂
+    exact rule (heq_of_eq h₁) (heq_of_eq h₂)
+
+end GrindNormalization
+
 namespace OptionalIndex
 
 /-- Equivalent decidable propositions are equal. -/

@@ -132,6 +132,10 @@ private def replayWitnesses (env : Environment) : IO Unit := do
     [``ReferenceRoundTrip.alloc, ``ReferenceRoundTrip.primAlloc, ``ReferenceRoundTrip.set, ``ReferenceRoundTrip.primSet,
      ``ReferenceRoundTrip.modify, ``ReferenceRoundTrip.primModify] ++
     BooleanReflection.witnesses.map (fun row => row.2.2) ++
+    [``GrindNormalization.normalizePositive, ``GrindNormalization.normalizeNegative,
+      ``GrindNormalization.normalizePositiveLeft, ``GrindNormalization.normalizePositiveRight,
+      ``GrindNormalization.completeIff, ``GrindNormalization.propextOfLookaheadAndNegative,
+      ``GrindNormalization.crossedCongruences] ++
     [``BooleanReflection.trueComparisons, ``BooleanReflection.falseComparisons,
       ``BooleanReflection.ratLETrueIff, ``BooleanReflection.ratLEFalseIff] ++
     InternalOrder.decisionChains.map Prod.snd ++ InternalOrder.tailDecisionChains.map Prod.snd ++
