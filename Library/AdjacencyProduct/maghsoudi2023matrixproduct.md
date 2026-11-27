@@ -14,4 +14,8 @@ triage: anchor
 
 # Complete-graph adjacency-matrix factorization
 
+## Verified locator
+
+DOI: 10.48550/arXiv.2312.08615
+
 [Theorem 1.2](https://arxiv.org/html/2312.08615v1#S1.Thmthm2) states that $K_n$ is a matrix product of two graphs exactly when $n=4k+1$. The criterion applies to the single-blade windmill. The two factors use symmetric steps in the cyclic group of order $4k+1$.

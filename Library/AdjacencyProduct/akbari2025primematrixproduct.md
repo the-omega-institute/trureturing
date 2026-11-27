@@ -14,6 +14,10 @@ triage: anchor
 
 # Windmill adjacency-matrix factorization
 
+## Verified locator
+
+DOI: 10.48550/arXiv.2512.24864
+
 [Section 5, item 1](https://arxiv.org/html/2512.24864v1#S5.I1.i1) defines the windmill by identifying one vertex from each of $d\ge1$ copies of $K_t$, with $t\ge3$. It asks to determine all pairs $(d,t)$ for which the resulting graph admits a factorization.
 
 [Section 1](https://arxiv.org/html/2512.24864v1#S1) defines factorization by taking ordinary products of the two graph adjacency matrices. Each matrix uses the same labelled vertex set.
