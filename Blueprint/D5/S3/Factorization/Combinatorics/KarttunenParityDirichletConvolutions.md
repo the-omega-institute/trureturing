@@ -54,7 +54,7 @@ OEIS A355837, revision 25, FORMULA (unpaginated). “Multiplicative with a(p^e) 
 
 **Definition 1.5 (The inverse Möbius transform).**
 
-$$\forall n \in Nat,\; \operatorname{H}\left(n\right) = \operatorname{Finset}.\operatorname{sum}\left((\operatorname{Nat}.\operatorname{divisors}\left(n\right)), (fun (m:Nat) \mapsto \operatorname{g}\left(m\right))\right)$$
+$$\forall n \in Nat,\; \operatorname{H}\left(n\right) = \operatorname{Finset}.\operatorname{sum}\left((\operatorname{Nat}.\operatorname{divisors}\left(n\right)), (fun (d:Nat) \mapsto \operatorname{g}\left(d\right))\right)$$
 
 *Formalization.* `D5/S3/Factorization/Combinatorics/KarttunenParityDirichletConvolutions.H` (`✓ std3`).
 

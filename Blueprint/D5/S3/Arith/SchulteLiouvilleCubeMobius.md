@@ -116,7 +116,7 @@ The two integer indicators give one at exponent zero and minus one at exponent k
 
 **Theorem 1.10 (Lifted zeta on prime powers).**
 
-$$\forall k \in \mathbb{N},\; (k \ne 0) \implies (\forall p \in \mathbb{N},\; \forall e \in \mathbb{N},\; (\operatorname{Nat}.\operatorname{Prime}\left(p\right)) \implies (\operatorname{liftPow}\left(k, \operatorname{intCast}\left(\operatorname{\zeta}\right)\right)\left(p^{e}\right) = (if (k \mid e) then 1 else 0)))$$
+$$\forall k \in \mathbb{N},\; (k \ne 0) \implies (\forall p \in \mathbb{N},\; \forall e \in \mathbb{N},\; (\operatorname{Nat}.\operatorname{Prime}\left(p\right)) \implies (\operatorname{liftPow}\left(k, \operatorname{ArithmeticFunction}.\operatorname{natCoe}\left(\operatorname{ArithmeticFunction}.\operatorname{zeta}\right)\right)\left(p^{e}\right) = (if (k \mid e) then 1 else 0)))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/SchulteLiouvilleCubeMobius.lift_zeta_prime_pow` (`✓ std3`). ∎
 
