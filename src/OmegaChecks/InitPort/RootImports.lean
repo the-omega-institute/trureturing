@@ -31,6 +31,11 @@ def main (args : List String) : IO Unit := do
         throw <| IO.userError s!"missing structure fields for {name} under import {root}"
       if expected && (official.getProjectionFnInfo? upstream).isSome && (env.getProjectionFnInfo? name).isNone then
         throw <| IO.userError s!"missing projection metadata for {name} under import {root}"
+      if expected then
+        for (label, hasTag) in [("match_pattern", hasMatchPatternAttribute),
+            ("elab_as_elim", Elab.Term.elabAsElim.hasTag), ("auxiliary recursor", isAuxRecursor)] do
+          unless hasTag env name == hasTag official upstream do
+            throw <| IO.userError s!"{label} mismatch for {name} under import {root}"
     if expected && (getStructureInfo? official upstream).isSome then structures := structures + 1
     if expected then exported := exported + 1 else separate := separate + 1
   IO.println s!"OmegaInit and OmegaMath public imports match Init for {exported} root names and {separate} separately imported names"

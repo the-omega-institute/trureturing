@@ -73,6 +73,8 @@ example (a b : Omega.Nat) :
     Omega.Eq ({ fst := a, snd := b } : Omega.Prod Omega.Nat Omega.Nat).fst a := Omega.rfl
 example (p : Omega.Prod Omega.Nat Omega.Nat) (b : Omega.Nat) :
     Omega.Eq ({ p with snd := b }).snd b := Omega.rfl
+example {p : Prop} (d : Omega.Decidable p) : Omega.Eq d d :=
+    Omega.Decidable.falseTrueCases (fun _ => Omega.rfl) (fun _ => Omega.rfl) d
 """)
     subprocess.run([lean, "--run", Path(__file__).with_name("RootImports.lean"),
                     output, basis / "lib", *foundation], cwd=ROOT, check=True)

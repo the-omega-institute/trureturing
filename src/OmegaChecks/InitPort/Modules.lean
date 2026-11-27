@@ -40,6 +40,29 @@ def mergeImports (a b : Array Import) : Array Import := Id.run do
     if !(out.contains i) then out := out.push i
   return out
 
+/-- Copy the elaborator's declaration tags from the same visibility level as the constants. -/
+private def elaboratorEntries (source seed : Environment) (idx : ModuleIdx) (owner : Name)
+    (available : NameSet) (level : OLeanLevel) : IO (Array (Name × Array EnvExtensionEntry)) := do
+  let mut env := (← mkEmptyEnvironment).setMainModule owner
+  let names (original inherited : Array Name) :=
+    NameSet.ofList (inherited ++ (original.map renamed).filter available.contains).toList
+  for attr in #[matchPatternAttr, Elab.Term.elabAsElim] do
+    let inherited := (seed.getModuleIdx? owner).map (fun old => attr.ext.getModuleEntries seed old (level := level))
+    for name in names (attr.ext.getModuleEntries source idx (level := level)) (inherited.getD #[]) do
+      env := attr.ext.addEntry (asyncDecl := name) env name
+  let inherited := (seed.getModuleIdx? owner).map (fun old => auxRecExt.getModuleEntries seed old (level := level))
+  -- Lean recognizes these auxiliary recursors by their root names as well as by tags.
+  let builtin := #[`Eq.ndrec, `Eq.ndrec_symm, `Eq.ndrecOn].filter fun n =>
+    source.getModuleIdxFor? n == some idx && isAuxRecursor source n
+  let aux := auxRecExt.getModuleEntries source idx (level := level) ++ builtin
+  for name in names aux (inherited.getD #[]) do
+    env := markAuxRecursor env name
+  -- The empty encoder has no declarations. The two input entry arrays have already
+  -- been filtered to this level, so export the assembled tags without filtering again.
+  let data ← mkModuleData env .private
+  return data.entries.filter fun e =>
+    #[matchPatternAttr.ext.name, Elab.Term.elabAsElim.ext.name, auxRecExt.name].contains e.1
+
 /-- A structure literal needs its field order, inherited projections and binder information. -/
 private def structureEntries (source port : Environment) (idx : ModuleIdx) (owner : Name)
     (available : NameSet) (level : OLeanLevel) : IO (Array (Name × Array EnvExtensionEntry)) := do
@@ -235,9 +258,12 @@ def main (args : List String) : IO Unit := do
           if let some n := v.globalName? then available := available.insert n
       let instances ← instanceEntries source idx available owner level
       let structures ← structureEntries source monolith idx owner available level
+      let tags ← elaboratorEntries source monolith idx owner available level
       let entries := (previous.entries.filter (fun e =>
         !selected.contains e.1 && e.1 != Meta.instanceExtension.ext.name &&
-        e.1 != structureExt.name && e.1 != projectionFnInfoExt.name)) ++ replacement ++ instances ++ structures
+        e.1 != structureExt.name && e.1 != projectionFnInfoExt.name &&
+        e.1 != matchPatternAttr.ext.name && e.1 != Elab.Term.elabAsElim.ext.name &&
+        e.1 != auxRecExt.name)) ++ replacement ++ instances ++ structures ++ tags
       let data : ModuleData := { previous with entries, isModule := true, imports := mergeImports previous.imports mappedImports, constants := cs, constNames := cs.map (·.name) }
       parts := parts.push (#[path,path.addExtension "server",path.addExtension "private"][i]!,data)
     graph := graph.push (owner.toString, (mergeImports orig[2]!.imports mappedImports).map (·.module.toString))
