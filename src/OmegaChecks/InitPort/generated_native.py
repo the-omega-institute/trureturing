@@ -96,7 +96,7 @@ def check_runtime_ir(stage, library, adapter, consumer):
 
 
 def compile_generated(stage, product, graph, seed_ir, owners=None, *, original_seed=None, before_owner=None,
-                      check_strings=True, check_literals=True):
+                      check_strings=True, check_literals=True, check_mixed=True):
     """Compile generated owners in import order and preserve the native symbols of existing owners."""
     requested = set(graph if owners is None else owners)
     selected = [owner for owner in TopologicalSorter(graph).static_order()
@@ -247,7 +247,7 @@ def compile_generated(stage, product, graph, seed_ir, owners=None, *, original_s
         obj = (stage / "original-native" / Path(*owner.split("."))).with_suffix(".o")
         inputs.append(compile_object((seed_files[owner], obj)))
     extra = []
-    if all(modes.get(owner) == "mixed=" and owner in objects
+    if check_mixed and all(modes.get(owner) == "mixed=" and owner in objects
            for owner in ("OmegaInit.Prelude", "OmegaInit.Control.Basic")):
         mixed = sources / "mixed-consumer.c"
         run("lean", "-R", HERE, "-c", mixed, HERE / "GeneratedMixedConsumer.lean",

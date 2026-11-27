@@ -1,5 +1,7 @@
 module
 import all Lean.Environment
+import OmegaChecks.InitCompiler.StructuralEquations
+meta import OmegaChecks.InitCompiler.StructuralEquations
 import all Lean.OriginalConstKind
 import Lean.Compiler.LCNF.ToDecl
 import Lean.Compiler.LCNF.Main
@@ -58,11 +60,12 @@ private def originalName (n : Name) : Name := Id.run do
   return n.replacePrefix `Omega .anonymous
 
 /-- Use the published strict calling conventions of runtime operands before boxing higher-order calls. -/
-private def missingRuntimeDependency (source : Environment) (n : Name) : CoreM Bool := do
+private def missingRuntimeDependency (source : Environment) (n : Name) (recursive : Name := .anonymous) : CoreM Bool := do
   let some body := (← getEnv).find? n >>= (·.value?) | return false
   let mut missing : NameSet := {}
   let env ← getEnv
   for dep in body.getUsedConstants do
+    if dep == recursive then continue
     -- Constructor applications lower directly using the owning inductive's strict layout.
     if let some (.ctorInfo ctor) := env.find? dep then
       if (monoTypeExt.find? env ctor.induct).isSome then continue
@@ -86,6 +89,31 @@ private def missingRuntimeDependency (source : Environment) (n : Name) : CoreM B
   finally
     before.restore
 
+/-- Reuse the pinned executable recursion only after the kernel identifies every constructor
+equation with the checked total function. The temporary declaration is excluded from the product. -/
+private def compileStructural (source : Environment) (n : Name) : CoreM Unit := do
+  let original := originalName n
+  unless original.getRoot == `List || original.getRoot == `Array do return
+  let recName := Compiler.mkUnsafeRecName original
+  let some (.defnInfo d) := source.find? recName | return
+  unless d.safety == .partial && d.all == [recName] do return
+  let name := InitKernelPort.portName recName
+  let raw := InitKernelPort.translate InitKernelPort.portName d.value
+  let body := raw.replace fun e => if e.isConstOf name then some (.const n e.constLevels!) else none
+  let type := InitKernelPort.translate InitKernelPort.portName d.type
+  unless body.getUsedConstants.all (← getEnv).contains do return
+  for i in [:type.getForallArity] do
+    try
+      Meta.MetaM.run' <| OmegaChecks.InitCompiler.checkConstructorEquations n d.levelParams type body i
+    catch _ => continue
+    let tmp := {d with name, all := [name], type, value := body, safety := .safe}
+    Lean.addDecl (.defnDecl tmp) (forceExpose := true)
+    if ← missingRuntimeDependency source name n then throwError "uncompiled recursive equation dependency of {n}"
+    modifyEnv (noncomputableExt.modifyState · (·.erase n))
+    modifyEnv fun env => privateConstKindsExt.insert env n .defn
+    (← compileDeclsRef.get) #[n] {}
+    return
+
 private def compileOwner (source : Environment) (groups : Array InductiveVal) (words order : Array Name) : CoreM Unit := do
   compileLayoutsInOrder groups
   OmegaChecks.InitPort.WordNative.install words
@@ -99,6 +127,17 @@ private def compileOwner (source : Environment) (groups : Array InductiveVal) (w
       unless (← CompilerM.run (getLocalDeclAt? n .impure)).isSome do before.restore
     catch _ =>
       before.restore
+      try
+        compileStructural source n
+        unless (← CompilerM.run (getLocalDeclAt? n .impure)).isSome do before.restore
+      catch _ =>
+        before.restore
+
+/-- The strict array is a record containing a list. These checked source definitions
+implement its read and update operations on that representation. -/
+private def arrayDefinition (n : Name) : Bool :=
+  [`Array.set, `Array.uget, `Array.uset, `Array.usize, `Array.pop, `Array.replicate,
+   `Array.swap, `Array.swapIfInBounds].contains n
 
 /-- Use ordinary module initialization so closed functions and imported modules are ready before calls. -/
 private def emitOwner (env : Environment) (owner : Name) (imports : Array Import)
@@ -150,7 +189,7 @@ private unsafe def install (source publicSource : Environment) (lib out : System
       if onlyLayouts || oldNative.contains d.name || ci.isUnsafe || ci.isPartial then continue
       let upstream := originalName d.name
       if unaryNat && largeWordSizes.contains upstream then continue
-      if isExtern source upstream || (getImplementedBy? source upstream).isSome then continue
+      if (isExtern source upstream && !arrayDefinition upstream) || (getImplementedBy? source upstream).isSome then continue
       candidates := candidates.push d.name
     | _ => continue
   if onlyLayouts && groups.isEmpty then return
@@ -188,7 +227,12 @@ private unsafe def install (source publicSource : Environment) (lib out : System
     unless words.isEmpty do
       IO.FS.withFile file .append fun h => do
         for n in words do h.putStr (← OmegaChecks.InitPort.WordNative.wrapper source st.env n)
-    writeCode lib owner st.env (layouts ++ codeExtensions ++ #[privateConstKindsExt.name])
+    let computable := NameSet.ofList <| part.constants.toList.filterMap fun ci =>
+      if !ci.isUnsafe && !ci.isPartial && isNoncomputable env ci.name &&
+          (IR.findEnvDecl st.env ci.name).isSome && (getSigCore? st.env impureSigExt ci.name).isSome then
+        some ci.name
+      else none
+    writeCode lib owner st.env (layouts ++ codeExtensions ++ #[privateConstKindsExt.name]) computable
     let fresh ← importModules #[{module := owner}] {} (level := .exported)
     let actual := NameSet.ofList ((impureSigExt.getModuleEntries fresh (fresh.getModuleIdx? owner).get!).map (·.name)).toList
     let originalOwner := owner.replacePrefix `OmegaInit `Init

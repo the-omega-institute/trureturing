@@ -23,8 +23,11 @@ private unsafe def entryName (ext : Name) (entry : EnvExtensionEntry) : Name :=
   else if ext == impureSigExt.name then (unsafeCast entry : Signature .impure).name
   else (unsafeCast entry : Name × Unit).1
 
-private unsafe def merge (old fresh : ModuleData) (selected : Array Name) : IO ModuleData := do
-  let mut entries := old.entries
+private unsafe def merge (old fresh : ModuleData) (selected : Array Name) (computable : NameSet) : IO ModuleData := do
+  let mut entries := old.entries.map fun (ext, values) =>
+    if ext == noncomputableExt.name then
+      (ext, values.filter fun entry => !computable.contains (unsafeCast entry : Name))
+    else (ext, values)
   for (ext, values) in fresh.entries do
     unless selected.contains ext do continue
     let mut replacements : NameMap EnvExtensionEntry := {}
@@ -47,14 +50,14 @@ public def localEnv (env : Environment) (mod : Name) (names : Array Name) : IO E
   return (Environment.ofKernelEnv kenv).setMainModule mod |>.setModulePackage (env.getModulePackageByIdx? idx)
 
 public unsafe def writeCode (lib : System.FilePath) (mod : Name) (compiled : Environment)
-    (selected : Array Name) : IO Unit := do
+    (selected : Array Name) (computable : NameSet := {}) : IO Unit := do
   let path := modToFilePath lib mod "olean"
   let paths := #[path, path.addExtension "server", path.addExtension "private"]
   let levels := #[OLeanLevel.exported, .server, .private]
   let old ← readModuleDataParts paths
   let mut parts := #[]
   for (previous, _) in old, file in paths, level in levels do
-    parts := parts.push (file, ← merge previous (← mkModuleData compiled level) selected)
+    parts := parts.push (file, ← merge previous (← mkModuleData compiled level) selected computable)
   saveModuleDataParts mod parts
   let ir := path.withExtension "ir"
   let sig := ir.addExtension "sig"
@@ -62,7 +65,7 @@ public unsafe def writeCode (lib : System.FilePath) (mod : Name) (compiled : Env
   let news := #[← mkModuleData compiled .exported, Lean.mkIRData compiled]
   let mut irParts := #[]
   for (previous, _) in old, file in #[sig, ir], fresh in news do
-    irParts := irParts.push (file, ← merge previous fresh selected)
+    irParts := irParts.push (file, ← merge previous fresh selected computable)
   saveModuleDataParts (mod ++ `ir) irParts
 
 public def compile (env : Environment) (work : CoreM Unit) : IO Environment := do

@@ -274,8 +274,11 @@ def generate(stage, product, seed, roots, excluded, original_seed):
         "Init.Data.String.Basic": {"String.toList", "String.data", "String.decidableLT", "ByteArray.validateUTF8",
                                    *(f"String.Pos.Raw.{n}" for n in ("get", "next", "prev", "atEnd", "isValid"))},
     }
+    mixed_interfaces = {"Init.Prelude": {"Lean.Macro.instMonadQuotationMacroM", "Lean.Syntax",
+                                          "Lean.Syntax.getNumArgs", "Lean.defaultMaxRecDepth"}}
     control_objects = compile_generated(stage, product, graph, original_seed.parents[1] / "ir",
                                         original_seed=original_seed, before_owner={"OmegaInit.ShareCommon": install_sharing},
+                                        check_mixed=has_interfaces(inventory, mixed_interfaces),
                                         check_strings=has_interfaces(inventory, string_interfaces),
                                         check_literals=has_interfaces(inventory, {"Init.Prelude": {"String.ofList", "Char.ofNat"}}))
     sharing_interfaces = {"Init.ShareCommon": {"ShareCommon.StateFactory.mk", "ShareCommon.State.mk", "ShareCommon.State.shareCommon", "ShareCommonM.run"}}
