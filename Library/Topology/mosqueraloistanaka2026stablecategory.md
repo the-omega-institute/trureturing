@@ -27,6 +27,9 @@ strata_touched:
   - D5/S3/Topology/GraphSubdivisionIntervals
   - D5/S3/Topology/GraphSubdivisionHalves
   - D5/S3/Topology/GraphSubdivisionNullhomotopy
+  - D5/S3/Topology/RankedCofaceContiguity
+  - D5/S3/Topology/CofaceComparisonObstruction
+  - D5/S3/Topology/CofaceTriangleCollapse
 license: citation-only
 triage: anchor
 ---
@@ -961,3 +964,28 @@ base to its root image. The classical edge-path description of the
 fundamental group gives finite move witnesses for this choice.
 The Lean theorem takes those witnesses as hypotheses. This is the
 fixed-target step for the three-dimensional approach to Question 6.3.
+
+## Coface comparisons in the four-dimensional approach
+
+The triangle-cone construction seeks a map from a region of the ordinary
+collar into one further subdivision of its triangle parameter. The
+ordinary retraction is an order map. If a chain-preserving comparison
+map lies pointwise above it, updating in descending face rank yields
+a contiguity chain fixed wherever the maps agree. The comparison
+allows the new map to reverse a comparable pair of source vertices.
+
+A failed coface extension in a complex with face sizes at most three
+has a witness of at most three prescribed comparisons when starting at
+a vertex. A prescribed coface incomparable with the partial choice
+forces every solution to contain their union. Each feasible such union
+adds a vertex.
+
+When the vertex labels have at most three vertices, contain their
+respective vertices, and form an inclusion chain on every source face,
+the source retracts by one contiguity step onto a full graph subcomplex.
+An inclusion-maximal label on each triangle equals the triangle. Its
+vertex has every incident face inside that triangle, so simultaneous
+replacement of one such vertex per triangle gives the retraction.
+Vertices whose labels have at most two elements stay fixed. The
+whole-cone partition needed for the four-dimensional bound remains
+open. [Question 6.3](https://arxiv.org/html/2609.39615v1#S6)
