@@ -1,4 +1,7 @@
 domains:
+  AdjacencyProduct:
+    stratum: S3
+    definition: Products of adjacency matrices of simple graphs, including factorability and structural constraints on the factors.
   Aliabadi:
     stratum: S3
     definition: Cyclic subgroup constructions and right-quotient realizations in finite groups.
