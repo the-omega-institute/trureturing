@@ -65,6 +65,10 @@ private def modelOperation (name : Name) : Bool :=
      `ofInt8, `ofInt16, `ofInt32, `ofInt64, `ofISize, `toUInt8, `toUInt16, `toUInt32, `toUInt64,
      `toUSize, `toInt8, `toInt16, `toInt32, `toInt64, `toISize, `ofScientific].contains (name.updatePrefix .anonymous)
 
+private def defsStringFunction (n : Name) : Bool :=
+  [`String.intercalate, `String.Internal.intercalateImpl, `String.pushn, `String.Internal.pushnImpl,
+   `String.Slice.getUTF8Byte, `String.Slice.getUTF8Byte!, `String.Slice.Pos.byte].contains n
+
 public def usesPinnedFunction (n : Name) : Bool :=
   let method := n.updatePrefix .anonymous
   let trailing := n == `Int.trailingZeros || n == `Int.trailingZeros.aux
@@ -72,7 +76,7 @@ public def usesPinnedFunction (n : Name) : Bool :=
   let vector := n.getPrefix == `BitVec &&
     [`abs, `pow, `smod, `replicate, `reverse, `cpop, `cpopNatRec, `ctz, `clz, `clzAuxRec,
      `getLsbD, `getLsb, `getMsbD, `getMsb, `msb, `sdiv, `srem, `smtSDiv, `hash, `ofBoolListLE, `ofBoolListBE].contains method
-  trailing || modelOperation n || ByteFoldNative.supported n || IndexedNative.supported n || SyntaxPositionNative.supported n || bytes || vector || [`Nat.repr, `Nat.reprFast, `Int.repr].contains n || [`BitVec.toHex, `BitVec.instToString].contains n || n == `Nat.bitwise || ((word? n.getPrefix).isSome && (method == `pow || (method == `ofInt && bitsType n.getPrefix == n.getPrefix))) ||
+  trailing || defsStringFunction n || modelOperation n || ByteFoldNative.supported n || IndexedNative.supported n || SyntaxPositionNative.supported n || bytes || vector || [`Nat.repr, `Nat.reprFast, `Int.repr].contains n || [`BitVec.toHex, `BitVec.instToString].contains n || n == `Nat.bitwise || ((word? n.getPrefix).isSome && (method == `pow || (method == `ofInt && bitsType n.getPrefix == n.getPrefix))) ||
     (n.getPrefix == `Int && [`negOfNat, `subNatNat, `sign, `toNat, `pow, `fdiv, `fmod, `bdiv, `bmod].contains method)
 
 private def bootstrapStringOp (n : Name) : Bool :=
@@ -82,6 +86,11 @@ private def bootstrapStringOp (n : Name) : Bool :=
     (n.getPrefix == `Substring.Raw.Internal && [`toString, `drop, `front, `takeWhile, `extract, `all, `beq,
       `isEmpty, `get, `prev].contains (n.updatePrefix .anonymous)) ||
     [`String.Pos.Raw.Internal.min, `String.Pos.Raw.Internal.sub].contains n
+
+private def basicStringExtern (n : Name) : Bool :=
+  ([`String.Pos.Raw, `String].contains n.getPrefix &&
+    [`get?, `get!, `get', `next', `extract].contains (n.updatePrefix .anonymous)) ||
+    [`String.decodeChar, `String.Pos.next].contains n
 
 /-- The bootstrap externs implemented in Lean are exported by the pinned string library. -/
 public def usesStringExport (n : Name) : Bool :=
@@ -109,7 +118,8 @@ public def supported (source : Environment) (owner name : Name) : Bool :=
   let modular := (owner == `OmegaInit.Data.Nat.Gcd && name == `Nat.gcd) ||
     (owner == `OmegaInit.Data.Nat.Div.Basic && name == `Nat.divExact) ||
     (owner == `OmegaInit.Data.Nat.PowMod && name == `Nat.powMod)
-  let stringOp := owner == `OmegaInit.Data.String.Bootstrap && bootstrapStringOp name
+  let stringOp := (owner == `OmegaInit.Data.String.Bootstrap && bootstrapStringOp name) ||
+    (owner == `OmegaInit.Data.String.Basic && basicStringExtern name)
   let textCompare := (owner == `OmegaInit.Data.String.PosRaw && [`String.getUTF8Byte, `String.getUtf8Byte].contains name) ||
     (owner == `OmegaInit.Data.Ord.String && name == `String.compare) ||
     (owner == `OmegaInit.Data.String.Slice && [`String.Slice.hash, `String.Slice.instDecidableLt].contains name) ||
@@ -118,7 +128,7 @@ public def supported (source : Environment) (owner name : Name) : Bool :=
     [`neg, `add, `sub, `mul, `decEq, `decLe, `decLt, `decNonneg, `natAbs, `ediv, `emod, `tdiv, `tmod, `divExact].contains method
   let primitive := ((word? name.getPrefix).isSome && name.getPrefix != `Char && (ops ++ widths).contains method) ||
     (name.getPrefix == `Bool && widths.contains method)
-  isFloatCall source owner name ||
+  (owner == `OmegaInit.Data.String.Defs && defsStringFunction name) || isFloatCall source owner name ||
     (owner == `OmegaInit.Data.ByteArray.Basic && ByteFoldNative.supported name) ||
     ([`OmegaInit.Grind.Ring.CommSolver, `OmegaInit.Data.Nat.Basic, `OmegaInit.Data.Nat.Div.Basic, `OmegaInit.Data.Nat.Lemmas,
     `OmegaInit.Data.RArray, `OmegaInit.Data.Nat.Internal.Linear, `OmegaInit.Data.Nat.Fold, `OmegaInit.Data.Fin.Lemmas].contains owner && IndexedNative.supported name) ||
@@ -164,7 +174,7 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
   if IndexedNative.supported official then return ← IndexedNative.wrapper source strict n (symbol n)
   if SyntaxPositionNative.supported official then return ← SyntaxPositionNative.wrapper source strict n (symbol n)
   let some ci := source.find? official | throw <| IO.userError s!"unknown word primitive {official}"
-  if bootstrapStringOp official then
+  if bootstrapStringOp official || basicStringExtern official || defsStringFunction official then
     let some strictInfo := strict.find? n | throw <| IO.userError s!"missing strict string operation {n}"
     unless strictInfo.type == InitKernelPort.translate InitKernelPort.portName ci.type do
       throw <| IO.userError s!"strict string input type differs at {n}"
@@ -187,9 +197,14 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
   let target ← match impl with
     | .extern _ _ _ ⟨[.standard `all entry]⟩ => pure entry
     | .fdecl .. =>
-      unless usesPinnedFunction official && (getExportNameFor? source compiled).isNone do
+      unless usesPinnedFunction official do
         throw <| IO.userError s!"unexpected compiled word function {official}"
-      pure (getSymbolStem source compiled)
+      if let some exported := getExportNameFor? source compiled then
+        unless ([ (`String.Internal.pushnImpl, `lean_string_pushn),
+                  (`String.Internal.intercalateImpl, `lean_string_intercalate) ] : List (Name × Name)).contains (official, exported) do
+          throw <| IO.userError s!"unexpected exported symbol {exported} for {official}"
+        pure exported.toString
+      else pure (getSymbolStem source compiled)
     | _ => throw <| IO.userError s!"expected pinned C primitive for {official}"
   let some (.extern _ actual result ⟨[.standard `all adapter]⟩) := IR.findEnvDecl strict n
     | throw <| IO.userError s!"missing strict C primitive for {n}"
@@ -201,11 +216,12 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
   let mut cleanup := ""
   let mut hasString := false
   let mut hasName := false
+  let passesErased := defsStringFunction official || official == `Int.trailingZeros.aux
   for (a, b) in params.zip actual, i in [:params.size] do
     let .forallE _ dom body _ := type | throw <| IO.userError s!"expected argument {i} of {n}"
     type := body
     if a.ty == .erased && b.ty == .erased then
-      if official == `Int.trailingZeros.aux then args := args.push "lean_box(0)"
+      if passesErased then args := args.push "lean_box(0)"
       continue
     let arg := "a" ++ toString i
     if bootstrapStringOp official && dom.isForall then
@@ -224,7 +240,7 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
       prepare := prepare ++ s!"  lean_object *cb{i} = lean_alloc_closure((void *){f}, {if fold then 3 else 2}, 1);\n  lean_closure_set(cb{i}, 0, {arg});\n"
       args := args.push s!"cb{i}"
       continue
-    if official == `String.Internal.intercalate && dom == mkApp (mkConst `List [.zero]) (mkConst `String) then
+    if [`String.Internal.intercalate, `String.intercalate, `String.Internal.intercalateImpl].contains official && dom == mkApp (mkConst `List [.zero]) (mkConst `String) then
       unless a.ty == .tobject && b.ty == .tobject && !a.borrow do throw <| IO.userError "invalid list of strings ABI"
       IndexedNative.checkDataTypes source strict [`List]
       decls := decls.push ((if b.borrow then "b_lean_obj_arg " else "lean_obj_arg ") ++ arg)
@@ -297,15 +313,17 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
       args := args.push arg
       if b.borrow && !a.borrow then prepare := prepare ++ s!"  lean_inc({arg});\n"
       if a.borrow && !b.borrow then cleanup := cleanup ++ s!"  lean_dec({arg});\n"
-    else if [`Nat, `Fin, `BitVec, `String.Pos.Raw].contains dom && a.ty == .tobject && b.ty == .tobject then
-      if dom == `String.Pos.Raw then
-        let some (some field) := impureTrivialStructureInfoExt.find? strict (`Omega ++ dom) | throw <| IO.userError "missing raw position"
-        unless field.fieldIdx == 0 do throw <| IO.userError "invalid raw position layout"
+    else if [`Nat, `Fin, `BitVec, `String.Pos.Raw, `String.Pos, `String.Slice.Pos].contains dom && a.ty == .tobject && b.ty == .tobject then
+      if [`String.Pos.Raw, `String.Pos, `String.Slice.Pos].contains dom then
+        for (env, pos) in [(source, dom), (strict, `Omega ++ dom)] do
+          let some (some field) := impureTrivialStructureInfoExt.find? env pos | throw <| IO.userError s!"missing position {pos}"
+          unless field.fieldIdx == 0 do throw <| IO.userError s!"invalid offset field in {pos}"
       else if dom != `Nat then layout strict dom
       decls := decls.push ((if b.borrow then "b_lean_obj_arg " else "lean_obj_arg ") ++ arg)
       args := args.push arg
-      if b.borrow && !a.borrow then prepare := prepare ++ s!"  lean_inc({arg});\n"
-      if a.borrow && !b.borrow then cleanup := cleanup ++ s!"  lean_dec({arg});\n"
+      let borrowed := a.borrow || target == "lean_string_get_byte_fast"
+      if b.borrow && !borrowed then prepare := prepare ++ s!"  lean_inc({arg});\n"
+      if borrowed && !b.borrow then cleanup := cleanup ++ s!"  lean_dec({arg});\n"
     else if dom == `Lean.Name && a.ty == .tobject && b.ty == .tobject && a.borrow then
       checkStrictString strict
       unless getExportNameFor? source `Lean.Name.mkStr == some `lean_name_mk_string &&
@@ -339,14 +357,6 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
       prepare := prepare ++ s!"  lean_object *slice{i} = omega_slice_to_lean({arg});\n"
       args := args.push s!"slice{i}"
       cleanup := cleanup ++ s!"  lean_dec(slice{i});\n"
-      unless b.borrow do cleanup := cleanup ++ s!"  lean_dec({arg});\n"
-    else if dom == `String.Pos.Raw && a.ty == .tobject && b.ty == .tobject &&
-        (a.borrow || target == "lean_string_get_byte_fast") then
-      for (env, pos) in [(source, `String.Pos.Raw), (strict, `Omega.String.Pos.Raw)] do
-        let some (some f) := impureTrivialStructureInfoExt.find? env pos | throw <| IO.userError s!"missing position {pos}"
-        unless f.fieldIdx == 0 do throw <| IO.userError s!"invalid offset field in {pos}"
-      decls := decls.push ((if b.borrow then "b_lean_obj_arg " else "lean_obj_arg ") ++ arg)
-      args := args.push arg
       unless b.borrow do cleanup := cleanup ++ s!"  lean_dec({arg});\n"
     else if [`String, `ByteArray].contains dom && a.ty == .object && b.ty == .tobject then
       checkStrictString strict
@@ -449,6 +459,14 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
   else if dom == `List && official == `ByteArray.toList.loop && ret == .tobject && result == .tobject then do
     checkStrictString strict
     pure ("lean_obj_res", call)
+  else if [`String.get?, `String.Pos.Raw.get?].contains official then do
+    unless type == mkApp (mkConst `Option [.zero]) (mkConst `Char) && ret == .tobject && result == .tobject do
+      throw <| IO.userError s!"incorrect optional character ABI at {n}"
+    layout strict `Char
+    IndexedNative.checkDataTypes source strict [`Option]
+    hasString := true
+    prepare := prepare ++ s!"  lean_object *optional = {call};\n"
+    pure ("lean_obj_res", "omega_optional_char_from_lean(optional)")
   else if dom == `Option && [`ByteArray.findIdx?.loop, `ByteArray.findFinIdx?.loop].contains official &&
       ret == .tobject && result == .tobject then do
     layout strict `Fin
@@ -462,7 +480,7 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
   else if dom == `BitVec && ret == .tobject && result == .tobject then do
     layout strict dom
     pure ("lean_obj_res", call)
-  else if dom == `String.Pos.Raw && ret == .tobject && result == .tobject then do
+  else if [`String.Pos.Raw, `String.Pos].contains dom && (ret == .tobject || ret == .tagged) && result == .tobject then do
     let some (some field) := impureTrivialStructureInfoExt.find? strict (`Omega ++ dom) | throw <| IO.userError "missing raw position"
     unless field.fieldIdx == 0 do throw <| IO.userError "invalid raw position layout"
     pure ("lean_obj_res", call)
@@ -479,10 +497,9 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
       | .uint32 => pure "uint32_t"
       | .uint64 => pure "uint64_t"
       | .usize => pure "size_t"
-      | .object | .tobject | .tagged => pure "lean_object *"
+      | .object | .tobject | .tagged | .erased => pure "lean_object *"
       | _ => throw <| IO.userError s!"unexpected C type at {official}: {t}"
-    let inputs ← (params.filter (fun p => p.ty != .erased || official == `Int.trailingZeros.aux)).mapM fun p =>
-      if p.ty == .erased then pure "lean_object *" else ctype p.ty
+    let inputs ← (params.filter fun p => p.ty != .erased || passesErased).mapM fun p => ctype p.ty
     pure s!"\nextern {← ctype ret} {target}({String.intercalate ", " inputs.toList});\n"
   else if (float? official.getPrefix).isSome || (float? dom).isSome then do
     let header := "\n#include \"float_bits.h\"\n"
@@ -495,6 +512,12 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
       `System.Platform.getIsEmscripten, `System.Platform.Internal.getHardwareConcurrency].contains official then
     let t := if ret == .uint8 then "uint8_t" else "uint32_t"
     pure s!"\nextern {t} {target}(lean_obj_arg);\n"
+  else if target == "lean_string_utf8_get_opt" then
+    pure "\nextern lean_obj_res lean_string_utf8_get_opt(b_lean_obj_arg, b_lean_obj_arg);\n"
+  else if target == "lean_string_utf8_get_bang" then
+    pure "\nextern uint32_t lean_string_utf8_get_bang(b_lean_obj_arg, b_lean_obj_arg);\n"
+  else if target == "lean_string_utf8_extract_fast" then
+    pure "\nextern lean_obj_res lean_string_utf8_extract_fast(b_lean_obj_arg, b_lean_obj_arg, b_lean_obj_arg);\n"
   else if official == `ByteArray.copySlice then
     pure "\nextern lean_obj_res lean_byte_array_copy_slice(b_lean_obj_arg, lean_obj_arg, lean_obj_arg, lean_obj_arg, lean_obj_arg, uint8_t);\n"
   else if official == `System.Platform.getNumBits then

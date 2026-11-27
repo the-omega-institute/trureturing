@@ -47,6 +47,15 @@ static lean_obj_res omega_convert_substring(b_lean_obj_arg slice, lean_obj_res (
     return result;
 }
 
+static lean_obj_res omega_optional_char_from_lean(lean_obj_arg value) {
+    if (lean_is_scalar(value)) return value;
+    uint32_t scalar = lean_unbox_uint32(lean_ctor_get(value, 0));
+    lean_dec(value);
+    lean_object *result = lean_alloc_ctor(1, 1, 0);
+    lean_ctor_set(result, 0, lean_uint32_to_nat(scalar));
+    return result;
+}
+
 static lean_obj_res omega_string_list_to_lean(b_lean_obj_arg strings) {
     lean_object *head = lean_box(0), *last = NULL;
     while (!lean_is_scalar(strings)) {
