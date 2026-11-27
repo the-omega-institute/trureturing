@@ -91,8 +91,7 @@ def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, 0, 0, 0, 0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["arg", "body", "arg", "body", "arg", "body", "arg", "body",
-        "body", "body", "fn", "arg", "arg"]
+      path := #["arg", "body", "arg", "body", "arg", "body", "arg", "body", "fn", "arg", "arg"]
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["fn", "arg"]
