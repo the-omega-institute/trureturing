@@ -8,7 +8,7 @@ internal sealed class A007562Document : IScribeDocumentDefinition
 {
     private const string Owner = "D5/S3/Combinatorics/UnorderedTrees/A007562.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Combinatorics/wiseman2025a007562");
+        LibraryNoteRef.Create("D5/L/RecurrenceAlgebraic/wiseman2025a007562");
 
     private static readonly Formula Nat = Seq(Mathbb, Grp(F.Id("N")));
     private static readonly Formula V = F.Id("V");
