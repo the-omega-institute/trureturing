@@ -1,0 +1,1 @@
+{"statement_id":"sha256:6b2fe9b4d03d45a8a76d112b46eeb05b211d7ba74ef51c0e4e60b24836ed22af","declarations":[{"declaration_name_key":"ns(ns(n0,10:IsAICLocal),19:multivariate_hensel)","kind":"theorem","libraries":["Aesop","Batteries","Init","Lean","Mathlib","Std"],"axioms":["Classical.choice","Quot.sound","propext"]}]}
