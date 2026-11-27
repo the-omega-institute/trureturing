@@ -177,6 +177,8 @@ private def checkElaboration (env full : Environment) (reference? : Option Envir
       | `Omega.IO.Promise.new => pure (`OmegaInit.System.Promise, "omega_io_promise_new")
       | `Omega.IO.Promise.resolve => pure (`OmegaInit.System.Promise, "omega_io_promise_resolve")
       | `Omega.IO.Promise.isResolved => pure (`OmegaInit.System.Promise, "omega_io_promise_is_resolved")
+      | `Omega.panicCore => pure (`OmegaInit.Prelude, "omega_panic_core")
+      | `Omega.Array.get!Internal => pure (`OmegaInit.Prelude, "omega_array_get_bang")
       | `Omega.Char.ofNat => pure (`OmegaInit.Prelude, "omega_char_of_nat")
       | `Omega.String.toByteArray => pure (`OmegaInit.Prelude, "omega_string_to_bytes")
       | `Omega.String.decEq => pure (`OmegaInit.Prelude, "omega_string_dec_eq")

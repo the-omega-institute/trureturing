@@ -52,3 +52,26 @@ LEAN_EXPORT lean_obj_res omega_string_hash(b_lean_obj_arg bytes) {
     lean_dec(native);
     return omega_nat_from_uint64(hash);
 }
+
+LEAN_EXPORT lean_obj_res omega_panic_core(b_lean_obj_arg fallback, lean_obj_arg message) {
+    lean_object *native = omega_string_to_lean(message);
+    lean_dec(message);
+    return lean_panic_fn_borrowed(fallback, native);
+}
+
+LEAN_EXPORT lean_obj_res omega_array_get_bang(b_lean_obj_arg fallback, b_lean_obj_arg xs, b_lean_obj_arg index) {
+    if (lean_is_scalar(index)) {
+        size_t remaining = lean_unbox(index);
+        while (!lean_is_scalar(xs)) {
+            if (remaining == 0) {
+                lean_object *result = lean_ctor_get(xs, 0);
+                lean_inc(result);
+                return result;
+            }
+            --remaining;
+            xs = lean_ctor_get(xs, 1);
+        }
+    }
+    lean_inc(fallback);
+    return lean_array_get_panic(fallback);
+}

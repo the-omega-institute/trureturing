@@ -48,6 +48,8 @@ public unsafe def main (args : List String) : IO Unit := do
   unless owner == `OmegaInit.Prelude || owner == `OmegaInit.Data.String.Basic || !extra.isEmpty do
     throw <| IO.userError s!"unsupported string owner {owner}"
   let official ← importModules #[{module := owner.replacePrefix `OmegaInit `Init, importAll := true}] {}
+  verify official `panicCore #[(.erased, false), (.tobject, true), (.object, false)] .tobject "lean_panic_fn_borrowed"
+  verify official `Array.get!Internal #[(.erased, false), (.tobject, true), (.object, true), (.tobject, true)] .tobject "lean_array_get"
   verify official `String.ofList #[(.tobject, false)] .object "lean_string_mk"
   let some (.fdecl _ #[arg] .uint32 _ _) := IR.findEnvDecl official `Char.ofNat
     | throw <| IO.userError "missing pinned Char.ofNat"
@@ -70,7 +72,8 @@ public unsafe def main (args : List String) : IO Unit := do
   let mut env ← read
   let names := if !extra.isEmpty then extra.map fun op => (`Omega ++ op.name, op.symbol)
   else if owner == `OmegaInit.Prelude then
-    [(`Omega.String.ofList, "omega_string_of_list"), (`Omega.Char.ofNat, "omega_char_of_nat"),
+    [(`Omega.panicCore, "omega_panic_core"), (`Omega.Array.get!Internal, "omega_array_get_bang"),
+     (`Omega.String.ofList, "omega_string_of_list"), (`Omega.Char.ofNat, "omega_char_of_nat"),
      (`Omega.String.utf8ByteSize, "omega_string_byte_size"), (`Omega.String.toByteArray, "omega_string_to_bytes"),
      (`Omega.String.decEq, "omega_string_dec_eq"), (`Omega.String.hash, "omega_string_hash")]
   else [(`Omega.String.toList, "omega_string_to_list"), (`Omega.String.data, "omega_string_data"),
@@ -79,7 +82,7 @@ public unsafe def main (args : List String) : IO Unit := do
   let names := names.filter fun (n, _) => (env.find? n).any (· matches .defnInfo _ | .opaqueInfo _) &&
     (getSigCore? env impureSigExt n).isNone
   if names.isEmpty then return
-  for n in [`Nat, `Omega.List, `Omega.Fin, `Omega.BitVec, `Omega.UInt8, `Omega.UInt32, `Omega.UInt64, `Decidable, `Bool, `Omega.String.Pos.Raw,
+  for n in [`Nat, `Omega.Inhabited, `Omega.List, `Omega.Fin, `Omega.BitVec, `Omega.UInt8, `Omega.UInt32, `Omega.UInt64, `Decidable, `Bool, `Omega.String.Pos.Raw,
             `Omega.Char, `Omega.Array, `Omega.ByteArray, `Omega.String] do
     if !env.contains n then continue
     unless (monoTypeExt.find? env n).isSome do
@@ -88,6 +91,8 @@ public unsafe def main (args : List String) : IO Unit := do
       env ← read
   if env.contains `Omega.String then checkStrictString env else checkNativeNat env
   for n in [`Decidable, `Omega.String.Pos.Raw, `Omega.Fin, `Omega.BitVec, `Omega.UInt8, `Omega.UInt32, `Omega.UInt64, `Omega.Char,
+  checkNativeNat env
+  for n in [`Omega.Inhabited, `Decidable, `Omega.String.Pos.Raw, `Omega.Fin, `Omega.BitVec, `Omega.UInt8, `Omega.UInt32, `Omega.UInt64, `Omega.Char,
             `Omega.Array, `Omega.ByteArray, `Omega.String] do
     if !env.contains n then continue
     let some (some field) := impureTrivialStructureInfoExt.find? env n
@@ -112,6 +117,10 @@ public unsafe def main (args : List String) : IO Unit := do
   for (n, symbol) in names do
     if let some op := extra.find? (fun op => n == `Omega ++ op.name) then
       verify compiled n (op.args.map fun (_, borrow) => (.tobject, borrow)) .tobject symbol
+    else if n == `Omega.panicCore then
+      verify compiled n #[(.erased, false), (.tobject, true), (.tobject, false)] .tobject symbol
+    else if n == `Omega.Array.get!Internal then
+      verify compiled n #[(.erased, false), (.tobject, true), (.tobject, true), (.tobject, true)] .tobject symbol
     else if let some (_, _, _, _, strictResult) := positionOps.find? (fun (name, _, _, _, _) => n == `Omega ++ name) then
       verify compiled n #[(.tobject, true), (.tobject, true)] strictResult symbol
     else if n == `Omega.ByteArray.validateUTF8 then
