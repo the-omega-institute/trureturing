@@ -11,8 +11,8 @@ GENERATOR = Path(__file__).with_name("InitPort") / "Hosted.lean"
 PARTS = (".olean", ".olean.server", ".olean.private", ".ir", ".ir.sig", ".ilean")
 
 
-def foundation_files(source):
-    paths = [*source.glob("OmegaInit.*"), *(source / "OmegaInit").rglob("*")]
+def foundation_files(source, module="OmegaInit"):
+    paths = [*source.glob(module + ".*"), *(source / module).rglob("*")]
     return sorted(path for path in paths if path.is_file() and path.name.endswith(PARTS))
 
 

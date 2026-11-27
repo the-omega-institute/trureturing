@@ -12,7 +12,7 @@ import tempfile
 import portable
 import scope as affected_scope
 from portable import BASIS, closure, import_graph, root
-from strict_lake import BUILD, COMMON_SRC, lake_layout, strict_config, isolated_config
+from strict_lake import BUILD, COMMON_SRC, build_profiles, lake_layout, strict_config, isolated_config
 
 ROOT = Path(__file__).resolve().parents[2]
 LIB = ROOT / BUILD / "lib/lean"
@@ -34,7 +34,10 @@ def run(*args):
 
 
 def build(targets):
-    run("lake", "-f", isolated_config(), "build", *("+" + target for target in targets))
+    selections = {"+" + name: {name} for name in targets}
+    result = build_profiles(library_graph(), selections)
+    if result:
+        raise subprocess.CalledProcessError(result, ["lake", "build", *selections])
 
 
 def strict_import_graph(lean, targets=()):
