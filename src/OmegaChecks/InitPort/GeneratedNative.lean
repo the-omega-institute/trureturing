@@ -236,7 +236,8 @@ private def compileOwner (source : Environment) (groups : Array InductiveVal) (w
       let name := Compiler.mkUnsafeRecName n
       compileEquation source n {d with name, all := [name], value, safety := .safe}
       continue
-    if n == `Omega.Lean.Grind.CommRing.Poly.combineC || n == `Omega.Lean.Grind.CommRing.Poly.denote'.go then
+    if [`Omega.Lean.Grind.CommRing.Poly.combineC, `Omega.Lean.Grind.CommRing.Poly.denote'.go,
+        `Omega.Lean.Grind.Linarith.Poly.combine, `Omega.Lean.Grind.Linarith.Poly.denote'.go].contains n then
       let before ← Core.saveState
       try
         compileFix source strict n (n ++ `eq_def)
