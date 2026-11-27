@@ -486,7 +486,8 @@ partial def visit (n : Name) : M Bool := do
       |>.instantiateLevelParams [`u] (ci.levelParams.map Level.param)
     for dep in usedConstants ci.type ++ usedConstants body do
       unless ← visit dep do return ← record n (.blocked "unavailable type name dependency" (some dep))
-    let info : DefinitionVal := {ci.toConstantVal with value := body, hints := .regular 0, safety := .safe, all := [n]}
+    let safety := if OmegaChecks.InitPort.TypeName.unsafeConversion n then DefinitionSafety.unsafe else .safe
+    let info : DefinitionVal := {ci.toConstantVal with value := body, hints := .regular 0, safety, all := [n]}
     let .ok decl := translateDecl (.defnInfo info) ci.type body | return ← record n (.blocked "invalid type name model")
     let .ok env ← checkWithRetry (← get).env decl c.maxHeartbeats
       | return ← record n (.blocked "kernel rejected type name model")

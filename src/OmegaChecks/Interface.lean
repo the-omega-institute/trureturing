@@ -225,7 +225,8 @@ private def compare (reference : Environment) (rename : Name → Name) (src dst 
       if let some api := (OmegaChecks.InitPort.LogicalHandle.implementation? y.name).filter (fun _ => x.safety == .safe) then
         OmegaChecks.InitPort.LogicalHandle.checkImplementation api reference y (liftTerm x.value)
         return deps ++ x.value.getUsedConstants
-      if x.safety == .safe && y.safety == .unsafe && (y.name == `TypeName.mk || y.name == OmegaChecks.InitPort.TypeName.reader) then
+      if OmegaChecks.InitPort.TypeName.isUnsafeConversion (.defnInfo x) true &&
+          OmegaChecks.InitPort.TypeName.isUnsafeConversion (.defnInfo y) false then
         OmegaChecks.InitPort.TypeName.check strict publicStrict reference y.name (liftTerm x.value)
         return deps ++ x.value.getUsedConstants
     if let some (strict, _) := foundation then

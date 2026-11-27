@@ -4,6 +4,7 @@ import all Init.Dynamic
 import all Lean.Environment
 import all Lean.OriginalConstKind
 import Lean.Compiler.IR.CompilerM
+import OmegaChecks.InitPort.Translation
 
 open Lean
 
@@ -32,6 +33,37 @@ private theorem roundTrip (α : Type u) (n : Name) : decode α (make α n) = n :
   inverseCast (package α).2 n
 
 public def reader := mkPrivateNameCore `Init.Dynamic `TypeName.typeNameImpl
+
+/-- Both conversions are unsafe in the pinned interface. In particular only trusted code
+may assert which declaration name represents an arbitrary type. -/
+public def unsafeConversion (name : Name) := name == `TypeName.mk || name == reader
+
+public def isUnsafeConversion (ci : ConstantInfo) (strict : Bool) : Bool := Id.run do
+  let rename := if strict then InitKernelPort.portName else id
+  let .defnInfo d := ci | return false
+  let [u] := d.levelParams | return false
+  let mk := d.name == rename `TypeName.mk
+  unless (mk || d.name == rename reader) && d.safety == .unsafe && d.all == [d.name] do return false
+  let tag := mkApp (mkConst (rename `TypeName) [.param u]) (.bvar 0)
+  let name := mkConst (rename `Lean.Name)
+  let expected := Expr.forallE `α (.sort (.succ (.param u)))
+    (if mk then .forallE `typeName name (tag.liftLooseBVars 0 1) .default
+     else .forallE `inst tag name .instImplicit) .default
+  return d.type.eqv expected
+
+/-- Replay the total logical terms separately before installing the official unsafe flags. -/
+public def replay (base : Kernel.Environment) (constants : Std.HashMap Name ConstantInfo) : IO Kernel.Environment := do
+  let mut installed := base
+  for n in [`TypeName.mk, reader] do
+    let some ci := constants[InitKernelPort.portName n]? | continue
+    unless isUnsafeConversion ci true do throw <| IO.userError s!"incorrect type name conversion {n}"
+    let .defnInfo d := ci | throw <| IO.userError s!"missing type name definition {n}"
+    unless (installed.addDeclCore 0 1000 (.defnDecl {d with safety := .safe}) none).isOk do
+      throw <| IO.userError s!"invalid logical type name conversion {n}"
+    let .ok next := installed.addDeclCore 0 1000 (.defnDecl d) none
+      | throw <| IO.userError s!"invalid unsafe type name interface {n}"
+    installed := next
+  return installed
 
 private def replaceModel (n : Name) : Name :=
   if n == ``family then `TypeNameData
@@ -96,7 +128,6 @@ private def copyStage (source env : Environment) (ext : Compiler.LCNF.DeclExt .p
   return ext.addEntry env { d with
     name := rename n
     type := type d.type
-    safe := true
     params := d.params.map (fun p => {p with type := type p.type})
     value }
 
@@ -117,7 +148,7 @@ public def nativeEntries (source monolith : Environment) (owner : Name) (rename 
     let target := rename n
     env := Lean.privateConstKindsExt.insert env target .defn
     env := Compiler.LCNF.setDeclPublic env target
-    env := Compiler.LCNF.impureSigExt.addEntry env {sig with name := target, safe := true}
+    env := Compiler.LCNF.impureSigExt.addEntry env {sig with name := target}
     env ← copyStage source env Compiler.LCNF.baseExt n rename
     env ← copyStage source env Compiler.LCNF.monoExt n rename
     env := IR.declMapExt.addEntry env (.fdecl target args ty body info)
@@ -159,7 +190,8 @@ public def check (strict publicStrict env : Environment) (n : Name) (candidate :
     throw <| IO.userError "type name carrier is exposed"
   let strictReader := mkPrivateNameCore `OmegaInit.Dynamic `Omega.TypeName.typeNameImpl
   if n == `TypeName.mk then
-    unless getOriginalConstKind? publicStrict `Omega.TypeName.mk == some .defn do
+    unless (publicStrict.find? `Omega.TypeName.mk).any (·.isUnsafe) &&
+        getOriginalConstKind? publicStrict `Omega.TypeName.mk == some .defn do
       throw <| IO.userError "the public type name constructor has no executable definition"
   if strict.contains strictReader && strict.contains `Omega.TypeName.typeName then
     unless Compiler.getImplementedBy? publicStrict `Omega.TypeName.typeName == some strictReader do

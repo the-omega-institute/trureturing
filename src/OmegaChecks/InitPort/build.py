@@ -166,6 +166,12 @@ def compile_type_name(stage, product, artifact, inventory):
         app = stage / "type-name-consumer"
         run("leanc", consumer, obj, HERE / "consumers" / "type_name_consumer.c", "-o", app)
         run(app)
+        safe_source = (STRICT_SOURCES / "TypeNameConsumer.lean").read_text().replace("public unsafe def", "public def")
+        rejected = subprocess.run(["lean", "--stdin"], input=safe_source, text=True, capture_output=True,
+                                  env={**os.environ, "LEAN_PATH": str(artifact)})
+        if rejected.returncode == 0 or "uses unsafe declaration 'Omega.TypeName.mk'" not in rejected.stdout + rejected.stderr:
+            raise ValueError("ordinary code could assign an arbitrary name to a type")
+
 
 
 def generate(stage, product, seed, roots, excluded, original_seed):
