@@ -5,6 +5,7 @@ import OmegaChecks.InitCompiler.Recursion
 import OmegaChecks.InitCompiler.FiniteCollectors
 import OmegaChecks.InitPort.Alternatives
 import OmegaChecks.InitPort.Arithmetic
+import OmegaChecks.InitPort.Promise
 import OmegaChecks.InitPort.NativeQuot
 import OmegaChecks.InitPort.Address
 import OmegaChecks.InitPort.WordFold
@@ -106,6 +107,7 @@ structure Context where
   literalProofs : NameMap ConstantInfo
   alternatives : NameMap ConstantInfo
   proofRules : NameMap ConstantInfo
+  promise : OmegaChecks.InitPort.Promise.Templates
   recursionRule : ConstantInfo
   output : IO.FS.Handle
 
@@ -487,6 +489,26 @@ partial def visit (n : Name) : M Bool := do
       | return ← record n (.blocked "kernel rejected logical reference")
     modify fun s => {s with env}
     return ← record n .added
+  if n == OmegaChecks.InitPort.Promise.pointed || n == `IO.Promise.new then
+    let .opaqueInfo native := ci | return ← record n (.blocked "missing opaque promise declaration")
+    let isFamily := n == OmegaChecks.InitPort.Promise.pointed
+    let pkg := c.promise.package
+    let body := if isFamily then c.promise.family else c.promise.allocation
+    let deps := usedConstants ci.type ++ usedConstants body ++ usedConstants pkg.type ++ usedConstants pkg.value
+    for dep in deps do
+      unless dep == pkg.name || (← visit dep) do return ← record n (.blocked "unavailable promise dependency" (some dep))
+    let mut env := (← get).env
+    if (env.find? (portName pkg.name)).isNone then
+      let .ok decl := translateDecl (.opaqueInfo pkg) pkg.type pkg.value | throw <| IO.userError "invalid promise package"
+      let .ok next ← checkWithRetry env decl c.maxHeartbeats | throw <| IO.userError "kernel rejected promise package"
+      env := next
+    let info := if isFamily then ConstantInfo.defnInfo
+      {native.toConstantVal with value := body, hints := .regular 0, safety := .safe, all := [n]} else ci
+    let .ok decl := translateDecl info ci.type body | return ← record n (.blocked "invalid promise model")
+    let .ok next ← checkWithRetry env decl c.maxHeartbeats
+      | return ← record n (.blocked "kernel rejected promise model")
+    modify fun s => {s with env := next}
+    return ← record n .added
   if n == `Void.nonemptyType then
     let .opaqueInfo native := ci | return ← record n (.blocked "missing opaque state family")
     let some body := OmegaChecks.InitPort.alternativeBody? c.alternatives ci
@@ -681,6 +703,7 @@ def writeMonolithic (base : Environment) (final : Kernel.Environment)
 
 def run (strictPath artifacts : System.FilePath) (outPath : String) (exclude : System.FilePath) (modules : List Name) : IO Unit := do
   let recursionRule ← OmegaChecks.InitCompiler.Recursion.loadRule
+  let promise ← OmegaChecks.InitPort.Promise.templates (← importModules #[{module := `OmegaChecks.InitPort.Promise}] {} (level := .private))
   let alternatives ← OmegaChecks.InitPort.loadAlternatives
   let ruleModule := `OmegaChecks.InitCompiler.ProofRules
   let ruleEnv ← importModules #[{module := ruleModule}] {} (level := .private)
@@ -727,7 +750,7 @@ def run (strictPath artifacts : System.FilePath) (outPath : String) (exclude : S
   let excluded := exclusions.foldl (init := ({} : NameMap String)) fun acc (n, r) => acc.insert n.toName r
   let maxHeartbeats := (← IO.getEnv "OMEGA_PORT_HEARTBEATS").bind String.toNat? |>.getD 5000
   let literalProofs ← loadLiteralProofs strictPath
-  let ctx := {source,base,publicNames,excluded,output,maxHeartbeats,literalProofs,alternatives,proofRules,recursionRule : Context}
+  let ctx := {source,base,publicNames,excluded,output,maxHeartbeats,literalProofs,alternatives,proofRules,promise,recursionRule : Context}
   let action : M Unit := do
     for owner in source.header.moduleNames, data in source.header.moduleData do
       if owner.getRoot == `Init then

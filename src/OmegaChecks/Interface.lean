@@ -3,6 +3,7 @@ import OmegaChecks.FieldMethods
 import OmegaChecks.InitPort.NativeQuot
 import OmegaChecks.InitPort.WordFold
 import OmegaChecks.InitPort.WordForIn
+import OmegaChecks.InitPort.Promise
 import OmegaChecks.InitPort.StateToken
 import OmegaChecks.InitPort.SyntaxArray
 import OmegaChecks.InitPort.FloatFraction
@@ -213,6 +214,9 @@ private def compare (reference : Environment) (rename : Name → Name) (src dst 
     compareDefinitionBody
   | .defnInfo x, .opaqueInfo y =>
     if let some (strict, publicStrict) := foundation then
+      if y.name == OmegaChecks.InitPort.Promise.pointed && x.safety == .safe then
+        OmegaChecks.InitPort.Promise.checkBody strict publicStrict reference y.name liftTerm x.value
+        return deps ++ x.value.getUsedConstants
       if y.name == `Void.nonemptyType && x.safety == .safe then
         unless (← lookup publicStrict x.name).isAxiom && getReducibilityStatusCore strict x.name == .irreducible do
           throw <| IO.userError "public state carrier is not abstract"
@@ -223,6 +227,10 @@ private def compare (reference : Environment) (rename : Name → Name) (src dst 
     compareDefinitionBody
     deps := deps ++ x.value.getUsedConstants
   | .opaqueInfo x, .opaqueInfo y =>
+    if let some (strict, publicStrict) := foundation then
+      if y.name == `IO.Promise.new && !x.isUnsafe then
+        OmegaChecks.InitPort.Promise.checkBody strict publicStrict reference y.name liftTerm x.value
+        return deps ++ x.value.getUsedConstants
     if foundation.isSome && !x.isUnsafe && y.name == `Void.mk then
       OmegaChecks.InitPort.StateToken.check reference y (liftTerm x.value)
       return deps ++ x.value.getUsedConstants
@@ -310,6 +318,9 @@ def checkSites (strict publicStrict reference : Environment) (bindings : Array (
     pending := pending.pop
     unless seen.contains (name, owner) do
       seen := seen.insert (name, owner)
+      if name == OmegaChecks.InitPort.Promise.strictToken && owner == OmegaChecks.InitPort.Promise.owner then
+        OmegaChecks.InitPort.Promise.checkToken strict publicStrict reference (translate (official strict))
+        continue
       let dst := official strict name
       unless declaredIn reference dst owner do
         throw <| IO.userError s!"upstream module mismatch for {name}"

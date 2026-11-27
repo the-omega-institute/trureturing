@@ -187,10 +187,16 @@ def main (args : List String) : IO Unit := do
   let newDecls := monolith.header.moduleData[(monolith.getModuleIdx? `OmegaImported).get!]!
   let mut reverseNames : Std.HashMap Name Name := {}
   for (n, _) in source.constants.toList do reverseNames := reverseNames.insert (renamed n) n
+  let promiseOwner := `Init.System.Promise
+  let promiseToken := mkPrivateNameCore promiseOwner `IO.Promise.logicalToken
+  let strictToken := renamed promiseToken
   let mut groups : NameMap (Array (Name × ConstantInfo)) := {}
   for ci in newDecls.constants do
-    let some upstream := reverseNames[ci.name]? | throw <| IO.userError s!"no official name for {ci.name}"
-    let owner := (officialModuleName source upstream).get!
+    let (upstream, owner) ← if ci.name == strictToken then
+      pure (promiseToken, promiseOwner)
+    else do
+      let some upstream := reverseNames[ci.name]? | throw <| IO.userError s!"no official name for {ci.name}"
+      pure (upstream, (officialModuleName source upstream).get!)
     groups := groups.insert owner ((groups.getD owner #[]).push (upstream,ci))
   IO.FS.createDirAll out
   let mut graph := #[]
@@ -276,6 +282,11 @@ def main (args : List String) : IO Unit := do
         e.1 != structureExt.name && e.1 != projectionFnInfoExt.name &&
         e.1 != matchPatternAttr.ext.name && e.1 != Elab.Term.elabAsElim.ext.name &&
         e.1 != auxRecExt.name && e.1 != aliasExtension.name)) ++ replacement ++ instances ++ structures ++ tags
+      let mut entries := entries
+      if i == 2 && cs.any (·.name == strictToken) then
+        let tags := addNoncomputable ((← mkEmptyEnvironment).setMainModule owner) strictToken
+        let tagged ← mkModuleData tags .private
+        entries := entries ++ tagged.entries.filter (fun e => e.1 == noncomputableExt.name && !e.2.isEmpty)
       let data : ModuleData := { previous with entries, isModule := true, imports := mergeImports previous.imports mappedImports, constants := cs, constNames := cs.map (·.name) }
       parts := parts.push (#[path,path.addExtension "server",path.addExtension "private"][i]!,data)
     graph := graph.push (owner.toString, (mergeImports orig[2]!.imports mappedImports).map (·.module.toString))
