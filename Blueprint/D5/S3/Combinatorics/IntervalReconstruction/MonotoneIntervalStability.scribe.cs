@@ -82,7 +82,7 @@ internal sealed class MonotoneIntervalStabilityDocument : IScribeDocumentDefinit
         var matchingBound = All("p", observations,
             Le(Abs(Sub(Call("S", a, p), Call("S", b, Call("apply", pi, p)))), eps));
         var noisyRecovery = All("epsilon", real, Imp(Le(D(0), eps),
-            All("pi", Call("Perm", observations), Imp(matchingBound, coordinateBound))));
+            All("pi", Call("Perm", observations), Imp(Seq(Left, Open, matchingBound, Right, Close), coordinateBound))));
         var tuples = All("a", tuple, All("b", tuple,
             Imp(Call("Nonnegative", a), Imp(Call("Nonnegative", b),
             Imp(Call("Monotone", a), Imp(Call("Monotone", b), noisyRecovery))))));
