@@ -37,6 +37,8 @@ Take the directed limit of iterated regular wreath products by $C_2$ under the o
 
 In $H\times C_2$, with $H$ the wreath limit, the central involution is isolated in both incident directions. There is a distinct proper vertex coming from the first-stage shift. Thus the graph is disconnected.
 
+The witness $H\times C_2$ lies in Lean's `Type` (universe 0). It is countable because $H$ is a quotient of the disjoint union of the finite stages indexed by $\mathbb N$, and $C_2$ is finite. This witness also refutes the paper's assertion over arbitrary groups.
+
 ## Evidence
 
 The Lean theorem proves the literal negation of the affirmative torsion statement. [Lean module](../D5/S3/Combinatorics/Graph/PowerGraphs/SilveiraContrerasTorsionRefutation.lean) · [Bibliography](../Library/GraphInvariants/silveiracontreras2026powergraph.md) · [#35024](https://github.com/the-omega-institute/trureturing/issues/35024)
