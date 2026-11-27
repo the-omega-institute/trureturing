@@ -32,6 +32,8 @@
     "!tools/scripts/agent/prime_slabs/CPU.md",
     "[omega]",
     "src/*.lean",
+    "OmegaMathlib.lean",
+    "OmegaMathlib/*.lean",
     "src/OmegaChecks/*.py",
     "src/OmegaChecks/InitPort/*.c",
     "src/OmegaChecks/InitPort/*.h",
