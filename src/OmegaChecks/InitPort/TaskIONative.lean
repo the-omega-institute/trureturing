@@ -8,13 +8,18 @@ open Lean OmegaChecks.InitPort.NativeState
 
 private def entries := #[(`IO.getTaskState, "get_task_state"), (`IO.hasFinished, "task_has_finished"),
   (`IO.wait, "wait"), (`IO.waitAny, "wait_any"), (`IO.cancel, "cancel"), (`IO.checkCanceled, "check_canceled"),
-  (`BaseIO.asTask, "as_task"), (`BaseIO.mapTask, "map_task"), (`BaseIO.bindTask, "bind_task")]
+  (`BaseIO.asTask, "as_task"), (`BaseIO.mapTask, "map_task"), (`BaseIO.bindTask, "bind_task"),
+  (`BaseIO.chainTask, "chain_task"), (`BaseIO.mapTasks, "map_tasks")]
 
 private def inputs (name : Name) (strict : Bool) : Array (IR.IRType × Bool) :=
   let world := (if strict then IR.IRType.tobject else .void, false)
   if name == `BaseIO.asTask then #[(.erased, false), (.object, false), (.tobject, false), world]
   else if name == `BaseIO.mapTask || name == `BaseIO.bindTask then
     #[(.erased, false), (.erased, false), (.object, false), (.object, false), (.tobject, false), (.uint8, false), world]
+  else if name == `BaseIO.chainTask then
+    #[(.erased, false), (.object, false), (.object, false), (.tobject, false), (.uint8, false), world]
+  else if name == `BaseIO.mapTasks then
+    #[(.erased, false), (.erased, false), (.object, false), (.tobject, false), (.tobject, false), (.uint8, false), world]
   else if name == `IO.checkCanceled then #[world]
   else if name == `IO.waitAny then #[(.erased, false), (.tobject, true), (.erased, false), world]
   else #[(.erased, false), (.object, name != `IO.wait && !(name == `IO.hasFinished && strict)), world]
@@ -33,7 +38,7 @@ private def checkLayouts (env : Environment) (names : Array Name) : IO Unit := d
   if schedules || names.contains `Omega.IO.hasFinished || names.contains `Omega.IO.checkCanceled then
     check `Omega.Bool.false 0 0
     check `Omega.Bool.true 1 0
-  unless names.contains `Omega.IO.waitAny do return
+  unless names.contains `Omega.IO.waitAny || names.contains `Omega.BaseIO.mapTasks do return
   check `Omega.List.nil 0 0
   check `Omega.List.cons 1 2
   let some cons := Compiler.LCNF.ctorLayoutExt.find? env `Omega.List.cons | throw <| IO.userError "missing task list"
@@ -43,13 +48,15 @@ public unsafe def main (args : List String) : IO Unit := do
   let [lib, output] := args | throw <| IO.userError "expected strict library and native C output"
   let original ← importModules #[{module := `Init.System.IO}] {}
   for (n, sym) in entries do
-    if n == `IO.hasFinished then
-      let some (.fdecl _ ps .uint8 _ _) := IR.findEnvDecl original n | throw <| IO.userError "missing compiled task query"
-      unless ps.map (fun p => (p.ty, p.borrow)) == inputs n false do throw <| IO.userError "task query ABI changed"
-      let some (.fdecl _ reduced .uint8 _ _) := IR.findEnvDecl original `IO.hasFinished._redArg
-        | throw <| IO.userError "missing reduced task query"
-      unless reduced.map (fun p => (p.ty, p.borrow)) == #[(.object, true), (.void, false)] do
-        throw <| IO.userError "unexpected borrowed task query"
+    if n == `IO.hasFinished || n == `BaseIO.chainTask || n == `BaseIO.mapTasks then
+      let ret := if n == `IO.hasFinished then IR.IRType.uint8 else if n == `BaseIO.chainTask then .tagged else .object
+      let some (.fdecl _ ps result _ _) := IR.findEnvDecl original n | throw <| IO.userError s!"missing compiled {n}"
+      let args := inputs n false
+      unless ps.map (fun p => (p.ty, p.borrow)) == args && result == ret do throw <| IO.userError s!"{n} ABI changed"
+      let some (.fdecl _ reduced result _ _) := IR.findEnvDecl original (n ++ `_redArg)
+        | throw <| IO.userError s!"missing reduced {n}"
+      unless reduced.map (fun p => (p.ty, p.borrow)) == args.filter (·.1 != .erased) && result == ret do
+        throw <| IO.userError s!"unexpected reduced {n} ABI"
     else
       let ret := if (`BaseIO).isPrefixOf n then IR.IRType.object
         else if n == `IO.cancel then .tagged

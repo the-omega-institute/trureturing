@@ -29,3 +29,11 @@ public import OmegaInit.System.IO
 @[export omega_io_smoke_bind] public def bindTask {α : Type} (t : Omega.Task α) :=
   Omega.BaseIO.bindTask t (fun a world => ⟨Omega.Task.pure (Omega.Option.some a), world⟩)
     Omega.Nat.zero Omega.Bool.true
+
+@[export omega_io_smoke_chain] public def chainAfter {α : Type}
+    (t : Omega.Task α) (after : α → Omega.BaseIO Omega.Unit) :=
+  Omega.BaseIO.chainTask t after Omega.Nat.zero Omega.Bool.false
+
+@[export omega_io_smoke_collect] public def collectTasks {α : Type} (ts : Omega.List (Omega.Task α))
+    (sync : Omega.Bool) :=
+  Omega.BaseIO.mapTasks (fun xs world => ⟨xs, world⟩) ts Omega.Nat.zero sync

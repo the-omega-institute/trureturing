@@ -11,6 +11,8 @@ extern lean_obj_res omega_io_smoke_canceled(lean_obj_arg);
 extern lean_obj_res omega_io_smoke_launch(lean_obj_arg, lean_obj_arg, lean_obj_arg);
 extern lean_obj_res omega_io_smoke_map(lean_obj_arg, lean_obj_arg, lean_obj_arg);
 extern lean_obj_res omega_io_smoke_bind(lean_obj_arg, lean_obj_arg, lean_obj_arg);
+extern lean_obj_res omega_io_smoke_chain(lean_obj_arg, lean_obj_arg, lean_obj_arg, lean_obj_arg);
+extern lean_obj_res omega_io_smoke_collect(lean_obj_arg, lean_obj_arg, uint8_t, lean_obj_arg);
 extern lean_obj_res lean_io_promise_new(void);
 extern lean_obj_res lean_io_promise_result_opt(b_lean_obj_arg);
 extern lean_obj_res lean_io_promise_resolve(lean_obj_arg, b_lean_obj_arg);
@@ -78,6 +80,55 @@ static void check_effect_scheduling(lean_obj_arg type) {
     lean_dec(world);
 }
 
+static lean_obj_res cons(lean_obj_arg head, lean_obj_arg tail) {
+    lean_object *node = lean_alloc_ctor(1, 2, 0);
+    lean_ctor_set(node, 0, head);
+    lean_ctor_set(node, 1, tail);
+    return node;
+}
+
+static lean_obj_res signal_value(lean_obj_arg done, lean_obj_arg value, lean_obj_arg world) {
+    lean_dec(lean_io_promise_resolve(value, done));
+    lean_dec(done);
+    lean_object *out = lean_alloc_ctor(0, 2, 0);
+    lean_ctor_set(out, 0, lean_box(0));
+    lean_ctor_set(out, 1, world);
+    return out;
+}
+
+static void check_composite_tasks(lean_obj_arg type, lean_obj_arg world) {
+    lean_object *source = lean_io_promise_new(), *done = lean_io_promise_new();
+    lean_object *observed = lean_io_promise_result_opt(done);
+    lean_object *fn = lean_alloc_closure((void *)signal_value, 3, 1);
+    lean_closure_set(fn, 0, done);
+    lean_object *pending = lean_io_promise_result_opt(source);
+    lean_inc(pending);
+    if (value(omega_io_smoke_chain(type, pending, fn, world), world) != lean_box(0)) exit(17);
+    lean_object *list = cons(lean_task_pure(lean_box(0)), cons(pending, cons(lean_task_pure(lean_box(0)), lean_box(0))));
+    lean_object *collected = value(omega_io_smoke_collect(type, list, false, world), world);
+    lean_dec(lean_io_promise_resolve(lean_box(57), source));
+    lean_dec(source);
+    lean_object *effect = lean_task_get_own(observed);
+    if (lean_obj_tag(effect) != 1 || lean_obj_tag(lean_ctor_get(effect, 0)) != 1 ||
+        lean_ctor_get(lean_ctor_get(effect, 0), 0) != lean_box(57)) exit(18);
+    lean_dec(effect);
+    lean_object *results = lean_task_get_own(collected), *node = results;
+    for (unsigned i = 0; i < 3; ++i) {
+        if (lean_obj_tag(node) != 1) exit(19);
+        lean_object *entry = lean_ctor_get(node, 0);
+        if (i == 1) {
+            if (lean_obj_tag(entry) != 1 || lean_ctor_get(entry, 0) != lean_box(57)) exit(20);
+        } else if (entry != lean_box(0)) exit(21);
+        node = lean_ctor_get(node, 1);
+    }
+    if (node != lean_box(0)) exit(22);
+    lean_dec(results);
+    for (unsigned sync = 0; sync < 2; ++sync) {
+        lean_object *empty = value(omega_io_smoke_collect(type, lean_box(0), sync, world), world);
+        if (lean_task_get_own(empty) != lean_box(0)) exit(23);
+    }
+}
+
 int main(void) {
     lean_object *status = runtime_initialize_TaskIOConsumer(1);
     if (lean_io_result_is_error(status)) return 1;
@@ -127,6 +178,7 @@ int main(void) {
     lean_dec(release);
     if (value(omega_io_smoke_wait(type, cancellable, world), world) != lean_box(1)) return 12;
     check_effect_scheduling(type);
+    check_composite_tasks(type, world);
     lean_finalize_task_manager();
     puts("Strict task I/O passed all task states, wait-any, cancellation and effectful scheduling checks");
     return 0;

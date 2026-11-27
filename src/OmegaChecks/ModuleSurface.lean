@@ -117,6 +117,8 @@ private def checkElaboration (env : Environment) (owner : Name) (idx : ModuleIdx
       | `Omega.IO.Promise.result? => pure (`OmegaInit.System.Promise, "lean_io_promise_result_opt")
       | `Omega.BaseIO.asTask => pure (`OmegaInit.System.IO, "omega_io_as_task")
       | `Omega.BaseIO.mapTask => pure (`OmegaInit.System.IO, "omega_io_map_task")
+      | `Omega.BaseIO.chainTask => pure (`OmegaInit.System.IO, "omega_io_chain_task")
+      | `Omega.BaseIO.mapTasks => pure (`OmegaInit.System.IO, "omega_io_map_tasks")
       | `Omega.BaseIO.bindTask => pure (`OmegaInit.System.IO, "omega_io_bind_task")
       | `Omega.IO.getTaskState => pure (`OmegaInit.System.IO, "omega_io_get_task_state")
       | `Omega.IO.hasFinished => pure (`OmegaInit.System.IO, "omega_io_task_has_finished")

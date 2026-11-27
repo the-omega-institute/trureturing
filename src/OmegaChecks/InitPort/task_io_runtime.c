@@ -82,3 +82,18 @@ LEAN_EXPORT lean_obj_res omega_io_bind_task(lean_obj_arg task, lean_obj_arg acti
     lean_object *fn = wrap_action((void *)continue_action, 4, action, world);
     return state_result(lean_io_bind_task(task, fn, lean_box(omega_task_priority(priority)), sync), world);
 }
+
+extern lean_obj_res l_BaseIO_chainTask___redArg(lean_obj_arg, lean_obj_arg, lean_obj_arg, uint8_t);
+extern lean_obj_res l_BaseIO_mapTasks___redArg(lean_obj_arg, lean_obj_arg, lean_obj_arg, uint8_t);
+
+LEAN_EXPORT lean_obj_res omega_io_chain_task(lean_obj_arg task, lean_obj_arg action,
+                                             lean_obj_arg priority, uint8_t sync, lean_obj_arg world) {
+    lean_object *fn = wrap_action((void *)continue_action, 4, action, world);
+    return state_result(l_BaseIO_chainTask___redArg(task, fn, lean_box(omega_task_priority(priority)), sync), world);
+}
+
+LEAN_EXPORT lean_obj_res omega_io_map_tasks(lean_obj_arg action, lean_obj_arg tasks,
+                                            lean_obj_arg priority, uint8_t sync, lean_obj_arg world) {
+    lean_object *fn = wrap_action((void *)continue_action, 4, action, world);
+    return state_result(l_BaseIO_mapTasks___redArg(fn, tasks, lean_box(omega_task_priority(priority)), sync), world);
+}
