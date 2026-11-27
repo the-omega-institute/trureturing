@@ -347,7 +347,26 @@ def TwoDividesOneFalse := ((2 : Int) ∣ 1) = False
 theorem twoDividesOneFalse (rule : type_of% @dvd_eq_false) : TwoDividesOneFalse :=
   rule (.leaf 0) 2 (.num 1) rfl
 
+def AddOneEqOne := ∀ a : Int, (a + 1 = 1) = (a = 0)
+
+theorem addOneEqOne (rule : type_of% @norm_eq_var_const) : AddOneEqOne :=
+  fun a => rule (.leaf a) (.add (.var 0) (.num 1)) (.num 1) 0 0 rfl
+
+/-- Tightening an odd bound divides by two and rounds its constant upward. -/
+def OddBound := ∀ a : Int, (2 * a + 1 ≤ 0) = (a + 1 ≤ 0)
+
+theorem oddBound (rule : type_of% @norm_le_coeff_tight) : OddBound :=
+  fun a => rule (.leaf a) (.add (.mulL 2 (.var 0)) (.num 1)) (.num 0) (.add 1 0 (.num 1)) 2 rfl
+
+def LiteralReflection := ∀ a b : Int, (a.beq' b = true) = (Poly.num a = Poly.num b)
+
+theorem literalReflection (rule : type_of% @Poly.beq'_eq) : LiteralReflection :=
+  fun a b => rule (.num a) (.num b)
+
 def witnesses : List (Name × Name × Name) := [
+  (``norm_eq_var_const, ``AddOneEqOne, ``addOneEqOne),
+  (``norm_le_coeff_tight, ``OddBound, ``oddBound),
+  (``Poly.beq'_eq, ``LiteralReflection, ``literalReflection),
   (``norm_dvd_gcd, ``DoubledDivisibility, ``doubledDivisibility),
   (``eq_eq_false, ``SuccessorFalse, ``successorFalse),
   (``eq_eq_false_of_divCoeff, ``ZeroOneFalse, ``zeroOneFalse),
