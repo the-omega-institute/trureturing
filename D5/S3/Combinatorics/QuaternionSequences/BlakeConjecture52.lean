@@ -442,6 +442,8 @@ def fullPeriodCorrelation (hM : 0 < M) (A : Fin M → T → ℍ[ℤ])
       star (extension hM (fun j => A j (t + s)) u hu
         (((q.val : ℤ) * M + r.val) + τ.val))
 
+section BaseNonvanishing
+
 variable [NeZero M]
 
 private theorem mapped_array_corr {R : Type*} [CommRing R] (hM : 0 < M)
@@ -511,10 +513,12 @@ private theorem base_correlation_exists (hM : 2 ≤ M) (hT : Odd (Fintype.card T
     have hφu : φ u = 1 := hφ (Or.inr (Or.inr hu))
     have hwrap (r : Fin M) : φ (if M ≤ r.val + τ.val then u else 1) = 1 := by
       split_ifs <;> simp [hφu]
+    have hstar (x : ℍ[ℤ]) : φ (star x) = φ x :=
+      character_star (by decide) 1 (one_mul 1) false x
     have hmap : φ (baseCorrelation hpos A u hu τ 0) = (M : ZMod 2) * Fintype.card T := by
-      simp [baseCorrelation, extension_add, map_sum, star_mul, map_mul,
-        character_star (by decide) 1 (one_mul 1) false, hwrap, fun r t => hφ (hA r t),
-        nsmul_eq_mul]
+      simp only [baseCorrelation, map_sum, add_zero, extension_add, star_mul, map_mul,
+        hstar, hwrap, fun r t => hφ (hA r t), mul_one]
+      simp [nsmul_eq_mul]
     rw [hzero τ hn, map_zero, odd_cast hT (by decide), mul_one] at hmap
     exact even_iff_two_dvd.mpr ((ZMod.natCast_eq_zero_iff M 2).mp hmap.symm)
   let d := 2 ^ M.factorization 2
@@ -590,7 +594,8 @@ private theorem base_correlation_exists (hM : 2 ≤ M) (hT : Odd (Fintype.card T
     (by omega : 2 * d - 2 < 2 * d), coeff_zero] at hpq
   exact zero_ne_one hpq
 
-omit [NeZero M] in
+end BaseNonvanishing
+
 private theorem extension_translate (hM : 0 < M) (a : Fin M → ℍ[ℤ])
     (u : ℍ[ℤ]) (hu : Noncentral u) (q n : ℤ) :
     extension hM a u hu (q * (M : ℤ) + n) =
@@ -616,7 +621,7 @@ private theorem extension_translate (hM : 0 < M) (a : Fin M → ℍ[ℤ])
         (extension_at hM a u hu (n / (M : ℤ)) r)
       rw [← hbase]
 
-omit [Fintype T] [NeZero M] in
+omit [Fintype T] in
 private theorem period_block_term (hM : 0 < M) (A : Fin M → T → ℍ[ℤ])
     (u : ℍ[ℤ]) (hu : Noncentral u) (q : ℤ) (r τ : Fin M) (t s : T) :
     extension hM (fun j => A j t) u hu (q * (M : ℤ) + r.val) *
@@ -630,7 +635,6 @@ private theorem period_block_term (hM : 0 < M) (A : Fin M → T → ℍ[ℤ])
   rw [add_assoc, extension_at, extension_translate, star_mul, ← mul_assoc, mul_assoc (A r t),
     hq, mul_one]
 
-omit [NeZero M] in
 private theorem full_period_factor_four (hM : 0 < M) (A : Fin M → T → ℍ[ℤ])
     (u : ℍ[ℤ]) (hu : Noncentral u) (τ : Fin M) (s : T) :
     fullPeriodCorrelation hM A u hu τ s = 4 • baseCorrelation hM A u hu τ s := by
@@ -657,16 +661,16 @@ private theorem four_nsmul_eq_zero (x : ℍ[ℤ]) : (4 • x : ℍ[ℤ]) = 0 ↔
   · rintro rfl
     exact nsmul_zero _
 
-omit [NeZero M] in
 /-- An array of odd transverse cardinality and first-axis length at least two has one
     off-period shift with nonzero base and full extension autocorrelations. -/
 theorem odd_transverse_nonvanishing (hM : 2 ≤ M) (hT : Odd (Fintype.card T))
     (A : Fin M → T → ℍ[ℤ]) (hA : ∀ r t, IsQ8 (A r t))
     (u : ℍ[ℤ]) (hu : Noncentral u) :
+    letI : NeZero M := ⟨by omega⟩
     ∃ τ : Fin M, ∃ s : T, (τ, s) ≠ (0, 0) ∧
       baseCorrelation (by omega) A u hu τ s ≠ 0 ∧
       fullPeriodCorrelation (by omega) A u hu τ s ≠ 0 := by
-  letI : NeZero M := ⟨by omega⟩
+  let : NeZero M := ⟨by omega⟩
   obtain ⟨τ, s, hshift, hbase⟩ := base_correlation_exists hM hT A hA u hu
   refine ⟨τ, s, hshift, hbase, ?_⟩
   rw [full_period_factor_four]

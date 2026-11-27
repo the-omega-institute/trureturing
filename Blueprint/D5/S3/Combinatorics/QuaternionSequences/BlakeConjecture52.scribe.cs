@@ -69,7 +69,8 @@ internal sealed class BlakeConjecture52Document : IScribeDocumentDefinition
                 "Definition 2.1 of Blake, arXiv:2611.20804v1, extends the first axis on the right. "
                 + "At each transverse coordinate t the existing extension acts on the column indexed by t. "
                 + "The transverse coordinate of the shifted entry is t plus sigma in the finite additive group. "
-                + "The first-axis shift tau is read as its integer representative between zero and M minus one."),
+                + "In the display, int takes the integer value of a finite index or natural number. "
+                + "The first-axis shift tau has integer representative between zero and M minus one."),
             ArrayDefinition("fullPeriodCorrelation", "Autocorrelation over the full extension period", true,
                 "The three indices enumerate the period of first-axis length 4M as qM plus r, with q in Fin 4 "
                 + "and r in Fin M, and the transverse coordinate t in T. The star is quaternion conjugation. "
@@ -212,9 +213,10 @@ internal sealed class BlakeConjecture52Document : IScribeDocumentDefinition
         Formula m = F.Id("M"), r = F.Id("r"), t = F.Id("t"), q = F.Id("q");
         Formula u = F.Id("u"), tau = F.Id("tau"), sigma = F.Id("sigma"), transverse = F.Id("T");
         Formula indices = Call("Fin", m);
-        Formula index = full ? Add(Mul(q, m), r) : r;
+        Formula row = Call("int", r);
+        Formula index = full ? Add(Mul(Call("int", q), Call("int", m)), row) : row;
         Formula left = full ? Call("extension", Column(t), u, index) : ArrayEntry(r, t);
-        Formula right = Call("star", Call("extension", Column(Add(t, sigma)), u, Add(index, tau)));
+        Formula right = Call("star", Call("extension", Column(Add(t, sigma)), u, Add(index, Call("int", tau))));
         Formula sum = SumOver(r, indices, SumOver(t, transverse, Mul(left, right)));
         if (full)
             sum = SumOver(q, Call("Fin", D(4)), sum);
@@ -235,6 +237,6 @@ internal sealed class BlakeConjecture52Document : IScribeDocumentDefinition
                     And(Rel(Call("baseCorrelation", a, u, tau, sigma), FormulaRelationOperator.NotEqual, zero),
                         Rel(Call("fullPeriodCorrelation", a, u, tau, sigma), FormulaRelationOperator.NotEqual, zero)))));
         return WithArrayInputs(Rel(D(2), FormulaRelationOperator.LessThanOrEqual, m),
-            Imp(Par(entries), witness));
+            Imp(Call("Odd", Call("card", transverse)), Imp(Par(entries), witness)));
     }
 }
