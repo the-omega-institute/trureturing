@@ -89,7 +89,8 @@ class CoverageTest(unittest.TestCase):
                    requiredBehavior="distinguish equal arrays")
         self.assertEqual(check_coverage(inventory(row)), (0, []))
         for mismatch in ({"checkedUnsafeRuntime": None}, {"checkedUnsafeRuntime": "other"},
-                         {"name": "other"}, {"unsafe": False}, {"runtimeConflictWitness": None}):
+                         {"name": "other"}, {"unsafe": False}, {"runtimeConflictWitness": None},
+                         {"checkedUnsafeRuntime": None, "runtimeConflictWitness": None}):
             with self.subTest(mismatch=mismatch), self.assertRaises(ValueError):
                 check_coverage(inventory(row | mismatch))
 

@@ -94,9 +94,10 @@ def check_coverage(official):
                         row.get("logicalConsequenceWitness") != runtime or not row.get("requiredBehavior")):
             raise ValueError(f"inconsistent runtime conflict for {owner}/{name}")
         unsafe_runtime = row.get("checkedUnsafeRuntime")
-        if unsafe_runtime and (site != ("Init.Util", "isExclusiveUnsafe") or
-                               unsafe_runtime != "lean_is_exclusive_obj" or not port or
-                               row["kind"] != "opaque" or not row.get("unsafe") or not runtime):
+        checked_exclusivity = site == ("Init.Util", "isExclusiveUnsafe") and port
+        if bool(unsafe_runtime) != checked_exclusivity or (unsafe_runtime and
+                (unsafe_runtime != "lean_is_exclusive_obj" or row["kind"] != "opaque" or
+                 not row.get("unsafe") or not runtime)):
             raise ValueError(f"inconsistent checked unsafe runtime for {owner}/{name}")
         if port:
             if axiom or witness or (runtime and not unsafe_runtime) or row["strictModule"] != "Omega" + owner:
