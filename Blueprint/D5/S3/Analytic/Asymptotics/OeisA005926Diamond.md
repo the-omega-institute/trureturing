@@ -10,7 +10,7 @@ Lean statement: `D5/S3/Analytic/Asymptotics/OeisA005926Diamond.thetaSeries`
 
 *Formalization.* `D5/S3/Analytic/Asymptotics/OeisA005926Diamond.thetaSeries` (`✓ std3`).
 
-*Citation.* Vaclav Kotesovec (2026). *Summatory conjecture for OEIS A005926*. URL: <https://oeis.org/A005926/internal>.
+*Citation.* Andrew J. Morris (2026). *Generating function for OEIS A005926*. URL: <https://oeis.org/A005926/internal>.
 
 *Commentary.*
 
