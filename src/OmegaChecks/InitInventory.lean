@@ -402,6 +402,15 @@ private def conditionalConsequence? (owner name : Name) : Option (String × Name
     if name == ``ShareCommon.Object.ptrHash then
       return ("False", ``OmegaChecks.InitBoundaries.PointerObservations.objectPointerHash,
         "Pointer hashes distinguish two simultaneously live NonScalar objects with the same Nat field")
+  if owner == `Init.Core && name == ``Quot.indepCoherent then
+    return ((``Quot.sound).toString, ``OmegaChecks.InitBoundaries.HeterogeneousQuotient.soundOfPairCoherence,
+      "The unit motive satisfies the original transport premise by reflexivity and yields equality of the pairs of any two related representatives")
+  if owner == `Init.Core && name == ``Quot.liftIndepPr1 then
+    return ((``Quot.sound).toString, ``OmegaChecks.InitBoundaries.HeterogeneousQuotient.soundOfPairCoherence,
+      "The lift in the original result requires pair coherence for every motive, including the unit motive")
+  if owner == `Init.Core && name == ``Quotient.decidableEq then
+    return ((``funext).toString, ``OmegaChecks.InitBoundaries.QuotientDecision.funextOfPositiveDecision,
+      "The official equality decision computes true on the false and true representatives of the indiscrete Boolean quotient")
   if owner == `Init.Core && name == ``Quot.hrecOn then
     return ((``Quot.sound).toString, ``OmegaChecks.InitBoundaries.HeterogeneousQuotient.soundOfPairCoherence,
       "The pinned reduction through Quot.indep identifies pairs of related representatives at the unit motive")

@@ -99,7 +99,10 @@ private def replayWitnesses (env : Environment) : IO Unit := do
       ``PointerObservations.address, ``PointerObservations.pointerEquality, ``PointerObservations.listPointerEquality,
       ``PointerObservations.objectPointerEquality, ``PointerObservations.objectPointerHash] ++
     [``HeterogeneousQuotient.hrecOn, ``HeterogeneousQuotient.hrecOnSetoid,
-     ``HeterogeneousQuotient.soundOfPairCoherence, ``HeterogeneousQuotient.setoidSoundOfPairCoherence] ++
+     ``HeterogeneousQuotient.soundOfPairCoherence, ``HeterogeneousQuotient.setoidSoundOfPairCoherence,
+     ``HeterogeneousQuotient.firstOfCoherence, ``QuotientDecision.ofSound,
+     ``QuotientDecision.exactOfDecidable, ``QuotientDecision.decisionsOnRepresentatives,
+     ``QuotientDecision.soundFromAgreement, ``QuotientDecision.funextOfPositiveDecision] ++
     [``ConstructorNormalization.propextOfDecision, ``ConstructorNormalization.addCancelOfSucc,
      ``ConstructorNormalization.prefixEqualityOfCons] ++
     [``EmbeddingRange.ofExists, ``EmbeddingRange.ofLeftInverse,
