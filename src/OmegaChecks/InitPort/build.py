@@ -247,7 +247,9 @@ def generate(stage, product, seed, roots, excluded, original_seed):
         })
         paths = install_state_runtime(stage, product, artifact, "PathIO", "path_io")
         path_interfaces = {"Init.System.IO": {"IO.getEnv", "IO.FS.createDir", "IO.FS.removeDir",
-                                              "IO.FS.removeFile", "IO.FS.rename"}}
+                                              "IO.FS.removeFile", "IO.FS.rename", "IO.FS.hardLink", "IO.FS.realPath",
+                                              "IO.FS.createTempDir", "IO.appPath", "IO.currentDir", "IO.Process.getCurrentDir",
+                                              "IO.Process.setCurrentDir", "System.FilePath.readDir"}}
         if paths and has_interfaces(inventory, path_interfaces):
             check_paths(stage, artifact, paths[0], product / "native" / "task_io.o")
     if "OmegaInit.System.Promise" in graph:

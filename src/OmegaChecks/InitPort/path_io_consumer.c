@@ -7,6 +7,17 @@ extern lean_obj_res omega_test_path_rmdir(lean_obj_arg, lean_obj_arg);
 extern lean_obj_res omega_test_path_unlink(lean_obj_arg, lean_obj_arg);
 extern lean_obj_res omega_test_path_rename(lean_obj_arg, lean_obj_arg, lean_obj_arg);
 
+extern lean_obj_res omega_test_path_hard_link(lean_obj_arg, lean_obj_arg, lean_obj_arg);
+extern lean_obj_res omega_test_path_set_cwd(lean_obj_arg, lean_obj_arg);
+extern lean_obj_res omega_test_path_cwd(lean_obj_arg);
+extern lean_obj_res omega_test_path_process_cwd(lean_obj_arg);
+extern lean_obj_res omega_test_path_real(lean_obj_arg, lean_obj_arg);
+extern lean_obj_res omega_test_path_temp_dir(lean_obj_arg);
+extern lean_obj_res omega_test_path_app(lean_obj_arg);
+extern lean_obj_res omega_test_path_list(lean_obj_arg, lean_obj_arg);
+extern lean_obj_res lean_io_current_dir(void);
+extern lean_obj_res lean_io_app_path(void);
+
 static lean_object *encode(const char *s) {
     const char *end = s;
     while (*end) ++end;
@@ -44,7 +55,7 @@ static int path_result(lean_obj_arg out, unsigned tag, const char *path) {
 }
 
 int main(int argc, char **argv) {
-    if (argc != 4) return 1;
+    if (argc != 6) return 1;
     lean_object *init = runtime_initialize_PathIOConsumer(1);
     if (lean_io_result_is_error(init)) return 1;
     lean_dec(init);
@@ -61,6 +72,44 @@ int main(int argc, char **argv) {
     if (!path_result(omega_test_path_create(encode(argv[1]), world), 1, argv[1])) return 5;
     if (!path_result(omega_test_path_rename(encode(argv[1]), encode(argv[2]), world), 0, 0)) return 6;
     if (!path_result(omega_test_path_rmdir(encode(argv[2]), world), 0, 0)) return 7;
+    lean_object *cwd = lean_io_current_dir();
+    if (!lean_io_result_is_ok(cwd)) return 10;
+    if (!path_result(omega_test_path_set_cwd(encode(argv[5]), world), 0, 0)) return 11;
+    lean_object *strict_cwd = omega_test_path_cwd(world);
+    lean_object *process_cwd = omega_test_path_process_cwd(world);
+    lean_object *real = omega_test_path_real(encode("."), world);
+    if (lean_obj_tag(strict_cwd) || lean_obj_tag(process_cwd) || lean_obj_tag(real) ||
+        !text_equals(lean_ctor_get(strict_cwd, 0), argv[5]) || !text_equals(lean_ctor_get(process_cwd, 0), argv[5]) ||
+        !text_equals(lean_ctor_get(real, 0), argv[5])) return 12;
+    lean_dec(strict_cwd); lean_dec(process_cwd); lean_dec(real);
+    if (!path_result(omega_test_path_set_cwd(encode(lean_string_cstr(lean_io_result_get_value(cwd))), world), 0, 0)) return 13;
+    lean_dec(cwd);
+    lean_object *app = lean_io_app_path();
+    lean_object *strict_app = omega_test_path_app(world);
+    if (!lean_io_result_is_ok(app) || lean_obj_tag(strict_app) || !text_equals(lean_ctor_get(strict_app, 0),
+        lean_string_cstr(lean_io_result_get_value(app)))) return 14;
+    lean_dec(app); lean_dec(strict_app);
+    lean_object *temp = omega_test_path_temp_dir(world);
+    if (lean_obj_tag(temp)) return 15;
+    lean_object *temp_path = lean_ctor_get(temp, 0);
+    lean_inc(temp_path); lean_dec(temp);
+    if (!path_result(omega_test_path_rmdir(temp_path, world), 0, 0)) return 16;
+    if (!path_result(omega_test_path_hard_link(encode(argv[3]), encode(argv[4]), world), 0, 0)) return 17;
+    lean_object *entries = omega_test_path_list(encode(argv[5]), world);
+    if (lean_obj_tag(entries)) return 18;
+    lean_object *xs = lean_ctor_get(entries, 0);
+    unsigned seen = 0;
+    for (; !lean_is_scalar(xs); xs = lean_ctor_get(xs, 1)) {
+        lean_object *e = lean_ctor_get(xs, 0);
+        if (!text_equals(lean_ctor_get(e, 0), argv[5])) return 19;
+        lean_object *name = lean_ctor_get(e, 1);
+        if (text_equals(name, "文件")) seen |= 1;
+        else if (text_equals(name, "链接")) seen |= 2;
+        else return 20;
+    }
+    lean_dec(entries);
+    if (seen != 3) return 20;
+    if (!path_result(omega_test_path_unlink(encode(argv[4]), world), 0, 0)) return 21;
     if (!path_result(omega_test_path_unlink(encode(argv[3]), world), 0, 0)) return 8;
     if (!path_result(omega_test_path_unlink(encode(argv[3]), world), 2, argv[3])) return 9;
     return 0;

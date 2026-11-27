@@ -26,7 +26,7 @@ def check_paths(stage, library, path_object, io_object):
     for i, command in enumerate(commands):
         root = test / str(i)
         root.mkdir()
-        paths = [root / "旧-λ", root / "新-é", root / "文件"]
+        paths = [root / "旧-λ", root / "新-é", root / "文件", root / "链接", root]
         paths[2].write_bytes(b"fixture")
         run(*command, *paths, env=env)
         if any(root.iterdir()):
