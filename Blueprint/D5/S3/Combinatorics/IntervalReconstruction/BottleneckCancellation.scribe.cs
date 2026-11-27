@@ -11,7 +11,7 @@ internal sealed class BottleneckCancellationDocument : IScribeDocumentDefinition
         Blocks(Describe.Lean(DescribeId.Create("bottleneck-occurrence-cancellation"),
             DeclarationHandle.Create("D5/S3/Combinatorics/IntervalReconstruction/BottleneckCancellation.result"),
             H("One complement bijection with a simultaneous error bound"),
-            StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+            StatementSource.FromAuthor(Disp(Statement())), AssessedProvenance.FromRepo(),
             Blocks(
                 Paragraph(Text("M is an arbitrary pseudometric space. X and Y index actual "
                     + "occurrences, and a:X→M and b:Y→M give their labels. The equivalence "
@@ -23,6 +23,16 @@ internal sealed class BottleneckCancellationDocument : IScribeDocumentDefinition
                     + "f:(X\\U)≃(Y\\V) for which every retained pair has distance at most "
                     + "(k+1)epsilon+k eta. The equivalence f works for all retained occurrences "
                     + "simultaneously.")),
+                Paragraph(Text("In the displayed formula, Type ranges over arbitrary types; X, Y "
+                    + "and M need not share a universe. Real is the real-number type, and rho "
+                    + "ranges over PseudoMetricSpace(M), the pseudometric structures on M; "
+                    + "dist is the distance of this chosen rho. Finset(A) is the type of finite "
+                    + "subsets of A, and Equiv(A,B) is the type of total equivalences A≃B. "
+                    + "When U or V occurs as a type, it denotes its membership subtype. "
+                    + "Xc denotes the subtype of x:X with x∉U, and Yc the subtype of y:Y "
+                    + "with y∉V. Subtype arguments to a and b are coerced to their underlying "
+                    + "occurrences. card(U) denotes the number of elements of U, coerced to "
+                    + "Real in the error bound. epsilon and eta denote the two real errors.")),
                 Paragraph(Text("No compatibility between e and d is imposed. Labels can repeat, "
                     + "distinct labels can have zero distance, and M can be infinite. Empty "
                     + "index sets, zero deletions and deletion of every occurrence are included; "
@@ -63,4 +73,54 @@ internal sealed class BottleneckCancellationDocument : IScribeDocumentDefinition
                     + "with no assertion of full noisy recovery, optimal constants, computational "
                     + "complexity or resolution of general Turnpike."))),
             DescribeRole.Theorem))));
+
+    private static Formula V(string s) => FormulaDsl.Id(s);
+    private static Formula Call(string s, params Formula[] xs) =>
+        new Formula.FunctionCall(FormulaIdentifier.Create(s), [.. xs]);
+    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
+    private static Formula All(string s, Formula type, Formula body) =>
+        Seq(Forall, Sp, V(s), Colon, Sp, type, Comma, Sp, body);
+    private static Formula Some(string s, Formula type, Formula body) =>
+        Seq(Exists, Sp, V(s), Colon, Sp, type, Comma, Sp, body);
+    private static Formula Imp(Formula a, Formula b) =>
+        new Formula.Logic(Parenthesized(a), FormulaLogicOperator.Implies, Parenthesized(b));
+    private static Formula Le(Formula a, Formula b) =>
+        new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
+    private static Formula Add(Formula a, Formula b) =>
+        new Formula.Binary(a, FormulaBinaryOperator.Add, b);
+    private static Formula Times(Formula a, Formula b) =>
+        new Formula.Binary(a, FormulaBinaryOperator.Multiply, b);
+
+    private static Formula Statement()
+    {
+        var X = V("X"); var Y = V("Y"); var M = V("M");
+        var U = V("U"); var W = V("V");
+        var x = V("x"); var u = V("u");
+        var epsilon = V("epsilon"); var eta = V("eta");
+        var k = Call("card", U);
+        var bound = Add(Times(Parenthesized(Add(k, D(1))), epsilon), Times(k, eta));
+        Formula statement = Some("f", Call("Equiv", V("Xc"), V("Yc")),
+            All("x", V("Xc"),
+                Le(Call("dist", Call("a", x), Call("b", Call("f", x))), bound)));
+        Formula[] assumptions = [
+            Le(D(0), epsilon),
+            Le(D(0), eta),
+            All("x", X, Le(Call("dist", Call("a", x), Call("b", Call("e", x))), epsilon)),
+            All("u", U, Le(Call("dist", Call("a", u), Call("b", Call("d", u))), eta))
+        ];
+        for (var i = assumptions.Length - 1; i >= 0; i--)
+            statement = Imp(assumptions[i], statement);
+        (string Name, Formula Type)[] binders = [
+            ("X", V("Type")), ("Y", V("Type")), ("M", V("Type")),
+            ("rho", Call("PseudoMetricSpace", M)),
+            ("a", new Formula.TypeArrow(X, M)), ("b", new Formula.TypeArrow(Y, M)),
+            ("e", Call("Equiv", X, Y)),
+            ("U", Call("Finset", X)), ("V", Call("Finset", Y)),
+            ("d", Call("Equiv", U, W)),
+            ("epsilon", V("Real")), ("eta", V("Real"))
+        ];
+        for (var i = binders.Length - 1; i >= 0; i--)
+            statement = All(binders[i].Name, binders[i].Type, statement);
+        return statement;
+    }
 }
