@@ -48,6 +48,9 @@ private def readWrapper (source strict : Environment) (n : Name) (symbol decoder
 private def entries := #[
   (`System.FilePath.metadata, "lean_io_metadata", "omega_io_metadata"),
   (`System.FilePath.symlinkMetadata, "lean_io_symlink_metadata", "omega_io_symlink_metadata"),
+  (`IO.setStdin, "lean_get_set_stdin", "omega_io_set_stdin"),
+  (`IO.setStdout, "lean_get_set_stdout", "omega_io_set_stdout"),
+  (`IO.setStderr, "lean_get_set_stderr", "omega_io_set_stderr"),
   (`IO.getStdin, "lean_get_stdin", "omega_io_get_stdin"),
   (`IO.getStdout, "lean_get_stdout", "omega_io_get_stdout"),
   (`IO.getStderr, "lean_get_stderr", "omega_io_get_stderr"),
@@ -87,7 +90,7 @@ private def entries := #[
   (`IO.FS.Handle.getLine, "lean_io_prim_handle_get_line", "omega_io_handle_get_line"),
   (`IO.FS.Handle.putStr, "lean_io_prim_handle_put_str", "omega_io_handle_put_str")]
 
-private def decodeError (source strict : Environment) : IO String := do
+private def convertError (source strict : Environment) (toNative : Bool) : IO String := do
   let some (.inductInfo errors) := source.find? `IO.Error | throw <| IO.userError "missing official IO.Error"
   let some (.inductInfo targetErrors) := strict.find? `Omega.IO.Error | throw <| IO.userError "missing strict IO.Error"
   unless targetErrors.ctors == errors.ctors.map (`Omega ++ ·) do throw <| IO.userError "IO.Error variants differ"
@@ -100,28 +103,34 @@ private def decodeError (source strict : Environment) : IO String := do
     unless tag == dest.ctorInfo.cidx && dest.fieldInfo.size == src.fieldInfo.size &&
         dest.ctorInfo.size == dest.fieldInfo.size && dest.ctorInfo.usize == 0 && dest.ctorInfo.ssize == 0 do
       throw <| IO.userError s!"unexpected IO.Error layout at {n}"
+    unless src.ctorInfo.usize == 0 do throw <| IO.userError s!"unexpected native IO.Error pointer-sized field {n}"
     if dest.fieldInfo.isEmpty then
       cases := cases ++ s!"case {tag}: return lean_box({tag});\n"
       continue
-    cases := cases ++ s!"case {tag}: \{ lean_object *out = lean_alloc_ctor({tag}, {dest.ctorInfo.size}, 0);\n"
+    let output := if toNative then src.ctorInfo else dest.ctorInfo
+    cases := cases ++ s!"case {tag}: \{ lean_object *out = lean_alloc_ctor({tag}, {output.size}, {output.ssize});\n"
     let mut ty := c.type
     for f in src.fieldInfo, g in dest.fieldInfo do
       let .forallE _ dom body _ := ty | throw <| IO.userError s!"unexpected type of {n}"
       let .object toIdx _ := g | throw <| IO.userError s!"expected boxed strict field of {n}"
-      let get ← match f with
+      let code ← match f with
         | .object idx _ =>
-          let decode ← if dom == mkConst `String then pure "omega_string_from_lean"
-            else if dom == mkApp (mkConst `Option [.zero]) (mkConst `String) then pure "strict_option_string"
+          let (decode, encode) ← if dom == mkConst `String then pure ("omega_string_from_lean", "omega_string_to_lean")
+            else if dom == mkApp (mkConst `Option [.zero]) (mkConst `String) then pure ("strict_option_string", "native_option_string")
             else throw <| IO.userError s!"unrecognized object in {n}: {dom}"
-          pure s!"{decode}(lean_ctor_get(error, {idx}))"
+          let (conv, input, output) := if toNative then (encode, toIdx, idx) else (decode, idx, toIdx)
+          pure s!"lean_ctor_set(out, {output}, {conv}(lean_ctor_get(error, {input})));\n"
         | .scalar 4 offset _ =>
           unless dom == mkConst `UInt32 do throw <| IO.userError s!"unexpected scalar in {n}"
-          pure s!"omega_nat_from_uint64(lean_ctor_get_uint32(error, {src.ctorInfo.size} * sizeof(void*) + {offset}))"
+          let address := s!"{src.ctorInfo.size} * sizeof(void*) + {offset}"
+          if toNative then pure s!"lean_ctor_set_uint32(out, {address}, lean_uint32_of_nat(lean_ctor_get(error, {toIdx})));\n"
+          else pure s!"lean_ctor_set(out, {toIdx}, omega_nat_from_uint64(lean_ctor_get_uint32(error, {address})));\n"
         | _ => throw <| IO.userError s!"unsupported IO.Error field layout in {n}"
-      cases := cases ++ s!"lean_ctor_set(out, {toIdx}, {get});\n"
+      cases := cases ++ code
       ty := body
     cases := cases ++ "return out; }\n"
-  return "\nstatic lean_obj_res strict_io_error(b_lean_obj_arg error) {\nswitch (lean_obj_tag(error)) {\n" ++
+  let name := if toNative then "native_io_error" else "strict_io_error"
+  return s!"\nstatic lean_obj_res {name}(b_lean_obj_arg error) \{\nswitch (lean_obj_tag(error)) \{\n" ++
     cases ++ "default: lean_internal_panic_unreachable();\n}\n}\n"
 
 private def checkProcesses (source strict : Environment) : IO Unit := do
@@ -183,7 +192,9 @@ public unsafe def main (args : List String) : IO Unit := do
   let fs := roots.any fun (n, _, _) => n != `IO.getEnv
   let handles := roots.any fun (n, _, _) => `IO.FS.Handle |>.isPrefixOf n
   let readDir := roots.any fun (n, _, _) => n == `System.FilePath.readDir
-  let streams := roots.any fun (n, _, _) => [`IO.getStdin, `IO.getStdout, `IO.getStderr].contains n
+  let getters := [`IO.getStdin, `IO.getStdout, `IO.getStderr]
+  let setters := [`IO.setStdin, `IO.setStdout, `IO.setStderr]
+  let streams := roots.any fun (n, _, _) => (getters ++ setters).contains n
   let processes := roots.any fun (n, _, _) => n == `IO.Process.spawn || (`IO.Process.Child).isPrefixOf n
   let metadata := roots.any fun (n, _, _) => [`System.FilePath.metadata, `System.FilePath.symlinkMetadata].contains n
   let dicts := [`Omega.Fin, `Omega.BitVec, `Omega.UInt8, `Omega.Array, `Omega.ByteArray, `Omega.String] ++
@@ -247,9 +258,10 @@ public unsafe def main (args : List String) : IO Unit := do
       (← compileDeclsRef.get) #[strict] {}
   for (n, upstream, symbol) in roots do
     if readFunctions.any (·.1 == n) then continue
-    if [`IO.getStdin, `IO.getStdout, `IO.getStderr].contains n then
-      verify source n #[(.void, false)] .object upstream
-      verify compiled (`Omega ++ n) #[(.tobject, false)] .object symbol
+    if (getters ++ setters).contains n then
+      let args := if setters.contains n then #[(IR.IRType.object, false)] else #[]
+      verify source n (args ++ #[(.void, false)]) .object upstream
+      verify compiled (`Omega ++ n) (args ++ #[(.tobject, false)]) .object symbol
       continue
     if n == `IO.Process.spawn then
       verify source n #[(.object, false), (.void, false)] .object upstream
@@ -311,6 +323,8 @@ public unsafe def main (args : List String) : IO Unit := do
   IO.FS.withFile file .append fun h => do
     if fs then h.putStrLn "#define OMEGA_PATH_IO_FS"
     h.putStr runtime
-    if fs then h.putStr (← decodeError source env)
+    if fs then
+      h.putStr (← convertError source env false)
+      h.putStr (← convertError source env true)
     for (name, symbol, decoder) in readFunctions do
       if roots.any (·.1 == name) then h.putStr (← readWrapper source compiled name symbol decoder)
