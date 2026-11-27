@@ -1,6 +1,7 @@
 module
 public import Lean
 import all Init.Internal.Order.Basic
+import all Init.Internal.Order.MonadTail
 import all Init.Data.Order.Lemmas
 import all Init.Data.Order.LemmasExtra
 import Lean.Replay
@@ -630,6 +631,19 @@ def uniqueChoiceOfProdCSup (select : type_of% @prod_csup.{u,u}) : UniqueChoice.{
 def uniqueChoiceOfFunSup (select : type_of% @fun_sup.{1,u}) : UniqueChoice.{u} :=
   fun {α} _ inh => @select Unit (fun _ => α) (fun _ => singletonLattice α inh) (fun _ => False) ()
 
+/-- Expand the pointwise chain relation in the type of the selected supremum. -/
+abbrev FunctionChainSup (α : Sort u) (β : α → Sort v) [∀ x, CCPO (β x)]
+    (c : (∀ x, β x) → Prop) :=
+  (∀ f g, c f → c g → (∀ x, f x ⊑ g x) ∨ (∀ x, g x ⊑ f x)) → (x : α) → β x
+
+example : (∀ {α : Sort u} {β : α → Sort v} [∀ x, CCPO (β x)] (c), FunctionChainSup α β c)
+    = (type_of% @fun_csup.{u,v}) := rfl
+
+def uniqueChoiceOfFunCSup (select : ∀ {ι : Type} {β : ι → Sort u} [∀ x, CCPO (β x)] (c),
+    FunctionChainSup ι β c) : UniqueChoice.{u} :=
+  fun {α} _ inh => @select Unit (fun _ => α) (fun _ => singletonCCPO α inh)
+    (fun _ => False) (fun _ _ denied => denied.elim) ()
+
 def limitedOmniscienceOfSearch (search : type_of% @Example.find)
     (step : ∀ f n, search f n = if f n then some n else search f (n+1))
     (valid : ∀ f n m, search f n = some m → f m = true) (f : Nat → Bool) :
@@ -655,6 +669,15 @@ def limitedOmniscienceOfSearch (search : type_of% @Example.find)
       cases eq
 
 abbrev FamilyChoice := ∀ {α : Sort u} {β : α → Type}, (∀ x, Nonempty (β x)) → Nonempty (∀ x, β x)
+
+/-- The index selecting the bottom point disappears when the flat carrier unfolds. -/
+abbrev StateOutput := ∀ {α σ : Type} [Nonempty α], Void σ → ST.Out σ α
+
+example : StateOutput = (type_of% @Lean.Order.ST.bot') := rfl
+
+theorem familyChoiceOfSTBottom (bot : StateOutput) : FamilyChoice.{u} :=
+  fun {_} {β} inh => (Void.instNonempty (σ := Unit)).elim fun token =>
+    ⟨fun x => (@bot (β x) Unit (inh x) token).val⟩
 
 theorem familyChoiceOfStateBottom (bot : type_of% @Lean.Order.EST.bot) : FamilyChoice.{u} :=
   fun {_} {β} inh =>

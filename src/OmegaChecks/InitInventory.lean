@@ -168,6 +168,12 @@ private def logicalConsequence? (owner name : Name) : Option (Name × Name) := d
   | `Init.Internal.Order.Basic, ``Lean.Order.fun_sup =>
     return (``OmegaChecks.InitBoundaries.InternalOrder.UniqueChoice,
       ``OmegaChecks.InitBoundaries.InternalOrder.uniqueChoiceOfFunSup)
+  | `Init.Internal.Order.Basic, ``Lean.Order.fun_csup =>
+    return (``OmegaChecks.InitBoundaries.InternalOrder.UniqueChoice,
+      ``OmegaChecks.InitBoundaries.InternalOrder.uniqueChoiceOfFunCSup)
+  | `Init.Internal.Order.MonadTail, ``Lean.Order.ST.bot' =>
+    return (``OmegaChecks.InitBoundaries.InternalOrder.FamilyChoice,
+      ``OmegaChecks.InitBoundaries.InternalOrder.familyChoiceOfSTBottom)
   | `Init.Internal.Order.Basic, ``Lean.Order.EST.bot =>
     return (``OmegaChecks.InitBoundaries.InternalOrder.FamilyChoice,
       ``OmegaChecks.InitBoundaries.InternalOrder.familyChoiceOfStateBottom)
