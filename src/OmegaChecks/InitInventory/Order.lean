@@ -77,6 +77,33 @@ end ClassicalOrderDecisions
 
 namespace AbstractOrder
 
+/-- Adjoining the single edge from `a` to `b` to equality makes their comparison
+available without deciding whether its endpoints coincide. -/
+theorem equalityCasesOfLeIffLtOrEq (split : type_of% (@Std.le_iff_lt_or_eq.{u})) :
+    FiniteMembership.EqualityCases.{u} := by
+  intro α a b
+  letI : LE α := ⟨fun x y => x = y ∨ x = a ∧ y = b⟩
+  letI : LT α := ⟨fun x y => x ≤ y ∧ ¬ y ≤ x⟩
+  letI : Std.LawfulOrderLT α := ⟨fun _ _ => Iff.rfl⟩
+  letI : Std.IsPartialOrder α := {
+    le_refl _ := Or.inl rfl
+    le_trans x y z xy yz := by
+      rcases xy with rfl | ⟨xa, yb⟩
+      · exact yz
+      rcases yz with rfl | ⟨_, zb⟩
+      · exact Or.inr ⟨xa, yb⟩
+      · exact Or.inr ⟨xa, zb⟩
+    le_antisymm x y xy yx := by
+      rcases xy with eq | ⟨xa, _⟩
+      · exact eq
+      rcases yx with eq | ⟨ya, _⟩
+      · exact eq.symm
+      · exact xa.trans ya.symm }
+  have forward : a ≤ b := Or.inr ⟨rfl, rfl⟩
+  rcases (@split α _ _ _ _ a b).mp forward with strict | eq
+  · exact Or.inr fun eq => strict.2 (Or.inl eq.symm)
+  · exact Or.inl eq
+
 private theorem notNotEM (p : Prop) : ¬ ¬ (p ∨ ¬p) :=
   fun neither => neither (.inr fun hp => neither (.inl hp))
 
