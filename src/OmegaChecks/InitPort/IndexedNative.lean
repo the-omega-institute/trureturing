@@ -8,7 +8,13 @@ namespace OmegaChecks.InitPort.IndexedNative
 
 /-- These eliminators pass arbitrary motive values through without inspecting them.
 Indices and captured callback arguments use the strict kernel Nat and the erased Fin wrapper. -/
+private def linear (n : Name) : Bool :=
+  let p := `Nat.Internal.Linear
+  [`Expr.toPoly.go, `Poly.insert, `Poly.cancelAux, `Poly.norm.go, `Poly.isNum?, `Poly.isZero, `Poly.isNonZero, `instBEqExpr.beq,
+   `Poly.toExpr.go].any fun suffix => n == p ++ suffix
+
 public def supported (n : Name) : Bool :=
+  linear n ||
   [`Fin.cases, `Fin.induction, `Fin.induction.go, `Fin.inductionOn, `Fin.reverseInduction,
    `Fin.reverseInduction.go, `Fin.lastCases, `Fin.succRec, `Fin.succRecOn,
    `Nat.recAux, `Nat.recCompiled, `Nat.repeat, `Nat.repeatTR, `Nat.div.inductionOn, `Nat.mod.inductionOn,
@@ -18,12 +24,36 @@ public def supported (n : Name) : Bool :=
 
 private def objectType (t : IR.IRType) := t == .tobject || t == .object || t == .tagged
 
+private def sameField : CtorFieldInfo → CtorFieldInfo → Bool
+  | .object i t, .object j u | .scalar 1 i t, .scalar 1 j u => i == j && t == u
+  | .erased, .erased | .void, .void => true
+  | _, _ => false
+
+/-- This normalizer operates only on natural numbers and these algebraic data types. -/
+private def checkLinearData (source strict : Environment) : IO Unit := do
+  for name in [`Prod, `Option, `List, `Nat.Internal.Linear.Expr] do
+    let some (.inductInfo s) := source.find? name | throw <| IO.userError s!"missing pinned data type {name}"
+    let some (.inductInfo t) := strict.find? (InitKernelPort.portName name) | throw <| IO.userError s!"missing strict data type {name}"
+    unless s.ctors.map InitKernelPort.portName == t.ctors do throw <| IO.userError s!"different constructors of {name}"
+    for (a,b) in s.ctors.zip t.ctors do
+      let some ca := source.find? a | throw <| IO.userError s!"missing {a}"
+      let some cb := strict.find? b | throw <| IO.userError s!"missing {b}"
+      unless cb.type == InitKernelPort.translate InitKernelPort.portName ca.type do throw <| IO.userError s!"different constructor fields in {b}"
+      let some x := ctorLayoutExt.find? source a | throw <| IO.userError s!"missing layout for {a}"
+      let some y := ctorLayoutExt.find? strict b | throw <| IO.userError s!"missing layout for {b}"
+      let l := x.ctorInfo
+      let r := y.ctorInfo
+      unless l.cidx == r.cidx && l.size == r.size && l.usize == r.usize && l.ssize == r.ssize &&
+          x.fieldInfo.size == y.fieldInfo.size && (x.fieldInfo.zip y.fieldInfo).all (fun (f,g) => sameField f g) do
+        throw <| IO.userError s!"different native layout for {a} and {b}"
+
 public def wrapper (source strict : Environment) (n : Name) (symbol : String) : IO String := do
   let official := n.replacePrefix `Omega .anonymous
   let some ci := source.find? official | throw <| IO.userError s!"missing pinned indexed eliminator {official}"
   let some target := strict.find? n | throw <| IO.userError s!"missing strict indexed eliminator {n}"
   unless target.type == InitKernelPort.translate InitKernelPort.portName ci.type do
     throw <| IO.userError s!"indexed eliminator type mismatch: {n}"
+  if linear official then checkLinearData source strict
   if official.getRoot == `Fin then
     let some (some field) := impureTrivialStructureInfoExt.find? strict `Omega.Fin | throw <| IO.userError "missing strict Fin layout"
     unless field.fieldIdx == 0 do throw <| IO.userError "unexpected strict Fin value slot"

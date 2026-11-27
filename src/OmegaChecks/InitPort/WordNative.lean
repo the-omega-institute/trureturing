@@ -81,7 +81,8 @@ public def supported (source : Environment) (owner name : Name) : Bool :=
   let primitive := ((word? name.getPrefix).isSome && (ops ++ widths).contains method) ||
     (name.getPrefix == `Bool && widths.contains method)
   isFloatCall source owner name ||
-    ([`OmegaInit.Data.Nat.Basic, `OmegaInit.Data.Nat.Div.Basic, `OmegaInit.Data.Nat.Lemmas, `OmegaInit.Data.Fin.Lemmas].contains owner && IndexedNative.supported name) ||
+    ([`OmegaInit.Data.Nat.Basic, `OmegaInit.Data.Nat.Div.Basic, `OmegaInit.Data.Nat.Lemmas,
+    `OmegaInit.Data.Nat.Internal.Linear, `OmegaInit.Data.Fin.Lemmas].contains owner && IndexedNative.supported name) ||
     (owner == `OmegaInit.Prelude && SyntaxPositionNative.supported name) ||
     ((base || intPrimitive || modular || stringOp || wordRepr || bitwise || logarithm || (inOwner && primitive)) && isExtern source name) ||
     ((intOwner || [`OmegaInit.Data.Int.Repr, `OmegaInit.Data.Repr, `OmegaInit.Data.Nat.Bitwise.Basic, `OmegaInit.Data.BitVec.Basic].contains owner || [`OmegaInit.Data.UInt.Basic, `OmegaInit.Data.SInt.Basic].contains owner) && usesPinnedFunction name)
