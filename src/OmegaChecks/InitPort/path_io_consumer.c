@@ -60,7 +60,7 @@ static int path_result(lean_obj_arg out, unsigned tag, const char *path) {
     if (ok && path) {
         lean_object *file = lean_ctor_get(s, 0);
         if (tag == 1 && !lean_is_scalar(file)) file = lean_ctor_get(file, 0);
-        ok = text_equals(file, path) && !lean_is_scalar(lean_ctor_get(s, 1));
+        ok = text_equals(file, path) && lean_ctor_get(s, 1) != lean_box(0);
     }
     lean_dec(out);
     return ok;
