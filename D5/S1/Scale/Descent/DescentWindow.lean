@@ -5,7 +5,8 @@
    anchors: []
    digest: Pell-type square bounds force the strict descent window. -/
 
-import Mathlib
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Ring
 
 namespace D5.S1.Scale.Descent.DescentWindow
 

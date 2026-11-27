@@ -9,7 +9,9 @@
 /- Escape audit unfinished under https://github.com/the-omega-institute/trureturing/issues/29342:
    the polymorphic source registration needs a faithful dependent-family realization. -/
 
-import Mathlib
+import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+import Mathlib.Algebra.Star.Basic
+import Mathlib.Tactic.Ring
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
