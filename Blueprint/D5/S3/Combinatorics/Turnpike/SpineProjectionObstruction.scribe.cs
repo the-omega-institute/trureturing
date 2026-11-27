@@ -15,9 +15,9 @@ internal sealed class SpineProjectionObstructionDocument : IScribeDocumentDefini
             Paragraph(Text("The numerical relation and linear constraints are Proposition 10 and System 11 of Elder, Marçais and Kingsford. Each interval and each numerical label is retained. The comparison fixes the entire assignment array P. The two existential coupling arrays are independent; there is no requirement to extend a chosen spine array, and no common joint distribution over all intervals is assumed.")),
             Paragraph(Text("Publication indices run from 1 to n and 1 to d. In Lean, vertex i and label q are represented by i−1 in Fin n and q−1 in Fin d. Thus I consists of ordered pairs i<j, Delta consists of ordered triples i<j<k, and S consists of triples (1,j,k) with 1<j<k. No containment pruning, endpoint fixing, or presolve restrictions are present.")),
             Paragraph(Text("Write R for the complete ordered numerical two-partition relation:")),
-            DisplayMath(RelationBody()),
+            new DocumentBlock.DisplayFormula(RelationBody()),
             Paragraph(Text("For H equal to Delta or S, write E(H,P) for the following explicit existential system. All sums over R include its entire guarded relation; an empty sum is zero. The components of r are a,b,c, assigned respectively to ij,jk,ik.")),
-            DisplayMath(Equal(App(Q("E"), X("H"), X("P")), FeasibleBody(X("H")))),
+            new DocumentBlock.DisplayFormula(Equal(App(Q("E"), X("H"), X("P")), FeasibleBody(X("H")))),
             Describe.Lean(DescribeId.Create("turnpike-spine-projection-claim"), DeclarationHandle.Create(Module + ".claim"),
                 H("The universal projection equality"),
                 StatementSource.FromAuthor(Disp(Equal(Typed(Q("claim"), Prop()), Par(ClaimBody())))),
@@ -27,7 +27,7 @@ internal sealed class SpineProjectionObstructionDocument : IScribeDocumentDefini
             Def("μ", "turnpike-spine-counts", "Positive multiplicities", Vec(1,1,1,1,1,1,1,2,2,1,1,2,2,2,1,1)),
             Def("ruler", "turnpike-spine-ruler", "An actual realizing ruler", Vec(0,4,7,8,13,16,18)),
             Paragraph(Text("Realizability requires strict increase, a label for every actual interval difference, and the exact occurrence count of every label. These three conditions are satisfied by the displayed x, y and mu:")),
-            DisplayMath(RealizesBody()),
+            new DocumentBlock.DisplayFormula(RealizesBody()),
             Describe.Lean(DescribeId.Create("turnpike-spine-assignment"), DeclarationHandle.Create(Module + ".assignment"),
                 H("The fractional assignment"), StatementSource.FromAuthor(Disp(Equal(App(X("P"),X("e"),X("q")),
                     new Formula.Fraction(Add(App(Q("indicator"),Equal(X("q"),App(X("L"),X("e")))),App(Q("indicator"),Equal(X("q"),App(X("U"),X("e"))))),D(2))))),
@@ -40,13 +40,13 @@ internal sealed class SpineProjectionObstructionDocument : IScribeDocumentDefini
                 AssessedProvenance.FromRepo(Source), Blocks(
                     Paragraph(Text("For each spine triangle, put half-mass at each of these two numerical triples, adding masses if they coincide: 123:(4,1,5),(2,5,7); 124:(4,4,8),(2,8,10); 125:(4,9,13),(2,9,11); 126:(4,12,16),(2,12,14); 127:(4,14,18),(2,16,18); 134:(7,3,10),(5,3,8); 135:(7,6,13),(5,6,11); 136:(7,9,16),(5,9,14); 137:(7,11,18),(5,13,18); 145:(8,5,13),(10,1,11); 146:(8,8,16),(10,4,14); 147:(8,10,18),(10,8,18); 156:(13,3,16),(11,3,14); 157:(13,5,18),(11,7,18); 167:(16,2,18),(14,4,18). Every other relation coordinate has mass zero. Exact addition holds, and the only equal summands are 4+4 and 8+8, both with multiplicity two. The three coordinate marginals are precisely the displayed P rows.")),
                     Paragraph(Text("For the omitted triangle 235, every full coupling satisfies the separator below. Labels 14,11,8 denote values 3,6,9 respectively. If b=11 and c=8 then numerical addition forces a=14. Consequently the sum of the indicators of b=11 and c=8, minus that of a=14, is at most one on every triple of R. Multiplying by nonnegative T and using normalization proves the inequality.")),
-                    DisplayMath(LE(Subtract(Add(App(X("P"),Q("35"),D(11)),App(X("P"),Q("25"),D(8))),App(X("P"),Q("23"),D(14))),D(1))),
+                    new DocumentBlock.DisplayFormula(LE(Subtract(Add(App(X("P"),D(3,5),D(1,1)),App(X("P"),D(2,5),D(8))),App(X("P"),D(2,3),D(1,4))),D(1))),
                     Paragraph(Text("Here P35 is the point mass at 6, P25 the point mass at 9, and P23 has no mass at 3. The separator's left side is therefore two. No full coupling exists at this same P, regardless of which spine coupling is chosen. Restriction of any full coupling gives a spine coupling, so the inclusion of full projections into spine projections is proper on this input.")),
                     Paragraph(Text("The input is realized by the displayed strictly increasing x, so the full system at the ruler's integral assignment is nonempty. This excludes a particular fractional assignment rather than the numerical multiset. Its expected interval lengths are 3(j−i), which satisfy every scalar triangle equality. The scalar conclusion of Lemma 13 and the marginal completion problem thus differ. No all-n family theorem, minimum failing size, LP integrality statement, complexity result, or claim about pruned formulations is asserted."))), DescribeRole.Theorem))));
 
-    private static ScribeNode Def(string name, string id, string title, Formula value) => Describe.Lean(
+    private static DocumentBlock.Describe Def(string name, string id, string title, Formula value) => Describe.Lean(
         DescribeId.Create(id), DeclarationHandle.Create(Module + "." + name), H(title),
-        StatementSource.FromAuthor(Disp(Equal(Q(name),value))), AssessedProvenance.FromRepo(Source),
+        StatementSource.FromAuthor(Disp(Equal(name == "μ" ? Mu : Q(name),value))), AssessedProvenance.FromRepo(Source),
         Blocks(Paragraph(Text("Entries are listed in increasing index order."))), DescribeRole.Definition);
 
     private static Formula ClaimBody()
@@ -63,7 +63,7 @@ internal sealed class SpineProjectionObstructionDocument : IScribeDocumentDefini
     private static Formula RealizesBody()
     {
         Formula increasing = All("i",Fin("n"),All("j",Fin("n"),
-            Imp(LT(X("i"),X("j")),LT(App(X("x"),X("i")),App(X("x"),X("j")))));
+            Imp(LT(X("i"),X("j")),LT(App(X("x"),X("i")),App(X("x"),X("j"))))));
         Formula difference = Subtract(App(X("x"),App(Q("right"),X("e"))),
             App(X("x"),App(Q("left"),X("e"))));
         Formula labels = All("e",App(Q("I"),X("n")),
@@ -93,7 +93,7 @@ internal sealed class SpineProjectionObstructionDocument : IScribeDocumentDefini
     private static Formula Vec(params int[] entries)
     {
         var items = new System.Collections.Generic.List<Formula>();
-        foreach (int entry in entries) { if(items.Count>0) items.Add(Comma); items.Add(D(entry)); }
+        foreach (int entry in entries) { if(items.Count>0) items.Add(Comma); items.Add(Num(entry)); }
         return Par(Seq([..items]));
     }
     private static Formula Fin(string name) => App(Q("Fin"),X(name));
