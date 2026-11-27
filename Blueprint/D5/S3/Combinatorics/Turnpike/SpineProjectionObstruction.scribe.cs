@@ -7,7 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Turnpike;
 internal sealed class SpineProjectionObstructionDocument : IScribeDocumentDefinition
 {
     private const string Module = "D5/S3/Combinatorics/Turnpike/SpineProjectionObstruction";
-    private static LibraryNoteRef Source => LibraryNoteRef.Create("D5/L/Combinatorics/elder2026turnpike");
+    private static LibraryNoteRef Source => LibraryNoteRef.Create("D5/L/FiniteGeometry/elder2026turnpike");
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "A realizable seven-point distance multiset has a spine-feasible assignment with no full triangle coupling.",
         H("Full and endpoint-spine triangle projections differ"),
