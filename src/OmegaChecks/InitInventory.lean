@@ -1,6 +1,8 @@
 module
 public import Lean
 import OmegaChecks.InitCompiler.RootNames
+import OmegaChecks.InitInventory.ConstructorIff
+meta import OmegaChecks.InitInventory.ConstructorIff
 meta import OmegaChecks.InitCompiler.RootNames
 import Lean.Compiler.LCNF.PhaseExt
 import OmegaChecks.InitInventory.Conditional
@@ -572,7 +574,7 @@ private def inventory (lib : System.FilePath) (visible strict full witnesses : E
   let mut nativeByModule := #[]
   let mut allNative := #[]
   if let some file := gaps then
-    file.putStrLn "module\tdeclaration\tkind\tunsafe\tpartial\tupstreamAxioms\timpliesAxiom\treductionWitness\tlogicalConsequence\tlogicalConsequenceWitness\trequiredBehavior\tabstractedDependency\truntimeConflictWitness\tequationOperand\toperandImpliesAxiom\toperandReductionWitness\tunchangedTypeAxioms\tunsafePackedObservation\tspecializedEndpointType\tunconditionalLogicalConsequence\tunconditionalLogicalConsequenceWitness"
+    file.putStrLn "module\tdeclaration\tkind\tunsafe\tpartial\tupstreamAxioms\timpliesAxiom\treductionWitness\tlogicalConsequence\tlogicalConsequenceWitness\trequiredBehavior\tabstractedDependency\truntimeConflictWitness\tequationOperand\toperandImpliesAxiom\toperandReductionWitness\tunchangedTypeAxioms\tunsafePackedObservation\tspecializedEndpointType\tunconditionalLogicalConsequence\tunconditionalLogicalConsequenceWitness\tstrictConstructorIff"
   for owner in modules do
     let some idx := visible.getModuleIdx? owner | throwError "missing official module {owner}"
     let publicNames := visible.header.moduleData[idx]!.constNames.filter publicName
@@ -598,6 +600,7 @@ private def inventory (lib : System.FilePath) (visible strict full witnesses : E
       let some (_, axioms) := localAxioms.binSearch (name, #[]) (fun a b => Name.quickLt a.1 b.1)
         | throwError "missing official axiom closure for {owner}/{name}"
       let typeAxioms ← checkedTypeAxioms official info axioms
+      let constructorIff := OmegaChecks.InitInventory.hasStrictConstructorIff official full info
       let operand := OmegaChecks.InitBoundaries.ChoiceOperands.operand? owner info
       let endpointType : Option String ← match operand with
         | some op => do
@@ -642,7 +645,7 @@ private def inventory (lib : System.FilePath) (visible strict full witnesses : E
             selector.getD "", runtimeConflict.getD "", (operand.map (·.name.toString)).getD "",
             (operand.map fun _ => (``Classical.choice).toString).getD "", (operand.map (·.witness.toString)).getD "",
             String.intercalate "," (typeAxioms.toList.map Name.toString), packedObservation.getD "", endpointType.getD "",
-            (additional.map Prod.fst).getD "", (additional.map (·.2.toString)).getD ""]
+            (additional.map Prod.fst).getD "", (additional.map (·.2.toString)).getD "", if constructorIff then "true" else ""]
       if info.isAxiom then
         directAxioms := directAxioms + 1
         axiomUnique := axiomUnique.insert name
@@ -665,6 +668,7 @@ private def inventory (lib : System.FilePath) (visible strict full witnesses : E
         moduleNative := moduleNative.push ⟨matched, hasSig⟩
         pure (row.setObjVal! "strictNativeSignature" (toJson hasSig))
       else pure row
+      let row := if constructorIff then row.setObjVal! "strictConstructorIff" (toJson true) else row
       let row := if typeAxioms.isEmpty then row else
         row.setObjVal! "unchangedTypeAxioms" (toJson (typeAxioms.map Name.toString))
       let row := match selector with
