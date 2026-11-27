@@ -7,8 +7,6 @@
    digest: Sub-Gaussian tails for finite Hermitian sign matrices. -/
 
 import D5.S3.Quantum.Entanglement.EntanglementBreaking.FiniteSignMatrices
-import Mathlib.Probability.Moments.SubGaussian
-import Mathlib.Probability.UniformOn
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false

@@ -7,7 +7,6 @@
    digest: Output partial transpose preserves the Hermitian sign matrix distribution. -/
 
 import D5.S3.Quantum.Entanglement.EntanglementBreaking.SignMatrixNetBounds
-import Mathlib.Probability.UniformOn
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 set_option maxHeartbeats 1000000

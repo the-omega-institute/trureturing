@@ -8,8 +8,6 @@
 
 import D5.S3.Quantum.Entanglement.EntanglementBreaking.SignMatrixPartialTranspose
 import D5.S3.Quantum.Entanglement.EntanglementBreaking.SignMatrixFailureBounds
-import Mathlib.Analysis.Matrix.Order
-import Mathlib.Analysis.CStarAlgebra.ContinuousFunctionalCalculus.Order
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false

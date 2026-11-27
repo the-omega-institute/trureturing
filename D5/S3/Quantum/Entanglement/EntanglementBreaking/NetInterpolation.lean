@@ -7,7 +7,6 @@
    digest: Bilinear and quadratic interpolation of finite net estimates. -/
 
 import D5.S3.Quantum.Entanglement.EntanglementBreaking.RankNet
-import Mathlib.Analysis.InnerProductSpace.Rayleigh
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false

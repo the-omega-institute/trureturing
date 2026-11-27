@@ -7,7 +7,7 @@
    digest: A right isometric factorization through a prescribed finite dimension. -/
 
 import OmegaBuild.Commands
-import Mathlib
+import Mathlib.Analysis.Matrix.Spectrum
 
 compile_only_with_mathlib
 
