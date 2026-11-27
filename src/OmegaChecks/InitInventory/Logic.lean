@@ -153,6 +153,19 @@ theorem propextFromRightIffIte (h : type_of% (@right_iff_ite_iff)) : type_of% (@
 theorem propextFromGrindIffEq (h : type_of% (@Lean.Grind.iff_eq)) : type_of% (@propext) :=
   fun {a b} eqv => (h a b).mp eqv
 
+private theorem neNegationOfIff {p q : Prop} (equiv : p ↔ q) : p ≠ ¬q := by
+  intro eq
+  have np : ¬p := fun hp => (eq.mp hp) (equiv.mp hp)
+  exact np (eq.mpr (fun hq => np (equiv.mpr hq)))
+
+/-- Taking the second proposition to be the negation of the first gives
+double-negation elimination. Apply it to equality of equivalent propositions. -/
+theorem propextFromNotEqProp (norm : type_of% @Lean.Grind.not_eq_prop) : type_of% @propext := by
+  have dne (p : Prop) : ¬¬p → p :=
+    ((norm p (¬p)).mp (neNegationOfIff (Iff.rfl (a := p)))).mpr
+  intro p q equiv
+  exact dne _ fun ne => neNegationOfIff equiv ((norm p q).mp ne)
+
 
 def choiceFromFix (fix : type_of% (@WellFounded.extrinsicFix.{u,v})) : type_of% (@Classical.choice.{v}) :=
   fun {α} inhabited => @fix PUnit.{u} (fun _ => α) (fun _ => inhabited) (fun _ _ => True)

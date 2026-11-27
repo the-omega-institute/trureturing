@@ -81,6 +81,7 @@ def reductions : List (Name × Name × Name × Name) := [
   (`Init.PropLemmas, `left_iff_ite_iff, `propext, ``propextFromLeftIffIte),
   (`Init.PropLemmas, `right_iff_ite_iff, `propext, ``propextFromRightIffIte),
   (`Init.Grind.Norm, `Lean.Grind.iff_eq, `propext, ``propextFromGrindIffEq),
+  (`Init.Grind.Norm, `Lean.Grind.not_eq_prop, `propext, ``propextFromNotEqProp),
   (`Init.WFExtrinsicFix, `WellFounded.extrinsicFix, `Classical.choice, ``choiceFromFix),
   (`Init.WFExtrinsicFix, `WellFounded.partialExtrinsicFix, `Classical.choice, ``choiceFromFix),
   (`Init.WFExtrinsicFix, `WellFounded.extrinsicFix₂, `Classical.choice, ``choiceFromFix₂),
