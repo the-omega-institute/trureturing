@@ -9,12 +9,8 @@
 import OmegaBuild.Commands
 import Mathlib.Algebra.QuaternionBasis
 import Mathlib.Algebra.CharP.Lemmas
-import Mathlib.Algebra.CharP.Two
-import Mathlib.Algebra.Ring.GeomSum
-import Mathlib.Data.Nat.Factorization.Basic
 import Mathlib.Data.ZMod.Basic
 import Mathlib.RingTheory.Polynomial.Basic
-import Mathlib.RingTheory.Ideal.Quotient.Basic
 
 compile_only_with_mathlib
 
@@ -60,23 +56,30 @@ def correlation {M : ℕ} (hM : 0 < M) (s : Fin M → ℍ[ℤ])
     (u : ℍ[ℤ]) (hu : Noncentral u) (τ : ℤ) : ℍ[ℤ] :=
   ∑ r : Fin M, s r * star (extension hM s u hu ((r.val : ℤ) + τ))
 
+private theorem extension_at {M : ℕ} (hM : 0 < M) (s : Fin M → ℍ[ℤ])
+    (u : ℍ[ℤ]) (hu : Noncentral u) (q : ℤ) (r : Fin M) :
+    extension hM s u hu (q * (M : ℤ) + r.val) = s r * ↑(twistUnit u hu ^ q) := by
+  have hpos : (0 : ℤ) < M := by exact_mod_cast hM
+  obtain ⟨hq, hr⟩ := (Int.ediv_emod_unique (r := (r.val : ℤ)) (q := q)
+    (a := q * (M : ℤ) + (r.val : ℤ)) hpos).2
+    ⟨by ring, by omega, by exact_mod_cast r.isLt⟩
+  simp only [extension, hq, hr, Int.toNat_natCast]
+
 private theorem extension_add {M : ℕ} [NeZero M] (hM : 0 < M)
     (s : Fin M → ℍ[ℤ]) (u : ℍ[ℤ]) (hu : Noncentral u) (r τ : Fin M) :
     extension hM s u hu ((r.val : ℤ) + τ.val) =
       s (r + τ) * (if M ≤ r.val + τ.val then u else 1) := by
-  have hr := r.isLt
-  have ht := τ.isLt
-  unfold extension
-  congr 1
   split_ifs with h
-  · have hpos : (0 : ℤ) < M := by exact_mod_cast hM
-    have he : ((r.val : ℤ) + τ.val) / (M : ℤ) = 1 :=
-      ((Int.ediv_emod_unique (r := (r.val : ℤ) + τ.val - M) hpos).2
-        ⟨by omega, by omega, by omega⟩).1
-    simp [he, twistUnit]
-  · have he : ((r.val : ℤ) + τ.val) / (M : ℤ) = 0 :=
-      Int.ediv_eq_zero_of_lt (by omega) (by omega)
-    simp [he]
+  · have hwrap : (r.val : ℤ) + τ.val = (1 : ℤ) * M + (r + τ).val := by
+      rw [Fin.val_add_eq_ite, ite_eq_left h]
+      omega
+    rw [hwrap, extension_at]
+    simp [twistUnit]
+  · have hplain : (r.val : ℤ) + τ.val = (0 : ℤ) * M + (r + τ).val := by
+      rw [Fin.val_add_eq_ite, ite_eq_right h]
+      omega
+    rw [hplain, extension_at]
+    simp
 
 section Character
 
@@ -160,8 +163,8 @@ private theorem map_correlation {M : ℕ} [NeZero M] (hM : 0 < M)
   rw [correlation, map_sum]
   apply sum_congr rfl
   intro r _
-  rw [map_mul, hstar, extension_add, map_mul, ← mul_assoc]
-  split_ifs <;> simp
+  rw [extension_add, star_mul, map_mul, map_mul, hstar, hstar]
+  split_ifs <;> simp [mul_comm, mul_left_comm]
 
 end Character
 
@@ -312,7 +315,7 @@ autocorrelation at an integer shift strictly between zero and the length. -/
 theorem blake_conjecture_5_2 {M : ℕ} (hM : 2 ≤ M)
     (s : Fin M → ℍ[ℤ]) (hs : ∀ r, IsQ8 (s r))
     (u : ℍ[ℤ]) (hu : Noncentral u) :
-    ∃ τ : ℤ, 0 < τ ∧ τ < (M : ℤ) ∧ ¬ (M : ℤ) ∣ τ ∧
+    ∃ τ : ℤ, 0 < τ ∧ τ < (M : ℤ) ∧ ¬ ((M : ℤ) ∣ τ) ∧
       correlation (by omega) s u hu τ ≠ 0 := by
   classical
   let : NeZero M := ⟨by omega⟩
