@@ -18,6 +18,23 @@ def choiceFromOptionPresence (select : type_of% (@Option.choice.{u}))
   have nonempty : Nonempty (PLift α) := h.elim fun a => ⟨⟨a⟩⟩
   exact ((select (PLift α)).get (present _ nonempty)).down
 
+namespace ExistentialConjunction
+
+def ClosedEquality : Prop := (∃ _ : True, True) = (True ∧ True)
+
+theorem ofRule (rule : type_of% @Lean.Grind.exists_prop) : ClosedEquality := rule
+
+run_cmd
+  let env ← getEnv
+  let some (.defnInfo closed) := env.find? ``ClosedEquality | throwError "missing closed existential equation"
+  let args := closed.value.getAppArgs
+  unless closed.value.getAppFn.constName? == some `Eq && args.size == 3 &&
+      args[1]!.getAppFn.constName? == some `Exists && args[2]!.getAppFn.constName? == some `And &&
+      !Kernel.isDefEqGuarded env {} args[1]! args[2]! do
+    throwError "expected distinct existential and conjunction heads in the closed equation"
+
+end ExistentialConjunction
+
 namespace OptionSelector
 
 def fromSome (select : type_of% (@Option.choice.{u}))
