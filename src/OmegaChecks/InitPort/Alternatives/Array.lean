@@ -7,6 +7,8 @@ public import OmegaChecks.InitPort.Alternatives.ArrayFind
 public import OmegaChecks.InitPort.Alternatives.ArrayMapIdx
 public import OmegaChecks.InitPort.Alternatives.Vector
 
+public import Init.Data.RArray
+import all Init.Data.RArray
 public import Init.Data.Array.DecidableEq
 public import Init.Data.Array.Basic
 public import Init.Data.Nat.Basic
@@ -20,6 +22,42 @@ import all Init.Data.Vector.Basic
 /-! List-backed implementations and induction proofs for the pinned array interfaces. -/
 
 namespace OmegaChecks.InitPort.Alternatives
+
+@[expose] public noncomputable def Lean.RArray.getImpl : type_of% @_root_.Lean.RArray.getImpl :=
+  @_root_.Lean.RArray.get
+
+public theorem Lean.RArray.get_eq_getImpl : @_root_.Lean.RArray.get = @Lean.RArray.getImpl := rfl
+
+private theorem getBranch {α : Type u} (p : Nat) (l r : _root_.Lean.RArray α) (i : Nat) :
+    Lean.RArray.getImpl (.branch p l r) i =
+      if i < p then Lean.RArray.getImpl l i else Lean.RArray.getImpl r i := by
+  by_cases h : i < p
+  · rw [ite_eq_left h]
+    change (Nat.ble p i).rec (l.get i) (r.get i) = l.get i
+    cases e : Nat.ble p i with
+    | false => rfl
+    | true => exact (Nat.not_le_of_lt h (Nat.ble_eq.mp e)).elim
+  · rw [ite_eq_right h]
+    change (Nat.ble p i).rec (l.get i) (r.get i) = r.get i
+    rw [show Nat.ble p i = true from Nat.ble_eq.mpr (Nat.le_of_not_lt h)]
+
+public theorem _root_.OmegaChecks.InitPort.AlternativeEquations.Lean.RArray.getImpl.eq_2 {α : Type u}
+    (i p : Nat) (l r : _root_.Lean.RArray α) :
+    Lean.RArray.getImpl (.branch p l r) i =
+      if i < p then Lean.RArray.getImpl l i else Lean.RArray.getImpl r i := getBranch p l r i
+
+public theorem _root_.OmegaChecks.InitPort.AlternativeEquations.Lean.RArray.getImpl.eq_def {α : Type u}
+    (a : _root_.Lean.RArray α) (i : Nat) :
+    Lean.RArray.getImpl a i = _root_.Lean.RArray.getImpl.match_1 (fun _ => α) a id
+      (fun p l r => if i < p then Lean.RArray.getImpl l i else Lean.RArray.getImpl r i) := by
+  cases a with
+  | leaf x => rfl
+  | branch p l r => exact getBranch p l r i
+
+@[expose] public def Array.instDecidableEq : type_of% @_root_.Array.instDecidableEq :=
+  @_root_.Array.instDecidableEqImpl
+
+public theorem Array.instDecidableEq_csimp : @Array.instDecidableEq = @_root_.Array.instDecidableEqImpl := rfl
 
 @[expose] public def Array.instDecidableEqEmpImpl : type_of% @_root_.Array.instDecidableEqEmpImpl :=
   @_root_.Array.instDecidableEqEmp

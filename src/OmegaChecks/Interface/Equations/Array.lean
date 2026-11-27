@@ -1,5 +1,6 @@
 module
 
+public import Init.Data.RArray
 public import Init.Data.Array.DecidableEq
 public import Init.Data.Array.Lemmas
 public import Init.Data.Vector.Lex
@@ -29,6 +30,14 @@ public theorem Vector.pmapImpl {α : Type u} {β : Type v} {n : Nat} {P : α →
     (f : ∀ a, P a → β) (xs : Vector α n) (h : ∀ a ∈ xs, P a) :
     _root_.Vector.pmap f xs h = _root_.Vector.pmapImpl f xs h := by
   rw [_root_.Vector.pmap_eq_pmapImpl]
+
+public theorem Lean.RArray.getImpl {α : Type u} (a : _root_.Lean.RArray α) (i : Nat) :
+    a.get i = a.getImpl i := by
+  rw [_root_.Lean.RArray.get_eq_getImpl]
+
+public theorem Array.instDecidableEq {α : Type u} [DecidableEq α] :
+    @_root_.Array.instDecidableEqImpl α _ = @_root_.Array.instDecidableEq α _ := by
+  rw [_root_.Array.instDecidableEq_csimp]
 
 public theorem Array.instDecidableEqEmpImpl {α : Type u} (xs : Array α) :
     _root_.Array.instDecidableEqEmp xs = _root_.Array.instDecidableEqEmpImpl xs :=
