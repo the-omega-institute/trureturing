@@ -15,7 +15,9 @@ private def linear (n : Name) : Bool :=
 
 public def supported (n : Name) : Bool :=
   linear n ||
-  [`Lean.RArray.getImpl, `Fin.cases, `Fin.induction, `Fin.induction.go, `Fin.inductionOn, `Fin.reverseInduction,
+  [`Lean.Grind.CommRing.Mon.revlexWF, `Lean.Grind.CommRing.Mon.revlexFuel, `Lean.Grind.CommRing.Mon.revlex,
+   `Lean.Grind.CommRing.Mon.grevlex, `Lean.Grind.CommRing.Power.revlex,
+   `Lean.RArray.getImpl, `Fin.cases, `Fin.induction, `Fin.induction.go, `Fin.inductionOn, `Fin.reverseInduction,
    `Fin.reverseInduction.go, `Fin.lastCases, `Fin.succRec, `Fin.succRecOn,
    `Nat.fold, `Nat.foldTR, `Nat.foldRev, `Nat.dfold, `Nat.dfoldRev, `Nat.any, `Nat.anyTR, `Nat.all, `Nat.allTR,
    `Prod.foldI, `Prod.anyI, `Prod.allI,
@@ -56,6 +58,8 @@ public def wrapper (source strict : Environment) (n : Name) (symbol : String) : 
   unless target.type == InitKernelPort.translate InitKernelPort.portName ci.type do
     throw <| IO.userError s!"indexed eliminator type mismatch: {n}"
   if linear official then checkDataTypes source strict [`Prod, `Option, `List, `Nat.Internal.Linear.Expr]
+  if official.getPrefix == `Lean.Grind.CommRing.Mon || official == `Lean.Grind.CommRing.Power.revlex then
+    checkDataTypes source strict [`Lean.Grind.CommRing.Mon, `Lean.Grind.CommRing.Power, `Ordering]
   if official == `Lean.RArray.getImpl then checkDataTypes source strict [`Lean.RArray]
   if official.getRoot == `Prod then checkDataTypes source strict [`Prod]
   if official.getRoot == `Fin then
