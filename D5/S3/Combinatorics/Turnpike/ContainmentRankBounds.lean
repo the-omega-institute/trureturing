@@ -1,7 +1,7 @@
 /- GID: D5/S3/Combinatorics/Turnpike/ContainmentRankBounds
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Turnpike/ContainmentRankBounds
-   mirror-E: none
+   mirror-E: none(waiver:general-containment-proof)
    anchors: []
    utility: none
    digest: Used distance rank blocks obey containment bounds. -/
