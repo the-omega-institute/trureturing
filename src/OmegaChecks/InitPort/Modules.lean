@@ -228,9 +228,10 @@ unsafe def main (args : List String) : IO Unit := do
     let srcPath := modToFilePath seed owner "olean"
     let orig ← readLevels srcPath
     let idx := (source.getModuleIdx? official).get!
-    -- The compiled syntax renderer calls the Name instance from this private import.
+    -- Compiled syntax rendering and line readers use these private imports in their executable bodies.
     let retained := source.header.moduleData[idx]!.imports.filter fun i =>
-      i.isExported || (official == `Init.Data.Format.Syntax && i.module == `Init.Data.ToString.Name)
+      i.isExported || (official == `Init.Data.Format.Syntax && i.module == `Init.Data.ToString.Name) ||
+        (official == `Init.System.IO && i.module == `Init.Data.String.TakeDrop)
     let mut mappedImports := retained.map fun i =>
       { i with module := i.module.replacePrefix `Init `OmegaInit }
     let baseImports := mergeImports orig[2]!.imports mappedImports
