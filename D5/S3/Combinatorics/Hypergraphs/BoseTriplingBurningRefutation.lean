@@ -6,6 +6,16 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Combinatorics/Hypergraphs/BoseTriplingBurningRefutation.claim; result=D5/S3/Combinatorics/Hypergraphs/BoseTriplingBurningRefutation.result; claim=D5/S3/Combinatorics/Hypergraphs/BoseTriplingBurningRefutation.claim
    digest: Ordinary burning of a cyclic Steiner triple system and its Bose tripling. -/
 
+/-
+result:
+  proof_shape: content
+  direct_frozen_dependencies: none
+  escape_witness: burning13 and burning39 certify the exact increase from 5 to 6.
+  admission_basis: open-problem-resolution (#34982; Refuted)
+  utility: certified-instance, refutes claim for the cited Bose tripling.
+The designated refutation result is exempt from four-slot escape registration.
+-/
+
 import Mathlib.Data.Finset.Powerset
 import Mathlib.Data.Fintype.Fin
 import Mathlib.Data.Fintype.BigOperators
