@@ -1,5 +1,6 @@
 module
 public import Lean
+import all Init.Internal.Order.Basic
 import Lean.Replay
 import all Lean.Util.CollectAxioms
 public import OmegaChecks.InitInventory.Logic
@@ -318,6 +319,34 @@ theorem excludedMiddleOfFlatCSup (pick : type_of% @flat_csup.{1})
     (valid : ∀ {α : Type} (c : Option α → Prop), chain c → is_sup c (@pick (Option α) none c))
     (p : Prop) : p ∨ ¬p :=
   excludedMiddleOfFlatSuprema (fun {_ c} hc => ⟨_, valid c hc⟩) p
+
+/-- The tag of the returned option for the predicate containing every point
+of the flat order, including its bottom. -/
+abbrev flatOptionTag (pick : type_of% @flat_csup.{u+1}) (α : Type u) : Bool :=
+  (@pick (Option α) none (fun _ => True)).inner.isSome
+
+abbrev returnsFlatSome (pick : type_of% @flat_csup.{u+1}) : Prop :=
+  ∀ (α : Type u), Nonempty α → flatOptionTag (@pick) α = true
+
+/-- The official definition selects a nonbottom point whenever one exists,
+including for predicates that are not chains. -/
+theorem officialFlatPresence : returnsFlatSome (@flat_csup.{u+1}) := by
+  intro α nonempty
+  have has : ∃ x : FlatOrder (none : Option α), True ∧ x ≠ none :=
+    nonempty.elim fun a => ⟨some a, trivial, fun eq => nomatch eq⟩
+  unfold flatOptionTag flat_csup
+  rw [dite_eq_left has]
+  have notBottom := (Classical.choose_spec has).2
+  generalize eq : Classical.choose has = x at *
+  cases x with
+  | none => exact (notBottom rfl).elim
+  | some => rfl
+
+/-- Preserving the pinned tag exposes a witness for every inhabited sort. -/
+def choiceFromFlatPresence (pick : type_of% @flat_csup.{u+1}) (present : returnsFlatSome (@pick)) :
+    type_of% @Classical.choice.{u} := fun {α} nonempty =>
+  ((@pick (Option (PLift α)) none (fun _ => True)).inner.get
+    (present (PLift α) (nonempty.elim fun x => ⟨⟨x⟩⟩))).down
 
 theorem funextOfPointwiseOrder
     (order : type_of% @Lean.Order.instOrderPi.{u,v})

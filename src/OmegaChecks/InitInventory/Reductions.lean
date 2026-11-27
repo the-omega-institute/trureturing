@@ -95,6 +95,7 @@ def reductions : List (Name × Name × Name × Name) := [
   (`Init.WFExtrinsicFix, `WellFounded.partialExtrinsicFix₃, `Classical.choice, ``choiceFromFix₃),
   -- Even the logically opaque loop must return an element when its three inputs are units.
   (`Init.WFExtrinsicFix, `WellFounded.opaqueFix₃, `Classical.choice, ``choiceFromFix₃),
+  (`Init.Internal.Order.Basic, `Lean.Order.flat_csup, `Classical.choice, ``InternalOrder.choiceFromFlatPresence),
   (`Init.Grind.Injective, `Lean.Grind.leftInv, `Classical.choice, ``choiceFromLeftInv),
   (`Init.While, `repeatM, `Classical.choice, ``choiceFromRepeatM),
   (`Init.Prelude, `unsafeCast, `sorryAx, ``sorryAxFromUnsafeCast)] ++
@@ -277,6 +278,18 @@ run_cmd
     else if [``Grind.CommRing.le_norm_expr, ``Grind.CommRing.le_norm_expr_nc].contains source.name then
       Elab.Command.liftCoreM <| Meta.MetaM.run' do
         mkArrow (← translatedComparisonType source) target.type
+    else if source.name == ``Order.flat_csup then
+      Elab.Command.liftCoreM <| Meta.MetaM.run' do
+        let [u] := levels | throwError "unexpected flat choice universe"
+        let sourceLevels := [Level.succ u]
+        let presence := mkConst ``InternalOrder.returnsFlatSome [u]
+        let pinned ← getConstInfo ``InternalOrder.officialFlatPresence
+        unless Kernel.isDefEqGuarded env {} (pinned.type.instantiateLevelParams pinned.levelParams [u])
+            (mkApp presence (mkConst source.name sourceLevels)) do
+          throwError "invalid pinned option observation for {source.name}"
+        Meta.withLocalDeclD `pick (source.type.instantiateLevelParams source.levelParams sourceLevels) fun pick => do
+          let conclusion := target.type.instantiateLevelParams target.levelParams [u]
+          Meta.mkForallFVars #[pick] (← mkArrow (mkApp presence pick) conclusion)
     else if source.name == ``Quot.indepCoherent then
       Elab.Command.liftCoreM <| Meta.MetaM.run' do
         let [u] := levels | throwError "unexpected quotient universe parameters"

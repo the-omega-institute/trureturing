@@ -502,8 +502,8 @@ private def conditionalConsequence? (owner name : Name) : Option (String × Name
       return ((``Classical.em).toString, ``OmegaChecks.InitBoundaries.InternalOrder.excludedMiddleOfFlatCCPO,
         "At options with bottom none the order underlying the proposed CCPO agrees with the flat order")
     if name == ``Lean.Order.flat_csup then
-      return ((``Classical.em).toString, ``OmegaChecks.InitBoundaries.InternalOrder.excludedMiddleOfFlatCSup,
-        "On chains of options with bottom none, the result satisfies flat_csup_is_sup")
+      return ((``Classical.choice).toString, ``OmegaChecks.InitBoundaries.InternalOrder.choiceFromFlatPresence,
+        "For nonempty α and the universal predicate on Option α with bottom none, the result has tag some, as in the pinned definition")
   if owner == `Init.Data.String.Pattern.Basic then
     if name == ``String.Slice.Pattern.ToForwardSearcher.DefaultForwardSearcher.instIteratorLoopIdSearchStep then
       return ("∀ f : Nat → Bool, Decidable (∃ n, f n = true)",
