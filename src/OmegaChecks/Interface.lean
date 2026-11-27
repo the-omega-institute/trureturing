@@ -349,18 +349,11 @@ private def consumerAliases (env : Environment) (owner : Name) : IO (Array Alias
   let some idx := env.getModuleIdx? owner | throw <| IO.userError s!"missing consumer module {owner}"
   return (aliasExtension.getModuleEntries env idx).filter fun (name, _) => publicName name
 
-/-- Restore imported name resolution from the isolated environment's compiled alias entries. -/
-private def withImportedAliases (env : Environment) : Environment := Id.run do
-  let mut aliases : AliasState := {}
-  for idx in [:env.header.modules.size] do
-    aliases := (aliasExtension.getModuleEntries env idx).foldl addAliasEntry aliases
-  return aliasExtension.setState env aliases.switch
-
 private def checkConsumerAliases (strict reference : Environment) (rename : Name → Name)
     (modules : Array Name) : IO (Array Name) := do
   let mut targets := #[]
-  let sourceEnv := withImportedAliases strict
-  let targetEnv := withImportedAliases reference
+  let sourceEnv := ModuleSurface.withImportedAliases strict
+  let targetEnv := ModuleSurface.withImportedAliases reference
   for owner in modules do
     OmegaChecks.FieldMethods.check sourceEnv targetEnv owner rename
     let source ← consumerAliases strict owner

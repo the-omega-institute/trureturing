@@ -18,6 +18,15 @@ def main (args : List String) : IO Unit := do
   let mut exported := 0
   let mut separate := 0
   let mut structures := 0
+  for (root, env) in roots do
+    for owner in official.header.moduleNames do
+      let originalIdx := (official.getModuleIdx? owner).get!
+      let expected := (aliasExtension.getModuleEntries official originalIdx).filterMap fun (alias, target) =>
+        if env.contains (`Omega ++ target) then some (`Omega ++ alias, `Omega ++ target) else none
+      let actual := (env.getModuleIdx? (owner.replacePrefix `Init `OmegaInit)).map fun idx =>
+        aliasExtension.getModuleEntries env idx
+      unless actual.getD #[] == expected do
+        throw <| IO.userError s!"exported aliases differ from {owner} under import {root}"
   for (name, _) in available.constants.toList do
     unless name.getRoot == `Omega do continue
     let upstream := name.replacePrefix `Omega .anonymous

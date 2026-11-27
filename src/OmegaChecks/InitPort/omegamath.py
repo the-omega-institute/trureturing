@@ -75,6 +75,19 @@ example (p : Omega.Prod Omega.Nat Omega.Nat) (b : Omega.Nat) :
     Omega.Eq ({ p with snd := b }).snd b := Omega.rfl
 example {p : Prop} (d : Omega.Decidable p) : Omega.Eq d d :=
     Omega.Decidable.falseTrueCases (fun _ => Omega.rfl) (fun _ => Omega.rfl) d
+example {p : Prop} (h : p) :
+    Omega.Eq (@Omega.decide p (Omega.isTrue h)) Omega.true := Omega.rfl
+def decisionTag {p : Prop} (d : Omega.Decidable p) : Omega.Bool :=
+  match d with
+  | Omega.isTrue _ => Omega.true
+  | Omega.isFalse _ => Omega.false
+example {p : Prop} (h : p) : Omega.Eq (decisionTag (Omega.isTrue h)) Omega.true := Omega.rfl
+example {p : Prop} (h : Omega.Not p) : Omega.Eq (decisionTag (Omega.isFalse h)) Omega.false := Omega.rfl
+def bothTrue : Omega.Bool → Omega.Bool → Omega.Bool
+  | Omega.true, Omega.true => Omega.true
+  | _, _ => Omega.false
+example : Omega.Eq (bothTrue Omega.true Omega.true) Omega.true := Omega.rfl
+example : Omega.Eq (bothTrue Omega.false Omega.true) Omega.false := Omega.rfl
 """)
     subprocess.run([lean, "--run", Path(__file__).with_name("RootImports.lean"),
                     output, basis / "lib", *foundation], cwd=ROOT, check=True)

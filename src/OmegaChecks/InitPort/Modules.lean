@@ -57,11 +57,21 @@ private def elaboratorEntries (source seed : Environment) (idx : ModuleIdx) (own
   let aux := auxRecExt.getModuleEntries source idx (level := level) ++ builtin
   for name in names aux (inherited.getD #[]) do
     env := markAuxRecursor env name
+  let forOwner := fun t => source.getModuleIdxFor? t == some idx
+  let mut aliases := #[]
+  for (alias, target) in aliasExtension.getModuleEntries source idx (level := level) do
+    let port := renamed target
+    if available.contains port || (!forOwner target && seed.contains port) then
+      aliases := aliases.push (renamed alias, port)
+  if let some old := seed.getModuleIdx? owner then
+    for entry in aliasExtension.getModuleEntries seed old (level := level) do
+      unless aliases.contains entry do aliases := aliases.push entry
+  for entry in aliases do env := aliasExtension.addEntry env entry
   -- The empty encoder has no declarations. The two input entry arrays have already
   -- been filtered to this level, so export the assembled tags without filtering again.
   let data ← mkModuleData env .private
   return data.entries.filter fun e =>
-    #[matchPatternAttr.ext.name, Elab.Term.elabAsElim.ext.name, auxRecExt.name].contains e.1
+    #[matchPatternAttr.ext.name, Elab.Term.elabAsElim.ext.name, auxRecExt.name, aliasExtension.name].contains e.1
 
 /-- A structure literal needs its field order, inherited projections and binder information. -/
 private def structureEntries (source port : Environment) (idx : ModuleIdx) (owner : Name)
@@ -89,7 +99,9 @@ private def structureEntries (source port : Environment) (idx : ModuleIdx) (owne
   let mut entries := #[]
   for ext in ← persistentEnvExtensionsRef.get do
     if ext.name == structureExt.name || ext.name == projectionFnInfoExt.name then
-      let data := (ext.exportEntriesFn env (ext.getState (asyncMode := .sync) env)).get level
+      -- Structure registrations live in the main environment. Read the extension
+      -- using its own mode so its local state survives distribution.
+      let data := (ext.exportEntriesFn env (ext.getState env)).get level
       unless data.isEmpty do entries := entries.push (ext.name, data)
   return entries
 
@@ -263,7 +275,7 @@ def main (args : List String) : IO Unit := do
         !selected.contains e.1 && e.1 != Meta.instanceExtension.ext.name &&
         e.1 != structureExt.name && e.1 != projectionFnInfoExt.name &&
         e.1 != matchPatternAttr.ext.name && e.1 != Elab.Term.elabAsElim.ext.name &&
-        e.1 != auxRecExt.name)) ++ replacement ++ instances ++ structures ++ tags
+        e.1 != auxRecExt.name && e.1 != aliasExtension.name)) ++ replacement ++ instances ++ structures ++ tags
       let data : ModuleData := { previous with entries, isModule := true, imports := mergeImports previous.imports mappedImports, constants := cs, constNames := cs.map (·.name) }
       parts := parts.push (#[path,path.addExtension "server",path.addExtension "private"][i]!,data)
     graph := graph.push (owner.toString, (mergeImports orig[2]!.imports mappedImports).map (·.module.toString))

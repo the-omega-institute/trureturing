@@ -9,6 +9,13 @@ open Lean
 
 namespace OmegaChecks.ModuleSurface
 
+/-- Restore name resolution from the alias entries of an isolated compiled environment. -/
+def withImportedAliases (env : Environment) : Environment := Id.run do
+  let mut aliases : AliasState := {}
+  for idx in [:env.header.modules.size] do
+    aliases := (aliasExtension.getModuleEntries env idx).foldl addAliasEntry aliases
+  return aliasExtension.setState env aliases.switch
+
 def isBasis (owner : Name) : Bool :=
   owner.getRoot == `OmegaInit || owner.getRoot == `OmegaMathlib
 
@@ -210,7 +217,7 @@ def check (strict : Environment) : IO (Array (Name × Name)) := do
       checkUmbrella strict port idx
       continue
     let official := counterpart port
-    let reference ← importModules #[{module := official}] {} (level := .exported)
+    let reference := withImportedAliases (← importModules #[{module := official}] {} (level := .exported))
     let officialClasses := classParameters reference (Array.range reference.header.modules.size)
     let visible ← publicClosure strict port
     let visibleIndices := (Array.range strict.header.modules.size).filter fun i =>
@@ -244,7 +251,10 @@ def check (strict : Environment) : IO (Array (Name × Name)) := do
         let officialAlias := alias.replacePrefix `Omega .anonymous
         let officialTarget := target.replacePrefix `Omega .anonymous
         let resolved := ResolveName.resolveGlobalName reference {} .anonymous [] officialAlias
-        unless resolved == [(officialTarget, [])] do
+        let some originalOwner := reference.getModuleIdx? (counterpart owner)
+          | throw <| IO.userError s!"missing owner of alias {alias} in {official}"
+        unless (aliasExtension.getModuleEntries reference originalOwner).contains (officialAlias, officialTarget) &&
+            resolved == [(officialTarget, [])] do
           throw <| IO.userError s!"unmatched public alias {alias} for {target} exposed by {port} in {official}"
         let some home := strict.getModuleIdxFor? target | throw <| IO.userError s!"unknown alias target {target}"
         roots := roots.insert target (counterpart strict.header.moduleNames[home]!)
