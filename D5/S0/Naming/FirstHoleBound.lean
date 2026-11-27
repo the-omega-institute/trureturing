@@ -5,7 +5,9 @@
    anchors: []
    digest: For a finite support S ⊆ ℕ with budget m = |S|, the first hole γ(S) = min(ℕ ∖ S) never exceeds the budget: γ(S) ≤ |S|, with equality exactly when S is the prefix (initial segment) {0,…,|S|−1} = Finset.range |S|. Proof by pigeonhole on Nat.find: range (|S|+1) ⊆ S would force |S|+1 ≤ |S|; the equality case pins range |S| ⊆ S and closes with eq_of_subset_of_card_le. Only this combinatorial first-hole characterization is recorded (定理 6.4(b) core); the measure clause μ(G(t)) = n^{−|S|} and the metric diameter formula diam G(t) = 2^{−γ(S)} — of which "prefix names uniquely minimize diameter" is the interpretation — are not covered. -/
 
-import Mathlib
+import Mathlib.Data.Finset.Card
+import Mathlib.Data.Fintype.EquivFin
+import Mathlib.Data.Nat.Find
 
 namespace D5.S0.Naming.FirstHoleBound
 
