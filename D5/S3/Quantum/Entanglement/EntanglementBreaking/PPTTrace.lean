@@ -16,7 +16,7 @@ set_option relaxedAutoImplicit false
 noncomputable section
 namespace D5.S3.Quantum.Entanglement.EntanglementBreaking
 
-open Matrix
+open _root_.Matrix
 open scoped ComplexOrder
 open D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf
 open D5.S3.Quantum.Dynamics.KickedIsingNegativityRefutation (partialTranspose)
@@ -49,8 +49,11 @@ private theorem completelyPositive_iff_left_amplifications {a b : ℕ}
     · exact (h k hk (hX.submatrix Prod.swap)).submatrix Prod.swap
     · have hk0 : k = 0 := by omega
       subst k
-      exact (Subsingleton.elim _ (0 : Matrix (Fin b × Fin 0) (Fin b × Fin 0) ℂ)).symm ▸
-        PosSemidef.zero
+      have hzero :
+          (amplify 0 Φ (X.submatrix Prod.swap Prod.swap)).submatrix Prod.swap Prod.swap =
+            (0 : Matrix (Fin b × Fin 0) (Fin b × Fin 0) ℂ) := Subsingleton.elim _ _
+      rw [hzero]
+      exact PosSemidef.zero
 
 /-- Decomposability as a sum of a completely positive and a completely copositive map. -/
 def IsDecomposable {a b : ℕ} (Φ : MatrixMap (Fin a) (Fin b) ℂ) : Prop :=

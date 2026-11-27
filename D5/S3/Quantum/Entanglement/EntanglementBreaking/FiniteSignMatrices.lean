@@ -14,7 +14,7 @@ set_option relaxedAutoImplicit false
 noncomputable section
 namespace D5.S3.Quantum.Entanglement.EntanglementBreaking
 
-open Matrix
+open _root_.Matrix
 open scoped ComplexOrder
 open D5.S3.Quantum.Dynamics.KickedIsingNegativityRefutation (partialTranspose)
 open D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf
@@ -36,7 +36,7 @@ theorem finiteSignMatrix_apply_diag {α : Type} [LinearOrder α] [DecidableEq α
 
 theorem signScalar_normSq (ε η : Bool) :
     Complex.normSq (signScalar ε η) = (18 / 25 : ℝ) := by
-  simp [signScalar, Complex.normSq, mul_pow]
+  simp [signScalar, Complex.normSq]
   split <;> split <;> norm_num
 
 theorem finiteSignMatrix_isHermitian {α : Type} [LinearOrder α] [DecidableEq α]
@@ -50,7 +50,7 @@ theorem finiteSignMatrix_isHermitian {α : Type} [LinearOrder α] [DecidableEq �
     simp [finiteSignMatrix]
   · by_cases hlt : i < j
     · have hjni : ¬j < i := not_lt_of_ge hlt.le
-      simp [finiteSignMatrix, hij, hlt, hjni, hlt.ne', Ne.symm hij]
+      simp [finiteSignMatrix, hij, hlt, hjni, hlt.ne']
     · have hji : j < i := lt_of_le_of_ne (le_of_not_gt hlt) (Ne.symm hij)
       simp [finiteSignMatrix, hij, hlt, hji, Ne.symm hij]
 
@@ -61,7 +61,7 @@ theorem finiteSignMatrix_offdiag_normSq {α : Type} [LinearOrder α] [DecidableE
   by_cases hlt : i < j
   · simp [finiteSignMatrix, hij, hlt, signScalar_normSq]
   · have hji : j < i := lt_of_le_of_ne (le_of_not_gt hlt) hij.symm
-    simp [finiteSignMatrix, hij, hlt, hji, signScalar_normSq]
+    simp [finiteSignMatrix, hij, hlt, signScalar_normSq]
 
 private theorem trace_mul_conjTranspose_frobenius {α : Type} [Fintype α]
     (A : Matrix α α ℂ) :
@@ -140,20 +140,20 @@ def finiteSignSample {d : ℕ} (ε η : (Fin d × Fin d) → (Fin d × Fin d) �
 theorem finiteSignSample_isHermitian {d : ℕ}
     (ε η : (Fin d × Fin d) → (Fin d × Fin d) → Bool) :
     (finiteSignSample ε η).IsHermitian := by
-  letI : LinearOrder (Fin d × Fin d) := Equiv.linearOrder finProdFinEquiv
+  let _ : LinearOrder (Fin d × Fin d) := Equiv.linearOrder finProdFinEquiv
   exact finiteSignMatrix_isHermitian ε η
 
 theorem finiteSignSample_trace_zero {d : ℕ}
     (ε η : (Fin d × Fin d) → (Fin d × Fin d) → Bool) :
     (finiteSignSample ε η).trace = 0 := by
-  letI : LinearOrder (Fin d × Fin d) := Equiv.linearOrder finProdFinEquiv
+  let _ : LinearOrder (Fin d × Fin d) := Equiv.linearOrder finProdFinEquiv
   exact finiteSignMatrix_trace_zero ε η
 
 theorem finiteSignSample_energy {d : ℕ}
     (ε η : (Fin d × Fin d) → (Fin d × Fin d) → Bool) :
     ((finiteSignSample ε η * finiteSignSample ε η).trace).re =
       (18 / 25 : ℝ) * (d : ℝ)^2 * ((d : ℝ)^2 - 1) := by
-  letI : LinearOrder (Fin d × Fin d) := Equiv.linearOrder finProdFinEquiv
+  let _ : LinearOrder (Fin d × Fin d) := Equiv.linearOrder finProdFinEquiv
   rw [show finiteSignSample ε η = finiteSignMatrix ε η from rfl,
     finiteSignMatrix_energy]
   simp only [Fintype.card_prod, Fintype.card_fin, Nat.cast_mul]
@@ -163,7 +163,7 @@ theorem finiteSignSample_energy_lower {d : ℕ} (hd : 2 ≤ d)
     (ε η : (Fin d × Fin d) → (Fin d × Fin d) → Bool) :
     (d : ℝ)^4 / 2 ≤
       ((finiteSignSample ε η * finiteSignSample ε η).trace).re := by
-  letI : LinearOrder (Fin d × Fin d) := Equiv.linearOrder finProdFinEquiv
+  let _ : LinearOrder (Fin d × Fin d) := Equiv.linearOrder finProdFinEquiv
   rw [finiteSignSample_energy]
   have h2 : (2 : ℝ) ≤ d := by exact_mod_cast hd
   have hx : 0 ≤ (d : ℝ)^2 := sq_nonneg _
@@ -183,7 +183,7 @@ theorem finiteSignSample_conditional {k d : ℕ} (hk : 2 ≤ k)
     ∃ Φ : MatrixMap (Fin d) (Fin d) ℂ,
       inputChoi Φ = choiCandidate (finiteSignSample ε η) ∧
         IsKEB k Φ ∧ ¬ IsDecomposable Φ := by
-  letI : LinearOrder (Fin d × Fin d) := Equiv.linearOrder finProdFinEquiv
+  let _ : LinearOrder (Fin d × Fin d) := Equiv.linearOrder finProdFinEquiv
   have hkd : k ≤ d := by
     have hkpow : k ≤ k ^ 3 := Nat.le_pow (by decide)
     omega

@@ -17,7 +17,7 @@ noncomputable section
 
 namespace D5.S3.Quantum.Entanglement.EntanglementBreaking
 
-open Matrix
+open _root_.Matrix
 open scoped ComplexOrder
 open D5.S3.Quantum.Entanglement.WitnessKernelTraceCriteriaRefutation (schmidtRank)
 
@@ -30,7 +30,7 @@ private theorem matrix_finrank_real (m n : ℕ) :
 
 section OperatorNorm
 
-open scoped Matrix.Norms.L2Operator
+open scoped _root_.Matrix.Norms.L2Operator
 
 /-- Rectangular Euclidean operator norm. -/
 def rectangularOpNorm {m n : ℕ} (U : Matrix (Fin m) (Fin n) ℂ) : ℝ :=
@@ -49,7 +49,7 @@ private theorem stiefel_mulVec_norm {d k : ℕ} {U : Matrix (Fin d) (Fin k) ℂ}
 
 section OperatorNorm
 
-open scoped Matrix.Norms.L2Operator
+open scoped _root_.Matrix.Norms.L2Operator
 
 private theorem stiefel_opNorm_le_one {d k : ℕ} {U : Matrix (Fin d) (Fin k) ℂ}
     (hU : Uᴴ * U = 1) : rectangularOpNorm U ≤ 1 := by
@@ -90,7 +90,7 @@ private theorem rectangularOpNorm_nonneg {m n : ℕ} (U : Matrix (Fin m) (Fin n)
 
 end OperatorNorm
 
-open scoped Matrix.Norms.Frobenius
+open scoped _root_.Matrix.Norms.Frobenius
 
 theorem exists_frobenius_sphere_net {m n : ℕ} :
     ∃ N : Finset (Matrix (Fin m) (Fin n) ℂ),

@@ -13,7 +13,7 @@ set_option relaxedAutoImplicit false
 set_option maxHeartbeats 1000000
 noncomputable section
 namespace D5.S3.Quantum.Entanglement.EntanglementBreaking
-open Matrix
+open _root_.Matrix
 open MeasureTheory ProbabilityTheory
 open D5.S3.Quantum.Dynamics.KickedIsingNegativityRefutation (partialTranspose)
 
@@ -135,7 +135,7 @@ private theorem ptBitTransform_involutive {d : ℕ} (ω : HermitianSignIndex (PT
 end D5.S3.Quantum.Entanglement.EntanglementBreaking
 
 namespace D5.S3.Quantum.Entanglement.EntanglementBreaking
-open Matrix
+open _root_.Matrix
 open D5.S3.Quantum.Dynamics.KickedIsingNegativityRefutation (partialTranspose)
 
 theorem partialTranspose_signCubeSample {d : ℕ}
@@ -198,7 +198,7 @@ theorem partialTranspose_signCubeSample {d : ℕ}
 end D5.S3.Quantum.Entanglement.EntanglementBreaking
 
 namespace D5.S3.Quantum.Entanglement.EntanglementBreaking
-open Matrix
+open _root_.Matrix
 open MeasureTheory ProbabilityTheory
 open D5.S3.Quantum.Dynamics.KickedIsingNegativityRefutation (partialTranspose)
 

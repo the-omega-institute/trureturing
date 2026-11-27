@@ -18,8 +18,8 @@ noncomputable section
 
 namespace D5.S3.Quantum.Entanglement.EntanglementBreaking
 
-open Matrix MeasureTheory
-open scoped ComplexOrder MatrixOrder Matrix.Norms.L2Operator
+open _root_.Matrix MeasureTheory
+open scoped ComplexOrder MatrixOrder _root_.Matrix.Norms.L2Operator
 open D5.S3.Quantum.Dynamics.KickedIsingNegativityRefutation (partialTranspose)
 open D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf (MatrixMap)
 

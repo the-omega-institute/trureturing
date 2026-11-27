@@ -14,7 +14,7 @@ set_option relaxedAutoImplicit false
 noncomputable section
 namespace D5.S3.Quantum.Entanglement.EntanglementBreaking
 
-open Matrix
+open _root_.Matrix
 open scoped ComplexOrder
 open D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf
 open D5.S3.Quantum.Dynamics.KickedIsingNegativityRefutation (partialTranspose)

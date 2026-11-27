@@ -17,7 +17,7 @@ noncomputable section
 
 namespace D5.S3.Quantum.Entanglement.EntanglementBreaking
 
-open Matrix
+open _root_.Matrix
 open scoped InnerProductSpace
 open D5.S3.Quantum.Entanglement.WitnessKernelTraceCriteriaRefutation (schmidtRank)
 
@@ -103,7 +103,7 @@ private theorem bounded_unit_pair_of_net {E : Type*} [NormedAddCommGroup E]
   refine (hunit x y hx hy hxn hyn).trans ((le_div_iff₀ (by linarith)).mpr ?_)
   linarith
 
-open scoped Matrix.Norms.Frobenius
+open scoped _root_.Matrix.Norms.Frobenius
 
 private abbrev BipartiteSpace (d : ℕ) := EuclideanSpace ℂ (Fin d × Fin d)
 

@@ -17,7 +17,7 @@ set_option relaxedAutoImplicit false
 noncomputable section
 namespace D5.S3.Quantum.Entanglement.EntanglementBreaking
 
-open Matrix
+open _root_.Matrix
 open scoped ComplexOrder
 
 /-- All rows of a rectangular matrix are supported by one k-dimensional

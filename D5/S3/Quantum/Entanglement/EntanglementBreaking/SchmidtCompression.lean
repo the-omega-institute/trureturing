@@ -17,13 +17,13 @@ set_option relaxedAutoImplicit false
 noncomputable section
 namespace D5.S3.Quantum.Entanglement.EntanglementBreaking
 
-open Matrix
+open _root_.Matrix
 open scoped ComplexOrder
 open D5.S3.Resource.CompositeCones
 open D5.S3.Resource.EntanglementWitness
 open D5.S3.Quantum.Entanglement.AbsoluteSeparability.ContractionBlocks
 open D5.S3.Quantum.Entanglement.WitnessKernelTraceCriteriaRefutation (schmidtRank)
-open scoped Kronecker Matrix.Norms.L2Operator
+open scoped Kronecker _root_.Matrix.Norms.L2Operator
 
 /-- The bound in the hypothesis, using the pinned coefficient-matrix Schmidt rank. -/
 def SchmidtQuadraticBound {d : ℕ} (k : ℕ)

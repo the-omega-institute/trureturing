@@ -104,7 +104,7 @@ private theorem signLinearForm_hasSubgaussianMGF_le {ι : Type*} [Fintype ι]
   have h := signLinearForm_hasSubgaussianMGF a
   exact ⟨h.integrable_exp_mul, fun s => (h.mgf_le s).trans (by gcongr)⟩
 
-open Matrix
+open _root_.Matrix
 
 /-- Two independent bits for each ordered pair of matrix indices. -/
 abbrev HermitianSignIndex (α : Type) := Bool × (α × α)

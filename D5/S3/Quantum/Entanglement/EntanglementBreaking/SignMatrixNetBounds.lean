@@ -17,7 +17,7 @@ noncomputable section
 
 namespace D5.S3.Quantum.Entanglement.EntanglementBreaking
 
-open Matrix MeasureTheory
+open _root_.Matrix MeasureTheory
 open D5.S3.Quantum.Dynamics.KickedIsingNegativityRefutation (partialTranspose)
 
 private abbrev Sample (d : ℕ) := HermitianSignIndex (Fin d × Fin d) → Bool
