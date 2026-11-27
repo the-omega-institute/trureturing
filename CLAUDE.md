@@ -709,9 +709,9 @@ workflow/脚本/make 永久不得物化或执行 base 树代码,不得以兜底/
 
 ### 8.7 原生同步等待与外部轮询边界
 
-**等待 PR required checks 一律按第 8.11 条。** 同一 PR 的当前 head 只用一个仓库原生 watcher。禁止用 `gh pr checks --watch`、`gh run watch`、API 或自写循环等待这组检查。watcher 不可用时，该 head 的检查结论记为未验证。
+**等待 PR required checks。** 跨仓操作优先使用目标仓库的 `pr-open`、`pr-watch` 入口。目标仓库没有专用入口时，从当前 PR head 的检查链接取得各条必需 Actions 运行的 run ID，用 `gh run watch <run-id> --interval 300 --exit-status` 等到结束，合并前核对该 head 的全部必需检查。本仓已提供原生入口，按第 8.11 条执行。 同一 PR 的当前 head 只用一个仓库原生 watcher。禁止用 `gh pr checks --watch`、`gh run watch`、API 或自写循环等待这组检查。watcher 不可用时，该 head 的检查结论记为未验证。
 
-**等待单次 GitHub Actions 运行。** Release 发布、缓存重建和合入后首次 push 等场景，确认 run ID 后，在一个宿主后台作业中执行 `gh run watch <run-id> --exit-status`。同一 run 复用这个 watcher，收到完成通知后读取退出结果。不要在 watcher 外反复调用宿主的 `wait`、`gh run view` 或另起等待循环。
+**等待单次 GitHub Actions 运行。** 检查 push CI 时，先用 `gh run list --event push --branch <分支> --commit <完整提交 SHA>` 确认此次推送触发的目标 workflow 和 run ID，再在宿主后台作业中执行 `gh run watch <run-id> --interval 300 --exit-status`，每五分钟刷新一次，直至运行结束。其他事件触发的 Release 发布或缓存重建，确认对应 run ID 后执行 `gh run watch <run-id> --exit-status`。同一 run 复用这个 watcher，收到完成通知后读取退出结果。不要在 watcher 外反复调用宿主的 `wait`、`gh run view` 或另起等待循环。
 
 **其他等待有原生同步阻塞原语时就使用它。** 用一个宿主后台作业运行对应原语，如子进程 `wait` 或 make。
 
