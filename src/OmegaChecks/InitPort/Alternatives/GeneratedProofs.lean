@@ -9,6 +9,7 @@ import all Init.Data.Iterators.Combinators.Monadic.Take
 import all Init.Data.List.BasicAux
 import all Init.Data.List.Count
 import all Init.Data.List.Erase
+import all Init.Data.List.Impl
 import all Init.Data.List.Lemmas
 import all Init.Data.List.Lex
 import all Init.Data.List.MapIdx
@@ -247,5 +248,23 @@ public theorem ByteArray.utf8DecodeChar?.assemble₂._proof_3 :
   exact Nat.or_lt_two_pow (shifted_byte_lt (w &&& 31) 6 (by decide))
     (Nat.lt_of_lt_of_le (UInt8.toNat_lt_size (x &&& 63))
       (Nat.pow_le_pow_right (Nat.zero_lt_succ 1) (by decide : 8 ≤ 14)))
+
+public theorem List.findRev?TR.eq_1 :
+    type_of% (private_decl% @_root_.List.findRev?TR.eq_1) := by
+  intros
+  rw [← _root_.List.findRev?_eq_findRev?TR]
+  exact _root_.List.findRev?_eq_find?_reverse
+
+public theorem List.findSomeRev?TR.eq_1 :
+    type_of% (private_decl% @_root_.List.findSomeRev?TR.eq_1) := by
+  intros
+  rw [← _root_.List.findSomeRev?_eq_findSomeRev?TR]
+  exact _root_.List.findSomeRev?_eq_findSome?_reverse
+
+public theorem List.foldrTR.eq_1 :
+    type_of% (private_decl% @_root_.List.foldrTR.eq_1) := by
+  intro α β f b xs
+  rw [← _root_.List.foldr_eq_foldrTR]
+  exact _root_.Array.foldr_toList (xs := xs.toArray) f
 
 end OmegaChecks.InitPort.Alternatives
