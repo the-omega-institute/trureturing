@@ -89,17 +89,11 @@ public unsafe def main (args : List String) : IO Unit := do
       let some idx := env.getModuleIdxFor? n | throw <| IO.userError s!"missing literal type {n}"
       writeCode lib env.header.moduleNames[idx]! (← compileLayouts env n) layouts
       env ← read
-  if env.contains `Omega.String then checkStrictString env else checkNativeNat env
-  for n in [`Omega.Inhabited, `Decidable, `Omega.String.Pos.Raw, `Omega.Fin, `Omega.BitVec, `Omega.UInt8, `Omega.UInt32, `Omega.UInt64, `Omega.Char,
-            `Omega.Array, `Omega.ByteArray, `Omega.String] do
-    if !env.contains n then continue
-    let some (some field) := impureTrivialStructureInfoExt.find? env n
-      | throw <| IO.userError s!"missing literal representation of {n}"
-    unless field.fieldIdx == 0 do throw <| IO.userError s!"unexpected representation of {n}"
-  if env.contains `Omega.List then
-    let some cons := ctorLayoutExt.find? env `Omega.List.cons | throw <| IO.userError "missing list layout"
-    let #[.object 0 _, .object 1 _] := cons.fieldInfo | throw <| IO.userError "incorrect character-list fields"
-    unless cons.ctorInfo.cidx == 1 && cons.ctorInfo.size == 2 do throw <| IO.userError "incorrect list tag or size"
+  if env.contains `Omega.String then checkStrictString env
+  else if env.contains `Omega.ByteArray then checkStrictBytes env
+  else checkNativeNat env
+  for n in [`Omega.Inhabited, `Decidable, `Omega.String.Pos.Raw, `Omega.UInt32, `Omega.UInt64, `Omega.Char] do
+    if env.contains n then checkErasedField env n
   if env.contains `Bool then
     for (name, tag) in [(`Bool.false, 0), (`Bool.true, 1)] do
       let some ctor := ctorLayoutExt.find? env name | throw <| IO.userError s!"missing constructor {name}"

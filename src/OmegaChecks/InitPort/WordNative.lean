@@ -701,7 +701,7 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
       if a.borrow then cleanup := cleanup ++ s!"  lean_dec(slice{i});\n"
       unless b.borrow do cleanup := cleanup ++ s!"  lean_dec({arg});\n"
     else if [`String, `ByteArray, `System.FilePath].contains dom && a.ty == .object && b.ty == .tobject then
-      checkStrictString strict
+      if dom == `ByteArray then checkStrictBytes strict else checkStrictString strict
       hasString := true
       decls := decls.push ((if b.borrow then "b_lean_obj_arg " else "lean_obj_arg ") ++ arg)
       if dom == `System.FilePath then
@@ -800,7 +800,7 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
     cleanup := cleanup ++ "  lean_dec(native_slice);\n"
     pure ("lean_obj_res", "omega_convert_substring(native_slice, omega_string_from_lean)")
   else if [`String, `ByteArray].contains dom then do
-    checkStrictString strict
+    if dom == `ByteArray then checkStrictBytes strict else checkStrictString strict
     unless ret == .object && result == .tobject do throw <| IO.userError s!"incorrect string result at {n}"
     prepare := prepare ++ s!"  lean_object *native_string = {call};\n"
     cleanup := cleanup ++ "  lean_dec(native_string);\n"

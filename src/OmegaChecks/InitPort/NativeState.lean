@@ -98,19 +98,29 @@ public def checkNativeNat (env : Environment) : IO Unit := do
   unless nat.ctors == [`Nat.zero, `Nat.succ] && env.getModuleIdxFor? `Nat == env.getModuleIdx? `OmegaInit.Prelude do
     throw <| IO.userError "expected the kernel Nat from the strict Prelude"
 
-/-- Check the byte-list layout consumed by strict_string.h. -/
-public def checkStrictString (env : Environment) : IO Unit := do
+/-- The compiler erases these single-field records to their first field. -/
+public def checkErasedField (env : Environment) (record : Name) : IO Unit := do
+  let some (some field) := impureTrivialStructureInfoExt.find? env record
+    | throw <| IO.userError s!"missing erased representation of {record}"
+  unless field.fieldIdx == 0 do throw <| IO.userError s!"unexpected erased field of {record}"
+
+/-- The strict ByteArray carries a list of bounded natural bytes at the native boundary. -/
+public def checkStrictBytes (env : Environment) : IO Unit := do
   checkNativeNat env
-  for n in [`Omega.Fin, `Omega.BitVec, `Omega.UInt8,
-            `Omega.Array, `Omega.ByteArray, `Omega.String] do
-    let some (some field) := impureTrivialStructureInfoExt.find? env n
-      | throw <| IO.userError s!"missing literal representation of {n}"
-    unless field.fieldIdx == 0 do throw <| IO.userError s!"unexpected representation of {n}"
-  let some nil := ctorLayoutExt.find? env `Omega.List.nil | throw <| IO.userError "missing string list nil"
-  unless nil.ctorInfo.cidx == 0 && nil.fieldInfo.isEmpty do throw <| IO.userError "incorrect string list nil"
-  let some cons := ctorLayoutExt.find? env `Omega.List.cons | throw <| IO.userError "missing list layout"
-  let #[.object 0 _, .object 1 _] := cons.fieldInfo | throw <| IO.userError "incorrect character-list fields"
-  unless cons.ctorInfo.cidx == 1 && cons.ctorInfo.size == 2 && cons.ctorInfo.usize == 0 && cons.ctorInfo.ssize == 0 do throw <| IO.userError "incorrect list tag or size"
+  for n in [`Omega.Fin, `Omega.BitVec, `Omega.UInt8, `Omega.Array, `Omega.ByteArray] do
+    checkErasedField env n
+  let some nil := ctorLayoutExt.find? env `Omega.List.nil | throw <| IO.userError "missing byte list nil"
+  unless nil.ctorInfo.cidx == 0 && nil.ctorInfo.size == 0 && nil.ctorInfo.usize == 0 &&
+      nil.ctorInfo.ssize == 0 && nil.fieldInfo.isEmpty do throw <| IO.userError "incorrect byte list nil"
+  let some cons := ctorLayoutExt.find? env `Omega.List.cons | throw <| IO.userError "missing byte list cons"
+  let #[.object 0 _, .object 1 _] := cons.fieldInfo | throw <| IO.userError "incorrect byte list fields"
+  unless cons.ctorInfo.cidx == 1 && cons.ctorInfo.size == 2 && cons.ctorInfo.usize == 0 &&
+      cons.ctorInfo.ssize == 0 do throw <| IO.userError "incorrect byte list tag or size"
+
+/-- String currently erases to its UTF-8 byte array. -/
+public def checkStrictString (env : Environment) : IO Unit := do
+  checkStrictBytes env
+  checkErasedField env `Omega.String
 
 /-- The native state adapters construct ST.Out with the result followed by the strict world. -/
 public unsafe def installStateLayout (lib : System.FilePath) (env : Environment) : IO Unit := do

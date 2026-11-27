@@ -203,12 +203,11 @@ public unsafe def main (args : List String) : IO Unit := do
   let buffers := bufferOperations.any fun op => env.contains (InitKernelPort.portName op.1)
   let processes := roots.any fun (n, _, _) => n == `IO.Process.spawn || (`IO.Process.Child).isPrefixOf n
   let metadata := roots.any fun (n, _, _) => [`System.FilePath.metadata, `System.FilePath.symlinkMetadata].contains n
-  let dicts := [`Omega.Fin, `Omega.BitVec, `Omega.UInt8, `Omega.Array, `Omega.ByteArray, `Omega.String] ++
-    (if fs then [`Omega.UInt32, `Omega.System.FilePath] else []) ++
+  let extraFields := (if fs then [`Omega.UInt32, `Omega.System.FilePath] else []) ++
     (if metadata then [`Omega.UInt64] else []) ++
     (if roots.any (fun (n, _, _) => n == `IO.FS.Handle.read || n == `IO.getRandomBytes) then [`Omega.USize] else [])
   if !ir then
-    for n in dicts ++ [`Omega.Option, `Omega.List, `Omega.ST.Out] ++ (if fs then [`Omega.EST.Out, `Omega.IO.Error] else []) ++
+    for n in [`Omega.Fin, `Omega.BitVec, `Omega.UInt8, `Omega.Array, `Omega.ByteArray, `Omega.String] ++ extraFields ++ [`Omega.Option, `Omega.List, `Omega.ST.Out] ++ (if fs then [`Omega.EST.Out, `Omega.IO.Error] else []) ++
         (if metadata then [`Omega.IO.FS.SystemTime, `Omega.IO.FS.Metadata, `Omega.IO.FS.FileType, `Omega.Int] else []) ++
         (if streams then [`Omega.IO.FS.Stream] else []) ++
         (if buffers then [`Omega.IO.FS.Stream.Buffer] else []) ++
@@ -220,12 +219,9 @@ public unsafe def main (args : List String) : IO Unit := do
       let some idx := env.getModuleIdxFor? n | throw <| IO.userError s!"missing owner for {n}"
       writeCode lib env.header.moduleNames[idx]! (← compileLayouts env n) layouts
   let env ← importModules imports {}
-  for n in dicts do
-    let some (some field) := impureTrivialStructureInfoExt.find? env n | throw <| IO.userError s!"expected single data field in {n}"
-    unless field.fieldIdx == 0 do throw <| IO.userError s!"unexpected data field in {n}"
-  checkNativeNat env
-  for (n, tag, fields) in [(`Omega.List.nil, 0, 0), (`Omega.List.cons, 1, 2), (`Omega.Option.none, 0, 0),
-      (`Omega.Option.some, 1, 1), (`Omega.ST.Out.mk, 0, 2)] ++
+  checkStrictString env
+  for n in extraFields do checkErasedField env n
+  for (n, tag, fields) in [(`Omega.Option.none, 0, 0), (`Omega.Option.some, 1, 1), (`Omega.ST.Out.mk, 0, 2)] ++
       (if fs then [(`Omega.EST.Out.ok, 0, 2), (`Omega.EST.Out.error, 1, 2)] else []) do
     let some l := ctorLayoutExt.find? env n | throw <| IO.userError s!"missing {n} layout"
     unless l.ctorInfo.cidx == tag && l.ctorInfo.size == fields && l.ctorInfo.usize == 0 && l.ctorInfo.ssize == 0 &&

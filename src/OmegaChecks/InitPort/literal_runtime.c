@@ -27,9 +27,7 @@ LEAN_EXPORT lean_obj_res omega_string_of_list(lean_obj_arg chars) {
 }
 
 LEAN_EXPORT lean_obj_res omega_string_byte_size(b_lean_obj_arg bytes) {
-    uint64_t count = 0;
-    for (; !lean_is_scalar(bytes); bytes = lean_ctor_get(bytes, 1)) ++count;
-    return omega_nat_from_uint64(count);
+    return lean_usize_to_nat(omega_bytes_size(bytes));
 }
 
 LEAN_EXPORT lean_obj_res omega_string_to_bytes(lean_obj_arg bytes) {

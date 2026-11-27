@@ -30,7 +30,7 @@ public def wrapper (source strict : Environment) (n : Name) (symbol : String) : 
   let some (.fdecl _ args .tobject ..) := IR.findEnvDecl source compiled | throw <| IO.userError s!"missing pinned byte fold IR: {compiled}"
   let some (.extern _ actual .tobject ⟨[.standard `all actualSymbol]⟩) := IR.findEnvDecl strict n | throw <| IO.userError s!"missing compiled byte fold: {n}"
   unless args.size == actual.size && actualSymbol == symbol do throw <| IO.userError s!"invalid strict byte fold arity: {n}"
-  NativeState.checkStrictString strict
+  NativeState.checkStrictBytes strict
   IndexedNative.checkDataTypes source strict [`Monad, `Applicative, `Pure, `Functor, `Seq, `SeqLeft, `SeqRight, `Bind, `ForInStep]
   let mut type := info.type
   let mut operands := #[]
@@ -62,7 +62,7 @@ public def wrapper (source strict : Environment) (n : Name) (symbol : String) : 
   let entry := getSymbolStem source compiled
   let proto := String.intercalate ", " (args.toList.map (fun _ => "lean_object *"))
   let call := s!"{entry}({String.intercalate ", " operands.toList})"
-  return s!"\n#include \"strict_string.h\"\nextern lean_obj_res {entry}({proto});\nLEAN_EXPORT lean_obj_res {symbol}({String.intercalate ", " decls.toList}) \{\n" ++
+  return s!"\n#include \"strict_byte_array.h\"\nextern lean_obj_res {entry}({proto});\nLEAN_EXPORT lean_obj_res {symbol}({String.intercalate ", " decls.toList}) \{\n" ++
     s!"{prepare}  lean_obj_res result = {call};\n{cleanup}  return result;\n}\n"
 
 end OmegaChecks.InitPort.ByteFoldNative
