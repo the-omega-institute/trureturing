@@ -99,7 +99,7 @@ public section
 
 /-- Cospectral real symmetric matrices with a common row sum admit an orthogonal
 intertwiner fixing the all-ones vector. -/
-theorem exists_orthogonal_intertwiner_of_row_sum {A B : Matrix V V ℝ} {r : ℝ}
+private theorem exists_orthogonal_intertwiner_of_row_sum {A B : Matrix V V ℝ} {r : ℝ}
     (hA : A.IsSymm) (hB : B.IsSymm) (hχ : A.charpoly = B.charpoly)
     (ha : A *ᵥ (1 : V → ℝ) = r • (1 : V → ℝ))
     (hb : B *ᵥ (1 : V → ℝ) = r • (1 : V → ℝ)) :

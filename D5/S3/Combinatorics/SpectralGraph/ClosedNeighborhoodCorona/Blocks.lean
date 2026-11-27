@@ -36,7 +36,7 @@ variable {V W : Type*}
 
 /-- Attach one copy of `H` at each vertex of `G`. Every vertex in that copy is
 adjacent to the vertices in the corresponding closed neighborhood in `G`. -/
-def corona (G : SimpleGraph V) (H : SimpleGraph W) : SimpleGraph (V ⊕ (V × W)) where
+@[expose] def corona (G : SimpleGraph V) (H : SimpleGraph W) : SimpleGraph (V ⊕ (V × W)) where
   Adj
     | .inl v, .inl u => G.Adj v u
     | .inl v, .inr (u, _) => v = u ∨ G.Adj v u
@@ -131,27 +131,6 @@ theorem degree_corona_inr (v : V) (w : W) :
     Fintype.sum_prod_type, hAdj, sum_closedNeighborhood_row, kronecker_apply,
     ← Finset.mul_sum, sum_adjMatrix_row, ← Finset.sum_mul]
   simp [Matrix.one_apply]
-
-/-- The degree diagonal splits into the base block and the copy block.
-The copy block is the Kronecker sum of the closed-neighborhood sizes
-in the base and the internal degrees in the attached graph. -/
-theorem degreeMatrix_corona (R : Type*) [Semiring R] [DecidableEq W] :
-    let D : Matrix V V R := diagonal fun v => (G.degree v : R)
-    let E : Matrix W W R := diagonal fun w => (H.degree w : R)
-    diagonal (fun x => ((corona G H).degree x : R)) =
-      fromBlocks (D + Fintype.card W • (D + 1)) 0 0
-        (((D + 1) ⊗ₖ (1 : Matrix W W R)) + ((1 : Matrix V V R) ⊗ₖ E)) := by
-  dsimp only
-  simp only [← diagonal_one' (n := V) (α := R), ← diagonal_one' (n := W) (α := R),
-    diagonal_add, ← diagonal_smul, diagonal_kronecker_diagonal, fromBlocks_diagonal]
-  congr 1
-  funext x
-  cases x with
-  | inl v =>
-    simp [degree_corona_inl, Nat.mul_comm (G.degree v + 1), nsmul_eq_mul, mul_add]
-  | inr p =>
-    obtain ⟨v, w⟩ := p
-    simp [degree_corona_inr]
 
 end Finite
 

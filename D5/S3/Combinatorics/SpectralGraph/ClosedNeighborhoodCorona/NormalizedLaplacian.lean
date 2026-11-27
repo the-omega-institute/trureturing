@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Normalized-Laplacian similarity under a block orthogonal lift.
+   digest: Normalized-Laplacian cospectrality in both closed-neighborhood corona orders.
 -/
 
 module
@@ -14,6 +14,7 @@ public import D5.S3.Combinatorics.SpectralGraph.ClosedNeighborhoodCorona.Regular
 public import Mathlib.Analysis.Real.Sqrt
 public import Mathlib.LinearAlgebra.Matrix.Charpoly.Basic
 
+import Mathlib.LinearAlgebra.Matrix.Charpoly.Coeff
 import OmegaBuild.Commands
 
 /-! # Normalized Laplacian of a closed-neighborhood corona
@@ -36,11 +37,11 @@ public section
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
 /-- The inverse square-root degree, with the value at zero fixed to zero. -/
-noncomputable def inverseSqrtDegree (G : SimpleGraph V) [DecidableRel G.Adj] (v : V) : ℝ :=
+private noncomputable def inverseSqrtDegree (G : SimpleGraph V) [DecidableRel G.Adj] (v : V) : ℝ :=
   if G.degree v = 0 then 0 else (Real.sqrt (G.degree v : ℝ))⁻¹
 
 /-- The diagonal inverse-square-root degree matrix. -/
-noncomputable def degreeScale (G : SimpleGraph V) [DecidableRel G.Adj] : Matrix V V ℝ :=
+private noncomputable def degreeScale (G : SimpleGraph V) [DecidableRel G.Adj] : Matrix V V ℝ :=
   diagonal (inverseSqrtDegree G)
 
 /-- The normalized Laplacian, with isolated vertices contributing zero rows. -/
@@ -62,7 +63,7 @@ private theorem charpoly_of_orthogonal_intertwining
       _ = Uᵀ * B := by rw [h, Matrix.mul_assoc Uᵀ, Matrix.mul_assoc B, h₂, mul_one]
 
 /-- A block-diagonal lift of an orthogonal map on the base and its copies. -/
-noncomputable def blockLift (U : Matrix V V ℝ) (W : Type*) [DecidableEq W] :
+private noncomputable def blockLift (U : Matrix V V ℝ) (W : Type*) [DecidableEq W] :
     Matrix (V ⊕ (V × W)) (V ⊕ (V × W)) ℝ :=
   fromBlocks U 0 0 (U ⊗ₖ (1 : Matrix W W ℝ))
 
@@ -120,10 +121,8 @@ private theorem normalized_laplacian_charpoly_of_intertwining
   simp only [Matrix.mul_assoc]
 
 /- The following algebraic bridge isolates the only degree-scaling obligation.
-It is stated for the registered matrices so that callers can discharge the
-pointwise degree calculation, including the zero-degree branch, independently
-of the characteristic-polynomial argument. -/
-theorem normalized_laplacian_similarity_of_block
+The degree calculation includes the zero-degree branch. -/
+private theorem normalized_laplacian_similarity_of_block
     {W : Type*} [Fintype W] [DecidableEq W]
     {G₁ G₂ : SimpleGraph V} {H : SimpleGraph W}
     [DecidableRel G₁.Adj] [DecidableRel G₂.Adj] [DecidableRel H.Adj]
@@ -189,7 +188,7 @@ private theorem blockLift_degree
 
 /-- Adjacency-cospectral regular base graphs give normalized-Laplacian cospectral
 closed-neighborhood coronas with the same attached graph. -/
-theorem normalized_laplacian_charpoly_corona_regular_base
+private theorem normalized_laplacian_charpoly_corona_regular_base
     {W : Type*} [Fintype W] [DecidableEq W]
     (G₁ G₂ : SimpleGraph V) (H : SimpleGraph W)
     [DecidableRel G₁.Adj] [DecidableRel G₂.Adj] [DecidableRel H.Adj]
@@ -284,7 +283,7 @@ private theorem copyLift_degree
 
 /-- Adjacency-cospectral regular attached graphs give normalized-Laplacian
 cospectral closed-neighborhood coronas over the same base graph. -/
-theorem normalized_laplacian_charpoly_corona_regular_attached
+private theorem normalized_laplacian_charpoly_corona_regular_attached
     {W : Type*} [Fintype W] [DecidableEq W]
     (G₁ G₂ : SimpleGraph V) (H : SimpleGraph W)
     [DecidableRel G₁.Adj] [DecidableRel G₂.Adj] [DecidableRel H.Adj]
@@ -302,6 +301,65 @@ theorem normalized_laplacian_charpoly_corona_regular_attached
   · rw [Matrix.mul_sub, Matrix.sub_mul,
       diagonal_degree_intertwining hDegree (fun d => (d : ℝ)),
       copyLift_adjacency G₁ G₂ H h₁ hAdj hOne]
+
+private def coronaIso {X V' W W' : Type*}
+    {G : SimpleGraph X} {G' : SimpleGraph V'} {H : SimpleGraph W} {H' : SimpleGraph W'}
+    (e : G ≃g G') (f : H ≃g H') : corona G H ≃g corona G' H' where
+  toEquiv := e.toEquiv.sumCongr (e.toEquiv.prodCongr f.toEquiv)
+  map_rel_iff' := by
+    intro i j
+    rcases i with v | ⟨v, w⟩ <;> rcases j with u | ⟨u, z⟩
+    · exact e.map_rel_iff
+    · exact or_congr e.injective.eq_iff e.map_rel_iff
+    · exact or_congr e.injective.eq_iff e.map_rel_iff
+    · exact and_congr e.injective.eq_iff f.map_rel_iff
+
+private theorem normalized_laplacian_charpoly_iso
+    {V' : Type*} [Fintype V'] [DecidableEq V']
+    {G : SimpleGraph V} {G' : SimpleGraph V'} [DecidableRel G.Adj] [DecidableRel G'.Adj]
+    (e : G ≃g G') :
+    (normalizedLaplacian G).charpoly = (normalizedLaplacian G').charpoly := by
+  let R := Matrix.reindexAlgEquiv ℝ ℝ e.toEquiv
+  have hDiag (f : ℕ → ℝ) :
+      R (diagonal (fun v => f (G.degree v))) = diagonal (fun v => f (G'.degree v)) := by
+    change (diagonal (fun v => f (G.degree v))).submatrix e.toEquiv.symm e.toEquiv.symm = _
+    rw [submatrix_diagonal_equiv]
+    congr 1
+    funext v
+    exact congrArg f (e.symm.degree_eq v)
+  have hAdj : R (G.adjMatrix ℝ) = G'.adjMatrix ℝ := e.reindex_adjMatrix ℝ
+  have hScale : R (degreeScale G) = degreeScale G' :=
+    hDiag (fun d => if d = 0 then 0 else (Real.sqrt (d : ℝ))⁻¹)
+  have hLap : R (normalizedLaplacian G) = normalizedLaplacian G' := by
+    simp only [normalizedLaplacian, map_mul, map_sub, hScale, hDiag, hAdj]
+  rw [← hLap]
+  exact (Matrix.charpoly_reindex e.toEquiv _).symm
+
+/-- Question 5.21 of Sason, Krupnik, Hamud and Berman. Adjacency-cospectral
+regular graphs give normalized-Laplacian cospectral closed-neighborhood
+coronas, both as the base and as the attached graph. -/
+theorem normalized_laplacian_charpoly_corona
+    {V' W : Type*} [Fintype V'] [Fintype W] [DecidableEq V'] [DecidableEq W]
+    (G₁ : SimpleGraph V) (G₂ : SimpleGraph V') (H : SimpleGraph W)
+    [DecidableRel G₁.Adj] [DecidableRel G₂.Adj] [DecidableRel H.Adj]
+    {d₁ d₂ : ℕ} (hG₁ : G₁.IsRegularOfDegree d₁) (hG₂ : G₂.IsRegularOfDegree d₂)
+    (hχ : (G₁.adjMatrix ℝ).charpoly = (G₂.adjMatrix ℝ).charpoly) :
+    ((normalizedLaplacian (corona G₁ H)).charpoly =
+      (normalizedLaplacian (corona G₂ H)).charpoly) ∧
+    ((normalizedLaplacian (corona H G₁)).charpoly =
+      (normalizedLaplacian (corona H G₂)).charpoly) := by
+  have hCard : Fintype.card V = Fintype.card V' := by
+    simpa only [Matrix.charpoly_natDegree_eq_dim] using congrArg Polynomial.natDegree hχ
+  let e : V ≃ V' := Fintype.equivOfCardEq hCard
+  let K := G₂.comap e
+  let i : K ≃g G₂ := SimpleGraph.Iso.comap e G₂
+  have hK : K.IsRegularOfDegree d₂ := fun v => (i.degree_eq v).symm.trans (hG₂.degree_eq (i v))
+  have hKχ : (G₁.adjMatrix ℝ).charpoly = (K.adjMatrix ℝ).charpoly := by
+    rw [hχ, ← i.reindex_adjMatrix ℝ, Matrix.charpoly_reindex]
+  exact ⟨(normalized_laplacian_charpoly_corona_regular_base G₁ K H hG₁ hK hKχ).trans
+      (normalized_laplacian_charpoly_iso (coronaIso i (RelIso.refl H.Adj))),
+    (normalized_laplacian_charpoly_corona_regular_attached G₁ K H hG₁ hK hKχ).trans
+      (normalized_laplacian_charpoly_iso (coronaIso (RelIso.refl H.Adj) i))⟩
 
 end
 
