@@ -16,7 +16,7 @@ motivation_gids:
 
 Theorem 5.20 starts with adjacency-cospectral regular graphs \(G_1,G_2\) and a third graph \(H\). It describes two pairs as irregular and nonisomorphic but cospectral (NICS) for adjacency, ordinary Laplacian and signless Laplacian. The pairs are \(G_1\,\underline{\boxtimes}\,H\) versus \(G_2\,\underline{\boxtimes}\,H\) and \(H\,\underline{\boxtimes}\,G_1\) versus \(H\,\underline{\boxtimes}\,G_2\). The underlined box-times denotes the closed-neighborhood corona. [Theorem 5.20](https://arxiv.org/html/2412.20775v6#S5.Thmtheorem20) · [Question 5.21](https://arxiv.org/html/2412.20775v6#S5.Thmtheorem21)
 
-## Statement echo
+### Statement echo
 
 Task #35002 targets `D5/S3/Combinatorics/SpectralGraph/ClosedNeighborhoodCorona/NormalizedLaplacian.normalized_laplacian_charpoly_corona`. The theorem preserves both pairs and the normalized Laplacian convention. [Preregistration](https://github.com/the-omega-institute/trureturing/issues/35002)
 
@@ -29,13 +29,27 @@ Task #35002 targets `D5/S3/Combinatorics/SpectralGraph/ClosedNeighborhoodCorona/
 | Normalized Laplacian | `normalizedLaplacian` is \(D^{-1/2}(D-A)D^{-1/2}\) with inverse square-root degree defined as zero at degree zero |
 | Both factor orders | A conjunction of equal real normalized-Laplacian characteristic polynomials for `corona G₁ H` and `corona G₂ H`, and for `corona H G₁` and `corona H G₂` |
 
-The formal theorem proves the spectral equalities for the survey's pairs and for a wider class that includes isomorphic factors, regular coronas, empty vertex types, disconnected graphs and isolated vertices. Equal characteristic polynomials imply equal vertex counts, supplying the equivalence used internally to relabel the regular factors. There are no direct frozen project dependencies.
+## Motivation
 
-## Proof
+Question 5.21 asks whether the same closed-neighborhood corona pairs from Theorem 5.20 retain cospectrality after accounting for the degrees of the base and copy vertices.
+
+## Gap
+
+The preceding theorem covers adjacency, ordinary Laplacian and signless Laplacian. The normalized Laplacian additionally scales each row and column by inverse square-root degree. The two factor orders require separate checks of that scaling.
+
+## Route
 
 Spectral conjugacy gives an orthogonal intertwiner for the regular adjacency matrices. Their common regular row sum allows a reflection inside the corresponding eigenspace to align the constant vectors. For a regular base, the intertwiner acts on the base and the copy index. For a regular attached factor, it acts within each copy and fixes the cross blocks because it fixes the all-ones vector. In each order the lift has nonzero coefficients only between vertices of equal degree. It therefore intertwines both the degree diagonal and its inverse square-root scaling, giving orthogonal similarity of the normalized Laplacians.
 
-## Declaration shapes
+## Falsifier
+
+A regular adjacency-cospectral pair and an arbitrary finite third graph yielding different normalized-Laplacian characteristic polynomials in either order would refute the claim.
+
+## Evidence
+
+The formal theorem proves the spectral equalities for the survey's pairs and for a wider class that includes isomorphic factors, regular coronas, empty vertex types, disconnected graphs and isolated vertices. Equal characteristic polynomials imply equal vertex counts, supplying the equivalence used internally to relabel the regular factors. There are no direct frozen project dependencies on the publication base.
+
+### Declaration shapes
 
 | Public theorem | Proof shape | Live mathematical step |
 | --- | --- | --- |
@@ -77,6 +91,14 @@ Five public theorems have outstanding escape registrations under the linked-issu
 | `RegularIntertwiner.exists_orthogonal_adjacency_intertwiner` | Typed realization and full law retaining the existential matrix, both orthogonality equations and adjacency intertwining, with rejection, sensitivity, actual dependence and validated binding |
 | `NormalizedLaplacian.normalized_laplacian_charpoly_corona` | Validated binding remains outstanding after the full-law equivalence, positive law, rejected family, sensitivity and actual dependence compiled. The scoped producer reported `declared_unresolved` with `IE-C050` (`incomplete_closure`, `E8.erasure_work`). |
 
-## Literature scope
+## Triage
 
-Sonar and Srivastava display the adjacency block identity with the copy coordinates reversed relative to Lean. Theorem 5.20 covers adjacency, ordinary Laplacian and signless Laplacian, and Question 5.21 asks about normalized Laplacian. Literature completeness and priority remain ASSUMED-UNVERIFIED. [Sonar–Srivastava, §3.1](https://arxiv.org/html/2407.05653v2#S3.Ex4) · [Preregistration](https://github.com/the-omega-institute/trureturing/issues/35002)
+The result proves Question 5.21 for both factor orders. The two support conditions relating the lifted intertwiner to equal degrees also account for isolated vertices and empty factors.
+
+### Literature scope
+
+Sonar and Srivastava display the adjacency block identity with the copy coordinates reversed relative to Lean. Theorem 5.20 covers adjacency, ordinary Laplacian and signless Laplacian, and Question 5.21 asks about normalized Laplacian. [Sonar–Srivastava, §3.1](https://arxiv.org/html/2407.05653v2#S3.Ex4) · [Preregistration](https://github.com/the-omega-institute/trureturing/issues/35002)
+
+## ASSUMED-UNVERIFIED
+
+Literature completeness and priority remain unverified.
