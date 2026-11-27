@@ -7,7 +7,7 @@ doi: 10.1145/3749116.3749118
 url: https://sigmodrecord.org/publications/sigmodRecord/2506/pdfs/03_Principles_Atserias.pdf
 claim: "For positive commutative monoids, Theorem 1 equates binary transportation, finite transportation and inner consistency; Section 6 constructs witnesses fiberwise from transportation matrices."
 strata_touched:
-  - D5/S3/Semigroups/Refinement/FiniteFiberTransport
+  - D5/S3/Combinatorics/Transportation/FiniteFiberTransport
 license: citation-only
 triage: anchor
 ---

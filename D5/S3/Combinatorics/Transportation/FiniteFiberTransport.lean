@@ -1,6 +1,6 @@
-/- GID: D5/S3/Semigroups/Refinement/FiniteFiberTransport
+/- GID: D5/S3/Combinatorics/Transportation/FiniteFiberTransport
    generality: G
-   mirror-B: D5/B/S3/Semigroups/Refinement/FiniteFiberTransport
+   mirror-B: D5/B/S3/Combinatorics/Transportation/FiniteFiberTransport
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
@@ -10,7 +10,7 @@ import OmegaMath.Algebra.Refinement.FiniteTransport
 
 /-! Exact transportation characterizes conical commutative refinement monoids. -/
 
-namespace D5.S3.Semigroups.Refinement.FiniteFiberTransport
+namespace D5.S3.Combinatorics.Transportation.FiniteFiberTransport
 
 open Omega.Refinement
 open scoped BigOperators Classical
@@ -67,4 +67,4 @@ theorem conical_refinement_iff_finite_fiber_transport (K : Type u) [AddCommMonoi
         by simpa [q, sum_ulift_bool] using hmcol ⟨true⟩,
         by simpa [q, sum_ulift_bool] using hmcol ⟨false⟩⟩
 
-end D5.S3.Semigroups.Refinement.FiniteFiberTransport
+end D5.S3.Combinatorics.Transportation.FiniteFiberTransport

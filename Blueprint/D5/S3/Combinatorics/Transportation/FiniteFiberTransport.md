@@ -8,7 +8,7 @@ Conical binary refinement is equivalent to exact transportation over every finit
 
 $$\forall K \in Type,\; [AddCommMonoid\left(K\right)], ((\forall x \in K,\; \forall y \in K,\; (x + y = 0) \Rightarrow ((x = 0) \land (y = 0))) \land (\forall a \in K,\; \forall b \in K,\; \forall c \in K,\; \forall d \in K,\; (a + b = c + d) \Rightarrow (\exists r \in K,\; \exists s \in K,\; \exists t \in K,\; \exists u \in K,\; (r + s = a) \land ((t + u = b) \land ((r + t = c) \land (s + u = d)))))) \Leftrightarrow (\forall A \in Type,\; \forall B \in Type,\; \forall Z \in Type,\; [Fintype\left(A\right)], [Fintype\left(B\right)], \forall f \in A \to Z,\; \forall g \in B \to Z,\; \forall p \in A \to K,\; \forall q \in B \to K,\; (\forall h \in Z,\; fiberSum\left(f, p, h\right) = fiberSum\left(g, q, h\right)) \Rightarrow (\exists m \in A \to B \to K,\; (\forall a \in A,\; \forall b \in B,\; (f\left(a\right) \ne g\left(b\right)) \Rightarrow (m\left(a, b\right) = 0)) \land ((\forall a \in A,\; \sum_{b \in B} m\left(a, b\right) = p\left(a\right)) \land (\forall b \in B,\; \sum_{a \in A} m\left(a, b\right) = q\left(b\right)))))$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/Semigroups/Refinement/FiniteFiberTransport.conical_refinement_iff_finite_fiber_transport` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Transportation/FiniteFiberTransport.conical_refinement_iff_finite_fiber_transport` (`✓ std3`). ∎
 
 *Citation.* Albert Atserias and Phokion G. Kolaitis (2025). *Consistency Witnesses for Annotated Relations*. DOI: [10.1145/3749116.3749118](https://doi.org/10.1145/3749116.3749118). URL: <https://sigmodrecord.org/publications/sigmodRecord/2506/pdfs/03_Principles_Atserias.pdf>.
 
@@ -28,4 +28,4 @@ The finite transportation theorem and fiberwise consistency construction are kno
 
 ## References
 
-- Truth anchor: `D5/S3/Semigroups/Refinement/FiniteFiberTransport.conical_refinement_iff_finite_fiber_transport`
+- Truth anchor: `D5/S3/Combinatorics/Transportation/FiniteFiberTransport.conical_refinement_iff_finite_fiber_transport`

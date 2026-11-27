@@ -2,7 +2,7 @@ using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Semigroups.Refinement;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Transportation;
 
 internal sealed class FiniteFiberTransportDocument : IScribeDocumentDefinition
 {
@@ -14,7 +14,7 @@ internal sealed class FiniteFiberTransportDocument : IScribeDocumentDefinition
         H("Finite-Fiber Transportation in Commutative Monoids"),
         Blocks(Describe.Lean(
             DescribeId.Create("conical-refinement-finite-fiber-transport"),
-            DeclarationHandle.Create("D5/S3/Semigroups/Refinement/FiniteFiberTransport.conical_refinement_iff_finite_fiber_transport"),
+            DeclarationHandle.Create("D5/S3/Combinatorics/Transportation/FiniteFiberTransport.conical_refinement_iff_finite_fiber_transport"),
             H("The exact transportation equivalence"),
             StatementSource.FromAuthor(Disp(Statement())),
             AssessedProvenance.FromLiterature(Source),
