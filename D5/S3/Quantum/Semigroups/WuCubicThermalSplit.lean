@@ -121,8 +121,9 @@ theorem degreeOneCoefficient_hasDerivAt_cap {beta : ℝ} (hbeta : 0 < beta) :
     unfold degreeOneCoefficient capSplitSlope
     rw [div_self (g_pos hbeta.le).ne']
     ring
-  have hshift := hcoeff.comp 0
+  have hshift := hcoeff.comp_of_eq 0
     ((hasDerivAt_const (0 : ℝ) beta).sub (hasDerivAt_id (0 : ℝ)))
+    (by simp)
   simpa [Function.comp_def] using hshift.congr_deriv (by ring)
 
 /-- The positive cap split is uniformly linear on a sufficiently small
@@ -171,7 +172,7 @@ theorem degreeOneCoefficient_linear_bounds {beta : ℝ} (hbeta : 0 < beta) :
   simp only [smul_eq_mul, zero_add] at hsec_lo hsec_hi
   have hFzero : F 0 = 0 := by
     simpa [F] using degreeOneCoefficient_at_cap hbeta
-  rw [hFzero] at hsec_lo hsec_hi
+  simp only [hFzero, sub_zero] at hsec_lo hsec_hi
   have hlo := mul_lt_mul_of_pos_left hsec_lo hdelta_pos
   have hhi := mul_lt_mul_of_pos_left hsec_hi hdelta_pos
   have hcancel : delta * (delta⁻¹ * F delta) = F delta := by
@@ -179,13 +180,13 @@ theorem degreeOneCoefficient_linear_bounds {beta : ℝ} (hbeta : 0 < beta) :
   constructor
   · calc
       capSplitSlope beta / 2 * delta = delta * (capSplitSlope beta / 2) := by ring
-      _ < delta * (delta⁻¹ * F delta) := hlo
+      _ ≤ delta * (delta⁻¹ * F delta) := hlo.le
       _ = F delta := hcancel
       _ = degreeOneCoefficient beta (beta - delta) := rfl
   · calc
       degreeOneCoefficient beta (beta - delta) = F delta := rfl
       _ = delta * (delta⁻¹ * F delta) := hcancel.symm
-      _ < delta * (3 / 2 * capSplitSlope beta) := hhi
+      _ ≤ delta * (3 / 2 * capSplitSlope beta) := hhi.le
       _ = 3 / 2 * capSplitSlope beta * delta := by ring
 
 #print axioms capSplitSlope_pos
