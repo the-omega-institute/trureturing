@@ -10,7 +10,8 @@ open Lean InitKernelPort OmegaChecks.InitBoundaries
 /-- Reuse each official read specialization but return a selector using the actual strict allocation. -/
 public def main (args : List String) : IO Unit := do
   let lib :: evidence :: output :: owners := args | throw <| IO.userError "expected strict library, strict proof module, output, and owners"
-  let official ← importModules #[{module := `OmegaChecks.InitInventory.ReferenceSelection, importAll := true}] {} (level := .private)
+  let official ← importModules #[{module := `OmegaChecks.InitInventory.ReferenceSelection, importAll := true},
+    {module := `Init.Internal.Order.MonadTail, importAll := true}] {} (level := .private)
   let owners := owners.toArray.map String.toName
   searchPathRef.set [evidence, lib]
   let env ← importModules (#[{module := `StrictReferenceChoice : Import}] ++ (owners.map fun n => {module := n})) {}
@@ -53,6 +54,21 @@ public def main (args : List String) : IO Unit := do
     let .ok next := kernelEnv.addDeclCore 0 1000 decl none | throw <| IO.userError s!"invalid strict selection from {name}"
     kernelEnv := next
     checked := checked.push (owner.toString, name.toString, n.toString)
+  for (owner, name) in [(`Init.Internal.Order.Basic, `Lean.Order.EST.bot),
+      (`Init.Internal.Order.MonadTail, `Lean.Order.ST.bot')] do
+    unless owners.contains (owner.replacePrefix `Init `OmegaInit) do continue
+    let n := `OmegaStrictReference ++ name
+    let some source := official.find? name | throw <| IO.userError s!"missing official {name}"
+    let some witness := env.find? n | throw <| IO.userError s!"missing strict selection witness {n}"
+    let .forallE _ input output _ := witness.type | throw <| IO.userError s!"incorrect witness type for {n}"
+    -- Unfolding the official flat carrier removes its unused choice-dependent point index.
+    let sourceInput := translate (fun k => k.replacePrefix `Omega .anonymous) input
+    unless source.levelParams.isEmpty && official.getModuleIdxFor? name == official.getModuleIdx? owner &&
+        Kernel.isDefEqGuarded official {} source.type sourceInput &&
+        Kernel.isDefEqGuarded env {} input (translate portName sourceInput) &&
+        Kernel.isDefEqGuarded env {} target output do
+      throw <| IO.userError s!"incorrect strict state selection from {name}"
+    checked := checked.push (owner.toString, name.toString, n.toString)
   -- Fresh replay of all exact source-type reductions and the strict helpers' transitive dependencies.
   let mut closure : Std.HashMap Name ConstantInfo := {}
   let mut pending := checked.toList.map (fun (_, _, n) => (kernelEnv.find? n.toName).get!)
@@ -67,4 +83,4 @@ public def main (args : List String) : IO Unit := do
         pending := dep :: pending
   let _ ← (← mkEmptyEnvironment).toKernelEnv.replay closure
   IO.FS.writeFile output (toJson (checked.map fun (owner, name, proof) => #[owner, name, proof])).compress
-  IO.println s!"Replayed {checked.size} strict reference interfaces implying explicit selection on Type with zero axioms."
+  IO.println s!"Replayed {checked.size} strict reference and state interfaces implying explicit selection on Type with zero axioms."

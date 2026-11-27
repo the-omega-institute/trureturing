@@ -82,7 +82,7 @@ def verify_complete(official, product, reductions, unresolved):
 
 
 def check_strict_reference_choices(product, stage, attempts):
-    owners = ("Init.System.ST", "Init.Control.StateRef")
+    owners = ("Init.System.ST", "Init.Control.StateRef", "Init.Internal.Order.Basic", "Init.Internal.Order.MonadTail")
     required = ("Void.mk", "ST.Prim.mkRef", "ST.Ref.ref", "ST.Out.val")
     if not all(attempts.get((owners[0], name), (None,))[0] in {"added", "existing"} for name in required):
         return {}

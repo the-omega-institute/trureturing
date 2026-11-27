@@ -36,7 +36,7 @@ example (a : α) (b : β) : Omega.Eq (Prod.fst (Prod.mk a b)) a := Omega.rfl
 
 严格库用私有、不可计算的句柄构造 `ST.Prim.mkRef`，并保留公开的 `ST.RefPointed` 封装。构建 `Init.System.ST` 时，`native/reference.o` 提供引用分配、身份比较、写入和交换的原生入口。交换的逻辑常量保持不透明，原生入口调用钉版 `lean_st_ref_swap` 取得先前的值。`Void.mk` 由钉版原生入口生成世界，严格端的 `runST`、`runEST` 保留各自返回类型。普通编译和独立 IR 消费者验证状态绑定、类型类分派、收尾动作的异常优先级，以及 `EST.Out` 两个构造子的消去。普通消费者验证两枚引用的身份、交换返回旧值、写入后再交换取得新值和世界状态的传递。使用 `Omega.StateRefT'.set` 时，链接 `native/state_ref.o` 和 `native/reference.o`。
 
-严格库能用 `Void.mk ()` 和 `ST.Prim.mkRef ()` 取得具体的世界与引用地址。对引用读取、取出、返回值修改及相应的状态实例，盘点器检查由其完整严格类型能否构造 `(α : Type) → Omega.Nonempty α → α`。原官方类型的 `Void.mk` 与 `ST.Prim.mkRef` 可取任意实现。内核核对其应用于严格公共构造器所得的选择器，与宇宙 0 的官方公理 `Classical.choice.{1}` 具有相同的移植类型。每条归约连同构造器依赖从空内核重放，完整性报告在 `strictImpliesAxiom` 和 `strictSelectionWitness` 中给出目标及见证。[严格选择器](StrictReferenceChoice.lean) · [归约核验](ReferenceChoiceCheck.lean)
+严格库能用 `Void.mk ()` 和 `ST.Prim.mkRef ()` 取得具体的世界与引用地址。对引用读取、取出、返回值修改、相应的状态实例以及 `Lean.Order.EST.bot` 和 `Lean.Order.ST.bot'`，盘点器检查由其完整严格类型能否构造 `(α : Type) → Omega.Nonempty α → α`。原官方类型的 `Void.mk` 与 `ST.Prim.mkRef` 可取任意实现。内核核对其应用于严格公共构造器所得的选择器，与宇宙 0 的官方公理 `Classical.choice.{1}` 具有相同的移植类型。每条归约连同构造器依赖从空内核重放，完整性报告在 `strictImpliesAxiom` 和 `strictSelectionWitness` 中给出目标及见证。[严格选择器](StrictReferenceChoice.lean) · [归约核验](ReferenceChoiceCheck.lean)
 
 `Omega.withPtrAddrUnsafe` 的返回值通过逐输入证明核对。官方实现把对象的机器地址传给回调 `k`，其参数 `h` 证明任意两个地址产生相同结果。严格实现调用 `Omega.withPtrAddr`。校验器读取官方的 `@[implemented_by]` 登记、两端签名和实际计算体，用 `h` 证明每个机器地址所得的值都等于严格实现的结果。[返回值核验](Address.lean) · [官方指针回调](https://github.com/leanprover/lean4/blob/v4.35.0/src/Init/Util.lean#L102)
 

@@ -16,4 +16,16 @@ public noncomputable def selector
     (read : {α : Type} → Omega.ST.Ref Omega.Unit α → Omega.ST Omega.Unit α) : Choice :=
   fun α h => (read (α := α) ⟨address, h⟩ world).val
 
+/-- At the concrete world, the successful return field must inhabit the requested type. -/
+public noncomputable def Lean.Order.ST.bot'
+    (bottom : {α σ : Type} → [Omega.Nonempty α] → Omega.Void σ → Omega.ST.Out σ α) : Choice :=
+  fun α h => (@bottom α Omega.Unit h world).val
+
+/-- With an empty success type the error field must inhabit the requested type. -/
+public noncomputable def Lean.Order.EST.bot
+    (bottom : {ε σ α : Type} → [Omega.Nonempty ε] → Omega.EST ε σ α) : Choice :=
+  fun α h => match @bottom α Omega.Unit Omega.Empty h world with
+    | .ok impossible _ => impossible.elim
+    | .error element _ => element
+
 end OmegaStrictReference
