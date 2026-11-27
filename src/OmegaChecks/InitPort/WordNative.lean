@@ -16,6 +16,15 @@ open Lean Compiler.LCNF OmegaChecks.InitPort.NativeState
 
 namespace OmegaChecks.InitPort.WordNative
 
+private def versionNumber? (n : Name) : Option String := do
+  let user ← privateToUserName? n
+  guard (privatePrefix? n == some (Name.num `_private.Init.Meta.Defs 0))
+  match user with
+  | `Lean.version.getMajor => some "lean_version_get_major"
+  | `Lean.version.getMinor => some "lean_version_get_minor"
+  | `Lean.version.getPatch => some "lean_version_get_patch"
+  | _ => none
+
 private def bitsType : Name → Name
   | `Int8 => `UInt8
   | `Int16 => `UInt16
@@ -170,8 +179,8 @@ public def supported (source : Environment) (owner name : Name) : Bool :=
   let platform := owner == `OmegaInit.System.Platform && [`System.Platform.getIsWindows, `System.Platform.getIsOSX,
     `System.Platform.getIsLinux, `System.Platform.getIsEmscripten, `System.Platform.getTarget,
     `System.Platform.Internal.getHardwareConcurrency].contains name
-  let version := owner == `OmegaInit.Meta.Defs && [`Lean.getGithash, `Lean.version.getIsRelease,
-    `Lean.version.getSpecialDesc, `Lean.Internal.isStage0, `Lean.Internal.hasLLVMBackend].contains name
+  let version := owner == `OmegaInit.Meta.Defs && ((versionNumber? name).isSome || [`Lean.getGithash, `Lean.version.getIsRelease,
+    `Lean.version.getSpecialDesc, `Lean.Internal.isStage0, `Lean.Internal.hasLLVMBackend].contains name)
   let modular := (owner == `OmegaInit.Data.Nat.Gcd && name == `Nat.gcd) ||
     (owner == `OmegaInit.Data.Nat.Div.Basic && name == `Nat.divExact) ||
     (owner == `OmegaInit.Data.Nat.PowMod && name == `Nat.powMod)
@@ -291,7 +300,7 @@ private def separatorWrapper (source strict : Environment) (n official : Name) :
 
 /-- Check both sides of the call and generate its ownership conversions from their stored IR. -/
 public def wrapper (source strict : Environment) (n : Name) : IO String := do
-  let official := n.replacePrefix `Omega .anonymous
+  let official := InitKernelPort.originalName n
   if MacroNative.supported official then return ← MacroNative.wrapper source strict n (symbol n)
   if monadicSeparator official then return ← separatorWrapper source strict n official
   if ByteFoldNative.supported official then return ← ByteFoldNative.wrapper source strict n (symbol n)
@@ -335,6 +344,11 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
   let ret := impl.resultType
   let target ← match impl with
     | .extern _ _ _ ⟨[.standard `all entry]⟩ => do
+      if let some expected := versionNumber? official then
+        let some installed := strict.find? n | throw <| IO.userError s!"missing version getter {n}"
+        unless installed.type == InitKernelPort.translate InitKernelPort.portName ci.type &&
+            ci.type == (.forallE `u (mkConst `Unit) (mkConst `Nat) .default) && entry == expected do
+          throw <| IO.userError s!"unexpected version getter {official}"
       if official == `Lean.getGithash then
         -- The standalone runtime exports the primitive. The shared Lean library exports its boxed entry.
         let boxed := mkBoxedName official

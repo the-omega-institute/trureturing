@@ -22,19 +22,11 @@ open Lean Compiler LCNF OmegaChecks.InitPort.NativeState
 
 namespace GeneratedNative
 
-/-- Recover the pinned name, including private declarations in their lexical owner. -/
-private def originalName (n : Name) : Name := Id.run do
-  if let some user := privateToUserName? n then
-    if let some lexical := privatePrefix? n then
-      if (`_private.OmegaInit).isPrefixOf lexical && isPrivatePrefix lexical then
-        return lexical.replacePrefix `_private.OmegaInit `_private.Init ++ user.replacePrefix `Omega .anonymous
-  return n.replacePrefix `Omega .anonymous
-
 /-- A pinned partial definition has a safe opaque face and a separate compiler-only recursion.
 Keep its original fallback in the kernel and translate the executable code on the strict types. -/
 private def pinnedPartialCode? (source : Environment) (ci : ConstantInfo) : Option DefinitionVal := do
   let .opaqueInfo dst := ci | none
-  let sourceName := originalName dst.name
+  let sourceName := InitKernelPort.originalName dst.name
   guard (sourceName.getRoot != `Omega && InitKernelPort.portName sourceName == dst.name &&
     !isExtern source sourceName && (Compiler.getImplementedBy? source sourceName).isNone)
   let some (.opaqueInfo src) := source.find? sourceName | none
@@ -89,7 +81,7 @@ private def missingRuntimeDependency (source : Environment) (n : Name) (recursiv
     -- Constructor applications lower directly using the owning inductive's strict layout.
     if let some (.ctorInfo ctor) := env.find? dep then
       if (monoTypeExt.find? env ctor.induct).isSome then continue
-    let original := originalName dep
+    let original := InitKernelPort.originalName dep
     if (isExtern source original || (getImplementedBy? source original).isSome ||
         (getSigCore? source impureSigExt original).isSome) &&
         (← getImpureSignature? dep).isNone then
@@ -238,7 +230,7 @@ private def compileCases (source strict : Environment) (d : DefinitionVal) : Cor
 /-- Reuse the pinned executable recursion only after the kernel identifies every constructor
 equation with the checked total function. The temporary declaration is excluded from the product. -/
 private def compilePinnedRecursion (source strict : Environment) (n : Name) : CoreM Bool := do
-  let recName := Compiler.mkUnsafeRecName (originalName n)
+  let recName := Compiler.mkUnsafeRecName (InitKernelPort.originalName n)
   let some (.defnInfo d) := source.find? recName | return false
   unless d.safety == .partial && d.all == [recName] do return false
   let name := InitKernelPort.portName recName
@@ -384,7 +376,7 @@ private unsafe def install (source publicSource : Environment) (lib out : System
   let largeWordSizes := [`UInt16.size, `UInt32.size, `UInt64.size, `USize.size]
   for ci in part.constants do
     if !onlyLayouts && !unaryNat && !oldNative.contains ci.name && !ci.isUnsafe && !ci.isPartial &&
-        OmegaChecks.InitPort.WordNative.supported source owner (originalName ci.name) then
+        OmegaChecks.InitPort.WordNative.supported source owner (InitKernelPort.originalName ci.name) then
       words := words.push ci.name
       continue
     match ci with
@@ -408,7 +400,7 @@ private unsafe def install (source publicSource : Environment) (lib out : System
           partialCode := partialCode.insert ci.name d
     | .defnInfo d =>
       if onlyLayouts || oldNative.contains d.name || ci.isUnsafe || ci.isPartial then continue
-      let upstream := originalName d.name
+      let upstream := InitKernelPort.originalName d.name
       if unaryNat && largeWordSizes.contains upstream then continue
       if (isExtern source upstream || (getImplementedBy? source upstream).isSome) && !arrayDefinition upstream then continue
       candidates := candidates.push d.name
@@ -421,7 +413,7 @@ private unsafe def install (source publicSource : Environment) (lib out : System
   -- Compiler tags stored under the imported module index need local entries while compiling.
   for n in locals ++ candidates do
     if owner == `OmegaInit.Meta.Defs then
-      let upstream := originalName n
+      let upstream := InitKernelPort.originalName n
       if let some (.defnInfo original) := source.find? upstream then
         if let some (.defnInfo installed) := env.find? n then
           let translate := InitKernelPort.translate InitKernelPort.portName
@@ -443,8 +435,8 @@ private unsafe def install (source publicSource : Environment) (lib out : System
       if oldNative.contains n then throw <| IO.userError s!"native symbol collision at {n}"
     let file := modToFilePath out owner "c"
     emitOwner st.env owner part.imports ctx file
-    let stringExports := words.any fun n => OmegaChecks.InitPort.WordNative.usesStringExport (originalName n)
-    if stringExports || words.any (fun n => OmegaChecks.InitPort.WordNative.usesPinnedFunction (originalName n)) then
+    let stringExports := words.any fun n => OmegaChecks.InitPort.WordNative.usesStringExport (InitKernelPort.originalName n)
+    if stringExports || words.any (fun n => OmegaChecks.InitPort.WordNative.usesPinnedFunction (InitKernelPort.originalName n)) then
       let upstream := if stringExports then `Init.Data.String else owner.replacePrefix `OmegaInit `Init
       let init := mkModuleInitializationFunctionName (phases := .runtime) owner st.env.getModulePackage?
       let upstreamInit := mkModuleInitializationFunctionName (phases := .runtime) upstream

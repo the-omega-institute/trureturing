@@ -18,6 +18,14 @@ public def portName (n : Name) : Name :=
     else `Omega ++ n
   else `Omega ++ n
 
+/-- Recover the pinned name, including private declarations in their lexical owner. -/
+public def originalName (n : Name) : Name := Id.run do
+  if let some user := privateToUserName? n then
+    if let some lexical := privatePrefix? n then
+      if (`_private.OmegaInit).isPrefixOf lexical && isPrivatePrefix lexical then
+        return lexical.replacePrefix `_private.OmegaInit `_private.Init ++ user.replacePrefix `Omega .anonymous
+  return n.replacePrefix `Omega .anonymous
+
 private def stringTerm (s : String) : Expr :=
   let char := mkConst `Omega.Char
   let chars := s.toList.foldr (init := mkApp (mkConst `Omega.List.nil [.zero]) char) fun ch tail =>
