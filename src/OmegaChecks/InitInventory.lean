@@ -374,6 +374,20 @@ private def logicalConsequence? (owner name : Name) : Option (Name × Name) := d
 
 /-- The conclusion uses the indicated semantic agreement in addition to the public type. -/
 private def conditionalConsequence? (owner name : Name) : Option (String × Name × String) := do
+  if owner == `Init.Data.Order.Lemmas || owner == `Init.Data.Order.LemmasExtra then
+    let observation := match owner, name with
+      | `Init.Data.Order.Lemmas, ``Classical.Order.instBEq =>
+        some (``OmegaChecks.InitBoundaries.ClassicalOrderDecisions.fromBEq, "beq true false is true")
+      | `Init.Data.Order.Lemmas, ``Classical.Order.instMin =>
+        some (``OmegaChecks.InitBoundaries.ClassicalOrderDecisions.fromMin, "min true false is true")
+      | `Init.Data.Order.Lemmas, ``Classical.Order.instMax =>
+        some (``OmegaChecks.InitBoundaries.ClassicalOrderDecisions.fromMax, "max true false is true")
+      | `Init.Data.Order.LemmasExtra, ``Classical.Order.instOrd =>
+        some (``OmegaChecks.InitBoundaries.ClassicalOrderDecisions.fromOrd, "compare true false is Ordering.eq")
+      | _, _ => none
+    if let some (proof, result) := observation then
+      return ("∀ P : Prop, Decidable P", proof,
+        s!"When x ≤ y on Bool is the constant proposition P, {result} exactly when P holds")
   if owner == `Init.Data.Array.Basic && [`Array.mapMUnsafe, `Array.mapFinIdxMUnsafe].contains name then
     let witness := if name == `Array.mapMUnsafe then ``OmegaChecks.InitBoundaries.ArrayCasts.map
       else ``OmegaChecks.InitBoundaries.ArrayCasts.mapIndexed

@@ -1,6 +1,8 @@
 module
 public import Lean
 import all Init.Internal.Order.Basic
+import all Init.Data.Order.Lemmas
+import all Init.Data.Order.LemmasExtra
 import Lean.Replay
 import all Lean.Util.CollectAxioms
 public import OmegaChecks.InitInventory.Logic
@@ -11,6 +13,66 @@ public section
 open Lean
 namespace OmegaChecks.InitBoundaries
 universe u v w z
+
+namespace ClassicalOrderDecisions
+
+/-- Both directions of the Boolean relation express the same arbitrary proposition. -/
+@[instance_reducible, expose] def testOrder (p : Prop) : LE Bool := ⟨fun _ _ => p⟩
+
+private def decideWith {p : Prop} (b : Bool) (h : b = true ↔ p) : Decidable p :=
+  match b with
+  | true => isTrue (h.mp rfl)
+  | false => isFalse fun hp => Bool.noConfusion (h.mpr hp)
+
+def fromMin (make : type_of% @Classical.Order.instMin.{0})
+    (h : ∀ p, (@make Bool (testOrder p)).min true false = true ↔ p) (p : Prop) : Decidable p :=
+  decideWith _ (h p)
+
+def fromMax (make : type_of% @Classical.Order.instMax.{0})
+    (h : ∀ p, (@make Bool (testOrder p)).max true false = true ↔ p) (p : Prop) : Decidable p :=
+  decideWith _ (h p)
+
+def fromBEq (make : type_of% @Classical.Order.instBEq.{0})
+    (h : ∀ p, (@make Bool (testOrder p)).beq true false = true ↔ p) (p : Prop) : Decidable p :=
+  decideWith _ (h p)
+
+def fromOrd (make : type_of% @Classical.Order.instOrd.{0})
+    (h : ∀ p, (@make Bool (testOrder p)).compare true false = .eq ↔ p) (p : Prop) : Decidable p := by
+  have reflects := h p
+  generalize h : (@make Bool (testOrder p)).compare true false = result at reflects
+  cases result with
+  | eq => exact isTrue (reflects.mp rfl)
+  | lt | gt => exact isFalse fun hp => Ordering.noConfusion (reflects.mpr hp)
+
+private theorem officialMin (p : Prop) :
+    (@Classical.Order.instMin Bool (testOrder p)).min true false = true ↔ p := by
+  classical
+  change (if p then true else false) = true ↔ p
+  by_cases h : p <;> simp [h]
+
+private theorem officialMax (p : Prop) :
+    (@Classical.Order.instMax Bool (testOrder p)).max true false = true ↔ p := by
+  classical
+  change (if p then true else false) = true ↔ p
+  by_cases h : p <;> simp [h]
+
+private theorem officialBEq (p : Prop) :
+    (@Classical.Order.instBEq Bool (testOrder p)).beq true false = true ↔ p := by
+  classical
+  change decide (p ∧ p) = true ↔ p
+  simp
+
+private theorem officialOrd (p : Prop) :
+    (@Classical.Order.instOrd Bool (testOrder p)).compare true false = .eq ↔ p := by
+  classical
+  change (if p then if p then Ordering.eq else .lt else .gt) = .eq ↔ p
+  by_cases h : p <;> simp [h]
+
+run_cmd
+  for name in [``fromMin, ``fromMax, ``fromBEq, ``fromOrd] do
+    unless (← collectAxioms name).isEmpty do throwError "order observation uses axioms: {name}"
+
+end ClassicalOrderDecisions
 
 namespace AbstractOrder
 
