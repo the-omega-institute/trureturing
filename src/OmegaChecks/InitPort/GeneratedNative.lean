@@ -149,6 +149,34 @@ private def compileRecursorCall (source strict : Environment) (d : DefinitionVal
   let name := Compiler.mkUnsafeRecName d.name
   compileEquation source d.name {d with name, all := [name], value := body, safety := .safe}
 
+/-- Specialize each kernel recursor rule to the actual branches before compiling.
+The recursive call then stays inside its original continuation for short-circuiting folds. -/
+private def compileDirectRecursor (source strict : Environment) (d : DefinitionVal) : CoreM Unit := do
+  let body ← withEnv strict <| Meta.MetaM.run' <| Meta.forallTelescope d.type fun params _ => do
+    let rhs := d.value.beta params
+    let .const recName levels := rhs.getAppFn | throwError "expected a recursor application"
+    let .recInfo r ← getConstInfo recName | throwError "expected a recursor"
+    let indName := r.getMajorInduct
+    let .inductInfo ind ← getConstInfo indName | throwError "expected an inductive"
+    let args := rhs.getAppArgs
+    unless r.numIndices == 0 && r.numMotives == 1 && !ind.isNested && ind.all == [indName] &&
+        recName == indName ++ `rec && r.rules.map (·.ctor) == ind.ctors &&
+        args.size == r.getMajorIdx + 1 && !params.isEmpty && params.back! == args.back! do
+      throwError "expected a single unindexed family on the final argument"
+    let original := rhs.appFn!
+    let self := mkAppN (mkConst d.name (d.levelParams.map Level.param)) params.pop
+    let mut cases := mkAppN (mkConst (indName ++ `casesOn) levels)
+      (args[:r.getFirstMinorIdx].toArray.push args.back!)
+    for rule in r.rules do
+      let equation := (rule.rhs.instantiateLevelParams r.levelParams levels).beta args.pop
+      let branch := equation.replace fun e => if e == original then some self else none
+      cases := mkApp cases (← Core.betaReduce branch)
+    let body ← Meta.mkLambdaFVars params cases
+    OmegaChecks.InitCompiler.checkConstructorEquations d.name d.levelParams d.type body (params.size - 1)
+    return body
+  let name := Compiler.mkUnsafeRecName d.name
+  compileEquation source d.name {d with name, all := [name], value := body, safety := .safe}
+
 /-- A recursive eliminator also performs plain case analysis when a branch ignores all
 its induction hypotheses. Retain the constructor fields and all outer variable bindings. -/
 private def withoutHypotheses (branch : Expr) : Nat → Nat → Option Expr
@@ -214,11 +242,30 @@ private def compileStructural (source strict : Environment) (n : Name) : CoreM U
     if ← compilePinnedRecursion source strict n then return
   catch _ => before.restore
   if let some (.defnInfo d) := strict.find? n then
+    try
+      compileDirectRecursor source strict d
+      return
+    catch _ => before.restore
     if d.value.getUsedConstants.contains `Nat.rec then compileRecursorCall source strict d
     else compileCases source strict d
 
+/-- The pinned boxing pass expects signatures for every call left after inlining and
+specialization. In a partial Init product an imported callee can still be unavailable. -/
+private def checkCallSignatures : Pass := Pass.mkPerDeclaration `checkCallSignatures .impure fun decl => do
+  decl.value.forCodeM fun root => root.forM fun code => do
+    if let .let binding _ := code then
+      match binding.value with
+      | .fap callee _ | .pap callee _ =>
+        unless (← getImpureSignature? callee).isSome do
+          throwError "missing compiled callee {callee} in {decl.name}"
+      | _ => pure ()
+  return decl
+
 private def compileOwner (source : Environment) (groups : Array InductiveVal) (words order : Array Name) : CoreM Unit := do
   let strict ← getEnv
+  let manager ← PassInstaller.run (← getPassManager)
+    (.installBefore .impure `explicitBoxing (fun _ => checkCallSignatures))
+  modifyEnv fun env => passManagerExt.setState env ((passManagerExt.getState env).1, manager)
   -- ToLCNF replaces nested proofs with this marker while inferring erased argument types.
   -- Only compiler extensions are serialized. Check equations in the original environment.
   let some (.axiomInfo marker) := source.find? `lcProof | throwError "missing pinned proof erasure marker"

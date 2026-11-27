@@ -119,6 +119,9 @@ private def officialDeclaration (stx : Syntax) : CommandElabM (Environment × Co
     let name := omegaName defn.name
     Lean.addDecl (.defnDecl {defn with name, type, value, all := defn.all.map omegaName}) (forceExpose := true)
     if isAuxRecursor src defn.name then modifyEnv (markAuxRecursor · name)
+    -- Unfold before compiling arguments, so untaken branches of the pinned ite stay lazy.
+    if Compiler.hasMacroInlineAttribute src defn.name then
+      setEnv (← ofExcept (Compiler.setInlineAttribute (← getEnv) name .macroInline))
     -- When code generation is optional, the compiler records unsupported definitions as
     -- noncomputable. Explicit native callers require a successful compilation.
     withOptions (fun opts => Elab.async.set opts false) do

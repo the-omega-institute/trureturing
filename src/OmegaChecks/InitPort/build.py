@@ -281,6 +281,11 @@ def generate(stage, product, seed, roots, excluded, original_seed):
                                         original_seed=original_seed, before_owner={"OmegaInit.ShareCommon": install_sharing},
                                         check_mixed=has_interfaces(inventory, mixed_interfaces),
                                         check_strings=has_interfaces(inventory, string_interfaces),
+                                        check_list_search=has_interfaces(inventory, {
+                                            "Init.Data.List.Control": {"List.anyM", "List.allM"},
+                                            "Init.Control.Id": {"Id.instMonad"},
+                                            "Init.Prelude": {"ite"},
+                                        }),
                                         check_bootstrap=has_interfaces(inventory, {"Init.Data.String.Bootstrap": {
                                             "String.Internal.nextWhile", "Substring.Raw.Internal.takeWhile",
                                             "String.Internal.foldl", "String.push", "Substring.Raw.Internal.toString",

@@ -97,7 +97,8 @@ def check_runtime_ir(stage, library, adapter, consumer):
 
 
 def compile_generated(stage, product, graph, seed_ir, owners=None, *, original_seed=None, before_owner=None,
-                      check_strings=True, check_literals=True, check_mixed=True, check_rat=True, check_bootstrap=True):
+                      check_strings=True, check_literals=True, check_mixed=True, check_rat=True, check_bootstrap=True,
+                      check_list_search=True):
     """Compile generated owners in import order and preserve the native symbols of existing owners."""
     requested = set(graph if owners is None else owners)
     selected = [owner for owner in TopologicalSorter(graph).static_order()
@@ -232,6 +233,16 @@ def compile_generated(stage, product, graph, seed_ir, owners=None, *, original_s
         run("leanc", "-shared", "-fPIC", "-DLEAN_EXPORTING", "-I", HERE, *string_sources, "-o", shim)
         run("lake", "env", "lean", "--load-dynlib=" + str(shim), "--run", HERE / "StringListIRConsumer.lean",
             library, stage)
+    search_owner = "OmegaInit.Data.List.Control"
+    if check_list_search and search_owner in objects and literals.is_file():
+        dependencies = reachable([search_owner, "OmegaInit.Control.Id"])
+        if dependencies.issubset(selected) and all(seed_files[d].is_file() for d in dependencies & seed_owners):
+            client = stage / "list-search-consumer.c"
+            run("lean", "-R", STRICT_SOURCES, "-c", client, STRICT_SOURCES / "ListSearchConsumer.lean",
+                env={**os.environ, "LEAN_PATH": str(library)})
+            application = stage / "check-list-search"
+            run("leanc", client, HERE / "list_search_consumer.c", *dependency_objects(dependencies), "-o", application)
+            run(application)
     bootstrap = "OmegaInit.Data.String.Bootstrap"
     if check_bootstrap and bootstrap in objects and literals.is_file():
         dependencies = reachable([bootstrap])
