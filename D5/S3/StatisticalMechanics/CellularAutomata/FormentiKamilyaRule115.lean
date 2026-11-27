@@ -14,6 +14,8 @@ import Mathlib.Data.Int.Notation
 import Mathlib.Data.Set.Finite.Lattice
 import Mathlib.Logic.Function.Iterate
 import Mathlib.Logic.Relation
+import Mathlib.Order.SuccPred.Int
+import Mathlib.Order.SuccPred.Relation
 
 
 namespace D5.S3.StatisticalMechanics.CellularAutomata
@@ -364,14 +366,10 @@ private theorem returning_second {p : ColumnPair} (hp : p ∈ returningPairs) :
 private theorem path_of_int_segment {α : Type} {step : α → α → Prop}
     (p : ℤ → α) (hs : ∀ i, step (p i) (p (i + 1)))
     {a b : ℤ} (hab : a ≤ b) : Relation.ReflTransGen step (p a) (p b) := by
-  obtain ⟨n, rfl⟩ : ∃ n : Nat, b = a + (n : ℤ) := ⟨(b - a).toNat, by omega⟩
-  clear hab
-  induction n with
-  | zero => simpa using (Relation.ReflTransGen.refl : Relation.ReflTransGen step (p a) (p a))
-  | succ n ih =>
-    have hindex : a + ((n + 1 : Nat) : ℤ) = a + (n : ℤ) + 1 := by omega
-    rw [hindex]
-    exact ih.tail (hs (a + (n : ℤ)))
+  have hpath : Relation.ReflTransGen (fun i j => step (p i) (p j)) a b :=
+    reflTransGen_of_succ_of_le (fun i j => step (p i) (p j))
+      (fun i _ => by simpa only [Order.succ_eq_add_one] using hs i) hab
+  exact hpath.lift p (fun _ _ h => h)
 
 private theorem forward_along_path {p q : ColumnPair} (hp : p ∈ forwardPairs)
     (h : Relation.ReflTransGen Step p q) : q ∈ forwardPairs := by
