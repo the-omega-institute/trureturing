@@ -6,7 +6,7 @@ An actual finite rooted tree whose size exceeds its vertex-height by one has exa
 
 **Definition 1.1 (The original root path).**
 
-$$\operatorname{spine}\left(T, v\right)$$
+$$\forall \left(V: Type\right) \left(T: \operatorname{Tree}\left(V\right)\right) \left(v: V\right) , \left(\operatorname{spine}\left(T, v\right) = \left\{\operatorname{iterate}\left(\operatorname{parent}\left(T\right), k, v\right) \mid k \in \operatorname{range}\left(\operatorname{depth}\left(T, v\right)+1\right)\right\}\right)$$
 
 *Formalization.* `D5/S3/Combinatorics/UnorderedTrees/OneFork.spine` (`✓ std3`).
 
@@ -14,11 +14,11 @@ $$\operatorname{spine}\left(T, v\right)$$
 
 *Commentary.*
 
-The spine is the finite set of parent iterates of v from step zero through its depth, including v and the root. Parent iteration subtracts depth until the root is reached, so these iterates are pairwise distinct on the specified interval. The spine is closed under the parent map and has cardinality depth(v) plus one.
+The spine is the finite set of parent iterates from v through the root, including both endpoints. It is closed under the parent map and has one vertex for each depth level.
 
 **Theorem 1.2 (A unique omitted leaf).**
 
-$$\operatorname{card}\left(V\right)=\operatorname{height}\left(T\right)+1 \to \exists v, w: V, (\forall x, \operatorname{depth}\left(T, x\right) \le \operatorname{depth}\left(T, v\right)) \land \neg (w \in \operatorname{spine}\left(T, v\right)) \land (\forall x, \neg (x \in \operatorname{spine}\left(T, v\right)) \iff x=w) \land \neg \operatorname{Internal}\left(T, w\right) \land \operatorname{parent}\left(T, w\right) \in \operatorname{spine}\left(T, v\right) \land \operatorname{parent}\left(T, w\right) \neq v$$
+$$\forall \left(V: Type\right) [\operatorname{Fintype}\left(V\right)] \left(T: \operatorname{Tree}\left(V\right)\right) , \left(\left(\operatorname{card}\left(V\right) = \operatorname{height}\left(T\right) + 1\right) \Rightarrow \left(\exists v \in V,\; \exists w \in V,\; \left(\forall x \in V,\; \operatorname{depth}\left(T, x\right) \le \operatorname{depth}\left(T, v\right)\right) \land \left(\left(\neg w \in \operatorname{spine}\left(T, v\right)\right) \land \left(\left(\forall x \in V,\; \left(\neg x \in \operatorname{spine}\left(T, v\right)\right) \Leftrightarrow \left(x = w\right)\right) \land \left(\left(\neg \operatorname{Internal}\left(T, w\right)\right) \land \left(\left(\operatorname{parent}\left(T, w\right) \in \operatorname{spine}\left(T, v\right)\right) \land \left(\operatorname{parent}\left(T, w\right) \ne v\right)\right)\right)\right)\right)\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/UnorderedTrees/OneFork.one_off_spine` (`✓ std3`). ∎
 
@@ -26,23 +26,71 @@ $$\operatorname{card}\left(V\right)=\operatorname{height}\left(T\right)+1 \to \e
 
 *Commentary.*
 
-For every finite vertex type and actual rooted parent tree T, assume card(V) = height(T) + 1. There exist vertices v and w such that v has maximal depth; w is outside the spine of v; and a vertex x is outside that spine if and only if x = w. The vertex w is a leaf, its parent is on the spine, and that parent is different from v. A deepest vertex exists on the nonempty finite carrier. The spine has exactly height(T) vertices, leaving a singleton complement. A child of the omitted vertex would give a second omitted vertex; an omitted parent would have to equal the vertex itself, contradicting the depth law. Attachment at v would exceed the maximal depth. This includes attachment at the root and the equal-arm boundary.
+When the carrier has one more vertex than the height, a deepest spine leaves a singleton complement. The omitted vertex is a leaf, its parent lies on the spine, and attachment at the deepest endpoint is excluded by maximality.
 
-**Theorem 1.3 (Skeletons of the qualifying actual trees).**
+**Definition 1.3 (The canonical fork carrier).**
 
-$$\operatorname{height}\left(T\right)=\operatorname{internalCount}\left(T\right) \to \exists h: \operatorname{Internal}\left(T, \operatorname{root}\left(T\right)\right), \exists v, w: \operatorname{InternalVertices}\left(T\right), (\forall x, \operatorname{depth}\left(\operatorname{prune}\left(T, h\right), x\right) \le \operatorname{depth}\left(\operatorname{prune}\left(T, h\right), v\right)) \land \neg (w \in \operatorname{spine}\left(\operatorname{prune}\left(T, h\right), v\right)) \land (\forall x, \neg (x \in \operatorname{spine}\left(\operatorname{prune}\left(T, h\right), v\right)) \iff x=w) \land \neg \operatorname{Internal}\left(\operatorname{prune}\left(T, h\right), w\right) \land \operatorname{parent}\left(\operatorname{prune}\left(T, h\right), w\right) \in \operatorname{spine}\left(\operatorname{prune}\left(T, h\right), v\right) \land \operatorname{parent}\left(\operatorname{prune}\left(T, h\right), w\right) \neq v$$
+$$\forall \left(b: \mathbb{N}\right) \left(c: \mathbb{N}\right) , \left(\operatorname{Fork}\left(b, c\right) = \operatorname{Sum}\left(\operatorname{Fin}\left(b+c+1\right), Bool\right)\right)$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/UnorderedTrees/OneFork.qualifying_one_off_spine` (`✓ std3`). ∎
+*Formalization.* `D5/S3/Combinatorics/UnorderedTrees/OneFork.Fork` (`✓ std3`).
 
 *Source.* Repository-derived.
 
 *Commentary.*
 
-For every finite actual rooted tree T satisfying vertex-height equals internal-vertex count, the root is internal. There is a deepest path in the pruned tree whose complement is exactly one leaf, attached to a different path vertex from the deepest endpoint. The theorem quantifies the retained vertices on the original internal-vertex subtype and proves all the preceding maximal-depth, complement, leaf and parent properties there. It follows by the leaf-pruning height law and the actual-vertex one-off-path theorem.
+Fork b c is the sum of the b+c+1 indexed spine vertices and two Boolean-tagged tips.
 
-**Theorem 1.4 (The canonical fork).**
+**Definition 1.4 (The fork point).**
 
-$$\operatorname{card}\left(V\right)=\operatorname{height}\left(T\right)+1 \implies \exists b,c, \operatorname{Nonempty}\left(\operatorname{Iso}\left(\operatorname{fork}\left(b, c\right), T\right)\right)$$
+$$\forall \left(b: \mathbb{N}\right) \left(c: \mathbb{N}\right) , \left(\operatorname{forkPoint}\left(b, c\right).val = b\right)$$
+
+*Formalization.* `D5/S3/Combinatorics/UnorderedTrees/OneFork.forkPoint` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The fork point is the spine vertex at index b where the short tip attaches.
+
+**Definition 1.5 (The canonical fork parent map).**
+
+$$\forall \left(b: \mathbb{N}\right) \left(c: \mathbb{N}\right) , \left(\begin{aligned}&\operatorname{root}\left(\operatorname{fork}\left(b, c\right)\right) = \operatorname{inl}\left(0\right)\\&\forall i \in \operatorname{Fin}\left(b+c+1\right),\; \operatorname{parent}\left(\operatorname{fork}\left(b, c\right), \operatorname{inl}\left(i\right)\right) = \operatorname{inl}\left(\langle i.val-1\rangle\right)\\&\operatorname{parent}\left(\operatorname{fork}\left(b, c\right), \operatorname{inr}\left(false\right)\right) = \operatorname{inl}\left(\operatorname{forkPoint}\left(b, c\right)\right)\\&\operatorname{parent}\left(\operatorname{fork}\left(b, c\right), \operatorname{inr}\left(true\right)\right) = \operatorname{inl}\left(\langle b+c\rangle\right)\end{aligned}\right)$$
+
+*Formalization.* `D5/S3/Combinatorics/UnorderedTrees/OneFork.fork` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The canonical parent map sends each indexed spine vertex to its predecessor and sends the false and true tips to the fork point and terminal spine vertex.
+
+**Theorem 1.6 (Cardinality of the fork).**
+
+$$\forall \left(b: \mathbb{N}\right) \left(c: \mathbb{N}\right) , \left(\operatorname{card}\left(\operatorname{Fork}\left(b, c\right)\right) = b + c + 3\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/UnorderedTrees/OneFork.card_fork` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The sum carrier has b+c+1 spine vertices and two tips.
+
+**Theorem 1.7 (Height of the fork).**
+
+$$\forall \left(b: \mathbb{N}\right) \left(c: \mathbb{N}\right) , \left(\operatorname{height}\left(\operatorname{fork}\left(b, c\right)\right) = b + c + 2\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/UnorderedTrees/OneFork.height_fork` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The long tip attains the maximum depth b+c+1, so the vertex-height is b+c+2.
+
+**Theorem 1.8 (The canonical fork).**
+
+$$\forall \left(V: Type\right) [\operatorname{Fintype}\left(V\right)] \left(T: \operatorname{Tree}\left(V\right)\right) , \left(\left(\operatorname{card}\left(V\right) = \operatorname{height}\left(T\right) + 1\right) \Rightarrow \left(\exists b \in \mathbb{N},\; \exists c \in \mathbb{N},\; \operatorname{Nonempty}\left(\operatorname{Iso}\left(\operatorname{fork}\left(b, c\right), T\right)\right)\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/UnorderedTrees/OneFork.exists_fork_iso` (`✓ std3`). ∎
 
@@ -50,12 +98,94 @@ $$\operatorname{card}\left(V\right)=\operatorname{height}\left(T\right)+1 \impli
 
 *Commentary.*
 
-For any rooted parent tree T on a finite type V of the displayed size, the spine nonterminals are indexed in increasing depth order. The short tip is the omitted vertex and the long tip is the chosen deepest vertex. The short tip attaches at depth b and the long tip at depth b+c. The vertex bijection preserves the root and every parent edge.
+A deepest spine, its omitted leaf and the parent edges give a bidirectional labelling by the canonical fork.
+
+**Theorem 1.9 (Internal indexed spine vertices).**
+
+$$\forall \left(b: \mathbb{N}\right) \left(c: \mathbb{N}\right) , \left(\forall i \in \operatorname{Fin}\left(b+c+1\right),\; \operatorname{Internal}\left(\operatorname{fork}\left(b, c\right), \operatorname{inl}\left(i\right)\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/UnorderedTrees/OneFork.fork_internal_spine` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Every indexed spine vertex has a child, with the terminal position supplied by the long tip.
+
+**Theorem 1.10 (The fork tips are terminal).**
+
+$$\forall \left(b: \mathbb{N}\right) \left(c: \mathbb{N}\right) , \left(\forall p \in Bool,\; \neg \operatorname{Internal}\left(\operatorname{fork}\left(b, c\right), \operatorname{inr}\left(p\right)\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/UnorderedTrees/OneFork.fork_terminal` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The Boolean tips have no nonroot children in the canonical parent map.
+
+**Theorem 1.11 (Fork parameters are invariant).**
+
+$$\forall \left(b: \mathbb{N}\right) \left(c: \mathbb{N}\right) \left(b': \mathbb{N}\right) \left(c': \mathbb{N}\right) , \left(\forall e: \operatorname{Iso}\left(\operatorname{fork}\left(b, c\right), \operatorname{fork}\left(b', c'\right)\right), \left(\left(b = b'\right) \land \left(c = c'\right)\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/UnorderedTrees/OneFork.fork_iso_parameters` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+An isomorphism between canonical forks identifies the unique branching depth b and then the maximum-depth excess c.
+
+**Theorem 1.12 (Fork isomorphisms fix the spine).**
+
+$$\forall \left(b: \mathbb{N}\right) \left(c: \mathbb{N}\right) , \left(\forall e: \operatorname{Iso}\left(\operatorname{fork}\left(b, c\right), \operatorname{fork}\left(b, c\right)\right), \left(\forall i \in \operatorname{Fin}\left(b+c+1\right),\; e.equiv\left(\operatorname{inl}\left(i\right)\right) = \operatorname{inl}\left(i\right)\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/UnorderedTrees/OneFork.fork_iso_spine` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Depth and internality uniquely identify each indexed nonterminal.
+
+**Theorem 1.13 (Fork isomorphisms permute the tips).**
+
+$$\forall \left(b: \mathbb{N}\right) \left(c: \mathbb{N}\right) , \left(\forall e: \operatorname{Iso}\left(\operatorname{fork}\left(b, c\right), \operatorname{fork}\left(b, c\right)\right), \left(\left(\left(e.equiv\left(\operatorname{inr}\left(false\right)\right) = \operatorname{inr}\left(false\right)\right) \land \left(e.equiv\left(\operatorname{inr}\left(true\right)\right) = \operatorname{inr}\left(true\right)\right)\right) \lor \left(\left(c = 0\right) \land \left(\left(e.equiv\left(\operatorname{inr}\left(false\right)\right) = \operatorname{inr}\left(true\right)\right) \land \left(e.equiv\left(\operatorname{inr}\left(true\right)\right) = \operatorname{inr}\left(false\right)\right)\right)\right)\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/UnorderedTrees/OneFork.fork_iso_tips` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The two tips are the only terminal vertices outside the spine. Their depths distinguish them when c is positive, while c=0 permits the swap.
+
+**Definition 1.14 (The equal-arm tip swap).**
+
+$$\forall \left(b: \mathbb{N}\right) , \left(\operatorname{swapTips}\left(b\right): \operatorname{Iso}\left(\operatorname{fork}\left(b, 0\right), \operatorname{fork}\left(b, 0\right)\right)\right)$$
+
+*Formalization.* `D5/S3/Combinatorics/UnorderedTrees/OneFork.swapTips` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+When c=0, exchanging the two Boolean tips is a rooted parent-map isomorphism.
 
 ## References
 
+- Truth anchor: `D5/S3/Combinatorics/UnorderedTrees/OneFork.Fork`
+- Truth anchor: `D5/S3/Combinatorics/UnorderedTrees/OneFork.card_fork`
 - Truth anchor: `D5/S3/Combinatorics/UnorderedTrees/OneFork.exists_fork_iso`
+- Truth anchor: `D5/S3/Combinatorics/UnorderedTrees/OneFork.fork`
+- Truth anchor: `D5/S3/Combinatorics/UnorderedTrees/OneFork.forkPoint`
+- Truth anchor: `D5/S3/Combinatorics/UnorderedTrees/OneFork.fork_internal_spine`
+- Truth anchor: `D5/S3/Combinatorics/UnorderedTrees/OneFork.fork_iso_parameters`
+- Truth anchor: `D5/S3/Combinatorics/UnorderedTrees/OneFork.fork_iso_spine`
+- Truth anchor: `D5/S3/Combinatorics/UnorderedTrees/OneFork.fork_iso_tips`
+- Truth anchor: `D5/S3/Combinatorics/UnorderedTrees/OneFork.fork_terminal`
+- Truth anchor: `D5/S3/Combinatorics/UnorderedTrees/OneFork.height_fork`
 - Truth anchor: `D5/S3/Combinatorics/UnorderedTrees/OneFork.one_off_spine`
-- Truth anchor: `D5/S3/Combinatorics/UnorderedTrees/OneFork.qualifying_one_off_spine`
 - Truth anchor: `D5/S3/Combinatorics/UnorderedTrees/OneFork.spine`
+- Truth anchor: `D5/S3/Combinatorics/UnorderedTrees/OneFork.swapTips`
 - Dependency: [D5/S3/Combinatorics/UnorderedTrees/LeafPruning](LeafPruning.md)

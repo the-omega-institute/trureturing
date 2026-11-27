@@ -6,9 +6,14 @@
    utility: none
    digest: Finite rooted parent trees, their actual vertex isomorphisms and leaf pruning. -/
 
+/-
+admission_basis: escape-witness
+code_eq_iff_iso: proof_shape: content; escape_witness: all_descendant.
+Every original vertex lies in the root descendant carrier by induction on a reaching iterate.
+Live consumers: classHeight, classInternalCount, ForkDecoration.classification.
+-/
+
 import D5.S1.FixedPoints.TransientTrees.RootedVertexClassification
-import Mathlib.Data.Finset.Lattice.Fold
-import Mathlib.Data.Fintype.Quotient
 import Mathlib.Data.Fintype.Pi
 import Mathlib.Data.Fintype.Prod
 import OmegaBuild.Commands

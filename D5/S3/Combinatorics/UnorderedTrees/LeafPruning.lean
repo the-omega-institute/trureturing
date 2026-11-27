@@ -6,6 +6,13 @@
    utility: none
    digest: Leaf pruning preserves the rooted parent tree and lowers vertex-height by one. -/
 
+/-
+admission_basis: escape-witness
+pruning_reduction: proof_shape: content; escape_witness: pruning_height.
+Every nonroot vertex has an internal parent one level up, and every retained vertex has a child one level down, giving equality of the two height bounds.
+Live consumers: ForkDecoration.model_qualifies and ForkDecoration.model_surjective.
+-/
+
 import D5.S3.Combinatorics.UnorderedTrees.ParentTree
 
 /-! Leaf pruning retains the actual internal-vertex subtree. -/

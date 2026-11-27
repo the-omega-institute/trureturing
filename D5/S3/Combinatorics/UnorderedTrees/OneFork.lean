@@ -6,6 +6,13 @@
    utility: none
    digest: A finite rooted tree with size one above vertex-height has exactly one off-spine leaf. -/
 
+/-
+admission_basis: escape-witness
+exists_fork_iso: proof_shape: content; escape_witness: one_off_spine.
+The bounded parent iterates of a deepest vertex have distinct depths and a singleton complement. The omitted leaf attaches below the deepest depth.
+Live consumers: ForkDecoration.model_surjective.
+-/
+
 import D5.S3.Combinatorics.UnorderedTrees.LeafPruning
 import Mathlib.Data.Fintype.Sum
 
@@ -125,20 +132,6 @@ theorem one_off_spine {V : Type u} [Fintype V] (T : Tree V)
     omega
   exact ⟨v, w, hmax, hwout, off_iff, hleaf, hparent, hparent_ne⟩
 
-/-- Every qualifying actual tree has an internal skeleton with one off-spine leaf. -/
-theorem qualifying_one_off_spine {V : Type u} [Fintype V] (T : Tree V)
-    (h : height T = internalCount T) :
-    ∃ hr : Internal T T.root, ∃ v w : {v // Internal T v},
-      (∀ x, depth (prune T hr) x ≤ depth (prune T hr) v) ∧
-      w ∉ spine (prune T hr) v ∧
-      (∀ x, x ∉ spine (prune T hr) v ↔ x = w) ∧
-      ¬ Internal (prune T hr) w ∧
-      (prune T hr).parent w ∈ spine (prune T hr) v ∧
-      (prune T hr).parent w ≠ v := by
-  let hr := qualifying_root T h
-  refine ⟨hr, ?_⟩
-  exact one_off_spine (prune T hr) ((pruning_reduction T hr).2.mp h)
-
 /-- The canonical fork uses successive spine nonterminals and two tips.
 The Boolean tags `false` and `true` mark the short and long tips, respectively. -/
 abbrev Fork (b c : ℕ) := Fin (b + c + 1) ⊕ Bool
@@ -193,13 +186,13 @@ private theorem depth_fork (b c : ℕ) (x : Fork b c) : depth (fork b c) x = for
       rw [ih _ (by omega) _ rfl]
       omega
 
-@[simp] theorem depth_fork_spine (b c : ℕ) (i : Fin (b + c + 1)) :
+@[simp] private theorem depth_fork_spine (b c : ℕ) (i : Fin (b + c + 1)) :
     depth (fork b c) (.inl i) = i.val := depth_fork b c _
 
-@[simp] theorem depth_fork_short (b c : ℕ) :
+@[simp] private theorem depth_fork_short (b c : ℕ) :
     depth (fork b c) (.inr false) = b + 1 := depth_fork b c _
 
-@[simp] theorem depth_fork_long (b c : ℕ) :
+@[simp] private theorem depth_fork_long (b c : ℕ) :
     depth (fork b c) (.inr true) = b + c + 1 := depth_fork b c _
 
 @[simp] theorem card_fork (b c : ℕ) : Fintype.card (Fork b c) = b + c + 3 := by
@@ -454,7 +447,6 @@ def swapTips (b : ℕ) : Iso (fork b 0) (fork b 0) where
     · cases p <;> rfl
 
 #print axioms one_off_spine
-#print axioms qualifying_one_off_spine
 #print axioms exists_fork_iso
 #print axioms fork_iso_parameters
 #print axioms fork_iso_tips

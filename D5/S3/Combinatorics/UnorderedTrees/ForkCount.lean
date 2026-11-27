@@ -1,10 +1,17 @@
 /- GID: D5/S3/Combinatorics/UnorderedTrees/ForkCount
    generality: I
    mirror-B: D5/B/S3/Combinatorics/UnorderedTrees/ForkCount
-   mirror-E: none(waiver:unordered-tree-fork-count)
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.Data.Sym.NatCard]
    utility: none
    digest: Bounded binomial sums count the two fork decoration families of each size. -/
+
+/-
+admission_basis: escape-witness
+count_by_arms: proof_shape: content; escape_witness: weightSplit and regroup_unequal.
+The weight-preserving split uses the unique sorted offset pair and independent unequal offsets. On unequal arms, the bijection with a total parameter and a choice of split gives the multiplicity.
+Live consumers: A358587.actual_series and A358587.initial.
+-/
 
 import D5.S3.Combinatorics.UnorderedTrees.ForkDecoration
 import Mathlib.Algebra.BigOperators.Fin
