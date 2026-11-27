@@ -1,7 +1,7 @@
 /- GID: D5/S3/Combinatorics/Graph/AdjacencyProduct/WindmillClassification
    generality: I
    mirror-B: D5/B/S3/Combinatorics/Graph/AdjacencyProduct/WindmillClassification
-   mirror-E: none(waiver:unbounded-symbolic-proof)
+   mirror-E: none(waiver:external-open-problem-resolution)
    anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.AdjMatrix, mathlib/module/Mathlib.Combinatorics.SimpleGraph.DegreeSum, mathlib/module/Mathlib.Data.ZMod.Basic]
    utility: none
    digest: Classification of ordinary adjacency matrix products for windmill graphs. -/
@@ -185,5 +185,175 @@ private theorem complete_card_mod_four {V : Type} [Fintype V] {B C : SimpleGraph
   have hn : 0 < Fintype.card V := Fintype.card_pos_iff.mpr ⟨x⟩
   have hm : Fintype.card V - 1 = 4 * (b * c) := by rw [← hp, hb, hc]; ring
   omega
+
+/-- The residues of the steps in the second factor are the two middle entries of
+each block of four. -/
+private def middleStep {k : ℕ} (a : ZMod (4 * k + 1)) : Prop :=
+  a.val % 4 = 2 ∨ a.val % 4 = 3
+
+private theorem neg_middleStep {k : ℕ} {a : ZMod (4 * k + 1)} (ha : middleStep a) :
+    middleStep (-a) := by
+  have hlt := ZMod.val_lt a
+  have hpos : 0 < a.val := by unfold middleStep at ha; omega
+  letI : NeZero a := ⟨ZMod.val_pos.mp hpos⟩
+  unfold middleStep at *
+  rw [ZMod.val_neg_of_ne_zero]
+  omega
+
+private def unitSteps (k : ℕ) (hk : 0 < k) : SimpleGraph (ZMod (4 * k + 1)) where
+  Adj x y := y - x = -1 ∨ y - x = 1
+  symm := by
+    intro x y h
+    change x - y = -1 ∨ x - y = 1
+    rw [← neg_sub y x]
+    rcases h with h | h
+    · exact Or.inr (by rw [h, neg_neg])
+    · exact Or.inl (by rw [h])
+  loopless := by
+    intro x h
+    change x - x = -1 ∨ x - x = 1 at h
+    have hval : (1 : ZMod (4 * k + 1)).val = 1 % (4 * k + 1) :=
+      ZMod.val_one_eq_one_mod _
+    simp only [sub_self] at h
+    rcases h with h | h
+    · have hneg : (1 : ZMod (4 * k + 1)) = 0 := by simpa using congrArg Neg.neg h.symm
+      rw [hneg, ZMod.val_zero] at hval
+      omega
+    · rw [← h, ZMod.val_zero] at hval
+      omega
+
+private def middleSteps (k : ℕ) : SimpleGraph (ZMod (4 * k + 1)) where
+  Adj x y := middleStep (y - x)
+  symm := by
+    intro x y h
+    change middleStep (x - y)
+    rw [← neg_sub y x]
+    exact neg_middleStep h
+  loopless := by
+    intro x h
+    change middleStep (x - x) at h
+    simpa [middleStep] using h
+
+private theorem step_partition {k : ℕ} (hk : 0 < k) (a : ZMod (4 * k + 1)) :
+    (middleStep (a - (-1)) ↔ a.val % 4 = 1 ∨ a.val % 4 = 2) ∧
+    (middleStep (a - 1) ↔ a.val % 4 = 3 ∨ (0 < a.val ∧ a.val % 4 = 0)) := by
+  letI : Fact (1 < 4 * k + 1) := ⟨by omega⟩
+  have hlt := ZMod.val_lt a
+  have hval : (1 : ZMod (4 * k + 1)).val = 1 := ZMod.val_one _
+  constructor
+  · rw [sub_neg_eq_add]
+    by_cases h : a.val + 1 < 4 * k + 1
+    · rw [middleStep, ZMod.val_add, hval, Nat.mod_eq_of_lt h]
+      omega
+    · have hw : a.val + 1 = 4 * k + 1 := by omega
+      rw [middleStep, ZMod.val_add, hval, hw, Nat.mod_self]
+      omega
+  · by_cases h : a = 0
+    · subst a
+      have hv : (-1 : ZMod (4 * k + 1)).val = 4 * k := ZMod.val_neg_one _
+      simp only [zero_sub, middleStep, hv, ZMod.val_zero]
+      omega
+    · have ha := ZMod.val_pos.mpr h
+      rw [middleStep, ZMod.val_sub (by simpa only [hval] using ha)]
+      rw [hval]
+      omega
+
+private theorem unique_intermediate {k : ℕ} (hk : 0 < k) (a : ZMod (4 * k + 1))
+    (ha : a ≠ 0) :
+    ∃! s : ZMod (4 * k + 1), (s = -1 ∨ s = 1) ∧ middleStep (a - s) := by
+  obtain ⟨hminus, hplus⟩ := step_partition hk a
+  have hpos := ZMod.val_pos.mpr ha
+  by_cases hm : middleStep (a - (-1))
+  · refine ⟨-1, ⟨Or.inl rfl, hm⟩, ?_⟩
+    rintro s ⟨(rfl | rfl), hs⟩
+    · rfl
+    · have := hminus.mp hm
+      have := hplus.mp hs
+      omega
+  · have hp : middleStep (a - 1) := by
+      have := mt hminus.mpr hm
+      apply hplus.mpr
+      omega
+    refine ⟨1, ⟨Or.inr rfl, hp⟩, ?_⟩
+    rintro s ⟨(rfl | rfl), hs⟩
+    · exact (hm hs).elim
+    · rfl
+
+private theorem cycle_product {k : ℕ} (hk : 0 < k) :
+    (unitSteps k hk).adjMatrix ℤ * (middleSteps k).adjMatrix ℤ =
+      (⊤ : SimpleGraph (ZMod (4 * k + 1))).adjMatrix ℤ := by
+  ext x y
+  rw [product_entry]
+  have hstep (z : ZMod (4 * k + 1)) : y - z = (y - x) - (z - x) := by abel
+  by_cases hxy : x = y
+  · subst y
+    have hempty : ((unitSteps k hk).neighborFinset x).filter
+        (fun z ↦ (middleSteps k).Adj z x) = ∅ := by
+      apply Finset.eq_empty_iff_forall_notMem.mpr
+      intro z hz
+      obtain ⟨hzB, hzC⟩ := Finset.mem_filter.mp hz
+      have ht : (z - x = -1 ∨ z - x = 1) := mem_neighborFinset.mp hzB
+      change middleStep (x - z) at hzC
+      rw [hstep, sub_self] at hzC
+      rcases ht with hs | hs
+      · have hh := (step_partition hk (0 : ZMod (4 * k + 1))).1.mp (hs ▸ hzC)
+        simp at hh
+      · have hh := (step_partition hk (0 : ZMod (4 * k + 1))).2.mp (hs ▸ hzC)
+        simp at hh
+    simp [hempty]
+  · have hne : y - x ≠ 0 := sub_ne_zero.mpr hxy.symm
+    obtain ⟨s, hs, hu⟩ := unique_intermediate hk (y - x) hne
+    have hcard : (((unitSteps k hk).neighborFinset x).filter
+        (fun z ↦ (middleSteps k).Adj z y)).card = 1 := by
+      apply Finset.card_eq_one_iff_existsUnique.mpr
+      refine ⟨x + s, Finset.mem_filter.mpr ⟨?_, ?_⟩, ?_⟩
+      · apply mem_neighborFinset.mpr
+        change (x + s) - x = -1 ∨ (x + s) - x = 1
+        simpa using hs.1
+      · change middleStep (y - (x + s))
+        rw [hstep]
+        simpa using hs.2
+      · intro z hz
+        obtain ⟨hzB, hzC⟩ := Finset.mem_filter.mp hz
+        have hunit : (z - x = -1 ∨ z - x = 1) := mem_neighborFinset.mp hzB
+        change middleStep (y - z) at hzC
+        rw [hstep] at hzC
+        exact sub_eq_iff_eq_add.mp (hu _ ⟨hunit, hzC⟩) |>.trans (add_comm _ _)
+    simp [hcard, hxy]
+
+private theorem complete_product_of_card {V : Type} [Fintype V] (k : ℕ) (hk : 0 < k)
+    (hcard : Fintype.card V = 4 * k + 1) :
+    ∃ B C : SimpleGraph V, B.adjMatrix ℤ * C.adjMatrix ℤ = (⊤ : SimpleGraph V).adjMatrix ℤ := by
+  let e : V ≃ ZMod (4 * k + 1) := Fintype.equivOfCardEq (hcard.trans (ZMod.card _).symm)
+  let B := unitSteps k hk
+  let C := middleSteps k
+  have hcomap (G : SimpleGraph (ZMod (4 * k + 1))) :
+      (G.comap e).adjMatrix ℤ = (G.adjMatrix ℤ).submatrix e e := by
+    ext
+    simp [comap_adj]
+  refine ⟨B.comap e, C.comap e, ?_⟩
+  rw [hcomap, hcomap, Matrix.submatrix_mul_equiv _ _ e e e, cycle_product hk]
+  ext x y
+  simp
+
+/-- The windmill admits a factorization into two simple graph adjacency matrices
+over the integers exactly for a single blade of order one modulo four. -/
+theorem result (d t : ℕ) (hd : 1 ≤ d) (ht : 3 ≤ t) :
+    (∃ B C : SimpleGraph (Option (Fin d × Fin (t - 1))),
+      B.adjMatrix ℤ * C.adjMatrix ℤ = (windmill d t).adjMatrix ℤ) ↔
+      d = 1 ∧ t % 4 = 1 := by
+  have hcard : Fintype.card (Option (Fin 1 × Fin (t - 1))) = t := by
+    simp [Fintype.card_option]
+    omega
+  constructor
+  · rintro ⟨B, C, h⟩
+    have h₁ := one_blade_of_product hd ht h
+    subst d
+    rw [one_blade_complete] at h
+    have hm := complete_card_mod_four h none
+    exact ⟨rfl, hcard ▸ hm⟩
+  · rintro ⟨rfl, hm⟩
+    rw [one_blade_complete]
+    exact complete_product_of_card (t / 4) (by omega) (by rw [hcard]; omega)
 
 end D5.S3.Combinatorics.Graph.AdjacencyProduct.WindmillClassification
