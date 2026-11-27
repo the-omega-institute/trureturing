@@ -10,7 +10,7 @@ import D5.S3.Quantum.Codes.BinaryEAAttainment
 import D5.S3.Quantum.Codes.BinaryEARankOneBridge
 import D5.S3.Quantum.Codes.BinaryEAShortening
 
-/-! Compression to the radical support and exclusion of all lengths at least eight. -/
+/-! Compression to the radical support and exclusion of all lengths at least eight. [Helper escape audits](https://github.com/the-omega-institute/trureturing/issues/34915). -/
 
 set_option autoImplicit false
 

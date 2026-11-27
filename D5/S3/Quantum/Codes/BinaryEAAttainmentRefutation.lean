@@ -7,7 +7,7 @@
    digest: No binary entanglement-assisted stabilizer parameters in the specified family attain the Singleton equality. -/
 
 import D5.S3.Quantum.Codes.BinaryEAAttainmentBridge
-import D5.S3.Quantum.Codes.BinaryEAShortening
+import D5.S3.Quantum.Codes.BinaryEAShorteningLengthSeven
 
 /-!
 The binary symplectic obstruction to exact attainment at every length in scope.

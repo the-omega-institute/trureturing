@@ -1,10 +1,10 @@
 import LeanInformationAuditInterface.Contract.Registration
-import D5.S3.Quantum.Codes.BinaryEAShortening
+import D5.S3.Quantum.Codes.BinaryEAShorteningLengthSeven
 import Reg.Support.SingleDependentReadout
 
 /-! Source-bound registration of the code-dimension hypothesis in the length-seven obstruction. -/
 
-namespace Reg.D5.S3.Quantum.Codes.BinaryEAShortening
+namespace Reg.D5.S3.Quantum.Codes.BinaryEAShorteningLengthSeven
 
 open _root_.D5.S3.Quantum.Codes.BinaryEAShortening
 open _root_.D5.S3.Quantum.Information.BinaryStabilizerGraphNormalForm (spForm)
@@ -78,8 +78,8 @@ def evidence : Registration arena (type_of% @length_seven_no_rank_two_site) wher
 def registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
       (@length_seven_no_rank_two_site) (Realization signature) Unit Unit := {
-  unitName := `Reg.D5.S3.Quantum.Codes.BinaryEAShortening.unit
-  realizationName := `Reg.D5.S3.Quantum.Codes.BinaryEAShortening.evidence
+  unitName := `Reg.D5.S3.Quantum.Codes.BinaryEAShorteningLengthSeven.unit
+  realizationName := `Reg.D5.S3.Quantum.Codes.BinaryEAShorteningLengthSeven.evidence
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -95,7 +95,7 @@ def registration :
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Quantum.Codes.BinaryEAShortening
+    owner := `D5.S3.Quantum.Codes.BinaryEAShorteningLengthSeven
     definition := none
     coordinates := #[]
     readouts := #[{
@@ -111,4 +111,4 @@ def registration :
 #print axioms registration
 
 end
-end Reg.D5.S3.Quantum.Codes.BinaryEAShortening
+end Reg.D5.S3.Quantum.Codes.BinaryEAShorteningLengthSeven

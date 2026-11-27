@@ -11,7 +11,7 @@ import Mathlib.LinearAlgebra.BilinearForm.Orthogonal
 import Mathlib.FieldTheory.Finiteness
 import OmegaBuild.Commands
 
-/-! Coordinate-kernel and support reductions for binary stabilizer codes. -/
+/-! Coordinate-kernel and support reductions for binary stabilizer codes. [Helper escape audits](https://github.com/the-omega-institute/trureturing/issues/34915). -/
 
 compile_only_with_mathlib
 

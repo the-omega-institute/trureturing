@@ -20,7 +20,7 @@ import Mathlib.Data.Fin.Tuple.Sort
 import Mathlib.Data.List.OfFn
 import Mathlib.Logic.Equiv.Fin.Basic
 
-/-! Systematic generators for the binary rank-one obstruction. -/
+/-! Systematic generators for the binary rank-one obstruction. [Helper escape audits](https://github.com/the-omega-institute/trureturing/issues/34915). -/
 
 namespace D5.S3.Quantum.Codes.BinaryEARankOneBridge
 
