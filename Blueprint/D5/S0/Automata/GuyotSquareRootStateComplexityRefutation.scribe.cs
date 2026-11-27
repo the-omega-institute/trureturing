@@ -32,8 +32,9 @@ internal sealed class GuyotSquareRootStateComplexityRefutationDocument : IScribe
                 AssessedProvenance.FromLiterature(Source),
                 Blocks(
                     Paragraph(Text(
-                        "Conjecture 1 in §2.2 states “∀ n ∈ ℕ₍₊₎, κ(√↓(Uₙ)) = α(n) ≤ c(n)² − c(n) + 3.” "
-                        + "The upper-bound conjunct concerns α(n), the largest quotient count for words of "
+                        "Conjecture 1 in §2.2 states “∀ n ∈ ℕ₍>₀₎, κ(√↓(Uₙ)) = α(n) ≤ c(n)² − c(n) + 3.”")),
+                    Paragraph(Text(
+                        "The upper-bound conjunct concerns α(n), the largest quotient count for words of "
                         + "length at most n. The conjectured equality involving Uₙ is separate.")),
                     Paragraph(Text(
                         "For each positive n, each finite alphabet A, and each word w of length at most n, "
@@ -59,7 +60,7 @@ internal sealed class GuyotSquareRootStateComplexityRefutationDocument : IScribe
                         + "For w = abcdabcdabdc, the bound allows at most 15 states.")),
                     Paragraph(Text(
                         "The selected prefixes are the empty word, a, b, c, d, aa, ab, ac, ad, ba, "
-                        + "bc, bd, ca, cd, da, and abc. Among the empty suffix and the four one-letter suffixes, "
+                        + "bc, bd, ca, cd, da, and bcd. Among the empty suffix and the four one-letter suffixes, "
                         + "each pair of prefixes has a suffix for which the sublist test on the doubled "
                         + "concatenation gives opposite answers.")),
                     Paragraph(Text(

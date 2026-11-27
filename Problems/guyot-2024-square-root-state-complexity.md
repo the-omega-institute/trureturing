@@ -14,7 +14,7 @@ motivation_gids:
 
 Section 2.2, Conjecture 1, of Jérôme Guyot's *On state complexity for
 subword-closed languages* states
-“∀ n ∈ ℕ₍₊₎, κ(√↓(Uₙ)) = α(n) ≤ c(n)² − c(n) + 3.”
+“$\forall n \in \mathbb{N}_{>0},\ \kappa(\sqrt{\downarrow(U_n)}) = \alpha(n) \leq c(n)^2-c(n)+3$.”
 [arXiv:2407.10355v1](https://arxiv.org/html/2407.10355v1#Thmconjecture1)
 
 **Mathematical scope.** The upper-bound conjunct quantifies over positive n,
@@ -63,7 +63,7 @@ method for output automata. The proof uses the pinned Mathlib DFA API directly.
 
 ### What the settlement shows
 
-- **Proved.** The length-twelve language has sixteen pairwise distinct left
+- **Proved.** The length-twelve language exhibits sixteen pairwise distinct left
   quotients, so the universal bound of fifteen at that length fails.
 - **Source evidence.** Remark 7 reports the bound through n = 11.
 - **Open here.** The exact maximum at n = 12, the proposed equality involving

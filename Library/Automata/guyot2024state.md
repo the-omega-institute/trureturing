@@ -19,7 +19,7 @@ triage: anchor
 https://arxiv.org/abs/2407.10355v1
 
 Section 2.2, Conjecture 1, states
-“∀ n ∈ ℕ₍₊₎, κ(√↓(Uₙ)) = α(n) ≤ c(n)² − c(n) + 3.”
+“$\forall n \in \mathbb{N}_{>0},\ \kappa(\sqrt{\downarrow(U_n)}) = \alpha(n) \leq c(n)^2-c(n)+3$.”
 Here c(n) is the ceiling of n/3 and α(n) is the maximum quotient count for
 the square roots of the subword closures of words of length at most n.
 The conjectured extremizer Uₙ consists of two copies of the distinct-letter
