@@ -7,7 +7,7 @@ internal sealed class BinaryEARankOneBridgeDocument : IScribeDocumentDefinition
     private const string Module = "D5/S3/Quantum/Codes/BinaryEARankOneBridge.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "The binary rank-one geometry is impossible on eight through ten support sites.",
+        "The binary rank-one geometry is impossible on a support of at most ten sites.",
         H("Exclusion of binary rank-one support"),
         Blocks(
             Describe.Lean(
@@ -24,9 +24,9 @@ internal sealed class BinaryEARankOneBridgeDocument : IScribeDocumentDefinition
                     + "Every vector in U outside H has at most three sites where X and Z both vanish."))),
                 DescribeRole.Definition),
             Describe.Lean(
-                DescribeId.Create("binary-ea-rank-one-bridge-result"),
-                DeclarationHandle.Create(Module + "result"),
-                H("The original support hypotheses are inconsistent"),
+                DescribeId.Create("binary-ea-rank-one-bridge-support-exclusion"),
+                DeclarationHandle.Create(Module + "no_rank_one_of_card_le_ten"),
+                H("Rank-one support of at most ten sites is impossible"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(
@@ -41,7 +41,9 @@ internal sealed class BinaryEARankOneBridgeDocument : IScribeDocumentDefinition
                         + "A vector outside H would then have four zero sites. Thus the Z-head map on U "
                         + "has kernel H and, by dimension, is onto the four head bits. A linear right inverse "
                         + "followed by subtraction of the radical word with matching X-head provides "
-                        + "a linear lift with X-head zero.")),
+                        + "a linear lift with X-head zero. If a lift has zero Z-tail, pairing it "
+                        + "with the four radical head basis vectors forces all its Z-head bits to vanish. "
+                        + "The tail map is therefore injective on four bits, requiring four tail sites.")),
                     Paragraph(Text(
                         "Use these head coordinates to write the radical X and logical Z generators as "
                         + "[I | A] and [I | R]. Orthogonality gives ARᵀ = I. "
@@ -55,5 +57,14 @@ internal sealed class BinaryEARankOneBridgeDocument : IScribeDocumentDefinition
                         + "low bits. The Gram, syndrome, radical translation, and zero-count identities "
                         + "supply the fields of BinaryEARankOneCore.Core at m = s − 4. "
                         + "Its finite exclusion applies for each of the three tail lengths."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("binary-ea-rank-one-bridge-result"),
+                DeclarationHandle.Create(Module + "result"),
+                H("The original support hypotheses are inconsistent"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "The exclusion for support of at most ten sites applies to the original claim."))),
                 DescribeRole.Theorem))));
 }
