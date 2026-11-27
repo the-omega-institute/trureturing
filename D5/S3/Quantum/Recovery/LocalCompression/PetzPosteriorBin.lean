@@ -27,11 +27,11 @@ private theorem weighted_rms_sub_mean_interval {ι : Type*} [Fintype ι]
     {lo hi : ℝ} (hlo : 0 ≤ lo) (hy : ∀ i, lo ≤ y i ∧ y i ≤ hi) :
     let μ := ∑ i, w i * y i
     let t := Real.sqrt (∑ i, w i * y i ^ 2)
-    0 ≤ t - μ ∧ (2 * lo) * (t - μ) ≤ (hi - lo) ^ 2 / 4 := by
+    0 ≤ t - μ ∧ (lo + hi) * (t - μ) ≤ (hi - lo) ^ 2 / 4 := by
   let μ := ∑ i, w i * y i
   let ν := ∑ i, w i * y i ^ 2
   let t := Real.sqrt ν
-  change 0 ≤ t - μ ∧ (2 * lo) * (t - μ) ≤ (hi - lo) ^ 2 / 4
+  change 0 ≤ t - μ ∧ (lo + hi) * (t - μ) ≤ (hi - lo) ^ 2 / 4
   have hμ : 0 ≤ μ :=
     Finset.sum_nonneg fun i _ => mul_nonneg (hw i) (hlo.trans (hy i).1)
   have hcs : μ ^ 2 ≤ ν := by
@@ -54,21 +54,8 @@ private theorem weighted_rms_sub_mean_interval {ι : Type*} [Fintype ι]
       nlinarith only [h]
     _ = (lo + hi) * μ - lo * hi := by
       simp only [Finset.sum_sub_distrib, ← Finset.mul_sum, hsum, mul_one, μ]
-  have hvar : t ^ 2 - μ ^ 2 ≤ (hi - lo) ^ 2 / 4 := by
-    nlinarith only [htSq, hsecant, sq_nonneg (hi + lo - 2 * μ)]
-  have hsum_lower : 2 * lo ≤ t + μ := by
-    have hμlo : lo ≤ μ := by
-      dsimp [μ]
-      have h := Finset.sum_le_sum (fun i _ =>
-        mul_le_mul_of_nonneg_left (hy i).1 (hw i))
-      simpa [hsum] using h
-    have hμt' : μ ≤ t := hμt
-    nlinarith
-  have hprod : (t - μ) * (t + μ) = t ^ 2 - μ ^ 2 := by ring
-  have hmul := mul_le_mul_of_nonneg_left hsum_lower (sub_nonneg.mpr hμt)
   exact ⟨sub_nonneg.mpr hμt, by
-    rw [← hprod]
-    exact hmul.trans hvar⟩
+    nlinarith only [htSq, hsecant, sq_nonneg (t - (lo + hi) / 2)]⟩
 
 /-- The weighted root mean square exceeds the arithmetic mean by at most
 `9 / (8 * L ^ 2)` on a square bin, including the bin with lower endpoint zero. -/
@@ -92,48 +79,18 @@ theorem weighted_square_bin_rms_sub_mean_le {ι : Type*} [Fintype ι]
     simpa only [lo, hi, k, div_pow, div_eq_mul_inv] using hy i
   obtain ⟨hgap, hscaled⟩ := weighted_rms_sub_mean_interval w y hw hsum hlo hbins
   refine ⟨hgap, ?_⟩
-  by_cases ha : a = 0
-  · subst a
-    have hsq : ∑ i, w i * y i ^ 2 ≤ hi ^ 2 := by
-      have h := Finset.sum_le_sum (fun i _ =>
-        mul_le_mul_of_nonneg_left (sq_le_sq₀ (hbins i).1 (hbins i).2).2 (hw i))
-      simpa [hsum] using h
-    have htHi : Real.sqrt (∑ i, w i * y i ^ 2) ≤ hi := by
-      nlinarith [Real.sq_sqrt (Finset.sum_nonneg fun i _ =>
-        mul_nonneg (hw i) (sq_nonneg (y i)))]
-    have hgap_hi : gap ≤ hi := by
-      dsimp [gap]
-      linarith [htHi]
-    have hhi_k : hi = k := by
-      dsimp [hi]
-      ring
+  have hwidth : (hi - lo) ^ 2 / 4 ≤ (lo + hi) * ((1 / 2 : ℝ) * k) := by
     calc
-      gap ≤ hi := hgap_hi
-      _ = k := hhi_k
-      _ ≤ 9 / (8 * (L : ℝ) ^ 2) := by
-        dsimp [k]
-        field_simp
-        norm_num
-  · have ha_pos : 0 < a := Nat.pos_of_ne_zero ha
-    have hlo_pos : 0 < lo := by
-      dsimp [lo]
-      positivity
-    have hbound : gap ≤ (hi - lo) ^ 2 / (8 * lo) := by
-      apply (le_div_iff₀ (by positivity : (0 : ℝ) < 8 * lo)).2
-      nlinarith [hscaled]
-    have hratio : (2 * (a : ℝ) + 1) ^ 2 ≤ 9 * (a : ℝ) ^ 2 := by
-      have ha_real : (1 : ℝ) ≤ a := by exact_mod_cast ha_pos
-      nlinarith [sq_nonneg ((a : ℝ) - 1)]
-    calc
-      gap ≤ (hi - lo) ^ 2 / (8 * lo) := hbound
-      _ = ((2 * (a : ℝ) + 1) ^ 2) /
-          (8 * (a : ℝ) ^ 2 * (L : ℝ) ^ 2) := by
-        dsimp [hi, lo, k]
-        field_simp
+      (hi - lo) ^ 2 / 4 = (lo + hi) * ((1 / 2 : ℝ) * k) - k ^ 2 / 4 := by
+        dsimp only [lo, hi]
         ring
-      _ ≤ 9 / (8 * (L : ℝ) ^ 2) := by
-        field_simp
-        nlinarith
+      _ ≤ _ := sub_le_self _ (div_nonneg (sq_nonneg k) (by norm_num))
+  calc
+    gap ≤ (1 / 2 : ℝ) * k :=
+      le_of_mul_le_mul_left (hscaled.trans hwidth) (add_pos_of_nonneg_of_pos hlo hhi)
+    _ ≤ (9 / 8 : ℝ) * k := mul_le_mul_of_nonneg_right (by norm_num) hk.le
+    _ = 9 / (8 * (L : ℝ) ^ 2) := by
+      simp only [k, div_eq_mul_inv, mul_inv_rev, mul_left_comm, mul_comm, mul_assoc]
 
 /-- The squared Euclidean distance between the coordinatewise root mean square
 of the flag posteriors and their weighted mean. -/
