@@ -38,7 +38,7 @@ private theorem rh_re_eq_half (rh : RiemannHypothesis) {s : ℂ}
     simp [hn, mul_im, add_im] at him
   exact rh s hz htriv h1
 
-private theorem six_lt_height (rh : RiemannHypothesis) {s : ℂ}
+theorem six_lt_height (rh : RiemannHypothesis) {s : ℂ}
     (him : 0 < s.im) (hz : riemannZeta s = 0) : 6 < s.im := by
   have h := six_lt_abs_im_of_riemannZeta_eq_zero_of_re_eq_half (rh_re_eq_half rh him hz) hz
   rwa [abs_of_pos him] at h
