@@ -37,3 +37,41 @@ public import OmegaInit.System.IO
 @[export omega_io_smoke_collect] public def collectTasks {α : Type} (ts : Omega.List (Omega.Task α))
     (sync : Omega.Bool) :=
   Omega.BaseIO.mapTasks (fun xs world => ⟨xs, world⟩) ts Omega.Nat.zero sync
+
+@[export omega_smoke_EIO_launch] public def launchEIO {ε α : Type} (act : Omega.EIO ε α) :=
+  Omega.EIO.asTask act Omega.Nat.zero
+
+@[export omega_smoke_EIO_map] public def mapEIO {ε α : Type} (act : α → Omega.EIO ε α) (t : Omega.Task α) :=
+  Omega.EIO.mapTask act t Omega.Nat.zero Omega.Bool.true
+
+@[export omega_smoke_EIO_bind] public def bindEIO {ε α : Type}
+    (t : Omega.Task α) (act : α → Omega.EIO ε (Omega.Task (Omega.Except ε α))) :=
+  Omega.EIO.bindTask t act Omega.Nat.zero Omega.Bool.true
+
+@[export omega_smoke_EIO_chain] public def chainEIO {ε α : Type}
+    (t : Omega.Task α) (act : α → Omega.EIO ε Omega.Unit) :=
+  Omega.EIO.chainTask t act Omega.Nat.zero Omega.Bool.true
+
+@[export omega_smoke_EIO_many] public def manyEIO {ε α : Type}
+    (act : Omega.List α → Omega.EIO ε α) (ts : Omega.List (Omega.Task α)) :=
+  Omega.EIO.mapTasks act ts Omega.Nat.zero Omega.Bool.true
+
+@[export omega_smoke_IO_launch] public def launchIO {α : Type} (act : Omega.IO α) :=
+  Omega.IO.asTask act Omega.Nat.zero
+
+@[export omega_smoke_IO_map] public def mapIO {α : Type} (act : α → Omega.IO α) (t : Omega.Task α) :=
+  Omega.IO.mapTask act t Omega.Nat.zero Omega.Bool.true
+
+@[export omega_smoke_IO_bind] public def bindIO {α : Type}
+    (t : Omega.Task α) (act : α → Omega.IO (Omega.Task (Omega.Except Omega.IO.Error α))) :=
+  Omega.IO.bindTask t act Omega.Nat.zero Omega.Bool.true
+
+@[export omega_smoke_IO_chain] public def chainIO {α : Type}
+    (t : Omega.Task α) (act : α → Omega.IO Omega.Unit) :=
+  Omega.IO.chainTask t act Omega.Nat.zero Omega.Bool.true
+
+@[export omega_smoke_IO_many] public def manyIO {α : Type}
+    (act : Omega.List α → Omega.IO α) (ts : Omega.List (Omega.Task α)) :=
+  Omega.IO.mapTasks act ts Omega.Nat.zero Omega.Bool.true
+
+@[export omega_io_end_of_file] public def endOfFile (_ : Omega.Unit) := Omega.IO.Error.unexpectedEof

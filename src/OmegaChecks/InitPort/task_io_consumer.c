@@ -13,6 +13,17 @@ extern lean_obj_res omega_io_smoke_map(lean_obj_arg, lean_obj_arg, lean_obj_arg)
 extern lean_obj_res omega_io_smoke_bind(lean_obj_arg, lean_obj_arg, lean_obj_arg);
 extern lean_obj_res omega_io_smoke_chain(lean_obj_arg, lean_obj_arg, lean_obj_arg, lean_obj_arg);
 extern lean_obj_res omega_io_smoke_collect(lean_obj_arg, lean_obj_arg, uint8_t, lean_obj_arg);
+extern lean_obj_res omega_io_end_of_file(lean_obj_arg);
+extern lean_obj_res omega_smoke_EIO_launch(lean_obj_arg, lean_obj_arg, lean_obj_arg, lean_obj_arg);
+extern lean_obj_res omega_smoke_EIO_map(lean_obj_arg, lean_obj_arg, lean_obj_arg, lean_obj_arg, lean_obj_arg);
+extern lean_obj_res omega_smoke_EIO_bind(lean_obj_arg, lean_obj_arg, lean_obj_arg, lean_obj_arg, lean_obj_arg);
+extern lean_obj_res omega_smoke_EIO_chain(lean_obj_arg, lean_obj_arg, lean_obj_arg, lean_obj_arg, lean_obj_arg);
+extern lean_obj_res omega_smoke_EIO_many(lean_obj_arg, lean_obj_arg, lean_obj_arg, lean_obj_arg, lean_obj_arg);
+extern lean_obj_res omega_smoke_IO_launch(lean_obj_arg, lean_obj_arg, lean_obj_arg);
+extern lean_obj_res omega_smoke_IO_map(lean_obj_arg, lean_obj_arg, lean_obj_arg, lean_obj_arg);
+extern lean_obj_res omega_smoke_IO_bind(lean_obj_arg, lean_obj_arg, lean_obj_arg, lean_obj_arg);
+extern lean_obj_res omega_smoke_IO_chain(lean_obj_arg, lean_obj_arg, lean_obj_arg, lean_obj_arg);
+extern lean_obj_res omega_smoke_IO_many(lean_obj_arg, lean_obj_arg, lean_obj_arg, lean_obj_arg);
 extern lean_obj_res lean_io_promise_new(void);
 extern lean_obj_res lean_io_promise_result_opt(b_lean_obj_arg);
 extern lean_obj_res lean_io_promise_resolve(lean_obj_arg, b_lean_obj_arg);
@@ -129,6 +140,76 @@ static void check_composite_tasks(lean_obj_arg type, lean_obj_arg world) {
     }
 }
 
+static lean_obj_res make_exception_result(lean_obj_arg tag, lean_obj_arg payload, lean_obj_arg world) {
+    lean_object *out = lean_alloc_ctor(lean_unbox(tag), 2, 0);
+    lean_ctor_set(out, 0, payload);
+    lean_ctor_set(out, 1, world);
+    return out;
+}
+
+static lean_obj_res return_after(lean_obj_arg tag, lean_obj_arg payload, lean_obj_arg input, lean_obj_arg world) {
+    lean_dec(input);
+    return make_exception_result(tag, payload, world);
+}
+
+static lean_obj_res return_action(bool continuation, unsigned tag, lean_obj_arg payload) {
+    void *fn = continuation ? (void *)return_after : (void *)make_exception_result;
+    lean_object *act = lean_alloc_closure(fn, continuation ? 4 : 3, 2);
+    lean_closure_set(act, 0, lean_box(tag));
+    lean_closure_set(act, 1, payload);
+    return act;
+}
+
+static void check_completed_exception(lean_obj_arg out, lean_obj_arg world,
+                                      unsigned expected_tag, b_lean_obj_arg expected) {
+    lean_object *result = lean_task_get_own(value(out, world));
+    if (lean_obj_tag(result) != expected_tag || lean_ctor_get(result, 0) != expected) exit(24);
+    lean_dec(result);
+}
+
+static void check_exception_tasks(bool polymorphic, lean_obj_arg type, lean_obj_arg world) {
+    for (unsigned failed = 0; failed < 2; ++failed) {
+        lean_object *expected = failed && !polymorphic ? omega_io_end_of_file(lean_box(0)) : lean_mk_string("payload");
+        unsigned except_tag = failed ? 0 : 1;
+        lean_inc(expected);
+        lean_object *fn = return_action(false, failed, expected);
+        lean_object *out = polymorphic ? omega_smoke_EIO_launch(type, type, fn, world) : omega_smoke_IO_launch(type, fn, world);
+        check_completed_exception(out, world, except_tag, expected);
+
+        lean_inc(expected);
+        fn = return_action(true, failed, expected);
+        lean_object *input = lean_task_pure(lean_box(0));
+        out = polymorphic ? omega_smoke_EIO_map(type, type, fn, input, world) : omega_smoke_IO_map(type, fn, input, world);
+        check_completed_exception(out, world, except_tag, expected);
+
+        lean_inc(expected);
+        lean_object *payload = expected;
+        if (!failed) {
+            lean_object *ok = lean_alloc_ctor(1, 1, 0);
+            lean_ctor_set(ok, 0, payload);
+            payload = lean_task_pure(ok);
+        }
+        fn = return_action(true, failed, payload);
+        input = lean_task_pure(lean_box(0));
+        out = polymorphic ? omega_smoke_EIO_bind(type, type, input, fn, world) : omega_smoke_IO_bind(type, input, fn, world);
+        check_completed_exception(out, world, except_tag, expected);
+
+        lean_inc(expected);
+        fn = return_action(true, failed, expected);
+        out = polymorphic ? omega_smoke_EIO_many(type, type, fn, lean_box(0), world)
+                          : omega_smoke_IO_many(type, fn, lean_box(0), world);
+        check_completed_exception(out, world, except_tag, expected);
+
+        if (failed) lean_inc(expected);
+        fn = return_action(true, failed, failed ? expected : lean_box(0));
+        input = lean_task_pure(lean_box(0));
+        out = polymorphic ? omega_smoke_EIO_chain(type, type, input, fn, world)
+                          : omega_smoke_IO_chain(type, input, fn, world);
+        if (lean_obj_tag(out) != 0 || value(out, world) != lean_box(0)) exit(25);
+        lean_dec(expected);
+    }
+}
+
 int main(void) {
     lean_object *status = runtime_initialize_TaskIOConsumer(1);
     if (lean_io_result_is_error(status)) return 1;
@@ -179,7 +260,9 @@ int main(void) {
     if (value(omega_io_smoke_wait(type, cancellable, world), world) != lean_box(1)) return 12;
     check_effect_scheduling(type);
     check_composite_tasks(type, world);
+    check_exception_tasks(true, type, world);
+    check_exception_tasks(false, type, world);
     lean_finalize_task_manager();
-    puts("Strict task I/O passed all task states, wait-any, cancellation and effectful scheduling checks");
+    puts("Strict task I/O passed all task states, wait-any, cancellation, effectful scheduling and typed exception checks");
     return 0;
 }

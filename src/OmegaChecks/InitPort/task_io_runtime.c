@@ -97,3 +97,59 @@ LEAN_EXPORT lean_obj_res omega_io_map_tasks(lean_obj_arg action, lean_obj_arg ta
     lean_object *fn = wrap_action((void *)continue_action, 4, action, world);
     return state_result(l_BaseIO_mapTasks___redArg(fn, tasks, lean_box(omega_task_priority(priority)), sync), world);
 }
+
+extern lean_obj_res l_EIO_asTask___redArg(lean_obj_arg, lean_obj_arg);
+extern lean_obj_res l_EIO_mapTask___redArg(lean_obj_arg, lean_obj_arg, lean_obj_arg, uint8_t);
+extern lean_obj_res l_EIO_bindTask___redArg(lean_obj_arg, lean_obj_arg, lean_obj_arg, uint8_t);
+extern lean_obj_res l_EIO_chainTask___redArg(lean_obj_arg, lean_obj_arg, lean_obj_arg, uint8_t);
+extern lean_obj_res l_EIO_mapTasks___redArg(lean_obj_arg, lean_obj_arg, lean_obj_arg, uint8_t);
+
+static lean_obj_res native_exception_result(lean_obj_arg out) {
+    unsigned tag = lean_obj_tag(out);
+    lean_object *value = take_payload(out);
+    return tag == 0 ? lean_io_result_mk_ok(value) : lean_io_result_mk_error(value);
+}
+
+static lean_obj_res run_exception_action(lean_obj_arg action, lean_obj_arg world, lean_obj_arg native_world) {
+    return native_exception_result(lean_apply_1(action, world));
+}
+
+static lean_obj_res continue_exception_action(lean_obj_arg action, lean_obj_arg world,
+                                             lean_obj_arg value, lean_obj_arg native_world) {
+    return native_exception_result(lean_apply_2(action, value, world));
+}
+
+LEAN_EXPORT lean_obj_res omega_io_except_as_task(lean_obj_arg action, lean_obj_arg prio, lean_obj_arg world) {
+    lean_object *fn = wrap_action((void *)run_exception_action, 3, action, world);
+    return state_result(l_EIO_asTask___redArg(fn, lean_box(omega_task_priority(prio))), world);
+}
+
+LEAN_EXPORT lean_obj_res omega_io_except_map_task(lean_obj_arg action, lean_obj_arg task,
+                                                  lean_obj_arg prio, uint8_t sync, lean_obj_arg world) {
+    lean_object *fn = wrap_action((void *)continue_exception_action, 4, action, world);
+    return state_result(l_EIO_mapTask___redArg(fn, task, lean_box(omega_task_priority(prio)), sync), world);
+}
+
+LEAN_EXPORT lean_obj_res omega_io_except_bind_task(lean_obj_arg task, lean_obj_arg action,
+                                                   lean_obj_arg prio, uint8_t sync, lean_obj_arg world) {
+    lean_object *fn = wrap_action((void *)continue_exception_action, 4, action, world);
+    return state_result(l_EIO_bindTask___redArg(task, fn, lean_box(omega_task_priority(prio)), sync), world);
+}
+
+LEAN_EXPORT lean_obj_res omega_io_except_chain_task(lean_obj_arg task, lean_obj_arg action,
+                                                    lean_obj_arg prio, uint8_t sync, lean_obj_arg world) {
+    lean_object *fn = wrap_action((void *)continue_exception_action, 4, action, world);
+    lean_object *native = l_EIO_chainTask___redArg(task, fn, lean_box(omega_task_priority(prio)), sync);
+    unsigned tag = lean_obj_tag(native);
+    lean_object *value = take_payload(native);
+    lean_object *out = lean_alloc_ctor(tag, 2, 0);
+    lean_ctor_set(out, 0, value);
+    lean_ctor_set(out, 1, world);
+    return out;
+}
+
+LEAN_EXPORT lean_obj_res omega_io_except_map_tasks(lean_obj_arg action, lean_obj_arg tasks,
+                                                   lean_obj_arg prio, uint8_t sync, lean_obj_arg world) {
+    lean_object *fn = wrap_action((void *)continue_exception_action, 4, action, world);
+    return state_result(l_EIO_mapTasks___redArg(fn, tasks, lean_box(omega_task_priority(prio)), sync), world);
+}
