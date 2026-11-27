@@ -118,6 +118,10 @@ $$\begin{aligned}&M_{4}(\mu_{4}) \land \operatorname{meanEfficiency}(\mu_{4})=\f
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/Stieltjes/FarihFourthMoment.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/farih-fourth-moment-mean-efficiency` (proved) by `D5/S3/Analytic/Stieltjes/FarihFourthMoment.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"farih-fourth-moment-mean-efficiency","declaration_gid":"D5/S3/Analytic/Stieltjes/FarihFourthMoment.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Badr Farih (2026). *Sharp Bounds on the Mean Efficiency of a Fluctuating Machine*. DOI: [10.48550/arXiv.2609.15443](https://doi.org/10.48550/arXiv.2609.15443). URL: <https://arxiv.org/abs/2609.15443v3>.
