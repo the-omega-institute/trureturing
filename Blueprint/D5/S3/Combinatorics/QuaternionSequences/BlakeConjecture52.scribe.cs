@@ -11,7 +11,7 @@ internal sealed class BlakeConjecture52Document : IScribeDocumentDefinition
         LibraryNoteRef.Create("D5/L/FiniteGroups/blake2026perfectquaternionsequences");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Every Q₈-valued quaternion sequence of length at least two has a nonzero off-period autocorrelation for each noncentral twist in Q₈.",
+        "Q₈ sequences of length at least two and Q₈ arrays with a first axis of length at least two and an odd transverse cardinality have a nonzero off-period autocorrelation for each noncentral twist.",
         H("Blake's Noncentral Twist Conjecture"),
         Blocks(
             Definition("Noncentral", "The six noncentral twists", NoncentralFormula(),
@@ -64,7 +64,49 @@ internal sealed class BlakeConjecture52Document : IScribeDocumentDefinition
                 DescribeRole.Theorem,
                 new OpenProblemResolutionClaim(
                     ProblemSlugRef.Create("blake-noncentral-quaternion-twist"),
-                    ResolutionKind.Proved)))));
+                    ResolutionKind.Proved)),
+            ArrayDefinition("baseCorrelation", "Right-twisted base correlation", false,
+                "Definition 2.1 of Blake, arXiv:2611.20804v1, extends the first axis on the right. "
+                + "At each transverse coordinate t the existing extension acts on the column indexed by t. "
+                + "The transverse coordinate of the shifted entry is t plus sigma in the finite additive group. "
+                + "In the display, int takes the integer value of a finite index or natural number. "
+                + "The first-axis shift tau has integer representative between zero and M minus one."),
+            ArrayDefinition("fullPeriodCorrelation", "Autocorrelation over the full extension period", true,
+                "The three indices enumerate the period of first-axis length 4M as qM plus r, with q in Fin 4 "
+                + "and r in Fin M, and the transverse coordinate t in T. The star is quaternion conjugation. "
+                + "In equation (2.1) each of the two lifted entries has its block factor on the right. "
+                + "Taking the star of the second entry brings the two factors together in the order "
+                + "u to the power q followed by its conjugate. Their product is one, giving four times the base correlation."),
+            Describe.Lean(DescribeId.Create("blake-odd-transverse-nonvanishing"),
+                DeclarationHandle.Create(Prefix + "odd_transverse_nonvanishing"),
+                H("Nonvanishing for odd transverse cardinality"),
+                StatementSource.FromAuthor(Disp(ArrayTheoremFormula())),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text(
+                        "The first question in Section 9 of Blake, arXiv:2611.20804v1, asks which shapes admit "
+                        + "arrays of noncentral type. Products of positive cyclic axes of odd cardinality give "
+                        + "the finite additive groups in the statement. A shift different from the zero pair "
+                        + "is off-period because the first coordinate is represented in the range zero through M minus one.")),
+                    Paragraph(Text(
+                        "If every off-period base correlation vanishes, the trivial character at the shift "
+                        + "with first coordinate one and transverse coordinate zero gives M times the cardinality "
+                        + "of T equal to zero in characteristic two. Thus M is even. For every fixed first-axis "
+                        + "shift, summing the character images over all transverse shifts pairs each transverse "
+                        + "entry with every entry in the other column. The wrap factor depends only on the two "
+                        + "first-axis indices. The zero shift contributes the diagonal M times the cardinality of T.")),
+                    Paragraph(Text(
+                        "Let d be the power-of-two part of M. Use a character sending the twist to one plus "
+                        + "X to the power d in the quotient by X to the power 2d. Odd transverse cardinality "
+                        + "makes each column sum lift to one plus a multiple of X to the power d. "
+                        + "The aggregated correlations force the cyclic product of the two weighted column sums "
+                        + "to vanish. Its coefficient at degree 2d minus two is one, a contradiction. "
+                        + "The factor four gives the same nonzero shift for the full period, since the "
+                        + "quaternions have integer coordinates.")),
+                    Paragraph(Text(
+                        "This excludes the odd-transverse family with first length at least two. "
+                        + "The even transverse shapes, including the paper's two-by-two example, lie outside this family."))),
+                DescribeRole.Theorem))));
 
     private static DocumentBlock Definition(string name, string title, Formula formula, string prose) =>
         Describe.Lean(DescribeId.Create("blake-" + name.ToLowerInvariant()),
@@ -140,5 +182,61 @@ internal sealed class BlakeConjecture52Document : IScribeDocumentDefinition
             All("s", Seq(indices, Sp, To, Sp, Quaternions()),
                 Imp(Par(All("r", indices, Call("IsQ8", Letter(s, r)))),
                     All("u", Quaternions(), Imp(Call("Noncentral", u), witness))))));
+    }
+
+    private static DocumentBlock ArrayDefinition(string name, string title, bool full, string prose) =>
+        Describe.Lean(DescribeId.Create("blake-" + name.ToLowerInvariant()),
+            DeclarationHandle.Create(Prefix + name), H(title),
+            StatementSource.FromAuthor(Disp(ArrayCorrelationFormula(name, full))),
+            AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
+
+    private static Formula WithArrayInputs(Formula sizeCondition, Formula body)
+    {
+        Formula t = F.Id("T"), m = F.Id("M"), u = F.Id("u"), indices = Call("Fin", m);
+        Formula arrayType = Seq(indices, Sp, To, Sp, t, Sp, To, Sp, Quaternions());
+        return All("T", F.Id("Type"),
+            Seq(OpenBracket, Call("Fintype", t), CloseBracket, Sp,
+                OpenBracket, Call("AddCommGroup", t), CloseBracket, Sp,
+                All("M", N(), Imp(sizeCondition, All("A", arrayType,
+                    All("u", Quaternions(), Imp(Call("Noncentral", u), body)))))));
+    }
+
+    private static Formula ArrayEntry(Formula r, Formula t) => new Formula.Apply(F.Id("A"), [r, t]);
+    private static Formula Column(Formula t) =>
+        Par(Seq(F.Id("j"), Sp, Mapsto, Sp, ArrayEntry(F.Id("j"), t)));
+    private static Formula Pair(Formula a, Formula b) => Par(Seq(a, Comma, Sp, b));
+    private static Formula SumOver(Formula index, Formula type, Formula body) =>
+        Seq(new Formula.Subscript(Sum, Seq(index, Colon, type)), Sp, body);
+
+    private static Formula ArrayCorrelationFormula(string name, bool full)
+    {
+        Formula m = F.Id("M"), r = F.Id("r"), t = F.Id("t"), q = F.Id("q");
+        Formula u = F.Id("u"), tau = F.Id("tau"), sigma = F.Id("sigma"), transverse = F.Id("T");
+        Formula indices = Call("Fin", m);
+        Formula row = Call("int", r);
+        Formula index = full ? Add(Mul(Call("int", q), Call("int", m)), row) : row;
+        Formula left = full ? Call("extension", Column(t), u, index) : ArrayEntry(r, t);
+        Formula right = Call("star", Call("extension", Column(Add(t, sigma)), u, Add(index, Call("int", tau))));
+        Formula sum = SumOver(r, indices, SumOver(t, transverse, Mul(left, right)));
+        if (full)
+            sum = SumOver(q, Call("Fin", D(4)), sum);
+        Formula formula = All("tau", indices, All("sigma", transverse,
+            Equal(Call(name, F.Id("A"), u, tau, sigma), sum)));
+        return WithArrayInputs(Rel(D(0), FormulaRelationOperator.LessThan, m), formula);
+    }
+
+    private static Formula ArrayTheoremFormula()
+    {
+        Formula m = F.Id("M"), u = F.Id("u"), a = F.Id("A"), indices = Call("Fin", m);
+        Formula tau = F.Id("tau"), sigma = F.Id("sigma"), transverse = F.Id("T"), zero = D(0);
+        Formula entries = All("r", indices, All("t", transverse,
+            Call("IsQ8", ArrayEntry(F.Id("r"), F.Id("t")))));
+        Formula witness = new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create("tau"), indices,
+            new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create("sigma"), transverse,
+                And(Rel(Pair(tau, sigma), FormulaRelationOperator.NotEqual, Pair(zero, zero)),
+                    And(Rel(Call("baseCorrelation", a, u, tau, sigma), FormulaRelationOperator.NotEqual, zero),
+                        Rel(Call("fullPeriodCorrelation", a, u, tau, sigma), FormulaRelationOperator.NotEqual, zero)))));
+        return WithArrayInputs(Rel(D(2), FormulaRelationOperator.LessThanOrEqual, m),
+            Imp(Call("Odd", Call("card", transverse)), Imp(Par(entries), witness)));
     }
 }
