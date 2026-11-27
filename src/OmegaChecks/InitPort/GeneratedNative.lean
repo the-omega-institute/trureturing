@@ -190,29 +190,32 @@ private def compileCases (source strict : Environment) (d : DefinitionVal) : Cor
 
 /-- Reuse the pinned executable recursion only after the kernel identifies every constructor
 equation with the checked total function. The temporary declaration is excluded from the product. -/
-private def compileStructural (source strict : Environment) (n : Name) : CoreM Unit := do
-  let original := originalName n
-  let recName := Compiler.mkUnsafeRecName original
-  let namespaceRoot := (privateToUserName? original).getD original |>.getRoot
-  let hasEquations := namespaceRoot == `List || namespaceRoot == `Array
-  let some (.defnInfo d) := if hasEquations then source.find? recName else none | do
-    if let some (.defnInfo strictDef) := strict.find? n then
-      if strictDef.value.getUsedConstants.contains `Nat.rec then compileRecursorCall source strict strictDef
-      else compileCases source strict strictDef
-    return
-  unless d.safety == .partial && d.all == [recName] do return
+private def compilePinnedRecursion (source strict : Environment) (n : Name) : CoreM Bool := do
+  let recName := Compiler.mkUnsafeRecName (originalName n)
+  let some (.defnInfo d) := source.find? recName | return false
+  unless d.safety == .partial && d.all == [recName] do return false
   let name := InitKernelPort.portName recName
   let raw := InitKernelPort.translate InitKernelPort.portName d.value
   let body := raw.replace fun e => if e.isConstOf name then some (.const n e.constLevels!) else none
   let type := InitKernelPort.translate InitKernelPort.portName d.type
-  unless body.getUsedConstants.all strict.contains && type.getUsedConstants.all strict.contains do return
+  unless body.getUsedConstants.all strict.contains && type.getUsedConstants.all strict.contains do return false
   for i in [:type.getForallArity] do
     try
       withEnv strict <| Meta.MetaM.run' <| OmegaChecks.InitCompiler.checkConstructorEquations n d.levelParams type body i
     catch _ => continue
     let tmp := {d with name, all := [name], type, value := body, safety := .safe}
     compileEquation source n tmp
-    return
+    return true
+  return false
+
+private def compileStructural (source strict : Environment) (n : Name) : CoreM Unit := do
+  let before ← Core.saveState
+  try
+    if ← compilePinnedRecursion source strict n then return
+  catch _ => before.restore
+  if let some (.defnInfo d) := strict.find? n then
+    if d.value.getUsedConstants.contains `Nat.rec then compileRecursorCall source strict d
+    else compileCases source strict d
 
 private def compileOwner (source : Environment) (groups : Array InductiveVal) (words order : Array Name) : CoreM Unit := do
   let strict ← getEnv
