@@ -45,6 +45,11 @@ exports.restoreCache = async function(paths, key, prefixes, options) {
       require("@actions/core")[process.env.RESTORE_DIAGNOSTIC]("cache service failure");
       return undefined;
     }
+    if (process.env.THROTTLE_ONCE && !fs.existsSync(storage + ".throttled")) {
+      fs.writeFileSync(storage + ".throttled", "");
+      require("@actions/core").warning("Failed to GetCacheEntryDownloadURL: Rate limited: Failed request: (429) Too Many Requests: rate limit exceeded");
+      return undefined;
+    }
     if (fs.existsSync(storage + ".reserved")) {
       fs.renameSync(storage + ".reserved", storage);
       return undefined;
@@ -190,6 +195,13 @@ esac
     assert.equal(await readFile(output, 'utf8'), bytes);
     await rm(output);
     const cacheFile = join(storage, key);
+    if (kind === 'unit') {
+      const throttled = invoke(worker, get, { THROTTLE_ONCE: 'true' });
+      assert.equal(throttled.status, 0, throttled.stderr);
+      assert.match(throttled.stderr, /429.*Too Many Requests/);
+      assert.equal(await readFile(output, 'utf8'), bytes);
+      await rm(output);
+    }
     await writeFile(cacheFile, 'x'.repeat(size));
     assert.match(invoke(worker, get).stderr, /checksum or length mismatch/);
     assert.match(invoke(publisher, put).stderr, /checksum or length mismatch/);
