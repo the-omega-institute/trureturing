@@ -11,6 +11,7 @@ public import OmegaChecks.InitPort.LogicalHandle
 public import OmegaChecks.InitPort.StateToken
 public import OmegaChecks.InitPort.TypeName
 public import OmegaChecks.InitPort.FloatFraction
+public import OmegaChecks.InitPort.Alternatives.GrindRing
 public import OmegaChecks.Interface.Equations.Array
 public import OmegaChecks.Interface.Equations.Collect
 public import OmegaChecks.Interface.Equations.FilePath
@@ -25,6 +26,12 @@ public import Mathlib.Data.Nat.Prime.Defs
 /-! Pointwise equations for strict arithmetic algorithms interpreted over official types. -/
 
 namespace OmegaChecks.Interface.Equations
+
+open Lean.Grind Lean.Grind.CommRing in
+public theorem Lean.Grind.CommRing.Expr.denoteSAsRing {α : Type u} [Lean.Grind.Semiring α]
+    (ctx : Context α) (e : Expr) :
+    OmegaChecks.InitPort.Alternatives.Lean.Grind.CommRing.Expr.denoteSAsRing ctx e = e.denoteSAsRing ctx :=
+  (e.denoteAsRing_eq ctx).symm
 
 public theorem List.splitOnPTR {α : Type u} (p : α → Bool) (xs : List α) :
     xs.splitOnP p = _root_.List.splitOnPTR p xs :=

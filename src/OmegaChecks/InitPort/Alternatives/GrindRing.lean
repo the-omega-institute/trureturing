@@ -1,4 +1,5 @@
 module
+import all Init.Grind.Ring.CommSemiringAdapter
 import all Init.Grind.Ring.CommSolver
 import all Init.Grind.Ring.Envelope
 
@@ -6,6 +7,20 @@ import all Init.Grind.Ring.Envelope
 
 open Lean.Grind Lean.Grind.CommRing
 namespace OmegaChecks.InitPort.Alternatives
+
+/-- Every result of the semiring interpreter already lies in the image of the embedding. -/
+@[expose] public def Lean.Grind.CommRing.Expr.denoteSAsRing {α : Type u} [Semiring α] (ctx : Context α)
+    (e : Expr) : Ring.OfSemiring.Q α :=
+  Ring.OfSemiring.toQ (e.denoteS ctx)
+
+public theorem Lean.Grind.CommRing.Expr.denoteAsRing_eq {α : Type u} [Semiring α] (ctx : Context α)
+    (e : Expr) : Lean.Grind.CommRing.Expr.denoteSAsRing ctx e = Ring.OfSemiring.toQ (e.denoteS ctx) :=
+  rfl
+
+public theorem Lean.Grind.Ring.OfSemiring.of_eq {α : Type u} [Semiring α] (ctx : Context α)
+    (lhs rhs : Expr) (h : lhs.denoteS ctx = rhs.denoteS ctx) :
+    Lean.Grind.CommRing.Expr.denoteSAsRing ctx lhs = Lean.Grind.CommRing.Expr.denoteSAsRing ctx rhs :=
+  congrArg Ring.OfSemiring.toQ h
 
 section
 open Std
