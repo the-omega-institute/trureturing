@@ -31,6 +31,15 @@ UNSAFE_OBSERVERS = {
 }
 
 
+ENVELOPE_CANCELLATION = {
+    ("Init.Grind.Ring.Envelope", "Lean.Grind.Ring.OfSemiring.neg_add_cancel"): "theorem",
+    ("Init.Grind.Module.Envelope", "Lean.Grind.IntModule.OfNatModule.neg_add_cancel"): "theorem",
+    ("Init.Grind.Ring.Envelope", "Lean.Grind.Ring.OfSemiring.ofSemiring"): "definition",
+    ("Init.Grind.Ring.Envelope", "Lean.Grind.CommRing.OfCommSemiring.ofCommSemiring"): "definition",
+    ("Init.Grind.Module.Envelope", "Lean.Grind.IntModule.OfNatModule.ofNatModule"): "definition",
+}
+
+
 EFFECT_RUNNERS = {("Init.System.IO", name) for name in ("unsafeBaseIO", "unsafeEIO", "unsafeIO")}
 
 
@@ -120,7 +129,12 @@ def check_coverage(official):
             suffix = {"Quotient.sound": "refuteSound", "instSubsingletonSquash": "refuteSquash",
                       "Quotient.decidableEq": "refutePositiveDecision"}.get(target)
             expected_kind = "definition" if path or decision else "theorem"
-            if (owner != "Init.Core" or not suffix or certified_model != (target, refuter) or
+            if site in ENVELOPE_CANCELLATION:
+                suffix = "refuteEnvelopeCancellation"
+                expected_kind = ENVELOPE_CANCELLATION[site]
+            elif owner != "Init.Core":
+                suffix = None
+            if (not suffix or certified_model != (target, refuter) or
                     refuter != "OmegaChecks.InitBoundaries.RepresentativeQuotient." + suffix or
                     (path and path != "Quotient.sound") or row["kind"] != expected_kind or
                     (decision and (row.get("logicalConsequence") != "funext" or not row.get("requiredBehavior"))) or

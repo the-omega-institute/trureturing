@@ -210,6 +210,21 @@ class CoverageTest(unittest.TestCase):
                 with self.assertRaisesRegex(ValueError, "inconsistent transport path"):
                     check_coverage(inventory(row | {"kind": "theorem"}) | certificate)
 
+    def test_envelope_cancellation_requires_the_pinned_owner_and_observed_declaration(self):
+        proof = "OmegaChecks.InitBoundaries.RepresentativeQuotient.refuteEnvelopeCancellation"
+        for owner, name, kind in [
+                ("Init.Grind.Ring.Envelope", "Lean.Grind.Ring.OfSemiring.neg_add_cancel", "theorem"),
+                ("Init.Grind.Module.Envelope", "Lean.Grind.IntModule.OfNatModule.ofNatModule", "definition")]:
+            row = site(owner, name, kind=kind, representativeRefuter=proof)
+            certificate = [[owner, name, name, proof]]
+            self.assertEqual(check_coverage(dict(inventory(row), certifiedRepresentativeRefutations=certificate)), (0, []))
+            for change in ({"module": "Init.Core"}, {"name": "another.operation"}, {"kind": "opaque"}):
+                altered = {**row, **change}
+                data = inventory(altered)
+                data["certifiedRepresentativeRefutations"] = [[altered["module"], altered["name"], altered["name"], proof]]
+                with self.assertRaisesRegex(ValueError, "inconsistent representative"):
+                    check_coverage(data)
+
     def test_representative_quotient_models_are_bound_to_the_statement_or_certified_path(self):
         for name, target, suffix in [("Quotient.sound", "Quotient.sound", "refuteSound"),
                                      ("instSubsingletonSquash", "instSubsingletonSquash", "refuteSquash"),

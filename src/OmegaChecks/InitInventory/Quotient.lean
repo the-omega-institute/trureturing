@@ -2,6 +2,7 @@ module
 public import OmegaChecks.InitPort.Alternatives.Logic.Quotient
 import all OmegaChecks.InitPort.Alternatives.Logic.Quotient
 public import OmegaChecks.InitInventory.Replay
+import OmegaChecks.InitInventory.EnvelopeCancellation
 
 /-! The two public heterogeneous quotient eliminators have constructively inhabited types.
 The pinned abbreviations reduce through a pair whose first component is the quotient
@@ -273,6 +274,12 @@ public theorem refuteSound
     (law : ∀ {α : Type} {s : Setoid α} {a b : α}, s.r a b → a = b) : False :=
   Bool.noConfusion (@law Bool (Setoid.trivial Bool) false true trivial)
 
+/-- In the representative interpretation the two classes computed by envelope cancellation
+at the class of (1,0) are distinct for every relation on pairs. -/
+public theorem refuteEnvelopeCancellation (r : Nat × Nat → Nat × Nat → Prop)
+    (h : point r (1, 1) = point r (0, 0)) : False :=
+  Nat.noConfusion (congrArg Prod.fst h)
+
 public theorem refuteSquash (law : ∀ {α : Type}, Subsingleton α) : False :=
   Bool.noConfusion ((@law Bool).allEq false true)
 
@@ -324,6 +331,7 @@ private def checkComputation (env : Environment) (elim : ConstantInfo) : Meta.Me
       unless arg.equal a do throwError "wrong representative in the branch of {elim.name}"
 
 public def refuter? (owner name : Name) : Option Name := do
+  if (EnvelopeCancellation.observation? owner name).isSome then return ``refuteEnvelopeCancellation
   guard (owner == `Init.Core)
   if name == ``Quotient.sound then some ``refuteSound
   else if name == ``instSubsingletonSquash then some ``refuteSquash
@@ -336,10 +344,14 @@ argument in an environment that does not contain the quotient primitives. -/
 public def certify (official witnesses : Environment) (source : ConstantInfo) (refuter : Name) : IO Unit := do
   let some proof := witnesses.find? refuter | throw <| IO.userError s!"missing {refuter}"
   let decision := source.name == ``Quotient.decidableEq
-  unless (if decision then source matches .defnInfo _ else source.isTheorem) && source.numLevelParams == 1 do
+  let envelope := refuter == ``refuteEnvelopeCancellation
+  unless (if decision || (envelope && source.name.getString! != "neg_add_cancel") then
+      source matches .defnInfo _ else source.isTheorem) && source.numLevelParams == 1 do
     throw <| IO.userError s!"unexpected signature at {source.name}"
   let type := interpret official (source.type.instantiateLevelParams source.levelParams [.one])
-  let expected ← if decision then do
+  let expected ← if envelope then
+    EnvelopeCancellation.counterexample official witnesses source ``point
+  else if decision then do
     let some observation := witnesses.find? ``QuotientDecision.officialPositive
       | throw <| IO.userError "missing equality decision observation"
     let equation := expand witnesses observation.type [``QuotientDecision.point, ``QuotientDecision.interval]
