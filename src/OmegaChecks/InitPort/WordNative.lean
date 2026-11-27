@@ -53,7 +53,7 @@ public def usesPinnedFunction (n : Name) : Bool :=
   let vector := n.getPrefix == `BitVec &&
     [`abs, `pow, `smod, `replicate, `reverse, `cpop, `cpopNatRec, `ctz, `clz, `clzAuxRec,
      `getLsbD, `getLsb, `getMsbD, `getMsb, `msb, `sdiv, `srem, `smtSDiv, `hash, `ofBoolListLE, `ofBoolListBE].contains method
-  vector || [`Nat.repr, `Nat.reprFast, `Int.repr].contains n || n == `BitVec.toHex || n == `Nat.bitwise || ((word? n.getPrefix).isSome && (method == `pow || (method == `ofInt && bitsType n.getPrefix == n.getPrefix))) ||
+  vector || [`Nat.repr, `Nat.reprFast, `Int.repr].contains n || [`BitVec.toHex, `BitVec.instToString].contains n || n == `Nat.bitwise || ((word? n.getPrefix).isSome && (method == `pow || (method == `ofInt && bitsType n.getPrefix == n.getPrefix))) ||
     (n.getPrefix == `Int && [`negOfNat, `subNatNat, `sign, `toNat, `pow, `fdiv, `fmod, `bdiv, `bmod].contains method)
 
 public def supported (source : Environment) (owner name : Name) : Bool :=
@@ -218,6 +218,7 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
     else throw <| IO.userError s!"unsupported argument of {n}: {dom}/{a.ty}/{b.ty}"
   let call := target ++ "(" ++ String.intercalate ", " args.toList ++ ")"
   let dom := type.consumeMData.getAppFn.constName
+  let mut helper := ""
   let (output, value) ← if let some (w, t) := word? dom then do
     layout strict dom
     unless ret == t && result == .tobject do throw <| IO.userError s!"incorrect word result at {n}"
@@ -240,6 +241,19 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
     unless field.fieldIdx == 0 && ret == .tobject && result == .tobject do
       throw <| IO.userError "invalid platform width result ABI"
     pure ("lean_obj_res", call)
+  else if official == `BitVec.instToString && dom == `ToString then do
+    checkStrictString strict
+    layout strict `BitVec
+    let some (some field) := impureTrivialStructureInfoExt.find? strict `Omega.ToString
+      | throw <| IO.userError "missing ToString dictionary representation"
+    unless field.fieldIdx == 0 && ret == .object && result == .object do throw <| IO.userError "incorrect ToString dictionary ABI"
+    hasString := true
+    helper := "\nstatic lean_obj_res omega_bitvec_to_string(lean_obj_arg render, lean_obj_arg vector) {\n" ++
+      "  lean_object *native = lean_apply_1(render, vector);\n  lean_object *bytes = omega_string_from_lean(native);\n" ++
+      "  lean_dec(native);\n  return bytes;\n}\n"
+    prepare := prepare ++ "  lean_object *closure = lean_alloc_closure((void *)omega_bitvec_to_string, 2, 1);\n"
+    prepare := prepare ++ s!"  lean_closure_set(closure, 0, {call});\n"
+    pure ("lean_obj_res", "closure")
   else if dom == `String then do
     checkStrictString strict
     unless ret == .object && result == .tobject do throw <| IO.userError s!"incorrect string result at {n}"
@@ -273,6 +287,6 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
   else if official == `System.Platform.getNumBits then
     pure "\nextern lean_obj_res lean_system_platform_nbits(lean_obj_arg);\n" else pure ""
   let header := if hasString || dom == `String then "\n#include \"strict_string.h\"\n" else ""
-  return header ++ proto ++ s!"\nLEAN_EXPORT {output} {adapter}({String.intercalate ", " decls.toList}) \{\n{prepare}  {output} r = {value};\n{cleanup}  return r;\n}\n"
+  return header ++ proto ++ helper ++ s!"\nLEAN_EXPORT {output} {adapter}({String.intercalate ", " decls.toList}) \{\n{prepare}  {output} r = {value};\n{cleanup}  return r;\n}\n"
 
 end OmegaChecks.InitPort.WordNative
