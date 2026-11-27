@@ -516,6 +516,19 @@ public theorem funextFromMapBind (law : type_of% @map_bind.{max 1 u v, max 1 u v
   let action (t : T) : Paired T T := ⟨(fun _ => f t, fun _ => g t), congrArg (fun x (_ : T) => x) (agree t)⟩
   exact (congrArg (fun z : Paired T T => z.val.1) (@law (Paired T) T T T _ _ id read action)).symm
 
+/-- Sequencing stateful readers can compare the two projections of an input-dependent action. -/
+public theorem funextFromStateRunSeq (rule : type_of% @StateT.run_seq.{max 1 u v,max 1 u v}) :
+    type_of% @funext.{u,v} := by
+  apply funextFromEndomorphisms
+  intro T f g h
+  letI := monad T
+  letI := lawful T
+  let read : StateT (Option T) (Paired T) (T → T) := fun _ => diagonal fun t => (id, some t)
+  let action : StateT (Option T) (Paired T) T
+    | none => diagonal fun t => (t, none)
+    | some t => ⟨(fun _ => (f t, none), fun _ => (g t, none)), congrArg (fun (a : T) (_ : T) => (a, (none : Option T))) (h t)⟩
+  exact (congrArg (fun z : Paired T (T × Option T) => fun t => (z.val.1 t).1) (rule read action none)).symm
+
 private def scanAction {T : Type u} {f g : T → T} (h : ∀ t, f t = g t) : Option T → Bool → Paired T (Option T)
   | _, false => diagonal (fun t => some t)
   | none, true => diagonal fun _ => none
@@ -535,7 +548,7 @@ public theorem funextFromScanlCons (rule : type_of% @List.scanlM_cons.{max 1 u v
 
 open Lean in
 run_cmd
-  for name in [``funextFromMapBind, ``funextFromScanlCons] do
+  for name in [``funextFromMapBind, ``funextFromStateRunSeq, ``funextFromScanlCons] do
     unless (← collectAxioms name).isEmpty do throwError "monad witness {name} depends on axioms"
 
 end MapAfterBind

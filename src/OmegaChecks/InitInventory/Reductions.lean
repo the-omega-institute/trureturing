@@ -156,7 +156,8 @@ private def replayWitnesses (env : Environment) : IO Unit := do
     [``PostconditionIdentity.pureImage, ``PostconditionIdentity.imageBind, ``PostconditionIdentity.associatedPredicates] ++
     [``ChoiceOperands.fromChoice, ``ExistentialConjunction.ofRule] ++
     [``SubsingletonState.ofState, ``SubsingletonState.iffState] ++
-    [``TransformerLaws.MapAfterBind.funextFromMapBind, ``TransformerLaws.MapAfterBind.funextFromScanlCons] ++
+    [``TransformerLaws.MapAfterBind.funextFromMapBind, ``TransformerLaws.MapAfterBind.funextFromStateRunSeq,
+     ``TransformerLaws.MapAfterBind.funextFromScanlCons] ++
     [``TransformerLaws.FiniteFold.funextOfMoveUnit, ``TransformerLaws.FiniteFold.funextOfRepeatUnit] ++
     [``EnvelopeOrder.propextFromRingLift, ``EnvelopeOrder.propextFromModuleLift,
       ``EnvelopeOrder.ringDiagonal, ``EnvelopeOrder.moduleDiagonal,
