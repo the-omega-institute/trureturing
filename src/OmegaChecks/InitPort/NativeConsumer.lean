@@ -156,6 +156,18 @@ public def byteBufferSecond (x y : Omega.Bool) : Omega.Bool :=
       (fun last _ => @Omega.Decidable.decide _ (Omega.UInt8.decEq last (byte .true))))
   Omega.strictAnd correct second
 
+public def updatedLookup (x y : Omega.Bool) : Omega.Bool :=
+  let xs := Omega.List.set (Omega.Array.mkArray2 x .false).toList one y
+  xs.toArray.getD one .false
+
+public def outsideLookup (x y : Omega.Bool) : Omega.Bool :=
+  (Omega.Array.mkArray1 x).getD two y
+
+public def slicedLookup (x y : Omega.Bool) : Omega.Bool :=
+  let xs := Omega.Array.appendCore (Omega.Array.mkArray1 x) (Omega.Array.mkArray1 y)
+  let tail := xs.extract one (.succ two)
+  Omega.strictAnd (@Omega.Decidable.decide _ (Omega.Nat.decEq tail.size one)) (tail.getD .zero .false)
+
 public def disjunction (x y : Omega.Bool) : Omega.Bool := Omega.strictOr x y
 public def conjunction (x y : Omega.Bool) : Omega.Bool := Omega.strictAnd x y
 "
@@ -187,7 +199,8 @@ unsafe def main (args : List String) : IO Unit := do
       (`naturalLe, fun x y => !x || y), (`arraySecond, second), (`bitEqual, BEq.beq),
       (`boundedLess, fun x y => !x && y), (`bitConjunction, and), (`word8Less, fun x y => !x && y),
       (`word16Equal, BEq.beq), (`word32Le, fun x y => !x || y), (`word64Equal, BEq.beq),
-      (`byteBufferSecond, second), (`disjunction, or), (`conjunction, and)]
+      (`byteBufferSecond, second), (`updatedLookup, second), (`outsideLookup, second),
+      (`slicedLookup, second), (`disjunction, or), (`conjunction, and)]
     for (name, expected) in checks do
       let some ci := env.find? name | throw <| IO.userError s!"missing {name}"
       unless Kernel.isDefEqGuarded env {} ci.type arity do throw <| IO.userError s!"invalid type of {name}"

@@ -911,3 +911,24 @@ port_definition List.toByteArray.loop._f
 port_definition List.toByteArray.loop
 port_structural_code List.toByteArray.loop on_arg 1
 port_definition List.toByteArray with_native_code
+
+port_proof noConfusion_of_Nat
+port_definition List.get.match_1 with_native_code
+port_definition List.get._f
+port_definition List.get
+port_structural_code List.get on_arg 2
+port_definition Array.getInternal with_native_code
+port_definition Array.getD with_native_code
+port_definition List.set.match_1 with_native_code
+port_definition List.set._f
+port_definition List.set
+port_structural_code List.set on_arg 2
+port_definition Array.appendCore.loop.match_1 with_native_code
+port_definition Array.appendCore.loop._f
+port_definition Array.appendCore.loop
+port_structural_code Array.appendCore.loop on_arg 3
+port_definition Array.appendCore with_native_code
+port_definition Array.extract.loop._f
+port_definition Array.extract.loop
+port_structural_code Array.extract.loop on_arg 3
+port_definition Array.extract with_native_code

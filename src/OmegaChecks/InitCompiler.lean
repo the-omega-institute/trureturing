@@ -183,27 +183,68 @@ before the root PUnit used by Lean's ordinary structure elaborator is available.
       let elim := mkIdentFrom id (ctor ++ `elim)
       elabCommand (← `(command| port_definition $elim:ident with_native_code))
 
-/-- Verify each constructor equation for an unindexed structural argument. Later arguments must
-be independent of that parameter, so replacing it preserves their local types. -/
+private def forallNatConstructors (check : Expr → MetaM Bool) : MetaM Bool := do
+  let .inductInfo nat ← getConstInfo `Omega.Nat | return false
+  unless nat.ctors == [`Omega.Nat.zero, `Omega.Nat.succ] do return false
+  for tag in nat.ctors do
+    let ctor := mkConst tag
+    unless ← Meta.forallTelescope (← Meta.inferType ctor) (fun fields _ => check (mkAppN ctor fields)) do
+      return false
+  return true
+
+/-- A bounded index has one constructor. Its natural field is either zero or a successor.
+For an empty bound, the proof field itself supplies a kernel-checked contradiction. -/
+private def checkFinEquations (fn body : Expr) (args : Array Expr) (index : Expr) : MetaM Bool := do
+  let ty ← Meta.whnf (← Meta.inferType index)
+  unless ty.isAppOfArity `Omega.Fin 1 do return false
+  let env ← getEnv
+  let some (.inductInfo fin) := env.find? `Omega.Fin | return false
+  unless fin.ctors == [`Omega.Fin.mk] do return false
+  let ctor := mkApp (mkConst `Omega.Fin.mk) ty.getAppArgs[0]!
+  forallNatConstructors fun val => do
+    let partialCtor := mkApp ctor val
+    Meta.forallTelescope (← Meta.inferType partialCtor) fun proofs _ => do
+      let #[h] := proofs | return false
+      let full := args.push (mkApp partialCtor h)
+      let actual := mkAppN fn full
+      let expected := mkAppN body full
+      let ctx ← getLCtx
+      if Kernel.isDefEqGuarded env ctx actual expected then return true
+      let t ← Meta.inferType actual
+      let u ← Meta.getLevel t
+      let goal := mkApp3 (mkConst `Omega.Eq [u]) t actual expected
+      let derivation := mkApp2 (mkConst `Omega.False.elim [.zero]) goal h
+      return (Kernel.check env ctx derivation).toOption.any (Kernel.isDefEqGuarded env ctx goal)
+
+/-- Compare the official one-step equation with the strict function at each constructor.
+Specializing the structural argument before the remaining binders preserves dependent indices. -/
 private def checkConstructorEquations (name : Name) (levelParams : List Name) (type body : Expr)
     (structural : Nat) : MetaM Unit := do
   let levels := levelParams.map Level.param
-  Meta.forallTelescope type fun args _ => do
-    let some arg := args[structural]? | throwError "missing structural argument"
-    let family ← Meta.whnf (← Meta.inferType arg)
+  Meta.forallBoundedTelescope type (some structural) fun before rest => do
+    unless before.size == structural && rest.isForall do throwError "missing structural argument"
+    let family ← Meta.whnf rest.bindingDomain!
     let .const indName us := family.getAppFn | throwError "expected an inductive parameter"
     let .inductInfo ind ← getConstInfo indName | throwError "expected an inductive parameter"
     unless ind.numIndices == 0 && family.getAppNumArgs == ind.numParams && !ind.ctors.isEmpty do
       throwError "expected a nonempty unindexed inductive family"
-    for next in args[structural+1:] do
-      if (← Meta.inferType next).containsFVar arg.fvarId! then throwError "dependent later argument"
     for ctorName in ind.ctors do
       let ctor := mkAppN (mkConst ctorName us) family.getAppArgs
       Meta.forallTelescope (← Meta.inferType ctor) fun fields _ => do
-        let inputs := args.set! structural (mkAppN ctor fields)
-        let actual := mkAppN (mkConst name levels) inputs
-        let expected := mkAppN body inputs
-        unless Kernel.isDefEqGuarded (← getEnv) (← getLCtx) actual expected do
+        let arg := mkAppN ctor fields
+        let fn := mkConst name levels
+        let args := before.push arg
+        let remaining := rest.bindingBody!.instantiate1 arg
+        let compare := fun (xs : Array Expr) => do
+          return Kernel.isDefEqGuarded (← getEnv) (← getLCtx) (mkAppN fn xs) (mkAppN body xs)
+        Meta.forallTelescope remaining fun suffix _ => do
+          if ← compare (args ++ suffix) then return
+          if let #[index] := suffix then
+            if ← checkFinEquations fn body args index then return
+          if remaining.isForall && (← Meta.whnf remaining.bindingDomain!).isConstOf `Omega.Nat then
+            if ← forallNatConstructors (fun val =>
+              Meta.forallTelescope (remaining.bindingBody!.instantiate1 val) fun tail _ =>
+                compare ((args.push val) ++ tail)) then return
           throwError "recursive equation does not match {name} at {ctorName}"
 
 @[command_parser, builtin_command_parser] def portStructuralCode := leading_parser
