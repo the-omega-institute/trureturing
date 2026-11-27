@@ -69,12 +69,13 @@ public def supported (source : Environment) (owner name : Name) : Bool :=
     [`land, `lor, `xor, `shiftLeft, `shiftRight].contains method
   let logarithm := owner == `OmegaInit.Data.Nat.Log2 && name == `Nat.log2
   let wordRepr := owner == `OmegaInit.Data.Repr && name == `USize.repr
+  let stringOp := owner == `OmegaInit.Data.String.Bootstrap && [`String.Internal.length, `String.Internal.append].contains name
   let intPrimitive := intOwner && name.getPrefix == `Int &&
     [`neg, `add, `sub, `mul, `decEq, `decLe, `decLt, `decNonneg, `natAbs, `ediv, `emod, `tdiv, `tmod, `divExact].contains method
   let primitive := ((word? name.getPrefix).isSome && (ops ++ widths).contains method) ||
     (name.getPrefix == `Bool && widths.contains method)
   isFloatCall source owner name ||
-  ((base || intPrimitive || wordRepr || bitwise || logarithm || (inOwner && primitive)) && isExtern source name) ||
+  ((base || intPrimitive || stringOp || wordRepr || bitwise || logarithm || (inOwner && primitive)) && isExtern source name) ||
     ((intOwner || [`OmegaInit.Data.Int.Repr, `OmegaInit.Data.Repr, `OmegaInit.Data.Nat.Bitwise.Basic, `OmegaInit.Data.BitVec.Basic].contains owner || [`OmegaInit.Data.UInt.Basic, `OmegaInit.Data.SInt.Basic].contains owner) && usesPinnedFunction name)
 
 private def symbol (n : Name) := "omega_word_" ++ (n.replacePrefix `Omega .anonymous).toString.replace "." "_"
@@ -134,6 +135,7 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
   let mut args := #[]
   let mut prepare := ""
   let mut cleanup := ""
+  let mut hasString := false
   for (a, b) in params.zip actual, i in [:params.size] do
     let .forallE _ dom body _ := type | throw <| IO.userError s!"expected argument {i} of {n}"
     type := body
@@ -194,6 +196,14 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
       args := args.push arg
       if b.borrow && !a.borrow then prepare := prepare ++ s!"  lean_inc({arg});\n"
       if a.borrow && !b.borrow then cleanup := cleanup ++ s!"  lean_dec({arg});\n"
+    else if dom == `String && a.ty == .object && b.ty == .tobject then
+      checkStrictString strict
+      hasString := true
+      decls := decls.push ((if b.borrow then "b_lean_obj_arg " else "lean_obj_arg ") ++ arg)
+      prepare := prepare ++ s!"  lean_object *string{i} = omega_string_to_lean({arg});\n"
+      args := args.push s!"string{i}"
+      if a.borrow then cleanup := cleanup ++ s!"  lean_dec(string{i});\n"
+      unless b.borrow do cleanup := cleanup ++ s!"  lean_dec({arg});\n"
     else if dom == `Int && a.ty == .tobject && b.ty == .object && a.borrow then
       checkIntLayout strict
       decls := decls.push ((if b.borrow then "b_lean_obj_arg " else "lean_obj_arg ") ++ arg)
@@ -262,7 +272,7 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
       pure <| header ++ s!"extern {ty} {target}({String.intercalate ", " (List.replicate params.size ty)});\n"
   else if official == `System.Platform.getNumBits then
     pure "\nextern lean_obj_res lean_system_platform_nbits(lean_obj_arg);\n" else pure ""
-  let header := if dom == `String then "\n#include \"strict_string.h\"\n" else ""
+  let header := if hasString || dom == `String then "\n#include \"strict_string.h\"\n" else ""
   return header ++ proto ++ s!"\nLEAN_EXPORT {output} {adapter}({String.intercalate ", " decls.toList}) \{\n{prepare}  {output} r = {value};\n{cleanup}  return r;\n}\n"
 
 end OmegaChecks.InitPort.WordNative
