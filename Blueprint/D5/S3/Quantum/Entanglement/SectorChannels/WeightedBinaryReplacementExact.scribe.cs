@@ -23,5 +23,15 @@ internal sealed class WeightedBinaryReplacementExactDocument : IScribeDocumentDe
                 Paragraph(Text(
                     "The three arcs have explicit physical attainers: filtering on the smaller direction or a rank-one projector and its complement. Clipping their diagonal hits by the target masses gives the exact error. The optimal output channel is a replacer; reference stabilization does not change its trace-norm distance to the target.")),
                 Paragraph(Text(
-                    "This is a fixed-resource, matched-diagonal replacement result. It does not assert an optimum for general coherent input-dependent recovery, mixed resources, shared randomness, or communications.")))))));
+                    "This is a fixed-resource, matched-diagonal replacement result. It does not assert an optimum for general coherent input-dependent recovery, mixed resources, shared randomness, or communications.")))),
+            Describe.Lean(
+                DescribeId.Create("replacement-diamond-exact"),
+                DeclarationHandle.Create(
+                    "D5/S3/Quantum/Entanglement/SectorChannels/WeightedBinaryReplacementExact.replacer_diamond_exact"),
+                H("Reference-stabilized distance of native replacement channels"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text(
+                        "Assume the finite input carrier has an element. If both native channels replace the input by a fixed matrix multiplied by its trace, every reference-amplified output difference is the trace-one positive marginal on the reference tensored with the output-matrix difference. The trace norm is multiplicative for this tensor, so the native diamond distance is exactly the trace norm of the difference between the two replacement outputs.")))))));
 }
