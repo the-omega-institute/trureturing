@@ -26,7 +26,7 @@ namespace D5.S3.Combinatorics.SpectralGraph.MixedPowerExtrema
 
 variable {V W : Type*} [Fintype V] [DecidableEq V] [Fintype W] [DecidableEq W]
 
-local instance graphDecidable' {U : Type*} (G : SimpleGraph U) : DecidableRel G.Adj :=
+private local instance graphDecidable' {U : Type*} (G : SimpleGraph U) : DecidableRel G.Adj :=
   Classical.decRel _
 
 omit [Fintype V] [DecidableEq V] in

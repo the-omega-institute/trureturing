@@ -83,8 +83,6 @@ private theorem pair_left_lt (i : PairIndex L) : 2 * i.val < L := by
 private def leftIndex (i : PairIndex L) : Fin (L + 1) :=
   ⟨i.val, by have := pair_left_lt i; omega⟩
 
-@[simp] private theorem leftIndex_val (i : PairIndex L) : (leftIndex i).val = i.val := rfl
-
 @[simp] private theorem rev_val (i : Fin (L + 1)) : i.rev.val = L - i.val := by
   simp [Fin.val_rev]
 
@@ -98,7 +96,7 @@ private theorem pairVertex_injective : Function.Injective A.pairVertex := by
   have hj := pair_left_lt j
   cases b <;> cases c <;>
     simp only [Bool.false_eq_true, ite_false, ite_true,
-      leftIndex_val, rev_val] at he
+      leftIndex, rev_val] at he
   · have hij : i = j := Fin.ext (by omega)
     simp [hij]
   · omega
@@ -118,13 +116,8 @@ private def fixedTip : A.Fixed := ⟨z, by
   rintro ⟨⟨i, b⟩, he⟩
   exact (A.q _).property he⟩
 
-@[simp] private theorem partition_left (i : PairIndex L) :
-    left A.partition i = (A.q (leftIndex i)).val := rfl
-
 @[simp] private theorem partition_right (i : PairIndex L) :
     right A.partition i = (A.q (leftIndex i).rev).val := rfl
-
-@[simp] private theorem partition_fixed (w : A.Fixed) : fixed A.partition w = w.val := rfl
 
 private theorem fixed_of_external (w : Surviving z) (hw : w ∉ Set.range A.q) :
     w.val ∉ Set.range A.pairVertex := by
@@ -140,7 +133,7 @@ private theorem midpoint_of_fixed (w : A.Fixed) (j : Fin (L + 1)) (hw : (A.q j).
     have he : leftIndex i = j := Fin.ext rfl
     exact w.property ⟨(i, true), by simpa [pairVertex, he] using hw⟩
   · let i : PairIndex L := ⟨L - j.val, by omega⟩
-    have he : (leftIndex i).rev = j := Fin.ext (by simp [i]; omega)
+    have he : (leftIndex i).rev = j := Fin.ext (by simp [i, leftIndex]; omega)
     exact w.property ⟨(i, false), by simpa [pairVertex, he] using hw⟩
 
 private theorem parallel_dist (hT : T.IsTree) (i j : Fin (L + 1)) :
@@ -217,28 +210,33 @@ private theorem power_incidence (hT : T.IsTree) (hk : 1 ≤ k) :
     Incidence A.partition A.fixedTip (graphPower T k)
       (graphPower (graft T z (A.q (Fin.last L)).val) k) := by
   have hlo (i : PairIndex L) : 2 * (leftIndex i).val ≤ L := by
-    simp only [leftIndex_val]
     exact (pair_left_lt i).le
   have hsep (i j : PairIndex L) : leftIndex i ≠ (leftIndex j).rev := by
     intro he
     have he' := congrArg Fin.val he
     have hi := pair_left_lt i
     have hj := pair_left_lt j
-    simp only [leftIndex_val, rev_val] at he'
+    simp only [leftIndex, rev_val] at he'
     omega
   constructor
   · intro u v hu hv
     exact (A.new_power_adj hT ⟨u, hu⟩ ⟨v, hv⟩).trans (A.old_power_adj hT ⟨u, hu⟩ ⟨v, hv⟩).symm
   · intro i j
-    simp only [partition_left, partition_right, A.old_power_adj hT, A.parallel_dist hT,
+    change (graphPower T k).Adj (A.q (leftIndex i)).val (A.q (leftIndex j)).val ↔
+      (graphPower T k).Adj (A.q (leftIndex i).rev).val (A.q (leftIndex j).rev).val
+    simp only [A.old_power_adj hT, A.parallel_dist hT,
       ne_eq, A.q.injective.eq_iff, Fin.rev_injective.eq_iff]
   · intro i j
-    simp only [partition_left, partition_right, A.old_power_adj hT,
+    change (graphPower T k).Adj (A.q (leftIndex i)).val (A.q (leftIndex j).rev).val ↔
+      (graphPower T k).Adj (A.q (leftIndex i).rev).val (A.q (leftIndex j)).val
+    simp only [A.old_power_adj hT,
       (A.cross_dist hT _ _ (hlo i) (hlo j)).1, (A.cross_dist hT _ _ (hlo i) (hlo j)).2,
       A.q.injective.ne_iff]
     exact (and_iff_right (hsep i j)).trans (and_iff_right (hsep j i).symm).symm
   · intro i j hij
-    simp only [partition_left, partition_right, A.old_power_adj hT]
+    change (graphPower T k).Adj (A.q (leftIndex i)).val (A.q (leftIndex j).rev).val →
+      (graphPower T k).Adj (A.q (leftIndex i)).val (A.q (leftIndex j)).val
+    simp only [A.old_power_adj hT]
     intro h
     refine ⟨fun he => hij (Fin.ext (congrArg (fun t : Fin (L + 1) => t.val) (A.q.injective he))), ?_⟩
     exact (A.parallel_le_cross hT _ _ (hlo i) (hlo j)).trans h.2
@@ -246,31 +244,36 @@ private theorem power_incidence (hT : T.IsTree) (hk : 1 ≤ k) :
     have hwz : w.val ≠ z := fun he => hw (Subtype.ext he)
     have hne (j : PairIndex L × Bool) : w.val ≠ A.pairVertex j :=
       fun he => w.property ⟨j, he.symm⟩
-    simp only [partition_fixed, partition_left, partition_right]
+    change (graphPower T k).Adj w.val (A.q (leftIndex i).rev).val →
+      (graphPower T k).Adj w.val (A.q (leftIndex i)).val
     rw [A.old_power_adj hT (⟨w.val, hwz⟩ : Surviving z),
       A.old_power_adj hT (⟨w.val, hwz⟩ : Surviving z)]
     intro h
     exact ⟨fun he => hne (i, true) (congrArg Subtype.val he),
       (A.fixed_dist_le hT w hwz _ (hlo i)).trans h.2⟩
   · intro i
-    simp only [partition_fixed, partition_left, partition_right, fixedTip]
+    change (graphPower (graft T z (A.q (Fin.last L)).val) k).Adj z (A.q (leftIndex i)).val ↔
+      (graphPower T k).Adj z (A.q (leftIndex i).rev).val
     rw [A.new_leaf_power_adj hT hk, A.old_leaf_power_adj hT hk, ← Fin.rev_zero,
       ← A.parallel_dist hT]
     simp
   · intro i
-    simp only [partition_fixed, partition_left, partition_right, fixedTip]
+    change (graphPower (graft T z (A.q (Fin.last L)).val) k).Adj z (A.q (leftIndex i).rev).val ↔
+      (graphPower T k).Adj z (A.q (leftIndex i)).val
     rw [A.new_leaf_power_adj hT hk, A.old_leaf_power_adj hT hk, ← Fin.rev_zero,
       A.parallel_dist hT]
   · intro i
-    simp only [partition_fixed, partition_left, partition_right, fixedTip]
+    change (graphPower T k).Adj z (A.q (leftIndex i).rev).val →
+      (graphPower T k).Adj z (A.q (leftIndex i)).val
     rw [A.old_leaf_power_adj hT hk, A.old_leaf_power_adj hT hk,
       A.path_dist hT, A.path_dist hT]
     have hi := pair_left_lt i
-    simp only [Fin.val_zero, leftIndex_val, rev_val, max_def, min_def, Nat.zero_le, ite_true,
+    simp only [Fin.val_zero, leftIndex, rev_val, max_def, min_def, Nat.zero_le, ite_true,
       Nat.sub_zero]
     omega
   · intro w
-    simp only [partition_fixed, fixedTip]
+    change (graphPower (graft T z (A.q (Fin.last L)).val) k).Adj w.val z →
+      (graphPower T k).Adj w.val z
     by_cases hw : w.val = z
     · simp [hw]
     · rw [adj_comm, adj_comm (u := w.val), A.new_leaf_power_adj hT hk ⟨w.val, hw⟩,
@@ -721,7 +724,7 @@ theorem mixedTop_last_graft_one_lt (hT : T.IsTree)
         rintro ⟨⟨i, b⟩, hi⟩
         have he := congrArg Fin.val (A.q.injective (Subtype.ext hi))
         have hb := i.isLt
-        cases b <;> simp [j₁] at he <;> omega
+        cases b <;> simp [j₁, leftIndex] at he <;> omega
       exact (compress_fixed A.partition x ⟨_, hfix⟩).ge
     · have he : j₁ = Fin.last L := Fin.ext (by change 1 = L; omega)
       rw [he]
