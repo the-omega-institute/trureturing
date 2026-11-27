@@ -157,10 +157,10 @@ using the saved IR under the same Boolean representation used by its C entry poi
 private unsafe def checkControl (lib dir : System.FilePath) : IO Unit := do
   searchPathRef.set [lib, dir]
   let env ← importModules #[{module := `GeneratedControlConsumer, importAll := true}] {} (level := .private)
-  let some (.inductInfo b) := env.find? `Omega.Bool | throw <| IO.userError "missing Boolean type"
-  unless b.numParams == 0 && b.ctors == [`Omega.Bool.false, `Omega.Bool.true] do
+  let some (.inductInfo b) := env.find? `Bool | throw <| IO.userError "missing Boolean type"
+  unless b.numParams == 0 && b.ctors == [`Bool.false, `Bool.true] do
     throw <| IO.userError "unexpected Boolean representation"
-  let ty := mkConst `Omega.Bool
+  let ty := mkConst `Bool
   let arity := .forallE `x ty (.forallE `y ty ty .default) .default
   for (name, expected) in [(`exceptResult, or), (`optionResult, and), (`stateResult, and)] do
     unless (env.find? name).any (·.type == arity) do throw <| IO.userError s!"unexpected type for {name}"

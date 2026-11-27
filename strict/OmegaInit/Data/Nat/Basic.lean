@@ -10,11 +10,9 @@ public import OmegaInit.Core
 
 @[expose] public section
 
-attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Nat.sub Omega.Nat.pred Omega.Nat.pow
 
 namespace Omega.Nat
 
-attribute [local semireducible] Nat.beq
 
 theorem beq_refl (a : Nat) : Eq (Nat.beq a a) Bool.true :=
   Nat.rec (motive := fun n => Eq (Nat.beq n n) Bool.true)

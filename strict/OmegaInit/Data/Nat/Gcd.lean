@@ -25,7 +25,7 @@ bounds the number of calls, including the final zero case. -/
     (fun _ smaller a b => Nat.rec b (fun d _ => smaller (Nat.mod b (succ d)) (succ d)) a)
     (succ m) m n
 
-attribute [local semireducible] Nat.mod Nat.ble Nat.sub Nat.pred Nat.add
+attribute [local semireducible] Nat.mod Nat.ble
 
 theorem gcd_zero_right (n : Nat) : Eq (gcd n zero) n :=
   Nat.rec (motive := fun m => Eq (gcd m zero) m) Omega.rfl (fun _ _ => Omega.rfl) n

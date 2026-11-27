@@ -1,6 +1,8 @@
 module
+meta import OmegaChecks.InitCompiler.RootNames
 import Lean
 import Lean.Replay
+import all OmegaChecks.InitCompiler.NaturalBootstrap
 import all OmegaChecks.InitCompiler.CompilerMarkers
 import all OmegaChecks.InitPort.NativeQuot
 import all Lean.Util.CollectAxioms
@@ -88,9 +90,9 @@ private def checkCountEquations (env : Environment) : IO Unit := do
     let rec refl : Expr → Option Expr
       | .forallE n d b bi => return .lam n d (← refl b) bi
       | prop => do
-        let .const `Omega.Eq levels := prop.getAppFn | none
+        let .const `Eq levels := prop.getAppFn | none
         let #[α, left, _] := prop.getAppArgs | none
-        return mkApp2 (mkConst `Omega.Eq.refl levels) α left
+        return mkApp2 (mkConst `Eq.refl levels) α left
     let some proof := refl ci.type | throw <| IO.userError s!"unexpected equation type for {name}"
     let .ok inferred := Kernel.check env {} proof | throw <| IO.userError s!"invalid reflexivity term for {name}"
     unless Kernel.isDefEqGuarded env {} inferred ci.type do
@@ -101,7 +103,7 @@ Read the persisted exported module level and ask the same API as `#print axioms`
 private def checkPublic (imports : Array Import) : IO Unit := do
   unsafe enableInitializersExecution
   let env ← importModules imports {} (loadExts := true) (level := .exported)
-  OmegaChecks.InitPort.NativeQuot.checkSupport env
+  OmegaChecks.InitPort.NativeQuot.checkSupport env .exported
   checkCountEquations env
   let check : CoreM Nat := do
     for mod in env.header.modules, data in env.header.moduleData, i in [:env.header.modules.size] do

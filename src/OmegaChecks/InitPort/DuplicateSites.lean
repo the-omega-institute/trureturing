@@ -2,6 +2,8 @@ import OmegaChecks.Interface
 
 open Lean
 
+private def portName (n : Name) := if OmegaChecks.InitCompiler.RootNames.usesRoot n then n else `Omega ++ n
+
 private abbrev ModuleGraph := NameMap (Array Name)
 
 private def reachable (graph : ModuleGraph) (root : Name) : NameSet := Id.run do
@@ -20,12 +22,12 @@ private def duplicateSites (strict source surface : Environment) : IO (NameMap (
   let mut sites : NameMap (Array Name) := {}
   for (owner, data) in surface.header.moduleNames.zip surface.header.moduleData do
     for n in data.constNames do
-      if !isPrivateName n && !n.isInternal && strict.contains (`Omega ++ n) then
+      if !isPrivateName n && !n.isInternal && strict.contains (portName n) then
         sites := sites.insert n ((sites.getD n #[]).push owner)
   let mut copies : NameMap (Array Name) := {}
   for (n, owners) in sites.toList do
     if owners.size < 2 || !owners.all (OmegaChecks.Interface.declaredIn source n ·) then continue
-    let target := `Omega ++ n
+    let target := portName n
     let some idx := strict.getModuleIdxFor? target | continue
     let origin := strict.header.moduleNames[idx]!.replacePrefix `OmegaInit `Init
     unless OmegaChecks.Interface.declaredIn source n origin do continue

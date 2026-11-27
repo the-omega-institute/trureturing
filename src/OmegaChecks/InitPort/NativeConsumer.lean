@@ -228,10 +228,10 @@ unsafe def main (args : List String) : IO Unit := do
     unless proc.exitCode == 0 do throw <| IO.userError (proc.stdout ++ proc.stderr)
     searchPathRef.set [dir, lib]
     let env ← importModules #[{module := `PairSmoke, importAll := true}] {} (level := .private)
-    let some (.inductInfo bool) := env.find? `Omega.Bool | throw <| IO.userError "missing Boolean type"
-    unless bool.numParams == 0 && bool.ctors == [`Omega.Bool.false, `Omega.Bool.true] do
+    let some (.inductInfo bool) := env.find? `Bool | throw <| IO.userError "missing Boolean type"
+    unless bool.numParams == 0 && bool.ctors == [`Bool.false, `Bool.true] do
       throw <| IO.userError "unexpected Boolean representation"
-    let b := mkConst `Omega.Bool
+    let b := mkConst `Bool
     let arity := .forallE `x b (.forallE `y b b .default) .default
     let first := fun (x _ : Bool) => x
     let second := fun (_ y : Bool) => y
