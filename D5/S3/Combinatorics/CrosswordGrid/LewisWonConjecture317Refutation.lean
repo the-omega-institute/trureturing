@@ -2,7 +2,7 @@
    generality: I
    mirror-B: D5/B/S3/Combinatorics/CrosswordGrid/LewisWonConjecture317Refutation
    mirror-E: none(waiver:external-open-problem-resolution)
-   anchors: [lewis2026crossword]
+   anchors: []
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Combinatorics/CrosswordGrid/LewisWonConjecture317Refutation.claim; result=D5/S3/Combinatorics/CrosswordGrid/LewisWonConjecture317Refutation.result; claim=D5/S3/Combinatorics/CrosswordGrid/LewisWonConjecture317Refutation.claim
    digest: The only admissible size at n = 3 lies on the excluded lower endpoint. -/
 
