@@ -21,12 +21,12 @@ zero_off_of_sum_eq                      bind-only    none / digit_eq_zero_of_col
 digit_eq_zero_of_collision              content      A changed second multiplicity spends the entire budget at one index.
 digit_eq_zero_iff                       content      The zero vector has exactly one second label and h - 1 matching first labels.
 digit_bounds                            content      The weight budget confines each signed digit to [-(h - 1)h, h].
-natAbs_lt_of_digit_bounds               bind-only    none / radixCode_eq_iff, radixCode_eq_zero_iff
-radixCode_eq_iff                        content      The radix induction recovers the digit vector from code equality.
-radixCode_eq_zero_iff                   content      The radix induction recovers zero digits, and the weight budget fixes their multiplicities.
-mem_nsmul_range_iff_counts              content      Constructs the exact-size multiset from counts and recovers counts from an indexed sum.
-mem_labelled_sum_iff                    content      The exact-size multiset argument recovers counts for both classes of labels.
-mem_radixGenerators_iff                 content      The exact-size multiset argument gives the counts in the code-and-remainder form.
+natAbs_lt_of_digit_bounds               content      Two digits in that interval differ by at most h².
+radixCode_eq_iff                        bind-only    none / adjacent_mem_range
+radixCode_eq_zero_iff                   content      Collision and weight-budget arguments fix multiplicities after zero-code normalization.
+mem_nsmul_range_iff_counts              bind-only    Sym.equivNatSumOfFintype supplies exact-size counts / mem_labelled_sum_iff
+mem_labelled_sum_iff                    bind-only    none / mem_radixGenerators_iff
+mem_radixGenerators_iff                 bind-only    none / adjacent_mem_range, nathanson_problem15
 mem_range_iff_zero_code_sum             content      Constructs weight-h multiplicities supported on the index of each prescribed point.
 abs_remainder_le                        content      The second-label weight bound controls the full remainder by hU.
 separated_values                        content      The radix scale dominates both remainders by at least two.
@@ -46,6 +46,7 @@ import Mathlib.Algebra.Group.Pointwise.Set.BigOperators
 import Mathlib.Algebra.Order.BigOperators.Group.Finset
 import Mathlib.Algebra.Order.Ring.Abs
 import Mathlib.Data.Fin.Basic
+import Mathlib.Data.Finsupp.Multiset
 import Mathlib.Data.Finset.Lattice.Fold
 import Mathlib.Data.Int.Basic
 import Mathlib.Logic.Equiv.Fin.Basic
@@ -306,18 +307,33 @@ private theorem mem_nsmul_range_iff_counts {ι : Type*} [Fintype ι] [DecidableE
     let s : Multiset ι := (Finset.univ : Finset (Fin h)).val.map w
     have hcard : s.card = h := by
       simp [s]
-    refine ⟨s.count, ?_, ?_⟩
-    · exact (Multiset.sum_count_eq_card (s := Finset.univ)
-        (fun i _ => Finset.mem_univ i)).trans hcard
-    · rw [← eval]
-      simpa only [s, Multiset.map_map, Function.comp_def, hw, ← Finset.sum_eq_multiset_sum]
-        using hsum
+    let counts : ι → ℕ :=
+      (Sym.equivNatSumOfFintype ι h ⟨s, hcard⟩ : ι → ℕ)
+    have hcounts (i : ι) : counts i = s.count i := by
+      exact (Sym.coe_equivNatSumOfFintype_apply_apply (α := ι) (n := h) ⟨s, hcard⟩ i)
+    refine ⟨counts, ?_, ?_⟩
+    · exact (Sym.equivNatSumOfFintype ι h ⟨s, hcard⟩).property
+    ·
+      have hsumcounts : (∑ i, counts i • g i) = ∑ i, s.count i • g i :=
+        Finset.sum_congr rfl (fun i _ => by rw [hcounts])
+      calc
+        _ = ∑ i, s.count i • g i := hsumcounts
+        _ = (s.map g).sum := eval s |>.symm
+        _ = ∑ i, f i := by
+          simp only [s, Multiset.map_map, Function.comp_def, hw,
+            ← Finset.sum_eq_multiset_sum]
+        _ = z := hsum
   · rintro ⟨c, hc, hsum⟩
-    let s : Multiset ι := ∑ i, Multiset.replicate (c i) i
-    have hcard : s.card = h := by simpa only [s, Multiset.card_sum, Multiset.card_replicate] using hc
-    have hcount (i : ι) : s.count i = c i := by
-      simp [s, Multiset.count_sum', Multiset.count_replicate, eq_comm]
-    have hm := Set.multiset_sum_mem_multiset_sum s (fun _ => Set.range g) g
+    let s : Sym ι h := (Sym.equivNatSumOfFintype ι h).symm ⟨c, hc⟩
+    have hcard : (s : Multiset ι).card = h := s.property
+    have hs : (Sym.equivNatSumOfFintype ι h) s = ⟨c, hc⟩ :=
+      (Sym.equivNatSumOfFintype ι h).apply_symm_apply ⟨c, hc⟩
+    have hcount (i : ι) : (s : Multiset ι).count i = c i := by
+      calc
+        _ = (Sym.equivNatSumOfFintype ι h s).val i :=
+          (Sym.coe_equivNatSumOfFintype_apply_apply (α := ι) (n := h) s i).symm
+        _ = c i := by rw [hs]
+    have hm := Set.multiset_sum_mem_multiset_sum (s : Multiset ι) (fun _ => Set.range g) g
       (fun i _ => ⟨i, rfl⟩)
     simpa only [eval, hcount, hsum, Multiset.map_const', Multiset.sum_replicate, hcard] using hm
 
