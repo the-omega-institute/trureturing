@@ -27,8 +27,7 @@ open private SideHigh compressed from
   D5.S3.Combinatorics.Graph.HypercubeCritical.TwentyPointCompression
 open private positive_eight_word from
   D5.S3.Combinatorics.Graph.HypercubeCritical.TwentyPointEightWord
-open private adjacent_exists_flip from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeGirth
+open BalancedCubeGirth (adjacent_exists_flip)
 open private diff diff_flip from
   D5.S3.Combinatorics.Graph.HypercubeCritical.CubeSmallSupport
 open private diff_self diff_injective inter_card subset_of_inter_card
