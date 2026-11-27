@@ -430,6 +430,7 @@ jobs:
         if: steps.toolchain.outcome == 'success'
         run: |
           python3 -B src/OmegaChecks/test_scope.py
+          python3 -B src/OmegaChecks/test_audit_cache.py
           python3 -B src/OmegaChecks/check.py --changed "$RUNNER_TEMP/changed-paths" \
             --write-scope "$RUNNER_TEMP/omega-scope.json" --cache-targets "$RUNNER_TEMP/omega-cache-targets"
       - id: dependency
