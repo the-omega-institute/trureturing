@@ -6,6 +6,8 @@ import Lean.Compiler.LCNF.EmitC
 import Lean.Compiler.ImplementedByAttr
 meta import OmegaChecks.InitPort.NativeState
 import OmegaChecks.InitPort.NativeState
+meta import OmegaChecks.InitPort.Translation
+import OmegaChecks.InitPort.Translation
 
 /-! Compile an existing strict owner directly from its checked kernel definitions. -/
 
@@ -24,10 +26,48 @@ private partial def dependencies (env : Environment) (localNames : NameSet) (n :
     prior := prior ++ (← dependencies env localNames dep)
   return prior.push n
 
-private def compileOwner (groups : Array InductiveVal) (order : Array Name) : CoreM Unit := do
+/-- A constructor can contain another inductive from the same owner. Defer its layout
+until the compiler has installed the referenced representation. -/
+private partial def compileLayoutsInOrder (groups : Array InductiveVal) : CoreM Unit := do
+  let mut deferred := #[]
+  let mut reasons := #[]
   for group in groups do
-    (← compileDeclsRef.get) group.all.toArray {}
+    let before ← Core.saveState
+    try
+      (← compileDeclsRef.get) group.all.toArray {}
+      for name in group.all do
+        unless (monoTypeExt.find? (← getEnv) name).isSome do throwError "no compiled layout for {name}"
+    catch ex =>
+      before.restore
+      deferred := deferred.push group
+      reasons := reasons.push (group.name, ← ex.toMessageData.toString)
+  if deferred.isEmpty then return
+  if deferred.size < groups.size then compileLayoutsInOrder deferred
+  else for (name, reason) in reasons do IO.println s!"missing layout {name}: {reason}"
+
+/-- Recover the pinned name, including private declarations in their lexical owner. -/
+private def originalName (n : Name) : Name := Id.run do
+  if let some user := privateToUserName? n then
+    if let some lexical := privatePrefix? n then
+      if (`_private.OmegaInit).isPrefixOf lexical && isPrivatePrefix lexical then
+        return lexical.replacePrefix `_private.OmegaInit `_private.Init ++ user.replacePrefix `Omega .anonymous
+  return n.replacePrefix `Omega .anonymous
+
+/-- Use the published strict calling conventions of runtime operands before boxing higher-order calls. -/
+private def missingRuntimeDependency (source : Environment) (n : Name) : CoreM Bool := do
+  let some body := (← getEnv).find? n >>= (·.value?) | return false
+  for dep in body.getUsedConstants do
+    let original := originalName dep
+    if (isExtern source original || (getImplementedBy? source original).isSome ||
+        (getSigCore? source impureSigExt original).isSome) &&
+        (← getImpureSignature? dep).isNone then
+      return true
+  return false
+
+private def compileOwner (source : Environment) (groups : Array InductiveVal) (order : Array Name) : CoreM Unit := do
+  compileLayoutsInOrder groups
   for n in order do
+    if ← missingRuntimeDependency source n then continue
     let before ← Core.saveState
     try
       (← compileDeclsRef.get) #[n] {}
@@ -54,8 +94,7 @@ private unsafe def install (source publicSource : Environment) (lib out : System
   let parts := raw.map (·.1)
   let part := parts[2]!
   let oldNative := NameSet.ofList ((impureSigExt.getModuleEntries env idx).map (·.name)).toList
-  if !onlyLayouts && !oldNative.isEmpty then
-    throw <| IO.userError s!"{owner} already has native symbols and its own initializer"
+  let onlyLayouts := onlyLayouts || !oldNative.isEmpty
   let mut groups := #[]
   let mut locals := #[]
   let mut candidates := #[]
@@ -76,7 +115,7 @@ private unsafe def install (source publicSource : Environment) (lib out : System
         locals := locals ++ family
     | .defnInfo d =>
       if onlyLayouts || ci.isUnsafe || ci.isPartial then continue
-      let upstream := d.name.replacePrefix `Omega .anonymous
+      let upstream := originalName d.name
       if isExtern source upstream || (getImplementedBy? source upstream).isSome then continue
       candidates := candidates.push d.name
     | _ => continue
@@ -86,11 +125,7 @@ private unsafe def install (source publicSource : Environment) (lib out : System
     (candidates.foldlM (fun acc n => return acc ++ (← dependencies env localNames n)) #[]).run' {}
   let context ← localEnv env owner (locals ++ candidates)
   let ctx : Core.Context := {fileName := "<generated native Init>", fileMap := default, options := Elab.async.set {} false}
-  let (_, st) ← (compileOwner groups order).toIO ctx {env := context}
-  for group in groups do
-    for name in group.all do
-      unless (monoTypeExt.find? st.env name).isSome do
-        throw <| IO.userError s!"compiler produced no layout for {name}"
+  let (_, st) ← (compileOwner source groups order).toIO ctx {env := context}
   if onlyLayouts then
     writeCode lib owner st.env layouts
   else
@@ -106,16 +141,34 @@ private unsafe def install (source publicSource : Environment) (lib out : System
     let publicSigs := publicSource.header.moduleData[originalIdx]!.constants.filter fun ci =>
       !ci.name.isInternalOrNum && !isPrivateName ci.name && published.contains ci.name &&
       (source.find? ci.name).any fun full => full.hasValue (allowOpaque := true) && !full.isUnsafe && !full.isPartial
-    let covered := publicSigs.filter fun ci => actual.contains (`Omega ++ ci.name)
+    let covered := publicSigs.filter fun ci => actual.contains (InitKernelPort.portName ci.name)
     IO.println s!"{owner}: {covered.size}/{publicSigs.size} public executable signatures"
     let missing := publicSigs.filterMap fun ci =>
-      if actual.contains (`Omega ++ ci.name) then none else some ci.name
+      if actual.contains (InitKernelPort.portName ci.name) then none else some ci.name
     if !missing.isEmpty then IO.println s!"{owner}: missing public executable signatures: {missing}"
 
+/-- A detached seed may supply only Lean's compiled modules. Execute the ordinary consumer
+using the saved IR under the same Boolean representation used by its C entry points. -/
+private unsafe def checkControl (lib dir : System.FilePath) : IO Unit := do
+  searchPathRef.set [lib, dir]
+  let env ← importModules #[{module := `GeneratedControlConsumer, importAll := true}] {} (level := .private)
+  let some (.inductInfo b) := env.find? `Omega.Bool | throw <| IO.userError "missing Boolean type"
+  unless b.numParams == 0 && b.ctors == [`Omega.Bool.false, `Omega.Bool.true] do
+    throw <| IO.userError "unexpected Boolean representation"
+  let ty := mkConst `Omega.Bool
+  let arity := .forallE `x ty (.forallE `y ty ty .default) .default
+  for (name, expected) in [(`exceptResult, or), (`optionResult, and), (`stateResult, and)] do
+    unless (env.find? name).any (·.type == arity) do throw <| IO.userError s!"unexpected type for {name}"
+    let fn ← IO.ofExcept <| env.evalConst (Bool → Bool → Bool) {} name
+    for x in [false, true] do
+      for y in [false, true] do
+        unless fn x y == expected x y do throw <| IO.userError s!"incorrect {name} {x} {y}"
 
 end GeneratedNative
 
 public unsafe def main (args : List String) : IO Unit := do
+  if let ["--check-control", lib, dir] := args then
+    return ← GeneratedNative.checkControl lib dir
   let lib :: out :: requests := args | throw <| IO.userError "expected library, C output and ordered owners"
   let modules := requests.toArray.map fun s => (s.dropPrefix "layouts=").toString.toName
   let official := modules.map fun n => {module := n.replacePrefix `OmegaInit `Init : Import}
@@ -124,3 +177,4 @@ public unsafe def main (args : List String) : IO Unit := do
   searchPathRef.set [lib]
   for name in modules, s in requests do
     GeneratedNative.install src published lib out name (s.startsWith "layouts=")
+    (← IO.getStdout).flush
