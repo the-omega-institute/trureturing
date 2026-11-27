@@ -14,7 +14,8 @@ import OmegaBuild.Commands
 Recognition of the P48q finite-support polynomial Fock representation for
 the current and charge generators of Bakalov–Kac, arXiv:math/0402315v3,
 §4.3. The target vacuum has the native moving-lattice character, and its
-charge translates lie in independent momentum subspaces.
+charge translates lie in the independent joint eigenspaces of the fixed
+Cartan zero modes.
 -/
 
 compile_only_with_mathlib
@@ -24,12 +25,14 @@ set_option autoImplicit false
 namespace D5.S3.VertexAlgebra.Lattice.Orbifold.P48qFockRecognition
 
 open LatticeGeneratingFieldLocality (Charge)
+open P48qMomentumEnergy (Fixed chargeVector fixedGram pairing_physicalMomentum physicalMomentum)
 open P48qTwistedChargeAction (Momentum lattice g multiplier liftPhase movingExact U)
-open P48qThirdTwistedField (Fock Mode State creator annihilatorDual fixedDualBases
+open P48qThirdTwistedField (Cartan Fock Mode State creator annihilatorDual fixedDualBases
   chargePhase U_ground)
-open P48qTwistedHeisenberg (mode scale)
+open P48qTwistedHeisenberg (mode mode_zero_apply scale)
 open P48qTwistedFockIrreducibility (chargeOperator chargeOperator_single
-  negative_mode_single positive_mode_single)
+  fixedCartan_separates negative_mode_single positive_mode_single)
+open ThirdEigenspacePairing (p48qForm)
 open ThirdTwistedGroundRecognition (recognitionMap recognitionMap_single)
 open MvPolynomial
 open scoped BigOperators
@@ -37,12 +40,29 @@ open scoped BigOperators
 noncomputable section
 
 local notation "s" => ThirdTwistedChargeAction.chooseSection lattice g
+local notation "N" => ThirdTwistedChargeAction.N lattice g
 local notation "shift" => ThirdTwistedChargeAction.shift lattice g
 local notation "χ" => ThirdTwistedChargeAction.chi lattice g multiplier liftPhase movingExact
 local notation "cre" i => mode (creator fixedDualBases i) (Int.negSucc i.2)
 local notation "ann" i => mode (annihilatorDual fixedDualBases i) (Int.ofNat (i.2 + 1))
 
 variable {M : Type*} [AddCommGroup M] [Module ℂ M]
+
+/-- The target joint eigenspace with the native fixed Cartan weight at `p`. -/
+def jointWeightSpace (Z : Fixed → Module.End ℂ M) (p : Momentum) : Submodule ℂ M :=
+  ⨅ h : Fixed, (Z h).eigenspace (fixedGram h (physicalMomentum p))
+
+/-- The native weights distinguish the momentum sectors in any target. -/
+theorem jointWeightSpace_iSupIndep (Z : Fixed → Module.End ℂ M) :
+    iSupIndep (jointWeightSpace Z) := by
+  have hinj : Function.Injective (fun (p : Momentum) (h : Fixed) =>
+      fixedGram h (physicalMomentum p)) := by
+    intro p q heq
+    by_contra hpq
+    obtain ⟨h, hsep⟩ := fixedCartan_separates hpq
+    exact hsep (congrFun heq h)
+  exact (iSupIndep.iInf (fun h => (Z h).eigenspace)
+    (fun h => (Z h).eigenspaces_iSupIndep)).comp hinj
 
 private theorem fock_map_eq_of_one (A : Mode → Module.End ℂ M)
     {F G : Fock →ₗ[ℂ] M} (hF : ∀ i P, F (X i * P) = A i (F P))
@@ -59,7 +79,7 @@ private theorem fock_map_eq_of_one (A : Mode → Module.End ℂ M)
 native charge orbit of cyclic oscillator spaces. Independence separates their
 finite sum, and irreducibility makes it the entire target. The positive
 operators `B` have the physical frequency in their Weyl bracket. -/
-theorem recognize_irreducible
+private theorem recognize_irreducible_of_subspaces
     (A B : Mode → Module.End ℂ M) (T : Charge lattice → Module.End ℂ M) (w : M)
     (W : Momentum → Submodule ℂ M)
     (hA : ∀ i j, Commute (A i) (A j))
@@ -184,8 +204,68 @@ theorem recognize_irreducible
     rw [hSingle]
     exact hFmem p P
 
+/-- The fixed Cartan relations place each charge translate of the vacuum in
+its native joint weight space. Recognition then intertwines the fixed Cartan
+zero modes as well as the oscillator and charge operators. -/
+theorem recognize_irreducible
+    (A B : Mode → Module.End ℂ M) (T : Charge lattice → Module.End ℂ M)
+    (Z : Fixed → Module.End ℂ M) (w : M)
+    (hA : ∀ i j, Commute (A i) (A j))
+    (hWeyl : ∀ i j, ⁅B i, A j⁆ = if i = j then scale i.2 • 1 else 0)
+    (hAT : ∀ i a, Commute (A i) (T a))
+    (hBT : ∀ i a, Commute (B i) (T a))
+    (hUnit : T 0 = LinearMap.id)
+    (hMul : ∀ a b, (T a).comp (T b) = (multiplier.c a b : ℂ) • T (a + b))
+    (hw : w ≠ 0) (hVac : ∀ i, B i w = 0)
+    (hχ : ∀ m : ThirdTwistedChargeAction.Moving lattice g, T m.1 w = (χ m : ℂ) • w)
+    (hZero : ∀ h, Z h w = 0)
+    (hZA : ∀ h i, Commute (Z h) (A i))
+    (hZT : ∀ h a, (Z h).comp (T a) - (T a).comp (Z h) =
+      (p48qForm (h : Cartan) (chargeVector (N a)) / 3) • T a)
+    (hIrred : ∀ S : Submodule ℂ M,
+      (∀ i x, x ∈ S → A i x ∈ S) → (∀ i x, x ∈ S → B i x ∈ S) →
+      (∀ a x, x ∈ S → T a x ∈ S) → S = ⊥ ∨ S = ⊤) :
+    ∃ e : State ≃ₗ[ℂ] M,
+      (∀ p, e (Finsupp.single p 1) = T ((s).lift p) w) ∧
+      (∀ p P, e (Finsupp.single p P) ∈ jointWeightSpace Z p) ∧
+      (∀ i : Mode, (A i).comp e.toLinearMap = e.toLinearMap.comp (cre i)) ∧
+      (∀ i : Mode, (B i).comp e.toLinearMap = e.toLinearMap.comp (ann i)) ∧
+      (∀ a, (T a).comp e.toLinearMap = e.toLinearMap.comp (chargeOperator a)) ∧
+      ∀ h, (Z h).comp e.toLinearMap = e.toLinearMap.comp (mode (h : Cartan) 0) := by
+  have hWeight (p : Momentum) : T ((s).lift p) w ∈ jointWeightSpace Z p := by
+    simp only [jointWeightSpace, Submodule.mem_iInf, Module.End.mem_eigenspace_iff]
+    intro h
+    simpa only [LinearMap.sub_apply, LinearMap.comp_apply, LinearMap.smul_apply,
+      hZero h, map_zero, sub_zero, (s).right_inv p, ← pairing_physicalMomentum h p]
+      using DFunLike.congr_fun (hZT h ((s).lift p)) w
+  have hStable : ∀ p i x, x ∈ jointWeightSpace Z p → A i x ∈ jointWeightSpace Z p := by
+    simp only [jointWeightSpace, Submodule.mem_iInf, Module.End.mem_eigenspace_iff]
+    intro p i x hx h
+    calc
+      Z h (A i x) = A i (Z h x) := DFunLike.congr_fun (hZA h i).eq x
+      _ = _ := by rw [hx h, map_smul]
+  obtain ⟨e, hGround, hMem, hCre, hAnn, hCharge⟩ :=
+    recognize_irreducible_of_subspaces A B T w (jointWeightSpace Z) hA hWeyl hAT hBT
+      hUnit hMul hw hVac hχ hWeight hStable (jointWeightSpace_iSupIndep Z) hIrred
+  refine ⟨e, hGround, hMem, hCre, hAnn, hCharge, ?_⟩
+  intro h
+  have hMode : mode (h : Cartan) 0 = P48qFixedCurrentIterate.zeroMode h := by
+    apply LinearMap.ext
+    intro v
+    apply Finsupp.ext
+    intro p
+    exact (mode_zero_apply (h : Cartan) v p).trans
+      (P48qFixedCurrentIterate.zeroMode_apply h v p).symm
+  apply Finsupp.lhom_ext
+  intro p P
+  have hp := hMem p P
+  simp only [jointWeightSpace, Submodule.mem_iInf, Module.End.mem_eigenspace_iff] at hp
+  simpa only [LinearMap.comp_apply, hMode, P48qFixedCurrentIterate.zeroMode_single,
+    map_smul, LinearEquiv.coe_toLinearMap] using hp h
+
 end
 
 end D5.S3.VertexAlgebra.Lattice.Orbifold.P48qFockRecognition
 
+#print axioms D5.S3.VertexAlgebra.Lattice.Orbifold.P48qFockRecognition.jointWeightSpace_iSupIndep
 #print axioms D5.S3.VertexAlgebra.Lattice.Orbifold.P48qFockRecognition.recognize_irreducible

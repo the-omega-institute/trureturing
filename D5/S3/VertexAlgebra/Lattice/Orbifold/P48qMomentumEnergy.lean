@@ -110,7 +110,7 @@ private theorem momentum_numerator_fixed (p : Momentum) : chargeVector p.1 ∈ F
 def physicalMomentum (p : Momentum) : Fixed :=
   (3 : ℂ)⁻¹ • (⟨chargeVector p.1, momentum_numerator_fixed p⟩ : Fixed)
 
-private theorem pairing_physicalMomentum (h : Fixed) (p : Momentum) :
+theorem pairing_physicalMomentum (h : Fixed) (p : Momentum) :
     fixedGram h (physicalMomentum p) = p48qForm (h : Fin 48 → ℂ) (chargeVector p.1) / 3 := by
   change p48qForm (h : Fin 48 → ℂ) ((3 : ℂ)⁻¹ • chargeVector p.1) = _
   rw [LinearMap.BilinForm.smul_right, div_eq_mul_inv, mul_comm]
