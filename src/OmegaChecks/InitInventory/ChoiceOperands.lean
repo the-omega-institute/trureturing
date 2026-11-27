@@ -25,6 +25,16 @@ public structure Operand where
   witness : Name
   levels : List Level
 
+/-- The selector laws can be instantiated with the predicate that a value equals itself. -/
+private theorem existsSelf {α : Sort u} (h : Nonempty α) : ∃ x : α, x = x :=
+  h.elim fun x => ⟨x, rfl⟩
+
+private def specification? : Name → Option (Name × Name)
+  | ``Classical.choose_spec => some (``Classical.choose, ``choiceFromChoose)
+  | ``Exists.choose_spec => some (``Exists.choose, ``choiceFromExistsChoose)
+  | ``Classical.epsilon_spec | ``Classical.epsilon_spec_aux => some (``Classical.epsilon, ``choiceFromEpsilon)
+  | _ => none
+
 private def fixWitness? : Name → Option Name
   | ``WellFounded.extrinsicFix | ``WellFounded.partialExtrinsicFix => some ``choiceFromFix
   | ``WellFounded.extrinsicFix₂ | ``WellFounded.partialExtrinsicFix₂ => some ``choiceFromFix₂
@@ -44,6 +54,10 @@ The witness consumes the complete polymorphic operation used to state the equati
 public def operand? (owner : Name) (source : ConstantInfo) : Option Operand := do
   guard (owner.getRoot == `Init)
   guard source.isTheorem
+  if owner == `Init.Classical then
+    if let some (name, witness) := specification? source.name then
+      guard (source.type.getUsedConstants.contains name)
+      return ⟨name, witness, source.levelParams.map Level.param⟩
   let congruence := source.name matches .str _ "congr_simp"
   guard (owner == `Init.WFExtrinsicFix || congruence)
   let mut conclusion := source.type
@@ -139,6 +153,44 @@ public def checkCongruenceEndpoints (official : Environment) (source : ConstantI
         unless Kernel.isDefEqGuarded env {} actual expected do
           throwError "{source.name} has a specialized endpoint of unexpected type {actual}"
 
+open Meta in
+/-- Read the equality after applying the official specification to a nonempty sort and
+the reflexive predicate. Both endpoints must depend only on these two choice arguments. -/
+private def checkSpecification (official : Environment) (source : ConstantInfo) (op : Operand) : MetaM Unit := do
+  let u := Level.param `u
+  let env ← getEnv
+  let choice ← getConstInfo ``Classical.choice
+  let choiceType := choice.type.instantiateLevelParams choice.levelParams [u]
+  forallTelescope choiceType fun params _ => do
+    let #[α, h] := params | throwError "unexpected choice type"
+    let predicate ← withLocalDeclD `x α fun x => do mkLambdaFVars #[x] (← mkEq x x)
+    let existsProof := mkApp2 (mkConst ``existsSelf [u]) α h
+    let args := if source.name == ``Classical.epsilon_spec_aux then #[α, h, predicate, existsProof]
+      else #[α, predicate, existsProof]
+    let recipes ← args.mapM (mkLambdaFVars params ·)
+    let roots := recipes.toList.flatMap fun recipe => recipe.getUsedConstantsAsSet.toList
+    let clean ← replayBoundaryDependencies official env (roots ++ choiceType.getUsedConstantsAsSet.toList)
+    for recipe in recipes do
+      discard <| Lean.ofExceptKernelException (Kernel.check clean {} recipe)
+    let declared := source.type.instantiateLevelParams source.levelParams [u]
+    withLocalDeclD `law declared fun law => do
+      let app := mkAppN law args
+      let inferred ← Lean.ofExceptKernelException (Kernel.check env (← getLCtx) app)
+      let some (_, left, right) := inferred.headBeta.eq? | throwError "expected a specialized equality for {source.name}"
+      for term in #[left, right] do
+        unless term.getAppFn.isConstOf op.name do throwError "unexpected selector in {source.name}"
+        let endpoint ← mkLambdaFVars params term
+        if endpoint.hasFVar then throwError "specialized endpoint depends on the specification proof"
+        let ty ← Lean.ofExceptKernelException (Kernel.check env {} endpoint)
+        unless Kernel.isDefEqGuarded env {} ty choiceType do throwError "incomplete choice type in {source.name}"
+
+public def hasChoiceEndpoints (source : ConstantInfo) (op : Operand) : Bool :=
+  source.name.getPrefix == op.name || (specification? source.name).isSome
+
+public def certifyEndpoints (official : Environment) (source : ConstantInfo) (op : Operand) : MetaM Unit :=
+  if (specification? source.name).isSome then checkSpecification official source op
+  else checkCongruenceEndpoints official source op
+
 run_cmd
   let env ← getEnv
   let pinned ← importModules #[{module := `Lean}] {} (level := .private)
@@ -148,7 +200,7 @@ run_cmd
       unless isPrivateName source.name || source.name.isInternalOrNum || source.name.hasMacroScopes do
         if let some operand := operand? owner source then
           if let .error msg := check env owner source operand then throwError "{msg}"
-          if source.name.getPrefix == operand.name then
-            Elab.Command.liftCoreM <| Meta.MetaM.run' (checkCongruenceEndpoints pinned source operand)
+          if hasChoiceEndpoints source operand then
+            Elab.Command.liftCoreM <| Meta.MetaM.run' (certifyEndpoints pinned source operand)
 
 end OmegaChecks.InitBoundaries.ChoiceOperands

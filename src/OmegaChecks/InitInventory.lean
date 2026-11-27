@@ -601,15 +601,15 @@ private def inventory (lib : System.FilePath) (visible strict full witnesses : E
       let operand := OmegaChecks.InitBoundaries.ChoiceOperands.operand? owner info
       let endpointType : Option String ← match operand with
         | some op => do
-          if name.getPrefix != op.name then pure none
+          if !OmegaChecks.InitBoundaries.ChoiceOperands.hasChoiceEndpoints info op then pure none
           else
-            let certify := OmegaChecks.InitBoundaries.ChoiceOperands.checkCongruenceEndpoints official info op
+            let certify := OmegaChecks.InitBoundaries.ChoiceOperands.certifyEndpoints official info op
             (Meta.MetaM.run' certify).toIO' {fileName := "<official equality endpoints>", fileMap := default} {env := witnesses}
             pure (some "Classical.choice")
         | none => pure none
       if endpointType.isSome then
         if let some op := operand then
-          certifiedEndpoints := certifiedEndpoints.push #[owner.toString, name.toString, op.witness.toString]
+          certifiedEndpoints := certifiedEndpoints.push #[owner.toString, name.toString, op.name.toString, op.witness.toString]
       let conditional := OmegaChecks.InitInventory.conditionalConsequence? owner name
       let direct := (logicalConsequence? owner name).map (fun (target, witness) => (target.toString, witness))
       let consequence := conditional.map (fun (target, witness, _) => (target, witness)) <|> direct

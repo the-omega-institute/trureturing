@@ -17,7 +17,7 @@ def check_coverage(official):
     """Count physical sites from the fresh Lean inventory, including repeated names."""
     modules = set(official["modules"])
     certificates = official.get("certifiedChoiceEndpoints", [])
-    by_site = {(owner, name): witness for owner, name, witness in certificates}
+    by_site = {(owner, name): (operand, witness) for owner, name, operand, witness in certificates}
     if len(by_site) != len(certificates):
         raise ValueError("repeated specialized equality endpoint certificate")
     sites = set()
@@ -43,10 +43,11 @@ def check_coverage(official):
         runtime = row.get("runtimeConflictWitness")
         endpoint = row.get("specializedEndpointType")
         certificate = by_site.pop(site, None)
-        if bool(endpoint) != bool(certificate) or (endpoint and certificate != row.get("operandReductionWitness")):
+        evidence = (row.get("equationOperand"), row.get("operandReductionWitness"))
+        if bool(endpoint) != bool(certificate) or (endpoint and certificate != evidence):
             raise ValueError(f"uncertified specialized equality endpoint for {owner}/{name}")
         if endpoint and (endpoint != "Classical.choice" or row["kind"] != "theorem" or
-                         name != str(row.get("equationOperand")) + ".congr_simp" or
+                         not row.get("equationOperand") or
                          row.get("operandImpliesAxiom") != endpoint or not row.get("operandReductionWitness") or
                          port or witness or strict or runtime):
             raise ValueError(f"inconsistent specialized equality endpoint for {owner}/{name}")

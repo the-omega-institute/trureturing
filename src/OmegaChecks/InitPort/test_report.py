@@ -91,7 +91,7 @@ class CoverageTest(unittest.TestCase):
         row = site("Init.While", "Classical.choice.congr_simp", equationOperand="Classical.choice",
                    operandImpliesAxiom="Classical.choice", operandReductionWitness="fromChoice",
                    specializedEndpointType="Classical.choice")
-        certificate = {"certifiedChoiceEndpoints": [("Init.While", row["name"], "fromChoice")]}
+        certificate = {"certifiedChoiceEndpoints": [("Init.While", row["name"], "Classical.choice", "fromChoice")]}
         self.assertEqual(check_coverage(inventory(row) | certificate), (0, []))
         fake = site("Init.ByCases", "ite.congr_simp", equationOperand="ite",
                     operandImpliesAxiom="Classical.choice", operandReductionWitness="doesNotExist",
