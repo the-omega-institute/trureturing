@@ -1,3 +1,4 @@
+import Reg.Support.HexagonalTheta.Stability
 import Reg.Support.ThetaVerticalPositive
 
 open D5.S3.Fourier.PlanarTheta
@@ -113,3 +114,33 @@ def registration_weighted : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
 
 end
 end Reg.D5.S3.Fourier.ThetaVerticalTail
+
+open Reg.Support.HexagonalThetaStability
+namespace Reg.D5.S3.Fourier.ThetaVerticalPositive
+noncomputable section
+
+def registration_hex_turn : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@hex_q_turn) (type_of% (realize hexFormSignature
+      (fun _ _ v => Q (1 / 2) (Real.sqrt 3 / 2) v)
+      (fun e => nomatch e))) Type Unit := {
+  unitName := `D5.S3.Fourier.PlanarTheta.hex_q_turn.__information_unit,
+  realizationName := `Reg.Support.HexagonalThetaStability.turnRegistration,
+  realizationSource := none, generated := false,
+  arena := .source ⟨turnArena⟩, objectArena := .source ⟨turnArena⟩,
+  catalog := Lean.Name.anonymous, localNames := false,
+  realization := .source turnArena ⟨turnRegistration⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize hexFormSignature
+    (fun _ _ v => Q (1 / 2) (Real.sqrt 3 / 2) v) (fun e => nomatch e)),
+  variation := .absent, sensitivity := .absent, partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some {
+    owner := `D5.S3.Fourier.ThetaVerticalPositive, definition := none,
+    coordinates := #[], readouts := #[{
+      path := #["body", "arg"], stateBinder := 0, functionOperand := false,
+      stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown, familyRecord := none, options := #[] }
+
+end
+end Reg.D5.S3.Fourier.ThetaVerticalPositive
