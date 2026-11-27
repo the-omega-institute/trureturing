@@ -6,28 +6,12 @@
    digest: W digits use Fibonacci weights and the unique nonadjacent Zeckendorf representation. -/
 
 import Mathlib.Data.Nat.Fib.Zeckendorf
+import OmegaBuild.Commands
 import OmegaMath.Arithmetic.WDigits
 
+compile_only_with_mathlib
+
 namespace D5.S0.Conventions
-
-section StrictWeights
-
-open Omega.Arithmetic.WDigits (wValue)
-
-theorem wValue_zero : Omega.Eq (wValue .zero) Omega.Nat.one :=
-  Omega.Arithmetic.WDigits.wValue_zero
-
-theorem wValue_one : Omega.Eq (wValue Omega.Nat.one) Omega.Nat.one.succ :=
-  Omega.Arithmetic.WDigits.wValue_one
-
-theorem wValue_two : Omega.Eq (wValue Omega.Nat.one.succ) Omega.Nat.one.succ.succ :=
-  Omega.Arithmetic.WDigits.wValue_two
-
-theorem wValue_add_two (index : Omega.Nat) :
-    Omega.Eq (wValue index.succ.succ) ((wValue index).add (wValue index.succ)) :=
-  Omega.Arithmetic.WDigits.wValue_add_two index
-
-end StrictWeights
 
 /-- The zero-based W weight sequence `1, 2, 3, 5, ...`. -/
 def wValue (index : ℕ) : ℕ := Nat.fib (index + 2)
@@ -49,6 +33,26 @@ theorem wValue_add_two_nat (index : ℕ) :
   change ((step^[index + 2 + 1 + 1]) (0, 1)).1 =
     ((step^[index + 2]) (0, 1)).1 + ((step^[index + 2 + 1]) (0, 1)).1
   rw [advance (index + 2 + 1), advance (index + 2)]
+
+section OmegaWeights
+
+open Omega.Arithmetic.WDigits renaming wValue → omegaWeight
+
+-- On the Mathlib backend both weight functions reduce to the same Fibonacci iterator.
+theorem wValue_zero : Omega.Eq (omegaWeight .zero) Omega.Nat.one :=
+  wValue_zero_nat
+
+theorem wValue_one : Omega.Eq (omegaWeight Omega.Nat.one) Omega.Nat.one.succ :=
+  wValue_one_nat
+
+theorem wValue_two : Omega.Eq (omegaWeight Omega.Nat.one.succ) Omega.Nat.one.succ.succ :=
+  wValue_two_nat
+
+theorem wValue_add_two (index : Omega.Nat) :
+    Omega.Eq (omegaWeight index.succ.succ) ((omegaWeight index).add (omegaWeight index.succ)) :=
+  wValue_add_two_nat index
+
+end OmegaWeights
 
 /-- Canonical W digits, stored as the occupied Fibonacci indices used by mathlib. -/
 def wdigits (n : ℕ) : List ℕ := Nat.zeckendorf n
