@@ -173,4 +173,84 @@ theorem twelve_le_card_of_extremal_bridge_partition [Finite X] (S : Set X)
   rw [← Nat.card_congr (Equiv.Set.sumCompl S), Nat.card_sum]
   exact Nat.add_le_add leftSize rightSize
 
+/-- In a finite core, a cut crossed by exactly one strict comparison has
+at least six vertices on each side if the two side graphs are connected
+and any side of height one is acyclic. -/
+theorem twelve_le_card_of_single_cross_comparison [Finite X] (S : Set X)
+    {a : S} {b : (Sᶜ : Set X)} (hab : a.val < b.val)
+    (hCross : ∀ (x : S) (y : (Sᶜ : Set X)), x.val < y.val → x = a ∧ y = b)
+    (hNoReverse : ∀ (x : S) (y : (Sᶜ : Set X)), ¬ y.val < x.val)
+    (hConnLeft : (comparabilityGraph S).Connected)
+    (hConnRight : (comparabilityGraph (Sᶜ : Set X)).Connected)
+    (hAcyclicLeft : (¬ ∃ l x r : S, l < x ∧ x < r) → (comparabilityGraph S).IsAcyclic)
+    (hAcyclicRight : (¬ ∃ l x r : (Sᶜ : Set X), l < x ∧ x < r) →
+      (comparabilityGraph (Sᶜ : Set X)).IsAcyclic)
+    (hUp : ∀ x : X, ¬ IsUpBeatPoint x) (hDown : ∀ x : X, ¬ IsDownBeatPoint x) :
+    12 ≤ Nat.card X := by
+  classical
+  have ha : IsMin a := by
+    rw [isMin_iff_forall_not_lt]
+    intro x hxa
+    exact hxa.ne (hCross x b ((show x.val < a.val from hxa).trans hab)).1
+  have hb : IsMax b := by
+    rw [isMax_iff_forall_not_lt]
+    intro y hby
+    exact hby.ne (hCross a y (hab.trans (show b.val < y.val from hby))).2.symm
+  have leftNontrivial : Nontrivial S := by
+    by_contra h
+    have only (x : S) : x = a := by
+      by_contra hx
+      exact h ⟨x, a, hx⟩
+    apply hUp a.val
+    refine ⟨b.val, hab, ?_⟩
+    intro y hy
+    by_cases hyS : y ∈ S
+    · exact (hy.ne (congrArg Subtype.val (only ⟨y, hyS⟩)).symm).elim
+    · exact (congrArg Subtype.val (hCross a ⟨y, hyS⟩ hy).2).ge
+  have rightNontrivial : Nontrivial (Sᶜ : Set X) := by
+    by_contra h
+    have only (y : (Sᶜ : Set X)) : y = b := by
+      by_contra hy
+      exact h ⟨y, b, hy⟩
+    apply hDown b.val
+    refine ⟨a.val, hab, ?_⟩
+    intro x hx
+    by_cases hxS : x ∈ S
+    · exact (congrArg Subtype.val (hCross ⟨x, hxS⟩ b hx).1).le
+    · exact (hx.ne (congrArg Subtype.val (only ⟨x, hxS⟩))).elim
+  letI := leftNontrivial
+  letI := rightNontrivial
+  apply twelve_le_card_of_extremal_bridge_partition S ha hb hConnLeft
+    hConnRight hAcyclicLeft hAcyclicRight
+  · rintro x ⟨z, hxz, hmin⟩
+    by_contra hxa
+    apply hUp x.val
+    refine ⟨z.val, hxz, ?_⟩
+    intro y hxy
+    by_cases hy : y ∈ S
+    · exact hmin (a := ⟨y, hy⟩) hxy
+    · exact (hxa (hCross x ⟨y, hy⟩ hxy).1).elim
+  · rintro x ⟨z, hzx, hmax⟩
+    apply hDown x.val
+    refine ⟨z.val, hzx, ?_⟩
+    intro y hyx
+    by_cases hy : y ∈ S
+    · exact hmax (a := ⟨y, hy⟩) hyx
+    · exact (hNoReverse x ⟨y, hy⟩ hyx).elim
+  · rintro x ⟨z, hzx, hmax⟩
+    by_contra hxb
+    apply hDown x.val
+    refine ⟨z.val, hzx, ?_⟩
+    intro y hyx
+    by_cases hy : y ∈ S
+    · exact (hxb (hCross ⟨y, hy⟩ x hyx).2).elim
+    · exact hmax (a := ⟨y, hy⟩) hyx
+  · rintro x ⟨z, hxz, hmin⟩
+    apply hUp x.val
+    refine ⟨z.val, hxz, ?_⟩
+    intro y hxy
+    by_cases hy : y ∈ S
+    · exact (hNoReverse ⟨y, hy⟩ x hxy).elim
+    · exact hmin (a := ⟨y, hy⟩) hxy
+
 end Omega.ExtremalBridge
