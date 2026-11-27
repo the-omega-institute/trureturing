@@ -8,7 +8,7 @@ internal sealed class CooperDuReflectedSteinerDocument : IScribeDocumentDefiniti
 {
     private const string Prefix = "D5/S3/Combinatorics/Graph/Steiner/CooperDuReflectedSteiner.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/GraphInvariants/cooperdu2025steinerdistancehypermatrices");
+        LibraryNoteRef.Create("D5/L/FiniteGeometry/cooperdu2025steinerdistancehypermatrices");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The star with 47 leaves has a negative real H-eigenvalue for the last-reflected Steiner form at every even order at least four.",
@@ -30,7 +30,7 @@ internal sealed class CooperDuReflectedSteinerDocument : IScribeDocumentDefiniti
                 "The vector x is real and nonzero, and lam is real. Each first-slot row equals the eigenvalue times the corresponding coordinate raised to the power m + 1, which is one less than the tensor order.",
                 AssessedProvenance.FromRepo(Source)),
             Definition("claim", "Cooper and Du’s positivity question", ClaimFormula(),
-                "After Proposition 4.5 on printed page 10, Cooper and Du ask whether the H-eigenvalues of C₁ are all positive and whether this extends to all even orders. The proposition requires strict positivity for every real H-eigenpair on every finite simple tree with at least three vertices at each even order k at least four. The tree proof hG supplies the connectedness argument. Relabelling the paper’s vertices by Fin n preserves both the Steiner entries and the eigenpair equations.",
+                "After Proposition 4.5 on printed page 10, Cooper and Du report computational evidence for diagonal positive definiteness of the quartic C₁. They ask whether the H-eigenvalues of C₁ are all positive and whether this extends to all even orders. The claim adopts the first-slot convention and requires strict positivity for every real H-eigenpair on every finite simple tree with at least three vertices at each even order k at least four. The tree proof hG supplies the connectedness argument. Relabelling the paper’s vertices by Fin n preserves both the Steiner entries and the eigenpair equations.",
                 AssessedProvenance.FromLiterature(Source)),
             Describe.Lean(
                 DescribeId.Create("cooper-du-star-negative"), DeclarationHandle.Create(Prefix + "star_negative"),
@@ -52,8 +52,11 @@ internal sealed class CooperDuReflectedSteinerDocument : IScribeDocumentDefiniti
                 H("The order-four instance refutes claim"),
                 StatementSource.FromAuthor(Disp(new Formula.Not(F.Id("claim")))),
                 AssessedProvenance.FromRepo(Source),
-                Blocks(Paragraph(Text(
-                    "Apply star_negative at k = 4. The star on Fin 48 satisfies the size and tree hypotheses of claim, which would make the supplied eigenvalue strictly positive. The witness has a strictly negative eigenvalue, giving ¬ claim."))),
+                Blocks(
+                    Paragraph(Text(
+                        "Apply star_negative at k = 4. The star on Fin 48 satisfies the size and tree hypotheses of claim, which would make the supplied eigenvalue strictly positive. The witness has a strictly negative eigenvalue, giving ¬ claim.")),
+                    Paragraph(Text(
+                        "At every even order k ≥ 4, multilinearity in the first slot expresses the diagonal value at the star witness as the sum of each coordinate times its first-slot row. The row equations give lam times the sum of the kth powers of the coordinates, which is negative because x is nonzero and lam < 0. The symmetric polarization has the same diagonal polynomial, and scaling the witness so its kth powers sum to one preserves the sign. The polynomial therefore attains a negative minimum on that compact constraint set. The constraint gradient is nonzero there. By symmetry the polynomial gradient is k times the row contraction, so the Lagrange multiplier equation gives an H-eigenpair. Contracting with the minimizing vector identifies its eigenvalue with the negative minimum. Proposition 4.5 gives diagonal positivity for the quartic sum C₁ + C₃."))),
                 DescribeRole.Theorem)),
         []));
 
@@ -112,7 +115,7 @@ internal sealed class CooperDuReflectedSteinerDocument : IScribeDocumentDefiniti
             Grp(Seq(F.Id("a"), Sp, Colon, Sp, Call("Fin", m))));
         Formula slots = Parenthesized(Seq(basis, Comma, Sp, copies, Comma, Sp, Call("reflect", x)));
         return Disp(Seq(Equal(Call("reflectedRow", h, m, x, i), Call("steinerForm", h, z)),
-            Comma, Quad, Equal(z, slots)));
+            Comma, Quad, Sp, Equal(z, slots)));
     }
 
     private static Formula EigenpairFormula()
