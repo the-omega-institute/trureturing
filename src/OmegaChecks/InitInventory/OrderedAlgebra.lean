@@ -325,6 +325,34 @@ theorem leCoeff (rule : type_of% @norm_le_coeff) : AddOneLE := by
   exact (rule (pairCtx a b) (plusOne 0) (plusOne 1) difference 1 rfl).trans
     (rule (pairCtx a b) (.var 0) (.var 1) difference 1 rfl).symm
 
+/-- Cancelling a common factor in a divisibility proposition preserves that proposition's identity. -/
+def DoubledDivisibility := ∀ x : Int, ((2 : Int) ∣ 2 * x) = ((1 : Int) ∣ x)
+
+theorem doubledDivisibility (rule : type_of% @norm_dvd_gcd) : DoubledDivisibility :=
+  fun x => rule (.leaf x) 2 (.mulL 2 (.var 0)) 1 (.add 1 0 (.num 0)) 2 rfl
+
+/-- The normalization rule identifies each impossible successor equality with falsity. -/
+def SuccessorFalse := ∀ z : Int, (z = z + 1) = False
+
+theorem successorFalse (rule : type_of% @eq_eq_false) : SuccessorFalse :=
+  fun z => rule (.leaf z) (.var 0) (.add (.var 0) (.num 1)) rfl
+
+def ZeroOneFalse := ((0 : Int) = 1) = False
+
+theorem zeroOneFalse (rule : type_of% @eq_eq_false_of_divCoeff) : ZeroOneFalse :=
+  rule (.leaf 0) (.num 0) (.num 1) 2 rfl
+
+def TwoDividesOneFalse := ((2 : Int) ∣ 1) = False
+
+theorem twoDividesOneFalse (rule : type_of% @dvd_eq_false) : TwoDividesOneFalse :=
+  rule (.leaf 0) 2 (.num 1) rfl
+
+def witnesses : List (Name × Name × Name) := [
+  (``norm_dvd_gcd, ``DoubledDivisibility, ``doubledDivisibility),
+  (``eq_eq_false, ``SuccessorFalse, ``successorFalse),
+  (``eq_eq_false_of_divCoeff, ``ZeroOneFalse, ``zeroOneFalse),
+  (``dvd_eq_false, ``TwoDividesOneFalse, ``twoDividesOneFalse)]
+
 end IntegerCancellation
 
 end OmegaChecks.InitBoundaries

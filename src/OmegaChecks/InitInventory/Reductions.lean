@@ -68,6 +68,7 @@ private def replayWitnesses (env : Environment) : IO Unit := do
   let mut todo := (reductions.map fun (_, _, _, witness) => witness) ++
     ClassicalConsequences.witnesses.map Prod.snd ++
     BooleanReflection.witnesses.map (fun row => row.2.2) ++
+    IntegerCancellation.witnesses.map (fun row => row.2.2) ++
     WeakRingOrder.witnesses.map (fun row => row.2.2) ++
     [``PointerObservations.address, ``PointerObservations.pointerEquality, ``PointerObservations.listPointerEquality] ++
     [``HeterogeneousQuotient.hrecOn, ``HeterogeneousQuotient.hrecOnSetoid,

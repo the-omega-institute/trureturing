@@ -84,6 +84,10 @@ private def reductionPaths (official strict full : Environment) : NameMap (List 
 /-- Additional logical consequences with separate proof terms. These do not discharge a
 missing official interface in the completeness check. -/
 private def logicalConsequence? (owner name : Name) : Option (Name × Name) := do
+  if owner == `Init.Data.Int.Linear then
+    if let some (_, target, witness) := OmegaChecks.InitBoundaries.IntegerCancellation.witnesses.find?
+        (fun row => row.1 == name) then
+      return (target, witness)
   match owner, name with
   | `Init.Data.Vector.Lemmas, ``Vector.eq_or_ne_mem_of_mem =>
     return (``OmegaChecks.InitBoundaries.FiniteMembership.EqualityCases,
