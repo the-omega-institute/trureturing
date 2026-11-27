@@ -8,13 +8,13 @@
 
 import D5.S3.VertexAlgebra.Lattice.CyclicIsometryLift
 import D5.S3.VertexAlgebra.LatticeActualConformalState
+import D5.S3.VertexAlgebra.LatticeActualVertexAlgebra
+import D5.S3.VertexAlgebra.LatticeEnergyGrading
 import D5.S3.VertexAlgebra.Sectors.LatticeSectorGround
 import Mathlib.Algebra.Category.Grp.Injective
 import Mathlib.Algebra.Module.Submodule.EqLocus
 import Mathlib.Analysis.SpecialFunctions.Pow.Complex
 import OmegaBuild.Commands
-
-compile_only_with_mathlib
 
 /-!
 Complex charge characters act by scalars on the actual lattice state carrier.
@@ -23,6 +23,8 @@ A character trivial on the fixed charges descends to the image of the charge
 difference. Divisibility of the complex units extends it to the whole charge
 group. The extended character conjugates lifts with matching fixed phases.
 -/
+
+compile_only_with_mathlib
 
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
@@ -41,12 +43,13 @@ open private ground_current_product current_field from
 open private neutral_negative_single from
   D5.S3.VertexAlgebra.LatticeFiniteNegativeGeneration
 
+/-- A multiplicative character of the additive lattice charge group. -/
 abbrev Character (D : LatticeData) := Multiplicative (Charge D) →* ℂˣ
 
 local notation "ofAdd" => Multiplicative.ofAdd
 
-private def complexUnitsDivisible : DivisibleBy (Additive ℂˣ) ℤ := by
-  haveI : DivisibleBy (Additive ℂˣ) ℕ := divisibleByOfSMulRightSurj (by
+@[instance_reducible] private def complexUnitsDivisible : DivisibleBy (Additive ℂˣ) ℤ := by
+  haveI : DivisibleBy (Additive ℂˣ) ℕ := divisibleByOfSMulRightSurj (Additive ℂˣ) ℕ (by
     intro n hn a
     let u : ℂˣ := Additive.toMul a
     let root : ℂ := (u : ℂ) ^ ((n : ℂ)⁻¹)
@@ -67,7 +70,7 @@ theorem exists_character_div_iff {A : Type*} [AddCommGroup A]
   · rintro ⟨η, hη⟩ a ha
     rw [hη, ha, div_self']
   · intro hχ
-    letI := complexUnitsDivisible
+    let _ := complexUnitsDivisible
     let difference : A →+ A := g - AddMonoidHom.id A
     let χadd : A →+ Additive ℂˣ := χ.toAdditiveRight
     have hker : difference.rangeRestrict.ker ≤ χadd.ker := by
@@ -111,6 +114,7 @@ def diagonal (D : LatticeData) (χ : Character D) : Carrier D ≃ₗ[ℂ] Carrie
       intro a p
       simp [LinearMap.comp_apply, diagonalLinear_single, smul_smul])
 
+/-- The diagonal multiplies a single charge sector by its character value. -/
 theorem diagonal_single (D : LatticeData) (χ : Character D)
     (a : Charge D) (p : Oscillator D) :
     diagonal D χ (Finsupp.single a p) = (χ (ofAdd a) : ℂ) • Finsupp.single a p :=
@@ -119,7 +123,8 @@ theorem diagonal_single (D : LatticeData) (χ : Character D)
 private theorem mode_smul (D : LatticeData) (u v : Carrier D) (n : ℤ) (c d : ℂ) :
     ((Y D (c • u))[[n]]) (d • v) = (c * d) • (((Y D u)[[n]]) v) := by
   rw [map_smul]
-  simp only [VertexOperator.ncoeff, Pi.smul_apply, LinearMap.smul_apply, map_smul, smul_smul]
+  simp only [VertexOperator.ncoeff, Pi.smul_apply, LinearMap.smul_apply, map_smul, smul_smul,
+    mul_comm d c]
 
 /-- Preservation of every integer mode on arbitrary states of the actual lattice VOA. -/
 theorem diagonal_modes (D : LatticeData) (χ : Character D)
@@ -153,21 +158,25 @@ theorem diagonal_modes (D : LatticeData) (χ : Character D)
     exact LinearMap.congr_fun he v
   exact LinearMap.congr_fun h u
 
+/-- The diagonal fixes every neutral oscillator state. -/
 theorem diagonal_neutral (D : LatticeData) (χ : Character D) (p : Oscillator D) :
     diagonal D χ (Finsupp.single 0 p) = Finsupp.single 0 p := by
   rw [diagonal_single]
   change ((χ 1 : ℂˣ) : ℂ) • Finsupp.single 0 p = _
   rw [map_one, Units.val_one, one_smul]
 
+/-- The charge diagonal fixes the actual vacuum. -/
 theorem diagonal_vacuum (D : LatticeData) (χ : Character D) :
     diagonal D χ (vacuum D) = vacuum D :=
   diagonal_neutral D χ 1
 
+/-- The charge diagonal commutes with the actual translation operator. -/
 theorem diagonal_translation (D : LatticeData) (χ : Character D) (v : Carrier D) :
     diagonal D χ (translation D v) = translation D (diagonal D χ v) := by
   rw [LatticeActualVertexAlgebra.translation_as_mode, diagonal_modes, diagonal_vacuum,
     ← LatticeActualVertexAlgebra.translation_as_mode]
 
+/-- The charge diagonal fixes the quadratic conformal vector. -/
 theorem diagonal_omega (D : LatticeData) (χ : Character D)
     (H : Matrix (Fin D.rank) (Fin D.rank) ℂ) :
     diagonal D χ (LatticeActualConformalState.omega D H) = LatticeActualConformalState.omega D H :=
@@ -186,7 +195,7 @@ private theorem diagonal_apply (D : LatticeData) (χ : Character D)
     by_cases h : b = a
     · subst b
       rfl
-    · simp [Finsupp.single_eq_of_ne h.symm]
+    · simp [Finsupp.single_eq_of_ne (Ne.symm h)]
   exact LinearMap.congr_fun he v
 
 /-- All actual homogeneous spaces are preserved, even without a Gram inverse. -/
@@ -250,6 +259,7 @@ private theorem preservesModes_symm (D : LatticeData) {U : Carrier D ≃ₗ[ℂ]
   apply U.injective
   rw [U.apply_symm_apply, hU, U.apply_symm_apply, U.apply_symm_apply]
 
+/-- The ground vector in charge sector `a`. -/
 abbrev ground (D : LatticeData) (a : Charge D) : Carrier D :=
   Finsupp.single a (1 : Oscillator D)
 
@@ -313,8 +323,11 @@ private theorem ground_ratio_character (D : LatticeData) (W : Carrier D ≃ₗ[�
     ∃ χ : Character D, ∀ a, χ (ofAdd a) = ratio a := by
   have hmul (a b : Charge D) : ratio (a + b) = ratio a * ratio b := by
     have h := hW (ground D a) (ground D b) (-bilinear D a b - 1)
-    simp only [ground_mul, map_smul, hRatio, mode_smul, smul_smul] at h
-    have hs := (smul_left_injective ℂ (ground_ne_zero D (a + b))) h
+    rw [ground_mul, map_smul, hRatio (a + b), hRatio a, hRatio b, mode_smul,
+      ground_mul, smul_smul, smul_smul] at h
+    have hs : epsilon D a b * (ratio (a + b) : ℂ) =
+        ((ratio a : ℂ) * (ratio b : ℂ)) * epsilon D a b :=
+      smul_left_injective ℂ (ground_ne_zero D (a + b)) h
     apply Units.ext
     change (ratio (a + b) : ℂ) = (ratio a : ℂ) * (ratio b : ℂ)
     apply mul_left_cancel₀ (epsilon_ne_zero D a b)

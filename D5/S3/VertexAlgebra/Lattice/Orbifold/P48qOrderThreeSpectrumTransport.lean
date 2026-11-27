@@ -9,12 +9,15 @@
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qActualTwistedSpectrum
 import D5.S3.VertexAlgebra.Lattice.Orbifold.DiagonalCharacterConjugacy
 import D5.S3.FiniteGroups.Cyclic.SL47OrderThreeConjugacy
+import OmegaBuild.Commands
 
 /-! Precomposition by a conformal source equivalence transports the cubic
 twisted field identities on the same module carrier. The fixed-charge phase
 rigidity of the P48q representative supplies such an equivalence for each
 cube-one monomial lift of that representative. A faithful and exhaustive
 integral SL₂(F₄₇) realization extends the result to all order-three isometries. -/
+
+compile_only_with_mathlib
 
 set_option autoImplicit false
 
@@ -72,8 +75,9 @@ theorem CubicTwistedModuleLaw.precomp
     (hY : CubicTwistedModuleLaw targetLift Y)
     (hIntertwine : ∀ a, F (sourceLift a) = targetLift (F a))
     (hMode : ∀ (a b : NativeStates) (n : ℤ), F (mu lattice a n b) = mu lattice (F a) n (F b))
-    (hVacuum : F (vacuum lattice) = vacuum lattice)
-    (hTranslation : ∀ a, F (translation lattice a) = translation lattice (F a))
+    (hVacuum : F (LatticeAllStateField.vacuum lattice) = LatticeAllStateField.vacuum lattice)
+    (hTranslation : ∀ a, F (LatticeSugawaraConformal.translation lattice a) =
+      LatticeSugawaraConformal.translation lattice (F a))
     (hOmega : F Ω = Ω) :
     CubicTwistedModuleLaw sourceLift (Y.comp F.toLinearMap) ∧
       conformalZeroMode (Y.comp F.toLinearMap) = conformalZeroMode Y := by
@@ -81,7 +85,7 @@ theorem CubicTwistedModuleLaw.precomp
       targetLift (F a) = ζ ^ s • F a := by
     rw [← hIntertwine a, ha, map_smul]
   refine ⟨⟨?_, ?_, ?_, ?_⟩, ?_⟩
-  · change Y (F (vacuum lattice)) = _
+  · change Y (F (LatticeAllStateField.vacuum lattice)) = _
     exact (congrArg Y hVacuum).trans hY.vacuum
   · intro a s ha
     exact hY.residue (F a) s (eigen a s ha)
@@ -94,7 +98,8 @@ theorem CubicTwistedModuleLaw.precomp
     · simpa only [TwistedBorcherdsOn, LinearMap.comp_apply, LinearEquiv.coe_coe, hMode]
         using hBorcherds
   · intro a j
-    simpa only [LinearMap.comp_apply, LinearEquiv.coe_coe, hTranslation] using hY.translation (F a) j
+    simpa only [LinearMap.comp_apply, LinearEquiv.coe_coe, hTranslation] using
+      hY.translation (F a) j
   · change C (Y (F Ω)) (-6) = C (Y Ω) (-6)
     rw [hOmega]
 
@@ -149,7 +154,8 @@ theorem actual_twisted_spectrum_of_order_three_lift
     (r : ℂ) (v : W) (hv : v ≠ 0) (hr : conformalZeroMode Y v = r • v) :
     (∃ n : ℕ, r = 16 / 9 + (n : ℂ) / 3) ∧ (∃ m : ℤ, 9 * r = (m : ℂ) ∧ m % 3 = 1) := by
   have hFixed (a : Charge lattice) (ha : g a = a) : phase a = nativeStandardEta lattice g a :=
-    (P48qOrderThreeLiftRigidity.p48q_order_three_lift_standard lift phase hLift hMode hCube a ha).trans
+    (P48qOrderThreeLiftRigidity.p48q_order_three_lift_standard
+      lift phase hLift hMode hCube a ha).trans
       (nativeStandardEta_fixed lattice g g_isometry a ha).symm
   obtain ⟨η, hConjugacy⟩ := conjugate_of_fixed_ground lattice g σ lift (nativeStandardEta lattice g)
     phase (fun a b n => (standardLift_compatible lattice g g_cube g_isometry).2.1 a n b) hMode
@@ -188,8 +194,9 @@ theorem actual_twisted_spectrum_of_order_three_isometry
     realization hFaithful hPreserves hExhaustive g h g_isometry hIsometry g_order hOrder
   let F := IsometryLift.lift lattice r
   let conjugated := F⁻¹ * lift * F
-  have hIntertwine (a : NativeStates) : F (conjugated a) = lift (F a) :=
-    F.apply_symm_apply _
+  have hIntertwine (a : NativeStates) : F (conjugated a) = lift (F a) := by
+    change F (F.symm (lift (F a))) = lift (F a)
+    exact F.apply_symm_apply (lift (F a))
   have hCompatible := IsometryLift.lift_compatible lattice r hrIsometry
   have hFMode (a b : NativeStates) (n : ℤ) :
       F (mu lattice a n b) = mu lattice (F a) n (F b) :=
@@ -224,7 +231,7 @@ theorem actual_twisted_spectrum_of_order_three_isometry
   obtain ⟨hSpectrum, hResidue⟩ := actual_twisted_spectrum_of_order_three_lift
     conjugated conjugatedPhase hConjugatedGround hConjugatedMode hConjugatedCube
     (Y.comp F.toLinearMap) hPullback lower
-    (by simpa only [hL0] using hLower) (by simpa only [hL0] using hFinite)
+    (by simpa only [hL0] using hLower) (by rw [hL0]; exact hFinite)
     weight v hv (by simpa only [hL0] using hWeight)
   refine ⟨hSpectrum, hResidue, ?_⟩
   intro z hz
@@ -237,7 +244,8 @@ theorem actual_twisted_spectrum_of_order_three_isometry
 
 run_cmd do
   for name in [``CubicTwistedModuleLaw.precomp, ``actual_twisted_spectrum_of_intertwiner,
-      ``actual_twisted_spectrum_of_order_three_lift, ``actual_twisted_spectrum_of_order_three_isometry] do
+      ``actual_twisted_spectrum_of_order_three_lift,
+      ``actual_twisted_spectrum_of_order_three_isometry] do
     let axioms ← Lean.collectAxioms name
     unless axioms.all (fun ax => [``propext, ``Classical.choice, ``Quot.sound].contains ax) do
       throwError "Unexpected axiom closure for {name}: {axioms}"
