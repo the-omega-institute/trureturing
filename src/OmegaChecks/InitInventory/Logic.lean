@@ -483,6 +483,22 @@ end GrindQuantifiers
 
 namespace ClassicalConsequences
 
+/-- De Morgan's law on a proposition and its negation yields weak excluded middle. -/
+theorem weakMiddleOfDeMorgan (law : type_of% @Classical.not_and_iff_not_or_not) (p : Prop) :
+    ¬p ∨ ¬¬p :=
+  (@law p (¬p)).mp fun ⟨hp, hn⟩ => hn hp
+
+/-- Weak excluded middle is sufficient at arbitrary propositions. -/
+theorem deMorganOfWeakMiddle (weak : ∀ p : Prop, ¬p ∨ ¬¬p) :
+    type_of% @Classical.not_and_iff_not_or_not := by
+  intro a b
+  constructor
+  · intro h
+    exact (weak a).elim Or.inl (fun nna => Or.inr fun hb => nna (fun ha => h ⟨ha, hb⟩))
+  · intro h ab
+    exact h.elim (fun na => na ab.1) (fun nb => nb ab.2)
+
+
 theorem ofByCases (cases : type_of% @Classical.byCases) : type_of% @Classical.em :=
   fun _ => cases Or.inl Or.inr
 

@@ -435,6 +435,9 @@ private def logicalConsequence? (owner name : Name) : Option (Name × Name) := d
     return (`OmegaChecks.InitInventory.StringPatterns.WeakExcludedMiddle, ``OmegaChecks.InitBoundaries.AbstractOrder.PredicateBounds.weakMiddleOfLTMax)
   | `Init.Data.Order.Lemmas, ``Std.min_lt_iff =>
     return (`OmegaChecks.InitInventory.StringPatterns.WeakExcludedMiddle, ``OmegaChecks.InitBoundaries.AbstractOrder.PredicateBounds.weakMiddleOfMinLT)
+  | `Init.Classical, ``Classical.not_and_iff_not_or_not =>
+    return (`OmegaChecks.InitInventory.StringPatterns.WeakExcludedMiddle,
+      ``OmegaChecks.InitBoundaries.ClassicalConsequences.weakMiddleOfDeMorgan)
   | `Init.Grind.Norm, ``Lean.Grind.not_and =>
     return (`OmegaChecks.InitInventory.StringPatterns.WeakExcludedMiddle, ``OmegaChecks.InitBoundaries.GrindQuantifiers.ofNegatedConjunction)
   | `Init.Data.Order.Lemmas, ``Std.Asymm.total_not =>

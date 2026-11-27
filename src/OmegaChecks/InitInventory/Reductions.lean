@@ -223,7 +223,8 @@ private def replayWitnesses (env : Environment) : IO Unit := do
       ``NaturalCancellation.exprEq, ``NaturalCancellation.exprLe, ``NaturalCancellation.exprLt,
       ``NaturalCancellation.exprNormEq, ``NaturalCancellation.exprNorm, ``NaturalCancellation.polyEq,
       ``NaturalCancellation.polyLe,
-      ``OptionalIndex.decidablePropExtOfIsSome, ``TwoWorlds.countermodel]
+      ``OptionalIndex.decidablePropExtOfIsSome, ``TwoWorlds.countermodel, ``ForkFrame.countermodel,
+      ``ClassicalConsequences.weakMiddleOfDeMorgan, ``ClassicalConsequences.deMorganOfWeakMiddle]
   discard <| replayBoundaryDependencies official env roots
 
 /-- Abstract just the proof argument of the pinned right-hand `Option.get`.
