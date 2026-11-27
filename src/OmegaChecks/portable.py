@@ -109,8 +109,8 @@ def backend_plan(official_path, names, environment=None, *, prepared=False):
 
 def namespace_exports(lean, strict, basis, official_path):
     helper = SRC / "OmegaChecks/Portable/Exports.lean"
-    surface = json.loads(output(lean, "--run", helper, strict, official_path, *basis,
-                                env={**os.environ, "LEAN_PATH": ""}))
+    subprocess.run(["lake", "build", "+OmegaChecks.Portable.Exports"], cwd=ROOT, check=True)
+    surface = json.loads(output("lake", "env", lean, "--run", helper, strict, official_path, *basis))
     exports = defaultdict(lambda: defaultdict(list))
     for module, namespace, official, leaf in surface["names"]:
         exports[module][namespace, official].append(leaf)
@@ -484,7 +484,7 @@ def check(only, backend="mathlib", destination=None, *, frozen=None, discovered=
     if backend != "mathlib":
         tracked.update((SRC / "OmegaBuild/Commands.lean", SRC / "OmegaBuild/Plan.lean"))
     if backend == "both":
-        tracked.add(SRC / "OmegaChecks/Portable/Exports.lean")
+        tracked.update(sources[name] for name in closure(graph, ["OmegaChecks.Portable.Exports"]))
     if frozen is not None:
         tracked.update(sources[name] for name in closure(graph, ["OmegaChecks.Audit"]))
         tracked.add(frozen[1])
