@@ -80,11 +80,12 @@ internal sealed class ThreeTreeBanachSharpBoundsDocument : IScribeDocumentDefini
     private static Formula Uniform(Formula graph, Formula vertices, Formula radius)
     {
         var target = V("E"); var gain = V("g"); var epsilon = V("e");
+        var fit = Some("p", Arrow(vertices, target), Call("fit", graph, gain, V("p"), Mul(Par(radius), epsilon)));
+        var hypotheses = Imp(Le(D(0), epsilon),
+            Imp(Call("skew", vertices, gain), Imp(Call("flat", graph, gain, epsilon), fit)));
+        var gains = All("g", Arrow(vertices, Arrow(vertices, target)), All("e", Reals, hypotheses));
         return All("v", Call("Universe"), All("E", Call("Type", V("v")),
-            Seq(Instance("SeminormedAddCommGroup", target), Instance("NormedSpace", Reals, target),
-                All("g", Arrow(vertices, Arrow(vertices, target)), All("e", Reals,
-                    Imp(Le(D(0), epsilon), Imp(Call("skew", vertices, gain), Imp(Call("flat", graph, gain, epsilon),
-                        Some("p", Arrow(vertices, target), Call("fit", graph, gain, V("p"), Mul(Par(radius), epsilon))))))))));
+            Seq(Instance("SeminormedAddCommGroup", target), Instance("NormedSpace", Reals, target), gains)));
     }
 
     private static Formula ChordalUpper()
@@ -107,7 +108,9 @@ internal sealed class ThreeTreeBanachSharpBoundsDocument : IScribeDocumentDefini
         var radius = Div(Mul(D(4), Call("real", m)), Add(Mul(D(3), Call("real", m)), D(4)));
         var edge = Some("i", vertices, Some("j", vertices, And(Call("Adj", graph, i, j),
             Le(radius, Call("err", g, p, i, j)))));
-        return All("m", Naturals, Imp(Le(D(1), m), Some("g", Arrow(vertices, Arrow(vertices, target)),
-            And(Call("skew", vertices, g), And(Call("flat", graph, g, D(1)), All("p", Arrow(vertices, target), edge)))));
+        var flatWitness = And(Call("flat", graph, g, D(1)), All("p", Arrow(vertices, target), edge));
+        var witness = Some("g", Arrow(vertices, Arrow(vertices, target)),
+            And(Call("skew", vertices, g), flatWitness));
+        return All("m", Naturals, Imp(Le(D(1), m), witness));
     }
 }
