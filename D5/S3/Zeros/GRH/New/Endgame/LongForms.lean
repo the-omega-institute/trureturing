@@ -42,7 +42,7 @@ lemma Data.heightLe_volume_ratio_sq {θ} (o : D.IsFitFamily θ) : HeightLe (2 * 
   -- the constants have height `2 m² t x ^ 999`
   have consts : HeightLe (2 * (D.logB * D.budget)) fun ι ↦ (‖c (θ ι) / c 1‖ ^ 2 :)⁻¹ :=
     (const θ o).mono (by simpa using D.le_of_hasLogBound) fun _ ↦ le_rfl
-  exact ((lifts.pow 2).mul (consts.pow D.rowDim)).mono (by grind) fun ι ↦
+  exact ((lifts.pow 2).mul (consts.pow D.rowDim)).mono (by grind -zetaDelta -abstractProof) fun ι ↦
     (congrArg (‖ι.2 ·‖) (by simp [vol, mul_pow, div_pow, ← pow_mul]; ring)).le
 
 include i hn I hV
