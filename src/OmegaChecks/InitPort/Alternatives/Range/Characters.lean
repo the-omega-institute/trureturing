@@ -337,4 +337,125 @@ public theorem Char.succ?_eq._proof_1_8 :
     type_of% (private_decl% @_root_.Char.succ?_eq._proof_1_8) :=
   fun lower distinct upper => distinct (Nat.eq_of_lt_succ_of_not_lt upper lower)
 
+public theorem Char.coe_ordinal._proof_1_2 :
+    type_of% (private_decl% @_root_.Char.coe_ordinal._proof_1_2) := @Char.coe_ordinal
+
+public theorem Char.ofOrdinal_le_of_le._proof_1_4 :
+    type_of% (private_decl% @_root_.Char.ofOrdinal_le_of_le._proof_1_4) := by
+  intro f g hf hg
+  rw [Nat.mod_eq_of_lt (Char.ofOrdinal._proof_3 g)]
+  exact Nat.le_trans (Nat.le_of_lt hf) (Nat.le_trans (Nat.le_of_not_lt hg) (Nat.le_add_right ..))
+
+public theorem Char.ofOrdinal_le_of_le._proof_1_5 :
+    type_of% (private_decl% @_root_.Char.ofOrdinal_le_of_le._proof_1_5) := fun le notLow low => notLow (Nat.lt_of_le_of_lt le low)
+
+public theorem Char.ofOrdinal_le_of_le._proof_1_6 :
+    type_of% (private_decl% @_root_.Char.ofOrdinal_le_of_le._proof_1_6) := by
+  intro f g le
+  rw [Nat.mod_eq_of_lt (Char.ofOrdinal._proof_3 f), Nat.mod_eq_of_lt (Char.ofOrdinal._proof_3 g)]
+  exact Nat.add_le_add_right le _
+
+public theorem Char.ofOrdinal_ordinal._proof_1_1 :
+    type_of% (private_decl% @_root_.Char.ofOrdinal_ordinal._proof_1_1) := fun {c} _ _ => c.val.toNat_lt
+
+public theorem Char.ofOrdinal_ordinal._proof_1_4 :
+    type_of% (private_decl% @_root_.Char.ofOrdinal_ordinal._proof_1_4) := by
+  intro c h
+  have low : c.val.toNat < 55296 := charCut ▸ UInt32.lt_iff_toNat_lt.mp h
+  rw [dite_eq_left low]
+  exact UInt32.toNat.inj UInt32.toNat_ofNatLT
+
+public theorem Char.ofOrdinal_ordinal._proof_1_5 :
+    type_of% (private_decl% @_root_.Char.ofOrdinal_ordinal._proof_1_5) := by
+  intro c high
+  have lower : 55296 ≤ c.val.toNat := Nat.le_of_not_lt fun low =>
+    high (UInt32.lt_iff_toNat_lt.mpr (charCut.symm ▸ low))
+  rw [Nat.sub_add_cancel (Nat.le_trans (by decide : 2048 ≤ 55296) lower)]
+  exact Nat.mod_eq_of_lt c.val.toNat_lt
+
+public theorem Char.ofOrdinal_ordinal._proof_1_6 :
+    type_of% (private_decl% @_root_.Char.ofOrdinal_ordinal._proof_1_6) := by
+  intro c high
+  obtain low | large := charValid c
+  · exact (high (UInt32.lt_iff_toNat_lt.mpr (charCut.symm ▸ low))).elim
+  · exact Nat.not_lt_of_ge (Nat.le_sub_of_add_le large)
+
+public theorem Char.ordinal_le_of_le._proof_1_4 :
+    type_of% (private_decl% @_root_.Char.ordinal_le_of_le._proof_1_4) := fun {_ d} le => packMono (charValid d) le
+
+public theorem Char.ordinal_ofOrdinal._proof_1_1 :
+    type_of% (private_decl% @_root_.Char.ordinal_ofOrdinal._proof_1_1) := fun {f} => Char.ofOrdinal._proof_3 f
+
+public theorem Char.ordinal_ofOrdinal._proof_1_2 :
+    type_of% (private_decl% @_root_.Char.ordinal_ofOrdinal._proof_1_2) := by
+  intro f high
+  rw [Nat.mod_eq_of_lt (Char.ofOrdinal._proof_3 f)]
+  exact Nat.le_trans (Nat.le_of_not_lt high) (Nat.le_add_right ..)
+
+public theorem Char.succ?._proof_5 :
+    type_of% (private_decl% @_root_.Char.succ?._proof_5) := by
+  intro c lower different upper
+  have pre : (0xd7ff : UInt32).toNat = 0xd7ff := UInt32.toNat_ofNat_of_lt (by decide)
+  have limit : (0x10ffff : UInt32).toNat = 0x10ffff := UInt32.toNat_ofNat_of_lt (by decide)
+  have valid := Char.succ?._proof_3 c
+    (fun low => Nat.not_lt_of_ge lower (pre ▸ UInt32.lt_iff_toNat_lt.mp low))
+    (fun e => different ((congrArg UInt32.toNat e).trans pre))
+    (UInt32.lt_iff_toNat_lt.mpr (limit.symm ▸ upper))
+  change (c.val + 1).toNat.isValidChar at valid
+  rw [UInt32.toNat_add] at valid
+  exact valid
+
+public theorem Char.succ?_eq._proof_1_11 :
+    type_of% (private_decl% @_root_.Char.succ?_eq._proof_1_11) := by
+  intro c lo ne hi
+  let d : Char := ⟨c.val + 1, Char.succ?._proof_3 c lo ne hi⟩
+  exact (ordinalStepAbove c d rfl lo ne) ▸ d.ordinal.isLt
+
+public theorem Char.succ?_eq._proof_1_10 :
+    type_of% (private_decl% @_root_.Char.succ?_eq._proof_1_10) := fun {c} high => Nat.not_lt_of_ge
+  (Nat.le_trans (Nat.le_of_not_lt (Char.ofOrdinal_ordinal._proof_1_6 (c := c) high)) (Nat.le_succ _))
+
+public theorem Char.succ?_eq._proof_1_12 :
+    type_of% (private_decl% @_root_.Char.succ?_eq._proof_1_12) := fun {_} le => Nat.succ_le_succ (Nat.succ_le_succ le)
+
+public theorem Char.succ?_eq._proof_1_13 :
+    type_of% (private_decl% @_root_.Char.succ?_eq._proof_1_13) := fun {c} high => (ordinalNextNone c high).symm
+
+public theorem Char.succ?_eq._proof_1_5 :
+    type_of% (private_decl% @_root_.Char.succ?_eq._proof_1_5) := by
+  intro c low _ _ ge
+  have pre : (55295 : UInt32).toNat = 55295 := UInt32.toNat_ofNat_of_lt (by decide)
+  exact (Nat.not_lt_of_ge ge (pre ▸ UInt32.lt_iff_toNat_lt.mp low)).elim
+
+public theorem Char.succ?_eq._proof_1_7 :
+    type_of% (private_decl% @_root_.Char.succ?_eq._proof_1_7) := by
+  intro c low
+  have below : c.val < 55296 := UInt32.lt_trans low (by decide)
+  have h : c.val.toNat < 55296 := charCut ▸ UInt32.lt_iff_toNat_lt.mp below
+  rw [ite_eq_left below]
+  exact Nat.lt_of_le_of_lt (Nat.succ_le_of_lt h) (by decide)
+
+public theorem Char.succ?_eq._proof_1_9 :
+    type_of% (private_decl% @_root_.Char.succ?_eq._proof_1_9) := by
+  intro c high
+  have lo : 55296 ≤ c.val.toNat := Nat.le_of_not_lt fun h =>
+    high (UInt32.lt_iff_toNat_lt.mpr (charCut.symm ▸ h))
+  rw [Nat.add_right_comm (c.val.toNat - 2048) 1 2048,
+    Nat.sub_add_cancel (Nat.le_trans (by decide : 2048 ≤ 55296) lo)]
+
+public theorem Char.val_ofOrdinal._proof_1_2 :
+    type_of% (private_decl% @_root_.Char.val_ofOrdinal._proof_1_2) := fun le => Nat.lt_of_le_of_lt le (by decide : 55295 < UInt32.size)
+
+public theorem Char.val_ofOrdinal._proof_1_3 :
+    type_of% (private_decl% @_root_.Char.val_ofOrdinal._proof_1_3) := fun le => Nat.lt_of_le_of_lt le (by decide : 55295 < 4294967296)
+
+public theorem Char.val_ofOrdinal._proof_1_4 :
+    type_of% (private_decl% @_root_.Char.val_ofOrdinal._proof_1_4) := fun le => Or.inl (UInt32.toNat_ofNatLT.symm ▸ Nat.lt_succ_of_le le)
+
+public theorem Char.val_ofOrdinal._proof_1_5 :
+    type_of% (private_decl% @_root_.Char.val_ofOrdinal._proof_1_5) := fun {f} denied => Char.ofOrdinal._proof_4 f (fun low => denied (Nat.le_of_lt_succ low))
+
+public theorem Char.val_ofOrdinal._proof_1_6 :
+    type_of% (private_decl% @_root_.Char.val_ofOrdinal._proof_1_6) := @Char.val_ofOrdinal
+
 end OmegaChecks.InitPort.Alternatives

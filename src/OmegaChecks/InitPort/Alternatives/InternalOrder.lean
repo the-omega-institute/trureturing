@@ -29,31 +29,54 @@ private theorem productSupremum {α : Sort u} {β : Sort v} [PartialOrder α] [P
     exact ⟨(ha x).mpr (fun i ⟨j, hij⟩ => (upper ⟨i, j⟩ hij).1),
       (hb y).mpr (fun j ⟨i, hij⟩ => (upper ⟨i, j⟩ hij).2)⟩
 
+public theorem instCCPOPProd._proof_1 :
+    type_of% (private_decl% @_root_.Lean.Order.instCCPOPProd._proof_1) := by
+  intro α β _ _ c hc
+  obtain ⟨a, ha⟩ := CCPO.has_csup (PProd.chain.chain_fst hc)
+  obtain ⟨b, hb⟩ := CCPO.has_csup (PProd.chain.chain_snd hc)
+  exact ⟨⟨a, b⟩, productSupremum ha hb⟩
+
 @[instance_reducible] public def instCCPOPProd {α : Sort u} {β : Sort v} [CCPO α] [CCPO β] : CCPO (α ×' β) where
-  has_csup hc := by
-    obtain ⟨a, ha⟩ := CCPO.has_csup (PProd.chain.chain_fst hc)
-    obtain ⟨b, hb⟩ := CCPO.has_csup (PProd.chain.chain_snd hc)
-    exact ⟨⟨a, b⟩, productSupremum ha hb⟩
+  has_csup := instCCPOPProd._proof_1
+
+public theorem instCompleteLatticePProd._proof_1 :
+    type_of% (private_decl% @_root_.Lean.Order.instCompleteLatticePProd._proof_1) := by
+  intro α β _ _ c
+  obtain ⟨a, ha⟩ := CompleteLattice.has_sup (_root_.Lean.Order.PProd.fst c)
+  obtain ⟨b, hb⟩ := CompleteLattice.has_sup (_root_.Lean.Order.PProd.snd c)
+  exact ⟨⟨a, b⟩, productSupremum ha hb⟩
 
 @[instance_reducible] public def instCompleteLatticePProd {α : Sort u} {β : Sort v}
     [CompleteLattice α] [CompleteLattice β] : CompleteLattice (α ×' β) where
-  has_sup c := by
-    obtain ⟨a, ha⟩ := CompleteLattice.has_sup (_root_.Lean.Order.PProd.fst c)
-    obtain ⟨b, hb⟩ := CompleteLattice.has_sup (_root_.Lean.Order.PProd.snd c)
-    exact ⟨⟨a, b⟩, productSupremum ha hb⟩
+  has_sup := instCompleteLatticePProd._proof_1
+
+public theorem instCCPOProd._proof_1 :
+    type_of% (private_decl% @_root_.Lean.Order.instCCPOProd._proof_1) := by
+  intro α β _ _ c hc
+  have hc' : chain (fun p : α ×' β => c (p.1, p.2)) := fun _ _ ha hb => hc _ _ ha hb
+  obtain ⟨p, hp⟩ := @CCPO.has_csup _ instCCPOPProd _ hc'
+  exact ⟨(p.1, p.2), Prod.is_sup_of_pprod hp⟩
 
 @[instance_reducible] public def instCCPOProd {α : Type u} {β : Type v} [CCPO α] [CCPO β] : CCPO (α × β) where
-  has_csup {c} hc := by
-    have hc' : chain (fun p : α ×' β => c (p.1, p.2)) := fun _ _ ha hb => hc _ _ ha hb
-    obtain ⟨p, hp⟩ := @CCPO.has_csup _ instCCPOPProd _ hc'
-    exact ⟨(p.1, p.2), Prod.is_sup_of_pprod hp⟩
+  has_csup := instCCPOProd._proof_1
+
+public theorem instCompleteLatticeProd._proof_1 :
+    type_of% (private_decl% @_root_.Lean.Order.instCompleteLatticeProd._proof_1) := by
+  intro α β _ _ c
+  obtain ⟨p, hp⟩ := @CompleteLattice.has_sup _ instCompleteLatticePProd
+    (fun p : α ×' β => c (p.1, p.2))
+  exact ⟨(p.1, p.2), Prod.is_sup_of_pprod hp⟩
 
 @[instance_reducible] public def instCompleteLatticeProd {α : Type u} {β : Type v}
     [CompleteLattice α] [CompleteLattice β] : CompleteLattice (α × β) where
-  has_sup c := by
-    obtain ⟨p, hp⟩ := @CompleteLattice.has_sup _ instCompleteLatticePProd
-      (fun p : α ×' β => c (p.1, p.2))
-    exact ⟨(p.1, p.2), Prod.is_sup_of_pprod hp⟩
+  has_sup := instCompleteLatticeProd._proof_1
+
+public theorem instMonadTailOption._proof_1 {α β : Type u} {a : Option α} {f g : α → Option β}
+    [Nonempty β] (h : ∀ x, @PartialOrder.rel (Option β) instPartialOrderOption (f x) (g x)) :
+    @PartialOrder.rel (Option β) instPartialOrderOption (a >>= f) (a >>= g) := by
+  cases a with
+  | none => exact FlatOrder.rel.refl
+  | some x => exact h x
 
 @[expose] public def admissible {α : Sort u} [CCPO α] (P : α → Prop) : Prop :=
   ∀ (c : α → Prop), chain c → (∀ x, c x → P x) → ∀ s, is_sup c s → P s

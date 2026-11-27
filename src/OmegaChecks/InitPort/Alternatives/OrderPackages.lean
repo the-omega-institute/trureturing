@@ -1,4 +1,6 @@
 module
+import all Init.Data.SInt.Package
+import all Init.Data.UInt.Package
 import all Init.Data.Int.Package
 import all Init.Data.Fin.Package
 import all Init.Data.Order.LemmasExtra
@@ -25,6 +27,46 @@ public theorem Int.instLinearOrderPackage._proof_2 :
 public theorem Int.instLinearOrderPackage._proof_7 :
     type_of% @_root_.Int.instLinearOrderPackage._proof_7 :=
   fun _ _ => Int.le_antisymm
+
+public theorem instLinearOrderPackageUInt8._proof_8 :
+    type_of% (private_decl% @_root_.instLinearOrderPackageUInt8._proof_8) :=
+  fun _ _ => UInt8.le_antisymm
+
+public theorem instLinearOrderPackageUInt16._proof_8 :
+    type_of% (private_decl% @_root_.instLinearOrderPackageUInt16._proof_8) :=
+  fun _ _ => UInt16.le_antisymm
+
+public theorem instLinearOrderPackageUInt32._proof_8 :
+    type_of% (private_decl% @_root_.instLinearOrderPackageUInt32._proof_8) :=
+  fun _ _ => UInt32.le_antisymm
+
+public theorem instLinearOrderPackageUInt64._proof_8 :
+    type_of% (private_decl% @_root_.instLinearOrderPackageUInt64._proof_8) :=
+  fun _ _ => UInt64.le_antisymm
+
+public theorem instLinearOrderPackageUSize._proof_8 :
+    type_of% (private_decl% @_root_.instLinearOrderPackageUSize._proof_8) :=
+  fun _ _ => USize.le_antisymm
+
+public theorem instLinearOrderPackageInt8._proof_8 :
+    type_of% (private_decl% @_root_.instLinearOrderPackageInt8._proof_8) :=
+  fun _ _ => Int8.le_antisymm
+
+public theorem instLinearOrderPackageInt16._proof_8 :
+    type_of% (private_decl% @_root_.instLinearOrderPackageInt16._proof_8) :=
+  fun _ _ => Int16.le_antisymm
+
+public theorem instLinearOrderPackageInt32._proof_8 :
+    type_of% (private_decl% @_root_.instLinearOrderPackageInt32._proof_8) :=
+  fun _ _ => Int32.le_antisymm
+
+public theorem instLinearOrderPackageInt64._proof_8 :
+    type_of% (private_decl% @_root_.instLinearOrderPackageInt64._proof_8) :=
+  fun _ _ => Int64.le_antisymm
+
+public theorem instLinearOrderPackageISize._proof_8 :
+    type_of% (private_decl% @_root_.instLinearOrderPackageISize._proof_8) :=
+  fun _ _ => ISize.le_antisymm
 
 public theorem Fin.instLinearOrderPackage._proof_5 :
     type_of% @_root_.Fin.instLinearOrderPackage._proof_5 := by
@@ -63,6 +105,14 @@ private theorem compareEqual {α : Type u} [Ord α] [LE α] [LawfulOrderOrd α] 
     compare a b = .eq ↔ a ≤ b ∧ b ≤ a :=
   Ordering.eq_eq_iff_isLE_and_isGE.trans
     (and_congr (LawfulOrderOrd.isLE_compare a b) (LawfulOrderOrd.isGE_compare a b))
+
+public theorem Std.LinearPreorderPackage.ofOrd._proof_5 :
+    type_of% (private_decl% @_root_.Std.LinearPreorderPackage.ofOrd._proof_5) := by
+  intro α args ord a b
+  letI := args.ord
+  letI := args.le
+  letI := ord
+  exact (args.beq_iff a b).trans (compareEqual a b)
 
 public theorem Std.LawfulOrderBEq.of_ord : type_of% @_root_.Std.LawfulOrderBEq.of_ord :=
   fun _ _ _ _ _ h => ⟨fun a b => (h a b).trans (compareEqual a b)⟩
