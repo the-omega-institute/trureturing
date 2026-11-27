@@ -96,6 +96,9 @@ public def supported (source : Environment) (owner name : Name) : Bool :=
     (owner == `OmegaInit.Data.Nat.Div.Basic && name == `Nat.divExact) ||
     (owner == `OmegaInit.Data.Nat.PowMod && name == `Nat.powMod)
   let stringOp := owner == `OmegaInit.Data.String.Bootstrap && [`String.Internal.length, `String.Internal.append].contains name
+  let textCompare := (owner == `OmegaInit.Data.Ord.String && name == `String.compare) ||
+    (owner == `OmegaInit.Data.String.Slice && [`String.Slice.hash, `String.Slice.instDecidableLt].contains name) ||
+    (owner == `OmegaInit.Data.String.Pattern.Basic && name == `String.Slice.Pattern.Internal.memcmpStr)
   let intPrimitive := intOwner && name.getPrefix == `Int &&
     [`neg, `add, `sub, `mul, `decEq, `decLe, `decLt, `decNonneg, `natAbs, `ediv, `emod, `tdiv, `tmod, `divExact].contains method
   let primitive := ((word? name.getPrefix).isSome && (ops ++ widths).contains method) ||
@@ -106,7 +109,7 @@ public def supported (source : Environment) (owner name : Name) : Bool :=
     `OmegaInit.Data.Nat.Internal.Linear, `OmegaInit.Data.Fin.Lemmas].contains owner && IndexedNative.supported name) ||
     ([`OmegaInit.Data.Float.Model.Float, `OmegaInit.Data.Float.Model.Float32].contains owner && modelOperation name) ||
     (owner == `OmegaInit.Prelude && SyntaxPositionNative.supported name) ||
-    ((base || intPrimitive || platform || byteOp || modular || stringOp || wordRepr || bitwise || logarithm || (inOwner && primitive)) && isExtern source name) ||
+    ((base || intPrimitive || platform || byteOp || textCompare || modular || stringOp || wordRepr || bitwise || logarithm || (inOwner && primitive)) && isExtern source name) ||
     ((intOwner || [`OmegaInit.Data.ByteArray.Basic, `OmegaInit.Data.Int.Repr, `OmegaInit.Data.Repr, `OmegaInit.Data.Nat.Bitwise.Basic, `OmegaInit.Data.BitVec.Basic].contains owner || [`OmegaInit.Data.UInt.Basic, `OmegaInit.Data.SInt.Basic].contains owner) && usesPinnedFunction name)
 
 private def symbol (n : Name) := (n.replacePrefix `Omega .anonymous).mangle "omega_word_"
@@ -265,6 +268,30 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
       args := args.push s!"name{i}"
       cleanup := cleanup ++ s!"  lean_dec(name{i});\n"
       unless b.borrow do cleanup := cleanup ++ s!"  lean_dec({arg});\n"
+    else if dom == `String.Slice && a.ty == .object && b.ty == .object && a.borrow then
+      checkStrictString strict
+      for (env, ns) in [(source, Name.anonymous), (strict, `Omega)] do
+        for pos in [`String.Pos, `String.Pos.Raw] do
+          let some (some f) := impureTrivialStructureInfoExt.find? env (ns ++ pos)
+            | throw <| IO.userError s!"missing erased slice position {ns ++ pos}"
+          unless f.fieldIdx == 0 do throw <| IO.userError s!"incorrect slice offset field {ns ++ pos}"
+        let some l := ctorLayoutExt.find? env (ns ++ `String.Slice.mk) | throw <| IO.userError "missing slice layout"
+        let #[.object 0 _, .object 1 _, .object 2 _, .erased] := l.fieldInfo | throw <| IO.userError "unexpected slice fields"
+        unless l.ctorInfo.cidx == 0 && l.ctorInfo.size == 3 && l.ctorInfo.usize == 0 && l.ctorInfo.ssize == 0 do
+          throw <| IO.userError "unexpected slice constructor"
+      hasString := true
+      decls := decls.push ((if b.borrow then "b_lean_obj_arg " else "lean_obj_arg ") ++ arg)
+      prepare := prepare ++ s!"  lean_object *slice{i} = omega_slice_to_lean({arg});\n"
+      args := args.push s!"slice{i}"
+      cleanup := cleanup ++ s!"  lean_dec(slice{i});\n"
+      unless b.borrow do cleanup := cleanup ++ s!"  lean_dec({arg});\n"
+    else if dom == `String.Pos.Raw && a.ty == .tobject && b.ty == .tobject && a.borrow then
+      for (env, pos) in [(source, `String.Pos.Raw), (strict, `Omega.String.Pos.Raw)] do
+        let some (some f) := impureTrivialStructureInfoExt.find? env pos | throw <| IO.userError s!"missing position {pos}"
+        unless f.fieldIdx == 0 do throw <| IO.userError s!"invalid offset field in {pos}"
+      decls := decls.push ((if b.borrow then "b_lean_obj_arg " else "lean_obj_arg ") ++ arg)
+      args := args.push arg
+      unless b.borrow do cleanup := cleanup ++ s!"  lean_dec({arg});\n"
     else if [`String, `ByteArray].contains dom && a.ty == .object && b.ty == .tobject then
       checkStrictString strict
       hasString := true
@@ -367,6 +394,9 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
     layout strict dom
     pure ("lean_obj_res", call)
   else if dom == `Nat && (ret == .tobject || ret == .tagged) && result == .tobject then pure ("lean_obj_res", call)
+  else if dom == `Ordering && ret == .uint8 && result == .uint8 then do
+    IndexedNative.checkDataTypes source strict [`Ordering]
+    pure ("uint8_t", call)
   else if [`Bool, `Decidable].contains dom && ret == .uint8 && result == .uint8 then pure ("uint8_t", call)
   else throw <| IO.userError s!"unsupported result of {n}: {dom}/{ret}/{result}"
   let proto ← if usesPinnedFunction official then do

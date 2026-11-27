@@ -34,3 +34,15 @@ static lean_obj_res omega_bytes_from_data(const unsigned char *chars, size_t len
 static lean_obj_res omega_string_from_lean(b_lean_obj_arg s) {
     return omega_bytes_from_data((const unsigned char *)lean_string_cstr(s), lean_string_size(s) - 1);
 }
+
+/* The three physical fields of Slice are the backing string and two byte offsets. */
+static inline lean_obj_res omega_slice_to_lean(b_lean_obj_arg slice) {
+    lean_object *converted = lean_alloc_ctor(0, 3, 0);
+    lean_ctor_set(converted, 0, omega_string_to_lean(lean_ctor_get(slice, 0)));
+    for (unsigned field = 1; field <= 2; ++field) {
+        lean_object *offset = lean_ctor_get(slice, field);
+        lean_inc(offset);
+        lean_ctor_set(converted, field, offset);
+    }
+    return converted;
+}
