@@ -395,6 +395,9 @@ private def conditionalConsequence? (owner name : Name) : Option (String × Name
       | _ => none
     return (target, witness,
       "On the Boolean additive monoid, the proposed structure computes the official negation on (true,false), addition of the swapped and original representatives, and zero")
+  if owner == `Init.Dynamic && [``Dynamic.mk, ``Dynamic.get?].contains name then
+    return ("False", ``OmegaChecks.InitBoundaries.DynamicRoundTrip.noRoundTrip,
+      "The total writer and reader jointly recover every stored callback from Dynamic to Bool using the same monomorphic type tag")
   if owner == `Init.Prelude && [``Lean.Macro.mkMethods, ``Lean.Macro.mkMethodsImp,
       ``Lean.Macro.getMethods, ``Lean.Macro.getMethodsImp].contains name then
     return ("False", ``OmegaChecks.InitBoundaries.MacroReferences.noQueryRoundTrip,
