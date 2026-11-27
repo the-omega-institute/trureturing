@@ -42,10 +42,8 @@ internal sealed class BottleneckCancellationDocument : IScribeDocumentDefinition
                     + "on Y is needed. The supplied equivalences carry the required cardinal "
                     + "information. The integer k counts deleted occurrences, including those "
                     + "whose labels coincide.")),
-                Paragraph(Text("The reusable proof is Omega.BottleneckCancellation.complement_bound "
-                    + "in OmegaMath.Combinatorics.BottleneckCancellation. This D5 declaration is "
-                    + "a direct book citation, classified bind-only; its mathematical content "
-                    + "belongs to that general proof. The proof first allows a separate nonnegative "
+                Paragraph(Text("The proof is Omega.BottleneckCancellation.complement_bound "
+                    + "in OmegaMath.Combinatorics.BottleneckCancellation. It first allows a separate nonnegative "
                     + "budget c(x) for each original matching edge and w(i) for each deleted "
                     + "pair p(i),q(i). It constructs a complement equivalence whose edge at x "
                     + "has distance at most c(x)+sum_i(c(p(i))+w(i)).")),
