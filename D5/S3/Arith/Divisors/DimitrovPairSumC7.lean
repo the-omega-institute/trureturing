@@ -41,7 +41,8 @@ def claim : Prop := ∀ n : ℕ, 2 ≤ n → ∀ k : ℕ, 1 ≤ k →
     (n : ℝ) ^ k * ((n : ℝ) + 1) ^ k) /
   (2 * ((n : ℝ) ^ (2 * k) + (n : ℝ) ^ k * ((n : ℝ) + 1) ^ k))
 
-/-- The full source pair-sum inequality, with real ratios and all natural exponents. -/
+/-- The full source pair-sum inequality for natural numbers n ≥ 2, with real ratios and
+positive natural exponents k ≥ 1. -/
 theorem result : claim := by
   intro n hn k _hk
   have hp := psi_ge hn

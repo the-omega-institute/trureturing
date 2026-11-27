@@ -35,8 +35,7 @@ Here $\varphi$ is Euler's totient, $\psi$ is Dedekind's function, and
 $\sigma$ is the sum of all positive divisors. The entire pair sums are
 raised to $k$, all quotients are over the reals, and the quantifiers are
 unrestricted. The source is [arXiv:2606.12484v1](https://arxiv.org/abs/2606.12484v1),
-Conjecture 7. The complete external endpoint and its bounded literature
-screen are preregistered in [#30579](https://github.com/the-omega-institute/trureturing/issues/30579).
+Conjecture 7.
 
 ## Motivation
 
@@ -47,11 +46,12 @@ value or pair sum.
 
 ## Gap
 
-Part III Theorem 5 treats $k=1$. The Part IV statements
-(DOI 10.3390/math14213935) and the public Lean donor
+The bounded literature comparison found no prior complete resolution in
+Dimitrov Parts I–IV (Part IV DOI 10.3390/math14213935), Sándor–Gryszka III,
+the public Lean donor
 `pro20541/dimitrov-conjectures-lean` at
-`95809b59deefd8dfad81e398250aedd7e1aea3b3` leave the full C7 assertion
-uncovered in the bounded source comparison supplied in #30579.
+`95809b59deefd8dfad81e398250aedd7e1aea3b3`, or the available citation and
+duplicate searches. [#30579](https://github.com/the-omega-institute/trureturing/issues/30579)
 
 ## Route
 
@@ -59,8 +59,9 @@ For $n\ge2$, set $q=(n+1)/n$.
 Totient positivity and the public `DimitrovLowerBoundsC4C5.psi_ge` and
 `sigma_ge_psi` give $0<x\le y$.
 The first projection of `DimitrovPsiSigmaSeparation.separation` gives
-$q\le z/y$, so $qy\le z$. Power monotonicity gives
-$q^ky^k\le z^k$ and $0<x^k\le y^k\le z^k$, using $q\ge1$.
+$1<q\le z/y$. Raising positive quantities to $k$ preserves order, and
+$y>0$ gives $(z/y)^k=z^k/y^k$. Thus $1<q^k\le z^k/y^k$ and
+$0<x^k\le y^k\le z^k$.
 The first projection of `DimitrovNesbittOppositeGap.opposite_gap` with
 $X=x^k$, $Y=y^k$, $Z=z^k$, $s=q^k$ gives the lower bound
 $q^k/2+2/(1+q^k)$, which normalizes to the displayed right-hand side.
@@ -75,22 +76,41 @@ exponent range, or a failed proof attempt is not a refutation.
 
 ## Evidence
 
-The complete Lean statement is
-`D5/S3/Arith/Divisors/DimitrovPairSumC7.claim`, and
-`DimitrovPairSumC7.result` carries the saved proof for that statement.
-The mirrored source registration is `Reg/D5/S3/Arith/Divisors/DimitrovPairSumC7.lean`
-and uses the actual Euler-totient family, with continuation unknown.
-
-The endpoint has the bind-only proof shape and candidate admission basis
-`open-problem-resolution (#30579)`. Its Scribe source carries the candidate annotation
-`OpenProblemResolutionClaim(dimitrov-2606-12484-conjecture-7, Proved)`.
+The mirrored registration in `Reg/D5/S3/Arith/Divisors/DimitrovPairSumC7.lean`
+uses the Euler-totient family, with continuation unknown. The rendered Scribe
+document and compiled D5 and Reg artifacts are available. Verification of the
+current Reg binding is pending.
+[Scribe document](../Blueprint/D5/S3/Arith/Divisors/DimitrovPairSumC7.md)
 
 ## Triage
 
-The proof and registration are local candidate sources.
-Raw-v3 Scribe consumer compatibility and external qualification remain pending.
+**Proved.** `D5/S3/Arith/Divisors/DimitrovPairSumC7.result` proves
+`DimitrovPairSumC7.claim` with real ratios for all natural numbers $n\ge2$
+and $k\ge1$. At $k=1$ the pair sums are unpowered and the right side becomes
+$(6n^2+3n+1)/(2n(2n+1))$, recovering
+[Part III, Theorem 5](https://arxiv.org/html/2606.12484v1#Thmtheorem5).
+
+At $k=0$ and $n\ge2$, outside the Lean endpoint, all powered terms are $1$.
+The left side is $3/2$ and the right side is $(4+1+1)/(2(1+1))=3/2$.
+At $n=1$, the three functions equal $1$, so $x=y=z=2$ and the left side is
+$3/2$ for every $k$. With $t=2^k$, the right side is $t/2+2/(1+t)$.
+It equals $5/3$ at $k=1$ and exceeds $3/2$ by $(t-1)^2/(2(1+t))>0$ for
+every $k\ge1$.
+
+For prime $n$, $\varphi(n)=n-1$ and $\psi(n)=\sigma(n)=n+1$. Hence
+$x=y=2n$ and $z=2(n+1)$, and the left side equals
+$2/(1+q^k)+q^k/2$, attaining the bound for every $k\ge1$.
+
+**Equality classification, deduced from the supplier projections.** On the
+source range, $s=q^k>1$, so the second projection of `opposite_gap` forces
+$x^k=y^k$ and $z^k=q^k y^k$ at equality. Since $u\mapsto u^k$ is strictly
+increasing on positive reals for $k\ge1$, $(z/y)^k=q^k$ implies $z/y=q$.
+The second projection of `separation` makes this ratio equality equivalent
+to primality. Thus equality in the stated bound holds exactly at primes.
 
 ## ASSUMED-UNVERIFIED
 
 The literature screen is bounded to the sources and repository states named
-in #30579. Exhaustive coverage and global priority are unverified.
+in #30579. Some forward-citation indexes were inaccessible, including the
+OpenAlex citing-work query. Exhaustive coverage and publication priority
+are unverified.
