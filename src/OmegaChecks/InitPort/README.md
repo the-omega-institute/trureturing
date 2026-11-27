@@ -43,7 +43,7 @@ example (a : α) (b : β) : Omega.Eq (Prod.fst (Prod.mk a b)) a := Omega.rfl
 全量构建也编译可单独导入的 OmegaMath 和 OmegaMathlib 源文件，一同审计它们的传递依赖。
 缺口表的 `firstDependencyPath` 和 `reason` 记录本次移植实际遇到的阻塞。只有 `impliesAxiom` 非空的行另有内核证明，从该官方接口可推出所列公理。`logicalConsequence` 与 `logicalConsequenceWitness` 给出其他已验证的逻辑后果及其证明。`requiredBehavior` 非空时，证明还需要候选实现满足该项行为前提。
 
-`equationOperand` 记录官方等式左端直接调用的运算。Lean 按该处的宇宙参数核对 `operandReductionWitness` 的完整类型：给定这个运算的通用实现，即可构造 `operandImpliesAxiom`。等式本身的可移植性继续按其独立证据结算。
+`equationOperand` 记录官方等式左端直接调用的运算。Lean 按该处的宇宙参数核对 `operandReductionWitness` 的完整类型。给定这个运算的通用实现，即可构造 `operandImpliesAxiom`。对选择函数与递归算子的 `congr_simp` 定理，检查器还用相同谓词或递归步骤特化整个官方等式，核对其参数，再从左右两边分别抽出具有完整 `Classical.choice` 类型的函数。等式本身的可移植性继续按其独立证据结算。
 
 `init-public-reductions.tsv` 列出已移植声明到严格库封装实现的一条最短定义体依赖路径。`officialReductionMechanism` 记录钉版 Lean 的官方机制，包括公开定义体、自然数内建运算、归纳类型、构造子和递归器。盘点 JSON 同时保存路径 `publicReductionBoundary` 与机制。`Nat.Coprime` 的路径通向内建运算 `Nat.gcd`。`And.rec` 和 `Iff.rec` 在官方环境中使用递归器计算规则。具体输入是否需要走到路径终点取决于归约过程。
 
