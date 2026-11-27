@@ -1,3 +1,11 @@
+/- GID: D5/S3/VertexAlgebra/Lattice/Orbifold/P48qPositiveCurrentChargedField
+   generality: I
+   mirror-B: none(waiver:internal-proof-component)
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Positive current derivations and their commutator with the charged field. -/
+
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qFixedDualBases
 import Mathlib.RingTheory.Derivation.MapCoeffs
 import Mathlib.RingTheory.PowerSeries.Exp

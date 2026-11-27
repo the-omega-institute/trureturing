@@ -1,3 +1,11 @@
+/- GID: D5/S3/VertexAlgebra/Lattice/Orbifold/P48qDiagonalCreationTransport
+   generality: I
+   mirror-B: none(waiver:internal-proof-component)
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Integrated negative signed modes transport the sum-charge creation factor. -/
+
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qChargedFieldTranslation
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qIntegratedNormalMode
 

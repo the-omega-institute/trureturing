@@ -1,3 +1,11 @@
+/- GID: D5/S3/VertexAlgebra/Lattice/Orbifold/P48qNativeChargedWickFactorization
+   generality: I
+   mirror-B: none(waiver:internal-proof-component)
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Factor the native charged source coefficient into its Wick field terms. -/
+
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qNativeCreationWordExpansion
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qChargedDiagonalWickScalar
 

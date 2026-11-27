@@ -1,3 +1,11 @@
+/- GID: D5/S3/VertexAlgebra/Lattice/Orbifold/P48qTwistedHeisenberg
+   generality: I
+   mirror-B: none(waiver:internal-proof-component)
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Signed P48q creation and annihilation modes and their Heisenberg brackets. -/
+
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qFixedCurrentIterate
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qMovingCurrentZero
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qFixedDualBases

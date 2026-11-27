@@ -1,3 +1,11 @@
+/- GID: D5/S3/VertexAlgebra/Lattice/Orbifold/P48qMomentumEnergy
+   generality: I
+   mirror-B: none(waiver:internal-proof-component)
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Fixed Cartan zero modes and their quadratic energy on P48q momenta. -/
+
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qGramPositivity
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qTwistedChargeAction
 import D5.S3.VertexAlgebra.Lattice.Orbifold.ThirdEigenspacePairingDraft

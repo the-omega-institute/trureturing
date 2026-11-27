@@ -1,3 +1,11 @@
+/- GID: D5/S3/VertexAlgebra/Lattice/Orbifold/P48qTwistedCurrentDiagonal
+   generality: I
+   mirror-B: none(waiver:internal-proof-component)
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Sum the radial current contraction and regularize its diagonal limit. -/
+
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qTwistedHeisenberg
 import Mathlib.RingTheory.LaurentSeries
 import Mathlib.RingTheory.PowerSeries.Binomial

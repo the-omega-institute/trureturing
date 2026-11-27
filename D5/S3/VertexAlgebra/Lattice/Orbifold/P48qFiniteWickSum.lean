@@ -1,3 +1,11 @@
+/- GID: D5/S3/VertexAlgebra/Lattice/Orbifold/P48qFiniteWickSum
+   generality: I
+   mirror-B: none(waiver:internal-proof-component)
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Factorial-weighted Wick sums at a symbolic positive source degree. -/
+
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qWickPermutation
 import Mathlib.Algebra.BigOperators.Fin
 import Mathlib.Data.List.OfFn

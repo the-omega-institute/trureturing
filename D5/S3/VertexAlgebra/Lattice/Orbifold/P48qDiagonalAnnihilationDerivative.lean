@@ -1,3 +1,11 @@
+/- GID: D5/S3/VertexAlgebra/Lattice/Orbifold/P48qDiagonalAnnihilationDerivative
+   generality: I
+   mirror-B: none(waiver:internal-proof-component)
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Coefficientwise diagonal differentiation of the native annihilation polynomial. -/
+
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qDiagonalAnnihilationTransport
 import Mathlib.Algebra.MvPolynomial.Supported
 import Mathlib.RingTheory.Derivation.MapCoeffs

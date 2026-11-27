@@ -1,3 +1,11 @@
+/- GID: D5/S3/VertexAlgebra/Lattice/Orbifold/P48qMixedCurrentChargedField
+   generality: I
+   mirror-B: none(waiver:internal-proof-component)
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: The negative current commutator from translation in the inverse cover variable. -/
+
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qFixedDualBases
 
 /-!

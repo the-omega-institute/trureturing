@@ -1,3 +1,11 @@
+/- GID: D5/S3/VertexAlgebra/Lattice/Orbifold/P48qIntegratedNormalMode
+   generality: I
+   mirror-B: none(waiver:internal-proof-component)
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: The signed normal-mode integral, including the zero-mode logarithm. -/
+
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qChargedDiagonalScalar
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qJetNormalOrdering
 

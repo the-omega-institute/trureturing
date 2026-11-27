@@ -1,3 +1,11 @@
+/- GID: D5/S3/VertexAlgebra/Lattice/Orbifold/P48qNativeMonodromy
+   generality: I
+   mirror-B: none(waiver:internal-proof-component)
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: The standard lift implements cover monodromy on the native Wick field. -/
+
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qAllJetWickField
 import D5.S3.VertexAlgebra.Lattice.Orbifold.NativeStandardThirdLift
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qTwistedGeneratorVacuum

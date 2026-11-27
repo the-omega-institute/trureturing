@@ -1,3 +1,11 @@
+/- GID: D5/S3/VertexAlgebra/Lattice/Orbifold/P48qNativeNegativeCurrentIterate
+   generality: I
+   mirror-B: none(waiver:internal-proof-component)
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Recover negative native current iterates from regular Taylor coefficients. -/
+
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qNativeCurrentStateAction
 
 /-! The negative current iterate on the native P48q oscillator carrier.

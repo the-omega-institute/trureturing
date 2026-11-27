@@ -1,3 +1,11 @@
+/- GID: D5/S3/VertexAlgebra/Lattice/Orbifold/P48qChargedDiagonalIterate
+   generality: I
+   mirror-B: none(waiver:internal-proof-component)
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Regular charged collision coefficients agree with the native ground-state iterate. -/
+
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qRetainedDiagonalComparison
 import D5.S3.VertexAlgebra.LatticeActualVertexAlgebra
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qChargedDiagonalTransport

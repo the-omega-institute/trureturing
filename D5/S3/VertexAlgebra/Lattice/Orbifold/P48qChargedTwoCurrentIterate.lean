@@ -1,3 +1,11 @@
+/- GID: D5/S3/VertexAlgebra/Lattice/Orbifold/P48qChargedTwoCurrentIterate
+   generality: I
+   mirror-B: none(waiver:internal-proof-component)
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Twisted charge fields through degree two in the first oscillators. -/
+
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qCurrentChargedIterate
 
 /-!

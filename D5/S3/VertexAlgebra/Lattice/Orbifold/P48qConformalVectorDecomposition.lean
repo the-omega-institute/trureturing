@@ -1,3 +1,11 @@
+/- GID: D5/S3/VertexAlgebra/Lattice/Orbifold/P48qConformalVectorDecomposition
+   generality: I
+   mirror-B: none(waiver:internal-proof-component)
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Decompose the native conformal state in fixed and opposite-eigenvalue bases. -/
+
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qMomentumEnergy
 import D5.S3.VertexAlgebra.Lattice.Orbifold.ThirdEigenspacePairingDraft
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qMovingPairIterate

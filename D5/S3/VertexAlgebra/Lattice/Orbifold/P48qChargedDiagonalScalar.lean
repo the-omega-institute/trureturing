@@ -1,3 +1,11 @@
+/- GID: D5/S3/VertexAlgebra/Lattice/Orbifold/P48qChargedDiagonalScalar
+   generality: I
+   mirror-B: none(waiver:internal-proof-component)
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: The all-degree diagonal scalar from the three regular orbit factors. -/
+
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qChargedCollision
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qIntegratedJetKernels
 

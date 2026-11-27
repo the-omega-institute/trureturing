@@ -1,3 +1,11 @@
+/- GID: D5/S3/VertexAlgebra/Lattice/Orbifold/P48qHigherCurrentIterate
+   generality: I
+   mirror-B: none(waiver:internal-proof-component)
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Arbitrary negative source modes as signed Hasse-weighted oscillator insertions. -/
+
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qCurrentChargedIterate
 import Mathlib.RingTheory.Binomial
 

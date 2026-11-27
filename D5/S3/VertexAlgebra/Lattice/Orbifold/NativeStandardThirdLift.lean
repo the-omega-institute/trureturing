@@ -1,3 +1,11 @@
+/- GID: D5/S3/VertexAlgebra/Lattice/Orbifold/NativeStandardThirdLift
+   generality: I
+   mirror-B: none(waiver:internal-proof-component)
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: The standard lift of an even lattice isometry of period three on its native carrier. -/
+
 import D5.S3.VertexAlgebra.Lattice.Orbifold.ThirdTwistedChargeAction
 import D5.S3.VertexAlgebra.Lattice.Automorphisms.InvariantQuadraticConformalState
 import D5.S3.VertexAlgebra.LatticeHalfFockChargedMonodromy

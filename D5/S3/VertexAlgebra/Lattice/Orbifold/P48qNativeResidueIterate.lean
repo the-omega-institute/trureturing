@@ -1,3 +1,11 @@
+/- GID: D5/S3/VertexAlgebra/Lattice/Orbifold/P48qNativeResidueIterate
+   generality: I
+   mirror-B: none(waiver:formal-unit-only)
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Fractional residue iteration and its negative-current, charged-ground case. -/
+
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qChargedResidueProduct
 import D5.S3.VertexAlgebra.SignedFields.OrdinaryResidueIterate
 
@@ -9,23 +17,19 @@ set_option backward.isDefEq.respectTransparency false
 open scoped BigOperators VertexOperator
 
 namespace D5.S3.VertexAlgebra.Lattice.Orbifold.P48qNativeResidueIterate
-
 open OrdinaryResidueIterate (residue_iterate alternating_iterate_weight)
 open BinomialKernelDelta (chooseSign)
 open StateFieldResidueReconstruction (epsilon)
 open LatticeHalfFockGroundRightCurrentTransport.Calculus (R Z Valid)
 
 noncomputable section
-
 private def chooseAt (a : ℂ) (j : ℤ) : ℂ :=
   if 0 ≤ j then Ring.choose a j.toNat else 0
 
 private def signedAt (a : ℂ) (j : ℤ) : ℂ :=
   (-1 : ℂ) ^ j * chooseAt a j
-
 private theorem chooseAt_nat (a : ℂ) (j : ℕ) :
     chooseAt a (j : ℤ) = Ring.choose a j := by simp [chooseAt]
-
 private theorem signedAt_nat (a : ℂ) (j : ℕ) :
     signedAt a (j : ℤ) = (-1 : ℂ)^j * Ring.choose a j := by
   rw [signedAt, chooseAt_nat, zpow_natCast]
@@ -108,7 +112,6 @@ private theorem reverseKernel (a : ℂ) (k : ℕ) (j : ℕ) :
 
 private def leftWeight (a b : ℂ) (d p : ℕ) : ℂ :=
   Ring.choose a p * Ring.choose (a + b - p) (d - p)
-
 private def rightWeight (a b : ℂ) (d k : ℕ) : ℂ :=
   Ring.choose a k * Ring.choose b (d - k)
 
@@ -432,7 +435,6 @@ private theorem strip_sum_smul {ι : Type*} (s : ℤ) (S : Finset ι) (c : ι �
 private theorem R_zero_first (B : VertexOperator ℂ V) (n : ℤ) : R 0 B n = 0 := by
   have h := R_smul_first B B n 0
   simpa only [zero_smul] using h
-
 private theorem R_add_first (X Y B : VertexOperator ℂ V) (n : ℤ) :
     R (X+Y) B n = R X B n + R Y B n := by
   rw [← sub_neg_eq_add, R_sub_first, ← neg_one_smul ℂ Y, R_smul_first, neg_one_smul,
@@ -994,6 +996,5 @@ run_cmd do
       throwError "Unexpected axiom closure for {name}: {axioms}"
 
 #print axioms source_iterate_finset
-
 end
 end D5.S3.VertexAlgebra.Lattice.Orbifold.P48qNativeResidueIterate

@@ -1,3 +1,11 @@
+/- GID: D5/S3/VertexAlgebra/Lattice/Orbifold/P48qNativeCreationWordExpansion
+   generality: I
+   mirror-B: none(waiver:internal-proof-component)
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Expand native creation exponential coefficients as finite oscillator word sums. -/
+
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qAllJetWickField
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qFiniteWickSum
 import Mathlib.RingTheory.PowerSeries.Trunc

@@ -1,3 +1,11 @@
+/- GID: D5/S3/VertexAlgebra/Lattice/Orbifold/P48qMovingLatticeCertificateDraft
+   generality: I
+   mirror-B: none(waiver:no-B-plane-mirror-for-source-module)
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: kind=numeric-reduction; basis=consumer=D5/S3/VertexAlgebra/Lattice/Orbifold/P48qTwistedChargeAction.movingExact; premises=D5/S3/VertexAlgebra/Lattice/Orbifold/P48qMovingLatticeCertificateDraft.certificate_identity; result=D5/S3/VertexAlgebra/Lattice/Orbifold/P48qMovingLatticeCertificateDraft.nebeOrderThree_moving_exact
+   digest: Integral moving-lattice exactness from the checked Nebe matrix identity. -/
+
 module
 
 public import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qFixedRankCertificateDraft

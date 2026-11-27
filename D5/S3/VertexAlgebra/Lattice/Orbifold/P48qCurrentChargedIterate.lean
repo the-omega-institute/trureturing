@@ -1,3 +1,11 @@
+/- GID: D5/S3/VertexAlgebra/Lattice/Orbifold/P48qCurrentChargedIterate
+   generality: I
+   mirror-B: none(waiver:internal-proof-component)
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: The charged ground and first-current iterate in the order-three cover. -/
+
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qChargedFieldTranslation
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qHeisenbergCharged
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qQuadraticStateField

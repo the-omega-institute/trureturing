@@ -1,3 +1,11 @@
+/- GID: D5/S3/VertexAlgebra/Lattice/Orbifold/P48qQuadraticStateField
+   generality: I
+   mirror-B: none(waiver:internal-proof-component)
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: The normal-ordered quadratic field with its diagonal contraction correction. -/
+
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qConformalVectorDecomposition
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qTwistedCurrentDiagonal
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qTwistedGeneratorVacuum

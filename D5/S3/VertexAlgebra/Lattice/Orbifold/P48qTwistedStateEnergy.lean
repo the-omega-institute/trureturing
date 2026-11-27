@@ -1,3 +1,11 @@
+/- GID: D5/S3/VertexAlgebra/Lattice/Orbifold/P48qTwistedStateEnergy
+   generality: I
+   mirror-B: none(waiver:internal-proof-component)
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: The total oscillator and momentum energy on the order-three state carrier. -/
+
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qGramCertificateDraft
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qMomentumEnergy
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qThirdTwistedField

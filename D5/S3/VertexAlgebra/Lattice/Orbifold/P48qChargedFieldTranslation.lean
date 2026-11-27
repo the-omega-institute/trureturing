@@ -1,3 +1,11 @@
+/- GID: D5/S3/VertexAlgebra/Lattice/Orbifold/P48qChargedFieldTranslation
+   generality: I
+   mirror-B: none(waiver:internal-proof-component)
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Signed current action and translation identities for the P48q charged field. -/
+
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qPositiveCurrentChargedField
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qMixedCurrentChargedField
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qTwistedHeisenberg

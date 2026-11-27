@@ -1,3 +1,11 @@
+/- GID: D5/S3/VertexAlgebra/Lattice/Orbifold/P48qHeisenbergCharged
+   generality: I
+   mirror-B: none(waiver:internal-proof-component)
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Present the signed Heisenberg commutator with the concrete charged field. -/
+
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qTwistedHeisenberg
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qPositiveCurrentChargedField
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qMixedCurrentChargedField

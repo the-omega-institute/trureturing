@@ -1,3 +1,11 @@
+/- GID: D5/S3/VertexAlgebra/Lattice/Orbifold/P48qTwistedGeneratorVacuum
+   generality: I
+   mirror-B: none(waiver:internal-proof-component)
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Vacuum and deck identities for the concrete charged and current fields. -/
+
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qHeisenbergCharged
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qTwistedFieldCovariance
 

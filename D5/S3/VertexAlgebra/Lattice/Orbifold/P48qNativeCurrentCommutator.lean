@@ -1,3 +1,11 @@
+/- GID: D5/S3/VertexAlgebra/Lattice/Orbifold/P48qNativeCurrentCommutator
+   generality: I
+   mirror-B: none(waiver:internal-proof-component)
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: The current commutator of signed normal-order coefficients from mode insertion. -/
+
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qNativeMonodromy
 
 /-! Current-mode commutators of the actual arbitrary-level P48q twisted fields. -/

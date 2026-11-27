@@ -1,3 +1,11 @@
+/- GID: D5/S3/VertexAlgebra/Lattice/Orbifold/P48qArbitraryWickRecursion
+   generality: I
+   mirror-B: none(waiver:internal-proof-component)
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: The Wick recursion by retained, singleton, and paired first-oscillator occurrences. -/
+
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qChargedTwoCurrentIterate
 
 /-!

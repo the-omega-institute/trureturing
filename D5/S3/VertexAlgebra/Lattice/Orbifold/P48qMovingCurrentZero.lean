@@ -1,3 +1,11 @@
+/- GID: D5/S3/VertexAlgebra/Lattice/Orbifold/P48qMovingCurrentZero
+   generality: I
+   mirror-B: none(waiver:internal-proof-component)
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Moving current pairs and their zero modes on polynomial and momentum states. -/
+
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qTwistedStateEnergy
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qMovingPairIterate
 import Batteries.Tactic.OpenPrivate

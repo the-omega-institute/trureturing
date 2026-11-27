@@ -1,3 +1,11 @@
+/- GID: D5/S3/VertexAlgebra/Lattice/Orbifold/P48qJetNormalOrdering
+   generality: I
+   mirror-B: none(waiver:internal-proof-component)
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Hasse-weighted signed normal ordering for arbitrary positive-level jets. -/
+
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qHigherCurrentIterate
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qSignedNormalWord
 

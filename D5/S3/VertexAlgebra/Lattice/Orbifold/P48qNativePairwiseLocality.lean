@@ -1,3 +1,11 @@
+/- GID: D5/S3/VertexAlgebra/Lattice/Orbifold/P48qNativePairwiseLocality
+   generality: I
+   mirror-B: none(waiver:internal-proof-component)
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Pairwise cover locality on the full native twisted state field. -/
+
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qNativeCurrentLocality
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qChargedLocality
 

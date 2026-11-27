@@ -1,3 +1,11 @@
+/- GID: D5/S3/VertexAlgebra/Lattice/Orbifold/P48qNativeResidueProduct
+   generality: I
+   mirror-B: none(waiver:internal-proof-component)
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Cleared residues and inverse twisting in the integral residue coordinates. -/
+
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qNativePairwiseLocality
 
 /-!

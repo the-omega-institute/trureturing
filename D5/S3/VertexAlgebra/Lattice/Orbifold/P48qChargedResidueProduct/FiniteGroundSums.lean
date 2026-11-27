@@ -1,3 +1,11 @@
+/- GID: D5/S3/VertexAlgebra/Lattice/Orbifold/P48qChargedResidueProduct/FiniteGroundSums
+   generality: I
+   mirror-B: none(waiver:internal-proof-component)
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Finite homogeneous ground sums for residue extraction from charged radial products. -/
+
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qChargedDiagonalIterate
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qNativeResidueProduct
 import D5.S3.VertexAlgebra.GroundRightCurrentTransport.Interchange

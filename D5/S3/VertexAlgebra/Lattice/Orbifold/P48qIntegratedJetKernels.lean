@@ -1,3 +1,11 @@
+/- GID: D5/S3/VertexAlgebra/Lattice/Orbifold/P48qIntegratedJetKernels
+   generality: I
+   mirror-B: none(waiver:internal-proof-component)
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Integrate the diagonal jet kernels and identify the omitted axes of the sum. -/
+
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qJetContractions
 import Mathlib.RingTheory.PowerSeries.Log
 

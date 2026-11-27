@@ -1,3 +1,11 @@
+/- GID: D5/S3/VertexAlgebra/Lattice/Orbifold/P48qNativeCurrentStateAction
+   generality: I
+   mirror-B: none(waiver:internal-proof-component)
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Identify nonnegative native current products on jet-word states. -/
+
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qNativeWickCurrentCommutator
 
 /-! The current commutator on the actual native field, with the untwisted

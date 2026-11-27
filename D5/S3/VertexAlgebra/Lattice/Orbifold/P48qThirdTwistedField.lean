@@ -1,3 +1,11 @@
+/- GID: D5/S3/VertexAlgebra/Lattice/Orbifold/P48qThirdTwistedField
+   generality: I
+   mirror-B: none(waiver:internal-proof-component)
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: The P48q charged field on oscillator polynomials and shifted momenta. -/
+
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qTwistedChargeAction
 import D5.S3.VertexAlgebra.Lattice.Orbifold.ThirdEigenspacePairingDraft
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qNativeContraction

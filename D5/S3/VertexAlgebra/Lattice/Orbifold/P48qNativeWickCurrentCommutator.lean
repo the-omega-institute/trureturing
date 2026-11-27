@@ -1,3 +1,11 @@
+/- GID: D5/S3/VertexAlgebra/Lattice/Orbifold/P48qNativeWickCurrentCommutator
+   generality: I
+   mirror-B: none(waiver:internal-proof-component)
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Propagate current commutators through the native jet Wick recursion. -/
+
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qNativeCurrentCommutator
 
 /-! The current commutator through the scalar Wick recursion on actual native jet fields. -/

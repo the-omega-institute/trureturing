@@ -1,3 +1,11 @@
+/- GID: D5/S3/VertexAlgebra/Lattice/Orbifold/P48qChargedLocality
+   generality: I
+   mirror-B: none(waiver:internal-proof-component)
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Pairwise locality of native charged fields via finite Laurent coefficient shifts. -/
+
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qChargedOrderedProduct
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qOrderedScalarExchange
 import D5.S3.VertexAlgebra.Lattice.Orbifold.ThirdTwistedScalarLocality

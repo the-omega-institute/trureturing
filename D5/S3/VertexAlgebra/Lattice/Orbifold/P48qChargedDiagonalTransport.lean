@@ -1,3 +1,11 @@
+/- GID: D5/S3/VertexAlgebra/Lattice/Orbifold/P48qChargedDiagonalTransport
+   generality: I
+   mirror-B: none(waiver:internal-proof-component)
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Transport of cleared radial products to the diagonal cover branch. -/
+
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qChargedDiagonalAnnihilation
 
 /-!

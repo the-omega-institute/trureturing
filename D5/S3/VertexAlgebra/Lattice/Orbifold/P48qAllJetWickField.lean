@@ -1,3 +1,11 @@
+/- GID: D5/S3/VertexAlgebra/Lattice/Orbifold/P48qAllJetWickField
+   generality: I
+   mirror-B: none(waiver:internal-proof-component)
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: The signed normal-order Wick field for arbitrary finite words of current jets. -/
+
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qJetContractions
 
 /-!

@@ -1,18 +1,23 @@
-module
+/- GID: D5/S3/VertexAlgebra/Lattice/Orbifold/ThirdEigenspacePairingDraft
+   generality: I
+   mirror-B: none(waiver:internal-proof-component)
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Perfect pairing and dual bases for the complementary cubic eigenspaces. -/
 
-public import Mathlib.Basic.Complex.Basic
-public import Mathlib.LinearAlgebra.Dimension.Constructions
-public import Mathlib.LinearAlgebra.Eigenspace.Basic
-public import Mathlib.LinearAlgebra.Matrix.BilinearForm
-public import Mathlib.LinearAlgebra.PerfectPairing.Basic
-public import Mathlib.RingTheory.RootsOfUnity.PrimitiveRoots
+import Mathlib.Basic.Complex.Basic
+import Mathlib.LinearAlgebra.Dimension.Constructions
+import Mathlib.LinearAlgebra.Eigenspace.Basic
+import Mathlib.LinearAlgebra.Matrix.BilinearForm
+import Mathlib.LinearAlgebra.PerfectPairing.Basic
+import Mathlib.RingTheory.RootsOfUnity.PrimitiveRoots
 import Mathlib.Tactic.Abel
 import Mathlib.Tactic.Module
 import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.Ring
-public import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qFixedRankCertificateDraft
-public import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qGramCertificateDraft
-import all D5.S3.VertexAlgebra.Lattice.Orbifold.P48qFixedRankCertificateDraft
+import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qFixedRankCertificateDraft
+import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qGramCertificateDraft
 
 /-!
 The complex bilinear lattice form gives the coefficient pairing for the two
@@ -22,7 +27,7 @@ row-action and Gram certificates to index both grids by the same `Fin 16`.
 
 set_option autoImplicit false
 
-public section
+section
 
 namespace D5.S3.VertexAlgebra.Lattice.Orbifold.ThirdEigenspacePairing
 

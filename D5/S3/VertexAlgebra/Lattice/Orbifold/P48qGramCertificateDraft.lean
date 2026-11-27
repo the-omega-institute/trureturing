@@ -1,8 +1,15 @@
-module
+/- GID: D5/S3/VertexAlgebra/Lattice/Orbifold/P48qGramCertificateDraft
+   generality: I
+   mirror-B: none(waiver:no-B-plane-mirror-for-source-module)
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: kind=checker; basis=consumer=D5/S3/VertexAlgebra/Lattice/Orbifold/ThirdEigenspacePairingDraft.p48q_movingPairing_isPerfPair; instance=D5/S3/VertexAlgebra/Lattice/Orbifold/P48qGramCertificateDraft.gram_inverse_certificate; result=D5/S3/VertexAlgebra/Lattice/Orbifold/P48qGramCertificateDraft.gram_isometry_certificate
+   digest: Replay the Nebe integer Gram inverse and row-action isometry certificates. -/
 
-public import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qNormImageCertificateDraft
-import all D5.S3.VertexAlgebra.Lattice.Orbifold.P48qNormImageCertificateDraft
-import all D5.S3.VertexAlgebra.Lattice.Orbifold.P48qFixedRankCertificateDraft
+import Batteries.Tactic.OpenPrivate
+import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qFixedRankCertificateDraft
+import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qNormImageCertificate
+import Mathlib.Data.List.OfFn
 
 set_option autoImplicit false
 set_option maxRecDepth 4096
@@ -11,7 +18,9 @@ set_option maxHeartbeats 6000000
 namespace P48qGramCertificateDraft
 
 open scoped Matrix
-open P48qFixedRankCertificateDraft P48qNormImageCertificateDraft
+open P48qFixedRankCertificateDraft
+open private mul_eq_of_dotProductRows from
+  D5.S3.VertexAlgebra.Lattice.Orbifold.P48qNormImageCertificate
 
 -- The literals come from the saved Nebe Gram matrix and exact integer products.
 
@@ -66,7 +75,7 @@ private def nebeGramData : Array (Array ℤ) := #[
   #[3, 2, -1, 4, 0, -2, -1, -1, 2, 3, -1, -2, 1, 2, -2, 1, 0, 0, 2, -1, 2, -2, -1, -1, 0, 0, -2, 0, 2, 1, 3, 0, 0, 1, 0, -1, -4, 2, 2, 0, 0, -3, 1, 2, 3, 0, -1, 8],
 ]
 
-public def nebeGram : Matrix (Fin 48) (Fin 48) ℤ :=
+def nebeGram : Matrix (Fin 48) (Fin 48) ℤ :=
   fun i j => (nebeGramData.getD i.val #[]).getD j.val 0
 
 private def nebeGramInverseData : Array (Array ℤ) := #[
@@ -120,7 +129,7 @@ private def nebeGramInverseData : Array (Array ℤ) := #[
   #[-6, -5, -10, 12, 6, 13, -7, 0, -6, -7, -12, 0, 1, -6, 2, -5, -1, 0, 4, 0, -3, 0, 0, 2, 0, 2, 2, 0, 1, -6, -3, -1, 3, 0, -1, -1, 3, 2, -1, 3, -2, 1, 3, 2, 1, -2, -2, 6],
 ]
 
-public def nebeGramInverse : Matrix (Fin 48) (Fin 48) ℤ :=
+def nebeGramInverse : Matrix (Fin 48) (Fin 48) ℤ :=
   fun i j => (nebeGramInverseData.getD i.val #[]).getD j.val 0
 
 private def actionTimesGramData : Array (Array ℤ) := #[
@@ -178,7 +187,7 @@ private def actionTimesGram : Matrix (Fin 48) (Fin 48) ℤ :=
   fun i j => (actionTimesGramData.getD i.val #[]).getD j.val 0
 
 /-- Replay the integer inverse certificate in the original coordinate basis. -/
-public theorem gram_inverse_certificate : nebeGramInverse * nebeGramᵀ = 1 := by
+theorem gram_inverse_certificate : nebeGramInverse * nebeGramᵀ = 1 := by
   apply mul_eq_of_dotProductRows
   intro i
   fin_cases i <;> decide +kernel
@@ -189,7 +198,7 @@ private theorem action_mul_gram : nebeOrderThree * nebeGram = actionTimesGram :=
   fin_cases i <;> decide +kernel
 
 /-- Replay the isometry identity in Nebe's row-vector convention. -/
-public theorem gram_isometry_certificate :
+theorem gram_isometry_certificate :
     nebeOrderThree * nebeGram * nebeOrderThreeᵀ = nebeGram := by
   rw [action_mul_gram]
   apply mul_eq_of_dotProductRows

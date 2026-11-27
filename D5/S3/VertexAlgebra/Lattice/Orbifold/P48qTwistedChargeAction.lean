@@ -1,3 +1,11 @@
+/- GID: D5/S3/VertexAlgebra/Lattice/Orbifold/P48qTwistedChargeAction
+   generality: I
+   mirror-B: none(waiver:internal-proof-component)
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: kind=numeric-reduction; basis=consumer=D5/S3/VertexAlgebra/Lattice/Orbifold/P48qTwistedChargeAction.lattice; premises=D5/S3/VertexAlgebra/Lattice/Orbifold/P48qTwistedChargeAction.gram_symmetric,D5/S3/VertexAlgebra/Lattice/Orbifold/P48qTwistedChargeAction.gram_diagonal
+   digest: Construct the even Nebe lattice and its P48q twisted ground charge action. -/
+
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qGramCertificateDraft
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qMovingLatticeCertificateDraft
 import D5.S3.VertexAlgebra.Lattice.Orbifold.ThirdTwistedChargeAction

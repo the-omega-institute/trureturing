@@ -1,3 +1,11 @@
+/- GID: D5/S3/VertexAlgebra/Lattice/Orbifold/P48qTwistedFieldCovariance
+   generality: I
+   mirror-B: none(waiver:internal-proof-component)
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Coefficientwise covariance of charged fields under third-cover rotation. -/
+
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qFixedDualBases
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qChargeMonodromy
 import Mathlib.Algebra.Polynomial.Eval.Degree

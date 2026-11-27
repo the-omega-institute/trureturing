@@ -1,3 +1,11 @@
+/- GID: D5/S3/VertexAlgebra/Lattice/Orbifold/P48qFixedDualBases
+   generality: I
+   mirror-B: none(waiver:internal-proof-component)
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Transport the fixed basis and its Gram dual into the charged field. -/
+
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qMomentumEnergy
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qThirdTwistedField
 

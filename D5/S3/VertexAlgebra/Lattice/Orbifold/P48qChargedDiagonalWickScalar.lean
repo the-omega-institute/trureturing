@@ -1,3 +1,11 @@
+/- GID: D5/S3/VertexAlgebra/Lattice/Orbifold/P48qChargedDiagonalWickScalar
+   generality: I
+   mirror-B: none(waiver:internal-proof-component)
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Integrated singleton and pair contractions recover the charged scalar logarithm. -/
+
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qAllJetWickField
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qChargedDiagonalScalar
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qChargedFieldTranslation

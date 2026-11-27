@@ -1,3 +1,11 @@
+/- GID: D5/S3/VertexAlgebra/Lattice/Orbifold/P48qChargedExponentialReordering
+   generality: I
+   mirror-B: none(waiver:internal-proof-component)
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Reordering the charged creation exponential through the oscillator translation. -/
+
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qThirdTwistedField
 import Mathlib.RingTheory.PowerSeries.Substitution
 

@@ -1,3 +1,11 @@
+/- GID: D5/S3/VertexAlgebra/Lattice/Orbifold/P48qNativeCurrentLocality
+   generality: I
+   mirror-B: none(waiver:internal-proof-component)
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Transport current locality between residue strips and the threefold cover. -/
+
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qNativeNegativeCurrentIterate
 import D5.S3.VertexAlgebra.SignedFields.SignedFieldResidueLocality
 

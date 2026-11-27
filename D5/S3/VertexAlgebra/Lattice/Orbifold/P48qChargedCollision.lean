@@ -1,3 +1,11 @@
+/- GID: D5/S3/VertexAlgebra/Lattice/Orbifold/P48qChargedCollision
+   generality: I
+   mirror-B: none(waiver:internal-proof-component)
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Regularized charged-field collision and orbit factors in the diagonal coordinate. -/
+
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qChargedLocality
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qTwistedCurrentDiagonal
 import Batteries.Tactic.OpenPrivate

@@ -1,3 +1,11 @@
+/- GID: D5/S3/VertexAlgebra/Lattice/Orbifold/P48qChargedResidueProduct
+   generality: I
+   mirror-B: none(waiver:internal-proof-component)
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Adjusted charged residues and their agreement with native ground-state products. -/
+
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qChargedResidueProduct.FiniteGroundSums
 
 /-! Residue extraction from finite homogeneous slices of the charged radial products. -/

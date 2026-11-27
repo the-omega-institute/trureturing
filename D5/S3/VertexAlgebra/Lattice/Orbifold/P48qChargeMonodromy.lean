@@ -1,3 +1,11 @@
+/- GID: D5/S3/VertexAlgebra/Lattice/Orbifold/P48qChargeMonodromy
+   generality: I
+   mirror-B: none(waiver:internal-proof-component)
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Cover rotation of the P48q ground charge operators at momentum p/3. -/
+
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qTwistedChargeAction
 import Mathlib.Algebra.Module.Torsion.Field
 
