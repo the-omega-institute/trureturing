@@ -1,4 +1,7 @@
 import Lean
+import Lean.Compiler.LCNF.PhaseExt
+import Lean.Compiler.LCNF.PublicDeclsExt
+import Lean.Compiler.IR.CompilerM
 import OmegaChecks.InitCompiler.Layout
 import OmegaChecks.InitCompiler.Proofs
 import OmegaChecks.InitCompiler.CompilerMarkers
@@ -185,4 +188,74 @@ before the root PUnit used by Lean's ordinary structure elaborator is available.
       let elim := mkIdentFrom id (ctor ++ `elim)
       elabCommand (← `(command| port_definition $elim:ident with_native_code))
 
+/-- Verify each constructor equation for an unindexed structural argument. Later arguments must
+be independent of that parameter, so replacing it preserves their local types. -/
+private def checkConstructorEquations (name : Name) (levelParams : List Name) (type body : Expr)
+    (structural : Nat) : MetaM Unit := do
+  let levels := levelParams.map Level.param
+  Meta.forallTelescope type fun args _ => do
+    let some arg := args[structural]? | throwError "missing structural argument"
+    let family ← Meta.whnf (← Meta.inferType arg)
+    let .const indName us := family.getAppFn | throwError "expected an inductive parameter"
+    let .inductInfo ind ← getConstInfo indName | throwError "expected an inductive parameter"
+    unless ind.numIndices == 0 && family.getAppNumArgs == ind.numParams && !ind.ctors.isEmpty do
+      throwError "expected a nonempty unindexed inductive family"
+    for next in args[structural+1:] do
+      if (← Meta.inferType next).containsFVar arg.fvarId! then throwError "dependent later argument"
+    for ctorName in ind.ctors do
+      let ctor := mkAppN (mkConst ctorName us) family.getAppArgs
+      Meta.forallTelescope (← Meta.inferType ctor) fun fields _ => do
+        let inputs := args.set! structural (mkAppN ctor fields)
+        let actual := mkAppN (mkConst name levels) inputs
+        let expected := mkAppN body inputs
+        unless Kernel.isDefEqGuarded (← getEnv) (← getLCtx) actual expected do
+          throwError "recursive equation does not match {name} at {ctorName}"
+
+@[command_parser, builtin_command_parser] def portStructuralCode := leading_parser
+  "port_structural_code " >> ident >> " on_arg " >> numLit
+
+open Compiler.LCNF in
+@[builtin_command_elab portStructuralCode] def elabPortStructuralCode : CommandElab := fun stx => do
+  let (src, info) ← officialDeclaration stx[1]
+  let name := omegaName info.name
+  let equationName := Compiler.mkUnsafeRecName info.name
+  let some (.defnInfo recFn) := src.find? equationName | throwError "missing recursive equations"
+  unless recFn.safety == .partial && recFn.all == [equationName] do throwError "expected a single recursive definition"
+  liftCoreM <| withExporting do
+    let value ← ofExcept (translateProofTerm src recFn.value)
+    for dep in value.getUsedConstants do
+      unless dep == omegaName equationName || (← getEnv).contains dep do throwError "missing equation dependency {dep}"
+    let body := value.replace fun e => if e.isConstOf (omegaName equationName) then some (.const name e.constLevels!) else none
+    let tmp := {recFn with
+      name := omegaName equationName
+      all := [omegaName equationName]
+      safety := .safe
+      type := ← ofExcept (translateProofTerm src recFn.type)
+      value := body}
+    let some pos := stx[3].isNatLit? | throwErrorAt stx[3] "expected a structural argument position"
+    if pos == 0 then throwErrorAt stx[3] "argument positions start at one"
+    Meta.MetaM.run' <| checkConstructorEquations name tmp.levelParams tmp.type body (pos - 1)
+    -- Lean uses this reserved name for executable recursive equations. The safe one-step
+    -- definition can call the already checked total function. Its environment is disposable.
+    let compiled ← withoutModifyingEnv do
+      modifyEnv (noncomputableExt.modifyState · (·.erase name))
+      Lean.addDecl (.defnDecl tmp) (forceExpose := true)
+      withOptions (fun o => (Elab.async.set o false).setBool `compiler.postponeCompile false) do
+        Lean.compileDecls #[name] (logErrors := true)
+      return ← getEnv
+    let original ← getEnv
+    -- Reattach generated code in backend order, including recursive workers and lifted closures.
+    let names := (declOrderExt.getState compiled).1.reverse.toArray.filter fun n =>
+      !(declOrderExt.getState original).2.contains n
+
+    unless names.contains name do throwError "no recursive code generated"
+    modifyEnv fun env => PersistentEnvExtension.modifyState noncomputableExt env fun (entries, marked) =>
+      (entries.filter (· != name), marked.erase name)
+    for n in names do
+      if let some decl := baseExt.getState compiled |>.find? n then modifyEnv (saveBaseDeclCore · decl)
+      if let some decl := monoExt.getState compiled |>.find? n then modifyEnv (saveMonoDeclCore · decl)
+      if let some decl := impureExt.getState compiled |>.find? n then modifyEnv (saveImpureDeclCore · decl)
+      if let some ir := IR.declMapExt.getState compiled |>.find? n then modifyEnv (IR.declMapExt.addEntry · ir)
+      if isDeclPublic compiled n then modifyEnv (setDeclPublic · n)
+      modifyEnv (recordFinalImpureDecl · n)
 end OmegaChecks.InitCompiler

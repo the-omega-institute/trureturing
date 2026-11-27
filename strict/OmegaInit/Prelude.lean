@@ -82,10 +82,15 @@ inductive Nat where
   | zero
   | succ (n : Nat)
 
+end Omega
+
+port_definition Nat.casesOn
+
+namespace Omega
 namespace Nat
 
 @[no_expose] def pred : Nat → Nat :=
-  Nat.rec zero (fun n _ => n)
+  fun n => Nat.casesOn (motive := fun _ => Nat) n zero (fun k => k)
 
 @[no_expose] protected def sub : Nat → Nat → Nat :=
   fun a => Nat.rec a (fun _ r => pred r)
@@ -471,7 +476,6 @@ attribute [irreducible] beq ble Nat.div Nat.mod Nat.modCore
 
 end Omega.Nat
 
-port_definition Nat.casesOn
 port_definition Nat.below
 port_definition Nat.brecOn.go
 port_definition Nat.brecOn
@@ -523,6 +527,9 @@ attribute [irreducible] lengthTR
 
 end Omega.List
 
+port_definition List.concat.match_1 with_native_code
+port_structural_code List.concat on_arg 2
+
 port_definition List.flatMap
 
 port_inductive OfNat
@@ -573,8 +580,8 @@ port_inductive Array
 port_definition Array.toList
 port_definition List.toArray
 port_definition Array.size
-port_definition Array.push
-port_definition Array.emptyWithCapacity
+port_definition Array.push with_native_code
+port_definition Array.emptyWithCapacity with_native_code
 port_definition Array.mkEmpty
 
 namespace Omega
@@ -748,3 +755,21 @@ port_definition instDecidableEqBool with_native_code
 port_definition DecidableRel
 port_definition Option.noConfusionType
 port_definition Option.noConfusion
+
+port_definition List.append.match_1 with_native_code
+port_structural_code List.append on_arg 2
+port_definition instDecidableEqList.match_1 with_native_code
+port_structural_code List.map on_arg 4
+port_definition List.foldl.match_1 with_native_code
+port_structural_code List.foldl on_arg 5
+port_definition List.lengthTRAux.match_1 with_native_code
+port_structural_code List.lengthTRAux on_arg 2
+port_definition Nat.add.match_1 with_native_code
+port_structural_code Nat.add on_arg 2
+port_definition Nat.mul.match_1 with_native_code
+port_structural_code Nat.mul on_arg 2
+port_definition Nat.pow.match_1 with_native_code
+port_structural_code Nat.pow on_arg 2
+port_structural_code Nat.sub on_arg 2
+port_definition instAddNat with_native_code
+port_structural_code List.length on_arg 2

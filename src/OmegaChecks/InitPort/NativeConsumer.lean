@@ -66,6 +66,27 @@ public def liftedNumeral (x y : Omega.Bool) : Omega.Bool :=
     (@Omega.Id.instOfNat Omega.Bool Omega.Nat.zero
       (Omega.OfNat.mk (Omega.strictOr x y)))
 
+public def lastElement (x y : Omega.Bool) : Omega.Bool :=
+  let pair := Omega.Prod.mk x y
+  let iteration : Omega.ForIn Omega.Id (Omega.Prod Omega.Bool Omega.Bool) Omega.Bool :=
+    Omega.ForIn.mk fun {_} p start step =>
+      Omega.ForInStep.casesOn (motive := fun _ => _) (step p.fst start)
+        (fun done => done) (fun afterFirst => (step p.snd afterFirst).value)
+  let xs := @Omega.ForIn.toList _ _ iteration pair
+  Omega.List.casesOn (motive := fun _ => Omega.Bool) xs .false (fun _ rest =>
+    Omega.List.casesOn (motive := fun _ => Omega.Bool) rest .false (fun second _ => second))
+
+private def asNat (x : Omega.Bool) : Omega.Nat :=
+  Omega.Bool.casesOn (motive := fun _ => Omega.Nat) x .zero (.succ .zero)
+
+public def arithmetic (x y : Omega.Bool) : Omega.Bool :=
+  let n := Omega.Nat.sub (Omega.Nat.mul (Omega.Nat.add (asNat x) (asNat y)) (.succ .zero)) (asNat y)
+  Omega.Nat.casesOn (motive := fun _ => Omega.Bool) n .false (fun _ => .true)
+
+public def listDisjunction (x y : Omega.Bool) : Omega.Bool :=
+  let xs := Omega.List.append (Omega.List.cons x Omega.List.nil) (Omega.List.cons y Omega.List.nil)
+  Omega.List.foldl Omega.strictOr .false (Omega.List.map (fun a => a) xs)
+
 public def disjunction (x y : Omega.Bool) : Omega.Bool := Omega.strictOr x y
 public def conjunction (x y : Omega.Bool) : Omega.Bool := Omega.strictAnd x y
 "
@@ -92,7 +113,8 @@ unsafe def main (args : List String) : IO Unit := do
     let checks := [(`firstValue, first), (`secondValue, second), (`additionFirst, first),
       (`stateSecond, second), (`optionFirst, first), (`composeSecond, second), (`mappedFirst, first),
       (`sumIndex, first), (`sumRight, or), (`boolEqual, BEq.beq), (`optionFiltered, and),
-      (`controlResult, or), (`optionEqual, BEq.beq), (`someValue, and), (`attachedValue, and), (`liftedNumeral, or), (`disjunction, or), (`conjunction, and)]
+      (`controlResult, or), (`optionEqual, BEq.beq), (`someValue, and), (`attachedValue, and), (`liftedNumeral, or), (`lastElement, second),
+      (`arithmetic, first), (`listDisjunction, or), (`disjunction, or), (`conjunction, and)]
     for (name, expected) in checks do
       let some ci := env.find? name | throw <| IO.userError s!"missing {name}"
       unless Kernel.isDefEqGuarded env {} ci.type arity do throw <| IO.userError s!"invalid type of {name}"
