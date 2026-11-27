@@ -16,7 +16,9 @@ $$\exists H,K : \operatorname{SimpleGraph}\left(\operatorname{Fin}\left(17\right
 
 *Commentary.*
 
-Section 5, item 2 of Akbari, Elahimanesh and Miraftab asks for two non-transitive graphs H and K whose adjacency matrices B and C satisfy BC = J − I. The two graphs share the labelled vertex set Fin 17. They have decidable adjacency, and adjMatrix uses integer entries. Matrix.of(1) has every entry equal to one, the subtracted 1 is the identity, and the product is ordinary matrix multiplication.
+In Section 5, item 2 of arXiv:2512.24864v1, Akbari, Elahimanesh and Miraftab ask for two non-transitive graphs H and K whose adjacency matrices B and C satisfy BC = J − I. The question is at https://arxiv.org/html/2512.24864v1#S5.I1.i2
+
+The two graphs share the labelled vertex set Fin 17. They have decidable adjacency, and adjMatrix uses integer entries. Matrix.of(1) has every entry equal to one, the subtracted 1 is the identity, and the product is ordinary matrix multiplication.
 
 The two graphs are defined by literal neighbor lists. The kernel checks symmetry, looplessness and the product entry at each ordered pair of vertices. Its value is zero on the diagonal and one off the diagonal.
 
