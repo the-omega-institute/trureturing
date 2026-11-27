@@ -128,10 +128,59 @@ set_option maxRecDepth 4096 in
 set_option maxHeartbeats 0 in
 private theorem search_five : search 5 = false := by decide +kernel
 
-set_option maxRecDepth 4096 in
-set_option maxHeartbeats 0 in
-private theorem search_six : search 6 = false := by decide +kernel
+private def searchFrom (m start : Nat) : Bool :=
+  ((candidates m 1 15).drop start).any (survives m)
 
+private def searchBlock (m start count : Nat) : Bool :=
+  (((candidates m 1 15).drop start).take count).any (survives m)
+
+-- Taking and dropping the same prefix partitions the entire remaining search.
+private theorem search_join {m start count : Nat}
+    (block : searchBlock m start count = false)
+    (rest : searchFrom m (start + count) = false) : searchFrom m start = false := by
+  unfold searchBlock at block
+  unfold searchFrom at rest ⊢
+  rw [← List.drop_drop] at rest
+  rw [← List.take_append_drop count (List.drop start (candidates m 1 15)),
+    List.any_append, block, rest]
+  rfl
+
+-- Bound kernel memory by checking four candidates at a time. The last
+-- certificate checks the entire suffix, so no candidate count is assumed.
+section
+set_option maxRecDepth 4096
+set_option maxHeartbeats 0
+
+private theorem search_six_from_0 : searchBlock 6 0 4 = false := by decide +kernel
+
+private theorem search_six_from_4 : searchBlock 6 4 4 = false := by decide +kernel
+
+private theorem search_six_from_8 : searchBlock 6 8 4 = false := by decide +kernel
+
+private theorem search_six_from_12 : searchBlock 6 12 4 = false := by decide +kernel
+
+private theorem search_six_from_16 : searchBlock 6 16 4 = false := by decide +kernel
+
+private theorem search_six_from_20 : searchBlock 6 20 4 = false := by decide +kernel
+
+private theorem search_six_from_24 : searchBlock 6 24 4 = false := by decide +kernel
+
+private theorem search_six_from_28 : searchBlock 6 28 4 = false := by decide +kernel
+
+private theorem search_six_from_32 : searchFrom 6 32 = false := by decide +kernel
+
+end
+
+private theorem search_six : search 6 = false := by
+  have h28 := search_join (start := 28) (count := 4) search_six_from_28 search_six_from_32
+  have h24 := search_join (start := 24) (count := 4) search_six_from_24 h28
+  have h20 := search_join (start := 20) (count := 4) search_six_from_20 h24
+  have h16 := search_join (start := 16) (count := 4) search_six_from_16 h20
+  have h12 := search_join (start := 12) (count := 4) search_six_from_12 h16
+  have h8 := search_join (start := 8) (count := 4) search_six_from_8 h12
+  have h4 := search_join (start := 4) (count := 4) search_six_from_4 h8
+  have h0 := search_join (start := 0) (count := 4) search_six_from_0 h4
+  simpa only [searchFrom, List.drop_zero, search] using h0
 
 private theorem candidates_complete {columns : List Nat} {lower : Nat}
     (hs : columns.Pairwise (· ≤ ·))
