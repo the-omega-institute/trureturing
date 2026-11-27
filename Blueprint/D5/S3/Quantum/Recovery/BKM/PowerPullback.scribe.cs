@@ -1,16 +1,16 @@
 using static StrataLint.Scribe.DefinitionDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Recovery;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Recovery.BKM;
 
-internal sealed class BKMPowerPullbackDocument : IScribeDocumentDefinition
+internal sealed class PowerPullbackDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Cubic pullback of the actual BKM integral.",
         H("Cubic pullback of the actual BKM integral"),
         Blocks(Describe.Lean(
             DescribeId.Create("omega-cube"),
-            DeclarationHandle.Create("D5/S3/Quantum/Recovery/BKMPowerPullback.omega_cube"),
+            DeclarationHandle.Create("D5/S3/Quantum/Recovery/BKM/PowerPullback.omega_cube"),
             H("The BKM integral at a positive definite cube"),
             StatementSource.FromAuthor(CubeIdentity()),
             AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/SpinModels/wu2026sharp")),

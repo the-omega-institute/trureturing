@@ -1,6 +1,6 @@
-/- GID: D5/S3/Quantum/Recovery/BKMPowerPullback
+/- GID: D5/S3/Quantum/Recovery/BKM/PowerPullback
    generality: G
-   mirror-B: D5/B/S3/Quantum/Recovery/BKMPowerPullback
+   mirror-B: D5/B/S3/Quantum/Recovery/BKM/PowerPullback
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
@@ -19,7 +19,7 @@ open D5.S3.Quantum.Matrix.SpectralPower (mpow mpow_one mpow_two)
 open D5.S3.Quantum.Recovery.BKMRelativeDensity (omega continuous_mpow)
 open D5.S3.Quantum.Recovery.BKMObservableRigidity (mpow_add mpow_zero)
 
-namespace D5.S3.Quantum.Recovery.BKMPowerPullback
+namespace D5.S3.Quantum.Recovery.BKM.PowerPullback
 
 variable {ι : Type*} [Fintype ι] [DecidableEq ι]
 
@@ -97,4 +97,4 @@ theorem omega_cube {B : M} (hB : B.PosDef) (X : M) :
           (hf.intervalIntegrable 0 1) (hf.intervalIntegrable 1 2), h01, h12, h23]
       ac_rfl
 
-end D5.S3.Quantum.Recovery.BKMPowerPullback
+end D5.S3.Quantum.Recovery.BKM.PowerPullback

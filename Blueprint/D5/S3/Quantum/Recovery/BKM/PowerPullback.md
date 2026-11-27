@@ -8,7 +8,7 @@ Cubic pullback of the actual BKM integral.
 
 $$\left(\omega_{B^{3}}\right)\left(X\right) = \frac{1}{3}\cdot\left(B^{2} \cdot \left(\omega_{B}\right)\left(X\right) + B \cdot \left(\omega_{B}\right)\left(X\right) \cdot B + \left(\omega_{B}\right)\left(X\right) \cdot B^{2}\right)$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Recovery/BKMPowerPullback.omega_cube` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Recovery/BKM/PowerPullback.omega_cube` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -24,6 +24,6 @@ In the quadratic entropy calculation for Wu’s Remark 3.15, equation (3.54), wr
 
 ## References
 
-- Truth anchor: `D5/S3/Quantum/Recovery/BKMPowerPullback.omega_cube`
-- Dependency: [D5/S3/Quantum/Recovery/BKMObservableRigidity](BKMObservableRigidity.md)
-- Dependency: [D5/S3/Quantum/Recovery/BKMSpectralVariance](BKMSpectralVariance.md)
+- Truth anchor: `D5/S3/Quantum/Recovery/BKM/PowerPullback.omega_cube`
+- Dependency: [D5/S3/Quantum/Recovery/BKMObservableRigidity](../BKMObservableRigidity.md)
+- Dependency: [D5/S3/Quantum/Recovery/BKMSpectralVariance](../BKMSpectralVariance.md)

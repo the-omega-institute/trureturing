@@ -1,6 +1,6 @@
 import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.UniverseSingleReadout
-import D5.S3.Quantum.Recovery.BKMPowerPullback
+import D5.S3.Quantum.Recovery.BKM.PowerPullback
 
 /-! The cube pullback equality detects deletion of the normalization factor. -/
 
@@ -11,9 +11,9 @@ open scoped ComplexOrder MatrixOrder Matrix.Norms.L2Operator
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.Quantum.Matrix.SpectralPower (mpow)
 open _root_.D5.S3.Quantum.Recovery.BKMRelativeDensity (omega)
-open _root_.D5.S3.Quantum.Recovery.BKMPowerPullback (omega_cube)
+open _root_.D5.S3.Quantum.Recovery.BKM.PowerPullback (omega_cube)
 
-namespace Reg.D5.S3.Quantum.Recovery.BKMPowerPullback
+namespace Reg.D5.S3.Quantum.Recovery.BKM.PowerPullback
 
 universe u
 
@@ -80,8 +80,8 @@ def registration : Registration arena.{u} (type_of% @omega_cube.{u}) where
 
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     (@omega_cube.{u}) (Realization signature.{u}) Unit Unit where
-  unitName := `D5.S3.Quantum.Recovery.BKMPowerPullback.omega_cube.__information_unit
-  realizationName := `Reg.D5.S3.Quantum.Recovery.BKMPowerPullback.registration
+  unitName := `D5.S3.Quantum.Recovery.BKM.PowerPullback.omega_cube.__information_unit
+  realizationName := `Reg.D5.S3.Quantum.Recovery.BKM.PowerPullback.registration
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -97,7 +97,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Quantum.Recovery.BKMPowerPullback
+    owner := `D5.S3.Quantum.Recovery.BKM.PowerPullback
     definition := none
     coordinates := #[0]
     readouts := #[{
@@ -110,4 +110,4 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   familyRecord := none
   options := #[]
 
-end Reg.D5.S3.Quantum.Recovery.BKMPowerPullback
+end Reg.D5.S3.Quantum.Recovery.BKM.PowerPullback
