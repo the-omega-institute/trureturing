@@ -1,6 +1,6 @@
-/- GID: D5/S3/Quantum/Information/PovmSensitivityDefect
+/- GID: D5/S3/Quantum/Measurement/Sensitivity/PovmSensitivityDefect
    generality: G
-   mirror-B: D5/B/S3/Quantum/Information/PovmSensitivityDefect
+   mirror-B: D5/B/S3/Quantum/Measurement/Sensitivity/PovmSensitivityDefect
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
@@ -24,7 +24,7 @@ as in the setting of Céleri–Soares-Pinto, arXiv:2611.34788v1, Eq. (14).
 
 noncomputable section
 
-namespace D5.S3.Quantum.Information.PovmSensitivityDefect
+namespace D5.S3.Quantum.Measurement.Sensitivity.PovmSensitivityDefect
 
 set_option autoImplicit false
 
@@ -457,4 +457,4 @@ theorem forwardKL_decomposition (E : FinitePOVM n ι) (ρ X : Mat)
   rw [hd.deriv]
   exact sensitivity_decomposition E ρ X hρ hX hp z
 
-end D5.S3.Quantum.Information.PovmSensitivityDefect
+end D5.S3.Quantum.Measurement.Sensitivity.PovmSensitivityDefect

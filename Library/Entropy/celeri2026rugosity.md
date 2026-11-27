@@ -7,7 +7,7 @@ doi: null
 url: https://arxiv.org/abs/2611.34788v1
 claim: "Equation (14) gives the thermal reset sensitivity bound for a binary flat-state test. The conclusion asks for extensions to other prescribed POVMs."
 strata_touched:
-  - D5/S3/Quantum/Information/PovmSensitivityDefect
+  - D5/S3/Quantum/Measurement/Sensitivity/PovmSensitivityDefect
 license: citation-only
 triage: anchor
 ---

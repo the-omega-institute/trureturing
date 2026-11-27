@@ -1,10 +1,10 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Information;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Measurement.Sensitivity;
 
 internal sealed class PovmSensitivityDefectDocument : IScribeDocumentDefinition
 {
-    private const string Module = "D5/S3/Quantum/Information/PovmSensitivityDefect.";
+    private const string Module = "D5/S3/Quantum/Measurement/Sensitivity/PovmSensitivityDefect.";
     private static readonly LibraryNoteRef Source =
         LibraryNoteRef.Create("D5/L/Entropy/celeri2026rugosity");
 
