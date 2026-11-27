@@ -65,12 +65,7 @@ private theorem valueFive_characterization (n : ℕ) : seq n = 5 ↔
       omega
     have left_ne_two : seq (2 ^ n % n) ≠ 2 := by
       intro h
-      have hpow : Nat.ModEq n (2 ^ n) 1 := by
-        simpa [Nat.ModEq, Nat.mod_eq_of_lt hn] using (seq_eq_two _).mp h
-      have hp := Nat.minFac_prime (by omega : n ≠ 1)
-      have hmod := leastPrimeFactor_modEq_one_of_pow_self hn hpow
-      have hd : n.minFac ∣ 1 := (Nat.modEq_iff_dvd' (by decide : 1 ≤ 2)).mp hmod.symm
-      exact hp.ne_one (Nat.dvd_one.mp hd)
+      exact two_pow_self_mod_ne_one hn ((seq_eq_two _).mp h)
     have right_ne_one : seq (3 ^ n % n) ≠ 1 := by
       intro h
       have hp := Nat.minFac_prime (by omega : n ≠ 1)

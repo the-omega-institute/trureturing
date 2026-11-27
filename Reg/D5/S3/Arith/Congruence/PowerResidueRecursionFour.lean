@@ -2,7 +2,7 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Arith.Congruence.PowerResidueRecursionFour
 import Reg.Support.SingleDependentReadout
 
-/-! # Source-bound audit of positivity in the A374911 recursion -/
+/-! # Source-bound audits of positivity and the base-two remainder exclusion -/
 
 open _root_.D5.S3.Arith.Congruence.PowerResidueRecursionFour
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
@@ -67,5 +67,64 @@ noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
   continuation := .unknown
   familyRecord := none
   options := #[]
+
+namespace BaseTwoRemainder
+
+def actual : Realization signature :=
+  realize signature (fun _ _ n => 2 ^ n % n) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => 1) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ {n : ℕ}, 1 < n → R.readout () () n ≠ 1
+
+private theorem rejected_law : ¬ arena.Law rejected :=
+  fun h => h (n := 2) (by decide) rfl
+
+def registration : Registration arena (type_of% @two_pow_self_mod_ne_one) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@two_pow_self_mod_ne_one, rejected, rejected_law⟩
+  sensitivity :=
+    _root_.Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected rejected_law
+  dependence := by
+    intro _
+    refine ⟨(), 2, 3, ?_⟩
+    exact (by decide : (2 : ℕ) ^ 2 % 2 ≠ 2 ^ 3 % 3)
+
+noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+    (@two_pow_self_mod_ne_one) (Realization signature) Unit Unit where
+  unitName :=
+    `D5.S3.Arith.Congruence.PowerResidueRecursionFour.two_pow_self_mod_ne_one.informationUnit
+  realizationName :=
+    `Reg.D5.S3.Arith.Congruence.PowerResidueRecursionFour.BaseTwoRemainder.registration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨registration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ n => 2 ^ n % n) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.Congruence.PowerResidueRecursionFour
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "fn", "arg"], stateBinder := 0
+      functionOperand := false, stateOperand := none, booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end BaseTwoRemainder
 
 end Reg.D5.S3.Arith.Congruence.PowerResidueRecursionFour

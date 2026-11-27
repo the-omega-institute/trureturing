@@ -90,6 +90,18 @@ $$\forall n: \mathbb{N}, \operatorname{seq}\left(n\right) = 4 \Leftrightarrow (n
 
 Values one and two for the left recursive term are impossible. The right term is therefore one, forcing the index to be a power of three. Addition lifting of the exponent gives remainder three to the k minus one for the left argument. For even k, two-adic lifting gives j = 2 + v₂(k) when that remainder is two to the j; this implies two to the j is at most 4k, contradicting exponential growth for k at least three. Odd k at least three is excluded modulo four. The remaining exponents one and two give precisely three and nine. This proves the question explicitly posed by A374911; the proof is derived here from the preceding arithmetic ingredients.
 
+**Theorem 1.7 (Base-two remainder excludes one).**
+
+$$\forall n: \mathbb{N}, 1 < n \Rightarrow 2^{n} \bmod n \neq 1$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Congruence/PowerResidueRecursionFour.two_pow_self_mod_ne_one` (`✓ std3`). ∎
+
+*Citation.* OEIS Foundation Inc. (2026). *OEIS A036236*. URL: <https://oeis.org/A036236>.
+
+*Commentary.*
+
+If the remainder were one, the order of two modulo the least prime factor of the index would divide both the index and that prime minus one. These numbers are coprime, so two would equal one in the residue field.
+
 ## References
 
 - Truth anchor: `D5/S3/Arith/Congruence/PowerResidueRecursionFour.a374911_eq_four`
@@ -98,3 +110,4 @@ Values one and two for the left recursive term are impossible. The right term is
 - Truth anchor: `D5/S3/Arith/Congruence/PowerResidueRecursionFour.seq_eq_three`
 - Truth anchor: `D5/S3/Arith/Congruence/PowerResidueRecursionFour.seq_eq_two`
 - Truth anchor: `D5/S3/Arith/Congruence/PowerResidueRecursionFour.seq_pos`
+- Truth anchor: `D5/S3/Arith/Congruence/PowerResidueRecursionFour.two_pow_self_mod_ne_one`

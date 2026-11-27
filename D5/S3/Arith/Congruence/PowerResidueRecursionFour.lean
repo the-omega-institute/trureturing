@@ -63,7 +63,7 @@ theorem seq_eq_two (n : ℕ) : seq n = 2 ↔ n = 1 := by
     · exact Nat.dvd_of_mod_eq_zero hz₃
   · rintro rfl; exact seq_one
 
-private theorem two_pow_self_mod_ne_one {n : ℕ} (hn : 1 < n) : 2 ^ n % n ≠ 1 := by
+theorem two_pow_self_mod_ne_one {n : ℕ} (hn : 1 < n) : 2 ^ n % n ≠ 1 := by
   intro h
   let p := n.minFac
   have hp : p.Prime := Nat.minFac_prime (by omega)

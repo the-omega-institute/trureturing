@@ -56,7 +56,15 @@ internal sealed class PowerResidueRecursionFourDocument : IScribeDocumentDefinit
                     + "The remaining exponents one and two give precisely three and nine. "
                     + "This proves the question explicitly posed by A374911; the proof "
                     + "is derived here from the preceding arithmetic ingredients.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source, Residues)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source, Residues)),
+            Node("two_pow_self_mod_ne_one", "Base-two remainder excludes one",
+                Disp(Seq(Bound(N()), D(1), Sp, Lt, Sp, N(), Sp, Rightarrow, Sp,
+                    new Formula.Modulo(Pow(D(2), N()), N()), Sp, Neq, Sp, D(1))),
+                "If the remainder were one, the order of two modulo the least prime "
+                    + "factor of the index would divide both the index and that prime "
+                    + "minus one. These numbers are coprime, so two would equal one "
+                    + "in the residue field.",
+                DescribeRole.Theorem, AssessedProvenance.FromLiterature(Residues)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula,
         string prose, DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
