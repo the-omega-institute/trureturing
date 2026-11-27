@@ -35,7 +35,10 @@ internal sealed class A358587Document : IScribeDocumentDefinition
                     + "series over the integers. The displayed denominator has constant coefficient "
                     + "one. The signed recurrence follows by comparing coefficients above degree "
                     + "seven after multiplication by that denominator."))),
-            DescribeRole.Theorem))));
+            DescribeRole.Theorem,
+            openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                ProblemSlugRef.Create("oeis-a358587-unordered-rooted-trees"),
+                ResolutionKind.Proved)))));
 
     private static Formula ResultFormula()
     {
