@@ -534,7 +534,7 @@ Lean statement: `D5/S3/Combinatorics/OrderedTrees/LeafPruning.decoration_weight`
 
 *Commentary.*
 
-For every decoration of a skeleton with u+3 vertices, inflation gives u+5 plus the free gap total vertices, and the decoration has 2u+5 free slots.
+For every decoration whose skeleton belongs to the size-u collection, meaning it has u+3 vertices and vertex height u+2, inflation gives u+5 plus the free gap total vertices, and the decoration has 2u+5 free slots.
 
 ## References
 
