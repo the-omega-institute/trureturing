@@ -108,7 +108,7 @@ public def loadAlternatives : IO (NameMap ConstantInfo) := do
     for ci in data.constants do
       let internalProof := ci.isTheorem && match ci.name with
         | .str (.str _ "_unary") "eq_def" => true
-        | .str _ "_unary" => true
+        | .str _ "_unary" | .str _ "_f" => true
         | .str _ component => component.startsWith "_proof_"
         | _ => false
       let equation := equationScope.isPrefixOf ci.name

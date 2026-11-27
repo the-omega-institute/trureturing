@@ -465,6 +465,11 @@ public theorem Array.foldrM_eq_reverse_foldlM_toList.aux :
   intro m α β monad f xs b i h
   exact (congrFun (foldReversePrefix f xs i h) b).symm
 
+public theorem Array.foldrM_eq_reverse_foldlM_toList.aux._f :
+    type_of% @_root_.Array.foldrM_eq_reverse_foldlM_toList.aux._f := by
+  intro m α β inst f xs i _ init h
+  exact @Array.foldrM_eq_reverse_foldlM_toList.aux m α β inst f xs init i h
+
 public theorem Array.foldrM_eq_reverse_foldlM_toList :
     type_of% @_root_.Array.foldrM_eq_reverse_foldlM_toList := by
   intro m α β monad f b xs
