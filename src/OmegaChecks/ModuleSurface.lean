@@ -1,6 +1,7 @@
 module
 public import Lean
 public import OmegaChecks.InitCompiler.RootNames
+import OmegaChecks.InitPort.WordNative
 import Lean.Elab.ParseImportsFast
 import Lean.Compiler.LCNF.SpecInfo
 import all Lean.Structure
@@ -101,7 +102,8 @@ private def checkSpecializations (env : Environment) (owner : Name) : IO Unit :=
           entry.paramsInfo.any Compiler.LCNF.SpecParamInfo.causesSpecialization do
         throw <| IO.userError s!"invalid parameter specialization for {entry.declName} in {owner}"
 
-private def checkElaboration (env : Environment) (owner : Name) (idx : ModuleIdx) : IO Unit := do
+private def checkElaboration (env full : Environment) (reference? : Option Environment)
+    (owner : Name) (idx : ModuleIdx) : IO Unit := do
   for (n, data) in externAttr.ext.getModuleEntries env idx do
     let (expectedOwner, symbol) ← match n with
       | `Omega.ShareCommon.StateFactory.mk => pure (`OmegaInit.ShareCommon, "omega_share_common_factory_mk")
@@ -190,7 +192,17 @@ private def checkElaboration (env : Environment) (owner : Name) (idx : ModuleIdx
       | `Omega.String.utf8ByteSize => pure (`OmegaInit.Prelude, "omega_string_byte_size")
       | `Omega.String.toList => pure (`OmegaInit.Data.String.Basic, "omega_string_to_list")
       | `Omega.String.ofList => pure (`OmegaInit.Prelude, "omega_string_of_list")
-      | _ => throw <| IO.userError s!"unverified native symbol for {owner}/{n}"
+      | _ => do
+        let original := n.replacePrefix `Omega .anonymous
+        let some ref := reference? | throw <| IO.userError s!"unverified native symbol for {owner}/{n}"
+        unless n == `Omega ++ original && ref.getModuleIdxFor? original == ref.getModuleIdx? (counterpart owner) &&
+            InitPort.WordNative.supported ref owner original do
+          throw <| IO.userError s!"unverified native symbol for {owner}/{n}"
+        InitPort.NativeState.checkNativeNat full
+        discard <| InitPort.WordNative.wrapper ref full n
+        let some (.extern _ _ _ ⟨[.standard `all symbol]⟩) := IR.findEnvDecl full n
+          | throw <| IO.userError s!"missing checked native entry for {owner}/{n}"
+        pure (owner, symbol)
     unless owner == expectedOwner && env.getModuleIdxFor? n == some idx &&
         data == ⟨[.standard `all symbol]⟩ do throw <| IO.userError s!"invalid native state entry {owner}/{n}"
   for (n, implementation) in Compiler.implementedByAttr.ext.getModuleEntries env idx do
@@ -338,12 +350,16 @@ declarations and alias targets are mathematical roots, even in a declaration-fre
 def check (strict : Environment) (full? : Option Environment := none) : IO (Array (Name × Name)) := do
   let strict := withImportedAliases strict
   let mut roots : NameMap Name := {}
+  let nativeOwners := strict.allImportedModuleNames.filter fun owner =>
+    owner.getRoot == `OmegaInit && (strict.getModuleIdx? owner).any fun idx =>
+      !(externAttr.ext.getModuleEntries strict idx).isEmpty
+  let nativeReference ← importModules (nativeOwners.map fun n => {module := counterpart n, importAll := true}) {}
   for port in strict.allImportedModuleNames do
     if !isBasis port then continue
     let some idx := strict.getModuleIdx? port | throw <| IO.userError s!"missing module {port}"
-    checkElaboration strict port idx
     checkSpecializations (full?.getD strict) port
     if port == port.getRoot then
+      checkElaboration strict (full?.getD strict) none port idx
       unless (structureExt.getModuleEntries strict idx).isEmpty &&
           (projectionFnInfoExt.getModuleEntries strict idx).isEmpty do
         throw <| IO.userError s!"unmatched structure registration in the {port} umbrella"
@@ -355,6 +371,7 @@ def check (strict : Environment) (full? : Option Environment := none) : IO (Arra
       continue
     let official := counterpart port
     let reference := withImportedAliases (← importModules #[{module := official}] {} (level := .exported))
+    checkElaboration strict (full?.getD strict) (some nativeReference) port idx
     let officialClasses := classParameters reference (Array.range reference.header.modules.size)
     let visible ← publicClosure strict port
     let visibleIndices := (Array.range strict.header.modules.size).filter fun i =>
@@ -363,7 +380,7 @@ def check (strict : Environment) (full? : Option Environment := none) : IO (Arra
     -- Diagnose the port's own public registrations before those of a re-export.
     for owner in port :: (visible.erase port).toList do
       let some idx := strict.getModuleIdx? owner | throw <| IO.userError s!"missing module {owner}"
-      if owner != port then checkElaboration strict owner idx
+      if owner != port then checkElaboration strict (full?.getD strict) (some nativeReference) owner idx
       let data := strict.header.moduleData[idx]!
       checkStructures strict reference owner idx
       checkInstances strict reference owner idx
