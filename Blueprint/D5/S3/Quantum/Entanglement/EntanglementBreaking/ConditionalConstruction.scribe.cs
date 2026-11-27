@@ -5,6 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Entanglement.EntanglementBre
 internal sealed class ConditionalConstructionDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "A Hermitian matrix and a PPT test give an indecomposable k-entanglement-breaking map.",
         H("Conditional construction of an indecomposable map"),
         Blocks(
             Describe.Lean(DescribeId.Create("eb-conditionalconstruction-conditional-indecomposable-keb"),

@@ -8,6 +8,7 @@ internal sealed class PPTTraceDocument : IScribeDocumentDefinition
         LibraryNoteRef.Create("D5/L/Resource/devendra2023mapping");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Output partial transpose and trace separation of decomposable maps.",
         H("Trace separation for decomposable maps"),
         Blocks(
             Describe.Lean(DescribeId.Create("eb-ppttrace-isdecomposable"),
@@ -34,7 +35,7 @@ internal sealed class PPTTraceDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create("D5/S3/Quantum/Entanglement/EntanglementBreaking/PPTTrace.candidate_trace_bound"),
                 H("Energy gives a negative trace pairing"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("Tracelessness cancels the terms linear in H. The quadratic contribution is negative and the lower bound on the real trace of H squared forces the unnormalized pairing to be at most minus d squared."))),
-                DescribeRole.Theorem)),
+                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("eb-ppttrace-inputchoi-decomposition"),
                 DeclarationHandle.Create("D5/S3/Quantum/Entanglement/EntanglementBreaking/PPTTrace.inputChoi_decomposition"),
                 H("Input choi decomposition"), StatementSource.WithoutFormula(),
@@ -49,5 +50,5 @@ internal sealed class PPTTraceDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create("D5/S3/Quantum/Entanglement/EntanglementBreaking/PPTTrace.candidate_indecomposable"),
                 H("Candidate indecomposable"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("In dimension d at least one, a traceless H with real trace of H squared at least d to the fourth power over two gives an indecomposable candidate whenever the trace test and its partial transpose are both positive semidefinite."))),
-                DescribeRole.Theorem)));
+                DescribeRole.Theorem))));
 }

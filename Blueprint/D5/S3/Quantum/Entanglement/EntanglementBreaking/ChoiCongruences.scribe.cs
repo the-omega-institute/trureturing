@@ -8,6 +8,7 @@ internal sealed class ChoiCongruencesDocument : IScribeDocumentDefinition
         LibraryNoteRef.Create("D5/L/Resource/devendra2023mapping");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Rectangular Choi congruences and the k-entanglement-breaking condition.",
         H("Choi congruences and entanglement breaking"),
         Blocks(
             Describe.Lean(DescribeId.Create("eb-choicongruences-inputchoi"),
@@ -24,7 +25,7 @@ internal sealed class ChoiCongruencesDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create("D5/S3/Quantum/Entanglement/EntanglementBreaking/ChoiCongruences.isKEB_of_choi_congruences"),
                 H("Choi compressions suffice for entanglement breaking"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("A rank-one positive input amplifies to a rectangular local congruence of the input-first Choi matrix. A positive semidefinite input is a finite sum of these rank-one inputs. Separability is preserved under their sum."))),
-                DescribeRole.Theorem)),
+                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("eb-choicongruences-frominputchoi"),
                 DeclarationHandle.Create("D5/S3/Quantum/Entanglement/EntanglementBreaking/ChoiCongruences.fromInputChoi"),
                 H("From input choi"), StatementSource.WithoutFormula(),
@@ -54,5 +55,5 @@ internal sealed class ChoiCongruencesDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create("D5/S3/Quantum/Entanglement/EntanglementBreaking/ChoiCongruences.separable_local_congruence"),
                 H("Separable local congruence"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("A rectangular local congruence on the first factor preserves separability. It replaces every first positive factor P by A P A*."))),
-                DescribeRole.Theorem)));
+                DescribeRole.Theorem))));
 }

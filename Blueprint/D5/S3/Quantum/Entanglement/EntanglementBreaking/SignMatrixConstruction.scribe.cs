@@ -6,6 +6,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Entanglement.EntanglementBre
 internal sealed class SignMatrixConstructionDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Simultaneous sign matrix bounds give indecomposable k-entanglement-breaking maps.",
         H("Indecomposable maps from finite Hermitian signs"),
         Blocks(
             Describe.Lean(DescribeId.Create("eb-signmatrixconstruction-finitesignsample-unconditional"),
@@ -17,12 +18,12 @@ internal sealed class SignMatrixConstructionDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create("D5/S3/Quantum/Entanglement/EntanglementBreaking/SignMatrixConstruction.exists_indecomposable_kEB"),
                 H("Indecomposable k-entanglement-breaking maps"), StatementSource.FromAuthor(F.Disp(Family())),
                 AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("For each integer k at least two and every integer d at least 524288 times k cubed, there is a complex-linear k-entanglement-breaking map from the full d by d matrix algebra into itself that is indecomposable."))),
-                DescribeRole.Theorem)),
+                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("eb-signmatrixconstruction-exists-signcubesample-good"),
                 DeclarationHandle.Create("D5/S3/Quantum/Entanglement/EntanglementBreaking/SignMatrixConstruction.exists_signCubeSample_good"),
                 H("Exists sign cube sample good"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("For k at least two and dimension at least 524288 times k cubed, a single assignment has the Schmidt-restricted quadratic bound and operator norms at most four times d for both the matrix and its output partial transpose."))),
-                DescribeRole.Theorem)));
+                DescribeRole.Theorem))));
 
     private static Formula Family()
     {

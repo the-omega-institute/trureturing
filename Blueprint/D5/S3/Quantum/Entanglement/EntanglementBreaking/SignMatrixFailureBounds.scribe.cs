@@ -5,6 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Entanglement.EntanglementBre
 internal sealed class SignMatrixFailureBoundsDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "The three finite sign failure bounds at the admissible dimensions.",
         H("Dimension thresholds for the three bad events"),
         Blocks(
             Describe.Lean(DescribeId.Create("eb-signmatrixfailurebounds-schmidt-failure-bound-lt-quarter"),

@@ -9,6 +9,7 @@ internal sealed class DevendraMallickSumeshOpenProblemOneDocument : IScribeDocum
         LibraryNoteRef.Create("D5/L/Resource/devendra2023mapping");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "A 2-entanglement-breaking map on complex matrices can be indecomposable.",
         H("Decomposability of 2-entanglement-breaking maps"),
         Blocks(
             Describe.Lean(DescribeId.Create("eb-devendramallicksumeshopenproblemone-claim"),

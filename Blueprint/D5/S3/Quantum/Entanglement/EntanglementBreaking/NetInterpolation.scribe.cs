@@ -5,6 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Entanglement.EntanglementBre
 internal sealed class NetInterpolationDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Bilinear and quadratic interpolation of finite net estimates.",
         H("Interpolation from finite nets"),
         Blocks(
             Describe.Lean(DescribeId.Create("eb-netinterpolation-exists-schmidt-bilinear-net"),
@@ -16,10 +17,10 @@ internal sealed class NetInterpolationDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create("D5/S3/Quantum/Entanglement/EntanglementBreaking/NetInterpolation.exists_full_sphere_quadratic_net"),
                 H("Quadratic net controls the Hermitian operator norm"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("Approximate a unit vector on both sides of its quadratic form. Hermiticity relates the supremum of the absolute quadratic form to the operator norm."))),
-                DescribeRole.Theorem)),
+                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("eb-netinterpolation-coeffvector"),
                 DeclarationHandle.Create("D5/S3/Quantum/Entanglement/EntanglementBreaking/NetInterpolation.coeffVector"),
                 H("Coeff vector"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("Turn a coefficient matrix into the Euclidean vector with the same entries, indexed by the product of the row and column types."))),
-                DescribeRole.Definition)));
+                DescribeRole.Definition))));
 }

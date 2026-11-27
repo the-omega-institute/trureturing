@@ -5,6 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Entanglement.EntanglementBre
 internal sealed class FiniteSignTailsDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Sub-Gaussian tails for finite Hermitian sign matrices.",
         H("Concentration for a finite Hermitian sign matrix"),
         Blocks(
             Describe.Lean(DescribeId.Create("eb-finitesigntails-signcubemeasure"),
@@ -16,7 +17,7 @@ internal sealed class FiniteSignTailsDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create("D5/S3/Quantum/Entanglement/EntanglementBreaking/FiniteSignTails.signCubeSample_quadratic_tail"),
                 H("Fixed-vector quadratic tail"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("A quadratic form at a vector of Euclidean norm at most one is a real linear form in independent signed variables. Its squared coefficient norm is bounded by 18/25. The two one-sided sub-Gaussian bounds give the absolute tail."))),
-                DescribeRole.Theorem)),
+                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("eb-finitesigntails-signvalue"),
                 DeclarationHandle.Create("D5/S3/Quantum/Entanglement/EntanglementBreaking/FiniteSignTails.signValue"),
                 H("Sign value"), StatementSource.WithoutFormula(),
@@ -101,5 +102,5 @@ internal sealed class FiniteSignTailsDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create("D5/S3/Quantum/Entanglement/EntanglementBreaking/FiniteSignTails.signCubeSample_bilinear_finset_tail"),
                 H("Sign cube sample bilinear finset tail"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("A finite family of pairs of unit-ball vectors has a simultaneous upper tail bounded by the sum of their individual bilinear bounds."))),
-                DescribeRole.Theorem)));
+                DescribeRole.Theorem))));
 }

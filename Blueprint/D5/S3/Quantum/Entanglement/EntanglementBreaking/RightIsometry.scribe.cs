@@ -5,6 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Entanglement.EntanglementBre
 internal sealed class RightIsometryDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "A right isometric factorization through a prescribed finite dimension.",
         H("Right isometric factorization"),
         Blocks(
             Describe.Lean(DescribeId.Create("eb-rightisometry-exists-right-isometry-factorization"),

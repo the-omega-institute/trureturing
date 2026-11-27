@@ -5,6 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Entanglement.EntanglementBre
 internal sealed class BallNetDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Volumetric finite nets in finite-dimensional real normed spaces.",
         H("Volumetric covering of the unit ball"),
         Blocks(
             Describe.Lean(DescribeId.Create("eb-ballnet-exists-finset-net-unitball"),

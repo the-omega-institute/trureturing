@@ -5,6 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Entanglement.EntanglementBre
 internal sealed class FiniteSignMatricesDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Hermitian sign matrices have zero trace and fixed energy.",
         H("Finite Hermitian sign matrices"),
         Blocks(
             Describe.Lean(DescribeId.Create("eb-finitesignmatrices-finitesignmatrix"),
@@ -21,7 +22,7 @@ internal sealed class FiniteSignMatricesDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create("D5/S3/Quantum/Entanglement/EntanglementBreaking/FiniteSignMatrices.finiteSignSample_conditional"),
                 H("The sign matrix construction under three bounds"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("The sign choices supply Hermiticity, tracelessness and sufficient energy. The remaining hypotheses impose the Schmidt-restricted quadratic bound and positive semidefiniteness of both trace tests."))),
-                DescribeRole.Theorem)),
+                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("eb-finitesignmatrices-signscalar"),
                 DeclarationHandle.Create("D5/S3/Quantum/Entanglement/EntanglementBreaking/FiniteSignMatrices.signScalar"),
                 H("Sign scalar"), StatementSource.WithoutFormula(),
@@ -76,5 +77,5 @@ internal sealed class FiniteSignMatricesDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create("D5/S3/Quantum/Entanglement/EntanglementBreaking/FiniteSignMatrices.finiteSignSample_energy_lower"),
                 H("Finite sign sample energy lower"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("If d is at least two, the real trace of the square is at least d to the fourth power divided by two."))),
-                DescribeRole.Theorem)));
+                DescribeRole.Theorem))));
 }
