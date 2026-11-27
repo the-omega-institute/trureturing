@@ -22,15 +22,42 @@ open Lean Compiler LCNF OmegaChecks.InitPort.NativeState
 
 namespace GeneratedNative
 
-private partial def dependencies (env : Environment) (localNames : NameSet) (n : Name) :
+/-- Recover the pinned name, including private declarations in their lexical owner. -/
+private def originalName (n : Name) : Name := Id.run do
+  if let some user := privateToUserName? n then
+    if let some lexical := privatePrefix? n then
+      if (`_private.OmegaInit).isPrefixOf lexical && isPrivatePrefix lexical then
+        return lexical.replacePrefix `_private.OmegaInit `_private.Init ++ user.replacePrefix `Omega .anonymous
+  return n.replacePrefix `Omega .anonymous
+
+/-- A pinned partial definition has a safe opaque face and a separate compiler-only recursion.
+Keep its original fallback in the kernel and translate the executable code on the strict types. -/
+private def formatCode? (source : Environment) (ci : ConstantInfo) : Option DefinitionVal := do
+  let .opaqueInfo dst := ci | none
+  let sourceName := originalName dst.name
+  let some userName := privateToUserName? sourceName | none
+  guard ([`Std.Format.be, `Std.Format.spaceUptoLine'].contains userName &&
+    source.getModuleIdxFor? sourceName == source.getModuleIdx? `Init.Data.Format.Basic)
+  let some (.opaqueInfo src) := source.find? sourceName | none
+  let recName := Compiler.mkUnsafeRecName src.name
+  let some (.defnInfo d) := source.find? recName | none
+  let translate := InitKernelPort.translate InitKernelPort.portName
+  guard (!src.isUnsafe && !dst.isUnsafe && d.safety == DefinitionSafety.partial && d.all == [recName] &&
+    src.levelParams == dst.levelParams && d.levelParams == dst.levelParams &&
+    translate src.type == dst.type && translate d.type == dst.type && translate src.value == dst.value)
+  let name := Compiler.mkUnsafeRecName dst.name
+  let value := (translate d.value).replace fun e => if e.isConstOf name then some (.const dst.name e.constLevels!) else none
+  return {d with name, all := [name], type := dst.type, value, safety := .safe}
+
+private partial def dependencies (env : Environment) (formatCode : NameMap DefinitionVal) (localNames : NameSet) (n : Name) :
     StateM NameSet (Array Name) := do
   if !(localNames.contains n) || (← get).contains n then return #[]
   modify (·.insert n)
   let some ci := env.find? n | return #[]
-  let some body := ci.value? | return #[]
+  let some body := (formatCode.find? n).map (·.value) <|> ci.value? | return #[]
   let mut prior := #[]
   for dep in ci.type.getUsedConstants ++ body.getUsedConstants do
-    prior := prior ++ (← dependencies env localNames dep)
+    prior := prior ++ (← dependencies env formatCode localNames dep)
   return prior.push n
 
 /-- A constructor can contain another inductive from the same owner. Defer its layout
@@ -51,14 +78,6 @@ private partial def compileLayoutsInOrder (groups : Array InductiveVal) : CoreM 
   if deferred.isEmpty then return
   if deferred.size < groups.size then compileLayoutsInOrder deferred
   else for (name, reason) in reasons do IO.println s!"missing layout {name}: {reason}"
-
-/-- Recover the pinned name, including private declarations in their lexical owner. -/
-private def originalName (n : Name) : Name := Id.run do
-  if let some user := privateToUserName? n then
-    if let some lexical := privatePrefix? n then
-      if (`_private.OmegaInit).isPrefixOf lexical && isPrivatePrefix lexical then
-        return lexical.replacePrefix `_private.OmegaInit `_private.Init ++ user.replacePrefix `Omega .anonymous
-  return n.replacePrefix `Omega .anonymous
 
 /-- Use the published strict calling conventions of runtime operands before boxing higher-order calls. -/
 private def missingRuntimeDependency (source : Environment) (n : Name) (recursive : Name := .anonymous) : CoreM Bool := do
@@ -261,7 +280,7 @@ private def checkCallSignatures : Pass := Pass.mkPerDeclaration `checkCallSignat
       | _ => pure ()
   return decl
 
-private def compileOwner (source : Environment) (groups : Array InductiveVal) (words order : Array Name) : CoreM Unit := do
+private def compileOwner (source : Environment) (formatCode : NameMap DefinitionVal) (groups : Array InductiveVal) (words order : Array Name) : CoreM Unit := do
   let strict ← getEnv
   let manager ← PassInstaller.run (← getPassManager)
     (.installBefore .impure `explicitBoxing (fun _ => checkCallSignatures))
@@ -274,6 +293,14 @@ private def compileOwner (source : Environment) (groups : Array InductiveVal) (w
   compileLayoutsInOrder groups
   OmegaChecks.InitPort.WordNative.install words
   for n in order do
+    if let some code := formatCode.find? n then
+      let before ← Core.saveState
+      try
+        compileEquation source n code
+      catch e =>
+        IO.println s!"cannot compile pinned formatting operation {n}: {← e.toMessageData.toString}"
+        before.restore
+      continue
     if n == `Omega.Lean.RArray.get && (← getImpureSignature? `Omega.Lean.RArray.getImpl).isSome then
       let impl := `Omega.Lean.RArray.getImpl
       let some (.defnInfo d) := strict.find? n | throwError "missing reflected array lookup"
@@ -349,6 +376,7 @@ private unsafe def install (source publicSource : Environment) (lib out : System
   let mut groups := #[]
   let mut locals := #[]
   let mut candidates := #[]
+  let mut formatCode : NameMap DefinitionVal := {}
   let mut words := #[]
   -- These eager word cardinalities require 65,536 through 2^64 successor cells
   -- when a detached seed uses a separately defined unary Nat.
@@ -373,6 +401,11 @@ private unsafe def install (source publicSource : Environment) (lib out : System
       if missing then
         groups := groups.push i
         locals := locals ++ family
+    | .opaqueInfo _ =>
+      if !onlyLayouts && !oldNative.contains ci.name then
+        if let some d := formatCode? source ci then
+          candidates := candidates.push ci.name
+          formatCode := formatCode.insert ci.name d
     | .defnInfo d =>
       if onlyLayouts || oldNative.contains d.name || ci.isUnsafe || ci.isPartial then continue
       let upstream := originalName d.name
@@ -383,7 +416,7 @@ private unsafe def install (source publicSource : Environment) (lib out : System
   if onlyLayouts && groups.isEmpty then return
   let localNames := NameSet.ofList candidates.toList
   let order : Array Name := Id.run <|
-    (candidates.foldlM (fun acc n => return acc ++ (← dependencies env localNames n)) #[]).run' {}
+    (candidates.foldlM (fun acc n => return acc ++ (← dependencies env formatCode localNames n)) #[]).run' {}
   let mut context ← localEnv env owner (locals ++ words ++ candidates)
   -- Compiler tags stored under the imported module index need local entries while compiling.
   for n in locals ++ candidates do
@@ -393,7 +426,7 @@ private unsafe def install (source publicSource : Environment) (lib out : System
     if let some proj := env.getProjectionFnInfo? n then
       context := addProjectionFnInfo context n proj.ctorName proj.numParams proj.i proj.fromClass
   let ctx : Core.Context := {fileName := "<generated native Init>", fileMap := default, options := Elab.async.set {} false}
-  let (_, st) ← (compileOwner source groups words order).toIO ctx {env := context}
+  let (_, st) ← (compileOwner source formatCode groups words order).toIO ctx {env := context}
   if onlyLayouts then
     writeCode lib owner st.env layouts
   else
