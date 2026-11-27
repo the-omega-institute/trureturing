@@ -40,7 +40,8 @@ private def float? : Name → Option (String × IR.IRType)
   | _ => none
 
 private def isFloatCall (source : Environment) (owner name : Name) : Bool := Id.run do
-  unless [`OmegaInit.Data.Float.Float, `OmegaInit.Data.Float.Float32].contains owner do return false
+  unless [`OmegaInit.Data.Float.Float, `OmegaInit.Data.Float.Float32,
+          `OmegaInit.Data.SInt.Float, `OmegaInit.Data.SInt.Float32].contains owner do return false
   let some ci := source.find? name | return false
   unless (ci matches .defnInfo _ | .opaqueInfo _) && isExtern source name do return false
   if (float? name.getPrefix).isSome &&
