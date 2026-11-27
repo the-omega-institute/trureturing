@@ -26,6 +26,7 @@ import all Init.Data.Nat.Gcd
 import all Init.WFComputable
 import all Init.Data.List.Sort.Impl
 import all Init.Data.BitVec.Lemmas
+import all Init.Data.Array.Basic
 import all Init.Data.Array.Attach
 import all Init.Data.Vector.Attach
 import all Init.Data.List.ToArray
@@ -501,5 +502,57 @@ public theorem String.Slice.Pos.nextFast.eq_1 :
   simp [_root_.String.Slice.Pos.ext_iff, _root_.String.Pos.Raw.ext_iff, _root_.String.Slice.Pos.get_eq_get_str]
   omega
 
+
+private theorem neighbors (xs : List α) (i : Nat) (hi : i < xs.length) (later : i + 1 < xs.length) :
+    xs.eraseIdx i = ((xs.set (i+1) xs[i]).set i xs[i+1]).eraseIdx (i+1) := by
+  induction i generalizing xs with
+  | zero =>
+    match xs with
+    | [] => exact False.elim (Nat.not_lt_zero _ hi)
+    | [_] => exact False.elim ((Nat.lt_irrefl 1) later)
+    | _ :: _ :: _ => rfl
+  | succ i ih =>
+    match xs with
+    | [] => exact False.elim (Nat.not_lt_zero _ hi)
+    | x :: ys => exact congrArg (List.cons x) (ih ys (Nat.lt_of_succ_lt_succ hi) (Nat.lt_of_succ_lt_succ later))
+
+private theorem lastErase (xs : List α) (i : Nat) (hi : i < xs.length) (last : ¬ i + 1 < xs.length) :
+    xs.eraseIdx i = xs.dropLast := by
+  induction i generalizing xs with
+  | zero =>
+    match xs with
+    | [] => exact False.elim (Nat.not_lt_zero _ hi)
+    | [_] => rfl
+    | a :: b :: ys => exact False.elim (last (Nat.succ_lt_succ (Nat.zero_lt_succ _)))
+  | succ i ih =>
+    match xs with
+    | [] => exact False.elim (Nat.not_lt_zero _ hi)
+    | [x] => exact False.elim (Nat.not_lt_zero _ (Nat.lt_of_succ_lt_succ hi))
+    | x :: y :: ys =>
+      exact congrArg (List.cons x) (ih (y :: ys) (Nat.lt_of_succ_lt_succ hi) (fun h => last (Nat.succ_lt_succ h)))
+
+private theorem nativeSwap (xs : List α) (i j : Nat) (hi : i < xs.toArray.size) (hj : j < xs.toArray.size) :
+    xs.toArray.swap i j hi hj = ((xs.set i xs[j]).set j xs[i]).toArray := by rfl
+
+private theorem nativePop (xs : List α) : xs.toArray.pop = xs.dropLast.toArray := rfl
+
+public theorem Array.eraseIdx.eq_def :
+    type_of% (private_decl% @_root_.Array.eraseIdx.eq_def) := by
+  intro α xs i bound
+  obtain ⟨xs⟩ := xs
+  split
+  next h =>
+    let swapped := xs.toArray.swap (i + 1) i h bound
+    have eq := _root_.List.eraseIdx_toArray swapped.toList (i + 1)
+      (by exact _root_.Array.eraseIdx._proof_1 xs.toArray i bound h)
+    change xs.toArray.eraseIdx i bound = swapped.eraseIdx (i+1) _
+    rw [_root_.List.eraseIdx_toArray]
+    refine Eq.trans ?_ eq.symm
+    dsimp only [swapped]
+    rw [nativeSwap]
+    exact congrArg List.toArray (neighbors xs i bound h)
+  next h =>
+    rw [_root_.List.eraseIdx_toArray, nativePop]
+    exact congrArg List.toArray (lastErase xs i bound h)
 
 end OmegaChecks.InitPort.Alternatives

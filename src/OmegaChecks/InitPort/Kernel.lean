@@ -630,6 +630,17 @@ partial def visit (n : Name) : M Bool := do
   if let some alt := OmegaChecks.InitPort.alternativeBody? c.alternatives ci then
     let result ← attempt alt
     if result matches .added then return ← record n .added
+    if let .blocked _ (some missing) := result then
+      unless c.source.contains missing do
+        -- An auxiliary theorem can live in a later official module than the requested root.
+        -- Inline its checked alternative so the earlier module can be published independently.
+        let localized := alt.replace fun e => do
+          let .const name levels := e | none
+          guard (!c.source.contains name)
+          let .thmInfo info ← c.alternatives.find? name | none
+          return info.value.instantiateLevelParams info.levelParams levels
+        if !localized.equal alt && (← attempt localized) matches .added then
+          return ← record n .added
     -- An alternative can contain index proofs inherited from the official statement.
     let mut candidate := alt
     if ci.isTheorem && (result matches .blocked _ (some _)) then
