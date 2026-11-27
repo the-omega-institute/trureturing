@@ -283,6 +283,10 @@ def generate(stage, product, seed, roots, excluded, original_seed):
                                         check_names=has_interfaces(inventory, {"Init.Prelude": {
                                             "Lean.Name.append", "Lean.addMacroScope", "Lean.extractMacroScopes",
                                             "Lean.MacroScopesView.review"}}),
+                                        check_toolchain=has_interfaces(inventory, {"Init.Meta.Defs": {
+                                            "Lean.getGithash", "Lean.githash", "Lean.version.getSpecialDesc",
+                                            "Lean.version.specialDesc", "Lean.version.getIsRelease", "Lean.version.isRelease",
+                                            "Lean.Internal.isStage0", "Lean.Internal.hasLLVMBackend"}}),
                                         check_strings=has_interfaces(inventory, string_interfaces),
                                         check_list_search=has_interfaces(inventory, {
                                             "Init.Data.List.Control": {"List.anyM", "List.allM"},

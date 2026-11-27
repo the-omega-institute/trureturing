@@ -144,6 +144,8 @@ public def supported (source : Environment) (owner name : Name) : Bool :=
   let platform := owner == `OmegaInit.System.Platform && [`System.Platform.getIsWindows, `System.Platform.getIsOSX,
     `System.Platform.getIsLinux, `System.Platform.getIsEmscripten, `System.Platform.getTarget,
     `System.Platform.Internal.getHardwareConcurrency].contains name
+  let version := owner == `OmegaInit.Meta.Defs && [`Lean.getGithash, `Lean.version.getIsRelease,
+    `Lean.version.getSpecialDesc, `Lean.Internal.isStage0, `Lean.Internal.hasLLVMBackend].contains name
   let modular := (owner == `OmegaInit.Data.Nat.Gcd && name == `Nat.gcd) ||
     (owner == `OmegaInit.Data.Nat.Div.Basic && name == `Nat.divExact) ||
     (owner == `OmegaInit.Data.Nat.PowMod && name == `Nat.powMod)
@@ -169,7 +171,7 @@ public def supported (source : Environment) (owner name : Name) : Bool :=
     `OmegaInit.Data.RArray, `OmegaInit.Data.Nat.Internal.Linear, `OmegaInit.Data.Nat.Fold, `OmegaInit.Data.Fin.Lemmas].contains owner && IndexedNative.supported name) ||
     ([`OmegaInit.Data.Float.Model.Float, `OmegaInit.Data.Float.Model.Float32].contains owner && modelOperation name) ||
     (owner == `OmegaInit.Prelude && SyntaxPositionNative.supported name) ||
-    ((base || intPrimitive || platform || byteOp || textCompare || modular || stringOp || wordRepr || bitwise || logarithm || (inOwner && primitive)) && isExtern source name) ||
+    ((base || intPrimitive || platform || version || byteOp || textCompare || modular || stringOp || wordRepr || bitwise || logarithm || (inOwner && primitive)) && isExtern source name) ||
     ((intOwner || [`OmegaInit.Data.Dyadic.Basic, `OmegaInit.Data.ByteArray.Extra, `OmegaInit.Data.ByteArray.Basic, `OmegaInit.Data.Int.Repr, `OmegaInit.Data.Repr, `OmegaInit.Data.Nat.Bitwise.Basic, `OmegaInit.Data.BitVec.Basic].contains owner || [`OmegaInit.Data.UInt.Basic, `OmegaInit.Data.SInt.Basic].contains owner) && usesPinnedFunction name)
 
 private def symbol (n : Name) := (n.replacePrefix `Omega .anonymous).mangle "omega_word_"
@@ -267,7 +269,16 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
   let params := impl.params
   let ret := impl.resultType
   let target ← match impl with
-    | .extern _ _ _ ⟨[.standard `all entry]⟩ => pure entry
+    | .extern _ _ _ ⟨[.standard `all entry]⟩ => do
+      if official == `Lean.getGithash then
+        -- The standalone runtime exports the primitive. The shared Lean library exports its boxed entry.
+        let boxed := mkBoxedName official
+        let some (.fdecl _ args .object ..) := IR.findEnvDecl source boxed
+          | throw <| IO.userError "missing boxed git revision getter"
+        unless args.map (·.ty) == #[.tagged] && entry == "lean_get_githash" do
+          throw <| IO.userError "unexpected git revision getter ABI"
+        pure (getSymbolStem source boxed)
+      else pure entry
     | .fdecl .. =>
       unless usesPinnedFunction official do
         throw <| IO.userError s!"unexpected compiled word function {official}"
@@ -651,6 +662,8 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
       unless (ret == .float || ret == .float32) && params.all (·.ty == ret) do
         throw <| IO.userError s!"unexpected math library signature {target}"
       pure <| header ++ s!"extern {ty} {target}({String.intercalate ", " (List.replicate params.size ty)});\n"
+  else if official == `Lean.getGithash then pure s!"\nextern lean_obj_res {target}(lean_obj_arg);\n"
+  else if official == `Lean.Internal.hasLLVMBackend then pure s!"\nextern uint8_t {target}(lean_obj_arg);\n"
   else if [`System.Platform.getIsWindows, `System.Platform.getIsOSX, `System.Platform.getIsLinux,
       `System.Platform.getIsEmscripten, `System.Platform.Internal.getHardwareConcurrency].contains official then
     let t := if ret == .uint8 then "uint8_t" else "uint32_t"

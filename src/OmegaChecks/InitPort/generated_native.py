@@ -98,7 +98,7 @@ def check_runtime_ir(stage, library, adapter, consumer):
 
 def compile_generated(stage, product, graph, seed_ir, owners=None, *, original_seed=None, before_owner=None,
                       check_strings=True, check_literals=True, check_mixed=True, check_rat=True, check_bootstrap=True,
-                      check_list_search=True, check_decoding=True, check_names=True):
+                      check_list_search=True, check_decoding=True, check_names=True, check_toolchain=True):
     """Compile generated owners in import order and preserve the native symbols of existing owners."""
     requested = set(graph if owners is None else owners)
     selected = [owner for owner in TopologicalSorter(graph).static_order()
@@ -238,6 +238,8 @@ def compile_generated(stage, product, graph, seed_ir, owners=None, *, original_s
                 raise ValueError("missing strict String.Basic initializer")
             loader = f"--plugin={shim}=runtime_initialize_{initializer}"
             options = ["--decode"]
+            if check_toolchain and "OmegaInit.Meta.Defs" in dependencies:
+                run("lake", "env", "lean", loader, "--run", HERE / "ToolchainInfo.lean", library)
         else:
             run("leanc", "-shared", "-fPIC", "-DLEAN_EXPORTING", "-I", HERE, *string_sources, "-o", shim)
             loader = "--load-dynlib=" + str(shim)
