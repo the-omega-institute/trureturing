@@ -16,7 +16,7 @@ public unsafe def main (args : List String) : IO Unit := do
     let get ← IO.ofExcept <| env.evalConst (Unit → StringRepr) {} getter
     let stored ← IO.ofExcept <| env.evalConst StringRepr {} value
     let bytes := expected.toUTF8.data.toList.map UInt8.toNat
-    unless (get ()).bytes == bytes && stored.bytes == bytes do throw <| IO.userError s!"incorrect pinned {getter} or {value}"
+    unless (get ()).bytes.data == bytes && stored.bytes.data == bytes do throw <| IO.userError s!"incorrect pinned {getter} or {value}"
   for (getter, expected) in [(`Omega.Lean.version.getIsRelease, Lean.version.isRelease),
       (`Omega.Lean.Internal.isStage0, Lean.Internal.isStage0 ()),
       (`Omega.Lean.Internal.hasLLVMBackend, Lean.Internal.hasLLVMBackend ())] do

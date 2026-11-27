@@ -43,9 +43,10 @@ private def readWrapper (source strict : Environment) (n : Name) (symbol decoder
   let input := if path then "native" else "input"
   let rest := if buffer then ", packed" else ""
   let prepare := if path then "  lean_object *native = omega_string_to_lean(input);\n" else
-    if buffer then "  lean_object *packed = omega_bytes_to_lean(bytes);\n" else ""
+    if buffer then (if formals[1]!.borrow then "  lean_inc(bytes);\n" else "") ++
+      "  lean_object *alias;\n  lean_object *packed = omega_bytes_take_native(bytes, &alias);\n" else ""
   let release := (if path then "  lean_dec(native);\n" else "") ++ (if !formals[0]!.borrow then "  lean_dec(input);\n" else "") ++
-    (if buffer && !formals[1]!.borrow then "  lean_dec(bytes);\n" else "") ++ (if formals.back!.borrow then "  lean_inc(world);\n" else "")
+    (if buffer then "  if (alias) lean_dec_ref(alias);\n" else "") ++ (if formals.back!.borrow then "  lean_inc(world);\n" else "")
   return s!"\nextern lean_obj_res {target}(b_lean_obj_arg input{more});\n" ++
     s!"LEAN_EXPORT lean_obj_res {symbol}(b_lean_obj_arg input{more}, lean_obj_arg world) \{\n" ++
     s!"{prepare}  lean_object *r = {target}({input}{rest});\n{release}  return strict_result(r, world, {decoder});\n}\n"

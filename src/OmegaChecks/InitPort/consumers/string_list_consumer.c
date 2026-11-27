@@ -131,7 +131,7 @@ int main(void) {
     lean_dec(native);
     lean_dec(again);
     if (!same) return 5;
-    lean_object *empty = omega_string_scalars(omega_string_wrap(lean_box(0), 0));
+    lean_object *empty = omega_string_scalars(omega_string_wrap(omega_bytes_from_data(NULL, 0), 0));
     if (empty != lean_box(0)) return 6;
     lean_dec(empty);
     return 0;

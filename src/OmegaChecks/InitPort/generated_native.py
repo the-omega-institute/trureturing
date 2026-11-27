@@ -96,32 +96,36 @@ def check_runtime_ir(stage, library, adapter, consumer):
         library, check)
 
 
-def check_marked_strings(stage, library, inputs):
-    client = stage / "string-mark-consumer.c"
-    run("lean", "-R", STRICT_SOURCES, "-c", client, STRICT_SOURCES / "StringMarkConsumer.lean",
-        env={**os.environ, "LEAN_PATH": str(library)})
-    app = stage / "check-string-mark"
-    run("leanc", "-I", HERE, client, HERE / "consumers/string_mark_consumer.c", *inputs, "-o", app)
+def check_linear_marks(stage, library, inputs, kind):
+    client = stage / f"{kind}-mark-consumer.c"
+    consumer = STRICT_SOURCES / f"{kind.capitalize()}MarkConsumer.lean"
+    run("lean", "-R", STRICT_SOURCES, "-c", client, consumer, env={**os.environ, "LEAN_PATH": str(library)})
+    app = stage / f"check-{kind}-mark"
+    run("leanc", "-I", HERE, client, HERE / f"consumers/{kind}_mark_consumer.c", *inputs, "-o", app)
     base = {k: v for k, v in os.environ.items() if k != "LEAN_ABORT_ON_NONLINEAR"}
+    operations = ["mark", "remark", "propagate", "propagate-fresh", "propagate-unmarked", "push"]
+    if kind == "byte":
+        operations.extend(["set", "set-out", "copy", "text"])
     for value in ["", "hé中"]:
         for abort in [False, True]:
             env = {**base, "LEAN_ABORT_ON_NONLINEAR": "1"} if abort else base
-            for operation in ["mark", "remark", "propagate", "propagate-fresh", "propagate-unmarked", "push"]:
+            for operation in operations:
                 for share in ["", "shared-"]:
                     case = share + operation
                     native, strict = (subprocess.run([app, variant, case, value], env=env, capture_output=True)
                                       for variant in ["native", "strict"])
                     if native.returncode != strict.returncode or native.stdout != strict.stdout:
-                        raise ValueError(f"string {case}, {value!r}, abort={abort}: "
+                        raise ValueError(f"{kind} {case}, {value!r}, abort={abort}: "
                                          f"native {native.returncode} {native.stdout!r}, "
                                          f"strict {strict.returncode} {strict.stdout!r}")
-                    if native.returncode != 0 and not (abort and share and operation in ["remark", "propagate", "push"]):
+                    if native.returncode != 0 and not (abort and share and
+                            operation in ["remark", "propagate", "push", "set", "copy"]):
                         native.check_returncode()
 
 
 def compile_generated(stage, product, graph, seed_ir, owners=None, *, original_seed=None, before_owner=None,
                       check_sharing=None, check_macro_reader=False,
-                      check_strings=True, check_string_marks=False, check_literals=True, check_mixed=True, check_rat=True, check_bootstrap=True,
+                      check_strings=True, check_string_marks=False, check_byte_marks=False, check_literals=True, check_mixed=True, check_rat=True, check_bootstrap=True,
                       check_list_search=True, check_decoding=True, check_names=True, check_toolchain=True, check_thunks=False):
     """Compile generated owners in import order and preserve the native symbols of existing owners."""
     requested = set(graph if owners is None else owners)
@@ -282,10 +286,14 @@ def compile_generated(stage, product, graph, seed_ir, owners=None, *, original_s
             run("leanc", client, HERE / "consumers" / "thunk_consumer.c", *dependency_objects(dependencies), "-o", app)
             run(app, timeout=30)
 
-    if check_string_marks and "OmegaInit.Data.String.Defs" in selected:
+    if (check_string_marks or check_byte_marks) and "OmegaInit.Data.String.Defs" in selected:
         required = reachable(["OmegaInit.Data.String.Defs"])
         if required.issubset(selected) and all(seed_files[d].is_file() for d in required & seed_owners):
-            check_marked_strings(stage, library, dependency_objects(required))
+            inputs = dependency_objects(required)
+            if check_string_marks:
+                check_linear_marks(stage, library, inputs, "string")
+            if check_byte_marks:
+                check_linear_marks(stage, library, inputs, "byte")
 
     if len(string_sources) == len(string_modules) and check_strings:
         list_client = stage / "string-list-consumer.c"

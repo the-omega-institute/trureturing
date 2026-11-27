@@ -308,6 +308,12 @@ def generate(stage, product, seed, roots, excluded, original_seed):
                           "Init.Data.String.Defs": {"String.markLinear", "String.propagateMark"},
                           "Init.Data.String.Bootstrap": {"String.push"},
                       }),
+                      check_byte_marks=has_interfaces(inventory, {
+                          "Init.Data.ByteArray.Basic": {"ByteArray.markLinear", "ByteArray.propagateMark",
+                                                        "ByteArray.set!", "ByteArray.copySlice"},
+                          "Init.Prelude": {"ByteArray.push", "String.ofByteArray"},
+                          "Init.Data.String.Defs": {"String.toUTF8"},
+                      }),
                       check_list_search=has_interfaces(inventory, {
                           "Init.Data.List.Control": {"List.anyM", "List.allM"},
                           "Init.Control.Id": {"Id.instMonad"},

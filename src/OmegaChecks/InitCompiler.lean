@@ -108,6 +108,21 @@ private def officialDeclaration (stx : Syntax) : CommandElabM (Environment × Co
       | throwError "kernel rejected native compiler marker {name}"
     setEnv checked
 
+/-- The strict seed keeps ByteArray.data in field zero and owns capacity and linearity. -/
+private def installByteExtern (src : Environment) (name : Name) : CoreM Unit := do
+  let spec : Option (String × String × Array (IR.IRType × Bool) × IR.IRType) := match name with
+    | `ByteArray.mk => some ("lean_byte_array_mk", "omega_byte_array_mk", #[(.object, false)], .object)
+    | `ByteArray.emptyWithCapacity => some ("lean_mk_empty_byte_array", "omega_byte_array_empty", #[(.tobject, true)], .object)
+    | `ByteArray.push => some ("lean_byte_array_push", "omega_byte_array_push", #[(.object, false), (.uint8, false)], .object)
+    | _ => none
+  let some (target, symbol, args, result) := spec | return
+  let some (.extern _ ps ret ⟨[.standard `all upstream]⟩) := IR.findEnvDecl src name
+    | throwError "missing pinned native primitive {name}"
+  unless upstream == target && ps.map (fun p => (p.ty, p.borrow)) == args && ret == result do
+    throwError "incompatible pinned native primitive {name}"
+  let n := omegaName name
+  modifyEnv fun env => externAttr.ext.addEntry (asyncDecl := n) env (n, ⟨[.standard `all symbol]⟩)
+
 @[command_parser, builtin_command_parser] def portDefinition := leading_parser
   "port_definition " >> ident >> optional " with_native_code"
 
@@ -119,6 +134,7 @@ private def officialDeclaration (stx : Syntax) : CommandElabM (Environment × Co
     let name := omegaName defn.name
     Lean.addDecl (.defnDecl {defn with name, type, value, all := defn.all.map omegaName}) (forceExpose := true)
     if isAuxRecursor src defn.name then modifyEnv (markAuxRecursor · name)
+    installByteExtern src defn.name
     -- Unfold before compiling arguments, so untaken branches of the pinned ite stay lazy.
     if Compiler.hasMacroInlineAttribute src defn.name then
       setEnv (← ofExcept (Compiler.setInlineAttribute (← getEnv) name .macroInline))
@@ -143,6 +159,9 @@ private def officialDeclaration (stx : Syntax) : CommandElabM (Environment × Co
       if isProtected src (exported.replacePrefix `Omega .anonymous) then
         modifyEnv (addProtected · exported)
     compilerLayouts (types.toArray.map (·.name)) ctors
+    if name == `ByteArray then
+      installByteExtern src `ByteArray.mk
+      Lean.compileDecls #[`Omega.ByteArray.mk] (logErrors := true)
     for typ in types do
       Meta.MetaM.run' <| mkCasesOn typ.name
       Meta.MetaM.run' <| mkRecOn typ.name

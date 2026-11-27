@@ -81,9 +81,8 @@ static int handle_io(const char *path) {
     if (!file_ok(omega_test_unlock, h) || !file_ok(omega_test_truncate, h)) return 0;
     lean_inc(h);
     if (!path_result(omega_test_put(h, encode("héλ界\n"), w), 0, 0)) return 0;
-    lean_object *bytes = lean_alloc_ctor(1, 2, 0);
-    lean_ctor_set(bytes, 0, lean_box(0));
-    lean_ctor_set(bytes, 1, omega_bytes_from_data((const unsigned char *)"\xff", 1));
+    const unsigned char sample[] = {0, 255};
+    lean_object *bytes = omega_bytes_from_data(sample, sizeof(sample));
     lean_inc(h);
     if (!path_result(omega_test_write(h, bytes, w), 0, 0) ||
         !file_ok(omega_test_flush, h) || !file_ok(omega_test_rewind, h)) return 0;
@@ -94,9 +93,9 @@ static int handle_io(const char *path) {
     out = omega_test_read(h, omega_nat_from_uint64(9), w);
     if (lean_obj_tag(out)) return 0;
     bytes = lean_ctor_get(out, 0);
-    int ok = !lean_is_scalar(bytes) && lean_ctor_get(bytes, 0) == lean_box(0) &&
-        !lean_is_scalar(lean_ctor_get(bytes, 1)) && lean_ctor_get(lean_ctor_get(bytes, 1), 0) == lean_box(255) &&
-        lean_ctor_get(lean_ctor_get(bytes, 1), 1) == lean_box(0);
+    lean_object *packed = omega_bytes_to_lean(bytes);
+    int ok = lean_sarray_size(packed) == sizeof(sample) && !memcmp(lean_sarray_cptr(packed), sample, sizeof(sample));
+    lean_dec_ref(packed);
     lean_dec(out);
     return ok;
 }

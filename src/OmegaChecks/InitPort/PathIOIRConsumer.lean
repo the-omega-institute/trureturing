@@ -5,7 +5,7 @@ meta import OmegaChecks.InitPort.NativeState
 
 open Lean
 
-open OmegaChecks.InitPort.NativeState (StringRepr)
+open OmegaChecks.InitPort.NativeState (StringRepr BytesRepr)
 open OmegaChecks.InitPort.NativeState.StringRepr (encode)
 
 private inductive Status where
@@ -51,21 +51,21 @@ private unsafe def checkHandle (env : Environment) (file : String) : IO Unit := 
   unitOp `fileUnlock
   unitOp `fileTruncate
   let put ← IO.ofExcept <| env.evalConst (IO.FS.Handle → StringRepr → Unit → Status × Unit) {} `filePut
-  let write ← IO.ofExcept <| env.evalConst (IO.FS.Handle → List Nat → Unit → Status × Unit) {} `fileWrite
+  let write ← IO.ofExcept <| env.evalConst (IO.FS.Handle → BytesRepr → Unit → Status × Unit) {} `fileWrite
   let text := "héλ界\n"
   let bytes : List Nat := [0, 255]
   unless (← withHandle (fun h => put h (encode text)) h).1 == .ok &&
-      (← withHandle (fun h => write h bytes) h).1 == .ok do throw <| IO.userError "text or binary write failed"
+      (← withHandle (fun h => write h (.ofList bytes)) h).1 == .ok do throw <| IO.userError "text or binary write failed"
   unitOp `fileFlush
   unless (← IO.FS.readBinFile file) == text.toUTF8 ++ ByteArray.mk #[0, 255] do
     throw <| IO.userError "bytes on disk differ from strict writes"
   unitOp `fileRewind
   let getLine ← IO.ofExcept <| env.evalConst (IO.FS.Handle → Unit → Outcome StringRepr) {} `fileLine
   unless (← unpack (← withHandle getLine h)) == encode text do throw <| IO.userError "unexpected file line"
-  let read ← IO.ofExcept <| env.evalConst (IO.FS.Handle → Nat → Unit → Outcome (List Nat)) {} `fileRead
+  let read ← IO.ofExcept <| env.evalConst (IO.FS.Handle → Nat → Unit → Outcome BytesRepr) {} `fileRead
   let readBytes (size : Nat) := withHandle (fun h => read h size) h
-  unless (← unpack (← readBytes 0)).isEmpty && (← unpack (← readBytes 9)) == bytes &&
-      (← unpack (← readBytes 1)).isEmpty do throw <| IO.userError "wrong binary read or EOF"
+  unless (← unpack (← readBytes 0)).data.isEmpty && (← unpack (← readBytes 9)).data == bytes &&
+      (← unpack (← readBytes 1)).data.isEmpty do throw <| IO.userError "wrong binary read or EOF"
 
 public unsafe def main (args : List String) : IO Unit := do
   let [library, consumer, oldName, newName, file, link, root] := args | throw <| IO.userError "expected library, consumer and fixture paths"

@@ -125,8 +125,12 @@ public def checkErasedField (env : Environment) (record : Name) : IO Unit := do
 /-- The strict ByteArray carries a list of bounded natural bytes at the native boundary. -/
 public def checkStrictBytes (env : Environment) : IO Unit := do
   checkNativeNat env
-  for n in [`Omega.Fin, `Omega.BitVec, `Omega.UInt8, `Omega.Array, `Omega.ByteArray] do
+  for n in [`Omega.Fin, `Omega.BitVec, `Omega.UInt8, `Omega.Array] do
     checkErasedField env n
+  let some l := ctorLayoutExt.find? env `Omega.ByteArray.mk | throw <| IO.userError "missing byte array storage"
+  unless ((impureTrivialStructureInfoExt.find? env `Omega.ByteArray) matches some none) &&
+      l.ctorInfo.cidx == 0 && l.ctorInfo.size == 1 && l.ctorInfo.usize == 2 && l.ctorInfo.ssize == 1 &&
+      (l.fieldInfo matches #[.object 0 _]) do throw <| IO.userError "expected the boxed ByteArray seed"
   let some nil := ctorLayoutExt.find? env `Omega.List.nil | throw <| IO.userError "missing byte list nil"
   unless nil.ctorInfo.cidx == 0 && nil.ctorInfo.size == 0 && nil.ctorInfo.usize == 0 &&
       nil.ctorInfo.ssize == 0 && nil.fieldInfo.isEmpty do throw <| IO.userError "incorrect byte list nil"
@@ -135,13 +139,24 @@ public def checkStrictBytes (env : Environment) : IO Unit := do
   unless cons.ctorInfo.cidx == 1 && cons.ctorInfo.size == 2 && cons.ctorInfo.usize == 0 &&
       cons.ctorInfo.ssize == 0 do throw <| IO.userError "incorrect byte list tag or size"
 
-/-- Matching host layout for the interpreter tests that call strict string code by name. -/
-public structure StringRepr where
-  bytes : List Nat
+/-- Matching host layouts for the interpreter tests that call strict code by name. -/
+public structure BytesRepr where
+  data : List Nat
+  size : USize
+  capacity : USize
   mark : UInt8 := 0
-deriving BEq
 
-public def StringRepr.encode (s : String) : StringRepr := ⟨s.toUTF8.data.toList.map UInt8.toNat, 0⟩
+public def BytesRepr.ofList (xs : List Nat) : BytesRepr :=
+  ⟨xs, xs.length.toUSize, xs.length.toUSize, 0⟩
+
+public structure StringRepr where
+  bytes : BytesRepr
+  mark : UInt8 := 0
+
+public instance : BEq StringRepr where
+  beq a b := a.bytes.data == b.bytes.data
+
+public def StringRepr.encode (s : String) : StringRepr := ⟨.ofList (s.toUTF8.data.toList.map UInt8.toNat), 0⟩
 
 /-- Each string owns a distinct record whose first field is its UTF-8 byte array. -/
 public def checkStrictString (env : Environment) : IO Unit := do

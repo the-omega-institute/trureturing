@@ -202,7 +202,7 @@ public def supported (source : Environment) (owner name : Name) (boxedFloatArray
   let arraySet := owner == `OmegaInit.Data.Array.Set && name == `Array.set!
   let floatIndex := owner == `OmegaInit.Data.FloatArray.Basic && floatArrayIndex name
   let byteOp := owner == `OmegaInit.Data.ByteArray.Basic && name.getPrefix == `ByteArray &&
-    [`uget, `get, `get!, `uset, `set, `set!, `usize, `copySlice, `beq, `decEq, `hash].contains method
+    [`uget, `get, `get!, `uset, `set, `set!, `usize, `copySlice, `markLinear, `propagateMark, `beq, `decEq, `hash].contains method
   let platform := owner == `OmegaInit.System.Platform && [`System.Platform.getIsWindows, `System.Platform.getIsOSX,
     `System.Platform.getIsLinux, `System.Platform.getIsEmscripten, `System.Platform.getTarget,
     `System.Platform.Internal.getHardwareConcurrency].contains name
@@ -315,6 +315,17 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
       throw <| IO.userError s!"unexpected primitive thunk interface {n}"
     for env in [source, strict] do verify env n args out entry
     return ""
+  if official == `ByteArray.markLinear || official == `ByteArray.propagateMark then
+    checkStrictBytes strict
+    let unary := official == `ByteArray.markLinear
+    let args := if unary then #[(IR.IRType.object, false)] else #[(.object, true), (.object, false)]
+    let primitive := if unary then "lean_sarray_mark_linear" else "lean_sarray_propagate_mark"
+    verify source official args .object primitive
+    verify strict n (args.map (fun (_, b) => (IR.IRType.tobject, b))) .tobject (symbol n)
+    let call := if unary then "omega_bytes_mark(value)" else
+      "lean_ctor_get_uint8(source, 3 * sizeof(void *)) ? omega_bytes_mark(value) : value"
+    let params := (if unary then "" else "b_lean_obj_arg source, ") ++ "lean_obj_arg value"
+    return s!"\n#include \"strict_byte_array.h\"\nLEAN_EXPORT lean_obj_res {symbol n}({params}) \{ return {call}; }\n"
   if IONative.supported official then return ← IONative.wrapper source strict n (symbol n)
   if MacroNative.supported official then return ← MacroNative.wrapper source strict n (symbol n)
   if monadicSeparator official then return ← SeparatorNative.wrapper source strict n official (symbol n)
@@ -459,6 +470,7 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
   let mut args := #[]
   let mut prepare := ""
   let mut cleanup := ""
+  let mut byteUpdate : Option Nat := none
   let mut hasString := false
   let mut hasName := false
   let passesErased := (pinnedStringFunction official || official == `Int.trailingZeros.aux) &&
@@ -709,9 +721,16 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
           let some (some f) := impureTrivialStructureInfoExt.find? e path | throw <| IO.userError s!"expected one file path field {path}"
           unless f.fieldIdx == 0 do throw <| IO.userError s!"unexpected file path field {path}"
       let borrowed := a.borrow || target == "lean_string_get_byte_fast"
-      if dom != `ByteArray && !borrowed then
+      if !borrowed then
+        let update := dom == `ByteArray && ci.type.getForallBody.getAppFn.isConstOf `ByteArray
+        let take := if update then "omega_bytes_native_owner" else if dom == `ByteArray then
+          "omega_bytes_take_native" else "omega_string_take_native"
         if b.borrow then prepare := prepare ++ s!"  lean_inc({arg});\n"
-        prepare := prepare ++ s!"  lean_object *alias{i};\n  lean_object *string{i} = omega_string_take_native({arg}, &alias{i});\n"
+        prepare := prepare ++ s!"  lean_object *alias{i};\n  lean_object *string{i} = {take}({arg}, &alias{i});\n"
+        if update then
+          if byteUpdate.isSome then throw <| IO.userError s!"ambiguous byte array update {n}"
+          byteUpdate := some i
+          prepare := prepare ++ s!"  uintptr_t original{i} = (uintptr_t)string{i};\n"
         cleanup := cleanup ++ s!"  if (alias{i}) lean_dec_ref(alias{i});\n"
       else
         let convert := if dom == `ByteArray then "omega_bytes_to_lean" else "omega_string_to_lean"
@@ -809,8 +828,8 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
     unless ret == .object && result == .tobject do throw <| IO.userError s!"incorrect string result at {n}"
     prepare := prepare ++ s!"  lean_object *native_string = {call};\n"
     cleanup := cleanup ++ "  lean_dec(native_string);\n"
-    let value := if dom == `String then "omega_string_from_lean(native_string)" else
-      "omega_bytes_from_data(lean_sarray_cptr(native_string), lean_sarray_size(native_string))"
+    let value := if dom == `String then "omega_string_from_lean(native_string)" else if let some i := byteUpdate then
+      s!"omega_bytes_finish_update(a{i}, original{i}, native_string)" else "omega_bytes_from_lean(native_string)"
     pure ("lean_obj_res", value)
   else if dom == `List && digitList official && ret == .tobject && result == .tobject then do
     prepare := prepare ++ s!"  lean_object *digits = {call};\n"

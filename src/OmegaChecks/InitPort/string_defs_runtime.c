@@ -1,9 +1,7 @@
 #include "strict_string.h"
 
 LEAN_EXPORT lean_obj_res omega_string_utf8(b_lean_obj_arg text) {
-    lean_object *bytes = lean_ctor_get(text, 0);
-    lean_inc(bytes);
-    return bytes;
+    return omega_bytes_fresh(lean_ctor_get(text, 0));
 }
 
 LEAN_EXPORT lean_obj_res omega_string_mark(lean_obj_arg text) {

@@ -1,4 +1,5 @@
 #include "strict_string.h"
+#include "byte_seed.c"
 
 /* Char, UInt32, BitVec and Fin erase to the checked natural representation. */
 static uint32_t omega_scalar_value(b_lean_obj_arg n) {
@@ -31,12 +32,13 @@ LEAN_EXPORT lean_obj_res omega_string_byte_size(b_lean_obj_arg bytes) {
 }
 
 LEAN_EXPORT lean_obj_res omega_string_of_bytes(lean_obj_arg bytes) {
-    return omega_string_wrap(bytes, 0);
+    lean_object *copy = omega_bytes_fresh(bytes);
+    lean_dec_ref(bytes);
+    return omega_string_wrap(copy, 0);
 }
 
 LEAN_EXPORT lean_obj_res omega_string_to_bytes(lean_obj_arg text) {
-    lean_object *bytes = lean_ctor_get(text, 0);
-    lean_inc(bytes);
+    lean_object *bytes = omega_bytes_fresh(lean_ctor_get(text, 0));
     lean_dec(text);
     return bytes;
 }

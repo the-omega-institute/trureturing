@@ -1,4 +1,5 @@
 """Build and audit the isolated foundations and expose their ordinary Lean import view."""
+import hashlib
 import json
 import os
 import re
@@ -12,6 +13,24 @@ ROOT = Path(__file__).resolve().parents[2]
 BUILD = ".lake/build/omega-strict"
 COMMON_SRC = ROOT / ".lake/omega-common-src"
 INSPECTOR = ROOT / "tools/lean-inspector-interface"
+
+
+def byte_seed_object():
+    source = ROOT / "src/OmegaChecks/InitPort/byte_seed.c"
+    prefix = Path(subprocess.check_output(["lean", "--print-prefix"], cwd=ROOT, text=True).strip())
+    digest = hashlib.sha256(str(prefix).encode())
+    for path in [source, source.with_name("strict_byte_array.h"), source.with_name("strict_nat.h"),
+                 prefix / "include/lean/lean.h", ROOT / "lean-toolchain"]:
+        digest.update(path.read_bytes())
+    folder = ROOT / BUILD / "native"
+    folder.mkdir(parents=True, exist_ok=True)
+    target = folder / ("byte_seed-" + digest.hexdigest() + ".o")
+    if not target.is_file():
+        with tempfile.TemporaryDirectory(dir=folder) as tmp:
+            obj = Path(tmp) / "byte_seed.o"
+            subprocess.run(["leanc", "-fPIC", "-DLEAN_EXPORTING", "-c", source, "-o", obj], cwd=ROOT, check=True)
+            os.replace(obj, target)
+    return target
 
 
 def foundation_config(source_dir, build_dir, label):
@@ -32,6 +51,8 @@ def foundation_config(source_dir, build_dir, label):
         header = f'name = "{lib["name"]}"\nsrcDir = '
         source = source.replace(header + '"src"', header + json.dumps(source_dir))
     if source_dir == "strict":
+        expected["moreLinkArgs"] = [*expected.get("moreLinkArgs", []), str(byte_seed_object())]
+        source = "moreLinkArgs = " + json.dumps(expected["moreLinkArgs"]) + "\n" + source
         # The elaborator is a build input. The compiled prelude has no Lean imports.
         omega_init = next(lib for lib in libraries if lib["name"] == "OmegaInit")
         # Build the shared library once before independent module facets load it.
