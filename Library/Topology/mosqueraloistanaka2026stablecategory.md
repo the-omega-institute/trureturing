@@ -33,6 +33,8 @@ strata_touched:
   - D5/S3/Topology/CofaceComparisonObstruction
   - D5/S3/Topology/CofaceTriangleCollapse
   - D5/S3/Topology/RetractionCoordinate
+  - D5/S3/Topology/StableCategory/TetrahedralGraphIteration
+  - D5/S3/Topology/StableCategory/TetrahedralCategoricalCover
 license: citation-only
 triage: anchor
 ---
@@ -1042,3 +1044,43 @@ source chain with sizes at least three, four, and five. The
 ordinary triangle cone allows only four vertices in a source
 face. The weaker comparison with only containment in the largest
 assigned face remains open.
+
+For a synchronously subdivided coarsening ($f_{s+1}=\operatorname{sd} f_s$),
+there is an obstruction at every depth $s\ge4$ when the comparison is
+required to preserve the full old sides and their endpoints. The source
+and target subdivisions of an old side are paths of equal length, so the
+comparison on that side is the identity. At the singleton flag over an
+edge $A$, maximal-face containment then forces a singleton face of the
+preceding target to equal $A$. The same argument allows either direction
+of comparison between consecutive flags.
+
+## One round of two-colour graph refinement
+
+Suppose that the inclusions of two induced colour regions admit contiguity
+factorizations through properly two-coloured graphs. The join of these
+graphs has a proper four-rank colouring. On each main region the
+tetrahedral heights give a map into four ordinary subdivisions of the
+corresponding graph after only three ambient subdivisions. Each extra
+component contracts through one opposite-colour carrier edge. If the
+ambient one-skeleton is connected, its constant can be moved to the
+image of a chosen vertex of the main parameter graph. The Lean
+construction gives both refined factorizations in the same colouring
+and permits any vertex selector for the final parameter subdivision.
+
+## Weak category one in dimension at most three
+
+Let the order complex of a nonempty finite poset have dimension at
+most three and contractible realization. Some ordinary iterated chain
+poset of the original poset has a categorical lower cover by two
+sets. This is the weak-category-one case of Question 6.3 in that
+range.
+
+Height gives a proper four-rank colouring of every chain. The two
+pairs of ranks induce bipartite graph parameters whose inclusions are
+nullhomotopic by restriction of the contraction. Each refinement adds
+three ambient subdivisions and four parameter subdivisions. After
+enough rounds, the extra parameter subdivisions give fixed-target
+contiguity contractions. The original edge carriers transport them
+to the synchronously subdivided ambient complex. Taking the face
+neighbourhoods that meet the two final colours gives categorical lower
+sets in an ordinary iterated chain poset.

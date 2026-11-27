@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.AlgebraicTopology.SimplicialComplex.Basic]
    utility: none
-   digest: The interval comparison glues across old faces and extra components retract into individual edges. -/
+   digest: Interval comparisons glue across faces and extra components retract into single edges. -/
 
 import Batteries.Tactic.OpenPrivate
 import D5.S3.Topology.OrdinaryTetrahedronCollar
@@ -12,6 +12,7 @@ import D5.S3.Topology.IntervalSubdivisionCoordinates
 import D5.S3.Topology.OrdinaryCollarRetraction
 import D5.S3.Topology.RankColouredTetrahedron
 import D5.S3.Topology.RelativeIntervalChartGluing
+import D5.S3.Topology.StableCategory.IntervalChartRefinement
 
 /-! The ordinary path coordinates of the colour-collar retraction. -/
 
@@ -21,13 +22,16 @@ set_option backward.isDefEq.respectTransparency false
 namespace TetrahedronCollar16
 
 open D5.S3.Topology
+open D5.S3.Topology.StableCategory
 open BarycentricGraphDistance (Face Vertex subdivisionGraph oneSkeleton)
-open BarycentricBaseRigidity (vertexOfFace faceImage retainedVertex Contiguous)
-open GraphSubdivisionIntervals (originalSupport originalSupport_mem mem_iteratedSubcomplex_iff)
+open BarycentricBaseRigidity (vertexOfFace faceImage retainedVertex Contiguous sd subdividedVertex)
+open GraphSubdivisionIntervals (originalSupport originalSupport_mem mem_iteratedSubcomplex_iff
+  faceImage_singleton)
 open PathContiguity (intervalComplex IsIntervalMap)
 open RelativeIntervalChartGluing (relative_contiguity_of_interval_charts)
 open private simplex_le mem_faceImage_iff iterated_point_face iterated_le_ambient
   from D5.S3.Topology.GraphSubdivisionIntervals
+open private toVertexMap contiguous_toVertexMap from D5.S3.Topology.PathContiguity
 open D5.S3.Geometry.FiniteAlexanderDualCollapse (simplex)
 open IntervalFlagCoordinate (coordinate list_coordinate)
 open private asFinset mem_asFinset cut₁ cut₂ subdivisionCoordinate
@@ -381,33 +385,61 @@ private def intervalPoint {N : ℕ} (n : ℕ) (h : n ≤ N) : Vertex (intervalCo
       rw [Finset.mem_singleton.mp ha, Finset.mem_singleton.mp hb]
       exact Nat.le_succ _⟩
 
-/-- Relative interpolation on the tetrahedral heights glues on an
-arbitrary properly rank-coloured complex. Along a thin face, it fixes the
-image of the unique selected old vertex. -/
-theorem main_retraction_glued {X : Type} {K : PreAbstractSimplicialComplex X}
+private theorem main_retraction_charts {X : Type} {K : PreAbstractSimplicialComplex X}
     [Finite (iteratedAmbient K 3).1]
     (colour : X → Fin 4) (c : Color)
     (hinj : ∀ s ∈ K, Set.InjOn colour (s : Set X)) :
     let A := OrdinaryCollarRetraction.colourComplex K (hasColour c ∘ colour)
     let P := mainComplex K colour c
     let E := {e : Face A // e.val.val.card = 2}
+    let q := fun x => (colour x).val - low c
     ∃ (chart : E → Vertex (intervalComplex 8) → Vertex (iteratedAmbient A 3).2)
       (g : Vertex P → Vertex (iteratedAmbient A 3).2),
       (∀ e s (hs : s ∈ intervalComplex 8),
         faceImage (chart e) hs ∈ iteratedSubcomplex A (simplex e.val.val) 3) ∧
       (∀ u (e : E), RankColouredTetrahedron.colourSupport colour c u.val = e.val.val →
         ∃ i, i.val = height (RankColouredTetrahedron.row colour u.val) / 2 ∧ g u = chart e i) ∧
+      (∀ e, Function.Injective (chart e)) ∧
+      (∀ e i, IntervalSubdivisionCoordinates.iterate (K := A) q 3 (chart e i).val = i.val) ∧
+      (∀ e (x : Vertex A) i, x.val ∈ e.val.val → i.val = 8 * q x.val →
+        chart e i = retainedVertex 3 x) ∧
+      (∀ u (x : Vertex A), RankColouredTetrahedron.colourSupport colour c u.val = {x.val} →
+        g u = retainedVertex 3 x) ∧
+      (∀ s ∈ P, ((originalSupport K 3 s).filter fun x => (hasColour c ∘ colour) x = true) ∈ A) ∧
+      IsIntervalMap (oneSkeleton P) 16 (fun u => height (RankColouredTetrahedron.row colour u.val)) ∧
       Relation.ReflTransGen Contiguous
         (fun u : Vertex P => vertexOfFace _ (OrdinaryCollarRetraction.retract
           (hasColour c ∘ colour) ⟨u.val, (RankColouredTetrahedron.row_inCollar colour c u.val).mp
             (main_conditions (main_of_vertex u)).1⟩)) g := by
-  intro A P E
+  intro A P E q
   obtain ⟨hdim, left, right, horient⟩ := oriented_colour_edges (K := K) colour c hinj
   obtain ⟨chart, hinjChart, hend, hfaces, _, _⟩ := GraphSubdivisionIntervals.graph_subdivision_intervals_oriented
     A hdim 3 left right (fun e => ⟨(horient e).1, (horient e).2.1⟩)
   have hchart (e : E) (s : Finset ℕ) (hs : s ∈ intervalComplex 8) :
       faceImage (chart e) hs ∈ iteratedSubcomplex A (simplex e.val.val) 3 :=
     (hfaces e _).mpr ⟨s, hs, rfl⟩
+  have hq := old_path_coordinate (K := K) colour c hinj
+  have hqinj (e : E) : Set.InjOn q {x | ({x} : Finset X) ∈ simplex e.val.val} := by
+    apply (hq.2 _ e.val.property).mono
+    intro x hx
+    exact hx.2 (Finset.mem_singleton_self _)
+  have hindex (e : E) (i : Vertex (intervalComplex 8)) :
+      IntervalSubdivisionCoordinates.iterate (K := A) q 3 (chart e i).val = i.val :=
+    IntervalSubdivisionCoordinates.iterate_eq_chart_index (simplex_le e.val.property) q
+      hq.1 (hqinj e) 3 (chart e) (hinjChart e) (hchart e) (left e)
+      (horient e).2.2.1 (fun j hj => (hend e j).1 hj) i
+  have hendpoint (e : E) (x : Vertex A) (i : Vertex (intervalComplex 8))
+      (hx : x.val ∈ e.val.val) (hi : i.val = 8 * q x.val) : chart e i = retainedVertex 3 x := by
+    rw [(horient e).1, Finset.mem_insert, Finset.mem_singleton] at hx
+    rcases hx with hx | hx
+    · have hx' : x = left e := Subtype.ext hx
+      have hq0 : q (left e).val = 0 := (horient e).2.2.1
+      rw [hx', hq0, Nat.mul_zero] at hi
+      exact ((hend e i).1 hi).trans (congrArg (retainedVertex 3) hx'.symm)
+    · have hx' : x = right e := Subtype.ext hx
+      have hq1 : q (right e).val = 1 := (horient e).2.2.2
+      rw [hx', hq1, Nat.mul_one] at hi
+      exact ((hend e i).2 hi).trans (congrArg (retainedVertex 3) hx'.symm)
   let sel := hasColour c ∘ colour
   let support (s : Finset (iteratedAmbient K 3).1) :=
     (originalSupport K 3 s).filter fun x => sel x = true
@@ -553,21 +585,172 @@ theorem main_retraction_glued {X : Type} {K : PreAbstractSimplicialComplex X}
     · rw [hpoint u x hx]
       exact (main_retraction_at_singleton colour c u.val (row u).property x hx).2.2.2.symm
     · rw [hedge u e he]
-      have hq := old_path_coordinate (K := K) colour c hinj
-      refine main_retraction_eq_edge_chart colour c u.val (row u).property e.val (left e) (chart e)
-        (hinjChart e) (hfaces e) (fun i hi => (hend e i).1 hi) hq.1 ?_ (horient e).2.2.1 he.le (f u) rfl
-      apply (hq.2 _ e.val.property).mono
-      intro x hx
-      exact hx.2 (Finset.mem_singleton_self _)
-  refine ⟨chart, fun u => place u (g u), hchart, ?_, ?_⟩
+      exact main_retraction_eq_edge_chart colour c u.val (row u).property e.val (left e) (chart e)
+        (hinjChart e) (hfaces e) (fun i hi => (hend e i).1 hi) hq.1 (hqinj e)
+        (horient e).2.2.1 he.le (f u) rfl
+  refine ⟨chart, fun u => place u (g u), hchart, ?_, hinjChart, hindex, hendpoint, ?_,
+    hsupport, hh, ?_⟩
   · intro u e he
     exact ⟨g u, rfl, congrFun (hedge u e he) (g u)⟩
+  · exact fun u x hx => hpoint u x hx (g u)
   · have hc := relative_contiguity_of_interval_charts 8 S f g hr hg hfix place hface
     have he : (fun u => place u (f u)) = r := funext hstart
     rw [he] at hc
     exact (Relation.ReflTransGen.mono
       (r := fun a b => Contiguous a b ∧ Set.EqOn a r S ∧ Set.EqOn b r S)
       (p := Contiguous) (fun _ _ h => h.1)) _ _ hc
+
+/-- Relative interpolation on the tetrahedral heights glues on an
+arbitrary properly rank-coloured complex. Along a thin face, it fixes the
+image of the unique selected old vertex. -/
+theorem main_retraction_glued {X : Type} {K : PreAbstractSimplicialComplex X}
+    [Finite (iteratedAmbient K 3).1]
+    (colour : X → Fin 4) (c : Color)
+    (hinj : ∀ s ∈ K, Set.InjOn colour (s : Set X)) :
+    let A := OrdinaryCollarRetraction.colourComplex K (hasColour c ∘ colour)
+    let P := mainComplex K colour c
+    let E := {e : Face A // e.val.val.card = 2}
+    ∃ (chart : E → Vertex (intervalComplex 8) → Vertex (iteratedAmbient A 3).2)
+      (g : Vertex P → Vertex (iteratedAmbient A 3).2),
+      (∀ e s (hs : s ∈ intervalComplex 8),
+        faceImage (chart e) hs ∈ iteratedSubcomplex A (simplex e.val.val) 3) ∧
+      (∀ u (e : E), RankColouredTetrahedron.colourSupport colour c u.val = e.val.val →
+        ∃ i, i.val = height (RankColouredTetrahedron.row colour u.val) / 2 ∧ g u = chart e i) ∧
+      Relation.ReflTransGen Contiguous
+        (fun u : Vertex P => vertexOfFace _ (OrdinaryCollarRetraction.retract
+          (hasColour c ∘ colour) ⟨u.val, (RankColouredTetrahedron.row_inCollar colour c u.val).mp
+            (main_conditions (main_of_vertex u)).1⟩)) g := by
+  obtain ⟨chart, g, hfaces, hheight, _, _, _, _, _, _, hc⟩ := main_retraction_charts colour c hinj
+  exact ⟨chart, g, hfaces, hheight, hc⟩
+
+/-- The main region refines its selected graph by one subdivision.
+Projecting each refined face to its lower coordinate gives a map in the
+contiguity class of the actual two-cut retraction. -/
+theorem main_retraction_glued_refined {X : Type} {K : PreAbstractSimplicialComplex X}
+    [Finite (iteratedAmbient K 3).1]
+    (colour : X → Fin 4) (c : Color)
+    (hinj : ∀ s ∈ K, Set.InjOn colour (s : Set X)) :
+    let A := OrdinaryCollarRetraction.colourComplex K (hasColour c ∘ colour)
+    let B := (iteratedAmbient A 3).2
+    let P := mainComplex K colour c
+    ∃ (select : Vertex (sd B) → Vertex B) (lift : Vertex P → Vertex (sd B)),
+      (∀ v, (select v).val ∈ v.val.val) ∧
+      (∀ s (hs : s ∈ sd B), faceImage select hs ∈ B) ∧
+      (∀ s (hs : s ∈ P), faceImage lift hs ∈ sd B) ∧
+      Relation.ReflTransGen Contiguous
+        (fun u : Vertex P => vertexOfFace _ (OrdinaryCollarRetraction.retract
+          (hasColour c ∘ colour) ⟨u.val, (RankColouredTetrahedron.row_inCollar colour c u.val).mp
+            (main_conditions (main_of_vertex u)).1⟩)) (select ∘ lift) := by
+  intro A B P
+  let E := {e : Face A // e.val.val.card = 2}
+  let q : X → ℕ := fun x => (colour x).val - low c
+  let old := IntervalSubdivisionCoordinates.iterate (K := A) q 3
+  let small (u : Vertex P) := RankColouredTetrahedron.colourSupport colour c u.val
+  let support (s : Finset (iteratedAmbient K 3).1) :=
+    (originalSupport K 3 s).filter fun x => (hasColour c ∘ colour) x = true
+  obtain ⟨chart, g, hchart, hhalf, hinjChart, hindex, hendpoint, hgpoint, hsupport, hh, hc⟩ :=
+    main_retraction_charts colour c hinj
+  have edge_refinement (e : E) :=
+    IntervalChartRefinement.refined_chart_floor (chart e) (hinjChart e)
+      (fun s hs => iterated_le_ambient (simplex_le e.val.property) 3 (hchart e s hs))
+  choose fine hfine hparent heven using edge_refinement
+  obtain ⟨select, hselect, hselectFace⟩ :=
+    IntervalChartRefinement.exists_coordinate_minimum_selector B old
+  let h (u : Vertex P) := height (RankColouredTetrahedron.row colour u.val)
+  let pos : Vertex P → Vertex (intervalComplex 16) := toVertexMap 16 h
+  have hpos (u : Vertex P) : (pos u).val = h u := min_eq_left (hh.1 u)
+  have hposFace (s : Finset _) (hs : s ∈ P) : faceImage pos hs ∈ intervalComplex 16 := by
+    have hnum : PathContiguity.Contiguous (oneSkeleton P) h h := by
+      intro u v huv
+      rw [max_self, min_self]
+      rcases huv with he | he
+      · rw [he]
+        exact Nat.le_succ _
+      · exact (hh.2 he).1
+    simpa only [Finset.union_self] using (contiguous_toVertexMap hh.1 hh.1 hnum) s hs
+  have hdim := (oriented_colour_edges (K := K) colour c hinj).1
+  have cases_support (s : Finset X) (hs : s ∈ A) :
+      (∃ x : Vertex A, s = {x.val}) ∨ ∃ e : E, s = e.val.val := by
+    by_cases htwo : s.card = 2
+    · exact Or.inr ⟨⟨⟨s, hs⟩, htwo⟩, rfl⟩
+    · have hp := Finset.card_pos.mpr (A.isRelLowerSet_faces hs).1
+      have he : s.card = 1 :=
+        Nat.le_antisymm (Nat.le_of_lt_succ (lt_of_le_of_ne (hdim s hs) htwo)) hp
+      obtain ⟨x, hx⟩ := Finset.card_eq_one.mp he
+      exact Or.inl ⟨⟨x, hx ▸ hs⟩, hx⟩
+  have hsmall (u : Vertex P) : small u ∈ A := hsupport _ u.property
+  have no_pair (x : Vertex A) (e : E) : e.val.val ≠ ({x.val} : Finset X) := by
+    intro he
+    have hc : (2 : ℕ) = 1 := e.property.symm.trans
+      ((congrArg Finset.card he).trans (Finset.card_singleton _))
+    exact Nat.ne_of_gt (Nat.lt_succ_self 1) hc
+  let retained (x : Vertex A) : Vertex (sd B) := subdividedVertex (retainedVertex 3 x)
+  have choices (u : Vertex P) : ∃ w : Vertex (sd B),
+      (∀ x : Vertex A, small u = {x.val} → w = retained x) ∧
+      (∀ e : E, small u = e.val.val → w = fine e (pos u)) := by
+    rcases cases_support _ (hsmall u) with ⟨x, hx⟩ | ⟨e, he⟩
+    · refine ⟨retained x, ?_, fun e he => (no_pair x e (he.symm.trans hx)).elim⟩
+      intro y hy
+      exact congrArg retained (Subtype.ext (Finset.singleton_injective (hx.symm.trans hy)))
+    · refine ⟨fine e (pos u), fun x hx => (no_pair x e (he.symm.trans hx)).elim, ?_⟩
+      intro e' he'
+      have eq : e = e' := Subtype.ext (Subtype.ext (he.symm.trans he'))
+      rw [eq]
+  choose lift hliftPoint hliftEdge using choices
+  have hsimp (s : Finset _) (hs : s ∈ P) : faceImage lift hs ∈ sd B := by
+    have hsub (u : Vertex P) (hu : u.val ∈ s) : small u ⊆ support s :=
+      Finset.filter_subset_filter _ (support_mono 3 (Finset.singleton_subset_iff.mpr hu))
+    have nonempty : (faceImage lift hs).Nonempty := (P.isRelLowerSet_faces hs).1.attach.image _
+    rcases cases_support _ (hsupport s hs) with ⟨x, hx⟩ | ⟨e, he⟩
+    · apply ((sd B).isRelLowerSet_faces (retained x).property).2 _ nonempty
+      intro y hy
+      obtain ⟨u, hu, rfl⟩ := (mem_faceImage_iff lift hs y).mp hy
+      have hs' : small u ⊆ {x.val} := hx ▸ hsub u hu
+      have hcard : ({x.val} : Finset X).card ≤ (small u).card := by
+        rw [Finset.card_singleton]
+        exact Finset.card_pos.mpr (A.isRelLowerSet_faces (hsmall u)).1
+      rw [hliftPoint u x (Finset.eq_of_subset_of_card_le hs' hcard)]
+      exact Finset.mem_singleton_self _
+    · apply ((sd B).isRelLowerSet_faces (hfine e _ (hposFace s hs))).2 _ nonempty
+      intro y hy
+      obtain ⟨u, hu, huy⟩ := (mem_faceImage_iff lift hs y).mp hy
+      have hs' : small u ⊆ e.val.val := he ▸ hsub u hu
+      have hplace : lift u = fine e (pos u) := by
+        rcases cases_support _ (hsmall u) with ⟨x, hx⟩ | ⟨e', he'⟩
+        · rw [hliftPoint u x hx]
+          have hx' : x.val ∈ e.val.val := hs' (hx.symm ▸ Finset.mem_singleton_self _)
+          obtain ⟨_, hh', _, _⟩ :=
+            main_retraction_at_singleton colour c u.val (main_of_vertex u) x hx
+          have hq : q x.val ≤ 1 := by
+            have hq := (old_path_coordinate (K := K) colour c hinj).1 {x.val} x.property
+            exact hq.2.1 _ (Finset.mem_image.mpr ⟨_, Finset.mem_singleton_self _, rfl⟩)
+          let i := intervalPoint (8 * q x.val)
+            (show 8 * q x.val ≤ 8 from (Nat.mul_le_mul_left 8 hq).trans_eq (Nat.mul_one 8))
+          have hpos' : (pos u).val = 2 * i.val := by
+            have hh'' : h u = 16 * q x.val := hh'
+            rw [hpos, hh'']
+            change 16 * q x.val = 2 * (8 * q x.val)
+            exact Nat.mul_assoc 2 8 _
+          rw [heven e (pos u) i hpos', hendpoint e x i hx' rfl]
+        · have heq : small u = e.val.val :=
+            Finset.eq_of_subset_of_card_le hs' (e.property.trans (he' ▸ e'.property).symm).le
+          exact hliftEdge u e heq
+      apply (mem_faceImage_iff (fine e) (hposFace s hs) y).mpr
+      refine ⟨pos u, (mem_faceImage_iff pos hs _).mpr ⟨u, hu, rfl⟩, ?_⟩
+      rw [← hplace]
+      exact huy
+  have hcomp : select ∘ lift = g := by
+    funext u
+    change select (lift u) = g u
+    rcases cases_support _ (hsmall u) with ⟨x, hx⟩ | ⟨e, he⟩
+    · rw [hliftPoint u x hx, hgpoint u x hx]
+      apply Subtype.ext
+      exact Finset.mem_singleton.mp (hselect (retained x)).1
+    · obtain ⟨i, hi, hg⟩ := hhalf u e he
+      rw [hliftEdge u e he, hg]
+      exact IntervalChartRefinement.minimum_selector_eq_half old select hselect (chart e)
+        (hindex e) (fine e) (hparent e) (pos u) i (hi.trans (congrArg (· / 2) (hpos u)).symm)
+  exact ⟨select, lift, fun v => (hselect v).1, hselectFace, hsimp, hcomp.symm ▸ hc⟩
 
 /-- Every extra component retracts into the subdivision of a single old
 edge of the opposite colour. The same edge also works for a one-vertex
