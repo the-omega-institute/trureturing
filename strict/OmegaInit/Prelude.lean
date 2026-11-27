@@ -377,11 +377,8 @@ port_definition LE.le
 port_inductive LT
 port_definition LT.lt
 
-port_definition Decidable.decide
-port_proof Decidable.reflects_decide
 port_definition Decidable.isFalse
 port_definition Decidable.isTrue
-port_definition dite
 port_definition ite
 
 
@@ -460,7 +457,7 @@ port_definition instHOrOfOrOp with_native_code
 port_definition instHShiftLeftOfShiftLeft with_native_code
 port_definition instHShiftRightOfShiftRight with_native_code
 
-port_native_records Inhabited, PLift, ULift, PULift, MProd
+port_native_records Inhabited, PLift, ULift, MProd
 port_native_records Bind, Pure, Functor, Seq, SeqLeft, SeqRight
 port_native_records MonadLift, MonadLiftT, MonadEval, MonadEvalT, MonadFunctor, MonadFunctorT
 port_native_records MonadReader, MonadReaderOf, MonadWithReader, MonadWithReaderOf

@@ -47,7 +47,7 @@ public unsafe def install (lib output : System.FilePath) (interpreter : Bool) : 
   if !interpreter then
     if env.contains `Omega.ST.Out then installStateLayout lib env
     for n in [`Omega.EST.Out, `Omega.Except, `Omega.STWorld, `Omega.MonadFinally, `Omega.MonadAttach,
-        `Omega.MonadExceptOf, `Omega.Monad, `Omega.MonadLift, `Omega.PULift] do
+        `Omega.MonadExceptOf, `Omega.Monad, `Omega.MonadLift, `PULift] do
       if env.contains n && (monoTypeExt.find? env n).isNone then
         let idx := (env.getModuleIdxFor? n).get!
         writeCode lib env.header.moduleNames[idx]! (← compileLayouts env n) layouts
@@ -87,9 +87,9 @@ public unsafe def install (lib output : System.FilePath) (interpreter : Bool) : 
       let #[.object 0 _, .object 1 _] := layout.fieldInfo | throw <| IO.userError s!"invalid field order for {n}"
       unless layout.ctorInfo.cidx == tag && layout.ctorInfo.size == 2 && layout.ctorInfo.usize == 0 &&
           layout.ctorInfo.ssize == 0 do throw <| IO.userError s!"incorrect strict fields for {n}"
-    let some (some info) := impureTrivialStructureInfoExt.find? compiled `Omega.PULift
+    let some (some info) := impureTrivialStructureInfoExt.find? compiled `PULift
       | throw <| IO.userError "expected an unboxed EST eliminator continuation"
-    unless info.ctorName == `Omega.PULift.up && info.fieldIdx == 0 do throw <| IO.userError "incorrect continuation layout"
+    unless info.ctorName == `PULift.up && info.fieldIdx == 0 do throw <| IO.userError "incorrect continuation layout"
   let implicitArgs := #[(IR.IRType.erased, false), (.erased, false)]
   for (n, symbol) in externs do
     if n == elim then

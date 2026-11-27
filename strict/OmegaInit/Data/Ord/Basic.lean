@@ -11,13 +11,9 @@ noncomputable section
 
 @[expose] public section
 
-namespace Omega
+port_inductive Ordering
 
-set_option genCtorIdx false in
-inductive Ordering where
-  | lt
-  | «eq»
-  | gt
+namespace Omega
 
 namespace Ordering
 

@@ -17,9 +17,11 @@ public def binderAnnotations := #[`optParam, `outParam, `semiOutParam]
 public def natPrimitives := #[
   `id,
   `PProd.fst, `PProd.snd,
+  -- The elaborator builds constructor eliminators using these literal names once Nat is available.
+  `PULift, `PULift.up, `PULift.down, `PULift.rec, `PULift.recOn, `PULift.casesOn,
   `Add, `Add.add, `Add.mk, `Add.rec, `Bool, `Bool.Reflects, `Bool.Reflects.match_1, `Bool.casesOn,
   `Bool.false, `Bool.noConfusion, `Bool.noConfusionType, `Bool.rec, `Bool.true, `Decidable,
-  `Decidable.casesOn, `Decidable.intro, `Decidable.rec, `Eq, `Eq.casesOn, `Eq.recOn, `Eq.ndrec,
+  `dite, `Decidable.decide, `Decidable.reflects_decide, `Decidable.casesOn, `Decidable.intro, `Decidable.rec, `Eq, `Eq.casesOn, `Eq.recOn, `Eq.ndrec,
   `Eq.ndrec_symm, `Eq.rec, `Eq.refl, `Eq.subst, `Eq.symm, `Eq.trans, `False, `False.casesOn,
   `False.rec, `HAdd, `HAdd.hAdd, `HAdd.mk, `HAdd.rec, `HEq, `HEq.casesOn, `HEq.rec, `HEq.refl,
   `Nat.ble, `Nat.ble._f, `Nat.ble.match_1,

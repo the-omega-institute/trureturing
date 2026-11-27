@@ -108,7 +108,7 @@ public def installNaturalBootstrap : CommandElabM Unit := do
     if entries.contains n then env := reducibilityCoreExt.addEntry (asyncDecl := n) env (n, status)
   setEnv (env.setModulePackage pkg)
   liftCoreM <| withExporting do
-    for family in #[`Bool, `Nat, `Eq, `PUnit, `PProd, `Decidable, `HAdd, `Add, `OfNat, `False, `HEq] do
+    for family in #[`Bool, `Nat, `Eq, `PUnit, `PProd, `PULift, `Decidable, `HAdd, `Add, `OfNat, `False, `HEq] do
       let some (.inductInfo ind) := (← getEnv).find? family | continue
       compilerLayouts #[family] ind.ctors.toArray
     for n in #[`Nat.ble, `Nat.beq, `Nat.decEq, `Nat.sub, `Nat.add, `Nat.mul, `Nat.pow] do
@@ -116,7 +116,7 @@ public def installNaturalBootstrap : CommandElabM Unit := do
       modifyEnv fun e => externAttr.ext.addEntry (asyncDecl := n) e (n, attr)
       Lean.compileDecls #[n] (logErrors := true)
 
-    for n in #[`id, `Unit.unit, `PProd.fst, `PProd.snd, `cond.match_1, `cond, `OfNat.ofNat, `instOfNatNat, `Add.add, `HAdd.hAdd, `instAddNat, `instHAdd] do
+    for n in #[`id, `Unit.unit, `Decidable.decide, `dite, `PULift.down, `PProd.fst, `PProd.snd, `cond.match_1, `cond, `OfNat.ofNat, `instOfNatNat, `Add.add, `HAdd.hAdd, `instAddNat, `instHAdd] do
       Lean.compileDecls #[n] (logErrors := true)
 
   for name in RootNames.binderAnnotations ++ RootNames.natPrimitives do

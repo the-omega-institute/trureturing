@@ -3,6 +3,9 @@ import OmegaChecks.InitCompiler.RootNames
 
 open Lean
 
+private def portName (n : Name) : Name :=
+  if OmegaChecks.InitCompiler.RootNames.usesRoot n then n else `Omega ++ n
+
 /-- Check ordinary public visibility of the ported Init names from both generated entry points. -/
 def main (args : List String) : IO Unit := do
   let output :: basis :: modules := args | throw <| IO.userError "expected consumer library, basis library and modules"
@@ -23,13 +26,14 @@ def main (args : List String) : IO Unit := do
     for owner in official.header.moduleNames do
       let originalIdx := (official.getModuleIdx? owner).get!
       let expected := (aliasExtension.getModuleEntries official originalIdx).filterMap fun (alias, target) =>
-        if env.contains (`Omega ++ target) then some (`Omega ++ alias, `Omega ++ target) else none
+        if env.contains (portName target) then some (portName alias, portName target) else none
+      let idx := env.getModuleIdx? (owner.replacePrefix `Init `OmegaInit)
       let aliases := official.header.moduleData[originalIdx]!.constNames.filterMap fun n => do
         let entry ← OmegaChecks.InitCompiler.RootNames.aliasFor? n
-        guard (env.contains entry.2)
+        let i ← idx
+        guard (env.header.moduleData[i]!.constNames.contains entry.2)
         return entry
-      let actual := (env.getModuleIdx? (owner.replacePrefix `Init `OmegaInit)).map fun idx =>
-        aliasExtension.getModuleEntries env idx
+      let actual := idx.map fun i => aliasExtension.getModuleEntries env i
       let actual := actual.getD #[]
       unless (actual.filter (fun pair => !aliases.contains pair)) == expected &&
           actual.size == expected.size + aliases.size && aliases.all actual.contains do
