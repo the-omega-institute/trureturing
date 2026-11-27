@@ -3,11 +3,82 @@ import Init.LawfulBEqTactics
 public import Init.Data.String.Pattern.String
 public import Init.Data.Iterators.Combinators.Monadic.Take
 import all Init.Data.ByteArray.Lemmas
+import all Init.Data.Iterators.Consumers.Access
 import all Init.Data.Iterators.Combinators.Monadic.Take
+import all Init.Data.List.BasicAux
+import all Init.Data.List.Count
+import all Init.Data.List.Erase
+import all Init.Data.List.Lemmas
+import all Init.Data.List.Lex
+import all Init.Data.List.MapIdx
+import all Init.Data.List.Nat.Basic
+import all Init.Data.List.Nat.Modify
+import all Init.Data.List.Range
+import all Init.Data.List.Sort.Lemmas
+import all Init.Data.List.Sublist
+import all Init.Data.Nat.Lemmas
 import all Init.Data.String.Basic
 import all Init.Data.String.Decode
 import all Init.Data.String.Pattern.String
 namespace OmegaChecks.InitPort.Alternatives
+
+/-- A course-of-values induction step can reuse the theorem on its original arguments. -/
+local macro "induction_step% " parent:term : term =>
+  `(by intros; apply $parent <;> assumption)
+
+public theorem Nat.pow_eq_zero._f : type_of% @_root_.Nat.pow_eq_zero._f :=
+  induction_step% @_root_.Nat.pow_eq_zero
+
+public theorem Nat.mul_add_div._f : type_of% @_root_.Nat.mul_add_div._f :=
+  induction_step% @_root_.Nat.mul_add_div
+
+public theorem List.append_cancel_right._f : type_of% @_root_.List.append_cancel_right._f :=
+  induction_step% @_root_.List.append_cancel_right
+
+public theorem List.mem_replicate._f : type_of% @_root_.List.mem_replicate._f :=
+  induction_step% @_root_.List.mem_replicate
+
+public theorem List.mem_map._f : type_of% @_root_.List.mem_map._f :=
+  induction_step% @_root_.List.mem_map
+
+public theorem List.isSublist_iff_sublist._f : type_of% @_root_.List.isSublist_iff_sublist._f :=
+  induction_step% @_root_.List.isSublist_iff_sublist
+
+public theorem List.count_erase._f : type_of% @_root_.List.count_erase._f :=
+  induction_step% @_root_.List.count_erase
+
+public theorem List.mem_range'._f : type_of% @_root_.List.mem_range'._f :=
+  induction_step% @_root_.List.mem_range'
+
+public theorem List.erase_eq_eraseP._f : type_of% @_root_.List.erase_eq_eraseP._f :=
+  induction_step% @_root_.List.erase_eq_eraseP
+
+public theorem List.eraseIdx_eq_self._f : type_of% @_root_.List.eraseIdx_eq_self._f :=
+  induction_step% @_root_.List.eraseIdx_eq_self
+
+public theorem List.getElem?_modify._f : type_of% @_root_.List.getElem?_modify._f :=
+  induction_step% @_root_.List.getElem?_modify
+
+public theorem List.mem_eraseIdx_iff_getElem._f : type_of% @_root_.List.mem_eraseIdx_iff_getElem._f :=
+  induction_step% @_root_.List.mem_eraseIdx_iff_getElem
+
+public theorem List.getElem?_mapIdx_go._f : type_of% @_root_.List.getElem?_mapIdx_go._f :=
+  induction_step% @_root_.List.getElem?_mapIdx_go
+
+public theorem List.map_lt._f : type_of% @_root_.List.map_lt._f :=
+  induction_step% @_root_.List.map_lt
+
+public theorem ByteArray.utf8Decode?go_eq_utf8Decode?go_extract._unary :
+    type_of% (private_decl% @_root_.ByteArray.utf8Decode?go_eq_utf8Decode?go_extract._unary) :=
+  fun _ => _root_.ByteArray.utf8Decode?go_eq_utf8Decode?go_extract
+
+public theorem Std.Iter.atIdxSlow?.induct_unfolding._unary :
+    type_of% @_root_.Std.Iter.atIdxSlow?.induct_unfolding._unary :=
+  fun motive yieldZero yieldSucc skip done x =>
+    _root_.Std.Iter.atIdxSlow?.induct_unfolding motive yieldZero yieldSucc skip done x.1 x.2
+
+public theorem List.length_merge._unary : type_of% @_root_.List.length_merge._unary :=
+  fun s p => _root_.List.length_merge s p.1 p.2
 
 public theorem DerivingHelpers.and_true_curry : type_of% @_root_.DerivingHelpers.and_true_curry := by
   intro a b P f
