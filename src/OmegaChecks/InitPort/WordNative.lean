@@ -22,6 +22,8 @@ private def bitsType : Name → Name
   | n => n
 
 private def word? (name : Name) : Option (String × IR.IRType) := match bitsType name with
+  | `Float.Model => some ("uint64", .uint64)
+  | `Float32.Model => some ("uint32", .uint32)
   | `UInt8 => some ("uint8", .uint8)
   | `UInt16 => some ("uint16", .uint16)
   | `UInt32 => some ("uint32", .uint32)
@@ -52,12 +54,20 @@ private def isFloatCall (source : Environment) (owner name : Name) : Bool := Id.
   return (sawFloat || (float? result).isSome) &&
     ((float? result).isSome || (word? result).isSome || [`Decidable, `Bool].contains result)
 
+/-- The model-level operations run the pinned software arithmetic on their IEEE bit fields. -/
+private def modelOperation (name : Name) : Bool :=
+  [`Float.Model, `Float32.Model].contains name.getPrefix &&
+    [`add, `sub, `mul, `div, `sqrt, `fma, `neg, `abs, `le, `lt, `beq, `isFinite, `isInf, `isNaN,
+     `ofBits, `ofInt, `ofNat, `ofUInt8, `ofUInt16, `ofUInt32, `ofUInt64, `ofUSize,
+     `ofInt8, `ofInt16, `ofInt32, `ofInt64, `ofISize, `toUInt8, `toUInt16, `toUInt32, `toUInt64,
+     `toUSize, `toInt8, `toInt16, `toInt32, `toInt64, `toISize, `ofScientific].contains (name.updatePrefix .anonymous)
+
 public def usesPinnedFunction (n : Name) : Bool :=
   let method := n.updatePrefix .anonymous
   let vector := n.getPrefix == `BitVec &&
     [`abs, `pow, `smod, `replicate, `reverse, `cpop, `cpopNatRec, `ctz, `clz, `clzAuxRec,
      `getLsbD, `getLsb, `getMsbD, `getMsb, `msb, `sdiv, `srem, `smtSDiv, `hash, `ofBoolListLE, `ofBoolListBE].contains method
-  IndexedNative.supported n || SyntaxPositionNative.supported n || vector || [`Nat.repr, `Nat.reprFast, `Int.repr].contains n || [`BitVec.toHex, `BitVec.instToString].contains n || n == `Nat.bitwise || ((word? n.getPrefix).isSome && (method == `pow || (method == `ofInt && bitsType n.getPrefix == n.getPrefix))) ||
+  modelOperation n || IndexedNative.supported n || SyntaxPositionNative.supported n || vector || [`Nat.repr, `Nat.reprFast, `Int.repr].contains n || [`BitVec.toHex, `BitVec.instToString].contains n || n == `Nat.bitwise || ((word? n.getPrefix).isSome && (method == `pow || (method == `ofInt && bitsType n.getPrefix == n.getPrefix))) ||
     (n.getPrefix == `Int && [`negOfNat, `subNatNat, `sign, `toNat, `pow, `fdiv, `fmod, `bdiv, `bmod].contains method)
 
 public def supported (source : Environment) (owner name : Name) : Bool :=
@@ -83,6 +93,7 @@ public def supported (source : Environment) (owner name : Name) : Bool :=
   isFloatCall source owner name ||
     ([`OmegaInit.Data.Nat.Basic, `OmegaInit.Data.Nat.Div.Basic, `OmegaInit.Data.Nat.Lemmas,
     `OmegaInit.Data.Nat.Internal.Linear, `OmegaInit.Data.Fin.Lemmas].contains owner && IndexedNative.supported name) ||
+    ([`OmegaInit.Data.Float.Model.Float, `OmegaInit.Data.Float.Model.Float32].contains owner && modelOperation name) ||
     (owner == `OmegaInit.Prelude && SyntaxPositionNative.supported name) ||
     ((base || intPrimitive || modular || stringOp || wordRepr || bitwise || logarithm || (inOwner && primitive)) && isExtern source name) ||
     ((intOwner || [`OmegaInit.Data.Int.Repr, `OmegaInit.Data.Repr, `OmegaInit.Data.Nat.Bitwise.Basic, `OmegaInit.Data.BitVec.Basic].contains owner || [`OmegaInit.Data.UInt.Basic, `OmegaInit.Data.SInt.Basic].contains owner) && usesPinnedFunction name)
@@ -97,7 +108,8 @@ public def install (names : Array Name) : CoreM Unit := do
     (← compileDeclsRef.get) #[n] {}
 
 private def layout (env : Environment) (name : Name) : IO Unit := do
-  for n in [`Omega.Fin, `Omega.BitVec, `Omega ++ bitsType name, `Omega ++ name].eraseDups do
+  let storage := if name == `Float.Model then `UInt64 else if name == `Float32.Model then `UInt32 else bitsType name
+  for n in [`Omega.Fin, `Omega.BitVec, `Omega ++ storage, `Omega ++ name].eraseDups do
     let some (some field) := impureTrivialStructureInfoExt.find? env n
       | throw <| IO.userError s!"word argument does not erase to Nat: {n}"
     unless field.fieldIdx == 0 do throw <| IO.userError s!"incorrect word layout: {n}"
@@ -264,14 +276,6 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
     checkFloatLayout strict dom
     unless ret == t && result == .tobject do throw <| IO.userError s!"incorrect float result at {n}"
     pure ("lean_obj_res", s!"omega_{f}_to_nat_bits({call})")
-  else if (float? official.getPrefix).isSome && official == official.getPrefix ++ `toModel then do
-    let model := official.getPrefix ++ `Model
-    let single := official.getPrefix == `Float32
-    checkFloatLayout strict official.getPrefix
-    unless dom == model && ret == (if single then .uint32 else .uint64) && result == .tobject do
-      throw <| IO.userError s!"unexpected IEEE model result at {n}"
-    let toNat := if single then "lean_uint32_to_nat" else "lean_uint64_to_nat"
-    pure ("lean_obj_res", s!"{toNat}({call})")
   else if (float? official.getPrefix).isSome && official == official.getPrefix ++ `frExp then do
     let floatType := official.getPrefix
     unless type == mkApp2 (mkConst `Prod [.zero, .zero]) (mkConst floatType) (mkConst `Int) &&
