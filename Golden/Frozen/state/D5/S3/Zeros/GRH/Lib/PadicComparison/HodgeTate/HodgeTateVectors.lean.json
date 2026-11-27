@@ -1,0 +1,1 @@
+{"statement_id":"sha256:3ed892e77b1f880f4f3d29591de7057045e31c1d3d08bbca58f2380853b41d4a","declarations":[{"declaration_name_key":"ns(n0,25:exists_hasHodgeTateWeight)","kind":"theorem","libraries":["Aesop","Batteries","Init","Lean","Mathlib","Std"],"axioms":["Classical.choice","Quot.sound","propext"]}]}
