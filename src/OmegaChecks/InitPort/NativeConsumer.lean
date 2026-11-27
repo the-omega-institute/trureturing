@@ -2,12 +2,15 @@ import Lean
 
 open Lean
 
-private def consumer := "module
+private def imports := "module
 prelude
 public import OmegaInit.Data.Function
 public import OmegaInit.Data.Nat.Basic
 public import OmegaInit.Data.Option.Basic
 public import OmegaInit.Control.Id
+"
+
+private def consumer := imports ++ "
 public def firstValue (x y : Omega.Bool) : Omega.Bool :=
   Omega.Function.curry (fun p => Omega.Prod.fst p) x y
 public def secondValue (x y : Omega.Bool) : Omega.Bool :=
@@ -145,12 +148,12 @@ public def word16Equal (x y : Omega.Bool) : Omega.Bool :=
 
 public def word32Le (x y : Omega.Bool) : Omega.Bool :=
   let mk := fun b => Omega.UInt32.ofBitVec (asWordBits
-    (Omega.Nat.le_add_right_of_le (Omega.Nat.succ_le_succ (Omega.Nat.zero_le _))) b)
+    (Omega.Nat.succ_le_succ (Omega.Nat.zero_le 31)) b)
   @Omega.Decidable.decide _ (Omega.UInt32.decLe (mk x) (mk y))
 
 public def word64Equal (x y : Omega.Bool) : Omega.Bool :=
   let mk := fun b => Omega.UInt64.ofBitVec (asWordBits
-    (Omega.Nat.le_add_right_of_le (Omega.Nat.le_add_right_of_le (Omega.Nat.succ_le_succ (Omega.Nat.zero_le _)))) b)
+    (Omega.Nat.succ_le_succ (Omega.Nat.zero_le 63)) b)
   @Omega.Decidable.decide _ (Omega.UInt64.decEq (mk x) (mk y))
 
 public def byteBufferSecond (x y : Omega.Bool) : Omega.Bool :=
@@ -227,10 +230,23 @@ unsafe def main (args : List String) : IO Unit := do
   let [lib] := args | throw <| IO.userError "expected generated library path"
   let lib ← IO.FS.realPath lib
   IO.FS.withTempDir fun dir => do
+    let compilerEnv := #[("LEAN_PATH", some lib.toString)]
+    -- Initialize just the consumer's imports. Its own functions still run from packaged IR.
+    IO.FS.writeFile (dir / "PairImports.lean") imports
+    discard <| IO.Process.run {
+      cmd := "lean", args := #["-c", "PairImports.c", "PairImports.lean"]
+      cwd := dir, env := compilerEnv }
+    let objects := (← (lib / ".." / "native").walkDir).filter (·.extension == some "o")
+    let plugin := dir / "PairImports.so"
+    discard <| IO.Process.run {
+      cmd := "leanc", cwd := dir
+      args := #["-shared", "-fPIC", "-DLEAN_EXPORTING", "PairImports.c"] ++
+        (objects.map (·.toString)) ++ #["-o", plugin.toString] }
+    loadPlugin plugin (some "runtime_initialize_PairImports")
     IO.FS.writeFile (dir / "PairSmoke.lean") consumer
     let proc ← IO.Process.output {
       cmd := "lean", args := #["-c", "PairSmoke.c", "-o", "PairSmoke.olean", "PairSmoke.lean"]
-      cwd := dir, env := #[("LEAN_PATH", some lib.toString)] }
+      cwd := dir, env := compilerEnv }
     unless proc.exitCode == 0 do throw <| IO.userError (proc.stdout ++ proc.stderr)
     searchPathRef.set [dir, lib]
     let env ← importModules #[{module := `PairSmoke, importAll := true}] {} (level := .private)

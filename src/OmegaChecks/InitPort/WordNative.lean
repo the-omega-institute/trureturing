@@ -185,7 +185,7 @@ private def thunkExtern : Name → Option String
   | `Thunk.get => some "lean_thunk_get_own"
   | _ => none
 
-public def supported (source : Environment) (owner name : Name) : Bool :=
+public def supported (source : Environment) (owner name : Name) (boxedFloatArray : Bool) : Bool :=
   let method := name.updatePrefix .anonymous
   let widths := [`toUInt8, `toUInt16, `toUInt32, `toUInt64, `toUSize, `toInt8, `toInt16, `toInt32, `toInt64, `toISize]
   let ops := [`add, `sub, `mul, `div, `mod, `land, `lor, `xor, `complement, `neg,
@@ -223,6 +223,7 @@ public def supported (source : Environment) (owner name : Name) : Bool :=
   let primitive := ((word? name.getPrefix).isSome && name.getPrefix != `Char && (ops ++ widths).contains method) ||
     (name.getPrefix == `Bool && widths.contains method)
   (owner == `OmegaInit.Core && (thunkExtern name).isSome) ||
+    (owner == `OmegaInit.Data.FloatArray.Basic && boxedFloatArray && FloatArrayNative.operations.contains name) ||
     (owner == `OmegaInit.Util && debugPrimitive name && isExtern source name) ||
     (owner == `OmegaInit.System.Uri && uriFunction name) ||
     (owner == `OmegaInit.Data.ToString.Name && renderName name) ||

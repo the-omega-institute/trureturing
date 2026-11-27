@@ -3,6 +3,7 @@ public import Lean
 public import OmegaChecks.InitCompiler.RootNames
 import OmegaChecks.InitPort.Translation
 import OmegaChecks.InitPort.WordNative
+import OmegaChecks.InitPort.FloatArrayNative
 import OmegaChecks.InitPort.BufferReference
 import OmegaChecks.InitPort.StateRunner
 import Lean.Elab.ParseImportsFast
@@ -239,7 +240,7 @@ private def checkElaboration (env full : Environment) (reference? : Option Envir
           let original := InitKernelPort.originalName n
           let some ref := reference? | throw <| IO.userError s!"unverified native symbol for {owner}/{n}"
           unless n == InitKernelPort.portName original && ref.getModuleIdxFor? original == ref.getModuleIdx? (counterpart owner) &&
-              InitPort.WordNative.supported ref owner original do
+              InitPort.WordNative.supported ref owner original (InitPort.FloatArrayNative.boxed full) do
             throw <| IO.userError s!"unverified native symbol for {owner}/{n}"
           InitPort.NativeState.checkNativeNat full
           discard <| InitPort.WordNative.wrapper ref full n
