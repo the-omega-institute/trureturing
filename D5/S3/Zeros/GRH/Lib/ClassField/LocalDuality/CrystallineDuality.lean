@@ -110,8 +110,8 @@ lemma IsPotCrys.relIndex_dvd_of_orthogonal [IsTopologicalGroup Γ]
       map_cyclotomicGp_smul _ nsmul_zmodPowToUnits, -smul_eq_mul]; tauto
   have := (mul_dvd_mul_right ((card_dvd_of_le (sup_le_iff.2 (forall₂_or_left.1 fun s z ↦ (hH s
     z).rec fun a ⟨F, G⟩ ↦ ⟨⟨_, hZ z⟩, by
-    exact fun _ ⟨c, v, e⟩ ↦
-    e ▸ neg_eq_zero.1 ((cupProduct_flip ..).symm.trans ((ker_mkQ _).ge (by
+    rintro _ ⟨c, v, e⟩
+    exact e ▸ neg_eq_zero.1 ((cupProduct_flip ..).symm.trans ((ker_mkQ _).ge (by
     simpa [← F, ← by simpa [ext_iff] using D e₀ hb, I] using! G c v))), rfl⟩))).trans (card_map_dvd
     _ (Z1 _).toAddSubgroup.subtype)) _).trans (V.local_duality_card_dvd (holdsCorestrictions hj t'
     (D e B) k' (r.range_eq_top.1 (eq_top_of_card_eq _ (by erw [← index_ker, k', index_pPowMultiples,

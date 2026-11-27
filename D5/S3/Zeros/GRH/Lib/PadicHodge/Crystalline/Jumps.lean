@@ -121,8 +121,9 @@ lemma jump_eq_zero_iff : jump ρ γ u = 0 ↔ ∀ f ∈ hodgeTateMaps ρ γ u, f
 /-- For j with open image and T finitely generated over R, there is a natural number a such that
 every jump k of T at γ (nonzero multiplicity) satisfies −a ≤ k ≤ a. -/
 lemma exists_jump_bound : ∃ a : ℕ, ∀ k, jump ρ γ k ≠ 0 → -a ≤ k ∧ k ≤ a :=
-    (exists_fun_fin_finrank_span_eq _ (∃ u, · ∈ _)).elim fun _ ⟨h, e, _⟩ ↦ (skolem.1 h).rec fun a
-  h ↦ (exists_le (a · |>.natAbs)).imp fun _ b _ ↦ Not.imp_symm fun n ↦ jump_eq_zero_iff.2 fun _ m ↦
+    (exists_fun_fin_finrank_span_eq _ (∃ u, · ∈ _)).elim fun _ witness ↦ by
+    obtain ⟨h, e, _⟩ := witness
+    exact (skolem.1 h).rec fun a h ↦ (exists_le (a · |>.natAbs)).imp fun _ b _ ↦ Not.imp_symm fun n ↦ jump_eq_zero_iff.2 fun _ m ↦
     (span_eq_bot.2 (by grind)).le (mem_span_same_weight h m (e.ge (subset_span ⟨_, m⟩)))
 
 variable [Algebra.IsAlgebraic ℤ_[p] R] [Module ℤ_[p] T] [IsScalarTower ℤ_[p] R T] [Free R T]
