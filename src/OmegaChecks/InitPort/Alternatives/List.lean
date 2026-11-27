@@ -464,23 +464,22 @@ public theorem List.find?_toArray : type_of% @_root_.List.find?_toArray := by
     cases p a <;> rfl
   cases v <;> exact result
 
-private theorem searchIndexSucc {α : Type u} (p : α → Bool) (xs : List α) (i : Nat) :
-    List.findIdx?.go p xs (i+1) = (List.findIdx?.go p xs i).map (· + 1) := by
-  induction xs generalizing i with
-  | nil => rfl
-  | cons a xs ih =>
-    change (if p a then some (i+1) else List.findIdx?.go p xs (i+1+1)) =
-      (if p a then some i else List.findIdx?.go p xs (i+1)).map (· + 1)
-    cases p a with
-    | false => exact ih (i+1)
-    | true => rfl
+public theorem List.findIdx?_go_eq : type_of% (private_decl% @_root_.List.findIdx?_go_eq) := by
+  intro α p xs i
+  induction i with
+  | zero => exact private_decl% _root_.List.findIdx?_go_succ
+  | succ i ih =>
+    have step : List.findIdx?.go p xs (i+1+1) = (List.findIdx?.go p xs (i+1)).map (· + 1) :=
+      private_decl% _root_.List.findIdx?_go_succ
+    rw [step, ih]
+    cases List.findIdx?.go p xs 0 <;> rfl
 
 public theorem List.findIdx?_cons : type_of% @_root_.List.findIdx?_cons := by
   intro α x xs p
   change (if p x then some 0 else List.findIdx?.go p xs 1) = _
   cases p x with
   | true => rfl
-  | false => exact searchIndexSucc p xs 0
+  | false => exact private_decl% _root_.List.findIdx?_go_eq
 
 public theorem List.idxOf?_cons : type_of% @_root_.List.idxOf?_cons := by
   intro α inst a xs b

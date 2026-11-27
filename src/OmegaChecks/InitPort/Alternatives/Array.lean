@@ -14,6 +14,7 @@ public import Init.Data.Array.DecidableEq
 public import Init.Data.Array.Basic
 public import Init.Data.Nat.Basic
 import all Init.Data.Array.Basic
+import all Init.Data.List.ToArray
 import Init.Data.Array.Lemmas
 import all Init.Data.Array.MapIdx
 import Init.Data.Slice.Array.Iterator
@@ -699,6 +700,13 @@ private theorem zipWithAllList (f : Option α → Option β → γ) (xs : Array 
 public theorem Array.toList_zipWithAll : type_of% @_root_.Array.toList_zipWithAll := by
   intro α β γ f xs ys
   exact zipWithAllList f xs ys 0 #[]
+
+public theorem List.zipWithAll_go_toArray :
+    type_of% (private_decl% @_root_.List.zipWithAll_go_toArray) := by
+  intro α β γ xs ys f i acc
+  apply _root_.Array.ext'
+  rw [_root_.Array.toList_append]
+  exact zipWithAllList f xs.toArray ys.toArray i acc
 
 public theorem List.zipWithAll_toArray : type_of% @_root_.List.zipWithAll_toArray := by
   intro α β γ f xs ys

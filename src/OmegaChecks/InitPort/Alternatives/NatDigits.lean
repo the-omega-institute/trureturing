@@ -1,6 +1,7 @@
 module
 
 public import Init.Data.Nat.ToString
+import all Init.Data.Nat.ToString
 import all Init.Data.Repr
 
 namespace OmegaChecks.InitPort.Alternatives
@@ -16,25 +17,27 @@ public theorem Nat.isDigit_digitChar : type_of% @_root_.Nat.isDigit_digitChar :=
     repeat rw [ite_eq_right (by omega)]
     decide
 
+public theorem Nat.isDigit_of_mem_toDigitsCore :
+    type_of% (private_decl% @_root_.Nat.isDigit_of_mem_toDigitsCore) := by
+  intro b cs c fuel a known base bound inside
+  have digit (n : Nat) : (n % b).digitChar.isDigit = true :=
+    (Nat.isDigit_digitChar (n := n % b)).trans (decide_eq_true (Nat.lt_of_lt_of_le (Nat.mod_lt n base) bound))
+  induction fuel generalizing a cs with
+  | zero => exact known inside
+  | succ fuel ih =>
+    have cons : c ∈ (a % b).digitChar :: cs → c.isDigit = true := by
+      intro h
+      cases h with
+      | head => exact digit a
+      | tail _ h => exact known h
+    rw [Nat.toDigitsCore] at inside
+    split at inside
+    · exact cons inside
+    · exact ih cons inside
+
 public theorem Nat.isDigit_of_mem_toDigits : type_of% @_root_.Nat.isDigit_of_mem_toDigits := by
   intro b n c base bound member
-  have digit (a : Nat) : (a % b).digitChar.isDigit = true :=
-    (Nat.isDigit_digitChar (n := a % b)).trans (decide_eq_true (Nat.lt_of_lt_of_le (Nat.mod_lt a base) bound))
-  have loop (fuel a : Nat) (cs : List Char) (known : c ∈ cs → c.isDigit = true)
-      (inside : c ∈ Nat.toDigitsCore b fuel a cs) : c.isDigit = true := by
-    induction fuel generalizing a cs with
-    | zero => exact known inside
-    | succ fuel ih =>
-      have cons : c ∈ (a%b).digitChar :: cs → c.isDigit = true := by
-        intro h
-        cases h with
-        | head => exact digit a
-        | tail _ h => exact known h
-      rw [Nat.toDigitsCore] at inside
-      split at inside
-      · exact cons inside
-      · exact ih _ _ cons inside
-  exact loop _ _ [] (fun h => by cases h) member
+  exact (private_decl% _root_.Nat.isDigit_of_mem_toDigitsCore) (fun h => by cases h) base bound member
 
 public theorem Nat.underscore_not_in_toDigits : type_of% @_root_.Nat.underscore_not_in_toDigits := by
   intro n h

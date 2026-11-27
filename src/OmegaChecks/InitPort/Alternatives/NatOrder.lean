@@ -226,10 +226,8 @@ public theorem Nat.mul_sub_mod : type_of% @_root_.Nat.mul_sub_mod := by
   conv in (_ + 1) => rw [← Nat.mod_add_div x n, Nat.add_right_comm]
   exact Nat.add_sub_add_right _ _ _
 
-private theorem allLTTR_loop_eq_true {n : Nat} {f : (i : Nat) → i < n → Bool} :
-    ∀ j (hj : j ≤ n), Nat.allLTTR.loop n f j hj = true ↔
-      ∀ i (_ : n - j ≤ i) (h : i < n), f i h = true := by
-  intro j
+public theorem Nat.allLTTR_loop_eq_true : type_of% (private_decl% @_root_.Nat.allLTTR_loop_eq_true) := by
+  intro n f j
   induction j with
   | zero =>
     intro hj
@@ -249,13 +247,11 @@ private theorem allLTTR_loop_eq_true {n : Nat} {f : (i : Nat) → i < n → Bool
 
 public theorem Nat.allLTTR_eq_true : type_of% @_root_.Nat.allLTTR_eq_true := by
   intro n f
-  apply (allLTTR_loop_eq_true n (Nat.le_refl n)).trans
+  apply ((private_decl% _root_.Nat.allLTTR_loop_eq_true) n (Nat.le_refl n)).trans
   exact ⟨fun all i hi => all i (Nat.sub_self n ▸ Nat.zero_le i) hi, fun all i _ hi => all i hi⟩
 
-private theorem anyLTTR_loop_eq_true {n : Nat} {f : (i : Nat) → i < n → Bool} :
-    ∀ j (hj : j ≤ n), Nat.anyLTTR.loop n f j hj = true ↔
-      ∃ i, ∃ h : i < n, n - j ≤ i ∧ f i h = true := by
-  intro j
+public theorem Nat.anyLTTR_loop_eq_true : type_of% (private_decl% @_root_.Nat.anyLTTR_loop_eq_true) := by
+  intro n f j
   induction j with
   | zero =>
     intro hj
@@ -275,7 +271,7 @@ private theorem anyLTTR_loop_eq_true {n : Nat} {f : (i : Nat) → i < n → Bool
 
 public theorem Nat.anyLTTR_eq_true : type_of% @_root_.Nat.anyLTTR_eq_true := by
   intro n f
-  apply (anyLTTR_loop_eq_true n (Nat.le_refl n)).trans
+  apply ((private_decl% _root_.Nat.anyLTTR_loop_eq_true) n (Nat.le_refl n)).trans
   exact ⟨fun ⟨i,hi,_,ok⟩ => ⟨i,hi,ok⟩, fun ⟨i,hi,ok⟩ => ⟨i,hi,Nat.sub_self n ▸ Nat.zero_le i,ok⟩⟩
 
 public noncomputable def Nat.decidableBallLTTR : type_of% @_root_.Nat.decidableBallLTTR :=
