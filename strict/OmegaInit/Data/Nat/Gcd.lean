@@ -74,5 +74,5 @@ end Omega.Nat
 
 public section
 namespace Nat
-export _root_.Omega.Nat (gcd gcd_add_one gcd_one_left gcd_rec gcd_succ gcd_zero_left gcd_zero_right)
+export _root_.Omega.Nat (gcd_add_one gcd_one_left gcd_rec gcd_succ gcd_zero_left gcd_zero_right)
 end Nat

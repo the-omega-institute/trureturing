@@ -8,29 +8,33 @@ import tempfile
 
 ROOT = Path(__file__).resolve().parents[2]
 GENERATOR = Path(__file__).with_name("InitPort") / "Hosted.lean"
+FOUNDATIONS = ("OmegaInit", "OmegaMathlib", "OmegaMath")
 PARTS = (".olean", ".olean.server", ".olean.private", ".ir", ".ir.sig", ".ilean")
 
 
-def foundation_files(source, module="OmegaInit"):
-    paths = [*source.glob(module + ".*"), *(source / module).rglob("*")]
+def foundation_files(source, module=None):
+    modules = (module,) if module else FOUNDATIONS
+    paths = [path for name in modules for path in [*source.glob(name + ".*"), *(source / name).rglob("*")]]
     return sorted(path for path in paths if path.is_file() and path.name.endswith(PARTS))
 
 
 def link_other_roots(source, target):
     if source.is_dir():
         for path in source.iterdir():
-            if path.name.split(".")[0] != "OmegaInit":
+            if path.name.split(".")[0] not in FOUNDATIONS:
                 try:
                     (target / path.name).symlink_to(os.path.relpath(path, target))
                 except FileExistsError:
                     pass
 
 
-def make_view(source, target, files, lake=("lake",), *, snapshot=False):
+def make_view(source, target, files, *, snapshot=False):
     target.mkdir(parents=True, exist_ok=True)
     owners = [".".join(path.relative_to(source).with_suffix("").parts) for path in files if path.suffix == ".olean"]
     if owners:
-        subprocess.run([*lake, "env", "lean", "--run", GENERATOR, source, target, *owners], cwd=ROOT, check=True)
+        subprocess.run(["lake", "build", "+OmegaChecks.Interface", "+OmegaChecks.Interface.Equations"],
+                       cwd=ROOT, check=True, stdout=subprocess.DEVNULL)
+        subprocess.run(["lake", "env", "lean", "--run", GENERATOR, source, target, *owners], cwd=ROOT, check=True)
     # Lean resolves a whole module prefix in one directory. The projector writes
     # the changed owners. Keep all other parts of that same foundation available.
     for path in files:
@@ -46,7 +50,8 @@ def make_view(source, target, files, lake=("lake",), *, snapshot=False):
 def fingerprint(source, files):
     digest = hashlib.sha256(GENERATOR.read_bytes())
     digest.update((ROOT / "lean-toolchain").read_bytes())
-    digest.update((GENERATOR.parents[1] / "InitCompiler/CompilerMarkers.lean").read_bytes())
+    for tool in ("InitCompiler/CompilerMarkers.lean", "Interface.lean", "Interface/Equations.lean"):
+        digest.update((GENERATOR.parents[1] / tool).read_bytes())
     for path in files:
         digest.update(os.fsencode(path.relative_to(source)) + b"\0")
         with path.open("rb") as stream:
@@ -54,7 +59,7 @@ def fingerprint(source, files):
     return digest.hexdigest()
 
 
-def cached_view(source, lake):
+def cached_view(source):
     cache = ROOT / ".lake/omega-hosted"
     cache.mkdir(parents=True, exist_ok=True)
     while True:
@@ -65,7 +70,7 @@ def cached_view(source, lake):
             break
         with tempfile.TemporaryDirectory(dir=cache) as temporary:
             view = Path(temporary)
-            make_view(source, view, files, lake, snapshot=True)
+            make_view(source, view, files, snapshot=True)
             if fingerprint(source, foundation_files(source)) != key:
                 continue
             try:

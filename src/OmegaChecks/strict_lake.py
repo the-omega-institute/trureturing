@@ -57,7 +57,7 @@ def strict_config():
 
     base = ROOT / BUILD / "lib/lean"
     kernel = isolated_config()
-    view = cached_view(base, ["lake", "-f", kernel])
+    view = cached_view(base)
     raw = kernel.read_text()
     return write_config("omega-strict.toml", "leanLibDir = " + json.dumps(str(view)) + "\n" + raw)
 

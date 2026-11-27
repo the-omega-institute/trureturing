@@ -1,5 +1,6 @@
 import Lean
-import OmegaChecks.InitCompiler.CompilerMarkers
+import Lean.Replay
+import OmegaChecks.Interface
 
 /-! Share pinned physical roots with an ordinary Lean importer. -/
 
@@ -24,37 +25,111 @@ private def sameImplementation (ported pinned : ConstantInfo) : Bool := Id.run d
 private def physicalRoot (name : Name) : Bool :=
   name.getRoot != `Omega && !(`_private.OmegaInit).isPrefixOf name
 
-private def project (source output std : System.FilePath) (owner : Name) : IO Unit := do
+private def renameTerm (moved : NameSet) (value : Expr) : Expr :=
+  value.replace fun e => match e with
+    | .const n us => if moved.contains n then some (.const (`Omega ++ n) us) else none
+    | _ => none
+
+private def relocate (moved : NameSet) (ci : ConstantInfo) : ConstantInfo := Id.run do
+  if !(moved.contains ci.name || ci.getUsedConstantsAsSet.toArray.any moved.contains) then return ci
+  let name := fun n => if moved.contains n then `Omega ++ n else n
+  let term := renameTerm moved
+  let base (v : ConstantVal) := {v with name := name v.name, type := term v.type}
+  match ci with
+  | .defnInfo v => return .defnInfo {v with toConstantVal := base v.toConstantVal, all := v.all.map name, value := term v.value}
+  | .opaqueInfo v => return .opaqueInfo {v with toConstantVal := base v.toConstantVal, all := v.all.map name, value := term v.value}
+  | .thmInfo v => return .thmInfo {v with toConstantVal := base v.toConstantVal, all := v.all.map name, value := term v.value}
+  | .axiomInfo v => return .axiomInfo {v with toConstantVal := base v.toConstantVal}
+  | .inductInfo v => return .inductInfo {v with toConstantVal := base v.toConstantVal}
+  | .ctorInfo v => return .ctorInfo {v with toConstantVal := base v.toConstantVal}
+  | .recInfo v => return .recInfo {v with toConstantVal := base v.toConstantVal, rules := v.rules.map fun r => {r with rhs := term r.rhs}}
+  | .quotInfo v => return .quotInfo {v with toConstantVal := base v.toConstantVal}
+
+private def project (source output : System.FilePath) (env pinned : Environment) (moved : NameSet) (owner : Name) : IO Unit := do
   let raw := modToFilePath source owner "olean"
   let path := modToFilePath output owner "olean"
   let strict := (← readModuleDataParts (parts raw)).map Prod.fst
-  let candidates := strict[2]!.constants.filter fun ci => physicalRoot ci.name
-  if candidates.isEmpty then return
   let original := owner.replacePrefix `OmegaInit `Init
-  let pinned := (← readModuleDataParts (parts (modToFilePath std original "olean"))).map Prod.fst
-  let byName := pinned[2]!.constants.foldl (init := ({} : NameMap ConstantInfo)) fun m ci => m.insert ci.name ci
+  let idx := (env.getModuleIdx? owner).get!
   let mut shared : NameSet := {}
-  for ci in candidates do
-    if let some target := byName.find? ci.name then
+  for ci in strict[2]!.constants do
+    unless owner.getRoot == `OmegaInit && physicalRoot ci.name && !moved.contains ci.name do continue
+    if let some target := pinned.find? ci.name then
       unless sameImplementation ci target do throw <| IO.userError s!"incompatible physical root {owner}/{ci.name}"
       shared := shared.insert ci.name
-  if shared.isEmpty then return
+  let affected := strict[2]!.constants.any fun ci => moved.contains ci.name || ci.getUsedConstantsAsSet.toArray.any moved.contains
+  if shared.isEmpty && !affected then return
   IO.FS.createDirAll path.parent.get!
   let mut outputParts := #[]
-  for data in strict, file in parts path do
-    let constants := data.constants.filter fun ci => !shared.contains ci.name
+  for data in strict, file in parts path, level in #[OLeanLevel.exported,.server,.private] do
+    let remaining := data.constants.filter fun ci => !shared.contains ci.name
+    let constants := remaining.map (relocate moved)
+    let mut metadata := (← mkEmptyEnvironment).setMainModule owner
+    for (alias, target) in aliasExtension.getModuleEntries env idx (level := level) do
+      let target := if moved.contains target then `Omega ++ target else target
+      if alias != target then metadata := addAlias metadata alias target
+    let mut entries := data.entries.filter (·.1 != aliasExtension.name)
+    let mut redirects := #[]
+    for n in data.constNames do
+      if moved.contains n && (env.find? n).any (· matches .defnInfo _) then
+        metadata := Compiler.implementedByAttr.ext.addEntry (asyncDecl := `Omega ++ n) metadata (`Omega ++ n, n)
+        redirects := redirects.push (`Omega ++ n)
+    -- Keep every pre-existing compiler entry and add the same native calls used by the isolated library.
+    let dataMeta ← mkModuleData metadata level
+    entries := entries ++ dataMeta.entries.filter (fun e => e.1 == aliasExtension.name)
+    for (ext, more) in dataMeta.entries do
+      if ext == Compiler.implementedByAttr.ext.name && !more.isEmpty then
+        let earlier := (entries.find? (·.1 == ext)).map Prod.snd |>.getD #[]
+        entries := (entries.filter (·.1 != ext)).push (ext, earlier ++ more)
+    let imports := if shared.isEmpty && redirects.isEmpty then data.imports else data.imports.push {module := original}
     let result := { data with
       constants
       constNames := constants.map (·.name)
-      extraConstNames := data.extraConstNames.filter (!shared.contains ·)
-      imports := data.imports.push {module := original} }
+      entries
+      imports
+      extraConstNames := data.extraConstNames.filter (!shared.contains ·) }
     outputParts := outputParts.push (file, result)
   saveModuleDataParts owner outputParts
 
 def main (args : List String) : IO Unit := do
   let source :: output :: owners := args | throw <| IO.userError "expected a strict library, output directory and module names"
-  let std ← getLibDir (← findSysroot)
-  for owner in owners do
-    let name := owner.toName
-    unless name.getRoot == `OmegaInit do throw <| IO.userError s!"expected an OmegaInit module, got {name}"
-    project source output std name
+  let names := owners.toArray.map String.toName
+  unless names.all (fun n => #[`OmegaInit, `OmegaMathlib, `OmegaMath].contains n.getRoot) do
+    throw <| IO.userError "expected isolated mathematical library modules"
+  initSearchPath (← findSysroot)
+  let certificates ← importModules #[{module := `OmegaChecks.Interface.Equations}] {} (level := .private)
+  searchPathRef.set [← getLibDir (← findSysroot)]
+  let upstream := names.filter (·.getRoot == `OmegaInit)
+  let pinned ← importModules (upstream.map fun n => {module := n.replacePrefix `OmegaInit `Init, importAll := true}) {} (level := .private)
+  searchPathRef.set [source]
+  let env ← importModules (names.map fun n => {module := n, importAll := true}) {} (level := .private)
+  let mut moved : NameSet := {}
+  for n in #[`Nat.div, `Nat.mod, `Nat.gcd] do
+    if let some raw := env.find? n then
+      let some host := pinned.find? n | throw <| IO.userError s!"missing official {n}"
+      unless sameImplementation raw host do
+        unless raw.type.equal host.type && raw matches .defnInfo _ do throw <| IO.userError s!"invalid arithmetic interface for {n}"
+        OmegaChecks.Interface.checkInstalledEquation env certificates n
+        moved := moved.insert n
+  let operations := moved
+  for (n, ci) in env.constants.toList do
+    if ci.isTheorem && operations.toArray.any (·.isPrefixOf n) then moved := moved.insert n
+  let mut terms := {}
+  for (n,ci) in env.constants.toList do
+    if moved.contains n || !pinned.contains n then
+      let changed := relocate moved ci
+      terms := terms.insert changed.name changed
+  let checked ← pinned.toKernelEnv.replay terms
+  -- Each physical proof occurrence has a body, including duplicated public equations.
+  for data in env.header.moduleData do
+    for ci in data.constants do
+      if let .thmInfo t := ci then
+        let name := if moved.contains t.name then `Omega ++ t.name else t.name
+        let some canonical := terms[name]? | continue
+        let body := renameTerm moved t.value
+        if canonical.value?.any (·.equal body) then continue
+        let kernel := Environment.ofKernelEnv checked
+        let .ok type := Kernel.check kernel {} body | throw <| IO.userError s!"invalid hosted proof {name}"
+        unless Kernel.isDefEqGuarded kernel {} type (renameTerm moved t.type) do
+          throw <| IO.userError s!"hosted proof type mismatch for {name}"
+  for name in names do project source output env pinned moved name

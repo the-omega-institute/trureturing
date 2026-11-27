@@ -165,6 +165,12 @@ private def checkEquation (env : Environment) (src dst : ConstantInfo) (body : E
     unless #[`propext, `Classical.choice, `Quot.sound].contains ax do
       throw <| IO.userError s!"inadmissible axiom {ax} in {certName}"
 
+/-- Verify a native operation against the pinned all-input equation for its actual isolated body. -/
+def checkInstalledEquation (strict reference : Environment) (name : Name) : IO Unit := do
+  let some (.defnInfo ported) := strict.find? name | throw <| IO.userError s!"missing isolated definition {name}"
+  let some native := reference.find? name | throw <| IO.userError s!"missing pinned operation {name}"
+  checkEquation reference (.defnInfo ported) native (translate (official strict) ported.value)
+
 private def compare (reference : Environment) (rename : Name → Name) (src dst : ConstantInfo)
     (foundation : Option (Environment × Environment) := none) :
     IO (Array Name) := do
