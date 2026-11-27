@@ -456,7 +456,12 @@ lemma exists_detecting_points_component (hX : X ≠ 0) (hl : N + e + 3 < l) : �
     (fun i _ ↦ ∀ S ⊆ Q, #S ≤ i → J (insert p S) → l ^ i • κ S ∈ Y) (fun i _ H S T c j ↦ (ex _ j
     (by grw [card_insert_le]; omega)).rec fun w h ↦ j.2 _ (nsmul_mem (Z S T) _) (by_contra fun o ↦
     (G ⟨⟨⟨_, H S T c.step j⟩, not_cycloGalGroup_le_zeroSubgroup _ γ (by simp [*]) (by simpa [*,
-    pow_succ', mul_smul] using o) _⟩, w⟩).rec fun A ⟨σ, d, f, y, x⟩ ↦ (h _ ((K _).of_dvd (M.mul_left
+    pow_succ', mul_smul] using o) _⟩, w⟩).rec fun A hσ ↦ hσ.elim fun σ hs ↦
+    have d := hs.1
+    have f := hs.2.1
+    have y := hs.2.2.1
+    have x := hs.2.2.2
+    (h _ ((K _).of_dvd (M.mul_left
     _)) (x <| · A d σ f.1)).rec fun n j ↦ (F S T _ (by simp [b]) (n ∘ mem_insert_of_mem) A σ f
     d).rec fun τ ⟨i, e⟩ ↦ y (congr(l ^ _ • $e).symm.trans ((H _ (by simp [*, insert_subset]) (by grw
     [card_insert_le, c]) (by rwa [insert_comm])).2.2 τ ⟨A, I (j.1 _ (by simp)) d i, nofun⟩))))

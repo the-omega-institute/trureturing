@@ -108,8 +108,8 @@ lemma relLength_obeyingCocycles_le {ℓ} [ThePrime ℓ] {X n R Γ G d : Type} [F
     (by simpa [o.forall, e, continuous_prod_of_discrete_right] using fun x ↦ (continuous_comp hj
     H.isPotCrys τ C (coboundary_mem x)).add_const (τ x))) |> (forall₂_and.1 fun s hs ↦ ?_).elim)
   choose y hY t q a ha E using show ∃ y, InClass F K U y ∧ ∃ t : y →ₗ[R] _, (∀ g x, t (y.ρ g x) =
-    ρ (η g) • t x) ∧ s ∈ (crysCocycles y.ρ).map (t.compLeft Γ) from hs.elim (by tauto) fun ⟨w, hw,
-    s⟩ ↦ by
+    ρ (η g) • t x) ∧ s ∈ (crysCocycles y.ρ).map (t.compLeft Γ) from hs.elim (by tauto) fun witness ↦ by
+    obtain ⟨w, hw, s⟩ := witness
     choose k Y i hx using obeyingCocycles.exists_graph_subrepresentation _ _ hw
     have := i.moduleIsTorsionFree (R := R) _ (by simp)
     use ⟨_, Y.toRepresentation.comp η⟩, .of_jointly_injective (hZ <| Prod.fst ·) (fun a ↦ ⟨⟨(·.1.1

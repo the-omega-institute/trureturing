@@ -121,7 +121,7 @@ lemma exists_uniform_trace_sum_eq_jump {p} [ThePrime p] Γ [Group Γ] [𝒥 : Ov
     exists_associated_xi_pow (ne_zero_of_map (algebraMap_apply _ BdRPlus BdR e ▸ K)), ((localFieldOf
     Γ).essFiniteType_iff.1 inferInstance).choose_spec ▸ CoeffRing.exists_mem_of_mem_adjoin _
   let O := (toAlgHom ..).liftEquiv ℤ_[p] Amax R BdRPlus
-  let ⟨c, B⟩ := (@End.isNilpotent_iff_of_finite Amax (_ ⧸ (((toAlgHom _ BPlus _).toLinearMap
+  obtain ⟨c, B⟩ := (@End.isNilpotent_iff_of_finite Amax (_ ⧸ (((toAlgHom _ BPlus _).toLinearMap
     ∘ₗ Algebra.linearMap ..).coprod (.mulLeft _ (xi ^ m.succ • 1))).range.comap
     O.toLinearMap) _ _ _ _ p).2 (Quot.ind (O · |>.exists_Ainf_approx m.succ |>.imp fun l ⟨a, w, h⟩ ↦
     mod_cast (mk_eq_zero _).2 ⟨(a, w), by simp [← h, smul_def, ← algebraMap_apply]⟩))

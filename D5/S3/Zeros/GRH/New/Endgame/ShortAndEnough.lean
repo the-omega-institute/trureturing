@@ -189,4 +189,6 @@ lemma Data.enough_forms : 0 < finrank ℂ D.Column ∧ 0 < D.rowDim ∧
   finrank ℂ ↥(⨆ s ∈ t, (D.projectedPoincare s).range) := have := D.columnCoords.nontrivial
   ⟨finrank_pos, D.finrank_rows_ne_zero.pos, (exists_few_translates (W :=
     D.rows) (HasLogBound.pos D) (D.ramifiedColumns_fill_rows _)).imp fun _ ↦ .imp (by simp)
-    (·.trans (mod_cast finrank_mono (iSup₂_mono fun _ _ _ ⟨φ, e⟩ ↦ ⟨⟨_, φ, rfl⟩, e⟩)))⟩
+    (·.trans (mod_cast finrank_mono (iSup₂_mono fun _ _ _ h ↦ by
+      obtain ⟨φ, e⟩ := h
+      exact ⟨⟨_, φ, rfl⟩, e⟩)))⟩

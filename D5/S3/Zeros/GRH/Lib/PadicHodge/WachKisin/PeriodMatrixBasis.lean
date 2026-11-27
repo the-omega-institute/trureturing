@@ -153,10 +153,13 @@ lemma exists_basis : ∃ Q Z, Q.det ≠ 0 ∧ (∀ i j, Z i j ∈ c.bicommutant)
   choose y' ha using (pow_dvd_of_map (map_mul frobEnd _) (by simp [↓mu_ne_zero]) (fun _ ⟨_, _⟩ ↦
     dvd_of_thetaBPlus_frobEnd_eq_zero _ tau_dvd_of_theta_frobEnd (by simp [*]))
     ⟨_, by simpa [o, mul_left_comm] using congr((F' *ᵥ $(H (e' _))) ·)⟩)
-  refine match R ⟨⟨ψ ∘ f ∘ frobEnd, by simp [← J.eq_iff, *]⟩, fun s _ ↦ J (by
-    simpa [smul_def, Ψ] using! f.2 (c.φ s) _)⟩ y' ⟨_, ?Z⟩, H ?Z with | ⟨w', hw'⟩, Y => ⟨_,
-    ⟨_, _, _, _, i, ?Z, hw', rfl⟩, (?_ : _ → _) congr(frobEnd ($hw' i))⟩
-  simpa [e', smul_def, mul_left_comm] using congr(U *ᵥ $((funext ha : _ = (_ : BPlus) • y'))).symm
+  have Z : U *ᵥ y' = c.E.1 ^ h • ainfToBPlus ∘ ψ ∘ (v • c.E.1 ^ h • x) := by
+    simpa [e', smul_def, mul_left_comm] using congr(U *ᵥ $((funext ha : _ = (_ : BPlus) • y'))).symm
+  have Y := H Z
+  refine (R ⟨⟨ψ ∘ f ∘ frobEnd, by simp [← J.eq_iff, *]⟩, fun s _ ↦ J (by
+    simpa [smul_def, Ψ] using! f.2 (c.φ s) _)⟩ y' ⟨_, Z⟩).elim ?_
+  intro w' hw'
+  refine ⟨_, ⟨_, _, _, _, i, Z, hw', rfl⟩, (?_ : _ → _) congr(frobEnd ($hw' i))⟩
   erw [map_mulVec, comp_def, funext fun _ ↦ show frobEnd _ = c.extendToBPlus f (frobEnd _) from
     sub_eq_zero.1 (eq_zero_of_ainfToBPlus (.mk' (_ ∘ _ - _ ∘ _) (by simp [sub_add_sub_comm])) (fun _
     _ ↦ by apply_rules [sub_mem, extendToBPlus_mem_amaxImage, smul_mem_amaxImage]) (by simp [*])),

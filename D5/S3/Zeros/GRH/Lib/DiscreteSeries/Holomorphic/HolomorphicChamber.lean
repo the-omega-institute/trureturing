@@ -35,10 +35,10 @@ lemma dsCoeff_eq_holMinors {n} [Fintype n] {ε o} (ho :
   clear_value (L : l = _)
   simp [funext_iff, twoRho] at L
   have k a b (q : o a < o b) : ite (ε a = ε b) (l b < l a) (2 * (γ - card n) ≤ l b - l a) := by
-    grind [IsKDominant, HasHolGap, twoRho, twoRho_lt_twoRho q, units_eq_one_or (ε _)]
-  have hg : l.HasLargeGap A := ⟨(by grind [o · |>.lt_or_le <| o ·]),
-    (by grind [card_lt_add_card_gt_add_one t ·]), gapThreshold.eq_1 n A ▸ mod_cast by grind⟩
-  obtain ⟨rfl, x⟩ := (by grind [(by simpa [twoRho, ← sum_boole, ← sum_sub_distrib, add_assoc,
+    grind -abstractProof [IsKDominant, HasHolGap, twoRho, twoRho_lt_twoRho q, units_eq_one_or (ε _)]
+  have hg : l.HasLargeGap A := ⟨(by grind -abstractProof [o · |>.lt_or_le <| o ·]),
+    (by grind -abstractProof [card_lt_add_card_gt_add_one t ·]), gapThreshold.eq_1 n A ▸ mod_cast by grind -abstractProof⟩
+  obtain ⟨rfl, x⟩ := (by grind -abstractProof [(by simpa [twoRho, ← sum_boole, ← sum_sub_distrib, add_assoc,
     ← sum_add_distrib] using (L · ▸ two_mul_lowestKType hg _ :))] : l.lowestKType = w),
     isKHighest_dsGenerator hg
   simpa [holMinorsPi, hg] using
@@ -47,7 +47,7 @@ lemma dsCoeff_eq_holMinors {n} [Fintype n] {ε o} (ho :
       ite (l.dsAction.E a b l.dsGenerator = 0) 0 (o b - o a)
     by_contra; have := casimir_bound hg.isUnitaryCasimirGe_dsAction.1
       ⟨(x.E_word_eq_wordWeight_smul [(a, b)] · |>.1), by simp +contextual [word,
-      apply_apply_eq_swap_add_bracket, x.2, map_single_mul_single, DFunLike.ite_apply] at *; grind⟩
+      apply_apply_eq_swap_add_bracket, x.2, map_single_mul_single, DFunLike.ite_apply] at *; grind -abstractProof⟩
     simp [word, sub_mul] at *
-    grind [x.2 a]⟩) (fun _ _ _ _ ↦ hasDerivAt_rightDeriv_expU _ _ _)
+    grind -abstractProof [x.2 a]⟩) (fun _ _ _ _ ↦ hasDerivAt_rightDeriv_expU _ _ _)
     (.mkPiAlgebra ..)).eq_holMinorsPi_mul ho (by simpa) (by simp [← dsCoeff_inv]) ![·]))

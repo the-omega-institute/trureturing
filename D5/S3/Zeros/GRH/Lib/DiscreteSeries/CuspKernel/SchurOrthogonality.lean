@@ -177,7 +177,8 @@ variable (hg)
 generator ψ_λ has norm 1, and |y(g)| ≤ ‖y‖ for all y in D_λ and g in U(diag ε). -/
 lemma isUnitaryCasimirGe_dsAction : IsUnitaryCasimirGe l l.dsAction ∧ ‖l.dsGenerator‖ = 1 ∧
   ∀ (y : l.DsModule) g, ‖y.1.1 g‖ ≤ ‖y‖ := by
-  have ⟨d, k, _⟩ := hg.toL2_spec
+  have d := hg.toL2_spec.1
+  have k := hg.toL2_spec.2.1
   have u := by simpa using congr(√‖$(k l.dsGenerator 1)‖)
   use ⟨d.form_E_eq_sign_mul isUnitaryRep_rightRegularL2, by simp [dsAction,
     casimirK_generatedBy casimir_dsCoeffSmooth, sq]⟩, u,

@@ -103,4 +103,6 @@ lemma Data.exists_family_covolumeSq_le (D : Data P) : ∃ n, ∃ y : Fin n → _
   -- index and length
   exact ⟨_, y, i, big, ⟨_, mul_le_mul_of_nonneg_right ht (HasLogBound.pos D).le, index t _ y
     (Set.image2_subset_left hS <| hy ·)⟩, fun σ ↦ covolumeSq_le
-    (have ⟨s, _, φ, h, e⟩ := hy ·; by simpa [e] using size φ h s σ)⟩
+    (fun k ↦ by
+      obtain ⟨s, _, φ, h, e⟩ := hy k
+      simpa [e] using size φ h s σ)⟩

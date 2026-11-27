@@ -45,8 +45,12 @@ abbrev reindexAux {E : Type} [Field E] [NumberField E] [NumberField.IsCMField E]
 /-- The lattice-preserving operators on forms of principal level that are restrictions of
 O-combinations of translations by elements of G_f supported at w_j and its conjugate. -/
 def localOps : Subalgebra EllAdicIntegers (D.integralEnd Q.w) := ⟨⟨⟨⟨{a | ∃ b : localGroupAlgebra
-  (Q.w j), ∀ y, (a.1 y).1 = b.1 y}, fun ⟨a, _⟩ ⟨b, _⟩ ↦ ⟨a * b, by simp [*]⟩⟩, 1, by simp⟩,
-  fun ⟨a, _⟩ ⟨b, _⟩ ↦ ⟨a + b, by simp [*]⟩, 0, by simp⟩, (⟨· • 1, by simp⟩)⟩
+  (Q.w j), ∀ y, (a.1 y).1 = b.1 y}, by
+    rintro _ _ ⟨a, ha⟩ ⟨b, hb⟩
+    exact ⟨a * b, by simp [ha, hb]⟩⟩, 1, by simp⟩,
+  by
+    rintro _ _ ⟨a, ha⟩ ⟨b, hb⟩
+    exact ⟨a + b, by simp [ha, hb]⟩, 0, by simp⟩, (⟨· • 1, by simp⟩)⟩
 
 /-- The action of ∏_j GL_n(k_{w_j}) on forms of principal level at the auxiliary places by
 translation through lifts; it preserves the integral forms. -/

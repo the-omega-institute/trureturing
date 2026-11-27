@@ -78,7 +78,7 @@ lemma exists_isPrimeTriangle {ℓ E} [ThePrime ℓ] [Field E] [UnramCMField E] t
       (Submodule.finrank_le _) (by simp)) (h₁ ·) (.of_lt_imp_ne (by simp +contextual [h₃])) y
     have n : (·.2 w |>.cast) ∈ H := ⟨w, by simpa⟩
     choose c A using B.mem_submodule_iff'.1 ⟨_, n, rfl⟩
-    have ⟨u, hu, L⟩ := prod_induction (s := {j.1.1}ᶜ) (fun a (d, _) ↦ (m ^ d - m ^ a.1) * m) (∀ v ∈
+    obtain ⟨u, hu, L⟩ := prod_induction (s := {j.1.1}ᶜ) (fun a (d, _) ↦ (m ^ d - m ^ a.1) * m) (∀ v ∈
       H, · * v ∈ H) (by simp +contextual [mul_assoc]) (by simp) (fun a _ _ k@⟨b, B, q⟩ ↦ (zsmul_mem
       k (-m ^ (a.1 + 1))).rec fun a ⟨A, p⟩ ↦
       ⟨_, by simp [*], fun k ↦ (k.map_conj_mul γ b a B A).trans
@@ -104,7 +104,15 @@ lemma exists_isPrimeTriangle {ℓ E} [ThePrime ℓ] [Field E] [UnramCMField E] t
       Fact.out).pow _).inv.fst'.smul continuous_snd)) (placesDividing E
       ℓ).toFinite).eventually_all.2 fun x h ↦ (continuous_discrete_rng.1 h.1.1 _).mem_nhds rfl).and
       (isOpen_ker_cycCharMod.1.mem_nhds (by simp [cycCharMod_prime_pow_eq, g, mul_comm, *])))),
-      .rfl⟩))).elim fun x ⟨a, ⟨z, n⟩, b, c, d, o⟩ ↦ ⟨(x, _, _),
+      .rfl⟩))).elim fun x hx ↦
+      have a := hx.1
+      have z := hx.2.1.1
+      have n := hx.2.1.2
+      have b := hx.2.2.1
+      have c := hx.2.2.2.1
+      have d := hx.2.2.2.2.1
+      have o := hx.2.2.2.2.2
+      ⟨(x, _, _),
       ⟨z.2.2, o⟩, r, by simpa [L r, ← k _ r, cycCharMod_prime_pow_eq, ← mul_assoc, map_ofNat, sq,
       m, *, κ, ((Units.isUnit _).map _).pow] using map_dvd (toZModPow ν) ((mul_dvd_mul_right
       ⟨_, rfl⟩ _).trans (h2 _ j.1.2)), fun O k hk ↦ sub_eq_zero.1 (eq_zero_of_mem_evenClasses hk

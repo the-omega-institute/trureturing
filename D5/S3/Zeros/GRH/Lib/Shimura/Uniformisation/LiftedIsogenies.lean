@@ -67,7 +67,7 @@ lemma exists_torusModel {τ} {X : ThetaFamily D Z τ} {x : ThetaObject X _} (e :
     fun y a ↦ ⟨z - P (toRealVectors y), by simp_all [h y (e.injective _), two_smul], by simp⟩))
     |> IsIntegrallyClosed.isIntegral_iff.1 |>.imp fun _ ↦ congrArg Rat.den)
   let Q := (LinearEquiv.ofBijective P (bijective_of_surjective_of_finrank_le P (range_eq_top.1
-    (eq_top_mono (Submodule.span_le.2 fun _ ↦ by simp; grind) u.3.2.1))
+    (eq_top_mono (Submodule.span_le.2 fun _ ↦ by simp; grind -abstractProof) u.3.2.1))
     (by simp [abelianDim.eq_1 E, mul_assoc]))).toContinuousLinearEquiv
   have K c w : Q (c • w) = G c (Q w) := by simp [Q, P, G.map_mul_iff.2 (ext_basis d d fun i j ↦
     u.linear_ext (by simp [← map_mul, mul_smul, *]))]
@@ -122,8 +122,8 @@ lemma exists_torusModel {τ} {X : ThetaFamily D Z τ} {x : ThetaObject X _} (e :
     Submodule.ext ?_⟩, LinearMap.ext (by simp [TorusModel.fullStructure,
     ← v]), (X · v₀), (I / (Φ v₀ D.β.val).im) • (ξ <| Q <| Pi.single · 1), ?_, rfl⟩
   · by_cases v = v₀ <;> simp [D.emb_beta_eq_of_ne, *, -K, vecMulVec_mulVec, ← by simpa [← K] using
-      (H <| Pi.single v₀ ·), Complex.ext_iff, smul_re_im (Φ v₀ _)] <;> clear * - q <;> grind
-  · simp [mem_classLattice, ← e.injective.eq_iff, v, Q]; clear * - T; grind
+      (H <| Pi.single v₀ ·), Complex.ext_iff, smul_re_im (Φ v₀ _)] <;> clear * - q <;> grind -abstractProof
+  · simp [mem_classLattice, ← e.injective.eq_iff, v, Q]; clear * - T; grind -abstractProof
   simp [← by simpa [smul_left_inj, *, ← sub_smul] using A X, Complex.ext_iff, ← two_mul, field]
 
 /-- Rigidity: let x be rigid over a field of characteristic l, w a pull-back of x, y a point of

@@ -74,9 +74,12 @@ lemma SplitPlaces.hasFewCocycles_of_central {K R ι} [Field K] [EmbeddedNumberFi
       (isShortExact_submodule _ _ ι.range.2).2.2⟩ k.1 ((hn _ le_rfl (S.cyc_eq_one ·) k.1 (k.2
     (Pi.single 1 1) (by simp [inv_mul_eq_one]))).2 e (isTotallyComplex_of_algebra K _)).ge).2
   simp [mul_pow, o.card_eq_mul, mul_div_mul_comm, card_eq_of_isShortExact _ I o,
-    (map _ I π).range_eq_top.2 fun ⟨⟨a, x⟩, _, p⟩
-    ↦ match T.1.ge (mem_univ ⟨(a, (x ·)), by fun_prop, by tauto⟩), o.2.2 (∑ g : _ ⧸ B.1, x g.out),
-    u.isCoprime with | ⟨⟨q, v⟩, e⟩, ⟨m, _⟩, ⟨_, n, E⟩ => ⟨⟨_, zsmul_mem (sub_mem (corestrict_mem B
+    (map _ I π).range_eq_top.2 fun witness ↦ by
+    obtain ⟨⟨a, x⟩, _, p⟩ := witness
+    obtain ⟨⟨q, v⟩, e⟩ := T.1.ge (mem_univ ⟨(a, (x ·)), by fun_prop, by tauto⟩)
+    obtain ⟨m, _⟩ := o.2.2 (∑ g : _ ⧸ B.1, x g.out)
+    obtain ⟨_, n, E⟩ := u.isCoprime
+    exact ⟨⟨_, zsmul_mem (sub_mem (corestrict_mem B
     (s.mem_and_conj_mem · · |>.imp_left (F ·)) v) (y := (fun _ ↦ m, _)) ⟨(coboundary _ m).2.1, by
     simp +contextual [k.2.2.1 _ (s.mem_and_conj_mem ..).1]⟩) n⟩, (fun (P : trivialisedCocycles ..)
     (e : P.1.1 = a) ↦ show P = _ by

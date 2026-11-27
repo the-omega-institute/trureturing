@@ -449,7 +449,7 @@ lemma IsLabel.exists_eq_prod_of_splits (h : ∀ x : K, aeval x c = 0 → x ^ .ca
 lemma rankPart_labelChar : (labelChar T c).rankPart r = labelChar T c := funext
   (hc.induction_irreducible_mul K (by simp) (by
   intro _ _ _ _ _ _ _ _ _ x; simp_all; exact fun _ ↦ .symm (finsum_eq_zero_of_forall_eq_zero
-  fun U ↦ by grind [U.1.finrank_quotient_add_finrank, dim_simClassOf, greenTau_eq_zero_of_dim_ne,
+  fun U ↦ by grind -abstractProof [U.1.finrank_quotient_add_finrank, dim_simClassOf, greenTau_eq_zero_of_dim_ne,
   simClassOf_out x])))
 
 lemma skew_greenTau_labelChar_eq_zero {d e} (i : Irreducible P) : IsLabel e P → e = d → ¬P ∣ c →
