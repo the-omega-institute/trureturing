@@ -2,6 +2,7 @@ import Lean
 import OmegaChecks.FieldMethods
 import OmegaChecks.InitPort.NativeQuot
 import OmegaChecks.InitPort.WordFold
+import OmegaChecks.InitPort.WordForIn
 import OmegaChecks.InitPort.ArrayWord
 import OmegaChecks.InitPort.Address
 import OmegaChecks.InitPort.ArrayModify
@@ -184,6 +185,9 @@ private def compare (reference : Environment) (rename : Name → Name) (src dst 
       return deps ++ x.value.getUsedConstants
     if foundation.isSome && x.safety == .safe && OmegaChecks.InitPort.WordFold.supported y.name then
       OmegaChecks.InitPort.WordFold.check reference y (liftTerm x.value)
+      return deps ++ x.value.getUsedConstants
+    if foundation.isSome && x.safety == .safe && OmegaChecks.InitPort.WordForIn.supported y.name then
+      OmegaChecks.InitPort.WordForIn.check reference y (liftTerm x.value)
       return deps ++ x.value.getUsedConstants
     unless x.safety == y.safety do
       throw <| IO.userError s!"definition safety mismatch for {src.name}"

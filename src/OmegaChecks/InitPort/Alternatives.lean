@@ -52,6 +52,7 @@ public import OmegaChecks.InitPort.Alternatives.StringSlice
 public import OmegaChecks.InitPort.Alternatives.SubarrayFold
 public import OmegaChecks.InitPort.Alternatives.Word
 public import OmegaChecks.InitPort.Alternatives.WordFold
+public import OmegaChecks.InitPort.Alternatives.WordForIn
 
 /-! Read constructive alternatives without importing their environment into the generated library. -/
 
