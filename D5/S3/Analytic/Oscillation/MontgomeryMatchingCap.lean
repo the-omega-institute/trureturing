@@ -1,6 +1,6 @@
 /- GID: D5/S3/Analytic/Oscillation/MontgomeryMatchingCap
    generality: G
-   mirror-B: none
+   mirror-B: D5/B/S3/Analytic/Oscillation/MontgomeryMatchingCap
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
@@ -241,13 +241,14 @@ private lemma selected_sum {J P : Type*} [DecidableEq J] {s : Finset J} {gamma :
   simp [owner]
   ring
 
-theorem finite_matching_defect {J P : Type*} [DecidableEq J] {s : Finset J} {gamma : J → ℝ} {t ρ : ℝ}
-    (M : MatchingData J P s gamma t)
-    (hrow : ∀ u ∈ s, ∑ v ∈ s, lorentzKernel (gamma u - gamma v) ≤ ρ) :
-    finiteLorentzPairSum s gamma t ≤
-      ρ * s.card - (1 / 4 : ℝ) * ∑ p ∈ M.pairs,
+/-- Disjoint endpoint rows amplify their phase deficits by the local copy count. -/
+theorem finite_matching_defect {J P : Type*} [DecidableEq J]
+    {s : Finset J} {gamma : J → ℝ} {t : ℝ}
+    (M : MatchingData J P s gamma t) :
+    (1 / 4 : ℝ) * ∑ p ∈ M.pairs,
         (localCopies s gamma (M.left p)).card *
-          phaseResidual (t * gamma (M.left p)) (t * gamma (M.right p)) := by
+          phaseResidual (t * gamma (M.left p)) (t * gamma (M.right p)) ≤
+      finiteLorentzPairSum s gamma 0 - finiteLorentzPairSum s gamma t := by
   classical
   let rowDefect (u : J) := ∑ v ∈ s,
     lorentzKernel (gamma u - gamma v) * phaseResidual (t * gamma u) (t * gamma v)
@@ -290,8 +291,8 @@ theorem finite_matching_defect {J P : Type*} [DecidableEq J] {s : Finset J} {gam
     apply Finset.sum_congr rfl
     intro v hv
     ring
-  have hzero := finite_pair_sum_zero_le s gamma t ρ hrow
-  linarith [hzero, htotal, hselected_le, hdefect_lower]
+  rw [htotal]
+  exact hdefect_lower.trans hselected_le
 
 #print axioms finite_matching_defect
 
@@ -334,11 +335,14 @@ theorem spectrum_matching_defect {S : Spectrum} {P : Type*} {H t ρ : ℝ}
           phaseResidual (t * S.gamma (M.left p).1) (t * S.gamma (M.right p).1) := by
   classical
   letI := Classical.decEq (Σ j : S.index, Fin (S.mult j))
-  have h := finite_matching_defect M hrow
-  rw [copies_pair_sum] at h
+  have hdefect := finite_matching_defect M
+  have hzero := finite_pair_sum_zero_le (CutDensity.copies (S.cut H) S.mult)
+    (fun q => S.gamma q.1) t ρ hrow
+  simp only [copies_pair_sum] at hdefect hzero
   have hcard : ((CutDensity.copies (S.cut H) S.mult).card : ℝ) = S.N H :=
     copies_card S H
-  simpa [hcard] using h
+  rw [hcard] at hzero
+  linarith [hdefect, hzero]
 
 theorem strict_normalized_cap_of_matching {S : Spectrum} {P : Type*}
     {H t ρ κ η c₁ c₂ c₃ : ℝ}
