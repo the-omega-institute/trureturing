@@ -2,6 +2,8 @@ module
 public import Lean
 import Lean.Replay
 import all Lean.Util.CollectAxioms
+public import OmegaChecks.InitInventory.IteratorMapStep
+import all OmegaChecks.InitInventory.IteratorMapStep
 public import OmegaChecks.InitInventory.IteratorLoopLift
 import all OmegaChecks.InitInventory.IteratorLoopLift
 public import OmegaChecks.InitInventory.PostconditionIdentity
@@ -134,6 +136,7 @@ private def replayWitnesses (env : Environment) : IO Unit := do
     WeakRingOrder.witnesses.map (fun row => row.2.2) ++
     [``MonadicTraversal.fromListFoldl, ``MonadicTraversal.fromListFoldr, ``ArrayLoopCongruence.listForInCongr] ++
     [``funextFromFunextIff, ``PostconditionIdentity.rightIdentity, ``PostconditionIdentity.leftIdentity, ``PostconditionIdentity.ofMonad] ++
+    [``IteratorStepLift.funextOfMap, ``IteratorStepLift.funextOfMapM] ++
     [``IteratorLoopLift.funextOfForIn, ``IteratorLoopLift.funextOfForIn', ``IteratorLoopLift.funextOfFold] ++
     [``PostconditionIdentity.pureImage, ``PostconditionIdentity.imageBind, ``PostconditionIdentity.associatedPredicates] ++
     [``ChoiceOperands.fromChoice, ``ExistentialConjunction.ofRule] ++

@@ -260,6 +260,10 @@ private def logicalConsequence? (owner name : Name) : Option (Name × Name) := d
     return (``funext, ``OmegaChecks.InitBoundaries.IteratorLoopCongruence.funextFromMonadicCongr)
   | `Init.Data.Iterators.Lemmas.Consumers.Monadic.Loop, ``Std.IterM.forIn'_congr =>
     return (``funext, ``OmegaChecks.InitBoundaries.IteratorLoopCongruence.funextFromMonadicCongr')
+  | `Init.Data.Iterators.Lemmas.Combinators.Monadic.FilterMap, ``Std.IterM.step_mapWithPostcondition =>
+    return (``funext, ``OmegaChecks.InitBoundaries.IteratorStepLift.funextOfMap)
+  | `Init.Data.Iterators.Lemmas.Combinators.Monadic.FilterMap, ``Std.IterM.step_mapM =>
+    return (``funext, ``OmegaChecks.InitBoundaries.IteratorStepLift.funextOfMapM)
   | `Init.Data.Iterators.Lemmas.Consumers.Loop, ``Std.Iter.forIn_eq_forIn_toIterM =>
     return (``funext, ``OmegaChecks.InitBoundaries.IteratorLoopLift.funextOfForIn)
   | `Init.Data.Iterators.Lemmas.Consumers.Loop, ``Std.Iter.forIn'_eq_forIn'_toIterM =>
