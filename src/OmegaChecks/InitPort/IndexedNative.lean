@@ -14,7 +14,7 @@ private def linear (n : Name) : Bool :=
    `Poly.toExpr.go].any fun suffix => n == p ++ suffix
 
 public def supported (n : Name) : Bool :=
-  linear n ||
+  linear n || n == `List.mapMonoM ||
   [`Lean.Grind.CommRing.Mon.revlexWF, `Lean.Grind.CommRing.Mon.revlexFuel, `Lean.Grind.CommRing.Mon.revlex,
    `Lean.Grind.CommRing.Mon.grevlex, `Lean.Grind.CommRing.Power.revlex,
    `Lean.RArray.getImpl, `Fin.cases, `Fin.induction, `Fin.induction.go, `Fin.inductionOn, `Fin.reverseInduction,
@@ -65,7 +65,15 @@ public def wrapper (source strict : Environment) (n : Name) (symbol : String) : 
   if official.getRoot == `Fin then
     let some (some field) := impureTrivialStructureInfoExt.find? strict `Omega.Fin | throw <| IO.userError "missing strict Fin layout"
     unless field.fieldIdx == 0 do throw <| IO.userError "unexpected strict Fin value slot"
-  let some (.fdecl _ args ret ..) := IR.findEnvDecl source official | throw <| IO.userError s!"missing pinned native eliminator {official}"
+  let impl ← if official == `List.mapMonoM then do
+    let impl := mkPrivateNameCore `Init.Data.List.BasicAux `List.mapMonoMImp
+    let some info := source.find? impl | throw <| IO.userError "missing pinned sharing-preserving list traversal"
+    unless (Compiler.getImplementedBy? source official) == some impl && info.type == ci.type do
+      throw <| IO.userError "unexpected sharing-preserving list implementation"
+    checkDataTypes source strict [`List, `Monad, `Applicative, `Pure, `Functor, `Seq, `SeqLeft, `SeqRight, `Bind]
+    pure impl
+  else pure official
+  let some (.fdecl _ args ret ..) := IR.findEnvDecl source impl | throw <| IO.userError s!"missing pinned native eliminator {official}"
   let some (.extern _ actual out ⟨[.standard `all entry]⟩) := IR.findEnvDecl strict n | throw <| IO.userError s!"missing generated eliminator {n}"
   let result ← if objectType ret && objectType out then pure "lean_obj_res"
     else if ret == .uint8 && out == .uint8 then pure "uint8_t"
@@ -87,8 +95,8 @@ public def wrapper (source strict : Environment) (n : Name) (symbol : String) : 
       if b.borrow && !a.borrow then prepare := prepare ++ s!"  lean_inc({x});\n"
       if !b.borrow && a.borrow then cleanup := cleanup ++ s!"  lean_dec({x});\n"
     else throw <| IO.userError s!"incompatible eliminator argument at {n} {i}: {a.ty}/{b.ty}"
-  let cfg := (getExportNameFor? source official).map (·.toString)
-  let entry := cfg.getD (getSymbolStem source official)
+  let cfg := (getExportNameFor? source impl).map (·.toString)
+  let entry := cfg.getD (getSymbolStem source impl)
   let proto := String.intercalate ", " (args.toList.map (fun _ => "lean_object *"))
   let call := s!"{entry}({String.intercalate ", " operands.toList})"
   return s!"\nextern {result} {entry}({proto});\nLEAN_EXPORT {result} {symbol}({String.intercalate ", " decls.toList}) \{\n" ++
