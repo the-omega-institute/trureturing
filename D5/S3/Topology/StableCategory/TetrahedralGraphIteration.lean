@@ -1,16 +1,16 @@
-/- GID: D5/S3/Topology/TetrahedralGraphIteration
+/- GID: D5/S3/Topology/StableCategory/TetrahedralGraphIteration
    generality: G
-   mirror-B: D5/B/S3/Topology/TetrahedralGraphIteration
+   mirror-B: D5/B/S3/Topology/StableCategory/TetrahedralGraphIteration
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.AlgebraicTopology.SimplicialComplex.Basic]
    utility: none
    digest: One ordinary tetrahedral refinement adds three ambient and four parameter subdivisions. -/
 
 import Batteries.Tactic.OpenPrivate
-import D5.S3.Topology.ColourGraphJoin
+import D5.S3.Topology.StableCategory.ColourGraphJoin
 import D5.S3.Topology.GeometricGraphTermination
-import D5.S3.Topology.TetrahedralMainFactorization
-import D5.S3.Topology.TerminalCarrierIteration
+import D5.S3.Topology.StableCategory.TetrahedralMainFactorization
+import D5.S3.Topology.StableCategory.TerminalCarrierIteration
 import Mathlib.Topology.Order.IntermediateValue
 
 /-! Iterate the tetrahedral refinement on the two graph parameters. -/
@@ -18,7 +18,7 @@ import Mathlib.Topology.Order.IntermediateValue
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 
-namespace D5.S3.Topology.TetrahedralGraphIteration
+namespace D5.S3.Topology.StableCategory.TetrahedralGraphIteration
 
 open D5.S3.Geometry.FiniteConeCollapse (realization_mem_iff)
 open D5.S3.Geometry.FiniteSimplicialJoin (Space simplicialJoin)
@@ -37,10 +37,10 @@ open Relation (ReflTransGen)
 open scoped BigOperators
 open private singleton_mem_of_mem from D5.S3.Topology.BarycentricBaseRigidity
 open private image from D5.S3.Topology.OrdinarySubdivisionMap
-open private restricted_image from D5.S3.Topology.OrdinaryCollarNaturality
-open private refinedColourComplex from D5.S3.Topology.TetrahedralMainFactorization
-open private subdivide_simplicial from D5.S3.Topology.TerminalCarrierIteration
-open private left_projection_image right_projection_image from D5.S3.Topology.ColourGraphJoin
+open private restricted_image from D5.S3.Topology.StableCategory.OrdinaryCollarNaturality
+open private refinedColourComplex from D5.S3.Topology.StableCategory.TetrahedralMainFactorization
+open private subdivide_simplicial from D5.S3.Topology.StableCategory.TerminalCarrierIteration
+open private left_projection_image right_projection_image from D5.S3.Topology.StableCategory.ColourGraphJoin
 
 noncomputable section
 
@@ -331,4 +331,4 @@ theorem refine_bicolour_graphs
 
 end
 
-end D5.S3.Topology.TetrahedralGraphIteration
+end D5.S3.Topology.StableCategory.TetrahedralGraphIteration

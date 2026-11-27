@@ -1,4 +1,4 @@
-/- GID: D5/S3/Topology/OrdinaryContiguityLift
+/- GID: D5/S3/Topology/StableCategory/OrdinaryContiguityLift
    generality: G
    mirror-B: none(waiver:support-for-the-tetrahedral-refinement)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
@@ -16,7 +16,7 @@ import D5.S3.Topology.OrdinarySubdivisionMap
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 
-namespace D5.S3.Topology.OrdinaryContiguityLift
+namespace D5.S3.Topology.StableCategory.OrdinaryContiguityLift
 
 open BarycentricGraphDistance (Face Vertex)
 open BarycentricBaseRigidity (Contiguous faceImage sd skeleton vertexOfFace)
@@ -306,4 +306,4 @@ theorem lift_iterates [Finite X] (f g : X → Y)
 
 end
 
-end D5.S3.Topology.OrdinaryContiguityLift
+end D5.S3.Topology.StableCategory.OrdinaryContiguityLift

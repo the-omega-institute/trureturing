@@ -12,7 +12,7 @@ import D5.S3.Topology.IntervalSubdivisionCoordinates
 import D5.S3.Topology.OrdinaryCollarRetraction
 import D5.S3.Topology.RankColouredTetrahedron
 import D5.S3.Topology.RelativeIntervalChartGluing
-import D5.S3.Topology.IntervalChartRefinement
+import D5.S3.Topology.StableCategory.IntervalChartRefinement
 
 /-! The ordinary path coordinates of the colour-collar retraction. -/
 
@@ -22,6 +22,7 @@ set_option backward.isDefEq.respectTransparency false
 namespace TetrahedronCollar16
 
 open D5.S3.Topology
+open D5.S3.Topology.StableCategory
 open BarycentricGraphDistance (Face Vertex subdivisionGraph oneSkeleton)
 open BarycentricBaseRigidity (vertexOfFace faceImage retainedVertex Contiguous sd subdividedVertex)
 open GraphSubdivisionIntervals (originalSupport originalSupport_mem mem_iteratedSubcomplex_iff

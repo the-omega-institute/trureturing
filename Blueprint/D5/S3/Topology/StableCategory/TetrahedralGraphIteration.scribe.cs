@@ -1,6 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Topology;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Topology.StableCategory;
 
 internal sealed class TetrahedralGraphIterationDocument : IScribeDocumentDefinition
 {
@@ -9,7 +9,7 @@ internal sealed class TetrahedralGraphIterationDocument : IScribeDocumentDefinit
         H("Refining a two-colour graph factorization"),
         Blocks(Describe.Lean(
             DescribeId.Create("tetrahedral-graph-refinement"),
-            DeclarationHandle.Create("D5/S3/Topology/TetrahedralGraphIteration.refine_bicolour_graphs"),
+            DeclarationHandle.Create("D5/S3/Topology/StableCategory/TetrahedralGraphIteration.refine_bicolour_graphs"),
             H("One round of ordinary subdivision"),
             StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo(

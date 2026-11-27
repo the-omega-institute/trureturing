@@ -1,4 +1,4 @@
-/- GID: D5/S3/Topology/DisjointContiguityGluing
+/- GID: D5/S3/Topology/StableCategory/DisjointContiguityGluing
    generality: G
    mirror-B: none(waiver:support-for-the-tetrahedral-refinement)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
@@ -8,14 +8,14 @@
 
 import Batteries.Tactic.OpenPrivate
 import D5.S3.Topology.OrdinaryCollarRetraction
-import D5.S3.Topology.OrdinaryContiguityLift
+import D5.S3.Topology.StableCategory.OrdinaryContiguityLift
 
 /-! Contiguity factorizations on a facewise disjoint partition. -/
 
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 
-namespace D5.S3.Topology.DisjointContiguityGluing
+namespace D5.S3.Topology.StableCategory.DisjointContiguityGluing
 
 open BarycentricGraphDistance (Vertex)
 open BarycentricBaseRigidity (Contiguous faceImage)
@@ -269,4 +269,4 @@ end Parameters
 
 end
 
-end D5.S3.Topology.DisjointContiguityGluing
+end D5.S3.Topology.StableCategory.DisjointContiguityGluing

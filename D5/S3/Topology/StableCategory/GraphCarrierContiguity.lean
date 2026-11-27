@@ -1,4 +1,4 @@
-/- GID: D5/S3/Topology/GraphCarrierContiguity
+/- GID: D5/S3/Topology/StableCategory/GraphCarrierContiguity
    generality: G
    mirror-B: none(waiver:support-for-the-tetrahedral-refinement)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
@@ -8,13 +8,13 @@
 
 import Batteries.Tactic.OpenPrivate
 import D5.S3.Topology.IntervalSubdivisionCoordinates
-import D5.S3.Topology.OrdinaryContiguityLift
+import D5.S3.Topology.StableCategory.OrdinaryContiguityLift
 import D5.S3.Topology.RelativeIntervalChartGluing
 
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 
-namespace D5.S3.Topology.GraphCarrierContiguity
+namespace D5.S3.Topology.StableCategory.GraphCarrierContiguity
 
 open BarycentricGraphDistance (Face Vertex oneSkeleton)
 open BarycentricNeighborhoodIteration (iteratedAmbient iteratedSubcomplex)
@@ -197,4 +197,4 @@ theorem supported_maps_contiguous (A : PreAbstractSimplicialComplex X)
 
 end
 
-end D5.S3.Topology.GraphCarrierContiguity
+end D5.S3.Topology.StableCategory.GraphCarrierContiguity

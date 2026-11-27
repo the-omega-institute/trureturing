@@ -1,4 +1,4 @@
-/- GID: D5/S3/Topology/ColourGraphJoin
+/- GID: D5/S3/Topology/StableCategory/ColourGraphJoin
    generality: G
    mirror-B: none(waiver:support-for-the-tetrahedral-refinement)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
@@ -9,7 +9,7 @@
 import Batteries.Tactic.OpenPrivate
 import D5.S3.Geometry.FiniteSimplicialJoin
 import D5.S3.Topology.OrdinaryCollarRetraction
-import D5.S3.Topology.OrdinaryContiguityLift
+import D5.S3.Topology.StableCategory.OrdinaryContiguityLift
 import D5.S3.Topology.OrdinarySubdivisionMap
 import Mathlib.Data.Finset.Sum
 
@@ -18,7 +18,7 @@ import Mathlib.Data.Finset.Sum
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 
-namespace D5.S3.Topology.ColourGraphJoin
+namespace D5.S3.Topology.StableCategory.ColourGraphJoin
 
 open D5.S3.Geometry.FiniteSimplicialJoin (simplicialJoin)
 open BarycentricGraphDistance (Face Vertex)
@@ -284,4 +284,4 @@ theorem subdivision_rank_colouring (A : PreAbstractSimplicialComplex X) {n : ℕ
 
 end
 
-end D5.S3.Topology.ColourGraphJoin
+end D5.S3.Topology.StableCategory.ColourGraphJoin

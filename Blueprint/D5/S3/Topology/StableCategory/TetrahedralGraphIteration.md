@@ -6,9 +6,9 @@ Refining a two-colour graph factorization
 
 **Theorem 1.1 (One round of ordinary subdivision).**
 
-Lean statement: `D5/S3/Topology/TetrahedralGraphIteration.refine_bicolour_graphs`
+Lean statement: `D5/S3/Topology/StableCategory/TetrahedralGraphIteration.refine_bicolour_graphs`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Topology/TetrahedralGraphIteration.refine_bicolour_graphs` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Topology/StableCategory/TetrahedralGraphIteration.refine_bicolour_graphs` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -20,5 +20,5 @@ Each colour begins with a contiguity factorization through a properly two-colour
 
 ## References
 
-- Truth anchor: `D5/S3/Topology/TetrahedralGraphIteration.refine_bicolour_graphs`
-- Dependency: [D5/S3/Topology/GeometricGraphTermination](GeometricGraphTermination.md)
+- Truth anchor: `D5/S3/Topology/StableCategory/TetrahedralGraphIteration.refine_bicolour_graphs`
+- Dependency: [D5/S3/Topology/GeometricGraphTermination](../GeometricGraphTermination.md)

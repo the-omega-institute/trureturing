@@ -1,4 +1,4 @@
-/- GID: D5/S3/Topology/TetrahedralMainFactorization
+/- GID: D5/S3/Topology/StableCategory/TetrahedralMainFactorization
    generality: G
    mirror-B: none(waiver:support-for-the-tetrahedral-refinement)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
@@ -7,8 +7,8 @@
    digest: Main and extra regions give two parts of the tetrahedral refinement. -/
 
 import Batteries.Tactic.OpenPrivate
-import D5.S3.Topology.OrdinaryCollarNaturality
-import D5.S3.Topology.DisjointContiguityGluing
+import D5.S3.Topology.StableCategory.OrdinaryCollarNaturality
+import D5.S3.Topology.StableCategory.DisjointContiguityGluing
 import D5.S3.Topology.RetractionCoordinate
 
 /-! The two-colour refinement step in the tetrahedral construction. -/
@@ -16,7 +16,7 @@ import D5.S3.Topology.RetractionCoordinate
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 
-namespace D5.S3.Topology.TetrahedralMainFactorization
+namespace D5.S3.Topology.StableCategory.TetrahedralMainFactorization
 
 open BarycentricGraphDistance (Face Vertex oneSkeleton subdivisionGraph)
 open BarycentricNeighborhoodIteration (iteratedAmbient iteratedSubcomplex subdivision_full)
@@ -34,9 +34,9 @@ open PathContiguity (intervalComplex IsIntervalMap relative_complex_contiguity)
 open D5.S3.Geometry.FiniteAlexanderDualCollapse (simplex)
 open GraphSubdivisionIntervals (faceImage_singleton)
 open Relation (ReflTransGen)
-open private forgetColour collarVertex from D5.S3.Topology.OrdinaryCollarContiguity
-open private restricted_image from D5.S3.Topology.OrdinaryCollarNaturality
-open private colourPiece glue from D5.S3.Topology.DisjointContiguityGluing
+open private forgetColour collarVertex from D5.S3.Topology.StableCategory.OrdinaryCollarContiguity
+open private restricted_image from D5.S3.Topology.StableCategory.OrdinaryCollarNaturality
+open private colourPiece glue from D5.S3.Topology.StableCategory.DisjointContiguityGluing
 open private image from D5.S3.Topology.OrdinarySubdivisionMap
 open private mem_faceImage_iff edge_chart interval_bound iterated_le_ambient simplex_le
   from D5.S3.Topology.GraphSubdivisionIntervals
@@ -598,4 +598,4 @@ end Pullback
 
 end
 
-end D5.S3.Topology.TetrahedralMainFactorization
+end D5.S3.Topology.StableCategory.TetrahedralMainFactorization

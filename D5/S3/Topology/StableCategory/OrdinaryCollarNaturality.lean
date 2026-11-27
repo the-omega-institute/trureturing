@@ -1,4 +1,4 @@
-/- GID: D5/S3/Topology/OrdinaryCollarNaturality
+/- GID: D5/S3/Topology/StableCategory/OrdinaryCollarNaturality
    generality: G
    mirror-B: none(waiver:support-for-the-tetrahedral-refinement)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
@@ -7,15 +7,15 @@
    digest: Both ordinary collar cuts commute with colour-preserving maps. -/
 
 import Batteries.Tactic.OpenPrivate
-import D5.S3.Topology.OrdinaryCollarContiguity
-import D5.S3.Topology.OrdinaryContiguityLift
+import D5.S3.Topology.StableCategory.OrdinaryCollarContiguity
+import D5.S3.Topology.StableCategory.OrdinaryContiguityLift
 
 /-! Pulling back a two-cut collar and its contiguity comparisons. -/
 
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 
-namespace D5.S3.Topology.OrdinaryCollarNaturality
+namespace D5.S3.Topology.StableCategory.OrdinaryCollarNaturality
 
 open BarycentricGraphDistance (Face Vertex)
 open BarycentricBaseRigidity (Contiguous faceImage sd vertexOfFace)
@@ -26,7 +26,7 @@ open OrdinaryContiguityLift (Simplicial comp_chains comp_image includeSubcomplex
 open OrdinarySubdivisionMap (iterate inTwoCutCollar inTwoCutCollar_iterate_iff twoCutImage_iterate)
 open Relation (ReflTransGen)
 open private collarVertex colour_inclusion_image forgetColour
-  from D5.S3.Topology.OrdinaryCollarContiguity
+  from D5.S3.Topology.StableCategory.OrdinaryCollarContiguity
 open private mem_faceImage_iff from D5.S3.Topology.GraphSubdivisionIntervals
 open private image from D5.S3.Topology.OrdinarySubdivisionMap
 
@@ -263,4 +263,4 @@ theorem pullback_comparison [Finite X] {Z : Type} {A : PreAbstractSimplicialComp
 
 end
 
-end D5.S3.Topology.OrdinaryCollarNaturality
+end D5.S3.Topology.StableCategory.OrdinaryCollarNaturality

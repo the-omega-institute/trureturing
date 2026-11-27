@@ -1,4 +1,4 @@
-/- GID: D5/S3/Topology/IntervalChartRefinement
+/- GID: D5/S3/Topology/StableCategory/IntervalChartRefinement
    generality: G
    mirror-B: none(waiver:support-for-the-tetrahedral-refinement)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
@@ -13,7 +13,7 @@ import D5.S3.Topology.GraphSubdivisionIntervals
 
 set_option autoImplicit false
 
-namespace D5.S3.Topology.IntervalChartRefinement
+namespace D5.S3.Topology.StableCategory.IntervalChartRefinement
 
 open BarycentricGraphDistance (Face Vertex)
 open BarycentricBaseRigidity (faceImage sd vertexOfFace subdividedVertex)
@@ -135,4 +135,4 @@ theorem minimum_selector_eq_half {V : Type} {A : PreAbstractSimplicialComplex V}
 
 end
 
-end D5.S3.Topology.IntervalChartRefinement
+end D5.S3.Topology.StableCategory.IntervalChartRefinement

@@ -33,7 +33,7 @@ strata_touched:
   - D5/S3/Topology/CofaceComparisonObstruction
   - D5/S3/Topology/CofaceTriangleCollapse
   - D5/S3/Topology/RetractionCoordinate
-  - D5/S3/Topology/TetrahedralGraphIteration
+  - D5/S3/Topology/StableCategory/TetrahedralGraphIteration
 license: citation-only
 triage: anchor
 ---

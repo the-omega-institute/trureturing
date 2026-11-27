@@ -1,6 +1,6 @@
-/- GID: D5/S3/Topology/OrdinaryCollarContiguity
+/- GID: D5/S3/Topology/StableCategory/OrdinaryCollarContiguity
    generality: G
-   mirror-B: D5/B/S3/Topology/OrdinaryCollarContiguity
+   mirror-B: none(waiver:support-for-the-tetrahedral-refinement)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.AlgebraicTopology.SimplicialComplex.Basic]
    utility: none
@@ -16,7 +16,7 @@ in the actual ordinary subdivision. -/
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 
-namespace D5.S3.Topology.OrdinaryCollarContiguity
+namespace D5.S3.Topology.StableCategory.OrdinaryCollarContiguity
 
 open BarycentricGraphDistance (Face Vertex)
 open BarycentricBaseRigidity (Contiguous faceImage sd vertexOfFace)
@@ -365,4 +365,4 @@ theorem collar_inclusion_contiguous [Finite X] [Finite (Face K)] [Finite (Face (
 
 end
 
-end D5.S3.Topology.OrdinaryCollarContiguity
+end D5.S3.Topology.StableCategory.OrdinaryCollarContiguity

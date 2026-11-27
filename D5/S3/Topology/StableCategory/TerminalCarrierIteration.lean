@@ -1,4 +1,4 @@
-/- GID: D5/S3/Topology/TerminalCarrierIteration
+/- GID: D5/S3/Topology/StableCategory/TerminalCarrierIteration
    generality: G
    mirror-B: none(waiver:support-for-the-tetrahedral-refinement)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
@@ -6,12 +6,12 @@
    utility: none
    digest: Accelerated parameter maps transport fixed-target graph contractions. -/
 
-import D5.S3.Topology.GraphCarrierContiguity
+import D5.S3.Topology.StableCategory.GraphCarrierContiguity
 
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 
-namespace D5.S3.Topology.TerminalCarrierIteration
+namespace D5.S3.Topology.StableCategory.TerminalCarrierIteration
 
 open BarycentricGraphDistance (Face Vertex subdivisionGraph)
 open BarycentricBaseRigidity (Contiguous faceImage retainedVertex sd skeleton vertexOfFace)
@@ -22,7 +22,7 @@ open OrdinaryContiguityLift (Simplicial comp_chains comp_image iterate_comp lift
 open PathContiguity (intervalComplex)
 open Relation (ReflTransGen)
 open private mem_faceImage_iff from D5.S3.Topology.GraphSubdivisionIntervals
-open private constant_face_image faceMap from D5.S3.Topology.OrdinaryContiguityLift
+open private constant_face_image faceMap from D5.S3.Topology.StableCategory.OrdinaryContiguityLift
 open OrdinarySubdivisionMap (iterate)
 open private image from D5.S3.Topology.OrdinarySubdivisionMap
 open private exists_bisected_walk singletonFace from D5.S3.Topology.BarycentricGraphDistance
@@ -534,4 +534,4 @@ theorem contraction_after_synchronous_subdivision [Finite X]
 
 end
 
-end D5.S3.Topology.TerminalCarrierIteration
+end D5.S3.Topology.StableCategory.TerminalCarrierIteration
