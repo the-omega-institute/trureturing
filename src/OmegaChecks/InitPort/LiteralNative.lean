@@ -86,7 +86,7 @@ public unsafe def main (args : List String) : IO Unit := do
       let some idx := env.getModuleIdxFor? n | throw <| IO.userError s!"missing literal type {n}"
       writeCode lib env.header.moduleNames[idx]! (← compileLayouts env n) layouts
       env ← read
-  checkNativeNat env
+  if env.contains `Omega.String then checkStrictString env else checkNativeNat env
   for n in [`Decidable, `Omega.String.Pos.Raw, `Omega.Fin, `Omega.BitVec, `Omega.UInt8, `Omega.UInt32, `Omega.UInt64, `Omega.Char,
             `Omega.Array, `Omega.ByteArray, `Omega.String] do
     if !env.contains n then continue

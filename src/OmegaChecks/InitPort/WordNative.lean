@@ -3,6 +3,7 @@ module
 public import OmegaChecks.InitPort.NativeState
 import all Lean.Compiler.LCNF.ToImpureType
 import all Lean.OriginalConstKind
+import Lean.Compiler.ImplementedByAttr
 
 /-! Compile machine-word primitives over their strict, Nat-backed Fin representation. -/
 
@@ -31,7 +32,7 @@ public def usesPinnedFunction (n : Name) : Bool :=
   let vector := n.getPrefix == `BitVec &&
     [`abs, `pow, `smod, `replicate, `reverse, `cpop, `cpopNatRec, `ctz, `clz, `clzAuxRec,
      `getLsbD, `getLsb, `getMsbD, `getMsb, `msb, `sdiv, `srem, `smtSDiv, `hash, `ofBoolListLE, `ofBoolListBE].contains method
-  vector || n == `Nat.bitwise || ((word? n.getPrefix).isSome && (method == `pow || (method == `ofInt && bitsType n.getPrefix == n.getPrefix))) ||
+  vector || [`Nat.repr, `Nat.reprFast, `Int.repr].contains n || n == `BitVec.toHex || n == `Nat.bitwise || ((word? n.getPrefix).isSome && (method == `pow || (method == `ofInt && bitsType n.getPrefix == n.getPrefix))) ||
     (n.getPrefix == `Int && [`negOfNat, `subNatNat, `sign, `toNat, `pow, `fdiv, `fmod, `bdiv, `bmod].contains method)
 
 public def supported (source : Environment) (owner name : Name) : Bool :=
@@ -46,12 +47,13 @@ public def supported (source : Environment) (owner name : Name) : Bool :=
   let bitwise := owner == `OmegaInit.Data.Nat.Bitwise.Basic && name.getPrefix == `Nat &&
     [`land, `lor, `xor, `shiftLeft, `shiftRight].contains method
   let logarithm := owner == `OmegaInit.Data.Nat.Log2 && name == `Nat.log2
+  let wordRepr := owner == `OmegaInit.Data.Repr && name == `USize.repr
   let intPrimitive := intOwner && name.getPrefix == `Int &&
     [`neg, `add, `sub, `mul, `decEq, `decLe, `decLt, `decNonneg, `natAbs, `ediv, `emod, `tdiv, `tmod, `divExact].contains method
   let primitive := ((word? name.getPrefix).isSome && (ops ++ widths).contains method) ||
     (name.getPrefix == `Bool && widths.contains method)
-  ((base || intPrimitive || bitwise || logarithm || (inOwner && primitive)) && isExtern source name) ||
-    ((intOwner || [`OmegaInit.Data.Nat.Bitwise.Basic, `OmegaInit.Data.BitVec.Basic].contains owner || [`OmegaInit.Data.UInt.Basic, `OmegaInit.Data.SInt.Basic].contains owner) && usesPinnedFunction name)
+  ((base || intPrimitive || wordRepr || bitwise || logarithm || (inOwner && primitive)) && isExtern source name) ||
+    ((intOwner || [`OmegaInit.Data.Int.Repr, `OmegaInit.Data.Repr, `OmegaInit.Data.Nat.Bitwise.Basic, `OmegaInit.Data.BitVec.Basic].contains owner || [`OmegaInit.Data.UInt.Basic, `OmegaInit.Data.SInt.Basic].contains owner) && usesPinnedFunction name)
 
 private def symbol (n : Name) := "omega_word_" ++ (n.replacePrefix `Omega .anonymous).toString.replace "." "_"
 
@@ -79,15 +81,21 @@ private def checkIntLayout (strict : Environment) : IO Unit := do
 public def wrapper (source strict : Environment) (n : Name) : IO String := do
   let official := n.replacePrefix `Omega .anonymous
   let some ci := source.find? official | throw <| IO.userError s!"unknown word primitive {official}"
-  let some impl := IR.findEnvDecl source official | throw <| IO.userError s!"no pinned IR for {official}"
+  let compiled ← if official == `Nat.repr then do
+    unless (Compiler.getImplementedBy? source official) == some `Nat.reprFast do throw <| IO.userError "unexpected Nat.repr implementation"
+    let some fast := source.find? `Nat.reprFast | throw <| IO.userError "missing pinned Nat.reprFast"
+    unless fast.type == ci.type do throw <| IO.userError "Nat.reprFast type differs from Nat.repr"
+    pure `Nat.reprFast
+  else pure official
+  let some impl := IR.findEnvDecl source compiled | throw <| IO.userError s!"no pinned IR for {official}"
   let params := impl.params
   let ret := impl.resultType
   let target ← match impl with
     | .extern _ _ _ ⟨[.standard `all entry]⟩ => pure entry
     | .fdecl .. =>
-      unless usesPinnedFunction official && (getExportNameFor? source official).isNone do
+      unless usesPinnedFunction official && (getExportNameFor? source compiled).isNone do
         throw <| IO.userError s!"unexpected compiled word function {official}"
-      pure (getSymbolStem source official)
+      pure (getSymbolStem source compiled)
     | _ => throw <| IO.userError s!"expected pinned C primitive for {official}"
   let some (.extern _ actual result ⟨[.standard `all adapter]⟩) := IR.findEnvDecl strict n
     | throw <| IO.userError s!"missing strict C primitive for {n}"
@@ -183,6 +191,12 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
     unless field.fieldIdx == 0 && ret == .tobject && result == .tobject do
       throw <| IO.userError "invalid platform width result ABI"
     pure ("lean_obj_res", call)
+  else if dom == `String then do
+    checkStrictString strict
+    unless ret == .object && result == .tobject do throw <| IO.userError s!"incorrect string result at {n}"
+    prepare := prepare ++ s!"  lean_object *native_string = {call};\n"
+    cleanup := cleanup ++ "  lean_dec(native_string);\n"
+    pure ("lean_obj_res", "omega_string_from_lean(native_string)")
   else if dom == `BitVec && ret == .tobject && result == .tobject then do
     layout strict dom
     pure ("lean_obj_res", call)
@@ -202,6 +216,7 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
     pure s!"\nextern {← ctype ret} {target}({String.intercalate ", " inputs.toList});\n"
   else if official == `System.Platform.getNumBits then
     pure "\nextern lean_obj_res lean_system_platform_nbits(lean_obj_arg);\n" else pure ""
-  return proto ++ s!"\nLEAN_EXPORT {output} {adapter}({String.intercalate ", " decls.toList}) \{\n{prepare}  {output} r = {value};\n{cleanup}  return r;\n}\n"
+  let header := if dom == `String then "\n#include \"strict_string.h\"\n" else ""
+  return header ++ proto ++ s!"\nLEAN_EXPORT {output} {adapter}({String.intercalate ", " decls.toList}) \{\n{prepare}  {output} r = {value};\n{cleanup}  return r;\n}\n"
 
 end OmegaChecks.InitPort.WordNative

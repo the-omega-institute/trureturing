@@ -89,6 +89,20 @@ public def checkNativeNat (env : Environment) : IO Unit := do
   unless nat.ctors == [`Nat.zero, `Nat.succ] && env.getModuleIdxFor? `Nat == env.getModuleIdx? `OmegaInit.Prelude do
     throw <| IO.userError "expected the kernel Nat from the strict Prelude"
 
+/-- Check the byte-list layout consumed by strict_string.h. -/
+public def checkStrictString (env : Environment) : IO Unit := do
+  checkNativeNat env
+  for n in [`Omega.Fin, `Omega.BitVec, `Omega.UInt8,
+            `Omega.Array, `Omega.ByteArray, `Omega.String] do
+    let some (some field) := impureTrivialStructureInfoExt.find? env n
+      | throw <| IO.userError s!"missing literal representation of {n}"
+    unless field.fieldIdx == 0 do throw <| IO.userError s!"unexpected representation of {n}"
+  let some nil := ctorLayoutExt.find? env `Omega.List.nil | throw <| IO.userError "missing string list nil"
+  unless nil.ctorInfo.cidx == 0 && nil.fieldInfo.isEmpty do throw <| IO.userError "incorrect string list nil"
+  let some cons := ctorLayoutExt.find? env `Omega.List.cons | throw <| IO.userError "missing list layout"
+  let #[.object 0 _, .object 1 _] := cons.fieldInfo | throw <| IO.userError "incorrect character-list fields"
+  unless cons.ctorInfo.cidx == 1 && cons.ctorInfo.size == 2 && cons.ctorInfo.usize == 0 && cons.ctorInfo.ssize == 0 do throw <| IO.userError "incorrect list tag or size"
+
 /-- The native state adapters construct ST.Out with the result followed by the strict world. -/
 public unsafe def installStateLayout (lib : System.FilePath) (env : Environment) : IO Unit := do
   let state ← compileLayouts env `Omega.ST.Out
