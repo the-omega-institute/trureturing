@@ -4,6 +4,12 @@ extern lean_obj_res l_ShareCommon_StateFactory_mkImpl(lean_obj_arg);
 
 #include "share_common_word.h"
 
+extern uint64_t lean_sharecommon_hash(b_lean_obj_arg);
+
+LEAN_EXPORT lean_obj_res omega_share_common_object_hash(b_lean_obj_arg key) {
+    return lean_uint64_to_nat(lean_sharecommon_hash(key));
+}
+
 static lean_object *capture(void *entry, unsigned arity, lean_obj_arg value) {
     lean_object *closure = lean_alloc_closure(entry, arity, 1);
     lean_closure_set(closure, 0, value);

@@ -278,6 +278,11 @@ def generate(stage, product, seed, roots, excluded, original_seed):
                 check_runtime_ir(stage, artifact, "ShareCommon", "ShareCommon")
             else:
                 check_state_consumer(stage, artifact, "ShareCommon", "share_common", objects)
+        if sharing and has_interfaces(inventory, {"Init.ShareCommon": {"ShareCommon.Object.eq", "ShareCommon.Object.hash"}}):
+            if objects is None:
+                check_runtime_ir(stage, artifact, "ShareCommon", "ShareObject")
+            else:
+                check_state_consumer(stage, artifact, "ShareObject", "share_object", objects)
 
     string_interfaces = {
         "Init.Data.String.Bootstrap": {"String.push", "String.mk", "String.Internal.length",

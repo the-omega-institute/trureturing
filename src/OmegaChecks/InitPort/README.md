@@ -36,7 +36,7 @@ example (a : α) (b : β) : Omega.Eq (Prod.fst (Prod.mk a b)) a := Omega.rfl
 
 `native/path_io.o` 支持读取环境变量和当前程序路径、获取与切换进程目录、规范化路径、创建和删除目录与临时目录，以及文件删除、重命名、硬链接和目录枚举。文件句柄使用钉版分配与锁，文本行和任意二进制字节分别按严格库的 `String` 与 `ByteArray` 传递。路径和环境变量按 UTF-8 字节转换。`IO.Error` 的解码由两个库的构造子、字段类型和运行布局生成，保留文件名、系统错误码、说明及世界状态。测试在临时目录中用多字节路径对照官方异常。
 
-`ShareCommon.State.mk` 使用按工厂和宇宙层级索引的私有逻辑句柄。其原生入口调用钉版的 `ShareCommon.mkStateImpl`。`StateFactory.mk` 接受自定义的映射与集合回调，原生入口适配六个回调、初始容量和哈希结果。严格库的 `UInt64` 在原生端擦除为一元自然数，取值为 h 的哈希需要 h 个后继节点。构建 `Init.ShareCommon` 时，普通消费者核验容量 1024、小哈希的表示，以及两种官方工厂和自定义函数映射工厂对布尔列表的共享行为。
+`ShareCommon.State.mk` 使用按工厂和宇宙层级索引的私有逻辑句柄。其原生入口调用钉版的 `ShareCommon.mkStateImpl`。`StateFactory.mk` 接受自定义的映射与集合回调，原生入口适配六个回调、初始容量和哈希结果。严格库的 `UInt64` 在原生端擦除为 Lean 的 `Nat`，适配器用 `lean_uint64_to_nat` 转换完整的 64 位结果。构建 `Init.ShareCommon` 时，普通消费者核验容量 1024、小哈希的表示，以及两种官方工厂和自定义函数映射工厂对布尔列表的共享行为。
 
 严格库用私有、不可计算的句柄构造 `ST.Prim.mkRef`，并保留公开的 `ST.RefPointed` 封装。构建 `Init.System.ST` 时，`native/reference.o` 提供引用分配、身份比较、写入和交换的原生入口。交换的逻辑常量保持不透明，原生入口调用钉版 `lean_st_ref_swap` 取得先前的值。`Void.mk` 由钉版原生入口生成世界，严格端的 `runST`、`runEST` 保留各自返回类型。普通编译和独立 IR 消费者验证状态绑定、类型类分派、收尾动作的异常优先级，以及 `EST.Out` 两个构造子的消去。普通消费者验证两枚引用的身份、交换返回旧值、写入后再交换取得新值和世界状态的传递。使用 `Omega.StateRefT'.set` 时，链接 `native/state_ref.o` 和 `native/reference.o`。
 
@@ -44,7 +44,7 @@ example (a : α) (b : β) : Omega.Eq (Prod.fst (Prod.mk a b)) a := Omega.rfl
 
 `Omega.withPtrAddrUnsafe` 的返回值通过逐输入证明核对。官方实现把对象的机器地址传给回调 `k`，其参数 `h` 证明任意两个地址产生相同结果。严格实现调用 `Omega.withPtrAddr`。校验器读取官方的 `@[implemented_by]` 登记、两端签名和实际计算体，用 `h` 证明每个机器地址所得的值都等于严格实现的结果。[返回值核验](Address.lean) · [官方指针回调](https://github.com/leanprover/lean4/blob/v4.35.0/src/Init/Util.lean#L102)
 
-`ptrAddrUnsafe`、`ptrEq` 和 `ptrEqList` 能区分内容相等的两个列表。对于分别分配、唯一自然数字段相等的两个 `NonScalar` 对象，`ShareCommon.Object.ptrEq` 与 `ShareCommon.Object.ptrHash` 也能给出不同结果。运行 `lake env lean --run src/OmegaChecks/InitPort/PointerObservations.lean` 可在钉版 Lean 运行时复现。对原类型的任意纯函数，Lean 的等式替换要求这两组输入得到相同结果。对具有相同大自然数载荷或只含标量的单层列表，`ShareCommon.Object.eq` 和 `hash` 的读数一致。外层列表的载荷含子列表地址，两份等值但独立分配的子列表可使比较和哈希结果不同。若还要求纯装箱函数保留这组原生读数，等式替换会导出矛盾。每次盘点都在当前工具链执行观察。嵌套列表通过 `unsafeCast` 装箱的读数记入 `unsafePackedObservation`。原类型的纯装箱前提尚待建立，这两个接口仍列为未解决。只有实际观测到不同返回值且源码中有针对该原类型的内核矛盾证明时，缺口记录才写入 `runtimeConflictWitness`。[内核证明](../InitInventory/PointerObservations.lean) · [运行时样例](PointerObservations.lean)
+`ptrAddrUnsafe`、`ptrEq` 和 `ptrEqList` 能区分内容相等的两个列表。对于分别分配、唯一自然数字段相等的两个 `NonScalar` 对象，`ShareCommon.Object.ptrEq` 与 `ShareCommon.Object.ptrHash` 也能给出不同结果。运行 `lake env lean --run src/OmegaChecks/InitPort/PointerObservations.lean` 可在钉版 Lean 运行时复现。对原类型的任意纯函数，Lean 的等式替换要求这两组输入得到相同结果。对具有相同大自然数载荷或只含标量的单层列表，`ShareCommon.Object.eq` 和 `hash` 的读数一致。外层列表的载荷含子列表地址，两份等值但独立分配的子列表可使比较和哈希结果不同。若还要求纯装箱函数保留这组原生读数，等式替换会导出矛盾。每次盘点都在当前工具链执行观察。嵌套列表通过 `unsafeCast` 装箱的读数记入 `unsafePackedObservation`。两个接口保留官方的 `unsafe opaque` 类型、借用参数和默认体，原生调用使用钉版比较和哈希入口。纯装箱前提仍是上述条件证明的一项假设。只有实际观测到不同返回值且源码中有针对该原类型的内核矛盾证明时，缺口记录才写入 `runtimeConflictWitness`。[内核证明](../InitInventory/PointerObservations.lean) · [运行时样例](PointerObservations.lean)
 
 严格库的 `Omega.isExclusiveUnsafe` 保留官方的 `unsafe opaque` 声明、内核默认值和借用参数。普通 Lean 声明调用它会被内核拒绝。原生入口读取堆对象的引用计数，调用方需传入有效的堆对象。盘点分别核对两端声明和原生签名，并保留要求纯函数区分等值输入时得到的条件反证。盘点器编译并运行原生观测程序。它分别读取运行时创建的单元素数组与内容相同的常量数组，检查元素为 0 和 1 时的两组输入。两组中都观测到前者独占、后者共享时，才登记与纯函数等式替换的冲突。可运行 `lake exe omegaPointerObservations --exclusivity` 复核。[运行时观测和内核证明](../InitInventory/PointerObservations.lean)
 

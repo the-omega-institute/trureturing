@@ -29,10 +29,28 @@ public unsafe def main (args : List String) : IO Unit := do
   let shareSymbol := "lean_state_sharecommon"
   let shareArgs := #[(IR.IRType.erased, false), (.tobject, true), (.tobject, false), (.tobject, false)]
   NativeState.verify official share shareArgs .object shareSymbol
+  let eq := `ShareCommon.Object.eq
+  let hash := `ShareCommon.Object.hash
+  let borrowed := (IR.IRType.tobject, true)
+  NativeState.verify official eq #[borrowed, borrowed] .uint8 "lean_sharecommon_eq"
+  NativeState.verify official hash #[borrowed] .uint64 "lean_sharecommon_hash"
   searchPathRef.set [lib]
   let env ← importModules #[{module := api.privateOwner, importAll := true}] {}
-  let roots := [(api.allocator, api.nativeAllocator), (factory.allocator, "omega_share_common_factory_mk"), (share, shareSymbol)].filter fun (n, _) => env.contains (`Omega ++ n)
+  let entries : List (Name × String × Array (IR.IRType × Bool) × IR.IRType) := [
+    (api.allocator, api.nativeAllocator, #[(.tobject, false)], .tobject),
+    (factory.allocator, "omega_share_common_factory_mk", #[(.object, false)], .tobject),
+    (share, shareSymbol, shareArgs, .object),
+    (eq, "lean_sharecommon_eq", #[borrowed, borrowed], .uint8),
+    (hash, "omega_share_common_object_hash", #[borrowed], .tobject)]
+  let roots := entries.filter fun (n, _) => env.contains (`Omega ++ n)
   if roots.isEmpty then return
+  if env.contains (`Omega ++ eq) || env.contains (`Omega ++ hash) then
+    for (e, name) in [(official, `NonScalar), (env, `Omega.NonScalar)] do
+      NativeState.checkErasedField e name
+    if env.contains (`Omega ++ hash) then
+      NativeState.checkNativeNat env
+      for name in [`Omega.UInt64, `Omega.BitVec, `Omega.Fin] do
+        NativeState.checkErasedField env name
   if !interpreter && env.contains (`Omega ++ factory.allocator) then
     for name in [`Omega.BEq, `Omega.Hashable] do
       if (Compiler.LCNF.monoTypeExt.find? env name).isNone then
@@ -63,20 +81,15 @@ public unsafe def main (args : List String) : IO Unit := do
   let names := roots.map (fun (n, _) => `Omega ++ n) ++ wrappers
   let ctx ← NativeState.localEnv env api.privateOwner names.toArray
   let compiled ← NativeState.compile ctx do
-    for (n, symbol) in roots do
+    for (n, symbol, _, _) in roots do
       let strict := `Omega ++ n
       modifyEnv fun e => externAttr.ext.addEntry (asyncDecl := strict) e (strict, ⟨[.standard `all symbol]⟩)
       (← compileDeclsRef.get) #[strict] {}
     for strict in wrappers do
       modifyEnv fun e => privateConstKindsExt.insert e strict .defn
       (← compileDeclsRef.get) #[strict] {}
-  for (n, symbol) in roots do
-    if n == api.allocator then
-      NativeState.verify compiled (`Omega ++ n) #[(.tobject, false)] .tobject symbol
-    else if n == factory.allocator then
-      NativeState.verify compiled (`Omega ++ n) #[(.object, false)] .tobject symbol
-    else
-      NativeState.verify compiled (`Omega ++ n) shareArgs .object symbol
+  for (n, symbol, args, result) in roots do
+    NativeState.verify compiled (`Omega ++ n) args result symbol
   let runtime := "src/OmegaChecks/InitPort/share_common_runtime.c"
   if interpreter then
     NativeState.emitBridge compiled `StrictShareCommonInterpreter runtime output
