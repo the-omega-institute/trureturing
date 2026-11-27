@@ -88,7 +88,11 @@ private def decodeStringFunction (n : Name) : Bool :=
     [`UInt8.instDecidableIsUTF8FirstByte, `UInt8.utf8ByteSize, `String.utf8EncodeCharFast,
      `ByteArray.validateUTF8At, `ByteArray.utf8DecodeChar, `ByteArray.utf8DecodeChar?].contains n
 
-private def pinnedStringFunction (n : Name) : Bool := defsStringFunction n || basicStringFunction n || decodeStringFunction n
+private def sliceStringFunction (n : Name) : Bool :=
+  n == `String.Slice.lines.lineMap || (n.getPrefix == `String.Slice &&
+    [`trimAsciiStart, `trimAsciiEnd, `trimAscii, `intercalate, `isInt, `toInt?, `toInt!].contains (n.updatePrefix .anonymous))
+
+private def pinnedStringFunction (n : Name) : Bool := defsStringFunction n || basicStringFunction n || decodeStringFunction n || sliceStringFunction n
 
 private def digitList (n : Name) : Bool := [`Nat.toSuperDigitsAux, `Nat.toSubDigitsAux].contains n
 
@@ -142,7 +146,8 @@ public def supported (source : Environment) (owner name : Name) : Bool :=
     (owner == `OmegaInit.Data.Nat.Div.Basic && name == `Nat.divExact) ||
     (owner == `OmegaInit.Data.Nat.PowMod && name == `Nat.powMod)
   let stringOp := (owner == `OmegaInit.Data.String.Bootstrap && bootstrapStringOp name) ||
-    (owner == `OmegaInit.Data.String.Basic && basicStringExtern name)
+    (owner == `OmegaInit.Data.String.Basic && basicStringExtern name) ||
+    (owner == `OmegaInit.Data.String.Length && name == `String.length)
   let textCompare := (owner == `OmegaInit.Data.String.PosRaw && [`String.getUTF8Byte, `String.getUtf8Byte].contains name) ||
     (owner == `OmegaInit.Data.Ord.String && name == `String.compare) ||
     (owner == `OmegaInit.Data.String.Slice && [`String.Slice.hash, `String.Slice.instDecidableLt].contains name) ||
@@ -153,7 +158,8 @@ public def supported (source : Environment) (owner name : Name) : Bool :=
     (name.getPrefix == `Bool && widths.contains method)
   (owner == `OmegaInit.Data.String.Defs && defsStringFunction name) ||
     (owner == `OmegaInit.Data.String.Basic && basicStringFunction name) ||
-    (owner == `OmegaInit.Data.String.Decode && decodeStringFunction name) || isFloatCall source owner name ||
+    (owner == `OmegaInit.Data.String.Decode && decodeStringFunction name) ||
+    (owner == `OmegaInit.Data.String.Slice && sliceStringFunction name) || isFloatCall source owner name ||
     (owner == `OmegaInit.Data.ByteArray.Basic && ByteFoldNative.supported name) ||
     ([`OmegaInit.Grind.Ring.CommSolver, `OmegaInit.Data.Nat.Basic, `OmegaInit.Data.Nat.Div.Basic, `OmegaInit.Data.Nat.Lemmas,
     `OmegaInit.Data.RArray, `OmegaInit.Data.Nat.Internal.Linear, `OmegaInit.Data.Nat.Fold, `OmegaInit.Data.Fin.Lemmas].contains owner && IndexedNative.supported name) ||
@@ -284,13 +290,20 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
       prepare := prepare ++ s!"  lean_object *cb{i} = lean_alloc_closure((void *){f}, {if fold then 3 else 2}, 1);\n  lean_closure_set(cb{i}, 0, {arg});\n"
       args := args.push s!"cb{i}"
       continue
-    if [`String.Internal.intercalate, `String.intercalate, `String.Internal.intercalateImpl].contains official && dom == mkApp (mkConst `List [.zero]) (mkConst `String) then
-      unless a.ty == .tobject && b.ty == .tobject && !a.borrow do throw <| IO.userError "invalid list of strings ABI"
+    if [`String.Internal.intercalate, `String.intercalate, `String.Internal.intercalateImpl, `String.Slice.intercalate].contains official &&
+        dom.getAppFn.constName == `List then
+      let slice := official == `String.Slice.intercalate
+      let elem := if slice then `String.Slice else `String
+      unless dom == mkApp (mkConst `List [.zero]) (mkConst elem) && a.ty == .tobject && b.ty == .tobject do
+        throw <| IO.userError "invalid list of strings ABI"
+      if slice then checkSliceLayout source strict
       IndexedNative.checkDataTypes source strict [`List]
       decls := decls.push ((if b.borrow then "b_lean_obj_arg " else "lean_obj_arg ") ++ arg)
-      prepare := prepare ++ s!"  lean_object *strings = omega_string_list_to_lean({arg});\n"
+      let convert := if slice then s!"omega_map_list({arg}, omega_slice_to_lean)" else s!"omega_string_list_to_lean({arg})"
+      prepare := prepare ++ s!"  lean_object *texts = {convert};\n"
       unless b.borrow do cleanup := cleanup ++ s!"  lean_dec({arg});\n"
-      args := args.push "strings"
+      if a.borrow then cleanup := cleanup ++ "  lean_dec(texts);\n"
+      args := args.push "texts"
       continue
     let charSeq := fun (t : Name) => mkApp (mkConst t [.zero]) (mkConst `Char)
     if basicStringFunction official && (dom == charSeq `List || dom == charSeq `Array) then
@@ -454,11 +467,9 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
   else if dom == `Int then do
     checkIntLayout strict
     unless (ret == .tobject || ret == .tagged) && result == .object do throw <| IO.userError s!"incorrect integer result at {n}"
-    prepare := prepare ++ s!"  lean_object *i = {call};\n  uint8_t neg = lean_int_lt(i, lean_box(0));\n"
-    prepare := prepare ++ "  lean_object *magnitude = lean_nat_abs(i);\n  lean_dec(i);\n"
-    prepare := prepare ++ "  if (neg) { lean_object *p = lean_nat_pred(magnitude); lean_dec(magnitude); magnitude = p; }\n"
-    prepare := prepare ++ "  lean_object *integer = lean_alloc_ctor(neg, 1, 0);\n  lean_ctor_set(integer, 0, magnitude);\n"
-    pure ("lean_obj_res", "integer")
+    prepare := prepare ++ s!"  lean_object *integer = {call};\n"
+    cleanup := cleanup ++ "  lean_dec(integer);\n"
+    pure ("lean_obj_res", "omega_int_from_lean(integer)")
   else if let some (f, t) := float? dom then do
     checkFloatLayout strict dom
     unless ret == t && result == .tobject do throw <| IO.userError s!"incorrect float result at {n}"
@@ -552,6 +563,12 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
     hasString := true
     prepare := prepare ++ s!"  lean_object *optional = {call};\n"
     pure ("lean_obj_res", "omega_optional_from_lean(optional, " ++ (if scalar then "omega_char_from_lean)" else "omega_char_array_from_lean)"))
+  else if official == `String.Slice.toInt? then do
+    unless type == mkApp (mkConst `Option [.zero]) (mkConst `Int) && ret == .tobject && result == .tobject do
+      throw <| IO.userError "incorrect optional integer ABI"
+    checkIntLayout strict
+    IndexedNative.checkDataTypes source strict [`Option]
+    pure ("lean_obj_res", s!"omega_optional_from_lean({call}, omega_int_from_lean)")
   else if dom == `Option && basicStringFunction official then do
     let pos := type.getArg! 0 |>.getAppFn.constName
     unless [`String.Pos, `String.Slice.Pos].contains pos && ret == .tobject && result == .tobject do
@@ -617,7 +634,7 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
     pure "\nextern lean_obj_res lean_byte_array_copy_slice(b_lean_obj_arg, lean_obj_arg, lean_obj_arg, lean_obj_arg, lean_obj_arg, uint8_t);\n"
   else if official == `System.Platform.getNumBits then
     pure "\nextern lean_obj_res lean_system_platform_nbits(lean_obj_arg);\n" else pure ""
-  let header := if hasName then "\n#include \"strict_name.h\"\n" else if hasString || [`String, `ByteArray].contains dom then "\n#include \"strict_string.h\"\n" else ""
+  let header := if hasName then "\n#include \"strict_name.h\"\n" else if hasString || [`String, `ByteArray].contains dom then "\n#include \"strict_string.h\"\n" else if dom == `Int then "\n#include \"strict_nat.h\"\n" else ""
   return header ++ proto ++ helper ++ s!"\nLEAN_EXPORT {output} {adapter}({String.intercalate ", " decls.toList}) \{\n{prepare}  {output} r = {value};\n{cleanup}  return r;\n}\n"
 
 end OmegaChecks.InitPort.WordNative
