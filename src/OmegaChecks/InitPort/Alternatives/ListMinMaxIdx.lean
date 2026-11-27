@@ -8,18 +8,18 @@ import all Init.Data.List.MinMaxOn
 
 open scoped Std.OppositeOrderInstances
 namespace OmegaChecks.InitPort.Alternatives
-public theorem List.minIdxOn_le_of_apply_getElem_le_apply_minOn._proof_1_1 :
-    type_of% (private_decl% @_root_.List.minIdxOn_le_of_apply_getElem_le_apply_minOn._proof_1_1) := by
+public theorem List.minIdxOn_le_of_apply_getElem_le_apply_minOn._proof_1_1.{u, v} :
+    type_of% (private_decl% @_root_.List.minIdxOn_le_of_apply_getElem_le_apply_minOn._proof_1_1.{u, v}) := by
   intro _ _ _ _ _ _ _ k hk _ _ denied
   exact denied (Nat.lt_min.mpr ⟨Nat.lt_succ_self k, hk⟩)
 
-public theorem List.getElem_minIdxOn._proof_1_1 :
-    type_of% (private_decl% @_root_.List.getElem_minIdxOn._proof_1_1) := by
+public theorem List.getElem_minIdxOn._proof_1_1.{u, v} :
+    type_of% (private_decl% @_root_.List.getElem_minIdxOn._proof_1_1.{u, v}) := by
   intro _ _ _ _ _ xs _ _ _ denied
   exact denied (Nat.le_succ xs.length)
 
-public theorem List.minIdxOn_eq_go_drop._proof_1_14 :
-    type_of% (private_decl% @_root_.List.minIdxOn_eq_go_drop._proof_1_14) := by
+public theorem List.minIdxOn_eq_go_drop._proof_1_14.{u, v} :
+    type_of% (private_decl% @_root_.List.minIdxOn_eq_go_drop._proof_1_14.{u, v}) := by
   intro _ _ _ _ _ _ _ _ _ _ _ hk denied
   exact denied (Nat.succ_lt_succ hk)
 
