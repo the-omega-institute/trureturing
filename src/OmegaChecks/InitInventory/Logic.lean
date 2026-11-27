@@ -405,6 +405,46 @@ theorem emOfVectorSucc (existsDec : DecideSucc) (p : Prop) : p ∨ ¬p := by
   | isTrue yes => exact yes.elim fun _ hp => hp
   | isFalse no => exact (nn (fun hp => no ⟨⟨#[()], rfl⟩, hp⟩)).elim
 
+private theorem endOfNonempty {α : Type u} (a : α) (as : List α) :
+    ∃ (p : List α) (z : α), a :: as = p.concat z := by
+  induction as generalizing a with
+  | nil => exact ⟨[], a, rfl⟩
+  | cons b bs ih =>
+    obtain ⟨p,z,h⟩ := ih b
+    exact ⟨a :: p, z, congrArg (a :: ·) h⟩
+
+private theorem decompose {α : Type u} {n : Nat} (v : Vector α (n+1)) :
+    ∃ (xs : Vector α n) (x : α), v = push xs x := by
+  rcases v with ⟨⟨as⟩, size⟩
+  cases as with
+  | nil => exact (Nat.noConfusion size)
+  | cons a as =>
+    obtain ⟨p, z, eq⟩ := endOfNonempty a as
+    have length : p.length = n := Nat.succ.inj (((appendOne p z).symm.trans
+      (congrArg List.length eq.symm)).trans size)
+    refine ⟨⟨⟨p⟩, length⟩, z, ?_⟩
+    have same {a b : Vector α (n+1)} (sameList : a.toArray.toList = b.toArray.toList) : a = b := by
+      rcases a with ⟨⟨xs⟩, size⟩
+      rcases b with ⟨⟨ys⟩, size'⟩
+      change xs = ys at sameList
+      cases sameList
+      rfl
+    exact same eq
+
+/-- The official decision of universal absence is enough once excluded middle is supplied. -/
+noncomputable def ofExcludedMiddle (em : ∀ p : Prop, p ∨ ¬p) : DecideSucc := fun {α n} P d => by
+  cases d with
+  | isTrue absent =>
+    exact .isFalse fun ⟨v, h⟩ => (decompose v).elim fun xs h' => h'.elim fun x eq => absent x xs (eq ▸ h)
+  | isFalse possible =>
+    exact .isTrue ((em (∃ v, P v)).elim id fun no =>
+      (possible fun x xs h => no ⟨push xs x, h⟩).elim)
+
+
+theorem nonemptyDeciderIffExcludedMiddle :
+    Nonempty DecideSucc ↔ ∀ p : Prop, p ∨ ¬p :=
+  ⟨fun decider => decider.elim emOfVectorSucc, fun em => ⟨ofExcludedMiddle em⟩⟩
+
 end VectorExistence
 
 theorem dneFromClosedRange (range : type_of% (@Std.Rxc.size_pos_iff_le.{0}))
