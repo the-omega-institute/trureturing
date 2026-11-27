@@ -61,7 +61,10 @@ internal sealed class BlakeConjecture52Document : IScribeDocumentDefinition
                         + "which is T to the power d in the quotient. Each factor has its first nonzero coefficient "
                         + "at degree d − 1, with value one. Their product has coefficient one at degree 2d − 2, "
                         + "which survives the quotient and contradicts its vanishing."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("blake-noncentral-quaternion-twist"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Definition(string name, string title, Formula formula, string prose) =>
         Describe.Lean(DescribeId.Create("blake-" + name.ToLowerInvariant()),

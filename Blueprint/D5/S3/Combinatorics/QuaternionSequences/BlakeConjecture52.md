@@ -58,6 +58,10 @@ $$\forall M \in \mathbb{N},\; 2 \le M \Rightarrow \left(\forall s \in \operatorn
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/QuaternionSequences/BlakeConjecture52.blake_conjecture_5_2` (`✓ std3`). ∎
 
+*Resolves.* `Problems/blake-noncentral-quaternion-twist` (proved) by `D5/S3/Combinatorics/QuaternionSequences/BlakeConjecture52.blake_conjecture_5_2`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"blake-noncentral-quaternion-twist","declaration_gid":"D5/S3/Combinatorics/QuaternionSequences/BlakeConjecture52.blake_conjecture_5_2","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Sam Blake (2026). *A Recursive Construction of Perfect and Odd Perfect Sequences of Unbounded Length over the Unit Quaternions*. DOI: [10.48550/arXiv.2611.19627](https://doi.org/10.48550/arXiv.2611.19627). URL: <https://arxiv.org/abs/2611.19627v1>.
