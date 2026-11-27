@@ -24,6 +24,8 @@ inputs:
   require-pr-opt-in:
     description: Search for PR preparation artifacts only if the open PR currently has the preparation label
     default: 'false'
+  kind:
+    description: Publication to build or restore (compiler or report). Omit for ordinary combined restoration.
   targets:
     description: Space-delimited project Lean modules whose imports are needed
   version:
