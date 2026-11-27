@@ -90,13 +90,19 @@ def write_config(name, source):
     return config
 
 
-def lake_layout(strict, with_reg, common_dir=None):
+def lake_layout(strict, with_reg, common_dir=None, hosted=None):
     label = "common" if common_dir else "strict"
     build_dir = ".lake/build/omega-common" if common_dir else BUILD
     overlay = (foundation_config(str(common_dir), build_dir, label) if common_dir else
                isolated_config() if strict else None)
+    if hosted:
+        hosted_lib, hosted_key = hosted
+        label = "witness-" + hashlib.sha256(str(hosted_lib).encode()).hexdigest()
+        build_dir = str(hosted_lib.parent / "witness-build")
+        base = foundation_config("strict", build_dir, label).read_text()
+        overlay = hosted_config("leanLibDir = " + json.dumps(str(hosted_lib)) + "\n" + base, hosted_key)
     command = ["lake", "-f", overlay] if overlay else ["lake"]
-    libraries = {"": ROOT / (build_dir if overlay else ".lake/build") / "lib/lean"}
+    libraries = {"": hosted_lib if hosted else ROOT / (build_dir if overlay else ".lake/build") / "lib/lean"}
     if not with_reg:
         return command, libraries
     reg = ROOT / "Reg"
@@ -127,12 +133,9 @@ def lake_layout(strict, with_reg, common_dir=None):
     return command, libraries
 
 
-def build_profiles(graph, selections, options=(), original=None):
+def mixed_modules(graph, requested):
     from portable import closure, root
-    from check import terminal_modules
 
-    foundations = {"OmegaInit", "OmegaMathlib", "OmegaMath"}
-    requested = set().union(*selections.values()).intersection(graph)
     with_omega = set()
     with_host = set()
     for name in closure(graph, requested):
@@ -141,8 +144,16 @@ def build_profiles(graph, selections, options=(), original=None):
             with_omega.add(name)
         if deps & with_host or any(dep not in graph for dep in deps):
             with_host.add(name)
-    mixed = with_host & with_omega
-    mixed = {name for name in mixed if root(name) not in foundations}
+    return {name for name in with_host & with_omega if root(name) not in {"OmegaInit", "OmegaMathlib", "OmegaMath"}}
+
+
+def build_profiles(graph, selections, options=(), original=None):
+    from portable import closure, root
+    from check import terminal_modules
+
+    foundations = {"OmegaInit", "OmegaMathlib", "OmegaMath"}
+    requested = set().union(*selections.values()).intersection(graph)
+    mixed = mixed_modules(graph, requested)
     lake = ["lake", "-f", isolated_config(), "build"]
     if not requested & mixed:
         return subprocess.call([*lake, *(original if original is not None else [*options, *selections])], cwd=ROOT)
@@ -157,23 +168,27 @@ def build_profiles(graph, selections, options=(), original=None):
     # The isolated foundation is an input library to this build. Lake resolves
     # the real witness targets and their facets; it cannot rebuild the foundation
     # into the ordinary import view as a side effect of compiling a mixed file.
-    config = strict_config().read_text()
-    expected = tomllib.loads(config)
-    expected["lean_lib"] = [lib for lib in expected["lean_lib"] if lib["name"] not in foundations]
-    pattern = r'^\[\[lean_lib\]\]\nname = "(?:OmegaInit|OmegaMathlib|OmegaMath)"\n.*?(?=^\[\[|\Z)'
-    config = re.sub(pattern, "", config, flags=re.MULTILINE | re.DOTALL)
     # Lake treats these prebuilt modules as external. Bind its compilation trace
     # to the isolated basis bytes used for this particular witness build.
     from hosted import foundation_files, fingerprint
     base = ROOT / BUILD / "lib/lean"
     files = sorted(path for foundation in foundations for path in foundation_files(base, foundation))
     key = fingerprint(base, files)
+    profile = hosted_config(strict_config().read_text(), key)
+    return subprocess.call(["lake", "-f", profile, "build", *options, *hosted], cwd=ROOT)
+
+
+def hosted_config(config, key):
+    foundations = {"OmegaInit", "OmegaMathlib", "OmegaMath"}
+    expected = tomllib.loads(config)
+    expected["lean_lib"] = [lib for lib in expected["lean_lib"] if lib["name"] not in foundations]
+    pattern = r'^\[\[lean_lib\]\]\nname = "(?:OmegaInit|OmegaMathlib|OmegaMath)"\n.*?(?=^\[\[|\Z)'
+    config = re.sub(pattern, "", config, flags=re.MULTILINE | re.DOTALL)
     expected["moreLeanArgs"] = ["-Dweak.omegaHostedBasis=" + key]
     config = "moreLeanArgs = " + json.dumps(expected["moreLeanArgs"]) + "\n" + config
     if tomllib.loads(config) != expected:
         raise ValueError("unexpected hosted witness configuration")
-    profile = write_config(f"omega-hosted-{key}.toml", config)
-    return subprocess.call(["lake", "-f", profile, "build", *options, *hosted], cwd=ROOT)
+    return write_config("omega-hosted-" + hashlib.sha256(config.encode()).hexdigest() + ".toml", config)
 
 
 def strict_build(args):

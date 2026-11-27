@@ -8,6 +8,7 @@ import json
 import os
 from pathlib import Path
 import subprocess
+import sys
 import tempfile
 import unittest
 from unittest.mock import patch
@@ -23,6 +24,40 @@ TETRAHEDRON = "D5.S3.Quantum.AURICOmega.RationalBlochTetrahedron"
 
 
 class FrozenMeasurement(unittest.TestCase):
+    def test_mixed_public_consumer(self):
+        subprocess.run([sys.executable, "-B", "src/OmegaChecks/portable.py", "--backend", "both", MIXED],
+                       cwd=portable.ROOT, check=True)
+        report = json.loads((portable.ROOT / ".lake/build/omega-checks/selected-official-axioms.json").read_text())
+        self.assertIn(MIXED, report["consumerModules"])
+        self.assertEqual([row["axioms"] for row in report["declarations"]
+                          if row["module"] == MIXED and row["name"].endswith(".mixedFib")],
+                         [["Classical.choice"]])
+
+    def test_mixed_frozen_provenance(self):
+        pure = "D5.S3.Arith.EuclidLemma"
+        names = [MIXED, pure]
+        inspector = portable.ROOT / ".lake/build/lean-inspector/producer/bin/reportInspector"
+        subprocess.run(["lake", "build", *("+" + name for name in names)], cwd=portable.ROOT, check=True)
+        with tempfile.TemporaryDirectory(prefix="omega-frozen-mixed-") as directory:
+            request, official, result = (Path(directory) / name for name in ("request", "official", "result"))
+            request.write_text(json.dumps(names))
+            subprocess.run(["lake", "env", inspector, "--frozen-dependencies-v1", request, official],
+                           cwd=portable.ROOT, check=True)
+            portable.frozen_measurement(request, official, inspector, result)
+            mixed, isolated = json.loads(result.read_text())
+            rows = [row for row in mixed["declarations"] if row["includeInStatement"]]
+            self.assertEqual(len(rows), 2)
+            private = next(row["strict_omega"] for row in rows if "privateFib" in row["nameKey"])
+            public = next(row["strict_omega"] for row in rows if "mixedFib" in row["nameKey"])
+            self.assertEqual(private["axioms"], [])
+            self.assertEqual(public["axioms"], ["Classical.choice"])
+            self.assertIn("Init", public["libraries"])
+            self.assertIn("OmegaMathlib", public["libraries"])
+            for row in isolated["declarations"]:
+                if row["includeInStatement"]:
+                    self.assertEqual(row["strict_omega"]["axioms"], [])
+                    self.assertNotIn("Init", row["strict_omega"]["libraries"])
+
     def test_compiled_pair(self):
         inspector = portable.ROOT / ".lake/build/lean-inspector/producer/bin/reportInspector"
         self.assertTrue(inspector.is_file(), "prepare reportInspector before running this test")

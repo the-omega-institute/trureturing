@@ -667,7 +667,8 @@ private def sharedConsumerNames (env other : Environment) (modules : Array Name)
 The frozen inventory requires correspondence for every included shared declaration and
 compiler provenance for every one-sided declaration. -/
 def checkConsumers (strict publicStrict reference : Environment) (modules : Array Name)
-    (strictSearchPath : System.SearchPath) (inventory : Array FrozenInventory := #[]) : IO (Array (String × String)) := do
+    (strictSearchPath : System.SearchPath) (inventory : Array FrozenInventory := #[])
+    (isolated? : Option Environment := none) : IO (Array (String × String)) := do
   let rename := fun (name : Name) => Id.run do
     let some idx := strict.getModuleIdxFor? name | return name
     let owner := strict.header.modules[idx]!.module
@@ -714,7 +715,15 @@ def checkConsumers (strict publicStrict reference : Environment) (modules : Arra
           if modules.contains depOwner then pending := pending.push dep
           else if depOwner.getRoot == `OmegaMath || depOwner.getRoot == `D5 then
             throw <| IO.userError s!"project dependency missing from isolated consumer check: {depOwner}"
-  check strict publicStrict reference basis
+  let isolated := isolated?.getD strict
+  let bindings ← basis.mapM fun (name, owner) => do
+    let raw := if isolated.contains name then name else name.replacePrefix `Omega .anonymous
+    let expectedOwner := if owner.getRoot == `Init then owner.replacePrefix `Init `OmegaInit
+      else owner.replacePrefix `Mathlib `OmegaMathlib
+    unless (← ownerOf isolated raw) == expectedOwner do
+      throw <| IO.userError s!"isolated source owner mismatch for {name}"
+    pure (raw, owner)
+  check isolated publicStrict reference bindings
   let mut generated ← checkDerived reference expected <|
     (consumerExports reference modules).filter fun name => !expected.contains name && !officialOnly.contains name
   unless officialOnly.isEmpty do

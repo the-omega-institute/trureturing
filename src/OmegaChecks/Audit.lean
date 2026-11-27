@@ -1,5 +1,6 @@
 import Lean
 import Lean.Replay
+import OmegaChecks.InitPort.HostedProjection
 import OmegaChecks.AuditCache
 import OmegaChecks.Interface
 import OmegaChecks.ModuleSurface
@@ -165,6 +166,9 @@ private def testLibrary (selected : List String) : IO Unit := do
   unless (← proc.wait) == 0 do throw <| IO.userError "Omega library test failed"
 
 def main (args : List String) : IO Unit := do
+  let (projection?, args) := match args with
+    | "--hosted-consumer" :: raw :: view :: rest => (some (raw, view), "--consumer" :: rest)
+    | _ => (none, args)
   if let "--consumer" :: strictPath :: officialPath :: names := args then
     let clients := names.takeWhile (· != "--basis")
     let modules := clients.toArray.map String.toName
@@ -180,6 +184,16 @@ def main (args : List String) : IO Unit := do
     -- use Lean's legacy format, which cannot be imported in an exported context.
     let basis := strict.allImportedModuleNames.filter fun name =>
       name.getRoot == `OmegaInit || name.getRoot == `OmegaMathlib
+    let isolated ← if let some (raw, view) := projection? then do
+      let foundations := strict.allImportedModuleNames.filter isStrict
+      unless strictSearchPath.head? == some (System.FilePath.mk view) do
+        throw <| IO.userError "expected the verified projection first on the hosted import path"
+      OmegaChecks.HostedProjection.verify raw view foundations (System.SearchPath.parse officialPath)
+      searchPathRef.set [raw]
+      let isolated ← importModules (foundations.map fun name => {module := name}) {}
+      checkLayers isolated
+      pure isolated
+    else pure strict
     let publicStrict ← importModules (basis.map fun name => {module := name}) {} (level := .exported)
     let mode ← IO.getEnv "OMEGA_CACHE_CONSUMER_MODE"
     let report := (← IO.getEnv "OMEGA_OFFICIAL_AXIOM_REPORT").map System.FilePath.mk
@@ -187,6 +201,7 @@ def main (args : List String) : IO Unit := do
       (← IO.getEnv "OMEGA_FROZEN_INVENTORY").isNone && (← IO.getEnv "OMEGA_FROZEN_CERTIFICATE").isNone &&
       ((mode == some "common-interface" && report.isNone) || (mode == some "official-interface" && report.isSome))
     let strictFiles ← if cacheable then OmegaChecks.AuditCache.artifacts strict else pure #[]
+    let basisFiles ← if cacheable && projection?.isSome then OmegaChecks.AuditCache.artifacts isolated else pure #[]
     searchPathRef.set (System.SearchPath.parse officialPath)
     let official ← importModules (imports.push { module := `OmegaChecks.Interface.Equations }) {}
     let compare : IO Unit := do
@@ -197,17 +212,18 @@ def main (args : List String) : IO Unit := do
       let inventory : Array OmegaChecks.Interface.FrozenInventory ←
         if let some path ← IO.getEnv "OMEGA_FROZEN_INVENTORY" then
           -- Strict foundation modules may not be official alias facades.
-          checkLayers strict
+          checkLayers isolated
           IO.ofExcept (Json.parse (← IO.FS.readFile path) >>= fromJson?)
         else pure #[]
-      let certified ← OmegaChecks.Interface.checkConsumers strict publicStrict official modules strictSearchPath inventory
+      let certified ← OmegaChecks.Interface.checkConsumers strict publicStrict official modules strictSearchPath inventory (some isolated)
       if let some path ← IO.getEnv "OMEGA_FROZEN_CERTIFICATE" then
         IO.FS.writeFile path ((toJson certified).compress ++ "\n")
       if let some report := report then
-        reportOfficialAxioms strict official modules report.toString
+        reportOfficialAxioms isolated official modules report.toString
     if cacheable then
       let officialFiles ← OmegaChecks.AuditCache.artifacts official
-      let files := strictFiles.map (fun (name, file) => ("strict/" ++ name, file)) ++
+      let files := basisFiles.map (fun (name, file) => ("basis/" ++ name, file)) ++
+        strictFiles.map (fun (name, file) => ("strict/" ++ name, file)) ++
         officialFiles.map (fun (name, file) => ("reference/" ++ name, file))
       OmegaChecks.AuditCache.withResult mode.get! names.toArray files compare report
     else compare
