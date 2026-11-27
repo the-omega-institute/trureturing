@@ -108,6 +108,7 @@ private def checkElaboration (env : Environment) (owner : Name) (idx : ModuleIdx
       | `Omega.ShareCommon.State.mk => pure (`OmegaInit.ShareCommon, "l_ShareCommon_mkStateImpl")
       | `Omega.ShareCommon.State.shareCommon => pure (`OmegaInit.ShareCommon, "lean_state_sharecommon")
       | `Omega.Void.mk => pure (`OmegaInit.System.ST, "lean_void_mk")
+      | `Nat.ble => pure (`OmegaInit.Prelude, "lean_nat_dec_le")
       | `Nat.beq => pure (`OmegaInit.Prelude, "lean_nat_dec_eq")
       | `Nat.add => pure (`OmegaInit.Prelude, "lean_nat_add")
       | `Nat.sub => pure (`OmegaInit.Prelude, "lean_nat_sub")

@@ -110,7 +110,7 @@ public def installNaturalBootstrap : CommandElabM Unit := do
     for family in #[`Bool, `Nat, `Eq, `PUnit, `PProd, `Decidable, `HAdd, `Add, `OfNat, `False, `HEq] do
       let some (.inductInfo ind) := (← getEnv).find? family | continue
       compilerLayouts #[family] ind.ctors.toArray
-    for n in #[`Nat.beq, `Nat.decEq, `Nat.sub, `Nat.add, `Nat.mul, `Nat.pow] do
+    for n in #[`Nat.ble, `Nat.beq, `Nat.decEq, `Nat.sub, `Nat.add, `Nat.mul, `Nat.pow] do
       let some attr := getExternAttrData? orig n | throwError "missing pinned extern {n}"
       modifyEnv fun e => externAttr.ext.addEntry (asyncDecl := n) e (n, attr)
       Lean.compileDecls #[n] (logErrors := true)

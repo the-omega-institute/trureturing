@@ -22,6 +22,7 @@ public def natPrimitives := #[
   `Decidable.casesOn, `Decidable.intro, `Decidable.rec, `Eq, `Eq.casesOn, `Eq.recOn, `Eq.ndrec,
   `Eq.ndrec_symm, `Eq.rec, `Eq.refl, `Eq.subst, `Eq.symm, `Eq.trans, `False, `False.casesOn,
   `False.rec, `HAdd, `HAdd.hAdd, `HAdd.mk, `HAdd.rec, `HEq, `HEq.casesOn, `HEq.rec, `HEq.refl,
+  `Nat.ble, `Nat.ble._f, `Nat.ble.match_1,
   `Nat, `Nat.add, `Nat.add._f, `Nat.add.match_1, `Nat.below, `Nat.beq, `Nat.beq._f,
   `Nat.beq.match_1, `Nat.brecOn, `Nat.brecOn.go, `Nat.casesOn, `Nat.decEq, `Nat.decEq._proof_1,
   `Nat.decEq.match_1, `Nat.eq_of_beq_eq_true, `Nat.eq_of_beq_eq_true._f, `Nat.mul, `Nat.mul._f,

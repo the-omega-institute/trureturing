@@ -249,10 +249,6 @@ end Omega.Option
 
 namespace Omega.Nat
 
-@[no_expose] def ble : Nat → Nat → Bool :=
-  Nat.rec (motive := fun _ => Nat → Bool) (fun _ => Bool.true)
-    (fun _ smaller => Nat.rec Bool.false (fun k _ => smaller k))
-
 protected theorem lt_irrefl (n : Nat) : Not (Nat.lt n n) :=
   Nat.rec (motive := fun k => Not (Nat.lt k k)) (not_succ_le_zero zero)
     (fun _ ih h => ih (le_of_succ_le_succ h)) n
@@ -319,7 +315,7 @@ theorem mod_lt (x : Nat) {y : Nat} (hy : Nat.lt zero y) : Nat.lt (Nat.mod x y) y
 
 theorem modCore_lt {x y : Nat} (hy : Nat.lt zero y) : Nat.lt (Nat.modCore x y) y := mod_lt x hy
 
-attribute [irreducible] ble Nat.div Nat.mod Nat.modCore
+attribute [irreducible] Nat.div Nat.mod Nat.modCore
 
 end Omega.Nat
 
@@ -388,8 +384,6 @@ port_definition Decidable.isTrue
 port_definition dite
 port_definition ite
 
-port_definition Nat.ble.match_1 with_native_code
-port_structural_code Nat.ble on_arg 1
 
 namespace Omega
 
