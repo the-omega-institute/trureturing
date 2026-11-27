@@ -213,7 +213,7 @@ private theorem boundary_smul (r : ℝ) (c : Chains V) :
   ext v
   simp [boundary, mul_sub, Finset.mul_sum]
 
-private theorem boundary_sub (c d : Chains V) : boundary (c - d) = boundary c - boundary d := by
+theorem boundary_sub (c d : Chains V) : boundary (c - d) = boundary c - boundary d := by
   have h := boundary_smul (-1) d
   simp only [neg_smul, one_smul] at h
   simp only [sub_eq_add_neg, boundary_add, h]
@@ -536,7 +536,7 @@ theorem pairing_chain_add (f c d : Chains V) : pairing f (c + d) = pairing f c +
 incident chain mass times the pointwise change bound. -/
 theorem abs_pairing_change_le (a b c : Chains V) (S : Finset V) (d : ℝ) (hd : 0 ≤ d)
     (close : ∀ e, |a e - b e| ≤ d)
-    (fixed : ∀ x y, x ∉ S → y ∉ S → a (x,y) = b (x,y)) :
+    (fixed : ∀ x y, x ∉ S → y ∉ S → c (x,y) ≠ 0 → a (x,y) = b (x,y)) :
     |pairing a c - pairing b c| ≤ d * ∑ v ∈ S, load c v := by
   classical
   rw [← pairing_sub]
@@ -552,8 +552,10 @@ theorem abs_pairing_change_le (a b c : Chains V) (S : Finset V) (d : ℝ) (hd : 
         (mul_le_mul_of_nonneg_left (le_add_of_nonneg_right (abs_nonneg _)) hd)
     · simpa [hx, hy] using mul_le_mul_of_nonneg_right (close e) (abs_nonneg (c e))
     · simpa [hx, hy] using mul_le_mul_of_nonneg_right (close e) (abs_nonneg (c e))
-    · rw [show a e = b e from fixed e.1 e.2 hx hy]
-      simp [hx, hy]
+    · by_cases he : c e = 0
+      · simp [he, hx, hy]
+      · rw [show a e = b e from fixed e.1 e.2 hx hy he]
+        simp [hx, hy]
   refine (Finset.sum_le_sum fun e _ => h e).trans_eq ?_
   rw [← Finset.mul_sum, Finset.sum_add_distrib]
   congr 1
@@ -926,7 +928,7 @@ theorem dualNorm_push_change {T : Type*} (t : T → Chains V) (ρ σ : V → V)
   · intro e
     apply (abs_sub _ _).trans
     exact (add_le_add (hf.1 _) (hf.1 _)).trans (by norm_num)
-  · intro u v hu hv
+  · intro u v hu hv _
     simp [pullCochain, h u hu, h v hv]
 
 end ChangeOfProjection
