@@ -30,8 +30,7 @@ open private matrix_support from
   D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCriticalSpectrum
 open BalancedCubeGirth (flip_comm)
 open SupportedEigenSaturation (selected_neighbor_card)
-open private adjacent_exists_flip from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeGirth
+open BalancedCubeGirth (adjacent_exists_flip)
 
 open Classical in
 def directions {n : Nat} (C : Finset (Q n)) (x : Q n) : Finset (Fin n) :=
@@ -47,9 +46,6 @@ theorem flip_injective {n : Nat} (x : Q n) : Function.Injective (flip x) := by
   by_contra hij
   have h := congrFun he i
   cases hxi : x i <;> simp [BalancedCriticalSpectrum.flip, hij, hxi] at h
-
--- Keep the short-name lookup used by existing `open private ... from` callers.
-private alias Legacy.flip_injective := flip_injective
 
 open Classical in
 theorem directions_card {n : Nat} (C : Finset (Q n)) (x : Q n) :

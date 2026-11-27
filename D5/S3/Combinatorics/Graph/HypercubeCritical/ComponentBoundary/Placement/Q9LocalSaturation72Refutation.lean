@@ -35,8 +35,7 @@ open Q9BoundaryGram (Interior)
 open Q9WeightedSaturation (Rows biadjacency defect)
 open private flipSign_cast from
   D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Q9IsotropicHuang
-open private adjacent_exists_flip from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeGirth
+open BalancedCubeGirth (adjacent_exists_flip)
 open private paritySide from
   D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeLowerBound
 

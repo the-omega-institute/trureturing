@@ -22,8 +22,7 @@ open BalancedCubeLowerBound (coordinateSlice)
 open Q9TwentyTwoReconstruction (bit_iff_opposite_mem)
 open BalancedCubeGirth (flip_comm)
 open SupportedEigenSaturation (selected_neighbor_card)
-open private adjacent_exists_flip from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeGirth
+open BalancedCubeGirth (adjacent_exists_flip)
 open private flip_direction_injective from
   D5.S3.Combinatorics.Graph.HypercubeCritical.CubeLayerDisjointness
 open CubeBitMoves (toggle)

@@ -65,7 +65,7 @@ jobs:
 
       - name: Resolve optional cache partitions
         id: keys
-        run: python3 tools/scripts/worktree/lean_actions.py keys --repository "$GITHUB_WORKSPACE"
+        run: python3 tools/scripts/worktree/lean_actions.py keys --repository "$GITHUB_WORKSPACE" --layers dependency
 
       - name: Restore the pinned Lean toolchain
         if: steps.keys.outputs.elan_key != ''
@@ -94,23 +94,41 @@ jobs:
           key: ${{ steps.keys.outputs.dependency_key }}
           restore-keys: ${{ steps.keys.outputs.dependency_restore_prefix }}
 
-      - name: Restore the Lean project layer
-        id: project
-        if: steps.keys.outputs.project_key != ''
-        uses: actions/cache/restore@v5
-        continue-on-error: true
-        with:
-          path: ${{ steps.keys.outputs.project_archive_path }}
-          key: ${{ steps.keys.outputs.project_key }}
-          restore-keys: ${{ steps.keys.outputs.project_restore_prefix }}
-
-      - name: Restore optional validated seeds
+      - name: Prepare the restored dependencies
         env:
           DEPENDENCY_KEY: ${{ steps.dependency.outputs.cache-matched-key }}
-          PROJECT_KEY: ${{ steps.project.outputs.cache-matched-key }}
           DEPENDENCY_OUTCOME: ${{ steps.dependency.outcome }}
-          PROJECT_OUTCOME: ${{ steps.project.outcome }}
-        run: python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --dependency-key "$DEPENDENCY_KEY" --project-key "$PROJECT_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME" --project-outcome "$PROJECT_OUTCOME"
+        run: |
+          python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --layers dependency \
+            --dependency-key "$DEPENDENCY_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME"
+
+      - name: Select the compiler inputs of the analysis and measurement fixtures
+        run: |
+          PYTHONPATH=tools/scripts/worktree:src/OmegaChecks python3 - <<'PYTHON'
+          import os
+          from pathlib import Path
+          from lean_artifact_inventory import workspace_modules
+          from lean_compile_layers import scoped_imports
+          from test_frozen_measurement import MIXED, OFFICIAL, PRIVATE_INDUCTIVE, TETRAHEDRON
+
+          root = Path.cwd()
+          modules = workspace_modules(root)
+          fixtures = {name for name in modules if name.split('.')[0] == 'LeanInformationAuditRegAnalysis'}
+          if not fixtures:
+              raise ValueError('no Lean analysis fixtures in the checkout')
+          fixtures.update((MIXED, OFFICIAL, PRIVATE_INDUCTIVE, TETRAHEDRON))
+          targets = scoped_imports(root, modules, fixtures)
+          (Path(os.environ['RUNNER_TEMP']) / 'analysis-cache-targets').write_text('\n'.join(sorted(targets)) + '\n')
+          PYTHON
+
+      - name: Restore published compiler modules for the fixtures
+        uses: ./.github/actions/lean-cache-shards
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        with:
+          operation: restore-published
+          targets-file: ${{ runner.temp }}/analysis-cache-targets
 
       - name: Install the artifact hashing tool
         shell: bash
