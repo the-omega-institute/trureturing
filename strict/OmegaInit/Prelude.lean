@@ -896,3 +896,18 @@ port_definition UInt64.noConfusion
 port_proof UInt64.decEq._proof_1
 port_definition UInt64.decEq with_native_code
 port_definition instDecidableEqUInt64 with_native_code
+
+port_definition instMinUInt32 with_native_code
+port_definition instMaxUInt32 with_native_code
+port_native_records ByteArray
+port_definition ByteArray.emptyWithCapacity with_native_code
+port_definition ByteArray.empty with_native_code
+port_definition ByteArray.push.match_1 with_native_code
+port_definition ByteArray.push with_native_code
+port_definition ByteArray.size.match_1 with_native_code
+port_definition ByteArray.size with_native_code
+port_definition List.toByteArray.match_1 with_native_code
+port_definition List.toByteArray.loop._f
+port_definition List.toByteArray.loop
+port_structural_code List.toByteArray.loop on_arg 1
+port_definition List.toByteArray with_native_code

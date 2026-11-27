@@ -142,6 +142,15 @@ public def word64Equal (x y : Omega.Bool) : Omega.Bool :=
     (Omega.Nat.le_add_right_of_le (Omega.Nat.le_add_right_of_le (Omega.Nat.succ_le_succ (Omega.Nat.zero_le _)))) b)
   @Omega.Decidable.decide _ (Omega.UInt64.decEq (mk x) (mk y))
 
+public def byteBufferSecond (x y : Omega.Bool) : Omega.Bool :=
+  let byte := fun b => Omega.UInt8.ofBitVec (asWordBits (Omega.Nat.succ_le_succ (Omega.Nat.zero_le _)) b)
+  let bytes := Omega.List.toByteArray (Omega.List.cons (byte x) (Omega.List.cons (byte y) Omega.List.nil))
+  let correct := @Omega.Decidable.decide _ (Omega.Nat.decEq bytes.size two)
+  let second := Omega.List.casesOn (motive := fun _ => Omega.Bool) bytes.data.toList .false
+    (fun _ tail => Omega.List.casesOn (motive := fun _ => Omega.Bool) tail .false
+      (fun last _ => @Omega.Decidable.decide _ (Omega.UInt8.decEq last (byte .true))))
+  Omega.strictAnd correct second
+
 public def disjunction (x y : Omega.Bool) : Omega.Bool := Omega.strictOr x y
 public def conjunction (x y : Omega.Bool) : Omega.Bool := Omega.strictAnd x y
 "
@@ -173,7 +182,7 @@ unsafe def main (args : List String) : IO Unit := do
       (`naturalLe, fun x y => !x || y), (`arraySecond, second), (`bitEqual, BEq.beq),
       (`boundedLess, fun x y => !x && y), (`bitConjunction, and), (`word8Less, fun x y => !x && y),
       (`word16Equal, BEq.beq), (`word32Le, fun x y => !x || y), (`word64Equal, BEq.beq),
-      (`disjunction, or), (`conjunction, and)]
+      (`byteBufferSecond, second), (`disjunction, or), (`conjunction, and)]
     for (name, expected) in checks do
       let some ci := env.find? name | throw <| IO.userError s!"missing {name}"
       unless Kernel.isDefEqGuarded env {} ci.type arity do throw <| IO.userError s!"invalid type of {name}"
