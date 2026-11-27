@@ -1,9 +1,9 @@
-/- GID: D5/S3/Combinatorics/BoseTriplingBurningRefutation
+/- GID: D5/S3/Combinatorics/Hypergraphs/BoseTriplingBurningRefutation
    generality: I
-   mirror-B: D5/B/S3/Combinatorics/BoseTriplingBurningRefutation
+   mirror-B: D5/B/S3/Combinatorics/Hypergraphs/BoseTriplingBurningRefutation
    mirror-E: none(waiver:kernel-checked-refutation)
    anchors: [mathlib/module/Mathlib.Data.Finset.Powerset]
-   utility: none
+   utility: kind=certified-instance; basis=refutes=gid:D5/S3/Combinatorics/Hypergraphs/BoseTriplingBurningRefutation.claim; result=D5/S3/Combinatorics/Hypergraphs/BoseTriplingBurningRefutation.result; claim=D5/S3/Combinatorics/Hypergraphs/BoseTriplingBurningRefutation.claim
    digest: Ordinary burning of a cyclic Steiner triple system and its Bose tripling. -/
 
 import Mathlib.Data.Finset.Powerset
@@ -16,13 +16,21 @@ import Mathlib.Algebra.Group.Fin.Basic
 import Mathlib.Logic.Equiv.Fin.Basic
 import OmegaBuild.Commands
 
-/-! The cyclic system of order 13 and its cited Bose tripling of order 39. -/
+/-!
+# Burning under Bose tripling
+
+The translates of `{0,1,4}` and `{0,2,7}` modulo 13 give a nondegenerate
+system with burning number 5. Its Bose tripling has burning number 6.
+
+Source question: Burgess, Danziger, Jones, Marbach and Pike,
+arXiv:2608.25627v1, §5. Registered scope: trureturing issue #34982.
+-/
 
 compile_only_with_mathlib
 
 set_option autoImplicit false
 
-namespace D5.S3.Combinatorics.BoseTriplingBurningRefutation
+namespace D5.S3.Combinatorics.Hypergraphs.BoseTriplingBurningRefutation
 
 /-- Pair completion of a Steiner triple system, with the diagonal extended idempotently. -/
 structure Steiner (α : Type) where
@@ -118,8 +126,23 @@ def bose {n : ℕ} (H : Steiner (Fin n)) : Steiner (Fin (n * 3)) where
   cancel x y := by
     simp only [Equiv.symm_apply_apply, (boseOnProduct H).cancel, Equiv.apply_symm_apply]
 
-private theorem cyclic_translates :
-    ∀ t : Fin 13, complete13 t (t + 1) = t + 4 ∧ complete13 t (t + 2) = t + 7 := by decide
+private def cyclicBlocks : Finset (Finset (Fin 13)) :=
+  (Finset.univ.image fun t : Fin 13 => {t, t + 1, t + 4}) ∪
+    (Finset.univ.image fun t : Fin 13 => {t, t + 2, t + 7})
+
+private theorem cyclic_block_count : cyclicBlocks.card = 26 ∧
+    (∀ b ∈ cyclicBlocks, b.card = 3) := by
+  exact ⟨by decide, fun b hb => by
+    have hc : ∀ b : {s // s ∈ cyclicBlocks}, b.val.card = 3 := by decide
+    exact hc ⟨b, hb⟩⟩
+
+set_option maxRecDepth 4096 in
+set_option maxHeartbeats 1000000 in
+-- Check the pair incidence against the translated triples and the executable completion.
+private theorem cyclic_incidence :
+    ∀ x y : Fin 13, x ≠ y →
+      (cyclicBlocks.filter fun b => x ∈ b ∧ y ∈ b).card = 1 ∧
+      {x, y, complete13 x y} ∈ cyclicBlocks := by decide
 
 private def schedule13 : List (Fin 13) := [0, 1, 2, 3, 6]
 
@@ -244,7 +267,8 @@ private theorem card_pairs_le (s : Finset α) : (pairs s).card ≤ s.card.choose
       have hm : a ∈ ({c, d} : Finset α) := he ▸ Finset.mem_insert_self _ _
       simpa using hm
     have hb : b = c ∨ b = d := by
-      have hm : b ∈ ({c, d} : Finset α) := he ▸ Finset.mem_insert_of_mem (Finset.mem_singleton_self b)
+      have hm : b ∈ ({c, d} : Finset α) :=
+        he ▸ Finset.mem_insert_of_mem (Finset.mem_singleton_self b)
       simpa using hm
     grind
 
@@ -277,6 +301,7 @@ private theorem burned_le_four [Inhabited α] (H : Steiner α) (xs : List α)
   rw [← he, burned_append] at hcard
   exact (Finset.card_le_card (subset_burned H (burned H ∅ xs) ys)).trans hcard
 
+-- The unrestricted pair count in round five suffices at order 39.
 private theorem burned_le_five [Inhabited α] (H : Steiner α) (xs : List α)
     (h : xs.length ≤ 5) : (burned H ∅ xs).card ≤ 37 := by
   induction xs using List.reverseRecOn with
@@ -356,6 +381,7 @@ noncomputable def lazyBurning (H : Steiner α) (target : Finset α) : ℕ := by
   classical
   exact Nat.find (exists_seed_size H target)
 
+omit [LinearOrder α] in
 private theorem lazy_eq_of_seed {H : Steiner α} {target seed : Finset α}
     (hseed : seed ⊆ target) (hgen : Generates H seed target)
     (hmin : ∀ s ⊆ target, Generates H s target → seed.card ≤ s.card) :
@@ -413,4 +439,155 @@ def claim : Prop :=
   ∀ (n : ℕ) (H : Steiner (Fin n)), 0 < n → Nondegenerate H →
     burning H < burning (bose H) → Projective H ∨ Affine H
 
-end D5.S3.Combinatorics.BoseTriplingBurningRefutation
+private theorem complete13_translate (t x y : Fin 13) :
+    cyclic13.complete (x + t) (y + t) = cyclic13.complete x y + t := by
+  change complete13 (x + t) (y + t) = complete13 x y + t
+  simp only [complete13, add_sub_add_right_eq_sub]
+  ac_rfl
+
+private def spreadThree (s : Finset (Fin 13)) : Finset (Fin 13) :=
+  spread cyclic13 (spread cyclic13 (spread cyclic13 s))
+
+set_option maxRecDepth 4096 in
+set_option maxHeartbeats 2000000 in
+-- Kernel reduction checks every nonblock seed containing 0 in one finite decision.
+private theorem zero_triples_generate :
+    ∀ y z : Fin 13, 0 < y → y < z → z ≠ cyclic13.complete 0 y →
+      spreadThree {0, y, z} = Finset.univ := by decide
+
+private theorem normalized_generation {y z : Fin 13} (hy : y ≠ 0) (hz : z ≠ 0)
+    (hyz : y ≠ z) (hn : z ≠ cyclic13.complete 0 y) :
+    Generates cyclic13 {0, y, z} Finset.univ := by
+  have hc : spreadThree {0, y, z} = Finset.univ := by
+    rcases lt_or_gt_of_ne hyz with h | h
+    · exact zero_triples_generate y z (bot_lt_iff_ne_bot.mpr hy) h hn
+    · rw [show ({0, y, z} : Finset (Fin 13)) = {0, z, y} by ext; simp [or_comm]]
+      refine zero_triples_generate z y (bot_lt_iff_ne_bot.mpr hz) h ?_
+      intro e
+      apply hn
+      rw [e, cyclic13.cancel]
+  intro s hs hseed
+  rw [← hc]
+  exact spread_subset_of_closed _ hs
+    (spread_subset_of_closed _ hs (spread_subset_of_closed _ hs hseed))
+
+private theorem nonblock_generates {x y z : Fin 13} (hxy : x ≠ y) (hxz : x ≠ z)
+    (hyz : y ≠ z) (hn : z ≠ cyclic13.complete x y) :
+    Generates cyclic13 {x, y, z} Finset.univ := by
+  intro K hK hseed
+  let K' : Finset (Fin 13) := Finset.univ.filter fun u => u + x ∈ K
+  have mem_K' (u : Fin 13) : u ∈ K' ↔ u + x ∈ K := by simp [K']
+  have hK' : Closed cyclic13 K' := by
+    intro u v hu hv
+    rw [mem_K', ← complete13_translate]
+    exact hK ((mem_K' _).mp hu) ((mem_K' _).mp hv)
+  have hy : y - x ≠ 0 := by simpa [sub_eq_zero] using hxy.symm
+  have hz : z - x ≠ 0 := by simpa [sub_eq_zero] using hxz.symm
+  have hyz' : y - x ≠ z - x := fun e => hyz (sub_left_injective e)
+  have hn' : z - x ≠ cyclic13.complete 0 (y - x) := by
+    intro e
+    have he := congrArg (fun u : Fin 13 => u + x) e
+    apply hn
+    simpa [← complete13_translate] using he
+  have hseed' : ({0, y - x, z - x} : Finset (Fin 13)) ⊆ K' := by
+    rw [Finset.insert_subset_iff, Finset.insert_subset_iff, Finset.singleton_subset_iff]
+    exact ⟨(mem_K' _).mpr (by simpa using hseed (by simp)),
+      (mem_K' _).mpr (by simpa using hseed (by simp)),
+      (mem_K' _).mpr (by simpa using hseed (by simp))⟩
+  intro u _
+  have hm := normalized_generation hy hz hyz' hn' K' hK' hseed' (Finset.mem_univ (u - x))
+  simpa using (mem_K' _).mp hm
+
+private theorem card_block (H : Steiner α) {x y : α} (h : x ≠ y) :
+    (block H x y).card = 3 := by
+  have hx := complete_ne_left H h
+  have hy : H.complete x y ≠ y := H.comm x y ▸ complete_ne_left H h.symm
+  exact Finset.card_eq_three.mpr ⟨x, y, H.complete x y, h, hx.symm, hy.symm, rfl⟩
+
+omit [LinearOrder α] in
+private theorem closed_small (H : Steiner α) {s : Finset α} (h : s.card ≤ 1) :
+    Closed H s := by
+  intro x y hx hy
+  rw [Finset.card_le_one.mp h x hx y hy, H.idem]
+  exact hy
+
+private theorem pair_generates_block (H : Steiner α) (x y : α) :
+    Generates H {x, y} (block H x y) := by
+  intro s hs hpair
+  have hx := hpair (Finset.mem_insert_self x {y})
+  have hy := hpair (Finset.mem_insert_of_mem (Finset.mem_singleton_self y))
+  simp [block, Finset.insert_subset_iff, hx, hy, hs hx hy]
+
+private theorem lazy_block (H : Steiner α) {x y : α} (h : x ≠ y) :
+    lazyBurning H (block H x y) = 2 := by
+  have hseed : ({x, y} : Finset α).card = 2 := Finset.card_eq_two.mpr ⟨x, y, h, rfl⟩
+  rw [← hseed]
+  apply lazy_eq_of_seed (by simp [block, Finset.insert_subset_iff]) (pair_generates_block H x y)
+  intro s _ hs
+  rw [hseed]
+  by_contra! hn
+  have hc := Finset.card_le_card (hs s (closed_small H (by omega)) fun _ h => h)
+  rw [card_block H h] at hc
+  omega
+
+private theorem lazy13 : lazyBurning cyclic13 Finset.univ = 3 := by
+  let seed : Finset (Fin 13) := {0, 1, 2}
+  have hseed : seed.card = 3 := by decide
+  rw [← hseed]
+  have hgen : Generates cyclic13 seed Finset.univ :=
+    nonblock_generates (by decide) (by decide) (by decide) (by decide)
+  apply lazy_eq_of_seed (Finset.subset_univ _) hgen
+  intro s _ hs
+  rw [hseed]
+  by_contra! hn
+  have hc : (Finset.univ : Finset (Fin 13)).card = 13 := by simp
+  by_cases hsmall : s.card ≤ 1
+  · have hcard := Finset.card_le_card (hs s (closed_small cyclic13 hsmall) fun _ h => h)
+    omega
+  · obtain ⟨x, y, hxy, rfl⟩ := Finset.card_eq_two.mp (show s.card = 2 by omega)
+    have hcard := Finset.card_le_card (hs (block cyclic13 x y) (block_closed cyclic13 x y)
+      (by simp [block, Finset.insert_subset_iff]))
+    rw [card_block cyclic13 hxy] at hcard
+    omega
+
+private theorem nondegenerate13 : Nondegenerate cyclic13 := by
+  intro K hK hproper hclosed hmax
+  obtain ⟨x, hx⟩ := hK
+  have hy : ∃ y ∈ K, x ≠ y := by
+    by_contra! h
+    let L := block cyclic13 x (x + 1)
+    have hLcard : L.card = 3 := card_block _ (by
+      exact fun e => (by decide : (0 : Fin 13) ≠ 1) (by simpa using congrArg (· - x) e))
+    have hKL : K ⊆ L := by
+      intro u hu
+      rw [← h u hu]
+      simp [L, block]
+    have hcard : K.card ≤ 1 :=
+      Finset.card_le_one.mpr fun a ha b hb => (h a ha).symm.trans (h b hb)
+    have he := hmax L (lt_of_le_of_ne hKL fun e => by rw [e, hLcard] at hcard; omega)
+      (block_closed _ _ _)
+    rw [he] at hLcard
+    simp at hLcard
+  obtain ⟨y, hy, hxy⟩ := hy
+  have hb : block cyclic13 x y ⊆ K := pair_generates_block cyclic13 x y K hclosed
+    (by simp [Finset.insert_subset_iff, hx, hy])
+  have he : K = block cyclic13 x y := by
+    apply Finset.Subset.antisymm _ hb
+    intro z hz
+    by_contra hn
+    simp only [block, Finset.mem_insert, Finset.mem_singleton, not_or] at hn
+    have hgen := nonblock_generates hxy (fun e => hn.1 e.symm) (fun e => hn.2.1 e.symm) hn.2.2
+    have hall : Finset.univ ⊆ K := hgen K hclosed
+      (by simp [Finset.insert_subset_iff, hx, hy, hz])
+    exact hproper (Finset.Subset.antisymm (Finset.subset_univ _) hall)
+  rw [he, lazy_block _ hxy, lazy13]
+
+/-- The cyclic order-13 system refutes the registered Bose tripling implication. -/
+theorem result : ¬ claim := by
+  intro h
+  have hincrease : burning cyclic13 < burning (bose cyclic13) := by
+    rw [burning13, burning39]
+    decide
+  exact (h 13 cyclic13 (by decide) nondegenerate13 hincrease).elim not_projective13 not_affine13
+
+end D5.S3.Combinatorics.Hypergraphs.BoseTriplingBurningRefutation
