@@ -4,64 +4,37 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Approximate signed atoms by admissible ones while matching moments exactly. -/
+   digest: Replace the zero cutoff while preserving five signed moments. -/
 
-import Mathlib.Analysis.Normed.Module.FiniteDimension
-import OmegaBuild.Commands
+import OmegaMath.MeasureTheory.AtomicMomentRepair
+import Mathlib.Topology.Order.DenselyOrdered
 
-/-! Small changes in a finite family of signed atoms can be repaired exactly by
-a fixed basis of admissible moment vectors at arbitrarily small additional cost. -/
-
-compile_only_with_mathlib
+/-! Publication statement for replacing the zero cutoff in a five-moment match. -/
 
 open Set
 open scoped BigOperators
 
 namespace D5.S3.Topology.Measures.AtomicMomentRepair
 
-/-- Replace each old atom by an admissible atom and restore the original
-moment using a fixed admissible basis with total correction cost below ε. -/
+/-- Move the zero-cutoff atom to a positive cutoff and restore its five moments
+using arbitrarily small signed corrections at fixed positive cutoffs. -/
 theorem exists_exact_moment_repair
-    {Atom E ι κ : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
-    [Fintype ι] [Fintype κ]
-    (moment : Atom → E) (admissible : Set Atom) (basisNode : κ → admissible)
-    (basis : Module.Basis κ ℝ E)
+    (moment : ℝ → Fin 5 → ℝ)
+    (hContinuous : ContinuousWithinAt moment (Ioc 0 1) 0)
+    (basisNode : Fin 5 → Ioc (0 : ℝ) 1)
+    (basis : Module.Basis (Fin 5) ℝ (Fin 5 → ℝ))
     (hBasis : ∀ j, basis j = moment (basisNode j))
-    (oldMoment : ι → E) (weight : ι → ℝ)
-    (hApprox : ∀ i, oldMoment i ∈ closure (moment '' admissible))
-    {ε : ℝ} (hε : 0 < ε) :
-    ∃ (node : ι → admissible) (correction : κ → ℝ),
-      (∑ i, weight i • moment (node i)) + (∑ j, correction j • moment (basisNode j)) =
-        (∑ i, weight i • oldMoment i) ∧ (∑ j, |correction j|) < ε := by
-  classical
-  let residual (candidate : ι → E) : E :=
-    (∑ i, weight i • oldMoment i) - ∑ i, weight i • candidate i
-  let cost (candidate : ι → E) : ℝ :=
-    ∑ j, |basis.equivFunL (residual candidate) j|
-  have hResidual : Continuous residual := by
-    dsimp only [residual]
-    fun_prop
-  have hCost : Continuous cost := by
-    dsimp only [cost]
-    fun_prop
-  have hProduct : oldMoment ∈ closure (Set.univ.pi fun _ : ι => moment '' admissible) :=
-    mem_closure_pi.mpr fun i _ => hApprox i
-  have hOldCost : cost oldMoment = 0 := by simp [cost, residual]
-  obtain ⟨candidate, hCheap, hAdmissible⟩ :=
-    mem_closure_iff.mp hProduct {candidate | cost candidate < ε}
-      (isOpen_lt hCost continuous_const) (show cost oldMoment < ε by simpa [hOldCost])
-  have hNode : ∀ i, ∃ x ∈ admissible, moment x = candidate i :=
-    fun i => hAdmissible i (mem_univ i)
-  choose x hx hMoment using hNode
-  refine ⟨fun i => ⟨x i, hx i⟩, basis.equivFunL (residual candidate), ?_, hCheap⟩
-  change (∑ i, weight i • moment (x i)) +
-    (∑ j, basis.equivFunL (residual candidate) j • moment (basisNode j)) = _
-  simp_rw [hMoment, ← hBasis]
-  change (∑ i, weight i • candidate i) +
-    (∑ j, basis.repr (residual candidate) j • basis j) = _
-  rw [basis.sum_repr]
-  exact add_sub_cancel _ _
-
-#print axioms exists_exact_moment_repair
+    (weight : ℝ) {ε : ℝ} (hε : 0 < ε) :
+    ∃ (x : Ioc (0 : ℝ) 1) (correction : Fin 5 → ℝ),
+      weight • moment x + (∑ j, correction j • moment (basisNode j)) =
+        weight • moment 0 ∧ (∑ j, |correction j|) < ε := by
+  have h0 : (0 : ℝ) ∈ closure (Ioc 0 1) := by
+    rw [closure_Ioc (zero_ne_one : (0 : ℝ) ≠ 1)]
+    exact ⟨le_rfl, zero_le_one⟩
+  obtain ⟨node, correction, hEq, hCost⟩ :=
+    Omega.MeasureTheory.AtomicMomentRepair.exists_exact_moment_repair
+      moment (Ioc 0 1) basisNode basis hBasis (fun _ : Unit => moment 0)
+      (fun _ => weight) (fun _ => hContinuous.mem_closure_image h0) hε
+  exact ⟨node (), correction, by simpa using hEq, hCost⟩
 
 end D5.S3.Topology.Measures.AtomicMomentRepair
