@@ -1,0 +1,1 @@
+{"statement_id":"sha256:5415ebab8b717ed4955dde5f07269d73bc5e0d5b9d6c249e62bc334aa9c77704","declarations":[{"declaration_name_key":"ns(ns(n0,12:IsDualFamily),17:sum_le_of_fourier)","kind":"theorem","libraries":["Aesop","Batteries","Init","Lean","Mathlib","Std"],"axioms":["Classical.choice","Quot.sound","propext"]}]}

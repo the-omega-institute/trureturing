@@ -60,7 +60,7 @@ OmegaMath
 │   │   └── Polynomial
 │   │       └── Monomials
 │   └── Quaternion
-│       └── Polynomial
+│       └── Polynomial, Shell
 ├── Arithmetic
 │   ├── ContinuedFraction
 │   │   └── Convergents, Tangent
