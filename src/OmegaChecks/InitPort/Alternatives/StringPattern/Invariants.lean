@@ -385,6 +385,14 @@ public theorem String.Slice.Pattern.Model.find?_eq_none_iff :
     | none => rfl
     | some q => exact (absent q ((_root_.String.Slice.Pattern.Model.find?_eq_some_iff pat).mp eq).1).elim
 
+public theorem String.Slice.isSome_find? : type_of% @_root_.String.Slice.isSome_find? := by
+  intro ρ pat σ iter finite loop lawful search s
+  unfold _root_.String.Slice.find? _root_.String.Slice.contains
+  rw [← _root_.Std.Iter.findSome?_toList, ← _root_.Std.Iter.any_toList]
+  induction (ToForwardSearcher.toSearcher pat s).toList with
+  | nil => rfl
+  | cons step steps ih => cases step <;> first | rfl | exact ih
+
 public theorem String.Slice.Pattern.Model.contains_eq_true_iff :
     type_of% @_root_.String.Slice.Pattern.Model.contains_eq_true_iff := by
   intro ρ pat model strict σ iter finite loop lawful search valid s

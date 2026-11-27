@@ -595,15 +595,6 @@ end OmegaChecks.InitPort.Alternatives
 
 namespace OmegaChecks.InitPort.Alternatives
 
-public theorem String.contains_char_eq {c : Char} {s : String} :
-    String.Internal.containsImpl s c = decide (c ∈ s.toList) := rfl
-
-public theorem String.contains_bool_eq {p : Char → Bool} {s : String} :
-    String.Internal.anyImpl s p = s.toList.any p := rfl
-
-public theorem String.contains_prop_eq {p : Char → Prop} [DecidablePred p] {s : String} :
-    String.Internal.anyImpl s (fun c => decide (p c)) = s.toList.any (fun c => decide (p c)) := rfl
-
 public theorem String.contains_char_eq_contains_beq {c : Char} {s : String} :
     String.Internal.containsImpl s c = String.Internal.anyImpl s (fun x => x == c) := by
   change decide (c ∈ s.toList) = s.toList.any (fun x => x == c)
