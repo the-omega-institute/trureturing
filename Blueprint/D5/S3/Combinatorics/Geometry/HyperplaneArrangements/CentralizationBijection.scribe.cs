@@ -98,7 +98,10 @@ internal sealed class CentralizationBijectionDocument : IScribeDocumentDefinitio
                         + "applicable periods and the coordinate factors. This also suffices at pq. "
                         + "The Lean endpoint proves the complement equivalence. Characteristic-polynomial "
                         + "evaluation follows from the cited counting results."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("chen-fu-li-wang-2026-centralization-crt-bijection"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Definition(string id, string name, string title, string prose) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Module + "." + name),
