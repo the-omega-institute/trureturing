@@ -34,6 +34,28 @@ import all Init.Data.List.ToArray
 
 namespace OmegaChecks.InitPort.Alternatives
 
+private theorem bindFoldAppend [Monad m] [LawfulMonad m] (f : β → α → m β)
+    (xs ys : List α) (seed : m β) :
+    (seed >>= fun b => (xs ++ ys).foldlM f b) =
+      (seed >>= fun b => xs.foldlM f b) >>= fun b => ys.foldlM f b := by
+  induction xs generalizing seed with
+  | nil =>
+    change (seed >>= fun b => ys.foldlM f b) = (seed >>= pure) >>= fun b => ys.foldlM f b
+    rw [bind_pure]
+  | cons a xs ih =>
+    change (seed >>= fun b => f b a >>= fun c => (xs ++ ys).foldlM f c) =
+      (seed >>= fun b => f b a >>= fun c => xs.foldlM f c) >>= fun b => ys.foldlM f b
+    rw [← bind_assoc, ih, ← bind_assoc]
+public theorem List.foldlM_append : type_of% @_root_.List.foldlM_append := by
+  intro m α β _ _ f b xs ys
+  have h := bindFoldAppend f xs ys (pure b)
+  simpa only [pure_bind] using h
+public theorem List.foldrM_append : type_of% @_root_.List.foldrM_append := by
+  intro m α β _ _ f b xs ys
+  unfold List.foldrM
+  rw [List.reverse_append]
+  exact _root_.List.foldlM_append
+
 public theorem List.foldlM_pure : type_of% @_root_.List.foldlM_pure := by
   intro m β α monad lawful f b xs
   induction xs generalizing b with

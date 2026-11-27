@@ -401,6 +401,36 @@ private theorem foldrAsList [Monad m] (f : α → β → m β) (xs : _root_.Arra
     | nil => rfl
     | cons a as => exact (h (Nat.zero_lt_succ _)).elim
 
+private theorem foldlAsList [Monad m] (f : β → α → m β) (xs : _root_.Array α) :
+    (fun b => xs.foldlM f b) = fun b => xs.toList.foldlM f b := by
+  unfold _root_.Array.foldlM
+  apply (liftTrueBranch (p := xs.size ≤ xs.size) (Nat.le_refl _) _ _).trans
+  exact foldListTail f xs xs.size 0 (Nat.le_refl _)
+
+public theorem Array.foldlM_append : type_of% @_root_.Array.foldlM_append := by
+  intro m α β _ _ f b xs ys
+  rw [← _root_.Array.foldlM_toList, _root_.Array.toList_append, _root_.List.foldlM_append,
+    ← _root_.Array.foldlM_toList]
+  exact congrArg (fun k => xs.toList.foldlM f b >>= k) (foldlAsList f ys).symm
+
+public theorem Array.foldlM_append' : type_of% @_root_.Array.foldlM_append' := by
+  intro m α β _ _ f b xs ys stop h
+  subst stop
+  rw [← _root_.Array.size_append]
+  exact _root_.Array.foldlM_append
+
+public theorem Array.foldrM_append : type_of% @_root_.Array.foldrM_append := by
+  intro m α β _ _ f b xs ys
+  rw [_root_.Array.foldrM_eq_reverse_foldlM_toList, _root_.Array.toList_append,
+    List.reverse_append, _root_.List.foldlM_append, _root_.Array.foldrM_eq_reverse_foldlM_toList]
+  exact congrArg (fun k => ys.toList.reverse.foldlM (fun acc a => f a acc) b >>= k) (foldrAsList f xs).symm
+
+public theorem Array.foldrM_append' : type_of% @_root_.Array.foldrM_append' := by
+  intro m α β _ _ f b xs ys start h
+  subst start
+  rw [← _root_.Array.size_append]
+  exact _root_.Array.foldrM_append
+
 public theorem Array.foldrM_push : type_of% @_root_.Array.foldrM_push := by
   intro m α β mon f b xs a
   rw [_root_.Array.foldrM_eq_reverse_foldlM_toList, _root_.Array.toList_push, List.reverse_concat]
