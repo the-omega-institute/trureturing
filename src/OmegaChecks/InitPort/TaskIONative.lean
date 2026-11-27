@@ -56,10 +56,10 @@ private def checkLayouts (env : Environment) (names : Array Name) : IO Unit := d
       check n tag 0
   let exceptions := names.any fun n => exceptionEntries.any fun (op, _) => n == `Omega ++ op
   let schedules := exceptions || names.any (`Omega.BaseIO).isPrefixOf
-  if schedules then checkPriorityLayout env
+  if schedules then checkNativeNat env
   if schedules || names.contains `Omega.IO.hasFinished || names.contains `Omega.IO.checkCanceled then
-    check `Omega.Bool.false 0 0
-    check `Omega.Bool.true 1 0
+    check `Bool.false 0 0
+    check `Bool.true 1 0
   if exceptions then
     for (n, tag) in #[(`Omega.EST.Out.ok, 0), (`Omega.EST.Out.error, 1)] do
       check n tag 2

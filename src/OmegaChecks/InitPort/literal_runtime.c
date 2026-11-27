@@ -2,13 +2,10 @@
 
 /* Char, UInt32, BitVec and Fin erase to the checked natural representation. */
 static uint32_t omega_scalar_value(b_lean_obj_arg n) {
-    uint32_t value = 0;
-    while (!lean_is_scalar(n)) {
-        if (value == 0x10ffff) return 0;
-        ++value;
-        n = lean_ctor_get(n, 0);
-    }
-    return value >= 0xd800 && value <= 0xdfff ? 0 : value;
+    if (!lean_is_scalar(n)) return 0;
+    size_t value = lean_unbox(n);
+    if (value > 0x10ffff || (value >= 0xd800 && value <= 0xdfff)) return 0;
+    return (uint32_t)value;
 }
 
 LEAN_EXPORT lean_obj_res omega_char_of_nat(lean_obj_arg n) {

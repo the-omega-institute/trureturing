@@ -165,8 +165,8 @@ public def check (strict publicStrict env : Environment) (n : Name) (candidate :
     unless Compiler.getImplementedBy? publicStrict `Omega.TypeName.typeName == some strictReader do
       throw <| IO.userError "the public type name accessor has no implementation"
   let familyType (α : Name) := mkApp (mkConst `Omega.NonemptyType.type [.zero]) (mkApp (mkConst `Omega.TypeNameData [.zero]) (mkConst α))
-  let x := familyType `Omega.Bool
-  let y := familyType `Omega.Nat
+  let x := familyType `Bool
+  let y := familyType `Nat
   for t in #[x,y,mkConst `Omega.Lean.Name] do
     unless (Kernel.check strict {} t).isOk do throw <| IO.userError s!"invalid name carrier probe {t}"
   if Kernel.isDefEqGuarded strict {} x y || Kernel.isDefEqGuarded strict {} x (mkConst `Omega.Lean.Name) then

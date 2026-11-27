@@ -12,6 +12,7 @@ noncomputable section
 
 namespace Omega
 
+set_option genCtorIdx false in
 /-- A nonnegative integer or the negative of a natural successor. -/
 inductive Int where
   | ofNat : Nat → Int

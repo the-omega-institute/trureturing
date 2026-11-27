@@ -9,7 +9,6 @@ import all OmegaInit.Prelude
 
 namespace Omega.Nat
 
-attribute [local semireducible] Nat.add
 
 theorem succ_div_of_mod_ne_zero {a b : Nat} (h : Ne (Nat.mod (Nat.add a (succ zero)) b) zero) :
     Eq (Nat.div (Nat.add a (succ zero)) b) (Nat.div a b) :=

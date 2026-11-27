@@ -320,7 +320,12 @@ where
     if let some (strict, _) := foundation then
       if src matches .defnInfo _ then
         if hidden && getReducibilityStatusCore strict src.name != .irreducible then
-          throw <| IO.userError s!"legacy importer can unfold the hidden implementation of {src.name}"
+          -- A physical kernel primitive retains the pinned legacy body and its original
+          -- transparency. Compare the literal terms before admitting that behavior.
+          unless src.name == dst.name && src.type.equal dst.type &&
+              original.any (·.equal value) &&
+              getReducibilityStatusCore strict src.name == getReducibilityStatusCore reference dst.name do
+            throw <| IO.userError s!"legacy importer can unfold the hidden implementation of {src.name}"
 
 abbrev CheckedSites := Std.HashSet (Name × Name)
 
@@ -328,6 +333,7 @@ abbrev CheckedSites := Std.HashSet (Name × Name)
 The owning module is part of the key for independently generated declarations. -/
 def checkSites (strict publicStrict reference : Environment) (bindings : Array (Name × Name))
     (checked : CheckedSites) : IO CheckedSites := do
+  let physical ← OmegaChecks.InitCompiler.naturalNames
   let mut pending := bindings
   let mut seen := checked
   while let some (name, owner) := pending.back? do
@@ -349,7 +355,8 @@ def checkSites (strict publicStrict reference : Environment) (bindings : Array (
           | `OmegaMathlib => owner.replacePrefix `OmegaMathlib `Mathlib
           | _ => Name.anonymous
         if target.isAnonymous || ((privateToUserName dep).getRoot != `Omega &&
-            !OmegaChecks.InitPort.NativeQuot.isSupport owner dep && !OmegaChecks.InitCompiler.RootNames.isPrimitive owner dep) then
+            !OmegaChecks.InitPort.NativeQuot.isSupport owner dep && !OmegaChecks.InitCompiler.RootNames.isPrimitive owner dep &&
+            !(owner == `OmegaInit.Prelude && physical.contains dep)) then
           throw <| IO.userError s!"dependency outside the standard interface: {name} uses {dep} in {owner}"
         pending := pending.push (dep, target)
   return seen

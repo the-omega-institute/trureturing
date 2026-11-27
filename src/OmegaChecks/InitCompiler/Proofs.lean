@@ -21,16 +21,6 @@ public def officialEnvironment (owner : Name) : IO Environment := do
   cachedOwner.set (some (owner, env))
   return env
 
-/-- Kernel numeral literals denote the official Nat; strict numerals use the Omega constructors. -/
-private partial def natTerm (n : Nat) : Expr :=
-  if n < 32 then
-    n.fold (init := mkConst `Omega.Nat.zero) (fun _ _ x => mkApp (mkConst `Omega.Nat.succ) x)
-  else
-    let x := mkBVar 0
-    let twice := mkApp2 (mkConst `Omega.Nat.add) x x
-    .letE `half (mkConst `Omega.Nat) (natTerm (n / 2))
-      (if n % 2 == 0 then twice else mkApp (mkConst `Omega.Nat.succ) twice) false
-
 private abbrev Helpers := Std.HashMap Name (List Name × Expr)
 
 /-- Preserve sharing while expanding the private implementation of an official proof. -/
@@ -55,8 +45,7 @@ private partial def translateTerm (env : Environment) (visiting : NameSet) (term
       | .const n us =>
         if let some (params, body) := helpers[n]? then some (body.instantiateLevelParams params us)
         else some (.const (if RootNames.usesRoot n then n else `Omega ++ n) us)
-      | .proj n i x => some (.proj (`Omega ++ n) i (go x))
-      | .lit (.natVal n) => some (natTerm n)
+      | .proj n i x => some (.proj (if RootNames.usesRoot n then n else `Omega ++ n) i (go x))
       | _ => none
   return go term
 
@@ -473,7 +462,7 @@ public partial def elementaryCandidates (type : Expr) : List Expr :=
     let mut candidates := (List.range depth).map mkBVar
     if let .const n us := goal.getAppFn then
       let xs := goal.getAppArgs
-      if (n == `Omega.Eq && xs.size == 3) || (n == `Omega.HEq && xs.size == 4) then
+      if (n == `Eq && xs.size == 3) || (n == `HEq && xs.size == 4) then
         candidates := mkApp2 (mkConst (n ++ `refl) us) xs[0]! xs[1]! :: candidates
       if n == `Omega.Iff && xs.size == 2 then
         candidates := mkApp (mkConst `Omega.Iff.rfl) xs[0]! :: candidates

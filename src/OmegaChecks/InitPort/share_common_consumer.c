@@ -29,20 +29,11 @@ static int shares(lean_object *factory, size_t x, size_t y, int expected_shared)
     return ok;
 }
 
-static int is_unary(b_lean_obj_arg value, uint64_t expected) {
-    while (expected > 0) {
-        if (lean_is_scalar(value) || lean_obj_tag(value) != 1 || lean_ctor_num_objs(value) != 1) return 0;
-        value = lean_ctor_get(value, 0);
-        --expected;
-    }
-    return value == lean_box(0);
-}
-
 static int has_capacities(b_lean_obj_arg custom) {
     lean_inc(custom);
     lean_object *state = omega_share_common_new_state(custom);
-    int ok = is_unary(lean_ctor_get(lean_ctor_get(state, 0), 0), 1024)
-          && is_unary(lean_ctor_get(lean_ctor_get(state, 1), 0), 1024);
+    int ok = lean_nat_dec_eq(lean_ctor_get(lean_ctor_get(state, 0), 0), lean_box(1024))
+          && lean_nat_dec_eq(lean_ctor_get(lean_ctor_get(state, 1), 0), lean_box(1024));
     lean_dec(state);
     return ok;
 }
@@ -53,7 +44,7 @@ static lean_obj_res small_hash(lean_obj_arg key) {
 
 static int hash_result(unsigned value) {
     lean_object *result = strict_hash(lean_alloc_closure((void *)small_hash, 1, 0), lean_box(value));
-    int ok = is_unary(result, value);
+    int ok = lean_nat_dec_eq(result, lean_box(value));
     lean_dec(result);
     return ok;
 }

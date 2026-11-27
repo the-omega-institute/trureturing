@@ -24,14 +24,14 @@ public unsafe def main (args : List String) : IO Unit := do
   let names := names.filter fun (n, _) => (env.find? n).any (· matches .defnInfo _) &&
     (getSigCore? env impureSigExt n).isNone
   if names.isEmpty then return
-  for n in [`Omega.Nat, `Omega.List, `Omega.Fin, `Omega.BitVec, `Omega.UInt8, `Omega.UInt32,
+  for n in [`Nat, `Omega.List, `Omega.Fin, `Omega.BitVec, `Omega.UInt8, `Omega.UInt32,
             `Omega.Char, `Omega.Array, `Omega.ByteArray, `Omega.String] do
     let env ← read
     unless (monoTypeExt.find? env n).isSome do
       let some idx := env.getModuleIdxFor? n | throw <| IO.userError s!"missing literal type {n}"
       writeCode lib env.header.moduleNames[idx]! (← compileLayouts env n) layouts
   let env ← read
-  checkPriorityLayout env
+  checkNativeNat env
   for n in [`Omega.Fin, `Omega.BitVec, `Omega.UInt8, `Omega.UInt32, `Omega.Char,
             `Omega.Array, `Omega.ByteArray, `Omega.String] do
     let some (some field) := impureTrivialStructureInfoExt.find? env n

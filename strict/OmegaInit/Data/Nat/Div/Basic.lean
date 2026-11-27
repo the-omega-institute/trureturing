@@ -11,7 +11,7 @@ import all OmegaInit.Prelude
 public section
 namespace Omega.Nat
 
-attribute [local semireducible] Nat.mod Nat.div Nat.ble Nat.modCore
+attribute [local semireducible] Nat.mod Nat.div Nat.modCore
 
 theorem mod_zero (a : Nat) : Eq (Nat.mod a zero) a :=
   Nat.rec (motive := fun k => Eq (Nat.mod k zero) k) Omega.rfl (fun _ _ => Omega.rfl) a

@@ -75,7 +75,7 @@ private def checkUmbrella (env : Environment) (port : Name) (idx : ModuleIdx) : 
 extension kinds therefore require a correspondence before a port can expose them. -/
 private def supportedExtension (name : Name) : Bool :=
   [-- Compiled interface registrations checked by the port and kernel-interface audits.
-   externAttr.ext.name, aliasExtension.name, classExtension.name, Meta.instanceExtension.ext.name, Meta.simpExtension.ext.name, auxRecExt.name,
+   externAttr.ext.name, aliasExtension.name, classExtension.name, Meta.instanceExtension.ext.name, Meta.simpExtension.ext.name, auxRecExt.name, noConfusionExt.name, Meta.completionBlackListExt.name,
    protectedExt.name, matchPatternAttr.ext.name, Elab.Term.elabAsElim.ext.name, reducibilityCoreExt.name,
    privateToUserName structureExt.name, projectionFnInfoExt.name,
    -- Module provenance, compiled representation and kernel bookkeeping in the pinned toolchain.
@@ -122,6 +122,13 @@ private def checkElaboration (env : Environment) (owner : Name) (idx : ModuleIdx
       | `Omega.IO.FS.removeFile => pure (`OmegaInit.System.IO, "omega_io_remove_file")
       | `Omega.IO.FS.rename => pure (`OmegaInit.System.IO, "omega_io_rename")
       | `Omega.Void.mk => pure (`OmegaInit.System.ST, "lean_void_mk")
+      | `Nat.ble => pure (`OmegaInit.Prelude, "lean_nat_dec_le")
+      | `Nat.beq => pure (`OmegaInit.Prelude, "lean_nat_dec_eq")
+      | `Nat.add => pure (`OmegaInit.Prelude, "lean_nat_add")
+      | `Nat.sub => pure (`OmegaInit.Prelude, "lean_nat_sub")
+      | `Nat.mul => pure (`OmegaInit.Prelude, "lean_nat_mul")
+      | `Nat.pow => pure (`OmegaInit.Prelude, "lean_nat_pow")
+      | `Nat.decEq => pure (`OmegaInit.Prelude, "lean_nat_dec_eq")
       | `Omega.ST.Prim.Ref.swap => pure (`OmegaInit.System.ST, "omega_st_ref_swap")
       | `Omega.ST.Prim.Ref.set => pure (`OmegaInit.System.ST, "omega_st_ref_set")
       | `Omega.ST.Prim.Ref.ptrEq => pure (`OmegaInit.System.ST, "omega_st_ref_ptr_eq")
@@ -186,6 +193,22 @@ private def checkStructures (port ref : Environment) (owner : Name) (idx : Modul
         return lexical.replacePrefix `_private.OmegaInit `_private.Init ++
           (privateToUserName n).replacePrefix `Omega .anonymous
     return n.replacePrefix `Omega .anonymous
+  for name in Meta.completionBlackListExt.getModuleEntries port idx do
+    unless port.getModuleIdxFor? name == some idx &&
+        ref.getModuleIdxFor? (rename name) == ref.getModuleIdx? (counterpart owner) &&
+        Meta.completionBlackListExt.isTagged ref (rename name) do
+      throw <| IO.userError s!"unmatched completion blacklist entry for {owner}/{name}"
+  for (name, info) in noConfusionExt.getModuleEntries port idx do
+    let upstream := rename name
+    let some original := noConfusionExt.find? ref upstream
+      | throw <| IO.userError s!"missing upstream no-confusion registration for {name}"
+    let same := match info, original with
+      | .regular a l r, .regular b x y => a == b && l == x && r == y
+      | .perCtor a f, .perCtor b g => a == b && f == g
+      | _, _ => false
+    unless same && port.getModuleIdxFor? name == some idx &&
+        ref.getModuleIdxFor? upstream == ref.getModuleIdx? (counterpart owner) do
+      throw <| IO.userError s!"no-confusion metadata mismatch for {owner}/{name}"
   for s in structureExt.getModuleEntries port idx do
     let some (.inductInfo ind) := port.find? s.structName
       | throw <| IO.userError s!"registered structure {s.structName} is not an inductive type in {owner}"
@@ -238,7 +261,7 @@ private def checkInstances (env reference : Environment) (owner : Name) (idx : M
     let (scope, v) := load e
     let some name := v.globalName? | throw <| IO.userError s!"unnamed public instance in {owner}"
     let .const n us := v.val | throw <| IO.userError s!"invalid public instance term in {owner}"
-    unless name == n && name.getRoot == `Omega && env.contains name && reference.contains (rename name) do
+    unless name == n && (name.getRoot == `Omega || OmegaChecks.InitCompiler.RootNames.isPrimitive owner name) && env.contains name && reference.contains (rename name) do
       throw <| IO.userError s!"no elaboration correspondence for public instance {name} in {owner}"
     -- Preserve the relative order of registered candidates, including priority ties.
     let mut found := false
