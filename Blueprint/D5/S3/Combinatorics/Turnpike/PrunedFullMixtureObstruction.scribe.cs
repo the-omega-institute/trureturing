@@ -78,12 +78,12 @@ internal sealed class PrunedFullMixtureObstructionDocument : IScribeDocumentDefi
             And(All("k",ktype,RealizesBody(xk)),All("e",I(),All("q",Fin("d"),coordinate)))));
         return Some("K",Nat(),And(LT(D(0),X("K")),Some("w",Arrow(ktype,Real()),Some("x",Arrow(ktype,Arrow(Fin("n"),Real())),body))));
     }
-    private static Formula Marginal(int u) => All("q",Fin("d"),Equal(
+    private static Formula Marginal(byte u) => All("q",Fin("d"),Equal(
         SumOver("r",R(),Multiply(Indicator(Equal(Coordinate(u),X("q"))),App(X("T"),X("tau"),X("r")))),
         App(X("P"),Edge(u),X("q"))));
-    private static Formula Coordinate(int u) => App(Q("coordinate"),D(u),App(Q("triple"),X("r")));
-    private static Formula Edge(int u) => App(Q("edge"),X("tau"),D(u));
-    private static Formula Mask(int u) => App(Q("rankMask"),X("mu"),Edge(u),Coordinate(u));
+    private static Formula Coordinate(byte u) => App(Q("coordinate"),D(u),App(Q("triple"),X("r")));
+    private static Formula Edge(byte u) => App(Q("edge"),X("tau"),D(u));
+    private static Formula Mask(byte u) => App(Q("rankMask"),X("mu"),Edge(u),Coordinate(u));
     private static Formula Difference(Formula x,Formula e) => Subtract(App(x,App(Q("right"),e)),App(x,App(Q("left"),e)));
     private static Formula Indicator(Formula p) => App(Q("indicator"),p);
     private static Formula I() => App(Q("Interval"),X("n"));
