@@ -35,7 +35,7 @@ public import OmegaChecks.InitPort.Alternatives.ListZip
 public import OmegaChecks.InitPort.Alternatives.Logic
 public import OmegaChecks.InitPort.Alternatives.Monad
 public import OmegaChecks.InitPort.Alternatives.Name
-public import OmegaChecks.InitPort.Alternatives.BitwiseEquation
+public import OmegaChecks.InitPort.Alternatives.Word.BitwiseEquation
 public import OmegaChecks.InitPort.Alternatives.NatBits
 public import OmegaChecks.InitPort.Alternatives.NatDigits
 public import OmegaChecks.InitPort.Alternatives.NatFold

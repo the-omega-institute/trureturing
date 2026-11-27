@@ -2,7 +2,7 @@ module
 
 public import Init.Data.Nat.Bitwise.Lemmas
 public import Init.Data.BitVec.Lemmas
-public import OmegaChecks.InitPort.Alternatives.BitwiseEquation
+public import OmegaChecks.InitPort.Alternatives.Word.BitwiseEquation
 import all Init.Data.Nat.Bitwise.Basic
 
 namespace OmegaChecks.Interface.Equations
