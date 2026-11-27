@@ -21,7 +21,7 @@ internal sealed class CauchyPairEnergyDocument : IScribeDocumentDefinition
                 H("Energy controls the magnitude of the total coefficient"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(
-                    Paragraph(Text("Take a finite family of locations x_j in [0,Y], complex coefficients a_j, and any real R. Write S = sum a_j and N = sum |a_j|. The ordered-pair sum of Re(a_i conjugate(a_j)) times 4/(4+(x_i-x_j)^2) is at least 2 pi/(Y+2R) times the square of max(|S|-(1-2 arctan(R)/pi) N,0).")),
+                    Paragraph(Text("Take a finite family of locations x_j in [0,Y], complex coefficients a_j, and any real R. Write S = sum a_j and N = sum |a_j|. The ordered-pair sum of Re(a_i conjugate(a_j)) times 4/(4+(x_i-x_j)^2) is nonnegative for R <= 0 or an empty family. For R > 0 and a nonempty family it is at least 2 pi/(Y+2R) times the square of max(|S|-(1-2 arctan(R)/pi) N,0).")),
                     Paragraph(Text("The sum equals 2 pi times the squared L2 norm of the combination of translated unit-scale Cauchy densities. The probability convolution identity gives the kernel of scale two. For R > 0, on [-R,Y+R], the integral of the smoothed combination differs from S by at most (1-2 arctan(R)/pi) N. Cauchy-Schwarz converts this magnitude bound into the energy bound. For R <= 0, the triangle inequality makes the lower bound zero."))),
                 DescribeRole.Theorem))));
 }
