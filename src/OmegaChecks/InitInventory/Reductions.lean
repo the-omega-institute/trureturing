@@ -88,6 +88,7 @@ private def replayWitnesses (env : Environment) : IO Unit := do
     BooleanReflection.witnesses.map (fun row => row.2.2) ++
     IntegerCancellation.witnesses.map (fun row => row.2.2) ++
     WeakRingOrder.witnesses.map (fun row => row.2.2) ++
+    [``TransformerLaws.MapAfterBind.funextFromMapBind] ++
     [``TransformerLaws.FiniteFold.funextOfMoveUnit, ``TransformerLaws.FiniteFold.funextOfRepeatUnit] ++
     [``EnvelopeOrder.propextFromRingLift, ``EnvelopeOrder.propextFromModuleLift,
       ``EnvelopeOrder.ringDiagonal, ``EnvelopeOrder.moduleDiagonal,

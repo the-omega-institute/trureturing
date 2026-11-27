@@ -167,6 +167,8 @@ private def logicalConsequence? (owner name : Name) : Option (Name × Name) := d
     return (``funext, ``OmegaChecks.InitBoundaries.TransformerLaws.fromStateSeqLeft)
   | `Init.Control.Lawful.Instances, ``StateT.seqRight_eq =>
     return (``funext, ``OmegaChecks.InitBoundaries.TransformerLaws.fromStateSeqRight)
+  | `Init.Control.Lawful.Basic, ``map_bind =>
+    return (``funext, ``OmegaChecks.InitBoundaries.TransformerLaws.MapAfterBind.funextFromMapBind)
   | `Init.Control.Lawful.Basic, ``LawfulMonad.mk' =>
     return (``funext, ``OmegaChecks.InitBoundaries.TransformerLaws.fromMonadConstructor)
   | `Init.Control.Lawful.Lemmas, ``map_inj_of_left_inverse =>

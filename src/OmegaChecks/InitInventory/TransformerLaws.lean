@@ -417,6 +417,76 @@ run_cmd
   for n in [``fromStateSeqLeft, ``fromStateSeqRight] do
     unless (← collectAxioms n).isEmpty do throwError "state sequencing witness {n} uses axioms"
 
+namespace MapAfterBind
+
+/-- Two readers with a proof that the entire functions agree. -/
+private abbrev Paired (T A : Type u) := {p : (T → A) × (T → A) // p.1 = p.2}
+
+private def diagonal {T A : Type u} (f : T → A) : Paired T A := ⟨(f, f), rfl⟩
+
+private theorem diagonalExists {T A : Type u} (x : Paired T A) : ∃ f, x = diagonal f := by
+  rcases x with ⟨⟨f, g⟩, h⟩
+  cases h
+  exact ⟨f, rfl⟩
+
+@[instance_reducible] private def monad (T : Type u) : Monad (Paired T) where
+  pure a := diagonal fun _ => a
+  bind x k := diagonal fun t => (k (x.val.2 t)).val.2 t
+  map f x := diagonal fun t => f (x.val.1 t)
+
+private theorem lawful (T : Type u) : letI := monad T; LawfulMonad (Paired T) := by
+  letI := monad T
+  exact {
+    map_const := rfl
+    id_map := by intro α x; obtain ⟨f, rfl⟩ := diagonalExists x; rfl
+    comp_map := by intros; rfl
+    map_pure := by intros; rfl
+    pure_seq := by intros; rfl
+    seq_pure := by intro α β g x; obtain ⟨f, rfl⟩ := diagonalExists g; rfl
+    seqLeft_eq := by
+      intro α β x y
+      obtain ⟨f, rfl⟩ := diagonalExists x
+      obtain ⟨g, rfl⟩ := diagonalExists y
+      rfl
+    seqRight_eq := by
+      intro α β x y
+      obtain ⟨f, rfl⟩ := diagonalExists x
+      obtain ⟨g, rfl⟩ := diagonalExists y
+      rfl
+    seq_assoc := by
+      intro α β γ x g h
+      obtain ⟨a, rfl⟩ := diagonalExists x
+      obtain ⟨b, rfl⟩ := diagonalExists g
+      obtain ⟨c, rfl⟩ := diagonalExists h
+      rfl
+    bind_pure_comp := by intro α β f x; obtain ⟨g, rfl⟩ := diagonalExists x; rfl
+    bind_map := by intros; rfl
+    pure_bind := by
+      intro α β x f
+      change diagonal (f x).val.2 = f x
+      obtain ⟨g, hg⟩ := diagonalExists (f x)
+      rw [hg]
+      rfl
+    bind_assoc := by intros; rfl
+  }
+
+/-- Mapping uses the first reader and binding uses the second. Mapping under an arbitrary
+continuation identifies the two readers even when their choice depends on the input. -/
+public theorem funextFromMapBind (law : type_of% @map_bind.{max 1 u v, max 1 u v}) : type_of% @funext.{u,v} := by
+  apply funextFromEndomorphisms
+  intro T f g agree
+  letI := monad T
+  letI := lawful T
+  let read : Paired T T := diagonal id
+  let action (t : T) : Paired T T := ⟨(fun _ => f t, fun _ => g t), congrArg (fun x (_ : T) => x) (agree t)⟩
+  exact (congrArg (fun z : Paired T T => z.val.1) (@law (Paired T) T T T _ _ id read action)).symm
+
+open Lean in
+run_cmd
+  unless (← collectAxioms ``funextFromMapBind).isEmpty do throwError "map_bind witness depends on axioms"
+
+end MapAfterBind
+
 namespace FiniteFold
 
 /-- An error value carries two representatives of the same value. -/
