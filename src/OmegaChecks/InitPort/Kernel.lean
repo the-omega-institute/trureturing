@@ -9,6 +9,7 @@ import OmegaChecks.InitPort.NativeQuot
 import OmegaChecks.InitPort.Address
 import OmegaChecks.InitPort.WordFold
 import OmegaChecks.InitPort.WordForIn
+import OmegaChecks.InitPort.SyntaxArray
 
 open Lean
 
@@ -487,16 +488,16 @@ partial def visit (n : Name) : M Bool := do
     modify fun s => {s with env}
     return ← record n .added
   if n == `Array.anyMUnsafe || OmegaChecks.InitPort.WordFold.supported n ||
-      OmegaChecks.InitPort.WordForIn.supported n then
-    let .defnInfo native := ci | return ← record n (.blocked "missing native array loop")
+      OmegaChecks.InitPort.WordForIn.supported n || OmegaChecks.InitPort.SyntaxArray.supported n then
+    let .defnInfo native := ci | return ← record n (.blocked "missing native array implementation")
     let some body := OmegaChecks.InitPort.alternativeBody? c.alternatives ci
-      | return ← record n (.blocked "missing bounded word loop")
+      | return ← record n (.blocked "missing safe array implementation")
     for dep in usedConstants ci.type ++ usedConstants body do
-      unless ← visit dep do return ← record n (.blocked "unavailable bounded word loop dependency" (some dep))
+      unless ← visit dep do return ← record n (.blocked "unavailable safe array implementation dependency" (some dep))
     let .ok decl := translateDecl (.defnInfo {native with safety := .safe}) ci.type body
-      | return ← record n (.blocked "invalid bounded word loop")
+      | return ← record n (.blocked "invalid safe array implementation")
     let .ok env ← checkWithRetry (← get).env decl c.maxHeartbeats
-      | return ← record n (.blocked "kernel rejected bounded word loop")
+      | return ← record n (.blocked "kernel rejected safe array implementation")
     modify fun s => {s with env}
     return ← record n .added
   if (ci.isUnsafe && !boundedBorrowedRead ci) || ci.isPartial then return ← record n (.blocked "unsafe/partial")

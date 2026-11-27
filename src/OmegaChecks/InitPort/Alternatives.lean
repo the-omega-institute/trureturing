@@ -50,6 +50,7 @@ public import OmegaChecks.InitPort.Alternatives.UTF8
 public import OmegaChecks.InitPort.Alternatives.Uri
 public import OmegaChecks.InitPort.Alternatives.StringSlice
 public import OmegaChecks.InitPort.Alternatives.SubarrayFold
+public import OmegaChecks.InitPort.Alternatives.SyntaxArray
 public import OmegaChecks.InitPort.Alternatives.Word
 public import OmegaChecks.InitPort.Alternatives.WordFold
 public import OmegaChecks.InitPort.Alternatives.WordForIn
