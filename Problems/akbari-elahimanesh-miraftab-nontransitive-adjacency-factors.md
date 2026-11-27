@@ -69,8 +69,8 @@ that the claimed graph automorphisms preserve these diagonal entries.
 The settling declaration is
 `D5/S3/Combinatorics/Graph/AdjacencyProduct/NontransitiveFactors.result`.
 The proof uses the pinned Mathlib adjacency-matrix reindexing lemma
-`SimpleGraph.Iso.reindex_adjMatrix` and ring equivalence
-`Matrix.reindexRingEquiv`. The correspondence between diagonal powers and
+`SimpleGraph.Embedding.submatrix_adjMatrix` and the multiplication identity
+`Matrix.submatrix_mul_equiv` for reindexing by a bijection. The correspondence between diagonal powers and
 closed-walk counts is `SimpleGraph.adjMatrix_pow_apply_eq_card_walk`.
 The finite checks use kernel `decide`.
 The witness tables and exact arithmetic readings appear in the witness issue.

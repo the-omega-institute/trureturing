@@ -2,12 +2,11 @@
    generality: I
    mirror-B: D5/B/S3/Combinatorics/Graph/AdjacencyProduct/NontransitiveFactors
    mirror-E: none(waiver:external-open-problem-resolution)
-   anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.AdjMatrix, mathlib/module/Mathlib.LinearAlgebra.Matrix.Reindex]
+   anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.AdjMatrix]
    utility: none
    digest: Two non-vertex-transitive simple graph factors of the complete graph on 17 vertices. -/
 
 import Mathlib.Combinatorics.SimpleGraph.AdjMatrix
-import Mathlib.LinearAlgebra.Matrix.Reindex
 import OmegaBuild.Commands
 
 /-! Akbari, Elahimanesh and Miraftab, arXiv:2512.24864v1, Section 5, item 2. -/
@@ -83,9 +82,14 @@ private instance : DecidableRel graphC.Adj :=
 private theorem diagonal_pow_invariant {G : SimpleGraph (Fin 17)} [DecidableRel G.Adj]
     (e : G ≃g G) (n : ℕ) (i : Fin 17) :
     (G.adjMatrix ℤ ^ n) (e i) (e i) = (G.adjMatrix ℤ ^ n) i i := by
-  have h : reindexRingEquiv ℤ e.symm.toEquiv (G.adjMatrix ℤ ^ n) = G.adjMatrix ℤ ^ n := by
-    rw [map_pow]
-    exact congrArg (· ^ n) (e.symm.reindex_adjMatrix ℤ)
+  let p := e.toEquiv
+  have hAdj : (G.adjMatrix ℤ).submatrix p p = G.adjMatrix ℤ :=
+    e.toEmbedding.submatrix_adjMatrix ℤ
+  have h : (G.adjMatrix ℤ ^ n).submatrix p p = G.adjMatrix ℤ ^ n := by
+    induction n with
+    | zero => simpa only [pow_zero] using (Matrix.submatrix_one_equiv (α := ℤ) p)
+    | succ n ih =>
+      simp only [pow_succ, ← Matrix.submatrix_mul_equiv _ _ p p p, ih, hAdj]
   exact congrFun (congrFun h i) i
 
 private theorem product_entry : ∀ i j : Fin 17,
