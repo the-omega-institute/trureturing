@@ -1,6 +1,7 @@
 module
 public import Lean
 import Lean.Elab.ParseImportsFast
+import Lean.Compiler.LCNF.SpecInfo
 import all Lean.Structure
 
 public section
@@ -80,11 +81,22 @@ private def supportedExtension (name : Name) : Bool :=
    `Lean.namespacesExt, `Lean.noncomputableExt, `Lean.Compiler.inlineAttrs, `Lean.exportedAxiomsExt,
    `Lean.privateConstKindsExt, `Lean.modPkgExt, `Lean.IR.declMapExt, `Lean.Compiler.LCNF.baseExt,
    `Lean.Compiler.LCNF.monoExt, `Lean.Compiler.LCNF.impureSigExt, `Lean.Compiler.LCNF.trivialStructureInfoExt,
+   Compiler.LCNF.specExtension.name,
    `Lean.Compiler.LCNF.monoTypeExt, `Lean.Compiler.LCNF.impureTypeExt,
    `Lean.Compiler.LCNF.impureTrivialStructureInfoExt, `Lean.Compiler.LCNF.ctorLayoutExt,
    `Lean.indirectModUseExt, `Lean.deprecatedModuleExt].contains (privateToUserName name)
 
 private def checkElaboration (env : Environment) (owner : Name) (idx : ModuleIdx) : IO Unit := do
+  let specs := Compiler.LCNF.specExtension.getModuleEntries env idx
+  unless specs.isEmpty do
+    let base := Compiler.LCNF.baseExt.getModuleEntries env idx
+    for entry in specs do
+      let some decl := base.find? (·.name == entry.declName)
+        | throw <| IO.userError s!"no compiled signature for specialization of {entry.declName} in {owner}"
+      unless env.getModuleIdxFor? entry.declName == some idx &&
+          entry.paramsInfo.size == decl.params.size &&
+          entry.paramsInfo.any Compiler.LCNF.SpecParamInfo.causesSpecialization do
+        throw <| IO.userError s!"invalid parameter specialization for {entry.declName} in {owner}"
   for entry in reducibilityExtraExt.ext.getModuleEntries env idx do
     let (name, _) := match entry with
       | .global value | .scoped _ value => value
