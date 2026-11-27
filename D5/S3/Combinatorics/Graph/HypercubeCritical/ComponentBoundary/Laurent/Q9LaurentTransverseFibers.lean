@@ -30,13 +30,12 @@ open private mem_twoStepPaths flip_parity from
 
 variable {C : Finset (Q 9)} {b : Bool}
 
-/-- A two-step move through an axis outside the shared triple preserves the
-partition at its endpoints. -/
-theorem neighborPartition_eq_of_first_axis_outside {P R : Partition} {S : Block}
-    (hinter : P ∩ R = {S})
-    (htypes : ∀ x : Side C b, neighborPartition C x.val = P ∨ neighborPartition C x.val = R)
+/-- A surviving two-step move carries a block distinct from the removed block
+in both endpoint partitions. -/
+theorem exists_shared_block_of_first_axis_outside {S : Block}
     (x : Side C b) (p : PathAt C x.val) (hout : p.val.1 ∉ S) :
-    neighborPartition C x.val = neighborPartition C (pathEnd x p).val := by
+    ∃ T, T ∈ neighborPartition C x.val ∧
+      T ∈ neighborPartition C (pathEnd x p).val ∧ T ≠ S := by
   let middle := cubeFlip x.val p.val.1
   let T := directions C middle
   obtain ⟨hstep, _, _⟩ := mem_twoStepPaths.mp p.property
@@ -53,6 +52,16 @@ theorem neighborPartition_eq_of_first_axis_outside {P R : Partition} {S : Block}
   have hne : T ≠ S := fun hTS => hout (hTS ▸ (mem_directions C middle _).mpr
     (by rw [show middle = cubeFlip x.val p.val.1 from rfl, BalancedCriticalSpectrum.flip_flip];
         exact x.property.1))
+  exact ⟨T, hx, hy, hne⟩
+
+/-- A two-step move through an axis outside the shared triple preserves the
+partition at its endpoints. -/
+theorem neighborPartition_eq_of_first_axis_outside {P R : Partition} {S : Block}
+    (hinter : P ∩ R = {S})
+    (htypes : ∀ x : Side C b, neighborPartition C x.val = P ∨ neighborPartition C x.val = R)
+    (x : Side C b) (p : PathAt C x.val) (hout : p.val.1 ∉ S) :
+    neighborPartition C x.val = neighborPartition C (pathEnd x p).val := by
+  obtain ⟨T, hx, hy, hne⟩ := exists_shared_block_of_first_axis_outside x p hout
   rcases htypes x with hXP | hXR <;> rcases htypes (pathEnd x p) with hYP | hYR
   · exact hXP.trans hYP.symm
   · rw [hXP] at hx
@@ -85,7 +94,7 @@ noncomputable def transverseSide (S : Block) (root : Side C b) : Finset (Side C 
   classical
   exact univ.filter fun x => Relation.ReflTransGen (transverseMove S) root x
 
-private theorem mem_transverseSide {S : Block} {root x : Side C b} :
+theorem mem_transverseSide {S : Block} {root x : Side C b} :
     x ∈ transverseSide S root ↔ Relation.ReflTransGen (transverseMove S) root x := by
   classical
   simp [transverseSide]
@@ -109,12 +118,20 @@ theorem transverseSupport_subset (S : Block) (root : Side C b) : transverseSuppo
     obtain ⟨i, hi, rfl⟩ := mem_image.mp hx
     exact (mem_directions C _ _).mp (mem_sdiff.mp hi).1
 
-/-- Every surviving center keeps its three directions inside a transverse
-component. This supplies the local stars for the two complementary blocks. -/
-theorem directions_eq_transverse_center {P R : Partition} {S : Block}
+private theorem row_partition_and_mem_of_two_types {P R : Partition} {S : Block}
     (hP : IsTriplePartition P) (hR : IsTriplePartition R) (hSP : S ∈ P) (hSR : S ∈ R)
     (htypes : ∀ x : Side C b, neighborPartition C x.val = P ∨ neighborPartition C x.val = R)
-    {root x : Side C b} (hx : x ∈ transverseSide S root)
+    (x : Side C b) :
+    IsTriplePartition (neighborPartition C x.val) ∧ S ∈ neighborPartition C x.val := by
+  rcases htypes x with hx | hx
+  · rw [hx]
+    exact ⟨hP, hSP⟩
+  · rw [hx]
+    exact ⟨hR, hSR⟩
+
+private theorem directions_eq_transverse_center_of_partition {S : Block} {root x : Side C b}
+    (hpart : IsTriplePartition (neighborPartition C x.val))
+    (hshared : S ∈ neighborPartition C x.val) (hx : x ∈ transverseSide S root)
     {i : Fin 9} (hi : i ∈ directions C x.val) (hiS : i ∉ S) :
     directions (transverseSupport S root) (cubeFlip x.val i) = directions C (cubeFlip x.val i) := by
   classical
@@ -129,12 +146,7 @@ theorem directions_eq_transverse_center {P R : Partition} {S : Block}
     exact (mem_directions C v i).mpr (by
       rw [show v = cubeFlip x.val i from rfl, BalancedCriticalSpectrum.flip_flip]
       exact x.property.1)
-  have hDisj : Disjoint (directions C v) S := by
-    rcases htypes x with h | h
-    · rw [h] at hvType
-      exact hP.disjoint_blocks hvType hSP hvNe
-    · rw [h] at hvType
-      exact hR.disjoint_blocks hvType hSR hvNe
+  have hDisj := hpart.disjoint_blocks hvType hshared hvNe
   ext j
   rw [mem_directions, mem_directions]
   constructor
@@ -154,7 +166,20 @@ theorem directions_eq_transverse_center {P R : Partition} {S : Block}
     refine mem_image.mpr ⟨pathEnd x p, mem_transverseSide.mpr ?_, rfl⟩
     exact (mem_transverseSide.mp hx).tail ⟨p, hiS, hjS, rfl⟩
 
-private theorem exists_transverseSide_of_selected_mem {S : Block} {root : Side C b}
+/-- Every surviving center keeps its three directions inside a transverse
+component. This supplies the local stars for the two complementary blocks. -/
+theorem directions_eq_transverse_center {P R : Partition} {S : Block}
+    (hP : IsTriplePartition P) (hR : IsTriplePartition R) (hSP : S ∈ P) (hSR : S ∈ R)
+    (htypes : ∀ x : Side C b, neighborPartition C x.val = P ∨ neighborPartition C x.val = R)
+    {root x : Side C b} (hx : x ∈ transverseSide S root)
+    {i : Fin 9} (hi : i ∈ directions C x.val) (hiS : i ∉ S) :
+    directions (transverseSupport S root) (cubeFlip x.val i) = directions C (cubeFlip x.val i) := by
+  obtain ⟨hpart, hshared⟩ := row_partition_and_mem_of_two_types hP hR hSP hSR htypes x
+  exact directions_eq_transverse_center_of_partition hpart hshared hx hi hiS
+
+/-- Each selected-parity vertex of the transverse support comes from the
+selected-parity transverse component. -/
+theorem exists_transverseSide_of_selected_mem {S : Block} {root : Side C b}
     (x : Side (transverseSupport S root) b) :
     ∃ y ∈ transverseSide S root, y.val = x.val := by
   classical
@@ -171,13 +196,11 @@ private theorem exists_transverseSide_of_selected_mem {S : Block} {root : Side C
     exact (hne hp).elim
 
 open scoped Classical in
-/-- A complementary triple occurring on a transverse component has a
-unique star at each vertex of that component, with the original cube edges. -/
-theorem uniqueCommonNeighbor_transverse {P R : Partition} {S : Block} {e : Axes}
+theorem uniqueCommonNeighbor_transverse_of_partitions {S : Block} {e : Axes}
     {a : Side C b → Exponent} {root : Side C b}
     (hC : ((hypercube 9).induce (C : Set (Q 9))).IsRegularOfDegree 3) (h : LaurentIdentity a)
-    (hP : IsTriplePartition P) (hR : IsTriplePartition R) (hSP : S ∈ P) (hSR : S ∈ R)
-    (htypes : ∀ x : Side C b, neighborPartition C x.val = P ∨ neighborPartition C x.val = R)
+    (hparts : ∀ x ∈ transverseSide S root, IsTriplePartition (neighborPartition C x.val))
+    (hshared : ∀ x ∈ transverseSide S root, S ∈ neighborPartition C x.val)
     (hTS : Disjoint (commonAxes e) S)
     (hpart : ∀ x ∈ transverseSide S root, commonAxes e ∈ neighborPartition C x.val) :
     UniqueCommonNeighbor (transverseSupport S root) b e := by
@@ -195,7 +218,7 @@ theorem uniqueCommonNeighbor_transverse {P R : Partition} {S : Block} {e : Axes}
     unfold transverseSupport
     exact mem_union_right _ (mem_biUnion.mpr ⟨y, hy,
       mem_image.mpr ⟨i, mem_sdiff.mpr ⟨hi, hiS⟩, rfl⟩⟩)
-  have hd := directions_eq_transverse_center hP hR hSP hSR htypes hy hi hiS
+  have hd := directions_eq_transverse_center_of_partition (hparts y hy) (hshared y hy) hy hi hiS
   obtain ⟨j, _, rfl⟩ := mem_image.mp hiT
   refine ⟨j, ⟨by rwa [← hxy], by rw [← hxy, hd, he]⟩, ?_⟩
   intro k hk
@@ -204,7 +227,7 @@ theorem uniqueCommonNeighbor_transverse {P R : Partition} {S : Block} {e : Axes}
     exact transverseSupport_subset S root hk.1)
   have hkT : e (.inl k) ∈ commonAxes e := mem_image.mpr ⟨k, mem_univ _, rfl⟩
   have hkS : e (.inl k) ∉ S := fun hS => disjoint_left.mp hTS hkT hS
-  have hkd := directions_eq_transverse_center hP hR hSP hSR htypes hy hkC hkS
+  have hkd := directions_eq_transverse_center_of_partition (hparts y hy) (hshared y hy) hy hkC hkS
   have hkDir : directions C (cubeFlip y.val (e (.inl k))) = commonAxes e := by
     rw [← hkd, hxy]
     exact hk.2
@@ -219,6 +242,21 @@ theorem uniqueCommonNeighbor_transverse {P R : Partition} {S : Block} {e : Axes}
     change axis ∈ directions C (cubeFlip y.val (e (.inl k)))
     rwa [hkDir])
   exact Sum.inl.inj (e.injective (congrArg Subtype.val (hk'.trans hj.symm)))
+
+open scoped Classical in
+/-- A complementary triple occurring on a transverse component has a
+unique star at each vertex of that component, with the original cube edges. -/
+theorem uniqueCommonNeighbor_transverse {P R : Partition} {S : Block} {e : Axes}
+    {a : Side C b → Exponent} {root : Side C b}
+    (hC : ((hypercube 9).induce (C : Set (Q 9))).IsRegularOfDegree 3) (h : LaurentIdentity a)
+    (hP : IsTriplePartition P) (hR : IsTriplePartition R) (hSP : S ∈ P) (hSR : S ∈ R)
+    (htypes : ∀ x : Side C b, neighborPartition C x.val = P ∨ neighborPartition C x.val = R)
+    (hTS : Disjoint (commonAxes e) S)
+    (hpart : ∀ x ∈ transverseSide S root, commonAxes e ∈ neighborPartition C x.val) :
+    UniqueCommonNeighbor (transverseSupport S root) b e := by
+  have hrows := row_partition_and_mem_of_two_types hP hR hSP hSR htypes
+  exact uniqueCommonNeighbor_transverse_of_partitions hC h
+    (fun x _ => (hrows x).1) (fun x _ => (hrows x).2) hTS hpart
 
 
 end Q9TriplePartitions
@@ -511,13 +549,10 @@ def transverseComponents (S : Block) : Setoid (Side C b) where
     | tail _ he ih => exact (Relation.ReflTransGen.single (transverseMove_symm he)).trans ih,
     fun h h' => h.trans h'⟩
 
-/-- A two-step move through a center of the shared type fixes the transverse
-coordinates. A move through any other type uses two surviving axes. -/
-theorem transverse_or_same_projection {e : Axes} {P R : Partition}
-    (hP : IsTriplePartition P) (hR : IsTriplePartition R)
-    (hSP : commonAxes e ∈ P) (hSR : commonAxes e ∈ R)
-    (htypes : ∀ x : Side C b, neighborPartition C x.val = P ∨ neighborPartition C x.val = R)
-    (x y : Side C b) (v : ↥C)
+theorem transverse_or_same_projection_of_partition {e : Axes} {x : Side C b}
+    (hpart : IsTriplePartition (neighborPartition C x.val))
+    (hshared : commonAxes e ∈ neighborPartition C x.val)
+    (y : Side C b) (v : ↥C)
     (hx : ((hypercube 9).induce (C : Set (Q 9))).Adj ⟨x.val, x.property.1⟩ v)
     (hy : ((hypercube 9).induce (C : Set (Q 9))).Adj v ⟨y.val, y.property.1⟩) :
     (transverseComponents (commonAxes e)).r x y ∨ outside e x.val = outside e y.val := by
@@ -544,10 +579,7 @@ theorem transverse_or_same_projection {e : Axes} {P R : Partition}
     have hR' : outside e y.val = outside e v.val := by rw [hj, ← hl, outside_flip]
     exact hL.trans hR'.symm
   · left
-    have hd : Disjoint (directions C v.val) (commonAxes e) := by
-      rcases htypes x with h | h
-      · exact hP.disjoint_blocks (h ▸ hV) hSP hShared
-      · exact hR.disjoint_blocks (h ▸ hV) hSR hShared
+    have hd := hpart.disjoint_blocks hV hshared hShared
     let p : PathAt C x.val := ⟨(i, j), mem_twoStepPaths.mpr ⟨hiC, hi ▸ hjV, hij⟩⟩
     have hend : pathEnd x p = y := by
       apply Subtype.ext
@@ -555,6 +587,19 @@ theorem transverse_or_same_projection {e : Axes} {P R : Partition}
       rw [← hi, hj]
     exact .single ⟨p, fun h => disjoint_left.mp hd hiV h,
       fun h => disjoint_left.mp hd hjV h, hend⟩
+
+/-- A two-step move through a center of the shared type fixes the transverse
+coordinates. A move through any other type uses two surviving axes. -/
+theorem transverse_or_same_projection {e : Axes} {P R : Partition}
+    (hP : IsTriplePartition P) (hR : IsTriplePartition R)
+    (hSP : commonAxes e ∈ P) (hSR : commonAxes e ∈ R)
+    (htypes : ∀ x : Side C b, neighborPartition C x.val = P ∨ neighborPartition C x.val = R)
+    (x y : Side C b) (v : ↥C)
+    (hx : ((hypercube 9).induce (C : Set (Q 9))).Adj ⟨x.val, x.property.1⟩ v)
+    (hy : ((hypercube 9).induce (C : Set (Q 9))).Adj v ⟨y.val, y.property.1⟩) :
+    (transverseComponents (commonAxes e)).r x y ∨ outside e x.val = outside e y.val := by
+  obtain ⟨hpart, hshared⟩ := row_partition_and_mem_of_two_types hP hR hSP hSR htypes x
+  exact transverse_or_same_projection_of_partition (e := e) (x := x) hpart hshared y v hx hy
 
 
 end Q9TriplePartitions

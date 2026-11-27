@@ -297,7 +297,7 @@ private theorem walkGain_concat {T : SimpleGraph I} (d : I → I → E)
     rw [ih, add_assoc]
 
 omit [NormedSpace ℝ E] in
-private theorem tree_offsets {T : SimpleGraph I} (hT : T.IsTree)
+theorem tree_offsets {T : SimpleGraph I} (hT : T.IsTree)
     (d : I → I → E) (hrev : ∀ a b, T.Adj a b → d b a = -d a b) :
     ∃ c : I → E, ∀ a b, T.Adj a b → c b - c a = d a b := by
   classical

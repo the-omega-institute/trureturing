@@ -60,11 +60,11 @@ instance {k : ℕ} (d : Bool) (p q : Row k) : Decidable (compatible d p q) := by
   unfold compatible
   infer_instance
 
-private def tailGood {k : ℕ} (d : Bool) : {n : ℕ} → Row k → (Fin n → Row k) → Prop
+def tailGood {k : ℕ} (d : Bool) : {n : ℕ} → Row k → (Fin n → Row k) → Prop
   | 0, _, _ => True
   | _ + 1, p, f => proper (f 0) ∧ compatible d p (f 0) ∧ tailGood d (f 0) (Fin.tail f)
 
-private instance {k n : ℕ} (d : Bool) (p : Row k) (f : Fin n → Row k) :
+instance {k n : ℕ} (d : Bool) (p : Row k) (f : Fin n → Row k) :
     Decidable (tailGood d p f) := by
   induction n generalizing p with
   | zero => exact isTrue trivial
@@ -72,11 +72,11 @@ private instance {k n : ℕ} (d : Bool) (p : Row k) (f : Fin n → Row k) :
     exact @instDecidableAnd _ _ inferInstance
       (@instDecidableAnd _ _ inferInstance (ih _ _))
 
-private def continuation {k : ℕ} (d : Bool) : ℕ → Row k → ℕ
+def continuation {k : ℕ} (d : Bool) : ℕ → Row k → ℕ
   | 0, _ => 1
   | m + 1, p => ∑ q : Row k, if proper q ∧ compatible d p q then continuation d m q else 0
 
-private theorem tail_count {k : ℕ} (d : Bool) (n : ℕ) (p : Row k) :
+theorem tail_count {k : ℕ} (d : Bool) (n : ℕ) (p : Row k) :
     (∑ f : Fin n → Row k, if tailGood d p f then 1 else 0) = continuation d n p := by
   induction n generalizing p with
   | zero => simp [tailGood, continuation]
@@ -235,7 +235,7 @@ noncomputable def colouringEquiv (d : Bool) (n k : ℕ) :
   left_inv p := DFunLike.ext _ _ (fun _ => rfl)
   right_inv f := Subtype.ext rfl
 
-private theorem graph_count (d : Bool) (n k : ℕ) :
+theorem graph_count (d : Bool) (n k : ℕ) :
     Nat.card ((stripGraph d n k).Coloring (Fin 3)) =
       ∑ p : Row k, if proper p then continuation d n p else 0 := by
   classical

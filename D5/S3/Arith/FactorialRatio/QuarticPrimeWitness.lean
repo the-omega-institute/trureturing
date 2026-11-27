@@ -389,7 +389,7 @@ private theorem quartic_large_base_witness {r q : ℕ} (hr : 8 ≤ r) (hrq : r <
   · obtain ⟨hb, happ, hbound⟩ := floor_witness (by omega : 0 < r) hrq hqs hs (by omega)
     exact ⟨1, q / r, by decide, hb, by simpa using happ, by simpa using hbound⟩
 
-private theorem log_le_three {p r s : ℕ} (hp : p.Prime) (hpr : p ≤ r)
+public theorem log_le_three {p r s : ℕ} (hp : p.Prime) (hpr : p ≤ r)
     (hs0 : s ≠ 0) (hs : s < r ^ 2) : Nat.log p s ≤ 3 * Nat.log p r := by
   have hr0 := (hp.pos.trans_le hpr).ne'
   let J := Nat.log p r

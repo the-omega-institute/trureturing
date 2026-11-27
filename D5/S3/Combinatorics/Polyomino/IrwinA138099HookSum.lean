@@ -336,7 +336,7 @@ private theorem hook_sum_insert (D : Finset (ℤ × ℤ)) (p : ℤ × ℤ) (hp :
 
 open Finset
 
-private def frame (o : ℤ × ℤ) (s : ℤ) (u : ℤ × ℤ) : ℤ × ℤ :=
+def frame (o : ℤ × ℤ) (s : ℤ) (u : ℤ × ℤ) : ℤ × ℤ :=
   o + (s, s) * u
 
 private def box (w h : ℕ) (o : ℤ × ℤ) (s : ℤ) : Finset (ℤ × ℤ) :=
@@ -613,7 +613,7 @@ private theorem walk_turn (N l : ℕ) (o : ℤ × ℤ) (hw : walk N = ⟨o,l,0�
   · rfl
   · rfl
 
-private theorem layer_walk (m : ℕ) (hm : 1 ≤ m) (o : ℤ × ℤ)
+theorem layer_walk (m : ℕ) (hm : 1 ≤ m) (o : ℤ × ℤ)
     (hw : walk (m*m-1) = ⟨o,2*m-2,m-1⟩) :
     (∀ t, t < m → walk (m*m+t) = ⟨frame o (if m%2 = 0 then (-1:ℤ) else 1) (-1,t),2*m-1,t⟩) ∧
     (∀ t, t ≤ m → walk (m*m+m+t) = ⟨frame o (if m%2 = 0 then (-1:ℤ) else 1) ((t:ℤ)-1,m),2*m,t⟩) := by

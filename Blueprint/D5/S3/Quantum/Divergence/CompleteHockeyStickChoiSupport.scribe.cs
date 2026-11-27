@@ -56,5 +56,14 @@ internal sealed class CompleteHockeyStickChoiSupportDocument : IScribeDocumentDe
                 + "negative semidefinite. Monotonicity of the positive-part trace and data "
                 + "processing for the residual channel give the bound. This is the bound for "
                 + "an exhibited weight in Proposition 31 of George, Hirche, Nuradha and Wilde."))),
+            DescribeRole.Theorem),
+          Describe.Lean(
+            DescribeId.Create("choi-support-budget-witness"),
+            DeclarationHandle.Create("D5/S3/Quantum/Divergence/CompleteHockeyStickChoiSupport.exists_budget_witness"),
+            H("Budget witnesses from Choi support"),
+            StatementSource.WithoutFormula(),
+            AssessedProvenance.FromRepo(Source),
+            Blocks(
+                Paragraph(Text("In the absence of a full reference fiber over a nonzero output vector, Bell preparation transfers calibrated simplex witnesses to the channel. A single finite reference works at every sufficiently small budget a. The input divergence is positive and at most a, and the output divergence is at least a divided by (1 + D a)."))),
             DescribeRole.Theorem))));
 }

@@ -78,15 +78,22 @@ def closure(graph, roots):
         if name not in seen:
             seen.add(name)
             pending.extend(dep for dep in graph[name] if dep in graph)
-    return list(TopologicalSorter({n: graph[n] & seen for n in sorted(seen)}).static_order())
+    return list(TopologicalSorter({n: sorted(graph[n] & seen) for n in sorted(seen)}).static_order())
 
 
-def backend_plan(official_path, names, environment=None):
+def backend_plan(official_path, names, environment=None, *, prepared=False):
     """Read backend restrictions from the exact official artifacts about to be consumed."""
     if not names:
         return {"mathlibOnly": {}, "declarations": []}
-    subprocess.run(["lake", "build", "omegaBackendPlan"], cwd=ROOT, env=environment, check=True)
-    plan = json.loads(output(ROOT / ".lake/build/bin/omegaBackendPlan", official_path, *names, env=environment))
+    if prepared:
+        # Run main from the selector module restored with these official artifacts.
+        env = {**(os.environ if environment is None else environment), "LEAN_PATH": official_path}
+        raw = output("lean", "--stdin", "--run", "OmegaBackendPlan.lean", official_path, *names,
+                     input="import OmegaBuild.Plan\n", env=env)
+    else:
+        subprocess.run(["lake", "build", "omegaBackendPlan"], cwd=ROOT, env=environment, check=True)
+        raw = output(ROOT / ".lake/build/bin/omegaBackendPlan", official_path, *names, env=environment)
+    plan = json.loads(raw)
     for name, chain in plan["mathlibOnly"].items():
         if name not in names or not chain or chain[0] != name:
             raise RuntimeError(f"invalid backend restriction for {name}: {chain}")
@@ -483,7 +490,7 @@ def check(only, backend="mathlib", destination=None, *, frozen=None, discovered=
                 for p in manifest["packages"]}
     environment = {k: v for k, v in os.environ.items()
                    if k not in {"LEAN_PATH", "LEAN_SRC_PATH", "OMEGA_FROZEN_INVENTORY", "OMEGA_FROZEN_CERTIFICATE",
-                                "OMEGA_OFFICIAL_AXIOM_REPORT"}}
+                                "OMEGA_OFFICIAL_AXIOM_REPORT", "OMEGA_CACHE_CONSUMER_MODE"}}
     if destination:
         destination = Path(destination).absolute()
         destination.parent.mkdir(parents=True, exist_ok=True)
@@ -528,7 +535,7 @@ def check(only, backend="mathlib", destination=None, *, frozen=None, discovered=
             subprocess.run(["lake", "build", "omegaAudit"], cwd=ROOT, env=environment, check=True)
         if common_modules:
             subprocess.run([AUDIT, "--consumer", strict_path, common_path, *common_downstream, "--basis", *common_basis], cwd=ROOT,
-                           env=environment, check=True)
+                           env={**environment, "OMEGA_CACHE_CONSUMER_MODE": "common-interface"}, check=True)
             print(f"Common computational interface checked: {len(common_basis)} basis modules, "
                   f"{len(common_downstream)} downstream modules", flush=True)
         if backend == "both" and frozen is None:
@@ -536,7 +543,8 @@ def check(only, backend="mathlib", destination=None, *, frozen=None, discovered=
             report_data = {"backend": "mathlib", "consumerModules": [], "declarations": []}
             if downstream or basis:
                 subprocess.run([AUDIT, "--consumer", strict_path, official_path, *downstream, "--basis", *basis],
-                               cwd=ROOT, env={**environment, "OMEGA_OFFICIAL_AXIOM_REPORT": str(staged_report)},
+                               cwd=ROOT, env={**environment, "OMEGA_CACHE_CONSUMER_MODE": "official-interface",
+                                              "OMEGA_OFFICIAL_AXIOM_REPORT": str(staged_report)},
                                check=True)
                 report_data = json.loads(staged_report.read_text())
             # Supplemental common-interface checks may cover unrelated consumers.

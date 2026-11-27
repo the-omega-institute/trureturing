@@ -34,9 +34,24 @@ Lean statement: `D5/S3/Quantum/Divergence/CompleteHockeyStickChoiSupport.coeffic
 
 A channel with a replacement component of weight p has complete coefficient at most one minus p for every parameter at least one. Equal input reference marginals make the replacement term in the amplified hockey-stick difference negative semidefinite. Monotonicity of the positive-part trace and data processing for the residual channel give the bound. This is the bound for an exhibited weight in Proposition 31 of George, Hirche, Nuradha and Wilde.
 
+**Theorem 1.3 (Budget witnesses from Choi support).**
+
+Lean statement: `D5/S3/Quantum/Divergence/CompleteHockeyStickChoiSupport.exists_budget_witness`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Divergence/CompleteHockeyStickChoiSupport.exists_budget_witness` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Christoph Hirche; Ian George; Theshani Nuradha; Mark M. Wilde (2026). *Conditional contraction coefficients and their applications to quantum networks*. URL: <https://arxiv.org/abs/2608.27171v1>.
+
+*Commentary.*
+
+In the absence of a full reference fiber over a nonzero output vector, Bell preparation transfers calibrated simplex witnesses to the channel. A single finite reference works at every sufficiently small budget a. The input divergence is positive and at most a, and the output divergence is at least a divided by (1 + D a).
+
 ## References
 
 - Truth anchor: `D5/S3/Quantum/Divergence/CompleteHockeyStickChoiSupport.coefficient_le_of_replacement`
+- Truth anchor: `D5/S3/Quantum/Divergence/CompleteHockeyStickChoiSupport.exists_budget_witness`
 - Truth anchor: `D5/S3/Quantum/Divergence/CompleteHockeyStickChoiSupport.result`
 - Dependency: [D5/S3/Quantum/Divergence/CompleteHockeyStickBasisSupport](CompleteHockeyStickBasisSupport.md)
 - Dependency: [D5/S3/Quantum/Divergence/UmegakiKernelContraction](UmegakiKernelContraction.md)

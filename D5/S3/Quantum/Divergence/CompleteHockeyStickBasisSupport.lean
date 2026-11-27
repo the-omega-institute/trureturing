@@ -13,6 +13,7 @@ import Mathlib.Data.Matrix.Basis
 import Mathlib.LinearAlgebra.Basis.VectorSpace
 import Mathlib.LinearAlgebra.Pi
 import Mathlib.Analysis.Matrix.Order
+import Mathlib.Analysis.Real.Sqrt
 import Mathlib.Analysis.CStarAlgebra.ContinuousFunctionalCalculus.Order
 import Mathlib.Data.Matrix.ColumnRowPartitioned
 import Mathlib.LinearAlgebra.Matrix.Kronecker
@@ -283,6 +284,7 @@ private theorem calibrate_blocks (γ : ℝ) (hγ : 1 < γ) (P : Matrix n n ℂ)
     (hP : P.PosSemidef) (hPtr : P.trace = 1) (Y : Option I → Matrix n n ℂ)
     (hY : ∀ i, (Y i).PosSemidef) (hdom : γ • P ≤ ∑ i, Y i) :
     ∃ (c : ℝ) (ρ σ : Option I → Matrix n n ℂ), 0 < c ∧
+      c = (1 + (((γ - 1)⁻¹ : ℝ) • ((∑ i, Y i) - γ • P)).trace.re)⁻¹ ∧
       (∀ i, (ρ i).PosSemidef) ∧ (∀ i, (σ i).PosSemidef) ∧
       (∑ i, ρ i) = ∑ i, σ i ∧ (∑ i, ρ i).trace = 1 ∧
       ∀ i, ρ i - γ • σ i = c • ((if i = none then P else 0) - Y i) := by
@@ -303,7 +305,7 @@ private theorem calibrate_blocks (γ : ℝ) (hγ : 1 < γ) (P : Matrix n n ℂ)
     | some _ => 0
   let σ : Option I → Matrix n n ℂ := fun i =>
     c • (γ⁻¹ • (Y i + if i = none then K else 0))
-  refine ⟨c, ρ, σ, hc, ?_, ?_, ?_, ?_, ?_⟩
+  refine ⟨c, ρ, σ, hc, rfl, ?_, ?_, ?_, ?_, ?_⟩
   · intro i
     cases i
     · exact (hP.add hK).smul hc.le
@@ -377,8 +379,8 @@ variable {I : Type*} [Fintype I] [DecidableEq I]
 /-- The simplex rays can be scaled to dominate the prescribed positive ray
 at each nonzero perturbation. -/
 private theorem simplex_dominates (pivot : I) {γ ε : ℝ} (hγ : 0 < γ) (hε : ε ≠ 0) :
-    ∃ t : ℝ, 0 < t ∧ γ • (Matrix.single none none 1 : Matrix (Option I) (Option I) ℂ) ≤
-      ∑ i, t • ray (simplexVector pivot ε i) := by
+    γ • (Matrix.single none none 1 : Matrix (Option I) (Option I) ℂ) ≤
+      ∑ i, (γ * (Fintype.card (Option I) : ℝ) / ε ^ 2) • ray (simplexVector pivot ε i) := by
   let v := simplexVector pivot ε
   let e : Option I → ℂ := Pi.single none 1
   let P : Matrix (Option I) (Option I) ℂ := Matrix.single none none 1
@@ -395,10 +397,32 @@ private theorem simplex_dominates (pivot : I) {γ ε : ℝ} (hγ : 0 < γ) (hε 
   let c : ℝ := γ / ε ^ 2
   have hc : 0 < c := div_pos hγ (sq_pos_of_ne_zero hε)
   have hcε : c * ε ^ 2 = γ := div_mul_cancel₀ _ (pow_ne_zero _ hε)
-  have hcard : 0 < (Fintype.card (Option I) : ℝ) := by exact_mod_cast Fintype.card_pos
-  refine ⟨c * Fintype.card (Option I), mul_pos hc hcard, ?_⟩
   have h := smul_le_smul_of_nonneg_left (sum_ray_le v) hc.le
-  rwa [hP, smul_smul, hcε, smul_smul, Finset.smul_sum] at h
+  rw [hP, smul_smul, hcε, smul_smul, Finset.smul_sum] at h
+  simpa only [v, c, div_mul_eq_mul_div₀] using h
+
+/-- The distinguished ray has one unit contribution per ordinary label.
+Each ordinary ray contributes one more, and the pivot contributes the perturbation. -/
+private theorem simplex_trace (pivot : I) (ε : ℝ) :
+    (∑ i, ray (simplexVector pivot ε i)).trace =
+      ((2 * (Fintype.card I : ℝ) + ε ^ 2 : ℝ) : ℂ) := by
+  have hnone : (ray (simplexVector pivot ε none)).trace = (Fintype.card I : ℂ) := by
+    rw [ray, Matrix.trace_vecMulVec, dotProduct, Fintype.sum_option]
+    simp [simplexVector, Pi.star_apply, Finset.sum_const, Finset.card_univ, nsmul_eq_mul]
+  have hsome (j : I) : (ray (simplexVector pivot ε (some j))).trace =
+      (if j = pivot then (ε : ℂ) ^ 2 else 0) + 1 := by
+    have hcoord (k : I) :
+        simplexVector pivot ε (some j) (some k) * star (simplexVector pivot ε (some j) (some k)) =
+          if j = k then (1 : ℂ) else 0 := by
+      by_cases hjk : j = k <;> simp [simplexVector, hjk]
+    rw [ray, Matrix.trace_vecMulVec, dotProduct, Fintype.sum_option]
+    simp only [Pi.star_apply, hcoord, Finset.sum_ite_eq, Finset.mem_univ, ite_true]
+    by_cases hj : j = pivot <;> simp [simplexVector, Complex.star_def, hj, pow_two]
+  rw [Matrix.trace_sum, Fintype.sum_option, hnone]
+  simp only [hsome, Finset.sum_add_distrib, Finset.sum_const, Finset.card_univ, nsmul_eq_mul,
+    mul_one, Finset.sum_ite_eq', Finset.mem_univ, ite_true, Complex.ofReal_add,
+    Complex.ofReal_mul, Complex.ofReal_ofNat, Complex.ofReal_natCast, Complex.ofReal_pow]
+  ring
 
 end SimplexCalibration
 
@@ -413,18 +437,34 @@ retention factor tending to one as the perturbation vanishes. -/
 private theorem simplex_witness (τ : Option I → Matrix a a ℂ)
     (hτ : (⨅ i, (τ i).mulVecLin.range) = ⊥) (htrace : (τ none).trace = 1)
     (pivot : I) (γ : ℝ) (hγ : 1 < γ) :
-    ∃ C : ℝ, 0 ≤ C ∧ ∀ ε : ℝ, ε ≠ 0 →
+    ∃ α β C : ℝ, 0 < α ∧ 0 < β ∧ 0 ≤ C ∧ ∀ ε : ℝ, ε ≠ 0 →
       ∃ (c : ℝ) (ρ σ : Option I → Matrix (Option I) (Option I) ℂ)
         (F : Matrix (Option I × a) (Option I × a) ℂ),
-        0 < c ∧ (∀ i, (ρ i).PosSemidef) ∧ (∀ i, (σ i).PosSemidef) ∧
+        0 < c ∧ c = ε ^ 2 / (α + β * ε ^ 2) ∧ (∀ i, (ρ i).PosSemidef) ∧ (∀ i, (σ i).PosSemidef) ∧
         (∑ i, ρ i) = (∑ i, σ i) ∧ (∑ i, ρ i).trace = 1 ∧ 0 ≤ F ∧ F ≤ 1 ∧
         (∑ i, (((ρ i - γ • σ i)⁺ : Matrix (Option I) (Option I) ℂ)).trace) = (c : ℂ) ∧
         (F * ∑ i, (ρ i - γ • σ i) ⊗ₖ τ i).trace = (c : ℂ) * ((1 + ε ^ 2 * C)⁻¹ : ℝ) := by
   obtain ⟨C, hC, hF⟩ := simplex_payoff τ hτ htrace pivot
-  refine ⟨C, hC, fun ε hε => ?_⟩
-  obtain ⟨t, ht, hdom⟩ := simplex_dominates pivot (lt_trans zero_lt_one hγ) hε
+  let n : ℝ := Fintype.card I
+  let m : ℝ := Fintype.card (Option I)
+  have hm : m = n + 1 := by simp [m, n]
+  letI : Nonempty I := ⟨pivot⟩
+  have hn : 0 < n := by
+    dsimp [n]
+    exact_mod_cast (Fintype.card_pos : 0 < Fintype.card I)
+  have hm₀ : 0 < m := by linarith only [hm, hn]
+  have hg := lt_trans zero_lt_one hγ
+  have hd := sub_pos.mpr hγ
+  let α := 2 * γ * m * n / (γ - 1)
+  let β := 1 + γ * n / (γ - 1)
+  have hα : 0 < α := by dsimp [α]; positivity
+  have hβ : 0 < β := by dsimp [β]; positivity
+  refine ⟨α, β, C, hα, hβ, hC, fun ε hε => ?_⟩
+  let t := γ * m / ε ^ 2
+  have ht : 0 < t := div_pos (mul_pos hg hm₀) (sq_pos_of_ne_zero hε)
   let P : Matrix (Option I) (Option I) ℂ := Matrix.single none none 1
   let Y (i : Option I) := t • ray (simplexVector pivot ε i)
+  have hdom : γ • P ≤ ∑ i, Y i := simplex_dominates pivot hg hε
   have hPtr : P.trace = 1 := by simp [P]
   have hP : P.PosSemidef := by
     rw [show P = ray (Pi.single (none : Option I) (1 : ℂ)) by
@@ -432,10 +472,30 @@ private theorem simplex_witness (τ : Option I → Matrix a a ℂ)
     exact Matrix.posSemidef_vecMulVec_self_star _
   have hY (i : Option I) : (Y i).PosSemidef :=
     (Matrix.posSemidef_vecMulVec_self_star (simplexVector pivot ε i)).smul ht.le
-  obtain ⟨c, ρ, σ, hc, hρ, hσ, hsum, htr, hdiff⟩ :=
+  obtain ⟨c, ρ, σ, hc, hcK, hρ, hσ, hsum, htr, hdiff⟩ :=
     calibrate_blocks γ hγ P hP hPtr Y hY hdom
+  have htrY : (∑ i, Y i).trace = ((t * (2 * n + ε ^ 2) : ℝ) : ℂ) := by
+    change (∑ i, t • ray (simplexVector pivot ε i)).trace = _
+    rw [← Finset.smul_sum, Matrix.trace_smul, simplex_trace, Complex.real_smul,
+      Complex.ofReal_mul]
+  have hnorm : c = (1 + (t * (2 * n + ε ^ 2) - γ) / (γ - 1))⁻¹ := by
+    rw [hcK, Matrix.trace_smul, Matrix.trace_sub, Matrix.trace_smul, hPtr, htrY]
+    simp only [Complex.smul_re, smul_eq_mul, Complex.sub_re, Complex.ofReal_re,
+      Complex.one_re, mul_one, div_eq_mul_inv]
+    rw [mul_comm (γ - 1)⁻¹]
+  have hcal : c = ε ^ 2 / (α + β * ε ^ 2) := by
+    have hz : 0 < 1 + (t * (2 * n + ε ^ 2) - γ) / (γ - 1) :=
+      inv_pos.mp (by rwa [← hnorm])
+    have hclear : (1 + (t * (2 * n + ε ^ 2) - γ) / (γ - 1)) * ε ^ 2 =
+        α + β * ε ^ 2 := by
+      dsimp only [t, α, β]
+      rw [hm]
+      field_simp [hε, hd.ne'] <;> ring
+    rw [hnorm]
+    apply (eq_div_iff (by positivity : α + β * ε ^ 2 ≠ 0)).2
+    rw [← hclear, ← mul_assoc, inv_mul_cancel₀ hz.ne', one_mul]
   obtain ⟨F, hF₀, hF₁, hpay⟩ := hF ε t
-  refine ⟨c, ρ, σ, F, hc, hρ, hσ, hsum, htr, hF₀, hF₁, ?_, ?_⟩
+  refine ⟨c, ρ, σ, F, hc, hcal, hρ, hσ, hsum, htr, hF₀, hF₁, ?_, ?_⟩
   · have hzero : P * Y none = 0 := by
       ext i j
       cases i <;>
@@ -531,42 +591,43 @@ private theorem block_amp (N : QuantumChannel A B) (X : A → Matrix R R ℂ) :
   rw [map_sum]
   exact Finset.sum_congr rfl fun i _ => amp_kronecker N (X i) (Matrix.single i i 1)
 
-/-- For any finite channel, trivial intersection of the output supports of the
-computational basis states implies complete hockey-stick coefficient one at every
-parameter strictly greater than one. The witnesses use a reference of input dimension. -/
-theorem result {I : Type} [Fintype I] [DecidableEq I] [Nonempty B]
+/-- Trivial common basis output support gives equal-marginal states on a fixed reference
+whose input divergence exhausts each sufficiently small positive budget. -/
+theorem exists_budget_witness {I : Type} [Fintype I] [DecidableEq I] [Nonempty B]
     (N : QuantumChannel (Option I) B) (pivot : I) (γ : ℝ) (hγ : 1 < γ)
     (hS : (⨅ i, (act N (Matrix.single i i 1)).mulVecLin.range) = ⊥) :
-    completeCoefficient N γ false = 1 := by
+    ∃ δ D : ℝ, 0 < δ ∧ 0 ≤ D ∧ ∀ a : ℝ, 0 < a → a ≤ δ →
+      ∃ P Q : Matrix (Option I × Option I) (Option I × Option I) ℂ,
+        P.PosSemidef ∧ P.trace = 1 ∧ Q.PosSemidef ∧ Q.trace = 1 ∧
+        ptr P = ptr Q ∧ E γ P Q = a ∧ a / (1 + D * a) ≤ E γ (amp N P) (amp N Q) := by
   let τ (i : Option I) := act N (Matrix.single i i 1)
   have htrτ : (τ none).trace = 1 := by
     exact (N.trace_preserving (CStarMatrix.ofMatrix (Matrix.single (none : Option I) none 1))).trans
       (by change (Matrix.single (none : Option I) none (1 : ℂ)).trace = 1; simp)
-  obtain ⟨C, hC, hWitness⟩ := HockeyStickSupportLinearCore.simplex_witness τ hS htrτ pivot γ hγ
-  have hBound : BddAbove (insert 0 (completeRatios N γ false)) :=
-    ⟨1, fun _ h => ratio_le_one N γ false h⟩
-  have hUpper : completeCoefficient N γ false ≤ 1 :=
-    csSup_le ⟨0, Set.mem_insert _ _⟩ fun _ h => ratio_le_one N γ false h
-  apply le_antisymm hUpper
-  apply le_of_forall_lt_imp_le_of_dense
-  intro t ht
-  have hden : 0 < 1 + C := by linarith
-  let ε : ℝ := min 1 ((1 - t) / (1 + C))
-  have hε : 0 < ε := lt_min zero_lt_one (div_pos (sub_pos.mpr ht) hden)
-  have hε₁ : ε ≤ 1 := min_le_left _ _
-  have hε₂ : ε * (1 + C) ≤ 1 - t :=
-    (le_div_iff₀ hden).mp (min_le_right _ _)
-  have hεC : ε ^ 2 * C ≤ 1 - t := by
-    calc
-      ε ^ 2 * C ≤ ε * C := mul_le_mul_of_nonneg_right (by nlinarith) hC
-      _ ≤ ε * (1 + C) := by nlinarith
-      _ ≤ 1 - t := hε₂
-  have hfac : t ≤ (1 + ε ^ 2 * C)⁻¹ := by
-    have hp : 0 < 1 + ε ^ 2 * C := by positivity
-    rw [← mul_one ((1 + ε ^ 2 * C)⁻¹), le_inv_mul_iff₀ hp]
-    nlinarith [mul_nonneg (sub_nonneg.mpr ht.le) (mul_nonneg (sq_nonneg ε) hC)]
-  obtain ⟨c, ρ, σ, F, hc, hρ, hσ, hsum, htr, hF, hF₁, hinput, hout⟩ :=
+  obtain ⟨α, β, C, hα, hβ, hC, hWitness⟩ :=
+    HockeyStickSupportLinearCore.simplex_witness τ hS htrτ pivot γ hγ
+  have hsum₀ := add_pos hα hβ
+  refine ⟨(α + β)⁻¹, C * (α + β), inv_pos.mpr hsum₀, mul_nonneg hC hsum₀.le, ?_⟩
+  intro a ha hsmall
+  have hbound : (α + β) * a ≤ 1 := by
+    have h : a ≤ 1 / (α + β) := by simpa only [one_div] using hsmall
+    simpa only [mul_comm] using (le_div_iff₀ hsum₀).mp h
+  have hslack : 0 < 1 - β * a := by
+    nlinarith only [hbound, mul_pos hα ha]
+  let ε := Real.sqrt (α * a / (1 - β * a))
+  have hε : 0 < ε := Real.sqrt_pos.mpr (div_pos (mul_pos hα ha) hslack)
+  have hεsq : ε ^ 2 = α * a / (1 - β * a) :=
+    Real.sq_sqrt (div_nonneg (mul_pos hα ha).le hslack.le)
+  have hεmul := (eq_div_iff hslack.ne').mp hεsq
+  have hεle : ε ^ 2 ≤ (α + β) * a := by
+    rw [hεsq, div_le_iff₀ hslack]
+    have h := mul_le_mul_of_nonneg_left hbound (mul_nonneg hβ.le ha.le)
+    nlinarith only [h]
+  obtain ⟨c, ρ, σ, F, _, hcal, hρ, hσ, hsum, htr, hF, hF₁, hinput, hout⟩ :=
     hWitness ε hε.ne'
+  have hca : c = a := by
+    rw [hcal, div_eq_iff (by positivity : α + β * ε ^ 2 ≠ 0)]
+    nlinarith only [hεmul]
   let P := Matrix.blockDiagonal ρ
   let Q := Matrix.blockDiagonal σ
   have hP := block_psd ρ hρ
@@ -600,11 +661,43 @@ theorem result {I : Type} [Fintype I] [DecidableEq I] [Nonempty B]
       simp only [Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im, mul_zero, sub_zero]
     change rtrace (F * (amp N P - γ • amp N Q)) ≤ E γ (amp N P) (amp N Q) at hb
     linarith
-  have hm : E γ (amp N P) (amp N Q) / E γ P Q ∈ completeRatios N γ false := by
-    exact ⟨Option I, inferInstance, inferInstance, P, Q, hP, hPtr, hQ, hQtr, hPQ,
-      by simp, hE ▸ hc, rfl⟩
-  refine hfac.trans ((le_div_iff₀ (hE ▸ hc)).mpr ?_) |>.trans
+  have hden : 0 < 1 + ε ^ 2 * C := by positivity
+  have hdenle : 1 + ε ^ 2 * C ≤ 1 + (C * (α + β)) * a := by
+    nlinarith only [mul_le_mul_of_nonneg_right hεle hC]
+  refine ⟨P, Q, hP, hPtr, hQ, hQtr, hPQ, hE.trans hca, ?_⟩
+  exact (div_le_div_of_nonneg_left ha.le hden hdenle).trans
+    (by simpa only [hca, div_eq_mul_inv] using hpay)
+
+/-- For any finite channel, trivial intersection of the output supports of the
+computational basis states implies complete hockey-stick coefficient one at every
+parameter strictly greater than one. The witnesses use a reference of input dimension. -/
+theorem result {I : Type} [Fintype I] [DecidableEq I] [Nonempty B]
+    (N : QuantumChannel (Option I) B) (pivot : I) (γ : ℝ) (hγ : 1 < γ)
+    (hS : (⨅ i, (act N (Matrix.single i i 1)).mulVecLin.range) = ⊥) :
+    completeCoefficient N γ false = 1 := by
+  obtain ⟨δ, D, hδ, hD, hWitness⟩ := exists_budget_witness N pivot γ hγ hS
+  have hBound : BddAbove (insert 0 (completeRatios N γ false)) :=
+    ⟨1, fun _ h => ratio_le_one N γ false h⟩
+  apply le_antisymm (csSup_le ⟨0, Set.mem_insert _ _⟩ fun _ h => ratio_le_one N γ false h)
+  apply le_of_forall_lt_imp_le_of_dense
+  intro t ht
+  have hD₁ : 0 < 1 + D := by positivity
+  let a := min δ ((1 - t) / (1 + D))
+  have ha : 0 < a := lt_min hδ (div_pos (sub_pos.mpr ht) hD₁)
+  have hscale : a * (1 + D) ≤ 1 - t :=
+    (le_div_iff₀ hD₁).mp (min_le_right _ _)
+  have hden : 0 < 1 + D * a := by positivity
+  have hfac : t ≤ (1 + D * a)⁻¹ := by
+    rw [← one_div, le_div_iff₀ hden]
+    have hDa : D * a ≤ 1 - t := by nlinarith only [hscale, ha.le]
+    nlinarith only [hDa, mul_nonneg (sub_nonneg.mpr ht.le) (mul_nonneg hD ha.le)]
+  obtain ⟨P, Q, hP, hPt, hQ, hQt, hPQ, hE, hpay⟩ :=
+    hWitness a ha (min_le_left _ _)
+  have hx : 0 < E γ P Q := hE.symm ▸ ha
+  have hm : E γ (amp N P) (amp N Q) / E γ P Q ∈ completeRatios N γ false :=
+    ⟨Option I, inferInstance, inferInstance, P, Q, hP, hPt, hQ, hQt, hPQ, by simp, hx, rfl⟩
+  refine hfac.trans ((le_div_iff₀ hx).mpr ?_) |>.trans
     (le_csSup hBound (Set.mem_insert_of_mem _ hm))
-  simpa [hE, mul_comm] using hpay
+  simpa only [hE, div_eq_mul_inv, mul_comm a] using hpay
 
 end D5.S3.Quantum.Divergence.CompleteHockeyStickBasisSupport

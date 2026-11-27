@@ -49,7 +49,7 @@ def signedAdj {n : ℕ} (G : SimpleGraph (Fin n)) (σ : Sym2 (Fin n) → Bool) :
     Matrix (Fin n) (Fin n) ℝ := fun i j =>
   if G.Adj i j then (if σ s(i,j) then 1 else -1) else 0
 
-private theorem signed_hermitian {n : ℕ} (G : SimpleGraph (Fin n))
+theorem signed_hermitian {n : ℕ} (G : SimpleGraph (Fin n))
     (σ : Sym2 (Fin n) → Bool) : (signedAdj G σ).IsHermitian := by
   apply Matrix.isHermitian_iff_isSymm.mpr
   ext i j

@@ -28,8 +28,7 @@ open Q9LaurentGainPartition (Side)
 open Q9LaurentCommonTriple (Axes inside outside fiber star UniqueCommonNeighbor)
 open Q9ProjectedHeightCompatibility (Point HasBoxHeight occupiedSlices sameBox inBox)
 open Q6TwoBlockRigidity (Q3Side q3_side_card)
-open private star_card from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Laurent.Q9LaurentCommonTriple
+open Q9LaurentCommonTriple (star_card)
 open private cubeParity from
   D5.S3.Combinatorics.Graph.HypercubeSubQuorum
 
@@ -211,8 +210,7 @@ open Q9ProjectedHeightCompatibility (Point HasBoxHeight inBox)
 open Q9RealizedProjection (sliceIndex no_mixed_of_transverse_components)
 open private flip_parity from
   D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Q9LaurentGainPartition
-open private mem_transverseSide from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Laurent.Q9LaurentTransverseFibers
+
 
 set_option maxHeartbeats 2000000 in
 -- The proof combines dependent parity subtypes, normalized charts, and the box realization.
@@ -313,8 +311,7 @@ open Finset
 open BalancedCriticalSpectrum (Q)
 open Q9IsotropicHuang (parity)
 open Q9LaurentGainPartition (Side)
-open private star_card from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Laurent.Q9LaurentCommonTriple
+open Q9LaurentCommonTriple (star_card)
 
 open scoped Classical in
 /-- Every occupied complementary fiber has exactly three vertices, so the
@@ -424,8 +421,7 @@ open Q9IsotropicHuang (parity)
 open Q9LaurentGainPartition (Side Exponent LaurentIdentity)
 open Q9LaurentCommonTriple (Axes commonAxes outside exists_projected_exponent)
 open Q9ProjectedHeightCompatibility (Point HasBoxHeight inBox sameBox)
-open private mem_transverseSide from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Laurent.Q9LaurentTransverseFibers
+
 
 open scoped Classical in
 /-- A constant direction partition, written as the first normalized split,
@@ -522,12 +518,6 @@ theorem card_selected_eq_twentySeven_of_uniform_partition {C : Finset (Q 9)} {b 
   rw [Q9LaurentCommonTriple.card_selected_eq_three_mul_card_projection hCommon]
   change 3 * projected.card = 27
   rw [hcard]
-
-open private exists_third_block from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Laurent.Q9LaurentDirectionTypes
-
-open private exists_other from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Laurent.Q9LaurentNormalizedBoxes
 
 private theorem exists_companion_partition {P : Partition} {S : Block}
     (hP : IsTriplePartition P) (hS : S ∈ P) :

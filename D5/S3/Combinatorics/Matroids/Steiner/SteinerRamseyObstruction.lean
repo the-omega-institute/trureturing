@@ -190,7 +190,7 @@ private noncomputable def starts {L A : Type*} [Mul L] [AddCommGroup A]
     (e p q : L) (labels : Set L → A) : Set (L × A) :=
   {z | (liftedStep e p q labels)^[2] z ≠ z}
 
-private theorem improve {L A : Type*} [Finite L] [Finite A] [Mul L]
+theorem improve {L A : Type*} [Finite L] [Finite A] [Mul L]
     [AddCommGroup A] [Module (ZMod 2) A] [Nontrivial A]
     (G : SimpleGraph L) (e p q x : L) (labels : Set L → A)
     (unit : ∀ x, e * x = x) (comm : ∀ x y : L, x * y = y * x)
@@ -280,7 +280,7 @@ noncomputable def switchCount {L A : Type*} [Mul L] [AddCommGroup A]
   letI := extensionMul e labels
   ({x : L × A | (q, 0) * ((p, 0) * x) ≠ (p, 0) * ((q, 0) * x)} : Set (L × A)).ncard
 
-private theorem switchCount_eq {L A : Type*} [Mul L] [AddCommGroup A] [Module (ZMod 2) A]
+theorem switchCount_eq {L A : Type*} [Mul L] [AddCommGroup A] [Module (ZMod 2) A]
     (e p q : L) (labels : Set L → A)
     (unit : ∀ x, e * x = x) (comm : ∀ x y : L, x * y = y * x)
     (invol : ∀ x y : L, x * (x * y) = y) (centre : Set.center L = {e}) :
