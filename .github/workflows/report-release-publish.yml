@@ -1,0 +1,75 @@
+name: Report Release Publish
+
+on:
+  workflow_run:
+    workflows: ['Cache Release Publish']
+    branches: [dev]
+    types: [completed]
+  schedule:
+    - cron: '23 */6 * * *'
+  workflow_dispatch:
+    inputs:
+      shard_mib:
+        description: Compressed capacity per module shard in MiB
+        required: false
+        type: number
+        default: 256
+
+permissions: {}
+concurrency:
+  group: >-
+    ${{ github.ref == 'refs/heads/dev' && github.ref_protected &&
+    ((github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success' &&
+      github.event.workflow_run.head_repository.full_name == github.repository) ||
+     github.event_name == 'schedule' ||
+     (github.event_name == 'workflow_dispatch' && github.actor == 'loning' && github.triggering_actor == 'loning')) &&
+    'lean-report-generation-publisher-v1' || format('lean-report-skipped-{0}', github.run_id) }}
+  cancel-in-progress: false
+  # A retry keeps its original source and must leave the newest pending event in the queue.
+  queue: ${{ github.run_attempt > 1 && 'max' || 'single' }}
+
+jobs:
+  pin:
+    if: >-
+      github.ref == 'refs/heads/dev' && github.ref_protected &&
+      ((github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success' &&
+        github.event.workflow_run.head_repository.full_name == github.repository) ||
+       github.event_name == 'schedule' ||
+       (github.event_name == 'workflow_dispatch' && github.actor == 'loning' && github.triggering_actor == 'loning'))
+    runs-on: ubuntu-24.04-arm
+    permissions:
+      contents: read
+      actions: read
+    outputs:
+      source: ${{ steps.pin.outputs.source }}
+      already_published: ${{ steps.pin.outputs.already_published }}
+      superseded: ${{ steps.pin.outputs.superseded }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.workflow_sha }}
+          sparse-checkout-cone-mode: false
+          sparse-checkout: /.github/actions/lean-cache-shards/pin-source.py
+          persist-credentials: false
+      - id: pin
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 .github/actions/lean-cache-shards/pin-source.py --published compiler --skip-published report
+      - if: steps.pin.outputs.upload == 'true'
+        uses: actions/upload-artifact@v6
+        with:
+          name: generation-pin-${{ github.run_id }}
+          path: ${{ runner.temp }}/pin/source
+
+  publish:
+    needs: pin
+    if: needs.pin.outputs.source != '' && needs.pin.outputs.superseded != 'true'
+    permissions:
+      contents: write
+      actions: read
+    uses: ./.github/workflows/ci-lean-module-publication.yml
+    with:
+      already_published: ${{ needs.pin.outputs.already_published == 'true' }}
+      kind: report
+      source: ${{ needs.pin.outputs.source }}
+      shard_mib: ${{ inputs.shard_mib || fromJSON(vars.LEAN_MODULE_SHARD_MIB || '256') }}

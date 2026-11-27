@@ -1,0 +1,1 @@
+{"statement_id":"sha256:ee6b1937c3f8438c85858309b646c887f44c8538fa01be682ef341c3e5ab6b26","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),8:Topology),27:CofaceComparisonObstruction),30:exists_small_infeasible_family)","kind":"theorem","libraries":["Batteries","Init","Lean","Mathlib"],"axioms":["Classical.choice","Quot.sound","propext"]}]}
