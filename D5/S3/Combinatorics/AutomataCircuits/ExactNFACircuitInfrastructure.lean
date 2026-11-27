@@ -80,7 +80,10 @@ Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issu
 -/
 
 import D5.S3.Observer.Separation.BooleanRankThreeK4
+import Mathlib.Computability.NFA
 import Mathlib.LinearAlgebra.AffineSpace.AffineMap
+import Mathlib.RingTheory.MvPolynomial.Groebner
+import Mathlib.RingTheory.MvPolynomial.MonomialOrder.DegLex
 
 /-! Exact automata and polynomial obstructions for sparse languages. -/
 

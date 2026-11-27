@@ -58,6 +58,8 @@ sum_fields_by_kind: proof_shape=bind-only; consumers=KingDifference.count_by_kin
 count_by_kind: proof_shape=bind-only; consumers=KingClosedForm.closed_form,KingClosedForm.width_three,KingClosedForm.width_two
 -/
 import D5.S3.StatisticalMechanics.Potts.KingDefects.KingGrid
+import Mathlib.GroupTheory.Nilpotent
+import Mathlib.GroupTheory.SpecificGroups.Cyclic
 import Mathlib.GroupTheory.SpecificGroups.KleinFour
 import Mathlib.Algebra.BigOperators.Fin
 import Mathlib.Algebra.BigOperators.Group.List.Basic

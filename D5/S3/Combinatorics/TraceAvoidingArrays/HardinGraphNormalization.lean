@@ -46,6 +46,7 @@ connected_count: proof_shape=content; consumers=HardinThinGraphTransport.normali
 The numerical sum helpers are consumed by the connected theorem and its actual strips.
 -/
 
+import Mathlib.Data.Fintype.CardEmbedding
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip
 import Mathlib.Combinatorics.SimpleGraph.Coloring.Vertex
 import Mathlib.Tactic.IntervalCases

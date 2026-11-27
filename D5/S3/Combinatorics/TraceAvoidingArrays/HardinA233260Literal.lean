@@ -6,6 +6,7 @@
    utility: kind=numeric-reduction; basis=consumer=D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233260Literal.result; premises=D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233260Literal.counting_bridge
    digest: Literal five-row antidiagonal arrays and their exact complementary-pair count. -/
 
+import Mathlib.Data.List.ChainOfFn
 import D5.S3.Observer.Separation.BooleanRankThreeK4
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical

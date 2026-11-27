@@ -110,6 +110,7 @@ distribution_relation: proof_shape=bind-only; consumers=result
 result: proof_shape=bind-only; consumers=terminal result (#28572)
 -/
 
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233253TriangleStrip
