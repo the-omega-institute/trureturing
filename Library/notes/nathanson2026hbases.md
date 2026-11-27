@@ -5,9 +5,10 @@ year: 2026
 title: "Problems in additive number theory, VII: The structure of additive h-bases for n"
 doi: null
 url: https://arxiv.org/abs/2605.26425v3
-claim: "Problem 12 asks whether negative elements force ell_h(A) <= n-flat_h(k), or even the strict inequality ell_h(A) < n-flat_h(k)."
+claim: "Problem 12 asks whether negative elements force ell_h(A) <= n-flat_h(k), or even the strict inequality ell_h(A) < n-flat_h(k). Problem 15 asks which prescribed intervals can occur in an iterated sumset, and how many generators suffice."
 strata_touched:
   - D5/S3/Arith/NathansonAdditiveHBasisRefutation
+  - D5/S3/Arith/Additive/NathansonProblem15
 license: citation-only
 triage: anchor
 ---
@@ -31,9 +32,18 @@ The reflection example on printed page 7 gives `B={-1,1,2}` and
 `2B={-2,0,1,2,3,4}`. The source uses this set to illustrate reflection of
 interval bases, not as a stated answer to Problem 12.
 
+Problem 15 asks for a finite integer set whose `h`-fold sumset contains
+intervals of length `n+1` exactly at the prescribed starts and whose consecutive
+pairs all lie within one of those prescribed intervals. The starts are ordered
+with consecutive differences at least `N_q ≥ n+2`, where `h,q ≥ 2` and `n ≥ 1`.
+It also asks for the size of the witnessing set. The bound `2q(n+1)` is the
+formal result's estimate. Theorem 7 concerns one prescribed interval for `h=2`.
+
 ## Verified locator
 
 - Source: https://arxiv.org/abs/2605.26425v3
 - Definitions of `hA`, additive `h`-basis, and `ell_h(A)`: printed page 2.
 - Definition of `n-flat_h(k)`: printed pages 7-8.
 - Problem 12: printed page 9.
+- Problem 15: §5, https://arxiv.org/html/2605.26425v3#Thmproblem15
+- Theorem 7: §5, https://arxiv.org/html/2605.26425v3#Thmtheorem7
