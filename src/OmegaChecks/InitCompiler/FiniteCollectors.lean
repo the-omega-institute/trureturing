@@ -6,6 +6,7 @@ import Init.Data.Iterators.Consumers.Access
 import Init.Data.Iterators.Consumers.Collect
 import Init.Data.Iterators.Consumers.Total
 import Init.Data.Slice.Operations
+import all Init.Data.String.Iter.Intercalate
 
 /-! Use the terminating consumer at collection sites with an available finite instance.
 The source kernel checks the complete replacement by definitional equality. -/
@@ -16,6 +17,8 @@ open Lean Meta
 private def pureCollectors := [``Std.Iter.toArray, ``Std.Iter.toList, ``Std.Iter.toListRev]
 private def monadicCollectors := [``Std.IterM.toArray, ``Std.IterM.toList, ``Std.IterM.toListRev]
 private def sliceCollectors := [``Std.Slice.toArray, ``Std.Slice.toList, ``Std.Slice.toListRev]
+
+private def stringFolds := [``Std.Iter.joinString, ``Std.Iter.intercalateString]
 
 private def isDefaultLoopAlias (env : Environment) (name : Name) : Bool :=
   match env.find? name with
@@ -55,14 +58,24 @@ public def finiteCollectors (env : Environment) (input : Expr) (withinImplementa
     (!aliases.isEmpty || used.contains ``Std.IteratorLoop.defaultImplementation ||
       used.contains ``Std.IterM.DefaultConsumers.forIn')
   let patterns := InitPort.PatternMatch.rules.filter fun rule => used.contains rule.original && env.contains rule.helper
-  unless hasLoop || !patterns.isEmpty || used.any (fun n => (consumerArity? n).isSome) do return input
+  let hasStringFold := used.any stringFolds.contains
+  unless hasLoop || hasStringFold || !patterns.isEmpty || used.any (fun n => (consumerArity? n).isSome) do return input
   let rewrite : MetaM Expr := Meta.transform input (pre := fun sub => do
     if hasLoop then
       if let some call ← InitPort.LawfulLoop.specialize? sub then return .done call
     let some head := sub.getAppFn.constName? | return .continue
+    -- Both string consumers fold a mapped iterator. Expose the fold only when the
+    -- caller supplies finiteness, so the mapped iterator can select a terminating loop.
+    if stringFolds.contains head then
+      let args := sub.getAppArgs
+      let arity := if head == ``Std.Iter.joinString then 5 else 6
+      if args.size == arity then
+        let finite ← mkAppOptM ``Std.Iterators.Finite #[args[0]!, none, args[1]!, args[2]!]
+        if (← synthInstance? finite).isSome then
+          if let some fold ← unfoldDefinition? sub then return .visit fold
     -- A generic searcher can revisit a position. At concrete uses of the same
     -- instance, the iterator may supply a proof that its traversal is finite.
-    if hasLoop && aliases.contains head then
+    if (hasLoop && aliases.contains head) || (hasStringFold && isDefaultLoopAlias env head) then
       if let some core ← unfoldDefinition? sub then
         if let some loop ← InitPort.LawfulLoop.specializeFiniteDefault? core then return .done loop
     if let some rule := patterns.find? (·.original == head) then

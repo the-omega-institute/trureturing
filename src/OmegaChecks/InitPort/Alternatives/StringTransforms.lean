@@ -20,10 +20,17 @@ import all Init.Data.Char.Basic
 import Init.Data.UInt.Lemmas
 import all Init.Data.String.Modify
 import all Init.Data.String.Lemmas.Intercalate
+import all Init.Data.String.Lemmas.Iter
 
 /-! Character traversal, cursor membership, mapping and intercalation. -/
 
 namespace OmegaChecks.InitPort.Alternatives
+
+public theorem Std.Iter.joinString_eq : type_of% @_root_.Std.Iter.joinString_eq := by
+  intro α β inst finite display it
+  exact (_root_.Std.Iter.foldl_toList (it := it.map toString) (init := "")
+    (f := fun a b : String => a ++ b)).symm.trans
+    (congrArg _root_.String.join (_root_.Std.Iter.toList_map (it := it) (f := toString)))
 
 public theorem Char.toLower._proof_1 : type_of% @_root_.Char.toLower._proof_1 := by
   intro c h
