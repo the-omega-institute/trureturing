@@ -8,6 +8,7 @@
 module
 public import OmegaMath.Combinatorics.Turnpike.PrunedTriangleLP
 public import Mathlib.Data.Fin.VecNotation
+public import Mathlib.Algebra.BigOperators.Fin
 
 /-! The numerical relation and marginal system are from Elder, Marçais and
 Kingsford, WABI 2026, Proposition 10 and System 11 (CC BY 4.0).
@@ -267,7 +268,7 @@ private theorem coupling_marginal (τ : {τ : Triangle 9 // spine τ}) (u : Fin 
   classical
   rw [coupling, weightedAtoms_marginal]
   have h := congrArg (fun z : ℕ => (z : ℝ) / 62) (raw_marginals τ.1 τ.2 u q)
-  simpa [weight,support,assignment,Nat.cast_sum,Finset.sum_div] using h
+  simpa [weight,support,assignment,Nat.cast_sum,Finset.sum_div,ite_div] using h
 
 private theorem spine_feasible : assignment ∈ PrunedProjection y μ spine := by
   classical
@@ -1335,8 +1336,10 @@ private theorem cut_678_12 : ∀ a b : Fin 20,
 private theorem cut_checks (τ : Triangle 9) (u v w : Fin 3)
     (huv : u < v) (hwu : w ≠ u) (hwv : w ≠ v) (a b : Fin 20) :
     CutCheck τ u v w a b := by
-  fin_cases u <;> fin_cases v <;> fin_cases w <;>
-    norm_num at huv hwu hwv ⊢
+  fin_cases u <;> fin_cases v <;> fin_cases w
+  all_goals try norm_num at huv
+  all_goals try norm_num at hwu
+  all_goals try norm_num at hwv
   all_goals fin_cases τ
   · exact cut_012_01 a b
   · exact cut_013_01 a b
@@ -1614,7 +1617,7 @@ private theorem singleton_cuts : SingletonCuts y μ assignment := by
       exact ⟨rr,h.2.2.1,h.2.2.2.1,h.2.2.2.2.1,rfl⟩
     have hs : assignment (edge τ w) (coordinate w r) ≤
         ∑ c ∈ Completion y μ τ u v w a b, assignment (edge τ w) c :=
-      Finset.single_le_sum (fun c _ => (domain.1.1 _ _).1) hc
+      Finset.single_le_sum (fun c _ => (domain.1.1 (edge τ w) c).1) hc
     have hh : assignment (edge τ u) a + assignment (edge τ v) b ≤
         1 + assignment (edge τ w) (coordinate w r) := by
       dsimp [assignment]
@@ -1639,7 +1642,7 @@ private theorem observation_marginal {α : Type*} [Fintype α]
       ∑ q, if o q = true then if f r = q then T r else 0 else 0 := by
     intro r
     symm
-    apply Finset.sum_eq_single (f r)
+    rw [Finset.sum_eq_single (f r)]
     · simp
     · intro b _ hb
       simp [Ne.symm hb]
@@ -1665,7 +1668,9 @@ private theorem not_full : assignment ∉ PrunedProjection y μ full := by
       obsB r.1.2.1 = true → obsC r.1.2.2 = true := by
     intro r ha hb
     apply hf r.1.1 r.1.2.1 r.1.2.2 _ ha hb
-    exact_mod_cast r.2.1
+    have hr := r.2.1
+    change (values r.1.1 : ℝ) + values r.1.2.1 = values r.1.2.2 at hr
+    exact_mod_cast hr
   have h := coupling_separator (fun r : Relation y μ => obsC r.1.2.2)
     (fun r => obsA r.1.1) (fun r => obsB r.1.2.1) true true true
     (T ⟨τ,trivial⟩) (fun r => (hb r).1) hn forced
