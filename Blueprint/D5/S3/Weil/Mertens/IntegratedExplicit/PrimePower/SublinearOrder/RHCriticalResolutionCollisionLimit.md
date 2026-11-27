@@ -27,7 +27,4 @@ The classical pair-correlation conjecture would supply the upper bound on these 
 ## References
 
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/PrimePower/SublinearOrder/RHCriticalResolutionCollisionLimit.harmonic_zeta_critical_collision_limit`
-- Dependency: [D5/S3/Analytic/Oscillation/MontgomeryWindow](../../../../../Analytic/Oscillation/MontgomeryWindow.md)
-- Dependency: [D5/S3/Weil/Mertens/IntegratedExplicit/PrimePower/SublinearOrder/OmittedSpectrumCutoff](OmittedSpectrumCutoff.md)
-- Dependency: [D5/S3/Weil/Mertens/IntegratedExplicit/PrimePower/SublinearOrder/RHLogarithmicCollisionLimit](RHLogarithmicCollisionLimit.md)
-- Dependency: [D5/S3/Weil/ZetaExplicit/LandauUniformCutoff](../../../../ZetaExplicit/LandauUniformCutoff.md)
+- Dependency: [D5/S3/Weil/Mertens/IntegratedExplicit/PrimePower/SublinearOrder/RHCriticalPairSumThreshold](RHCriticalPairSumThreshold.md)

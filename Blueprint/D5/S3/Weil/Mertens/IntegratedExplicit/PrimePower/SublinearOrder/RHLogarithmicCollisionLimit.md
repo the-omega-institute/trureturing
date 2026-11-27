@@ -32,5 +32,5 @@ Gonek's uniform Landau formula supplies the assumed envelope at the literature l
 - Dependency: [D5/S3/Fourier/Asymptotics/MovingFejerGaussianPrincipal](../../../../../Fourier/Asymptotics/MovingFejerGaussianPrincipal.md)
 - Dependency: [D5/S3/Fourier/Concentration/FejerCollisionLimit](../../../../../Fourier/Concentration/FejerCollisionLimit.md)
 - Dependency: [D5/S3/Fourier/Concentration/FejerRelativeLocalization](../../../../../Fourier/Concentration/FejerRelativeLocalization.md)
-- Dependency: [D5/S3/Weil/Mertens/IntegratedExplicit/PrimePower/SublinearOrder/RHLandauWindowTransfer](RHLandauWindowTransfer.md)
+- Dependency: [D5/S3/Weil/Mertens/IntegratedExplicit/PrimePower/SublinearOrder/RHLogarithmicAnnulusDecay](RHLogarithmicAnnulusDecay.md)
 - Dependency: [D5/S3/Weil/Mertens/IntegratedExplicit/PrimePower/SublinearOrder/RHPeriodicPhaseCoverage](RHPeriodicPhaseCoverage.md)
