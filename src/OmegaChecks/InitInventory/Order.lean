@@ -339,6 +339,20 @@ theorem strictOfReverseWeak : (type_of% @Order.lt_eq_false_of_le.{0}) ↔ Refute
   · intro canon α _ _ _ _ a b h
     exact canon _ fun k => ((LawfulOrderLT.lt_iff b a).mp k).2 h
 
+/-- The three pinned rules together identify equivalent propositions. The
+comparison supplies the case split, and the two tags identify each case. -/
+theorem propextFromOrderRules (compare : type_of% @Order.le_of_not_lt.{0})
+    (positive : type_of% @Order.le_eq_true.{0}) (negative : type_of% @Order.lt_eq_false.{0}) :
+    type_of% @propext := by
+  intro p q equiv
+  cases GrindOrder.excludedMiddleFromComparison (@compare) p with
+  | inl hp =>
+    have normalize := weakRefl.mp (@positive)
+    exact (normalize p hp).trans (normalize q (equiv.mp hp)).symm
+  | inr np =>
+    have normalize := strictRefl.mp (@negative)
+    exact (normalize p np).trans (normalize q (fun hq => np (equiv.mpr hq))).symm
+
 /-- Each full rule is equivalent at the small universe to the indicated
 truth-value normalization. Neither normalization is marked as a forbidden axiom. -/
 def equivalences : List (Name × Name × Name) := [
