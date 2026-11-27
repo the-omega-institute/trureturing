@@ -1,6 +1,9 @@
 module
 public import Init.Data.Iterators.Lemmas.Consumers.Access
 import Init.Data.Iterators.Lemmas.Consumers.Loop
+import Init.Data.Iterators.Lemmas.Monadic.Basic
+import Init.Data.Iterators.Lemmas.Basic
+import Init.Data.Iterators.Lemmas.Consumers.Collect
 import all Init.Data.Iterators.Consumers.Total
 public import Init.Data.Iterators.Consumers.Access
 import all Init.Data.Iterators.Consumers.Monadic.Loop
@@ -43,6 +46,98 @@ public theorem Std.Iter.forIn_eq : type_of% @_root_.Std.Iter.forIn_eq := by
   intro α β iter finite m mm laws i h γ it init f
   exact h.lawful (fun _ _ g x => g x.run) γ it.toIterM init (fun _ _ _ => True)
     IteratorLoop.wellFounded_of_finite (fun b _ c => do return ⟨← f b c, trivial⟩)
+
+private def foldWith {α β : Type w} [Iterator α Id β] [Finite α Id] {γ : Type x}
+    (f : γ → β → γ) (it : IterM (α := α) Id β) (init : γ)
+    (P : β → Prop) (hp : ∀ b, it.IsPlausibleIndirectOutput b → P b) : γ :=
+  IterM.DefaultConsumers.forIn'.wf (n := Id) (fun _ _ g x => g x.run) γ (fun _ _ _ => True)
+    IteratorLoop.wellFounded_of_finite it init P hp (fun b _ c => ⟨.yield (f c b), trivial⟩)
+
+private theorem foldWith_congr {α β : Type w} [Iterator α Id β] [Finite α Id] {γ : Type x}
+    (f : γ → β → γ) (it : IterM (α := α) Id β) (init : γ)
+    (P Q : β → Prop) (hp : ∀ b, it.IsPlausibleIndirectOutput b → P b)
+    (hq : ∀ b, it.IsPlausibleIndirectOutput b → Q b) :
+    foldWith f it init P hp = foldWith f it init Q hq := by
+  induction it using IterM.inductSteps generalizing init with
+  | step it ihy ihs =>
+    unfold foldWith
+    rw [IterM.DefaultConsumers.forIn'.wf.eq_def, IterM.DefaultConsumers.forIn'.wf.eq_def]
+    dsimp only
+    cases it.step.run.inflate using PlausibleIterStep.casesOn
+    · apply ihy <;> assumption
+    · apply ihs <;> assumption
+    · rfl
+
+private theorem fold_eq_foldWith {α β : Type w} [Iterator α Id β] [Finite α Id]
+    {γ : Type x} [IteratorLoop α Id Id.{x}] [LawfulIteratorLoop α Id Id.{x}]
+    (f : γ → β → γ) (it : Iter (α := α) β) (init : γ) :
+    it.fold f init = foldWith f it.toIterM init (fun _ => True) (fun _ _ => trivial) := by
+  rw [Iter.fold_eq_forIn, Iter.forIn_eq, IterM.DefaultConsumers.forIn'_eq_wf (wf := IteratorLoop.wellFounded_of_finite)]
+  exact foldWith_congr f it.toIterM init _ _ _ _
+
+public theorem Std.Iter.fold_eq_match_step : type_of% @_root_.Std.Iter.fold_eq_match_step := by
+  intro α β γ iter finite loop lawful f init it
+  rw [fold_eq_foldWith]
+  unfold foldWith
+  rw [IterM.DefaultConsumers.forIn'.wf.eq_def]
+  dsimp only [Iter.step]
+  cases it.toIterM.step.run.inflate using PlausibleIterStep.casesOn
+  · rename_i next out h
+    exact (fold_eq_foldWith (α := α) f next.toIter (f init out)).symm
+  · rename_i next h
+    exact (fold_eq_foldWith (α := α) f next.toIter init).symm
+  · rfl
+
+public theorem Std.Iter.length_eq_fold.{w} : type_of% @_root_.Std.Iter.length_eq_fold.{w} := by
+  intro α β iter finite i1 h1 i2 h2 it
+  rw [Iter.length_eq_length_toIterM, IterM.length_eq_fold, ← Iter.fold_eq_fold_toIterM]
+  exact (Iter.fold_hom (it := it) (f := ULift.down)
+    (g₁ := fun (n : ULift.{w} Nat) (_ : β) => ULift.up (n.down + 1))
+    (g₂ := fun (n : Nat) (_ : β) => n + 1) (init := ULift.up 0) (fun _ _ => rfl)).symm
+public theorem Std.Iter.foldl_toList : type_of% @_root_.Std.Iter.foldl_toList := by
+  intro α β γ iter finite loop lawful f init it
+  induction it using Iter.inductSteps generalizing init with
+  | step it ihy ihs =>
+    rw [Iter.toList_eq_match_step, Iter.fold_eq_match_step]
+    cases it.step using PlausibleIterStep.casesOn
+    · apply ihy <;> assumption
+    · apply ihs <;> assumption
+    · rfl
+public theorem Std.Iter.foldl_toArray : type_of% @_root_.Std.Iter.foldl_toArray := by
+  intro α β γ iter finite loop lawful f init it
+  rw [← Iter.toArray_toList, List.foldl_toArray]
+  exact Std.Iter.foldl_toList
+public theorem Std.Iter.toList_eq_fold : type_of% @_root_.Std.Iter.toList_eq_fold := by
+  intro α β iter finite loop lawful it
+  rw [← Std.Iter.foldl_toList]
+  rw [List.foldl_append_eq_append, List.nil_append]
+  induction it.toList with
+  | nil => rfl
+  | cons x xs ih => exact congrArg (List.cons x) ih
+
+private theorem countFold {β : Type w} (xs : List β) (n : Nat) :
+    xs.foldl (fun (a : ULift.{w} Nat) _ => ULift.up (a.down + 1)) (.up n) = .up (n + xs.length) := by
+  induction xs generalizing n with
+  | nil => rfl
+  | cons x xs ih =>
+    exact (ih (n+1)).trans (congrArg ULift.up ((Nat.succ_add n xs.length).trans (Nat.add_succ n xs.length).symm))
+public theorem Std.Iter.length_toList_eq_length.{w} : type_of% @_root_.Std.Iter.length_toList_eq_length.{w} := by
+  intro α β iter finite loop lawful it
+  rw [Iter.length_eq_length_toIterM, IterM.length_eq_fold, ← Iter.fold_eq_fold_toIterM, ← Std.Iter.foldl_toList]
+  exact (Nat.zero_add _).symm.trans (congrArg ULift.down (countFold it.toList 0)).symm
+public theorem Std.Iter.length_eq_match_step.{w} : type_of% @_root_.Std.Iter.length_eq_match_step.{w} := by
+  intro α β iter finite loop lawful it
+  rw [← Std.Iter.length_toList_eq_length, Iter.toList_eq_match_step]
+  cases it.step using PlausibleIterStep.casesOn
+  · rename_i next out h
+    exact congrArg Nat.succ (@Std.Iter.length_toList_eq_length _ _ _ _ _ _ next)
+  · rename_i next h
+    exact @Std.Iter.length_toList_eq_length _ _ _ _ _ _ next
+  · rfl
+public theorem Std.Iter.size_toArray_eq_length : type_of% @_root_.Std.Iter.size_toArray_eq_length := by
+  intro α β iter finite loop lawful it
+  rw [← Iter.toArray_toList, List.size_toArray]
+  exact Std.Iter.length_toList_eq_length
 
 private noncomputable def finiteForIn {α β : Type w} {m : Type w → Type w'} [Iterator α m β] [Finite α m]
     {n : Type x → Type x'} [Monad n] (lift : ∀ γ δ, (γ → n δ) → m γ → n δ)
