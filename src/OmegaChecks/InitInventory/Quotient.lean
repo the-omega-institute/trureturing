@@ -33,6 +33,16 @@ public theorem soundOfPairCoherence
     type_of% @_root_.Quot.sound.{u} :=
   fun {α r a b} related => congrArg PSigma.fst (@coherent α r a b related)
 
+/-- Restrict the public theorem to the constant unit family. Its transport
+premise then holds by reflexivity for every pair of related representatives. -/
+public theorem soundFromUnitCoherence
+    (law : ∀ {α : Sort u} {r : α → α → Prop},
+      (∀ (a b : α), r a b → () = ()) → ∀ (a b : α), r a b →
+        Quot.indep (motive := fun _ : Quot r => Unit) (fun _ => ()) a =
+          Quot.indep (motive := fun _ : Quot r => Unit) (fun _ => ()) b) :
+    type_of% @_root_.Quot.sound.{u} :=
+  soundOfPairCoherence fun a b related => law (fun _ _ _ => rfl) a b related
+
 public theorem setoidSoundOfPairCoherence
     (coherent : ∀ {α : Sort u} {s : Setoid α} (a b : α), s.r a b →
       Quot.indep (motive := fun _ : Quotient s => Unit) (fun _ => ()) a =

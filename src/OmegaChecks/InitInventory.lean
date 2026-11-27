@@ -445,9 +445,6 @@ private def conditionalConsequence? (owner name : Name) : Option (String × Name
     if name == ``ShareCommon.Object.ptrHash then
       return ("False", ``OmegaChecks.InitBoundaries.PointerObservations.objectPointerHash,
         "Pointer hashes distinguish two simultaneously live NonScalar objects with the same Nat field")
-  if owner == `Init.Core && name == ``Quot.indepCoherent then
-    return ((``Quot.sound).toString, ``OmegaChecks.InitBoundaries.HeterogeneousQuotient.soundOfPairCoherence,
-      "The unit motive satisfies the original transport premise by reflexivity and yields equality of the pairs of any two related representatives")
   if owner == `Init.Core && name == ``Quot.liftIndepPr1 then
     return ((``Quot.sound).toString, ``OmegaChecks.InitBoundaries.HeterogeneousQuotient.soundOfPairCoherence,
       "The lift in the original result requires pair coherence for every motive, including the unit motive")

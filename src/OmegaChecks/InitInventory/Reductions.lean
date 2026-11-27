@@ -56,6 +56,7 @@ universe u v w z
 /-- Physical public definition sites with a checked reduction from the original type.
 The target universe parameters are a suffix of the witness parameters. -/
 def reductions : List (Name × Name × Name × Name) := [
+  (`Init.Core, `Quot.indepCoherent, `Quot.sound, ``HeterogeneousQuotient.soundFromUnitCoherence),
   (`Init.Classical, `Classical.choose, `Classical.choice, ``choiceFromChoose),
   (`Init.Classical, `Exists.choose, `Classical.choice, ``choiceFromExistsChoose),
   (`Init.Classical, `Classical.epsilon, `Classical.choice, ``choiceFromEpsilon),
@@ -213,6 +214,19 @@ private abbrev agreesOnEquivalentProps (port reference : type_of% @instDecidable
   ∀ (p q : Prop) (h : p ↔ q),
     @decide (p = q) (@port p q (.isTrue h)) = @decide (p = q) (@reference p q (.isTrue h))
 
+/-- Keep the type and relation arbitrary while instantiating the next two
+arguments of the pinned declaration with the unit family and its element. -/
+private def unitCoherenceType (source : ConstantInfo) (u : Level) : MetaM Expr := do
+  let type := source.type.instantiateLevelParams source.levelParams [u, .succ .zero]
+  Meta.forallBoundedTelescope type (some 2) fun params rest => do
+    let #[α, r] := params | throwError "missing quotient parameters"
+    let quot := mkApp2 (mkConst `Quot [u]) α r
+    let family := Expr.lam `q quot (mkConst `Unit) .default
+    let value := Expr.lam `a α (mkConst `Unit.unit) .default
+    let .forallE _ _ next _ := rest | throwError "missing quotient motive"
+    let .forallE _ _ law _ := next.instantiate1 family | throwError "missing quotient function"
+    Meta.mkForallFVars params (law.instantiate1 value)
+
 run_cmd
   let env ← getEnv
   let mut seen := Std.HashSet.emptyWithCapacity
@@ -224,7 +238,7 @@ run_cmd
       | throwError "missing definition site {owner}/{name}"
     -- Several compiler axioms have constructively inhabited types (e.g. lcAny : Type).
     -- A reduction to one of those cannot exclude a source declaration.
-    unless [`Classical.choice, `propext, `sorryAx].contains axiomName do
+    unless [`Classical.choice, `propext, `Quot.sound, `sorryAx].contains axiomName do
       throwError "unsupported impossibility target {axiomName} for {owner}/{name}"
     let proof ← getConstInfo witness
     let target ← getConstInfo axiomName
@@ -237,6 +251,10 @@ run_cmd
         pure law
       else pure source
       Elab.Command.liftCoreM <| Meta.MetaM.run' <| optionLawReductionType law target levels
+    else if source.name == ``Quot.indepCoherent then
+      Elab.Command.liftCoreM <| Meta.MetaM.run' do
+        let [u] := levels | throwError "unexpected quotient universe parameters"
+        mkArrow (← unitCoherenceType source u) (target.type.instantiateLevelParams target.levelParams [u])
     else if owner == `Init.Internal.Order.Basic && InternalOrder.implicationOrders.lookup name == some witness then
       Elab.Command.liftCoreM <| Meta.MetaM.run' <| orderReductionType source target
     else if source.name == ``instDecidableEqOfIff then
