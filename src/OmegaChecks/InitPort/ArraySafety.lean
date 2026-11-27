@@ -10,7 +10,7 @@ private def borrowedReads : List Name :=
 
 /-- Array operations with constructive strict bodies and a pinned unsafe interface. -/
 public def names : List Name := borrowedReads ++ [
-  `Array.modifyMUnsafe, `Array.anyMUnsafe, `Array.foldlMUnsafe, `Array.foldrMUnsafe, `Array.forIn'Unsafe,
+  `Array.mapMUnsafe, `Array.mapFinIdxMUnsafe, `Array.modifyMUnsafe, `Array.anyMUnsafe, `Array.foldlMUnsafe, `Array.foldrMUnsafe, `Array.forIn'Unsafe,
   `ByteArray.foldlMUnsafe, `ByteArray.forInUnsafe, `FloatArray.foldlMUnsafe, `FloatArray.forInUnsafe]
 
 public def isOriginal (ci : ConstantInfo) (strict : Bool) : Bool :=

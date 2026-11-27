@@ -124,7 +124,7 @@ def check_linear_marks(stage, library, inputs, kind):
 
 
 def compile_generated(stage, product, graph, seed_ir, owners=None, *, original_seed=None, before_owner=None,
-                      check_sharing=None, check_macro_reader=False, check_macro_writer=False, check_syntax_array=False,
+                      check_sharing=None, check_array_map=False, check_macro_reader=False, check_macro_writer=False, check_syntax_array=False,
                       check_strings=True, check_string_marks=False, check_byte_marks=False, check_literals=True, check_mixed=True, check_rat=True, check_bootstrap=True,
                       check_list_search=True, check_decoding=True, check_names=True, check_toolchain=True, check_thunks=False, check_persistent=False, check_exclusive=False,
                       check_guarded_pointer=False, check_effects=False, check_borrowed_arrays=False, check_address=False, check_pointer_comparison=False, check_shared_pointer=False,
@@ -304,6 +304,7 @@ def compile_generated(stage, product, graph, seed_ir, owners=None, *, original_s
             run(app, timeout=30)
 
     observations = [(check_syntax_array, "OmegaInit.Prelude", "SyntaxArray", "Omega.Lean.TSyntaxArray.mkImpl"),
+                    (check_array_map, "OmegaInit.Data.Array.Basic", "UnsafeArrayMap", "Omega.Array.mapMUnsafe"),
                     (check_dynamic, "OmegaInit.Dynamic", "DynamicValue", None),
                     (check_persistent, "OmegaInit.System.IO", "Persistent", "Omega.Runtime.markPersistent"),
                     (check_address, "OmegaInit.Util", "Address", "Omega.ptrAddrUnsafe"),
@@ -334,6 +335,8 @@ def compile_generated(stage, product, graph, seed_ir, owners=None, *, original_s
             result = subprocess.run(["lean", "--stdin"], input=safe, text=True, env=env, capture_output=True)
             unsafe_names = [declaration] if client_name != "EffectRun" else [
                 "Omega.unsafeBaseIO", "Omega.unsafeEIO", "Omega.unsafeIO"]
+            if client_name == "UnsafeArrayMap":
+                unsafe_names = ["Omega.Array.mapMUnsafe", "Omega.Array.mapFinIdxMUnsafe"]
             if client_name == "PointerComparison":
                 unsafe_names = ["Omega.ptrEq", "Omega.withPtrEqUnsafe"]
             if client_name == "SyntaxArray":

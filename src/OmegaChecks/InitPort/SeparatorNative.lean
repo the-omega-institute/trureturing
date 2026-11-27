@@ -23,16 +23,7 @@ public def wrapper (source strict : Environment) (n official : Name) (symbol : S
   let strictAbi := #[IR.IRType.erased, .object, .tobject, .tobject] ++ (if auxiliary then #[.tobject, .tobject] else #[])
   unless entry == symbol && params.map (·.ty) == abi && params.all (!·.borrow) && actual.map (·.ty) == strictAbi do
     throw <| IO.userError s!"unexpected separator ABI {n}: {actual.map (·.ty)}"
-  IndexedNative.checkDataTypes source strict [`Monad, `Applicative, `Pure, `Functor, `Seq, `SeqLeft, `SeqRight, `Bind]
-  for (ctor, names) in [(`Monad.mk, [`toApplicative, `toBind]), (`Applicative.mk, [`toFunctor, `toPure, `toSeq, `toSeqLeft, `toSeqRight])] do
-    let some layout := ctorLayoutExt.find? source ctor | throw <| IO.userError s!"missing separator dictionary {ctor}"
-    unless layout.ctorInfo.size == names.length && layout.ctorInfo.cidx == 0 && layout.ctorInfo.ssize == 0 &&
-        layout.ctorInfo.usize == 0 do throw <| IO.userError s!"unexpected separator dictionary {ctor}"
-    for field in names, i in [:names.length] do
-      let some projection := source.getProjectionFnInfo? (ctor.getPrefix ++ field)
-        | throw <| IO.userError s!"missing separator projection {field}"
-      let .object j _ := layout.fieldInfo[i]! | throw <| IO.userError "separator dictionary field is unboxed"
-      unless projection.i == i && j == i do throw <| IO.userError s!"reordered separator dictionary field {field}"
+  IndexedNative.checkMonadDictionary source strict
   let target := getSymbolStem source official
   let operands := #["monad", "values", "callback"] ++ (if auxiliary then #["index", "acc"] else #[])
   let owned := (actual.extract 1 actual.size).zip operands

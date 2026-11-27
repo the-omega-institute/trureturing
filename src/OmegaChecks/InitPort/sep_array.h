@@ -21,11 +21,15 @@ static lean_obj_res omega_sep_replace_field(b_lean_obj_arg original, unsigned in
     return out;
 }
 
+static lean_obj_res omega_array_with_pure(b_lean_obj_arg monad, lean_obj_arg replacement) {
+    return omega_sep_replace_field(monad, 0, omega_sep_replace_field(lean_ctor_get(monad, 0), 1, replacement));
+}
+
 static lean_obj_res omega_sep_array_monad(b_lean_obj_arg monad) {
     lean_object *applicative = lean_ctor_get(monad, 0);
     lean_object *pure = lean_ctor_get(applicative, 1);
     lean_inc(pure);
     lean_object *adapted = lean_alloc_closure((void *)omega_sep_array_pure, 3, 1);
     lean_closure_set(adapted, 0, pure);
-    return omega_sep_replace_field(monad, 0, omega_sep_replace_field(applicative, 1, adapted));
+    return omega_array_with_pure(monad, adapted);
 }

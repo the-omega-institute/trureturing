@@ -97,6 +97,19 @@ public def checkDataTypes (source strict : Environment) (types : List Name) : IO
           x.fieldInfo.size == y.fieldInfo.size && (x.fieldInfo.zip y.fieldInfo).all (fun (f,g) => sameField f g) do
         throw <| IO.userError s!"different native layout for {a} and {b}"
 
+/-- Verify the runtime fields shared by native traversals that replace the monadic pure. -/
+public def checkMonadDictionary (source strict : Environment) : IO Unit := do
+  checkDataTypes source strict [`Monad, `Applicative, `Pure, `Functor, `Seq, `SeqLeft, `SeqRight, `Bind]
+  for (ctor, names) in [(`Monad.mk, [`toApplicative, `toBind]), (`Applicative.mk, [`toFunctor, `toPure, `toSeq, `toSeqLeft, `toSeqRight])] do
+    let some layout := ctorLayoutExt.find? source ctor | throw <| IO.userError s!"missing monad dictionary {ctor}"
+    unless layout.ctorInfo.size == names.length && layout.ctorInfo.cidx == 0 && layout.ctorInfo.ssize == 0 &&
+        layout.ctorInfo.usize == 0 do throw <| IO.userError s!"unexpected monad dictionary {ctor}"
+    for field in names, i in [:names.length] do
+      let some projection := source.getProjectionFnInfo? (ctor.getPrefix ++ field)
+        | throw <| IO.userError s!"missing monad projection {field}"
+      let .object j _ := layout.fieldInfo[i]! | throw <| IO.userError "monad dictionary field is unboxed"
+      unless projection.i == i && j == i do throw <| IO.userError s!"reordered monad dictionary field {field}"
+
 /-- After erasing the subtype proof, attaching it retains the original container. -/
 private def attachmentWrapper (source strict : Environment) (official n : Name) (symbol : String) : IO String := do
   let owner := `Init.Data ++ official.getPrefix ++ `Attach

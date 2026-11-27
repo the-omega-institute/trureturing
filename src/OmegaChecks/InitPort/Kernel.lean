@@ -12,6 +12,7 @@ import OmegaChecks.InitPort.Translation
 import OmegaChecks.InitPort.NativeQuot
 import OmegaChecks.InitPort.UnsafeRuntime
 import OmegaChecks.InitPort.Address
+import OmegaChecks.InitPort.ArrayMap
 import OmegaChecks.InitPort.WordFold
 import OmegaChecks.InitPort.WordForIn
 import OmegaChecks.InitPort.SyntaxArray
@@ -462,15 +463,17 @@ partial def visit (n : Name) : M Bool := do
       if missing.isSome then return ← record n (.blocked "smart unfolding requires unavailable matcher metadata")
   if let some reason := c.excluded.find? n then return ← record n (.blocked reason)
   if ci.isAxiom then return ← record n (.blocked "axiom")
+  let mapRef := OmegaChecks.InitPort.ArrayMap.reference? n
   let allocator := OmegaChecks.InitPort.LogicalHandle.implementation? n
   let dynamicOp := OmegaChecks.InitPort.DynamicValue.operation? n |>.filter (· != n)
   let atomicUpdate := n == OmegaChecks.InitPort.ReferenceModify.implementation
   let readsMethods := n == `Lean.Macro.getMethodsImp
-  if n == `Array.modifyMUnsafe || allocator.isSome || dynamicOp.isSome || atomicUpdate || readsMethods then
+  if mapRef.isSome || n == `Array.modifyMUnsafe || allocator.isSome || dynamicOp.isSome || atomicUpdate || readsMethods then
     let .defnInfo native := ci | return ← record n (.blocked "missing native implementation")
-    let name := dynamicOp.getD <| if readsMethods then `Lean.Macro.getMethods else if atomicUpdate then OmegaChecks.InitPort.ReferenceModify.consumer else
+    let name := (mapRef <|> dynamicOp).getD <| if readsMethods then `Lean.Macro.getMethods else if atomicUpdate then OmegaChecks.InitPort.ReferenceModify.consumer else
       allocator.map (·.allocator) |>.getD `Array.modifyM
     let reference := mkConst name (native.levelParams.map Level.param)
+    if mapRef.isSome then OmegaChecks.InitPort.ArrayMap.check c.source native reference
     if dynamicOp.isSome then OmegaChecks.InitPort.LogicalHandle.checkOpaqueImplementation `Init.Dynamic name c.source native reference
     if readsMethods then OmegaChecks.InitPort.LogicalHandle.checkOpaqueImplementation `Init.Prelude name c.source native reference
     if atomicUpdate then OmegaChecks.InitPort.ReferenceModify.checkImplementation c.source native reference
@@ -478,7 +481,7 @@ partial def visit (n : Name) : M Bool := do
     unless Compiler.getImplementedBy? c.source name == some n do
       return ← record n (.blocked "mismatched native implementation" (some name))
     unless ← visit name do return ← record n (.blocked "unavailable logical reference" (some name))
-    let info := if n == `Array.modifyMUnsafe then ci else ConstantInfo.defnInfo {native with safety := if dynamicOp.isSome then .unsafe else .safe, value := reference}
+    let info := if mapRef.isSome || n == `Array.modifyMUnsafe then ci else ConstantInfo.defnInfo {native with safety := if dynamicOp.isSome then .unsafe else .safe, value := reference}
     let .ok decl := translateDecl info ci.type reference | return ← record n (.blocked "invalid logical reference")
     let .ok env ← checkWithRetry (← get).env (keepImplementationSafety n decl) c.maxHeartbeats
       | return ← record n (.blocked "kernel rejected logical reference")

@@ -3,6 +3,7 @@ import OmegaChecks.InitPort.DynamicValue
 
 public import Lean
 import OmegaChecks.InitPort.IONative
+import OmegaChecks.InitPort.ArrayMap
 import OmegaChecks.InitPort.MacroNative
 import OmegaChecks.InitPort.SyntaxPositionNative
 import OmegaChecks.InitPort.FloatArrayNative
@@ -236,6 +237,7 @@ public def supported (source : Environment) (owner name : Name) (boxedFloatArray
     (owner == `OmegaInit.System.IOError && errorString name) ||
     (owner == `OmegaInit.System.IO && IONative.supported name) ||
     (owner == `OmegaInit.Prelude && (name == `Quot.liftOn || name == `Lean.Name.hash || MacroNative.supported name)) ||
+    (owner == `OmegaInit.Data.Array.Basic && (ArrayMap.reference? name).isSome) ||
     (owner == `OmegaInit.Data.ByteArray.Basic && ByteFoldNative.supported name) ||
     ([`OmegaInit.Grind.Ring.Envelope, `OmegaInit.Grind.Module.Envelope, `OmegaInit.Data.Array.BasicAux, `OmegaInit.Util, `OmegaInit.ShareCommon, `OmegaInit.Data.List.Attach, `OmegaInit.Data.Option.Attach, `OmegaInit.Data.Array.Attach, `OmegaInit.Data.Vector.Attach,
     `OmegaInit.Core, `OmegaInit.WFComputable, `OmegaInit.Data.List.Impl, `OmegaInit.Data.List.BasicAux,

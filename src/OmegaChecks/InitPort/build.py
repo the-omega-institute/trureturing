@@ -312,6 +312,7 @@ def generate(stage, product, seed, roots, excluded, original_seed):
                       original_seed=original_seed, before_owner={"OmegaInit.ShareCommon": install_sharing},
                       check_sharing=check_sharing,
                       check_syntax_array=has_interfaces(inventory, {"Init.Prelude": {"Lean.TSyntaxArray.mkImpl", "Lean.TSyntaxArray.rawImpl"}}),
+                      check_array_map=has_interfaces(inventory, {"Init.Data.Array.Basic": {"Array.mapMUnsafe", "Array.mapFinIdxMUnsafe"}}),
                       check_macro_writer=has_interfaces(inventory, {"Init.Prelude": {"Lean.Macro.mkMethodsImp"}}),
                       check_macro_reader=has_interfaces(inventory, {"Init.Prelude": {"Lean.Macro.getMethodsImp"}}),
                       check_list_pointer=has_interfaces(inventory, {"Init.Util": {"ptrEqList"}}),

@@ -17,6 +17,7 @@ import OmegaChecks.InitPort.FloatFraction
 import OmegaChecks.InitPort.BorrowedIndex
 import OmegaChecks.InitPort.ArrayWord
 import OmegaChecks.InitPort.Address
+import OmegaChecks.InitPort.ArrayMap
 import OmegaChecks.InitPort.ArrayModify
 
 /-! Compare compiled public interfaces in independent Lean environments. -/
@@ -247,6 +248,9 @@ private def compare (reference : Environment) (rename : Name → Name) (src dst 
       unless OmegaChecks.InitPort.Address.isOriginal src true && OmegaChecks.InitPort.Address.isOriginal dst false do
         throw <| IO.userError "unexpected pinned unsafe address callback"
       OmegaChecks.InitPort.Address.check reference y (mkConst `withPtrAddr (y.levelParams.map Level.param))
+      return deps ++ x.value.getUsedConstants
+    if foundation.isSome && (OmegaChecks.InitPort.ArrayMap.reference? y.name).isSome then
+      OmegaChecks.InitPort.ArrayMap.check reference y (liftTerm x.value)
       return deps ++ x.value.getUsedConstants
     if foundation.isSome && y.name == `Array.modifyMUnsafe then
       OmegaChecks.InitPort.ArrayModify.check reference y (liftTerm x.value)

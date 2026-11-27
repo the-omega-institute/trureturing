@@ -6,6 +6,7 @@ import all OmegaChecks.InitPort.WordNative.Operations
 import OmegaChecks.InitPort.UnsafeRuntime
 import OmegaChecks.InitPort.IONative
 import OmegaChecks.InitPort.SeparatorNative
+import OmegaChecks.InitPort.ArrayMap
 import OmegaChecks.InitPort.MacroNative
 import OmegaChecks.InitPort.SyntaxPositionNative
 import OmegaChecks.InitPort.FloatArrayNative
@@ -160,6 +161,7 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
     return s!"\n#include \"strict_byte_array.h\"\nLEAN_EXPORT lean_obj_res {symbol n}({params}) \{ return {call}; }\n"
   if let some op := DynamicValue.operation? official then return ← dynamicWrapper source strict n op
   if IONative.supported official then return ← IONative.wrapper source strict n (symbol n)
+  if (ArrayMap.reference? official).isSome then return ← ArrayMap.wrapper source strict n (symbol n)
   if MacroNative.supported official then return ← MacroNative.wrapper source strict n (symbol n)
   if monadicSeparator official then return ← SeparatorNative.wrapper source strict n official (symbol n)
   if (BorrowedNative.symbol? official).isSome then return ← BorrowedNative.wrapper source strict n (symbol n)
