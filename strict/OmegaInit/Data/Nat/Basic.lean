@@ -13,7 +13,6 @@ public import OmegaInit.Core
 
 namespace Omega.Nat
 
-attribute [local semireducible] Nat.beq
 
 theorem beq_refl (a : Nat) : Eq (Nat.beq a a) Bool.true :=
   Nat.rec (motive := fun n => Eq (Nat.beq n n) Bool.true)

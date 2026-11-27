@@ -26,28 +26,8 @@ port_inductive List
 port_inductive Prod
 port_definition Prod.fst with_native_code
 port_definition Prod.snd with_native_code
-port_inductive PProd
-port_definition PProd.fst
-port_definition PProd.snd
 
 namespace Omega
-
-/-- Equality and its eliminator are available in the strict environment. -/
-inductive Eq {α : Sort u} : α → α → Prop where
-  | refl (a : α) : Eq a a
-
-@[match_pattern] abbrev rfl {α : Sort u} {a : α} : Eq a a := Eq.refl a
-
-namespace Eq
-theorem symm {a b : α} (h : Eq a b) : Eq b a :=
-  Eq.rec (motive := fun b _ => Eq b a) rfl h
-
-theorem trans {a b c : α} (h₁ : Eq a b) (h₂ : Eq b c) : Eq a c :=
-  Eq.rec (motive := fun c _ => Eq a c) h₁ h₂
-
-theorem subst {motive : α → Prop} {a b : α} (h₁ : Eq a b) (h₂ : motive a) : motive b :=
-  Eq.rec (motive := fun b _ => motive b) h₂ h₁
-end Eq
 
 theorem congrArg {α : Sort u} {β : Sort v} {a₁ a₂ : α} (f : α → β) (h : Eq a₁ a₂) : Eq (f a₁) (f a₂) :=
   Eq.rec (motive := fun a₂ _ => Eq (f a₁) (f a₂)) rfl h
@@ -55,7 +35,6 @@ theorem congrArg {α : Sort u} {β : Sort v} {a₁ a₂ : α} (f : α → β) (h
 inductive True : Prop where
   | intro
 
-inductive False : Prop
 
 end Omega
 
@@ -64,7 +43,6 @@ namespace Omega
 
 def False.elim {C : Sort u} (h : False) : C := False.casesOn (fun _ => C) h
 
-def Not (a : Prop) : Prop := a → False
 
 end Omega
 
@@ -80,9 +58,6 @@ inductive Or (a b : Prop) : Prop where
 theorem Or.elim {a b c : Prop} (h : Or a b) (left : a → c) (right : b → c) : c :=
   Or.rec (motive := fun _ => c) left right h
 
-inductive Bool where
-  | false
-  | true
 
 end Omega
 
@@ -130,26 +105,14 @@ theorem succ_sub_succ_eq_sub (n m : Nat) : Eq (Nat.sub (succ n) (succ m)) (Nat.s
 
 end Nat
 
-set_option bootstrap.inductiveCheckResultingUniverse false in
-inductive PUnit : Sort u where
-  | unit : PUnit
-
-abbrev Unit : Type := PUnit
-
-@[match_pattern] abbrev Unit.unit : Unit := PUnit.unit
-
 inductive Empty : Type
 
 set_option bootstrap.inductiveCheckResultingUniverse false in
 inductive PEmpty : Sort u where
 
-inductive HEq : {α : Sort u} → α → {β : Sort u} → β → Prop where
-  | refl (a : α) : HEq a a
-
 set_option linter.defProp false in
 @[match_pattern] protected def HEq.rfl {α : Sort u} {a : α} : HEq a a := HEq.refl a
 
-def id {α : Sort u} (a : α) : α := a
 
 theorem id_eq (a : α) : Eq (id a) a := Omega.rfl
 
@@ -163,16 +126,6 @@ end Omega
 
 namespace Omega
 
-abbrev Eq.ndrec.{u1, u2} {α : Sort u2} {a : α} {motive : α → Sort u1}
-    (m : motive a) {b : α} (h : Eq a b) : motive b :=
-  Eq.casesOn (motive := fun b _ => motive b) h m
-
-abbrev Eq.ndrec_symm.{u1, u2} {α : Sort u2} {a : α} {motive : α → Sort u1}
-    (m : motive a) {b : α} (h : Eq b a) : motive b := Eq.ndrec m h.symm
-
-def cast {α β : Sort u} (h : Eq α β) (a : α) : β :=
-  Eq.casesOn (motive := fun β _ => β) h a
-
 theorem congrFun {α : Sort u} {β : α → Sort v} {f g : (x : α) → β x}
     (h : Eq f g) (a : α) : Eq (f a) (g a) := congrArg (fun f : (x : α) → β x => f a) h
 
@@ -182,11 +135,6 @@ theorem congrFun' {α : Sort u} {β : Sort v} {f g : α → β}
 theorem congr {α : Sort u} {β : Sort v} {f₁ f₂ : α → β} {a₁ a₂ : α}
     (h₁ : Eq f₁ f₂) (h₂ : Eq a₁ a₂) : Eq (f₁ a₁) (f₂ a₂) :=
   (congrFun h₁ a₁).trans (congrArg f₂ h₂)
-
-theorem heq_of_eq (h : Eq a a') : HEq a a' :=
-  Eq.subst h (HEq.refl a)
-
-def absurd {a : Prop} {b : Sort v} (h₁ : a) (h₂ : Not a) : b := False.elim (h₂ h₁)
 
 theorem Or.intro_left (b : Prop) (h : a) : Or a b := Or.inl h
 
@@ -207,13 +155,6 @@ class inductive Nonempty (α : Sort u) : Prop where
 protected theorem Nonempty.elim {α : Sort u} {p : Prop} (h₁ : Nonempty α) (h₂ : α → p) : p :=
   Nonempty.rec (motive := fun _ => p) h₂ h₁
 
-theorem eq_of_heq {α : Sort u} {a a' : α} (h : HEq a a') : Eq a a' :=
-  let align : ∀ (α β : Sort u) (a : α) (b : β), HEq a b → (h : Eq α β) → Eq (cast h a) b :=
-    fun α β a b he => @HEq.rec _ a
-      (fun {β} b _ => (h : Eq α β) → Eq (cast h a) b)
-      (fun _ => Eq.refl a) β b he
-  align α α a a' h Omega.rfl
-
 set_option checkBinderAnnotations false in
 abbrev inferInstance {α : Sort u} [i : α] : α := i
 
@@ -231,32 +172,12 @@ namespace Omega
 
 
 
-set_option linter.unusedVariables.funArgs false in
-protected abbrev Empty.noConfusionType (P : Sort u) (t t' : Empty) : Sort u :=
-  Empty.casesOn (fun _ => Sort u) t
-
-protected abbrev Empty.noConfusion {P : Sort u} {t t' : Empty} (eq : Eq t t') :
-    Empty.noConfusionType P t t' :=
-  Eq.rec (motive := fun t' _ => Empty.noConfusionType P t t')
-    (Empty.casesOn (fun t => Empty.noConfusionType P t t) t) eq
-
-set_option linter.unusedVariables.funArgs false in
-protected abbrev PEmpty.noConfusionType.{v,u} (P : Sort v) (t t' : PEmpty.{u}) : Sort v :=
-  PEmpty.casesOn (fun _ => Sort v) t
-
-protected abbrev PEmpty.noConfusion.{v,u} {P : Sort v} {t t' : PEmpty.{u}} (eq : Eq t t') :
-    PEmpty.noConfusionType P t t' :=
-  Eq.rec (motive := fun t' _ => PEmpty.noConfusionType P t t')
-    (PEmpty.casesOn (fun t => PEmpty.noConfusionType P t t) t) eq
-
-open Bool (false true)
 
 end Omega
 
 
 namespace Omega
 
-def cond {α : Sort u} (c : Bool) (x y : α) : α := Bool.casesOn c y x
 
 protected def Bool.dcond {α : Sort u} (c : Bool)
     (x : Eq c true → α) (y : Eq c false → α) : α :=
@@ -284,9 +205,6 @@ theorem Bool.not_eq_internalNot : Eq Bool.not Bool.Internal.not := Omega.rfl
 open Bool (or and not)
 
 def Bool.beq (a b : Bool) : Bool := Bool.casesOn b (Bool.not a) a
-
-abbrev Bool.Reflects : Bool → Prop → Prop :=
-  fun b p => Bool.rec (motive := fun _ => Prop) (Not p) p b
 
 theorem Bool.eq_false_of_ne_true : {b : Bool} → Not (Eq b true) → Eq b false :=
   fun {b} => Bool.rec (motive := fun b => Not (Eq b true) → Eq b false)
@@ -330,10 +248,6 @@ def getD {α : Type u} (opt : Option α) (dflt : α) : α :=
 end Omega.Option
 
 namespace Omega.Nat
-
-@[no_expose] def beq : Nat → Nat → Bool :=
-  Nat.rec (motive := fun _ => Nat → Bool) (Nat.rec Bool.true (fun _ _ => Bool.false))
-    (fun _ smaller => Nat.rec Bool.false (fun k _ => smaller k))
 
 @[no_expose] def ble : Nat → Nat → Bool :=
   Nat.rec (motive := fun _ => Nat → Bool) (fun _ => Bool.true)
@@ -405,13 +319,10 @@ theorem mod_lt (x : Nat) {y : Nat} (hy : Nat.lt zero y) : Nat.lt (Nat.mod x y) y
 
 theorem modCore_lt {x y : Nat} (hy : Nat.lt zero y) : Nat.lt (Nat.modCore x y) y := mod_lt x hy
 
-attribute [irreducible] beq ble Nat.div Nat.mod Nat.modCore
+attribute [irreducible] ble Nat.div Nat.mod Nat.modCore
 
 end Omega.Nat
 
-port_definition Nat.below
-port_definition Nat.brecOn.go
-port_definition Nat.brecOn
 
 port_definition List.below
 port_definition List.brecOn.go
@@ -470,7 +381,6 @@ port_definition LE.le
 port_inductive LT
 port_definition LT.lt
 
-port_inductive Decidable
 port_definition Decidable.decide
 port_proof Decidable.reflects_decide
 port_definition Decidable.isFalse
@@ -478,8 +388,6 @@ port_definition Decidable.isTrue
 port_definition dite
 port_definition ite
 
-port_definition Nat.beq.match_1 with_native_code
-port_structural_code Nat.beq on_arg 1
 port_definition Nat.ble.match_1 with_native_code
 port_structural_code Nat.ble on_arg 1
 
@@ -692,9 +600,6 @@ port_definition List.foldl.match_1 with_native_code
 port_structural_code List.foldl on_arg 5
 port_definition List.lengthTRAux.match_1 with_native_code
 port_structural_code List.lengthTRAux on_arg 2
-port_definition Nat.add.match_1 with_native_code
-port_definition Nat.mul.match_1 with_native_code
-port_definition Nat.pow.match_1 with_native_code
 port_structural_code List.length on_arg 2
 
 port_definition instMulNat with_native_code
@@ -705,26 +610,8 @@ port_definition instMinNat with_native_code
 port_definition Decidable.falseTrueCases with_native_code
 namespace Omega
 
-attribute [local semireducible] Nat.beq
-
-public theorem Nat.decEq._proof_1 (n m : Nat) : Bool.Reflects (Nat.beq n m) (Eq n m) :=
-  have separate (k : Nat) (h : Eq Nat.zero (Nat.succ k)) : False :=
-    Nat.not_succ_le_zero k (Eq.subst (motive := fun t => Nat.le (Nat.succ k) t) h.symm (Nat.le_refl _))
-  have lift (b : Bool) (k l : Nat) (r : Bool.Reflects b (Eq k l)) :
-      Bool.Reflects b (Eq (Nat.succ k) (Nat.succ l)) :=
-    Bool.casesOn (motive := fun bit => Bool.Reflects bit (Eq k l) →
-        Bool.Reflects bit (Eq (Nat.succ k) (Nat.succ l))) b
-      (fun different equal => different (congrArg Nat.pred equal)) (fun equal => congrArg Nat.succ equal) r
-  Nat.rec (motive := fun k => ∀ l, Bool.Reflects (Nat.beq k l) (Eq k l))
-    (fun l => Nat.casesOn (motive := fun l => Bool.Reflects (Nat.beq Nat.zero l) (Eq Nat.zero l))
-      l Omega.rfl separate)
-    (fun k prior l => Nat.casesOn (motive := fun l =>
-        Bool.Reflects (Nat.beq (Nat.succ k) l) (Eq (Nat.succ k) l)) l
-      (fun h => separate k h.symm) (fun j => lift (Nat.beq k j) k j (prior j))) n m
-
 end Omega
 
-port_definition Nat.decEq with_native_code
 port_definition instDecidableEqNat with_native_code
 
 port_definition Array.size with_native_code

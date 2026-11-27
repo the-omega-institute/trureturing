@@ -398,9 +398,9 @@ private partial def equationCases? (type : Expr) (fuel := 2) (depth := 0) : Opti
   let fresh := fun (n : Name) => mkFVar ⟨Name.num n depth⟩
   let lam := fun (x : Expr) n domain body bi => Expr.lam n domain (body.abstract #[x]) bi
   let .forallE n dom body bi := type |
-    let .const `Omega.Eq us := type.getAppFn | none
+    let .const `Eq us := type.getAppFn | none
     let #[α, lhs, _] := type.getAppArgs | none
-    return mkApp2 (mkConst `Omega.Eq.refl us) α lhs
+    return mkApp2 (mkConst `Eq.refl us) α lhs
   let x := fresh `x
   let motive := Expr.lam n dom body .default
   let after := fun y f => equationCases? (body.instantiate1 y) f (depth + 1)

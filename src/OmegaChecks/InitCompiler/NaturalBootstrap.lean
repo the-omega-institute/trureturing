@@ -1,5 +1,6 @@
 module
 import all Lean.Environment
+import all Lean.Structure
 public import Lean
 import Lean.Replay
 import OmegaChecks.InitCompiler.Layout
@@ -25,8 +26,7 @@ private def pinnedNaturalBasis : IO NaturalBasis := do
     (fun table ci => table.insert ci.name ci)
   let exported := ((raws.map Prod.fst)[0]!.constants).foldl (init := ({} : NameMap ConstantInfo))
     (fun table ci => table.insert ci.name ci)
-  let mut todo := #[`Nat.add, `Nat.sub, `Nat.mul, `Nat.pow, `Nat.decEq, `Nat.recOn,
-    `cond, `instHAdd, `HAdd.hAdd, `instAddNat, `instOfNatNat, `OfNat.ofNat]
+  let mut todo := RootNames.natPrimitives
   let mut entries : Std.HashMap Name ConstantInfo := {}
   while !todo.isEmpty do
     let n := todo.back!
@@ -78,9 +78,6 @@ public def installNaturalBootstrap : CommandElabM Unit := do
   let mut env ← getEnv
   for (n, _) in entries.toList do
     let some ci := checked.find? n | throwError "bootstrap replay omitted {n}"
-    env := env.registerNamespace n.getPrefix
-    if isAuxRecursor orig n then env := markAuxRecursor env n
-    if isProtected orig n then env := addProtected env n
     if let some existing := env.find? n then
       unless sameEntry existing ci do throwError "bootstrap conflict at {n}"
     else
@@ -89,7 +86,15 @@ public def installNaturalBootstrap : CommandElabM Unit := do
         (env.lakeAdd face).asyncConstsMap.public
       else env.asyncConstsMap.public
       env := { privateEnv with asyncConstsMap.public := publicConsts }
+  for (n, _) in entries.toList do
+    env := (env.registerNamespace n.getPrefix).registerNamespace (`Omega ++ n.getPrefix)
+    if isAuxRecursor orig n then env := markAuxRecursor env n
+    if isProtected orig n then env := addProtected env n
   let some idx := orig.getModuleIdx? `Init.Prelude | throwError "missing official Prelude"
+  for info in structureExt.getModuleEntries orig idx do
+    if entries.contains info.structName then env := structureExt.addEntry env info
+  for (n, info) in projectionFnInfoExt.getModuleEntries orig idx do
+    if entries.contains n then env := projectionFnInfoExt.addEntry (asyncDecl := n) env (n, info)
   for entry in classExtension.getModuleEntries orig idx do
     if entries.contains entry.name then env := classExtension.addEntry env entry
   for entry in Meta.instanceExtension.ext.getModuleEntries orig idx do
@@ -102,15 +107,15 @@ public def installNaturalBootstrap : CommandElabM Unit := do
     if entries.contains n then env := reducibilityCoreExt.addEntry (asyncDecl := n) env (n, status)
   setEnv env
   liftCoreM <| withExporting do
-    for family in #[`Bool, `Nat, `Eq, `PUnit, `PProd, `Decidable, `HAdd, `Add, `OfNat] do
+    for family in #[`Bool, `Nat, `Eq, `PUnit, `PProd, `Decidable, `HAdd, `Add, `OfNat, `False, `HEq] do
       let some (.inductInfo ind) := (← getEnv).find? family | continue
       compilerLayouts #[family] ind.ctors.toArray
-    for n in #[`Nat.decEq, `Nat.sub, `Nat.add, `Nat.mul, `Nat.pow] do
+    for n in #[`Nat.beq, `Nat.decEq, `Nat.sub, `Nat.add, `Nat.mul, `Nat.pow] do
       let some attr := getExternAttrData? orig n | throwError "missing pinned extern {n}"
       modifyEnv fun e => externAttr.ext.addEntry (asyncDecl := n) e (n, attr)
       Lean.compileDecls #[n] (logErrors := true)
 
-    for n in #[`OfNat.ofNat, `instOfNatNat, `Add.add, `HAdd.hAdd, `instAddNat, `instHAdd] do
+    for n in #[`id, `Unit.unit, `PProd.fst, `PProd.snd, `cond.match_1, `cond, `OfNat.ofNat, `instOfNatNat, `Add.add, `HAdd.hAdd, `instAddNat, `instHAdd] do
       Lean.compileDecls #[n] (logErrors := true)
 
   for name in RootNames.binderAnnotations ++ RootNames.natPrimitives do

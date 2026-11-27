@@ -234,7 +234,7 @@ private def checkFinEquations (fn body : Expr) (args : Array Expr) (index : Expr
       if Kernel.isDefEqGuarded env ctx actual expected then return true
       let t ← Meta.inferType actual
       let u ← Meta.getLevel t
-      let goal := mkApp3 (mkConst `Omega.Eq [u]) t actual expected
+      let goal := mkApp3 (mkConst `Eq [u]) t actual expected
       let impossible := mkApp2 (mkConst `Omega.Nat.not_succ_le_zero) val h
       let derivation := mkApp2 (mkConst `Omega.False.elim [.zero]) goal impossible
       return (Kernel.check env ctx derivation).toOption.any (Kernel.isDefEqGuarded env ctx goal)

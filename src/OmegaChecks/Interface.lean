@@ -320,7 +320,12 @@ where
     if let some (strict, _) := foundation then
       if src matches .defnInfo _ then
         if hidden && getReducibilityStatusCore strict src.name != .irreducible then
-          throw <| IO.userError s!"legacy importer can unfold the hidden implementation of {src.name}"
+          -- A physical kernel primitive retains the pinned legacy body and its original
+          -- transparency. Compare the literal terms before admitting that behavior.
+          unless src.name == dst.name && src.type.equal dst.type &&
+              original.any (·.equal value) &&
+              getReducibilityStatusCore strict src.name == getReducibilityStatusCore reference dst.name do
+            throw <| IO.userError s!"legacy importer can unfold the hidden implementation of {src.name}"
 
 abbrev CheckedSites := Std.HashSet (Name × Name)
 

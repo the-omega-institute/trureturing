@@ -194,7 +194,7 @@ theorem cast_heq.{u} {α β : Sort u} (h : Eq α β) (a : α) : HEq (cast h a) a
 
 theorem heq_of_eqRec_eq.{u} {α β : Sort u} {a : α} {b : β} (h₁ : Eq α β) (h₂ : Eq (Eq.rec (motive := fun α _ => α) a h₁) b) :
   HEq a b :=
-  (cast_heq h₁ a).symm.trans (heq_of_eq h₂)
+  HEq.trans (HEq.symm (cast_heq h₁ a)) (heq_of_eq h₂)
 
 /-! ## Logical equivalence -/
 

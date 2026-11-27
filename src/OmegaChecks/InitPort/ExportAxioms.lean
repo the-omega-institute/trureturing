@@ -1,4 +1,5 @@
 module
+meta import OmegaChecks.InitCompiler.RootNames
 import Lean
 import Lean.Replay
 import all OmegaChecks.InitCompiler.NaturalBootstrap
@@ -89,9 +90,9 @@ private def checkCountEquations (env : Environment) : IO Unit := do
     let rec refl : Expr → Option Expr
       | .forallE n d b bi => return .lam n d (← refl b) bi
       | prop => do
-        let .const `Omega.Eq levels := prop.getAppFn | none
+        let .const `Eq levels := prop.getAppFn | none
         let #[α, left, _] := prop.getAppArgs | none
-        return mkApp2 (mkConst `Omega.Eq.refl levels) α left
+        return mkApp2 (mkConst `Eq.refl levels) α left
     let some proof := refl ci.type | throw <| IO.userError s!"unexpected equation type for {name}"
     let .ok inferred := Kernel.check env {} proof | throw <| IO.userError s!"invalid reflexivity term for {name}"
     unless Kernel.isDefEqGuarded env {} inferred ci.type do
