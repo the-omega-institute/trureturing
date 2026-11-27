@@ -273,8 +273,8 @@ theorem ble_eq_true_of_le {n m : Nat} (h : Nat.le n m) : Eq (Nat.ble n m) Bool.t
       (fun _ previous n => Bool.rec zero (succ (previous (Nat.sub n (succ d)))) (Nat.ble (succ d) n))
       (succ x) x) y
 
-@[extern "lean_nat_mod", no_expose] protected def _root_.Nat.mod (x y : @& Nat) : Nat :=
-  Nat.rec zero (fun k _ =>
+@[extern "lean_nat_mod", no_expose] protected def _root_.Nat.mod : @& Nat → @& Nat → Nat :=
+  fun x y => Nat.rec zero (fun k _ =>
     Nat.rec (succ k) (fun d _ =>
       Nat.rec (motive := fun _ => Nat → Nat) (fun _ => zero)
         (fun _ previous n => Bool.rec n (previous (Nat.sub n (succ d))) (Nat.ble (succ d) n))
