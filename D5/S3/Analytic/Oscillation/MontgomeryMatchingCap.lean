@@ -124,7 +124,8 @@ private lemma row_pair_defect_lower {J : Type*} (s : Finset J) (gamma : J → �
           have huv' : |gamma v - gamma u| ≤ 1 := by simpa [abs_sub_comm] using huv
           exact htriangle.trans (add_le_add huv' hku |>.trans (by norm_num))
         have hwu := mul_le_mul_of_nonneg_right
-          (kernel_ge_half (hku.trans (by norm_num))) (phaseResidual_nonneg (t * gamma u) (t * gamma k))
+          (kernel_ge_half (hku.trans (by norm_num)))
+          (phaseResidual_nonneg (t * gamma u) (t * gamma k))
         have hwv := mul_le_mul_of_nonneg_right (kernel_ge_half hkv)
           (phaseResidual_nonneg (t * gamma v) (t * gamma k))
         nlinarith [hwu, hwv, phaseResidual_triangle (t * gamma u) (t * gamma v) (t * gamma k)]
@@ -246,7 +247,8 @@ theorem finite_matching_defect {J P : Type*}
     have hpair := row_pair_defect_lower s gamma t (M.left p) (M.right p)
       (M.close p hp)
     dsimp [rowDefect]
-    convert hpair using 1 <;> ring
+    convert hpair using 1
+    ring
   have hselected_le : ∑ u ∈ selected, rowDefect u ≤ ∑ u ∈ s, rowDefect u :=
     Finset.sum_le_sum_of_subset_of_nonneg hselected
       (fun u hu _ => hrow_nonneg u hu)
@@ -273,8 +275,9 @@ open D5.S3.Analytic.Oscillation.MontgomeryCountUpper (pairSum)
 
 private lemma copies_lorentz_pair_sum {S : Spectrum} {H t : ℝ} :
     finiteLorentzPairSum (CutDensity.copies (S.cut H) S.mult)
-      (fun p => S.gamma p.1) t = pairSum S H t :=
-  copies_pair_sum S H (fun j k => pairCos (S.gamma j - S.gamma k) t)
+      (fun p => S.gamma p.1) t = pairSum S H t := by
+  simpa only [finiteLorentzPairSum, pairSum, pairCos, kernel, mul_comm t] using
+    (copies_pair_sum S H (fun j k => pairCos (S.gamma j - S.gamma k) t))
 
 /-- The finite matching deficit for the ordered spectrum sum with multiplicities. -/
 theorem spectrum_matching_defect {S : Spectrum} {P : Type*} {H t : ℝ}
