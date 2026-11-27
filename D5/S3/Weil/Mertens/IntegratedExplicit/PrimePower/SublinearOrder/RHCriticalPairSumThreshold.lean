@@ -307,8 +307,13 @@ private theorem cutoff_fractional_deficit (S : Spectrum) (hN : CountAsymptotic S
   apply (mul_le_mul_iff_right₀ (sq_pos_of_pos hNpos)).mp
   nlinarith only [hbc, hf]
 
-private theorem harmonic_long_deficit_of_threshold (rh : RiemannHypothesis)
-    (hpair : MontgomeryThresholdOnLogBands (zetaSpectrum rh)) :
+/-- A fixed fractional deficit of the inclusive cutoff transfers to the harmonic score. -/
+theorem harmonic_long_deficit_of_cutoff_deficit (rh : RiemannHypothesis)
+    (hcutoff : ∃ d > (0 : ℝ), ∀ A > (1 : ℝ), ∀ᶠ Y : ℝ in atTop,
+      ∀ t : ℝ, Real.log Y ≤ |t| → |t| ≤ A * Real.log Y →
+        d * ((zetaSpectrum rh).N Y : ℝ) ≤ ((zetaSpectrum rh).N Y : ℝ) -
+          ‖∑ j ∈ (zetaSpectrum rh).cut Y,
+            ((zetaSpectrum rh).mult j : ℂ) * phase ((zetaSpectrum rh).gamma j) t‖) :
     ∀ A > (1 : ℝ), ∃ d > (0 : ℝ), ∀ᶠ Y : ℝ in atTop,
       ∀ t : ℝ, Real.log Y ≤ |t| → |t| ≤ A * Real.log Y →
         d / Real.log Y ≤
@@ -318,7 +323,7 @@ private theorem harmonic_long_deficit_of_threshold (rh : RiemannHypothesis)
   let c : ℝ := 1 / (2 * Real.pi)
   have hc : 0 < c := by dsimp [c]; positivity
   have hN : CountAsymptotic S := zetaSpectrum_countAsymptotic rh
-  obtain ⟨d, hd, hdeficit⟩ := cutoff_fractional_deficit S hN hpair
+  obtain ⟨d, hd, hdeficit⟩ := hcutoff
   have hmass : Tendsto (fun Y : ℝ => harmonicMass rh Y / (Real.log Y)^2) atTop (𝓝 (c/2)) := by
     convert harmonic_mass_limit rh using 2 <;> dsimp [c] <;> ring
   intro A hA
@@ -388,6 +393,15 @@ private theorem harmonic_long_deficit_of_threshold (rh : RiemannHypothesis)
   apply (mul_le_mul_iff_right₀ (mul_pos hc hlog)).mp
   nlinarith only [hh]
 
+
+private theorem harmonic_long_deficit_of_threshold (rh : RiemannHypothesis)
+    (hpair : MontgomeryThresholdOnLogBands (zetaSpectrum rh)) :
+    ∀ A > (1 : ℝ), ∃ d > (0 : ℝ), ∀ᶠ Y : ℝ in atTop,
+      ∀ t : ℝ, Real.log Y ≤ |t| → |t| ≤ A * Real.log Y →
+        d / Real.log Y ≤
+          1 - ‖complexScore (harmonicOrdinate rh Y) (harmonicProbability rh Y) t‖ :=
+  harmonic_long_deficit_of_cutoff_deficit rh
+    (cutoff_fractional_deficit _ (zetaSpectrum_countAsymptotic rh) hpair)
 
 private theorem critical_window_deficit (rh : RiemannHypothesis) (A : ℝ) {d : ℝ}
     (hlong : ∀ᶠ H : ℝ in atTop, ∀ t : ℝ, Real.log H ≤ |t| → |t| ≤ A * Real.log H →
