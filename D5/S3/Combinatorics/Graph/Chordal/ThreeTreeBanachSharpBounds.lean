@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: An invariant polygon bounds clique-four reconstruction and a hexagonal witness gives the sharp width-three path limit. -/
+   digest: An invariant polygon bounds clique-four reconstruction and a hexagonal witness bounds finite width-three path coefficients. -/
 
 import D5.S3.Combinatorics.Graph.Chordal.SimplicialAndIntervalPotential
 import D5.S3.Combinatorics.Graph.Chordal.EliminationForest
@@ -704,18 +704,6 @@ end ChordalUpper
 
 section ExtremalConstants
 
-private theorem four_thirds_le_of_family {C : ℝ}
-    (h : ∀ m : ℕ, 1 ≤ m → (4*m : ℝ)/(3*m+4) ≤ C) : (4/3 : ℝ) ≤ C := by
-  by_contra! hc
-  let d := 4 - 3*C
-  have hd : 0 < d := by dsimp [d]; linarith
-  obtain ⟨m, hm⟩ := exists_nat_gt (max 1 (4*C/d))
-  have hm₁ : (1 : ℝ) < m := (le_max_left _ _).trans_lt hm
-  have hgt := (div_lt_iff₀ hd).mp ((le_max_right _ _).trans_lt hm)
-  have hle := (div_le_iff₀ (by positivity : (0:ℝ) < 3*m+4)).mp (h m (by exact_mod_cast hm₁.le))
-  dsimp [d] at hgt
-  nlinarith only [hgt, hle]
-
 private theorem coefficient_upper (n : ℕ) : BanachPathPower.banachCoefficient n 3 ≤ 4/3 := by
   unfold BanachPathPower.banachCoefficient
   apply csInf_le ⟨0, fun c hc => hc.1⟩
@@ -723,26 +711,16 @@ private theorem coefficient_upper (n : ℕ) : BanachPathPower.banachCoefficient 
   intro E _ _ _ g hg ht
   simpa only [mul_one] using pathPowerThree_banach_upper_four_thirds n g 1 zero_le_one hg ht
 
-private theorem coefficient_lower (m : ℕ) (hm : 1 ≤ m) :
-    (4*m : ℝ)/(3*m+4) ≤ BanachPathPower.banachCoefficient (3*m+3) 3 := by
-  unfold BanachPathPower.banachCoefficient
-  apply le_csInf
-  · refine ⟨4/3, by norm_num, ?_⟩
-    intro E _ _ _ g hg ht
-    simpa only [mul_one] using pathPowerThree_banach_upper_four_thirds (3*m+3) g 1 zero_le_one hg ht
-  · intro c hc
-    obtain ⟨g, hg, ht, hl⟩ := pathPowerThree_banach_lower_four_thirds m hm
-    obtain ⟨φ, hp⟩ := hc.2 pathHexagon g hg ht
-    obtain ⟨i, j, hij, hR⟩ := hl φ
-    exact hR.trans (hp i j hij)
-
 /-- The supremum of the width-three path coefficients is attained as an asymptotic bound. -/
 theorem pathPowerThree_banach_sup_four_thirds :
     (⨆ n : ℕ, BanachPathPower.banachCoefficient n 3) = (4/3 : ℝ) := by
   have hb : BddAbove (Set.range fun n : ℕ => BanachPathPower.banachCoefficient n 3) :=
     ⟨4/3, by rintro _ ⟨n, rfl⟩; exact coefficient_upper n⟩
-  refine (ciSup_le coefficient_upper).antisymm (four_thirds_le_of_family fun m hm => ?_)
-  exact (coefficient_lower m hm).trans (le_ciSup hb (3*m+3))
+  have hlim : Filter.Tendsto (fun n => BanachPathPower.banachCoefficient n 3) Filter.atTop
+      (nhds (4/3 : ℝ)) := by
+    simpa only [Nat.cast_ofNat, show (2 - 2 / (3 : ℝ)) = 4/3 by norm_num] using
+      BanachPathPower.pathPower_banach_limit_tendsto 3 (by decide)
+  exact (ciSup_le coefficient_upper).antisymm (le_of_tendsto' hlim fun n => le_ciSup hb n)
 
 private theorem path_chordal (n : ℕ) : (pathPowerThree n).IsChordal := by
   obtain ⟨l, r, _, h, hi⟩ := BanachPathPower.pathPower_isIntervalGraph n 3
@@ -797,13 +775,12 @@ theorem cliqueFour_banach_coefficient_bounds :
     simpa only [mul_one] using hG.exists_cliqueFour_banach_gain_potential_polygon hK g 1 zero_le_one hg ht
   refine ⟨le_csInf ⟨_, hupper⟩ ?_, csInf_le ⟨0, fun c hc => hc.1⟩ hupper, by norm_num⟩
   intro c hc
-  apply four_thirds_le_of_family
-  intro m hm
-  obtain ⟨g, hg, ht, hl⟩ := pathPowerThree_banach_lower_four_thirds m hm
-  obtain ⟨φ, hφ⟩ := hc.2 (Fin (3*m+3)) (pathPowerThree (3*m+3)) (path_chordal _) (fun _ => path_clique)
-    pathHexagon g hg ht
-  obtain ⟨i, j, hij, hR⟩ := hl φ
-  exact hR.trans (hφ i j hij)
+  rw [← pathPowerThree_banach_sup_four_thirds]
+  apply ciSup_le
+  intro n
+  unfold BanachPathPower.banachCoefficient
+  apply csInf_le ⟨0, fun r hr => hr.1⟩
+  exact ⟨hc.1, hc.2 (Fin n) (pathPowerThree n) (path_chordal n) (fun _ => path_clique)⟩
 
 end ExtremalConstants
 

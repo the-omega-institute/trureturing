@@ -102,7 +102,7 @@ $$\operatorname{sup}\left((n:\mathbb{N} \mapsto \operatorname{CBan}\left(n, 3\ri
 
 *Commentary.*
 
-Here CBan is the infimum of nonnegative uniform reconstruction coefficients at unit defect for the indicated path power. The causal formula supplies a common upper bound. The planar lower bounds approach it as the residue classes lengthen.
+Here CBan is the infimum of nonnegative uniform reconstruction coefficients at unit defect for the indicated path power. The causal formula supplies a common upper bound. The path-coefficient convergence theorem at width three gives the matching lower bound on the supremum.
 
 **Definition 1.9 (The clique-four coefficient).**
 
@@ -126,7 +126,7 @@ $$(\frac{4}{3} \le S) \land ((S \le \frac{72537}{50000}) \land (\frac{72537}{500
 
 *Commentary.*
 
-Every admissible coefficient bounds the finite hexagonal examples because these path powers are chordal and have no clique of size five. The polygon coefficient is itself admissible.
+Every admissible coefficient bounds the reconstruction coefficients of every third power of a path. These graphs are chordal and have no clique of size five, so the path supremum gives the lower endpoint. The polygon coefficient is itself admissible.
 
 ## References
 

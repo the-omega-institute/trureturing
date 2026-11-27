@@ -39,13 +39,13 @@ internal sealed class ThreeTreeBanachSharpBoundsDocument : IScribeDocumentDefini
                 "The length-three gain is two thirds in every coordinate except the initial index modulo three, where it is minus four thirds. A length-two gain averages the current and previous length-three gains. Adjacent gains vanish. Sum the residuals along each of the three length-three residue classes, taking its corresponding coordinate. The zero coordinate sums at the two middle endpoints leave four adjacent-edge differences. If M bounds the residuals, the resulting inequality is four times m at most three times m plus four, multiplied by M."),
             Entry("path-power-supremum", "pathPowerThree_banach_sup_four_thirds",
                 "Supremum over path lengths", Eq(Call("sup", Map("n", Naturals, Call("CBan", V("n"), D(3)))), FourThirds),
-                "Here CBan is the infimum of nonnegative uniform reconstruction coefficients at unit defect for the indicated path power. The causal formula supplies a common upper bound. The planar lower bounds approach it as the residue classes lengthen."),
+                "Here CBan is the infimum of nonnegative uniform reconstruction coefficients at unit defect for the indicated path power. The causal formula supplies a common upper bound. The path-coefficient convergence theorem at width three gives the matching lower bound on the supremum."),
             Entry("clique-four-coefficient", "cliqueFourBanachCoefficient", "The clique-four coefficient",
                 Eq(V("S"), Call("inf", Call("Good"))),
                 "Good is the set of nonnegative real coefficients giving a uniform potential bound at unit triangle defect for every finite chordal graph of clique number at most four and every real Banach target. S is the infimum of Good.", DescribeRole.Definition),
             Entry("clique-four-interval", "cliqueFour_banach_coefficient_bounds",
                 "The clique-four interval", And(Le(FourThirds, V("S")), And(Le(V("S"), PolygonRadius), Lt(PolygonRadius, Div(D(3), D(2))))),
-                "Every admissible coefficient bounds the finite hexagonal examples because these path powers are chordal and have no clique of size five. The polygon coefficient is itself admissible."))));
+                "Every admissible coefficient bounds the reconstruction coefficients of every third power of a path. These graphs are chordal and have no clique of size five, so the path supremum gives the lower endpoint. The polygon coefficient is itself admissible."))));
 
     private static DocumentBlock Entry(string id, string name, string title, Formula statement, string proof,
         DescribeRole role = DescribeRole.Theorem) => Describe.Lean(DescribeId.Create(id),
