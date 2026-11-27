@@ -33,16 +33,28 @@ private structure Tagged where
   tag : Type
   data : List Nat
 
-private theorem differentTags (a b : List Nat) (h : Tagged.mk Unit a = Tagged.mk Empty b) : false = true :=
+private theorem differentTags (a b : List Nat) (h : Tagged.mk Unit a = Tagged.mk Empty b) : False :=
   (Eq.mp (congrArg Tagged.tag h) ()).elim
 
 public def compareTagged (read : type_of% @withPtrEqUnsafe.{1}) (a b : List Nat) : Bool :=
-  read (Tagged.mk Unit a) (Tagged.mk Empty b) (fun _ => false) (differentTags a b)
+  read (Tagged.mk Unit a) (Tagged.mk Empty b) (fun _ => false) (fun h => (differentTags a b h).elim)
 
 public theorem guardedPointerEquality (read : type_of% @withPtrEqUnsafe.{1})
     (observed : ∃ a b : List Nat, a = b ∧ compareTagged read a a ≠ compareTagged read a b) : False := by
   obtain ⟨a, b, eq, different⟩ := observed
   exact different (congrArg (compareTagged read a) eq)
+
+/-- Distinct erased tags have a negative equality decision for every choice of list payloads. -/
+@[noinline] public def decideTagged (read : type_of% @withPtrEqDecEq.{1}) (a b : List Nat) : Bool :=
+  toBoolUsing (read (Tagged.mk Unit a) (Tagged.mk Empty b) (fun _ => .isFalse (differentTags a b)))
+
+public theorem guardedPointerDecision (read : type_of% @withPtrEqDecEq.{1})
+    (observed : ∃ a : List Nat, decideTagged read a a = true) : False := by
+  obtain ⟨a, h⟩ := observed
+  have negative : decideTagged read a a = false :=
+    @decide_eq_false _ (read (Tagged.mk Unit a) (Tagged.mk Empty a) (fun _ => .isFalse (differentTags a a)))
+      (differentTags a a)
+  exact Bool.noConfusion (negative.symm.trans h)
 
 public theorem objectPointerEquality (read : type_of% @ShareCommon.Object.ptrEq)
     (observed : ∃ a b : NonScalar, a = b ∧ read a a ≠ read a b) : False := by
@@ -92,6 +104,7 @@ public unsafe def observe (seed : Nat) : IO (List String) := do
   let results := [("ptrAddrUnsafe", ptrAddrUnsafe a != ptrAddrUnsafe b),
     ("ptrEq", ptrEq a a != ptrEq a b), ("ptrEqList", ptrEqList [a] [a] != ptrEqList [a] [b]),
     ("withPtrEqUnsafe", compareTagged (@withPtrEqUnsafe) a a && !compareTagged (@withPtrEqUnsafe) a b),
+    ("withPtrEqDecEq", decideTagged (@withPtrEqDecEq) a a && !decideTagged (@withPtrEqDecEq) a b),
     ("ShareCommon.Object.ptrEq", ShareCommon.Object.ptrEq x x != ShareCommon.Object.ptrEq x y),
     ("ShareCommon.Object.ptrHash", ShareCommon.Object.ptrHash x != ShareCommon.Object.ptrHash y)]
   return (results.filter Prod.snd).map Prod.fst

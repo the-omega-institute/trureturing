@@ -613,6 +613,9 @@ private def conditionalConsequence? (owner name : Name) : Option (String × Name
     if name == ``withPtrEqUnsafe then
       return ("False", ``OmegaChecks.InitBoundaries.PointerObservations.guardedPointerEquality,
         "Distinct erased type tags permit a constant false callback, but aliasing an equal list field changes the native result from false to true")
+    if name == ``withPtrEqDecEq then
+      return ("False", ``OmegaChecks.InitBoundaries.PointerObservations.guardedPointerDecision,
+        "The native equality decision returns true for distinct erased type tags whose list fields alias")
     if name == ``ptrEqList then
       return ("False", ``OmegaChecks.InitBoundaries.PointerObservations.listPointerEquality,
         "Elementwise pointer identity distinguishes singleton lists containing equal allocations")

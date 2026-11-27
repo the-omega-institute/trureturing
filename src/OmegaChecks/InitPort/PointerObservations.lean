@@ -9,7 +9,7 @@ unsafe def main (args : List String) : IO Unit := do
     return
   let results ← OmegaChecks.InitBoundaries.PointerObservations.observe args.length
   let packed ← OmegaChecks.InitBoundaries.PointerObservations.observePacked args.length
-  unless results.length == 6 do
+  unless results.length == 7 do
     throw <| IO.userError s!"only {results} distinguished the equal inputs"
   IO.println s!"Observed different results on equal inputs for {results}."
   IO.println s!"Observed different results through unsafe packing of equal nested lists for {packed}."
