@@ -1,4 +1,4 @@
-# Kotesovec’s summatory conjecture for OEIS A005926
+# Vaclav Kotesovec’s summatory conjecture for OEIS A005926
 
 ## Abstract
 
@@ -50,13 +50,17 @@ $$\lim_{N \to \infty} \frac{\sum_{k=1}^{N} a\left(k\right)}{N^{\frac{3}{2}}} = \
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/Asymptotics/OeisA005926Diamond.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a005926-diamond-summatory-asymptotic` (proved) by `D5/S3/Analytic/Asymptotics/OeisA005926Diamond.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a005926-diamond-summatory-asymptotic","declaration_gid":"D5/S3/Analytic/Asymptotics/OeisA005926Diamond.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Vaclav Kotesovec (2026). *Summatory conjecture for OEIS A005926*. URL: <https://oeis.org/A005926/internal>.
 
 *Commentary.*
 
-The parity condition partitions the triples into the four residue classes 000, 011, 101, and 110 modulo two. In the squared-norm coordinates these give four translates of the lattice of spacing eight. Each class is counted by a shifted closed ball of radius √N/8, so division by N^(3/2) contributes (4π/3)/8³ per class. The four classes and weight two give π/48 for natural N tending to infinity through all cutoffs.
+Vaclav Kotesovec stated the conjecture in OEIS A005926 revision 49 on November 26, 2026. The parity condition partitions the triples into the four residue classes 000, 011, 101, and 110 modulo two. In the squared-norm coordinates these give four translates of the lattice of spacing eight. Each class is counted by a shifted closed ball of radius √N/8, so division by N^(3/2) contributes (4π/3)/8³ per class. The four classes and weight two give π/48 for natural N tending to infinity through all cutoffs.
 
 ## References
 
