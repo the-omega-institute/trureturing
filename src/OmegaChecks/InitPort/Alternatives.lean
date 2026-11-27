@@ -7,6 +7,7 @@ public import OmegaChecks.InitPort.Alternatives.ArrayFold
 public import OmegaChecks.InitPort.Alternatives.ArrayPredicates
 public import OmegaChecks.InitPort.Alternatives.ArrayReverse
 public import OmegaChecks.InitPort.Alternatives.ArraySort
+public import OmegaChecks.InitPort.Alternatives.ArrayWord
 public import OmegaChecks.InitPort.Alternatives.ArrayZip
 public import OmegaChecks.InitPort.Alternatives.Collect
 public import OmegaChecks.InitPort.Alternatives.Constraint

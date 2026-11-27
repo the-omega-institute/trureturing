@@ -484,6 +484,18 @@ partial def visit (n : Name) : M Bool := do
       | return ← record n (.blocked "kernel rejected logical reference")
     modify fun s => {s with env}
     return ← record n .added
+  if n == `Array.anyMUnsafe then
+    let .defnInfo native := ci | return ← record n (.blocked "missing native array search")
+    let some body := OmegaChecks.InitPort.alternativeBody? c.alternatives ci
+      | return ← record n (.blocked "missing bounded word loop")
+    for dep in usedConstants ci.type ++ usedConstants body do
+      unless ← visit dep do return ← record n (.blocked "unavailable bounded word loop dependency" (some dep))
+    let .ok decl := translateDecl (.defnInfo {native with safety := .safe}) ci.type body
+      | return ← record n (.blocked "invalid bounded word loop")
+    let .ok env ← checkWithRetry (← get).env decl c.maxHeartbeats
+      | return ← record n (.blocked "kernel rejected bounded word loop")
+    modify fun s => {s with env}
+    return ← record n .added
   if (ci.isUnsafe && !boundedBorrowedRead ci) || ci.isPartial then return ← record n (.blocked "unsafe/partial")
   if let .inductInfo i := ci then
     let .ok f ← (family c.source i).run | return ← record n (.blocked "malformed family")
