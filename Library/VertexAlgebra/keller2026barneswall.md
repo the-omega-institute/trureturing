@@ -11,6 +11,7 @@ strata_touched:
   - D5/S3/VertexAlgebra/TwistedGround/BarnesWall/OddGaussSum
   - D5/S3/VertexAlgebra/TwistedGround/BarnesWall/TensorIntertwiners
   - D5/S3/VertexAlgebra/TwistedGround/BarnesWall/OddCoherentTraceSign
+  - D5/S3/VertexAlgebra/TwistedGround/BarnesWall/Rank32CommutingTrace
   - D5/S3/VertexAlgebra/TwistedGround/BarnesWall/TensorDefectDet
   - D5/S3/Fourier/CyclicFluxChargeExchange
   - D5/S3/VertexAlgebra/TwistedGround/BarnesWall/Rank128Lattice
@@ -135,6 +136,33 @@ has zero basis values. Splitting by a spectator slot makes the cross
 pairing a complement permutation and a square-zero shear. The resulting
 finite Gauss sum is $+2^{2^{m-2}}$. The rank-128 value is $+2^{32}$.
 [Keller–Roberts–Roberts, §2.2 and Appendix A](https://arxiv.org/abs/2411.13646v2)
+
+## The rank-32 boundary
+
+For the specified $E(5)$ action the order-four twisted ground has weight
+$3/2$. Cyclic type is zero since four times the weight is integral. Its
+normalized squared action has phase $+1$ on the ground, and the
+reflection ground has weight $2$. These are the phases used in the
+quaternion modular comparison, so the same comparison gives zero chiral
+anomaly at rank 32. At rank eight the order-four weight is $3/8$ and its
+cyclic type is $2$ modulo $4$, which detects a nonzero anomaly.
+[Ji–Tian, equations (109)–(113)](https://arxiv.org/abs/2611.23231v1)
+
+The rank-32 Lean calculation concerns a different pair of Pauli words.
+The two rotations in distinct slots commute, and their lift exponent
+has four independent blocks of character sum eight. The resulting
+reflection-ground trace is $4096$. The abelian modular transform gives
+trace $16$ for the reflection on the weight-one ground of the twisted
+sector for the product involution. A character line in its even sector
+can be selected by the slant of an inflated two-cocycle. The corresponding
+holomorphic extension contains a weight-one Virasoro primary and has gap
+one. Every choice has gap at most two. The all-ones tensor lattice row
+has norm four and its pure translation stabilizer fixes the associated
+primary with phase one, so the invariant orbit sum gives a weight-two
+primary. For fixed trivial torsion the coherent centralizer projection
+on the noncentral involution grounds still determines which gap occurs.
+[Evans–Gannon, equation (2.7) and Corollary 2](https://arxiv.org/abs/1804.11145) ·
+[Huang–Kirillov–Lepowsky, VOA extensions](https://arxiv.org/abs/1406.3420)
 
 The complement bijection balances the row exponents and makes the
 normalized tensor Gram unimodular. The same lower cocycle on the actual
