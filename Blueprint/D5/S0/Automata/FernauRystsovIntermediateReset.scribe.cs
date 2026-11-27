@@ -45,7 +45,10 @@ internal sealed class FernauRystsovIntermediateResetDocument : IScribeDocumentDe
                 Paragraph(Text("The lower endpoint has t = min(r,s) and the upper endpoint has t = 0. "
                     + "A zero factor threshold gives a singleton with the empty reset word, and m then equals the other threshold. "
                     + "Proposition 7 supplies the necessity of the interval for finite factor and product thresholds."))),
-            DescribeRole.Theorem))));
+            DescribeRole.Theorem,
+            openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                ProblemSlugRef.Create("fernau-rystsov-2026-intermediate-reset-thresholds"),
+                ResolutionKind.Proved)))));
 
     private static Formula Attainment()
     {

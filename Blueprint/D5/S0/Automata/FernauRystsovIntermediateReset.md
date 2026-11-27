@@ -24,6 +24,10 @@ $$\begin{aligned}\forall r,s,m: \mathbb{N}, (\operatorname{max}\left(r, s\right)
 
 *Proof.* Machine-checked in Lean as `D5/S0/Automata/FernauRystsovIntermediateReset.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/fernau-rystsov-2026-intermediate-reset-thresholds` (proved) by `D5/S0/Automata/FernauRystsovIntermediateReset.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"fernau-rystsov-2026-intermediate-reset-thresholds","declaration_gid":"D5/S0/Automata/FernauRystsovIntermediateReset.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Henning Fernau and Igor Rystsov (2026). *Shortest Synchronizing Words on Product Automata*. DOI: [10.48550/arXiv.2611.09136](https://doi.org/10.48550/arXiv.2611.09136). URL: <https://arxiv.org/abs/2611.09136v1>.
