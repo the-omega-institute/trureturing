@@ -29,9 +29,9 @@ private def sameField : CtorFieldInfo → CtorFieldInfo → Bool
   | .erased, .erased | .void, .void => true
   | _, _ => false
 
-/-- This normalizer operates only on natural numbers and these algebraic data types. -/
-private def checkLinearData (source strict : Environment) : IO Unit := do
-  for name in [`Prod, `Option, `List, `Nat.Internal.Linear.Expr] do
+/-- Compare every constructor field and its native offset before sharing a runtime representation. -/
+public def checkDataTypes (source strict : Environment) (types : List Name) : IO Unit := do
+  for name in types do
     let some (.inductInfo s) := source.find? name | throw <| IO.userError s!"missing pinned data type {name}"
     let some (.inductInfo t) := strict.find? (InitKernelPort.portName name) | throw <| IO.userError s!"missing strict data type {name}"
     unless s.ctors.map InitKernelPort.portName == t.ctors do throw <| IO.userError s!"different constructors of {name}"
@@ -53,7 +53,7 @@ public def wrapper (source strict : Environment) (n : Name) (symbol : String) : 
   let some target := strict.find? n | throw <| IO.userError s!"missing strict indexed eliminator {n}"
   unless target.type == InitKernelPort.translate InitKernelPort.portName ci.type do
     throw <| IO.userError s!"indexed eliminator type mismatch: {n}"
-  if linear official then checkLinearData source strict
+  if linear official then checkDataTypes source strict [`Prod, `Option, `List, `Nat.Internal.Linear.Expr]
   if official.getRoot == `Fin then
     let some (some field) := impureTrivialStructureInfoExt.find? strict `Omega.Fin | throw <| IO.userError "missing strict Fin layout"
     unless field.fieldIdx == 0 do throw <| IO.userError "unexpected strict Fin value slot"

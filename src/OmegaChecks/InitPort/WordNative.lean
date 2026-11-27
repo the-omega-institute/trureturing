@@ -3,6 +3,7 @@ module
 public import OmegaChecks.InitPort.NativeState
 import OmegaChecks.InitPort.SyntaxPositionNative
 import OmegaChecks.InitPort.IndexedNative
+import OmegaChecks.InitPort.ByteFoldNative
 import OmegaChecks.InitPort.Translation
 import all Lean.Compiler.LCNF.ToImpureType
 import all Lean.OriginalConstKind
@@ -69,7 +70,7 @@ public def usesPinnedFunction (n : Name) : Bool :=
   let vector := n.getPrefix == `BitVec &&
     [`abs, `pow, `smod, `replicate, `reverse, `cpop, `cpopNatRec, `ctz, `clz, `clzAuxRec,
      `getLsbD, `getLsb, `getMsbD, `getMsb, `msb, `sdiv, `srem, `smtSDiv, `hash, `ofBoolListLE, `ofBoolListBE].contains method
-  modelOperation n || IndexedNative.supported n || SyntaxPositionNative.supported n || bytes || vector || [`Nat.repr, `Nat.reprFast, `Int.repr].contains n || [`BitVec.toHex, `BitVec.instToString].contains n || n == `Nat.bitwise || ((word? n.getPrefix).isSome && (method == `pow || (method == `ofInt && bitsType n.getPrefix == n.getPrefix))) ||
+  modelOperation n || ByteFoldNative.supported n || IndexedNative.supported n || SyntaxPositionNative.supported n || bytes || vector || [`Nat.repr, `Nat.reprFast, `Int.repr].contains n || [`BitVec.toHex, `BitVec.instToString].contains n || n == `Nat.bitwise || ((word? n.getPrefix).isSome && (method == `pow || (method == `ofInt && bitsType n.getPrefix == n.getPrefix))) ||
     (n.getPrefix == `Int && [`negOfNat, `subNatNat, `sign, `toNat, `pow, `fdiv, `fmod, `bdiv, `bmod].contains method)
 
 public def supported (source : Environment) (owner name : Name) : Bool :=
@@ -95,6 +96,7 @@ public def supported (source : Environment) (owner name : Name) : Bool :=
   let primitive := ((word? name.getPrefix).isSome && (ops ++ widths).contains method) ||
     (name.getPrefix == `Bool && widths.contains method)
   isFloatCall source owner name ||
+    (owner == `OmegaInit.Data.ByteArray.Basic && ByteFoldNative.supported name) ||
     ([`OmegaInit.Data.Nat.Basic, `OmegaInit.Data.Nat.Div.Basic, `OmegaInit.Data.Nat.Lemmas,
     `OmegaInit.Data.Nat.Internal.Linear, `OmegaInit.Data.Fin.Lemmas].contains owner && IndexedNative.supported name) ||
     ([`OmegaInit.Data.Float.Model.Float, `OmegaInit.Data.Float.Model.Float32].contains owner && modelOperation name) ||
@@ -135,6 +137,7 @@ private def checkFloatLayout (env : Environment) (name : Name) : IO Unit := do
 /-- Check both sides of the call and generate its ownership conversions from their stored IR. -/
 public def wrapper (source strict : Environment) (n : Name) : IO String := do
   let official := n.replacePrefix `Omega .anonymous
+  if ByteFoldNative.supported official then return ← ByteFoldNative.wrapper source strict n (symbol n)
   if IndexedNative.supported official then return ← IndexedNative.wrapper source strict n (symbol n)
   if SyntaxPositionNative.supported official then return ← SyntaxPositionNative.wrapper source strict n (symbol n)
   let some ci := source.find? official | throw <| IO.userError s!"unknown word primitive {official}"
