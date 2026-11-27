@@ -78,7 +78,7 @@ The carrier consists of the old vertices and a fresh copy of Fin(k(p)) at each o
 
 **Definition 1.7 (Attaching fresh leaves).**
 
-$$\forall \left(V: Type\right) \left(T: \operatorname{Tree}\left(V\right)\right) \left(k: V \to \mathbb{N}\right) , \left(\begin{aligned}&\operatorname{inflate}\left(T, k\right): \operatorname{Tree}\left(\operatorname{Inflated}\left(k\right)\right)\\&\operatorname{root}\left(\operatorname{inflate}\left(T, k\right)\right) = \operatorname{inl}\left(\operatorname{root}\left(T\right)\right)\\&\operatorname{parent}\left(\operatorname{inflate}\left(T, k\right), \operatorname{inl}\left(p\right)\right) = \operatorname{inl}\left(\operatorname{parent}\left(T, p\right)\right)\\&\operatorname{parent}\left(\operatorname{inflate}\left(T, k\right), \operatorname{inr}\left(\langle p, i\rangle\right)\right) = \operatorname{inl}\left(p\right)\end{aligned}\right)$$
+$$\forall \left(V: Type\right) \left(T: \operatorname{Tree}\left(V\right)\right) \left(k: V \to \mathbb{N}\right) , \left(\begin{aligned}&\operatorname{inflate}\left(T, k\right): \operatorname{Tree}\left(\operatorname{Inflated}\left(k\right)\right)\\&\operatorname{root}\left(\operatorname{inflate}\left(T, k\right)\right) = \operatorname{inl}\left(\operatorname{root}\left(T\right)\right)\\&\forall p: V, \operatorname{parent}\left(\operatorname{inflate}\left(T, k\right), \operatorname{inl}\left(p\right)\right) = \operatorname{inl}\left(\operatorname{parent}\left(T, p\right)\right)\\&\forall p: V, \forall i: \operatorname{Fin}\left(k\left(p\right)\right), \operatorname{parent}\left(\operatorname{inflate}\left(T, k\right), \operatorname{inr}\left(\langle p, i\rangle\right)\right) = \operatorname{inl}\left(p\right)\end{aligned}\right)$$
 
 *Formalization.* `D5/S3/Combinatorics/UnorderedTrees/LeafDecoration.inflate` (`✓ std3`).
 
@@ -102,7 +102,7 @@ An old internal vertex keeps its old child. At an old terminal, a positive leaf 
 
 **Definition 1.9 (Pruning recovers the skeleton).**
 
-$$\forall \left(V: Type\right) \left(T: \operatorname{Tree}\left(V\right)\right) \left(k: V \to \mathbb{N}\right) , \left(\forall hk: \left(\forall p \in V,\; \left(\neg \operatorname{Internal}\left(T, p\right)\right) \Rightarrow 0 < k\left(p\right)\right), \forall hr: \operatorname{Internal}\left(\operatorname{inflate}\left(T, k\right), \operatorname{root}\left(\operatorname{inflate}\left(T, k\right)\right)\right), \operatorname{pruneInflateIso}\left(T, k, hk\right): \operatorname{Iso}\left(T, \operatorname{prune}\left(\operatorname{inflate}\left(T, k\right), hr\right)\right)\right)$$
+$$\forall \left(V: Type\right) \left(T: \operatorname{Tree}\left(V\right)\right) \left(k: V \to \mathbb{N}\right) , \left(\forall hk: \left(\forall p \in V,\; \left(\neg \operatorname{Internal}\left(T, p\right)\right) \Rightarrow 0 < k\left(p\right)\right), \operatorname{pruneInflateIso}\left(T, k, hk\right): \operatorname{Iso}\left(T, \operatorname{prune}\left(\operatorname{inflate}\left(T, k\right), \left(\operatorname{internal}_{\mathrm{inflate}}\right)\left(T, k, hk, \operatorname{root}\left(T\right)\right)\right)\right)\right)$$
 
 *Formalization.* `D5/S3/Combinatorics/UnorderedTrees/LeafDecoration.pruneInflateIso` (`✓ std3`).
 
@@ -114,7 +114,7 @@ The isomorphism uses the left injection. The proof supplied to prune is internal
 
 **Definition 1.10 (The prescribed multiplicity of each fibre).**
 
-$$\forall \left(V: Type\right) \left(T: \operatorname{Tree}\left(V\right)\right) \left(k: V \to \mathbb{N}\right) , \left(\forall hk: \left(\forall p \in V,\; \left(\neg \operatorname{Internal}\left(T, p\right)\right) \Rightarrow 0 < k\left(p\right)\right), \forall p \in V,\; \operatorname{Fin}\left(k\left(p\right)\right) \equiv \operatorname{LeafFibre}\left(\operatorname{inflate}\left(T, k\right), \operatorname{pruneInflateIso}\left(T, k, hk\right).equiv\left(p\right)\right)\right)$$
+$$\forall \left(V: Type\right) \left(T: \operatorname{Tree}\left(V\right)\right) \left(k: V \to \mathbb{N}\right) , \left(\forall hk: \left(\forall p \in V,\; \left(\neg \operatorname{Internal}\left(T, p\right)\right) \Rightarrow 0 < k\left(p\right)\right), \forall p \in V,\; \operatorname{inflateLeafIso}\left(T, k, hk, p\right): \operatorname{Fin}\left(k\left(p\right)\right) \equiv \operatorname{LeafFibre}\left(\operatorname{inflate}\left(T, k\right), \operatorname{pruneInflateIso}\left(T, k, hk\right).equiv\left(p\right)\right)\right)$$
 
 *Formalization.* `D5/S3/Combinatorics/UnorderedTrees/LeafDecoration.inflateLeafIso` (`✓ std3`).
 

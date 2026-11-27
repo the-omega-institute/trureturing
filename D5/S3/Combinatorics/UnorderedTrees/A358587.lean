@@ -7,7 +7,7 @@
    digest: Wu's generating function and recurrence for actual unordered rooted trees. -/
 
 /-
-admission_basis: open-problem-resolution (#34765; Proved)
+admission_basis: open-problem-resolution (#34765; open)
 result: proof_shape: content; escape_witness: actual_series;
   consumers: none (designated external open-problem settlement).
 The exact result packages the actual quotient count, the integer-valued formal

@@ -20,7 +20,6 @@ internal sealed class LeafDecorationDocument : IScribeDocumentDefinition
     private static Formula CoreIso => Call("Iso", Call("prune", T, Hr), Call("prune", S, Hs));
     private static Formula FibreEquality => All("p", Call("Core", T),
         Equal(Card(Call("LeafFibre", T, P)), Card(Call("LeafFibre", S, Image(E, P)))));
-    private static Formula RootWitness => F.Id("hr");
     private static Formula PositiveTips => All("p", V, new Formula.Logic(
         new Formula.Not(Call("Internal", T, P)), FormulaLogicOperator.Implies,
         Less(D(0), Apply(K, P))));
@@ -56,10 +55,11 @@ internal sealed class LeafDecorationDocument : IScribeDocumentDefinition
                 new Formula.Aligned([
                     Seq(Amp, HasType(InflatedTree, Call("Tree", Call("Inflated", K)))),
                     Seq(Amp, Equal(Call("root", InflatedTree), Call("inl", Call("root", T)))),
-                    Seq(Amp, Equal(Call("parent", InflatedTree, Call("inl", P)),
-                        Call("inl", Call("parent", T, P)))),
-                    Seq(Amp, Equal(Call("parent", InflatedTree, Call("inr", Pair(P, F.Id("i")))),
-                        Call("inl", P)))
+                    Seq(Amp, Binder(Forall, "p", V, Equal(Call("parent", InflatedTree, Call("inl", P)),
+                        Call("inl", Call("parent", T, P))))),
+                    Seq(Amp, Binder(Forall, "p", V, Binder(Forall, "i", Call("Fin", Apply(K, P)),
+                        Equal(Call("parent", InflatedTree, Call("inr", Pair(P, F.Id("i")))),
+                            Call("inl", P)))))
                 ]),
                 "Old vertices retain their old parent edges. Each fresh leaf points to its fibre index, and the root is the image of the old root."),
             Theorem("internal-inflate", "internal_inflate", "The old vertices become internal",
@@ -68,14 +68,16 @@ internal sealed class LeafDecorationDocument : IScribeDocumentDefinition
                 "An old internal vertex keeps its old child. At an old terminal, a positive leaf multiplicity supplies a fresh child."),
             Definition("recover", "pruneInflateIso", "Pruning recovers the skeleton",
                 Binder(Forall, "hk", Parenthesized(PositiveTips),
-                    Binder(Forall, "hr", Call("Internal", InflatedTree, Call("root", InflatedTree)),
                     HasType(Call("pruneInflateIso", T, K, Hk), Call("Iso", T,
-                        Call("prune", InflatedTree, RootWitness))))),
+                        Call("prune", InflatedTree, Apply(new Formula.Subscript(
+                            Seq(Operatorname, Grp(F.Id("internal"))), Seq(Mathrm, Grp(F.Id("inflate")))),
+                            T, K, Hk, Call("root", T)))))),
                 "The isomorphism uses the left injection. The proof supplied to prune is internal_inflate at the original root, and the pruned carrier excludes every fresh leaf."),
             Definition("recover-fibre", "inflateLeafIso", "The prescribed multiplicity of each fibre",
                 Binder(Forall, "hk", Parenthesized(PositiveTips), All("p", V,
-                    EquivOf(Call("Fin", Apply(K, P)), Call("LeafFibre", InflatedTree,
-                        Image(Call("pruneInflateIso", T, K, Hk), P))))),
+                    HasType(Call("inflateLeafIso", T, K, Hk, P),
+                        EquivOf(Call("Fin", Apply(K, P)), Call("LeafFibre", InflatedTree,
+                            Image(Call("pruneInflateIso", T, K, Hk), P)))))),
                 "The equivalence sends an index i to the fresh leaf tagged by (p,i) and extracts that index from the corresponding leaf fibre."),
             Theorem("card-inflate", "card_inflate", "Size of the inflated carrier",
                 Equal(Card(Call("Inflated", K)), Seq(Card(V), Sp, Plus, Sp,
