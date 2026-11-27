@@ -73,7 +73,7 @@ private theorem alternating_tail_bounds {a : ℕ → ℝ} {l : ℝ}
     ring
   have ht' := ht.comp (tendsto_add_atTop_nat 1)
   change Tendsto (fun n => ∑ i ∈ range (n + 1), (-1 : ℝ) ^ i * a i) atTop (𝓝 l) at ht'
-  simp only [hid] at ht' 
+  simp only [hid] at ht'
   have htail : Tendsto (fun n => ∑ i ∈ range n, (-1 : ℝ) ^ i * a (i + 1))
       atTop (𝓝 (a 0 - l)) := by
     simpa only [sub_sub_cancel] using (tendsto_const_nhds (x := a 0)).sub ht'

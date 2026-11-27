@@ -114,7 +114,7 @@ theorem same_layer_second_range {ι κ : Type*} [Fintype ι] {δ t s k G : ℝ}
     have hc' := cos_le_cos_of_nonneg_of_le_pi hangle (round_le_pi _ _) hdist
     rw [cos_round, Quaternion.inner_def] at hc'
     change ((1 : ℍ[ℝ]) * star (Q₁.point i : ℍ[ℝ])).re ≤ _ at hc'
-    rw [one_mul, Quaternion.re_star] at hc' 
+    rw [one_mul, Quaternion.re_star] at hc'
     exact hc'.trans hk
   have hY (i : Fin 4) : cos δ ≤ ⟪(P₁.point i : ℍ[ℝ]), (Q₁.point i : ℍ[ℝ])⟫_ℝ := by
     apply (round_le_iff _ _ hδ hδπ).mp
