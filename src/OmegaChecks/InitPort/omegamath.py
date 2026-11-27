@@ -11,7 +11,7 @@ import tempfile
 import tomllib
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-from check import library_mathlib_only
+from check import extend_project_imports, library_mathlib_only
 from portable import STRICT_LIBRARIES, ROOT, closure, import_graph, root, source_fingerprint
 
 
@@ -28,6 +28,7 @@ def lean_options(options, prefix=""):
 def build(basis, output, workers, audit_log):
     lean = subprocess.check_output(["lake", "env", "printenv", "LEAN"], cwd=ROOT, text=True).strip()
     sources, graph = import_graph(lean, (*STRICT_LIBRARIES, "src/*.lean"))
+    extend_project_imports(lean, graph)
     foundation = dict(json.loads((basis / "modules.json").read_text()))
     graph.update((name, set(deps)) for name, deps in foundation.items())
     clients = sorted(name for name in sources if root(name) in {"OmegaMath", "OmegaMathlib"})

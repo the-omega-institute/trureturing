@@ -41,8 +41,7 @@ def build(targets):
         raise subprocess.CalledProcessError(result, ["lake", "build", *selections])
 
 
-def strict_import_graph(lean, targets=()):
-    _, graph = import_graph(lean, (*portable.STRICT_LIBRARIES, "src/*.lean"))
+def extend_project_imports(lean, graph, targets=()):
     # A witness can reach a marked project module through the public umbrella.
     # Read the requested project branches without scanning every unrelated D5 source.
     pending = set(targets).union(*graph.values())
@@ -54,6 +53,11 @@ def strict_import_graph(lean, targets=()):
         _, extra = import_graph(lean, paths)
         graph.update(extra)
         pending = set().union(*extra.values())
+
+
+def strict_import_graph(lean, targets=()):
+    _, graph = import_graph(lean, (*portable.STRICT_LIBRARIES, "src/*.lean"))
+    extend_project_imports(lean, graph, targets)
     return graph
 
 
