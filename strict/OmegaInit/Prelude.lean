@@ -51,26 +51,14 @@ def False.elim {C : Sort u} (h : False) : C := False.rec (motive := fun _ => C) 
 
 def Not (a : Prop) : Prop := a → False
 
-/-- Constructive conjunction with propositional elimination. -/
-@[no_expose] def And (a b : Prop) : Prop := ∀ r : Prop, (a → b → r) → r
+structure And (a b : Prop) : Prop where
+  intro ::
+  left : a
+  right : b
 
-namespace And
-theorem intro {a b : Prop} (left : a) (right : b) : And a b :=
-  fun _ use => use left right
-
-theorem left {a b : Prop} (self : And a b) : a := self a (fun ha _ => ha)
-
-theorem right {a b : Prop} (self : And a b) : b := self b (fun _ hb => hb)
-@[no_expose] def rec {a b : Prop} {motive : And a b → Sort u}
-    (intro : ∀ left right, motive (And.intro left right)) (t : And a b) : motive t :=
-  intro t.left t.right
-
-abbrev casesOn {a b : Prop} {motive : And a b → Sort u} (t : And a b)
+abbrev And.casesOn {a b : Prop} {motive : And a b → Sort u} (t : And a b)
     (intro : ∀ left right, motive (And.intro left right)) : motive t :=
-  intro t.left t.right
-
-protected abbrev recOn.{u} := @And.casesOn.{u}
-end And
+  And.rec (motive := motive) intro t
 
 /-- Constructive disjunction with propositional elimination. -/
 @[no_expose] def Or (a b : Prop) : Prop := ∀ r : Prop, (a → r) → (b → r) → r
@@ -94,7 +82,7 @@ abbrev casesOn {a b : Prop} {motive : Or a b → Prop} (t : Or a b)
 protected abbrev recOn := @Or.casesOn
 end Or
 
-attribute [irreducible] And And.rec Or
+attribute [irreducible] Or
 
 inductive Bool where
   | false

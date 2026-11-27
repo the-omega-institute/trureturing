@@ -73,6 +73,9 @@ example (a b : Omega.Nat) :
     Omega.Eq ({ fst := a, snd := b } : Omega.Prod Omega.Nat Omega.Nat).fst a := Omega.rfl
 example (p : Omega.Prod Omega.Nat Omega.Nat) (b : Omega.Nat) :
     Omega.Eq ({ p with snd := b }).snd b := Omega.rfl
+example {p q : Prop} (h : Omega.And p q) : p := h.left
+example {p q : Prop} (pq : p → q) (qp : q → p) : Omega.Iff p q := { mp := pq, mpr := qp }
+example {p q : Prop} (h : Omega.Iff p q) : q → p := h.mpr
 example {p : Prop} (d : Omega.Decidable p) : Omega.Eq d d :=
     Omega.Decidable.falseTrueCases (fun _ => Omega.rfl) (fun _ => Omega.rfl) d
 example {p : Prop} (h : p) :

@@ -17,24 +17,14 @@ port_inductive Sum
 
 namespace Omega
 
-@[no_expose] def Iff (a b : Prop) : Prop := And (a → b) (b → a)
+structure Iff (a b : Prop) : Prop where
+  intro ::
+  mp : a → b
+  mpr : b → a
 
-namespace Iff
-theorem intro {a b : Prop} (mp : a → b) (mpr : b → a) : Iff a b := And.intro mp mpr
-
-theorem mp {a b : Prop} (self : Iff a b) : a → b := And.left self
-
-theorem mpr {a b : Prop} (self : Iff a b) : b → a := And.right self
-@[no_expose] def rec {a b : Prop} {motive : Iff a b → Sort u}
-    (intro : ∀ mp mpr, motive (Iff.intro mp mpr)) (t : Iff a b) : motive t :=
-  intro t.mp t.mpr
-
-abbrev casesOn {a b : Prop} {motive : Iff a b → Sort u} (t : Iff a b)
+abbrev Iff.casesOn {a b : Prop} {motive : Iff a b → Sort u} (t : Iff a b)
     (intro : ∀ mp mpr, motive (Iff.intro mp mpr)) : motive t :=
-  intro t.mp t.mpr
-
-protected abbrev recOn.{u} := @Iff.casesOn.{u}
-end Iff
+  Iff.rec (motive := motive) intro t
 
 @[no_expose] def Exists {α : Sort u} (p : α → Prop) : Prop := ∀ r : Prop, (∀ w, p w → r) → r
 
@@ -54,7 +44,7 @@ abbrev Exists.casesOn {α : Sort u} {p : α → Prop} {motive : Exists p → Pro
 
 protected abbrev Exists.recOn.{u} := @Exists.casesOn.{u}
 
-attribute [irreducible] Iff Iff.rec Exists
+attribute [irreducible] Exists
 
 namespace Nat
 
