@@ -14,7 +14,7 @@ import OmegaBuild.Commands
 
 /-!
 Davydov–Simmons (arXiv:1603.04650), Theorem 2.11 and equations (14), (15),
-and (25). In the induced object for a subgroup algebra, the value at
+(22), and (25). In the induced object for a subgroup algebra, the value at
 `x` in degree `g` is in the line of degree `x⁻¹ * g * x` when that
 degree belongs to the subgroup. Otherwise the fiber is zero, so a section
 is fully represented by its scalar values on `ConjugatingElements`.
@@ -197,6 +197,81 @@ private theorem mixedTwist_comp (ω : G → G → G → 𝕜ˣ)
       rw [hv, hw, hz]
       abel
     _ = 0 := by simp only [hδ, neg_zero, add_zero, sub_zero]
+
+/-- The coefficient `ε_h(u)` of the action on the basis vector of degree `u`
+in Davydov–Simmons equation (22). -/
+def subgroupCoefficient (γ : K → K → 𝕜ˣ) (h u : K) : 𝕜ˣ :=
+  γ h u / γ (h * u * h⁻¹) h
+
+/-- The subgroup coefficient composes by the mixed twist of the coboundary
+of `γ`, with the orientation of Davydov–Simmons equations (5) and (6). -/
+theorem subgroupCoefficient_comp (ω : G → G → G → 𝕜ˣ) (γ : K → K → 𝕜ˣ)
+    (restricted : ∀ a b c : K, ω a b c = γ b c * γ a (b * c) / (γ (a * b) c * γ a b))
+    (a b u : K) :
+    mixedTwist ω a b u * subgroupCoefficient γ a (b * u * b⁻¹) *
+      subgroupCoefficient γ b u = subgroupCoefficient γ (a * b) u := by
+  let v := b * u * b⁻¹
+  let w := a * v * a⁻¹
+  have hv : v * b = b * u := by simp [v, mul_assoc]
+  have hw : w * a = a * v := by simp [w, mul_assoc]
+  have hab : (a * b) * u * (a * b)⁻¹ = w := by simp [w, v, mul_inv_rev, mul_assoc]
+  let A : K → K → K → Additive (𝕜ˣ) := fun p q r => Additive.ofMul (ω p q r)
+  let B : K → K → Additive (𝕜ˣ) := fun p q => Additive.ofMul (γ p q)
+  let δ : K → K → K → Additive (𝕜ˣ) := fun p q r =>
+    B q r + B p (q * r) - (B (p * q) r + B p q)
+  have hδ (p q r : K) : δ p q r - A p q r = 0 :=
+    sub_eq_zero.mpr (congrArg Additive.ofMul (restricted p q r)).symm
+  apply Additive.ofMul.injective
+  apply sub_eq_zero.mp
+  change ((-A a b u + A a v b + -A w a b) + (B a v - B w a) + (B b u - B v b)) -
+    (B (a * b) u - B ((a * b) * u * (a * b)⁻¹) (a * b)) = 0
+  rw [hab]
+  calc
+    _ = (δ a b u - A a b u) - (δ a v b - A a v b) + (δ w a b - A w a b) := by
+      dsimp only [δ]
+      rw [← hv, ← hw]
+      abel
+    _ = 0 := by simp only [hδ, sub_zero, add_zero]
+
+/-- Right-translation transport in Davydov–Simmons equation (15), using the
+subgroup action coefficient from (22) when `ω|K³ = δγ`. -/
+def transportOfCochain (ω : G → G → G → 𝕜ˣ) (γ : K → K → 𝕜ˣ)
+    (normalized : ∀ a b c, (a = 1 ∨ b = 1 ∨ c = 1) → ω a b c = 1)
+    (cocycle : ∀ a b c d, ω b c d * ω a (b * c) d * ω a b c =
+      ω (a * b) c d * ω a b (c * d))
+    (cochainNormalized : ∀ a b : K, (a = 1 ∨ b = 1) → γ a b = 1)
+    (restricted : ∀ a b c : K, ω a b c = γ b c * γ a (b * c) / (γ (a * b) c * γ a b)) :
+    Transport 𝕜 K g where
+  scalar x h := mixedTwist ω h.val⁻¹ x.val⁻¹ g *
+    subgroupCoefficient γ h⁻¹ ⟨x.val⁻¹ * g * x.val, x.property⟩
+  one x := by
+    have hfirst (a b : G) : ω 1 a b = 1 := normalized 1 a b (Or.inl rfl)
+    have hsecond (a b : G) : ω a 1 b = 1 := normalized a 1 b (Or.inr (Or.inl rfl))
+    have hγfirst (u : K) : γ 1 u = 1 := cochainNormalized 1 u (Or.inl rfl)
+    have hγsecond (u : K) : γ u 1 = 1 := cochainNormalized u 1 (Or.inr rfl)
+    change mixedTwist ω ((1 : G)⁻¹) x.val⁻¹ g *
+      subgroupCoefficient γ (1 : K)⁻¹ ⟨x.val⁻¹ * g * x.val, x.property⟩ = 1
+    simp only [mixedTwist, subgroupCoefficient, inv_one, hfirst, hsecond,
+      hγfirst, hγsecond, one_div, one_mul]
+  comp x h j := by
+    let u : K := ⟨x.val⁻¹ * g * x.val, x.property⟩
+    let v : K := ⟨(rightMul x h).val⁻¹ * g * (rightMul x h).val, (rightMul x h).property⟩
+    have hv : v = h⁻¹ * u * h := by
+      apply Subtype.ext
+      simp [v, u, rightMul, mul_inv_rev, mul_assoc]
+    have hcoeff := subgroupCoefficient_comp ω γ restricted j⁻¹ h⁻¹ u
+    rw [inv_inv] at hcoeff
+    have hcomp := mixedTwist_comp ω cocycle j.val⁻¹ h.val⁻¹ x.val⁻¹ g
+    rw [inv_inv] at hcomp
+    change _ = _ * mixedTwist ω (↑(j⁻¹) : G) (↑(h⁻¹) : G) (u : G) at hcomp
+    change mixedTwist ω (↑(h * j) : G)⁻¹ x.val⁻¹ g * subgroupCoefficient γ (h * j)⁻¹ u =
+      (mixedTwist ω j.val⁻¹ (x.val * h.val)⁻¹ g * subgroupCoefficient γ j⁻¹ v) *
+        (mixedTwist ω h.val⁻¹ x.val⁻¹ g * subgroupCoefficient γ h⁻¹ u)
+    simp only [Subgroup.coe_mul, mul_inv_rev, hv]
+    rw [← hcoeff]
+    simp only [← mul_assoc]
+    rw [← hcomp]
+    ac_rfl
 
 /-- Equation (15) for the gauge in which `ω|K³ = 1` and the subgroup trivializing
 cochain is `1`. The subgroup action in (22) then permutes the graded basis with
