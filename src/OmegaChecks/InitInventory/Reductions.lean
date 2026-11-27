@@ -63,6 +63,8 @@ meta import OmegaChecks.InitInventory.OrderedAlgebra
 public import OmegaChecks.InitInventory.Order
 import all OmegaChecks.InitInventory.Order
 meta import OmegaChecks.InitInventory.Order
+import all OmegaChecks.InitInventory.AbstractOrder
+meta import OmegaChecks.InitInventory.AbstractOrder
 
 public section
 
