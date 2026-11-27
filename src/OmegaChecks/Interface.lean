@@ -3,6 +3,7 @@ import OmegaChecks.InitCompiler.RootNames
 import OmegaChecks.FieldMethods
 import OmegaChecks.InitPort.NativeQuot
 import OmegaChecks.InitPort.LawfulLoop
+import OmegaChecks.InitPort.PatternMatch
 import OmegaChecks.InitPort.WordFold
 import OmegaChecks.InitPort.WordForIn
 import OmegaChecks.InitPort.ReferenceSwap
@@ -25,6 +26,8 @@ namespace OmegaChecks.Interface
 
 private def official (strict : Environment) (n : Name) : Name := Id.run do
   if n == OmegaChecks.InitPort.LawfulLoop.strictHelper then return ``OmegaChecks.InitPort.LawfulLoop.reference
+  if let some rule := OmegaChecks.InitPort.PatternMatch.rules.find? (fun r => InitKernelPort.portName r.helper == n) then
+    return rule.reference
   if let some user := privateToUserName? n then
     if let some idx := strict.getModuleIdxFor? n then
       if strict.header.moduleNames[idx]!.getRoot == `OmegaInit && user.getRoot == `Omega then
@@ -394,6 +397,9 @@ def checkSites (strict publicStrict reference : Environment) (bindings : Array (
         continue
       let deps ← if name == OmegaChecks.InitPort.LawfulLoop.strictHelper && owner == OmegaChecks.InitPort.LawfulLoop.owner then
         OmegaChecks.InitPort.LawfulLoop.check strict reference (translate (official strict))
+      else if let some rule := OmegaChecks.InitPort.PatternMatch.rules.find? (fun r =>
+          owner == OmegaChecks.InitPort.PatternMatch.owner && InitKernelPort.portName r.helper == name) then
+        OmegaChecks.InitPort.checkCertifiedFunction strict reference (translate (official strict)) owner name rule.reference rule.agreement
       else do
         let dst := official strict name
         unless declaredIn reference dst owner do

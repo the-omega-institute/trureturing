@@ -4,6 +4,8 @@ import OmegaChecks.InitPort.ReferenceSpecialization
 meta import OmegaChecks.InitPort.ReferenceSpecialization
 import OmegaChecks.InitPort.LawfulLoop
 meta import OmegaChecks.InitPort.LawfulLoop
+import OmegaChecks.InitPort.PatternMatch
+meta import OmegaChecks.InitPort.PatternMatch
 import OmegaChecks.InitPort.LogicalHandle
 meta import OmegaChecks.InitPort.LogicalHandle
 import OmegaChecks.InitCompiler.RootNames
@@ -205,7 +207,9 @@ unsafe def main (args : List String) : IO Unit := do
   for (n, _) in source.constants.toList do reverseNames := reverseNames.insert (renamed n) n
   let tokens := OmegaChecks.InitPort.LogicalHandle.apis.map (fun api => (api.tokenName, api.owner))
   let loopHelper := (OmegaChecks.InitPort.LawfulLoop.helper, OmegaChecks.InitPort.LawfulLoop.owner)
-  let localHelpers := loopHelper :: (tokens ++ OmegaChecks.InitPort.ReferenceSpecialization.supportOwners)
+  let matchHelpers := OmegaChecks.InitPort.PatternMatch.rules.map (fun rule => (rule.helper, OmegaChecks.InitPort.PatternMatch.owner))
+  let exposedHelpers := loopHelper :: matchHelpers
+  let localHelpers := exposedHelpers ++ tokens ++ OmegaChecks.InitPort.ReferenceSpecialization.supportOwners
   let mut groups : NameMap (Array (Name × ConstantInfo)) := {}
   let mut generatedOwners : NameMap Name := {}
   for ci in newDecls.constants do
@@ -290,7 +294,7 @@ unsafe def main (args : List String) : IO Unit := do
       let previous := orig[i]!
       let mut cs := previous.constants
       for (n,new) in group do
-        if i == 2 || n == loopHelper.1 then cs := cs.push new
+        if i == 2 || exposedHelpers.any (·.1 == n) then cs := cs.push new
         else if let some exposed := publiclyDeclared.find? n then
           if (exposed.isAxiom || sealedImplementation n) && !new.isAxiom then
             let hidden := ConstantInfo.axiomInfo {new.toConstantVal with isUnsafe := false}

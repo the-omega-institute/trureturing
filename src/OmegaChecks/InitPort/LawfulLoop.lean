@@ -1,5 +1,5 @@
 module
-public import Lean
+public import OmegaChecks.InitPort.CertifiedFunction
 public import Init.Data.Iterators.Consumers.Monadic.Loop
 import all Init.Data.Iterators.Consumers.Monadic.Loop
 import all Init.WFExtrinsicFix
@@ -106,27 +106,7 @@ public def addReference (source templates : Environment) : IO Environment := do
   | .ok out => return out
   | .error e => throw <| IO.userError (← e.toMessageData {} |>.toString)
 
-/-- In the isolated module the same private helper computes the terminating loop. Its
-complete function is compared with the two sides of the checked universal equality. -/
-public def check (strict standard : Environment) (translateTerm : Expr → Expr) : IO (Array Name) := do
-  let some (.defnInfo actual) := strict.find? strictHelper | throw <| IO.userError "missing strict well-founded loop"
-  let some (.defnInfo ref) := standard.find? ``reference | throw <| IO.userError "missing loop reference"
-  let some (.thmInfo proof) := standard.find? ``agreement | throw <| IO.userError "missing loop equality"
-  let levels := actual.levelParams.map Level.param
-  let mappedType := translateTerm actual.type
-  let body := translateTerm actual.value
-  let refTerm := mkConst ref.name levels
-  let .ok (.sort u) := Kernel.check standard {} mappedType | throw <| IO.userError "invalid loop type"
-  let equation := mkApp3 (mkConst `Eq [u]) mappedType refTerm body
-  unless actual.safety == .safe && actual.all == [strictHelper] && levels.length == ref.levelParams.length &&
-      proof.levelParams.length == levels.length &&
-      strict.getModuleIdxFor? strictHelper == strict.getModuleIdx? (owner.replacePrefix `Init `OmegaInit) &&
-      Kernel.isDefEqGuarded standard {} mappedType (ref.type.instantiateLevelParams ref.levelParams levels) &&
-      Kernel.isDefEqGuarded standard {} equation (proof.type.instantiateLevelParams proof.levelParams levels) do
-    throw <| IO.userError "well-founded loop does not implement the certified function"
-  let axs ← (collectAxioms proof.name : CoreM _).toIO' {fileName := "<well-founded loop>", fileMap := default} {env := standard}
-  unless axs.all (#[`propext, `Classical.choice, `Quot.sound].contains ·) do
-    throw <| IO.userError "unexpected assumption in the loop correspondence"
-  return actual.type.getUsedConstants ++ actual.value.getUsedConstants
+public def check (strict standard : Environment) (translateTerm : Expr → Expr) : IO (Array Name) :=
+  checkCertifiedFunction strict standard translateTerm owner strictHelper ``reference ``agreement
 
 end OmegaChecks.InitPort.LawfulLoop

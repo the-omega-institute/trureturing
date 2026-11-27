@@ -21,6 +21,7 @@ namespace InitKernelPort
 
 def moduleOf (env : Environment) (n : Name) : Option Name := do
   if n == OmegaChecks.InitPort.LawfulLoop.helper then return OmegaChecks.InitPort.LawfulLoop.owner
+  if OmegaChecks.InitPort.PatternMatch.rules.any (·.helper == n) then return OmegaChecks.InitPort.PatternMatch.owner
   let i ← env.getModuleIdxFor? n
   return env.header.moduleNames[i]!
 
@@ -753,7 +754,11 @@ def run (strictPath artifacts : System.FilePath) (outPath : String) (exclude : S
   let inlineLocal := fun n => loopTemplates.getModuleIdxFor? n == loopTemplates.getModuleIdx? `OmegaChecks.InitPort.LawfulLoop
   let loopBody ← (Meta.deltaExpand loop.value inlineLocal (allowOpaque := true)).toIO'
     {fileName := "<well-founded iterator>", fileMap := default} {env := loopTemplates}
-  let alternatives := (← OmegaChecks.InitPort.loadAlternatives).insert OmegaChecks.InitPort.LawfulLoop.helper (.defnInfo {loop with value := loopBody})
+  let mut alternatives := (← OmegaChecks.InitPort.loadAlternatives).insert OmegaChecks.InitPort.LawfulLoop.helper (.defnInfo {loop with value := loopBody})
+  let patternTemplates ← importModules #[{module := `OmegaChecks.InitPort.PatternMatch}] {} (level := .private)
+  for rule in OmegaChecks.InitPort.PatternMatch.rules do
+    let some impl := patternTemplates.find? rule.implementation | throw <| IO.userError s!"missing {rule.implementation}"
+    alternatives := alternatives.insert rule.helper impl
   let ruleModule := `OmegaChecks.InitCompiler.ProofRules
   let ruleEnv ← importModules #[{module := ruleModule}] {} (level := .private)
   let mut proofRules := {}
@@ -772,6 +777,7 @@ def run (strictPath artifacts : System.FilePath) (outPath : String) (exclude : S
   unsafe enableInitializersExecution
   let source ← importModules imports {} (loadExts := true) (level := .private)
   let source ← OmegaChecks.InitPort.LawfulLoop.addReference source loopTemplates
+  let source ← OmegaChecks.InitPort.PatternMatch.addReferences source patternTemplates
   let mut referenceModels := {}
   for (consumer, owner) in [(`IO.FS.Stream.ofBuffer, `Init.System.IO), (`StateRefT'.run, `Init.Control.StateRef),
       (`ST.Prim.Ref.modify, `Init.System.ST), (`IO.stdGenRef, `Init.Data.Random)] do

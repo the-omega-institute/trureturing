@@ -1,6 +1,7 @@
 module
 public import Lean
 import OmegaChecks.InitPort.LawfulLoop
+import OmegaChecks.InitPort.PatternMatch
 import Init.Data.Iterators.Consumers.Access
 import Init.Data.Iterators.Consumers.Collect
 import Init.Data.Iterators.Consumers.Total
@@ -53,7 +54,8 @@ public def finiteCollectors (env : Environment) (input : Expr) (withinImplementa
   let hasLoop := env.contains InitPort.LawfulLoop.helper &&
     (!aliases.isEmpty || used.contains ``Std.IteratorLoop.defaultImplementation ||
       used.contains ``Std.IterM.DefaultConsumers.forIn')
-  unless hasLoop || used.any (fun n => (consumerArity? n).isSome) do return input
+  let patterns := InitPort.PatternMatch.rules.filter fun rule => used.contains rule.original && env.contains rule.helper
+  unless hasLoop || !patterns.isEmpty || used.any (fun n => (consumerArity? n).isSome) do return input
   let rewrite : MetaM Expr := Meta.transform input (pre := fun sub => do
     if hasLoop then
       if let some call ← InitPort.LawfulLoop.specialize? sub then return .done call
@@ -63,6 +65,8 @@ public def finiteCollectors (env : Environment) (input : Expr) (withinImplementa
     if hasLoop && aliases.contains head then
       if let some core ← unfoldDefinition? sub then
         if let some loop ← InitPort.LawfulLoop.specializeFiniteDefault? core then return .done loop
+    if let some rule := patterns.find? (·.original == head) then
+      if let some call ← InitPort.PatternMatch.specialize? rule sub then return .done call
     let isSlice := sliceCollectors.contains head
     let some arity := consumerArity? head | return .continue
     -- Rewrites under congrArg often pass the collection function without its final argument.
