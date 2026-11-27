@@ -162,10 +162,11 @@ lemma exists_rep_of_pseudo [IsAlgClosed k] [CharZero k] {T} (h : ∀ B, (∀ x :
   have : I.IsTwoSided := ⟨by aesop⟩
   let τ : _ ⧸ I →ₗ[k] _ := liftQ _ t (mul_one · ▸ congr($(·) 1))
   have hN l : ∀ x, (∀ m, x ^ m.succ = l ^ m • x) → ∃ j : ℕ, τ x = j * l := mk_surjective.forall.2
-    fun x _ ↦ have e j : ∀ m, (newtonPoly j.succ m.succ).eval (τ <| x ^ ·) =
-      l ^ m * ∏ i ∈ range (j + 1), (τ x - i * l) := by induction j with simp_all [newtonPoly,
-      prod_range_succ] <;> grind [‹∀ _, _› 0]
-    by grind [e (Fintype.card n) 0 ▸ eval_rename (x ^ ·) t _ ▸ h _ (by simp [eval_rename,
+    fun x hx ↦ by
+      have e j : ∀ m, (newtonPoly j.succ m.succ).eval (τ <| x ^ ·) =
+      l ^ m * ∏ i ∈ range (j + 1), (τ x - i * l) := by
+        induction j with simp_all [newtonPoly, prod_range_succ] <;> grind -abstractProof [‹∀ _, _› 0]
+      grind -abstractProof [e (Fintype.card n) 0 ▸ eval_rename (x ^ ·) t _ ▸ h _ (by simp [eval_rename,
       eval_newtonPoly, trace_pow_eq_sum_roots, card_roots_eq_natDegree]), prod_eq_zero_iff]
   have : Module.Finite k (_ ⧸ I) :=
     rank_lt_aleph0_iff.1 (.trans' Cardinal.natCast_lt_aleph0 (not_le.1
