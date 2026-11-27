@@ -1,5 +1,6 @@
 module
 public import Init.Control.StateRef
+import all Init.System.Promise
 public import Lean.Data.Name
 
 namespace OmegaChecks.InitBoundaries.ReferenceSelection
@@ -31,6 +32,11 @@ public theorem stateModifyGet (f : type_of% @StateRefT'.modifyGet) : Selection :
 public theorem stateInstance (f : type_of% @StateRefT'.instMonadStateOfOfMonadLiftTST) : Selection :=
   fromRead fun r => (f (m := ST Unit)).get r
 
+/-- One hidden promise handle suffices across all payload types. -/
+public theorem promiseResult (result : type_of% @IO.Promise.result!) : Selection := by
+  obtain ⟨address⟩ := (private_decl% IO.PromisePointed).property
+  exact ⟨fun α h => (result (α := α) ⟨address, h⟩).get⟩
+
 /-- Each source keeps its original pinned type through `type_of%` in the corresponding theorem. -/
 public def witnesses : List (Lean.Name × Lean.Name × Lean.Name) := [
   (`Init.System.ST, ``ST.Prim.Ref.get, ``primGet),
@@ -43,6 +49,7 @@ public def witnesses : List (Lean.Name × Lean.Name × Lean.Name) := [
   (`Init.System.ST, ``ST.Ref.toMonadStateOf, ``monadState),
   (`Init.Control.StateRef, ``StateRefT'.get, ``stateGet),
   (`Init.Control.StateRef, ``StateRefT'.modifyGet, ``stateModifyGet),
-  (`Init.Control.StateRef, ``StateRefT'.instMonadStateOfOfMonadLiftTST, ``stateInstance)]
+  (`Init.Control.StateRef, ``StateRefT'.instMonadStateOfOfMonadLiftTST, ``stateInstance),
+  (`Init.System.Promise, ``IO.Promise.result!, ``promiseResult)]
 
 end OmegaChecks.InitBoundaries.ReferenceSelection
