@@ -7,7 +7,7 @@ internal sealed class KeplerSupportTwoDocument : IScribeDocumentDefinition
 {
     private const string Owner = "D5/S3/Combinatorics/SpectralGraph/KeplerSupportTwo";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/SpectralGraph/kepler2026balphaspectral");
+        LibraryNoteRef.Create("D5/L/Combinatorics/kepler2026balphaspectral");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The equivalence-class sum counts Kepler's supports, with two signed vectors per support.",
