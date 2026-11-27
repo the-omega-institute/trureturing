@@ -457,3 +457,5 @@ port_definition strictAnd with_native_code
 port_definition strictOr with_native_code
 port_definition toBoolUsing with_native_code
 port_definition bne with_native_code
+
+port_constructor_eliminators PSum, Sum, ForInStep, DoResultBC, DoResultPR, DoResultPRBC, DoResultSBC

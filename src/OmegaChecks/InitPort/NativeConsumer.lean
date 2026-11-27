@@ -29,6 +29,15 @@ public def composeSecond (x y : Omega.Bool) : Omega.Bool :=
 
 public def mappedFirst (x y : Omega.Bool) : Omega.Bool :=
   Omega.Prod.fst (Omega.Prod.map (fun a => a) (fun b => b) (Omega.Prod.mk x y))
+public def sumIndex (x y : Omega.Bool) : Omega.Bool :=
+  let s := Omega.Bool.casesOn (motive := fun _ => Omega.Sum Omega.Bool Omega.Bool) x
+    (Omega.Sum.inl y) (Omega.Sum.inr y)
+  Omega.Nat.casesOn (motive := fun _ => Omega.Bool) s.ctorIdx .false (fun _ => .true)
+
+public def sumRight (x y : Omega.Bool) : Omega.Bool :=
+  Omega.Sum.inr.elim (α := Omega.Bool) (motive := fun _ => Omega.Bool)
+    (Omega.Sum.inr y) Omega.rfl (fun value => Omega.strictOr x value)
+
 public def disjunction (x y : Omega.Bool) : Omega.Bool := Omega.strictOr x y
 public def conjunction (x y : Omega.Bool) : Omega.Bool := Omega.strictAnd x y
 "
@@ -54,7 +63,7 @@ unsafe def main (args : List String) : IO Unit := do
     let second := fun (_ y : Bool) => y
     let checks := [(`firstValue, first), (`secondValue, second), (`additionFirst, first),
       (`stateSecond, second), (`optionFirst, first), (`composeSecond, second), (`mappedFirst, first),
-      (`disjunction, or), (`conjunction, and)]
+      (`sumIndex, first), (`sumRight, or), (`disjunction, or), (`conjunction, and)]
     for (name, expected) in checks do
       let some ci := env.find? name | throw <| IO.userError s!"missing {name}"
       unless Kernel.isDefEqGuarded env {} ci.type arity do throw <| IO.userError s!"invalid type of {name}"

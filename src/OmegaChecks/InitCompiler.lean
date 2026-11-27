@@ -139,4 +139,21 @@ private def officialDeclaration (stx : Syntax) : CommandElabM (Environment × Co
       let name := mkIdentFrom id field.projFn
       elabCommand (← `(command| port_definition $name:ident with_native_code))
 
+/-- Compile the pinned constructor index and typed elimination functions of each inductive. -/
+@[command_parser, builtin_command_parser] def portConstructorEliminators := leading_parser
+  "port_constructor_eliminators " >> sepBy1 ident ","
+
+@[builtin_command_elab portConstructorEliminators] def elabPortConstructorEliminators : CommandElab := fun stx => do
+  for id in stx[1].getSepArgs do
+    let (_, .inductInfo info) ← officialDeclaration id | throwErrorAt id "expected an official inductive"
+    let ctorIdx := mkIdentFrom id (mkCtorIdxName info.name)
+    let elimType := mkIdentFrom id (info.name ++ `ctorElimType)
+    let ctorElim := mkIdentFrom id (mkCtorElimName info.name)
+    elabCommand (← `(command| port_definition $ctorIdx:ident with_native_code))
+    elabCommand (← `(command| port_definition $elimType:ident))
+    elabCommand (← `(command| port_definition $ctorElim:ident with_native_code))
+    for ctor in info.ctors do
+      let elim := mkIdentFrom id (ctor ++ `elim)
+      elabCommand (← `(command| port_definition $elim:ident with_native_code))
+
 end OmegaChecks.InitCompiler

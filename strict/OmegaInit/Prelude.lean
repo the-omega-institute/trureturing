@@ -202,9 +202,15 @@ def Function.comp {α : Sort u} {β : Sort v} {δ : Sort w}
 
 def Function.const {α : Sort u} (β : Sort v) (a : α) : β → α := fun _ => a
 
+end Omega
+
+port_definition Eq.casesOn
+
+namespace Omega
+
 abbrev Eq.ndrec.{u1, u2} {α : Sort u2} {a : α} {motive : α → Sort u1}
     (m : motive a) {b : α} (h : Eq a b) : motive b :=
-  Eq.rec (motive := fun b _ => motive b) m h
+  Eq.casesOn (motive := fun b _ => motive b) h m
 
 abbrev Eq.ndrec_symm.{u1, u2} {α : Sort u2} {a : α} {motive : α → Sort u1}
     (m : motive a) {b : α} (h : Eq b a) : motive b := Eq.ndrec m h.symm
@@ -280,8 +286,6 @@ abbrev Empty.casesOn (motive : (t : Empty) → Sort u) (t : Empty) : motive t :=
 
 abbrev PEmpty.casesOn.{v,u} (motive : (t : PEmpty.{u}) → Sort v) (t : PEmpty) : motive t :=
   PEmpty.rec motive t
-
-abbrev Eq.casesOn.{v,u} := @Eq.recOn.{v,u}
 
 abbrev HEq.casesOn.{v,u} := @HEq.recOn.{v,u}
 
@@ -708,3 +712,5 @@ port_inductive Subtype
 port_definition Subtype.val with_native_code
 port_proof Subtype.property
 port_definition DecidableEq
+
+port_constructor_eliminators Bool, Nat, Option, List, Except, EStateM.Result
