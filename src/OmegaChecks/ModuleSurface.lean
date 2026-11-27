@@ -81,7 +81,7 @@ private def supportedExtension (name : Name) : Bool :=
    `Lean.namespacesExt, `Lean.noncomputableExt, `Lean.Compiler.inlineAttrs, `Lean.exportedAxiomsExt,
    `Lean.privateConstKindsExt, `Lean.modPkgExt, `Lean.IR.declMapExt, `Lean.Compiler.LCNF.baseExt,
    `Lean.Compiler.LCNF.monoExt, `Lean.Compiler.LCNF.impureSigExt, `Lean.Compiler.LCNF.trivialStructureInfoExt,
-   Compiler.LCNF.specExtension.name,
+   Compiler.LCNF.specExtension.name, Compiler.implementedByAttr.ext.name,
    `Lean.Compiler.LCNF.monoTypeExt, `Lean.Compiler.LCNF.impureTypeExt,
    `Lean.Compiler.LCNF.impureTrivialStructureInfoExt, `Lean.Compiler.LCNF.ctorLayoutExt,
    `Lean.indirectModUseExt, `Lean.deprecatedModuleExt].contains (privateToUserName name)
@@ -109,6 +109,11 @@ private def checkElaboration (env : Environment) (owner : Name) (idx : ModuleIdx
       | _ => throw <| IO.userError s!"unverified native symbol for {owner}/{n}"
     unless owner == `OmegaInit.System.Promise && env.getModuleIdxFor? n == some idx &&
         data == ⟨[.standard `all symbol]⟩ do throw <| IO.userError s!"invalid promise runtime entry {owner}/{n}"
+  for (n, implementation) in Compiler.implementedByAttr.ext.getModuleEntries env idx do
+    let reader := mkPrivateNameCore `OmegaInit.Dynamic `Omega.TypeName.typeNameImpl
+    unless owner == `OmegaInit.Dynamic && n == `Omega.TypeName.typeName && implementation == reader &&
+        env.getModuleIdxFor? n == some idx && env.getModuleIdxFor? reader == some idx do
+      throw <| IO.userError s!"unmatched native implementation {n} → {implementation} in {owner}"
   for entry in reducibilityExtraExt.ext.getModuleEntries env idx do
     let (name, _) := match entry with
       | .global value | .scoped _ value => value

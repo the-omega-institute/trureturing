@@ -100,19 +100,41 @@ def compile_promise_runtime(stage, product, artifact, inventory):
         run(app)
 
 
+def compile_type_name(stage, product, artifact, inventory):
+    bridge = stage / "type-name.c"
+    run("lake", "env", "lean", "--run", HERE / "TypeNameNative.lean", artifact, bridge)
+    if not bridge.exists():
+        return
+    native = product / "native"
+    native.mkdir(exist_ok=True)
+    obj = native / "type-name.o"
+    run("leanc", "-fPIC", "-c", bridge, "-o", obj)
+    with inventory.open() as stream:
+        installed = {name for owner, name, _, status, _ in map(json.loads, stream)
+                     if owner == "Init.Dynamic" and status in {"added", "existing"}}
+    if {"TypeName.mk", "TypeName.typeName"} <= installed:
+        consumer = stage / "type-name-consumer.c"
+        run("lean", "-R", HERE, "-c", consumer, HERE / "TypeNameConsumer.lean",
+            env={**os.environ, "LEAN_PATH": str(artifact)})
+        app = stage / "type-name-consumer"
+        run("leanc", consumer, obj, HERE / "type_name_consumer.c", "-o", app)
+        run(app)
+
+
 def generate(stage, product, seed, roots, excluded):
     transfer = stage / "transfer"
     artifact = product / "lib"
     inventory = product / "inventory.jsonl"
     omissions = dict.fromkeys(excluded, "explicit exclusion")
     selection = product / "interface-rejections.jsonl"
-    run("lake", "build", "omegaAudit", "+OmegaChecks.Interface.Equations", "+OmegaChecks.InitPort.Kernel")
+    run("lake", "build", "omegaAudit", "+OmegaChecks.Interface.Equations", "+OmegaChecks.InitPort.Kernel",
+        "+OmegaChecks.InitPort.NativeState")
     run("lake", "env", "lean", "--run", HERE / "Kernel.lean", "--prepare-quot", seed)
     order_file = stage / "candidate-order.json"
 
     def distribute():
         options = ["--order", order_file] if order_file.exists() else []
-        run("lean", "--run", HERE / "Modules.lean", *options, transfer, seed, artifact, *roots)
+        run("lake", "env", "lean", "--run", HERE / "Modules.lean", *options, transfer, seed, artifact, *roots)
         return dict(json.loads((product / "modules.json").read_text()))
 
     with selection.open("w") as rejected:
@@ -151,6 +173,8 @@ def generate(stage, product, seed, roots, excluded):
     graph = dict(json.loads((product / "modules.json").read_text()))
     closure = list(TopologicalSorter(graph).static_order())
     run("lake", "env", "lean", "--run", HERE / "ExportAxioms.lean", artifact, *graph)
+    if "OmegaInit.Dynamic" in graph:
+        compile_type_name(stage, product, artifact, inventory)
     if "OmegaInit.System.Promise" in graph:
         compile_promise_runtime(stage, product, artifact, inventory)
     with (product / "audit.txt").open("w") as log:

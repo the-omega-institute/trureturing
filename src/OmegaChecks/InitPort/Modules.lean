@@ -1,5 +1,9 @@
 module
 public import Lean
+import OmegaChecks.InitPort.TypeName
+meta import OmegaChecks.InitPort.TypeName
+import OmegaChecks.InitPort.NativeState
+meta import OmegaChecks.InitPort.NativeState
 import all Lean.Structure
 
 public section
@@ -163,7 +167,7 @@ private def localizeProof (env : Environment) (later : Name → Bool) (ci : Cons
     return .thmInfo {thm with value := body}
   | .error _ => return ci
 
-def main (args : List String) : IO Unit := do
+unsafe def main (args : List String) : IO Unit := do
   let (order, args) ← match args with
     | "--order" :: path :: rest => do
       let names : Array String ← IO.ofExcept <| fromJson? (← IO.ofExcept <| Json.parse (← IO.FS.readFile path))
@@ -248,6 +252,9 @@ def main (args : List String) : IO Unit := do
       for key in protectedExt.getModuleEntries monolith old do metadata := addProtected metadata key
       for e in reducibilityCoreExt.getModuleEntries monolith old do metadata := reducibilityCoreExt.addEntry (asyncDecl := e.1) metadata e
     let sourceNames := NameSet.ofList (group.toList.map Prod.fst)
+    let nameCode ← if owner == `OmegaInit.Dynamic && ([`TypeName.mk, OmegaChecks.InitPort.TypeName.reader].any sourceNames.contains) then
+      some <$> OmegaChecks.InitPort.TypeName.nativeEntries source monolith owner renamed sourceNames.contains
+      else pure none
     for cls in classExtension.getModuleEntries surface (surface.getModuleIdx? official).get! do
       if sourceNames.contains cls.name then metadata := classExtension.addEntry metadata {cls with name := renamed cls.name}
     for (n, ci) in group do
@@ -283,11 +290,22 @@ def main (args : List String) : IO Unit := do
         e.1 != matchPatternAttr.ext.name && e.1 != Elab.Term.elabAsElim.ext.name &&
         e.1 != auxRecExt.name && e.1 != aliasExtension.name)) ++ replacement ++ instances ++ structures ++ tags
       let mut entries := entries
+      if let some compiled := nameCode then
+        let generated ← OmegaChecks.InitPort.TypeName.publicCompilerEntries compiled
+        for (key, extra) in generated do
+          let old := ((entries.find? (·.1 == key)).map Prod.snd).getD #[]
+          let name (v : EnvExtensionEntry) := (unsafeCast v : Name × Unit).1
+          let merged := old.foldl (init := extra) fun a v => if a.any (fun e => name e == name v) then a else a.push v
+          entries := (entries.filter (·.1 != key)).push (key, merged.qsort (fun a b => (name a).quickLt (name b)))
       if i == 2 && cs.any (·.name == strictToken) then
         let tags := addNoncomputable ((← mkEmptyEnvironment).setMainModule owner) strictToken
         let tagged ← mkModuleData tags .private
         entries := entries ++ tagged.entries.filter (fun e => e.1 == noncomputableExt.name && !e.2.isEmpty)
-      let data : ModuleData := { previous with entries, isModule := true, imports := mergeImports previous.imports mappedImports, constants := cs, constNames := cs.map (·.name) }
+      let extraConstNames := if nameCode.isSome then
+          (exported.extraConstNames.filter sourceNames.contains |>.map renamed).foldl
+            (fun acc name => if acc.contains name then acc else acc.push name) previous.extraConstNames
+        else previous.extraConstNames
+      let data : ModuleData := { previous with entries, extraConstNames, isModule := true, imports := mergeImports previous.imports mappedImports, constants := cs, constNames := cs.map (·.name) }
       parts := parts.push (#[path,path.addExtension "server",path.addExtension "private"][i]!,data)
     graph := graph.push (owner.toString, (mergeImports orig[2]!.imports mappedImports).map (·.module.toString))
     saveModuleDataParts owner parts
@@ -298,6 +316,8 @@ def main (args : List String) : IO Unit := do
     else
       let ir : ModuleData := { (default : ModuleData) with isModule := true, imports := mappedImports }
       saveModuleDataParts (owner ++ `ir) #[(path.withExtension "ir.sig", default),(path.withExtension "ir",ir)]
+    if let some compiled := nameCode then
+      OmegaChecks.InitPort.NativeState.writeCode out owner compiled OmegaChecks.InitPort.NativeState.codeExtensions
     count := count + 1
   let mut copied := NameSet.ofList (owners.toList.map (fun n => n.replacePrefix `Init `OmegaInit))
   let mut pending := graph.flatMap Prod.snd

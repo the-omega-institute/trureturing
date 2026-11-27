@@ -5,6 +5,7 @@ import OmegaChecks.InitPort.WordFold
 import OmegaChecks.InitPort.WordForIn
 import OmegaChecks.InitPort.Promise
 import OmegaChecks.InitPort.StateToken
+import OmegaChecks.InitPort.TypeName
 import OmegaChecks.InitPort.SyntaxArray
 import OmegaChecks.InitPort.FloatFraction
 import OmegaChecks.InitPort.BorrowedIndex
@@ -184,6 +185,10 @@ private def compare (reference : Environment) (rename : Name → Name) (src dst 
     unless (Kernel.check reference {} dst.type).toOption.any (same reference (.sort .zero)) do
       throw <| IO.userError s!"official declaration is not a proof for {src.name}"
   | .defnInfo x, .defnInfo y =>
+    if let some (strict, publicStrict) := foundation then
+      if x.safety == .safe && y.safety == .unsafe && (y.name == `TypeName.mk || y.name == OmegaChecks.InitPort.TypeName.reader) then
+        OmegaChecks.InitPort.TypeName.check strict publicStrict reference y.name (liftTerm x.value)
+        return deps ++ x.value.getUsedConstants
     if foundation.isSome && x.safety == .safe && y.name == `withPtrAddrUnsafe then
       OmegaChecks.InitPort.Address.check reference y (liftTerm x.value)
       return deps ++ x.value.getUsedConstants
@@ -214,6 +219,9 @@ private def compare (reference : Environment) (rename : Name → Name) (src dst 
     compareDefinitionBody
   | .defnInfo x, .opaqueInfo y =>
     if let some (strict, publicStrict) := foundation then
+      if y.name == `TypeNameData && x.safety == .safe then
+        OmegaChecks.InitPort.TypeName.check strict publicStrict reference y.name (liftTerm x.value)
+        return deps ++ x.value.getUsedConstants
       if y.name == OmegaChecks.InitPort.Promise.pointed && x.safety == .safe then
         OmegaChecks.InitPort.Promise.checkBody strict publicStrict reference y.name liftTerm x.value
         return deps ++ x.value.getUsedConstants
