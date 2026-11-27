@@ -178,6 +178,113 @@ private theorem openFinite {α : Type u} [UpwardEnumerable α] [LawfulUpwardEnum
       exact ⟨n + 1, by rw [reach]; exact fun lt => UpwardEnumerable.lt_irrefl (UpwardEnumerable.lt_iff.mp lt)⟩
     · exact ⟨0, by rw [succMany?_zero]; exact inside⟩
 
+private noncomputable def finiteClosedRangeLoop :
+    type_of% @_root_.Std.Rxc.Iterator.instIteratorLoop.loop := by
+  intro α enum order dec law compat n mon
+  letI := closedFinite (α := α)
+  exact finiteRxcLoop.loop
+
+/-- Unfold an entire family of well-founded calls by supplying an explicit accessibility constructor. -/
+private theorem unfoldFamily {A : Sort u} {R : A → A → Prop} {C : A → Sort v}
+    (wf : WellFounded R) (step : ∀ x, (∀ y, R y x → C y) → C x) {I : Sort w} (atIndex : I → A) :
+    (fun i => wf.fix step (atIndex i)) =
+      fun i => step (atIndex i) (fun y _ => wf.fix step y) := by
+  calc
+    _ = fun i => WellFounded.fixF step (atIndex i)
+          (Acc.intro (atIndex i) (fun y _ => wf.apply y)) := rfl
+    _ = _ := rfl
+
+private theorem falseFamily {γ : Type u} {A : Sort v} {p : Prop} [d : Decidable p] (outside : ¬ p)
+    (yes : γ → p → A) (no : γ → ¬p → A) :
+    (fun c => if h : p then yes c h else no c h) = (fun c => no c outside) := by
+  cases d with
+  | isTrue h => exact (outside h).elim
+  | isFalse _ => rfl
+
+private theorem trueFamily {γ : Type u} {A : Sort v} {p : Prop} [d : Decidable p] (inside : p)
+    (yes : γ → p → A) (no : γ → ¬p → A) :
+    (fun c => if h : p then yes c h else no c h) = (fun c => yes c inside) := by
+  cases d with
+  | isTrue h => rfl
+  | isFalse h => exact (h inside).elim
+
+private def resumeLoop {α γ : Type u} {m : Type u → Type v} [Monad m]
+    (s : Option α) (rec : (y : α) → s = some y → γ → m γ) (c : γ) : m γ :=
+  finiteRxcLoop.loop.match_1 (fun _ => m γ) s (fun y hs => rec y hs c) (fun _ => pure c)
+
+private theorem resumeCongr {α γ : Type u} {m : Type u → Type v} [Monad m]
+    (s : Option α) (l r : (y : α) → s = some y → γ → m γ)
+    (h : ∀ y e, l y e = r y e) : resumeLoop s l = resumeLoop s r := by
+  cases s with
+  | none => rfl
+  | some y => exact h y rfl
+
+/-- Induct on the distance to an excluded endpoint. Equality as functions of the accumulator
+lets each monadic bind use the same continuation on both sides. -/
+private theorem rangeDecisions {α : Type u} [enum : UpwardEnumerable α] [le : LE α]
+    (d₁ d₂ : DecidableLE α) [law : LawfulUpwardEnumerable α] [compat : LawfulUpwardEnumerableLE α]
+    {m : Type u → Type w} [mon : Monad m] (γ : Type u) (Pl : α → γ → ForInStep γ → Prop)
+    (P : α → Prop) (hp : ∀ a b, a ≤ b → P a → P b) (upper : α)
+    (f : (out : α) → P out → out ≤ upper → (acc : γ) → m (Subtype (Pl out acc))) :
+    ∀ k next (h : P next), (succMany? k next).elim True (fun y => ¬ y ≤ upper) →
+      (fun c => @finiteClosedRangeLoop α enum le d₁ law compat m mon γ Pl P hp upper c next h f) =
+      (fun c => @finiteClosedRangeLoop α enum le d₂ law compat m mon γ Pl P hp upper c next h f) := by
+  letI : DecidableLE α := d₁
+  intro k
+  induction k with
+  | zero =>
+    intro next hn stop
+    rw [succMany?_zero] at stop
+    have outside : ¬ next ≤ upper := stop
+    unfold finiteClosedRangeLoop finiteRxcLoop.loop finiteFix₃
+    rw [unfoldFamily, unfoldFamily]
+    dsimp only
+    calc
+      _ = (fun c : γ => pure (f := m) c) := by apply @falseFamily _ _ _ (d₁ next upper) outside
+      _ = _ := by symm; apply @falseFamily _ _ _ (d₂ next upper) outside
+  | succ k ih =>
+    intro next hn stop
+    by_cases inside : next ≤ upper
+    · have later (y : α) (hs : succ? next = some y) : P y :=
+        hp next y (UpwardEnumerable.le_iff.mpr ⟨1, succMany?_one.trans hs⟩) hn
+      let after (d : DecidableLE α) (y : α) (hs : succ? next = some y) (c : γ) :=
+        @finiteClosedRangeLoop α enum le d law compat m mon γ Pl P hp upper c y (later y hs) f
+      have tails := resumeCongr (succ? next) (after d₁) (after d₂) (fun y hs =>
+        ih y (later y hs) (by rwa [succMany?_add_one_eq_succ?_bind_succMany?, hs, Option.bind_some] at stop))
+      unfold finiteClosedRangeLoop finiteRxcLoop.loop finiteFix₃
+      rw [unfoldFamily, unfoldFamily]
+      dsimp only
+      rw [@trueFamily _ _ _ (d₁ next upper) inside, @trueFamily _ _ _ (d₂ next upper) inside]
+      exact congrArg (fun (resume : γ → m γ) => fun c => do
+        let step ← f next hn inside c
+        finiteRxcLoop.loop.match_3 γ Pl next c (fun _ => m γ) step
+          (fun c' _ => resume c') (fun c' _ => pure c')) tails
+    · unfold finiteClosedRangeLoop finiteRxcLoop.loop finiteFix₃
+      rw [unfoldFamily, unfoldFamily]
+      dsimp only
+      calc
+        _ = (fun c : γ => pure (f := m) c) := by apply @falseFamily _ _ _ (d₁ next upper) inside
+        _ = _ := by symm; apply @falseFamily _ _ _ (d₂ next upper) inside
+
+private theorem closedRangeCongr
+    {α : Type u} [enum : UpwardEnumerable α] [le : LE α] {d₁ : DecidableLE α} [d₂ : DecidableLE α]
+    [law : LawfulUpwardEnumerable α] [compat : LawfulUpwardEnumerableLE α]
+    {m : Type u → Type w} [mon : Monad m] (γ : Type u) (Pl : α → γ → ForInStep γ → Prop)
+    (P : α → Prop) (hp : ∀ a b, a ≤ b → P a → P b) (upper : α)
+    (acc acc' : γ) (e_acc : acc = acc') (next next' : α) (e_next : next = next') (h : P next)
+    (f f' : (out : α) → P out → out ≤ upper → (c : γ) → m (Subtype (Pl out c))) (e_f : f = f') :
+    @finiteClosedRangeLoop α enum le d₁ law compat m mon γ Pl P hp upper acc next h f =
+      @finiteClosedRangeLoop α enum le d₂ law compat m mon γ Pl P hp upper acc' next' (e_next ▸ h) f' := by
+  cases e_acc
+  cases e_next
+  cases e_f
+  obtain ⟨k, stop⟩ := (closedFinite (α := α)).finite next upper
+  exact congrFun (rangeDecisions d₁ d₂ γ Pl P hp upper f k next h stop) acc
+
+-- Declare the congruence first, while the implementation name is still available.
+public theorem Std.Rxc.Iterator.instIteratorLoop.loop.congr_simp :
+    type_of% (private_decl% @closedRangeCongr) := @closedRangeCongr
+
 public noncomputable def Std.Rxc.Iterator.instIteratorLoop.loop :
     type_of% @_root_.Std.Rxc.Iterator.instIteratorLoop.loop := by
   intro α enum order dec law compat n mon
