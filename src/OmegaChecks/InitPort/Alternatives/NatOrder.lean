@@ -6,6 +6,10 @@ import all Init.Data.Nat.Lemmas
 
 namespace OmegaChecks.InitPort.Alternatives
 
+public theorem Nat.instLawfulBEq : type_of% @_root_.Nat.instLawfulBEq where
+  eq_of_beq := _root_.Nat.eq_of_beq_eq_true
+  rfl := _root_.Nat.beq_refl _
+
 public theorem Nat.lt_sub_iff_add_lt' : type_of% @_root_.Nat.lt_sub_iff_add_lt' := by
   intro a b c
   rw [Nat.add_comm b a]
