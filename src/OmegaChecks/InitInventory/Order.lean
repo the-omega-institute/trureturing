@@ -95,6 +95,87 @@ theorem weakMiddleOfLinearOrder (order : type_of% (@Std.IsLinearOrder.of_lt.{0})
   letI : LT Bool := ⟨signed p⟩
   exact ((@order Bool _ (signedAsymm p) (signedNegTrans p) (signedTri p)).le_total false true).symm
 
+/-- Singleton lexicographic comparisons distinguish a proposition from its negation. -/
+private theorem weakMiddleOfSingletons (p : Prop) (total :
+    letI : LT Bool := ⟨signed p⟩
+    [false] ≤ [true] ∨ [true] ≤ [false]) : ¬p ∨ ¬¬p := by
+  letI : LT Bool := ⟨signed p⟩
+  exact total.elim (fun le => .inr fun neg => le (.rel neg)) (fun le => .inl fun pos => le (.rel pos))
+
+theorem weakMiddleOfListTotal (total : type_of% @List.le_total.{0}) (p : Prop) : ¬p ∨ ¬¬p :=
+  weakMiddleOfSingletons p (@total Bool ⟨signed p⟩ (signedAsymm p) [false] [true])
+
+theorem weakMiddleOfListTotalInstance (total : type_of% @List.instTotalLeOfAsymmLt.{0}) (p : Prop) : ¬p ∨ ¬¬p :=
+  weakMiddleOfSingletons p ((@total Bool ⟨signed p⟩ (signedAsymm p)).total [false] [true])
+
+theorem weakMiddleOfArrayTotal (total : type_of% @Array.le_total.{0}) (p : Prop) : ¬p ∨ ¬¬p :=
+  weakMiddleOfSingletons p (@total Bool ⟨signed p⟩ (signedAsymm p) #[false] #[true])
+
+theorem weakMiddleOfArrayTotalInstance (total : type_of% @Array.instTotalLeOfAsymmLt.{0}) (p : Prop) : ¬p ∨ ¬¬p :=
+  weakMiddleOfSingletons p ((@total Bool ⟨signed p⟩ (signedAsymm p)).total #[false] #[true])
+
+theorem weakMiddleOfVectorTotal (total : type_of% @Vector.le_total.{0}) (p : Prop) : ¬p ∨ ¬¬p := by
+  letI : LT Bool := ⟨signed p⟩
+  letI := signedAsymm p
+  apply weakMiddleOfSingletons p
+  exact total (Vector.mk #[false] rfl) (Vector.mk #[true] rfl)
+
+theorem weakMiddleOfVectorTotalInstance (total : type_of% @Vector.instTotalLeOfAsymmLt.{0}) (p : Prop) : ¬p ∨ ¬¬p := by
+  letI : LT Bool := ⟨signed p⟩
+  letI := signedAsymm p
+  apply weakMiddleOfSingletons p
+  exact total.total (Vector.mk #[false] rfl) (Vector.mk #[true] rfl)
+
+private theorem singletonLe (p : Prop) (nn : ¬¬p) :
+    letI : LT Bool := ⟨signed p⟩
+    [false] ≤ [true] := by
+  letI : LT Bool := ⟨signed p⟩
+  intro reverse
+  cases reverse with
+  | rel h => exact nn h
+
+theorem excludedMiddleOfConsLe (consLe : type_of% @List.cons_le_cons_iff.{0}) (p : Prop) : p ∨ ¬p := by
+  apply excludedMiddleFromDNE _ p
+  intro q nn
+  letI : LT Bool := ⟨signed q⟩
+  have parts := (@consLe Bool _ (signedAsymm q) (signedTri q) false true [] []).mp (singletonLe q nn)
+  exact parts.elim id (fun h => False.elim (Bool.noConfusion h.1))
+
+theorem excludedMiddleOfListLeExists (descr : type_of% @List.le_iff_exists.{0}) (p : Prop) : p ∨ ¬p := by
+  apply excludedMiddleFromDNE _ p
+  intro q nn
+  letI : LT Bool := ⟨signed q⟩
+  obtain eq | ⟨i, hi, _, _, hit⟩ :=
+    (@descr Bool _ (signedAsymm q) (signedTri q) [false] [true]).mp (singletonLe q nn)
+  · exact Bool.noConfusion (List.cons.inj eq).1
+  · cases i with
+    | zero => exact hit
+    | succ i => exact (Nat.not_succ_le_zero i (Nat.le_of_lt_succ hi)).elim
+
+theorem excludedMiddleOfArrayLeExists (descr : type_of% @Array.le_iff_exists.{0}) (p : Prop) : p ∨ ¬p := by
+  apply excludedMiddleFromDNE _ p
+  intro q nn
+  letI : LT Bool := ⟨signed q⟩
+  obtain eq | ⟨i, hi, _, _, hit⟩ :=
+    (@descr Bool _ (signedAsymm q) (signedTri q) #[false] #[true]).mp (singletonLe q nn)
+  · exact Bool.noConfusion (List.cons.inj (congrArg Array.toList eq)).1
+  · cases i with
+    | zero => exact hit
+    | succ i => exact (Nat.not_succ_le_zero i (Nat.le_of_lt_succ hi)).elim
+
+theorem excludedMiddleOfVectorLeExists (descr : type_of% @Vector.le_iff_exists.{0}) (p : Prop) : p ∨ ¬p := by
+  apply excludedMiddleFromDNE _ p
+  intro q nn
+  letI : LT Bool := ⟨signed q⟩
+  letI := signedAsymm q
+  letI := signedTri q
+  obtain eq | ⟨i, hi, _, hit⟩ :=
+    (descr (xs := Vector.mk #[false] rfl) (ys := Vector.mk #[true] rfl)).mp (singletonLe q nn)
+  · exact Bool.noConfusion (List.cons.inj (congrArg (fun v => v.toArray.toList) eq)).1
+  · cases i with
+    | zero => exact hit
+    | succ i => exact (Nat.not_succ_le_zero i (Nat.le_of_lt_succ hi)).elim
+
 end AbstractOrder
 
 namespace InternalOrder

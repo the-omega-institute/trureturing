@@ -256,6 +256,20 @@ private def logicalConsequence? (owner name : Name) : Option (Name × Name) := d
     return (``OmegaChecks.InitBoundaries.IntegerCancellation.AddOneLE, ``OmegaChecks.InitBoundaries.IntegerCancellation.leCoeff)
   | `Init.GetElem, ``isSome_getElem? =>
     return (``OmegaChecks.InitBoundaries.OptionalIndex.DecidablePropExt, ``OmegaChecks.InitBoundaries.OptionalIndex.decidablePropExtOfIsSome)
+  | `Init.Data.List.Lex, ``List.le_total =>
+    return (`OmegaChecks.InitInventory.StringPatterns.WeakExcludedMiddle, ``OmegaChecks.InitBoundaries.AbstractOrder.weakMiddleOfListTotal)
+  | `Init.Data.List.Lex, ``List.instTotalLeOfAsymmLt =>
+    return (`OmegaChecks.InitInventory.StringPatterns.WeakExcludedMiddle, ``OmegaChecks.InitBoundaries.AbstractOrder.weakMiddleOfListTotalInstance)
+  | `Init.Data.List.Lex, ``List.le_total_of_asymm =>
+    return (`OmegaChecks.InitInventory.StringPatterns.WeakExcludedMiddle, ``OmegaChecks.InitBoundaries.AbstractOrder.weakMiddleOfListTotal)
+  | `Init.Data.Array.Lex.Lemmas, ``Array.le_total =>
+    return (`OmegaChecks.InitInventory.StringPatterns.WeakExcludedMiddle, ``OmegaChecks.InitBoundaries.AbstractOrder.weakMiddleOfArrayTotal)
+  | `Init.Data.Array.Lex.Lemmas, ``Array.instTotalLeOfAsymmLt =>
+    return (`OmegaChecks.InitInventory.StringPatterns.WeakExcludedMiddle, ``OmegaChecks.InitBoundaries.AbstractOrder.weakMiddleOfArrayTotalInstance)
+  | `Init.Data.Vector.Lex, ``Vector.le_total =>
+    return (`OmegaChecks.InitInventory.StringPatterns.WeakExcludedMiddle, ``OmegaChecks.InitBoundaries.AbstractOrder.weakMiddleOfVectorTotal)
+  | `Init.Data.Vector.Lex, ``Vector.instTotalLeOfAsymmLt =>
+    return (`OmegaChecks.InitInventory.StringPatterns.WeakExcludedMiddle, ``OmegaChecks.InitBoundaries.AbstractOrder.weakMiddleOfVectorTotalInstance)
   | `Init.Data.Order.Lemmas, ``Std.Asymm.total_not =>
     return (`OmegaChecks.InitInventory.StringPatterns.WeakExcludedMiddle, ``OmegaChecks.InitBoundaries.AbstractOrder.weakMiddleOfTotalNot)
   | `Init.Data.Order.Factories, ``Std.IsLinearPreorder.of_lt =>
@@ -299,6 +313,10 @@ private def logicalConsequence? (owner name : Name) : Option (Name × Name) := d
     | `Init.Grind.Norm, ``Lean.Grind.imp_eq => some ``OmegaChecks.InitBoundaries.GrindOrder.excludedMiddleFromImplication
     | `Init.Grind.Norm, ``Lean.Grind.not_not => some ``OmegaChecks.InitBoundaries.GrindOrder.excludedMiddleFromNotNot
     | `Init.Grind.Lemmas, ``Lean.Grind.of_lookahead => some ``OmegaChecks.InitBoundaries.GrindOrder.excludedMiddleFromLookahead
+    | `Init.Data.List.Lex, ``List.cons_le_cons_iff => some ``OmegaChecks.InitBoundaries.AbstractOrder.excludedMiddleOfConsLe
+    | `Init.Data.List.Lex, ``List.le_iff_exists => some ``OmegaChecks.InitBoundaries.AbstractOrder.excludedMiddleOfListLeExists
+    | `Init.Data.Array.Lex.Lemmas, ``Array.le_iff_exists => some ``OmegaChecks.InitBoundaries.AbstractOrder.excludedMiddleOfArrayLeExists
+    | `Init.Data.Vector.Lex, ``Vector.le_iff_exists => some ``OmegaChecks.InitBoundaries.AbstractOrder.excludedMiddleOfVectorLeExists
     | `Init.Data.Order.Lemmas, ``Std.Trichotomous.rel_or_eq_or_rel_swap =>
       some ``OmegaChecks.InitBoundaries.AbstractOrder.excludedMiddleOfTrichotomy
     | `Init.Data.Order.Lemmas, ``Std.lt_trichotomy => some ``OmegaChecks.InitBoundaries.AbstractOrder.excludedMiddleOfLTTrichotomy
