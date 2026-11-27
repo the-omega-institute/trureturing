@@ -58,13 +58,13 @@ def numerator (e : Interval 9) (q : Fin 20) : ℕ :=
   | 7, 8 => ![0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 8, 0, 0, 8, 42] q
   | _, _ => 0
 def assignment : Assignment 9 20 := fun e q => (numerator e q : ℝ) / 62
-private def inverse (z : ℤ) : Fin 20 :=
+def inverse (z : ℤ) : Fin 20 :=
   match z with
   | 22 => 0 | 21 => 1 | 20 => 2 | 19 => 3 | 17 => 4 | 16 => 5
   | 15 => 6 | 14 => 7 | 13 => 8 | 12 => 9 | 11 => 10 | 10 => 11
   | 9 => 12 | 8 => 13 | 6 => 14 | 5 => 15 | 4 => 16 | 3 => 17
   | 2 => 18 | 1 => 19 | _ => 0
-private def candidate (u v : Fin 3) (a b : Fin 20) : Fin 20 × Fin 20 × Fin 20 :=
+def candidate (u v : Fin 3) (a b : Fin 20) : Fin 20 × Fin 20 × Fin 20 :=
   if u = 0 then
     if v = 1 then (a,b,inverse ((values a : ℤ) + values b))
     else (a,inverse ((values b : ℤ) - values a),b)
