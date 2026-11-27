@@ -71,7 +71,7 @@ private theorem blockLift_orthogonal {W : Type*} [Fintype W] [DecidableEq W]
     (blockLift U W)ᵀ * blockLift U W = 1 ∧
       blockLift U W * (blockLift U W)ᵀ = 1 := by
   simp [blockLift, fromBlocks_transpose, fromBlocks_multiply, ← kroneckerMap_transpose,
-    ← mul_kronecker_mul, h₁, h₂, one_kronecker_one, fromBlocks_one]
+    ← mul_kronecker_mul, h₁, h₂, fromBlocks_one]
 
 private theorem blockLift_adjacency
     {W : Type*} [Fintype W] [DecidableEq W]
@@ -105,6 +105,20 @@ private theorem blockLift_adjacency
   simp only [blockLift, fromBlocks_multiply, Matrix.zero_mul, Matrix.mul_zero, zero_add,
     add_zero, ← mul_kronecker_mul, one_mul, mul_one, hU, hUpper, hLower]
 
+private theorem normalized_laplacian_charpoly_of_intertwining
+    {K₁ K₂ : SimpleGraph V} [DecidableRel K₁.Adj] [DecidableRel K₂.Adj]
+    {P : Matrix V V ℝ} (h₁ : Pᵀ * P = 1) (h₂ : P * Pᵀ = 1)
+    (hScale : P * degreeScale K₁ = degreeScale K₂ * P)
+    (hCore : P * (diagonal (fun x => (K₁.degree x : ℝ)) - K₁.adjMatrix ℝ) =
+      (diagonal (fun x => (K₂.degree x : ℝ)) - K₂.adjMatrix ℝ) * P) :
+    (normalizedLaplacian K₁).charpoly = (normalizedLaplacian K₂).charpoly := by
+  apply charpoly_of_orthogonal_intertwining h₁ h₂
+  unfold normalizedLaplacian
+  rw [← Matrix.mul_assoc P, ← Matrix.mul_assoc P,
+    hScale, Matrix.mul_assoc (degreeScale K₂), hCore,
+    Matrix.mul_assoc (degreeScale K₂), Matrix.mul_assoc _ P, hScale]
+  simp only [Matrix.mul_assoc]
+
 /- The following algebraic bridge isolates the only degree-scaling obligation.
 It is stated for the registered matrices so that callers can discharge the
 pointwise degree calculation, including the zero-degree branch, independently
@@ -124,16 +138,10 @@ theorem normalized_laplacian_similarity_of_block
         (corona G₂ H).adjMatrix ℝ) * blockLift U W) :
     (normalizedLaplacian (corona G₁ H)).charpoly =
       (normalizedLaplacian (corona G₂ H)).charpoly := by
-  apply charpoly_of_orthogonal_intertwining
-  · exact blockLift_orthogonal h₁ h₂ |>.1
-  · exact blockLift_orthogonal h₁ h₂ |>.2
-  · unfold normalizedLaplacian
-    rw [← Matrix.mul_assoc (blockLift U W), ← Matrix.mul_assoc (blockLift U W),
-      hScale, Matrix.mul_assoc (degreeScale (corona G₂ H)), hCore,
-      Matrix.mul_assoc (degreeScale (corona G₂ H)), Matrix.mul_assoc _ (blockLift U W),
-      hScale]
-    simp only [Matrix.mul_assoc]
+  obtain ⟨hLift₁, hLift₂⟩ := blockLift_orthogonal h₁ h₂ (W := W)
+  exact normalized_laplacian_charpoly_of_intertwining hLift₁ hLift₂ hScale hCore
 
+omit [DecidableEq V] in
 private theorem degree_eq_of_regular_intertwiner
     {G₁ G₂ : SimpleGraph V} [DecidableRel G₁.Adj] [DecidableRel G₂.Adj]
     {d₁ d₂ : ℕ} (hG₁ : G₁.IsRegularOfDegree d₁) (hG₂ : G₂.IsRegularOfDegree d₂)
@@ -175,7 +183,7 @@ private theorem blockLift_degree
   · have hwz : w = z := by
       by_contra h
       apply hij
-      simp [blockLift, kronecker_apply, Matrix.one_apply_ne h]
+      simp [blockLift, Matrix.one_apply_ne h]
     subst z
     simp only [degree_corona_inr, hDegree v u]
 
@@ -198,6 +206,102 @@ theorem normalized_laplacian_charpoly_corona_regular_base
   · rw [Matrix.mul_sub, Matrix.sub_mul,
       diagonal_degree_intertwining hDegree (fun d => (d : ℝ)),
       blockLift_adjacency G₁ G₂ H hAdj]
+
+private noncomputable def copyLift {W : Type*} [DecidableEq W] (U : Matrix V V ℝ) :
+    Matrix (W ⊕ (W × V)) (W ⊕ (W × V)) ℝ :=
+  fromBlocks 1 0 0 ((1 : Matrix W W ℝ) ⊗ₖ U)
+
+private theorem copyLift_orthogonal {W : Type*} [Fintype W] [DecidableEq W]
+    {U : Matrix V V ℝ} (h₁ : Uᵀ * U = 1) (h₂ : U * Uᵀ = 1) :
+    (copyLift (W := W) U)ᵀ * copyLift U = 1 ∧
+      copyLift (W := W) U * (copyLift U)ᵀ = 1 := by
+  simp [copyLift, fromBlocks_transpose, fromBlocks_multiply, ← kroneckerMap_transpose,
+    ← mul_kronecker_mul, h₁, h₂, fromBlocks_one]
+
+private theorem copyLift_adjacency
+    {W : Type*} [Fintype W] [DecidableEq W]
+    (G₁ G₂ : SimpleGraph V) (H : SimpleGraph W)
+    [DecidableRel G₁.Adj] [DecidableRel G₂.Adj] [DecidableRel H.Adj]
+    {U : Matrix V V ℝ} (h₁ : Uᵀ * U = 1)
+    (hAdj : U * G₁.adjMatrix ℝ = G₂.adjMatrix ℝ * U)
+    (hOne : U *ᵥ (1 : V → ℝ) = 1) :
+    copyLift U * (corona H G₁).adjMatrix ℝ =
+      (corona H G₂).adjMatrix ℝ * copyLift U := by
+  have hTranspose : Uᵀ *ᵥ (1 : V → ℝ) = 1 := by
+    calc
+      Uᵀ *ᵥ (1 : V → ℝ) = Uᵀ *ᵥ (U *ᵥ (1 : V → ℝ)) := by rw [hOne]
+      _ = 1 := by rw [mulVec_mulVec, h₁, one_mulVec]
+  have hRow (v : V) : ∑ u, U v u = 1 := by
+    simpa [mulVec, dotProduct] using congrFun hOne v
+  have hCol (v : V) : ∑ u, U u v = 1 := by
+    simpa [mulVec, dotProduct] using congrFun hTranspose v
+  let B : Matrix W (W × V) ℝ := of fun w p => (H.adjMatrix ℝ + 1) w p.1
+  have hUpper : B * ((1 : Matrix W W ℝ) ⊗ₖ U) = B := by
+    ext w ⟨z, v⟩
+    simp [B, Matrix.mul_apply, Fintype.sum_prod_type, Matrix.one_apply, ite_mul, mul_ite]
+    let c := (H.adjMatrix ℝ + 1) w z
+    calc
+      (∑ x, c * U x v) = c * (∑ x, U x v) :=
+        (Finset.mul_sum Finset.univ (fun x => U x v) c).symm
+      _ = c := by rw [hCol, mul_one]
+  have hLower : ((1 : Matrix W W ℝ) ⊗ₖ U) * Bᵀ = Bᵀ := by
+    ext ⟨w, v⟩ z
+    simp [B, Matrix.mul_apply, Fintype.sum_prod_type, Matrix.one_apply, ite_mul]
+    let c := (H.adjMatrix ℝ + 1) z w
+    calc
+      (∑ x, U v x * c) = (∑ x, U v x) * c :=
+        (Finset.sum_mul Finset.univ (fun x => U v x) c).symm
+      _ = c := by rw [hRow, one_mul]
+  rw [adjMatrix_corona, adjMatrix_corona]
+  change
+    copyLift U * fromBlocks (H.adjMatrix ℝ) B Bᵀ ((1 : Matrix W W ℝ) ⊗ₖ G₁.adjMatrix ℝ) =
+      fromBlocks (H.adjMatrix ℝ) B Bᵀ ((1 : Matrix W W ℝ) ⊗ₖ G₂.adjMatrix ℝ) * copyLift U
+  simp only [copyLift, fromBlocks_multiply, Matrix.zero_mul, Matrix.mul_zero, zero_add,
+    add_zero, ← mul_kronecker_mul, Matrix.one_mul, Matrix.mul_one, hAdj, hUpper, hLower]
+
+omit [DecidableEq V] in
+private theorem copyLift_degree
+    {W : Type*} [Fintype W] [DecidableEq W]
+    {G₁ G₂ : SimpleGraph V} {H : SimpleGraph W}
+    [DecidableRel G₁.Adj] [DecidableRel G₂.Adj] [DecidableRel H.Adj]
+    {U : Matrix V V ℝ} (hDegree : ∀ v u, G₁.degree u = G₂.degree v) :
+    ∀ i j, copyLift U i j ≠ 0 → (corona H G₁).degree j = (corona H G₂).degree i := by
+  intro i j hij
+  rcases i with w | ⟨w, v⟩ <;> rcases j with z | ⟨z, u⟩
+  · have hwz : w = z := by
+      by_contra h
+      exact hij (Matrix.one_apply_ne h)
+    subst z
+    simp only [degree_corona_inl]
+  · exact (hij rfl).elim
+  · exact (hij rfl).elim
+  · have hwz : w = z := by
+      by_contra h
+      apply hij
+      simp [copyLift, Matrix.one_apply_ne h]
+    subst z
+    simp only [degree_corona_inr, hDegree v u]
+
+/-- Adjacency-cospectral regular attached graphs give normalized-Laplacian
+cospectral closed-neighborhood coronas over the same base graph. -/
+theorem normalized_laplacian_charpoly_corona_regular_attached
+    {W : Type*} [Fintype W] [DecidableEq W]
+    (G₁ G₂ : SimpleGraph V) (H : SimpleGraph W)
+    [DecidableRel G₁.Adj] [DecidableRel G₂.Adj] [DecidableRel H.Adj]
+    {d₁ d₂ : ℕ} (hG₁ : G₁.IsRegularOfDegree d₁) (hG₂ : G₂.IsRegularOfDegree d₂)
+    (hχ : (G₁.adjMatrix ℝ).charpoly = (G₂.adjMatrix ℝ).charpoly) :
+    (normalizedLaplacian (corona H G₁)).charpoly =
+      (normalizedLaplacian (corona H G₂)).charpoly := by
+  obtain ⟨U, h₁, h₂, hAdj, hOne⟩ := exists_orthogonal_adjacency_intertwiner G₁ G₂ hG₁ hG₂ hχ
+  obtain ⟨hLift₁, hLift₂⟩ := copyLift_orthogonal h₁ h₂ (W := W)
+  have hDegree := copyLift_degree (H := H)
+    (U := U) (fun v u => degree_eq_of_regular_intertwiner hG₁ hG₂ hAdj hOne u v)
+  apply normalized_laplacian_charpoly_of_intertwining hLift₁ hLift₂
+  · exact diagonal_degree_intertwining hDegree
+      (fun d => if d = 0 then 0 else (Real.sqrt (d : ℝ))⁻¹)
+  · rw [Matrix.mul_sub, Matrix.sub_mul,
+      diagonal_degree_intertwining hDegree (fun d => (d : ℝ)),
+      copyLift_adjacency G₁ G₂ H h₁ hAdj hOne]
 
 end
 
