@@ -35,9 +35,7 @@ interval_equivalences                   content      An adjacent pair cannot str
 nathanson_problem15                     content      Constructs the finite generator set and obtains both exact interval laws.
 
 Four-slot audit: the Reg mirror binds the sumset readout in the prescribed-start
-equivalence of nathanson_problem15. The other eight public theorems lack
-source-bound registrations under §3.9. They still need exact source selections
-and reconstruction, with checked variation, sensitivity and dependence.
+equivalence of nathanson_problem15.
 Tracking: https://github.com/the-omega-institute/trureturing/issues/34976.
 
 Utility is none. The conclusion quantifies over arbitrary admissible parameters.
@@ -71,7 +69,7 @@ namespace D5.S3.Arith.NathansonProblem15
 
 /- The powers are indexed by `Fin m`; the hypothesis is exactly the strict
    digit-width condition needed by the first-modulus argument. -/
-theorem signed_radix_injective {m : ℕ} {B : ℤ} (hB : 1 < B)
+private theorem signed_radix_injective {m : ℕ} {B : ℤ} (hB : 1 < B)
     (d e : Fin m → ℤ)
     (hdiff : ∀ i, (d i - e i).natAbs < B.natAbs)
     (h : (∑ i : Fin m, d i * B ^ i.val) =
@@ -131,7 +129,7 @@ private theorem zero_off_of_sum_eq {m : ℕ} (f : Fin m → ℕ) (i : Fin m)
     (Finset.mem_erase.mpr ⟨hj, Finset.mem_univ j⟩)
 
 /-- A collision between distinct multiplicity pairs of total weight `h` has zero digits. -/
-theorem digit_eq_zero_of_collision {m h : ℕ} (hh : 2 ≤ h)
+private theorem digit_eq_zero_of_collision {m h : ℕ} (hh : 2 ≤ h)
     {u v u' v' : Fin m → ℕ}
     (huv : (∑ i, (u i + v i)) = h)
     (huv' : (∑ i, (u' i + v' i)) = h)
@@ -178,7 +176,7 @@ theorem digit_eq_zero_of_collision {m h : ℕ} (hh : 2 ≤ h)
   · exact hz huv heq.symm i hgt
 
 /-- Zero digits use all terms at one index, with one term of the second kind. -/
-theorem digit_eq_zero_iff {m h : ℕ} (hh : 2 ≤ h) {u v : Fin m → ℕ}
+private theorem digit_eq_zero_iff {m h : ℕ} (hh : 2 ≤ h) {u v : Fin m → ℕ}
     (huv : (∑ i, (u i + v i)) = h) :
     digit h u v = 0 ↔ ∃ j : Fin m, ∀ i,
       u i = (if i = j then h - 1 else 0) ∧ v i = (if i = j then 1 else 0) := by
@@ -256,7 +254,7 @@ private theorem natAbs_lt_of_digit_bounds {h : ℕ} {x y : ℤ}
   exact_mod_cast hcast
 
 /-- For multiplicities of weight `h`, equality of codes is equality of digit vectors. -/
-theorem radixCode_eq_iff {m h : ℕ} (hh : 2 ≤ h) {u v u' v' : Fin m → ℕ}
+private theorem radixCode_eq_iff {m h : ℕ} (hh : 2 ≤ h) {u v u' v' : Fin m → ℕ}
     (huv : (∑ i, (u i + v i)) = h) (huv' : (∑ i, (u' i + v' i)) = h) :
     radixCode h u v = radixCode h u' v' ↔ digit h u v = digit h u' v' := by
   have hB : 1 < (h : ℤ) ^ 2 + 1 := by
@@ -270,7 +268,7 @@ theorem radixCode_eq_iff {m h : ℕ} (hh : 2 ≤ h) {u v u' v' : Fin m → ℕ}
     simp only [radixCode, heq]
 
 /-- The zero radix code occurs exactly for the multiplicities of a prescribed point. -/
-theorem radixCode_eq_zero_iff {m h : ℕ} (hh : 2 ≤ h) {u v : Fin m → ℕ}
+private theorem radixCode_eq_zero_iff {m h : ℕ} (hh : 2 ≤ h) {u v : Fin m → ℕ}
     (huv : (∑ i, (u i + v i)) = h) :
     radixCode h u v = 0 ↔ ∃ j : Fin m, ∀ i,
       u i = (if i = j then h - 1 else 0) ∧ v i = (if i = j then 1 else 0) := by
@@ -325,7 +323,7 @@ private theorem mem_nsmul_range_iff_counts {ι : Type*} [Fintype ι] [DecidableE
 
 /-- Membership in the iterated sum of two labelled families is equivalent to a budgeted
 sum of their multiplicities. Labels may have equal values. -/
-theorem mem_labelled_sum_iff {m h : ℕ} {z : ℤ} (a b : Fin m → ℤ) :
+private theorem mem_labelled_sum_iff {m h : ℕ} {z : ℤ} (a b : Fin m → ℤ) :
     z ∈ h • Set.range (Sum.elim a b) ↔
       ∃ u v : Fin m → ℕ, (∑ i, (u i + v i)) = h ∧
         (∑ i, ((u i : ℤ) * a i + (v i : ℤ) * b i)) = z := by
@@ -346,7 +344,7 @@ def radixGenerators {m : ℕ} (h : ℕ) (M : ℤ) (t : Fin m → ℤ) : Fin m �
   Sum.elim a (fun i => t i - ((h : ℤ) - 1) * a i)
 
 /-- A sum of radix generators has a signed code and a remainder from the second labels. -/
-theorem mem_radixGenerators_iff {m h : ℕ} {M z : ℤ} (t : Fin m → ℤ) :
+private theorem mem_radixGenerators_iff {m h : ℕ} {M z : ℤ} (t : Fin m → ℤ) :
     z ∈ h • Set.range (radixGenerators h M t) ↔
       ∃ u v : Fin m → ℕ, (∑ i, (u i + v i)) = h ∧
         M * radixCode h u v + (∑ i, (v i : ℤ) * t i) = z := by
@@ -365,7 +363,7 @@ theorem mem_radixGenerators_iff {m h : ℕ} {M z : ℤ} (t : Fin m → ℤ) :
   simp only [heval]
 
 /-- The values represented by zero-code multiplicities are exactly the prescribed points. -/
-theorem mem_range_iff_zero_code_sum {m h : ℕ} (hh : 2 ≤ h) (t : Fin m → ℤ) (z : ℤ) :
+private theorem mem_range_iff_zero_code_sum {m h : ℕ} (hh : 2 ≤ h) (t : Fin m → ℤ) (z : ℤ) :
     z ∈ Set.range t ↔
       ∃ u v : Fin m → ℕ, (∑ i, (u i + v i)) = h ∧
         radixCode h u v = 0 ∧ (∑ i, (v i : ℤ) * t i) = z := by
