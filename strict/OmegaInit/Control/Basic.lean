@@ -22,3 +22,9 @@ port_definition ForInStep.value with_native_code
 port_definition optional with_native_code
 port_definition guard with_native_code
 port_definition instToBoolBool with_native_code
+
+port_native_records MonadControl, MonadControlT
+port_definition instMonadControlTOfPure with_native_code
+port_definition instMonadControlTOfMonadControl with_native_code
+port_definition controlAt with_native_code
+port_definition control with_native_code

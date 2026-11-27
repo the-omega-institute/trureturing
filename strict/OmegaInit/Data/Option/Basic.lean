@@ -128,3 +128,24 @@ port_definition Option.mapA with_native_code
 port_definition Option.elimM with_native_code
 port_definition Option.isEqSome.match_1 with_native_code
 port_definition Option.isEqSome with_native_code
+
+port_definition Option.guard with_native_code
+port_definition Option.isSome.match_1 with_native_code
+port_definition Option.filter with_native_code
+port_definition Option.getDM with_native_code
+port_definition Option.bindM with_native_code
+port_definition Option.sequence.match_1 with_native_code
+port_definition Option.sequence with_native_code
+port_definition Option.filterM.match_1 with_native_code
+port_definition Option.filterM with_native_code
+port_definition Option.min.match_1 with_native_code
+port_definition Option.min with_native_code
+port_definition Option.max with_native_code
+port_definition Option.instMin with_native_code
+port_definition Option.instMax with_native_code
+port_definition Option.instBEq.beq.match_1 with_native_code
+port_definition Option.instBEq.beq with_native_code
+port_definition Option.instBEq with_native_code
+port_definition instMonadExceptOfUnitOption with_native_code
+port_definition instAlternativeOption with_native_code
+port_definition liftOption with_native_code

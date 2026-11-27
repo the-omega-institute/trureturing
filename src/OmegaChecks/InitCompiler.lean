@@ -126,7 +126,7 @@ private def officialDeclaration (stx : Syntax) : CommandElabM (Environment × Co
         -- Use the registration from the owning module, including its out parameters.
         modifyEnv fun env => classExtension.addEntry env {cls with name := omegaName cls.name}
 
-/-- Elaborate a pinned record and compile each of its actual projections. -/
+/-- Elaborate a pinned record and compile its projections in dependency order. -/
 @[command_parser, builtin_command_parser] def portNativeRecords := leading_parser "port_native_records " >> sepBy1 ident ","
 
 @[builtin_command_elab portNativeRecords] def elabPortNativeRecords : CommandElab := fun stx => do
@@ -135,8 +135,9 @@ private def officialDeclaration (stx : Syntax) : CommandElabM (Environment × Co
     let some record := getStructureInfo? src ci.name | throwErrorAt id "expected an official record"
     let type := mkIdentFrom id ci.name
     elabCommand (← `(command| port_inductive $type:ident))
-    for field in record.fieldInfo do
-      let name := mkIdentFrom id field.projFn
+    for field in record.fieldNames do
+      let some projection := getFieldInfo? src ci.name field | throwErrorAt id "missing projection {field}"
+      let name := mkIdentFrom id projection.projFn
       elabCommand (← `(command| port_definition $name:ident with_native_code))
 
 /-- Compile the pinned constructor index and typed elimination functions of each inductive. -/

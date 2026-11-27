@@ -714,3 +714,30 @@ port_proof Subtype.property
 port_definition DecidableEq
 
 port_constructor_eliminators Bool, Nat, Option, List, Except, EStateM.Result
+
+port_native_records Min, Max
+port_definition getModify with_native_code
+port_definition modify with_native_code
+port_definition modifyThe with_native_code
+port_definition modifyGetThe with_native_code
+port_definition Pi.instInhabited with_native_code
+port_definition instSMulOfMul with_native_code
+port_definition instPowOfHomogeneousPow with_native_code
+port_definition instBEqOfDecidableEq with_native_code
+
+port_definition NonemptyType with_native_code
+port_definition instInhabitedNonemptyType with_native_code
+
+namespace Omega
+
+public theorem Bool.decEq._proof_1 (a b : Bool) : Bool.Reflects (Bool.beq a b) (Eq a b) :=
+  Bool.casesOn (motive := fun a => Bool.Reflects (Bool.beq a b) (Eq a b)) a
+    (Bool.casesOn (motive := fun b => Bool.Reflects (Bool.beq Bool.false b) (Eq Bool.false b)) b
+      Omega.rfl (Bool.ne_true_of_eq_false Omega.rfl))
+    (Bool.casesOn (motive := fun b => Bool.Reflects (Bool.beq Bool.true b) (Eq Bool.true b)) b
+      (Bool.ne_false_of_eq_true Omega.rfl) Omega.rfl)
+
+end Omega
+
+port_definition Bool.decEq with_native_code
+port_definition instDecidableEqBool with_native_code

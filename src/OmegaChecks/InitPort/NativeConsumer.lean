@@ -38,6 +38,18 @@ public def sumRight (x y : Omega.Bool) : Omega.Bool :=
   Omega.Sum.inr.elim (α := Omega.Bool) (motive := fun _ => Omega.Bool)
     (Omega.Sum.inr y) Omega.rfl (fun value => Omega.strictOr x value)
 
+public def boolEqual (x y : Omega.Bool) : Omega.Bool :=
+  @Omega.Decidable.decide _ (Omega.Bool.decEq x y)
+
+public def optionFiltered (x y : Omega.Bool) : Omega.Bool :=
+  (Omega.Option.filter (fun _ => x) (Omega.Option.some y)).getD .false
+
+public def controlResult (x y : Omega.Bool) : Omega.Bool :=
+  @Omega.controlAt Omega.Id Omega.Id
+    (@Omega.instMonadControlTOfPure Omega.Id
+      (@Omega.Applicative.toPure Omega.Id (@Omega.Monad.toApplicative Omega.Id Omega.Id.instMonad)))
+    Omega.Id.hasBind Omega.Bool (fun run => run (Omega.strictOr x y))
+
 public def disjunction (x y : Omega.Bool) : Omega.Bool := Omega.strictOr x y
 public def conjunction (x y : Omega.Bool) : Omega.Bool := Omega.strictAnd x y
 "
@@ -63,7 +75,8 @@ unsafe def main (args : List String) : IO Unit := do
     let second := fun (_ y : Bool) => y
     let checks := [(`firstValue, first), (`secondValue, second), (`additionFirst, first),
       (`stateSecond, second), (`optionFirst, first), (`composeSecond, second), (`mappedFirst, first),
-      (`sumIndex, first), (`sumRight, or), (`disjunction, or), (`conjunction, and)]
+      (`sumIndex, first), (`sumRight, or), (`boolEqual, BEq.beq), (`optionFiltered, and),
+      (`controlResult, or), (`disjunction, or), (`conjunction, and)]
     for (name, expected) in checks do
       let some ci := env.find? name | throw <| IO.userError s!"missing {name}"
       unless Kernel.isDefEqGuarded env {} ci.type arity do throw <| IO.userError s!"invalid type of {name}"
