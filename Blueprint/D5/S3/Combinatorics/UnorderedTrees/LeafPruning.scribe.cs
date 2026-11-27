@@ -29,7 +29,7 @@ internal sealed class LeafPruningDocument : IScribeDocumentDefinition
                     Sp, Iff, Sp,
                     Call("card", Call("Internal", F.Id("T"))), Eq,
                     Call("height", Call("prune", F.Id("T"), F.Id("h"))), Plus, D(1), Close)),
-                "For every finite vertex type and every rooted parent tree T whose root is internal, pruning lowers vertex-height by exactly one. Depth is unchanged on retained vertices because all parent iterates agree. Every nonroot original vertex lies one level below an internal parent, giving the upper height bound. Conversely each retained vertex has a child one level below it, giving the reverse bound. The pruned vertex cardinality is the original internal-vertex count, so the equality defining the counting problem becomes size of the pruned tree equals its vertex-height plus one. This is a structural reduction; classifying the remaining shapes and counting their unordered decorations are further mathematical obligations.",
+                "For every finite vertex type and every rooted parent tree T whose root is internal, pruning lowers vertex-height by exactly one. Depth is unchanged on retained vertices because all parent iterates agree. Every nonroot original vertex lies one level below an internal parent, giving the upper height bound. Conversely each retained vertex has a child one level below it, giving the reverse bound. The pruned vertex cardinality is the original internal-vertex count, so the equality defining the counting problem becomes size of the pruned tree equals its vertex-height plus one.",
                 DescribeRole.Theorem))));
 
     private static Formula Call(string name, params Formula[] arguments) =>

@@ -34,7 +34,7 @@ internal sealed class ParentTreeDocument : IScribeDocumentDefinition
             Node("depth-minimum", "Minimality of the depth", "depth_le",
                 Disp(Seq(Call("iterate", Call("parent", F.Id("T")), F.Id("k"), F.Id("v")),
                     Eq, Call("root", F.Id("T")), Sp, To, Sp,
-                    Call("depth", F.Id("T"), F.Id("v")), Le, F.Id("k"))),
+                    Call("depth", F.Id("T"), F.Id("v")), Sp, Le, Sp, F.Id("k"))),
                 "Every iterate reaching the root has index at least the depth of its starting vertex.", DescribeRole.Theorem),
             Node("depth-root", "The root has depth zero", "depth_root",
                 Disp(Seq(Call("depth", F.Id("T"), Call("root", F.Id("T"))), Eq, D(0))),
@@ -62,7 +62,7 @@ internal sealed class ParentTreeDocument : IScribeDocumentDefinition
                     Call("card", Seq(OpenBrace, F.Id("T"), Colon, Sp, Call("TreeClass", F.Id("n")), Sp, Mid, Sp, Seq(
                         Call("classHeight", F.Id("T")), Eq,
                         Call("classInternalCount", F.Id("T"))), CloseBrace)))),
-                "The sequence counts the actual size-n unordered rooted-tree classes whose vertex-height equals their internal-vertex count. Its definition uses this finite isomorphism quotient, without a prescribed recurrence or a restricted family of skeletons. The generating function, the small initial values and the all-size recurrence require separate enumeration arguments.",
+                "The sequence counts the actual size-n unordered rooted-tree classes whose vertex-height equals their internal-vertex count. Its definition uses this finite isomorphism quotient, without a prescribed recurrence or a restricted family of skeletons.",
                 DescribeRole.Definition))));
 
     private static Formula Call(string name, params Formula[] arguments) =>

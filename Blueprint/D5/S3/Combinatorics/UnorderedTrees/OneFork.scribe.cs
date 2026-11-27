@@ -22,7 +22,13 @@ internal sealed class OneForkDocument : IScribeDocumentDefinition
                 DescribeRole.Theorem),
             Node("qualifying", "Skeletons of the qualifying actual trees", "qualifying_one_off_spine",
                 ClassificationFormula(true),
-                "For every finite actual rooted tree T satisfying vertex-height equals internal-vertex count, the root is internal. There is a deepest path in the pruned tree whose complement is exactly one leaf, attached to a different path vertex from the deepest endpoint. The theorem quantifies the retained vertices on the original internal-vertex subtype and proves all the preceding maximal-depth, complement, leaf and parent properties there. It follows by the leaf-pruning height law and the actual-vertex one-off-path theorem. No enumeration of decorations or generating-series identity follows without further proof.",
+                "For every finite actual rooted tree T satisfying vertex-height equals internal-vertex count, the root is internal. There is a deepest path in the pruned tree whose complement is exactly one leaf, attached to a different path vertex from the deepest endpoint. The theorem quantifies the retained vertices on the original internal-vertex subtype and proves all the preceding maximal-depth, complement, leaf and parent properties there. It follows by the leaf-pruning height law and the actual-vertex one-off-path theorem.",
+                DescribeRole.Theorem),
+            Node("canonical", "The canonical fork", "exists_fork_iso",
+                Disp(Seq(Call("card", F.Id("V")), Eq, Call("height", F.Id("T")), Plus, D(1),
+                    Sp, Implies, Sp, Exists, Sp, F.Id("b"), Comma, F.Id("c"), Comma, Sp,
+                    Call("Nonempty", Call("Iso", Call("fork", F.Id("b"), F.Id("c")), F.Id("T"))))),
+                "For any rooted parent tree T on a finite type V of the displayed size, the spine nonterminals are indexed in increasing depth order. The short tip is the omitted vertex and the long tip is the chosen deepest vertex. The short tip attaches at depth b and the long tip at depth b+c. The vertex bijection preserves the root and every parent edge.",
                 DescribeRole.Theorem))));
 
     private static Formula ClassificationFormula(bool qualifying)
@@ -32,14 +38,14 @@ internal sealed class OneForkDocument : IScribeDocumentDefinition
         Formula path = Call("spine", s, v);
         Formula inPath(Formula y) => Seq(y, Sp, InMacro, Sp, path);
         Formula body = Seq(
-            Forall, Sp, x, Comma, Sp,
+            Open, Forall, Sp, x, Comma, Sp,
             new Formula.Relation(Call("depth", s, x), FormulaRelationOperator.LessThanOrEqual,
-                Call("depth", s, v)), Sp, Land, Sp,
-            Neg, inPath(w), Sp, Land, Sp,
-            Open, Forall, Sp, x, Comma, Sp, Neg, inPath(x), Sp, Iff, Sp, x, Eq, w, Close,
-            Sp, Land, Sp, Neg, Call("Internal", s, w), Sp, Land, Sp,
+                Call("depth", s, v)), Close, Sp, Land, Sp,
+            Neg, Sp, Open, inPath(w), Close, Sp, Land, Sp,
+            Open, Forall, Sp, x, Comma, Sp, Neg, Sp, Open, inPath(x), Close, Sp, Iff, Sp, x, Eq, w, Close,
+            Sp, Land, Sp, Neg, Sp, Call("Internal", s, w), Sp, Land, Sp,
             inPath(Call("parent", s, w)), Sp, Land, Sp,
-            Call("parent", s, w), Neq, v);
+            Call("parent", s, w), Sp, Neq, Sp, v);
         Formula premise = qualifying
             ? Seq(Call("height", t), Eq, Call("internalCount", t))
             : Seq(Call("card", F.Id("V")), Eq, Call("height", t), Plus, D(1));

@@ -45,9 +45,6 @@ structure Iso {V : Type u} {W : Type v} (T : Tree V) (S : Tree W) where
   root_eq : equiv T.root = S.root
   parent_eq : ∀ v, equiv (T.parent v) = S.parent (equiv v)
 
-def Iso.refl {V : Type u} (T : Tree V) : Iso T T :=
-  ⟨Equiv.refl _, rfl, fun _ => rfl⟩
-
 def Iso.symm {V : Type u} {W : Type v} {T : Tree V} {S : Tree W}
     (e : Iso T S) : Iso S T where
   equiv := e.equiv.symm
@@ -173,7 +170,7 @@ private def ofRootedVertexEquiv {V : Type u} {W : Type v} {T : Tree V} {S : Tree
     · exact ((e.child_iff (descendantEquiv T v) (descendantEquiv T (T.parent v))).mp
         ((transient_iff_child T v (T.parent v)).mpr ⟨hv, rfl⟩)).2.symm
 
-theorem iso_iterate {V : Type u} {W : Type v} {T : Tree V} {S : Tree W}
+private theorem iso_iterate {V : Type u} {W : Type v} {T : Tree V} {S : Tree W}
     (e : Iso T S) (k : ℕ) (v : V) :
     e.equiv ((T.parent^[k]) v) = (S.parent^[k]) (e.equiv v) :=
   (show Function.Semiconj e.equiv T.parent S.parent from e.parent_eq).iterate_right k v

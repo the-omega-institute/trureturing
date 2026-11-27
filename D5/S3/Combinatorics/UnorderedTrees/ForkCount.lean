@@ -211,15 +211,30 @@ private theorem regroup_unequal (n : ℕ) :
     _ = ∑ q ∈ diagonals, (n - 3).choose (q.1 + 3) := reindex
     _ = _ := by simp [diagonals, Finset.sum_sigma]
 
+private theorem card_equal_feasible (n : ℕ) :
+    Nat.card (Equal n) = ∑ m ∈ Finset.range (n + 1),
+      ∑ b ∈ Finset.range (n - (4 + 2 * m)), (n - 4 - 2 * m).choose (b + 1) := by
+  rw [card_equal, Finset.sum_comm]
+  apply Finset.sum_congr rfl
+  intro m _
+  rw [← Finset.sum_subset
+    (s₁ := Finset.range (n - (4 + 2 * m))) (s₂ := Finset.range (n + 1))
+    (Finset.range_mono (by omega))]
+  · apply Finset.sum_congr rfl
+    intro b hb
+    rw [ite_eq_left (by have h := Finset.mem_range.mp hb; omega)]
+  · intro b _ hb
+    rw [ite_eq_right (by have h := Finset.mem_range.not.mp hb; omega)]
+
 /-- The all-size binomial count from the original isomorphism classes. -/
 theorem count_by_arms (n : ℕ) :
     a n =
-      (∑ b ∈ Finset.range (n + 1), ∑ m ∈ Finset.range (n + 1),
-        if b + 5 + 2 * m ≤ n then (n - 4 - 2 * m).choose (b + 1) else 0) +
+      (∑ m ∈ Finset.range (n + 1), ∑ b ∈ Finset.range (n - (4 + 2 * m)),
+        (n - 4 - 2 * m).choose (b + 1)) +
       (∑ v ∈ Finset.range (n - 5), (v + 1) * (n - 3).choose (v + 3)) := by
   have : Finite (Equal n) := by unfold Equal; infer_instance
   have : Finite (Unequal n) := by unfold Unequal; infer_instance
-  rw [← card_weighted, Nat.card_congr (weightSplit n), Nat.card_sum, card_equal, card_unequal,
+  rw [← card_weighted, Nat.card_congr (weightSplit n), Nat.card_sum, card_equal_feasible, card_unequal,
     regroup_unequal]
 
 #print axioms weightSplit

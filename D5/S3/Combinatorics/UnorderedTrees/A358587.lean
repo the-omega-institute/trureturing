@@ -128,8 +128,8 @@ private theorem coeff_E_term (n b m : ℕ) :
   · simp [h]
 
 private theorem coeff_E (n : ℕ) :
-    coeff n E = ∑ b ∈ Finset.range (n + 1), ∑ m ∈ Finset.range (n + 1),
-      if b + 5 + 2 * m ≤ n then ((n - 4 - 2*m).choose (b + 1) : ℤ) else 0 := by
+    coeff n E = ∑ m ∈ Finset.range (n + 1), ∑ b ∈ Finset.range (n - (4 + 2 * m)),
+      ((n - 4 - 2*m).choose (b + 1) : ℤ) := by
   have h : coeff n E = coeff n ((X ^ 5 * G ^ 2 * (∑ b ∈ Finset.range (n + 1), U ^ b)) *
       (∑ m ∈ Finset.range (n + 1), (X ^ 2) ^ m)) := by
     unfold E
@@ -140,8 +140,17 @@ private theorem coeff_E (n : ℕ) :
     · exact fun j hj => coeff_H_trunc j n hj
   rw [h]
   simp only [Finset.mul_sum, Finset.sum_mul, map_sum]
-  rw [Finset.sum_comm]
   simp only [coeff_E_term]
+  apply Finset.sum_congr rfl
+  intro m _
+  rw [← Finset.sum_subset
+    (s₁ := Finset.range (n - (4 + 2 * m))) (s₂ := Finset.range (n + 1))
+    (Finset.range_mono (by omega))]
+  · apply Finset.sum_congr rfl
+    intro b hb
+    rw [ite_eq_left (by have h := Finset.mem_range.mp hb; omega)]
+  · intro b _ hb
+    rw [ite_eq_right (by have h := Finset.mem_range.not.mp hb; omega)]
 
 private theorem coeff_G2 (v : ℕ) : coeff v (G ^ 2) = (v : ℤ) + 1 := by
   have h := mk_one_pow_eq_mk_choose_add ℤ 1
