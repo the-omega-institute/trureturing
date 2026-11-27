@@ -17,6 +17,8 @@ public def supported (n : Name) : Bool :=
   linear n ||
   [`Fin.cases, `Fin.induction, `Fin.induction.go, `Fin.inductionOn, `Fin.reverseInduction,
    `Fin.reverseInduction.go, `Fin.lastCases, `Fin.succRec, `Fin.succRecOn,
+   `Nat.fold, `Nat.foldTR, `Nat.foldRev, `Nat.dfold, `Nat.dfoldRev, `Nat.any, `Nat.anyTR, `Nat.all, `Nat.allTR,
+   `Prod.foldI, `Prod.anyI, `Prod.allI,
    `Nat.recAux, `Nat.recCompiled, `Nat.repeat, `Nat.repeatTR, `Nat.div.inductionOn, `Nat.mod.inductionOn,
    `Nat.decidableBallLTTR, `Nat.decidableExistsLE, `Nat.decidableExistsLTTR, `Nat.decidableBallLE,
    `Nat.decidableExistsLT'TR, `Nat.allLTTR, `Nat.decidableExistsFin, `Nat.decidableForallFin,
@@ -54,6 +56,7 @@ public def wrapper (source strict : Environment) (n : Name) (symbol : String) : 
   unless target.type == InitKernelPort.translate InitKernelPort.portName ci.type do
     throw <| IO.userError s!"indexed eliminator type mismatch: {n}"
   if linear official then checkDataTypes source strict [`Prod, `Option, `List, `Nat.Internal.Linear.Expr]
+  if official.getRoot == `Prod then checkDataTypes source strict [`Prod]
   if official.getRoot == `Fin then
     let some (some field) := impureTrivialStructureInfoExt.find? strict `Omega.Fin | throw <| IO.userError "missing strict Fin layout"
     unless field.fieldIdx == 0 do throw <| IO.userError "unexpected strict Fin value slot"
