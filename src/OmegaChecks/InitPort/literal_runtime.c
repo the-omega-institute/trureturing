@@ -31,3 +31,24 @@ LEAN_EXPORT lean_obj_res omega_string_byte_size(b_lean_obj_arg bytes) {
     for (; !lean_is_scalar(bytes); bytes = lean_ctor_get(bytes, 1)) ++count;
     return omega_nat_from_uint64(count);
 }
+
+LEAN_EXPORT lean_obj_res omega_string_to_bytes(lean_obj_arg bytes) {
+    return bytes;
+}
+
+LEAN_EXPORT uint8_t omega_string_dec_eq(b_lean_obj_arg left, b_lean_obj_arg right) {
+    if (left == right) return 1;
+    lean_object *a = omega_string_to_lean(left);
+    lean_object *b = omega_string_to_lean(right);
+    uint8_t equal = lean_string_dec_eq(a, b);
+    lean_dec(a);
+    lean_dec(b);
+    return equal;
+}
+
+LEAN_EXPORT lean_obj_res omega_string_hash(b_lean_obj_arg bytes) {
+    lean_object *native = omega_string_to_lean(bytes);
+    uint64_t hash = lean_string_hash(native);
+    lean_dec(native);
+    return omega_nat_from_uint64(hash);
+}

@@ -265,8 +265,13 @@ def generate(stage, product, seed, roots, excluded, original_seed):
     def install_sharing():
         sharing.extend(install_state_runtime(stage, product, artifact, "ShareCommon", "share_common"))
 
+    string_interfaces = {
+        "Init.Prelude": {"String.ofList", "String.utf8ByteSize", "String.toByteArray", "String.decEq", "String.hash"},
+        "Init.Data.String.Basic": {"String.toList", "String.data", "String.decidableLT"},
+    }
     control_objects = compile_generated(stage, product, graph, original_seed.parents[1] / "ir",
-                                        original_seed=original_seed, before_owner={"OmegaInit.ShareCommon": install_sharing})
+                                        original_seed=original_seed, before_owner={"OmegaInit.ShareCommon": install_sharing},
+                                        check_strings=has_interfaces(inventory, string_interfaces))
     sharing_interfaces = {"Init.ShareCommon": {"ShareCommon.StateFactory.mk", "ShareCommon.State.mk", "ShareCommon.State.shareCommon", "ShareCommonM.run"}}
     if sharing and has_interfaces(inventory, sharing_interfaces):
         if control_objects is None:

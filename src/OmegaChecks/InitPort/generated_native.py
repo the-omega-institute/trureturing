@@ -95,7 +95,8 @@ def check_runtime_ir(stage, library, adapter, consumer):
         library, check)
 
 
-def compile_generated(stage, product, graph, seed_ir, owners=None, *, original_seed=None, before_owner=None):
+def compile_generated(stage, product, graph, seed_ir, owners=None, *, original_seed=None, before_owner=None,
+                      check_strings=True):
     """Compile generated owners in import order and preserve the native symbols of existing owners."""
     requested = set(graph if owners is None else owners)
     selected = [owner for owner in TopologicalSorter(graph).static_order()
@@ -188,17 +189,15 @@ def compile_generated(stage, product, graph, seed_ir, owners=None, *, original_s
                 pending.extend(graph.get(owner, ()))
         return seen
 
-    if strings.exists() and literals.exists():
+    if strings.exists() and literals.exists() and check_strings:
         list_client = stage / "string-list-consumer.c"
-        run("lean", "-R", HERE, "-c", list_client, HERE / "StringListConsumer.lean",
+        run("lean", "-R", HERE, "-o", stage / "StringListConsumer.olean", "-c", list_client, HERE / "StringListConsumer.lean",
             env={**os.environ, "LEAN_PATH": str(library)})
         dependencies = reachable([string_owner])
         missing = sorted(name for name in dependencies & seed_owners if not seed_files[name].is_file())
-        if missing:
-            # The detached seed carries the rest of these modules as Lean IR only.
+        if missing or (owners is not None and not dependencies.issubset(selected)):
+            # Detached and selectively compiled products need only the two adapters for this consumer.
             inputs = [literals, strings]
-            print("Checking the compiled string adapters directly. Seed C unavailable for "
-                  + ", ".join(missing), flush=True)
         else:
             inputs = []
             for owner in sorted(dependencies):
@@ -217,6 +216,10 @@ def compile_generated(stage, product, graph, seed_ir, owners=None, *, original_s
         application = stage / "check-string-list"
         run("leanc", "-I", HERE, list_client, HERE / "string_list_consumer.c", *inputs, "-o", application)
         run(application)
+        shim = stage / ("string-extern" + (sysconfig.get_config_var("SHLIB_SUFFIX") or ".so"))
+        run("leanc", "-shared", "-fPIC", "-DLEAN_EXPORTING", "-I", HERE, literals, strings, "-o", shim)
+        run("lake", "env", "lean", "--load-dynlib=" + str(shim), "--run", HERE / "StringListIRConsumer.lean",
+            library, stage)
     if not set(CONTROL).issubset(selected):
         return []
 

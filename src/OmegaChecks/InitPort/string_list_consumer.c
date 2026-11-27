@@ -5,13 +5,38 @@ extern lean_obj_res omega_string_roundtrip(lean_obj_arg);
 extern lean_obj_res omega_string_scalars(lean_obj_arg);
 extern lean_obj_res omega_string_bytes(lean_obj_arg);
 
-static int represents(b_lean_obj_arg n, uint32_t expected) {
-    if (lean_is_scalar(n)) return lean_unbox(n) == expected;
-    while (expected && !lean_is_scalar(n) && lean_is_ctor(n)) {
-        n = lean_ctor_get(n, 0);
-        --expected;
+extern lean_obj_res omega_test_string_raw(lean_obj_arg);
+extern uint8_t omega_test_string_equal(lean_obj_arg, lean_obj_arg);
+extern uint8_t omega_test_string_less(lean_obj_arg, lean_obj_arg);
+extern lean_obj_res omega_test_string_hash(lean_obj_arg);
+extern lean_obj_res omega_test_string_data(lean_obj_arg);
+
+static int check_operations(b_lean_obj_arg a, b_lean_obj_arg b) {
+    uint8_t equal = omega_test_string_equal(omega_string_from_lean(a), omega_string_from_lean(b));
+    uint8_t less = omega_test_string_less(omega_string_from_lean(a), omega_string_from_lean(b));
+    if (equal != lean_string_dec_eq(a, b) || less != lean_string_dec_lt(a, b)) return 0;
+    lean_object *hash = omega_test_string_hash(omega_string_from_lean(a));
+    lean_object *expected = lean_uint64_to_nat(lean_string_hash(a));
+    int valid = lean_nat_dec_eq(hash, expected);
+    lean_dec(hash);
+    lean_dec(expected);
+    lean_object *raw = omega_test_string_raw(omega_string_from_lean(a));
+    lean_object *bytes = omega_bytes_to_lean(raw);
+    valid = valid && lean_sarray_size(bytes) == lean_string_size(a) - 1;
+    for (size_t i = 0; valid && i < lean_sarray_size(bytes); ++i) {
+        valid = lean_sarray_cptr(bytes)[i] == (unsigned char)lean_string_cstr(a)[i];
     }
-    return !expected && n == lean_box(0);
+    lean_dec(bytes);
+    lean_dec(raw);
+    return valid;
+}
+
+static int has_scalars(b_lean_obj_arg chars, const uint32_t *values, size_t count) {
+    for (size_t i = 0; i < count; ++i) {
+        if (lean_is_scalar(chars) || lean_ctor_get(chars, 0) != lean_box(values[i])) return 0;
+        chars = lean_ctor_get(chars, 1);
+    }
+    return chars == lean_box(0);
 }
 
 int main(void) {
@@ -22,19 +47,22 @@ int main(void) {
     static const char text[] = "\x00\xc3\xa9\xe4\xb8\xad\xf0\x9f\x99\x82";
     static const uint32_t scalars[] = {0, 0xe9, 0x4e2d, 0x1f642};
     lean_object *native = lean_mk_string_from_bytes_unchecked(text, sizeof text - 1);
+    lean_object *empty_string = lean_mk_string("");
+    if (!check_operations(native, empty_string) || !check_operations(empty_string, native) ||
+        !check_operations(native, native) || !check_operations(empty_string, empty_string)) return 7;
+    lean_dec(empty_string);
     lean_object *s = omega_string_from_lean(native);
     lean_inc(s);
     lean_object *len = omega_string_bytes(s);
-    if (!represents(len, sizeof text - 1)) return 2;
+    if (len != lean_box(sizeof text - 1)) return 2;
     lean_dec(len);
     lean_inc(s);
     lean_object *decoded = omega_string_scalars(s);
-    lean_object *cell = decoded;
-    for (size_t i = 0; i < sizeof scalars / sizeof scalars[0]; ++i) {
-        if (lean_is_scalar(cell) || !represents(lean_ctor_get(cell, 0), scalars[i])) return 3;
-        cell = lean_ctor_get(cell, 1);
-    }
-    if (!lean_is_scalar(cell)) return 4;
+    if (!has_scalars(decoded, scalars, sizeof scalars / sizeof scalars[0])) return 3;
+    lean_dec(decoded);
+    lean_inc(s);
+    decoded = omega_test_string_data(s);
+    if (!has_scalars(decoded, scalars, sizeof scalars / sizeof scalars[0])) return 8;
     lean_dec(decoded);
     lean_object *encoded = omega_string_roundtrip(s);
     lean_object *again = omega_string_to_lean(encoded);

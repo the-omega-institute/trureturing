@@ -18,3 +18,16 @@ LEAN_EXPORT lean_obj_res omega_string_to_list(lean_obj_arg bytes) {
     lean_dec(decoded);
     return result;
 }
+
+LEAN_EXPORT lean_obj_res omega_string_data(lean_obj_arg bytes) {
+    return omega_string_to_list(bytes);
+}
+
+LEAN_EXPORT uint8_t omega_string_dec_lt(b_lean_obj_arg left, b_lean_obj_arg right) {
+    lean_object *a = omega_string_to_lean(left);
+    lean_object *b = omega_string_to_lean(right);
+    uint8_t less = lean_string_dec_lt(a, b);
+    lean_dec(a);
+    lean_dec(b);
+    return less;
+}
