@@ -2,7 +2,7 @@
 import argparse
 from collections import Counter, defaultdict
 from graphlib import CycleError, TopologicalSorter
-from generated_native import compile_generated
+from generated_native import check_share_ir, compile_generated
 import json
 import omegamath
 import os
@@ -122,23 +122,26 @@ def install_state_runtime(stage, product, artifact, tool, filename):
     return [obj, *objects]
 
 
-def check_state_consumer(stage, artifact, inventory, tool, filename, required, objects):
+def has_interfaces(inventory, required):
     with inventory.open() as stream:
         installed = {(mod, name) for mod, name, _, status, _ in map(json.loads, stream)
                      if status in {"added", "existing"}}
-    if all((mod, name) in installed for mod, names in required.items() for name in names):
-        consumer = stage / (filename + "-consumer.c")
-        run("lean", "-R", HERE, "-c", consumer, HERE / (tool + "Consumer.lean"),
-            env={**os.environ, "LEAN_PATH": str(artifact)})
-        app = stage / (filename + "-consumer")
-        run("leanc", consumer, *objects, HERE / (filename + "_consumer.c"), "-o", app)
-        run(app)
+    return all((mod, name) in installed for mod, names in required.items() for name in names)
+
+
+def check_state_consumer(stage, artifact, tool, filename, objects):
+    consumer = stage / (filename + "-consumer.c")
+    run("lean", "-R", HERE, "-c", consumer, HERE / (tool + "Consumer.lean"),
+        env={**os.environ, "LEAN_PATH": str(artifact)})
+    app = stage / (filename + "-consumer")
+    run("leanc", consumer, *objects, HERE / (filename + "_consumer.c"), "-o", app)
+    run(app)
 
 
 def compile_state_runtime(stage, product, artifact, inventory, tool, filename, required, extra_sources=()):
     objects = install_state_runtime(stage, product, artifact, tool, filename)
-    if objects:
-        check_state_consumer(stage, artifact, inventory, tool, filename, required, [*objects, *extra_sources])
+    if objects and has_interfaces(inventory, required):
+        check_state_consumer(stage, artifact, tool, filename, [*objects, *extra_sources])
 
 
 def compile_type_name(stage, product, artifact, inventory):
@@ -245,10 +248,12 @@ def generate(stage, product, seed, roots, excluded, original_seed):
 
     control_objects = compile_generated(stage, product, graph, original_seed.parents[1] / "ir",
                                         original_seed=original_seed, before_owner={"OmegaInit.ShareCommon": install_sharing})
-    if sharing and control_objects is not None:
-        check_state_consumer(stage, artifact, inventory, "ShareCommon", "share_common", {
-            "Init.ShareCommon": {"ShareCommon.State.mk", "ShareCommon.State.shareCommon", "ShareCommonM.run"},
-        }, [*sharing, *control_objects])
+    sharing_interfaces = {"Init.ShareCommon": {"ShareCommon.State.mk", "ShareCommon.State.shareCommon", "ShareCommonM.run"}}
+    if sharing and has_interfaces(inventory, sharing_interfaces):
+        if control_objects is None:
+            check_share_ir(stage, artifact)
+        else:
+            check_state_consumer(stage, artifact, "ShareCommon", "share_common", [*sharing, *control_objects])
     with (product / "audit.txt").open("w") as log:
         audit = ROOT / ".lake/build/bin/omegaAudit"
         checked = subprocess.run(["lake", "env", audit, "--exact-roots", artifact, *graph, "--", *closure],
