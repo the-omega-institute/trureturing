@@ -190,10 +190,11 @@ private def compare (reference : Environment) (rename : Name → Name) (src dst 
     let .defnInfo d := src | throw <| IO.userError "expected strict reference consumer"
     let .defnInfo ref := dst | throw <| IO.userError "expected official reference consumer"
     let expected ← OmegaChecks.InitPort.ReferenceSpecialization.consumerBody reference reference ref
-    if owner == OmegaChecks.InitPort.StateRunner.owner && !(liftTerm d.value).equal expected then
-      throw <| IO.userError s!"incorrect state runner initialization or result for {src.name}"
+    if owner != OmegaChecks.InitPort.BufferReference.owner && !(liftTerm d.value).equal expected then
+      throw <| IO.userError s!"unexpected reference specialization for {src.name}"
     requireSame reference src.name "specialized reference body"
-      (OmegaChecks.InitPort.ReferenceSpecialization.restore owner (liftTerm d.value)) (OmegaChecks.InitPort.ReferenceSpecialization.restore owner expected)
+      (← OmegaChecks.InitPort.ReferenceSpecialization.restore reference owner (liftTerm d.value))
+      (← OmegaChecks.InitPort.ReferenceSpecialization.restore reference owner expected)
     return src.type.getUsedConstants ++ d.value.getUsedConstants
   let mut deps := src.type.getUsedConstants
   match src, dst with

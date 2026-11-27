@@ -729,7 +729,8 @@ def writeMonolithic (base : Environment) (final : Kernel.Environment)
 def run (strictPath artifacts : System.FilePath) (outPath : String) (exclude : System.FilePath) (modules : List Name) : IO Unit := do
   let recursionRule ← OmegaChecks.InitCompiler.Recursion.loadRule
   let referenceTemplates ← importModules #[{module := `OmegaChecks.InitPort.BufferReference, importAll := true},
-    {module := `OmegaChecks.InitPort.StateRunner, importAll := true}] {} (level := .private)
+    {module := `OmegaChecks.InitPort.StateRunner, importAll := true},
+    {module := `OmegaChecks.InitPort.ReferenceModify, importAll := true}] {} (level := .private)
   let handleEnv ← importModules #[{module := `OmegaChecks.InitPort.LogicalHandle}] {} (level := .private)
   let mut handles : NameMap OmegaChecks.InitPort.LogicalHandle.Templates := {}
   for api in OmegaChecks.InitPort.LogicalHandle.apis do
@@ -754,7 +755,8 @@ def run (strictPath artifacts : System.FilePath) (outPath : String) (exclude : S
   unsafe enableInitializersExecution
   let source ← importModules imports {} (loadExts := true) (level := .private)
   let mut referenceModels := {}
-  for (consumer, owner) in [(`IO.FS.Stream.ofBuffer, `Init.System.IO), (`StateRefT'.run, `Init.Control.StateRef)] do
+  for (consumer, owner) in [(`IO.FS.Stream.ofBuffer, `Init.System.IO), (`StateRefT'.run, `Init.Control.StateRef),
+      (`ST.Prim.Ref.modify, `Init.System.ST)] do
     if source.contains consumer then
       referenceModels := referenceModels.insert owner (← OmegaChecks.InitPort.ReferenceSpecialization.models source referenceTemplates owner)
   let vis ← importModules imports {} (level := .exported)

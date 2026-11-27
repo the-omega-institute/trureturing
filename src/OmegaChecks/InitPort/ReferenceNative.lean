@@ -1,6 +1,8 @@
 module
 meta import OmegaChecks.InitPort.NativeState
 import OmegaChecks.InitPort.NativeState
+meta import OmegaChecks.InitPort.ReferenceModify
+import OmegaChecks.InitPort.ReferenceModify
 import all Lean.OriginalConstKind
 import all Lean.Environment
 import Lean
@@ -18,7 +20,10 @@ private def owner := `OmegaInit.System.ST
 private def allocation := `Omega.ST.Prim.mkRef
 private def world := `Omega.Void.mk
 private def elim := `Omega.EST.Out.ctorElim
+private def readForModify := InitKernelPort.portName OmegaChecks.InitPort.ReferenceModify.support
+private def modify := `Omega.ST.Prim.Ref.modify
 private def entries := #[(world, "lean_void_mk"), (elim, "omega_est_out_elim"), (allocation, "omega_st_mk_ref"), (`Omega.ST.Prim.Ref.swap, "omega_st_ref_swap"),
+  (modify, "omega_st_ref_modify"), (readForModify, "omega_st_ref_read_for_modify"),
   (`Omega.ST.Prim.Ref.set, "omega_st_ref_set"), (`Omega.ST.Prim.Ref.ptrEq, "omega_st_ref_ptr_eq")]
 private def operations := #[`Omega.ST.pure, `Omega.ST.bind, `Omega.EST.pure, `Omega.EST.bind,
   `Omega.EST.throw, `Omega.EST.tryCatch, `Omega.runST, `Omega.runEST,
@@ -28,7 +33,7 @@ private def operations := #[`Omega.ST.pure, `Omega.ST.bind, `Omega.EST.pure, `Om
   `Omega.instSTWorldOfMonadLift, `Omega.instMonadFinallyST, `Omega.instMonadFinallyEST,
   `Omega.instMonadAttachST, `Omega.instMonadAttachEST, `Omega.instMonadLiftSTEST]
 
-private def lifted := #[`Omega.ST.mkRef, `Omega.ST.Ref.swap, `Omega.ST.Ref.set, `Omega.ST.Ref.ptrEq]
+private def lifted := #[`Omega.ST.mkRef, `Omega.ST.Ref.swap, `Omega.ST.Ref.set, `Omega.ST.Ref.modify, `Omega.ST.Ref.ptrEq]
 
 public unsafe def install (lib output : System.FilePath) (interpreter : Bool) : IO Unit := do
   let original ← importModules #[{module := `Init.System.ST}] {}
@@ -46,7 +51,7 @@ public unsafe def install (lib output : System.FilePath) (interpreter : Bool) : 
   if externs.isEmpty && !(operations.any env.contains) then return
   if !interpreter then
     if env.contains `Omega.ST.Out then installStateLayout lib env
-    for n in [`Omega.EST.Out, `Omega.Except, `Omega.STWorld, `Omega.MonadFinally, `Omega.MonadAttach,
+    for n in [`Omega.EST.Out, `Omega.Except, `Omega.Option, `Omega.STWorld, `Omega.MonadFinally, `Omega.MonadAttach,
         `Omega.MonadExceptOf, `Omega.Monad, `Omega.MonadLift, `PULift] do
       if env.contains n && (monoTypeExt.find? env n).isNone then
         let idx := (env.getModuleIdxFor? n).get!
@@ -90,6 +95,17 @@ public unsafe def install (lib output : System.FilePath) (interpreter : Bool) : 
     let some (some info) := impureTrivialStructureInfoExt.find? compiled `PULift
       | throw <| IO.userError "expected an unboxed EST eliminator continuation"
     unless info.ctorName == `PULift.up && info.fieldIdx == 0 do throw <| IO.userError "incorrect continuation layout"
+  if externs.any (·.1 == modify) then
+    verify original `ST.Prim.Ref.take #[(.erased, false), (.erased, false), (.tobject, true), (.void, false)]
+      .tobject "lean_st_ref_take"
+    verify original `ST.Prim.Ref.put #[(.erased, false), (.erased, false), (.tobject, true), (.tobject, false), (.void, false)]
+      .tagged "lean_st_ref_put"
+    verify original `ST.Prim.Ref.get #[(.erased, false), (.erased, false), (.tobject, true), (.void, false)]
+      .tobject "lean_st_ref_get"
+    let some opt := ctorLayoutExt.find? compiled `Omega.Option.some | throw <| IO.userError "missing Option.some layout"
+    let #[.object 0 _] := opt.fieldInfo | throw <| IO.userError "invalid Option.some field"
+    unless opt.ctorInfo.cidx == 1 && opt.ctorInfo.size == 1 && opt.ctorInfo.usize == 0 && opt.ctorInfo.ssize == 0 do
+      throw <| IO.userError "incorrect strict optional reference read layout"
   let implicitArgs := #[(IR.IRType.erased, false), (.erased, false)]
   for (n, symbol) in externs do
     if n == elim then
@@ -99,7 +115,9 @@ public unsafe def install (lib output : System.FilePath) (interpreter : Bool) : 
     if n == world then
       verify compiled n #[(.erased, false), (.tobject, false)] .tobject symbol
       continue
-    let parameters := if n == allocation then #[(.tobject, false)]
+    let parameters := if n == readForModify then #[(.tobject, true)]
+      else if n == modify then #[(.tobject, false), (.tobject, false)]
+      else if n == allocation then #[(.tobject, false)]
       else if n == `Omega.ST.Prim.Ref.ptrEq then #[(.tobject, true), (.tobject, true)]
       else #[(.tobject, n == `Omega.ST.Prim.Ref.swap), (.tobject, false)]
     verify compiled n (implicitArgs ++ parameters ++ #[(.tobject, false)]) .object symbol
