@@ -98,7 +98,11 @@ private def officialDeclaration (stx : Syntax) : CommandElabM (Environment × Co
     let type ← ofExcept (translateProofTerm src defn.type)
     let name := omegaName defn.name
     Lean.addDecl (.defnDecl {defn with name, type, value, all := defn.all.map omegaName}) (forceExpose := true)
-    unless stx[2].isNone do Lean.compileDecls #[name]
+    if isAuxRecursor src defn.name then modifyEnv (markAuxRecursor · name)
+    -- When code generation is optional, the compiler records unsupported definitions as
+    -- noncomputable. Explicit native callers require a successful compilation.
+    withOptions (fun opts => Elab.async.set opts false) do
+      Lean.compileDecls #[name] (logErrors := !stx[2].isNone)
     setReducibilityStatus name (getReducibilityStatusCore src defn.name)
     if isProtected src defn.name then modifyEnv (addProtected · name)
 
