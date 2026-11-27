@@ -525,7 +525,18 @@ private unsafe def install (source publicSource : Environment) (lib out : System
           (IR.findEnvDecl st.env ci.name).isSome && (getSigCore? st.env impureSigExt ci.name).isSome then
         some ci.name
       else none
-    writeCode lib owner st.env (layouts ++ codeExtensions ++ #[privateConstKindsExt.name]) computable
+    let mut compiled := st.env
+    let mut extensions := layouts ++ codeExtensions ++ #[privateConstKindsExt.name]
+    if owner == `OmegaInit.Dynamic then
+      extensions := extensions.push Compiler.implementedByAttr.ext.name
+      for op in OmegaChecks.InitPort.DynamicValue.operations do
+        let pub := InitKernelPort.portName op
+        let impl := OmegaChecks.InitPort.DynamicValue.implementation op
+        let target := InitKernelPort.portName impl
+        if words.contains pub && words.contains target then
+          unless Compiler.getImplementedBy? source op == some impl do throw <| IO.userError s!"missing pinned implementation {op}"
+          compiled ← IO.ofExcept <| Compiler.setImplementedBy compiled pub target
+    writeCode lib owner compiled extensions computable
     let fresh ← importModules #[{module := owner}] {} (level := .exported)
     let actual := NameSet.ofList ((impureSigExt.getModuleEntries fresh (fresh.getModuleIdx? owner).get!).map (·.name)).toList
     let originalOwner := owner.replacePrefix `OmegaInit `Init

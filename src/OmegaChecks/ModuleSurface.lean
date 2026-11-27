@@ -280,9 +280,12 @@ private def checkElaboration (env full : Environment) (reference? : Option Envir
     unless owner == expectedOwner && env.getModuleIdxFor? n == some idx &&
         data == ⟨[.standard `all symbol]⟩ do throw <| IO.userError s!"invalid native state entry {owner}/{n}"
   for (n, implementation) in Compiler.implementedByAttr.ext.getModuleEntries env idx do
-    let reader := mkPrivateNameCore `OmegaInit.Dynamic `Omega.TypeName.typeNameImpl
-    unless owner == `OmegaInit.Dynamic && n == `Omega.TypeName.typeName && implementation == reader &&
-        env.getModuleIdxFor? n == some idx && env.getModuleIdxFor? reader == some idx do
+    let original := InitKernelPort.originalName n
+    let expected := if original == `TypeName.typeName then some (mkPrivateNameCore `Init.Dynamic `TypeName.typeNameImpl)
+      else if InitPort.DynamicValue.operations.contains original then some (InitPort.DynamicValue.implementation original)
+      else none
+    unless owner == `OmegaInit.Dynamic && (expected.map InitKernelPort.portName) == some implementation &&
+        env.getModuleIdxFor? n == some idx && env.getModuleIdxFor? implementation == some idx do
       throw <| IO.userError s!"unmatched native implementation {n} → {implementation} in {owner}"
   for entry in reducibilityExtraExt.ext.getModuleEntries env idx do
     let (name, _) := match entry with
