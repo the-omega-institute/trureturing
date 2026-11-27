@@ -23,8 +23,11 @@ private unsafe def entryName (ext : Name) (entry : EnvExtensionEntry) : Name :=
   else if ext == impureSigExt.name then (unsafeCast entry : Signature .impure).name
   else (unsafeCast entry : Name × Unit).1
 
-private unsafe def merge (old fresh : ModuleData) (selected : Array Name) : IO ModuleData := do
-  let mut entries := old.entries
+private unsafe def merge (old fresh : ModuleData) (selected : Array Name) (computable : NameSet) : IO ModuleData := do
+  let mut entries := old.entries.map fun (ext, values) =>
+    if ext == noncomputableExt.name then
+      (ext, values.filter fun entry => !computable.contains (unsafeCast entry : Name))
+    else (ext, values)
   for (ext, values) in fresh.entries do
     unless selected.contains ext do continue
     let mut replacements : NameMap EnvExtensionEntry := {}
@@ -47,14 +50,14 @@ public def localEnv (env : Environment) (mod : Name) (names : Array Name) : IO E
   return (Environment.ofKernelEnv kenv).setMainModule mod |>.setModulePackage (env.getModulePackageByIdx? idx)
 
 public unsafe def writeCode (lib : System.FilePath) (mod : Name) (compiled : Environment)
-    (selected : Array Name) : IO Unit := do
+    (selected : Array Name) (computable : NameSet := {}) : IO Unit := do
   let path := modToFilePath lib mod "olean"
   let paths := #[path, path.addExtension "server", path.addExtension "private"]
   let levels := #[OLeanLevel.exported, .server, .private]
   let old ← readModuleDataParts paths
   let mut parts := #[]
   for (previous, _) in old, file in paths, level in levels do
-    parts := parts.push (file, ← merge previous (← mkModuleData compiled level) selected)
+    parts := parts.push (file, ← merge previous (← mkModuleData compiled level) selected computable)
   saveModuleDataParts mod parts
   let ir := path.withExtension "ir"
   let sig := ir.addExtension "sig"
@@ -62,7 +65,7 @@ public unsafe def writeCode (lib : System.FilePath) (mod : Name) (compiled : Env
   let news := #[← mkModuleData compiled .exported, Lean.mkIRData compiled]
   let mut irParts := #[]
   for (previous, _) in old, file in #[sig, ir], fresh in news do
-    irParts := irParts.push (file, ← merge previous fresh selected)
+    irParts := irParts.push (file, ← merge previous fresh selected computable)
   saveModuleDataParts (mod ++ `ir) irParts
 
 public def compile (env : Environment) (work : CoreM Unit) : IO Environment := do
@@ -83,14 +86,25 @@ public def verify (env : Environment) (n : Name) (args : Array (IR.IRType × Boo
   unless params.map (fun p => (p.ty, p.borrow)) == args && result == ret &&
     symbolData == ⟨[.standard `all symbol]⟩ do throw <| IO.userError s!"native ABI mismatch for {n}"
 
-/-- Both pure and effectful task scheduling convert strict unary priorities to the runtime ABI. -/
-public def checkPriorityLayout (env : Environment) : IO Unit := do
-  for (n, tag, fields) in #[(`Omega.Nat.zero, 0, 0), (`Omega.Nat.succ, 1, 1)] do
-    let some d := ctorLayoutExt.find? env n | throw <| IO.userError s!"missing native priority layout {n}"
-    unless d.ctorInfo.cidx == tag && d.ctorInfo.size == fields && d.ctorInfo.usize == 0 &&
-        d.ctorInfo.ssize == 0 && d.fieldInfo.size == fields do throw <| IO.userError s!"incorrect priority layout {n}"
-  let some succ := ctorLayoutExt.find? env `Omega.Nat.succ | throw <| IO.userError "missing successor"
-  let #[.object 0 _] := succ.fieldInfo | throw <| IO.userError "incorrect priority predecessor"
+/-- The task and sharing adapters pass runtime Nat values without conversion. -/
+public def checkNativeNat (env : Environment) : IO Unit := do
+  let some (.inductInfo nat) := env.find? `Nat | throw <| IO.userError "missing native Nat"
+  unless nat.ctors == [`Nat.zero, `Nat.succ] && env.getModuleIdxFor? `Nat == env.getModuleIdx? `OmegaInit.Prelude do
+    throw <| IO.userError "expected the kernel Nat from the strict Prelude"
+
+/-- Check the byte-list layout consumed by strict_string.h. -/
+public def checkStrictString (env : Environment) : IO Unit := do
+  checkNativeNat env
+  for n in [`Omega.Fin, `Omega.BitVec, `Omega.UInt8,
+            `Omega.Array, `Omega.ByteArray, `Omega.String] do
+    let some (some field) := impureTrivialStructureInfoExt.find? env n
+      | throw <| IO.userError s!"missing literal representation of {n}"
+    unless field.fieldIdx == 0 do throw <| IO.userError s!"unexpected representation of {n}"
+  let some nil := ctorLayoutExt.find? env `Omega.List.nil | throw <| IO.userError "missing string list nil"
+  unless nil.ctorInfo.cidx == 0 && nil.fieldInfo.isEmpty do throw <| IO.userError "incorrect string list nil"
+  let some cons := ctorLayoutExt.find? env `Omega.List.cons | throw <| IO.userError "missing list layout"
+  let #[.object 0 _, .object 1 _] := cons.fieldInfo | throw <| IO.userError "incorrect character-list fields"
+  unless cons.ctorInfo.cidx == 1 && cons.ctorInfo.size == 2 && cons.ctorInfo.usize == 0 && cons.ctorInfo.ssize == 0 do throw <| IO.userError "incorrect list tag or size"
 
 /-- The native state adapters construct ST.Out with the result followed by the strict world. -/
 public unsafe def installStateLayout (lib : System.FilePath) (env : Environment) : IO Unit := do

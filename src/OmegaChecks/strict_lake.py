@@ -1,6 +1,7 @@
-"""Build eligible targets with the strict foundations. Other Lake commands inspect the raw overlay."""
+"""Build and audit the isolated foundations and expose their ordinary Lean import view."""
 import json
 import os
+import re
 from pathlib import Path
 import subprocess
 import sys
@@ -46,8 +47,19 @@ def foundation_config(source_dir, build_dir, label):
     return write_config(f"omega-{label}.toml", source)
 
 
+def isolated_config():
+    return foundation_config("strict", BUILD, "isolated")
+
+
 def strict_config():
-    return foundation_config("strict", BUILD, "strict")
+    """Ordinary `lake env` consumers share the pinned host's physical declarations."""
+    from hosted import cached_view
+
+    base = ROOT / BUILD / "lib/lean"
+    kernel = isolated_config()
+    view = cached_view(base)
+    raw = kernel.read_text()
+    return write_config("omega-strict.toml", "leanLibDir = " + json.dumps(str(view)) + "\n" + raw)
 
 
 def write_config(name, source):
@@ -64,7 +76,7 @@ def lake_layout(strict, with_reg, common_dir=None):
     label = "common" if common_dir else "strict"
     build_dir = ".lake/build/omega-common" if common_dir else BUILD
     overlay = (foundation_config(str(common_dir), build_dir, label) if common_dir else
-               strict_config() if strict else None)
+               isolated_config() if strict else None)
     command = ["lake", "-f", overlay] if overlay else ["lake"]
     libraries = {"": ROOT / (build_dir if overlay else ".lake/build") / "lib/lean"}
     if not with_reg:
@@ -97,6 +109,55 @@ def lake_layout(strict, with_reg, common_dir=None):
     return command, libraries
 
 
+def build_profiles(graph, selections, options=(), original=None):
+    from portable import closure, root
+    from check import terminal_modules
+
+    foundations = {"OmegaInit", "OmegaMathlib", "OmegaMath"}
+    requested = set().union(*selections.values()).intersection(graph)
+    with_omega = set()
+    with_host = set()
+    for name in closure(graph, requested):
+        deps = graph[name]
+        if root(name) == "OmegaInit" or deps & with_omega:
+            with_omega.add(name)
+        if deps & with_host or any(dep not in graph for dep in deps):
+            with_host.add(name)
+    mixed = with_host & with_omega
+    mixed = {name for name in mixed if root(name) not in foundations}
+    lake = ["lake", "-f", isolated_config(), "build"]
+    if not requested & mixed:
+        return subprocess.call([*lake, *(original if original is not None else [*options, *selections])], cwd=ROOT)
+    hosted = [target for target, names in selections.items() if names & mixed]
+    independent = [target for target in selections if target not in hosted]
+    required = {name for name in closure(graph, requested & mixed) if root(name) in foundations}
+    independent.extend("+" + name for name in terminal_modules(graph, required))
+    if independent:
+        result = subprocess.call([*lake, *options, *independent], cwd=ROOT)
+        if result:
+            return result
+    # The isolated foundation is an input library to this build. Lake resolves
+    # the real witness targets and their facets; it cannot rebuild the foundation
+    # into the ordinary import view as a side effect of compiling a mixed file.
+    config = strict_config().read_text()
+    expected = tomllib.loads(config)
+    expected["lean_lib"] = [lib for lib in expected["lean_lib"] if lib["name"] not in foundations]
+    pattern = r'^\[\[lean_lib\]\]\nname = "(?:OmegaInit|OmegaMathlib|OmegaMath)"\n.*?(?=^\[\[|\Z)'
+    config = re.sub(pattern, "", config, flags=re.MULTILINE | re.DOTALL)
+    # Lake treats these prebuilt modules as external. Bind its compilation trace
+    # to the isolated basis bytes used for this particular witness build.
+    from hosted import foundation_files, fingerprint
+    base = ROOT / BUILD / "lib/lean"
+    files = sorted(path for foundation in foundations for path in foundation_files(base, foundation))
+    key = fingerprint(base, files)
+    expected["moreLeanArgs"] = ["-Dweak.omegaHostedBasis=" + key]
+    config = "moreLeanArgs = " + json.dumps(expected["moreLeanArgs"]) + "\n" + config
+    if tomllib.loads(config) != expected:
+        raise ValueError("unexpected hosted witness configuration")
+    profile = write_config(f"omega-hosted-{key}.toml", config)
+    return subprocess.call(["lake", "-f", profile, "build", *options, *hosted], cwd=ROOT)
+
+
 def strict_build(args):
     # Resolve Lake's own module paths and library globs, including package-qualified
     # targets. Other commands continue to expose the raw overlay for inspection.
@@ -104,7 +165,7 @@ def strict_build(args):
     from portable import closure, root
     from scope import module_path
 
-    lake = ["lake", "-f", strict_config()]
+    lake = ["lake", "-f", isolated_config()]
     config = tomllib.loads((ROOT / "lakefile.toml").read_text())
     package = config["name"]
     libraries = {lib["name"] for lib in config["lean_lib"]}
@@ -146,7 +207,7 @@ def strict_build(args):
     graph = strict_import_graph("lean", all_roots)
     skipped = library_mathlib_only(graph, all_roots & graph.keys())
     if not skipped:
-        return subprocess.call([*lake, "build", *args], cwd=ROOT)
+        return build_profiles(graph, selections, options, original=args)
     targets = []
     eligible = set()
     skipped_facets = []
@@ -167,7 +228,8 @@ def strict_build(args):
             sys.stderr.write(result.stdout + result.stderr)
             return result.returncode
     targets.extend("+" + name for name in terminal_modules(graph, eligible))
-    return subprocess.call([*lake, "build", *options, *targets], cwd=ROOT) if targets else 0
+    chosen = {target: selections.get(target, {target.removeprefix("+")}) for target in targets}
+    return build_profiles(graph, chosen, options) if chosen else 0
 
 
 if __name__ == "__main__":
@@ -175,5 +237,9 @@ if __name__ == "__main__":
     if "build" in args and not {"-h", "--help"}.intersection(args):
         index = args.index("build")
         if all(option.startswith("-") for option in args[:index]):
-            sys.exit(strict_build([*args[:index], *args[index + 1:]]))
-    sys.exit(subprocess.call(["lake", "-f", strict_config(), *args], cwd=ROOT))
+            ret = strict_build([*args[:index], *args[index + 1:]])
+            if ret == 0:
+                strict_config()
+            sys.exit(ret)
+    config = strict_config() if "env" in args else isolated_config()
+    sys.exit(subprocess.call(["lake", "-f", config, *args], cwd=ROOT))

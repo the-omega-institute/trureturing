@@ -2,13 +2,10 @@
 
 /* Char, UInt32, BitVec and Fin erase to the checked natural representation. */
 static uint32_t omega_scalar_value(b_lean_obj_arg n) {
-    uint32_t value = 0;
-    while (!lean_is_scalar(n)) {
-        if (value == 0x10ffff) return 0;
-        ++value;
-        n = lean_ctor_get(n, 0);
-    }
-    return value >= 0xd800 && value <= 0xdfff ? 0 : value;
+    if (!lean_is_scalar(n)) return 0;
+    size_t value = lean_unbox(n);
+    if (value > 0x10ffff || (value >= 0xd800 && value <= 0xdfff)) return 0;
+    return (uint32_t)value;
 }
 
 LEAN_EXPORT lean_obj_res omega_char_of_nat(lean_obj_arg n) {
@@ -27,4 +24,31 @@ LEAN_EXPORT lean_obj_res omega_string_of_list(lean_obj_arg chars) {
     lean_object *bytes = omega_string_from_lean(native);
     lean_dec(native);
     return bytes;
+}
+
+LEAN_EXPORT lean_obj_res omega_string_byte_size(b_lean_obj_arg bytes) {
+    uint64_t count = 0;
+    for (; !lean_is_scalar(bytes); bytes = lean_ctor_get(bytes, 1)) ++count;
+    return omega_nat_from_uint64(count);
+}
+
+LEAN_EXPORT lean_obj_res omega_string_to_bytes(lean_obj_arg bytes) {
+    return bytes;
+}
+
+LEAN_EXPORT uint8_t omega_string_dec_eq(b_lean_obj_arg left, b_lean_obj_arg right) {
+    if (left == right) return 1;
+    lean_object *a = omega_string_to_lean(left);
+    lean_object *b = omega_string_to_lean(right);
+    uint8_t equal = lean_string_dec_eq(a, b);
+    lean_dec(a);
+    lean_dec(b);
+    return equal;
+}
+
+LEAN_EXPORT lean_obj_res omega_string_hash(b_lean_obj_arg bytes) {
+    lean_object *native = omega_string_to_lean(bytes);
+    uint64_t hash = lean_string_hash(native);
+    lean_dec(native);
+    return omega_nat_from_uint64(hash);
 }

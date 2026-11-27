@@ -1,5 +1,7 @@
 module
 public import Lean
+public import OmegaChecks.InitCompiler.NaturalBootstrap
+import OmegaChecks.InitCompiler.RootNames
 public import OmegaChecks.InitCompiler.CompilerMarkers
 
 open Lean
@@ -7,39 +9,24 @@ open Lean
 namespace OmegaChecks.InitPort.NativeQuot
 
 private def primitives := #[`Quot, `Quot.mk, `Quot.ind, `Quot.lift]
-private def matcherNames := #[`PProd.mk, `Unit, `Unit.unit]
-private def equalitySupport := #[
-  `rfl, `Eq.symm, `Eq.ndrec, `HEq, `HEq.refl, `HEq.rec,
-  `Eq.subst, `cast, `heq_of_eq, `eq_of_heq]
-private def kernelNames := #[`Eq, `Eq.refl, `Eq.rec] ++ equalitySupport ++ primitives
-private def fixedNames := kernelNames ++ matcherNames
-
 /-- Root names required by the kernel, pattern elaborator and native compiler. -/
 public def isSupport (owner name : Name) : Bool :=
-  owner == `OmegaInit.Prelude && (fixedNames.contains name || CompilerMarkers.names.contains name)
+  owner == `OmegaInit.Prelude && (primitives.contains name || CompilerMarkers.names.contains name)
 
 private def interfaceType (ci : ConstantInfo) : Expr :=
   ci.type.replace fun
-    | .const n ls => some (.const (`Omega ++ n) ls)
+    | .const n ls => some (.const (if InitCompiler.RootNames.usesRoot n then n else `Omega ++ n) ls)
     | _ => none
-
-/-- The elaborator consumes literal root names while compiling patterns. Alias them to the
-strict types so that source programs can also name and reduce the same products and units. -/
-private def matcherAlias (ci : ConstantInfo) : ConstantInfo :=
-  .defnInfo {
-    name := ci.name, all := [ci.name], levelParams := ci.levelParams, type := interfaceType ci,
-    value := mkConst (`Omega ++ ci.name) (ci.levelParams.map Level.param), hints := .abbrev, safety := .safe}
 
 private def officialSupport : IO (Array ConstantInfo) := do
   let lib ← getLibDir (← findSysroot)
   let path := modToFilePath lib `Init.Prelude "olean"
   let modules ← readModuleDataParts #[path, path.addExtension "server", path.addExtension "private"]
-  let dataByLevel := modules.map Prod.fst
-  fixedNames.mapM fun n => do
-    let data := if equalitySupport.contains n then dataByLevel[2]! else dataByLevel[0]!
+  let data := (modules.map Prod.fst)[0]!
+  primitives.mapM fun n => do
     let some ci := data.constants.find? (·.name == n)
-      | throw <| IO.userError s!"missing pinned kernel declaration {n}"
-    return if matcherNames.contains n then matcherAlias ci else ci
+      | throw <| IO.userError s!"missing pinned quotient declaration {n}"
+    return ci
 
 /-- Inspect the normal form itself. Proof irrelevance alone would also prove a
 propositional equality between the induction result and its constructor branch. -/
@@ -56,20 +43,18 @@ private def checkReduction (env : Environment) (ci : ConstantInfo) : IO Unit := 
 
 /-- Replay regenerates quotient primitives from their fixed names. Check the serialized
 types, kinds and owners too, including every physical copy before replay. -/
-public def checkSupport (env : Environment) : IO Unit := do
+public def checkSupport (env : Environment) (level := OLeanLevel.private) : IO Unit := do
+  InitCompiler.checkNaturalBasis env level
   CompilerMarkers.check env
   let mut found := #[]
   for owner in env.header.moduleNames, data in env.header.moduleData do
     for n in data.constNames, ci in data.constants do
-      if fixedNames.contains n || fixedNames.contains ci.name || ci matches .quotInfo _ then
+      if primitives.contains n || primitives.contains ci.name || ci matches .quotInfo _ then
         unless n == ci.name && isSupport owner n do
           throw <| IO.userError s!"unexpected native quotient support {owner}/{n}"
         found := found.push ci
   if found.isEmpty then return
-  let hasKernel := found.any fun ci => kernelNames.contains ci.name
-  let hasMatchers := found.any fun ci => matcherNames.contains ci.name
-  let expected := (← officialSupport).filter fun ci =>
-    if matcherNames.contains ci.name then hasMatchers else hasKernel
+  let expected ← officialSupport
   unless found.size == expected.size do throw <| IO.userError "incomplete or duplicated native quotient support"
   for standard in expected do
     let some ci := found.find? (·.name == standard.name)
@@ -91,35 +76,14 @@ public def checkSupport (env : Environment) : IO Unit := do
         throw <| IO.userError s!"invalid quotient interface {name}"
       if [`Quot.lift, `Quot.ind].contains standard.name then checkReduction env (.defnInfo wrapper)
 
-private inductive PortEq {α : Sort u} : α → α → Prop where
-  | refl (a : α) : PortEq a a
-
-/-- Checked template for adapting the respectfulness proof to the kernel's equality. -/
-private noncomputable def lift.{u,v} {α : Sort u} {r : α → α → Prop} {β : Sort v}
-    (f : α → β) (h : ∀ a b, r a b → PortEq (f a) (f b)) (q : Quot r) : β :=
-  Quot.lift f (fun a b hab =>
-    PortEq.rec (motive := fun z _ => Eq (f a) z) (Eq.refl (f a)) (h a b hab)) q
-
-/-- Install the canonical primitives and transparent Omega interfaces in an isolated
-copy of the seed. The portable mixed backend shares its root primitives with Init. -/
+/-- The canonical quotients use the same kernel equality as the strict interfaces. -/
 public def prepareSeed (dir : System.FilePath) : IO Unit := do
-  let templates ← importModules #[{module := `OmegaChecks.InitPort.NativeQuot}] {} (level := .private)
-  let some (.defnInfo adapter) := templates.find? ``lift | throw <| IO.userError "missing quotient lift template"
-  let expanded ← (Meta.deltaExpand adapter.value (fun n => adapter.name.isPrefixOf n) (allowOpaque := true)).toIO'
-    {fileName := "<native quotient>", fileMap := default} {env := templates}
-  let adapted := expanded.replace fun
-    | .const n ls =>
-      if n == ``PortEq then some (.const `Omega.Eq ls)
-      else if n == ``PortEq.rec then some (.const `Omega.Eq.rec ls)
-      else none
-    | _ => none
-  let mut additions := (← officialSupport).filter (fun ci => kernelNames.contains ci.name) ++
-    CompilerMarkers.names.map CompilerMarkers.declaration
+  let mut additions := (← officialSupport) ++ CompilerMarkers.names.map CompilerMarkers.declaration
   for ci in additions do
     unless primitives.contains ci.name do continue
     let name := `Omega ++ ci.name
     let type := interfaceType ci
-    let body := if ci.name == `Quot.lift then adapted else mkConst ci.name (ci.levelParams.map Level.param)
+    let body := mkConst ci.name (ci.levelParams.map Level.param)
     additions := additions.push <| .defnInfo {
       name, type, levelParams := ci.levelParams, value := body, all := [name], hints := .regular 1, safety := .safe}
   let path := modToFilePath dir `OmegaInit.Prelude "olean"

@@ -7,7 +7,6 @@ import all OmegaInit.Prelude
 
 noncomputable section
 set_option allowUnsafeReducibility true
-attribute [local semireducible] Omega.Nat.add Omega.Nat.mul
 
 namespace OmegaLiteralProofs
 open Omega
@@ -52,20 +51,20 @@ public theorem raiseBound (a b : Nat) (h : Nat.lt a b) : Nat.lt a (Nat.succ b) :
 
 -- This computable predicate compares numerals by stripping successors on both sides.
 public abbrev computedLE : Nat → Nat → Prop :=
-  Nat.rec (motive := fun _ => Nat → Prop) (fun _ => True)
-    (fun _ smaller n => Nat.rec (motive := fun _ => Prop) False (fun k _ => smaller k) n)
+  Nat.rec (motive := fun _ => Nat → Prop) (fun _ => Omega.True)
+    (fun _ smaller n => Nat.rec (motive := fun _ => Prop) Omega.False (fun k _ => smaller k) n)
 
-/-- The computed predicate reduces to True at comparable constructor numerals. -/
-public theorem leTrue (a b : Nat) : computedLE a b → Omega.Eq (computedLE a b) True :=
-  Nat.rec (motive := fun a => ∀ b, computedLE a b → Omega.Eq (computedLE a b) True)
+/-- The computed predicate reduces to Omega.True at comparable constructor numerals. -/
+public theorem leTrue (a b : Nat) : computedLE a b → Omega.Eq (computedLE a b) Omega.True :=
+  Nat.rec (motive := fun a => ∀ b, computedLE a b → Omega.Eq (computedLE a b) Omega.True)
     (fun _ _ => Omega.rfl)
-    (fun n ih => Nat.rec (motive := fun b => computedLE n.succ b → Omega.Eq (computedLE n.succ b) True)
-      (fun h => False.elim h) (fun b _ => ih b)) a b
+    (fun n ih => Nat.rec (motive := fun b => computedLE n.succ b → Omega.Eq (computedLE n.succ b) Omega.True)
+      (fun h => Omega.False.elim h) (fun b _ => ih b)) a b
 
-public theorem leFalse (a b : Nat) : (computedLE a b → False) → Omega.Eq (computedLE a b) False :=
-  Nat.rec (motive := fun a => ∀ b, (computedLE a b → False) → Omega.Eq (computedLE a b) False)
-    (fun _ h => False.elim (h True.intro))
-    (fun n ih => Nat.rec (motive := fun b => (computedLE n.succ b → False) → Omega.Eq (computedLE n.succ b) False)
+public theorem leFalse (a b : Nat) : (computedLE a b → Omega.False) → Omega.Eq (computedLE a b) Omega.False :=
+  Nat.rec (motive := fun a => ∀ b, (computedLE a b → Omega.False) → Omega.Eq (computedLE a b) Omega.False)
+    (fun _ h => Omega.False.elim (h Omega.True.intro))
+    (fun n ih => Nat.rec (motive := fun b => (computedLE n.succ b → Omega.False) → Omega.Eq (computedLE n.succ b) Omega.False)
       (fun _ => Omega.rfl) (fun b _ => ih b)) a b
 
 end OmegaLiteralProofs

@@ -13,7 +13,7 @@ CHECK_INPUTS = {AUDIT, CERTIFICATE, "OmegaChecks.Portable.Exports", "OmegaChecks
                 "OmegaBuild.Commands", "OmegaBuild.Plan"}
 SHARED = {"lean-toolchain", "lakefile.toml", "lake-manifest.json",
           "src/OmegaChecks/check.py", "src/OmegaChecks/portable.py",
-          "src/OmegaChecks/scope.py", "src/OmegaChecks/strict_lake.py",
+          "src/OmegaChecks/scope.py", "src/OmegaChecks/strict_lake.py", "src/OmegaChecks/hosted.py",
           "src/OmegaChecks/test_backend_plan.py", "src/OmegaChecks/test_backend_scheduling.py"}
 REG_INPUTS = {"Reg/lakefile.toml", "Reg/lake-manifest.json", "Meta/tools-release.json"}
 FIBONACCI = "OmegaMathlib.Data.Nat.Fib.Basic"

@@ -13,7 +13,7 @@ noncomputable section
 
 namespace Omega.Nat
 
-attribute [local semireducible] Nat.pow Nat.add Nat.mul Nat.bitwise Nat.div Nat.mod Nat.beq Nat.ble
+attribute [local semireducible] Nat.bitwise Nat.div Nat.mod
 
 private def steps (f : Bool → Bool → Bool) : Nat → Nat → Nat → Nat :=
   Nat.rec (motive := fun _ => Nat → Nat → Nat) (fun _ _ => Nat.zero)
@@ -290,3 +290,8 @@ theorem testBit_or (x y i : Nat) : Eq (testBit (Nat.lor x y) i) (Bool.or (testBi
   testBit_bitwise (f := Bool.or) Omega.rfl x y i
 
 end Omega.Nat
+
+public section
+namespace Nat
+export _root_.Omega.Nat (and_lt_two_pow bitwise_lt_two_pow exists_ge_and_testBit_of_ge_two_pow exists_testBit_of_ne_zero ge_two_pow_of_testBit lt_pow_two_of_testBit one_and_eq_mod_two or_lt_two_pow testBit_add_one testBit_and testBit_bitwise testBit_div_two testBit_lt_two_pow testBit_of_two_pow_le_and_two_pow_add_one_gt testBit_or testBit_succ zero_testBit)
+end Nat

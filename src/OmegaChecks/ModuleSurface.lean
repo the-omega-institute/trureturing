@@ -1,6 +1,7 @@
 module
 public import Lean
 public import OmegaChecks.InitCompiler.RootNames
+import OmegaChecks.InitPort.WordNative
 import Lean.Elab.ParseImportsFast
 import Lean.Compiler.LCNF.SpecInfo
 import all Lean.Structure
@@ -75,7 +76,7 @@ private def checkUmbrella (env : Environment) (port : Name) (idx : ModuleIdx) : 
 extension kinds therefore require a correspondence before a port can expose them. -/
 private def supportedExtension (name : Name) : Bool :=
   [-- Compiled interface registrations checked by the port and kernel-interface audits.
-   externAttr.ext.name, aliasExtension.name, classExtension.name, Meta.instanceExtension.ext.name, Meta.simpExtension.ext.name, auxRecExt.name,
+   externAttr.ext.name, aliasExtension.name, classExtension.name, Meta.instanceExtension.ext.name, Meta.simpExtension.ext.name, auxRecExt.name, noConfusionExt.name, Meta.completionBlackListExt.name,
    protectedExt.name, matchPatternAttr.ext.name, Elab.Term.elabAsElim.ext.name, reducibilityCoreExt.name,
    privateToUserName structureExt.name, projectionFnInfoExt.name,
    -- Module provenance, compiled representation and kernel bookkeeping in the pinned toolchain.
@@ -101,7 +102,8 @@ private def checkSpecializations (env : Environment) (owner : Name) : IO Unit :=
           entry.paramsInfo.any Compiler.LCNF.SpecParamInfo.causesSpecialization do
         throw <| IO.userError s!"invalid parameter specialization for {entry.declName} in {owner}"
 
-private def checkElaboration (env : Environment) (owner : Name) (idx : ModuleIdx) : IO Unit := do
+private def checkElaboration (env full : Environment) (reference? : Option Environment)
+    (owner : Name) (idx : ModuleIdx) : IO Unit := do
   for (n, data) in externAttr.ext.getModuleEntries env idx do
     let (expectedOwner, symbol) ← match n with
       | `Omega.ShareCommon.StateFactory.mk => pure (`OmegaInit.ShareCommon, "omega_share_common_factory_mk")
@@ -134,6 +136,16 @@ private def checkElaboration (env : Environment) (owner : Name) (idx : ModuleIdx
       | `Omega.IO.FS.removeFile => pure (`OmegaInit.System.IO, "omega_io_remove_file")
       | `Omega.IO.FS.rename => pure (`OmegaInit.System.IO, "omega_io_rename")
       | `Omega.Void.mk => pure (`OmegaInit.System.ST, "lean_void_mk")
+      | `Nat.div => pure (`OmegaInit.Prelude, "lean_nat_div")
+      | `Nat.mod => pure (`OmegaInit.Prelude, "lean_nat_mod")
+      | `Nat.gcd => pure (`OmegaInit.Data.Nat.Gcd, "lean_nat_gcd")
+      | `Nat.ble => pure (`OmegaInit.Prelude, "lean_nat_dec_le")
+      | `Nat.beq => pure (`OmegaInit.Prelude, "lean_nat_dec_eq")
+      | `Nat.add => pure (`OmegaInit.Prelude, "lean_nat_add")
+      | `Nat.sub => pure (`OmegaInit.Prelude, "lean_nat_sub")
+      | `Nat.mul => pure (`OmegaInit.Prelude, "lean_nat_mul")
+      | `Nat.pow => pure (`OmegaInit.Prelude, "lean_nat_pow")
+      | `Nat.decEq => pure (`OmegaInit.Prelude, "lean_nat_dec_eq")
       | `Omega.ST.Prim.Ref.swap => pure (`OmegaInit.System.ST, "omega_st_ref_swap")
       | `Omega.ST.Prim.Ref.set => pure (`OmegaInit.System.ST, "omega_st_ref_set")
       | `Omega.ST.Prim.Ref.ptrEq => pure (`OmegaInit.System.ST, "omega_st_ref_ptr_eq")
@@ -166,8 +178,38 @@ private def checkElaboration (env : Environment) (owner : Name) (idx : ModuleIdx
       | `Omega.IO.Promise.resolve => pure (`OmegaInit.System.Promise, "omega_io_promise_resolve")
       | `Omega.IO.Promise.isResolved => pure (`OmegaInit.System.Promise, "omega_io_promise_is_resolved")
       | `Omega.Char.ofNat => pure (`OmegaInit.Prelude, "omega_char_of_nat")
+      | `Omega.String.toByteArray => pure (`OmegaInit.Prelude, "omega_string_to_bytes")
+      | `Omega.String.decEq => pure (`OmegaInit.Prelude, "omega_string_dec_eq")
+      | `Omega.String.hash => pure (`OmegaInit.Prelude, "omega_string_hash")
+      | `Omega.String.Pos.Raw.get | `Omega.String.get => pure (`OmegaInit.Data.String.Basic, "omega_string_get_char")
+      | `Omega.String.Pos.Raw.next | `Omega.String.next => pure (`OmegaInit.Data.String.Basic, "omega_string_next")
+      | `Omega.String.Pos.Raw.prev | `Omega.String.prev => pure (`OmegaInit.Data.String.Basic, "omega_string_prev")
+      | `Omega.String.Pos.Raw.atEnd | `Omega.String.atEnd => pure (`OmegaInit.Data.String.Basic, "omega_string_at_end")
+      | `Omega.String.Pos.Raw.isValid => pure (`OmegaInit.Data.String.Basic, "omega_string_valid_pos")
+      | `Omega.ByteArray.validateUTF8 => pure (`OmegaInit.Data.String.Basic, "omega_bytes_valid_utf8")
+      | `Omega.String.push => pure (`OmegaInit.Data.String.Bootstrap, "omega_string_push")
+      | `Omega.String.Internal.length => pure (`OmegaInit.Data.String.Bootstrap, "omega_string_length")
+      | `Omega.String.Internal.append => pure (`OmegaInit.Data.String.Bootstrap, "omega_string_append")
+      | `Omega.String.Internal.extract => pure (`OmegaInit.Data.String.Bootstrap, "omega_string_extract")
+      | `Omega.String.mk => pure (`OmegaInit.Data.String.Bootstrap, "omega_string_of_list")
+      | `Omega.String.append => pure (`OmegaInit.Data.String.Defs, "omega_string_append")
+      | `Omega.String.toUTF8 => pure (`OmegaInit.Data.String.Defs, "omega_string_utf8")
+      | `Omega.String.data => pure (`OmegaInit.Data.String.Basic, "omega_string_data")
+      | `Omega.String.decidableLT => pure (`OmegaInit.Data.String.Basic, "omega_string_dec_lt")
+      | `Omega.String.utf8ByteSize => pure (`OmegaInit.Prelude, "omega_string_byte_size")
+      | `Omega.String.toList => pure (`OmegaInit.Data.String.Basic, "omega_string_to_list")
       | `Omega.String.ofList => pure (`OmegaInit.Prelude, "omega_string_of_list")
-      | _ => throw <| IO.userError s!"unverified native symbol for {owner}/{n}"
+      | _ => do
+        let original := n.replacePrefix `Omega .anonymous
+        let some ref := reference? | throw <| IO.userError s!"unverified native symbol for {owner}/{n}"
+        unless n == `Omega ++ original && ref.getModuleIdxFor? original == ref.getModuleIdx? (counterpart owner) &&
+            InitPort.WordNative.supported ref owner original do
+          throw <| IO.userError s!"unverified native symbol for {owner}/{n}"
+        InitPort.NativeState.checkNativeNat full
+        discard <| InitPort.WordNative.wrapper ref full n
+        let some (.extern _ _ _ ⟨[.standard `all symbol]⟩) := IR.findEnvDecl full n
+          | throw <| IO.userError s!"missing checked native entry for {owner}/{n}"
+        pure (owner, symbol)
     unless owner == expectedOwner && env.getModuleIdxFor? n == some idx &&
         data == ⟨[.standard `all symbol]⟩ do throw <| IO.userError s!"invalid native state entry {owner}/{n}"
   for (n, implementation) in Compiler.implementedByAttr.ext.getModuleEntries env idx do
@@ -198,6 +240,22 @@ private def checkStructures (port ref : Environment) (owner : Name) (idx : Modul
         return lexical.replacePrefix `_private.OmegaInit `_private.Init ++
           (privateToUserName n).replacePrefix `Omega .anonymous
     return n.replacePrefix `Omega .anonymous
+  for name in Meta.completionBlackListExt.getModuleEntries port idx do
+    unless port.getModuleIdxFor? name == some idx &&
+        ref.getModuleIdxFor? (rename name) == ref.getModuleIdx? (counterpart owner) &&
+        Meta.completionBlackListExt.isTagged ref (rename name) do
+      throw <| IO.userError s!"unmatched completion blacklist entry for {owner}/{name}"
+  for (name, info) in noConfusionExt.getModuleEntries port idx do
+    let upstream := rename name
+    let some original := noConfusionExt.find? ref upstream
+      | throw <| IO.userError s!"missing upstream no-confusion registration for {name}"
+    let same := match info, original with
+      | .regular a l r, .regular b x y => a == b && l == x && r == y
+      | .perCtor a f, .perCtor b g => a == b && f == g
+      | _, _ => false
+    unless same && port.getModuleIdxFor? name == some idx &&
+        ref.getModuleIdxFor? upstream == ref.getModuleIdx? (counterpart owner) do
+      throw <| IO.userError s!"no-confusion metadata mismatch for {owner}/{name}"
   for s in structureExt.getModuleEntries port idx do
     let some (.inductInfo ind) := port.find? s.structName
       | throw <| IO.userError s!"registered structure {s.structName} is not an inductive type in {owner}"
@@ -250,7 +308,7 @@ private def checkInstances (env reference : Environment) (owner : Name) (idx : M
     let (scope, v) := load e
     let some name := v.globalName? | throw <| IO.userError s!"unnamed public instance in {owner}"
     let .const n us := v.val | throw <| IO.userError s!"invalid public instance term in {owner}"
-    unless name == n && name.getRoot == `Omega && env.contains name && reference.contains (rename name) do
+    unless name == n && (name.getRoot == `Omega || OmegaChecks.InitCompiler.RootNames.isPrimitive owner name) && env.contains name && reference.contains (rename name) do
       throw <| IO.userError s!"no elaboration correspondence for public instance {name} in {owner}"
     -- Preserve the relative order of registered candidates, including priority ties.
     let mut found := false
@@ -299,12 +357,16 @@ declarations and alias targets are mathematical roots, even in a declaration-fre
 def check (strict : Environment) (full? : Option Environment := none) : IO (Array (Name × Name)) := do
   let strict := withImportedAliases strict
   let mut roots : NameMap Name := {}
+  let nativeOwners := strict.allImportedModuleNames.filter fun owner =>
+    owner.getRoot == `OmegaInit && (strict.getModuleIdx? owner).any fun idx =>
+      !(externAttr.ext.getModuleEntries strict idx).isEmpty
+  let nativeReference ← importModules (nativeOwners.map fun n => {module := counterpart n, importAll := true}) {}
   for port in strict.allImportedModuleNames do
     if !isBasis port then continue
     let some idx := strict.getModuleIdx? port | throw <| IO.userError s!"missing module {port}"
-    checkElaboration strict port idx
     checkSpecializations (full?.getD strict) port
     if port == port.getRoot then
+      checkElaboration strict (full?.getD strict) none port idx
       unless (structureExt.getModuleEntries strict idx).isEmpty &&
           (projectionFnInfoExt.getModuleEntries strict idx).isEmpty do
         throw <| IO.userError s!"unmatched structure registration in the {port} umbrella"
@@ -316,6 +378,7 @@ def check (strict : Environment) (full? : Option Environment := none) : IO (Arra
       continue
     let official := counterpart port
     let reference := withImportedAliases (← importModules #[{module := official}] {} (level := .exported))
+    checkElaboration strict (full?.getD strict) (some nativeReference) port idx
     let officialClasses := classParameters reference (Array.range reference.header.modules.size)
     let visible ← publicClosure strict port
     let visibleIndices := (Array.range strict.header.modules.size).filter fun i =>
@@ -324,7 +387,7 @@ def check (strict : Environment) (full? : Option Environment := none) : IO (Arra
     -- Diagnose the port's own public registrations before those of a re-export.
     for owner in port :: (visible.erase port).toList do
       let some idx := strict.getModuleIdx? owner | throw <| IO.userError s!"missing module {owner}"
-      if owner != port then checkElaboration strict owner idx
+      if owner != port then checkElaboration strict (full?.getD strict) (some nativeReference) owner idx
       let data := strict.header.moduleData[idx]!
       checkStructures strict reference owner idx
       checkInstances strict reference owner idx
@@ -361,7 +424,8 @@ def check (strict : Environment) (full? : Option Environment := none) : IO (Arra
         let some originalOwner := reference.getModuleIdx? (counterpart owner)
           | throw <| IO.userError s!"missing owner of alias {alias} in {official}"
         let rootAlias := OmegaChecks.InitCompiler.RootNames.aliasFor? officialTarget == some (alias, target) &&
-          strict.getModuleIdxFor? target == some idx && reference.getModuleIdxFor? officialTarget == some originalOwner
+          strict.header.moduleData[idx]!.constNames.contains target &&
+          reference.header.moduleData[originalOwner]!.constNames.contains officialTarget
         unless (rootAlias || (aliasExtension.getModuleEntries reference originalOwner).contains (officialAlias, officialTarget)) &&
             resolved == [(officialTarget, [])] do
           throw <| IO.userError s!"unmatched public alias {alias} for {target} exposed by {port} in {official}"

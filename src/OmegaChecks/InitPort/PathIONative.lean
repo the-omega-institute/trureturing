@@ -95,7 +95,7 @@ public unsafe def main (args : List String) : IO Unit := do
   for n in dicts do
     let some (some field) := impureTrivialStructureInfoExt.find? env n | throw <| IO.userError s!"expected single data field in {n}"
     unless field.fieldIdx == 0 do throw <| IO.userError s!"unexpected data field in {n}"
-  checkPriorityLayout env
+  checkNativeNat env
   for (n, tag, fields) in [(`Omega.List.nil, 0, 0), (`Omega.List.cons, 1, 2), (`Omega.Option.none, 0, 0),
       (`Omega.Option.some, 1, 1), (`Omega.ST.Out.mk, 0, 2)] ++
       (if fs then [(`Omega.EST.Out.ok, 0, 2), (`Omega.EST.Out.error, 1, 2)] else []) do

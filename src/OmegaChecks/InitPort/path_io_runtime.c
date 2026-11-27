@@ -189,9 +189,7 @@ static lean_obj_res from_byte_array(b_lean_obj_arg buffer) {
     return omega_bytes_from_data(lean_sarray_cptr(buffer), lean_sarray_size(buffer));
 }
 LEAN_EXPORT lean_obj_res omega_io_handle_read(b_lean_obj_arg handle, lean_obj_arg count, lean_obj_arg world) {
-    size_t size = 0;
-    for (lean_object *n = count; !lean_is_scalar(n); n = lean_ctor_get(n, 0)) ++size;
-    lean_dec(count);
+    size_t size = lean_usize_of_nat_mk(count);
     return strict_result(lean_io_prim_handle_read(handle, size), world, from_byte_array);
 }
 #endif

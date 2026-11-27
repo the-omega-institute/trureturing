@@ -23,6 +23,7 @@ private def checkLayers (env : Environment) : IO Unit := do
 private def checkUpstreamNames (strict publicStrict : Environment) : IO Unit := do
   let sysroot ← findSysroot
   let lib ← getLibDir sysroot
+  let physical ← OmegaChecks.InitCompiler.naturalNames
   let mut bindings := #[]
   let mut owners ← OmegaChecks.ModuleSurface.officialModules strict lib
   for (name, _) in strict.constants.toList do
@@ -30,7 +31,8 @@ private def checkUpstreamNames (strict publicStrict : Environment) : IO Unit := 
     let owner := strict.header.moduleNames[idx]!
     if !isStrict owner || isPrivateName name || name.isInternal then continue
     if OmegaChecks.InitPort.NativeQuot.isSupport owner name then continue
-    unless name.getRoot == `Omega || OmegaChecks.InitCompiler.RootNames.isPrimitive owner name do
+    unless name.getRoot == `Omega || OmegaChecks.InitCompiler.RootNames.isPrimitive owner name ||
+        (owner == `OmegaInit.Prelude && physical.contains name) do
       throw <| IO.userError s!"public name outside Omega: {name} in {owner}"
     if owner.getRoot == `OmegaMath then continue
     let upstream := if owner.getRoot == `OmegaInit then `Init else `Mathlib
@@ -74,7 +76,7 @@ private def audit (roots : List String) (path label : String)
   let publicStrict ← importModules (basis.map fun name => {module := name}) {} (level := .exported)
   checkLayers env
   OmegaChecks.InitPort.NativeQuot.checkSupport env
-  OmegaChecks.InitPort.NativeQuot.checkSupport publicStrict
+  OmegaChecks.InitPort.NativeQuot.checkSupport publicStrict .exported
   let actual := env.allImportedModuleNames.toList.map Name.toString
   if let some modules := expected then
     unless actual.mergeSort == modules.mergeSort do

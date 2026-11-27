@@ -6,6 +6,7 @@ from path_io_test import check_paths
 from generated_native import check_runtime_ir, compile_generated
 import json
 import omegamath
+from hosted import foundation_files, link_other_roots, make_view
 import os
 from pathlib import Path
 from report import report
@@ -174,7 +175,7 @@ def generate(stage, product, seed, roots, excluded, original_seed):
     omissions = dict.fromkeys(excluded, "explicit exclusion")
     selection = product / "interface-rejections.jsonl"
     run("lake", "build", "omegaAudit", "+OmegaChecks.Interface.Equations", "+OmegaChecks.InitPort.Kernel",
-        "+OmegaChecks.InitPort.NativeState")
+        "+OmegaChecks.InitPort.NativeState", "+OmegaChecks.InitPort.WordNative")
     run("lake", "env", "lean", "--run", HERE / "Kernel.lean", "--prepare-quot", seed)
     order_file = stage / "candidate-order.json"
 
@@ -266,8 +267,21 @@ def generate(stage, product, seed, roots, excluded, original_seed):
     def install_sharing():
         sharing.extend(install_state_runtime(stage, product, artifact, "ShareCommon", "share_common"))
 
+    string_interfaces = {
+        "Init.Data.String.Bootstrap": {"String.push", "String.mk", "String.Internal.length",
+                                       "String.Internal.extract", "String.Internal.append"},
+        "Init.Data.String.Defs": {"String.append", "String.toUTF8"},
+        "Init.Prelude": {"String.ofList", "String.utf8ByteSize", "String.toByteArray", "String.decEq", "String.hash"},
+        "Init.Data.String.Basic": {"String.toList", "String.data", "String.decidableLT", "ByteArray.validateUTF8",
+                                   *(f"String.Pos.Raw.{n}" for n in ("get", "next", "prev", "atEnd", "isValid"))},
+    }
+    mixed_interfaces = {"Init.Prelude": {"Lean.Macro.instMonadQuotationMacroM", "Lean.Syntax",
+                                          "Lean.Syntax.getNumArgs", "Lean.defaultMaxRecDepth"}}
     control_objects = compile_generated(stage, product, graph, original_seed.parents[1] / "ir",
-                                        original_seed=original_seed, before_owner={"OmegaInit.ShareCommon": install_sharing})
+                                        original_seed=original_seed, before_owner={"OmegaInit.ShareCommon": install_sharing},
+                                        check_mixed=has_interfaces(inventory, mixed_interfaces),
+                                        check_strings=has_interfaces(inventory, string_interfaces),
+                                        check_literals=has_interfaces(inventory, {"Init.Prelude": {"String.ofList", "Char.ofNat"}}))
     sharing_interfaces = {"Init.ShareCommon": {"ShareCommon.StateFactory.mk", "ShareCommon.State.mk", "ShareCommon.State.shareCommon", "ShareCommonM.run"}}
     if sharing and has_interfaces(inventory, sharing_interfaces):
         if control_objects is None:
@@ -319,6 +333,15 @@ def main():
         if not args.modules:
             report(product, require_complete=args.require_complete)
             omegamath.build(product, product / "lib", args.j, product / "omegamath-audit.txt")
+        library = product / "lib"
+        hosted = product / "hosted"
+        make_view(library, hosted, foundation_files(library))
+        link_other_roots(library, hosted)
+        consumer = roots[0].replace("Init", "OmegaInit", 1) if args.modules else "OmegaMath"
+        probe = f"import {consumer}\n"
+        if consumer == "OmegaMath" or consumer == "OmegaInit.Prelude":
+            probe += "example {p q : Prop} (h : Omega.And p q) : p := Omega.And.left h\n"
+        run("lean", "--stdin", text=True, input=probe, env={**os.environ, "LEAN_PATH": str(hosted)})
         product.rename(target)
 
 

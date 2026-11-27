@@ -26,17 +26,12 @@ namespace Omega
 inductive Exists {α : Sort u} (p : α → Prop) : Prop where
   | intro (w : α) (h : p w) : Exists p
 
-abbrev Exists.casesOn {α : Sort u} {p : α → Prop} {motive : Exists p → Prop}
-    (t : Exists p) (intro : ∀ w h, motive (Exists.intro w h)) : motive t :=
-  Exists.rec (motive := motive) intro t
-
 theorem Exists.elim {α : Sort u} {p : α → Prop} {b : Prop}
     (h₁ : Exists p) (h₂ : ∀ a, p a → b) : b :=
   Exists.rec (motive := fun _ => b) h₂ h₁
 
 namespace Nat
 
-attribute [local semireducible] Nat.add Nat.pred
 
 theorem succ.inj {m n : Nat} : Eq (succ m) (succ n) → Eq m n := fun h =>
   congrArg pred h
@@ -199,7 +194,7 @@ theorem cast_heq.{u} {α β : Sort u} (h : Eq α β) (a : α) : HEq (cast h a) a
 
 theorem heq_of_eqRec_eq.{u} {α β : Sort u} {a : α} {b : β} (h₁ : Eq α β) (h₂ : Eq (Eq.rec (motive := fun α _ => α) a h₁) b) :
   HEq a b :=
-  (cast_heq h₁ a).symm.trans (heq_of_eq h₂)
+  HEq.trans (HEq.symm (cast_heq h₁ a)) (heq_of_eq h₂)
 
 /-! ## Logical equivalence -/
 
@@ -542,3 +537,29 @@ port_definition noConfusionEnum with_native_code
 namespace Omega.Lean
 public opaque opaqueId {α : Sort u} (x : α) : α := x
 end Omega.Lean
+
+public section
+namespace Bool
+export _root_.Omega.Bool (of_not_eq_false of_not_eq_true)
+end Bool
+namespace Eq
+export _root_.Omega.Eq (comm mp mpr ndrecOn substr to_iff)
+end Eq
+namespace HEq
+export _root_.Omega.HEq (comm ndrec ndrecOn subst symm trans)
+end HEq
+namespace Nat
+export _root_.Omega.Nat (add_zero)
+end Nat
+namespace Nat.succ
+export _root_.Omega.Nat.succ (inj)
+end Nat.succ
+namespace Not
+export _root_.Omega.Not (elim imp intro)
+end Not
+namespace Omega.id
+export _root_.id (eq_1)
+end Omega.id
+namespace PUnit
+export _root_.Omega.PUnit (eq_punit ext subsingleton)
+end PUnit

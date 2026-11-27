@@ -20,6 +20,8 @@ example (a : α) (b : β) : Omega.Eq (Prod.fst (Prod.mk a b)) a := Omega.rfl
 
 生成的 `OmegaInit.Prelude` 提供 `Omega.Quot`、`Omega.Quot.mk`、`Omega.Quot.ind` 和 `Omega.Quot.lift`。普通导入支持两个消去子的构造子归约。Lean 内核按固定的根名称识别商类型和等式，在打开 `Omega` 命名空间的外部代码中可用 `Omega.Eq` 指定移植的等式。
 
+普通 Lean 文件可直接写 `import OmegaInit.Prelude`，使用 `LEAN_PATH=.lake/init-port/hosted lean Example.lean`。`hosted/` 保留移植声明，按类型和实现核对同名根对象后复用钉版 `Init` 的定义。`lib/` 是带 `prelude` 的独立内核入口，零公理审计和空环境重放读取此目录。仓库种子构建也提供普通导入入口 `python3 src/OmegaChecks/strict_lake.py env lean Example.lean`。
+
 位置参数接受一个或多个官方模块名。省略这些参数会扫描钉版工具链的所有 `Init` 模块，包括需要单独导入的模块。构建整个库可运行 `python3 src/OmegaChecks/InitPort/build.py .lake/init-port-all`。加上 `--seed PATH` 可选择另一个已编译的严格种子，默认读取 `.lake/build/omega-strict/lib/lean`。工具把种子的编译文件复制到独立临时目录，随后从钉版官方模块逐个翻译依赖、证明项、定义、归纳族和递归器。每个候选声明都在 Lean 内核中检查。环境变量 `OMEGA_PORT_HEARTBEATS` 为每个候选声明指定原始心跳预算，默认 5000。
 
 `inventory.jsonl` 按顺序记下官方模块名、声明名、公开标记、移植结果和直接阻塞依赖。`added` 包含内核生成的构造子、递归器、私有及编译器内部声明。`existing` 表示复用种子中的声明。`interface-rejections.jsonl` 保存无法通过仓库官方对应检查的候选。公理、商原语、unsafe 或 partial 声明、未支持的表达式和依赖缺失均有逐项记录。
@@ -58,9 +60,9 @@ example (a : α) (b : β) : Omega.Eq (Prod.fst (Prod.mk a b)) a := Omega.rfl
 
 `equationOperand` 记录官方等式左端直接调用的运算。Lean 按该处的宇宙参数核对 `operandReductionWitness` 的完整类型。给定这个运算的通用实现，即可构造 `operandImpliesAxiom`。对选择函数与递归算子的 `congr_simp` 定理，检查器还用相同谓词或递归步骤特化整个官方等式，核对其参数，再从左右两边分别抽出具有完整 `Classical.choice` 类型的函数。等式本身的可移植性继续按其独立证据结算。
 
-`init-public-reductions.tsv` 列出已移植声明到严格库封装实现的一条最短定义体依赖路径。`officialReductionMechanism` 记录钉版 Lean 的官方机制，包括公开定义体、自然数内建运算、归纳类型、构造子和递归器。盘点 JSON 同时保存路径 `publicReductionBoundary` 与机制。`Nat.Coprime` 的路径通向内建运算 `Nat.gcd`。`And.rec` 和 `Iff.rec` 在官方环境中使用递归器计算规则。具体输入是否需要走到路径终点取决于归约过程。
+`init-public-reductions.tsv` 列出已移植声明到严格库封装实现的一条最短定义体依赖路径。`officialReductionMechanism` 记录钉版 Lean 的官方机制，包括公开定义体、自然数内建运算、归纳类型、构造子和递归器。盘点 JSON 同时保存路径 `publicReductionBoundary` 与机制。严格库中的 `Nat.gcd` 保留了 Lean 内核识别的根名称。在普通导入中，`Nat.Coprime` 用到的最大公约数能直接在具体自然数上归约，包含大于 64 位的输入。`And.rec` 和 `Iff.rec` 在官方环境中使用递归器计算规则。具体输入是否需要走到路径终点取决于归约过程。
 
-例如，普通导入 `OmegaInit.Data.Nat.Div.Basic` 后可用 `Omega.Nat.div_zero` 证明除数为零的等式。若需直接归约严格实现，可 `import all OmegaInit.Prelude`，并在证明所在节设置 `attribute [local semireducible] Omega.Nat.div Omega.Nat.ble Omega.Nat.sub Omega.Nat.pred`。
+例如，普通导入 `OmegaInit.Data.Nat.Div.Basic` 后可用 `Omega.Nat.div_zero` 证明除数为零的等式。对具体自然数，除法和求余均可用内核内建规则直接归约。若需在符号参数上展开严格定义体，可 `import all OmegaInit.Prelude`，并在证明所在节设置 `attribute [local semireducible] Omega.Nat.div Omega.Nat.ble Omega.Nat.sub Omega.Nat.pred`。
 
 直接运行盘点命令时，先执行 `lake build +OmegaChecks.InitInventory`，再执行 `lake env lean --run src/OmegaChecks/InitInventory.lean <lib> <inventory.json>`。以下完整性验收入口会自动准备所需模块。
 

@@ -70,3 +70,11 @@ port_proof Bool.true_and by_reflexivity
 port_proof Bool.true_or by_reflexivity
 port_proof Eq.mpr_not
 port_proof Eq.mpr_prop
+
+public section
+namespace Bool
+export _root_.Omega.Bool (false_and false_or not_false not_true true_and true_or)
+end Bool
+namespace Eq
+export _root_.Omega.Eq (mpr_not mpr_prop)
+end Eq

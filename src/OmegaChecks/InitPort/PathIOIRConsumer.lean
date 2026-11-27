@@ -3,22 +3,13 @@ import Lean
 
 open Lean
 
-private inductive Unary where
-  | zero
-  | succ (n : Unary)
-deriving BEq
-
-private def fromNat : Nat → Unary
-  | 0 => .zero
-  | n + 1 => .succ (fromNat n)
-
-private abbrev Bytes := List Unary
-private def encode (s : String) : Bytes := s.toUTF8.data.toList.map fun b => fromNat b.toNat
+private abbrev Bytes := List Nat
+private def encode (s : String) : Bytes := s.toUTF8.data.toList.map fun b => b.toNat
 
 private inductive Status where
   | ok
-  | existsAlready (filename : Option Bytes) (code : Unary) (details : Bytes)
-  | missing (filename : Bytes) (code : Unary) (details : Bytes)
+  | existsAlready (filename : Option Bytes) (code : Nat) (details : Bytes)
+  | missing (filename : Bytes) (code : Nat) (details : Bytes)
   | other
 deriving BEq
 
@@ -60,7 +51,7 @@ private unsafe def checkHandle (env : Environment) (file : String) : IO Unit := 
   let put ← IO.ofExcept <| env.evalConst (IO.FS.Handle → Bytes → Unit → Status × Unit) {} `filePut
   let write ← IO.ofExcept <| env.evalConst (IO.FS.Handle → Bytes → Unit → Status × Unit) {} `fileWrite
   let text := "héλ界\n"
-  let bytes := [fromNat 0, fromNat 255]
+  let bytes : Bytes := [0, 255]
   unless (← withHandle (fun h => put h (encode text)) h).1 == .ok &&
       (← withHandle (fun h => write h bytes) h).1 == .ok do throw <| IO.userError "text or binary write failed"
   unitOp `fileFlush
@@ -69,8 +60,8 @@ private unsafe def checkHandle (env : Environment) (file : String) : IO Unit := 
   unitOp `fileRewind
   let getLine ← IO.ofExcept <| env.evalConst (IO.FS.Handle → Unit → Outcome Bytes) {} `fileLine
   unless (← unpack (← withHandle getLine h)) == encode text do throw <| IO.userError "unexpected file line"
-  let read ← IO.ofExcept <| env.evalConst (IO.FS.Handle → Unary → Unit → Outcome Bytes) {} `fileRead
-  let readBytes (size : Nat) := withHandle (fun h => read h (fromNat size)) h
+  let read ← IO.ofExcept <| env.evalConst (IO.FS.Handle → Nat → Unit → Outcome Bytes) {} `fileRead
+  let readBytes (size : Nat) := withHandle (fun h => read h size) h
   unless (← unpack (← readBytes 0)).isEmpty && (← unpack (← readBytes 9)) == bytes &&
       (← unpack (← readBytes 1)).isEmpty do throw <| IO.userError "wrong binary read or EOF"
 
@@ -94,7 +85,7 @@ public unsafe def main (args : List String) : IO Unit := do
     throw <| IO.userError "expected duplicate directory"
   catch e =>
     let .alreadyExists name code msg := e | throw e
-    unless duplicate == .existsAlready (name.map encode) (fromNat code.toNat) (encode msg) do throw <| IO.userError "changed alreadyExists fields"
+    unless duplicate == .existsAlready (name.map encode) code.toNat (encode msg) do throw <| IO.userError "changed alreadyExists fields"
   unless (← perform (rename old) newPath) == .ok && (← perform rm newPath) == .ok do
     throw <| IO.userError "rename or directory removal failed"
   let hardLink ← IO.ofExcept <| env.evalConst (Bytes → PathOp) {} `pathHardLink
@@ -131,4 +122,4 @@ public unsafe def main (args : List String) : IO Unit := do
     throw <| IO.userError "expected missing file"
   catch e =>
     let .noFileOrDirectory name code msg := e | throw e
-    unless missing == .missing (encode name) (fromNat code.toNat) (encode msg) do throw <| IO.userError "changed noFileOrDirectory fields"
+    unless missing == .missing (encode name) code.toNat (encode msg) do throw <| IO.userError "changed noFileOrDirectory fields"

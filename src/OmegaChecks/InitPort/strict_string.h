@@ -1,16 +1,12 @@
 #pragma once
 #include "strict_nat.h"
 
-/* The strict String data field erases to a list of unary UTF-8 bytes. */
+/* The strict String data field erases to a list of Nat-valued UTF-8 bytes. */
 static lean_obj_res omega_bytes_to_lean(b_lean_obj_arg bytes) {
     lean_object *array = lean_mk_empty_byte_array(lean_box(0));
     while (!lean_is_scalar(bytes)) {
         b_lean_obj_arg byte = lean_ctor_get(bytes, 0);
-        uint8_t value = 0;
-        while (!lean_is_scalar(byte)) {
-            ++value;
-            byte = lean_ctor_get(byte, 0);
-        }
+        uint8_t value = lean_unbox(byte);
         array = lean_byte_array_push(array, value);
         bytes = lean_ctor_get(bytes, 1);
     }

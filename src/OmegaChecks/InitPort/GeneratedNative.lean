@@ -1,11 +1,15 @@
 module
 import all Lean.Environment
+import OmegaChecks.InitCompiler.StructuralEquations
+meta import OmegaChecks.InitCompiler.StructuralEquations
 import all Lean.OriginalConstKind
 import Lean.Compiler.LCNF.ToDecl
 import Lean.Compiler.LCNF.Main
 import Lean.Compiler.LCNF.PhaseExt
 import Lean.Compiler.LCNF.EmitC
 import Lean.Compiler.ImplementedByAttr
+meta import OmegaChecks.InitPort.WordNative
+import OmegaChecks.InitPort.WordNative
 meta import OmegaChecks.InitPort.NativeState
 import OmegaChecks.InitPort.NativeState
 meta import OmegaChecks.InitPort.Translation
@@ -56,11 +60,12 @@ private def originalName (n : Name) : Name := Id.run do
   return n.replacePrefix `Omega .anonymous
 
 /-- Use the published strict calling conventions of runtime operands before boxing higher-order calls. -/
-private def missingRuntimeDependency (source : Environment) (n : Name) : CoreM Bool := do
+private def missingRuntimeDependency (source : Environment) (n : Name) (recursive : Name := .anonymous) : CoreM Bool := do
   let some body := (← getEnv).find? n >>= (·.value?) | return false
   let mut missing : NameSet := {}
   let env ← getEnv
   for dep in body.getUsedConstants do
+    if dep == recursive then continue
     -- Constructor applications lower directly using the owning inductive's strict layout.
     if let some (.ctorInfo ctor) := env.find? dep then
       if (monoTypeExt.find? env ctor.induct).isSome then continue
@@ -84,8 +89,34 @@ private def missingRuntimeDependency (source : Environment) (n : Name) : CoreM B
   finally
     before.restore
 
-private def compileOwner (source : Environment) (groups : Array InductiveVal) (order : Array Name) : CoreM Unit := do
+/-- Reuse the pinned executable recursion only after the kernel identifies every constructor
+equation with the checked total function. The temporary declaration is excluded from the product. -/
+private def compileStructural (source : Environment) (n : Name) : CoreM Unit := do
+  let original := originalName n
+  unless original.getRoot == `List || original.getRoot == `Array do return
+  let recName := Compiler.mkUnsafeRecName original
+  let some (.defnInfo d) := source.find? recName | return
+  unless d.safety == .partial && d.all == [recName] do return
+  let name := InitKernelPort.portName recName
+  let raw := InitKernelPort.translate InitKernelPort.portName d.value
+  let body := raw.replace fun e => if e.isConstOf name then some (.const n e.constLevels!) else none
+  let type := InitKernelPort.translate InitKernelPort.portName d.type
+  unless body.getUsedConstants.all (← getEnv).contains do return
+  for i in [:type.getForallArity] do
+    try
+      Meta.MetaM.run' <| OmegaChecks.InitCompiler.checkConstructorEquations n d.levelParams type body i
+    catch _ => continue
+    let tmp := {d with name, all := [name], type, value := body, safety := .safe}
+    Lean.addDecl (.defnDecl tmp) (forceExpose := true)
+    if ← missingRuntimeDependency source name n then throwError "uncompiled recursive equation dependency of {n}"
+    modifyEnv (noncomputableExt.modifyState · (·.erase n))
+    modifyEnv fun env => privateConstKindsExt.insert env n .defn
+    (← compileDeclsRef.get) #[n] {}
+    return
+
+private def compileOwner (source : Environment) (groups : Array InductiveVal) (words order : Array Name) : CoreM Unit := do
   compileLayoutsInOrder groups
+  OmegaChecks.InitPort.WordNative.install words
   for n in order do
     if ← missingRuntimeDependency source n then continue
     let before ← Core.saveState
@@ -96,6 +127,17 @@ private def compileOwner (source : Environment) (groups : Array InductiveVal) (o
       unless (← CompilerM.run (getLocalDeclAt? n .impure)).isSome do before.restore
     catch _ =>
       before.restore
+      try
+        compileStructural source n
+        unless (← CompilerM.run (getLocalDeclAt? n .impure)).isSome do before.restore
+      catch _ =>
+        before.restore
+
+/-- The strict array is a record containing a list. These checked source definitions
+implement its read and update operations on that representation. -/
+private def arrayDefinition (n : Name) : Bool :=
+  [`Array.set, `Array.uget, `Array.uset, `Array.usize, `Array.pop, `Array.replicate,
+   `Array.swap, `Array.swapIfInBounds].contains n
 
 /-- Use ordinary module initialization so closed functions and imported modules are ready before calls. -/
 private def emitOwner (env : Environment) (owner : Name) (imports : Array Import)
@@ -119,11 +161,16 @@ private unsafe def install (source publicSource : Environment) (lib out : System
   let mut groups := #[]
   let mut locals := #[]
   let mut candidates := #[]
+  let mut words := #[]
   -- These eager word cardinalities require 65,536 through 2^64 successor cells
   -- when a detached seed uses a separately defined unary Nat.
   let unaryNat := (env.find? `Omega.Nat).any (· matches .inductInfo _)
   let largeWordSizes := [`UInt16.size, `UInt32.size, `UInt64.size, `USize.size]
   for ci in part.constants do
+    if !onlyLayouts && !unaryNat && !oldNative.contains ci.name && !ci.isUnsafe && !ci.isPartial &&
+        OmegaChecks.InitPort.WordNative.supported source owner (originalName ci.name) then
+      words := words.push ci.name
+      continue
     match ci with
     | .inductInfo i =>
       if i.all.head? != some i.name then continue
@@ -142,14 +189,14 @@ private unsafe def install (source publicSource : Environment) (lib out : System
       if onlyLayouts || oldNative.contains d.name || ci.isUnsafe || ci.isPartial then continue
       let upstream := originalName d.name
       if unaryNat && largeWordSizes.contains upstream then continue
-      if isExtern source upstream || (getImplementedBy? source upstream).isSome then continue
+      if (isExtern source upstream && !arrayDefinition upstream) || (getImplementedBy? source upstream).isSome then continue
       candidates := candidates.push d.name
     | _ => continue
   if onlyLayouts && groups.isEmpty then return
   let localNames := NameSet.ofList candidates.toList
   let order : Array Name := Id.run <|
     (candidates.foldlM (fun acc n => return acc ++ (← dependencies env localNames n)) #[]).run' {}
-  let mut context ← localEnv env owner (locals ++ candidates)
+  let mut context ← localEnv env owner (locals ++ words ++ candidates)
   -- Compiler tags stored under the imported module index need local entries while compiling.
   for n in locals ++ candidates do
     if isAuxRecursor env n then context := markAuxRecursor context n
@@ -158,14 +205,34 @@ private unsafe def install (source publicSource : Environment) (lib out : System
     if let some proj := env.getProjectionFnInfo? n then
       context := addProjectionFnInfo context n proj.ctorName proj.numParams proj.i proj.fromClass
   let ctx : Core.Context := {fileName := "<generated native Init>", fileMap := default, options := Elab.async.set {} false}
-  let (_, st) ← (compileOwner source groups order).toIO ctx {env := context}
+  let (_, st) ← (compileOwner source groups words order).toIO ctx {env := context}
   if onlyLayouts then
     writeCode lib owner st.env layouts
   else
     for n in (declOrderExt.getState st.env).1 do
       if oldNative.contains n then throw <| IO.userError s!"native symbol collision at {n}"
-    emitOwner st.env owner part.imports ctx (modToFilePath out owner "c")
-    writeCode lib owner st.env (layouts ++ codeExtensions ++ #[privateConstKindsExt.name])
+    let file := modToFilePath out owner "c"
+    emitOwner st.env owner part.imports ctx file
+    if words.any (fun n => OmegaChecks.InitPort.WordNative.usesPinnedFunction (originalName n)) then
+      let upstream := owner.replacePrefix `OmegaInit `Init
+      let init := mkModuleInitializationFunctionName (phases := .runtime) owner st.env.getModulePackage?
+      let upstreamInit := mkModuleInitializationFunctionName (phases := .runtime) upstream
+        (source.getModulePackageByIdx? (source.getModuleIdx? upstream).get!)
+      let generated ← IO.FS.readFile file
+      let decl := s!"LEAN_EXPORT lean_object* {init}(uint8_t builtin) \{"
+      let parts := generated.splitOn decl
+      let [before, after] := parts | throw <| IO.userError s!"missing runtime initializer {init}"
+      IO.FS.writeFile file <| before ++ s!"extern lean_obj_res {upstreamInit}(uint8_t);\n" ++ decl ++
+        s!"\nlean_obj_res upstream = {upstreamInit}(builtin);\nif (lean_io_result_is_error(upstream)) return upstream;\nlean_dec_ref(upstream);\n" ++ after
+    unless words.isEmpty do
+      IO.FS.withFile file .append fun h => do
+        for n in words do h.putStr (← OmegaChecks.InitPort.WordNative.wrapper source st.env n)
+    let computable := NameSet.ofList <| part.constants.toList.filterMap fun ci =>
+      if !ci.isUnsafe && !ci.isPartial && isNoncomputable env ci.name &&
+          (IR.findEnvDecl st.env ci.name).isSome && (getSigCore? st.env impureSigExt ci.name).isSome then
+        some ci.name
+      else none
+    writeCode lib owner st.env (layouts ++ codeExtensions ++ #[privateConstKindsExt.name]) computable
     let fresh ← importModules #[{module := owner}] {} (level := .exported)
     let actual := NameSet.ofList ((impureSigExt.getModuleEntries fresh (fresh.getModuleIdx? owner).get!).map (·.name)).toList
     let originalOwner := owner.replacePrefix `OmegaInit `Init
@@ -185,10 +252,10 @@ using the saved IR under the same Boolean representation used by its C entry poi
 private unsafe def checkControl (lib dir : System.FilePath) : IO Unit := do
   searchPathRef.set [lib, dir]
   let env ← importModules #[{module := `GeneratedControlConsumer, importAll := true}] {} (level := .private)
-  let some (.inductInfo b) := env.find? `Omega.Bool | throw <| IO.userError "missing Boolean type"
-  unless b.numParams == 0 && b.ctors == [`Omega.Bool.false, `Omega.Bool.true] do
+  let some (.inductInfo b) := env.find? `Bool | throw <| IO.userError "missing Boolean type"
+  unless b.numParams == 0 && b.ctors == [`Bool.false, `Bool.true] do
     throw <| IO.userError "unexpected Boolean representation"
-  let ty := mkConst `Omega.Bool
+  let ty := mkConst `Bool
   let arity := .forallE `x ty (.forallE `y ty ty .default) .default
   for (name, expected) in [(`exceptResult, or), (`optionResult, and), (`stateResult, and)] do
     unless (env.find? name).any (·.type == arity) do throw <| IO.userError s!"unexpected type for {name}"
