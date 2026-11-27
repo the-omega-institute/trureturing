@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.PopStack;
 internal sealed class PopStackChainsDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/PopStack/PopStackChains.";
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Combinatorics/cioni2025sorting");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/PermutationPatterns/cioni2025sorting");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "For a word with distinct entries, membership in D is equivalent to the existence of a value cut such that entries on each side of the cut occur in decreasing order. Every such word belongs to C.",
