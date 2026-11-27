@@ -2,7 +2,7 @@
    generality: I
    mirror-B: D5/B/S3/Combinatorics/SpectralGraph/AlbrightMaxEdgeDerivative
    mirror-E: none(waiver:external-open-problem-resolution)
-   anchors: [D5/S3/Combinatorics/SpectralGraph/AlbrightKemenyEdgeDerivativeRefutation]
+   anchors: []
    utility: none
    digest: The normalized Laplacian edge derivative has sharp upper bound one. -/
 
