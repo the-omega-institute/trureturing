@@ -35,9 +35,15 @@ private unsafe def merge (old fresh : ModuleData) (selected : Array Name) (compu
       for v in existing do replacements := replacements.insert (entryName ext v) v
     for v in values do replacements := replacements.insert (entryName ext v) v
     entries := (entries.filter (·.1 != ext)).push (ext, (replacements.toArray.qsort (fun a b => a.1.quickLt b.1)).map Prod.snd)
-  let extras := (old.extraConstNames ++ fresh.extraConstNames).foldl (init := #[]) fun ns n =>
-    if ns.contains n then ns else ns.push n
-  return {old with entries, extraConstNames := extras}
+  -- Lean resolves private functions in imported optimizer code through the IR name-to-module index.
+  let kernelNames := NameSet.ofList old.constNames.toList
+  let mut extras := NameSet.ofList (old.extraConstNames ++ fresh.extraConstNames).toList
+  for (ext, values) in entries do
+    if ext == baseExt.name || ext == monoExt.name || ext == impureSigExt.name || ext == IR.declMapExt.name then
+      for entry in values do
+        let name := entryName ext entry
+        if !kernelNames.contains name then extras := extras.insert name
+  return {old with entries, extraConstNames := extras.toArray.qsort Name.quickLt}
 
 /-- Recompile existing kernel objects as local definitions in their actual owner. Only the
 compiler metadata is written back. The original constants and import edges stay in their files. -/
