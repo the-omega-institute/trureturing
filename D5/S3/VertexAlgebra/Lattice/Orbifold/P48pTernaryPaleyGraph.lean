@@ -93,10 +93,13 @@ private theorem quadraticChar_eq_table (x : Fin 23) :
     fin_cases i <;> decide +kernel
   by_cases hx : (x : F23) = 0
   · calc
-      quadraticChar F23 x = 0 := by rw [hx, quadraticChar_zero]
+      quadraticChar F23 x = quadraticChar F23 (0 : F23) := congrArg (quadraticChar F23) hx
+      _ = 0 := @quadraticChar_zero F23 _ _ _
       _ = characterTable x := by simpa only [if_pos hx] using table x
   · rw [quadraticChar_eq_pow_of_char_ne_two hchar hx, ZMod.card]
-    simpa only [if_neg hx] using table x
+    have hhalf : (23 / 2 : ℕ) = 11 := by decide
+    rw [hhalf]
+    convert table x using 1 <;> simp only [if_neg hx] <;> rfl
 
 private def paleyCComputable : Matrix (Fin 24) (Fin 24) F3 :=
   fun d e =>
@@ -211,6 +214,8 @@ private theorem frameSyndrome_eq_chart_blocks (u : Fin 48 → F3) :
       intro d _
       apply Finset.sum_congr rfl
       intro k _
+      have hindex : chartIndexEquiv (d, k) = chartIndex d k := rfl
+      rw [hindex]
       change _ = ((chartSign (chartIndex d k) : F3) * u (chartIndex d k)) *
         ((chartSign (chartIndex d k) : F3) * (p48pFrameRows (chartIndex d k) j : F3))
       rw [mul_mul_mul_comm, chartSign_sq, one_mul]

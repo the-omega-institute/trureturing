@@ -159,7 +159,7 @@ def projectiveAction : SL23 →* Matrix Direction Direction ℤ where
     change projectiveMatrix (g * h) d e = (projectiveMatrix g * projectiveMatrix h) d e
     simp only [Matrix.mul_apply, projectiveMatrix, projectiveStep_mul, map_mul]
     rw [Fintype.sum_eq_single (projectiveStep g d).1]
-    · simp only [ite_eq_left rfl, mul_ite, mul_zero]
+    · simp only [if_true, mul_ite, mul_zero]
     · intro j hj
       rw [ite_eq_right (Ne.symm hj), zero_mul]
 
@@ -358,8 +358,9 @@ private theorem frameAction_of_transitions (g : SL23) (index : Fin 48 → Fin 48
   obtain ⟨hc, hs⟩ := hi
   have hd : (frameChart (index i)).1 = (projectiveStep g (frameChart i).1).1 :=
     congrArg Prod.fst hc
-  have hb : (frameChart (index i)).2 = (frameChart i).2 :=
-    congrArg Prod.snd hc
+  have hb : (frameChart (index i)).2 = (frameChart i).2 := by
+    have hcopy := congrArg (fun p : Direction × Fin 2 => p.2) hc.symm
+    exact show (chartCoordinate (index i)).2 = (chartCoordinate i).2 from hcopy.symm
   rw [frameAction_apply, signedFrameMatrix]
   by_cases hij : index i = j
   · subst j
