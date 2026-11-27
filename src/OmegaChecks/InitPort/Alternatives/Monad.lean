@@ -1,5 +1,7 @@
 module
 public import Init.Control.Lawful.Instances
+public import Init.Control.Lawful.MonadLift.Lemmas
+public import Init.Data.Iterators.Internal.LawfulMonadLiftFunction
 public import Init.Control.Lawful.MonadAttach.Lemmas
 public import Init.Control.StateCps
 public import Init.Control.ExceptCps
@@ -7,6 +9,21 @@ public import Init.Control.ExceptCps
 /-! Monad laws for optional values and exceptions, and reduction of state operations. -/
 
 namespace OmegaChecks.InitPort.Alternatives
+
+public theorem seqRight_eq_bind : type_of% @_root_.seqRight_eq_bind := by
+  intro m α β _ _ x y
+  rw [seqRight_eq, seq_eq_bind_map, map_eq_pure_bind, bind_assoc]
+  exact congrArg (fun z : m β => x >>= fun _ => z) ((pure_bind _ _).trans (id_map y))
+
+public theorem monadLift_seqRight : type_of% @_root_.monadLift_seqRight := by
+  intros
+  rw [seqRight_eq_bind, seqRight_eq_bind, monadLift_bind]
+
+public theorem Std.Internal.LawfulMonadLiftFunction.lift_seqRight :
+    type_of% @_root_.Std.Internal.LawfulMonadLiftFunction.lift_seqRight := by
+  intros
+  rw [seqRight_eq_bind, seqRight_eq_bind]
+  exact _root_.Std.Internal.LawfulMonadLiftFunction.lift_bind ..
 
 public theorem instLawfulMonadOption : LawfulMonad Option where
   map_const := rfl
