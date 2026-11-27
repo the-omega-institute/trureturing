@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.RotationAvoidance;
 internal sealed class RotationAvoidanceMixedEmptyDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/RotationAvoidance/RotationAvoidanceMixedEmpty.";
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Combinatorics/egecioglu2026rotations");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/PermutationPatterns/egecioglu2026rotations");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "When the lower block is empty, the mixed pattern has a rigid filtered form or a single split parameter.",

@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.RotationAvoidance;
 internal sealed class RotationAvoidanceSlicesDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/RotationAvoidance/RotationAvoidanceSlices.";
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Combinatorics/egecioglu2026rotations");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/PermutationPatterns/egecioglu2026rotations");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Endpoint slices for 1324 have a binary factor and an odd-indexed Fibonacci factor.",
