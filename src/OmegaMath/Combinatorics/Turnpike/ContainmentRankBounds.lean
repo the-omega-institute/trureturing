@@ -3,7 +3,7 @@ module
 public import OmegaMath.Combinatorics.Turnpike.PrunedTriangleLP
 public import Mathlib.Order.Interval.Finset.Fin
 public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-public import Mathlib.Tactic.Omega
+public import Lean.Elab.Tactic.Omega
 
 /-! Omega original.
 # Whole multiplicity blocks of realized distances
@@ -75,8 +75,9 @@ private theorem card_contained {n : ℕ} (e : Interval n) :
       · intro b hb
         have h := Finset.mem_filter.mp hb
         have hp := Finset.mem_product.mp h.1
-        exact ⟨⟨b,h.2⟩, by simp only [Finset.mem_filter, Finset.mem_univ, true_and];
-          exact ⟨(Finset.mem_Icc.mp hp.1).1,(Finset.mem_Icc.mp hp.2).2⟩, rfl⟩
+        refine ⟨⟨b,h.2⟩, ?_, rfl⟩
+        simp only [Finset.mem_filter, Finset.mem_univ, true_and]
+        exact ⟨(Finset.mem_Icc.mp hp.1).1,(Finset.mem_Icc.mp hp.2).2⟩
     _ = _ := by
       rw [Finset.card_product_filter_lt, Fin.card_Icc]
       congr 1
@@ -127,8 +128,9 @@ theorem containment_rank_bounds {n d : ℕ} {y : Fin d → ℝ} {mu : Fin d → 
         · have hq : label a < q := hy.lt_iff_gt.mp (by
             rw [← label_spec a, ← heq]; exact h)
           simp [hq]
-      _ ≤ _ := by simpa using Finset.card_union_le
-        (Finset.univ.filter fun a : Interval n => label a < q) {e}
+      _ ≤ _ := by
+        simpa using (Finset.card_union_le
+          (Finset.univ.filter fun a : Interval n => label a < q) {e})
   have upper_sub :
       (e.1.2.val - e.1.1.val + 1).choose 2 ≤
       (Finset.univ.filter fun a : Interval n => q < label a).card + 1 := by
@@ -143,8 +145,9 @@ theorem containment_rank_bounds {n d : ℕ} {y : Fin d → ℝ} {mu : Fin d → 
         · have hq : q < label a := hy.lt_iff_gt.mp (by
             rw [← label_spec a, ← heq]; exact h)
           simp [hq]
-      _ ≤ _ := by simpa using Finset.card_union_le
-        (Finset.univ.filter fun a : Interval n => q < label a) {e}
+      _ ≤ _ := by
+        simpa using (Finset.card_union_le
+          (Finset.univ.filter fun a : Interval n => q < label a) {e})
   have partition := Finset.card_filter_add_card_filter_not
     (s := (Finset.univ : Finset (Interval n))) (p := fun a => label a ≤ q)
   have total :
