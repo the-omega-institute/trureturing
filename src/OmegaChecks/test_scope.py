@@ -4,6 +4,7 @@ from tempfile import TemporaryDirectory
 import unittest
 from unittest.mock import patch
 
+import portable
 import scope
 import check
 from check import library_backend_candidates
@@ -71,6 +72,26 @@ class ScopeTests(unittest.TestCase):
                  "D5.Markable": {"OmegaBuild.Commands"}, "Reg.Inherited": {"D5.Markable"}}
         result = scope.plan(graph, self.official, {"D5.Markable"}, set(), [], [])
         self.assertEqual(result["consumers"], ["D5.Markable", "Reg.Inherited"])
+
+    def test_strict_imports_require_an_eligible_root(self):
+        graph = {
+            "OmegaInit.Core": set(),
+            "D5.OfficialDependency": set(),
+            "D5.Shared": {"OmegaInit.Core"},
+            "D5.OfficialOnly": {"D5.OfficialDependency", "D5.Shared"},
+            "D5.Paired": {"D5.Shared"},
+        }
+        skipped = {"D5.OfficialOnly": ["D5.OfficialOnly"]}
+        roots = ["D5.OfficialOnly", "OmegaInit.Core"]
+        self.assertEqual(portable.strict_closure(graph, roots, skipped), ["OmegaInit.Core"])
+        self.assertEqual(
+            set(portable.strict_closure(graph, [*roots, "D5.Paired"], skipped)),
+            {"OmegaInit.Core", "D5.Shared", "D5.Paired"},
+        )
+        self.assertIn(
+            "D5.OfficialDependency",
+            portable.strict_closure(graph, [*roots, "D5.OfficialDependency"], skipped),
+        )
 
     def test_strict_witnesses_are_resolved_officially_only_if_they_can_use_a_marker(self):
         graph = {"OmegaBuild.Commands": set(), "OmegaMath.Base": set(),

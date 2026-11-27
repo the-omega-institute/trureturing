@@ -81,6 +81,12 @@ def closure(graph, roots):
     return list(TopologicalSorter({n: graph[n] & seen for n in sorted(seen)}).static_order())
 
 
+def strict_closure(graph, roots, mathlib_only):
+    """Compute imports needed by roots eligible for strict compilation."""
+    eligible = [name for name in roots if name not in mathlib_only]
+    return [name for name in closure(graph, eligible) if name not in mathlib_only]
+
+
 def backend_plan(official_path, names, environment=None):
     """Read backend restrictions from the exact official artifacts about to be consumed."""
     if not names:
@@ -496,9 +502,11 @@ def check(only, backend="mathlib", destination=None, *, frozen=None, discovered=
         if backend != "mathlib":
             plan = backend_plan(official_path, list(compiled), environment)
             skipped = plan["mathlibOnly"]
-            strict_sources = {n: path for n, path in strict_sources.items() if n not in skipped}
-            downstream = [n for n in downstream if n not in skipped]
-            common_modules = closure(graph, [n for n in common_roots if n not in skipped])
+            # The foundation audit still covers every basis module used by the official build.
+            paired_modules = strict_closure(graph, [*roots, *basis], skipped)
+            common_modules = strict_closure(graph, common_roots, skipped)
+            strict_sources = {n: sources[n] for n in dict.fromkeys([*paired_modules, *common_modules])}
+            downstream = [n for n in paired_modules if root(n) not in BASIS | {"OmegaBuild"}]
             strict.mkdir()
             if strict_sources:
                 strict_path = backend_artifacts(True, with_reg, strict_sources, strict, packages, lean,
