@@ -1,6 +1,7 @@
 module
 public import OmegaChecks.InitPort.Alternatives.Logic.Quotient
 public import Init.WFComputable
+public import Init.Ext
 public import Init.SimpLemmas
 public import Init.PropLemmas
 public import Init.Sym.Lemmas
@@ -8,6 +9,11 @@ public import Init.Data.Sum.Lemmas
 public import Init.Data.Erased
 
 namespace OmegaChecks.InitPort.Alternatives
+
+/-- The argument of a thunk has a unique constructor, so applying it at unit reconstructs the thunk. -/
+public theorem Thunk.ext : type_of% @_root_.Thunk.ext := by
+  intro α a b h
+  exact congrArg (fun x => _root_.Thunk.mk (fun _ => x)) h
 
 public theorem Erased.mk_inj : type_of% @_root_.Erased.mk_inj := by
   intro α a b
