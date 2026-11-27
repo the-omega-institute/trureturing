@@ -28,10 +28,7 @@ internal sealed class WindmillClassificationDocument : IScribeDocumentDefinition
                     Paragraph(Text("The quantifier ranges over all pairs of simple undirected graphs on the windmill's labelled vertex set. The notation A(G) denotes the integer adjacency matrix of G, and juxtaposition denotes ordinary matrix multiplication.")),
                     Paragraph(Text("Symmetry reverses the product and makes both factors commute with the windmill adjacency matrix. The product at a blade vertex and the hub supplies a non-hub intermediate neighbor. Commutation at that entry then forces each factor to join the hub to every blade. Distinct blades would therefore give a positive product entry at a nonedge.")),
                     Paragraph(Text("A single blade is a complete graph. Commutation gives constant degrees for the two factors, whose product is t − 1. The second factor induces a graph of degree one on the first factor's neighbors of any vertex. The degree-sum formula gives even degree for the first factor, and reversing the factors gives even degree for the second. For t = 4k + 1 the cyclic steps of the first factor are ±1. Those of the second factor are 4j + 2 and 4j + 3 for 0 ≤ j < k. The sums partition the nonzero residues into blocks of four, with one representation per residue."))),
-                DescribeRole.Theorem,
-                openProblemResolutionClaim: new OpenProblemResolutionClaim(
-                    ProblemSlugRef.Create("akbari-elahimanesh-miraftab-windmill-factorization"),
-                    ResolutionKind.Proved)))));
+                DescribeRole.Theorem))));
 
     private static Formula Call(string name, params Formula[] arguments) =>
         new Formula.Apply(Seq(Operatorname, Grp(F.Id(name))), [.. arguments]);

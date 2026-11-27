@@ -22,10 +22,6 @@ $$\forall d,t \in \mathbb{N}, 1 \leq d \land 3 \leq t \implies ((\exists B,C : \
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/AdjacencyProduct/WindmillClassification.result` (`✓ std3`). ∎
 
-*Resolves.* `Problems/akbari-elahimanesh-miraftab-windmill-factorization` (proved) by `D5/S3/Combinatorics/Graph/AdjacencyProduct/WindmillClassification.result`.
-
-<!-- scribe-open-problem-resolution-v1 {"problem_slug":"akbari-elahimanesh-miraftab-windmill-factorization","declaration_gid":"D5/S3/Combinatorics/Graph/AdjacencyProduct/WindmillClassification.result","resolution_kind":"proved"} -->
-
 *Source.* Repository-derived.
 
 *Acknowledgement.* Saieed Akbari, Mohamad Parsa Elahimanesh and Bobby Miraftab (2025). *On Prime Matrix Product Factorizations*. DOI: [10.48550/arXiv.2512.24864](https://doi.org/10.48550/arXiv.2512.24864). URL: <https://arxiv.org/html/2512.24864v1#S5.I1.i1>.
