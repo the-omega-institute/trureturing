@@ -485,8 +485,12 @@ partial def visit (n : Name) : M Bool := do
     modify fun s => {s with env}
     return ← record n .added
   if let some refOwner := OmegaChecks.InitPort.ReferenceSpecialization.consumerOwner? n then
-    let .defnInfo d := ci | return ← record n (.blocked "expected reference consumer")
-    let body ← OmegaChecks.InitPort.ReferenceSpecialization.consumerBody c.source c.referenceTemplates d
+    let body ← match ci with
+      | .defnInfo d => OmegaChecks.InitPort.ReferenceSpecialization.consumerBody c.source c.referenceTemplates d
+      | .opaqueInfo _ =>
+        if n == OmegaChecks.InitPort.RandomState.refName then pure OmegaChecks.InitPort.RandomState.refBody
+        else throw <| IO.userError s!"unexpected opaque reference consumer {n}"
+      | _ => throw <| IO.userError s!"unexpected reference consumer {n}"
     let models := c.referenceModels.getD refOwner #[]
     let mut deps := usedConstants ci.type ++ usedConstants body
     for model in models do
@@ -733,7 +737,8 @@ def run (strictPath artifacts : System.FilePath) (outPath : String) (exclude : S
   let referenceTemplates ← importModules #[{module := `OmegaChecks.InitPort.BufferReference, importAll := true},
     {module := `OmegaChecks.InitPort.StateRunner, importAll := true},
     {module := `OmegaChecks.InitPort.ReferenceModify, importAll := true},
-    {module := `OmegaChecks.InitPort.CancelFlag, importAll := true}] {} (level := .private)
+    {module := `OmegaChecks.InitPort.CancelFlag, importAll := true},
+    {module := `OmegaChecks.InitPort.RandomState, importAll := true}] {} (level := .private)
   let handleEnv ← importModules #[{module := `OmegaChecks.InitPort.LogicalHandle}] {} (level := .private)
   let mut handles : NameMap OmegaChecks.InitPort.LogicalHandle.Templates := {}
   for api in OmegaChecks.InitPort.LogicalHandle.apis do
@@ -759,7 +764,7 @@ def run (strictPath artifacts : System.FilePath) (outPath : String) (exclude : S
   let source ← importModules imports {} (loadExts := true) (level := .private)
   let mut referenceModels := {}
   for (consumer, owner) in [(`IO.FS.Stream.ofBuffer, `Init.System.IO), (`StateRefT'.run, `Init.Control.StateRef),
-      (`ST.Prim.Ref.modify, `Init.System.ST)] do
+      (`ST.Prim.Ref.modify, `Init.System.ST), (`IO.stdGenRef, `Init.Data.Random)] do
     if source.contains consumer then
       referenceModels := referenceModels.insert owner (← OmegaChecks.InitPort.ReferenceSpecialization.models source referenceTemplates owner)
   let vis ← importModules imports {} (level := .exported)

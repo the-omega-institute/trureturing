@@ -141,6 +141,8 @@ def compile_generated(stage, product, graph, seed_ir, owners=None, *, original_s
             string_sources.append(source)
             if owner not in seed_owners:
                 modes[owner] = "mixed="
+    if "OmegaInit.Data.Random" in selected and (stage / "random-state.c").is_file():
+        modes["OmegaInit.Data.Random"] = "mixed="
     runtime_sources = {"OmegaInit.Control.StateRef": "state_ref.c", "OmegaInit.Dynamic": "type-name.c",
                        "OmegaInit.ShareCommon": "share_common.c"}
     literals = stage / "literal.c"

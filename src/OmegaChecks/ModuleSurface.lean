@@ -7,6 +7,7 @@ import OmegaChecks.InitPort.FloatArrayNative
 import OmegaChecks.InitPort.BufferReference
 import OmegaChecks.InitPort.StateRunner
 import OmegaChecks.InitPort.ReferenceModify
+import OmegaChecks.InitPort.RandomState
 import Lean.Elab.ParseImportsFast
 import Lean.Compiler.LCNF.SpecInfo
 import all Lean.Structure
@@ -178,6 +179,7 @@ private def checkElaboration (env full : Environment) (reference? : Option Envir
       | `Nat.pow => pure (`OmegaInit.Prelude, "lean_nat_pow")
       | `Nat.decEq => pure (`OmegaInit.Prelude, "lean_nat_dec_eq")
       | `Omega.ST.Prim.Ref.swap => pure (`OmegaInit.System.ST, "omega_st_ref_swap")
+      | `Omega.IO.rand => pure (`OmegaInit.Data.Random, "omega_io_rand")
       | `Omega.ST.Prim.Ref.modify => pure (`OmegaInit.System.ST, "omega_st_ref_modify")
       | `Omega.ST.Prim.Ref.set => pure (`OmegaInit.System.ST, "omega_st_ref_set")
       | `Omega.ST.Prim.Ref.ptrEq => pure (`OmegaInit.System.ST, "omega_st_ref_ptr_eq")
@@ -234,7 +236,9 @@ private def checkElaboration (env full : Environment) (reference? : Option Envir
       | `Omega.String.toList => pure (`OmegaInit.Data.String.Basic, "omega_string_to_list")
       | `Omega.String.ofList => pure (`OmegaInit.Prelude, "omega_string_of_list")
       | _ => do
-        if n == InitKernelPort.portName InitPort.ReferenceModify.support then
+        if n == InitKernelPort.portName InitPort.RandomState.support then
+          pure (`OmegaInit.Data.Random, "omega_std_gen_ref")
+        else if n == InitKernelPort.portName InitPort.ReferenceModify.support then
           pure (`OmegaInit.System.ST, "omega_st_ref_read_for_modify")
         else if n == InitKernelPort.portName InitPort.StateRunner.support then
           pure (`OmegaInit.Control.StateRef, "omega_state_ref_read_with_initial")

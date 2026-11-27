@@ -236,6 +236,8 @@ def generate(stage, product, seed, roots, excluded, original_seed):
         if has_interfaces(inventory, pure_state):
             check_state_consumer(stage, artifact, "PureState", "pure_state", [product / "native" / "reference.o"])
             check_runtime_ir(stage, artifact, "Reference", "PureState")
+    if "OmegaInit.Data.Random" in graph:
+        install_state_runtime(stage, product, artifact, "Random", "random-state")
     if "OmegaInit.Control.StateRef" in graph:
         compile_state_runtime(stage, product, artifact, inventory, "StateRef", "state_ref", {
             "Init.Control.StateRef": {"StateRefT'.set"},

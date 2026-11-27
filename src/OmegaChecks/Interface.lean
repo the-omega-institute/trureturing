@@ -186,6 +186,12 @@ private def compare (reference : Environment) (rename : Name → Name) (src dst 
         dst.isAxiom && dst.isUnsafe do
       throw <| IO.userError s!"invalid compiler type marker {src.name}"
     return #[]
+  if foundation.isSome && dst.name == OmegaChecks.InitPort.RandomState.refName then
+    let .opaqueInfo d := src | throw <| IO.userError "the standard generator reference must be opaque"
+    let .opaqueInfo ref := dst | throw <| IO.userError "expected an initialized official standard generator reference"
+    unless !d.isUnsafe && !ref.isUnsafe && (liftTerm d.value).equal OmegaChecks.InitPort.RandomState.refBody do
+      throw <| IO.userError "standard generator uses a different global"
+    return src.type.getUsedConstants ++ d.value.getUsedConstants
   if let some owner := foundation.bind fun _ => OmegaChecks.InitPort.ReferenceSpecialization.consumerOwner? dst.name then
     let .defnInfo d := src | throw <| IO.userError "expected strict reference consumer"
     let .defnInfo ref := dst | throw <| IO.userError "expected official reference consumer"
