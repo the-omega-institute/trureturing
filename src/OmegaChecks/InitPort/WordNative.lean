@@ -97,6 +97,11 @@ private def metaLiteralFunction (n : Name) : Bool :=
     [`decodeNatLitVal?, `decodeScientificLitVal?, `decodeNameLit, `decodeStrLit, `decodeStrLitAux,
      `decodeRawStrLitAux, `splitNameLit].contains (n.updatePrefix .anonymous))
 
+private def syntaxTreeFunction (n : Name) : Bool :=
+  [`Lean.mkIdent, `Lean.mkIdentFrom, `Lean.mkCIdentFrom].contains n || (n.getPrefix == `Lean.Syntax &&
+    [`getHead?, `setHeadInfoAux, `setTailInfoAux, `findAux, `structEq, `isToken, `hasArgs, `isAtom, `isNone,
+     `isIdOrAtom?, `isLit?].contains (n.updatePrefix .anonymous))
+
 private def pinnedStringFunction (n : Name) : Bool := defsStringFunction n || basicStringFunction n || decodeStringFunction n || sliceStringFunction n || metaLiteralFunction n || n == `String.toName
 
 private def debugPrimitive (n : Name) : Bool := [`dbgTrace, `dbgTraceIfShared, `dbgSleep, `dbgStackTrace].contains n
@@ -110,7 +115,7 @@ public def usesPinnedFunction (n : Name) : Bool :=
   let vector := n.getPrefix == `BitVec &&
     [`abs, `pow, `smod, `replicate, `reverse, `cpop, `cpopNatRec, `ctz, `clz, `clzAuxRec,
      `getLsbD, `getLsb, `getMsbD, `getMsb, `msb, `sdiv, `srem, `smtSDiv, `hash, `ofBoolListLE, `ofBoolListBE].contains method
-  digitList n || trailing || pinnedStringFunction n || modelOperation n || ByteFoldNative.supported n || IndexedNative.supported n || SyntaxPositionNative.supported n || bytes || vector || [`Nat.repr, `Nat.reprFast, `Int.repr].contains n || [`BitVec.toHex, `BitVec.instToString].contains n || n == `Nat.bitwise || ((word? n.getPrefix).isSome && (method == `pow || (method == `ofInt && bitsType n.getPrefix == n.getPrefix))) ||
+  digitList n || trailing || syntaxTreeFunction n || pinnedStringFunction n || modelOperation n || ByteFoldNative.supported n || IndexedNative.supported n || SyntaxPositionNative.supported n || bytes || vector || [`Nat.repr, `Nat.reprFast, `Int.repr].contains n || [`BitVec.toHex, `BitVec.instToString].contains n || n == `Nat.bitwise || ((word? n.getPrefix).isSome && (method == `pow || (method == `ofInt && bitsType n.getPrefix == n.getPrefix))) ||
     (n.getPrefix == `Int && [`negOfNat, `subNatNat, `sign, `toNat, `pow, `fdiv, `fmod, `bdiv, `bmod].contains method)
 
 private def bootstrapStringOp (n : Name) : Bool :=
@@ -170,7 +175,7 @@ public def supported (source : Environment) (owner name : Name) : Bool :=
     (owner == `OmegaInit.Data.String.Basic && basicStringFunction name) ||
     (owner == `OmegaInit.Data.String.Decode && decodeStringFunction name) ||
     (owner == `OmegaInit.Data.String.Slice && sliceStringFunction name) ||
-    (owner == `OmegaInit.Meta.Defs && (name == `String.toName || metaLiteralFunction name)) || isFloatCall source owner name ||
+    (owner == `OmegaInit.Meta.Defs && (name == `String.toName || metaLiteralFunction name || syntaxTreeFunction name)) || isFloatCall source owner name ||
     (owner == `OmegaInit.Data.ByteArray.Basic && ByteFoldNative.supported name) ||
     ([`OmegaInit.Grind.Ring.CommSolver, `OmegaInit.Data.Nat.Basic, `OmegaInit.Data.Nat.Div.Basic, `OmegaInit.Data.Nat.Lemmas,
     `OmegaInit.Data.RArray, `OmegaInit.Data.Nat.Internal.Linear, `OmegaInit.Data.Nat.Fold, `OmegaInit.Data.Fin.Lemmas].contains owner && IndexedNative.supported name) ||
@@ -241,7 +246,7 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
   if IndexedNative.supported official then return ← IndexedNative.wrapper source strict n (symbol n)
   if SyntaxPositionNative.supported official then return ← SyntaxPositionNative.wrapper source strict n (symbol n)
   let some ci := source.find? official | throw <| IO.userError s!"unknown word primitive {official}"
-  if bootstrapStringOp official || basicStringExtern official || pinnedStringFunction official then
+  if bootstrapStringOp official || basicStringExtern official || pinnedStringFunction official || syntaxTreeFunction official then
     let some strictInfo := strict.find? n | throw <| IO.userError s!"missing strict string operation {n}"
     unless strictInfo.type == InitKernelPort.translate InitKernelPort.portName ci.type do
       throw <| IO.userError s!"strict string input type differs at {n}"
@@ -252,6 +257,9 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
         let #[.object 0 field, .object 1 start, .object 2 stop] := fields.fieldInfo | throw <| IO.userError "invalid substring fields"
         unless field == text && start == ImpureType.tobject && stop == ImpureType.tobject && fields.ctorInfo.cidx == 0 && fields.ctorInfo.size == 3 && fields.ctorInfo.usize == 0 && fields.ctorInfo.ssize == 0 do
           throw <| IO.userError "invalid substring record layout"
+  if syntaxTreeFunction official then
+    SyntaxPositionNative.checkTreeLayout source strict
+    checkNameLayout source strict
   let compiled ← if official == `Nat.repr then do
     unless (Compiler.getImplementedBy? source official) == some `Nat.reprFast do throw <| IO.userError "unexpected Nat.repr implementation"
     let some fast := source.find? `Nat.reprFast | throw <| IO.userError "missing pinned Nat.reprFast"
@@ -321,6 +329,15 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
       decls := decls.push ((if b.borrow then "b_lean_obj_arg " else "lean_obj_arg ") ++ arg)
       if b.borrow then prepare := prepare ++ s!"  lean_inc({arg});\n"
       args := args.push arg
+      continue
+    if syntaxTreeFunction official && dom.isForall then
+      unless official == `Lean.Syntax.findAux && dom.bindingDomain! == mkConst `Lean.Syntax &&
+          dom.bindingBody! == mkConst `Bool && a.ty == .object && b.ty == .object && !a.borrow do
+        throw <| IO.userError s!"incorrect syntax predicate signature {n}"
+      decls := decls.push ((if b.borrow then "b_lean_obj_arg " else "lean_obj_arg ") ++ arg)
+      if b.borrow then prepare := prepare ++ s!"  lean_inc({arg});\n"
+      prepare := prepare ++ s!"  lean_object *predicate = lean_alloc_closure((void *)omega_syntax_predicate, 2, 1);\n  lean_closure_set(predicate, 0, {arg});\n"
+      args := args.push "predicate"
       continue
     if bootstrapStringOp official && dom.isForall then
       let arrow := fun (a b : Expr) => Expr.forallE .anonymous a b .default
@@ -450,13 +467,22 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
       let borrowed := a.borrow || target == "lean_string_get_byte_fast"
       if b.borrow && !borrowed then prepare := prepare ++ s!"  lean_inc({arg});\n"
       if borrowed && !b.borrow then cleanup := cleanup ++ s!"  lean_dec({arg});\n"
-    else if dom == `Lean.Name && a.ty == .tobject && b.ty == .tobject && a.borrow then
+    else if syntaxTreeFunction official && [`Lean.Syntax, `Lean.SourceInfo, `Lean.SyntaxNodeKind].contains dom &&
+        a.ty == .tobject && b.ty == .tobject then
+      let convert := if dom == `Lean.Syntax then s!"omega_convert_syntax({arg}, true)" else
+        if dom == `Lean.SourceInfo then s!"omega_convert_source_info({arg}, true)" else s!"omega_name_to_lean({arg})"
+      decls := decls.push ((if b.borrow then "b_lean_obj_arg " else "lean_obj_arg ") ++ arg)
+      prepare := prepare ++ s!"  lean_object *input{i} = {convert};\n"
+      args := args.push s!"input{i}"
+      if a.borrow then cleanup := cleanup ++ s!"  lean_dec(input{i});\n"
+      unless b.borrow do cleanup := cleanup ++ s!"  lean_dec({arg});\n"
+    else if dom == `Lean.Name && a.ty == .tobject && b.ty == .tobject then
       checkNameLayout source strict
       hasName := true
       decls := decls.push ((if b.borrow then "b_lean_obj_arg " else "lean_obj_arg ") ++ arg)
       prepare := prepare ++ s!"  lean_object *name{i} = omega_name_to_lean({arg});\n"
       args := args.push s!"name{i}"
-      cleanup := cleanup ++ s!"  lean_dec(name{i});\n"
+      if a.borrow then cleanup := cleanup ++ s!"  lean_dec(name{i});\n"
       unless b.borrow do cleanup := cleanup ++ s!"  lean_dec({arg});\n"
     else if dom == `String.Slice && a.ty == .object && b.ty == .object then
       checkStrictString strict
@@ -614,6 +640,16 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
     checkIntLayout strict
     IndexedNative.checkDataTypes source strict [`Option]
     pure ("lean_obj_res", s!"omega_optional_from_lean({call}, omega_int_from_lean)")
+  else if syntaxTreeFunction official && dom == `Lean.Syntax.Ident && ret == .tobject && result == .tobject then do
+    prepare := prepare ++ s!"  lean_object *stx = {call};\n"
+    cleanup := cleanup ++ "  lean_dec(stx);\n"
+    pure ("lean_obj_res", "omega_syntax_from_lean(stx)")
+  else if syntaxTreeFunction official && dom == `Option && ret == .tobject && result == .tobject then do
+    let payload := type.getArg! 0
+    let converter ← if payload == mkConst `String then pure "omega_string_from_lean"
+      else if payload == mkConst `Lean.Syntax then pure "omega_syntax_from_lean"
+      else throw <| IO.userError s!"unexpected syntax query payload at {n}"
+    pure ("lean_obj_res", s!"omega_optional_from_lean({call}, {converter})")
   else if metaLiteralFunction official && dom == `Option && ret == .tobject && result == .tobject then do
     IndexedNative.checkDataTypes source strict [`Option]
     let payload := type.getArg! 0
@@ -708,7 +744,7 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
     pure "\nextern lean_obj_res lean_byte_array_copy_slice(b_lean_obj_arg, lean_obj_arg, lean_obj_arg, lean_obj_arg, lean_obj_arg, uint8_t);\n"
   else if official == `System.Platform.getNumBits then
     pure "\nextern lean_obj_res lean_system_platform_nbits(lean_obj_arg);\n" else pure ""
-  let header := if hasName then "\n#include \"strict_name.h\"\n" else if hasString || [`String, `ByteArray].contains dom then "\n#include \"strict_string.h\"\n" else if dom == `Int then "\n#include \"strict_nat.h\"\n" else ""
+  let header := if syntaxTreeFunction official then "\n#include \"strict_syntax.h\"\n" else if hasName then "\n#include \"strict_name.h\"\n" else if hasString || [`String, `ByteArray].contains dom then "\n#include \"strict_string.h\"\n" else if dom == `Int then "\n#include \"strict_nat.h\"\n" else ""
   return header ++ proto ++ helper ++ s!"\nLEAN_EXPORT {output} {adapter}({String.intercalate ", " decls.toList}) \{\n{prepare}  {output} r = {value};\n{cleanup}  return r;\n}\n"
 
 end OmegaChecks.InitPort.WordNative
