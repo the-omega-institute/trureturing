@@ -12,7 +12,7 @@ internal sealed class OeisA005926DiamondDocument : IScribeDocumentDefinition
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The summatory function of the diamond theta coefficients has leading constant π/48.",
-        H("Kotesovec’s summatory conjecture for OEIS A005926"),
+        H("Vaclav Kotesovec’s summatory conjecture for OEIS A005926"),
         Blocks(
             Node("thetaSeries", "The diamond theta series",
                 StatementSource.WithoutFormula(), AssessedProvenance.FromLiterature(Source),
@@ -28,14 +28,18 @@ internal sealed class OeisA005926DiamondDocument : IScribeDocumentDefinition
                 DescribeRole.Theorem),
             Node("result", "The normalized sums tend to π/48",
                 StatementSource.FromAuthor(Limit()), AssessedProvenance.FromRepo(Source),
-                "The parity condition partitions the triples into the four residue classes 000, 011, 101, and 110 modulo two. In the squared-norm coordinates these give four translates of the lattice of spacing eight. Each class is counted by a shifted closed ball of radius √N/8, so division by N^(3/2) contributes (4π/3)/8³ per class. The four classes and weight two give π/48 for natural N tending to infinity through all cutoffs.",
-                DescribeRole.Theorem))));
+                "Vaclav Kotesovec stated the conjecture in OEIS A005926 revision 49 on November 26, 2026. The parity condition partitions the triples into the four residue classes 000, 011, 101, and 110 modulo two. In the squared-norm coordinates these give four translates of the lattice of spacing eight. Each class is counted by a shifted closed ball of radius √N/8, so division by N^(3/2) contributes (4π/3)/8³ per class. The four classes and weight two give π/48 for natural N tending to infinity through all cutoffs.",
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("oeis-a005926-diamond-summatory-asymptotic"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string declaration, string title, StatementSource statement,
-        AssessedProvenance provenance, string prose, DescribeRole role) =>
+        AssessedProvenance provenance, string prose, DescribeRole role,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("a005926-" + declaration.ToLowerInvariant().Replace('_', '-')),
             DeclarationHandle.Create(Prefix + declaration), H(title), statement, provenance,
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, openProblemResolutionClaim: resolution);
 
     private static Formula Limit()
     {
