@@ -70,7 +70,10 @@ instance (G : SimpleGraph V) (H : SimpleGraph W) [DecidableEq V]
     | .inr (v, w), .inr (u, z) => inferInstanceAs (Decidable (v = u ∧ H.Adj w z))
 
 /-- The cross block repeats each column of the closed-neighborhood matrix
-once per vertex of the attached graph. -/
+once per vertex of the attached graph. In [Sonar and Srivastava, §3.1]
+(https://arxiv.org/html/2407.05653v2#S3.Ex4), the copy coordinates are ordered
+as (attached vertex, base vertex). Swapping them to (base vertex, attached
+vertex) gives the block identity proved here directly over a semiring. -/
 theorem adjMatrix_corona (R : Type*) [Semiring R] [DecidableEq V]
     (G : SimpleGraph V) (H : SimpleGraph W) [DecidableRel G.Adj] [DecidableRel H.Adj] :
     let B : Matrix V (V × W) R := of fun v p => (G.adjMatrix R + 1) v p.1

@@ -14,7 +14,7 @@ motivation_gids:
 
 > Are the irregular graphs in Theorem 5.20 also cospectral with respect to the normalized Laplacian matrix?
 
-Theorem 5.20 uses adjacency-cospectral regular graphs \(G_1,G_2\) and an arbitrary graph \(H\). It compares \(G_1\diamond H\) with \(G_2\diamond H\) and \(H\diamond G_1\) with \(H\diamond G_2\), where \(\diamond\) is the closed-neighborhood corona. [Theorem 5.20](https://arxiv.org/html/2412.20775v6#S5.Thmtheorem20) · [Question 5.21](https://arxiv.org/html/2412.20775v6#S5.Thmtheorem21)
+Theorem 5.20 starts with adjacency-cospectral regular graphs \(G_1,G_2\) and a third graph \(H\). It describes two pairs as irregular and nonisomorphic but cospectral (NICS) for adjacency, ordinary Laplacian and signless Laplacian. The pairs are \(G_1\,\underline{\boxtimes}\,H\) versus \(G_2\,\underline{\boxtimes}\,H\) and \(H\,\underline{\boxtimes}\,G_1\) versus \(H\,\underline{\boxtimes}\,G_2\). The underlined box-times denotes the closed-neighborhood corona. [Theorem 5.20](https://arxiv.org/html/2412.20775v6#S5.Thmtheorem20) · [Question 5.21](https://arxiv.org/html/2412.20775v6#S5.Thmtheorem21)
 
 ## Statement echo
 
@@ -29,7 +29,7 @@ Task #35002 targets `D5/S3/Combinatorics/SpectralGraph/ClosedNeighborhoodCorona/
 | Normalized Laplacian | `normalizedLaplacian` is \(D^{-1/2}(D-A)D^{-1/2}\) with inverse square-root degree defined as zero at degree zero |
 | Both factor orders | A conjunction of equal real normalized-Laplacian characteristic polynomials for `corona G₁ H` and `corona G₂ H`, and for `corona H G₁` and `corona H G₂` |
 
-The comparison includes empty vertex types, disconnected graphs and isolated vertices. Equal characteristic polynomials imply equal vertex counts, supplying the equivalence used internally to relabel the regular factors. There are no direct frozen project dependencies.
+The formal theorem proves the spectral equalities for the survey's pairs and for a wider class that includes isomorphic factors, regular coronas, empty vertex types, disconnected graphs and isolated vertices. Equal characteristic polynomials imply equal vertex counts, supplying the equivalence used internally to relabel the regular factors. There are no direct frozen project dependencies.
 
 ## Proof
 
@@ -45,8 +45,25 @@ Spectral conjugacy gives an orthogonal intertwiner for the regular adjacency mat
 | `RegularIntertwiner.exists_orthogonal_adjacency_intertwiner` | content | Spectral conjugacy and reflection give an orthogonal intertwiner fixing the constant vector |
 | `NormalizedLaplacian.normalized_laplacian_charpoly_corona` | content | The two block lifts intertwine adjacency, degree and inverse square-root degree |
 
-The companion names in the table are given relative to their owning modules. The publication theorem has admission basis `open-problem-resolution`. Its two private order-specific proofs use the respective block lifts on the live derivation paths.
+The theorem names are relative to their owning modules. The `admission_basis` is `escape-witness` for the Blocks and RegularIntertwiner modules and `open-problem-resolution` for the Question 5.21 result. The final conjunction consumes both private order-specific proofs.
+
+The following §3.2 helpers organize the proofs through the named live consumers. They provide no independent admission basis or escape witness.
+
+| Module | Private helper | `proof_shape` | Live consumers |
+| --- | --- | --- | --- |
+| Blocks | `sum_adjMatrix_row` | `bind-only` | `sum_closedNeighborhood_row`, `degree_corona_inl`, `degree_corona_inr` |
+| Blocks | `sum_closedNeighborhood_row` | `bind-only` | `degree_corona_inl`, `degree_corona_inr` |
+| RegularIntertwiner | `spectralConjugacy` | `bind-only` | `exists_orthogonal_intertwiner_of_row_sum`, `exists_orthogonal_adjacency_intertwiner` |
+| RegularIntertwiner | `transpose_unitary` | `bind-only` | `exists_orthogonal_intertwiner_of_row_sum`, `exists_orthogonal_adjacency_intertwiner` |
+| RegularIntertwiner | `conjugation_eq` | `bind-only` | `exists_orthogonal_intertwiner_of_row_sum`, `exists_orthogonal_adjacency_intertwiner` |
+| NormalizedLaplacian | `charpoly_of_orthogonal_intertwining` | `bind-only` | `normalized_laplacian_charpoly_of_intertwining` |
+| NormalizedLaplacian | `blockLift_orthogonal` | `bind-only` | `normalized_laplacian_similarity_of_block` |
+| NormalizedLaplacian | `normalized_laplacian_charpoly_of_intertwining` | `bind-only` | `normalized_laplacian_similarity_of_block`, `normalized_laplacian_charpoly_corona_regular_attached` |
+| NormalizedLaplacian | `normalized_laplacian_similarity_of_block` | `bind-only` | `normalized_laplacian_charpoly_corona_regular_base` |
+| NormalizedLaplacian | `diagonal_degree_intertwining` | `bind-only` | `normalized_laplacian_charpoly_corona_regular_base`, `normalized_laplacian_charpoly_corona_regular_attached` |
+| NormalizedLaplacian | `copyLift_orthogonal` | `bind-only` | `normalized_laplacian_charpoly_corona_regular_attached` |
+| NormalizedLaplacian | `normalized_laplacian_charpoly_iso` | `bind-only` | `normalized_laplacian_charpoly_corona` |
 
 ## Literature scope
 
-The literature screen in #35002 distinguishes the adjacency, ordinary Laplacian and signless Laplacian conclusions of Theorem 5.20 from the normalized Laplacian question. Literature completeness and priority remain ASSUMED-UNVERIFIED. [Preregistration](https://github.com/the-omega-institute/trureturing/issues/35002)
+Sonar and Srivastava display the adjacency block identity with the copy coordinates reversed relative to Lean. Theorem 5.20 covers adjacency, ordinary Laplacian and signless Laplacian, and Question 5.21 asks about normalized Laplacian. Literature completeness and priority remain ASSUMED-UNVERIFIED. [Sonar–Srivastava, §3.1](https://arxiv.org/html/2407.05653v2#S3.Ex4) · [Preregistration](https://github.com/the-omega-institute/trureturing/issues/35002)
