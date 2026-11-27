@@ -46,4 +46,4 @@ formal result's estimate. Theorem 7 concerns one prescribed interval for `h=2`.
 - Definition of `n-flat_h(k)`: printed pages 7-8.
 - Problem 12: printed page 9.
 - Problem 15: §5, https://arxiv.org/html/2605.26425v3#Thmproblem15
-- Theorem 7: §4, https://arxiv.org/html/2605.26425v3#Thmtheorem7
+- Theorem 7: §5, https://arxiv.org/html/2605.26425v3#Thmtheorem7
