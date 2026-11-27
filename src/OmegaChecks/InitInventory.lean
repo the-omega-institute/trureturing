@@ -560,7 +560,7 @@ private def inventory (lib : System.FilePath) (visible strict full witnesses : E
       if publicName n then
         if names.contains n then duplicateNames := duplicateNames.insert n
         names := names.insert n
-  let mut certifiedEndpoints : Array (String × String × String) := #[]
+  let mut certifiedEndpoints : Array (Array String) := #[]
   let mut certifiedSites := 0
   let mut matchedUnique : NameSet := {}
   let mut axiomUnique : NameSet := {}
@@ -609,7 +609,7 @@ private def inventory (lib : System.FilePath) (visible strict full witnesses : E
         | none => pure none
       if endpointType.isSome then
         if let some op := operand then
-          certifiedEndpoints := certifiedEndpoints.push (owner.toString, name.toString, op.witness.toString)
+          certifiedEndpoints := certifiedEndpoints.push #[owner.toString, name.toString, op.witness.toString]
       let conditional := OmegaChecks.InitInventory.conditionalConsequence? owner name
       let direct := (logicalConsequence? owner name).map (fun (target, witness) => (target.toString, witness))
       let consequence := conditional.map (fun (target, witness, _) => (target, witness)) <|> direct
