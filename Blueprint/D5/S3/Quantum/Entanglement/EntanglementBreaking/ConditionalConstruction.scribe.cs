@@ -9,7 +9,7 @@ internal sealed class ConditionalConstructionDocument : IScribeDocumentDefinitio
         Blocks(
             Describe.Lean(DescribeId.Create("eb-conditionalconstruction-conditional-indecomposable-keb"),
                 DeclarationHandle.Create("D5/S3/Quantum/Entanglement/EntanglementBreaking/ConditionalConstruction.conditional_indecomposable_kEB"),
-                H("Schmidt bound and positive partial transpose suffice"), StatementSource.FromLean(),
+                H("Schmidt bound and positive partial transpose suffice"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("For a traceless Hermitian direction at dimension d, impose the Schmidt-cutoff quadratic bound and the lower energy bound. Positivity of the test and its output partial transpose then yields a k-entanglement-breaking indecomposable map with the stated input-first Choi matrix."))),
                 DescribeRole.Theorem))));
 }

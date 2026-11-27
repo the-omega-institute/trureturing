@@ -19,7 +19,7 @@ open D5.S3.Quantum.Dynamics.KickedIsingNegativityRefutation (partialTranspose)
 
 abbrev PTIndex (d : ℕ) := Fin d × Fin d
 def ptLt {d : ℕ} (i j : PTIndex d) : Prop := finProdFinEquiv i < finProdFinEquiv j
-instance {d : ℕ} (i j : PTIndex d) : Decidable (ptLt i j) := by unfold ptLt; infer_instance
+instance ptLt_decidable {d : ℕ} (i j : PTIndex d) : Decidable (ptLt i j) := by unfold ptLt; infer_instance
 
 /-- The two product indices exchanged by second-factor partial transpose. -/
 def ptCross {d : ℕ} (i j : PTIndex d) : PTIndex d × PTIndex d :=

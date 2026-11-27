@@ -27,7 +27,8 @@ def signValue (b : Bool) : ℝ := if b then 1 else -1
 def signCubeMeasure (ι : Type*) [Fintype ι] : Measure (ι → Bool) :=
   uniformOn Set.univ
 
-instance {ι : Type*} [Fintype ι] : IsProbabilityMeasure (signCubeMeasure ι) := by
+instance signCubeMeasure_isProbabilityMeasure {ι : Type*} [Fintype ι] :
+    IsProbabilityMeasure (signCubeMeasure ι) := by
   unfold signCubeMeasure
   infer_instance
 

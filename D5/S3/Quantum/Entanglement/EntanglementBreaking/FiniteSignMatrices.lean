@@ -60,8 +60,7 @@ theorem finiteSignMatrix_offdiag_normSq {α : Type} [LinearOrder α] [DecidableE
   classical
   by_cases hlt : i < j
   · simp [finiteSignMatrix, hij, hlt, signScalar_normSq]
-  · have hji : j < i := lt_of_le_of_ne (le_of_not_gt hlt) hij.symm
-    simp [finiteSignMatrix, hij, hlt, signScalar_normSq]
+  · simp [finiteSignMatrix, hij, hlt, signScalar_normSq]
 
 private theorem trace_mul_conjTranspose_frobenius {α : Type} [Fintype α]
     (A : Matrix α α ℂ) :
