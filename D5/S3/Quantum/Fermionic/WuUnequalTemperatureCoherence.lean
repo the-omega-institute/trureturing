@@ -52,22 +52,26 @@ private theorem jump_zero :
     jump 0 = !![0, 1, 0, 0; 0, 0, 0, 0; 0, 0, 0, 1; 0, 0, 0, 0] := by
   change reindex occupationToHole occupationToHole
     (((!![0, 1; 0, 0] : Matrix (Fin 2) (Fin 2) ℂ) ⊗ₖ 1)ᴴ) = _
-  ext i j
+  apply Matrix.ext
+  intro i j
+  simp only [Matrix.reindex_apply, Matrix.submatrix_apply, Matrix.conjTranspose_apply]
   fin_cases i <;> fin_cases j <;>
-    norm_num [occupationOf_empty, occupationOf_first, occupationOf_second, occupationOf_both,
-      Matrix.reindex_apply, Matrix.conjTranspose_apply, Matrix.kroneckerMap_apply,
-      Matrix.one_apply, Complex.star_def]
+    simp only [Fin.reduceFinMk, occupationOf_empty, occupationOf_first,
+      occupationOf_second, occupationOf_both] <;>
+    norm_num [Matrix.kroneckerMap_apply, Matrix.one_apply, Complex.star_def]
 
 private theorem jump_one :
     jump 1 = !![0, 0, 1, 0; 0, 0, 0, -1; 0, 0, 0, 0; 0, 0, 0, 0] := by
   change reindex occupationToHole occupationToHole
     ((diagonal (![-1, 1] : Fin 2 → ℂ) ⊗ₖ
       (!![0, 1; 0, 0] : Matrix (Fin 2) (Fin 2) ℂ))ᴴ) = _
-  ext i j
+  apply Matrix.ext
+  intro i j
+  simp only [Matrix.reindex_apply, Matrix.submatrix_apply, Matrix.conjTranspose_apply]
   fin_cases i <;> fin_cases j <;>
-    norm_num [occupationOf_empty, occupationOf_first, occupationOf_second, occupationOf_both,
-      Matrix.reindex_apply, Matrix.conjTranspose_apply, Matrix.kroneckerMap_apply,
-      Matrix.diagonal_apply, Complex.star_def]
+    simp only [Fin.reduceFinMk, occupationOf_empty, occupationOf_first,
+      occupationOf_second, occupationOf_both] <;>
+    norm_num [Matrix.kroneckerMap_apply, Matrix.diagonal_apply, Complex.star_def]
 
 /-- The two signed lowering matrices satisfy the canonical anticommutation relations. -/
 theorem car (i j : Fin 2) :

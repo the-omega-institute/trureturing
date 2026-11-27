@@ -36,7 +36,7 @@ private abbrev arena : Arena where
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hactual : jump 0 * (jump 0)ᴴ + (jump 0)ᴴ * jump 0 = 1 := by
-    simpa only [if_pos rfl] using (car 0 0).2
+    simpa using (car 0 0).2
   have hzero : jump 0 * (jump 0)ᴴ + (jump 0)ᴴ * jump 0 = 0 := (h 0 0).2
   exact one_ne_zero (hactual.symm.trans hzero)
 

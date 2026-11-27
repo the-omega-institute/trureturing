@@ -24,6 +24,12 @@ internal sealed class WuUnequalTemperatureCoherenceDocument : IScribeDocumentDef
             Theorem("wu-unequal-temperature-certificate", "physical_certificate", "Exact witness and axis optima",
                 StatementSource.WithoutFormula(),
                 "At source exponent two, take β = 8 log 2 and the two mode parameters (4 log 2, 8 log 2). " +
+                "Equations (3.54) and (3.55) of Wu v1 give α₂*(β) = 2L. Set aᵢ = 1/(1+exp βᵢ), " +
+                "bᵢ = 1−aᵢ and T = Tr(M²) for the Gibbs-embedded positive input M. On the rank-one " +
+                "density M²/T, the two transported jump traces for mode i both equal |zᵢ|². Its contribution " +
+                "to the entropy divided by T is −log bᵢ + βᵢqᵢ. Subtracting the entropy term from the energy " +
+                "gives the deficit divided by 2T as ∑ᵢ(aᵢ + L log bᵢ) − ∑ᵢ(cᵢ|zᵢ|² − dᵢqᵢ). " +
+                "This identity uses the continuous extension to rank-one positive inputs. " +
                 "With L = (cosh(β/2) − 1)/(β sinh(β/2)), the coefficients cᵢ = sech(βᵢ/2) and " +
                 "dᵢ = tanh(βᵢ/2) − L βᵢ are (8/17, 32/257) and (15/34, 480/4369), respectively. " +
                 "The unit vector (60,9,10,1)/√3782 has hole probabilities (82,101)/3782 and " +
