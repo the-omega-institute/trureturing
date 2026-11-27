@@ -732,6 +732,13 @@ private def inventory (lib strictDir : System.FilePath) (visible strict full wit
             OmegaChecks.InitPort.PointerComparison.hasBorrowedABI official name false &&
             OmegaChecks.InitPort.PointerComparison.hasBorrowedABI full name true do
           throwError "invalid public, private or native pointer comparison {strictName}"
+      let addressCallback := matched && owner == `Init.Util && name == OmegaChecks.InitPort.Address.name
+      if addressCallback then
+        let some dst := full.find? strictName | throwError "missing address callback {strictName}"
+        unless (strict.find? strictName).any (·.isUnsafe) && officialSigs.contains name && strictSigs.contains strictName &&
+            OmegaChecks.InitPort.Address.isOriginal info false && OmegaChecks.InitPort.Address.isOriginal dst true &&
+            OmegaChecks.InitPort.Address.hasBorrowedABI official false && OmegaChecks.InitPort.Address.hasBorrowedABI full true do
+          throwError "invalid public, private or native address callback {strictName}"
       let pointerHash := matched && owner == `Init.ShareCommon && name == OmegaChecks.InitPort.PointerHash.name
       if pointerHash then
         let some dst := full.find? strictName | throwError "missing pointer hash body {strictName}"
@@ -800,6 +807,7 @@ private def inventory (lib strictDir : System.FilePath) (visible strict full wit
             ("operandImpliesAxiom", toJson (``Classical.choice).toString), ("operandReductionWitness", toJson op.witness.toString)]
         | none => row
       let row := if let some target := endpointType then row.setObjVal! "specializedEndpointType" (toJson target) else row
+      let row := if addressCallback then row.setObjVal! "checkedAddressCallback" (toJson true) else row
       let row := if pointerHash then row.setObjVal! "checkedPointerHash" (toJson true) else row
       let row := if pointerComparison then row.setObjVal! "checkedPointerComparison" (toJson true) else row
       let row := if effectRunner then row.setObjVal! "checkedEffectRunner" (toJson true) else row

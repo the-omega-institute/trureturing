@@ -314,6 +314,7 @@ def generate(stage, product, seed, roots, excluded, original_seed):
                       check_macro_reader=has_interfaces(inventory, {"Init.Prelude": {"Lean.Macro.getMethodsImp"}}),
                       check_list_pointer=has_interfaces(inventory, {"Init.Util": {"ptrEqList"}}),
                       check_pointer_hash=has_interfaces(inventory, {"Init.ShareCommon": {"ShareCommon.Object.ptrHash"}}),
+                      check_address_callback=has_interfaces(inventory, {"Init.Util": {"withPtrAddrUnsafe"}}),
                       check_shared_pointer=has_interfaces(inventory, {"Init.ShareCommon": {"ShareCommon.Object.ptrEq"}}),
                       check_pointer_comparison=has_interfaces(inventory, {"Init.Util": {"ptrEq", "withPtrEqUnsafe"}}),
                       check_guarded_pointer=has_interfaces(inventory, {"Init.Util": {"withPtrEq"}}),

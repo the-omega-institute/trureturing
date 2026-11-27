@@ -2,6 +2,7 @@ module
 
 public import OmegaChecks.InitPort.PointerList
 public import OmegaChecks.InitPort.PointerHash
+public import OmegaChecks.InitPort.Address
 import all OmegaChecks.InitPort.ReferencePut
 
 open Lean
@@ -28,6 +29,7 @@ private def lambdaBody (type body : Expr) : Expr := match type with
 public def isOriginal (ci : ConstantInfo) (strict : Bool) : Bool := Id.run do
   let .defnInfo d := ci | return false
   let name := if strict then InitKernelPort.originalName d.name else d.name
+  if name == Address.name then return Address.isOriginal ci strict
   if name == PointerHash.name then return PointerHash.isOriginal ci strict
   if name == `ptrEqList then return PointerList.isOriginal ci strict
   unless names.contains name && d.safety == .unsafe && d.all == [d.name] do return false
@@ -68,7 +70,7 @@ public def replay (checked installed : Kernel.Environment) (constants : Std.Hash
     match env.addDeclCore 0 1000 (.defnDecl d) none with
     | .ok next => pure next
     | .error e => throw <| IO.userError s!"kernel rejected {d.name}: {← e.toMessageData {} |>.toString}"
-  for name in names ++ [PointerHash.name] do
+  for name in names ++ [PointerHash.name, Address.name] do
     let some ci := constants[InitKernelPort.portName name]? | continue
     unless isOriginal ci true do throw <| IO.userError s!"invalid transparent pointer comparison {name}"
     let .defnInfo d := ci | throw <| IO.userError s!"expected definition {name}"

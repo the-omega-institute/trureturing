@@ -235,8 +235,10 @@ private def compare (reference : Environment) (rename : Name → Name) (src dst 
           throw <| IO.userError "unexpected unsafeBaseIO implementation"
         OmegaChecks.InitPort.EffectRun.checkWorld strict.toKernelEnv
         return deps ++ x.value.getUsedConstants
-    if foundation.isSome && x.safety == .safe && y.name == `withPtrAddrUnsafe then
-      OmegaChecks.InitPort.Address.check reference y (liftTerm x.value)
+    if foundation.isSome && y.name == `withPtrAddrUnsafe then
+      unless OmegaChecks.InitPort.Address.isOriginal src true && OmegaChecks.InitPort.Address.isOriginal dst false do
+        throw <| IO.userError "unexpected pinned unsafe address callback"
+      OmegaChecks.InitPort.Address.check reference y (mkConst `withPtrAddr (y.levelParams.map Level.param))
       return deps ++ x.value.getUsedConstants
     if foundation.isSome && x.safety == .safe && y.name == `Array.modifyMUnsafe then
       OmegaChecks.InitPort.ArrayModify.check reference y (liftTerm x.value)

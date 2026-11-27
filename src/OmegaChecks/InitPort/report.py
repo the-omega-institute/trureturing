@@ -137,6 +137,10 @@ def check_coverage(official):
         if comparison is not expected_comparison or (comparison and
                 (row["kind"] != "definition" or not row.get("unsafe") or not runtime)):
             raise ValueError(f"inconsistent checked pointer comparison for {owner}/{name}")
+        callback = row.get("checkedAddressCallback", False)
+        if callback is not (port and site == ("Init.Util", "withPtrAddrUnsafe")) or (callback and
+                (row["kind"] != "definition" or not row.get("unsafe"))):
+            raise ValueError(f"inconsistent checked address callback for {owner}/{name}")
         pointer_hash = row.get("checkedPointerHash", False)
         if pointer_hash is not (port and site == ("Init.ShareCommon", "ShareCommon.Object.ptrHash")) or (pointer_hash and
                 (row["kind"] != "definition" or not row.get("unsafe") or not runtime)):
