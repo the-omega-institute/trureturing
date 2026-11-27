@@ -521,8 +521,26 @@ theorem result : ¬ claim := by
   have recurrence : ∀ k : Fin 8,
       horner k.castSucc * square + coefficients k • (1 : Matrix (Fin 32) (Fin 32) ℚ) =
         horner k.succ := by
+    -- Check the recurrence over ℤ and certify that its inputs cast back to ℚ.
+    let squareInt : Matrix (Fin 32) (Fin 32) ℤ := square.map Rat.num
+    let hornerInt (k : Fin 9) : Matrix (Fin 32) (Fin 32) ℤ := (horner k).map Rat.num
+    have squareInt_cast : squareInt.map (Int.castRingHom ℚ) = square := by
+      decide +kernel
+    have hornerInt_cast (k : Fin 9) : (hornerInt k).map (Int.castRingHom ℚ) = horner k := by
+      fin_cases k <;> decide +kernel
+    have coefficient_matrix_cast (k : Fin 8) :
+        ((coefficients k).num • (1 : Matrix (Fin 32) (Fin 32) ℤ)).map (Int.castRingHom ℚ) =
+          coefficients k • (1 : Matrix (Fin 32) (Fin 32) ℚ) := by
+      fin_cases k <;> decide +kernel
+    have checked (k : Fin 8) :
+        hornerInt k.castSucc * squareInt +
+          (coefficients k).num • (1 : Matrix (Fin 32) (Fin 32) ℤ) = hornerInt k.succ := by
+      fin_cases k <;> decide +kernel
     intro k
-    fin_cases k <;> decide +kernel
+    have cast := congrArg (fun M : Matrix (Fin 32) (Fin 32) ℤ => M.map (Int.castRingHom ℚ))
+      (checked k)
+    rw [Matrix.map_add (Int.castRingHom ℚ) (map_add (Int.castRingHom ℚ))] at cast
+    simpa only [Matrix.map_mul, squareInt_cast, hornerInt_cast, coefficient_matrix_cast] using cast
   classical
   let p : Polynomial ℝ :=
     (((((((Polynomial.X - Polynomial.C 32) * Polynomial.X + Polynomial.C 416) *

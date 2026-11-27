@@ -340,12 +340,16 @@ async function digestFile(path) {
   return hash.digest('hex');
 }
 
-function requirePublisher() {
+function requirePublisher(kind) {
   const env = process.env;
-  if (!['schedule', 'workflow_dispatch'].includes(env.GITHUB_EVENT_NAME)
+  const workflow = kind === 'report' ? 'report-release-publish.yml' : 'cache-release-publish.yml';
+  const events = ['schedule', 'workflow_dispatch'];
+  if (kind === 'compiler') events.push('push');
+  if (kind === 'report') events.push('workflow_run');
+  if (!events.includes(env.GITHUB_EVENT_NAME)
       || env.GITHUB_REF !== 'refs/heads/dev' || env.GITHUB_REF_PROTECTED !== 'true'
       || env.STRATALINT_CACHE_WRITES !== 'true'
-      || env.GITHUB_WORKFLOW_REF !== env.GITHUB_REPOSITORY + '/.github/workflows/cache-release-publish.yml@refs/heads/dev') {
+      || env.GITHUB_WORKFLOW_REF !== env.GITHUB_REPOSITORY + '/.github/workflows/' + workflow + '@refs/heads/dev') {
     throw new Error('shared cache writes require the protected dev Release publisher');
   }
 }
@@ -381,7 +385,7 @@ async function generationIndex(digest, file) {
 
 async function moduleCacheEntry(key, digest, file) {
   const put = operation === 'module-put';
-  if (put) requirePublisher();
+  if (put) requirePublisher(key?.endsWith('-report') ? 'report' : 'compiler');
   if (!key || key.length > 512 || /[,\r\n]/.test(key) || !/^[0-9a-f]{64}$/.test(digest) || !file) {
     throw new Error('invalid module cache address');
   }
@@ -415,28 +419,34 @@ async function runModuleCache() {
   const temp = process.env.RUNNER_TEMP;
   const plan = join(temp, 'module-plan.json');
   const tool = 'tools/scripts/worktree/lean_module_cache.py';
+  const kind = process.env.INPUT_KIND || '';
+  if (kind && !['compiler', 'report'].includes(kind)) throw new Error('invalid publication kind');
   let args;
   if (operation === 'restore-published') {
     if (targetsFile && !(await readFile(targetsFile, 'utf8')).trim()) return;
     args = ['restore'];
+    if (kind) args.push('--kind', kind);
+    if (process.env.INPUT_STAGED === 'true') args.push('--staged');
     if (process.env.INPUT_VERSION) args.push('--version', process.env.INPUT_VERSION);
     if (targetsFile) args.push('--targets-file', targetsFile);
     else if (targets.length) args.push('--targets', ...targets);
   } else if (operation === 'module-plan') {
-    requirePublisher();
+    requirePublisher(kind || 'compiler');
     const capacity = Number(process.env.SHARD_MIB || 256);
     if (!Number.isSafeInteger(capacity) || capacity < 1 || capacity >= 2048) {
       throw new Error('shard_mib must be between 1 and 2047');
     }
-    args = ['plan', '--capacity', String(capacity * 1024 ** 2), '--output', plan, '--legacy-checkpoints', '--prepare-release'];
+    args = ['plan', '--kind', kind || 'compiler', '--capacity', String(capacity * 1024 ** 2), '--output', plan, '--legacy-checkpoints', '--prepare-release'];
   } else {
-    requirePublisher();
+    requirePublisher(kind || 'compiler');
     if (operation === 'module-worker') {
       const lane = process.env.MODULE_LANE;
       if (!/^(0|[1-9][0-9]*)$/.test(lane)) throw new Error('invalid module lane');
       args = ['worker', '--plan', plan, '--lane', lane, '--output', join(temp, 'module-worker')];
+    } else if (operation === 'module-stage') {
+      args = ['finish', '--stage-only', '--plan', plan, '--output', join(temp, 'module-index.json')];
     } else {
-      args = ['finish', '--plan', plan, '--output', join(temp, 'module-index.json')];
+      args = ['promote', '--kind', kind, '--version', process.env.INPUT_VERSION];
     }
   }
   try {
@@ -444,7 +454,7 @@ async function runModuleCache() {
       stdio: 'inherit', env: { ...process.env, LEAN_MODULE_ACTIONS_CACHE: '1' },
     });
   } catch (error) {
-    if (operation !== 'restore-published' || error.status !== 3) throw error;
+    if (operation !== 'restore-published' || error.status !== 3 || process.env.INPUT_VERSION) throw error;
     console.log('No published module cache yet. Continuing with the local Lean build.');
   }
 }
@@ -644,7 +654,7 @@ async function saveContinuation() {
 }
 
 async function main() {
-  if (['module-plan', 'module-worker', 'module-finish', 'restore-published'].includes(operation)) return runModuleCache();
+  if (['module-plan', 'module-worker', 'module-stage', 'module-promote', 'restore-published'].includes(operation)) return runModuleCache();
   if (operation === 'module-get' || operation === 'module-put') return moduleCacheEntry(...process.argv.slice(3));
   if (operation === 'generation-get' || operation === 'generation-put') {
     return generationIndex(process.argv[3], process.argv[4]);

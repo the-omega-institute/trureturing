@@ -23,6 +23,13 @@ strata_touched:
   - D5/S3/Topology/BarycentricBaseRigidity
   - D5/S3/Topology/ConnectedCategoryGraft
   - D5/S3/Topology/PathContiguity
+  - D5/S3/Topology/FixedTargetGraphTermination
+  - D5/S3/Topology/GraphSubdivisionIntervals
+  - D5/S3/Topology/GraphSubdivisionHalves
+  - D5/S3/Topology/GraphSubdivisionNullhomotopy
+  - D5/S3/Topology/RankedCofaceContiguity
+  - D5/S3/Topology/CofaceComparisonObstruction
+  - D5/S3/Topology/CofaceTriangleCollapse
 license: citation-only
 triage: anchor
 ---
@@ -937,3 +944,74 @@ components of weak category at least two. Passing to cores and adding
 over connected components excludes any counterexample with fewer than
 fifteen points. The unrestricted inequality remains open.
 [Question 6.3](https://arxiv.org/html/2609.39615v1#S6)
+
+## Contiguity contractions of graph maps in a fixed target
+
+For a finite graph, choose paths from one ambient vertex to the images of the original graph
+vertices. On every oriented edge, assume that triangle moves replace the
+mapped edge by the concatenation through the chosen ambient vertex.
+The Lean theorem `GraphSubdivisionNullhomotopy.supported_graph_map_contracts`
+gives a common depth beyond which composing any selection from the original
+vertex supports with the graph map yields a contiguity contraction in the
+fixed target. Each old edge becomes an interval. First replace the edge maps
+relative to their endpoints. Then contract the two half paths sharing its
+midpoint simultaneously, including at vertices shared by several old edges.
+
+If each graph component induces the trivial map on fundamental groups and
+the vertex images lie in one ambient component, choose the vertex paths
+using a spanning tree in each graph component and a path from the common
+base to its root image. The classical edge-path description of the
+fundamental group gives finite move witnesses for this choice.
+The Lean theorem takes those witnesses as hypotheses. This is the
+fixed-target step for the three-dimensional approach to Question 6.3.
+
+## Coface comparisons in the four-dimensional approach
+
+The triangle-cone construction seeks a map from a region of the ordinary
+collar into one further subdivision of its triangle parameter. The
+ordinary retraction is an order map. If a chain-preserving comparison
+map lies pointwise above it, updating in descending face rank yields
+a contiguity chain fixed wherever the maps agree. The comparison
+allows the new map to reverse a comparable pair of source vertices.
+
+A failed coface extension in a complex with face sizes at most three
+has a witness of at most three prescribed comparisons when starting at
+a vertex. A prescribed coface incomparable with the partial choice
+forces every solution to contain their union. Each feasible such union
+adds a vertex.
+
+When the vertex labels have at most three vertices, contain their
+respective vertices, and form an inclusion chain on every source face,
+the source retracts by one contiguity step onto a full graph subcomplex.
+An inclusion-maximal label on each triangle equals the triangle. Its
+vertex has every incident face inside that triangle, so simultaneous
+replacement of one such vertex per triangle gives the retraction.
+Vertices whose labels have at most two elements stay fixed. The
+whole-cone partition needed for the four-dimensional bound remains
+open. [Question 6.3](https://arxiv.org/html/2609.39615v1#S6)
+
+## Ordinary face cuts and flag capacity
+
+A colour-preserving simplicial map preserves and detects membership
+in the ordinary two-cut collar. Taking image flags commutes with
+both cuts, even when the map identifies vertices. The union of the
+retracted nested flag is exactly the part of the original support
+of the selected colour. With the chamber table and its interval
+charts supplied, this transports the cut data through the four old
+rank colours in the three-dimensional construction. If suitable
+charts are given on all source faces, an interval contiguity chain
+can be interpreted in each chart. At vertices fixed during the
+chain the charts need only agree at the fixed value.
+
+The four-dimensional cone argument uses a separate chain argument
+to force an interface of nonzero degree to hit every target
+triangle. The ranked-fibre bound in Lean
+limits the distinct coface labels that any one chain can supply
+when they must come from the same fibre. A second bound applies
+to an isotone whole-flag assignment whose singleton values
+record the actual retracted face. A target triangle of flags
+starting with the singleton of a three-vertex face forces a
+source chain with sizes at least three, four, and five. The
+ordinary triangle cone allows only four vertices in a source
+face. The weaker comparison with only containment in the largest
+assigned face remains open.

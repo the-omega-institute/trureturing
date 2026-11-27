@@ -8,7 +8,19 @@ The inclusive cutoff counts each positive ordinate with analytic multiplicity. W
 
 Let c=1/(2 pi). The premise P asserts that a constant kappa in (0,2 c^2/3) satisfies G_Y(t)<=kappa Y log(Y)^2 uniformly on every fixed band log(Y)<=|t|<=A log(Y) for all sufficiently large Y, for each fixed A>1.
 
-**Theorem 1.1 (Critical Gaussian collision limit under the positive threshold).**
+**Theorem 1.1 (Transfer from the inclusive cutoff to harmonic weights).**
+
+Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/PrimePower/SublinearOrder/RHCriticalPairSumThreshold.harmonic_long_deficit_of_cutoff_deficit`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Weil/Mertens/IntegratedExplicit/PrimePower/SublinearOrder/RHCriticalPairSumThreshold.harmonic_long_deficit_of_cutoff_deficit` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Assume RH and a fixed positive fractional deficit of the multiplicity-weighted phase sum on every fixed logarithmic band. The normalized harmonic phase score has a deficit at least d/log(Y) with one d > 0 valid on every band for sufficiently large Y depending on the band. The harmonic coefficient per multiplicity is at least 1/(2Y), and the total harmonic mass is asymptotic to (c/2) log(Y)^2.
+
+**Theorem 1.2 (Critical Gaussian collision limit under the positive threshold).**
 
 $$\begin{aligned}RH \land P \land T_{n} \to \infty \land \frac{(\log(T_{n}))^{2}}{n} \to 0\\\land \frac{\varepsilon_{n}}{s_{n}} \to 0\\\land (\exists a>0, \exists n_{0}, \forall n\ge n_{0}, 0<\varepsilon_{n} \land a\le \varepsilon_{n} \cdot \log(T_{n}))\\\longrightarrow \lim_{n \to \infty} \frac{s_{n} \cdot E_{n}(\varepsilon_{n})}{\varepsilon_{n} \cdot \operatorname{W}\left(T_{n}\right)^{2 \cdot n}} = \frac{1}{\sqrt{\pi}}\end{aligned}$$
 
@@ -28,6 +40,7 @@ The Landau estimate supplies the short-band deficit. Annulus decay and the relat
 
 ## References
 
+- Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/PrimePower/SublinearOrder/RHCriticalPairSumThreshold.harmonic_long_deficit_of_cutoff_deficit`
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/PrimePower/SublinearOrder/RHCriticalPairSumThreshold.harmonic_zeta_critical_collision_limit_of_threshold`
 - Dependency: [D5/S3/Analytic/Oscillation/MontgomeryWindow](../../../../../Analytic/Oscillation/MontgomeryWindow.md)
 - Dependency: [D5/S3/Fourier/Concentration/ExponentialTentEnergy](../../../../../Fourier/Concentration/ExponentialTentEnergy.md)
