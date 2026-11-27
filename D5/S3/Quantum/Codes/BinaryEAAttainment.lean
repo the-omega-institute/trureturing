@@ -107,7 +107,8 @@ private theorem dim_ker_domRestrict (W : Submodule F (E n)) (I : Finset (Fin n))
   · rintro ⟨hv, hz⟩
     exact ⟨⟨v, hv⟩, hz, rfl⟩
 
-private theorem dim_kernel_add_rank (W : Submodule F (E n)) (I : Finset (Fin n)) :
+/-- The joint coordinate kernel and image dimensions sum to the code dimension. -/
+theorem dim_kernel_add_rank (W : Submodule F (E n)) (I : Finset (Fin n)) :
     dim (siteKernel W I) + dim (LinearMap.range ((restrictSites I).domRestrict W)) = dim W := by
   rw [← dim_ker_domRestrict, add_comm, LinearMap.finrank_range_add_finrank_ker]
 
@@ -354,12 +355,14 @@ noncomputable def support (W : Submodule F (E n)) : Finset (Fin n) := by
   classical
   exact Finset.univ.filter fun i => ∃ v ∈ W, site i v ≠ 0
 
-private theorem mem_support {W : Submodule F (E n)} {i : Fin n} :
+/-- Membership in the support is witnessed by a nonzero local coordinate pair. -/
+theorem mem_support {W : Submodule F (E n)} {i : Fin n} :
     i ∈ support W ↔ ∃ v ∈ W, site i v ≠ 0 := by
   classical
   simp [support]
 
-private theorem site_zero_outside_support {W : Submodule F (E n)} {i : Fin n}
+/-- Each codeword vanishes at every site outside the code's support. -/
+theorem site_zero_outside_support {W : Submodule F (E n)} {i : Fin n}
     (hi : i ∉ support W) {v : E n} (hv : v ∈ W) : site i v = 0 := by
   by_contra h
   exact hi (mem_support.mpr ⟨v, hv, h⟩)
@@ -482,7 +485,8 @@ private theorem kernel_le_radical (U : Submodule F (E n)) (hU : ZeroBound U)
   have := hU v hvU h
   omega
 
-private theorem core_injective (U : Submodule F (E n)) (hU : ZeroBound U)
+/-- Projection onto at least four radical support sites preserves the code dimension. -/
+theorem core_injective (U : Submodule F (E n)) (hU : ZeroBound U)
     (hS : 4 ≤ (support (radical U)).card) :
     Function.Injective ((mask (support (radical U))).domRestrict U) := by
   rw [← LinearMap.ker_eq_bot]
@@ -497,7 +501,8 @@ private theorem core_injective (U : Submodule F (E n)) (hU : ZeroBound U)
   have hs := mask_eq_self (le_supportedOn_support (radical U) hr)
   exact Subtype.ext (hs.symm.trans hu0)
 
-private theorem core_le_orthogonal (U : Submodule F (E n)) :
+/-- The projected code remains orthogonal to its original radical. -/
+theorem core_le_orthogonal (U : Submodule F (E n)) :
     U.map (mask (support (radical U))) ≤
       (spForm n).orthogonal (radical U) ⊓ supportedOn (support (radical U)) := by
   rintro v ⟨u, hu, rfl⟩

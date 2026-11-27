@@ -679,9 +679,12 @@ private theorem expand_tail {m : ℕ} (f : (Fin 4 → F) →ₗ[F] (Fin m → F)
     _ = tail (fun i => f (Pi.single i 1)) q j := by
       simp [tail, map_sum, map_smul, Finset.sum_apply, smul_eq_mul]
 
-/-- On eight through ten sites, the original rank-one hypotheses are inconsistent. -/
-theorem result : ¬ claim := by
-  rintro ⟨s, U, H, slo, shi, hHU, rankU, rankH, orthogonal, rankSite, distance⟩
+/-- The rank-one hypotheses are inconsistent on any support of at most ten sites. -/
+theorem no_rank_one_of_card_le_ten {s : ℕ} (U H : Submodule F (Ambient s))
+    (shi : s ≤ 10) (hHU : H ≤ U) (rankU : Module.finrank F U = 8)
+    (rankH : Module.finrank F H = 4) (orthogonal : U ≤ (spForm s).orthogonal H)
+    (rankSite : ∀ i, Module.finrank F (H.map (site i)) = 1)
+    (distance : ∀ u ∈ U, u ∉ H → (zeros u.1 u.2).card ≤ 3) : False := by
   classical
   obtain ⟨X, Z, siteZero, axesPair, radicalZ, radicalSite⟩ := exists_axes H rankSite
   let XH := X.comp H.subtype
@@ -764,6 +767,25 @@ theorem result : ¬ claim := by
     exact LinearMap.congr_fun hlift q
   let radicalTail := (rest.comp XH).comp Hgen
   let logicalTail := (rest.comp Z).comp (U.subtype.comp L)
+  have injectiveTail : Function.Injective logicalTail := by
+    apply LinearMap.ker_eq_bot.mp
+    apply LinearMap.ker_eq_bot'.mpr
+    intro q hq
+    funext i
+    let h := Hgen (Pi.single i 1)
+    let u := L q
+    have hp := (LinearMap.BilinForm.mem_orthogonal_iff.mp (orthogonal u.property)) h h.property
+    have hp' := (axesPair h u).trans hp
+    rw [radicalZ h] at hp'
+    simp only [Pi.zero_apply, zero_mul, add_zero] at hp'
+    have hs := (Equiv.sum_comp e (fun j => X h j * Z u j)).trans hp'
+    rw [Fintype.sum_sum_type] at hs
+    change (∑ j : Fin 4, head (X h) j * head (Z u) j) +
+      (∑ j : Fin (s - 4), radicalTail (Pi.single i 1) j * logicalTail q j) = 0 at hs
+    rw [headH, headLZ, hq] at hs
+    simpa [Pi.single_apply] using hs
+  have width := LinearMap.finrank_le_finrank_of_injective injectiveTail
+  have tailWidth : 4 ≤ s - 4 := by simpa using width
   let Xtail := (rest.comp X).comp (U.subtype.comp L)
   let A := fun i => radicalTail (Pi.single i 1)
   let R := fun i => logicalTail (Pi.single i 1)
@@ -835,6 +857,11 @@ theorem result : ¬ claim := by
     rw [← hx', ← hz', zero_card_equiv]
     exact normalizedDistance u hu
   exact BinaryEARankOneCore.result
-    ⟨s - 4, by omega, by omega, systematic_core A R Xtail nonzero pairing systematicDistance⟩
+    ⟨s - 4, tailWidth, by omega, systematic_core A R Xtail nonzero pairing systematicDistance⟩
+
+/-- On eight through ten sites, the original rank-one hypotheses are inconsistent. -/
+theorem result : ¬ claim := by
+  rintro ⟨s, U, H, _, shi, hHU, rankU, rankH, orthogonal, rankSite, distance⟩
+  exact no_rank_one_of_card_le_ten U H shi hHU rankU rankH orthogonal rankSite distance
 
 end D5.S3.Quantum.Codes.BinaryEARankOneBridge
