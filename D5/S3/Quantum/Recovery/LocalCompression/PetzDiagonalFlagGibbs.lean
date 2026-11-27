@@ -54,6 +54,7 @@ abbrev realDiagonal (s : n → ℝ) : Matrix n n ℂ :=
 def effectWeight (s : ι → n → ℝ) (i : ι) (j : n) : ℝ :=
   s i j / ∑ k, s k j
 
+omit [Fintype n] in
 private theorem marginal_diagonal (s : ι → n → ℝ) :
     marginal (fun i => realDiagonal (s i)) = realDiagonal (fun j => ∑ i, s i j) := by
   rw [marginal_eq_sum]
@@ -61,13 +62,15 @@ private theorem marginal_diagonal (s : ι → n → ℝ) :
   by_cases hjk : j = k
   · subst k
     simp [realDiagonal, Matrix.sum_apply, Complex.ofReal_sum]
-  · simp [realDiagonal, Matrix.sum_apply, Matrix.diagonal_apply, hjk]
+  · simp [realDiagonal, Matrix.sum_apply, hjk]
 
+omit [Fintype n] [DecidableEq n] [DecidableEq ι] in
 private theorem effectWeight_sum (s : ι → n → ℝ)
     (hp : ∀ j, 0 < ∑ i, s i j) (j : n) :
     ∑ i, effectWeight s i j = 1 := by
   simp only [effectWeight, ← Finset.sum_div, div_self (hp j).ne']
 
+omit [Fintype n] in
 private theorem diagonal_hermitian (s : n → ℝ) : (realDiagonal s).IsHermitian := by
   change (realDiagonal s)ᴴ = realDiagonal s
   rw [Matrix.diagonal_conjTranspose]
@@ -105,16 +108,18 @@ theorem partialTracePetz_diagonal (s : ι → n → ℝ) (hs : ∀ i j, 0 ≤ s 
       realDiagonal (fun j => Real.sqrt (s i j)) *
           realDiagonal (fun j => (Real.sqrt (p j))⁻¹) =
         CFC.sqrt (realDiagonal (effectWeight s i)) := by
-    rw [Matrix.diagonal_mul_diagonal, sqrt_diagonal _
-      (fun j => div_nonneg (hs i j) (hp j).le)]
+    have hd (j : n) : 0 ≤ effectWeight s i j := div_nonneg (hs i j) (hp j).le
+    rw [Matrix.diagonal_mul_diagonal, sqrt_diagonal (effectWeight s i) hd]
     congr 1
     funext j
-    rw [effectWeight, Real.sqrt_div (hs i j), div_eq_mul_inv, Complex.ofReal_mul,
+    change (Real.sqrt (s i j) : ℂ) * (((Real.sqrt (p j))⁻¹ : ℝ) : ℂ) =
+      (Real.sqrt (s i j / p j) : ℂ)
+    rw [Real.sqrt_div (hs i j), div_eq_mul_inv, Complex.ofReal_mul,
       Complex.ofReal_inv]
   have hcomm (i : ι) :
       Commute (realDiagonal (fun j => (Real.sqrt (p j))⁻¹))
         (realDiagonal (fun j => Real.sqrt (s i j))) := by
-    show _ * _ = _ * _
+    change _ * _ = _ * _
     simp only [Matrix.diagonal_mul_diagonal, mul_comm]
   unfold partialTracePetz
   change mpow (joint (fun i => realDiagonal (s i))) (1 / 2) *
@@ -214,7 +219,10 @@ private theorem supported_flag_diagonal_entry
     rw [hτ]
     by_cases hli : l = i
     · subst l
-      simp [Matrix.blockDiagonal_apply_eq, Matrix.diagonal_apply, hz]
+      by_cases hkj : k = j
+      · subst k
+        simp [Matrix.blockDiagonal_apply_eq, hz]
+      · simp [Matrix.blockDiagonal_apply_eq, hkj]
     · simp [Matrix.blockDiagonal_apply, hli]
   simpa only [hρ, Matrix.blockDiagonal_apply_eq] using
     supported_diagonal_entry hSupport (j, i) hzCol
@@ -273,17 +281,18 @@ theorem physical_gibbs_entropy_split [Nonempty ι]
     Matrix.trace_smul, htrace]
   simp only [← Matrix.blockDiagonal_sub, ← Matrix.blockDiagonal_mul, joint,
     Matrix.trace_blockDiagonal, Complex.re_sum, Complex.smul_re, Complex.one_re,
-    smul_eq_mul, mul_one]
+    smul_eq_mul, mul_one, Pi.sub_apply]
 
 private def outer {m : Type*} (v : m → ℂ) : Matrix m m ℂ :=
   vecMulVec v (star v)
 
 private theorem conj_mul_self (z : ℂ) : star z * z = (Complex.normSq z : ℂ) := by
-  simpa only [Complex.normSq_eq_norm_sq, Complex.ofReal_pow] using Complex.conj_mul' z
+  rw [Complex.star_def, mul_comm, Complex.mul_conj]
 
 private theorem mul_conj_self (z : ℂ) : z * star z = (Complex.normSq z : ℂ) := by
   rw [mul_comm, conj_mul_self]
 
+omit [DecidableEq n] in
 private theorem outer_idempotent (v : n → ℂ) (hv : star v ⬝ᵥ v = 1) :
     outer v * outer v = outer v := by
   simp only [outer, Matrix.vecMulVec_mul_vecMulVec, hv, one_smul]
@@ -292,10 +301,12 @@ private theorem log_smul_outer (v : n → ℂ) (hv : star v ⬝ᵥ v = 1) (t : �
     CFC.log (t • outer v) = Real.log t • outer v := by
   let P := outer v
   have hP : P.IsHermitian := (Matrix.posSemidef_vecMulVec_self_star v).isHermitian
-  change cfc Real.log (t • P) = _
-  rw [← cfc_comp_const_mul t Real.log P
-    (hf := ((P.finite_real_spectrum).image _).continuousOn _) (ha := hP)]
+  change cfc Real.log (t • P) = Real.log t • P
   calc
+    _ = cfc (fun r : ℝ => Real.log (t * r)) P :=
+      (cfc_comp_const_mul t Real.log P
+        (hf := (P.finite_real_spectrum.image (t * ·)).continuousOn Real.log)
+        (ha := hP.isSelfAdjoint)).symm
     _ = cfc (fun r : ℝ => Real.log t * r) P := by
       apply cfc_congr
       intro r hr
@@ -304,13 +315,15 @@ private theorem log_smul_outer (v : n → ℂ) (hv : star v ⬝ᵥ v = 1) (t : �
       simp only [Set.mem_insert_iff, Set.mem_singleton_iff] at hr'
       rcases hr' with rfl | rfl <;> simp
     _ = _ := by
-      rw [cfc_const_mul (Real.log t) (fun r : ℝ => r) P, cfc_id' ℝ P]
+      rw [cfc_const_mul (Real.log t) (fun r : ℝ => r) P,
+        cfc_id' ℝ P (ha := hP.isSelfAdjoint)]
 
 /-- Keeping a copy of the flag labels in an auxiliary register purifies the
 direct sum of the outer products. -/
 private def flagVector (a : ι → n → ℝ) (ψ : n → ℂ) (z : (n × ι) × ι) : ℂ :=
   if z.1.2 = z.2 then (a z.1.2 z.1.1 : ℂ) * ψ z.1.1 else 0
 
+omit [Fintype n] [DecidableEq n] in
 private theorem partialTrace_flagVector (a : ι → n → ℝ) (ψ : n → ℂ) :
     partialTraceRight (outer (flagVector a ψ)) =
       joint (fun i => outer (fun j => (a i j : ℂ) * ψ j)) := by
@@ -326,6 +339,7 @@ private theorem partialTrace_flagVector (a : ι → n → ℝ) (ψ : n → ℂ) 
     simp [flagVector, Ne.symm he]
   · simp
 
+omit [DecidableEq n] in
 private theorem flagVector_pairing (a b : ι → n → ℝ) (ψ : n → ℂ) :
     star (flagVector a ψ) ⬝ᵥ flagVector b ψ =
       ((∑ j, ∑ i, a i j * b i j * Complex.normSq (ψ j) : ℝ) : ℂ) := by
@@ -333,9 +347,11 @@ private theorem flagVector_pairing (a b : ι → n → ℝ) (ψ : n → ℂ) :
   push_cast
   refine Finset.sum_congr rfl fun j _ => Finset.sum_congr rfl fun i _ => ?_
   rw [Finset.sum_eq_single i]
-  · simp only [flagVector, if_pos rfl, Pi.star_apply, star_mul,
-      Complex.star_def, Complex.conj_ofReal]
-    change (star (ψ j) * (a i j : ℂ)) * ((b i j : ℂ) * ψ j) = _
+  · have hflag (c : ι → n → ℝ) : flagVector c ψ ((j, i), i) = (c i j : ℂ) * ψ j := by
+      simp [flagVector]
+    rw [Pi.star_apply, hflag a, hflag b, star_mul]
+    have hreal : star (a i j : ℂ) = (a i j : ℂ) := Complex.conj_ofReal _
+    rw [hreal]
     calc
       _ = (a i j : ℂ) * (b i j : ℂ) * (star (ψ j) * ψ j) := by ring
       _ = _ := by rw [conj_mul_self]
@@ -343,6 +359,7 @@ private theorem flagVector_pairing (a b : ι → n → ℝ) (ψ : n → ℂ) :
     simp [flagVector, Ne.symm he]
   · simp
 
+omit [Fintype n] [DecidableEq n] in
 private theorem outer_flag_scale (a : ℝ) (ψ : n → ℂ) :
     outer (fun j => (a : ℂ) * ψ j) = a ^ 2 • outer ψ := by
   ext j k
@@ -407,7 +424,8 @@ theorem pure_retained_petz_traceNorm_sq_le
   have hQ : Q.PosSemidef := Matrix.posSemidef_vecMulVec_self_star ψ
   have hQdiag (j : Fin 2) : Q j j = (u j : ℂ) := mul_conj_self (ψ j)
   have hQtrace : Q.trace = 1 := by
-    rw [outer, Matrix.trace_vecMulVec, dotProduct_comm, hψ]
+    change (vecMulVec ψ (star ψ)).trace = 1
+    rw [Matrix.trace_vecMulVec, dotProduct_comm, hψ]
   have hu (j : Fin 2) : 0 ≤ u j := Complex.normSq_nonneg _
   have husum : ∑ j, u j = 1 := by
     simp only [Matrix.trace, Matrix.diag_apply, hQdiag, ← Complex.ofReal_sum] at hQtrace
@@ -427,14 +445,14 @@ theorem pure_retained_petz_traceNorm_sq_le
     change ((x i • Q) * CFC.log (x i • Q)).trace.re = _
     rw [log_smul_outer ψ hψ, Matrix.smul_mul, Matrix.mul_smul, outer_idempotent ψ hψ,
       Matrix.trace_smul, Matrix.trace_smul, hQtrace]
-    simp [Complex.smul_re]
+    simp
   have hloss : conditionalLoss ρ τ =
       (∑ i, x i * Real.log (x i)) - ∑ i, ∑ j, x i * u j * Real.log (d i j) := by
     rw [physicalLoss_eq_blockLoss ρ τ X _ hρX hτ,
       partialTraceEntropyLoss_diagonal X s (fun i => (hQ.smul (hx i)).isHermitian) hs hp hzero,
       hXm, hlogQ]
     simp only [zero_add, Matrix.mul_sub, Matrix.trace_sub, Complex.sub_re, hfirst,
-      trace_mul_log_diagonal, hxdiag, Complex.ofReal_re, Finset.sum_sub_distrib]
+      trace_mul_log_diagonal, hxdiag, Complex.ofReal_re, Finset.sum_sub_distrib, d]
   refine ⟨hloss, ?_⟩
   let p : Fin 2 × ι → ℝ := fun ji => x ji.2 * u ji.1
   let q : Fin 2 × ι → ℝ := fun ji => d ji.2 ji.1 * u ji.1
@@ -493,7 +511,7 @@ theorem pure_retained_petz_traceNorm_sq_le
     refine Finset.sum_congr rfl fun j _ => Finset.sum_congr rfl fun i _ => ?_
     change Real.sqrt (x i) * Real.sqrt (d i j) * u j =
       Real.sqrt ((x i * u j) * (d i j * u j))
-    rw [Real.sqrt_mul (mul_nonneg (hx i) (hu j)), Real.sqrt_mul (hx i).le,
+    rw [Real.sqrt_mul (mul_nonneg (hx i) (hu j)), Real.sqrt_mul (hx i),
       Real.sqrt_mul (hd i j)]
     rw [show Real.sqrt (x i) * Real.sqrt (u j) * (Real.sqrt (d i j) * Real.sqrt (u j)) =
       Real.sqrt (x i) * Real.sqrt (d i j) * (Real.sqrt (u j) * Real.sqrt (u j)) by ring,
@@ -545,9 +563,11 @@ theorem pure_retained_petz_traceNorm_sq_le
   have hExp := exp_neg_kl_divergence_le_bhattacharyya_sq p q hpLaw hqLaw.1 hac
   rw [hKL] at hExp
   have harg : 0 ≤ 1 - bhattacharyya p q ^ 2 := by
-    have hB := pow_le_pow_left₀ hB0 (bhattacharyya_le_one p q hpLaw hqLaw) 2
-    norm_num at hB
-    linarith
+    apply sub_nonneg.mpr
+    calc
+      bhattacharyya p q ^ 2 ≤ (1 : ℝ) ^ 2 :=
+        pow_le_pow_left₀ hB0 (bhattacharyya_le_one p q hpLaw hqLaw) 2
+      _ = 1 := one_pow 2
   calc
     _ ≤ (2 * Real.sqrt (1 - bhattacharyya p q ^ 2)) ^ 2 :=
       pow_le_pow_left₀ (traceNorm_nonneg _) (hcontract.trans hbound) 2

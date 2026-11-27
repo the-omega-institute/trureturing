@@ -70,7 +70,7 @@ theorem traceNorm_petzPosteriorPhysicalBlock_square_bin_le
     ext j l
     simp only [C, D, d, Matrix.mul_diagonal, Matrix.diagonal_mul,
       Real.sqrt_mul (show 0 ≤ k j from (hk j).le), Complex.ofReal_mul,
-      Complex.ofReal_inv, div_eq_mul_inv, mul_inv_rev]
+      Complex.ofReal_inv, div_eq_mul_inv, _root_.mul_inv_rev]
     ring
   have hDadj : (D d)ᴴ = D d := by
     change (diagonal (fun j => (d j : ℂ)))ᴴ = _
@@ -90,7 +90,8 @@ theorem traceNorm_petzPosteriorPhysicalBlock_square_bin_le
     have hpositive : (D v).PosSemidef :=
       Matrix.PosSemidef.diagonal (fun j => Complex.zero_le_real.mpr (hv j))
     have hsqrt : CFC.sqrt (D v) = D (fun j => Real.sqrt (v j)) := by
-      rw [CFC.sqrt_eq_real_sqrt _ hpositive.nonneg, cfcₙ_eq_cfc]
+      rw [CFC.sqrt_eq_real_sqrt _ hpositive.nonneg,
+        cfcₙ_eq_cfc (hf := Real.continuous_sqrt.continuousOn) (hf0 := Real.sqrt_zero)]
       exact cfc_diagonal Real.sqrt v
     have hcoord (j : κ) :
         (x j : ℂ) * (d j : ℂ) * (Real.sqrt p : ℂ) = (Real.sqrt (v j) : ℂ) := by
@@ -139,7 +140,7 @@ theorem traceNorm_petzPosteriorPhysicalBlock_square_bin_le
     by_cases hjl : j = l
     · subst l
       simp only [D, t, Matrix.sum_apply, Matrix.diagonal_apply_eq, Complex.ofReal_sum]
-    · simp [D, Matrix.sum_apply, Matrix.diagonal_apply, hjl]
+    · simp [D, Matrix.sum_apply, hjl]
   have hmerged : CFC.sqrt T * K * CFC.sqrt T = R • (D u * C * D u) := by
     rw [hT, show u = (fun j => Real.sqrt (k j * t j / R)) from funext hu]
     exact recovery t (fun j => Finset.sum_nonneg fun i _ => hs i j) R hR

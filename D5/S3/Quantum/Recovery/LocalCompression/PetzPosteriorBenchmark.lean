@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Bound the trace-norm drift of a commuting-reference Petz benchmark under a flag merger. -/
+   digest: Trace-norm drift bound for a commuting-reference Petz benchmark under a flag merger. -/
 
 import D5.S3.Quantum.Foundation.HilbertSchmidtTraceStability
 import D5.S3.Quantum.Recovery.LocalCompression.PetzPosteriorBin
@@ -105,8 +105,9 @@ theorem traceNorm_posteriorBenchmark_sub_le (C : Matrix κ κ ℂ)
     exact Matrix.posSemidef_sum _ fun i _ =>
       (Matrix.posSemidef_self_mul_conjTranspose (F (y i) - B)).smul (hw i)
   have hdeficit : traceNorm (M - B * Bᴴ) = 1 - ‖B‖ ^ 2 := by
-    simpa only [Complex.ofReal_re, Matrix.trace_sub, Complex.sub_re, hM, htraceGram] using
+    have hre : (Complex.ofReal (traceNorm (M - B * Bᴴ))).re = (M - B * Bᴴ).trace.re :=
       congrArg Complex.re (traceNorm_of_posSemidef hpsd)
+    simpa only [Complex.ofReal_re, Matrix.trace_sub, Complex.sub_re, hM, htraceGram] using hre
   have hB : ‖B‖ ≤ 1 := by
     have h := traceNorm_nonneg (M - B * Bᴴ)
     rw [hdeficit] at h
@@ -177,6 +178,6 @@ theorem traceNorm_posteriorBenchmark_square_bin_le (C : Matrix κ κ ℂ)
     _ = _ := by
       have hLr : (L : ℝ) ≠ 0 := Nat.cast_ne_zero.mpr hL.ne'
       rw [Real.sqrt_mul (Nat.cast_nonneg _), Real.sqrt_sq (by positivity)]
-      field_simp [hLr] <;> ring
+      field_simp [hLr]; ring
 
 end D5.S3.Quantum.Recovery.LocalCompression.PetzPosteriorBenchmark
