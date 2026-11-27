@@ -159,6 +159,18 @@ private theorem packed_lt {x y high low : Nat} (hx : x < 2 ^ high) (hy : y < 2 ^
   _ ≤ 2 ^ low * 2 ^ high := Nat.mul_le_mul_left _ hx
   _ = _ := (Nat.pow_add ..).symm
 
+/-- Keep the 32-bit modulus symbolic when a host replays the UTF-8 bounds. -/
+public theorem ByteArray.utf8DecodeChar?.assemble₂._proof_1 :
+    type_of% (private_decl% @ByteArray.utf8DecodeChar?.assemble₂._proof_1) := by
+  intro _ _ h denied
+  exact denied (Nat.lt_of_lt_of_le (shifted_lt (width := 5) 6 h) (by decide : 2 ^ 11 ≤ 2 ^ 32))
+
+public theorem ByteArray.utf8DecodeChar?.assemble₂._proof_2 :
+    type_of% (private_decl% @ByteArray.utf8DecodeChar?.assemble₂._proof_2) := by
+  intro _ _ hx hy denied
+  exact denied (Nat.lt_trans (packed_lt (high := 5) (low := 6) hx hy)
+    (by decide : 2 ^ 11 < 55296))
+
 public theorem ByteArray.utf8DecodeChar?.assemble₃._proof_3 :
     type_of% (private_decl% @ByteArray.utf8DecodeChar?.assemble₃._proof_3) := by
   intro _ _ _ h denied
