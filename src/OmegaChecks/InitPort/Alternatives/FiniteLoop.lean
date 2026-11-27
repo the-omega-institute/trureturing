@@ -18,6 +18,13 @@ public theorem Std.instLawfulIteratorLoopDefaultImplementation :
     @_root_.Std.LawfulIteratorLoop.mk β α m n mm mn iter
       (@_root_.Std.IteratorLoop.defaultImplementation β α m n mn iter) (fun _ _ _ _ _ _ _ _ => rfl)
 
+public theorem Std.IterM.DefaultConsumers.forIn'_eq_match_step {α β : Type w} {m : Type w → Type w'} [Iterator α m β] {n : Type x → Type x'}
+    [Monad n] [LawfulMonad n] {lift : ∀ γ δ, (γ → n δ) → m γ → n δ} {γ : Type x}
+    {it : IterM (α := α) m β} {init : γ} {P : β → Prop} {hP : ∀ b, it.IsPlausibleIndirectOutput b → P b}
+    (pl : β → γ → ForInStep γ → Prop) {f : (b : β) → P b → (c : γ) → n (Subtype (pl b c))}
+    (wf : IteratorLoop.WellFounded α m pl) : type_of% (@IterM.DefaultConsumers.forIn'.wf.eq_def m α β _ n _ lift γ pl wf it init P hP f) :=
+  @IterM.DefaultConsumers.forIn'.wf.eq_def m α β _ n _ lift γ pl wf it init P hP f
+
 private noncomputable def finiteForIn {α β : Type w} {m : Type w → Type w'} [Iterator α m β] [Finite α m]
     {n : Type x → Type x'} [Monad n] (lift : ∀ γ δ, (γ → n δ) → m γ → n δ)
     (γ : Type x) (Pl : β → γ → ForInStep γ → Prop) (it : IterM (α := α) m β) (init : γ)

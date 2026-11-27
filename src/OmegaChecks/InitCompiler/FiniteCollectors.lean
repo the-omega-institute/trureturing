@@ -48,8 +48,11 @@ private def specializeCollector (e : Expr) : MetaM (Option Expr) := do
 
 public def finiteCollectors (env : Environment) (input : Expr) (withinImplementation := false) : IO Expr := do
   let used := input.getUsedConstants
-  let aliases := used.foldl (init := ({} : NameSet)) fun ns n => if isDefaultLoopAlias env n then ns.insert n else ns
-  let hasLoop := env.contains InitPort.LawfulLoop.helper && (!aliases.isEmpty || used.contains ``Std.IteratorLoop.defaultImplementation)
+  let aliases := used.foldl (init := ({} : NameSet)) fun ns n =>
+    if isDefaultLoopAlias env n then ns.insert n else ns
+  let hasLoop := env.contains InitPort.LawfulLoop.helper &&
+    (!aliases.isEmpty || used.contains ``Std.IteratorLoop.defaultImplementation ||
+      used.contains ``Std.IterM.DefaultConsumers.forIn')
   unless hasLoop || used.any (fun n => (consumerArity? n).isSome) do return input
   let rewrite : MetaM Expr := Meta.transform input (pre := fun sub => do
     if hasLoop then
