@@ -44,7 +44,7 @@ internal sealed class WindmillClassificationDocument : IScribeDocumentDefinition
         Formula factors = Seq(Exists, Sp, b, Comma, c, Sp, Colon, Sp,
             Call("SimpleGraph", vertices), Comma, Sp,
             Call("A", b), Sp, Call("A", c), Sp, Eq, Sp, Call("A", Call("windmill", d, t)));
-        return Disp(Seq(Forall, Sp, d, Comma, t, Sp, In, Sp, Mathbb, Grp(F.Id("N")),
+        return Disp(Seq(Forall, Sp, d, Comma, t, Sp, InMacro, Sp, Mathbb, Grp(F.Id("N")),
             Comma, Sp, D(1), Sp, Leq, Sp, d, Sp, Land, Sp, D(3), Sp, Leq, Sp, t,
             Sp, Implies, Sp, Open, Open, factors, Close, Sp, Iff, Sp,
             Open, d, Sp, Eq, Sp, D(1), Sp, Land, Sp,
