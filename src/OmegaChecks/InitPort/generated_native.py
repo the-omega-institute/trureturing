@@ -141,6 +141,23 @@ def compile_generated(stage, product, graph, seed_ir, owners=None, *, original_s
             if owner not in seed_owners:
                 modes[owner] = "mixed="
     literals = stage / "literal.c"
+    macro_source = stage / "macro-methods.c"
+    if "OmegaInit.Prelude" in selected:
+        run("lake", "env", "lean", "--run", HERE / "GeneratedNative.lean", library, sources,
+            "layouts=OmegaInit.Prelude", env=env)
+        run("lake", "env", "lean", "--run", HERE / "MacroMethodsNative.lean", library, macro_source, env=env)
+        if macro_source.is_file():
+            macro_client = stage / "macro-methods-consumer.c"
+            run("lean", "-R", HERE, "-c", macro_client, HERE / "MacroMethodsConsumer.lean",
+                env={**os.environ, "LEAN_PATH": str(library)})
+            app = stage / "check-macro-methods"
+            run("leanc", macro_source, macro_client, HERE / "macro_methods_consumer.c", "-o", app)
+            run(app)
+            if literals.is_file():
+                combined = product / "native/literal.o"
+                link_owner(combined, stage / "prelude-bridges", [literals, macro_source])
+            else:
+                compile_object((macro_source, product / "native/macro-methods.o"))
     requests = [modes.get(owner, "") + owner for owner in selected]
     if owners is not None and "OmegaInit.Control.State" in requested and "OmegaInit.Control.Basic" not in requested:
         requests.insert(0, "layouts=OmegaInit.Control.Basic")
@@ -178,6 +195,8 @@ def compile_generated(stage, product, graph, seed_ir, owners=None, *, original_s
             if adapter := adapters.get(init_suffix(source)):
                 adapter_source, obj = adapter
                 parts.append(adapter_source)
+                if owner == "OmegaInit.Prelude" and adapter_source == literals and macro_source.is_file():
+                    parts.append(macro_source)
             parts.append(source)
             obj = link_owner(obj, stage / "mixed-native" / owner, parts)
         else:

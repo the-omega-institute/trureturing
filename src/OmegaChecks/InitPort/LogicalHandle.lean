@@ -26,6 +26,14 @@ private def factoryRepresentative.{u} : NonemptyType.{u} := ⟨PUnit, ⟨PUnit.u
 private noncomputable def makeFactory (_ : ShareCommon.StateFactoryBuilder) : factoryCarrier.{0}.type :=
   factoryToken.2
 
+-- Prelude precedes dependent pairs. A sealed branch selects a pointed carrier using Bool.rec.
+private noncomputable opaque methodsTag : Bool := false
+private def methodsCarrier : NonemptyType :=
+  ⟨Bool.rec PUnit (Nat → Bool) methodsTag,
+    ⟨Bool.rec (motive := fun tag => Bool.rec PUnit (Nat → Bool) tag) PUnit.unit (fun _ => false) methodsTag⟩⟩
+private noncomputable def makeMethods (_ : Lean.Macro.Methods) : methodsCarrier.type :=
+  Bool.rec (motive := fun tag => Bool.rec PUnit (Nat → Bool) tag) PUnit.unit (fun _ => false) methodsTag
+
 private structure Model (α : Type) where
   handle : carrier.type
   support : Nonempty α
@@ -46,17 +54,20 @@ public structure API where
   allocator : Name
   logicalToken : Name
   nativeAllocator : String
+  implementedBy : Option Name := none
 
 public def promise : API := ⟨`Init.System.Promise, mkPrivateNameCore `Init.System.Promise `IO.PromisePointed,
-  `IO.Promise.new, `IO.Promise.logicalToken, "lean_io_promise_new"⟩
+  `IO.Promise.new, `IO.Promise.logicalToken, "lean_io_promise_new", none⟩
 public def referenceCell : API := ⟨`Init.System.ST, `ST.RefPointed, `ST.Prim.mkRef, `ST.Ref.logicalToken,
-  "lean_st_mk_ref"⟩
+  "lean_st_mk_ref", none⟩
 
 public def shareState : API := ⟨`Init.ShareCommon, `ShareCommon.StatePointed, `ShareCommon.State.mk,
-  `ShareCommon.State.logicalToken, "l_ShareCommon_mkStateImpl"⟩
+  `ShareCommon.State.logicalToken, "l_ShareCommon_mkStateImpl", some `ShareCommon.mkStateImpl⟩
 public def shareFactory : API := ⟨`Init.ShareCommon, `ShareCommon.StateFactoryPointed, `ShareCommon.StateFactory.mk,
-  `ShareCommon.StateFactory.logicalToken, "l_ShareCommon_StateFactory_mkImpl"⟩
-public def apis := [promise, referenceCell, shareState, shareFactory]
+  `ShareCommon.StateFactory.logicalToken, "l_ShareCommon_StateFactory_mkImpl", some `ShareCommon.StateFactory.mkImpl⟩
+public def macroMethods : API := ⟨`Init.Prelude, `Lean.Macro.MethodsRefPointed, `Lean.Macro.mkMethods,
+  `Lean.Macro.MethodsRef.logicalToken, "l_Lean_Macro_mkMethodsImp", some `Lean.Macro.mkMethodsImp⟩
+public def apis := [promise, referenceCell, shareState, shareFactory, macroMethods]
 
 public def API.privateOwner (api : API) := api.owner.replacePrefix `Init `OmegaInit
 public def API.tokenName (api : API) := mkPrivateNameCore api.owner api.logicalToken
@@ -68,8 +79,8 @@ public def forToken? (n : Name) := apis.find? (fun api => n == api.strictToken)
 private def renameTemplate (api : API) (body : Expr) : Expr :=
   body.replace fun
     | .const n us =>
-      let name := if n == ``token || n == ``shareToken || n == ``factoryToken then api.tokenName
-        else if n == ``carrier || n == ``shareCarrier || n == ``factoryCarrier then api.pointed
+      let name := if n == ``token || n == ``shareToken || n == ``factoryToken || n == ``methodsTag then api.tokenName
+        else if n == ``carrier || n == ``shareCarrier || n == ``factoryCarrier || n == ``methodsCarrier then api.pointed
         else if n == ``Model then `IO.Promise
         else if n == ``Model.mk then mkPrivateNameCore api.owner `IO.Promise.mk
         else if n == ``Reference then `ST.Ref
@@ -87,6 +98,7 @@ public def templates (api : API) (env : Environment) : IO Templates := do
   let (pkgName, familyName, allocName) :=
     if api.pointed == shareState.pointed then (``shareToken, ``shareCarrier, ``shareAllocate)
     else if api.pointed == shareFactory.pointed then (``factoryToken, ``factoryCarrier, ``makeFactory)
+    else if api.pointed == macroMethods.pointed then (``methodsTag, ``methodsCarrier, ``makeMethods)
     else (``token, ``carrier, if api.owner == promise.owner then ``allocate else ``allocateRef)
   let some (.opaqueInfo pkg) := env.find? pkgName | throw <| IO.userError "missing logical handle token"
   let some (.defnInfo family) := env.find? familyName | throw <| IO.userError "missing handle carrier"
@@ -126,9 +138,9 @@ public def checkBody (api : API) (strict publicStrict reference : Environment) (
   let modelName := if indexed then ``shareRepresentative
     else if api.pointed == shareFactory.pointed then ``factoryRepresentative else ``standardCarrier
   let model := mkConst modelName (original.levelParams.map Level.param)
-  let nativeMatches := if indexed then Compiler.getImplementedBy? reference api.allocator == some `ShareCommon.mkStateImpl
-    else if api.pointed == shareFactory.pointed then Compiler.getImplementedBy? reference api.allocator == some `ShareCommon.StateFactory.mkImpl
-    else getExternNameFor reference `c api.allocator == some api.nativeAllocator
+  let nativeMatches := match api.implementedBy with
+    | some impl => Compiler.getImplementedBy? reference api.allocator == some impl && impl.mangle (pre := "l_") == api.nativeAllocator
+    | none => getExternNameFor reference `c api.allocator == some api.nativeAllocator
   unless !original.isUnsafe && Kernel.isDefEqGuarded reference {} original.value model &&
       reference.getModuleIdxFor? name == reference.getModuleIdx? api.owner &&
       reference.getModuleIdxFor? api.pointed == reference.getModuleIdx? api.owner &&

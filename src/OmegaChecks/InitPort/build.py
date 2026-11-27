@@ -175,7 +175,7 @@ def generate(stage, product, seed, roots, excluded, original_seed):
     omissions = dict.fromkeys(excluded, "explicit exclusion")
     selection = product / "interface-rejections.jsonl"
     run("lake", "build", "omegaAudit", "+OmegaChecks.Interface.Equations", "+OmegaChecks.InitPort.Kernel",
-        "+OmegaChecks.InitPort.GeneratedNative")
+        "+OmegaChecks.InitPort.GeneratedNative", "+OmegaChecks.InitPort.MacroMethodsNative")
     run("lake", "env", "lean", "--run", HERE / "Kernel.lean", "--prepare-quot", seed)
     order_file = stage / "candidate-order.json"
 
