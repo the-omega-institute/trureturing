@@ -7,10 +7,14 @@
    digest: Binary rank-one support of eight through ten sites cannot meet the three-zero bound. -/
 
 import D5.S3.Quantum.Codes.BinaryEARankOneCore
+import D5.S3.Quantum.Information.BinaryStabilizerGraphNormalForm
 import Mathlib.Data.ZMod.Basic
 import Mathlib.Algebra.BigOperators.Fin
 import Mathlib.Algebra.CharP.Two
 import Mathlib.LinearAlgebra.Pi
+import Mathlib.LinearAlgebra.BilinearForm.Orthogonal
+import Mathlib.LinearAlgebra.Dual.Lemmas
+import Mathlib.LinearAlgebra.FiniteDimensional.Basic
 import Mathlib.Data.Finset.Sum
 import Mathlib.Data.Fin.Tuple.Sort
 import Mathlib.Data.List.OfFn
@@ -324,7 +328,8 @@ private def dotMask (h a : ℕ) : Bool :=
 private theorem dotMask_eq (v w : Fin 4 → F) :
     dotMask (pack v).toNat (pack w).toNat = bit (∑ i, v i * w i) := by
   have h : ∀ a b : Fin 16, dotMask a.val b.val =
-      bit (∑ i, unpack (BitVec.ofFin (w := 4) a) i * unpack (BitVec.ofFin (w := 4) b) i) := by decide +kernel
+      bit (∑ i, unpack (BitVec.ofFin (w := 4) a) i * unpack (BitVec.ofFin (w := 4) b) i) := by
+    decide +kernel
   have hv := h (pack v).toFin (pack w).toFin
   change dotMask (pack v).toNat (pack w).toNat =
     bit (∑ i, unpack (pack v) i * unpack (pack w) i) at hv
@@ -366,11 +371,12 @@ private theorem packed_testBit {m : ℕ} (h : Fin 4 → F) (t : Fin m → F)
   | inl i =>
     change (if i.val < 4 then (pack h).toNat.testBit i.val
       else (pack t).toNat.testBit (i.val - 4)) = bit (h i)
-    rw [if_pos i.isLt, pack_get]
+    rw [ite_eq_left i.isLt, pack_get]
   | inr i =>
     change (if 4 + i.val < 4 then (pack h).toNat.testBit (4 + i.val)
       else (pack t).toNat.testBit (4 + i.val - 4)) = bit (t i)
-    rw [if_neg (by omega), show 4 + i.val - 4 = i.val by omega, pack_get]
+    rw [ite_eq_right (show ¬ 4 + i.val < 4 by omega),
+      show 4 + i.val - 4 = i.val by omega, pack_get]
 
 private theorem zeroCount_eq {m : ℕ} (A R : Fin 4 → Fin m → F)
     (x : Fin m → F) (q h : Fin 4 → F) :
@@ -510,5 +516,325 @@ private theorem systematic_core {m : ℕ} (A R : Fin 4 → Fin m → F)
     have he := zeroCount_eq A' R' (X' (unpack q)) (unpack q) (unpack h)
     rw [pack_unpack, pack_unpack] at he
     exact he.trans_le (distance' (unpack q) hq' (unpack h))
+
+private abbrev Ambient (s : ℕ) := (Fin s → F) × (Fin s → F)
+
+open D5.S3.Quantum.Information.BinaryStabilizerGraphNormalForm (spForm)
+
+/-- Project to the two binary coordinates at a site. -/
+def site {s : ℕ} (i : Fin s) : Ambient s →ₗ[F] F × F :=
+  ((LinearMap.proj i).comp (LinearMap.fst F _ _)).prod
+    ((LinearMap.proj i).comp (LinearMap.snd F _ _))
+
+/-- Existence of an original dimension-eight code and dimension-four radical,
+with rank-one site images on a support of eight through ten sites. -/
+def claim : Prop :=
+  ∃ (s : ℕ) (U H : Submodule F (Ambient s)),
+    8 ≤ s ∧ s ≤ 10 ∧ H ≤ U ∧ Module.finrank F U = 8 ∧ Module.finrank F H = 4 ∧
+    U ≤ (spForm s).orthogonal H ∧
+    (∀ i, Module.finrank F (H.map (site i)) = 1) ∧
+    (∀ u ∈ U, u ∉ H → (zeros u.1 u.2).card ≤ 3)
+
+private def axes (a : F × F) : (F × F) →ₗ[F] F × F :=
+  if a.1 = 0 then (LinearMap.snd F F F).prod (LinearMap.fst F F F)
+  else (LinearMap.fst F F F).prod (LinearMap.snd F F F + a.2 • LinearMap.fst F F F)
+
+private theorem axes_apply (a v : F × F) :
+    axes a v = if a.1 = 0 then (v.2, v.1) else (v.1, v.2 + a.2 * v.1) := by
+  by_cases ha : a.1 = 0 <;> simp [axes, ha, smul_eq_mul]
+
+private theorem axes_self (a : F × F) (ha : a ≠ 0) : axes a a = (1, 0) := by
+  rcases bit_eq_zero_or_one a.1 with hx | hx
+  · have hz : a.2 = 1 := by
+      rcases bit_eq_zero_or_one a.2 with hz | hz
+      · exact (ha (Prod.ext hx hz)).elim
+      · exact hz
+    simp [axes_apply, hx, hz]
+  · simp [axes_apply, hx, CharTwo.add_self_eq_zero]
+
+private theorem axes_zero_iff (a v : F × F) :
+    ((axes a v).1 = 0 ∧ (axes a v).2 = 0) ↔ v.1 = 0 ∧ v.2 = 0 := by
+  by_cases ha : a.1 = 0
+  · simp [axes_apply, ha, and_comm]
+  · simp only [axes_apply, ite_eq_right ha]
+    constructor
+    · rintro ⟨hx, hz⟩
+      exact ⟨hx, by simpa [hx] using hz⟩
+    · rintro ⟨hx, hz⟩
+      simp [hx, hz]
+
+private theorem axes_pair (a u v : F × F) :
+    (axes a u).1 * (axes a v).2 + (axes a u).2 * (axes a v).1 =
+      u.1 * v.2 + u.2 * v.1 := by
+  by_cases ha : a.1 = 0
+  · simp [axes_apply, ha, mul_comm, add_comm]
+  · simp only [axes_apply, ite_eq_right ha]
+    calc
+      _ = (u.1 * v.2 + u.2 * v.1) + (a.2 * u.1 * v.1 + a.2 * u.1 * v.1) := by ring
+      _ = _ := by rw [CharTwo.add_self_eq_zero, add_zero]
+
+private theorem exists_axes {s : ℕ} (H : Submodule F (Ambient s))
+    (rank : ∀ i, Module.finrank F (H.map (site i)) = 1) :
+    ∃ X Z : Ambient s →ₗ[F] (Fin s → F),
+      (∀ u i, X u i = 0 ∧ Z u i = 0 ↔ u.1 i = 0 ∧ u.2 i = 0) ∧
+      (∀ u v, (∑ i : Fin s, (X u i * Z v i + Z u i * X v i)) = spForm s u v) ∧
+      (∀ h : H, Z h = 0) ∧ (∀ i, ∃ h : H, X h i = 1) := by
+  classical
+  have haxis (i : Fin s) : ∃ a : H.map (site i), a ≠ 0 ∧
+      ∀ w : H.map (site i), ∃ c : F, c • a = w := finrank_eq_one_iff'.mp (rank i)
+  choose a ha hspan using haxis
+  let T (i : Fin s) : Ambient s →ₗ[F] (F × F) := (axes (a i)).comp (site i)
+  let X : Ambient s →ₗ[F] (Fin s → F) :=
+    LinearMap.pi (fun i => (LinearMap.fst F F F).comp (T i))
+  let Z : Ambient s →ₗ[F] (Fin s → F) :=
+    LinearMap.pi (fun i => (LinearMap.snd F F F).comp (T i))
+  have ha' (i : Fin s) : (a i : F × F) ≠ 0 :=
+    fun h => ha i (Subtype.ext h)
+  refine ⟨X, Z, ?_, ?_, ?_, ?_⟩
+  · intro u i
+    exact axes_zero_iff (a i) (site i u)
+  · intro u v
+    change (∑ i : Fin s, (X u i * Z v i + Z u i * X v i)) =
+      ∑ i, (u.1 i * v.2 i + u.2 i * v.1 i)
+    exact Finset.sum_congr rfl (fun i _ => axes_pair (a i) (site i u) (site i v))
+  · intro h
+    funext i
+    let w : H.map (site i) := ⟨site i h, Submodule.mem_map.mpr ⟨h, h.property, rfl⟩⟩
+    obtain ⟨c, hc⟩ := hspan i w
+    have he : c • (a i : F × F) = site i h := congrArg Subtype.val hc
+    change (axes (a i) (site i h)).2 = 0
+    rw [← he, map_smul, axes_self _ (ha' i)]
+    simp
+  · intro i
+    obtain ⟨h, hh, hsite⟩ := Submodule.mem_map.mp (a i).property
+    refine ⟨⟨h, hh⟩, ?_⟩
+    change (axes (a i) (site i h)).1 = 1
+    rw [hsite, axes_self _ (ha' i)]
+
+private theorem exists_head {s : ℕ} {V : Type*} [AddCommGroup V] [Module F V] [Module.Finite F V]
+    (X : V →ₗ[F] (Fin s → F)) (inj : Function.Injective X)
+    (rank : Module.finrank F V = 4) :
+    ∃ e : Fin 4 ⊕ Fin (s - 4) ≃ Fin s,
+      Function.Bijective ((restrictCoordinates (e ∘ Sum.inl)).comp X) := by
+  classical
+  let family (i : Fin s) : Module.Dual F V := (LinearMap.proj i).comp X
+  have hspan : Submodule.span F (Set.range family) = ⊤ := by
+    apply top_unique
+    intro d _
+    obtain ⟨f, rfl⟩ := LinearMap.dualMap_surjective_of_injective inj d
+    let b := (Pi.basisFun F (Fin s)).dualBasis
+    have hb (i) : X.dualMap (b i) = family i := by
+      ext v
+      exact (Module.Basis.dualBasis_apply _ i (X v)).trans (Pi.basisFun_repr F (Fin s) (X v) i)
+    rw [← b.sum_repr f, map_sum]
+    exact Submodule.sum_mem _ (fun i _ => by
+      rw [map_smul, hb]
+      exact Submodule.smul_mem _ _ (Submodule.subset_span (Set.mem_range_self i)))
+  obtain ⟨t, a, ha, hsel, hli⟩ := exists_linearIndependent' (K := F) family
+  let _ : Fintype t := Fintype.ofInjective a ha
+  let basis := Module.Basis.mk hli (by rw [hsel, hspan])
+  have ht : Fintype.card t = 4 := by
+    rw [← Module.finrank_eq_card_basis basis, Subspace.dual_finrank_eq, rank]
+  let r := (Fintype.equivFinOfCardEq ht).symm
+  let lhs := r.trans (Equiv.ofInjective a ha)
+  let sum := Equiv.Set.sumCompl (Set.range a)
+  have hleft := Fintype.card_congr lhs
+  have hsum := Fintype.card_congr sum
+  rw [Fintype.card_sum, ← hleft, Fintype.card_fin, Fintype.card_fin] at hsum
+  have hright : Fintype.card (↑((Set.range a)ᶜ) : Type) = s - 4 := by omega
+  let e := (lhs.sumCongr (Fintype.equivFinOfCardEq hright).symm).trans sum
+  let head := (restrictCoordinates (e ∘ Sum.inl)).comp X
+  have he (i : Fin 4) : e (.inl i) = a (r i) := rfl
+  have hi : Function.Injective head := by
+    apply LinearMap.ker_eq_bot.mp
+    apply LinearMap.ker_eq_bot'.mpr
+    intro v hv
+    have hkill : Set.range (family ∘ a) ⊆ LinearMap.ker (Module.Dual.eval F V v) := by
+      rintro _ ⟨j, rfl⟩
+      obtain ⟨i, rfl⟩ := r.surjective j
+      have h := congrFun hv i
+      change X v (e (.inl i)) = 0 at h
+      rw [he] at h
+      exact h
+    have hle := Submodule.span_le.mpr hkill
+    rw [hsel, hspan] at hle
+    apply (Module.evalEquiv F V).injective
+    ext d
+    rw [map_zero]
+    exact hle (Submodule.mem_top : d ∈ (⊤ : Submodule F (Module.Dual F V)))
+  have hr : Module.finrank F V = Module.finrank F (Fin 4 → F) := by
+    rw [rank]
+    simp
+  exact ⟨e, hi, (LinearMap.injective_iff_surjective_of_finrank_eq_finrank hr).mp hi⟩
+
+private theorem expand_tail {m : ℕ} (f : (Fin 4 → F) →ₗ[F] (Fin m → F)) (q : Fin 4 → F) :
+    f q = tail (fun i => f (Pi.single i 1)) q := by
+  classical
+  let b := Pi.basisFun F (Fin 4)
+  have he : (∑ i, q i • Pi.single i (1 : F)) = q := by
+    simpa [b, Pi.basisFun_repr, Pi.basisFun_apply] using b.sum_repr q
+  funext j
+  calc
+    f q j = f (∑ i, q i • Pi.single i (1 : F)) j := by rw [he]
+    _ = tail (fun i => f (Pi.single i 1)) q j := by
+      simp [tail, map_sum, map_smul, Finset.sum_apply, smul_eq_mul]
+
+/-- On eight through ten sites, the original rank-one hypotheses are inconsistent. -/
+theorem result : ¬ claim := by
+  rintro ⟨s, U, H, slo, shi, hHU, rankU, rankH, orthogonal, rankSite, distance⟩
+  classical
+  obtain ⟨X, Z, siteZero, axesPair, radicalZ, radicalSite⟩ := exists_axes H rankSite
+  let XH := X.comp H.subtype
+  have injectiveXH : Function.Injective XH := by
+    apply LinearMap.ker_eq_bot.mp
+    apply LinearMap.ker_eq_bot'.mpr
+    intro h hx
+    apply Subtype.ext
+    apply Prod.ext <;> funext i
+    · exact ((siteZero h i).mp ⟨congrFun hx i, congrFun (radicalZ h) i⟩).1
+    · exact ((siteZero h i).mp ⟨congrFun hx i, congrFun (radicalZ h) i⟩).2
+  obtain ⟨e, headBijective⟩ := exists_head XH injectiveXH rankH
+  let head := restrictCoordinates (e ∘ Sum.inl)
+  let rest := restrictCoordinates (e ∘ Sum.inr)
+  let radicalHead := LinearEquiv.ofBijective (head.comp XH) headBijective
+  let Hgen := radicalHead.symm.toLinearMap
+  let inc := Submodule.inclusion hHU
+  let XU := (head.comp X).comp U.subtype
+  let ZU := (head.comp Z).comp U.subtype
+  have headH (h : Fin 4 → F) : head (X (Hgen h)) = h := radicalHead.apply_symm_apply h
+  have normalizedDistance (u : U) (hu : (u : Ambient s) ∉ H) :
+      (zeros (X u) (Z u)).card ≤ 3 := by
+    have h : zeros (X u) (Z u) = zeros u.val.1 u.val.2 := by
+      ext i
+      simpa only [zeros, Finset.mem_filter, Finset.mem_univ, true_and] using siteZero u i
+    rw [h]
+    exact distance u.val u.property hu
+  -- Any vector with zero Z on the head can be shifted by the radical to
+  -- have zero X there as well. Thus the kernel of the Z-head map is H.
+  have kerZU : LinearMap.ker ZU = LinearMap.range inc := by
+    ext u
+    constructor
+    · intro hzu
+      by_cases hu : u.val ∈ H
+      · exact ⟨⟨u.val, hu⟩, rfl⟩
+      exfalso
+      let h := Hgen (XU u)
+      let w := u - inc h
+      have hw : w.val ∉ H := by
+        intro hwh
+        have he := H.add_mem hwh h.property
+        change (u.val - h.val) + h.val ∈ H at he
+        rw [sub_add_cancel] at he
+        exact hu he
+      have hxw : XU w = 0 := by
+        rw [show XU w = XU u - head (X h) from map_sub XU u (inc h), headH, sub_self]
+      have hzw : ZU w = 0 := by
+        have hzu' : ZU u = 0 := hzu
+        rw [show ZU w = ZU u - head (Z h) from map_sub ZU u (inc h),
+          radicalZ h, map_zero, sub_zero, hzu']
+      let sites := Finset.univ.map (Function.Embedding.inl.trans e.toEmbedding)
+      have hcard : sites.card = 4 := by simp [sites]
+      have hle := card_zeros_ge (x := X w) (z := Z w) sites (by
+        intro i hi
+        obtain ⟨j, _, rfl⟩ := Finset.mem_map.mp hi
+        exact ⟨congrFun hxw j, congrFun hzw j⟩)
+      have hd := normalizedDistance w hw
+      omega
+    · rintro ⟨h, rfl⟩
+      change head (Z h) = 0
+      rw [radicalZ h, map_zero]
+  have rankKer : Module.finrank F (LinearMap.ker ZU) = 4 := by
+    rw [kerZU, LinearMap.finrank_range_of_inj (Submodule.inclusion_injective hHU), rankH]
+  have rankRange : Module.finrank F (LinearMap.range ZU) = 4 := by
+    have h := ZU.finrank_range_add_finrank_ker
+    omega
+  obtain ⟨lift, hlift⟩ := ZU.exists_rightInverse_of_surjective
+    (Submodule.eq_top_of_finrank_eq (by simpa using rankRange))
+  -- Subtract the unique radical word with the same X-head. This is a
+  -- linear choice of representatives of U/H with X-head zero.
+  let L := lift - inc.comp (Hgen.comp (XU.comp lift))
+  have headLX (q : Fin 4 → F) : head (X (L q)) = 0 := by
+    change XU (lift q - inc (Hgen (XU (lift q)))) = 0
+    rw [map_sub, show XU (inc (Hgen (XU (lift q)))) = _ from headH _, sub_self]
+  have headLZ (q : Fin 4 → F) : head (Z (L q)) = q := by
+    change ZU (lift q - inc (Hgen (XU (lift q)))) = q
+    rw [map_sub]
+    change ZU (lift q) - head (Z (Hgen (XU (lift q)))) = q
+    rw [radicalZ, map_zero, sub_zero]
+    exact LinearMap.congr_fun hlift q
+  let radicalTail := (rest.comp XH).comp Hgen
+  let logicalTail := (rest.comp Z).comp (U.subtype.comp L)
+  let Xtail := (rest.comp X).comp (U.subtype.comp L)
+  let A := fun i => radicalTail (Pi.single i 1)
+  let R := fun i => logicalTail (Pi.single i 1)
+  have ha (h : Fin 4 → F) : radicalTail h = tail A h := expand_tail _ _
+  have hr (q : Fin 4 → F) : logicalTail q = tail R q := expand_tail _ _
+  have nonzero (j : Fin (s - 4)) : (fun i => A i j) ≠ 0 := by
+    intro hz
+    obtain ⟨h, hh⟩ := radicalSite (e (.inr j))
+    have he : radicalTail (radicalHead h) j = 1 := by
+      change X (radicalHead.symm (radicalHead h)) (e (.inr j)) = 1
+      simpa only [radicalHead.symm_apply_apply] using hh
+    rw [ha] at he
+    have hzero (i : Fin 4) : A i j = 0 := congrFun hz i
+    simp [tail, hzero] at he
+  have pairing (k i : Fin 4) : (∑ j, A k j * R i j) = if k = i then 1 else 0 := by
+    let h := Hgen (Pi.single k 1)
+    let u := L (Pi.single i 1)
+    have hp := (LinearMap.BilinForm.mem_orthogonal_iff.mp (orthogonal u.property)) h h.property
+    have hp' := (axesPair h u).trans hp
+    rw [radicalZ h] at hp'
+    simp only [Pi.zero_apply, zero_mul, add_zero] at hp'
+    have hs := (Equiv.sum_comp e (fun j => X h j * Z u j)).trans hp'
+    rw [Fintype.sum_sum_type] at hs
+    change (∑ j : Fin 4, head (X h) j * head (Z u) j) + (∑ j, A k j * R i j) = 0 at hs
+    rw [show head (X h) = Pi.single k 1 from headH _,
+      show head (Z u) = Pi.single i 1 from headLZ _] at hs
+    let d : F := if k = i then 1 else 0
+    have hd : (∑ j : Fin 4, Pi.single k (1 : F) j * Pi.single i (1 : F) j) = d := by
+      simp [d, Pi.single_apply, eq_comm]
+    rw [hd] at hs
+    calc
+      (∑ j, A k j * R i j) = d + (d + ∑ j, A k j * R i j) := by
+        rw [← add_assoc, CharTwo.add_self_eq_zero, zero_add]
+      _ = d := by rw [hs, add_zero]
+  have systematicDistance : Distance A R Xtail := by
+    intro q hq h
+    let u := L q + inc (Hgen h)
+    have hx : X u = X (L q) + X (Hgen h) := map_add X _ _
+    have hz : Z u = Z (L q) := by
+      change Z ((L q : Ambient s) + (Hgen h : Ambient s)) = Z (L q)
+      rw [map_add, radicalZ, add_zero]
+    have hu : u.val ∉ H := by
+      intro hu
+      have he : Z u = 0 := radicalZ ⟨u.val, hu⟩
+      rw [hz] at he
+      apply hq
+      rw [← headLZ q, he, map_zero]
+    have hx' : X u ∘ e = Sum.elim h (Xtail q + tail A h) := by
+      funext j
+      cases j with
+      | inl i =>
+        change head (X u) i = h i
+        rw [hx, map_add, headLX, headH, zero_add]
+      | inr i =>
+        change rest (X u) i = (Xtail q + tail A h) i
+        rw [hx, map_add]
+        change (Xtail q + radicalTail h) i = _
+        rw [ha]
+    have hz' : Z u ∘ e = Sum.elim q (tail R q) := by
+      funext j
+      cases j with
+      | inl i =>
+        change head (Z u) i = q i
+        rw [hz, headLZ]
+      | inr i =>
+        change rest (Z u) i = tail R q i
+        rw [hz]
+        exact congrFun (hr q) i
+    rw [← hx', ← hz', zero_card_equiv]
+    exact normalizedDistance u hu
+  exact BinaryEARankOneCore.result
+    ⟨s - 4, by omega, by omega, systematic_core A R Xtail nonzero pairing systematicDistance⟩
 
 end D5.S3.Quantum.Codes.BinaryEARankOneBridge
