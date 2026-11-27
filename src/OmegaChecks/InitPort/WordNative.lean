@@ -99,6 +99,9 @@ private def metaLiteralFunction (n : Name) : Bool :=
     [`decodeNatLitVal?, `decodeScientificLitVal?, `decodeNameLit, `decodeStrLit, `decodeStrLitAux,
      `decodeRawStrLitAux, `splitNameLit].contains (n.updatePrefix .anonymous))
 
+private def monadicSeparator (n : Name) : Bool :=
+  [`Array.mapSepElemsM, `Array.filterSepElemsM].contains n
+
 private def syntaxTreeFunction (n : Name) : Bool :=
   [`Lean.mkIdent, `Lean.mkIdentFrom, `Lean.mkCIdentFrom, `Lean.HygieneInfo.mkIdent,
    `Lean.TSyntax.getHexNumVal, `Lean.TSyntax.getHexNumSize, `Lean.TSyntax.getDocString,
@@ -121,7 +124,7 @@ public def usesPinnedFunction (n : Name) : Bool :=
   let vector := n.getPrefix == `BitVec &&
     [`abs, `pow, `smod, `replicate, `reverse, `cpop, `cpopNatRec, `ctz, `clz, `clzAuxRec,
      `getLsbD, `getLsb, `getMsbD, `getMsb, `msb, `sdiv, `srem, `smtSDiv, `hash, `ofBoolListLE, `ofBoolListBE].contains method
-  digitList n || trailing || syntaxTreeFunction n || pinnedStringFunction n || modelOperation n || ByteFoldNative.supported n || IndexedNative.supported n || SyntaxPositionNative.supported n || bytes || vector || [`Nat.repr, `Nat.reprFast, `Int.repr].contains n || [`BitVec.toHex, `BitVec.instToString].contains n || n == `Nat.bitwise || ((word? n.getPrefix).isSome && (method == `pow || (method == `ofInt && bitsType n.getPrefix == n.getPrefix))) ||
+  digitList n || trailing || monadicSeparator n || syntaxTreeFunction n || pinnedStringFunction n || modelOperation n || ByteFoldNative.supported n || IndexedNative.supported n || SyntaxPositionNative.supported n || bytes || vector || [`Nat.repr, `Nat.reprFast, `Int.repr].contains n || [`BitVec.toHex, `BitVec.instToString].contains n || n == `Nat.bitwise || ((word? n.getPrefix).isSome && (method == `pow || (method == `ofInt && bitsType n.getPrefix == n.getPrefix))) ||
     (n.getPrefix == `Int && [`negOfNat, `subNatNat, `sign, `toNat, `pow, `fdiv, `fmod, `bdiv, `bmod].contains method)
 
 private def bootstrapStringOp (n : Name) : Bool :=
@@ -183,7 +186,7 @@ public def supported (source : Environment) (owner name : Name) : Bool :=
     (owner == `OmegaInit.Data.String.Basic && basicStringFunction name) ||
     (owner == `OmegaInit.Data.String.Decode && decodeStringFunction name) ||
     (owner == `OmegaInit.Data.String.Slice && sliceStringFunction name) ||
-    (owner == `OmegaInit.Meta.Defs && (name == `String.toName || metaLiteralFunction name || syntaxTreeFunction name)) || isFloatCall source owner name ||
+    (owner == `OmegaInit.Meta.Defs && (name == `String.toName || metaLiteralFunction name || syntaxTreeFunction name || monadicSeparator name)) || isFloatCall source owner name ||
     (owner == `OmegaInit.Data.ByteArray.Basic && ByteFoldNative.supported name) ||
     ([`OmegaInit.Grind.Ring.CommSolver, `OmegaInit.Data.Nat.Basic, `OmegaInit.Data.Nat.Div.Basic, `OmegaInit.Data.Nat.Lemmas,
     `OmegaInit.Data.RArray, `OmegaInit.Data.Nat.Internal.Linear, `OmegaInit.Data.Nat.Fold, `OmegaInit.Data.Fin.Lemmas].contains owner && IndexedNative.supported name) ||
@@ -247,9 +250,41 @@ private def checkSliceLayout (source strict : Environment) : IO Unit := do
     unless l.ctorInfo.cidx == 0 && l.ctorInfo.size == 3 && l.ctorInfo.usize == 0 && l.ctorInfo.ssize == 0 do
       throw <| IO.userError "unexpected slice constructor"
 
+/-- Preserve the callback's effects while converting the terminal array underneath arbitrary monads. -/
+private def separatorWrapper (source strict : Environment) (n official : Name) : IO String := do
+  let some src := source.find? official | throw <| IO.userError s!"missing separator operation {official}"
+  let some dst := strict.find? n | throw <| IO.userError s!"missing strict separator operation {n}"
+  unless dst.type == InitKernelPort.translate InitKernelPort.portName src.type do throw <| IO.userError "different separator types"
+  let some (.fdecl _ params .tobject ..) := IR.findEnvDecl source official | throw <| IO.userError "missing pinned separator IR"
+  let some (.extern _ actual .tobject ⟨[.standard `all entry]⟩) := IR.findEnvDecl strict n
+    | throw <| IO.userError "missing strict separator IR"
+  unless entry == symbol n && params.map (fun p => (p.ty, p.borrow)) ==
+      #[(.erased, false), (.object, false), (.object, false), (.tobject, false)] &&
+      actual.map (·.ty) == #[.erased, .object, .tobject, .tobject] do
+    throw <| IO.userError s!"unexpected separator ABI {n}: {actual.map (·.ty)}"
+  IndexedNative.checkDataTypes source strict [`Monad, `Applicative, `Pure, `Functor, `Seq, `SeqLeft, `SeqRight, `Bind]
+  for (ctor, names) in [(`Monad.mk, [`toApplicative, `toBind]), (`Applicative.mk, [`toFunctor, `toPure, `toSeq, `toSeqLeft, `toSeqRight])] do
+    let some layout := ctorLayoutExt.find? source ctor | throw <| IO.userError s!"missing separator dictionary {ctor}"
+    unless layout.ctorInfo.size == names.length && layout.ctorInfo.cidx == 0 && layout.ctorInfo.ssize == 0 &&
+        layout.ctorInfo.usize == 0 do throw <| IO.userError s!"unexpected separator dictionary {ctor}"
+    for field in names, i in [:names.length] do
+      let some projection := source.getProjectionFnInfo? (ctor.getPrefix ++ field)
+        | throw <| IO.userError s!"missing separator projection {field}"
+      let .object j _ := layout.fieldInfo[i]! | throw <| IO.userError "separator dictionary field is unboxed"
+      unless projection.i == i && j == i do throw <| IO.userError s!"reordered separator dictionary field {field}"
+  let target := getSymbolStem source official
+  let keep := if actual[2]!.borrow then "lean_inc(values); " else ""
+  let keepFn := if actual[3]!.borrow then "lean_inc(callback); " else ""
+  let release := if actual[1]!.borrow then "" else "lean_dec(monad); "
+  return "\n#include \"sep_array.h\"\n" ++
+    s!"extern lean_obj_res {target}(lean_obj_arg, lean_obj_arg, lean_obj_arg, lean_obj_arg);\n" ++
+    s!"LEAN_EXPORT lean_obj_res {entry}(lean_obj_arg monad, lean_obj_arg values, lean_obj_arg callback) \{\n" ++
+    s!"  lean_object *adapted = omega_sep_array_monad(monad);\n  {keep}{keepFn}{release}return {target}(lean_box(0), adapted, lean_array_mk(values), callback);\n}\n"
+
 /-- Check both sides of the call and generate its ownership conversions from their stored IR. -/
 public def wrapper (source strict : Environment) (n : Name) : IO String := do
   let official := n.replacePrefix `Omega .anonymous
+  if monadicSeparator official then return ← separatorWrapper source strict n official
   if ByteFoldNative.supported official then return ← ByteFoldNative.wrapper source strict n (symbol n)
   if IndexedNative.supported official then return ← IndexedNative.wrapper source strict n (symbol n)
   if SyntaxPositionNative.supported official then return ← SyntaxPositionNative.wrapper source strict n (symbol n)
