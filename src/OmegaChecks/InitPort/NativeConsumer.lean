@@ -89,6 +89,12 @@ public def arithmetic (x y : Omega.Bool) : Omega.Bool :=
   let n := Omega.Nat.sub (Omega.Nat.mul (Omega.Nat.add (asNat x) (asNat y)) (.succ .zero)) (asNat y)
   Omega.Nat.casesOn (motive := fun _ => Omega.Bool) n .false (fun _ => .true)
 
+example (n : Omega.Nat) : Omega.Eq (Omega.Nat.add n 0) n := Omega.rfl
+example : Omega.Eq (Omega.Nat.pow 2 64) 18446744073709551616 := Omega.rfl
+
+public def largeArithmetic (n : Omega.Nat) : Omega.Nat :=
+  Omega.Nat.mul (Omega.Nat.add n 18446744073709551616) 3
+
 public def listDisjunction (x y : Omega.Bool) : Omega.Bool :=
   let xs := Omega.List.append (Omega.List.cons x Omega.List.nil) (Omega.List.cons y Omega.List.nil)
   Omega.List.foldl Omega.strictOr .false (Omega.List.map (fun a => a) xs)
@@ -231,6 +237,13 @@ unsafe def main (args : List String) : IO Unit := do
     let some (.inductInfo bool) := env.find? `Bool | throw <| IO.userError "missing Boolean type"
     unless bool.numParams == 0 && bool.ctors == [`Bool.false, `Bool.true] do
       throw <| IO.userError "unexpected Boolean representation"
+    let natTy := mkConst `Nat
+    let some large := env.find? `largeArithmetic | throw <| IO.userError "missing large arithmetic consumer"
+    unless Kernel.isDefEqGuarded env {} large.type (.forallE `n natTy natTy .default) do
+      throw <| IO.userError "incorrect native Nat interface"
+    let compute ← IO.ofExcept <| env.evalConst (Nat → Nat) {} `largeArithmetic
+    for n in [0, 2^63, 2^127 + 1] do
+      unless compute n == (n + 2^64) * 3 do throw <| IO.userError s!"invalid large arithmetic result at {n}"
     let b := mkConst `Bool
     let arity := .forallE `x b (.forallE `y b b .default) .default
     let first := fun (x _ : Bool) => x
