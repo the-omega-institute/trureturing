@@ -4,6 +4,7 @@ public import Init.Data.Range.Polymorphic.Int
 public import Init.Data.Range.Polymorphic.Fin
 public import Init.Data.Range.Polymorphic.UInt
 import all Init.Data.Range.Polymorphic.Internal.SignedBitVec
+import all Init.Data.Range.Polymorphic.BitVec
 import all Init.Data.Range.Polymorphic.SInt
 import all Init.Data.Char.Ordinal
 import all Init.Data.Range.Polymorphic.Char
@@ -375,5 +376,35 @@ private theorem ISizeSizeLaws : Rxc.LawfulHasSize ISize ∧ Rxo.LawfulHasSize IS
 public theorem ISize.instRxcLawfulHasSize : Rxc.LawfulHasSize ISize := ISizeSizeLaws.1
 public theorem ISize.instRxoLawfulHasSize : Rxo.LawfulHasSize ISize := ISizeSizeLaws.2.1
 public theorem ISize.instRxiLawfulHasSize : Rxi.LawfulHasSize ISize := ISizeSizeLaws.2.2
+
+public theorem Int16.instLawfulUpwardEnumerableLeast?._proof_2 :
+    type_of% (private_decl% @_root_.Int16.instLawfulUpwardEnumerableLeast?._proof_2) :=
+  fun _ lower impossible => impossible (Int.add_nonneg_iff_neg_le.mpr lower)
+
+public theorem Int32.instLawfulUpwardEnumerableLeast?._proof_2 :
+    type_of% (private_decl% @_root_.Int32.instLawfulUpwardEnumerableLeast?._proof_2) :=
+  fun _ lower impossible => impossible (Int.add_nonneg_iff_neg_le.mpr lower)
+
+public theorem Int64.instLawfulUpwardEnumerableLeast?._proof_2 :
+    type_of% (private_decl% @_root_.Int64.instLawfulUpwardEnumerableLeast?._proof_2) :=
+  fun _ lower impossible => impossible (Int.add_nonneg_iff_neg_le.mpr lower)
+
+public theorem ISize.toBitVec_minValueSealed_eq_intMinSealed :
+    type_of% (private_decl% @_root_.ISize.toBitVec_minValueSealed_eq_intMinSealed) :=
+  by
+  rw [private_decl% @_root_.ISize.minValueSealed_def,
+    private_decl% @_root_.BitVec.Signed.intMinSealed_def, _root_.ISize.toBitVec_minValue]
+  apply _root_.BitVec.eq_of_toNat_eq
+  rw [_root_.BitVec.toNat_intMin, _root_.BitVec.natCast_eq_ofNat, _root_.BitVec.toNat_ofNat]
+
+public theorem ISize.toBitVec_maxValueSealed_eq_intMaxSealed :
+    type_of% (private_decl% @_root_.ISize.toBitVec_maxValueSealed_eq_intMaxSealed) :=
+  by
+  rw [private_decl% @_root_.ISize.maxValueSealed_def,
+    private_decl% @_root_.BitVec.Signed.intMaxSealed_def, _root_.ISize.toBitVec_maxValue]
+  apply _root_.BitVec.eq_of_toNat_eq
+  rw [_root_.BitVec.toNat_intMax, _root_.BitVec.natCast_eq_ofNat, _root_.BitVec.toNat_ofNat]
+  exact (Nat.mod_eq_of_lt (_root_.BitVec.toNat_intMax (w := System.Platform.numBits) ▸
+    (_root_.BitVec.intMax System.Platform.numBits).isLt)).symm
 
 end OmegaChecks.InitPort.Alternatives

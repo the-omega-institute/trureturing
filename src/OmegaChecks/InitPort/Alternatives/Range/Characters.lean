@@ -253,4 +253,8 @@ public theorem Char.map._proof_2 : type_of% (private_decl% @_root_.Char.map._pro
   intro n c
   exact (unpackMap (c.ordinal.addNat? n)).symm
 
+public theorem Char.succ?_eq._proof_1_8 :
+    type_of% (private_decl% @_root_.Char.succ?_eq._proof_1_8) :=
+  fun lower distinct upper => distinct (Nat.eq_of_lt_succ_of_not_lt upper lower)
+
 end OmegaChecks.InitPort.Alternatives
