@@ -335,6 +335,31 @@ theorem shortGap_geometric_eq {p : ℕ} (hp : 0 < p) {t : ℝ} (ht : 0 < t) :
   linear_combination t*h_hp
 
 /-- Keep the profile's slope and the geometric correction in the curvature estimate. -/
+theorem shortGap_mixed_lt_of_profile_margin_of_slopes
+    {α β αv m E q q' s s' s'' j j' j'' z z' ξ ε : ℝ}
+    (hα : 0 ≤ α) (hβ : β ≤ 0) (hαβmax : α - β ≤ 1/2)
+    (hs : 0 ≤ s)
+    (hprofile : ε < s'' - (α - β) * s' - (β - m) * E * (q' + (α + m) * q))
+    (hj : 0 ≤ j) (hj' : 0 ≤ j') (hj'' : j'/2 ≤ j'')
+    (hz : 0 ≤ 1-z) (hz' : 0 ≤ z')
+    (hcorrection : z'*j' ≤ ξ*(1/2-α)*(1/2-αv)) :
+    -s'' + (α-β)*s' + α*β*s +
+      (β-m)*E*(q'+(α+m)*q) +
+      ((1-z)*(-j''+(α-β)*j') + z'*j' + α*(β*(1-z)-z')*j) -
+      ξ*(1/2-α)*(1/2-αv) < -ε := by
+  have hF₂ : α*β*s ≤ 0 := mul_nonpos_of_nonpos_of_nonneg
+    (mul_nonpos_of_nonneg_of_nonpos hα hβ) hs
+  have hJ₁ : -j''+(α-β)*j' ≤ 0 := by
+    have h := mul_le_mul_of_nonneg_right hαβmax hj'
+    linarith
+  have hJ₂ : β*(1-z)-z' ≤ 0 :=
+    sub_nonpos.mpr ((mul_nonpos_of_nonpos_of_nonneg hβ hz).trans hz')
+  have hJ₃ := mul_nonpos_of_nonneg_of_nonpos hz hJ₁
+  have hJ₄ := mul_nonpos_of_nonpos_of_nonneg
+    (mul_nonpos_of_nonneg_of_nonpos hα hJ₂) hj
+  linarith
+
+/-- Keep the profile's slope and the geometric correction in the curvature estimate. -/
 theorem shortGap_mixed_lt_of_profile_margin
     {α β αv m E q q' s s' s'' j j' j'' z z' ξ ε : ℝ}
     (hα : 0 ≤ α) (hαmax : α ≤ 1/7) (hβ : β ≤ 0) (hβmin : -1/4 ≤ β)
@@ -347,18 +372,8 @@ theorem shortGap_mixed_lt_of_profile_margin
       (β-m)*E*(q'+(α+m)*q) +
       ((1-z)*(-j''+(α-β)*j') + z'*j' + α*(β*(1-z)-z')*j) -
       ξ*(1/2-α)*(1/2-αv) < -ε := by
-  have hαβmax : α-β ≤ 1/2 := by linarith
-  have hF₂ : α*β*s ≤ 0 := mul_nonpos_of_nonpos_of_nonneg
-    (mul_nonpos_of_nonneg_of_nonpos hα hβ) hs
-  have hJ₁ : -j''+(α-β)*j' ≤ 0 := by
-    have h := mul_le_mul_of_nonneg_right hαβmax hj'
-    linarith
-  have hJ₂ : β*(1-z)-z' ≤ 0 :=
-    sub_nonpos.mpr ((mul_nonpos_of_nonpos_of_nonneg hβ hz).trans hz')
-  have hJ₃ := mul_nonpos_of_nonneg_of_nonpos hz hJ₁
-  have hJ₄ := mul_nonpos_of_nonpos_of_nonneg
-    (mul_nonpos_of_nonneg_of_nonpos hα hJ₂) hj
-  linarith
+  exact shortGap_mixed_lt_of_profile_margin_of_slopes hα hβ (by linarith only [hαmax, hβmin])
+    hs hprofile hj hj' hj'' hz hz' hcorrection
 
 /-- Positive curvature and nonpositive slope suffice when the geometric correction helps. -/
 theorem shortGap_mixed_lt

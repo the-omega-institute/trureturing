@@ -5,7 +5,7 @@ import { createReadStream } from 'node:fs';
 import { copyFile, mkdir, mkdtemp, readdir, readFile, rename, rm, stat, writeFile } from 'node:fs/promises';
 import { createRequire } from 'node:module';
 import { performance } from 'node:perf_hooks';
-import { dirname, join, resolve } from 'node:path';
+import { dirname, isAbsolute, join, resolve } from 'node:path';
 import { createInterface } from 'node:readline';
 import { setTimeout as delay } from 'node:timers/promises';
 import { fileURLToPath, pathToFileURL } from 'node:url';
@@ -340,12 +340,16 @@ async function digestFile(path) {
   return hash.digest('hex');
 }
 
-function requirePublisher() {
+function requirePublisher(kind) {
   const env = process.env;
-  if (!['schedule', 'workflow_dispatch'].includes(env.GITHUB_EVENT_NAME)
+  const workflow = kind === 'report' ? 'report-release-publish.yml' : 'cache-release-publish.yml';
+  const events = ['schedule', 'workflow_dispatch'];
+  if (kind === 'compiler') events.push('push');
+  if (kind === 'report') events.push('workflow_run');
+  if (!events.includes(env.GITHUB_EVENT_NAME)
       || env.GITHUB_REF !== 'refs/heads/dev' || env.GITHUB_REF_PROTECTED !== 'true'
       || env.STRATALINT_CACHE_WRITES !== 'true'
-      || env.GITHUB_WORKFLOW_REF !== env.GITHUB_REPOSITORY + '/.github/workflows/cache-release-publish.yml@refs/heads/dev') {
+      || env.GITHUB_WORKFLOW_REF !== env.GITHUB_REPOSITORY + '/.github/workflows/' + workflow + '@refs/heads/dev') {
     throw new Error('shared cache writes require the protected dev Release publisher');
   }
 }
@@ -381,7 +385,7 @@ async function generationIndex(digest, file) {
 
 async function moduleCacheEntry(key, digest, file) {
   const put = operation === 'module-put';
-  if (put) requirePublisher();
+  if (put) requirePublisher(key?.endsWith('-report') ? 'report' : 'compiler');
   if (!key || key.length > 512 || /[,\r\n]/.test(key) || !/^[0-9a-f]{64}$/.test(digest) || !file) {
     throw new Error('invalid module cache address');
   }
@@ -411,32 +415,133 @@ async function moduleCacheEntry(key, digest, file) {
   }
 }
 
+// The SDK returns undefined both for an absent entry and after logging a service
+// error. Only the former permits a compiler worker to rebuild an evicted unit.
+async function restoreCheckpoint(cache, core, path, key) {
+  const { warning, error } = core;
+  let failure;
+  const capture = log => (message, ...args) => {
+    failure = String(message);
+    log(message, ...args);
+  };
+  core.warning = capture(warning);
+  core.error = capture(error);
+  try {
+    const matched = await cache.restoreCache([path], key, []);
+    if (matched === key) return true;
+    if (failure || matched !== undefined) throw new Error(failure || 'unexpected compiler checkpoint key ' + matched);
+    return false;
+  } finally {
+    core.warning = warning;
+    core.error = error;
+  }
+}
+
+async function compilerCheckpoint(kind, ...args) {
+  requirePublisher('compiler');
+  if (!['unit', 'catalog'].includes(kind)) throw new Error('invalid compiler checkpoint kind');
+  const prefix = 'lean-compiler-' + kind + '-v1-';
+  // Every runner must use the same literal path to derive the SDK cache version.
+  const path = join(stage, 'compiler-checkpoints', kind);
+  const { cache, cacheVersion, packageFile } = await loadCacheClient();
+  if (operation === 'compiler-cache-list') {
+    const [output] = args;
+    if (args.length !== 1 || !output) throw new Error('expected a compiler inventory destination');
+    const version = cacheVersion(path);
+    const rows = [];
+    for (const entry of visibleEntries('refs/heads/dev', prefix)) {
+      if (entry.version !== version || !entry.key.startsWith(prefix)) continue;
+      const match = /^([0-9a-f]{64})-([0-9a-f]{64})-([1-9][0-9]*)$/.exec(entry.key.slice(prefix.length));
+      if (!match || !Number.isSafeInteger(Number(match[3]))) continue;
+      const [, id, sha256, bytes] = match;
+      if (kind === 'catalog' && id !== sha256) continue;
+      rows.push({ id, sha256, bytes: Number(bytes) });
+    }
+    await writeFile(output, JSON.stringify(rows));
+    return;
+  }
+  const [id, sha256, bytes, file] = args;
+  if (args.length !== 4 || !isAbsolute(file) || !/^[0-9a-f]{64}$/.test(id) || !/^[0-9a-f]{64}$/.test(sha256)
+      || !/^[1-9][0-9]*$/.test(bytes) || !Number.isSafeInteger(Number(bytes))
+      || (kind === 'catalog' && id !== sha256)) {
+    throw new Error('invalid compiler checkpoint address');
+  }
+  const key = prefix + id + '-' + sha256 + '-' + bytes;
+  const verify = async candidate => {
+    if ((await stat(candidate)).size !== Number(bytes) || await digestFile(candidate) !== sha256) {
+      throw new Error('compiler checkpoint checksum or length mismatch');
+    }
+  };
+  const core = createRequire(packageFile)('@actions/core');
+  // Concurrent operations in a single runner must not extract over one another.
+  const temporary = await mkdtemp(join(process.env.RUNNER_TEMP, 'compiler-checkpoint-'));
+  try {
+    process.env.GITHUB_WORKSPACE = temporary;
+    process.chdir(temporary);
+    await mkdir(dirname(path), { recursive: true });
+    if (operation === 'compiler-cache-put') {
+      await copyFile(file, path);
+      await verify(path);
+      if (await cache.saveCache([path], key) > 0) return;
+      await rm(path, { force: true });
+      // A competing reservation can be visible only after its upload finalizes.
+      for (const ms of [0, 1000, 2000, 4000, 8000, 16000]) {
+        if (ms) await delay(ms);
+        if (await restoreCheckpoint(cache, core, path, key)) {
+          await verify(path);
+          return;
+        }
+      }
+      throw new Error('Actions Cache did not publish compiler checkpoint ' + key);
+    }
+    if (!await restoreCheckpoint(cache, core, path, key)) {
+      process.exitCode = 4;
+      throw new Error('Actions compiler checkpoint unavailable: ' + key);
+    }
+    await verify(path);
+    await copyFile(path, file);
+  } finally {
+    process.chdir(workspace);
+    process.env.GITHUB_WORKSPACE = workspace;
+    await rm(temporary, { recursive: true, force: true });
+  }
+}
+
 async function runModuleCache() {
   const temp = process.env.RUNNER_TEMP;
   const plan = join(temp, 'module-plan.json');
   const tool = 'tools/scripts/worktree/lean_module_cache.py';
+  const kind = process.env.INPUT_KIND || '';
+  if (kind && !['compiler', 'report'].includes(kind)) throw new Error('invalid publication kind');
   let args;
   if (operation === 'restore-published') {
     if (targetsFile && !(await readFile(targetsFile, 'utf8')).trim()) return;
     args = ['restore'];
+    if (kind) args.push('--kind', kind);
+    if (process.env.INPUT_STAGED === 'true') args.push('--staged');
     if (process.env.INPUT_VERSION) args.push('--version', process.env.INPUT_VERSION);
     if (targetsFile) args.push('--targets-file', targetsFile);
     else if (targets.length) args.push('--targets', ...targets);
   } else if (operation === 'module-plan') {
-    requirePublisher();
+    requirePublisher(kind || 'compiler');
     const capacity = Number(process.env.SHARD_MIB || 256);
     if (!Number.isSafeInteger(capacity) || capacity < 1 || capacity >= 2048) {
       throw new Error('shard_mib must be between 1 and 2047');
     }
-    args = ['plan', '--capacity', String(capacity * 1024 ** 2), '--output', plan, '--legacy-checkpoints', '--prepare-release'];
+    const publicationKind = kind || 'compiler';
+    args = ['plan', '--kind', publicationKind, '--capacity', String(capacity * 1024 ** 2),
+      '--output', plan, '--prepare-release'];
+    if (publicationKind === 'compiler') args.push('--compiler-dag', '--legacy-checkpoints');
   } else {
-    requirePublisher();
+    requirePublisher(kind || 'compiler');
     if (operation === 'module-worker') {
       const lane = process.env.MODULE_LANE;
       if (!/^(0|[1-9][0-9]*)$/.test(lane)) throw new Error('invalid module lane');
       args = ['worker', '--plan', plan, '--lane', lane, '--output', join(temp, 'module-worker')];
+    } else if (operation === 'module-stage') {
+      args = ['finish', '--stage-only', '--plan', plan, '--output', join(temp, 'module-index.json')];
     } else {
-      args = ['finish', '--plan', plan, '--output', join(temp, 'module-index.json')];
+      args = ['promote', '--kind', kind, '--version', process.env.INPUT_VERSION];
     }
   }
   try {
@@ -444,7 +549,7 @@ async function runModuleCache() {
       stdio: 'inherit', env: { ...process.env, LEAN_MODULE_ACTIONS_CACHE: '1' },
     });
   } catch (error) {
-    if (operation !== 'restore-published' || error.status !== 3) throw error;
+    if (operation !== 'restore-published' || error.status !== 3 || process.env.INPUT_VERSION) throw error;
     console.log('No published module cache yet. Continuing with the local Lean build.');
   }
 }
@@ -644,7 +749,10 @@ async function saveContinuation() {
 }
 
 async function main() {
-  if (['module-plan', 'module-worker', 'module-finish', 'restore-published'].includes(operation)) return runModuleCache();
+  if (['module-plan', 'module-worker', 'module-stage', 'module-promote', 'restore-published'].includes(operation)) return runModuleCache();
+  if (['compiler-cache-list', 'compiler-cache-put', 'compiler-cache-get'].includes(operation)) {
+    return compilerCheckpoint(...process.argv.slice(3));
+  }
   if (operation === 'module-get' || operation === 'module-put') return moduleCacheEntry(...process.argv.slice(3));
   if (operation === 'generation-get' || operation === 'generation-put') {
     return generationIndex(process.argv[3], process.argv[4]);

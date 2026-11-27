@@ -16,7 +16,7 @@ internal sealed class HuttonMehtaVukovicOutputOverlapDocument : IScribeDocumentD
         Blocks(
             Paragraph(Text("Matrices have complex entries. Fin n indexes the source's n computational basis vectors from zero; sigma is the family of output states, and u lists the input vectors. Products and traces are matrix products and Matrix.trace. Complex.re gives the real comparison. The sums over r and s count ordered pairs, with zero diagonal terms.")),
             Describe.Lean(DescribeId.Create("hmv-output-overlap-state"),
-                DeclarationHandle.Create("D5/S3/QuantumChannels/CoPRelativeQuantumnessRefutation.IsDensity"),
+                DeclarationHandle.Create("D5/S3/QuantumStates/DensitySpan.IsDensity"),
                 H("Quantum states"), StatementSource.FromAuthor(StateFormula()),
                 AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text("A quantum state in M_d(ℂ) is a positive semidefinite matrix with trace one. This is the existing CoPRelativeQuantumnessRefutation.IsDensity predicate used directly in the hypothesis."))),

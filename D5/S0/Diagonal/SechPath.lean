@@ -6,7 +6,7 @@
    utility: none
    digest: Every finite step on a discrete hyperbolic-secant path stays strictly above zero. -/
 
-import Mathlib
+import Mathlib.Analysis.Complex.Trigonometric
 
 namespace D5.S0.Diagonal.SechPath
 

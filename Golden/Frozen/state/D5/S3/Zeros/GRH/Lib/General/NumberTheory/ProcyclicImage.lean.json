@@ -1,0 +1,1 @@
+{"statement_id":"sha256:02d4db52bf354cabbcf8522ce0ee571ec907ed2d973ce9c69ccd83d0555b4fb9","declarations":[{"declaration_name_key":"ns(n0,26:exists_procyclic_generator)","kind":"theorem","libraries":["Aesop","Batteries","Init","Lean","Mathlib","Std"],"axioms":["Classical.choice","Quot.sound","propext"]}]}

@@ -158,7 +158,7 @@ private theorem Gamma_half_add_mul_I (y : ℝ) :
   exact_mod_cast hℂ
 
 /-- The product `P(x,y) = ∏ₖ (1 + y²/(x+k)²)` of DLMF 5.8.3. -/
-private def gammaVertProd (x y : ℝ) : ℝ := ∏' k : ℕ, (1 + y ^ 2 / (x + k) ^ 2)
+def gammaVertProd (x y : ℝ) : ℝ := ∏' k : ℕ, (1 + y ^ 2 / (x + k) ^ 2)
 
 /-- The partial products `∏_{k<n} (1 + y²/(x + k)²)` tend to `gammaVertProd x y`. -/
 private theorem tendsto_prod_gammaVertProd (x y : ℝ) :
@@ -167,7 +167,7 @@ private theorem tendsto_prod_gammaVertProd (x y : ℝ) :
   (multipliable_one_add_sq_div_add_sq x y).hasProd.tendsto_prod_nat
 
 /-- `gammaVertProd x y ≥ 1`. -/
-private theorem one_le_gammaVertProd (x y : ℝ) : 1 ≤ gammaVertProd x y :=
+theorem one_le_gammaVertProd (x y : ℝ) : 1 ≤ gammaVertProd x y :=
   ge_of_tendsto' (tendsto_prod_gammaVertProd x y) fun n =>
     Finset.one_le_prod₀ fun k _ => le_add_of_nonneg_right (by positivity)
 
@@ -181,7 +181,7 @@ private theorem gammaVertProd_anti {x x' : ℝ} (hx : 0 < x) (hxx : x ≤ x') (y
   gcongr
 
 /-- For `x > 0`, `|Γ(x + iy)|² = Γ(x)² / ∏ₖ (1 + y²/(x + k)²)`. -/
-private theorem norm_Gamma_sq_eq {x : ℝ} (hx : 0 < x) (y : ℝ) :
+theorem norm_Gamma_sq_eq {x : ℝ} (hx : 0 < x) (y : ℝ) :
     ‖Complex.Gamma (x + I * y)‖ ^ 2 = Real.Gamma x ^ 2 / gammaVertProd x y := by
   have hxk : ∀ k : ℕ, (x : ℂ) ≠ -k := fun k h => by
     have := congrArg re h; simp at this; linarith [(Nat.cast_nonneg k : (0 : ℝ) ≤ k)]

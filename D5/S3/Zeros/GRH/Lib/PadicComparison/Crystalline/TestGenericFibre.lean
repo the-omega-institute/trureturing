@@ -1,0 +1,139 @@
+/- GID: D5/S3/Zeros/GRH/Lib/PadicComparison/Crystalline/TestGenericFibre
+   generality: G
+   mirror-B: D5/B/S3/Zeros/GRH/Lib/PadicComparison/Crystalline/TestGenericFibre
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Compact Dirichlet GRH proof, upstream module Lib.PadicComparison.Crystalline.TestGenericFibre. -/
+
+-- Source: https://github.com/lsernau/grh-lean/blob/72fead102f663d5c7a407964a13dc0cf9d977207/grh-compact/src/Lib/PadicComparison/Crystalline/TestGenericFibre.lean
+-- Apache 2.0 license, notice and attribution: docs/reports/third-party/grh-lean/
+import D5.S3.Zeros.GRH.Lib.PadicComparison.Completion.RootSystems
+-- Adapted imports and elaboration settings for D5.
+set_option autoImplicit false
+set_option maxHeartbeats 4000000
+set_option linter.mathlibStandardSet false
+
+/-! Part of: Crystalline comparison: p-adic étale cohomology with good reduction is crystalline
+(known result; see Lib.PadicComparison.Crystalline.CrystallineClasses).
+
+This file: Completed divided power envelope, its universal property, lifts from perfect rings and
+Witt vectors. -/
+
+noncomputable section
+
+open CategoryTheory CommAlgCat Ideal Quotient Nat Function Algebra TensorProduct Perfection
+  WittVector IsScalarTower nonZeroDivisors AlgHom DFunLike
+variable {p} [hp : ThePrime p] {S T} [CommRing S] [CommRing T] [Algebra S T] {x M} [CommMonoid M]
+  [PerfectRing M p] (h : IsCompleteTorsionFree S) (E : CrysTest S)
+
+/-- For p not a unit in S, the ring homomorphism S/𝔡(S) → S/p induced by x ↦ x^p, where 𝔡(S) is
+the ideal of elements with divided powers. -/
+def frobModPd [Fact ¬IsUnit (p : S)] : S ⧸ pdIdeal S →+* ModP S p := lift _ (.comp (frobenius
+  ..) (mk _)) fun _ h ↦ (eq_zero_iff_dvd ..).2 ((dvd_factorial Fin.pos' .refl).natCast.trans (h p))
+
+include h
+
+/-- If S is p-torsion-free and p-adically complete, then p lies in the ideal 𝔡(S) of the x such
+that n! divides x^n for every n. -/
+lemma IsCompleteTorsionFree.p_mem_pdIdeal : ↑p ∈ pdIdeal S := fun n ↦ (coprime_ordCompl hp.out
+  n.factorial_ne_zero).cast.elim fun a ⟨b, _⟩ ↦ ((mem_jacobson_bot.1 (h.2.le_jacobson_bot _
+  (subset_span rfl)) (-a)).dvd_mul_right.1 ⟨b, by grind [congr(($(ordProj_mul_ordCompl_eq_self n !
+  p) : S)), factorization_def, hp.out]⟩).trans (pow_dvd_pow _ (padicValNat_factorial_le p n))
+
+lemma IsCompleteTorsionFree.isLocalHom_pdQuotientMk : IsLocalHom (pdQuotientMk S) :=
+  isLocalHom_of_le_jacobson_bot _ fun _ y ↦ isRadical_jacobson _ ⟨p, h.2.le_jacobson_bot _
+  (mem_span_singleton.2 ((dvd_factorial Fin.pos' .refl).natCast.trans (y p)))⟩
+
+/-- Let S be p-torsion-free and p-adically complete and M a commutative monoid on which x ↦ x^p
+is bijective. Then reduction modulo 𝔡(S) is a bijection from monoid homomorphisms M → S to
+monoid homomorphisms M → S/𝔡(S). -/
+lemma IsCompleteTorsionFree.monoidHom_lift_bijective :
+  Bijective ((pdQuotientMk S).1.comp : (M →* S) → _) := by
+  have := h.2
+  nontriviality S using bijective_iff_existsUnique, ExistsUnique, ext_iff
+  refine ((liftMonoidHom ..).1.symm.bijective_comp _).1 (((quotientMulEquiv p
+    _).monoidHomCongrRightEquiv.trans (liftMonoidHom ..).1.symm).trans
+    ⟨(factor (by simp [h.p_mem_pdIdeal]
+    )).1.comp, (frobModPd.1.comp <| ·.comp (powMulEquiv M p).symm), ?_, ?_⟩).bijective <;> intro x
+    <;> ext m <;> rw [← powMulEquiv_symm_pow_p _ p m, x.map_pow] <;> simp <;> rcases x _ <;> rfl
+
+/-- Let S be p-torsion-free and p-complete, 𝔡 its ideal of elements with divided powers, b a perfect
+ring with p = 0. Each ring map f: b → S/𝔡 has a unique ring map g: W(b) → S with g(x) ≡ f(x₀) mod 𝔡
+for every x in W(b), x₀ the zeroth coordinate. -/
+lemma IsCompleteTorsionFree.existsUnique_witt_lift {b} [CommRing b] [PerfectRing b p] (e :
+  (p : b) = 0) (f : b →+* _) : ∃! g : WittVector p b →+* S, ∀ x, pdQuotientMk S (g x) =
+  f (x.coeff 0) := have := h.2; by
+    by_cases! Subsingleton S
+    · use .mk' 1 ?_ <;> aesop_cat
+    have := @CharP.of_eq_zero _ _ (frobModPd.comp f).domain_nontrivial _ hp.out e
+    exact .imp (fun _ a ↦ ⟨a, fun _ e ↦
+      witt_hom_ext (congr($(@h.monoidHom_lift_bijective.1 (.comp ..) (.comp ..) (by aesop)) ·))⟩)
+      ⟨(fontaineTheta ..).comp (map ((pthRoot ..).comp (lift _ _ _ (frobModPd.comp f)))),
+      fun x ↦ congr(factor (by simp [h.p_mem_pdIdeal]) $(mk_fontaineTheta _)).trans
+      ((by rcases f _; rfl : factor _ (frobModPd _) = f _ ^ p).trans (by simp [← f.map_pow]))⟩
+
+omit h
+
+omit [ThePrime p] in
+/-- If a map κ: C → W of S-algebras is bijective modulo every power of p and the S-algebra X is
+p-adically complete, then composition with κ is a bijection Hom(W, X) → Hom(C, X). -/
+lemma IsBijOnCompletion.comp_bijective {C W X : CommAlg S} (κ : C ⟶ W) (c :
+  IsBijOnCompletion p κ.hom.toLinearMap) (d : IsAdicComplete (span {(p : X)}) X) :
+  Bijective (κ ≫ · : (W ⟶ X) → _) := have := isAdicComplete_over_base (S := S) d
+  ⟨fun _ _ e ↦ hom_ext (toLinearMap_injective (c.linearMap_comp_bijective.1 congr($e.1))),
+    (c.linearMap_comp_bijective.2 ·.1.toLinearMap |>.elim fun G
+    e ↦ have m x := @c.linearMap_comp_bijective.1 (G ∘ₗ .mulLeft _ x) (G x •
+    G); by simp [ext_iff] at *; use ofHom (.ofLinearMap G (by grind [e 1]) (m · fun t ↦
+      by rw [mul_comm, m, mul_comm]; simp_all [← map_mul])), by bound)⟩
+
+instance : CoeSort (CrysTest S) Type := ⟨(·.1)⟩
+
+instance : HasUniqueDiv E := ⟨fun n a _ _ _ ↦
+  E.2.1.pow n ((E.2.p_mem_pdIdeal n).elim (by grind [congr(($(mul_factorial_pred a) : E))]))⟩
+
+lemma CrysTest.p_eq_zero_mod_pdIdeal : (p : _ ⧸ pdIdeal E) = 0 :=
+  eq_zero_iff_mem.2 E.2.p_mem_pdIdeal
+
+variable (S) (J : Set T)
+
+/-- For a subset J of T, the T-subalgebra of T ⊗_ℤ ℚ generated by the divided powers x^n/n! with
+x in J and n ≥ 0. -/
+def preEnvelope := adjoin T {(x ^ n) ⊗ₜ[ℤ] (n ! : ℚ)⁻¹ | (x ∈ J) (n)}
+
+/-- The divided power envelope of T along J: the p-adic completion of `preEnvelope`, as a
+p-torsion-free p-complete S-algebra. -/
+abbrev Envelope : CrysTest S := ⟨.of S (PadicCompletion (preEnvelope J) p),
+  isCompleteTorsionFree_completion fun _ _ h ↦ Subtype.ext
+  (((isUnit_of_invertible ↑p).map includeRight).mul_left_cancel (by simpa using congr($h.1)))⟩
+
+/-- Universal property of the envelope: an S-algebra map h from T to a p-torsion-free p-complete
+S-algebra B that sends J into the elements with divided powers factors uniquely through the
+canonical map from T to the envelope of J. -/
+lemma Envelope.existsUnique_lift {B} h (hJ : ∀ x ∈ J, h x ∈ pdIdeal _) : ∃! g : Envelope S J ⟶ B,
+    g.1.hom.comp (toAlgHom ..) = h := let := h.1.toAlgebra
+  let F := (AlgEquiv.ofInjective _ (includeLeft_injective Int.cast_injective)).symm.toAlgHom.comp
+    ((Subalgebra.inclusion (by exact Subalgebra.map_le.2 (adjoin_le fun y ⟨x, hx, n, e⟩ ↦ (hJ x hx
+    n).imp fun c hc ↦ by simpa [← e, ← hc] using! (smul_tmul n ! c (n ! :
+    ℚ)⁻¹).symm))).comp (subalgebraMap (preEnvelope J) (rTensor ℚ (ofId ..))))
+  ((isBijOnCompletion_completion.comp_bijective (ofHom _) B.2.2).existsUnique
+    (ofHom (F.restrictScalars S))).elim fun G e H ↦
+    ⟨⟨G⟩, ext (F.2 · ▸ congr($e _)), fun ⟨G⟩ e ↦ H G (hom_ext (ext fun x ↦ (IsLocalizedModule.surj
+    ℤ⁰ (toAlgHom ℤ T _).toLinearMap x.1).elim fun ⟨t, n⟩ c ↦ zsmul_right_injective (coe_ne_zero n)
+    (by simpa [↓← map_zsmul, (Subtype.ext c : n.1 • x = ofId T _ t)] using! congr($e t)))) ▸ rfl⟩
+
+/-- For a subset J of the S-algebra T and x in J, the image of x in the envelope E of T along J
+lies in 𝔡(E): n! divides its n-th power for every n. -/
+lemma Envelope.algebraMap_mem_pdIdeal (hx : x ∈ J) : algebraMap T (Envelope S J) x ∈ pdIdeal _ :=
+  pdIdeal_le_comap (algebraMap (preEnvelope J) _)
+  (⟨⟨_, subset_adjoin ⟨x, hx, ·, rfl⟩⟩, by ext; simp [natCast_def']⟩)
+
+lemma powers_le_comap_powers (p : ℕ) {A B} [CommRing A] [CommRing B] (f : A →+* B) :
+    .powers p ≤ (Submonoid.powers ↑p).comap f := by simp [Submonoid.powers_le]
+
+/-- The ring S[1/p] obtained by inverting p in the ring S of a p-adic test. -/
+abbrev PadicTest.GenericRing {p} [ThePrime p] (c : PadicTest) := Localization.Away (p : c.ProdRing)
+
+lemma PadicTest.eq_zero_of_algebraMap_genericRing {p} [ThePrime p] (c : PadicTest) x (e :
+  algebraMap c.ProdRing c.GenericRing x = 0) :
+  x = 0 := (IsLocalization.Away.exists_of_eq _ (by simpa)).elim (c.isLeftRegular_p.pow · ·)

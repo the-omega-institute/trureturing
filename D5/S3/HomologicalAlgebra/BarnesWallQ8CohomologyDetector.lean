@@ -137,12 +137,13 @@ def etaExponent (p : Q8 × Q8 × Q8) : ZMod 2 :=
 
 variable {M : Type} [AddCommGroup M]
 
-private def coefficientHom (t : M) (ht : t + t = 0) : ZMod 2 →+ M :=
+/-- Send the nonzero bit to the specified element of order dividing two. -/
+def coefficientHom (t : M) (ht : t + t = 0) : ZMod 2 →+ M :=
   ZMod.lift 2 ⟨zmultiplesHom M t, by
     change (2 : ℤ) • t = 0
     rw [two_zsmul, ht]⟩
 
-private theorem coefficientHom_one (t : M) (ht : t + t = 0) :
+theorem coefficientHom_one (t : M) (ht : t + t = 0) :
     coefficientHom t ht 1 = t := by
   change ZMod.lift 2 _ ((1 : ℤ) : ZMod 2) = t
   rw [ZMod.lift_coe]

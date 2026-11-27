@@ -7,8 +7,12 @@ on:
         description: Protected dev commit selected by the publisher
         required: true
         type: string
+      kind:
+        description: Compiler or report publication
+        required: true
+        type: string
       matrix:
-        description: Lanes containing changed module shards
+        description: Workers for the pinned publication plan
         required: true
         type: string
 
@@ -45,7 +49,7 @@ jobs:
           cache: false
       - run: make -C tools dotnet DOTNET_PROJECT=tools/StrataLint.Lean/StrataLint.Lean.csproj
       - id: keys
-        run: python3 tools/scripts/worktree/lean_actions.py keys --repository "$GITHUB_WORKSPACE"
+        run: python3 tools/scripts/worktree/lean_actions.py keys --repository "$GITHUB_WORKSPACE" --layers dependency
       - uses: actions/cache/restore@v5
         if: steps.keys.outputs.elan_key != ''
         continue-on-error: true
@@ -69,7 +73,7 @@ jobs:
         run: |
           python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --layers dependency --dependency-key "$DEPENDENCY_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME"
           bash .github/actions/lean-compile-layer/prepare-dependencies.sh
-      - name: Build and save each module shard with its reports
+      - name: Build and checkpoint the assigned publication targets
         env:
           GH_TOKEN: ${{ github.token }}
           STRATALINT_CACHE_WRITES: 'true'
@@ -77,4 +81,5 @@ jobs:
           LEAN_NUM_THREADS: '1'
         uses: ./.github/actions/lean-cache-shards
         with:
+          kind: ${{ inputs.kind }}
           operation: module-worker
