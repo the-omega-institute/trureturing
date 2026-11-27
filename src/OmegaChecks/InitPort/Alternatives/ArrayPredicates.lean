@@ -47,6 +47,10 @@ public theorem Array.anyM_loop_iff_exists : type_of% @_root_.Array.anyM_loop_iff
   intro α p xs start stop limit
   exact anyFrom p xs limit stop start (Nat.le_add_right _ _)
 
+public theorem Array.anyM_loop_iff_exists._unary : type_of% @_root_.Array.anyM_loop_iff_exists._unary := by
+  intro α p xs stop h start
+  exact Array.anyM_loop_iff_exists (p := p) (start := start) h
+
 public theorem Array.any_iff_exists : type_of% @_root_.Array.any_iff_exists := by
   intro α p xs start stop
   unfold _root_.Array.any _root_.Array.anyM

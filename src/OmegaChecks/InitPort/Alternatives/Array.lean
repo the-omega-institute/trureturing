@@ -272,6 +272,11 @@ public theorem Array.foldlM_toList.aux : type_of% @_root_.Array.foldlM_toList.au
   intro m β α monad f xs i j room b
   exact congrFun (foldListTail f xs i j room) b
 
+public theorem Array.foldlM_toList.aux._unary : type_of% @_root_.Array.foldlM_toList.aux._unary := by
+  intro α xs packed
+  obtain ⟨m, β, inst, f, i, j, h, b⟩ := packed
+  exact @Array.foldlM_toList.aux m β α inst f xs i j h b
+
 public theorem Array.foldlM_toList : type_of% @_root_.Array.foldlM_toList := by
   intro m β α monad f b xs
   unfold _root_.Array.foldlM
