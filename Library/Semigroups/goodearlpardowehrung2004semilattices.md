@@ -41,6 +41,14 @@ transportation consequence, which includes empty finite carriers and an
 arbitrary label type. Embedding, purity, cancellation, finiteness of the
 coefficient monoid, and nontriviality are not assumed.
 
+## Verified locator
+
+Source: https://arxiv.org/pdf/math/0408072v1
+
+Scope: Section 2, Lemma 2.1 (regular abelian monoids as semilattices of groups),
+and Section 3, Theorem 3.2 (refinement characterized by a distributive
+idempotent semilattice and the Mayer–Vietoris property for a regular abelian monoid).
+
 ## References
 
 - Truth anchor: `D5/S3/Combinatorics/Transportation/RegularMayerVietoris.regular_mvp_iff_finite_fiber_transport`
