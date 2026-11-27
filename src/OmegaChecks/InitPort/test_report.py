@@ -75,6 +75,13 @@ class CoverageTest(unittest.TestCase):
             with self.subTest(mismatch=mismatch), self.assertRaisesRegex(ValueError, "runtime conflict"):
                 check_coverage(inventory({**observed, **mismatch}))
 
+    def test_unsafe_packing_alone_leaves_declared_input_unresolved(self):
+        row = site("Init.ShareCommon", "ShareCommon.Object.eq", kind="opaque", unsafe=True,
+                   logicalConsequence="False", logicalConsequenceWitness="packedPayloadEquality",
+                   requiredBehavior="preserve native payloads under a pure packing of nested lists",
+                   unsafePackedObservation="unsafeCast of equal nested lists produced different results")
+        self.assertEqual(check_coverage(inventory(row)), (0, [("Init.ShareCommon", "ShareCommon.Object.eq")]))
+
     def test_equation_operand_does_not_resolve_the_equation(self):
         equation = site("Init.While", "Classical.choice.congr_simp", equationOperand="Classical.choice",
                         operandImpliesAxiom="Classical.choice", operandReductionWitness="fromChoice")

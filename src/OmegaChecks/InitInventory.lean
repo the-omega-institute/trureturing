@@ -712,7 +712,7 @@ private def checkedTypeAxioms (official : Environment) (info : ConstantInfo)
   return direct
 
 private def inventory (lib : System.FilePath) (visible strict full : Environment) (modules : Array Name)
-    (gaps : Option IO.FS.Handle) (observedRuntime : List String) : CoreM Json := do
+    (gaps : Option IO.FS.Handle) (observedRuntime observedPacked : List String) : CoreM Json := do
   let official ← getEnv
   let reductions := reductionPaths visible strict full
   let boundaries : Std.HashMap (Name × Name) (Name × Name) := OmegaChecks.InitBoundaries.reductions.foldl
@@ -736,7 +736,7 @@ private def inventory (lib : System.FilePath) (visible strict full : Environment
   let mut nativeByModule := #[]
   let mut allNative := #[]
   if let some file := gaps then
-    file.putStrLn "module\tdeclaration\tkind\tunsafe\tpartial\tupstreamAxioms\timpliesAxiom\treductionWitness\tlogicalConsequence\tlogicalConsequenceWitness\trequiredBehavior\tabstractedDependency\truntimeConflictWitness\tequationOperand\toperandImpliesAxiom\toperandReductionWitness\tunchangedTypeAxioms"
+    file.putStrLn "module\tdeclaration\tkind\tunsafe\tpartial\tupstreamAxioms\timpliesAxiom\treductionWitness\tlogicalConsequence\tlogicalConsequenceWitness\trequiredBehavior\tabstractedDependency\truntimeConflictWitness\tequationOperand\toperandImpliesAxiom\toperandReductionWitness\tunchangedTypeAxioms\tunsafePackedObservation"
   for owner in modules do
     let some idx := visible.getModuleIdx? owner | throwError "missing official module {owner}"
     let publicNames := visible.header.moduleData[idx]!.constNames.filter publicName
@@ -771,6 +771,9 @@ private def inventory (lib : System.FilePath) (visible strict full : Environment
         guard (info.isUnsafe && observedRuntime.contains name.toString)
         let some ("False", witness, _) := conditional | none
         return witness.toString
+      let packedObservation := if observedPacked.contains name.toString then
+        some "Observed different native results on equal nested lists packed as NonScalar by unsafeCast"
+      else none
       let boundary := boundaries[(owner, name)]?
       let selector := if boundary.isSome && OmegaChecks.InitBoundaries.OptionSelector.usesSelector owner name then
         some (``Option.choice).toString else none
@@ -790,7 +793,7 @@ private def inventory (lib : System.FilePath) (visible strict full : Environment
             (consequence.map Prod.fst).getD "", (consequence.map (·.2.toString)).getD "", behavior.getD "",
             selector.getD "", runtimeConflict.getD "", (operand.map (·.name.toString)).getD "",
             (operand.map fun _ => (``Classical.choice).toString).getD "", (operand.map (·.witness.toString)).getD "",
-            String.intercalate "," (typeAxioms.toList.map Name.toString)]
+            String.intercalate "," (typeAxioms.toList.map Name.toString), packedObservation.getD ""]
       if info.isAxiom then
         directAxioms := directAxioms + 1
         axiomUnique := axiomUnique.insert name
@@ -821,6 +824,9 @@ private def inventory (lib : System.FilePath) (visible strict full : Environment
       let row := match operand with
         | some op => row.mergeObj <| Json.mkObj [("equationOperand", toJson op.name.toString),
             ("operandImpliesAxiom", toJson (``Classical.choice).toString), ("operandReductionWitness", toJson op.witness.toString)]
+        | none => row
+      let row := match packedObservation with
+        | some observation => row.setObjVal! "unsafePackedObservation" (toJson observation)
         | none => row
       let row := match runtimeConflict with
         | some witness => row.setObjVal! "runtimeConflictWitness" (toJson witness)
@@ -871,6 +877,7 @@ def main (args : List String) : IO Unit := do
     unless owner.getRoot == `OmegaInit do
       throw <| IO.userError s!"expected a strict OmegaInit build, found import {owner}"
   let pointers ← unsafe OmegaChecks.InitBoundaries.PointerObservations.observe modules.size
+  let packed ← unsafe OmegaChecks.InitBoundaries.PointerObservations.observePacked modules.size
   let effects ← unsafe OmegaChecks.InitBoundaries.EffectObservations.observe modules.size
   -- Reference counts depend on argument ownership in native code. Run the borrowed call
   -- in a compiled executable so interpreter boxing cannot perturb the observed object.
@@ -880,6 +887,6 @@ def main (args : List String) : IO Unit := do
     | "true" => pure ("isExclusiveUnsafe" :: pointers ++ effects)
     | "false" => pure (pointers ++ effects)
     | other => throw <| IO.userError s!"unexpected native exclusivity observation: {other}"
-  let result ← (inventory lib visible strict full modules gaps observedRuntime).toIO' {fileName := "<Init inventory>", fileMap := default} {env := official}
+  let result ← (inventory lib visible strict full modules gaps observedRuntime packed).toIO' {fileName := "<Init inventory>", fileMap := default} {env := official}
   IO.FS.writeFile outputPath (result.compress ++ "\n")
   IO.println (← IO.ofExcept (result.getObjVal? "summary")).compress

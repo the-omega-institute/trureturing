@@ -89,6 +89,19 @@ public unsafe def observe (seed : Nat) : IO (List String) := do
   let x := object (seed % 17)
   let y := equalObject (seed % 17)
   unless x.val == y.val do throw <| IO.userError "expected equal NonScalar fields"
+  let results := [("ptrAddrUnsafe", ptrAddrUnsafe a != ptrAddrUnsafe b),
+    ("ptrEq", ptrEq a a != ptrEq a b), ("ptrEqList", ptrEqList [a] [a] != ptrEqList [a] [b]),
+    ("withPtrEqUnsafe", compareTagged (@withPtrEqUnsafe) a a && !compareTagged (@withPtrEqUnsafe) a b),
+    ("ShareCommon.Object.ptrEq", ShareCommon.Object.ptrEq x x != ShareCommon.Object.ptrEq x y),
+    ("ShareCommon.Object.ptrHash", ShareCommon.Object.ptrHash x != ShareCommon.Object.ptrHash y)]
+  return (results.filter Prod.snd).map Prod.fst
+
+/-- Heterogeneous heap payloads reach the declared NonScalar parameter only through an unsafe cast. -/
+public unsafe def observePacked (seed : Nat) : IO (List String) := do
+  let a := singleton seed
+  let b := reversed [seed]
+  let x := object (seed % 17)
+  let y := equalObject (seed % 17)
   unless ShareCommon.Object.eq x y && ShareCommon.Object.hash x == ShareCommon.Object.hash y do
     throw <| IO.userError "expected equal large Nat payloads"
   let leaf₁ : NonScalar := unsafeCast a
@@ -102,12 +115,7 @@ public unsafe def observe (seed : Nat) : IO (List String) := do
   let packed₁ : NonScalar := unsafeCast outer₁
   let packed₂ : NonScalar := unsafeCast outer₂
   unless ShareCommon.Object.eq packed₁ packed₁ do throw <| IO.userError "expected identical object payloads"
-  let results := [("ptrAddrUnsafe", ptrAddrUnsafe a != ptrAddrUnsafe b),
-    ("ptrEq", ptrEq a a != ptrEq a b), ("ptrEqList", ptrEqList [a] [a] != ptrEqList [a] [b]),
-    ("withPtrEqUnsafe", compareTagged (@withPtrEqUnsafe) a a && !compareTagged (@withPtrEqUnsafe) a b),
-    ("ShareCommon.Object.ptrEq", ShareCommon.Object.ptrEq x x != ShareCommon.Object.ptrEq x y),
-    ("ShareCommon.Object.ptrHash", ShareCommon.Object.ptrHash x != ShareCommon.Object.ptrHash y),
-    ("ShareCommon.Object.eq", !ShareCommon.Object.eq packed₁ packed₂),
+  let results := [("ShareCommon.Object.eq", !ShareCommon.Object.eq packed₁ packed₂),
     ("ShareCommon.Object.hash", ShareCommon.Object.hash packed₁ != ShareCommon.Object.hash packed₂)]
   return (results.filter Prod.snd).map Prod.fst
 
