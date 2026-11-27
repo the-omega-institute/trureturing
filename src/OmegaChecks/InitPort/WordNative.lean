@@ -70,6 +70,8 @@ public def supported (source : Environment) (owner name : Name) : Bool :=
     [`land, `lor, `xor, `shiftLeft, `shiftRight].contains method
   let logarithm := owner == `OmegaInit.Data.Nat.Log2 && name == `Nat.log2
   let wordRepr := owner == `OmegaInit.Data.Repr && name == `USize.repr
+  let modular := (owner == `OmegaInit.Data.Nat.Div.Basic && name == `Nat.divExact) ||
+    (owner == `OmegaInit.Data.Nat.PowMod && name == `Nat.powMod)
   let stringOp := owner == `OmegaInit.Data.String.Bootstrap && [`String.Internal.length, `String.Internal.append].contains name
   let intPrimitive := intOwner && name.getPrefix == `Int &&
     [`neg, `add, `sub, `mul, `decEq, `decLe, `decLt, `decNonneg, `natAbs, `ediv, `emod, `tdiv, `tmod, `divExact].contains method
@@ -77,7 +79,7 @@ public def supported (source : Environment) (owner name : Name) : Bool :=
     (name.getPrefix == `Bool && widths.contains method)
   isFloatCall source owner name ||
     (owner == `OmegaInit.Prelude && SyntaxPositionNative.supported name) ||
-    ((base || intPrimitive || stringOp || wordRepr || bitwise || logarithm || (inOwner && primitive)) && isExtern source name) ||
+    ((base || intPrimitive || modular || stringOp || wordRepr || bitwise || logarithm || (inOwner && primitive)) && isExtern source name) ||
     ((intOwner || [`OmegaInit.Data.Int.Repr, `OmegaInit.Data.Repr, `OmegaInit.Data.Nat.Bitwise.Basic, `OmegaInit.Data.BitVec.Basic].contains owner || [`OmegaInit.Data.UInt.Basic, `OmegaInit.Data.SInt.Basic].contains owner) && usesPinnedFunction name)
 
 private def symbol (n : Name) := (n.replacePrefix `Omega .anonymous).mangle "omega_word_"
