@@ -3,7 +3,7 @@ import Lean.Replay
 import OmegaChecks.AuditCache
 import OmegaChecks.Interface
 import OmegaChecks.ModuleSurface
-import OmegaChecks.InitPort.Persistent
+import OmegaChecks.InitPort.UnsafeRuntime
 
 open Lean
 
@@ -70,13 +70,13 @@ private def checkUpstreamNames (strict publicStrict : Environment) : IO Unit := 
 private def replayStrict (env : Environment) : IO Unit := do
   let check : CoreM Unit := do
     for (name, info) in env.constants.toList do
-      if (info.isUnsafe && !OmegaChecks.InitPort.Persistent.isOriginal info true) || info.isPartial || info.isAxiom then
+      if (info.isUnsafe && !OmegaChecks.InitPort.UnsafeRuntime.isOriginal info true) || info.isPartial || info.isAxiom then
         throwError "inadmissible declaration {name}"
       let axioms ← collectAxioms name
       unless axioms.isEmpty do
         throwError "{name} depends on {axioms}"
   check.toIO' {fileName := "<audit>", fileMap := default} {env}
-  discard <| OmegaChecks.InitPort.Persistent.replay env.constants.map₁
+  discard <| OmegaChecks.InitPort.UnsafeRuntime.replay env.constants.map₁
 
 /-- Replay the imported artifacts in an empty kernel environment. -/
 private def audit (roots : List String) (path label : String)

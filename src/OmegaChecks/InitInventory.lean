@@ -4,6 +4,8 @@ import OmegaChecks.InitCompiler.RootNames
 import OmegaChecks.InitInventory.ConstructorIff
 meta import OmegaChecks.InitInventory.ConstructorIff
 meta import OmegaChecks.InitCompiler.RootNames
+import OmegaChecks.InitPort.UnsafeRuntime
+meta import OmegaChecks.InitPort.UnsafeRuntime
 import Lean.Compiler.LCNF.PhaseExt
 import OmegaChecks.InitInventory.Conditional
 meta import OmegaChecks.InitInventory.Conditional
@@ -676,6 +678,16 @@ private def inventory (lib : System.FilePath) (visible strict full witnesses : E
       if boundary.isSome then certifiedSites := certifiedSites + 1
       let strictName := if OmegaChecks.InitCompiler.RootNames.isPrimitive expected name then name else `Omega ++ name
       let matched := strictNames.any (·.contains strictName)
+      let checkedUnsafeRuntime ← if matched && owner == `Init.Util && name == `isExclusiveUnsafe then do
+        let some dst := full.find? strictName | throwError "missing private exclusivity observation"
+        unless (strict.find? strictName).any (·.isUnsafe) && officialSigs.contains name &&
+            strictSigs.contains strictName && OmegaChecks.InitPort.UnsafeRuntime.isExclusive info false &&
+            OmegaChecks.InitPort.UnsafeRuntime.isExclusive dst true &&
+            OmegaChecks.InitPort.UnsafeRuntime.exclusiveABI official false &&
+            OmegaChecks.InitPort.UnsafeRuntime.exclusiveABI full true do
+          throwError "invalid public, private or native interface of the unsafe exclusivity observation"
+        pure (some "lean_is_exclusive_obj")
+      else pure none
       let strictOwner := if matched then some expected else none
       if matched then
         matchingNames := matchingNames + 1
@@ -727,6 +739,9 @@ private def inventory (lib : System.FilePath) (visible strict full witnesses : E
             ("operandImpliesAxiom", toJson (``Classical.choice).toString), ("operandReductionWitness", toJson op.witness.toString)]
         | none => row
       let row := if let some target := endpointType then row.setObjVal! "specializedEndpointType" (toJson target) else row
+      let row := match checkedUnsafeRuntime with
+        | some entry => row.setObjVal! "checkedUnsafeRuntime" (toJson entry)
+        | none => row
       let row := match packedObservation with
         | some observation => row.setObjVal! "unsafePackedObservation" (toJson observation)
         | none => row

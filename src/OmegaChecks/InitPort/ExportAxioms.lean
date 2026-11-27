@@ -5,8 +5,8 @@ import Lean.Replay
 import all OmegaChecks.InitCompiler.NaturalBootstrap
 import all OmegaChecks.InitCompiler.CompilerMarkers
 import all OmegaChecks.InitPort.NativeQuot
-import OmegaChecks.InitPort.Persistent
-meta import OmegaChecks.InitPort.Persistent
+import OmegaChecks.InitPort.UnsafeRuntime
+meta import OmegaChecks.InitPort.UnsafeRuntime
 import all Lean.Util.CollectAxioms
 
 open Lean
@@ -17,9 +17,9 @@ private def compilerAxiomEntries (full : Environment) :
     IO (Name × NameMap EnvExtensionEntry) := do
   OmegaChecks.InitPort.NativeQuot.checkSupport full
   for (n, ci) in full.constants.toList do
-    if (ci.isUnsafe && !OmegaChecks.InitPort.Persistent.isOriginal ci true) || ci.isPartial || ci.isAxiom then
+    if (ci.isUnsafe && !OmegaChecks.InitPort.UnsafeRuntime.isOriginal ci true) || ci.isPartial || ci.isAxiom then
       throw <| IO.userError s!"inadmissible strict declaration {n}"
-  let checked ← OmegaChecks.InitPort.Persistent.replay full.constants.map₁
+  let checked ← OmegaChecks.InitPort.UnsafeRuntime.replay full.constants.map₁
   let env := Environment.ofKernelEnv checked
   let data ← mkModuleData env
   let some (ext, entries) := data.entries.find? (fun e => privateToUserName e.1 == `Lean.exportedAxiomsExt)
@@ -66,7 +66,7 @@ private def checkCopies (dir : System.FilePath) (full : Environment) : IO Unit :
       -- its own copies selected. Replay rejects cyclic/self-supporting alternatives.
       let env ← importModules #[{module := owner}] {} (level := .private)
       let terms := localTerms.foldl (fun states c => states.insert c.name c) env.constants.map₁
-      discard <| OmegaChecks.InitPort.Persistent.replay terms
+      discard <| OmegaChecks.InitPort.UnsafeRuntime.replay terms
 
 private def writeModule (lib : System.FilePath) (name ext : Name)
     (byName : NameMap EnvExtensionEntry) : IO Unit := do

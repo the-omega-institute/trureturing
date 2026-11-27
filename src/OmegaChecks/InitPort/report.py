@@ -93,8 +93,13 @@ def check_coverage(official):
                         row.get("logicalConsequence") != "False" or
                         row.get("logicalConsequenceWitness") != runtime or not row.get("requiredBehavior")):
             raise ValueError(f"inconsistent runtime conflict for {owner}/{name}")
+        unsafe_runtime = row.get("checkedUnsafeRuntime")
+        if unsafe_runtime and (site != ("Init.Util", "isExclusiveUnsafe") or
+                               unsafe_runtime != "lean_is_exclusive_obj" or not port or
+                               row["kind"] != "opaque" or not row.get("unsafe") or not runtime):
+            raise ValueError(f"inconsistent checked unsafe runtime for {owner}/{name}")
         if port:
-            if axiom or witness or runtime or row["strictModule"] != "Omega" + owner:
+            if axiom or witness or (runtime and not unsafe_runtime) or row["strictModule"] != "Omega" + owner:
                 raise ValueError(f"inconsistent strict match for {owner}/{name}")
             matched += 1
         elif axiom:
@@ -119,7 +124,8 @@ def check_coverage(official):
 def verify_complete(official, product, reductions, unresolved):
     if unresolved:
         examples = ", ".join(f"{owner}/{name}" for owner, name in unresolved[:3])
-        runtime = sum(bool(row.get("runtimeConflictWitness")) for row in official["declarations"])
+        runtime = sum(bool(row.get("runtimeConflictWitness")) and not row["matchingNameAndModule"]
+                      for row in official["declarations"])
         endpoints = sum(bool(row.get("specializedEndpointType")) for row in official["declarations"])
         formations = sum(bool(row.get("formationArgument")) or row.get("transportPathType") == "Quot.sound"
                          for row in official["declarations"])

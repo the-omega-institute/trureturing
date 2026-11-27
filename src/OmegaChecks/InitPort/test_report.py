@@ -81,6 +81,18 @@ class CoverageTest(unittest.TestCase):
                    strictLogicalConsequenceWitness="OmegaStrictString.excludedMiddleOfLongest")
         self.assertEqual(check_coverage(inventory(row)), (0, [(row["module"], row["name"])]))
 
+    def test_matched_unsafe_observation_retains_the_pure_replacement_counterexample(self):
+        row = site("Init.Util", "isExclusiveUnsafe", kind="opaque", unsafe=True,
+                   matchingNameAndModule=True, strictModule="OmegaInit.Util",
+                   checkedUnsafeRuntime="lean_is_exclusive_obj", runtimeConflictWitness="exclusivity",
+                   logicalConsequence="False", logicalConsequenceWitness="exclusivity",
+                   requiredBehavior="distinguish equal arrays")
+        self.assertEqual(check_coverage(inventory(row)), (0, []))
+        for mismatch in ({"checkedUnsafeRuntime": None}, {"checkedUnsafeRuntime": "other"},
+                         {"name": "other"}, {"unsafe": False}, {"runtimeConflictWitness": None}):
+            with self.subTest(mismatch=mismatch), self.assertRaises(ValueError):
+                check_coverage(inventory(row | mismatch))
+
     def test_unsafe_packing_alone_leaves_declared_input_unresolved(self):
         row = site("Init.ShareCommon", "ShareCommon.Object.eq", kind="opaque", unsafe=True,
                    logicalConsequence="False", logicalConsequenceWitness="packedPayloadEquality",
