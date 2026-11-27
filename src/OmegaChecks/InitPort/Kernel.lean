@@ -453,10 +453,12 @@ partial def visit (n : Name) : M Bool := do
       if missing.isSome then return ← record n (.blocked "smart unfolding requires unavailable matcher metadata")
   if let some reason := c.excluded.find? n then return ← record n (.blocked reason)
   if ci.isAxiom then return ← record n (.blocked "axiom")
-  if [`withPtrAddrUnsafe, `Array.modifyMUnsafe].contains n then
+  let allocator := OmegaChecks.InitPort.LogicalHandle.implementation? n
+  if [`withPtrAddrUnsafe, `Array.modifyMUnsafe].contains n || allocator.isSome then
     let .defnInfo native := ci | return ← record n (.blocked "missing native implementation")
-    let name := if n == `withPtrAddrUnsafe then `withPtrAddr else `Array.modifyM
+    let name := allocator.map (·.allocator) |>.getD (if n == `withPtrAddrUnsafe then `withPtrAddr else `Array.modifyM)
     let reference := mkConst name (native.levelParams.map Level.param)
+    if let some api := allocator then OmegaChecks.InitPort.LogicalHandle.checkImplementation api c.source native reference
     if n == `withPtrAddrUnsafe then OmegaChecks.InitPort.Address.check c.source native reference
     unless Compiler.getImplementedBy? c.source name == some n do
       return ← record n (.blocked "mismatched native implementation" (some name))

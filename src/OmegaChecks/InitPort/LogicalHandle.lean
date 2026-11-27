@@ -69,6 +69,22 @@ public def macroMethods : API := ⟨`Init.Prelude, `Lean.Macro.MethodsRefPointed
   `Lean.Macro.MethodsRef.logicalToken, "l_Lean_Macro_mkMethodsImp", some `Lean.Macro.mkMethodsImp⟩
 public def apis := [promise, referenceCell, shareState, shareFactory, macroMethods]
 
+public def implementation? (name : Name) := apis.find? (·.implementedBy == some name)
+
+/-- The public allocator runs this very implementation in the pinned runtime. Its checked
+strict definition supplies a total term at the implementation's original type. -/
+public def checkImplementation (api : API) (ref : Environment) (impl : DefinitionVal) (body : Expr) : IO Unit := do
+  let some (.opaqueInfo alloc) := ref.find? api.allocator | throw <| IO.userError "missing pinned allocator"
+  let levels := impl.levelParams.map Level.param
+  unless impl.safety == .unsafe && !alloc.isUnsafe && api.implementedBy == some impl.name &&
+      Compiler.getImplementedBy? ref alloc.name == some impl.name &&
+      ref.getModuleIdxFor? impl.name == ref.getModuleIdx? api.owner &&
+      ref.getModuleIdxFor? alloc.name == ref.getModuleIdx? api.owner &&
+      impl.name.mangle (pre := "l_") == api.nativeAllocator &&
+      alloc.levelParams.length == levels.length && body == mkConst alloc.name levels &&
+      Kernel.isDefEqGuarded ref {} (alloc.type.instantiateLevelParams alloc.levelParams levels) impl.type do
+    throw <| IO.userError s!"incorrect allocator implementation {impl.name}"
+
 public def API.privateOwner (api : API) := api.owner.replacePrefix `Init `OmegaInit
 public def API.tokenName (api : API) := mkPrivateNameCore api.owner api.logicalToken
 public def API.strictToken (api : API) := mkPrivateNameCore api.privateOwner (`Omega ++ api.logicalToken)
