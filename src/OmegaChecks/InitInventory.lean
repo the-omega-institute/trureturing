@@ -309,6 +309,9 @@ private def logicalConsequence? (owner name : Name) : Option (Name × Name) := d
     if name == ``List.cons.injEq then
       return (``OmegaChecks.InitBoundaries.ConstructorNormalization.PrefixEquality,
         ``OmegaChecks.InitBoundaries.ConstructorNormalization.prefixEqualityOfCons)
+  if owner == `Init.Grind.Order then
+    if let some result := OmegaChecks.InitBoundaries.OrderTags.equivalences.lookup name then
+      return result
   if owner == `Init.Grind.Ordered.Field || owner == `Init.Grind.Ordered.Ring then
     if let some reduction := OmegaChecks.InitBoundaries.WeakRingOrder.witnesses.lookup name then
       return reduction

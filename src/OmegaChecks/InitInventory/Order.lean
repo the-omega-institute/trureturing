@@ -4,6 +4,7 @@ import all Init.Internal.Order.Basic
 import Lean.Replay
 import all Lean.Util.CollectAxioms
 public import OmegaChecks.InitInventory.Logic
+import all OmegaChecks.InitInventory.Logic
 
 public section
 
@@ -264,6 +265,91 @@ theorem weakMiddleOfMinLT (law : type_of% @Std.min_lt_iff.{0}) (p : Prop) : ¬p 
 end PredicateBounds
 
 end AbstractOrder
+
+namespace OrderTags
+open Lean.Grind Std
+
+/-- Two off-diagonal comparisons encode arbitrary disjoint propositions. -/
+private def comparison (diagonal p q : Prop) (a b : Bool) : Prop :=
+  Bool.rec (Bool.rec diagonal p b) (Bool.rec q diagonal b) a
+
+@[instance_reducible] private def weak (p q : Prop) : LE Bool := ⟨comparison True p q⟩
+@[instance_reducible] private def strict (p q : Prop) : LT Bool := ⟨comparison False p q⟩
+
+private theorem preorder (p q : Prop) : @IsPreorder Bool (weak p q) :=
+  @IsPreorder.mk Bool (weak p q) (fun a => by cases a <;> exact True.intro)
+    (fun a b c h k => by cases a <;> cases b <;> cases c <;> first | exact trivial | exact h | exact k)
+
+private theorem lawful (p q : Prop) (disjoint : p → ¬q) : @LawfulOrderLT Bool (strict p q) (weak p q) := by
+  apply @LawfulOrderLT.mk Bool (strict p q) (weak p q)
+  intro a b
+  cases a <;> cases b
+  · exact ⟨False.elim, fun h => h.2 h.1⟩
+  · exact ⟨fun h => ⟨h, disjoint h⟩, And.left⟩
+  · exact ⟨fun h => ⟨h, fun hp => disjoint hp h⟩, And.left⟩
+  · exact ⟨False.elim, fun h => h.2 h.1⟩
+
+theorem weakRefl : (type_of% @Order.le_eq_true.{0}) ↔ InhabitedPropExt := by
+  constructor
+  · intro law p hp
+    letI : LE Unit := ⟨fun _ _ => p⟩
+    letI : IsPreorder Unit := ⟨fun _ => hp, fun _ _ _ h _ => h⟩
+    exact @law Unit _ _ ()
+  · intro canon α _ _ a
+    exact canon _ (IsPreorder.le_refl a)
+
+theorem weakOfStrict : (type_of% @Order.le_eq_true_of_lt.{0}) ↔ InhabitedPropExt := by
+  constructor
+  · intro law p hp
+    exact @law Bool (weak p False) (strict p False) (lawful p False (fun _ => id)) false true hp
+  · intro canon α _ _ _ a b h
+    exact canon _ ((LawfulOrderLT.lt_iff a b).mp h).1
+
+theorem strictRefl : (type_of% @Order.lt_eq_false.{0}) ↔ RefutedPropExt := by
+  constructor
+  · intro law p np
+    letI : LE Unit := ⟨fun _ _ => True⟩
+    letI : LT Unit := ⟨fun _ _ => p⟩
+    letI : LawfulOrderLT Unit := ⟨fun _ _ => ⟨fun h => (np h).elim, fun h => (h.2 h.1).elim⟩⟩
+    exact @law Unit _ _ _ ()
+  · intro canon α _ _ _ a
+    apply canon
+    intro h
+    have k := (LawfulOrderLT.lt_iff a a).mp h
+    exact k.2 k.1
+
+theorem weakOfReverseStrict : (type_of% @Order.le_eq_false_of_lt.{0}) ↔ RefutedPropExt := by
+  constructor
+  · intro law p np
+    exact @law Bool (weak True p) (strict True p) (lawful True p (fun _ => np)) (preorder True p) false true trivial
+  · intro canon α _ _ _ _ a b h
+    exact canon _ ((LawfulOrderLT.lt_iff a b).mp h).2
+
+theorem strictOfReverseStrict : (type_of% @Order.lt_eq_false_of_lt.{0}) ↔ RefutedPropExt := by
+  constructor
+  · intro law p np
+    exact @law Bool (weak True p) (strict True p) (lawful True p (fun _ => np)) (preorder True p) false true trivial
+  · intro canon α _ _ _ _ a b h
+    exact canon _ fun k => ((LawfulOrderLT.lt_iff a b).mp h).2 ((LawfulOrderLT.lt_iff b a).mp k).1
+
+theorem strictOfReverseWeak : (type_of% @Order.lt_eq_false_of_le.{0}) ↔ RefutedPropExt := by
+  constructor
+  · intro law p np
+    exact @law Bool (weak True p) (strict True p) (lawful True p (fun _ => np)) (preorder True p) false true trivial
+  · intro canon α _ _ _ _ a b h
+    exact canon _ fun k => ((LawfulOrderLT.lt_iff b a).mp k).2 h
+
+/-- Each full rule is equivalent at the small universe to the indicated
+truth-value normalization. Neither normalization is marked as a forbidden axiom. -/
+def equivalences : List (Name × Name × Name) := [
+  (``Order.le_eq_true, ``InhabitedPropExt, ``weakRefl),
+  (``Order.le_eq_true_of_lt, ``InhabitedPropExt, ``weakOfStrict),
+  (``Order.lt_eq_false, ``RefutedPropExt, ``strictRefl),
+  (``Order.le_eq_false_of_lt, ``RefutedPropExt, ``weakOfReverseStrict),
+  (``Order.lt_eq_false_of_lt, ``RefutedPropExt, ``strictOfReverseStrict),
+  (``Order.lt_eq_false_of_le, ``RefutedPropExt, ``strictOfReverseWeak)]
+
+end OrderTags
 
 namespace InternalOrder
 

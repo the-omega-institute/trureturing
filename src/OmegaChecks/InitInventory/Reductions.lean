@@ -120,6 +120,7 @@ private def replayWitnesses (env : Environment) : IO Unit := do
     ReferenceSelection.witnesses.map (fun row => row.2.2) ++
     [``ReferenceRoundTrip.alloc, ``ReferenceRoundTrip.primAlloc, ``ReferenceRoundTrip.set, ``ReferenceRoundTrip.primSet] ++
     BooleanReflection.witnesses.map (fun row => row.2.2) ++
+    OrderTags.equivalences.map (fun row => row.2.2) ++
     IntegerCancellation.witnesses.map (fun row => row.2.2) ++
     WeakRingOrder.witnesses.map (fun row => row.2.2) ++
     [``MonadicTraversal.fromListFoldl, ``MonadicTraversal.fromListFoldr, ``ArrayLoopCongruence.listForInCongr] ++
