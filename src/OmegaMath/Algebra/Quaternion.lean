@@ -267,6 +267,12 @@ theorem nonzero_scale {a : Quaternion} {k : Int} (ha : a.Nonzero) (hk : Not (Eq 
     (scale_cancel hk (e.trans (ext (a := scale k zero) (b := zero) (Int.mul_zero k) (Int.mul_zero k)
       (Int.mul_zero k) (Int.mul_zero k)).symm)))
 
+/-- Integer quaternions have no zero divisors. -/
+theorem eq_zero_or_eq_zero_of_mul_eq_zero {a b : Quaternion} (h : Eq (a.mul b) zero) :
+    Or (Eq a zero) (Eq b zero) :=
+  (Nat.mul_eq_zero.mp ((normSq_mul a b).symm.trans ((normSq_eq_zero_iff (a.mul b)).mpr h))).elim
+    (fun e => Or.inl ((normSq_eq_zero_iff a).mp e)) (fun e => Or.inr ((normSq_eq_zero_iff b).mp e))
+
 theorem nonzero_mul {a b : Quaternion} (ha : a.Nonzero) (hb : b.Nonzero) : (a.mul b).Nonzero :=
   nonzero_of_normSq_ne_zero
     (fun e => ((Nat.mul_eq_zero.mp ((normSq_mul a b).symm.trans e)).elim
