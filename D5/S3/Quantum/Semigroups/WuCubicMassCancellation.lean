@@ -185,7 +185,7 @@ theorem operatorDeficit_deriv_pos_of_degree_one_le {r t : ℝ} {A : Mat}
     mul_pos (by norm_num) hV
   linarith only [henergy, hcost, hmargin]
 
-open Matrix Set WuCubicAngularCertificate WuCubicConditionedTranslation in
+open Set WuCubicAngularCertificate WuCubicConditionedTranslation in
 /-- A uniform normalized margin at spectral ratio `2/3` propagates to the entire
 closed conditioned ray when the degree-one mass is at most `17/25` of the variance.
 The margin is scaled by the cube of the top eigenvalue at entry. -/
