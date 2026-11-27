@@ -23,6 +23,22 @@ public theorem listPointerEquality (read : type_of% @ptrEqList.{0})
   obtain ⟨a, b, eq, different⟩ := observed
   exact different (congrArg (fun x => read [a] [x]) eq)
 
+/-- The type tag is erased. The list field controls the runtime representation. -/
+private structure Tagged where
+  tag : Type
+  data : List Nat
+
+private theorem differentTags (a b : List Nat) (h : Tagged.mk Unit a = Tagged.mk Empty b) : false = true :=
+  (Eq.mp (congrArg Tagged.tag h) ()).elim
+
+public def compareTagged (read : type_of% @withPtrEqUnsafe.{1}) (a b : List Nat) : Bool :=
+  read (Tagged.mk Unit a) (Tagged.mk Empty b) (fun _ => false) (differentTags a b)
+
+public theorem guardedPointerEquality (read : type_of% @withPtrEqUnsafe.{1})
+    (observed : ∃ a b : List Nat, a = b ∧ compareTagged read a a ≠ compareTagged read a b) : False := by
+  obtain ⟨a, b, eq, different⟩ := observed
+  exact different (congrArg (compareTagged read a) eq)
+
 public theorem objectPointerEquality (read : type_of% @ShareCommon.Object.ptrEq)
     (observed : ∃ a b : NonScalar, a = b ∧ read a a ≠ read a b) : False := by
   obtain ⟨a, b, eq, different⟩ := observed
@@ -50,6 +66,7 @@ public unsafe def observe (seed : Nat) : IO (List String) := do
   unless x.val == y.val do throw <| IO.userError "expected equal NonScalar fields"
   let results := [("ptrAddrUnsafe", ptrAddrUnsafe a != ptrAddrUnsafe b),
     ("ptrEq", ptrEq a a != ptrEq a b), ("ptrEqList", ptrEqList [a] [a] != ptrEqList [a] [b]),
+    ("withPtrEqUnsafe", compareTagged (@withPtrEqUnsafe) a a && !compareTagged (@withPtrEqUnsafe) a b),
     ("ShareCommon.Object.ptrEq", ShareCommon.Object.ptrEq x x != ShareCommon.Object.ptrEq x y),
     ("ShareCommon.Object.ptrHash", ShareCommon.Object.ptrHash x != ShareCommon.Object.ptrHash y)]
   return (results.filter Prod.snd).map Prod.fst

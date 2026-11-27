@@ -97,7 +97,7 @@ private def replayWitnesses (env : Environment) : IO Unit := do
     [``EffectObservations.base, ``EffectObservations.eio, ``EffectObservations.io,
       ``ArrayCasts.map, ``ArrayCasts.mapIndexed,
       ``PointerObservations.address, ``PointerObservations.pointerEquality, ``PointerObservations.listPointerEquality,
-      ``PointerObservations.objectPointerEquality, ``PointerObservations.objectPointerHash] ++
+      ``PointerObservations.guardedPointerEquality, ``PointerObservations.objectPointerEquality, ``PointerObservations.objectPointerHash] ++
     [``HeterogeneousQuotient.hrecOn, ``HeterogeneousQuotient.hrecOnSetoid,
      ``HeterogeneousQuotient.soundOfPairCoherence, ``HeterogeneousQuotient.setoidSoundOfPairCoherence,
      ``HeterogeneousQuotient.firstOfCoherence, ``QuotientDecision.ofSound,

@@ -385,6 +385,9 @@ private def conditionalConsequence? (owner name : Name) : Option (String × Name
     if name == ``ptrEq then
       return ("False", ``OmegaChecks.InitBoundaries.PointerObservations.pointerEquality,
         "Native pointer identity distinguishes an alias from an equal, separately allocated list")
+    if name == ``withPtrEqUnsafe then
+      return ("False", ``OmegaChecks.InitBoundaries.PointerObservations.guardedPointerEquality,
+        "Distinct erased type tags permit a constant false callback, but aliasing an equal list field changes the native result from false to true")
     if name == ``ptrEqList then
       return ("False", ``OmegaChecks.InitBoundaries.PointerObservations.listPointerEquality,
         "Elementwise pointer identity distinguishes singleton lists containing equal allocations")
