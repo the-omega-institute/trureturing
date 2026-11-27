@@ -9,11 +9,8 @@
 import D5.S3.Weil.Analytic.NymanFixedRationalKernel
 import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
 import Mathlib.Analysis.MellinTransform
-import OmegaBuild.Commands
 
 /-! Exact nonvanishing Mellin transform of the fixed rational kernel. -/
-
-compile_only_with_mathlib
 
 set_option autoImplicit false
 

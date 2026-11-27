@@ -7,11 +7,8 @@
    digest: Uniform control between adjacent reciprocal integer scales. -/
 
 import D5.S3.Weil.Analytic.NymanShellMellin
-import OmegaBuild.Commands
 
 /-! Uniform control between adjacent reciprocal integer scales. -/
-
-compile_only_with_mathlib
 
 set_option autoImplicit false
 noncomputable section

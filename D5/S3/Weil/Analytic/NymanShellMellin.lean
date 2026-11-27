@@ -10,11 +10,8 @@ import Mathlib.Analysis.MellinTransform
 import D5.S3.Weil.ZetaPntBounds.ZetaBoundsUpper
 import Mathlib.Tactic
 import Mathlib.NumberTheory.LSeries.Dirichlet
-import OmegaBuild.Commands
 
 /-! Mellin continuation for compactly supported Möbius shell sums. -/
-
-compile_only_with_mathlib
 
 set_option autoImplicit false
 noncomputable section

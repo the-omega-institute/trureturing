@@ -10,11 +10,8 @@ import D5.S3.Weil.Analytic.NymanShellScale
 import D5.S3.Weil.Analytic.NymanFixedRationalKernelLipschitz
 import D5.S3.Weil.Analytic.NymanFixedRationalKernelMellin
 import D5.S3.Weil.ZetaBridge.RightHalfStripRiemannReduction
-import OmegaBuild.Commands
 
 /-! The fixed rational scalar growth bound implies the Riemann hypothesis. -/
-
-compile_only_with_mathlib
 
 set_option autoImplicit false
 noncomputable section

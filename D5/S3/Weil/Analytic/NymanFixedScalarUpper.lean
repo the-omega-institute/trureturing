@@ -8,11 +8,8 @@
 
 import D5.S3.Weil.Analytic.NymanFixedRationalScalar
 import D5.S3.Weil.ZetaPntBounds.MobiusShortAverage
-import OmegaBuild.Commands
 
 /-! Square-root growth of the fixed rational scalar is equivalent to RH. -/
-
-compile_only_with_mathlib
 
 set_option autoImplicit false
 noncomputable section
