@@ -47,7 +47,7 @@ def build(basis, output, workers, audit_log):
     before = {name: source_fingerprint(sources[name]) for name in clients}
 
     def compile_module(name):
-        project = ROOT / ("strict" if root(name) == "OmegaMathlib" else "src")
+        project = ROOT if root(name) == "OmegaMathlib" else ROOT / "src"
         target = output.joinpath(*name.split(".")).with_suffix(".olean")
         target.parent.mkdir(parents=True, exist_ok=True)
         subprocess.run([lean, "-j1", *args, "-R", project, "-o", target, sources[name]],

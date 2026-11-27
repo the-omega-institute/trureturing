@@ -47,9 +47,9 @@ def foundation_config(source_dir, build_dir, label):
     for lib in libraries:
         if lib.get("srcDir") != "src":
             raise ValueError(f"unexpected official source directory for {lib['name']}")
-        lib["srcDir"] = source_dir
+        lib["srcDir"] = "." if source_dir == "strict" and lib["name"] == "OmegaMathlib" else source_dir
         header = f'name = "{lib["name"]}"\nsrcDir = '
-        source = source.replace(header + '"src"', header + json.dumps(source_dir))
+        source = source.replace(header + '"src"', header + json.dumps(lib["srcDir"]))
     if source_dir == "strict":
         expected["moreLinkArgs"] = [*expected.get("moreLinkArgs", []), str(byte_seed_object())]
         source = "moreLinkArgs = " + json.dumps(expected["moreLinkArgs"]) + "\n" + source

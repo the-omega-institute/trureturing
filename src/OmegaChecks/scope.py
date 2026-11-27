@@ -25,12 +25,12 @@ REPORT_DIR = ".lake/build/omega-checks/"
 def module_path(path):
     if not path.endswith(".lean"):
         return None
-    if path == "Trureturing.lean" or path.startswith(("D5/", "Reg/")):
+    if path in {"Trureturing.lean", "OmegaMathlib.lean"} or path.startswith(("D5/", "Reg/", "OmegaMathlib/")):
         return path.removesuffix(".lean").replace("/", ".")
     if path.startswith(("src/", "strict/")):
         directory, _, relative = path.partition("/")
         name = relative.removesuffix(".lean").replace("/", ".")
-        if root(name) in (CHECK_ROOTS | {"OmegaBuild"} if directory == "src" else BASIS):
+        if root(name) in (CHECK_ROOTS | {"OmegaBuild"} if directory == "src" else {"OmegaInit"}):
             return name
     return None
 

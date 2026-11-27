@@ -29,7 +29,7 @@ def output(*args, **kwargs):
 
 
 STRICT_LIBRARIES = ("strict/OmegaInit.lean", "strict/OmegaInit/*.lean",
-                    "strict/OmegaMathlib.lean", "strict/OmegaMathlib/*.lean")
+                    "OmegaMathlib.lean", "OmegaMathlib/*.lean")
 
 
 def import_graph(lean, pathspecs=(*STRICT_LIBRARIES, "src/*.lean", "D5/*.lean", "Trureturing.lean"), *,
@@ -43,7 +43,7 @@ def import_graph(lean, pathspecs=(*STRICT_LIBRARIES, "src/*.lean", "D5/*.lean", 
         if file and (ROOT / file).is_file():
             path = file.removeprefix("strict/").removeprefix("src/")
             name = path.removesuffix(".lean").replace("/", ".")
-            if file.startswith("src/") and root(name) in BASIS and not official_basis:
+            if root(name) in BASIS and file.startswith("src/") != official_basis:
                 continue
             sources[name] = ROOT / file
     if with_reg:
@@ -158,7 +158,7 @@ def derived_facades(lean, strict, basis, official_path):
 
 def regenerate_facades():
     lean = output("lake", "env", "printenv", "LEAN").strip()
-    sources, graph = import_graph(lean, STRICT_LIBRARIES)
+    _, graph = import_graph(lean, STRICT_LIBRARIES)
     basis = sorted(name for name in graph if root(name) in BASIS)
     if not BASIS.issubset(basis):
         raise RuntimeError("strict foundation roots are missing")
@@ -169,7 +169,7 @@ def regenerate_facades():
     changed = []
     with tempfile.TemporaryDirectory(dir=ROOT / ".lake") as temporary:
         for name, content in generated.items():
-            relative = sources[name].relative_to(ROOT / "strict")
+            relative = Path(*name.split(".")).with_suffix(".lean")
             target = SRC / relative
             if target.resolve() != target:
                 raise ValueError(f"refusing to write a facade through a symlink: {target}")

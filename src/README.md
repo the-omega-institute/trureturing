@@ -1,8 +1,8 @@
 # Omega 数学模块的架构与验证
 
-`OmegaInit` 提供严格基础，`OmegaMathlib` 提供与钉版 Mathlib 对应的公开接口，`OmegaMath` 公开六卷的项目数学。项目数学与外部核验库位于 `src/`，严格后端的基础实现位于 `strict/`。Lean 导入使用模块名，例如 `import OmegaMath`。根包使用钉版工具链和依赖锁文件。宿主审计与混合消费示例位于 `OmegaChecks`。[Lake 配置](../lakefile.toml)
+`OmegaInit` 提供严格基础，`OmegaMathlib` 提供与钉版 Mathlib 对应的公开接口，`OmegaMath` 公开六卷的项目数学。严格 Mathlib 移植位于仓库根目录的 `OmegaMathlib.lean` 和 `OmegaMathlib/`，叶模块沿用钉版 Mathlib 的相对路径。项目数学与外部核验库位于 `src/`，严格 Init 基础位于 `strict/`。Lean 导入使用模块名，例如 `import OmegaMath`。根包使用钉版工具链和依赖锁文件。宿主审计与混合消费示例位于 `OmegaChecks`。[Lake 配置](../lakefile.toml)
 
-普通 Lake 构建和下游导入使用钉版官方 Lean Init 与 Mathlib。作者照常运行 `lake build`。编译器自动记录模块声明，官方构建照常编译带标记的模块及其下游；严格准入读取该记录并跳过这些模块。运行 `lake build +OmegaMath` 即可编译项目数学。Lake 从 `src/OmegaInit` 和 `src/OmegaMathlib` 读取与共享源码配套的官方名称别名。准入时，构建驱动在独立的工件目录中改用 `strict/OmegaInit` 和 `strict/OmegaMathlib`，以同一份项目数学源码做严格核验。[Lake 配置](../lakefile.toml) · [严格构建](OmegaChecks/strict_lake.py)
+普通 Lake 构建和下游导入使用钉版官方 Lean Init 与 Mathlib。作者照常运行 `lake build`。编译器自动记录模块声明，官方构建照常编译带标记的模块及其下游；严格准入读取该记录并跳过这些模块。运行 `lake build +OmegaMath` 即可编译项目数学。Lake 从 `src/OmegaInit` 和 `src/OmegaMathlib` 读取与共享源码配套的官方名称别名。准入时，构建驱动在独立的工件目录中改用 `strict/OmegaInit` 和根目录的 `OmegaMathlib`，以同一份项目数学源码做严格核验。[Lake 配置](../lakefile.toml) · [严格构建](OmegaChecks/strict_lake.py)
 
 ## 选择编译后端
 
@@ -215,7 +215,7 @@ python3 src/OmegaChecks/check.py --full
 
 完整双端检查也沿导入图选取独立 `Reg` 包中依赖 Omega 的模块。先用 `make install-tools` 安装钉版检查器接口。官方端使用主库及检查器接口编译入选模块，严格端编译其中支持双端的子集。普通数学发布从主包构建。
 
-移植者新增严格基础模块或修改其公开接口后，在仓库根目录运行以下命令。它编译 `strict/` 下的移植，从实际导入图和编译后的公开名称生成 `src/OmegaInit`、`src/OmegaMathlib` 及其根模块的官方别名文件。将生成文件和严格源码一同提交，双端准入检查会按相同规则核对内容。
+移植者新增严格基础模块或修改其公开接口后，在仓库根目录运行以下命令。它编译 `strict/OmegaInit` 和根目录 `OmegaMathlib` 中的移植，从实际导入图和编译后的公开名称生成 `src/OmegaInit`、`src/OmegaMathlib` 及其根模块的官方别名文件。将生成文件和严格源码一同提交，双端准入检查会按相同规则核对内容。
 
 ```sh
 python3 src/OmegaChecks/portable.py --regenerate-facades
