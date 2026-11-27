@@ -131,6 +131,7 @@ private def replayWitnesses (env : Environment) : IO Unit := do
     ReferenceSelection.witnesses.map (fun row => row.2.2) ++
     [``ReferenceRoundTrip.alloc, ``ReferenceRoundTrip.primAlloc, ``ReferenceRoundTrip.set, ``ReferenceRoundTrip.primSet,
      ``ReferenceRoundTrip.modify, ``ReferenceRoundTrip.primModify] ++
+    NaturalComparison.equivalences.map (fun row => row.2.2) ++
     BooleanReflection.witnesses.map (fun row => row.2.2) ++
     [``GrindNormalization.normalizePositive, ``GrindNormalization.normalizeNegative,
       ``GrindNormalization.normalizePositiveLeft, ``GrindNormalization.normalizePositiveRight,

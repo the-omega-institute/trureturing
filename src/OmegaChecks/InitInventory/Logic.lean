@@ -974,6 +974,58 @@ def witnesses : List (Name × (Name × Name)) := [
 
 end BooleanReflection
 
+namespace NaturalComparison
+
+/-- Every pair of naturals fits in one finite type. Its cardinality remains arbitrary
+in the symbolic rule for `Fin`. -/
+private theorem onFin (P : Nat → Nat → Prop) :
+    (∀ {n} (a b : Fin n), P a.val b.val) ↔ ∀ a b, P a b :=
+  ⟨fun rule a b => @rule (a+b+1) ⟨a, Nat.lt_succ_of_le (Nat.le_add_right a b)⟩
+    ⟨b, Nat.lt_succ_of_le (Nat.le_add_left b a)⟩, fun rule _ a b => rule a.val b.val⟩
+
+private theorem onWords (P : Nat → Nat → Prop) :
+    (∀ {n} (a b : BitVec n), P a.toNat b.toNat) ↔ ∀ a b, P a b :=
+  ⟨fun rule a b => @rule (a+b)
+    (.ofFin ⟨a, Nat.lt_of_le_of_lt (Nat.le_add_right a b) Nat.lt_two_pow_self⟩)
+    (.ofFin ⟨b, Nat.lt_of_le_of_lt (Nat.le_add_left b a) Nat.lt_two_pow_self⟩),
+   fun rule _ a b => rule a.toNat b.toNat⟩
+
+theorem finLTTrue : (type_of% @Lean.Sym.Fin.lt_eq_true) ↔ (type_of% @Lean.Sym.Nat.lt_eq_true) :=
+  onFin fun a b => decide (a < b) = true → (a < b) = True
+
+theorem finLTFalse : (type_of% @Lean.Sym.Fin.lt_eq_false) ↔ (type_of% @Lean.Sym.Nat.lt_eq_false) :=
+  onFin fun a b => decide (a < b) = false → (a < b) = False
+
+theorem finLETrue : (type_of% @Lean.Sym.Fin.le_eq_true) ↔ (type_of% @Lean.Sym.Nat.le_eq_true) :=
+  onFin fun a b => decide (a ≤ b) = true → (a ≤ b) = True
+
+theorem finLEFalse : (type_of% @Lean.Sym.Fin.le_eq_false) ↔ (type_of% @Lean.Sym.Nat.le_eq_false) :=
+  onFin fun a b => decide (a ≤ b) = false → (a ≤ b) = False
+
+theorem bitVecLTTrue : (type_of% @Lean.Sym.BitVec.lt_eq_true) ↔ (type_of% @Lean.Sym.Nat.lt_eq_true) :=
+  onWords fun a b => decide (a < b) = true → (a < b) = True
+
+theorem bitVecLTFalse : (type_of% @Lean.Sym.BitVec.lt_eq_false) ↔ (type_of% @Lean.Sym.Nat.lt_eq_false) :=
+  onWords fun a b => decide (a < b) = false → (a < b) = False
+
+theorem bitVecLETrue : (type_of% @Lean.Sym.BitVec.le_eq_true) ↔ (type_of% @Lean.Sym.Nat.le_eq_true) :=
+  onWords fun a b => decide (a ≤ b) = true → (a ≤ b) = True
+
+theorem bitVecLEFalse : (type_of% @Lean.Sym.BitVec.le_eq_false) ↔ (type_of% @Lean.Sym.Nat.le_eq_false) :=
+  onWords fun a b => decide (a ≤ b) = false → (a ≤ b) = False
+
+def equivalences : List (Name × Name × Name) := [
+  (``Lean.Sym.Fin.lt_eq_true, ``Lean.Sym.Nat.lt_eq_true, ``finLTTrue),
+  (``Lean.Sym.Fin.lt_eq_false, ``Lean.Sym.Nat.lt_eq_false, ``finLTFalse),
+  (``Lean.Sym.Fin.le_eq_true, ``Lean.Sym.Nat.le_eq_true, ``finLETrue),
+  (``Lean.Sym.Fin.le_eq_false, ``Lean.Sym.Nat.le_eq_false, ``finLEFalse),
+  (``Lean.Sym.BitVec.lt_eq_true, ``Lean.Sym.Nat.lt_eq_true, ``bitVecLTTrue),
+  (``Lean.Sym.BitVec.lt_eq_false, ``Lean.Sym.Nat.lt_eq_false, ``bitVecLTFalse),
+  (``Lean.Sym.BitVec.le_eq_true, ``Lean.Sym.Nat.le_eq_true, ``bitVecLETrue),
+  (``Lean.Sym.BitVec.le_eq_false, ``Lean.Sym.Nat.le_eq_false, ``bitVecLEFalse)]
+
+end NaturalComparison
+
 namespace ConstructorNormalization
 
 theorem propextOfDecision
