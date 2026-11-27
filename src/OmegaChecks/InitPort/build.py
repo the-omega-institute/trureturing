@@ -215,6 +215,10 @@ def generate(stage, product, seed, roots, excluded):
             "Init.Control.StateRef": {"StateRefT'.set"},
             "Init.System.ST": {"ST.mkRef", "ST.Ref.set", "ST.Ref.swap"},
         }, [product / "native" / "reference.o"])
+    if "OmegaInit.System.IO" in graph:
+        compile_state_runtime(stage, product, artifact, inventory, "TaskIO", "task_io", {
+            "Init.System.IO": {"IO.getTaskState", "IO.hasFinished", "IO.wait", "IO.waitAny", "IO.cancel", "IO.checkCanceled"},
+        })
     if "OmegaInit.System.Promise" in graph:
         compile_state_runtime(stage, product, artifact, inventory, "Promise", "promise", {
             "Init.System.Promise": {"IO.Promise.new", "IO.Promise.resolve", "IO.Promise.isResolved", "IO.Promise.result?", "IO.Promise.resultD"},
