@@ -555,43 +555,6 @@ theorem graph_subdivision_intervals_oriented (A : PreAbstractSimplicialComplex X
         · rintro ⟨e, i, hi₀, hiN, hi⟩
           exact (retained_at_end e i x hi).elim hi₀ hiN
 
-/-- Choose one orientation for every original edge and construct the interval charts. -/
-theorem graph_subdivision_intervals (A : PreAbstractSimplicialComplex X)
-    (hdim : ∀ s ∈ A, (s : Finset X).card ≤ 2) (m : ℕ) :
-    let E := {e : Face A // e.val.val.card = 2}
-    let P := (iteratedAmbient A m).2
-    ∃ (left right : E → Vertex A) (chart : E → Vertex (intervalComplex (2 ^ m)) → Vertex P),
-      (∀ e, e.val.val = { (left e).val, (right e).val } ∧ left e ≠ right e) ∧
-      (∀ e, Function.Injective (chart e)) ∧
-      (∀ e i, (i.val = 0 → chart e i = retainedVertex m (left e)) ∧
-        (i.val = 2 ^ m → chart e i = retainedVertex m (right e))) ∧
-      (∀ (e : E) (s : Finset (iteratedAmbient A m).1),
-        s ∈ iteratedSubcomplex A (simplex e.val.val) m ↔
-          ∃ (t : Finset ℕ) (ht : t ∈ intervalComplex (2 ^ m)), faceImage (chart e) ht = s) ∧
-      (∀ (e d : E) (i j : Vertex (intervalComplex (2 ^ m))),
-        i.val ≠ 0 → i.val ≠ 2 ^ m → chart e i = chart d j → e = d) ∧
-      (∀ (s : Finset (iteratedAmbient A m).1), s ∈ P →
-        (∃ x : Vertex A, (∀ y : Vertex A, ¬ (oneSkeleton A).Adj x y) ∧
-          s = {(retainedVertex m x).val} ∧
-          ¬ ∃ (e : E) (i : Vertex (intervalComplex (2 ^ m))),
-            i.val ≠ 0 ∧ i.val ≠ 2 ^ m ∧ chart e i = retainedVertex m x) ∨
-        ∃ (e : E) (t : Finset ℕ) (ht : t ∈ intervalComplex (2 ^ m)),
-          faceImage (chart e) ht = s ∧
-          ∀ x : Vertex P, x.val ∈ s →
-            ∃ i : Vertex (intervalComplex (2 ^ m)), i.val ∈ t ∧ chart e i = x) := by
-  let E := {e : Face A // e.val.val.card = 2}
-  have orient (e : E) : ∃ x y : Vertex A, e.val.val = {x.val, y.val} ∧ x ≠ y := by
-    obtain ⟨a, b, hab, he⟩ := Finset.card_eq_two.mp e.property
-    have ha : a ∈ e.val.val := by rw [he]; exact Finset.mem_insert_self _ _
-    have hb : b ∈ e.val.val := by
-      rw [he]
-      exact Finset.mem_insert_of_mem (Finset.mem_singleton_self _)
-    exact ⟨⟨a, singleton_of_face e.val.property ha⟩, ⟨b, singleton_of_face e.val.property hb⟩,
-      he, fun h => hab (congrArg Subtype.val h)⟩
-  choose left right horient using orient
-  obtain ⟨chart, hc⟩ := graph_subdivision_intervals_oriented A hdim m left right horient
-  exact ⟨left, right, chart, horient, hc⟩
-
 end
 
 end D5.S3.Topology.GraphSubdivisionIntervals
