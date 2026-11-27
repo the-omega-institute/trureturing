@@ -456,3 +456,9 @@ port_definition toBoolUsing with_native_code
 port_definition bne with_native_code
 
 port_constructor_eliminators PSum, Sum, ForInStep, DoResultBC, DoResultPR, DoResultPRBC, DoResultSBC
+
+port_definition decidable_of_decidable_of_iff.match_1
+port_proof decidable_of_decidable_of_iff._proof_1
+port_definition decidable_of_decidable_of_iff with_native_code
+port_proof decidable_of_decidable_of_eq._proof_1
+port_definition decidable_of_decidable_of_eq with_native_code

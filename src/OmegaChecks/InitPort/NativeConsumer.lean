@@ -42,6 +42,11 @@ public def sumRight (x y : Omega.Bool) : Omega.Bool :=
 public def boolEqual (x y : Omega.Bool) : Omega.Bool :=
   @Omega.Decidable.decide _ (Omega.Bool.decEq x y)
 
+public def transportedDecision (x y : Omega.Bool) : Omega.Bool :=
+  let decision := Omega.Bool.decEq x y
+  let equivalent := @Omega.decidable_of_decidable_of_iff _ _ decision Omega.Iff.rfl
+  @Omega.Decidable.decide _ (@Omega.decidable_of_decidable_of_eq _ _ equivalent Omega.rfl)
+
 public def optionFiltered (x y : Omega.Bool) : Omega.Bool :=
   (Omega.Option.filter (fun _ => x) (Omega.Option.some y)).getD .false
 
@@ -176,7 +181,7 @@ unsafe def main (args : List String) : IO Unit := do
     let second := fun (_ y : Bool) => y
     let checks := [(`firstValue, first), (`secondValue, second), (`additionFirst, first),
       (`stateSecond, second), (`optionFirst, first), (`composeSecond, second), (`mappedFirst, first),
-      (`sumIndex, first), (`sumRight, or), (`boolEqual, BEq.beq), (`optionFiltered, and),
+      (`sumIndex, first), (`sumRight, or), (`boolEqual, BEq.beq), (`transportedDecision, BEq.beq), (`optionFiltered, and),
       (`controlResult, or), (`optionEqual, BEq.beq), (`someValue, and), (`attachedValue, and), (`liftedNumeral, or), (`lastElement, second),
       (`arithmetic, first), (`listDisjunction, or), (`naturalEqual, BEq.beq),
       (`naturalLe, fun x y => !x || y), (`arraySecond, second), (`bitEqual, BEq.beq),
