@@ -4,13 +4,21 @@ public import OmegaChecks.InitPort.NativeState
 import all Lean.Compiler.LCNF.ToImpureType
 import all Lean.OriginalConstKind
 
-/-! Compile unsigned-word primitives over the strict, Nat-backed Fin representation. -/
+/-! Compile machine-word primitives over their strict, Nat-backed Fin representation. -/
 
 open Lean Compiler.LCNF OmegaChecks.InitPort.NativeState
 
 namespace OmegaChecks.InitPort.WordNative
 
-private def word? : Name → Option (String × IR.IRType)
+private def bitsType : Name → Name
+  | `Int8 => `UInt8
+  | `Int16 => `UInt16
+  | `Int32 => `UInt32
+  | `Int64 => `UInt64
+  | `ISize => `USize
+  | n => n
+
+private def word? (name : Name) : Option (String × IR.IRType) := match bitsType name with
   | `UInt8 => some ("uint8", .uint8)
   | `UInt16 => some ("uint16", .uint16)
   | `UInt32 => some ("uint32", .uint32)
@@ -19,19 +27,21 @@ private def word? : Name → Option (String × IR.IRType)
   | _ => none
 
 public def usesPinnedFunction (n : Name) : Bool :=
-  (word? n.getPrefix).isSome && [`pow, `ofInt].contains (n.updatePrefix .anonymous)
+  let method := n.updatePrefix .anonymous
+  (word? n.getPrefix).isSome && (method == `pow || (method == `ofInt && bitsType n.getPrefix == n.getPrefix))
 
 public def supported (source : Environment) (owner name : Name) : Bool :=
   let method := name.updatePrefix .anonymous
-  let widths := [`toUInt8, `toUInt16, `toUInt32, `toUInt64, `toUSize]
+  let widths := [`toUInt8, `toUInt16, `toUInt32, `toUInt64, `toUSize, `toInt8, `toInt16, `toInt32, `toInt64, `toISize]
   let ops := [`add, `sub, `mul, `div, `mod, `land, `lor, `xor, `complement, `neg,
-              `shiftLeft, `shiftRight, `log2, `decLt, `decLe, `decEq, `toNat, `ofNat, `ofNatLT, `ofNat32]
+              `shiftLeft, `shiftRight, `log2, `abs, `toInt, `ofInt, `decLt, `decLe, `decEq, `toNat, `ofNat, `ofNatLT, `ofNat32]
   let base := owner == `OmegaInit.Prelude && name == `System.Platform.getNumBits
-  let inOwner := [`OmegaInit.Prelude, `OmegaInit.Data.UInt.BasicAux, `OmegaInit.Data.UInt.Basic, `OmegaInit.Data.UInt.Log2].contains owner
+  let inOwner := [`OmegaInit.Prelude, `OmegaInit.Data.UInt.BasicAux, `OmegaInit.Data.UInt.Basic, `OmegaInit.Data.UInt.Log2,
+                  `OmegaInit.Data.SInt.Basic].contains owner
   let primitive := ((word? name.getPrefix).isSome && (ops ++ widths).contains method) ||
     (name.getPrefix == `Bool && widths.contains method)
   ((base || (inOwner && primitive)) && isExtern source name) ||
-    (owner == `OmegaInit.Data.UInt.Basic && usesPinnedFunction name)
+    ([`OmegaInit.Data.UInt.Basic, `OmegaInit.Data.SInt.Basic].contains owner && usesPinnedFunction name)
 
 private def symbol (n : Name) := "omega_word_" ++ (n.replacePrefix `Omega .anonymous).toString.replace "." "_"
 
@@ -43,10 +53,17 @@ public def install (names : Array Name) : CoreM Unit := do
     (← compileDeclsRef.get) #[n] {}
 
 private def layout (env : Environment) (name : Name) : IO Unit := do
-  for n in [`Omega.Fin, `Omega.BitVec, `Omega ++ name] do
+  for n in [`Omega.Fin, `Omega.BitVec, `Omega ++ bitsType name, `Omega ++ name].eraseDups do
     let some (some field) := impureTrivialStructureInfoExt.find? env n
       | throw <| IO.userError s!"word argument does not erase to Nat: {n}"
     unless field.fieldIdx == 0 do throw <| IO.userError s!"incorrect word layout: {n}"
+
+private def checkIntLayout (strict : Environment) : IO Unit := do
+  for (ctor, tag) in [(`Omega.Int.ofNat, 0), (`Omega.Int.negSucc, 1)] do
+    let some l := ctorLayoutExt.find? strict ctor | throw <| IO.userError s!"missing {ctor}"
+    let #[.object 0 _] := l.fieldInfo | throw <| IO.userError s!"invalid integer field in {ctor}"
+    unless l.ctorInfo.cidx == tag && l.ctorInfo.size == 1 && l.ctorInfo.ssize == 0 && l.ctorInfo.usize == 0 do
+      throw <| IO.userError s!"unexpected integer constructor layout {ctor}"
 
 /-- Check both sides of the call and generate its ownership conversions from their stored IR. -/
 public def wrapper (source strict : Environment) (n : Name) : IO String := do
@@ -91,11 +108,7 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
       if b.borrow && !a.borrow then throw <| IO.userError s!"borrowed Nat consumed at {n}"
       if a.borrow && !b.borrow then cleanup := cleanup ++ s!"  lean_dec({arg});\n"
     else if dom == `Int && a.ty == .tobject && b.ty == .object && a.borrow then
-      for (ctor, tag) in [(`Omega.Int.ofNat, 0), (`Omega.Int.negSucc, 1)] do
-        let some l := ctorLayoutExt.find? strict ctor | throw <| IO.userError s!"missing {ctor}"
-        let #[.object 0 _] := l.fieldInfo | throw <| IO.userError s!"invalid integer field in {ctor}"
-        unless l.ctorInfo.cidx == tag && l.ctorInfo.size == 1 && l.ctorInfo.ssize == 0 && l.ctorInfo.usize == 0 do
-          throw <| IO.userError s!"unexpected integer constructor layout {ctor}"
+      checkIntLayout strict
       decls := decls.push ((if b.borrow then "b_lean_obj_arg " else "lean_obj_arg ") ++ arg)
       prepare := prepare ++ s!"  lean_object *mag = lean_ctor_get({arg}, 0);\n  lean_inc(mag);\n"
       prepare := prepare ++ s!"  lean_object *value = lean_obj_tag({arg}) == 0 ? lean_nat_to_int(mag) : lean_int_neg_succ_of_nat(mag);\n"
@@ -112,6 +125,14 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
     layout strict dom
     unless ret == t && result == .tobject do throw <| IO.userError s!"incorrect word result at {n}"
     pure ("lean_obj_res", s!"lean_{w}_to_nat({call})")
+  else if dom == `Int then do
+    checkIntLayout strict
+    unless (ret == .tobject || ret == .tagged) && result == .object do throw <| IO.userError s!"incorrect integer result at {n}"
+    prepare := prepare ++ s!"  lean_object *i = {call};\n  uint8_t neg = lean_int_lt(i, lean_box(0));\n"
+    prepare := prepare ++ "  lean_object *magnitude = lean_nat_abs(i);\n  lean_dec(i);\n"
+    prepare := prepare ++ "  if (neg) { lean_object *p = lean_nat_pred(magnitude); lean_dec(magnitude); magnitude = p; }\n"
+    prepare := prepare ++ "  lean_object *integer = lean_alloc_ctor(neg, 1, 0);\n  lean_ctor_set(integer, 0, magnitude);\n"
+    pure ("lean_obj_res", "integer")
   else if dom == `Subtype && official == `System.Platform.getNumBits then do
     let some (some field) := impureTrivialStructureInfoExt.find? strict `Omega.Subtype
       | throw <| IO.userError "missing platform width subtype layout"
