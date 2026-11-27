@@ -20,6 +20,7 @@ strata_touched:
   - D5/S3/Topology/BarycentricNeighborhoodIteration
   - D5/S3/Topology/BarycentricBaseRigidity
   - D5/S3/Topology/ConnectedCategoryGraft
+  - D5/S3/Topology/PathContiguity
 license: citation-only
 triage: anchor
 ---
@@ -684,3 +685,85 @@ vertex through all same-depth contiguity chains of the base inclusion.
 The Lean theorem holds at every subsequent ordinary subdivision depth.
 Question 6.3 also requires deciding the existence of a categorical
 two-cover, whose members may meet only parts of the base.
+
+## The factor-two bound for two-dimensional complexes
+
+The stable category is at most twice the weak category when the order
+complex has dimension at most two. More generally, if the inclusion
+of a finite subcomplex $A$ of dimension at most two is nullhomotopic
+in the realization of a finite complex $K$, after some common
+ordinary subdivision depth the base is covered by two subcomplexes
+categorical in the subdivided ambient complex.
+
+In each triangle of $A$ take the tripod joining the original vertices
+to its center. Together with all original vertices, these tripods
+form a graph in the first subdivision. Its inclusion in the ambient
+complex is nullhomotopic. One further subdivision makes the graph
+full. Every nonisolated edge in this graph lies in a small triangle
+in its original triangle. The small triangles chosen for different
+edges are distinct, since a triangle containing two graph edges would
+contradict fullness.
+
+With the target triangulation fixed, simplicial approximation of a
+nullhomotopy gives a contiguity chain from an iterated endpoint
+selection on a finer subdivision of the graph to a constant. Write
+$b$ for this additional source depth. In each of the chosen small
+triangles replace the graph edge by a simple path joining its old
+endpoints and disjoint from the triangle boundary elsewhere. At
+ordinary depth $s$ the replacement can have at least $2^{b+s}$
+edges. To see this, choose two disjoint interior subdivided triangles
+at a fixed depth $k$, at graph distance $d>0$. Draw a simple arc in
+the triangle with at least $N$ passages between these two triangles,
+where $Nd\geq 2^{b+k}$. Use a sufficiently thin neighborhood and
+follow the arc by a walk along fine triangle barycenters and the
+barycenters of their common edges. Extend the arc parameter to the
+ambient triangle. Choose disjoint closed parameter intervals that
+force visits to the specified interiors. At fine depth each edge
+changes the parameter by less than an interval width, so erasing
+loops preserves the visits. Distance doubling shows that each
+passage takes at least $2^{s-k}d$ edges. Finiteness lets the paths be
+chosen at one common depth.
+
+The replacement paths meet at the old graph vertices and preserve the
+tripod incidence. Folding a chosen triangle onto its old graph edge
+gives a contiguity to the identity relative to that edge. After
+subdivision and restriction, the folded path maps into the subdivided
+old edge. It has the same endpoints as the composite of a monotone
+surjection onto the $(b+s)$-fold subdivided edge and the subdivided
+endpoint selection. The two maps are contiguous through a chain
+relative to their endpoints. The Lean theorem proves this interval
+interpolation for finite source complexes. A maximal label among
+vertices still above the pointwise minimum can be lowered one step
+without violating contiguity on incident simplices. The sum of labels
+strictly decreases. The relative chains glue across the graph and
+then follow the subdivided nullhomotopy. Thus the replaced graph is
+categorical at the same depth as its ambient target.
+
+The complement of each tripod has three sectors, one adjacent to
+each open original side. The sectors incident to one side can meet
+across that side. At a different side or original vertex the
+components remain separate. Consequently each complementary
+component lies in the closed star of an original edge. This works
+also at a free edge, an edge incident to more than two triangles,
+or a maximal edge. One further subdivision makes the categorical
+graph full. The induced complex on the remaining vertices lies
+componentwise in subdivided closed edge stars. These stars are cones
+before subdivision and their contractions persist under subdivision.
+Move the resulting constant values along ambient edge paths.
+
+Finally, a cover of the vertex set by categorical induced complexes
+gives a categorical cover of the next subdivision. For a vertex
+part $S$, use the flags of faces meeting $S$. Intersection with $S$
+is monotone and pointwise below the inclusion. It factors through
+the subdivision of the induced complex on $S$. Each flag is covered
+because a vertex of its smallest face belongs to some part and
+persists in the entire flag. This gives the two categorical pieces.
+
+For a finite space of weak category one, the realization of its order
+complex is contractible, so the local result applies. When the order
+complex has dimension at most two, a dimension colouring of the face
+poset gives at most three pieces, which suffices for weak category
+at least two. The simplicial and finite-space comparisons transfer
+the bound at the next subdivision. The componentwise bounds add.
+[Question 6.3 and the comparison inequalities](https://arxiv.org/html/2609.39615v1#S6)
+· [Simplicial approximation of homotopies](https://arxiv.org/abs/1701.07612)
