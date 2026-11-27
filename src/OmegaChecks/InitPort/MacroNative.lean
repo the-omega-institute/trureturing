@@ -1,7 +1,9 @@
 module
 
 public import OmegaChecks.InitPort.NativeState
+import OmegaChecks.InitPort.SyntaxArray
 import OmegaChecks.InitPort.IndexedNative
+import all Lean.Compiler.LCNF.ToImpureType
 import OmegaChecks.InitPort.Translation
 import Lean.Compiler.ImplementedByAttr
 
@@ -10,7 +12,7 @@ open Lean
 namespace OmegaChecks.InitPort.MacroNative
 
 public def supported (name : Name) : Bool :=
-  name.getPrefix == `Lean.Macro && [`getMethods, `expandMacro?, `getCurrNamespace, `hasDecl,
+  [`Lean.TSyntaxArray.raw, `Lean.TSyntaxArray.mk].contains name || name.getPrefix == `Lean.Macro && [`getMethods, `expandMacro?, `getCurrNamespace, `hasDecl,
     `resolveNamespace, `resolveGlobalName].contains (name.updatePrefix .anonymous)
 
 /-- These methods project the registered callback and pass its arguments through without
@@ -21,6 +23,22 @@ public def wrapper (source strict : Environment) (n : Name) (symbol : String) : 
   let some dst := strict.find? n | throw <| IO.userError s!"missing strict macro method {n}"
   unless dst.type == InitKernelPort.translate InitKernelPort.portName src.type do
     throw <| IO.userError s!"different macro method types at {n}"
+  if official.getPrefix == `Lean.TSyntaxArray then
+    let impl := official.appendAfter "Impl"
+    let some (.defnInfo native) := source.find? impl | throw <| IO.userError s!"missing native syntax array conversion {impl}"
+    SyntaxArray.checkRuntimeCast source native
+    for name in [`Omega.Lean.TSyntax, `Omega.Array] do
+      let some (some field) := Compiler.LCNF.impureTrivialStructureInfoExt.find? strict name
+        | throw <| IO.userError s!"missing single-field representation for {name}"
+      unless field.fieldIdx == 0 do throw <| IO.userError s!"invalid representation for {name}"
+    let some (.extern _ actual .tobject ⟨[.standard `all entry]⟩) := IR.findEnvDecl strict n
+      | throw <| IO.userError s!"missing strict syntax array calling convention {n}"
+    let #[kinds, xs] := actual | throw <| IO.userError s!"unexpected syntax array parameters {n}"
+    unless kinds.ty == .tobject && xs.ty == .tobject && symbol == entry do
+      throw <| IO.userError s!"unexpected syntax array representations {n}"
+    let release := if kinds.borrow then "" else "lean_dec(kinds); "
+    let retain := if xs.borrow then "lean_inc(xs); " else ""
+    return s!"\nLEAN_EXPORT lean_obj_res {entry}(lean_object *kinds, lean_object *xs) \{ {release}{retain}return xs; }\n"
   let override := `Lean.Macro.getMethodsImp
   unless Compiler.getImplementedBy? source `Lean.Macro.getMethods == some override do
     throw <| IO.userError "unexpected MethodsRef reader"

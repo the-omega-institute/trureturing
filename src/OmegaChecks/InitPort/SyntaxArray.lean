@@ -31,7 +31,7 @@ public def supported (n : Name) : Bool :=
 
 /-- The pinned compiler returns the same array after retaining its borrowed pointer.
 Both compiler phases erase the single syntax wrapper to its raw field. -/
-public def check (env : Environment) (native : DefinitionVal) (candidate : Expr) : IO Unit := do
+public def checkRuntimeCast (env : Environment) (native : DefinitionVal) : IO Unit := do
   let raw := native.name == `Lean.TSyntaxArray.rawImpl
   let api := if raw then `Lean.TSyntaxArray.raw else `Lean.TSyntaxArray.mk
   let owner := env.getModuleIdx? `Init.Prelude
@@ -49,6 +49,10 @@ public def check (env : Environment) (native : DefinitionVal) (candidate : Expr)
   let some field := env.getProjectionFnInfo? `Lean.TSyntax.raw | throw <| IO.userError "missing syntax projection"
   unless field.ctorName == `Lean.TSyntax.mk && field.numParams == 1 && field.i == 0 do
     throw <| IO.userError "syntax projection does not read the erased wrapper field"
+/-- Validate the constructive conversion at every typed/raw array index. -/
+public def check (env : Environment) (native : DefinitionVal) (candidate : Expr) : IO Unit := do
+  checkRuntimeCast env native
+  let raw := native.name == `Lean.TSyntaxArray.rawImpl
   let verify : MetaM Unit := do
     for layout in [← Compiler.LCNF.hasTrivialStructure? `Lean.TSyntax,
         ← Compiler.LCNF.hasTrivialImpureStructure? `Lean.TSyntax] do
