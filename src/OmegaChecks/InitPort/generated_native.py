@@ -140,6 +140,9 @@ def compile_generated(stage, product, graph, seed_ir, owners=None, *, original_s
             string_sources.append(source)
             if owner not in seed_owners:
                 modes[owner] = "mixed="
+    state_ref = "OmegaInit.Control.StateRef"
+    if state_ref in selected and (stage / "state_ref.c").is_file() and state_ref not in seed_owners:
+        modes[state_ref] = "mixed="
     literals = stage / "literal.c"
     macro_source = stage / "macro-methods.c"
     if "OmegaInit.Prelude" in selected:
