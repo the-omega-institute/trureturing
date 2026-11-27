@@ -28,7 +28,8 @@ private def word? (name : Name) : Option (String × IR.IRType) := match bitsType
 
 public def usesPinnedFunction (n : Name) : Bool :=
   let method := n.updatePrefix .anonymous
-  (word? n.getPrefix).isSome && (method == `pow || (method == `ofInt && bitsType n.getPrefix == n.getPrefix))
+  ((word? n.getPrefix).isSome && (method == `pow || (method == `ofInt && bitsType n.getPrefix == n.getPrefix))) ||
+    (n.getPrefix == `Int && [`negOfNat, `subNatNat, `sign, `toNat, `pow, `fdiv, `fmod, `bdiv, `bmod].contains method)
 
 public def supported (source : Environment) (owner name : Name) : Bool :=
   let method := name.updatePrefix .anonymous
@@ -38,10 +39,13 @@ public def supported (source : Environment) (owner name : Name) : Bool :=
   let base := owner == `OmegaInit.Prelude && name == `System.Platform.getNumBits
   let inOwner := [`OmegaInit.Prelude, `OmegaInit.Data.UInt.BasicAux, `OmegaInit.Data.UInt.Basic, `OmegaInit.Data.UInt.Log2,
                   `OmegaInit.Data.SInt.Basic].contains owner
+  let intOwner := [`OmegaInit.Data.Int.Basic, `OmegaInit.Data.Int.DivMod.Basic].contains owner
+  let intPrimitive := intOwner && name.getPrefix == `Int &&
+    [`neg, `add, `sub, `mul, `decEq, `decLe, `decLt, `decNonneg, `natAbs, `ediv, `emod, `tdiv, `tmod, `divExact].contains method
   let primitive := ((word? name.getPrefix).isSome && (ops ++ widths).contains method) ||
     (name.getPrefix == `Bool && widths.contains method)
-  ((base || (inOwner && primitive)) && isExtern source name) ||
-    ([`OmegaInit.Data.UInt.Basic, `OmegaInit.Data.SInt.Basic].contains owner && usesPinnedFunction name)
+  ((base || intPrimitive || (inOwner && primitive)) && isExtern source name) ||
+    ((intOwner || [`OmegaInit.Data.UInt.Basic, `OmegaInit.Data.SInt.Basic].contains owner) && usesPinnedFunction name)
 
 private def symbol (n : Name) := "omega_word_" ++ (n.replacePrefix `Omega .anonymous).toString.replace "." "_"
 
@@ -105,15 +109,15 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
     else if dom == `Nat && a.ty == .tobject && b.ty == .tobject then
       decls := decls.push ((if b.borrow then "b_lean_obj_arg " else "lean_obj_arg ") ++ arg)
       args := args.push arg
-      if b.borrow && !a.borrow then throw <| IO.userError s!"borrowed Nat consumed at {n}"
+      if b.borrow && !a.borrow then prepare := prepare ++ s!"  lean_inc({arg});\n"
       if a.borrow && !b.borrow then cleanup := cleanup ++ s!"  lean_dec({arg});\n"
     else if dom == `Int && a.ty == .tobject && b.ty == .object && a.borrow then
       checkIntLayout strict
       decls := decls.push ((if b.borrow then "b_lean_obj_arg " else "lean_obj_arg ") ++ arg)
-      prepare := prepare ++ s!"  lean_object *mag = lean_ctor_get({arg}, 0);\n  lean_inc(mag);\n"
-      prepare := prepare ++ s!"  lean_object *value = lean_obj_tag({arg}) == 0 ? lean_nat_to_int(mag) : lean_int_neg_succ_of_nat(mag);\n"
-      args := args.push "value"
-      cleanup := cleanup ++ "  lean_dec(value);\n"
+      prepare := prepare ++ s!"  lean_object *mag{i} = lean_ctor_get({arg}, 0);\n  lean_inc(mag{i});\n"
+      prepare := prepare ++ s!"  lean_object *value{i} = lean_obj_tag({arg}) == 0 ? lean_nat_to_int(mag{i}) : lean_int_neg_succ_of_nat(mag{i});\n"
+      args := args.push s!"value{i}"
+      cleanup := cleanup ++ s!"  lean_dec(value{i});\n"
       unless b.borrow do cleanup := cleanup ++ s!"  lean_dec({arg});\n"
     else if dom == `Bool && a.ty == .uint8 && b.ty == .uint8 then
       decls := decls.push ("uint8_t " ++ arg)
@@ -143,10 +147,16 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
   else if dom == `Decidable && ret == .uint8 && result == .uint8 then pure ("uint8_t", call)
   else throw <| IO.userError s!"unsupported result of {n}: {dom}/{ret}/{result}"
   let proto ← if usesPinnedFunction official then do
-    let some (width, _) := word? official.getPrefix | throw <| IO.userError "unknown word width"
-    let scalar := if width == "usize" then "size_t" else width ++ "_t"
-    let inputs := if official.updatePrefix .anonymous == `pow then scalar ++ ", b_lean_obj_arg" else "b_lean_obj_arg"
-    pure s!"\nextern {scalar} {target}({inputs});\n"
+    let ctype (t : IR.IRType) : IO String := match t with
+      | .uint8 => pure "uint8_t"
+      | .uint16 => pure "uint16_t"
+      | .uint32 => pure "uint32_t"
+      | .uint64 => pure "uint64_t"
+      | .usize => pure "size_t"
+      | .tobject | .tagged => pure "lean_object *"
+      | _ => throw <| IO.userError s!"unexpected C type at {official}: {t}"
+    let inputs ← (params.filter (·.ty != .erased)).mapM fun p => ctype p.ty
+    pure s!"\nextern {← ctype ret} {target}({String.intercalate ", " inputs.toList});\n"
   else if official == `System.Platform.getNumBits then
     pure "\nextern lean_obj_res lean_system_platform_nbits(lean_obj_arg);\n" else pure ""
   return proto ++ s!"\nLEAN_EXPORT {output} {adapter}({String.intercalate ", " decls.toList}) \{\n{prepare}  {output} r = {value};\n{cleanup}  return r;\n}\n"
