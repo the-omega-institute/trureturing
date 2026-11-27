@@ -227,6 +227,15 @@ private def compileOwner (source : Environment) (groups : Array InductiveVal) (w
   compileLayoutsInOrder groups
   OmegaChecks.InitPort.WordNative.install words
   for n in order do
+    if n == `Omega.Lean.RArray.get then
+      let impl := `Omega.Lean.RArray.getImpl
+      let some (.defnInfo d) := strict.find? n | throwError "missing reflected array lookup"
+      let value := mkConst impl (d.levelParams.map Level.param)
+      unless Kernel.isDefEqGuarded strict {} (mkConst n (d.levelParams.map Level.param)) value do
+        throwError "reflected array lookup differs from its strict implementation"
+      let name := Compiler.mkUnsafeRecName n
+      compileEquation source n {d with name, all := [name], value, safety := .safe}
+      continue
     if n == `Omega.WellFounded.fix || n == `Omega.WellFounded.fixF then
       compileFix source strict n (n.appendAfter "_eq")
       continue

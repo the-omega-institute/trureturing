@@ -15,7 +15,7 @@ private def linear (n : Name) : Bool :=
 
 public def supported (n : Name) : Bool :=
   linear n ||
-  [`Fin.cases, `Fin.induction, `Fin.induction.go, `Fin.inductionOn, `Fin.reverseInduction,
+  [`Lean.RArray.getImpl, `Fin.cases, `Fin.induction, `Fin.induction.go, `Fin.inductionOn, `Fin.reverseInduction,
    `Fin.reverseInduction.go, `Fin.lastCases, `Fin.succRec, `Fin.succRecOn,
    `Nat.fold, `Nat.foldTR, `Nat.foldRev, `Nat.dfold, `Nat.dfoldRev, `Nat.any, `Nat.anyTR, `Nat.all, `Nat.allTR,
    `Prod.foldI, `Prod.anyI, `Prod.allI,
@@ -56,6 +56,7 @@ public def wrapper (source strict : Environment) (n : Name) (symbol : String) : 
   unless target.type == InitKernelPort.translate InitKernelPort.portName ci.type do
     throw <| IO.userError s!"indexed eliminator type mismatch: {n}"
   if linear official then checkDataTypes source strict [`Prod, `Option, `List, `Nat.Internal.Linear.Expr]
+  if official == `Lean.RArray.getImpl then checkDataTypes source strict [`Lean.RArray]
   if official.getRoot == `Prod then checkDataTypes source strict [`Prod]
   if official.getRoot == `Fin then
     let some (some field) := impureTrivialStructureInfoExt.find? strict `Omega.Fin | throw <| IO.userError "missing strict Fin layout"
