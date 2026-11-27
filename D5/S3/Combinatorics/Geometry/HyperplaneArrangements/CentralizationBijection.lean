@@ -25,6 +25,8 @@ import Mathlib.Data.Rat.Cast.Defs
 import Mathlib.Data.ZMod.Basic
 import Mathlib.LinearAlgebra.Dual.Lemmas
 import Mathlib.LinearAlgebra.Matrix.Dual
+import Mathlib.RingTheory.Localization.FractionRing
+import Mathlib.RingTheory.Localization.Integer
 
 /-!
 # Centralization convolution over coprime residue rings
@@ -55,15 +57,19 @@ private def HomogeneousImplies (R : Type*) [CommRing R] {n : ℕ} {ι : Type*}
 set_option linter.unusedFintypeInType false in
 private theorem clearDenominators {κ : Type*} [Fintype κ] (v : κ → ℚ) :
     ∃ d : ℕ, 0 < d ∧ ∃ z : κ → ℤ, (Int.castRingHom ℚ ∘ z) = (d : ℚ) • v := by
-  classical
-  let d := ∏ i, (v i).den
-  have hdvd (i : κ) : (v i).den ∣ d := Finset.dvd_prod_of_mem _ (Finset.mem_univ i)
-  choose k hk using hdvd
-  refine ⟨d, Finset.prod_pos (fun i _ => (v i).den_pos), fun i => (k i : ℤ) * (v i).num, ?_⟩
+  obtain ⟨d, hd⟩ := IsLocalization.exist_integer_multiples_of_finite (Submonoid.pos ℤ) v
+  have h0 : 0 < (d : ℤ) := d.property
+  have hdc : ((d : ℤ).toNat : ℤ) = (d : ℤ) := Int.toNat_of_nonneg h0.le
+  have hpos : 0 < (d : ℤ).toNat := by omega
+  choose z hz using hd
+  refine ⟨(d : ℤ).toNat, hpos, z, ?_⟩
   funext i
-  change (((k i : ℤ) * (v i).num : ℤ) : ℚ) = (d : ℚ) * v i
-  rw [Int.cast_mul, Int.cast_natCast, hk i, Nat.cast_mul, mul_comm ((v i).den : ℚ),
-    mul_assoc, Rat.den_mul_eq_num]
+  change (z i : ℚ) = ((d : ℤ).toNat : ℚ) * v i
+  have hi := hz i
+  change (z i : ℚ) = (d : ℤ) • v i at hi
+  rw [Algebra.smul_def] at hi
+  rw [← Int.cast_natCast ((d : ℤ).toNat), hdc]
+  exact hi
 
 private theorem intCast_isUnit_of_coprime {m : ℕ} {z : ℤ} (h : m.Coprime z.natAbs) :
     IsUnit (z : ZMod m) := by
