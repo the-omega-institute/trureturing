@@ -249,7 +249,10 @@ def generate(stage, product, seed, roots, excluded, original_seed):
         path_interfaces = {"Init.System.IO": {"IO.getEnv", "IO.FS.createDir", "IO.FS.removeDir",
                                               "IO.FS.removeFile", "IO.FS.rename", "IO.FS.hardLink", "IO.FS.realPath",
                                               "IO.FS.createTempDir", "IO.appPath", "IO.currentDir", "IO.Process.getCurrentDir",
-                                              "IO.Process.setCurrentDir", "System.FilePath.readDir"}}
+                                              "IO.Process.setCurrentDir", "System.FilePath.readDir",
+                                              *(f"IO.FS.Handle.{op}" for op in ("mk", "lock", "tryLock", "unlock", "isTty",
+                                                                                 "flush", "rewind", "truncate", "read",
+                                                                                 "write", "getLine", "putStr"))}}
         if paths and has_interfaces(inventory, path_interfaces):
             check_paths(stage, artifact, paths[0], product / "native" / "task_io.o")
     if "OmegaInit.System.Promise" in graph:

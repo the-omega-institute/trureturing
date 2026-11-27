@@ -125,4 +125,73 @@ static lean_obj_res strict_entries(b_lean_obj_arg array) {
 LEAN_EXPORT lean_obj_res omega_io_read_dir(b_lean_obj_arg path, lean_obj_arg world) {
     return unary_path(lean_io_read_dir, path, world, strict_entries);
 }
+extern lean_obj_res lean_io_prim_handle_mk(b_lean_obj_arg, uint8_t);
+extern uint8_t lean_io_prim_handle_is_tty(b_lean_obj_arg);
+extern lean_obj_res lean_io_prim_handle_flush(b_lean_obj_arg);
+extern lean_obj_res lean_io_prim_handle_rewind(b_lean_obj_arg);
+extern lean_obj_res lean_io_prim_handle_truncate(b_lean_obj_arg);
+extern lean_obj_res lean_io_prim_handle_unlock(b_lean_obj_arg);
+extern lean_obj_res lean_io_prim_handle_lock(b_lean_obj_arg, uint8_t);
+extern lean_obj_res lean_io_prim_handle_try_lock(b_lean_obj_arg, uint8_t);
+extern lean_obj_res lean_io_prim_handle_write(b_lean_obj_arg, b_lean_obj_arg);
+extern lean_obj_res lean_io_prim_handle_read(b_lean_obj_arg, size_t);
+extern lean_obj_res lean_io_prim_handle_get_line(b_lean_obj_arg);
+extern lean_obj_res lean_io_prim_handle_put_str(b_lean_obj_arg, b_lean_obj_arg);
+
+static lean_obj_res retain_value(b_lean_obj_arg value) {
+    lean_inc(value);
+    return value;
+}
+
+LEAN_EXPORT lean_obj_res omega_io_handle_mk(b_lean_obj_arg path, uint8_t mode, lean_obj_arg world) {
+    lean_object *p = omega_string_to_lean(path);
+    lean_object *r = lean_io_prim_handle_mk(p, mode);
+    lean_dec(p);
+    return strict_result(r, world, retain_value);
+}
+LEAN_EXPORT lean_obj_res omega_io_handle_is_tty(b_lean_obj_arg handle, lean_obj_arg world) {
+    return world_result(0, lean_box(lean_io_prim_handle_is_tty(handle)), world);
+}
+LEAN_EXPORT lean_obj_res omega_io_handle_flush(b_lean_obj_arg handle, lean_obj_arg world) {
+    return strict_result(lean_io_prim_handle_flush(handle), world, strict_unit);
+}
+LEAN_EXPORT lean_obj_res omega_io_handle_rewind(b_lean_obj_arg handle, lean_obj_arg world) {
+    return strict_result(lean_io_prim_handle_rewind(handle), world, strict_unit);
+}
+LEAN_EXPORT lean_obj_res omega_io_handle_truncate(b_lean_obj_arg handle, lean_obj_arg world) {
+    return strict_result(lean_io_prim_handle_truncate(handle), world, strict_unit);
+}
+LEAN_EXPORT lean_obj_res omega_io_handle_unlock(b_lean_obj_arg handle, lean_obj_arg world) {
+    return strict_result(lean_io_prim_handle_unlock(handle), world, strict_unit);
+}
+LEAN_EXPORT lean_obj_res omega_io_handle_get_line(b_lean_obj_arg handle, lean_obj_arg world) {
+    return strict_result(lean_io_prim_handle_get_line(handle), world, omega_string_from_lean);
+}
+LEAN_EXPORT lean_obj_res omega_io_handle_lock(b_lean_obj_arg handle, uint8_t exclusive, lean_obj_arg world) {
+    return strict_result(lean_io_prim_handle_lock(handle, exclusive), world, strict_unit);
+}
+LEAN_EXPORT lean_obj_res omega_io_handle_try_lock(b_lean_obj_arg handle, uint8_t exclusive, lean_obj_arg world) {
+    return strict_result(lean_io_prim_handle_try_lock(handle, exclusive), world, retain_value);
+}
+LEAN_EXPORT lean_obj_res omega_io_handle_put_str(b_lean_obj_arg handle, b_lean_obj_arg string, lean_obj_arg world) {
+    lean_object *s = omega_string_to_lean(string);
+    lean_object *r = lean_io_prim_handle_put_str(handle, s);
+    lean_dec(s);
+    return strict_result(r, world, strict_unit);
+}
+LEAN_EXPORT lean_obj_res omega_io_handle_write(b_lean_obj_arg handle, b_lean_obj_arg bytes, lean_obj_arg world) {
+    lean_object *buffer = omega_bytes_to_lean(bytes);
+    lean_object *r = lean_io_prim_handle_write(handle, buffer);
+    lean_dec(buffer);
+    return strict_result(r, world, strict_unit);
+}
+static lean_obj_res from_byte_array(b_lean_obj_arg buffer) {
+    return omega_bytes_from_data(lean_sarray_cptr(buffer), lean_sarray_size(buffer));
+}
+LEAN_EXPORT lean_obj_res omega_io_handle_read(b_lean_obj_arg handle, lean_obj_arg count, lean_obj_arg world) {
+    size_t size = 0;
+    for (lean_object *n = count; !lean_is_scalar(n); n = lean_ctor_get(n, 0)) ++size;
+    lean_dec(count);
+    return strict_result(lean_io_prim_handle_read(handle, size), world, from_byte_array);
+}
 #endif

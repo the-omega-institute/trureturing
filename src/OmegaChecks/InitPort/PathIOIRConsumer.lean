@@ -38,6 +38,42 @@ private abbrev PathOp := Bytes → Unit → Status × Unit
   let arg ← IO.mkRef path
   return (op (← arg.get) ()).1
 
+@[noinline] private def withHandle (action : IO.FS.Handle → Unit → α) (h : IO.FS.Handle) : IO α := do
+  let cell ← IO.mkRef h
+  return action (← cell.get) ()
+
+/-- Strict handles are the reference-counted upstream handles. File contents cross the byte and text encodings. -/
+private unsafe def checkHandle (env : Environment) (file : String) : IO Unit := do
+  let openFile ← IO.ofExcept <| env.evalConst (Bytes → Unit → Outcome IO.FS.Handle) {} `fileOpen
+  let h ← unpack (openFile (encode file) ())
+  let unitOp (n : Name) : IO Unit := do
+    let act ← IO.ofExcept <| env.evalConst (IO.FS.Handle → Unit → Status × Unit) {} n
+    unless (← withHandle act h).1 == .ok do throw <| IO.userError s!"strict {n} failed"
+  let tty ← IO.ofExcept <| env.evalConst (IO.FS.Handle → Unit → Bool × Unit) {} `fileTty
+  unless !(← withHandle tty h).1 do throw <| IO.userError "ordinary file reported as terminal"
+  unitOp `fileLock
+  unitOp `fileUnlock
+  let tryLock ← IO.ofExcept <| env.evalConst (IO.FS.Handle → Unit → Outcome Bool) {} `fileTryLock
+  unless ← unpack (← withHandle tryLock h) do throw <| IO.userError "file lock unavailable"
+  unitOp `fileUnlock
+  unitOp `fileTruncate
+  let put ← IO.ofExcept <| env.evalConst (IO.FS.Handle → Bytes → Unit → Status × Unit) {} `filePut
+  let write ← IO.ofExcept <| env.evalConst (IO.FS.Handle → Bytes → Unit → Status × Unit) {} `fileWrite
+  let text := "héλ界\n"
+  let bytes := [fromNat 0, fromNat 255]
+  unless (← withHandle (fun h => put h (encode text)) h).1 == .ok &&
+      (← withHandle (fun h => write h bytes) h).1 == .ok do throw <| IO.userError "text or binary write failed"
+  unitOp `fileFlush
+  unless (← IO.FS.readBinFile file) == text.toUTF8 ++ ByteArray.mk #[0, 255] do
+    throw <| IO.userError "bytes on disk differ from strict writes"
+  unitOp `fileRewind
+  let getLine ← IO.ofExcept <| env.evalConst (IO.FS.Handle → Unit → Outcome Bytes) {} `fileLine
+  unless (← unpack (← withHandle getLine h)) == encode text do throw <| IO.userError "unexpected file line"
+  let read ← IO.ofExcept <| env.evalConst (IO.FS.Handle → Unary → Unit → Outcome Bytes) {} `fileRead
+  let readBytes (size : Nat) := withHandle (fun h => read h (fromNat size)) h
+  unless (← unpack (← readBytes 0)).isEmpty && (← unpack (← readBytes 9)) == bytes &&
+      (← unpack (← readBytes 1)).isEmpty do throw <| IO.userError "wrong binary read or EOF"
+
 public unsafe def main (args : List String) : IO Unit := do
   let [library, consumer, oldName, newName, file, link, root] := args | throw <| IO.userError "expected library, consumer and fixture paths"
   searchPathRef.set [library, consumer]
@@ -81,6 +117,7 @@ public unsafe def main (args : List String) : IO Unit := do
   unless (← unpack (app ())) == encode (← IO.appPath).toString do throw <| IO.userError "appPath differs from upstream"
   let created ← unpack (tmp ())
   unless (← perform rm created) == .ok do throw <| IO.userError "temporary directory removal failed"
+  checkHandle env file
   unless (← perform (hardLink (encode file)) (encode link)) == .ok do throw <| IO.userError "hard link failed"
   unless (← IO.FS.readBinFile file) == (← IO.FS.readBinFile link) do throw <| IO.userError "link contents differ"
   let names ← unpack (entries (encode root) ())

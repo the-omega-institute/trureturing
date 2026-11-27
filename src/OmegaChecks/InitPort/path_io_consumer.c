@@ -18,6 +18,19 @@ extern lean_obj_res omega_test_path_list(lean_obj_arg, lean_obj_arg);
 extern lean_obj_res lean_io_current_dir(void);
 extern lean_obj_res lean_io_app_path(void);
 
+extern lean_obj_res omega_test_open(lean_obj_arg, lean_obj_arg);
+extern lean_obj_res omega_test_tty(lean_obj_arg, lean_obj_arg);
+extern lean_obj_res omega_test_flush(lean_obj_arg, lean_obj_arg);
+extern lean_obj_res omega_test_rewind(lean_obj_arg, lean_obj_arg);
+extern lean_obj_res omega_test_truncate(lean_obj_arg, lean_obj_arg);
+extern lean_obj_res omega_test_unlock(lean_obj_arg, lean_obj_arg);
+extern lean_obj_res omega_test_lock(lean_obj_arg, lean_obj_arg);
+extern lean_obj_res omega_test_try_lock(lean_obj_arg, lean_obj_arg);
+extern lean_obj_res omega_test_read(lean_obj_arg, lean_obj_arg, lean_obj_arg);
+extern lean_obj_res omega_test_write(lean_obj_arg, lean_obj_arg, lean_obj_arg);
+extern lean_obj_res omega_test_line(lean_obj_arg, lean_obj_arg);
+extern lean_obj_res omega_test_put(lean_obj_arg, lean_obj_arg, lean_obj_arg);
+
 static lean_object *encode(const char *s) {
     const char *end = s;
     while (*end) ++end;
@@ -50,6 +63,49 @@ static int path_result(lean_obj_arg out, unsigned tag, const char *path) {
         if (tag == 1 && !lean_is_scalar(file)) file = lean_ctor_get(file, 0);
         ok = text_equals(file, path) && !lean_is_scalar(lean_ctor_get(s, 1));
     }
+    lean_dec(out);
+    return ok;
+}
+
+static int file_ok(lean_obj_res (*action)(lean_obj_arg, lean_obj_arg), b_lean_obj_arg h) {
+    lean_inc(h);
+    return path_result(action(h, lean_box(0)), 0, 0);
+}
+
+static int handle_io(const char *path) {
+    lean_object *w = lean_box(0);
+    lean_object *out = omega_test_open(encode(path), w);
+    if (lean_obj_tag(out) || lean_ctor_get(out, 1) != w) return 0;
+    lean_object *h = lean_ctor_get(out, 0);
+    lean_inc(h);
+    lean_dec(out);
+    lean_inc(h);
+    out = omega_test_tty(h, w);
+    if (lean_ctor_get(out, 0) != lean_box(0)) return 0;
+    lean_dec(out);
+    if (!file_ok(omega_test_lock, h) || !file_ok(omega_test_unlock, h)) return 0;
+    lean_inc(h);
+    out = omega_test_try_lock(h, w);
+    if (lean_obj_tag(out) || lean_ctor_get(out, 0) != lean_box(1)) return 0;
+    lean_dec(out);
+    if (!file_ok(omega_test_unlock, h) || !file_ok(omega_test_truncate, h)) return 0;
+    lean_inc(h);
+    if (!path_result(omega_test_put(h, encode("héλ界\n"), w), 0, 0)) return 0;
+    lean_object *bytes = lean_alloc_ctor(1, 2, 0);
+    lean_ctor_set(bytes, 0, lean_box(0));
+    lean_ctor_set(bytes, 1, encode("\xff"));
+    lean_inc(h);
+    if (!path_result(omega_test_write(h, bytes, w), 0, 0) ||
+        !file_ok(omega_test_flush, h) || !file_ok(omega_test_rewind, h)) return 0;
+    lean_inc(h);
+    out = omega_test_line(h, w);
+    if (lean_obj_tag(out) || !text_equals(lean_ctor_get(out, 0), "héλ界\n")) return 0;
+    lean_dec(out);
+    out = omega_test_read(h, omega_nat_from_uint64(9), w);
+    if (lean_obj_tag(out)) return 0;
+    bytes = lean_ctor_get(out, 0);
+    int ok = !lean_is_scalar(bytes) && lean_ctor_get(bytes, 0) == lean_box(0) &&
+        text_equals(lean_ctor_get(bytes, 1), "\xff");
     lean_dec(out);
     return ok;
 }
@@ -94,6 +150,7 @@ int main(int argc, char **argv) {
     lean_object *temp_path = lean_ctor_get(temp, 0);
     lean_inc(temp_path); lean_dec(temp);
     if (!path_result(omega_test_path_rmdir(temp_path, world), 0, 0)) return 16;
+    if (!handle_io(argv[3])) return 22;
     if (!path_result(omega_test_path_hard_link(encode(argv[3]), encode(argv[4]), world), 0, 0)) return 17;
     lean_object *entries = omega_test_path_list(encode(argv[5]), world);
     if (lean_obj_tag(entries)) return 18;
