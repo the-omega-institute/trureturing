@@ -24,7 +24,13 @@ The versioned PDF has Definition 2.1 and the tangent and secant definitions on p
 
 Definition 2.1 and its minimality clause. [p. 4](https://arxiv.org/pdf/2507.05037v2#page=4)
 
-> A blocking set of PG(2, q) is a set of points B which meets every line but does not contain any line. A blocking set B of PG(2, q) (AG(2, q), respectively) is called minimal if no proper subset of B is a blocking set of PG(2, q) (AG(2, q), respectively).
+**Projective blocking sets**
+
+> A blocking set of PG(2, q) is a set of points B which meets every line but does not contain any line.
+
+**Minimality**
+
+> A blocking set B of PG(2, q) (AG(2, q), respectively) is called minimal if no proper subset of B is a blocking set of PG(2, q) (AG(2, q), respectively).
 
 Tangent and secant. [p. 4](https://arxiv.org/pdf/2507.05037v2#page=4)
 

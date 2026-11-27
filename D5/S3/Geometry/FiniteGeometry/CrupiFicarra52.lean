@@ -37,7 +37,8 @@ def BlockingSet (B : Finset (ℙ F (Fin 3 → F))) : Prop :=
   (∀ l : ℙ F (Fin 3 → F), ∃ p ∈ B, p ∈ l) ∧
   (∀ l : ℙ F (Fin 3 → F), ¬ ∀ p : ℙ F (Fin 3 → F), p ∈ l → p ∈ B)
 
-/-- A line whose intersection with the set is exactly the given point. -/
+/-- A line through `p` such that any point of `B` on the line equals `p`.
+    Membership `p ∈ B` is supplied by `RInfinity`. -/
 def TangentAt (B : Finset (ℙ F (Fin 3 → F))) (p l : ℙ F (Fin 3 → F)) : Prop :=
   p ∈ l ∧ ∀ x ∈ B, x ∈ l → x = p
 
