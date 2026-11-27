@@ -25,7 +25,7 @@ private def listTraversal (n : Name) : Bool :=
 
 public def supported (n : Name) : Bool :=
   attachment n || linear n || quotientEliminator n || listTraversal n ||
-  [`withPtrEq, `ShareCommon.shareCommon', `List.mapMonoM, `List.flatMapMTR.loop, `BitVec.flattenListFast].contains n ||
+  [`withPtrEq, `ShareCommon.shareCommon', `List.mapMonoM, `List.flatMapMTR.loop, `List.splitOn, `List.splitOnPTR, `BitVec.flattenListFast].contains n ||
   [`Acc.recC, `Acc.ndrecC, `Acc.ndrecOnC, `WellFounded.fixFC,
    `Lean.Grind.CommRing.Mon.revlexWF, `Lean.Grind.CommRing.Mon.revlexFuel, `Lean.Grind.CommRing.Mon.revlex,
    `Lean.Grind.CommRing.Mon.grevlex, `Lean.Grind.CommRing.Power.revlex,
@@ -105,6 +105,8 @@ public def wrapper (source strict : Environment) (n : Name) (symbol : String) : 
     let release := if actual[1]!.borrow then "" else "lean_dec(x); "
     return s!"\nextern lean_obj_res lean_sharecommon_quick(b_lean_obj_arg);\nLEAN_EXPORT lean_obj_res {entry}(lean_obj_arg x) \{ lean_obj_res r = lean_sharecommon_quick(x); {release}return r; }\n"
   if attachment official then return ← attachmentWrapper source strict official n symbol
+  if [`List.splitOn, `List.splitOnPTR].contains official then
+    checkDataTypes source strict [`List, `Bool, `BEq]
   if official == `List.flatMapMTR.loop then
     checkDataTypes source strict [`List, `Monad, `Applicative, `Pure, `Functor, `Seq, `SeqLeft, `SeqRight, `Bind]
   if official == `BitVec.flattenListFast then
