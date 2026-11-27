@@ -2,6 +2,7 @@ import Lean
 import OmegaChecks.FieldMethods
 import OmegaChecks.InitPort.NativeQuot
 import OmegaChecks.InitPort.Address
+import OmegaChecks.InitPort.ArrayModify
 
 /-! Compare compiled public interfaces in independent Lean environments. -/
 
@@ -172,6 +173,9 @@ private def compare (reference : Environment) (rename : Name → Name) (src dst 
   | .defnInfo x, .defnInfo y =>
     if foundation.isSome && x.safety == .safe && y.name == `withPtrAddrUnsafe then
       OmegaChecks.InitPort.Address.check reference y (liftTerm x.value)
+      return deps ++ x.value.getUsedConstants
+    if foundation.isSome && x.safety == .safe && y.name == `Array.modifyMUnsafe then
+      OmegaChecks.InitPort.ArrayModify.check reference y (liftTerm x.value)
       return deps ++ x.value.getUsedConstants
     unless x.safety == y.safety do
       throw <| IO.userError s!"definition safety mismatch for {src.name}"

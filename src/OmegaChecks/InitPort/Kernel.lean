@@ -470,16 +470,18 @@ partial def visit (n : Name) : M Bool := do
       if missing.isSome then return ← record n (.blocked "smart unfolding requires unavailable matcher metadata")
   if let some reason := c.excluded.find? n then return ← record n (.blocked reason)
   if ci.isAxiom then return ← record n (.blocked "axiom")
-  if n == `withPtrAddrUnsafe then
-    let .defnInfo native := ci | return ← record n (.blocked "missing pointer continuation implementation")
-    let reference := mkConst `withPtrAddr (native.levelParams.map Level.param)
-    OmegaChecks.InitPort.Address.check c.source native reference
-    if !(← visit `withPtrAddr) then
-      return ← record n (.blocked "unavailable address continuation" (some `withPtrAddr))
+  if [`withPtrAddrUnsafe, `Array.modifyMUnsafe].contains n then
+    let .defnInfo native := ci | return ← record n (.blocked "missing native implementation")
+    let name := if n == `withPtrAddrUnsafe then `withPtrAddr else `Array.modifyM
+    let reference := mkConst name (native.levelParams.map Level.param)
+    if n == `withPtrAddrUnsafe then OmegaChecks.InitPort.Address.check c.source native reference
+    unless Compiler.getImplementedBy? c.source name == some n do
+      return ← record n (.blocked "mismatched native implementation" (some name))
+    unless ← visit name do return ← record n (.blocked "unavailable logical reference" (some name))
     let safe := ConstantInfo.defnInfo {native with safety := .safe}
-    let .ok decl := translateDecl safe ci.type reference | return ← record n (.blocked "invalid address continuation")
+    let .ok decl := translateDecl safe ci.type reference | return ← record n (.blocked "invalid logical reference")
     let .ok env ← checkWithRetry (← get).env decl c.maxHeartbeats
-      | return ← record n (.blocked "kernel rejected address continuation")
+      | return ← record n (.blocked "kernel rejected logical reference")
     modify fun s => {s with env}
     return ← record n .added
   if (ci.isUnsafe && !boundedBorrowedRead ci) || ci.isPartial then return ← record n (.blocked "unsafe/partial")

@@ -3,6 +3,7 @@ module
 public import Init.Data.RArray
 public import Init.Data.Array.DecidableEq
 public import Init.Data.Array.Lemmas
+public import OmegaChecks.InitPort.ArrayModify
 public import Init.Data.Vector.Lex
 public import Init.Data.Vector.Attach
 public import OmegaChecks.InitPort.Alternatives.ByteArray
