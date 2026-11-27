@@ -11,6 +11,9 @@ strata_touched:
   - D5/S3/Topology/MatchedFaceIncidenceForest
   - D5/S3/Topology/DescendingClosureContiguity
   - D5/S3/Topology/SubdivisionCategoricalCover
+  - D5/S3/Topology/SmallPosetSubdivisionCategory
+  - D5/S3/Topology/FiniteCategoricalCoverCertificate
+  - D5/S3/Topology/SmallAcyclicCategoricalCovers
   - D5/S3/Topology/RelativeDerivedContiguity
   - D5/S3/Topology/BarycentricGraphDistance
   - D5/S3/Topology/BarycentricNeighborhoodIteration
@@ -95,10 +98,38 @@ second subdivision. In the first subdivision each chain meeting a chosen
 set contracts through its intersection with that set. In the second
 subdivision the smallest chain in each flag makes the two lower sets cover.
 
-The lower-bound argument uses this transfer for connected cores of weak
-category at least two. The weak-category-one case uses an exhaustive analysis
-of cores of sizes nine through eleven. This module formalizes the subdivision
-step. [Conjecture 6.1 and Corollary 4.2](https://arxiv.org/html/2609.39615v1#S6)
+The computer-assisted lower bound is twelve. For a connected core of at
+most eleven points, simultaneous strictness with weak category at least two
+requires at least four maximal points. The corresponding Lean theorem
+partitions such a core into two categorical subsets and bounds the category
+of its second subdivision by two. It uses the two extrema above and below
+each intermediate point in a core and the limit of four intermediate points
+when there are at least three minima.
+
+With weak category one, the nine-point theorem of Cianci and Ottina reduces
+the remaining range to sizes nine through eleven. A core with at most two
+maxima already has a two-cover by principal lower sets. For the rest, take
+the McKay catalogue of Hasse diagrams on eight, nine and ten points and
+extend each poset at one maximum. Use a lower ideal with no greatest
+element, exclude all old maxima, and for each old up beat point include that
+point and exclude its former least strict upper neighbor. Discard orders
+with a down beat point, and use connectedness and vanishing reduced
+homology over the field of two elements. The latter conditions hold for
+every weakly contractible candidate. This yields 2, 10 and 93 isomorphism
+classes with at least three maxima. The Lean kernel checks two explicit
+lower sets and their inclusion-to-constant zigzags for every listed class.
+The exhaustive enumeration uses the published catalogue and integer
+computation.
+
+Passing to cores preserves the three categories, which are additive over
+components. Any component with a strict weak-to-stable inequality needs at
+least nine points. For weak category one this uses Cianci and Ottina. For
+weak category at least two, a core on at most eight points has a stable
+two-cover by the same intermediate-point argument. Under the size bound
+of eleven the other components therefore contribute equally to all three
+categories.
+[Conjecture 6.1 and Corollary 4.2](https://arxiv.org/html/2609.39615v1#S6)
+[McKay catalogue](https://users.cecs.anu.edu.au/~bdm/data/digraphs.html)
 
 ## Contiguity under subdivision
 
