@@ -345,6 +345,20 @@ private def logicalConsequence? (owner name : Name) : Option (Name × Name) := d
 
 /-- The conclusion uses the indicated semantic agreement in addition to the public type. -/
 private def conditionalConsequence? (owner name : Name) : Option (String × Name × String) := do
+  if owner == `Init.Data.Array.Basic && [`Array.mapMUnsafe, `Array.mapFinIdxMUnsafe].contains name then
+    let witness := if name == `Array.mapMUnsafe then ``OmegaChecks.InitBoundaries.ArrayCasts.map
+      else ``OmegaChecks.InitBoundaries.ArrayCasts.mapIndexed
+    return ("False", witness,
+      "On Array Unit with word length zero and a callback returning none : Option Empty, the zero-step exit returns some output of the original natural length")
+  if owner == `Init.Data.Fin.Fold then
+    let witness ← match name with
+      | ``Fin.foldlM_succ_last | ``Fin.foldrM_succ =>
+        some ``OmegaChecks.InitBoundaries.TransformerLaws.FiniteFold.funextOfMoveUnit
+      | ``Fin.foldlM_add | ``Fin.foldrM_add =>
+        some ``OmegaChecks.InitBoundaries.TransformerLaws.FiniteFold.funextOfRepeatUnit
+      | _ => none
+    return ((``funext).toString, witness,
+      "The zero-step fold is pure and the one-step fold binds its callback to pure, as in the pinned zero and successor equations")
   if owner == `Init.Grind.Ring.Envelope || owner == `Init.Grind.Module.Envelope then
     if name == ``Lean.Grind.Ring.OfSemiring.instLEQOfOrderedAdd ||
         name == ``Lean.Grind.IntModule.OfNatModule.instLEQOfOrderedAdd then
