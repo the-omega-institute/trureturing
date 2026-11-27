@@ -2,6 +2,8 @@ module
 
 public import OmegaBuild.Commands
 public import Mathlib.Algebra.Group.Basic
+public import Mathlib.Algebra.Group.Idempotent
+public import Mathlib.Algebra.Group.TypeTags.Basic
 
 /-!
 Omega original.
@@ -102,9 +104,9 @@ theorem component_add {e f x y : K} (he : Idempotent e) (hf : Idempotent f)
   rcases hyf.1 with ⟨v, hv⟩
   rcases hyf.2 with ⟨v', hv'⟩
   refine ⟨?_, ⟨⟨u + v, ?_⟩, ⟨u' + v', ?_⟩⟩⟩
-  · calc
-      (e + f) + (e + f) = (e + e) + (f + f) := by ac_rfl
-      _ = e + f := by rw [he, hf]
+  · exact IsIdempotentElem.mul
+      (S := Multiplicative K) (a := Multiplicative.ofAdd e)
+      (b := Multiplicative.ofAdd f) he hf
   · calc
       (e + f) + (u + v) = (e + u) + (f + v) := by ac_rfl
       _ = x + y := by rw [hu, hv]

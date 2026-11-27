@@ -63,10 +63,9 @@ theorem component_sum_of_refinement (hr : BinaryRefinement K) : ComponentSum K :
   intro e f he hf x
   constructor
   · intro hx
-    have hef : Idempotent (e + f) := by
-      calc
-        (e + f) + (e + f) = (e + e) + (f + f) := by ac_rfl
-        _ = e + f := by rw [he, hf]
+    have hef : Idempotent (e + f) := IsIdempotentElem.mul
+      (S := Multiplicative K) (a := Multiplicative.ofAdd e)
+      (b := Multiplicative.ofAdd f) he hf
     obtain ⟨xi, _, hxi⟩ := component_inverse hef hx
     obtain ⟨a, b, c, d, hab, _, hac, hbd⟩ := hr x xi e f hxi
     refine ⟨a + e, b + f, component_offset he ⟨c, hac⟩,
