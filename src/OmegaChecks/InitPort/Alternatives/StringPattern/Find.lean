@@ -74,6 +74,34 @@ public theorem Pos.find?_char_eq_none_iff : type_of% @_root_.String.Slice.Pos.fi
     obtain ⟨h, ok⟩ := Pattern.Model.Char.matchesAt_iff.mp matched
     exact first q lo h ok
 
+public theorem Pos.find?_char_eq_none_iff_not_mem_of_splits :
+    type_of% @_root_.String.Slice.Pos.find?_char_eq_none_iff_not_mem_of_splits := by
+  intro c s start t u split
+  refine (_root_.String.Slice.Pos.find?_char_eq_none_iff (pos := start) (c := c)).trans ⟨?_, ?_⟩
+  · intro absent member
+    obtain ⟨q, lo, h, eq⟩ := split.mem_toList_right_iff.mp member
+    exact absent q lo h eq
+  · intro missing q lo h eq
+    exact missing (split.mem_toList_right_iff.mpr ⟨q, lo, h, eq⟩)
+
+public theorem Pos.find?_prop_eq_none_iff_of_splits :
+    type_of% @_root_.String.Slice.Pos.find?_prop_eq_none_iff_of_splits := by
+  intro p _ s start t u split
+  rw [_root_.String.Slice.Pos.find?_prop_eq_find?_decide]
+  refine (_root_.String.Slice.Pos.find?_bool_eq_none_iff_of_splits split).trans ⟨?_, ?_⟩
+  · exact fun h c mem => of_decide_eq_false (h c mem)
+  · exact fun h c mem => decide_eq_false (h c mem)
+
+public theorem Pos.find?_prop_eq_some_iff_splits :
+    type_of% @_root_.String.Slice.Pos.find?_prop_eq_some_iff_splits := by
+  intro p _ s start t u split pos
+  rw [_root_.String.Slice.Pos.find?_prop_eq_find?_decide]
+  refine (_root_.String.Slice.Pos.find?_bool_eq_some_iff_splits split).trans ⟨?_, ?_⟩
+  · rintro ⟨v, c, w, atPos, yes, earlier⟩
+    exact ⟨v, c, w, atPos, of_decide_eq_true yes, fun d mem => of_decide_eq_false (earlier d mem)⟩
+  · rintro ⟨v, c, w, atPos, yes, earlier⟩
+    exact ⟨v, c, w, atPos, decide_eq_true yes, fun d mem => decide_eq_false (earlier d mem)⟩
+
 public theorem contains_char_eq : type_of% @_root_.String.Slice.contains_char_eq := by
   intro c s
   apply Bool.eq_iff_iff.mpr
@@ -101,6 +129,55 @@ public theorem contains_bool_eq : type_of% @_root_.String.Slice.contains_bool_eq
 end OmegaChecks.InitPort.Alternatives.String.Slice
 
 namespace OmegaChecks.InitPort.Alternatives.String
+
+open _root_.String
+
+public theorem Pos.find?_char_eq_some_iff_splits : type_of% @_root_.String.Pos.find?_char_eq_some_iff_splits := by
+  intro c s start t u split pos
+  rw [_root_.String.Pos.find?_eq_find?_toSlice]
+  refine Option.map_eq_some_iff.trans ⟨?_, ?_⟩
+  · rintro ⟨q, found, rfl⟩
+    obtain ⟨v, w, atPos, first⟩ :=
+      (Slice.Pos.find?_char_eq_some_iff_splits (Pos.splits_toSlice_iff.mpr split)).mp found
+    exact ⟨v, w, Slice.Pos.splits_ofToSlice_iff.mpr atPos, first⟩
+  · rintro ⟨v, w, atPos, first⟩
+    exact ⟨pos.toSlice, (Slice.Pos.find?_char_eq_some_iff_splits (Pos.splits_toSlice_iff.mpr split)).mpr
+      ⟨v, w, Pos.splits_toSlice_iff.mpr atPos, first⟩, Pos.ofToSlice_toSlice pos⟩
+
+public theorem Pos.find?_bool_eq_some_iff_splits : type_of% @_root_.String.Pos.find?_bool_eq_some_iff_splits := by
+  intro p s start t u split pos
+  rw [_root_.String.Pos.find?_eq_find?_toSlice]
+  refine Option.map_eq_some_iff.trans ⟨?_, ?_⟩
+  · rintro ⟨q, found, rfl⟩
+    obtain ⟨v, c, w, atPos, yes, earlier⟩ :=
+      (Slice.Pos.find?_bool_eq_some_iff_splits (Pos.splits_toSlice_iff.mpr split)).mp found
+    exact ⟨v, c, w, Slice.Pos.splits_ofToSlice_iff.mpr atPos, yes, earlier⟩
+  · rintro ⟨v, c, w, atPos, yes, earlier⟩
+    exact ⟨pos.toSlice, (Slice.Pos.find?_bool_eq_some_iff_splits (Pos.splits_toSlice_iff.mpr split)).mpr
+      ⟨v, c, w, Pos.splits_toSlice_iff.mpr atPos, yes, earlier⟩, Pos.ofToSlice_toSlice pos⟩
+
+public theorem Pos.find?_prop_eq_some_iff_splits : type_of% @_root_.String.Pos.find?_prop_eq_some_iff_splits := by
+  intro p _ s start t u split pos
+  rw [_root_.String.Pos.find?_eq_find?_toSlice]
+  refine Option.map_eq_some_iff.trans ⟨?_, ?_⟩
+  · rintro ⟨q, found, rfl⟩
+    obtain ⟨v, c, w, atPos, yes, earlier⟩ :=
+      (Slice.Pos.find?_prop_eq_some_iff_splits (Pos.splits_toSlice_iff.mpr split)).mp found
+    exact ⟨v, c, w, Slice.Pos.splits_ofToSlice_iff.mpr atPos, yes, earlier⟩
+  · rintro ⟨v, c, w, atPos, yes, earlier⟩
+    exact ⟨pos.toSlice, (Slice.Pos.find?_prop_eq_some_iff_splits (Pos.splits_toSlice_iff.mpr split)).mpr
+      ⟨v, c, w, Pos.splits_toSlice_iff.mpr atPos, yes, earlier⟩, Pos.ofToSlice_toSlice pos⟩
+
+public theorem Pos.find?_prop_eq_none_iff_of_splits : type_of% @_root_.String.Pos.find?_prop_eq_none_iff_of_splits := by
+  intro p _ s start t u split
+  rw [_root_.String.Pos.find?_eq_find?_toSlice]
+  exact Option.map_eq_none_iff.trans (Slice.Pos.find?_prop_eq_none_iff_of_splits (Pos.splits_toSlice_iff.mpr split))
+
+public theorem Pos.find?_char_eq_none_iff_not_mem_of_splits :
+    type_of% @_root_.String.Pos.find?_char_eq_none_iff_not_mem_of_splits := by
+  intro c s start t u split
+  rw [_root_.String.Pos.find?_eq_find?_toSlice]
+  exact Option.map_eq_none_iff.trans (Slice.Pos.find?_char_eq_none_iff_not_mem_of_splits (Pos.splits_toSlice_iff.mpr split))
 
 public theorem contains_char_eq : type_of% @_root_.String.contains_char_eq := by
   intro c s
