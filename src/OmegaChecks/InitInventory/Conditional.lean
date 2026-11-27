@@ -2,6 +2,7 @@ module
 
 public import OmegaChecks.InitInventory.Reductions
 public import OmegaChecks.InitInventory.Collector
+public import OmegaChecks.InitInventory.FieldNormalization
 public import OmegaChecks.InitInventory.StringPatterns
 public import OmegaChecks.InitInventory.StringSearchLoops
 public import OmegaChecks.InitInventory.StringSplitLoops
@@ -31,6 +32,20 @@ public def conditionalConsequence? (owner name : Name) : Option (String × Name 
     if let some (proof, result) := observation then
       return ("∀ P : Prop, Decidable P", proof,
         s!"When x ≤ y on Bool is the constant proposition P, {result} exactly when P holds")
+  if owner == `Init.Grind.FieldNormNum then
+    let inverse := ``OmegaChecks.InitBoundaries.FieldNormalization.inverse
+    let verify := ``OmegaChecks.InitBoundaries.FieldNormalization.verifyInv
+    let divide := ``OmegaChecks.InitBoundaries.FieldNormalization.divide
+    let power := ``OmegaChecks.InitBoundaries.FieldNormalization.power
+    let quotient := "The field construction uses propext and Quot.sound"
+    let entry := match name with
+      | `Lean.Grind.Field.NormNum.ofRat_inv => some (inverse, quotient)
+      | `Lean.Grind.Field.NormNum.inv_eq => some (verify, quotient)
+      | `Lean.Grind.Field.NormNum.ofRat_div' => some (divide, quotient ++ " and the rational division computes 1 / (3/2) = 2/3")
+      | `Lean.Grind.Field.NormNum.ofRat_zpow' => some (power, quotient ++ " and the rational integer power computes (2/3)^(-1) = 3/2")
+      | _ => none
+    if let some (witness, assumptions) := entry then
+      return ("∀ P : Prop, ¬¬ P → P", witness, assumptions)
   if owner == `Init.Data.ByteArray.Basic then
     if name == `ByteArray.forInUnsafe.loop then
       return ("False", ``OmegaChecks.InitBoundaries.ByteArrayReads.noForInBound,
