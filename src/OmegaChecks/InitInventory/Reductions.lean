@@ -36,6 +36,9 @@ meta import OmegaChecks.InitInventory.Quotient
 public import OmegaChecks.InitInventory.TransformerLaws
 import all OmegaChecks.InitInventory.TransformerLaws
 meta import OmegaChecks.InitInventory.TransformerLaws
+public import OmegaChecks.InitInventory.StrictRingOrder
+import all OmegaChecks.InitInventory.StrictRingOrder
+meta import OmegaChecks.InitInventory.StrictRingOrder
 public import OmegaChecks.InitInventory.EnvelopeOrder
 import all OmegaChecks.InitInventory.EnvelopeOrder
 meta import OmegaChecks.InitInventory.EnvelopeOrder
@@ -83,6 +86,8 @@ def reductions : List (Name × Name × Name × Name) := [
   (`Init.PropLemmas, `ite_iff_right_iff, `propext, ``propextFromIteIffRight),
   (`Init.PropLemmas, `left_iff_ite_iff, `propext, ``propextFromLeftIffIte),
   (`Init.PropLemmas, `right_iff_ite_iff, `propext, ``propextFromRightIffIte),
+  (`Init.Grind.Ring.CommSolver, `Lean.Grind.CommRing.lt_norm_expr, `propext, ``StrictRingOrder.propextFromLT),
+  (`Init.Grind.Ring.CommSolver, `Lean.Grind.CommRing.lt_norm_expr_nc, `propext, ``StrictRingOrder.propextFromLTNC),
   (`Init.Grind.Ring.CommSolver, `Lean.Grind.CommRing.le_norm_expr, `propext, ``EnvelopeOrder.propextFromLeNorm),
   (`Init.Grind.Ring.CommSolver, `Lean.Grind.CommRing.le_norm_expr_nc, `propext, ``EnvelopeOrder.propextFromLeNormNC),
   (`Init.Grind.Norm, `Lean.Grind.iff_eq, `propext, ``propextFromGrindIffEq),
@@ -258,9 +263,15 @@ checks the source application with `Eq.refl true` as its entire certificate. -/
 private def translatedComparisonType (source : ConstantInfo) : MetaM Expr := do
   let levels := [Level.zero]
   let type := source.type.instantiateLevelParams source.levelParams levels
-  Meta.forallBoundedTelescope type (some 7) fun params _ => do
+  let strict := [``Grind.CommRing.lt_norm_expr, ``Grind.CommRing.lt_norm_expr_nc].contains source.name
+  Meta.forallBoundedTelescope type (some (if strict then 8 else 7)) fun params _ => do
     let literal (n : Nat) := mkApp (mkConst ``Grind.CommRing.Expr.num) (toExpr (Int.ofNat n))
-    let test := mkAppN (mkConst source.name levels) (params ++ #[literal 0, literal 1, literal 1, literal 2])
+    let terms := if strict then
+      let x := mkApp (mkConst ``Grind.CommRing.Expr.var) (toExpr (0 : Nat))
+      #[literal 0, x, literal 1, mkApp2 (mkConst ``Grind.CommRing.Expr.add) x (literal 1)]
+    else
+      #[literal 0, literal 1, literal 1, literal 2]
+    let test := mkAppN (mkConst source.name levels) (params ++ terms)
     let application := mkApp test (← Meta.mkEqRefl (mkConst ``Bool.true))
     let proof ← Meta.mkLambdaFVars params application
     Lean.ofExceptKernelException (Kernel.check (← getEnv) {} proof)
@@ -289,7 +300,8 @@ run_cmd
         pure law
       else pure source
       Elab.Command.liftCoreM <| Meta.MetaM.run' <| optionLawReductionType law target levels
-    else if [``Grind.CommRing.le_norm_expr, ``Grind.CommRing.le_norm_expr_nc].contains source.name then
+    else if [``Grind.CommRing.le_norm_expr, ``Grind.CommRing.le_norm_expr_nc,
+        ``Grind.CommRing.lt_norm_expr, ``Grind.CommRing.lt_norm_expr_nc].contains source.name then
       Elab.Command.liftCoreM <| Meta.MetaM.run' do
         mkArrow (← translatedComparisonType source) target.type
     else if source.name == ``Order.flat_csup then
