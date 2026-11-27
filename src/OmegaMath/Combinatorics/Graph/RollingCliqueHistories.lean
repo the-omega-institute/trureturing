@@ -1,6 +1,6 @@
 import OmegaBuild.Commands
-import OmegaMath.Topology.FiniteGraphChainNorm
 import Mathlib.Combinatorics.SimpleGraph.Clique
+import Mathlib.Combinatorics.SimpleGraph.Connectivity.Connected
 
 compile_only_with_mathlib
 
@@ -10,7 +10,7 @@ Finite trees of nested clique retention histories and their label and copy symme
 
 namespace Omega.RollingCliques
 
-open SimpleGraph Omega.GraphChains
+open SimpleGraph
 
 open scoped BigOperators
 

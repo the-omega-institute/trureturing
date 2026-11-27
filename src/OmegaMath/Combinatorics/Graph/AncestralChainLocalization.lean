@@ -233,10 +233,6 @@ private noncomputable def History.collapseVertex (a : History P k) (h : 0 < a.st
     exact P.positivePrevious a.stage h
   exact (a.prefix (Fin.previous a.stage) hp, hn.choose)
 
-private theorem History.collapse_mem (a : History P k) (h : 0 < a.stage.val) :
-    (collapseVertex a h).2 ∈ (a.step a.stage).1 (Fin.previous a.stage) :=
-  Classical.choose_spec _
-
 noncomputable def spineMap (c : History P k) (v : History P k × Fin q) :
     History P k × Fin q := by
   classical

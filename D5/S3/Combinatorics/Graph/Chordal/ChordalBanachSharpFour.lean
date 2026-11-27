@@ -792,8 +792,8 @@ namespace SimpleGraph
 
 open ChordalReconstruction Omega.GraphChains Omega.RollingCliques Omega.PeriodicBandCochains
 
-/-- For every positive tolerance, a finite connected chordal graph has a triangle-flat
-Banach-valued gain whose reconstruction error is at least four minus that tolerance. -/
+/-- For every positive tolerance, a finite connected chordal graph has a Banach-valued gain
+with triangle defect at most one and reconstruction error at least four minus that tolerance. -/
 theorem exists_chordal_banach_gain_lower_four (ε : ℝ) (hε : 0 < ε) :
     ∃ (V : Type) (_ : Fintype V) (G : SimpleGraph V), G.IsChordal ∧ G.Connected ∧
       ∃ (E : Type) (N : NormedAddCommGroup E) (S : @NormedSpace ℝ E _ N.toSeminormedAddCommGroup),
