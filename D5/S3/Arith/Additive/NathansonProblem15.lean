@@ -21,8 +21,8 @@ zero_off_of_sum_eq                      bind-only    none / digit_eq_zero_of_col
 digit_eq_zero_of_collision              content      A changed second multiplicity spends the entire budget at one index.
 digit_eq_zero_iff                       content      The zero vector has exactly one second label and h - 1 matching first labels.
 digit_bounds                            content      The weight budget confines each signed digit to [-(h - 1)h, h].
-natAbs_lt_of_digit_bounds               content      Two digits in that interval differ by at most h².
-radixCode_eq_iff                        bind-only    none / adjacent_mem_range
+natAbs_lt_of_digit_bounds               bind-only    Normalizes the two given intervals / radixCode_eq_iff, radixCode_eq_zero_iff
+radixCode_eq_iff                        content      Inlines the signed_radix_injective induction to recover equal digit vectors.
 radixCode_eq_zero_iff                   content      Collision and weight-budget arguments fix multiplicities after zero-code normalization.
 mem_nsmul_range_iff_counts              bind-only    Sym.equivNatSumOfFintype supplies exact-size counts / mem_labelled_sum_iff
 mem_labelled_sum_iff                    bind-only    none / mem_radixGenerators_iff
