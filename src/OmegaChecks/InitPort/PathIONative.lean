@@ -200,6 +200,7 @@ public unsafe def main (args : List String) : IO Unit := do
   let getters := [`IO.getStdin, `IO.getStdout, `IO.getStderr]
   let setters := [`IO.setStdin, `IO.setStdout, `IO.setStderr]
   let streams := roots.any fun (n, _, _) => (getters ++ setters).contains n
+  let buffers := bufferOperations.any fun op => env.contains (InitKernelPort.portName op.1)
   let processes := roots.any fun (n, _, _) => n == `IO.Process.spawn || (`IO.Process.Child).isPrefixOf n
   let metadata := roots.any fun (n, _, _) => [`System.FilePath.metadata, `System.FilePath.symlinkMetadata].contains n
   let dicts := [`Omega.Fin, `Omega.BitVec, `Omega.UInt8, `Omega.Array, `Omega.ByteArray, `Omega.String] ++
@@ -210,6 +211,7 @@ public unsafe def main (args : List String) : IO Unit := do
     for n in dicts ++ [`Omega.Option, `Omega.List, `Omega.ST.Out] ++ (if fs then [`Omega.EST.Out, `Omega.IO.Error] else []) ++
         (if metadata then [`Omega.IO.FS.SystemTime, `Omega.IO.FS.Metadata, `Omega.IO.FS.FileType, `Omega.Int] else []) ++
         (if streams then [`Omega.IO.FS.Stream] else []) ++
+        (if buffers then [`Omega.IO.FS.Stream.Buffer] else []) ++
         (if processes then [`Omega.Prod, `Omega.IO.Process.Stdio, `Omega.IO.Process.StdioConfig, `Omega.IO.Process.SpawnArgs, `Omega.IO.Process.Child] else []) ++
         (if roots.any (fun (n, _, _) => n == `IO.FS.createTempFile) then [`Omega.Prod] else []) ++
         (if readDir then [`Omega.IO.FS.DirEntry] else []) ++ (if handles then [`Omega.IO.FS.Mode] else []) do
