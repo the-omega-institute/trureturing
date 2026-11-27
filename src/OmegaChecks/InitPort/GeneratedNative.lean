@@ -412,8 +412,9 @@ private unsafe def install (source publicSource : Environment) (lib out : System
   let mut context ← localEnv env owner (locals ++ words ++ candidates)
   -- Compiler tags stored under the imported module index need local entries while compiling.
   for n in locals ++ candidates do
-    if owner == `OmegaInit.Meta.Defs then
-      let upstream := InitKernelPort.originalName n
+    let upstream := InitKernelPort.originalName n
+    let macroMatchers := [`Lean.expandMacros.match_1, `Lean.Syntax.setTailInfo.match_1, `Lean.Syntax.structEq._sparseCasesOn_2]
+    if owner == `OmegaInit.Meta.Defs && (privateToUserName? upstream).any macroMatchers.contains then
       if let some (.defnInfo original) := source.find? upstream then
         if let some (.defnInfo installed) := env.find? n then
           let translate := InitKernelPort.translate InitKernelPort.portName
