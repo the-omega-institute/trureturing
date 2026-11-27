@@ -227,7 +227,9 @@ public theorem Array.findFinIdx?_append : type_of% @_root_.Array.findFinIdx?_app
   apply (Option.map_inj_right (f := Fin.val) (fun _ _ => Fin.eq_of_val_eq)).mp
   rw [← Array.findIdx?_eq_map_findFinIdx?_val, Array.findIdx?_append,
     Array.findIdx?_eq_map_findFinIdx?_val, Array.findIdx?_eq_map_findFinIdx?_val]
-  cases xs.findFinIdx? p <;> cases ys.findFinIdx? p <;> first | rfl | exact congrArg some (Nat.add_comm ..)
+  cases xs.findFinIdx? p <;> cases ys.findFinIdx? p <;> try rfl
+  rename_i i
+  exact congrArg some ((Nat.add_comm _ _).trans (_root_.Fin.val_natAdd xs.size i).symm)
 
 public theorem Array.findFinIdx?_push : type_of% @_root_.Array.findFinIdx?_push := by
   intro α xs a p

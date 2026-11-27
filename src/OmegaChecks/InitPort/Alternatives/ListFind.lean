@@ -205,7 +205,9 @@ public theorem List.findFinIdx?_append : type_of% @_root_.List.findFinIdx?_appen
   apply sameFinOption
   rw [← List.findIdx?_eq_map_findFinIdx?_val, List.findIdx?_append,
     List.findIdx?_eq_map_findFinIdx?_val, List.findIdx?_eq_map_findFinIdx?_val]
-  cases xs.findFinIdx? p <;> cases ys.findFinIdx? p <;> first | rfl | exact congrArg some (Nat.add_comm ..)
+  cases xs.findFinIdx? p <;> cases ys.findFinIdx? p <;> try rfl
+  rename_i i
+  exact congrArg some ((Nat.add_comm _ _).trans (_root_.Fin.val_natAdd xs.length i).symm)
 
 public theorem List.findIdx?_flatten : type_of% @_root_.List.findIdx?_flatten := by
   intro α rows p

@@ -176,8 +176,9 @@ public theorem Fin.foldl_add : type_of% @_root_.Fin.foldl_add := by
   | zero => rfl
   | succ m ih =>
     apply (foldl_succ_last (n := n+m) f x).trans
-    rw [ih, foldl_succ_last (n := m)]
-    rfl
+    rw [ih, foldl_succ_last (n := m), _root_.Fin.natAdd_last]
+    exact congrArg (fun z => f z (last (n+m))) (foldl_pointwise
+      (fun a i => congrArg (f a) (_root_.Fin.castSucc_natAdd n i)) _)
 
 public theorem Fin.foldr_add : type_of% @_root_.Fin.foldr_add := by
   intro n m α f x
@@ -185,8 +186,9 @@ public theorem Fin.foldr_add : type_of% @_root_.Fin.foldr_add := by
   | zero => rfl
   | succ m ih =>
     apply (Fin.foldr_succ_last (n := n+m) f x).trans
-    rw [ih, Fin.foldr_succ_last (f := fun i => f (i.natAdd n))]
-    rfl
+    rw [ih, Fin.foldr_succ_last (f := fun i => f (i.natAdd n)), _root_.Fin.natAdd_last]
+    exact congrArg (foldr n (fun i => f (i.castLE (Nat.le_add_right n (m+1))))) (foldr_pointwise
+      (fun i a => congrArg (fun j => f j a) (_root_.Fin.castSucc_natAdd n i)) _)
 
 public theorem Fin.foldl_rev : type_of% @_root_.Fin.foldl_rev := by
   intro n α f x

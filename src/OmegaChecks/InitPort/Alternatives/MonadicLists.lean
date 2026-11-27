@@ -630,6 +630,18 @@ private theorem foldPurePush [Monad m] [LawfulMonad m] (f : Fin n → α) (xs : 
     dsimp only
     rw [map_pure, pure_bind, ih, Array.ofFn_succ' (f := f), Array.push_eq_append, Array.append_assoc]
 
+public theorem List.ofFn_add : type_of% @_root_.List.ofFn_add := by
+  intro α n m f
+  unfold _root_.List.ofFn
+  rw [_root_.Fin.foldr_add]
+  exact _root_.Fin.foldr_cons_eq_append
+
+public theorem Array.ofFn_add : type_of% @_root_.Array.ofFn_add := by
+  intro α n m f
+  apply _root_.Array.toList_inj.mp
+  rw [_root_.Array.toList_append, _root_.Array.toList_ofFn, _root_.Array.toList_ofFn,
+    _root_.Array.toList_ofFn, _root_.List.ofFn_add]
+
 public theorem Array.ofFnM_pure_comp : type_of% @_root_.Array.ofFnM_pure_comp := by
   intro m α mon law n f
   unfold _root_.Array.ofFnM
