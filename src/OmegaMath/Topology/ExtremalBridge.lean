@@ -9,9 +9,9 @@ import OmegaBuild.Commands
 /-!
 Omega original.
 
-The size of a side of an extremal bridge in a finite poset. This is the
-order-theoretic counting step for the small finite spaces in Conjecture 6.1
-of Mosquera-Lois and Tanaka (https://arxiv.org/abs/2609.39615v1).
+Extremal bridges in finite posets and the size of their sides. This is the
+combinatorial reduction for the small finite spaces in Conjecture 6.1 of
+Mosquera-Lois and Tanaka (https://arxiv.org/abs/2609.39615v1).
 -/
 
 compile_only_with_mathlib
@@ -252,5 +252,161 @@ theorem twelve_le_card_of_single_cross_comparison [Finite X] (S : Set X)
     by_cases hy : y ∈ S
     · exact (hNoReverse ⟨y, hy⟩ x hxy).elim
     · exact hmin (a := ⟨y, hy⟩) hxy
+
+/-- Every mod-two label additive along strict three-element chains is a difference
+of vertex potentials on strict comparisons. -/
+def ModTwoCocyclesExact (X : Type*) [PartialOrder X] : Prop :=
+  ∀ e : X → X → Bool,
+    (∀ x y z, x < y → y < z → e x z = Bool.xor (e x y) (e y z)) →
+    ∃ f : X → Bool, ∀ x y, x < y → e x y = Bool.xor (f x) (f y)
+
+-- The indicator of an edge in no strict three-element chain is a cocycle.
+private theorem exists_edge_potential (hExact : ModTwoCocyclesExact X) {a b : X}
+    (hab : a < b) (hTriangle : ∀ z, ¬ (z < a ∨ (a < z ∧ z < b) ∨ b < z)) :
+    ∃ f : X → Bool, ∀ ⦃x y : X⦄, (comparabilityGraph X).Adj x y →
+      (f x ≠ f y ↔ s(x, y) = s(a, b)) := by
+  classical
+  let e (x y : X) : Bool := decide (x = a ∧ y = b)
+  obtain ⟨f, hf⟩ := hExact e (by
+    intro x y z hxy hyz
+    have h₁ : ¬ (x = a ∧ y = b) := by
+      rintro ⟨rfl, rfl⟩
+      exact hTriangle z (Or.inr (Or.inr hyz))
+    have h₂ : ¬ (y = a ∧ z = b) := by
+      rintro ⟨rfl, rfl⟩
+      exact hTriangle x (Or.inl hxy)
+    have h₃ : ¬ (x = a ∧ z = b) := by
+      rintro ⟨rfl, rfl⟩
+      exact hTriangle y (Or.inr (Or.inl ⟨hxy, hyz⟩))
+    simp only [e, decide_eq_false h₁, decide_eq_false h₂, decide_eq_false h₃, Bool.false_xor])
+  have ordered {x y : X} (hxy : x < y) : f x ≠ f y ↔ s(x, y) = s(a, b) := by
+    have hReverse : ¬ (x = b ∧ y = a) := by
+      rintro ⟨rfl, rfl⟩
+      exact hab.not_gt hxy
+    rw [← Bool.xor_iff_ne, ← hf x y hxy, Sym2.eq_iff]
+    simp [e, hReverse]
+  refine ⟨f, fun x y hxy => ?_⟩
+  rcases adj_iff.mp hxy with hxy | hyx
+  · exact ordered hxy
+  · rw [ne_comm, (Sym2.eq_swap : s(x, y) = s(y, x))]
+    exact ordered hyx
+
+private theorem connected_side_of_single_cross {S : Set X} (a : S)
+    (hConn : (comparabilityGraph X).Connected)
+    (hCross : ∀ ⦃x y : X⦄, x ∈ S → y ∉ S → (comparabilityGraph X).Adj x y → x = a.val) :
+    (comparabilityGraph S).Connected := by
+  classical
+  -- Collapse the other side to the distinguished endpoint.
+  let collapse (x : X) : S := if hx : x ∈ S then ⟨x, hx⟩ else a
+  have step {u v : X} (huv : (comparabilityGraph X).Adj u v) :
+      (comparabilityGraph S).Reachable (collapse u) (collapse v) := by
+    by_cases hu : u ∈ S <;> by_cases hv : v ∈ S <;>
+      simp only [collapse, hu, hv, dite_true, dite_false]
+    · apply SimpleGraph.Adj.reachable
+      apply adj_iff.mpr
+      exact (adj_iff (X := X)).mp huv
+    · rw [show (⟨u, hu⟩ : S) = a from Subtype.ext (hCross hu hv huv)]
+    · rw [show (⟨v, hv⟩ : S) = a from Subtype.ext (hCross hv hu huv.symm)]
+    · exact SimpleGraph.Reachable.rfl
+  have walk {u v : X} (p : (comparabilityGraph X).Walk u v) :
+      (comparabilityGraph S).Reachable (collapse u) (collapse v) := by
+    induction p with
+    | nil => exact SimpleGraph.Reachable.rfl
+    | cons huv _ ih => exact (step huv).trans ih
+  refine { preconnected := ?_, nonempty := ⟨a⟩ }
+  intro u v
+  obtain ⟨p⟩ := hConn u.val v.val
+  simpa [collapse, u.property, v.property] using walk p
+
+private theorem acyclic_side_of_single_cross {S : Set X} (a : S)
+    (hExact : ModTwoCocyclesExact X)
+    (hCross : ∀ ⦃x y : X⦄, x ∈ S → y ∉ S → (comparabilityGraph X).Adj x y → x = a.val)
+    (hHeight : ¬ ∃ l x r : S, l < x ∧ x < r) : (comparabilityGraph S).IsAcyclic := by
+  have bridge (x y : S) (hxy : x < y) : (comparabilityGraph S).IsBridge s(x, y) := by
+    have hxy' : x.val < y.val := hxy
+    -- A third vertex comparable to both endpoints must lie on this side.
+    have mem_of_adj (z : X) (hxz : (comparabilityGraph X).Adj x.val z)
+        (hyz : (comparabilityGraph X).Adj y.val z) : z ∈ S := by
+      by_contra hz
+      exact hxy.ne (Subtype.ext ((hCross x.property hz hxz).trans
+        (hCross y.property hz hyz).symm))
+    obtain ⟨f, hf⟩ := exists_edge_potential hExact hxy' (by
+      intro z hz
+      rcases hz with hzx | ⟨hxz, hzy⟩ | hyz
+      · have hz := mem_of_adj z (adj_iff.mpr (Or.inr hzx))
+          (adj_iff.mpr (Or.inr (hzx.trans hxy')))
+        exact hHeight ⟨⟨z, hz⟩, x, y, hzx, hxy⟩
+      · have hz := mem_of_adj z (adj_iff.mpr (Or.inl hxz)) (adj_iff.mpr (Or.inr hzy))
+        exact hHeight ⟨x, ⟨z, hz⟩, y, hxz, hzy⟩
+      · have hz := mem_of_adj z (adj_iff.mpr (Or.inl (hxy'.trans hyz)))
+          (adj_iff.mpr (Or.inl hyz))
+        exact hHeight ⟨x, y, ⟨z, hz⟩, hxy, hyz⟩)
+    have constant_along {u v : S} (p : (comparabilityGraph S).Walk u v) :
+        s(x, y) ∉ p.edges → f u.val = f v.val := by
+      induction p with
+      | nil => exact fun _ => rfl
+      | @cons u v w huv p ih =>
+        intro hp
+        rw [SimpleGraph.Walk.edges_cons, List.mem_cons, not_or] at hp
+        have heq : f u.val = f v.val := by
+          by_contra hne
+          have huv' : (comparabilityGraph X).Adj u.val v.val := by
+            apply adj_iff.mpr
+            exact (adj_iff (X := S)).mp huv
+          have hedge := (hf huv').mp hne
+          apply hp.1
+          exact Sym2.map.injective Subtype.val_injective hedge.symm
+        exact heq.trans (ih hp.2)
+    refine SimpleGraph.isBridge_iff_forall_walk_mem_edges.mpr fun p => ?_
+    by_contra hp
+    exact (hf (adj_iff.mpr (Or.inl hxy))).mpr rfl (constant_along p hp)
+  refine SimpleGraph.isAcyclic_iff_forall_adj_isBridge.mpr fun x y hxy => ?_
+  rcases adj_iff.mp hxy with hxy | hyx
+  · exact bridge x y hxy
+  · rw [show s(x, y) = s(y, x) from Sym2.eq_swap]
+    exact bridge y x hyx
+
+/-- A connected finite poset without beat points and with exact mod-two cocycles
+has at least twelve vertices if a minimum is strictly below a maximum with
+no point in between. -/
+theorem twelve_le_card_of_unmediated_extremal_comparison [Finite X] {a b : X}
+    (ha : IsMin a) (hb : IsMax b) (hab : a < b) (hCover : ∀ z, a < z → ¬ z < b)
+    (hConn : (comparabilityGraph X).Connected) (hExact : ModTwoCocyclesExact X)
+    (hUp : ∀ x : X, ¬ IsUpBeatPoint x) (hDown : ∀ x : X, ¬ IsDownBeatPoint x) :
+    12 ≤ Nat.card X := by
+  obtain ⟨f, hf⟩ := exists_edge_potential hExact hab (by
+    intro z hz
+    rcases hz with hza | ⟨haz, hzb⟩ | hbz
+    · exact ha.not_lt hza
+    · exact hCover z haz hzb
+    · exact (isMax_iff_forall_not_lt.mp hb z) hbz)
+  let S : Set X := {x | f x = f a}
+  have haS : a ∈ S := rfl
+  have hbS : b ∉ S := (hf (adj_iff.mpr (Or.inl hab))).mpr rfl |>.symm
+  have cross {x y : X} (hx : x ∈ S) (hy : y ∉ S) (hxy : (comparabilityGraph X).Adj x y) :
+      x = a ∧ y = b := by
+    have hne : f x ≠ f y := fun h => hy (h.symm.trans hx)
+    rcases Sym2.eq_iff.mp ((hf hxy).mp hne) with h | ⟨hxb, _⟩
+    · exact h
+    · exact (hbS (hxb ▸ hx)).elim
+  let left : S := ⟨a, haS⟩
+  let right : (Sᶜ : Set X) := ⟨b, hbS⟩
+  have crossLeft {x y : X} (hx : x ∈ S) (hy : y ∉ S)
+      (hxy : (comparabilityGraph X).Adj x y) : x = left.val := (cross hx hy hxy).1
+  have crossRight {x y : X} (hx : x ∈ Sᶜ) (hy : y ∉ Sᶜ)
+      (hxy : (comparabilityGraph X).Adj x y) : x = right.val :=
+    (cross (by simpa only [Set.mem_compl_iff, not_not] using hy) hx hxy.symm).2
+  refine twelve_le_card_of_single_cross_comparison S (a := left) (b := right) hab ?_ ?_
+    (connected_side_of_single_cross left hConn @crossLeft)
+    (connected_side_of_single_cross right hConn @crossRight)
+    (acyclic_side_of_single_cross left hExact @crossLeft)
+    (acyclic_side_of_single_cross right hExact @crossRight) hUp hDown
+  · intro x y hxy
+    obtain ⟨hx, hy⟩ := cross x.property y.property (adj_iff.mpr (Or.inl hxy))
+    exact ⟨Subtype.ext hx, Subtype.ext hy⟩
+  · intro x y hyx
+    obtain ⟨hx, hy⟩ := cross x.property y.property (adj_iff.mpr (Or.inr hyx))
+    rw [hx, hy] at hyx
+    exact hab.not_gt hyx
 
 end Omega.ExtremalBridge
