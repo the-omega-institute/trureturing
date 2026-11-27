@@ -56,6 +56,31 @@ public theorem Lean.Grind.Ring.OfSemiring.toQ_ofNat {α : Type u} [Semiring α] 
   congrArg (fun x : α => Q.mk (x, 0)) (Semiring.ofNat_eq_natCast n)
 
 section
+variable {α : Type u} [Semiring α] (ctx : Context α)
+
+public theorem _root_.OmegaChecks.InitPort.AlternativeEquations.Lean.Grind.CommRing.Expr.denoteSAsRing.eq_1
+    (k : Int) : Lean.Grind.CommRing.Expr.denoteSAsRing ctx (.num k) = Ring.OfSemiring.natCast (α := α) k.natAbs :=
+  Lean.Grind.Ring.OfSemiring.toQ_ofNat k.natAbs
+
+public theorem _root_.OmegaChecks.InitPort.AlternativeEquations.Lean.Grind.CommRing.Expr.denoteSAsRing.eq_2
+    (k : Nat) : Lean.Grind.CommRing.Expr.denoteSAsRing ctx (.natCast k) = Ring.OfSemiring.natCast (α := α) k :=
+  Lean.Grind.Ring.OfSemiring.toQ_ofNat k
+
+public theorem _root_.OmegaChecks.InitPort.AlternativeEquations.Lean.Grind.CommRing.Expr.denoteSAsRing.eq_7
+    (a b : Expr) : Lean.Grind.CommRing.Expr.denoteSAsRing ctx (.sub a b) = Ring.OfSemiring.natCast (α := α) 0 :=
+  Lean.Grind.Ring.OfSemiring.toQ_zero
+
+public theorem _root_.OmegaChecks.InitPort.AlternativeEquations.Lean.Grind.CommRing.Expr.denoteSAsRing.eq_8
+    (a : Expr) : Lean.Grind.CommRing.Expr.denoteSAsRing ctx (.neg a) = Ring.OfSemiring.natCast (α := α) 0 :=
+  Lean.Grind.Ring.OfSemiring.toQ_zero
+
+public theorem _root_.OmegaChecks.InitPort.AlternativeEquations.Lean.Grind.CommRing.Expr.denoteSAsRing.eq_9
+    (k : Int) : Lean.Grind.CommRing.Expr.denoteSAsRing ctx (.intCast k) = Ring.OfSemiring.natCast (α := α) 0 :=
+  Lean.Grind.Ring.OfSemiring.toQ_zero
+
+end
+
+section
 open _root_.Lean.Grind.Ring.OfSemiring
 attribute [local instance] Semiring.natCast
 
