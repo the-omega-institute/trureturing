@@ -15,7 +15,7 @@ internal sealed class NymanOneSidedScalarDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(Owner + ".signal_mellin"),
                 H("Mellin transform of the logarithmic shell signal"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For a real kernel W vanishing outside (1, 2), the real logarithmic shell signal uses scale 2 exp(−t). Its Laplace integral over t > 0 multiplied by 2^s equals the Mellin transform of the Möbius dilates of W. The dilates vanish at scales at least 2, so the substitution covers the whole nonzero part of the Mellin integral. The identity uses totalized integrals, with convergence in the starting half-plane Re(s) > 1."))),
+                Blocks(Paragraph(Text("For a real kernel W vanishing outside (1, 2), the real logarithmic shell signal uses scale 2 exp(−t). Its Laplace integral over t > 0 multiplied by 2^s equals the Mellin transform of the Möbius dilates of W. The dilates vanish at scales at least 2, so the substitution covers the whole nonzero part of the Mellin integral. The identity uses totalized integrals. For continuous Lipschitz kernels, the Laplace integral converges when Re(s) > 1."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("zero-re-le-of-one-sided-signal"),

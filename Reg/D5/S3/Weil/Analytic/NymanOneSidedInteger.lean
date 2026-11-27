@@ -38,7 +38,9 @@ private theorem rejected_fails : ¬ arena.Law rejected := by
   intro h
   have hf := h (W := fun _ => 0) (by simp) (K := 0) le_rfl (by simp)
     (β := 0) (c := 1) (C := 0) le_rfl le_rfl (by simp [integerSample, Wcomplex, scaled])
-  simpa [rejected, realize] using hf
+  obtain ⟨a, ha⟩ := eventually_atTop.mp hf
+  have impossible : (1 : ℝ) ≤ 0 := by simpa [rejected, realize] using ha a le_rfl
+  norm_num at impossible
 
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
@@ -57,7 +59,9 @@ private theorem dependence : ObservationalDependence signature actual := by
     have hoff : Wcomplex W ((2 : ℝ) * x) = 0 := hW _ (by
       intro hm
       linarith [hm.2])
-    simp [hoff, Wcomplex]
+    have hz : W (2 * x) = 0 := by
+      simpa only [Wcomplex, Complex.ofReal_re, Complex.zero_re] using congrArg Complex.re hoff
+    simp [Wcomplex, hz]
   refine ⟨W, 0, -Real.log (3 / 4), ?_⟩
   change signal W 0 ≠ signal W (-Real.log (3 / 4))
   unfold signal
@@ -96,7 +100,8 @@ def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     definition := none
     coordinates := #[0]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body",
+      path := #["body", "body", "body", "body", "body", "body",
+        "body", "body", "body", "body", "body",
         "fn", "arg", "body", "fn", "arg", "arg"]
       stateBinder := 11
       functionOperand := false
