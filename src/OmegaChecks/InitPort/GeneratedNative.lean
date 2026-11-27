@@ -130,8 +130,19 @@ private def compileNatRec (source strict : Environment) (d : DefinitionVal) : Co
     return body
   compileEquation source d.name {d with name, all := [name], value := body, safety := .safe}
 
-/-- For nonrecursive unindexed inductives, `casesOn` and `rec` differ only in argument
-order. Validate the changed term against the full original kernel definition. -/
+/-- A recursive eliminator also performs plain case analysis when a branch ignores all
+its induction hypotheses. Retain the constructor fields and all outer variable bindings. -/
+private def withoutHypotheses (branch : Expr) : Nat → Nat → Option Expr
+  | _, 0 => some branch
+  | fields + 1, count => do
+    let .lam name domain body info := branch | none
+    return .lam name domain (← withoutHypotheses body fields count) info
+  | 0, count + 1 => do
+    let .lam _ _ body _ := branch | none
+    if body.hasLooseBVar 0 then none else withoutHypotheses (body.lowerLooseBVars 1 1) 0 count
+
+/-- Reorder the arguments of an unindexed eliminator that only examines constructors.
+Validate the changed term against the full original kernel definition. -/
 private def compileCases (source strict : Environment) (d : DefinitionVal) : CoreM Unit := do
   let body := d.value.replace fun e => do
     let .const recName levels := e.getAppFn | none
@@ -139,13 +150,20 @@ private def compileCases (source strict : Environment) (d : DefinitionVal) : Cor
     unless r.numIndices == 0 && r.numMotives == 1 && e.getAppNumArgs > r.getMajorIdx do none
     let indName := r.getMajorInduct
     let some (.inductInfo ind) := strict.find? indName | none
-    unless !ind.isRec && !ind.isNested && ind.all == [indName] && recName == indName ++ `rec do none
+    unless !ind.isNested && ind.all == [indName] && recName == indName ++ `rec do none
     let casesName := indName ++ `casesOn
     unless strict.contains casesName do none
     let args := e.getAppArgs
     let n := r.getMajorIdx
     let m := r.getFirstMinorIdx
-    return mkAppN (mkConst casesName levels) (args[:m].toArray.push args[n]! ++ args[m:n].toArray ++ args[n+1:].toArray)
+    let mut branches := args[m:n].toArray
+    if ind.isRec then
+      unless r.rules.length == branches.size do none
+      for rule in r.rules, i in [:branches.size] do
+        let arity := rule.rhs.getLambdaBody.getAppNumArgs
+        unless rule.nfields <= arity do none
+        branches := branches.set! i (← withoutHypotheses branches[i]! rule.nfields (arity - rule.nfields))
+    return mkAppN (mkConst casesName levels) (args[:m].toArray.push args[n]! ++ branches ++ args[n+1:].toArray)
   if body == d.value then return
   unless Kernel.isDefEqGuarded strict {} d.value body do return
   let name := Compiler.mkUnsafeRecName d.name
