@@ -556,7 +556,7 @@ import argparse, os
 from pathlib import Path
 parser = argparse.ArgumentParser()
 parser.add_argument("command")
-for option in ["kind", "capacity", "output", "plan", "lane", "version", "targets-file"]:
+for option in ["kind", "capacity", "workers", "output", "plan", "lane", "version", "targets-file"]:
     parser.add_argument("--" + option)
 parser.add_argument("--prepare-release", action="store_true")
 parser.add_argument("--stage-only", action="store_true")
@@ -569,6 +569,7 @@ kind = os.environ["INPUT_KIND"]
 if args.command == "plan":
     assert args.kind == kind and args.prepare_release and int(args.capacity) == 32 * 1024**2
     assert args.compiler_dag == (kind == "compiler")
+    assert args.workers == (os.environ.get("LEAN_COMPILER_WORKERS", "64") if kind == "compiler" else None)
     Path(args.output).write_text(kind)
 elif args.command == "worker":
     assert Path(args.plan).read_text() == kind and args.lane == "2"
@@ -602,6 +603,16 @@ else:
   ]) {
     env.INPUT_KIND = kind;
     env.GITHUB_WORKFLOW_REF = 'owner/repo/.github/workflows/' + workflow + '@refs/heads/dev';
+    if (kind === 'compiler') {
+      delete env.LEAN_COMPILER_WORKERS;
+      const defaultPlan = run(event, 'module-plan');
+      assert.equal(defaultPlan.status, 0, defaultPlan.stderr);
+      for (const invalid of ['0', '257', '8.5', 'unlimited']) {
+        env.LEAN_COMPILER_WORKERS = invalid;
+        assert.match(run(event, 'module-plan').stderr, /between 1 and 256/);
+      }
+      env.LEAN_COMPILER_WORKERS = '256';
+    }
     for (const operation of ['module-plan', 'module-worker', 'module-stage']) {
       const result = run(event, operation);
       assert.equal(result.status, 0, result.stderr);
