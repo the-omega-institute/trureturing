@@ -96,7 +96,7 @@ def check_runtime_ir(stage, library, adapter, consumer):
 
 
 def compile_generated(stage, product, graph, seed_ir, owners=None, *, original_seed=None, before_owner=None,
-                      check_strings=True):
+                      check_strings=True, check_literals=True):
     """Compile generated owners in import order and preserve the native symbols of existing owners."""
     requested = set(graph if owners is None else owners)
     selected = [owner for owner in TopologicalSorter(graph).static_order()
@@ -247,7 +247,7 @@ def compile_generated(stage, product, graph, seed_ir, owners=None, *, original_s
         run("lean", "-R", HERE, "-c", mixed, HERE / "GeneratedMixedConsumer.lean",
             env={**os.environ, "LEAN_PATH": str(library)})
         extra = ["-DOMEGA_TEST_MIXED", mixed]
-    if literals.exists():
+    if literals.exists() and check_literals:
         client = sources / "literal-consumer.c"
         run("lean", "-R", HERE, "-c", client, HERE / "LiteralConsumer.lean",
             env={**os.environ, "LEAN_PATH": str(library)})

@@ -56,6 +56,7 @@ public unsafe def main (args : List String) : IO Unit := do
   if names.isEmpty then return
   for n in [`Nat, `Omega.List, `Omega.Fin, `Omega.BitVec, `Omega.UInt8, `Omega.UInt32, `Omega.UInt64, `Decidable, `Bool, `Omega.String.Pos.Raw,
             `Omega.Char, `Omega.Array, `Omega.ByteArray, `Omega.String] do
+    if !env.contains n then continue
     unless (monoTypeExt.find? env n).isSome do
       let some idx := env.getModuleIdxFor? n | throw <| IO.userError s!"missing literal type {n}"
       writeCode lib env.header.moduleNames[idx]! (← compileLayouts env n) layouts
@@ -63,16 +64,19 @@ public unsafe def main (args : List String) : IO Unit := do
   checkNativeNat env
   for n in [`Decidable, `Omega.String.Pos.Raw, `Omega.Fin, `Omega.BitVec, `Omega.UInt8, `Omega.UInt32, `Omega.UInt64, `Omega.Char,
             `Omega.Array, `Omega.ByteArray, `Omega.String] do
+    if !env.contains n then continue
     let some (some field) := impureTrivialStructureInfoExt.find? env n
       | throw <| IO.userError s!"missing literal representation of {n}"
     unless field.fieldIdx == 0 do throw <| IO.userError s!"unexpected representation of {n}"
-  let some cons := ctorLayoutExt.find? env `Omega.List.cons | throw <| IO.userError "missing list layout"
-  let #[.object 0 _, .object 1 _] := cons.fieldInfo | throw <| IO.userError "incorrect character-list fields"
-  unless cons.ctorInfo.cidx == 1 && cons.ctorInfo.size == 2 do throw <| IO.userError "incorrect list tag or size"
-  for (name, tag) in [(`Bool.false, 0), (`Bool.true, 1)] do
-    let some ctor := ctorLayoutExt.find? env name | throw <| IO.userError s!"missing constructor {name}"
-    unless ctor.ctorInfo.cidx == tag && ctor.ctorInfo.size == 0 && ctor.ctorInfo.ssize == 0 do
-      throw <| IO.userError s!"unexpected decision representation for {name}"
+  if env.contains `Omega.List then
+    let some cons := ctorLayoutExt.find? env `Omega.List.cons | throw <| IO.userError "missing list layout"
+    let #[.object 0 _, .object 1 _] := cons.fieldInfo | throw <| IO.userError "incorrect character-list fields"
+    unless cons.ctorInfo.cidx == 1 && cons.ctorInfo.size == 2 do throw <| IO.userError "incorrect list tag or size"
+  if env.contains `Bool then
+    for (name, tag) in [(`Bool.false, 0), (`Bool.true, 1)] do
+      let some ctor := ctorLayoutExt.find? env name | throw <| IO.userError s!"missing constructor {name}"
+      unless ctor.ctorInfo.cidx == tag && ctor.ctorInfo.size == 0 && ctor.ctorInfo.ssize == 0 do
+        throw <| IO.userError s!"unexpected decision representation for {name}"
   let context ← localEnv env owner (names.map Prod.fst).toArray
   let compiled ← compile context do
     for (n, symbol) in names do
