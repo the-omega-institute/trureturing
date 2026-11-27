@@ -23,6 +23,7 @@ private def elim := `Omega.EST.Out.ctorElim
 private def readForModify := InitKernelPort.portName OmegaChecks.InitPort.ReferenceModify.support
 private def modify := `Omega.ST.Prim.Ref.modify
 private def entries := #[(world, "lean_void_mk"), (elim, "omega_est_out_elim"), (allocation, "omega_st_mk_ref"), (`Omega.ST.Prim.Ref.swap, "omega_st_ref_swap"),
+  (`Omega.ST.Prim.Ref.put, "omega_st_ref_put"),
   (modify, "omega_st_ref_modify"), (readForModify, "omega_st_ref_read_for_modify"),
   (`Omega.ST.Prim.Ref.set, "omega_st_ref_set"), (`Omega.ST.Prim.Ref.ptrEq, "omega_st_ref_ptr_eq")]
 private def operations := #[`Omega.ST.pure, `Omega.ST.bind, `Omega.EST.pure, `Omega.EST.bind,
@@ -33,7 +34,7 @@ private def operations := #[`Omega.ST.pure, `Omega.ST.bind, `Omega.EST.pure, `Om
   `Omega.instSTWorldOfMonadLift, `Omega.instMonadFinallyST, `Omega.instMonadFinallyEST,
   `Omega.instMonadAttachST, `Omega.instMonadAttachEST, `Omega.instMonadLiftSTEST]
 
-private def lifted := #[`Omega.ST.mkRef, `Omega.ST.Ref.swap, `Omega.ST.Ref.set, `Omega.ST.Ref.modify, `Omega.ST.Ref.ptrEq]
+private def lifted := #[`Omega.ST.mkRef, `Omega.ST.Ref.put, `Omega.ST.Ref.swap, `Omega.ST.Ref.set, `Omega.ST.Ref.modify, `Omega.ST.Ref.ptrEq]
 
 public unsafe def install (lib output : System.FilePath) (interpreter : Bool) : IO Unit := do
   let original ← importModules #[{module := `Init.System.ST}] {}
@@ -42,6 +43,8 @@ public unsafe def install (lib output : System.FilePath) (interpreter : Bool) : 
     .tobject "lean_st_mk_ref"
   verify original `ST.Prim.Ref.swap #[(.erased, false), (.erased, false), (.tobject, true), (.tobject, false), (.void, false)]
     .tobject "lean_st_ref_swap"
+  verify original `ST.Prim.Ref.put #[(.erased, false), (.erased, false), (.tobject, true), (.tobject, false), (.void, false)]
+    .tagged "lean_st_ref_put"
   verify original `ST.Prim.Ref.ptrEq #[(.erased, false), (.erased, false), (.tobject, true), (.tobject, true), (.void, false)]
     .uint8 "lean_st_ref_ptr_eq"
   searchPathRef.set [lib]
@@ -98,8 +101,6 @@ public unsafe def install (lib output : System.FilePath) (interpreter : Bool) : 
   if externs.any (·.1 == modify) then
     verify original `ST.Prim.Ref.take #[(.erased, false), (.erased, false), (.tobject, true), (.void, false)]
       .tobject "lean_st_ref_take"
-    verify original `ST.Prim.Ref.put #[(.erased, false), (.erased, false), (.tobject, true), (.tobject, false), (.void, false)]
-      .tagged "lean_st_ref_put"
     verify original `ST.Prim.Ref.get #[(.erased, false), (.erased, false), (.tobject, true), (.void, false)]
       .tobject "lean_st_ref_get"
     let some opt := ctorLayoutExt.find? compiled `Omega.Option.some | throw <| IO.userError "missing Option.some layout"
@@ -119,7 +120,7 @@ public unsafe def install (lib output : System.FilePath) (interpreter : Bool) : 
       else if n == modify then #[(.tobject, false), (.tobject, false)]
       else if n == allocation then #[(.tobject, false)]
       else if n == `Omega.ST.Prim.Ref.ptrEq then #[(.tobject, true), (.tobject, true)]
-      else #[(.tobject, n == `Omega.ST.Prim.Ref.swap), (.tobject, false)]
+      else #[(.tobject, n == `Omega.ST.Prim.Ref.swap || n == `Omega.ST.Prim.Ref.put), (.tobject, false)]
     verify compiled n (implicitArgs ++ parameters ++ #[(.tobject, false)]) .object symbol
   if interpreter then
     emitBridge compiled `StrictVoidInterpreter "src/OmegaChecks/InitPort/est_out_elim.h" output

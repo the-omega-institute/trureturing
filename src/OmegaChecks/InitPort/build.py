@@ -228,6 +228,14 @@ def generate(stage, product, seed, roots, excluded, original_seed):
     if "OmegaInit.System.ST" in graph:
         compile_state_runtime(stage, product, artifact, inventory, "Reference", "reference",
                               {"Init.System.ST": {"ST.Prim.mkRef", "ST.mkRef", "ST.Ref.swap", "ST.Ref.set", "ST.Ref.ptrEq"}})
+        if has_interfaces(inventory, {"Init.System.ST": {"ST.Prim.Ref.put", "ST.Ref.put"}}):
+            check_state_consumer(stage, artifact, "ReferencePut", "ref_put", [product / "native/reference.o"])
+            source = (STRICT_SOURCES / "ReferencePutConsumer.lean").read_text().replace("public unsafe def", "public def")
+            safe = subprocess.run(["lean", "--stdin"], input=source, text=True, capture_output=True,
+                                  env={**os.environ, "LEAN_PATH": str(artifact)})
+            if safe.returncode == 0 or any(f"uses unsafe declaration '{name}'" not in safe.stdout + safe.stderr
+                                           for name in ("Omega.ST.Prim.Ref.put", "Omega.ST.Ref.put")):
+                raise ValueError("safe client did not reject both unsafe reference writes")
         pure_state = {"Init.System.ST": {"Void.mk", "ST.pure", "ST.bind", "EST.pure", "EST.bind",
                                          "EST.throw", "EST.tryCatch", "runST", "runEST", "EST.Out.ok.elim",
                                          "EST.Out.error.elim", "instMonadST", "instMonadEST", "instMonadExceptOfEST",

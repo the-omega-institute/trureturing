@@ -17,6 +17,10 @@ LEAN_EXPORT lean_obj_res omega_st_ref_swap(b_lean_obj_arg ref, lean_obj_arg valu
     return state_result(lean_st_ref_swap(ref, value), world);
 }
 
+LEAN_EXPORT lean_obj_res omega_st_ref_put(b_lean_obj_arg ref, lean_obj_arg value, lean_obj_arg world) {
+    return state_result(lean_st_ref_put(ref, value), world);
+}
+
 LEAN_EXPORT lean_obj_res omega_st_ref_set(lean_obj_arg ref, lean_obj_arg value, lean_obj_arg world) {
     lean_dec(lean_st_ref_swap(ref, value));
     lean_dec(ref);
