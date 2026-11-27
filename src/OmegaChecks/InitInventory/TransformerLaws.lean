@@ -1,5 +1,6 @@
 module
 public import Lean
+import all Init.Data.List.Scan.Basic
 import Lean.Replay
 import all Lean.Util.CollectAxioms
 public import OmegaChecks.InitInventory.Extensionality
@@ -429,9 +430,13 @@ private theorem diagonalExists {T A : Type u} (x : Paired T A) : ∃ f, x = diag
   cases h
   exact ⟨f, rfl⟩
 
+private def bindPair {T A B : Type u} (x : Paired T A) (k : A → Paired T B) : Paired T B :=
+  ⟨(fun t => (k (x.val.1 t)).val.2 t, fun t => (k (x.val.2 t)).val.2 t),
+    congrArg (fun r (t : T) => (k (r t)).val.2 t) x.property⟩
+
 @[instance_reducible] private def monad (T : Type u) : Monad (Paired T) where
   pure a := diagonal fun _ => a
-  bind x k := diagonal fun t => (k (x.val.2 t)).val.2 t
+  bind x k := bindPair x k
   map f x := diagonal fun t => f (x.val.1 t)
 
 private theorem lawful (T : Type u) : letI := monad T; LawfulMonad (Paired T) := by
@@ -460,7 +465,7 @@ private theorem lawful (T : Type u) : letI := monad T; LawfulMonad (Paired T) :=
       obtain ⟨c, rfl⟩ := diagonalExists h
       rfl
     bind_pure_comp := by intro α β f x; obtain ⟨g, rfl⟩ := diagonalExists x; rfl
-    bind_map := by intros; rfl
+    bind_map := by intro A B x y; obtain ⟨r, rfl⟩ := diagonalExists y; rfl
     pure_bind := by
       intro α β x f
       change diagonal (f x).val.2 = f x
@@ -470,8 +475,8 @@ private theorem lawful (T : Type u) : letI := monad T; LawfulMonad (Paired T) :=
     bind_assoc := by intros; rfl
   }
 
-/-- Mapping uses the first reader and binding uses the second. Mapping under an arbitrary
-continuation identifies the two readers even when their choice depends on the input. -/
+/-- Mapping selects the first reader. Binding selects the second result of its continuation,
+even when the continuation depends on the input. -/
 public theorem funextFromMapBind (law : type_of% @map_bind.{max 1 u v, max 1 u v}) : type_of% @funext.{u,v} := by
   apply funextFromEndomorphisms
   intro T f g agree
@@ -481,9 +486,27 @@ public theorem funextFromMapBind (law : type_of% @map_bind.{max 1 u v, max 1 u v
   let action (t : T) : Paired T T := ⟨(fun _ => f t, fun _ => g t), congrArg (fun x (_ : T) => x) (agree t)⟩
   exact (congrArg (fun z : Paired T T => z.val.1) (@law (Paired T) T T T _ _ id read action)).symm
 
+private def scanAction {T : Type u} {f g : T → T} (h : ∀ t, f t = g t) : Option T → Bool → Paired T (Option T)
+  | _, false => diagonal (fun t => some t)
+  | none, true => diagonal fun _ => none
+  | some t, true => ⟨(fun _ => some (f t), fun _ => some (g t)), congrArg (fun a (_ : T) => some a) (h t)⟩
+
+private def thirdState {T : Type u} (m : Paired T (List (Option T))) (t : T) : T :=
+  (m.val.1 t).tail.tail.head?.join.getD t
+
+/-- The second scan step reads the state returned by the first step. -/
+public theorem funextFromScanlCons (rule : type_of% @List.scanlM_cons.{max 1 u v,max 1 u v,0}) : type_of% @funext.{u,v} := by
+  apply funextFromEndomorphisms
+  intro T f g h
+  letI := monad T
+  letI := lawful T
+  let e := rule (f := scanAction h) (init := none) (x := false) (xs := [true])
+  exact (congrArg thirdState e).symm
+
 open Lean in
 run_cmd
-  unless (← collectAxioms ``funextFromMapBind).isEmpty do throwError "map_bind witness depends on axioms"
+  for name in [``funextFromMapBind, ``funextFromScanlCons] do
+    unless (← collectAxioms name).isEmpty do throwError "monad witness {name} depends on axioms"
 
 end MapAfterBind
 

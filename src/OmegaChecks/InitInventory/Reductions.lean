@@ -103,7 +103,7 @@ private def replayWitnesses (env : Environment) : IO Unit := do
     IntegerCancellation.witnesses.map (fun row => row.2.2) ++
     WeakRingOrder.witnesses.map (fun row => row.2.2) ++
     [``MonadicTraversal.fromListFoldl, ``MonadicTraversal.fromListFoldr, ``ArrayLoopCongruence.listForInCongr] ++
-    [``TransformerLaws.MapAfterBind.funextFromMapBind] ++
+    [``TransformerLaws.MapAfterBind.funextFromMapBind, ``TransformerLaws.MapAfterBind.funextFromScanlCons] ++
     [``TransformerLaws.FiniteFold.funextOfMoveUnit, ``TransformerLaws.FiniteFold.funextOfRepeatUnit] ++
     [``EnvelopeOrder.propextFromRingLift, ``EnvelopeOrder.propextFromModuleLift,
       ``EnvelopeOrder.ringDiagonal, ``EnvelopeOrder.moduleDiagonal,
