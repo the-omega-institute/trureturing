@@ -1,56 +1,42 @@
-/- GID: D5/S3/VertexAlgebra/Lattice/Orbifold/ThirdTwistedContraction
-   generality: I
-   mirror-B: D5/B/S3/VertexAlgebra/Lattice/Orbifold/ThirdTwistedContraction
-   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: []
-   utility: none
-   digest: The normalized order-three lattice contraction and its complementary Fourier coefficient. -/
-
+import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qTwistedChargeAction
 import D5.S3.VertexAlgebra.Lattice.Orbifold.ThirdTwistedChargeCocycle
 import Mathlib.LinearAlgebra.Matrix.BilinearForm
 import Mathlib.RingTheory.PowerSeries.Log
-import OmegaBuild.Commands
-
-compile_only_with_mathlib
 
 /-!
-The scalar exponential in Bojko Bakalov and Victor G. Kac,
-*Twisted Modules over Lattice Vertex Algebras*, arXiv:math/0402315v3, Lemma 4.2.
+The scalar exponential in Bakalov–Kac, arXiv:math/0402315v3, Lemma 4.2.
 In (4.34), factor `z^(1/3)` out of each binomial and write `X` for the
 formal coordinate `(w/z)^(1/3)`. The resulting power series has constant
 coefficient one. The integral exponents are the native orbit pairings.
-The product identity holds for any complex phase. When the phase is a
-cubic root of unity and the action is a cubic isometry, the coefficient
-at frequency `n/3` pairs the complementary Fourier components.
 -/
 
 set_option autoImplicit false
 
 namespace D5.S3.VertexAlgebra.Lattice.Orbifold.ThirdTwistedContraction
 
-open LatticeGeneratingFieldLocality (LatticeData Charge bilinear)
-open ThirdTwistedChargeCocycle (pairing_shift_one pairing_shift_two)
+open LatticeGeneratingFieldLocality (Charge bilinear)
+open P48qTwistedChargeAction (lattice g g_cube g_isometry)
 open PowerSeries
 open scoped BigOperators
 
 noncomputable section
 
-variable (D : LatticeData) (g : Charge D ≃+ Charge D) (ζ : ℂ)
+local notation "ζ" => (ThirdTwistedChargeCocycle.zeta : ℂ)
 
 /-- The series in the scalar exponential, in the coordinate `X = (w/z)^(1/3)`. -/
-def contractionExponent (a b : Charge D) : PowerSeries ℂ :=
+def contractionExponent (a b : Charge lattice) : PowerSeries ℂ :=
   PowerSeries.mk fun n => if n = 0 then 0 else
     -(∑ j ∈ Finset.range 3,
-      (bilinear D ((g^[j]) a) b : ℂ) * ζ ^ (j * n)) / (n : ℂ)
+      (bilinear lattice ((g^[j]) a) b : ℂ) * ζ ^ (j * n)) / (n : ℂ)
 
-private theorem coeff_contractionExponent (a b : Charge D) (n : ℕ) :
-    coeff n (contractionExponent D g ζ a b) = if n = 0 then 0 else
+theorem coeff_contractionExponent (a b : Charge lattice) (n : ℕ) :
+    coeff n (contractionExponent a b) = if n = 0 then 0 else
       -(∑ j ∈ Finset.range 3,
-        (bilinear D ((g^[j]) a) b : ℂ) * ζ ^ (j * n)) / (n : ℂ) :=
+        (bilinear lattice ((g^[j]) a) b : ℂ) * ζ ^ (j * n)) / (n : ℂ) :=
   coeff_mk _ _
 
-@[simp] theorem constantCoeff_contractionExponent (a b : Charge D) :
-    constantCoeff (contractionExponent D g ζ a b) = 0 := by
+@[simp] theorem constantCoeff_contractionExponent (a b : Charge lattice) :
+    constantCoeff (contractionExponent a b) = 0 := by
   simp [contractionExponent]
 
 /-- The unit with underlying series `1 - c X`. Its integer powers include inverse powers. -/
@@ -176,15 +162,15 @@ private theorem formalExp_logBinomial (c : ℂ) :
     ← rescale_eq_subst, map_add, map_one, rescale_X, map_neg, neg_mul, ← sub_eq_add_neg,
     coe_binomialUnit]
 
-/-- The normalized scalar contraction in Bakalov–Kac (4.34). Each factor is raised to
-its native integral orbit pairing in the group of power-series units. -/
-theorem scalar_contraction (a b : Charge D) :
-    (exp ℂ).subst (contractionExponent D g ζ a b) =
+/-- The normalized scalar contraction in Bakalov–Kac (4.34) for the P48q order-three
+action. Each exponent on the right is an integer power in the power-series units. -/
+theorem scalar_contraction (a b : Charge lattice) :
+    (exp ℂ).subst (contractionExponent a b) =
       (↑(∏ j ∈ Finset.range 3,
-        binomialUnit (ζ ^ j) ^ bilinear D ((g^[j]) a) b) : PowerSeries ℂ) := by
-  let f (j : ℕ) : PowerSeries ℂ := bilinear D ((g^[j]) a) b • logBinomial (ζ ^ j)
+        binomialUnit (ζ ^ j) ^ bilinear lattice ((g^[j]) a) b) : PowerSeries ℂ) := by
+  let f (j : ℕ) : PowerSeries ℂ := bilinear lattice ((g^[j]) a) b • logBinomial (ζ ^ j)
   have hf (j : ℕ) : constantCoeff (f j) = 0 := by simp [f, constantCoeff_logBinomial]
-  have hexponent : contractionExponent D g ζ a b = ∑ j ∈ Finset.range 3, f j := by
+  have hexponent : contractionExponent a b = ∑ j ∈ Finset.range 3, f j := by
     apply PowerSeries.ext
     intro n
     rw [coeff_contractionExponent, map_sum]
@@ -197,82 +183,76 @@ theorem scalar_contraction (a b : Charge D) :
     dsimp only [f]
     rw [zsmul_eq_mul, coeff_intCast_mul, coeff_logBinomial, ite_eq_right hn, ← pow_mul ζ j n]
     ring
-  change formalExp (contractionExponent D g ζ a b) = _
+  change formalExp (contractionExponent a b) = _
   rw [hexponent, formalExp_sum_range f hf, Units.coe_prod]
   apply Finset.prod_congr rfl
   intro j _
   exact formalExp_zsmul (constantCoeff_logBinomial (ζ ^ j)) (binomialUnit (ζ ^ j))
-    (formalExp_logBinomial (ζ ^ j)).symm (bilinear D ((g^[j]) a) b)
+    (formalExp_logBinomial (ζ ^ j)).symm (bilinear lattice ((g^[j]) a) b)
 
 /-- The complex scalar extension of the native lattice pairing. -/
-def complexPairing : LinearMap.BilinForm ℂ (Fin D.rank → ℂ) :=
-  (D.G.map (Int.castRingHom ℂ)).toBilin'
+def complexPairing : LinearMap.BilinForm ℂ (Fin lattice.rank → ℂ) :=
+  (lattice.G.map (Int.castRingHom ℂ)).toBilin'
 
-private def castCharge (a : Charge D) : Fin D.rank → ℂ := fun i => (a i : ℂ)
+private def castCharge (a : Charge lattice) : Fin lattice.rank → ℂ := fun i => (a i : ℂ)
 
-private theorem complexPairing_castCharge (a b : Charge D) :
-    complexPairing D (castCharge D a) (castCharge D b) = (bilinear D a b : ℂ) := by
+private theorem complexPairing_castCharge (a b : Charge lattice) :
+    complexPairing (castCharge a) (castCharge b) = (bilinear lattice a b : ℂ) := by
   simp only [complexPairing, Matrix.toBilin'_apply, Matrix.map_apply, Int.coe_castRingHom,
     castCharge, bilinear, Int.cast_sum, Int.cast_mul]
 
-/-- The Fourier component lies in the `u⁻¹` eigenspace when `g ^ 3 = 1` and `u ^ 3 = 1`. -/
-def fourierComponent (u : ℂ) (a : Charge D) : Fin D.rank → ℂ :=
-  (3 : ℂ)⁻¹ • (castCharge D a + u • castCharge D (g a) + u ^ 2 • castCharge D (g (g a)))
+/-- Fourier component for eigenvalue `u⁻¹` when `u ^ 3 = 1`. -/
+def fourierComponent (u : ℂ) (a : Charge lattice) : Fin lattice.rank → ℂ :=
+  (3 : ℂ)⁻¹ • (castCharge a + u • castCharge (g a) + u ^ 2 • castCharge (g (g a)))
 
-variable (h3 : ∀ a, g (g (g a)) = a)
-variable (hg : ∀ a b, bilinear D (g a) (g b) = bilinear D a b)
-
-include h3 hg in
-private theorem opposite_pairing (a b : Charge D) (u : ℂ) (hu : u ^ 3 = 1) :
-    complexPairing D (fourierComponent D g u a) (fourierComponent D g (u ^ 2) b) =
-      (3 : ℂ)⁻¹ * ((bilinear D a b : ℂ) + u * (bilinear D (g a) b : ℂ) +
-        u ^ 2 * (bilinear D (g (g a)) b : ℂ)) := by
+private theorem opposite_pairing (a b : Charge lattice) (u : ℂ) (hu : u ^ 3 = 1) :
+    complexPairing (fourierComponent u a) (fourierComponent (u ^ 2) b) =
+      (3 : ℂ)⁻¹ * ((bilinear lattice a b : ℂ) + u * (bilinear lattice (g a) b : ℂ) +
+        u ^ 2 * (bilinear lattice (g (g a)) b : ℂ)) := by
   have hu4 : u ^ 4 = u := by rw [show (4 : ℕ) = 3 + 1 by decide, pow_succ, hu, one_mul]
   have hsq : (u ^ 2) ^ 2 = u := by rw [← pow_mul]; exact hu4
+  have hleft (v w : Charge lattice) :
+      bilinear lattice v (g w) = bilinear lattice (g (g v)) w := by
+    simpa only [g_cube] using g_isometry (g (g v)) w
+  have hright (v w : Charge lattice) :
+      bilinear lattice v (g (g w)) = bilinear lattice (g v) w := by
+    simpa only [g_cube] using (g_isometry v (g (g w))).symm
   simp only [fourierComponent, hsq, map_add, map_smul, LinearMap.add_apply,
     LinearMap.smul_apply, smul_eq_mul, complexPairing_castCharge]
-  simp only [hg]
-  simp only [pairing_shift_two D g hg h3, pairing_shift_one D g hg h3, h3]
-  set p := (bilinear D a b : ℂ)
-  set q := (bilinear D (g a) b : ℂ)
-  set r := (bilinear D (g (g a)) b : ℂ)
+  simp only [g_isometry]
+  simp only [hright, hleft, g_cube]
+  set p := (bilinear lattice a b : ℂ)
+  set q := (bilinear lattice (g a) b : ℂ)
+  set r := (bilinear lattice (g (g a)) b : ℂ)
   calc
     _ = (3 : ℂ)⁻¹ * (3 : ℂ)⁻¹ *
         ((1 + u ^ 3 + u ^ 3) * p + (u + u + u ^ 4) * q + (u ^ 2 + u ^ 2 + u ^ 2) * r) :=
       by ring
     _ = _ := by rw [hu, hu4]; ring
 
-include h3 hg in
 /-- At positive frequency `n/3`, the coefficient uses the pairing of complementary
 Fourier components. For `u = ζ^(n % 3)`, the second component has eigenvalue `u`. -/
-theorem coeff_contractionExponent_opposite (hζ : ζ ^ 3 = 1)
-    (a b : Charge D) {n : ℕ} (hn : n ≠ 0) :
-    coeff n (contractionExponent D g ζ a b) =
-      -(complexPairing D (fourierComponent D g (ζ ^ (n % 3)) a)
-        (fourierComponent D g ((ζ ^ (n % 3)) ^ 2) b)) / ((n : ℂ) / 3) := by
+theorem coeff_contractionExponent_opposite (a b : Charge lattice) {n : ℕ} (hn : n ≠ 0) :
+    coeff n (contractionExponent a b) =
+      -(complexPairing (fourierComponent (ζ ^ (n % 3)) a)
+        (fourierComponent ((ζ ^ (n % 3)) ^ 2) b)) / ((n : ℂ) / 3) := by
+  have hζ : ζ ^ 3 = 1 :=
+    (IsPrimitiveRoot.coe_units_iff.mpr ThirdTwistedChargeCocycle.zeta_primitive).pow_eq_one
   let u : ℂ := ζ ^ (n % 3)
   have hu : u ^ 3 = 1 := by dsimp [u]; rw [pow_right_comm, hζ, one_pow]
   have hpow (j : ℕ) : ζ ^ (j * n) = u ^ j := by
     rw [pow_mul, pow_right_comm]
     exact congrArg (fun c : ℂ => c ^ j) (pow_eq_pow_mod n hζ)
-  change coeff n (contractionExponent D g ζ a b) =
-    -(complexPairing D (fourierComponent D g u a) (fourierComponent D g (u ^ 2) b)) / ((n : ℂ) / 3)
-  rw [coeff_contractionExponent, if_neg hn, opposite_pairing D g h3 hg a b u hu]
+  change coeff n (contractionExponent a b) =
+    -(complexPairing (fourierComponent u a) (fourierComponent (u ^ 2) b)) / ((n : ℂ) / 3)
+  rw [coeff_contractionExponent, if_neg hn, opposite_pairing a b u hu]
   simp_rw [hpow]
   simp only [Finset.sum_range_succ, Finset.sum_range_zero, zero_add,
     Function.iterate_succ_apply', Function.iterate_zero_apply, pow_zero, pow_one, mul_one]
   have hnC : (n : ℂ) ≠ 0 := Nat.cast_ne_zero.mpr hn
   field_simp <;> ring
 
-/--
-info: 'D5.S3.VertexAlgebra.Lattice.Orbifold.ThirdTwistedContraction.scalar_contraction' depends on axioms: [propext, Classical.choice, Quot.sound]
--/
-#guard_msgs (whitespace := lax) in
 #print axioms scalar_contraction
-/--
-info: 'D5.S3.VertexAlgebra.Lattice.Orbifold.ThirdTwistedContraction.coeff_contractionExponent_opposite' depends on axioms: [propext, Classical.choice, Quot.sound]
--/
-#guard_msgs (whitespace := lax) in
 #print axioms coeff_contractionExponent_opposite
 
 end

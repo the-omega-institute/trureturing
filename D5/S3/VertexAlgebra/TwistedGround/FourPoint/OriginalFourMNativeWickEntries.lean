@@ -39,8 +39,7 @@ open private nativeKernel from
   D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMSpatialWickPartition
 open private true_lip_source true_lip_covariance from
   D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMDFourCurrent
-open OriginalFourMSectorContinuation (dLipCovarianceEntry)
-open private dLipMeanEntry from
+open private dLipCovarianceEntry dLipMeanEntry from
   D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMDLipChannel
 
 private theorem pair_coeff_congr {f g : ℂ × ℂ → ℂ} (h : f =ᶠ[𝓝 (0, 0)] g) (a b : ℕ) :

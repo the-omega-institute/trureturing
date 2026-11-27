@@ -1,24 +1,14 @@
-/- GID: D5/S3/VertexAlgebra/Lattice/Orbifold/ThirdTwistedQuadratic
-   generality: I
-   mirror-B: D5/B/S3/VertexAlgebra/Lattice/Orbifold/ThirdTwistedQuadratic
-   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: []
-   utility: none
-   digest: The ordered quadratic coefficient of the two complementary third-cover grids. -/
-
 import D5.S3.VertexAlgebra.Lattice.Orbifold.ThirdCoverComplement
+import Batteries.Tactic.OpenPrivate
 
-/-!
-The complementary Virasoro action is the sign-ordered normal product of
-the one-third and two-thirds currents plus the scalar shift at mode zero.
-The normal product is the field product at n = -1 in Bakalov and Kac,
-*Twisted Modules over Lattice Vertex Algebras*, arXiv:math/0402315v3, (3.13).
-The equality here is on the concrete complement polynomial space.
--/
+/-! The ordered moving-pair coefficient of the order-three oscillator field. -/
 
 set_option autoImplicit false
 
 noncomputable section
+
+open private complementPair_finiteSupport inverse_scale_sq
+  from D5.S3.VertexAlgebra.Lattice.Orbifold.ThirdCoverComplement
 
 namespace D5.S3.VertexAlgebra.Lattice.Orbifold.ThirdTwistedQuadratic
 
@@ -34,12 +24,22 @@ private theorem sortedPair_swap (k l : ℤ) : sortedPair k l = sortedPair l k :=
   · rfl
   · simp [sortedPair, h.le, h.not_ge]
 
-private theorem sortedPair_eq_smul_complementPair (k l : ℤ) :
-    sortedPair k l = (3 : ℂ)⁻¹ • complementPair l k := by
-  by_cases h : k ≤ l <;>
-    simp only [sortedPair, fractionalCurrent, complementPair, h, ite_true, ite_false,
-      Algebra.smul_mul_assoc, Algebra.mul_smul_comm, smul_smul, inverse_scale_sq,
-      Module.End.mul_eq_comp]
+private theorem sortedPair_finite (m : ℤ) (Q : ComplementFock) :
+    ({k : ℤ | ¬ (3 : ℤ) ∣ k} ∩ Function.support
+      (fun k : ℤ => sortedPair k (3 * m - k) Q)).Finite := by
+  have scale (k l : ℤ) : sortedPair k l = (3 : ℂ)⁻¹ • complementPair l k := by
+    by_cases h : k ≤ l <;>
+      simp only [sortedPair, fractionalCurrent, complementPair, h, ite_true, ite_false,
+        Algebra.smul_mul_assoc, Algebra.mul_smul_comm, smul_smul, inverse_scale_sq,
+        Module.End.mul_eq_comp]
+  refine (complementPair_finiteSupport m Q).subset ?_
+  intro k ⟨hk, hs⟩
+  refine ⟨hk, ?_⟩
+  change complementPair (3 * m - k) k Q ≠ 0
+  intro hz
+  apply hs
+  change sortedPair k (3 * m - k) Q = 0
+  simp [scale, hz]
 
 /-- The two terms of the usual normal order are selected by the sign of the
 first frequency. The native indices are three times their frequencies. -/
@@ -58,18 +58,22 @@ private theorem sortedPair_eq_orderedPair {k l : ℤ} (hk : ¬ (3 : ℤ) ∣ k)
   · exact commute (by omega)
   · exact (commute (by omega)).symm
 
-/-- Native indices with remainder a modulo three. For 0 ≤ a < 3 the frequency grid is ℤ + a/3. -/
+/-- Native indices of the frequency grid ℤ + a/3. -/
 def residue (a : ℤ) : Set ℤ := {k | k % 3 = a}
-
-private theorem residue_nondivisible {a k : ℤ} (ha : a ≠ 0) (hk : k ∈ residue a) :
-    ¬ (3 : ℤ) ∣ k :=
-  fun hd => ha ((show k % 3 = a from hk).symm.trans (Int.emod_eq_zero_of_dvd hd))
 
 private theorem sortedPair_eq_orderedPair_on_residue (m : ℤ) {a k : ℤ}
     (ha : a ≠ 0) (hk : k ∈ residue a) :
-    sortedPair k (3 * m - k) = orderedPair k (3 * m - k) :=
-  sortedPair_eq_orderedPair (residue_nondivisible ha hk)
-    (noninteger_partner m k (residue_nondivisible ha hk))
+    sortedPair k (3 * m - k) = orderedPair k (3 * m - k) := by
+  have hk' : ¬ (3 : ℤ) ∣ k :=
+    fun hd => ha ((show k % 3 = a from hk).symm.trans (Int.emod_eq_zero_of_dvd hd))
+  exact sortedPair_eq_orderedPair hk' fun hd =>
+    hk' (by simpa using dvd_sub (dvd_mul_right (3 : ℤ) m) hd)
+
+private theorem residue_finite (m : ℤ) (Q : ComplementFock) {a : ℤ}
+    (ha : a ≠ 0) :
+    (residue a ∩ Function.support (fun k : ℤ => sortedPair k (3 * m - k) Q)).Finite :=
+  (sortedPair_finite m Q).subset fun k ⟨hk, hs⟩ =>
+    ⟨fun hd => ha ((show k % 3 = a from hk).symm.trans (Int.emod_eq_zero_of_dvd hd)), hs⟩
 
 private theorem sorted_residue_sums (m : ℤ) (Q : ComplementFock) :
     (∑ᶠ k ∈ residue 1, sortedPair k (3 * m - k) Q) =
@@ -106,24 +110,19 @@ and the complementary index belongs to V. -/
 def orderedCoefficient (m : ℤ) (Q : ComplementFock) : ComplementFock :=
   ∑ᶠ k ∈ residue 1, orderedPair k (3 * m - k) Q
 
-/-- Every polynomial has finite support for the ordered sum on a nonzero residue. -/
 theorem orderedPair_finite_on_residue (m : ℤ) (Q : ComplementFock) {a : ℤ} (ha : a ≠ 0) :
     (residue a ∩ Function.support (fun k : ℤ => orderedPair k (3 * m - k) Q)).Finite := by
-  refine (complementPair_finiteSupport m Q).subset ?_
+  refine (residue_finite m Q ha).subset ?_
   intro k ⟨hk, hs⟩
-  refine ⟨residue_nondivisible ha hk, ?_⟩
-  change complementPair (3 * m - k) k Q ≠ 0
-  intro hz
-  apply hs
-  change orderedPair k (3 * m - k) Q = 0
-  rw [← sortedPair_eq_orderedPair_on_residue m ha hk, sortedPair_eq_smul_complementPair]
-  simp only [LinearMap.smul_apply, hz, smul_zero]
+  refine ⟨hk, ?_⟩
+  change sortedPair k (3 * m - k) Q ≠ 0
+  rw [sortedPair_eq_orderedPair_on_residue m ha hk]
+  exact hs
 
-/-- The fractional Virasoro mode is one ordered dual-grid sum with the vacuum shift. -/
 theorem fractionalVirasoro_apply_ordered (m : ℤ) (Q : ComplementFock) :
     fractionalVirasoro m Q =
       orderedCoefficient m Q + (if m = 0 then (1 / 9 : ℂ) else 0) • Q := by
-  have hsplit : integerIndicesᶜ = residue 1 ∪ residue 2 := by
+  have hsplit : {k : ℤ | ¬ (3 : ℤ) ∣ k} = residue 1 ∪ residue 2 := by
     ext k
     change (¬ (3 : ℤ) ∣ k) ↔ k % 3 = 1 ∨ k % 3 = 2
     rw [Int.dvd_iff_emod_eq_zero]
@@ -133,26 +132,17 @@ theorem fractionalVirasoro_apply_ordered (m : ℤ) (Q : ComplementFock) :
     change k % 3 = 1 at h₁
     change k % 3 = 2 at h₂
     omega
-  have hscale :
-      (3 : ℂ)⁻¹ • (∑ᶠ k ∈ integerIndicesᶜ, complementPair (3 * m - k) k Q) =
-        ∑ᶠ k ∈ integerIndicesᶜ, orderedPair k (3 * m - k) Q := by
-    calc
-      _ = ∑ᶠ k ∈ integerIndicesᶜ, (3 : ℂ)⁻¹ • complementPair (3 * m - k) k Q := by
-        simpa only [DistribSMul.toAddMonoidHom_apply] using
-          (DistribSMul.toAddMonoidHom ComplementFock (3 : ℂ)⁻¹).map_finsum_mem'
-            (complementPair_finiteSupport m Q)
-      _ = _ := by
-        refine finsum_mem_congr rfl fun k hk => ?_
-        have hp := sortedPair_eq_orderedPair (k := k) hk (noninteger_partner m k hk)
-        rw [sortedPair_eq_smul_complementPair] at hp
-        simpa only [LinearMap.smul_apply] using LinearMap.congr_fun hp Q
-  change (3 : ℂ)⁻¹ • ((2 : ℂ)⁻¹ •
-      (∑ᶠ k ∈ integerIndicesᶜ, complementPair (3 * m - k) k Q)) +
-      (if m = 0 then (1 / 9 : ℂ) else 0) • Q = _
-  rw [orderedCoefficient, smul_comm (3 : ℂ)⁻¹ (2 : ℂ)⁻¹, hscale, hsplit,
-    finsum_mem_union' hd (orderedPair_finite_on_residue m Q (by decide))
-      (orderedPair_finite_on_residue m Q (by decide)), ← complementary_residue_sums]
+  rw [fractionalVirasoro_apply, orderedCoefficient]
+  change (2 : ℂ)⁻¹ • (∑ᶠ k ∈ {k : ℤ | ¬ (3 : ℤ) ∣ k}, sortedPair k (3 * m - k) Q) + _ = _
+  rw [hsplit, finsum_mem_union' hd (residue_finite m Q (by decide))
+    (residue_finite m Q (by decide)), ← sorted_residue_sums]
   congr 1
   rw [← two_smul ℂ, smul_smul, inv_mul_cancel₀ (by norm_num : (2 : ℂ) ≠ 0), one_smul]
+  exact finsum_mem_congr rfl fun k hk =>
+    LinearMap.congr_fun (sortedPair_eq_orderedPair_on_residue m (by decide) hk) Q
+
+#print axioms complementary_residue_sums
+#print axioms orderedPair_finite_on_residue
+#print axioms fractionalVirasoro_apply_ordered
 
 end D5.S3.VertexAlgebra.Lattice.Orbifold.ThirdTwistedQuadratic

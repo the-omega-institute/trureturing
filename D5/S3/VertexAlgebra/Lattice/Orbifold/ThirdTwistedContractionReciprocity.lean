@@ -1,22 +1,11 @@
-/- GID: D5/S3/VertexAlgebra/Lattice/Orbifold/ThirdTwistedContractionReciprocity
-   generality: I
-   mirror-B: D5/B/S3/VertexAlgebra/Lattice/Orbifold/ThirdTwistedContractionReciprocity
-   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: []
-   utility: none
-   digest: Rational reciprocity and Bakalov–Kac phase cancellation for the order-three lattice contraction. -/
-
-import D5.S3.VertexAlgebra.Lattice.Orbifold.ThirdTwistedChargeAction
 import D5.S3.VertexAlgebra.Lattice.Orbifold.ThirdTwistedContraction
 import Mathlib.RingTheory.LaurentSeries
 import Mathlib.Tactic.Ring
 
 /-!
-The rational form of the order-three contraction of Bakalov–Kac,
-*Twisted Modules over Lattice Vertex Algebras*, arXiv:math/0402315v3,
-Lemma 4.2, in the cover coordinate `t = (w / z)^(1/3)`.
-Reversing the cover ratio and the ordered charges introduces the orbit-norm
-monomial and a scalar phase. The charge multiplier of (4.42) cancels the phase.
+The rational order-three contraction in the cover coordinate `t = y / x`.
+Taking `u = ζ⁻¹` gives the factors `1 - ζ^(-j) t`. Taking `u = ζ` gives the
+rational function whose expansion is `ThirdTwistedContraction.scalar_contraction`.
 -/
 
 set_option autoImplicit false
@@ -26,7 +15,6 @@ namespace D5.S3.VertexAlgebra.Lattice.Orbifold.ThirdTwistedContraction
 open LatticeGeneratingFieldLocality (LatticeData Charge bilinear)
 open LatticeActualGeneratorLocality (bilinear_add_right)
 open LatticeFiniteNegativeGeneration (bilinear_symmetric)
-open ThirdTwistedChargeCocycle (pairing_shift_one pairing_shift_two)
 open scoped BigOperators
 
 noncomputable section
@@ -46,13 +34,13 @@ def reciprocityPhase (u : ℂˣ) (a b : Charge D) : ℂˣ :=
     (Units.mk0 (-1 : ℂ) (neg_ne_zero.mpr one_ne_zero) * u ^ j) ^
       bilinear D ((g^[j]) a) b
 
-private theorem coe_reciprocityPhase (u : ℂˣ) (a b : Charge D) :
+theorem coe_reciprocityPhase (u : ℂˣ) (a b : Charge D) :
     (reciprocityPhase D g u a b : ℂ) =
       ∏ j ∈ Finset.range 3, (-(↑(u ^ j) : ℂ)) ^ bilinear D ((g^[j]) a) b := by
   simp only [reciprocityPhase, Units.coe_prod, Units.val_zpow_eq_zpow_val,
     Units.val_mul, Units.val_mk0, neg_mul, one_mul]
 
-private theorem sum_orbitPairing (a b : Charge D) :
+theorem sum_orbitPairing (a b : Charge D) :
     (∑ j ∈ Finset.range 3, bilinear D ((g^[j]) a) b) =
       bilinear D (ThirdTwistedChargeAction.N D g a) b := by
   rw [bilinear_symmetric D (ThirdTwistedChargeAction.N D g a) b]
@@ -66,13 +54,15 @@ variable (hg : ∀ a b, bilinear D (g a) (g b) = bilinear D a b)
 include h3 hg in
 /-- Inverting the root exchanges indices one and two. By isometry and symmetry,
 the exponent of index `j` for `(b, a)` is the exponent of `-j mod 3` for `(a, b)`. -/
-private theorem rationalContraction_inv_root (u : ℂˣ) (hu : u ^ (3 : ℕ) = 1)
+theorem rationalContraction_inv_root (u : ℂˣ) (hu : u ^ (3 : ℕ) = 1)
     (a b : Charge D) (t : RatFunc ℂ) :
     rationalContraction D g u⁻¹ a b t = rationalContraction D g u b a t := by
-  have hpairOne : bilinear D (g b) a = bilinear D (g (g a)) b :=
-    (bilinear_symmetric D (g b) a).trans (pairing_shift_one D g hg h3 a b)
-  have hpairTwo : bilinear D (g (g b)) a = bilinear D (g a) b :=
-    (bilinear_symmetric D (g (g b)) a).trans (pairing_shift_two D g hg h3 a b)
+  have hpairOne : bilinear D (g b) a = bilinear D (g (g a)) b := by
+    rw [bilinear_symmetric D (g b) a]
+    simpa only [h3 a] using hg (g (g a)) b
+  have hpairTwo : bilinear D (g (g b)) a = bilinear D (g a) b := by
+    rw [bilinear_symmetric D (g (g b)) a]
+    simpa only [h3 b] using (hg a (g (g b))).symm
   have hinv : u⁻¹ = u ^ (2 : ℕ) := by
     symm
     apply eq_inv_of_mul_eq_one_left
@@ -159,120 +149,36 @@ theorem rationalContraction_X_expansion (u : ℂˣ) (a b : Charge D) :
   intro j _
   rw [map_zpow₀, map_zpow, hbinomial]
 
+open P48qTwistedChargeAction (lattice g_cube g_isometry)
+
+local notation "ζ" => ThirdTwistedChargeCocycle.zeta
+
+/-- The native power series is the expansion at `X = 0` with root parameter `ζ`. -/
+theorem rationalContraction_X_expansion_native (a b : Charge lattice) :
+    (rationalContraction lattice P48qTwistedChargeAction.g ζ a b RatFunc.X : LaurentSeries ℂ) =
+      ((PowerSeries.exp ℂ).subst (contractionExponent a b) : LaurentSeries ℂ) := by
+  rw [scalar_contraction]
+  simpa only [Units.val_pow_eq_pow_val] using
+    rationalContraction_X_expansion lattice P48qTwistedChargeAction.g ζ a b
+
+/-- Reciprocity for the factors `1 - ζ^(-j) X` in the native lattice.
+Both products use the negative-index convention and the phase is explicit. -/
+theorem rationalContraction_negative_reciprocity (a b : Charge lattice) :
+    let g := P48qTwistedChargeAction.g
+    rationalContraction lattice g ζ⁻¹ a b RatFunc.X =
+      RatFunc.X ^ (∑ j ∈ Finset.range 3, bilinear lattice ((g^[j]) a) b) *
+        RatFunc.C (∏ j ∈ Finset.range 3,
+          (-((ζ : ℂ) ^ (-(j : ℤ)))) ^ bilinear lattice ((g^[j]) a) b) *
+        rationalContraction lattice g ζ⁻¹ b a RatFunc.X⁻¹ := by
+  have hζ : (ζ⁻¹ : ℂˣ) ^ (3 : ℕ) = 1 := by
+    rw [inv_pow, ThirdTwistedChargeCocycle.zeta_primitive.pow_eq_one, inv_one]
+  dsimp only
+  have h := rationalContraction_reciprocity lattice P48qTwistedChargeAction.g g_cube g_isometry
+    ζ⁻¹ hζ a b RatFunc.X RatFunc.X_ne_zero
+  rw [← sum_orbitPairing lattice P48qTwistedChargeAction.g a b, coe_reciprocityPhase] at h
+  simpa only [Units.val_pow_eq_pow_val, Units.val_inv_eq_inv_val, inv_pow, zpow_neg,
+    zpow_natCast] using h
+
 end
-
-end D5.S3.VertexAlgebra.Lattice.Orbifold.ThirdTwistedContraction
-
-namespace D5.S3.VertexAlgebra.Lattice.Orbifold.ThirdTwistedChargeCocycle
-
-open LatticeGeneratingFieldLocality (LatticeData Charge bilinear paritySign)
-open LatticeActualGeneratorLocality (epsilon_skew)
-open LatticeFiniteNegativeGeneration (bilinear_symmetric)
-open ThirdTwistedContraction (reciprocityPhase)
-
-local notation "ζ" => zeta
-
-/-- The leading-coefficient phase at the Bakalov–Kac root exchanges the charges
-in the order-three multiplier. -/
-theorem c_mul_reciprocityPhase (D : LatticeData) (g : Charge D ≃+ Charge D)
-    (h3 : ∀ a, g (g (g a)) = a)
-    (hg : ∀ a b, bilinear D (g a) (g b) = bilinear D a b)
-    (a b : Charge D) :
-    c D g a b * reciprocityPhase D g ζ a b = c D g b a := by
-  let e₀ := bilinear D a b
-  let e₁ := bilinear D (g a) b
-  let e₂ := bilinear D (g (g a)) b
-  have hpairOne : bilinear D (g b) a = bilinear D (g (g a)) b :=
-    (bilinear_symmetric D (g b) a).trans (pairing_shift_one D g hg h3 a b)
-  have hpairTwo : bilinear D (g (g b)) a = bilinear D (g a) b :=
-    (bilinear_symmetric D (g (g b)) a).trans (pairing_shift_two D g hg h3 a b)
-
-  have hζ : IsPrimitiveRoot (ζ : ℂ) 3 := IsPrimitiveRoot.coe_units_iff.mpr zeta_primitive
-  let sign : ℂˣ := Units.mk0 (-1) (by norm_num)
-  let three : ℂˣ := Units.mk0 3 (by norm_num)
-  let factor₁ : ℂˣ := Units.mk0 (1 - (ζ : ℂ)) (sub_ne_zero.mpr (hζ.ne_one (by decide)).symm)
-  let factor₂ : ℂˣ := Units.mk0 (1 - (ζ : ℂ) ^ 2)
-    (sub_ne_zero.mpr (hζ.pow_ne_one_of_pos_of_lt (by decide : (2 : ℕ) ≠ 0) (by decide)).symm)
-  have hfactorOne : factor₁ * (sign * ζ ^ (2 : ℕ)) = factor₂ := by
-    apply Units.ext
-    change (1 - (ζ : ℂ)) * ((-1 : ℂ) * (ζ : ℂ) ^ 2) = 1 - (ζ : ℂ) ^ 2
-    calc
-      _ = (ζ : ℂ) ^ 3 - (ζ : ℂ) ^ 2 := by ring
-      _ = _ := by rw [hζ.pow_eq_one]
-  have hfactorTwo : factor₂ * (sign * ζ) = factor₁ := by
-    apply Units.ext
-    change (1 - (ζ : ℂ) ^ 2) * ((-1 : ℂ) * (ζ : ℂ)) = 1 - (ζ : ℂ)
-    calc
-      _ = (ζ : ℂ) ^ 3 - (ζ : ℂ) := by ring
-      _ = _ := by rw [hζ.pow_eq_one]
-
-  have hB (x y : Charge D) : B D g x y = three ^ (-bilinear D x y) *
-      factor₁ ^ bilinear D (g x) y * factor₂ ^ bilinear D (g (g x)) y := by
-    unfold B
-    rfl
-  have hforward : B D g a b = three ^ (-e₀) * factor₁ ^ e₁ * factor₂ ^ e₂ := hB a b
-  have hswap : B D g b a = three ^ (-e₀) * factor₂ ^ e₁ * factor₁ ^ e₂ := by
-    rw [hB b a, bilinear_symmetric D b a, hpairOne, hpairTwo]
-    change three ^ (-e₀) * factor₁ ^ e₂ * factor₂ ^ e₁ = _
-    ac_rfl
-  have hphase : reciprocityPhase D g ζ a b =
-      sign ^ e₀ * (sign * ζ) ^ e₁ * (sign * ζ ^ (2 : ℕ)) ^ e₂ := by
-    simp only [reciprocityPhase, Finset.prod_range_succ, Finset.prod_range_zero, one_mul,
-      mul_one, Function.iterate_succ_apply', Function.iterate_zero_apply, pow_zero, pow_one,
-      sign, e₀, e₁, e₂]
-  have hphaseB : reciprocityPhase D g ζ a b * B D g b a = sign ^ e₀ * B D g a b := by
-    rw [hphase, hswap, hforward]
-    calc
-      _ = sign ^ e₀ * (three ^ (-e₀) * (factor₂ ^ e₁ * (sign * ζ) ^ e₁) *
-          (factor₁ ^ e₂ * (sign * ζ ^ (2 : ℕ)) ^ e₂)) := by ac_rfl
-      _ = _ := by
-        rw [← mul_zpow factor₂ (sign * ζ) e₁, hfactorTwo,
-          ← mul_zpow factor₁ (sign * ζ ^ (2 : ℕ)) e₂, hfactorOne]
-
-  have hepsilon : epsilonUnit D a b = sign ^ e₀ * epsilonUnit D b a := by
-    apply Units.ext
-    simpa only [Units.val_mul, coe_epsilonUnit, Units.val_zpow_eq_zpow_val, Units.val_mk0,
-      sign, e₀, neg_one_zpow_eq_ite, paritySign] using epsilon_skew D a b
-  have hsignSquare : sign ^ (2 : ℤ) = 1 := by
-    apply Units.ext
-    change ((sign ^ (2 : ℤ) : ℂˣ) : ℂ) = 1
-    rw [Units.val_zpow_eq_zpow_val]
-    change (-1 : ℂ) ^ (2 : ℤ) = 1
-    norm_num
-  have hsign : sign ^ e₀ * sign ^ e₀ = 1 := by
-    rw [← zpow_add, ← two_mul, zpow_mul, hsignSquare, one_zpow]
-
-  simp only [c, ← div_eq_mul_inv, div_mul_eq_mul_div]
-  apply div_eq_div_iff_mul_eq_mul.mpr
-  rw [mul_assoc, hphaseB, hepsilon]
-  calc
-    _ = (sign ^ e₀ * sign ^ e₀) * (epsilonUnit D b a * B D g a b) := by ac_rfl
-    _ = _ := by rw [hsign, one_mul]
-
-end D5.S3.VertexAlgebra.Lattice.Orbifold.ThirdTwistedChargeCocycle
-
-namespace D5.S3.VertexAlgebra.Lattice.Orbifold.ThirdTwistedContraction
-
-open LatticeGeneratingFieldLocality (LatticeData Charge bilinear)
-open ThirdTwistedChargeCocycle (c zeta zeta_primitive c_mul_reciprocityPhase)
-
-/-- Reversing the charges and the cover ratio in the cocycle-weighted rational
-contraction leaves only the monomial with the integral orbit-norm exponent. -/
-theorem c_mul_rationalContraction_reciprocity (D : LatticeData) (g : Charge D ≃+ Charge D)
-    (h3 : ∀ a, g (g (g a)) = a)
-    (hg : ∀ a b, bilinear D (g a) (g b) = bilinear D a b)
-    (a b : Charge D) (t : RatFunc ℂ) (ht : t ≠ 0) :
-    RatFunc.C (c D g a b : ℂ) * rationalContraction D g zeta a b t =
-      t ^ bilinear D (ThirdTwistedChargeAction.N D g a) b *
-        (RatFunc.C (c D g b a : ℂ) * rationalContraction D g zeta b a t⁻¹) := by
-  have hphase := congrArg (fun v : ℂˣ => RatFunc.C (v : ℂ))
-    (c_mul_reciprocityPhase D g h3 hg a b)
-  simp only [Units.val_mul, map_mul] at hphase
-  rw [rationalContraction_reciprocity D g h3 hg zeta zeta_primitive.pow_eq_one a b t ht]
-  calc
-    _ = t ^ bilinear D (ThirdTwistedChargeAction.N D g a) b *
-        ((RatFunc.C (c D g a b : ℂ) * RatFunc.C (reciprocityPhase D g zeta a b : ℂ)) *
-          rationalContraction D g zeta b a t⁻¹) := by ac_rfl
-    _ = _ := by rw [hphase]
 
 end D5.S3.VertexAlgebra.Lattice.Orbifold.ThirdTwistedContraction

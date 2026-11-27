@@ -31,9 +31,10 @@ open OriginalFourMChargeCoset (slitChannelA slitChannelB dLipChannel)
 
 open private oscillatorWord laurentPower laurentPhase from
   D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMNativeLaurent
-open OriginalFourMCompactLowering (nativePuncture)
-open private determinant product_native from
-  D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMCompactLowering
+open private determinant from
+  D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMLoweredNormalization
+open private product_native from
+  D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMNativeOccupation
 open private lowering_weight from
   D5.S3.VertexAlgebra.TwistedGround.OriginalFourMEnergyCoefficient
 
@@ -43,7 +44,7 @@ open OriginalFourMSignedOverlap (chart_parameter_ne_one)
 open NativeAffineExternalCoefficient (jetOccupation)
 open LatticeHalfFockChargedCoefficients (omega)
 open private word_slots from
-  D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMAssignedOccupation
+  D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMCompactLowering
 open private relative_same_slot from
   D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMPhysicalCovariance
 open private chartA_normalization chartB_normalization chartA_radius slot from
@@ -401,28 +402,6 @@ open OriginalFourPointChartGluing (U_A U_D)
 open D5.S3.Analytic.OriginalHalfBinomialSlitPeriod (doubleSlit)
 open private translated_gauss_sum fourierSign_swap from
   D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMDFourCurrent
-
-open FourPoint.FourPointChannelCoefficients (loweringCutoff)
-
-/-- At the actual signed-mode diagonal the outgoing energy cutoff equals the
-literal cutoff in both transported channels. -/
-theorem cutoff_of_output_weight (H K L J : ℕ) (m n r : ℤ)
-    (h : (J : ℤ) = H + K + L - (m + n + r) - 2) :
-    loweringCutoff H K L m n r = J - 1 := by
-  unfold loweringCutoff
-  omega
-
-/-- Both transported evaluations use the exact channel definitions once the
-output weight is chosen by the right selector. -/
-theorem nativeLaurent_eq_transported_channels (D : LatticeData) (H K L J : ℕ)
-    (m n r : ℤ) (h : (J : ℤ) = H + K + L - (m + n + r) - 2)
-    (P Q R S : Oscillator D) (a : ModTwoCharge D) (t : ℂ) :
-    nativeLaurent D .B H K L J (m + n + r) P Q R S a t =
-      slitChannelB D H K L m n r P Q R S a t ∧
-    (∑ b, quadraticSign D (b + a) * nativeLaurent D .D H K L J (m + n + r) P Q R S b t) =
-      dLipChannel D true H K L m n r P Q R S a t := by
-  rw [slitChannelB, dLipChannel, cutoff_of_output_weight H K L J m n r h]
-  exact ⟨rfl, rfl⟩
 
 /-- The actual signed channels agree on the real A/B and true A/D overlaps
 for arbitrary integer-weight oscillator words at the selected output mode. -/

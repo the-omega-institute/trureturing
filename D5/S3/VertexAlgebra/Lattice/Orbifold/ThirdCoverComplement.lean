@@ -107,9 +107,9 @@ private theorem normalPair_join_complement (s : ℂ) (hs : s ≠ 0) (i j : ℤ)
   · simp only [normalPair, complementPair, ite_eq_right h, LinearMap.comp_apply,
       mode_join_complement s hs j hj, mode_join_complement s hs i hi]
 
-def integerIndices : Set ℤ := {k | (3 : ℤ) ∣ k}
+private def integerIndices : Set ℤ := {k | (3 : ℤ) ∣ k}
 
-theorem noninteger_partner (m k : ℤ) (hk : k ∈ integerIndicesᶜ) :
+private theorem noninteger_partner (m k : ℤ) (hk : k ∈ integerIndicesᶜ) :
     ¬ (3 : ℤ) ∣ 3 * m - k := by
   intro h
   apply hk
@@ -117,11 +117,15 @@ theorem noninteger_partner (m k : ℤ) (hk : k ∈ integerIndicesᶜ) :
   have hd := dvd_sub (dvd_mul_right (3 : ℤ) m) h
   simpa using hd
 
-theorem complementPair_finiteSupport (m : ℤ) (Q : ComplementFock) :
+private theorem nativePair_finiteSupport (n : ℤ) (P : Fock) :
+    Function.HasFiniteSupport (fun k : ℤ => normalPair (n - k) k P) :=
+  (Set.finite_Ioo _ _).subset (normalPair_support_interval n P)
+
+private theorem complementPair_finiteSupport (m : ℤ) (Q : ComplementFock) :
     (integerIndicesᶜ ∩ Function.support
       (fun k : ℤ => complementPair (3 * m - k) k Q)).Finite := by
-  have hfinite := (Set.finite_Ioo _ _).subset
-    (normalPair_support_interval (3 * m) (join 1 one_ne_zero ((1 : Fock) ⊗ₜ[ℂ] Q)))
+  have hfinite := nativePair_finiteSupport (3 * m)
+    (join 1 one_ne_zero ((1 : Fock) ⊗ₜ[ℂ] Q))
   refine hfinite.subset ?_
   intro k hk
   change normalPair (3 * m - k) k (join 1 one_ne_zero ((1 : Fock) ⊗ₜ[ℂ] Q)) ≠ 0
@@ -167,7 +171,7 @@ private theorem cover_sub_integer_apply (m : ℤ) (P : Fock) :
       (3 : ℂ)⁻¹ • ((2 : ℂ)⁻¹ • ∑ᶠ k ∈ integerIndicesᶜ, normalPair (3 * m - k) k P) +
         coverShift m • P := by
   let f (k : ℤ) := normalPair (3 * m - k) k P
-  have hfinite := (Set.finite_Ioo _ _).subset (normalPair_support_interval (3 * m) P)
+  have hfinite := nativePair_finiteSupport (3 * m) P
   have hsum := finsum_mem_union' (f := f) (disjoint_compl_right (a := integerIndices))
     (hfinite.subset Set.inter_subset_right) (hfinite.subset Set.inter_subset_right)
   rw [Set.union_compl_self, finsum_mem_univ] at hsum
@@ -305,8 +309,38 @@ theorem fractionalVirasoro_vacuum (m : ℤ) (hm : 0 ≤ m) :
 def fractionalCurrent (r : ℤ) : Module.End ℂ ComplementFock :=
   sqrtThree⁻¹ • complementMode r
 
-theorem inverse_scale_sq : sqrtThree⁻¹ * sqrtThree⁻¹ = (3 : ℂ)⁻¹ := by
+private theorem inverse_scale_sq : sqrtThree⁻¹ * sqrtThree⁻¹ = (3 : ℂ)⁻¹ := by
   rw [← pow_two, inv_pow, sqrtThree_sq]
+
+/-- In normalized current coordinates the coefficient of the normal-ordered sum
+is one half, and only pairs from the two complementary residue grids occur. -/
+theorem fractionalVirasoro_apply (m : ℤ) (Q : ComplementFock) :
+    fractionalVirasoro m Q =
+      (2 : ℂ)⁻¹ • (∑ᶠ k ∈ {k : ℤ | ¬ (3 : ℤ) ∣ k},
+        (if k ≤ 3 * m - k then fractionalCurrent k * fractionalCurrent (3 * m - k)
+          else fractionalCurrent (3 * m - k) * fractionalCurrent k) Q) +
+        (if m = 0 then (1 / 9 : ℂ) else 0) • Q := by
+  have hterm (i j : ℤ) :
+      (if j ≤ i then fractionalCurrent j * fractionalCurrent i
+        else fractionalCurrent i * fractionalCurrent j) =
+        (3 : ℂ)⁻¹ • complementPair i j := by
+    by_cases h : j ≤ i
+    · simp only [fractionalCurrent, complementPair, ite_eq_left h, Algebra.smul_mul_assoc,
+        Algebra.mul_smul_comm, smul_smul, inverse_scale_sq, Module.End.mul_eq_comp]
+    · simp only [fractionalCurrent, complementPair, ite_eq_right h, Algebra.smul_mul_assoc,
+        Algebra.mul_smul_comm, smul_smul, inverse_scale_sq, Module.End.mul_eq_comp]
+  change (3 : ℂ)⁻¹ • ((2 : ℂ)⁻¹ •
+    ∑ᶠ k ∈ integerIndicesᶜ, complementPair (3 * m - k) k Q) + coverShift m • Q = _
+  simp only [hterm, LinearMap.smul_apply]
+  have hsum :
+      (3 : ℂ)⁻¹ • (∑ᶠ k ∈ integerIndicesᶜ, complementPair (3 * m - k) k Q) =
+        ∑ᶠ k ∈ integerIndicesᶜ, (3 : ℂ)⁻¹ • complementPair (3 * m - k) k Q := by
+    simpa only [DistribSMul.toAddMonoidHom_apply] using
+      (DistribSMul.toAddMonoidHom ComplementFock (3 : ℂ)⁻¹).map_finsum_mem'
+        (complementPair_finiteSupport m Q)
+  change _ = (2 : ℂ)⁻¹ • (∑ᶠ k ∈ integerIndicesᶜ, (3 : ℂ)⁻¹ •
+    complementPair (3 * m - k) k Q) + coverShift m • Q
+  rw [← hsum, smul_comm (3 : ℂ)⁻¹ (2 : ℂ)⁻¹]
 
 private theorem split_fractionalCurrent (r : ℤ) (hr : ¬ (3 : ℤ) ∣ r) :
     let E := (split sqrtThree (ne_zero_of_sq_eq_three sqrtThree_sq)).toLinearEquiv

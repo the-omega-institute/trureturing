@@ -5,13 +5,12 @@
    anchors: []
    utility: none
    digest: Mixed BPZ for the original odd coefficients by finite stress transposition. -/
-
 import D5.S3.VertexAlgebra.TwistedGround.Orbifold.OriginalOrbifoldTranslation
 import Batteries.Tactic.OpenPrivate
 
-/-! Finite and algebraic BPZ identities for the original mixed coefficients. -/
-
 set_option autoImplicit false
+set_option maxRecDepth 4096
+set_option maxHeartbeats 4000000
 set_option backward.isDefEq.respectTransparency false
 
 noncomputable section
@@ -154,6 +153,10 @@ private theorem originalI_pairing_kernel (h24 : D.rank = 24) (H K : ℕ) (n : �
   simp only [kernel, K_R, LinearMap.sum_apply, LinearMap.smul_apply,
     LinearMap.coe_mk, AddHom.coe_mk, smul_eq_mul]
 
+/- proof_shape: content
+   admission_basis: escape-witness
+   escape_witness: the actual source inverse and transposed right sum are
+   compared term by term using the opposite doubled index and even phase shift. -/
 /-- The original mixed coefficient and right field have the same finite BPZ sum.
 The two ranges are determined by the actual lowering tails of the inputs. -/
 theorem original_mixed_bpz_finite (h24 : D.rank = 24) (H K : ℕ) (n : ℤ)

@@ -1,26 +1,8 @@
-/- GID: D5/S3/VertexAlgebra/Lattice/Orbifold/ThirdTwistedIterate
-   generality: I
-   mirror-B: D5/B/S3/VertexAlgebra/Lattice/Orbifold/ThirdTwistedIterate
-   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: []
-   utility: none
-   digest: The native current minus-one product yields the complementary modes under the twisted iterate identity. -/
-
-import Mathlib.RingTheory.Binomial
-import D5.S3.VertexAlgebra.Lattice.Automorphisms.ConformalGroundTransport
 import D5.S3.VertexAlgebra.Lattice.Orbifold.ThirdTwistedQuadratic
+import D5.S3.VertexAlgebra.Lattice.Orbifold.ThirdEigenspacePairingDraft
 import D5.S3.VertexAlgebra.LatticeActualConformalState
-import D5.S3.VertexAlgebra.Modules.FullJacobiCurrentTransport
 
-/-!
-Bojko Bakalov and Victor G. Kac, *Twisted Modules over Lattice Vertex Algebras*,
-arXiv:math/0402315v3, (3.13) at n = -1 and first grid 1/3. Assume the
-coefficientwise identity for a normalized pair of native lattice currents,
-together with the two current restrictions and the twisted vacuum field.
-The native nonnegative products leave only the vacuum contraction at product
-index 1. Its binomial factor at j = 2 is -1/9, giving the zero-mode shift
-when the twisted field of the native (-1)-product is isolated.
--/
+/-! Bakalov–Kac (3.13) at n = -1 for a normalized order-three moving pair. -/
 
 set_option autoImplicit false
 
@@ -29,27 +11,43 @@ noncomputable section
 namespace D5.S3.VertexAlgebra.Lattice.Orbifold.ThirdTwistedIterate
 
 open LatticeGeneratingFieldLocality LatticeAllStateField LatticeAllStateReconstruction
-open LatticeActualConformalState
-open D5.S3.VertexAlgebra.Lattice.Automorphisms D5.S3.VertexAlgebra.Modules
+open LatticeActualConformalState LatticeSugawaraCurrents
 open ThirdCoverIntegerFactor ThirdCoverComplement ThirdTwistedQuadratic
 open scoped BigOperators VertexOperator
 
+/-- The actual lattice current state in a complex coefficient direction. -/
+def currentAlong (D : LatticeData) (u : Fin D.rank → ℂ) : Carrier D :=
+  ∑ i, u i • currentState D i
+
+private theorem basis_current_product (D : LatticeData) (i j : Fin D.rank)
+    (n : ℤ) (hn : 0 ≤ n) :
+    mu D (currentState D i) n (currentState D j) =
+      if n = 1 then (D.G i j : ℂ) • vacuum D else 0 := by
+  have hz := stateField_creativity D (currentState D i) n hn
+  rw [current_state_field, neutralField_ncoeff] at hz
+  have hc := current_state_creation D j
+  rw [neutralField_ncoeff] at hc
+  have h := LinearMap.congr_fun (neutralMode_heisenberg D i j n (-1)) (vacuum D)
+  simp only [LinearMap.sub_apply, Module.End.mul_apply, LinearMap.smul_apply,
+    Module.End.one_apply, hz, hc, map_zero, sub_zero] at h
+  rw [mu, current_state_field, neutralField_ncoeff]
+  by_cases hn1 : n = 1
+  · subst n
+    simpa using h
+  · simpa [hn1, show n + -1 ≠ 0 by omega] using h
+
 private theorem current_product (D : LatticeData) (u v : Fin D.rank → ℂ)
     (n : ℤ) (hn : 0 ≤ n) :
-    mu D (ConformalGroundTransport.current D u) n (ConformalGroundTransport.current D v) =
+    mu D (currentAlong D u) n (currentAlong D v) =
       if n = 1 then ((D.G.map (Int.castRingHom ℂ)).toBilin' u v) • vacuum D else 0 := by
-  have hcurrent : ((Y D (ConformalGroundTransport.current D u))[[n]]) =
+  have hcurrent : ((Y D (currentAlong D u))[[n]]) =
       ∑ i, u i • ((Y D (currentState D i))[[n]]) := by
-    simp only [ConformalGroundTransport.current, map_sum, map_smul, Finset.sum_apply, Pi.smul_apply]
+    simp only [currentAlong, map_sum, map_smul, Finset.sum_apply, Pi.smul_apply]
   rw [mu, hcurrent]
-  simp only [ConformalGroundTransport.current, LinearMap.sum_apply, LinearMap.smul_apply,
-    map_sum, map_smul]
-  have index_one : n.toNat = 1 ↔ n = 1 := by omega
+  simp only [currentAlong, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul]
   have hb (i j : Fin D.rank) : ((Y D (currentState D i))[[n]]) (currentState D j) =
-      if n = 1 then (D.G i j : ℂ) • vacuum D else 0 := by
-    simpa only [FullJacobiCurrentTransport.sourceProduct, FullJacobiCurrentTransport.currentState,
-      current_state_creation, Int.toNat_of_nonneg hn, index_one] using
-      FullJacobiCurrentTransport.source_current_product D i j n.toNat
+      if n = 1 then (D.G i j : ℂ) • vacuum D else 0 :=
+    basis_current_product D i j n hn
   simp_rw [hb]
   by_cases h : n = 1
   · simp only [h, ite_true, Matrix.toBilin'_apply, Matrix.map_apply]
@@ -61,21 +59,22 @@ private theorem current_product (D : LatticeData) (u v : Fin D.rank → ℂ)
           from mul_comm _ _)
   · simp [h]
 
-private theorem oneThirdChoose_two : Ring.choose (1 / 3 : ℂ) 2 = -1 / 9 := by
-  rw [Ring.choose_eq_smul, descPochhammer_succ_right ℤ 1, descPochhammer_one]
-  norm_num [Polynomial.smeval_mul, Polynomial.smeval_sub, Polynomial.smeval_X,
-    Polynomial.smeval_natCast, Polynomial.smeval_one, smul_eq_mul, Nat.factorial]
+/-- The generalized binomial coefficient for the one-third grid in (3.13). -/
+def oneThirdBinomial (j : ℕ) : ℂ :=
+  (∏ r ∈ Finset.range j, ((1 / 3 : ℂ) - (r : ℂ))) / (j.factorial : ℂ)
+
+private theorem oneThirdBinomial_two : oneThirdBinomial 2 = -1 / 9 := by
+  norm_num [oneThirdBinomial, Finset.prod_range_succ, Nat.factorial]
 
 /-- The explicit n = -1 instance of (3.13), coefficient by coefficient.
-A native index k denotes exponent -k/3 - 1 in the state field. The factor
-of z^(-j) gives the native index 3 * (m + 1 - j) on the right. -/
+A native index k denotes exponent -k/3 - 1 in the state field. -/
 def pairIterate (D : LatticeData) (a b : Carrier D)
     (Ytw : Carrier D →ₗ[ℂ] ℤ → Module.End ℂ ComplementFock) : Prop :=
   ∀ (m : ℤ) (Q : ComplementFock),
     (∑ᶠ k ∈ residue 1,
       (if k < 0 then Ytw a k * Ytw b (3 * m - k)
        else Ytw b (3 * m - k) * Ytw a k) Q) =
-      ∑ᶠ j : ℕ, Ring.choose (1 / 3 : ℂ) j •
+      ∑ᶠ j : ℕ, oneThirdBinomial j •
         Ytw (mu D a ((j : ℤ) - 1) b) (3 * (m + 1 - (j : ℤ))) Q
 
 /-- The pair state is the actual untwisted (-1)-product. The twisted inputs
@@ -83,18 +82,15 @@ are the two current restrictions, the vacuum field, and (3.13) on this pair. -/
 theorem fractionalVirasoro_of_twistedIterate (D : LatticeData) (u v : Fin D.rank → ℂ)
     (hpair : (D.G.map (Int.castRingHom ℂ)).toBilin' u v = 1)
     (Ytw : Carrier D →ₗ[ℂ] ℤ → Module.End ℂ ComplementFock)
-    (hU : ∀ k, Ytw (ConformalGroundTransport.current D u) k =
-      if k % 3 = 1 then fractionalCurrent k else 0)
-    (hV : ∀ k, Ytw (ConformalGroundTransport.current D v) k =
-      if k % 3 = 2 then fractionalCurrent k else 0)
+    (hU : ∀ k, Ytw (currentAlong D u) k = if k % 3 = 1 then fractionalCurrent k else 0)
+    (hV : ∀ k, Ytw (currentAlong D v) k = if k % 3 = 2 then fractionalCurrent k else 0)
     (hVac : ∀ k, Ytw (vacuum D) k = if k = -3 then 1 else 0)
-    (hIterate : pairIterate D (ConformalGroundTransport.current D u)
-      (ConformalGroundTransport.current D v) Ytw)
+    (hIterate : pairIterate D (currentAlong D u) (currentAlong D v) Ytw)
     (m : ℤ) :
-    Ytw (mu D (ConformalGroundTransport.current D u) (-1) (ConformalGroundTransport.current D v))
-        (3 * (m + 1)) = fractionalVirasoro m := by
-  let a := ConformalGroundTransport.current D u
-  let b := ConformalGroundTransport.current D v
+    Ytw (mu D (currentAlong D u) (-1) (currentAlong D v)) (3 * (m + 1)) =
+      fractionalVirasoro m := by
+  let a := currentAlong D u
+  let b := currentAlong D v
   apply LinearMap.ext
   intro Q
   have lhs : orderedCoefficient m Q =
@@ -108,7 +104,7 @@ theorem fractionalVirasoro_of_twistedIterate (D : LatticeData) (u v : Fin D.rank
     change k % 3 = 1 at hk
     change (3 * m - k) % 3 = 2 at hl
     simp only [a, b, orderedPair, hU k, hV (3 * m - k), hk, hl, ite_true]
-  let term (j : ℕ) := Ring.choose (1 / 3 : ℂ) j •
+  let term (j : ℕ) := oneThirdBinomial j •
     Ytw (mu D a ((j : ℤ) - 1) b) (3 * (m + 1 - (j : ℤ))) Q
   have hterm : Function.support term ⊆ (↑({0, 2} : Finset ℕ) : Set ℕ) := by
     intro j hj
@@ -123,15 +119,40 @@ theorem fractionalVirasoro_of_twistedIterate (D : LatticeData) (u v : Fin D.rank
   change orderedCoefficient m Q = ∑ᶠ j : ℕ, term j at h
   rw [finsum_eq_sum_of_support_subset term hterm, Finset.sum_pair (by decide : (0 : ℕ) ≠ 2)] at h
   have h0 : term 0 = Ytw (mu D a (-1) b) (3 * (m + 1)) Q := by
-    simp [term, Ring.choose_zero_right]
+    simp [term, oneThirdBinomial]
   have h2 : term 2 = -((if m = 0 then (1 / 9 : ℂ) else 0) • Q) := by
     have hproduct : mu D a 1 b = vacuum D := by
       simpa only [a, b, ite_true, hpair, one_smul] using current_product D u v 1 (by decide)
-    change Ring.choose (1 / 3 : ℂ) 2 • Ytw (mu D a 1 b) (3 * (m + 1 - 2)) Q = _
-    rw [oneThirdChoose_two, hproduct, hVac]
+    change oneThirdBinomial 2 • Ytw (mu D a 1 b) (3 * (m + 1 - 2)) Q = _
+    rw [oneThirdBinomial_two, hproduct, hVac]
     simp only [show 3 * (m + 1 - 2) = -3 ↔ m = 0 by omega]
     split <;> simp [neg_div, neg_smul]
   rw [fractionalVirasoro_apply_ordered, h, h0, h2]
   abel
+
+open ThirdEigenspacePairing P48qGramCertificateDraft
+
+/-- The comparison for each pair in Nebe's actual normalized moving bases. -/
+theorem p48q_fractionalVirasoro_of_twistedIterate {ζ : ℂ} (hζ : IsPrimitiveRoot ζ 3)
+    (i : Fin 16) (hSym : ∀ i j, nebeGram i j = nebeGram j i)
+    (hEven : ∀ i, Even (nebeGram i i)) :
+    let D : LatticeData := ⟨48, nebeGram, hSym, hEven⟩
+    let u : Fin D.rank → ℂ := (p48qBasis hζ i : Fin 48 → ℂ)
+    let v : Fin D.rank → ℂ := (p48qOppositeBasis hζ i : Fin 48 → ℂ)
+    ∀ (Ytw : Carrier D →ₗ[ℂ] ℤ → Module.End ℂ ComplementFock),
+      (∀ k, Ytw (currentAlong D u) k = if k % 3 = 1 then fractionalCurrent k else 0) →
+      (∀ k, Ytw (currentAlong D v) k = if k % 3 = 2 then fractionalCurrent k else 0) →
+      (∀ k, Ytw (vacuum D) k = if k = -3 then 1 else 0) →
+      pairIterate D (currentAlong D u) (currentAlong D v) Ytw →
+      ∀ m : ℤ, Ytw (mu D (currentAlong D u) (-1) (currentAlong D v)) (3 * (m + 1)) =
+        fractionalVirasoro m := by
+  intro D u v Ytw hU hV hVac hIterate m
+  apply fractionalVirasoro_of_twistedIterate D u v _ Ytw hU hV hVac hIterate
+  change p48qForm (p48qBasis hζ i) (p48qOppositeBasis hζ i) = 1
+  simpa using p48q_pair_bases hζ i i
+
+#print axioms oneThirdBinomial_two
+#print axioms fractionalVirasoro_of_twistedIterate
+#print axioms p48q_fractionalVirasoro_of_twistedIterate
 
 end D5.S3.VertexAlgebra.Lattice.Orbifold.ThirdTwistedIterate
