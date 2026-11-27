@@ -4,6 +4,7 @@ public import Init.Internal.Order.Basic
 import all Init.Internal.Order.Basic
 public import Init.Internal.Order.Lemmas
 import all Init.Internal.Order.Lemmas
+import all Init.Internal.Order.MonadTail
 import all Init.Data.Array.Basic
 public import OmegaChecks.InitPort.Alternatives.ArrayFind
 import all OmegaChecks.InitPort.Alternatives.ArrayFind
@@ -313,7 +314,7 @@ open Lean Meta Elab Command in
 run_meta do
   let env ← getEnv
   let orderLemmas := env.header.moduleData[(env.getModuleIdx? `Init.Internal.Order.Lemmas).get!.toNat]!
-  let basicLemmas := #[``Order.monotone_bind, ``Order.monotone_dite, ``Order.monotone_readerTRun,
+  let basicLemmas := #[``Order.MonadTail.monotone_bind_right, ``Order.monotone_bind, ``Order.monotone_dite, ``Order.monotone_readerTRun,
     ``Order.monotone_stateTRun, ``Order.monotone_stateRefT'Run, ``Order.monotone_apply, ``Order.monotone_of_monotone_apply,
     ``Order.chain_apply, ``Order.is_meet_pi, ``Order.ImplicationOrder.is_meet_and,
     ``Order.ReverseImplicationOrder.is_meet_or, ``Order.implication_order_monotone_and,
