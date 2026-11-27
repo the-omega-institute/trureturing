@@ -69,6 +69,20 @@ private def defsStringFunction (n : Name) : Bool :=
   [`String.intercalate, `String.Internal.intercalateImpl, `String.pushn, `String.Internal.pushnImpl,
    `String.Slice.getUTF8Byte, `String.Slice.getUTF8Byte!, `String.Slice.Pos.byte].contains n
 
+private def basicStringFunction (n : Name) : Bool :=
+  let method := n.updatePrefix .anonymous
+  (n.getPrefix == `String && [`fromUTF8!, `pos?, `pos!, `substrEq, `replaceStartEnd!, `slice!].contains method) ||
+    (n.getPrefix == `String.Pos && [`get!, `byte, `next!, `next?, `nextn, `ofSlice!, `slice!, `sliceOrPanic].contains method) ||
+    (n.getPrefix == `String.Slice && [`pos!, `pos?, `replaceStartEnd!, `slice!].contains method) ||
+    (n.getPrefix == `String.Slice.Pos && [`get!, `next, `next?, `next!, `nextFast, `nextn, `prevAux, `ofSlice!,
+      `slice!, `sliceOrPanic].contains method) ||
+    ([`String, `String.Pos.Raw].contains n.getPrefix && [`utf8GetAux, `utf8GetAux?, `utf8SetAux, `utf8PrevAux].contains method) ||
+    [`String.Pos.Raw.extract.go₁, `String.Pos.Raw.extract.go₂, `ByteArray.utf8Decode?, `ByteArray.utf8Decode?.go,
+     `String.Internal.toArray, `String.Slice.Pos.prevAux.go, `String.instDecidableIsValidForSlice, `String.Pos.Raw.isValidForSlice,
+     `String.Pos.Raw.substrEq, `ByteArray.validateUTF8.go].contains n
+
+private def pinnedStringFunction (n : Name) : Bool := defsStringFunction n || basicStringFunction n
+
 public def usesPinnedFunction (n : Name) : Bool :=
   let method := n.updatePrefix .anonymous
   let trailing := n == `Int.trailingZeros || n == `Int.trailingZeros.aux
@@ -76,7 +90,7 @@ public def usesPinnedFunction (n : Name) : Bool :=
   let vector := n.getPrefix == `BitVec &&
     [`abs, `pow, `smod, `replicate, `reverse, `cpop, `cpopNatRec, `ctz, `clz, `clzAuxRec,
      `getLsbD, `getLsb, `getMsbD, `getMsb, `msb, `sdiv, `srem, `smtSDiv, `hash, `ofBoolListLE, `ofBoolListBE].contains method
-  trailing || defsStringFunction n || modelOperation n || ByteFoldNative.supported n || IndexedNative.supported n || SyntaxPositionNative.supported n || bytes || vector || [`Nat.repr, `Nat.reprFast, `Int.repr].contains n || [`BitVec.toHex, `BitVec.instToString].contains n || n == `Nat.bitwise || ((word? n.getPrefix).isSome && (method == `pow || (method == `ofInt && bitsType n.getPrefix == n.getPrefix))) ||
+  trailing || pinnedStringFunction n || modelOperation n || ByteFoldNative.supported n || IndexedNative.supported n || SyntaxPositionNative.supported n || bytes || vector || [`Nat.repr, `Nat.reprFast, `Int.repr].contains n || [`BitVec.toHex, `BitVec.instToString].contains n || n == `Nat.bitwise || ((word? n.getPrefix).isSome && (method == `pow || (method == `ofInt && bitsType n.getPrefix == n.getPrefix))) ||
     (n.getPrefix == `Int && [`negOfNat, `subNatNat, `sign, `toNat, `pow, `fdiv, `fmod, `bdiv, `bmod].contains method)
 
 private def bootstrapStringOp (n : Name) : Bool :=
@@ -128,7 +142,8 @@ public def supported (source : Environment) (owner name : Name) : Bool :=
     [`neg, `add, `sub, `mul, `decEq, `decLe, `decLt, `decNonneg, `natAbs, `ediv, `emod, `tdiv, `tmod, `divExact].contains method
   let primitive := ((word? name.getPrefix).isSome && name.getPrefix != `Char && (ops ++ widths).contains method) ||
     (name.getPrefix == `Bool && widths.contains method)
-  (owner == `OmegaInit.Data.String.Defs && defsStringFunction name) || isFloatCall source owner name ||
+  (owner == `OmegaInit.Data.String.Defs && defsStringFunction name) ||
+    (owner == `OmegaInit.Data.String.Basic && basicStringFunction name) || isFloatCall source owner name ||
     (owner == `OmegaInit.Data.ByteArray.Basic && ByteFoldNative.supported name) ||
     ([`OmegaInit.Grind.Ring.CommSolver, `OmegaInit.Data.Nat.Basic, `OmegaInit.Data.Nat.Div.Basic, `OmegaInit.Data.Nat.Lemmas,
     `OmegaInit.Data.RArray, `OmegaInit.Data.Nat.Internal.Linear, `OmegaInit.Data.Nat.Fold, `OmegaInit.Data.Fin.Lemmas].contains owner && IndexedNative.supported name) ||
@@ -167,6 +182,17 @@ private def checkFloatLayout (env : Environment) (name : Name) : IO Unit := do
       | throw <| IO.userError s!"floating-point bits have no strict representation in {n}"
     unless field.fieldIdx == 0 do throw <| IO.userError s!"unexpected floating-point field in {n}"
 
+private def checkSliceLayout (source strict : Environment) : IO Unit := do
+  for (env, ns) in [(source, Name.anonymous), (strict, `Omega)] do
+    for pos in [`String.Pos, `String.Pos.Raw] do
+      let some (some f) := impureTrivialStructureInfoExt.find? env (ns ++ pos)
+        | throw <| IO.userError s!"missing erased slice position {ns ++ pos}"
+      unless f.fieldIdx == 0 do throw <| IO.userError s!"incorrect slice offset field {ns ++ pos}"
+    let some l := ctorLayoutExt.find? env (ns ++ `String.Slice.mk) | throw <| IO.userError "missing slice layout"
+    let #[.object 0 _, .object 1 _, .object 2 _, .erased] := l.fieldInfo | throw <| IO.userError "unexpected slice fields"
+    unless l.ctorInfo.cidx == 0 && l.ctorInfo.size == 3 && l.ctorInfo.usize == 0 && l.ctorInfo.ssize == 0 do
+      throw <| IO.userError "unexpected slice constructor"
+
 /-- Check both sides of the call and generate its ownership conversions from their stored IR. -/
 public def wrapper (source strict : Environment) (n : Name) : IO String := do
   let official := n.replacePrefix `Omega .anonymous
@@ -174,7 +200,7 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
   if IndexedNative.supported official then return ← IndexedNative.wrapper source strict n (symbol n)
   if SyntaxPositionNative.supported official then return ← SyntaxPositionNative.wrapper source strict n (symbol n)
   let some ci := source.find? official | throw <| IO.userError s!"unknown word primitive {official}"
-  if bootstrapStringOp official || basicStringExtern official || defsStringFunction official then
+  if bootstrapStringOp official || basicStringExtern official || pinnedStringFunction official then
     let some strictInfo := strict.find? n | throw <| IO.userError s!"missing strict string operation {n}"
     unless strictInfo.type == InitKernelPort.translate InitKernelPort.portName ci.type do
       throw <| IO.userError s!"strict string input type differs at {n}"
@@ -216,7 +242,7 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
   let mut cleanup := ""
   let mut hasString := false
   let mut hasName := false
-  let passesErased := defsStringFunction official || official == `Int.trailingZeros.aux
+  let passesErased := pinnedStringFunction official || official == `Int.trailingZeros.aux
   for (a, b) in params.zip actual, i in [:params.size] do
     let .forallE _ dom body _ := type | throw <| IO.userError s!"expected argument {i} of {n}"
     type := body
@@ -247,6 +273,20 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
       prepare := prepare ++ s!"  lean_object *strings = omega_string_list_to_lean({arg});\n"
       unless b.borrow do cleanup := cleanup ++ s!"  lean_dec({arg});\n"
       args := args.push "strings"
+      continue
+    let charSeq := fun (t : Name) => mkApp (mkConst t [.zero]) (mkConst `Char)
+    if basicStringFunction official && (dom == charSeq `List || dom == charSeq `Array) then
+      let array := dom == charSeq `Array
+      unless a.ty == (if array then .object else .tobject) && b.ty == .tobject do throw <| IO.userError s!"incorrect character sequence ABI at {n}"
+      layout strict `Char
+      IndexedNative.checkDataTypes source strict [`List]
+      hasString := true
+      decls := decls.push ((if b.borrow then "b_lean_obj_arg " else "lean_obj_arg ") ++ arg)
+      let conversion := if array then s!"omega_char_array_to_lean({arg})" else s!"omega_map_list({arg}, omega_char_to_lean)"
+      prepare := prepare ++ s!"  lean_object *chars{i} = {conversion};\n"
+      args := args.push s!"chars{i}"
+      if a.borrow then cleanup := cleanup ++ s!"  lean_dec(chars{i});\n"
+      unless b.borrow do cleanup := cleanup ++ s!"  lean_dec({arg});\n"
       continue
     let byteSearch := official == `ByteArray.findIdx?.loop || official == `ByteArray.findFinIdx?.loop
     if (official == `Nat.bitwise && i == 0) || (byteSearch && i == 1) then
@@ -341,22 +381,14 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
       args := args.push s!"name{i}"
       cleanup := cleanup ++ s!"  lean_dec(name{i});\n"
       unless b.borrow do cleanup := cleanup ++ s!"  lean_dec({arg});\n"
-    else if dom == `String.Slice && a.ty == .object && b.ty == .object && a.borrow then
+    else if dom == `String.Slice && a.ty == .object && b.ty == .object then
       checkStrictString strict
-      for (env, ns) in [(source, Name.anonymous), (strict, `Omega)] do
-        for pos in [`String.Pos, `String.Pos.Raw] do
-          let some (some f) := impureTrivialStructureInfoExt.find? env (ns ++ pos)
-            | throw <| IO.userError s!"missing erased slice position {ns ++ pos}"
-          unless f.fieldIdx == 0 do throw <| IO.userError s!"incorrect slice offset field {ns ++ pos}"
-        let some l := ctorLayoutExt.find? env (ns ++ `String.Slice.mk) | throw <| IO.userError "missing slice layout"
-        let #[.object 0 _, .object 1 _, .object 2 _, .erased] := l.fieldInfo | throw <| IO.userError "unexpected slice fields"
-        unless l.ctorInfo.cidx == 0 && l.ctorInfo.size == 3 && l.ctorInfo.usize == 0 && l.ctorInfo.ssize == 0 do
-          throw <| IO.userError "unexpected slice constructor"
+      checkSliceLayout source strict
       hasString := true
       decls := decls.push ((if b.borrow then "b_lean_obj_arg " else "lean_obj_arg ") ++ arg)
       prepare := prepare ++ s!"  lean_object *slice{i} = omega_slice_to_lean({arg});\n"
       args := args.push s!"slice{i}"
-      cleanup := cleanup ++ s!"  lean_dec(slice{i});\n"
+      if a.borrow then cleanup := cleanup ++ s!"  lean_dec(slice{i});\n"
       unless b.borrow do cleanup := cleanup ++ s!"  lean_dec({arg});\n"
     else if [`String, `ByteArray].contains dom && a.ty == .object && b.ty == .tobject then
       checkStrictString strict
@@ -443,7 +475,8 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
     prepare := prepare ++ "  lean_object *closure = lean_alloc_closure((void *)omega_bitvec_to_string, 2, 1);\n"
     prepare := prepare ++ s!"  lean_closure_set(closure, 0, {call});\n"
     pure ("lean_obj_res", "closure")
-  else if dom == `Substring.Raw && ret == .object && result == .object then do
+  else if [`Substring.Raw, `String.Slice].contains dom && ret == .object && result == .object then do
+    if dom == `String.Slice then checkSliceLayout source strict
     hasString := true
     prepare := prepare ++ s!"  lean_object *native_slice = {call};\n"
     cleanup := cleanup ++ "  lean_dec(native_slice);\n"
@@ -459,14 +492,37 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
   else if dom == `List && official == `ByteArray.toList.loop && ret == .tobject && result == .tobject then do
     checkStrictString strict
     pure ("lean_obj_res", call)
-  else if [`String.get?, `String.Pos.Raw.get?].contains official then do
-    unless type == mkApp (mkConst `Option [.zero]) (mkConst `Char) && ret == .tobject && result == .tobject do
+  else if basicStringFunction official && [`Array, `List].contains dom then do
+    let array := dom == `Array
+    unless type == mkApp (mkConst dom [.zero]) (mkConst `Char) && ret == (if array then .object else .tobject) && result == .tobject do
+      throw <| IO.userError s!"incorrect character sequence result at {n}"
+    layout strict `Char
+    IndexedNative.checkDataTypes source strict [`List]
+    hasString := true
+    prepare := prepare ++ s!"  lean_object *chars = {call};\n"
+    cleanup := cleanup ++ "  lean_dec(chars);\n"
+    pure ("lean_obj_res", if array then "omega_char_array_from_lean(chars)" else "omega_map_list(chars, omega_char_from_lean)")
+  else if dom == `Option && (basicStringFunction official || basicStringExtern official) &&
+      [`Char, `Array].contains (type.getArg! 0).getAppFn.constName then do
+    let payload := type.getArg! 0
+    let scalar := payload == mkConst `Char
+    unless (scalar || payload == mkApp (mkConst `Array [.zero]) (mkConst `Char)) && ret == .tobject && result == .tobject do
       throw <| IO.userError s!"incorrect optional character ABI at {n}"
     layout strict `Char
     IndexedNative.checkDataTypes source strict [`Option]
     hasString := true
     prepare := prepare ++ s!"  lean_object *optional = {call};\n"
-    pure ("lean_obj_res", "omega_optional_char_from_lean(optional)")
+    pure ("lean_obj_res", "omega_optional_from_lean(optional, " ++ (if scalar then "omega_char_from_lean)" else "omega_char_array_from_lean)"))
+  else if dom == `Option && basicStringFunction official then do
+    let pos := type.getArg! 0 |>.getAppFn.constName
+    unless [`String.Pos, `String.Slice.Pos].contains pos && ret == .tobject && result == .tobject do
+      throw <| IO.userError s!"incorrect optional position ABI at {n}"
+    for (env, ns) in [(source, Name.anonymous), (strict, `Omega)] do
+      for t in [pos, `String.Pos.Raw] do
+        let some (some f) := impureTrivialStructureInfoExt.find? env (ns ++ t) | throw <| IO.userError s!"missing position {t}"
+        unless f.fieldIdx == 0 do throw <| IO.userError s!"invalid offset layout at {t}"
+    IndexedNative.checkDataTypes source strict [`Option]
+    pure ("lean_obj_res", call)
   else if dom == `Option && [`ByteArray.findIdx?.loop, `ByteArray.findFinIdx?.loop].contains official &&
       ret == .tobject && result == .tobject then do
     layout strict `Fin
@@ -480,7 +536,7 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
   else if dom == `BitVec && ret == .tobject && result == .tobject then do
     layout strict dom
     pure ("lean_obj_res", call)
-  else if [`String.Pos.Raw, `String.Pos].contains dom && (ret == .tobject || ret == .tagged) && result == .tobject then do
+  else if [`String.Pos.Raw, `String.Pos, `String.Slice.Pos].contains dom && (ret == .tobject || ret == .tagged) && result == .tobject then do
     let some (some field) := impureTrivialStructureInfoExt.find? strict (`Omega ++ dom) | throw <| IO.userError "missing raw position"
     unless field.fieldIdx == 0 do throw <| IO.userError "invalid raw position layout"
     pure ("lean_obj_res", call)
