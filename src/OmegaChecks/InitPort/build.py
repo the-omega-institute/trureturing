@@ -86,6 +86,12 @@ def compile_state_runtime(stage, product, artifact, inventory, tool, filename, r
         return
     native = product / "native"
     native.mkdir(exist_ok=True)
+    if tool == "Promise":
+        pinned = stage / "promise-result-d.c"
+        run("lean", "-R", HERE, "-c", pinned, HERE / "PromiseResultD.lean")
+        pinned_object = native / "promise-result-d.o"
+        run("leanc", "-DLEAN_EXPORTING", "-I", stage, "-c", HERE / "promise_result_d.c", "-o", pinned_object)
+        extra_sources = [*extra_sources, pinned_object]
     obj = native / (filename + ".o")
     run("leanc", "-DLEAN_EXPORTING", "-c", bridge, "-o", obj)
     with inventory.open() as stream:
@@ -183,7 +189,7 @@ def generate(stage, product, seed, roots, excluded):
                               {"Init.System.ST": {"ST.Prim.mkRef"}})
     if "OmegaInit.System.Promise" in graph:
         compile_state_runtime(stage, product, artifact, inventory, "Promise", "promise", {
-            "Init.System.Promise": {"IO.Promise.new", "IO.Promise.resolve", "IO.Promise.isResolved", "IO.Promise.result?"},
+            "Init.System.Promise": {"IO.Promise.new", "IO.Promise.resolve", "IO.Promise.isResolved", "IO.Promise.result?", "IO.Promise.resultD"},
             "Init.Core": {"Task.pure", "Task.get", "Task.map", "Task.bind"},
         }, [raw_task])
     with (product / "audit.txt").open("w") as log:

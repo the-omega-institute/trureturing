@@ -28,7 +28,7 @@ example (a : α) (b : β) : Omega.Eq (Prod.fst (Prod.mk a b)) a := Omega.rfl
 
 这个独立制品用于内核类型检查、证明和定义归约。生成器复制已移植结构的字段顺序、父结构和投影信息，并登记已有的类型类实例。普通导入支持用 `{ fst := a, snd := b }` 构造积、用 `{ p with snd := b }` 更新字段。声明覆盖率按内核接口计数。原生可执行代码、语法扩展和完整实例搜索行为仍待核验。
 
-若选定模块闭包包含 `Init.System.Promise`，生成器为已移植的 `Omega.IO.Promise.new`、`Omega.IO.Promise.resolve` 和 `Omega.IO.Promise.isResolved` 生成原生入口。将消费者编译成 C 后，可用 `leanc` 在链接时传入输出目录中的 `native/promise.o`。这些入口调用钉版 Lean 运行时，并将返回值和严格库的世界状态装入 `Omega.ST.Out`。构建会编译独立消费者，验证两枚 Promise 分别兑现、兑现前后的状态、重复兑现保留首次值，以及丢弃未兑现的句柄后，官方结果任务给出 `none`。`Omega.IO.Promise.result?` 的原生入口仍需适配 `Omega.Task` 的消去。
+若选定模块闭包包含 `Init.System.Promise`，生成器为已移植的 `Omega.IO.Promise.new`、`resolve`、`isResolved`、`result?` 和 `resultD` 生成原生入口。将消费者编译成 C 后，用 `leanc` 链接输出目录中的 `native/promise.o`。使用 `resultD` 时同时链接 `native/promise-result-d.o`，其中的回调由钉版官方 Lean 定义编译。普通消费者可在兑现前取得结果任务。兑现后，字段投影、模式匹配和内核原始投影都读取第一次兑现的值。释放最后一个未兑现句柄后，`result?` 返回 `none`，`resultD` 返回传入的默认值。
 
 严格库用私有、不可计算的句柄构造 `ST.Prim.mkRef`，并保留公开的 `ST.RefPointed` 封装。构建 `Init.System.ST` 时，`native/reference.o` 提供对应的原生分配入口。消费程序验证两个引用保存各自的初始值、修改其中一个后另一个的值，以及传入世界状态的返回。读取和交换的运行时测试调用钉版 Lean 的原生函数。
 

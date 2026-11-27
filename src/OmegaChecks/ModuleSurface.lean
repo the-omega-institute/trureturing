@@ -107,6 +107,7 @@ private def checkElaboration (env : Environment) (owner : Name) (idx : ModuleIdx
       | `Omega.ST.Prim.mkRef => pure (`OmegaInit.System.ST, "omega_st_mk_ref")
       | `Task.pure => pure (`OmegaInit.Core, "lean_task_pure")
       | `Task.get => pure (`OmegaInit.Core, "lean_task_get_own")
+      | `Omega.IO.Promise.resultD => pure (`OmegaInit.System.Promise, "omega_io_promise_result_d")
       | `Omega.IO.Promise.result? => pure (`OmegaInit.System.Promise, "lean_io_promise_result_opt")
       | `Omega.IO.Promise.new => pure (`OmegaInit.System.Promise, "omega_io_promise_new")
       | `Omega.IO.Promise.resolve => pure (`OmegaInit.System.Promise, "omega_io_promise_resolve")

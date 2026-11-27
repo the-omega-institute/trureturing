@@ -17,6 +17,9 @@ public import OmegaInit.System.Promise
 @[export omega_smoke_result] public def result {α : Type} (p : Omega.IO.Promise α) :
     Omega.Task (Omega.Option α) := p.result?
 
+@[export omega_smoke_default] public def resultD {α : Type} (p : Omega.IO.Promise α) (fallback : α) :
+    Omega.Task α := p.resultD fallback
+
 @[export omega_smoke_task_get] public def read {α : Type} (task : Omega.Task α) : α := task.get
 
 @[export omega_smoke_task_pattern] public def readPattern {α : Type} (task : Omega.Task α) : α :=

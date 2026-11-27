@@ -20,6 +20,8 @@ private def allocationSymbol := "omega_io_promise_new"
 private def resolutionSymbol := "omega_io_promise_resolve"
 private def resolved := `Omega.IO.Promise.isResolved
 private def result := `Omega.IO.Promise.result?
+private def resultD := `Omega.IO.Promise.resultD
+private def resultDSymbol := "omega_io_promise_result_d"
 private def resultSymbol := "lean_io_promise_result_opt"
 private def resolvedSymbol := "omega_io_promise_is_resolved"
 
@@ -40,17 +42,17 @@ public unsafe def install (lib output : System.FilePath) : IO Unit := do
   searchPathRef.set [lib]
   let imports := #[{module := owner : Import}]
   let env ← importModules imports {}
-  unless [allocation, resolution, resolved, result].any env.contains do return
+  unless [allocation, resolution, resolved, result, resultD].any env.contains do return
   installStateLayout lib env
   let env ← importModules imports {}
   let some (.inductInfo prom) := env.find? `Omega.IO.Promise | throw <| IO.userError "missing promise type"
   let mut names := #[prom.name] ++ prom.ctors.toArray
-  for n in #[allocation, resolution, resolved, result] do
+  for n in #[allocation, resolution, resolved, result, resultD] do
     if env.contains n then names := names.push n
   let contextEnv ← localEnv env owner names
   let compiled ← compile contextEnv do
     (← compileDeclsRef.get) #[prom.name] {}
-    for (n, symbol) in #[ (allocation, allocationSymbol), (resolution, resolutionSymbol), (resolved, resolvedSymbol), (result, resultSymbol)] do
+    for (n, symbol) in #[ (allocation, allocationSymbol), (resolution, resolutionSymbol), (resolved, resolvedSymbol), (result, resultSymbol), (resultD, resultDSymbol)] do
       unless (← getEnv).contains n do continue
       modifyEnv fun e => externAttr.ext.addEntry (asyncDecl := n) e (n, ⟨[.standard `all symbol]⟩)
       (← compileDeclsRef.get) #[n] {}
@@ -67,6 +69,8 @@ public unsafe def install (lib output : System.FilePath) : IO Unit := do
     verify compiled resolved #[(.erased, false), (.tobject, false), (.tobject, false)] .object resolvedSymbol
   if compiled.contains result then
     verify compiled result #[(.erased, false), (.tobject, true)] .object resultSymbol
+  if compiled.contains resultD then
+    verify compiled resultD #[(.erased, false), (.tobject, false), (.tobject, false)] .object resultDSymbol
   writeCode lib owner compiled (layouts ++ codeExtensions)
   emitBridge compiled owner "src/OmegaChecks/InitPort/promise_runtime.c" output
 
