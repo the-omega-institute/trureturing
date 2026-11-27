@@ -168,6 +168,15 @@ public def slicedLookup (x y : Omega.Bool) : Omega.Bool :=
   let tail := xs.extract one (.succ two)
   Omega.strictAnd (@Omega.Decidable.decide _ (Omega.Nat.decEq tail.size one)) (tail.getD .zero .false)
 
+public def listEqual (x y : Omega.Bool) : Omega.Bool :=
+  let xs := Omega.List.cons x (Omega.List.cons y Omega.List.nil)
+  let ys := Omega.List.cons y (Omega.List.cons x Omega.List.nil)
+  @Omega.Decidable.decide _ (@Omega.instDecidableEqList Omega.Bool Omega.instDecidableEqBool xs ys)
+
+public def optionalListEmpty (x y : Omega.Bool) : Omega.Bool :=
+  let xs := Omega.Bool.casesOn (motive := fun _ => Omega.List Omega.Bool) x .nil (.cons y .nil)
+  @Omega.Decidable.decide _ (Omega.List.instDecidableNilEq xs)
+
 public def disjunction (x y : Omega.Bool) : Omega.Bool := Omega.strictOr x y
 public def conjunction (x y : Omega.Bool) : Omega.Bool := Omega.strictAnd x y
 "
@@ -200,7 +209,8 @@ unsafe def main (args : List String) : IO Unit := do
       (`boundedLess, fun x y => !x && y), (`bitConjunction, and), (`word8Less, fun x y => !x && y),
       (`word16Equal, BEq.beq), (`word32Le, fun x y => !x || y), (`word64Equal, BEq.beq),
       (`byteBufferSecond, second), (`updatedLookup, second), (`outsideLookup, second),
-      (`slicedLookup, second), (`disjunction, or), (`conjunction, and)]
+      (`slicedLookup, second), (`listEqual, BEq.beq), (`optionalListEmpty, fun x _ => !x),
+      (`disjunction, or), (`conjunction, and)]
     for (name, expected) in checks do
       let some ci := env.find? name | throw <| IO.userError s!"missing {name}"
       unless Kernel.isDefEqGuarded env {} ci.type arity do throw <| IO.userError s!"invalid type of {name}"

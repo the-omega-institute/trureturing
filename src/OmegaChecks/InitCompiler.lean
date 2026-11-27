@@ -30,6 +30,19 @@ private def sourceGroup (src : Environment) (owner name : Name) : CoreM (Declara
     types := {name := omegaName n, type := ← ofExcept (translateProofTerm src i.type), ctors := fields} :: types
   return (.inductDecl target.levelParams target.numParams types.reverse false, ctors)
 
+/-- The equation compiler can place a generated proof under the original function even when
+a nested worker consumes it. Follow only its own implementation declarations. -/
+private partial def referencesHelper (src : Environment) (root target : Name) (pending : List Name)
+    (visited : NameSet := {}) : Bool :=
+  match pending with
+  | [] => false
+  | name :: rest => Id.run do
+    if name == target then return true
+    if visited.contains name then return referencesHelper src root target rest visited
+    let used := (src.find? name >>= (·.value? (allowOpaque := true))).map (·.getUsedConstants)
+    let localNames := (used.getD #[]).toList.filter root.isPrefixOf
+    return referencesHelper src root target (localNames ++ rest) (visited.insert name)
+
 private def officialDeclaration (stx : Syntax) : CommandElabM (Environment × ConstantInfo) := do
   let moduleName ← getMainModule
   unless moduleName.getRoot == `OmegaInit do throwError "expected an OmegaInit module"
@@ -42,9 +55,9 @@ private def officialDeclaration (stx : Syntax) : CommandElabM (Environment × Co
   unless src.header.moduleNames[idx]! == owner do throwErrorAt stx "expected a declaration from {owner}"
   let some info := src.find? name | throwErrorAt stx "missing upstream declaration"
   if name.isInternalOrNum then
-    let some parent := src.find? name.getPrefix | throwErrorAt stx "missing the enclosing official definition"
-    let some body := parent.value? (allowOpaque := true) | throwErrorAt stx "missing the enclosing official body"
-    unless body.getUsedConstants.contains name do throwErrorAt stx "expected an official implementation dependency"
+    let parent := name.getPrefix
+    unless (src.find? parent).isSome && referencesHelper src parent name [parent] do
+      throwErrorAt stx "expected an official implementation dependency"
   if info.isAxiom || info.isUnsafe || info.isPartial then throwErrorAt stx "inadmissible declaration"
   return (src, info)
 
@@ -183,11 +196,13 @@ before the root PUnit used by Lean's ordinary structure elaborator is available.
       let elim := mkIdentFrom id (ctor ++ `elim)
       elabCommand (← `(command| port_definition $elim:ident with_native_code))
 
-private def forallNatConstructors (check : Expr → MetaM Bool) : MetaM Bool := do
-  let .inductInfo nat ← getConstInfo `Omega.Nat | return false
-  unless nat.ctors == [`Omega.Nat.zero, `Omega.Nat.succ] do return false
-  for tag in nat.ctors do
-    let ctor := mkConst tag
+private def forallConstructors (type : Expr) (check : Expr → MetaM Bool) : MetaM Bool := do
+  let type ← Meta.whnf type
+  let .const family us := type.getAppFn | return false
+  let .inductInfo ind ← getConstInfo family | return false
+  unless ind.numIndices == 0 && ind.numParams == type.getAppNumArgs do return false
+  for tag in ind.ctors do
+    let ctor := mkAppN (mkConst tag us) type.getAppArgs
     unless ← Meta.forallTelescope (← Meta.inferType ctor) (fun fields _ => check (mkAppN ctor fields)) do
       return false
   return true
@@ -201,7 +216,7 @@ private def checkFinEquations (fn body : Expr) (args : Array Expr) (index : Expr
   let some (.inductInfo fin) := env.find? `Omega.Fin | return false
   unless fin.ctors == [`Omega.Fin.mk] do return false
   let ctor := mkApp (mkConst `Omega.Fin.mk) ty.getAppArgs[0]!
-  forallNatConstructors fun val => do
+  forallConstructors (mkConst `Omega.Nat) fun val => do
     let partialCtor := mkApp ctor val
     Meta.forallTelescope (← Meta.inferType partialCtor) fun proofs _ => do
       let #[h] := proofs | return false
@@ -241,8 +256,8 @@ private def checkConstructorEquations (name : Name) (levelParams : List Name) (t
           if ← compare (args ++ suffix) then return
           if let #[index] := suffix then
             if ← checkFinEquations fn body args index then return
-          if remaining.isForall && (← Meta.whnf remaining.bindingDomain!).isConstOf `Omega.Nat then
-            if ← forallNatConstructors (fun val =>
+          if remaining.isForall then
+            if ← forallConstructors remaining.bindingDomain! (fun val =>
               Meta.forallTelescope (remaining.bindingBody!.instantiate1 val) fun tail _ =>
                 compare ((args.push val) ++ tail)) then return
           throwError "recursive equation does not match {name} at {ctorName}"

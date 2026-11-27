@@ -932,3 +932,28 @@ port_definition Array.extract.loop._f
 port_definition Array.extract.loop
 port_structural_code Array.extract.loop on_arg 3
 port_definition Array.extract with_native_code
+
+port_definition List.beq.match_1 with_native_code
+port_definition List.beq._f
+port_definition List.beq
+port_structural_code List.beq on_arg 3
+port_definition List.hasDecEq.go.match_3
+port_definition List.noConfusionType
+port_definition List.noConfusion
+port_definition List.hasDecEq.go.match_1
+port_proof List.hasDecEq._proof_1
+port_definition List.hasDecEq.go._f
+port_proof List.hasDecEq.go
+port_definition List.hasDecEq with_native_code
+port_proof instDecidableEqList._proof_1
+port_proof instDecidableEqList._proof_2
+port_proof instDecidableEqList._proof_3
+port_definition instDecidableEqList.match_5 with_native_code
+port_definition decEq with_native_code
+port_definition instDecidableEqList.match_3 with_native_code
+port_proof instDecidableEqList._proof_4
+port_proof instDecidableEqList._proof_5
+port_proof instDecidableEqList._proof_6
+port_definition instDecidableEqList with_native_code
+port_definition List.instDecidableEqNil with_native_code
+port_definition List.instDecidableNilEq with_native_code
