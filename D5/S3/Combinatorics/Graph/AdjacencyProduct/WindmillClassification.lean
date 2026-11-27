@@ -1,0 +1,189 @@
+/- GID: D5/S3/Combinatorics/Graph/AdjacencyProduct/WindmillClassification
+   generality: I
+   mirror-B: D5/B/S3/Combinatorics/Graph/AdjacencyProduct/WindmillClassification
+   mirror-E: none(waiver:unbounded-symbolic-proof)
+   anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.AdjMatrix, mathlib/module/Mathlib.Combinatorics.SimpleGraph.DegreeSum, mathlib/module/Mathlib.Data.ZMod.Basic]
+   utility: none
+   digest: Classification of ordinary adjacency matrix products for windmill graphs. -/
+
+import Mathlib.Combinatorics.SimpleGraph.AdjMatrix
+import Mathlib.Combinatorics.SimpleGraph.DegreeSum
+import Mathlib.Data.ZMod.Basic
+import OmegaBuild.Commands
+
+compile_only_with_mathlib
+
+/-! Windmill adjacency-matrix factorization (arXiv:2512.24864v1, Section 5, item 1).
+The complete-graph criterion is due to Maghsoudi, Miraftab and Suda
+(arXiv:2312.08615v1, Theorem 1.2). -/
+
+namespace D5.S3.Combinatorics.Graph.AdjacencyProduct.WindmillClassification
+
+open SimpleGraph Matrix
+open scoped BigOperators
+
+/-- The hub is `none`. Each `some (i, j)` belongs to blade `i`. -/
+def windmill (d t : ℕ) : SimpleGraph (Option (Fin d × Fin (t - 1))) where
+  Adj x y :=
+    match x, y with
+    | none, none => False
+    | none, some _ | some _, none => True
+    | some x, some y => x.1 = y.1 ∧ x.2 ≠ y.2
+  symm := by
+    rintro (_ | x) (_ | y) h
+    · exact h
+    · trivial
+    · trivial
+    · exact ⟨h.1.symm, Ne.symm h.2⟩
+  loopless := by
+    rintro (_ | x) h
+    · exact h
+    · exact h.2 rfl
+
+open scoped Classical
+
+private theorem reverse_product {V : Type} [Fintype V] {A B C : SimpleGraph V}
+    (h : B.adjMatrix ℤ * C.adjMatrix ℤ = A.adjMatrix ℤ) :
+    C.adjMatrix ℤ * B.adjMatrix ℤ = A.adjMatrix ℤ := by
+  simpa only [transpose_mul, transpose_adjMatrix] using congrArg Matrix.transpose h
+
+private theorem commute_product {V : Type} [Fintype V] {A B C : SimpleGraph V}
+    (h : B.adjMatrix ℤ * C.adjMatrix ℤ = A.adjMatrix ℤ) :
+    B.adjMatrix ℤ * A.adjMatrix ℤ = A.adjMatrix ℤ * B.adjMatrix ℤ := by
+  conv_lhs => rw [← reverse_product h]
+  conv_rhs => rw [← h]
+  exact (Matrix.mul_assoc _ _ _).symm
+
+private theorem product_entry {V : Type} [Fintype V] (B C : SimpleGraph V) (x y : V) :
+    (B.adjMatrix ℤ * C.adjMatrix ℤ) x y =
+      ((B.neighborFinset x).filter (fun z ↦ C.Adj z y)).card := by
+  rw [adjMatrix_mul_apply]
+  simp only [adjMatrix_apply]
+  exact (Finset.natCast_card_filter _ _).symm
+
+private theorem hub_neighbor_in_blade {d t : ℕ}
+    {B C : SimpleGraph (Option (Fin d × Fin (t - 1)))}
+    (h : B.adjMatrix ℤ * C.adjMatrix ℤ = (windmill d t).adjMatrix ℤ)
+    (i : Fin d) (j : Fin (t - 1)) :
+    ∃ k : Fin (t - 1), B.Adj (some (i, k)) none := by
+  let v : Option (Fin d × Fin (t - 1)) := some (i, j)
+  have hone : (B.adjMatrix ℤ * C.adjMatrix ℤ) v none = 1 := by
+    rw [h]
+    simp [v, windmill]
+  rw [product_entry] at hone
+  have hcard : ((B.neighborFinset v).filter (fun z ↦ C.Adj z none)).card = 1 := by
+    exact_mod_cast hone
+  obtain ⟨z, hz⟩ := Finset.card_pos.mp (show 0 < _ from hcard.symm ▸ Nat.zero_lt_one)
+  obtain ⟨hzB, hzC⟩ := Finset.mem_filter.mp hz
+  cases z with
+  | none => exact (C.loopless _ hzC).elim
+  | some z =>
+    have hcomm := congrFun (congrFun (commute_product h) v) none
+    rw [product_entry, product_entry] at hcomm
+    have hpos : 0 < ((B.neighborFinset v).filter (fun w ↦ (windmill d t).Adj w none)).card :=
+      Finset.card_pos.mpr ⟨some z, Finset.mem_filter.mpr ⟨hzB, trivial⟩⟩
+    have hcast : (0 : ℤ) <
+        (((B.neighborFinset v).filter (fun w ↦ (windmill d t).Adj w none)).card : ℤ) := by
+      exact_mod_cast hpos
+    rw [hcomm] at hcast
+    have hpos' : 0 < (((windmill d t).neighborFinset v).filter (fun w ↦ B.Adj w none)).card := by
+      exact_mod_cast hcast
+    obtain ⟨w, hw⟩ := Finset.card_pos.mp hpos'
+    obtain ⟨hwW, hwB⟩ := Finset.mem_filter.mp hw
+    cases w with
+    | none => exact (B.loopless _ hwB).elim
+    | some w =>
+      have hiw : i = w.1 := (mem_neighborFinset.mp hwW).1
+      exact ⟨w.2, by rcases w with ⟨l, k⟩; change i = l at hiw; simpa [hiw] using hwB⟩
+
+private theorem one_blade_of_product {d t : ℕ} (hd : 1 ≤ d) (ht : 3 ≤ t)
+    {B C : SimpleGraph (Option (Fin d × Fin (t - 1)))}
+    (h : B.adjMatrix ℤ * C.adjMatrix ℤ = (windmill d t).adjMatrix ℤ) : d = 1 := by
+  by_contra hne
+  let i : Fin d := ⟨0, by omega⟩
+  let l : Fin d := ⟨1, by omega⟩
+  let j : Fin (t - 1) := ⟨0, by omega⟩
+  have hil : i ≠ l := by intro he; have := congrArg Fin.val he; simp [i, l] at this
+  obtain ⟨x, hx⟩ := hub_neighbor_in_blade h i j
+  obtain ⟨y, hy⟩ := hub_neighbor_in_blade (reverse_product h) l j
+  have hpos : 0 < ((B.neighborFinset (some (i, x))).filter
+      (fun z ↦ C.Adj z (some (l, y)))).card :=
+    Finset.card_pos.mpr ⟨none, Finset.mem_filter.mpr ⟨mem_neighborFinset.mpr hx, C.symm hy⟩⟩
+  have hzero : (B.adjMatrix ℤ * C.adjMatrix ℤ) (some (i, x)) (some (l, y)) = 0 := by
+    rw [h]
+    simp [windmill, hil]
+  rw [product_entry] at hzero
+  exact (Nat.ne_of_gt hpos) (by exact_mod_cast hzero)
+
+private theorem one_blade_complete (t : ℕ) :
+    windmill 1 t = ⊤ := by
+  ext (_ | x) (_ | y)
+  · simp [windmill]
+  · simp [windmill]
+  · simp [windmill]
+  · rcases x with ⟨i, x⟩
+    rcases y with ⟨j, y⟩
+    simp [windmill, Subsingleton.elim i j]
+
+private theorem degree_eq_of_complete_product {V : Type} [Fintype V] {B C : SimpleGraph V}
+    (h : B.adjMatrix ℤ * C.adjMatrix ℤ = (⊤ : SimpleGraph V).adjMatrix ℤ) (x y : V) :
+    B.degree x = B.degree y := by
+  have hc := commute_product h
+  rw [adjMatrix_completeGraph_eq_of_one_sub_one, Matrix.mul_sub, Matrix.sub_mul,
+    Matrix.mul_one, Matrix.one_mul, sub_left_inj] at hc
+  have he := congrFun (congrFun hc x) y
+  have hcast : (B.degree x : ℤ) = B.degree y := by
+    simpa [adjMatrix_mul_apply, mul_adjMatrix_apply] using he
+  exact_mod_cast hcast
+
+private theorem even_degree_of_complete_product {V : Type} [Fintype V] {B C : SimpleGraph V}
+    (h : B.adjMatrix ℤ * C.adjMatrix ℤ = (⊤ : SimpleGraph V).adjMatrix ℤ) (x : V) :
+    Even (B.degree x) := by
+  let H := C.induce (B.neighborSet x)
+  have hdegree (y : B.neighborSet x) : H.degree y = 1 := by
+    have hxy : x ≠ y.val := B.ne_of_adj y.property
+    have hentry : (B.adjMatrix ℤ * C.adjMatrix ℤ) x y.val = 1 := by
+      rw [h]
+      simp [hxy]
+    have hcount : ((B.neighborFinset x).filter (fun z ↦ C.Adj z y.val)).card = 1 := by
+      rw [product_entry] at hentry
+      exact_mod_cast hentry
+    rw [← card_neighborSet_eq_degree, ← hcount]
+    let e : H.neighborSet y ≃
+        ((B.neighborFinset x).filter (fun z ↦ C.Adj z y.val) : Finset V) :=
+      { toFun := fun z ↦ ⟨z.val.val, Finset.mem_filter.mpr
+          ⟨mem_neighborFinset.mpr z.val.property, C.symm z.property⟩⟩
+        invFun := fun z ↦ ⟨⟨z.val, mem_neighborFinset.mp (Finset.mem_filter.mp z.property).1⟩,
+          C.symm (Finset.mem_filter.mp z.property).2⟩
+        left_inv := fun _ ↦ rfl
+        right_inv := fun _ ↦ rfl }
+    simpa only [Fintype.card_coe] using Fintype.card_congr e
+  have hsum := H.sum_degrees_eq_twice_card_edges
+  simp only [hdegree, Finset.sum_const, Finset.card_univ, nsmul_eq_mul, mul_one,
+    card_neighborSet_eq_degree] at hsum
+  exact ⟨H.edgeFinset.card, by omega⟩
+
+private theorem complete_card_mod_four {V : Type} [Fintype V] {B C : SimpleGraph V}
+    (h : B.adjMatrix ℤ * C.adjMatrix ℤ = (⊤ : SimpleGraph V).adjMatrix ℤ) (x : V) :
+    Fintype.card V % 4 = 1 := by
+  have hrow (z : V) : ∑ y : V, C.adjMatrix ℤ z y = (C.degree x : ℤ) := by
+    simp only [adjMatrix_apply, Finset.sum_boole, ← neighborFinset_eq_filter,
+      card_neighborFinset_eq_degree, degree_eq_of_complete_product (reverse_product h) z x]
+  have htop : ∑ y : V, (⊤ : SimpleGraph V).adjMatrix ℤ x y = (Fintype.card V - 1 : ℕ) := by
+    simp [adjMatrix_apply, Finset.sum_boole, ← neighborFinset_eq_filter]
+  have hprod : ((B.degree x : ℤ) * (C.degree x : ℤ)) = (Fintype.card V - 1 : ℕ) := by
+    calc
+      (B.degree x : ℤ) * (C.degree x : ℤ) =
+          ∑ z ∈ B.neighborFinset x, ∑ y : V, C.adjMatrix ℤ z y := by simp [hrow]
+      _ = ∑ y : V, (B.adjMatrix ℤ * C.adjMatrix ℤ) x y := by
+        simp only [adjMatrix_mul_apply]
+        rw [Finset.sum_comm]
+      _ = _ := by rw [h, htop]
+  obtain ⟨b, hb⟩ := even_degree_of_complete_product h x
+  obtain ⟨c, hc⟩ := even_degree_of_complete_product (reverse_product h) x
+  have hp : B.degree x * C.degree x = Fintype.card V - 1 := by exact_mod_cast hprod
+  have hn : 0 < Fintype.card V := Fintype.card_pos_iff.mpr ⟨x⟩
+  have hm : Fintype.card V - 1 = 4 * (b * c) := by rw [← hp, hb, hc]; ring
+  omega
+
+end D5.S3.Combinatorics.Graph.AdjacencyProduct.WindmillClassification
