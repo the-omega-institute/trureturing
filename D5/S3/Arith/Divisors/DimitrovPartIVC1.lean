@@ -1,7 +1,7 @@
 /- GID: D5/S3/Arith/Divisors/DimitrovPartIVC1
    generality: I
    mirror-B: D5/B/S3/Arith/Divisors/DimitrovPartIVC1
-   mirror-E: none(waiver:probe)
+   mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
    utility: none
    digest: Complete Part IV Conjecture 1 via the cubic ratio bound. -/

@@ -96,7 +96,7 @@ identify the unchanged original event, mathematically settled at
 | Declaration | proof_shape | escape_witness | Admission or consumer |
 | --- | --- | --- | --- |
 | claim | bind-only definition | none | Exact original proposition, consumed by result |
-| cubic_ratio_bound (private) | bind-only | none | Consumed by result |
+| cubic_ratio_bound | bind-only | none | Consumed by C4 result and DimitrovPartIVC1.result |
 | result | bind-only | none | open-problem-resolution, original preregistration |
 
 Utility is `none`: this is an unbounded symbolic inequality, without a finite
@@ -113,8 +113,7 @@ altered left side is $3$, while the unchanged right side is $17/4$.
 This witnesses whole-family intervention and sensitivity, not failure of the
 original conjecture. Actual totient observations differ at $2$ and $3$.
 The continuation is unknown and asserts neither undecidability nor
-inexhaustibility. Only the public `result` is a theorem audit target; the
-consumed private helper is not a fabricated public target.
+inexhaustibility. The existing C4 registration applies to `result`.
 The Scribe attaches `OpenProblemResolutionClaim` with `ResolutionKind.Proved`
 to the exact result and this dossier.
 
