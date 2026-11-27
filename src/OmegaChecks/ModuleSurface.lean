@@ -119,6 +119,8 @@ private def checkElaboration (env full : Environment) (reference? : Option Envir
       | `Omega.IO.Process.getCurrentDir => pure (`OmegaInit.System.IO, "omega_io_process_get_current_dir")
       | `Omega.IO.Process.setCurrentDir => pure (`OmegaInit.System.IO, "omega_io_process_set_current_dir")
       | `Omega.System.FilePath.readDir => pure (`OmegaInit.System.IO, "omega_io_read_dir")
+      | `Omega.IO.getRandomBytes => pure (`OmegaInit.System.IO, "omega_io_random_bytes")
+      | `Omega.IO.Prim.setAccessRights => pure (`OmegaInit.System.IO, "omega_io_set_access_rights")
       | `Omega.IO.FS.Handle.mk => pure (`OmegaInit.System.IO, "omega_io_handle_mk")
       | `Omega.IO.FS.Handle.lock => pure (`OmegaInit.System.IO, "omega_io_handle_lock")
       | `Omega.IO.FS.Handle.tryLock => pure (`OmegaInit.System.IO, "omega_io_handle_try_lock")

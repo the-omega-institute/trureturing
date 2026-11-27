@@ -192,4 +192,18 @@ LEAN_EXPORT lean_obj_res omega_io_handle_read(b_lean_obj_arg handle, lean_obj_ar
     size_t size = lean_usize_of_nat_mk(count);
     return strict_result(lean_io_prim_handle_read(handle, size), world, from_byte_array);
 }
+extern lean_obj_res lean_io_get_random_bytes(size_t);
+extern lean_obj_res lean_chmod(b_lean_obj_arg, uint32_t);
+
+LEAN_EXPORT lean_obj_res omega_io_random_bytes(lean_obj_arg count, lean_obj_arg world) {
+    return strict_result(lean_io_get_random_bytes(lean_usize_of_nat_mk(count)), world, from_byte_array);
+}
+
+LEAN_EXPORT lean_obj_res omega_io_set_access_rights(b_lean_obj_arg path, lean_obj_arg mode, lean_obj_arg world) {
+    lean_object *native = omega_string_to_lean(path);
+    lean_object *result = lean_chmod(native, lean_uint32_of_nat(mode));
+    lean_dec(mode);
+    lean_dec(native);
+    return strict_result(result, world, strict_unit);
+}
 #endif

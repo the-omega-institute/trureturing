@@ -6,7 +6,10 @@ meta import OmegaChecks.InitPort.NativeState
 
 open Lean Compiler.LCNF OmegaChecks.InitPort.NativeState
 
-private def entries := #[(`IO.getEnv, "lean_io_getenv", "omega_io_get_env"),
+private def entries := #[
+  (`IO.getRandomBytes, "lean_io_get_random_bytes", "omega_io_random_bytes"),
+  (`IO.Prim.setAccessRights, "lean_chmod", "omega_io_set_access_rights"),
+  (`IO.getEnv, "lean_io_getenv", "omega_io_get_env"),
   (`IO.FS.createDir, "lean_io_create_dir", "omega_io_create_dir"),
   (`IO.FS.removeDir, "lean_io_remove_dir", "omega_io_remove_dir"),
   (`IO.FS.removeFile, "lean_io_remove_file", "omega_io_remove_file"),
@@ -83,7 +86,7 @@ public unsafe def main (args : List String) : IO Unit := do
   let readDir := roots.any fun (n, _, _) => n == `System.FilePath.readDir
   let dicts := [`Omega.Fin, `Omega.BitVec, `Omega.UInt8, `Omega.Array, `Omega.ByteArray, `Omega.String] ++
     (if fs then [`Omega.UInt32, `Omega.System.FilePath] else []) ++
-    (if roots.any (fun (n, _, _) => n == `IO.FS.Handle.read) then [`Omega.USize] else [])
+    (if roots.any (fun (n, _, _) => n == `IO.FS.Handle.read || n == `IO.getRandomBytes) then [`Omega.USize] else [])
   if !ir then
     for n in dicts ++ [`Omega.Option, `Omega.List, `Omega.ST.Out] ++ (if fs then [`Omega.EST.Out, `Omega.IO.Error] else []) ++
         (if readDir then [`Omega.IO.FS.DirEntry] else []) ++ (if handles then [`Omega.IO.FS.Mode] else []) do
@@ -123,6 +126,14 @@ public unsafe def main (args : List String) : IO Unit := do
       modifyEnv fun e => externAttr.ext.addEntry (asyncDecl := strict) e (strict, ⟨[.standard `all symbol]⟩)
       (← compileDeclsRef.get) #[strict] {}
   for (n, upstream, symbol) in roots do
+    if n == `IO.getRandomBytes then
+      verify source n #[(.usize, false), (.void, false)] .object upstream
+      verify compiled (`Omega ++ n) #[(.tobject, false), (.tobject, false)] .object symbol
+      continue
+    if n == `IO.Prim.setAccessRights then
+      verify source n #[(.object, true), (.uint32, false), (.void, false)] .object upstream
+      verify compiled (`Omega ++ n) #[(.tobject, true), (.tobject, false), (.tobject, false)] .object symbol
+      continue
     if `IO.FS.Handle |>.isPrefixOf n then
       let path := n == `IO.FS.Handle.mk
       let obj := if path then IR.IRType.object else .tobject
