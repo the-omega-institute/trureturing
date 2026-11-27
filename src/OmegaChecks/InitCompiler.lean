@@ -14,12 +14,6 @@ namespace OmegaChecks.InitCompiler
 
 private def omegaName (n : Name) := if RootNames.usesRoot n then n else `Omega ++ n
 
-private partial def translate (e : Expr) : Expr :=
-  e.replace fun
-    | .const n us => some (.const (omegaName n) us)
-    | .proj n i x => some (.proj (omegaName n) i (translate x))
-    | _ => none
-
 private def sourceGroup (src : Environment) (owner name : Name) : CoreM (Declaration × Array Name) := do
   let some (.inductInfo target) := src.find? name | throwError "{name} is not an official inductive"
   let mut types := []
@@ -31,9 +25,9 @@ private def sourceGroup (src : Environment) (owner name : Name) : CoreM (Declara
     if i.isUnsafe || i.numNested != 0 then throwError "unsupported unsafe or nested inductive {n}"
     let fields ← i.ctors.mapM fun c => do
       let some (.ctorInfo val) := src.find? c | throwError "missing constructor {c}"
-      return {name := omegaName c, type := translate val.type : Constructor}
+      return {name := omegaName c, type := ← ofExcept (translateProofTerm src val.type) : Constructor}
     ctors := ctors ++ fields.toArray.map (·.name)
-    types := {name := omegaName n, type := translate i.type, ctors := fields} :: types
+    types := {name := omegaName n, type := ← ofExcept (translateProofTerm src i.type), ctors := fields} :: types
   return (.inductDecl target.levelParams target.numParams types.reverse false, ctors)
 
 private def officialDeclaration (stx : Syntax) : CommandElabM (Environment × ConstantInfo) := do

@@ -5,6 +5,7 @@ open Lean
 private def consumer := "module
 prelude
 public import OmegaInit.Data.Function
+public import OmegaInit.Data.Nat.Basic
 public import OmegaInit.Data.Option.Basic
 public import OmegaInit.Control.Id
 public def firstValue (x y : Omega.Bool) : Omega.Bool :=
@@ -93,6 +94,31 @@ public def naturalEqual (x y : Omega.Bool) : Omega.Bool :=
 public def naturalLe (x y : Omega.Bool) : Omega.Bool :=
   @Omega.Decidable.decide _ (Omega.Nat.decLe (asNat x) (asNat y))
 
+public def arraySecond (x y : Omega.Bool) : Omega.Bool :=
+  let xs := Omega.Array.mkArray2 x y
+  let correct := @Omega.Decidable.decide _ (Omega.Nat.decEq xs.size (.succ (.succ .zero)))
+  Omega.strictAnd correct (Omega.List.casesOn (motive := fun _ => Omega.Bool) xs.toList .false
+    (fun _ tail => Omega.List.casesOn (motive := fun _ => Omega.Bool) tail .false (fun last _ => last)))
+
+private def one := Omega.Nat.succ Omega.Nat.zero
+private def two := Omega.Nat.succ one
+
+private def asBit (x : Omega.Bool) : Omega.BitVec one :=
+  let within := fun {n} (h : Omega.Nat.lt n two) => Omega.Eq.subst (motive := fun bound => Omega.Nat.lt n bound) (Omega.Nat.pow_one two).symm h
+  Omega.Bool.casesOn (motive := fun _ => Omega.BitVec one) x
+    (Omega.BitVec.ofNatLT .zero (within (Omega.Nat.succ_le_succ (Omega.Nat.zero_le one))))
+    (Omega.BitVec.ofNatLT one (within (Omega.Nat.le_refl two)))
+
+public def bitEqual (x y : Omega.Bool) : Omega.Bool :=
+  @Omega.Decidable.decide _ (Omega.BitVec.decEq (asBit x) (asBit y))
+
+public def boundedLess (x y : Omega.Bool) : Omega.Bool :=
+  @Omega.Decidable.decide _ (Omega.Fin.decLt (asBit x).toFin (asBit y).toFin)
+
+public def bitConjunction (x y : Omega.Bool) : Omega.Bool :=
+  let both := Omega.strictAnd x y
+  @Omega.Decidable.decide _ (Omega.Nat.decEq (asBit both).toNat (.succ .zero))
+
 public def disjunction (x y : Omega.Bool) : Omega.Bool := Omega.strictOr x y
 public def conjunction (x y : Omega.Bool) : Omega.Bool := Omega.strictAnd x y
 "
@@ -121,7 +147,8 @@ unsafe def main (args : List String) : IO Unit := do
       (`sumIndex, first), (`sumRight, or), (`boolEqual, BEq.beq), (`optionFiltered, and),
       (`controlResult, or), (`optionEqual, BEq.beq), (`someValue, and), (`attachedValue, and), (`liftedNumeral, or), (`lastElement, second),
       (`arithmetic, first), (`listDisjunction, or), (`naturalEqual, BEq.beq),
-      (`naturalLe, fun x y => !x || y), (`disjunction, or), (`conjunction, and)]
+      (`naturalLe, fun x y => !x || y), (`arraySecond, second), (`bitEqual, BEq.beq),
+      (`boundedLess, fun x y => !x && y), (`bitConjunction, and), (`disjunction, or), (`conjunction, and)]
     for (name, expected) in checks do
       let some ci := env.find? name | throw <| IO.userError s!"missing {name}"
       unless Kernel.isDefEqGuarded env {} ci.type arity do throw <| IO.userError s!"invalid type of {name}"

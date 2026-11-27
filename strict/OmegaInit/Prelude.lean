@@ -586,7 +586,6 @@ end Omega
 port_inductive Array
 port_definition Array.toList
 port_definition List.toArray
-port_definition Array.size
 port_definition Array.push with_native_code
 port_definition Array.emptyWithCapacity with_native_code
 port_definition Array.mkEmpty
@@ -810,3 +809,43 @@ end Omega
 
 port_definition Nat.decEq with_native_code
 port_definition instDecidableEqNat with_native_code
+
+port_definition Array.size with_native_code
+port_definition Array.mkArray0 with_native_code
+port_definition Array.mkArray1 with_native_code
+port_definition Array.mkArray2 with_native_code
+port_definition Array.mkArray3 with_native_code
+port_definition Array.mkArray4 with_native_code
+port_definition Array.mkArray5 with_native_code
+port_definition Array.mkArray6 with_native_code
+port_definition Array.mkArray7 with_native_code
+port_definition Array.mkArray8 with_native_code
+
+port_inductive Fin
+port_definition Fin.val with_native_code
+port_proof Fin.isLt
+port_definition instLTFin with_native_code
+port_definition instLEFin with_native_code
+port_definition Fin.decLt with_native_code
+port_definition Fin.decLe with_native_code
+port_native_records BitVec
+port_definition BitVec.toNat with_native_code
+port_definition BitVec.ofNatLT with_native_code
+port_definition instLTBitVec with_native_code
+port_definition instLEBitVec with_native_code
+port_proof instDecidableLtBitVec._proof_1
+port_definition instDecidableLtBitVec with_native_code
+port_proof instDecidableLeBitVec._proof_1
+port_definition instDecidableLeBitVec with_native_code
+
+port_proof Fin.eq_of_val_eq
+port_proof Fin.val_eq_of_eq
+port_definition instDecidableEqFin.match_1
+port_proof instDecidableEqFin._proof_1
+port_definition instDecidableEqFin with_native_code
+port_definition BitVec.decEq.match_1
+port_definition BitVec.noConfusionType
+port_definition BitVec.noConfusion
+port_proof BitVec.decEq._proof_1
+port_definition BitVec.decEq with_native_code
+port_definition instDecidableEqBitVec with_native_code
