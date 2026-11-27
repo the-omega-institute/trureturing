@@ -463,10 +463,10 @@ private def conditionalConsequence? (owner name : Name) : Option (String × Name
         "The backward search loop agrees with the default on every well-founded callback, including zero-width matches")
   if owner == `Init.Data.String.Lemmas.Pattern.Basic then
     if name == ``String.Slice.Pattern.Model.matchAt? then
-      return ((``Classical.em).toString, `OmegaChecks.InitInventory.StringPatterns.excludedMiddleOfForwardResult,
+      return ("∀ P : Prop, Decidable P", `OmegaChecks.InitInventory.StringPatterns.decidableOfForwardResult,
         "The matcher returns some b at a iff IsLongestMatchAt pat a b (matchAt?_eq_some_iff)")
     if name == ``String.Slice.Pattern.Model.revMatchAt? then
-      return ((``Classical.em).toString, `OmegaChecks.InitInventory.StringPatterns.excludedMiddleOfBackwardResult,
+      return ("∀ P : Prop, Decidable P", `OmegaChecks.InitInventory.StringPatterns.decidableOfBackwardResult,
         "The matcher returns some a at b iff IsLongestRevMatchAt pat a b (revMatchAt?_eq_some_iff)")
   if owner == `Init.Data.String.Lemmas.Pattern.Split.Basic && name == ``String.Slice.Pattern.Model.split then
     return ("OmegaChecks.InitInventory.StringPatterns.WeakExcludedMiddle",

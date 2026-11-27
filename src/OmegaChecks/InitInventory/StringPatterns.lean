@@ -76,31 +76,112 @@ private theorem revMatchesWhole (P : Prop) (h : P) :
   apply isLongestRevMatchAt_endPos_iff.mpr
   exact ⟨⟨h⟩, fun _ before _ => Nat.not_lt_zero _ before⟩
 
-/-- The successful-result specification of any forward matcher decides every proposition. -/
-public theorem excludedMiddleOfForwardResult (find : type_of% @matchAt?)
+/-- The result of a forward matcher supplies a decision for every proposition. -/
+public def decidableOfForwardResult (find : type_of% @matchAt?)
     (correct : ∀ {ρ : Type} {pat : ρ} [PatternModel pat] {s : String.Slice} {a b : s.Pos},
-      find pat a = some b ↔ IsLongestMatchAt pat a b) (P : Prop) : P ∨ ¬ P := by
+      find pat a = some b ↔ IsLongestMatchAt pat a b) (P : Prop) : Decidable P := by
   letI : PatternModel () := accepts P
   cases result : find () sample.startPos with
-  | some q => exact Or.inl ((correct.mp result).isLongestMatch_sliceFrom.isMatch.matches_copy)
+  | some q => exact isTrue ((correct.mp result).isLongestMatch_sliceFrom.isMatch.matches_copy)
   | none =>
-    right
+    apply isFalse
     intro yes
     have clash := result.symm.trans (correct.mpr (matchesWhole P yes))
     cases clash
 
 /-- The successful-result specification of any reverse matcher decides every proposition. -/
-public theorem excludedMiddleOfBackwardResult (find : type_of% @revMatchAt?)
+public def decidableOfBackwardResult (find : type_of% @revMatchAt?)
     (correct : ∀ {ρ : Type} {pat : ρ} [PatternModel pat] {s : String.Slice} {a b : s.Pos},
-      find pat b = some a ↔ IsLongestRevMatchAt pat a b) (P : Prop) : P ∨ ¬ P := by
+      find pat b = some a ↔ IsLongestRevMatchAt pat a b) (P : Prop) : Decidable P := by
   letI : PatternModel () := accepts P
   cases result : find () sample.endPos with
-  | some q => exact Or.inl ((correct.mp result).isLongestRevMatch_sliceTo.isRevMatch.matches_copy)
+  | some q => exact isTrue ((correct.mp result).isLongestRevMatch_sliceTo.isRevMatch.matches_copy)
   | none =>
-    right
+    apply isFalse
     intro yes
     have clash := result.symm.trans (correct.mpr (revMatchesWhole P yes))
     cases clash
+
+
+private def positions (s : String.Slice) : List s.Pos :=
+  s.endPos :: (String.Slice.Model.positionsFrom s.startPos).map Subtype.val
+
+private theorem mem_positions {s : String.Slice} (q : s.Pos) : q ∈ positions s := by
+  by_cases h : q = s.endPos
+  · exact h ▸ .head _
+  · exact .tail _ (List.mem_map.mpr ⟨⟨q, h⟩, String.Slice.Model.mem_positionsFrom_startPos, rfl⟩)
+
+private def selectPosition {s : String.Slice} (p : s.Pos → Prop) (test : DecidablePred p) : Option s.Pos :=
+  (positions s).find? (fun q => @decide (p q) (test q))
+
+private theorem selectPosition_spec {s : String.Slice} (p : s.Pos → Prop) (test : DecidablePred p)
+    (unique : ∀ {a b}, p a → p b → a = b) (q : s.Pos) :
+    selectPosition p test = some q ↔ p q := by
+  letI := test
+  unfold selectPosition
+  constructor
+  · intro found
+    exact of_decide_eq_true (List.find?_eq_some_iff_append.mp found).1
+  · intro hit
+    cases result : (positions s).find? (fun x => decide (p x)) with
+    | none => exact False.elim ((List.find?_eq_none.mp result q (mem_positions q)) (decide_eq_true hit))
+    | some r =>
+      exact congrArg some (unique (of_decide_eq_true (List.find?_eq_some_iff_append.mp result).1) hit)
+
+private def allPositions {s : String.Slice} (p : s.Pos → Prop) [DecidablePred p] :
+    Decidable (∀ q, p q) :=
+  decidable_of_iff (∀ q ∈ positions s, p q)
+    ⟨fun h q => h q (mem_positions q), fun h q _ => h q⟩
+
+private def longestAtDecision {ρ : Type} (pat : ρ) [PatternModel pat]
+    [DecidablePred (PatternModel.Matches pat)] {s : String.Slice} (a b : s.Pos) :
+    Decidable (IsLongestMatchAt pat a b) := by
+  by_cases h : a ≤ b
+  · let t := s.sliceFrom a
+    let z : t.Pos := a.sliceFrom b h
+    letI (q : t.Pos) : Decidable (IsMatch pat q) := decidable_of_iff _ isMatch_iff.symm
+    letI := allPositions (s := t) (fun q => z < q → ¬ IsMatch pat q)
+    letI : Decidable (IsLongestMatch pat z) := decidable_of_iff _ isLongestMatch_iff.symm
+    exact decidable_of_iff (IsLongestMatch pat z)
+      ⟨fun m => ⟨h, m⟩, fun m => m.isLongestMatch_sliceFrom⟩
+  · exact isFalse fun m => h m.le
+
+private def revLongestAtDecision {ρ : Type} (pat : ρ) [PatternModel pat]
+    [DecidablePred (PatternModel.Matches pat)] {s : String.Slice} (a b : s.Pos) :
+    Decidable (IsLongestRevMatchAt pat a b) := by
+  by_cases h : a ≤ b
+  · let t := s.sliceTo b
+    let z : t.Pos := b.sliceTo a h
+    letI (q : t.Pos) : Decidable (IsRevMatch pat q) := decidable_of_iff _ isRevMatch_iff.symm
+    letI := allPositions (s := t) (fun q => q < z → ¬ IsRevMatch pat q)
+    letI : Decidable (IsLongestRevMatch pat z) := decidable_of_iff _ isLongestRevMatch_iff.symm
+    exact decidable_of_iff (IsLongestRevMatch pat z)
+      ⟨fun m => ⟨h, m⟩, fun m => m.isLongestRevMatch_sliceTo⟩
+  · exact isFalse fun m => h m.le
+
+/-- Decidability of this pattern's language suffices to select its longest forward matches. -/
+public def forwardOfDecidable {ρ : Type} (pat : ρ) [PatternModel pat]
+    [DecidablePred (PatternModel.Matches pat)] {s : String.Slice} (a : s.Pos) :
+    {result : Option s.Pos // ∀ b, result = some b ↔ IsLongestMatchAt pat a b} :=
+  ⟨selectPosition _ (longestAtDecision pat a),
+   selectPosition_spec _ _ (fun h k => h.eq k)⟩
+
+/-- A decidable pattern language also suffices for longest reverse matches. -/
+public def backwardOfDecidable {ρ : Type} (pat : ρ) [PatternModel pat]
+    [DecidablePred (PatternModel.Matches pat)] {s : String.Slice} (b : s.Pos) :
+    {result : Option s.Pos // ∀ a, result = some a ↔ IsLongestRevMatchAt pat a b} :=
+  ⟨selectPosition _ (fun a => revLongestAtDecision pat a b),
+   selectPosition_spec _ _ (fun h k => h.eq k)⟩
+
+public theorem excludedMiddleOfForwardResult (find : type_of% @matchAt?)
+    (correct : ∀ {ρ : Type} {pat : ρ} [PatternModel pat] {s : String.Slice} {a b : s.Pos},
+      find pat a = some b ↔ IsLongestMatchAt pat a b) (P : Prop) : P ∨ ¬ P :=
+  @Decidable.em P (decidableOfForwardResult find correct P)
+
+public theorem excludedMiddleOfBackwardResult (find : type_of% @revMatchAt?)
+    (correct : ∀ {ρ : Type} {pat : ρ} [PatternModel pat] {s : String.Slice} {a b : s.Pos},
+      find pat b = some a ↔ IsLongestRevMatchAt pat a b) (P : Prop) : P ∨ ¬ P :=
+  @Decidable.em P (decidableOfBackwardResult find correct P)
 
 public theorem excludedMiddleOfMatchAtSome (spec : type_of% @matchAt?_eq_some_iff) :
     ∀ P : Prop, P ∨ ¬ P := excludedMiddleOfForwardResult (@matchAt?) spec
