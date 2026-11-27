@@ -490,7 +490,7 @@ def check(only, backend="mathlib", destination=None, *, frozen=None, discovered=
                 for p in manifest["packages"]}
     environment = {k: v for k, v in os.environ.items()
                    if k not in {"LEAN_PATH", "LEAN_SRC_PATH", "OMEGA_FROZEN_INVENTORY", "OMEGA_FROZEN_CERTIFICATE",
-                                "OMEGA_OFFICIAL_AXIOM_REPORT"}}
+                                "OMEGA_OFFICIAL_AXIOM_REPORT", "OMEGA_CACHE_CONSUMER_MODE"}}
     if destination:
         destination = Path(destination).absolute()
         destination.parent.mkdir(parents=True, exist_ok=True)
@@ -535,7 +535,7 @@ def check(only, backend="mathlib", destination=None, *, frozen=None, discovered=
             subprocess.run(["lake", "build", "omegaAudit"], cwd=ROOT, env=environment, check=True)
         if common_modules:
             subprocess.run([AUDIT, "--consumer", strict_path, common_path, *common_downstream, "--basis", *common_basis], cwd=ROOT,
-                           env=environment, check=True)
+                           env={**environment, "OMEGA_CACHE_CONSUMER_MODE": "common-interface"}, check=True)
             print(f"Common computational interface checked: {len(common_basis)} basis modules, "
                   f"{len(common_downstream)} downstream modules", flush=True)
         if backend == "both" and frozen is None:
@@ -543,7 +543,8 @@ def check(only, backend="mathlib", destination=None, *, frozen=None, discovered=
             report_data = {"backend": "mathlib", "consumerModules": [], "declarations": []}
             if downstream or basis:
                 subprocess.run([AUDIT, "--consumer", strict_path, official_path, *downstream, "--basis", *basis],
-                               cwd=ROOT, env={**environment, "OMEGA_OFFICIAL_AXIOM_REPORT": str(staged_report)},
+                               cwd=ROOT, env={**environment, "OMEGA_CACHE_CONSUMER_MODE": "official-interface",
+                                              "OMEGA_OFFICIAL_AXIOM_REPORT": str(staged_report)},
                                check=True)
                 report_data = json.loads(staged_report.read_text())
             # Supplemental common-interface checks may cover unrelated consumers.
