@@ -10,7 +10,6 @@ public import OmegaInit.Data.Nat.Basic
 
 @[expose] public section
 
-attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Nat.sub Omega.Nat.pred Omega.Nat.pow
 
 namespace Omega.Nat
 

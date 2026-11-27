@@ -11,7 +11,7 @@ import all OmegaInit.Prelude
 
 @[expose] public section
 
-attribute [local semireducible] Omega.Nat.add Omega.Int.subNatNat
+attribute [local semireducible] Omega.Int.subNatNat
 
 namespace Omega.Int
 

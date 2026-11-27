@@ -21,7 +21,7 @@ public unsafe def main (args : List String) : IO Unit := do
     if isPrivateName n then mkPrivateNameCore owner (`Omega ++ privateToUserName n) else `Omega ++ n
   let names := [`TypeName.mk, TypeName.reader].filter fun n => env.contains (rename n)
   if names.isEmpty then return
-  for name in #[`Omega.Nat, `Omega.List, `Omega.Array, `Omega.Fin, `Omega.BitVec, `Omega.UInt8,
+  for name in #[`Nat, `Omega.List, `Omega.Array, `Omega.Fin, `Omega.BitVec, `Omega.UInt8,
       `Omega.ByteArray, `Omega.String, `Omega.Lean.Name, `Omega.TypeName] do
     let state ← read
     if (impureTypeExt.find? state name).isSome then continue

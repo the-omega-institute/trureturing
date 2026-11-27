@@ -9,7 +9,6 @@ import all OmegaInit.Prelude
 
 namespace Omega.List
 
-attribute [local semireducible] Nat.sub Nat.pred Nat.add
 
 theorem length_eraseIdx_of_lt {α : Type u} {l : List α} {i : Nat} (h : Nat.lt i l.length) :
     Eq (l.eraseIdx i).length (Nat.sub l.length Nat.zero.succ) :=

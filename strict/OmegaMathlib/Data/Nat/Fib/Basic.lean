@@ -19,7 +19,6 @@ noncomputable section
 
 @[expose] public section
 
-attribute [local semireducible] Omega.Nat.add
 
 namespace Omega.Nat
 
