@@ -31,13 +31,12 @@ open RHCriticalPairSumThreshold
 
 /-- A Montgomery cap below the Cauchy alignment threshold suffices for the critical limit. -/
 theorem harmonic_zeta_critical_collision_limit_of_cauchy_cap (rh : RiemannHypothesis)
-    {κ : ℝ} (hκ : 0 < κ) (hκmax : κ < 2 * Real.pi * (1 / (2 * Real.pi)) ^ 2)
+    {κ : ℝ} (hκmax : κ < 2 * Real.pi * (1 / (2 * Real.pi)) ^ 2)
     (hcorr : ∀ A > (1 : ℝ), ∀ᶠ Y : ℝ in atTop,
       ∀ t : ℝ, Real.log Y ≤ |t| → |t| ≤ A * Real.log Y →
         Y * Real.log Y / (2 * Real.pi) * montgomery (zetaSpectrum rh) (t / Real.log Y) Y ≤
           κ * Y * (Real.log Y) ^ 2)
     (T η : ℕ → ℝ) (hT : Tendsto T atTop atTop)
-    (hη : ∀ᶠ n : ℕ in atTop, 0 < η n)
     (hh : Tendsto (fun n : ℕ => (Real.log (T n))^2 / (n : ℝ)) atTop (𝓝 0))
     (hresolution : ∃ a > (0 : ℝ), ∀ᶠ n in atTop, a ≤ η n * Real.log (T n)) :
     let scale (n : ℕ) := Real.sqrt ((n : ℝ) * pairMoment
@@ -48,8 +47,12 @@ theorem harmonic_zeta_critical_collision_limit_of_cauchy_cap (rh : RiemannHypoth
       tailCollisionMass (fun j : ↥(positiveCutoff rh (T n)) => ordinate j.1)
         (fun j => harmonicWeight j.1) n (η n) /
         (η n * harmonicMass rh (T n)^(2*n))) atTop (𝓝 (1 / Real.sqrt Real.pi)) := by
+  have hη : ∀ᶠ n : ℕ in atTop, 0 < η n := by
+    obtain ⟨a, ha, hprod⟩ := hresolution
+    filter_upwards [hprod, hT.eventually_gt_atTop 1] with n hlower hheight
+    exact pos_of_mul_pos_left (ha.trans_le hlower) (Real.log_pos hheight).le
   obtain ⟨d, hd, hlong⟩ := harmonic_long_deficit_of_cutoff_deficit rh
-    (fractional_deficit_of_cauchy_cap _ (zetaSpectrum_countAsymptotic rh) hκ hκmax hcorr)
+    (fractional_deficit_of_cauchy_cap _ (zetaSpectrum_countAsymptotic rh) hκmax hcorr)
   exact harmonic_zeta_critical_collision_limit_of_long_deficit rh
     (fun A hA => ⟨d, hd, hlong A hA⟩)
     T η hT hη hh hresolution

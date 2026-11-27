@@ -20,34 +20,17 @@ open scoped Interval ENNReal NNReal Convolution MeasureTheory ComplexConjugate
 
 namespace D5.S3.Fourier.Concentration.CauchyPairEnergy
 
-/-- A unit-scale Cauchy density centered within an interval loses at most
-\(2/(\pi R)\) of its mass after the interval is extended by \(R\) on each side. -/
-theorem cauchy_mass_buffer_interval {x₀ Y R : ℝ} (hx₀ : x₀ ∈ Icc 0 Y) (hR : 0 < R) :
-    1 - 2 / (Real.pi * R) ≤ ∫ x in Icc (-R) (Y + R), cauchyPDFReal x₀ 1 x := by
-  have hsub : Icc (x₀ - R) (x₀ + R) ⊆ Icc (-R) (Y + R) := by
-    intro x hx
-    exact ⟨by linarith [hx₀.1, hx.1], by linarith [hx₀.2, hx.2]⟩
-  have hmono : (∫ x in Icc (x₀ - R) (x₀ + R), cauchyPDFReal x₀ 1 x) ≤
-      ∫ x in Icc (-R) (Y + R), cauchyPDFReal x₀ 1 x :=
-    setIntegral_mono_set (integrable_cauchyPDFReal x₀).integrableOn
-      (Filter.Eventually.of_forall fun x => (cauchyPDF_pos x₀ one_ne_zero x).le)
-      (Filter.Eventually.of_forall hsub)
-  apply le_trans _ hmono
-  rw [integral_Icc_eq_integral_Ioc, ← intervalIntegral.integral_of_le (by linarith)]
+/-- The mass of a unit-scale Cauchy density in the buffered interval. -/
+theorem cauchy_mass_buffer_interval {x₀ Y R : ℝ} (hle : -R ≤ Y + R) :
+    (∫ x in Icc (-R) (Y + R), cauchyPDFReal x₀ 1 x) =
+      Real.pi⁻¹ * (Real.arctan (Y + R - x₀) + Real.arctan (R + x₀)) := by
+  rw [integral_Icc_eq_integral_Ioc, ← intervalIntegral.integral_of_le hle]
   simp only [cauchyPDFReal_def, NNReal.coe_one, mul_one, one_pow]
   rw [intervalIntegral.integral_const_mul]
-  simp_rw [add_comm (( _ - x₀) ^ 2) 1]
-  rw [intervalIntegral.integral_comp_sub_right (f := fun x : ℝ => (1 + x ^ 2)⁻¹) x₀]
-  rw [show x₀ - R - x₀ = -R by ring, show x₀ + R - x₀ = R by ring]
-  rw [integral_inv_one_add_sq, Real.arctan_neg]
-  have hatan := Real.arctan_le_self (inv_nonneg.mpr hR.le)
-  rw [Real.arctan_inv_of_pos hR] at hatan
-  calc
-    1 - 2 / (Real.pi * R) = Real.pi⁻¹ * (Real.pi - 2 * R⁻¹) := by
-      field_simp [Real.pi_ne_zero, hR.ne']
-    _ ≤ Real.pi⁻¹ * (Real.arctan R + Real.arctan R) :=
-      mul_le_mul_of_nonneg_left (by linarith) (inv_nonneg.mpr Real.pi_pos.le)
-    _ = Real.pi⁻¹ * (Real.arctan R - -Real.arctan R) := by ring
+  simp_rw [add_comm ((_ - x₀) ^ 2) 1]
+  rw [intervalIntegral.integral_comp_sub_right (f := fun x : ℝ => (1 + x ^ 2)⁻¹) x₀,
+    integral_inv_one_add_sq, show -R - x₀ = -(R + x₀) by ring, Real.arctan_neg]
+  ring
 
 /-- Interval length controls the squared magnitude of an integral by its energy. -/
 private theorem sq_norm_integral_le_energy {u v : ℝ} (huv : u ≤ v) {f : ℝ → ℂ}
@@ -93,11 +76,11 @@ private lemma cauchy_one_continuous (c : ℝ) : Continuous (cauchyPDFReal c 1) :
 
 private lemma integral_cauchy_sum_buffer {J : Type*} (s : Finset J) (x : J → ℝ)
     (a : J → ℂ) {Y R : ℝ} (hx : ∀ j ∈ s, x j ∈ Icc 0 Y) (hR : 0 < R) :
-    ‖∑ j ∈ s, a j‖ - (2 / (Real.pi * R)) * ∑ j ∈ s, ‖a j‖ ≤
+    ‖∑ j ∈ s, a j‖ - (1 - Real.pi⁻¹ * (2 * Real.arctan R)) * ∑ j ∈ s, ‖a j‖ ≤
       ‖∫ u in Icc (-R) (Y + R), ∑ j ∈ s, a j * (cauchyPDFReal (x j) 1 u : ℂ)‖ := by
   let I := Icc (-R) (Y + R)
   let mass (j : J) := ∫ u in I, cauchyPDFReal (x j) 1 u
-  let loss := 2 / (Real.pi * R)
+  let loss := 1 - Real.pi⁻¹ * (2 * Real.arctan R)
   have hInt : ∀ j ∈ s, IntegrableOn (fun u => a j * (cauchyPDFReal (x j) 1 u : ℂ)) I := by
     intro j _
     exact ((integrable_cauchyPDFReal (x j)).ofReal.const_mul (a j)).integrableOn
@@ -110,7 +93,16 @@ private lemma integral_cauchy_sum_buffer {J : Type*} (s : Finset J) (x : J → �
       (Filter.Eventually.of_forall fun u => (cauchyPDF_pos (x j) one_ne_zero u).le)).trans_eq ?_
     exact integral_cauchyPDFReal_eq_one (x j) one_ne_zero
   have hnorm (j : J) (hj : j ∈ s) : ‖a j - a j * (mass j : ℂ)‖ ≤ loss * ‖a j‖ := by
-    have hlow : 1 - loss ≤ mass j := cauchy_mass_buffer_interval (hx j hj) hR
+    have hcenter := hx j hj
+    have hleft : R ≤ R + x j := by linarith [hcenter.1]
+    have hright : R ≤ Y + R - x j := by linarith [hcenter.2]
+    have hle : -R ≤ Y + R := by linarith [hcenter.1, hcenter.2]
+    have hlow : 1 - loss ≤ mass j := by
+      dsimp only [mass, I, loss]
+      rw [cauchy_mass_buffer_interval hle, sub_sub_cancel]
+      exact mul_le_mul_of_nonneg_left
+        (by linarith [Real.arctan_mono hleft, Real.arctan_mono hright])
+        (inv_nonneg.mpr Real.pi_pos.le)
     rw [← mul_one_sub, norm_mul, ← Complex.ofReal_one, ← Complex.ofReal_sub,
       Complex.norm_real, Real.norm_of_nonneg (sub_nonneg.mpr (hmass j)), mul_comm]
     exact mul_le_mul_of_nonneg_right (by linarith) (norm_nonneg _)
@@ -298,36 +290,40 @@ private lemma cauchy_pair_energy {J : Type*} (s : Finset J) (x : J → ℝ)
 
 /-- The Lorentz pair sum controls the total coefficient mass after the Cauchy tail loss. -/
 theorem lorentz_pair_lower_bound {J : Type*} (s : Finset J)
-    (x : J → ℝ) (a : J → ℂ) {Y R : ℝ} (hY : 0 ≤ Y)
+    (x : J → ℝ) (a : J → ℂ) {Y R : ℝ}
     (hx : ∀ j ∈ s, x j ∈ Icc 0 Y) (hR : 0 < R) :
     (2 * Real.pi) / (Y + 2 * R) *
-      max (‖∑ j ∈ s, a j‖ - (2 / (Real.pi * R)) * ∑ j ∈ s, ‖a j‖) 0 ^ 2 ≤
+      max (‖∑ j ∈ s, a j‖ - (1 - Real.pi⁻¹ * (2 * Real.arctan R)) * ∑ j ∈ s, ‖a j‖) 0 ^ 2 ≤
         ∑ i ∈ s, ∑ j ∈ s, (a i * conj (a j)).re * (4 / (4 + (x i - x j) ^ 2)) := by
-  let f (u : ℝ) := ∑ j ∈ s, a j * (cauchyPDFReal (x j) 1 u : ℂ)
-  have hf : Continuous f := by
-    apply continuous_finsetSum s
-    intro j _
-    exact continuous_const.mul (Complex.continuous_ofReal.comp (cauchy_one_continuous _))
-  have hfi : Integrable (fun u => ‖f u‖ ^ 2) := by
-    simp_rw [f, cauchy_sum_square s x a]
-    exact integrable_finsetSum s fun i _ => integrable_finsetSum s fun j _ =>
-      (integrable_cauchy_pair (x i) (x j)).const_mul _
-  have hdist : 0 < Y + 2 * R := by linarith
-  have hlen : Y + R - -R = Y + 2 * R := by ring
-  have hbuffer := max_le (integral_cauchy_sum_buffer s x a hx hR) (norm_nonneg _)
-  have hsquare := pow_le_pow_left₀ (le_max_right _ _) hbuffer 2
-  have hloc := sq_norm_integral_le_energy (u := -R) (v := Y + R)
-    (by linarith) hf.continuousOn
-  rw [hlen] at hloc
-  have hwhole := setIntegral_le_integral (s := Icc (-R) (Y + R)) hfi
-    (Filter.Eventually.of_forall fun u => sq_nonneg ‖f u‖)
-  have hbound := hsquare.trans (hloc.trans (mul_le_mul_of_nonneg_left hwhole hdist.le))
-  dsimp only [f] at hbound
-  rw [cauchy_pair_energy] at hbound
-  have h := mul_le_mul_of_nonneg_left hbound (show 0 ≤ 2 * Real.pi by positivity)
-  rw [div_mul_eq_mul_div, div_le_iff₀ hdist]
-  convert h using 1
-  field_simp [Real.pi_ne_zero]
-  <;> ring
+  by_cases hs : s.Nonempty
+  · obtain ⟨j, hj⟩ := hs
+    have hY : 0 ≤ Y := (hx j hj).1.trans (hx j hj).2
+    let f (u : ℝ) := ∑ j ∈ s, a j * (cauchyPDFReal (x j) 1 u : ℂ)
+    have hf : Continuous f := by
+      apply continuous_finsetSum s
+      intro j _
+      exact continuous_const.mul (Complex.continuous_ofReal.comp (cauchy_one_continuous _))
+    have hfi : Integrable (fun u => ‖f u‖ ^ 2) := by
+      simp_rw [f, cauchy_sum_square s x a]
+      exact integrable_finsetSum s fun i _ => integrable_finsetSum s fun j _ =>
+        (integrable_cauchy_pair (x i) (x j)).const_mul _
+    have hdist : 0 < Y + 2 * R := by linarith
+    have hlen : Y + R - -R = Y + 2 * R := by ring
+    have hbuffer := max_le (integral_cauchy_sum_buffer s x a hx hR) (norm_nonneg _)
+    have hsquare := pow_le_pow_left₀ (le_max_right _ _) hbuffer 2
+    have hloc := sq_norm_integral_le_energy (u := -R) (v := Y + R)
+      (by linarith) hf.continuousOn
+    rw [hlen] at hloc
+    have hwhole := setIntegral_le_integral (s := Icc (-R) (Y + R)) hfi
+      (Filter.Eventually.of_forall fun u => sq_nonneg ‖f u‖)
+    have hbound := hsquare.trans (hloc.trans (mul_le_mul_of_nonneg_left hwhole hdist.le))
+    dsimp only [f] at hbound
+    rw [cauchy_pair_energy] at hbound
+    have h := mul_le_mul_of_nonneg_left hbound (show 0 ≤ 2 * Real.pi by positivity)
+    rw [div_mul_eq_mul_div, div_le_iff₀ hdist]
+    convert h using 1
+    field_simp [Real.pi_ne_zero]
+    <;> ring
+  · simp [Finset.not_nonempty_iff_eq_empty.mp hs]
 
 end D5.S3.Fourier.Concentration.CauchyPairEnergy

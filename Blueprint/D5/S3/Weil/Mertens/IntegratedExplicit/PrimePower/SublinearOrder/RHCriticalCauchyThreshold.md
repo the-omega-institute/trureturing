@@ -14,9 +14,9 @@ Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/PrimePower/SublinearOrder
 
 *Commentary.*
 
-Assume RH. Write c = 1/(2 pi) and G_Y(t) for the unnormalized Montgomery sum on the inclusive positive-ordinate cutoff with analytic multiplicities. For one fixed 0 < kappa < 2 pi c^2, assume G_Y(t) <= kappa Y log(Y)^2 on every fixed band log(Y) <= |t| <= A log(Y), uniformly in t for sufficiently large Y depending on A > 1.
+Assume RH. Write c = 1/(2 pi) and G_Y(t) for the unnormalized Montgomery sum on the inclusive positive-ordinate cutoff with analytic multiplicities. For one fixed kappa < 2 pi c^2, assume G_Y(t) <= kappa Y log(Y)^2 on every fixed band log(Y) <= |t| <= A log(Y), uniformly in t for sufficiently large Y depending on A > 1.
 
-Take T_n tending to infinity with log(T_n)^2/n tending to zero. Let s_n be sqrt(n P_2(T_n)/2) for the second normalized harmonic pair moment P_2. For eventually positive eta_n with eta_n/s_n tending to zero and eta_n log(T_n) eventually bounded below by a positive constant, the inclusive hard collision mass multiplied by s_n and divided by eta_n times the total harmonic mass to power 2n tends to 1/sqrt(pi).
+Take T_n tending to infinity with log(T_n)^2/n tending to zero. Let s_n be sqrt(n P_2(T_n)/2) for the second normalized harmonic pair moment P_2. For eta_n/s_n tending to zero and eta_n log(T_n) eventually bounded below by a positive constant, the inclusive hard collision mass multiplied by s_n and divided by eta_n times the total harmonic mass to power 2n tends to 1/sqrt(pi).
 
 The Cauchy-smoothed phase sum gives a fixed fractional deficit in the multiplicity-weighted cutoff before harmonic reweighting. The harmonic transfer gives the required logarithmic-band deficit for the collision theorem. The upper bound on the actual zeta pair sum is an arithmetic hypothesis.
 

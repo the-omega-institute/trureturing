@@ -28,13 +28,29 @@ private theorem peak_lower (S : Spectrum) {Y R : ℝ} (hY : 1 < Y) (hR : 0 < R) 
       Y * Real.log Y / (2 * Real.pi) * montgomery S (t / Real.log Y) Y := by
   let a (j : S.index) : ℂ := (S.mult j : ℂ) * phase (S.gamma j) t
   have H := lorentz_pair_lower_bound (S.cut Y) S.gamma a (R := R)
-    (Y := Y) (by linarith) (fun j hj => ⟨(S.gamma_pos j).le, (S.finite_le Y).mem_toFinset.mp hj⟩)
+    (Y := Y) (fun j hj => ⟨(S.gamma_pos j).le, (S.finite_le Y).mem_toFinset.mp hj⟩)
     hR
   have hnorm : (∑ j ∈ S.cut Y, ‖a j‖) = (S.N Y : ℝ) := by
     rw [Spectrum.N, Nat.cast_sum]
     simp [a, norm_phase]
   rw [hnorm] at H
-  refine H.trans_eq ?_
+  have htail : 1 - Real.pi⁻¹ * (2 * Real.arctan R) ≤ 2 / (Real.pi * R) := by
+    have hatan := Real.arctan_le_self (inv_nonneg.mpr hR.le)
+    rw [Real.arctan_inv_of_pos hR] at hatan
+    calc
+      _ ≤ Real.pi⁻¹ * (2 * R⁻¹) := by
+        have h := mul_le_mul_of_nonneg_left (show Real.pi ≤ 2 * R⁻¹ + 2 * Real.arctan R by
+          linarith) (inv_nonneg.mpr Real.pi_pos.le)
+        rw [inv_mul_cancel₀ Real.pi_ne_zero] at h
+        linarith
+      _ = _ := by field_simp [Real.pi_ne_zero, hR.ne']
+  have hmax : max (‖∑ j ∈ S.cut Y, a j‖ - (2 / (Real.pi * R)) * (S.N Y : ℝ)) 0 ≤
+      max (‖∑ j ∈ S.cut Y, a j‖ -
+        (1 - Real.pi⁻¹ * (2 * Real.arctan R)) * (S.N Y : ℝ)) 0 :=
+    max_le_max_right 0 (sub_le_sub_left (mul_le_mul_of_nonneg_right htail (by positivity)) _)
+  have hY₀ : 0 < Y := by linarith
+  refine (mul_le_mul_of_nonneg_left (pow_le_pow_left₀ (le_max_right _ _) hmax 2)
+    (by positivity)).trans (H.trans_eq ?_)
   rw [← montgomery_normalization S hY t]
   apply Finset.sum_congr rfl
   intro i _
@@ -62,11 +78,11 @@ private theorem peak_lower (S : Spectrum) {Y R : ℝ} (hY : 1 < Y) (hR : 0 < R) 
 
 /-- A fixed pair-sum cap below the Cauchy energy of full alignment enforces a phase deficit. -/
 theorem fractional_deficit_of_cauchy_cap (S : Spectrum) (hN : CountAsymptotic S)
-    {κ : ℝ} (hκ : 0 < κ) (hκmax : κ < 2 * Real.pi * (1 / (2 * Real.pi)) ^ 2)
-    (hcap : ∀ A > (1 : ℝ), ∀ᶠ Y : ℝ in atTop,
+    {κ₀ : ℝ} (hκ₀ : κ₀ < 2 * Real.pi * (1 / (2 * Real.pi)) ^ 2)
+    (hcap₀ : ∀ A > (1 : ℝ), ∀ᶠ Y : ℝ in atTop,
       ∀ t : ℝ, Real.log Y ≤ |t| → |t| ≤ A * Real.log Y →
         Y * Real.log Y / (2 * Real.pi) * montgomery S (t / Real.log Y) Y ≤
-          κ * Y * (Real.log Y) ^ 2) :
+          κ₀ * Y * (Real.log Y) ^ 2) :
     ∃ d > (0 : ℝ), ∀ A > (1 : ℝ), ∀ᶠ Y : ℝ in atTop,
       ∀ t : ℝ, Real.log Y ≤ |t| → |t| ≤ A * Real.log Y →
         d * (S.N Y : ℝ) ≤ (S.N Y : ℝ) -
@@ -75,7 +91,22 @@ theorem fractional_deficit_of_cauchy_cap (S : Spectrum) (hN : CountAsymptotic S)
   let π₂ : ℝ := 2 * Real.pi
   have hπ₂ : 0 < π₂ := by dsimp [π₂]; positivity
   have hc : 0 < c := by dsimp [c]; positivity
-  change κ < π₂ * c ^ 2 at hκmax
+  let threshold := π₂ * c ^ 2
+  have hthreshold : 0 < threshold := by dsimp [threshold]; positivity
+  change κ₀ < threshold at hκ₀
+  let κ := max κ₀ (threshold / 2)
+  have hκ : 0 < κ := (half_pos hthreshold).trans_le (le_max_right _ _)
+  have hκmax : κ < π₂ * c ^ 2 :=
+    max_lt hκ₀ (half_lt_self hthreshold)
+  have hcap (A : ℝ) (hA : 1 < A) : ∀ᶠ Y : ℝ in atTop,
+      ∀ t : ℝ, Real.log Y ≤ |t| → |t| ≤ A * Real.log Y →
+        Y * Real.log Y / (2 * Real.pi) * montgomery S (t / Real.log Y) Y ≤
+          κ * Y * (Real.log Y) ^ 2 := by
+    filter_upwards [hcap₀ A hA, eventually_ge_atTop (0 : ℝ)] with Y hY hY₀
+    intro t htl htu
+    exact (hY t htl htu).trans
+      (mul_le_mul_of_nonneg_right (mul_le_mul_of_nonneg_right (le_max_left _ _) hY₀)
+        (sq_nonneg _))
   let ε : ℝ := (π₂ * c ^ 2 - κ) / (4 * κ)
   have hε : 0 < ε := div_pos (sub_pos.mpr hκmax) (by positivity)
   let K : ℝ := (1 + 2 * ε) / π₂ * κ
