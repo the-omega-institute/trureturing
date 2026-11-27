@@ -1,6 +1,7 @@
 module
 import all Init.Data.String.Basic
 import all Init.Data.String.Lemmas.Slice
+import all Init.Data.String.Lemmas.Iterate
 import all Init.Data.String.Lemmas.Pattern.Basic
 import all Init.Data.ByteArray.Lemmas
 import all Init.Data.String.Pattern.Basic
@@ -563,6 +564,18 @@ public theorem String.Slice.Pattern.ToBackwardSearcher.DefaultBackwardSearcher.f
 
 @[expose] public def String.Slice.foldr (f : Char → α → α) (init : α) (s : String.Slice) : α :=
   s.copy.toList.foldr f init
+
+public theorem _root_.OmegaChecks.InitPort.AlternativeEquations.String.Slice.foldl.eq_1
+    (f : α → Char → α) (init : α) (s : _root_.String.Slice) :
+    String.Slice.foldl f init s = s.chars.fold f init := by
+  rw [← _root_.Std.Iter.foldl_toList, _root_.String.Slice.toList_chars]
+  rfl
+
+public theorem _root_.OmegaChecks.InitPort.AlternativeEquations.String.Slice.foldr.eq_1
+    (f : Char → α → α) (init : α) (s : _root_.String.Slice) :
+    String.Slice.foldr f init s = s.revChars.fold (flip f) init := by
+  rw [← _root_.Std.Iter.foldl_toList, _root_.String.Slice.toList_revChars, _root_.List.foldl_reverse]
+  rfl
 
 @[expose] public def String.Slice.isNat (s : String.Slice) : Bool := Id.run do
   let mut lastWasDigit := false

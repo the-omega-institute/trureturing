@@ -100,7 +100,10 @@ private def officialEquation? (env : Environment) (name : Name) : Option Constan
   env.find? name <|> do
     let (parent, _) ← Meta.declFromEqLikeName env name
     let owner ← env.getModuleIdxFor? parent
-    env.find? (mkPrivateNameCore env.header.moduleNames[owner]! name)
+    env.find? (mkPrivateNameCore env.header.moduleNames[owner]! name) <|>
+      -- An importer can be the first module to request a private equation for this declaration.
+      env.header.moduleNames.findSome? fun mod =>
+        if mod.getRoot == `Init then env.find? (mkPrivateNameCore mod name) else none
 
 /-- Register named alternatives. The sibling namespace `AlternativeEquations` allows a
 proof of the original defining equation when Lean reserves its name for a replacement definition. -/
