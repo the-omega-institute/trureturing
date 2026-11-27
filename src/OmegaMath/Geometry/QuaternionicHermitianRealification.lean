@@ -62,7 +62,7 @@ theorem realAction_rightMul (M : Matrix ι ι ℍ[ℝ]) (q : ℍ[ℝ]) (x : Colu
   intro i
   simp only [realAction_apply, rightMul_apply, Finset.sum_mul, mul_assoc]
 
-private theorem re_mul_cycle (a b : ℍ[ℝ]) : (a * b).re = (b * a).re := by
+theorem re_mul_cycle (a b : ℍ[ℝ]) : (a * b).re = (b * a).re := by
   simp only [Quaternion.re_mul]
   ring
 

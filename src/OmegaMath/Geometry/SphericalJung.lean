@@ -20,7 +20,9 @@ open Set
 
 namespace Omega.Geometry.SphericalJung
 
-variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+universe u
+
+variable {E : Type u} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
   [FiniteDimensional ℝ E]
 
 /-- A proper subspace has a unit normal. -/
@@ -246,5 +248,62 @@ theorem zero_not_mem_convexHull_of_card_bound {ι : Type*} [Fintype ι]
   rw [div_eq_mul_inv, one_mul] at h
   rw [div_eq_mul_inv] at hpos
   nlinarith only [h, hpos, hbound]
+
+
+omit [FiniteDimensional ℝ E] in
+/-- A convex combination of a finite family can use zero weights at all
+unused indices, even if some family values coincide. -/
+theorem exists_weights_of_mem_convexHull {ι : Type*} [Fintype ι] {q : ι → E} {z : E}
+    (hz : z ∈ convexHull ℝ (range q)) :
+    ∃ w : ι → ℝ, (∀ i, 0 ≤ w i) ∧ (∑ i, w i = 1) ∧ (∑ i, w i • q i) = z := by
+  classical
+  rw [convexHull_range_eq_exists_affineCombination] at hz
+  obtain ⟨s, w, hw, hs, hz⟩ := hz
+  refine ⟨fun i => if i ∈ s then w i else 0, fun i => ?_, ?_, ?_⟩
+  · change 0 ≤ if i ∈ s then w i else 0
+    split_ifs with hi
+    · exact hw i hi
+    · exact le_rfl
+  · rw [← Finset.sum_filter]
+    simpa using hs
+  · simp only [ite_smul, zero_smul, ← Finset.sum_filter]
+    rw [Finset.affineCombination_eq_linear_combination s q w hs] at hz
+    simpa using hz
+
+
+/-- A nonzero nearest point of a finite convex hull admits a positive
+convex representation on its supporting affine hyperplane. -/
+theorem exists_contact_weights {ι : Type*} [Fintype ι] {q : ι → E} {z : E}
+    (hz : z ∈ convexHull ℝ (range q)) (hzn : z ≠ 0)
+    (hsupport : ∀ i, ‖z‖ ^ 2 ≤ ⟪z, q i⟫_ℝ) :
+    ∃ (κ : Type u) (_ : Fintype κ) (f : κ → ι) (w : κ → ℝ),
+      Fintype.card κ ≤ Module.finrank ℝ E ∧ (∀ i, 0 < w i) ∧ (∑ i, w i = 1) ∧
+      (∑ i, w i • q (f i)) = z := by
+  classical
+  obtain ⟨κ, _, p, w, hp, hlin, hw, hsum, hzw⟩ :=
+    eq_pos_convex_span_of_mem_convexHull hz
+  choose f hf using fun i => hp (mem_range_self i)
+  refine ⟨κ, inferInstance, f, w, ?_, hw, hsum, ?_⟩
+  · let L := (ℝ ∙ z : Submodule ℝ E)
+    have hrank : Module.finrank ℝ L = 1 := finrank_span_singleton hzn
+    have horth := L.finrank_add_finrank_orthogonal
+    have hcontact (i : κ) : ⟪z, p i⟫_ℝ = ‖z‖ ^ 2 :=
+      eq_of_support p w z hw hsum hzw (fun j => hf j ▸ hsupport (f j)) i
+    have hsub : vectorSpan ℝ (range p) ≤ Lᗮ := by
+      cases isEmpty_or_nonempty κ with
+      | inl h =>
+        let : IsEmpty κ := h
+        simp at hsum
+      | inr h =>
+        let k := h.some
+        rw [vectorSpan_eq_span_vsub_set_right ℝ (mem_range_self k), Submodule.span_le]
+        rintro _ ⟨_, ⟨i, rfl⟩, rfl⟩
+        change (p i - p k) ∈ (ℝ ∙ z : Submodule ℝ E)ᗮ
+        rw [Submodule.mem_orthogonal_singleton_iff_inner_left, real_inner_comm z (p i - p k),
+          inner_sub_right, hcontact, hcontact, sub_self]
+    have hv := Submodule.finrank_mono hsub
+    have hi := hlin.card_le_finrank_succ
+    omega
+  · simpa only [hf] using hzw
 
 end Omega.Geometry.SphericalJung

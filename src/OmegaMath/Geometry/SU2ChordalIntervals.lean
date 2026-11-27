@@ -249,10 +249,10 @@ private def ValidHolonomyCell (l u : ℝ) (b : HolonomyCell) : Prop :=
   0 < u ∧ u < 1 ∧ (3141592654 : ℝ) / 2 / 10 ^ 9 < sharpCoefficient * l ∧
     sharpCoefficient * l < 3141592653 / 10 ^ 9 ∧
     9 / 16 < b.cosine ∧ b.cosine ≤ trigSum u 0 14 ∧
-    0 < b.parameter ∧ b.parameter ≤ 1 / 4 ∧
+    0 < b.parameter ∧ b.parameter ≤ 1 / 4 ∧ 0 ≤ 4 * b.parameter ^ 2 + 4 * b.parameter - 1 ∧
     1 - b.cosine ≤ 6 * b.parameter ^ 2 + 4 * b.parameter ^ 3 ∧
     0 < 1 - 3 * b.parameter - 3 * b.parameter ^ 2 ∧
-    1 / 4 < b.cap ∧ b.cap ≤ 1 ∧
+    1 / 4 < b.cap ∧ b.cap < 1 ∧
     b.cap ^ 2 * (1 - 2 * b.parameter - 2 * b.parameter ^ 2) ≤
       (1 + 2 * b.parameter) ^ 2 * (1 - 3 * b.parameter - 3 * b.parameter ^ 2) ^ 2 ∧
     trigSum (sharpCoefficient * l) 0 13 ≤ b.angleCosine ∧ b.angleCosine < 0 ∧
@@ -310,7 +310,7 @@ private def capCell : Fin 15 → CapCell := ![
   ⟨355456769/500000000, -32561483/50000000, 35163971/50000000, 101606513/200000000, 430668931/500000000⟩,
   ⟨696706709/1000000000, -347781663/500000000, 717356091/1000000000, 477598531/1000000000, 439289097/500000000⟩]
 
-private def capSquare (c : ℝ) : ℝ := (3 * c ^ 2 - 1) / 2
+def capSquare (c : ℝ) : ℝ := (3 * c ^ 2 - 1) / 2
 
 private def ValidCapCell (l u : ℝ) (b : CapCell) : Prop :=
   0 ≤ l ∧ u ≤ 4 / 5 ∧
@@ -370,5 +370,125 @@ theorem cap_center_cosine_lt {δ a : ℝ} (hlo : 1 / 2 ≤ δ) (hhi : δ ≤ 4 /
     sub_le_sub (mul_le_mul hA' hc' hc₀ (sqrt_nonneg _))
       (mul_le_mul hB' hs' hS' hB₀)
   exact hleft.trans_lt (hb.trans_le hright)
+
+
+/-- The four-point Jung radius is at most `27δ/20` throughout the first range. -/
+theorem jung_radius_first_range {δ : ℝ} (hδ : 0 ≤ δ) (hmax : δ ≤ 4 / 5) :
+    arccos (√(capSquare (cos δ))) ≤ 27 / 20 * δ := by
+  let x := (27 / 20 : ℝ) * δ
+  have hx : 0 ≤ x := by dsimp [x]; positivity
+  have hxπ : x ≤ π / 2 := by dsimp [x]; linarith [pi_gt_three]
+  have hδπ : δ ≤ π := by linarith [pi_gt_three]
+  have hlow := (sin_bounds hx (by linarith [pi_pos, hxπ]) 1).1
+  have hhigh := (sin_bounds hδ hδπ 1).2
+  norm_num [trigSum, trigTerm, Finset.sum_range_succ, Nat.factorial_succ] at hlow hhigh
+  have hsinδ : 0 ≤ sin δ := sin_nonneg_of_nonneg_of_le_pi hδ hδπ
+  have hh : √(3 / 2 : ℝ) ≤ 49 / 40 :=
+    sqrt_le_iff.mpr ⟨by norm_num, by norm_num⟩
+  have h := mul_le_mul_of_nonneg_right hh hsinδ
+  let y := δ ^ 2
+  have hy : y ≤ 16 / 25 := pow_le_pow_left₀ hδ hmax 2 |>.trans_eq (by norm_num)
+  have hy₀ : 0 ≤ y := sq_nonneg _
+  have hy₂ : y ^ 2 ≤ (16 / 25 : ℝ) ^ 2 := pow_le_pow_left₀ hy₀ hy 2
+  have hy₃ : y ^ 3 ≤ (16 / 25 : ℝ) ^ 3 := pow_le_pow_left₀ hy₀ hy 3
+  have hid :
+      x - x ^ 3 / 6 + x ^ 5 / 120 - x ^ 7 / 5040 -
+        (49 / 40) * (δ - δ ^ 3 / 6 + δ ^ 5 / 120) =
+      δ * ((27 / 20 - 49 / 40) - (((27 / 20) ^ 3 - 49 / 40) / 6) * y +
+        (((27 / 20) ^ 5 - 49 / 40) / 120) * y ^ 2 - (27 / 20) ^ 7 / 5040 * y ^ 3) := by
+    dsimp [x, y]
+    ring
+  have hpoly : 0 ≤ (27 / 20 - 49 / 40) - (((27 / 20) ^ 3 - 49 / 40) / 6) * y +
+        (((27 / 20) ^ 5 - 49 / 40) / 120) * y ^ 2 - (27 / 20) ^ 7 / 5040 * y ^ 3 := by
+    have hsec := mul_nonneg (sub_nonneg.mpr hy)
+      (show 0 ≤ (((27 / 20 : ℝ) ^ 3 - 49 / 40) / 6) -
+          (((27 / 20 : ℝ) ^ 5 - 49 / 40) / 120) * (16 / 25 + y) by
+        norm_num
+        linarith only [hy])
+    nlinarith only [hsec, hy₃]
+  have hnet : √(3 / 2 : ℝ) * sin δ ≤ sin x := by
+    have hdiff := mul_nonneg hδ hpoly
+    rw [← hid] at hdiff
+    linarith only [hlow, hhigh, hdiff, h]
+  have hsq := pow_le_pow_left₀ (mul_nonneg (sqrt_nonneg _) hsinδ) hnet 2
+  rw [mul_pow, sq_sqrt (by norm_num : (0 : ℝ) ≤ 3 / 2)] at hsq
+  have hc : cos x ≤ √(capSquare (cos δ)) := by
+    apply le_sqrt_of_sq_le
+    unfold capSquare
+    nlinarith only [hsq, sin_sq_add_cos_sq δ, sin_sq_add_cos_sq x]
+  have ha := arccos_le_arccos hc
+  rwa [arccos_cos hx (by linarith [pi_pos])] at ha
+
+
+/-- The rational cells bound the holonomy cap radius and the largest possible
+real part of a candidate whose cap center is at the forbidden angle. -/
+theorem exists_range_two_bounds {δ : ℝ} (hlo : 4 / 5 ≤ δ) (hhi : (434 / 125) * δ ≤ π) :
+    ∃ t s k G : ℝ, 0 ≤ t ∧ t ≤ 1 / 4 ∧ 0 ≤ 4 * t ^ 2 + 4 * t - 1 ∧
+      9 / 16 < cos δ ∧ 1 - 6 * t ^ 2 - 4 * t ^ 3 ≤ cos δ ∧
+      1 / 4 < s ∧ s < 1 ∧
+      s ≤ (1 + 2 * t) * (1 - 3 * t - 3 * t ^ 2) / √(1 - 2 * t - 2 * t ^ 2) ∧
+      2 * arccos s ≤ (434 / 125) * δ ∧
+      0 ≤ (434 / 125) * δ - arccos s ∧ cos ((434 / 125) * δ - arccos s) ≤ k ∧
+      k < 0 ∧ 1 / 2 < cos δ - k ∧ 0 < G ∧ G ≤ (cos δ - (7 / 8) * k) ^ 2 ∧
+      QuarticCertificate s G := by
+  obtain ⟨l, u, b, hl, hu, hb⟩ := exists_holonomy_cell hlo hhi
+  rcases hb with ⟨hu₀, hu₁, hl₁, hl₂, hc, hc', ht₀, ht₁, ht₂, ht₃, ht₄, hs₀, hs₁, hs₂,
+    hC₁, hC₂, hS₁, hS₂, hT₀, hT₁, hk₀, hk₁, hk₂, hG₀, hG₁, hcert⟩
+  let K := sharpCoefficient
+  have hk : K * δ ≤ π := hhi
+  have hl₀ : 0 ≤ K * l := by linarith only [hl₁]
+  have hlπ : K * l ≤ π := by linarith only [hl₂, machin_pi_bounds.1]
+  have hmid : π / 2 ≤ K * l := by linarith only [hl₁, machin_pi_bounds.2]
+  have hcδ : b.cosine ≤ cos δ :=
+    hc'.trans ((cos_bounds hu₀.le (by linarith [pi_gt_three]) 6).1.trans
+      (cos_le_cos_of_nonneg_of_le_pi (by linarith) (by linarith [pi_gt_three]) hu))
+  have htSq := pow_le_pow_left₀ ht₀.le ht₁ 2
+  have hd : 0 < 1 - 2 * b.parameter - 2 * b.parameter ^ 2 := by linarith
+  have hcap : b.cap ≤ (1 + 2 * b.parameter) * (1 - 3 * b.parameter - 3 * b.parameter ^ 2) /
+      √(1 - 2 * b.parameter - 2 * b.parameter ^ 2) := by
+    rw [le_div_iff₀ (sqrt_pos.mpr hd)]
+    apply le_of_pow_le_pow_left₀ two_ne_zero (by positivity)
+    rw [mul_pow, sq_sqrt hd.le, mul_pow]
+    exact hs₂
+  let R := arccos b.cap
+  have hR₀ : 0 ≤ R := arccos_nonneg _
+  have hR : R ≤ π / 2 := arccos_le_pi_div_two.mpr (by linarith)
+  have hR' : R ≤ 4 / 3 := by
+    have hC := (cos_bounds (x := 4 / 3) (by norm_num) (by linarith [pi_gt_three]) 1).2
+    norm_num [trigSum, trigTerm, sum_range_succ, Nat.factorial_succ] at hC
+    have h := arccos_le_arccos (show cos (4 / 3) ≤ b.cap by linarith only [hC, hs₀])
+    rw [arccos_cos (by norm_num) (by linarith [pi_gt_three])] at h
+    exact h
+  have hk0 : K * l ≤ K * δ := mul_le_mul_of_nonneg_left hl (by norm_num [K, sharpCoefficient])
+  have hkt : cos (K * δ - R) ≤ b.overlap := by
+    have hcos : cos (K * l) ≤ b.angleCosine := (cos_bounds hl₀ hlπ 6).2.trans hC₁
+    have hsin : sin (K * l) ≤ b.angleSine := (sin_bounds hl₀ hlπ 6).2.trans hS₁
+    have hsin₀ : 0 ≤ sin (K * l) := sin_nonneg_of_nonneg_of_le_pi hl₀ hlπ
+    have hcosR : cos R = b.cap := cos_arccos (by linarith) hs₁.le
+    have hsR : sin R = √(1 - b.cap ^ 2) := sin_arccos _
+    have hT : sin R ≤ b.capSine := by rw [hsR]; exact sqrt_le_iff.mpr ⟨hT₀, hT₁⟩
+    have hsinR : 0 ≤ sin R := sin_nonneg_of_nonneg_of_le_pi hR₀ (by linarith [pi_pos])
+    calc
+      _ ≤ cos (K * l - R) := cos_le_cos_of_nonneg_of_le_pi (by linarith) (by linarith) (by linarith)
+      _ = cos (K * l) * b.cap + sin (K * l) * sin R := by rw [cos_sub, hcosR]
+      _ ≤ b.angleCosine * b.cap + b.angleSine * b.capSine :=
+        add_le_add (mul_le_mul_of_nonneg_right hcos (by linarith)) (mul_le_mul hsin hT hsinR hS₂)
+      _ ≤ _ := hk₀
+  refine ⟨b.parameter, b.cap, b.overlap, b.gapSquare, ht₀.le, ht₁, ht₂, hc.trans_le hcδ, ?_,
+    hs₀, hs₁, hcap, ?_, ?_, hkt, hk₁, ?_, hG₀, ?_, hcert⟩
+  · linarith only [ht₃, hcδ]
+  · change 2 * R ≤ K * δ
+    unfold K sharpCoefficient
+    linarith only [hR', hlo]
+  · change 0 ≤ K * δ - R
+    linarith only [hR, hmid, hk0]
+  · linarith only [hcδ, hk₂]
+  · apply hG₁.trans
+    exact pow_le_pow_left₀
+      (show 0 ≤ b.cosine - rho * b.overlap by
+        have h := mul_nonpos_of_nonneg_of_nonpos (by norm_num [rho] : 0 ≤ rho) hk₁.le
+        linarith only [h, hc])
+      (show b.cosine - rho * b.overlap ≤ cos δ - (7 / 8) * b.overlap from
+        sub_le_sub_right hcδ _) 2
 
 end Omega.Geometry.SU2ChordalIntervals
