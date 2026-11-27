@@ -30,6 +30,7 @@ strata_touched:
   - D5/S3/Topology/RankedCofaceContiguity
   - D5/S3/Topology/CofaceComparisonObstruction
   - D5/S3/Topology/CofaceTriangleCollapse
+  - D5/S3/Topology/RetractionCoordinate
 license: citation-only
 triage: anchor
 ---
@@ -1002,6 +1003,20 @@ rank colours in the three-dimensional construction. If suitable
 charts are given on all source faces, an interval contiguity chain
 can be interpreted in each chart. At vertices fixed during the
 chain the charts need only agree at the fixed value.
+
+The three-dimensional chamber comparison uses recursive path
+coordinates on the selected old graph. A subdivision vertex
+gets the sum of the least and greatest coordinates in its face.
+The coordinate of the actual two-cut retraction therefore agrees
+with the height computed from the tetrahedral table. On an old
+edge the two possible ranks orient the interval chart. On a
+singleton support the table fixes both maps at its retained vertex.
+These two cases glue the contiguity chain on the whole main region.
+In each extra component, adjacency preserves the two selected old
+vertices of the opposite colour. Its opposite retraction lies in
+the subdivided edge on those two vertices. The categorical-cover
+iteration also requires the map to the fourth subdivision and its
+comparison with the graph map used for termination.
 
 The four-dimensional cone argument uses a separate chain argument
 to force an interface of nonzero degree to hit every target
