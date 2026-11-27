@@ -83,6 +83,8 @@ public def supported (source : Environment) (owner name : Name) : Bool :=
     [`land, `lor, `xor, `shiftLeft, `shiftRight].contains method
   let logarithm := owner == `OmegaInit.Data.Nat.Log2 && name == `Nat.log2
   let wordRepr := owner == `OmegaInit.Data.Repr && name == `USize.repr
+  let byteOp := owner == `OmegaInit.Data.ByteArray.Basic && name.getPrefix == `ByteArray &&
+    [`uget, `get, `get!, `uset, `set, `set!, `usize, `copySlice, `beq, `decEq, `hash].contains method
   let modular := (owner == `OmegaInit.Data.Nat.Div.Basic && name == `Nat.divExact) ||
     (owner == `OmegaInit.Data.Nat.PowMod && name == `Nat.powMod)
   let stringOp := owner == `OmegaInit.Data.String.Bootstrap && [`String.Internal.length, `String.Internal.append].contains name
@@ -95,7 +97,7 @@ public def supported (source : Environment) (owner name : Name) : Bool :=
     `OmegaInit.Data.Nat.Internal.Linear, `OmegaInit.Data.Fin.Lemmas].contains owner && IndexedNative.supported name) ||
     ([`OmegaInit.Data.Float.Model.Float, `OmegaInit.Data.Float.Model.Float32].contains owner && modelOperation name) ||
     (owner == `OmegaInit.Prelude && SyntaxPositionNative.supported name) ||
-    ((base || intPrimitive || modular || stringOp || wordRepr || bitwise || logarithm || (inOwner && primitive)) && isExtern source name) ||
+    ((base || intPrimitive || byteOp || modular || stringOp || wordRepr || bitwise || logarithm || (inOwner && primitive)) && isExtern source name) ||
     ((intOwner || [`OmegaInit.Data.Int.Repr, `OmegaInit.Data.Repr, `OmegaInit.Data.Nat.Bitwise.Basic, `OmegaInit.Data.BitVec.Basic].contains owner || [`OmegaInit.Data.UInt.Basic, `OmegaInit.Data.SInt.Basic].contains owner) && usesPinnedFunction name)
 
 private def symbol (n : Name) := (n.replacePrefix `Omega .anonymous).mangle "omega_word_"
@@ -198,7 +200,9 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
       args := args.push arg
       unless b.borrow do cleanup := cleanup ++ s!"  lean_dec({arg});\n"
       continue
-    let dom := dom.consumeMData.getAppFn.constName
+    let dom := dom.consumeMData
+    let dom := if dom.isAppOfArity `optParam 2 then dom.getAppArgs[0]! else dom
+    let dom := dom.getAppFn.constName
     if let some (w, t) := word? dom then
       layout strict dom
       unless a.ty == t && b.ty == .tobject do throw <| IO.userError s!"wrong word argument at {n} {i}"
@@ -237,11 +241,12 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
       args := args.push s!"name{i}"
       cleanup := cleanup ++ s!"  lean_dec(name{i});\n"
       unless b.borrow do cleanup := cleanup ++ s!"  lean_dec({arg});\n"
-    else if dom == `String && a.ty == .object && b.ty == .tobject then
+    else if [`String, `ByteArray].contains dom && a.ty == .object && b.ty == .tobject then
       checkStrictString strict
       hasString := true
       decls := decls.push ((if b.borrow then "b_lean_obj_arg " else "lean_obj_arg ") ++ arg)
-      prepare := prepare ++ s!"  lean_object *string{i} = omega_string_to_lean({arg});\n"
+      let convert := if dom == `String then "omega_string_to_lean" else "omega_bytes_to_lean"
+      prepare := prepare ++ s!"  lean_object *string{i} = {convert}({arg});\n"
       args := args.push s!"string{i}"
       if a.borrow then cleanup := cleanup ++ s!"  lean_dec(string{i});\n"
       unless b.borrow do cleanup := cleanup ++ s!"  lean_dec({arg});\n"
@@ -313,12 +318,14 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
     prepare := prepare ++ "  lean_object *closure = lean_alloc_closure((void *)omega_bitvec_to_string, 2, 1);\n"
     prepare := prepare ++ s!"  lean_closure_set(closure, 0, {call});\n"
     pure ("lean_obj_res", "closure")
-  else if dom == `String then do
+  else if [`String, `ByteArray].contains dom then do
     checkStrictString strict
     unless ret == .object && result == .tobject do throw <| IO.userError s!"incorrect string result at {n}"
     prepare := prepare ++ s!"  lean_object *native_string = {call};\n"
     cleanup := cleanup ++ "  lean_dec(native_string);\n"
-    pure ("lean_obj_res", "omega_string_from_lean(native_string)")
+    let value := if dom == `String then "omega_string_from_lean(native_string)" else
+      "omega_bytes_from_data(lean_sarray_cptr(native_string), lean_sarray_size(native_string))"
+    pure ("lean_obj_res", value)
   else if dom == `BitVec && ret == .tobject && result == .tobject then do
     layout strict dom
     pure ("lean_obj_res", call)
@@ -343,9 +350,11 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
       unless (ret == .float || ret == .float32) && params.all (·.ty == ret) do
         throw <| IO.userError s!"unexpected math library signature {target}"
       pure <| header ++ s!"extern {ty} {target}({String.intercalate ", " (List.replicate params.size ty)});\n"
+  else if official == `ByteArray.copySlice then
+    pure "\nextern lean_obj_res lean_byte_array_copy_slice(b_lean_obj_arg, lean_obj_arg, lean_obj_arg, lean_obj_arg, lean_obj_arg, uint8_t);\n"
   else if official == `System.Platform.getNumBits then
     pure "\nextern lean_obj_res lean_system_platform_nbits(lean_obj_arg);\n" else pure ""
-  let header := if hasName then "\n#include \"strict_name.h\"\n" else if hasString || dom == `String then "\n#include \"strict_string.h\"\n" else ""
+  let header := if hasName then "\n#include \"strict_name.h\"\n" else if hasString || [`String, `ByteArray].contains dom then "\n#include \"strict_string.h\"\n" else ""
   return header ++ proto ++ helper ++ s!"\nLEAN_EXPORT {output} {adapter}({String.intercalate ", " decls.toList}) \{\n{prepare}  {output} r = {value};\n{cleanup}  return r;\n}\n"
 
 end OmegaChecks.InitPort.WordNative
