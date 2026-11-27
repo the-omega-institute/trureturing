@@ -67,7 +67,8 @@ private theorem G_pos_off_minimum {r t : ℝ} (hr : 1 ≤ r) (ht : 1 ≤ t) (hne
       apply strictMonoOn_of_deriv_pos (convex_Icc r t) (hcont hr)
       intro x hx
       rw [interior_Icc] at hx
-      rw [(hasDerivAt_G hr (zero_lt_one.trans_le (hr.trans hx.1.le))).deriv]
+      have hx0 : 0 < x := zero_lt_one.trans (hr.trans_lt hx.1)
+      rw [(hasDerivAt_G hr hx0).deriv]
       exact mul_pos (by positivity) (slope_gt_gibbs hr hx.1)
     simpa only [G_at_minimum hr] using
       hmono ⟨le_rfl, hrt.le⟩ ⟨hrt.le, le_rfl⟩ hrt
@@ -76,11 +77,8 @@ private theorem cut_center_gibbs {r : ℝ} (hr : 1 < r) :
     N r r / (2 * c r * (r - 1) * (r + 1)) = 1 := by
   have hB := cutB_gibbs hr
   rw [cutB_factor, cutA] at hB
-  have hden : 0 < 2 * c r * (r - 1) * (r + 1) := by
-    have := c_pos hr.le
-    have := sub_pos.mpr hr
-    have := zero_lt_one.trans hr
-    positivity
+  have hden : 0 < 2 * c r * (r - 1) * (r + 1) :=
+    mul_pos (mul_pos (mul_pos (by norm_num) (c_pos hr.le)) (sub_pos.mpr hr)) (by linarith)
   apply (div_eq_iff hden.ne').mpr
   apply mul_left_cancel₀ (sub_ne_zero.mpr hr.ne')
   linear_combination hB
@@ -292,7 +290,7 @@ private theorem one_mode_operator_eq_gibbs_levels {r : ℝ} (hr : 1 ≤ r) {C : 
   refine ⟨v, hv, ?_⟩
   ext i j
   fin_cases i <;> fin_cases j <;>
-    simp [Matrix.diagonal_apply, ← hlevels.1, hdiag0, hdiag1, hoff, hoff']
+    simp [← hlevels.1, hdiag0, hdiag1, hoff, hoff']
 
 private theorem sandwich_scalar {r v : ℝ} (hr : 1 ≤ r) :
     root r * (((v / rootScale r : ℝ) : ℂ) • (1 : Local)) * root r =
@@ -302,12 +300,16 @@ private theorem sandwich_scalar {r v : ℝ} (hr : 1 ≤ r) :
   have hv : v / rootScale r * rootScale r = v :=
     div_mul_cancel₀ _ (rootScale_pos (zero_le_one.trans hr)).ne'
   rw [Matrix.mul_smul, Matrix.mul_one, Matrix.smul_mul, ← pow_two,
-    root_diagonal, Matrix.diagonal_pow, Matrix.smul_diagonal]
+    root_diagonal, Matrix.diagonal_pow, ← Matrix.diagonal_smul]
   congr 1
   funext i
-  fin_cases i <;>
-    simp only [Pi.smul_apply, Pi.pow_apply, Matrix.cons_val_zero, Matrix.cons_val_one,
-      smul_eq_mul, root_second_sq hr, hs, ← mul_assoc, ← Complex.ofReal_mul, hv, mul_comm v r]
+  fin_cases i
+  · change ((v / rootScale r : ℝ) : ℂ) * (Real.sqrt (rootScale r) : ℂ) ^ 2 = (v : ℂ)
+    rw [hs, ← Complex.ofReal_mul, hv]
+  · change ((v / rootScale r : ℝ) : ℂ) *
+      ((Real.sqrt (rootScale r) : ℂ) * (rootRatio r : ℂ)) ^ 2 = ((r * v : ℝ) : ℂ)
+    rw [root_second_sq hr, hs, ← mul_assoc, ← Complex.ofReal_mul, hv,
+      ← Complex.ofReal_mul, mul_comm v r]
 
 /-- The literal Wu cubic deficit is nonnegative on a lifted positive-definite qubit. -/
 theorem operatorDeficit_lift_nonneg {r : ℝ} (hr : 1 ≤ r) {P : Local} (hP : P.PosDef) :

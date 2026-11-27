@@ -38,9 +38,8 @@ theorem S_B_vec (b : Occupation → ℝ) (X : Mat) (e : Entry) :
     vec (S_B (diagonal (fun i => (b i : ℂ))) X) e =
       ((b e.1 + b e.2) / 2 : ℂ) * vec X e := by
   obtain ⟨i,j⟩ := e
-  simp only [S_B, vec, Matrix.smul_apply, Matrix.add_apply, Matrix.mul_apply,
-    Matrix.diagonal_mul, Matrix.mul_diagonal, Complex.ofReal_add, Complex.ofReal_mul,
-    smul_eq_mul]
+  simp [S_B, vec, Matrix.smul_apply, Matrix.add_apply, Matrix.mul_apply,
+    Matrix.diagonal_apply, Complex.ofReal_add, Complex.ofReal_mul, smul_eq_mul]
   ring
 
 private theorem finite_kantorovich_sq {ι : Type*} [Fintype ι]
@@ -66,8 +65,13 @@ private theorem finite_kantorovich_sq {ι : Type*} [Fintype ι]
         intro i _
         exact mul_le_mul_of_nonneg_right (hpoint i) (hz i)
       _ = _ := by
-        simp only [Finset.sum_sub_distrib, Finset.sum_add_distrib, ← Finset.mul_sum]
-        ring
+        calc
+          _ = ∑ i, ((449 / 125 : ℝ) * (p i * z i) - (324 / 125 : ℝ) * z i) := by
+            apply Finset.sum_congr rfl
+            intro i _
+            ring
+          _ = _ := by
+            rw [Finset.sum_sub_distrib, ← Finset.mul_sum, ← Finset.mul_sum]
   have hCA : 4 * (324 / 125 : ℝ) * C * A ≤
       (449 / 125 : ℝ) ^ 2 * B ^ 2 := by
     have hmul := mul_le_mul_of_nonneg_right hC hA
@@ -84,8 +88,10 @@ private theorem finite_kantorovich_sq {ι : Type*} [Fintype ι]
           16 * (449 / 125 : ℝ) ^ 2 * B ^ 2 := by nlinarith only [hCA]
       _ ≤ _ := hfac
   have hab : 0 < (324 / 125 : ℝ) := by norm_num
-  apply le_of_mul_le_mul_left _ hab
-  simpa only [mul_assoc, mul_left_comm, mul_comm] using hmul
+  have hfinal : 64 * C * A ≤ 81 * B ^ 2 := by
+    apply le_of_mul_le_mul_left _ hab
+    simpa only [mul_assoc, mul_left_comm, mul_comm] using hmul
+  simpa only [A, B, C] using hfinal
 
 theorem kantorovich_324 {ι : Type*} [Fintype ι]
     (p : ι → ℝ) (u : ι → ℂ) (hp : ∀ i, 1 ≤ p i ∧ p i ≤ 324 / 125) :
@@ -109,9 +115,10 @@ theorem relative_trace_from_spectral_data {ι : Type*} [Fintype ι]
   have hv0 : 0 ≤ vNorm := by rw [hv]; exact Finset.sum_nonneg (fun i _ => Complex.normSq_nonneg _)
   have hq0 : 0 ≤ q := by
     rw [hq]
-    exact Finset.sum_nonneg (fun i _ => mul_nonneg (by positivity) (Complex.normSq_nonneg _))
+    exact Finset.sum_nonneg (fun i _ =>
+      mul_nonneg (by linarith [(hp i).1]) (Complex.normSq_nonneg _))
   have hkant := kantorovich_324 p u hp
-  rw [hq, hu, hpu] at hkant
+  rw [← hq, ← hu, ← hpu] at hkant
   have hcs : cross ^ 2 ≤ pUNorm * vNorm := by
     rw [hcross]
     let pu : EuclideanSpace ℂ ι :=
@@ -122,14 +129,20 @@ theorem relative_trace_from_spectral_data {ι : Type*} [Fintype ι]
       simp [PiLp.inner_apply]
       apply Finset.sum_congr rfl
       intro i _
+      dsimp [pu]
+      rw [map_mul]
+      simp only [Complex.star_def, Complex.conj_ofReal]
       ring
     have hsum : ‖pu‖ ^ 2 = pUNorm := by
       rw [EuclideanSpace.norm_sq_eq]
       rw [hpu]
       apply Finset.sum_congr rfl
       intro i _
-      rw [← Complex.normSq_eq_norm_sq, ← Complex.normSq_eq_norm_sq,
-        Complex.normSq_mul, Complex.normSq_ofReal]
+      dsimp [pu]
+      change ‖(p i : ℂ) * u i‖ ^ 2 = _
+      rw [← Complex.normSq_eq_norm_sq]
+      rw [Complex.normSq_mul, Complex.normSq_ofReal]
+      ring
     have hsumv : ‖v‖ ^ 2 = vNorm := by
       rw [EuclideanSpace.norm_sq_eq]
       simpa only [Complex.normSq_eq_norm_sq] using hv.symm
@@ -138,32 +151,42 @@ theorem relative_trace_from_spectral_data {ι : Type*} [Fintype ι]
       (Complex.abs_re_le_norm _).trans h
     have hprod : cross ^ 2 ≤ (‖pu‖ * ‖v‖) ^ 2 := by
       rw [hcross]
-      exact (sq_le_sq₀ (abs_nonneg _) habs).mpr habs
-    nlinarith only [hprod, hsum, hsumv]
-  have hcv : pUNorm * vNorm ≤ pUNorm * uNorm :=
+      rw [← sq_abs]
+      exact (sq_le_sq₀ (abs_nonneg _)
+        (mul_nonneg (norm_nonneg _) (norm_nonneg _))).mpr habs
+    calc
+      cross ^ 2 ≤ (‖pu‖ * ‖v‖) ^ 2 := hprod
+      _ = ‖pu‖ ^ 2 * ‖v‖ ^ 2 := by ring
+      _ = pUNorm * vNorm := by rw [hsum, hsumv]
+  have hcv : pUNorm * vNorm ≤ pUNorm * uNorm := by
     have hpUNonneg : 0 ≤ pUNorm := by
       rw [hpu]
       exact Finset.sum_nonneg (fun i _ =>
         mul_nonneg (sq_nonneg _) (Complex.normSq_nonneg _))
     exact mul_le_mul_of_nonneg_left hcontract hpUNonneg
   have hbound : cross ^ 2 ≤ (81 / 64 : ℝ) * q ^ 2 := by
-    have hk := hkant
-    nlinarith only [hcs, hcv, hk]
-  nlinarith only [hbound, sq_nonneg (cross + (9 / 8 : ℝ) * q)]
+    have htrans := hcs.trans hcv
+    calc
+      cross ^ 2 ≤ pUNorm * uNorm := htrans
+      _ ≤ (81 / 64 : ℝ) * q ^ 2 := by nlinarith only [hkant]
+  nlinarith only [hbound, hq0, sq_nonneg (cross + (9 / 8 : ℝ) * q)]
 
 /- The concrete trace operators used by the Wu application. -/
 def centeredEmbeddedGenerator (r : ℝ) (W : Mat) : Mat :=
-  G r * (generator r (GInv r * W * GInv r) - (3 : ℂ) •
-    (GInv r * W * GInv r)) * G r
+  G r * generator r (GInv r * W * GInv r) * G r - (3 : ℂ) • W
 
 def mixedTrace (M W E : Mat) : ℝ :=
   (S_M M W * E).trace.re
 
-structure WuSpectralCertificate (r : ℝ) (M W : Mat) : Prop where
+structure WuSpectralCertificate (r : ℝ) (M W : Mat) where
   p : Fin 16 → ℝ
   u : EuclideanSpace ℂ (Fin 16)
   v : EuclideanSpace ℂ (Fin 16)
-  cross q uNorm pUNorm vNorm : ℝ
+  cross : ℝ
+  q : ℝ
+  uNorm : ℝ
+  pUNorm : ℝ
+  vNorm : ℝ
   p_range : ∀ i, 1 ≤ p i ∧ p i ≤ 324 / 125
   cross_eq : cross = (∑ i, (conj ((p i : ℂ) * u i)) * v i).re
   q_eq : q = ∑ i, p i * Complex.normSq (u i)
@@ -190,23 +213,18 @@ theorem wu_relative_mixed_generator
   have hcross : cert.cross =
       (S_M M W * centeredEmbeddedGenerator r W).trace.re := cert.cross_trace_eq
   have hq : cert.q = (M * W ^ 2).trace.re := cert.q_trace_eq
-  have hcenter : centeredEmbeddedGenerator r W =
-      G r * generator r (GInv r * W * GInv r) * G r - (3 : ℂ) • W := by
-    unfold centeredEmbeddedGenerator
-    simp only [mul_sub, mul_smul_comm]
-    ring
-  rw [hcenter] at hcross
   have hmix : ((M * W + W * M) *
       (G r * generator r (GInv r * W * GInv r) * G r)).trace.re =
       2 * (3 * cert.q + cert.cross) := by
-    rw [show S_M M W = (M * W + W * M) / 2 by rfl]
-    dsimp only [mixedTrace] at hcross
+    rw [centeredEmbeddedGenerator] at hcross
+    change cert.cross =
+      (((1 / 2 : ℂ) • (M * W + W * M)) *
+        (G r * generator r (GInv r * W * GInv r) * G r - (3 : ℂ) • W)).trace.re at hcross
     rw [mul_sub, Matrix.trace_sub, Complex.sub_re, Matrix.trace_smul,
       smul_eq_mul, Complex.re_ofReal_mul] at hcross
     have hq' := hq
     rw [Matrix.trace_mul, Matrix.trace_add, Complex.add_re,
       Matrix.trace_mul_comm (W ^ 2) M] at hq'
-    dsimp only [S_M] at hcross
     nlinarith only [hcross, hq']
   rw [hmix]
   rw [hq] at hrel
