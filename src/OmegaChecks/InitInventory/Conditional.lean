@@ -40,17 +40,19 @@ public def conditionalConsequence? (owner name : Name) : Option (String × Name 
     if let some (proof, result) := observation then
       return ("∀ P : Prop, Decidable P", proof,
         s!"When x ≤ y on Bool is the constant proposition P, {result} exactly when P holds")
-  if owner == `Init.Grind.FieldNormNum then
-    let inverse := ``OmegaChecks.InitBoundaries.FieldNormalization.inverse
-    let verify := ``OmegaChecks.InitBoundaries.FieldNormalization.verifyInv
-    let divide := ``OmegaChecks.InitBoundaries.FieldNormalization.divide
-    let power := ``OmegaChecks.InitBoundaries.FieldNormalization.power
+  if owner == `Init.Grind.Ring.Field || owner == `Init.Grind.FieldNormNum then
     let quotient := "The field construction uses propext and Quot.sound"
     let entry := match name with
-      | `Lean.Grind.Field.NormNum.ofRat_inv => some (inverse, quotient)
-      | `Lean.Grind.Field.NormNum.inv_eq => some (verify, quotient)
-      | `Lean.Grind.Field.NormNum.ofRat_div' => some (divide, quotient ++ " and the rational division computes 1 / (3/2) = 2/3")
-      | `Lean.Grind.Field.NormNum.ofRat_zpow' => some (power, quotient ++ " and the rational integer power computes (2/3)^(-1) = 3/2")
+      | ``Lean.Grind.Field.inv_mul => some (``OmegaChecks.InitBoundaries.FieldNormalization.inverseProduct, quotient)
+      | ``Lean.Grind.Field.inv_neg => some (``OmegaChecks.InitBoundaries.FieldNormalization.inverseNegative, quotient)
+      | ``Lean.Grind.Field.of_mul_eq_zero => some (``OmegaChecks.InitBoundaries.FieldNormalization.productZero, quotient)
+      | ``Lean.Grind.Field.of_pow_eq_zero => some (``OmegaChecks.InitBoundaries.FieldNormalization.powerZero, quotient)
+      | ``Lean.Grind.Field.div_div_left => some (``OmegaChecks.InitBoundaries.FieldNormalization.divideLeft, quotient)
+      | ``Lean.Grind.Field.div_div_right => some (``OmegaChecks.InitBoundaries.FieldNormalization.divideRight, quotient)
+      | `Lean.Grind.Field.NormNum.ofRat_inv => some (``OmegaChecks.InitBoundaries.FieldNormalization.inverse, quotient)
+      | `Lean.Grind.Field.NormNum.inv_eq => some (``OmegaChecks.InitBoundaries.FieldNormalization.verifyInv, quotient)
+      | `Lean.Grind.Field.NormNum.ofRat_div' => some (``OmegaChecks.InitBoundaries.FieldNormalization.divide, quotient ++ " and the rational division computes 1 / (3/2) = 2/3")
+      | `Lean.Grind.Field.NormNum.ofRat_zpow' => some (``OmegaChecks.InitBoundaries.FieldNormalization.power, quotient ++ " and the rational integer power computes (2/3)^(-1) = 3/2")
       | _ => none
     if let some (witness, assumptions) := entry then
       return ("∀ P : Prop, ¬¬ P → P", witness, assumptions)

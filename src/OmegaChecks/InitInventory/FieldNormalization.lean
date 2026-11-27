@@ -135,6 +135,36 @@ private theorem castNotZero (P : Prop) (i : R) (odd : parity i ≠ 0) (e : mk P 
   have eq : rel P i 0 := Quotient.exact (s := residueSetoid P) e
   exact eq.elim (fun h => odd (congrArg parity h)) (fun h => odd h.2)
 
+/-- The even residues expose product, power, and division laws that distinguish the quotient
+before its parity classes are identified. -/
+public theorem inverseProduct (rule : type_of% @Field.inv_mul.{0}) (P : Prop) (nn : ¬¬ P) : P := by
+  letI := quotientField P nn
+  exact propositionOfEquality P (i := 2) (j := 0) (by decide) (rule (mk P 2) (mk P 2))
+
+public theorem inverseNegative (rule : type_of% @Field.inv_neg.{0}) (P : Prop) (nn : ¬¬ P) : P := by
+  letI := quotientField P nn
+  exact propositionOfEquality P (i := 6) (j := 4) (by decide) (rule (mk P 2))
+
+public theorem productZero (rule : type_of% @Field.of_mul_eq_zero.{0}) (P : Prop) (nn : ¬¬ P) : P := by
+  letI := quotientField P nn
+  cases rule (a := mk P 2) (b := mk P 4) rfl with
+  | inl h => exact propositionOfEquality P (i := 2) (j := 0) (by decide) h
+  | inr h => exact propositionOfEquality P (i := 4) (j := 0) (by decide) h
+
+public theorem powerZero (rule : type_of% @Field.of_pow_eq_zero.{0}) (P : Prop) (nn : ¬¬ P) : P := by
+  letI := quotientField P nn
+  exact propositionOfEquality P (i := 2) (j := 0) (by decide) (rule (mk P 2) 3 rfl)
+
+public theorem divideLeft (rule : type_of% @Field.div_div_left.{0}) (P : Prop) (nn : ¬¬ P) : P := by
+  letI := quotientField P nn
+  exact propositionOfEquality P (i := 0) (j := 2) (by decide)
+    (rule (x := mk P 1) (y := mk P 2) (z := mk P 2))
+
+public theorem divideRight (rule : type_of% @Field.div_div_right.{0}) (P : Prop) (nn : ¬¬ P) : P := by
+  letI := quotientField P nn
+  exact propositionOfEquality P (i := 2) (j := 0) (by decide)
+    (rule (x := mk P 1) (y := mk P 2) (z := mk P 4))
+
 open Lean.Grind.Field.NormNum
 
 private theorem inverseR : twoThirds⁻¹ = threeHalves := by decide +kernel
@@ -181,7 +211,8 @@ public theorem power (op : Rat → Int → Rat) (compute : op twoThirds (-1) = t
 
 
 run_cmd
-  for witness in #[``inverse, ``verifyInv, ``divide, ``power] do
+  for witness in #[``inverseProduct, ``inverseNegative, ``productZero, ``powerZero, ``divideLeft, ``divideRight,
+      ``inverse, ``verifyInv, ``divide, ``power] do
     let axioms ← Lean.collectAxioms witness
     unless axioms.all (#[`propext, `Quot.sound].contains ·) do
       throwError "field normalization reduction {witness} uses extra axioms: {axioms}"
