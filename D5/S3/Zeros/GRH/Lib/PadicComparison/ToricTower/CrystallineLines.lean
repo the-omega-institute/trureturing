@@ -174,7 +174,7 @@ lemma rootSystemsAreLines_crysTest {p} [ThePrime p] [h : CrysPeriodAlgebra] :
       (by simpa [z] using! SModEq.sub_mem.1 congr($hw.1).symm)
     obtain ⟨rfl, rfl⟩ : .comp g.1.1 v = χ ∧ x.1.2.1 ≫ g = f := by
       constructor <;> ext <;> exact congr($c _).trans (by simp)
-    use ⟨g⟩, rfl, fun ⟨g⟩ e ↦ H g (c ▸ algHom_ext' (B.2.monoidHom_lift_bijective.1 congr($e.1.1.1))
+    use ⟨g⟩, rfl, fun g e ↦ H g.down (c ▸ algHom_ext' (B.2.monoidHom_lift_bijective.1 congr($e.1.1.1))
       congr($e.1.2.1.1.1)) ▸ rfl
   ((hx E).2 _).elim fun ⟨γ⟩ hγ ↦ .of_acyclic (ψ := 𝟭 _) (F' := crysPeriodCoeff) (isoOfAppBijective _
     hx) (IsCohomEquiv.of_isIso _).bij x.1.2.1 γ (by tauto) ⟨uliftCoyonedaEquiv.injective hγ⟩ (by

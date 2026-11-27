@@ -106,19 +106,19 @@ lemma exists_isAnticyclotomicAt [ThePrime ℓ'] N (S : Finset (FinPlace E₁)) {
     ?z (hy _) ((a.smul b).valuationVia_eq_one_iff.2 (u.1.2 _ ?_)) ?_⟩ <;> simp_all [(a.smul
     b).valuation_natCast_eq_one_iff, placesDividing, (B v _).mt]) h 1, hW⟩ (hS.union h₀.cj)
   choose k hk using (Nat.modEq_iff_exists_eq_add hp.pos).1 ((F.mem_ker_cycCharMod_iff
-    (by simp [hA.valuation_natCast_eq_one_iff]; grind [placesDividing])).1 H.1.1).symm
+    (by simp [hA.valuation_natCast_eq_one_iff]; grind -abstractProof [placesDividing])).1 H.1.1).symm
   choose _ _ e o _ using hA.exists_localArtin_eq_tameGenerator
   let r := (LocInt P).unitGroupToResidueFieldUnits.comp (.mk' (fun t ↦
     ⟨t * uniformizer P ^ (Valued.v t.1).log,
     (Valued.v.mem_unitGroup_iff ..).2 (by simp [WithZero.exp_neg, -WithZero.inv_exp])⟩)
-      (by simp [Subtype.ext_iff, zpow_add]; grind))
+      (by simp [Subtype.ext_iff, zpow_add]; grind -abstractProof))
   have R t (h : Valued.v (t.1 - 1) < 1) : r t = 1 := Units.ext
     (residue_eq_iff_valuation_sub_lt_one.2 (by simpa [by simpa using Valued.v.map_one_add_of_lt h]))
   have n := (orderOf_eq_card_of_forall_mem_zpowers o).trans (card_ResField P ▸ Nat.card_units _)
   let f := (monoidHomOfForallMemZpowers o (g' := ofAdd (1 : ZMod (ℓ' ^ N))) (by simp [*])).comp r
   have L t : r (t ^ k) = 1 → f t = 1 := (o (r t)).elim fun _ e ↦ by
     simpa [f, ← e, ← zpow_natCast, ← zpow_mul, ← orderOf_dvd_iff_zpow_eq_one, n, hk] using
-      Int.dvd_of_mul_dvd_mul_right (by grind [hp.one_lt])
+      Int.dvd_of_mul_dvd_mul_right (by grind -abstractProof [hp.one_lt])
   choose η hθ using (((mk' (principalIdele (K := E₁)).range).domRestrict
     (idelesUnitOff T)).liftOfSurjective (MonoidHom.range_eq_top.1
     (comap_injective (mk'_surjective _) (by simpa)))).symm.surjective ⟨(f.comp _).domRestrict _, by
@@ -127,7 +127,7 @@ lemma exists_isAnticyclotomicAt [ThePrime ℓ'] N (S : Finset (FinPlace E₁)) {
       ((f.comp (ideleAt P)).comp
     (principalIdele.domRestrict _)).ker.toAddSubgroup.toIntSubmodule fun u hu ↦ L _ (R _ (by
     have v := by simpa [NeZero.ne, ← hy, valuationVia] using
-      hA.valuationVia_eq_one_iff.2 (u.2 P (by grind))
+      hA.valuationVia_eq_one_iff.2 (u.2 P (by grind -abstractProof))
     simpa using! (v_algebraMap_eq_valuation (u.1.1 ^ k - 1)).trans_lt
       (hA.isEquiv.lt_one_iff_lt_one.1 (by simpa [← (Subgroup.mem_iInf.1 H.1.2 ⟨_, hu⟩).symm,
       pow_add, pow_mul, *, ← mul_one_sub, Valuation.map_sub_swap] using F.2 _ v.le))))⟩
@@ -142,8 +142,8 @@ lemma exists_isAnticyclotomicAt [ThePrime ℓ'] N (S : Finset (FinPlace E₁)) {
   simp [star_locIdele, ↓locIdele_mem_idelesUnitOff, *, f, r, (isSplit_of_q_prime hp).symm] at g
   have F := by simpa using F.mul_iff.2 (hA.tameGenerator ^ (h σ⁻¹).toAdd.val).2
   exact ⟨P, hP ∘ .inr, hp, ⟨A, _, _, h⟩, (G _ F).2.self_of_nhds, by ext; simp [g], fun _ t
-    ↦ ⟨⟨(hh.1 · ⟨⟩), θ, (le_comap_mk' _ η.ker ⟨·, rfl⟩), by grind [mem_idelesUnitOff, star_star,
-    MonoidHom.comp_apply], d⟩, by simp [*], hA, F, by grind, hA.tameGenerator.2, g, rfl⟩⟩
+    ↦ ⟨⟨(hh.1 · ⟨⟩), θ, (le_comap_mk' _ η.ker ⟨·, rfl⟩), by grind -abstractProof [mem_idelesUnitOff, star_star,
+    MonoidHom.comp_apply], d⟩, by simp [*], hA, F, by grind -abstractProof, hA.tameGenerator.2, g, rfl⟩⟩
 
 /-- The even classes: locally constant cocycles c in (O/ℓ^ν)(−e), unramified off ℓ, S and S̄,
 with c(g^c) = c(g), vanishing on the elements of decomposition groups above ℓ in ker cyc. -/
