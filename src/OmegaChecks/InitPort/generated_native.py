@@ -124,7 +124,7 @@ def check_linear_marks(stage, library, inputs, kind):
 
 
 def compile_generated(stage, product, graph, seed_ir, owners=None, *, original_seed=None, before_owner=None,
-                      check_sharing=None, check_macro_reader=False, check_macro_writer=False,
+                      check_sharing=None, check_macro_reader=False, check_macro_writer=False, check_syntax_array=False,
                       check_strings=True, check_string_marks=False, check_byte_marks=False, check_literals=True, check_mixed=True, check_rat=True, check_bootstrap=True,
                       check_list_search=True, check_decoding=True, check_names=True, check_toolchain=True, check_thunks=False, check_persistent=False, check_exclusive=False,
                       check_guarded_pointer=False, check_effects=False, check_address=False, check_pointer_comparison=False, check_shared_pointer=False,
@@ -292,7 +292,8 @@ def compile_generated(stage, product, graph, seed_ir, owners=None, *, original_s
             run("leanc", client, HERE / "consumers" / "thunk_consumer.c", *dependency_objects(dependencies), "-o", app)
             run(app, timeout=30)
 
-    observations = [(check_dynamic, "OmegaInit.Dynamic", "DynamicValue", None),
+    observations = [(check_syntax_array, "OmegaInit.Prelude", "SyntaxArray", "Omega.Lean.TSyntaxArray.mkImpl"),
+                    (check_dynamic, "OmegaInit.Dynamic", "DynamicValue", None),
                     (check_persistent, "OmegaInit.System.IO", "Persistent", "Omega.Runtime.markPersistent"),
                     (check_address, "OmegaInit.Util", "Address", "Omega.ptrAddrUnsafe"),
                     (check_exclusive, "OmegaInit.Util", "Exclusive", "Omega.isExclusiveUnsafe"),
@@ -324,6 +325,8 @@ def compile_generated(stage, product, graph, seed_ir, owners=None, *, original_s
                 "Omega.unsafeBaseIO", "Omega.unsafeEIO", "Omega.unsafeIO"]
             if client_name == "PointerComparison":
                 unsafe_names = ["Omega.ptrEq", "Omega.withPtrEqUnsafe"]
+            if client_name == "SyntaxArray":
+                unsafe_names.append("Omega.Lean.TSyntaxArray.rawImpl")
             for name in unsafe_names:
                 if result.returncode == 0 or f"uses unsafe declaration '{name}'" not in result.stdout + result.stderr:
                     raise ValueError(f"safe client did not reject {name}")
