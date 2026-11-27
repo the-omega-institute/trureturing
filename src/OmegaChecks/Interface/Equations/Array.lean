@@ -6,7 +6,6 @@ public import OmegaChecks.InitPort.SyntaxArray
 public import OmegaChecks.InitPort.BorrowedIndex
 public import OmegaChecks.InitPort.ArrayWord
 public import Init.Data.RArray
-public import Init.Data.Array.Count
 public import Init.Data.Array.DecidableEq
 public import Init.Data.Array.Lemmas
 public import OmegaChecks.InitPort.ArrayModify
@@ -18,9 +17,6 @@ import all OmegaChecks.InitPort.Alternatives.ByteArray
 /-! Pointwise correspondence between the strict list-backed array operations and pinned Init. -/
 
 namespace OmegaChecks.Interface.Equations
-
-public theorem Array.countP {α : Type u} (p : α → Bool) (xs : Array α) :
-    (xs.filter p).size = xs.countP p := _root_.Array.countP_eq_size_filter.symm
 
 public theorem ByteArray.fastAppend (a b : ByteArray) :
     OmegaChecks.InitPort.Alternatives.ByteArray.fastAppend a b = a.fastAppend b :=

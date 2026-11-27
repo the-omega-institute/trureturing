@@ -79,12 +79,29 @@ private def writeModule (lib : System.FilePath) (name ext : Name)
     parts := parts.push (file, {data with entries})
   saveModuleDataParts name parts
 
+/-- Both count functions expose their defining equations to ordinary imports.
+Check reflexivity at free inputs, as required by callers that use the kernel reduction. -/
+private def checkCountEquations (env : Environment) : IO Unit := do
+  for name in [`Omega.List.countP.eq_1, `Omega.Array.countP.eq_1] do
+    let some ci := env.find? name | continue
+    let rec refl : Expr → Option Expr
+      | .forallE n d b bi => return .lam n d (← refl b) bi
+      | prop => do
+        let .const `Omega.Eq levels := prop.getAppFn | none
+        let #[α, left, _] := prop.getAppArgs | none
+        return mkApp2 (mkConst `Omega.Eq.refl levels) α left
+    let some proof := refl ci.type | throw <| IO.userError s!"unexpected equation type for {name}"
+    let .ok inferred := Kernel.check env {} proof | throw <| IO.userError s!"invalid reflexivity term for {name}"
+    unless Kernel.isDefEqGuarded env {} inferred ci.type do
+      throw <| IO.userError s!"ordinary imports lost definitional reduction for {name}"
+
 /-- Ordinary imports consult the public axiom extension when bodies are sealed.
 Read the persisted exported module level and ask the same API as `#print axioms`. -/
 private def checkPublic (imports : Array Import) : IO Unit := do
   unsafe enableInitializersExecution
   let env ← importModules imports {} (loadExts := true) (level := .exported)
   OmegaChecks.InitPort.NativeQuot.checkSupport env
+  checkCountEquations env
   let check : CoreM Nat := do
     for mod in env.header.modules, data in env.header.moduleData, i in [:env.header.modules.size] do
       let entries := exportedAxiomsExt.getModuleEntries env i

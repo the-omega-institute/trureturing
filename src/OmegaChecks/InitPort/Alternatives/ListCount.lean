@@ -1,6 +1,5 @@
 module
 public import Init.Data.List.Count
-import all Init.Data.List.Count
 
 /-! Count elements by induction on a sublist or on the inputs of a traversal. -/
 namespace OmegaChecks.InitPort.Alternatives
@@ -150,32 +149,5 @@ public theorem List.countP_replicate : type_of% @_root_.List.countP_replicate :=
       rw [_root_.List.replicate_succ, _root_.List.countP_cons_of_pos h, ih]
   · rw [ite_eq_right h]
     exact List.countP_eq_zero.mpr (fun x mem => (_root_.List.eq_of_mem_replicate mem) ▸ h)
-
-@[expose] public def List.countP {α : Type u} (p : α → Bool) (l : List α) : Nat :=
-  (l.filter p).length
-
-public theorem List.countP_cons_of_pos {α : Type u} {p : α → Bool} {a : α} {l : List α}
-    (h : p a) : List.countP p (a :: l) = List.countP p l + 1 :=
-  congrArg _root_.List.length (_root_.List.filter_cons_of_pos h)
-
-public theorem List.countP_cons_of_neg {α : Type u} {p : α → Bool} {a : α} {l : List α}
-    (h : ¬p a) : List.countP p (a :: l) = List.countP p l :=
-  congrArg _root_.List.length (_root_.List.filter_cons_of_neg h)
-
-public theorem List.countP_eq_length_filter' {α : Type u} {p : α → Bool} :
-    List.countP p = _root_.List.length ∘ _root_.List.filter p := rfl
-
-public theorem _root_.OmegaChecks.InitPort.AlternativeEquations.List.countP.eq_1
-    {α : Type u} (p : α → Bool) (l : List α) : List.countP p l = _root_.List.countP.go p l 0 := by
-  have go (xs : List α) (n : Nat) : (xs.filter p).length + n = _root_.List.countP.go p xs n := by
-    induction xs generalizing n with
-    | nil => exact Nat.zero_add n
-    | cons x xs ih =>
-      cases h : p x with
-      | false => simpa only [List.filter_cons, _root_.List.countP.go, h, Bool.false_eq_true, ite_false] using ih n
-      | true =>
-        simp only [List.filter_cons, _root_.List.countP.go, h, ite_true, List.length_cons]
-        exact (Nat.succ_add ..).trans (ih (n+1))
-  exact go l 0
 
 end OmegaChecks.InitPort.Alternatives

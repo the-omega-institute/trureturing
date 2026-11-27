@@ -380,6 +380,17 @@ public theorem List.findSomeM?_pure : type_of% @_root_.List.findSomeM?_pure := b
     | none => exact ih
     | some b => rfl
 
+public theorem List.countP_toArray : type_of% @_root_.List.countP_toArray := by
+  intro α p xs
+  rw [Array.countP, List.foldr_toArray]
+  induction xs with
+  | nil => rfl
+  | cons a xs ih =>
+    rw [List.foldr_cons, List.countP_cons]
+    cases h : p a with
+    | false => exact ih
+    | true => exact congrArg Nat.succ ih
+
 private def findStep (f : α → Option β) (a : α) : ForInStep (Option (Option β) × Unit) :=
   match f a with
   | some b => .done (some (some b), ())
@@ -706,29 +717,5 @@ public theorem List.getLast?_flatMap : type_of% @_root_.List.getLast?_flatMap :=
     rw [_root_.List.flatMap_cons, _root_.List.getLast?_append, ih,
       _root_.List.reverse_cons, _root_.List.findSome?_append, _root_.List.findSome?_cons]
     cases (f x).getLast? <;> rfl
-
-@[expose] public def Array.countP {α : Type u} (p : α → Bool) (xs : Array α) : Nat :=
-  (xs.filter p).size
-
-public theorem Array.countP_eq_size_filter' {α : Type u} {p : α → Bool} :
-    Array.countP p = _root_.Array.size ∘ _root_.Array.filter p := rfl
-
-public theorem List.countP_toArray {α : Type u} {p : α → Bool} {l : List α} :
-    Array.countP p l.toArray = l.countP p := by
-  unfold Array.countP
-  rw [_root_.List.filter_toArray, _root_.List.size_toArray]
-  exact _root_.List.countP_eq_length_filter.symm
-
-public theorem _root_.OmegaChecks.InitPort.AlternativeEquations.Array.countP.eq_1
-    {α : Type u} (p : α → Bool) (xs : Array α) :
-    Array.countP p xs = xs.foldr (fun a n => bif p a then n + 1 else n) 0 := by
-  unfold Array.countP
-  rw [← _root_.Array.length_toList, _root_.Array.toList_filter, ← _root_.Array.foldr_toList]
-  induction xs.toList with
-  | nil => rfl
-  | cons a as ih =>
-    cases h : p a <;>
-      simp only [_root_.List.filter_cons, _root_.List.foldr_cons, h, Bool.false_eq_true,
-        ite_false, ite_true, Bool.cond_true, Bool.cond_false, _root_.List.length_cons, ih]
 
 end OmegaChecks.InitPort.Alternatives

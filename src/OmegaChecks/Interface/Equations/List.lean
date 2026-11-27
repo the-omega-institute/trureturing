@@ -1,14 +1,10 @@
 module
-public import Init.Data.List.Count
 public import Init.Data.List.Impl
 public import Init.Data.List.Sort.Impl
 
 /-! Pointwise computation of the list implementations at their pinned entry points. -/
 
 namespace OmegaChecks.Interface.Equations
-
-public theorem List.countP {α : Type u} (p : α → Bool) (l : List α) :
-    (l.filter p).length = l.countP p := _root_.List.countP_eq_length_filter.symm
 
 public theorem List.appendTR {α : Type u} (xs ys : List α) :
     _root_.List.append xs ys = _root_.List.appendTR xs ys :=
