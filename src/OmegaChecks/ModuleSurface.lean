@@ -1,6 +1,7 @@
 module
 public import Lean
 public import OmegaChecks.InitCompiler.RootNames
+import OmegaChecks.InitPort.Translation
 import OmegaChecks.InitPort.WordNative
 import Lean.Elab.ParseImportsFast
 import Lean.Compiler.LCNF.SpecInfo
@@ -202,9 +203,9 @@ private def checkElaboration (env full : Environment) (reference? : Option Envir
       | `Omega.String.toList => pure (`OmegaInit.Data.String.Basic, "omega_string_to_list")
       | `Omega.String.ofList => pure (`OmegaInit.Prelude, "omega_string_of_list")
       | _ => do
-        let original := n.replacePrefix `Omega .anonymous
+        let original := InitKernelPort.originalName n
         let some ref := reference? | throw <| IO.userError s!"unverified native symbol for {owner}/{n}"
-        unless n == `Omega ++ original && ref.getModuleIdxFor? original == ref.getModuleIdx? (counterpart owner) &&
+        unless n == InitKernelPort.portName original && ref.getModuleIdxFor? original == ref.getModuleIdx? (counterpart owner) &&
             InitPort.WordNative.supported ref owner original do
           throw <| IO.userError s!"unverified native symbol for {owner}/{n}"
         InitPort.NativeState.checkNativeNat full
