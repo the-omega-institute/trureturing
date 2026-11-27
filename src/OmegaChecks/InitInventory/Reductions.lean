@@ -129,7 +129,7 @@ private def replayWitnesses (env : Environment) : IO Unit := do
   let roots := (reductions.map fun (_, _, _, witness) => witness) ++
     ClassicalConsequences.witnesses.map Prod.snd ++ [``ClassicalConsequences.ofTypeDecidableEq] ++
     [``MacroReferences.noQueryRoundTrip, ``MacroReferences.noRoundTrip] ++
-    [``DynamicRoundTrip.noRoundTrip, ``FactoryCarriers.noCarrierEmbedding] ++
+    [``DynamicRoundTrip.noRoundTrip, ``FactoryCarriers.noCarrierEmbedding, ``FactoryCarriers.noGetCast] ++
     [``PropositionalChoice.ofChoice, ``PropositionalChoice.ofSkolem, ``PropositionalChoice.ofProducts,
      ``OptionSelector.decideFromSingleton, ``OptionSelector.decideFromDefault] ++
     ReferenceSelection.witnesses.map (fun row => row.2.2) ++

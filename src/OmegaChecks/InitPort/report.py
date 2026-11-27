@@ -89,6 +89,11 @@ def check_coverage(official):
         if site == ("Init.Prelude", "unsafeCast"):
             if reduction_axiom != "lcProof" or port or axiom or not row.get("unsafe") or target != "sorryAx":
                 raise ValueError("invalid pinned reduction boundary for unsafeCast")
+        elif site == ("Init.ShareCommon", "ShareCommon.StateFactory.get"):
+            if (reduction_axiom != "lcProof" or port or axiom or not row.get("unsafe")
+                    or row.get("logicalConsequence") != "False"
+                    or row.get("logicalConsequenceWitness") != "OmegaChecks.InitBoundaries.FactoryCarriers.noGetCast"):
+                raise ValueError("invalid pinned reduction boundary for ShareCommon.StateFactory.get")
         elif reduction_axiom:
             raise ValueError(f"unexpected kernel reduction axiom for {owner}/{name}")
         runtime = row.get("runtimeConflictWitness")

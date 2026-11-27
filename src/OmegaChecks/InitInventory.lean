@@ -656,6 +656,8 @@ private def inventory (lib strictDir : System.FilePath) (visible strict full wit
       let typeAxioms ← checkedTypeAxioms official info axioms
       let kernelReductionAxiom ← if owner == `Init.Prelude && name == `unsafeCast then
         some <$> OmegaChecks.InitInventory.UnsafeCast.reductionAxiom official
+      else if owner == `Init.ShareCommon && name == `ShareCommon.StateFactory.get then
+        some <$> OmegaChecks.InitInventory.UnsafeCast.factoryReductionAxiom official witnesses
       else pure none
       let constructorIff := OmegaChecks.InitInventory.hasStrictConstructorIff official full info
       let operand := OmegaChecks.InitBoundaries.ChoiceOperands.operand? owner info
@@ -868,7 +870,7 @@ def main (args : List String) : IO Unit := do
   let sysroot ← findSysroot
   initSearchPath sysroot
   let witnesses ← importModules #[{module := `OmegaChecks.InitInventory.ChoiceOperands}, {module := `OmegaChecks.InitInventory.Quotient},
-    {module := `OmegaChecks.InitInventory.RefinedQuotient}] {} (level := .private)
+    {module := `OmegaChecks.InitInventory.RefinedQuotient}, {module := `OmegaChecks.InitInventory.StateFactory}] {} (level := .private)
   let lib ← getLibDir sysroot
   searchPathRef.set [lib]
   let modules ← installedModules lib `Init

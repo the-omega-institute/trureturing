@@ -1,6 +1,7 @@
 module
 public import Lean
 import OmegaChecks.InitPort.StrictReplay
+import OmegaChecks.InitInventory.StateFactory
 
 open Lean
 namespace OmegaChecks.InitInventory.UnsafeCast
@@ -36,5 +37,27 @@ public def reductionAxiom (env : Environment) : IO Name := do
   unless Kernel.isDefEqGuarded env {} inferred statement do throw <| error "safe witness type"
   discard <| OmegaChecks.InitPort.replayStrict env.toKernelEnv (witness.getUsedConstants ++ statement.getUsedConstants)
   return proof.getAppFn.constName!
+
+/-- Inspect the exposed factory reader and match its actual transport operand to the
+zero-axiom diagonal refutation. The factory writer is absent from that operand. -/
+public def factoryReductionAxiom (env witnesses : Environment) : IO Name := do
+  let reader := `ShareCommon.StateFactory.get
+  let error (part : String) := IO.userError s!"unexpected pinned {reader} {part}"
+  let some (.defnInfo d) := env.find? reader | throw <| error "definition"
+  unless d.safety == .unsafe && d.value.isAppOfArity `unsafeCast 2 &&
+      env.getModuleIdxFor? reader == env.getModuleIdx? `Init.ShareCommon do throw <| error "cast body"
+  let .ok (.proj `PLift 0 lifted) := Kernel.whnf env {} (mkApp d.value (mkFVar ⟨`factory⟩))
+    | throw <| error "result projection"
+  unless lifted.isAppOfArity `ULift.down 2 do throw <| error "universe projection"
+  let transport := lifted.appArg!
+  unless transport.isAppOfArity `cast 4 do throw <| error "transport"
+  let evidence := transport.getAppArgs[2]!
+  unless evidence.isAppOfArity `unsafeCast._proof_1 2 do throw <| error "equality helper"
+  let .ok proof := Kernel.whnf env {} evidence | throw <| error "equality operand"
+  let some witness := witnesses.find? ``OmegaChecks.InitBoundaries.FactoryCarriers.noGetCast | throw <| error "witness"
+  unless proof.isAppOfArity `lcProof 1 && witness.type.isForall &&
+      Kernel.isDefEqGuarded env {} witness.type.bindingDomain! proof.appArg! &&
+      witness.type.bindingBody!.isConstOf `False do throw <| error "carrier refutation"
+  return `lcProof
 
 end OmegaChecks.InitInventory.UnsafeCast
