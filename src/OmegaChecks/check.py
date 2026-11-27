@@ -323,19 +323,23 @@ def check_module_surface():
         for name, imports, body, reason in [
             ("OmegaMathlib.EmptyModuleProbe", [], "", "no official module Mathlib.EmptyModuleProbe"),
             ("OmegaInit.EmptyModuleProbe", [], "", "no official module Init.EmptyModuleProbe"),
-            (port, [prelude], "namespace And\nexport Omega.And (left)\nend And", None),
-            (core, [prelude], "namespace And\nexport Omega.And (left)\nend And", None),
-            (core, [prelude], "import all OmegaInit.Prelude\nattribute [local semireducible] Omega.Nat.add", None),
+            (port, [prelude], "namespace And\nexport Omega.And (left)\nend And",
+             "unmatched public alias And.left"),
+            (core, [prelude], "namespace And\nexport Omega.And (left)\nend And",
+             "unmatched public alias And.left"),
+            (core, [prelude], "public theorem Omega.Bool.of_not_eq_false {b : Bool} : "
+             "Not (Eq b Bool.false) → Eq b Bool.true := Omega.Bool.eq_true_of_ne_false\n"
+             "namespace Bool\nexport Omega.Bool (of_not_eq_false)\nend Bool", None),
+            (core, [prelude], "import all OmegaInit.Prelude\nattribute [local semireducible] Nat.div", None),
             (port, [prelude], "attribute [class] Omega.True", "public class registration mismatch for Omega.True"),
             (core, [prelude], "attribute [class] Omega.True", "public class registration mismatch for Omega.True"),
             ("OmegaInit", [prelude], "attribute [class] Omega.True", "unmatched class registration"),
             (core, [prelude], "import all OmegaInit.Prelude\nset_option allowUnsafeReducibility true in\n"
-             "attribute [semireducible] Omega.Nat.add",
-             "unverified public reducibility override for Omega.Nat.add"),
+             "attribute [semireducible] Nat.div",
+             "unverified public reducibility override for Nat.div"),
             ("OmegaInit.Data.Nat.Basic", [prelude],
-             "import all OmegaInit.Prelude\nattribute [local semireducible] Omega.Nat.mul\n"
-             "public theorem Omega.Nat.mul_zero (n : Omega.Nat) : "
-             "Omega.Eq (n.mul Omega.Nat.zero) Omega.Nat.zero := Omega.rfl",
+             "import all OmegaInit.Prelude\n"
+             "public theorem Omega.Nat.mul_zero (n : Nat) : Eq (Nat.mul n Nat.zero) Nat.zero := Eq.refl Nat.zero",
              "protected modifier mismatch for Omega.Nat.mul_zero"),
             (core, [prelude], "@[expose, match_pattern] public def Omega.Iff (a b : Prop) := "
              "Omega.And (a → b) (b → a)", "unmatched match_pattern attribute for Omega.Iff"),
@@ -412,14 +416,14 @@ def main (args : List String) : IO Unit := do
                         (not accepted and "public class registration mismatch" not in result.stderr)):
                     raise RuntimeError(f"Unexpected class metadata for {body}: {result.stdout}{result.stderr}")
         for name, body, kind in [
-            (port, 'notation "$$$" => Omega.True', "parser"),
-            (core, 'notation "$$$" => Omega.True', "parser"),
-            (core, 'public instance : Inhabited Omega.Nat := ⟨Omega.Nat.zero⟩', "instance"),
-            (core, '@[deprecated "use Omega.True.intro" (since := "1")] public theorem '
-             'Omega.oldIntro : Omega.True := Omega.True.intro', "environment extension"),
+            (port, 'notation "$$$" => True', "parser"),
+            (core, 'notation "$$$" => True', "parser"),
+            (core, 'public instance Omega.extraNat : Inhabited Nat := ⟨Nat.zero⟩', "instance"),
+            (core, '@[deprecated "use True.intro" (since := "1")] public theorem '
+             'Omega.oldIntro : True := True.intro', "environment extension"),
         ]:
             source = tmp.joinpath(*name.split(".")).with_suffix(".lean")
-            source.write_text(f"module\nprelude\npublic import Lean\npublic import {prelude}\n{body}\n")
+            source.write_text(f"module\nprelude\npublic import Lean\n{body}\n")
             lean("-R", tmp, "-o", source.with_suffix(".olean"), source)
             result = subprocess.run([ENV["LEAN"], "--run", probe, tmp, name], cwd=ROOT, env=ENV,
                                     capture_output=True, text=True)
