@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Graph/HypercubeCritical/ComponentBoundary/Placement/Q9K33ReplayBatches
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/module/Archive.Sensitivity]
+   anchors: [mathlib/module/Mathlib.Tactic.Sat.FromLRAT]
    utility: none
    digest: Named intermediate consequences reduce the memory needed to replay a resolution proof. -/
 
