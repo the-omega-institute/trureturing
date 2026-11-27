@@ -1,3 +1,48 @@
+/- GID: D5/S3/Arith/Additive/NathansonProblem15
+   generality: G
+   mirror-B: D5/B/S3/Arith/Additive/NathansonProblem15
+   mirror-E: none(waiver:external-open-problem-resolution)
+   anchors: []
+   utility: none
+   digest: Constructs iterated integer sumsets with prescribed intervals and controls the number of generators. -/
+
+/-
+admission_basis: open-problem-resolution (#34976; Proved)
+Direct frozen dependencies: none for every declaration.
+
+Definitions and live consumers:
+  digit -> digit_eq_zero_of_collision, digit_eq_zero_iff, radixCode
+  radixCode -> radixCode_eq_iff, radixCode_eq_zero_iff, mem_radixGenerators_iff
+  radixGenerators -> mem_radixGenerators_iff, adjacent_mem_range, nathanson_problem15
+
+Declaration                             proof_shape  escape_witness / live consumer
+signed_radix_injective                  content      Modulo the radix, the first digits agree under the strict width bound.
+zero_off_of_sum_eq                      bind-only    none / digit_eq_zero_of_collision
+digit_eq_zero_of_collision              content      A changed second multiplicity spends the entire budget at one index.
+digit_eq_zero_iff                       content      The zero vector has exactly one second label and h - 1 matching first labels.
+digit_bounds                            content      The weight budget confines each signed digit to [-(h - 1)h, h].
+natAbs_lt_of_digit_bounds               content      Two digits in that interval differ by at most h².
+radixCode_eq_iff                        bind-only    none / adjacent_mem_range
+radixCode_eq_zero_iff                   bind-only    none / mem_range_iff_zero_code_sum
+mem_nsmul_range_iff_counts              content      Constructs the exact-size multiset from counts and recovers counts from an indexed sum.
+mem_labelled_sum_iff                    bind-only    none / mem_radixGenerators_iff
+mem_radixGenerators_iff                 bind-only    none / adjacent_mem_range, nathanson_problem15
+mem_range_iff_zero_code_sum             content      Constructs weight-h multiplicities supported on the index of each prescribed point.
+abs_remainder_le                        content      The second-label weight bound controls the full remainder by hU.
+separated_values                        content      The radix scale dominates both remainders by at least two.
+adjacent_mem_range                      content      Adjacent values force equal codes and then a zero-digit collision.
+interval_equivalences                   content      An adjacent pair cannot straddle the gap between prescribed intervals.
+nathanson_problem15                     content      Constructs the finite generator set and obtains both exact interval laws.
+
+Four-slot audit: the Reg mirror binds the sumset readout in the prescribed-start
+equivalence of nathanson_problem15. The other eight public theorems lack
+source-bound registrations under §3.9. They still need exact source selections
+and reconstruction, with checked variation, sensitivity and dependence.
+Tracking: https://github.com/the-omega-institute/trureturing/issues/34976.
+
+Utility is none. The conclusion quantifies over arbitrary admissible parameters.
+-/
+
 import Mathlib.Algebra.BigOperators.Fin
 import Mathlib.Algebra.Group.Pointwise.Set.BigOperators
 import Mathlib.Algebra.Order.BigOperators.Group.Finset
@@ -9,6 +54,7 @@ import Mathlib.Logic.Equiv.Fin.Basic
 import Mathlib.Order.Interval.Set.Basic
 import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.Ring
+import OmegaBuild.Commands
 
 /-!
   Nathanson's Problem 15 on prescribed intervals in iterated integer sumsets.
@@ -16,6 +62,8 @@ import Mathlib.Tactic.Ring
   The signed radix code separates sums with different codes by at least two.
   Adjacent sums have code zero, whose values are exactly the prescribed points.
 -/
+
+compile_only_with_mathlib
 
 open scoped BigOperators Pointwise
 
