@@ -100,6 +100,10 @@ private def logicalConsequence? (owner name : Name) : Option (Name × Name) := d
         (fun row => row.1 == name) then
       return (target, witness)
   match owner, name with
+  | `Init.Data.Range.Polymorphic.Basic, ``Std.Rxc.size_pos_iff_le =>
+    return (``Classical.em, ``OmegaChecks.InitBoundaries.RangeSize.emOfClosed)
+  | `Init.Data.Range.Polymorphic.Basic, ``Std.Rxo.size_pos_iff_lt =>
+    return (``Classical.em, ``OmegaChecks.InitBoundaries.RangeSize.emOfOpen)
   | `Init.Data.Vector.Lemmas, ``Vector.eq_or_ne_mem_of_mem =>
     return (``OmegaChecks.InitBoundaries.FiniteMembership.EqualityCases,
       ``OmegaChecks.InitBoundaries.FiniteMembership.ofVectorMember)
