@@ -170,6 +170,11 @@ private def compare (reference : Environment) (rename : Name → Name) (src dst 
       compatibleBinders reference {} 0 (liftTerm src.type) dst.type do
     throw <| IO.userError s!"public binder mismatch for {src.name}"
   requireSame reference src.name "interface type" (liftTerm src.type) dst.type
+  if foundation.isSome && OmegaChecks.InitPort.CompilerMarkers.names.contains src.name then
+    unless OmegaChecks.InitPort.CompilerMarkers.valid src && dst.name == src.name &&
+        dst.isAxiom && dst.isUnsafe do
+      throw <| IO.userError s!"invalid compiler type marker {src.name}"
+    return #[]
   let mut deps := src.type.getUsedConstants
   match src, dst with
   | .thmInfo _, _ =>

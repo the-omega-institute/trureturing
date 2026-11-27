@@ -1,5 +1,6 @@
 module
 public import Lean
+public import OmegaChecks.InitPort.CompilerMarkers
 
 open Lean
 
@@ -10,7 +11,7 @@ private def fixedNames := #[`Eq, `Eq.refl, `Eq.rec] ++ primitives
 
 /-- These names are fixed by the kernel's quotient declaration and reduction rules. -/
 public def isSupport (owner name : Name) : Bool :=
-  owner == `OmegaInit.Prelude && fixedNames.contains name
+  owner == `OmegaInit.Prelude && (fixedNames.contains name || CompilerMarkers.names.contains name)
 
 private def officialSupport : IO (Array ConstantInfo) := do
   let lib ← getLibDir (← findSysroot)
@@ -42,6 +43,7 @@ private def checkReduction (env : Environment) (ci : ConstantInfo) : IO Unit := 
 /-- Replay regenerates quotient primitives from their fixed names. Check the serialized
 types, kinds and owners too, including every physical copy before replay. -/
 public def checkSupport (env : Environment) : IO Unit := do
+  CompilerMarkers.check env
   let mut found := #[]
   for owner in env.header.moduleNames, data in env.header.moduleData do
     for n in data.constNames, ci in data.constants do
@@ -93,7 +95,7 @@ public def prepareSeed (dir : System.FilePath) : IO Unit := do
       else if n == ``PortEq.rec then some (.const `Omega.Eq.rec ls)
       else none
     | _ => none
-  let mut additions ← officialSupport
+  let mut additions := (← officialSupport) ++ CompilerMarkers.names.map CompilerMarkers.declaration
   for ci in additions do
     unless primitives.contains ci.name do continue
     let name := `Omega ++ ci.name
