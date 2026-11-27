@@ -45,3 +45,8 @@ namespace Omega.Nat
   Bool.not (Nat.beq (Nat.land (succ zero) (Nat.shiftRight m n)) zero)
 
 end Omega.Nat
+
+public section
+namespace Nat
+export _root_.Omega.Nat (bitwise land lor shiftRight testBit)
+end Nat

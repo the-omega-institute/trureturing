@@ -766,3 +766,32 @@ port_definition instDecidableOr.match_1 with_native_code
 port_proof instDecidableOr._proof_1
 
 port_native_records Trans
+
+public section
+namespace Bool
+export _root_.Omega.Bool (and and_eq_internalAnd beq ctorElim ctorElimType ctorIdx dcond decEq eq_false_of_ne_true eq_true_of_ne_false ne_false_of_eq_true ne_true_of_eq_false not not_eq_internalNot or or_eq_internalOr)
+end Bool
+namespace Bool.false
+export _root_.Omega.Bool.false (elim)
+end Bool.false
+namespace Bool.true
+export _root_.Omega.Bool.true (elim)
+end Bool.true
+namespace Decidable
+export _root_.Omega.Decidable (falseTrueCases isFalse isTrue)
+end Decidable
+namespace False
+export _root_.Omega.False (elim)
+end False
+namespace HEq
+export _root_.Omega.HEq (rfl)
+end HEq
+namespace Nat
+export _root_.Omega.Nat (ble_eq_true_of_le ctorElim ctorElimType ctorIdx decLe decLt div le le_antisymm le_of_ble_eq_true le_of_succ_le_succ le_refl le_trans lt lt_irrefl mod modCore modCore_lt mod_lt not_succ_le_zero succ_le_succ succ_sub_succ_eq_sub zero_le)
+end Nat
+namespace Nat.succ
+export _root_.Omega.Nat.succ (elim)
+end Nat.succ
+namespace Nat.zero
+export _root_.Omega.Nat.zero (elim)
+end Nat.zero

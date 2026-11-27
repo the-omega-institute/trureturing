@@ -71,3 +71,8 @@ theorem gcd_rec (m n : Nat) : Eq (gcd m n) (gcd (Nat.mod n m) m) :=
 attribute [irreducible] gcd
 
 end Omega.Nat
+
+public section
+namespace Nat
+export _root_.Omega.Nat (gcd gcd_add_one gcd_one_left gcd_rec gcd_succ gcd_zero_left gcd_zero_right)
+end Nat

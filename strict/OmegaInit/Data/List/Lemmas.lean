@@ -483,3 +483,8 @@ theorem length_eq_one_iff {α : Type u} {l : List α} :
     (fun h => h.elim (fun _ e => congrArg length e))
 
 end Omega.List
+
+public section
+namespace Omega.absurd
+export _root_.absurd (congr_simp)
+end Omega.absurd

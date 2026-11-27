@@ -51,3 +51,8 @@ theorem succ_div_of_mod_eq_zero {a b : Nat} (h : Eq (Nat.mod (Nat.add a (succ ze
       Nat.le_antisymm (le_of_succ_le_succ (Nat.lt_of_not_ge blocked)) lower) h
 
 end Omega.Nat
+
+public section
+namespace Nat
+export _root_.Omega.Nat (succ_div_of_mod_eq_zero succ_div_of_mod_ne_zero)
+end Nat

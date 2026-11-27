@@ -537,3 +537,29 @@ port_definition noConfusionEnum with_native_code
 namespace Omega.Lean
 public opaque opaqueId {α : Sort u} (x : α) : α := x
 end Omega.Lean
+
+public section
+namespace Bool
+export _root_.Omega.Bool (of_not_eq_false of_not_eq_true)
+end Bool
+namespace Eq
+export _root_.Omega.Eq (comm mp mpr ndrecOn substr to_iff)
+end Eq
+namespace HEq
+export _root_.Omega.HEq (comm ndrec ndrecOn subst symm trans)
+end HEq
+namespace Nat
+export _root_.Omega.Nat (add_zero)
+end Nat
+namespace Nat.succ
+export _root_.Omega.Nat.succ (inj)
+end Nat.succ
+namespace Not
+export _root_.Omega.Not (elim imp intro)
+end Not
+namespace Omega.id
+export _root_.id (eq_1)
+end Omega.id
+namespace PUnit
+export _root_.Omega.PUnit (eq_punit ext subsingleton)
+end PUnit

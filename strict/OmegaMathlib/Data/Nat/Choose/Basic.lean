@@ -36,3 +36,8 @@ theorem choose_succ_succ (n k : Nat) :
 attribute [irreducible] choose
 
 end Omega.Nat
+
+public section
+namespace Nat
+export _root_.Omega.Nat (choose choose_succ_succ choose_zero_right choose_zero_succ)
+end Nat
