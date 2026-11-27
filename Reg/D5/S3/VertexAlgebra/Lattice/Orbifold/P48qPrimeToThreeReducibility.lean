@@ -22,7 +22,8 @@ abbrev signature := Reg.Support.SingleDependentReadout.signature Unit (fun _ => 
 
 def actual : Realization signature := realize signature (fun _ _ p => p - 1) (fun e => nomatch e)
 
-private def rejected : Realization signature := realize signature (fun _ _ _ => 2) (fun e => nomatch e)
+private def rejected : Realization signature :=
+  realize signature (fun _ _ _ => 2) (fun e => nomatch e)
 
 abbrev arena : Arena where
   signature := signature
@@ -41,8 +42,9 @@ private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   have hker : LinearMap.ker (T - 1) = ⊥ := by
     rw [LinearMap.ker_eq_bot']
     intro x hx
+    simp only [T, LinearMap.sub_apply, LinearMap.neg_apply, Module.End.one_apply] at hx
+    have hdown : -x.down - x.down = 0 := congrArg ULift.down hx
     apply ULift.ext
-    change -x.down - x.down = 0 at hx
     change x.down = 0
     linarith
   have hdim : finrank ℚ V = 1 := by
@@ -59,7 +61,9 @@ def family : Registration arena.{u} (type_of% @prime_sub_one_dvd_finrank_of_ker_
   sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected rejected_law
   dependence := by
     intro _
-    exact ⟨(), 2, 3, by decide⟩
+    refine ⟨(), 2, 3, ?_⟩
+    change (2 : ℕ) - 1 ≠ 3 - 1
+    decide
 
 def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@prime_sub_one_dvd_finrank_of_ker_sub_one_eq_bot.{u}) (Realization signature) Unit Unit where
@@ -81,10 +85,14 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.VertexAlgebra.Lattice.Orbifold.P48qPrimeToThreeReducibility
+    definition := none
     coordinates := #[]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg"]
       stateBinder := 3
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false
     }]
   }
   continuation := .unknown
@@ -167,10 +175,14 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.VertexAlgebra.Lattice.Orbifold.P48qPrimeToThreeReducibility
+    definition := none
     coordinates := #[]
     readouts := #[{
       path := #["body", "body", "body", "body", "fn", "arg", "fn", "arg"]
       stateBinder := 0
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false
     }]
   }
   continuation := .unknown
@@ -183,54 +195,57 @@ namespace InvariantSubspace
 
 universe u v
 
-private abbrev RationalSpace := Σ V : Type v, Σ addition : AddCommGroup V,
+private abbrev Params := Σ V : Type v, Σ addition : AddCommGroup V,
   letI := addition
   Module ℚ V
 
-private abbrev Block (s : RationalSpace.{v}) :=
-  letI := s.2.1
-  letI := s.2.2
-  Submodule ℚ s.1
+private abbrev Block (p : Params.{v}) :=
+  letI := p.2.1
+  letI := p.2.2
+  Submodule ℚ p.1
 
-private abbrev Endomorphism (s : RationalSpace.{v}) :=
-  letI := s.2.1
-  letI := s.2.2
-  Module.End ℚ s.1
-
-private abbrev Params := Σ s : RationalSpace.{v}, Block s
+private abbrev Endomorphism (p : Params.{v}) :=
+  letI := p.2.1
+  letI := p.2.2
+  Module.End ℚ p.1
 
 abbrev signature : Signature where
   Params := Params.{v}
-  State p := Endomorphism p.1
+  State := Endomorphism
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ p := Block p.1
+  Output _ p := Block p → Block p
   Anchor := Empty
   finiteAnchor := inferInstance
 
 def actual : Realization signature.{v} := realize signature
-  (fun _ p =>
-    letI := p.1.2.1
-    letI := p.1.2.2
-    p.2.comap) (fun e => nomatch e)
+  (fun _ p T =>
+    letI := p.2.1
+    letI := p.2.2
+    Submodule.comap T) (fun e => nomatch e)
 
 private def rejected : Realization signature.{v} := realize signature
-  (fun _ p _ =>
-    letI := p.1.2.1
-    letI := p.1.2.2
+  (fun _ p _ _ =>
+    letI := p.2.1
+    letI := p.2.2
     ⊥) (fun e => nomatch e)
 
 private theorem dependence : ObservationalDependence signature.{v} actual := by
   intro _
-  let s : RationalSpace.{v} := ⟨ULift.{v} ℚ, inferInstance, inferInstance⟩
   let W : Submodule ℚ (ULift.{v} ℚ) := ⊥
-  refine ⟨⟨s, W⟩, 0, 1, ?_⟩
-  intro h
-  change W.comap 0 = W.comap 1 at h
-  have hz : ULift.up (1 : ℚ) ∈ W.comap 0 := Submodule.zero_mem _
+  refine ⟨⟨ULift.{v} ℚ, inferInstance, inferInstance⟩, 0, 1, ?_⟩
+  intro heq
+  let x : ULift.{v} ℚ := ULift.up 1
+  have h := congrFun heq W
+  change W.comap (0 : Module.End ℚ (ULift.{v} ℚ)) = W.comap 1 at h
+  have hz : x ∈ W.comap (0 : Module.End ℚ (ULift.{v} ℚ)) := by
+    rw [Submodule.comap_zero]
+    exact Submodule.mem_top
   rw [h] at hz
-  have he : ULift.up (1 : ℚ) = (0 : ULift.{v} ℚ) := Submodule.mem_bot.mp hz
+  have he : x = 0 := by
+    rw [Submodule.mem_comap, Module.End.one_apply] at hz
+    exact (Submodule.mem_bot ℚ).mp hz
   exact one_ne_zero (congrArg ULift.down he)
 
 private abbrev TestSpace := ULift.{v} (Fin 48 → ℚ)
@@ -246,7 +261,7 @@ abbrev arena : Arena where
   Law R := ∀ {G : Type u} {V : Type v} [Group G] [AddCommGroup V] [Module ℚ V] [Finite G]
     (ρ : Representation ℚ G V), Function.Injective ρ → finrank ℚ V = 48 →
     Nat.card G ∣ 32 * 23 * 47 → ∃ W : Submodule ℚ V, W ≠ ⊥ ∧ W ≠ ⊤ ∧
-      ∀ g, W ≤ R.readout () ⟨⟨V, inferInstance, inferInstance⟩, W⟩ (ρ g)
+      ∀ g, W ≤ R.readout () ⟨V, inferInstance, inferInstance⟩ (ρ g) W
 
 private theorem rejected_law : ¬ arena.{u,v}.Law rejected := by
   intro h
@@ -286,21 +301,25 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize signature
-    (fun _ p =>
-      letI := p.1.2.1
-      letI := p.1.2.2
-      p.2.comap) (fun e => nomatch e))
+    (fun _ p T =>
+      letI := p.2.1
+      letI := p.2.2
+      Submodule.comap T) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.VertexAlgebra.Lattice.Orbifold.P48qPrimeToThreeReducibility
-    coordinates := #[1, 10]
+    definition := none
+    coordinates := #[1]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body",
-        "arg", "body", "arg", "arg", "body", "arg"]
-      stateOperand := some #["arg"]
+        "arg", "body", "arg", "arg", "body", "arg", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false
     }]
   }
   continuation := .unknown
@@ -319,7 +338,7 @@ abbrev arena : Arena where
     (H : Subgroup AmbientGroup), ¬ 3 ∣ Nat.card H →
     ∀ (ρ : Representation ℚ H V), Function.Injective ρ → finrank ℚ V = 48 →
     ∃ W : Submodule ℚ V, W ≠ ⊥ ∧ W ≠ ⊤ ∧
-      ∀ g, W ≤ R.readout () ⟨⟨V, inferInstance, inferInstance⟩, W⟩ (ρ g)
+      ∀ g, W ≤ R.readout () ⟨V, inferInstance, inferInstance⟩ (ρ g) W
 
 private theorem rejected_law : ¬ arena.{v}.Law rejected := by
   intro h
@@ -360,21 +379,25 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize signature
-    (fun _ p =>
-      letI := p.1.2.1
-      letI := p.1.2.2
-      p.2.comap) (fun e => nomatch e))
+    (fun _ p T =>
+      letI := p.2.1
+      letI := p.2.2
+      Submodule.comap T) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.VertexAlgebra.Lattice.Orbifold.P48qPrimeToThreeReducibility
-    coordinates := #[0, 8]
+    definition := none
+    coordinates := #[0]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body",
-        "arg", "body", "arg", "arg", "body", "arg"]
-      stateOperand := some #["arg"]
+        "arg", "body", "arg", "arg", "body", "arg", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false
     }]
   }
   continuation := .unknown

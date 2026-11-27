@@ -1,3 +1,4 @@
+import Batteries.Tactic.OpenPrivate
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qInvariantQuadratics
 import LeanInformationAuditInterface.Contract.Registration
 import Mathlib.Algebra.Group.PUnit
@@ -12,7 +13,10 @@ open _root_.D5.S3.VertexAlgebra.Lattice.Orbifold.P48qInvariantQuadratics
 open _root_.D5.S3.VertexAlgebra.Lattice.Orbifold.P48qGramCertificate (nebeLatticeData)
 open _root_.D5.S3.VertexAlgebra.Lattice.Orbifold.P48qGramPositivity (nebeGram_posDef)
 open _root_.D5.S3.VertexAlgebra.Lattice.Automorphisms.ConformalGroundTransport (current)
-open LatticeGeneratingFieldLocality LatticeAllStateField LatticeAllStateReconstruction LatticePositiveEnergy
+open _root_.D5.S3.VertexAlgebra.LatticeGeneratingFieldLocality
+open _root_.D5.S3.VertexAlgebra.LatticeAllStateField
+open _root_.D5.S3.VertexAlgebra.LatticeAllStateReconstruction
+open _root_.D5.S3.VertexAlgebra.LatticePositiveEnergy
 open LeanInformationAudit
 open scoped Matrix
 
@@ -31,7 +35,7 @@ private def direction (D : LatticeData) : RationalCartan D := fun _ => 1
 private theorem nebe_current_ne_zero : rationalCurrent nebeLatticeData (direction nebeLatticeData) ≠ 0 := by
   apply rationalCurrent_ne_zero
   intro h
-  have he := congrFun h (0 : Fin nebeLatticeData.rank)
+  have he := congrFun h (0 : Fin 48)
   exact one_ne_zero he
 
 private theorem current_zero (D : LatticeData) : rationalCurrent D 0 = 0 := by
@@ -89,10 +93,14 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.VertexAlgebra.Lattice.Orbifold.P48qInvariantQuadratics
+    definition := none
     coordinates := #[0]
     readouts := #[{
       path := #["body", "body", "body", "body", "arg"]
+      stateBinder := 0
+      functionOperand := false
       stateOperand := some #["arg"]
+      booleanPredicate := false
     }]
   }
   continuation := .unknown
@@ -149,10 +157,14 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.VertexAlgebra.Lattice.Orbifold.P48qInvariantQuadratics
+    definition := none
     coordinates := #[0]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "fn", "arg", "arg"]
+      stateBinder := 0
+      functionOperand := false
       stateOperand := some #["arg"]
+      booleanPredicate := false
     }]
   }
   continuation := .unknown
@@ -167,7 +179,7 @@ universe u
 
 private abbrev Params := Σ G : Type u, Σ group : Group G, Σ D : LatticeData,
   letI := group
-  Representation ℂ G (Carrier D) × G
+  Σ _ : Representation ℂ G (Carrier D), G
 
 abbrev signature : Signature where
   Params := Params.{u}
@@ -201,16 +213,18 @@ abbrev arena : Arena where
         (∀ g i, R.readout () ⟨G, inferInstance, D, A, g⟩ (q i) = q i) ∧ LinearIndependent ℂ q
 
 private def testBlock : Submodule ℚ (RationalCartan nebeLatticeData) :=
-  LinearMap.ker (LinearMap.proj 0)
+  LinearMap.ker (LinearMap.proj (0 : Fin 48))
 
 private theorem testBlock_ne_bot : testBlock ≠ ⊥ := by
   intro h
-  let x : RationalCartan nebeLatticeData := Pi.single 1 1
+  let x : RationalCartan nebeLatticeData :=
+    fun i : Fin 48 => if i = 1 then 1 else 0
   have hx : x ∈ testBlock := by
-    change x 0 = 0
-    have h01 : (0 : Fin nebeLatticeData.rank) ≠ 1 := by decide
-    simp [x, Pi.single_apply, h01, Ne.symm h01]
-  have he := congrFun (Submodule.mem_bot.mp (h ▸ hx)) (1 : Fin nebeLatticeData.rank)
+    change x (0 : Fin 48) = 0
+    simp [x, show (0 : Fin 48) ≠ 1 by decide]
+  have hzero : x = 0 := (Submodule.mem_bot ℚ).mp (h ▸ hx)
+  have he := congrFun hzero (1 : Fin 48)
+  change x (1 : Fin 48) = 0 at he
   exact (one_ne_zero : (1 : ℚ) ≠ 0) (by simpa [x] using he)
 
 private theorem testBlock_ne_top : testBlock ≠ ⊤ := by
@@ -266,11 +280,15 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.VertexAlgebra.Lattice.Orbifold.P48qInvariantQuadratics
+    definition := none
     coordinates := #[0, 2, 5, 14]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body",
-        "body", "body", "body", "arg", "fn", "arg", "body", "body", "fn", "arg", "fn"]
-      functionOperand := true
+        "body", "body", "body", "arg", "fn", "arg", "body", "body", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["arg"]
+      booleanPredicate := false
     }]
   }
   continuation := .unknown
@@ -283,7 +301,7 @@ namespace FixedStates
 
 private abbrev AmbientGroup := Matrix.SpecialLinearGroup (Fin 2) (ZMod 47)
 private abbrev States := Carrier nebeLatticeData
-private abbrev Params := Σ H : Subgroup AmbientGroup, Representation ℂ H States × H
+private abbrev Params := Σ H : Subgroup AmbientGroup, Σ _ : Representation ℂ H States, H
 
 abbrev signature := Reg.Support.SingleDependentReadout.signature Params (fun _ => States)
   (fun _ => States)
@@ -351,11 +369,15 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.VertexAlgebra.Lattice.Orbifold.P48qInvariantQuadratics
+    definition := none
     coordinates := #[0, 4, 9]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body",
-        "arg", "body", "arg", "fn", "arg", "body", "body", "fn", "arg", "fn"]
-      functionOperand := true
+        "arg", "body", "arg", "fn", "arg", "body", "body", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["arg"]
+      booleanPredicate := false
     }]
   }
   continuation := .unknown
