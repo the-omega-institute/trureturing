@@ -1,6 +1,7 @@
 """Run from anywhere in this checkout. --incremental temporarily edits two clean sources."""
 import argparse
 from functools import cache
+from graphlib import TopologicalSorter
 import hashlib
 import json
 import os
@@ -589,8 +590,15 @@ def check_generated_init():
             roots.update(name.removeprefix("Omega") for name in dependencies if root(name) == "OmegaInit")
         run(sys.executable, "-B", SRC / "OmegaChecks/InitPort/build.py", product, *sorted(roots))
         environment = {**ENV, "LEAN_PATH": str(product / "lib")}
-        for source in consumers.values():
-            subprocess.run([ENV["LEAN"], "-R", source.parent, source], cwd=ROOT, env=environment, check=True)
+        clients = Path(directory) / "clients"
+        clients.mkdir()
+        sources = {source.stem: source for source in consumers.values()}
+        deps = {source.stem: imports[name] & sources.keys() for name, source in consumers.items()}
+        client_env = {**environment, "LEAN_PATH": os.pathsep.join((str(clients), environment["LEAN_PATH"]))}
+        for name in TopologicalSorter(deps).static_order():
+            source = sources[name]
+            subprocess.run([ENV["LEAN"], "-R", source.parent, "-o", clients / (name + ".olean"), source],
+                           cwd=ROOT, env=client_env, check=True)
         run("lean", "--run", SRC / "OmegaChecks/InitPort/NativeConsumer.lean", product / "lib")
         quotient = """module
 prelude

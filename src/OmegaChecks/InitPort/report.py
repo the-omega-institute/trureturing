@@ -113,7 +113,7 @@ def check_strict_reference_choices(product, stage, attempts):
     subprocess.run(["lean", "-R", STRICT_SOURCES, "-o", stage / "StrictReferenceChoice.olean", STRICT_SOURCES / "StrictReferenceChoice.lean"],
                    cwd=ROOT, env={**os.environ, "LEAN_PATH": str(lib)}, check=True)
     if "OmegaInit.System.Promise" in selected:
-        subprocess.run(["lean", "-R", HERE, "-o", stage / "StrictPromiseChoice.olean", HERE / "StrictPromiseChoice.lean"],
+        subprocess.run(["lean", "-R", STRICT_SOURCES, "-o", stage / "StrictPromiseChoice.olean", STRICT_SOURCES / "StrictPromiseChoice.lean"],
                        cwd=ROOT, env={**os.environ, "LEAN_PATH": os.pathsep.join(map(str, (stage, lib)))}, check=True)
     output = stage / "strict-reference-choice.json"
     subprocess.run(["lake", "env", "lean", "--run", HERE / "ReferenceChoiceCheck.lean", lib, stage, output, *selected],

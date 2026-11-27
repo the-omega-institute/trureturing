@@ -151,7 +151,7 @@ def compile_generated(stage, product, graph, seed_ir, owners=None, *, original_s
         run("lake", "env", "lean", "--run", HERE / "MacroMethodsNative.lean", library, macro_source, env=env)
         if macro_source.is_file():
             macro_client = stage / "macro-methods-consumer.c"
-            run("lean", "-R", HERE, "-c", macro_client, HERE / "MacroMethodsConsumer.lean",
+            run("lean", "-R", STRICT_SOURCES, "-c", macro_client, STRICT_SOURCES / "MacroMethodsConsumer.lean",
                 env={**os.environ, "LEAN_PATH": str(library)})
             app = stage / "check-macro-methods"
             run("leanc", macro_source, macro_client, HERE / "macro_methods_consumer.c", "-o", app)
