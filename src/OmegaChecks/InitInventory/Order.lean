@@ -141,6 +141,42 @@ theorem excludedMiddleOfConsLe (consLe : type_of% @List.cons_le_cons_iff.{0}) (p
   have parts := (@consLe Bool _ (signedAsymm q) (signedTri q) false true [] []).mp (singletonLe q nn)
   exact parts.elim id (fun h => False.elim (Bool.noConfusion h.1))
 
+private theorem singletonStrictOrEqual (q : Prop) :
+    letI : LT Bool := ⟨signed q⟩
+    [false] < [true] ∨ [false] = [true] → q := by
+  letI : LT Bool := ⟨signed q⟩
+  intro h
+  rcases h with h | h
+  · cases h with
+    | rel h => exact h
+  · exact Bool.noConfusion (List.cons.inj h).1
+
+theorem excludedMiddleOfListLeIffLTOrEq (split : type_of% @List.le_iff_lt_or_eq.{0}) (p : Prop) : p ∨ ¬p := by
+  apply excludedMiddleFromDNE _ p
+  intro q nn
+  letI : LT Bool := ⟨signed q⟩
+  letI := signedAsymm q
+  letI := signedTri q
+  exact singletonStrictOrEqual q (split.mp (singletonLe q nn))
+
+theorem excludedMiddleOfArrayLeIffLTOrEq (split : type_of% @Array.le_iff_lt_or_eq.{0}) (p : Prop) : p ∨ ¬p := by
+  apply excludedMiddleFromDNE _ p
+  intro q nn
+  letI : LT Bool := ⟨signed q⟩
+  letI := signedAsymm q
+  letI := signedTri q
+  exact singletonStrictOrEqual q (((split (xs := #[false]) (ys := #[true])).mp (singletonLe q nn)).imp_right
+    (congrArg Array.toList))
+
+theorem excludedMiddleOfVectorLeIffLTOrEq (split : type_of% @Vector.le_iff_lt_or_eq.{0}) (p : Prop) : p ∨ ¬p := by
+  apply excludedMiddleFromDNE _ p
+  intro q nn
+  letI : LT Bool := ⟨signed q⟩
+  letI := signedAsymm q
+  letI := signedTri q
+  exact singletonStrictOrEqual q (((split (xs := Vector.mk #[false] rfl) (ys := Vector.mk #[true] rfl)).mp
+    (singletonLe q nn)).imp_right (congrArg fun v : Vector Bool 1 => v.toArray.toList))
+
 theorem excludedMiddleOfListLeExists (descr : type_of% @List.le_iff_exists.{0}) (p : Prop) : p ∨ ¬p := by
   apply excludedMiddleFromDNE _ p
   intro q nn
