@@ -58,7 +58,7 @@ structure And (a b : Prop) : Prop where
 
 abbrev And.casesOn {a b : Prop} {motive : And a b → Sort u} (t : And a b)
     (intro : ∀ left right, motive (And.intro left right)) : motive t :=
-  And.rec (motive := motive) intro t
+  intro t.1 t.2
 
 inductive Or (a b : Prop) : Prop where
   | inl (h : a) : Or a b

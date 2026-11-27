@@ -24,7 +24,7 @@ structure Iff (a b : Prop) : Prop where
 
 abbrev Iff.casesOn {a b : Prop} {motive : Iff a b → Sort u} (t : Iff a b)
     (intro : ∀ mp mpr, motive (Iff.intro mp mpr)) : motive t :=
-  Iff.rec (motive := motive) intro t
+  intro t.1 t.2
 
 inductive Exists {α : Sort u} (p : α → Prop) : Prop where
   | intro (w : α) (h : p w) : Exists p
