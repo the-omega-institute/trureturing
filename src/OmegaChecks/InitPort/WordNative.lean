@@ -67,11 +67,12 @@ private def modelOperation (name : Name) : Bool :=
 
 public def usesPinnedFunction (n : Name) : Bool :=
   let method := n.updatePrefix .anonymous
+  let trailing := n == `Int.trailingZeros || n == `Int.trailingZeros.aux
   let bytes := [`ByteArray.toList.loop, `ByteArray.findIdx?.loop, `ByteArray.findFinIdx?.loop].contains n
   let vector := n.getPrefix == `BitVec &&
     [`abs, `pow, `smod, `replicate, `reverse, `cpop, `cpopNatRec, `ctz, `clz, `clzAuxRec,
      `getLsbD, `getLsb, `getMsbD, `getMsb, `msb, `sdiv, `srem, `smtSDiv, `hash, `ofBoolListLE, `ofBoolListBE].contains method
-  modelOperation n || ByteFoldNative.supported n || IndexedNative.supported n || SyntaxPositionNative.supported n || bytes || vector || [`Nat.repr, `Nat.reprFast, `Int.repr].contains n || [`BitVec.toHex, `BitVec.instToString].contains n || n == `Nat.bitwise || ((word? n.getPrefix).isSome && (method == `pow || (method == `ofInt && bitsType n.getPrefix == n.getPrefix))) ||
+  trailing || modelOperation n || ByteFoldNative.supported n || IndexedNative.supported n || SyntaxPositionNative.supported n || bytes || vector || [`Nat.repr, `Nat.reprFast, `Int.repr].contains n || [`BitVec.toHex, `BitVec.instToString].contains n || n == `Nat.bitwise || ((word? n.getPrefix).isSome && (method == `pow || (method == `ofInt && bitsType n.getPrefix == n.getPrefix))) ||
     (n.getPrefix == `Int && [`negOfNat, `subNatNat, `sign, `toNat, `pow, `fdiv, `fmod, `bdiv, `bmod].contains method)
 
 private def bootstrapStringOp (n : Name) : Bool :=
@@ -124,7 +125,7 @@ public def supported (source : Environment) (owner name : Name) : Bool :=
     ([`OmegaInit.Data.Float.Model.Float, `OmegaInit.Data.Float.Model.Float32].contains owner && modelOperation name) ||
     (owner == `OmegaInit.Prelude && SyntaxPositionNative.supported name) ||
     ((base || intPrimitive || platform || byteOp || textCompare || modular || stringOp || wordRepr || bitwise || logarithm || (inOwner && primitive)) && isExtern source name) ||
-    ((intOwner || [`OmegaInit.Data.ByteArray.Basic, `OmegaInit.Data.Int.Repr, `OmegaInit.Data.Repr, `OmegaInit.Data.Nat.Bitwise.Basic, `OmegaInit.Data.BitVec.Basic].contains owner || [`OmegaInit.Data.UInt.Basic, `OmegaInit.Data.SInt.Basic].contains owner) && usesPinnedFunction name)
+    ((intOwner || [`OmegaInit.Data.Dyadic.Basic, `OmegaInit.Data.ByteArray.Basic, `OmegaInit.Data.Int.Repr, `OmegaInit.Data.Repr, `OmegaInit.Data.Nat.Bitwise.Basic, `OmegaInit.Data.BitVec.Basic].contains owner || [`OmegaInit.Data.UInt.Basic, `OmegaInit.Data.SInt.Basic].contains owner) && usesPinnedFunction name)
 
 private def symbol (n : Name) := (n.replacePrefix `Omega .anonymous).mangle "omega_word_"
 
@@ -203,7 +204,9 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
   for (a, b) in params.zip actual, i in [:params.size] do
     let .forallE _ dom body _ := type | throw <| IO.userError s!"expected argument {i} of {n}"
     type := body
-    if a.ty == .erased && b.ty == .erased then continue
+    if a.ty == .erased && b.ty == .erased then
+      if official == `Int.trailingZeros.aux then args := args.push "lean_box(0)"
+      continue
     let arg := "a" ++ toString i
     if bootstrapStringOp official && dom.isForall then
       let arrow := fun (a b : Expr) => Expr.forallE .anonymous a b .default
@@ -362,13 +365,13 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
       args := args.push s!"slice{i}"
       if a.borrow then cleanup := cleanup ++ s!"  lean_dec(slice{i});\n"
       unless b.borrow do cleanup := cleanup ++ s!"  lean_dec({arg});\n"
-    else if dom == `Int && a.ty == .tobject && b.ty == .object && a.borrow then
+    else if dom == `Int && a.ty == .tobject && b.ty == .object then
       checkIntLayout strict
       decls := decls.push ((if b.borrow then "b_lean_obj_arg " else "lean_obj_arg ") ++ arg)
       prepare := prepare ++ s!"  lean_object *mag{i} = lean_ctor_get({arg}, 0);\n  lean_inc(mag{i});\n"
       prepare := prepare ++ s!"  lean_object *value{i} = lean_obj_tag({arg}) == 0 ? lean_nat_to_int(mag{i}) : lean_int_neg_succ_of_nat(mag{i});\n"
       args := args.push s!"value{i}"
-      cleanup := cleanup ++ s!"  lean_dec(value{i});\n"
+      if a.borrow then cleanup := cleanup ++ s!"  lean_dec(value{i});\n"
       unless b.borrow do cleanup := cleanup ++ s!"  lean_dec({arg});\n"
     else if dom == `Bool && a.ty == .uint8 && b.ty == .uint8 then
       decls := decls.push ("uint8_t " ++ arg)
@@ -478,7 +481,8 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
       | .usize => pure "size_t"
       | .object | .tobject | .tagged => pure "lean_object *"
       | _ => throw <| IO.userError s!"unexpected C type at {official}: {t}"
-    let inputs ← (params.filter (·.ty != .erased)).mapM fun p => ctype p.ty
+    let inputs ← (params.filter (fun p => p.ty != .erased || official == `Int.trailingZeros.aux)).mapM fun p =>
+      if p.ty == .erased then pure "lean_object *" else ctype p.ty
     pure s!"\nextern {← ctype ret} {target}({String.intercalate ", " inputs.toList});\n"
   else if (float? official.getPrefix).isSome || (float? dom).isSome then do
     let header := "\n#include \"float_bits.h\"\n"
