@@ -23,7 +23,7 @@ internal sealed class BinaryEAShorteningDocument : IScribeDocumentDefinition
     private static readonly Formula Nat = Seq(Mathbb, Grp(V("N")));
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Surjective radical projections allow binary symplectic shortening. A spread rules out two successive rank-two shortenings at length seven. A conditional count rules out a rank-two radical site at length eight under the two-site rank bound.",
+        "Surjective radical projections allow binary symplectic shortening. The spread and six-site Gram arguments rule out a rank-two radical site at length seven. A conditional count rules out a rank-two radical site at length eight under the two-site rank bound.",
         H("Rank-two shortening for binary symplectic codes"),
         Blocks(
             Entry("shorten_of_radical_surjective", "Shortening on a set of radical sites", Shortening(),
@@ -36,6 +36,8 @@ internal sealed class BinaryEAShorteningDocument : IScribeDocumentDefinition
                 "Fix an occupied radical site, where the kernel in H consists of zero and a single nonzero word h. Outside H, words vanishing there and at distinct second sites belong to disjoint sets. Rank-nullity and the cardinality of each pair kernel force h to be supported on at most two sites. A triple containing that support and the fixed site is injective on H and then on U. Its restriction on U is surjective by dimension, which contradicts orthogonality to h."),
             Entry("length_seven_rank_two_shortens_to_rank_one", "The remaining length-seven case after one shortening", SevenResidual(),
                 "A rank-two radical site leaves dimensions two and six and a bound of two zeros outside the shortened radical. Any second surjective radical site would lift to a surjective joint projection on the two original sites, contradicting the length-seven spread obstruction."),
+            Entry("length_seven_no_rank_two_site", "Exclusion of a rank-two radical site at length seven", Seven(),
+                "After shortening, a three-site projection excludes radical words of weight at most two and weight-three words supported on mixed radical types. Local symplectic coordinates leave either two triples or three pairs of types. In both profiles the Z projection has kernel equal to the radical and image equal to its annihilator. A weight-two Z vector in the two-triple profile permits three zeros after a radical shift. In the three-pair profile, shifts enforce pair mismatches and parity equations on the four Z-basis lifts. These equations make the symplectic Gram vanish. Lifting through the shortening then makes the original eight-dimensional code isotropic in dimension fourteen."),
             Entry("length_eight_no_rank_two_site", "Exclusion of a rank-two radical site at length eight", Eight(),
                 "Surjectivity at a second site of the shortened radical would lift to joint rank four on the corresponding original pair. The rank bound of three therefore leaves at most rank one at each of the seven surviving sites, where the conditional count gives the contradiction."))));
 
@@ -144,6 +146,9 @@ internal sealed class BinaryEAShorteningDocument : IScribeDocumentDefinition
             Sp, Comma, Sp, body);
         return Standard(D(7), All(i, Fin(D(7)), Implies(Surj(On(Call("site", i), HSpace)), letBody)));
     }
+
+    private static Formula Seven() => Standard(D(7), All(i, Fin(D(7)),
+        Assumptions(V("False"), Surj(On(Call("site", i), HSpace)))));
 
     private static Formula Eight()
     {
