@@ -18,7 +18,10 @@ triage: anchor
 
 Sam Blake, *A Recursive Construction of Perfect and Odd Perfect Sequences of
 Unbounded Length over the Unit Quaternions*, arXiv:2611.19627v1, submitted
-14 November 2026. DOI 10.48550/arXiv.2611.19627.
+14 November 2026.
+
+DOI [10.48550/arXiv.2611.19627](https://doi.org/10.48550/arXiv.2611.19627).
+Versioned abstract <https://arxiv.org/abs/2611.19627v1>.
 
 - Conjecture 5.2, https://arxiv.org/html/2611.19627v1#S5.Thmtheorem2
 - Definition 2.1, https://arxiv.org/html/2611.19627v1#S2.Thmtheorem1
