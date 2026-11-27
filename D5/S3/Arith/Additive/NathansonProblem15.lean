@@ -17,13 +17,13 @@ Definitions and live consumers:
 
 Declaration                             proof_shape  escape_witness / live consumer
 signed_radix_injective                  content      Modulo the radix, the first digits agree under the strict width bound.
-zero_off_of_sum_eq                      bind-only    none / digit_eq_zero_of_collision, digit_eq_zero_iff
+zero_off_of_sum_eq                      bind-only    none / digit_eq_zero_of_collision
 digit_eq_zero_of_collision              content      A changed second multiplicity spends the entire budget at one index.
-digit_eq_zero_iff                       content      The zero vector has exactly one second label and h - 1 matching first labels.
+digit_eq_zero_iff                       content      Zero digits convert total weight h to h times the second-label weight, forcing that weight to be one.
 digit_bounds                            content      The weight budget confines each signed digit to [-(h - 1)h, h].
 natAbs_lt_of_digit_bounds               bind-only    Normalizes the two given intervals / radixCode_eq_iff, radixCode_eq_zero_iff
 radixCode_eq_iff                        content      Inlines the signed_radix_injective induction to recover equal digit vectors.
-radixCode_eq_zero_iff                   content      Collision and weight-budget arguments fix multiplicities after zero-code normalization.
+radixCode_eq_zero_iff                   content      Applies signed_radix_injective directly against the zero vector, then digit_eq_zero_iff recovers the multiplicities.
 mem_nsmul_range_iff_counts              bind-only    Sym.equivNatSumOfFintype supplies exact-size counts / mem_labelled_sum_iff
 mem_labelled_sum_iff                    bind-only    none / mem_radixGenerators_iff
 mem_radixGenerators_iff                 bind-only    none / adjacent_mem_range, nathanson_problem15
@@ -195,19 +195,18 @@ private theorem digit_eq_zero_iff {m h : ℕ} (hh : 2 ≤ h) {u v : Fin m → �
       rw [Finset.mul_sum, mul_one]
       exact (Finset.sum_congr rfl (fun i _ => (hlocal i).symm)).trans huv
     have hv : (∑ i, v i) = 1 := mul_left_cancel₀ (by omega : h ≠ 0) htotal
-    have hpos : 0 < ∑ i, v i := by rw [hv]; decide
-    obtain ⟨j, _, hj⟩ :=
-      (Finset.sum_pos_iff_of_nonneg (fun i _ => Nat.zero_le (v i))).mp hpos
-    have hjle : v j ≤ ∑ i, v i :=
-      Finset.single_le_sum (fun i _ => Nat.zero_le (v i)) (Finset.mem_univ j)
-    have hjone : v j = 1 := by omega
+    obtain ⟨j, hj⟩ := (Finsupp.sum_eq_one_iff (Finsupp.equivFunOnFinite.symm v)).mp
+      ((Finsupp.equivFunOnFinite_symm_sum v).trans hv)
+    have hsingle (i : Fin m) : v i = (if i = j then 1 else 0) := by
+      simpa [Finsupp.single_apply, eq_comm] using congrArg (fun f : Fin m →₀ ℕ => f i) hj
     refine ⟨j, fun i => ?_⟩
     by_cases hi : i = j
     · subst i
+      have hjone : v j = 1 := by simpa using hsingle j
       have hloc := hlocal j
       simp [hjone] at hloc
       simp [hjone, show u j = h - 1 by omega]
-    · have hvi := zero_off_of_sum_eq v j (hv.trans hjone.symm) hi
+    · have hvi : v i = 0 := by simpa [hi] using hsingle i
       have hui : u i = 0 := by simpa [hvi] using hlocal i
       simp [hi, hui, hvi]
   · rintro ⟨j, hj⟩
