@@ -1,43 +1,63 @@
 module
 import all Init.Data.Array.Basic
+import all Init.Data.List.Control
 import all Init.Data.Array.BinSearch
 public import Init.Data.Array.Lemmas
 public import Init.Data.Array.Find
 public import Init.Data.List.Find
+public import Init.Data.List.ToArray
 
 namespace OmegaChecks.InitPort.Alternatives
 
-private theorem findRevPrefix (f : α → Option β) (xs : List α) (i : Nat) (h : i ≤ xs.toArray.size) :
-    (Array.findSomeRevM?.find (m := Id) f xs.toArray i h).run = (xs.take i).reverse.findSome? f := by
-  induction i with
-  | zero => rfl
-  | succ i ih =>
-    have bound : i < xs.length := List.size_toArray (as := xs) ▸ h
-    rw [Array.findSomeRevM?.find, List.take_succ_eq_append_getElem bound, List.reverse_append]
-    simp only [Id.run, Bind.bind, Id.instMonad, Pure.pure, List.reverse_singleton,
-      List.singleton_append, List.getElem_toArray, List.findSome?_cons]
-    cases f xs[i] with
-    | some b => rfl
-    | none => exact ih _
+/- Expand the bounded traversal in place so the exported definition uses only Init primitives. -/
+local macro "reversePrefix% " f:term:max as:term:max : term =>
+  `(let n := ($as).size
+    Nat.rec (motive := fun i => i ≤ n → _) (fun _ => pure none)
+      (fun i earlier hi =>
+        ($f) (($as)[i]'hi) >>= fun r =>
+          Option.casesOn r (earlier (@Nat.le_of_succ_le i n hi)) (fun b => pure (some b))))
 
-private theorem findRevArray (f : α → Option β) (xs : List α) :
-    xs.toArray.findSomeRev? f = xs.reverse.findSome? f := by
-  have result := findRevPrefix f xs xs.length (List.size_toArray.symm ▸ Nat.le_refl _)
-  rw [List.take_length] at result
-  exact result
+@[inline] private noncomputable def revPrefix {α : Type u} {β : Type v} {m : Type v → Type w}
+    [Monad m] (f : α → m (Option β)) (as : Array α) :
+    (i : Nat) → i ≤ as.size → m (Option β) :=
+  reversePrefix% f as
 
-public theorem Array.findSomeRev?_eq_findSome?_reverse : type_of% @_root_.Array.findSomeRev?_eq_findSome?_reverse := by
-  intro α β f xs
+@[expose, implemented_by _root_.Array.findSomeRevM?] public noncomputable def Array.findSomeRevM?
+    {α : Type u} {β : Type v} {m : Type v → Type w} [Monad m]
+    (f : α → m (Option β)) (as : Array α) : m (Option β) :=
+  let n := as.size
+  (reversePrefix% f as) n (Nat.le_refl n)
+
+public theorem List.findSomeRevM?_toArray [Monad m] [LawfulMonad m] (f : α → m (Option β)) (l : List α) :
+    Array.findSomeRevM? f l.toArray = l.reverse.findSomeM? f := by
+  have run (i : Nat) (h : i ≤ l.toArray.size) :
+      revPrefix f l.toArray i h = (l.take i).reverse.findSomeM? f := by
+    induction i with
+    | zero => rw [_root_.List.take_zero, _root_.List.reverse_nil, _root_.List.findSomeM?_nil]; rfl
+    | succ i ih =>
+      have hi : i < l.length := h
+      rw [_root_.List.take_succ_eq_append_getElem hi, _root_.List.reverse_append]
+      rw [_root_.List.reverse_singleton, _root_.List.singleton_append, _root_.List.findSomeM?_cons]
+      unfold _root_.List.findSomeM?_cons.match_1
+      exact congrArg (fun tail => f l[i] >>= fun r => Option.casesOn r tail (fun b => pure (some b)))
+        (ih (Nat.le_of_lt hi))
+  exact (run l.length (Nat.le_refl _)).trans
+    (congrArg (fun xs => _root_.List.findSomeM? f xs.reverse) _root_.List.take_length)
+
+public theorem Array.findSomeRev?_eq_findSome?_reverse {f : α → Option β} {xs : Array α} :
+    (Array.findSomeRevM? (m := Id) f xs).run = xs.reverse.findSome? f := by
   cases xs with
   | mk xs =>
-    rw [findRevArray, List.reverse_toArray, _root_.List.findSome?_toArray]
+    rw [List.findSomeRevM?_toArray, _root_.List.reverse_toArray, _root_.List.findSome?_toArray]
+    exact _root_.List.findSome?_eq_findSomeM?.symm
 
-public theorem Array.findRev?_eq_find?_reverse : type_of% @_root_.Array.findRev?_eq_find?_reverse := by
-  intro α p xs
+public theorem Array.findRev?_eq_find?_reverse {α : Type} {f : α → Bool} {xs : Array α} :
+    (Array.findSomeRevM? (m := Id) (Option.guard f) xs).run = xs.reverse.find? f := by
   cases xs with
   | mk xs =>
-    change xs.toArray.findSomeRev? (Option.guard p) = _
-    rw [findRevArray, List.reverse_toArray, _root_.List.find?_toArray, List.findSome?_guard]
+    rw [List.findSomeRevM?_toArray, _root_.List.reverse_toArray, _root_.List.find?_toArray,
+      ← _root_.List.findSome?_guard]
+    exact _root_.List.findSome?_eq_findSomeM?.symm
 
 public theorem Array.findFinIdx?_congr : type_of% @_root_.Array.findFinIdx?_congr := by
   intro α p xs ys eq

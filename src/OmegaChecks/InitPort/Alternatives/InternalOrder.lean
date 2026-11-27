@@ -5,6 +5,8 @@ import all Init.Internal.Order.Basic
 public import Init.Internal.Order.Lemmas
 import all Init.Internal.Order.Lemmas
 import all Init.Data.Array.Basic
+public import OmegaChecks.InitPort.Alternatives.ArrayFind
+import all OmegaChecks.InitPort.Alternatives.ArrayFind
 public meta import Lean.Elab.Term.TermElabM
 meta import Lean
 
@@ -197,10 +199,12 @@ public theorem Array.monotone_foldrM_fold :
     · exact bindSteps (hf x y xy _ _) (fun z => ih _ z)
 
 public theorem Array.monotone_findSomeRevM? :
-    pointwise_type% (type_of% @_root_.Lean.Order.Array.monotone_findSomeRevM?) := by
+    pointwise_type% (∀ {m : Type u → Type v} [Monad m] [∀ α, PartialOrder (m α)] [MonoBind m]
+      {α β : Type u} {γ : Type w} [PartialOrder γ] (f : γ → α → m (Option β)) (xs : Array α),
+      ∀ (hmono : monotone f), monotone fun x => InitPort.Alternatives.Array.findSomeRevM? (f x) xs) := by
   intro m _ _ _ α β γ _ f xs hf x y xy
-  suffices ∀ i (h : i ≤ xs.size), _root_.Array.findSomeRevM?.find (f x) xs i h ⊑
-      _root_.Array.findSomeRevM?.find (f y) xs i h by exact this _ _
+  suffices ∀ i (h : i ≤ xs.size), InitPort.Alternatives.revPrefix (f x) xs i h ⊑
+      InitPort.Alternatives.revPrefix (f y) xs i h by exact this _ _
   intro i h
   induction i with
   | zero => exact PartialOrder.rel_refl

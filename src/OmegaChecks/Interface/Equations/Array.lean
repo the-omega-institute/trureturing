@@ -8,6 +8,9 @@ public import OmegaChecks.InitPort.ArrayWord
 public import Init.Data.RArray
 public import Init.Data.Array.DecidableEq
 public import Init.Data.Array.Lemmas
+import all Init.Data.Array.Basic
+public import OmegaChecks.InitPort.Alternatives.ArrayFind
+import all OmegaChecks.InitPort.Alternatives.ArrayFind
 public import OmegaChecks.InitPort.ArrayModify
 public import Init.Data.Vector.Lex
 public import Init.Data.Vector.Attach
@@ -17,6 +20,26 @@ import all OmegaChecks.InitPort.Alternatives.ByteArray
 /-! Pointwise correspondence between the strict list-backed array operations and pinned Init. -/
 
 namespace OmegaChecks.Interface.Equations
+
+public theorem Array.findSomeRevM? {α : Type u} {β : Type v} {m : Type v → Type w}
+    [Monad m] (f : α → m (Option β)) (xs : Array α) :
+    OmegaChecks.InitPort.Alternatives.Array.findSomeRevM? f xs = _root_.Array.findSomeRevM? f xs := by
+  let go : (i : Nat) → i ≤ xs.size → m (Option β) :=
+    (private_decl% @Array.findSomeRevM?.find) (m := m) f xs
+  have eq (i : Nat) (h : i ≤ xs.size) :
+      OmegaChecks.InitPort.Alternatives.revPrefix f xs i h = go i h := by
+    induction i with
+    | zero => rfl
+    | succ i ih =>
+      dsimp only [go]
+      rw [Array.findSomeRevM?.find]
+      change (f xs[i] >>= _) = f xs[i] >>= _
+      apply congrArg (fun k => f xs[i] >>= k)
+      funext r
+      cases r with
+      | none => exact ih _
+      | some => rfl
+  exact eq _ _
 
 public theorem ByteArray.fastAppend (a b : ByteArray) :
     OmegaChecks.InitPort.Alternatives.ByteArray.fastAppend a b = a.fastAppend b :=
