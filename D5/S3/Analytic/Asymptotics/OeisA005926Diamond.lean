@@ -70,11 +70,6 @@ private theorem triangular_index (z : ℤ) :
   change (triangular (toIndex z) : ℤ) = _
   split at h <;> nlinarith
 
-private theorem triangular_parity (z : ℤ) :
-    (triangular (indexEquiv z) : ℤ) % 2 = z % 2 := by
-  rw [triangular_index]
-  omega
-
 private def tripleEnergy (j : Fin 3 → ℕ) : ℕ := ∑ i, triangular (j i)
 def squareEnergy (z : Fin 3 → ℤ) : ℤ := ∑ i, (4*z i+1)^2
 private def sourceShell (n : ℕ) :=
