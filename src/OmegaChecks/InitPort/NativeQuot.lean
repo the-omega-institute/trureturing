@@ -7,11 +7,25 @@ open Lean
 namespace OmegaChecks.InitPort.NativeQuot
 
 private def primitives := #[`Quot, `Quot.mk, `Quot.ind, `Quot.lift]
-private def fixedNames := #[`Eq, `Eq.refl, `Eq.rec] ++ primitives
+private def matcherNames := #[`PProd.mk, `HEq, `Unit, `Unit.unit]
+private def kernelNames := #[`Eq, `Eq.refl, `Eq.rec] ++ primitives
+private def fixedNames := kernelNames ++ matcherNames
 
-/-- These names are fixed by the kernel's quotient declaration and reduction rules. -/
+/-- Root names required by the kernel, pattern elaborator and native compiler. -/
 public def isSupport (owner name : Name) : Bool :=
   owner == `OmegaInit.Prelude && (fixedNames.contains name || CompilerMarkers.names.contains name)
+
+private def interfaceType (ci : ConstantInfo) : Expr :=
+  ci.type.replace fun
+    | .const n ls => some (.const (`Omega ++ n) ls)
+    | _ => none
+
+/-- The elaborator consumes literal root names while compiling patterns. Alias them to the
+strict types so that source programs can also name and reduce the same products and units. -/
+private def matcherAlias (ci : ConstantInfo) : ConstantInfo :=
+  .defnInfo {
+    name := ci.name, all := [ci.name], levelParams := ci.levelParams, type := interfaceType ci,
+    value := mkConst (`Omega ++ ci.name) (ci.levelParams.map Level.param), hints := .abbrev, safety := .safe}
 
 private def officialSupport : IO (Array ConstantInfo) := do
   let lib ← getLibDir (← findSysroot)
@@ -20,12 +34,7 @@ private def officialSupport : IO (Array ConstantInfo) := do
   fixedNames.mapM fun n => do
     let some ci := data.constants.find? (·.name == n)
       | throw <| IO.userError s!"missing pinned kernel declaration {n}"
-    return ci
-
-private def interfaceType (ci : ConstantInfo) : Expr :=
-  ci.type.replace fun
-    | .const n ls => some (.const (`Omega ++ n) ls)
-    | _ => none
+    return if matcherNames.contains n then matcherAlias ci else ci
 
 /-- Inspect the normal form itself. Proof irrelevance alone would also prove a
 propositional equality between the induction result and its constructor branch. -/
@@ -52,12 +61,16 @@ public def checkSupport (env : Environment) : IO Unit := do
           throw <| IO.userError s!"unexpected native quotient support {owner}/{n}"
         found := found.push ci
   if found.isEmpty then return
-  let expected ← officialSupport
+  let hasKernel := found.any fun ci => kernelNames.contains ci.name
+  let hasMatchers := found.any fun ci => matcherNames.contains ci.name
+  let expected := (← officialSupport).filter fun ci =>
+    if matcherNames.contains ci.name then hasMatchers else hasKernel
   unless found.size == expected.size do throw <| IO.userError "incomplete or duplicated native quotient support"
   for standard in expected do
     let some ci := found.find? (·.name == standard.name)
       | throw <| IO.userError s!"missing native quotient support {standard.name}"
-    unless ci == standard && ci.type.equal standard.type do
+    unless ci == standard && ci.type.equal standard.type &&
+        (ci.value?.map ExprStructEq.mk) == (standard.value?.map ExprStructEq.mk) do
       throw <| IO.userError s!"invalid native quotient support {ci.name}"
     if let .recInfo a := ci then
       let .recInfo b := standard | throw <| IO.userError s!"invalid recursor {ci.name}"
@@ -95,7 +108,8 @@ public def prepareSeed (dir : System.FilePath) : IO Unit := do
       else if n == ``PortEq.rec then some (.const `Omega.Eq.rec ls)
       else none
     | _ => none
-  let mut additions := (← officialSupport) ++ CompilerMarkers.names.map CompilerMarkers.declaration
+  let mut additions := (← officialSupport).filter (fun ci => kernelNames.contains ci.name) ++
+    CompilerMarkers.names.map CompilerMarkers.declaration
   for ci in additions do
     unless primitives.contains ci.name do continue
     let name := `Omega ++ ci.name

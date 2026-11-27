@@ -618,3 +618,12 @@ port_inductive HSub
 port_definition HSub.hSub
 port_definition instHSub
 port_definition instSubNat
+
+end
+end
+
+-- Lean's pattern elaborator uses these root names for patterns, cases and argument-free branches.
+public abbrev PProd.mk.{u,v} := @Omega.PProd.mk.{u,v}
+public abbrev HEq.{u} := @Omega.HEq.{u}
+public abbrev Unit := Omega.Unit
+public abbrev Unit.unit := Omega.Unit.unit
