@@ -19,7 +19,7 @@ noncomputable section
 universe u um un uk
 
 abbrev signature : Signature where
-  Params := Type u × Type uk
+  Params := Σ _ : Type u, Type uk
   State p := p.2 → p.1
   Role := Unit
   finiteRole := inferInstance
@@ -47,7 +47,7 @@ abbrev arena : Arena where
     (contact *ᵥ a + tangent *ᵥ (diagonal weight *ᵥ v) = 0 ∧
       contactᵀ *ᵥ y = 0 ∧ tangentᵀ *ᵥ y + diagonal curvature *ᵥ v = 0) ↔
       contact *ᵥ a = 0 ∧ contactᵀ *ᵥ y = 0 ∧ tangentᵀ *ᵥ y = 0 ∧
-        r.readout () (R, k) v = 0
+        r.readout () ⟨R, k⟩ v = 0
 
 private theorem rejected_law : ¬ arena.{u, um, un, uk}.Law rejected.{u, uk} := by
   intro h
@@ -63,7 +63,7 @@ private theorem rejected_law : ¬ arena.{u, um, un, uk}.Law rejected.{u, uk} := 
     (fun _ => -1) (fun _ => 1) (fun _ => 1)
     (fun _ => one_ne_zero) (fun _ => zero_lt_one) (fun _ => by rw [one_mul]) 0 0
   have hzero := (hAt 0).mp ⟨by simp, by simp, by simp⟩
-  have hread : rejected.readout () (R, k) 1 = 0 := hzero.2.2.2
+  have hread : rejected.readout () ⟨R, k⟩ 1 = 0 := hzero.2.2.2
   have hbad := (hAt 1).mpr ⟨by simp, by simp, by simp, hread⟩
   have hrow := congrFun hbad.2.2 (ULift.up () : k)
   exact one_ne_zero (by simpa only [transpose_zero, zero_mulVec, Pi.add_apply,
@@ -73,7 +73,7 @@ private theorem dependence : ObservationalDependence signature.{u, uk} actual :=
   intro i
   let R := ULift.{u} ℤ
   let k := ULift.{uk} Unit
-  refine ⟨(R, k), 0, 1, ?_⟩
+  refine ⟨⟨R, k⟩, 0, 1, ?_⟩
   intro h
   exact zero_ne_one (congrFun h (ULift.up () : k))
 
