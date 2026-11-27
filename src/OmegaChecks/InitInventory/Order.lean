@@ -212,6 +212,56 @@ theorem excludedMiddleOfVectorLeExists (descr : type_of% @Vector.le_iff_exists.{
     | zero => exact hit
     | succ i => exact (Nat.not_succ_le_zero i (Nat.le_of_lt_succ hi)).elim
 
+namespace PredicateBounds
+
+/-- At the distinguished endpoint, the bound of two elements tests both predicates. -/
+private def condition : Option Prop → Prop
+  | none => True
+  | some p => p
+
+private def compare (a : Option Prop) : Option Prop → Prop
+  | none => condition a
+  | some _ => True
+
+private def joint (a b : Option Prop) : Option Prop := some (condition a ∧ condition b)
+
+private theorem total (a b : Option Prop) : compare a b ∨ compare b a := by
+  cases b with
+  | some _ => exact .inl trivial
+  | none => cases a with
+    | some _ => exact .inr trivial
+    | none => exact .inl trivial
+
+private theorem bound (a b c : Option Prop) :
+    compare (joint a b) c ↔ compare a c ∧ compare b c := by
+  cases c with
+  | none => exact Iff.rfl
+  | some _ => exact ⟨fun _ => ⟨trivial, trivial⟩, fun _ => trivial⟩
+
+private def strict (a b : Option Prop) := compare a b ∧ ¬compare b a
+
+theorem weakMiddleOfLTMax (law : type_of% @Std.lt_max_iff.{0}) (p : Prop) : ¬p ∨ ¬¬p := by
+  letI : LE (Option Prop) := ⟨compare⟩
+  letI : LT (Option Prop) := ⟨strict⟩
+  letI : Max (Option Prop) := ⟨joint⟩
+  letI : Std.Total (α := Option Prop) (· ≤ ·) := ⟨total⟩
+  letI : Std.LawfulOrderSup (Option Prop) := ⟨bound⟩
+  letI : Std.LawfulOrderLT (Option Prop) := ⟨fun _ _ => Iff.rfl⟩
+  exact ((law (a := none) (b := some p) (c := some (¬p))).mp
+    ⟨trivial, fun h => h.2 h.1⟩).imp And.right And.right
+
+theorem weakMiddleOfMinLT (law : type_of% @Std.min_lt_iff.{0}) (p : Prop) : ¬p ∨ ¬¬p := by
+  letI : LE (Option Prop) := ⟨fun a b => compare b a⟩
+  letI : LT (Option Prop) := ⟨fun a b => strict b a⟩
+  letI : Min (Option Prop) := ⟨joint⟩
+  letI : Std.Total (α := Option Prop) (· ≤ ·) := ⟨fun a b => total b a⟩
+  letI : Std.LawfulOrderInf (Option Prop) := ⟨fun a b c => bound b c a⟩
+  letI : Std.LawfulOrderLT (Option Prop) := ⟨fun _ _ => Iff.rfl⟩
+  exact ((law (a := some p) (b := some (¬p)) (c := none)).mp
+    ⟨trivial, fun h => h.2 h.1⟩).imp And.right And.right
+
+end PredicateBounds
+
 end AbstractOrder
 
 namespace InternalOrder

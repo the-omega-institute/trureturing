@@ -154,6 +154,7 @@ private def replayWitnesses (env : Environment) : IO Unit := do
       ``AbstractOrder.excludedMiddleOfListLeIffLTOrEq, ``AbstractOrder.excludedMiddleOfArrayLeIffLTOrEq,
       ``AbstractOrder.excludedMiddleOfVectorLeIffLTOrEq,
       ``AbstractOrder.excludedMiddleOfLawfulLT, ``AbstractOrder.weakMiddleOfTotalNot,
+      ``AbstractOrder.PredicateBounds.weakMiddleOfLTMax, ``AbstractOrder.PredicateBounds.weakMiddleOfMinLT,
       ``AbstractOrder.weakMiddleOfLinearPreorder, ``AbstractOrder.weakMiddleOfLinearOrder,
       ``inhabitedPropExtOfProofHEq, ``inhabitedPropExtOfEqTrue,
       ``inhabitedPropExtOfDecision, ``refutedPropExtOfDecision, ``inhabitedPropExtOfEqTrueRule,

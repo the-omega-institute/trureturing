@@ -285,6 +285,10 @@ private def logicalConsequence? (owner name : Name) : Option (Name × Name) := d
     return (`OmegaChecks.InitInventory.StringPatterns.WeakExcludedMiddle, ``OmegaChecks.InitBoundaries.AbstractOrder.weakMiddleOfVectorTotal)
   | `Init.Data.Vector.Lex, ``Vector.instTotalLeOfAsymmLt =>
     return (`OmegaChecks.InitInventory.StringPatterns.WeakExcludedMiddle, ``OmegaChecks.InitBoundaries.AbstractOrder.weakMiddleOfVectorTotalInstance)
+  | `Init.Data.Order.Lemmas, ``Std.lt_max_iff =>
+    return (`OmegaChecks.InitInventory.StringPatterns.WeakExcludedMiddle, ``OmegaChecks.InitBoundaries.AbstractOrder.PredicateBounds.weakMiddleOfLTMax)
+  | `Init.Data.Order.Lemmas, ``Std.min_lt_iff =>
+    return (`OmegaChecks.InitInventory.StringPatterns.WeakExcludedMiddle, ``OmegaChecks.InitBoundaries.AbstractOrder.PredicateBounds.weakMiddleOfMinLT)
   | `Init.Data.Order.Lemmas, ``Std.Asymm.total_not =>
     return (`OmegaChecks.InitInventory.StringPatterns.WeakExcludedMiddle, ``OmegaChecks.InitBoundaries.AbstractOrder.weakMiddleOfTotalNot)
   | `Init.Data.Order.Factories, ``Std.IsLinearPreorder.of_lt =>
