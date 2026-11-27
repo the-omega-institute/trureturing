@@ -1,7 +1,12 @@
+module
+meta import OmegaChecks.ModuleSurface
+meta import OmegaChecks.InitPort.NativeState
 import OmegaChecks.InitPort.NativeState
 import OmegaChecks.ModuleSurface
 import Lean
 import Lean.Compiler.LCNF.EmitC
+import all Lean.Compiler.LCNF.ToImpureType
+import all Lean.OriginalConstKind
 
 open Lean
 open OmegaChecks.InitPort.NativeState
@@ -9,6 +14,27 @@ open OmegaChecks.InitPort.NativeState
 private def checkTask (env : Environment) : IO Unit := do
   verify env `Task.pure #[(.erased, false), (.tobject, false)] .object "lean_task_pure"
   verify env `Task.get #[(.erased, false), (.object, false)] .tobject "lean_task_get_own"
+
+private def operations := #[(`Task.spawn, "spawn"), (`Task.map, "map"), (`Task.bind, "bind")]
+
+private def priorities := #[`Omega.Task.Priority.default, `Omega.Task.Priority.max, `Omega.Task.Priority.dedicated]
+
+private def operationArgs (n : Name) : Array (IR.IRType × Bool) :=
+  if n == `Task.spawn then #[(.erased, false), (.tobject, false), (.tobject, false)]
+  else #[(.erased, false), (.erased, false), (if n == `Task.map then .tobject else .object, false),
+    (.object, false), (.tobject, false), (.uint8, false)]
+
+private def checkOperands (env : Environment) : IO Unit := do
+  let check (n : Name) (tag fields : Nat) := do
+    let some d := Compiler.LCNF.ctorLayoutExt.find? env n | throw <| IO.userError s!"missing runtime layout {n}"
+    unless d.ctorInfo.cidx == tag && d.ctorInfo.size == fields && d.ctorInfo.usize == 0 &&
+        d.ctorInfo.ssize == 0 && d.fieldInfo.size == fields do throw <| IO.userError s!"incorrect task operand layout {n}"
+  check `Omega.Nat.zero 0 0
+  check `Omega.Nat.succ 1 1
+  check `Omega.Bool.false 0 0
+  check `Omega.Bool.true 1 0
+  let some succ := Compiler.LCNF.ctorLayoutExt.find? env `Omega.Nat.succ | throw <| IO.userError "missing successor"
+  let #[.object 0 _] := succ.fieldInfo | throw <| IO.userError "incorrect priority predecessor"
 
 /-- At both visibility levels each surface name resolves to its kernel primitive. -/
 private def checkPrimitiveNames (env : Environment) : IO Unit := do
@@ -44,10 +70,11 @@ private def compileRawRead (env : Environment) (output : System.FilePath) : IO U
   IO.FS.writeFile output c
 
 /-- Preserve the task runtime representation recognized by Lean's projection compiler. -/
-unsafe def main (args : List String) : IO Unit := do
-  let [lib, raw] := args | throw <| IO.userError "expected strict library and raw consumer C output"
+public unsafe def main (args : List String) : IO Unit := do
+  let [lib, raw, output] := args | throw <| IO.userError "expected strict library, raw consumer and native C outputs"
   let original ← importModules #[{module := `Init.Core}] {}
   checkTask original
+  for (n, suffix) in operations do verify original n (operationArgs n) .object ("lean_task_" ++ suffix)
   searchPathRef.set [lib]
   let owner := `OmegaInit.Core
   let env ← importModules #[{module := owner}] {}
@@ -69,3 +96,24 @@ unsafe def main (args : List String) : IO Unit := do
     verify compiled `Task.get #[(.erased, false), (.object, false)] .tobject "lean_task_get_own"
   writeCode lib owner compiled (layouts ++ codeExtensions)
   if names.contains `Task.get then compileRawRead (← importModules #[{module := owner}] {}) raw
+  let env ← importModules #[{module := owner}] {}
+  let methods := operations.map (fun e => `Omega ++ e.1)
+  let localNames := (methods ++ priorities).filter env.contains
+  if localNames.isEmpty then return
+  checkOperands env
+  let context ← localEnv env owner localNames
+  let functions ← compile context do
+    for (official, suffix) in operations do
+      let n := `Omega ++ official
+      if localNames.contains n then
+        modifyEnv fun e => externAttr.ext.addEntry (asyncDecl := n) e (n, ⟨[.standard `all ("omega_task_" ++ suffix)]⟩)
+        (← compileDeclsRef.get) #[n] {}
+    for n in priorities do
+      if localNames.contains n then
+        modifyEnv fun e => Lean.privateConstKindsExt.insert e n .defn
+        (← compileDeclsRef.get) #[n] {}
+  for (n, suffix) in operations do
+    if localNames.contains (`Omega ++ n) then
+      verify functions (`Omega ++ n) (operationArgs n) .object ("omega_task_" ++ suffix)
+  writeCode lib owner functions (codeExtensions ++ #[Lean.privateConstKindsExt.name])
+  emitBridge functions owner "src/OmegaChecks/InitPort/task_runtime.c" output

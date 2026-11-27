@@ -44,7 +44,7 @@ public def localEnv (env : Environment) (mod : Name) (names : Array Name) : IO E
   for n in names do
     unless env.getModuleIdxFor? n == some idx do throw <| IO.userError s!"wrong native owner of {n}"
     kenv := {kenv with const2ModIdx := kenv.const2ModIdx.erase n}
-  return (Environment.ofKernelEnv kenv).setMainModule mod
+  return (Environment.ofKernelEnv kenv).setMainModule mod |>.setModulePackage (env.getModulePackageByIdx? idx)
 
 public unsafe def writeCode (lib : System.FilePath) (mod : Name) (compiled : Environment)
     (selected : Array Name) : IO Unit := do
@@ -97,7 +97,7 @@ public def emitBridge (compiled : Environment) (owner : Name) (runtime : Option 
     (output : System.FilePath) : IO Unit := do
   let env := Environment.ofKernelEnv {compiled.toKernelEnv with header.imports := #[], header.isModule := true}
   -- C emission consults the attribute state for calls made inside boxed wrappers.
-  let env := externAttr.ext.setState env (externAttr.ext.getState compiled)
+  let env := (externAttr.ext.setState env (externAttr.ext.getState compiled)).setModulePackage compiled.getModulePackage?
   let c ← (emitC owner).toIO' {fileName := "<strict runtime entry points>", fileMap := default} {env}
   let source ← match runtime with
     | some file => pure <| c ++ "\n" ++ (← IO.FS.readFile file)

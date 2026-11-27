@@ -79,6 +79,29 @@ def cyclic_declarations(path):
     return rejected, list(order.static_order())
 
 
+def compile_tasks(stage, product, artifact, inventory, raw):
+    bridge = stage / "task.c"
+    run("lake", "env", "lean", "--run", HERE / "TaskNative.lean", artifact, raw, bridge)
+    if not bridge.exists():
+        return
+    native = product / "native"
+    native.mkdir(exist_ok=True)
+    obj = native / "task.o"
+    run("leanc", "-DLEAN_EXPORTING", "-c", bridge, "-o", obj)
+    with inventory.open() as stream:
+        installed = {name for mod, name, _, status, _ in map(json.loads, stream)
+                     if mod == "Init.Core" and status in {"added", "existing"}}
+    required = {"Task.spawn", "Task.map", "Task.bind", "Task.get", "Task.pure",
+                "Task.Priority.default", "Task.Priority.max", "Task.Priority.dedicated"}
+    if required <= installed:
+        consumer = stage / "task-consumer.c"
+        run("lean", "-R", HERE, "-c", consumer, HERE / "TaskConsumer.lean",
+            env={**os.environ, "LEAN_PATH": str(artifact)})
+        app = stage / "task-consumer"
+        run("leanc", consumer, obj, HERE / "task_consumer.c", "-o", app)
+        run(app)
+
+
 def compile_state_runtime(stage, product, artifact, inventory, tool, filename, required, extra_sources=()):
     bridge = stage / (filename + ".c")
     run("lake", "env", "lean", "--run", HERE / (tool + "Native.lean"), artifact, bridge)
@@ -181,7 +204,7 @@ def generate(stage, product, seed, roots, excluded):
     run("lake", "env", "lean", "--run", HERE / "ExportAxioms.lean", artifact, *graph)
     raw_task = stage / "raw-task.c"
     if "OmegaInit.Core" in graph:
-        run("lake", "env", "lean", "--run", HERE / "TaskNative.lean", artifact, raw_task)
+        compile_tasks(stage, product, artifact, inventory, raw_task)
     if "OmegaInit.Dynamic" in graph:
         compile_type_name(stage, product, artifact, inventory)
     if "OmegaInit.System.ST" in graph:
