@@ -23,10 +23,32 @@ set_option autoImplicit false
 
 namespace ExtremalC48
 
-open private exists_normal_zpowers_of_dvd exists_invariant_subspace_of_card_lt from
+open private exists_normal_zpowers_of_dvd from
   D5.S3.VertexAlgebra.Lattice.Orbifold.P48qPrimeToThreeReducibility
 
-variable {H V : Type*} [Group H] [Finite H] [AddCommGroup V] [Module ℚ V]
+variable {𝕜 H V : Type*} [Field 𝕜] [Group H] [Finite H] [AddCommGroup V] [Module 𝕜 V]
+
+private theorem exists_invariant_subspace_of_card_lt
+    (ρ : Representation 𝕜 H V) (hcard : Nat.card H < Module.finrank 𝕜 V) :
+    ∃ W : Submodule 𝕜 V, W ≠ ⊥ ∧ W ≠ ⊤ ∧ ∀ g, W ≤ W.comap (ρ g) := by
+  classical
+  let : Fintype H := Fintype.ofFinite H
+  let : Nontrivial V := Module.nontrivial_of_finrank_pos (lt_of_le_of_lt (Nat.zero_le _) hcard)
+  obtain ⟨v, hv⟩ := exists_ne (0 : V)
+  let W := Submodule.span 𝕜 (Set.range fun g => ρ g v)
+  refine ⟨W, ?_, ?_, ?_⟩
+  · intro h
+    have hm : v ∈ W := Submodule.subset_span ⟨1, by simp⟩
+    rw [h, Submodule.mem_bot] at hm
+    exact hv hm
+  · intro h
+    have hle := finrank_le_of_span_eq_top h
+    rw [← Nat.card_eq_fintype_card] at hle
+    exact hcard.not_ge hle
+  · intro g
+    apply Submodule.span_le.mpr
+    rintro _ ⟨k, rfl⟩
+    exact Submodule.subset_span ⟨g * k, by simp [Module.End.mul_apply]⟩
 
 /-- A normal factor whose Sylow count is forced to be one has a characteristic
 cyclic subgroup of order `p`. Its image is normal in the ambient group. -/
@@ -55,10 +77,10 @@ private theorem exists_ambient_normal_zpowers_of_dvd
 
 omit [Finite H] in
 private theorem exists_invariant_subspace_of_normal_fixed_space
-    (ρ : Representation ℚ H V) (x : H) [(Subgroup.zpowers x).Normal]
+    (ρ : Representation 𝕜 H V) (x : H) [(Subgroup.zpowers x).Normal]
     (hzero : LinearMap.ker (ρ x - 1) ≠ ⊥)
     (hproper : LinearMap.ker (ρ x - 1) ≠ ⊤) :
-    ∃ W : Submodule ℚ V, W ≠ ⊥ ∧ W ≠ ⊤ ∧ ∀ g, W ≤ W.comap (ρ g) := by
+    ∃ W : Submodule 𝕜 V, W ≠ ⊥ ∧ W ≠ ⊤ ∧ ∀ g, W ≤ W.comap (ρ g) := by
   let S := Subgroup.zpowers x
   let y : S := ⟨x, Subgroup.mem_zpowers x⟩
   let W := Representation.invariants (ρ.comp S.subtype)
@@ -74,28 +96,28 @@ private theorem exists_invariant_subspace_of_normal_fixed_space
   exact ⟨W, hW.symm ▸ hzero, hW.symm ▸ hproper, Representation.le_comap_invariants ρ S⟩
 
 private theorem exists_invariant_subspace_of_normal_factor_prime
-    (K : Subgroup H) [K.Normal] (ρ : Representation ℚ H V)
+    (K : Subgroup H) [K.Normal] (ρ : Representation 𝕜 H V)
     (p m : ℕ) [Fact p.Prime]
     (hcard : Nat.card K ∣ p * m) (hp : p ∣ Nat.card K) (hpm : ¬ p ∣ m)
     (hSylow : ∀ n ∈ m.divisors, n ≡ 1 [MOD p] → n = 1)
     (hfix : ∀ x : K, orderOf x = p →
       LinearMap.ker (ρ (x : H) - 1) ≠ ⊥ ∧ LinearMap.ker (ρ (x : H) - 1) ≠ ⊤) :
-    ∃ W : Submodule ℚ V, W ≠ ⊥ ∧ W ≠ ⊤ ∧ ∀ g, W ≤ W.comap (ρ g) := by
+    ∃ W : Submodule 𝕜 V, W ≠ ⊥ ∧ W ≠ ⊤ ∧ ∀ g, W ≤ W.comap (ρ g) := by
   obtain ⟨x, hx, hn⟩ := exists_ambient_normal_zpowers_of_dvd K p m hcard hp hpm hSylow
   let := hn
   exact exists_invariant_subspace_of_normal_fixed_space ρ (x : H)
     (hfix x hx).1 (hfix x hx).2
 
-/-- An odd normal P48p factor forces reducibility in rational dimension 48,
+/-- An odd normal P48p factor forces reducibility in dimension 48 over any field,
 including the trivial-factor case when the ambient group has order at most 12. -/
 theorem p48p_odd_normal_factor_exists_invariant_subspace
-    (K : Subgroup H) [K.Normal] (ρ : Representation ℚ H V)
-    (hdim : Module.finrank ℚ V = 48)
+    (K : Subgroup H) [K.Normal] (ρ : Representation 𝕜 H V)
+    (hdim : Module.finrank 𝕜 V = 48)
     (hcard : Nat.card K ∣ 2 ^ 4 * 3 * 11 * 23) (hindex : K.index ∣ 12)
     (hodd : ¬ 2 ∣ Nat.card K)
     (hfix : ∀ x : K, (orderOf x = 3 ∨ orderOf x = 11 ∨ orderOf x = 23) →
       LinearMap.ker (ρ (x : H) - 1) ≠ ⊥ ∧ LinearMap.ker (ρ (x : H) - 1) ≠ ⊤) :
-    ∃ W : Submodule ℚ V, W ≠ ⊥ ∧ W ≠ ⊤ ∧ ∀ g, W ≤ W.comap (ρ g) := by
+    ∃ W : Submodule 𝕜 V, W ≠ ⊥ ∧ W ≠ ⊤ ∧ ∀ g, W ≤ W.comap (ρ g) := by
   let : Fact (Nat.Prime 23) := ⟨by decide⟩
   let : Fact (Nat.Prime 11) := ⟨by decide⟩
   let : Fact (Nat.Prime 3) := ⟨by decide⟩
@@ -125,12 +147,12 @@ theorem p48p_odd_normal_factor_exists_invariant_subspace
 /-- For a normal P48p factor of order prime to three, either of the divisors
 11 or 23 forces an ambient invariant space through a characteristic Sylow subgroup. -/
 theorem p48p_prime_to_three_normal_factor_exists_invariant_subspace
-    (K : Subgroup H) [K.Normal] (ρ : Representation ℚ H V)
+    (K : Subgroup H) [K.Normal] (ρ : Representation 𝕜 H V)
     (hcard : Nat.card K ∣ 2 ^ 4 * 3 * 11 * 23)
     (h3 : ¬ 3 ∣ Nat.card K) (hdiv : 11 ∣ Nat.card K ∨ 23 ∣ Nat.card K)
     (hfix : ∀ x : K, (orderOf x = 11 ∨ orderOf x = 23) →
       LinearMap.ker (ρ (x : H) - 1) ≠ ⊥ ∧ LinearMap.ker (ρ (x : H) - 1) ≠ ⊤) :
-    ∃ W : Submodule ℚ V, W ≠ ⊥ ∧ W ≠ ⊤ ∧ ∀ g, W ≤ W.comap (ρ g) := by
+    ∃ W : Submodule 𝕜 V, W ≠ ⊥ ∧ W ≠ ⊤ ∧ ∀ g, W ≤ W.comap (ρ g) := by
   let : Fact (Nat.Prime 23) := ⟨by decide⟩
   let : Fact (Nat.Prime 11) := ⟨by decide⟩
   have hcop3 := (Nat.prime_three.coprime_iff_not_dvd.mpr h3).symm
@@ -149,13 +171,13 @@ theorem p48p_prime_to_three_normal_factor_exists_invariant_subspace
 cubic and ambient irreducibility force the normal factor's order to be a
 power of two, of exponent at most four. -/
 theorem p48p_irreducible_normal_factor_card_power_of_two
-    (K : Subgroup H) [K.Normal] (ρ : Representation ℚ H V)
+    (K : Subgroup H) [K.Normal] (ρ : Representation 𝕜 H V)
     (hcard : Nat.card K ∣ 2 ^ 4 * 3 * 11 * 23)
     (hfix : ∀ x : K, (orderOf x = 11 ∨ orderOf x = 23) →
       LinearMap.ker (ρ (x : H) - 1) ≠ ⊥ ∧ LinearMap.ker (ρ (x : H) - 1) ≠ ⊤)
-    (hcubic : ∀ x : K, orderOf x = 3 → Module.finrank ℚ (LinearMap.ker (ρ (x : H) - 1)) = 16)
-    (hno : ¬ ∃ x : K, orderOf x = 3 ∧ Module.finrank ℚ (LinearMap.ker (ρ (x : H) - 1)) = 16)
-    (hirred : ¬ ∃ W : Submodule ℚ V, W ≠ ⊥ ∧ W ≠ ⊤ ∧ ∀ g, W ≤ W.comap (ρ g)) :
+    (hcubic : ∀ x : K, orderOf x = 3 → Module.finrank 𝕜 (LinearMap.ker (ρ (x : H) - 1)) = 16)
+    (hno : ¬ ∃ x : K, orderOf x = 3 ∧ Module.finrank 𝕜 (LinearMap.ker (ρ (x : H) - 1)) = 16)
+    (hirred : ¬ ∃ W : Submodule 𝕜 V, W ≠ ⊥ ∧ W ≠ ⊤ ∧ ∀ g, W ≤ W.comap (ρ g)) :
     ∃ n ≤ 4, Nat.card K = 2 ^ n := by
   let : Fact (Nat.Prime 3) := ⟨by decide⟩
   have h3 : ¬ 3 ∣ Nat.card K := by
