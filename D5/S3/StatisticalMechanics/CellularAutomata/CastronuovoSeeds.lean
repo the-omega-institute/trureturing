@@ -113,9 +113,6 @@ def Universal {n : ℕ} (φ : LocalRule n) (k : ℕ) : Prop :=
 def StronglyUniversal {n : ℕ} (φ : LocalRule n) (k : ℕ) : Prop :=
   ∃ P : ℤ → Letter k, LineSeed P ∧ Simple P ∧ Complete (lineStep φ) P
 
-def CyclicUniversal {n : ℕ} (φ : LocalRule n) (k : ℕ) : Prop :=
-  ∃ (N : ℕ) (P : ZMod N → Letter k), CyclicSeed n P ∧ Complete (ringStep φ) P
-
 def StronglyCyclicUniversal {n : ℕ} (φ : LocalRule n) (k : ℕ) : Prop :=
   ∃ (N : ℕ) (P : ZMod N → Letter k), CyclicSeed n P ∧ Simple P ∧ Complete (ringStep φ) P
 
