@@ -300,7 +300,12 @@ def check (strict : Environment) (full? : Option Environment := none) : IO (Arra
       for (alias, target) in aliasExtension.getModuleEntries strict idx do
         let officialAlias := alias.replacePrefix `Omega .anonymous
         let officialTarget := target.replacePrefix `Omega .anonymous
-        let resolved := ResolveName.resolveGlobalName reference {} .anonymous [] officialAlias
+        -- An importing module may add overloads, including a declaration with the alias's
+        -- own name. Only candidates exported by this strict root participate in its interface.
+        let resolved := (ResolveName.resolveGlobalName reference {} .anonymous [] officialAlias).filter
+          fun (candidate, _) => candidate == officialTarget ||
+            (strict.getModuleIdxFor? (`Omega ++ candidate)).any fun home =>
+              visible.contains strict.header.moduleNames[home]!
         let some originalOwner := reference.getModuleIdx? (counterpart owner)
           | throw <| IO.userError s!"missing owner of alias {alias} in {official}"
         let rootAlias := OmegaChecks.InitCompiler.RootNames.aliasFor? officialTarget == some (alias, target) &&
