@@ -44,4 +44,5 @@ port_proof Array.size_eq_length_toList by_reflexivity
 port_definition Array.markLinear
 port_proof Array.markLinear_eq by_reflexivity
 port_definition Array.propagateMark
+attribute [never_extract] Omega.Array.markLinear Omega.Array.propagateMark
 port_proof Array.propagateMark_eq by_reflexivity
