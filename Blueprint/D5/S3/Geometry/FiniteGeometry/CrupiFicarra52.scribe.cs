@@ -48,7 +48,9 @@ internal sealed class CrupiFicarra52Document : IScribeDocumentDefinition
                     Paragraph(Text("In the affine chart z=1, omit the q points (x:x²:1) and keep every other affine point. Include just the vertical direction P=(0:1:0) at infinity. Each vertical line keeps P and q−1 affine points. A nonvertical line y=mx+b keeps at least q−2 points by the root bound for X²−mX−b and omits its point at infinity. The line at infinity keeps just P. These incidences give both blocking conditions and the unique tangent at P in every characteristic.")),
                     Paragraph(Text("For an arbitrary qualifying set, its tangent at p omits q points. Each other line through p omits at least one point, and these q omissions are distinct and off the tangent by uniqueness of the line through two points. The total q²+q+1 points therefore leave room for at most q²−q+1 in the set.")),
                     Paragraph(Text("The witness has a proper blocking subset. Deleting one retained affine point leaves P on the line at infinity and a hit on each of the other lines, which had at least two hits. The paper gives a separate definition for inclusion-minimal blocking sets."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("crupi-ficarra-2025-question-5-2"), ResolutionKind.Proved)))));
 
     private static Formula Named(string name) => Seq(Operatorname, Grp(FormulaDsl.Id(name)));
     private static Formula App(string name, params Formula[] args) => new Formula.Apply(Named(name), [.. args]);

@@ -54,6 +54,10 @@ $$\forall \left(F : \operatorname{Type}\right), [\operatorname{Field}\left(F\rig
 
 *Proof.* Machine-checked in Lean as `D5/S3/Geometry/FiniteGeometry/CrupiFicarra52.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/crupi-ficarra-2025-question-5-2` (proved) by `D5/S3/Geometry/FiniteGeometry/CrupiFicarra52.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"crupi-ficarra-2025-question-5-2","declaration_gid":"D5/S3/Geometry/FiniteGeometry/CrupiFicarra52.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Marilena Crupi and Antonino Ficarra (2025). *Generalizing blocking semiovals in finite projective planes*. DOI: [10.48550/arXiv.2507.05037](https://doi.org/10.48550/arXiv.2507.05037). URL: <https://arxiv.org/abs/2507.05037v2>.
