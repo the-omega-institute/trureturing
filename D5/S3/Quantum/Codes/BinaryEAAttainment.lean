@@ -361,8 +361,7 @@ theorem mem_support {W : Submodule F (E n)} {i : Fin n} :
   classical
   simp [support]
 
-/-- Each codeword vanishes at every site outside the code's support. -/
-theorem site_zero_outside_support {W : Submodule F (E n)} {i : Fin n}
+private theorem site_zero_outside_support {W : Submodule F (E n)} {i : Fin n}
     (hi : i ∉ support W) {v : E n} (hv : v ∈ W) : site i v = 0 := by
   by_contra h
   exact hi (mem_support.mpr ⟨v, hv, h⟩)

@@ -3,8 +3,8 @@
    mirror-B: D5/B/S3/Quantum/Codes/BinaryEAAttainmentBridge
    mirror-E: none(waiver:kernel-checked-refutation)
    anchors: []
-   utility: kind=composition; basis=refutes=gid:D5/S3/Quantum/Codes/BinaryEAAttainmentBridge.claim; result=D5.S3.Quantum.Codes.BinaryEAAttainmentBridge.result; claim=D5.S3.Quantum.Codes.BinaryEAAttainmentBridge.claim
-   digest: Binary Singleton attainment with dimensions eight and four is excluded from length eight onward. -/
+   utility: kind=bounded-enumeration; basis=refutes=gid:D5/S3/Quantum/Codes/BinaryEAAttainmentBridge.claim; result=D5/S3/Quantum/Codes/BinaryEAAttainmentBridge.result; claim=D5/S3/Quantum/Codes/BinaryEAAttainmentBridge.claim
+   digest: Binary Singleton attainment is excluded from length eight onward. -/
 
 import D5.S3.Quantum.Codes.BinaryEAAttainment
 import D5.S3.Quantum.Codes.BinaryEARankOneBridge
@@ -18,7 +18,7 @@ namespace D5.S3.Quantum.Codes.BinaryEAAttainmentBridge
 
 open BinaryEAAttainment
 open D5.S3.Quantum.Information.BinaryLagrangianGraphForm (sp)
-open D5.S3.Quantum.Information.BinaryStabilizerGraphNormalForm (spForm)
+open D5.S3.Quantum.Information.BinaryStabilizerGraphNormalForm (spForm sp_alt)
 open scoped BigOperators
 
 local notation "F" => ZMod 2
@@ -27,10 +27,10 @@ local notation "dim" => Module.finrank F
 
 private theorem site_rank_le_singleton_rank {n : ℕ} (H : Submodule F (E n)) (i : Fin n) :
     dim (H.map (site i)) ≤ dim (((restrictSites {i}).domRestrict H).range) := by
-  let p := LinearMap.proj (R := F) (M := fun _ : ({i} : Finset (Fin n)) => F × F)
+  let p := LinearMap.proj (R := F) (φ := fun _ : ({i} : Finset (Fin n)) => F × F)
     ⟨i, Finset.mem_singleton_self i⟩
   have hp : (((restrictSites {i}).domRestrict H).range).map p = H.map (site i) := by
-    rw [LinearMap.range_domRestrict, Submodule.map_map]
+    rw [LinearMap.range_domRestrict, ← Submodule.map_comp]
     rfl
   rw [← hp]
   exact Submodule.finrank_map_le _ _
@@ -50,7 +50,7 @@ private theorem no_rank_two_at_eight (U : Submodule F (E 8)) (hU : ZeroBound U)
     (hdU : dim U = 8) (hdH : dim (radical U) = 4)
     (i : Fin 8) (hi : Function.Surjective ((site i).domRestrict (radical U))) : False := by
   refine BinaryEAShortening.length_eight_no_rank_two_site (radical U) U inf_le_left
-    hdH hdU (fun _ hh u hu => hh.2 u hu) hU i hi ?_
+    hdH hdU (fun h hh u hu => (sp_alt 8).isRefl u h (hh.2 u hu)) hU i hi ?_
   intro j hj
   have hdim := dim_kernel_add_rank (radical U) {i, j}
   have hker := pair_kernel_dim_pos_at_eight U hU hdU {i, j} (Finset.card_pair hj.symm)
@@ -97,8 +97,10 @@ private theorem no_rank_one_on_small_support {n : ℕ} (U : Submodule F (E n)) (
   have hinjH : Function.Injective (p.domRestrict H) :=
     hinj.comp (Submodule.inclusion_injective hHU)
   have hC : dim C = 8 := by
+    change dim (U.map p) = 8
     rw [← LinearMap.range_domRestrict, LinearMap.finrank_range_of_inj hinj, hdU]
   have hG : dim G = 4 := by
+    change dim (H.map p) = 4
     rw [← LinearMap.range_domRestrict, LinearMap.finrank_range_of_inj hinjH, hdH]
   refine BinaryEARankOneBridge.no_rank_one_of_card_le_ten C G hS
     (Submodule.map_mono hHU) hC hG ?_ ?_ ?_
@@ -109,8 +111,8 @@ private theorem no_rank_one_on_small_support {n : ℕ} (U : Submodule F (E n)) (
     let g (i : Fin n) := h.1 i * u.2 i + h.2 i * u.1 i
     have hs : sp (p h) (p u) = ∑ i ∈ S, g i := by
       change (∑ j : Fin S.card, g (e j).val) = _
-      rw [← Finset.sum_subtype S (fun _ => Iff.rfl)]
-      exact Equiv.sum_comp e (fun i : S => g i.val)
+      exact (Equiv.sum_comp e (fun i : S => g i.val)).trans
+        (S.sum_subtype (fun _ => Iff.rfl) g)
     rw [hs]
     have hm : sp h (mask S u) = ∑ i ∈ S, g i := by
       unfold sp
@@ -122,7 +124,8 @@ private theorem no_rank_one_on_small_support {n : ℕ} (U : Submodule F (E n)) (
     exact hm.symm.trans hort
   · intro j
     have hp : G.map (BinaryEARankOneBridge.site j) = H.map (site (f j)) := by
-      rw [Submodule.map_map]
+      change (H.map p).map (BinaryEARankOneBridge.site j) = H.map (site (f j))
+      rw [← Submodule.map_comp]
       rfl
     rw [hp]
     have hpos : 0 < dim (H.map (site (f j))) := by
@@ -130,7 +133,7 @@ private theorem no_rank_one_on_small_support {n : ℕ} (U : Submodule F (E n)) (
       by_contra! hz
       have hb := Submodule.finrank_eq_zero.mp (Nat.eq_zero_of_le_zero hz)
       exact hn ((Submodule.mem_bot F).mp (hb ▸ Submodule.mem_map.mpr ⟨h, hh, rfl⟩))
-    have := hr (f j)
+    have hle : dim (H.map (site (f j))) ≤ 1 := hr (f j)
     omega
   · rintro _ ⟨u, hu, rfl⟩ hnu
     have huH : u ∉ H := fun h => hnu (Submodule.mem_map.mpr ⟨u, h, rfl⟩)
@@ -159,7 +162,8 @@ theorem result : ¬ claim := by
       (radical_site_rank_le_one U hU hdU hdH h9 i)
   · obtain rfl : n = 8 := by omega
     have hs : (support (radical U)).card ≤ 10 := by
-      have : (support (radical U)).card ≤ 8 := by simpa using Finset.card_le_univ _
+      have : (support (radical U)).card ≤ 8 := by
+        simpa only [Fintype.card_fin] using (support (radical U)).card_le_univ
       omega
     exact no_rank_one_on_small_support U hU hdU hdH hs (fun i =>
       site_rank_le_one_of_not_surjective (radical U) i (no_rank_two_at_eight U hU hdU hdH i))
@@ -172,7 +176,8 @@ theorem refute_attainment_of_length_seven_rank_two
   rintro ⟨n, hn, U, hdU, hdH, hweight, _⟩
   have hU := zeroBound_of_weight_bound U hn hweight
   have hs := seven_le_support U hU hdU hdH
-  have hs' : (support (radical U)).card ≤ n := by simpa using Finset.card_le_univ _
+  have hs' : (support (radical U)).card ≤ n := by
+    simpa only [Fintype.card_fin] using (support (radical U)).card_le_univ
   by_cases hn8 : 8 ≤ n
   · exact result ⟨n, U, hn8, hdU, hdH, hU⟩
   obtain rfl : n = 7 := by omega
