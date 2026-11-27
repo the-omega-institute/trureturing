@@ -14,9 +14,9 @@ Lean statement: `D5/S3/Analytic/Oscillation/MontgomeryMatchingCap.finite_matchin
 
 *Commentary.*
 
-A finite collection of copies carries the inclusive closed radius-one neighborhoods. Two injective endpoint maps with disjoint row owners amplify the pair residual by the squared triangle inequality on the circle.
+A finite collection of copies carries the inclusive closed radius-one neighborhoods. Two injective endpoint maps with disjoint images ensure that every selected row is counted once.
 
-The Lorentz weight is at least one half for both endpoint rows and every column in the first endpoint neighborhood. Summing nonnegative rows without duplication gives the ordered defect bound.
+In the first endpoint neighborhood the two Lorentz weights are at least four fifths and one half. For the two chord lengths to a neighboring phase, the square of their sum is at most thirteen fourths of their weighted squared sum. The triangle inequality therefore gives four thirteenths of the endpoint phase residual per neighboring copy. All omitted terms are nonnegative.
 
 **Theorem 1.2 (Defect for a spectrum with multiplicities).**
 
@@ -40,9 +40,9 @@ Lean statement: `D5/S3/Analytic/Oscillation/MontgomeryMatchingCap.strict_normali
 
 *Commentary.*
 
-For a cutoff above one, lower bounds proportional to the cutoff times its logarithm for the matching size and to its logarithm for the neighborhood copy counts, together with a nonnegative phase residual lower bound, give a normalized saving of at least one quarter of the product of their three constants.
+For a cutoff above one, lower bounds proportional to the cutoff times its logarithm for the matching size and to its logarithm for the neighborhood copy counts, together with a nonnegative phase residual lower bound, give a normalized saving of at least four thirteenths of the product of their three constants.
 
-A zero-phase bound within that saving of the desired cap yields a strict cap when the chosen margin is positive. Obtaining sufficiently many such close pairs with a uniform phase residual for actual zeta zeros across a long frequency band remains open.
+If the normalized zero-phase sum is at most the target cap minus the chosen margin plus that saving, the normalized sum at the tested frequency is at most the target cap minus the margin. A positive margin gives a strict bound. Obtaining sufficiently many such close pairs with a uniform phase residual for actual zeta zeros across a long frequency band remains open.
 
 ## References
 

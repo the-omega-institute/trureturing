@@ -9,7 +9,6 @@
 import D5.S3.Analytic.Oscillation.MontgomeryAutocorrelationLimit
 import D5.S3.Analytic.Oscillation.MontgomeryCountUpper
 import D5.S3.Analytic.Oscillation.SmoothedSpectrumCounting
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Bounds
 import OmegaBuild.Commands
 
 /-! Disjoint close pairs amplify a local phase defect into the ordered Lorentz sum. -/
@@ -29,7 +28,7 @@ open D5.S3.Analytic.Oscillation.SmoothedSpectrumCounting
 
 open D5.S3.Analytic.Oscillation.MontgomeryAutocorrelationLimit (copies_pair_sum)
 open D5.S3.Analytic.Oscillation.MontgomeryWindow (pairCos)
-open Omega.MeasureTheory.LorentzIntervalMass (kernel)
+open Omega.MeasureTheory.LorentzIntervalMass (kernel kernel_level kernel_nonneg)
 
 def phaseResidual (a b : ℝ) : ℝ := 1 - Real.cos (a - b)
 
@@ -43,8 +42,9 @@ def finiteLorentzPairSum {J : Type*} (s : Finset J) (gamma : J → ℝ) (t : ℝ
 private lemma phaseResidual_nonneg (a b : ℝ) : 0 ≤ phaseResidual a b := by
   exact sub_nonneg.mpr (Real.cos_le_one _)
 
-private lemma phaseResidual_triangle (a b c : ℝ) :
-    phaseResidual a c + phaseResidual b c ≥ (1 / 2 : ℝ) * phaseResidual a b := by
+private lemma weighted_phaseResidual_triangle (a b c : ℝ) :
+    (4 / 5 : ℝ) * phaseResidual a c + (1 / 2 : ℝ) * phaseResidual b c ≥
+      (4 / 13 : ℝ) * phaseResidual a b := by
   let za : ℂ := Complex.exp ((a : ℂ) * Complex.I)
   let zb : ℂ := Complex.exp ((b : ℂ) * Complex.I)
   let zc : ℂ := Complex.exp ((c : ℂ) * Complex.I)
@@ -78,43 +78,54 @@ private lemma phaseResidual_triangle (a b c : ℝ) :
   have hsq : ‖za - zb‖ ^ 2 ≤ (‖za - zc‖ + ‖zc - zb‖) ^ 2 := by
     exact (sq_le_sq₀ (norm_nonneg _) (by positivity)).mpr htri
   have hsum : (‖za - zc‖ + ‖zc - zb‖) ^ 2 ≤
-      2 * (‖za - zc‖ ^ 2 + ‖zc - zb‖ ^ 2) := by
-    nlinarith [sq_nonneg (‖za - zc‖ - ‖zc - zb‖)]
+      (13 / 4 : ℝ) * ((4 / 5 : ℝ) * ‖za - zc‖ ^ 2 + (1 / 2 : ℝ) * ‖zc - zb‖ ^ 2) := by
+    nlinarith [sq_nonneg (8 * ‖za - zc‖ - 5 * ‖zc - zb‖)]
   dsimp [za, zb, zc] at hsq hsum
   rw [hnorm a b] at hsq
   rw [hnorm a c, hnorm c b] at hsum
   have hsym : phaseResidual c b = phaseResidual b c := by
     unfold phaseResidual
     rw [show c - b = -(b - c) by ring, Real.cos_neg]
-  nlinarith
+  rw [hsym] at hsum
+  linarith only [hsq, hsum]
+
+private lemma kernel_ge_four_fifths {d : ℝ} (hd : |d| ≤ 1) :
+    (4 / 5 : ℝ) ≤ kernel d := by
+  have hradius : 2 * Real.sqrt (1 / (4 / 5 : ℝ) - 1) = 1 := by
+    rw [show 1 / (4 / 5 : ℝ) - 1 = 1 / 4 by norm_num,
+      Real.sqrt_div (by norm_num) 4, Real.sqrt_one,
+      show (4 : ℝ) = 2 ^ 2 by norm_num, Real.sqrt_sq (by norm_num)]
+    norm_num
+  change d ∈ {x : ℝ | (4 / 5 : ℝ) ≤ kernel x}
+  rw [kernel_level (by norm_num) (by norm_num), hradius]
+  exact abs_le.mp hd
 
 private lemma kernel_ge_half {d : ℝ} (hd : |d| ≤ 2) :
     (1 / 2 : ℝ) ≤ kernel d := by
-  unfold kernel
-  have hd2 : d ^ 2 ≤ 4 := by
-    have h := (sq_le_sq).2 (show |d| ≤ |(2 : ℝ)| by simpa using hd)
-    nlinarith
-  apply (le_div_iff₀ (by positivity)).2
-  nlinarith
+  have hradius : 2 * Real.sqrt (1 / (1 / 2 : ℝ) - 1) = 2 := by
+    rw [show 1 / (1 / 2 : ℝ) - 1 = 1 by norm_num, Real.sqrt_one, mul_one]
+  change d ∈ {x : ℝ | (1 / 2 : ℝ) ≤ kernel x}
+  rw [kernel_level (by norm_num) (by norm_num), hradius]
+  exact abs_le.mp hd
 
 private lemma row_pair_defect_lower {J : Type*} (s : Finset J) (gamma : J → ℝ)
     (t : ℝ) (u v : J)
     (huv : |gamma u - gamma v| ≤ 1) :
     (∑ k ∈ s, kernel (gamma u - gamma k) * phaseResidual (t * gamma u) (t * gamma k)) +
       (∑ k ∈ s, kernel (gamma v - gamma k) * phaseResidual (t * gamma v) (t * gamma k)) ≥
-      (1 / 4 : ℝ) * (localCopies s gamma u).card *
+      (4 / 13 : ℝ) * (localCopies s gamma u).card *
         phaseResidual (t * gamma u) (t * gamma v) := by
   have hlocal :
       (∑ k ∈ localCopies s gamma u, kernel (gamma u - gamma k) *
         phaseResidual (t * gamma u) (t * gamma k)) +
         (∑ k ∈ localCopies s gamma u, kernel (gamma v - gamma k) *
           phaseResidual (t * gamma v) (t * gamma k)) ≥
-      (1 / 4 : ℝ) * (localCopies s gamma u).card *
+      (4 / 13 : ℝ) * (localCopies s gamma u).card *
         phaseResidual (t * gamma u) (t * gamma v) := by
     rw [← Finset.sum_add_distrib]
     calc
       _ ≥ ∑ _k ∈ localCopies s gamma u,
-          (1 / 4 : ℝ) * phaseResidual (t * gamma u) (t * gamma v) := by
+          (4 / 13 : ℝ) * phaseResidual (t * gamma u) (t * gamma v) := by
         apply Finset.sum_le_sum
         intro k hk
         have hku : |gamma u - gamma k| ≤ 1 := by
@@ -124,11 +135,12 @@ private lemma row_pair_defect_lower {J : Type*} (s : Finset J) (gamma : J → �
           have huv' : |gamma v - gamma u| ≤ 1 := by simpa [abs_sub_comm] using huv
           exact htriangle.trans (add_le_add huv' hku |>.trans (by norm_num))
         have hwu := mul_le_mul_of_nonneg_right
-          (kernel_ge_half (hku.trans (by norm_num)))
+          (kernel_ge_four_fifths hku)
           (phaseResidual_nonneg (t * gamma u) (t * gamma k))
         have hwv := mul_le_mul_of_nonneg_right (kernel_ge_half hkv)
           (phaseResidual_nonneg (t * gamma v) (t * gamma k))
-        nlinarith [hwu, hwv, phaseResidual_triangle (t * gamma u) (t * gamma v) (t * gamma k)]
+        exact (weighted_phaseResidual_triangle (t * gamma u) (t * gamma v) (t * gamma k)).trans
+          (add_le_add hwu hwv)
       _ = _ := by rw [Finset.sum_const, nsmul_eq_mul]; ring
   calc
     _ ≥ (∑ k ∈ localCopies s gamma u, kernel (gamma u - gamma k) *
@@ -141,16 +153,14 @@ private lemma row_pair_defect_lower {J : Type*} (s : Finset J) (gamma : J → �
           exact (Finset.mem_filter.mp hk).1
         · intro k hk _
           apply mul_nonneg
-          · unfold kernel
-            positivity
+          · exact kernel_nonneg _
           · exact phaseResidual_nonneg _ _
       · apply Finset.sum_le_sum_of_subset_of_nonneg
         · intro k hk
           exact (Finset.mem_filter.mp hk).1
         · intro k hk _
           apply mul_nonneg
-          · unfold kernel
-            positivity
+          · exact kernel_nonneg _
           · exact phaseResidual_nonneg _ _
     _ ≥ _ := hlocal
 
@@ -216,7 +226,7 @@ private lemma selected_sum {J P : Type*} [DecidableEq J] {s : Finset J} {gamma :
 theorem finite_matching_defect {J P : Type*}
     {s : Finset J} {gamma : J → ℝ} {t : ℝ}
     (M : MatchingData J P s gamma) :
-    (1 / 4 : ℝ) * ∑ p ∈ M.pairs,
+    (4 / 13 : ℝ) * ∑ p ∈ M.pairs,
         (localCopies s gamma (M.left p)).card *
           phaseResidual (t * gamma (M.left p)) (t * gamma (M.right p)) ≤
       finiteLorentzPairSum s gamma 0 - finiteLorentzPairSum s gamma t := by
@@ -233,11 +243,10 @@ theorem finite_matching_defect {J P : Type*}
     apply Finset.sum_nonneg
     intro v hv
     apply mul_nonneg
-    · unfold kernel
-      positivity
+    · exact kernel_nonneg _
     · exact phaseResidual_nonneg _ _
   have hdefect_lower :
-      (1 / 4 : ℝ) * ∑ p ∈ M.pairs,
+      (4 / 13 : ℝ) * ∑ p ∈ M.pairs,
         (localCopies s gamma (M.left p)).card *
           phaseResidual (t * gamma (M.left p)) (t * gamma (M.right p)) ≤
       ∑ u ∈ selected, rowDefect u := by
@@ -283,7 +292,7 @@ private lemma copies_lorentz_pair_sum {S : Spectrum} {H t : ℝ} :
 theorem spectrum_matching_defect {S : Spectrum} {P : Type*} {H t : ℝ}
     (M : MatchingData (Σ j : S.index, Fin (S.mult j)) P
       (CutDensity.copies (S.cut H) S.mult) (fun p => S.gamma p.1)) :
-    (1 / 4 : ℝ) * ∑ p ∈ M.pairs,
+    (4 / 13 : ℝ) * ∑ p ∈ M.pairs,
       (localCopies (CutDensity.copies (S.cut H) S.mult)
         (fun q => S.gamma q.1) (M.left p)).card *
           phaseResidual (t * S.gamma (M.left p).1) (t * S.gamma (M.right p).1) ≤
@@ -303,7 +312,7 @@ theorem strict_normalized_cap_of_matching {S : Spectrum} {P : Type*}
         (localCopies (CutDensity.copies (S.cut H) S.mult)
           (fun q => S.gamma q.1) (M.left p)).card)
     (hbase : pairSum S H 0 ≤
-      (κ - η + c₁ * c₂ * c₃ / 4) * (H * Real.log H ^ 2)) :
+      (κ - η + 4 * c₁ * c₂ * c₃ / 13) * (H * Real.log H ^ 2)) :
     pairSum S H t / (H * Real.log H ^ 2) ≤ κ - η := by
   classical
   have hlog : 0 < Real.log H := Real.log_pos hH
@@ -324,8 +333,8 @@ theorem strict_normalized_cap_of_matching {S : Spectrum} {P : Type*}
     have hleft := mul_le_mul_of_nonneg_left hcard hc₂
     have hright := mul_le_mul_of_nonneg_right hphase hcard0
     nlinarith
-  have hsum : (c₁ * c₂ * c₃ / 4) * (H * Real.log H ^ 2) ≤
-      (1 / 4 : ℝ) * ∑ p ∈ M.pairs,
+  have hsum : (4 * c₁ * c₂ * c₃ / 13) * (H * Real.log H ^ 2) ≤
+      (4 / 13 : ℝ) * ∑ p ∈ M.pairs,
         (localCopies (CutDensity.copies (S.cut H) S.mult)
           (fun q => S.gamma q.1) (M.left p)).card *
           phaseResidual (t * S.gamma (M.left p).1) (t * S.gamma (M.right p).1) := by

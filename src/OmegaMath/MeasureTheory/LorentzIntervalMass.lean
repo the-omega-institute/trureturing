@@ -33,7 +33,7 @@ private theorem kernel_integral :
   simp_rw [kernel_eq_two_cauchy]
   rw [integral_const_mul, integral_cauchyPDFReal_eq_one 0 (by norm_num : (2 : ℝ≥0) ≠ 0), mul_one]
 
-private theorem kernel_level {t : ℝ} (h0 : 0 < t) (h1 : t ≤ 1) :
+theorem kernel_level {t : ℝ} (h0 : 0 < t) (h1 : t ≤ 1) :
     {x : ℝ | t ≤ kernel x} = Icc (-(2 * Real.sqrt (1 / t - 1))) (2 * Real.sqrt (1 / t - 1)) := by
   have hs : 0 ≤ 1 / t - 1 := sub_nonneg.mpr ((le_div_iff₀ h0).mpr (by simpa using h1))
   ext x
@@ -60,7 +60,7 @@ private theorem kernel_level {t : ℝ} (h0 : 0 < t) (h1 : t ≤ 1) :
 
 open scoped ENNReal
 
-private theorem kernel_nonneg (x : ℝ) : 0 ≤ kernel x := by
+theorem kernel_nonneg (x : ℝ) : 0 ≤ kernel x := by
   unfold kernel
   positivity
 
