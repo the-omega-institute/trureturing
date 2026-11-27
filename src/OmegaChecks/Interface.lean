@@ -2,6 +2,7 @@ import Lean
 import OmegaChecks.InitCompiler.RootNames
 import OmegaChecks.FieldMethods
 import OmegaChecks.InitPort.NativeQuot
+import OmegaChecks.InitPort.LawfulLoop
 import OmegaChecks.InitPort.WordFold
 import OmegaChecks.InitPort.WordForIn
 import OmegaChecks.InitPort.ReferenceSwap
@@ -23,6 +24,7 @@ open Lean
 namespace OmegaChecks.Interface
 
 private def official (strict : Environment) (n : Name) : Name := Id.run do
+  if n == OmegaChecks.InitPort.LawfulLoop.strictHelper then return ``OmegaChecks.InitPort.LawfulLoop.reference
   if let some user := privateToUserName? n then
     if let some idx := strict.getModuleIdxFor? n then
       if strict.header.moduleNames[idx]!.getRoot == `OmegaInit && user.getRoot == `Omega then
@@ -387,11 +389,14 @@ def checkSites (strict publicStrict reference : Environment) (bindings : Array (
       if let some api := (OmegaChecks.InitPort.LogicalHandle.forToken? name).filter (·.owner == owner) then
         OmegaChecks.InitPort.LogicalHandle.checkToken api strict publicStrict reference (translate (official strict))
         continue
-      let dst := official strict name
-      unless declaredIn reference dst owner do
-        throw <| IO.userError s!"upstream module mismatch for {name}"
-      let deps ← compare reference (official strict) (← lookup strict name) (← lookup reference dst)
-        (some (strict, publicStrict))
+      let deps ← if name == OmegaChecks.InitPort.LawfulLoop.strictHelper && owner == OmegaChecks.InitPort.LawfulLoop.owner then
+        OmegaChecks.InitPort.LawfulLoop.check strict reference (translate (official strict))
+      else do
+        let dst := official strict name
+        unless declaredIn reference dst owner do
+          throw <| IO.userError s!"upstream module mismatch for {name}"
+        compare reference (official strict) (← lookup strict name) (← lookup reference dst)
+          (some (strict, publicStrict))
       for dep in deps do
         let owner ← ownerOf strict dep
         let target := match owner.getRoot with

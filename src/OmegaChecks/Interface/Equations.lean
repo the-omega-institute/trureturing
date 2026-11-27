@@ -5,6 +5,7 @@ public import OmegaChecks.Interface.Equations.List
 public import OmegaChecks.Interface.Equations.Logic
 public import OmegaChecks.InitPort.ReferenceSwap
 public import OmegaChecks.InitPort.ReferenceSpecialization
+public import OmegaChecks.InitPort.LawfulLoop
 public import OmegaChecks.InitPort.LogicalHandle
 public import OmegaChecks.InitPort.StateToken
 public import OmegaChecks.InitPort.TypeName

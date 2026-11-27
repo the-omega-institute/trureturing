@@ -1,5 +1,6 @@
 module
 public import Lean
+import OmegaChecks.InitPort.LawfulLoop
 import Init.Data.Iterators.Consumers.Access
 import Init.Data.Iterators.Consumers.Collect
 import Init.Data.Iterators.Consumers.Total
@@ -41,8 +42,11 @@ private def specializeCollector (e : Expr) : MetaM (Option Expr) := do
   return none
 
 public def finiteCollectors (env : Environment) (input : Expr) (withinImplementation := false) : IO Expr := do
-  unless input.getUsedConstants.any (fun n => (consumerArity? n).isSome) do return input
+  let hasLoop := input.getUsedConstants.contains ``Std.IteratorLoop.defaultImplementation && env.contains InitPort.LawfulLoop.helper
+  unless hasLoop || input.getUsedConstants.any (fun n => (consumerArity? n).isSome) do return input
   let rewrite : MetaM Expr := Meta.transform input (pre := fun sub => do
+    if hasLoop then
+      if let some call ← InitPort.LawfulLoop.specialize? sub then return .done call
     let some head := sub.getAppFn.constName? | return .continue
     let isSlice := sliceCollectors.contains head
     let some arity := consumerArity? head | return .continue

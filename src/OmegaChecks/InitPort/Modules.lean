@@ -2,6 +2,8 @@ module
 public import Lean
 import OmegaChecks.InitPort.ReferenceSpecialization
 meta import OmegaChecks.InitPort.ReferenceSpecialization
+import OmegaChecks.InitPort.LawfulLoop
+meta import OmegaChecks.InitPort.LawfulLoop
 import OmegaChecks.InitPort.LogicalHandle
 meta import OmegaChecks.InitPort.LogicalHandle
 import OmegaChecks.InitCompiler.RootNames
@@ -202,11 +204,12 @@ unsafe def main (args : List String) : IO Unit := do
   let mut reverseNames : Std.HashMap Name Name := {}
   for (n, _) in source.constants.toList do reverseNames := reverseNames.insert (renamed n) n
   let tokens := OmegaChecks.InitPort.LogicalHandle.apis.map (fun api => (api.tokenName, api.owner))
-  let privateOps := OmegaChecks.InitPort.ReferenceSpecialization.supportOwners
+  let loopHelper := (OmegaChecks.InitPort.LawfulLoop.helper, OmegaChecks.InitPort.LawfulLoop.owner)
+  let localHelpers := loopHelper :: (tokens ++ OmegaChecks.InitPort.ReferenceSpecialization.supportOwners)
   let mut groups : NameMap (Array (Name × ConstantInfo)) := {}
   let mut generatedOwners : NameMap Name := {}
   for ci in newDecls.constants do
-    let (upstream, owner) ← if let some entry := (tokens ++ privateOps).find? (fun (n, _) => ci.name == renamed n) then
+    let (upstream, owner) ← if let some entry := localHelpers.find? (fun (n, _) => ci.name == renamed n) then
       pure entry
     else do
       let some upstream := reverseNames[ci.name]? | throw <| IO.userError s!"no official name for {ci.name}"
@@ -287,7 +290,7 @@ unsafe def main (args : List String) : IO Unit := do
       let previous := orig[i]!
       let mut cs := previous.constants
       for (n,new) in group do
-        if i == 2 then cs := cs.push new
+        if i == 2 || n == loopHelper.1 then cs := cs.push new
         else if let some exposed := publiclyDeclared.find? n then
           if (exposed.isAxiom || sealedImplementation n) && !new.isAxiom then
             let hidden := ConstantInfo.axiomInfo {new.toConstantVal with isUnsafe := false}
