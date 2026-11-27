@@ -22,6 +22,12 @@ import all Init.Data.Nat.Lemmas
 import all Init.Data.String.Basic
 import all Init.Data.String.Decode
 import all Init.Data.String.Pattern.String
+import all Init.Data.Nat.Gcd
+import all Init.WFComputable
+import all Init.Data.List.Sort.Impl
+import all Init.Data.BitVec.Lemmas
+import all Init.Data.Array.Attach
+import all Init.Data.Vector.Attach
 namespace OmegaChecks.InitPort.Alternatives
 
 /-- A course-of-values induction step can reuse the theorem on its original arguments. -/
@@ -407,5 +413,53 @@ public theorem List.intercalateTR.eq_3 :
   intro α sep x xs _
   rw [← _root_.List.intercalate_eq_intercalateTR]
   exact ((private_decl% @_root_.List.intercalate_eq_intercalateTR.go) α sep (acc := #[]) (x := x) xs).symm
+
+public theorem Nat.gcd.eq_def : type_of% (private_decl% @_root_.Nat.gcd.eq_def) := by
+  intro m n
+  by_cases h : m = 0
+  · subst m
+    rw [ite_eq_left rfl, Nat.gcd_zero_left]
+  · rw [ite_eq_right h, Nat.gcd_rec]
+
+public theorem Acc.recC.eq_def.{v, u} : type_of% (private_decl% @_root_.Acc.recC.eq_def.{v, u}) := by
+  intro α r motive step a t
+  rw [← _root_.Acc.rec_eq_recC]
+  cases t
+  rfl
+
+public theorem List.MergeSort.Internal.mergeTR.eq_1 :
+    type_of% (private_decl% @_root_.List.MergeSort.Internal.mergeTR.eq_1) := by
+  intro α left right le
+  rw [← _root_.List.MergeSort.Internal.merge_eq_mergeTR]
+  exact (private_decl% @_root_.List.MergeSort.Internal.mergeTR_go_eq (le := le) (l₁ := left) (l₂ := right) (acc := [])).symm
+
+public theorem List.MergeSort.Internal.mergeSortTR.eq_1 :
+    type_of% (private_decl% @_root_.List.MergeSort.Internal.mergeSortTR.eq_1) := by
+  intro α xs le
+  rw [← _root_.List.MergeSort.Internal.mergeSort_eq_mergeSortTR]
+  exact ((private_decl% @_root_.List.MergeSort.Internal.mergeSortTR_run_eq_mergeSort) (le := le) ⟨xs, rfl⟩).symm
+
+public theorem BitVec.flattenListFast.eq_1 :
+    type_of% (private_decl% @_root_.BitVec.flattenListFast.eq_1) := by
+  intro n xs
+  rw [← _root_.BitVec.flattenList_eq_flattenListFast, _root_.BitVec.flattenList.toNatAux_eq,
+    _root_.BitVec.ofNat_toNat, _root_.BitVec.setWidth_eq]
+
+public theorem Array.pmapImpl.eq_1 :
+    type_of% (private_decl% @_root_.Array.pmapImpl.eq_1) := by
+  intro α β P f xs H
+  rw [← _root_.Array.pmap_eq_pmapImpl, _root_.Array.map_attachWith_eq_pmap]
+  apply _root_.Array.pmap_congr_left
+  intros
+  rfl
+
+public theorem Vector.pmapImpl.eq_1 :
+    type_of% (private_decl% @_root_.Vector.pmapImpl.eq_1) := by
+  intro α β n P f xs H
+  rw [← _root_.Vector.pmap_eq_pmapImpl, _root_.Vector.map_attachWith_eq_pmap]
+  apply _root_.Vector.pmap_congr_left
+  intros
+  rfl
+
 
 end OmegaChecks.InitPort.Alternatives
