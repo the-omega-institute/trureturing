@@ -100,9 +100,13 @@ private def metaLiteralFunction (n : Name) : Bool :=
      `decodeRawStrLitAux, `splitNameLit].contains (n.updatePrefix .anonymous))
 
 private def syntaxTreeFunction (n : Name) : Bool :=
-  [`Lean.mkIdent, `Lean.mkIdentFrom, `Lean.mkCIdentFrom].contains n || (n.getPrefix == `Lean.Syntax &&
+  [`Lean.mkIdent, `Lean.mkIdentFrom, `Lean.mkCIdentFrom, `Lean.HygieneInfo.mkIdent,
+   `Lean.TSyntax.getHexNumVal, `Lean.TSyntax.getHexNumSize, `Lean.TSyntax.getDocString,
+   `Lean.Parser.Tactic.appendConfig, `Lean.Parser.Tactic.getConfigItems, `Lean.Parser.Tactic.mkOptConfig,
+   `Array.mapSepElems, `Array.filterSepElems, `Lean.Syntax.TSepArray.getElems,
+   `Lean.Syntax.TSepArray.ofElems].contains n || (n.getPrefix == `Lean.Syntax &&
     [`getHead?, `setHeadInfoAux, `setTailInfoAux, `findAux, `structEq, `isToken, `hasArgs, `isAtom, `isNone,
-     `isIdOrAtom?, `isLit?].contains (n.updatePrefix .anonymous))
+     `isIdOrAtom?, `isLit?, `isInterpolatedStrLit?, `mkApp, `mkCApp].contains (n.updatePrefix .anonymous))
 
 private def pinnedStringFunction (n : Name) : Bool := renderName n || defsStringFunction n || basicStringFunction n || decodeStringFunction n || sliceStringFunction n || metaLiteralFunction n || n == `String.toName
 
@@ -344,12 +348,14 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
       args := args.push arg
       continue
     if syntaxTreeFunction official && dom.isForall then
-      unless official == `Lean.Syntax.findAux && dom.bindingDomain! == mkConst `Lean.Syntax &&
-          dom.bindingBody! == mkConst `Bool && a.ty == .object && b.ty == .object && !a.borrow do
+      let map := official == `Array.mapSepElems
+      unless (map || [`Lean.Syntax.findAux, `Array.filterSepElems].contains official) &&
+          dom.bindingDomain! == mkConst `Lean.Syntax && dom.bindingBody! == mkConst (if map then `Lean.Syntax else `Bool) && a.ty == .object && b.ty == .object && !a.borrow do
         throw <| IO.userError s!"incorrect syntax predicate signature {n}"
       decls := decls.push ((if b.borrow then "b_lean_obj_arg " else "lean_obj_arg ") ++ arg)
       if b.borrow then prepare := prepare ++ s!"  lean_inc({arg});\n"
-      prepare := prepare ++ s!"  lean_object *predicate = lean_alloc_closure((void *)omega_syntax_predicate, 2, 1);\n  lean_closure_set(predicate, 0, {arg});\n"
+      let adapter := if map then "omega_syntax_map" else "omega_syntax_predicate"
+      prepare := prepare ++ s!"  lean_object *predicate = lean_alloc_closure((void *){adapter}, 2, 1);\n  lean_closure_set(predicate, 0, {arg});\n"
       args := args.push "predicate"
       continue
     if bootstrapStringOp official && dom.isForall then
@@ -440,6 +446,8 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
       continue
     let dom := dom.consumeMData
     let dom := if dom.isAppOfArity `optParam 2 then dom.getAppArgs[0]! else dom
+    let syntaxArray := dom.getAppFn.constName == `Array &&
+      [`Lean.Syntax, `Lean.TSyntax].contains (dom.getArg! 0).getAppFn.constName
     let dom := dom.getAppFn.constName
     if let some (w, t) := word? dom then
       layout strict dom
@@ -480,10 +488,24 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
       let borrowed := a.borrow || target == "lean_string_get_byte_fast"
       if b.borrow && !borrowed then prepare := prepare ++ s!"  lean_inc({arg});\n"
       if borrowed && !b.borrow then cleanup := cleanup ++ s!"  lean_dec({arg});\n"
-    else if syntaxTreeFunction official && [`Lean.Syntax, `Lean.SourceInfo, `Lean.SyntaxNodeKind].contains dom &&
+    else if syntaxTreeFunction official && (syntaxArray || [`Lean.TSyntaxArray, `Lean.Syntax.TSepArray].contains dom) &&
+        a.ty == .object && b.ty == .tobject then
+      decls := decls.push ((if b.borrow then "b_lean_obj_arg " else "lean_obj_arg ") ++ arg)
+      prepare := prepare ++ s!"  lean_object *syntax_array{i} = omega_syntax_array_to_lean({arg});\n"
+      args := args.push s!"syntax_array{i}"
+      if a.borrow then cleanup := cleanup ++ s!"  lean_dec(syntax_array{i});\n"
+      unless b.borrow do cleanup := cleanup ++ s!"  lean_dec({arg});\n"
+    else if syntaxTreeFunction official && dom == `Lean.SyntaxNodeKinds && a.ty == .tobject && b.ty == .tobject then
+      decls := decls.push ((if b.borrow then "b_lean_obj_arg " else "lean_obj_arg ") ++ arg)
+      prepare := prepare ++ s!"  lean_object *kinds{i} = omega_map_list({arg}, omega_name_to_lean);\n"
+      args := args.push s!"kinds{i}"
+      if a.borrow then cleanup := cleanup ++ s!"  lean_dec(kinds{i});\n"
+      unless b.borrow do cleanup := cleanup ++ s!"  lean_dec({arg});\n"
+    else if syntaxTreeFunction official && [`Lean.Syntax, `Lean.TSyntax, `Lean.Syntax.Term, `Lean.Syntax.HexNum,
+        `Lean.Syntax.HygieneInfo, `Lean.SourceInfo, `Lean.SyntaxNodeKind].contains dom &&
         a.ty == .tobject && b.ty == .tobject then
-      let convert := if dom == `Lean.Syntax then s!"omega_convert_syntax({arg}, true)" else
-        if dom == `Lean.SourceInfo then s!"omega_convert_source_info({arg}, true)" else s!"omega_name_to_lean({arg})"
+      let convert := if dom == `Lean.SourceInfo then s!"omega_convert_source_info({arg}, true)" else
+        if dom == `Lean.SyntaxNodeKind then s!"omega_name_to_lean({arg})" else s!"omega_convert_syntax({arg}, true)"
       decls := decls.push ((if b.borrow then "b_lean_obj_arg " else "lean_obj_arg ") ++ arg)
       prepare := prepare ++ s!"  lean_object *input{i} = {convert};\n"
       args := args.push s!"input{i}"
@@ -658,7 +680,12 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
     checkIntLayout strict
     IndexedNative.checkDataTypes source strict [`Option]
     pure ("lean_obj_res", s!"omega_optional_from_lean({call}, omega_int_from_lean)")
-  else if syntaxTreeFunction official && dom == `Lean.Syntax.Ident && ret == .tobject && result == .tobject then do
+  else if syntaxTreeFunction official && ([`Lean.TSyntaxArray, `Lean.Syntax.TSepArray].contains dom ||
+      (dom == `Array && (type.getArg! 0).isConstOf `Lean.Syntax)) && ret == .object && result == .tobject then do
+    prepare := prepare ++ s!"  lean_object *values = {call};\n"
+    cleanup := cleanup ++ "  lean_dec(values);\n"
+    pure ("lean_obj_res", "omega_syntax_array_from_lean(values)")
+  else if syntaxTreeFunction official && [`Lean.Syntax.Ident, `Lean.Syntax.Term, `Lean.TSyntax].contains dom && ret == .tobject && result == .tobject then do
     prepare := prepare ++ s!"  lean_object *stx = {call};\n"
     cleanup := cleanup ++ "  lean_dec(stx);\n"
     pure ("lean_obj_res", "omega_syntax_from_lean(stx)")

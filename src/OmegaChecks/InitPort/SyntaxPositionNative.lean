@@ -38,7 +38,7 @@ public def checkTreeLayout (source strict : Environment) : IO Unit := do
     for (name, tag, fields) in [(`Lean.Syntax.Preresolved.namespace, 0, 1),
         (`Lean.Syntax.Preresolved.decl, 1, 2), (`Substring.Raw.mk, 0, 3), (`List.nil, 0, 0), (`List.cons, 1, 2)] do
       checkCtor env (p ++ name) tag fields 0
-    for n in [`Lean.TSyntax, `String.Pos.Raw] do
+    for n in [`Lean.TSyntax, `Lean.Syntax.TSepArray, `String.Pos.Raw] do
       let some (some field) := impureTrivialStructureInfoExt.find? env (p ++ n) | throw <| IO.userError s!"missing syntax layout {p ++ n}"
       unless field.fieldIdx == 0 do throw <| IO.userError s!"unexpected syntax projection {p ++ n}"
 

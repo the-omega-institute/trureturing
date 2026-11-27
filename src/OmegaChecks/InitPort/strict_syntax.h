@@ -115,3 +115,28 @@ static lean_obj_res omega_syntax_predicate(lean_obj_arg f, lean_obj_arg stx) {
     lean_dec(stx);
     return lean_apply_1(f, input);
 }
+
+static lean_obj_res omega_syntax_array_to_lean(b_lean_obj_arg values) {
+    lean_object *out = lean_mk_empty_array();
+    for (; !lean_is_scalar(values); values = lean_ctor_get(values, 1))
+        out = lean_array_push(out, omega_convert_syntax(lean_ctor_get(values, 0), true));
+    return out;
+}
+
+static lean_obj_res omega_syntax_array_from_lean(b_lean_obj_arg values) {
+    lean_object *out = lean_box(0);
+    for (size_t i = lean_array_size(values); i > 0; --i) {
+        lean_object *cell = lean_alloc_ctor(1, 2, 0);
+        lean_ctor_set(cell, 0, omega_syntax_from_lean(lean_array_get_core(values, i - 1)));
+        lean_ctor_set(cell, 1, out);
+        out = cell;
+    }
+    return out;
+}
+
+static lean_obj_res omega_syntax_map(lean_obj_arg f, lean_obj_arg stx) {
+    lean_object *mapped = omega_syntax_predicate(f, stx);
+    lean_object *out = omega_convert_syntax(mapped, true);
+    lean_dec(mapped);
+    return out;
+}
