@@ -37,3 +37,7 @@ theorem Prime.eq_one_or_self_of_dvd {p : Nat} (pp : Prime p) (m : Nat)
 attribute [irreducible] Prime
 
 end Omega.Nat
+
+namespace Nat
+export _root_.Omega.Nat (Prime prime_def)
+end Nat
