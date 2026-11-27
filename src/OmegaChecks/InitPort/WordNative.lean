@@ -3,6 +3,7 @@ module
 public import OmegaChecks.InitPort.NativeState
 import OmegaChecks.InitPort.SyntaxPositionNative
 import OmegaChecks.InitPort.IndexedNative
+import OmegaChecks.InitPort.Translation
 import all Lean.Compiler.LCNF.ToImpureType
 import all Lean.OriginalConstKind
 import Lean.Compiler.ImplementedByAttr
@@ -64,10 +65,11 @@ private def modelOperation (name : Name) : Bool :=
 
 public def usesPinnedFunction (n : Name) : Bool :=
   let method := n.updatePrefix .anonymous
+  let bytes := [`ByteArray.toList.loop, `ByteArray.findIdx?.loop, `ByteArray.findFinIdx?.loop].contains n
   let vector := n.getPrefix == `BitVec &&
     [`abs, `pow, `smod, `replicate, `reverse, `cpop, `cpopNatRec, `ctz, `clz, `clzAuxRec,
      `getLsbD, `getLsb, `getMsbD, `getMsb, `msb, `sdiv, `srem, `smtSDiv, `hash, `ofBoolListLE, `ofBoolListBE].contains method
-  modelOperation n || IndexedNative.supported n || SyntaxPositionNative.supported n || vector || [`Nat.repr, `Nat.reprFast, `Int.repr].contains n || [`BitVec.toHex, `BitVec.instToString].contains n || n == `Nat.bitwise || ((word? n.getPrefix).isSome && (method == `pow || (method == `ofInt && bitsType n.getPrefix == n.getPrefix))) ||
+  modelOperation n || IndexedNative.supported n || SyntaxPositionNative.supported n || bytes || vector || [`Nat.repr, `Nat.reprFast, `Int.repr].contains n || [`BitVec.toHex, `BitVec.instToString].contains n || n == `Nat.bitwise || ((word? n.getPrefix).isSome && (method == `pow || (method == `ofInt && bitsType n.getPrefix == n.getPrefix))) ||
     (n.getPrefix == `Int && [`negOfNat, `subNatNat, `sign, `toNat, `pow, `fdiv, `fmod, `bdiv, `bmod].contains method)
 
 public def supported (source : Environment) (owner name : Name) : Bool :=
@@ -98,7 +100,7 @@ public def supported (source : Environment) (owner name : Name) : Bool :=
     ([`OmegaInit.Data.Float.Model.Float, `OmegaInit.Data.Float.Model.Float32].contains owner && modelOperation name) ||
     (owner == `OmegaInit.Prelude && SyntaxPositionNative.supported name) ||
     ((base || intPrimitive || byteOp || modular || stringOp || wordRepr || bitwise || logarithm || (inOwner && primitive)) && isExtern source name) ||
-    ((intOwner || [`OmegaInit.Data.Int.Repr, `OmegaInit.Data.Repr, `OmegaInit.Data.Nat.Bitwise.Basic, `OmegaInit.Data.BitVec.Basic].contains owner || [`OmegaInit.Data.UInt.Basic, `OmegaInit.Data.SInt.Basic].contains owner) && usesPinnedFunction name)
+    ((intOwner || [`OmegaInit.Data.ByteArray.Basic, `OmegaInit.Data.Int.Repr, `OmegaInit.Data.Repr, `OmegaInit.Data.Nat.Bitwise.Basic, `OmegaInit.Data.BitVec.Basic].contains owner || [`OmegaInit.Data.UInt.Basic, `OmegaInit.Data.SInt.Basic].contains owner) && usesPinnedFunction name)
 
 private def symbol (n : Name) := (n.replacePrefix `Omega .anonymous).mangle "omega_word_"
 
@@ -167,14 +169,22 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
     type := body
     if a.ty == .erased && b.ty == .erased then continue
     let arg := "a" ++ toString i
-    if official == `Nat.bitwise && i == 0 then
+    let byteSearch := official == `ByteArray.findIdx?.loop || official == `ByteArray.findFinIdx?.loop
+    if (official == `Nat.bitwise && i == 0) || (byteSearch && i == 1) then
       let bool := mkConst `Bool
-      let .forallE _ left (.forallE _ right out _) _ := dom.consumeMData | throw <| IO.userError "invalid bit operation type"
-      unless left == bool && right == bool && out == bool && a.ty == .object && b.ty == .object do
-        throw <| IO.userError "wrong binary bit operation closure ABI"
+      let .forallE _ left right _ := dom.consumeMData | throw <| IO.userError "invalid predicate"
+      if byteSearch then
+        layout strict `UInt8
+        unless left == mkConst `UInt8 && right == bool do throw <| IO.userError "invalid byte predicate signature"
+      else
+        let .forallE _ middle out _ := right | throw <| IO.userError "invalid binary boolean predicate"
+        unless left == bool && middle == bool && out == bool do throw <| IO.userError "invalid binary bit operation"
       let some strictInfo := strict.find? n | throw <| IO.userError "missing strict bit operation"
-      let .forallE _ callback _ _ := strictInfo.type | throw <| IO.userError "invalid strict bit operation type"
-      unless callback == dom do throw <| IO.userError "strict bit operation uses another boolean type"
+      let mut callbackTy := strictInfo.type
+      for _ in [:i] do callbackTy := callbackTy.bindingBody!
+      let .forallE _ callback _ _ := callbackTy | throw <| IO.userError "invalid strict callback type"
+      unless callback == InitKernelPort.translate InitKernelPort.portName dom && a.ty == .object && b.ty == .object do
+        throw <| IO.userError "strict callback uses an incompatible representation"
       for (name, tag) in [(`Bool.false, 0), (`Bool.true, 1)] do
         let some l := ctorLayoutExt.find? strict name | throw <| IO.userError s!"missing boolean layout: {name}"
         unless l.ctorInfo.cidx == tag && l.fieldInfo.isEmpty do throw <| IO.userError s!"invalid boolean layout: {name}"
@@ -218,6 +228,12 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
     else if dom == `Unit && a.ty == .tagged && b.ty == .tagged then
       decls := decls.push ("lean_obj_arg " ++ arg)
       args := args.push arg
+    else if dom == `List && official == `ByteArray.toList.loop && a.ty == .tobject && b.ty == .tobject then
+      checkStrictString strict
+      decls := decls.push ((if b.borrow then "b_lean_obj_arg " else "lean_obj_arg ") ++ arg)
+      args := args.push arg
+      if b.borrow && !a.borrow then prepare := prepare ++ s!"  lean_inc({arg});\n"
+      if a.borrow && !b.borrow then cleanup := cleanup ++ s!"  lean_dec({arg});\n"
     else if [`Nat, `Fin, `BitVec].contains dom && a.ty == .tobject && b.ty == .tobject then
       if dom != `Nat then layout strict dom
       decls := decls.push ((if b.borrow then "b_lean_obj_arg " else "lean_obj_arg ") ++ arg)
@@ -326,6 +342,19 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
     let value := if dom == `String then "omega_string_from_lean(native_string)" else
       "omega_bytes_from_data(lean_sarray_cptr(native_string), lean_sarray_size(native_string))"
     pure ("lean_obj_res", value)
+  else if dom == `List && official == `ByteArray.toList.loop && ret == .tobject && result == .tobject then do
+    checkStrictString strict
+    pure ("lean_obj_res", call)
+  else if dom == `Option && [`ByteArray.findIdx?.loop, `ByteArray.findFinIdx?.loop].contains official &&
+      ret == .tobject && result == .tobject then do
+    layout strict `Fin
+    for (env, opt) in [(source, `Option), (strict, `Omega.Option)] do
+      let some nil := ctorLayoutExt.find? env (opt ++ `none) | throw <| IO.userError "missing optional index layout"
+      let some val := ctorLayoutExt.find? env (opt ++ `some) | throw <| IO.userError "missing optional index layout"
+      let #[.object 0 _] := val.fieldInfo | throw <| IO.userError "incorrect optional index layout"
+      unless nil.ctorInfo.cidx == 0 && nil.fieldInfo.isEmpty && val.ctorInfo.cidx == 1 && val.ctorInfo.size == 1 do
+        throw <| IO.userError "incorrect optional index constructor"
+    pure ("lean_obj_res", call)
   else if dom == `BitVec && ret == .tobject && result == .tobject then do
     layout strict dom
     pure ("lean_obj_res", call)
