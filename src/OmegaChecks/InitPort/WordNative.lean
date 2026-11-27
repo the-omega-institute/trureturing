@@ -28,7 +28,10 @@ private def word? (name : Name) : Option (String × IR.IRType) := match bitsType
 
 public def usesPinnedFunction (n : Name) : Bool :=
   let method := n.updatePrefix .anonymous
-  n == `Nat.bitwise || ((word? n.getPrefix).isSome && (method == `pow || (method == `ofInt && bitsType n.getPrefix == n.getPrefix))) ||
+  let vector := n.getPrefix == `BitVec &&
+    [`abs, `pow, `smod, `replicate, `reverse, `cpop, `cpopNatRec, `ctz, `clz, `clzAuxRec,
+     `getLsbD, `getLsb, `getMsbD, `getMsb, `msb, `sdiv, `srem, `smtSDiv, `hash, `ofBoolListLE, `ofBoolListBE].contains method
+  vector || n == `Nat.bitwise || ((word? n.getPrefix).isSome && (method == `pow || (method == `ofInt && bitsType n.getPrefix == n.getPrefix))) ||
     (n.getPrefix == `Int && [`negOfNat, `subNatNat, `sign, `toNat, `pow, `fdiv, `fmod, `bdiv, `bmod].contains method)
 
 public def supported (source : Environment) (owner name : Name) : Bool :=
@@ -48,7 +51,7 @@ public def supported (source : Environment) (owner name : Name) : Bool :=
   let primitive := ((word? name.getPrefix).isSome && (ops ++ widths).contains method) ||
     (name.getPrefix == `Bool && widths.contains method)
   ((base || intPrimitive || bitwise || logarithm || (inOwner && primitive)) && isExtern source name) ||
-    ((intOwner || owner == `OmegaInit.Data.Nat.Bitwise.Basic || [`OmegaInit.Data.UInt.Basic, `OmegaInit.Data.SInt.Basic].contains owner) && usesPinnedFunction name)
+    ((intOwner || [`OmegaInit.Data.Nat.Bitwise.Basic, `OmegaInit.Data.BitVec.Basic].contains owner || [`OmegaInit.Data.UInt.Basic, `OmegaInit.Data.SInt.Basic].contains owner) && usesPinnedFunction name)
 
 private def symbol (n : Name) := "omega_word_" ++ (n.replacePrefix `Omega .anonymous).toString.replace "." "_"
 
@@ -115,6 +118,23 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
       if !a.borrow && b.borrow then prepare := prepare ++ s!"  lean_inc({arg});\n"
       if a.borrow && !b.borrow then cleanup := cleanup ++ s!"  lean_dec({arg});\n"
       continue
+    if official == `BitVec.ofBoolListLE || official == `BitVec.ofBoolListBE then
+      let some strictInfo := strict.find? n | throw <| IO.userError "missing strict Boolean list conversion"
+      let .forallE _ strictList _ _ := strictInfo.type | throw <| IO.userError "invalid Boolean list conversion"
+      let boolean := mkConst `Bool
+      unless dom == mkApp (mkConst `List [.zero]) boolean && strictList == mkApp (mkConst `Omega.List [.zero]) boolean &&
+          a.ty == .tobject && b.ty == .tobject && a.borrow do throw <| IO.userError "incorrect Boolean list ABI"
+      for (env, list) in [(strict, `Omega.List), (source, `List)] do
+        let some nil := ctorLayoutExt.find? env (list ++ `nil) | throw <| IO.userError "missing list nil layout"
+        let some cons := ctorLayoutExt.find? env (list ++ `cons) | throw <| IO.userError "missing list cons layout"
+        let #[.object 0 _, .object 1 _] := cons.fieldInfo | throw <| IO.userError "incorrect list cons fields"
+        unless nil.ctorInfo.cidx == 0 && nil.fieldInfo.isEmpty && cons.ctorInfo.cidx == 1 &&
+            cons.ctorInfo.size == 2 && cons.ctorInfo.usize == 0 && cons.ctorInfo.ssize == 0 do
+          throw <| IO.userError "incorrect Boolean list layout"
+      decls := decls.push ((if b.borrow then "b_lean_obj_arg " else "lean_obj_arg ") ++ arg)
+      args := args.push arg
+      unless b.borrow do cleanup := cleanup ++ s!"  lean_dec({arg});\n"
+      continue
     let dom := dom.consumeMData.getAppFn.constName
     if let some (w, t) := word? dom then
       layout strict dom
@@ -125,7 +145,8 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
     else if dom == `Unit && a.ty == .tagged && b.ty == .tagged then
       decls := decls.push ("lean_obj_arg " ++ arg)
       args := args.push arg
-    else if dom == `Nat && a.ty == .tobject && b.ty == .tobject then
+    else if [`Nat, `Fin, `BitVec].contains dom && a.ty == .tobject && b.ty == .tobject then
+      if dom != `Nat then layout strict dom
       decls := decls.push ((if b.borrow then "b_lean_obj_arg " else "lean_obj_arg ") ++ arg)
       args := args.push arg
       if b.borrow && !a.borrow then prepare := prepare ++ s!"  lean_inc({arg});\n"
@@ -162,8 +183,11 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
     unless field.fieldIdx == 0 && ret == .tobject && result == .tobject do
       throw <| IO.userError "invalid platform width result ABI"
     pure ("lean_obj_res", call)
+  else if dom == `BitVec && ret == .tobject && result == .tobject then do
+    layout strict dom
+    pure ("lean_obj_res", call)
   else if dom == `Nat && (ret == .tobject || ret == .tagged) && result == .tobject then pure ("lean_obj_res", call)
-  else if dom == `Decidable && ret == .uint8 && result == .uint8 then pure ("uint8_t", call)
+  else if [`Bool, `Decidable].contains dom && ret == .uint8 && result == .uint8 then pure ("uint8_t", call)
   else throw <| IO.userError s!"unsupported result of {n}: {dom}/{ret}/{result}"
   let proto ← if usesPinnedFunction official then do
     let ctype (t : IR.IRType) : IO String := match t with
