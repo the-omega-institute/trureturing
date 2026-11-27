@@ -3,7 +3,7 @@ import OmegaChecks.FieldMethods
 import OmegaChecks.InitPort.NativeQuot
 import OmegaChecks.InitPort.WordFold
 import OmegaChecks.InitPort.WordForIn
-import OmegaChecks.InitPort.Promise
+import OmegaChecks.InitPort.LogicalHandle
 import OmegaChecks.InitPort.StateToken
 import OmegaChecks.InitPort.TypeName
 import OmegaChecks.InitPort.SyntaxArray
@@ -222,8 +222,11 @@ private def compare (reference : Environment) (rename : Name → Name) (src dst 
       if y.name == `TypeNameData && x.safety == .safe then
         OmegaChecks.InitPort.TypeName.check strict publicStrict reference y.name (liftTerm x.value)
         return deps ++ x.value.getUsedConstants
-      if y.name == OmegaChecks.InitPort.Promise.pointed && x.safety == .safe then
-        OmegaChecks.InitPort.Promise.checkBody strict publicStrict reference y.name liftTerm x.value
+      if let some api := (OmegaChecks.InitPort.LogicalHandle.forDecl? y.name).filter (fun api => y.name == api.pointed && x.safety == .safe) then
+        if api.pointed == `ST.RefPointed then
+          unless (← lookup publicStrict x.name).isAxiom && getReducibilityStatusCore strict x.name == .irreducible do
+            throw <| IO.userError "public reference handle carrier is not sealed"
+        OmegaChecks.InitPort.LogicalHandle.checkBody api strict publicStrict reference y.name liftTerm x.value
         return deps ++ x.value.getUsedConstants
       if y.name == `Void.nonemptyType && x.safety == .safe then
         unless (← lookup publicStrict x.name).isAxiom && getReducibilityStatusCore strict x.name == .irreducible do
@@ -236,8 +239,8 @@ private def compare (reference : Environment) (rename : Name → Name) (src dst 
     deps := deps ++ x.value.getUsedConstants
   | .opaqueInfo x, .opaqueInfo y =>
     if let some (strict, publicStrict) := foundation then
-      if y.name == `IO.Promise.new && !x.isUnsafe then
-        OmegaChecks.InitPort.Promise.checkBody strict publicStrict reference y.name liftTerm x.value
+      if let some api := (OmegaChecks.InitPort.LogicalHandle.forDecl? y.name).filter (fun api => y.name == api.allocator && !x.isUnsafe) then
+        OmegaChecks.InitPort.LogicalHandle.checkBody api strict publicStrict reference y.name liftTerm x.value
         return deps ++ x.value.getUsedConstants
     if foundation.isSome && !x.isUnsafe && y.name == `Void.mk then
       OmegaChecks.InitPort.StateToken.check reference y (liftTerm x.value)
@@ -326,8 +329,8 @@ def checkSites (strict publicStrict reference : Environment) (bindings : Array (
     pending := pending.pop
     unless seen.contains (name, owner) do
       seen := seen.insert (name, owner)
-      if name == OmegaChecks.InitPort.Promise.strictToken && owner == OmegaChecks.InitPort.Promise.owner then
-        OmegaChecks.InitPort.Promise.checkToken strict publicStrict reference (translate (official strict))
+      if let some api := (OmegaChecks.InitPort.LogicalHandle.forToken? name).filter (·.owner == owner) then
+        OmegaChecks.InitPort.LogicalHandle.checkToken api strict publicStrict reference (translate (official strict))
         continue
       let dst := official strict name
       unless declaredIn reference dst owner do

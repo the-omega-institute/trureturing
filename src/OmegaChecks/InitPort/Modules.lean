@@ -191,13 +191,12 @@ unsafe def main (args : List String) : IO Unit := do
   let newDecls := monolith.header.moduleData[(monolith.getModuleIdx? `OmegaImported).get!]!
   let mut reverseNames : Std.HashMap Name Name := {}
   for (n, _) in source.constants.toList do reverseNames := reverseNames.insert (renamed n) n
-  let promiseOwner := `Init.System.Promise
-  let promiseToken := mkPrivateNameCore promiseOwner `IO.Promise.logicalToken
-  let strictToken := renamed promiseToken
+  let tokens := [(`Init.System.Promise, `IO.Promise.logicalToken), (`Init.System.ST, `ST.Ref.logicalToken)].map
+    fun (owner, name) => (mkPrivateNameCore owner name, owner)
   let mut groups : NameMap (Array (Name × ConstantInfo)) := {}
   for ci in newDecls.constants do
-    let (upstream, owner) ← if ci.name == strictToken then
-      pure (promiseToken, promiseOwner)
+    let (upstream, owner) ← if let some entry := tokens.find? (fun (n, _) => ci.name == renamed n) then
+      pure entry
     else do
       let some upstream := reverseNames[ci.name]? | throw <| IO.userError s!"no official name for {ci.name}"
       pure (upstream, (officialModuleName source upstream).get!)
@@ -297,7 +296,8 @@ unsafe def main (args : List String) : IO Unit := do
           let name (v : EnvExtensionEntry) := (unsafeCast v : Name × Unit).1
           let merged := old.foldl (init := extra) fun a v => if a.any (fun e => name e == name v) then a else a.push v
           entries := (entries.filter (·.1 != key)).push (key, merged.qsort (fun a b => (name a).quickLt (name b)))
-      if i == 2 && cs.any (·.name == strictToken) then
+      if let some (n, _) := tokens.find? (fun (n, o) => i == 2 && o == official && cs.any (·.name == renamed n)) then
+        let strictToken := renamed n
         let tags := addNoncomputable ((← mkEmptyEnvironment).setMainModule owner) strictToken
         let tagged ← mkModuleData tags .private
         entries := entries ++ tagged.entries.filter (fun e => e.1 == noncomputableExt.name && !e.2.isEmpty)
