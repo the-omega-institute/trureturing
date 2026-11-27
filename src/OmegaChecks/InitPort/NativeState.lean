@@ -95,6 +95,8 @@ public unsafe def installStateLayout (lib : System.FilePath) (env : Environment)
 /-- The emitted module contains the compiled entry points and has no imported initializers. -/
 public def emitBridge (compiled : Environment) (owner : Name) (runtime output : System.FilePath) : IO Unit := do
   let env := Environment.ofKernelEnv {compiled.toKernelEnv with header.imports := #[], header.isModule := true}
+  -- C emission consults the attribute state for calls made inside boxed wrappers.
+  let env := externAttr.ext.setState env (externAttr.ext.getState compiled)
   let c ← (emitC owner).toIO' {fileName := "<strict runtime entry points>", fileMap := default} {env}
   IO.FS.writeFile output (c ++ "\n" ++ (← IO.FS.readFile runtime))
 
