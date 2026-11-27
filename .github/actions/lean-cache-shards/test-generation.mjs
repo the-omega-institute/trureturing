@@ -21,7 +21,8 @@ async function fixture(t) {
   await writeFile(join(bin, 'npm'), `#!/bin/sh
 set -eu
 echo install >> "$(dirname "$0")/installs"
-mkdir -p node_modules/@actions/cache
+mkdir -p node_modules/@actions/cache node_modules/@actions/core
+echo "exports.warning = console.warn; exports.error = console.error;" > node_modules/@actions/core/index.js
 cp -R "$(dirname "$0")/sdk" node_modules/@actions/cache/lib
 `, { mode: 0o755 });
   await writeFile(join(sdk, 'internal/cacheUtils.js'),
@@ -30,7 +31,28 @@ cp -R "$(dirname "$0")/sdk" node_modules/@actions/cache/lib
 const fs = require("node:fs");
 const assert = require("node:assert/strict");
 const wire = 'build/lean-cache/generation/index.json';
+function checkpointStorage(paths, key) {
+  const kind = key.split("-")[2];
+  assert.deepEqual(paths, ["build/lean-cache/shards/compiler-checkpoints/" + kind]);
+  assert.equal(fs.realpathSync(process.env.GITHUB_WORKSPACE), fs.realpathSync("."));
+  return require("node:path").join(process.env.CHECKPOINT_STORE, key);
+}
 exports.restoreCache = async function(paths, key, prefixes, options) {
+  if (key.startsWith("lean-compiler-")) {
+    const storage = checkpointStorage(paths, key);
+    assert.deepEqual(prefixes, []);
+    if (process.env.RESTORE_DIAGNOSTIC) {
+      require("@actions/core")[process.env.RESTORE_DIAGNOSTIC]("cache service failure");
+      return undefined;
+    }
+    if (fs.existsSync(storage + ".reserved")) {
+      fs.renameSync(storage + ".reserved", storage);
+      return undefined;
+    }
+    if (!fs.existsSync(storage)) return undefined;
+    fs.copyFileSync(storage, paths[0]);
+    return key;
+  }
   if (paths[0].startsWith("build/lean-cache/modules/")) {
     const storage = key + "." + paths[0].split("/")[3];
     fs.appendFileSync("requests", "get " + key + "\\n");
@@ -49,6 +71,12 @@ exports.restoreCache = async function(paths, key, prefixes, options) {
   return key;
 };
 exports.saveCache = async function(paths, key) {
+  if (key.startsWith("lean-compiler-")) {
+    const storage = checkpointStorage(paths, key);
+    if (fs.existsSync(storage) || fs.existsSync(storage + ".reserved")) return -1;
+    fs.copyFileSync(paths[0], storage, fs.constants.COPYFILE_EXCL);
+    return 1;
+  }
   if (paths[0].startsWith("build/lean-cache/modules/")) {
     fs.appendFileSync("requests", "put " + key + "\\n");
     fs.copyFileSync(paths[0], key + "." + paths[0].split("/")[3], fs.constants.COPYFILE_EXCL);
@@ -120,6 +148,65 @@ test('publisher retries verify existing bytes and conflicting contents fail', as
   assert.equal(conflict.status, 1);
   assert.match(conflict.stderr, /corrupt Actions generation index/);
   assert.equal((await requests()).split('\n').filter(line => line.startsWith('put ')).length, 1);
+});
+
+test('compiler checkpoints cross runners, verify reserved entries and rebuild only on eviction', async t => {
+  const publisher = await fixture(t);
+  const worker = await fixture(t);
+  const storage = join(publisher.root, 'cache');
+  await mkdir(storage);
+  const env = { CHECKPOINT_STORE: storage, GITHUB_EVENT_NAME: 'push' };
+  const invoke = (runner, args, overrides = {}) => spawnSync(process.execPath, [action, ...args], {
+    cwd: runner.root, env: { ...runner.env, ...env, ...overrides }, encoding: 'utf8',
+  });
+  const size = Buffer.byteLength(bytes);
+  const input = join(publisher.root, 'input.json');
+  const output = join(worker.root, 'restored');
+  await writeFile(join(worker.root, 'bin/gh'), `#!/bin/sh
+case "$*" in
+  *actions/caches*ref=refs/heads/dev*key=lean-compiler-*) cat inventory ;;
+  *) exit 2 ;;
+esac
+`, { mode: 0o755 });
+  for (const kind of ['unit', 'catalog']) {
+    const id = kind === 'catalog' ? digest : 'a'.repeat(64);
+    const address = [kind, id, digest, String(size)];
+    const key = ['lean-compiler', kind, 'v1', id, digest, size].join('-');
+    const put = ['compiler-cache-put', ...address, input];
+    const get = ['compiler-cache-get', ...address, output];
+    assert.equal(invoke(publisher, put, { GITHUB_EVENT_NAME: 'pull_request' }).status, 1);
+    const stored = invoke(publisher, put);
+    assert.equal(stored.status, 0, stored.stderr);
+    const row = { key, version: 'sdk-version', ref: 'refs/heads/dev' };
+    const inventory = [row, { ...row, ref: 'refs/heads/pr' }, { ...row, version: 'different' },
+      { ...row, key: key + 'x' }, { ...row, key: key.replace(digest, 'bad') }];
+    await writeFile(join(worker.root, 'inventory'), inventory.map(r => JSON.stringify(r)).join('\n'));
+    const listFile = join(worker.root, 'listed.json');
+    const listed = invoke(worker, ['compiler-cache-list', kind, listFile]);
+    assert.equal(listed.status, 0, listed.stderr);
+    assert.deepEqual(JSON.parse(await readFile(listFile)), [{ id, sha256: digest, bytes: size }]);
+    const restored = invoke(worker, get);
+    assert.equal(restored.status, 0, restored.stderr);
+    assert.equal(await readFile(output, 'utf8'), bytes);
+    await rm(output);
+    const cacheFile = join(storage, key);
+    await writeFile(cacheFile, 'x'.repeat(size));
+    assert.match(invoke(worker, get).stderr, /checksum or length mismatch/);
+    assert.match(invoke(publisher, put).stderr, /checksum or length mismatch/);
+    await assert.rejects(readFile(output), { code: 'ENOENT' });
+    await rm(cacheFile);
+    assert.equal(invoke(worker, get).status, 4);
+    for (const level of ['warning', 'error']) {
+      const outage = invoke(worker, get, { RESTORE_DIAGNOSTIC: level });
+      assert.equal(outage.status, 1, outage.stderr);
+      assert.match(outage.stderr, /cache service failure/);
+    }
+    await writeFile(cacheFile + '.reserved', bytes);
+    const race = invoke(publisher, put);
+    assert.equal(race.status, 0, race.stderr);
+  }
+  const invalidCatalog = invoke(publisher, ['compiler-cache-put', 'catalog', 'a'.repeat(64), digest, String(size), input]);
+  assert.match(invalidCatalog.stderr, /invalid compiler checkpoint address/);
 });
 
 test('migration pins the newest complete verified owner and checks each streamed payload', async t => {
