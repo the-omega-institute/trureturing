@@ -157,6 +157,58 @@ public theorem Std.Iter.find?_eq_match_step : type_of% @_root_.Std.Iter.find?_eq
   | skip next h => rfl
   | done h => rfl
 
+private theorem loopWith_pure {α β : Type w} [Iterator α Id β] [Finite α Id]
+    {γ : Type x} {m : Type x → Type x'} [Monad m] [LawfulMonad m]
+    (g : β → γ → ForInStep γ) (f : β → γ → m (ForInStep γ))
+    (h : ∀ b c, f b c = pure (g b c)) (it : IterM (α := α) Id β) (init : γ)
+    (P : β → Prop) (hp : ∀ b, it.IsPlausibleIndirectOutput b → P b) :
+    IterM.DefaultConsumers.forIn'.wf (n := m) (fun _ _ k x => k x.run) γ (fun _ _ _ => True)
+      IteratorLoop.wellFounded_of_finite it init P hp (fun b _ c => do return ⟨← f b c, trivial⟩) =
+      pure (loopWith g it init P hp) := by
+  induction it using IterM.inductSteps generalizing init with
+  | step it ihy ihs =>
+    unfold loopWith
+    rw [IterM.DefaultConsumers.forIn'.wf.eq_def, IterM.DefaultConsumers.forIn'.wf.eq_def]
+    dsimp only
+    cases it.step.run.inflate using PlausibleIterStep.casesOn with
+    | yield next out hs =>
+      dsimp only [Id.instMonad, bind, pure, Id.run]
+      rw [h, pure_bind, pure_bind]
+      cases g out init with
+      | yield acc => exact ihy hs _ _
+      | done acc => rfl
+    | skip next hs => exact ihs hs _ _
+    | done _ => rfl
+
+private theorem forIn_pure {α β : Type w} [Iterator α Id β] [Finite α Id]
+    {γ : Type x} {m : Type x → Type x'} [Monad m] [LawfulMonad m]
+    [IteratorLoop α Id m] [LawfulIteratorLoop α Id m]
+    [IteratorLoop α Id Id.{x}] [LawfulIteratorLoop α Id Id.{x}]
+    (g : β → γ → ForInStep γ) (f : β → γ → m (ForInStep γ))
+    (h : ∀ b c, f b c = pure (g b c)) (it : Iter (α := α) β) (init : γ) :
+    ForIn.forIn (m := m) it init f = pure (ForIn.forIn (m := Id) it init g) := by
+  rw [Iter.forIn_eq, IterM.DefaultConsumers.forIn'_eq_wf (wf := IteratorLoop.wellFounded_of_finite), forIn_eq_loopWith]
+  exact (loopWith_pure g f h it.toIterM init _ _).trans (congrArg pure (loopWith_congr g it.toIterM init _ _ _ _))
+
+public theorem Std.Iter.findSomeM?_pure : type_of% @_root_.Std.Iter.findSomeM?_pure := by
+  intro α β γ m mon iter lm li laws finite hm hi it f
+  unfold Iter.findSome? Iter.findSomeM?
+  apply forIn_pure
+  intro b c
+  rw [pure_bind]
+  dsimp only [Id.instMonad, bind, pure, Id.run]
+  cases f b <;> rfl
+
+public theorem Std.Iter.findM?_pure : type_of% @_root_.Std.Iter.findM?_pure := by
+  intro α β m mon iter lm li laws finite hm hi it f
+  unfold Iter.find? Iter.findM? Iter.findSomeM?
+  apply forIn_pure
+  intro b c
+  dsimp only
+  rw [pure_bind, pure_bind]
+  dsimp only [Id.instMonad, bind, pure, Id.run]
+  cases (f b).down <;> rfl
+
 public theorem Std.Iter.length_eq_fold.{w} : type_of% @_root_.Std.Iter.length_eq_fold.{w} := by
   intro α β iter finite i1 h1 i2 h2 it
   rw [Iter.length_eq_length_toIterM, IterM.length_eq_fold, ← Iter.fold_eq_fold_toIterM]
