@@ -22,6 +22,10 @@ The right side quantifies over independently universed finite types A and B, inc
 
 Goodearl, Pardo and Wehrung, Lemma 2.1, supply the regular component construction; Theorem 3.2 supplies the refinement classification. Necessity takes the idempotent identities of refinement entries, offsets a refinement of x plus its internal inverse to obtain component-sum surjectivity, and adds the inverse of the lower-right entry to the upper-left entry to obtain a common lift. Sufficiency refines the four component identities, decomposes each row, forms the column defects, and lifts their compatible pair. Splitting that lift under the two row identities gives two row corrections. Their internal inverses correct the first column and the corrections themselves correct the second column, preserving both rows.
 
+Closure of idempotent sums is supplied directly by the pinned Mathlib theorem IsIdempotentElem.mul on Multiplicative K. This type tag changes the notation for the same operation; both the component proof and the final matrix equalities remain in the original additive monoid.
+
+A concrete coefficient example is Additive (WithOne (Multiplicative (ZMod 2))), the two-element additive group with a new global identity adjoined. It has three elements: global zero, an embedded local identity e, and an element x with e nonzero, e+x=x, x+x=e, and x+x distinct from x. It is regular, conical, and has binary refinement, so the criterion gives finite-fiber transportation. In contrast, ZMod 2 itself is regular but is not conical: two weights equal to one sum to zero. On a two-element source and an empty target with constant label, fiber totals agree but every matrix row sums to zero, so those nonzero marginals cannot be transported.
+
 The predecessor exact transportation equivalence is applied directly to this refinement construction and conicality. The result is an acquisition of the published classification and its transportation consequence. It does not settle the separate largest-support classification problem and makes no mathematical originality claim.
 
 ## References
