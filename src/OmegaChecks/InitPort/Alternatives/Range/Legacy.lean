@@ -1,6 +1,7 @@
 module
 
 public import Init.Data.Range.Lemmas
+import all Init.Data.Range.Lemmas
 import all Init.Data.Range.Basic
 import all Init.Data.List.Control
 import all OmegaChecks.InitPort.Alternatives.MonadicLists
@@ -38,7 +39,7 @@ private theorem forMRange [Monad m] (r : Range) (f : Nat → m PUnit) (i : Nat) 
   intro i recur ih
   dsimp only
   by_cases h : i < r.stop
-  · rw [dite_eq_left h, Std.Legacy.Range.size_eq r h, List.range'_succ]
+  · rw [dite_eq_left h, Range.size_eq r h, List.range'_succ]
     change (f i >>= fun _ => _) = f i >>= fun _ => _
     exact congrArg (fun tail => f i >>= fun _ => tail) (ih (i + r.step) _)
   · rw [dite_eq_right h, rangeStopped r i h]
@@ -83,7 +84,7 @@ private theorem forInRange [Monad m] (r : Range) (f : (i : Nat) → i ∈ r → 
   · intro n cont ih i hs hl bound rest reach entries
     dsimp only
     by_cases h : i < r.stop
-    · rw [Std.Legacy.Range.size_eq r h, List.range'_succ] at entries
+    · rw [Range.size_eq r h, List.range'_succ] at entries
       subst rest
       obtain ⟨pref, hp⟩ := reach
       have tailReach : ∃ p, p ++ List.range' (i + r.step)
