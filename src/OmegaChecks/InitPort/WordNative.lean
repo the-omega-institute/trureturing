@@ -110,7 +110,8 @@ private def metaLiteralFunction (n : Name) : Bool :=
      `decodeRawStrLitAux, `splitNameLit].contains (n.updatePrefix .anonymous))
 
 private def monadicSeparator (n : Name) : Bool :=
-  [`Array.mapSepElemsM, `Array.filterSepElemsM].contains n
+  [`Array.mapSepElemsM, `Array.filterSepElemsM].contains n ||
+    n == mkPrivateNameCore `Init.Meta.Defs `Array.filterSepElemsMAux
 
 private def syntaxTreeFunction (n : Name) : Bool :=
   [`Lean.instQuoteNameMkStr1._private_1,
@@ -275,9 +276,11 @@ private def separatorWrapper (source strict : Environment) (n official : Name) :
   let some (.fdecl _ params .tobject ..) := IR.findEnvDecl source official | throw <| IO.userError "missing pinned separator IR"
   let some (.extern _ actual .tobject ⟨[.standard `all entry]⟩) := IR.findEnvDecl strict n
     | throw <| IO.userError "missing strict separator IR"
-  unless entry == symbol n && params.map (fun p => (p.ty, p.borrow)) ==
-      #[(.erased, false), (.object, false), (.object, false), (.tobject, false)] &&
-      actual.map (·.ty) == #[.erased, .object, .tobject, .tobject] do
+  let auxiliary := isPrivateName official
+  let suffix := if auxiliary then #[IR.IRType.tobject, .object] else #[]
+  let abi := #[IR.IRType.erased, .object, .object, .tobject] ++ suffix
+  let strictAbi := #[IR.IRType.erased, .object, .tobject, .tobject] ++ (if auxiliary then #[.tobject, .tobject] else #[])
+  unless entry == symbol n && params.map (·.ty) == abi && params.all (!·.borrow) && actual.map (·.ty) == strictAbi do
     throw <| IO.userError s!"unexpected separator ABI {n}: {actual.map (·.ty)}"
   IndexedNative.checkDataTypes source strict [`Monad, `Applicative, `Pure, `Functor, `Seq, `SeqLeft, `SeqRight, `Bind]
   for (ctor, names) in [(`Monad.mk, [`toApplicative, `toBind]), (`Applicative.mk, [`toFunctor, `toPure, `toSeq, `toSeqLeft, `toSeqRight])] do
@@ -290,13 +293,17 @@ private def separatorWrapper (source strict : Environment) (n official : Name) :
       let .object j _ := layout.fieldInfo[i]! | throw <| IO.userError "separator dictionary field is unboxed"
       unless projection.i == i && j == i do throw <| IO.userError s!"reordered separator dictionary field {field}"
   let target := getSymbolStem source official
-  let keep := if actual[2]!.borrow then "lean_inc(values); " else ""
-  let keepFn := if actual[3]!.borrow then "lean_inc(callback); " else ""
-  let release := if actual[1]!.borrow then "" else "lean_dec(monad); "
+  let operands := #["monad", "values", "callback"] ++ (if auxiliary then #["index", "acc"] else #[])
+  let owned := (actual.extract 1 actual.size).zip operands
+  let keep := String.join <| owned.toList.filterMap fun (p, a) =>
+    if p.borrow && a != "monad" then some s!"  lean_inc({a});\n" else none
+  let release := if actual[1]!.borrow then "" else "  lean_dec(monad);\n"
+  let proto := String.intercalate ", " (List.replicate abi.size "lean_obj_arg")
+  let arguments := String.intercalate ", " (operands.toList.map ("lean_obj_arg " ++ ·))
+  let tail := if auxiliary then ", index, lean_array_mk(acc)" else ""
   return "\n#include \"sep_array.h\"\n" ++
-    s!"extern lean_obj_res {target}(lean_obj_arg, lean_obj_arg, lean_obj_arg, lean_obj_arg);\n" ++
-    s!"LEAN_EXPORT lean_obj_res {entry}(lean_obj_arg monad, lean_obj_arg values, lean_obj_arg callback) \{\n" ++
-    s!"  lean_object *adapted = omega_sep_array_monad(monad);\n  {keep}{keepFn}{release}return {target}(lean_box(0), adapted, lean_array_mk(values), callback);\n}\n"
+    s!"extern lean_obj_res {target}({proto});\nLEAN_EXPORT lean_obj_res {entry}({arguments}) \{\n" ++
+    s!"  lean_object *adapted = omega_sep_array_monad(monad);\n{keep}{release}  return {target}(lean_box(0), adapted, lean_array_mk(values), callback{tail});\n}\n"
 
 /-- Check both sides of the call and generate its ownership conversions from their stored IR. -/
 public def wrapper (source strict : Environment) (n : Name) : IO String := do
