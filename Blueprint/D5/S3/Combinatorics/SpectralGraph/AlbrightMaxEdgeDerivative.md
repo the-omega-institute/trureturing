@@ -62,6 +62,10 @@ $$\begin{aligned}&(\forall n: \mathbb{N}, G: \operatorname{SimpleGraph}\left(\op
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/AlbrightMaxEdgeDerivative.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/albright-et-al-2023-max-edge-derivative-conjecture-2-20` (proved) by `D5/S3/Combinatorics/SpectralGraph/AlbrightMaxEdgeDerivative.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"albright-et-al-2023-max-edge-derivative-conjecture-2-20","declaration_gid":"D5/S3/Combinatorics/SpectralGraph/AlbrightMaxEdgeDerivative.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* C. Albright; K. P. Hadaway; A. H. Pomerance; J. Jeffries; K. J. Lorenzen; A. K. Nix (2023). *On the Edge Derivative of the Normalized Laplacian with Applications to Kemeny's Constant*. DOI: [10.48550/arXiv.2211.01495](https://doi.org/10.48550/arXiv.2211.01495). URL: <https://arxiv.org/abs/2211.01495v2>.

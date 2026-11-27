@@ -65,7 +65,10 @@ internal sealed class AlbrightMaxEdgeDerivativeDocument : IScribeDocumentDefinit
                     Paragraph(Text("For the path on three vertices, the unit vector (1,0,−1)/√2 spans the "
                         + "eigenspace at 1. The perturbed normalized Laplacian on this vector has eigenvalue "
                         + "1 + t/(1 + t) near zero. Its derivative at zero is 1."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("albright-et-al-2023-max-edge-derivative-conjecture-2-20"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula,
         AssessedProvenance provenance, string prose) =>
