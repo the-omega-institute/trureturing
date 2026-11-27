@@ -86,7 +86,7 @@ internal sealed class LeafPruningDocument : IScribeDocumentDefinition
             Node("count-small", "No shapes below size five", "count_eq_zero_of_lt_five", DescribeRole.Theorem,
                 "For every natural n less than five, the actual tree count is zero, as a consequence of the exact reconstruction size law. This includes the zero coefficient and the first four required initial values."),
             Node("decoration-weight", "Weight of a skeleton decoration", "decoration_weight", DescribeRole.Theorem,
-                "For every decoration of a skeleton with u+3 vertices, inflation gives u+5 plus the free gap total vertices, and the decoration has 2u+5 free slots.")),
+                "For every decoration whose skeleton belongs to the size-u collection, meaning it has u+3 vertices and vertex height u+2, inflation gives u+5 plus the free gap total vertices, and the decoration has 2u+5 free slots.")),
         []));
 
     private static DocumentBlock Node(string id, string title, string declaration,
