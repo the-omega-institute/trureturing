@@ -31,7 +31,8 @@ private theorem flip_eq_flip_iff {n : ℕ} (x y : Q n) (i j : Fin n) :
     cases hx : x i <;> cases hy : y i <;> simp [BalancedCriticalSpectrum.flip, hx, hy]
   · simp [BalancedCriticalSpectrum.flip, hij]
 
-private theorem hamming_flip_of_ne {n : ℕ} {x y : Q n} {i : Fin n} (hi : x i ≠ y i) :
+/-- Flipping a coordinate on which two vertices differ reduces their Hamming distance by one. -/
+theorem hamming_flip_of_ne {n : ℕ} {x y : Q n} {i : Fin n} (hi : x i ≠ y i) :
     hammingDist (flip x i) y + 1 = hammingDist x y := by
   classical
   let S := Finset.univ.filter fun k : Fin n => x k ≠ y k

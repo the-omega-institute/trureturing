@@ -248,8 +248,9 @@ Two explicit boundaries live in [Hearts.lean](D5/X_Frontier/Hearts.lean):
 - **O-6:** `o6WeilPositivityStatement` defines a Weil-positivity proposition.
   Defining that proposition supplies no proof of it.
 
-These are open research obligations, not established impossibility results.
-This repository does **not** establish the Riemann hypothesis.
+Both obligations remain open. Levent Alpöge’s proof establishes the classical
+Riemann hypothesis. The recommended Lean repository for that proof and Dirichlet
+GRH is maintained in the community’s primary repository [leanprover-community/riemann-hypothesis](https://github.com/leanprover-community/riemann-hypothesis). [Lean and Mathlib statement](https://leanprover-community.github.io/blog/posts/riemann-hypothesis/)
 
 ## First run
 

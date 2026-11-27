@@ -8,6 +8,7 @@ url: https://arxiv.org/abs/2308.16247v1
 claim: Section 7 asks whether the replica invariant E_n^(q) is positive on all normalized pure states.
 strata_touched:
   - D5/S3/Quantum/Information/MultiEntropyPositivityRefutation
+  - D5/S3/Quantum/Information/MultiEntropy/CQReplicaCoarseGraining
 license: citation-only
 triage: anchor
 ---
@@ -38,3 +39,23 @@ The scalar positivity question is encoded as positive real part and zero
 imaginary part, for every n,q ≥ 2 and every normalized pure state on finite
 local bases. The final party is unshifted. The coarse-graining inequalities
 (1.13)–(1.15) are statements directly about E and are distinct from this question.
+
+## Classical–quantum coarse graining
+
+For a normalized pure state on finite parties $A,B,C$, suppose that the
+$AB$ marginal is block diagonal in a basis of $A$. Write its positive
+blocks on $B$ as $T_a$. The blocks may fail to commute. For every
+integer $n\ge2$, the theorem `E_eq_trace_tensor_sum_pow` writes the
+tripartite replica moment as
+$\operatorname{Tr}[(\sum_a T_a^{\otimes n})^n]$.
+`E_coarseGraining_all_mergers` proves strict positivity and the three
+coarse-graining inequalities of Eq. (1.13) for this state class using the
+original contraction for both the tripartite and the merged states.
+`renyi_coarseGraining_all_mergers` checks positivity of the merged moments
+and the corresponding inequalities for the real logarithm in Eq. (1.11).
+
+Section 3 of the original paper treats diagonal states. Tasuki discusses the
+all-state result at $n=2$ and the continuum vacuum result in §2.3.
+
+[Gadde et al., §1.2](https://arxiv.org/html/2308.16247v1#S1.SS2) ·
+[Tasuki, §2.3](https://arxiv.org/html/2611.34715v1#S2.SS3)
