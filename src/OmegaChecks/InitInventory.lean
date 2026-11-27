@@ -350,6 +350,13 @@ private def conditionalConsequence? (owner name : Name) : Option (String × Name
     if name == ``ptrEqList then
       return ("False", ``OmegaChecks.InitBoundaries.PointerObservations.listPointerEquality,
         "Elementwise pointer identity distinguishes singleton lists containing equal allocations")
+  if owner == `Init.ShareCommon then
+    if name == ``ShareCommon.Object.ptrEq then
+      return ("False", ``OmegaChecks.InitBoundaries.PointerObservations.objectPointerEquality,
+        "Pointer identity distinguishes an alias from a separately allocated NonScalar with the same Nat field")
+    if name == ``ShareCommon.Object.ptrHash then
+      return ("False", ``OmegaChecks.InitBoundaries.PointerObservations.objectPointerHash,
+        "Pointer hashes distinguish two simultaneously live NonScalar objects with the same Nat field")
   if owner == `Init.Core && name == ``Quot.hrecOn then
     return ((``Quot.sound).toString, ``OmegaChecks.InitBoundaries.HeterogeneousQuotient.soundOfPairCoherence,
       "The pinned reduction through Quot.indep identifies pairs of related representatives at the unit motive")
@@ -537,7 +544,7 @@ private def inventory (lib : System.FilePath) (visible strict full : Environment
         <|> conditional.map (fun (target, witness, _) => (target, witness))
       let behavior := conditional.map (fun (_, _, premise) => premise)
       let runtimeConflict : Option String := do
-        guard (owner == `Init.Util && info.isUnsafe && observedPointers.contains name.toString)
+        guard (info.isUnsafe && observedPointers.contains name.toString)
         let some ("False", witness, _) := conditional | none
         return witness.toString
       let boundary := boundaries[(owner, name)]?

@@ -75,7 +75,8 @@ private def replayWitnesses (env : Environment) : IO Unit := do
     WeakRingOrder.witnesses.map (fun row => row.2.2) ++
     [``Envelope.funextFromCancellation, ``Envelope.funextFromEnvelopeRing,
       ``Envelope.funextFromEnvelopeCommRing, ``Envelope.funextFromEnvelopeIntModule] ++
-    [``PointerObservations.address, ``PointerObservations.pointerEquality, ``PointerObservations.listPointerEquality] ++
+    [``PointerObservations.address, ``PointerObservations.pointerEquality, ``PointerObservations.listPointerEquality,
+      ``PointerObservations.objectPointerEquality, ``PointerObservations.objectPointerHash] ++
     [``HeterogeneousQuotient.hrecOn, ``HeterogeneousQuotient.hrecOnSetoid,
      ``HeterogeneousQuotient.soundOfPairCoherence, ``HeterogeneousQuotient.setoidSoundOfPairCoherence] ++
     [``ConstructorNormalization.propextOfDecision, ``ConstructorNormalization.addCancelOfSucc,
