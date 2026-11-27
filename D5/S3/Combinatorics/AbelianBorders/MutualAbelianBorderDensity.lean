@@ -24,6 +24,7 @@ import D5.S3.Combinatorics.NarayanaStrip.CiglerStripExpansionDefs
 import D5.S3.ConceptDynamics.ExperimentBoundary.BoundedRunSpace
 import D5.S3.StatisticalMechanics.RandomWalks.SurvivingWalkRecurrence
 import D5.S3.StatisticalMechanics.RandomWalks.WalkCount
+import Mathlib.Data.Set.Finite.List
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
