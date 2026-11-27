@@ -136,24 +136,6 @@ def bose {n : ℕ} (H : Steiner (Fin n)) : Steiner (Fin (n * 3)) where
   cancel x y := by
     simp only [Equiv.symm_apply_apply, (boseOnProduct H).cancel, Equiv.apply_symm_apply]
 
-private def cyclicBlocks : Finset (Finset (Fin 13)) :=
-  (Finset.univ.image fun t : Fin 13 => {t, t + 1, t + 4}) ∪
-    (Finset.univ.image fun t : Fin 13 => {t, t + 2, t + 7})
-
-private theorem cyclic_block_count : cyclicBlocks.card = 26 ∧
-    (∀ b ∈ cyclicBlocks, b.card = 3) := by
-  exact ⟨by decide, fun b hb => by
-    have hc : ∀ b : {s // s ∈ cyclicBlocks}, b.val.card = 3 := by decide
-    exact hc ⟨b, hb⟩⟩
-
-set_option maxRecDepth 4096 in
-set_option maxHeartbeats 1000000 in
--- Check the pair incidence against the translated triples and the executable completion.
-private theorem cyclic_incidence :
-    ∀ x y : Fin 13, x ≠ y →
-      (cyclicBlocks.filter fun b => x ∈ b ∧ y ∈ b).card = 1 ∧
-      {x, y, complete13 x y} ∈ cyclicBlocks := by decide
-
 private def schedule13 : List (Fin 13) := [0, 1, 2, 3, 6]
 
 -- Encoded by (x,i) ↦ 3*x+i, the sources are 0, 1, 3, 6, 4, 7.

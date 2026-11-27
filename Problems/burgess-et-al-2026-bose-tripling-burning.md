@@ -38,7 +38,7 @@ Projective orders have the form $2^{d+1}-1$, with 13 strictly between 7 and 15. 
 
 ## Falsifier
 
-The witness must satisfy unique pair completion, nondegeneracy over all maximal proper subsystems, strict increase under the specified Bose blocks and exclusion from both geometric families. The exact burning numbers require legal schedules and lower bounds under the preceding-round propagation rule. The direct product with the three-point affine system is a distinct operation from the registered block construction.
+The witness must satisfy unique pair completion, nondegeneracy over all maximal proper subsystems, strict increase under the specified Bose blocks and exclusion from both geometric families. The exact burning numbers require legal schedules and lower bounds under the preceding-round propagation rule.
 
 ## Evidence
 
@@ -52,7 +52,7 @@ The admission basis is `open-problem-resolution (#34982)`. The proof shape of `r
 
 - **Proved by `BoseTriplingBurningRefutation.result`.** A nondegenerate order-13 system outside both geometric families has a one-round increase under Bose tripling. Even an increase of exactly one fails to characterize those families for this operation.
 - **Open here.** A classification of systems whose burning number increases under Bose tripling, the doubling question, and the direct-product tripling reading remain outside this settlement.
-- **Source scope.** The refutation addresses the exclusivity implication for the cited Bose construction. Theorems 4.7 and 4.8 concern the geometric cases and are separate statements.
+- **Source scope.** The publication's claim in §5 that tripling $\mathrm{AG}(m,3)$ produces $\mathrm{AG}(m+1,3)$ conflicts with its cited Bose block rule. In the Bose tripling of $\mathrm{AG}(2,3)$, the seed $\{((0,0),0),((1,0),0),((0,1),0)\}$ has sizes $3,6,12,27$ under successive simultaneous pair completions. The direct product with the three-point affine system uses coordinatewise completion and gives $\mathrm{AG}(3,3)$, where any three points generate at most their nine-point affine span. This finite calculation distinguishes the two operations. The Lean result concerns the registered order-13 witness and the exclusivity implication for Bose tripling. [Publication §5](https://arxiv.org/html/2608.25627v1#S5.p4)
 
 ## ASSUMED-UNVERIFIED
 
