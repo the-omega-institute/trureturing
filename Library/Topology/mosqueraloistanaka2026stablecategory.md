@@ -34,6 +34,7 @@ strata_touched:
   - D5/S3/Topology/CofaceTriangleCollapse
   - D5/S3/Topology/RetractionCoordinate
   - D5/S3/Topology/StableCategory/TetrahedralGraphIteration
+  - D5/S3/Topology/StableCategory/TetrahedralCategoricalCover
 license: citation-only
 triage: anchor
 ---
@@ -1065,3 +1066,21 @@ ambient one-skeleton is connected, its constant can be moved to the
 image of a chosen vertex of the main parameter graph. The Lean
 construction gives both refined factorizations in the same colouring
 and permits any vertex selector for the final parameter subdivision.
+
+## Weak category one in dimension at most three
+
+Let the order complex of a nonempty finite poset have dimension at
+most three and contractible realization. Some ordinary iterated chain
+poset of the original poset has a categorical lower cover by two
+sets. This is the weak-category-one case of Question 6.3 in that
+range.
+
+Height gives a proper four-rank colouring of every chain. The two
+pairs of ranks induce bipartite graph parameters whose inclusions are
+nullhomotopic by restriction of the contraction. Each refinement adds
+three ambient subdivisions and four parameter subdivisions. After
+enough rounds, the extra parameter subdivisions give fixed-target
+contiguity contractions. The original edge carriers transport them
+to the synchronously subdivided ambient complex. Taking the face
+neighbourhoods that meet the two final colours gives categorical lower
+sets in an ordinary iterated chain poset.
