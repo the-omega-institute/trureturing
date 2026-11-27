@@ -86,7 +86,7 @@ private def emitOwner (env : Environment) (owner : Name) (imports : Array Import
   IO.FS.writeFile out (← (emitC owner).toIO' ctx {env := cenv})
 
 private unsafe def install (source publicSource : Environment) (lib out : System.FilePath) (owner : Name)
-    (onlyLayouts : Bool) : IO Unit := do
+    (onlyLayouts mixed : Bool) : IO Unit := do
   let env ← importModules #[{module := owner, importAll := true}] {}
   let some idx := env.getModuleIdx? owner | throw <| IO.userError s!"unknown owner {owner}"
   let path := modToFilePath lib owner "olean"
@@ -94,10 +94,14 @@ private unsafe def install (source publicSource : Environment) (lib out : System
   let parts := raw.map (·.1)
   let part := parts[2]!
   let oldNative := NameSet.ofList ((impureSigExt.getModuleEntries env idx).map (·.name)).toList
-  let onlyLayouts := onlyLayouts || !oldNative.isEmpty
+  let onlyLayouts := onlyLayouts || (!mixed && !oldNative.isEmpty)
   let mut groups := #[]
   let mut locals := #[]
   let mut candidates := #[]
+  -- These eager word cardinalities require 65,536 through 2^64 successor cells
+  -- when a detached seed uses a separately defined unary Nat.
+  let unaryNat := (env.find? `Omega.Nat).any (· matches .inductInfo _)
+  let largeWordSizes := [`UInt16.size, `UInt32.size, `UInt64.size, `USize.size]
   for ci in part.constants do
     match ci with
     | .inductInfo i =>
@@ -114,8 +118,9 @@ private unsafe def install (source publicSource : Environment) (lib out : System
         groups := groups.push i
         locals := locals ++ family
     | .defnInfo d =>
-      if onlyLayouts || ci.isUnsafe || ci.isPartial then continue
+      if onlyLayouts || oldNative.contains d.name || ci.isUnsafe || ci.isPartial then continue
       let upstream := originalName d.name
+      if unaryNat && largeWordSizes.contains upstream then continue
       if isExtern source upstream || (getImplementedBy? source upstream).isSome then continue
       candidates := candidates.push d.name
     | _ => continue
@@ -170,11 +175,11 @@ public unsafe def main (args : List String) : IO Unit := do
   if let ["--check-control", lib, dir] := args then
     return ← GeneratedNative.checkControl lib dir
   let lib :: out :: requests := args | throw <| IO.userError "expected library, C output and ordered owners"
-  let modules := requests.toArray.map fun s => (s.dropPrefix "layouts=").toString.toName
+  let modules := requests.toArray.map fun s => ((s.dropPrefix "layouts=").dropPrefix "mixed=").toString.toName
   let official := modules.map fun n => {module := n.replacePrefix `OmegaInit `Init : Import}
   let published ← importModules official {} (level := .exported)
   let src ← importModules official {}
   searchPathRef.set [lib]
   for name in modules, s in requests do
-    GeneratedNative.install src published lib out name (s.startsWith "layouts=")
+    GeneratedNative.install src published lib out name (s.startsWith "layouts=") (s.startsWith "mixed=")
     (← IO.getStdout).flush
