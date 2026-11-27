@@ -69,6 +69,17 @@ def produce(directory):
         if not unittest.TextTestRunner(verbosity=2).run(suite).wasSuccessful():
             raise RuntimeError("module publication fixture failed")
     shutil.rmtree(source)
+    regression_cases = [
+        'test_lean_module_cache.ModuleReleases.test_rolling_report_marker_can_lag_the_compiler_and_restore_only_matching_inputs',
+        'test_lean_module_cache.ModuleReleases.test_first_report_publication_migrates_unchanged_zips_after_two_compiler_versions',
+        'test_lean_module_remote.VersionedShards.test_independent_report_release_and_promotion',
+        'test_lean_module_remote.VersionedShards.test_late_promotion_of_an_unpublished_ancestor_is_superseded',
+        'test_lean_module_remote.VersionedShards.test_retries_the_staged_index_after_interrupted_promotion_and_a_new_base',
+        'test_lean_module_remote.VersionedShards.test_manifest_readback_failure_blocks_advance',
+    ]
+    suite = unittest.defaultTestLoader.loadTestsFromNames(regression_cases)
+    if not unittest.TextTestRunner(verbosity=2).run(suite).wasSuccessful():
+        raise RuntimeError("publication recovery cases failed")
 
 
 def consume(directory, reader, issuer):

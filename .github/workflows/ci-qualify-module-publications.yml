@@ -21,16 +21,6 @@ jobs:
       - run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
       - name: Build a Lake project and publish independent compiler and report shards locally
         run: python3 -B .github/scripts/probe-module-publications.py produce "$RUNNER_TEMP/module-registry"
-      - name: Exercise report failure, an advancing compiler, partial promotion and catch-up
-        working-directory: tools/scripts/worktree
-        run: |
-          python3 -B -m unittest -v \
-            test_lean_module_cache.ModuleReleases.test_rolling_report_marker_can_lag_the_compiler_and_restore_only_matching_inputs \
-            test_lean_module_cache.ModuleReleases.test_first_report_publication_migrates_unchanged_zips_after_two_compiler_versions \
-            test_lean_module_remote.VersionedShards.test_independent_report_release_and_promotion \
-            test_lean_module_remote.VersionedShards.test_late_promotion_of_an_unpublished_ancestor_is_superseded \
-            test_lean_module_remote.VersionedShards.test_retries_the_staged_index_after_interrupted_promotion_and_a_new_base \
-            test_lean_module_remote.VersionedShards.test_manifest_readback_failure_blocks_advance
       - id: transfer
         uses: actions/upload-artifact@v6
         with:
