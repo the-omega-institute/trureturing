@@ -67,7 +67,10 @@ internal sealed class GuyotSquareRootStateComplexityRefutationDocument : IScribe
                         "Mathlib's leftQuotient_accepts_apply identifies the left quotient by a prefix "
                         + "with the language accepted from the state reached by that prefix. Thus the "
                         + "sixteen prefixes reach distinct states, contradicting the bound of fifteen."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("guyot-2024-square-root-state-complexity"),
+                    ResolutionKind.Refuted)))));
 
     private static Formula LanguageBody()
     {

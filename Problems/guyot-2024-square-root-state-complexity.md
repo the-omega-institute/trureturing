@@ -6,6 +6,7 @@ url: https://arxiv.org/abs/2407.10355v1
 triage: theorem
 motivation_gids:
   - D5/S0/Automata/DFAOStateLowerBound
+  - D5/S0/Automata/GuyotSquareRootStateComplexityRefutation.result
 ---
 
 # Guyot's universal upper bound for square-root state complexity
@@ -53,17 +54,19 @@ certificate. Lean checks every pair against the five suffixes.
 
 ## Evidence
 
-The formal predicate is `claim : Prop` and the refutation is
+The formal predicate is `claim : Prop` and the frozen refutation is
 `D5/S0/Automata/GuyotSquareRootStateComplexityRefutation.result`.
 The designated refutation result is exempt from four-slot escape registration
 under §3.9. The motivation GID describes the related distinguishing-family
 method for output automata. The proof uses the pinned Mathlib DFA API directly.
+[Blueprint and proof](../Blueprint/D5/S0/Automata/GuyotSquareRootStateComplexityRefutation.md)
+· [Literature note](../Library/Automata/guyot2024state.md)
 
 ## Triage
 
 ### What the settlement shows
 
-- **Proved.** The length-twelve language exhibits sixteen pairwise distinct left
+- **Refuted.** The length-twelve language exhibits sixteen pairwise distinct left
   quotients, so the universal bound of fifteen at that length fails.
 - **Source evidence.** Remark 7 reports the bound through n = 11.
 - **Open here.** The exact maximum at n = 12, the proposed equality involving

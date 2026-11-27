@@ -40,6 +40,10 @@ $$\neg (\forall n \in \mathbb{N},\; 0 < n \Rightarrow (\forall A \in Type,\; [\o
 
 *Proof.* Machine-checked in Lean as `D5/S0/Automata/GuyotSquareRootStateComplexityRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/guyot-2024-square-root-state-complexity` (refuted) by `D5/S0/Automata/GuyotSquareRootStateComplexityRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"guyot-2024-square-root-state-complexity","declaration_gid":"D5/S0/Automata/GuyotSquareRootStateComplexityRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Jérôme Guyot (2024). *On state complexity for subword-closed languages*. URL: <https://arxiv.org/abs/2407.10355v1>.
