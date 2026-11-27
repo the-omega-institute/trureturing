@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.PopStack;
 internal sealed class PopStackTerminalIntervalsDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/PopStack/PopStackTerminalIntervals.";
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Combinatorics/cioni2025sorting");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/PermutationPatterns/cioni2025sorting");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "For n at least four, R(n) is a permutation of size n in C ending in its minimum. Its proper nontrivial intervals are exactly the prefix of length n minus one with values from two through n and, when n is even, the second and third entries with values n minus one and n. Moreover, Y(n+1) is a simple permutation of size n + 1 in C.",
