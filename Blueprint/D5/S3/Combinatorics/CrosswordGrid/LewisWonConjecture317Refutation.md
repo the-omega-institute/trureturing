@@ -28,6 +28,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/CrosswordGrid/LewisWonConjecture317Refutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/lewis-won-conjecture-3-17` (refuted) by `D5/S3/Combinatorics/CrosswordGrid/LewisWonConjecture317Refutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"lewis-won-conjecture-3-17","declaration_gid":"D5/S3/Combinatorics/CrosswordGrid/LewisWonConjecture317Refutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Joel Brewster Lewis, Robert Won (2026). *Non-attacking rook placements on crossword grids*. DOI: [10.48550/arXiv.2609.03081](https://doi.org/10.48550/arXiv.2609.03081). URL: <https://arxiv.org/abs/2609.03081v1>.

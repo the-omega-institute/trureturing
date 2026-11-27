@@ -41,7 +41,9 @@ internal sealed class LewisWonConjecture317RefutationDocument : IScribeDocumentD
                     + "reads 3 = 1 + 2. Every admissible positive size satisfies 1 ≤ m "
                     + "and 2m ≤ 3, hence m = 1. Its strict lower comparison would read "
                     + "1 < 1. The restriction to n ≥ 4 remains open."))),
-                DescribeRole.Theorem)),
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("lewis-won-conjecture-3-17"), ResolutionKind.Refuted))),
         []));
 
     private static Formula Equation31()
