@@ -399,6 +399,8 @@ theorem instDecidableAnd._proof_1 {p q : Prop} [dp : Decidable p] [dq : Decidabl
 instance instDecidableAnd {p q : Prop} [dp : Decidable p] [dq : Decidable q] : Decidable (And p q) :=
   Decidable.intro (Bool.and (@Decidable.decide p dp) (@Decidable.decide q dq)) instDecidableAnd._proof_1
 
+attribute [instance] _root_.instOfNatNat _root_.instHAdd _root_.instAddNat
+
 instance instLENat : LE Nat := LE.mk Nat.le
 instance instLTNat : LT Nat := LT.mk Nat.lt
 

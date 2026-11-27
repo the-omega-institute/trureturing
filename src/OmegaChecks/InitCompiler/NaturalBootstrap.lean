@@ -98,12 +98,6 @@ public def installNaturalBootstrap : CommandElabM Unit := do
     if entries.contains n then env := projectionFnInfoExt.addEntry (asyncDecl := n) env (n, info)
   for entry in classExtension.getModuleEntries orig idx do
     if entries.contains entry.name then env := classExtension.addEntry env entry
-  for entry in Meta.instanceExtension.ext.getModuleEntries orig idx do
-    match entry with
-    | .global value =>
-      if value.globalName?.any entries.contains then env := Meta.instanceExtension.addEntry env value
-    | .scoped ns value =>
-      if value.globalName?.any entries.contains then env := Meta.instanceExtension.addScopedEntry env ns value
   for (n, status) in reducibilityCoreExt.getModuleEntries orig idx do
     if entries.contains n then env := reducibilityCoreExt.addEntry (asyncDecl := n) env (n, status)
   setEnv (env.setModulePackage pkg)
