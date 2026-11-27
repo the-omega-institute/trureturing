@@ -74,6 +74,21 @@ run_cmd
   for n in [``fromListFoldl, ``fromListFoldr] do
     unless (← collectAxioms n).isEmpty do throwError "monadic traversal witness {n} uses axioms"
 
+example (rule : type_of% @Array.foldlM_subtype.{u,u,0}) : type_of% @List.foldlM_subtype.{u,u,0} := by
+  intro m α β mon p xs f g x agree
+  have eq := @rule m α β xs.length mon p xs.toArray f g x agree rfl
+  change xs.toArray.foldlM f x = xs.toArray.unattach.foldlM g x 0 xs.toArray.size at eq
+  rw [← Array.foldlM_toList (xs := xs.toArray)] at eq
+  rw [← Array.size_unattach (xs := xs.toArray), ← Array.foldlM_toList, Array.toList_unattach] at eq
+  exact eq
+example (rule : type_of% @Array.foldrM_subtype.{u,u,0}) : type_of% @List.foldrM_subtype.{u,u,0} := by
+  intro m α β mon laws p xs f g x agree
+  have eq := @rule m α β xs.length mon laws p xs.toArray f g x agree rfl
+  change xs.toArray.foldrM f x = xs.toArray.unattach.foldrM g x xs.toArray.size 0 at eq
+  rw [← Array.foldrM_toList (xs := xs.toArray)] at eq
+  rw [← Array.size_unattach (xs := xs.toArray), ← Array.foldrM_toList, Array.toList_unattach] at eq
+  exact eq
+
 end MonadicTraversal
 
 namespace RangeMap
@@ -352,6 +367,13 @@ public theorem foldlCongr (combine : type_of% @Array.foldlM_congr.{max 1 u v,0,m
 
 public theorem foldrCongr (combine : type_of% @Array.foldrM_congr.{0,max 1 u v,max 1 u v}) :
     type_of% @funext.{u,v} := funextFromEndomorphisms (fromRight combine)
+
+example (rule : type_of% @List.forIn'_loop_congr.{u,u,0}) : ListCongruence.{u,u} := by
+  intro m α β mon as bs w b b' hb f g agree
+  subst bs
+  subst b'
+  rw [listLoop_eq]
+  exact rule (as := as) (bs := as) (xs := as) (b := b) ⟨[],rfl⟩ ⟨[],rfl⟩ (fun a h _ s => agree a h s)
 
 open Lean in
 run_cmd

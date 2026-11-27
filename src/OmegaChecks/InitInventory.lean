@@ -356,6 +356,14 @@ private def conditionalConsequence? (owner name : Name) : Option (String × Name
       else ``OmegaChecks.InitBoundaries.ArrayCasts.mapIndexed
     return ("False", witness,
       "On Array Unit with word length zero and a callback returning none : Option Empty, the zero-step exit returns some output of the original natural length")
+  if owner == `Init.Data.Array.Monadic && [``Array.foldlM_subtype, ``Array.foldrM_subtype].contains name then
+    let witness := if name == ``Array.foldlM_subtype then ``OmegaChecks.InitBoundaries.MonadicTraversal.fromListFoldl
+      else ``OmegaChecks.InitBoundaries.MonadicTraversal.fromListFoldr
+    return ((``funext).toString, witness,
+      "A full array fold agrees with the underlying list fold, and unattach preserves the size and projects that list")
+  if owner == `Init.Data.List.Monadic && name == ``List.forIn'_loop_congr then
+    return ((``funext).toString, ``OmegaChecks.InitBoundaries.ArrayLoopCongruence.listForInCongr,
+      "The whole-list traversal starts its auxiliary loop on the full input with the empty prefix")
   if owner == `Init.Data.Fin.Fold then
     let witness ← match name with
       | ``Fin.foldlM_succ_last | ``Fin.foldrM_succ =>
