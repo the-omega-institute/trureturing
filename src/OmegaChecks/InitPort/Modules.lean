@@ -228,7 +228,10 @@ unsafe def main (args : List String) : IO Unit := do
     let srcPath := modToFilePath seed owner "olean"
     let orig ← readLevels srcPath
     let idx := (source.getModuleIdx? official).get!
-    let mut mappedImports := (source.header.moduleData[idx]!.imports.filter (·.isExported)).map fun i =>
+    -- The compiled syntax renderer calls the Name instance from this private import.
+    let retained := source.header.moduleData[idx]!.imports.filter fun i =>
+      i.isExported || (official == `Init.Data.Format.Syntax && i.module == `Init.Data.ToString.Name)
+    let mut mappedImports := retained.map fun i =>
       { i with module := i.module.replacePrefix `Init `OmegaInit }
     let baseImports := mergeImports orig[2]!.imports mappedImports
     let officialImports := source.header.moduleData[idx]!.imports.map fun i =>

@@ -108,7 +108,7 @@ private def syntaxTreeFunction (n : Name) : Bool :=
     [`getHead?, `setHeadInfoAux, `setTailInfoAux, `findAux, `structEq, `isToken, `hasArgs, `isAtom, `isNone,
      `isIdOrAtom?, `isLit?, `isInterpolatedStrLit?, `mkApp, `mkCApp].contains (n.updatePrefix .anonymous))
 
-private def pinnedStringFunction (n : Name) : Bool := renderName n || defsStringFunction n || basicStringFunction n || decodeStringFunction n || sliceStringFunction n || metaLiteralFunction n || n == `String.toName
+private def pinnedStringFunction (n : Name) : Bool := n == `Substring.Raw.toString || renderName n || defsStringFunction n || basicStringFunction n || decodeStringFunction n || sliceStringFunction n || metaLiteralFunction n || n == `String.toName
 
 private def debugPrimitive (n : Name) : Bool := [`dbgTrace, `dbgTraceIfShared, `dbgSleep, `dbgStackTrace].contains n
 
@@ -178,6 +178,7 @@ public def supported (source : Environment) (owner name : Name) : Bool :=
     (name.getPrefix == `Bool && widths.contains method)
   (owner == `OmegaInit.Util && debugPrimitive name && isExtern source name) ||
     (owner == `OmegaInit.Data.ToString.Name && renderName name) ||
+    (owner == `OmegaInit.Data.String.Substring && name == `Substring.Raw.toString) ||
     (owner == `OmegaInit.Data.String.Defs && defsStringFunction name) ||
     (owner == `OmegaInit.Data.String.Basic && basicStringFunction name) ||
     (owner == `OmegaInit.Data.String.Decode && decodeStringFunction name) ||
@@ -258,7 +259,7 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
     unless strictInfo.type == InitKernelPort.translate InitKernelPort.portName ci.type do
       throw <| IO.userError s!"strict string input type differs at {n}"
     checkStrictString strict
-    if official.getPrefix == `Substring.Raw.Internal || [`Substring.Raw.toName, `Lean.Syntax.splitNameLit].contains official then
+    if official.getPrefix == `Substring.Raw.Internal || [`Substring.Raw.toName, `Substring.Raw.toString, `Lean.Syntax.splitNameLit].contains official then
       for (env, name, text) in [(source, `Substring.Raw.mk, ImpureType.object), (strict, `Omega.Substring.Raw.mk, ImpureType.tobject)] do
         let some fields := ctorLayoutExt.find? env name | throw <| IO.userError s!"missing substring record {name}"
         let #[.object 0 field, .object 1 start, .object 2 stop] := fields.fieldInfo | throw <| IO.userError "invalid substring fields"
