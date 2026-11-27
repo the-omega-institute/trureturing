@@ -44,7 +44,10 @@ internal sealed class LyudogovskiyDimensionJumpDocument : IScribeDocumentDefinit
                         Paragraph(Text("Partition(n) consists of all integer partitions of n. Adj(graph(n), p, q) holds for one nontrivial unit transfer between distinct part occurrences, with a virtual zero recipient allowed. localDimension(p) is the maximum clique size through p minus one. rowLens(ofPartition(p)) lists the row lengths of the Young diagram of p in weakly decreasing order. Each dimension in the universal bound is cast to the integers before subtraction.")),
                         Paragraph(Text("A clique of size at least two lies above a common predecessor or below a common successor. The available corners are counted by distinct positive row lengths, with one additional corner for starting a row. Across a one-cell change, at most one positive length is gained and at most one is lost. Two adjacent diagrams share a predecessor and a successor, so counting the actual cliques built on those diagrams bounds the change in either direction.")),
                         Paragraph(Text("For the displayed family, the shared predecessor is (k, k, k−2). Its extensions give a clique of dimension two through the second endpoint. All deletions from that endpoint have at most two distinct positive lengths, and its successors have at most three, giving the matching upper bound. Deleting from the second row of the first endpoint leaves four distinct positive lengths. Its extensions give dimension at least four, and the universal bound gives the matching upper bound."))),
-                    DescribeRole.Theorem))));
+                    DescribeRole.Theorem,
+                    new OpenProblemResolutionClaim(
+                        ProblemSlugRef.Create("lyudogovskiy-2026-dimension-jump"),
+                        ResolutionKind.Proved)))));
     }
 
     private static Formula Apply(string name, params Formula[] arguments) =>

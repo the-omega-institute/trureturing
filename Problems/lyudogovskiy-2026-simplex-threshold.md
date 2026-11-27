@@ -1,7 +1,7 @@
 ---
 slug: lyudogovskiy-2026-simplex-threshold
 bibkey: lyudogovskiy2026simplex
-doi: null
+doi: 10.48550/arXiv.2603.23228
 url: https://arxiv.org/html/2603.23228v1
 triage: theorem
 motivation_gids:

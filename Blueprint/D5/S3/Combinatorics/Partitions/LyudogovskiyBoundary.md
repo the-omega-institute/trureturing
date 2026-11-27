@@ -10,9 +10,13 @@ $$\forall r \in Nat,\; 1 \le r \Rightarrow \operatorname{IsLeast}\left(\{n:Nat\m
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Partitions/LyudogovskiyBoundary.boundary_result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/lyudogovskiy-2026-boundary-threshold` (proved) by `D5/S3/Combinatorics/Partitions/LyudogovskiyBoundary.boundary_result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"lyudogovskiy-2026-boundary-threshold","declaration_gid":"D5/S3/Combinatorics/Partitions/LyudogovskiyBoundary.boundary_result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
-*Acknowledgement.* Fedor B. Lyudogovskiy (2026). *Simplex Stratification and Phase Boundaries in the Partition Graph*. URL: <https://arxiv.org/html/2603.23228v1>.
+*Acknowledgement.* Fedor B. Lyudogovskiy (2026). *Simplex Stratification and Phase Boundaries in the Partition Graph*. DOI: [10.48550/arXiv.2603.23228](https://doi.org/10.48550/arXiv.2603.23228). URL: <https://arxiv.org/html/2603.23228v1>.
 
 *Commentary.*
 

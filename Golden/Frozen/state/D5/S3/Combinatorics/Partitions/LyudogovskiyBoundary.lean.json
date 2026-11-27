@@ -1,0 +1,1 @@
+{"statement_id":"sha256:709b6572ca7176ed59455ef3f1b6d24004b882ba71262f66aef075ebb0e6caad","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),13:Combinatorics),10:Partitions),19:LyudogovskiySimplex),15:boundary_result)","kind":"theorem","libraries":["Batteries","Init","Lean","Mathlib"],"axioms":["Classical.choice","Quot.sound","propext"]}]}
