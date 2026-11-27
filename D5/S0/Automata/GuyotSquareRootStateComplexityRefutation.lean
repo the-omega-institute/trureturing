@@ -27,7 +27,7 @@ Public result:
   proof_shape: content
   escape_witness: separated (the finite prefix/suffix separation table);
     consumer: state_lower_bound, then result
-admission_basis: open-problem-resolution (#34977; Open)
+admission_basis: open-problem-resolution (#34977; Refuted)
 Direct frozen dependencies: none (pinned Mathlib only).
 -/
 
