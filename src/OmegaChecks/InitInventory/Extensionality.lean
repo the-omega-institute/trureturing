@@ -13,6 +13,9 @@ open Lean
 namespace OmegaChecks.InitBoundaries
 universe u v w z
 
+theorem funextFromFunextIff (rule : type_of% @funext_iff.{u,v}) : type_of% @funext.{u,v} :=
+  fun {_ _ _ _} => rule.mpr
+
 /-- Evaluation factors through the setoid of pointwise-equal functions. -/
 theorem funextFromQuotientSound (sound : type_of% (@Quotient.sound.{imax u v})) :
     type_of% (@funext.{u,v}) := by
