@@ -603,6 +603,11 @@ public theorem Array.zipWithMAux.eq_def : type_of% @_root_.Array.zipWithMAux.eq_
   · rw [dite_eq_right ha, List.drop_eq_nil_of_le (Nat.le_of_not_gt ha)]
     rfl
 
+public theorem Array.zipWithMAux._unary.eq_def : type_of% @_root_.Array.zipWithMAux._unary.eq_def := by
+  intro α β γ m mon as bs f p
+  obtain ⟨i, acc⟩ := p
+  with_unfolding_all exact Array.zipWithMAux.eq_def as bs f i acc
+
 public theorem List.firstM_toArray : type_of% @_root_.List.firstM_toArray := by
   intro m α β alt xs f
   have loop (n j : Nat) (sum : j + n = xs.length) :
