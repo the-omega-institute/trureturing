@@ -267,4 +267,40 @@ public theorem List.foldrTR.eq_1 :
   rw [← _root_.List.foldr_eq_foldrTR]
   exact _root_.Array.foldr_toList (xs := xs.toArray) f
 
+public theorem List.setTR.eq_1 :
+    type_of% (private_decl% @_root_.List.setTR.eq_1) := by
+  intro α xs i a
+  rw [← _root_.List.set_eq_setTR]
+  exact ((private_decl% @_root_.List.set_eq_setTR.go) α xs a #[] xs i rfl).symm
+
+public theorem List.erasePTR.eq_1 :
+    type_of% (private_decl% @_root_.List.erasePTR.eq_1) := by
+  intro α p xs
+  rw [← _root_.List.eraseP_eq_erasePTR]
+  exact ((private_decl% @_root_.List.eraseP_eq_erasePTR.go) α p xs #[] xs rfl).symm
+
+public theorem List.modifyTR.eq_1 :
+    type_of% (private_decl% @_root_.List.modifyTR.eq_1) := by
+  intro α xs i f
+  rw [← _root_.List.modify_eq_modifyTR]
+  exact ((private_decl% @_root_.List.modifyTR_go_eq) (f := f) (acc := #[]) xs i).symm
+
+public theorem List.insertIdxTR.eq_1 :
+    type_of% (private_decl% @_root_.List.insertIdxTR.eq_1) := by
+  intro α xs i a
+  rw [← _root_.List.insertIdx_eq_insertIdxTR]
+  exact ((private_decl% @_root_.List.insertIdxTR_go_eq) (a := a) (acc := #[]) i xs).symm
+
+public theorem List.zipIdxTR.eq_1 :
+    type_of% (private_decl% @_root_.List.zipIdxTR.eq_1) := by
+  intro α xs n
+  rw [← _root_.List.zipIdx_eq_zipIdxTR, ← _root_.Array.foldr_toList]
+  exact congrArg Prod.snd ((private_decl% @_root_.List.zipIdx_eq_zipIdxTR.go) α xs n).symm
+
+public theorem List.intercalateTR.eq_2 :
+    type_of% (private_decl% @_root_.List.intercalateTR.eq_2) := by
+  intro α sep xs
+  rw [← _root_.List.intercalate_eq_intercalateTR]
+  exact _root_.List.intercalate_singleton
+
 end OmegaChecks.InitPort.Alternatives
