@@ -96,7 +96,8 @@ public def supported (source : Environment) (owner name : Name) : Bool :=
     (owner == `OmegaInit.Data.Nat.Div.Basic && name == `Nat.divExact) ||
     (owner == `OmegaInit.Data.Nat.PowMod && name == `Nat.powMod)
   let stringOp := owner == `OmegaInit.Data.String.Bootstrap && [`String.Internal.length, `String.Internal.append].contains name
-  let textCompare := (owner == `OmegaInit.Data.Ord.String && name == `String.compare) ||
+  let textCompare := (owner == `OmegaInit.Data.String.PosRaw && [`String.getUTF8Byte, `String.getUtf8Byte].contains name) ||
+    (owner == `OmegaInit.Data.Ord.String && name == `String.compare) ||
     (owner == `OmegaInit.Data.String.Slice && [`String.Slice.hash, `String.Slice.instDecidableLt].contains name) ||
     (owner == `OmegaInit.Data.String.Pattern.Basic && name == `String.Slice.Pattern.Internal.memcmpStr)
   let intPrimitive := intOwner && name.getPrefix == `Int &&
@@ -285,7 +286,8 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
       args := args.push s!"slice{i}"
       cleanup := cleanup ++ s!"  lean_dec(slice{i});\n"
       unless b.borrow do cleanup := cleanup ++ s!"  lean_dec({arg});\n"
-    else if dom == `String.Pos.Raw && a.ty == .tobject && b.ty == .tobject && a.borrow then
+    else if dom == `String.Pos.Raw && a.ty == .tobject && b.ty == .tobject &&
+        (a.borrow || target == "lean_string_get_byte_fast") then
       for (env, pos) in [(source, `String.Pos.Raw), (strict, `Omega.String.Pos.Raw)] do
         let some (some f) := impureTrivialStructureInfoExt.find? env pos | throw <| IO.userError s!"missing position {pos}"
         unless f.fieldIdx == 0 do throw <| IO.userError s!"invalid offset field in {pos}"
@@ -299,7 +301,8 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
       let convert := if dom == `String then "omega_string_to_lean" else "omega_bytes_to_lean"
       prepare := prepare ++ s!"  lean_object *string{i} = {convert}({arg});\n"
       args := args.push s!"string{i}"
-      if a.borrow then cleanup := cleanup ++ s!"  lean_dec(string{i});\n"
+      -- The byte reader's public C primitive borrows both inputs, also for its deprecated alias.
+      if a.borrow || target == "lean_string_get_byte_fast" then cleanup := cleanup ++ s!"  lean_dec(string{i});\n"
       unless b.borrow do cleanup := cleanup ++ s!"  lean_dec({arg});\n"
     else if dom == `Int && a.ty == .tobject && b.ty == .object && a.borrow then
       checkIntLayout strict
