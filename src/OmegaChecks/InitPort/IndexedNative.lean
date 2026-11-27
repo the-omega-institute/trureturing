@@ -1,6 +1,7 @@
 module
 public import OmegaChecks.InitPort.NativeState
 import OmegaChecks.InitPort.Translation
+import OmegaChecks.InitPort.UnsafeRuntime
 import all Lean.Compiler.LCNF.ToImpureType
 
 open Lean Compiler.LCNF
@@ -42,6 +43,51 @@ public def supported (n : Name) : Bool :=
    `Nat.anyLTTR, `Nat.decidableExistsLE'].contains n
 
 private def objectType (t : IR.IRType) := t == .tobject || t == .object || t == .tagged
+
+/-- The guarded equality fast path compares the original borrowed objects in operand order. -/
+private def pointerComparison (body : IR.FnBody) (left right : IR.VarId) : Option (IR.VarId × IR.FnBody) := do
+  let .vdecl a .usize (.fap `ptrAddrUnsafe #[.erased, .var x]) body := body | none
+  let .vdecl b .usize (.fap `ptrAddrUnsafe #[.erased, .var y]) body := body | none
+  let .vdecl result .uint8 (.fap `USize.decEq #[.var v, .var w]) rest := body | none
+  guard (x == left && y == right && a == v && b == w)
+  return (result, rest)
+
+private def pinnedPointerEq (ci : ConstantInfo) : Bool := Id.run do
+  let .defnInfo d := ci | return false
+  let [u] := d.levelParams | return false
+  let .lam _ (.sort (.succ (.param v))) (.lam _ (.bvar 0) (.lam _ (.bvar 1) body .default) .default) .implicit := d.value
+    | return false
+  let word := mkConst `USize
+  let comparison := mkApp2 (mkConst `instBEqOfDecidableEq [0]) word (mkConst `instDecidableEqUSize)
+  let observing := mkApp (mkConst `ptrAddrUnsafe [.param u]) (.bvar 2)
+  return d.name == `ptrEq && d.safety == .unsafe && u == v && body ==
+    mkApp4 (mkConst `BEq.beq [0]) word comparison (mkApp observing (.bvar 1)) (mkApp observing (.bvar 0))
+
+private def checkGuardedPointerEq (env : Environment) : Bool := Id.run do
+  let some observer := env.find? `ptrAddrUnsafe | return false
+  let operand := Expr.forallE `a (markBorrowed (.bvar 0)) (mkConst `USize) .default
+  let prototype := Expr.forallE `α (.sort (.succ (.param `u))) operand .implicit
+  unless UnsafeRuntime.matchesDefaultOpaque observer `ptrAddrUnsafe false [`u] prototype `USize `instInhabitedUSize do
+    return false
+  let some (.defnInfo eq) := env.find? `ptrEq | return false
+  let some (.defnInfo guarded) := env.find? `withPtrEqUnsafe | return false
+  unless pinnedPointerEq (.defnInfo eq) && guarded.safety == .unsafe &&
+      guarded.value.getUsedConstants.contains `ptrEq do return false
+  let some (.fdecl _ cmpArgs .uint8 cmpBody _) := IR.findEnvDecl env eq.name | return false
+  let some (.fdecl _ guardArgs .uint8 guardBody _) := IR.findEnvDecl env guarded.name | return false
+  let operands := #[(IR.IRType.erased, false), (.tobject, true), (.tobject, true)]
+  unless cmpArgs.map (fun a => (a.ty, a.borrow)) == operands &&
+      guardArgs.map (fun a => (a.ty, a.borrow)) == operands ++ #[(.object, false), (.erased, false)] do return false
+  let some (cmp, .ret (.var result)) := pointerComparison cmpBody cmpArgs[1]!.x cmpArgs[2]!.x | return false
+  let some (test, .case `UInt8 branch .uint8 #[.ctor onFalse fallback, .ctor onTrue success]) :=
+    pointerComparison guardBody guardArgs[1]!.x guardArgs[2]!.x | return false
+  let .vdecl unit .tagged (.ctor unitCtor #[]) (.vdecl applied .tagged (.ap k #[.var argument])
+    (.vdecl unboxed .uint8 (.unbox boxed) (.ret (.var output)))) := fallback | return false
+  let .dec released 1 _ false (.ret (.var yes)) := success | return false
+  return onFalse == ⟨`Bool.false, 0, 0, 0, 0⟩ && onTrue == ⟨`Bool.true, 1, 0, 0, 0⟩ &&
+    unitCtor == ⟨`PUnit.unit, 0, 0, 0, 0⟩ && cmp == result && test == branch &&
+    unit == argument && k == guardArgs[3]!.x && applied == boxed && unboxed == output &&
+    released == k && yes == test
 
 private def sameField : CtorFieldInfo → CtorFieldInfo → Bool
   | .object i t, .object j u | .scalar 1 i t, .scalar 1 j u => i == j && t == u
@@ -151,7 +197,8 @@ public def wrapper (source strict : Environment) (n : Name) (symbol : String) : 
     unless field.fieldIdx == 0 do throw <| IO.userError "unexpected strict Fin value slot"
   let impl ← if official == `withPtrEq then do
     let some fast := source.find? `withPtrEqUnsafe | throw <| IO.userError "missing pinned pointer comparison"
-    unless Compiler.getImplementedBy? source official == some fast.name && fast.type == ci.type do
+    unless Compiler.getImplementedBy? source official == some fast.name && fast.type == ci.type &&
+        checkGuardedPointerEq source do
       throw <| IO.userError "unexpected pointer comparison implementation"
     checkDataTypes source strict [`PUnit, `Bool]
     pure fast.name
