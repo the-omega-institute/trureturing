@@ -94,6 +94,8 @@ private def sliceStringFunction (n : Name) : Bool :=
 
 private def pinnedStringFunction (n : Name) : Bool := defsStringFunction n || basicStringFunction n || decodeStringFunction n || sliceStringFunction n || n == `String.toName
 
+private def debugPrimitive (n : Name) : Bool := [`dbgTrace, `dbgTraceIfShared, `dbgSleep, `dbgStackTrace].contains n
+
 private def digitList (n : Name) : Bool := [`Nat.toSuperDigitsAux, `Nat.toSubDigitsAux].contains n
 
 public def usesPinnedFunction (n : Name) : Bool :=
@@ -156,7 +158,8 @@ public def supported (source : Environment) (owner name : Name) : Bool :=
     [`neg, `add, `sub, `mul, `decEq, `decLe, `decLt, `decNonneg, `natAbs, `ediv, `emod, `tdiv, `tmod, `divExact].contains method
   let primitive := ((word? name.getPrefix).isSome && name.getPrefix != `Char && (ops ++ widths).contains method) ||
     (name.getPrefix == `Bool && widths.contains method)
-  (owner == `OmegaInit.Data.String.Defs && defsStringFunction name) ||
+  (owner == `OmegaInit.Util && debugPrimitive name && isExtern source name) ||
+    (owner == `OmegaInit.Data.String.Defs && defsStringFunction name) ||
     (owner == `OmegaInit.Data.String.Basic && basicStringFunction name) ||
     (owner == `OmegaInit.Data.String.Decode && decodeStringFunction name) ||
     (owner == `OmegaInit.Data.String.Slice && sliceStringFunction name) ||
@@ -249,6 +252,10 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
     pure `Nat.reprFast
   else pure official
   let some impl := IR.findEnvDecl source compiled | throw <| IO.userError s!"no pinned IR for {official}"
+  if debugPrimitive official then
+    let some strictInfo := strict.find? n | throw <| IO.userError s!"missing strict debug operation {n}"
+    unless strictInfo.type == InitKernelPort.translate InitKernelPort.portName ci.type do
+      throw <| IO.userError s!"different debug operation type at {n}"
   if digitList official then
     let some targetInfo := strict.find? n | throw <| IO.userError s!"missing strict character conversion {n}"
     unless targetInfo.type == InitKernelPort.translate InitKernelPort.portName ci.type do
@@ -289,6 +296,16 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
       if passesErased then args := args.push "lean_box(0)"
       continue
     let arg := "a" ++ toString i
+    if debugPrimitive official && (dom.isForall || dom.isBVar) then
+      -- The runtime either returns the polymorphic payload or invokes its continuation with Unit.unit.
+      let payload := official == `dbgTraceIfShared && dom == .bvar (i - 1)
+      let thunk := dom.isForall && dom.bindingDomain! == mkConst `Unit && dom.bindingBody! == .bvar i
+      unless (payload || thunk) && a.ty == .tobject && (b.ty == .tobject || b.ty == .object) && !a.borrow do
+        throw <| IO.userError s!"different debug continuation or payload ABI at {n}"
+      decls := decls.push ((if b.borrow then "b_lean_obj_arg " else "lean_obj_arg ") ++ arg)
+      if b.borrow then prepare := prepare ++ s!"  lean_inc({arg});\n"
+      args := args.push arg
+      continue
     if bootstrapStringOp official && dom.isForall then
       let arrow := fun (a b : Expr) => Expr.forallE .anonymous a b .default
       let unary := arrow (mkConst `Char) (mkConst `Bool)
@@ -609,6 +626,8 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
     unless field.fieldIdx == 0 do throw <| IO.userError "invalid raw position layout"
     pure ("lean_obj_res", call)
   else if dom == `Nat && (ret == .tobject || ret == .tagged) && result == .tobject then pure ("lean_obj_res", call)
+  else if debugPrimitive official && type == .bvar (params.size - 1) && ret == .tobject && result == .tobject then
+    pure ("lean_obj_res", call)
   else if dom == `Ordering && ret == .uint8 && result == .uint8 then do
     IndexedNative.checkDataTypes source strict [`Ordering]
     pure ("uint8_t", call)
@@ -636,6 +655,8 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
       `System.Platform.getIsEmscripten, `System.Platform.Internal.getHardwareConcurrency].contains official then
     let t := if ret == .uint8 then "uint8_t" else "uint32_t"
     pure s!"\nextern {t} {target}(lean_obj_arg);\n"
+  else if target == "lean_dbg_stack_trace" then
+    pure "\nextern lean_obj_res lean_dbg_stack_trace(lean_obj_arg);\n"
   else if target == "lean_string_utf8_get_opt" then
     pure "\nextern lean_obj_res lean_string_utf8_get_opt(b_lean_obj_arg, b_lean_obj_arg);\n"
   else if target == "lean_string_utf8_get_bang" then
