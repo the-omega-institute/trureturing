@@ -1,10 +1,10 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Divergence;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Divergence.TraceEntropy;
 
 internal sealed class GibbsCubicTranslationEntropyDocument : IScribeDocumentDefinition
 {
-    private const string Owner = "D5/S3/Quantum/Divergence/GibbsCubicTranslationEntropy.";
+    private const string Owner = "D5/S3/Quantum/Divergence/TraceEntropy/GibbsCubicTranslationEntropy.";
     private static readonly LibraryNoteRef Wu = LibraryNoteRef.Create("D5/L/SpinModels/wu2026sharp");
 
     private static DocumentBlock.Describe Result(string id, string declaration, string title, string body) =>

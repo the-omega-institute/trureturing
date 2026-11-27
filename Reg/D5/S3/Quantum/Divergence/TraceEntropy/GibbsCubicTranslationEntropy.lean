@@ -1,6 +1,6 @@
 import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.SingleDependentReadout
-import D5.S3.Quantum.Divergence.GibbsCubicTranslationEntropy
+import D5.S3.Quantum.Divergence.TraceEntropy.GibbsCubicTranslationEntropy
 
 /-! The cubic entropy derivatives and correction as source-bound observations. -/
 
@@ -14,11 +14,11 @@ universe u
 open Matrix LeanInformationAudit
 open scoped BigOperators ComplexOrder MatrixOrder Matrix.Norms.L2Operator
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
-open _root_.D5.S3.Quantum.Divergence.GibbsCubicTranslationEntropy
+open _root_.D5.S3.Quantum.Divergence.TraceEntropy.GibbsCubicTranslationEntropy
 open _root_.D5.S3.Quantum.Divergence.SpectralCeilingRelativeEntropy (overlap)
 open _root_.D5.S3.Quantum.Recovery.BKMRelativeDensity (omega)
 
-namespace Reg.D5.S3.Quantum.Divergence.GibbsCubicTranslationEntropy
+namespace Reg.D5.S3.Quantum.Divergence.TraceEntropy.GibbsCubicTranslationEntropy
 
 private abbrev readoutSignature (State Output : Type) : Signature :=
   _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => State) (fun _ => Output)
@@ -114,9 +114,9 @@ def family : Registration arena.{u} (type_of% @hasDerivAt_cubicEntropy.{u}) wher
 
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     (@hasDerivAt_cubicEntropy.{u}) (Realization signature) Unit Unit where
-  unitName := `D5.S3.Quantum.Divergence.GibbsCubicTranslationEntropy.hasDerivAt_cubicEntropy.audit
+  unitName := `D5.S3.Quantum.Divergence.TraceEntropy.GibbsCubicTranslationEntropy.hasDerivAt_cubicEntropy.audit
   realizationName :=
-    `Reg.D5.S3.Quantum.Divergence.GibbsCubicTranslationEntropy.TraceDerivative.family
+    `Reg.D5.S3.Quantum.Divergence.TraceEntropy.GibbsCubicTranslationEntropy.TraceDerivative.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -132,7 +132,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Quantum.Divergence.GibbsCubicTranslationEntropy
+    owner := `D5.S3.Quantum.Divergence.TraceEntropy.GibbsCubicTranslationEntropy
     definition := none
     coordinates := #[]
     readouts := #[{
@@ -176,9 +176,9 @@ def family : Registration arena.{u} (type_of% @hasDerivWithinAt_cubicEntropy.{u}
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     (@hasDerivWithinAt_cubicEntropy.{u}) (Realization signature) Unit Unit where
   unitName :=
-    `D5.S3.Quantum.Divergence.GibbsCubicTranslationEntropy.hasDerivWithinAt_cubicEntropy.audit
+    `D5.S3.Quantum.Divergence.TraceEntropy.GibbsCubicTranslationEntropy.hasDerivWithinAt_cubicEntropy.audit
   realizationName :=
-    `Reg.D5.S3.Quantum.Divergence.GibbsCubicTranslationEntropy.RightTraceDerivative.family
+    `Reg.D5.S3.Quantum.Divergence.TraceEntropy.GibbsCubicTranslationEntropy.RightTraceDerivative.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -194,7 +194,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Quantum.Divergence.GibbsCubicTranslationEntropy
+    owner := `D5.S3.Quantum.Divergence.TraceEntropy.GibbsCubicTranslationEntropy
     definition := none
     coordinates := #[]
     readouts := #[{
@@ -239,9 +239,9 @@ def family : Registration arena.{u} (type_of% @correction_spectral.{u}) where
 
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     (@correction_spectral.{u}) (Realization signature) Unit Unit where
-  unitName := `D5.S3.Quantum.Divergence.GibbsCubicTranslationEntropy.correction_spectral.audit
+  unitName := `D5.S3.Quantum.Divergence.TraceEntropy.GibbsCubicTranslationEntropy.correction_spectral.audit
   realizationName :=
-    `Reg.D5.S3.Quantum.Divergence.GibbsCubicTranslationEntropy.SpectralCorrection.family
+    `Reg.D5.S3.Quantum.Divergence.TraceEntropy.GibbsCubicTranslationEntropy.SpectralCorrection.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -257,7 +257,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Quantum.Divergence.GibbsCubicTranslationEntropy
+    owner := `D5.S3.Quantum.Divergence.TraceEntropy.GibbsCubicTranslationEntropy
     definition := none
     coordinates := #[]
     readouts := #[{
@@ -298,8 +298,8 @@ def family : Registration arena.{u} (type_of% @correction_eq_bkm.{u}) where
 
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     (@correction_eq_bkm.{u}) (Realization signature) Unit Unit where
-  unitName := `D5.S3.Quantum.Divergence.GibbsCubicTranslationEntropy.correction_eq_bkm.audit
-  realizationName := `Reg.D5.S3.Quantum.Divergence.GibbsCubicTranslationEntropy.BKMCorrection.family
+  unitName := `D5.S3.Quantum.Divergence.TraceEntropy.GibbsCubicTranslationEntropy.correction_eq_bkm.audit
+  realizationName := `Reg.D5.S3.Quantum.Divergence.TraceEntropy.GibbsCubicTranslationEntropy.BKMCorrection.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -315,7 +315,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Quantum.Divergence.GibbsCubicTranslationEntropy
+    owner := `D5.S3.Quantum.Divergence.TraceEntropy.GibbsCubicTranslationEntropy
     definition := none
     coordinates := #[]
     readouts := #[{
@@ -355,9 +355,9 @@ def family : Registration arena.{u} (type_of% @correction_nonneg.{u}) where
 
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     (@correction_nonneg.{u}) (Realization signature) Unit Unit where
-  unitName := `D5.S3.Quantum.Divergence.GibbsCubicTranslationEntropy.correction_nonneg.audit
+  unitName := `D5.S3.Quantum.Divergence.TraceEntropy.GibbsCubicTranslationEntropy.correction_nonneg.audit
   realizationName :=
-    `Reg.D5.S3.Quantum.Divergence.GibbsCubicTranslationEntropy.CorrectionNonnegative.family
+    `Reg.D5.S3.Quantum.Divergence.TraceEntropy.GibbsCubicTranslationEntropy.CorrectionNonnegative.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -373,7 +373,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Quantum.Divergence.GibbsCubicTranslationEntropy
+    owner := `D5.S3.Quantum.Divergence.TraceEntropy.GibbsCubicTranslationEntropy
     definition := none
     coordinates := #[]
     readouts := #[{
@@ -413,9 +413,9 @@ def family : Registration arena.{u} (type_of% @correction_eq_zero_iff_commute.{u
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     (@correction_eq_zero_iff_commute.{u}) (Realization signature) Unit Unit where
   unitName :=
-    `D5.S3.Quantum.Divergence.GibbsCubicTranslationEntropy.correction_eq_zero_iff_commute.audit
+    `D5.S3.Quantum.Divergence.TraceEntropy.GibbsCubicTranslationEntropy.correction_eq_zero_iff_commute.audit
   realizationName :=
-    `Reg.D5.S3.Quantum.Divergence.GibbsCubicTranslationEntropy.CorrectionCommutation.family
+    `Reg.D5.S3.Quantum.Divergence.TraceEntropy.GibbsCubicTranslationEntropy.CorrectionCommutation.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -431,7 +431,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Quantum.Divergence.GibbsCubicTranslationEntropy
+    owner := `D5.S3.Quantum.Divergence.TraceEntropy.GibbsCubicTranslationEntropy
     definition := none
     coordinates := #[]
     readouts := #[{
@@ -479,9 +479,9 @@ def family :
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     (@hasDerivWithinAt_cubicEntropy_spectral_pair.{u}) (Realization signature) Unit Unit where
   unitName :=
-    `D5.S3.Quantum.Divergence.GibbsCubicTranslationEntropy.hasDerivWithinAt_cubicEntropy_spectral_pair.audit
+    `D5.S3.Quantum.Divergence.TraceEntropy.GibbsCubicTranslationEntropy.hasDerivWithinAt_cubicEntropy_spectral_pair.audit
   realizationName :=
-    `Reg.D5.S3.Quantum.Divergence.GibbsCubicTranslationEntropy.RightSpectralDerivative.family
+    `Reg.D5.S3.Quantum.Divergence.TraceEntropy.GibbsCubicTranslationEntropy.RightSpectralDerivative.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -497,7 +497,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Quantum.Divergence.GibbsCubicTranslationEntropy
+    owner := `D5.S3.Quantum.Divergence.TraceEntropy.GibbsCubicTranslationEntropy
     definition := none
     coordinates := #[]
     readouts := #[{
@@ -560,9 +560,9 @@ def family : Registration arena.{u} (type_of% @hasDerivAt_cubicEntropy_spectral_
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     (@hasDerivAt_cubicEntropy_spectral_pair.{u}) (Realization signature) Unit Unit where
   unitName :=
-    `D5.S3.Quantum.Divergence.GibbsCubicTranslationEntropy.hasDerivAt_cubicEntropy_spectral_pair.audit
+    `D5.S3.Quantum.Divergence.TraceEntropy.GibbsCubicTranslationEntropy.hasDerivAt_cubicEntropy_spectral_pair.audit
   realizationName :=
-    `Reg.D5.S3.Quantum.Divergence.GibbsCubicTranslationEntropy.SpectralComparison.family
+    `Reg.D5.S3.Quantum.Divergence.TraceEntropy.GibbsCubicTranslationEntropy.SpectralComparison.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -578,7 +578,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Quantum.Divergence.GibbsCubicTranslationEntropy
+    owner := `D5.S3.Quantum.Divergence.TraceEntropy.GibbsCubicTranslationEntropy
     definition := none
     coordinates := #[]
     readouts := #[{
@@ -596,4 +596,4 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
 
 end SpectralComparison
 
-end Reg.D5.S3.Quantum.Divergence.GibbsCubicTranslationEntropy
+end Reg.D5.S3.Quantum.Divergence.TraceEntropy.GibbsCubicTranslationEntropy

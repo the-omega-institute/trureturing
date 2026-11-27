@@ -10,9 +10,9 @@ Use complex matrices on an arbitrary finite index type, ordinary trace, and real
 
 **Theorem 1.1 (Two-sided derivative).**
 
-Lean statement: `D5/S3/Quantum/Divergence/GibbsCubicTranslationEntropy.hasDerivAt_cubicEntropy`
+Lean statement: `D5/S3/Quantum/Divergence/TraceEntropy/GibbsCubicTranslationEntropy.hasDerivAt_cubicEntropy`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Divergence/GibbsCubicTranslationEntropy.hasDerivAt_cubicEntropy` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Divergence/TraceEntropy/GibbsCubicTranslationEntropy.hasDerivAt_cubicEntropy` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -24,9 +24,9 @@ For positive definite B and M the derivative at s = 0 is 9 Re Tr(BM²(log M − 
 
 **Theorem 1.2 (Right derivative on the positive boundary).**
 
-Lean statement: `D5/S3/Quantum/Divergence/GibbsCubicTranslationEntropy.hasDerivWithinAt_cubicEntropy`
+Lean statement: `D5/S3/Quantum/Divergence/TraceEntropy/GibbsCubicTranslationEntropy.hasDerivWithinAt_cubicEntropy`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Divergence/GibbsCubicTranslationEntropy.hasDerivWithinAt_cubicEntropy` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Divergence/TraceEntropy/GibbsCubicTranslationEntropy.hasDerivWithinAt_cubicEntropy` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -40,9 +40,9 @@ For positive definite B and positive semidefinite M the same coefficient is the 
 
 **Theorem 1.3 (Correction in a reference eigenbasis).**
 
-Lean statement: `D5/S3/Quantum/Divergence/GibbsCubicTranslationEntropy.correction_spectral`
+Lean statement: `D5/S3/Quantum/Divergence/TraceEntropy/GibbsCubicTranslationEntropy.correction_spectral`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Divergence/GibbsCubicTranslationEntropy.correction_spectral` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Divergence/TraceEntropy/GibbsCubicTranslationEntropy.correction_spectral` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -54,9 +54,9 @@ For Hermitian B and M, write bᵢ for the eigenvalues of B and U for M in the ch
 
 **Theorem 1.4 (BKM pairing of the logarithmic commutator).**
 
-Lean statement: `D5/S3/Quantum/Divergence/GibbsCubicTranslationEntropy.correction_eq_bkm`
+Lean statement: `D5/S3/Quantum/Divergence/TraceEntropy/GibbsCubicTranslationEntropy.correction_eq_bkm`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Divergence/GibbsCubicTranslationEntropy.correction_eq_bkm` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Divergence/TraceEntropy/GibbsCubicTranslationEntropy.correction_eq_bkm` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -68,9 +68,9 @@ For positive definite B and Hermitian M, set C = (log B)M − M(log B). Then J =
 
 **Theorem 1.5 (Nonnegative correction).**
 
-Lean statement: `D5/S3/Quantum/Divergence/GibbsCubicTranslationEntropy.correction_nonneg`
+Lean statement: `D5/S3/Quantum/Divergence/TraceEntropy/GibbsCubicTranslationEntropy.correction_nonneg`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Divergence/GibbsCubicTranslationEntropy.correction_nonneg` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Divergence/TraceEntropy/GibbsCubicTranslationEntropy.correction_nonneg` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -82,9 +82,9 @@ For positive definite B and Hermitian M, the spectral weights are nonnegative by
 
 **Theorem 1.6 (Equality and commutation).**
 
-Lean statement: `D5/S3/Quantum/Divergence/GibbsCubicTranslationEntropy.correction_eq_zero_iff_commute`
+Lean statement: `D5/S3/Quantum/Divergence/TraceEntropy/GibbsCubicTranslationEntropy.correction_eq_zero_iff_commute`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Divergence/GibbsCubicTranslationEntropy.correction_eq_zero_iff_commute` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Divergence/TraceEntropy/GibbsCubicTranslationEntropy.correction_eq_zero_iff_commute` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -100,9 +100,9 @@ Let mⱼ be the eigenvalues of M and let wᵢⱼ be the squared overlaps of the 
 
 **Theorem 1.7 (Spectral expression for the right derivative).**
 
-Lean statement: `D5/S3/Quantum/Divergence/GibbsCubicTranslationEntropy.hasDerivWithinAt_cubicEntropy_spectral_pair`
+Lean statement: `D5/S3/Quantum/Divergence/TraceEntropy/GibbsCubicTranslationEntropy.hasDerivWithinAt_cubicEntropy_spectral_pair`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Divergence/GibbsCubicTranslationEntropy.hasDerivWithinAt_cubicEntropy_spectral_pair` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Divergence/TraceEntropy/GibbsCubicTranslationEntropy.hasDerivWithinAt_cubicEntropy_spectral_pair` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -114,9 +114,9 @@ For positive definite B and positive semidefinite M, the right slope is 9 Σ πx
 
 **Theorem 1.8 (Exact Jensen deficit of the scalar slope).**
 
-Lean statement: `D5/S3/Quantum/Divergence/GibbsCubicTranslationEntropy.hasDerivAt_cubicEntropy_spectral_pair`
+Lean statement: `D5/S3/Quantum/Divergence/TraceEntropy/GibbsCubicTranslationEntropy.hasDerivAt_cubicEntropy_spectral_pair`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Divergence/GibbsCubicTranslationEntropy.hasDerivAt_cubicEntropy_spectral_pair` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Divergence/TraceEntropy/GibbsCubicTranslationEntropy.hasDerivAt_cubicEntropy_spectral_pair` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -134,13 +134,13 @@ In the occupation basis the correction uses the same Gibbs eigenvalue ratios tha
 
 ## References
 
-- Truth anchor: `D5/S3/Quantum/Divergence/GibbsCubicTranslationEntropy.correction_eq_bkm`
-- Truth anchor: `D5/S3/Quantum/Divergence/GibbsCubicTranslationEntropy.correction_eq_zero_iff_commute`
-- Truth anchor: `D5/S3/Quantum/Divergence/GibbsCubicTranslationEntropy.correction_nonneg`
-- Truth anchor: `D5/S3/Quantum/Divergence/GibbsCubicTranslationEntropy.correction_spectral`
-- Truth anchor: `D5/S3/Quantum/Divergence/GibbsCubicTranslationEntropy.hasDerivAt_cubicEntropy`
-- Truth anchor: `D5/S3/Quantum/Divergence/GibbsCubicTranslationEntropy.hasDerivAt_cubicEntropy_spectral_pair`
-- Truth anchor: `D5/S3/Quantum/Divergence/GibbsCubicTranslationEntropy.hasDerivWithinAt_cubicEntropy`
-- Truth anchor: `D5/S3/Quantum/Divergence/GibbsCubicTranslationEntropy.hasDerivWithinAt_cubicEntropy_spectral_pair`
-- Dependency: [D5/S3/Quantum/Divergence/TraceEntropyCalculus](TraceEntropyCalculus.md)
-- Dependency: [D5/S3/Quantum/Recovery/BKMSpectralVariance](../Recovery/BKMSpectralVariance.md)
+- Truth anchor: `D5/S3/Quantum/Divergence/TraceEntropy/GibbsCubicTranslationEntropy.correction_eq_bkm`
+- Truth anchor: `D5/S3/Quantum/Divergence/TraceEntropy/GibbsCubicTranslationEntropy.correction_eq_zero_iff_commute`
+- Truth anchor: `D5/S3/Quantum/Divergence/TraceEntropy/GibbsCubicTranslationEntropy.correction_nonneg`
+- Truth anchor: `D5/S3/Quantum/Divergence/TraceEntropy/GibbsCubicTranslationEntropy.correction_spectral`
+- Truth anchor: `D5/S3/Quantum/Divergence/TraceEntropy/GibbsCubicTranslationEntropy.hasDerivAt_cubicEntropy`
+- Truth anchor: `D5/S3/Quantum/Divergence/TraceEntropy/GibbsCubicTranslationEntropy.hasDerivAt_cubicEntropy_spectral_pair`
+- Truth anchor: `D5/S3/Quantum/Divergence/TraceEntropy/GibbsCubicTranslationEntropy.hasDerivWithinAt_cubicEntropy`
+- Truth anchor: `D5/S3/Quantum/Divergence/TraceEntropy/GibbsCubicTranslationEntropy.hasDerivWithinAt_cubicEntropy_spectral_pair`
+- Dependency: [D5/S3/Quantum/Divergence/TraceEntropyCalculus](../TraceEntropyCalculus.md)
+- Dependency: [D5/S3/Quantum/Recovery/BKMSpectralVariance](../../Recovery/BKMSpectralVariance.md)

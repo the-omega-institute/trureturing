@@ -1,6 +1,6 @@
-/- GID: D5/S3/Quantum/Divergence/GibbsCubicTranslationEntropy
+/- GID: D5/S3/Quantum/Divergence/TraceEntropy/GibbsCubicTranslationEntropy
    generality: G
-   mirror-B: D5/B/S3/Quantum/Divergence/GibbsCubicTranslationEntropy
+   mirror-B: D5/B/S3/Quantum/Divergence/TraceEntropy/GibbsCubicTranslationEntropy
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
@@ -20,7 +20,7 @@ noncomputable section
 open Matrix Filter
 open scoped BigOperators Topology ComplexOrder MatrixOrder Matrix.Norms.L2Operator
 
-namespace D5.S3.Quantum.Divergence.GibbsCubicTranslationEntropy
+namespace D5.S3.Quantum.Divergence.TraceEntropy.GibbsCubicTranslationEntropy
 
 variable {n : Type*} [Fintype n] [DecidableEq n]
 
@@ -746,4 +746,4 @@ theorem hasDerivAt_cubicEntropy_spectral_pair (B M : Matrix n n ℂ)
 #print axioms hasDerivAt_cubicEntropy_spectral_pair
 #print axioms hasDerivWithinAt_cubicEntropy_spectral_pair
 
-end D5.S3.Quantum.Divergence.GibbsCubicTranslationEntropy
+end D5.S3.Quantum.Divergence.TraceEntropy.GibbsCubicTranslationEntropy
