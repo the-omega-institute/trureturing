@@ -25,3 +25,4 @@ This construction shows that a strict cap below 2πc² on every fixed logarithmi
 - Truth anchor: `D5/S3/Analytic/Oscillation/MontgomeryCountSharpness.exists_sharp_count_discrepancy`
 - Dependency: [D5/S3/Analytic/Oscillation/MontgomeryCountUpper](MontgomeryCountUpper.md)
 - Dependency: [D5/S3/Analytic/Oscillation/SpectrumTwoTermCountAlignment](SpectrumTwoTermCountAlignment.md)
+- Dependency: [D5/S3/Fourier/Concentration/CauchyPairEnergy](../../Fourier/Concentration/CauchyPairEnergy.md)
