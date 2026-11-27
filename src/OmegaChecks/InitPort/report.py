@@ -180,6 +180,15 @@ def check_strict_longest_matches(product, stage):
     return {(owner, name): (target, witness) for owner, name, target, witness in json.loads(output.read_text())}
 
 
+def check_strict_range_equivalences(product, stage):
+    lib = product / "lib"
+    if not (lib / "OmegaInit/Data/Range/Polymorphic/NatLemmas.olean").is_file():
+        return {}
+    output = stage / "strict-range-index.json"
+    subprocess.run(["lake", "env", "lean", "--run", HERE / "RangeIndexCheck.lean", lib, output], cwd=ROOT, check=True)
+    return {(owner, name): (condition, proof) for owner, name, condition, proof in json.loads(output.read_text())}
+
+
 def report(product, require_complete=False):
     with tempfile.TemporaryDirectory(dir=product) as work:
         stage = Path(work)
@@ -197,23 +206,25 @@ def report(product, require_complete=False):
                 owners[name].append(owner)
         strict_choices = check_strict_reference_choices(product, stage, attempts)
         strict_matches = check_strict_longest_matches(product, stage)
-        pending_matches = strict_matches.copy()
+        strict_ranges = check_strict_range_equivalences(product, stage)
+        pending = {site: (*result, "strictLogicalConsequenceWitness") for site, result in strict_matches.items()}
+        pending.update({site: (*result, "strictEquivalenceWitness") for site, result in strict_ranges.items()})
         for row in official["declarations"]:
             site = (row["module"], row["name"])
             witness = strict_choices.get(site)
             if witness:
                 row["strictSelectionWitness"] = witness
                 row["strictImpliesAxiom"] = "Classical.choice.{1}"
-            if implication := pending_matches.pop(site, None):
-                target, proof = implication
+            if consequence := pending.pop(site, None):
+                target, proof, column = consequence
                 if row.get("logicalConsequence") != target or row.get("requiredBehavior") or row["kind"] != "theorem":
                     raise ValueError(f"official logical consequence differs from strict proof for {site}")
                 row["strictLogicalConsequence"] = target
-                row["strictLogicalConsequenceWitness"] = proof
-        if pending_matches:
-            raise ValueError(f"missing official definition sites for strict consequences: {sorted(pending_matches)}")
+                row[column] = proof
+        if pending:
+            raise ValueError(f"missing official definition sites for strict consequences: {sorted(pending)}")
         reduction_count, unresolved = check_coverage(official)
-        if strict_choices or strict_matches:
+        if strict_choices or strict_matches or strict_ranges:
             inventory.write_text(json.dumps(official, ensure_ascii=False, separators=(",", ":")) + "\n")
         with (product / "interface-rejections.jsonl").open() as f:
             rejected = dict(map(json.loads, f))
@@ -234,7 +245,7 @@ def report(product, require_complete=False):
                              "unchangedTypeAxioms", "unsafePackedObservation", "strictImpliesAxiom", "strictSelectionWitness",
                              "unconditionalLogicalConsequence", "unconditionalLogicalConsequenceWitness",
                              "specializedEndpointType", "strictConstructorIff", "formationArgument", "transportPathType",
-                             "strictLogicalConsequence", "strictLogicalConsequenceWitness"])
+                             "strictLogicalConsequence", "strictLogicalConsequenceWitness", "strictEquivalenceWitness"])
             for row in official["declarations"]:
                 if row["matchingNameAndModule"] or row["kind"] == "axiom":
                     continue
@@ -274,7 +285,8 @@ def report(product, require_complete=False):
                                  row.get("unconditionalLogicalConsequence"), row.get("unconditionalLogicalConsequenceWitness"),
                                  row.get("specializedEndpointType"), "true" if row.get("strictConstructorIff") else "",
                                  row.get("formationArgument"), row.get("transportPathType"),
-                                 row.get("strictLogicalConsequence"), row.get("strictLogicalConsequenceWitness")])
+                                 row.get("strictLogicalConsequence"), row.get("strictLogicalConsequenceWitness"),
+                                 row.get("strictEquivalenceWitness")])
         reductions = stage / "init-public-reductions.tsv"
         with reductions.open("w", newline="") as f:
             writer = csv.writer(f, delimiter="\t", lineterminator="\n")

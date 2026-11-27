@@ -16,6 +16,8 @@ meta import OmegaChecks.InitInventory.Reductions
 import Lean.Replay
 import all Lean.Util.CollectAxioms
 import all Lean.Environment
+meta import OmegaChecks.InitInventory.RangeIndex
+public import OmegaChecks.InitInventory.RangeIndex
 public import OmegaChecks.InitInventory.Reductions
 public import OmegaChecks.InitInventory.TransformerLaws
 public import OmegaChecks.InitInventory.Traversal
@@ -140,6 +142,8 @@ private def logicalConsequence? (owner name : Name) : Option (Name × Name) := d
     | `Init.Classical, ``Classical.skolem => return (result, ``OmegaChecks.InitBoundaries.PropositionalChoice.ofSkolem)
     | `Init.Prelude, ``Pi.instNonempty => return (result, ``OmegaChecks.InitBoundaries.PropositionalChoice.ofProducts)
     | _, _ => pure ()
+  if owner == `Init.Data.Range.Polymorphic.NatLemmas then
+    if let some result := OmegaChecks.InitBoundaries.RangeIndex.equivalences.lookup name then return result
   if owner == `Init.System.ST || owner == `Init.Control.StateRef || owner == `Init.System.Promise then
     if let some (_, _, witness) := OmegaChecks.InitBoundaries.ReferenceSelection.witnesses.find?
         (fun entry => entry.1 == owner && entry.2.1 == name) then
