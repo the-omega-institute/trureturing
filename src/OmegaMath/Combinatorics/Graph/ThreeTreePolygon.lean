@@ -295,12 +295,6 @@ private theorem mem_join {A C t : ℝ} :
       (-x₂, -y₂, -1), ⟨by simpa using h₂, rfl⟩, p, 1 - p, hp, by linarith, by ring, ?_⟩
     ext <;> change _ * _ + _ * _ = _ <;> ring
 
-/-- The initial residuals divide the root defect equally. -/
-theorem initial {t : ℝ} (ht : |t| ≤ 1) : InPolytope (t / 3) (t / 3) t := by
-  rw [abs_le] at ht
-  exact ⟨(t + 1) / 2, 1 / 3, 1 / 3, 1 / 3, 1 / 3, by linarith [ht.1],
-    by linarith [ht.2], root, root, by ring, by ring, by ring⟩
-
 /-- A zero-defect parent obtained by adjoining a copy of the second vertex.
 The residual on the cloned edge is set by the potential of the virtual copy. -/
 theorem padded {x : ℝ} (hx : |x| ≤ 72537/50000) :

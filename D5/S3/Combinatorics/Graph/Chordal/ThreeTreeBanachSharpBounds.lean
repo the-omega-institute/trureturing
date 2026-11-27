@@ -41,10 +41,6 @@ private theorem clamp_between {n : ℕ} (hn : 0 < n) {i j : ℕ} (hij : i ≤ j)
   · right
     refine ⟨h, ?_, ?_⟩ <;> dsimp [clamp] <;> omega
 
-private theorem skew_diag (g : α → α → E) (hg : ∀ i j, g j i = -g i j) (i : α) : g i i = 0 := by
-  have h : (2 : ℝ) • g i i = 0 := by rw [two_smul, ← sub_neg_eq_add, ← hg i i, sub_self]
-  exact (smul_eq_zero.mp h).resolve_left (by norm_num)
-
 /-- Integrate the adjacent gains, then add the sum of the local corrections on the prefix. -/
 noncomputable def pathPowerThree_causal_potential (n : ℕ) (g : Fin n → Fin n → E) (i : Fin n) : E :=
   let c := clamp (Nat.zero_lt_of_lt i.isLt)
@@ -68,19 +64,23 @@ theorem pathPowerThree_causal_potential_error (n : ℕ) (g : Fin n → Fin n →
     let I := integrate fun i => g (c i) (c (i+1))
     let f (i j : ℕ) := g (c i) (c j) - (I j - I i)
     have hstep (i : ℕ) : f i (i+1) = 0 := by simp [f, I, integrate]
+    have hdiag (i : Fin n) : g i i = 0 := by
+      have hz := eq_neg_iff_add_eq_zero.mp (hg i i)
+      exact (smul_eq_zero.mp (by simpa only [two_smul] using hz : (2 : ℝ) • g i i = 0)).resolve_left
+        (by norm_num)
     have hflat {i j k : ℕ} (hij : i ≤ j) (hjk : j ≤ k) (hik : k ≤ i+3) :
         ‖f i j + f j k - f i k‖ ≤ ε := by
       rw [show f i j + f j k - f i k = g (c i) (c j) + g (c j) (c k) - g (c i) (c k) by
         dsimp only [f]; abel]
       rcases clamp_between hn hij (by omega) with h | h₁
       · change c i = c j at h
-        simpa [h, skew_diag g hg] using hε
+        simpa [h, hdiag] using hε
       rcases clamp_between hn hjk (by omega) with h | h₂
       · change c j = c k at h
-        simpa [h, skew_diag g hg] using hε
+        simpa [h, hdiag] using hε
       rcases clamp_between hn (hij.trans hjk) hik with h | h₃
       · change c i = c k at h
-        simpa [← h, hg (c i) (c j), skew_diag g hg] using hε
+        simpa [← h, hg (c i) (c j), hdiag] using hε
       exact ht _ _ _ h₁ h₂ h₃
     let a (i : ℕ) := f i (i+2)
     let b (i : ℕ) := f i (i+3)
@@ -704,28 +704,22 @@ end ChordalUpper
 
 section ExtremalConstants
 
-private theorem coefficient_upper (n : ℕ) : BanachPathPower.banachCoefficient n 3 ≤ 4/3 := by
-  unfold BanachPathPower.banachCoefficient
-  apply csInf_le ⟨0, fun c hc => hc.1⟩
-  refine ⟨by norm_num, ?_⟩
-  intro E _ _ _ g hg ht
-  simpa only [mul_one] using pathPowerThree_banach_upper_four_thirds n g 1 zero_le_one hg ht
-
 /-- The supremum of the width-three path coefficients is attained as an asymptotic bound. -/
 theorem pathPowerThree_banach_sup_four_thirds :
     (⨆ n : ℕ, BanachPathPower.banachCoefficient n 3) = (4/3 : ℝ) := by
+  have hUpper (n : ℕ) : BanachPathPower.banachCoefficient n 3 ≤ 4/3 := by
+    unfold BanachPathPower.banachCoefficient
+    apply csInf_le ⟨0, fun c hc => hc.1⟩
+    refine ⟨by norm_num, ?_⟩
+    intro E _ _ _ g hg ht
+    simpa only [mul_one] using pathPowerThree_banach_upper_four_thirds n g 1 zero_le_one hg ht
   have hb : BddAbove (Set.range fun n : ℕ => BanachPathPower.banachCoefficient n 3) :=
-    ⟨4/3, by rintro _ ⟨n, rfl⟩; exact coefficient_upper n⟩
+    ⟨4/3, by rintro _ ⟨n, rfl⟩; exact hUpper n⟩
   have hlim : Filter.Tendsto (fun n => BanachPathPower.banachCoefficient n 3) Filter.atTop
       (nhds (4/3 : ℝ)) := by
     simpa only [Nat.cast_ofNat, show (2 - 2 / (3 : ℝ)) = 4/3 by norm_num] using
       BanachPathPower.pathPower_banach_limit_tendsto 3 (by decide)
-  exact (ciSup_le coefficient_upper).antisymm (le_of_tendsto' hlim fun n => le_ciSup hb n)
-
-private theorem path_chordal (n : ℕ) : (pathPowerThree n).IsChordal := by
-  obtain ⟨l, r, _, h, hi⟩ := BanachPathPower.pathPower_isIntervalGraph n 3
-  exact (intervalGraph_isChordal_and_two_approximate_gain_potential (H := Multiplicative ℝ)
-    l r h hi (fun _ _ => 1) 0 le_rfl (by simp) (by simp)).1
+  exact (ciSup_le hUpper).antisymm (le_of_tendsto' hlim fun n => le_ciSup hb n)
 
 private theorem path_clique {n : ℕ} {C : Set (Fin n)} (hC : (pathPowerThree n).IsClique C) :
     C.ncard ≤ 4 := by
@@ -780,7 +774,10 @@ theorem cliqueFour_banach_coefficient_bounds :
   intro n
   unfold BanachPathPower.banachCoefficient
   apply csInf_le ⟨0, fun r hr => hr.1⟩
-  exact ⟨hc.1, hc.2 (Fin n) (pathPowerThree n) (path_chordal n) (fun _ => path_clique)⟩
+  obtain ⟨l, r, _, h, hi⟩ := BanachPathPower.pathPower_isIntervalGraph n 3
+  have hChordal := (intervalGraph_isChordal_and_two_approximate_gain_potential
+    (H := Multiplicative ℝ) l r h hi (fun _ _ => 1) 0 le_rfl (by simp) (by simp)).1
+  exact ⟨hc.1, hc.2 (Fin n) (pathPowerThree n) hChordal (fun _ => path_clique)⟩
 
 end ExtremalConstants
 
