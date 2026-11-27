@@ -6,6 +6,34 @@ public import Init.Data.List.Sort.Impl
 
 namespace OmegaChecks.Interface.Equations
 
+public theorem List.filterMapTR {α : Type u} {β : Type v} (f : α → Option β) (xs : List α) :
+    _root_.List.filterMap f xs = _root_.List.filterMapTR f xs := by
+  rw [_root_.List.filterMap_eq_filterMapTR]
+
+public theorem List.mapTR {α : Type u} {β : Type v} (f : α → β) (xs : List α) :
+    _root_.List.map f xs = _root_.List.mapTR f xs := by
+  rw [_root_.List.map_eq_mapTR]
+
+public theorem List.filterTR {α : Type u} (p : α → Bool) (xs : List α) :
+    _root_.List.filter p xs = _root_.List.filterTR p xs := by
+  rw [_root_.List.filter_eq_filterTR]
+
+public theorem List.replicateTR {α : Type u} (n : Nat) (a : α) :
+    _root_.List.replicate n a = _root_.List.replicateTR n a := by
+  rw [_root_.List.replicate_eq_replicateTR]
+
+public theorem List.leftpadTR {α : Type u} (n : Nat) (a : α) (xs : List α) :
+    _root_.List.leftpad n a xs = _root_.List.leftpadTR n a xs := by
+  rw [_root_.List.leftpad_eq_leftpadTR]
+
+public theorem List.range'TR (start count step : Nat) :
+    _root_.List.range' start count step = _root_.List.range'TR start count step := by
+  rw [_root_.List.range'_eq_range'TR]
+
+public theorem List.intersperseTR {α : Type u} (separator : α) (xs : List α) :
+    _root_.List.intersperse separator xs = _root_.List.intersperseTR separator xs := by
+  rw [_root_.List.intersperse_eq_intersperseTR]
+
 public theorem List.setTR {α : Type u} (xs : List α) (n : Nat) (a : α) :
     _root_.List.set xs n a = _root_.List.setTR xs n a := by
   rw [_root_.List.set_eq_setTR]

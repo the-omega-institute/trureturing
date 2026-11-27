@@ -6,6 +6,54 @@ import all Init.Data.List.Impl
 
 namespace OmegaChecks.InitPort.Alternatives
 
+@[expose] public def List.filterMapTR : type_of% @_root_.List.filterMapTR := @_root_.List.filterMap
+
+public theorem List.filterMap_eq_filterMapTR : @_root_.List.filterMap = @List.filterMapTR := rfl
+
+@[expose] public def List.mapTR : type_of% @_root_.List.mapTR := @_root_.List.map
+
+public theorem List.map_eq_mapTR : @_root_.List.map = @List.mapTR := rfl
+
+@[expose] public def List.filterTR : type_of% @_root_.List.filterTR := @_root_.List.filter
+
+public theorem List.filter_eq_filterTR : @_root_.List.filter = @List.filterTR := rfl
+
+@[expose] public def List.replicateTR : type_of% @_root_.List.replicateTR := @_root_.List.replicate
+
+public theorem List.replicate_eq_replicateTR : @_root_.List.replicate = @List.replicateTR := rfl
+
+@[expose] public def List.leftpadTR : type_of% @_root_.List.leftpadTR := @_root_.List.leftpad
+
+public theorem List.leftpad_eq_leftpadTR : @_root_.List.leftpad = @List.leftpadTR := rfl
+
+@[expose] public def List.range'TR : type_of% @_root_.List.range'TR := @_root_.List.range'
+
+public theorem List.range'_eq_range'TR : @_root_.List.range' = @List.range'TR := rfl
+
+@[expose] public def List.intersperseTR : type_of% @_root_.List.intersperseTR := @_root_.List.intersperse
+
+public theorem List.intersperse_eq_intersperseTR : @_root_.List.intersperse = @List.intersperseTR := rfl
+
+
+public theorem _root_.OmegaChecks.InitPort.AlternativeEquations.List.mapTR.eq_1 {α : Type u} {β : Type v} (f : α → β) (xs : List α) :
+    List.mapTR f xs = _root_.List.mapTR.loop f xs [] := (_root_.List.mapTR_loop_eq (bs := []) (as := xs) (f := f)).symm
+
+public theorem _root_.OmegaChecks.InitPort.AlternativeEquations.List.filterTR.eq_1 {α : Type u} (p : α → Bool) (xs : List α) :
+    List.filterTR p xs = _root_.List.filterTR.loop p xs [] := (_root_.List.filterTR_loop_eq (bs := []) (as := xs) (p := p)).symm
+
+public theorem _root_.OmegaChecks.InitPort.AlternativeEquations.List.leftpadTR.eq_1 {α : Type u} (n : Nat) (a : α) (xs : List α) :
+    List.leftpadTR n a xs = _root_.List.replicateTR.loop a (n - xs.length) xs :=
+  (_root_.List.replicateTR_loop_eq _).symm
+
+public theorem _root_.OmegaChecks.InitPort.AlternativeEquations.List.intersperseTR.eq_3 {α : Type u} (sep x y : α) (xs : List α) :
+    List.intersperseTR sep (x :: y :: xs) = x :: sep :: y :: xs.foldr (fun a r => sep :: a :: r) [] := by
+  change _root_.List.intersperse sep (x :: y :: xs) = _
+  rw [_root_.List.intersperse] <;> try (intro h; cases h)
+  apply congrArg (fun l => x :: sep :: l)
+  induction xs generalizing y with
+  | nil => rfl
+  | cons z zs ih => exact congrArg (fun l => y :: sep :: l) (ih z)
+
 @[expose] public def List.setTR : type_of% @_root_.List.setTR := @_root_.List.set
 
 public theorem List.set_eq_setTR : @_root_.List.set = @List.setTR := rfl
