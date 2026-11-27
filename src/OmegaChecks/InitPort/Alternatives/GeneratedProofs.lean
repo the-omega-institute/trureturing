@@ -7,6 +7,7 @@ import all Init.Data.Char.Ordinal
 import all Init.Data.Iterators.Consumers.Access
 import all Init.Data.Iterators.Combinators.Monadic.Take
 import all Init.Data.List.BasicAux
+import all Init.Data.List.Control
 import all Init.Data.List.Count
 import all Init.Data.List.Erase
 import all Init.Data.List.Impl
@@ -554,5 +555,17 @@ public theorem Array.eraseIdx.eq_def :
   next h =>
     rw [_root_.List.eraseIdx_toArray, nativePop]
     exact congrArg List.toArray (lastErase xs i bound h)
+
+/-- Dependent Boolean elimination whose constant-motive form reduces to the public monadic conditional. -/
+public def List.anyM.match_1 (motive : Bool → Sort u) (b : Bool)
+    (whenTrue : Unit → motive true) (whenFalse : Unit → motive false) : motive b :=
+  if h : b = true then cast (congrArg motive h.symm) (whenTrue ())
+  else cast (congrArg motive (Bool.eq_false_iff.mpr h).symm) (whenFalse ())
+
+example (motive : Bool → Sort u) (b : Bool) (whenTrue : Unit → motive true)
+    (whenFalse : Unit → motive false) :
+    List.anyM.match_1 motive b whenTrue whenFalse =
+      (private_decl% @_root_.List.anyM.match_1) motive b whenTrue whenFalse := by
+  cases b <;> rfl
 
 end OmegaChecks.InitPort.Alternatives

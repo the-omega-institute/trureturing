@@ -2,6 +2,7 @@ module
 public import OmegaChecks.InitPort.Alternatives.BoolSearch
 public import Init.Data.List.Impl
 public import Init.Data.List.Sort.Impl
+import all Init.Data.List.Control
 
 /-! Pointwise computation of the list implementations at their pinned entry points. -/
 
@@ -21,6 +22,17 @@ public theorem List.allM {m : Type → Type u} [Monad m] {α : Type v} (p : α �
   | cons a xs ih =>
     rw [OmegaChecks.InitPort.Alternatives.List.allM_cons, _root_.List.allM_cons, ih]
 
+public theorem List.findM? {m : Type → Type u} [Monad m] {α : Type} (p : α → m Bool) (xs : List α) :
+    OmegaChecks.InitPort.Alternatives.List.findM? p xs = _root_.List.findM? p xs := by
+  induction xs with
+  | nil => rw [_root_.List.findM?]; rfl
+  | cons a as ih =>
+    rw [_root_.List.findM?]
+    change (p a >>= fun b => if b then pure (some a) else OmegaChecks.InitPort.Alternatives.List.findM? p as) = _
+    rw [ih]
+    apply congrArg (fun k => p a >>= k)
+    funext b
+    cases b <;> rfl
 
 public theorem List.appendTR {α : Type u} (xs ys : List α) :
     _root_.List.append xs ys = _root_.List.appendTR xs ys :=

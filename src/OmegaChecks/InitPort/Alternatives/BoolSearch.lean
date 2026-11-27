@@ -16,6 +16,10 @@ namespace OmegaChecks.InitPort.Alternatives
     {m : Type → Type u} [Monad m] {α : Type v} (p : α → m Bool) : List α → m Bool :=
   List.rec (pure true) (fun a _ tail => p a >>= fun b => if b then tail else pure false)
 
+@[expose, implemented_by _root_.List.findM?] public noncomputable def List.findM?
+    {m : Type → Type u} [Monad m] {α : Type} (p : α → m Bool) : List α → m (Option α) :=
+  List.rec (pure none) (fun a _ tail => p a >>= fun b => if b then pure (some a) else tail)
+
 public theorem List.anyM_cons [Monad m] {p : α → m Bool} {x : α} {xs : List α} :
     List.anyM p (x :: xs) = (do if ← p x then return true else List.anyM p xs) := rfl
 

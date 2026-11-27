@@ -169,7 +169,7 @@ public theorem List.findM?_pure : type_of% @_root_.List.findM?_pure := by
   induction xs with
   | nil => rfl
   | cons x xs ih =>
-    rw [List.findM?, pure_bind, List.find?_cons]
+    rw [_root_.List.findM?, pure_bind, List.find?_cons]
     cases p x <;> first | rfl | exact ih
 
 public theorem List.ofFnM_zero : type_of% @_root_.List.ofFnM_zero := by

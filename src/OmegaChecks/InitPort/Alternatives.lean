@@ -165,10 +165,11 @@ public def alternativeType? (alternatives : NameMap ConstantInfo) (official : Co
 The caller checks each candidate against the full original type in the target kernel. -/
 public def alternativeBody? (alternatives : NameMap ConstantInfo) (official : ConstantInfo) : Option Expr := do
   let ci ← alternatives.find? official.name <|> do
-    guard official.isTheorem
     let user ← privateToUserName? official.name
+    let boolMatcher := official.name == mkPrivateNameCore `Init.Data.List.Control `List.anyM.match_1
+    guard (official.isTheorem || boolMatcher)
     let ci ← alternatives.find? user
-    guard (ci.isTheorem && ci.numLevelParams == official.numLevelParams)
+    guard (ci.isTheorem == official.isTheorem && ci.numLevelParams == official.numLevelParams)
     guard (ci.type.instantiateLevelParams ci.levelParams (official.levelParams.map Level.param) == official.type)
     return ci
   guard (ci.numLevelParams == official.numLevelParams)
