@@ -357,6 +357,20 @@ private theorem indexDecisionCongr [le : LE β] (d₁ d₂ : DecidableLE β)
     · simp only [_root_.List.minIdxOn.go, ite_eq_right keep]
       exact ih y j (j+1)
 
+public theorem List.minIdxOn.go.congr_simp.{u, v} :
+    type_of% (private_decl% @_root_.List.minIdxOn.go.congr_simp.{u, v}) := by
+  intro β α le d₁ d₂ f _ rfl x _ rfl i _ rfl j _ rfl xs _ rfl
+  exact indexDecisionCongr d₁ d₂ f xs x i j
+
+public theorem List.combineMinIdxOn.congr_simp.{u, v} :
+    type_of% (private_decl% @_root_.List.combineMinIdxOn.congr_simp.{u, v}) := by
+  intro β α le d₁ d₂ f _ rfl xs _ rfl ys _ rfl i _ rfl j _ rfl hi hj
+  letI := d₁
+  unfold _root_.List.combineMinIdxOn
+  by_cases keep : f xs[i] ≤ f ys[j]
+  · rw [ite_eq_left keep, ite_eq_left keep]
+  · rw [ite_eq_right keep, ite_eq_right keep]
+
 public theorem List.minIdxOn.congr_simp : type_of% @_root_.List.minIdxOn.congr_simp := by
   intro β α le d₁ d₂ f g rfl xs ys rfl nonempty
   cases xs with

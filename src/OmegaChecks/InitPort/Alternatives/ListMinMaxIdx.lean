@@ -23,6 +23,18 @@ public theorem List.minIdxOn_eq_go_drop._proof_1_14.{u, v} :
   intro _ _ _ _ _ _ _ _ _ _ _ hk denied
   exact denied (Nat.succ_lt_succ hk)
 
+public theorem List.minIdxOn_append_aux.{u, v} :
+    type_of% (private_decl% @_root_.List.minIdxOn_append_aux.{u, v}) := by
+  intro β α _ _ _ xs ys f hxs hys
+  unfold _root_.List.combineMinIdxOn
+  rw [_root_.List.getElem_minIdxOn, _root_.List.getElem_minIdxOn]
+  exact _root_.List.minIdxOn_append hxs hys
+
+public theorem List.minIdxOn_cons_aux.{u, v} :
+    type_of% (private_decl% @_root_.List.minIdxOn_cons_aux.{u, v}) := by
+  intro β α _ _ _ x xs f hxs
+  exact (private_decl% _root_.List.minIdxOn_append_aux) (_root_.List.cons_ne_nil x []) hxs
+
 public theorem List.minIdxOn_eq_zero_iff : type_of% @_root_.List.minIdxOn_eq_zero_iff := by
   intro β α _ _ _ xs f nonempty
   cases xs with

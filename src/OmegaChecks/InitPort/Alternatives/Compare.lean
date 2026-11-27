@@ -144,9 +144,8 @@ private theorem consArrayAt (a : α) (xs : List α) (i : Nat)
     (a :: xs).toArray[i+1] = xs.toArray[i] := by
   rw [List.getElem_toArray, List.getElem_toArray, List.getElem_cons_succ]
 
-private theorem compareGoSucc {α : Type u} {cmp : α → α → Ordering} {x y : α} {xs ys : List α} {i : Nat} :
-    Array.compareLex.go cmp (x :: xs).toArray (y :: ys).toArray (i+1) =
-      Array.compareLex.go cmp xs.toArray ys.toArray i := by
+public theorem Array.compareLex.go_succ : type_of% (private_decl% @_root_.Array.compareLex.go_succ) := by
+  intro α cmp x y xs ys i
   induction i using Array.compareLex.go.induct cmp xs.toArray ys.toArray
   all_goals
     rw [Array.compareLex.go.eq_1 cmp (x :: xs).toArray (y :: ys).toArray,
@@ -189,7 +188,7 @@ public theorem List.compareLex_eq_compareLex_toArray : type_of% @_root_.List.com
         _root_.List.compareLex_cons_cons]
       cases cmp x y with
       | lt | gt => rfl
-      | eq => exact (ih (ys := ys)).trans compareGoSucc.symm
+      | eq => exact (ih (ys := ys)).trans (private_decl% _root_.Array.compareLex.go_succ).symm
 
 public theorem isLE_compareOfLessAndEq : type_of% @_root_.isLE_compareOfLessAndEq := by
   intro α lt le decLt decLe decEq antisymm notLE total x y
