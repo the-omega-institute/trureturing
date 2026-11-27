@@ -23,6 +23,11 @@ internal sealed class PowerResidueRecursionFourDocument : IScribeDocumentDefinit
                     + "In the displayed formula, ite selects the second argument when "
                     + "the first argument holds and the third otherwise.",
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
+            Node("seq_pos", "Positivity of every term",
+                Disp(Seq(Bound(N()), D(0), Sp, Lt, Sp, A(N()))),
+                "Strong induction uses the positive initial value and the sum of two "
+                    + "positive recursive terms at every nonzero index.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
             Node("seq_eq_one", "Value one", LevelFormula(1, Equal(N(), D(0))),
                 "Strong induction proves every term positive. At a nonzero index the "
                     + "sum of two positive recursive terms is at least two.",

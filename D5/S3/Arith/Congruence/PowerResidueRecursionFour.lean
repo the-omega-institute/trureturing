@@ -28,7 +28,7 @@ private theorem seq_rec {n : ℕ} (hn : n ≠ 0) :
 
 private theorem seq_one : seq 1 = 2 := by norm_num [seq_rec, seq_zero]
 
-private theorem seq_pos (n : ℕ) : 0 < seq n := by
+theorem seq_pos (n : ℕ) : 0 < seq n := by
   induction n using Nat.strong_induction_on with
   | h n ih =>
     by_cases hn : n = 0

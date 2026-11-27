@@ -16,7 +16,21 @@ $$\forall n: \mathbb{N}, \operatorname{seq}\left(n\right) = \operatorname{ite}\l
 
 The zero case is selected before either recursive call. At a positive index both remainders are strictly smaller than that index, so well-founded recursion defines the sequence on every natural number. In the displayed formula, ite selects the second argument when the first argument holds and the third otherwise.
 
-**Theorem 1.2 (Value one).**
+**Theorem 1.2 (Positivity of every term).**
+
+$$\forall n: \mathbb{N}, 0 < \operatorname{seq}\left(n\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Congruence/PowerResidueRecursionFour.seq_pos` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* OEIS Foundation Inc. (2024). *OEIS A374911*. URL: <https://oeis.org/A374911>.
+
+*Commentary.*
+
+Strong induction uses the positive initial value and the sum of two positive recursive terms at every nonzero index.
+
+**Theorem 1.3 (Value one).**
 
 $$\forall n: \mathbb{N}, \operatorname{seq}\left(n\right) = 1 \Leftrightarrow (n = 0)$$
 
@@ -30,7 +44,7 @@ $$\forall n: \mathbb{N}, \operatorname{seq}\left(n\right) = 1 \Leftrightarrow (n
 
 Strong induction proves every term positive. At a nonzero index the sum of two positive recursive terms is at least two.
 
-**Theorem 1.3 (Value two).**
+**Theorem 1.4 (Value two).**
 
 $$\forall n: \mathbb{N}, \operatorname{seq}\left(n\right) = 2 \Leftrightarrow (n = 1)$$
 
@@ -44,7 +58,7 @@ $$\forall n: \mathbb{N}, \operatorname{seq}\left(n\right) = 2 \Leftrightarrow (n
 
 Both recursive terms must equal one, making the index divide both two to the index and three to the index. These powers are coprime, so the index is one.
 
-**Theorem 1.4 (Value three).**
+**Theorem 1.5 (Value three).**
 
 $$\forall n: \mathbb{N}, \operatorname{seq}\left(n\right) = 3 \Leftrightarrow (\exists k: \mathbb{N}, 0 < k \land n = 2^{k})$$
 
@@ -60,7 +74,7 @@ $$\forall n: \mathbb{N}, \operatorname{seq}\left(n\right) = 3 \Leftrightarrow (\
 
 A least-prime-divisor and multiplicative-order argument excludes two to the index having remainder one at every index greater than one. Thus the left recursive term must be one, forcing a power of two. Euler's theorem supplies the converse for every positive exponent. The modular exclusion is also proved in the A036236 comments.
 
-**Theorem 1.5 (Value four).**
+**Theorem 1.6 (Value four).**
 
 $$\forall n: \mathbb{N}, \operatorname{seq}\left(n\right) = 4 \Leftrightarrow (n = 3 \lor n = 9)$$
 
@@ -83,3 +97,4 @@ Values one and two for the left recursive term are impossible. The right term is
 - Truth anchor: `D5/S3/Arith/Congruence/PowerResidueRecursionFour.seq_eq_one`
 - Truth anchor: `D5/S3/Arith/Congruence/PowerResidueRecursionFour.seq_eq_three`
 - Truth anchor: `D5/S3/Arith/Congruence/PowerResidueRecursionFour.seq_eq_two`
+- Truth anchor: `D5/S3/Arith/Congruence/PowerResidueRecursionFour.seq_pos`

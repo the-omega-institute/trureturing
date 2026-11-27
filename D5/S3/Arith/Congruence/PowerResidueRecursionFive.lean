@@ -42,22 +42,6 @@ private theorem valueFive_characterization (n : ℕ) : seq n = 5 ↔
     3 ^ n % n = 1 ∧ ∃ k : ℕ, 0 < k ∧ 2 ^ n % n = 2 ^ k := by
   have at_zero := (seq_eq_one 0).mpr rfl
   have at_one := (seq_eq_two 1).mpr rfl
-  have lower_bound (m : ℕ) : min 3 (m + 1) ≤ seq m := by
-    induction m using Nat.strong_induction_on with
-    | h m ih =>
-      by_cases hm : m = 0
-      · subst m
-        simp [at_zero]
-      by_cases hm₁ : m = 1
-      · subst m
-        simp [at_one]
-      have hm_pos := Nat.pos_of_ne_zero hm
-      have left := ih _ (Nat.mod_lt (2 ^ m) hm_pos)
-      have right := ih _ (Nat.mod_lt (3 ^ m) hm_pos)
-      have hrec : seq m = seq (2 ^ m % m) + seq (3 ^ m % m) := by
-        conv_lhs => rw [seq.eq_def, dite_eq_right hm]
-      have hne : seq m ≠ 2 := fun h => hm₁ ((seq_eq_two m).mp h)
-      omega
   constructor
   · intro hs
     have hn : 1 < n := by
@@ -66,8 +50,8 @@ private theorem valueFive_characterization (n : ℕ) : seq n = 5 ↔
       rcases this with rfl | rfl <;> omega
     have hrec : seq n = seq (2 ^ n % n) + seq (3 ^ n % n) := by
       conv_lhs => rw [seq.eq_def, dite_eq_right (by omega : n ≠ 0)]
-    have left := lower_bound (2 ^ n % n)
-    have right := lower_bound (3 ^ n % n)
+    have left := seq_pos (2 ^ n % n)
+    have right := seq_pos (3 ^ n % n)
     have left_ne_one : seq (2 ^ n % n) ≠ 1 := by
       intro h
       obtain ⟨k, _, hk⟩ := (Nat.dvd_prime_pow Nat.prime_two).mp
