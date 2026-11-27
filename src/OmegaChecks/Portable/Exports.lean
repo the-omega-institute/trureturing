@@ -1,4 +1,6 @@
 import Lean
+import OmegaChecks.InitCompiler.RootNames
+import OmegaChecks.InitPort.NativeQuot
 
 open Lean
 
@@ -29,6 +31,10 @@ def main (args : List String) : IO Unit := do
     for name in data.constNames ++ aliases do
       if isPrivateName name || name.isInternal then continue
       if name.getRoot != `Omega then
+        -- Kernel and compiler primitives keep their literal names. The Omega aliases of
+        -- public primitives are enumerated separately from the same module's export table.
+        if OmegaChecks.InitCompiler.RootNames.isPrimitive owner name ||
+            OmegaChecks.InitPort.NativeQuot.isSupport owner name then continue
         throw <| IO.userError s!"unexpected public interface name {name} in {owner}"
       let .str parent leaf := name | throw <| IO.userError s!"unnamed export in {owner}"
       let original := parent.replacePrefix `Omega Name.anonymous

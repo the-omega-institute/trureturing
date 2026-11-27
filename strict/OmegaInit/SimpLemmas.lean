@@ -9,6 +9,27 @@ module
 prelude
 public import OmegaInit.Core
 
+namespace Omega
+
+public theorem iff_congr {p₁ p₂ q₁ q₂ : Prop} (h₁ : Iff p₁ p₂) (h₂ : Iff q₁ q₂) :
+    Iff (Iff p₁ q₁) (Iff p₂ q₂) :=
+  Iff.intro (fun h => h₁.symm.trans (h.trans h₂))
+    (fun h => h₁.trans (h.trans h₂.symm))
+
+public theorem and_self_left {a b : Prop} : Iff (And a (And a b)) (And a b) :=
+  Iff.intro And.right (fun h => And.intro h.left h)
+
+public theorem and_self_right {a b : Prop} : Iff (And (And a b) b) (And a b) :=
+  Iff.intro And.left (fun h => And.intro h h.right)
+
+public theorem or_self_left {a b : Prop} : Iff (Or a (Or a b)) (Or a b) :=
+  Iff.intro (fun h => Or.elim h Or.inl (fun x => x)) Or.inr
+
+public theorem or_self_right {a b : Prop} : Iff (Or (Or a b) b) (Or a b) :=
+  Iff.intro (fun h => Or.elim h (fun x => x) Or.inr) Or.inl
+
+end Omega
+
 port_proof and_assoc
 port_proof and_congr_right
 port_proof and_congr_left
@@ -49,3 +70,11 @@ port_proof Bool.true_and by_reflexivity
 port_proof Bool.true_or by_reflexivity
 port_proof Eq.mpr_not
 port_proof Eq.mpr_prop
+
+public section
+namespace Bool
+export _root_.Omega.Bool (false_and false_or not_false not_true true_and true_or)
+end Bool
+namespace Eq
+export _root_.Omega.Eq (mpr_not mpr_prop)
+end Eq

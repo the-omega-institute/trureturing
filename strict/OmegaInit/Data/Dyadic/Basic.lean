@@ -8,3 +8,8 @@ prelude
 public import OmegaInit.Prelude
 
 port_proof HEq.congr_simp
+
+public section
+namespace Omega.HEq
+export _root_.HEq (congr_simp)
+end Omega.HEq

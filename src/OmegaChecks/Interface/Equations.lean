@@ -1,6 +1,24 @@
 module
 
+import Init.Data.List.SplitOn.Basic
+public import OmegaChecks.Interface.Equations.List
 public import OmegaChecks.Interface.Equations.Logic
+public import OmegaChecks.InitPort.ReferenceSwap
+public import OmegaChecks.InitPort.ReferenceSpecialization
+public import OmegaChecks.InitPort.LawfulLoop
+public import OmegaChecks.InitPort.PatternMatch
+public import OmegaChecks.InitPort.LogicalHandle
+public import OmegaChecks.InitPort.StateToken
+public import OmegaChecks.InitPort.TypeName
+public import OmegaChecks.InitPort.FloatFraction
+public import OmegaChecks.InitPort.Alternatives.GrindRing
+public import OmegaChecks.Interface.Equations.Array
+public import OmegaChecks.Interface.Equations.Collect
+public import OmegaChecks.Interface.Equations.FilePath
+public import OmegaChecks.Interface.Equations.String
+public import OmegaChecks.Interface.Equations.Uri
+public import OmegaChecks.Interface.Equations.Bitwise
+public import OmegaChecks.Interface.Equations.NatFold
 public import Mathlib.Data.Nat.Fib.Basic
 public import Mathlib.Data.Nat.Choose.Basic
 public import Mathlib.Data.Nat.Prime.Defs
@@ -8,6 +26,16 @@ public import Mathlib.Data.Nat.Prime.Defs
 /-! Pointwise equations for strict arithmetic algorithms interpreted over official types. -/
 
 namespace OmegaChecks.Interface.Equations
+
+open Lean.Grind Lean.Grind.CommRing in
+public theorem Lean.Grind.CommRing.Expr.denoteSAsRing {α : Type u} [Lean.Grind.Semiring α]
+    (ctx : Context α) (e : Expr) :
+    OmegaChecks.InitPort.Alternatives.Lean.Grind.CommRing.Expr.denoteSAsRing ctx e = e.denoteSAsRing ctx :=
+  (e.denoteAsRing_eq ctx).symm
+
+public theorem List.splitOnPTR {α : Type u} (p : α → Bool) (xs : List α) :
+    xs.splitOnP p = _root_.List.splitOnPTR p xs :=
+  congrFun (congrFun (congrFun _root_.List.splitOnP_eq_splitOnPTR α) p) xs
 
 @[expose] public def pair (n : Nat) : Bool → Nat :=
   Nat.rec (motive := fun _ => Bool → Nat) (Bool.rec 0 1)
@@ -178,6 +206,9 @@ public theorem Nat.mod (x y : Nat) :
     cases y with
     | zero => exact (Nat.mod_zero k.succ).symm
     | succ d => exact remainderSteps_eq d _ _ (Nat.lt_succ_self k.succ)
+
+public theorem Nat.modCore (x y : Nat) : _root_.Nat.mod x y = _root_.Nat.modCore x y :=
+  (_root_.Nat.modCore_eq_mod x y).symm
 
 @[expose] public noncomputable def euclideanSteps : Nat → Nat → Nat → Nat :=
   Nat.rec (motive := fun _ => Nat → Nat → Nat) (fun _ n => n)

@@ -11,12 +11,9 @@ noncomputable section
 
 @[expose] public section
 
-namespace Omega
+port_inductive Ordering
 
-inductive Ordering where
-  | lt
-  | «eq»
-  | gt
+namespace Omega
 
 namespace Ordering
 

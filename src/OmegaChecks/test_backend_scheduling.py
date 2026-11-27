@@ -36,9 +36,9 @@ class BackendScheduling(unittest.TestCase):
     def test_marker_changes_and_transitive_targets(self):
         with tempfile.TemporaryDirectory(prefix="omega-scheduling-") as directory:
             project = Path(directory)
-            for filename in ("lakefile.toml", "lake-manifest.json", "lean-toolchain"):
+            for filename in ("lakefile.toml", "lake-manifest.json", "lean-toolchain", "OmegaMathlib.lean"):
                 shutil.copyfile(ROOT / filename, project / filename)
-            for name in ("src", "strict"):
+            for name in ("src", "strict", "OmegaMathlib"):
                 shutil.copytree(ROOT / name, project / name)
             subprocess.run(["git", "init", "--quiet"], cwd=project, check=True)
             (project / ".lake").mkdir()

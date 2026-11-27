@@ -7,6 +7,7 @@ public import OmegaInit.Control.Lawful.Instances
 public import OmegaInit.Control.Reader
 public import OmegaInit.Control.StateCps
 public import OmegaInit.Core
+public import OmegaInit.Data.Array.Bootstrap
 public import OmegaInit.Data.Array.Lemmas
 public import OmegaInit.Data.Bool
 public import OmegaInit.Data.Dyadic.Basic
@@ -18,10 +19,12 @@ public import OmegaInit.Data.Int.Lemmas
 public import OmegaInit.Data.Int.Order
 public import OmegaInit.Data.List.Attach
 public import OmegaInit.Data.List.Basic
+public import OmegaInit.Data.List.Erase
 public import OmegaInit.Data.List.Lemmas
 public import OmegaInit.Data.List.Perm
 public import OmegaInit.Data.List.Scan.Lemmas
 public import OmegaInit.Data.Nat
+public import OmegaInit.Data.Nat.Bitwise.Lemmas
 public import OmegaInit.Data.Option.Basic
 public import OmegaInit.Data.Option.Lemmas
 public import OmegaInit.Data.Ord.Basic
