@@ -60,9 +60,22 @@ The following §3.2 helpers organize the proofs through the named live consumers
 | NormalizedLaplacian | `blockLift_orthogonal` | `bind-only` | `normalized_laplacian_similarity_of_block` |
 | NormalizedLaplacian | `normalized_laplacian_charpoly_of_intertwining` | `bind-only` | `normalized_laplacian_similarity_of_block`, `normalized_laplacian_charpoly_corona_regular_attached` |
 | NormalizedLaplacian | `normalized_laplacian_similarity_of_block` | `bind-only` | `normalized_laplacian_charpoly_corona_regular_base` |
+| NormalizedLaplacian | `degree_eq_of_regular_intertwiner` | `bind-only` | `normalized_laplacian_charpoly_corona_regular_base`, `normalized_laplacian_charpoly_corona_regular_attached` |
 | NormalizedLaplacian | `diagonal_degree_intertwining` | `bind-only` | `normalized_laplacian_charpoly_corona_regular_base`, `normalized_laplacian_charpoly_corona_regular_attached` |
 | NormalizedLaplacian | `copyLift_orthogonal` | `bind-only` | `normalized_laplacian_charpoly_corona_regular_attached` |
 | NormalizedLaplacian | `normalized_laplacian_charpoly_iso` | `bind-only` | `normalized_laplacian_charpoly_corona` |
+
+### Incomplete §3.9 escape registrations
+
+Five public theorems have outstanding escape registrations under the linked-issue exception. [Audit gaps and selector readings](https://github.com/the-omega-institute/trureturing/issues/35002#issuecomment-7229964615)
+
+| Public theorem | Outstanding evidence |
+| --- | --- |
+| `Blocks.adjMatrix_corona` | Typed block readout, reconstruction of the scoped `let B` and full block equality, positive law, rejected family, sensitivity, actual dependence and validated binding |
+| `Blocks.degree_corona_inl` | Typed degree readout and full law retaining copy cardinality, rejection, sensitivity, actual dependence and validated binding |
+| `Blocks.degree_corona_inr` | Typed degree readout and full law retaining both indices and the closed-neighborhood size plus internal copy degree, rejection, sensitivity, actual dependence and validated binding |
+| `RegularIntertwiner.exists_orthogonal_adjacency_intertwiner` | Typed realization and full law retaining the existential matrix, both orthogonality equations and adjacency intertwining, with rejection, sensitivity, actual dependence and validated binding |
+| `NormalizedLaplacian.normalized_laplacian_charpoly_corona` | Validated binding remains outstanding after the full-law equivalence, positive law, rejected family, sensitivity and actual dependence compiled. The scoped producer reported `declared_unresolved` with `IE-C050` (`incomplete_closure`, `E8.erasure_work`). |
 
 ## Literature scope
 
