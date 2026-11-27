@@ -526,3 +526,19 @@ port_definition PSigma.noConfusion
 port_proof instDecidableEqPSigma._proof_2
 port_proof instDecidableEqPSigma._proof_3
 port_definition instDecidableEqPSigma with_native_code
+
+port_definition Decidable.byCases.match_1 with_native_code
+port_definition iteInduction with_native_code
+port_definition instDecidableDite with_native_code
+port_native_records HasEquiv
+port_definition Setoid.r with_native_code
+port_definition instHasEquivOfSetoid with_native_code
+port_definition instTransIff with_native_code
+port_definition noConfusionTypeEnum
+port_proof noConfusionEnum._proof_1
+port_proof noConfusionEnum._proof_2
+port_definition noConfusionEnum with_native_code
+
+namespace Omega.Lean
+public opaque opaqueId {α : Sort u} (x : α) : α := x
+end Omega.Lean

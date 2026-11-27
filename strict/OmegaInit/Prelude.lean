@@ -938,3 +938,10 @@ port_definition Subtype.noConfusion
 port_definition instDecidableOr.match_3 with_native_code
 port_definition instDecidableOr.match_1 with_native_code
 port_proof instDecidableOr._proof_1
+
+port_native_records Trans
+
+namespace Omega.Nat
+public theorem ne_of_beq_eq_false {n m : Nat} : Eq (beq n m) Bool.false → Not (Eq n m) := fun h =>
+  Eq.subst (motive := fun b => Bool.Reflects b (Eq n m)) h (Nat.decEq._proof_1 n m)
+end Omega.Nat

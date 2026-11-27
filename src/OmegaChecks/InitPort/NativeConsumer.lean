@@ -208,6 +208,10 @@ public def psigmaEqual (x y : Omega.Bool) : Omega.Bool :=
   let mk := fun tag value => @Omega.PSigma.mk _ fiber tag (fiberValue tag value)
   @Omega.Decidable.decide _ (@Omega.instDecidableEqPSigma _ fiber Omega.instDecidableEqBool fiberEq (mk x x) (mk x y))
 
+public def chooseValue (x y : Omega.Bool) : Omega.Bool :=
+  @Omega.iteInduction Omega.Bool (Omega.Eq x Omega.Bool.true) (Omega.Bool.decEq x .true)
+    (fun _ => Omega.Bool) y .false (fun _ => Omega.Lean.opaqueId y) (fun _ => .false)
+
 public def disjunction (x y : Omega.Bool) : Omega.Bool := Omega.strictOr x y
 public def conjunction (x y : Omega.Bool) : Omega.Bool := Omega.strictAnd x y
 "
@@ -242,7 +246,7 @@ unsafe def main (args : List String) : IO Unit := do
       (`byteBufferSecond, second), (`updatedLookup, second), (`outsideLookup, second),
       (`slicedLookup, second), (`listEqual, BEq.beq), (`optionalListEmpty, fun x _ => !x),
       (`pairEqual, BEq.beq), (`sumEqual, BEq.beq), (`subtypeEqual, BEq.beq),
-      (`sigmaEqual, BEq.beq), (`psigmaEqual, BEq.beq), (`disjunction, or), (`conjunction, and)]
+      (`sigmaEqual, BEq.beq), (`psigmaEqual, BEq.beq), (`chooseValue, and), (`disjunction, or), (`conjunction, and)]
     for (name, expected) in checks do
       let some ci := env.find? name | throw <| IO.userError s!"missing {name}"
       unless Kernel.isDefEqGuarded env {} ci.type arity do throw <| IO.userError s!"invalid type of {name}"
