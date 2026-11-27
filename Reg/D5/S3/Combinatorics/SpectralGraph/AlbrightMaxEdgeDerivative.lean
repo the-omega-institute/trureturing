@@ -19,7 +19,7 @@ abbrev endpointSignature : Signature := signature Unit (fun _ => Fin 3) (fun _ =
 
 def actual : Realization endpointSignature :=
   realize endpointSignature
-    (fun _ _ j => @decide (path.Adj 0 j) (Classical.propDecidable _)) (fun e => nomatch e)
+    (fun _ _ j => decide ((SimpleGraph.pathGraph 3).Adj 0 j)) (fun e => nomatch e)
 
 def rejected : Realization endpointSignature :=
   realize endpointSignature (fun _ _ _ => true) (fun e => nomatch e)
@@ -40,7 +40,7 @@ abbrev arena : Arena where
       HasDerivAt (rayleighAverage path 0 2 1 b) 1 0 ∧ edgeDerivative path 0 2 1 b = 1
 
 private theorem bridge : claim ↔ arena.Law actual := by
-  simp only [claim, arena, actual, realize, path, decide_eq_true_eq]
+  simp only [claim, actual, realize, path, decide_eq_true_eq]
 
 private theorem rejected_law : ¬ arena.Law rejected := fun h => h.2.2.2.1 rfl
 
@@ -49,7 +49,8 @@ private theorem dependence : ObservationalDependence endpointSignature actual :=
   refine ⟨(), 1, 2, ?_⟩
   have h₁ : path.Adj 0 1 := by decide
   have h₂ : ¬ path.Adj 0 2 := by decide
-  simp [actual, realize, h₁, h₂]
+  simp only [actual, realize, decide_eq_true h₁, decide_eq_false h₂]
+  decide
 
 def pathSource : Registration arena claim where
   actual := actual
@@ -72,7 +73,7 @@ def pathRegistration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize endpointSignature
-    (fun _ _ j => @decide (path.Adj 0 j) (Classical.propDecidable _)) (fun e => nomatch e))
+    (fun _ _ j => decide ((SimpleGraph.pathGraph 3).Adj 0 j)) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
