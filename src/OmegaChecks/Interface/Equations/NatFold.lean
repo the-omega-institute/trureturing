@@ -2,10 +2,17 @@ module
 
 public import OmegaChecks.InitPort.Alternatives.NatFold
 public import OmegaChecks.InitPort.Alternatives.Fin
+import all OmegaChecks.InitPort.Alternatives.Fin
 import all OmegaChecks.InitPort.Alternatives.NatFold
 import all Init.Data.Nat.Basic
 
 namespace OmegaChecks.Interface.Equations
+
+public theorem Fin.natAdd {m : Nat} (n : Nat) (i : Fin m) :
+    OmegaChecks.InitPort.Alternatives.Fin.natAdd n i = _root_.Fin.natAdd n i := by
+  cases n with
+  | zero => exact Fin.ext (Nat.zero_add i.val).symm
+  | succ => rfl
 
 public theorem Fin.foldlTR {α : Sort u} (n : Nat) (f : α → Fin n → α) (init : α) :
     _root_.Fin.foldl n f init = _root_.Fin.foldlTR n f init :=

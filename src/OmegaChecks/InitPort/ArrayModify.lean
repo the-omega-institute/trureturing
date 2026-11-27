@@ -32,6 +32,11 @@ exact erased placeholder. The safe image only calls the pinned logical reference
 public def check (env : Environment) (native : DefinitionVal) (candidate : Expr) : IO Unit := do
   let levels := native.levelParams.map Level.param
   let some (.defnInfo reference) := env.find? `Array.modifyM | throw <| IO.userError "missing Array.modifyM"
+  let some (.thmInfo _) := env.find? ``overwritten | throw <| IO.userError "missing array overwrite theorem"
+  let axioms ← (collectAxioms ``overwritten : CoreM _).toIO'
+    {fileName := "<array overwrite>", fileMap := default} {env}
+  unless axioms.all (#[`propext, `Quot.sound, `Classical.choice].contains ·) do
+    throw <| IO.userError s!"unexpected axiom in the array overwrite theorem: {axioms}"
   unless native.name == `Array.modifyMUnsafe && native.safety == .unsafe && reference.safety == .safe &&
       Compiler.getImplementedBy? env reference.name == some native.name &&
       env.getModuleIdxFor? native.name == env.getModuleIdx? `Init.Data.Array.Basic &&

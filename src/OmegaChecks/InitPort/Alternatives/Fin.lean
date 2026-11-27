@@ -7,6 +7,62 @@ import all Init.Data.Fin.Lemmas
 
 namespace OmegaChecks.InitPort.Alternatives
 
+private def offsetVal (n i : Nat) : Nat :=
+  match n with
+  | 0 => i
+  | k + 1 => (k + 1) + i
+
+private theorem offsetVal_eq (n i : Nat) : offsetVal n i = n + i := by
+  cases n with
+  | zero => exact (Nat.zero_add i).symm
+  | succ => rfl
+
+public def Fin.natAdd {m : Nat} (n : Nat) (i : Fin m) : Fin (n + m) :=
+  ⟨offsetVal n i.val, (offsetVal_eq n i.val).symm ▸ Nat.add_lt_add_left i.isLt n⟩
+
+public theorem Fin.val_natAdd (n : Nat) {m : Nat} (i : Fin m) : (Fin.natAdd n i).val = n + i.val :=
+  offsetVal_eq n i.val
+
+public theorem Fin.coe_natAdd (n : Nat) {m : Nat} (i : Fin m) : (Fin.natAdd n i).val = n + i.val :=
+  Fin.val_natAdd n i
+
+public theorem Fin.le_coe_natAdd (m : Nat) (i : Fin n) : m ≤ (Fin.natAdd m i).val :=
+  (Fin.val_natAdd m i).symm ▸ Nat.le_add_right m i.val
+
+public theorem Fin.cast_natAdd_left {n m m' : Nat} (i : Fin n) (h : m' + n = m + n) :
+    (Fin.natAdd m' i).cast h = Fin.natAdd m i := by
+  cases Nat.add_right_cancel h
+  rfl
+
+public theorem Fin.natAdd_natAdd (m n : Nat) {p : Nat} (i : Fin p) :
+    Fin.natAdd m (Fin.natAdd n i) = (Fin.natAdd (m + n) i).cast (Nat.add_assoc ..) :=
+  _root_.Fin.ext ((Fin.val_natAdd m _).trans ((congrArg (m + ·) (Fin.val_natAdd n i)).trans
+    ((Nat.add_assoc m n i.val).symm.trans (Fin.val_natAdd (m+n) i).symm)))
+
+public theorem Fin.cast_natAdd (n : Nat) {m : Nat} (i : Fin m) :
+    (Fin.natAdd n i).cast (Nat.add_comm ..) = i.addNat n :=
+  _root_.Fin.ext ((Fin.val_natAdd n i).trans (Nat.add_comm ..))
+
+public theorem Fin.cast_addNat {n : Nat} (m : Nat) (i : Fin n) :
+    (i.addNat m).cast (Nat.add_comm ..) = Fin.natAdd m i :=
+  _root_.Fin.ext ((Nat.add_comm i.val m).trans (Fin.val_natAdd m i).symm)
+
+public theorem Fin.natAdd_last {m n : Nat} : Fin.natAdd n (_root_.Fin.last m) = _root_.Fin.last (n+m) :=
+  _root_.Fin.ext (Fin.val_natAdd n (_root_.Fin.last m))
+
+public theorem Fin.natAdd_eq_addNat (n : Nat) (i : Fin n) : Fin.natAdd n i = i.addNat n :=
+  _root_.Fin.ext ((Fin.val_natAdd n i).trans (Nat.add_comm ..))
+
+public theorem Fin.natAdd_subNat_cast {n m : Nat} {i : Fin (n+m)} (h : n ≤ i.val) :
+    Fin.natAdd n (_root_.Fin.subNat n (i.cast (Nat.add_comm ..)) h) = i :=
+  _root_.Fin.ext ((Fin.val_natAdd n _).trans (Nat.add_sub_of_le h))
+
+public theorem Fin.natAdd_mk (n i : Nat) (h : i < m) :
+    Fin.natAdd n ⟨i, h⟩ = ⟨n+i, Nat.add_lt_add_left h n⟩ :=
+  _root_.Fin.ext (offsetVal_eq n i)
+
+public theorem Fin.natAdd_zero {n : Nat} : Fin.natAdd 0 = _root_.Fin.cast (Nat.zero_add n).symm := by rfl
+
 public theorem Fin.eq_or_lt_of_le : type_of% @_root_.Fin.eq_or_lt_of_le := by
   intro n a b h
   exact (Nat.eq_or_lt_of_le h).imp _root_.Fin.eq_of_val_eq id
