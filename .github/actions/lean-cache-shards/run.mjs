@@ -531,7 +531,13 @@ async function runModuleCache() {
     const publicationKind = kind || 'compiler';
     args = ['plan', '--kind', publicationKind, '--capacity', String(capacity * 1024 ** 2),
       '--output', plan, '--prepare-release'];
-    if (publicationKind === 'compiler') args.push('--compiler-dag', '--legacy-checkpoints');
+    if (publicationKind === 'compiler') {
+      const workers = Number(process.env.LEAN_COMPILER_WORKERS || 64);
+      if (!Number.isSafeInteger(workers) || workers < 1 || workers > 256) {
+        throw new Error('LEAN_COMPILER_WORKERS must be an integer between 1 and 256');
+      }
+      args.push('--compiler-dag', '--legacy-checkpoints', '--workers', String(workers));
+    }
   } else {
     requirePublisher(kind || 'compiler');
     if (operation === 'module-worker') {
