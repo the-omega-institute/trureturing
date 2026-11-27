@@ -586,6 +586,10 @@ public theorem List.zipWithMAux_toArray_succ : type_of% @_root_.List.zipWithMAux
     zipListInto f (as.tail.drop i) (bs.tail.drop i) acc
   rw [List.drop_tail, List.drop_tail]
 
+public theorem List.zipWithMAux_toArray_succ._unary : type_of% @_root_.List.zipWithMAux_toArray_succ._unary := by
+  intro α β γ m _ as bs f p
+  exact List.zipWithMAux_toArray_succ as bs f p.1 p.2
+
 public theorem List.zipWithMAux_toArray_succ' : type_of% @_root_.List.zipWithMAux_toArray_succ' := by
   intros
   rw [zipArrayLists, zipArrayLists]
