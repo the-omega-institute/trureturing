@@ -3,14 +3,14 @@ import os
 from pathlib import Path
 import sysconfig
 
-from generated_native import HERE, run
+from generated_native import HERE, STRICT_SOURCES, run
 
 
 def check_paths(stage, library, path_object, io_object):
     test = stage / "path-io-check"
     test.mkdir()
     source = test / "consumer.c"
-    run("lean", "-R", HERE, "-c", source, "-o", test / "PathIOConsumer.olean", HERE / "PathIOConsumer.lean",
+    run("lean", "-R", STRICT_SOURCES, "-c", source, "-o", test / "PathIOConsumer.olean", STRICT_SOURCES / "PathIOConsumer.lean",
         env={**os.environ, "LEAN_PATH": str(library)})
     native = test / "consumer"
     run("leanc", "-I", HERE, source, path_object, *([io_object] if io_object.is_file() else []),

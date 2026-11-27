@@ -28,7 +28,11 @@ def output(*args, **kwargs):
     return subprocess.check_output(args, cwd=ROOT, text=True, **kwargs)
 
 
-def import_graph(lean, pathspecs=("strict/*.lean", "src/*.lean", "D5/*.lean", "Trureturing.lean"), *,
+STRICT_LIBRARIES = ("strict/OmegaInit.lean", "strict/OmegaInit/*.lean",
+                    "strict/OmegaMathlib.lean", "strict/OmegaMathlib/*.lean")
+
+
+def import_graph(lean, pathspecs=(*STRICT_LIBRARIES, "src/*.lean", "D5/*.lean", "Trureturing.lean"), *,
                  with_reg=False, official_basis=False):
     if with_reg:
         pathspecs = (*pathspecs, "Reg/*.lean")
@@ -147,7 +151,7 @@ def derived_facades(lean, strict, basis, official_path):
 
 def regenerate_facades():
     lean = output("lake", "env", "printenv", "LEAN").strip()
-    sources, graph = import_graph(lean, ("strict/*.lean",))
+    sources, graph = import_graph(lean, STRICT_LIBRARIES)
     basis = sorted(name for name in graph if root(name) in BASIS)
     if not BASIS.issubset(basis):
         raise RuntimeError("strict foundation roots are missing")

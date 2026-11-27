@@ -33,6 +33,8 @@
     "[omega]",
     "src/*.lean",
     "src/OmegaChecks/*.py",
+    "src/OmegaChecks/InitPort/*.c",
+    "src/OmegaChecks/InitPort/*.h",
     "strict/*.lean",
     "D5/*.lean",
     "Reg/*.lean",

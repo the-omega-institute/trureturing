@@ -15,6 +15,7 @@ import tempfile
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[2]
+STRICT_SOURCES = ROOT / "strict/OmegaChecks/InitPort"
 DEFAULT_SEED = ROOT / ".lake/build/omega-strict/lib/lean"
 
 
@@ -97,7 +98,7 @@ def compile_tasks(stage, product, artifact, inventory, raw):
                 "Task.Priority.default", "Task.Priority.max", "Task.Priority.dedicated"}
     if required <= installed:
         consumer = stage / "task-consumer.c"
-        run("lean", "-R", HERE, "-c", consumer, HERE / "TaskConsumer.lean",
+        run("lean", "-R", STRICT_SOURCES, "-c", consumer, STRICT_SOURCES / "TaskConsumer.lean",
             env={**os.environ, "LEAN_PATH": str(artifact)})
         app = stage / "task-consumer"
         run("leanc", consumer, obj, HERE / "task_consumer.c", "-o", app)
@@ -132,7 +133,7 @@ def has_interfaces(inventory, required):
 
 def check_state_consumer(stage, artifact, tool, filename, objects):
     consumer = stage / (filename + "-consumer.c")
-    run("lean", "-R", HERE, "-c", consumer, HERE / (tool + "Consumer.lean"),
+    run("lean", "-R", STRICT_SOURCES, "-c", consumer, STRICT_SOURCES / (tool + "Consumer.lean"),
         env={**os.environ, "LEAN_PATH": str(artifact)})
     app = stage / (filename + "-consumer")
     run("leanc", consumer, *objects, HERE / (filename + "_consumer.c"), "-o", app)
@@ -159,7 +160,7 @@ def compile_type_name(stage, product, artifact, inventory):
                      if owner == "Init.Dynamic" and status in {"added", "existing"}}
     if {"TypeName.mk", "TypeName.typeName"} <= installed:
         consumer = stage / "type-name-consumer.c"
-        run("lean", "-R", HERE, "-c", consumer, HERE / "TypeNameConsumer.lean",
+        run("lean", "-R", STRICT_SOURCES, "-c", consumer, STRICT_SOURCES / "TypeNameConsumer.lean",
             env={**os.environ, "LEAN_PATH": str(artifact)})
         app = stage / "type-name-consumer"
         run("leanc", consumer, obj, HERE / "type_name_consumer.c", "-o", app)

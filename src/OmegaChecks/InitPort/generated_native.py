@@ -10,6 +10,7 @@ import sysconfig
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[2]
+STRICT_SOURCES = ROOT / "strict/OmegaChecks/InitPort"
 CONTROL = ("OmegaInit.Control.Except", "OmegaInit.Control.Option", "OmegaInit.Control.State")
 
 
@@ -89,7 +90,7 @@ def check_runtime_ir(stage, library, adapter, consumer):
     run("lake", "env", "lean", "--run", HERE / (adapter + "Native.lean"), "--interpreter", library, source)
     shim = check / ("extern" + (sysconfig.get_config_var("SHLIB_SUFFIX") or ".so"))
     run("leanc", "-shared", "-fPIC", "-DLEAN_EXPORTING", "-I", HERE, source, "-o", shim)
-    run("lean", "-R", HERE, "-o", check / (consumer + "Consumer.olean"), HERE / (consumer + "Consumer.lean"),
+    run("lean", "-R", STRICT_SOURCES, "-o", check / (consumer + "Consumer.olean"), STRICT_SOURCES / (consumer + "Consumer.lean"),
         env={**os.environ, "LEAN_PATH": str(library)})
     run("lake", "env", "lean", "--load-dynlib=" + str(shim), "--run", HERE / (consumer + "IRConsumer.lean"),
         library, check)
@@ -182,8 +183,8 @@ def compile_generated(stage, product, graph, seed_ir, owners=None, *, original_s
         pending.extend(graph.get(owner, ()))
     sources.mkdir(exist_ok=True, parents=True)
     consumer = sources / "consumer.c"
-    run("lean", "-R", HERE, "-o", sources / "GeneratedControlConsumer.olean", "-c", consumer,
-        HERE / "GeneratedControlConsumer.lean", env={**os.environ, "LEAN_PATH": str(library)})
+    run("lean", "-R", STRICT_SOURCES, "-o", sources / "GeneratedControlConsumer.olean", "-c", consumer,
+        STRICT_SOURCES / "GeneratedControlConsumer.lean", env={**os.environ, "LEAN_PATH": str(library)})
     missing = sorted(owner for owner in reachable & seed_owners if not seed_files[owner].is_file())
     if missing:
         run("lake", "env", "lean", "--run", HERE / "GeneratedNative.lean", "--check-control", library, sources,
@@ -200,12 +201,12 @@ def compile_generated(stage, product, graph, seed_ir, owners=None, *, original_s
     if all(modes.get(owner) == "mixed=" and owner in objects
            for owner in ("OmegaInit.Prelude", "OmegaInit.Control.Basic")):
         mixed = sources / "mixed-consumer.c"
-        run("lean", "-R", HERE, "-c", mixed, HERE / "GeneratedMixedConsumer.lean",
+        run("lean", "-R", STRICT_SOURCES, "-c", mixed, STRICT_SOURCES / "GeneratedMixedConsumer.lean",
             env={**os.environ, "LEAN_PATH": str(library)})
         extra = ["-DOMEGA_TEST_MIXED", mixed]
     if literals.exists():
         client = sources / "literal-consumer.c"
-        run("lean", "-R", HERE, "-c", client, HERE / "LiteralConsumer.lean",
+        run("lean", "-R", STRICT_SOURCES, "-c", client, STRICT_SOURCES / "LiteralConsumer.lean",
             env={**os.environ, "LEAN_PATH": str(library)})
         extra += ["-DOMEGA_TEST_LITERALS", client]
     app = sources / "consumer"

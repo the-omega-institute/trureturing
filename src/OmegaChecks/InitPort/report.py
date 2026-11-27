@@ -10,6 +10,7 @@ import tempfile
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[2]
+STRICT_SOURCES = ROOT / "strict/OmegaChecks/InitPort"
 
 
 def check_coverage(official):
@@ -89,7 +90,7 @@ def check_strict_reference_choices(product, stage, attempts):
     lib = product / "lib"
     strict_owners = ("Omega" + owner for owner in owners)
     selected = [owner for owner in strict_owners if (lib / Path(*owner.split("."))).with_suffix(".olean").is_file()]
-    subprocess.run(["lean", "-R", HERE, "-o", stage / "StrictReferenceChoice.olean", HERE / "StrictReferenceChoice.lean"],
+    subprocess.run(["lean", "-R", STRICT_SOURCES, "-o", stage / "StrictReferenceChoice.olean", STRICT_SOURCES / "StrictReferenceChoice.lean"],
                    cwd=ROOT, env={**os.environ, "LEAN_PATH": str(lib)}, check=True)
     output = stage / "strict-reference-choice.json"
     subprocess.run(["lake", "env", "lean", "--run", HERE / "ReferenceChoiceCheck.lean", lib, stage, output, *selected],

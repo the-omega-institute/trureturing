@@ -81,7 +81,7 @@ abbrev M := ReaderT Context (StateRefT State IO)
 
 private def loadLiteralProofs (strictPath : System.FilePath) : IO (NameMap ConstantInfo) :=
   IO.FS.withTempDir fun temp => do
-    let dir := System.FilePath.mk "src/OmegaChecks/InitPort"
+    let dir := System.FilePath.mk "strict/OmegaChecks/InitPort"
     let lean := (← findSysroot) / "bin" / "lean"
     let build ← IO.Process.output {
       cmd := lean.toString

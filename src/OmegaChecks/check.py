@@ -39,7 +39,7 @@ def build(targets):
 
 
 def strict_import_graph(lean, targets=()):
-    _, graph = import_graph(lean, ("strict/*.lean", "src/*.lean"))
+    _, graph = import_graph(lean, (*portable.STRICT_LIBRARIES, "src/*.lean"))
     # A witness can reach a marked project module through the public umbrella.
     # Read the requested project branches without scanning every unrelated D5 source.
     pending = set(targets).union(*graph.values())
@@ -565,11 +565,16 @@ example {p q : Prop} (h : p ∧ q) : p := OmegaChecks.Portable.Common.projectLef
 def check_generated_init():
     with tempfile.TemporaryDirectory(prefix="omega-generated-init-") as directory:
         product = Path(directory) / "port"
-        run(sys.executable, "-B", SRC / "OmegaChecks/InitPort/build.py", product,
-            "Init.Prelude", "Init.Data.Function", "Init.Data.List.Impl", "Init.Data.List.TakeDrop",
-            "Init.Data.Nat.Coprime")
-        run("lean", "--run", SRC / "OmegaChecks/InitPort/NativeConsumer.lean", product / "lib")
+        consumers, imports = import_graph(ENV["LEAN"], ("strict/OmegaChecks/InitPort/*.lean",))
+        roots = {"Init.Prelude", "Init.Data.Function", "Init.Data.List.Impl", "Init.Data.List.TakeDrop",
+                 "Init.Data.Nat.Coprime"}
+        for dependencies in imports.values():
+            roots.update(name.removeprefix("Omega") for name in dependencies if root(name) == "OmegaInit")
+        run(sys.executable, "-B", SRC / "OmegaChecks/InitPort/build.py", product, *sorted(roots))
         environment = {**ENV, "LEAN_PATH": str(product / "lib")}
+        for source in consumers.values():
+            subprocess.run([ENV["LEAN"], "-R", source.parent, source], cwd=ROOT, env=environment, check=True)
+        run("lean", "--run", SRC / "OmegaChecks/InitPort/NativeConsumer.lean", product / "lib")
         quotient = """module
 prelude
 import OmegaInit.Prelude

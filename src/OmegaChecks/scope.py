@@ -75,7 +75,8 @@ def discover(changed_file):
     paths = set(raw.decode().split("\0")) - {""}
     changed = {path: name for path in paths if (name := module_path(path))}
     shared = (paths & SHARED) | {path for path in paths if path == "src/OmegaChecks/InitCompiler.lean"
-                                or path.startswith(("src/OmegaChecks/InitCompiler/", "src/OmegaChecks/InitPort/"))}
+                                or path.startswith(("src/OmegaChecks/InitCompiler/", "src/OmegaChecks/InitPort/",
+                                                    "strict/OmegaChecks/InitPort/"))}
     reg_inputs = paths & REG_INPUTS
     if not (changed or shared or reg_inputs):
         return plan({}, {}, set(), set(), [], [])
