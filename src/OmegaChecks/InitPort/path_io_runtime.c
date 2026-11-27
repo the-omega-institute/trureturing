@@ -230,6 +230,8 @@ LEAN_EXPORT lean_obj_res omega_io_set_access_rights(b_lean_obj_arg path, lean_ob
     return strict_result(result, world, strict_unit);
 }
 
+#include "stream_io.h"
+
 extern lean_obj_res lean_io_metadata(b_lean_obj_arg);
 extern lean_obj_res lean_io_symlink_metadata(b_lean_obj_arg);
 

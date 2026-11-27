@@ -48,6 +48,9 @@ private def readWrapper (source strict : Environment) (n : Name) (symbol decoder
 private def entries := #[
   (`System.FilePath.metadata, "lean_io_metadata", "omega_io_metadata"),
   (`System.FilePath.symlinkMetadata, "lean_io_symlink_metadata", "omega_io_symlink_metadata"),
+  (`IO.getStdin, "lean_get_stdin", "omega_io_get_stdin"),
+  (`IO.getStdout, "lean_get_stdout", "omega_io_get_stdout"),
+  (`IO.getStderr, "lean_get_stderr", "omega_io_get_stderr"),
   (`IO.Process.spawn, "lean_io_process_spawn", "omega_io_process_spawn"),
   (`IO.Process.Child.wait, "lean_io_process_child_wait", "omega_io_process_child_wait"),
   (`IO.Process.Child.tryWait, "lean_io_process_child_try_wait", "omega_io_process_child_try_wait"),
@@ -180,6 +183,7 @@ public unsafe def main (args : List String) : IO Unit := do
   let fs := roots.any fun (n, _, _) => n != `IO.getEnv
   let handles := roots.any fun (n, _, _) => `IO.FS.Handle |>.isPrefixOf n
   let readDir := roots.any fun (n, _, _) => n == `System.FilePath.readDir
+  let streams := roots.any fun (n, _, _) => [`IO.getStdin, `IO.getStdout, `IO.getStderr].contains n
   let processes := roots.any fun (n, _, _) => n == `IO.Process.spawn || (`IO.Process.Child).isPrefixOf n
   let metadata := roots.any fun (n, _, _) => [`System.FilePath.metadata, `System.FilePath.symlinkMetadata].contains n
   let dicts := [`Omega.Fin, `Omega.BitVec, `Omega.UInt8, `Omega.Array, `Omega.ByteArray, `Omega.String] ++
@@ -189,6 +193,7 @@ public unsafe def main (args : List String) : IO Unit := do
   if !ir then
     for n in dicts ++ [`Omega.Option, `Omega.List, `Omega.ST.Out] ++ (if fs then [`Omega.EST.Out, `Omega.IO.Error] else []) ++
         (if metadata then [`Omega.IO.FS.SystemTime, `Omega.IO.FS.Metadata, `Omega.IO.FS.FileType, `Omega.Int] else []) ++
+        (if streams then [`Omega.IO.FS.Stream] else []) ++
         (if processes then [`Omega.IO.Process.SpawnArgs, `Omega.IO.Process.StdioConfig, `Omega.IO.Process.Child, `Omega.IO.Process.Stdio, `Omega.Prod] else []) ++
         (if roots.any (fun (n, _, _) => n == `IO.FS.createTempFile) then [`Omega.Prod] else []) ++
         (if readDir then [`Omega.IO.FS.DirEntry] else []) ++ (if handles then [`Omega.IO.FS.Mode] else []) do
@@ -210,6 +215,12 @@ public unsafe def main (args : List String) : IO Unit := do
     for f in l.fieldInfo, i in [:fields] do
       let .object j _ := f | throw <| IO.userError s!"expected boxed {n} field"
       unless i == j do throw <| IO.userError s!"unexpected {n} field position"
+  if streams then
+    for (e, n) in [(source, `IO.FS.Stream.mk), (env, `Omega.IO.FS.Stream.mk)] do
+      let some l := ctorLayoutExt.find? e n | throw <| IO.userError s!"missing stream constructor {n}"
+      unless l.ctorInfo.cidx == 0 && l.ctorInfo.size == 6 && l.ctorInfo.usize == 0 && l.ctorInfo.ssize == 0 &&
+          (l.fieldInfo matches #[.object 0 _, .object 1 _, .object 2 _, .object 3 _, .object 4 _, .object 5 _]) do
+        throw <| IO.userError s!"unexpected stream callback layout {n}"
   if processes then checkProcesses source env
   if roots.any (fun (n, _, _) => n == `IO.FS.createTempFile) then
     for (e, pair) in [(source, `Prod.mk), (env, `Omega.Prod.mk)] do
@@ -236,6 +247,10 @@ public unsafe def main (args : List String) : IO Unit := do
       (← compileDeclsRef.get) #[strict] {}
   for (n, upstream, symbol) in roots do
     if readFunctions.any (·.1 == n) then continue
+    if [`IO.getStdin, `IO.getStdout, `IO.getStderr].contains n then
+      verify source n #[(.void, false)] .object upstream
+      verify compiled (`Omega ++ n) #[(.tobject, false)] .object symbol
+      continue
     if n == `IO.Process.spawn then
       verify source n #[(.object, false), (.void, false)] .object upstream
       verify compiled (`Omega ++ n) #[(.object, false), (.tobject, false)] .object symbol
