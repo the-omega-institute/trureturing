@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Entanglement.EntanglementBreaking.PPTTrace
 import Reg.Support.DependentFamily
 
+/-! Source-bound registration of the trace readout in the sign matrix construction. -/
+
 namespace Reg.D5.S3.Quantum.Entanglement.EntanglementBreaking.PPTTrace
 
 open LeanInformationAudit _root_.Matrix
@@ -38,7 +40,7 @@ abbrev arena : Arena where
 theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   let H : Matrix (Fin 1 × Fin 1) (Fin 1 × Fin 1) ℂ := (-4 : ℂ) • 1
-  have henergy : (1 : ℝ)^4 / 2 ≤ (H * H).trace.re := by
+  have henergy : ((1 : ℕ) : ℝ)^4 / 2 ≤ (H * H).trace.re := by
     norm_num [H, Matrix.smul_mul, Matrix.mul_smul, Matrix.trace_smul, Matrix.trace_one]
   have htest : pptTest H = 0 := by
     ext i j
