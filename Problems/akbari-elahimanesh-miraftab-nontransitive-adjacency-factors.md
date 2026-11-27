@@ -5,7 +5,6 @@ doi: 10.48550/arXiv.2512.24864
 triage: theorem
 motivation_gids:
   - D5/S3/Combinatorics/Graph/AdjacencyProduct/NontransitiveFactors.result
-url: https://arxiv.org/html/2512.24864v1#S5.I1.i2
 ---
 
 # Non-vertex-transitive adjacency factors of a complete graph
@@ -71,7 +70,9 @@ The settling declaration is
 `D5/S3/Combinatorics/Graph/AdjacencyProduct/NontransitiveFactors.result`.
 The proof uses the pinned Mathlib adjacency-matrix reindexing lemma
 `SimpleGraph.Iso.reindex_adjMatrix` and ring equivalence
-`Matrix.reindexRingEquiv`. The finite checks use kernel `decide`.
+`Matrix.reindexRingEquiv`. The correspondence between diagonal powers and
+closed-walk counts is `SimpleGraph.adjMatrix_pow_apply_eq_card_walk`.
+The finite checks use kernel `decide`.
 The witness tables and exact arithmetic readings appear in the witness issue.
 [Witness and independent replay](https://github.com/the-omega-institute/trureturing/issues/34961)
 
