@@ -297,7 +297,7 @@ unsafe def main (args : List String) : IO Unit := do
         if i == 2 || exposedHelpers.any (·.1 == n) then cs := cs.push new
         else if let some exposed := publiclyDeclared.find? n then
           if (exposed.isAxiom || sealedImplementation n) && !new.isAxiom then
-            let hidden := ConstantInfo.axiomInfo {new.toConstantVal with isUnsafe := false}
+            let hidden := ConstantInfo.axiomInfo {new.toConstantVal with isUnsafe := new.isUnsafe}
             cs := cs.push hidden
           else cs := cs.push new
       cs := cs.qsort fun a b => a.name.quickCmp b.name == .lt

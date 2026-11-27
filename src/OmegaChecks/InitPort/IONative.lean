@@ -14,6 +14,7 @@ private def specs : List (Name × String × IR.IRType) :=
    (`IO.Process.getPID, "lean_io_process_get_pid", .uint32),
    (`IO.getTID, "lean_io_get_tid", .uint64), (`IO.initializing, "lean_io_initializing", .uint8),
    (`IO.sleep, "", .tagged), (`Runtime.hold, "lean_runtime_hold", .tagged),
+   (`Runtime.markPersistent, "lean_runtime_mark_persistent", .tobject),
    (`Runtime.forget, "lean_runtime_forget", .tagged), (`Runtime.markMultiThreaded, "lean_runtime_mark_multi_threaded", .tobject)]
 
 public def supported (name : Name) : Bool := specs.any (·.1 == name) || [`timeit, `allocprof].contains name

@@ -18,6 +18,8 @@ meta import OmegaChecks.InitPort.NativeState
 import OmegaChecks.InitPort.NativeState
 meta import OmegaChecks.InitPort.Translation
 import OmegaChecks.InitPort.Translation
+import OmegaChecks.InitPort.Persistent
+meta import OmegaChecks.InitPort.Persistent
 
 /-! Compile an existing strict owner directly from its checked kernel definitions. -/
 
@@ -405,7 +407,8 @@ private unsafe def install (source publicSource : Environment) (lib out : System
   let floatArray := owner == `OmegaInit.Data.FloatArray.Basic && !unaryNat &&
     (OmegaChecks.InitPort.FloatArrayNative.boxed env || (monoTypeExt.find? env `Omega.FloatArray).isNone)
   for ci in part.constants do
-    if !onlyLayouts && !unaryNat && !oldNative.contains ci.name && !ci.isUnsafe && !ci.isPartial &&
+    if !onlyLayouts && !unaryNat && !oldNative.contains ci.name &&
+        (!ci.isUnsafe || OmegaChecks.InitPort.Persistent.isOriginal ci true) && !ci.isPartial &&
         OmegaChecks.InitPort.WordNative.supported source owner (InitKernelPort.originalName ci.name) floatArray then
       words := words.push ci.name
       continue

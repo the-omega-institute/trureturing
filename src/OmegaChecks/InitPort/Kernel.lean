@@ -10,6 +10,7 @@ import OmegaChecks.InitPort.ReferenceSpecialization
 import OmegaChecks.InitPort.TypeName
 import OmegaChecks.InitPort.Translation
 import OmegaChecks.InitPort.NativeQuot
+import OmegaChecks.InitPort.Persistent
 import OmegaChecks.InitPort.Address
 import OmegaChecks.InitPort.WordFold
 import OmegaChecks.InitPort.WordForIn
@@ -45,7 +46,7 @@ private def boundedBorrowedRead (ci : ConstantInfo) : Bool :=
 def translateDecl (info : ConstantInfo) (type body : Expr) : Except String Declaration := do
   let rename := portName
   let val (v : ConstantVal) := { v with name := rename v.name, type := translate rename type }
-  if (info.isUnsafe && !boundedBorrowedRead info) || info.isPartial then throw "unsafe/partial"
+  if (info.isUnsafe && !boundedBorrowedRead info && !OmegaChecks.InitPort.Persistent.isOriginal info false) || info.isPartial then throw "unsafe/partial"
   if invalidExpr type || invalidExpr body then throw "open term or unsupported string literal"
   let body := translate rename body
   match info with
@@ -570,7 +571,7 @@ partial def visit (n : Name) : M Bool := do
       | return ← record n (.blocked "kernel rejected safe array implementation")
     modify fun s => {s with env}
     return ← record n .added
-  if (ci.isUnsafe && !boundedBorrowedRead ci) || ci.isPartial then return ← record n (.blocked "unsafe/partial")
+  if (ci.isUnsafe && !boundedBorrowedRead ci && !OmegaChecks.InitPort.Persistent.isOriginal ci false) || ci.isPartial then return ← record n (.blocked "unsafe/partial")
   if let .inductInfo i := ci then
     let .ok f ← (family c.source i).run | return ← record n (.blocked "malformed family")
     if let some member := f.generated.find? (fun member => c.excluded.contains member) then

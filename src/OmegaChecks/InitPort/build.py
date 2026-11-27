@@ -293,6 +293,7 @@ def generate(stage, product, seed, roots, excluded, original_seed):
                       original_seed=original_seed, before_owner={"OmegaInit.ShareCommon": install_sharing},
                       check_sharing=check_sharing,
                       check_macro_reader=has_interfaces(inventory, {"Init.Prelude": {"Lean.Macro.getMethodsImp"}}),
+                      check_persistent=has_interfaces(inventory, {"Init.System.IO": {"Runtime.markPersistent"}}),
                       check_mixed=has_interfaces(inventory, mixed_interfaces),
                       check_thunks=has_interfaces(inventory, {"Init.Core": {
                           "Thunk.mk", "Thunk.pure", "Thunk.get", "Thunk.map", "Thunk.bind",
