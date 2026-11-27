@@ -10,6 +10,10 @@ $$\neg \operatorname{Attainment}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Codes/BinaryEAAttainmentRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/baek-won-kim-2026-binary-singleton-attainment` (refuted) by `D5/S3/Quantum/Codes/BinaryEAAttainmentRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"baek-won-kim-2026-binary-singleton-attainment","declaration_gid":"D5/S3/Quantum/Codes/BinaryEAAttainmentRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Jae-Hyun Baek; Byung-Sun Won; Jon-Lark Kim (2026). *Validity and maximum violation of the entanglement-assisted quantum Singleton bound for linear stabilizer codes*. DOI: [10.48550/arXiv.2611.32126](https://doi.org/10.48550/arXiv.2611.32126). URL: <https://arxiv.org/abs/2611.32126v1>.

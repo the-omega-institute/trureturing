@@ -38,5 +38,8 @@ internal sealed class BinaryEAAttainmentRefutationDocument : IScribeDocumentDefi
                         + "length seven when every radical site map has rank at most one. At length seven "
                         + "a surjective radical site falls under the shortening obstruction with "
                         + "H = U ∩ U⊥ and the original symplectic form."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("baek-won-kim-2026-binary-singleton-attainment"),
+                    ResolutionKind.Refuted)))));
 }
