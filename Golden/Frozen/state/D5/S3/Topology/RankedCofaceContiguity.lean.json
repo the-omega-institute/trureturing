@@ -1,0 +1,1 @@
+{"statement_id":"sha256:1bcd16f0442733d514e548a4af387f7412249bbd30e68211232546ea51202e3e","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),8:Topology),22:RankedCofaceContiguity),39:exists_relative_contiguity_of_chain_map)","kind":"theorem","libraries":["Init","Mathlib"],"axioms":["Classical.choice","Quot.sound","propext"]}]}
