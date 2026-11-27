@@ -26,7 +26,7 @@ example (a : α) (b : β) : Omega.Eq (Prod.fst (Prod.mk a b)) a := Omega.rfl
 
 `lib/` 保存按官方定义模块组织的编译文件。程序对所选的基础库模块运行仓库的 `omegaAudit --exact-roots`，检查模块闭包、公开归属和可计算对应，逐声明检查公理并从空环境重放内核。全量构建还将 OmegaMath 和 OmegaMathlib 的下游源码编译到同一 `lib/`，验证普通 `import OmegaMath`，并审计其实际导入闭包。成功后输出目录才会出现。两次审计的读数分别保存在 `audit.txt` 和 `omegamath-audit.txt`。全量缺口表位于同一目录的 `init-gaps.tsv`。
 
-这个独立制品用于内核类型检查、证明和定义归约。新生成声明的原生可执行代码、语法扩展、实例搜索和结构字段语法均不在移植覆盖范围内。
+这个独立制品用于内核类型检查、证明和定义归约。生成器复制已移植结构的字段顺序、父结构和投影信息，并登记已有的类型类实例。普通导入支持用 `{ fst := a, snd := b }` 构造积、用 `{ p with snd := b }` 更新字段。声明覆盖率按内核接口计数。原生可执行代码、语法扩展和完整实例搜索行为仍待核验。
 
 `Omega.withPtrAddrUnsafe` 的返回值通过逐输入证明核对。官方实现把对象的机器地址传给回调 `k`，其参数 `h` 证明任意两个地址产生相同结果。严格实现调用 `Omega.withPtrAddr`。校验器读取官方的 `@[implemented_by]` 登记、两端签名和实际计算体，用 `h` 证明每个机器地址所得的值都等于严格实现的结果。[返回值核验](Address.lean) · [官方指针回调](https://github.com/leanprover/lean4/blob/v4.35.0/src/Init/Util.lean#L102)
 

@@ -17,6 +17,7 @@ def main (args : List String) : IO Unit := do
     return (root, ← importModules (publicImports #[root]) {} (level := .exported))
   let mut exported := 0
   let mut separate := 0
+  let mut structures := 0
   for (name, _) in available.constants.toList do
     unless name.getRoot == `Omega do continue
     let upstream := name.replacePrefix `Omega .anonymous
@@ -26,5 +27,11 @@ def main (args : List String) : IO Unit := do
       unless env.contains name == expected do
         let issue := if expected then "missing from" else "unexpectedly exported by"
         throw <| IO.userError s!"{name} is {issue} import {root} compared with import Init"
+      if expected && (getStructureInfo? official upstream).isSome && (getStructureInfo? env name).isNone then
+        throw <| IO.userError s!"missing structure fields for {name} under import {root}"
+      if expected && (official.getProjectionFnInfo? upstream).isSome && (env.getProjectionFnInfo? name).isNone then
+        throw <| IO.userError s!"missing projection metadata for {name} under import {root}"
+    if expected && (getStructureInfo? official upstream).isSome then structures := structures + 1
     if expected then exported := exported + 1 else separate := separate + 1
   IO.println s!"OmegaInit and OmegaMath public imports match Init for {exported} root names and {separate} separately imported names"
+  IO.println s!"Verified the field registrations of {structures} publicly imported structures"

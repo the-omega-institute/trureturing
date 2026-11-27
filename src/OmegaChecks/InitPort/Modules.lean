@@ -1,4 +1,8 @@
-import Lean
+module
+public import Lean
+import all Lean.Structure
+
+public section
 open Lean
 
 def officialModuleName (env : Environment) (n : Name) : Option Name := do
@@ -35,6 +39,36 @@ def mergeImports (a b : Array Import) : Array Import := Id.run do
   for i in b do
     if !(out.contains i) then out := out.push i
   return out
+
+/-- A structure literal needs its field order, inherited projections and binder information. -/
+private def structureEntries (source port : Environment) (idx : ModuleIdx) (owner : Name)
+    (available : NameSet) (level : OLeanLevel) : IO (Array (Name × Array EnvExtensionEntry)) := do
+  let mut env := port.setMainModule owner
+  if let some old := port.getModuleIdx? owner then
+    for info in structureExt.getModuleEntries port old (level := level) do
+      env := structureExt.addEntry env info
+    for (name, info) in projectionFnInfoExt.getModuleEntries port old (level := level) do
+      env := projectionFnInfoExt.addEntry (asyncDecl := name) env (name, info)
+  for info in structureExt.getModuleEntries source idx (level := level) do
+    let name := renamed info.structName
+    unless available.contains name do continue
+    let fields ← info.fieldInfo.mapM fun field => do
+      if field.autoParam?.isSome then
+        throw <| IO.userError s!"unexpected autoParam on {info.structName}.{field.fieldName}"
+      return {field with projFn := renamed field.projFn, subobject? := field.subobject?.map renamed}
+    let parents := info.parentInfo.map fun p =>
+      {p with structName := renamed p.structName, projFn := renamed p.projFn}
+    env := structureExt.addEntry env {info with structName := name, fieldInfo := fields, parentInfo := parents}
+  for (name, info) in projectionFnInfoExt.getModuleEntries source idx (level := level) do
+    if available.contains (renamed name) then
+      let proj := renamed name
+      env := projectionFnInfoExt.addEntry (asyncDecl := proj) env (proj, {info with ctorName := renamed info.ctorName})
+  let mut entries := #[]
+  for ext in ← persistentEnvExtensionsRef.get do
+    if ext.name == structureExt.name || ext.name == projectionFnInfoExt.name then
+      let data := (ext.exportEntriesFn env (ext.getState (asyncMode := .sync) env)).get level
+      unless data.isEmpty do entries := entries.push (ext.name, data)
+  return entries
 
 /-- Replay the official candidate order, including scoped instances and priority ties.
 Only publish entries whose implementation is available at this definition site. -/
@@ -200,8 +234,10 @@ def main (args : List String) : IO Unit := do
           let v := match e with | .global v | .scoped _ v => v
           if let some n := v.globalName? then available := available.insert n
       let instances ← instanceEntries source idx available owner level
+      let structures ← structureEntries source monolith idx owner available level
       let entries := (previous.entries.filter (fun e =>
-        !selected.contains e.1 && e.1 != Meta.instanceExtension.ext.name)) ++ replacement ++ instances
+        !selected.contains e.1 && e.1 != Meta.instanceExtension.ext.name &&
+        e.1 != structureExt.name && e.1 != projectionFnInfoExt.name)) ++ replacement ++ instances ++ structures
       let data : ModuleData := { previous with entries, isModule := true, imports := mergeImports previous.imports mappedImports, constants := cs, constNames := cs.map (·.name) }
       parts := parts.push (#[path,path.addExtension "server",path.addExtension "private"][i]!,data)
     graph := graph.push (owner.toString, (mergeImports orig[2]!.imports mappedImports).map (·.module.toString))

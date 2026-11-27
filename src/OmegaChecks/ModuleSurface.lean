@@ -1,5 +1,9 @@
-import Lean
+module
+public import Lean
 import Lean.Elab.ParseImportsFast
+import all Lean.Structure
+
+public section
 
 open Lean
 
@@ -64,6 +68,7 @@ private def supportedExtension (name : Name) : Bool :=
   [-- Compiled interface registrations checked by the port and kernel-interface audits.
    aliasExtension.name, classExtension.name, Meta.instanceExtension.ext.name, Meta.simpExtension.ext.name, auxRecExt.name,
    protectedExt.name, matchPatternAttr.ext.name, Elab.Term.elabAsElim.ext.name, reducibilityCoreExt.name,
+   privateToUserName structureExt.name, projectionFnInfoExt.name,
    -- Module provenance, compiled representation and kernel bookkeeping in the pinned toolchain.
    `Lean.namespacesExt, `Lean.noncomputableExt, `Lean.Compiler.inlineAttrs, `Lean.exportedAxiomsExt,
    `Lean.privateConstKindsExt, `Lean.modPkgExt, `Lean.IR.declMapExt, `Lean.Compiler.LCNF.baseExt,
@@ -87,6 +92,39 @@ private def checkElaboration (env : Environment) (owner : Name) (idx : ModuleIdx
   for (ext, entries) in env.header.moduleData[idx]!.entries do
     unless entries.isEmpty || supportedExtension ext do
       throw <| IO.userError s!"no elaboration correspondence for public environment extension {ext} in {owner}"
+
+/-- Validate the metadata that ordinary field notation and structure literals consume. -/
+private def checkStructures (port ref : Environment) (owner : Name) (idx : ModuleIdx) : IO Unit := do
+  let rename := fun (n : Name) => Id.run do
+    if let some lexical := privatePrefix? n then
+      if (`_private.OmegaInit).isPrefixOf lexical then
+        return lexical.replacePrefix `_private.OmegaInit `_private.Init ++
+          (privateToUserName n).replacePrefix `Omega .anonymous
+    return n.replacePrefix `Omega .anonymous
+  for s in structureExt.getModuleEntries port idx do
+    let some target := getStructureInfo? ref (rename s.structName)
+      | throw <| IO.userError s!"unknown public structure {s.structName} in {owner}"
+    unless port.getModuleIdxFor? s.structName == some idx &&
+        ref.getModuleIdxFor? target.structName == ref.getModuleIdx? (counterpart owner) &&
+        s.fieldNames == target.fieldNames && s.fieldInfo.size == target.fieldInfo.size &&
+        s.parentInfo.size == target.parentInfo.size do
+      throw <| IO.userError s!"structure field order or owner mismatch for {s.structName}"
+    for (f, g) in s.fieldInfo.zip target.fieldInfo do
+      unless f.fieldName == g.fieldName && rename f.projFn == g.projFn &&
+          f.subobject?.map rename == g.subobject? && f.binderInfo == g.binderInfo &&
+          f.autoParam?.isNone && g.autoParam?.isNone do
+        throw <| IO.userError s!"structure field mismatch for {s.structName}.{f.fieldName}"
+    for (p, q) in s.parentInfo.zip target.parentInfo do
+      unless rename p.structName == q.structName && p.subobject == q.subobject && rename p.projFn == q.projFn do
+        throw <| IO.userError s!"structure parent mismatch for {s.structName}.{p.projFn}"
+  for (name, info) in projectionFnInfoExt.getModuleEntries port idx do
+    let some target := ref.getProjectionFnInfo? (rename name)
+      | throw <| IO.userError s!"unmatched projection {name} in {owner}"
+    unless port.getModuleIdxFor? name == some idx &&
+        ref.getModuleIdxFor? (rename name) == ref.getModuleIdx? (counterpart owner) &&
+        port.contains info.ctorName && rename info.ctorName == target.ctorName &&
+        info.numParams == target.numParams && info.i == target.i && info.fromClass == target.fromClass do
+      throw <| IO.userError s!"projection metadata mismatch for {name} in {owner}"
 
 private abbrev ClassParameters := Array Nat × Array Nat
 
@@ -162,6 +200,9 @@ def check (strict : Environment) : IO (Array (Name × Name)) := do
     let some idx := strict.getModuleIdx? port | throw <| IO.userError s!"missing module {port}"
     checkElaboration strict port idx
     if port == port.getRoot then
+      unless (structureExt.getModuleEntries strict idx).isEmpty &&
+          (projectionFnInfoExt.getModuleEntries strict idx).isEmpty do
+        throw <| IO.userError s!"unmatched structure registration in the {port} umbrella"
       unless (Meta.instanceExtension.ext.getModuleEntries strict idx).isEmpty do
         throw <| IO.userError s!"unmatched instance registration in the {port} umbrella"
       unless (Meta.simpExtension.ext.getModuleEntries strict idx).isEmpty do
@@ -180,6 +221,7 @@ def check (strict : Environment) : IO (Array (Name × Name)) := do
       let some idx := strict.getModuleIdx? owner | throw <| IO.userError s!"missing module {owner}"
       if owner != port then checkElaboration strict owner idx
       let data := strict.header.moduleData[idx]!
+      checkStructures strict reference owner idx
       checkInstances strict reference owner idx
       checkClasses strict reference owner idx strictClasses officialClasses
       checkSimp strict reference owner idx

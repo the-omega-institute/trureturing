@@ -65,7 +65,15 @@ def build(basis, output, workers, audit_log):
     if any(before[name] != source_fingerprint(sources[name]) for name in clients):
         raise RuntimeError("consumer sources changed during compilation")
     subprocess.run([lean, "--stdin"], cwd=ROOT, env=env, check=True, text=True,
-                   input="module\nprelude\nimport OmegaMath\n#check Omega.Nat.fib\n")
+                   input="""module
+prelude
+import OmegaMath
+#check Omega.Nat.fib
+example (a b : Omega.Nat) :
+    Omega.Eq ({ fst := a, snd := b } : Omega.Prod Omega.Nat Omega.Nat).fst a := Omega.rfl
+example (p : Omega.Prod Omega.Nat Omega.Nat) (b : Omega.Nat) :
+    Omega.Eq ({ p with snd := b }).snd b := Omega.rfl
+""")
     subprocess.run([lean, "--run", Path(__file__).with_name("RootImports.lean"),
                     output, basis / "lib", *foundation], cwd=ROOT, check=True)
     audit = ROOT / ".lake/build/bin/omegaAudit"
