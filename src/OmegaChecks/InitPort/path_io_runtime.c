@@ -206,4 +206,33 @@ LEAN_EXPORT lean_obj_res omega_io_set_access_rights(b_lean_obj_arg path, lean_ob
     lean_dec(native);
     return strict_result(result, world, strict_unit);
 }
+
+extern lean_obj_res lean_io_metadata(b_lean_obj_arg);
+extern lean_obj_res lean_io_symlink_metadata(b_lean_obj_arg);
+
+static lean_obj_res strict_file_time(b_lean_obj_arg time) {
+    lean_object *out = lean_alloc_ctor(0, 2, 0);
+    lean_ctor_set(out, 0, omega_int_from_lean(lean_ctor_get(time, 0)));
+    lean_ctor_set(out, 1, lean_uint32_to_nat(lean_ctor_get_uint32(time, sizeof(void*))));
+    return out;
+}
+
+static lean_obj_res strict_metadata(b_lean_obj_arg record) {
+    size_t offset = 2 * sizeof(void*);
+    lean_object *out = lean_alloc_ctor(0, 4, 1);
+    lean_ctor_set(out, 0, strict_file_time(lean_ctor_get(record, 0)));
+    lean_ctor_set(out, 1, strict_file_time(lean_ctor_get(record, 1)));
+    lean_ctor_set(out, 2, lean_uint64_to_nat(lean_ctor_get_uint64(record, offset)));
+    lean_ctor_set_uint8(out, 4 * sizeof(void*), lean_ctor_get_uint8(record, offset + 16));
+    lean_ctor_set(out, 3, lean_uint64_to_nat(lean_ctor_get_uint64(record, offset + 8)));
+    return out;
+}
+
+LEAN_EXPORT lean_obj_res omega_io_metadata(b_lean_obj_arg path, lean_obj_arg world) {
+    return unary_path(lean_io_metadata, path, world, strict_metadata);
+}
+
+LEAN_EXPORT lean_obj_res omega_io_symlink_metadata(b_lean_obj_arg path, lean_obj_arg world) {
+    return unary_path(lean_io_symlink_metadata, path, world, strict_metadata);
+}
 #endif

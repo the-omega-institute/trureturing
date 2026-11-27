@@ -7,6 +7,8 @@ meta import OmegaChecks.InitPort.NativeState
 open Lean Compiler.LCNF OmegaChecks.InitPort.NativeState
 
 private def entries := #[
+  (`System.FilePath.metadata, "lean_io_metadata", "omega_io_metadata"),
+  (`System.FilePath.symlinkMetadata, "lean_io_symlink_metadata", "omega_io_symlink_metadata"),
   (`IO.getRandomBytes, "lean_io_get_random_bytes", "omega_io_random_bytes"),
   (`IO.Prim.setAccessRights, "lean_chmod", "omega_io_set_access_rights"),
   (`IO.getEnv, "lean_io_getenv", "omega_io_get_env"),
@@ -71,6 +73,31 @@ private def decodeError (source strict : Environment) : IO String := do
   return "\nstatic lean_obj_res strict_io_error(b_lean_obj_arg error) {\nswitch (lean_obj_tag(error)) {\n" ++
     cases ++ "default: lean_internal_panic_unreachable();\n}\n}\n"
 
+private def checkMetadata (source strict : Environment) : IO Unit := do
+  for (env, p) in [(source, Name.anonymous), (strict, `Omega)] do
+    let native := p.isAnonymous
+    let ctor := fun (n : Name) => do
+      let some l := ctorLayoutExt.find? env (p ++ n) | throw <| IO.userError s!"missing metadata layout {p ++ n}"
+      pure l
+    let time ← ctor `IO.FS.SystemTime.mk
+    let metadata ← ctor `IO.FS.Metadata.mk
+    let timeFields := if native then time.fieldInfo matches #[.object 0 _, .scalar 4 0 _]
+      else time.fieldInfo matches #[.object 0 _, .object 1 _]
+    let fileFields := if native then metadata.fieldInfo matches #[.object 0 _, .object 1 _, .scalar 8 0 _, .scalar 1 16 _, .scalar 8 8 _]
+      else metadata.fieldInfo matches #[.object 0 _, .object 1 _, .object 2 _, .scalar 1 0 _, .object 3 _]
+    unless timeFields && fileFields && time.ctorInfo.cidx == 0 && time.ctorInfo.usize == 0 &&
+        time.ctorInfo.size == (if native then 1 else 2) && time.ctorInfo.ssize == (if native then 4 else 0) &&
+        metadata.ctorInfo.cidx == 0 && metadata.ctorInfo.usize == 0 &&
+        metadata.ctorInfo.size == (if native then 2 else 4) && metadata.ctorInfo.ssize == (if native then 17 else 1) do
+      throw <| IO.userError "unexpected filesystem time or metadata layout"
+    for (name, i) in [(`dir, 0), (`file, 1), (`symlink, 2), (`other, 3)] do
+      let kind ← ctor (`IO.FS.FileType ++ name)
+      unless kind.ctorInfo.cidx == i && kind.fieldInfo.isEmpty do throw <| IO.userError "unexpected filesystem type index"
+  for (ctor, i) in [(`Omega.Int.ofNat, 0), (`Omega.Int.negSucc, 1)] do
+    let some l := ctorLayoutExt.find? strict ctor | throw <| IO.userError s!"missing {ctor}"
+    unless l.ctorInfo.cidx == i && l.ctorInfo.size == 1 && l.ctorInfo.ssize == 0 &&
+        l.ctorInfo.usize == 0 && (l.fieldInfo matches #[.object 0 _]) do throw <| IO.userError "unexpected strict timestamp integer"
+
 public unsafe def main (args : List String) : IO Unit := do
   let (ir, args) := if args.head? == some "--interpreter" then (true, args.drop 1) else (false, args)
   let [lib, file] := args | throw <| IO.userError "expected strict library and C output"
@@ -84,11 +111,14 @@ public unsafe def main (args : List String) : IO Unit := do
   let fs := roots.any fun (n, _, _) => n != `IO.getEnv
   let handles := roots.any fun (n, _, _) => `IO.FS.Handle |>.isPrefixOf n
   let readDir := roots.any fun (n, _, _) => n == `System.FilePath.readDir
+  let metadata := roots.any fun (n, _, _) => [`System.FilePath.metadata, `System.FilePath.symlinkMetadata].contains n
   let dicts := [`Omega.Fin, `Omega.BitVec, `Omega.UInt8, `Omega.Array, `Omega.ByteArray, `Omega.String] ++
     (if fs then [`Omega.UInt32, `Omega.System.FilePath] else []) ++
+    (if metadata then [`Omega.UInt64] else []) ++
     (if roots.any (fun (n, _, _) => n == `IO.FS.Handle.read || n == `IO.getRandomBytes) then [`Omega.USize] else [])
   if !ir then
     for n in dicts ++ [`Omega.Option, `Omega.List, `Omega.ST.Out] ++ (if fs then [`Omega.EST.Out, `Omega.IO.Error] else []) ++
+        (if metadata then [`Omega.IO.FS.SystemTime, `Omega.IO.FS.Metadata, `Omega.IO.FS.FileType, `Omega.Int] else []) ++
         (if readDir then [`Omega.IO.FS.DirEntry] else []) ++ (if handles then [`Omega.IO.FS.Mode] else []) do
       let env ← importModules imports {}
       if (monoTypeExt.find? env n).isSome then continue
@@ -108,6 +138,7 @@ public unsafe def main (args : List String) : IO Unit := do
     for f in l.fieldInfo, i in [:fields] do
       let .object j _ := f | throw <| IO.userError s!"expected boxed {n} field"
       unless i == j do throw <| IO.userError s!"unexpected {n} field position"
+  if metadata then checkMetadata source env
   if handles then
     for (n, tag) in [(`read, 0), (`write, 1), (`writeNew, 2), (`readWrite, 3), (`append, 4)] do
       for (e, mode) in [(source, `IO.FS.Mode), (env, `Omega.IO.FS.Mode)] do
