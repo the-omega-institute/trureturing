@@ -10,6 +10,7 @@ strata_touched:
   - D5/S3/Topology/RelativeConeRigidity
   - D5/S3/Topology/MatchedFaceIncidenceForest
   - D5/S3/Topology/DescendingClosureContiguity
+  - D5/S3/Topology/SubdivisionCategoricalCover
   - D5/S3/Topology/RelativeDerivedContiguity
   - D5/S3/Topology/BarycentricGraphDistance
   - D5/S3/Topology/BarycentricNeighborhoodIteration
@@ -82,6 +83,22 @@ the selected vertices. Each forest component contracts in the connected
 ambient complex, giving a two-piece categorical cover. The Lean
 incidence result addresses the forest step.
 [Subdivision and contiguity](https://arxiv.org/abs/1605.01322v2)
+
+## Conjecture 6.1 and categorical covers
+
+Conjecture 6.1 asks for the least size of a finite space with both category
+inequalities strict. Corollary 4.2 attains twelve points. The Lean theorem
+`SubdivisionCategoricalCover.hasCategoricalCover_double_subdivision`
+supplies the subdivision step for the lower bound. Two categorical induced
+subposets covering a finite poset give two categorical open subsets of its
+second subdivision. In the first subdivision each chain meeting a chosen
+set contracts through its intersection with that set. In the second
+subdivision the smallest chain in each flag makes the two lower sets cover.
+
+The lower-bound argument uses this transfer for connected cores of weak
+category at least two. The weak-category-one case uses an exhaustive analysis
+of cores of sizes nine through eleven. This module formalizes the subdivision
+step. [Conjecture 6.1 and Corollary 4.2](https://arxiv.org/html/2609.39615v1#S6)
 
 ## Contiguity under subdivision
 
