@@ -1,0 +1,1 @@
+{"statement_id":"sha256:2dfbff44318bf83e0a97f03ceb43b755cb98c46fc3f0ab39328339e582244fe6","declarations":[{"declaration_name_key":"ns(n0,18:exists_isFitFamily)","kind":"theorem","libraries":["Aesop","Batteries","Init","Lean","Mathlib","Std"],"axioms":["Classical.choice","Quot.sound","propext"]}]}
