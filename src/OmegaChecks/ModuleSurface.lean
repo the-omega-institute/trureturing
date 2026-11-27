@@ -153,6 +153,8 @@ private def checkElaboration (env : Environment) (owner : Name) (idx : ModuleIdx
       | `Omega.IO.Promise.new => pure (`OmegaInit.System.Promise, "omega_io_promise_new")
       | `Omega.IO.Promise.resolve => pure (`OmegaInit.System.Promise, "omega_io_promise_resolve")
       | `Omega.IO.Promise.isResolved => pure (`OmegaInit.System.Promise, "omega_io_promise_is_resolved")
+      | `Omega.Char.ofNat => pure (`OmegaInit.Prelude, "omega_char_of_nat")
+      | `Omega.String.ofList => pure (`OmegaInit.Prelude, "omega_string_of_list")
       | _ => throw <| IO.userError s!"unverified native symbol for {owner}/{n}"
     unless owner == expectedOwner && env.getModuleIdxFor? n == some idx &&
         data == ⟨[.standard `all symbol]⟩ do throw <| IO.userError s!"invalid native state entry {owner}/{n}"

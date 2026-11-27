@@ -20,7 +20,7 @@ def run(*args, **options):
 def compile_object(paths):
     source, obj = paths
     obj.parent.mkdir(exist_ok=True, parents=True)
-    run("leanc", "-DLEAN_EXPORTING", "-c", source, "-o", obj)
+    run("leanc", "-DLEAN_EXPORTING", "-I", HERE, "-c", source, "-o", obj)
     return obj
 
 
@@ -122,6 +122,11 @@ def compile_generated(stage, product, graph, seed_ir, owners=None, *, original_s
         requests.insert(0, "layouts=OmegaInit.Control.Basic")
     env = {**os.environ, "LEAN_ABORT_ON_PANIC": "1"}
     callbacks = before_owner or {}
+    literals = stage / "literal.c"
+    if "OmegaInit.Prelude" in selected and modes.get("OmegaInit.Prelude") == "mixed=":
+        run("lake", "env", "lean", "--run", HERE / "LiteralNative.lean", library, literals, env=env)
+        if literals.exists():
+            compile_object((literals, product / "native/literal.o"))
     pending = []
 
     def flush():
@@ -198,6 +203,11 @@ def compile_generated(stage, product, graph, seed_ir, owners=None, *, original_s
         run("lean", "-R", HERE, "-c", mixed, HERE / "GeneratedMixedConsumer.lean",
             env={**os.environ, "LEAN_PATH": str(library)})
         extra = ["-DOMEGA_TEST_MIXED", mixed]
+    if literals.exists():
+        client = sources / "literal-consumer.c"
+        run("lean", "-R", HERE, "-c", client, HERE / "LiteralConsumer.lean",
+            env={**os.environ, "LEAN_PATH": str(library)})
+        extra += ["-DOMEGA_TEST_LITERALS", client]
     app = sources / "consumer"
     run("leanc", consumer, HERE / "generated_control_consumer.c", *extra, *inputs, "-o", app)
     run(app)
