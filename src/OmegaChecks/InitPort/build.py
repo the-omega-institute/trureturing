@@ -79,6 +79,27 @@ def cyclic_declarations(path):
     return rejected, list(order.static_order())
 
 
+def compile_promise_runtime(stage, product, artifact, inventory):
+    bridge = stage / "promise.c"
+    run("lake", "env", "lean", "--run", HERE / "PromiseNative.lean", artifact, bridge)
+    if not bridge.exists():
+        return
+    native = product / "native"
+    native.mkdir(exist_ok=True)
+    obj = native / "promise.o"
+    run("leanc", "-fPIC", "-c", bridge, "-o", obj)
+    with inventory.open() as stream:
+        installed = {name for owner, name, _, status, _ in map(json.loads, stream)
+                     if owner == "Init.System.Promise" and status in {"added", "existing"}}
+    if {"IO.Promise.new", "IO.Promise.resolve"} <= installed:
+        consumer = stage / "promise-consumer.c"
+        run("lean", "-R", HERE, "-c", consumer, HERE / "PromiseConsumer.lean",
+            env={**os.environ, "LEAN_PATH": str(artifact)})
+        app = stage / "promise-consumer"
+        run("leanc", consumer, obj, HERE / "promise_consumer.c", "-o", app)
+        run(app)
+
+
 def generate(stage, product, seed, roots, excluded):
     transfer = stage / "transfer"
     artifact = product / "lib"
@@ -130,6 +151,8 @@ def generate(stage, product, seed, roots, excluded):
     graph = dict(json.loads((product / "modules.json").read_text()))
     closure = list(TopologicalSorter(graph).static_order())
     run("lake", "env", "lean", "--run", HERE / "ExportAxioms.lean", artifact, *graph)
+    if "OmegaInit.System.Promise" in graph:
+        compile_promise_runtime(stage, product, artifact, inventory)
     with (product / "audit.txt").open("w") as log:
         audit = ROOT / ".lake/build/bin/omegaAudit"
         checked = subprocess.run(["lake", "env", audit, "--exact-roots", artifact, *graph, "--", *closure],

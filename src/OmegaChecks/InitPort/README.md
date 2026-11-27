@@ -28,6 +28,8 @@ example (a : α) (b : β) : Omega.Eq (Prod.fst (Prod.mk a b)) a := Omega.rfl
 
 这个独立制品用于内核类型检查、证明和定义归约。生成器复制已移植结构的字段顺序、父结构和投影信息，并登记已有的类型类实例。普通导入支持用 `{ fst := a, snd := b }` 构造积、用 `{ p with snd := b }` 更新字段。声明覆盖率按内核接口计数。原生可执行代码、语法扩展和完整实例搜索行为仍待核验。
 
+若选定模块闭包包含 `Init.System.Promise`，生成器为已移植的 `Omega.IO.Promise.new` 与 `Omega.IO.Promise.resolve` 生成原生入口。将消费者编译成 C 后，可用 `leanc` 在链接时传入输出目录中的 `native/promise.o`。这两个入口调用钉版 Lean 运行时，并将返回值和严格库的世界状态装入 `Omega.ST.Out`。构建会编译独立消费者，验证两枚 Promise 分别兑现、重复兑现保留首次值，以及丢弃未兑现的句柄后，官方结果任务给出 `none`。`Omega.IO.Promise.result?` 的原生入口仍需适配 `Omega.Task` 的消去。
+
 `Omega.withPtrAddrUnsafe` 的返回值通过逐输入证明核对。官方实现把对象的机器地址传给回调 `k`，其参数 `h` 证明任意两个地址产生相同结果。严格实现调用 `Omega.withPtrAddr`。校验器读取官方的 `@[implemented_by]` 登记、两端签名和实际计算体，用 `h` 证明每个机器地址所得的值都等于严格实现的结果。[返回值核验](Address.lean) · [官方指针回调](https://github.com/leanprover/lean4/blob/v4.35.0/src/Init/Util.lean#L102)
 
 `ptrAddrUnsafe`、`ptrEq` 和 `ptrEqList` 能区分内容相等的两个列表。对于分别分配、唯一自然数字段相等的两个 `NonScalar` 对象，`ShareCommon.Object.ptrEq` 与 `ShareCommon.Object.ptrHash` 也能给出不同结果。运行 `lake env lean --run src/OmegaChecks/InitPort/PointerObservations.lean` 可在钉版 Lean 运行时复现。对原类型的任意纯函数，Lean 的等式替换要求这两组输入得到相同结果。每次盘点都在当前工具链执行观察。只有实际观测到不同返回值且源码中有针对该原类型的内核矛盾证明时，缺口记录才写入 `runtimeConflictWitness`。[内核证明](../InitInventory/PointerObservations.lean) · [运行时样例](PointerObservations.lean)

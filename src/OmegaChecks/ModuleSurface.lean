@@ -74,7 +74,7 @@ private def checkUmbrella (env : Environment) (port : Name) (idx : ModuleIdx) : 
 extension kinds therefore require a correspondence before a port can expose them. -/
 private def supportedExtension (name : Name) : Bool :=
   [-- Compiled interface registrations checked by the port and kernel-interface audits.
-   aliasExtension.name, classExtension.name, Meta.instanceExtension.ext.name, Meta.simpExtension.ext.name, auxRecExt.name,
+   externAttr.ext.name, aliasExtension.name, classExtension.name, Meta.instanceExtension.ext.name, Meta.simpExtension.ext.name, auxRecExt.name,
    protectedExt.name, matchPatternAttr.ext.name, Elab.Term.elabAsElim.ext.name, reducibilityCoreExt.name,
    privateToUserName structureExt.name, projectionFnInfoExt.name,
    -- Module provenance, compiled representation and kernel bookkeeping in the pinned toolchain.
@@ -101,6 +101,13 @@ private def checkSpecializations (env : Environment) (owner : Name) : IO Unit :=
         throw <| IO.userError s!"invalid parameter specialization for {entry.declName} in {owner}"
 
 private def checkElaboration (env : Environment) (owner : Name) (idx : ModuleIdx) : IO Unit := do
+  for (n, data) in externAttr.ext.getModuleEntries env idx do
+    let symbol ← match n with
+      | `Omega.IO.Promise.new => pure "omega_io_promise_new"
+      | `Omega.IO.Promise.resolve => pure "omega_io_promise_resolve"
+      | _ => throw <| IO.userError s!"unverified native symbol for {owner}/{n}"
+    unless owner == `OmegaInit.System.Promise && env.getModuleIdxFor? n == some idx &&
+        data == ⟨[.standard `all symbol]⟩ do throw <| IO.userError s!"invalid promise runtime entry {owner}/{n}"
   for entry in reducibilityExtraExt.ext.getModuleEntries env idx do
     let (name, _) := match entry with
       | .global value | .scoped _ value => value
