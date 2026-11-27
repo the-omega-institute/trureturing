@@ -1,0 +1,20 @@
+using static StrataLint.Scribe.DefinitionDsl;
+
+namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Entanglement.EntanglementBreaking;
+
+internal sealed class NetInterpolationDocument : IScribeDocumentDefinition
+{
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        H("Interpolation from finite nets"),
+        Blocks(
+            Describe.Lean(DescribeId.Create("eb-netinterpolation-exists-schmidt-bilinear-net"),
+                DeclarationHandle.Create("D5/S3/Quantum/Entanglement/EntanglementBreaking/NetInterpolation.exists_schmidt_bilinear_net"),
+                H("Bilinear net for bounded Schmidt rank"), StatementSource.FromLean(),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("Approximation of each factor yields two error terms controlled by the restricted bilinear bound. The net radius allows these errors to be absorbed into that bound."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("eb-netinterpolation-exists-full-sphere-quadratic-net"),
+                DeclarationHandle.Create("D5/S3/Quantum/Entanglement/EntanglementBreaking/NetInterpolation.exists_full_sphere_quadratic_net"),
+                H("Quadratic net controls the Hermitian operator norm"), StatementSource.FromLean(),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("Approximate a unit vector on both sides of its quadratic form. Hermiticity relates the supremum of the absolute quadratic form to the operator norm."))),
+                DescribeRole.Theorem))));
+}
