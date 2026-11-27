@@ -109,6 +109,9 @@ private def logicalConsequence? (owner name : Name) : Option (Name × Name) := d
       return (``OmegaChecks.InitBoundaries.PostconditionIdentity.LeftIdentity,
         ``OmegaChecks.InitBoundaries.PostconditionIdentity.ofMonad)
     | _ => pure ()
+  if owner == `Init.Internal.Order.Basic then
+    if let some witness := OmegaChecks.InitBoundaries.InternalOrder.decisionChains.lookup name then
+      return (``Classical.em, witness)
   if owner == `Init.Grind.Norm && name == ``Lean.Grind.exists_prop then
     return (``OmegaChecks.InitBoundaries.ExistentialConjunction.ClosedEquality,
       ``OmegaChecks.InitBoundaries.ExistentialConjunction.ofRule)
@@ -588,12 +591,6 @@ private def conditionalConsequence? (owner name : Name) : Option (String × Name
     if let some witness := OmegaChecks.InitBoundaries.InternalOrder.implicationOrders.lookup name then
       return ((``propext).toString, witness,
         "Every pair related by the pinned instance's rel field is also related by the replacement")
-    if name == ``Lean.Order.instCCPOOption then
-      return ((``Classical.em).toString, ``OmegaChecks.InitBoundaries.InternalOrder.excludedMiddleOfOptionCCPO,
-        "The order underlying the proposed CCPO on options agrees with the official flat order")
-    if name == ``Lean.Order.FlatOrder.instCCPO then
-      return ((``Classical.em).toString, ``OmegaChecks.InitBoundaries.InternalOrder.excludedMiddleOfFlatCCPO,
-        "At options with bottom none the order underlying the proposed CCPO agrees with the flat order")
     if name == ``Lean.Order.flat_csup then
       return ((``Classical.choice).toString, ``OmegaChecks.InitBoundaries.InternalOrder.choiceFromFlatPresence,
         "For nonempty α and the universal predicate on Option α with bottom none, the result has tag some, as in the pinned definition")

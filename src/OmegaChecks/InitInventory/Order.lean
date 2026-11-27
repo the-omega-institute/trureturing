@@ -454,29 +454,66 @@ theorem excludedMiddleOfFlatSuprema
       cases h
     exact .inr fun hp => impossible (.isTrue hp)
 
-
-private theorem completeFlatOrder {α : Type} (order : CCPO (Option α))
-    (agree : ∀ x y : Option α, order.rel x y ↔ x ⊑ y)
-    {c : Option α → Prop} (hc : chain c) : ∃ top, is_sup c top := by
-  have hc' : @chain _ order.toPartialOrder c := fun x y hx hy =>
-    (hc x y hx hy).elim (fun h => .inl ((agree x y).mpr h)) (fun h => .inr ((agree y x).mpr h))
-  obtain ⟨top, upper⟩ := @CCPO.has_csup _ order c hc'
-  refine ⟨top, fun x => ⟨?_, ?_⟩⟩
-  · intro bound y hy
-    exact (agree y x).mp ((upper x).mp ((agree top x).mpr bound) y hy)
-  · intro bounds
-    exact (agree top x).mp ((upper x).mpr fun y hy => (agree y x).mpr (bounds y hy))
-
+/-- A chain of encoded decisions has at most one member. When the decision exists,
+its encoding must be the supremum in every chain-complete partial order. -/
+private theorem excludedMiddleOfDecisionChain {α : Type} {p : Prop} (order : CCPO α)
+    (encode : Decidable p → α) (decode : α → Option (Decidable p))
+    (recover : ∀ d, decode (encode d) = some d) : p ∨ ¬p := by
+  letI := order
+  let c : α → Prop := fun x => ∃ d, x = encode d
+  have ordered : chain c := by
+    rintro _ _ ⟨d, rfl⟩ ⟨d', rfl⟩
+    cases Subsingleton.elim d d'
+    exact .inl PartialOrder.rel_refl
+  obtain ⟨s, least⟩ := order.has_csup ordered
+  cases hs : decode s with
+  | some d => cases d with
+    | isTrue hp => exact .inl hp
+    | isFalse hn => exact .inr hn
+  | none =>
+    refine .inr fun hp => ?_
+    let d : Decidable p := .isTrue hp
+    have first : s ⊑ encode d := (least _).mpr (by
+      rintro _ ⟨d', rfl⟩
+      cases Subsingleton.elim d' d
+      exact PartialOrder.rel_refl)
+    have second : encode d ⊑ s := (least s).mp PartialOrder.rel_refl _ ⟨d, rfl⟩
+    have same := PartialOrder.rel_antisymm first second
+    exact nomatch hs.symm.trans ((congrArg decode same).trans (recover d))
 
 theorem excludedMiddleOfOptionCCPO (order : type_of% @Lean.Order.instCCPOOption.{0})
-    (agree : ∀ {α : Type} (x y : Option α), (@order α).rel x y ↔ x ⊑ y)
     (p : Prop) : p ∨ ¬p :=
-  excludedMiddleOfFlatSuprema (fun {α _} hc => completeFlatOrder (@order α) agree hc) p
+  excludedMiddleOfDecisionChain (@order (Decidable p)) some id (fun _ => rfl)
 
-theorem excludedMiddleOfFlatCCPO (order : type_of% @FlatOrder.instCCPO.{1})
-    (agree : ∀ {α : Type} (x y : Option α), (@order (Option α) none).rel x y ↔ x ⊑ y)
+theorem excludedMiddleOfFlatCCPO (order : type_of% @Lean.Order.FlatOrder.instCCPO.{1})
     (p : Prop) : p ∨ ¬p :=
-  excludedMiddleOfFlatSuprema (fun {α _} hc => completeFlatOrder (@order (Option α) none) agree hc) p
+  excludedMiddleOfDecisionChain (@order (Option (Decidable p)) none) some id (fun _ => rfl)
+
+private theorem excludedMiddleOfStateResult {ε σ : Type} {p : Prop}
+    (order : CCPO (EST ε σ (Decidable p))) : p ∨ ¬p := by
+  obtain ⟨w⟩ := Void.instNonempty (σ := σ)
+  apply excludedMiddleOfDecisionChain order (fun d t => .ok d t) (fun act =>
+    match act w with
+    | .ok d _ => some d
+    | .error _ _ => none)
+  intro d
+  rfl
+
+theorem excludedMiddleOfESTCCPO (order : type_of% @Lean.Order.instCCPOESTOfNonempty)
+    (p : Prop) : p ∨ ¬p := excludedMiddleOfStateResult (@order Unit Unit (Decidable p) inferInstance)
+
+theorem excludedMiddleOfEIOCCPO (order : type_of% @Lean.Order.instCCPOEIOOfNonempty)
+    (p : Prop) : p ∨ ¬p := excludedMiddleOfStateResult (@order Unit (Decidable p) inferInstance)
+
+theorem excludedMiddleOfIOCCPO (order : type_of% @Lean.Order.instCCPOIO)
+    (p : Prop) : p ∨ ¬p := excludedMiddleOfStateResult (@order (Decidable p))
+
+def decisionChains : List (Name × Name) := [
+  (``Lean.Order.instCCPOOption, ``excludedMiddleOfOptionCCPO),
+  (``FlatOrder.instCCPO, ``excludedMiddleOfFlatCCPO),
+  (``Lean.Order.instCCPOESTOfNonempty, ``excludedMiddleOfESTCCPO),
+  (``Lean.Order.instCCPOEIOOfNonempty, ``excludedMiddleOfEIOCCPO),
+  (``Lean.Order.instCCPOIO, ``excludedMiddleOfIOCCPO)]
 
 theorem excludedMiddleOfFlatCSup (pick : type_of% @flat_csup.{1})
     (valid : ∀ {α : Type} (c : Option α → Prop), chain c → is_sup c (@pick (Option α) none c))
