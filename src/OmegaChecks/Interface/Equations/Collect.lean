@@ -183,8 +183,4 @@ public theorem Std.Iter.Total.atIdxSlow? {α β : Type u} [Iterator α Id β] [P
   rcases p with ⟨i, k⟩
   cases i.step using PlausibleIterStep.casesOn <;> cases k <;> rfl
 
-public theorem Char.succ? (c : Char) :
-    OmegaChecks.InitPort.Alternatives.Char.succ? c = c.succ? :=
-  _root_.Char.succ?_eq.symm
-
 end OmegaChecks.Interface.Equations

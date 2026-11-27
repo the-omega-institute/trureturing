@@ -232,7 +232,87 @@ public theorem Char.ordinal_zero : type_of% @_root_.Char.ordinal_zero := by
   rw [charOfValidNat 0 (Or.inl below)]
   exact ite_eq_left below
 
-public def Char.succ? (c : Char) : Option Char := (c.ordinal.addNat? 1).map Char.ofOrdinal
+private theorem scalarNextSome (c d : Char) (step : d.ordinal.val = c.ordinal.val + 1) :
+    some d = (c.ordinal.addNat? 1).map Char.ofOrdinal := by
+  have h := step ▸ d.ordinal.isLt
+  rw [Fin.addNat?_eq_some h, Option.map_some]
+  apply congrArg some
+  have e : d.ordinal = (⟨c.ordinal.val + 1, h⟩ : Fin Char.numCodePoints) := Fin.ext step
+  rw [← e, Char.ofOrdinal_ordinal]
+
+private theorem incrementScalar (c d : Char) (next : d.val = c.val + 1) :
+    d.val.toNat = c.val.toNat + 1 := by
+  rw [next, UInt32.toNat_add]
+  obtain h | ⟨_, h⟩ := c.valid
+  · exact Nat.mod_eq_of_lt (Nat.lt_of_le_of_lt h (by decide : 55296 < 4294967296))
+  · exact Nat.mod_eq_of_lt (Nat.lt_of_le_of_lt h (by decide : 1114112 < 4294967296))
+
+private theorem ordinalStepBelow (c d : Char) (next : d.val = c.val + 1) (hc : c.val < 0xd7ff) :
+    d.ordinal.val = c.ordinal.val + 1 := by
+  have pre : (0xd7ff : UInt32).toNat = 0xd7ff := UInt32.toNat_ofNat_of_lt (by decide)
+  have bound : c.val.toNat < 0xd7ff := pre ▸ UInt32.lt_iff_toNat_lt.mp hc
+  have gap : 0xd7ff + 1 = (0xd800 : Nat) := lowOnesSucc 26 11
+  have below : c.val.toNat + 1 < 0xd800 := gap ▸ Nat.succ_lt_succ bound
+  rw [charPacked, charPacked, incrementScalar c d next]
+  unfold packScalar
+  rw [ite_eq_left below, ite_eq_left (Nat.lt_trans (Nat.lt_succ_self _) below)]
+
+private theorem ordinalStepAbove (c d : Char) (next : d.val = c.val + 1)
+    (hc : ¬ c.val < 0xd7ff) (distinct : ¬ c.val = 0xd7ff) :
+    d.ordinal.val = c.ordinal.val + 1 := by
+  have pre : (0xd7ff : UInt32).toNat = 0xd7ff := UInt32.toNat_ofNat_of_lt (by decide)
+  have gap : 0xd7ff + 1 = (0xd800 : Nat) := lowOnesSucc 26 11
+  have lower : (0xd800 : Nat) ≤ c.val.toNat := by
+    rw [← gap]
+    apply Nat.lt_of_le_of_ne
+    · exact Nat.le_of_not_lt fun h => hc (UInt32.lt_iff_toNat_lt.mpr (pre.symm ▸ h))
+    · exact fun e => distinct (UInt32.toNat.inj (e.symm.trans pre.symm))
+  rw [charPacked, charPacked, incrementScalar c d next]
+  unfold packScalar
+  rw [ite_eq_right (Nat.not_lt_of_ge (Nat.le_trans lower (Nat.le_succ _))),
+    ite_eq_right (Nat.not_lt_of_ge lower)]
+  have pad : Char.numSurrogates ≤ c.val.toNat := Nat.le_trans (by decide : 2048 ≤ 0xd800) lower
+  omega
+
+private theorem ordinalStepAcross (c d : Char) (hc : c.val = 0xd7ff) (hd : d.val = 0xe000) :
+    d.ordinal.val = c.ordinal.val + 1 := by
+  have pre : (0xd7ff : UInt32).toNat = 0xd7ff := UInt32.toNat_ofNat_of_lt (by decide)
+  have high : (0xe000 : UInt32).toNat = 0xe000 := UInt32.toNat_ofNat_of_lt (by decide)
+  have left : (0xd800 : Nat) + 2048 = 0xe000 := doubleBitsAdd 27 1 11
+  have right : 0xd7ff + 1 = (0xd800 : Nat) := lowOnesSucc 26 11
+  rw [charPacked, charPacked, hc, hd, pre, high]
+  unfold packScalar
+  rw [ite_eq_right (by decide), ite_eq_left (by decide), right, ← left, Nat.add_sub_cancel]
+
+private theorem ordinalNextNone (c : Char) (last : ¬ c.val < 0x10ffff) :
+    none = (c.ordinal.addNat? 1).map Char.ofOrdinal := by
+  have bound : (0x10ffff : UInt32).toNat = 0x10ffff := UInt32.toNat_ofNat_of_lt (by decide)
+  have lo : 0x10ffff ≤ c.val.toNat :=
+    Nat.le_of_not_lt fun h => last (UInt32.lt_iff_toNat_lt.mpr (bound.symm ▸ h))
+  have cut : 0xd800 ≤ c.val.toNat := Nat.le_trans (by decide : 0xd800 ≤ 0x10ffff) lo
+  apply Eq.symm
+  rw [Fin.addNat?_eq_none_iff.mpr]
+  · rfl
+  · rw [charPacked, packScalar, ite_eq_right (Nat.not_lt_of_ge cut)]
+    have hi : 0x10ffff + 1 = (0x110000 : Nat) := lowOnesSucc 16 16
+    have total : 0x10ffff + 1 ≤ c.val.toNat + 1 := Nat.succ_le_succ lo
+    rw [hi, ← packedSize] at total
+    have pad : Char.numSurrogates ≤ c.val.toNat := Nat.le_trans (by decide : 2048 ≤ 0xd800) cut
+    omega
+
+public theorem Char.succ?_eq : type_of% @_root_.Char.succ?_eq := by
+  intro c
+  unfold _root_.Char.succ?
+  split
+  next low => exact scalarNextSome c _ (ordinalStepBelow c _ rfl low)
+  next above =>
+    split
+    next edge => exact scalarNextSome c _ (ordinalStepAcross c _ edge rfl)
+    next other =>
+      split
+      next _ => exact scalarNextSome c _ (ordinalStepAbove c _ rfl above other)
+      next last => exact ordinalNextNone c last
+
 
 private theorem unpackMap (o : Option (Fin Char.numCodePoints)) :
     (o.map Char.ofOrdinal).map Char.ordinal = o := by
