@@ -46,6 +46,10 @@ $$\forall (h : \mathbb{N}), \forall (q : \mathbb{N}), \forall (n : \mathbb{N}), 
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/Additive/NathansonProblem15.nathanson_problem15` (`✓ std3`). ∎
 
+*Resolves.* `Problems/nathanson-2026-problem-15-prescribed-intervals` (proved) by `D5/S3/Arith/Additive/NathansonProblem15.nathanson_problem15`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"nathanson-2026-problem-15-prescribed-intervals","declaration_gid":"D5/S3/Arith/Additive/NathansonProblem15.nathanson_problem15","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Melvyn B. Nathanson (2026). *Problems in additive number theory, VII: The structure of additive h-bases for n*. URL: <https://arxiv.org/abs/2605.26425v3>.

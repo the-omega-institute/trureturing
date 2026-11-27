@@ -21,10 +21,6 @@ internal sealed class NathansonProblem15Document : IScribeDocumentDefinition
                 "The base is h² + 1, one more than the width of the allowed digit interval.", DescribeRole.Definition),
             Node("radix-generators", "radixGenerators", "Radix generators", GeneratorDefinition(),
                 "For each prescribed point, two generators are indexed by the two copies of Fin m.", DescribeRole.Definition),
-            // After the canonical first freeze, attach to the settling Describe:
-            // new OpenProblemResolutionClaim(
-            //     ProblemSlugRef.Create("nathanson-2026-problem-15-prescribed-intervals"),
-            //     ResolutionKind.Proved)
             Describe.Lean(DescribeId.Create("nathanson-problem-fifteen"),
                 DeclarationHandle.Create(Prefix + "nathanson_problem15"),
                 H("The prescribed interval equivalences"),
@@ -40,7 +36,10 @@ internal sealed class NathansonProblem15Document : IScribeDocumentDefinition
                     + "If two distinct count pairs have equal digits, a change in a second-label count forces one pair to spend all h terms at a single index. Both pairs then have zero digits. A zero code uses h − 1 first labels and one second label at a single index, and its sum is exactly the prescribed point at that index. "
                     + "The construction scales the code by twice the remainder bound plus two, which separates unequal codes by at least two. "
                     + "Adjacent sums must share a code and come from distinct multiplicity pairs, so their common code is zero. Each is then a prescribed point, and the spacing forces both into one prescribed interval."))),
-                DescribeRole.Theorem)),
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("nathanson-2026-problem-15-prescribed-intervals"),
+                    ResolutionKind.Proved))),
         []));
 
     private static DocumentBlock Node(string id, string name, string title, Formula statement, string prose,
