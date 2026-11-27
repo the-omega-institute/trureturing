@@ -200,13 +200,22 @@ unsafe def main (args : List String) : IO Unit := do
   let tokens := [(`Init.System.Promise, `IO.Promise.logicalToken), (`Init.System.ST, `ST.Ref.logicalToken)].map
     fun (owner, name) => (mkPrivateNameCore owner name, owner)
   let mut groups : NameMap (Array (Name × ConstantInfo)) := {}
+  let mut generatedOwners : NameMap Name := {}
   for ci in newDecls.constants do
     let (upstream, owner) ← if let some entry := tokens.find? (fun (n, _) => ci.name == renamed n) then
       pure entry
     else do
       let some upstream := reverseNames[ci.name]? | throw <| IO.userError s!"no official name for {ci.name}"
       pure (upstream, (officialModuleName source upstream).get!)
+    generatedOwners := generatedOwners.insert ci.name (owner.replacePrefix `Init `OmegaInit)
     groups := groups.insert owner ((groups.getD owner #[]).push (upstream,ci))
+  -- A localized proof can mention a private helper from the strict seed that has no
+  -- official name. Use its physical owner when building each module's dependency graph.
+  let dependencyOwner := fun (name : Name) => generatedOwners.find? name <|> do
+    let i ← monolith.getModuleIdxFor? name
+    let home := monolith.header.moduleNames[i]!
+    guard (home.getRoot == `OmegaInit)
+    return home
   IO.FS.createDirAll out
   let mut graph := #[]
   let edgeInfo ← IO.FS.Handle.mk (out.parent.get!.parent.get! / "candidate-edges.jsonl") .write
@@ -229,8 +238,7 @@ unsafe def main (args : List String) : IO Unit := do
     let publiclyDeclared : NameMap ConstantInfo := exported.constants.foldl (fun acc ci => acc.insert ci.name ci) {}
     let mut group := groups.getD official #[]
     if let some rank := order.find? owner then
-      let later := fun n => ((reverseNames[n]? >>= officialModuleName source).bind
-        fun m => order.find? (m.replacePrefix `Init `OmegaInit)).any (· > rank)
+      let later := fun n => (dependencyOwner n >>= order.find?).any (· > rank)
       group ← group.mapM fun (n, ci) => return (n, ← localizeProof monolith later ci)
     kept := kept + group.size
     if !group.isEmpty then keptOwners := keptOwners + 1
@@ -238,13 +246,11 @@ unsafe def main (args : List String) : IO Unit := do
       let mut edges := #[]
       let deps := (declarationDependencies ci).toArray
       for dep in deps do
-        if let some up := reverseNames[dep]? then
-          if let some m := officialModuleName source up then
-            let target := m.replacePrefix `Init `OmegaInit
-            if target != owner && !(baseImports.any (·.module == target)) then
-              if !edges.contains target then edges := edges.push target
-              if !(mappedImports.any (·.module == target)) then
-                mappedImports := mappedImports.push {module := target, isExported := false}
+        if let some target := dependencyOwner dep then
+          if target != owner && !(baseImports.any (·.module == target)) then
+            if !edges.contains target then edges := edges.push target
+            if !(mappedImports.any (·.module == target)) then
+              mappedImports := mappedImports.push {module := target, isExported := false}
       if !edges.isEmpty then edgeInfo.putStrLn (toJson #[owner.toString, originalName.toString, (toJson (edges.map Name.toString)).compress]).compress
     for i in mappedImports do
       unless i.module.getRoot == `OmegaInit do throw <| IO.userError s!"{owner} import {i.module}"
@@ -336,6 +342,8 @@ unsafe def main (args : List String) : IO Unit := do
       let original ← readLevels path
       let imports := original[2]!.imports.map (·.module.toString)
       graph := graph.push (dep, imports)
+      let dependencies := (toJson imports).compress
+      edgeInfo.putStrLn (toJson #[dep, "", dependencies, dependencies]).compress
       pending := pending ++ imports
       for ext in #["olean", "olean.server", "olean.private", "ir", "ir.sig"] do
         let to := modToFilePath out name ext
