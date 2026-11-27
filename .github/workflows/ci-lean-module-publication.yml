@@ -51,12 +51,13 @@ jobs:
         with:
           global-json-file: global.json
           cache: false
-      - name: Plan changes by module prefix
+      - name: Plan the missing publication targets
         id: shards
         env:
           STRATALINT_CACHE_WRITES: 'true'
           GH_TOKEN: ${{ github.token }}
           SHARD_MIB: ${{ inputs.shard_mib }}
+          LEAN_COMPILER_WORKERS: ${{ vars.LEAN_COMPILER_WORKERS }}
         uses: ./.github/actions/lean-cache-shards
         with:
           kind: ${{ inputs.kind }}

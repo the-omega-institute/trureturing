@@ -373,7 +373,7 @@ open Matrix
 
 variable {n : ℕ}
 
-private def edgeDegrees (a b : Fin n) : Fin n → ℝ := Pi.single a 1 + Pi.single b 1
+def edgeDegrees (a b : Fin n) : Fin n → ℝ := Pi.single a 1 + Pi.single b 1
 
 private theorem paramAdj_isSymm (G : SimpleGraph (Fin n)) [DecidableRel G.Adj]
     (a b : Fin n) (t : ℝ) : (paramAdj G a b t).IsSymm := by
@@ -382,7 +382,7 @@ private theorem paramAdj_isSymm (G : SimpleGraph (Fin n)) [DecidableRel G.Adj]
       Matrix.isSymm_add_transpose_self (Matrix.single a b (1 : ℝ))
   exact (G.isSymm_adjMatrix).add (hE.smul t)
 
-private theorem paramAdj_degrees (G : SimpleGraph (Fin n)) [DecidableRel G.Adj]
+theorem paramAdj_degrees (G : SimpleGraph (Fin n)) [DecidableRel G.Adj]
     (a b : Fin n) (d : Fin n → ℝ) (hrow : ∀ i, ∑ j, G.adjMatrix ℝ i j = d i)
     (t : ℝ) : ∀ i, ∑ j, paramAdj G a b t i j = d i + t * edgeDegrees a b i := by
   intro i
