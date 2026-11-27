@@ -104,6 +104,6 @@ internal sealed class PrunedFullMixtureObstructionDocument : IScribeDocumentDefi
     private static Formula LT(Formula a,Formula b) => new Formula.Relation(a,FormulaRelationOperator.LessThan,b);
     private static Formula LE(Formula a,Formula b) => new Formula.Relation(a,FormulaRelationOperator.LessThanOrEqual,b);
     private static Formula Multiply(Formula a,Formula b) => new Formula.Binary(Par(a),FormulaBinaryOperator.Multiply,Par(b));
-    private static Formula X(string n) => n == "mu" ? Mu : n == "tau" ? Tau : F.Id(n);
+    private static Formula X(string n) => F.Id(n);
     private static Formula Q(string n) => Seq(Operatorname,Grp(F.Id(n)));
 }
