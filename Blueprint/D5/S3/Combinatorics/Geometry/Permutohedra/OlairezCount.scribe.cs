@@ -32,19 +32,11 @@ internal sealed class OlairezCountDocument : IScribeDocumentDefinition
                 H("Finite cardinality in every dilation"),
                 StatementSource.FromAuthor(CountFormula()),
                 AssessedProvenance.FromRepo(Source),
-                Blocks(Paragraph(Text("Every source point corresponds to one terminal prefix of length n, and every such prefix recovers one source point. The sum counts the prefixes with multiplicity across states. Taking k = 1 gives the undilated count, and k = 0 gives the singleton at the origin. This resolves the lattice-point alternative of Question 6.1. An explicit Ehrhart coefficient formula remains open here."))),
-                DescribeRole.Theorem,
-                new OpenProblemResolutionClaim(
-                    ProblemSlugRef.Create("olairez-2026-dihedral-permutohedron-lattice-points"),
-                    ResolutionKind.Proved)),
-            Describe.Lean(
-                DescribeId.Create("olairez-count-four-one"),
-                DeclarationHandle.Create(Module + ".recurrence_four_one"),
-                H("Four coordinates at unit dilation"),
-                StatementSource.FromAuthor(Disp(Seq(Call(F.Id("E"), D(4), D(1)), Eq, D(2, 2)))),
-                AssessedProvenance.FromRepo(Source),
-                Blocks(Paragraph(Text("The terminal filter on the prefix contributions for n = 4 and k = 1 counts 22 occurrences. The proof uses kernel computation after the general recurrence identity. The cardinality theorem transfers that value to the original source lattice."))),
-                DescribeRole.Theorem))));
+                Blocks(Paragraph(Text("Every source point corresponds to one terminal prefix of length n, and every such prefix recovers one source point. The sum counts the prefixes with multiplicity across states. Taking k = 1 gives the undilated count, and k = 0 gives the singleton at the origin. This resolves the lattice-point alternative of Question 6.1. An explicit Ehrhart coefficient formula remains open here.")),
+                    Paragraph(Text("At n = 4 and k = 1, kernel evaluation counts 22 occurrences passing the terminal filter. Applying the cardinality theorem gives 22 points in the original source lattice."))),
+                DescribeRole.Theorem),
+            Definition("four-one-input", "fourOneInput", "Four coordinates at unit dilation",
+                "The input pair (4, 1) gives the coordinate count and dilation for the recurrence check."))));
 
     private static Formula CountFormula()
     {

@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Combinatorics/Geometry/Permutohedra/OlairezCount
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   utility: kind=checker; basis=terminal=gid:D5/S3/Combinatorics/Geometry/Permutohedra/OlairezCount.latticePointCount_terminalSum; instance=D5/S3/Combinatorics/Geometry/Permutohedra/OlairezCount.recurrence_four_one
+   utility: kind=checker; basis=terminal=gid:D5/S3/Combinatorics/Geometry/Permutohedra/OlairezCount.latticePointCount_terminalSum; instance=D5/S3/Combinatorics/Geometry/Permutohedra/OlairezCount.fourOneInput
    digest: Count lattice points of the dihedral orbit hull by a prefix recurrence. -/
 import D5.S3.Combinatorics.Geometry.Permutohedra.OlairezWrapHull
 import Mathlib.Algebra.Order.Floor.Ring
@@ -885,11 +885,18 @@ theorem latticePointCount_terminalSum (n k : ℕ) (hn : 3 ≤ n) :
   exact ⟨Finite.of_equiv _ e.symm,
     (Nat.card_congr e).trans (hc.trans (recurrence_eq_terminal_sum n k))⟩
 
+/-- The coordinate count and dilation for the first recurrence check. -/
+def fourOneInput : ℕ × ℕ := (4, 1)
+
 set_option maxRecDepth 200000 in
 set_option maxHeartbeats 2000000 in
--- Kernel evaluation expands the prefix contributions at bound four.
-/-- The terminal recurrence gives 22 at four coordinates and unit dilation. -/
-theorem recurrence_four_one : terminalSum 4 1 = 22 :=
-  (recurrence_eq_terminal_sum 4 1).symm.trans (by decide)
+example : Nat.card (SourcePoints fourOneInput.1 fourOneInput.2) = 22 := by
+  letI : NeZero fourOneInput.1 := ⟨by decide⟩
+  calc
+    _ = terminalSum fourOneInput.1 fourOneInput.2 :=
+      (latticePointCount_terminalSum _ _ (by decide)).2
+    _ = recurrenceCount fourOneInput.1 fourOneInput.2 :=
+      (recurrence_eq_terminal_sum _ _).symm
+    _ = 22 := by decide
 
 end OlairezCount
