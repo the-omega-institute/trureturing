@@ -645,7 +645,7 @@ private def inventory (lib : System.FilePath) (visible strict full witnesses : E
       let operand := OmegaChecks.InitBoundaries.ChoiceOperands.operand? owner info
       let endpointType : Option String ← match operand with
         | some op => do
-          if !OmegaChecks.InitBoundaries.ChoiceOperands.hasChoiceEndpoints info op then pure none
+          if !OmegaChecks.InitBoundaries.ChoiceOperands.hasChoiceEndpoints owner info then pure none
           else
             let certify := OmegaChecks.InitBoundaries.ChoiceOperands.certifyEndpoints official info op
             (Meta.MetaM.run' certify).toIO' {fileName := "<official equality endpoints>", fileMap := default} {env := witnesses}

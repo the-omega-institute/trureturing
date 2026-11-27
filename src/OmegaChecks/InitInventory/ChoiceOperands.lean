@@ -184,8 +184,25 @@ private def checkSpecification (official : Environment) (source : ConstantInfo) 
         let ty ← Lean.ofExceptKernelException (Kernel.check env {} endpoint)
         unless Kernel.isDefEqGuarded env {} ty choiceType do throwError "incomplete choice type in {source.name}"
 
-public def hasChoiceEndpoints (source : ConstantInfo) (op : Operand) : Bool :=
-  source.name.getPrefix == op.name || (specification? source.name).isSome
+/-- Physical congruence sites in the pin. Several modules export the same name.
+At each listed site, substituting the arguments of the selector witness into the
+actual statement exhibits a function of the type of Classical.choice at both endpoints. -/
+private def congruenceSites : List (Name × Name) := [
+  (`Init.Classical, `Classical.choose.congr_simp),
+  (`Init.WFExtrinsicFix, `WellFounded.extrinsicFix.congr_simp),
+  (`Init.While, `Classical.choice.congr_simp),
+  (`Init.While, `Exists.choose.congr_simp),
+  (`Init.Control.Lawful.Lemmas, `Exists.choose.congr_simp),
+  (`Init.Data.Option.Lemmas, `Classical.choice.congr_simp),
+  (`Init.Control.Lawful.MonadAttach.Lemmas, `Classical.ofNonempty.congr_simp),
+  (`Init.Data.Iterators.Consumers.Access, `WellFounded.extrinsicFix₂.congr_simp),
+  (`Init.Data.Range.Polymorphic.UpwardEnumerable, `Exists.choose.congr_simp),
+  (`Init.Data.Iterators.Lemmas.Consumers.Monadic.Collect, `WellFounded.extrinsicFix₂.congr_simp),
+  (`Init.Data.Iterators.Lemmas.Consumers.Monadic.Loop, `WellFounded.extrinsicFix₃.congr_simp)]
+
+public def hasChoiceEndpoints (owner : Name) (source : ConstantInfo) : Bool :=
+  congruenceSites.contains (owner, source.name) ||
+    (owner == `Init.Classical && (specification? source.name).isSome)
 
 public def certifyEndpoints (official : Environment) (source : ConstantInfo) (op : Operand) : MetaM Unit :=
   if (specification? source.name).isSome then checkSpecification official source op
@@ -194,13 +211,20 @@ public def certifyEndpoints (official : Environment) (source : ConstantInfo) (op
 run_cmd
   let env ← getEnv
   let pinned ← importModules #[{module := `Lean}] {} (level := .private)
+  let mut verified := #[]
   for (owner, data) in env.header.moduleNames.zip env.header.moduleData do
     unless owner.getRoot == `Init do continue
     for source in data.constants do
       unless isPrivateName source.name || source.name.isInternalOrNum || source.name.hasMacroScopes do
         if let some operand := operand? owner source then
           if let .error msg := check env owner source operand then throwError "{msg}"
-          if hasChoiceEndpoints source operand then
+          if source.name.getPrefix == operand.name then
+            unless congruenceSites.contains (owner, source.name) do
+              throwError "unrecorded choice-valued congruence in {owner}: {source.name}"
+            verified := verified.push (owner, source.name)
+          if hasChoiceEndpoints owner source then
             Elab.Command.liftCoreM <| Meta.MetaM.run' (certifyEndpoints pinned source operand)
+  unless verified.size == congruenceSites.length && congruenceSites.all verified.contains do
+    throwError "recorded choice congruences differ from the compiled pin"
 
 end OmegaChecks.InitBoundaries.ChoiceOperands
