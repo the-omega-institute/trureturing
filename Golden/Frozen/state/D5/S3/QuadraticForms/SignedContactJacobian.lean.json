@@ -1,0 +1,1 @@
+{"statement_id":"sha256:28a7cf2721acbab2bb9cef5f0cb86612817f07722695a4c39c02a6e0658dcd8d","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),14:QuadraticForms),21:SignedContactJacobian),10:kernel_iff)","kind":"theorem","libraries":["Batteries","Init","Mathlib","OmegaMath"],"axioms":["Classical.choice","Quot.sound","propext"]}]}

@@ -1,0 +1,1 @@
+{"statement_id":"sha256:ecd19817d8ac8c5a8808e740dffba20283216bcc7d8daf198c23d71a3aa4698a","declarations":[{"declaration_name_key":"ns(n0,19:hyperbolicSplitting)","kind":"def","libraries":["Aesop","Batteries","Init","Lean","Mathlib","Std"],"axioms":["Classical.choice","Quot.sound","propext"]}]}

@@ -22,10 +22,10 @@ def cross {h : ℕ} (p q : Column h) : Prop :=
 instance {h : ℕ} (p q : Column h) : Decidable (cross p q) :=
   inferInstanceAs (Decidable ((∀ _, _) ∧ ∀ _, _ ∧ _))
 
-private def tailGood {h : ℕ} : {k : ℕ} → Column h → (Fin k → Column h) → Prop
+def tailGood {h : ℕ} : {k : ℕ} → Column h → (Fin k → Column h) → Prop
   | 0, _, _ => True
   | _+1, p, f => cross p (f 0) ∧ tailGood (f 0) (Fin.tail f)
-private instance {h k : ℕ} (p : Column h) (f : Fin k → Column h) : Decidable (tailGood p f) := by
+instance {h k : ℕ} (p : Column h) (f : Fin k → Column h) : Decidable (tailGood p f) := by
   induction k generalizing p with
   | zero => exact isTrue trivial
   | succ k ih => exact @instDecidableAnd _ _ inferInstance (ih _ _)
@@ -34,7 +34,7 @@ def columnV {h : ℕ} : ℕ → Column h → ℕ
   | 0, _ => 1
   | k+1, p => ∑ q : Column h, if cross p q then columnV k q else 0
 
-private theorem tail_local {h : ℕ} (k : ℕ) (f : Fin (k+1) → Column h) :
+theorem tail_local {h : ℕ} (k : ℕ) (f : Fin (k+1) → Column h) :
     tailGood (f 0) (Fin.tail f) ↔ ∀ j : Fin k, cross (f j.castSucc) (f j.succ) := by
   induction k with
   | zero => simp [tailGood]
@@ -77,7 +77,7 @@ noncomputable def coloringEquiv (h k : ℕ) :
   left_inv p := DFunLike.ext _ _ (fun _ => rfl)
   right_inv f := Subtype.ext rfl
 
-private theorem tail_count {h : ℕ} (k : ℕ) (p : Column h) :
+theorem tail_count {h : ℕ} (k : ℕ) (p : Column h) :
     (∑ f : Fin k → Column h, if tailGood p f then 1 else 0) = columnV k p := by
   induction k generalizing p with
   | zero => simp [tailGood, columnV]
@@ -90,7 +90,7 @@ private theorem tail_count {h : ℕ} (k : ℕ) (p : Column h) :
     intro q _
     by_cases hc : cross p q <;> simp [tailGood,hc,ih]
 
-private theorem graph_count (h k : ℕ) :
+theorem graph_count (h k : ℕ) :
     Nat.card ((stripGraph true h k).Coloring (Fin 3)) = ∑ p : Column h, columnV k p := by
   classical
   rw [Nat.card_congr (coloringEquiv h k), Nat.card_eq_fintype_card,
