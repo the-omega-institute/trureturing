@@ -490,23 +490,66 @@ theorem excludedMiddleOfFlatCCPO (order : type_of% @Lean.Order.FlatOrder.instCCP
   excludedMiddleOfDecisionChain (@order (Option (Decidable p)) none) some id (fun _ => rfl)
 
 private theorem excludedMiddleOfStateResult {ε σ : Type} {p : Prop}
-    (order : CCPO (EST ε σ (Decidable p))) : p ∨ ¬p := by
+    (order : CCPO (EST ε σ (Option (Decidable p)))) : p ∨ ¬p := by
   obtain ⟨w⟩ := Void.instNonempty (σ := σ)
-  apply excludedMiddleOfDecisionChain order (fun d t => .ok d t) (fun act =>
+  apply excludedMiddleOfDecisionChain order (fun d t => .ok (some d) t) (fun act =>
     match act w with
-    | .ok d _ => some d
+    | .ok d _ => d
     | .error _ _ => none)
   intro d
   rfl
 
 theorem excludedMiddleOfESTCCPO (order : type_of% @Lean.Order.instCCPOESTOfNonempty)
-    (p : Prop) : p ∨ ¬p := excludedMiddleOfStateResult (@order Unit Unit (Decidable p) inferInstance)
+    (p : Prop) : p ∨ ¬p := excludedMiddleOfStateResult (@order Unit Unit (Option (Decidable p)) inferInstance)
 
 theorem excludedMiddleOfEIOCCPO (order : type_of% @Lean.Order.instCCPOEIOOfNonempty)
-    (p : Prop) : p ∨ ¬p := excludedMiddleOfStateResult (@order Unit (Decidable p) inferInstance)
+    (p : Prop) : p ∨ ¬p := excludedMiddleOfStateResult (@order Unit (Option (Decidable p)) inferInstance)
 
 theorem excludedMiddleOfIOCCPO (order : type_of% @Lean.Order.instCCPOIO)
-    (p : Prop) : p ∨ ¬p := excludedMiddleOfStateResult (@order (Decidable p))
+    (p : Prop) : p ∨ ¬p := excludedMiddleOfStateResult (@order (Option (Decidable p)))
+
+private theorem excludedMiddleOfSTResult {σ : Type} {p : Prop}
+    (order : CCPO (ST σ (Option (Decidable p)))) : p ∨ ¬p := by
+  obtain ⟨w⟩ := Void.instNonempty (σ := σ)
+  exact excludedMiddleOfDecisionChain order (fun d t => ⟨some d, t⟩)
+    (fun act => (act w).val) (fun _ => rfl)
+
+theorem excludedMiddleOfSTCCPO (order : type_of% @instCCPOSTOfNonempty)
+    (p : Prop) : p ∨ ¬p := excludedMiddleOfSTResult (@order (Option (Decidable p)) Unit ⟨none⟩)
+
+private abbrev tailOrder {m : Type → Type} [Bind m] (order : MonadTail m) (p : Prop) :
+    CCPO (m (Option (Decidable p))) :=
+  @MonadTail.instCCPO m _ order (Option (Decidable p)) ⟨none⟩
+
+theorem excludedMiddleOfIdTail (order : type_of% @instMonadTailId.{0})
+    (p : Prop) : p ∨ ¬p :=
+  excludedMiddleOfDecisionChain (tailOrder order p) some id (fun _ => rfl)
+
+theorem excludedMiddleOfOptionTail (order : type_of% @instMonadTailOption.{0})
+    (p : Prop) : p ∨ ¬p :=
+  excludedMiddleOfDecisionChain (tailOrder order p) (some ∘ some)
+    Option.join (fun _ => rfl)
+
+theorem excludedMiddleOfExceptTail (order : type_of% @instMonadTailExcept.{0,0})
+    (p : Prop) : p ∨ ¬p :=
+  excludedMiddleOfDecisionChain (tailOrder (@order Unit) p)
+    (fun d => .ok (some d)) (fun act => match act with | .ok val => val | .error _ => none)
+    (fun _ => rfl)
+
+theorem excludedMiddleOfSTTail (order : type_of% @instMonadTailST)
+    (p : Prop) : p ∨ ¬p := excludedMiddleOfSTResult (tailOrder (@order Unit) p)
+
+theorem excludedMiddleOfBaseIOTail (order : type_of% @instMonadTailBaseIO)
+    (p : Prop) : p ∨ ¬p := excludedMiddleOfSTResult (tailOrder order p)
+
+theorem excludedMiddleOfESTTail (order : type_of% @instMonadTailESTOfNonempty)
+    (p : Prop) : p ∨ ¬p := excludedMiddleOfStateResult (tailOrder (@order Unit Unit inferInstance) p)
+
+theorem excludedMiddleOfEIOTail (order : type_of% @instMonadTailEIOOfNonempty)
+    (p : Prop) : p ∨ ¬p := excludedMiddleOfStateResult (tailOrder (@order Unit inferInstance) p)
+
+theorem excludedMiddleOfIOTail (order : type_of% @instMonadTailIO)
+    (p : Prop) : p ∨ ¬p := excludedMiddleOfStateResult (tailOrder order p)
 
 def decisionChains : List (Name × Name) := [
   (``Lean.Order.instCCPOOption, ``excludedMiddleOfOptionCCPO),
@@ -514,6 +557,17 @@ def decisionChains : List (Name × Name) := [
   (``Lean.Order.instCCPOESTOfNonempty, ``excludedMiddleOfESTCCPO),
   (``Lean.Order.instCCPOEIOOfNonempty, ``excludedMiddleOfEIOCCPO),
   (``Lean.Order.instCCPOIO, ``excludedMiddleOfIOCCPO)]
+
+def tailDecisionChains : List (Name × Name) := [
+  (``Lean.Order.instCCPOSTOfNonempty, ``excludedMiddleOfSTCCPO),
+  (``Lean.Order.instMonadTailId, ``excludedMiddleOfIdTail),
+  (``Lean.Order.instMonadTailOption, ``excludedMiddleOfOptionTail),
+  (``Lean.Order.instMonadTailExcept, ``excludedMiddleOfExceptTail),
+  (``Lean.Order.instMonadTailST, ``excludedMiddleOfSTTail),
+  (``Lean.Order.instMonadTailBaseIO, ``excludedMiddleOfBaseIOTail),
+  (``Lean.Order.instMonadTailESTOfNonempty, ``excludedMiddleOfESTTail),
+  (``Lean.Order.instMonadTailEIOOfNonempty, ``excludedMiddleOfEIOTail),
+  (``Lean.Order.instMonadTailIO, ``excludedMiddleOfIOTail)]
 
 theorem excludedMiddleOfFlatCSup (pick : type_of% @flat_csup.{1})
     (valid : ∀ {α : Type} (c : Option α → Prop), chain c → is_sup c (@pick (Option α) none c))

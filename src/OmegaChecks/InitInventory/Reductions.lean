@@ -130,7 +130,7 @@ private def replayWitnesses (env : Environment) : IO Unit := do
     [``ReferenceRoundTrip.alloc, ``ReferenceRoundTrip.primAlloc, ``ReferenceRoundTrip.set, ``ReferenceRoundTrip.primSet,
      ``ReferenceRoundTrip.modify, ``ReferenceRoundTrip.primModify] ++
     BooleanReflection.witnesses.map (fun row => row.2.2) ++
-    InternalOrder.decisionChains.map Prod.snd ++
+    InternalOrder.decisionChains.map Prod.snd ++ InternalOrder.tailDecisionChains.map Prod.snd ++
     OrderTags.equivalences.map (fun row => row.2.2) ++ [``OrderTags.propextFromOrderRules] ++
     [``RangeSize.emOfClosed, ``RangeSize.emOfOpen, ``RangeSize.closedOfEM, ``RangeSize.openOfEM] ++
     IntegerCancellation.witnesses.map (fun row => row.2.2) ++

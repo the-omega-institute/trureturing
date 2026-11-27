@@ -112,6 +112,9 @@ private def logicalConsequence? (owner name : Name) : Option (Name × Name) := d
   if owner == `Init.Internal.Order.Basic then
     if let some witness := OmegaChecks.InitBoundaries.InternalOrder.decisionChains.lookup name then
       return (``Classical.em, witness)
+  if owner == `Init.Internal.Order.MonadTail then
+    if let some witness := OmegaChecks.InitBoundaries.InternalOrder.tailDecisionChains.lookup name then
+      return (``Classical.em, witness)
   if owner == `Init.Grind.Norm && name == ``Lean.Grind.exists_prop then
     return (``OmegaChecks.InitBoundaries.ExistentialConjunction.ClosedEquality,
       ``OmegaChecks.InitBoundaries.ExistentialConjunction.ofRule)
