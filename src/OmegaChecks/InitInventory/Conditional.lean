@@ -68,6 +68,20 @@ public def conditionalConsequence? (owner name : Name) : Option (String × Name 
       else ``OmegaChecks.InitBoundaries.ArrayCasts.mapIndexed
     return ("False", witness,
       "On Array Unit with word length zero and a callback returning none : Option Empty, the zero-step exit returns some output of the original natural length")
+  if owner == `Init.Data.List.ToArray || owner == `Init.Data.Array.Lemmas then
+    let entry := match owner, name with
+      | `Init.Data.List.ToArray, ``List.findM?_toArray
+      | `Init.Data.Array.Lemmas, ``Array.findM?_toList =>
+        some (``OmegaChecks.InitBoundaries.MonadicTraversal.SingletonSearch.BoolFusion,
+          ``OmegaChecks.InitBoundaries.MonadicTraversal.SingletonSearch.boolOfSingleton)
+      | `Init.Data.List.ToArray, ``List.findSomeM?_toArray
+      | `Init.Data.Array.Lemmas, ``Array.findSomeM?_toList =>
+        some (``OmegaChecks.InitBoundaries.MonadicTraversal.SingletonSearch.OptionFusion,
+          ``OmegaChecks.InitBoundaries.MonadicTraversal.SingletonSearch.optionOfSingleton)
+      | _, _ => none
+    if let some (target, witness) := entry then
+      return (target.toString, witness,
+        "On the singleton Unit input the array traverses one ForInStep and the list branches directly on the predicate result")
   if owner == `Init.Data.Array.Monadic && [``Array.foldlM_subtype, ``Array.foldrM_subtype].contains name then
     let witness := if name == ``Array.foldlM_subtype then ``OmegaChecks.InitBoundaries.MonadicTraversal.fromListFoldl
       else ``OmegaChecks.InitBoundaries.MonadicTraversal.fromListFoldr

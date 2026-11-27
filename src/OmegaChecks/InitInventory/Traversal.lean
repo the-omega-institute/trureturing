@@ -4,6 +4,10 @@ import Lean.Replay
 import all Lean.Util.CollectAxioms
 import all Init.Data.Iterators.Basic
 import all Init.Data.Array.Basic
+import all Init.Data.Nat.Bitwise.Basic
+import all Init.Data.List.Control
+import Init.Data.List.ToArray
+import Init.Data.Array.Lemmas
 import all Init.Data.Iterators.Consumers.Monadic.Loop
 import all Init.Prelude
 public import OmegaChecks.InitInventory.Extensionality
@@ -88,6 +92,100 @@ example (rule : type_of% @Array.foldrM_subtype.{u,u,0}) : type_of% @List.foldrM_
   rw [← Array.foldrM_toList (xs := xs.toArray)] at eq
   rw [← Array.size_unattach (xs := xs.toArray), ← Array.foldrM_toList, Array.toList_unattach] at eq
   exact eq
+
+namespace SingletonSearch
+
+/- The forward monadic search correspondences are open. Each public law specializes to
+one of these reader equations. Constructor cases establish pointwise agreement. -/
+private abbrev Acc (α : Type) := Option (Option α) × Unit
+
+private def finish {m : Type → Type} [Monad m] {α : Type} (step : m (ForInStep (Acc α))) : m (Option α) := do
+  let result ← (step >>= fun | .done x => pure x | .yield x => pure x)
+  match result.1 with
+  | some x => pure x
+  | none => pure none
+
+private def boolStep {m : Type → Type} [Monad m] (test : m Bool) : m (ForInStep (Acc Unit)) := do
+  if (← test) then return .done (some (some ()), ())
+  else return .yield (none, ())
+
+/-- The pinned wildcard matcher tests bit `x.ctorIdx` of the mask `2`. Specializing
+the first argument of bitwise and to `1` eliminates its termination proof. -/
+private def wildcardGuard (x : Option Bool) : Prop :=
+  let n := Nat.shiftRight 2 x.ctorIdx
+  let masked := if _h : n = 0 then 0
+    else if _h : decide (n % 2 = 1) = true then 1 else 0
+  masked ≠ 1
+
+set_option smartUnfolding false
+attribute [local semireducible] Nat.bitwise
+example : wildcardGuard = (fun x => Nat.hasNotBit 2 x.ctorIdx) := by
+  delta Nat.hasNotBit Nat.land Nat.bitwise Nat.bitwise._unary wildcardGuard
+  rfl
+
+private noncomputable def optionStep {m : Type → Type} [Monad m] (test : m (Option Bool)) : m (ForInStep (Acc Bool)) := do
+  let result ← test
+  let motive (x : Option Bool) :=
+    (wildcardGuard x → m (ForInStep (Acc Bool))) → m (ForInStep (Acc Bool))
+  Option.rec (motive := motive) (fun tail => tail Nat.zero_ne_one)
+    (fun b _ => pure (.done (some (some b), ()))) result
+    (fun _ => pure (.yield (none, ())))
+
+private def boolResult {m : Type → Type} [Monad m] (test : m Bool) : m (Option Unit) := do
+  match (← test) with | true => pure (some ()) | false => pure none
+
+private def optionResult {m : Type → Type} [Monad m] (test : m (Option Bool)) : m (Option Bool) := do
+  match (← test) with
+  | some b => return some b
+  | none => return none
+
+private abbrev readBool : ReaderM Bool Bool := read
+private abbrev readOption : ReaderM (Option Bool) (Option Bool) := read
+/-- The two singleton Boolean searches as complete reader functions. -/
+def BoolFusion : Prop := finish (boolStep readBool) = boolResult readBool
+/-- The two singleton option searches as complete reader functions. -/
+def OptionFusion : Prop := finish (optionStep readOption) = optionResult readOption
+
+def BoolSingleton := ∀ {m : Type → Type} [Monad m] [LawfulMonad m] (p : m Bool),
+  finish (boolStep p) = boolResult p
+def OptionSingleton := ∀ {m : Type → Type} [Monad m] [LawfulMonad m] (p : m (Option Bool)),
+  finish (optionStep p) = optionResult p
+
+theorem boolOfSingleton (h : BoolSingleton) : BoolFusion :=
+  @h (ReaderM Bool) _ (lawful Bool) readBool
+theorem optionOfSingleton (h : OptionSingleton) : OptionFusion :=
+  @h (ReaderM (Option Bool)) _ (lawful _) readOption
+
+example (h : type_of% @List.findM?_toArray.{0}) : BoolSingleton := by
+  intro m mon laws p
+  exact @h m Unit mon laws (fun _ => p) [()]
+
+example (h : type_of% @List.findSomeM?_toArray.{0,0,0}) : OptionSingleton := by
+  intro m mon laws p
+  exact @h m Unit Bool mon laws (fun _ => p) [()]
+
+example (h : type_of% @Array.findM?_toList.{0}) : BoolSingleton := by
+  intro m mon laws p
+  exact (@h m Unit mon laws (fun _ => p) #[()]).symm
+
+example (h : type_of% @Array.findSomeM?_toList.{0,0,0}) : OptionSingleton := by
+  intro m mon laws p
+  exact (@h m Unit Bool mon laws (fun _ => p) #[()]).symm
+
+example (b : Bool) : finish (boolStep readBool) b = boolResult readBool b := by cases b <;> rfl
+example (v : Option Bool) : finish (optionStep readOption) v = optionResult readOption v := by cases v <;> rfl
+
+run_cmd
+  let env ← getEnv
+  for name in [``BoolFusion, ``OptionFusion] do
+    let some (.defnInfo law) := env.find? name | throwError "missing singleton search law {name}"
+    let some (_, left, right) := law.value.eq? | throwError "expected an equality in {name}"
+    if Kernel.isDefEqGuarded env {} left right then
+      throwError "the two readers in {name} are now definitionally equal"
+  for witness in [``boolOfSingleton, ``optionOfSingleton] do
+    unless (← collectAxioms witness).isEmpty do throwError "singleton search witness {witness} uses axioms"
+
+end SingletonSearch
 
 end MonadicTraversal
 
