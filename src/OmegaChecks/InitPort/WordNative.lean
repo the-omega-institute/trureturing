@@ -92,7 +92,8 @@ public def supported (source : Environment) (owner name : Name) : Bool :=
   let platform := owner == `OmegaInit.System.Platform && [`System.Platform.getIsWindows, `System.Platform.getIsOSX,
     `System.Platform.getIsLinux, `System.Platform.getIsEmscripten, `System.Platform.getTarget,
     `System.Platform.Internal.getHardwareConcurrency].contains name
-  let modular := (owner == `OmegaInit.Data.Nat.Div.Basic && name == `Nat.divExact) ||
+  let modular := (owner == `OmegaInit.Data.Nat.Gcd && name == `Nat.gcd) ||
+    (owner == `OmegaInit.Data.Nat.Div.Basic && name == `Nat.divExact) ||
     (owner == `OmegaInit.Data.Nat.PowMod && name == `Nat.powMod)
   let stringOp := owner == `OmegaInit.Data.String.Bootstrap && [`String.Internal.length, `String.Internal.append].contains name
   let intPrimitive := intOwner && name.getPrefix == `Int &&
