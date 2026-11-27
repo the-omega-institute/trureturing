@@ -327,6 +327,19 @@ private def logicalConsequence? (owner name : Name) : Option (Name × Name) := d
 
 /-- The conclusion uses the indicated semantic agreement in addition to the public type. -/
 private def conditionalConsequence? (owner name : Name) : Option (String × Name × String) := do
+  if owner == `Init.Grind.Ring.Envelope || owner == `Init.Grind.Module.Envelope then
+    let target := (``funext).toString
+    if name == ``Lean.Grind.Ring.OfSemiring.neg_add_cancel ||
+        name == ``Lean.Grind.IntModule.OfNatModule.neg_add_cancel then
+      return (target, ``OmegaChecks.InitBoundaries.Envelope.funextFromCancellation,
+        "On the Boolean additive monoid, negation swaps (true,false) and addition of the swapped and original representatives yields (true,true), with zero represented by (false,false)")
+    let witness ← match name with
+      | ``Lean.Grind.Ring.OfSemiring.ofSemiring => some ``OmegaChecks.InitBoundaries.Envelope.funextFromEnvelopeRing
+      | ``Lean.Grind.CommRing.OfCommSemiring.ofCommSemiring => some ``OmegaChecks.InitBoundaries.Envelope.funextFromEnvelopeCommRing
+      | ``Lean.Grind.IntModule.OfNatModule.ofNatModule => some ``OmegaChecks.InitBoundaries.Envelope.funextFromEnvelopeIntModule
+      | _ => none
+    return (target, witness,
+      "On the Boolean additive monoid, the proposed structure computes the official negation on (true,false), addition of the swapped and original representatives, and zero")
   if owner == `Init.Util then
     if name == ``ptrAddrUnsafe then
       return ("False", ``OmegaChecks.InitBoundaries.PointerObservations.address,

@@ -3,6 +3,7 @@ public import Lean
 import Lean.Replay
 import all Lean.Util.CollectAxioms
 import all Init.Grind.Ring.Envelope
+import all Init.Grind.Module.Envelope
 import all Init.Prelude
 public import OmegaChecks.InitInventory.Logic
 
@@ -122,9 +123,62 @@ theorem funextFromCancellation
   intro α β f g h
   exact envelopeFunext eq.symm h
 
+/-- Three computations of the proposed ring on the Boolean semiring's quotient. -/
+structure RingComputes (s : Ring (Q Bool)) : Prop where
+  negValue : s.toNeg.neg (Q.mk (true, false)) = Q.mk (false, true)
+  addValue : s.toSemiring.toAdd.add (Q.mk (false, true)) (Q.mk (true, false)) = Q.mk (true, true)
+  zeroValue : (s.toSemiring.ofNat 0).ofNat = Q.mk (false, false)
+
+private theorem RingComputes.funext {s : Ring (Q Bool)} (h : RingComputes s) :
+    type_of% @funext.{u,v} :=
+  @funextFromCancellation s.toSemiring.toAdd.add s.toNeg.neg h.negValue h.addValue
+    (fun z => (s.neg_add_cancel z).trans h.zeroValue)
+
+theorem funextFromEnvelopeRing (ring : type_of% @ofSemiring.{0})
+    (computes : RingComputes (@ring Bool boolSemiring)) : type_of% @funext.{u,v} :=
+  @RingComputes.funext _ computes
+
+local instance boolCommSemiring : CommSemiring Bool where
+  toSemiring := boolSemiring
+  mul_comm a b := by cases a <;> cases b <;> rfl
+
+theorem funextFromEnvelopeCommRing (ring : type_of% @CommRing.OfCommSemiring.ofCommSemiring.{0})
+    (computes : RingComputes (@ring Bool boolCommSemiring).toRing) : type_of% @funext.{u,v} :=
+  @RingComputes.funext _ computes
+
+local instance boolNatModule : NatModule Bool where
+  zero := false
+  add := Bool.or
+  nsmul := ⟨fun k a => natPositive k && a⟩
+  add_zero a := by cases a <;> rfl
+  add_comm a b := by cases a <;> cases b <;> rfl
+  add_assoc a b c := by cases a <;> cases b <;> cases c <;> rfl
+  zero_nsmul _ := rfl
+  add_one_nsmul n a := by cases n <;> cases a <;> rfl
+
+/-- Three computations of the proposed integer module on the Boolean additive monoid's quotient. -/
+structure IntModuleComputes (s : IntModule (IntModule.OfNatModule.Q Bool)) : Prop where
+  negValue : s.toAddCommGroup.toNeg.neg (IntModule.OfNatModule.Q.mk (true, false)) =
+    IntModule.OfNatModule.Q.mk (false, true)
+  addValue : s.toAddCommGroup.toAddCommMonoid.toAdd.add
+    (IntModule.OfNatModule.Q.mk (false, true)) (IntModule.OfNatModule.Q.mk (true, false)) =
+    IntModule.OfNatModule.Q.mk (true, true)
+  zeroValue : s.toAddCommGroup.toAddCommMonoid.toZero.zero = IntModule.OfNatModule.Q.mk (false, false)
+
+theorem funextFromEnvelopeIntModule (mod : type_of% @IntModule.OfNatModule.ofNatModule.{0})
+    (computes : IntModuleComputes (@mod Bool boolNatModule)) : type_of% @funext.{u,v} := by
+  let s := (@mod Bool boolNatModule).toAddCommGroup
+  exact @funextFromCancellation s.toAddCommMonoid.toAdd.add s.toNeg.neg computes.negValue computes.addValue
+    (fun z => (s.neg_add_cancel z).trans computes.zeroValue)
+
+example : RingComputes (ofSemiring (α := Bool)) := ⟨rfl, rfl, rfl⟩
+example : RingComputes (CommRing.OfCommSemiring.ofCommSemiring (α := Bool)).toRing := ⟨rfl, rfl, rfl⟩
+example : IntModuleComputes (IntModule.OfNatModule.ofNatModule (α := Bool)) := ⟨rfl, rfl, rfl⟩
+
 run_cmd
   for n in [``funextFromNegRespect, ``funextFromAddRespect, ``funextFromSubRespect,
-      ``funextFromMulRespect, ``funextFromCancellation] do
+      ``funextFromMulRespect, ``funextFromCancellation, ``funextFromEnvelopeRing,
+      ``funextFromEnvelopeCommRing, ``funextFromEnvelopeIntModule] do
     unless (← collectAxioms n).isEmpty do throwError "ring envelope witness {n} uses axioms"
 
 end Envelope
