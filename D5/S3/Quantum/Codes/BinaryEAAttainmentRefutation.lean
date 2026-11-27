@@ -9,7 +9,13 @@
 import D5.S3.Quantum.Codes.BinaryEAAttainmentBridge
 import D5.S3.Quantum.Codes.BinaryEAShortening
 
-/-! The binary symplectic obstruction to exact attainment at every length in scope. -/
+/-!
+The binary symplectic obstruction to exact attainment at every length in scope.
+
+admission_basis: open-problem-resolution (#34860; Refuted).
+The public result is the designated refutation result (`basis=refutes`) and is exempt from
+four-slot escape registration (CLAUDE.md §3.9).
+-/
 
 set_option autoImplicit false
 
