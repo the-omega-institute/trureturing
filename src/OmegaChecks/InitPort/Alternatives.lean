@@ -35,6 +35,7 @@ public import OmegaChecks.InitPort.Alternatives.ListZip
 public import OmegaChecks.InitPort.Alternatives.Logic
 public import OmegaChecks.InitPort.Alternatives.Monad
 public import OmegaChecks.InitPort.Alternatives.Name
+public import OmegaChecks.InitPort.Alternatives.BitwiseEquation
 public import OmegaChecks.InitPort.Alternatives.NatBits
 public import OmegaChecks.InitPort.Alternatives.NatDigits
 public import OmegaChecks.InitPort.Alternatives.NatFold
@@ -95,6 +96,12 @@ private def officialLevelArgs (env : Environment) (alt official : ConstantInfo) 
   if Kernel.isDefEqGuarded env {} (type.instantiateLevelParams alt.levelParams args) official.type then return args
   return positional
 
+private def officialEquation? (env : Environment) (name : Name) : Option ConstantInfo :=
+  env.find? name <|> do
+    let (parent, _) ← Meta.declFromEqLikeName env name
+    let owner ← env.getModuleIdxFor? parent
+    env.find? (mkPrivateNameCore env.header.moduleNames[owner]! name)
+
 /-- Register named alternatives. The sibling namespace `AlternativeEquations` allows a
 proof of the original defining equation when Lean reserves its name for a replacement definition. -/
 public def loadAlternatives : IO (NameMap ConstantInfo) := do
@@ -119,7 +126,7 @@ public def loadAlternatives : IO (NameMap ConstantInfo) := do
       let body ← (Meta.deltaExpand body localMatcher (allowOpaque := true)).toIO'
         {fileName := "<constructive alternative>", fileMap := default} {env}
       let name := officialName ci.name
-      let official := (env.find? name).filter (fun entry => entry.numLevelParams == ci.numLevelParams)
+      let official := (if equation then officialEquation? env name else env.find? name).filter (fun entry => entry.numLevelParams == ci.numLevelParams)
       let params := official.map (·.levelParams) |>.getD ci.levelParams
       let args := official.map (officialLevelArgs env ci) |>.getD (ci.levelParams.map Level.param)
       if equation then
@@ -148,7 +155,7 @@ public def loadAlternatives : IO (NameMap ConstantInfo) := do
     | .defnInfo v => .defnInfo {v with type := officialNames orders v.type, value := officialNames orders v.value}
     | other => other
     if equationScope.isPrefixOf ci.name then
-      let some target := env.find? name | throw <| IO.userError s!"missing official equation {name}"
+      let some target := officialEquation? env name | throw <| IO.userError s!"missing official equation {name}"
       unless Kernel.isDefEqGuarded env {} value.type target.type do
         throw <| IO.userError s!"constructive equation {ci.name} does not match the complete type of {name}"
     aligned := aligned.insert name value

@@ -2,6 +2,7 @@ module
 
 public import Init.Data.Nat.Bitwise.Lemmas
 public import Init.Data.BitVec.Lemmas
+public import OmegaChecks.InitPort.Alternatives.BitwiseEquation
 import all Init.Data.Nat.Bitwise.Basic
 
 namespace OmegaChecks.Interface.Equations
@@ -10,20 +11,7 @@ public theorem BitVec.flattenListFast {n : Nat} (xs : List (BitVec n)) :
     _root_.BitVec.flattenList xs = _root_.BitVec.flattenListFast xs :=
   congrArg (fun k => @k n xs) _root_.BitVec.flattenList_eq_flattenListFast
 
-@[expose] public def bitwiseSteps (f : Bool → Bool → Bool) : Nat → Nat → Nat → Nat :=
-  Nat.rec (motive := fun _ => Nat → Nat → Nat) (fun _ _ => Nat.zero)
-    (fun _ prev a b => Nat.casesOn (motive := fun _ => Nat) a
-      (Bool.casesOn (motive := fun _ => Nat) (f Bool.false Bool.true) Nat.zero b)
-      (fun i => Nat.casesOn (motive := fun _ => Nat) b
-        (Bool.casesOn (motive := fun _ => Nat) (f Bool.true Bool.false) Nat.zero (Nat.succ i))
-        (fun j =>
-          let x := Nat.succ i
-          let y := Nat.succ j
-          let one := Nat.succ Nat.zero
-          let two := Nat.succ one
-          let r := prev (Nat.div x two) (Nat.div y two)
-          let bit := f (Nat.beq (Nat.mod x two) one) (Nat.beq (Nat.mod y two) one)
-          Bool.casesOn (motive := fun _ => Nat) bit (Nat.add r r) (Nat.succ (Nat.add r r)))))
+public abbrev bitwiseSteps := OmegaChecks.InitPort.bitwiseSteps
 
 private theorem steps_eq (f : Bool → Bool → Bool) (fuel n m : Nat) (h : n < fuel) :
     bitwiseSteps f fuel n m = _root_.Nat.bitwise f n m := by
