@@ -46,6 +46,20 @@ class CoverageTest(unittest.TestCase):
             self.assertIn("--exact-roots", commands[-1])
             self.assertTrue(all(call.kwargs["check"] for call in run.call_args_list))
 
+    def test_matched_definition_requires_its_official_native_signature(self):
+        row = site("Init.Core", "found", kind="definition", matchingNameAndModule=True,
+                   strictModule="OmegaInit.Core", strictNativeSignature=False)
+        boundary = site("Init.Core", "boundary", kind="opaque", strictNativeSignature=False,
+                        impliesAxiom="Classical.choice", reductionWitness="proof")
+        with patch("report.subprocess.run") as run:
+            data = inventory(row, boundary)
+            with self.assertRaisesRegex(ValueError, "1 matched definitions.*Init.Core/found"):
+                verify_complete(data, Path("product"), *check_coverage(data))
+            run.assert_not_called()
+            data = inventory({**row, "strictNativeSignature": True}, boundary)
+            verify_complete(data, Path("product"), *check_coverage(data))
+            self.assertTrue(run.called)
+
     def test_witness_required_for_each_claimed_reduction(self):
         with self.assertRaisesRegex(ValueError, "incomplete axiom reduction"):
             check_coverage(inventory(site("Init.Core", "t", impliesAxiom="propext")))

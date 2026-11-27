@@ -58,6 +58,12 @@ def verify_complete(official, product, reductions, unresolved):
         raise ValueError(f"{len(unresolved)} unresolved public non-axiom definition sites; "
                          f"{reductions} checked axiom reductions, {runtime} observed runtime conflicts. "
                          f"Examples: {examples}. See init-gaps.tsv.")
+    missing_native = [(row["module"], row["name"]) for row in official["declarations"]
+                      if row["matchingNameAndModule"] and row.get("strictNativeSignature") is False]
+    if missing_native:
+        examples = ", ".join(f"{owner}/{name}" for owner, name in missing_native[:3])
+        raise ValueError(f"{len(missing_native)} matched definitions lack their official native signatures. "
+                         f"Examples: {examples}. See init-inventory.json.")
     # Never accept an old audit log or a same-name strict declaration as a certificate.
     # Audit the product actually being presented, against all installed official module roots.
     lib = product / "lib"
