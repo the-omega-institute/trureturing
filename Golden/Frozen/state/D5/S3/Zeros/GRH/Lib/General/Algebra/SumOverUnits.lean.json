@@ -1,0 +1,1 @@
+{"statement_id":"sha256:2c217ff15a9f136ed0b507f35aa8d98f1192e55b333319516b77a668d12439ec","declarations":[{"declaration_name_key":"ns(n0,20:sum_eq_add_sum_units)","kind":"theorem","libraries":["Batteries","Init","Lean","Mathlib"],"axioms":["Classical.choice","Quot.sound","propext"]}]}
