@@ -1,6 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.Robin;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.Robin.AllSupport;
 
 internal sealed class AllSupportRobinPrimeBlockDocument : IScribeDocumentDefinition
 {
@@ -10,7 +10,7 @@ internal sealed class AllSupportRobinPrimeBlockDocument : IScribeDocumentDefinit
         Blocks(
             Describe.Lean(
                 DescribeId.Create("robin-prime-cost-block"),
-                DeclarationHandle.Create("D5/S3/Arith/Robin/AllSupportRobinPrimeBlock.theta_weight_two_block_le_prime_cost"),
+                DeclarationHandle.Create("D5/S3/Arith/Robin/AllSupport/PrimeBlock.theta_weight_two_block_le_prime_cost"),
                 H("Chebyshev theta with the index-two Robin weight"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),

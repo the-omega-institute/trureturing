@@ -6,9 +6,9 @@ An exact decomposition of the Robin margin for arbitrary prime support.
 
 **Theorem 1.1 (Exact prime-cost and correction identity).**
 
-Lean statement: `D5/S3/Arith/Robin/AllSupportRobinCost.robin_margin_eq_all_support_ledger`
+Lean statement: `D5/S3/Arith/Robin/AllSupport/Cost.robin_margin_eq_all_support_ledger`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/AllSupportRobinCost.robin_margin_eq_all_support_ledger` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/AllSupport/Cost.robin_margin_eq_all_support_ledger` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -18,9 +18,9 @@ For a positive integer n with log n at least 2, the Robin log margin is the sum 
 
 **Theorem 1.2 (A lower bound for the Robin margin).**
 
-Lean statement: `D5/S3/Arith/Robin/AllSupportRobinCost.robin_margin_ge_prime_cost_add_theta_tail`
+Lean statement: `D5/S3/Arith/Robin/AllSupport/Cost.robin_margin_ge_prime_cost_add_theta_tail`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/AllSupportRobinCost.robin_margin_ge_prime_cost_add_theta_tail` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/AllSupport/Cost.robin_margin_ge_prime_cost_add_theta_tail` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -30,7 +30,7 @@ The prime cost and signed theta tail give a lower bound for the log margin at th
 
 ## References
 
-- Truth anchor: `D5/S3/Arith/Robin/AllSupportRobinCost.robin_margin_eq_all_support_ledger`
-- Truth anchor: `D5/S3/Arith/Robin/AllSupportRobinCost.robin_margin_ge_prime_cost_add_theta_tail`
-- Dependency: [D5/S3/Arith/Robin/OriginalEndpointPrimeTail](OriginalEndpointPrimeTail.md)
-- Dependency: [D5/S3/Arith/Robin/ThetaTailRobinWitness](ThetaTailRobinWitness.md)
+- Truth anchor: `D5/S3/Arith/Robin/AllSupport/Cost.robin_margin_eq_all_support_ledger`
+- Truth anchor: `D5/S3/Arith/Robin/AllSupport/Cost.robin_margin_ge_prime_cost_add_theta_tail`
+- Dependency: [D5/S3/Arith/Robin/OriginalEndpointPrimeTail](../OriginalEndpointPrimeTail.md)
+- Dependency: [D5/S3/Arith/Robin/ThetaTailRobinWitness](../ThetaTailRobinWitness.md)

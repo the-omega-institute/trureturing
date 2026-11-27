@@ -1,6 +1,6 @@
-/- GID: D5/S3/Arith/Robin/AllSupportRobinPrimeBlock
+/- GID: D5/S3/Arith/Robin/AllSupport/PrimeBlock
    generality: I
-   mirror-B: D5/B/S3/Arith/Robin/AllSupportRobinPrimeBlock
+   mirror-B: D5/B/S3/Arith/Robin/AllSupport/PrimeBlock
    mirror-E: none(waiver:analytic-prime-cost-estimate)
    anchors: []
    utility: none
@@ -16,9 +16,9 @@ The lower-end cancellation is the one in Analytic/PrimeSquareAbelBound.lean
 https://github.com/kimihiro64/Robin1984/tree/5ce18bf3487c68d9353276ef5811057f60d17808/Robin1984/Analytic
 
 This draft uses the exact native finite Abel formula and the primeCost
-definition from the companion AllSupportRobinCost.lean draft.
+definition from the companion Cost.lean module.
 -/
-import D5.S3.Arith.Robin.AllSupportRobinCost
+import D5.S3.Arith.Robin.AllSupport.Cost
 import D5.S3.Arith.Robin.PriceRecord.Effective.RobinEffectiveAbel
 
 /-! Lower bound for the Robin prime cost by a finite weighted Chebyshev integral. -/
@@ -28,7 +28,7 @@ set_option relaxedAutoImplicit false
 
 noncomputable section
 
-namespace D5.S3.Arith.Robin.AllSupportRobinCost
+namespace D5.S3.Arith.Robin.AllSupport
 
 open MeasureTheory
 open scoped BigOperators
@@ -148,4 +148,4 @@ theorem theta_weight_two_block_le_prime_cost {h : ℝ} (hh : 8 ≤ h) :
     linarith only [hcost]
   linarith only [hblock, htop]
 
-end D5.S3.Arith.Robin.AllSupportRobinCost
+end D5.S3.Arith.Robin.AllSupport

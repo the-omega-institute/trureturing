@@ -1,6 +1,6 @@
-/- GID: D5/S3/Arith/Robin/AllSupportRobinCost
+/- GID: D5/S3/Arith/Robin/AllSupport/Cost
    generality: I
-   mirror-B: D5/B/S3/Arith/Robin/AllSupportRobinCost
+   mirror-B: D5/B/S3/Arith/Robin/AllSupport/Cost
    mirror-E: none(waiver:analytic-prime-cost-estimate)
    anchors: []
    utility: none
@@ -27,7 +27,7 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section
 
-namespace D5.S3.Arith.Robin.AllSupportRobinCost
+namespace D5.S3.Arith.Robin.AllSupport
 
 open Finset Real MeasureTheory
 open scoped BigOperators
@@ -336,4 +336,4 @@ theorem robin_margin_pos_of_cost_tail {n : ℕ} (hn : 0 < n)
     0 < robinLogMargin n := by
   linarith [robin_margin_ge_prime_cost_add_theta_tail hn hH]
 
-end D5.S3.Arith.Robin.AllSupportRobinCost
+end D5.S3.Arith.Robin.AllSupport

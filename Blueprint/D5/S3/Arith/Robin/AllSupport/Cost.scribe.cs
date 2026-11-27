@@ -1,6 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.Robin;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.Robin.AllSupport;
 
 internal sealed class AllSupportRobinCostDocument : IScribeDocumentDefinition
 {
@@ -10,7 +10,7 @@ internal sealed class AllSupportRobinCostDocument : IScribeDocumentDefinition
         Blocks(
             Describe.Lean(
                 DescribeId.Create("all-support-robin-cost"),
-                DeclarationHandle.Create("D5/S3/Arith/Robin/AllSupportRobinCost.robin_margin_eq_all_support_ledger"),
+                DeclarationHandle.Create("D5/S3/Arith/Robin/AllSupport/Cost.robin_margin_eq_all_support_ledger"),
                 H("Exact prime-cost and correction identity"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
@@ -24,7 +24,7 @@ internal sealed class AllSupportRobinCostDocument : IScribeDocumentDefinition
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("all-support-robin-bound"),
-                DeclarationHandle.Create("D5/S3/Arith/Robin/AllSupportRobinCost.robin_margin_ge_prime_cost_add_theta_tail"),
+                DeclarationHandle.Create("D5/S3/Arith/Robin/AllSupport/Cost.robin_margin_ge_prime_cost_add_theta_tail"),
                 H("A lower bound for the Robin margin"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
