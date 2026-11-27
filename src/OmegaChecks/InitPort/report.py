@@ -83,7 +83,10 @@ def verify_complete(official, product, reductions, unresolved):
 
 
 def check_strict_reference_choices(product, stage, attempts):
-    owners = ("Init.System.ST", "Init.Control.StateRef", "Init.Internal.Order.Basic", "Init.Internal.Order.MonadTail")
+    owners = ["Init.System.ST", "Init.Control.StateRef", "Init.Internal.Order.Basic", "Init.Internal.Order.MonadTail"]
+    promise_ctor = ("Init.System.Promise", "_private.Init.System.Promise.0.IO.Promise.mk")
+    if attempts.get(promise_ctor, (None,))[0] in {"added", "existing"}:
+        owners.append("Init.System.Promise")
     required = ("Void.mk", "ST.Prim.mkRef", "ST.Ref.ref", "ST.Out.val")
     if not all(attempts.get((owners[0], name), (None,))[0] in {"added", "existing"} for name in required):
         return {}
@@ -92,6 +95,9 @@ def check_strict_reference_choices(product, stage, attempts):
     selected = [owner for owner in strict_owners if (lib / Path(*owner.split("."))).with_suffix(".olean").is_file()]
     subprocess.run(["lean", "-R", STRICT_SOURCES, "-o", stage / "StrictReferenceChoice.olean", STRICT_SOURCES / "StrictReferenceChoice.lean"],
                    cwd=ROOT, env={**os.environ, "LEAN_PATH": str(lib)}, check=True)
+    if "OmegaInit.System.Promise" in selected:
+        subprocess.run(["lean", "-R", HERE, "-o", stage / "StrictPromiseChoice.olean", HERE / "StrictPromiseChoice.lean"],
+                       cwd=ROOT, env={**os.environ, "LEAN_PATH": os.pathsep.join(map(str, (stage, lib)))}, check=True)
     output = stage / "strict-reference-choice.json"
     subprocess.run(["lake", "env", "lean", "--run", HERE / "ReferenceChoiceCheck.lean", lib, stage, output, *selected],
                    cwd=ROOT, check=True)

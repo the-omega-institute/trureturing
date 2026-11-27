@@ -14,7 +14,8 @@ public def main (args : List String) : IO Unit := do
     {module := `Init.Internal.Order.MonadTail, importAll := true}] {} (level := .private)
   let owners := owners.toArray.map String.toName
   searchPathRef.set [evidence, lib]
-  let env ← importModules (#[{module := `StrictReferenceChoice : Import}] ++ (owners.map fun n => {module := n})) {}
+  let evidenceModule := if owners.contains `OmegaInit.System.Promise then `StrictPromiseChoice else `StrictReferenceChoice
+  let env ← importModules (#[{module := evidenceModule : Import}] ++ (owners.map fun n => {module := n})) {}
     (level := .private)
   let mut kernelEnv := env.toKernelEnv
   let target := mkConst `OmegaStrictReference.Choice
@@ -31,6 +32,7 @@ public def main (args : List String) : IO Unit := do
     throw <| IO.userError "strict constructors must belong to OmegaInit.System.ST"
   let mut checked : Array (String × String × String) := #[]
   for (owner, name, witness) in ReferenceSelection.witnesses do
+    if name == `IO.Promise.result! then continue
     unless owners.contains (owner.replacePrefix `Init `OmegaInit) do continue
     let some ci := official.find? name | throw <| IO.userError s!"missing official {name}"
     let some proof := official.find? witness | throw <| IO.userError s!"missing read specialization {witness}"
@@ -54,7 +56,8 @@ public def main (args : List String) : IO Unit := do
     let .ok next := kernelEnv.addDeclCore 0 1000 decl none | throw <| IO.userError s!"invalid strict selection from {name}"
     kernelEnv := next
     checked := checked.push (owner.toString, name.toString, n.toString)
-  for (owner, name) in [(`Init.Internal.Order.Basic, `Lean.Order.EST.bot),
+  for (owner, name) in [(`Init.System.Promise, `IO.Promise.result!),
+      (`Init.Internal.Order.Basic, `Lean.Order.EST.bot),
       (`Init.Internal.Order.MonadTail, `Lean.Order.ST.bot')] do
     unless owners.contains (owner.replacePrefix `Init `OmegaInit) do continue
     let n := `OmegaStrictReference ++ name
