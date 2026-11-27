@@ -76,6 +76,7 @@ public def installNaturalBootstrap : CommandElabM Unit := do
   let orig ← importModules #[{module := `Init.Prelude}] {}
   let checked ← (← mkEmptyEnvironment).toKernelEnv.replay entries
   let mut env ← getEnv
+  let pkg := env.getModulePackage?
   for (n, _) in entries.toList do
     let some ci := checked.find? n | throwError "bootstrap replay omitted {n}"
     if let some existing := env.find? n then
@@ -105,7 +106,7 @@ public def installNaturalBootstrap : CommandElabM Unit := do
       if value.globalName?.any entries.contains then env := Meta.instanceExtension.addScopedEntry env ns value
   for (n, status) in reducibilityCoreExt.getModuleEntries orig idx do
     if entries.contains n then env := reducibilityCoreExt.addEntry (asyncDecl := n) env (n, status)
-  setEnv env
+  setEnv (env.setModulePackage pkg)
   liftCoreM <| withExporting do
     for family in #[`Bool, `Nat, `Eq, `PUnit, `PProd, `Decidable, `HAdd, `Add, `OfNat, `False, `HEq] do
       let some (.inductInfo ind) := (← getEnv).find? family | continue
