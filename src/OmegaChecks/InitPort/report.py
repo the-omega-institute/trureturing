@@ -73,6 +73,12 @@ def check_coverage(official):
         if bool(strict) != bool(strict_target) or (strict and (strict_target != "Classical.choice.{1}" or
                 strict != "OmegaStrictReference." + name or axiom or port or witness)):
             raise ValueError(f"inconsistent strict choice reduction for {owner}/{name}")
+        reduction_axiom = row.get("kernelReductionAxiom")
+        if site == ("Init.Prelude", "unsafeCast"):
+            if reduction_axiom != "lcProof" or port or axiom or not row.get("unsafe") or target != "sorryAx":
+                raise ValueError("invalid pinned reduction boundary for unsafeCast")
+        elif reduction_axiom:
+            raise ValueError(f"unexpected kernel reduction axiom for {owner}/{name}")
         runtime = row.get("runtimeConflictWitness")
         endpoint = row.get("specializedEndpointType")
         certificate = by_site.pop(site, None)

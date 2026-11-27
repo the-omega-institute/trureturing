@@ -1,5 +1,7 @@
 module
 public import Lean
+import OmegaChecks.InitInventory.UnsafeCast
+meta import OmegaChecks.InitInventory.UnsafeCast
 import OmegaChecks.InitCompiler.RootNames
 import OmegaChecks.InitInventory.ConstructorIff
 meta import OmegaChecks.InitInventory.ConstructorIff
@@ -650,6 +652,9 @@ private def inventory (lib strictDir : System.FilePath) (visible strict full wit
       let some (_, axioms) := localAxioms.binSearch (name, #[]) (fun a b => Name.quickLt a.1 b.1)
         | throwError "missing official axiom closure for {owner}/{name}"
       let typeAxioms ← checkedTypeAxioms official info axioms
+      let kernelReductionAxiom ← if owner == `Init.Prelude && name == `unsafeCast then
+        some <$> OmegaChecks.InitInventory.UnsafeCast.reductionAxiom official
+      else pure none
       let constructorIff := OmegaChecks.InitInventory.hasStrictConstructorIff official full info
       let operand := OmegaChecks.InitBoundaries.ChoiceOperands.operand? owner info
       let endpointType : Option String ← match operand with
@@ -808,6 +813,7 @@ private def inventory (lib strictDir : System.FilePath) (visible strict full wit
         | none => row
       let row := if let some target := endpointType then row.setObjVal! "specializedEndpointType" (toJson target) else row
       let row := if addressCallback then row.setObjVal! "checkedAddressCallback" (toJson true) else row
+      let row := if let some ax := kernelReductionAxiom then row.setObjVal! "kernelReductionAxiom" (toJson ax.toString) else row
       let row := if pointerHash then row.setObjVal! "checkedPointerHash" (toJson true) else row
       let row := if pointerComparison then row.setObjVal! "checkedPointerComparison" (toJson true) else row
       let row := if effectRunner then row.setObjVal! "checkedEffectRunner" (toJson true) else row
