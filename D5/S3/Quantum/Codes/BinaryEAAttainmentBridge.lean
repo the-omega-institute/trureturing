@@ -112,7 +112,7 @@ private theorem no_rank_one_on_small_support {n : ℕ} (U : Submodule F (E n)) (
     have hs : sp (p h) (p u) = ∑ i ∈ S, g i := by
       change (∑ j : Fin S.card, g (e j).val) = _
       exact (Equiv.sum_comp e (fun i : S => g i.val)).trans
-        (S.sum_subtype (fun _ => Iff.rfl) g)
+        (S.sum_subtype (fun _ => Iff.rfl) g).symm
     rw [hs]
     have hm : sp h (mask S u) = ∑ i ∈ S, g i := by
       unfold sp
@@ -133,8 +133,7 @@ private theorem no_rank_one_on_small_support {n : ℕ} (U : Submodule F (E n)) (
       by_contra! hz
       have hb := Submodule.finrank_eq_zero.mp (Nat.eq_zero_of_le_zero hz)
       exact hn ((Submodule.mem_bot F).mp (hb ▸ Submodule.mem_map.mpr ⟨h, hh, rfl⟩))
-    have hle : dim (H.map (site (f j))) ≤ 1 := hr (f j)
-    omega
+    exact Nat.le_antisymm (hr (f j)) hpos
   · rintro _ ⟨u, hu, rfl⟩ hnu
     have huH : u ∉ H := fun h => hnu (Submodule.mem_map.mpr ⟨u, h, rfl⟩)
     let Z := (Finset.univ : Finset (Fin S.card)).filter
