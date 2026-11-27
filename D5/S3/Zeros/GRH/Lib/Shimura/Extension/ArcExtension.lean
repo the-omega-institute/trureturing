@@ -88,12 +88,15 @@ lemma exists_hom_of_hasThetaCoords (hN : N.IsProjEmbedding A.hom) (c : N.picClas
   μ • N.picClass := by
   have ⟨k, hm⟩ : ∃ k, IsUnit (↑(μ + .succ k) : O) := by
     by_contra! H; simpa using (IsLocalRing.maximalIdeal O).sub_mem (H μ.succ) (H μ)
-  have ⟨e, he, C, i⟩ := exists_section_of_hasThetaCoords (s' :=
+  have hsection := exists_section_of_hasThetaCoords (s' :=
     .mk' (fun z ↦ lift (u.expMap z) (s' z)) (by bound)) u (h.pow _)
     (by aesop) (mod_cast hm.mul hn) ?_ ((hM.of_isPullback (.flip (.of_hasPullback ..))).mul (hN.pow
     ?_)) (fst ..) rfl ?_ (add_smul μ _ B ▸ pow_add χ .. ▸ (h'.pull 1 ?_).mul ((h.pow k.succ).pull 1
     ?_)) rfl (by linear_combination (norm := (simp; module)) (μ • congr($(pull_nsmul_eq_sq_smul c _
     ).pull (fst _ A').1) - congr($(pull_nsmul_eq_sq_smul c' _).pull (snd A _).1)))
+  all_goals try (solve | simp_all [atGeneric, exists_isTranslationLift_iff, mem_dualLattice_nsmul, mul_nsmul,
+    c.nsmul_class_pairing, ← comp_nsmul, ← map_nsmul])
+  rcases hsection with ⟨e, he, C, i⟩
   use e ≫ snd .., isAdditive_of_universal ((@isSeparatingFamily_atGeneric _ _ _ _
     (by simp [-fst_left]; infer_instance) _ _ _
     (homEquivToProd.symm.surjective.comp (u.4.prodMap u.4))).hom_ext ?_), ?_, (by simp_all
