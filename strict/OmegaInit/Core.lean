@@ -435,3 +435,6 @@ end Omega
 
 port_proof if_pos
 port_proof if_neg
+
+port_inductive ForInStep
+port_native_records ForIn, ForIn'

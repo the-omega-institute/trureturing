@@ -86,10 +86,12 @@ private def supportedExtension (name : Name) : Bool :=
    `Lean.Compiler.LCNF.impureTrivialStructureInfoExt, `Lean.Compiler.LCNF.ctorLayoutExt,
    `Lean.indirectModUseExt, `Lean.deprecatedModuleExt].contains (privateToUserName name)
 
-private def checkElaboration (env : Environment) (owner : Name) (idx : ModuleIdx) : IO Unit := do
-  let specs := Compiler.LCNF.specExtension.getModuleEntries env idx
+/-- The compiler may specialize a private helper inside a publicly callable definition. -/
+private def checkSpecializations (env : Environment) (owner : Name) : IO Unit := do
+  let some idx := env.getModuleIdx? owner | throw <| IO.userError s!"missing native owner {owner}"
+  let specs := Compiler.LCNF.specExtension.getModuleEntries env idx (level := .private)
   unless specs.isEmpty do
-    let base := Compiler.LCNF.baseExt.getModuleEntries env idx
+    let base := Compiler.LCNF.baseExt.getModuleEntries env idx (level := .private)
     for entry in specs do
       let some decl := base.find? (·.name == entry.declName)
         | throw <| IO.userError s!"no compiled signature for specialization of {entry.declName} in {owner}"
@@ -97,6 +99,8 @@ private def checkElaboration (env : Environment) (owner : Name) (idx : ModuleIdx
           entry.paramsInfo.size == decl.params.size &&
           entry.paramsInfo.any Compiler.LCNF.SpecParamInfo.causesSpecialization do
         throw <| IO.userError s!"invalid parameter specialization for {entry.declName} in {owner}"
+
+private def checkElaboration (env : Environment) (owner : Name) (idx : ModuleIdx) : IO Unit := do
   for entry in reducibilityExtraExt.ext.getModuleEntries env idx do
     let (name, _) := match entry with
       | .global value | .scoped _ value => value
@@ -212,12 +216,13 @@ private def checkSimp (strict reference : Environment) (owner : Name) (idx : Mod
 
 /-- Check a port as seen by a consumer importing it alone. Re-exported foundation
 declarations and alias targets are mathematical roots, even in a declaration-free module. -/
-def check (strict : Environment) : IO (Array (Name × Name)) := do
+def check (strict : Environment) (full? : Option Environment := none) : IO (Array (Name × Name)) := do
   let mut roots : NameMap Name := {}
   for port in strict.allImportedModuleNames do
     if !isBasis port then continue
     let some idx := strict.getModuleIdx? port | throw <| IO.userError s!"missing module {port}"
     checkElaboration strict port idx
+    checkSpecializations (full?.getD strict) port
     if port == port.getRoot then
       unless (structureExt.getModuleEntries strict idx).isEmpty &&
           (projectionFnInfoExt.getModuleEntries strict idx).isEmpty do

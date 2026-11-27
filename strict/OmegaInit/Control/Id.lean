@@ -18,3 +18,7 @@ def Id (type : Type u) : Type u := type
 protected def Id.run {α : Type u} (x : Id α) : α := x
 
 end Omega
+
+port_definition Id.instMonad with_native_code
+port_definition Id.hasBind with_native_code
+port_definition Id.instMonadLiftTOfPure with_native_code

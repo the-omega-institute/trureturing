@@ -113,9 +113,6 @@ private def officialDeclaration (stx : Syntax) : CommandElabM (Environment × Co
   let name := info.name
   let owner := (← getMainModule).replacePrefix `OmegaInit `Init
   liftCoreM <| withExporting do
-    if let some record := getStructureInfo? src name then
-      if !record.parentInfo.isEmpty then
-        throwError "expected an inductive or a flat record"
     let (decl, ctors) ← sourceGroup src owner name
     let .inductDecl _ _ types _ := decl | unreachable!
     Lean.addDecl decl
@@ -129,7 +126,7 @@ private def officialDeclaration (stx : Syntax) : CommandElabM (Environment × Co
         -- Use the registration from the owning module, including its out parameters.
         modifyEnv fun env => classExtension.addEntry env {cls with name := omegaName cls.name}
 
-/-- Elaborate a pinned, flat record and compile each of its actual projections. -/
+/-- Elaborate a pinned record and compile each of its actual projections. -/
 @[command_parser, builtin_command_parser] def portNativeRecords := leading_parser "port_native_records " >> sepBy1 ident ","
 
 @[builtin_command_elab portNativeRecords] def elabPortNativeRecords : CommandElab := fun stx => do

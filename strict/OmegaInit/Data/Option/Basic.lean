@@ -5,7 +5,7 @@ Authors: Leonardo de Moura, Mario Carneiro
 -/
 module
 prelude
-public import OmegaInit.Prelude
+public import OmegaInit.Control.Basic
 
 noncomputable section
 
@@ -116,3 +116,15 @@ theorem orElse_some :
     Eq (Option.orElse (Option.some a) b) (Option.some a) := Omega.rfl
 
 end Omega.Option
+
+port_definition instFunctorOption with_native_code
+port_definition instMonadOption with_native_code
+port_definition Option.instOrElse with_native_code
+port_definition Option.instDecidableEq.match_1 with_native_code
+port_definition Option.toArray with_native_code
+port_definition Option.getM with_native_code
+port_definition Option.mapM with_native_code
+port_definition Option.mapA with_native_code
+port_definition Option.elimM with_native_code
+port_definition Option.isEqSome.match_1 with_native_code
+port_definition Option.isEqSome with_native_code

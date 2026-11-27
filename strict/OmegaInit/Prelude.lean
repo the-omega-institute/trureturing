@@ -704,3 +704,34 @@ port_definition EStateM.nonBacktrackable with_native_code
 port_definition EStateM.instInhabitedResult with_native_code
 port_definition EStateM.instInhabited with_native_code
 port_definition EStateM.instMonadStateOf with_native_code
+
+port_native_records Applicative, Monad
+
+port_definition instInhabitedForallOfMonad with_native_code
+port_definition instInhabitedOfMonad with_native_code
+port_definition ReaderT.read with_native_code
+port_definition ReaderT.pure with_native_code
+port_definition ReaderT.bind with_native_code
+port_definition ReaderT.instFunctorOfMonad with_native_code
+port_definition ReaderT.instApplicativeOfMonad with_native_code
+port_definition ReaderT.instMonad with_native_code
+port_definition instMonadReaderOfReaderTOfMonad with_native_code
+port_definition EStateM.adaptExcept.match_1 with_native_code
+port_definition EStateM.adaptExcept with_native_code
+port_definition EStateM.bind.match_1 with_native_code
+port_definition EStateM.bind with_native_code
+port_definition EStateM.map with_native_code
+port_definition EStateM.tryCatch.match_1 with_native_code
+port_definition EStateM.tryCatch with_native_code
+port_definition EStateM.orElse with_native_code
+port_definition EStateM.seqRight with_native_code
+port_definition EStateM.run' with_native_code
+port_definition EStateM.instMonad with_native_code
+port_definition EStateM.instMonadExceptOfOfBacktrackable with_native_code
+port_definition EStateM.instOrElseOfBacktrackable with_native_code
+port_definition MonadExcept.ofExcept.match_1 with_native_code
+port_definition MonadExcept.ofExcept with_native_code
+port_definition MonadExcept.orElse with_native_code
+port_definition MonadExcept.instOrElse with_native_code
+
+port_native_records BEq, Membership

@@ -5,6 +5,8 @@ open Lean
 private def consumer := "module
 prelude
 public import OmegaInit.Data.Function
+public import OmegaInit.Data.Option.Basic
+public import OmegaInit.Control.Id
 public def firstValue (x y : Omega.Bool) : Omega.Bool :=
   Omega.Function.curry (fun p => Omega.Prod.fst p) x y
 public def secondValue (x y : Omega.Bool) : Omega.Bool :=
@@ -17,6 +19,13 @@ public def stateSecond (x y : Omega.Bool) : Omega.Bool :=
   Omega.EStateM.Result.casesOn (motive := fun _ => Omega.Bool)
     (@Omega.EStateM.run Omega.Bool Omega.Bool Omega.PUnit (Omega.EStateM.set y) x)
     (fun _ s => s) (fun _ _ => x)
+
+public def optionFirst (x y : Omega.Bool) : Omega.Bool :=
+  (@Omega.Option.mapM Omega.Id _ _ (@Omega.Monad.toApplicative Omega.Id Omega.Id.instMonad) (fun a => a) (Omega.Option.some x)).elim y (fun a => a)
+
+public def composeSecond (x y : Omega.Bool) : Omega.Bool :=
+  @Omega.Bind.kleisliRight Omega.Bool Omega.Id Omega.Bool Omega.Bool Omega.Id.hasBind
+    (fun _ => y) (fun a => a) x
 "
 
 /-- Compile a fresh ordinary consumer and execute its packaged IR with both Boolean values. -/
@@ -37,7 +46,7 @@ unsafe def main (args : List String) : IO Unit := do
     let b := mkConst `Omega.Bool
     let arity := .forallE `x b (.forallE `y b b .default) .default
     for (name, selectFirst) in [(`firstValue, true), (`secondValue, false),
-        (`additionFirst, true), (`stateSecond, false)] do
+        (`additionFirst, true), (`stateSecond, false), (`optionFirst, true), (`composeSecond, false)] do
       let some ci := env.find? name | throw <| IO.userError s!"missing {name}"
       unless Kernel.isDefEqGuarded env {} ci.type arity do throw <| IO.userError s!"invalid type of {name}"
       let fn ← IO.ofExcept <| env.evalConst (Bool → Bool → Bool) {} name

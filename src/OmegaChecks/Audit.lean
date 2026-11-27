@@ -39,7 +39,7 @@ private def checkUpstreamNames (strict publicStrict : Environment) : IO Unit := 
     if !owners.contains official then owners := owners.push official
   if owners.isEmpty then
     initSearchPath sysroot [lib]
-    discard <| OmegaChecks.ModuleSurface.check publicStrict
+    discard <| OmegaChecks.ModuleSurface.check publicStrict (some strict)
     return
   let targets := (owners.filter (·.getRoot == `Mathlib)).map fun name => s!"@mathlib/+{name}:olean"
   let proc ← IO.Process.spawn { cmd := "lake", args := #["build", "+OmegaChecks.Interface.Equations"] ++ targets }
@@ -59,7 +59,7 @@ private def checkUpstreamNames (strict publicStrict : Environment) : IO Unit := 
       if actual == owner then
         throw <| IO.userError s!"the active official declaration {counterpart} differs from the entry stored in {owner}"
       throw <| IO.userError s!"official owner of {counterpart} is {actual}, expected {owner}"
-  let reexports ← OmegaChecks.ModuleSurface.check publicStrict
+  let reexports ← OmegaChecks.ModuleSurface.check publicStrict (some strict)
   OmegaChecks.Interface.check strict publicStrict reference (bindings ++ reexports)
   IO.println s!"Upstream names and owning modules matched for {bindings.size} declarations in {owners}."
 
