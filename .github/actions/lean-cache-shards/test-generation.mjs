@@ -472,7 +472,7 @@ elif args.command == "finish":
 elif args.command == "restore":
     assert Path(args.targets_file).read_text() == "D5.A\\n"
     assert (args.kind or "") == kind
-    if args.version is None:
+    if args.version is None or Path("missing-index").exists():
         raise SystemExit(3)
     assert args.version == "lean-modules-" + "b" * 40 + ("-report" if kind == "report" else "")
     Path("pinned-restore").write_text(args.version)
@@ -503,6 +503,9 @@ else:
     const pinned = run('pull_request', 'restore-published');
     assert.equal(pinned.status, 0, pinned.stderr);
     assert.equal(await readFile(join(root, 'pinned-restore'), 'utf8'), env.INPUT_VERSION);
+    await writeFile(join(root, 'missing-index'), '');
+    assert.notEqual(run('pull_request', 'restore-published').status, 0);
+    await rm(join(root, 'missing-index'));
   }
   env.INPUT_KIND = '';
   delete env.INPUT_VERSION;

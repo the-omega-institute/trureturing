@@ -451,7 +451,7 @@ async function runModuleCache() {
       stdio: 'inherit', env: { ...process.env, LEAN_MODULE_ACTIONS_CACHE: '1' },
     });
   } catch (error) {
-    if (operation !== 'restore-published' || error.status !== 3) throw error;
+    if (operation !== 'restore-published' || error.status !== 3 || process.env.INPUT_VERSION) throw error;
     console.log('No published module cache yet. Continuing with the local Lean build.');
   }
 }
