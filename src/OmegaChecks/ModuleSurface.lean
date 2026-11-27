@@ -2,6 +2,7 @@ module
 public import Lean
 public import OmegaChecks.InitCompiler.RootNames
 import OmegaChecks.InitPort.Translation
+import OmegaChecks.InitPort.UnsafeRuntime
 import OmegaChecks.InitPort.WordNative
 import OmegaChecks.InitPort.FloatArrayNative
 import OmegaChecks.InitPort.BufferReference
@@ -112,6 +113,15 @@ private def checkElaboration (env full : Environment) (reference? : Option Envir
     (owner : Name) (idx : ModuleIdx) : IO Unit := do
   for (n, data) in externAttr.ext.getModuleEntries env idx do
     let (expectedOwner, symbol) ← match n with
+      | `Omega.ShareCommon.Object.eq | `Omega.ShareCommon.Object.hash => do
+        let original := InitKernelPort.originalName n
+        let some pinned := InitPort.UnsafeRuntime.observerSymbol? full `Init.ShareCommon original true
+          | throw <| IO.userError s!"invalid object observation ABI for {n}"
+        if let some ref := reference? then
+          unless InitPort.UnsafeRuntime.observerSymbol? ref `Init.ShareCommon original false == some pinned do
+            throw <| IO.userError s!"invalid pinned object observation ABI for {original}"
+        let symbol := if original == `ShareCommon.Object.hash then "omega_share_common_object_hash" else pinned
+        pure (`OmegaInit.ShareCommon, symbol)
       | `Omega.ShareCommon.StateFactory.mk => pure (`OmegaInit.ShareCommon, "omega_share_common_factory_mk")
       | `Omega.ShareCommon.State.mk => pure (`OmegaInit.ShareCommon, "l_ShareCommon_mkStateImpl")
       | `Omega.ShareCommon.State.shareCommon => pure (`OmegaInit.ShareCommon, "lean_state_sharecommon")
