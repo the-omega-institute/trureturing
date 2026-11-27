@@ -80,6 +80,20 @@ theorem mu_current_negative_word (a : Charge lattice) (u : Cartan) (d : ℕ+)
   rw [wordState, mu_current_negative_single]
   rfl
 
+/-- On coordinate oscillator words, the negative current product prepends the
+coordinate at its positive creation level. -/
+theorem mu_current_negative_oscillatorWord (a : Charge lattice) (j : NativeIndex)
+    (word : List NativeIndex) :
+    mu lattice (currentAlong lattice (oscillatorJet j).1)
+        (-(((oscillatorJet j).2 : ℕ) : ℤ)) (Finsupp.single a (nativeWordPolynomial word)) =
+      Finsupp.single a (nativeWordPolynomial (j :: word)) := by
+  have wordState_map (w : List NativeIndex) :
+      wordState a (w.map oscillatorJet) = Finsupp.single a (nativeWordPolynomial w) :=
+    congrArg (Finsupp.single a) (jetWordPolynomial_map w)
+  rw [← wordState_map word, ← wordState_map (j :: word), List.map_cons]
+  exact mu_current_negative_word a (oscillatorJet j).1 (oscillatorJet j).2
+    (word.map oscillatorJet)
+
 private theorem source_zero_above (u : Cartan) (v : NativeStates) (n : ℕ)
     (hn : vectorFrequencyBound lattice v < n) :
     mu lattice (currentAlong lattice u) (n : ℤ) v = 0 := by

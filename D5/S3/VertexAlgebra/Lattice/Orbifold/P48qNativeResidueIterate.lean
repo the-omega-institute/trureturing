@@ -899,12 +899,12 @@ open ThirdEigenspacePairing (p48qAction)
 open NativeStandardThirdLift (standardLift)
 open LatticeAllStateReconstruction (mu stateField_iterate)
 open P48qNativeCurrentLocality (nativeField_inResidue)
-open P48qNativePairwiseLocality (nativeField_pairwise_locality)
-open P48qChargedResidueProduct (adjustedResidue_ground_first_eigenstate)
+open P48qNativePairwiseLocality (nativeField_pairwise_locality eq_top_of_ground_and_eigenCurrent)
+open P48qChargedResidueProduct (adjustedResidue_ground_first_eigenstate mu_eigen)
 open private EigenWord EigenWord.eigen groundProject_mem eigenWords eigenWordSpan eigenWordSpan_eq_top
   liftProject liftProject_eigen from
   D5.S3.VertexAlgebra.Lattice.Orbifold.P48qNativePairwiseLocality
-open private mu_eigen current_lift_eigen adjusted_current_at_locality liftProject_eigenstate
+open private current_lift_eigen adjusted_current_at_locality liftProject_eigenstate
   liftProject_sum zeta_zpow_eq_iff from
   D5.S3.VertexAlgebra.Lattice.Orbifold.P48qChargedResidueProduct
 open P48qNativeResidueProduct (adjustedResidue_cutoff_mono)
@@ -1131,8 +1131,34 @@ run_cmd do
 
 #print axioms source_iterate_finset
 
+/-- The signed-residue form of the cubic twisted Borcherds identity at a
+finite source cutoff, with Laurent cover exponents on the right. -/
+def TwistedBorcherdsAt (Y : NativeStates →ₗ[ℂ] Field) (a b : NativeStates)
+    (s t : ℤ) (N : ℕ) : Prop :=
+  ∀ p q n : ℤ,
+    ((SignedFieldResidueLocality.residueField 1 n
+      (stripResidue (s - 3 * p) (Y a)) (stripResidue t (Y b))).operator)[[q]] =
+      ∑ j ∈ Finset.range ((N : ℤ) - n).toNat,
+        Ring.choose ((p : ℂ) - (s : ℂ) / 3) j •
+          HVertexOperator.coeff (Y (mu lattice a (n + (j : ℤ)) b))
+            (s + t - 3 * (p + q - (j : ℤ) + 1))
+
+private theorem nativeField_twisted_borcherds_with_cutoff (a b : NativeStates) (s t : ℤ)
+    (ha : σ a = ζ ^ s • a) (hb : σ b = ζ ^ t • b) :
+    ∃ N : ℕ, (∀ n ≥ (N : ℤ), mu lattice a n b = 0) ∧
+      TwistedBorcherdsAt nativeField a b s t N := by
+  obtain ⟨L, hL⟩ := nativeField_pairwise_locality a b
+  obtain ⟨K, hK⟩ := source_cutoff a b
+  let N := max L K
+  have hN := cover_mono (le_max_left L K) hL
+  refine ⟨N, fun n hn => hK n (by dsimp [N] at hn; omega), fun p q n => ?_⟩
+  exact adjustedResidue_twisted_borcherds s t (nativeField a) (nativeField b) N
+    (fun m => nativeField (mu lattice a m b))
+    (nativeField_inResidue a s ha) (nativeField_inResidue b t hb) hN
+    (fun m => adjustedResidue_eigenstate_first a b s t ha hb N hN m) p q n
+
 /-- The native eigenfields satisfy the arbitrary-index twisted Borcherds
-mode identity with one locality cutoff for all three integer indices. -/
+mode identity with one cutoff for all three integer indices. -/
 theorem nativeField_twisted_borcherds (a b : NativeStates) (s t : ℤ)
     (ha : σ a = ζ ^ s • a) (hb : σ b = ζ ^ t • b) :
     ∃ N : ℕ, ∀ p q n : ℤ,
@@ -1143,17 +1169,111 @@ theorem nativeField_twisted_borcherds (a b : NativeStates) (s t : ℤ)
           Ring.choose ((p : ℂ) - (s : ℂ) / 3) j •
             HVertexOperator.coeff (nativeField (mu lattice a (n + (j : ℤ)) b))
               (s + t - 3 * (p + q - (j : ℤ) + 1)) := by
-  obtain ⟨N, hN⟩ := nativeField_pairwise_locality a b
-  refine ⟨N, fun p q n => ?_⟩
-  exact adjustedResidue_twisted_borcherds s t (nativeField a) (nativeField b) N
-    (fun m => nativeField (mu lattice a m b))
-    (nativeField_inResidue a s ha) (nativeField_inResidue b t hb) hN
-    (fun m => adjustedResidue_eigenstate_first a b s t ha hb N hN m) p q n
+  obtain ⟨N, _, hN⟩ := nativeField_twisted_borcherds_with_cutoff a b s t ha hb
+  exact ⟨N, hN⟩
 
-#print axioms nativeField_twisted_borcherds
+private theorem twistedBorcherdsAt_mono
+    (Y : NativeStates →ₗ[ℂ] Field) (a b : NativeStates) (s t : ℤ) {N M : ℕ}
+    (hNM : N ≤ M) (hcut : ∀ n ≥ (N : ℤ), mu lattice a n b = 0)
+    (h : TwistedBorcherdsAt Y a b s t N) :
+    TwistedBorcherdsAt Y a b s t M := by
+  intro p q n
+  rw [h p q n]
+  apply Finset.sum_subset (Finset.range_mono (by omega))
+  intro j _ hj
+  simp only [Finset.mem_range, not_lt] at hj
+  rw [hcut (n + (j : ℤ)) (by omega)]
+  simp only [map_zero, Pi.zero_apply, smul_zero]
+
+open P48qNativeResidueProduct (binomialTail binomialTail_inverse)
+
+/-- Agreement at a lift eigenpair propagates to all its actual source products.
+The target identity uses a cutoff for the untwisted products and its output
+fields have the residue of the product eigenspace. -/
+theorem targetField_eq_nativeField_of_twisted_borcherds
+    (Y : NativeStates →ₗ[ℂ] Field) (a b : NativeStates) (s t : ℤ)
+    (ha : σ a = ζ ^ s • a) (hb : σ b = ζ ^ t • b)
+    (hYa : Y a = nativeField a) (hYb : Y b = nativeField b)
+    (hYres : ∀ n : ℤ, InResidue (s + t) (Y (mu lattice a n b)))
+    (hY : ∃ N : ℕ, (∀ n ≥ (N : ℤ), mu lattice a n b = 0) ∧
+      TwistedBorcherdsAt Y a b s t N) (n : ℤ) :
+    Y (mu lattice a n b) = nativeField (mu lattice a n b) := by
+  obtain ⟨L, hLcut, hL⟩ := nativeField_twisted_borcherds_with_cutoff a b s t ha hb
+  obtain ⟨K, hKcut, hK⟩ := hY
+  let N := max L K
+  have hNative := twistedBorcherdsAt_mono nativeField a b s t (le_max_left L K) hLcut hL
+  have hTarget := twistedBorcherdsAt_mono Y a b s t (le_max_right L K) hKcut hK
+  have hcut (m : ℤ) (hm : (N : ℤ) ≤ m) : mu lattice a m b = 0 :=
+    hKcut m (by dsimp [N] at hm; omega)
+  apply HVertexOperator.coeff_inj
+  funext k
+  by_cases hk : k % 3 = (s + t) % 3
+  · let e := k - 3 * n
+    let F (m : ℤ) := HVertexOperator.coeff (nativeField (mu lattice a m b)) (e + 3 * m)
+    let G (m : ℤ) := HVertexOperator.coeff (Y (mu lattice a m b)) (e + 3 * m)
+    have hshift (m : ℤ) (j : ℕ) :
+        e + 3 * (m + (j : ℤ)) = s + t - 3 * ((s + t - e) / 3 - m - 1 - (j : ℤ) + 1) := by
+      have he : (s + t - e) % 3 = 0 := by dsimp [e]; omega
+      omega
+    let α := -((s : ℂ) / 3)
+    have htail : binomialTail α N G = binomialTail α N F := by
+      funext m
+      let q := (s + t - e) / 3 - m - 1
+      have hG := hTarget 0 q m
+      have hF := hNative 0 q m
+      rw [hYa, hYb] at hG
+      simpa only [binomialTail, F, G, α, q, hshift, Int.cast_zero, zero_sub, zero_add]
+        using hG.symm.trans hF
+    have hGcut : ∀ m ≥ (N : ℤ), G m = 0 := fun m hm => by
+      simp only [G, hcut m hm, map_zero, Pi.zero_apply]
+    have hFcut : ∀ m ≥ (N : ℤ), F m = 0 := fun m hm => by
+      simp only [F, hcut m hm, map_zero, Pi.zero_apply]
+    have h := (binomialTail_inverse α N G hGcut).symm.trans
+      ((congrArg (binomialTail (-α) N) htail).trans (binomialTail_inverse α N F hFcut))
+    simpa only [F, G, e, sub_add_cancel] using congrFun h n
+  · exact (hYres n k hk).trans
+      ((nativeField_inResidue _ _ (mu_eigen a b s t n ha hb)) k hk).symm
+
+#print axioms targetField_eq_nativeField_of_twisted_borcherds
+
+/-- On the native twisted carrier, the charged ground fields and lift
+eigen-current fields determine the entire field map. It suffices for the target
+to satisfy the cubic Borcherds identity with an eigen-current in the first slot. -/
+theorem targetField_eq_nativeField_of_generators (Y : NativeStates →ₗ[ℂ] Field)
+    (hground : ∀ a : LatticeGeneratingFieldLocality.Charge lattice,
+      Y (Finsupp.single a 1) = nativeField (Finsupp.single a 1))
+    (hcurrent : ∀ (u : Cartan) (s : ℤ),
+      σ (currentAlong lattice u) = ζ ^ s • currentAlong lattice u →
+      Y (currentAlong lattice u) = nativeField (currentAlong lattice u))
+    (hresidue : ∀ (v : NativeStates) (t : ℤ), σ v = ζ ^ t • v → InResidue t (Y v))
+    (hborcherds : ∀ (u : Cartan) (v : NativeStates) (s t : ℤ),
+      σ (currentAlong lattice u) = ζ ^ s • currentAlong lattice u →
+      σ v = ζ ^ t • v →
+      ∃ N : ℕ, (∀ n ≥ (N : ℤ), mu lattice (currentAlong lattice u) n v = 0) ∧
+        TwistedBorcherdsAt Y (currentAlong lattice u) v s t N) :
+    Y = nativeField := by
+  let S := LinearMap.ker (Y - nativeField)
+  have mem (v : NativeStates) : v ∈ S ↔ Y v = nativeField v := by
+    simp only [S, LinearMap.mem_ker, LinearMap.sub_apply, sub_eq_zero]
+  have hS := eq_top_of_ground_and_eigenCurrent S (fun a => (mem _).mpr (hground a)) (by
+    intro u v s t d hu hv hmem
+    apply (mem _).mpr
+    exact targetField_eq_nativeField_of_twisted_borcherds Y _ v s t hu hv
+      (hcurrent u s hu) ((mem v).mp hmem)
+      (fun n => hresidue _ (s + t) (mu_eigen _ v s t n hu hv))
+      (hborcherds u v s t hu hv) (-((d : ℕ) : ℤ)))
+  apply LinearMap.ext
+  intro v
+  apply (mem v).mp
+  rw [hS]
+  exact Submodule.mem_top
+
+#print axioms targetField_eq_nativeField_of_generators
 
 run_cmd do
-  for name in [``adjustedResidue_twisted_borcherds, ``nativeField_twisted_borcherds] do
+  for name in [``adjustedResidue_twisted_borcherds, ``nativeField_twisted_borcherds,
+      ``targetField_eq_nativeField_of_twisted_borcherds,
+      ``targetField_eq_nativeField_of_generators] do
     let axioms ← Lean.collectAxioms name
     unless axioms.size == 3 && axioms.contains ``propext &&
         axioms.contains ``Classical.choice && axioms.contains ``Quot.sound do

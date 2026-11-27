@@ -1264,7 +1264,8 @@ private theorem current_lift_eigen (u : Cartan) (r : ℕ)
   rw [hp, lift_current, hu]
   exact currentStateLinear.map_smul _ _
 
-private theorem mu_eigen (a b : NativeStates) (s t m : ℤ)
+/-- The lift multiplies the eigenvalues of the two inputs on each source mode product. -/
+theorem mu_eigen (a b : NativeStates) (s t m : ℤ)
     (ha : σ a = ζ ^ s • a) (hb : σ b = ζ ^ t • b) :
     σ (mu lattice a m b) = ζ ^ (s + t) • mu lattice a m b := by
   unfold mu

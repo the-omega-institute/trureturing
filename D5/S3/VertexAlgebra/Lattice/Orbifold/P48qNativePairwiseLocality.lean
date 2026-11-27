@@ -21,7 +21,7 @@ open P48qTwistedChargeAction (lattice g g_cube g_isometry)
 open P48qThirdTwistedField (Cartan concreteChargedField chargedField fieldCoeff fixedDualBases
   chargedLocalityOrder chargedLocalityPolynomial fieldCoeff_pairwise_locality)
 open P48qAllJetWickField (NativeStates NativeIndex NativePolynomial nativeField nativeField_ground
-  oscillatorOccurrences nativeWordPolynomial)
+  oscillatorJet oscillatorOccurrences nativeWordPolynomial)
 open P48qNativeCurrentLocality (Field CoverLocal coverDelta coverComm native_current_local
   native_negativeCurrent_local)
 open P48qTwistedHeisenberg (project project_action)
@@ -37,8 +37,7 @@ open private oscillator_X_eq_jetPolynomial jetPolynomial from
   D5.S3.VertexAlgebra.Lattice.Orbifold.P48qNativeMonodromy
 open private nativeWordPolynomial_eq_monomial from
   D5.S3.VertexAlgebra.Lattice.Orbifold.P48qAllJetWickField
-open private mu_current_negative_single from
-  D5.S3.VertexAlgebra.Lattice.Orbifold.P48qNativeNegativeCurrentIterate
+open P48qNativeNegativeCurrentIterate (mu_current_negative_oscillatorWord)
 
 local notation "ζ" => (ThirdTwistedChargeCocycle.zeta : ℂ)
 local notation "σ" => standardLift lattice g g_cube g_isometry
@@ -354,14 +353,8 @@ private theorem eigenWordSpan_word (a : Charge lattice) (word : List NativeIndex
   induction word with
   | nil => exact eigenWordSpan_ground a
   | cons j tail ih =>
-    obtain ⟨i, n⟩ := j
-    let d : ℕ+ := ⟨n + 1, n.succ_pos⟩
-    let u : Cartan := Pi.single i 1
-    have h := eigenWordSpan_prepend d u ih
-    rw [prepend, mu_current_negative_single] at h
-    classical
-    simpa [d, u, P48qHigherCurrentIterate.sourceOscillator, Pi.single_apply, nativeWordPolynomial]
-      using h
+    have h := eigenWordSpan_prepend (oscillatorJet j).2 (oscillatorJet j).1 ih
+    rwa [prepend, mu_current_negative_oscillatorWord] at h
 
 private theorem eigenWordSpan_eq_top : eigenWordSpan = ⊤ := by
   classical
@@ -384,6 +377,33 @@ private theorem eigenWordSpan_eq_top : eigenWordSpan = ⊤ := by
   intro v
   rw [← Finsupp.sum_single v]
   exact eigenWordSpan.sum_mem fun a _ => single_mem a (v a)
+
+/-- Charged grounds and closure under negative lift-eigen-current products
+on lift eigenstates suffice to span the native source carrier. -/
+theorem eq_top_of_ground_and_eigenCurrent (S : Submodule ℂ NativeStates)
+    (hground : ∀ a : Charge lattice, Finsupp.single a 1 ∈ S)
+    (hstep : ∀ (u : Cartan) (v : NativeStates) (s t : ℤ) (d : ℕ+),
+      σ (currentAlong lattice u) = ζ ^ s • currentAlong lattice u →
+      σ v = ζ ^ t • v → v ∈ S →
+      mu lattice (currentAlong lattice u) (-((d : ℕ) : ℤ)) v ∈ S) :
+    S = ⊤ := by
+  have hgroundSpan : groundSpan ≤ S := Submodule.span_le.mpr (by
+    rintro _ ⟨a, rfl⟩
+    exact hground a)
+  have hspan : eigenWordSpan ≤ S := by
+    apply Submodule.span_le.mpr
+    rintro _ ⟨n, hv⟩
+    induction hv with
+    | ground a r => exact hgroundSpan (groundProject_mem a r)
+    | @cons n v tail d u r hu ih =>
+      obtain ⟨t, ht⟩ := tail.eigen
+      have hs : σ (currentAlong lattice u) =
+          ζ ^ ((r.val * 2 : ℕ) : ℤ) • currentAlong lattice u := by
+        rw [zpow_natCast, pow_mul, lift_current, hu]
+        exact currentStateLinear.map_smul _ _
+      exact hstep u v _ t d hs ht ih
+  rw [eigenWordSpan_eq_top] at hspan
+  exact top_unique hspan
 
 /-- Every pair of actual native P48q twisted fields is local for the physical
 difference `x³ - y³`. -/
