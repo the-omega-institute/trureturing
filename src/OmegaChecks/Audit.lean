@@ -96,6 +96,15 @@ private def audit (roots : List String) (path label : String)
   IO.println s!"{label}: {actual.length} modules, {count} declarations, zero axioms, fresh kernel replay passed"
   return actual
 
+/-- Initialize only the pinned compiler's precomputed axiom lookup for the isolated import. -/
+private def withCompilerAxioms (env : Environment) : IO Environment := do
+  let name := (`_private.Lean.Util.CollectAxioms).num 0 ++ `Lean.exportedAxiomsExt
+  let some ext := (← persistentEnvExtensionsRef.get).find? (·.name == name)
+    | throw <| IO.userError "missing compiler axiom metadata"
+  let state := ext.toEnvExtension.getState (asyncMode := .sync) env
+  let imported ← ext.addImportedFn state.importedEntries {env := env, opts := {}}
+  return ext.toEnvExtension.setState (asyncMode := .sync) env {state with state := imported}
+
 /-- Measure the published declarations in the official environment, including proof dependencies. -/
 private def reportOfficialAxioms (strict official : Environment) (modules : Array Name) (path : String) : IO Unit := do
   let mut names : NameSet := {}
@@ -116,7 +125,8 @@ private def reportOfficialAxioms (strict official : Environment) (modules : Arra
         ("axioms", toJson ((← collectAxioms name).map Name.toString))]
     return Json.mkObj [("backend", "mathlib"), ("consumerModules", toJson (modules.map Name.toString)),
       ("declarations", toJson rows)]
-  let report ← collect.toIO' {fileName := "<official axiom dependencies>", fileMap := default} {env := official}
+  let env ← withCompilerAxioms official
+  let report ← collect.toIO' {fileName := "<official axiom dependencies>", fileMap := default} {env}
   IO.FS.writeFile path (report.compress ++ "\n")
   IO.println s!"Measured official axiom dependencies for {names.size} declarations."
 
