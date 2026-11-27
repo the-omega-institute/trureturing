@@ -190,7 +190,7 @@ private def compare (reference : Environment) (rename : Name → Name) (src dst 
     let .defnInfo d := src | throw <| IO.userError "expected strict reference consumer"
     let .defnInfo ref := dst | throw <| IO.userError "expected official reference consumer"
     let expected ← OmegaChecks.InitPort.ReferenceSpecialization.consumerBody reference reference ref
-    if owner != OmegaChecks.InitPort.BufferReference.owner && !(liftTerm d.value).equal expected then
+    if owner != OmegaChecks.InitPort.BufferReference.owner && !(liftTerm d.value).eqv expected then
       throw <| IO.userError s!"unexpected reference specialization for {src.name}"
     requireSame reference src.name "specialized reference body"
       (← OmegaChecks.InitPort.ReferenceSpecialization.restore reference owner (liftTerm d.value))
