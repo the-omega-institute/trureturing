@@ -73,17 +73,19 @@ public def implementation? (name : Name) := apis.find? (·.implementedBy == some
 
 /-- The public allocator runs this very implementation in the pinned runtime. Its checked
 strict definition supplies a total term at the implementation's original type. -/
-public def checkImplementation (api : API) (ref : Environment) (impl : DefinitionVal) (body : Expr) : IO Unit := do
-  let some (.opaqueInfo alloc) := ref.find? api.allocator | throw <| IO.userError "missing pinned allocator"
+public def checkOpaqueImplementation (owner publicName : Name) (ref : Environment) (impl : DefinitionVal) (body : Expr) : IO Unit := do
+  let some (.opaqueInfo entry) := ref.find? publicName | throw <| IO.userError s!"missing pinned operation {publicName}"
   let levels := impl.levelParams.map Level.param
-  unless impl.safety == .unsafe && !alloc.isUnsafe && api.implementedBy == some impl.name &&
-      Compiler.getImplementedBy? ref alloc.name == some impl.name &&
-      ref.getModuleIdxFor? impl.name == ref.getModuleIdx? api.owner &&
-      ref.getModuleIdxFor? alloc.name == ref.getModuleIdx? api.owner &&
-      impl.name.mangle (pre := "l_") == api.nativeAllocator &&
-      alloc.levelParams.length == levels.length && body == mkConst alloc.name levels &&
-      Kernel.isDefEqGuarded ref {} (alloc.type.instantiateLevelParams alloc.levelParams levels) impl.type do
+  unless impl.safety == .unsafe && !entry.isUnsafe && Compiler.getImplementedBy? ref publicName == some impl.name &&
+      ref.getModuleIdxFor? impl.name == ref.getModuleIdx? owner && ref.getModuleIdxFor? publicName == ref.getModuleIdx? owner &&
+      entry.levelParams.length == levels.length && body == mkConst publicName levels &&
+      Kernel.isDefEqGuarded ref {} (entry.type.instantiateLevelParams entry.levelParams levels) impl.type do
+    throw <| IO.userError s!"incorrect implementation of {publicName} by {impl.name}"
+
+public def checkImplementation (api : API) (ref : Environment) (impl : DefinitionVal) (body : Expr) : IO Unit := do
+  unless api.implementedBy == some impl.name && impl.name.mangle (pre := "l_") == api.nativeAllocator do
     throw <| IO.userError s!"incorrect allocator implementation {impl.name}"
+  checkOpaqueImplementation api.owner api.allocator ref impl body
 
 public def API.privateOwner (api : API) := api.owner.replacePrefix `Init `OmegaInit
 public def API.tokenName (api : API) := mkPrivateNameCore api.owner api.logicalToken

@@ -457,11 +457,13 @@ partial def visit (n : Name) : M Bool := do
   if ci.isAxiom then return ← record n (.blocked "axiom")
   let allocator := OmegaChecks.InitPort.LogicalHandle.implementation? n
   let atomicUpdate := n == OmegaChecks.InitPort.ReferenceModify.implementation
-  if [`withPtrAddrUnsafe, `Array.modifyMUnsafe].contains n || allocator.isSome || atomicUpdate then
+  let readsMethods := n == `Lean.Macro.getMethodsImp
+  if [`withPtrAddrUnsafe, `Array.modifyMUnsafe].contains n || allocator.isSome || atomicUpdate || readsMethods then
     let .defnInfo native := ci | return ← record n (.blocked "missing native implementation")
-    let name := if atomicUpdate then OmegaChecks.InitPort.ReferenceModify.consumer else
+    let name := if readsMethods then `Lean.Macro.getMethods else if atomicUpdate then OmegaChecks.InitPort.ReferenceModify.consumer else
       allocator.map (·.allocator) |>.getD (if n == `withPtrAddrUnsafe then `withPtrAddr else `Array.modifyM)
     let reference := mkConst name (native.levelParams.map Level.param)
+    if readsMethods then OmegaChecks.InitPort.LogicalHandle.checkOpaqueImplementation `Init.Prelude name c.source native reference
     if atomicUpdate then OmegaChecks.InitPort.ReferenceModify.checkImplementation c.source native reference
     if let some api := allocator then OmegaChecks.InitPort.LogicalHandle.checkImplementation api c.source native reference
     if n == `withPtrAddrUnsafe then OmegaChecks.InitPort.Address.check c.source native reference

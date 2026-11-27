@@ -16,8 +16,11 @@ private unsafe def readTable (ctx : Lean.Macro.Context) (s : Lean.Macro.State) :
     EStateM.Result Lean.Macro.Exception Lean.Macro.State Lean.Macro.Methods :=
   .ok (unsafeCast ctx.methods) s
 
+private def readerCode := mkPrivateNameCore `OmegaChecks.InitPort.MacroMethodsNative `MacroMethodsNative.readTable
+
 private def operations := #[(`Lean.Macro.mkMethods, `Lean.Macro.mkMethodsImp, `Lean.Macro.mkMethodsImp),
-  (`Lean.Macro.getMethods, `Lean.Macro.getMethodsImp, mkPrivateNameCore `OmegaChecks.InitPort.MacroMethodsNative `MacroMethodsNative.readTable)]
+  (`Lean.Macro.getMethods, `Lean.Macro.getMethodsImp, readerCode),
+  (`Lean.Macro.getMethodsImp, `Lean.Macro.getMethodsImp, readerCode)]
 
 /-- Compile the verified runtime bodies in a transient compiler environment. Only the compiler
 extensions are written back to the already checked opaque declarations. -/
@@ -44,15 +47,22 @@ public unsafe def main (args : List String) : IO Unit := do
   let mut targets := #[]
   for (name, impl, code) in operations do
     let target := rename name
-    let some (.opaqueInfo sealed) := strict.find? target | continue
+    let some entry := strict.find? target | continue
+    let logical := if name == impl then `Lean.Macro.getMethods else name
+    if name == impl then
+      let some (.defnInfo alias) := strict.find? target | throw <| IO.userError s!"missing strict alias {target}"
+      unless alias.safety == .safe && alias.value == mkConst (rename logical) do
+        throw <| IO.userError s!"incorrect strict body for {target}"
+    else
+      unless entry matches .opaqueInfo _ do throw <| IO.userError s!"expected opaque {target}"
     let some (.defnInfo pinned) := source.find? impl | throw <| IO.userError s!"missing {impl}"
     let some template := source.find? code >>= (·.value?) | throw <| IO.userError s!"missing {code}"
-    unless Compiler.getImplementedBy? source name == some impl && pinned.safety == .unsafe &&
-        Kernel.isDefEqGuarded source {} pinned.value template && !sealed.isUnsafe do
+    unless Compiler.getImplementedBy? source logical == some impl && pinned.safety == .unsafe &&
+        Kernel.isDefEqGuarded source {} pinned.value template && !entry.isUnsafe do
       throw <| IO.userError s!"incorrect runtime implementation of {name}"
     let entry : DefinitionVal := {pinned with
       name := target
-      type := sealed.type
+      type := entry.type
       value := InitKernelPort.translate rename template
       all := [target]}
     let executable := ConstantInfo.defnInfo entry

@@ -120,7 +120,7 @@ def check_marked_strings(stage, library, inputs):
 
 
 def compile_generated(stage, product, graph, seed_ir, owners=None, *, original_seed=None, before_owner=None,
-                      check_sharing=None,
+                      check_sharing=None, check_macro_reader=False,
                       check_strings=True, check_string_marks=False, check_literals=True, check_mixed=True, check_rat=True, check_bootstrap=True,
                       check_list_search=True, check_decoding=True, check_names=True, check_toolchain=True, check_thunks=False):
     """Compile generated owners in import order and preserve the native symbols of existing owners."""
@@ -179,7 +179,8 @@ def compile_generated(stage, product, graph, seed_ir, owners=None, *, original_s
             run("lean", "-R", STRICT_SOURCES, "-c", macro_client, STRICT_SOURCES / "MacroMethodsConsumer.lean",
                 env={**os.environ, "LEAN_PATH": str(library)})
             app = stage / "check-macro-methods"
-            run("leanc", macro_source, macro_client, HERE / "consumers" / "macro_methods_consumer.c", "-o", app)
+            flags = ["-DCHECK_MACRO_METHODS_IMP"] if check_macro_reader else []
+            run("leanc", *flags, macro_source, macro_client, HERE / "consumers" / "macro_methods_consumer.c", "-o", app)
             run(app)
             if literals.is_file():
                 combined = product / "native/literal.o"
