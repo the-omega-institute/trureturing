@@ -25,7 +25,7 @@ open D5.S3.Arith.Divisors.OeisA344695GcdSigmaPsiPrimes
 open D5.S3.Arith.Divisors.DimitrovLowerBoundsC4C5
 
 /-- Cubic quotient bound on a positive ratio quadrant; consumed by `result`. -/
-private lemma cubic_ratio_bound {x y r : ℝ}
+lemma cubic_ratio_bound {x y r : ℝ}
     (hr : 1 ≤ r) (hx : r ≤ x) (hy : r ≤ y) :
     (1 + 2 * r ^ 3) / r ^ 2 ≤ (1 + x ^ 3 + y ^ 3) / (x * y) := by
   have hr0 : 0 < r := by linarith
