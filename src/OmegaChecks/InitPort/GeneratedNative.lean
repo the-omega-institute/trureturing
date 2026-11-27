@@ -6,6 +6,7 @@ import all Lean.OriginalConstKind
 import Lean.Compiler.LCNF.ToDecl
 import Lean.Compiler.LCNF.Main
 import Lean.Compiler.LCNF.PhaseExt
+import Lean.Compiler.IR.EmitUtil
 import Lean.Compiler.LCNF.EmitC
 import Lean.Compiler.ImplementedByAttr
 meta import OmegaChecks.InitPort.WordNative
@@ -91,7 +92,7 @@ private def missingRuntimeDependency (source : Environment) (n : Name) (recursiv
 
 /-- Reuse the pinned executable recursion only after the kernel identifies every constructor
 equation with the checked total function. The temporary declaration is excluded from the product. -/
-private def compileStructural (source : Environment) (n : Name) : CoreM Unit := do
+private def compileStructural (source strict : Environment) (n : Name) : CoreM Unit := do
   let original := originalName n
   unless original.getRoot == `List || original.getRoot == `Array do return
   let recName := Compiler.mkUnsafeRecName original
@@ -101,10 +102,10 @@ private def compileStructural (source : Environment) (n : Name) : CoreM Unit := 
   let raw := InitKernelPort.translate InitKernelPort.portName d.value
   let body := raw.replace fun e => if e.isConstOf name then some (.const n e.constLevels!) else none
   let type := InitKernelPort.translate InitKernelPort.portName d.type
-  unless body.getUsedConstants.all (← getEnv).contains do return
+  unless body.getUsedConstants.all strict.contains && type.getUsedConstants.all strict.contains do return
   for i in [:type.getForallArity] do
     try
-      Meta.MetaM.run' <| OmegaChecks.InitCompiler.checkConstructorEquations n d.levelParams type body i
+      withEnv strict <| Meta.MetaM.run' <| OmegaChecks.InitCompiler.checkConstructorEquations n d.levelParams type body i
     catch _ => continue
     let tmp := {d with name, all := [name], type, value := body, safety := .safe}
     Lean.addDecl (.defnDecl tmp) (forceExpose := true)
@@ -115,6 +116,12 @@ private def compileStructural (source : Environment) (n : Name) : CoreM Unit := 
     return
 
 private def compileOwner (source : Environment) (groups : Array InductiveVal) (words order : Array Name) : CoreM Unit := do
+  let strict ← getEnv
+  -- ToLCNF replaces nested proofs with this marker while inferring erased argument types.
+  -- Only compiler extensions are serialized. Check equations in the original environment.
+  let some (.axiomInfo marker) := source.find? `lcProof | throwError "missing pinned proof erasure marker"
+  unless marker.isUnsafe && !strict.contains marker.name do throwError "unexpected proof erasure marker"
+  Lean.addDecl (.axiomDecl marker)
   compileLayoutsInOrder groups
   OmegaChecks.InitPort.WordNative.install words
   for n in order do
@@ -128,10 +135,14 @@ private def compileOwner (source : Environment) (groups : Array InductiveVal) (w
     catch _ =>
       before.restore
       try
-        compileStructural source n
+        compileStructural source strict n
         unless (← CompilerM.run (getLocalDeclAt? n .impure)).isSome do before.restore
       catch _ =>
         before.restore
+
+  let compiled ← getEnv
+  if (IR.collectUsedDecls compiled (IR.getDecls compiled)).contains marker.name then
+    throwError "proof erasure marker survived in runtime code"
 
 /-- The strict array is a record containing a list. These checked source definitions
 implement its read and update operations on that representation. -/
