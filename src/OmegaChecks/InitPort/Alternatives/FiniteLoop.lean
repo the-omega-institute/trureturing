@@ -1,5 +1,6 @@
 module
 public import Init.Data.Iterators.Lemmas.Consumers.Access
+import Init.Data.Iterators.Lemmas.Consumers.Loop
 import all Init.Data.Iterators.Consumers.Total
 public import Init.Data.Iterators.Consumers.Access
 import all Init.Data.Iterators.Consumers.Monadic.Loop
@@ -24,6 +25,24 @@ public theorem Std.IterM.DefaultConsumers.forIn'_eq_match_step {α β : Type w} 
     (pl : β → γ → ForInStep γ → Prop) {f : (b : β) → P b → (c : γ) → n (Subtype (pl b c))}
     (wf : IteratorLoop.WellFounded α m pl) : type_of% (@IterM.DefaultConsumers.forIn'.wf.eq_def m α β _ n _ lift γ pl wf it init P hP f) :=
   @IterM.DefaultConsumers.forIn'.wf.eq_def m α β _ n _ lift γ pl wf it init P hP f
+
+public theorem Std.IterM.forIn'_eq : type_of% @_root_.Std.IterM.forIn'_eq := by
+  intro α β m iter finite n mm mn laws i h liftT lawsT γ it init f
+  exact h.lawful (fun _ _ g x => monadLift x >>= g) γ it init (fun _ _ _ => True)
+    IteratorLoop.wellFounded_of_finite (fun b p c => do return ⟨← f b p c, trivial⟩)
+public theorem Std.IterM.forIn_eq : type_of% @_root_.Std.IterM.forIn_eq := by
+  intro α β m iter finite n mm mn laws i h liftT lawsT γ it init f
+  exact h.lawful (fun _ _ g x => monadLift x >>= g) γ it init (fun _ _ _ => True)
+    IteratorLoop.wellFounded_of_finite (fun b _ c => do return ⟨← f b c, trivial⟩)
+
+public theorem Std.Iter.forIn'_eq : type_of% @_root_.Std.Iter.forIn'_eq := by
+  intro α β iter finite m mm laws i h γ it init f
+  exact h.lawful (fun _ _ g x => g x.run) γ it.toIterM init (fun _ _ _ => True)
+    IteratorLoop.wellFounded_of_finite (fun b p c => do return ⟨← f b (Iter.isPlausibleIndirectOutput_iff_isPlausibleIndirectOutput_toIterM.mpr p) c, trivial⟩)
+public theorem Std.Iter.forIn_eq : type_of% @_root_.Std.Iter.forIn_eq := by
+  intro α β iter finite m mm laws i h γ it init f
+  exact h.lawful (fun _ _ g x => g x.run) γ it.toIterM init (fun _ _ _ => True)
+    IteratorLoop.wellFounded_of_finite (fun b _ c => do return ⟨← f b c, trivial⟩)
 
 private noncomputable def finiteForIn {α β : Type w} {m : Type w → Type w'} [Iterator α m β] [Finite α m]
     {n : Type x → Type x'} [Monad n] (lift : ∀ γ δ, (γ → n δ) → m γ → n δ)
