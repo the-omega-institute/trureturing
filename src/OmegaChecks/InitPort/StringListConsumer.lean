@@ -27,3 +27,21 @@ public def stringHash (s : Omega.String) : Omega.UInt64 := Omega.String.hash s
 
 @[export omega_test_string_data]
 public def stringData (s : Omega.String) : Omega.List Omega.Char := Omega.String.data s
+
+@[export omega_test_string_valid_bytes]
+public def validBytes (b : Omega.ByteArray) : Bool := Omega.ByteArray.validateUTF8 b
+
+@[export omega_test_string_get]
+public def getAt (s : Omega.String) (i : Nat) : Omega.Char := Omega.String.Pos.Raw.get s ⟨i⟩
+
+@[export omega_test_string_next]
+public def nextAt (s : Omega.String) (i : Nat) : Nat := (Omega.String.Pos.Raw.next s ⟨i⟩).byteIdx
+
+@[export omega_test_string_prev]
+public def prevAt (s : Omega.String) (i : Nat) : Nat := (Omega.String.Pos.Raw.prev s ⟨i⟩).byteIdx
+
+@[export omega_test_string_end]
+public def endAt (s : Omega.String) (i : Nat) : Bool := Omega.String.Pos.Raw.atEnd s ⟨i⟩
+
+@[export omega_test_string_valid_pos]
+public def validAt (s : Omega.String) (i : Nat) : Bool := Omega.String.Pos.Raw.isValid s ⟨i⟩

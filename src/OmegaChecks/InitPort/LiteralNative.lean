@@ -9,6 +9,16 @@ meta import OmegaChecks.InitPort.NativeState
 
 open Lean Compiler.LCNF OmegaChecks.InitPort.NativeState
 
+/-- Raw positions erase to the same checked natural that the physical String ABI expects. -/
+private def positionOps : List (Name × String × String × IR.IRType × IR.IRType) :=
+  let cursor := fun (stem : Name) (strict upstream : String) (sourceResult strictResult : IR.IRType) =>
+    [(`String.Pos.Raw ++ stem, strict, upstream, sourceResult, strictResult), (`String ++ stem, strict, upstream, sourceResult, strictResult)]
+  cursor `get "omega_string_get_char" "lean_string_utf8_get" .uint32 .tobject ++
+  cursor `next "omega_string_next" "lean_string_utf8_next" .tobject .tobject ++
+  cursor `prev "omega_string_prev" "lean_string_utf8_prev" .tobject .tobject ++
+  cursor `atEnd "omega_string_at_end" "lean_string_utf8_at_end" .uint8 .uint8 ++
+  [(`String.Pos.Raw.isValid, "omega_string_valid_pos", "lean_string_is_valid_pos", .uint8, .uint8)]
+
 public unsafe def main (args : List String) : IO Unit := do
   let [lib, out, ownerArg] := args | throw <| IO.userError "expected strict library, native output and module"
   let owner := ownerArg.toName
@@ -28,6 +38,9 @@ public unsafe def main (args : List String) : IO Unit := do
     for n in [`String.toList, `String.data] do
       verify official n #[(.object, false)] .tobject "lean_string_data"
     verify official `String.decidableLT borrowedPair .uint8 "lean_string_dec_lt"
+    verify official `ByteArray.validateUTF8 #[(.object, true)] .uint8 "lean_string_validate_utf8"
+    for (name, _, symbol, sourceResult, _) in positionOps do
+      verify official name #[(.object, true), (.tobject, true)] sourceResult symbol
   searchPathRef.set [lib]
   let read := importModules #[{module := owner, importAll := true : Import}] {}
   let mut env ← read
@@ -36,18 +49,19 @@ public unsafe def main (args : List String) : IO Unit := do
      (`Omega.String.utf8ByteSize, "omega_string_byte_size"), (`Omega.String.toByteArray, "omega_string_to_bytes"),
      (`Omega.String.decEq, "omega_string_dec_eq"), (`Omega.String.hash, "omega_string_hash")]
   else [(`Omega.String.toList, "omega_string_to_list"), (`Omega.String.data, "omega_string_data"),
-        (`Omega.String.decidableLT, "omega_string_dec_lt")]
+        (`Omega.String.decidableLT, "omega_string_dec_lt"), (`Omega.ByteArray.validateUTF8, "omega_bytes_valid_utf8")] ++
+       positionOps.map fun (n, symbol, _, _, _) => (`Omega ++ n, symbol)
   let names := names.filter fun (n, _) => (env.find? n).any (· matches .defnInfo _ | .opaqueInfo _) &&
     (getSigCore? env impureSigExt n).isNone
   if names.isEmpty then return
-  for n in [`Nat, `Omega.List, `Omega.Fin, `Omega.BitVec, `Omega.UInt8, `Omega.UInt32, `Omega.UInt64, `Decidable, `Bool,
+  for n in [`Nat, `Omega.List, `Omega.Fin, `Omega.BitVec, `Omega.UInt8, `Omega.UInt32, `Omega.UInt64, `Decidable, `Bool, `Omega.String.Pos.Raw,
             `Omega.Char, `Omega.Array, `Omega.ByteArray, `Omega.String] do
     unless (monoTypeExt.find? env n).isSome do
       let some idx := env.getModuleIdxFor? n | throw <| IO.userError s!"missing literal type {n}"
       writeCode lib env.header.moduleNames[idx]! (← compileLayouts env n) layouts
       env ← read
   checkNativeNat env
-  for n in [`Decidable, `Omega.Fin, `Omega.BitVec, `Omega.UInt8, `Omega.UInt32, `Omega.UInt64, `Omega.Char,
+  for n in [`Decidable, `Omega.String.Pos.Raw, `Omega.Fin, `Omega.BitVec, `Omega.UInt8, `Omega.UInt32, `Omega.UInt64, `Omega.Char,
             `Omega.Array, `Omega.ByteArray, `Omega.String] do
     let some (some field) := impureTrivialStructureInfoExt.find? env n
       | throw <| IO.userError s!"missing literal representation of {n}"
@@ -67,7 +81,11 @@ public unsafe def main (args : List String) : IO Unit := do
       modifyEnv fun e => externAttr.ext.addEntry (asyncDecl := n) e (n, ⟨[.standard `all symbol]⟩)
       (← compileDeclsRef.get) #[n] {}
   for (n, symbol) in names do
-    if n == `Omega.String.decEq || n == `Omega.String.decidableLT then
+    if let some (_, _, _, _, strictResult) := positionOps.find? (fun (name, _, _, _, _) => n == `Omega ++ name) then
+      verify compiled n #[(.tobject, true), (.tobject, true)] strictResult symbol
+    else if n == `Omega.ByteArray.validateUTF8 then
+      verify compiled n #[(.tobject, true)] .uint8 symbol
+    else if n == `Omega.String.decEq || n == `Omega.String.decidableLT then
       verify compiled n #[(.tobject, true), (.tobject, true)] .uint8 symbol
     else
       let borrow := n == `Omega.String.utf8ByteSize || n == `Omega.String.hash

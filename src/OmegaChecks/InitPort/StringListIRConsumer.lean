@@ -17,6 +17,11 @@ public unsafe def main (args : List String) : IO Unit := do
   let data ← IO.ofExcept <| env.evalConst (List Nat → List Nat) {} `stringData
   let roundTrip ← IO.ofExcept <| env.evalConst (List Nat → List Nat) {} `roundTrip
   let size ← IO.ofExcept <| env.evalConst (List Nat → Nat) {} `bytes
+  let getAt ← IO.ofExcept <| env.evalConst (List Nat → Nat → Nat) {} `getAt
+  let nextAt ← IO.ofExcept <| env.evalConst (List Nat → Nat → Nat) {} `nextAt
+  let prevAt ← IO.ofExcept <| env.evalConst (List Nat → Nat → Nat) {} `prevAt
+  let endAt ← IO.ofExcept <| env.evalConst (List Nat → Nat → Bool) {} `endAt
+  let validAt ← IO.ofExcept <| env.evalConst (List Nat → Nat → Bool) {} `validAt
   let strings := ["", "abc", "ab", "é", "e\u0301", "\u0000中🙂", "🙂"]
   for a in strings do
     let s := encode a
@@ -28,3 +33,13 @@ public unsafe def main (args : List String) : IO Unit := do
       let t := encode b
       unless equal s t == (a == b) && less s t == decide (a < b) do
         throw <| IO.userError s!"strict string comparison differs for {repr a} and {repr b}"
+    for i in (List.range (a.utf8ByteSize + 3)) ++ [2 ^ 80] do
+      let p : String.Pos.Raw := ⟨i⟩
+      unless getAt s i == (p.get a).toNat && nextAt s i == (p.next a).byteIdx &&
+          prevAt s i == (p.prev a).byteIdx && endAt s i == p.atEnd a && validAt s i == p.isValid a do
+        throw <| IO.userError s!"strict UTF-8 position {i} differs for {repr a}"
+  let valid ← IO.ofExcept <| env.evalConst (List Nat → Bool) {} `validBytes
+  for bs in [[], [0], [0xc0, 0xaf], [0x80], [0xc3], [0xed, 0xa0, 0x80], [0xf4, 0x90, 0x80, 0x80],
+      [0xf4, 0x8f, 0xbf, 0xbf], encode "é中🙂"] do
+    let bytes := ByteArray.mk (bs.map Nat.toUInt8).toArray
+    unless valid bs == bytes.validateUTF8 do throw <| IO.userError s!"strict UTF-8 validation differs for {bs}"

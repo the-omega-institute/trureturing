@@ -267,7 +267,8 @@ def generate(stage, product, seed, roots, excluded, original_seed):
 
     string_interfaces = {
         "Init.Prelude": {"String.ofList", "String.utf8ByteSize", "String.toByteArray", "String.decEq", "String.hash"},
-        "Init.Data.String.Basic": {"String.toList", "String.data", "String.decidableLT"},
+        "Init.Data.String.Basic": {"String.toList", "String.data", "String.decidableLT", "ByteArray.validateUTF8",
+                                   *(f"String.Pos.Raw.{n}" for n in ("get", "next", "prev", "atEnd", "isValid"))},
     }
     control_objects = compile_generated(stage, product, graph, original_seed.parents[1] / "ir",
                                         original_seed=original_seed, before_owner={"OmegaInit.ShareCommon": install_sharing},

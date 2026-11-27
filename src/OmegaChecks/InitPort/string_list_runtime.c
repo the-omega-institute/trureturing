@@ -31,3 +31,49 @@ LEAN_EXPORT uint8_t omega_string_dec_lt(b_lean_obj_arg left, b_lean_obj_arg righ
     lean_dec(b);
     return less;
 }
+
+/* These pinned runtime functions are exported outside lean.h. */
+extern uint8_t lean_string_is_valid_pos(b_lean_obj_arg, b_lean_obj_arg);
+extern uint8_t lean_string_validate_utf8(b_lean_obj_arg);
+
+LEAN_EXPORT uint8_t omega_bytes_valid_utf8(b_lean_obj_arg bytes) {
+    lean_object *array = omega_bytes_to_lean(bytes);
+    uint8_t valid = lean_string_validate_utf8(array);
+    lean_dec(array);
+    return valid;
+}
+
+LEAN_EXPORT lean_obj_res omega_string_get_char(b_lean_obj_arg bytes, b_lean_obj_arg pos) {
+    lean_object *s = omega_string_to_lean(bytes);
+    lean_obj_res result = omega_nat_from_uint64(lean_string_utf8_get(s, pos));
+    lean_dec(s);
+    return result;
+}
+
+LEAN_EXPORT lean_obj_res omega_string_next(b_lean_obj_arg bytes, b_lean_obj_arg pos) {
+    lean_object *s = omega_string_to_lean(bytes);
+    lean_obj_res result = lean_string_utf8_next(s, pos);
+    lean_dec(s);
+    return result;
+}
+
+LEAN_EXPORT lean_obj_res omega_string_prev(b_lean_obj_arg bytes, b_lean_obj_arg pos) {
+    lean_object *s = omega_string_to_lean(bytes);
+    lean_obj_res result = lean_string_utf8_prev(s, pos);
+    lean_dec(s);
+    return result;
+}
+
+LEAN_EXPORT uint8_t omega_string_at_end(b_lean_obj_arg bytes, b_lean_obj_arg pos) {
+    lean_object *s = omega_string_to_lean(bytes);
+    uint8_t result = lean_string_utf8_at_end(s, pos);
+    lean_dec(s);
+    return result;
+}
+
+LEAN_EXPORT uint8_t omega_string_valid_pos(b_lean_obj_arg bytes, b_lean_obj_arg pos) {
+    lean_object *s = omega_string_to_lean(bytes);
+    uint8_t result = lean_string_is_valid_pos(s, pos);
+    lean_dec(s);
+    return result;
+}

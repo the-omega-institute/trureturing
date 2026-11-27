@@ -11,6 +11,32 @@ extern uint8_t omega_test_string_less(lean_obj_arg, lean_obj_arg);
 extern lean_obj_res omega_test_string_hash(lean_obj_arg);
 extern lean_obj_res omega_test_string_data(lean_obj_arg);
 
+extern uint8_t omega_test_string_valid_bytes(lean_obj_arg);
+extern lean_obj_res omega_test_string_get(lean_obj_arg, lean_obj_arg);
+extern lean_obj_res omega_test_string_next(lean_obj_arg, lean_obj_arg);
+extern lean_obj_res omega_test_string_prev(lean_obj_arg, lean_obj_arg);
+extern uint8_t omega_test_string_end(lean_obj_arg, lean_obj_arg);
+extern uint8_t omega_test_string_valid_pos(lean_obj_arg, lean_obj_arg);
+extern uint8_t lean_string_is_valid_pos(b_lean_obj_arg, b_lean_obj_arg);
+
+static int check_positions(b_lean_obj_arg s) {
+    for (size_t i = 0; i <= lean_string_size(s) + 1; ++i) {
+        lean_object *p = lean_box(i);
+        lean_object *c = omega_test_string_get(omega_string_from_lean(s), p);
+        lean_object *next = omega_test_string_next(omega_string_from_lean(s), p);
+        lean_object *prev = omega_test_string_prev(omega_string_from_lean(s), p);
+        int good = c == lean_box(lean_string_utf8_get(s, p)) && next == lean_string_utf8_next(s, p)
+            && prev == lean_string_utf8_prev(s, p)
+            && omega_test_string_end(omega_string_from_lean(s), p) == lean_string_utf8_at_end(s, p)
+            && omega_test_string_valid_pos(omega_string_from_lean(s), p) == lean_string_is_valid_pos(s, p);
+        lean_dec(c);
+        lean_dec(next);
+        lean_dec(prev);
+        if (!good) return 0;
+    }
+    return 1;
+}
+
 static int check_operations(b_lean_obj_arg a, b_lean_obj_arg b) {
     uint8_t equal = omega_test_string_equal(omega_string_from_lean(a), omega_string_from_lean(b));
     uint8_t less = omega_test_string_less(omega_string_from_lean(a), omega_string_from_lean(b));
@@ -51,6 +77,9 @@ int main(void) {
     if (!check_operations(native, empty_string) || !check_operations(empty_string, native) ||
         !check_operations(native, native) || !check_operations(empty_string, empty_string)) return 7;
     lean_dec(empty_string);
+    static const unsigned char overlong[] = {0xc0, 0xaf};
+    if (!check_positions(native) || !omega_test_string_valid_bytes(omega_string_from_lean(native)) ||
+        omega_test_string_valid_bytes(omega_bytes_from_data(overlong, sizeof overlong))) return 10;
     lean_object *s = omega_string_from_lean(native);
     lean_inc(s);
     lean_object *len = omega_string_bytes(s);
