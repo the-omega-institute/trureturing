@@ -1,16 +1,15 @@
 module
 public import Lean
-import all OmegaChecks.InitInventory.TransformerLaws
+public import OmegaChecks.InitInventory.Extensionality
 import all Init.Data.Iterators.Basic
 import all Init.Data.Iterators.Combinators.Monadic.FilterMap
 import all Init.Data.Iterators.Lemmas.Combinators.Monadic.FilterMap
 
-/-! Monadically mapping the output of a reader exposes which of two equal readers is used. -/
+/-! Monadic mapping and filtering can expose which of two equal continuations is used. -/
 
 public section
 open Std Std.Iterators
 namespace OmegaChecks.InitBoundaries.IteratorStepLift
-open TransformerLaws.MapAfterBind
 universe u v
 
 private theorem cancelFamilyCasts (s : {q : Type u → Type u // q = id}) :
@@ -50,49 +49,99 @@ local elab "cancelShrinks% " h:term : term => do
   IsPlausibleStep _ _ := True
   step it t := .deflate ⟨.yield it t, trivial⟩
 
-@[instance_reducible] private def attachment (T : Type u) : MonadAttach (Paired T) where
-  CanReturn _ _ := True
-  attach p := ⟨(fun t => ⟨p.val.1 t, trivial⟩, fun t => ⟨p.val.2 t, trivial⟩),
-    congrArg (fun h t => (⟨h t, trivial⟩ : { _x // True })) p.property⟩
+/-- Two provably equal continuations can return an observation immediately, at any result type. -/
+private abbrev Branch (T A : Type u) := T → (A → T) → T
+private abbrev PairedBranch (T A : Type u) := {p : Branch T A × Branch T A // p.1 = p.2}
+private def twin {T A : Type u} (r : Branch T A) : PairedBranch T A := ⟨(r, r), rfl⟩
 
+private theorem twinExists {T A : Type u} (p : PairedBranch T A) : ∃ r, p = twin r := by
+  rcases p with ⟨⟨r, s⟩, h⟩
+  cases h
+  exact ⟨r, rfl⟩
+
+@[instance_reducible] private def branchMonad (T : Type u) : Monad (PairedBranch T) where
+  pure a := twin fun _ k => k a
+  bind p g := ⟨(fun t k => p.val.1 t (fun a => (g a).val.2 t k),
+    fun t k => p.val.2 t (fun a => (g a).val.2 t k)),
+    congrArg (fun r t k => r t (fun a => (g a).val.2 t k)) p.property⟩
+  map f p := twin fun t k => p.val.1 t (fun a => k (f a))
+
+private theorem branchLawful (T : Type u) : letI := branchMonad T; LawfulMonad (PairedBranch T) := by
+  letI := branchMonad T
+  exact {
+    map_const := rfl
+    id_map := by intro _ x; obtain ⟨_, rfl⟩ := twinExists x; rfl
+    comp_map := by intros; rfl
+    pure_seq := by intros; rfl
+    map_pure := by intros; rfl
+    seq_pure := by intro _ _ x _; obtain ⟨_, rfl⟩ := twinExists x; rfl
+    seqLeft_eq := by
+      intro _ _ x y; obtain ⟨_, rfl⟩ := twinExists x; obtain ⟨_, rfl⟩ := twinExists y; rfl
+    seqRight_eq := by
+      intro _ _ x y; obtain ⟨_, rfl⟩ := twinExists x; obtain ⟨_, rfl⟩ := twinExists y; rfl
+    seq_assoc := by
+      intro _ _ _ x g h
+      obtain ⟨_, rfl⟩ := twinExists x
+      obtain ⟨_, rfl⟩ := twinExists g
+      obtain ⟨_, rfl⟩ := twinExists h
+      rfl
+    bind_pure_comp := by intro _ _ _ x; obtain ⟨_, rfl⟩ := twinExists x; rfl
+    bind_map := by intro _ _ _ x; obtain ⟨_, rfl⟩ := twinExists x; rfl
+    pure_bind := by
+      intro A B a k
+      change twin (k a).val.2 = k a
+      obtain ⟨r, hr⟩ := twinExists (k a)
+      rw [hr]
+      rfl
+    bind_assoc := by intros; rfl
+  }
+
+@[instance_reducible] private def branchAttachment (T : Type u) : MonadAttach (PairedBranch T) where
+  CanReturn _ _ := True
+  attach {A} p := ⟨(fun t k => p.val.1 t (fun a => k ⟨a, trivial⟩),
+    fun t k => p.val.2 t (fun a => k ⟨a, trivial⟩)),
+    congrArg (fun (r : Branch T A) t (k : {_a : A // True} → T) => r t (fun a => k ⟨a, trivial⟩)) p.property⟩
+
+/-- An aborted mapping can report an arbitrary value even when its declared return type is Boolean. -/
 private theorem fromStep (rule : (type_of% @Std.IterM.step_mapWithPostcondition.{u,u,u}) ∨
-    (type_of% @Std.IterM.step_mapM.{u,u,u}))
-    {T : Type u} {f g : T → T} (agree : ∀ x, f x = g x) : f = g := by
+    (type_of% @Std.IterM.step_mapM.{u,u,u}) ∨ (type_of% @Std.IterM.step_filterWithPostcondition.{u,u,u}) ∨
+    (type_of% @Std.IterM.step_filterM.{u,u,u}))
+    {T : Type u} {f g : T → T} (agree : ∀ t, f t = g t) : f = g := by
   letI := reading T
-  letI := monad T
-  letI := lawful T
-  letI : MonadLiftT (ReaderM T) (Paired T) := ⟨fun r => diagonal r⟩
+  letI := branchMonad T
+  letI := branchLawful T
+  letI := branchAttachment T
+  letI : MonadLiftT (ReaderM T) (PairedBranch T) := ⟨fun r => twin (fun t k => k (r t))⟩
   let it : IterM (α := ULift.{u} Unit) (ReaderM T) T := ⟨⟨()⟩⟩
-  letI := attachment T
-  let action (t : T) : Paired T T :=
-    ⟨(fun _ => f t, fun _ => g t), congrArg (fun y (_ : T) => y) (agree t)⟩
-  -- Mapping the action copies its first reader. Binding the action in the official right side
-  -- retains its second reader, which returns the other representative at each input.
-  let k (t : T) := PostconditionT.attachLift (action t)
-  have eq : type_of% (Std.IterM.step_mapWithPostcondition (it := it) (f := k)) := by
-    cases rule with
-    | inl law => exact law (it := it) (f := k)
-    | inr law => exact law (it := it) (f := action)
-  let observed (s : Paired T _) := fun t : T =>
-    match ((s.val.2 t : Shrink _).inflate : (it.mapWithPostcondition k).Step).val with
-    | .yield _ b => b
-    | .skip _ => t
-    | .done => t
-  have out := congrArg observed eq
-  dsimp +zetaDelta [observed, IterM.step, Types.Map.instIterator._aux_3, Types.Map.instIterator,
-    Types.FilterMap.instIterator, Iterator.step, it, reading, monadLift, liftM, Id.run, PostconditionT.map,
-    diagonal, k, attachment, action, PostconditionT.attachLift, MonadAttach.attach, Functor.map,
-    Bind.bind, Pure.pure, bindPair, monad, bind, pure, IterM.mapWithPostcondition,
-    IterM.InternalCombinators.map, IterM.InternalCombinators.filterMap, IterM.filterMapWithPostcondition] at out
-  have stage₁ := cancelShrinks% out
-  dsimp at stage₁
-  have stage₂ := cancelShrinks% stage₁
-  exact stage₂
+  let action (A : Type u) (t : T) : PairedBranch T A :=
+    ⟨(fun _ _ => f t, fun _ _ => g t), congrArg (fun y (_ : T) (_ : A → T) => y) (agree t)⟩
+  rcases rule with law | law | law | law
+  all_goals
+    first
+    | have eq := law (it := it) (f := fun t => PostconditionT.attachLift (action T t))
+    | have eq := law (it := it) (f := action T)
+    | have eq := law (it := it) (f := fun t => PostconditionT.attachLift (action (ULift.{u} Bool) t))
+    | have eq := law (it := it) (f := action (ULift.{u} Bool))
+    have out := congrArg (fun s : PairedBranch T _ => fun t => s.val.2 t (fun _ => t)) eq
+    dsimp +zetaDelta [IterM.step, IterM.mapM, IterM.mapWithPostcondition, IterM.filterM,
+      IterM.filterWithPostcondition, Types.Map.instIterator._aux_3, Types.Map.instIterator,
+      Types.FilterMap.instIterator, Iterator.step, it, reading, monadLift, liftM, PostconditionT.map,
+      twin, branchAttachment, action, PostconditionT.attachLift, MonadAttach.attach, Functor.map,
+      Bind.bind, Pure.pure, branchMonad, bind, pure, IterM.InternalCombinators.map,
+      IterM.InternalCombinators.filterMap, IterM.filterMapWithPostcondition] at out
+    exact cancelShrinks% out
+
 private theorem rawMap (law : type_of% @Std.IterM.step_mapWithPostcondition.{max 1 u v,max 1 u v,max 1 u v}) :
     type_of% @funext.{u,v} := funextFromEndomorphisms (fromStep (Or.inl law))
 
 private theorem rawMapM (law : type_of% @Std.IterM.step_mapM.{max 1 u v,max 1 u v,max 1 u v}) :
-    type_of% @funext.{u,v} := funextFromEndomorphisms (fromStep (Or.inr law))
+    type_of% @funext.{u,v} := funextFromEndomorphisms (fromStep (Or.inr (Or.inl law)))
+
+private theorem rawFilter (law : type_of% @Std.IterM.step_filterWithPostcondition.{max 1 u v,max 1 u v,max 1 u v}) :
+    type_of% @funext.{u,v} := funextFromEndomorphisms (fromStep (Or.inr (Or.inr (Or.inl law))))
+
+private theorem rawFilterM (law : type_of% @Std.IterM.step_filterM.{max 1 u v,max 1 u v,max 1 u v}) :
+    type_of% @funext.{u,v} := funextFromEndomorphisms (fromStep (Or.inr (Or.inr (Or.inr law))))
 
 /-- These transports use the equality stored in the pinned shrinking representation. -/
 private def pack {A : Type u} (a : A) : Shrink A :=
@@ -106,7 +155,10 @@ open Lean Meta Elab Term in
 local elab "cleanStep% " h:term : term => withExporting (isExporting := false) do
   let exp ← instantiateMVars (← elabTerm h none)
   let expr ← deltaExpand exp (fun n =>
-    n == ``rawMapM || n == ``rawMap || (``fromStep).isPrefixOf n ||
+    [``rawMapM, ``rawMap, ``rawFilter, ``rawFilterM].contains n ||
+    (``fromStep).isPrefixOf n ||
+    (``Std.IterM.step_filterWithPostcondition).isPrefixOf n ||
+    (``Std.Iterators.Types.FilterMap.instIterator).isPrefixOf n ||
     n == ``allCancel || n == ``reading || (``Std.Iterators.Types.Map.instIterator).isPrefixOf n) true
   let clean := expr.replace fun
     | .const n us =>
@@ -120,17 +172,27 @@ local elab "cleanStep% " h:term : term => withExporting (isExporting := false) d
 
 public theorem funextOfMap.{u',v'} : cleanStep% (type_of% (private_decl% @rawMap.{u',v'})) :=
   cleanStep% (private_decl% @rawMap.{u',v'})
+
 public theorem funextOfMapM.{u',v'} : cleanStep% (type_of% (private_decl% @rawMapM.{u',v'})) :=
   cleanStep% (private_decl% @rawMapM.{u',v'})
+
+public theorem funextOfFilter.{u',v'} : cleanStep% (type_of% (private_decl% @rawFilter.{u',v'})) :=
+  cleanStep% (private_decl% @rawFilter.{u',v'})
+
+public theorem funextOfFilterM.{u',v'} : cleanStep% (type_of% (private_decl% @rawFilterM.{u',v'})) :=
+  cleanStep% (private_decl% @rawFilterM.{u',v'})
+
+
 open Lean in
 run_cmd
   let env ← getEnv
-  for (raw, witness) in [(``rawMap, ``funextOfMap), (``rawMapM, ``funextOfMapM)] do
+  for (raw, witness) in [(``rawMap, ``funextOfMap), (``rawMapM, ``funextOfMapM),
+      (``rawFilter, ``funextOfFilter), (``rawFilterM, ``funextOfFilterM)] do
     let before ← getConstInfo raw
     let after ← getConstInfo witness
     let levels := before.levelParams.map Level.param
     unless Kernel.isDefEqGuarded env {} before.type (after.type.instantiateLevelParams after.levelParams levels) &&
         (← collectAxioms witness).isEmpty do
-      throwError "invalid map-step reduction {witness}"
+      throwError "invalid iterator step reduction {witness}"
 
 end OmegaChecks.InitBoundaries.IteratorStepLift
