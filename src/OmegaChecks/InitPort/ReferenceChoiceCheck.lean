@@ -1,5 +1,6 @@
 module
-import Lean.Replay
+meta import OmegaChecks.InitPort.StrictReplay
+import OmegaChecks.InitPort.StrictReplay
 meta import OmegaChecks.InitPort.Translation
 meta import OmegaChecks.InitInventory.ReferenceSelection
 import OmegaChecks.InitPort.Translation
@@ -72,18 +73,6 @@ public def main (args : List String) : IO Unit := do
         Kernel.isDefEqGuarded env {} target output do
       throw <| IO.userError s!"incorrect strict state selection from {name}"
     checked := checked.push (owner.toString, name.toString, n.toString)
-  -- Fresh replay of all exact source-type reductions and the strict helpers' transitive dependencies.
-  let mut closure : Std.HashMap Name ConstantInfo := {}
-  let mut pending := checked.toList.map (fun (_, _, n) => (kernelEnv.find? n.toName).get!)
-  for ci in pending do closure := closure.insert ci.name ci
-  while let ci :: rest := pending do
-    pending := rest
-    if ci.isAxiom || ci.isUnsafe || ci.isPartial then throw <| IO.userError s!"inadmissible strict dependency {ci.name}"
-    for n in ci.getUsedConstantsAsSet.toList do
-      unless closure.contains n do
-        let some dep := kernelEnv.find? n | throw <| IO.userError s!"missing {n}"
-        closure := closure.insert n dep
-        pending := dep :: pending
-  let _ ← (← mkEmptyEnvironment).toKernelEnv.replay closure
+  let _ ← OmegaChecks.InitPort.replayStrict kernelEnv (checked.map fun (_, _, witness) => witness.toName)
   IO.FS.writeFile output (toJson (checked.map fun (owner, name, proof) => #[owner, name, proof])).compress
   IO.println s!"Replayed {checked.size} strict reference and state interfaces implying explicit selection on Type with zero axioms."

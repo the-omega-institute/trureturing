@@ -75,6 +75,12 @@ class CoverageTest(unittest.TestCase):
             with self.subTest(mismatch=mismatch), self.assertRaisesRegex(ValueError, "runtime conflict"):
                 check_coverage(inventory({**observed, **mismatch}))
 
+    def test_strict_excluded_middle_is_a_logical_consequence(self):
+        row = site("Init.Data.String.Lemmas.Pattern.Basic", "String.Slice.Pattern.Model.IsMatch.exists_isLongestMatch",
+                   logicalConsequence="Classical.em", strictLogicalConsequence="Classical.em",
+                   strictLogicalConsequenceWitness="OmegaStrictString.excludedMiddleOfLongest")
+        self.assertEqual(check_coverage(inventory(row)), (0, [(row["module"], row["name"])]))
+
     def test_unsafe_packing_alone_leaves_declared_input_unresolved(self):
         row = site("Init.ShareCommon", "ShareCommon.Object.eq", kind="opaque", unsafe=True,
                    logicalConsequence="False", logicalConsequenceWitness="packedPayloadEquality",

@@ -167,11 +167,25 @@ def check_strict_reference_choices(product, stage, attempts):
     return {(owner, name): witness for owner, name, witness in json.loads(output.read_text())}
 
 
+def check_strict_longest_matches(product, stage):
+    lib = product / "lib"
+    if not (lib / "OmegaInit/Data/String/Lemmas/Pattern/Basic.olean").is_file():
+        return {}
+    module = "StrictStringLongest"
+    subprocess.run(["lean", "-R", STRICT_SOURCES, "-o", stage / f"{module}.olean", STRICT_SOURCES / f"{module}.lean"],
+                   cwd=ROOT, env={**os.environ, "LEAN_PATH": str(lib)}, check=True)
+    output = stage / "strict-longest-matches.json"
+    subprocess.run(["lake", "env", "lean", "--run", HERE / "StringLongestCheck.lean", lib, stage, output],
+                   cwd=ROOT, check=True)
+    return {(owner, name): (target, witness) for owner, name, target, witness in json.loads(output.read_text())}
+
+
 def report(product, require_complete=False):
     with tempfile.TemporaryDirectory(dir=product) as work:
         stage = Path(work)
         inventory = stage / "init-inventory.json"
-        subprocess.run(["lake", "build", "+OmegaChecks.InitInventory", "+OmegaChecks.InitPort.Translation"], cwd=ROOT, check=True)
+        subprocess.run(["lake", "build", "+OmegaChecks.InitInventory", "+OmegaChecks.InitPort.Translation",
+                        "+OmegaChecks.InitPort.StrictReplay"], cwd=ROOT, check=True)
         subprocess.run(["lake", "env", "lean", "--run", HERE.parent / "InitInventory.lean", product / "lib", inventory],
                        cwd=ROOT, check=True)
         official = json.loads(inventory.read_text())
@@ -182,13 +196,24 @@ def report(product, require_complete=False):
                 attempts[owner, name] = (why, dep)
                 owners[name].append(owner)
         strict_choices = check_strict_reference_choices(product, stage, attempts)
+        strict_matches = check_strict_longest_matches(product, stage)
+        pending_matches = strict_matches.copy()
         for row in official["declarations"]:
-            witness = strict_choices.get((row["module"], row["name"]))
+            site = (row["module"], row["name"])
+            witness = strict_choices.get(site)
             if witness:
                 row["strictSelectionWitness"] = witness
                 row["strictImpliesAxiom"] = "Classical.choice.{1}"
+            if implication := pending_matches.pop(site, None):
+                target, proof = implication
+                if row.get("logicalConsequence") != target or row.get("requiredBehavior") or row["kind"] != "theorem":
+                    raise ValueError(f"official logical consequence differs from strict proof for {site}")
+                row["strictLogicalConsequence"] = target
+                row["strictLogicalConsequenceWitness"] = proof
+        if pending_matches:
+            raise ValueError(f"missing official definition sites for strict consequences: {sorted(pending_matches)}")
         reduction_count, unresolved = check_coverage(official)
-        if strict_choices:
+        if strict_choices or strict_matches:
             inventory.write_text(json.dumps(official, ensure_ascii=False, separators=(",", ":")) + "\n")
         with (product / "interface-rejections.jsonl").open() as f:
             rejected = dict(map(json.loads, f))
@@ -208,7 +233,8 @@ def report(product, require_complete=False):
                              "runtimeConflictWitness", "equationOperand", "operandImpliesAxiom", "operandReductionWitness",
                              "unchangedTypeAxioms", "unsafePackedObservation", "strictImpliesAxiom", "strictSelectionWitness",
                              "unconditionalLogicalConsequence", "unconditionalLogicalConsequenceWitness",
-                             "specializedEndpointType", "strictConstructorIff", "formationArgument", "transportPathType"])
+                             "specializedEndpointType", "strictConstructorIff", "formationArgument", "transportPathType",
+                             "strictLogicalConsequence", "strictLogicalConsequenceWitness"])
             for row in official["declarations"]:
                 if row["matchingNameAndModule"] or row["kind"] == "axiom":
                     continue
@@ -247,7 +273,8 @@ def report(product, require_complete=False):
                                  row.get("strictImpliesAxiom"), row.get("strictSelectionWitness"),
                                  row.get("unconditionalLogicalConsequence"), row.get("unconditionalLogicalConsequenceWitness"),
                                  row.get("specializedEndpointType"), "true" if row.get("strictConstructorIff") else "",
-                                 row.get("formationArgument"), row.get("transportPathType")])
+                                 row.get("formationArgument"), row.get("transportPathType"),
+                                 row.get("strictLogicalConsequence"), row.get("strictLogicalConsequenceWitness")])
         reductions = stage / "init-public-reductions.tsv"
         with reductions.open("w", newline="") as f:
             writer = csv.writer(f, delimiter="\t", lineterminator="\n")

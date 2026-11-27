@@ -56,7 +56,7 @@ example (a : α) (b : β) : Omega.Eq (Prod.fst (Prod.mk a b)) a := Omega.rfl
 `init-inventory.json` 的 `summary` 按模块与名字的组合计数，`uniqueNames` 按名字去重。
 对官方提供原生签名、有定义体且安全、全定义的公开声明，`strictNativeSignature` 记录严格库是否在同一模块打包了对应的 LCNF 签名。`nativeByModule` 和 `summary.native` 分别按模块和全库汇总官方签名数、已匹配声明数和严格库签名数。实际运行结果由编译后的消费用例验证。
 全量构建也编译可单独导入的 OmegaMath 和 OmegaMathlib 源文件，一同审计它们的传递依赖。
-缺口表的 `firstDependencyPath` 和 `reason` 记录本次移植实际遇到的阻塞。只有 `impliesAxiom` 非空的行另有内核证明，从该官方接口可推出所列公理。`logicalConsequence` 与 `logicalConsequenceWitness` 给出其他已验证的逻辑后果及其证明。`requiredBehavior` 非空时，证明还需要候选实现满足该项行为前提。
+缺口表的 `firstDependencyPath` 和 `reason` 记录本次移植实际遇到的阻塞。只有 `impliesAxiom` 非空的行另有内核证明，从该官方接口可推出所列公理。`logicalConsequence` 与 `logicalConsequenceWitness` 给出官方环境中已验证的其他逻辑后果及其证明。对任意字符串匹配谓词，正向与反向最长匹配的存在性各自推出排中律。报告分别核对严格见证的输入与官方完整类型的翻译，再在空内核中重放证明闭包。对应两行的 `strictLogicalConsequence` 和 `strictLogicalConsequenceWitness` 保存结论和严格见证。`requiredBehavior` 非空时，证明还需要候选实现满足该项行为前提。
 
 `equationOperand` 记录官方等式左端直接调用的运算。Lean 按该处的宇宙参数核对 `operandReductionWitness` 的完整类型。给定这个运算的通用实现，即可构造 `operandImpliesAxiom`。对选择函数与递归算子的 `congr_simp` 定理，检查器还用相同谓词或递归步骤特化整个官方等式，核对其参数，再从左右两边分别抽出具有完整 `Classical.choice` 类型的函数。等式本身的可移植性继续按其独立证据结算。
 
