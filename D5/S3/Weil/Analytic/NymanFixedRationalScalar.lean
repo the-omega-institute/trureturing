@@ -12,6 +12,8 @@ import D5.S3.Weil.Analytic.NymanFixedRationalKernelMellin
 import D5.S3.Weil.ZetaBridge.RightHalfStripRiemannReduction
 import OmegaBuild.Commands
 
+/-! The fixed rational scalar growth bound implies the Riemann hypothesis. -/
+
 compile_only_with_mathlib
 
 set_option autoImplicit false
@@ -30,7 +32,7 @@ def scalar (N : ℕ) : ℚ :=
 def ScalarSquareRoot : Prop :=
   ∀ ε : ℝ, 0<ε → ∃ C : ℝ,0≤C ∧ ∀ N : ℕ, 0<N → |(scalar N:ℝ)|≤C*(N:ℝ)^(1/2+ε)
 
-private theorem scalar_eq_scaled {N : ℕ} (hN : 0<N) :
+theorem scalar_eq_scaled {N : ℕ} (hN : 0<N) :
     (scalar N:ℂ)=scaled (fun x => (b x:ℂ)) ((N:ℝ)⁻¹) := by
   unfold scalar scaled
   push_cast

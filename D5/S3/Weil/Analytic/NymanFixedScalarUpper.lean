@@ -4,11 +4,13 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: The Riemann hypothesis is equivalent to square-root growth of the fixed rational scalar. -/
+   digest: Square-root growth of the fixed rational scalar is equivalent to RH. -/
 
 import D5.S3.Weil.Analytic.NymanFixedRationalScalar
 import D5.S3.Weil.ZetaPntBounds.MobiusShortAverage
 import OmegaBuild.Commands
+
+/-! Square-root growth of the fixed rational scalar is equivalent to RH. -/
 
 compile_only_with_mathlib
 
@@ -35,11 +37,16 @@ private theorem sum_parts {r f g : ℕ→ℝ} (L : ℕ) (h0 : r 0=0)
     (hr : ∀ k<L,r (k+1)=r k+f k) :
     (∑ k∈range L,f k*g (k+1)) =
       r L*g L+∑ k∈range L,r k*(g k-g (k+1)) := by
-  induction L with
-  | zero => simp [h0]
-  | succ L ih =>
-    rw [sum_range_succ,sum_range_succ,ih (fun k hk => hr k (by omega)),hr L (by omega)]
-    ring
+  calc
+    _ = ∑ k ∈ range L,
+        ((r (k + 1) * g (k + 1) - r k * g k) + r k * (g k - g (k + 1))) := by
+      apply sum_congr rfl
+      intro k hk
+      rw [hr k (mem_range.mp hk)]
+      ring
+    _ = _ := by
+      rw [sum_add_distrib, sum_range_sub (fun k => r k * g k)]
+      simp [h0]
 
 private theorem scalar_eq_range {N : ℕ} (_hN : 0<N) :
     (scalar N:ℝ)=∑ k∈range N,(μ (N+k+1):ℝ)*b (((N+k+1:ℕ):ℝ)/(N:ℝ)) := by
@@ -81,7 +88,7 @@ private theorem scalar_parts {N : ℕ} (hN : 0<N) :
 
 /-- A uniform ordinary Möbius prefix power bound implies the same power for this
 specific rational scalar. -/
-private theorem scalar_bound_of_prefix {β D : ℝ} (hβ : 0≤β) (hD : 0≤D)
+theorem scalar_bound_of_prefix {β D : ℝ} (hβ : 0≤β) (hD : 0≤D)
     (hp : ∀ m : ℕ, 0<m → |mobiusPrefix m|≤D*(m:ℝ)^β) :
     ∃ C : ℝ,0≤C ∧ ∀ N : ℕ,0<N → |(scalar N:ℝ)|≤C*(N:ℝ)^β := by
   obtain ⟨K,hK,hlip⟩ := b_lipschitz

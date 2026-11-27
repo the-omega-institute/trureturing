@@ -12,6 +12,8 @@ import Mathlib.Analysis.Calculus.Deriv.Pow
 import Mathlib.Tactic
 import OmegaBuild.Commands
 
+/-! Compact support of the explicit cubic rational kernel. -/
+
 compile_only_with_mathlib
 
 set_option autoImplicit false

@@ -12,6 +12,8 @@ import Mathlib.Tactic
 import Mathlib.NumberTheory.LSeries.Dirichlet
 import OmegaBuild.Commands
 
+/-! Mellin continuation for compactly supported Möbius shell sums. -/
+
 compile_only_with_mathlib
 
 set_option autoImplicit false
@@ -131,7 +133,7 @@ private theorem norm_integral_term {W : ℝ→ℂ} (s : ℂ) (n : ℕ) :
 
 /-- Absolute-convergence half-plane identity of the scale Mellin transform and the actual
 reciprocal-zeta Dirichlet series. -/
-private theorem scaled_mellin_dirichlet {W : ℝ→ℂ} (hc : Continuous W)
+theorem scaled_mellin_dirichlet {W : ℝ→ℂ} (hc : Continuous W)
     (hW : ∀ x∉Set.Ioo (1:ℝ) 2,W x=0) {s : ℂ} (hs : 1<s.re) :
     riemannZeta s*mellin (scaled W) s=mellin W s := by
   have hsumm : LSeriesSummable (fun n => (μ n:ℂ)) s :=

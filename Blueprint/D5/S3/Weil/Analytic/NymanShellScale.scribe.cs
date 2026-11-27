@@ -14,7 +14,7 @@ internal sealed class NymanShellScaleDocument : IScribeDocumentDefinition
                 DescribeId.Create("scale-difference"),
                 DeclarationHandle.Create(Owner + ".scale_difference"),
                 H("Uniform estimate between integer samples"),
-                StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("Suppose W vanishes outside (1, 2) and has Lipschitz constant K. For 1/(N+1) ≤ t ≤ 1/N and N ≥ 1, the two scaled sums differ by at most 10K. Truncating both sums at 2(N+1) bounds the number of terms, and each term changes by at most 2K/N."))),
                 DescribeRole.Theorem))));
 }

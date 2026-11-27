@@ -11,6 +11,8 @@ import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
 import Mathlib.Analysis.MellinTransform
 import OmegaBuild.Commands
 
+/-! Exact nonvanishing Mellin transform of the fixed rational kernel. -/
+
 compile_only_with_mathlib
 
 set_option autoImplicit false
@@ -200,14 +202,13 @@ theorem mellin_formula {s : ℂ} (hs : 0<s.re) :
     rw [b_zero_off x (fun h => hx.2 ⟨h.1,h.2.le⟩),ofReal_zero,mul_zero]
 
 private theorem cpow_sub_one_ne_zero {z : ℂ} (hz : 0<z.re) : (A:ℂ)^z-1≠0 := by
-  have hnorm : ‖(A:ℂ)^z‖=A^z.re := by
-    rw [Complex.norm_cpow_of_ne_zero (ofReal_ne_zero.mpr A_pos.ne'),arg_ofReal_of_nonneg A_pos.le,zero_mul,Real.exp_zero,div_one,Complex.norm_real,Real.norm_eq_abs,abs_of_pos A_pos]
+  have hnorm := Complex.norm_cpow_eq_rpow_re_of_pos A_pos z
   intro h
   have he := sub_eq_zero.mp h
   rw [he,norm_one] at hnorm
   exact (ne_of_gt (Real.one_lt_rpow one_lt_A hz)) hnorm.symm
 
-/-- A single fixed rational shell test detects every zero in Re(s)>0. -/
+/-- The Mellin transform of the fixed rational shell kernel is nonzero for Re(s) > 0. -/
 theorem mellin_ne_zero {s : ℂ} (hs : 0<s.re) :
     mellin (fun u : ℝ => (b u:ℂ)) s ≠ 0 := by
   rw [mellin_formula hs]

@@ -14,7 +14,7 @@ internal sealed class NymanFixedRationalKernelLipschitzDocument : IScribeDocumen
                 DescribeId.Create("b-lipschitz"),
                 DeclarationHandle.Create(Owner + ".b_lipschitz"),
                 H("A global Lipschitz constant"),
-                StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("Each truncated cubic is Lipschitz on [1, 2] by the difference-of-cubes identity. Clamping to that interval preserves the kernel value and extends the estimate to every pair of real inputs."))),
                 DescribeRole.Theorem))));
 }

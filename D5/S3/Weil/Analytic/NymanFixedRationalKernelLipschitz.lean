@@ -10,6 +10,8 @@ import D5.S3.Weil.Analytic.NymanFixedRationalKernel
 import Mathlib.Tactic
 import OmegaBuild.Commands
 
+/-! Global Lipschitz bound for the compact cubic kernel. -/
+
 compile_only_with_mathlib
 
 set_option autoImplicit false
