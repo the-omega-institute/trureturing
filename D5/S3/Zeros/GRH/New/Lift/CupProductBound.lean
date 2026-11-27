@@ -83,6 +83,7 @@ def Pairing.ScaledCupBounds e c c' := ∀ ⦃_ : TopologicalSpace Γ⦄, IsOpenE
 lemma wittFst_smul : ∀ x, S.wittFst (n • x) =
   n • S.wittFst x + S.trivLattice.wittMap S.kerLattice (.fst .. ∘ₗ extensionRep S.α (snd n) ∘ₗ
   .inr ..) (n • S.projTriv.wittMap x) := diagTensor_induction (by simp; simp [extensionRep])
+    (by simp +contextual <;> grind -abstractProof)
 
 lemma Pairing.smul_wittPairing x y : n • P.wittPairing x y = P.wittPairing (n • x) (n • y) :=
   .symm (baseChangePairing_map _ (P.modPairing_rho _) ..)
