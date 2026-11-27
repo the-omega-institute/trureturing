@@ -1,6 +1,7 @@
 module
 
 public import OmegaChecks.InitPort.Persistent
+public import OmegaChecks.InitPort.ReferencePut
 import Lean.Compiler.BorrowedAnnotation
 
 open Lean
@@ -65,7 +66,7 @@ private def originalOpaque (ci : ConstantInfo) (strict : Bool) : Bool :=
   isExclusive ci strict || isShareCommonObject ci strict
 
 public def isOriginal (ci : ConstantInfo) (strict : Bool) : Bool :=
-  Persistent.isOriginal ci strict || originalOpaque ci strict
+  Persistent.isOriginal ci strict || originalOpaque ci strict || ReferencePut.isOriginal ci strict
 
 /-- Replay the checked library before installing each pinned opaque at its original unsafe boundary. -/
 public def replay (constants : Std.HashMap Name ConstantInfo) : IO Kernel.Environment := do
@@ -80,6 +81,6 @@ public def replay (constants : Std.HashMap Name ConstantInfo) : IO Kernel.Enviro
       | .error _ => throw <| IO.userError s!"kernel rejected unsafe observation {upstream}"
     discard <| check {d with isUnsafe := false}
     base ← check d
-  return base
+  ReferencePut.replay base constants
 
 end OmegaChecks.InitPort.UnsafeRuntime
