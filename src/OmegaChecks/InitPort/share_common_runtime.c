@@ -22,11 +22,11 @@ static lean_obj_res set_op(lean_obj_arg fn, lean_obj_arg alpha, lean_obj_arg eq,
 }
 static lean_obj_res mk_map(lean_obj_arg fn, lean_obj_arg alpha, lean_obj_arg beta,
                            lean_obj_arg eq, lean_obj_arg hash, lean_obj_arg capacity) {
-    return lean_apply_1(map_op(fn, alpha, beta, eq, hash), share_unary(lean_unbox(capacity)));
+    return lean_apply_1(map_op(fn, alpha, beta, eq, hash), omega_nat_from_uint64(lean_unbox(capacity)));
 }
 static lean_obj_res mk_set(lean_obj_arg fn, lean_obj_arg alpha, lean_obj_arg eq,
                            lean_obj_arg hash, lean_obj_arg capacity) {
-    return lean_apply_1(set_op(fn, alpha, eq, hash), share_unary(lean_unbox(capacity)));
+    return lean_apply_1(set_op(fn, alpha, eq, hash), omega_nat_from_uint64(lean_unbox(capacity)));
 }
 
 LEAN_EXPORT lean_obj_res omega_share_common_factory_mk(lean_obj_arg builder) {

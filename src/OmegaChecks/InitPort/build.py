@@ -2,6 +2,7 @@
 import argparse
 from collections import Counter, defaultdict
 from graphlib import CycleError, TopologicalSorter
+from path_io_test import check_paths
 from generated_native import check_runtime_ir, compile_generated
 import json
 import omegamath
@@ -244,6 +245,11 @@ def generate(stage, product, seed, roots, excluded, original_seed):
                                *(f"{ns}.{name}" for ns in ("BaseIO", "EIO", "IO")
                                  for name in ("asTask", "mapTask", "bindTask", "chainTask", "mapTasks"))},
         })
+        paths = install_state_runtime(stage, product, artifact, "PathIO", "path_io")
+        path_interfaces = {"Init.System.IO": {"IO.getEnv", "IO.FS.createDir", "IO.FS.removeDir",
+                                              "IO.FS.removeFile", "IO.FS.rename"}}
+        if paths and has_interfaces(inventory, path_interfaces):
+            check_paths(stage, artifact, paths[0], product / "native" / "task_io.o")
     if "OmegaInit.System.Promise" in graph:
         compile_state_runtime(stage, product, artifact, inventory, "Promise", "promise", {
             "Init.System.Promise": {"IO.Promise.new", "IO.Promise.resolve", "IO.Promise.isResolved", "IO.Promise.result?", "IO.Promise.resultD"},
