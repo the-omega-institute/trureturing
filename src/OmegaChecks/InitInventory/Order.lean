@@ -326,6 +326,80 @@ theorem equalityCasesOfArrayComparison (law : type_of% @Array.lt_of_le_of_lt.{u}
     FiniteMembership.EqualityCases.{u} :=
   equalityCasesOfPrefix fun x y le lt => law (xs := #[x]) (ys := #[y]) (zs := #[y,y]) le lt
 
+theorem stableEqualityOfHeadLE (law : type_of% @List.left_le_left_of_cons_le_cons.{u}) : StableEquality.{u} := by
+  intro α a b nn
+  letI := orderEndpoints a b
+  letI := strictEndpoints a b
+  letI := endpointsLinear a b
+  letI := endpointsLT a b
+  apply eqOfReverse
+  apply law (l₁ := []) (l₂ := [])
+  intro h
+  exact nn fun eq => (singletonReverse h).2 (Or.inl eq.symm)
+
+/-- The two negations give a weak case split even when equality is undecided. -/
+def WeakEqualityCases : Prop := ∀ {α : Type u} (a b : α), a ≠ b ∨ ¬¬a = b
+
+theorem weakEqualityOfLexTotal (law : type_of% @List.not_lex_total.{u}) : WeakEqualityCases.{u} := by
+  intro α a b
+  letI := orderEndpoints a b
+  letI := strictEndpoints a b
+  let x := leftEnd a b
+  let y := rightEnd a b
+  have total (v w : Endpoints a b) : ¬ v < w ∨ ¬ w < v :=
+    ((endpointsLinear a b).le_total v w).elim
+      (fun le => Or.inr fun gt => gt.2 le) (fun ge => Or.inl fun lt => lt.2 ge)
+  rcases law total [y] [x,x] with denied | denied
+  · exact Or.inl fun eq => denied ((Subtype.ext eq : x = y) ▸ List.Lex.cons (a := x) List.Lex.nil)
+  · exact Or.inr fun ne => denied (List.Lex.rel ⟨endpointsForward a b, fun g => ne (eqOfReverse g)⟩)
+
+private theorem optionLinear {T : Type u} [LE T] [o : IsLinearOrder T] : IsLinearOrder (Option T) where
+  le_refl v := by cases v with | none => trivial | some t => exact o.le_refl t
+  le_trans v w z vw wz := by
+    cases v <;> cases w <;> cases z <;> first | exact trivial | exact False.elim vw | exact False.elim wz | exact o.le_trans _ _ _ vw wz
+  le_total v w := by
+    cases v <;> cases w <;> first | exact Or.inl trivial | exact Or.inr trivial | exact o.le_total _ _
+  le_antisymm v w vw wv := by
+    cases v <;> cases w <;> first | rfl | exact False.elim vw | exact False.elim wv | exact congrArg some (o.le_antisymm _ _ vw wv)
+
+private theorem optionStrict {T : Type u} [LE T] [LT T] [o : LawfulOrderLT T] : LawfulOrderLT (Option T) where
+  lt_iff v w := by
+    cases v <;> cases w
+    · exact ⟨False.elim, fun h => h.2 trivial⟩
+    · exact ⟨fun _ => ⟨trivial, id⟩, fun _ => trivial⟩
+    · exact ⟨False.elim, And.left⟩
+    · exact o.lt_iff _ _
+
+private theorem twoHeads {T : Type u} [LT T] {v w : T} {s t : List T} (h : v::s < w::t) :
+    v < w ∨ v = w ∧ s < t := by
+  cases h with
+  | rel lt => exact Or.inl lt
+  | cons tail => exact Or.inr ⟨rfl, tail⟩
+
+theorem equalityCasesOfVectorComparison (law : type_of% @Vector.lt_of_le_of_lt.{u}) :
+    FiniteMembership.EqualityCases.{u} := by
+  intro α a b
+  letI := orderEndpoints a b
+  letI := strictEndpoints a b
+  letI := endpointsLinear a b
+  letI := endpointsLT a b
+  letI := optionStrict (T := Endpoints a b)
+  letI := optionLinear (T := Endpoints a b)
+  let x := leftEnd a b
+  let y := rightEnd a b
+  let xs : Vector (Option (Endpoints a b)) 2 := #v[some x, none]
+  let ys : Vector (Option (Endpoints a b)) 2 := #v[some y, none]
+  let zs : Vector (Option (Endpoints a b)) 2 := #v[some y, some x]
+  have le : xs ≤ ys := by
+    intro back
+    rcases twoHeads (show [some y, none] < [some x, none] from back) with lt | ⟨_, tail⟩
+    · exact lt.2 (endpointsForward a b)
+    · exact singletonReverse tail
+  have strict : ys < zs := List.Lex.cons (List.Lex.rel (show (none : Option (Endpoints a b)) < some x from trivial))
+  rcases twoHeads (show [some x, none] < [some y, some x] from law le strict) with lt | ⟨eq, _⟩
+  · exact Or.inr fun eq => lt.2 (Or.inl eq.symm)
+  · exact Or.inl (congrArg Subtype.val (Option.some.inj eq))
+
 end
 
 private theorem notNotEM (p : Prop) : ¬ ¬ (p ∨ ¬p) :=
@@ -458,6 +532,41 @@ private theorem singletonLe (p : Prop) (nn : ¬¬p) :
   intro reverse
   cases reverse with
   | rel h => exact nn h
+
+private theorem excludedMiddleOfSingletonStrict (law : ∀ q : Prop,
+    letI : LT Bool := ⟨signed q⟩
+    ([false] : List Bool) ≤ [true] ∧ ¬ ([true] : List Bool) ≤ [false] →
+      ([false] : List Bool) < [true]) (p : Prop) : p ∨ ¬p := by
+  apply excludedMiddleFromDNE _ p
+  intro q nn
+  letI : LT Bool := ⟨signed q⟩
+  exact singletonReverse (law q ⟨singletonLe q nn,
+    fun le => nn fun yes => le (List.Lex.rel yes)⟩)
+
+private theorem signedListsAsymm (p : Prop) : Std.Asymm (List.Lex (signed p)) := by
+  constructor
+  intro xs ys h
+  induction h with
+  | nil => intro rev; cases rev
+  | rel h =>
+    intro rev
+    cases rev with
+    | rel k => exact (signedAsymm p).asymm _ _ h k
+    | cons _ => exact (signedAsymm p).asymm _ _ h h
+  | cons _ ih =>
+    intro rev
+    cases rev with
+    | rel k => exact (signedAsymm p).asymm _ _ k k
+    | cons k => exact ih k
+
+theorem excludedMiddleOfListOrderLT (rule : type_of% @List.instLawfulOrderLTOfAsymmLt.{0}) :
+    type_of% @Classical.em :=
+  excludedMiddleOfSingletonStrict fun q => (@rule Bool ⟨signed q⟩ (signedListsAsymm q)).lt_iff [false] [true] |>.mpr
+
+theorem excludedMiddleOfVectorOrderLT (rule : type_of% @Vector.instLawfulOrderLTOfAsymmLt.{0}) :
+    type_of% @Classical.em :=
+  excludedMiddleOfSingletonStrict fun q =>
+    (@rule Bool 1 ⟨signed q⟩ (signedAsymm q)).lt_iff #v[false] #v[true] |>.mpr
 
 theorem excludedMiddleOfConsLe (consLe : type_of% @List.cons_le_cons_iff.{0}) (p : Prop) : p ∨ ¬p := by
   apply excludedMiddleFromDNE _ p

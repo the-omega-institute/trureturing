@@ -391,6 +391,15 @@ private def logicalConsequence? (owner name : Name) : Option (Name × Name) := d
   | `Init.Data.Order.Lemmas, `Std.instTotalNotLtOfLawfulOrderLTOfLe =>
     return (`OmegaChecks.InitInventory.StringPatterns.WeakExcludedMiddle,
       ``OmegaChecks.InitBoundaries.AbstractOrder.weakMiddleOfTotalNotLT)
+  | `Init.Data.List.Lex, ``List.left_le_left_of_cons_le_cons =>
+    return (``OmegaChecks.InitBoundaries.AbstractOrder.StableEquality,
+      ``OmegaChecks.InitBoundaries.AbstractOrder.stableEqualityOfHeadLE)
+  | `Init.Data.List.Lex, ``List.not_lex_total =>
+    return (``OmegaChecks.InitBoundaries.AbstractOrder.WeakEqualityCases,
+      ``OmegaChecks.InitBoundaries.AbstractOrder.weakEqualityOfLexTotal)
+  | `Init.Data.Vector.Lex, ``Vector.lt_of_le_of_lt =>
+    return (``OmegaChecks.InitBoundaries.FiniteMembership.EqualityCases,
+      ``OmegaChecks.InitBoundaries.AbstractOrder.equalityCasesOfVectorComparison)
   | `Init.Data.List.Lex, ``List.le_total =>
     return (`OmegaChecks.InitInventory.StringPatterns.WeakExcludedMiddle, ``OmegaChecks.InitBoundaries.AbstractOrder.weakMiddleOfListTotal)
   | `Init.Data.List.Lex, ``List.instTotalLeOfAsymmLt =>
@@ -455,6 +464,10 @@ private def logicalConsequence? (owner name : Name) : Option (Name × Name) := d
     | `Init.Grind.Norm, ``Lean.Grind.imp_eq => some ``OmegaChecks.InitBoundaries.GrindOrder.excludedMiddleFromImplication
     | `Init.Grind.Norm, ``Lean.Grind.not_not => some ``OmegaChecks.InitBoundaries.GrindOrder.excludedMiddleFromNotNot
     | `Init.Grind.Lemmas, ``Lean.Grind.of_lookahead => some ``OmegaChecks.InitBoundaries.GrindOrder.excludedMiddleFromLookahead
+    | `Init.Data.List.Lex, ``List.instLawfulOrderLTOfAsymmLt =>
+      some ``OmegaChecks.InitBoundaries.AbstractOrder.excludedMiddleOfListOrderLT
+    | `Init.Data.Vector.Lex, ``Vector.instLawfulOrderLTOfAsymmLt =>
+      some ``OmegaChecks.InitBoundaries.AbstractOrder.excludedMiddleOfVectorOrderLT
     | `Init.Data.List.Lex, ``List.cons_le_cons_iff => some ``OmegaChecks.InitBoundaries.AbstractOrder.excludedMiddleOfConsLe
     | `Init.Data.List.Lex, ``List.le_iff_exists => some ``OmegaChecks.InitBoundaries.AbstractOrder.excludedMiddleOfListLeExists
     | `Init.Data.List.Lex, ``List.le_iff_lt_or_eq => some ``OmegaChecks.InitBoundaries.AbstractOrder.excludedMiddleOfListLeIffLTOrEq
