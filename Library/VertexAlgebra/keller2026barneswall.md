@@ -10,6 +10,10 @@ strata_touched:
   - D5/S3/VertexAlgebra/TwistedGround/BarnesWall/Q8TraceSign
   - D5/S3/VertexAlgebra/TwistedGround/BarnesWall/OddGaussSum
   - D5/S3/VertexAlgebra/TwistedGround/BarnesWall/TensorIntertwiners
+  - D5/S3/VertexAlgebra/TwistedGround/BarnesWall/OddCoherentTraceSign
+  - D5/S3/VertexAlgebra/TwistedGround/BarnesWall/Rank32CommutingTrace
+  - D5/S3/VertexAlgebra/TwistedGround/BarnesWall/TensorDefectDet
+  - D5/S3/Fourier/CyclicFluxChargeExchange
   - D5/S3/VertexAlgebra/TwistedGround/BarnesWall/Rank128Lattice
   - D5/S3/VertexAlgebra/TwistedGround/BarnesWall/Q8GroundTrace
   - D5/S3/VertexAlgebra/TwistedGround/BarnesWall/PauliRows
@@ -18,6 +22,7 @@ strata_touched:
   - D5/S3/VertexAlgebra/TwistedGround/BarnesWall/FixedWordPhase
   - D5/S3/HomologicalAlgebra/BarnesWallQ8CohomologyDetector
   - D5/S3/HomologicalAlgebra/BarnesWallQ8CyclicGauge
+  - D5/S3/HomologicalAlgebra/CentralCocycleTransport
   - D5/S3/HomologicalAlgebra/InflatedCubicCandidate
   - D5/S3/HomologicalAlgebra/QuaternionCandidateRestriction
 license: citation-only
@@ -132,6 +137,33 @@ pairing a complement permutation and a square-zero shear. The resulting
 finite Gauss sum is $+2^{2^{m-2}}$. The rank-128 value is $+2^{32}$.
 [Keller–Roberts–Roberts, §2.2 and Appendix A](https://arxiv.org/abs/2411.13646v2)
 
+## The rank-32 boundary
+
+For the specified $E(5)$ action the order-four twisted ground has weight
+$3/2$. Cyclic type is zero since four times the weight is integral. Its
+normalized squared action has phase $+1$ on the ground, and the
+reflection ground has weight $2$. These are the phases used in the
+quaternion modular comparison, so the same comparison gives zero chiral
+anomaly at rank 32. At rank eight the order-four weight is $3/8$ and its
+cyclic type is $2$ modulo $4$, which detects a nonzero anomaly.
+[Ji–Tian, equations (109)–(113)](https://arxiv.org/abs/2611.23231v1)
+
+The rank-32 Lean calculation concerns a different pair of Pauli words.
+The two rotations in distinct slots commute, and their lift exponent
+has four independent blocks of character sum eight. The resulting
+reflection-ground trace is $4096$. The abelian modular transform gives
+trace $16$ for the reflection on the weight-one ground of the twisted
+sector for the product involution. A character line in its even sector
+can be selected by the slant of an inflated two-cocycle. The corresponding
+holomorphic extension contains a weight-one Virasoro primary and has gap
+one. Every choice has gap at most two. The all-ones tensor lattice row
+has norm four and its pure translation stabilizer fixes the associated
+primary with phase one, so the invariant orbit sum gives a weight-two
+primary. For fixed trivial torsion the coherent centralizer projection
+on the noncentral involution grounds still determines which gap occurs.
+[Evans–Gannon, equation (2.7) and Corollary 2](https://arxiv.org/abs/1804.11145) ·
+[Huang–Kirillov–Lepowsky, VOA extensions](https://arxiv.org/abs/1406.3420)
+
 The complement bijection balances the row exponents and makes the
 normalized tensor Gram unimodular. The same lower cocycle on the actual
 reflection quotient therefore has a Weyl ground representation in every
@@ -139,3 +171,32 @@ such rank. Its even-row displacement subspace is the common image and
 kernel of the two quaternion deviations. The literal lift exponent
 vanishes on that subspace. This supplies nonzero covariant intertwiners
 and identifies their normalized product trace with the Gauss sum above.
+
+## The modular comparison in every odd tensor rank
+
+For each order-four quaternion word, its square is negative identity on the
+tensor lattice. Its defect transforms the unimodular Gram into twice that
+Gram, so the defect has absolute determinant $2^{2^{m-1}}$. The square-root
+defect rule gives multiplicity $2^{2^{m-2}}$.
+
+The phase-free cyclic modular matrix becomes the exchange $(r,h)\mapsto
+(h,-r)$ after summing over charges with the insertion character. This sends
+the order-four character with central insertion to the reflection character
+with inverse insertion. The paired reflection oscillators contribute a
+factor tending to one at the cusp, and the transformed eta quotient gives
+the stated multiplicity as the reflection ground trace.
+
+A normalized inflated cocycle has trivial centralizer multiplier at the
+reflection, which maps to the identity in the quotient. The two-cochain
+used to change gauge supplies the explicit scalar correction in any
+cohomologous representative. Scalar-related linear actions differ by
+one global character, which the normalized tensor trace ratio cancels
+by multiplicativity on $ij=k$. The extracted coefficient fixes the
+remaining sign and forces the anomaly bit to vanish. The Lean comparison
+takes the modular character matrix, the lattice twisted-character
+formulas, and transport from the physical centralizer action as inputs.
+In the VOA argument, the last transport is fixed by the trivial
+self-monodromy of the charge-zero generator flux and its trivial mutual
+monodromy with the charge-zero reflection flux.
+[van Ekeren–Möller–Scheithauer, Theorem 5.13](https://arxiv.org/abs/1507.08142v3) ·
+[McRae, Theorem 4.17](https://arxiv.org/abs/1910.13226v2)

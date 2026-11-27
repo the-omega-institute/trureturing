@@ -108,7 +108,9 @@ lemma IsProperOver.proper_base_change {ℓ} [ThePrime ℓ] {Y A} [CommRing A] [I
       (quotientFunctor ..).mapCocone _) (Quot.ind (E · |>.exists.imp fun _ ↦ (⟨⟦⟨_, ·⟩⟧, rfl⟩))) (by
     rintro j ⟨⟩ k
     obtain ⟨o, i, f, e⟩ := exists_map_dvd_of_mem_map (eq_zero_iff_mem.1 k)
-    exact ((E f).and (mem_atTop j)).exists.imp fun b ⟨h, l⟩ ↦ ⟨l.hom, eq_zero_iff_mem.2
+    exact ((E f).and (mem_atTop j)).exists.imp fun b witness ↦ by
+      obtain ⟨h, l⟩ := witness
+      exact ⟨l.hom, eq_zero_iff_mem.2
       (mem_of_dvd _ ⟨⟨_, h⟩, by congrm ⟨$e.1, _⟩⟩ (mem_map_of_mem _ i))⟩),
       (isProperOver_placeSpace.isCohomContinuous.of_isRelAffine
     (isRelAffine_killingPlaces _)).isFilteredColimit_antitoneFamily a (fun _ ↦
@@ -126,10 +128,13 @@ lemma IsProperOver.proper_base_change {ℓ} [ThePrime ℓ] {Y A} [CommRing A] [I
     use 0] <;> exact t (Prod.ext ((hκ _ l₁.le.hom _).trans e₁) ((hκ _ l₂.le.hom _).trans e₂))
   have S := γ.rangeRestrict_surjective
   let B : aicSubrings γ := ⟨_, le_rfl, .of_surjective S⟩
-  have T A x : x ∈ placesFiniteOn z ⊥ B.1 A := ⟨by simp [zeroPoints], fun _ ⟨a, e⟩ ↦
-    ⟨⟨_, baseRingMap_mem_placeGraph a⟩, e⟩⟩
+  have T A x : x ∈ placesFiniteOn z ⊥ B.1 A := ⟨by simp [zeroPoints], fun _ witness ↦ by
+    obtain ⟨a, e⟩ := witness
+    exact ⟨⟨_, baseRingMap_mem_placeGraph a⟩, e⟩⟩
   exact (isCohomEquiv_iff_range (hg := mono_of_app_injective (by rintro _ ⟨⟨⟩⟩ ⟨⟩ ⟨⟩; rfl)) (U :=
-    (placesFiniteOn ..).whisker _) (by ext _ ⟨⟩; exact ⟨fun ⟨y, e⟩ ↦ ⟨e ▸ y.1.2, (T ..).2⟩, (⟨⟨⟨_,
+    (placesFiniteOn ..).whisker _) (by ext _ ⟨⟩; exact ⟨fun witness ↦ by
+      obtain ⟨y, e⟩ := witness
+      exact ⟨e ▸ y.1.2, (T ..).2⟩, (⟨⟨⟨_,
     ·.1⟩, ‹_›⟩, rfl⟩)⟩)).2 (by simpa [← map_comp] using! (((G ⊥ B).isCohomEquiv (isDomain (hI := by
     simp [isPrime_bot])) (isDomain (hI := map_isPrime_of_surjective S (le_maximalIdeal (ker_ne_top
     _)))) (homOfLe (by tauto)) (G _ B)).comp_iff.2 (IsCohomDense.isCohomEquiv .of_top_le))))).eqv

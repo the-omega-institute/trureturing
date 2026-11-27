@@ -1,0 +1,1 @@
+{"statement_id":"sha256:5cd5fea185c0ac7722584ab850f32dd6f0243db07e87b480fd86563b36f35464","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),13:Combinatorics),22:IntervalReconstruction),30:MonotoneIntervalReconstruction),6:result)","kind":"theorem","libraries":["Batteries","Init","Mathlib","OmegaMath"],"axioms":["Classical.choice","Quot.sound","propext"]}]}

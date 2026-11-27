@@ -403,7 +403,7 @@ end D5.S3.Weil.ZetaGamma.HadamardTruncatedBinomialLimit
 namespace D5.S3.Weil.ZetaGamma.HadamardTruncatedBinomialLimit
 open Filter Topology
 
-private def reciprocalGamma (z : ℂ) : ℂ := (Complex.Gamma z)⁻¹
+def reciprocalGamma (z : ℂ) : ℂ := (Complex.Gamma z)⁻¹
 
 private def hadamardCandidate (y : ℂ) : ℂ :=
   (Real.sqrt Real.pi : ℂ) / 2 * Complex.exp (y * Complex.log 2) *
@@ -418,7 +418,7 @@ private theorem reciprocal_gamma_shift (z : ℂ) :
   simpa only [reciprocalGamma, sub_add_cancel] using
     Complex.one_div_Gamma_eq_self_mul_one_div_Gamma_add_one (z-1)
 
-private theorem reciprocal_gamma_deriv_shift (z : ℂ) :
+theorem reciprocal_gamma_deriv_shift (z : ℂ) :
     deriv reciprocalGamma (z-1) = reciprocalGamma z + (z-1) * deriv reciprocalGamma z := by
   have hleft := (reciprocal_gamma_differentiable (z-1)).hasDerivAt.comp z
     ((hasDerivAt_id z).sub_const 1)
