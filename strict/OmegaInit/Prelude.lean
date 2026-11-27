@@ -330,18 +330,24 @@ protected abbrev PEmpty.noConfusion.{v,u} {P : Sort v} {t t' : PEmpty.{u}} (eq :
 
 open Bool (false true)
 
-def cond {α : Sort u} (c : Bool) (x y : α) : α := Bool.rec y x c
+end Omega
+
+port_definition Bool.casesOn
+
+namespace Omega
+
+def cond {α : Sort u} (c : Bool) (x y : α) : α := Bool.casesOn c y x
 
 protected def Bool.dcond {α : Sort u} (c : Bool)
     (x : Eq c true → α) (y : Eq c false → α) : α :=
   Bool.rec (motive := fun b => (Eq b true → α) → (Eq b false → α) → α)
     (fun _ no => no Omega.rfl) (fun yes _ => yes Omega.rfl) c x y
 
-def Bool.or (x y : Bool) : Bool := Bool.rec y true x
+def Bool.or (x y : Bool) : Bool := Bool.casesOn x y true
 
-def Bool.and (x y : Bool) : Bool := Bool.rec false y x
+def Bool.and (x y : Bool) : Bool := Bool.casesOn x false y
 
-def Bool.not (x : Bool) : Bool := Bool.rec true false x
+def Bool.not (x : Bool) : Bool := Bool.casesOn x true false
 
 def Bool.Internal.or (x y : Bool) : Bool := Bool.or x y
 
@@ -357,7 +363,7 @@ theorem Bool.not_eq_internalNot : Eq Bool.not Bool.Internal.not := Omega.rfl
 
 open Bool (or and not)
 
-def Bool.beq (a b : Bool) : Bool := Bool.rec (Bool.not a) a b
+def Bool.beq (a b : Bool) : Bool := Bool.casesOn b (Bool.not a) a
 
 abbrev Bool.Reflects : Bool → Prop → Prop :=
   fun b p => Bool.rec (motive := fun _ => Prop) (Not p) p b
@@ -483,7 +489,6 @@ attribute [irreducible] beq ble Nat.div Nat.mod Nat.modCore
 
 end Omega.Nat
 
-port_definition Bool.casesOn
 port_definition Nat.casesOn
 port_definition Nat.below
 port_definition Nat.brecOn.go
@@ -723,3 +728,8 @@ port_definition MonadExcept.orElse with_native_code
 port_definition MonadExcept.instOrElse with_native_code
 
 port_native_records BEq, Membership
+
+port_inductive Subtype
+port_definition Subtype.val with_native_code
+port_proof Subtype.property
+port_definition DecidableEq

@@ -26,6 +26,11 @@ public def optionFirst (x y : Omega.Bool) : Omega.Bool :=
 public def composeSecond (x y : Omega.Bool) : Omega.Bool :=
   @Omega.Bind.kleisliRight Omega.Bool Omega.Id Omega.Bool Omega.Bool Omega.Id.hasBind
     (fun _ => y) (fun a => a) x
+
+public def mappedFirst (x y : Omega.Bool) : Omega.Bool :=
+  Omega.Prod.fst (Omega.Prod.map (fun a => a) (fun b => b) (Omega.Prod.mk x y))
+public def disjunction (x y : Omega.Bool) : Omega.Bool := Omega.strictOr x y
+public def conjunction (x y : Omega.Bool) : Omega.Bool := Omega.strictAnd x y
 "
 
 /-- Compile a fresh ordinary consumer and execute its packaged IR with both Boolean values. -/
@@ -45,13 +50,17 @@ unsafe def main (args : List String) : IO Unit := do
       throw <| IO.userError "unexpected Boolean representation"
     let b := mkConst `Omega.Bool
     let arity := .forallE `x b (.forallE `y b b .default) .default
-    for (name, selectFirst) in [(`firstValue, true), (`secondValue, false),
-        (`additionFirst, true), (`stateSecond, false), (`optionFirst, true), (`composeSecond, false)] do
+    let first := fun (x _ : Bool) => x
+    let second := fun (_ y : Bool) => y
+    let checks := [(`firstValue, first), (`secondValue, second), (`additionFirst, first),
+      (`stateSecond, second), (`optionFirst, first), (`composeSecond, second), (`mappedFirst, first),
+      (`disjunction, or), (`conjunction, and)]
+    for (name, expected) in checks do
       let some ci := env.find? name | throw <| IO.userError s!"missing {name}"
       unless Kernel.isDefEqGuarded env {} ci.type arity do throw <| IO.userError s!"invalid type of {name}"
       let fn ← IO.ofExcept <| env.evalConst (Bool → Bool → Bool) {} name
       for x in [false, true] do
         for y in [false, true] do
-          unless fn x y == (if selectFirst then x else y) do
+          unless fn x y == expected x y do
             throw <| IO.userError s!"invalid executable result for {name} at {x}, {y}"
 
