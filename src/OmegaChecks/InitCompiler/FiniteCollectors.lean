@@ -16,6 +16,11 @@ private def pureCollectors := [``Std.Iter.toArray, ``Std.Iter.toList, ``Std.Iter
 private def monadicCollectors := [``Std.IterM.toArray, ``Std.IterM.toList, ``Std.IterM.toListRev]
 private def sliceCollectors := [``Std.Slice.toArray, ``Std.Slice.toList, ``Std.Slice.toListRev]
 
+private def isDefaultLoopAlias (env : Environment) (name : Name) : Bool :=
+  match env.find? name with
+  | some (.defnInfo decl) => decl.value.getLambdaBody.getAppFn.isConstOf ``Std.IteratorLoop.defaultImplementation
+  | _ => false
+
 private def consumerArity? (head : Name) : Option Nat :=
   if pureCollectors.contains head then some 4
   else if head == ``Std.Iter.atIdxSlow? then some 5
@@ -42,12 +47,19 @@ private def specializeCollector (e : Expr) : MetaM (Option Expr) := do
   return none
 
 public def finiteCollectors (env : Environment) (input : Expr) (withinImplementation := false) : IO Expr := do
-  let hasLoop := input.getUsedConstants.contains ``Std.IteratorLoop.defaultImplementation && env.contains InitPort.LawfulLoop.helper
-  unless hasLoop || input.getUsedConstants.any (fun n => (consumerArity? n).isSome) do return input
+  let used := input.getUsedConstants
+  let aliases := used.foldl (init := ({} : NameSet)) fun ns n => if isDefaultLoopAlias env n then ns.insert n else ns
+  let hasLoop := env.contains InitPort.LawfulLoop.helper && (!aliases.isEmpty || used.contains ``Std.IteratorLoop.defaultImplementation)
+  unless hasLoop || used.any (fun n => (consumerArity? n).isSome) do return input
   let rewrite : MetaM Expr := Meta.transform input (pre := fun sub => do
     if hasLoop then
       if let some call ← InitPort.LawfulLoop.specialize? sub then return .done call
     let some head := sub.getAppFn.constName? | return .continue
+    -- A generic searcher can revisit a position. At concrete uses of the same
+    -- instance, the iterator may supply a proof that its traversal is finite.
+    if hasLoop && aliases.contains head then
+      if let some core ← unfoldDefinition? sub then
+        if let some loop ← InitPort.LawfulLoop.specializeFiniteDefault? core then return .done loop
     let isSlice := sliceCollectors.contains head
     let some arity := consumerArity? head | return .continue
     -- Rewrites under congrArg often pass the collection function without its final argument.
