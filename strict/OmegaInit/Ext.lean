@@ -9,3 +9,11 @@ public import OmegaInit.Core
 
 port_proof PUnit.ext_iff
 port_proof Unit.ext by_reflexivity
+
+public section
+namespace PUnit
+export _root_.Omega.PUnit (ext_iff)
+end PUnit
+namespace Unit
+export _root_.Omega.Unit (ext)
+end Unit

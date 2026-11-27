@@ -54,6 +54,9 @@ theorem usesChoice : True := Classical.choice ⟨True.intro⟩
 """,
             "UseSquare": """prelude
 import OmegaMath.Data.Nat
+import OmegaMathlib
+
+example (n : Nat) : Omega.Nat.fib n = Nat.fib n := rfl
 
 example (a k : Omega.Nat) : Omega.Eq ((a.mul k).mul (a.mul k)) ((a.mul a).mul (k.mul k)) :=
   Omega.Nat.square_mul a k

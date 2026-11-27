@@ -15,3 +15,8 @@ namespace Omega.Nat
 theorem coprime_one_left : ∀ n, Coprime (succ zero) n := gcd_one_left
 
 end Omega.Nat
+
+public section
+namespace Nat
+export _root_.Omega.Nat (Coprime coprime_one_left)
+end Nat

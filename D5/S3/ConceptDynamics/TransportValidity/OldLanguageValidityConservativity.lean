@@ -23,10 +23,10 @@ public theorem old_language_validity_conservative
     (admissionPreserving : ∀ extended, extensionAdmissible extended →
       oldAdmissible (project extended))
     (admissionSurjective : ∀ x, oldAdmissible x →
-      Exists (fun extended => And (extensionAdmissible extended) (Eq (project extended) x)))
+      Omega.Exists (fun extended => Omega.And (extensionAdmissible extended) (Eq (project extended) x)))
     (P : X → Prop) :
-    Iff (∀ x, oldAdmissible x → P x) (∀ extended, extensionAdmissible extended → P (project extended)) :=
-  Iff.intro
+    Omega.Iff (∀ x, oldAdmissible x → P x) (∀ extended, extensionAdmissible extended → P (project extended)) :=
+  Omega.Iff.intro
     (fun oldValid => validity_preserved_by_admission_map
       extensionAdmissible oldAdmissible project P oldValid admissionPreserving)
     (fun extensionValid x oldAdmission =>

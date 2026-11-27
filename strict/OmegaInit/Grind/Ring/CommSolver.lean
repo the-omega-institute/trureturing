@@ -9,3 +9,8 @@ public import OmegaInit.Prelude
 
 port_proof cond.eq_1 by_reflexivity
 port_proof cond.eq_2 by_reflexivity
+
+public section
+namespace Omega.cond
+export _root_.cond (eq_1 eq_2)
+end Omega.cond

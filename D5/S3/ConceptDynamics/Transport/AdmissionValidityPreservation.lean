@@ -25,31 +25,31 @@ public theorem validity_preserved_by_admission_map
 
 /-- The identity transport and constant true predicate satisfy both premises. -/
 example :
-    let admitted : Bool → Prop := fun _ => True
+    let admitted : Bool → Prop := fun _ => Omega.True
     let transport : Bool → Bool := fun x => x
-    let P : Bool → Prop := fun _ => True
-    And (∀ y, admitted y → P y) (∀ x, admitted x → admitted (transport x)) :=
-  And.intro (fun _ h => h) (fun _ h => h)
+    let P : Bool → Prop := fun _ => Omega.True
+    Omega.And (∀ y, admitted y → P y) (∀ x, admitted x → admitted (transport x)) :=
+  Omega.And.intro (fun _ h => h) (fun _ h => h)
 
 /-- Target validity can hold while the unadmitted source image fails the predicate. -/
 example :
-    let sourceAdmissible : Bool → Prop := fun _ => True
+    let sourceAdmissible : Bool → Prop := fun _ => Omega.True
     let targetAdmissible : Bool → Prop := fun y => Eq y .true
     let transport : Bool → Bool := fun x => x
     let P : Bool → Prop := fun y => Eq y .true
-    And (∀ y, targetAdmissible y → P y)
+    Omega.And (∀ y, targetAdmissible y → P y)
       (Not (∀ x, sourceAdmissible x → P (transport x))) :=
-  And.intro (fun _ h => h) (fun valid =>
-    Eq.subst (motive := Bool.rec (motive := fun _ => Prop) True False)
-      (valid .false True.intro) True.intro)
+  Omega.And.intro (fun _ h => h) (fun valid =>
+    Eq.subst (motive := Bool.rec (motive := fun _ => Prop) Omega.True False)
+      (valid .false Omega.True.intro) Omega.True.intro)
 
 /-- Admission preservation can hold while the target predicate is false everywhere. -/
 example :
-    let admitted : Bool → Prop := fun _ => True
+    let admitted : Bool → Prop := fun _ => Omega.True
     let transport : Bool → Bool := fun x => x
     let P : Bool → Prop := fun _ => False
-    And (∀ x, admitted x → admitted (transport x))
+    Omega.And (∀ x, admitted x → admitted (transport x))
       (Not (∀ x, admitted x → P (transport x))) :=
-  And.intro (fun _ h => h) (fun valid => valid .false True.intro)
+  Omega.And.intro (fun _ h => h) (fun valid => valid .false Omega.True.intro)
 
 end D5.S3.ConceptDynamics.Transport.AdmissionValidityPreservation

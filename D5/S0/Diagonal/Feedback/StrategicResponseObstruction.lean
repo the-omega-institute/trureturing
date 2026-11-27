@@ -18,9 +18,9 @@ its prediction, no predictor is correct at every state. -/
 public theorem strategic_response_precludes_universal_predictor
     {X : Type u} {Y : Type v} (twist : Y → Y) (response : (X → Y) → X → Y)
     (fixedPointFree : ∀ y, Not (Eq (twist y) y))
-    (strategic : ∀ predictor : X → Y, Exists (fun state : X =>
+    (strategic : ∀ predictor : X → Y, Omega.Exists (fun state : X =>
       Eq (response predictor state) (twist (predictor state)))) :
-    Not (Exists (fun predictor : X → Y => ∀ state : X,
+    Not (Omega.Exists (fun predictor : X → Y => ∀ state : X,
       Eq (response predictor state) (predictor state))) :=
   fun universal =>
     universal.elim (fun predictor correct =>

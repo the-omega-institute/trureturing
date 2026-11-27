@@ -50,15 +50,16 @@ public theorem toStd_le_iff (a b : Omega.Nat) :
   | succ a ih =>
     induction b using Omega.Nat.rec with
     | zero =>
-      exact ⟨fun h => (Nat.not_succ_le_zero _ h).elim, fun h => Omega.False.elim (Omega.Nat.not_succ_le_zero a h)⟩
+      exact ⟨fun h => (Nat.not_succ_le_zero _ h).elim,
+        fun h => Omega.False.elim (Omega.Nat.not_succ_le_zero a h)⟩
     | succ b _ =>
       exact Nat.succ_le_succ_iff.trans ((ih b).trans
         ⟨Omega.Nat.succ_le_succ, Omega.Nat.le_of_succ_le_succ⟩)
 
 /-- Every strict Fibonacci value agrees with the pinned Mathlib definition. -/
-public theorem toStd_fib (n : Omega.Nat) : toStd n.fib = (toStd n).fib := by
-  suffices h : toStd n.fib = (toStd n).fib ∧
-      toStd n.succ.fib = (toStd n).succ.fib by
+public theorem toStd_fib (n : Omega.Nat) : toStd (Omega.Nat.fib n) = (toStd n).fib := by
+  suffices h : toStd (Omega.Nat.fib n) = (toStd n).fib ∧
+      toStd (Omega.Nat.fib n.succ) = (toStd n).succ.fib by
     exact h.1
   induction n with
   | zero =>
@@ -66,14 +67,14 @@ public theorem toStd_fib (n : Omega.Nat) : toStd n.fib = (toStd n).fib := by
     exact ⟨rfl, rfl⟩
   | succ n ih =>
     refine ⟨ih.2, ?_⟩
-    have recurrence : n.succ.succ.fib = n.fib.add n.succ.fib :=
+    have recurrence : Omega.Nat.fib n.succ.succ = (Omega.Nat.fib n).add (Omega.Nat.fib n.succ) :=
       fromOmegaEq (Omega.Nat.fib_add_two (n := n))
     rw [recurrence, toStd_add, ih.1, ih.2]
     exact (Nat.fib_add_two (n := toStd n)).symm
 
 /-- Every strict binomial coefficient agrees with the pinned Mathlib definition. -/
 public theorem toStd_choose (n k : Omega.Nat) :
-    toStd (n.choose k) = (toStd n).choose (toStd k) := by
+    toStd (Omega.Nat.choose n k) = (toStd n).choose (toStd k) := by
   induction n generalizing k with
   | zero =>
     induction k using Omega.Nat.rec with
@@ -87,7 +88,8 @@ public theorem toStd_choose (n k : Omega.Nat) :
       rw [fromOmegaEq (Omega.Nat.choose_zero_right _)]
       exact (Nat.choose_zero_right (toStd n).succ).symm
     | succ k _ =>
-      have recurrence : n.succ.choose k.succ = (n.choose k).add (n.choose k.succ) :=
+      have recurrence : Omega.Nat.choose n.succ k.succ =
+          (Omega.Nat.choose n k).add (Omega.Nat.choose n k.succ) :=
         fromOmegaEq (Omega.Nat.choose_succ_succ n k)
       rw [recurrence, toStd_add, ih k, ih k.succ]
       exact (Nat.choose_succ_succ (toStd n) (toStd k)).symm

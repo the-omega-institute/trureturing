@@ -12,6 +12,7 @@ noncomputable section
 
 namespace Omega
 
+set_option genCtorIdx false in
 /-- A nonnegative integer or the negative of a natural successor. -/
 inductive Int where
   | ofNat : Nat → Int
@@ -67,3 +68,5 @@ attribute [irreducible] subNatNat
 
 end Int
 end Omega
+
+port_definition Int.negOfNat.match_1

@@ -2,6 +2,8 @@ import OmegaChecks.Interface
 
 open Lean
 
+private def portName (n : Name) := if OmegaChecks.InitCompiler.RootNames.usesRoot n then n else `Omega ++ n
+
 private abbrev ModuleGraph := NameMap (Array Name)
 
 private def reachable (graph : ModuleGraph) (root : Name) : NameSet := Id.run do
@@ -20,12 +22,12 @@ private def duplicateSites (strict source surface : Environment) : IO (NameMap (
   let mut sites : NameMap (Array Name) := {}
   for (owner, data) in surface.header.moduleNames.zip surface.header.moduleData do
     for n in data.constNames do
-      if !isPrivateName n && !n.isInternal && strict.contains (`Omega ++ n) then
+      if !isPrivateName n && !n.isInternal && strict.contains (portName n) then
         sites := sites.insert n ((sites.getD n #[]).push owner)
   let mut copies : NameMap (Array Name) := {}
   for (n, owners) in sites.toList do
     if owners.size < 2 || !owners.all (OmegaChecks.Interface.declaredIn source n ·) then continue
-    let target := `Omega ++ n
+    let target := portName n
     let some idx := strict.getModuleIdxFor? target | continue
     let origin := strict.header.moduleNames[idx]!.replacePrefix `OmegaInit `Init
     unless OmegaChecks.Interface.declaredIn source n origin do continue
@@ -72,21 +74,27 @@ private def copyModule (dir : System.FilePath) (strict source : Environment)
     if isProtected source (n.replacePrefix `Omega .anonymous) then entries := addProtected entries n
   let protectedEntries := (← mkModuleData entries).entries.filter (·.1 == protectedExt.name)
   let mut output := #[]
-  for (part, _) in parts, (view, _) in views, path in files do
+  for (part, _) in parts, (view, _) in views, path in files, level in #[OLeanLevel.exported, .server, .private] do
+    let mut aliases := (← mkEmptyEnvironment).setMainModule owner
+    for entry in aliasExtension.getModuleEntries strict (strict.getModuleIdx? owner).get! (level := level) do
+      aliases := aliasExtension.addEntry aliases entry
     let mut constants := part.constants
     for n in names do
       let original := n.replacePrefix `Omega .anonymous
       let some upstream := view.constants.find? (·.name == original) | continue
       let some ci := strict.find? n | throw <| IO.userError s!"missing strict proof of {n}"
+      if let some entry := OmegaChecks.InitCompiler.RootNames.aliasFor? original then
+        if entry.2 == n then aliases := aliasExtension.addEntry aliases entry
       constants := constants.push <| if upstream.isAxiom then
         .axiomInfo {ci.toConstantVal with isUnsafe := false} else ci
     constants := constants.qsort fun a b => Name.quickLt a.name b.name
     let edges := part.imports ++ imports.map fun n => {module := n, isExported := false}
+    let aliasEntries := (← mkModuleData aliases .private).entries.filter (·.1 == aliasExtension.name)
     let data := { part with
       constants
       constNames := constants.map (·.name)
       imports := edges
-      entries := part.entries.filter (·.1 != protectedExt.name) ++ protectedEntries }
+      entries := part.entries.filter (fun e => e.1 != protectedExt.name && e.1 != aliasExtension.name) ++ protectedEntries ++ aliasEntries }
     output := output.push (path, data)
   saveModuleDataParts owner output
 
