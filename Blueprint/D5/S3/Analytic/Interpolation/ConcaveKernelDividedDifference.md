@@ -14,7 +14,7 @@ Lean statement: `D5/S3/Analytic/Interpolation/ConcaveKernelDividedDifference.int
 
 *Commentary.*
 
-Let the integration interval have endpoints left and right. The integrand h is continuous from the smaller of a and left to right and strictly negative in the interior of the integration interval outside [a,b]. Let a < b < c <= right. The continuous concave kernel k is nonnegative on the interval and strictly positive inside it.
+Let left < right be the endpoints of the integration interval. The integrand h is continuous from the smaller of a and left to right and strictly negative in the interior of the integration interval outside [a,b]. Let a < b < c <= right. The continuous concave kernel k is strictly positive in the interior.
 
 Assume that the integral of the positive part of h from a to b is strictly smaller than the integral of minus h from b to c weighted by the fraction (c-t)/(c-a). Then the integral of h times k is negative. If b is at or to the left of the integration interval, strict negativity holds pointwise in the interior. Otherwise choose a point of maximum kernel value on the portion of [a,b] inside the integration interval. That value bounds the possible positive contribution. The chord from the same point to c gives the lower bound for k on [b,c] used to control the negative contribution.
 

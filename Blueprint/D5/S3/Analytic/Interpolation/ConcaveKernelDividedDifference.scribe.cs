@@ -19,11 +19,11 @@ internal sealed class ConcaveKernelDividedDifferenceDocument : IScribeDocumentDe
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(
-                    Paragraph(Text("Let the integration interval have endpoints left and right. "
+                    Paragraph(Text("Let left < right be the endpoints of the integration interval. "
                         + "The integrand h is continuous from the smaller of a and left to right "
                         + "and strictly negative in the interior of the integration interval "
                         + "outside [a,b]. Let a < b < c <= right. The continuous concave kernel k "
-                        + "is nonnegative on the interval and strictly positive inside it.")),
+                        + "is strictly positive in the interior.")),
                     Paragraph(Text("Assume that the integral of the positive part of h from a to b "
                         + "is strictly smaller than the integral of minus h from b to c weighted "
                         + "by the fraction (c-t)/(c-a). Then the integral of h times k is negative. "

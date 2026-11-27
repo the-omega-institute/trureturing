@@ -35,7 +35,7 @@ abbrev integralArena : Arena where
     left < right → a < b → b < c → c ≤ right →
     ContinuousOn h (Icc (min a left) right) → ContinuousOn k (Icc left right) →
     ConcaveOn ℝ (Icc left right) k →
-    (∀ t ∈ Icc left right, 0 ≤ k t) → (∀ t ∈ Ioo left right, 0 < k t) →
+    (∀ t ∈ Ioo left right, 0 < k t) →
     (∀ t ∈ Ioo left right \ Icc a b, h t < 0) →
     ((∫ t in a..b, max (h t) 0) < ∫ t in b..c, -h t * ((c - t) / (c - a))) →
     R.readout () () (∫ t in left..right, h t * k t) 0
@@ -57,8 +57,7 @@ private theorem integral_rejected : ¬ integralArena.Law rejected := by
     (h := fun _ => -1) (k := fun _ => 1)
     (by norm_num) (by norm_num) (by norm_num) (by norm_num)
     continuousOn_const continuousOn_const (concaveOn_const _ (convex_Icc _ _))
-    (by intros; norm_num) (by intros; norm_num) (by intros; norm_num)
-    constant_negative_lobe_bound
+    (by intros; norm_num) (by intros; norm_num) constant_negative_lobe_bound
 
 def integralFamily : Registration integralArena (type_of% @integral_mul_concave_neg_of_lobe_bound)
     where
@@ -94,7 +93,7 @@ def integralAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     coordinates := #[]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body",
-        "body", "body", "body", "body", "body", "body", "body", "body", "fn", "fn"]
+        "body", "body", "body", "body", "body", "body", "body", "fn", "fn"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none

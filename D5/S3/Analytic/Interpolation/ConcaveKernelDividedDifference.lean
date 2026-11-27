@@ -33,12 +33,16 @@ theorem integral_mul_concave_neg_of_lobe_bound
     (hh : ContinuousOn h (Icc (min a left) right))
     (hk : ContinuousOn k (Icc left right))
     (hconcave : ConcaveOn ℝ (Icc left right) k)
-    (hk_nonneg : ∀ t ∈ Icc left right, 0 ≤ k t)
     (hk_pos : ∀ t ∈ Ioo left right, 0 < k t)
     (hh_neg : ∀ t ∈ Ioo left right \ Icc a b, h t < 0)
     (hbound : (∫ t in a..b, max (h t) 0) <
       ∫ t in b..c, -h t * ((c - t) / (c - a))) :
     (∫ t in left..right, h t * k t) < 0 := by
+  have hk_nonneg (t : ℝ) (ht : t ∈ Icc left right) : 0 ≤ k t := by
+    have ht_closure : t ∈ closure (Ioo left right) := by
+      rwa [closure_Ioo hinterval.ne]
+    exact ContinuousWithinAt.closure_le ht_closure continuousWithinAt_const
+      ((hk t ht).mono Ioo_subset_Icc_self) (fun u hu => (hk_pos u hu).le)
   have h_cont : ContinuousOn (fun t => h t * k t) (Icc left right) :=
     (hh.mono (Icc_subset_Icc (min_le_right ..) le_rfl)).mul hk
   have hint {u v : ℝ} (hu : left ≤ u) (huv : u ≤ v) (hv : v ≤ right) :
@@ -252,11 +256,8 @@ theorem three_node_slope_sub_slope_neg_of_lobe_bound
   have hpos (t : ℝ) (ht : t ∈ Ioo left right) : 0 < min (up t) (down t) :=
     lt_min (div_pos (sub_pos.mpr ht.1) (sub_pos.mpr hlm))
       (div_pos (sub_pos.mpr ht.2) (sub_pos.mpr hmr))
-  have hnonneg (t : ℝ) (ht : t ∈ Icc left right) : 0 ≤ min (up t) (down t) :=
-    le_min (div_nonneg (sub_nonneg.mpr ht.1) (sub_nonneg.mpr hlm.le))
-      (div_nonneg (sub_nonneg.mpr ht.2) (sub_nonneg.mpr hmr.le))
   have hsign := integral_mul_concave_neg_of_lobe_bound (hlm.trans hmr) hab hbc hcr hfpp
-    (hu.inf hd).continuousOn (huc.inf hdc) hnonneg hpos hneg hbound
+    (hu.inf hd).continuousOn (huc.inf hdc) hpos hneg hbound
   have hid := intervalIntegral_tent_eq_slope_sub_slope hlm hmr hf hfp
     (hfpp.mono (Icc_subset_Icc (min_le_right ..) le_rfl))
   exact sub_neg.mp (hid ▸ hsign)
