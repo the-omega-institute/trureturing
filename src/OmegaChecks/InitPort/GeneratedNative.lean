@@ -193,7 +193,8 @@ equation with the checked total function. The temporary declaration is excluded 
 private def compileStructural (source strict : Environment) (n : Name) : CoreM Unit := do
   let original := originalName n
   let recName := Compiler.mkUnsafeRecName original
-  let hasEquations := original.getRoot == `List || original.getRoot == `Array
+  let namespaceRoot := (privateToUserName? original).getD original |>.getRoot
+  let hasEquations := namespaceRoot == `List || namespaceRoot == `Array
   let some (.defnInfo d) := if hasEquations then source.find? recName else none | do
     if let some (.defnInfo strictDef) := strict.find? n then
       if strictDef.value.getUsedConstants.contains `Nat.rec then compileRecursorCall source strict strictDef
