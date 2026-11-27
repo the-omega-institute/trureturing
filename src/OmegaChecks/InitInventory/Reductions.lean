@@ -2,6 +2,9 @@ module
 public import Lean
 import Lean.Replay
 import all Lean.Util.CollectAxioms
+public import OmegaChecks.InitInventory.EffectObservations
+import all OmegaChecks.InitInventory.EffectObservations
+meta import OmegaChecks.InitInventory.EffectObservations
 public import OmegaChecks.InitInventory.PointerObservations
 import all OmegaChecks.InitInventory.PointerObservations
 meta import OmegaChecks.InitInventory.PointerObservations
@@ -81,7 +84,8 @@ private def replayWitnesses (env : Environment) : IO Unit := do
       ``EnvelopeOrder.propextFromRingOrder, ``EnvelopeOrder.propextFromModuleOrder] ++
     [``Envelope.funextFromCancellation, ``Envelope.funextFromEnvelopeRing,
       ``Envelope.funextFromEnvelopeCommRing, ``Envelope.funextFromEnvelopeIntModule] ++
-    [``PointerObservations.address, ``PointerObservations.pointerEquality, ``PointerObservations.listPointerEquality,
+    [``EffectObservations.base, ``EffectObservations.eio, ``EffectObservations.io,
+      ``PointerObservations.address, ``PointerObservations.pointerEquality, ``PointerObservations.listPointerEquality,
       ``PointerObservations.objectPointerEquality, ``PointerObservations.objectPointerHash] ++
     [``HeterogeneousQuotient.hrecOn, ``HeterogeneousQuotient.hrecOnSetoid,
      ``HeterogeneousQuotient.soundOfPairCoherence, ``HeterogeneousQuotient.setoidSoundOfPairCoherence] ++

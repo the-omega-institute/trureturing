@@ -374,6 +374,13 @@ private def conditionalConsequence? (owner name : Name) : Option (String × Name
     if name == ``ptrEqList then
       return ("False", ``OmegaChecks.InitBoundaries.PointerObservations.listPointerEquality,
         "Elementwise pointer identity distinguishes singleton lists containing equal allocations")
+  if owner == `Init.System.IO then
+    let witness ← match name with
+      | `unsafeBaseIO => some ``OmegaChecks.InitBoundaries.EffectObservations.base
+      | `unsafeEIO => some ``OmegaChecks.InitBoundaries.EffectObservations.eio
+      | `unsafeIO => some ``OmegaChecks.InitBoundaries.EffectObservations.io
+      | _ => none
+    return ("False", witness, "The same read action returns n and n+1 around an update to its reference cell")
   if owner == `Init.ShareCommon then
     if name == ``ShareCommon.Object.ptrEq then
       return ("False", ``OmegaChecks.InitBoundaries.PointerObservations.objectPointerEquality,
@@ -520,7 +527,7 @@ private def conditionalConsequence? (owner name : Name) : Option (String × Name
     "On every finite iterator it the result equals " ++ behavior)
 
 private def inventory (lib : System.FilePath) (visible strict full : Environment) (modules : Array Name)
-    (gaps : Option IO.FS.Handle) (observedPointers : List String) : CoreM Json := do
+    (gaps : Option IO.FS.Handle) (observedRuntime : List String) : CoreM Json := do
   let official ← getEnv
   let reductions := reductionPaths visible strict full
   let boundaries : Std.HashMap (Name × Name) (Name × Name) := OmegaChecks.InitBoundaries.reductions.foldl
@@ -568,7 +575,7 @@ private def inventory (lib : System.FilePath) (visible strict full : Environment
         <|> conditional.map (fun (target, witness, _) => (target, witness))
       let behavior := conditional.map (fun (_, _, premise) => premise)
       let runtimeConflict : Option String := do
-        guard (info.isUnsafe && observedPointers.contains name.toString)
+        guard (info.isUnsafe && observedRuntime.contains name.toString)
         let some ("False", witness, _) := conditional | none
         return witness.toString
       let boundary := boundaries[(owner, name)]?
@@ -653,7 +660,9 @@ def main (args : List String) : IO Unit := do
   for owner in strict.allImportedModuleNames do
     unless owner.getRoot == `OmegaInit do
       throw <| IO.userError s!"expected a strict OmegaInit build, found import {owner}"
-  let observedPointers ← unsafe OmegaChecks.InitBoundaries.PointerObservations.observe modules.size
-  let result ← (inventory lib visible strict full modules gaps observedPointers).toIO' {fileName := "<Init inventory>", fileMap := default} {env := official}
+  let pointers ← unsafe OmegaChecks.InitBoundaries.PointerObservations.observe modules.size
+  let effects ← unsafe OmegaChecks.InitBoundaries.EffectObservations.observe modules.size
+  let observedRuntime := pointers ++ effects
+  let result ← (inventory lib visible strict full modules gaps observedRuntime).toIO' {fileName := "<Init inventory>", fileMap := default} {env := official}
   IO.FS.writeFile outputPath (result.compress ++ "\n")
   IO.println (← IO.ofExcept (result.getObjVal? "summary")).compress

@@ -32,6 +32,8 @@ example (a : α) (b : β) : Omega.Eq (Prod.fst (Prod.mk a b)) a := Omega.rfl
 
 `ptrAddrUnsafe`、`ptrEq` 和 `ptrEqList` 能区分内容相等的两个列表。对于分别分配、唯一自然数字段相等的两个 `NonScalar` 对象，`ShareCommon.Object.ptrEq` 与 `ShareCommon.Object.ptrHash` 也能给出不同结果。运行 `lake env lean --run src/OmegaChecks/InitPort/PointerObservations.lean` 可在钉版 Lean 运行时复现。对原类型的任意纯函数，Lean 的等式替换要求这两组输入得到相同结果。每次盘点都在当前工具链执行观察。只有实际观测到不同返回值且源码中有针对该原类型的内核矛盾证明时，缺口记录才写入 `runtimeConflictWitness`。[内核证明](../InitInventory/PointerObservations.lean) · [运行时样例](PointerObservations.lean)
 
+对 `unsafeBaseIO`、`unsafeEIO` 和 `unsafeIO`，盘点器各执行两次同一个读取引用的动作。两次之间将引用值加一。原类型的纯函数对同一个动作只能返回同一个值。盘点器实际观测到不同的返回值后，将对应证明写入缺口表。[读数与内核证明](../InitInventory/EffectObservations.lean)
+
 `Omega.Array.anyMUnsafe` 按官方机器字索引循环执行。自然数区间长度给出递归上界。每一步仍比较机器字，耗尽区间时两端必然相等，读取位置也在原数组内。即使数组长度达到 `USize.size`，这两个结论仍然成立。例如从零开始搜索恰有 `USize.size` 个元素的整个数组时，转换后的终点为零，循环立即返回 `false`。校验器把官方入口和递归分支逐一与全输入证明核对。[循环及证明](ArrayWord.lean) · [官方数组循环](https://github.com/leanprover/lean4/blob/v4.35.0/src/Init/Data/Array/Basic.lean#L936)
 
 公开覆盖清单按官方定义模块和声明名逐项列出，重复生成的名字在各自模块有独立记录。
