@@ -72,3 +72,7 @@ values and the recurrence in the integers under n > 7.
 Tier 1. The admission basis is open-problem-resolution. The proof uses
 the reversible decomposition of actual ordered trees and the resulting
 all-size binomial count on its live path to the series and recurrence.
+
+## ASSUMED-UNVERIFIED
+
+Publication priority beyond the cited source screening remains unverified.
