@@ -15,6 +15,8 @@ import OmegaChecks.InitInventory.Conditional
 meta import OmegaChecks.InitInventory.Conditional
 meta import OmegaChecks.InitInventory.ChoiceOperands
 import OmegaChecks.InitInventory.Quotient
+import OmegaChecks.InitInventory.RefinedQuotient
+meta import OmegaChecks.InitInventory.RefinedQuotient
 meta import OmegaChecks.InitInventory.OrderedAlgebra
 meta import OmegaChecks.InitInventory.Order
 meta import OmegaChecks.InitInventory.Logic
@@ -617,7 +619,7 @@ private def inventory (lib strictDir : System.FilePath) (visible strict full wit
   let mut nativeByModule := #[]
   let mut allNative := #[]
   if let some file := gaps then
-    file.putStrLn "module\tdeclaration\tkind\tunsafe\tpartial\tupstreamAxioms\timpliesAxiom\treductionWitness\tlogicalConsequence\tlogicalConsequenceWitness\trequiredBehavior\tabstractedDependency\truntimeConflictWitness\tequationOperand\toperandImpliesAxiom\toperandReductionWitness\tunchangedTypeAxioms\tunsafePackedObservation\tspecializedEndpointType\tunconditionalLogicalConsequence\tunconditionalLogicalConsequenceWitness\tstrictConstructorIff\tformationArgument\ttransportPathType\trepresentativeRefuter"
+    file.putStrLn "module\tdeclaration\tkind\tunsafe\tpartial\tupstreamAxioms\timpliesAxiom\treductionWitness\tlogicalConsequence\tlogicalConsequenceWitness\trequiredBehavior\tabstractedDependency\truntimeConflictWitness\tequationOperand\toperandImpliesAxiom\toperandReductionWitness\tunchangedTypeAxioms\tunsafePackedObservation\tspecializedEndpointType\tunconditionalLogicalConsequence\tunconditionalLogicalConsequenceWitness\tstrictConstructorIff\tformationArgument\ttransportPathType\trepresentativeRefuter\trefinedQuotientConsequence"
   for owner in modules do
     let some idx := visible.getModuleIdx? owner | throwError "missing official module {owner}"
     let publicNames := visible.header.moduleData[idx]!.constNames.filter publicName
@@ -678,6 +680,9 @@ private def inventory (lib strictDir : System.FilePath) (visible strict full wit
         certifiedTransportPaths := certifiedTransportPaths.push #[owner.toString, name.toString, path.toString]
         pure (some path.toString)
       else pure none
+      let refinedModel := OmegaChecks.InitBoundaries.RefinedQuotient.sites.contains (owner, name)
+      if refinedModel then
+        OmegaChecks.InitBoundaries.RefinedQuotient.certify official witnesses owner info
       let refutedStatement := if transportPath == some "Quotient.sound" then ``Quotient.sound else name
       let refuter := OmegaChecks.InitBoundaries.RepresentativeQuotient.refuter? owner refutedStatement
       if let some proof := refuter then
@@ -774,7 +779,8 @@ private def inventory (lib strictDir : System.FilePath) (visible strict full wit
             (operand.map fun _ => (``Classical.choice).toString).getD "", (operand.map (·.witness.toString)).getD "",
             String.intercalate "," (typeAxioms.toList.map Name.toString), packedObservation.getD "", endpointType.getD "",
             (additional.map Prod.fst).getD "", (additional.map (·.2.toString)).getD "", if constructorIff then "true" else "",
-            formationArgument.getD "", transportPath.getD "", (refuter.map Name.toString).getD ""]
+            formationArgument.getD "", transportPath.getD "", (refuter.map Name.toString).getD "",
+            if refinedModel then "The pinned operations in the refined interpretation imply Not (type of Quot.sound.{1})" else ""]
       if info.isAxiom then
         directAxioms := directAxioms + 1
         axiomUnique := axiomUnique.insert name
@@ -798,6 +804,8 @@ private def inventory (lib strictDir : System.FilePath) (visible strict full wit
         moduleNative := moduleNative.push ⟨matched, hasSig⟩
         pure (row.setObjVal! "strictNativeSignature" (toJson hasSig))
       else pure row
+      let row := if refinedModel then row.setObjVal! "refinedQuotientConsequence"
+        (toJson "The pinned operations in the refined interpretation imply Not (type of Quot.sound.{1})") else row
       let row := if let some proof := refuter then row.setObjVal! "representativeRefuter" (toJson proof.toString) else row
       let row := if let some path := transportPath then row.setObjVal! "transportPathType" (toJson path) else row
       let row := if let some argument := formationArgument then row.setObjVal! "formationArgument" (toJson argument) else row
@@ -859,7 +867,8 @@ def main (args : List String) : IO Unit := do
     | _ => throw <| IO.userError "expected at most one gaps TSV file"
   let sysroot ← findSysroot
   initSearchPath sysroot
-  let witnesses ← importModules #[{module := `OmegaChecks.InitInventory.ChoiceOperands}, {module := `OmegaChecks.InitInventory.Quotient}] {} (level := .private)
+  let witnesses ← importModules #[{module := `OmegaChecks.InitInventory.ChoiceOperands}, {module := `OmegaChecks.InitInventory.Quotient},
+    {module := `OmegaChecks.InitInventory.RefinedQuotient}] {} (level := .private)
   let lib ← getLibDir sysroot
   searchPathRef.set [lib]
   let modules ← installedModules lib `Init

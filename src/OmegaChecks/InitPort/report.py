@@ -339,7 +339,7 @@ def report(product, require_complete=False):
                              "unconditionalLogicalConsequence", "unconditionalLogicalConsequenceWitness",
                              "specializedEndpointType", "strictConstructorIff", "formationArgument", "transportPathType",
                              "strictLogicalConsequence", "strictLogicalConsequenceWitness", "strictEquivalenceWitness",
-                             "representativeRefuter"])
+                             "representativeRefuter", "refinedQuotientConsequence"])
             for row in official["declarations"]:
                 if row["matchingNameAndModule"] or row["kind"] == "axiom":
                     continue
@@ -380,7 +380,8 @@ def report(product, require_complete=False):
                                  row.get("specializedEndpointType"), "true" if row.get("strictConstructorIff") else "",
                                  row.get("formationArgument"), row.get("transportPathType"),
                                  row.get("strictLogicalConsequence"), row.get("strictLogicalConsequenceWitness"),
-                                 row.get("strictEquivalenceWitness"), row.get("representativeRefuter")])
+                                 row.get("strictEquivalenceWitness"), row.get("representativeRefuter"),
+                                 row.get("refinedQuotientConsequence")])
         reductions = stage / "init-public-reductions.tsv"
         with reductions.open("w", newline="") as f:
             writer = csv.writer(f, delimiter="\t", lineterminator="\n")
