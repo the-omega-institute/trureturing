@@ -95,7 +95,7 @@ private def replayWitnesses (env : Environment) : IO Unit := do
       ``EnvelopeOrder.propextFromRingOrder, ``EnvelopeOrder.propextFromModuleOrder] ++
     [``Envelope.funextFromCancellation, ``Envelope.funextFromEnvelopeRing,
       ``Envelope.funextFromEnvelopeCommRing, ``Envelope.funextFromEnvelopeIntModule] ++
-    [``EffectObservations.base, ``EffectObservations.eio, ``EffectObservations.io,
+    [``PointerObservations.exclusivity, ``EffectObservations.base, ``EffectObservations.eio, ``EffectObservations.io,
       ``ArrayCasts.map, ``ArrayCasts.mapIndexed,
       ``PointerObservations.address, ``PointerObservations.pointerEquality, ``PointerObservations.listPointerEquality,
       ``PointerObservations.guardedPointerEquality, ``PointerObservations.objectPointerEquality, ``PointerObservations.objectPointerHash] ++

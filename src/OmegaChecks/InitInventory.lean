@@ -381,6 +381,9 @@ private def conditionalConsequence? (owner name : Name) : Option (String × Name
     return (target, witness,
       "On the Boolean additive monoid, the proposed structure computes the official negation on (true,false), addition of the swapped and original representatives, and zero")
   if owner == `Init.Util then
+    if name == ``isExclusiveUnsafe then
+      return ("False", ``OmegaChecks.InitBoundaries.PointerObservations.exclusivity,
+        "Native exclusivity distinguishes a freshly allocated singleton array from a persistent literal with the same element")
     if name == ``ptrAddrUnsafe then
       return ("False", ``OmegaChecks.InitBoundaries.PointerObservations.address,
         "Native addresses distinguish two simultaneously live equal lists")
@@ -687,7 +690,14 @@ def main (args : List String) : IO Unit := do
       throw <| IO.userError s!"expected a strict OmegaInit build, found import {owner}"
   let pointers ← unsafe OmegaChecks.InitBoundaries.PointerObservations.observe modules.size
   let effects ← unsafe OmegaChecks.InitBoundaries.EffectObservations.observe modules.size
-  let observedRuntime := pointers ++ effects
+  -- Reference counts depend on argument ownership in native code. Run the borrowed call
+  -- in a compiled executable so interpreter boxing cannot perturb the observed object.
+  let native ← IO.Process.output {cmd := "lake", args := #["-q", "exe", "omegaPointerObservations", "--exclusivity"]}
+  unless native.exitCode == 0 do throw <| IO.userError s!"native exclusivity observation failed: {native.stderr}"
+  let observedRuntime ← match native.stdout.trimAscii.toString with
+    | "true" => pure ("isExclusiveUnsafe" :: pointers ++ effects)
+    | "false" => pure (pointers ++ effects)
+    | other => throw <| IO.userError s!"unexpected native exclusivity observation: {other}"
   let result ← (inventory lib visible strict full modules gaps observedRuntime).toIO' {fileName := "<Init inventory>", fileMap := default} {env := official}
   IO.FS.writeFile outputPath (result.compress ++ "\n")
   IO.println (← IO.ofExcept (result.getObjVal? "summary")).compress

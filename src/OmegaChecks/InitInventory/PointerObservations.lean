@@ -3,13 +3,18 @@ public import Init.Util
 public import Init.System.IO
 public import Init.ShareCommon
 
-/-! Native pointer observations can distinguish propositionally equal list values. -/
+/-! Native allocation and pointer observations can distinguish propositionally equal values. -/
 
 namespace OmegaChecks.InitBoundaries.PointerObservations
 
 /-- A pure candidate that distinguishes equal inputs contradicts substitution. -/
 public theorem address (read : type_of% @ptrAddrUnsafe.{0})
     (observed : ∃ a b : List Nat, a = b ∧ @read _ a ≠ @read _ b) : False := by
+  obtain ⟨a, b, eq, different⟩ := observed
+  exact different (congrArg _ eq)
+
+public theorem exclusivity (read : type_of% @isExclusiveUnsafe.{0})
+    (observed : ∃ a b : Array Nat, a = b ∧ @read _ a ≠ @read _ b) : False := by
   obtain ⟨a, b, eq, different⟩ := observed
   exact different (congrArg _ eq)
 
@@ -55,6 +60,15 @@ public theorem objectPointerHash (read : type_of% @ShareCommon.Object.ptrHash)
 -- A large Nat is boxed. Compute the same field value by two independent allocations.
 @[noinline] private def object (n : Nat) : NonScalar := ⟨2 ^ (80 + n)⟩
 @[noinline] private def equalObject (n : Nat) : NonScalar := ⟨2 ^ (79 + n) * 2⟩
+
+-- The native compiler stores the two literals persistently. The other array is allocated at runtime.
+@[noinline] private def freshArray (bit : Nat) : Array Nat := Array.replicate 1 bit
+@[noinline] private def staticArray (bit : Nat) : Array Nat := if bit == 0 then #[0] else #[1]
+@[noinline] private unsafe def exclusive (a : @& Array Nat) := isExclusiveUnsafe a
+
+/-- The executed comparisons include an independent equality check on the arrays. -/
+public unsafe def distinguishesExclusivity (bit : Nat) : Bool :=
+  exclusive (freshArray bit) && !exclusive (staticArray bit) && decide (freshArray bit = staticArray bit)
 
 /-- Observe which pinned primitives distinguish equal inputs on this runtime. -/
 public unsafe def observe (seed : Nat) : IO (List String) := do
