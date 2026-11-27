@@ -62,6 +62,80 @@ private theorem fuelInvariant {A : Sort u} {B : Sort v} (measure : A → Nat)
   | zero => exact zero
   | succ k ih => exact succ k _ ih
 
+private abbrev RangeState (r : Range) (β : Type u) :=
+  (_ : β) ×' (i : Nat) ×' (_ : (i - r.start) % r.step = 0) ×' r.start ≤ i
+
+private def remaining (r : Range) (p : RangeState r β) : Nat :=
+  PSigma.casesOn p fun _ q => PSigma.casesOn q fun i s => PSigma.casesOn s fun _ _ => r.stop - i
+
+private def rangeAction [Monad m] (r : Range) (f : (i : Nat) → i ∈ r → β → m (ForInStep β))
+    (p : RangeState r β) : ((q : RangeState r β) → remaining r q < remaining r p → m β) → m β := by
+  obtain ⟨b, i, hs, hl⟩ := p
+  intro rec
+  exact if h : i < r.stop then
+    have aligned : (i + r.step - r.start) % r.step = 0 := by
+      rw [Nat.add_comm i, Nat.add_sub_assoc hl, Nat.add_mod_left, hs]
+    forInNext (f i ⟨hl, h, hs⟩)
+      (fun b => rec ⟨b, i + r.step, aligned, Nat.le_trans hl (Nat.le_add_right ..)⟩
+        (Nat.sub_lt_sub_left h (Nat.lt_add_of_pos_right r.step_pos))) b
+  else pure b
+
+private abbrev rangeFuel [Monad m] (r : Range) (f : (i : Nat) → i ∈ r → β → m (ForInStep β))
+    (n i : Nat) (hs : (i - r.start) % r.step = 0) (hl : r.start ≤ i) (hn : r.stop - i < n) (b : β) :=
+  WellFounded.Nat.fix.go (remaining r) (rangeAction r f) n ⟨b, i, hs, hl⟩ hn
+
+/-- The entire function of the accumulator agrees for any two sufficient bounds. -/
+private theorem rangeBounds [Monad m] (r : Range) (f : (i : Nat) → i ∈ r → β → m (ForInStep β))
+    (n k i : Nat) (hs : (i - r.start) % r.step = 0) (hl : r.start ≤ i)
+    (hn : r.stop - i < n) (hk : r.stop - i < k) :
+    rangeFuel r f n i hs hl hn = rangeFuel r f k i hs hl hk := by
+  induction n generalizing k i with
+  | zero => exact (Nat.not_lt_zero _ hn).elim
+  | succ n ih =>
+    cases k with
+    | zero => exact (Nat.not_lt_zero _ hk).elim
+    | succ k =>
+      delta rangeFuel WellFounded.Nat.fix.go
+      dsimp only [rangeAction]
+      by_cases h : i < r.stop
+      · refine (dependentBranch h _ _).trans (Eq.trans ?_ (dependentBranch h _ _).symm)
+        have aligned : (i + r.step - r.start) % r.step = 0 := by
+          rw [Nat.add_comm i, Nat.add_sub_assoc hl, Nat.add_mod_left, hs]
+        have smaller := Nat.sub_lt_sub_left h (Nat.lt_add_of_pos_right r.step_pos)
+        exact congrArg (forInNext (f i ⟨hl, h, hs⟩))
+          (ih k (i + r.step) aligned (Nat.le_trans hl (Nat.le_add_right ..))
+            (Nat.lt_of_lt_of_le smaller (Nat.le_of_lt_succ hn))
+            (Nat.lt_of_lt_of_le smaller (Nat.le_of_lt_succ hk)))
+      · apply Eq.trans (b := fun b : β => pure (f := m) b)
+        · apply dependentElse h
+        · symm
+          apply dependentElse h
+
+private theorem rangeAtFuel [Monad m] (r : Range) (f : (i : Nat) → i ∈ r → β → m (ForInStep β))
+    (i n : Nat) (hs : (i - r.start) % r.step = 0) (hl : r.start ≤ i) (hn : r.stop - i < n) :
+    (fun b => Range.forIn'.loop r f b i hs hl) = rangeFuel r f n i hs hl hn := by
+  delta Range.forIn'.loop Range.forIn'.loop._unary WellFounded.Nat.fix
+  exact rangeBounds r f (WellFounded.Nat.eager (r.stop - i + 1)) n i hs hl
+    (WellFounded.Nat.eager_eq _ ▸ Nat.lt_add_one _) hn
+
+public theorem Std.Legacy.Range.forIn'.loop._unary.eq_def :
+    type_of% (private_decl% @_root_.Std.Legacy.Range.forIn'.loop._unary.eq_def) := by
+  intro m β inst r f p
+  obtain ⟨b, i, hs, hl⟩ := p
+  dsimp only
+  have start := congrFun (rangeAtFuel r f i (Nat.succ (r.stop - i)) hs hl (Nat.lt_succ_self _)) b
+  with_unfolding_all refine start.trans ?_
+  delta rangeFuel WellFounded.Nat.fix.go
+  dsimp only [rangeAction]
+  by_cases h : i < r.stop
+  · rw [dite_eq_left h, dite_eq_left h]
+    have aligned : (i + r.step - r.start) % r.step = 0 := by
+      rw [Nat.add_comm i, Nat.add_sub_assoc hl, Nat.add_mod_left, hs]
+    have smaller := Nat.sub_lt_sub_left h (Nat.lt_add_of_pos_right r.step_pos)
+    with_unfolding_all exact congrFun (congrArg (forInNext (f i ⟨hl,h,hs⟩))
+      (rangeAtFuel r f (i + r.step) (r.stop - i) aligned (Nat.le_trans hl (Nat.le_add_right ..)) smaller).symm) b
+  · rw [dite_eq_right h, dite_eq_right h]
+
 private theorem forInRange [Monad m] (r : Range) (f : (i : Nat) → i ∈ r → β → m (ForInStep β))
     (xs : List Nat) (inside : ∀ a, a ∈ xs → a ∈ r) (i : Nat)
     (hs : (i - r.start) % r.step = 0) (hl : r.start ≤ i) (rest : List Nat)
