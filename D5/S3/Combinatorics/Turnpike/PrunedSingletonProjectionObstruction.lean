@@ -145,9 +145,11 @@ private theorem admissible : Admissible 9 20 y μ := by
   refine ⟨by norm_num, by norm_num, ?_, ?_, ?_, ?_⟩
   · have h : StrictAnti values := by decide +kernel
     intro a b hab
+    change (values b : ℝ) < (values a : ℝ)
     exact_mod_cast h hab
   · have h : ∀ q, 0 < values q := by decide +kernel
     intro q
+    change (0 : ℝ) < (values q : ℝ)
     exact_mod_cast h q
   · decide +kernel
   · decide +kernel
@@ -167,6 +169,7 @@ private theorem realizes : Realizes y μ ruler := by
     linarith
   refine ⟨?_, fun e => ⟨occurrence e, hr e⟩, ?_⟩
   · intro i j hij
+    change (xNat i : ℝ) < (xNat j : ℝ)
     exact_mod_cast hm hij
   · intro q
     have heq : (Finset.univ.filter fun e : Interval 9 =>
@@ -239,17 +242,21 @@ private theorem raw_marginals : ∀ τ : Triangle 9, spine τ → ∀ u : Fin 3,
 private def weight (τ : {τ : Triangle 9 // spine τ}) (s : Fin 12) : ℝ :=
   ((raw τ.1 s).2 : ℝ) / 62
 private def coupling (τ : {τ : Triangle 9 // spine τ}) : Relation y μ → ℝ :=
-  weightedAtoms (support τ) (weight τ)
+  by
+    classical
+    exact weightedAtoms (support τ) (weight τ)
 
 private theorem coupling_nonneg (τ : {τ : Triangle 9 // spine τ}) (r : Relation y μ) :
     0 ≤ coupling τ r := by
   classical
+  unfold coupling weightedAtoms
   apply Finset.sum_nonneg
   intro s _
   unfold weight atom
   positivity
 private theorem coupling_total (τ : {τ : Triangle 9 // spine τ}) :
     ∑ r, coupling τ r = 1 := by
+  classical
   rw [coupling, weightedAtoms_sum]
   have h := congrArg (fun z : ℕ => (z : ℝ) / 62) (raw_total τ.1 τ.2)
   simpa [weight, Nat.cast_sum, Finset.sum_div] using h
@@ -257,6 +264,7 @@ private theorem coupling_marginal (τ : {τ : Triangle 9 // spine τ}) (u : Fin 
     (q : Fin 20) :
     (∑ r, if coordinate u r.1 = q then coupling τ r else 0) =
       assignment (edge τ.1 u) q := by
+  classical
   rw [coupling, weightedAtoms_marginal]
   have h := congrArg (fun z : ℕ => (z : ℝ) / 62) (raw_marginals τ.1 τ.2 u q)
   simpa [weight,support,assignment,Nat.cast_sum,Finset.sum_div] using h
@@ -281,6 +289,7 @@ private theorem spine_feasible : assignment ∈ PrunedProjection y μ spine := b
       simp [rankMask,hr.1,hr.2.1,hr.2.2]
       exact hb r
     · have hz : coupling τ r = 0 := by
+        unfold coupling weightedAtoms
         apply Finset.sum_eq_zero
         intro s _
         by_cases hn : (raw τ.1 s).2 = 0
@@ -294,3 +303,1385 @@ private theorem spine_feasible : assignment ∈ PrunedProjection y μ spine := b
       rw [hz]
       unfold rankMask
       split_ifs <;> norm_num
+
+private def inverse (z : ℤ) : Fin 20 :=
+  match z with
+  | 22 => 0 | 21 => 1 | 20 => 2 | 19 => 3 | 17 => 4 | 16 => 5
+  | 15 => 6 | 14 => 7 | 13 => 8 | 12 => 9 | 11 => 10 | 10 => 11
+  | 9 => 12 | 8 => 13 | 6 => 14 | 5 => 15 | 4 => 16 | 3 => 17
+  | 2 => 18 | 1 => 19 | _ => 0
+private def candidate (u v : Fin 3) (a b : Fin 20) : Fin 20 × Fin 20 × Fin 20 :=
+  if u = 0 then
+    if v = 1 then (a,b,inverse ((values a : ℤ) + values b))
+    else (a,inverse ((values b : ℤ) - values a),b)
+  else (inverse ((values b : ℤ) - values a),a,b)
+private def CutCheck (τ : Triangle 9) (u v w : Fin 3) (a b : Fin 20) : Prop :=
+  numerator (edge τ u) a + numerator (edge τ v) b ≤ 62 ∨
+  let r := candidate u v a b
+  values r.1 + values r.2.1 = values r.2.2 ∧
+  (r.1 ≠ r.2.1 ∨ 2 ≤ μ r.1) ∧ ProductAllowed μ τ r ∧
+  coordinate u r = a ∧ coordinate v r = b ∧
+  numerator (edge τ u) a + numerator (edge τ v) b ≤
+    62 + numerator (edge τ w) (coordinate w r)
+private theorem cut_012_01 : ∀ a b : Fin 20,
+    CutCheck ⟨(0,1,2),by decide⟩ 0 1 2 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_012_02 : ∀ a b : Fin 20,
+    CutCheck ⟨(0,1,2),by decide⟩ 0 2 1 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_012_12 : ∀ a b : Fin 20,
+    CutCheck ⟨(0,1,2),by decide⟩ 1 2 0 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_013_01 : ∀ a b : Fin 20,
+    CutCheck ⟨(0,1,3),by decide⟩ 0 1 2 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_013_02 : ∀ a b : Fin 20,
+    CutCheck ⟨(0,1,3),by decide⟩ 0 2 1 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_013_12 : ∀ a b : Fin 20,
+    CutCheck ⟨(0,1,3),by decide⟩ 1 2 0 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_014_01 : ∀ a b : Fin 20,
+    CutCheck ⟨(0,1,4),by decide⟩ 0 1 2 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_014_02 : ∀ a b : Fin 20,
+    CutCheck ⟨(0,1,4),by decide⟩ 0 2 1 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_014_12 : ∀ a b : Fin 20,
+    CutCheck ⟨(0,1,4),by decide⟩ 1 2 0 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_015_01 : ∀ a b : Fin 20,
+    CutCheck ⟨(0,1,5),by decide⟩ 0 1 2 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_015_02 : ∀ a b : Fin 20,
+    CutCheck ⟨(0,1,5),by decide⟩ 0 2 1 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_015_12 : ∀ a b : Fin 20,
+    CutCheck ⟨(0,1,5),by decide⟩ 1 2 0 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_016_01 : ∀ a b : Fin 20,
+    CutCheck ⟨(0,1,6),by decide⟩ 0 1 2 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_016_02 : ∀ a b : Fin 20,
+    CutCheck ⟨(0,1,6),by decide⟩ 0 2 1 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_016_12 : ∀ a b : Fin 20,
+    CutCheck ⟨(0,1,6),by decide⟩ 1 2 0 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_017_01 : ∀ a b : Fin 20,
+    CutCheck ⟨(0,1,7),by decide⟩ 0 1 2 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_017_02 : ∀ a b : Fin 20,
+    CutCheck ⟨(0,1,7),by decide⟩ 0 2 1 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_017_12 : ∀ a b : Fin 20,
+    CutCheck ⟨(0,1,7),by decide⟩ 1 2 0 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_018_01 : ∀ a b : Fin 20,
+    CutCheck ⟨(0,1,8),by decide⟩ 0 1 2 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_018_02 : ∀ a b : Fin 20,
+    CutCheck ⟨(0,1,8),by decide⟩ 0 2 1 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_018_12 : ∀ a b : Fin 20,
+    CutCheck ⟨(0,1,8),by decide⟩ 1 2 0 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_023_01 : ∀ a b : Fin 20,
+    CutCheck ⟨(0,2,3),by decide⟩ 0 1 2 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_023_02 : ∀ a b : Fin 20,
+    CutCheck ⟨(0,2,3),by decide⟩ 0 2 1 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_023_12 : ∀ a b : Fin 20,
+    CutCheck ⟨(0,2,3),by decide⟩ 1 2 0 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_024_01 : ∀ a b : Fin 20,
+    CutCheck ⟨(0,2,4),by decide⟩ 0 1 2 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_024_02 : ∀ a b : Fin 20,
+    CutCheck ⟨(0,2,4),by decide⟩ 0 2 1 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_024_12 : ∀ a b : Fin 20,
+    CutCheck ⟨(0,2,4),by decide⟩ 1 2 0 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_025_01 : ∀ a b : Fin 20,
+    CutCheck ⟨(0,2,5),by decide⟩ 0 1 2 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_025_02 : ∀ a b : Fin 20,
+    CutCheck ⟨(0,2,5),by decide⟩ 0 2 1 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_025_12 : ∀ a b : Fin 20,
+    CutCheck ⟨(0,2,5),by decide⟩ 1 2 0 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_026_01 : ∀ a b : Fin 20,
+    CutCheck ⟨(0,2,6),by decide⟩ 0 1 2 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_026_02 : ∀ a b : Fin 20,
+    CutCheck ⟨(0,2,6),by decide⟩ 0 2 1 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_026_12 : ∀ a b : Fin 20,
+    CutCheck ⟨(0,2,6),by decide⟩ 1 2 0 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_027_01 : ∀ a b : Fin 20,
+    CutCheck ⟨(0,2,7),by decide⟩ 0 1 2 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_027_02 : ∀ a b : Fin 20,
+    CutCheck ⟨(0,2,7),by decide⟩ 0 2 1 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_027_12 : ∀ a b : Fin 20,
+    CutCheck ⟨(0,2,7),by decide⟩ 1 2 0 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_028_01 : ∀ a b : Fin 20,
+    CutCheck ⟨(0,2,8),by decide⟩ 0 1 2 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_028_02 : ∀ a b : Fin 20,
+    CutCheck ⟨(0,2,8),by decide⟩ 0 2 1 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_028_12 : ∀ a b : Fin 20,
+    CutCheck ⟨(0,2,8),by decide⟩ 1 2 0 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_034_01 : ∀ a b : Fin 20,
+    CutCheck ⟨(0,3,4),by decide⟩ 0 1 2 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_034_02 : ∀ a b : Fin 20,
+    CutCheck ⟨(0,3,4),by decide⟩ 0 2 1 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_034_12 : ∀ a b : Fin 20,
+    CutCheck ⟨(0,3,4),by decide⟩ 1 2 0 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_035_01 : ∀ a b : Fin 20,
+    CutCheck ⟨(0,3,5),by decide⟩ 0 1 2 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_035_02 : ∀ a b : Fin 20,
+    CutCheck ⟨(0,3,5),by decide⟩ 0 2 1 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_035_12 : ∀ a b : Fin 20,
+    CutCheck ⟨(0,3,5),by decide⟩ 1 2 0 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_036_01 : ∀ a b : Fin 20,
+    CutCheck ⟨(0,3,6),by decide⟩ 0 1 2 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_036_02 : ∀ a b : Fin 20,
+    CutCheck ⟨(0,3,6),by decide⟩ 0 2 1 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_036_12 : ∀ a b : Fin 20,
+    CutCheck ⟨(0,3,6),by decide⟩ 1 2 0 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_037_01 : ∀ a b : Fin 20,
+    CutCheck ⟨(0,3,7),by decide⟩ 0 1 2 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_037_02 : ∀ a b : Fin 20,
+    CutCheck ⟨(0,3,7),by decide⟩ 0 2 1 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_037_12 : ∀ a b : Fin 20,
+    CutCheck ⟨(0,3,7),by decide⟩ 1 2 0 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_038_01 : ∀ a b : Fin 20,
+    CutCheck ⟨(0,3,8),by decide⟩ 0 1 2 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_038_02 : ∀ a b : Fin 20,
+    CutCheck ⟨(0,3,8),by decide⟩ 0 2 1 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_038_12 : ∀ a b : Fin 20,
+    CutCheck ⟨(0,3,8),by decide⟩ 1 2 0 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_045_01 : ∀ a b : Fin 20,
+    CutCheck ⟨(0,4,5),by decide⟩ 0 1 2 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_045_02 : ∀ a b : Fin 20,
+    CutCheck ⟨(0,4,5),by decide⟩ 0 2 1 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_045_12 : ∀ a b : Fin 20,
+    CutCheck ⟨(0,4,5),by decide⟩ 1 2 0 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_046_01 : ∀ a b : Fin 20,
+    CutCheck ⟨(0,4,6),by decide⟩ 0 1 2 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_046_02 : ∀ a b : Fin 20,
+    CutCheck ⟨(0,4,6),by decide⟩ 0 2 1 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_046_12 : ∀ a b : Fin 20,
+    CutCheck ⟨(0,4,6),by decide⟩ 1 2 0 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_047_01 : ∀ a b : Fin 20,
+    CutCheck ⟨(0,4,7),by decide⟩ 0 1 2 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_047_02 : ∀ a b : Fin 20,
+    CutCheck ⟨(0,4,7),by decide⟩ 0 2 1 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_047_12 : ∀ a b : Fin 20,
+    CutCheck ⟨(0,4,7),by decide⟩ 1 2 0 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_048_01 : ∀ a b : Fin 20,
+    CutCheck ⟨(0,4,8),by decide⟩ 0 1 2 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_048_02 : ∀ a b : Fin 20,
+    CutCheck ⟨(0,4,8),by decide⟩ 0 2 1 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_048_12 : ∀ a b : Fin 20,
+    CutCheck ⟨(0,4,8),by decide⟩ 1 2 0 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_056_01 : ∀ a b : Fin 20,
+    CutCheck ⟨(0,5,6),by decide⟩ 0 1 2 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_056_02 : ∀ a b : Fin 20,
+    CutCheck ⟨(0,5,6),by decide⟩ 0 2 1 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_056_12 : ∀ a b : Fin 20,
+    CutCheck ⟨(0,5,6),by decide⟩ 1 2 0 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_057_01 : ∀ a b : Fin 20,
+    CutCheck ⟨(0,5,7),by decide⟩ 0 1 2 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_057_02 : ∀ a b : Fin 20,
+    CutCheck ⟨(0,5,7),by decide⟩ 0 2 1 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_057_12 : ∀ a b : Fin 20,
+    CutCheck ⟨(0,5,7),by decide⟩ 1 2 0 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_058_01 : ∀ a b : Fin 20,
+    CutCheck ⟨(0,5,8),by decide⟩ 0 1 2 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_058_02 : ∀ a b : Fin 20,
+    CutCheck ⟨(0,5,8),by decide⟩ 0 2 1 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_058_12 : ∀ a b : Fin 20,
+    CutCheck ⟨(0,5,8),by decide⟩ 1 2 0 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_067_01 : ∀ a b : Fin 20,
+    CutCheck ⟨(0,6,7),by decide⟩ 0 1 2 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_067_02 : ∀ a b : Fin 20,
+    CutCheck ⟨(0,6,7),by decide⟩ 0 2 1 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_067_12 : ∀ a b : Fin 20,
+    CutCheck ⟨(0,6,7),by decide⟩ 1 2 0 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_068_01 : ∀ a b : Fin 20,
+    CutCheck ⟨(0,6,8),by decide⟩ 0 1 2 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_068_02 : ∀ a b : Fin 20,
+    CutCheck ⟨(0,6,8),by decide⟩ 0 2 1 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_068_12 : ∀ a b : Fin 20,
+    CutCheck ⟨(0,6,8),by decide⟩ 1 2 0 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_078_01 : ∀ a b : Fin 20,
+    CutCheck ⟨(0,7,8),by decide⟩ 0 1 2 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_078_02 : ∀ a b : Fin 20,
+    CutCheck ⟨(0,7,8),by decide⟩ 0 2 1 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_078_12 : ∀ a b : Fin 20,
+    CutCheck ⟨(0,7,8),by decide⟩ 1 2 0 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_123_01 : ∀ a b : Fin 20,
+    CutCheck ⟨(1,2,3),by decide⟩ 0 1 2 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_123_02 : ∀ a b : Fin 20,
+    CutCheck ⟨(1,2,3),by decide⟩ 0 2 1 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_123_12 : ∀ a b : Fin 20,
+    CutCheck ⟨(1,2,3),by decide⟩ 1 2 0 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_124_01 : ∀ a b : Fin 20,
+    CutCheck ⟨(1,2,4),by decide⟩ 0 1 2 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_124_02 : ∀ a b : Fin 20,
+    CutCheck ⟨(1,2,4),by decide⟩ 0 2 1 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_124_12 : ∀ a b : Fin 20,
+    CutCheck ⟨(1,2,4),by decide⟩ 1 2 0 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_125_01 : ∀ a b : Fin 20,
+    CutCheck ⟨(1,2,5),by decide⟩ 0 1 2 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_125_02 : ∀ a b : Fin 20,
+    CutCheck ⟨(1,2,5),by decide⟩ 0 2 1 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_125_12 : ∀ a b : Fin 20,
+    CutCheck ⟨(1,2,5),by decide⟩ 1 2 0 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_126_01 : ∀ a b : Fin 20,
+    CutCheck ⟨(1,2,6),by decide⟩ 0 1 2 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_126_02 : ∀ a b : Fin 20,
+    CutCheck ⟨(1,2,6),by decide⟩ 0 2 1 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_126_12 : ∀ a b : Fin 20,
+    CutCheck ⟨(1,2,6),by decide⟩ 1 2 0 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_127_01 : ∀ a b : Fin 20,
+    CutCheck ⟨(1,2,7),by decide⟩ 0 1 2 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_127_02 : ∀ a b : Fin 20,
+    CutCheck ⟨(1,2,7),by decide⟩ 0 2 1 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_127_12 : ∀ a b : Fin 20,
+    CutCheck ⟨(1,2,7),by decide⟩ 1 2 0 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_128_01 : ∀ a b : Fin 20,
+    CutCheck ⟨(1,2,8),by decide⟩ 0 1 2 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_128_02 : ∀ a b : Fin 20,
+    CutCheck ⟨(1,2,8),by decide⟩ 0 2 1 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_128_12 : ∀ a b : Fin 20,
+    CutCheck ⟨(1,2,8),by decide⟩ 1 2 0 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_134_01 : ∀ a b : Fin 20,
+    CutCheck ⟨(1,3,4),by decide⟩ 0 1 2 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_134_02 : ∀ a b : Fin 20,
+    CutCheck ⟨(1,3,4),by decide⟩ 0 2 1 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_134_12 : ∀ a b : Fin 20,
+    CutCheck ⟨(1,3,4),by decide⟩ 1 2 0 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_135_01 : ∀ a b : Fin 20,
+    CutCheck ⟨(1,3,5),by decide⟩ 0 1 2 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_135_02 : ∀ a b : Fin 20,
+    CutCheck ⟨(1,3,5),by decide⟩ 0 2 1 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_135_12 : ∀ a b : Fin 20,
+    CutCheck ⟨(1,3,5),by decide⟩ 1 2 0 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_136_01 : ∀ a b : Fin 20,
+    CutCheck ⟨(1,3,6),by decide⟩ 0 1 2 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_136_02 : ∀ a b : Fin 20,
+    CutCheck ⟨(1,3,6),by decide⟩ 0 2 1 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_136_12 : ∀ a b : Fin 20,
+    CutCheck ⟨(1,3,6),by decide⟩ 1 2 0 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_137_01 : ∀ a b : Fin 20,
+    CutCheck ⟨(1,3,7),by decide⟩ 0 1 2 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_137_02 : ∀ a b : Fin 20,
+    CutCheck ⟨(1,3,7),by decide⟩ 0 2 1 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_137_12 : ∀ a b : Fin 20,
+    CutCheck ⟨(1,3,7),by decide⟩ 1 2 0 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_138_01 : ∀ a b : Fin 20,
+    CutCheck ⟨(1,3,8),by decide⟩ 0 1 2 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_138_02 : ∀ a b : Fin 20,
+    CutCheck ⟨(1,3,8),by decide⟩ 0 2 1 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_138_12 : ∀ a b : Fin 20,
+    CutCheck ⟨(1,3,8),by decide⟩ 1 2 0 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_145_01 : ∀ a b : Fin 20,
+    CutCheck ⟨(1,4,5),by decide⟩ 0 1 2 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_145_02 : ∀ a b : Fin 20,
+    CutCheck ⟨(1,4,5),by decide⟩ 0 2 1 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_145_12 : ∀ a b : Fin 20,
+    CutCheck ⟨(1,4,5),by decide⟩ 1 2 0 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_146_01 : ∀ a b : Fin 20,
+    CutCheck ⟨(1,4,6),by decide⟩ 0 1 2 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_146_02 : ∀ a b : Fin 20,
+    CutCheck ⟨(1,4,6),by decide⟩ 0 2 1 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_146_12 : ∀ a b : Fin 20,
+    CutCheck ⟨(1,4,6),by decide⟩ 1 2 0 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_147_01 : ∀ a b : Fin 20,
+    CutCheck ⟨(1,4,7),by decide⟩ 0 1 2 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_147_02 : ∀ a b : Fin 20,
+    CutCheck ⟨(1,4,7),by decide⟩ 0 2 1 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_147_12 : ∀ a b : Fin 20,
+    CutCheck ⟨(1,4,7),by decide⟩ 1 2 0 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_148_01 : ∀ a b : Fin 20,
+    CutCheck ⟨(1,4,8),by decide⟩ 0 1 2 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_148_02 : ∀ a b : Fin 20,
+    CutCheck ⟨(1,4,8),by decide⟩ 0 2 1 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_148_12 : ∀ a b : Fin 20,
+    CutCheck ⟨(1,4,8),by decide⟩ 1 2 0 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_156_01 : ∀ a b : Fin 20,
+    CutCheck ⟨(1,5,6),by decide⟩ 0 1 2 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_156_02 : ∀ a b : Fin 20,
+    CutCheck ⟨(1,5,6),by decide⟩ 0 2 1 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_156_12 : ∀ a b : Fin 20,
+    CutCheck ⟨(1,5,6),by decide⟩ 1 2 0 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_157_01 : ∀ a b : Fin 20,
+    CutCheck ⟨(1,5,7),by decide⟩ 0 1 2 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_157_02 : ∀ a b : Fin 20,
+    CutCheck ⟨(1,5,7),by decide⟩ 0 2 1 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_157_12 : ∀ a b : Fin 20,
+    CutCheck ⟨(1,5,7),by decide⟩ 1 2 0 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_158_01 : ∀ a b : Fin 20,
+    CutCheck ⟨(1,5,8),by decide⟩ 0 1 2 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_158_02 : ∀ a b : Fin 20,
+    CutCheck ⟨(1,5,8),by decide⟩ 0 2 1 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_158_12 : ∀ a b : Fin 20,
+    CutCheck ⟨(1,5,8),by decide⟩ 1 2 0 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_167_01 : ∀ a b : Fin 20,
+    CutCheck ⟨(1,6,7),by decide⟩ 0 1 2 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_167_02 : ∀ a b : Fin 20,
+    CutCheck ⟨(1,6,7),by decide⟩ 0 2 1 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_167_12 : ∀ a b : Fin 20,
+    CutCheck ⟨(1,6,7),by decide⟩ 1 2 0 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_168_01 : ∀ a b : Fin 20,
+    CutCheck ⟨(1,6,8),by decide⟩ 0 1 2 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_168_02 : ∀ a b : Fin 20,
+    CutCheck ⟨(1,6,8),by decide⟩ 0 2 1 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_168_12 : ∀ a b : Fin 20,
+    CutCheck ⟨(1,6,8),by decide⟩ 1 2 0 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_178_01 : ∀ a b : Fin 20,
+    CutCheck ⟨(1,7,8),by decide⟩ 0 1 2 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_178_02 : ∀ a b : Fin 20,
+    CutCheck ⟨(1,7,8),by decide⟩ 0 2 1 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_178_12 : ∀ a b : Fin 20,
+    CutCheck ⟨(1,7,8),by decide⟩ 1 2 0 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_234_01 : ∀ a b : Fin 20,
+    CutCheck ⟨(2,3,4),by decide⟩ 0 1 2 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_234_02 : ∀ a b : Fin 20,
+    CutCheck ⟨(2,3,4),by decide⟩ 0 2 1 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_234_12 : ∀ a b : Fin 20,
+    CutCheck ⟨(2,3,4),by decide⟩ 1 2 0 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_235_01 : ∀ a b : Fin 20,
+    CutCheck ⟨(2,3,5),by decide⟩ 0 1 2 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_235_02 : ∀ a b : Fin 20,
+    CutCheck ⟨(2,3,5),by decide⟩ 0 2 1 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_235_12 : ∀ a b : Fin 20,
+    CutCheck ⟨(2,3,5),by decide⟩ 1 2 0 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_236_01 : ∀ a b : Fin 20,
+    CutCheck ⟨(2,3,6),by decide⟩ 0 1 2 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_236_02 : ∀ a b : Fin 20,
+    CutCheck ⟨(2,3,6),by decide⟩ 0 2 1 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_236_12 : ∀ a b : Fin 20,
+    CutCheck ⟨(2,3,6),by decide⟩ 1 2 0 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_237_01 : ∀ a b : Fin 20,
+    CutCheck ⟨(2,3,7),by decide⟩ 0 1 2 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_237_02 : ∀ a b : Fin 20,
+    CutCheck ⟨(2,3,7),by decide⟩ 0 2 1 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_237_12 : ∀ a b : Fin 20,
+    CutCheck ⟨(2,3,7),by decide⟩ 1 2 0 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_238_01 : ∀ a b : Fin 20,
+    CutCheck ⟨(2,3,8),by decide⟩ 0 1 2 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_238_02 : ∀ a b : Fin 20,
+    CutCheck ⟨(2,3,8),by decide⟩ 0 2 1 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_238_12 : ∀ a b : Fin 20,
+    CutCheck ⟨(2,3,8),by decide⟩ 1 2 0 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_245_01 : ∀ a b : Fin 20,
+    CutCheck ⟨(2,4,5),by decide⟩ 0 1 2 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_245_02 : ∀ a b : Fin 20,
+    CutCheck ⟨(2,4,5),by decide⟩ 0 2 1 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_245_12 : ∀ a b : Fin 20,
+    CutCheck ⟨(2,4,5),by decide⟩ 1 2 0 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_246_01 : ∀ a b : Fin 20,
+    CutCheck ⟨(2,4,6),by decide⟩ 0 1 2 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_246_02 : ∀ a b : Fin 20,
+    CutCheck ⟨(2,4,6),by decide⟩ 0 2 1 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_246_12 : ∀ a b : Fin 20,
+    CutCheck ⟨(2,4,6),by decide⟩ 1 2 0 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_247_01 : ∀ a b : Fin 20,
+    CutCheck ⟨(2,4,7),by decide⟩ 0 1 2 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_247_02 : ∀ a b : Fin 20,
+    CutCheck ⟨(2,4,7),by decide⟩ 0 2 1 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_247_12 : ∀ a b : Fin 20,
+    CutCheck ⟨(2,4,7),by decide⟩ 1 2 0 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_248_01 : ∀ a b : Fin 20,
+    CutCheck ⟨(2,4,8),by decide⟩ 0 1 2 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_248_02 : ∀ a b : Fin 20,
+    CutCheck ⟨(2,4,8),by decide⟩ 0 2 1 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_248_12 : ∀ a b : Fin 20,
+    CutCheck ⟨(2,4,8),by decide⟩ 1 2 0 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_256_01 : ∀ a b : Fin 20,
+    CutCheck ⟨(2,5,6),by decide⟩ 0 1 2 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_256_02 : ∀ a b : Fin 20,
+    CutCheck ⟨(2,5,6),by decide⟩ 0 2 1 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_256_12 : ∀ a b : Fin 20,
+    CutCheck ⟨(2,5,6),by decide⟩ 1 2 0 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_257_01 : ∀ a b : Fin 20,
+    CutCheck ⟨(2,5,7),by decide⟩ 0 1 2 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_257_02 : ∀ a b : Fin 20,
+    CutCheck ⟨(2,5,7),by decide⟩ 0 2 1 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_257_12 : ∀ a b : Fin 20,
+    CutCheck ⟨(2,5,7),by decide⟩ 1 2 0 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_258_01 : ∀ a b : Fin 20,
+    CutCheck ⟨(2,5,8),by decide⟩ 0 1 2 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_258_02 : ∀ a b : Fin 20,
+    CutCheck ⟨(2,5,8),by decide⟩ 0 2 1 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_258_12 : ∀ a b : Fin 20,
+    CutCheck ⟨(2,5,8),by decide⟩ 1 2 0 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_267_01 : ∀ a b : Fin 20,
+    CutCheck ⟨(2,6,7),by decide⟩ 0 1 2 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_267_02 : ∀ a b : Fin 20,
+    CutCheck ⟨(2,6,7),by decide⟩ 0 2 1 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_267_12 : ∀ a b : Fin 20,
+    CutCheck ⟨(2,6,7),by decide⟩ 1 2 0 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_268_01 : ∀ a b : Fin 20,
+    CutCheck ⟨(2,6,8),by decide⟩ 0 1 2 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_268_02 : ∀ a b : Fin 20,
+    CutCheck ⟨(2,6,8),by decide⟩ 0 2 1 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_268_12 : ∀ a b : Fin 20,
+    CutCheck ⟨(2,6,8),by decide⟩ 1 2 0 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_278_01 : ∀ a b : Fin 20,
+    CutCheck ⟨(2,7,8),by decide⟩ 0 1 2 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_278_02 : ∀ a b : Fin 20,
+    CutCheck ⟨(2,7,8),by decide⟩ 0 2 1 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_278_12 : ∀ a b : Fin 20,
+    CutCheck ⟨(2,7,8),by decide⟩ 1 2 0 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_345_01 : ∀ a b : Fin 20,
+    CutCheck ⟨(3,4,5),by decide⟩ 0 1 2 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_345_02 : ∀ a b : Fin 20,
+    CutCheck ⟨(3,4,5),by decide⟩ 0 2 1 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_345_12 : ∀ a b : Fin 20,
+    CutCheck ⟨(3,4,5),by decide⟩ 1 2 0 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_346_01 : ∀ a b : Fin 20,
+    CutCheck ⟨(3,4,6),by decide⟩ 0 1 2 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_346_02 : ∀ a b : Fin 20,
+    CutCheck ⟨(3,4,6),by decide⟩ 0 2 1 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_346_12 : ∀ a b : Fin 20,
+    CutCheck ⟨(3,4,6),by decide⟩ 1 2 0 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_347_01 : ∀ a b : Fin 20,
+    CutCheck ⟨(3,4,7),by decide⟩ 0 1 2 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_347_02 : ∀ a b : Fin 20,
+    CutCheck ⟨(3,4,7),by decide⟩ 0 2 1 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_347_12 : ∀ a b : Fin 20,
+    CutCheck ⟨(3,4,7),by decide⟩ 1 2 0 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_348_01 : ∀ a b : Fin 20,
+    CutCheck ⟨(3,4,8),by decide⟩ 0 1 2 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_348_02 : ∀ a b : Fin 20,
+    CutCheck ⟨(3,4,8),by decide⟩ 0 2 1 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_348_12 : ∀ a b : Fin 20,
+    CutCheck ⟨(3,4,8),by decide⟩ 1 2 0 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_356_01 : ∀ a b : Fin 20,
+    CutCheck ⟨(3,5,6),by decide⟩ 0 1 2 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_356_02 : ∀ a b : Fin 20,
+    CutCheck ⟨(3,5,6),by decide⟩ 0 2 1 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_356_12 : ∀ a b : Fin 20,
+    CutCheck ⟨(3,5,6),by decide⟩ 1 2 0 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_357_01 : ∀ a b : Fin 20,
+    CutCheck ⟨(3,5,7),by decide⟩ 0 1 2 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_357_02 : ∀ a b : Fin 20,
+    CutCheck ⟨(3,5,7),by decide⟩ 0 2 1 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_357_12 : ∀ a b : Fin 20,
+    CutCheck ⟨(3,5,7),by decide⟩ 1 2 0 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_358_01 : ∀ a b : Fin 20,
+    CutCheck ⟨(3,5,8),by decide⟩ 0 1 2 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_358_02 : ∀ a b : Fin 20,
+    CutCheck ⟨(3,5,8),by decide⟩ 0 2 1 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_358_12 : ∀ a b : Fin 20,
+    CutCheck ⟨(3,5,8),by decide⟩ 1 2 0 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_367_01 : ∀ a b : Fin 20,
+    CutCheck ⟨(3,6,7),by decide⟩ 0 1 2 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_367_02 : ∀ a b : Fin 20,
+    CutCheck ⟨(3,6,7),by decide⟩ 0 2 1 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_367_12 : ∀ a b : Fin 20,
+    CutCheck ⟨(3,6,7),by decide⟩ 1 2 0 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_368_01 : ∀ a b : Fin 20,
+    CutCheck ⟨(3,6,8),by decide⟩ 0 1 2 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_368_02 : ∀ a b : Fin 20,
+    CutCheck ⟨(3,6,8),by decide⟩ 0 2 1 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_368_12 : ∀ a b : Fin 20,
+    CutCheck ⟨(3,6,8),by decide⟩ 1 2 0 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_378_01 : ∀ a b : Fin 20,
+    CutCheck ⟨(3,7,8),by decide⟩ 0 1 2 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_378_02 : ∀ a b : Fin 20,
+    CutCheck ⟨(3,7,8),by decide⟩ 0 2 1 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_378_12 : ∀ a b : Fin 20,
+    CutCheck ⟨(3,7,8),by decide⟩ 1 2 0 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_456_01 : ∀ a b : Fin 20,
+    CutCheck ⟨(4,5,6),by decide⟩ 0 1 2 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_456_02 : ∀ a b : Fin 20,
+    CutCheck ⟨(4,5,6),by decide⟩ 0 2 1 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_456_12 : ∀ a b : Fin 20,
+    CutCheck ⟨(4,5,6),by decide⟩ 1 2 0 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_457_01 : ∀ a b : Fin 20,
+    CutCheck ⟨(4,5,7),by decide⟩ 0 1 2 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_457_02 : ∀ a b : Fin 20,
+    CutCheck ⟨(4,5,7),by decide⟩ 0 2 1 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_457_12 : ∀ a b : Fin 20,
+    CutCheck ⟨(4,5,7),by decide⟩ 1 2 0 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_458_01 : ∀ a b : Fin 20,
+    CutCheck ⟨(4,5,8),by decide⟩ 0 1 2 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_458_02 : ∀ a b : Fin 20,
+    CutCheck ⟨(4,5,8),by decide⟩ 0 2 1 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_458_12 : ∀ a b : Fin 20,
+    CutCheck ⟨(4,5,8),by decide⟩ 1 2 0 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_467_01 : ∀ a b : Fin 20,
+    CutCheck ⟨(4,6,7),by decide⟩ 0 1 2 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_467_02 : ∀ a b : Fin 20,
+    CutCheck ⟨(4,6,7),by decide⟩ 0 2 1 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_467_12 : ∀ a b : Fin 20,
+    CutCheck ⟨(4,6,7),by decide⟩ 1 2 0 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_468_01 : ∀ a b : Fin 20,
+    CutCheck ⟨(4,6,8),by decide⟩ 0 1 2 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_468_02 : ∀ a b : Fin 20,
+    CutCheck ⟨(4,6,8),by decide⟩ 0 2 1 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_468_12 : ∀ a b : Fin 20,
+    CutCheck ⟨(4,6,8),by decide⟩ 1 2 0 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_478_01 : ∀ a b : Fin 20,
+    CutCheck ⟨(4,7,8),by decide⟩ 0 1 2 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_478_02 : ∀ a b : Fin 20,
+    CutCheck ⟨(4,7,8),by decide⟩ 0 2 1 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_478_12 : ∀ a b : Fin 20,
+    CutCheck ⟨(4,7,8),by decide⟩ 1 2 0 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_567_01 : ∀ a b : Fin 20,
+    CutCheck ⟨(5,6,7),by decide⟩ 0 1 2 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_567_02 : ∀ a b : Fin 20,
+    CutCheck ⟨(5,6,7),by decide⟩ 0 2 1 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_567_12 : ∀ a b : Fin 20,
+    CutCheck ⟨(5,6,7),by decide⟩ 1 2 0 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_568_01 : ∀ a b : Fin 20,
+    CutCheck ⟨(5,6,8),by decide⟩ 0 1 2 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_568_02 : ∀ a b : Fin 20,
+    CutCheck ⟨(5,6,8),by decide⟩ 0 2 1 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_568_12 : ∀ a b : Fin 20,
+    CutCheck ⟨(5,6,8),by decide⟩ 1 2 0 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_578_01 : ∀ a b : Fin 20,
+    CutCheck ⟨(5,7,8),by decide⟩ 0 1 2 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_578_02 : ∀ a b : Fin 20,
+    CutCheck ⟨(5,7,8),by decide⟩ 0 2 1 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_578_12 : ∀ a b : Fin 20,
+    CutCheck ⟨(5,7,8),by decide⟩ 1 2 0 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_678_01 : ∀ a b : Fin 20,
+    CutCheck ⟨(6,7,8),by decide⟩ 0 1 2 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_678_02 : ∀ a b : Fin 20,
+    CutCheck ⟨(6,7,8),by decide⟩ 0 2 1 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+private theorem cut_678_12 : ∀ a b : Fin 20,
+    CutCheck ⟨(6,7,8),by decide⟩ 1 2 0 a b := by
+  unfold CutCheck ProductAllowed RankAllowed
+  decide +kernel
+
+private theorem cut_checks (τ : Triangle 9) (u v w : Fin 3)
+    (huv : u < v) (hwu : w ≠ u) (hwv : w ≠ v) (a b : Fin 20) :
+    CutCheck τ u v w a b := by
+  fin_cases u <;> fin_cases v <;> fin_cases w <;>
+    norm_num at huv hwu hwv ⊢
+  all_goals fin_cases τ
+  · exact cut_012_01 a b
+  · exact cut_013_01 a b
+  · exact cut_014_01 a b
+  · exact cut_015_01 a b
+  · exact cut_016_01 a b
+  · exact cut_017_01 a b
+  · exact cut_018_01 a b
+  · exact cut_023_01 a b
+  · exact cut_024_01 a b
+  · exact cut_025_01 a b
+  · exact cut_026_01 a b
+  · exact cut_027_01 a b
+  · exact cut_028_01 a b
+  · exact cut_034_01 a b
+  · exact cut_035_01 a b
+  · exact cut_036_01 a b
+  · exact cut_037_01 a b
+  · exact cut_038_01 a b
+  · exact cut_045_01 a b
+  · exact cut_046_01 a b
+  · exact cut_047_01 a b
+  · exact cut_048_01 a b
+  · exact cut_056_01 a b
+  · exact cut_057_01 a b
+  · exact cut_058_01 a b
+  · exact cut_067_01 a b
+  · exact cut_068_01 a b
+  · exact cut_078_01 a b
+  · exact cut_123_01 a b
+  · exact cut_124_01 a b
+  · exact cut_125_01 a b
+  · exact cut_126_01 a b
+  · exact cut_127_01 a b
+  · exact cut_128_01 a b
+  · exact cut_134_01 a b
+  · exact cut_135_01 a b
+  · exact cut_136_01 a b
+  · exact cut_137_01 a b
+  · exact cut_138_01 a b
+  · exact cut_145_01 a b
+  · exact cut_146_01 a b
+  · exact cut_147_01 a b
+  · exact cut_148_01 a b
+  · exact cut_156_01 a b
+  · exact cut_157_01 a b
+  · exact cut_158_01 a b
+  · exact cut_167_01 a b
+  · exact cut_168_01 a b
+  · exact cut_178_01 a b
+  · exact cut_234_01 a b
+  · exact cut_235_01 a b
+  · exact cut_236_01 a b
+  · exact cut_237_01 a b
+  · exact cut_238_01 a b
+  · exact cut_245_01 a b
+  · exact cut_246_01 a b
+  · exact cut_247_01 a b
+  · exact cut_248_01 a b
+  · exact cut_256_01 a b
+  · exact cut_257_01 a b
+  · exact cut_258_01 a b
+  · exact cut_267_01 a b
+  · exact cut_268_01 a b
+  · exact cut_278_01 a b
+  · exact cut_345_01 a b
+  · exact cut_346_01 a b
+  · exact cut_347_01 a b
+  · exact cut_348_01 a b
+  · exact cut_356_01 a b
+  · exact cut_357_01 a b
+  · exact cut_358_01 a b
+  · exact cut_367_01 a b
+  · exact cut_368_01 a b
+  · exact cut_378_01 a b
+  · exact cut_456_01 a b
+  · exact cut_457_01 a b
+  · exact cut_458_01 a b
+  · exact cut_467_01 a b
+  · exact cut_468_01 a b
+  · exact cut_478_01 a b
+  · exact cut_567_01 a b
+  · exact cut_568_01 a b
+  · exact cut_578_01 a b
+  · exact cut_678_01 a b
+  · exact cut_012_02 a b
+  · exact cut_013_02 a b
+  · exact cut_014_02 a b
+  · exact cut_015_02 a b
+  · exact cut_016_02 a b
+  · exact cut_017_02 a b
+  · exact cut_018_02 a b
+  · exact cut_023_02 a b
+  · exact cut_024_02 a b
+  · exact cut_025_02 a b
+  · exact cut_026_02 a b
+  · exact cut_027_02 a b
+  · exact cut_028_02 a b
+  · exact cut_034_02 a b
+  · exact cut_035_02 a b
+  · exact cut_036_02 a b
+  · exact cut_037_02 a b
+  · exact cut_038_02 a b
+  · exact cut_045_02 a b
+  · exact cut_046_02 a b
+  · exact cut_047_02 a b
+  · exact cut_048_02 a b
+  · exact cut_056_02 a b
+  · exact cut_057_02 a b
+  · exact cut_058_02 a b
+  · exact cut_067_02 a b
+  · exact cut_068_02 a b
+  · exact cut_078_02 a b
+  · exact cut_123_02 a b
+  · exact cut_124_02 a b
+  · exact cut_125_02 a b
+  · exact cut_126_02 a b
+  · exact cut_127_02 a b
+  · exact cut_128_02 a b
+  · exact cut_134_02 a b
+  · exact cut_135_02 a b
+  · exact cut_136_02 a b
+  · exact cut_137_02 a b
+  · exact cut_138_02 a b
+  · exact cut_145_02 a b
+  · exact cut_146_02 a b
+  · exact cut_147_02 a b
+  · exact cut_148_02 a b
+  · exact cut_156_02 a b
+  · exact cut_157_02 a b
+  · exact cut_158_02 a b
+  · exact cut_167_02 a b
+  · exact cut_168_02 a b
+  · exact cut_178_02 a b
+  · exact cut_234_02 a b
+  · exact cut_235_02 a b
+  · exact cut_236_02 a b
+  · exact cut_237_02 a b
+  · exact cut_238_02 a b
+  · exact cut_245_02 a b
+  · exact cut_246_02 a b
+  · exact cut_247_02 a b
+  · exact cut_248_02 a b
+  · exact cut_256_02 a b
+  · exact cut_257_02 a b
+  · exact cut_258_02 a b
+  · exact cut_267_02 a b
+  · exact cut_268_02 a b
+  · exact cut_278_02 a b
+  · exact cut_345_02 a b
+  · exact cut_346_02 a b
+  · exact cut_347_02 a b
+  · exact cut_348_02 a b
+  · exact cut_356_02 a b
+  · exact cut_357_02 a b
+  · exact cut_358_02 a b
+  · exact cut_367_02 a b
+  · exact cut_368_02 a b
+  · exact cut_378_02 a b
+  · exact cut_456_02 a b
+  · exact cut_457_02 a b
+  · exact cut_458_02 a b
+  · exact cut_467_02 a b
+  · exact cut_468_02 a b
+  · exact cut_478_02 a b
+  · exact cut_567_02 a b
+  · exact cut_568_02 a b
+  · exact cut_578_02 a b
+  · exact cut_678_02 a b
+  · exact cut_012_12 a b
+  · exact cut_013_12 a b
+  · exact cut_014_12 a b
+  · exact cut_015_12 a b
+  · exact cut_016_12 a b
+  · exact cut_017_12 a b
+  · exact cut_018_12 a b
+  · exact cut_023_12 a b
+  · exact cut_024_12 a b
+  · exact cut_025_12 a b
+  · exact cut_026_12 a b
+  · exact cut_027_12 a b
+  · exact cut_028_12 a b
+  · exact cut_034_12 a b
+  · exact cut_035_12 a b
+  · exact cut_036_12 a b
+  · exact cut_037_12 a b
+  · exact cut_038_12 a b
+  · exact cut_045_12 a b
+  · exact cut_046_12 a b
+  · exact cut_047_12 a b
+  · exact cut_048_12 a b
+  · exact cut_056_12 a b
+  · exact cut_057_12 a b
+  · exact cut_058_12 a b
+  · exact cut_067_12 a b
+  · exact cut_068_12 a b
+  · exact cut_078_12 a b
+  · exact cut_123_12 a b
+  · exact cut_124_12 a b
+  · exact cut_125_12 a b
+  · exact cut_126_12 a b
+  · exact cut_127_12 a b
+  · exact cut_128_12 a b
+  · exact cut_134_12 a b
+  · exact cut_135_12 a b
+  · exact cut_136_12 a b
+  · exact cut_137_12 a b
+  · exact cut_138_12 a b
+  · exact cut_145_12 a b
+  · exact cut_146_12 a b
+  · exact cut_147_12 a b
+  · exact cut_148_12 a b
+  · exact cut_156_12 a b
+  · exact cut_157_12 a b
+  · exact cut_158_12 a b
+  · exact cut_167_12 a b
+  · exact cut_168_12 a b
+  · exact cut_178_12 a b
+  · exact cut_234_12 a b
+  · exact cut_235_12 a b
+  · exact cut_236_12 a b
+  · exact cut_237_12 a b
+  · exact cut_238_12 a b
+  · exact cut_245_12 a b
+  · exact cut_246_12 a b
+  · exact cut_247_12 a b
+  · exact cut_248_12 a b
+  · exact cut_256_12 a b
+  · exact cut_257_12 a b
+  · exact cut_258_12 a b
+  · exact cut_267_12 a b
+  · exact cut_268_12 a b
+  · exact cut_278_12 a b
+  · exact cut_345_12 a b
+  · exact cut_346_12 a b
+  · exact cut_347_12 a b
+  · exact cut_348_12 a b
+  · exact cut_356_12 a b
+  · exact cut_357_12 a b
+  · exact cut_358_12 a b
+  · exact cut_367_12 a b
+  · exact cut_368_12 a b
+  · exact cut_378_12 a b
+  · exact cut_456_12 a b
+  · exact cut_457_12 a b
+  · exact cut_458_12 a b
+  · exact cut_467_12 a b
+  · exact cut_468_12 a b
+  · exact cut_478_12 a b
+  · exact cut_567_12 a b
+  · exact cut_568_12 a b
+  · exact cut_578_12 a b
+  · exact cut_678_12 a b
+
+private theorem singleton_cuts : SingletonCuts y μ assignment := by
+  classical
+  intro τ u v w huv hwu hwv a b
+  have hn : 0 ≤ ∑ c ∈ Completion y μ τ u v w a b, assignment (edge τ w) c :=
+    Finset.sum_nonneg fun c _ => (domain.1.1 _ _).1
+  rcases cut_checks τ u v w huv hwu hwv a b with h | h
+  · have hh : assignment (edge τ u) a + assignment (edge τ v) b ≤ 1 := by
+      dsimp [assignment]
+      have hh : (numerator (edge τ u) a : ℝ) + numerator (edge τ v) b ≤ 62 := by
+        exact_mod_cast h
+      linarith
+    linarith
+  · dsimp only at h
+    let r := candidate u v a b
+    let rr : Relation y μ := ⟨r, by
+      refine ⟨?_, h.2.1⟩
+      change (values r.1 : ℝ) + values r.2.1 = values r.2.2
+      exact_mod_cast h.1⟩
+    have hc : coordinate w r ∈ Completion y μ τ u v w a b := by
+      simp only [Completion,Finset.mem_filter,Finset.mem_univ,true_and]
+      exact ⟨rr,h.2.2.1,h.2.2.2.1,h.2.2.2.2.1,rfl⟩
+    have hs : assignment (edge τ w) (coordinate w r) ≤
+        ∑ c ∈ Completion y μ τ u v w a b, assignment (edge τ w) c :=
+      Finset.single_le_sum (fun c _ => (domain.1.1 _ _).1) hc
+    have hh : assignment (edge τ u) a + assignment (edge τ v) b ≤
+        1 + assignment (edge τ w) (coordinate w r) := by
+      dsimp [assignment]
+      have ht : (numerator (edge τ u) a : ℝ) + numerator (edge τ v) b ≤
+          62 + numerator (edge τ w) (coordinate w r) := by
+        exact_mod_cast h.2.2.2.2.2
+      linarith
+    linarith
+
+private def obsA (q : Fin 20) : Bool := decide (q = 16 ∨ q = 17 ∨ q = 19)
+private def obsB (q : Fin 20) : Bool := decide (q = 14 ∨ q = 17 ∨ q = 18 ∨ q = 19)
+private def obsC (q : Fin 20) : Bool :=
+  decide (q = 11 ∨ q = 12 ∨ q = 14 ∨ q = 15 ∨ q = 16 ∨ q = 17 ∨ q = 18)
+
+private theorem observation_marginal {α : Type*} [Fintype α]
+    (f : α → Fin 20) (o : Fin 20 → Bool) (T : α → ℝ) (p : Fin 20 → ℝ)
+    (hm : ∀ q, (∑ r, if f r = q then T r else 0) = p q) :
+    (∑ r, if o (f r) = true then T r else 0) =
+      ∑ q, if o q = true then p q else 0 := by
+  classical
+  have one : ∀ r, (if o (f r) = true then T r else 0) =
+      ∑ q, if o q = true then if f r = q then T r else 0 else 0 := by
+    intro r
+    symm
+    apply Finset.sum_eq_single (f r)
+    · simp
+    · intro b _ hb
+      simp [Ne.symm hb]
+    · simp
+  simp_rw [one]
+  rw [Finset.sum_comm]
+  apply Finset.sum_congr rfl
+  intro q _
+  by_cases h : o q = true
+  · simp only [h,if_true]
+    exact hm q
+  · simp [h]
+
+private theorem not_full : assignment ∉ PrunedProjection y μ full := by
+  classical
+  rintro ⟨_,T,hT⟩
+  let τ : Triangle 9 := ⟨(1,2,3),by decide⟩
+  obtain ⟨⟨hb,hn,ha,hb',hc⟩,_⟩ := hT ⟨τ,trivial⟩
+  have hf : ∀ a b c : Fin 20, values a + values b = values c →
+      obsA a = true → obsB b = true → obsC c = true := by
+    decide +kernel
+  have forced : ∀ r : Relation y μ, obsA r.1.1 = true →
+      obsB r.1.2.1 = true → obsC r.1.2.2 = true := by
+    intro r ha hb
+    apply hf r.1.1 r.1.2.1 r.1.2.2 _ ha hb
+    exact_mod_cast r.2.1
+  have h := coupling_separator (fun r : Relation y μ => obsC r.1.2.2)
+    (fun r => obsA r.1.1) (fun r => obsB r.1.2.1) true true true
+    (T ⟨τ,trivial⟩) (fun r => (hb r).1) hn forced
+  rw [observation_marginal _ _ _ _ ha, observation_marginal _ _ _ _ hb',
+    observation_marginal _ _ _ _ hc] at h
+  norm_num [assignment,τ,first,second,outer,obsA,obsB,obsC,numerator,
+    Fin.sum_univ_succ] at h
+
+/-- The original universal claim, including all singleton cuts, is false. -/
+theorem result : ¬ claim := by
+  intro h
+  have he := h 9 20 y μ admissible ⟨ruler,realizes⟩
+  have hs : assignment ∈ {P | P ∈ PrunedProjection y μ spine ∧ SingletonCuts y μ P} :=
+    ⟨spine_feasible,singleton_cuts⟩
+  exact not_full (he.symm ▸ hs)
+
+#print axioms result
+end
+end D5.S3.Combinatorics.Turnpike.PrunedSingletonProjectionObstruction
