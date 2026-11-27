@@ -99,6 +99,15 @@ public theorem String.intercalate_append_of_ne_nil :
     @ForIn.forIn m _ Char (@Std.instForInIterOfMonadOfIteratorLoopId _ _ m _ _ finiteIteratorLoop)
       _ s.chars b f
 
+-- The upstream character traversal unfolds to the corresponding string or slice instance.
+public theorem String.Slice.forIn_eq_forIn_chars {β : Type u} {m : Type u → Type v} [Monad m]
+    {s : _root_.String.Slice} {b : β} {f : Char → β → m (ForInStep β)} :
+    forIn s b f = forIn s b f := rfl
+
+public theorem String.forIn_eq_forIn_chars {β : Type u} {m : Type u → Type v} [Monad m]
+    {s : _root_.String} {b : β} {f : Char → β → m (ForInStep β)} :
+    forIn s b f = forIn s b f := rfl
+
 public theorem String.Slice.Model.revPositionsFrom._proof_3 :
     type_of% (private_decl% @_root_.String.Slice.Model.revPositionsFrom._proof_3) := by
   intro s p h
