@@ -29,7 +29,6 @@ private theorem peak_lower (S : Spectrum) {Y R : ℝ} (hY : 1 < Y) (hR : 0 < R) 
   let a (j : S.index) : ℂ := (S.mult j : ℂ) * phase (S.gamma j) t
   have H := lorentz_pair_lower_bound (S.cut Y) S.gamma a (R := R)
     (Y := Y) (fun j hj => ⟨(S.gamma_pos j).le, (S.finite_le Y).mem_toFinset.mp hj⟩)
-    hR
   have hnorm : (∑ j ∈ S.cut Y, ‖a j‖) = (S.N Y : ℝ) := by
     rw [Spectrum.N, Nat.cast_sum]
     simp [a, norm_phase]

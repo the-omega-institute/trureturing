@@ -291,10 +291,25 @@ private lemma cauchy_pair_energy {J : Type*} (s : Finset J) (x : J → ℝ)
 /-- The Lorentz pair sum controls the total coefficient mass after the Cauchy tail loss. -/
 theorem lorentz_pair_lower_bound {J : Type*} (s : Finset J)
     (x : J → ℝ) (a : J → ℂ) {Y R : ℝ}
-    (hx : ∀ j ∈ s, x j ∈ Icc 0 Y) (hR : 0 < R) :
+    (hx : ∀ j ∈ s, x j ∈ Icc 0 Y) :
     (2 * Real.pi) / (Y + 2 * R) *
       max (‖∑ j ∈ s, a j‖ - (1 - Real.pi⁻¹ * (2 * Real.arctan R)) * ∑ j ∈ s, ‖a j‖) 0 ^ 2 ≤
         ∑ i ∈ s, ∑ j ∈ s, (a i * conj (a j)).re * (4 / (4 + (x i - x j) ^ 2)) := by
+  by_cases hR : 0 < R
+  swap
+  · have hloss : 1 ≤ 1 - Real.pi⁻¹ * (2 * Real.arctan R) := by
+      have ha := Real.arctan_le_zero.mpr (le_of_not_gt hR)
+      linarith [mul_nonpos_of_nonneg_of_nonpos (inv_nonneg.mpr Real.pi_pos.le)
+        (show 2 * Real.arctan R ≤ 0 by linarith)]
+    have hmass : ‖∑ j ∈ s, a j‖ ≤
+        (1 - Real.pi⁻¹ * (2 * Real.arctan R)) * ∑ j ∈ s, ‖a j‖ :=
+      (norm_sum_le s a).trans (le_mul_of_one_le_left
+        (Finset.sum_nonneg fun j _ => norm_nonneg (a j)) hloss)
+    rw [max_eq_right (sub_nonpos.mpr hmass)]
+    simp only [zero_pow (by decide : 2 ≠ 0), mul_zero]
+    apply nonneg_of_mul_nonneg_right _ (inv_pos.mpr (by positivity : 0 < 2 * Real.pi))
+    rw [← cauchy_pair_energy]
+    exact integral_nonneg fun _ => sq_nonneg _
   by_cases hs : s.Nonempty
   · obtain ⟨j, hj⟩ := hs
     have hY : 0 ≤ Y := (hx j hj).1.trans (hx j hj).2
