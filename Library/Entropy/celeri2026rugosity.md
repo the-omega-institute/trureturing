@@ -43,8 +43,9 @@ resolves that complement into a logarithmic-mean gap and POVM
 sandwiches, then accounts for the additional classical score
 projection in each relative-entropy readout.
 
-## Verified locators
+## Verified locator
 
+[Pinned arXiv record](https://arxiv.org/abs/2611.34788v1).
 [Equation (14)](https://arxiv.org/html/2611.34788v1#S3.E14).
 [Extension question](https://arxiv.org/html/2611.34788v1).
 [Gao, Li, Marvian and Rouzé](https://arxiv.org/abs/2302.02341).
