@@ -154,7 +154,11 @@ where
     if let some (_, publicStrict) := foundation then
       let exposed ← lookup publicStrict src.name
       hidden := exposed.isAxiom || exposed matches .opaqueInfo _
-    if !same reference body target then
+    -- The kernel cannot unfold an opaque constant. For opaque consumer declarations,
+    -- compare the stored bodies directly and leave their dependencies in the audit.
+    let identicalOpaqueConsumer := foundation.isNone && (src matches .opaqueInfo _) &&
+      (dst matches .opaqueInfo _) && (dst.value? (allowOpaque := true)).any body.equal
+    if !identicalOpaqueConsumer && !same reference body target then
       unless hidden do
         throw <| IO.userError s!"computed definition mismatch for {src.name}"
       checkEquation reference src dst body
