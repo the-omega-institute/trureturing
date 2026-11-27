@@ -1,5 +1,5 @@
 /- GID: D5/S3/Quantum/Measurement/Sensitivity/PovmSensitivityDefect
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Quantum/Measurement/Sensitivity/PovmSensitivityDefect
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
