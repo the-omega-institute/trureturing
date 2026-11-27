@@ -90,7 +90,55 @@ $$\forall r \in Nat,\; \forall i \in Nat,\; \forall j \in Nat,\; \operatorname{p
 
 The ideal is empty at r=0 and has row lengths r,r-1,...,1 for positive r.
 
-**Definition 1.8 (All addable one-cell extensions).**
+**Definition 1.8 (The top-row extension of the staircase).**
+
+$$\forall r \in Nat,\; \forall e \in Nat,\; \operatorname{cells}\left(\operatorname{expandedStaircase}\left(r, e\right)\right) = \operatorname{union}\left(\operatorname{cells}\left(\operatorname{staircase}\left(r\right)\right), \operatorname{product}\left(\operatorname{singleton}\left(0\right), \operatorname{range}\left(r + e\right)\right)\right)$$
+
+*Formalization.* `D5/S3/Combinatorics/Partitions/LyudogovskiySimplex.expandedStaircase` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The extra cells extend row zero to length r+e.
+
+**Theorem 1.9 (Staircase cell membership).**
+
+$$\forall r \in Nat,\; \forall c \in \operatorname{Prod}\left(Nat, Nat\right),\; c \in \operatorname{staircase}\left(r\right) \Leftrightarrow \operatorname{fst}\left(c\right) + \operatorname{snd}\left(c\right) < r$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Partitions/LyudogovskiySimplex.mem_staircase` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Coordinates are zero-based. The cell condition identifies the staircase cell missing from the lower boundary endpoint.
+
+**Theorem 1.10 (Size of the top-row extension).**
+
+$$\forall r \in Nat,\; \forall e \in Nat,\; \operatorname{card}\left(\operatorname{expandedStaircase}\left(r, e\right)\right) = \operatorname{triangular}\left(r\right) + e$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Partitions/LyudogovskiySimplex.expanded_card` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+One extra cell gives an upper endpoint at the first size of its layer.
+
+**Theorem 1.11 (Maximum dimension at the exact-layer threshold).**
+
+$$\forall r \in Nat,\; \operatorname{maxDimension}\left(\operatorname{triangular}\left(r\right) + 1\right) = r$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Partitions/LyudogovskiySimplex.maximum_at_threshold` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+At the first size of the upper layer, the global maximum bounds the dimension of every potential lower endpoint.
+
+**Definition 1.12 (All addable one-cell extensions).**
 
 $$\forall r \in Nat,\; \forall n \in Nat,\; \forall p \in \operatorname{Partition}\left(n\right),\; p \in \operatorname{firstFamily}\left(r, n\right) \Leftrightarrow \left(\operatorname{subset}\left(\operatorname{cells}\left(\operatorname{staircase}\left(r\right)\right), \operatorname{cells}\left(\operatorname{ofPartition}\left(p\right)\right)\right) \land \operatorname{card}\left(\operatorname{sdiff}\left(\operatorname{cells}\left(\operatorname{ofPartition}\left(p\right)\right), \operatorname{cells}\left(\operatorname{staircase}\left(r\right)\right)\right)\right) = 1\right)$$
 
@@ -102,7 +150,7 @@ $$\forall r \in Nat,\; \forall n \in Nat,\; \forall p \in \operatorname{Partitio
 
 All addable one-cell extensions.
 
-**Definition 1.9 (The full threshold question).**
+**Definition 1.13 (The full threshold question).**
 
 $$\operatorname{ThresholdClaim}\left(\right) \Leftrightarrow \left(\left(\forall r \in Nat,\; \operatorname{threshold}\left(r\right) = \operatorname{triangular}\left(r\right) + 1 \land \operatorname{IsLeast}\left(\operatorname{positiveNonemptyLevels}\left(r\right), \operatorname{triangular}\left(r\right) + 1\right)\right) \land \left(\forall n \in Nat,\; 0 < n \Rightarrow \operatorname{maxDimension}\left(n\right) = \operatorname{max}\left(\operatorname{triangularRanksBelow}\left(n\right)\right)\right)\right)$$
 
@@ -114,7 +162,7 @@ $$\operatorname{ThresholdClaim}\left(\right) \Leftrightarrow \left(\left(\forall
 
 triangularRanksBelow(n) is the finite set of r<=n for which triangular(r)+1<=n. The cutoff omits no feasible natural rank: r<=triangular(r), so triangular(r)+1<=n implies r<n. This proposition specifies the entire threshold and maximum problem; its definition supplies no proof of that proposition.
 
-**Definition 1.10 (The full first-family question).**
+**Definition 1.14 (The full first-family question).**
 
 $$\operatorname{FirstOccurrenceClaim}\left(\right) \Leftrightarrow \left(\forall r \in Nat,\; 2 \le r \Rightarrow \left(\operatorname{layer}\left(r, \operatorname{threshold}\left(r\right)\right) = \operatorname{firstFamily}\left(r, \operatorname{threshold}\left(r\right)\right) \land \left(\operatorname{layer}\left(r, \operatorname{triangular}\left(r\right) + 1\right) = \operatorname{firstFamily}\left(r, \operatorname{triangular}\left(r\right) + 1\right) \land \operatorname{card}\left(\operatorname{firstFamily}\left(r, \operatorname{threshold}\left(r\right)\right)\right) = r + 1\right)\right)\right)$$
 
@@ -126,7 +174,7 @@ $$\operatorname{FirstOccurrenceClaim}\left(\right) \Leftrightarrow \left(\forall
 
 Both equalities concern full finite vertex sets. The cardinality requires r+1 distinct members. This proposition includes r=2 and has no upper bound on r; its definition supplies no proof.
 
-**Theorem 1.11 (The complete threshold formula).**
+**Theorem 1.15 (The complete threshold formula).**
 
 $$\left(\forall r \in Nat,\; \operatorname{threshold}\left(r\right) = \operatorname{triangular}\left(r\right) + 1 \land \operatorname{IsLeast}\left(\operatorname{positiveNonemptyLevels}\left(r\right), \operatorname{triangular}\left(r\right) + 1\right)\right) \land \left(\forall n \in Nat,\; 0 < n \Rightarrow \operatorname{maxDimension}\left(n\right) = \operatorname{max}\left(\operatorname{triangularRanksBelow}\left(n\right)\right)\right)$$
 
@@ -144,7 +192,7 @@ $$\left(\forall r \in Nat,\; \operatorname{threshold}\left(r\right) = \operatorn
 
 For every r, the positive size triangular(r)+1 has a nonempty exact layer and is its least positive occurrence. Separately, every positive n has the displayed maximum. The proof bounds every actual clique through the star/top alternatives, constructs r+1 genuine extensions of an enlarged staircase at every feasible size, and uses finite attainment. No assumption that the local-dimension spectrum is contiguous is used.
 
-**Theorem 1.12 (The entire first-occurrence family).**
+**Theorem 1.16 (The entire first-occurrence family).**
 
 $$\forall r \in Nat,\; 2 \le r \Rightarrow \left(\operatorname{layer}\left(r, \operatorname{threshold}\left(r\right)\right) = \operatorname{firstFamily}\left(r, \operatorname{threshold}\left(r\right)\right) \land \left(\operatorname{layer}\left(r, \operatorname{triangular}\left(r\right) + 1\right) = \operatorname{firstFamily}\left(r, \operatorname{triangular}\left(r\right) + 1\right) \land \operatorname{card}\left(\operatorname{firstFamily}\left(r, \operatorname{threshold}\left(r\right)\right)\right) = r + 1\right)\right)$$
 
@@ -167,11 +215,15 @@ For every r at least two, a clique of dimension r at the first size cannot be a 
 - Truth anchor: `D5/S3/Combinatorics/Partitions/LyudogovskiySimplex.FirstOccurrenceClaim`
 - Truth anchor: `D5/S3/Combinatorics/Partitions/LyudogovskiySimplex.ThresholdClaim`
 - Truth anchor: `D5/S3/Combinatorics/Partitions/LyudogovskiySimplex.cliques`
+- Truth anchor: `D5/S3/Combinatorics/Partitions/LyudogovskiySimplex.expandedStaircase`
+- Truth anchor: `D5/S3/Combinatorics/Partitions/LyudogovskiySimplex.expanded_card`
 - Truth anchor: `D5/S3/Combinatorics/Partitions/LyudogovskiySimplex.firstFamily`
 - Truth anchor: `D5/S3/Combinatorics/Partitions/LyudogovskiySimplex.first_occurrence_result`
 - Truth anchor: `D5/S3/Combinatorics/Partitions/LyudogovskiySimplex.layer`
 - Truth anchor: `D5/S3/Combinatorics/Partitions/LyudogovskiySimplex.localDimension`
 - Truth anchor: `D5/S3/Combinatorics/Partitions/LyudogovskiySimplex.maxDimension`
+- Truth anchor: `D5/S3/Combinatorics/Partitions/LyudogovskiySimplex.maximum_at_threshold`
+- Truth anchor: `D5/S3/Combinatorics/Partitions/LyudogovskiySimplex.mem_staircase`
 - Truth anchor: `D5/S3/Combinatorics/Partitions/LyudogovskiySimplex.staircase`
 - Truth anchor: `D5/S3/Combinatorics/Partitions/LyudogovskiySimplex.threshold`
 - Truth anchor: `D5/S3/Combinatorics/Partitions/LyudogovskiySimplex.threshold_result`
