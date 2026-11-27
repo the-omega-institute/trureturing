@@ -11,7 +11,7 @@ internal sealed class WuCubicThermalOrthogonalityDocument : IScribeDocumentDefin
         "The Gibbs square-root trace pairing is diagonal on the sixteen physical Wu thermal directions.",
         H("Thermal charge pairing and direction weights"),
         Blocks(
-            Describe.Lean(DescribeId.Create("pairing-trace-G"),
+            Describe.Lean(DescribeId.Create("pairing-trace-g"),
                 DeclarationHandle.Create(Owner + "gibbsPairing_eq_trace_G"),
                 H("Gibbs square-root pairing in the G normalization"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(Wu),
