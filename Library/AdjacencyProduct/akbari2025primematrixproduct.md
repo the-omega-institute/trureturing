@@ -4,7 +4,7 @@ authors: Saieed Akbari, Mohamad Parsa Elahimanesh and Bobby Miraftab
 year: 2025
 title: On Prime Matrix Product Factorizations
 doi: 10.48550/arXiv.2512.24864
-url: https://arxiv.org/html/2512.24864v1#S5.I1.i1
+url: https://arxiv.org/html/2512.24864v1#S5
 claim: "Section 5 asks which windmills admit an adjacency-matrix product factorization and whether a complete graph can have two non-transitive factors."
 strata_touched:
   - D5/S3/Combinatorics/Graph/AdjacencyProduct/WindmillClassification

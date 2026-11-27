@@ -5,7 +5,7 @@ doi: 10.48550/arXiv.2512.24864
 triage: theorem
 motivation_gids:
   - D5/S3/Combinatorics/Graph/AdjacencyProduct/WindmillClassification.result
-url: https://arxiv.org/html/2512.24864v1#S5.I1.i1
+url: https://arxiv.org/html/2512.24864v1#S5
 ---
 
 # Windmill adjacency-matrix factorization

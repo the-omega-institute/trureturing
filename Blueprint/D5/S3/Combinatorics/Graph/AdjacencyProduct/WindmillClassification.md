@@ -10,7 +10,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/AdjacencyProduct/WindmillClassificati
 
 *Formalization.* `D5/S3/Combinatorics/Graph/AdjacencyProduct/WindmillClassification.windmill` (`✓ std3`).
 
-*Citation.* Saieed Akbari, Mohamad Parsa Elahimanesh and Bobby Miraftab (2025). *On Prime Matrix Product Factorizations*. DOI: [10.48550/arXiv.2512.24864](https://doi.org/10.48550/arXiv.2512.24864). URL: <https://arxiv.org/html/2512.24864v1#S5.I1.i1>.
+*Citation.* Saieed Akbari, Mohamad Parsa Elahimanesh and Bobby Miraftab (2025). *On Prime Matrix Product Factorizations*. DOI: [10.48550/arXiv.2512.24864](https://doi.org/10.48550/arXiv.2512.24864). URL: <https://arxiv.org/html/2512.24864v1#S5>.
 
 *Commentary.*
 
@@ -28,9 +28,11 @@ $$\forall d,t \in \mathbb{N}, 1 \leq d \land 3 \leq t \implies ((\exists B,C : \
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Saieed Akbari, Mohamad Parsa Elahimanesh and Bobby Miraftab (2025). *On Prime Matrix Product Factorizations*. DOI: [10.48550/arXiv.2512.24864](https://doi.org/10.48550/arXiv.2512.24864). URL: <https://arxiv.org/html/2512.24864v1#S5.I1.i1>.
+*Acknowledgement.* Saieed Akbari, Mohamad Parsa Elahimanesh and Bobby Miraftab (2025). *On Prime Matrix Product Factorizations*. DOI: [10.48550/arXiv.2512.24864](https://doi.org/10.48550/arXiv.2512.24864). URL: <https://arxiv.org/html/2512.24864v1#S5>.
 
 *Commentary.*
+
+In Section 5, item 1 of arXiv:2512.24864v1, Akbari, Elahimanesh and Miraftab ask which pairs (d, t) give a windmill that admits a factorization. The question is at https://arxiv.org/html/2512.24864v1#S5.I1.i1
 
 The quantifier ranges over all pairs of simple undirected graphs on the windmill's labelled vertex set. The notation A(G) denotes the integer adjacency matrix of G, and juxtaposition denotes ordinary matrix multiplication.
 
