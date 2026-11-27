@@ -81,7 +81,14 @@ private def basicStringFunction (n : Name) : Bool :=
      `String.Internal.toArray, `String.Slice.Pos.prevAux.go, `String.instDecidableIsValidForSlice, `String.Pos.Raw.isValidForSlice,
      `String.Pos.Raw.substrEq, `ByteArray.validateUTF8.go].contains n
 
-private def pinnedStringFunction (n : Name) : Bool := defsStringFunction n || basicStringFunction n
+private def decodeStringFunction (n : Name) : Bool :=
+  (n.getPrefix == `ByteArray.utf8DecodeChar? && [`parseFirstByte, `isInvalidContinuationByte, `verify₂, `verify₃,
+    `verify₄, `assemble₂, `assemble₃, `assemble₄, `assemble₂Unchecked, `assemble₃Unchecked,
+    `assemble₄Unchecked].contains (n.updatePrefix .anonymous)) ||
+    [`UInt8.instDecidableIsUTF8FirstByte, `UInt8.utf8ByteSize, `String.utf8EncodeCharFast,
+     `ByteArray.validateUTF8At, `ByteArray.utf8DecodeChar, `ByteArray.utf8DecodeChar?].contains n
+
+private def pinnedStringFunction (n : Name) : Bool := defsStringFunction n || basicStringFunction n || decodeStringFunction n
 
 public def usesPinnedFunction (n : Name) : Bool :=
   let method := n.updatePrefix .anonymous
@@ -143,7 +150,8 @@ public def supported (source : Environment) (owner name : Name) : Bool :=
   let primitive := ((word? name.getPrefix).isSome && name.getPrefix != `Char && (ops ++ widths).contains method) ||
     (name.getPrefix == `Bool && widths.contains method)
   (owner == `OmegaInit.Data.String.Defs && defsStringFunction name) ||
-    (owner == `OmegaInit.Data.String.Basic && basicStringFunction name) || isFloatCall source owner name ||
+    (owner == `OmegaInit.Data.String.Basic && basicStringFunction name) ||
+    (owner == `OmegaInit.Data.String.Decode && decodeStringFunction name) || isFloatCall source owner name ||
     (owner == `OmegaInit.Data.ByteArray.Basic && ByteFoldNative.supported name) ||
     ([`OmegaInit.Grind.Ring.CommSolver, `OmegaInit.Data.Nat.Basic, `OmegaInit.Data.Nat.Div.Basic, `OmegaInit.Data.Nat.Lemmas,
     `OmegaInit.Data.RArray, `OmegaInit.Data.Nat.Internal.Linear, `OmegaInit.Data.Nat.Fold, `OmegaInit.Data.Fin.Lemmas].contains owner && IndexedNative.supported name) ||
@@ -492,6 +500,16 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
   else if dom == `List && official == `ByteArray.toList.loop && ret == .tobject && result == .tobject then do
     checkStrictString strict
     pure ("lean_obj_res", call)
+  else if official == `String.utf8EncodeCharFast then do
+    unless type == mkApp (mkConst `List [.zero]) (mkConst `UInt8) && ret == .tobject && result == .tobject do
+      throw <| IO.userError "incorrect UTF-8 byte list ABI"
+    layout strict `UInt8
+    IndexedNative.checkDataTypes source strict [`List]
+    -- A boxed UInt8 and a native Nat below 256 have the same tagged scalar representation.
+    pure ("lean_obj_res", call)
+  else if dom == `ByteArray.utf8DecodeChar?.FirstByte && ret == .uint8 && result == .uint8 then do
+    IndexedNative.checkDataTypes source strict [dom]
+    pure ("uint8_t", call)
   else if basicStringFunction official && [`Array, `List].contains dom then do
     let array := dom == `Array
     unless type == mkApp (mkConst dom [.zero]) (mkConst `Char) && ret == (if array then .object else .tobject) && result == .tobject do
@@ -502,7 +520,7 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
     prepare := prepare ++ s!"  lean_object *chars = {call};\n"
     cleanup := cleanup ++ "  lean_dec(chars);\n"
     pure ("lean_obj_res", if array then "omega_char_array_from_lean(chars)" else "omega_map_list(chars, omega_char_from_lean)")
-  else if dom == `Option && (basicStringFunction official || basicStringExtern official) &&
+  else if dom == `Option && (basicStringFunction official || basicStringExtern official || decodeStringFunction official) &&
       [`Char, `Array].contains (type.getArg! 0).getAppFn.constName then do
     let payload := type.getArg! 0
     let scalar := payload == mkConst `Char
