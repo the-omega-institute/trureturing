@@ -5,8 +5,18 @@ public import Init.SimpLemmas
 public import Init.PropLemmas
 public import Init.Sym.Lemmas
 public import Init.Data.Sum.Lemmas
+public import Init.Data.Erased
 
 namespace OmegaChecks.InitPort.Alternatives
+
+public theorem Erased.mk_inj : type_of% @_root_.Erased.mk_inj := by
+  intro α a b
+  constructor
+  · intro h
+    have test := congrArg (fun e : _root_.Erased α => e.val b) h
+    exact cast test.symm (Eq.refl b)
+  · intro h
+    exact congrArg _root_.Erased.mk h
 
 public theorem let_congr : type_of% @_root_.let_congr :=
   fun {_ _ a _ _ _} ha hb => ha ▸ hb a
