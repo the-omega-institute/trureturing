@@ -22,6 +22,15 @@ The sole public theorem is the designated refutation result and is exempt
 from four-slot escape registration under §3.9.
 -/
 
+/-
+Public result:
+  proof_shape: content
+  escape_witness: separated (the finite prefix/suffix separation table);
+    consumer: state_lower_bound, then result
+admission_basis: open-problem-resolution (#34977; Open)
+Direct frozen dependencies: none (pinned Mathlib only).
+-/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
