@@ -128,7 +128,12 @@ private def rawFold (n : Name) : Bool := n == `Substring.Raw.foldl || n == `Subs
 
 private def rawStringFunction (n : Name) : Bool := rawFold n || [`Substring.Raw.all, `Substring.Raw.toString].contains n
 
-private def pinnedStringFunction (n : Name) : Bool := rawStringFunction n || renderName n || defsStringFunction n || basicStringFunction n || decodeStringFunction n || sliceStringFunction n || metaLiteralFunction n || n == `String.toName
+private def modifyStringFunction (n : Name) : Bool :=
+  (n.getPrefix == `String && [`set, `modify, `mapAux, `map, `capitalize, `decapitalize, `toLower, `toUpper].contains (n.updatePrefix .anonymous)) ||
+  (n.getPrefix == `String.Pos && [`set, `pastSet, `toSetOfLE, `modify, `pastModify, `toModifyOfLE].contains (n.updatePrefix .anonymous)) ||
+  [`String.Pos.Raw.set, `String.Pos.Raw.modify, `String.Internal.capitalizeImpl].contains n
+
+private def pinnedStringFunction (n : Name) : Bool := modifyStringFunction n || rawStringFunction n || renderName n || defsStringFunction n || basicStringFunction n || decodeStringFunction n || sliceStringFunction n || metaLiteralFunction n || n == `String.toName
 
 private def debugPrimitive (n : Name) : Bool := [`dbgTrace, `dbgTraceIfShared, `dbgSleep, `dbgStackTrace].contains n
 
@@ -202,6 +207,7 @@ public def supported (source : Environment) (owner name : Name) : Bool :=
     (owner == `OmegaInit.Data.String.Defs && defsStringFunction name) ||
     (owner == `OmegaInit.Data.String.Basic && basicStringFunction name) ||
     (owner == `OmegaInit.Data.String.Decode && decodeStringFunction name) ||
+    (owner == `OmegaInit.Data.String.Modify && modifyStringFunction name) ||
     (owner == `OmegaInit.Data.String.Slice && sliceStringFunction name) ||
     (owner == `OmegaInit.Meta.Defs && (name == `String.toName || metaLiteralFunction name || syntaxTreeFunction name || monadicSeparator name)) || isFloatCall source owner name ||
     (owner == `OmegaInit.Prelude && MacroNative.supported name) ||
@@ -370,7 +376,8 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
         throw <| IO.userError s!"unexpected compiled word function {official}"
       if let some exported := getExportNameFor? source compiled then
         unless ([ (`String.Internal.pushnImpl, `lean_string_pushn),
-                  (`String.Internal.intercalateImpl, `lean_string_intercalate) ] : List (Name × Name)).contains (official, exported) do
+                  (`String.Internal.intercalateImpl, `lean_string_intercalate),
+                  (`String.Internal.capitalizeImpl, `lean_string_capitalize) ] : List (Name × Name)).contains (official, exported) do
           throw <| IO.userError s!"unexpected exported symbol {exported} for {official}"
         pure exported.toString
       else pure (getSymbolStem source compiled)
@@ -385,7 +392,8 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
   let mut cleanup := ""
   let mut hasString := false
   let mut hasName := false
-  let passesErased := pinnedStringFunction official || official == `Int.trailingZeros.aux
+  let passesErased := (pinnedStringFunction official || official == `Int.trailingZeros.aux) &&
+    !(modifyStringFunction official && (impl matches .extern ..))
   for (a, b) in params.zip actual, i in [:params.size] do
     let .forallE _ dom body _ := type | throw <| IO.userError s!"expected argument {i} of {n}"
     type := body
@@ -440,20 +448,22 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
       prepare := prepare ++ s!"  lean_object *predicate = lean_alloc_closure((void *){adapter}, 2, 1);\n  lean_closure_set(predicate, 0, {arg});\n"
       args := args.push "predicate"
       continue
-    if (bootstrapStringOp official || official == `Substring.Raw.all) && dom.isForall then
+    if (bootstrapStringOp official || official == `Substring.Raw.all || modifyStringFunction official) && dom.isForall then
       let arrow := fun (a b : Expr) => Expr.forallE .anonymous a b .default
       let unary := arrow (mkConst `Char) (mkConst `Bool)
       let binary := arrow (mkConst `String) (arrow (mkConst `Char) (mkConst `String))
       let fold := dom == binary && official == `String.Internal.foldl
-      unless (fold || dom == unary) && a.ty == .object && b.ty == .object && !a.borrow do
-        throw <| IO.userError s!"invalid pinned string callback {n}"
+      let mapChar := modifyStringFunction official && dom == arrow (mkConst `Char) (mkConst `Char)
+      unless (fold || mapChar || dom == unary) && a.ty == .object && b.ty == .object do
+        throw <| IO.userError s!"invalid pinned string callback {n} argument {i}, types {a.ty} and {b.ty}, borrowed {a.borrow} and {b.borrow}, domain {dom}"
       layout strict `Char
       IndexedNative.checkDataTypes source strict [`Bool]
       hasString := true
-      let f := if fold then "omega_string_fold_step" else "omega_string_predicate"
+      let f := if fold then "omega_string_fold_step" else if mapChar then "omega_string_map_char" else "omega_string_predicate"
       decls := decls.push ((if b.borrow then "b_lean_obj_arg " else "lean_obj_arg ") ++ arg)
       if b.borrow then prepare := prepare ++ s!"  lean_inc({arg});\n"
       prepare := prepare ++ s!"  lean_object *cb{i} = lean_alloc_closure((void *){f}, {if fold then 3 else 2}, 1);\n  lean_closure_set(cb{i}, 0, {arg});\n"
+      if a.borrow then cleanup := cleanup ++ s!"  lean_dec(cb{i});\n"
       args := args.push s!"cb{i}"
       continue
     if [`String.Internal.intercalate, `String.intercalate, `String.Internal.intercalateImpl, `String.Slice.intercalate].contains official &&

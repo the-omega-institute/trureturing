@@ -106,6 +106,15 @@ static lean_obj_res omega_optional_from_lean(lean_obj_arg value, lean_obj_res (*
     return result;
 }
 
+static lean_obj_res omega_string_map_char(lean_obj_arg fn, lean_obj_arg c) {
+    lean_object *arg = omega_char_from_lean(c);
+    lean_dec(c);
+    lean_object *mapped = lean_apply_1(fn, arg);
+    lean_object *result = omega_char_to_lean(mapped);
+    lean_dec(mapped);
+    return result;
+}
+
 static lean_obj_res omega_string_predicate(lean_obj_arg f, lean_obj_arg c) {
     uint32_t scalar = lean_unbox_uint32(c);
     lean_dec(c);
