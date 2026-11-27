@@ -105,7 +105,8 @@ def report(product, require_complete=False):
             writer.writerow(["module", "declaration", "kind", "unsafe", "partial", "upstreamAxioms",
                              "impliesAxiom", "firstDependencyPath", "reason", "reductionWitness",
                              "logicalConsequence", "logicalConsequenceWitness", "requiredBehavior", "abstractedDependency",
-                             "runtimeConflictWitness", "equationOperand", "operandImpliesAxiom", "operandReductionWitness"])
+                             "runtimeConflictWitness", "equationOperand", "operandImpliesAxiom", "operandReductionWitness",
+                             "unchangedTypeAxioms"])
             for row in official["declarations"]:
                 if row["matchingNameAndModule"] or row["kind"] == "axiom":
                     continue
@@ -139,7 +140,8 @@ def report(product, require_complete=False):
                                  " -> ".join(path), " ".join(reason.splitlines()), row["reductionWitness"],
                                  row.get("logicalConsequence"), row.get("logicalConsequenceWitness"),
                                  row.get("requiredBehavior"), row.get("abstractedDependency"), row.get("runtimeConflictWitness"),
-                                 row.get("equationOperand"), row.get("operandImpliesAxiom"), row.get("operandReductionWitness")])
+                                 row.get("equationOperand"), row.get("operandImpliesAxiom"), row.get("operandReductionWitness"),
+                                 ",".join(row.get("unchangedTypeAxioms", []))])
         reductions = stage / "init-public-reductions.tsv"
         with reductions.open("w", newline="") as f:
             writer = csv.writer(f, delimiter="\t", lineterminator="\n")

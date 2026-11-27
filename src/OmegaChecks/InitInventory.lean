@@ -1,6 +1,7 @@
 module
 public import Lean
 import OmegaChecks.InitCompiler.RootNames
+meta import OmegaChecks.InitCompiler.RootNames
 import Lean.Compiler.LCNF.PhaseExt
 meta import OmegaChecks.InitInventory.OrderedAlgebra
 meta import OmegaChecks.InitInventory.Order
