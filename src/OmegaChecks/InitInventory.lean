@@ -404,6 +404,10 @@ private def conditionalConsequence? (owner name : Name) : Option (String × Name
       | _ => none
     return (target, witness,
       "On the Boolean additive monoid, the proposed structure computes the official negation on (true,false), addition of the swapped and original representatives, and zero")
+  if owner == `Init.ShareCommon && [``ShareCommon.StateFactory.mk, ``ShareCommon.StateFactory.mkImpl,
+      ``ShareCommon.StateFactory.get].contains name then
+    return ("False", ``OmegaChecks.InitBoundaries.FactoryCarriers.noCarrierEmbedding,
+      "Packing and decoding each constant-map builder jointly preserve an injection from its supplied map carrier into its decoded Map type")
   if owner == `Init.Dynamic && [``Dynamic.mk, ``Dynamic.get?].contains name then
     return ("False", ``OmegaChecks.InitBoundaries.DynamicRoundTrip.noRoundTrip,
       "The total writer and reader jointly recover every stored callback from Dynamic to Bool using the same monomorphic type tag")

@@ -10,6 +10,9 @@ meta import OmegaChecks.InitInventory.MacroReferences
 public import OmegaChecks.InitInventory.Dynamic
 import all OmegaChecks.InitInventory.Dynamic
 meta import OmegaChecks.InitInventory.Dynamic
+public import OmegaChecks.InitInventory.StateFactory
+import all OmegaChecks.InitInventory.StateFactory
+meta import OmegaChecks.InitInventory.StateFactory
 public import OmegaChecks.InitInventory.ReferenceSelection
 import all OmegaChecks.InitInventory.ReferenceSelection
 meta import OmegaChecks.InitInventory.ReferenceSelection
@@ -97,7 +100,7 @@ private def replayWitnesses (env : Environment) : IO Unit := do
   let mut todo := (reductions.map fun (_, _, _, witness) => witness) ++
     ClassicalConsequences.witnesses.map Prod.snd ++
     [``MacroReferences.noQueryRoundTrip, ``MacroReferences.noRoundTrip] ++
-    [``DynamicRoundTrip.noRoundTrip] ++
+    [``DynamicRoundTrip.noRoundTrip, ``FactoryCarriers.noCarrierEmbedding] ++
     [``PropositionalChoice.ofChoice, ``PropositionalChoice.ofSkolem, ``PropositionalChoice.ofProducts] ++
     ReferenceSelection.witnesses.map (fun row => row.2.2) ++
     BooleanReflection.witnesses.map (fun row => row.2.2) ++
