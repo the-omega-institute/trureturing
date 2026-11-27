@@ -339,9 +339,37 @@ private def logicalConsequence? (owner name : Name) : Option (Name × Name) := d
     return (``OmegaChecks.InitBoundaries.IntegerCancellation.AddOneLE, ``OmegaChecks.InitBoundaries.IntegerCancellation.leCoeff)
   | `Init.GetElem, ``isSome_getElem? =>
     return (``OmegaChecks.InitBoundaries.OptionalIndex.DecidablePropExt, ``OmegaChecks.InitBoundaries.OptionalIndex.decidablePropExtOfIsSome)
-  | `Init.Data.Order.Lemmas, ``Std.le_iff_lt_or_eq =>
+  | `Init.Data.Order.Lemmas, ``Std.le_iff_lt_or_eq
+  | `Init.Grind.Ordered.Order, ``Lean.Grind.PartialOrder.le_iff_lt_or_eq =>
     return (``OmegaChecks.InitBoundaries.FiniteMembership.EqualityCases,
       ``OmegaChecks.InitBoundaries.AbstractOrder.equalityCasesOfLeIffLtOrEq)
+  | `Init.Grind.Ordered.Order, ``Lean.Grind.LinearOrder.trichotomy =>
+    return (``OmegaChecks.InitBoundaries.FiniteMembership.EqualityCases,
+      ``OmegaChecks.InitBoundaries.AbstractOrder.equalityCasesOfGrindTrichotomy)
+  | `Init.Grind.Ordered.Order, ``Lean.Grind.LinearOrder.le_of_not_lt =>
+    return (``OmegaChecks.InitBoundaries.AbstractOrder.StableEquality,
+      ``OmegaChecks.InitBoundaries.AbstractOrder.stableEqualityOfGrindComparison)
+  | `Init.Data.Array.Lex.Lemmas, ``Array.le_antisymm =>
+    return (``OmegaChecks.InitBoundaries.AbstractOrder.StableEquality,
+      ``OmegaChecks.InitBoundaries.AbstractOrder.stableEqualityOfArrayAntisymm)
+  | `Init.Data.Vector.Lex, ``Vector.le_antisymm =>
+    return (``OmegaChecks.InitBoundaries.AbstractOrder.StableEquality,
+      ``OmegaChecks.InitBoundaries.AbstractOrder.stableEqualityOfVectorAntisymm)
+  | `Init.Data.Array.Lex.Lemmas, ``Array.instIsLinearOrderOfLawfulOrderLT =>
+    return (``OmegaChecks.InitBoundaries.AbstractOrder.StableEquality,
+      ``OmegaChecks.InitBoundaries.AbstractOrder.stableEqualityOfArrayOrder)
+  | `Init.Data.Vector.Lex, ``Vector.instIsLinearOrderOfLawfulOrderLT =>
+    return (``OmegaChecks.InitBoundaries.AbstractOrder.StableEquality,
+      ``OmegaChecks.InitBoundaries.AbstractOrder.stableEqualityOfVectorOrder)
+  | `Init.Data.List.Lex, ``List.instIsLinearOrder =>
+    return (``OmegaChecks.InitBoundaries.AbstractOrder.StableEquality,
+      ``OmegaChecks.InitBoundaries.AbstractOrder.stableEqualityOfListOrder)
+  | `Init.Data.List.Lex, ``List.lt_of_le_of_lt =>
+    return (``OmegaChecks.InitBoundaries.FiniteMembership.EqualityCases,
+      ``OmegaChecks.InitBoundaries.AbstractOrder.equalityCasesOfListComparison)
+  | `Init.Data.Array.Lex.Lemmas, ``Array.lt_of_le_of_lt =>
+    return (``OmegaChecks.InitBoundaries.FiniteMembership.EqualityCases,
+      ``OmegaChecks.InitBoundaries.AbstractOrder.equalityCasesOfArrayComparison)
   | `Init.Data.List.Lex, ``List.le_total =>
     return (`OmegaChecks.InitInventory.StringPatterns.WeakExcludedMiddle, ``OmegaChecks.InitBoundaries.AbstractOrder.weakMiddleOfListTotal)
   | `Init.Data.List.Lex, ``List.instTotalLeOfAsymmLt =>

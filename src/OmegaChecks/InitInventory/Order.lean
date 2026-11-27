@@ -3,6 +3,7 @@ public import Lean
 import all Init.Internal.Order.Basic
 import all Init.Internal.Order.MonadTail
 import all Init.Data.Order.Lemmas
+import all Init.Grind.Ordered.Order
 import all Init.Data.Order.LemmasExtra
 import Lean.Replay
 import all Lean.Util.CollectAxioms
@@ -77,32 +78,173 @@ end ClassicalOrderDecisions
 
 namespace AbstractOrder
 
-/-- Adjoining the single edge from `a` to `b` to equality makes their comparison
-available without deciding whether its endpoints coincide. -/
-theorem equalityCasesOfLeIffLtOrEq (split : type_of% (@Std.le_iff_lt_or_eq.{u})) :
-    FiniteMembership.EqualityCases.{u} := by
-  intro α a b
-  letI : LE α := ⟨fun x y => x = y ∨ x = a ∧ y = b⟩
-  letI : LT α := ⟨fun x y => x ≤ y ∧ ¬ y ≤ x⟩
-  letI : Std.LawfulOrderLT α := ⟨fun _ _ => Iff.rfl⟩
-  letI : Std.IsPartialOrder α := {
+
+section
+open Std
+variable {α : Type u} {a b : α}
+
+/-- The two named endpoints inherit a linear order even if equality on the ambient type is undecided. -/
+private abbrev Endpoints (a b : α) := {x : α // x = a ∨ x = b}
+@[instance_reducible] private def orderEndpoints (a b : α) : LE (Endpoints a b) :=
+  ⟨fun x y => x.val = y.val ∨ x.val = a ∧ y.val = b⟩
+@[instance_reducible] private def strictEndpoints (a b : α) : LT (Endpoints a b) :=
+  letI := orderEndpoints a b
+  ⟨fun x y => x ≤ y ∧ ¬ y ≤ x⟩
+
+private theorem endpointsLinear (a b : α) : letI := orderEndpoints a b; IsLinearOrder (Endpoints a b) := by
+  letI := orderEndpoints a b
+  exact {
     le_refl _ := Or.inl rfl
     le_trans x y z xy yz := by
-      rcases xy with rfl | ⟨xa, yb⟩
-      · exact yz
-      rcases yz with rfl | ⟨_, zb⟩
-      · exact Or.inr ⟨xa, yb⟩
+      rcases xy with eq | ⟨xa, yb⟩
+      · exact (Subtype.ext eq) ▸ yz
+      rcases yz with eq | ⟨_, zb⟩
+      · exact Or.inr ⟨xa, eq ▸ yb⟩
       · exact Or.inr ⟨xa, zb⟩
     le_antisymm x y xy yx := by
       rcases xy with eq | ⟨xa, _⟩
-      · exact eq
+      · exact Subtype.ext eq
       rcases yx with eq | ⟨ya, _⟩
-      · exact eq.symm
-      · exact xa.trans ya.symm }
-  have forward : a ≤ b := Or.inr ⟨rfl, rfl⟩
-  rcases (@split α _ _ _ _ a b).mp forward with strict | eq
+      · exact Subtype.ext eq.symm
+      · exact Subtype.ext (xa.trans ya.symm)
+    le_total x y := by
+      rcases x.property with xa | xb <;> rcases y.property with ya | yb
+      · exact Or.inl (Or.inl (xa.trans ya.symm))
+      · exact Or.inl (Or.inr ⟨xa, yb⟩)
+      · exact Or.inr (Or.inr ⟨ya, xb⟩)
+      · exact Or.inl (Or.inl (xb.trans yb.symm)) }
+
+private abbrev leftEnd (a b : α) : Endpoints a b := ⟨a, Or.inl rfl⟩
+private abbrev rightEnd (a b : α) : Endpoints a b := ⟨b, Or.inr rfl⟩
+
+private theorem endpointsLT (a b : α) :
+    letI := orderEndpoints a b; letI := strictEndpoints a b; LawfulOrderLT (Endpoints a b) :=
+  by
+    letI := orderEndpoints a b
+    letI := strictEndpoints a b
+    exact ⟨fun _ _ => Iff.rfl⟩
+
+private theorem endpointsForward (a b : α) : letI := orderEndpoints a b; leftEnd a b ≤ rightEnd a b :=
+  Or.inr ⟨rfl, rfl⟩
+
+private theorem eqOfReverse {a b : α} : (letI := orderEndpoints a b; rightEnd a b ≤ leftEnd a b) → a = b :=
+  fun r => r.elim Eq.symm (fun h => h.2)
+
+theorem equalityCasesOfLeIffLtOrEq (split : type_of% @Std.le_iff_lt_or_eq.{u}) :
+    FiniteMembership.EqualityCases.{u} := by
+  intro α a b
+  letI := orderEndpoints a b
+  letI := strictEndpoints a b
+  letI := endpointsLinear a b
+  letI := endpointsLT a b
+  rcases (split (a := leftEnd a b) (b := rightEnd a b)).mp (endpointsForward a b) with lt | eq
+  · exact Or.inr fun eq => lt.2 (Or.inl eq.symm)
+  · exact Or.inl (congrArg Subtype.val eq)
+
+example : (type_of% @Std.le_iff_lt_or_eq.{u}) = (type_of% @Lean.Grind.PartialOrder.le_iff_lt_or_eq.{u}) := rfl
+
+theorem equalityCasesOfGrindTrichotomy (tri : type_of% @Lean.Grind.LinearOrder.trichotomy.{u}) :
+    FiniteMembership.EqualityCases.{u} := by
+  intro α a b
+  letI := orderEndpoints a b
+  letI := strictEndpoints a b
+  letI := endpointsLinear a b
+  letI := endpointsLT a b
+  rcases tri (leftEnd a b) (rightEnd a b) with lt | eq | gt
+  · exact Or.inr fun eq => lt.2 (Or.inl eq.symm)
+  · exact Or.inl (congrArg Subtype.val eq)
+  · exact (gt.2 (endpointsForward a b)).elim
+
+/-- Equality is stable under double negation at this universe. -/
+def StableEquality : Prop := ∀ {α : Type u} (a b : α), ¬¬a = b → a = b
+
+theorem stableEqualityOfGrindComparison (le : type_of% @Lean.Grind.LinearOrder.le_of_not_lt.{u}) :
+    StableEquality.{u} := by
+  intro α a b nn
+  letI := orderEndpoints a b
+  letI := strictEndpoints a b
+  letI := endpointsLinear a b
+  letI := endpointsLT a b
+  exact eqOfReverse (le (a := leftEnd a b) (b := rightEnd a b)
+    (fun lt => nn fun eq => lt.2 (Or.inl eq.symm)))
+
+
+private abbrev SingletonAntisym := ∀ {T : Type u} [LT T] [LE T] [IsLinearOrder T] [LawfulOrderLT T]
+  (x y : T), [x] ≤ [y] → [y] ≤ [x] → x = y
+
+private theorem equalityStableOfSingletons (anti : SingletonAntisym.{u}) : StableEquality.{u} := by
+  intro α a b nn
+  letI := orderEndpoints a b
+  letI := strictEndpoints a b
+  letI := endpointsLinear a b
+  letI := endpointsLT a b
+  have le (x y : Endpoints a b) (nn : ¬¬ x = y) : [x] ≤ [y] := by
+    intro lt
+    apply nn
+    rintro rfl
+    cases lt with
+    | rel rel => exact rel.2 rel.1
+    | cons tail => cases tail
+  have both : ¬¬ leftEnd a b = rightEnd a b := fun no => nn fun e => no (Subtype.ext e)
+  exact congrArg Subtype.val (anti _ _ (le _ _ both) (le _ _ fun no => both fun e => no e.symm))
+
+theorem stableEqualityOfArrayAntisymm (anti : type_of% @Array.le_antisymm.{u}) : StableEquality.{u} :=
+  equalityStableOfSingletons fun {_} _ _ _ _ x y le ge =>
+    (List.cons.inj (congrArg Array.toList (anti (xs := #[x]) (ys := #[y]) le ge))).1
+
+theorem stableEqualityOfVectorAntisymm (anti : type_of% @Vector.le_antisymm.{u}) : StableEquality.{u} :=
+  equalityStableOfSingletons fun {T} _ _ _ _ x y le ge =>
+    (List.cons.inj (congrArg (fun v : Vector T 1 => v.toArray.toList)
+      (anti (xs := Vector.mk #[x] rfl) (ys := Vector.mk #[y] rfl) le ge))).1
+
+theorem stableEqualityOfArrayOrder (order : type_of% @Array.instIsLinearOrderOfLawfulOrderLT.{u}) : StableEquality.{u} :=
+  stableEqualityOfArrayAntisymm fun {_} _ _ _ _ {x y} => order.le_antisymm x y
+
+theorem stableEqualityOfVectorOrder (order : type_of% @Vector.instIsLinearOrderOfLawfulOrderLT.{u}) : StableEquality.{u} :=
+  stableEqualityOfVectorAntisymm fun {_ _} _ _ _ _ {x y} => order.le_antisymm x y
+
+theorem stableEqualityOfListOrder (order : type_of% @List.instIsLinearOrder.{u}) : StableEquality.{u} :=
+  equalityStableOfSingletons fun {_} _ _ _ _ x y le ge =>
+    (List.cons.inj (order.le_antisymm [x] [y] le ge)).1
+
+private abbrev PrefixComparison := ∀ {T : Type u} [LT T] [LE T] [IsLinearOrder T] [LawfulOrderLT T]
+  (x y : T), [x] ≤ [y] → [y] < [y,y] → [x] < [y,y]
+
+private theorem singletonReverse {T : Type u} [LT T] {x y : T} (h : [y] < [x]) : y < x := by
+  cases h with
+  | rel h => exact h
+  | cons h => cases h
+
+private theorem singletonToPair {T : Type u} [LT T] {x y : T} (h : [x] < [y,y]) : x < y ∨ x = y := by
+  cases h with
+  | rel h => exact Or.inl h
+  | cons _ => exact Or.inr rfl
+
+/-- Comparing a singleton with a length-two list exposes its first unequal head or an equal head. -/
+private theorem equalityCasesOfPrefix (comparePrefix : PrefixComparison.{u}) : FiniteMembership.EqualityCases.{u} := by
+  intro α a b
+  letI := orderEndpoints a b
+  letI := strictEndpoints a b
+  letI := endpointsLinear a b
+  letI := endpointsLT a b
+  let x := leftEnd a b
+  let y := rightEnd a b
+  have le : [x] ≤ [y] := by
+    intro reverse
+    exact (singletonReverse reverse).2 (endpointsForward a b)
+  rcases singletonToPair (comparePrefix x y le (List.Lex.cons List.Lex.nil)) with strict | eq
   · exact Or.inr fun eq => strict.2 (Or.inl eq.symm)
-  · exact Or.inl eq
+  · exact Or.inl (congrArg Subtype.val eq)
+
+theorem equalityCasesOfListComparison (law : type_of% @List.lt_of_le_of_lt.{u}) :
+    FiniteMembership.EqualityCases.{u} :=
+  equalityCasesOfPrefix fun _ _ le lt => law le lt
+
+theorem equalityCasesOfArrayComparison (law : type_of% @Array.lt_of_le_of_lt.{u}) :
+    FiniteMembership.EqualityCases.{u} :=
+  equalityCasesOfPrefix fun x y le lt => law (xs := #[x]) (ys := #[y]) (zs := #[y,y]) le lt
+
+end
 
 private theorem notNotEM (p : Prop) : ¬ ¬ (p ∨ ¬p) :=
   fun neither => neither (.inr fun hp => neither (.inl hp))
