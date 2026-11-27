@@ -103,21 +103,26 @@ def compile_tasks(stage, product, artifact, inventory, raw):
         run(app)
 
 
-def compile_state_runtime(stage, product, artifact, inventory, tool, filename, required, extra_sources=()):
+def install_state_runtime(stage, product, artifact, tool, filename):
     bridge = stage / (filename + ".c")
     run("lake", "env", "lean", "--run", HERE / (tool + "Native.lean"), artifact, bridge)
     if not bridge.exists():
-        return
+        return []
     native = product / "native"
     native.mkdir(exist_ok=True)
+    objects = []
     if tool == "Promise":
         pinned = stage / "promise-result-d.c"
         run("lean", "-R", HERE, "-c", pinned, HERE / "PromiseResultD.lean")
         pinned_object = native / "promise-result-d.o"
         run("leanc", "-DLEAN_EXPORTING", "-I", stage, "-c", HERE / "promise_result_d.c", "-o", pinned_object)
-        extra_sources = [*extra_sources, pinned_object]
+        objects.append(pinned_object)
     obj = native / (filename + ".o")
     run("leanc", "-DLEAN_EXPORTING", "-I", HERE, "-c", bridge, "-o", obj)
+    return [obj, *objects]
+
+
+def check_state_consumer(stage, artifact, inventory, tool, filename, required, objects):
     with inventory.open() as stream:
         installed = {(mod, name) for mod, name, _, status, _ in map(json.loads, stream)
                      if status in {"added", "existing"}}
@@ -126,8 +131,14 @@ def compile_state_runtime(stage, product, artifact, inventory, tool, filename, r
         run("lean", "-R", HERE, "-c", consumer, HERE / (tool + "Consumer.lean"),
             env={**os.environ, "LEAN_PATH": str(artifact)})
         app = stage / (filename + "-consumer")
-        run("leanc", consumer, obj, *extra_sources, HERE / (filename + "_consumer.c"), "-o", app)
+        run("leanc", consumer, *objects, HERE / (filename + "_consumer.c"), "-o", app)
         run(app)
+
+
+def compile_state_runtime(stage, product, artifact, inventory, tool, filename, required, extra_sources=()):
+    objects = install_state_runtime(stage, product, artifact, tool, filename)
+    if objects:
+        check_state_consumer(stage, artifact, inventory, tool, filename, required, [*objects, *extra_sources])
 
 
 def compile_type_name(stage, product, artifact, inventory):
@@ -151,7 +162,7 @@ def compile_type_name(stage, product, artifact, inventory):
         run(app)
 
 
-def generate(stage, product, seed, roots, excluded, seed_ir):
+def generate(stage, product, seed, roots, excluded, original_seed):
     transfer = stage / "transfer"
     artifact = product / "lib"
     inventory = product / "inventory.jsonl"
@@ -227,11 +238,17 @@ def generate(stage, product, seed, roots, excluded, seed_ir):
             "Init.System.Promise": {"IO.Promise.new", "IO.Promise.resolve", "IO.Promise.isResolved", "IO.Promise.result?", "IO.Promise.resultD"},
             "Init.Core": {"Task.pure", "Task.get", "Task.map", "Task.bind"},
         }, [raw_task])
-    control_objects = compile_generated(stage, product, graph, seed_ir)
-    if "OmegaInit.ShareCommon" in graph:
-        compile_state_runtime(stage, product, artifact, inventory, "ShareCommon", "share_common", {
+    sharing = []
+
+    def install_sharing():
+        sharing.extend(install_state_runtime(stage, product, artifact, "ShareCommon", "share_common"))
+
+    control_objects = compile_generated(stage, product, graph, original_seed.parents[1] / "ir",
+                                        original_seed=original_seed, before_owner={"OmegaInit.ShareCommon": install_sharing})
+    if sharing and control_objects is not None:
+        check_state_consumer(stage, artifact, inventory, "ShareCommon", "share_common", {
             "Init.ShareCommon": {"ShareCommon.State.mk", "ShareCommon.State.shareCommon", "ShareCommonM.run"},
-        }, control_objects)
+        }, [*sharing, *control_objects])
     with (product / "audit.txt").open("w") as log:
         audit = ROOT / ".lake/build/bin/omegaAudit"
         checked = subprocess.run(["lake", "env", audit, "--exact-roots", artifact, *graph, "--", *closure],
@@ -273,7 +290,7 @@ def main():
         snapshot_seed(seed, stage / "seed")
         product = stage / "product"
         product.mkdir()
-        generate(stage, product, stage / "seed", roots, args.exclude, seed.parents[1] / "ir")
+        generate(stage, product, stage / "seed", roots, args.exclude, seed)
         if not args.modules:
             report(product, require_complete=args.require_complete)
             omegamath.build(product, product / "lib", args.j, product / "omegamath-audit.txt")
