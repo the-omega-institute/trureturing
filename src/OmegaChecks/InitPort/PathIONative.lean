@@ -205,7 +205,7 @@ public unsafe def main (args : List String) : IO Unit := do
     for n in dicts ++ [`Omega.Option, `Omega.List, `Omega.ST.Out] ++ (if fs then [`Omega.EST.Out, `Omega.IO.Error] else []) ++
         (if metadata then [`Omega.IO.FS.SystemTime, `Omega.IO.FS.Metadata, `Omega.IO.FS.FileType, `Omega.Int] else []) ++
         (if streams then [`Omega.IO.FS.Stream] else []) ++
-        (if processes then [`Omega.IO.Process.SpawnArgs, `Omega.IO.Process.StdioConfig, `Omega.IO.Process.Child, `Omega.IO.Process.Stdio, `Omega.Prod] else []) ++
+        (if processes then [`Omega.Prod, `Omega.IO.Process.Stdio, `Omega.IO.Process.StdioConfig, `Omega.IO.Process.SpawnArgs, `Omega.IO.Process.Child] else []) ++
         (if roots.any (fun (n, _, _) => n == `IO.FS.createTempFile) then [`Omega.Prod] else []) ++
         (if readDir then [`Omega.IO.FS.DirEntry] else []) ++ (if handles then [`Omega.IO.FS.Mode] else []) do
       let env ← importModules imports {}
