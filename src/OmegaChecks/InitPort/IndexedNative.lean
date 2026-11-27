@@ -16,6 +16,9 @@ private def linear (n : Name) : Bool :=
 private def attachment (n : Name) : Bool :=
   [`List.attachWith, `Array.attachWith, `Option.attachWith, `Vector.attachWith].contains n
 
+private def envelopeLift (n : Name) : Bool :=
+  [`Lean.Grind.Ring.OfSemiring.Q.liftOn₂, `Lean.Grind.IntModule.OfNatModule.Q.liftOn₂].contains n
+
 private def quotientEliminator (n : Name) : Bool :=
   [`Quot.hrecOn, `Quotient.hrecOn, `Quotient.lift, `Quotient.liftOn, `Quotient.liftOn₂,
    `Quotient.lift₂, `Squash.lift].contains n
@@ -24,7 +27,7 @@ private def listTraversal (n : Name) : Bool :=
   [`List.filterMapTR, `List.flatMapTR, `List.flattenTR, `List.intercalateTR, `List.reduceOption].contains n
 
 public def supported (n : Name) : Bool :=
-  attachment n || linear n || quotientEliminator n || listTraversal n ||
+  envelopeLift n || attachment n || linear n || quotientEliminator n || listTraversal n ||
   [`withPtrEq, `ShareCommon.shareCommon', `Array.mapMono, `List.mapMonoM, `List.flatMapMTR.loop, `List.splitOn, `List.splitOnPTR, `BitVec.flattenListFast].contains n ||
   [`Acc.recC, `Acc.ndrecC, `Acc.ndrecOnC, `WellFounded.fixFC,
    `Lean.Grind.CommRing.Mon.revlexWF, `Lean.Grind.CommRing.Mon.revlexFuel, `Lean.Grind.CommRing.Mon.revlex,
@@ -95,6 +98,12 @@ public def wrapper (source strict : Environment) (n : Name) (symbol : String) : 
   let some target := strict.find? n | throw <| IO.userError s!"missing strict indexed eliminator {n}"
   unless target.type == InitKernelPort.translate InitKernelPort.portName ci.type do
     throw <| IO.userError s!"indexed eliminator type mismatch: {n}"
+  if envelopeLift official then
+    let some (.fdecl _ args .tobject (.vdecl result .tobject (.ap callback #[.var x, .var y]) (.ret (.var returned))) _) :=
+        IR.findEnvDecl source official | throw <| IO.userError s!"unexpected envelope quotient lift {official}"
+    unless args.size == 7 && args[3]!.x == x && args[4]!.x == y && args[5]!.x == callback && returned == result do
+      throw <| IO.userError s!"envelope quotient lift changed its representative arguments {official}"
+    checkDataTypes source strict [`Prod]
   if official == `Array.mapMono then
     let some (.fdecl _ args .object ..) := IR.findEnvDecl source official
       | throw <| IO.userError "missing pinned array map"
