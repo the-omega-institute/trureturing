@@ -767,12 +767,9 @@ theorem no_rank_one_of_card_le_ten {s : ℕ} (U H : Submodule F (Ambient s))
     exact LinearMap.congr_fun hlift q
   let radicalTail := (rest.comp XH).comp Hgen
   let logicalTail := (rest.comp Z).comp (U.subtype.comp L)
-  have injectiveTail : Function.Injective logicalTail := by
-    apply LinearMap.ker_eq_bot.mp
-    apply LinearMap.ker_eq_bot'.mpr
-    intro q hq
-    funext i
-    let h := Hgen (Pi.single i 1)
+  have headPairing (a q : Fin 4 → F) :
+      (∑ j, a j * q j) + (∑ j, radicalTail a j * logicalTail q j) = 0 := by
+    let h := Hgen a
     let u := L q
     have hp := (LinearMap.BilinForm.mem_orthogonal_iff.mp (orthogonal u.property)) h h.property
     have hp' := (axesPair h u).trans hp
@@ -781,8 +778,15 @@ theorem no_rank_one_of_card_le_ten {s : ℕ} (U H : Submodule F (Ambient s))
     have hs := (Equiv.sum_comp e (fun j => X h j * Z u j)).trans hp'
     rw [Fintype.sum_sum_type] at hs
     change (∑ j : Fin 4, head (X h) j * head (Z u) j) +
-      (∑ j : Fin (s - 4), radicalTail (Pi.single i 1) j * logicalTail q j) = 0 at hs
-    rw [headH, headLZ, hq] at hs
+      (∑ j : Fin (s - 4), radicalTail a j * logicalTail q j) = 0 at hs
+    rwa [headH, headLZ] at hs
+  have injectiveTail : Function.Injective logicalTail := by
+    apply LinearMap.ker_eq_bot.mp
+    apply LinearMap.ker_eq_bot'.mpr
+    intro q hq
+    funext i
+    have hs := headPairing (Pi.single i 1) q
+    rw [hq] at hs
     simpa [Pi.single_apply] using hs
   have width := LinearMap.finrank_le_finrank_of_injective injectiveTail
   have tailWidth : 4 ≤ s - 4 := by simpa using width
@@ -801,17 +805,9 @@ theorem no_rank_one_of_card_le_ten {s : ℕ} (U H : Submodule F (Ambient s))
     have hzero (i : Fin 4) : A i j = 0 := congrFun hz i
     simp [tail, hzero] at he
   have pairing (k i : Fin 4) : (∑ j, A k j * R i j) = if k = i then 1 else 0 := by
-    let h := Hgen (Pi.single k 1)
-    let u := L (Pi.single i 1)
-    have hp := (LinearMap.BilinForm.mem_orthogonal_iff.mp (orthogonal u.property)) h h.property
-    have hp' := (axesPair h u).trans hp
-    rw [radicalZ h] at hp'
-    simp only [Pi.zero_apply, zero_mul, add_zero] at hp'
-    have hs := (Equiv.sum_comp e (fun j => X h j * Z u j)).trans hp'
-    rw [Fintype.sum_sum_type] at hs
-    change (∑ j : Fin 4, head (X h) j * head (Z u) j) + (∑ j, A k j * R i j) = 0 at hs
-    rw [show head (X h) = Pi.single k 1 from headH _,
-      show head (Z u) = Pi.single i 1 from headLZ _] at hs
+    have hs := headPairing (Pi.single k 1) (Pi.single i 1)
+    change (∑ j : Fin 4, Pi.single k (1 : F) j * Pi.single i (1 : F) j) +
+      (∑ j, A k j * R i j) = 0 at hs
     let d : F := if k = i then 1 else 0
     have hd : (∑ j : Fin 4, Pi.single k (1 : F) j * Pi.single i (1 : F) j) = d := by
       simp [d, Pi.single_apply, eq_comm]

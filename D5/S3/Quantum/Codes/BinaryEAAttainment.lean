@@ -107,7 +107,6 @@ private theorem dim_ker_domRestrict (W : Submodule F (E n)) (I : Finset (Fin n))
   · rintro ⟨hv, hz⟩
     exact ⟨⟨v, hv⟩, hz, rfl⟩
 
-/-- The joint coordinate kernel and image dimensions sum to the code dimension. -/
 theorem dim_kernel_add_rank (W : Submodule F (E n)) (I : Finset (Fin n)) :
     dim (siteKernel W I) + dim (LinearMap.range ((restrictSites I).domRestrict W)) = dim W := by
   rw [← dim_ker_domRestrict, add_comm, LinearMap.finrank_range_add_finrank_ker]
@@ -355,7 +354,6 @@ noncomputable def support (W : Submodule F (E n)) : Finset (Fin n) := by
   classical
   exact Finset.univ.filter fun i => ∃ v ∈ W, site i v ≠ 0
 
-/-- Membership in the support is witnessed by a nonzero local coordinate pair. -/
 theorem mem_support {W : Submodule F (E n)} {i : Fin n} :
     i ∈ support W ↔ ∃ v ∈ W, site i v ≠ 0 := by
   classical
@@ -484,7 +482,6 @@ private theorem kernel_le_radical (U : Submodule F (E n)) (hU : ZeroBound U)
   have := hU v hvU h
   omega
 
-/-- Projection onto at least four radical support sites preserves the code dimension. -/
 theorem core_injective (U : Submodule F (E n)) (hU : ZeroBound U)
     (hS : 4 ≤ (support (radical U)).card) :
     Function.Injective ((mask (support (radical U))).domRestrict U) := by
@@ -500,7 +497,6 @@ theorem core_injective (U : Submodule F (E n)) (hU : ZeroBound U)
   have hs := mask_eq_self (le_supportedOn_support (radical U) hr)
   exact Subtype.ext (hs.symm.trans hu0)
 
-/-- The projected code remains orthogonal to its original radical. -/
 theorem core_le_orthogonal (U : Submodule F (E n)) :
     U.map (mask (support (radical U))) ≤
       (spForm n).orthogonal (radical U) ⊓ supportedOn (support (radical U)) := by
