@@ -2,6 +2,7 @@
 import argparse
 import csv
 import json
+import os
 from collections import defaultdict
 from pathlib import Path
 import subprocess
@@ -29,6 +30,11 @@ def check_coverage(official):
         witness, target = row["reductionWitness"], row["impliesAxiom"]
         if bool(witness) != bool(target):
             raise ValueError(f"incomplete axiom reduction for {owner}/{name}")
+        strict = row.get("strictSelectionWitness")
+        strict_target = row.get("strictImpliesAxiom")
+        if bool(strict) != bool(strict_target) or (strict and (strict_target != "Classical.choice.{1}" or
+                strict != "OmegaStrictReference." + name or axiom or port or witness)):
+            raise ValueError(f"inconsistent strict choice reduction for {owner}/{name}")
         runtime = row.get("runtimeConflictWitness")
         if runtime and (axiom or witness or not row.get("unsafe") or
                         row.get("logicalConsequence") != "False" or
@@ -40,7 +46,7 @@ def check_coverage(official):
             matched += 1
         elif axiom:
             direct += 1
-        elif witness:
+        elif witness or strict:
             reductions += 1
         elif not runtime:
             unresolved.append(site)
@@ -75,21 +81,45 @@ def verify_complete(official, product, reductions, unresolved):
                     "--exact-roots", lib, *roots, "--", *roots], cwd=ROOT, check=True)
 
 
+def check_strict_reference_choices(product, stage, attempts):
+    owners = ("Init.System.ST", "Init.Control.StateRef")
+    required = ("Void.mk", "ST.Prim.mkRef", "ST.Ref.ref", "ST.Out.val")
+    if not all(attempts.get((owners[0], name), (None,))[0] in {"added", "existing"} for name in required):
+        return {}
+    lib = product / "lib"
+    strict_owners = ("Omega" + owner for owner in owners)
+    selected = [owner for owner in strict_owners if (lib / Path(*owner.split("."))).with_suffix(".olean").is_file()]
+    subprocess.run(["lean", "-R", HERE, "-o", stage / "StrictReferenceChoice.olean", HERE / "StrictReferenceChoice.lean"],
+                   cwd=ROOT, env={**os.environ, "LEAN_PATH": str(lib)}, check=True)
+    output = stage / "strict-reference-choice.json"
+    subprocess.run(["lake", "env", "lean", "--run", HERE / "ReferenceChoiceCheck.lean", lib, stage, output, *selected],
+                   cwd=ROOT, check=True)
+    return {(owner, name): witness for owner, name, witness in json.loads(output.read_text())}
+
+
 def report(product, require_complete=False):
     with tempfile.TemporaryDirectory(dir=product) as work:
         stage = Path(work)
         inventory = stage / "init-inventory.json"
-        subprocess.run(["lake", "build", "+OmegaChecks.InitInventory"], cwd=ROOT, check=True)
+        subprocess.run(["lake", "build", "+OmegaChecks.InitInventory", "+OmegaChecks.InitPort.Translation"], cwd=ROOT, check=True)
         subprocess.run(["lake", "env", "lean", "--run", HERE.parent / "InitInventory.lean", product / "lib", inventory],
                        cwd=ROOT, check=True)
         official = json.loads(inventory.read_text())
-        reduction_count, unresolved = check_coverage(official)
         with (product / "inventory.jsonl").open() as f:
             attempts = {}
             owners = defaultdict(list)
             for owner, name, _, why, dep in map(json.loads, f):
                 attempts[owner, name] = (why, dep)
                 owners[name].append(owner)
+        strict_choices = check_strict_reference_choices(product, stage, attempts)
+        for row in official["declarations"]:
+            witness = strict_choices.get((row["module"], row["name"]))
+            if witness:
+                row["strictSelectionWitness"] = witness
+                row["strictImpliesAxiom"] = "Classical.choice.{1}"
+        reduction_count, unresolved = check_coverage(official)
+        if strict_choices:
+            inventory.write_text(json.dumps(official, ensure_ascii=False, separators=(",", ":")) + "\n")
         with (product / "interface-rejections.jsonl").open() as f:
             rejected = dict(map(json.loads, f))
         # Incompatible copies are rejected together. Transfer visits one active
@@ -106,7 +136,7 @@ def report(product, require_complete=False):
                              "impliesAxiom", "firstDependencyPath", "reason", "reductionWitness",
                              "logicalConsequence", "logicalConsequenceWitness", "requiredBehavior", "abstractedDependency",
                              "runtimeConflictWitness", "equationOperand", "operandImpliesAxiom", "operandReductionWitness",
-                             "unchangedTypeAxioms", "unsafePackedObservation"])
+                             "unchangedTypeAxioms", "unsafePackedObservation", "strictImpliesAxiom", "strictSelectionWitness"])
             for row in official["declarations"]:
                 if row["matchingNameAndModule"] or row["kind"] == "axiom":
                     continue
@@ -141,7 +171,8 @@ def report(product, require_complete=False):
                                  row.get("logicalConsequence"), row.get("logicalConsequenceWitness"),
                                  row.get("requiredBehavior"), row.get("abstractedDependency"), row.get("runtimeConflictWitness"),
                                  row.get("equationOperand"), row.get("operandImpliesAxiom"), row.get("operandReductionWitness"),
-                                 ",".join(row.get("unchangedTypeAxioms", [])), row.get("unsafePackedObservation")])
+                                 ",".join(row.get("unchangedTypeAxioms", [])), row.get("unsafePackedObservation"),
+                                 row.get("strictImpliesAxiom"), row.get("strictSelectionWitness")])
         reductions = stage / "init-public-reductions.tsv"
         with reductions.open("w", newline="") as f:
             writer = csv.writer(f, delimiter="\t", lineterminator="\n")

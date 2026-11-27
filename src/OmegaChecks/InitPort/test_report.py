@@ -87,6 +87,15 @@ class CoverageTest(unittest.TestCase):
                         operandImpliesAxiom="Classical.choice", operandReductionWitness="fromChoice")
         self.assertEqual(check_coverage(inventory(equation)), (0, [("Init.While", "Classical.choice.congr_simp")]))
 
+    def test_strict_choice_requires_a_checked_target_and_an_unimplemented_site(self):
+        row = site("Init.System.ST", "ST.Prim.Ref.get", strictImpliesAxiom="Classical.choice.{1}",
+                   strictSelectionWitness="OmegaStrictReference.ST.Prim.Ref.get")
+        self.assertEqual(check_coverage(inventory(row)), (1, []))
+        for mismatch in ({"strictImpliesAxiom": None}, {"strictImpliesAxiom": "Classical.choice"},
+                         {"strictSelectionWitness": "wrong"}, {"matchingNameAndModule": True}):
+            with self.subTest(mismatch=mismatch), self.assertRaisesRegex(ValueError, "strict choice"):
+                check_coverage(inventory({**row, **mismatch}))
+
     def test_refuse_duplicate_definition_site(self):
         with self.assertRaisesRegex(ValueError, "repeated official definition site"):
             check_coverage(inventory(site("Init.A", "t"), site("Init.A", "t")))

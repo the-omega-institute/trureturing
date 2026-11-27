@@ -36,6 +36,8 @@ example (a : α) (b : β) : Omega.Eq (Prod.fst (Prod.mk a b)) a := Omega.rfl
 
 严格库用私有、不可计算的句柄构造 `ST.Prim.mkRef`，并保留公开的 `ST.RefPointed` 封装。构建 `Init.System.ST` 时，`native/reference.o` 提供引用分配、身份比较、写入和交换的原生入口。交换的逻辑常量保持不透明，原生入口调用钉版 `lean_st_ref_swap` 取得先前的值。普通消费者验证两枚引用的身份、交换返回旧值、写入后再交换取得新值和世界状态的传递。使用 `Omega.StateRefT'.set` 时，链接 `native/state_ref.o` 和 `native/reference.o`。
 
+严格库能用 `Void.mk ()` 和 `ST.Prim.mkRef ()` 取得具体的世界与引用地址。对引用读取、取出、返回值修改及相应的状态实例，盘点器检查由其完整严格类型能否构造 `(α : Type) → Omega.Nonempty α → α`。原官方类型的 `Void.mk` 与 `ST.Prim.mkRef` 可取任意实现。内核核对其应用于严格公共构造器所得的选择器，与宇宙 0 的官方公理 `Classical.choice.{1}` 具有相同的移植类型。每条归约连同构造器依赖从空内核重放，完整性报告在 `strictImpliesAxiom` 和 `strictSelectionWitness` 中给出目标及见证。[严格选择器](StrictReferenceChoice.lean) · [归约核验](ReferenceChoiceCheck.lean)
+
 `Omega.withPtrAddrUnsafe` 的返回值通过逐输入证明核对。官方实现把对象的机器地址传给回调 `k`，其参数 `h` 证明任意两个地址产生相同结果。严格实现调用 `Omega.withPtrAddr`。校验器读取官方的 `@[implemented_by]` 登记、两端签名和实际计算体，用 `h` 证明每个机器地址所得的值都等于严格实现的结果。[返回值核验](Address.lean) · [官方指针回调](https://github.com/leanprover/lean4/blob/v4.35.0/src/Init/Util.lean#L102)
 
 `ptrAddrUnsafe`、`ptrEq` 和 `ptrEqList` 能区分内容相等的两个列表。对于分别分配、唯一自然数字段相等的两个 `NonScalar` 对象，`ShareCommon.Object.ptrEq` 与 `ShareCommon.Object.ptrHash` 也能给出不同结果。运行 `lake env lean --run src/OmegaChecks/InitPort/PointerObservations.lean` 可在钉版 Lean 运行时复现。对原类型的任意纯函数，Lean 的等式替换要求这两组输入得到相同结果。对具有相同大自然数载荷或只含标量的单层列表，`ShareCommon.Object.eq` 和 `hash` 的读数一致。外层列表的载荷含子列表地址，两份等值但独立分配的子列表可使比较和哈希结果不同。若还要求纯装箱函数保留这组原生读数，等式替换会导出矛盾。每次盘点都在当前工具链执行观察。嵌套列表通过 `unsafeCast` 装箱的读数记入 `unsafePackedObservation`。原类型的纯装箱前提尚待建立，这两个接口仍列为未解决。只有实际观测到不同返回值且源码中有针对该原类型的内核矛盾证明时，缺口记录才写入 `runtimeConflictWitness`。[内核证明](../InitInventory/PointerObservations.lean) · [运行时样例](PointerObservations.lean)

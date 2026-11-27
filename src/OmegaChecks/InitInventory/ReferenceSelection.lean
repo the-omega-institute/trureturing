@@ -8,6 +8,14 @@ namespace OmegaChecks.InitBoundaries.ReferenceSelection
 /-- A selector exists simultaneously for all nonempty types in the state monad’s universe. -/
 public abbrev Selection := Nonempty ((α : Type) → Nonempty α → α)
 
+/-- Any implementations of the two original public constructors supply the world and the
+address. The returned selector uses no operation on the hidden representation of either. -/
+public noncomputable def choiceUsing (mkWorld : type_of% @Void.mk) (alloc : type_of% @ST.Prim.mkRef)
+    (read : ∀ {α}, ST.Ref Unit α → ST Unit α) (α : Type) (h : Nonempty α) : α :=
+  let world := mkWorld (σ := Unit) ()
+  let address := (alloc (σ := Unit) (α := Unit) () world).val.ref
+  (read (α := α) ⟨address, h⟩ world).val
+
 /-- The two hidden representatives are selected within the proposition `Nonempty`. -/
 private theorem fromRead (read : ∀ {α}, ST.Ref Unit α → ST Unit α) : Selection := by
   obtain ⟨address⟩ := ST.RefPointed.property

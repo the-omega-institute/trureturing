@@ -1,0 +1,70 @@
+module
+import Lean.Replay
+meta import OmegaChecks.InitPort.Translation
+meta import OmegaChecks.InitInventory.ReferenceSelection
+import OmegaChecks.InitPort.Translation
+import all OmegaChecks.InitInventory.ReferenceSelection
+
+open Lean InitKernelPort OmegaChecks.InitBoundaries
+
+/-- Reuse each official read specialization but return a selector using the actual strict allocation. -/
+public def main (args : List String) : IO Unit := do
+  let lib :: evidence :: output :: owners := args | throw <| IO.userError "expected strict library, strict proof module, output, and owners"
+  let official ← importModules #[{module := `OmegaChecks.InitInventory.ReferenceSelection, importAll := true}] {} (level := .private)
+  let owners := owners.toArray.map String.toName
+  searchPathRef.set [evidence, lib]
+  let env ← importModules (#[{module := `StrictReferenceChoice : Import}] ++ (owners.map fun n => {module := n})) {}
+    (level := .private)
+  let mut kernelEnv := env.toKernelEnv
+  let target := mkConst `OmegaStrictReference.Choice
+  let some choice := official.find? ``Classical.choice | throw <| IO.userError "missing pinned choice axiom"
+  unless choice.isAxiom && choice.levelParams.length == 1 &&
+      Kernel.isDefEqGuarded env {} target (translate portName (choice.type.instantiateLevelParams choice.levelParams [.succ .zero])) do
+    throw <| IO.userError "incorrect universe or type for strict small selection"
+  let some common := official.find? ``ReferenceSelection.choiceUsing | throw <| IO.userError "missing abstract constructor proof"
+  let some generic := common.value? | throw <| IO.userError "missing constructor proof body"
+  let actual := mkApp2 (translate portName generic) (mkConst `Omega.Void.mk) (mkConst `Omega.ST.Prim.mkRef)
+  unless Kernel.isDefEqGuarded env {} actual (mkConst `OmegaStrictReference.selector) do
+    throw <| IO.userError "the strict selector differs from the construction for arbitrary official constructors"
+  unless [`Omega.Void.mk, `Omega.ST.Prim.mkRef].all (fun n => env.getModuleIdxFor? n == env.getModuleIdx? `OmegaInit.System.ST) do
+    throw <| IO.userError "strict constructors must belong to OmegaInit.System.ST"
+  let mut checked : Array (String × String × String) := #[]
+  for (owner, name, witness) in ReferenceSelection.witnesses do
+    unless owners.contains (owner.replacePrefix `Init `OmegaInit) do continue
+    let some ci := official.find? name | throw <| IO.userError s!"missing official {name}"
+    let some proof := official.find? witness | throw <| IO.userError s!"missing read specialization {witness}"
+    let some (.lam arg input (.app head read) bi) := proof.value? (allowOpaque := true)
+      | throw <| IO.userError s!"unexpected read specialization at {witness}"
+    unless head.constName?.map privateToUserName == some `OmegaChecks.InitBoundaries.ReferenceSelection.fromRead &&
+        official.getModuleIdxFor? name == official.getModuleIdx? owner &&
+        ci.levelParams.isEmpty && Kernel.isDefEqGuarded official {} input ci.type do
+      throw <| IO.userError s!"incorrect official argument of {witness}"
+    let type := translate portName ci.type
+    let argument := translate portName read
+    if (type.getUsedConstants ++ argument.getUsedConstants).any (!env.contains ·) then continue
+    let n := `OmegaStrictReference ++ name
+    let decl := Declaration.defnDecl {
+      name := n
+      levelParams := []
+      type := .forallE arg type target bi
+      value := .lam arg type (mkApp (mkConst `OmegaStrictReference.selector) argument) bi
+      safety := .safe
+      hints := .opaque }
+    let .ok next := kernelEnv.addDeclCore 0 1000 decl none | throw <| IO.userError s!"invalid strict selection from {name}"
+    kernelEnv := next
+    checked := checked.push (owner.toString, name.toString, n.toString)
+  -- Fresh replay of all exact source-type reductions and the strict helpers' transitive dependencies.
+  let mut closure : Std.HashMap Name ConstantInfo := {}
+  let mut pending := checked.toList.map (fun (_, _, n) => (kernelEnv.find? n.toName).get!)
+  for ci in pending do closure := closure.insert ci.name ci
+  while let ci :: rest := pending do
+    pending := rest
+    if ci.isAxiom || ci.isUnsafe || ci.isPartial then throw <| IO.userError s!"inadmissible strict dependency {ci.name}"
+    for n in ci.getUsedConstantsAsSet.toList do
+      unless closure.contains n do
+        let some dep := kernelEnv.find? n | throw <| IO.userError s!"missing {n}"
+        closure := closure.insert n dep
+        pending := dep :: pending
+  let _ ← (← mkEmptyEnvironment).toKernelEnv.replay closure
+  IO.FS.writeFile output (toJson (checked.map fun (owner, name, proof) => #[owner, name, proof])).compress
+  IO.println s!"Replayed {checked.size} strict reference interfaces implying explicit selection on Type with zero axioms."
