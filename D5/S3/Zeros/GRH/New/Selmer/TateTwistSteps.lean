@@ -32,7 +32,10 @@ lemma add_conjGal_mem_evenClasses {e S ν c} (he : e ≠ 0) (h :
   c ∈ selmerModule (tateTwist ℓ E O e) (placesDividing E ℓ ∪ .conjClosure S) ∅ _ ⊓ .pi
   (shaLocalSet ℓ E e) ⊥) : c + c ∘ conjGal ∈ evenClasses O S ν e := by
   simp_all [evenClasses, mem_selmerModule_iff, add_add_add_comm _ (_ • _), shaLocalSet, obeying]
-  exact h.elim fun ⟨_, u, l⟩ h ↦ ⟨⟨fun _ ⟨_, _, _, b, c⟩ ↦ u _ ⟨_, by aesop, _, b.conjPlace_star,
+  exact h.elim fun localCocycle h ↦
+    have u := localCocycle.2.1
+    have l := localCocycle.2.2
+    ⟨⟨fun _ ⟨_, _, _, b, c⟩ ↦ u _ ⟨_, by aesop, _, b.conjPlace_star,
     c.conjPlace_conjGal⟩, l.add (l.comp_continuous (by fun_prop))⟩, by simp [add_comm], by
     intros; simp [*, h _ ‹_›, h _ _ _ (decompGroup.map cmConj_conjGal_smul ‹_›), ↓val_comap_lt_one]⟩
 
