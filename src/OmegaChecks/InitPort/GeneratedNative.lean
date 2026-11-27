@@ -39,7 +39,9 @@ private def formatCode? (source : Environment) (ci : ConstantInfo) : Option Defi
   let userName := (privateToUserName? sourceName).getD sourceName
   guard (([`Std.Format.be, `Std.Format.spaceUptoLine'].contains userName &&
     owner == source.getModuleIdx? `Init.Data.Format.Basic) ||
-    (sourceName == `Lean.Syntax.formatStxAux && owner == source.getModuleIdx? `Init.Data.Format.Syntax))
+    (sourceName == `Lean.Syntax.formatStxAux && owner == source.getModuleIdx? `Init.Data.Format.Syntax) ||
+    ([`Lean.Syntax.instRepr.repr, `Lean.Name.needsNoEscapeAsciiRest].contains userName &&
+      owner == source.getModuleIdx? `Init.Meta.Defs))
   let some (.opaqueInfo src) := source.find? sourceName | none
   let recName := Compiler.mkUnsafeRecName src.name
   let some (.defnInfo d) := source.find? recName | none
