@@ -126,7 +126,7 @@ def check_linear_marks(stage, library, inputs, kind):
 def compile_generated(stage, product, graph, seed_ir, owners=None, *, original_seed=None, before_owner=None,
                       check_sharing=None, check_macro_reader=False,
                       check_strings=True, check_string_marks=False, check_byte_marks=False, check_literals=True, check_mixed=True, check_rat=True, check_bootstrap=True,
-                      check_list_search=True, check_decoding=True, check_names=True, check_toolchain=True, check_thunks=False, check_persistent=False):
+                      check_list_search=True, check_decoding=True, check_names=True, check_toolchain=True, check_thunks=False, check_persistent=False, check_exclusive=False):
     """Compile generated owners in import order and preserve the native symbols of existing owners."""
     requested = set(graph if owners is None else owners)
     selected = [owner for owner in TopologicalSorter(graph).static_order()
@@ -286,21 +286,26 @@ def compile_generated(stage, product, graph, seed_ir, owners=None, *, original_s
             run("leanc", client, HERE / "consumers" / "thunk_consumer.c", *dependency_objects(dependencies), "-o", app)
             run(app, timeout=30)
 
-    if check_persistent and "OmegaInit.System.IO" in selected:
-        required = reachable(["OmegaInit.System.IO"])
+    observations = [(check_persistent, "OmegaInit.System.IO", "Persistent", "Omega.Runtime.markPersistent"),
+                    (check_exclusive, "OmegaInit.Util", "Exclusive", "Omega.isExclusiveUnsafe")]
+    for enabled, owner, client_name, declaration in observations:
+        if not enabled or owner not in selected:
+            continue
+        required = reachable([owner])
         if required.issubset(selected) and all(seed_files[d].is_file() for d in required & seed_owners):
-            client = stage / "persistent-consumer.c"
-            consumer = STRICT_SOURCES / "PersistentConsumer.lean"
+            stem = client_name.lower()
+            client = stage / f"{stem}-consumer.c"
+            consumer = STRICT_SOURCES / f"{client_name}Consumer.lean"
             env = {**os.environ, "LEAN_PATH": str(library)}
             run("lean", "-R", STRICT_SOURCES, "-c", client, consumer, env=env)
-            app = stage / "check-persistent"
-            run("leanc", client, HERE / "consumers/persistent_consumer.c", *dependency_objects(required), "-o", app)
+            app = stage / f"check-{stem}"
+            run("leanc", client, HERE / f"consumers/{stem}_consumer.c", *dependency_objects(required), "-o", app)
             run(app)
             safe = consumer.read_text().replace("public unsafe def", "public def")
             result = subprocess.run(["lean", "--stdin"], input=safe, text=True, env=env, capture_output=True)
-            expected = "uses unsafe declaration 'Omega.Runtime.markPersistent'"
+            expected = f"uses unsafe declaration '{declaration}'"
             if result.returncode == 0 or expected not in result.stdout + result.stderr:
-                raise ValueError("safe client did not reject the unsafe persistent marker")
+                raise ValueError(f"safe client did not reject {declaration}")
 
     if (check_string_marks or check_byte_marks) and "OmegaInit.Data.String.Defs" in selected:
         required = reachable(["OmegaInit.Data.String.Defs"])

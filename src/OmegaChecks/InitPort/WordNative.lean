@@ -3,6 +3,7 @@ module
 public import OmegaChecks.InitPort.NativeState
 public import OmegaChecks.InitPort.WordNative.Operations
 import all OmegaChecks.InitPort.WordNative.Operations
+import OmegaChecks.InitPort.UnsafeRuntime
 import OmegaChecks.InitPort.IONative
 import OmegaChecks.InitPort.SeparatorNative
 import OmegaChecks.InitPort.MacroNative
@@ -89,6 +90,11 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
       throw <| IO.userError s!"unexpected primitive thunk interface {n}"
     for env in [source, strict] do verify env n args out entry
     return ""
+  if official == `isExclusiveUnsafe then
+    unless UnsafeRuntime.exclusiveABI source false && UnsafeRuntime.exclusiveABI strict true do
+      throw <| IO.userError "unexpected borrowed exclusivity observation ABI"
+    IndexedNative.checkDataTypes source strict [`Bool]
+    return s!"\nLEAN_EXPORT uint8_t {symbol n}(b_lean_obj_arg value) \{ return lean_is_exclusive_obj(value); }\n"
   if official == `ByteArray.markLinear || official == `ByteArray.propagateMark then
     checkStrictBytes strict
     let unary := official == `ByteArray.markLinear

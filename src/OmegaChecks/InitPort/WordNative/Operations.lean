@@ -219,7 +219,7 @@ public def supported (source : Environment) (owner name : Name) (boxedFloatArray
     (name.getPrefix == `Bool && widths.contains method)
   (owner == `OmegaInit.Core && (thunkExtern name).isSome) ||
     (owner == `OmegaInit.Data.FloatArray.Basic && boxedFloatArray && FloatArrayNative.operations.contains name) ||
-    (owner == `OmegaInit.Util && debugPrimitive name && isExtern source name) ||
+    (owner == `OmegaInit.Util && (debugPrimitive name || name == `isExclusiveUnsafe) && isExtern source name) ||
     (owner == `OmegaInit.System.Uri && uriFunction name) ||
     (owner == `OmegaInit.Data.ToString.Name && renderName name) ||
     (owner == `OmegaInit.Data.String.Substring && rawStringFunction name) ||

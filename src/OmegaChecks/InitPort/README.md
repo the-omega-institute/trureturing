@@ -46,7 +46,7 @@ example (a : α) (b : β) : Omega.Eq (Prod.fst (Prod.mk a b)) a := Omega.rfl
 
 `ptrAddrUnsafe`、`ptrEq` 和 `ptrEqList` 能区分内容相等的两个列表。对于分别分配、唯一自然数字段相等的两个 `NonScalar` 对象，`ShareCommon.Object.ptrEq` 与 `ShareCommon.Object.ptrHash` 也能给出不同结果。运行 `lake env lean --run src/OmegaChecks/InitPort/PointerObservations.lean` 可在钉版 Lean 运行时复现。对原类型的任意纯函数，Lean 的等式替换要求这两组输入得到相同结果。对具有相同大自然数载荷或只含标量的单层列表，`ShareCommon.Object.eq` 和 `hash` 的读数一致。外层列表的载荷含子列表地址，两份等值但独立分配的子列表可使比较和哈希结果不同。若还要求纯装箱函数保留这组原生读数，等式替换会导出矛盾。每次盘点都在当前工具链执行观察。嵌套列表通过 `unsafeCast` 装箱的读数记入 `unsafePackedObservation`。原类型的纯装箱前提尚待建立，这两个接口仍列为未解决。只有实际观测到不同返回值且源码中有针对该原类型的内核矛盾证明时，缺口记录才写入 `runtimeConflictWitness`。[内核证明](../InitInventory/PointerObservations.lean) · [运行时样例](PointerObservations.lean)
 
-对 `isExclusiveUnsafe`，盘点器编译并运行原生观测程序。它分别读取运行时创建的单元素数组与内容相同的常量数组，检查元素为 0 和 1 时的两组输入。两组中都观测到前者独占、后者共享时，才登记与纯函数等式替换的冲突。可运行 `lake exe omegaPointerObservations --exclusivity` 复核。[运行时观测和内核证明](../InitInventory/PointerObservations.lean)
+严格库的 `Omega.isExclusiveUnsafe` 保留官方的 `unsafe opaque` 声明、内核默认值和借用参数。普通 Lean 声明调用它会被内核拒绝。原生入口按运行时引用计数返回布尔值。盘点分别核对两端声明和原生签名，并保留要求纯函数区分等值输入时得到的条件反证。盘点器编译并运行原生观测程序。它分别读取运行时创建的单元素数组与内容相同的常量数组，检查元素为 0 和 1 时的两组输入。两组中都观测到前者独占、后者共享时，才登记与纯函数等式替换的冲突。可运行 `lake exe omegaPointerObservations --exclusivity` 复核。[运行时观测和内核证明](../InitInventory/PointerObservations.lean)
 
 对 `unsafeBaseIO`、`unsafeEIO` 和 `unsafeIO`，盘点器各执行两次同一个读取引用的动作。两次之间将引用值加一。原类型的纯函数对同一个动作只能返回同一个值。盘点器实际观测到不同的返回值后，将对应证明写入缺口表。[读数与内核证明](../InitInventory/EffectObservations.lean)
 
