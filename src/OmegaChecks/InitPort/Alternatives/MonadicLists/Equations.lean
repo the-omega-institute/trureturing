@@ -25,8 +25,8 @@ private theorem nextFuel (h : i < n) :
 private theorem endFuel (h : ¬i < n) : WellFounded.Nat.eager (n - i + 1) = Nat.succ 0 := by
   rw [WellFounded.Nat.eager_eq, Nat.sub_eq_zero_of_le (Nat.le_of_not_gt h)]
 
-public theorem Vector.mapM.go._unary.eq_def :
-    private_decl% type_of% @Vector.mapM.go._unary.eq_def := by
+public theorem Vector.mapM.go._unary.eq_def.{u,v,w} :
+    type_of% (private_decl% @Vector.mapM.go._unary.eq_def.{u,v,w}) := by
   intro m α β n _ f xs p
   obtain ⟨i, hi, acc⟩ := p
   let measure (p : (k : Nat) ×' (_ : k ≤ n) ×' Vector β k) : Nat :=
@@ -45,8 +45,8 @@ public theorem Vector.mapM.go._unary.eq_def :
     dsimp only [WellFounded.Nat.fix.go]
     rw [dite_eq_right h]
 
-public theorem Vector.flatMapM.go._unary.eq_def :
-    private_decl% type_of% @Vector.flatMapM.go._unary.eq_def := by
+public theorem Vector.flatMapM.go._unary.eq_def.{u,v,w} :
+    type_of% (private_decl% @Vector.flatMapM.go._unary.eq_def.{u,v,w}) := by
   intro m α n β k _ xs f p
   obtain ⟨i, hi, acc⟩ := p
   let measure (p : (j : Nat) ×' (_ : j ≤ n) ×' Vector β (j * k)) : Nat :=
@@ -65,8 +65,8 @@ public theorem Vector.flatMapM.go._unary.eq_def :
     dsimp only [WellFounded.Nat.fix.go]
     rw [dite_eq_right h]
 
-public theorem Vector.ofFnM.go._unary.eq_def :
-    private_decl% type_of% @Vector.ofFnM.go._unary.eq_def := by
+public theorem Vector.ofFnM.go._unary.eq_def.{u,v} :
+    type_of% (private_decl% @Vector.ofFnM.go._unary.eq_def.{u,v}) := by
   intro m α n _ f p
   obtain ⟨i, hi, acc, hsize⟩ := p
   let measure (p : (k : Nat) ×' (_ : k ≤ n) ×' (acc : Array α) ×' acc.size = k) : Nat :=
@@ -105,8 +105,8 @@ public theorem Array.mapM.map._unary.eq_def :
     dsimp only [WellFounded.Nat.fix.go]
     rw [dite_eq_right h]
 
-public theorem Array.mapM'.go._unary.eq_def :
-    private_decl% type_of% @Array.mapM'.go._unary.eq_def := by
+public theorem Array.mapM'.go._unary.eq_def.{u,v,w} :
+    type_of% (private_decl% @Array.mapM'.go._unary.eq_def.{u,v,w}) := by
   intro m α β _ f xs p
   obtain ⟨i, acc, hle⟩ := p
   let measure (p : (j : Nat) ×' (_ : {ys : Array β // ys.size = j}) ×' j ≤ xs.size) : Nat :=
