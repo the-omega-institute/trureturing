@@ -178,12 +178,6 @@ private theorem openFinite {α : Type u} [UpwardEnumerable α] [LawfulUpwardEnum
       exact ⟨n + 1, by rw [reach]; exact fun lt => UpwardEnumerable.lt_irrefl (UpwardEnumerable.lt_iff.mp lt)⟩
     · exact ⟨0, by rw [succMany?_zero]; exact inside⟩
 
-@[instance_reducible] public noncomputable def Std.Rxc.Iterator.instIteratorLoop
-    [UpwardEnumerable α] [LE α] [DecidableLE α] [LawfulUpwardEnumerable α] [LawfulUpwardEnumerableLE α]
-    {n : Type u → Type w} [Monad n] : IteratorLoop (Rxc.Iterator α) Id n :=
-  letI := closedFinite (α := α)
-  finiteRxcLoop
-
 public noncomputable def Std.Rxc.Iterator.instIteratorLoop.loop :
     type_of% @_root_.Std.Rxc.Iterator.instIteratorLoop.loop := by
   intro α enum order dec law compat n mon

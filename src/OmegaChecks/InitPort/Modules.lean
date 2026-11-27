@@ -70,6 +70,7 @@ private def sealedImplementation (n : Name) : Bool :=
     `String.Slice.ByteIterator.instIteratorLoopUInt8OfMonad,
     `String.Slice.Pattern.ForwardSliceSearcher.instIteratorLoopIdSearchStep,
     `String.Slice.PosIterator.instIteratorLoopSubtypePosNeEndPosOfMonad,
+    `Std.Rxc.Iterator.instIteratorLoop.loop, `Std.Rxo.Iterator.instIteratorLoop,
     `String.Slice.RevByteIterator.instIteratorLoopUInt8OfMonad,
     `String.Slice.RevByteIterator.instForInCharOfMonad,
     `String.Slice.RevPosIterator.instIteratorLoopSubtypePosNeEndPosOfMonad].contains n
