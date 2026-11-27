@@ -98,4 +98,22 @@ public theorem Std.IterM.drain_eq_foldM : type_of% @_root_.Std.IterM.drain_eq_fo
   exact congrArg (fun action => ForIn.forIn (m := m) it PUnit.unit (fun _ _ => action))
     (map_pure (f := m) ForInStep.yield PUnit.unit).symm
 
+public theorem Std.Iter.fold_map : type_of% @_root_.Std.Iter.fold_map := by
+  intros
+  rw [← _root_.Std.Iter.foldl_toList, ← _root_.Std.Iter.foldl_toList, _root_.Std.Iter.toList_map, List.foldl_map]
+public theorem Std.Iter.fold_filter : type_of% @_root_.Std.Iter.fold_filter := by
+  intros
+  rw [← _root_.Std.Iter.foldl_toList, ← _root_.Std.Iter.foldl_toList, _root_.Std.Iter.toList_filter, List.foldl_filter]
+public theorem Std.Iter.fold_filterMap : type_of% @_root_.Std.Iter.fold_filterMap := by
+  intro α β γ δ iter finite loop laws f g init it
+  rw [← _root_.Std.Iter.foldl_toList, ← _root_.Std.Iter.foldl_toList, _root_.Std.Iter.toList_filterMap, List.foldl_filterMap]
+  induction it.toList generalizing init with
+  | nil => rfl
+  | cons x xs ih =>
+    dsimp only [List.foldl]
+    cases f x <;> exact ih
+public theorem Std.Iter.length_map : type_of% @_root_.Std.Iter.length_map := by
+  intros
+  rw [← _root_.Std.Iter.length_toList_eq_length, ← _root_.Std.Iter.length_toList_eq_length, _root_.Std.Iter.toList_map, List.length_map]
+
 end OmegaChecks.InitPort.Alternatives
