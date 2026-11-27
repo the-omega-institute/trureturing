@@ -132,6 +132,7 @@ private def replayWitnesses (env : Environment) : IO Unit := do
     WeakRingOrder.witnesses.map (fun row => row.2.2) ++
     [``MonadicTraversal.fromListFoldl, ``MonadicTraversal.fromListFoldr, ``ArrayLoopCongruence.listForInCongr] ++
     [``funextFromFunextIff, ``PostconditionIdentity.rightIdentity, ``PostconditionIdentity.leftIdentity, ``PostconditionIdentity.ofMonad] ++
+    [``PostconditionIdentity.pureImage, ``PostconditionIdentity.imageBind, ``PostconditionIdentity.associatedPredicates] ++
     [``ChoiceOperands.fromChoice, ``ExistentialConjunction.ofRule] ++
     [``TransformerLaws.MapAfterBind.funextFromMapBind, ``TransformerLaws.MapAfterBind.funextFromScanlCons] ++
     [``TransformerLaws.FiniteFold.funextOfMoveUnit, ``TransformerLaws.FiniteFold.funextOfRepeatUnit] ++

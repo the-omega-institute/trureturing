@@ -96,6 +96,15 @@ private def logicalConsequence? (owner name : Name) : Option (Name × Name) := d
     | ``Std.Iterators.PostconditionT.pure_bind =>
       return (``OmegaChecks.InitBoundaries.PostconditionIdentity.LeftIdentity,
         ``OmegaChecks.InitBoundaries.PostconditionIdentity.leftIdentity)
+    | ``Std.Iterators.PostconditionT.map_pure =>
+      return (``OmegaChecks.InitBoundaries.PostconditionIdentity.PureImage,
+        ``OmegaChecks.InitBoundaries.PostconditionIdentity.pureImage)
+    | ``Std.Iterators.PostconditionT.map_eq_pure_bind =>
+      return (``OmegaChecks.InitBoundaries.PostconditionIdentity.ImageBind,
+        ``OmegaChecks.InitBoundaries.PostconditionIdentity.imageBind)
+    | ``Std.Iterators.PostconditionT.bind_assoc =>
+      return (``OmegaChecks.InitBoundaries.PostconditionIdentity.AssociatedPredicates,
+        ``OmegaChecks.InitBoundaries.PostconditionIdentity.associatedPredicates)
     | ``Std.Iterators.instLawfulMonadPostconditionT =>
       return (``OmegaChecks.InitBoundaries.PostconditionIdentity.LeftIdentity,
         ``OmegaChecks.InitBoundaries.PostconditionIdentity.ofMonad)
