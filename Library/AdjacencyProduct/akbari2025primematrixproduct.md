@@ -14,7 +14,7 @@ triage: anchor
 
 # Adjacency-matrix factorization of windmills and complete graphs
 
-## Source locators
+## Verified locator
 
 DOI: 10.48550/arXiv.2512.24864
 
