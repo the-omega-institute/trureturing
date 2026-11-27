@@ -15,7 +15,11 @@ Shell maps of integer quaternions. For an integer `s` and quaternions `p`, `a` t
 sends `v` to `s v + p v a`. When `p`, `q`, `r` and `a` are pure, the compositions
 `P_p P_q P_p` and `P_p P_q P_r P_p` are given by exact identities whose defect terms are
 multiples of `s² - N(p) N(a)`. Every product `p v a` with pure `p` and `a` is handled through
-the pair action `v ↦ c v + (d v) a`, whose composition law only uses `a a = -N(a)`.
+the pair action `v ↦ c v + (d v) a`, whose composition law only uses `a a = -N(a)`. The
+compression identity holds for every `v` exactly on the shell or when `s = 0` and `q = 0`.
+For the maps `u_c v = (c v) a` with pure `a`, the three cyclic triple compositions minus the
+three reverse ones equal `-N(a) (A x) a`, where `A` is the alternating sum of the six ordered
+products of `p`, `q`, `r`; for pure `p`, `q`, `r` this is `6 N(a) (p · (q r)) (x a)`.
 -/
 
 noncomputable section
@@ -614,6 +618,176 @@ theorem shell_compress_iff (s : Int) {p q a : Quaternion} (hp : p.IsPure) (hq : 
         (shell_compress s hp hq ha v).trans
           ((congrArg (fun w => (scale (t.add t) (shell s p a v)).add (scale δ w)) vanish).trans
             (add_scale_zero_right _ δ))))
+
+private def altProd (P Q R : Quaternion) : Quaternion :=
+  ((((P.mul Q).mul R).add ((Q.mul R).mul P)).add ((R.mul P).mul Q)).sub
+    ((((P.mul R).mul Q).add ((R.mul Q).mul P)).add ((Q.mul P).mul R))
+
+private def caltProd (P Q R : Coordinates) : Coordinates :=
+  csub (cadd (cadd ((P.mul Q).mul R) ((Q.mul R).mul P)) ((R.mul P).mul Q))
+    (cadd (cadd ((P.mul R).mul Q) ((R.mul Q).mul P)) ((Q.mul P).mul R))
+
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
+private theorem alt_prod_mk (x1 x2 x3 y1 y2 y3 z1 z2 z3 : Int) :
+    let p := Quaternion.mk Int.zero x1 x2 x3
+    let q := Quaternion.mk Int.zero y1 y2 y3
+    let r := Quaternion.mk Int.zero z1 z2 z3
+    let d := p.dot (q.mul r)
+    let d3 := (d.add d).add d
+    Eq (altProd p q r) (scalar (d3.add d3).neg) :=
+  let values := triple x1 x2 x3 (triple y1 y2 y3 (triple z1 z2 z3 .nil))
+  let P := pure Nat.zero
+  let Q := pure n3
+  let R := pure (n3.add n3)
+  let D := P.dot (Q.mul R)
+  let D3 := (D.add D).add D
+  let lhs := caltProd P Q R
+  let rhs := Coordinates.scalar (D3.add D3).neg
+  ext (lhs.w.sound rhs.w values rfl) (lhs.x.sound rhs.x values rfl)
+    (lhs.y.sound rhs.y values rfl) (lhs.z.sound rhs.z values rfl)
+
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
+private theorem sum_mul_mk (y1 y2 y3 y4 y5 y6 x : Quaternion) :
+    Eq ((((y1.mul x).add (y2.mul x)).add (y3.mul x)).sub
+        (((y4.mul x).add (y5.mul x)).add (y6.mul x)))
+      ((((y1.add y2).add y3).sub ((y4.add y5).add y6)).mul x) :=
+  let values := quad y1 (quad y2 (quad y3 (quad y4 (quad y5 (quad y6 (quad x .nil))))))
+  let n24 := n12.add n12
+  let Y1 := Coordinates.variables Nat.zero
+  let Y2 := Coordinates.variables n4
+  let Y3 := Coordinates.variables n8
+  let Y4 := Coordinates.variables n12
+  let Y5 := Coordinates.variables (n12.add n4)
+  let Y6 := Coordinates.variables (n12.add n8)
+  let X := Coordinates.variables n24
+  let lhs := csub (cadd (cadd (Y1.mul X) (Y2.mul X)) (Y3.mul X))
+    (cadd (cadd (Y4.mul X) (Y5.mul X)) (Y6.mul X))
+  let rhs := (csub (cadd (cadd Y1 Y2) Y3) (cadd (cadd Y4 Y5) Y6)).mul X
+  ext (lhs.w.sound rhs.w values rfl) (lhs.x.sound rhs.x values rfl)
+    (lhs.y.sound rhs.y values rfl) (lhs.z.sound rhs.z values rfl)
+
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
+private theorem alt_glue_mk (α : Int) (y1 y2 y3 y4 y5 y6 a : Quaternion) :
+    let Z := fun y : Quaternion => scale α.neg (y.mul a)
+    Eq ((((Z y1).add (Z y2)).add (Z y3)).sub (((Z y4).add (Z y5)).add (Z y6)))
+      (scale α.neg ((((y1.add y2).add y3).sub ((y4.add y5).add y6)).mul a)) :=
+  let values := Values.cons α (quad y1 (quad y2 (quad y3 (quad y4 (quad y5 (quad y6
+    (quad a .nil)))))))
+  let A' := Expr.var Nat.zero
+  let n1 := Nat.zero.succ
+  let n24 := n12.add n12
+  let Y1 := Coordinates.variables n1
+  let Y2 := Coordinates.variables (n4.add n1)
+  let Y3 := Coordinates.variables (n8.add n1)
+  let Y4 := Coordinates.variables (n12.add n1)
+  let Y5 := Coordinates.variables ((n12.add n4).add n1)
+  let Y6 := Coordinates.variables ((n12.add n8).add n1)
+  let Av := Coordinates.variables (n24.add n1)
+  let Z := fun Y : Coordinates => (Y.mul Av).scale A'.neg
+  let lhs := csub (cadd (cadd (Z Y1) (Z Y2)) (Z Y3)) (cadd (cadd (Z Y4) (Z Y5)) (Z Y6))
+  let rhs := ((csub (cadd (cadd Y1 Y2) Y3) (cadd (cadd Y4 Y5) Y6)).mul Av).scale A'.neg
+  ext (lhs.w.sound rhs.w values rfl) (lhs.x.sound rhs.x values rfl)
+    (lhs.y.sound rhs.y values rfl) (lhs.z.sound rhs.z values rfl)
+
+set_option allowUnsafeReducibility true in
+attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat in
+private theorem alt_scale_mk (α d : Int) (x a : Quaternion) :
+    let d3 := (d.add d).add d
+    let l := α.mul d
+    let t := (l.add l).add l
+    Eq (scale α.neg ((scale (d3.add d3).neg x).mul a)) (scale (t.add t) (x.mul a)) :=
+  let values := Values.cons α (Values.cons d (quad x (quad a .nil)))
+  let A' := Expr.var Nat.zero
+  let D := Expr.var Nat.zero.succ
+  let X := Coordinates.variables Nat.zero.succ.succ
+  let Av := Coordinates.variables (n4.add Nat.zero.succ.succ)
+  let D3 := (D.add D).add D
+  let L := A'.mul D
+  let T := (L.add L).add L
+  let lhs := ((X.scale (D3.add D3).neg).mul Av).scale A'.neg
+  let rhs := (X.mul Av).scale (T.add T)
+  ext (lhs.w.sound rhs.w values rfl) (lhs.x.sound rhs.x values rfl)
+    (lhs.y.sound rhs.y values rfl) (lhs.z.sound rhs.z values rfl)
+
+private theorem triple_of_isPure {a : Quaternion} (ha : a.IsPure) (p q r x : Quaternion) :
+    Eq ((p.mul ((q.mul ((r.mul x).mul a)).mul a)).mul a)
+      (scale (a.dot a).neg ((p.mul (q.mul (r.mul x))).mul a)) :=
+  let W := r.mul x
+  have inner : Eq ((q.mul (W.mul a)).mul a) (scale (a.dot a).neg (q.mul W)) :=
+    (congrArg (fun t : Quaternion => t.mul a) (mul_assoc q W a).symm).trans
+      (mul_mul_of_isPure ha (q.mul W))
+  (congrArg (fun t : Quaternion => (p.mul t).mul a) inner).trans
+    ((congrArg (fun t : Quaternion => t.mul a) (scale_mul_right (a.dot a).neg p (q.mul W))).trans
+      (scale_mul_left (a.dot a).neg (p.mul (q.mul W)) a))
+
+private theorem mul_mul_mul_assoc (A B C x : Quaternion) :
+    Eq (A.mul (B.mul (C.mul x))) (((A.mul B).mul C).mul x) :=
+  (congrArg A.mul (mul_assoc B C x).symm).trans
+    ((mul_assoc A (B.mul C) x).symm.trans
+      (congrArg (fun t : Quaternion => t.mul x) (mul_assoc A B C).symm))
+
+/-- Oriented axis identity for arbitrary `p`, `q`, `r`. For pure `a`, any quaternions `p`, `q`,
+`r`, `x` and the maps `u_c v = (c v) a`, the three cyclic compositions minus the three reverse
+ones equal `-N(a) (A x) a`, where `A` is the alternating sum of the six ordered products of
+`p`, `q`, `r`. -/
+theorem oriented_axis_general {a : Quaternion} (ha : a.IsPure) (p q r x : Quaternion) :
+    let u := fun c v : Quaternion => (c.mul v).mul a
+    let A := ((((p.mul q).mul r).add ((q.mul r).mul p)).add ((r.mul p).mul q)).sub
+      ((((p.mul r).mul q).add ((r.mul q).mul p)).add ((q.mul p).mul r))
+    Eq ((((u p (u q (u r x))).add (u q (u r (u p x)))).add (u r (u p (u q x)))).sub
+        (((u p (u r (u q x))).add (u r (u q (u p x)))).add (u q (u p (u r x)))))
+      (scale (a.dot a).neg ((A.mul x).mul a)) :=
+  let α := a.dot a
+  let Y := fun A B C : Quaternion => A.mul (B.mul (C.mul x))
+  let Z := fun A B C : Quaternion => (A.mul B).mul C
+  let T := fun A B C : Quaternion => triple_of_isPure ha A B C x
+  let M := fun A B C : Quaternion => mul_mul_mul_assoc A B C x
+  have assoc : Eq ((((Y p q r).add (Y q r p)).add (Y r p q)).sub
+      (((Y p r q).add (Y r q p)).add (Y q p r))) ((altProd p q r).mul x) :=
+    (Eq.map₂ sub (Eq.map₂ add (Eq.map₂ add (M p q r) (M q r p)) (M r p q))
+      (Eq.map₂ add (Eq.map₂ add (M p r q) (M r q p)) (M q p r))).trans
+      (sum_mul_mk (Z p q r) (Z q r p) (Z r p q) (Z p r q) (Z r q p) (Z q p r) x)
+  (Eq.map₂ sub (Eq.map₂ add (Eq.map₂ add (T p q r) (T q r p)) (T r p q))
+    (Eq.map₂ add (Eq.map₂ add (T p r q) (T r q p)) (T q p r))).trans
+    ((alt_glue_mk α (Y p q r) (Y q r p) (Y r p q) (Y p r q) (Y r q p) (Y q p r) a).trans
+      (congrArg (fun w : Quaternion => scale α.neg (w.mul a)) assoc))
+
+/-- Oriented axis identity. For pure `p`, `q`, `r`, `a`, any quaternion `x` and the maps
+`u_c v = (c v) a`, the three cyclic compositions minus the three reverse ones satisfy
+`u_p u_q u_r x + u_q u_r u_p x + u_r u_p u_q x - u_p u_r u_q x - u_r u_q u_p x - u_q u_p u_r x
+  = 6 N(a) [p, q, r] (x a)`,
+where `[p, q, r] = p · (q r)` is the triple product of the three pure quaternions. -/
+theorem oriented_axis {p q r a : Quaternion} (hp : p.IsPure) (hq : q.IsPure) (hr : r.IsPure)
+    (ha : a.IsPure) (x : Quaternion) :
+    let u := fun c v : Quaternion => (c.mul v).mul a
+    let l := (a.dot a).mul (p.dot (q.mul r))
+    let t := (l.add l).add l
+    Eq ((((u p (u q (u r x))).add (u q (u r (u p x)))).add (u r (u p (u q x)))).sub
+        (((u p (u r (u q x))).add (u r (u q (u p x)))).add (u q (u p (u r x)))))
+      (scale (t.add t) (x.mul a)) :=
+  let α := a.dot a
+  let d := p.dot (q.mul r)
+  let d3 := (d.add d).add d
+  let stmt := fun P Q R : Quaternion =>
+    let d := P.dot (Q.mul R)
+    let d3 := (d.add d).add d
+    Eq (altProd P Q R) (scalar (d3.add d3).neg)
+  have alt : stmt p q r :=
+    Eq.subst (motive := fun P => stmt P q r) (eq_mk_of_isPure hp).symm
+      (Eq.subst (motive := fun Q => stmt (Quaternion.mk Int.zero p.x p.y p.z) Q r)
+        (eq_mk_of_isPure hq).symm
+        (Eq.subst (motive := fun R => stmt (Quaternion.mk Int.zero p.x p.y p.z)
+            (Quaternion.mk Int.zero q.x q.y q.z) R)
+          (eq_mk_of_isPure hr).symm
+          (alt_prod_mk p.x p.y p.z q.x q.y q.z r.x r.y r.z)))
+  (oriented_axis_general ha p q r x).trans
+    ((congrArg (fun w : Quaternion => scale α.neg ((w.mul x).mul a))
+        alt).trans
+      ((congrArg (fun w : Quaternion => scale α.neg (w.mul a)) (scalar_mul (d3.add d3).neg x)).trans
+        (alt_scale_mk α d x a)))
 
 end Quaternion
 end Omega
