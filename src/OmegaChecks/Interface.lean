@@ -1,5 +1,4 @@
 import Lean
-import OmegaChecks.InitPort.LoopLaw
 import OmegaChecks.FieldMethods
 import OmegaChecks.InitPort.NativeQuot
 import OmegaChecks.InitPort.WordFold
@@ -163,8 +162,8 @@ private def checkEquation (env : Environment) (src dst : ConstantInfo) (body : E
 private def compare (reference : Environment) (rename : Name → Name) (src dst : ConstantInfo)
     (foundation : Option (Environment × Environment) := none) :
     IO (Array Name) := do
-  let guarded := foundation.isSome && OmegaChecks.InitPort.LoopLaw.familyMember dst.name
-  if guarded then OmegaChecks.InitPort.LoopLaw.checkCertificate reference
+  let liftTerm := fun (e : Expr) =>
+    translate rename (e.instantiateLevelParams src.levelParams (dst.levelParams.map Level.param))
   unless src.numLevelParams == dst.numLevelParams &&
       compatibleBinders reference {} 0 (liftTerm src.type) dst.type do
     throw <| IO.userError s!"public binder mismatch for {src.name}"
@@ -241,15 +240,10 @@ private def compare (reference : Environment) (rename : Name → Name) (src dst 
   | _, _ => throw <| IO.userError s!"unsupported or different declaration kind for {src.name}"
   return deps
 where
-  liftTerm (e : Expr) : Expr :=
-    let term := translate rename (e.instantiateLevelParams src.levelParams (dst.levelParams.map Level.param))
-    if foundation.isSome && OmegaChecks.InitPort.LoopLaw.familyMember dst.name then
-      OmegaChecks.InitPort.LoopLaw.originalCalls term
-    else term
   compareDefinitionBody : IO Unit := do
     let value := src.value! (allowOpaque := true)
     let raw := value.instantiateLevelParams src.levelParams (dst.levelParams.map Level.param)
-    let body := liftTerm value
+    let body := translate rename raw
     -- A copy of a checked official body already has its official type. Comparing
     -- it directly also avoids evaluating large closed computations on both sides.
     let original := match src, dst with

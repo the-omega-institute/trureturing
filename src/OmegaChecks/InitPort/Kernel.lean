@@ -4,7 +4,6 @@ import OmegaChecks.InitCompiler.Proofs
 import OmegaChecks.InitCompiler.Recursion
 import OmegaChecks.InitCompiler.FiniteCollectors
 import OmegaChecks.InitPort.Alternatives
-import OmegaChecks.InitPort.LoopLaw
 import OmegaChecks.InitPort.Arithmetic
 import OmegaChecks.InitPort.NativeQuot
 import OmegaChecks.InitPort.Address
@@ -99,7 +98,6 @@ structure State where
   proofsByType : Std.HashMap Expr (List Name) := {}
 
 structure Context where
-  loopLaw : Environment
   source : Environment
   base : Environment
   maxHeartbeats : Nat
@@ -318,8 +316,7 @@ def record (name : Name) (outcome : Outcome) : M Bool := do
   return true
 
 /-- Compare the entire generated kernel entry, including the iota rules of recursors. -/
-def expectGenerated (src loopLaw : Environment) (original : ConstantInfo) : IO (Option ConstantInfo) := do
-  let ci := OmegaChecks.InitPort.LoopLaw.declaration loopLaw original
+def expectGenerated (src : Environment) (ci : ConstantInfo) : IO (Option ConstantInfo) := do
   let newType ← OmegaChecks.InitCompiler.finiteCollectors src ci.type
   let ren := portName
   let val (v : ConstantVal) := {v with name := ren v.name, type := translate ren newType}
@@ -352,7 +349,7 @@ structure Family where
   externals : NameSet
   generated : Array Name
 
-def family (src loopLaw : Environment) (i : InductiveVal) : ExceptT String IO Family := do
+def family (src : Environment) (i : InductiveVal) : ExceptT String IO Family := do
   let rename := portName
   let mut types := []
   let mut deps : NameSet := {}
@@ -364,7 +361,7 @@ def family (src loopLaw : Environment) (i : InductiveVal) : ExceptT String IO Fa
     deps := deps ++ usedConstants v.type
     names := names.push n
     for k in v.ctors do
-      let some (.ctorInfo cv) := (src.find? k).map (OmegaChecks.InitPort.LoopLaw.declaration loopLaw) | throw "missing constructor"
+      let some (.ctorInfo cv) := src.find? k | throw "missing constructor"
       if cv.isUnsafe || invalidExpr cv.type then throw "inadmissible constructor"
       names := names.push k
       let ctorType ← liftM (m := IO) (OmegaChecks.InitCompiler.finiteCollectors src cv.type)
@@ -455,8 +452,7 @@ partial def visit (n : Name) : M Bool := do
   if (← get).visiting.contains n then return false
   let some owner := moduleOf c.source n | return ← record n (.blocked "unknown official module")
   if owner.getRoot != `Init then return ← record n (.blocked "outside Init")
-  let some original := c.source.find? n | return ← record n (.blocked "missing official constant")
-  let ci := OmegaChecks.InitPort.LoopLaw.declaration c.loopLaw original
+  let some ci := c.source.find? n | return ← record n (.blocked "missing official constant")
   let dest := portName n
   if let some i := c.base.find? dest then
     if i.isAxiom || i.isUnsafe || i.isPartial || (i matches .quotInfo _) ||
@@ -464,7 +460,7 @@ partial def visit (n : Name) : M Bool := do
       return ← record n (.blocked "unverified seed name or wrong seed owner")
     return ← record n .existing
   if let some generated := (← get).env.find? dest then
-    if agrees (← get).env (← expectGenerated c.source c.loopLaw ci) (some generated) then return ← record n .added
+    if agrees (← get).env (← expectGenerated c.source ci) (some generated) then return ← record n .added
     return ← record n (.blocked "target name collision")
   if n == Meta.mkSmartUnfoldingNameFor n.getPrefix then
     if c.base.contains (portName n.getPrefix) then
@@ -509,7 +505,7 @@ partial def visit (n : Name) : M Bool := do
     return ← record n .added
   if (ci.isUnsafe && !boundedBorrowedRead ci) || ci.isPartial then return ← record n (.blocked "unsafe/partial")
   if let .inductInfo i := ci then
-    let .ok f ← (family c.source c.loopLaw i).run | return ← record n (.blocked "malformed family")
+    let .ok f ← (family c.source i).run | return ← record n (.blocked "malformed family")
     if let some member := f.generated.find? (fun member => c.excluded.contains member) then
       return ← record n (.blocked "unavailable family member" (some member))
     modify fun s => {s with visiting := s.visiting.insert n}
@@ -522,7 +518,7 @@ partial def visit (n : Name) : M Bool := do
     | .ok env =>
       for orig in f.generated do
         let some spec := c.source.find? orig | return ← record n (.blocked "missing family result" (some orig))
-        if !agrees env (← expectGenerated c.source c.loopLaw spec) (env.find? (portName orig)) then
+        if !agrees env (← expectGenerated c.source spec) (env.find? (portName orig)) then
           return ← record n (.blocked "generated kernel entry mismatch" (some orig))
       modify fun s => {s with env}
       return ← record n .added
@@ -530,7 +526,7 @@ partial def visit (n : Name) : M Bool := do
     let parent := match ci with | .ctorInfo v => v.induct | .recInfo v => v.all.head! | _ => Name.anonymous
     if !(← visit parent) then return ← record n (.blocked "unavailable family" (some parent))
     if let some generated := (← get).env.find? dest then
-      if agrees (← get).env (← expectGenerated c.source c.loopLaw ci) (some generated) then return ← record n .added
+      if agrees (← get).env (← expectGenerated c.source ci) (some generated) then return ← record n .added
     return ← record n (.blocked "generated kernel entry mismatch" (some parent))
   if !(ci matches .thmInfo _ | .defnInfo _ | .opaqueInfo _) then
     return ← record n (.blocked "requires inductive family or primitive")
@@ -675,7 +671,7 @@ def run (strictPath artifacts : System.FilePath) (outPath : String) (exclude : S
   let recursionRule ← OmegaChecks.InitCompiler.Recursion.loadRule
   let alternatives ← OmegaChecks.InitPort.loadAlternatives
   let ruleModule := `OmegaChecks.InitCompiler.ProofRules
-  let ruleEnv ← importModules #[{module := ruleModule}, {module := `OmegaChecks.InitPort.LoopLaw}] {} (level := .private)
+  let ruleEnv ← importModules #[{module := ruleModule}] {} (level := .private)
   let mut proofRules := {}
   for name in #[`notLtDecidable, `notLtOrDecidable, `iteCongr, `diteCongr, `forallDomain, `decideCongr, `natBEq, `intBEq, `intBNe, `intBLt, `intBLe,
                 `polyBEq, `ringPowerBEq, `ringMonBEq, `ringPolyBEq] do
@@ -719,7 +715,7 @@ def run (strictPath artifacts : System.FilePath) (outPath : String) (exclude : S
   let excluded := exclusions.foldl (init := ({} : NameMap String)) fun acc (n, r) => acc.insert n.toName r
   let maxHeartbeats := (← IO.getEnv "OMEGA_PORT_HEARTBEATS").bind String.toNat? |>.getD 5000
   let literalProofs ← loadLiteralProofs strictPath
-  let ctx := {loopLaw := ruleEnv,source,base,publicNames,excluded,output,maxHeartbeats,literalProofs,alternatives,proofRules,recursionRule : Context}
+  let ctx := {source,base,publicNames,excluded,output,maxHeartbeats,literalProofs,alternatives,proofRules,recursionRule : Context}
   let action : M Unit := do
     for owner in source.header.moduleNames, data in source.header.moduleData do
       if owner.getRoot == `Init then
