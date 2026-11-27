@@ -203,7 +203,6 @@ def generate(stage, product, seed, roots, excluded, seed_ir):
     graph = dict(json.loads((product / "modules.json").read_text()))
     closure = list(TopologicalSorter(graph).static_order())
     run("lake", "env", "lean", "--run", HERE / "ExportAxioms.lean", artifact, *graph)
-    compile_generated(stage, product, graph, seed_ir)
     raw_task = stage / "raw-task.c"
     if "OmegaInit.Core" in graph:
         compile_tasks(stage, product, artifact, inventory, raw_task)
@@ -228,6 +227,7 @@ def generate(stage, product, seed, roots, excluded, seed_ir):
             "Init.System.Promise": {"IO.Promise.new", "IO.Promise.resolve", "IO.Promise.isResolved", "IO.Promise.result?", "IO.Promise.resultD"},
             "Init.Core": {"Task.pure", "Task.get", "Task.map", "Task.bind"},
         }, [raw_task])
+    compile_generated(stage, product, graph, seed_ir)
     with (product / "audit.txt").open("w") as log:
         audit = ROOT / ".lake/build/bin/omegaAudit"
         checked = subprocess.run(["lake", "env", audit, "--exact-roots", artifact, *graph, "--", *closure],
