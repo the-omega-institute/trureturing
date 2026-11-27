@@ -463,20 +463,22 @@ partial def visit (n : Name) : M Bool := do
   if let some reason := c.excluded.find? n then return ← record n (.blocked reason)
   if ci.isAxiom then return ← record n (.blocked "axiom")
   let allocator := OmegaChecks.InitPort.LogicalHandle.implementation? n
+  let dynamicOp := OmegaChecks.InitPort.DynamicValue.operation? n |>.filter (· != n)
   let atomicUpdate := n == OmegaChecks.InitPort.ReferenceModify.implementation
   let readsMethods := n == `Lean.Macro.getMethodsImp
-  if n == `Array.modifyMUnsafe || allocator.isSome || atomicUpdate || readsMethods then
+  if n == `Array.modifyMUnsafe || allocator.isSome || dynamicOp.isSome || atomicUpdate || readsMethods then
     let .defnInfo native := ci | return ← record n (.blocked "missing native implementation")
-    let name := if readsMethods then `Lean.Macro.getMethods else if atomicUpdate then OmegaChecks.InitPort.ReferenceModify.consumer else
+    let name := dynamicOp.getD <| if readsMethods then `Lean.Macro.getMethods else if atomicUpdate then OmegaChecks.InitPort.ReferenceModify.consumer else
       allocator.map (·.allocator) |>.getD `Array.modifyM
     let reference := mkConst name (native.levelParams.map Level.param)
+    if dynamicOp.isSome then OmegaChecks.InitPort.LogicalHandle.checkOpaqueImplementation `Init.Dynamic name c.source native reference
     if readsMethods then OmegaChecks.InitPort.LogicalHandle.checkOpaqueImplementation `Init.Prelude name c.source native reference
     if atomicUpdate then OmegaChecks.InitPort.ReferenceModify.checkImplementation c.source native reference
     if let some api := allocator then OmegaChecks.InitPort.LogicalHandle.checkImplementation api c.source native reference
     unless Compiler.getImplementedBy? c.source name == some n do
       return ← record n (.blocked "mismatched native implementation" (some name))
     unless ← visit name do return ← record n (.blocked "unavailable logical reference" (some name))
-    let safe := ConstantInfo.defnInfo {native with safety := .safe}
+    let safe := ConstantInfo.defnInfo {native with safety := if dynamicOp.isSome then .unsafe else .safe, value := reference}
     let .ok decl := translateDecl safe ci.type reference | return ← record n (.blocked "invalid logical reference")
     let .ok env ← checkWithRetry (← get).env (keepImplementationSafety n decl) c.maxHeartbeats
       | return ← record n (.blocked "kernel rejected logical reference")

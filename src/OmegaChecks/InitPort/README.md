@@ -32,6 +32,8 @@ example (a : α) (b : β) : Omega.Eq (Prod.fst (Prod.mk a b)) a := Omega.rfl
 
 当模块闭包包含 `Init.Core` 时，生成器为 `Omega.Task.spawn`、`map`、`bind` 及任务优先级提供 `native/task.o`。严格的自然数优先级按钉版调度器参数转换。同步与异步映射保留任务依赖。使用 `IO.getTaskState`、`hasFinished`、`wait`、`waitAny`、`waitAny'`、`cancel` 或 `checkCanceled` 的严格消费者可链接 `native/task_io.o`。该对象还提供 `BaseIO.asTask`、`mapTask`、`bindTask`、`chainTask` 与 `mapTasks`。原生调度器即使在最后一个用户句柄释放后也会执行已提交的效应。相同的五个调度操作也支持 `EIO` 和 `IO`，任务可返回成功值或原有的异常。
 
+`OmegaInit.Dynamic` 中的 `Dynamic.mk` 把类型名与值交给钉版运行时，`Dynamic.typeName` 取回名称，`Dynamic.get?` 在名称相等时返回原值。名称跨越严格库与原生库时转换其字符串表示。内核中的载体通过一个私有的有点类型取得，公开读写接口保持不透明。为类型登记名称的 `TypeName.mk` 和三个运行时私有实现保留官方 `unsafe` 标记。[接口及重放](DynamicValue.lean) · [钉版源码](https://github.com/leanprover/lean4/blob/v4.35.0/src/Init/Dynamic.lean)
+
 若选定模块闭包包含 `Init.System.Promise`，生成器为已移植的 `Omega.IO.Promise.new`、`resolve`、`isResolved`、`result?` 和 `resultD` 生成原生入口。将消费者编译成 C 后，用 `leanc` 链接输出目录中的 `native/promise.o` 与 `native/promise-result-d.o`。后者的回调由钉版官方 Lean 定义编译。普通消费者可在兑现前取得结果任务。兑现后，字段投影、模式匹配和内核原始投影都读取第一次兑现的值。释放最后一个未兑现句柄后，`result?` 返回 `none`，`resultD` 返回传入的默认值。
 
 `native/path_io.o` 支持读取环境变量和当前程序路径、获取与切换进程目录、规范化路径、创建和删除目录与临时目录，以及文件删除、重命名、硬链接和目录枚举。文件句柄使用钉版分配与锁，文本行和任意二进制字节分别按严格库的 `String` 与 `ByteArray` 传递。路径和环境变量按 UTF-8 字节转换。`IO.Error` 的解码由两个库的构造子、字段类型和运行布局生成，保留文件名、系统错误码、说明及世界状态。测试在临时目录中用多字节路径对照官方异常。

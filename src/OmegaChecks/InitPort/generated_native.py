@@ -128,7 +128,7 @@ def compile_generated(stage, product, graph, seed_ir, owners=None, *, original_s
                       check_strings=True, check_string_marks=False, check_byte_marks=False, check_literals=True, check_mixed=True, check_rat=True, check_bootstrap=True,
                       check_list_search=True, check_decoding=True, check_names=True, check_toolchain=True, check_thunks=False, check_persistent=False, check_exclusive=False,
                       check_guarded_pointer=False, check_effects=False, check_address=False, check_pointer_comparison=False, check_shared_pointer=False,
-                      check_list_pointer=False, check_pointer_hash=False, check_address_callback=False):
+                      check_list_pointer=False, check_pointer_hash=False, check_address_callback=False, check_dynamic=False):
     """Compile generated owners in import order and preserve the native symbols of existing owners."""
     requested = set(graph if owners is None else owners)
     selected = [owner for owner in TopologicalSorter(graph).static_order()
@@ -172,6 +172,8 @@ def compile_generated(stage, product, graph, seed_ir, owners=None, *, original_s
                 modes[owner] = "mixed="
     if "OmegaInit.Data.Random" in selected and (stage / "random-state.c").is_file():
         modes["OmegaInit.Data.Random"] = "mixed="
+    if "OmegaInit.Dynamic" in selected and (stage / "type-name.c").is_file():
+        modes["OmegaInit.Dynamic"] = "mixed="
     runtime_sources = {"OmegaInit.Control.StateRef": "state_ref.c", "OmegaInit.Dynamic": "type-name.c",
                        "OmegaInit.ShareCommon": "share_common.c"}
     literals = stage / "literal.c"
@@ -290,7 +292,8 @@ def compile_generated(stage, product, graph, seed_ir, owners=None, *, original_s
             run("leanc", client, HERE / "consumers" / "thunk_consumer.c", *dependency_objects(dependencies), "-o", app)
             run(app, timeout=30)
 
-    observations = [(check_persistent, "OmegaInit.System.IO", "Persistent", "Omega.Runtime.markPersistent"),
+    observations = [(check_dynamic, "OmegaInit.Dynamic", "DynamicValue", None),
+                    (check_persistent, "OmegaInit.System.IO", "Persistent", "Omega.Runtime.markPersistent"),
                     (check_address, "OmegaInit.Util", "Address", "Omega.ptrAddrUnsafe"),
                     (check_exclusive, "OmegaInit.Util", "Exclusive", "Omega.isExclusiveUnsafe"),
                     (check_address_callback, "OmegaInit.Util", "AddressCallback", "Omega.withPtrAddrUnsafe"),

@@ -1,4 +1,5 @@
 module
+import OmegaChecks.InitPort.DynamicValue
 
 public import Lean
 import OmegaChecks.InitPort.IONative
@@ -217,7 +218,8 @@ public def supported (source : Environment) (owner name : Name) (boxedFloatArray
     [`neg, `add, `sub, `mul, `decEq, `decLe, `decLt, `decNonneg, `natAbs, `ediv, `emod, `tdiv, `tmod, `divExact].contains method
   let primitive := ((word? name.getPrefix).isSome && name.getPrefix != `Char && (ops ++ widths).contains method) ||
     (name.getPrefix == `Bool && widths.contains method)
-  (owner == `OmegaInit.Core && (thunkExtern name).isSome) ||
+  (owner == `OmegaInit.Dynamic && (DynamicValue.operation? name).isSome) ||
+    (owner == `OmegaInit.Core && (thunkExtern name).isSome) ||
     (owner == `OmegaInit.Data.FloatArray.Basic && boxedFloatArray && FloatArrayNative.operations.contains name) ||
     (owner == `OmegaInit.Util && (debugPrimitive name || [`isExclusiveUnsafe, `ptrAddrUnsafe].contains name) && isExtern source name) ||
     (owner == `OmegaInit.System.Uri && uriFunction name) ||

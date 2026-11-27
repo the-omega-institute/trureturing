@@ -68,6 +68,51 @@ private def checkNameLayout (source strict : Environment) : IO Unit := do
       unless valid && l.ctorInfo.cidx == tag && l.ctorInfo.size == l.fieldInfo.size &&
           l.ctorInfo.usize == 0 && l.ctorInfo.ssize == 0 do throw <| IO.userError s!"invalid name layout: {name}"
 
+/-- Dynamic stores the pinned runtime name together with the caller's boxed payload.
+The native Option preserves the same tags and payload representation on both sides. -/
+private def dynamicWrapper (source strict : Environment) (n op : Name) : IO String := do
+  let impl := DynamicValue.implementation op
+  let some (.defnInfo pinned) := source.find? impl | throw <| IO.userError s!"missing {impl}"
+  let some publicOp := source.find? op | throw <| IO.userError s!"missing {op}"
+  let some dest := strict.find? n | throw <| IO.userError s!"missing {n}"
+  let privateEntry := InitKernelPort.originalName n == impl
+  unless (publicOp matches .opaqueInfo _) && !publicOp.isUnsafe && pinned.safety == .unsafe &&
+      source.getModuleIdxFor? op == source.getModuleIdx? `Init.Dynamic &&
+      source.getModuleIdxFor? impl == source.getModuleIdx? `Init.Dynamic &&
+      Compiler.getImplementedBy? source op == some impl && dest.isUnsafe == privateEntry &&
+      InitKernelPort.translate InitKernelPort.portName (if privateEntry then pinned.type else publicOp.type) == dest.type do
+    throw <| IO.userError s!"unexpected dynamic interface {n}"
+  let some (.fdecl _ args out _ info) := IR.findEnvDecl source impl | throw <| IO.userError s!"missing {impl} code"
+  let some (.extern _ actual result ⟨[.standard `all sym]⟩) := IR.findEnvDecl strict n
+    | throw <| IO.userError s!"missing native {n}"
+  let pack := op == `Dynamic.mk
+  let name := op == `Dynamic.typeName
+  let kinds : Array (IR.IRType × Bool) := if name then #[(.tobject, true)]
+    else #[(.erased, false), (.tobject, !pack), (.tobject, !pack)]
+  unless sym == symbol n && args.map (fun a => (a.ty, a.borrow)) == kinds && out == .tobject &&
+      info.sorryDep?.isNone && result == .tobject && actual.map (·.ty) == kinds.map Prod.fst do
+    throw <| IO.userError s!"unexpected dynamic ABI {n}: {actual.map (fun a => (a.ty, a.borrow))} → {result}"
+  checkNameLayout source strict
+  checkErasedField strict `Omega.TypeName
+  if !name && !pack then IndexedNative.checkDataTypes source strict [`Option]
+  let target := getSymbolStem source impl
+  let types := if name then "lean_object *" else "lean_object *, lean_object *, lean_object *"
+  let header := "#include \"strict_name.h\"\n" ++ s!"extern lean_obj_res {target}({types});\n"
+  let release (idx : Nat) (var : String) := if actual[idx]!.borrow then "" else s!"lean_dec({var}); "
+  let retain (idx : Nat) (var : String) := if actual[idx]!.borrow then s!"lean_inc({var}); " else ""
+  let (params, body) := if pack then
+      ("lean_object *tag, lean_object *value",
+       "lean_object *native = omega_name_to_lean(tag); " ++ release 1 "tag" ++ retain 2 "value" ++
+       s!"return {target}(lean_box(0), native, value);")
+    else if name then
+      ("lean_object *value", s!"lean_object *native = {target}(value); " ++ release 0 "value" ++
+       "lean_object *result = omega_name_from_lean(native); lean_dec(native); return result;")
+    else
+      ("lean_object *value, lean_object *tag", "lean_object *native = omega_name_to_lean(tag); " ++
+       s!"lean_object *result = {target}(lean_box(0), value, native); lean_dec(native); " ++
+       release 1 "value" ++ release 2 "tag" ++ "return result;")
+  return header ++ s!"LEAN_EXPORT lean_obj_res {sym}({params}) \{ {body} }\n"
+
 private def checkSliceLayout (source strict : Environment) : IO Unit := do
   for (env, ns) in [(source, Name.anonymous), (strict, `Omega)] do
     for pos in [`String.Pos, `String.Pos.Raw] do
@@ -113,6 +158,7 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
       "lean_ctor_get_uint8(source, 3 * sizeof(void *)) ? omega_bytes_mark(value) : value"
     let params := (if unary then "" else "b_lean_obj_arg source, ") ++ "lean_obj_arg value"
     return s!"\n#include \"strict_byte_array.h\"\nLEAN_EXPORT lean_obj_res {symbol n}({params}) \{ return {call}; }\n"
+  if let some op := DynamicValue.operation? official then return ← dynamicWrapper source strict n op
   if IONative.supported official then return ← IONative.wrapper source strict n (symbol n)
   if MacroNative.supported official then return ← MacroNative.wrapper source strict n (symbol n)
   if monadicSeparator official then return ← SeparatorNative.wrapper source strict n official (symbol n)

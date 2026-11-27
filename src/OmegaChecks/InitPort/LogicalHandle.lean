@@ -2,6 +2,7 @@ module
 public import Lean
 import all Init.System.Promise
 import all Init.ShareCommon
+import all Init.Dynamic
 import Lean.Compiler.IR.CompilerM
 
 open Lean
@@ -33,6 +34,13 @@ private def methodsCarrier : NonemptyType :=
     ⟨Bool.rec (motive := fun tag => Bool.rec PUnit (Nat → Bool) tag) PUnit.unit (fun _ => false) methodsTag⟩⟩
 private noncomputable def makeMethods (_ : Lean.Macro.Methods) : methodsCarrier.type :=
   Bool.rec (motive := fun tag => Bool.rec PUnit (Nat → Bool) tag) PUnit.unit (fun _ => false) methodsTag
+
+private noncomputable opaque dynamicToken : (T : Type) ×' T :=
+  ⟨Name × NonScalar, (Name.anonymous, default)⟩
+private def dynamicRepresentative : NonemptyType := ⟨Name × NonScalar, inferInstance⟩
+private def dynamicCarrier : NonemptyType := ⟨dynamicToken.1, ⟨dynamicToken.2⟩⟩
+private noncomputable def makeDynamic {α : Type u} [TypeName α] (_ : α) : dynamicCarrier.type :=
+  dynamicToken.2
 
 private structure Model (α : Type) where
   handle : carrier.type
@@ -67,7 +75,10 @@ public def shareFactory : API := ⟨`Init.ShareCommon, `ShareCommon.StateFactory
   `ShareCommon.StateFactory.logicalToken, "l_ShareCommon_StateFactory_mkImpl", some `ShareCommon.StateFactory.mkImpl⟩
 public def macroMethods : API := ⟨`Init.Prelude, `Lean.Macro.MethodsRefPointed, `Lean.Macro.mkMethods,
   `Lean.Macro.MethodsRef.logicalToken, "l_Lean_Macro_mkMethodsImp", some `Lean.Macro.mkMethodsImp⟩
-public def apis := [promise, referenceCell, shareState, shareFactory, macroMethods]
+public def dynamicValue : API := ⟨`Init.Dynamic, mkPrivateNameCore `Init.Dynamic `DynamicPointed, `Dynamic.mk,
+  `Dynamic.logicalToken, (mkPrivateNameCore `Init.Dynamic `Dynamic.mkImpl).mangle "l_",
+  some (mkPrivateNameCore `Init.Dynamic `Dynamic.mkImpl)⟩
+public def apis := [promise, referenceCell, shareState, shareFactory, macroMethods, dynamicValue]
 
 public def implementation? (name : Name) := apis.find? (·.implementedBy == some name)
 
@@ -97,8 +108,8 @@ public def forToken? (n : Name) := apis.find? (fun api => n == api.strictToken)
 private def renameTemplate (api : API) (body : Expr) : Expr :=
   body.replace fun
     | .const n us =>
-      let name := if n == ``token || n == ``shareToken || n == ``factoryToken || n == ``methodsTag then api.tokenName
-        else if n == ``carrier || n == ``shareCarrier || n == ``factoryCarrier || n == ``methodsCarrier then api.pointed
+      let name := if n == ``token || n == ``shareToken || n == ``factoryToken || n == ``methodsTag || n == ``dynamicToken then api.tokenName
+        else if n == ``carrier || n == ``shareCarrier || n == ``factoryCarrier || n == ``methodsCarrier || n == ``dynamicCarrier then api.pointed
         else if n == ``Model then `IO.Promise
         else if n == ``Model.mk then mkPrivateNameCore api.owner `IO.Promise.mk
         else if n == ``Reference then `ST.Ref
@@ -114,7 +125,8 @@ public structure Templates where
 
 public def templates (api : API) (env : Environment) : IO Templates := do
   let (pkgName, familyName, allocName) :=
-    if api.pointed == shareState.pointed then (``shareToken, ``shareCarrier, ``shareAllocate)
+    if api.pointed == dynamicValue.pointed then (``dynamicToken, ``dynamicCarrier, ``makeDynamic)
+    else if api.pointed == shareState.pointed then (``shareToken, ``shareCarrier, ``shareAllocate)
     else if api.pointed == shareFactory.pointed then (``factoryToken, ``factoryCarrier, ``makeFactory)
     else if api.pointed == macroMethods.pointed then (``methodsTag, ``methodsCarrier, ``makeMethods)
     else (``token, ``carrier, if api.owner == promise.owner then ``allocate else ``allocateRef)
@@ -153,7 +165,7 @@ public def checkBody (api : API) (strict publicStrict reference : Environment) (
   checkToken api strict publicStrict reference renameTerm
   let some (.opaqueInfo original) := reference.find? api.pointed | throw <| IO.userError "missing official handle carrier"
   let indexed := api.pointed == shareState.pointed
-  let modelName := if indexed then ``shareRepresentative
+  let modelName := if api.pointed == dynamicValue.pointed then ``dynamicRepresentative else if indexed then ``shareRepresentative
     else if api.pointed == shareFactory.pointed then ``factoryRepresentative else ``standardCarrier
   let model := mkConst modelName (original.levelParams.map Level.param)
   let nativeMatches := match api.implementedBy with
