@@ -123,4 +123,49 @@ theorem digit_eq_zero_of_collision {m h : ℕ} (hh : 2 ≤ h)
   · exact heq.trans (hz huv' heq i hlt)
   · exact hz huv heq.symm i hgt
 
+/-- Zero digits use all terms at one index, with one term of the second kind. -/
+theorem digit_eq_zero_iff {m h : ℕ} (hh : 2 ≤ h) {u v : Fin m → ℕ}
+    (huv : (∑ i, (u i + v i)) = h) :
+    digit h u v = 0 ↔ ∃ j : Fin m, ∀ i,
+      u i = (if i = j then h - 1 else 0) ∧ v i = (if i = j then 1 else 0) := by
+  constructor
+  · intro hz
+    have hpoint (i : Fin m) : (u i : ℤ) = ((h : ℤ) - 1) * (v i : ℤ) := by
+      have hi : digit h u v i = 0 := congrFun hz i
+      exact sub_eq_zero.mp hi
+    have hlocal (i : Fin m) : u i + v i = h * v i := by
+      have hi : (u i : ℤ) + (v i : ℤ) = (h : ℤ) * (v i : ℤ) := by
+        rw [hpoint i, sub_mul, one_mul]
+        ring
+      exact_mod_cast hi
+    have htotal : h * (∑ i, v i) = h * 1 := by
+      rw [Finset.mul_sum, mul_one]
+      exact (Finset.sum_congr rfl (fun i _ => (hlocal i).symm)).trans huv
+    have hv : (∑ i, v i) = 1 := mul_left_cancel₀ (by omega : h ≠ 0) htotal
+    have hpos : 0 < ∑ i, v i := by rw [hv]; decide
+    obtain ⟨j, _, hj⟩ :=
+      (Finset.sum_pos_iff_of_nonneg (fun i _ => Nat.zero_le (v i))).mp hpos
+    have hjle : v j ≤ ∑ i, v i :=
+      Finset.single_le_sum (fun i _ => Nat.zero_le (v i)) (Finset.mem_univ j)
+    have hjone : v j = 1 := by omega
+    refine ⟨j, fun i => ?_⟩
+    by_cases hi : i = j
+    · subst i
+      have hloc := hlocal j
+      simp [hjone] at hloc
+      simp [hjone, show u j = h - 1 by omega]
+    · have hvi := zero_off_of_sum_eq v j (hv.trans hjone.symm) hi
+      have hui : u i = 0 := by simpa [hvi] using hlocal i
+      simp [hi, hui, hvi]
+  · rintro ⟨j, hj⟩
+    funext i
+    change digit h u v i = 0
+    obtain ⟨hu, hv⟩ := hj i
+    by_cases hi : i = j
+    · subst i
+      simp at hu hv
+      simp [digit, hv, show (u j : ℤ) = (h : ℤ) - 1 by omega]
+    · simp [hi] at hu hv
+      simp [digit, hu, hv]
+
 end D5.S3.Arith.NathansonProblem15
