@@ -303,4 +303,109 @@ public theorem List.intercalateTR.eq_2 :
   rw [← _root_.List.intercalate_eq_intercalateTR]
   exact _root_.List.intercalate_singleton
 
+private theorem pushTail (acc : Array α) (x : α) (xs : List α) :
+    (acc.push x).toList ++ xs = acc.toList ++ x :: xs := by
+  rw [Array.toList_push, List.append_assoc]
+  rfl
+
+private theorem takeAcc (all : List α) (xs : List α) (n : Nat) (acc : Array α)
+    (parts : all = acc.toList ++ xs) :
+    List.takeTR.go all xs n acc = acc.toList ++ xs.take n := by
+  induction xs generalizing n acc with
+  | nil => cases n <;> exact parts
+  | cons x xs ih =>
+    cases n with
+    | zero => exact (List.append_nil _).symm
+    | succ n =>
+      exact (ih n (acc.push x) (parts.trans (pushTail _ _ _).symm)).trans (pushTail _ _ _)
+
+public theorem List.takeTR.eq_1 :
+    type_of% (private_decl% @_root_.List.takeTR.eq_1) := by
+  intro α n xs
+  rw [← _root_.List.take_eq_takeTR]
+  exact (takeAcc xs xs n #[] rfl).symm
+
+private theorem eraseIdxAcc (all : List α) (xs : List α) (n : Nat) (acc : Array α)
+    (parts : all = acc.toList ++ xs) :
+    List.eraseIdxTR.go all xs n acc = acc.toList ++ xs.eraseIdx n := by
+  induction xs generalizing n acc with
+  | nil => cases n <;> exact parts
+  | cons x xs ih =>
+    cases n with
+    | zero => exact Array.toListAppend_eq
+    | succ n =>
+      exact (ih n (acc.push x) (parts.trans (pushTail _ _ _).symm)).trans (pushTail _ _ _)
+
+public theorem List.eraseIdxTR.eq_1 :
+    type_of% (private_decl% @_root_.List.eraseIdxTR.eq_1) := by
+  intro α xs n
+  rw [← _root_.List.eraseIdx_eq_eraseIdxTR]
+  exact (eraseIdxAcc xs xs n #[] rfl).symm
+
+private theorem takeWhileAcc (p : α → Bool) (all xs : List α) (acc : Array α)
+    (parts : all = acc.toList ++ xs) :
+    List.takeWhileTR.go p all xs acc = acc.toList ++ xs.takeWhile p := by
+  induction xs generalizing acc with
+  | nil => exact parts
+  | cons x xs ih =>
+    cases q : p x with
+    | false =>
+      simp only [List.takeWhileTR.go, List.takeWhile, q, Bool.cond_false]
+      exact (List.append_nil _).symm
+    | true =>
+      simp only [List.takeWhileTR.go, List.takeWhile, q, Bool.cond_true]
+      exact (ih (acc.push x) (parts.trans (pushTail _ _ _).symm)).trans (pushTail _ _ _)
+
+public theorem List.takeWhileTR.eq_1 :
+    type_of% (private_decl% @_root_.List.takeWhileTR.eq_1) := by
+  intro α p xs
+  rw [← _root_.List.takeWhile_eq_takeWhileTR]
+  exact (takeWhileAcc p xs xs #[] rfl).symm
+
+private theorem replaceAcc [BEq α] (all : List α) (old new : α) (xs : List α) (acc : Array α)
+    (parts : all = acc.toList ++ xs) :
+    List.replaceTR.go all old new xs acc = acc.toList ++ xs.replace old new := by
+  induction xs generalizing acc with
+  | nil => exact parts
+  | cons x xs ih =>
+    cases q : old == x with
+    | false =>
+      simp only [List.replaceTR.go, List.replace, q, Bool.cond_false]
+      exact (ih (acc.push x) (parts.trans (pushTail _ _ _).symm)).trans (pushTail _ _ _)
+    | true =>
+      simp only [List.replaceTR.go, List.replace, q, Bool.cond_true]
+      exact Array.toListAppend_eq
+
+public theorem List.replaceTR.eq_1 :
+    type_of% (private_decl% @_root_.List.replaceTR.eq_1) := by
+  intro α inst xs old new
+  rw [← _root_.List.replace_eq_replaceTR]
+  exact (replaceAcc xs old new xs #[] rfl).symm
+
+private theorem eraseAcc [BEq α] (all : List α) (a : α) (xs : List α) (acc : Array α)
+    (parts : all = acc.toList ++ xs) :
+    List.eraseTR.go all a xs acc = acc.toList ++ xs.erase a := by
+  induction xs generalizing acc with
+  | nil => exact parts
+  | cons x xs ih =>
+    cases q : x == a with
+    | false =>
+      simp only [List.eraseTR.go, List.erase, q, Bool.cond_false]
+      exact (ih (acc.push x) (parts.trans (pushTail _ _ _).symm)).trans (pushTail _ _ _)
+    | true =>
+      simp only [List.eraseTR.go, List.erase, q, Bool.cond_true]
+      exact Array.toListAppend_eq
+
+public theorem List.eraseTR.eq_1 :
+    type_of% (private_decl% @_root_.List.eraseTR.eq_1) := by
+  intro α inst xs a
+  rw [← _root_.List.erase_eq_eraseTR]
+  exact (eraseAcc xs a xs #[] rfl).symm
+
+public theorem List.intercalateTR.eq_3 :
+    type_of% (private_decl% @_root_.List.intercalateTR.eq_3) := by
+  intro α sep x xs _
+  rw [← _root_.List.intercalate_eq_intercalateTR]
+  exact ((private_decl% @_root_.List.intercalate_eq_intercalateTR.go) α sep (acc := #[]) (x := x) xs).symm
+
 end OmegaChecks.InitPort.Alternatives
