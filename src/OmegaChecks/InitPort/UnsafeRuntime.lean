@@ -32,20 +32,36 @@ public def exclusiveABI (env : Environment) (strict : Bool) : Bool := Id.run do
   let some (.extern _ args .uint8 ⟨[.standard `all entry]⟩) := IR.findEnvDecl env name | return false
   return entry == expected && args.map (fun p => (p.ty, p.borrow)) == #[(.erased, false), (.tobject, true)]
 
-public def isOriginal (ci : ConstantInfo) (strict : Bool) : Bool :=
-  Persistent.isOriginal ci strict || isExclusive ci strict
+public def isShareCommonObject (ci : ConstantInfo) (strict : Bool) : Bool := Id.run do
+  let upstream := if strict then InitKernelPort.originalName ci.name else ci.name
+  let object := markBorrowed (mkConst `ShareCommon.Object)
+  let arg (binder : Name) (type : Expr) := Expr.forallE binder object type .default
+  match upstream with
+  | `ShareCommon.Object.eq =>
+    return matchesDefaultOpaque ci upstream strict [] (arg `a (arg `b (mkConst `Bool))) `Bool `instInhabitedBool
+  | `ShareCommon.Object.hash =>
+    return matchesDefaultOpaque ci upstream strict [] (arg `a (mkConst `UInt64)) `UInt64 `instInhabitedUInt64
+  | _ => return false
 
-/-- Replay the checked library before installing the exact pinned opaque as unsafe. -/
+private def originalOpaque (ci : ConstantInfo) (strict : Bool) : Bool :=
+  isExclusive ci strict || isShareCommonObject ci strict
+
+public def isOriginal (ci : ConstantInfo) (strict : Bool) : Bool :=
+  Persistent.isOriginal ci strict || originalOpaque ci strict
+
+/-- Replay the checked library before installing each pinned opaque at its original unsafe boundary. -/
 public def replay (constants : Std.HashMap Name ConstantInfo) : IO Kernel.Environment := do
-  let base ← Persistent.replay constants
-  let some ci := constants[InitKernelPort.portName `isExclusiveUnsafe]? | return base
-  unless isExclusive ci true do throw <| IO.userError "invalid unsafe exclusivity observation"
-  let .opaqueInfo d := ci | throw <| IO.userError "expected the opaque exclusivity observation"
-  let check (decl : OpaqueVal) : IO Kernel.Environment := do
-    match base.addDeclCore 0 1000 (.opaqueDecl decl) none with
-    | .ok checked => pure checked
-    | .error _ => throw <| IO.userError "kernel rejected the exclusivity observation"
-  discard <| check {d with isUnsafe := false}
-  check d
+  let mut base ← Persistent.replay constants
+  for upstream in [`isExclusiveUnsafe, `ShareCommon.Object.eq, `ShareCommon.Object.hash] do
+    let some ci := constants[InitKernelPort.portName upstream]? | continue
+    unless originalOpaque ci true do throw <| IO.userError s!"invalid pinned unsafe observation {upstream}"
+    let .opaqueInfo d := ci | throw <| IO.userError s!"expected opaque observation {upstream}"
+    let check (decl : OpaqueVal) : IO Kernel.Environment := do
+      match base.addDeclCore 0 1000 (.opaqueDecl decl) none with
+      | .ok checked => pure checked
+      | .error _ => throw <| IO.userError s!"kernel rejected unsafe observation {upstream}"
+    discard <| check {d with isUnsafe := false}
+    base ← check d
+  return base
 
 end OmegaChecks.InitPort.UnsafeRuntime
