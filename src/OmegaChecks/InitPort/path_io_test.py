@@ -6,14 +6,15 @@ import sysconfig
 from generated_native import HERE, STRICT_SOURCES, run
 
 
-def check_paths(stage, library, path_object, io_object):
+def check_paths(stage, library, path_object, io_object, check_read_into=False):
     test = stage / "path-io-check"
     test.mkdir()
     source = test / "consumer.c"
     run("lean", "-R", STRICT_SOURCES, "-c", source, "-o", test / "PathIOConsumer.olean", STRICT_SOURCES / "PathIOConsumer.lean",
         env={**os.environ, "LEAN_PATH": str(library)})
     native = test / "consumer"
-    run("leanc", "-I", HERE, source, path_object, *([io_object] if io_object.is_file() else []),
+    flags = ["-DOMEGA_TEST_READ_INTO"] if check_read_into else []
+    run("leanc", *flags, "-I", HERE, source, path_object, *([io_object] if io_object.is_file() else []),
         HERE / "consumers" / "path_io_consumer.c", "-o", native)
     shim_c = test / "extern.c"
     run("lake", "env", "lean", "--run", HERE / "PathIONative.lean", "--interpreter", library, shim_c)

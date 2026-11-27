@@ -258,7 +258,8 @@ def generate(stage, product, seed, roots, excluded, original_seed):
                                                                                  "flush", "rewind", "truncate", "read",
                                                                                  "write", "getLine", "putStr"))}}
         if paths and has_interfaces(inventory, path_interfaces):
-            check_paths(stage, artifact, paths[0], product / "native" / "task_io.o")
+            check_paths(stage, artifact, paths[0], product / "native" / "task_io.o",
+                        check_read_into=has_interfaces(inventory, {"Init.System.IO": {"IO.FS.Handle.readBinToEndInto"}}))
     if "OmegaInit.System.Promise" in graph:
         compile_state_runtime(stage, product, artifact, inventory, "Promise", "promise", {
             "Init.System.Promise": {"IO.Promise.new", "IO.Promise.resolve", "IO.Promise.isResolved", "IO.Promise.result?", "IO.Promise.resultD"},

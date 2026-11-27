@@ -62,6 +62,21 @@ static int file_ok(lean_obj_res (*action)(lean_obj_arg, lean_obj_arg), b_lean_ob
     return path_result(action(h, lean_box(0)), 0, 0);
 }
 
+#ifdef OMEGA_TEST_READ_INTO
+extern lean_obj_res omega_io_handle_read_bin_into(lean_obj_arg, lean_obj_arg, lean_obj_arg);
+
+static int check_eof_buffer(lean_obj_arg handle, lean_obj_arg world) {
+    lean_object *bytes = omega_bytes_mark(omega_bytes_from_data((const unsigned char *)"x", 1));
+    lean_inc_ref(bytes);
+    lean_object *result = omega_io_handle_read_bin_into(handle, bytes, world);
+    int ok = lean_obj_tag(result) == 0 && lean_ctor_get(result, 0) == bytes &&
+             lean_ctor_get(result, 1) == world;
+    lean_dec_ref(result);
+    lean_dec_ref(bytes);
+    return ok;
+}
+#endif
+
 static int handle_io(const char *path) {
     lean_object *w = lean_box(0);
     lean_object *out = omega_test_open(encode(path), w);
@@ -90,6 +105,9 @@ static int handle_io(const char *path) {
     out = omega_test_line(h, w);
     if (lean_obj_tag(out) || !text_equals(lean_ctor_get(out, 0), "héλ界\n")) return 0;
     lean_dec(out);
+#ifdef OMEGA_TEST_READ_INTO
+    lean_inc(h);
+#endif
     out = omega_test_read(h, omega_nat_from_uint64(9), w);
     if (lean_obj_tag(out)) return 0;
     bytes = lean_ctor_get(out, 0);
@@ -97,6 +115,9 @@ static int handle_io(const char *path) {
     int ok = lean_sarray_size(packed) == sizeof(sample) && !memcmp(lean_sarray_cptr(packed), sample, sizeof(sample));
     lean_dec_ref(packed);
     lean_dec(out);
+#ifdef OMEGA_TEST_READ_INTO
+    ok = check_eof_buffer(h, w) && ok;
+#endif
     return ok;
 }
 

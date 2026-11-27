@@ -201,6 +201,17 @@ LEAN_EXPORT lean_obj_res omega_io_handle_write(b_lean_obj_arg handle, b_lean_obj
 static lean_obj_res from_byte_array(b_lean_obj_arg buffer) {
     return omega_bytes_from_lean(buffer);
 }
+
+static lean_obj_res strict_byte_update_result(lean_obj_arg result, lean_obj_arg world, lean_obj_arg bytes, uintptr_t original) {
+    if (lean_io_result_is_error(result)) {
+        lean_dec_ref(bytes);
+        return strict_result(result, world, from_byte_array);
+    }
+    lean_object *out = omega_bytes_finish_update(bytes, original, lean_io_result_get_value(result));
+    lean_dec_ref(result);
+    return world_result(0, out, world);
+}
+
 static lean_obj_res strict_string_array(b_lean_obj_arg values) {
     lean_object *list = lean_box(0);
     for (size_t i = lean_array_size(values); i > 0; --i) {
