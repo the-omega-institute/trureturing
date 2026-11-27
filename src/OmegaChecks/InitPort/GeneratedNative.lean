@@ -236,6 +236,13 @@ private def compileOwner (source : Environment) (groups : Array InductiveVal) (w
       let name := Compiler.mkUnsafeRecName n
       compileEquation source n {d with name, all := [name], value, safety := .safe}
       continue
+    if n == `Omega.Lean.Grind.CommRing.Poly.combineC then
+      let before ← Core.saveState
+      try
+        compileFix source strict n (n ++ `eq_def)
+        if (← getImpureSignature? n).isSome then continue
+      catch _ => pure ()
+      before.restore
     if n == `Omega.WellFounded.fix || n == `Omega.WellFounded.fixF then
       compileFix source strict n (n.appendAfter "_eq")
       continue
