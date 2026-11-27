@@ -1,8 +1,9 @@
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qInvariantQuadratics
 import LeanInformationAuditInterface.Contract.Registration
+import Mathlib.Algebra.Group.PUnit
 import Reg.Support.SingleDependentReadout
 
-/-! Source-bound audits of the rational current readouts in the two mode-one laws. -/
+/-! Source-bound audits of the current and action readouts in the block quadratic laws. -/
 
 namespace Reg.D5.S3.VertexAlgebra.Lattice.Orbifold.P48qInvariantQuadratics
 
@@ -13,6 +14,7 @@ open _root_.D5.S3.VertexAlgebra.Lattice.Orbifold.P48qGramPositivity (nebeGram_po
 open _root_.D5.S3.VertexAlgebra.Lattice.Automorphisms.ConformalGroundTransport (current)
 open LatticeGeneratingFieldLocality LatticeAllStateField LatticeAllStateReconstruction LatticePositiveEnergy
 open LeanInformationAudit
+open scoped Matrix
 
 open private rationalCurrent_ne_zero from
   D5.S3.VertexAlgebra.Lattice.Orbifold.P48qInvariantQuadratics
@@ -158,6 +160,124 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   options := #[]
 
 end Perpendicular
+
+namespace InvariantBlocks
+
+universe u
+
+private abbrev Params := Σ G : Type u, Σ group : Group G, Σ D : LatticeData,
+  letI := group
+  Representation ℂ G (Carrier D) × G
+
+abbrev signature : Signature where
+  Params := Params.{u}
+  State p := Carrier p.2.2.1
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ p := Carrier p.2.2.1
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature.{u} := realize signature
+  (fun _ p v => p.2.2.2.1 p.2.2.2.2 v) (fun e => nomatch e)
+
+private def rejected : Realization signature.{u} := realize signature (fun _ _ _ => 0)
+  (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature.{u}
+  Law R := ∀ {G : Type u} [Group G] (D : LatticeData)
+    (hPos : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ)))
+    (ρ : Representation ℚ G (RationalCartan D)) (A : Representation ℂ G (Carrier D)),
+    (∀ g x y, rationalGram D (ρ g x) (ρ g y) = rationalGram D x y) →
+    (∀ g x, A g (rationalCurrent D x) = rationalCurrent D (ρ g x)) →
+    (∀ g u n v, A g (mu D u n v) = mu D (A g u) n (A g v)) →
+    ∀ (W : Submodule ℚ (RationalCartan D)), W ≠ ⊥ → W ≠ ⊤ →
+      (∀ g, W ≤ W.comap (ρ g)) →
+      let q : Fin 2 → Carrier D :=
+        ![blockQuadratic D hPos W, blockQuadratic D hPos ((rationalGram D).orthogonal W)]
+      (∀ i, q i ∈ grade D 2) ∧
+        (∀ g i, R.readout () ⟨G, inferInstance, D, A, g⟩ (q i) = q i) ∧ LinearIndependent ℂ q
+
+private def testBlock : Submodule ℚ (RationalCartan nebeLatticeData) :=
+  LinearMap.ker (LinearMap.proj 0)
+
+private theorem testBlock_ne_bot : testBlock ≠ ⊥ := by
+  intro h
+  let x : RationalCartan nebeLatticeData := Pi.single 1 1
+  have hx : x ∈ testBlock := by
+    change x 0 = 0
+    have h01 : (0 : Fin nebeLatticeData.rank) ≠ 1 := by decide
+    simp [x, Pi.single_apply, h01, Ne.symm h01]
+  have he := congrFun (Submodule.mem_bot.mp (h ▸ hx)) (1 : Fin nebeLatticeData.rank)
+  exact (one_ne_zero : (1 : ℚ) ≠ 0) (by simpa [x] using he)
+
+private theorem testBlock_ne_top : testBlock ≠ ⊤ := by
+  intro h
+  have hx : direction nebeLatticeData ∈ testBlock := h.symm ▸ Submodule.mem_top
+  exact (one_ne_zero : (1 : ℚ) ≠ 0) hx
+
+private theorem rejected_law : ¬ arena.{u}.Law rejected := by
+  intro h
+  let ρ := Representation.trivial ℚ PUnit.{u+1} (RationalCartan nebeLatticeData)
+  let A := Representation.trivial ℂ PUnit.{u+1} (Carrier nebeLatticeData)
+  have hq := h nebeLatticeData nebeGram_posDef ρ A (fun _ _ _ => rfl) (fun _ _ => rfl)
+    (fun _ _ _ _ => rfl) testBlock testBlock_ne_bot testBlock_ne_top (fun _ _ hx => hx)
+  exact (hq.2.2.ne_zero 0) (hq.2.1 1 0).symm
+
+def family : Registration arena.{u} (type_of% @invariant_block_quadratics.{u}) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@invariant_block_quadratics.{u}, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j hj
+      exact (hj (Subsingleton.elim _ _)).elim
+    · intro e
+      exact nomatch e
+  dependence := by
+    intro _
+    let D := nebeLatticeData
+    let A := Representation.trivial ℂ PUnit.{u+1} (Carrier D)
+    refine ⟨⟨PUnit.{u+1}, inferInstance, D, A, 1⟩, rationalCurrent D (direction D), 0, ?_⟩
+    exact nebe_current_ne_zero
+
+def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@invariant_block_quadratics.{u}) (Realization signature.{u}) Unit Unit where
+  unitName :=
+    `D5.S3.VertexAlgebra.Lattice.Orbifold.P48qInvariantQuadratics.invariant_block_quadratics.__information_unit
+  realizationName := `Reg.D5.S3.VertexAlgebra.Lattice.Orbifold.P48qInvariantQuadratics.InvariantBlocks.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena.{u}⟩
+  objectArena := .source ⟨arena.{u}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena.{u} ⟨family.{u}⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ p v => p.2.2.2.1 p.2.2.2.2 v) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.VertexAlgebra.Lattice.Orbifold.P48qInvariantQuadratics
+    coordinates := #[0, 2, 5, 14]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body",
+        "body", "body", "body", "arg", "fn", "arg", "body", "body", "fn", "arg", "fn"]
+      functionOperand := true
+    }]
+  }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end InvariantBlocks
 
 namespace FixedStates
 

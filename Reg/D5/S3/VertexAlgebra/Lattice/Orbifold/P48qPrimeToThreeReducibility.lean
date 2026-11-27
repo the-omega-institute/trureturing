@@ -5,7 +5,7 @@ import Mathlib.Algebra.Module.ULift
 import Mathlib.Tactic.Linarith
 import Reg.Support.SingleDependentReadout
 
-/-! Source-bound audits of the cyclotomic degree and the group order readouts. -/
+/-! Source-bound audits of the degree, group order, and invariant-subspace readouts. -/
 
 namespace Reg.D5.S3.VertexAlgebra.Lattice.Orbifold.P48qPrimeToThreeReducibility
 
@@ -178,6 +178,212 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   options := #[]
 
 end GroupOrder
+
+namespace InvariantSubspace
+
+universe u v
+
+private abbrev RationalSpace := Σ V : Type v, Σ addition : AddCommGroup V,
+  letI := addition
+  Module ℚ V
+
+private abbrev Block (s : RationalSpace.{v}) :=
+  letI := s.2.1
+  letI := s.2.2
+  Submodule ℚ s.1
+
+private abbrev Endomorphism (s : RationalSpace.{v}) :=
+  letI := s.2.1
+  letI := s.2.2
+  Module.End ℚ s.1
+
+private abbrev Params := Σ s : RationalSpace.{v}, Block s
+
+abbrev signature : Signature where
+  Params := Params.{v}
+  State p := Endomorphism p.1
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ p := Block p.1
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature.{v} := realize signature
+  (fun _ p =>
+    letI := p.1.2.1
+    letI := p.1.2.2
+    p.2.comap) (fun e => nomatch e)
+
+private def rejected : Realization signature.{v} := realize signature
+  (fun _ p _ =>
+    letI := p.1.2.1
+    letI := p.1.2.2
+    ⊥) (fun e => nomatch e)
+
+private theorem dependence : ObservationalDependence signature.{v} actual := by
+  intro _
+  let s : RationalSpace.{v} := ⟨ULift.{v} ℚ, inferInstance, inferInstance⟩
+  let W : Submodule ℚ (ULift.{v} ℚ) := ⊥
+  refine ⟨⟨s, W⟩, 0, 1, ?_⟩
+  intro h
+  change W.comap 0 = W.comap 1 at h
+  have hz : ULift.up (1 : ℚ) ∈ W.comap 0 := Submodule.zero_mem _
+  rw [h] at hz
+  have he : ULift.up (1 : ℚ) = (0 : ULift.{v} ℚ) := Submodule.mem_bot.mp hz
+  exact one_ne_zero (congrArg ULift.down he)
+
+private abbrev TestSpace := ULift.{v} (Fin 48 → ℚ)
+
+private theorem test_dim : finrank ℚ TestSpace.{v} = 48 := by
+  let e : TestSpace.{v} ≃ₗ[ℚ] (Fin 48 → ℚ) := ULift.moduleEquiv
+  rw [e.finrank_eq, Module.finrank_fintype_fun_eq_card, Fintype.card_fin]
+
+namespace OrderDivisor
+
+abbrev arena : Arena where
+  signature := signature.{v}
+  Law R := ∀ {G : Type u} {V : Type v} [Group G] [AddCommGroup V] [Module ℚ V] [Finite G]
+    (ρ : Representation ℚ G V), Function.Injective ρ → finrank ℚ V = 48 →
+    Nat.card G ∣ 32 * 23 * 47 → ∃ W : Submodule ℚ V, W ≠ ⊥ ∧ W ≠ ⊤ ∧
+      ∀ g, W ≤ R.readout () ⟨⟨V, inferInstance, inferInstance⟩, W⟩ (ρ g)
+
+private theorem rejected_law : ¬ arena.{u,v}.Law rejected := by
+  intro h
+  let ρ := Representation.trivial ℚ PUnit.{u+1} TestSpace.{v}
+  have hinj : Function.Injective ρ := fun _ _ _ => Subsingleton.elim _ _
+  have horder : Nat.card PUnit.{u+1} ∣ 32 * 23 * 47 := by
+    rw [Nat.card_unique]
+    exact one_dvd _
+  obtain ⟨W, hbot, _, hW⟩ := h ρ hinj test_dim horder
+  exact hbot (le_antisymm (hW 1) bot_le)
+
+def family : Registration arena.{u,v} (type_of% @exists_invariant_subspace_of_card_dvd.{u,v}) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@exists_invariant_subspace_of_card_dvd.{u,v}, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j hj
+      exact (hj (Subsingleton.elim _ _)).elim
+    · intro e
+      exact nomatch e
+  dependence := dependence
+
+def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@exists_invariant_subspace_of_card_dvd.{u,v}) (Realization signature.{v}) Unit Unit where
+  unitName := `ExtremalC48.exists_invariant_subspace_of_card_dvd.__information_unit
+  realizationName := `Reg.D5.S3.VertexAlgebra.Lattice.Orbifold.P48qPrimeToThreeReducibility.InvariantSubspace.OrderDivisor.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena.{u,v}⟩
+  objectArena := .source ⟨arena.{u,v}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena.{u,v} ⟨family.{u,v}⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature
+    (fun _ p =>
+      letI := p.1.2.1
+      letI := p.1.2.2
+      p.2.comap) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.VertexAlgebra.Lattice.Orbifold.P48qPrimeToThreeReducibility
+    coordinates := #[1, 10]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body",
+        "arg", "body", "arg", "arg", "body", "arg"]
+      stateOperand := some #["arg"]
+    }]
+  }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end OrderDivisor
+
+namespace SL47
+
+private abbrev AmbientGroup := Matrix.SpecialLinearGroup (Fin 2) (ZMod 47)
+
+abbrev arena : Arena where
+  signature := signature.{v}
+  Law R := ∀ {V : Type v} [AddCommGroup V] [Module ℚ V]
+    (H : Subgroup AmbientGroup), ¬ 3 ∣ Nat.card H →
+    ∀ (ρ : Representation ℚ H V), Function.Injective ρ → finrank ℚ V = 48 →
+    ∃ W : Submodule ℚ V, W ≠ ⊥ ∧ W ≠ ⊤ ∧
+      ∀ g, W ≤ R.readout () ⟨⟨V, inferInstance, inferInstance⟩, W⟩ (ρ g)
+
+private theorem rejected_law : ¬ arena.{v}.Law rejected := by
+  intro h
+  let H : Subgroup AmbientGroup := ⊥
+  let ρ := Representation.trivial ℚ H TestSpace.{v}
+  have hinj : Function.Injective ρ := fun _ _ _ => Subsingleton.elim _ _
+  have horder : ¬ 3 ∣ Nat.card H := by
+    rw [Nat.card_unique]
+    decide
+  obtain ⟨W, hbot, _, hW⟩ := h H horder ρ hinj test_dim
+  exact hbot (le_antisymm (hW 1) bot_le)
+
+def family : Registration arena.{v} (type_of% @sl47_prime_to_three_exists_invariant_subspace.{v}) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@sl47_prime_to_three_exists_invariant_subspace.{v}, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j hj
+      exact (hj (Subsingleton.elim _ _)).elim
+    · intro e
+      exact nomatch e
+  dependence := dependence
+
+def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@sl47_prime_to_three_exists_invariant_subspace.{v}) (Realization signature.{v}) Unit Unit where
+  unitName := `ExtremalC48.sl47_prime_to_three_exists_invariant_subspace.__information_unit
+  realizationName := `Reg.D5.S3.VertexAlgebra.Lattice.Orbifold.P48qPrimeToThreeReducibility.InvariantSubspace.SL47.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena.{v}⟩
+  objectArena := .source ⟨arena.{v}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena.{v} ⟨family.{v}⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature
+    (fun _ p =>
+      letI := p.1.2.1
+      letI := p.1.2.2
+      p.2.comap) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.VertexAlgebra.Lattice.Orbifold.P48qPrimeToThreeReducibility
+    coordinates := #[0, 8]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body",
+        "arg", "body", "arg", "arg", "body", "arg"]
+      stateOperand := some #["arg"]
+    }]
+  }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end SL47
+
+end InvariantSubspace
 
 end
 end Reg.D5.S3.VertexAlgebra.Lattice.Orbifold.P48qPrimeToThreeReducibility
