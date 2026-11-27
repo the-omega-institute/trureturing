@@ -508,6 +508,84 @@ def limitedOmniscienceFromTakeLoop (loop : type_of% (@Take.instIteratorLoop.{0,0
     Iter.toList_take_of_finite, List.getElem?_take, ite_eq_left (Nat.lt_succ_self _)]
   exact Iter.getElem?_toList_eq_atIdxSlow?
 
+private def stopAt (g : Nat → Bool) (k : Nat) : Option Nat :=
+  if g k then none else some k
+
+@[instance_reducible] private def signalRange (g : Nat → Bool) : Std.PRange.UpwardEnumerable Nat where
+  succ? k := stopAt g (k + 1)
+  succMany?
+    | 0, k => some k
+    | n + 1, k => stopAt g (k + (n + 1))
+
+private theorem signalRangeLaw {g : Nat → Bool} (sticky : ∀ k, g k = true → g (k+1) = true) :
+    @Std.PRange.LawfulUpwardEnumerable Nat (signalRange g) := by
+  letI := signalRange g
+  constructor
+  · intro a b
+    rintro ⟨n, h⟩ rfl
+    change stopAt g (a + (n+1)) = some a at h
+    unfold stopAt at h
+    split at h
+    · cases h
+    · have := Option.some.inj h
+      omega
+  · intro; rfl
+  · intro n a
+    cases n with
+    | zero => rfl
+    | succ n =>
+      change stopAt g (a + (n+1) + 1) = (stopAt g (a + (n+1))).bind (fun k => stopAt g (k+1))
+      unfold stopAt
+      cases h : g (a + (n+1)) with
+      | false => rfl
+      | true => rw [sticky _ h]; rfl
+
+private theorem signalRangeFinite {g : Nat → Bool} (sticky : ∀ k, g k = true → g (k+1) = true)
+    {n : Nat} (hit : g n = true) : @Rxi.IsAlwaysFinite Nat (signalRange g) := by
+  letI := signalRange g
+  constructor
+  intro k
+  refine ⟨n+1, ?_⟩
+  change stopAt g (k + (n+1)) = none
+  unfold stopAt
+  rw [signal_after sticky hit (by omega : n ≤ k + (n+1))]
+  rfl
+
+/-- A right-unbounded range can enumerate a Boolean search up to its first signal. -/
+def limitedOmniscienceFromUnboundedRange (loop : type_of% (@Rxi.Iterator.instIteratorLoop.{0,0}))
+    (correct : ∀ [en : Std.PRange.UpwardEnumerable Nat] [law : Std.PRange.LawfulUpwardEnumerable Nat]
+      [Rxi.IsAlwaysFinite Nat], @loop Nat en law Id _ = @Rxi.Iterator.instIteratorLoop Nat en law Id _)
+    (f : Nat → Bool) : Decidable (∃ n, f n = true) := by
+  let g := seen f
+  letI := signalRange g
+  letI := signalRangeLaw (seenSticky f)
+  letI := @Rxi.instIteratorIteratorIdOfUpwardEnumerable Nat (signalRange g)
+  let start (k : Nat) : Iter (α := Rxi.Iterator Nat) Nat := ⟨⟨stopAt g k⟩⟩
+  let len (k : Nat) :=
+    letI := @loop Nat (signalRange g) (signalRangeLaw (seenSticky f)) Id _
+    (start k).length
+  cases h : g (len 0) with
+  | true => exact isTrue (hit_of_seen f _ h)
+  | false =>
+    refine isFalse fun ⟨n, hit⟩ => ?_
+    have gHit := seen_of_hit f n hit
+    letI := signalRangeFinite (seenSticky f) gHit
+    have computed (k : Nat) : len k = (start k).toList.length := by
+      unfold len
+      have eq := congrArg (fun inst : IteratorLoop (Rxi.Iterator Nat) Id Id =>
+        @Iter.length _ _ _ inst (start k)) (@correct (signalRange g) (signalRangeLaw (seenSticky f)) _)
+      letI := @Rxi.Iterator.instIteratorLoop Nat (signalRange g) (signalRangeLaw (seenSticky f)) Id _
+      exact eq.trans (@Iter.length_toList_eq_length _ _ _ _ (@Rxi.Iterator.instIteratorLoop Nat (signalRange g) (signalRangeLaw (seenSticky f)) Id _)
+        (@Rxi.Iterator.instLawfulIteratorLoop Nat (signalRange g) (signalRangeLaw (seenSticky f)) Id _ _) (start k)).symm
+    have unroll (k : Nat) : len k = (match g k with | true => 0 | false => (len (k+1)).succ) := by
+      rw [computed, @Rxi.Iterator.toList_eq_match Nat (signalRange g) _ (signalRangeLaw (seenSticky f)) (start k)]
+      dsimp only [start]
+      cases e : g k with
+      | false => simp only [stopAt, e, Bool.false_eq_true, ite_false]; exact congrArg Nat.succ (computed _).symm
+      | true => simp only [stopAt, e, ite_true]; rfl
+    have result := length_hits (seenSticky f) gHit len unroll 0
+    exact Bool.noConfusion (h.symm.trans (by simpa only [Nat.zero_add] using result))
+
 end Collector
 
 end OmegaChecks.InitBoundaries

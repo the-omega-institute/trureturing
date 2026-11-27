@@ -442,6 +442,9 @@ private def conditionalConsequence? (owner name : Name) : Option (String × Name
     | `Init.Data.Iterators.Combinators.Monadic.FlatMap, ``Std.Iterators.Types.Flatten.instIteratorLoop =>
       some (``OmegaChecks.InitBoundaries.Collector.limitedOmniscienceFromFlattenLoop,
         "the official result of the identity-monad flattening loop for finite outer and inner iterators")
+    | `Init.Data.Range.Polymorphic.RangeIterator, ``Std.Rxi.Iterator.instIteratorLoop =>
+      some (``OmegaChecks.InitBoundaries.Collector.limitedOmniscienceFromUnboundedRange,
+        "the official identity-monad loop on natural numbers with a finite successor enumeration")
     | `Init.Data.Iterators.Combinators.Monadic.Take, ``Std.Iterators.Types.Take.instIteratorLoop =>
       some (``OmegaChecks.InitBoundaries.Collector.limitedOmniscienceFromTakeLoop,
         "the official result of the identity-monad take loop")
