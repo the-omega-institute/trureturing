@@ -2,6 +2,8 @@ module
 public import Lean
 import Lean.Replay
 import all Lean.Util.CollectAxioms
+public import OmegaChecks.InitInventory.ChoiceOperands
+import all OmegaChecks.InitInventory.ChoiceOperands
 public import OmegaChecks.InitInventory.Traversal
 import all OmegaChecks.InitInventory.Traversal
 public import OmegaChecks.InitInventory.MacroReferences
@@ -108,6 +110,7 @@ private def replayWitnesses (env : Environment) : IO Unit := do
     IntegerCancellation.witnesses.map (fun row => row.2.2) ++
     WeakRingOrder.witnesses.map (fun row => row.2.2) ++
     [``MonadicTraversal.fromListFoldl, ``MonadicTraversal.fromListFoldr, ``ArrayLoopCongruence.listForInCongr] ++
+    [``ChoiceOperands.fromChoice] ++
     [``TransformerLaws.MapAfterBind.funextFromMapBind, ``TransformerLaws.MapAfterBind.funextFromScanlCons] ++
     [``TransformerLaws.FiniteFold.funextOfMoveUnit, ``TransformerLaws.FiniteFold.funextOfRepeatUnit] ++
     [``EnvelopeOrder.propextFromRingLift, ``EnvelopeOrder.propextFromModuleLift,

@@ -609,7 +609,7 @@ private def inventory (lib : System.FilePath) (visible strict full : Environment
   let mut directAxioms := 0
   let mut withAxioms := 0
   if let some file := gaps then
-    file.putStrLn "module\tdeclaration\tkind\tunsafe\tpartial\tupstreamAxioms\timpliesAxiom\treductionWitness\tlogicalConsequence\tlogicalConsequenceWitness\trequiredBehavior\tabstractedDependency\truntimeConflictWitness"
+    file.putStrLn "module\tdeclaration\tkind\tunsafe\tpartial\tupstreamAxioms\timpliesAxiom\treductionWitness\tlogicalConsequence\tlogicalConsequenceWitness\trequiredBehavior\tabstractedDependency\truntimeConflictWitness\tequationOperand\toperandImpliesAxiom\toperandReductionWitness"
   for owner in modules do
     let some idx := visible.getModuleIdx? owner | throwError "missing official module {owner}"
     let publicNames := visible.header.moduleData[idx]!.constNames.filter publicName
@@ -630,6 +630,7 @@ private def inventory (lib : System.FilePath) (visible strict full : Environment
       let some info := localDecls.find? name | throwError "missing declaration {owner}/{name}"
       let some (_, axioms) := localAxioms.binSearch (name, #[]) (fun a b => Name.quickLt a.1 b.1)
         | throwError "missing official axiom closure for {owner}/{name}"
+      let operand := OmegaChecks.InitBoundaries.ChoiceOperands.operand? owner info
       let conditional := conditionalConsequence? owner name
       let consequence := (logicalConsequence? owner name).map (fun (target, witness) => (target.toString, witness))
         <|> conditional.map (fun (target, witness, _) => (target, witness))
@@ -655,7 +656,8 @@ private def inventory (lib : System.FilePath) (visible strict full : Environment
             String.intercalate "," (axioms.toList.map Name.toString),
             (boundary.map (·.1.toString)).getD "", (boundary.map (·.2.toString)).getD "",
             (consequence.map Prod.fst).getD "", (consequence.map (·.2.toString)).getD "", behavior.getD "",
-            selector.getD "", runtimeConflict.getD ""]
+            selector.getD "", runtimeConflict.getD "", (operand.map (·.name.toString)).getD "",
+            (operand.map fun _ => (``Classical.choice).toString).getD "", (operand.map (·.witness.toString)).getD ""]
       if info.isAxiom then
         directAxioms := directAxioms + 1
         axiomUnique := axiomUnique.insert name
@@ -675,6 +677,10 @@ private def inventory (lib : System.FilePath) (visible strict full : Environment
         ("strictModule", toJson (strictOwner.map Name.toString))]
       let row := match selector with
         | some dep => row.setObjVal! "abstractedDependency" (toJson dep)
+        | none => row
+      let row := match operand with
+        | some op => row.mergeObj <| Json.mkObj [("equationOperand", toJson op.name.toString),
+            ("operandImpliesAxiom", toJson (``Classical.choice).toString), ("operandReductionWitness", toJson op.witness.toString)]
         | none => row
       let row := match runtimeConflict with
         | some witness => row.setObjVal! "runtimeConflictWitness" (toJson witness)

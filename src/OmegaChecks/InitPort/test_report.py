@@ -61,6 +61,11 @@ class CoverageTest(unittest.TestCase):
             with self.subTest(mismatch=mismatch), self.assertRaisesRegex(ValueError, "runtime conflict"):
                 check_coverage(inventory({**observed, **mismatch}))
 
+    def test_equation_operand_does_not_resolve_the_equation(self):
+        equation = site("Init.While", "Classical.choice.congr_simp", equationOperand="Classical.choice",
+                        operandImpliesAxiom="Classical.choice", operandReductionWitness="fromChoice")
+        self.assertEqual(check_coverage(inventory(equation)), (0, [("Init.While", "Classical.choice.congr_simp")]))
+
     def test_refuse_duplicate_definition_site(self):
         with self.assertRaisesRegex(ValueError, "repeated official definition site"):
             check_coverage(inventory(site("Init.A", "t"), site("Init.A", "t")))
