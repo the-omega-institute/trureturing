@@ -6,7 +6,7 @@ internal sealed class PauliDiagonalPPTTomographyDocument : IScribeDocumentDefini
 {
     private const string Module = "D5/S3/Quantum/ProcessReconstruction/PauliDiagonalPPTTomography.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/QuantumChannels/singh2026boundtomography");
+        LibraryNoteRef.Create("D5/L/ProcessReconstruction/singh2026boundtomography");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Sharp worst-direction conditioning for process tomography with four-dimensional Pauli-diagonal PPT probes.",
