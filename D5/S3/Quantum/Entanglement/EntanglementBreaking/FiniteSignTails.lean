@@ -92,8 +92,6 @@ theorem signLinearForm_tail {ι : Type*} [Fintype ι] (a : ι → ℝ) {t : ℝ}
   simpa only [NNReal.coe_sum, NNReal.coe_pow, coe_nnnorm, Real.norm_eq_abs, sq_abs]
     using subgaussian_abs_tail (signLinearForm_hasSubgaussianMGF a) ht
 
-/-- At positive thresholds the zero-energy tail has probability zero. -/
-/-- At nonpositive thresholds the absolute-value event is the whole cube. -/
 private theorem signLinearForm_hasSubgaussianMGF_le {ι : Type*} [Fintype ι]
     (a : ι → ℝ) {c : ℝ≥0} (ha : ∑ i, a i ^ 2 ≤ (c : ℝ)) :
     HasSubgaussianMGF (signLinearForm a) c (signCubeMeasure ι) := by
