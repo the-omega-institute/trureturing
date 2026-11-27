@@ -1,3 +1,11 @@
+/- GID: D5/S3/Fourier/Concentration/CauchyPairEnergy
+   generality: I
+   mirror-B: D5/B/S3/Fourier/Concentration/CauchyPairEnergy
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Localization of the Cauchy-smoothed energy gives a finite Lorentz pair-sum lower bound. -/
+
 import D5.S3.Analytic.ShiftedXiPoisson.ShiftedPoissonSemigroup
 import Mathlib.Analysis.Convolution
 import Mathlib.Analysis.SpecialFunctions.Integrals.Basic

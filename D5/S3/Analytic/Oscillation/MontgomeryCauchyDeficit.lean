@@ -1,3 +1,11 @@
+/- GID: D5/S3/Analytic/Oscillation/MontgomeryCauchyDeficit
+   generality: I
+   mirror-B: D5/B/S3/Analytic/Oscillation/MontgomeryCauchyDeficit
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: An upper Montgomery pair-sum bound strictly below the Cauchy threshold yields a fractional phase deficit. -/
+
 import D5.S3.Analytic.Oscillation.MontgomeryWindow
 import D5.S3.Fourier.Concentration.CauchyPairEnergy
 import D5.S3.Analytic.Asymptotics.DirichletPolynomialMeanSquare
