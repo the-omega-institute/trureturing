@@ -39,6 +39,8 @@ private def isFloatCall (source : Environment) (owner name : Name) : Bool := Id.
   unless [`OmegaInit.Data.Float.Float, `OmegaInit.Data.Float.Float32].contains owner do return false
   let some ci := source.find? name | return false
   unless (ci matches .defnInfo _ | .opaqueInfo _) && isExtern source name do return false
+  if (float? name.getPrefix).isSome &&
+      [`toModel, `scaleB, `toString, `frExp].contains (name.updatePrefix .anonymous) then return true
   let mut ty := ci.type
   let mut sawFloat := false
   while let .forallE _ dom body _ := ty do
@@ -261,6 +263,32 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
     checkFloatLayout strict dom
     unless ret == t && result == .tobject do throw <| IO.userError s!"incorrect float result at {n}"
     pure ("lean_obj_res", s!"omega_{f}_to_nat_bits({call})")
+  else if (float? official.getPrefix).isSome && official == official.getPrefix ++ `toModel then do
+    let model := official.getPrefix ++ `Model
+    let single := official.getPrefix == `Float32
+    checkFloatLayout strict official.getPrefix
+    unless dom == model && ret == (if single then .uint32 else .uint64) && result == .tobject do
+      throw <| IO.userError s!"unexpected IEEE model result at {n}"
+    let toNat := if single then "lean_uint32_to_nat" else "lean_uint64_to_nat"
+    pure ("lean_obj_res", s!"{toNat}({call})")
+  else if (float? official.getPrefix).isSome && official == official.getPrefix ++ `frExp then do
+    let floatType := official.getPrefix
+    unless type == mkApp2 (mkConst `Prod [.zero, .zero]) (mkConst floatType) (mkConst `Int) &&
+        ret == .object && result == .object do throw <| IO.userError s!"unexpected fraction/exponent result at {n}"
+    checkIntLayout strict
+    for (env, ctor) in [(source, `Prod.mk), (strict, `Omega.Prod.mk)] do
+      let some l := ctorLayoutExt.find? env ctor | throw <| IO.userError s!"missing {ctor}"
+      let #[.object 0 _, .object 1 _] := l.fieldInfo | throw <| IO.userError s!"unexpected fields in {ctor}"
+      unless l.ctorInfo.cidx == 0 && l.ctorInfo.size == 2 && l.ctorInfo.ssize == 0 && l.ctorInfo.usize == 0 do
+        throw <| IO.userError s!"unexpected product layout at {ctor}"
+    let width := if floatType == `Float32 then "float32" else "float"
+    prepare := prepare ++ s!"  lean_object *parts = {call};\n"
+    prepare := prepare ++ s!"  lean_object *bits = omega_{width}_to_nat_bits(lean_unbox_{width}(lean_ctor_get(parts, 0)));\n"
+    prepare := prepare ++ "  lean_object *exponent = lean_ctor_get(parts, 1);\n  uint8_t neg = lean_int_lt(exponent, lean_box(0));\n"
+    prepare := prepare ++ "  lean_object *mag = lean_nat_abs(exponent);\n  if (neg) { lean_object *pred = lean_nat_pred(mag); lean_dec(mag); mag = pred; }\n"
+    prepare := prepare ++ "  lean_object *integer = lean_alloc_ctor(neg, 1, 0);\n  lean_ctor_set(integer, 0, mag);\n"
+    prepare := prepare ++ "  lean_object *pair = lean_alloc_ctor(0, 2, 0);\n  lean_ctor_set(pair, 0, bits);\n  lean_ctor_set(pair, 1, integer);\n  lean_dec(parts);\n"
+    pure ("lean_obj_res", "pair")
   else if dom == `Subtype && official == `System.Platform.getNumBits then do
     let some (some field) := impureTrivialStructureInfoExt.find? strict `Omega.Subtype
       | throw <| IO.userError "missing platform width subtype layout"
