@@ -102,7 +102,7 @@ def compile_tasks(stage, product, artifact, inventory, raw):
         run("lean", "-R", STRICT_SOURCES, "-c", consumer, STRICT_SOURCES / "TaskConsumer.lean",
             env={**os.environ, "LEAN_PATH": str(artifact)})
         app = stage / "task-consumer"
-        run("leanc", consumer, obj, HERE / "task_consumer.c", "-o", app)
+        run("leanc", consumer, obj, HERE / "consumers" / "task_consumer.c", "-o", app)
         run(app)
 
 
@@ -137,7 +137,7 @@ def check_state_consumer(stage, artifact, tool, filename, objects):
     run("lean", "-R", STRICT_SOURCES, "-c", consumer, STRICT_SOURCES / (tool + "Consumer.lean"),
         env={**os.environ, "LEAN_PATH": str(artifact)})
     app = stage / (filename + "-consumer")
-    run("leanc", consumer, *objects, HERE / (filename + "_consumer.c"), "-o", app)
+    run("leanc", "-I", HERE, consumer, *objects, HERE / "consumers" / (filename + "_consumer.c"), "-o", app)
     run(app)
 
 
@@ -164,7 +164,7 @@ def compile_type_name(stage, product, artifact, inventory):
         run("lean", "-R", STRICT_SOURCES, "-c", consumer, STRICT_SOURCES / "TypeNameConsumer.lean",
             env={**os.environ, "LEAN_PATH": str(artifact)})
         app = stage / "type-name-consumer"
-        run("leanc", consumer, obj, HERE / "type_name_consumer.c", "-o", app)
+        run("leanc", consumer, obj, HERE / "consumers" / "type_name_consumer.c", "-o", app)
         run(app)
 
 

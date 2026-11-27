@@ -14,7 +14,7 @@ def check_paths(stage, library, path_object, io_object):
         env={**os.environ, "LEAN_PATH": str(library)})
     native = test / "consumer"
     run("leanc", "-I", HERE, source, path_object, *([io_object] if io_object.is_file() else []),
-        HERE / "path_io_consumer.c", "-o", native)
+        HERE / "consumers" / "path_io_consumer.c", "-o", native)
     shim_c = test / "extern.c"
     run("lake", "env", "lean", "--run", HERE / "PathIONative.lean", "--interpreter", library, shim_c)
     shim = test / ("extern" + (sysconfig.get_config_var("SHLIB_SUFFIX") or ".so"))

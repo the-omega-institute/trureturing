@@ -154,7 +154,7 @@ def compile_generated(stage, product, graph, seed_ir, owners=None, *, original_s
             run("lean", "-R", STRICT_SOURCES, "-c", macro_client, STRICT_SOURCES / "MacroMethodsConsumer.lean",
                 env={**os.environ, "LEAN_PATH": str(library)})
             app = stage / "check-macro-methods"
-            run("leanc", macro_source, macro_client, HERE / "macro_methods_consumer.c", "-o", app)
+            run("leanc", macro_source, macro_client, HERE / "consumers" / "macro_methods_consumer.c", "-o", app)
             run(app)
             if literals.is_file():
                 combined = product / "native/literal.o"
@@ -250,7 +250,7 @@ def compile_generated(stage, product, graph, seed_ir, owners=None, *, original_s
         else:
             inputs = dependency_objects(dependencies)
         application = stage / "check-string-list"
-        run("leanc", "-I", HERE, list_client, HERE / "string_list_consumer.c", *inputs, "-o", application)
+        run("leanc", "-I", HERE, list_client, HERE / "consumers" / "string_list_consumer.c", *inputs, "-o", application)
         run(application)
         shim = stage / ("string-extern" + (sysconfig.get_config_var("SHLIB_SUFFIX") or ".so"))
         if complete and check_decoding:
@@ -275,7 +275,7 @@ def compile_generated(stage, product, graph, seed_ir, owners=None, *, original_s
             run("lean", "-R", STRICT_SOURCES, "-c", client, STRICT_SOURCES / "ListSearchConsumer.lean",
                 env={**os.environ, "LEAN_PATH": str(library)})
             application = stage / "check-list-search"
-            run("leanc", client, HERE / "list_search_consumer.c", *dependency_objects(dependencies), "-o", application)
+            run("leanc", client, HERE / "consumers" / "list_search_consumer.c", *dependency_objects(dependencies), "-o", application)
             run(application)
     bootstrap = "OmegaInit.Data.String.Bootstrap"
     if check_bootstrap and bootstrap in objects and literals.is_file():
@@ -285,7 +285,7 @@ def compile_generated(stage, product, graph, seed_ir, owners=None, *, original_s
             run("lean", "-R", STRICT_SOURCES, "-c", client, STRICT_SOURCES / "StringBootstrapConsumer.lean",
                 env={**os.environ, "LEAN_PATH": str(library)})
             application = stage / "check-string-bootstrap"
-            run("leanc", "-I", HERE, client, HERE / "string_bootstrap_consumer.c", *dependency_objects(dependencies),
+            run("leanc", "-I", HERE, client, HERE / "consumers" / "string_bootstrap_consumer.c", *dependency_objects(dependencies),
                 "-o", application)
             run(application)
     rat_owner = "OmegaInit.Data.Rat.Basic"
@@ -298,7 +298,7 @@ def compile_generated(stage, product, graph, seed_ir, owners=None, *, original_s
             run("lean", "-R", STRICT_SOURCES, "-c", client, STRICT_SOURCES / "RatFormatConsumer.lean",
                 env={**os.environ, "LEAN_PATH": str(library)})
             application = stage / "check-rat-format"
-            run("leanc", "-I", HERE, client, HERE / "rat_format_consumer.c", *dependency_objects(dependencies),
+            run("leanc", "-I", HERE, client, HERE / "consumers" / "rat_format_consumer.c", *dependency_objects(dependencies),
                 "-o", application)
             run(application)
     if not set(CONTROL).issubset(selected):
@@ -339,6 +339,6 @@ def compile_generated(stage, product, graph, seed_ir, owners=None, *, original_s
             env={**os.environ, "LEAN_PATH": str(library)})
         extra += ["-DOMEGA_TEST_LITERALS", client]
     app = sources / "consumer"
-    run("leanc", consumer, HERE / "generated_control_consumer.c", *extra, *inputs, "-o", app)
+    run("leanc", "-I", HERE, consumer, HERE / "consumers" / "generated_control_consumer.c", *extra, *inputs, "-o", app)
     run(app)
     return inputs
