@@ -12,6 +12,7 @@ P48pFrameLatticeAction proves Gram preservation for the integral catalogue maps.
 No group-classification or dense-rank argument is used here.
 -/
 
+import D5.S3.VertexAlgebra.Lattice.Orbifold.P48pFrameData
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48pFramePositive
 import Mathlib.Data.Matrix.Basic
 import Mathlib.Tactic
@@ -26,16 +27,18 @@ open P48pSyndromeFrame (p48pGram p48pFrameRows)
 open private mul_eq_of_dotProductRows from
   D5.S3.VertexAlgebra.Lattice.Orbifold.P48qGramCertificate
 
-private def tIndex : Fin 48 → Fin 48 := ![0, 25, 4, 39, 35, 17, 21, 43, 44, 33, 18, 3, 36, 1, 32, 5, 16, 22, 38, 10, 46, 41, 47, 9, 30, 12, 29, 6, 11, 40, 45, 27, 15, 28, 8, 19, 23, 24, 37, 20, 42, 26, 34, 14, 2, 31, 7, 13]
-private def tSign : Fin 48 → ℤ := ![1, 1, 1, -1, -1, 1, -1, 1, -1, -1, 1, -1, -1, 1, -1, 1, 1, -1, 1, -1, -1, 1, 1, 1, -1, -1, 1, -1, -1, -1, -1, -1, -1, -1, 1, 1, -1, 1, -1, 1, 1, -1, 1, 1, -1, 1, -1, -1]
-private def uIndex : Fin 48 → Fin 48 := ![19, 1, 29, 17, 30, 36, 2, 22, 6, 32, 10, 46, 47, 20, 15, 3, 13, 7, 0, 41, 14, 24, 9, 43, 40, 16, 18, 26, 5, 4, 34, 44, 12, 11, 38, 31, 39, 21, 35, 23, 45, 42, 8, 33, 37, 27, 25, 28]
-private def uSign : Fin 48 → ℤ := ![1, 1, 1, 1, 1, 1, 1, 1, 1, -1, 1, -1, -1, 1, 1, 1, 1, -1, 1, -1, 1, 1, 1, 1, 1, -1, -1, -1, 1, 1, -1, -1, 1, 1, 1, 1, -1, 1, 1, 1, 1, 1, 1, -1, 1, -1, -1, 1]
+open private tIndex tSign uIndex uSign from
+  D5.S3.VertexAlgebra.Lattice.Orbifold.P48pFrameData
 
-def signedFrameMatrix (index : Fin 48 → Fin 48) (sign : Fin 48 → ℤ) :
-    Matrix (Fin 48) (Fin 48) ℤ := fun i j => if index i = j then sign i else 0
+private abbrev frameData_tIndex : Fin 48 → Fin 48 := tIndex
+private abbrev frameData_tSign : Fin 48 → ℤ := tSign
+private abbrev frameData_uIndex : Fin 48 → Fin 48 := uIndex
+private abbrev frameData_uSign : Fin 48 → ℤ := uSign
 
-def tFrameMatrix : Matrix (Fin 48) (Fin 48) ℤ := signedFrameMatrix tIndex tSign
-def uFrameMatrix : Matrix (Fin 48) (Fin 48) ℤ := signedFrameMatrix uIndex uSign
+private abbrev tIndex : Fin 48 → Fin 48 := frameData_tIndex
+private abbrev tSign : Fin 48 → ℤ := frameData_tSign
+private abbrev uIndex : Fin 48 → Fin 48 := frameData_uIndex
+private abbrev uSign : Fin 48 → ℤ := frameData_uSign
 
 /-- `(seed, orbit size, sign consistency)` for the six pair orbits. -/
 def pairOrbitCertificate : List ((Nat × Nat) × Nat × Bool) :=

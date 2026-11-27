@@ -54,7 +54,7 @@ open private mem_fixedStates_iff lift_fixed fixedProjection fixedProjection_fixe
 open private gram_det_unit from
   D5.S3.VertexAlgebra.Lattice.Orbifold.P48qConformalVectorDecomposition
 open private left_grade_projection_pairing from
-  D5.S3.VertexAlgebra.FixedGradedDuality
+  D5.S3.VertexAlgebra.Lattice.FixedGradedDuality
 
 noncomputable section
 
@@ -221,7 +221,8 @@ abbrev fixedGrade (d : ℤ) : Submodule ℂ NativeStates :=
 
 /-- The original BPZ form restricted to the cubic fixed grade. -/
 def fixedGradeForm (d : ℤ) : LinearMap.BilinForm ℂ (fixedGrade d) :=
-  B.restrict (fixedGrade d)
+  LinearMap.BilinForm.comp (sourcePairing lattice)
+    (fixedGrade d).subtype (fixedGrade d).subtype
 
 private theorem sourcePairing_fixedProjection (u : fixedStates) (v : NativeStates) :
     B u.val (fixedProjection v) = B u.val v := by
@@ -249,21 +250,25 @@ theorem fixedGradeForm_nondegenerate (d : ℤ) : (fixedGradeForm d).Nondegenerat
       rw [sourceLZero_fixedProjection, hp, map_smul]
     let w : fixedGrade d :=
       ⟨fixedProjection p, (mem_fixedStates_iff _).mpr (fixedProjection_fixed p), hw⟩
+    have hproj : B u.val p = B u.val v :=
+      left_grade_projection_pairing lattice (sourcePairing lattice)
+        (fun (m n : ℤ) (x y : NativeStates) hx hy hne =>
+          sourcePairing_grade lattice m n hne x y hx hy)
+        d u.val u.property.2 v
     calc
-      B u.val v = B u.val p :=
-        (left_grade_projection_pairing lattice B
-          (fun m n x y hx hy hne => sourcePairing_grade lattice m n hne x y hx hy)
-          d u.val u.property.2 v).symm
+      B u.val v = B u.val p := hproj.symm
       _ = B u.val (fixedProjection p) :=
         (sourcePairing_fixedProjection ⟨u.val, u.property.1⟩ p).symm
-      _ = 0 := hu w
+      _ = 0 := by
+        simpa only [fixedGradeForm, LinearMap.BilinForm.comp_apply, Submodule.subtype_apply, w]
+          using hu w
   refine ⟨left, ?_⟩
   intro v hv
   apply left v
   intro u
-  change B v.val u.val = 0
+  simp only [fixedGradeForm, LinearMap.BilinForm.comp_apply, Submodule.subtype_apply]
   rw [sourcePairing_symmetric lattice v.val u.val]
-  exact hv u
+  simpa only [fixedGradeForm, LinearMap.BilinForm.comp_apply, Submodule.subtype_apply] using hv u
 
 end
 end D5.S3.VertexAlgebra.Lattice.Orbifold.P48qFixedSourceBPZ

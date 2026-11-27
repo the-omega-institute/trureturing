@@ -134,7 +134,7 @@ private theorem mode_aa (n : ℤ) (a b : fixedStates) :
   rw [map_zero]
 
 private theorem mode_am (n : ℤ) (a : fixedStates) (u : sector s) :
-    μ n (aIn a) (mIn u) = mIn ((fixedField s a)[[n]] u) := by
+    μ n (aIn a) (mIn u) = mIn (((fixedField s a)[[n]]) u) := by
   rw [mode_a]
   change (sourceMode n a 0, sectorMode s n a u) = (0, sectorMode s n a u)
   rw [map_zero]
@@ -221,8 +221,7 @@ private theorem pow_m (j : ℕ) (u : sector s) :
   | zero => simp only [pow_zero, Module.End.one_apply]
   | succ j ih =>
     simp only [pow_succ', Module.End.mul_apply, ih]
-    change (sourceTranslation 0, _) = ((0 : fixedStates), _)
-    rw [map_zero]
+    simp only [mixedTranslation, LinearMap.prodMap_apply, LinearMap.inr_apply, map_zero]
 
 private theorem smul_m (z : ℂ) (u : sector s) : z • mIn u = mIn (z • u) :=
   (map_smul mIn z u).symm
@@ -246,30 +245,33 @@ private theorem skew_ma (u : sector s) (a : fixedStates) : SkewAt μ T (mIn u) (
     rw [epsilon, show -(n + (j : ℤ)) - 1 = -(n + j + 1) by omega,
       zpow_neg, ← inv_zpow]
     norm_num
-  simp only [rightTerm, reversalTerm, hindex, hsign, fixedInsertion_coeff, div_eq_mul_inv,
-    VertexOperator.ncoeff_apply]
+  simp only [rightTerm, reversalTerm, fixedInsertion_coeff, VertexOperator.ncoeff_apply,
+    hindex, hsign, div_eq_mul_inv]
 
 private theorem defect_aam (a b : fixedStates) (u : sector s) (p q r : ℤ) :
     defect μ (aIn a) (aIn b) (mIn u) p q r = 0 := by
   obtain ⟨N, hcut, hB⟩ := fixedField_borcherds s a b
   have hIter :
       (∑ᶠ i : ℕ, integerBinomial p i •
-        (fixedField s (fixedProduct a b (r + i)))[[p + q - i]] u) =
+        ((fixedField s (fixedProduct a b (r + i)))[[p + q - i]]) u) =
       ∑ i ∈ Finset.range ((N : ℤ) - r).toNat, Ring.choose (p : ℂ) i •
-        (fixedField s (fixedProduct a b (r + i)))[[p + q - i]] u := by
+        ((fixedField s (fixedProduct a b (r + i)))[[p + q - i]]) u := by
     rw [finsum_range (N := ((N : ℤ) - r).toNat)]
     · simp only [choose_cast]
     · intro i hi
-      rw [hcut _ (by omega), map_zero, VertexOperator.ncoeff_apply,
-        Pi.zero_apply, LinearMap.zero_apply, smul_zero]
+      have hz : fixedProduct a b (r + i) = 0 := hcut _ (by omega)
+      simp only [hz, map_zero, Pi.zero_apply, LinearMap.zero_apply, smul_zero]
   simp only [defect, product, iterate, mode_aa, mode_am, smul_m, ← sum_m, ← map_sub]
   rw [hIter, hB p q r u, sub_self, map_zero]
 
 private theorem finite_of_inr {f : ℕ → sector s}
     (h : Function.HasFiniteSupport (fun i => mIn (f i))) : Function.HasFiniteSupport f := by
   apply h.subset
-  intro i hi hz
-  exact hi (LinearMap.inr_injective (hz.trans (map_zero mIn).symm))
+  intro i hi
+  change f i ≠ 0 at hi
+  change mIn (f i) ≠ 0
+  rw [← map_zero mIn]
+  exact fun hz => hi (LinearMap.inr_injective hz)
 
 /-- Mixed Borcherds for the actual right insertion in each cubic rotation sector.
 The iterate and the two product summands have finite support individually. -/
@@ -277,16 +279,16 @@ theorem rightInsertion_borcherds (a b : fixedStates) (u : sector s) (p q r : ℤ
     let R (n : ℤ) (v : sector s) (c : fixedStates) :=
       (rightInsertion s v c).coeff (-n - 1)
     let left : ℕ → sector s := fun i =>
-      integerBinomial p i • R (p + q - i) ((fixedField s a)[[r + i]] u) b
+      integerBinomial p i • R (p + q - i) (((fixedField s a)[[r + i]]) u) b
     let first : ℕ → sector s := fun i =>
-      ((-1 : ℂ) ^ i * integerBinomial r i) • (fixedField s a)[[p + r - i]] (R (q + i) u b)
+      ((-1 : ℂ) ^ i * integerBinomial r i) • ((fixedField s a)[[p + r - i]]) (R (q + i) u b)
     let second : ℕ → sector s := fun i =>
       ((-1 : ℂ) ^ i * integerBinomial r i) •
         (epsilon r • R (q + r - i) u (fixedProduct a b (p + i)))
     Function.HasFiniteSupport left ∧ Function.HasFiniteSupport first ∧
       Function.HasFiniteSupport second ∧
         (∑ᶠ i : ℕ, left i) = ∑ᶠ i : ℕ, ((-1 : ℂ) ^ i * integerBinomial r i) •
-          ((fixedField s a)[[p + r - i]] (R (q + i) u b) -
+          (((fixedField s a)[[p + r - i]]) (R (q + i) u b) -
             epsilon r • R (q + r - i) u (fixedProduct a b (p + i))) := by
   have hzero : defect μ (aIn a) (mIn u) (aIn b) p q r = 0 := by
     rw [(defect_swap_last μ (truncation s) (aIn a) (mIn u) (aIn b) p q r

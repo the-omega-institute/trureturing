@@ -36,8 +36,14 @@ def sectorHomSpace (r s : Fin 3) : Submodule ℂ (sector r →ₗ[ℂ] sector s)
   carrier := {f | ∀ (a : fixedStates) (n : ℤ) (v : sector r),
     f (C (fixedField r a) n v) = C (fixedField s a) n (f v)}
   zero_mem' := by simp
-  add_mem' := by intro f g hf hg a n v; simp [hf a n v, hg a n v]
-  smul_mem' := by intro c f hf a n v; simp [hf a n v]
+  add_mem' := by
+    intro f g hf hg a n v
+    simp only [LinearMap.add_apply, map_add]
+    exact congrArg₂ (· + ·) (hf a n v) (hg a n v)
+  smul_mem' := by
+    intro c f hf a n v
+    simp only [LinearMap.smul_apply, map_smul]
+    exact congrArg (c • ·) (hf a n v)
 
 private def groundVector : sector 0 := ⟨vacuum, vacuum_mem_sector_zero⟩
 
@@ -81,7 +87,8 @@ theorem ground_weight_occurs_iff (s : Fin 3) :
     have hζ : IsPrimitiveRoot ζ 3 :=
       IsPrimitiveRoot.coe_units_iff.mpr ThirdTwistedChargeCocycle.zeta_primitive
     apply Fin.ext
-    exact hζ.pow_inj s.isLt (by decide : (0 : ℕ) < 3) (by simpa only [pow_zero] using hphase)
+    exact hζ.pow_inj s.isLt (by decide : (0 : ℕ) < 3)
+      (by simpa only [Fin.val_zero, pow_zero] using hphase)
   · rintro rfl
     exact ⟨groundVector, groundVector_ne_zero, fixedConformal_groundVector⟩
 

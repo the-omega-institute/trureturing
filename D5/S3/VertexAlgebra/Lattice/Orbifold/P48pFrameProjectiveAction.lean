@@ -7,7 +7,7 @@
    digest: The two signed P48p frame generators act as two copies of the quadratic-character projective action of SL(2,23). -/
 
 import Batteries.Tactic.OpenPrivate
-import D5.S3.VertexAlgebra.Lattice.Orbifold.P48pSymmetricCommutantCertificate
+import D5.S3.VertexAlgebra.Lattice.Orbifold.P48pFrameData
 import Mathlib.Algebra.Group.Subgroup.Ker
 import Mathlib.Data.Fintype.EquivFin
 import Mathlib.Data.Fintype.Option
@@ -34,7 +34,8 @@ namespace D5.S3.VertexAlgebra.Lattice.Orbifold.P48pFrameProjectiveAction
 
 open scoped Matrix
 open P48pSymmetricCommutantCertificate
-open private tIndex tSign uIndex uSign in tFrameMatrix uFrameMatrix
+open private tIndex tSign uIndex uSign from
+  D5.S3.VertexAlgebra.Lattice.Orbifold.P48pFrameData
 
 abbrev F23 := ZMod 23
 abbrev SL23 := Matrix.SpecialLinearGroup (Fin 2) F23
@@ -156,8 +157,11 @@ def projectiveAction : SL23 →* Matrix Direction Direction ℤ where
     apply Matrix.ext
     intro d e
     change projectiveMatrix (g * h) d e = (projectiveMatrix g * projectiveMatrix h) d e
-    simp only [Matrix.mul_apply, projectiveMatrix, ite_mul, zero_mul, Finset.sum_ite_eq,
-      Finset.mem_univ, if_true, projectiveStep_mul, map_mul, mul_ite, mul_zero]
+    simp only [Matrix.mul_apply, projectiveMatrix, projectiveStep_mul, map_mul]
+    rw [Fintype.sum_eq_single (projectiveStep g d).1]
+    · simp only [ite_eq_left rfl, mul_ite, mul_zero]
+    · intro j hj
+      rw [ite_eq_right (Ne.symm hj), zero_mul]
 
 private theorem char_ne_two : ringChar F23 ≠ 2 := by
   rw [ZMod.ringChar_zmod_n]
@@ -196,7 +200,8 @@ theorem projectiveAction_injective : Function.Injective projectiveAction := by
   have hchar : quadraticChar F23 (g 0 0) = 1 := by
     have h := congrFun (congrFun hg (some 0 : Direction)) (some 0 : Direction)
     change projectiveMatrix g (some 0) (some 0) = _ at h
-    simpa only [projectiveMatrix, hfix, if_pos rfl, Matrix.one_apply_eq, hscale] using h
+    simpa only [projectiveMatrix, ite_eq_left (hfix (some 0)), Matrix.one_apply_eq, hscale]
+      using h
   have hdet := g.det_coe
   rw [Matrix.det_fin_two] at hdet
   have hsq : (g 0 0) ^ 2 = 1 := by
@@ -351,12 +356,14 @@ private theorem frameAction_of_transitions (g : SL23) (index : Fin 48 → Fin 48
   have hi := h i
   unfold Transition at hi
   obtain ⟨hc, hs⟩ := hi
-  have hd := congrArg Prod.fst hc
-  have hb := congrArg Prod.snd hc
+  have hd : (frameChart (index i)).1 = (projectiveStep g (frameChart i).1).1 :=
+    congrArg Prod.fst hc
+  have hb : (frameChart (index i)).2 = (frameChart i).2 :=
+    congrArg Prod.snd hc
   rw [frameAction_apply, signedFrameMatrix]
   by_cases hij : index i = j
   · subst j
-    rw [if_pos rfl, if_pos (And.intro hd.symm hb.symm)]
+    rw [ite_eq_left rfl, ite_eq_left (And.intro hd.symm hb.symm)]
     exact hs
   · rw [if_neg hij]
     refine if_neg ?_
