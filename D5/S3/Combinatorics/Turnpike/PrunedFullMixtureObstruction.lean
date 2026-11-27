@@ -28,6 +28,10 @@ theorem result : ¬ claim := by
   intro h
   exact not_mixture (h 7 9 y μ admissible ⟨ruler,realizes⟩ assignment full_feasible)
 
+/-- info: 'D5.S3.Combinatorics.Turnpike.PrunedFullMixtureObstruction.result' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound] -/
+#guard_msgs in
 #print axioms result
 end
 end D5.S3.Combinatorics.Turnpike.PrunedFullMixtureObstruction
