@@ -489,15 +489,21 @@ partial def visit (n : Name) : M Bool := do
       | return ← record n (.blocked "kernel rejected type name model")
     modify fun s => {s with env}
     return ← record n .added
-  if let some refOwner := OmegaChecks.InitPort.ReferenceSpecialization.consumerOwner? n then
-    let body ← match ci with
-      | .defnInfo d => OmegaChecks.InitPort.ReferenceSpecialization.consumerBody c.source c.referenceTemplates d
+  let referenceOwner := if n == OmegaChecks.InitPort.StateRunner.monotonicity then
+    some OmegaChecks.InitPort.StateRunner.owner else OmegaChecks.InitPort.ReferenceSpecialization.consumerOwner? n
+  if let some refOwner := referenceOwner then
+    let (type, body) ← match ci with
+      | .thmInfo th =>
+        let some type := OmegaChecks.InitPort.alternativeType? c.alternatives ci
+          | throw <| IO.userError s!"missing pointwise order interface for {n}"
+        pure (type, ← OmegaChecks.InitPort.StateRunner.monotonicityProof c.source c.referenceTemplates th type)
+      | .defnInfo d => pure (ci.type, ← OmegaChecks.InitPort.ReferenceSpecialization.consumerBody c.source c.referenceTemplates d)
       | .opaqueInfo _ =>
-        if n == OmegaChecks.InitPort.RandomState.refName then pure OmegaChecks.InitPort.RandomState.refBody
+        if n == OmegaChecks.InitPort.RandomState.refName then pure (ci.type, OmegaChecks.InitPort.RandomState.refBody)
         else throw <| IO.userError s!"unexpected opaque reference consumer {n}"
       | _ => throw <| IO.userError s!"unexpected reference consumer {n}"
     let models := c.referenceModels.getD refOwner #[]
-    let mut deps := usedConstants ci.type ++ usedConstants body
+    let mut deps := usedConstants type ++ usedConstants body
     for model in models do
       deps := deps ++ usedConstants model.type ++ usedConstants (model.value! (allowOpaque := true))
     for dep in deps do
@@ -509,7 +515,7 @@ partial def visit (n : Name) : M Bool := do
         | throw <| IO.userError s!"invalid private reference operation {model.name}"
       let .ok next ← checkWithRetry env decl c.maxHeartbeats | throw <| IO.userError s!"kernel rejected {model.name}"
       env := next
-    let .ok decl := translateDecl ci ci.type body | return ← record n (.blocked "invalid reference consumer")
+    let .ok decl := translateDecl ci type body | return ← record n (.blocked "invalid reference consumer")
     let .ok next ← checkWithRetry env decl c.maxHeartbeats | return ← record n (.blocked "kernel rejected specialized reference consumer")
     modify fun state => {state with env := next}
     return ← record n .added
