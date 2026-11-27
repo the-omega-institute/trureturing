@@ -56,6 +56,7 @@ def reductions : List (Name × Name × Name × Name) := [
   (`Init.Core, `Iff.subst, `propext, ``propextFromIffSubst),
   (`Init.Core, `Eq.propIntro, `propext, ``propextFromPropIntro),
   (`Init.Core, `instDecidableEqOfIff, `propext, ``ConstructorNormalization.propextOfDecision),
+  (`Init.Data.Option.Lemmas, `Option.choice, `Classical.choice, ``OptionSelector.fromSome),
   (`Init.Ext, `propext_iff, `propext, ``propextFromPropextIff),
   (`Init.Classical, `Classical.propComplete, `propext, ``propextFromPropComplete),
   (`Init.PropLemmas, `ite_iff_left_iff, `propext, ``propextFromIteIffLeft),
@@ -204,8 +205,13 @@ run_cmd
     let target ← getConstInfo axiomName
     let levels := proof.levelParams.map Level.param
     let targetLevels := levels.drop (levels.length - target.numLevelParams)
-    let expected ← if OptionSelector.usesSelector owner name then
-      Elab.Command.liftCoreM <| Meta.MetaM.run' <| optionLawReductionType source target levels
+    let expected ← if OptionSelector.usesSelector owner name || source.name == ``Option.choice then
+      let law ← if source.name == ``Option.choice then do
+        let some law := env.header.moduleData[idx]!.constants.find? (·.name == ``Option.isSome_choice)
+          | throwError "missing official presence law for {owner}/{name}"
+        pure law
+      else pure source
+      Elab.Command.liftCoreM <| Meta.MetaM.run' <| optionLawReductionType law target levels
     else if owner == `Init.Internal.Order.Basic && InternalOrder.implicationOrders.lookup name == some witness then
       Elab.Command.liftCoreM <| Meta.MetaM.run' <| orderReductionType source target
     else if source.name == ``instDecidableEqOfIff then

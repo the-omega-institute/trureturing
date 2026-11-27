@@ -412,7 +412,7 @@ private def conditionalConsequence? (owner name : Name) : Option (String × Name
     return ((``propext).toString, ``OmegaChecks.InitBoundaries.ConstructorNormalization.propextOfDecision,
       "A positive decision of p ↔ q produces a positive decision of p = q")
   if owner == `Init.Data.Option.Lemmas && name == ``Option.choice then
-    return ((``Classical.choice).toString, ``OmegaChecks.InitBoundaries.choiceFromOptionPresence,
+    return ((``Classical.choice).toString, ``OmegaChecks.InitBoundaries.OptionSelector.fromSome,
       "For every nonempty type, the selector returns some, as specified by Option.isSome_choice")
   if owner == `Init.Internal.Order.Basic then
     if name == ``Lean.Order.Example.find then
