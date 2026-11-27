@@ -174,6 +174,17 @@ private unsafe def install (source publicSource : Environment) (lib out : System
       if oldNative.contains n then throw <| IO.userError s!"native symbol collision at {n}"
     let file := modToFilePath out owner "c"
     emitOwner st.env owner part.imports ctx file
+    if words.any (fun n => OmegaChecks.InitPort.WordNative.usesPinnedFunction (originalName n)) then
+      let upstream := owner.replacePrefix `OmegaInit `Init
+      let init := mkModuleInitializationFunctionName (phases := .runtime) owner st.env.getModulePackage?
+      let upstreamInit := mkModuleInitializationFunctionName (phases := .runtime) upstream
+        (source.getModulePackageByIdx? (source.getModuleIdx? upstream).get!)
+      let generated ← IO.FS.readFile file
+      let decl := s!"LEAN_EXPORT lean_object* {init}(uint8_t builtin) \{"
+      let parts := generated.splitOn decl
+      let [before, after] := parts | throw <| IO.userError s!"missing runtime initializer {init}"
+      IO.FS.writeFile file <| before ++ s!"extern lean_obj_res {upstreamInit}(uint8_t);\n" ++ decl ++
+        s!"\nlean_obj_res upstream = {upstreamInit}(builtin);\nif (lean_io_result_is_error(upstream)) return upstream;\nlean_dec_ref(upstream);\n" ++ after
     unless words.isEmpty do
       IO.FS.withFile file .append fun h => do
         for n in words do h.putStr (← OmegaChecks.InitPort.WordNative.wrapper source st.env n)

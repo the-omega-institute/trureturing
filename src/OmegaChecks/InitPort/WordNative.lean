@@ -18,6 +18,9 @@ private def word? : Name → Option (String × IR.IRType)
   | `USize => some ("usize", .usize)
   | _ => none
 
+public def usesPinnedFunction (n : Name) : Bool :=
+  (word? n.getPrefix).isSome && [`pow, `ofInt].contains (n.updatePrefix .anonymous)
+
 public def supported (source : Environment) (owner name : Name) : Bool :=
   let method := name.updatePrefix .anonymous
   let widths := [`toUInt8, `toUInt16, `toUInt32, `toUInt64, `toUSize]
@@ -27,7 +30,8 @@ public def supported (source : Environment) (owner name : Name) : Bool :=
   let inOwner := [`OmegaInit.Prelude, `OmegaInit.Data.UInt.BasicAux, `OmegaInit.Data.UInt.Basic].contains owner
   let primitive := ((word? name.getPrefix).isSome && (ops ++ widths).contains method) ||
     (name.getPrefix == `Bool && widths.contains method)
-  (base || (inOwner && primitive)) && isExtern source name
+  ((base || (inOwner && primitive)) && isExtern source name) ||
+    (owner == `OmegaInit.Data.UInt.Basic && usesPinnedFunction name)
 
 private def symbol (n : Name) := "omega_word_" ++ (n.replacePrefix `Omega .anonymous).toString.replace "." "_"
 
@@ -48,14 +52,23 @@ private def layout (env : Environment) (name : Name) : IO Unit := do
 public def wrapper (source strict : Environment) (n : Name) : IO String := do
   let official := n.replacePrefix `Omega .anonymous
   let some ci := source.find? official | throw <| IO.userError s!"unknown word primitive {official}"
-  let some (.extern _ params ret ⟨[.standard `all target]⟩) := IR.findEnvDecl source official
-    | throw <| IO.userError s!"expected pinned C primitive for {official}"
+  let some impl := IR.findEnvDecl source official | throw <| IO.userError s!"no pinned IR for {official}"
+  let params := impl.params
+  let ret := impl.resultType
+  let target ← match impl with
+    | .extern _ _ _ ⟨[.standard `all entry]⟩ => pure entry
+    | .fdecl .. =>
+      unless usesPinnedFunction official && (getExportNameFor? source official).isNone do
+        throw <| IO.userError s!"unexpected compiled word function {official}"
+      pure (getSymbolStem source official)
+    | _ => throw <| IO.userError s!"expected pinned C primitive for {official}"
   let some (.extern _ actual result ⟨[.standard `all adapter]⟩) := IR.findEnvDecl strict n
     | throw <| IO.userError s!"missing strict C primitive for {n}"
   unless actual.size == params.size && adapter == symbol n do throw <| IO.userError s!"incorrect word ABI: {n}"
   let mut type := ci.type
   let mut decls := #[]
   let mut args := #[]
+  let mut prepare := ""
   let mut cleanup := ""
   for (a, b) in params.zip actual, i in [:params.size] do
     let .forallE _ dom body _ := type | throw <| IO.userError s!"expected argument {i} of {n}"
@@ -77,6 +90,18 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
       args := args.push arg
       if b.borrow && !a.borrow then throw <| IO.userError s!"borrowed Nat consumed at {n}"
       if a.borrow && !b.borrow then cleanup := cleanup ++ s!"  lean_dec({arg});\n"
+    else if dom == `Int && a.ty == .tobject && b.ty == .object && a.borrow then
+      for (ctor, tag) in [(`Omega.Int.ofNat, 0), (`Omega.Int.negSucc, 1)] do
+        let some l := ctorLayoutExt.find? strict ctor | throw <| IO.userError s!"missing {ctor}"
+        let #[.object 0 _] := l.fieldInfo | throw <| IO.userError s!"invalid integer field in {ctor}"
+        unless l.ctorInfo.cidx == tag && l.ctorInfo.size == 1 && l.ctorInfo.ssize == 0 && l.ctorInfo.usize == 0 do
+          throw <| IO.userError s!"unexpected integer constructor layout {ctor}"
+      decls := decls.push ((if b.borrow then "b_lean_obj_arg " else "lean_obj_arg ") ++ arg)
+      prepare := prepare ++ s!"  lean_object *mag = lean_ctor_get({arg}, 0);\n  lean_inc(mag);\n"
+      prepare := prepare ++ s!"  lean_object *value = lean_obj_tag({arg}) == 0 ? lean_nat_to_int(mag) : lean_int_neg_succ_of_nat(mag);\n"
+      args := args.push "value"
+      cleanup := cleanup ++ "  lean_dec(value);\n"
+      unless b.borrow do cleanup := cleanup ++ s!"  lean_dec({arg});\n"
     else if dom == `Bool && a.ty == .uint8 && b.ty == .uint8 then
       decls := decls.push ("uint8_t " ++ arg)
       args := args.push arg
@@ -96,8 +121,13 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
   else if dom == `Nat && (ret == .tobject || ret == .tagged) && result == .tobject then pure ("lean_obj_res", call)
   else if dom == `Decidable && ret == .uint8 && result == .uint8 then pure ("uint8_t", call)
   else throw <| IO.userError s!"unsupported result of {n}: {dom}/{ret}/{result}"
-  let proto := if official == `System.Platform.getNumBits then
-    "\nextern lean_obj_res lean_system_platform_nbits(lean_obj_arg);\n" else ""
-  return proto ++ s!"\nLEAN_EXPORT {output} {adapter}({String.intercalate ", " decls.toList}) \{\n  {output} r = {value};\n{cleanup}  return r;\n}\n"
+  let proto ← if usesPinnedFunction official then do
+    let some (width, _) := word? official.getPrefix | throw <| IO.userError "unknown word width"
+    let scalar := if width == "usize" then "size_t" else width ++ "_t"
+    let inputs := if official.updatePrefix .anonymous == `pow then scalar ++ ", b_lean_obj_arg" else "b_lean_obj_arg"
+    pure s!"\nextern {scalar} {target}({inputs});\n"
+  else if official == `System.Platform.getNumBits then
+    pure "\nextern lean_obj_res lean_system_platform_nbits(lean_obj_arg);\n" else pure ""
+  return proto ++ s!"\nLEAN_EXPORT {output} {adapter}({String.intercalate ", " decls.toList}) \{\n{prepare}  {output} r = {value};\n{cleanup}  return r;\n}\n"
 
 end OmegaChecks.InitPort.WordNative
