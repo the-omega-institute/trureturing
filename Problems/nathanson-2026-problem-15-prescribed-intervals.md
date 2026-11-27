@@ -26,7 +26,7 @@ The question also asks for an estimate of the size of `A`. The settling theorem 
 
 The source is [arXiv:2605.26425v3](https://arxiv.org/abs/2605.26425v3), §5, Problem 15, located at [Theoremproblem15](https://arxiv.org/html/2605.26425v3#Thmproblem15). The Lean index `i : Fin q` represents the source index `i.val + 1`. Pointwise scalar multiplication is the h-fold sumset with repetitions.
 
-The construction uses two labelled generators for every prescribed point. A signed radix code with base `h^2 + 1` separates unequal code vectors. Equal adjacent sums force a zero code, and zero-code multiplicities recover one prescribed point. The resulting finite generator set satisfies `Finset.card A <= 2*q*(n+1)`.
+The construction uses two labelled generators for every prescribed point. It scales the signed radix code in base `h^2 + 1` by twice the remainder bound plus two, so sums with unequal codes differ by at least two. Sums differing by one must therefore share a code. They have distinct multiplicity arrays, and the collision forces their common code to be zero. Each zero-code array gives one prescribed point. The resulting finite generator set satisfies `Finset.card A <= 2*q*(n+1)`.
 
 ## Gap
 
@@ -38,15 +38,15 @@ The settling declaration `D5/S3/Arith/Additive/NathansonProblem15.nathanson_prob
 
 The first equivalence is
 
-`(∀ x : ℤ, Set.Icc x (x + (n : ℤ)) ⊆ h • (A : Set ℤ)) ↔ ∃ i : Fin q, x = c i`.
+`∀ x : ℤ, (Set.Icc x (x + (n : ℤ)) ⊆ h • (A : Set ℤ) ↔ ∃ i : Fin q, x = c i)`.
 
 The second equivalence is
 
-`(∀ x : ℤ, Set.Icc x (x + 1) ⊆ h • (A : Set ℤ)) ↔ ∃ i : Fin q, Set.Icc x (x + 1) ⊆ Set.Icc (c i) (c i + (n : ℤ)) ∧ Set.Icc (c i) (c i + (n : ℤ)) ⊆ h • (A : Set ℤ)`.
+`∀ x : ℤ, (Set.Icc x (x + 1) ⊆ h • (A : Set ℤ) ↔ ∃ i : Fin q, Set.Icc x (x + 1) ⊆ Set.Icc (c i) (c i + (n : ℤ)) ∧ Set.Icc (c i) (c i + (n : ℤ)) ⊆ h • (A : Set ℤ))`.
 
 ## Falsifier
 
-A counterexample to either exact equivalence under the declared hypotheses, or to the cardinal bound in the same construction, would refute the settled proposition. The frozen Lean declaration is the formal truth anchor for the proposition recorded here.
+For an admissible input, failure of either equivalence or of the cardinal bound for the constructed set would defeat that construction. Refuting the existential theorem would require an admissible input for which every finite candidate set violates the bound or at least one equivalence. The frozen Lean declaration is the formal truth anchor for the proposition recorded here.
 
 ## Evidence
 

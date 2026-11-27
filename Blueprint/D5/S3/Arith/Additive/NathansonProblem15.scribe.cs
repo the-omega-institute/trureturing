@@ -134,10 +134,10 @@ internal sealed class NathansonProblem15Document : IScribeDocumentDefinition
         var consecutive = Equal(Qualified("Fin", "val", J), Add(Qualified("Fin", "val", I), D(1)));
         var gaps = All("i", starts, All("j", starts,
             ImpliesTo(consecutive, AtMost(gap, Sub(App(c, J), start)))));
-        var exactStarts = All("x", Z, Equivalent(SubsetOf(Interval(x, Add(x, length)), hA),
-            Some("i", starts, Equal(x, start))));
-        var exactPairs = All("x", Z, Equivalent(SubsetOf(adjacent, hA),
-            Some("i", starts, And(SubsetOf(adjacent, prescribed), SubsetOf(prescribed, hA)))));
+        var exactStarts = All("x", Z, Par(Equivalent(SubsetOf(Interval(x, Add(x, length)), hA),
+            Some("i", starts, Equal(x, start)))));
+        var exactPairs = All("x", Z, Par(Equivalent(SubsetOf(adjacent, hA),
+            Some("i", starts, And(SubsetOf(adjacent, prescribed), SubsetOf(prescribed, hA))))));
         var size = AtMost(Cardinality(a), Mul(Mul(D(2), q), Par(Add(n, D(1)))));
         var conclusion = Some("A", Call("Finset", Z), And(size, And(exactStarts, exactPairs)));
         return All("h", N, All("q", N, All("n", N, All("N", Z,

@@ -17,16 +17,16 @@ Definitions and live consumers:
 
 Declaration                             proof_shape  escape_witness / live consumer
 signed_radix_injective                  content      Modulo the radix, the first digits agree under the strict width bound.
-zero_off_of_sum_eq                      bind-only    none / digit_eq_zero_of_collision
+zero_off_of_sum_eq                      bind-only    none / digit_eq_zero_of_collision, digit_eq_zero_iff
 digit_eq_zero_of_collision              content      A changed second multiplicity spends the entire budget at one index.
 digit_eq_zero_iff                       content      The zero vector has exactly one second label and h - 1 matching first labels.
 digit_bounds                            content      The weight budget confines each signed digit to [-(h - 1)h, h].
-natAbs_lt_of_digit_bounds               content      Two digits in that interval differ by at most h².
-radixCode_eq_iff                        bind-only    none / adjacent_mem_range
-radixCode_eq_zero_iff                   bind-only    none / mem_range_iff_zero_code_sum
+natAbs_lt_of_digit_bounds               bind-only    none / radixCode_eq_iff, radixCode_eq_zero_iff
+radixCode_eq_iff                        content      The radix induction recovers the digit vector from code equality.
+radixCode_eq_zero_iff                   content      The radix induction recovers zero digits, and the weight budget fixes their multiplicities.
 mem_nsmul_range_iff_counts              content      Constructs the exact-size multiset from counts and recovers counts from an indexed sum.
-mem_labelled_sum_iff                    bind-only    none / mem_radixGenerators_iff
-mem_radixGenerators_iff                 bind-only    none / adjacent_mem_range, nathanson_problem15
+mem_labelled_sum_iff                    content      The exact-size multiset argument recovers counts for both classes of labels.
+mem_radixGenerators_iff                 content      The exact-size multiset argument gives the counts in the code-and-remainder form.
 mem_range_iff_zero_code_sum             content      Constructs weight-h multiplicities supported on the index of each prescribed point.
 abs_remainder_le                        content      The second-label weight bound controls the full remainder by hU.
 separated_values                        content      The radix scale dominates both remainders by at least two.
