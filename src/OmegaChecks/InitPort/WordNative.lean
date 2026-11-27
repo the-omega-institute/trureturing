@@ -5,7 +5,7 @@ import all Lean.Compiler.LCNF.ToImpureType
 import all Lean.OriginalConstKind
 import Lean.Compiler.ImplementedByAttr
 
-/-! Compile machine-word primitives over their strict, Nat-backed Fin representation. -/
+/-! Compile scalar primitives over the strict, Nat-backed Fin representation. -/
 
 open Lean Compiler.LCNF OmegaChecks.InitPort.NativeState
 
@@ -26,6 +26,27 @@ private def word? (name : Name) : Option (String × IR.IRType) := match bitsType
   | `UInt64 => some ("uint64", .uint64)
   | `USize => some ("usize", .usize)
   | _ => none
+
+/-- The strict floating-point model stores IEEE bits in the corresponding unsigned word. -/
+private def float? : Name → Option (String × IR.IRType)
+  | `Float => some ("float", .float)
+  | `Float32 => some ("float32", .float32)
+  | _ => none
+
+private def isFloatCall (source : Environment) (owner name : Name) : Bool := Id.run do
+  unless [`OmegaInit.Data.Float.Float, `OmegaInit.Data.Float.Float32].contains owner do return false
+  let some ci := source.find? name | return false
+  unless (ci matches .defnInfo _ | .opaqueInfo _) && isExtern source name do return false
+  let mut ty := ci.type
+  let mut sawFloat := false
+  while let .forallE _ dom body _ := ty do
+    let head := dom.consumeMData.getAppFn.constName
+    unless (word? head).isSome || (float? head).isSome do return false
+    sawFloat := sawFloat || (float? head).isSome
+    ty := body
+  let result := ty.consumeMData.getAppFn.constName
+  return (sawFloat || (float? result).isSome) &&
+    ((float? result).isSome || (word? result).isSome || [`Decidable, `Bool].contains result)
 
 public def usesPinnedFunction (n : Name) : Bool :=
   let method := n.updatePrefix .anonymous
@@ -52,6 +73,7 @@ public def supported (source : Environment) (owner name : Name) : Bool :=
     [`neg, `add, `sub, `mul, `decEq, `decLe, `decLt, `decNonneg, `natAbs, `ediv, `emod, `tdiv, `tmod, `divExact].contains method
   let primitive := ((word? name.getPrefix).isSome && (ops ++ widths).contains method) ||
     (name.getPrefix == `Bool && widths.contains method)
+  isFloatCall source owner name ||
   ((base || intPrimitive || wordRepr || bitwise || logarithm || (inOwner && primitive)) && isExtern source name) ||
     ((intOwner || [`OmegaInit.Data.Int.Repr, `OmegaInit.Data.Repr, `OmegaInit.Data.Nat.Bitwise.Basic, `OmegaInit.Data.BitVec.Basic].contains owner || [`OmegaInit.Data.UInt.Basic, `OmegaInit.Data.SInt.Basic].contains owner) && usesPinnedFunction name)
 
@@ -76,6 +98,13 @@ private def checkIntLayout (strict : Environment) : IO Unit := do
     let #[.object 0 _] := l.fieldInfo | throw <| IO.userError s!"invalid integer field in {ctor}"
     unless l.ctorInfo.cidx == tag && l.ctorInfo.size == 1 && l.ctorInfo.ssize == 0 && l.ctorInfo.usize == 0 do
       throw <| IO.userError s!"unexpected integer constructor layout {ctor}"
+
+private def checkFloatLayout (env : Environment) (name : Name) : IO Unit := do
+  layout env (if name == `Float32 then `UInt32 else `UInt64)
+  for n in [`Omega ++ name, `Omega ++ name ++ `Model] do
+    let some (some field) := impureTrivialStructureInfoExt.find? env n
+      | throw <| IO.userError s!"floating-point bits have no strict representation in {n}"
+    unless field.fieldIdx == 0 do throw <| IO.userError s!"unexpected floating-point field in {n}"
 
 /-- Check both sides of the call and generate its ownership conversions from their stored IR. -/
 public def wrapper (source strict : Environment) (n : Name) : IO String := do
@@ -150,6 +179,12 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
       decls := decls.push ((if b.borrow then "b_lean_obj_arg " else "lean_obj_arg ") ++ arg)
       args := args.push s!"lean_{w}_of_nat({arg})"
       unless b.borrow do cleanup := cleanup ++ s!"  lean_dec({arg});\n"
+    else if let some (f, t) := float? dom then
+      checkFloatLayout strict dom
+      unless a.ty == t && b.ty == .tobject do throw <| IO.userError s!"wrong float argument at {n} {i}"
+      decls := decls.push ((if b.borrow then "b_lean_obj_arg " else "lean_obj_arg ") ++ arg)
+      args := args.push s!"omega_{f}_from_nat_bits({arg})"
+      unless b.borrow do cleanup := cleanup ++ s!"  lean_dec({arg});\n"
     else if dom == `Unit && a.ty == .tagged && b.ty == .tagged then
       decls := decls.push ("lean_obj_arg " ++ arg)
       args := args.push arg
@@ -185,6 +220,10 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
     prepare := prepare ++ "  if (neg) { lean_object *p = lean_nat_pred(magnitude); lean_dec(magnitude); magnitude = p; }\n"
     prepare := prepare ++ "  lean_object *integer = lean_alloc_ctor(neg, 1, 0);\n  lean_ctor_set(integer, 0, magnitude);\n"
     pure ("lean_obj_res", "integer")
+  else if let some (f, t) := float? dom then do
+    checkFloatLayout strict dom
+    unless ret == t && result == .tobject do throw <| IO.userError s!"incorrect float result at {n}"
+    pure ("lean_obj_res", s!"omega_{f}_to_nat_bits({call})")
   else if dom == `Subtype && official == `System.Platform.getNumBits then do
     let some (some field) := impureTrivialStructureInfoExt.find? strict `Omega.Subtype
       | throw <| IO.userError "missing platform width subtype layout"
@@ -214,6 +253,13 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
       | _ => throw <| IO.userError s!"unexpected C type at {official}: {t}"
     let inputs ← (params.filter (·.ty != .erased)).mapM fun p => ctype p.ty
     pure s!"\nextern {← ctype ret} {target}({String.intercalate ", " inputs.toList});\n"
+  else if (float? official.getPrefix).isSome || (float? dom).isSome then do
+    let header := "\n#include \"float_bits.h\"\n"
+    if target.startsWith "lean_" then pure header else
+      let ty := if ret == .float then "double" else "float"
+      unless (ret == .float || ret == .float32) && params.all (·.ty == ret) do
+        throw <| IO.userError s!"unexpected math library signature {target}"
+      pure <| header ++ s!"extern {ty} {target}({String.intercalate ", " (List.replicate params.size ty)});\n"
   else if official == `System.Platform.getNumBits then
     pure "\nextern lean_obj_res lean_system_platform_nbits(lean_obj_arg);\n" else pure ""
   let header := if dom == `String then "\n#include \"strict_string.h\"\n" else ""
