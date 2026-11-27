@@ -38,16 +38,16 @@ def match_cached_seed(owner, seed):
     return source
 
 
-def check_share_ir(stage, library):
-    check = stage / "share-ir"
+def check_runtime_ir(stage, library, adapter, consumer):
+    check = stage / (consumer + "-ir")
     check.mkdir()
     source = check / "extern.c"
-    run("lake", "env", "lean", "--run", HERE / "ShareCommonNative.lean", "--interpreter", library, source)
+    run("lake", "env", "lean", "--run", HERE / (adapter + "Native.lean"), "--interpreter", library, source)
     shim = check / ("extern" + (sysconfig.get_config_var("SHLIB_SUFFIX") or ".so"))
     run("leanc", "-shared", "-fPIC", "-DLEAN_EXPORTING", "-I", HERE, source, "-o", shim)
-    run("lean", "-R", HERE, "-o", check / "ShareCommonConsumer.olean", HERE / "ShareCommonConsumer.lean",
+    run("lean", "-R", HERE, "-o", check / (consumer + "Consumer.olean"), HERE / (consumer + "Consumer.lean"),
         env={**os.environ, "LEAN_PATH": str(library)})
-    run("lake", "env", "lean", "--load-dynlib=" + str(shim), "--run", HERE / "ShareCommonIRConsumer.lean",
+    run("lake", "env", "lean", "--load-dynlib=" + str(shim), "--run", HERE / (consumer + "IRConsumer.lean"),
         library, check)
 
 

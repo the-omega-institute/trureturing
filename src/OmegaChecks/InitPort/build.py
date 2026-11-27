@@ -2,7 +2,7 @@
 import argparse
 from collections import Counter, defaultdict
 from graphlib import CycleError, TopologicalSorter
-from generated_native import check_share_ir, compile_generated
+from generated_native import check_runtime_ir, compile_generated
 import json
 import omegamath
 import os
@@ -225,6 +225,11 @@ def generate(stage, product, seed, roots, excluded, original_seed):
     if "OmegaInit.System.ST" in graph:
         compile_state_runtime(stage, product, artifact, inventory, "Reference", "reference",
                               {"Init.System.ST": {"ST.Prim.mkRef", "ST.mkRef", "ST.Ref.swap", "ST.Ref.set", "ST.Ref.ptrEq"}})
+        pure_state = {"Init.System.ST": {"Void.mk", "ST.pure", "ST.bind", "EST.pure", "EST.bind",
+                                         "EST.throw", "EST.tryCatch", "runST", "runEST"}}
+        if has_interfaces(inventory, pure_state):
+            check_state_consumer(stage, artifact, "PureState", "pure_state", [product / "native" / "reference.o"])
+            check_runtime_ir(stage, artifact, "Reference", "PureState")
     if "OmegaInit.Control.StateRef" in graph:
         compile_state_runtime(stage, product, artifact, inventory, "StateRef", "state_ref", {
             "Init.Control.StateRef": {"StateRefT'.set"},
@@ -251,7 +256,7 @@ def generate(stage, product, seed, roots, excluded, original_seed):
     sharing_interfaces = {"Init.ShareCommon": {"ShareCommon.StateFactory.mk", "ShareCommon.State.mk", "ShareCommon.State.shareCommon", "ShareCommonM.run"}}
     if sharing and has_interfaces(inventory, sharing_interfaces):
         if control_objects is None:
-            check_share_ir(stage, artifact)
+            check_runtime_ir(stage, artifact, "ShareCommon", "ShareCommon")
         else:
             check_state_consumer(stage, artifact, "ShareCommon", "share_common", [*sharing, *control_objects])
     with (product / "audit.txt").open("w") as log:

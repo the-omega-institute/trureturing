@@ -34,7 +34,7 @@ example (a : α) (b : β) : Omega.Eq (Prod.fst (Prod.mk a b)) a := Omega.rfl
 
 `ShareCommon.State.mk` 使用按工厂和宇宙层级索引的私有逻辑句柄。其原生入口调用钉版的 `ShareCommon.mkStateImpl`。`StateFactory.mk` 接受自定义的映射与集合回调，原生入口适配六个回调、初始容量和哈希结果。严格库的 `UInt64` 在原生端擦除为一元自然数，取值为 h 的哈希需要 h 个后继节点。构建 `Init.ShareCommon` 时，普通消费者核验容量 1024、小哈希的表示，以及两种官方工厂和自定义函数映射工厂对布尔列表的共享行为。
 
-严格库用私有、不可计算的句柄构造 `ST.Prim.mkRef`，并保留公开的 `ST.RefPointed` 封装。构建 `Init.System.ST` 时，`native/reference.o` 提供引用分配、身份比较、写入和交换的原生入口。交换的逻辑常量保持不透明，原生入口调用钉版 `lean_st_ref_swap` 取得先前的值。普通消费者验证两枚引用的身份、交换返回旧值、写入后再交换取得新值和世界状态的传递。使用 `Omega.StateRefT'.set` 时，链接 `native/state_ref.o` 和 `native/reference.o`。
+严格库用私有、不可计算的句柄构造 `ST.Prim.mkRef`，并保留公开的 `ST.RefPointed` 封装。构建 `Init.System.ST` 时，`native/reference.o` 提供引用分配、身份比较、写入和交换的原生入口。交换的逻辑常量保持不透明，原生入口调用钉版 `lean_st_ref_swap` 取得先前的值。`Void.mk` 由钉版原生入口生成世界，严格端的 `runST`、`runEST` 保留各自返回类型。普通编译和独立 IR 消费者验证状态绑定，以及异常的传播与恢复。普通消费者验证两枚引用的身份、交换返回旧值、写入后再交换取得新值和世界状态的传递。使用 `Omega.StateRefT'.set` 时，链接 `native/state_ref.o` 和 `native/reference.o`。
 
 严格库能用 `Void.mk ()` 和 `ST.Prim.mkRef ()` 取得具体的世界与引用地址。对引用读取、取出、返回值修改及相应的状态实例，盘点器检查由其完整严格类型能否构造 `(α : Type) → Omega.Nonempty α → α`。原官方类型的 `Void.mk` 与 `ST.Prim.mkRef` 可取任意实现。内核核对其应用于严格公共构造器所得的选择器，与宇宙 0 的官方公理 `Classical.choice.{1}` 具有相同的移植类型。每条归约连同构造器依赖从空内核重放，完整性报告在 `strictImpliesAxiom` 和 `strictSelectionWitness` 中给出目标及见证。[严格选择器](StrictReferenceChoice.lean) · [归约核验](ReferenceChoiceCheck.lean)
 
