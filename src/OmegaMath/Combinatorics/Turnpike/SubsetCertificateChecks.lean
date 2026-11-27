@@ -18,11 +18,10 @@ theorem flow_checks (τ : Triangle 7) (u v w : Fin 3)
       ∃ L, PartialFlowCheck (numericAtoms τ) (fun z => numerator (edge τ z))
         u v w U L := by
   fin_cases u <;> fin_cases v <;> fin_cases w <;>
-    simp_all only [Fin.reduceLT, ne_eq, Fin.isValue, not_true_eq_false,
-      not_false_eq_true, false_implies, true_implies]
-  · exact checks_01 τ
-  · exact checks_02 τ
-  · exact checks_12 τ
+    simp_all [Fin.lt_def, Fin.ext_iff]
+  · simpa using checks_01 τ
+  · simpa using checks_02 τ
+  · simpa using checks_12 τ
 
 theorem all_subset_cuts : SubsetCuts y μ assignment := by
   classical

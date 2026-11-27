@@ -163,4 +163,3 @@ internal sealed class PrunedSubsetProjectionObstructionDocument : IScribeDocumen
     private static Formula X(string name) => name == "mu" ? Mu : F.Id(name);
     private static Formula Q(string name) => Seq(Operatorname,Grp(F.Id(name)));
 }
-
