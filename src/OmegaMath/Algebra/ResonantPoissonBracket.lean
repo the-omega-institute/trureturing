@@ -37,12 +37,9 @@ theorem SkewBiderivation.left_add (b : SkewBiderivation S) (a c d : S) :
   abel
 
 theorem SkewBiderivation.self_zero (b : SkewBiderivation S) (a : S) : b.ham a a = 0 := by
-  have h : (2 : ℝ) • b.ham a a = 0 := by
-    rw [two_smul, ← eq_neg_iff_add_eq_zero]
-    exact b.skew a a
-  have h' := congrArg (fun z : S => (1 / 2 : ℝ) • z) h
-  have ht : (1 / 2 : ℝ) * 2 = 1 := by norm_num
-  simpa only [smul_smul, ht, one_smul, smul_zero] using h'
+  apply (smul_eq_zero_iff_right (by norm_num : (2 : ℝ) ≠ 0)).mp
+  rw [two_smul, ← eq_neg_iff_add_eq_zero]
+  exact b.skew a a
 
 end Brackets
 
@@ -65,29 +62,14 @@ private def mixed (n m : ℕ) (Ω s : ℝ) : FourPolys :=
 private abbrev PolyDer := Derivation ℝ FourPolys FourPolys
 private abbrev pd (i : Fin 4) : PolyDer := pderiv i
 
-private def weight (r : FourPolys) (D : PolyDer) : PolyDer :=
-  Derivation.mk' {
-    toFun := fun f => r * D f
-    map_add' := by intro a b; rw [map_add D, mul_add]
-    map_smul' := by
-      intro t a
-      change r * D (t • a) = t • (r * D a)
-      rw [D.map_smul]
-      simp only [Algebra.smul_def]
-      ring
-  } (by
-    intro a b
-    change r * D (a * b) = a * (r * D b) + b * (r * D a)
-    rw [leibniz_mul (S := FourPolys) D]
-    ring)
+private abbrev weight (r : FourPolys) (D : PolyDer) : PolyDer := r • D
 
 private def wedge (D E : PolyDer) (f : FourPolys) : PolyDer :=
   weight (D f) E - weight (E f) D
 
 @[simp] private theorem wedge_apply (D E : PolyDer) (f g : FourPolys) :
     wedge D E f g = D f * E g - E f * D g := by
-  simp only [wedge, Derivation.sub_apply]
-  rfl
+  simp only [wedge, Derivation.sub_apply, Derivation.smul_apply, smul_eq_mul]
 
 private def energyDirection (s : ℝ) : PolyDer := pd 0 + weight (C s) (pd 1)
 
@@ -97,16 +79,14 @@ private def ambient (n m : ℕ) (Ω s : ℝ) : SkewBiderivation FourPolys where
   ham f := weight (C Ω) (wedge (energyDirection s) rotatingDirection f) +
     weight (mixed n m Ω s) (wedge (pd 2) (pd 3) f)
   skew f g := by
-    simp only [Derivation.add_apply, weight, Derivation.coe_mk', LinearMap.coe_mk, AddHom.coe_mk,
-      wedge_apply]
+    simp only [Derivation.add_apply, Derivation.smul_apply, smul_eq_mul, wedge_apply]
     ring
 
 private theorem ambient_apply (n m : ℕ) (Ω s : ℝ) (f g : FourPolys) :
     (ambient n m Ω s).ham f g =
       C Ω * (energyDirection s f * rotatingDirection g - rotatingDirection f * energyDirection s g) +
       mixed n m Ω s * (pd 2 f * pd 3 g - pd 3 f * pd 2 g) := by
-  simp only [ambient, Derivation.add_apply, weight, Derivation.coe_mk', LinearMap.coe_mk,
-    AddHom.coe_mk, wedge_apply]
+  simp only [ambient, Derivation.add_apply, Derivation.smul_apply, smul_eq_mul, wedge_apply]
 
 private theorem ambient_gen (n m : ℕ) (Ω s : ℝ) (i j : Fin 4) :
     (ambient n m Ω s).ham (X i) (X j) =

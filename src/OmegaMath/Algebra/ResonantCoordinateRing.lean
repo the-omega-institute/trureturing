@@ -55,7 +55,9 @@ theorem inclC_X : inclC (n := n) (m := m) X = u - v := by
   abel
 
 theorem normal (a : A n m) : a = incl a.re + incl a.im * y := by
-  ext <;> simp [incl, y]
+  have he (p : B) (z : A n m) : p • z = incl p * z := by
+    apply QuadraticAlgebra.ext <;> simp [incl]
+  simpa only [y, he, mul_one] using (QuadraticAlgebra.re_smul_add_im_smul a).symm
 
 theorem y_sq : (y (n := n) (m := m)) ^ 2 = incl (rad n m) := by
   rw [pow_two]
@@ -87,29 +89,23 @@ private def polyEval (a b d : S) : B →ₐ[ℝ] S :=
 @[simp] private theorem polyEval_xb (a b d : S) : polyEval a b d xb = d := by
   simp [polyEval]
 
-def evaluate (a b d e : S) (h : d ^ 2 + e ^ 2 = a ^ n * b ^ m) : A n m →ₐ[ℝ] S where
-  toFun z := polyEval a b d z.re + polyEval a b d z.im * e
-  map_zero' := by simp
-  map_one' := by
-    change polyEval a b d 1 + polyEval a b d 0 * e = 1
-    simp
-  map_add' p q := by simp only [QuadraticAlgebra.re_add, QuadraticAlgebra.im_add, map_add]; ring
-  map_mul' p q := by
-    have hr : polyEval a b d (rad n m) = e ^ 2 := by
-      rw [show rad n m = (C uu) ^ n * (C vv) ^ m - xb ^ 2 by simp only [rad, map_mul, map_pow]]
-      rw [map_sub (polyEval a b d), map_mul (polyEval a b d), map_pow (polyEval a b d),
-        map_pow (polyEval a b d), map_pow (polyEval a b d), polyEval_uu, polyEval_vv, polyEval_xb]
-      rw [← h, add_sub_cancel_left]
-    simp only [QuadraticAlgebra.re_mul, QuadraticAlgebra.im_mul, map_add, map_mul, map_zero, hr]
-    ring
-  commutes' t := by
-    change polyEval a b d (algebraMap ℝ B t) + polyEval a b d 0 * e = _
-    rw [map_zero (polyEval a b d), zero_mul, add_zero]
-    exact (polyEval a b d).commutes t
+def evaluate (a b d e : S) (h : d ^ 2 + e ^ 2 = a ^ n * b ^ m) : A n m →ₐ[ℝ] S := by
+  letI : Algebra B S := (polyEval a b d).toRingHom.toAlgebra
+  letI : IsScalarTower ℝ B S := IsScalarTower.of_algebraMap_eq (R := ℝ) (S := B) (A := S) fun r =>
+    ((polyEval a b d).commutes r).symm
+  have hr : polyEval a b d (rad n m) = e ^ 2 := by
+    rw [show rad n m = (C uu) ^ n * (C vv) ^ m - xb ^ 2 by simp only [rad, map_mul, map_pow]]
+    rw [map_sub, map_mul, map_pow, map_pow, map_pow, polyEval_uu, polyEval_vv, polyEval_xb,
+      ← h, add_sub_cancel_left]
+  let F : A n m →ₐ[B] S := QuadraticAlgebra.lift ⟨e, by
+    change e * e = rad n m • (1 : S) + (0 : B) • e
+    rw [zero_smul, add_zero, ← Algebra.algebraMap_eq_smul_one, ← pow_two]
+    exact hr.symm⟩
+  exact F.restrictScalars ℝ
 
 @[simp] private theorem evaluate_incl {a b d e : S} {h : d ^ 2 + e ^ 2 = a ^ n * b ^ m}
     (p : B) : evaluate a b d e h (incl p) = polyEval a b d p := by
-  change polyEval a b d p + polyEval a b d 0 * e = _
+  change polyEval a b d p * 1 + polyEval a b d 0 * e = _
   simp
 
 @[simp] theorem evaluate_u {a b d e : S} (h : d ^ 2 + e ^ 2 = a ^ n * b ^ m) :
@@ -129,7 +125,7 @@ def evaluate (a b d e : S) (h : d ^ 2 + e ^ 2 = a ^ n * b ^ m) : A n m →ₐ[�
 
 @[simp] theorem evaluate_y {a b d e : S} (h : d ^ 2 + e ^ 2 = a ^ n * b ^ m) :
     evaluate a b d e h (y (n := n) (m := m)) = e := by
-  change polyEval a b d 0 + polyEval a b d 1 * e = e
+  change polyEval a b d 0 * 1 + polyEval a b d 1 * e = e
   simp
 
 theorem hom_ext {f g : A n m →ₐ[ℝ] S}
@@ -146,12 +142,12 @@ theorem hom_ext {f g : A n m →ₐ[ℝ] S}
     apply Polynomial.algHom_ext'
     · exact hp
     · exact hx
-  apply AlgHom.ext
-  intro a
-  rw [normal a]
-  simp only [map_add, map_mul, hy]
-  rw [show f (incl a.re) = g (incl a.re) from AlgHom.congr_fun hb a.re,
-      show f (incl a.im) = g (incl a.im) from AlgHom.congr_fun hb a.im]
+  let _ : Algebra B S := (f.comp incl).toRingHom.toAlgebra
+  let fB : A n m →ₐ[B] S := { f.toRingHom with commutes' := fun _ => rfl }
+  let gB : A n m →ₐ[B] S :=
+    { g.toRingHom with commutes' := fun p => (AlgHom.congr_fun hb p).symm }
+  have he : fB = gB := QuadraticAlgebra.algHom_ext hy
+  exact AlgHom.ext fun a => AlgHom.congr_fun he a
 
 end Universal
 

@@ -45,22 +45,33 @@ variable {R S : Type*} [CommRing R] [CommRing S] [Algebra ℝ R] [Algebra ℝ S]
 private theorem deriv_poly (F : R[X] →ₐ[ℝ] S) (D : Derivation ℝ S S)
     (hC : ∀ a, D (F (C a)) = 0) (p : R[X]) :
     D (F p) = F (derivative p) * D (F X) := by
-  induction p using Polynomial.induction_on' with
-  | add p q hp hq =>
-      rw [map_add F, map_add D, hp, hq, map_add derivative, map_add F, add_mul]
-  | monomial k a =>
-      rw [← C_mul_X_pow_eq_monomial, map_mul F, leibniz_mul, map_pow F, D.leibniz_pow, hC,
-        mul_zero, add_zero, derivative_mul, derivative_C, zero_mul, zero_add,
-        derivative_X_pow, map_mul F, map_mul F, map_pow F]
-      rw [show (C (k : R) : R[X]) = (k : R[X]) by simp, map_natCast F]
-      simp only [nsmul_eq_mul, smul_eq_mul]
-      ring
+  let _ : Algebra R S := (F.comp CAlgHom).toRingHom.toAlgebra
+  let _ : IsScalarTower ℝ R S := IsScalarTower.of_algebraMap_eq fun r => by
+    change algebraMap ℝ S r = F (C (algebraMap ℝ R r))
+    rw [← algebraMap_apply, F.commutes]
+  let D' : Derivation R S S :=
+    Derivation.mk'
+      { toFun := D
+        map_add' := D.map_add
+        map_smul' := fun a b => by
+          change D (a • b) = a • D b
+          have hz : D (algebraMap R S a) = 0 := hC a
+          rw [Algebra.smul_def, Algebra.smul_def, D.leibniz, hz, smul_zero, add_zero,
+            smul_eq_mul] }
+      D.leibniz
+  have hF : (aeval (F X) : R[X] →ₐ[R] S).restrictScalars ℝ = F := by
+    apply algHom_ext'
+    · ext a
+      exact aeval_C _ _
+    · exact aeval_X _
+  have hmap (q : R[X]) : aeval (F X) q = F q := DFunLike.congr_fun hF q
+  simpa only [hmap, smul_eq_mul, D', Derivation.coe_mk', LinearMap.coe_mk, AddHom.coe_mk]
+    using D'.map_aeval p (F X)
 
 private theorem deriv_base (F : ℝ[X] →ₐ[ℝ] S) (D : Derivation ℝ S S) (p : ℝ[X]) :
     D (F p) = F (derivative p) * D (F X) := by
-  apply deriv_poly
-  intro a
-  rw [C_eq_algebraMap, F.commutes, D.map_algebraMap]
+  have hF : aeval (F X) = F := algHom_ext (aeval_X _)
+  simpa only [hF, smul_eq_mul] using D.map_aeval p (F X)
 
 end Derivation
 
@@ -292,12 +303,7 @@ private theorem no_isomorphism {can alt : SkewBiderivation (A n m)} {Ω : ℝ}
     apply alt_zero_fiber hn hm
     change k (e (u + v)) = 0
     rw [hp, character_center_eval hk p, ← hp, h₀]
-  have heq := (transported f hf).trans (transported g hg).symm
-  apply hne
-  apply AlgHom.ext
-  intro z
-  have hz := AlgHom.congr_fun heq (e.symm z)
-  simpa only [AlgHom.comp_apply, AlgEquiv.coe_toAlgHom, e.apply_symm_apply] using hz
+  exact hne ((AlgHom.cancel_right e.surjective).mp ((transported f hf).trans (transported g hg).symm))
 
 
 section Conjugate
