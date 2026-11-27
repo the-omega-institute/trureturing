@@ -28,7 +28,7 @@ private theorem seq_rec {n : ℕ} (hn : n ≠ 0) :
 
 private theorem seq_one : seq 1 = 2 := by norm_num [seq_rec, seq_zero]
 
-private theorem seq_pos (n : ℕ) : 0 < seq n := by
+theorem seq_pos (n : ℕ) : 0 < seq n := by
   induction n using Nat.strong_induction_on with
   | h n ih =>
     by_cases hn : n = 0
@@ -63,7 +63,7 @@ theorem seq_eq_two (n : ℕ) : seq n = 2 ↔ n = 1 := by
     · exact Nat.dvd_of_mod_eq_zero hz₃
   · rintro rfl; exact seq_one
 
-private theorem two_pow_self_mod_ne_one {n : ℕ} (hn : 1 < n) : 2 ^ n % n ≠ 1 := by
+theorem two_pow_self_mod_ne_one {n : ℕ} (hn : 1 < n) : 2 ^ n % n ≠ 1 := by
   intro h
   let p := n.minFac
   have hp : p.Prime := Nat.minFac_prime (by omega)

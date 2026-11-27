@@ -8,8 +8,6 @@ import { test } from 'node:test';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const action = fileURLToPath(new URL('run.mjs', import.meta.url));
-const manifest = new URL('action.yml', import.meta.url);
-const workflow = new URL('../../workflows/ci-current.yml', import.meta.url);
 const bytes = '{"target":"A","complete":true}';
 const digest = createHash('sha256').update(bytes).digest('hex');
 
@@ -87,7 +85,7 @@ exports.saveCache = async function(paths, key) {
 }
 
 for (const event of ['push', 'pull_request']) {
-  test(event + ' hit, miss and post-job perform zero cache writes', async t => {
+  test(event + ' hit and miss perform zero cache writes', async t => {
     const { root, requests, run } = await fixture(t);
     const published = 'lean-generation-v1-' + digest;
     await writeFile(join(root, published), bytes);
@@ -104,14 +102,6 @@ for (const event of ['push', 'pull_request']) {
       'get ' + published,
       'get lean-generation-v1-' + '0'.repeat(64),
     ]);
-    const actionYaml = await readFile(manifest, 'utf8');
-    assert.doesNotMatch(actionYaml, /^\s*post(?:-if)?:/m);
-    const current = await readFile(workflow, 'utf8');
-    assert.match(current, /operation: restore-published/);
-    assert.doesNotMatch(current, /uses:\s*actions\/cache(?:@|\/save@)/);
-    for (const setup of current.matchAll(/uses:\s*actions\/setup-dotnet@[^\n]*\n((?: {8,}[^\n]*\n)+)/g)) {
-      assert.match(setup[1], /^\s*cache: false$/m);
-    }
   });
 }
 
@@ -246,62 +236,169 @@ esac
 
 test('truth publication follows the completed release on protected dev and keeps its first pin', async t => {
   const { root, env } = await fixture(t);
-  const event = join(root, 'event.json');
   const pinned = 'b'.repeat(40);
-  const earlier = 'a'.repeat(40);
+  const marker = join(root, 'marker.json');
+  const ref = 'refs/heads/lean-modules-published-report';
   const outputs = join(root, 'outputs');
   await writeFile(join(root, 'bin/gh'), `#!/bin/sh
 case "$*" in
   *actions/runs/7/artifacts*) cat artifacts.json ;;
-  *git/ref/heads/lean-modules-published*) cat marker.json ;;
+  *git/matching-refs/heads/lean-modules-published-report) cat marker.json ;;
   *branches/dev*) echo '{"protected":true,"commit":{"sha":"${pinned}"}}' ;;
   'run download 7 '*) echo '${pinned}' > pin/source ;;
   *) exit 2 ;;
 esac
 `, { mode: 0o755 });
   const command = fileURLToPath(new URL('pin-source.py', import.meta.url));
-  const invoke = (name, attempt = '1') => spawnSync('python3', ['-B', command, '--published'], {
-    cwd: root, encoding: 'utf8', env: { ...env, GITHUB_EVENT_NAME: name, GITHUB_EVENT_PATH: event,
-      GITHUB_SHA: earlier, GITHUB_RUN_ID: '7', GITHUB_RUN_ATTEMPT: attempt, GITHUB_OUTPUT: outputs },
+  const invoke = (name, attempt = '1') => spawnSync('python3', ['-B', command, '--published', 'report'], {
+    cwd: root, encoding: 'utf8', env: { ...env, GITHUB_EVENT_NAME: name,
+      GITHUB_RUN_ID: '7', GITHUB_RUN_ATTEMPT: attempt, GITHUB_OUTPUT: outputs },
   });
   await writeFile(join(root, 'artifacts.json'), '[{"artifacts":[]}]');
-  await writeFile(join(root, 'marker.json'), JSON.stringify({ object: { sha: pinned } }));
-  await writeFile(event, '{"client_payload":{}}');
-  for (const name of ['schedule', 'repository_dispatch']) {
+  await writeFile(marker, JSON.stringify([{ ref: ref + '-old', object: { sha: pinned } }]));
+  const absent = invoke('schedule');
+  assert.equal(absent.status, 0, absent.stderr);
+  assert.equal(await readFile(outputs, 'utf8'), 'source=\nupload=false\n');
+  await rm(outputs);
+  await writeFile(marker, JSON.stringify([{ ref, object: { sha: pinned } }]));
+  for (const name of ['schedule', 'workflow_run', 'workflow_dispatch']) {
     const result = invoke(name);
     assert.equal(result.status, 0, result.stderr);
     assert.equal(await readFile(outputs, 'utf8'), `source=${pinned}\nupload=true\n`);
     await rm(outputs);
   }
-  await rm(join(root, 'marker.json'));
-  await writeFile(event, JSON.stringify({ client_payload: { source_commit: earlier } }));
-  const explicit = invoke('repository_dispatch');
-  assert.equal(explicit.status, 0, explicit.stderr);
-  assert.equal(await readFile(outputs, 'utf8'), `source=${earlier}\nupload=true\n`);
-  await rm(outputs);
-  await writeFile(event, '{"client_payload":{"source_commit":"refs/heads/dev"}}');
-  assert.match(invoke('repository_dispatch').stderr, /lowercase 40-hex string/);
+  await writeFile(marker, JSON.stringify([{ ref, object: { sha: 'bad-source' } }]));
+  assert.match(invoke('schedule').stderr, /lowercase 40-hex string/);
+  await rm(marker);
   await writeFile(join(root, 'artifacts.json'), '[{"artifacts":[{"name":"generation-pin-7","expired":false}]}]');
   const resume = invoke('schedule', '2');
   assert.equal(resume.status, 0, resume.stderr);
   assert.equal(await readFile(outputs, 'utf8'), `source=${pinned}\nupload=false\n`);
 });
 
+test('the report publisher pins the latest compatible compiler release and reuses its pin on retry', async t => {
+  const { root, env } = await fixture(t);
+  const first = 'a'.repeat(40);
+  const latest = 'b'.repeat(40);
+  const ref = 'refs/heads/lean-modules-published';
+  const outputs = join(root, 'outputs');
+  const json = (name, data) => writeFile(join(root, name), JSON.stringify(data));
+  await writeFile(join(root, 'bin/gh'), `#!/bin/sh
+set -eu
+case "$*" in
+  *actions/runs/*/artifacts*) cat artifacts.json ;;
+  *git/matching-refs/heads/lean-modules-published) cat refs.json ;;
+  *git/matching-refs/heads/lean-modules-published-report) cat report-refs.json ;;
+  *branches/dev*) cat dev.json ;;
+  *compare/${first}...${latest}*--jq*) echo '${first}' ;;
+  *compare/${first}...${latest}*) echo '{"status":"ahead"}' ;;
+  *compare/${latest}...${first}*) cat retry-comparison.json ;;
+  'release download '*) test "$3" = "lean-modules-$(cat release-source)" && cp index.json "$9/index.json" ;;
+  'run download '*) cp pinned-source pin/source ;;
+  *) exit 2 ;;
+esac
+`, { mode: 0o755 });
+  const command = fileURLToPath(new URL('pin-source.py', import.meta.url));
+  const invoke = async (run = '7', attempt = '1', args = ['--published', 'compiler']) => {
+    await rm(outputs, { force: true });
+    return spawnSync('python3', ['-B', command, ...args], {
+      cwd: root, encoding: 'utf8', env: { ...env, GITHUB_EVENT_NAME: 'workflow_run',
+        GITHUB_RUN_ID: run, GITHUB_RUN_ATTEMPT: attempt, GITHUB_OUTPUT: outputs },
+    });
+  };
+  const index = (source, fields) => ({
+    source, version: 'lean-modules-' + source, schema: 'lean-module-shards-v1', ...fields,
+  });
+  const publish = async source => {
+    await json('refs.json', [{ ref, object: { sha: source } }]);
+    await json('dev.json', { protected: true, commit: { sha: source } });
+    await writeFile(join(root, 'release-source'), source);
+    await json('index.json', index(source, { kind: 'compiler' }));
+  };
+  await json('artifacts.json', [{ artifacts: [] }]);
+  // GitHub's matching-refs endpoint can return only the sibling report marker.
+  await json('refs.json', [{ ref: ref + '-report', object: { sha: first } }]);
+  let result = await invoke();
+  assert.equal(result.status, 0, result.stderr);
+  assert.equal(await readFile(outputs, 'utf8'), 'source=\nupload=false\n');
+
+  await publish(first);
+  await json('index.json', index(first, {}));
+  result = await invoke();
+  assert.equal(result.status, 0, result.stderr);
+  assert.equal(await readFile(outputs, 'utf8'), 'source=\nupload=false\n');
+  for (const [fields, error] of [
+    [{ kind: 'report' }, /expected a published compiler index/],
+    [{ kind: 'compiler', schema: 'unexpected' }, /marker and index differ/],
+    [{ kind: 'compiler', source: latest }, /marker and index differ/],
+  ]) {
+    await json('index.json', index(first, fields));
+    const invalid = await invoke();
+    assert.notEqual(invalid.status, 0);
+    assert.match(invalid.stderr, error);
+    await assert.rejects(readFile(outputs), { code: 'ENOENT' });
+  }
+  await publish(first);
+  result = await invoke();
+  assert.equal(result.status, 0, result.stderr);
+  assert.equal(await readFile(outputs, 'utf8'), 'source=' + first + '\nupload=true\n');
+  const skipReport = ['--published', 'compiler', '--skip-published', 'report'];
+  await json('report-refs.json', []);
+  result = await invoke('7', '1', skipReport);
+  assert.equal(result.status, 0, result.stderr);
+  assert.equal(await readFile(outputs, 'utf8'), 'source=' + first + '\nupload=true\n');
+  await json('report-refs.json', [{ ref: ref + '-report', object: { sha: first } }]);
+  result = await invoke('7', '1', skipReport);
+  assert.equal(result.status, 0, result.stderr);
+  assert.match(await readFile(outputs, 'utf8'), /^already_published=true$/m);
+  await writeFile(join(root, 'pinned-source'), await readFile(join(root, 'pin/source')));
+  await publish(latest);
+  result = await invoke('8');
+  assert.equal(result.status, 0, result.stderr);
+  assert.equal(await readFile(outputs, 'utf8'), 'source=' + latest + '\nupload=true\n');
+  await json('artifacts.json', [{ artifacts: [{ name: 'generation-pin-7', expired: false }] }]);
+  result = await invoke('8', '1', skipReport);
+  assert.equal(result.status, 0, result.stderr);
+  assert.equal(await readFile(outputs, 'utf8'), 'source=' + latest + '\nupload=true\n');
+  result = await invoke('8', '1', ['--skip-published', 'compiler']);
+  assert.equal(result.status, 0, result.stderr);
+  assert.match(await readFile(outputs, 'utf8'), /^already_published=true$/m);
+  result = await invoke('7', '2');
+  assert.equal(result.status, 0, result.stderr);
+  assert.equal(await readFile(outputs, 'utf8'), 'source=' + first + '\nupload=false\n');
+  await json('report-refs.json', [{ ref: ref + '-report', object: { sha: latest } }]);
+  await json('retry-comparison.json', { status: 'behind' });
+  for (const args of [skipReport, ['--skip-published', 'compiler']]) {
+    result = await invoke('7', '2', args);
+    assert.equal(result.status, 0, result.stderr);
+    assert.equal(await readFile(outputs, 'utf8'), 'source=' + first + '\nupload=false\nsuperseded=true\n');
+    assert.equal((await readFile(join(root, 'pin/source'), 'utf8')).trim(), first);
+  }
+  await json('retry-comparison.json', { status: 'diverged' });
+  result = await invoke('7', '2', skipReport);
+  assert.notEqual(result.status, 0);
+  assert.match(result.stderr, /incompatible histories/);
+  await assert.rejects(readFile(outputs), { code: 'ENOENT' });
+});
+
 test('the truth reader copies only named report ZIPs from an inherited split Release', async t => {
   const root = await mkdtemp(join(tmpdir(), 'published reports '));
   t.after(() => rm(root, { recursive: true, force: true }));
-  const tag = 'lean-modules-' + 'b'.repeat(40);
-  const inherited = 'lean-modules-' + 'a'.repeat(40) + '-part-2';
+  const source = 'b'.repeat(40);
+  const compiler = 'lean-modules-' + source;
+  const tag = compiler + '-report';
+  const inherited = 'lean-modules-' + 'a'.repeat(40) + '-report-part-2';
+  const asset = 'old-D5.Example.tar.gz-report';
   await mkdir(join(root, tag));
   await mkdir(join(root, inherited));
-  await writeFile(join(root, tag, 'index.json'), JSON.stringify({ shards: {
-    'D5.Example': { version: inherited, asset: 'old-D5.Example.tar.gz', members: ['D5.Example', 'D5.CompilerOnly'] },
-  }}));
   const pack = spawnSync('python3', ['-c', `
-import io, sys, tarfile
+import io, sys, tarfile, zipfile
+report = io.BytesIO()
+with zipfile.ZipFile(report, 'w') as z:
+    z.writestr('report.json', '{}')
 with tarfile.open(sys.argv[1], 'w:gz') as archive:
     for name, data in {
-        'lean-inspector/modules/D5.Example.zip': b'opaque report bytes',
+        'lean-inspector/modules/D5.Example.zip': report.getvalue(),
         'lean-inspector/modules/D5.Example.zip.hash': b'hash',
         'lean-inspector/modules/D5.Example.zip.trace': b'trace',
         'lean-inspector/modules/D5.Other.zip': b'outside shard membership',
@@ -311,13 +408,24 @@ with tarfile.open(sys.argv[1], 'w:gz') as archive:
         member = tarfile.TarInfo(name)
         member.size = len(data)
         archive.addfile(member, io.BytesIO(data))
-`, join(root, inherited, 'old-D5.Example.tar.gz')], { encoding: 'utf8' });
+`, join(root, inherited, asset)], { encoding: 'utf8' });
   assert.equal(pack.status, 0, pack.stderr);
+  const contents = await readFile(join(root, inherited, asset));
+  await writeFile(join(root, tag, 'index.json'), JSON.stringify({
+    schema: 'lean-module-shards-v1', mathlib: 'fixture', kind: 'report', compiler_version: compiler,
+    source, version: tag,
+    targets: { 'D5.Example': { key: digest, report_inputs: [], shard: 'split' } },
+    shards: { split: { version: inherited, asset, key: asset, artifact_kind: 'report',
+      members: ['D5.Example'], sha256: createHash('sha256').update(contents).digest('hex'), bytes: contents.length } },
+  }));
   const reader = fileURLToPath(new URL('../../scripts/read-module-reports.py', import.meta.url));
   const destination = join(root, '.lake/build/lean-inspector/modules');
   const read = spawnSync('python3', ['-B', reader, pathToFileURL(root).href, tag, destination], { encoding: 'utf8' });
   assert.equal(read.status, 0, read.stderr);
-  assert.equal(await readFile(join(destination, 'D5.Example.zip'), 'utf8'), 'opaque report bytes');
+  const verify = spawnSync('python3', ['-c', 'import sys, zipfile; print(zipfile.ZipFile(sys.argv[1]).read("report.json").decode())',
+    join(destination, 'D5.Example.zip')], { encoding: 'utf8' });
+  assert.equal(verify.status, 0, verify.stderr);
+  assert.equal(verify.stdout.trim(), '{}');
   assert.deepEqual(await readdir(destination), ['D5.Example.zip']);
   assert.deepEqual((await readdir(root)).sort(), ['.lake', inherited, tag].sort());
 });
@@ -338,6 +446,7 @@ test('the same readable module key retrieves either version and readers cannot p
     const repeated = entry('workflow_dispatch', 'module-put', hash, 'shard.tar.gz');
     assert.equal(repeated.status, 0, repeated.stderr);
   }
+  env.GITHUB_WORKFLOW_REF = 'owner/repo/.github/workflows/ci-current.yml@refs/heads/dev';
   for (const [hash, body] of versions) {
     const lookup = entry('pull_request', 'module-get', hash, 'restored');
     assert.equal(lookup.status, 0, lookup.stderr);
@@ -351,89 +460,86 @@ test('the same readable module key retrieves either version and readers cannot p
   assert.equal(entry('push', 'module-get', hash, 'restored').status, 5);
 });
 
-test('the publication plan feeds compiler lanes and publishes directly from completed shards', async t => {
+test('the two protected publishers feed type-specific plans to their workers', async t => {
   const { root, env, run } = await fixture(t);
   const dir = join(root, 'tools/scripts/worktree');
   await mkdir(dir, { recursive: true });
   await writeFile(join(dir, 'lean_module_cache.py'), `
-import os, sys
+import argparse, os
 from pathlib import Path
-command = sys.argv[1]
-args = dict(zip(sys.argv[2::2], sys.argv[3::2]))
+parser = argparse.ArgumentParser()
+parser.add_argument("command")
+for option in ["kind", "capacity", "output", "plan", "lane", "version", "targets-file"]:
+    parser.add_argument("--" + option)
+parser.add_argument("--prepare-release", action="store_true")
+parser.add_argument("--stage-only", action="store_true")
+parser.add_argument("--staged", action="store_true")
+parser.add_argument("--legacy-checkpoints", action="store_true")
+args = parser.parse_args()
 assert os.environ["LEAN_MODULE_ACTIONS_CACHE"] == "1"
-if command == "plan":
-    assert "--prepare-release" in sys.argv
-    assert args["--capacity"] == str(32 * 1024**2)
-    Path(args["--output"]).write_text("planned")
-elif command == "worker":
-    assert Path(args["--plan"]).read_text() == "planned" and args["--lane"] == "2"
-    Path("shard").write_text("compiler outputs")
-elif command == "finish":
-    assert Path(args["--plan"]).read_text() == "planned" and Path("shard").is_file()
-    Path(args["--output"]).write_text("published")
-elif command == "restore":
-    assert Path(args["--targets-file"]).read_text() == "D5.A\\n"
-    if "--version" in args:
-        assert args["--version"] == "lean-modules-" + "b" * 40
-        Path("pinned-restore").write_text(args["--version"])
-    else:
-        sys.exit(3)
+kind = os.environ["INPUT_KIND"]
+if args.command == "plan":
+    assert args.kind == kind and args.prepare_release and int(args.capacity) == 32 * 1024**2
+    Path(args.output).write_text(kind)
+elif args.command == "worker":
+    assert Path(args.plan).read_text() == kind and args.lane == "2"
+    Path("shard").write_text(kind)
+elif args.command == "finish":
+    assert args.stage_only
+    assert Path(args.plan).read_text() == Path("shard").read_text() == kind
+    Path(args.output).write_text(kind)
+elif args.command == "promote":
+    assert args.kind == kind and Path("module-index.json").read_text() == kind
+    assert args.version == "lean-modules-" + "b" * 40 + ("-report" if kind == "report" else "")
+elif args.command == "restore":
+    assert args.staged == (os.environ.get("INPUT_STAGED") == "true")
+    assert Path(args.targets_file).read_text() == "D5.A\\n"
+    assert (args.kind or "") == kind
+    if args.version is None or Path("missing-index").exists():
+        raise SystemExit(3)
+    assert args.version == "lean-modules-" + "b" * 40 + ("-report" if kind == "report" else "")
+    Path("pinned-restore").write_text(args.version)
 else:
-    raise AssertionError(command)
+    raise AssertionError(args.command)
 `);
   env.SHARD_MIB = '32';
   env.MODULE_LANE = '2';
-  assert.equal(run('push', 'module-plan').status, 1);
-  for (const operation of ['module-plan', 'module-worker', 'module-finish']) {
-    const result = run('workflow_dispatch', operation);
-    assert.equal(result.status, 0, result.stderr);
-  }
-  assert.equal(await readFile(join(root, 'module-index.json'), 'utf8'), 'published');
+  const source = 'b'.repeat(40);
   await writeFile(join(root, 'target-list'), 'D5.A\n');
   env['INPUT_TARGETS-FILE'] = join(root, 'target-list');
-  const restored = run('push', 'restore-published');
-  assert.equal(restored.status, 0, restored.stderr);
-  assert.match(restored.stdout, /No published module cache yet/);
-  env.INPUT_VERSION = 'lean-modules-' + 'b'.repeat(40);
-  const pinned = run('push', 'restore-published');
-  assert.equal(pinned.status, 0, pinned.stderr);
-  assert.equal(await readFile(join(root, 'pinned-restore'), 'utf8'), env.INPUT_VERSION);
-  const publisher = await readFile(new URL('../../workflows/cache-release-publish.yml', import.meta.url), 'utf8');
-  assert.doesNotMatch(publisher, /plan-reports|build-reports|facet-plan/);
-  assert.match(publisher, /needs: \[pin, publish\][\s\S]*uses: .\/\.github\/workflows\/ci-lean-module-verify.yml[\s\S]*published: true/);
-});
-
-test('the published module reader requires the restored report before invoking Lake', async () => {
-  const verification = await readFile(new URL('../../workflows/ci-lean-module-verify.yml', import.meta.url), 'utf8');
-  const restore = verification.indexOf('operation: restore-published');
-  const validate = verification.indexOf('name: Verify the report delivered by the published shard');
-  const prepare = verification.indexOf('make lean-report-prepare');
-  assert.ok(restore >= 0 && validate > restore && prepare > validate);
-  assert.match(verification.slice(restore, validate), /version:.*lean-modules-\{0\}.*inputs.source/);
-  const files = verification.slice(validate, prepare);
-  for (const suffix of ['', '.hash', '.trace']) {
-    assert.ok(files.includes('test -s "$report' + suffix + '"'), suffix);
+  for (const [kind, workflow, event] of [
+    ['compiler', 'cache-release-publish.yml', 'push'],
+    ['report', 'report-release-publish.yml', 'workflow_run'],
+  ]) {
+    env.INPUT_KIND = kind;
+    env.GITHUB_WORKFLOW_REF = 'owner/repo/.github/workflows/' + workflow + '@refs/heads/dev';
+    for (const operation of ['module-plan', 'module-worker', 'module-stage']) {
+      const result = run(event, operation);
+      assert.equal(result.status, 0, result.stderr);
+    }
+    assert.equal(await readFile(join(root, 'module-index.json'), 'utf8'), kind);
+    assert.equal(run('pull_request', 'module-plan').status, 1);
+    env.INPUT_KIND = kind === 'compiler' ? 'report' : 'compiler';
+    assert.equal(run('schedule', 'module-plan').status, 1);
+    env.INPUT_KIND = kind;
+    env.INPUT_VERSION = 'lean-modules-' + source + (kind === 'report' ? '-report' : '');
+    env.INPUT_STAGED = 'true';
+    const staged = run('workflow_run', 'restore-published');
+    assert.equal(staged.status, 0, staged.stderr);
+    delete env.INPUT_STAGED;
+    const promoted = run(event, 'module-promote');
+    assert.equal(promoted.status, 0, promoted.stderr);
+    assert.notEqual(run('pull_request', 'module-promote').status, 0);
+    const pinned = run('pull_request', 'restore-published');
+    assert.equal(pinned.status, 0, pinned.stderr);
+    assert.equal(await readFile(join(root, 'pinned-restore'), 'utf8'), env.INPUT_VERSION);
+    await writeFile(join(root, 'missing-index'), '');
+    assert.notEqual(run('pull_request', 'restore-published').status, 0);
+    await rm(join(root, 'missing-index'));
   }
-  assert.match(verification.slice(prepare), /make lean-report-scoped[\s\S]*extracted_modules == 0/);
-});
-
-test('Truth publication caches Scribe inputs independently from the previous public bundle', async () => {
-  const workflow = await readFile(new URL('../../workflows/truth-release-publish.yml', import.meta.url), 'utf8');
-  const first = workflow.indexOf('      - name: Restore Scribe resource inputs');
-  const build = workflow.indexOf('      - name: Generate and package the DAG and truth release');
-  const save = workflow.indexOf('      - name: Save the prepared Scribe resources');
-  assert.ok(first >= 0 && build > first && save > build);
-  const restore = workflow.slice(first, build);
-  const generate = workflow.slice(build, save);
-  const persist = workflow.slice(save, workflow.indexOf('      - id: upload', save));
-  assert.match(restore, /if: steps\.reports\.outputs\.existing == ''/);
-  for (const step of [restore, persist]) {
-    assert.ok(step.includes('path: ${{ runner.temp }}/truth-scribe'));
-    assert.ok(step.includes('key: truth-scribe-v1-${{ needs.pin.outputs.source }}'));
-  }
-  assert.ok(restore.includes('restore-keys: truth-scribe-v1-'));
-  assert.ok(generate.includes('TRUTH_RELEASE_BASE: ${{ runner.temp }}/truth-base'));
-  assert.ok(generate.includes('TRUTH_RELEASE_SCRIBE_CACHE: ${{ runner.temp }}/truth-scribe'));
-  assert.ok(persist.includes("steps.generate.outputs.scribe_cache_ready == 'true'"));
-  assert.ok(persist.includes("steps.scribe-cache.outputs.cache-hit != 'true'"));
+  env.INPUT_KIND = '';
+  delete env.INPUT_VERSION;
+  const empty = run('push', 'restore-published');
+  assert.equal(empty.status, 0, empty.stderr);
+  assert.match(empty.stdout, /No published module cache yet/);
 });
