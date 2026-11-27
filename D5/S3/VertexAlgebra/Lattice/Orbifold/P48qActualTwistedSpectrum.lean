@@ -79,10 +79,11 @@ theorem actual_twisted_spectrum_inclusion (r : ℂ) (v : W) (hv : v ≠ 0)
     apply LinearMap.ext
     intro w
     change (HahnSeries.single (0 : ℤ) w).coeff 0 = w
-    simp only [HahnSeries.coeff_single, if_pos rfl]
+    simp [HahnSeries.coeff_single]
   have hfixed (a : Charge lattice) (ha : g a = a) : σ (chargedGround a) = ζ ^ (0 : ℤ) •
       chargedGround a := by
-    simpa only [zpow_zero, one_smul] using standardLift_fixed_ground lattice g g_cube g_isometry a ha
+    simpa only [chargedGround, zpow_zero, one_smul] using
+      standardLift_fixed_ground lattice g g_cube g_isometry a ha
   have hopposite (a : Charge lattice) (ha : g a = a) : ∃ N : ℕ,
       bilinear lattice a a ≤ (N : ℤ) ∧
       TwistedBorcherdsOn Y (chargedGround (-a)) (chargedGround a) 0 0 N := by
