@@ -989,3 +989,29 @@ replacement of one such vertex per triangle gives the retraction.
 Vertices whose labels have at most two elements stay fixed. The
 whole-cone partition needed for the four-dimensional bound remains
 open. [Question 6.3](https://arxiv.org/html/2609.39615v1#S6)
+
+## Ordinary face cuts and flag capacity
+
+A colour-preserving simplicial map preserves and detects membership
+in the ordinary two-cut collar. Taking image flags commutes with
+both cuts, even when the map identifies vertices. The union of the
+retracted nested flag is exactly the part of the original support
+of the selected colour. With the chamber table and its interval
+charts supplied, this transports the cut data through the four old
+rank colours in the three-dimensional construction. If suitable
+charts are given on all source faces, an interval contiguity chain
+can be interpreted in each chart. At vertices fixed during the
+chain the charts need only agree at the fixed value.
+
+The four-dimensional cone argument uses a separate chain argument
+to force an interface of nonzero degree to hit every target
+triangle. The ranked-fibre bound in Lean
+limits the distinct coface labels that any one chain can supply
+when they must come from the same fibre. A second bound applies
+to an isotone whole-flag assignment whose singleton values
+record the actual retracted face. A target triangle of flags
+starting with the singleton of a three-vertex face forces a
+source chain with sizes at least three, four, and five. The
+ordinary triangle cone allows only four vertices in a source
+face. The weaker comparison with only containment in the largest
+assigned face remains open.
