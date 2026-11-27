@@ -90,6 +90,8 @@ private def decodeStringFunction (n : Name) : Bool :=
 
 private def pinnedStringFunction (n : Name) : Bool := defsStringFunction n || basicStringFunction n || decodeStringFunction n
 
+private def digitList (n : Name) : Bool := [`Nat.toSuperDigitsAux, `Nat.toSubDigitsAux].contains n
+
 public def usesPinnedFunction (n : Name) : Bool :=
   let method := n.updatePrefix .anonymous
   let trailing := n == `Int.trailingZeros || n == `Int.trailingZeros.aux
@@ -97,7 +99,7 @@ public def usesPinnedFunction (n : Name) : Bool :=
   let vector := n.getPrefix == `BitVec &&
     [`abs, `pow, `smod, `replicate, `reverse, `cpop, `cpopNatRec, `ctz, `clz, `clzAuxRec,
      `getLsbD, `getLsb, `getMsbD, `getMsb, `msb, `sdiv, `srem, `smtSDiv, `hash, `ofBoolListLE, `ofBoolListBE].contains method
-  trailing || pinnedStringFunction n || modelOperation n || ByteFoldNative.supported n || IndexedNative.supported n || SyntaxPositionNative.supported n || bytes || vector || [`Nat.repr, `Nat.reprFast, `Int.repr].contains n || [`BitVec.toHex, `BitVec.instToString].contains n || n == `Nat.bitwise || ((word? n.getPrefix).isSome && (method == `pow || (method == `ofInt && bitsType n.getPrefix == n.getPrefix))) ||
+  digitList n || trailing || pinnedStringFunction n || modelOperation n || ByteFoldNative.supported n || IndexedNative.supported n || SyntaxPositionNative.supported n || bytes || vector || [`Nat.repr, `Nat.reprFast, `Int.repr].contains n || [`BitVec.toHex, `BitVec.instToString].contains n || n == `Nat.bitwise || ((word? n.getPrefix).isSome && (method == `pow || (method == `ofInt && bitsType n.getPrefix == n.getPrefix))) ||
     (n.getPrefix == `Int && [`negOfNat, `subNatNat, `sign, `toNat, `pow, `fdiv, `fmod, `bdiv, `bmod].contains method)
 
 private def bootstrapStringOp (n : Name) : Bool :=
@@ -226,6 +228,14 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
     pure `Nat.reprFast
   else pure official
   let some impl := IR.findEnvDecl source compiled | throw <| IO.userError s!"no pinned IR for {official}"
+  if digitList official then
+    let some targetInfo := strict.find? n | throw <| IO.userError s!"missing strict character conversion {n}"
+    unless targetInfo.type == InitKernelPort.translate InitKernelPort.portName ci.type do
+      throw <| IO.userError s!"character conversion type mismatch {n}"
+    IndexedNative.checkDataTypes source strict [`List]
+    let some (some f) := impureTrivialStructureInfoExt.find? strict `Omega.Char | throw <| IO.userError "missing strict character"
+    unless f.fieldIdx == 0 do throw <| IO.userError "invalid strict character"
+    layout strict `UInt32
   let params := impl.params
   let ret := impl.resultType
   let target ← match impl with
@@ -355,6 +365,13 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
     else if dom == `Unit && a.ty == .tagged && b.ty == .tagged then
       decls := decls.push ("lean_obj_arg " ++ arg)
       args := args.push arg
+    else if dom == `List && digitList official && a.ty == .tobject && b.ty == .tobject then
+      hasString := true
+      decls := decls.push ((if b.borrow then "b_lean_obj_arg " else "lean_obj_arg ") ++ arg)
+      prepare := prepare ++ s!"  lean_object *chars{i} = omega_convert_char_list({arg}, true);\n"
+      args := args.push s!"chars{i}"
+      if a.borrow then cleanup := cleanup ++ s!"  lean_dec(chars{i});\n"
+      unless b.borrow do cleanup := cleanup ++ s!"  lean_dec({arg});\n"
     else if dom == `List && official == `ByteArray.toList.loop && a.ty == .tobject && b.ty == .tobject then
       checkStrictString strict
       decls := decls.push ((if b.borrow then "b_lean_obj_arg " else "lean_obj_arg ") ++ arg)
@@ -497,6 +514,10 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
     let value := if dom == `String then "omega_string_from_lean(native_string)" else
       "omega_bytes_from_data(lean_sarray_cptr(native_string), lean_sarray_size(native_string))"
     pure ("lean_obj_res", value)
+  else if dom == `List && digitList official && ret == .tobject && result == .tobject then do
+    prepare := prepare ++ s!"  lean_object *digits = {call};\n"
+    cleanup := cleanup ++ "  lean_dec(digits);\n"
+    pure ("lean_obj_res", "omega_convert_char_list(digits, false)")
   else if dom == `List && official == `ByteArray.toList.loop && ret == .tobject && result == .tobject then do
     checkStrictString strict
     pure ("lean_obj_res", call)

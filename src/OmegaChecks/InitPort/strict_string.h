@@ -119,3 +119,20 @@ static lean_obj_res omega_string_fold_step(lean_obj_arg f, lean_obj_arg s, lean_
 static inline lean_obj_res omega_slice_to_lean(b_lean_obj_arg slice) {
     return omega_convert_substring(slice, omega_string_to_lean);
 }
+
+/* Pinned Char boxes UInt32, while strict Char carries a physical Nat. */
+static inline lean_obj_res omega_convert_char_list(b_lean_obj_arg chars, bool to_native) {
+    lean_object *head = lean_box(0);
+    lean_object *last = NULL;
+    for (; !lean_is_scalar(chars); chars = lean_ctor_get(chars, 1)) {
+        lean_object *ch = lean_ctor_get(chars, 0);
+        lean_object *next = lean_alloc_ctor(1, 2, 0);
+        lean_ctor_set(next, 0, to_native ? lean_box_uint32(lean_uint32_of_nat(ch))
+                                        : lean_uint32_to_nat(lean_unbox_uint32(ch)));
+        lean_ctor_set(next, 1, lean_box(0));
+        if (last == NULL) head = next;
+        else lean_ctor_set(last, 1, next);
+        last = next;
+    }
+    return head;
+}
