@@ -91,8 +91,10 @@ stabilizer by taking $U^{\perp_s}$.
 - `D5/S3/Quantum/Codes/BinaryEAAttainmentBridge.result` gives the
   exclusion for $n\ge8$. The conditional bridge handles $n=6$ and
   the length-seven rank-one case and consumes the remaining case.
-- `D5/S3/Quantum/Codes/BinaryEAShorteningLengthSeven.length_seven_no_rank_two_site`
-  excludes the rank-two site. The final theorem applies it with
+- `D5.S3.Quantum.Codes.BinaryEAShortening.length_seven_no_rank_two_site`
+  excludes the rank-two site. Its proof is in
+  [BinaryEAShorteningLengthSeven.lean](../D5/S3/Quantum/Codes/BinaryEAShorteningLengthSeven.lean).
+  The final theorem applies it with
   $H=U\cap U^{\perp_s}$ and the original binary symplectic form.
 
 - The remaining public helper registrations are tracked in [#34915](https://github.com/the-omega-institute/trureturing/issues/34915).
