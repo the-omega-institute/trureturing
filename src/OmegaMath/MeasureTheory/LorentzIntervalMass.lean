@@ -1,20 +1,21 @@
-/- GID: D5/S3/Fourier/Concentration/LorentzIntervalMass
-   generality: I
-   mirror-B: D5/B/S3/Fourier/Concentration/LorentzIntervalMass
-   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: []
-   utility: none
-   digest: Centered interval mass bounds give an upper bound for a Lorentz kernel integral. -/
-
 import Mathlib.Probability.Distributions.Cauchy
 import Mathlib.MeasureTheory.Integral.Layercake
+import OmegaBuild.Commands
+
+/-!
+Omega original.
+
+Centered interval mass bounds for the scale-two Lorentz kernel.
+-/
+
+compile_only_with_mathlib
 
 open MeasureTheory ProbabilityTheory Set
 open scoped NNReal
 
 noncomputable section
 
-namespace D5.S3.Fourier.Concentration.LorentzIntervalMass
+namespace Omega.MeasureTheory.LorentzIntervalMass
 
 /-- The Lorentz kernel of scale two, normalized to equal one at the origin. -/
 def kernel (x : ℝ) : ℝ := 4 / (4 + x ^ 2)
@@ -159,4 +160,4 @@ theorem lorentz_sum_upper {J : Type*} (s : Finset J) (x w : J → ℝ)
   rw [← hsum]
   exact lorentz_mass_upper μ hμ fun r hr => (hmeasure r).trans_le (hloc r hr)
 
-end D5.S3.Fourier.Concentration.LorentzIntervalMass
+end Omega.MeasureTheory.LorentzIntervalMass

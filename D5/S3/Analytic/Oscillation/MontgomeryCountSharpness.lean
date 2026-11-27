@@ -21,7 +21,8 @@ namespace D5.S3.Analytic.Oscillation.MontgomeryCountSharpness
 
 open OrdinateCounting (Spectrum CountAsymptotic)
 open SpectrumPhaseCutoff (mass sine mem_cut)
-open MontgomeryCountUpper (countMain count_asymptotic_of_bounded_discrepancy pairSum
+open SmoothedSpectrumCounting.CutDensity (countMain)
+open MontgomeryCountUpper (count_asymptotic_of_bounded_discrepancy pairSum
   pairSum_le_of_bounded_discrepancy)
 open MontgomeryWindow (pairCos)
 open D5.S3.Fourier.Concentration.CauchyPairEnergy (lorentz_pair_lower_bound)
@@ -105,17 +106,16 @@ private theorem eventually_lower_of_alignment (S : Spectrum) (hN : CountAsymptot
 /-- A single bounded-discrepancy spectrum attains the upper coefficient in a fixed band. -/
 theorem exists_sharp_count_discrepancy :
     ∃ (S : Spectrum) (D A : ℝ), 1 < A ∧
-      (∀ᶠ Y : ℝ in atTop, |(S.N Y : ℝ) - countMain Y| ≤ D) ∧
+      (∀ᶠ Y : ℝ in atTop, |(S.N Y : ℝ) - countMain (2 * Real.pi) Y| ≤ D) ∧
       ∀ ε > (0 : ℝ), ∀ᶠ Y : ℝ in atTop,
         (∀ t : ℝ, pairSum S Y t ≤ (threshold + ε) * (Y * Real.log Y ^ 2)) ∧
         ∃ t ∈ Ioo (Real.log Y) (A * Real.log Y),
           (threshold - ε) * (Y * Real.log Y ^ 2) < pairSum S Y t := by
   obtain ⟨S, w, _, hw, ⟨D, _, hD⟩, _, _, hvisit⟩ :=
     SpectrumTwoTermCountAlignment.exists_two_term_count_alignment
-  have hcount : ∀ᶠ Y : ℝ in atTop, |(S.N Y : ℝ) - countMain Y| ≤ D := by
+  have hcount : ∀ᶠ Y : ℝ in atTop, |(S.N Y : ℝ) - countMain (2 * Real.pi) Y| ≤ D := by
     filter_upwards [hD] with Y hY
-    rw [show Y / (2 * Real.pi) = c * Y by dsimp [c]; ring] at hY
-    exact hY
+    rwa [countMain, ← div_mul_eq_mul_div]
   let K : ℝ := 42 * Real.pi / Real.log 2
   have hK : 0 < K := div_pos (by positivity) (Real.log_pos (by norm_num))
   let A : ℝ := 1 + 2 * K

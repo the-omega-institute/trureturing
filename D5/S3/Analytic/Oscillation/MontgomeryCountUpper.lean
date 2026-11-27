@@ -7,7 +7,8 @@
    digest: Bounded two-term count discrepancy gives a uniform Montgomery upper bound. -/
 
 import D5.S3.Analytic.Oscillation.MontgomeryWindow
-import D5.S3.Fourier.Concentration.LorentzIntervalMass
+import D5.S3.Analytic.Oscillation.SmoothedSpectrumCounting
+import OmegaMath.MeasureTheory.LorentzIntervalMass
 import Mathlib.Analysis.Real.Pi.Bounds
 
 /-! A bound on the count in closed intervals controls the ordered Lorentz pair sum. -/
@@ -21,7 +22,11 @@ namespace D5.S3.Analytic.Oscillation.MontgomeryCountUpper
 
 open OrdinateCounting (Spectrum CountAsymptotic)
 open MontgomeryWindow (pairCos)
-open D5.S3.Fourier.Concentration.LorentzIntervalMass (kernel lorentz_sum_upper)
+open Omega.MeasureTheory.LorentzIntervalMass (kernel lorentz_sum_upper)
+open SmoothedSpectrumCounting (meanScale normalized_count_tends_one)
+open SmoothedSpectrumCounting.CutDensity (countMain eventual_count_bound)
+
+local notation "mainTerm" => countMain (2 * Real.pi)
 
 private abbrev c : ℝ := 1 / (2 * Real.pi)
 
@@ -31,11 +36,13 @@ private theorem c_le_one : c ≤ 1 := by
   apply (div_le_one (by positivity : 0 < 2 * Real.pi)).mpr
   linarith [Real.pi_gt_three]
 
-/-- Main term in the two-term ordinate count. -/
-def countMain (Y : ℝ) : ℝ := c * Y * (Real.log (c * Y) - 1)
+private theorem mainTerm_eq (Y : ℝ) : mainTerm Y = c * Y * (Real.log (c * Y) - 1) := by
+  rw [countMain, show Y / (2 * Real.pi) = c * Y by dsimp [c]; ring]
+  dsimp [c]
+  ring
 
 private theorem countMain_sub_le {a b Y : ℝ} (ha : 0 < a) (hab : a ≤ b) (hbY : b ≤ Y) :
-    countMain b - countMain a ≤ c * Real.log Y * (b - a) := by
+    mainTerm b - mainTerm a ≤ c * Real.log Y * (b - a) := by
   have hb := ha.trans_le hab
   have hca := mul_pos c_pos ha
   have hcb := mul_pos c_pos hb
@@ -51,9 +58,9 @@ private theorem countMain_sub_le {a b Y : ℝ} (ha : 0 < a) (hab : a ≤ b) (hbY
   have hlogY : Real.log (c * b) ≤ Real.log Y :=
     Real.log_le_log hcb ((mul_le_of_le_one_left hb.le c_le_one).trans hbY)
   calc
-    countMain b - countMain a =
+    mainTerm b - mainTerm a =
         c * (b - a) * (Real.log (c * b) - 1) +
-          c * a * (Real.log (c * b) - Real.log (c * a)) := by unfold countMain; ring
+          c * a * (Real.log (c * b) - Real.log (c * a)) := by simp only [mainTerm_eq]; ring
     _ ≤ c * (b - a) * (Real.log (c * b) - 1) + c * (b - a) := add_le_add_right herr _
     _ = c * (b - a) * Real.log (c * b) := by ring
     _ ≤ c * (b - a) * Real.log Y :=
@@ -67,7 +74,7 @@ private theorem cut_mono (S : Spectrum) {a b : ℝ} (hab : a ≤ b) :
   exact hj.trans hab
 
 private theorem interval_mass_le (S : Spectrum) {A D : ℝ}
-    (hA : 1 ≤ A) (hcount : ∀ Y ≥ A, |(S.N Y : ℝ) - countMain Y| ≤ D)
+    (hA : 1 ≤ A) (hcount : ∀ Y ≥ A, |(S.N Y : ℝ) - mainTerm Y| ≤ D)
     {Y u r : ℝ} (hY : A ≤ Y) (hY1 : 1 < Y) (hu : u ≤ Y) (hr : 0 ≤ r) :
     (∑ j ∈ S.cut Y, if S.gamma j - u ∈ Icc (-r) r then (S.mult j : ℝ) else 0) ≤
       2 * (c * Real.log Y) * r + ((S.N A : ℝ) + 2 * D + c) := by
@@ -111,14 +118,14 @@ private theorem interval_mass_le (S : Spectrum) {A D : ℝ}
       _ = _ := by
         rw [Finset.sum_union hdisj, Finset.sum_sdiff_eq_sub (cut_mono S hab)]
         simp only [Spectrum.N, Nat.cast_sum]
-  have hcountDiff : (S.N b : ℝ) - (S.N a : ℝ) ≤ countMain b - countMain a + 2 * D := by
+  have hcountDiff : (S.N b : ℝ) - (S.N a : ℝ) ≤ mainTerm b - mainTerm a + 2 * D := by
     linarith [(abs_le.mp (hcount a haA)).1, (abs_le.mp (hcount b hbA)).2]
   have hmain := countMain_sub_le (by linarith : 0 < a) hab hbY
   have hslack : c * Real.log Y * δ = c := by dsimp [δ]; field_simp
   have hscale := mul_le_mul_of_nonneg_left hwidth (mul_nonneg c_pos.le hlog.le)
   calc
     _ ≤ (S.N A : ℝ) + ((S.N b : ℝ) - (S.N a : ℝ)) := hmass
-    _ ≤ (S.N A : ℝ) + (countMain b - countMain a + 2 * D) :=
+    _ ≤ (S.N A : ℝ) + (mainTerm b - mainTerm a + 2 * D) :=
       add_le_add_right hcountDiff _
     _ ≤ (S.N A : ℝ) + (c * Real.log Y * (b - a) + 2 * D) := by linarith
     _ ≤ (S.N A : ℝ) + (c * Real.log Y * (2 * r + δ) + 2 * D) := by linarith
@@ -130,7 +137,7 @@ def pairSum (S : Spectrum) (Y t : ℝ) : ℝ :=
     (S.mult j : ℝ) * (S.mult k : ℝ) * pairCos (S.gamma j - S.gamma k) t
 
 private theorem pairSum_le (S : Spectrum) {A D : ℝ} (hA : 1 ≤ A)
-    (hcount : ∀ Y ≥ A, |(S.N Y : ℝ) - countMain Y| ≤ D)
+    (hcount : ∀ Y ≥ A, |(S.N Y : ℝ) - mainTerm Y| ≤ D)
     {Y : ℝ} (hY : A ≤ Y) (hY1 : 1 < Y) (t : ℝ) :
     pairSum S Y t ≤ (S.N Y : ℝ) *
       (2 * Real.pi * (c * Real.log Y) + ((S.N A : ℝ) + 2 * D + c)) := by
@@ -160,41 +167,21 @@ private theorem pairSum_le (S : Spectrum) {A D : ℝ} (hA : 1 ≤ A)
 
 /-- Bounded two-term discrepancy implies the normalized counting asymptotic. -/
 theorem count_asymptotic_of_bounded_discrepancy (S : Spectrum) {D : ℝ}
-    (hcount : ∀ᶠ Y : ℝ in atTop, |(S.N Y : ℝ) - countMain Y| ≤ D) :
+    (hcount : ∀ᶠ Y : ℝ in atTop, |(S.N Y : ℝ) - mainTerm Y| ≤ D) :
     CountAsymptotic S := by
-  let C := D + |c * (Real.log c - 1)|
-  have hzero : Tendsto (fun Y : ℝ => C / Real.log Y) atTop (𝓝 0) := by
-    simpa [div_eq_mul_inv, Function.comp_def] using
-      (tendsto_inv_atTop_zero.comp Real.tendsto_log_atTop).const_mul C
-  have herr : Tendsto (fun Y : ℝ => (S.N Y : ℝ) / (Y * Real.log Y) - c) atTop (𝓝 0) := by
-    apply squeeze_zero_norm' _ hzero
-    filter_upwards [hcount, eventually_gt_atTop (1 : ℝ)] with Y hY hY1
-    have hY0 : 0 < Y := by linarith
-    have hlog := Real.log_pos hY1
-    have hD : 0 ≤ D := (abs_nonneg _).trans hY
-    have hterm :
-        |countMain Y - c * (Y * Real.log Y)| = |c * (Real.log c - 1)| * Y := by
-      unfold countMain
-      rw [Real.log_mul c_pos.ne' hY0.ne',
-        show c * Y * (Real.log c + Real.log Y - 1) - c * (Y * Real.log Y) =
-          c * (Real.log c - 1) * Y by ring, abs_mul, abs_of_pos hY0]
-    rw [Real.norm_eq_abs, show (S.N Y : ℝ) / (Y * Real.log Y) - c =
-      ((S.N Y : ℝ) - c * (Y * Real.log Y)) / (Y * Real.log Y) by field_simp,
-      abs_div, abs_of_pos (mul_pos hY0 hlog)]
-    have hbound : |(S.N Y : ℝ) - c * (Y * Real.log Y)| ≤ C * Y := by
-      calc
-        _ ≤ |(S.N Y : ℝ) - countMain Y| + |countMain Y - c * (Y * Real.log Y)| :=
-          abs_sub_le _ _ _
-        _ ≤ D + |c * (Real.log c - 1)| * Y := by rw [hterm]; exact add_le_add_left hY _
-        _ ≤ C * Y := by dsimp [C]; linarith [le_mul_of_one_le_right hD hY1.le]
-    calc
-      _ ≤ C * Y / (Y * Real.log Y) := div_le_div_of_nonneg_right hbound (by positivity)
-      _ = _ := by field_simp
-  simpa [CountAsymptotic] using herr.add_const c
+  obtain ⟨E, hE⟩ := eventual_count_bound S (by positivity : 0 < 2 * Real.pi) hcount
+  have h := (normalized_count_tends_one S E hE).const_mul c
+  rw [mul_one] at h
+  refine h.congr' ?_
+  filter_upwards [eventually_gt_atTop (1 : ℝ)] with Y hY
+  have hY0 : 0 < Y := by linarith
+  have hlog := Real.log_pos hY
+  dsimp [meanScale, c]
+  field_simp [hY0.ne', hlog.ne', Real.pi_ne_zero]
 
 /-- The count discrepancy bounds the leading coefficient uniformly in the phase. -/
 theorem pairSum_le_of_bounded_discrepancy (S : Spectrum) {D : ℝ}
-    (hcount : ∀ᶠ Y : ℝ in atTop, |(S.N Y : ℝ) - countMain Y| ≤ D)
+    (hcount : ∀ᶠ Y : ℝ in atTop, |(S.N Y : ℝ) - mainTerm Y| ≤ D)
     {ε : ℝ} (hε : 0 < ε) : ∀ᶠ Y : ℝ in atTop, ∀ t : ℝ,
       pairSum S Y t ≤ (2 * Real.pi * c ^ 2 + ε) * (Y * Real.log Y ^ 2) := by
   obtain ⟨A₀, hA₀⟩ := eventually_atTop.mp hcount

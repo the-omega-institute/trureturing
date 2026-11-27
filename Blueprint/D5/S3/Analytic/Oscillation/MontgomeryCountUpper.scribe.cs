@@ -16,7 +16,7 @@ internal sealed class MontgomeryCountUpperDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(Owner + ".count_asymptotic_of_bounded_discrepancy"),
                 H("The normalized count"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("If |N(Y)−M(Y)| is bounded for all sufficiently large Y, then N(Y)/(Y log Y) tends to c. The linear term in M(Y) vanishes after the normalization."))),
+                Blocks(Paragraph(Text("If |N(Y)−M(Y)| is bounded for all sufficiently large Y, then N(Y)/(Y log Y) tends to c. Use the normalized count limit with mean scale log(Y)/(2π), then rescale the limit by c."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("pair-sum-le-of-bounded-discrepancy"),
@@ -25,7 +25,7 @@ internal sealed class MontgomeryCountUpperDocument : IScribeDocumentDefinition
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text("For each ε > 0, the same counting hypothesis gives G_Y(t) ≤ (2πc²+ε)Y(log Y)² for all sufficiently large Y and all real t.")),
-                    Paragraph(Text("Let the count error be bounded by D from a fixed A onward. For an interval of radius r centered at an ordinate through Y, bound the mass above A by a difference of inclusive counts. Move the lower cutoff left by 1/log Y, clamped at A, to include ordinates at the left endpoint. The contribution through A is at most N(A). The difference of the two smooth main terms is at most c log Y times the distance between the cutoffs. Over the level intervals of the Lorentz kernel, this gives a row bound of 2πc log Y + N(A) + 2D + c.")),
+                    Paragraph(Text("Let the count error be bounded by D from a fixed A onward. For an interval of radius r centered at an ordinate through Y, bound the mass above A by a difference of inclusive counts. Move the lower cutoff left by 1/log Y, clamped at A, to include ordinates at the left endpoint. The contribution through A is at most N(A). The difference of the two smooth main terms is at most c log Y times the distance between the cutoffs. Integrate the mass estimate over the centered superlevel intervals of the Lorentz kernel to obtain a row bound of 2πc log Y + N(A) + 2D + c.")),
                     Paragraph(Text("Bound each cosine by one, then sum the row bound with the outer multiplicities. The normalized count makes the resulting leading coefficient 2πc²."))),
                 DescribeRole.Theorem))));
 }
