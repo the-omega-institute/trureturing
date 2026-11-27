@@ -5,12 +5,34 @@ import shutil
 import subprocess
 import sys
 import tempfile
+import tomllib
 import unittest
 
 from strict_lake import ROOT
 
 
 class BackendScheduling(unittest.TestCase):
+    def test_ordinary_init_compiler_library_owns_its_helpers(self):
+        plugin = "OmegaChecks.InitCompiler"
+        with tempfile.TemporaryDirectory(prefix="omega-plugin-") as directory:
+            project = Path(directory)
+            shutil.copyfile(ROOT / "lean-toolchain", project / "lean-toolchain")
+            prefix = Path("src/OmegaChecks")
+            (project / prefix).mkdir(parents=True)
+            shutil.copyfile(ROOT / prefix / "InitCompiler.lean", project / prefix / "InitCompiler.lean")
+            shutil.copytree(ROOT / prefix / "InitCompiler", project / prefix / "InitCompiler")
+            # Preserve both overlapping library selections and their order from this checkout.
+            config = tomllib.loads((ROOT / "lakefile.toml").read_text())
+            selected = [lib for lib in config["lean_lib"] if lib["name"] in {"OmegaChecks", plugin}]
+            self.assertEqual({lib["name"] for lib in selected}, {"OmegaChecks", plugin})
+            source = 'name = ' + json.dumps(config['name']) + '\n'
+            for library in selected:
+                source += '\n[[lean_lib]]\n' + ''.join(
+                    key + ' = ' + json.dumps(value) + '\n' for key, value in library.items())
+            (project / "lakefile.toml").write_text(source)
+            subprocess.run(["lake", "build", plugin + ":shared"], cwd=project, check=True)
+            subprocess.run(["lake", "--no-build", "build", plugin + ":shared"], cwd=project, check=True)
+
     def test_marker_changes_and_transitive_targets(self):
         with tempfile.TemporaryDirectory(prefix="omega-scheduling-") as directory:
             project = Path(directory)

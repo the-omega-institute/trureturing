@@ -1,0 +1,1 @@
+{"statement_id":"sha256:584f96282b438b931dff6ecbfbfd545ebacd2b2e2217ebffc2ee46e38a99347d","declarations":[{"declaration_name_key":"ns(n0,21:exists_level_pairWeil)","kind":"theorem","libraries":["Aesop","Batteries","Init","Lean","Mathlib","Std"],"axioms":["Classical.choice","Quot.sound","propext"]}]}
