@@ -11,7 +11,8 @@ namespace OmegaChecks.InitPort.UnsafeImplementation
 
 private def aliases := [(ReferenceModify.implementation, ReferenceModify.consumer),
   (`Lean.Macro.getMethodsImp, `Lean.Macro.getMethods)] ++
-  LogicalHandle.apis.filterMap fun api => api.implementedBy.map fun impl => (impl, api.allocator)
+  [LogicalHandle.shareState, LogicalHandle.shareFactory, LogicalHandle.macroMethods].filterMap
+    fun api => api.implementedBy.map fun impl => (impl, api.allocator)
 
 private def syntaxNames := [`Lean.TSyntaxArray.mkImpl, `Lean.TSyntaxArray.rawImpl]
 
