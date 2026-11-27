@@ -1,3 +1,4 @@
+module
 import Lean
 import OmegaChecks.InitPort.NativeState
 meta import OmegaChecks.InitPort.NativeState
@@ -5,7 +6,7 @@ meta import OmegaChecks.InitPort.NativeState
 open Lean OmegaChecks.InitPort.NativeState
 
 /-- Check the getters in the initialized shared library used by ordinary IR consumers. -/
-unsafe def main (args : List String) : IO Unit := do
+public unsafe def main (args : List String) : IO Unit := do
   let [library] := args | throw <| IO.userError "expected the strict library"
   searchPathRef.set [library]
   let env ← importModules #[{module := `OmegaInit.Meta.Defs, importAll := true}] {} (level := .private)
