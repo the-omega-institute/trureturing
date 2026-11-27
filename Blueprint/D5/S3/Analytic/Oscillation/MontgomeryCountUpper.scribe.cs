@@ -25,7 +25,7 @@ internal sealed class MontgomeryCountUpperDocument : IScribeDocumentDefinition
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text("For each ε > 0, the same counting hypothesis gives G_Y(t) ≤ (2πc²+ε)Y(log Y)² for all sufficiently large Y and all real t.")),
-                    Paragraph(Text("Let the count error be bounded by D from a fixed A onward. For an interval of radius r centered at an ordinate through Y, count the part above A by a difference of inclusive counts. Move its lower cutoff left by 1/log Y, clamped at A, to include ordinates at the left endpoint. The contribution through A is at most N(A). The difference of the two smooth main terms is at most c log Y times the distance between the cutoffs. Over the level intervals of the Lorentz kernel, this gives a row bound of 2πc log Y + N(A) + 2D + c.")),
+                    Paragraph(Text("Let the count error be bounded by D from a fixed A onward. For an interval of radius r centered at an ordinate through Y, bound the mass above A by a difference of inclusive counts. Move the lower cutoff left by 1/log Y, clamped at A, to include ordinates at the left endpoint. The contribution through A is at most N(A). The difference of the two smooth main terms is at most c log Y times the distance between the cutoffs. Over the level intervals of the Lorentz kernel, this gives a row bound of 2πc log Y + N(A) + 2D + c.")),
                     Paragraph(Text("Bound each cosine by one, then sum the row bound with the outer multiplicities. The normalized count makes the resulting leading coefficient 2πc²."))),
                 DescribeRole.Theorem))));
 }
