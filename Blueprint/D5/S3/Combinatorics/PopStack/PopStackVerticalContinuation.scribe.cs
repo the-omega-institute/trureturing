@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.PopStack;
 internal sealed class PopStackVerticalContinuationDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/PopStack/PopStackVerticalContinuation.";
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Combinatorics/cioni2025sorting");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/PermutationPatterns/cioni2025sorting");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "For a word p of length n, undoV(p) equals P(floor(n/2)) if p = E(floor(n/2)), and equals E(floor(n/2)-1) if p = P(floor(n/2)). Otherwise, if the second entry is below n, delete the first entry and decrease each remaining value greater than it. In the remaining case delete the entry immediately before the minimum and decrease each remaining value larger than the deleted entry. Subtraction is truncated at zero.",

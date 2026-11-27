@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.PopStack;
 internal sealed class PopStackContinuationDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/PopStack/PopStackContinuation.";
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Combinatorics/cioni2025sorting");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/PermutationPatterns/cioni2025sorting");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "For a word p, W(p) prepends one more than its second entry and increases by one each original entry larger than that second entry. Positions are numbered from zero, and an absent entry is read as zero.",
