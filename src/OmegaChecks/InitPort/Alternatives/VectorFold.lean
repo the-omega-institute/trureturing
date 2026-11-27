@@ -69,6 +69,18 @@ public theorem Vector.foldrM_reverse : type_of% @_root_.Vector.foldrM_reverse :=
   intros
   exact Array.foldrM_reverse
 
+public theorem Vector.foldlM_append : type_of% @_root_.Vector.foldlM_append := by
+  intros
+  exact _root_.Array.foldlM_append
+
+public theorem Vector.foldrM_append : type_of% @_root_.Vector.foldrM_append := by
+  intros
+  exact _root_.Array.foldrM_append
+
+public theorem Vector.foldlM_push : type_of% @_root_.Vector.foldlM_push := by
+  intros
+  exact _root_.Array.foldlM_push
+
 public theorem Vector.foldrM_push : type_of% @_root_.Vector.foldrM_push := by
   intros
   exact Array.foldrM_push

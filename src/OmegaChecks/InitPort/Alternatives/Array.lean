@@ -431,6 +431,19 @@ public theorem Array.foldrM_append' : type_of% @_root_.Array.foldrM_append' := b
   rw [← _root_.Array.size_append]
   exact _root_.Array.foldrM_append
 
+public theorem Array.foldlM_push : type_of% @_root_.Array.foldlM_push := by
+  intro m α β _ _ xs a f b
+  rw [← _root_.Array.foldlM_toList, _root_.Array.toList_push, _root_.List.foldlM_append,
+    ← _root_.Array.foldlM_toList]
+  change (xs.toList.foldlM f b >>= fun acc => f acc a >>= pure) = _
+  rw [← bind_assoc, bind_pure]
+
+public theorem Array.foldlM_push' : type_of% @_root_.Array.foldlM_push' := by
+  intro m α β _ _ xs a f b stop h
+  subst stop
+  rw [← _root_.Array.size_push (xs := xs) a]
+  exact _root_.Array.foldlM_push
+
 public theorem Array.foldrM_push : type_of% @_root_.Array.foldrM_push := by
   intro m α β mon f b xs a
   rw [_root_.Array.foldrM_eq_reverse_foldlM_toList, _root_.Array.toList_push, List.reverse_concat]
