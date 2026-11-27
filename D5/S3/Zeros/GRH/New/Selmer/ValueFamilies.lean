@@ -50,7 +50,7 @@ lemma Data.Pair.exists_isIntegralMeasure (p : D.Pair) (r : p.IsRamified) : ∃ F
     (p.ψ * ϑ.ψ) w = 1 := by simp_all [places_modulus_eq_union, p.6, ϑ.5]
   cases' p.z_mem.1.lt_or_eq' with hz hz
   · use p.intAlgPart ⟨card_fin _, hz⟩, {0}, 0, by simp,
-      isIntegralMeasure_intAlgPart _, ?_, by grind [ratio_eq_intAlgPart_div, intAlgPart_ne_zero]
+      isIntegralMeasure_intAlgPart _, ?_, by grind -abstractProof [ratio_eq_intAlgPart_div, intAlgPart_ne_zero]
     introv _ _ _ _
     obtain ⟨⟨_, ⟨⟩⟩⟩ := p.intAlgPart_eq_mul_L ⟨card_fin _, hz⟩, ϑ'.6 v,
       @levelNorm_mem_and_notMem_of_mem_Q _ D ϑ' v, @levelNorm_mem_and_notMem_of_mem_Q _ D ϑ'
@@ -58,19 +58,19 @@ lemma Data.Pair.exists_isIntegralMeasure (p : D.Pair) (r : p.IsRamified) : ∃ F
     simp [mul_assoc, L, *]
     convert (eulerProd_erase (p.hasWeight.mul ϑ.hasWeight).inv.isHeckeOfType.norm_heckeCoeff_le {v,
       star v}).2.2 p.z (mod_cast hz)
-    · simp [funext_iff, heckeCoeff, Set.indicator]; grind [star_star]
+    · simp [funext_iff, heckeCoeff, Set.indicator]; grind -abstractProof [star_star]
     repeat simp_all [atUnif, heckeCoeff, cpow_neg, Ne.symm, places_modulus_eq_union,
-      IsChosen] <;> grind
+      IsChosen] <;> grind -abstractProof
   let c := (p.c · - 1)
   have h ϑ := ((p.hasWeight.mul (TameChar.hasWeight ϑ)).mul_upsilonU1_pow 1).of_weight_eq (e' :=
-    (-c ·)) (by grind [le_c, add_zero])
+    (-c ·)) (by grind -abstractProof [le_c, add_zero])
   obtain ⟨⟨N, _, J⟩, C, K⟩ := exists_modKernel_integral_bound (Fin 2) (Fin 2) D (univ.sum c * 2),
     stdClassSum_det_modKernel_eq _ even_two c
   let Λ ϑ := detPeriod (Fin 2) (p.ν * ϑ.toAutChar * WeilData.upsilonU1 ^ 1) c (D.𝔪 ϑ 2) (p.ψ * ϑ.ψ)
   choose γ b e using (K <| isTameFor_of_hasWeight (c := 2) · (h _) r)
   have a ϑ : ‖_ * Λ _‖ = _ := congr(‖$(e ϑ 1)‖)
   simp [places_modulus_eq_union, inv_mul_cancel_comm] at a b
-  refine ⟨(‖D.chosenGroupOrder * N * Λ ·‖ ^ 2), univ, 1, by simp [NeZero.ne]; grind [norm_zero],
+  refine ⟨(‖D.chosenGroupOrder * N * Λ ·‖ ^ 2), univ, 1, by simp [NeZero.ne]; grind -abstractProof [norm_zero],
     fun ϑ ↦ let g (x : StdClasses (Kf ..) × GL _ (D.𝔪 ϑ 2).ResRing) := x.1.out * (liftMod x.2).1
     .norm_sq _ ⟨_, inferInstance, (detFin 1 <| g ·), _, fun x ↦ mul_mem (div_mem_integralAway
     ((D.card_classAut_dvd_chosenGroupOrder (by simpa using
@@ -91,7 +91,7 @@ lemma Data.Pair.exists_isIntegralMeasure (p : D.Pair) (r : p.IsRamified) : ∃ F
     ring
   have := And.intro (p.lValueProd_eq 1 ϑ) (b 1)
   simp [ratio, lowerPoint, hz, twist_one_spec] at this ⊢
-  norm_cast at *; grind
+  norm_cast at *; grind -abstractProof
 
 lemma coprime_q_of_isAuxiliary {I} (c : IsAuxiliary (badPlaces D ℓ) I) :
     ℓ.Coprime (∏ w ∈ I, w.q) ∧ (D.gProd * D.N).Coprime (∏ w ∈ I, w.q) := Nat.coprime_mul_iff_left.1

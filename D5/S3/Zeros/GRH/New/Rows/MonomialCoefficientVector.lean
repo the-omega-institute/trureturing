@@ -37,7 +37,7 @@ lemma Data.Pair.norm_conj_intAlgPart_le {P} {D} {p : @Pair P D} {n} [Fintype n] 
   have k σ : X.normSqAt σ ≤ _ :=
     classSum_le_card_mul_sq fun _ ↦ by grw (transparency := default) [trivialLift_apply,
     sqrt_weylNormSq_sum_le, (P.norm_jet_le_of_isAdmissibleComb (hb := b_hasWeight _)
-    (P.isAdmissibleComb_vacuumDatum 1 (by grind [levelIndicator, norm_one, norm_zero])) ..).2 1
+    (P.isAdmissibleComb_vacuumDatum 1 (by grind -abstractProof [levelIndicator, norm_one, norm_zero])) ..).2 1
     (LValueData.isLiftWeight _), Fintype.card_fun, card_levelModulus_resRing, prod_q_chosenPlace,
     prod_eq_one _ nofun, (by aesop : AuxPair.κ _ = 0), (congrArg _ (by simp [_root_.funext_iff,
     weylEval, nablaBasis_eq_one])).trans (weylNormSq_weylEval_permArray (rowPos _))]

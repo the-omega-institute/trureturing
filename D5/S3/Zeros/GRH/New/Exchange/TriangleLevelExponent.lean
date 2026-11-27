@@ -96,7 +96,7 @@ lemma weylGauge_pointKernel_le_one {l} [Fact l.Prime] {j : PadicPlace l} g h (hl
   • pointKernel H ϑ g h) ≤ 1 := by simpa +contextual [weylGauge, weylRep, schur_eq_one] using!
   (mem_raises_of_dvd (pointDatum H ϑ) (hκ := isLiftWeight _) (ha := a_hasWeight _) (hb :=
   b_hasWeight _) (K := ⊤) (smul_vacuumDatum_mem_standardData norm_mul_gProd_pow_mem_modulus
-  (by grind [AuxPair.levelIndicator, one_mem, zero_mem]) hl) norm_star_piG_le_one
+  (by grind -abstractProof [AuxPair.levelIndicator, one_mem, zero_mem]) hl) norm_star_piG_le_one
   (by simp [denomBound, boxes, AuxPair.κ, mixedWeight, (lValueData H ϑ).one_lt_card, ← H.1]) _ _ 1)
 
 /-- One group ring element gives all twists of a modulus: the normalised values

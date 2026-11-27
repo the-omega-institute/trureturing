@@ -38,9 +38,9 @@ dividing 𝔪 and their conjugates. -/
 lemma exists_reductionK₀_eq (g : GL n 𝔪.ResRing) : ∃ k, ↑k ∈ Gf.supportedOn n 𝔪.places ∧
   𝔪.reductionK₀ k = g := by
   choose M hM using (𝔪.reduction_surjective <| g · ·)
-  use ⟨_, (atSplits_mem_Kf (by grind [disjoint_places_star]) _).2 fun w ↦ ⟨(isUnit_of_mapMatrix
+  use ⟨_, (atSplits_mem_Kf (by grind -abstractProof [disjoint_places_star]) _).2 fun w ↦ ⟨(isUnit_of_mapMatrix
     (IsLocalRing.residue _) ⟨g.map (modulusResidue _ (mem_toFinset.1 w.2)), funext₂
-    (by simp [← hM]; tauto)⟩).unit, rfl⟩⟩, (by grind [atSplits_mem_supportedOn, coe_toFinset]); ext
+    (by simp [← hM]; tauto)⟩).unit, rfl⟩⟩, (by grind -abstractProof [atSplits_mem_supportedOn, coe_toFinset]); ext
   exact hM .. ▸ reduction_congr _ fun w
     h ↦ by set_option synthInstance.maxHeartbeats 200000 in
       simpa using! congr($(atPlace_atSplits _ _ ⟨w, by simpa⟩) _ _)

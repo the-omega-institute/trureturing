@@ -37,8 +37,11 @@ omit [ThePrime p] in
 lemma exists_cell_over {B} [CommRing.{0} B] {m} (_ : IsPrime m) (h : IsSMulRegular B p)
     (hp : ↑p ∈ m) : ∃ W, ∃ (_ : CommRing W) (_ : IsCell p W) (y : B →+* W),
   ∀ z ∈ m, ¬IsUnit (y z) := let L := Localization.AtPrime m
-  have ⟨U, g, l⟩ := IsLocalRing.exists_factor_valuationRing (algebraMap L (AlgebraicClosure
+  have factor := IsLocalRing.exists_factor_valuationRing (algebraMap L (AlgebraicClosure
     (Classical.arbitrary (PrimeSpectrum (FractionRing L))).1.ResidueField))
+  let U := factor.choose
+  let g := factor.choose_spec.choose
+  have l := factor.choose_spec.choose_spec
   let G := (hyperfilter ℕ).Germ U
   let γ : _ →+* G := Germ.coeRingHom _
   have Q : Surjective γ := exists_rep

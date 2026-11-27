@@ -185,8 +185,9 @@ lemma avatarCompatAt_of_stablyUnram {ℓ} [ThePrime ℓ] [PadicIso ℓ] {E} [Fie
     refine have T :=
         local_clauses_of_retract 1 _ (by simp) (by tauto) c Filter.univ_mem ?_ (one_mul 1)
       (this θ.baseChange hu (S u (k ▸ u.1.absNorm_mem)).star_ne).imp T.1 (.imp (T.2.1 (by simp))
-        fun c s m l t ↦ (c (.ofRingEquiv (·.2 ⟨_, a (inv_mem t.1)⟩)) m l (by rwa [k])).elim fun y
-        ⟨o, e, p⟩ ↦ ⟨_, by simp [v_localNorm (f := 1), *], (hu.localArtin_adeleNorm j).1 e,
+        fun c s m l t ↦ (c (.ofRingEquiv (·.2 ⟨_, a (inv_mem t.1)⟩)) m l (by rwa [k])).elim fun y witness ↦ by
+          obtain ⟨o, e, p⟩ := witness
+          exact ⟨_, by simp [v_localNorm (f := 1), *], (hu.localArtin_adeleNorm j).1 e,
       by simpa [← adeleNorm_locIdele] using! T.2.2 _ ⟨⟩ p⟩)
     simp; refine (dense_of_mostFrobenii (eventually_mostFrobenii
       (eventually_notMem_star_notMem ℓ {u}) fun y l ↦ (y.isPlaceOver.exists_localArtin_eq
@@ -195,7 +196,7 @@ lemma avatarCompatAt_of_stablyUnram {ℓ} [ThePrime ℓ] [PadicIso ℓ] {E} [Fie
       adeleNorm_locIdele, θ.avatar_localArtin y.isPlaceOver.isPlaceOver_below _
       ((y.isPlaceOver.localArtin_adeleNorm j).1 e.2)]; simp [l]
   have : CMType E := {}
-  let ⟨v, o⟩ := (((Northcott.finite_le (h := FinPlace.q) (2 ^ Module.finrank ℚ E)).insert w).insert
+  obtain ⟨v, o⟩ := (((Northcott.finite_le (h := FinPlace.q) (2 ^ Module.finrank ℚ E)).insert w).insert
     (star w)).exists_notMem
   let k s := ite (inducedPrime s = w) (θ.1.2.toAdd s) (-θ.1.2.toAdd (star s))
   have e : levelSpace ((stdSpace E (Fin 1)).formTranslation (0, k ∘ Φ)) _ ≃ₗ[ℂ] _ :=

@@ -118,7 +118,7 @@ lemma IntegralPlace.exists_isLatticeLevel {N} [IsHermUnit (latMiddleGram 𝔰 N)
   let F : HyperbolicBasis ι (latMiddleGram 𝔰 N) m := ⟨E, by
     rw [gram_mul, gram_inclMatrix]
     simp [entrywise, latMiddleGram, diagonal, (f _).2.symm, Subtype.val_inj]
-    grind, by lia, by grind [md_det_eq_one, u.2]⟩
+    grind -abstractProof, by lia, by grind -abstractProof [md_det_eq_one, u.2]⟩
   let l := 𝔰.besselFrame 𝔰.top; let x : 𝔰.BesselIndex → A := Pi.single (𝔰.indexX₀ 𝔰.k₀) (-1)
   let J := (latMiddleGram 𝔰 N).splitGram; let φ p :=
     F.floorBasis 𝔰.top *ᵥ flatChart (hyperbolicGram _ 1) (P.skewUnitMul (J l l)) p
@@ -133,7 +133,7 @@ lemma IntegralPlace.exists_isLatticeLevel {N} [IsHermUnit (latMiddleGram 𝔰 N)
   have n := (w.map_apply ν (unitaryLevel R 1 J)).trans ((inv_apply ..).trans haarMeasure_self)
   refine ⟨.mk F _ _ g _ _ _ (neZero_measureH := ⟨(by simp [·] at n)⟩) ⟨(ae_map_iff M.aemeasurable
     measurableSet_floorGroup).2 (.of_forall fun _ ↦ (exists_eichler_orbitPoint_eq hx).2.1 fun i
-    k ↦ by simp [φ, ← mulVec_mulVec]; exact Finset.sum_eq_zero (by simp; grind [floorOf])),
+    k ↦ by simp [φ, ← mulVec_mulVec]; exact Finset.sum_eq_zero (by simp; grind -abstractProof [floorOf])),
     (Measure.map_map (by fun_prop) M).trans (.trans (Measure.map_congr
     ((quasiMeasurePreserving_fst.ae (quasiMeasurePreserving_fst.ae ae_isUnit)).mono fun p k ↦
     (exists_eichler_orbitPoint_eq hx).2.2 ?_ (by simpa [t])))

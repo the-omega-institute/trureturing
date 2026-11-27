@@ -31,7 +31,7 @@ lemma Data.exists_squareLaw_grid z (h : a < D.m) (m : b < D.m) : ∃ κ σ, ∃ 
   1 (c ·) ∧ ∀ ϑ (l : _ × (GridForm z (a + 1) b →ₗ[ℂ] ℂ)), SquareLaw (edgeChar ϑ (verticalEdge z a
   b) * edgeChar ϑ (rowEdge z a b))⁻¹ σ (κ / c ϑ) (fun x ↦ l.2 (descentMove x.toCols₂
   (liftMove x.toCols₁ l.1))) fun y ↦ l.2 (liftMove y.toRows₂ (descentMove y.toRows₁ l.1)) := by
-  have ⟨x, T⟩ := exists_isTameFor_costsSquares_one ⟨_, D.w _ + D.w _, _, D.t, by
+  obtain ⟨x, T⟩ := exists_isTameFor_costsSquares_one ⟨_, D.w _ + D.w _, _, D.t, by
     simpa [← zpow_add] using! (D.mu₀_hasWeight a.succ).mul
       (D.mu₀_hasWeight b.succ), by simp_all, by grind, by simp; grind, by simp; grind
     [w_le_two_mul_b]⟩ (D.omega_zpow_ne_one _) D.b₁ ⟨ite z a b + 1, by grind⟩

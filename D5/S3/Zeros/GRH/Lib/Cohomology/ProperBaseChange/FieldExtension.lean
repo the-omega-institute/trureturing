@@ -56,9 +56,9 @@ lemma IsProperOver.isCohomEquiv_field_extension {a b} {φ : S ⟶ T} (e : a ≫ 
   let b t : fibreProd s (reprMap a) ⟶ _ :=
     (baseChangeFunctor s).map ((Under.map a).map (β t).toUnder).op
   refine (h.isCohomContinuous.isFilteredColimit_adjoin s T a n).imp (fun p ↦ .of_ker _ fun x g ↦
-    (p ∅ _ ((map_comp _ (baseChangeTransition s _ rfl) _).symm.trans g)).elim fun t ⟨_,
-    e⟩ ↦ by simpa [HV.map] using! map_eq_zero_of_factors (by ext; exact baseChangeOf.ext rfl (
-    congrArg _ <| (β t).2 ·) : b t ≫ _ = 𝟙 _) ((map_comp ..).trans e)) (· · |>.elim fun t ⟨x, e⟩ ↦
+    (p ∅ _ ((map_comp _ (baseChangeTransition s _ rfl) _).symm.trans g)).elim fun t witness ↦ witness.elim fun _ e ↦ by
+    simpa [HV.map] using! map_eq_zero_of_factors (by ext; exact baseChangeOf.ext rfl (
+    congrArg _ <| (β t).2 ·) : b t ≫ _ = 𝟙 _) ((map_comp ..).trans e)) (· · |>.elim fun t witness ↦ witness.elim fun x e ↦
     .elim (image_subset_nonunits_valuationSubring (A := (adjoin ..).toSubring) _
     (ker_ne_top (β t))) fun V W ↦ let i := ofHom (R := adjoin S _) (Subring.inclusion W.1)
     ⟨map _ (b t) n x, e ▸ (map_comp (baseChangeTransition s (ofHom V.subtype) rfl)
@@ -104,5 +104,5 @@ lemma IsProperOver.isOpen_zero_set_and_eq_zero (T :
     isPullback_fibreProd).lift_snd _ (ι (.preimage _ q)) ((Category.assoc ..).trans ((fromPreimage
     .. ≫ homOfLe (unitPoints_le_range_reprMap _ M)) ≫= IsIso.inv_hom_id_assoc (toRange
     (uliftCoyoneda.map _)) (ι _)))) (h.injective_map_residue u (by simpa [← map_comp]))))).elim
-    fun t ⟨_, e⟩ ↦ ⟨_, w (forall_mem_image.2 fun
+    fun t witness ↦ witness.elim fun _ e ↦ ⟨_, w (forall_mem_image.2 fun
     _ ↦ t.dvd_prod_of_mem _) ((map_comp ..).trans e :), M.prod_mem fun c _ ↦ c.2⟩

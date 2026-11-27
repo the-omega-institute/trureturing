@@ -125,7 +125,7 @@ lemma exists_sorted_of_type (h0 : x ≠ 0) : ∃ θ, (∃ l, IsExponent ρ (toru
   have ⟨s, ht, I⟩ := exists_iwahoriHeckeHom_injective ρ hϖ
   have R t : (cyclicSpan _ x).submoduleOf _ ∈ (iwahoriHeckeHom ρ t).invtSubmodule := fun _ ↦
     compactMean_mem_cyclicSpan _
-  have ⟨χ, y, ⟨Y, Q⟩, z, e⟩ := exists_eigencharacter (S := _ ⊓ ⨅ (i) (ε : Fˣ) (h : v ε.1 = 1),
+  obtain ⟨χ, y, ⟨Y, Q⟩, z, e⟩ := exists_eigencharacter (S := _ ⊓ ⨅ (i) (ε : Fˣ) (h : v ε.1 = 1),
     (iwahoriHeckeHom ρ ⟨mulSingle i ε, by simp [dominantTorus, apply_ite, h]⟩).eigenspace
     (τ (mulSingle i ε))) _ (fun t y h ↦
     ⟨R t h.1, by simp [← End.mul_apply, ← map_mul, mul_comm]; aesop⟩) (h0 congr($(@· ⟨x, hx⟩
