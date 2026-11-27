@@ -76,7 +76,7 @@ private partial def solveBranch (g : MVarId) (agree : FVarId) (depth : Nat) : Me
 private partial def openState (g : MVarId) (vars : List FVarId) : MetaM (List MVarId) := g.withContext do
   let x :: rest := vars | return [g]
   let type ← inferType (mkFVar x)
-  unless type.getAppFn.isConstOf `PSigma || type.getAppFn.isConstOf `Prod do return ← openState g rest
+  unless [`PSigma, `Prod, `PSum, `Sum].any type.getAppFn.isConstOf do return ← openState g rest
   let mut result := []
   for branch in ← g.cases x do
     result := result ++ (← openState branch.mvarId ((branch.fields.toList.map Expr.fvarId!) ++ rest))

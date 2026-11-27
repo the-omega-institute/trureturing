@@ -443,6 +443,12 @@ public theorem List.MergeSort.Internal.mergeSortTR.eq_1 :
   rw [← _root_.List.MergeSort.Internal.mergeSort_eq_mergeSortTR]
   exact ((private_decl% @_root_.List.MergeSort.Internal.mergeSortTR_run_eq_mergeSort) (le := le) ⟨xs, rfl⟩).symm
 
+public theorem List.MergeSort.Internal.mergeSortTR₂.eq_1 :
+    type_of% (private_decl% @_root_.List.MergeSort.Internal.mergeSortTR₂.eq_1) := by
+  intro α xs le
+  rw [← _root_.List.MergeSort.Internal.mergeSort_eq_mergeSortTR₂]
+  exact ((private_decl% @_root_.List.MergeSort.Internal.mergeSortTR₂_run_eq_mergeSort) (le := le) ⟨xs, rfl⟩).symm
+
 public theorem BitVec.flattenListFast.eq_1 :
     type_of% (private_decl% @_root_.BitVec.flattenListFast.eq_1) := by
   intro n xs
