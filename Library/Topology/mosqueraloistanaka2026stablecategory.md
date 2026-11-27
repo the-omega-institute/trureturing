@@ -27,9 +27,12 @@ strata_touched:
   - D5/S3/Topology/GraphSubdivisionIntervals
   - D5/S3/Topology/GraphSubdivisionHalves
   - D5/S3/Topology/GraphSubdivisionNullhomotopy
+  - D5/S3/Topology/GraphSubdivisionPositions
+  - D5/S3/Topology/GeometricGraphTermination
   - D5/S3/Topology/RankedCofaceContiguity
   - D5/S3/Topology/CofaceComparisonObstruction
   - D5/S3/Topology/CofaceTriangleCollapse
+  - D5/S3/Topology/RetractionCoordinate
 license: citation-only
 triage: anchor
 ---
@@ -965,6 +968,16 @@ fundamental group gives finite move witnesses for this choice.
 The Lean theorem takes those witnesses as hypotheses. This is the
 fixed-target step for the three-dimensional approach to Question 6.3.
 
+For a geometric nullhomotopy there is also a direct construction.
+Place the subdivided graph vertices at dyadic points on their old edges.
+The pullbacks of the target vertex stars have a common Lebesgue number
+on the homotopy cylinder. A fine time mesh gives contiguous consecutive
+rows because the labels on each subdivided face at adjacent times all
+belong to a single target face. The bottom row is contiguous to every
+selection from the original supports, and the top row is constant.
+The Lean theorem `GeometricGraphTermination.realized_graph_map_contracts`
+uses this construction with the affine realization of a simplicial graph map.
+
 ## Coface comparisons in the four-dimensional approach
 
 The triangle-cone construction seeks a map from a region of the ordinary
@@ -1002,6 +1015,20 @@ rank colours in the three-dimensional construction. If suitable
 charts are given on all source faces, an interval contiguity chain
 can be interpreted in each chart. At vertices fixed during the
 chain the charts need only agree at the fixed value.
+
+The three-dimensional chamber comparison uses recursive path
+coordinates on the selected old graph. A subdivision vertex
+gets the sum of the least and greatest coordinates in its face.
+The coordinate of the actual two-cut retraction therefore agrees
+with the height computed from the tetrahedral table. On an old
+edge the two possible ranks orient the interval chart. On a
+singleton support the table fixes both maps at its retained vertex.
+These two cases glue the contiguity chain on the whole main region.
+In each extra component, adjacency preserves the two selected old
+vertices of the opposite colour. Its opposite retraction lies in
+the subdivided edge on those two vertices. The categorical-cover
+iteration also requires the map to the fourth subdivision and its
+comparison with the graph map used for termination.
 
 The four-dimensional cone argument uses a separate chain argument
 to force an interface of nonzero degree to hit every target
