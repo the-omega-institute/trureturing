@@ -418,6 +418,8 @@ private def logicalConsequence? (owner name : Name) : Option (Name × Name) := d
     return (`OmegaChecks.InitInventory.StringPatterns.WeakExcludedMiddle, ``OmegaChecks.InitBoundaries.AbstractOrder.PredicateBounds.weakMiddleOfLTMax)
   | `Init.Data.Order.Lemmas, ``Std.min_lt_iff =>
     return (`OmegaChecks.InitInventory.StringPatterns.WeakExcludedMiddle, ``OmegaChecks.InitBoundaries.AbstractOrder.PredicateBounds.weakMiddleOfMinLT)
+  | `Init.Grind.Norm, ``Lean.Grind.not_and =>
+    return (`OmegaChecks.InitInventory.StringPatterns.WeakExcludedMiddle, ``OmegaChecks.InitBoundaries.GrindQuantifiers.ofNegatedConjunction)
   | `Init.Data.Order.Lemmas, ``Std.Asymm.total_not =>
     return (`OmegaChecks.InitInventory.StringPatterns.WeakExcludedMiddle, ``OmegaChecks.InitBoundaries.AbstractOrder.weakMiddleOfTotalNot)
   | `Init.Data.Order.Factories, ``Std.IsLinearPreorder.of_lt =>
@@ -460,6 +462,12 @@ private def logicalConsequence? (owner name : Name) : Option (Name × Name) := d
     | `Init.Data.Vector.Lex, ``Vector.not_le | `Init.Data.Vector.Lex, `Vector.not_le_iff_gt =>
       some ``OmegaChecks.InitBoundaries.LexicographicOrder.ofVectorNotLE
     | `Init.Data.Vector.Lemmas, ``Vector.instDecidableExistsVectorSucc => some ``OmegaChecks.InitBoundaries.VectorExistence.emOfVectorSucc
+    | `Init.Grind.Util, ``Lean.Grind.em => some ``OmegaChecks.InitBoundaries.GrindQuantifiers.ofNormalizedAlternatives
+    | `Init.Grind.Norm, ``Lean.Grind.not_forall => some ``OmegaChecks.InitBoundaries.GrindQuantifiers.ofNegatedForall
+    | `Init.Grind.Norm, ``Lean.Grind.not_implies => some ``OmegaChecks.InitBoundaries.GrindQuantifiers.ofNegatedImplication
+    | `Init.Grind.Norm, ``Lean.Grind.forall_imp_eq_or => some ``OmegaChecks.InitBoundaries.GrindQuantifiers.ofForallImplication
+    | `Init.Grind.Norm, ``Lean.Grind.forall_or_forall => some ``OmegaChecks.InitBoundaries.GrindQuantifiers.ofForallOr
+    | `Init.Grind.Norm, ``Lean.Grind.forall_forall_or => some ``OmegaChecks.InitBoundaries.GrindQuantifiers.ofOrForall
     | `Init.Grind.Order, ``Lean.Grind.Order.le_of_not_lt => some ``OmegaChecks.InitBoundaries.GrindOrder.excludedMiddleFromComparison
     | `Init.Grind.Norm, ``Lean.Grind.imp_eq => some ``OmegaChecks.InitBoundaries.GrindOrder.excludedMiddleFromImplication
     | `Init.Grind.Norm, ``Lean.Grind.not_not => some ``OmegaChecks.InitBoundaries.GrindOrder.excludedMiddleFromNotNot

@@ -452,6 +452,34 @@ theorem ofSkolem (split : type_of% (@Classical.skolem.{u+2,u+1})) : Selection.{u
 
 end PropositionalChoice
 
+namespace GrindQuantifiers
+
+theorem ofNormalizedAlternatives (law : type_of% @Lean.Grind.em) : type_of% @Classical.em := law
+
+theorem ofNegatedForall (law : type_of% @Lean.Grind.not_forall.{0}) : type_of% @Classical.em :=
+  excludedMiddleFromDNE fun p nn =>
+    ((@law p (fun _ => False)).mp nn).elim fun hp _ => hp
+
+theorem ofNegatedImplication (law : type_of% @Lean.Grind.not_implies) : type_of% @Classical.em :=
+  excludedMiddleFromDNE fun p nn => ((law p False).mp nn).1
+
+theorem ofForallImplication (law : type_of% @Lean.Grind.forall_imp_eq_or.{0}) : type_of% @Classical.em :=
+  fun p => ((@law True (fun _ => p) p).mp (fun f => f trivial)).elim
+    (fun h => h.elim fun _ np => Or.inr np) Or.inl
+
+theorem ofForallOr (law : type_of% @Lean.Grind.forall_or_forall.{0,0}) : type_of% @Classical.em :=
+  fun p => (@law True (fun _ => p) (fun _ => p) (fun _ _ => False)).mpr
+    (fun _ hp => Or.inl hp) trivial
+
+theorem ofOrForall (law : type_of% @Lean.Grind.forall_forall_or.{0,0}) : type_of% @Classical.em :=
+  fun p => ((@law True (fun _ => p) (fun _ => p) (fun _ _ => False)).mpr
+    (fun _ hp => Or.inr hp) trivial).elim Or.inr Or.inl
+
+theorem ofNegatedConjunction (law : type_of% @Lean.Grind.not_and) (p : Prop) : ¬p ∨ ¬¬p :=
+  (law p (¬p)).mp fun ⟨hp, np⟩ => np hp
+
+end GrindQuantifiers
+
 namespace ClassicalConsequences
 
 theorem ofByCases (cases : type_of% @Classical.byCases) : type_of% @Classical.em :=
