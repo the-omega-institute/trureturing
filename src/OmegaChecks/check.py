@@ -614,7 +614,6 @@ example {α : Sort u} {r : α → α → Prop} {p : Omega.Quot r → Prop}
                        input=quotient, check=True)
         # The upstream addition helper must preserve the strict seed's definitional reduction.
         source = ("module\nprelude\nimport all OmegaInit.Prelude\n"
-                  "attribute [local semireducible] Omega.Nat.add\n"
                   "example (x : Omega.Nat) : Omega.Eq (x.add .zero) x := Omega.rfl\n")
         subprocess.run([ENV["LEAN"], "--stdin"], cwd=ROOT, text=True, input=source, check=True,
                        env=environment)
