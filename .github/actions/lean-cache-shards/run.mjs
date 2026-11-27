@@ -427,10 +427,20 @@ async function restoreCheckpoint(cache, core, path, key) {
   core.warning = capture(warning);
   core.error = capture(error);
   try {
-    const matched = await cache.restoreCache([path], key, []);
-    if (matched === key) return true;
-    if (failure || matched !== undefined) throw new Error(failure || 'unexpected compiler checkpoint key ' + matched);
-    return false;
+    const backoffs = [2000, 4000, 8000, 16000, 32000];
+    for (let attempt = 0; ; attempt++) {
+      failure = undefined;
+      const matched = await cache.restoreCache([path], key, []);
+      if (matched === key) return true;
+      if (matched !== undefined) throw new Error('unexpected compiler checkpoint key ' + matched);
+      if (failure === undefined) return false;
+      if (attempt === backoffs.length || !/\b429\b[^\n]*Too Many Requests/i.test(failure)) {
+        throw new Error(failure);
+      }
+      // Workers share a repository-wide Actions Cache quota.
+      const backoff = backoffs[attempt];
+      await delay(backoff + Math.floor(Math.random() * backoff));
+    }
   } finally {
     core.warning = warning;
     core.error = error;
