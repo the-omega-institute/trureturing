@@ -20,7 +20,7 @@ The preceding sentence describes factorizations of complete graphs with transiti
 Here transitivity means vertex transitivity. The two finite simple undirected
 graphs share one labelled vertex set, $J$ is the all-ones matrix, and $I$ is the
 identity. The product is ordinary multiplication of integer matrices.
-[Published question](https://arxiv.org/html/2512.24864v1#S5.I1.i2) · [Source note](../Library/Combinatorics/akbari2025primematrixproduct.md)
+[Published question](https://arxiv.org/html/2512.24864v1#S5.I1.i2) · [Source note](../Library/AdjacencyProduct/akbari2025primematrixproduct.md)
 
 | Source clause | Lean counterpart |
 | --- | --- |
