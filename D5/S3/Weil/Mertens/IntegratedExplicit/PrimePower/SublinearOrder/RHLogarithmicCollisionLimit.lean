@@ -283,13 +283,14 @@ theorem harmonic_central_window_limit (rh : RiemannHypothesis) (T η : ℕ → �
   rw [hEq] at hsc
   exact hsc
 
-theorem harmonic_multiple_log_annulus_limit (rh : RiemannHypothesis) (T η : ℕ → ℝ)
-    (B : ℝ) (hB : 1 ≤ B)
+/-- A fixed positive normalized phase deficit suppresses the entire logarithmic annulus. -/
+theorem harmonic_multiple_log_annulus_limit_of_deficit (rh : RiemannHypothesis) (T η : ℕ → ℝ)
+    (B : ℝ) (hB : 1 ≤ B) {c : ℝ} (hc : 0 < c)
     (hT : Tendsto T atTop atTop)
     (hη : ∀ᶠ n : ℕ in atTop, 0 < η n)
     (hh : Tendsto (fun n : ℕ => (Real.log (T n))^2 / (n : ℝ)) atTop (𝓝 0))
     (hd : ∀ᶠ H : ℝ in atTop, ∀ t : ℝ, 1 / H ≤ |t| → |t| ≤ B * Real.log H →
-      1 / (1048576 * Real.log H) ≤
+      c / Real.log H ≤
         1 - ‖complexScore (harmonicOrdinate rh H) (harmonicProbability rh H) t‖) :
     let F (n : ℕ) (t : ℝ) := K (η n) t *
       ‖complexScore (harmonicOrdinate rh (T n)) (harmonicProbability rh (T n)) t‖^(2*n)
@@ -297,8 +298,6 @@ theorem harmonic_multiple_log_annulus_limit (rh : RiemannHypothesis) (T η : ℕ
       ((∫ t in -(B * Real.log (T n))..B * Real.log (T n), F n t) -
       (∫ t in -(1 / T n)..1 / T n, F n t))) atTop (𝓝 0) := by
   intro F
-  let c : ℝ := 1 / 1048576
-  have hc : 0 < c := by norm_num [c]
   have hdecay := (logarithmic_window_decay T hT hh hc).div_const Real.pi
   rw [zero_div] at hdecay
   have hdecay := hdecay.const_mul B
@@ -363,9 +362,7 @@ theorem harmonic_multiple_log_annulus_limit (rh : RiemannHypothesis) (T η : ℕ
       (D := η n / (2 * Real.pi) * E) (fun t hlo hhi => by
         apply mul_le_mul (K_cap hηn t) _ (by positivity) (by positivity)
         have h := score_power_le_exp _ _ (norm_nonneg _) (hdn t hlo hhi) n
-        convert h using 2
-        dsimp [E, c]
-        ring)
+        convert h using 2 <;> ring)
     have hr : 0 ≤ harmonicScale rh T n / η n := by dsimp [harmonicScale]; positivity
     calc
       _ ≤ harmonicScale rh T n / η n * (2 * (B * Real.log (T n) - 1 / T n) *
@@ -378,6 +375,23 @@ theorem harmonic_multiple_log_annulus_limit (rh : RiemannHypothesis) (T η : ℕ
         refine mul_le_mul hscale (by linarith [one_div_pos.mpr hTpos]) (sub_nonneg.mpr hwin) ?_
         exact mul_nonneg (Real.sqrt_nonneg _) hTpos.le
       _ = B * (Real.sqrt (n : ℝ) * T n * Real.log (T n) * E / Real.pi) := by ring
+
+theorem harmonic_multiple_log_annulus_limit (rh : RiemannHypothesis) (T η : ℕ → ℝ)
+    (B : ℝ) (hB : 1 ≤ B)
+    (hT : Tendsto T atTop atTop)
+    (hη : ∀ᶠ n : ℕ in atTop, 0 < η n)
+    (hh : Tendsto (fun n : ℕ => (Real.log (T n))^2 / (n : ℝ)) atTop (𝓝 0))
+    (hd : ∀ᶠ H : ℝ in atTop, ∀ t : ℝ, 1 / H ≤ |t| → |t| ≤ B * Real.log H →
+      1 / (1048576 * Real.log H) ≤
+        1 - ‖complexScore (harmonicOrdinate rh H) (harmonicProbability rh H) t‖) :
+    let F (n : ℕ) (t : ℝ) := K (η n) t *
+      ‖complexScore (harmonicOrdinate rh (T n)) (harmonicProbability rh (T n)) t‖^(2*n)
+    Tendsto (fun n : ℕ => harmonicScale rh T n / η n *
+      ((∫ t in -(B * Real.log (T n))..B * Real.log (T n), F n t) -
+      (∫ t in -(1 / T n)..1 / T n, F n t))) atTop (𝓝 0) := by
+  exact harmonic_multiple_log_annulus_limit_of_deficit rh T η B hB
+    (show (0 : ℝ) < 1 / 1048576 by positivity) hT hη hh
+    (by simpa only [div_div] using hd)
 
 /-- Compare the normalized full and truncated Fejér integrals using a relative tail. -/
 theorem harmonic_fejer_relative_control (rh : RiemannHypothesis) (T η : ℕ → ℝ)
