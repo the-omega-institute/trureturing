@@ -149,3 +149,30 @@ port_definition Option.instBEq with_native_code
 port_definition instMonadExceptOfUnitOption with_native_code
 port_definition instAlternativeOption with_native_code
 port_definition liftOption with_native_code
+
+port_definition instLEOption with_native_code
+port_definition instLTOption with_native_code
+port_proof Option.instDecidableEq._proof_1 by_reflexivity
+port_proof Option.instDecidableEq._proof_2
+port_proof Option.instDecidableEq._proof_3
+port_definition Option.decidableNoneEq with_native_code
+port_definition Option.decidableEqNone with_native_code
+port_proof Option.instDecidableEq._proof_4
+port_proof Option.instDecidableEq._proof_5
+port_definition Option.instDecidableEq.match_3 with_native_code
+port_definition Option.instDecidableEq with_native_code
+port_definition Option.instDecidableRelLt.match_1 with_native_code
+port_definition Option.instDecidableRelLt with_native_code
+port_definition Option.instDecidableRelLe with_native_code
+
+end
+end
+
+namespace Omega.Option
+
+@[expose, implicit_reducible] public def get {α : Type u} :
+    (o : Option α) → Eq o.isSome Bool.true → α :=
+  fun o h => Option.casesOn (motive := fun t => Eq t.isSome Bool.true → α) o
+    (fun impossible => False.elim (Bool.decEq._proof_1 Bool.false Bool.true impossible)) (fun value _ => value) h
+
+end Omega.Option

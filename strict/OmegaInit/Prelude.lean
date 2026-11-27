@@ -47,7 +47,13 @@ inductive True : Prop where
 
 inductive False : Prop
 
-def False.elim {C : Sort u} (h : False) : C := False.rec (motive := fun _ => C) h
+end Omega
+
+port_definition False.casesOn
+
+namespace Omega
+
+def False.elim {C : Sort u} (h : False) : C := False.casesOn (fun _ => C) h
 
 def Not (a : Prop) : Prop := a → False
 
@@ -216,7 +222,7 @@ abbrev Eq.ndrec_symm.{u1, u2} {α : Sort u2} {a : α} {motive : α → Sort u1}
     (m : motive a) {b : α} (h : Eq b a) : motive b := Eq.ndrec m h.symm
 
 def cast {α β : Sort u} (h : Eq α β) (a : α) : β :=
-  Eq.rec (motive := fun β _ => β) a h
+  Eq.casesOn (motive := fun β _ => β) h a
 
 theorem congrFun {α : Sort u} {β : α → Sort v} {f g : (x : α) → β x}
     (h : Eq f g) (a : α) : Eq (f a) (g a) := congrArg (fun f : (x : α) → β x => f a) h
@@ -741,3 +747,7 @@ end Omega
 
 port_definition Bool.decEq with_native_code
 port_definition instDecidableEqBool with_native_code
+
+port_definition DecidableRel
+port_definition Option.noConfusionType
+port_definition Option.noConfusion

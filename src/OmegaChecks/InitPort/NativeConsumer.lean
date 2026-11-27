@@ -50,6 +50,22 @@ public def controlResult (x y : Omega.Bool) : Omega.Bool :=
       (@Omega.Applicative.toPure Omega.Id (@Omega.Monad.toApplicative Omega.Id Omega.Id.instMonad)))
     Omega.Id.hasBind Omega.Bool (fun run => run (Omega.strictOr x y))
 
+public def optionEqual (x y : Omega.Bool) : Omega.Bool :=
+  @Omega.Decidable.decide _ (@Omega.Option.instDecidableEq Omega.Bool Omega.instDecidableEqBool
+    (Omega.Option.some x) (Omega.Option.some y))
+
+public def someValue (x y : Omega.Bool) : Omega.Bool :=
+  (Omega.Option.some (Omega.strictAnd x y)).get Omega.rfl
+
+public def attachedValue (x y : Omega.Bool) : Omega.Bool :=
+  @Omega.MonadAttach.pbind Omega.Id Omega.Bool Omega.Bool Omega.Id.instMonad Omega.Id.instMonadAttach
+    x (fun value _ => Omega.strictAnd value y)
+
+public def liftedNumeral (x y : Omega.Bool) : Omega.Bool :=
+  @Omega.OfNat.ofNat (Omega.Id Omega.Bool) Omega.Nat.zero
+    (@Omega.Id.instOfNat Omega.Bool Omega.Nat.zero
+      (Omega.OfNat.mk (Omega.strictOr x y)))
+
 public def disjunction (x y : Omega.Bool) : Omega.Bool := Omega.strictOr x y
 public def conjunction (x y : Omega.Bool) : Omega.Bool := Omega.strictAnd x y
 "
@@ -76,7 +92,7 @@ unsafe def main (args : List String) : IO Unit := do
     let checks := [(`firstValue, first), (`secondValue, second), (`additionFirst, first),
       (`stateSecond, second), (`optionFirst, first), (`composeSecond, second), (`mappedFirst, first),
       (`sumIndex, first), (`sumRight, or), (`boolEqual, BEq.beq), (`optionFiltered, and),
-      (`controlResult, or), (`disjunction, or), (`conjunction, and)]
+      (`controlResult, or), (`optionEqual, BEq.beq), (`someValue, and), (`attachedValue, and), (`liftedNumeral, or), (`disjunction, or), (`conjunction, and)]
     for (name, expected) in checks do
       let some ci := env.find? name | throw <| IO.userError s!"missing {name}"
       unless Kernel.isDefEqGuarded env {} ci.type arity do throw <| IO.userError s!"invalid type of {name}"

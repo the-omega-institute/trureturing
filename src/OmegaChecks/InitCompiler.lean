@@ -38,11 +38,15 @@ private def officialDeclaration (stx : Syntax) : CommandElabM (Environment × Co
   let owner := moduleName.replacePrefix `OmegaInit `Init
   let src ← officialEnvironment owner
   let name := stx.getId
-  if isPrivateName name || name.isInternalOrNum || name.hasMacroScopes then
+  if isPrivateName name || name.hasMacroScopes then
     throwErrorAt stx "expected a public declaration"
   let some idx := src.getModuleIdxFor? name | throwErrorAt stx "unknown upstream declaration"
   unless src.header.moduleNames[idx]! == owner do throwErrorAt stx "expected a declaration from {owner}"
   let some info := src.find? name | throwErrorAt stx "missing upstream declaration"
+  if name.isInternalOrNum then
+    let some parent := src.find? name.getPrefix | throwErrorAt stx "missing the enclosing official definition"
+    let some body := parent.value? (allowOpaque := true) | throwErrorAt stx "missing the enclosing official body"
+    unless body.getUsedConstants.contains name do throwErrorAt stx "expected an official implementation dependency"
   if info.isAxiom || info.isUnsafe || info.isPartial then throwErrorAt stx "inadmissible declaration"
   return (src, info)
 
