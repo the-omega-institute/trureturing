@@ -99,7 +99,7 @@ class Schedule:
 def run_id(response):
     if not isinstance(response, dict):
         return None
-    identifier = response.get("workflow_run_id", response.get("id"))
+    identifier = response.get("workflow_run_id", response.get("run_id", response.get("id")))
     return identifier if type(identifier) is int and identifier > 0 else None
 
 
@@ -189,8 +189,15 @@ class GitHub:
     def result(self, identifier, batch):
         name = f"compiler-result-{self.attempt}-{batch}"
         endpoint = f"actions/runs/{identifier}/artifacts?" + urlencode({"name": name})
-        artifacts = [a for a in self.json(endpoint)["artifacts"] if a["name"] == name and not a["expired"]]
-        if len(artifacts) != 1 or artifacts[0].get("workflow_run", {"id": identifier}).get("id") != identifier:
+        for delay in (0, 2, 4, 8):
+            if delay:
+                time.sleep(delay)
+            artifacts = [a for a in self.json(endpoint)["artifacts"] if a["name"] == name]
+            if artifacts:
+                break
+        if len(artifacts) != 1 or artifacts[0]["expired"]:
+            raise ValueError(f"child {identifier} has no unique live result artifact")
+        if "workflow_run" in artifacts[0] and artifacts[0]["workflow_run"].get("id") != identifier:
             raise ValueError(f"child {identifier} has no unique result artifact")
         artifact = artifacts[0]
         raw = self.api(f"actions/artifacts/{artifact['id']}/zip")

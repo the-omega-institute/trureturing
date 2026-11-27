@@ -182,7 +182,7 @@ class ApiTests(unittest.TestCase):
                 self.github.dispatch(1, "units", [key(1)])
 
     def test_dispatch_return_run_details_variants(self):
-        for response in ({"workflow_run_id":91,"run_url":"example"}, {"id":91}):
+        for response in ({"workflow_run_id":91,"run_url":"example"}, {"run_id":91}, {"id":91}):
             self.github.json = Mock(return_value=response)
             with patch.object(controller.time, "sleep"):
                 self.assertEqual(self.github.dispatch(1, "units", [key(1)]), 91)
@@ -202,6 +202,10 @@ class ApiTests(unittest.TestCase):
         self.github.json = Mock(return_value={"artifacts":[row]})
         self.assertEqual(self.github.result(91, 1), {"lanes":[0]})
         self.assertIn("actions/runs/91/artifacts?", self.github.json.call_args.args[0])
+        self.github.json = Mock(side_effect=[{"artifacts":[]}, {"artifacts":[row]}])
+        with patch.object(controller.time, "sleep"):
+            self.assertEqual(self.github.result(91, 1), {"lanes":[0]})
+        self.github.json = Mock()
         # Older run-scoped responses can omit the redundant workflow_run field.
         self.github.json.return_value = {"artifacts":[{k:v for k,v in row.items() if k != "workflow_run"}]}
         self.assertEqual(self.github.result(91, 1), {"lanes":[0]})
