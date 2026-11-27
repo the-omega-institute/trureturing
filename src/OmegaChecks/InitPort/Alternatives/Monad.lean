@@ -19,6 +19,23 @@ public theorem monadLift_seqRight : type_of% @_root_.monadLift_seqRight := by
   intros
   rw [seqRight_eq_bind, seqRight_eq_bind, monadLift_bind]
 
+public theorem Std.Internal.instLawfulMonadLiftFunctionOfLawfulMonadLiftBindFunctionBindOfLawfulMonad :
+    type_of% @_root_.Std.Internal.instLawfulMonadLiftFunctionOfLawfulMonadLiftBindFunctionBindOfLawfulMonad := by
+  intro m n _ _ lift _ _
+  constructor
+  · intro γ a
+    exact (bind_pure (x := lift (pure a))).symm.trans
+      (_root_.Std.Internal.LawfulMonadLiftBindFunction.liftBind_pure
+        (m := m) (n := n) (liftBind := fun _ _ f x => lift x >>= f) pure a)
+  · intro α β x g
+    have eq := _root_.Std.Internal.LawfulMonadLiftBindFunction.liftBind_bind
+      (m := m) (n := n) (liftBind := fun _ _ f x => lift x >>= f) pure x g
+    calc
+      lift (x >>= g) = lift (x >>= g) >>= pure := (bind_pure _).symm
+      _ = lift x >>= (fun b => lift (g b) >>= pure) := eq
+      _ = (lift x >>= fun b => lift (g b)) >>= pure := (bind_assoc ..).symm
+      _ = lift x >>= fun b => lift (g b) := bind_pure _
+
 public theorem Std.Internal.LawfulMonadLiftFunction.lift_seqRight :
     type_of% @_root_.Std.Internal.LawfulMonadLiftFunction.lift_seqRight := by
   intros
