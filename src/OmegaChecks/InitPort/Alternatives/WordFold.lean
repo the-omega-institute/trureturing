@@ -19,15 +19,28 @@ private def foldStep {β : Type v} {m : Type v → Type w} [Monad m] (i last : U
 
 private def foldLoop {α : Type u} {β : Type v} {m : Type v → Type w} [Monad m]
     (size : Nat) (get : (i : USize) → i.toNat < size → α) (f : β → α → m β)
-    (last : USize) (fuel : Nat) : USize → β → m β :=
+    (address advance : USize → USize) (last : USize) (fuel : Nat) : USize → β → m β :=
   Nat.rec (fun _ b => pure b) (fun _ next i b =>
-    foldStep i last b (fun _ => if h : i.toNat < size then f b (get i h) else pure b)
-      (fun c => next (i+1) c)) fuel
+    foldStep i last b (fun _ => if h : (address i).toNat < size then f b (get (address i) h) else pure b)
+      (fun c => next (advance i) c)) fuel
 
 private def wordFold {α : Type u} {β : Type v} {m : Type v → Type w} [Monad m]
     (size : Nat) (get : (i : USize) → i.toNat < size → α) (f : β → α → m β)
     (b : β) (start stop : Nat) : m β :=
-  foldEntry size start stop b fun j last => foldLoop size get f (.ofNat last) (last-j) (.ofNat j)
+  foldEntry size start stop b fun j last => foldLoop size get f id (· + 1) (.ofNat last) (last-j) (.ofNat j)
+
+private def wordFoldRight {α : Type u} {β : Type v} {m : Type v → Type w} [Monad m]
+    (size : Nat) (get : (i : USize) → i.toNat < size → α) (f : β → α → m β)
+    (b : β) (start stop : Nat) : m β :=
+  let run (j last : Nat) := foldLoop size get f (· - 1) (· - 1) (.ofNat last) (j-last) (.ofNat j) b
+  if start ≤ size then
+    if stop < start then run start stop else pure b
+  else if stop < size then run size stop
+  else pure b
+
+public def Array.foldrMUnsafe {α : Type u} {β : Type v} {m : Type v → Type w} [Monad m]
+    (f : α → β → m β) (init : β) (xs : _root_.Array α) (start := xs.size) (stop := 0) : m β :=
+  wordFoldRight xs.size xs.uget (fun b a => f a b) init start stop
 
 public def Array.foldlMUnsafe {α : Type u} {β : Type v} {m : Type v → Type w} [Monad m]
     (f : β → α → m β) (init : β) (xs : _root_.Array α) (start := 0) (stop := xs.size) : m β :=
