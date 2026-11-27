@@ -83,6 +83,8 @@ def reductions : List (Name × Name × Name × Name) := [
   (`Init.PropLemmas, `ite_iff_right_iff, `propext, ``propextFromIteIffRight),
   (`Init.PropLemmas, `left_iff_ite_iff, `propext, ``propextFromLeftIffIte),
   (`Init.PropLemmas, `right_iff_ite_iff, `propext, ``propextFromRightIffIte),
+  (`Init.Grind.Ring.CommSolver, `Lean.Grind.CommRing.le_norm_expr, `propext, ``EnvelopeOrder.propextFromLeNorm),
+  (`Init.Grind.Ring.CommSolver, `Lean.Grind.CommRing.le_norm_expr_nc, `propext, ``EnvelopeOrder.propextFromLeNormNC),
   (`Init.Grind.Norm, `Lean.Grind.iff_eq, `propext, ``propextFromGrindIffEq),
   (`Init.Grind.Norm, `Lean.Grind.not_eq_prop, `propext, ``propextFromNotEqProp),
   (`Init.WFExtrinsicFix, `WellFounded.extrinsicFix, `Classical.choice, ``choiceFromFix),
@@ -236,6 +238,18 @@ private def unitCoherenceType (source : ConstantInfo) (u : Level) : MetaM Expr :
     let .forallE _ _ law _ := next.instantiate1 family | throwError "missing quotient function"
     Meta.mkForallFVars params (law.instantiate1 value)
 
+/-- Read the instantiated type from the physical declaration. The kernel
+checks the source application with `Eq.refl true` as its entire certificate. -/
+private def translatedComparisonType (source : ConstantInfo) : MetaM Expr := do
+  let levels := [Level.zero]
+  let type := source.type.instantiateLevelParams source.levelParams levels
+  Meta.forallBoundedTelescope type (some 7) fun params _ => do
+    let literal (n : Nat) := mkApp (mkConst ``Grind.CommRing.Expr.num) (toExpr (Int.ofNat n))
+    let test := mkAppN (mkConst source.name levels) (params ++ #[literal 0, literal 1, literal 1, literal 2])
+    let application := mkApp test (← Meta.mkEqRefl (mkConst ``Bool.true))
+    let proof ← Meta.mkLambdaFVars params application
+    Lean.ofExceptKernelException (Kernel.check (← getEnv) {} proof)
+
 run_cmd
   let env ← getEnv
   let mut seen := Std.HashSet.emptyWithCapacity
@@ -260,6 +274,9 @@ run_cmd
         pure law
       else pure source
       Elab.Command.liftCoreM <| Meta.MetaM.run' <| optionLawReductionType law target levels
+    else if [``Grind.CommRing.le_norm_expr, ``Grind.CommRing.le_norm_expr_nc].contains source.name then
+      Elab.Command.liftCoreM <| Meta.MetaM.run' do
+        mkArrow (← translatedComparisonType source) target.type
     else if source.name == ``Quot.indepCoherent then
       Elab.Command.liftCoreM <| Meta.MetaM.run' do
         let [u] := levels | throwError "unexpected quotient universe parameters"

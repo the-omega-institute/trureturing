@@ -56,6 +56,52 @@ theorem testOrdered {p q : Prop} (h : p ↔ q) :
   @OrderedAdd.mk Bool _ (testLE p q) (testPreorder p q) (fun {a b} c => by
     cases a <;> cases b <;> cases c <;> first | exact Iff.rfl | exact h | exact h.symm)
 
+@[instance_reducible] private def xorRing : CommRing Bool where
+  toSemiring := xorSemiring
+  neg := id
+  sub := Bool.xor
+  intCast := ⟨fun n => parity n.natAbs⟩
+  zsmul := ⟨fun n a => parity n.natAbs && a⟩
+  mul_comm a b := by cases a <;> cases b <;> rfl
+  neg_add_cancel a := by cases a <;> rfl
+  sub_eq_add_neg _ _ := rfl
+  neg_zsmul n a := by
+    cases n with
+    | ofNat n => cases n <;> rfl
+    | negSucc n => rfl
+  intCast_neg n := by
+    cases n with
+    | ofNat n => cases n <;> rfl
+    | negSucc n => rfl
+
+/-- The two weak-inequality normalizers quantify over any strict comparison
+satisfying the three fields of `OrderedRing`. The constant true comparison
+satisfies those fields together with the Boolean translation preorder. -/
+@[instance_reducible] private def universalLT : LT Bool := ⟨fun _ _ => True⟩
+
+private theorem testOrderedRing {p q : Prop} (equiv : p ↔ q) :
+    @OrderedRing Bool xorSemiring (testLE p q) universalLT (testPreorder p q) :=
+  @OrderedRing.mk Bool xorSemiring (testLE p q) universalLT (testPreorder p q) (testOrdered equiv) True.intro
+    (fun _ _ => True.intro) (fun _ _ => True.intro)
+
+open Lean.Grind.CommRing
+
+abbrev translatedComparison {α : Type} [Ring α] [LE α] (ctx : Context α) : Prop :=
+  (Expr.denote ctx (.num 0) ≤ Expr.denote ctx (.num 1)) =
+  (Expr.denote ctx (.num 1) ≤ Expr.denote ctx (.num 2))
+
+/-- Translating `0 ≤ 1` to `1 ≤ 2` exchanges the off-diagonal Boolean
+comparisons. Both differences normalize to one using the pinned certificate. -/
+theorem propextFromLeNorm (translate : ∀ {α : Type} [CommRing α] [LE α] [LT α]
+    [IsPreorder α] [OrderedRing α] (ctx : Context α), translatedComparison ctx) :
+    type_of% @propext := fun {p q} equiv =>
+  @translate Bool xorRing (testLE p q) universalLT (testPreorder p q) (testOrderedRing equiv) (.leaf false)
+
+theorem propextFromLeNormNC (translate : ∀ {α : Type} [Ring α] [LE α] [LT α]
+    [IsPreorder α] [OrderedRing α] (ctx : Context α), translatedComparison ctx) :
+    type_of% @propext := fun {p q} equiv =>
+  @translate Bool xorRing.toRing (testLE p q) universalLT (testPreorder p q) (testOrderedRing equiv) (.leaf false)
+
 theorem propextFromRingLift (respect : type_of% @Ring.OfSemiring.instLEQOfOrderedAdd._proof_1.{0}) :
     type_of% @propext := by
   intro p q h
