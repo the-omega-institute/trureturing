@@ -47,5 +47,6 @@ Exact attainment requires weight at least n − 3 outside the radical and a nonr
 - Truth anchor: `D5/S3/Quantum/Codes/BinaryEAAttainmentBridge.claim`
 - Truth anchor: `D5/S3/Quantum/Codes/BinaryEAAttainmentBridge.refute_attainment_of_length_seven_rank_two`
 - Truth anchor: `D5/S3/Quantum/Codes/BinaryEAAttainmentBridge.result`
+- Dependency: [D5/S3/Quantum/Codes/BinaryEAAttainment](BinaryEAAttainment.md)
 - Dependency: [D5/S3/Quantum/Codes/BinaryEARankOneBridge](BinaryEARankOneBridge.md)
 - Dependency: [D5/S3/Quantum/Codes/BinaryEAShortening](BinaryEAShortening.md)

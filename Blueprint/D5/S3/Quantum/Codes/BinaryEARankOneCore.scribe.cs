@@ -44,8 +44,7 @@ internal sealed class BinaryEARankOneCoreDocument : IScribeDocumentDefinition
                         + "Every normalized core induces these basis images by restriction and respects each sum by linearity. "
                         + "Lean evaluates the finite search to false for each of the three lengths.")),
                     Paragraph(Text(
-                        "This is the normalized core subproblem of issue #34860. "
-                        + "Application to an original code requires a common systematic head for the radical and the Z projection, "
+                        "Application to an original code requires a common systematic head for the radical and the Z projection, "
                         + "the binary Gram identity for the radical X tail, and a linear choice of representatives with X-head zero. "
                         + "The bound on zeros must hold on the retained support sites for every radical translate."))),
                 DescribeRole.Theorem))));
