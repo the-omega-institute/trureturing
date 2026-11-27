@@ -111,7 +111,7 @@ lemma exists_equiv_simClassOf_out : ∃ e : _ ≃ₗ[k] V, ∀ x, e ((simClassOf
 
 lemma Hall.mul_apply_eq_zero_of_dim_lt {m n} (F : ∀ c, c.dim < m → f c = 0) (H : ∀ c, c.dim < n →
   h c = 0) c (e : c.dim < m + n) : (f * h) c = 0 := finsum_eq_zero_of_forall_eq_zero fun W ↦ by
-    grind [W.1.finrank_quotient_add_finrank, simClassOf_out c, dim_simClassOf]
+    grind -abstractProof [W.1.finrank_quotient_add_finrank, simClassOf_out c, dim_simClassOf]
 
 @[simp] lemma Hall.add_apply : (f + h) c = f c + h c := rfl
 
@@ -265,9 +265,11 @@ variable {k V W : Type*} [Field k] [Finite k] [AddCommGroup V] [Module k V] [Mod
   [AddCommGroup W] [Module k W] [Module.Finite k W] (F : Hall k) (a : End k V) (b : End k W)
 
 lemma Hall.blockAverage_simClassOf : F.blockAverage (simClassOf a) (simClassOf b) =
-  finMean (F <| simClassOf <| blockTriangularEnd a b ·) := match exists_equiv_simClassOf_out a,
-  exists_equiv_simClassOf_out b with | ⟨e, _⟩, ⟨f, _⟩ => (finMean_equiv
-  (f.arrowCongr e).symm.toEquiv fun _ ↦ congrArg F (simClassOf_eq_of_equiv (f.prodCongr e)))
+  finMean (F <| simClassOf <| blockTriangularEnd a b ·) := by
+  obtain ⟨e, _⟩ := exists_equiv_simClassOf_out a
+  obtain ⟨f, _⟩ := exists_equiv_simClassOf_out b
+  exact (finMean_equiv
+    (f.arrowCongr e).symm.toEquiv fun _ ↦ congrArg F (simClassOf_eq_of_equiv (f.prodCongr e)))
 
 /-- Mackey formula: the block averaging map δ of `Hall.blockAverage` is multiplicative, δ(F * H) =
 δF * δH, with the Hall product taken in each of the two variables on the right. -/
