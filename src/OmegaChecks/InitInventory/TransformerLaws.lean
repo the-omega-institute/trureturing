@@ -417,6 +417,75 @@ run_cmd
   for n in [``fromStateSeqLeft, ``fromStateSeqRight] do
     unless (← collectAxioms n).isEmpty do throwError "state sequencing witness {n} uses axioms"
 
+namespace FiniteFold
+
+/-- An error value carries two representatives of the same value. -/
+private abbrev Twin (T : Type u) := {p : T × T // p.1 = p.2}
+private def swap {T : Type u} (p : Twin T) : Twin T := ⟨(p.val.2, p.val.1), p.2.symm⟩
+private theorem swap_eq {T : Type u} (p : Twin T) : swap p = p := by
+  obtain ⟨⟨a, b⟩, h⟩ := p
+  cases h
+  rfl
+private def step {T : Type u} {f g : T → T} (h : ∀ x, f x = g x) (x : T) : Except (Twin T) T :=
+  .error ⟨(f x, g x), h x⟩
+private def observe {T : Type u} (v : T → Except (Twin T) T) (x : T) : T :=
+  match v x with | .ok t => t | .error e => e.val.1
+
+
+/-- The two ways of composing a monadic step with the unit agree as functions. -/
+abbrev MoveUnit := ∀ {m : Type u → Type u} [Monad m] [LawfulMonad m] {T : Type u} (s : T → m T),
+  (fun x => s x >>= pure) = fun x => pure x >>= s
+/-- A second composition with the unit preserves the entire Kleisli arrow. -/
+abbrev RepeatUnit := ∀ {m : Type u → Type u} [Monad m] [LawfulMonad m] {T : Type u} (s : T → m T),
+  (fun x => s x >>= pure) = fun x => (s x >>= pure) >>= pure
+
+theorem funextOfMoveUnit (law : MoveUnit.{max 1 u v}) : type_of% @funext.{u,v} := by
+  apply funextFromEndomorphisms
+  intro T f g h
+  letI := exceptionMonad (@swap T)
+  letI := lawful (@swap T) swap_eq
+  exact (congrArg observe (@law (Except (Twin T)) _ _ T (step h))).symm
+
+theorem funextOfRepeatUnit (law : RepeatUnit.{max 1 u v}) : type_of% @funext.{u,v} := by
+  apply funextFromEndomorphisms
+  intro T f g h
+  letI := exceptionMonad (@swap T)
+  letI := lawful (@swap T) swap_eq
+  exact (congrArg observe (@law (Except (Twin T)) _ _ T (step h))).symm
+
+example (rule : type_of% @Fin.foldlM_succ_last.{u,u}) : MoveUnit.{u} := by
+  intro m _ _ T s
+  have e := @rule m T 0 _ _ (fun x _ => s x)
+  rw [Fin.foldlM_succ, Fin.foldlM_zero] at e
+  exact e
+
+example (rule : type_of% @Fin.foldrM_succ.{u,u}) : MoveUnit.{u} := by
+  intro m _ _ T s
+  have e := @rule m 0 T _ _ (fun _ x => s x)
+  rw [Fin.foldrM_succ_last, Fin.foldrM_zero] at e
+  exact e
+
+example (rule : type_of% @Fin.foldlM_add.{u,u}) : RepeatUnit.{u} := by
+  intro m _ _ T s
+  have e := @rule m T 1 0 _ _ (fun x _ => s x)
+  change Fin.foldlM 1 (fun x _ => s x) = fun x => Fin.foldlM 1 (fun x _ => s x) x >>= Fin.foldlM 0 (fun x _ => s x) at e
+  rw [Fin.foldlM_succ, Fin.foldlM_zero] at e
+  exact e
+
+example (rule : type_of% @Fin.foldrM_add.{u,u}) : RepeatUnit.{u} := by
+  intro m _ _ T s
+  have e := @rule m 0 1 T _ _ (fun _ x => s x)
+  change Fin.foldrM 1 (fun _ x => s x) = fun x => Fin.foldrM 1 (fun _ x => s x) x >>= Fin.foldrM 0 (fun _ x => s x) at e
+  rw [Fin.foldrM_succ_last, Fin.foldrM_zero] at e
+  exact e
+
+open Lean in
+run_cmd
+  for n in [``funextOfMoveUnit, ``funextOfRepeatUnit] do
+    unless (← collectAxioms n).isEmpty do throwError "finite fold witness {n} uses axioms"
+
+end FiniteFold
+
 end TransformerLaws
 
 end OmegaChecks.InitBoundaries
