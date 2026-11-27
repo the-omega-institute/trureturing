@@ -17,12 +17,12 @@ open Omega
 public theorem relative_diagonal_escape {A : Type u} {Y : Type v}
     (listing : A → A → Y) (twist : Y → Y)
     (fixedPointFree : ∀ value, Not (Eq (twist value) value)) :
-    Not (Exists (fun row =>
+    Not (Omega.Exists (fun row =>
       Eq (listing row) (fun index => twist (listing index index)))) :=
   fun captured =>
     captured.elim (fun row equal =>
       fixedPointFree (listing row row)
-        (congrArg (fun line : A → Y => line row) equal).symm)
+        (Omega.congrArg (fun line : A → Y => line row) equal).symm)
 
 private inductive OneIndex where
   | only
@@ -30,12 +30,12 @@ private inductive OneIndex where
 example : OneIndex := .only
 
 example :
-    Not (Exists (fun row : OneIndex =>
+    Not (Omega.Exists (fun row : OneIndex =>
       Eq ((fun _ _ : OneIndex => Bool.false) row) (fun _ : OneIndex => Bool.true))) :=
   relative_diagonal_escape (fun _ _ : OneIndex => Bool.false)
     (Bool.rec (motive := fun _ => Bool) .true .false)
     (have distinct : Not (Eq Bool.false Bool.true) :=
-      fun equal => Eq.subst (motive := Bool.rec (motive := fun _ => Prop) True False) equal True.intro
+      fun equal => Eq.subst (motive := Bool.rec (motive := fun _ => Prop) Omega.True False) equal Omega.True.intro
      Bool.rec (fun equal => distinct equal.symm) distinct)
 
 end D5.S0.Diagonal.Naturality.RelativeDiagonalEscape

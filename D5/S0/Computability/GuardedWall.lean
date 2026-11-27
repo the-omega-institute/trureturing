@@ -32,21 +32,21 @@ public theorem wall_never_positive
 
 /-- A one-step Boolean ledger witnesses the hypotheses and wall membership. -/
 public theorem boolean_guarded_wall_witness :
-    let positive : True → Bool → Prop := fun _ statement => Eq statement .true
+    let positive : Omega.True → Bool → Prop := fun _ statement => Eq statement .true
     let wall : Bool → Prop := fun statement => Eq statement .false
     let gatekeepers : Bool → Prop := fun statement => Eq statement .true
-    let forbidden : True → Bool → Prop := fun _ statement =>
-      And (Eq statement Bool.false) (Eq statement Bool.true)
-    And (∀ t g, gatekeepers g → positive t g)
-      (And (∀ t w, wall w → positive t w →
+    let forbidden : Omega.True → Bool → Prop := fun _ statement =>
+      Omega.And (Eq statement Bool.false) (Eq statement Bool.true)
+    Omega.And (∀ t g, gatekeepers g → positive t g)
+      (Omega.And (∀ t w, wall w → positive t w →
           (∀ g, gatekeepers g → positive t g) → forbidden t w)
-        (And (∀ t w, wall w → Not (forbidden t w))
-          (And (wall .false) (Not (positive True.intro .false))))) :=
+        (Omega.And (∀ t w, wall w → Not (forbidden t w))
+          (Omega.And (wall .false) (Not (positive Omega.True.intro .false))))) :=
   have falseNeTrue : Not (Eq Bool.false Bool.true) :=
-    fun h => Eq.subst (motive := Bool.rec (motive := fun _ => Prop) True False) h True.intro
-  And.intro (fun _ _ gatekeeper => gatekeeper)
-    (And.intro (fun _ _ inWall positiveNow _ => And.intro inWall positiveNow)
-      (And.intro (fun _ _ _ evidence => falseNeTrue (evidence.left.symm.trans evidence.right))
-        (And.intro rfl falseNeTrue)))
+    fun h => Eq.subst (motive := Bool.rec (motive := fun _ => Prop) Omega.True False) h Omega.True.intro
+  Omega.And.intro (fun _ _ gatekeeper => gatekeeper)
+    (Omega.And.intro (fun _ _ inWall positiveNow _ => Omega.And.intro inWall positiveNow)
+      (Omega.And.intro (fun _ _ _ evidence => falseNeTrue (evidence.left.symm.trans evidence.right))
+        (Omega.And.intro rfl falseNeTrue)))
 
 end D5.S0.Computability.GuardedWall
