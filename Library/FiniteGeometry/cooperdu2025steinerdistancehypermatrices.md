@@ -14,7 +14,7 @@ triage: anchor
 
 # Cooper–Du’s reflected Steiner H-eigenvalue questions
 
-## Source and locators
+## Verified locator
 
 Joshua Cooper and Zhibin Du, *Determinants of Steiner Distance
 Hypermatrices*, arXiv:2505.10501v1 (2025). Printed page 1 defines Steiner
