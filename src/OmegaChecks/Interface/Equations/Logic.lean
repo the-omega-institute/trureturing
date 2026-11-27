@@ -1,5 +1,6 @@
 module
 
+public import OmegaChecks.InitInventory.Quotient
 public import Init.WFComputable
 public import Init.Core
 public import Init.Internal.Order.Basic
@@ -77,5 +78,11 @@ public theorem Acc.recC.{v,u} {α : Sort u} {r : α → α → Prop} {motive : (
     {a : α} (t : Acc r a) :
     @_root_.Acc.rec α r motive step a t = @_root_.Acc.recC α r motive step a t :=
   congrArg (fun k => @k α r motive step a t) _root_.Acc.rec_eq_recC
+
+public theorem Quot.hrecOn.{u,v} {α : Sort u} {r : α → α → Prop} {motive : Quot r → Sort v}
+    (q : Quot r) (f : (a : α) → motive (Quot.mk r a))
+    (c : (a b : α) → r a b → HEq (f a) (f b)) :
+    OmegaChecks.InitPort.Alternatives.Quot.hrecOn q f c = _root_.Quot.hrecOn q f c :=
+  OmegaChecks.InitBoundaries.HeterogeneousQuotient.agrees q f c
 
 end OmegaChecks.Interface.Equations

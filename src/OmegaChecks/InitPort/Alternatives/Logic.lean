@@ -1,4 +1,5 @@
 module
+public import OmegaChecks.InitPort.Alternatives.Logic.Quotient
 public import Init.WFComputable
 public import Init.SimpLemmas
 public import Init.PropLemmas
