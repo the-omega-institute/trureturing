@@ -238,7 +238,8 @@ public def supported (source : Environment) (owner name : Name) (boxedFloatArray
     (owner == `OmegaInit.System.IO && IONative.supported name) ||
     (owner == `OmegaInit.Prelude && (name == `Quot.liftOn || name == `Lean.Name.hash || MacroNative.supported name)) ||
     (owner == `OmegaInit.Data.ByteArray.Basic && ByteFoldNative.supported name) ||
-    ([`OmegaInit.Core, `OmegaInit.WFComputable, `OmegaInit.Data.List.Impl, `OmegaInit.Data.List.BasicAux,
+    ([`OmegaInit.Data.List.Attach, `OmegaInit.Data.Option.Attach, `OmegaInit.Data.Array.Attach, `OmegaInit.Data.Vector.Attach,
+    `OmegaInit.Core, `OmegaInit.WFComputable, `OmegaInit.Data.List.Impl, `OmegaInit.Data.List.BasicAux,
     `OmegaInit.Data.BitVec.Lemmas, `OmegaInit.Data.List.ControlImpl, `OmegaInit.Grind.Ring.CommSolver, `OmegaInit.Data.Nat.Basic, `OmegaInit.Data.Nat.Div.Basic, `OmegaInit.Data.Nat.Lemmas,
     `OmegaInit.Data.RArray, `OmegaInit.Data.Nat.Internal.Linear, `OmegaInit.Data.Nat.Fold, `OmegaInit.Data.Fin.Lemmas].contains owner && IndexedNative.supported name) ||
     ([`OmegaInit.Data.Float.Model.Float, `OmegaInit.Data.Float.Model.Float32].contains owner && modelOperation name) ||

@@ -13,6 +13,9 @@ private def linear (n : Name) : Bool :=
   [`Expr.toPoly.go, `Poly.insert, `Poly.cancelAux, `Poly.norm.go, `Poly.isNum?, `Poly.isZero, `Poly.isNonZero, `instBEqExpr.beq,
    `Poly.toExpr.go].any fun suffix => n == p ++ suffix
 
+private def attachment (n : Name) : Bool :=
+  [`List.attachWith, `Array.attachWith, `Option.attachWith, `Vector.attachWith].contains n
+
 private def quotientEliminator (n : Name) : Bool :=
   [`Quot.hrecOn, `Quotient.hrecOn, `Quotient.lift, `Quotient.liftOn, `Quotient.liftOn₂,
    `Quotient.lift₂, `Squash.lift].contains n
@@ -21,7 +24,7 @@ private def listTraversal (n : Name) : Bool :=
   [`List.filterMapTR, `List.flatMapTR, `List.flattenTR, `List.intercalateTR, `List.reduceOption].contains n
 
 public def supported (n : Name) : Bool :=
-  linear n || quotientEliminator n || listTraversal n ||
+  attachment n || linear n || quotientEliminator n || listTraversal n ||
   [`List.mapMonoM, `List.flatMapMTR.loop, `BitVec.flattenListFast].contains n ||
   [`Acc.recC, `Acc.ndrecC, `Acc.ndrecOnC, `WellFounded.fixFC,
    `Lean.Grind.CommRing.Mon.revlexWF, `Lean.Grind.CommRing.Mon.revlexFuel, `Lean.Grind.CommRing.Mon.revlex,
@@ -60,12 +63,39 @@ public def checkDataTypes (source strict : Environment) (types : List Name) : IO
           x.fieldInfo.size == y.fieldInfo.size && (x.fieldInfo.zip y.fieldInfo).all (fun (f,g) => sameField f g) do
         throw <| IO.userError s!"different native layout for {a} and {b}"
 
+/-- After erasing the subtype proof, attaching it retains the original container. -/
+private def attachmentWrapper (source strict : Environment) (official n : Name) (symbol : String) : IO String := do
+  let owner := `Init.Data ++ official.getPrefix ++ `Attach
+  let impl := mkPrivateNameCore owner (official.appendAfter "Impl")
+  let some (.defnInfo code) := source.find? impl | throw <| IO.userError s!"missing pinned attachment {impl}"
+  unless (Compiler.getImplementedBy? source official) == some impl && code.safety == .unsafe do
+    throw <| IO.userError s!"unexpected attachment implementation {official}"
+  let some (.fdecl _ pinned result (.inc kept 1 _ false (.ret (.var returned))) _) := IR.findEnvDecl source impl
+    | throw <| IO.userError s!"attachment does not retain its input {impl}"
+  let vector := official == `Vector.attachWith
+  let index := if vector then 2 else 1
+  let importedType : IR.IRType := if vector || official == `Array.attachWith then .object else .tobject
+  let signature : Array IR.IRType := #[.erased] ++ (if vector then #[.tobject] else #[]) ++ #[importedType, .erased, .erased]
+  unless pinned.map (·.ty) == signature && result == importedType && pinned[index]!.borrow &&
+      kept == pinned[index]!.x && kept == returned do throw <| IO.userError s!"wrong native attachment input {impl}"
+  let some (some tag) := impureTrivialStructureInfoExt.find? strict `Omega.Subtype
+    | throw <| IO.userError "strict subtype proof occupies a runtime field"
+  let some (.extern _ args .tobject ⟨[.standard `all entry]⟩) := IR.findEnvDecl strict n
+    | throw <| IO.userError s!"missing strict attachment signature {n}"
+  unless entry == symbol && tag.fieldIdx == 0 && args.map (·.ty) == signature.set! index .tobject do
+    throw <| IO.userError s!"unexpected strict attachment layout {n}"
+  let length := if vector then "lean_obj_arg length, " else ""
+  let release := if vector && !args[1]!.borrow then "lean_dec(length); " else ""
+  let retain := if args[index]!.borrow then "lean_inc(xs); " else ""
+  return s!"\nLEAN_EXPORT lean_obj_res {entry}({length}lean_obj_arg xs) \{ {release}{retain}return xs; }\n"
+
 public def wrapper (source strict : Environment) (n : Name) (symbol : String) : IO String := do
   let official := n.replacePrefix `Omega .anonymous
   let some ci := source.find? official | throw <| IO.userError s!"missing pinned indexed eliminator {official}"
   let some target := strict.find? n | throw <| IO.userError s!"missing strict indexed eliminator {n}"
   unless target.type == InitKernelPort.translate InitKernelPort.portName ci.type do
     throw <| IO.userError s!"indexed eliminator type mismatch: {n}"
+  if attachment official then return ← attachmentWrapper source strict official n symbol
   if official == `List.flatMapMTR.loop then
     checkDataTypes source strict [`List, `Monad, `Applicative, `Pure, `Functor, `Seq, `SeqLeft, `SeqRight, `Bind]
   if official == `BitVec.flattenListFast then
