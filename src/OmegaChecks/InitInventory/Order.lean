@@ -252,6 +252,23 @@ theorem propextOfReverseImplicationOrder (order : PartialOrder Prop)
     (rel : ∀ p q : Prop, (q → p) → order.rel p q) : type_of% @propext :=
   fun {p q} iff => order.rel_antisymm (rel p q iff.mpr) (rel q p iff.mp)
 
+theorem propextOfImplicationLattice (order : CompleteLattice Prop)
+    (rel : ∀ p q : Prop, (p → q) → order.rel p q) : type_of% @propext :=
+  propextOfImplicationOrder order.toPartialOrder rel
+
+theorem propextOfReverseImplicationLattice (order : CompleteLattice Prop)
+    (rel : ∀ p q : Prop, (q → p) → order.rel p q) : type_of% @propext :=
+  propextOfReverseImplicationOrder order.toPartialOrder rel
+
+/-- Each witness needs only that the replacement admits all comparisons
+of the original instance. The inventory constructs this premise from the
+pinned instance's actual projection. -/
+def implicationOrders : List (Name × Name) := [
+  (``ImplicationOrder.instOrder, ``propextOfImplicationOrder),
+  (``ReverseImplicationOrder.instOrder, ``propextOfReverseImplicationOrder),
+  (``ImplicationOrder.instCompleteLattice, ``propextOfImplicationLattice),
+  (``ReverseImplicationOrder.instCompleteLattice, ``propextOfReverseImplicationLattice)]
+
 @[instance_reducible] private def singletonOrder (α : Sort u) [Subsingleton α] : PartialOrder α :=
   ⟨fun _ _ => True, trivial, fun _ _ => trivial, fun {_ _} _ _ => Subsingleton.elim _ _⟩
 

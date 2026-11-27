@@ -59,6 +59,8 @@ python3 src/OmegaChecks/InitPort/report.py .lake/init-port-all --require-complet
 
 缺口表的 `abstractedDependency` 标明归约中被全称量化的官方对象。例如，任选一个与 `Option.choice` 同类型的函数，若它在每个非空类型上返回的可选值都满足 `toList.length = 1`，就能从该值取出元素，构造 `Classical.choice`。Lean 会从官方声明的类型中抽出该选择函数，核对剩余命题、目标公理和见证的全部参数。
 
+官方正向、反向命题蕴涵分别定义了偏序与完备格，共四个实例。任何保留相应实例 `rel` 字段计算行为的移植，都能将 `p ↔ q` 的两个方向送入反对称律，得到 `p = q`。校验器从钉版实例投影出实际比较关系，核对四条归约的前提与结论，并在空内核中重放见证。缺口表的 `requiredBehavior` 记录这个计算前提。[归约见证](../InitInventory/Order.lean) · [类型核对](../InitInventory/Reductions.lean)
+
 ### 范围大小与双重否定消除
 
 给定官方原类型的 `Std.Rxc.size_pos_iff_le` 或 `Std.Rxo.size_pos_iff_lt`，都能推出任意命题的双重否定消除，继而推出排中律。令范围的端点都为 `Unit.unit`，把端点比较定义成待证命题 `p`，把大小定义成 1。在 `¬¬p` 下，假设比较失败就得到矛盾，因而满足比较失败时大小为零的类定律。对大小为正应用官方接口即可得到 `p`。清单生成器会从空内核重放这两条归约及双重否定消除推出排中律的证明。[Lean 归约](../InitInventory/Logic.lean) · [官方范围接口](https://github.com/leanprover/lean4/blob/v4.35.0/src/Init/Data/Range/Polymorphic/Basic.lean#L78)

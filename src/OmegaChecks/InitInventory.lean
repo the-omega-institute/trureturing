@@ -428,12 +428,9 @@ private def conditionalConsequence? (owner name : Name) : Option (String × Name
     if name == ``Lean.Order.instOrderPi then
       return ((``funext).toString, ``OmegaChecks.InitBoundaries.InternalOrder.funextOfPointwiseOrder,
         "Pointwise comparison of functions implies comparison in the proposed order")
-    if name == ``Lean.Order.ImplicationOrder.instOrder then
-      return ((``propext).toString, ``OmegaChecks.InitBoundaries.InternalOrder.propextOfImplicationOrder,
-        "An implication from p to q implies p is below q")
-    if name == ``Lean.Order.ReverseImplicationOrder.instOrder then
-      return ((``propext).toString, ``OmegaChecks.InitBoundaries.InternalOrder.propextOfReverseImplicationOrder,
-        "An implication from q to p implies p is below q")
+    if let some witness := OmegaChecks.InitBoundaries.InternalOrder.implicationOrders.lookup name then
+      return ((``propext).toString, witness,
+        "Every pair related by the pinned instance's rel field is also related by the replacement")
     if name == ``Lean.Order.instCCPOOption then
       return ((``Classical.em).toString, ``OmegaChecks.InitBoundaries.InternalOrder.excludedMiddleOfOptionCCPO,
         "The order underlying the proposed CCPO on options agrees with the official flat order")

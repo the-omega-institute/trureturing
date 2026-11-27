@@ -73,7 +73,8 @@ def reductions : List (Name × Name × Name × Name) := [
   (`Init.Grind.Injective, `Lean.Grind.leftInv, `Classical.choice, ``choiceFromLeftInv),
   (`Init.While, `repeatM, `Classical.choice, ``choiceFromRepeatM),
   (`Init.Prelude, `unsafeCast, `sorryAx, ``sorryAxFromUnsafeCast)] ++
-  OptionSelector.laws.map fun (owner, name, witness) => (owner, name, ``Classical.choice, witness)
+  (OptionSelector.laws.map fun (owner, name, witness) => (owner, name, ``Classical.choice, witness)) ++
+  (InternalOrder.implicationOrders.map fun (name, witness) => (`Init.Internal.Order.Basic, name, ``propext, witness))
 
 /-- Recheck the transitive kernel terms of each witness with all forbidden declarations absent.
 Include complete inductive families so that replay can regenerate their primitive rules. -/
@@ -165,6 +166,22 @@ private def optionLawReductionType (source target : ConstantInfo) (levels : List
     let conclusion := target.type.instantiateLevelParams target.levelParams levels
     Meta.mkForallFVars #[select] (.forallE .anonymous law conclusion .default)
 
+/-- Read the order relation from both instances. The premise requires every
+official comparison to hold for the proposed port, including both directions
+of comparison whenever the two propositions are equivalent. -/
+private def orderReductionType (source target : ConstantInfo) : MetaM Expr := do
+  let relation (inst p q : Expr) : MetaM Expr := do
+    let order ← if source.type.isAppOf ``Order.CompleteLattice then
+      Meta.mkAppOptM ``Order.CompleteLattice.toPartialOrder #[none, some inst]
+    else pure inst
+    Meta.mkAppOptM ``Order.PartialOrder.rel #[none, some order, some p, some q]
+  Meta.withLocalDeclD `port source.type fun port =>
+    Meta.withLocalDeclD `p (.sort .zero) fun p =>
+      Meta.withLocalDeclD `q (.sort .zero) fun q => do
+        let admission ← mkArrow (← relation (mkConst source.name) p q) (← relation port p q)
+        let allComparisons ← Meta.mkForallFVars #[p, q] admission
+        Meta.mkForallFVars #[port] (← mkArrow allComparisons target.type)
+
 run_cmd
   let env ← getEnv
   let mut seen := Std.HashSet.emptyWithCapacity
@@ -184,6 +201,8 @@ run_cmd
     let targetLevels := levels.drop (levels.length - target.numLevelParams)
     let expected ← if OptionSelector.usesSelector owner name then
       Elab.Command.liftCoreM <| Meta.MetaM.run' <| optionLawReductionType source target levels
+    else if owner == `Init.Internal.Order.Basic && InternalOrder.implicationOrders.lookup name == some witness then
+      Elab.Command.liftCoreM <| Meta.MetaM.run' <| orderReductionType source target
     else do
       -- The source may be specialized to a particular universe tuple when constructing the axiom.
       let .forallE _ input _ _ := proof.type | throwError "missing argument of {witness}"
