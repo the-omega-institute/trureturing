@@ -1,4 +1,5 @@
 import D5.S3.Quantum.Semigroups.WuCubicConditionedHessian
+import D5.S3.Quantum.Semigroups.WuCubicWiderCurvature
 import D5.S3.Quantum.Semigroups.WuCubicHessianResolvent
 import D5.S3.Quantum.Divergence.GibbsCubicTranslationEntropy
 
@@ -159,18 +160,25 @@ private theorem trace_square_pos (W : Mat) (hW : W.IsHermitian) (hn : W ≠ 0) :
   refine lt_of_le_of_ne h.1 fun he => hn ?_
   exact Matrix.trace_conjTranspose_mul_self_eq_zero_iff.mp (Complex.ext he.symm h.2.symm)
 
-/-- At a normalized conditioned matrix, the centered difference of the ordinary-trace
-operator deficit has a positive local quadratic lower bound in every nonzero Hermitian
-direction satisfying the mixed-generator inequality. -/
-theorem operatorDeficit_centered_ge_normalized {r : ℝ} (hr : 1 ≤ r) (hrhi : r ≤ 6 / 5)
+/-- A positive physical curvature bound with a trace-log curvature majorant yields
+half that coefficient in the local centered difference of the actual operator deficit.
+The strictly positive base spectral floor controls the quartic entropy remainder. -/
+theorem operatorDeficit_centered_ge_of_curvature {r : ℝ} (hr : 1 ≤ r)
     (M W : Mat) (hM : M.PosDef) (hW : W.IsHermitian) (hWne : W ≠ 0)
-    (hlo : (5 / 9 : ℝ) • (1 : Mat) ≤ M) (hhi : M ≤ 1)
-    (htrace : 3 ≤ M.trace.re) (hmax : ∃ i, hM.isHermitian.eigenvalues i = 1)
-    (hmixed : (15 / 4 : ℝ) * (M * W ^ 2).trace.re ≤
-      ((M * W + W * M) * embeddedGenerator r W).trace.re) :
+    {bMinus bPlus κ : ℝ} (hb : 0 < bMinus) (hbb : bMinus ≤ bPlus)
+    (hlo : bMinus • (1 : Mat) ≤ M) (hhi : M ≤ bPlus • (1 : Mat))
+    (hκ : 0 < κ) (b : ℝ)
+    (hmajorant : (W ^ 2 * cfc (fun x : ℝ => 15 * x + 18 * x * Real.log x) M).trace.re ≤ b)
+    (hcurv : κ * (W ^ 2).trace.re ≤
+      (9 / 4 : ℝ) * (W ^ 2 * embeddedGenerator r M +
+        (M * W + W * M) * embeddedGenerator r W).trace.re -
+      alpha r * b +
+      2 * alpha r * ((M * W ^ 2 + W * M * W + W ^ 2 * M) * cfc Real.log (D r)).trace.re +
+      alpha r * (6 * (1 + Real.log (M ^ 3).trace.re) * (M * W ^ 2).trace.re +
+        9 * ((M ^ 2 * W).trace.re) ^ 2 / (M ^ 3).trace.re)) :
     let F := fun t : ℝ => operatorDeficit r (GInv r * (M + t • W) * GInv r)
     ∀ᶠ t : ℝ in 𝓝 0,
-      (1 / 10 : ℝ) * (W ^ 2).trace.re * t ^ 2 ≤ F t + F (-t) - 2 * F 0 := by
+      (κ / 2) * (W ^ 2).trace.re * t ^ 2 ≤ F t + F (-t) - 2 * F 0 := by
   intro F
   let Y := fun s : ℝ => M + s • W
   let E := fun s : ℝ => (9 / 8 : ℝ) * ((Y s) ^ 2 * embeddedGenerator r (Y s)).trace.re
@@ -180,7 +188,6 @@ theorem operatorDeficit_centered_ge_normalized {r : ℝ} (hr : 1 ≤ r) (hrhi : 
   let Z := fun s : ℝ => ((Y s) ^ 3).trace.re * Real.log ((Y s) ^ 3).trace.re
   let e := (9 / 4 : ℝ) *
     (W ^ 2 * embeddedGenerator r M + (M * W + W * M) * embeddedGenerator r W).trace.re
-  let b := (W ^ 2 * cfc (fun x : ℝ => 15 * x + 18 * x * Real.log x) M).trace.re
   let d := 2 * ((M * W ^ 2 + W * M * W + W ^ 2 * M) * K).trace.re
   let z := 6 * (1 + Real.log (M ^ 3).trace.re) * (M * W ^ 2).trace.re +
     9 * ((M ^ 2 * W).trace.re) ^ 2 / (M ^ 3).trace.re
@@ -193,21 +200,12 @@ theorem operatorDeficit_centered_ge_normalized {r : ℝ} (hr : 1 ≤ r) (hrhi : 
     simp only [E, B, K, R, Z, embeddedGenerator, mul_sub, mul_smul_comm,
       Matrix.trace_sub, Complex.sub_re, trace_real_smul]
     ring
-  have hmass := cubic_mass_ge hM htrace hmax
-  have hband (i : Occupation) : hM.isHermitian.eigenvalues i ∈ Icc (5 / 9 : ℝ) 1 :=
-    ⟨(Matrix.PosSemidef.smul_one_le_of_eigenvalues_iff hM.isHermitian _).mpr hlo i,
-      (Matrix.PosSemidef.le_smul_one_of_eigenvalues_iff hM.isHermitian _).mpr
-        (by simpa only [one_smul] using hhi) i⟩
-  have hcurv : (1 / 5 : ℝ) * (W ^ 2).trace.re ≤ e - alpha r * b + alpha r * d + alpha r * z := by
-    have hlo' : ((5 / 9 : ℝ) : ℂ) • (1 : Mat) ≤ M := by
-      have hs : (5 / 9 : ℝ) • (1 : Mat) = ((5 / 9 : ℝ) : ℂ) • (1 : Mat) := by
-        ext i j
-        exact Complex.real_smul
-      rwa [← hs]
-    have h := physical_curvature_ge hr hrhi M W hM hW hlo'
-      hhi hband hmass b le_rfl hmixed
-    dsimp only [e, d, z, K, embeddedGenerator]
-    linarith only [h]
+  have hcurv' : κ * (W ^ 2).trace.re ≤ e - alpha r * b + alpha r * d + alpha r * z := by
+    dsimp only [e, d, z, K]
+    linarith only [hcurv]
+  have hMp : (M ^ 3).PosDef :=
+    ((hM.posSemidef.pow 3).posDef_iff_isUnit).mpr (hM.isUnit.pow 3)
+  have hmass : 0 < (M ^ 3).trace.re := (Complex.lt_def.mp hMp.trace_pos).1
   let S := CFC.sqrt M
   let A := S⁻¹ * W * S⁻¹
   have hS : S.IsHermitian := (CFC.sqrt_nonneg M).posSemidef.isHermitian
@@ -219,25 +217,26 @@ theorem operatorDeficit_centered_ge_normalized {r : ℝ} (hr : 1 ≤ r) (hrhi : 
   have hrecover : S * A * S = W := by
     rw [show S * A * S = (S * S⁻¹) * W * (S⁻¹ * S) by dsimp only [A]; noncomm_ring,
       Matrix.mul_inv_of_invertible S, Matrix.inv_mul_of_invertible S, one_mul, mul_one]
-  let C := 2 * (entropyFactor (5 / 9) 1 (1 / 2) * (A ^ 4).trace.re)
+  let C := 2 * (entropyFactor bMinus bPlus (1 / 2) * (A ^ 4).trace.re)
   have hB : ∀ᶠ t : ℝ in 𝓝 0,
       3 * (B t + B (-t) - 2 * B 0) ≤ t ^ 2 * b + C * t ^ 4 := by
     filter_upwards [small_signed_smul A hA] with t ht
-    have h := cubicLog_centered_le M A hM hA (bMinus := 5/9) (bPlus := 1)
-      (by norm_num) (by norm_num) hlo (by simpa only [one_smul] using hhi) t ht.1 ht.2
+    have h := cubicLog_centered_le M A hM hA hb hbb hlo hhi t ht.1 ht.2
     dsimp only at h
     rw [show CFC.sqrt M * A * CFC.sqrt M = W from hrecover] at h
     change 3 * (B t + B (-t) - 2 * B 0) ≤ _ at h
     calc
       _ ≤ _ := h
-      _ = _ := by
+      _ = t ^ 2 * (W ^ 2 * cfc (fun x : ℝ => 15 * x + 18 * x * Real.log x) M).trace.re +
+          C * t ^ 4 := by
         rw [mul_comm (2 : ℝ) (t ^ 2), mul_assoc, entropy_majorant_eq M W hM.isHermitian]
-        dsimp only [b, C]
+        dsimp only [C]
         ring
-  let margin := (1 / 10 : ℝ) * (W ^ 2).trace.re
-  have hmargin : 0 < margin := mul_pos (by norm_num) (trace_square_pos W hW hWne)
+      _ ≤ _ := add_le_add_left (mul_le_mul_of_nonneg_left hmajorant (sq_nonneg t)) _
+  let margin := (κ / 2) * (W ^ 2).trace.re
+  have hmargin : 0 < margin := mul_pos (half_pos hκ) (trace_square_pos W hW hWne)
   have hα := (WuCubicOccupationTaylor.alpha_bounds_of_one_le hr).1
-  have hZo := massLog_centered_isLittleO M W (by linarith)
+  have hZo := massLog_centered_isLittleO M W hmass
   change (fun t : ℝ => Z t + Z (-t) - 2 * Z 0 - z * t ^ 2)
     =o[𝓝 0] (fun t : ℝ => t ^ 2) at hZo
   have hZsmall := (hZo.const_mul_left (alpha r)).bound (half_pos hmargin)
@@ -255,13 +254,74 @@ theorem operatorDeficit_centered_ge_normalized {r : ℝ} (hr : 1 ≤ r) (hrhi : 
     exact (abs_le.mp htZ).1
   have hCbound := mul_le_mul_of_nonneg_right htC (sq_nonneg t)
   have hbt := mul_le_mul_of_nonneg_left htB hα
-  have hct := mul_le_mul_of_nonneg_right hcurv (sq_nonneg t)
+  have hct := mul_le_mul_of_nonneg_right hcurv' (sq_nonneg t)
   have he : E t + E (-t) - 2 * E 0 = t ^ 2 * e := energy_centered r M W t
   have hd : R t + R (-t) - 2 * R 0 = t ^ 2 * d := reference_centered M W K t
   change margin * t ^ 2 ≤ _
   rw [hF t, hF (-t), hF 0]
-  rw [show (1 / 5 : ℝ) * (W ^ 2).trace.re = 2 * margin by dsimp [margin]; ring] at hct
+  rw [show κ * (W ^ 2).trace.re = 2 * margin by dsimp [margin]; ring] at hct
   nlinarith only [he, congrArg (alpha r * ·) hd, hZbound, hCbound, hbt, hct]
+
+/-- At a normalized conditioned matrix, the centered difference of the ordinary-trace
+operator deficit has a positive local quadratic lower bound in every nonzero Hermitian
+direction satisfying the mixed-generator inequality. -/
+theorem operatorDeficit_centered_ge_normalized {r : ℝ} (hr : 1 ≤ r) (hrhi : r ≤ 6 / 5)
+    (M W : Mat) (hM : M.PosDef) (hW : W.IsHermitian) (hWne : W ≠ 0)
+    (hlo : (5 / 9 : ℝ) • (1 : Mat) ≤ M) (hhi : M ≤ 1)
+    (htrace : 3 ≤ M.trace.re) (hmax : ∃ i, hM.isHermitian.eigenvalues i = 1)
+    (hmixed : (15 / 4 : ℝ) * (M * W ^ 2).trace.re ≤
+      ((M * W + W * M) * embeddedGenerator r W).trace.re) :
+    let F := fun t : ℝ => operatorDeficit r (GInv r * (M + t • W) * GInv r)
+    ∀ᶠ t : ℝ in 𝓝 0,
+      (1 / 10 : ℝ) * (W ^ 2).trace.re * t ^ 2 ≤ F t + F (-t) - 2 * F 0 := by
+  have hmass := cubic_mass_ge hM htrace hmax
+  have hband (i : Occupation) : hM.isHermitian.eigenvalues i ∈ Icc (5 / 9 : ℝ) 1 :=
+    ⟨(Matrix.PosSemidef.smul_one_le_of_eigenvalues_iff hM.isHermitian _).mpr hlo i,
+      (Matrix.PosSemidef.le_smul_one_of_eigenvalues_iff hM.isHermitian _).mpr
+        (by simpa only [one_smul] using hhi) i⟩
+  have hlo' : ((5 / 9 : ℝ) : ℂ) • (1 : Mat) ≤ M := by
+    have hs : (5 / 9 : ℝ) • (1 : Mat) = ((5 / 9 : ℝ) : ℂ) • (1 : Mat) := by
+      ext i j
+      exact Complex.real_smul
+    rwa [← hs]
+  have h := physical_curvature_ge hr hrhi M W hM hW hlo' hhi hband hmass
+    _ le_rfl hmixed
+  simpa only [show (1 / 5 : ℝ) / 2 = 1 / 10 by norm_num] using
+    operatorDeficit_centered_ge_of_curvature hr M W hM hW hWne
+      (bMinus := 5 / 9) (bPlus := 1) (κ := 1 / 5)
+      (by norm_num) (by norm_num) hlo (by simpa only [one_smul] using hhi)
+      (by norm_num) _ le_rfl h
+
+/-- The wider normalized physical curvature bound yields a centered quadratic
+lower bound throughout the spectral band with floor 21/40. -/
+theorem operatorDeficit_centered_ge_normalized_wider {r : ℝ} (hr : 1 ≤ r) (hrhi : r ≤ 6 / 5)
+    (M W : Mat) (hM : M.PosDef) (hW : W.IsHermitian) (hWne : W ≠ 0)
+    (hlo : (21 / 40 : ℝ) • (1 : Mat) ≤ M) (hhi : M ≤ 1)
+    (htrace : 289 / 100 ≤ M.trace.re) (hmax : ∃ i, hM.isHermitian.eigenvalues i = 1)
+    (hmixed : (187 / 50 : ℝ) * (M * W ^ 2).trace.re ≤
+      ((M * W + W * M) * embeddedGenerator r W).trace.re) :
+    let F := fun t : ℝ => operatorDeficit r (GInv r * (M + t • W) * GInv r)
+    ∀ᶠ t : ℝ in 𝓝 0,
+      (1 / 20 : ℝ) * (W ^ 2).trace.re * t ^ 2 ≤ F t + F (-t) - 2 * F 0 := by
+  have hband (i : Occupation) : hM.isHermitian.eigenvalues i ∈ Icc (21 / 40 : ℝ) 1 :=
+    ⟨(Matrix.PosSemidef.smul_one_le_of_eigenvalues_iff hM.isHermitian _).mpr hlo i,
+      (Matrix.PosSemidef.le_smul_one_of_eigenvalues_iff hM.isHermitian _).mpr
+        (by simpa only [one_smul] using hhi) i⟩
+  have h := WuCubicWiderCurvature.physical_curvature_ge hr hrhi M W hM.isHermitian hW
+    hband htrace hmax _ le_rfl hmixed
+  simpa only [show (1 / 10 : ℝ) / 2 = 1 / 20 by norm_num] using
+    operatorDeficit_centered_ge_of_curvature hr M W hM hW hWne
+      (bMinus := 21 / 40) (bPlus := 1) (κ := 1 / 10)
+      (by norm_num) (by norm_num) hlo (by simpa only [one_smul] using hhi)
+      (by norm_num) _ le_rfl h
+
+private theorem centered_pos_of_eventually_ge (F : ℝ → ℝ) {margin : ℝ} (hm : 0 < margin)
+    (hb : ∀ᶠ t : ℝ in 𝓝 0, margin * t ^ 2 ≤ F t + F (-t) - 2 * F 0) :
+    ∃ δ > 0, ∀ t : ℝ, 0 < t → t < δ → 2 * F 0 < F t + F (-t) := by
+  obtain ⟨l, u, h0, hI⟩ := hb.exists_Ioo_subset
+  refine ⟨u, h0.2, fun t ht htu => ?_⟩
+  have h := hI (show t ∈ Ioo l u from ⟨h0.1.trans ht, htu⟩)
+  exact lt_of_sub_pos ((mul_pos hm (pow_pos ht 2)).trans_le h)
 
 /-- The normalized conditioned operator deficit has strictly positive symmetric
 differences at every sufficiently small positive step. -/
@@ -274,16 +334,29 @@ theorem operatorDeficit_centered_pos_normalized {r : ℝ} (hr : 1 ≤ r) (hrhi :
     let F := fun t : ℝ => operatorDeficit r (GInv r * (M + t • W) * GInv r)
     ∃ δ > 0, ∀ t : ℝ, 0 < t → t < δ → 2 * F 0 < F t + F (-t) := by
   intro F
-  obtain ⟨l, u, h0, hI⟩ :=
+  exact centered_pos_of_eventually_ge F
+    (mul_pos (by norm_num : (0 : ℝ) < 1 / 10) (trace_square_pos W hW hWne))
     (operatorDeficit_centered_ge_normalized hr hrhi M W hM hW hWne hlo hhi
-      htrace hmax hmixed).exists_Ioo_subset
-  refine ⟨u, h0.2, fun t ht htu => ?_⟩
-  have hb := hI (show t ∈ Ioo l u from ⟨h0.1.trans ht, htu⟩)
-  have hp : 0 < (1 / 10 : ℝ) * (W ^ 2).trace.re * t ^ 2 :=
-    mul_pos (mul_pos (by norm_num) (trace_square_pos W hW hWne)) (pow_pos ht 2)
-  exact lt_of_sub_pos (hp.trans_le hb)
+      htrace hmax hmixed)
+
+/-- The wider-band conditioned operator deficit has strictly positive symmetric
+differences at every sufficiently small positive step. -/
+theorem operatorDeficit_centered_pos_normalized_wider {r : ℝ} (hr : 1 ≤ r) (hrhi : r ≤ 6 / 5)
+    (M W : Mat) (hM : M.PosDef) (hW : W.IsHermitian) (hWne : W ≠ 0)
+    (hlo : (21 / 40 : ℝ) • (1 : Mat) ≤ M) (hhi : M ≤ 1)
+    (htrace : 289 / 100 ≤ M.trace.re) (hmax : ∃ i, hM.isHermitian.eigenvalues i = 1)
+    (hmixed : (187 / 50 : ℝ) * (M * W ^ 2).trace.re ≤
+      ((M * W + W * M) * embeddedGenerator r W).trace.re) :
+    let F := fun t : ℝ => operatorDeficit r (GInv r * (M + t • W) * GInv r)
+    ∃ δ > 0, ∀ t : ℝ, 0 < t → t < δ → 2 * F 0 < F t + F (-t) := by
+  intro F
+  exact centered_pos_of_eventually_ge F
+    (mul_pos (by norm_num : (0 : ℝ) < 1 / 20) (trace_square_pos W hW hWne))
+    (operatorDeficit_centered_ge_normalized_wider hr hrhi M W hM hW hWne hlo hhi
+      htrace hmax hmixed)
 
 #print axioms operatorDeficit_centered_pos_normalized
+#print axioms operatorDeficit_centered_pos_normalized_wider
 
 private theorem operatorDeficit_embedded_scale {r : ℝ} (hr : 1 ≤ r)
     (c : ℝ) (M : Mat) (hM : M.PosDef) :

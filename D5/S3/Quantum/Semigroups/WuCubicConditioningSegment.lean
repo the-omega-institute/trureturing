@@ -204,18 +204,19 @@ private theorem kron_eigenvalue_range {A B : Local} (hA : A.IsHermitian) (hB : B
     simp [hz] at heq'
     linarith
 
-/-- The conditioned endpoint has its own maximal eigenvalue, and satisfies the
-stronger trace bound `55/18` in the entire temperature interval. -/
-theorem conditioned_endpoint {r L : ℝ} (hr : 1 ≤ r) (hhi : r ≤ 6/5)
-    (X : Mat) (hL : 0 < L)
-    (hlo : (2 / 3 * L : ℝ) • (1 : Mat) ≤ G r * X * G r)
+/-- The conditioned endpoint has an attained maximal eigenvalue. Its spectral
+ratio is at least `5 * k / 6`, and its trace-to-maximum ratio is at least
+`11 * (1 + k) / 6` in the entire temperature interval. -/
+theorem conditioned_endpoint_of_ratio {r L k : ℝ} (hr : 1 ≤ r) (hhi : r ≤ 6 / 5)
+    (X : Mat) (hL : 0 < L) (hk : 0 < k)
+    (hlo : (k * L : ℝ) • (1 : Mat) ≤ G r * X * G r)
     (hup : G r * X * G r ≤ L • (1 : Mat)) :
     ∃ L0 : ℝ, 0 < L0 ∧
       ∃ h0 : (G r * lift (reduce r X) * G r).IsHermitian,
         (∃ i, h0.eigenvalues i = L0) ∧
-        (5 / 9 * L0 : ℝ) • (1 : Mat) ≤ G r * lift (reduce r X) * G r ∧
+        (5 / 6 * k * L0 : ℝ) • (1 : Mat) ≤ G r * lift (reduce r X) * G r ∧
         G r * lift (reduce r X) * G r ≤ L0 • (1 : Mat) ∧
-        (55 / 18 : ℝ) * L0 ≤ (G r * lift (reduce r X) * G r).trace.re := by
+        (11 / 6 * (1 + k) : ℝ) * L0 ≤ (G r * lift (reduce r X) * G r).trace.re := by
   rw [conditioned_product hr]
   let S := weightedTrace r (G r * X * G r)
   let a := rootScale r
@@ -223,20 +224,20 @@ theorem conditioned_endpoint {r L : ℝ} (hr : 1 ≤ r) (hhi : r ≤ 6/5)
   have ha : 0 < a := rootScale_pos (zero_le_one.trans hr)
   have ht : 0 < t := traceWeight_pos hr
   obtain ⟨hslo, hsup⟩ := weightedTrace_bounds hlo hup
-  change (2 / 3 * L * t) • (1 : Local) ≤ S at hslo
+  change (k * L * t) • (1 : Local) ≤ S at hslo
   change S ≤ (L * t) • (1 : Local) at hsup
   have hSpsd : S.PosSemidef := Matrix.LE.le.posSemidef
-    (le_trans (smul_nonneg (by positivity : 0 ≤ (2 / 3 * L * t : ℝ)) (by simp)) hslo)
+    (le_trans (smul_nonneg (by positivity : 0 ≤ (k * L * t : ℝ)) (by simp)) hslo)
   let hS := hSpsd.isHermitian
   obtain ⟨j, hj⟩ := max_eigenvalue hS
   let b := hS.eigenvalues j
   have hbup : b ≤ L * t :=
     (Matrix.PosSemidef.le_smul_one_of_eigenvalues_iff hS _).mpr hsup j
-  have hslow (i : Fin 2) : 2 / 3 * L * t ≤ hS.eigenvalues i :=
+  have hslow (i : Fin 2) : k * L * t ≤ hS.eigenvalues i :=
     (Matrix.PosSemidef.smul_one_le_of_eigenvalues_iff hS _).mpr hslo i
   have hb : 0 < b := lt_of_lt_of_le (by positivity) (hslow j)
-  have hratio (i : Fin 2) : 2 / 3 * b ≤ hS.eigenvalues i := by
-    linarith [hslow i]
+  have hratio (i : Fin 2) : k * b ≤ hS.eigenvalues i := by
+    nlinarith only [hslow i, mul_le_mul_of_nonneg_left hbup hk.le]
   have hB : (root r ^ 2).IsHermitian := ((root_posDef hr).posSemidef.pow 2).isHermitian
   have hBmin (i : Fin 2) : a ≤ hB.eigenvalues i :=
     (Matrix.PosSemidef.smul_one_le_of_eigenvalues_iff hB _).mpr (root_square_bounds hr).1 i
@@ -259,9 +260,11 @@ theorem conditioned_endpoint {r L : ℝ} (hr : 1 ≤ r) (hhi : r ≤ 6/5)
       exact ⟨i, rfl⟩
     obtain ⟨p, hp⟩ := hm
     rw [← hp]
-    have hprod := mul_le_mul (hBmin p.1) (hratio p.2) (by positivity : 0 ≤ 2 / 3 * b)
+    have hprod := mul_le_mul (hBmin p.1) (hratio p.2) (by positivity : 0 ≤ k * b)
       (ha.le.trans (hBmin p.1))
-    have hrb : (5 / 9 * r) ≤ (2 / 3 : ℝ) := by linarith
+    have hrb : (5 / 6 * k * r) ≤ k := by
+      nlinarith only [mul_le_mul_of_nonneg_right
+        (show (5 / 6 : ℝ) * r ≤ 1 by linarith) hk.le]
     have h := mul_le_mul_of_nonneg_right hrb (mul_nonneg ha.le hb.le)
     dsimp [L0]
     nlinarith only [hprod, h]
@@ -273,46 +276,141 @@ theorem conditioned_endpoint {r L : ℝ} (hr : 1 ≤ r) (hhi : r ≤ 6/5)
       exact ⟨i, rfl⟩
     obtain ⟨p, hp⟩ := hm
     rw [← hp]
-    exact mul_le_mul (hBmax p.1) (hj p.2) (by linarith [hratio p.2]) (by positivity)
-  · have hsTrace : (5 / 3 : ℝ) * b ≤ S.trace.re := by
+    exact mul_le_mul (hBmax p.1) (hj p.2)
+      ((mul_nonneg hk.le hb.le).trans (hratio p.2)) (by positivity)
+  · have hsTrace : (1 + k) * b ≤ S.trace.re := by
       rw [hS.trace_eq_sum_eigenvalues, Complex.re_sum, Fin.sum_univ_two]
-      change (5 / 3 : ℝ) * b ≤ hS.eigenvalues 0 + hS.eigenvalues 1
-      fin_cases j <;> dsimp [b] at * <;> linarith [hratio 0, hratio 1]
+      change (1 + k) * b ≤ hS.eigenvalues 0 + hS.eigenvalues 1
+      fin_cases j <;> dsimp [b] at * <;> nlinarith only [hratio 0, hratio 1]
     have hBtr : (root r ^ 2).trace.im = 0 := by
       rw [root_square hr, Matrix.trace_diagonal, Fin.sum_univ_two]
       simp
     rw [Matrix.trace_kronecker, Complex.mul_re, hBtr, zero_mul, sub_zero, root_square_trace hr]
     have hh := mul_le_mul_of_nonneg_left hsTrace (by positivity : 0 ≤ (1 + r) * a)
-    have hr' : (55 / 18 : ℝ) * r ≤ (1 + r) * (5 / 3) := by linarith
+    have hr' : (11 / 6 * (1 + k)) * r ≤ (1 + r) * (1 + k) := by
+      nlinarith only [mul_le_mul_of_nonneg_right
+        (show (11 / 6 : ℝ) * r ≤ 1 + r by linarith) (by positivity : 0 ≤ 1 + k)]
     have hh' := mul_le_mul_of_nonneg_right hr' (mul_nonneg ha.le hb.le)
     dsimp [L0]
     nlinarith only [hh, hh']
 
-private theorem original_trace_bound {M : Mat} {L : ℝ} (hM : M.IsHermitian)
-    (hlow : ∀ i, 2 / 3 * L ≤ hM.eigenvalues i)
+/-- The two-thirds input gives the endpoint ratios `5/9` and `55/18`. -/
+theorem conditioned_endpoint {r L : ℝ} (hr : 1 ≤ r) (hhi : r ≤ 6 / 5)
+    (X : Mat) (hL : 0 < L)
+    (hlo : (2 / 3 * L : ℝ) • (1 : Mat) ≤ G r * X * G r)
+    (hup : G r * X * G r ≤ L • (1 : Mat)) :
+    ∃ L0 : ℝ, 0 < L0 ∧
+      ∃ h0 : (G r * lift (reduce r X) * G r).IsHermitian,
+        (∃ i, h0.eigenvalues i = L0) ∧
+        (5 / 9 * L0 : ℝ) • (1 : Mat) ≤ G r * lift (reduce r X) * G r ∧
+        G r * lift (reduce r X) * G r ≤ L0 • (1 : Mat) ∧
+        (55 / 18 : ℝ) * L0 ≤ (G r * lift (reduce r X) * G r).trace.re := by
+  simpa only [show (5 / 6 : ℝ) * (2 / 3) = 5 / 9 by norm_num,
+    show (11 / 6 : ℝ) * (1 + 2 / 3) = 55 / 18 by norm_num] using
+    conditioned_endpoint_of_ratio hr hhi X hL (k := 2 / 3) (by norm_num) hlo hup
+
+private theorem original_trace_bound {M : Mat} {L k : ℝ} (hM : M.IsHermitian)
+    (hlow : ∀ i, k * L ≤ hM.eigenvalues i)
     (hmax : ∃ i, hM.eigenvalues i = L) :
-    3 * L ≤ M.trace.re := by
+    (1 + 3 * k) * L ≤ M.trace.re := by
   obtain ⟨i, hi⟩ := hmax
   rw [hM.trace_eq_sum_eigenvalues, Complex.re_sum]
-  change 3 * L ≤ ∑ j, hM.eigenvalues j
-  have hsum : (∑ j : Occupation, (2 / 3 * L + if j = i then L / 3 else 0)) ≤
+  change (1 + 3 * k) * L ≤ ∑ j, hM.eigenvalues j
+  have hsum : (∑ j : Occupation, (k * L + if j = i then (1 - k) * L else 0)) ≤
       ∑ j, hM.eigenvalues j := by
     apply Finset.sum_le_sum
     intro j _
     by_cases h : j = i
     · subst j
-      simp [hi]
-      linarith
+      simp [hi] <;> ring_nf <;> exact le_rfl
     · simpa [h] using hlow j
   rw [Finset.sum_add_distrib] at hsum
   simp [Fintype.card_prod] at hsum
-  linarith
+  nlinarith only [hsum]
 
-/-- Along the actual Gibbs-weighted conditioning segment every eigenvalue is
-at least `5/9` of its own maximal eigenvalue and the trace is at least three
-times that maximum. The input maximum is attained, and each segment maximum
-is attained. -/
-theorem conditioning_segment_bounds {r L s : ℝ} (hr : 1 ≤ r) (hhi : r ≤ 6/5)
+/-- Along the actual Gibbs-weighted conditioning segment an input spectral
+ratio of at least `k > 0` gives a spectral ratio of at least `5 * k / 6`.
+The trace-to-maximum ratio is bounded by the smaller of the two endpoint
+bounds. The input and segment maxima are attained. -/
+theorem conditioning_segment_bounds_of_ratio {r L s k : ℝ} (hr : 1 ≤ r) (hhi : r ≤ 6 / 5)
+    (X : Mat) (hL : 0 < L) (hk : 0 < k) (hs : 0 ≤ s) (hs' : s ≤ 1)
+    (hM : (G r * X * G r).IsHermitian)
+    (hlow : ∀ i, k * L ≤ hM.eigenvalues i)
+    (hup : ∀ i, hM.eigenvalues i ≤ L)
+    (hmax : ∃ i, hM.eigenvalues i = L) :
+    let Ms := (1 - s) • (G r * lift (reduce r X) * G r) + s • (G r * X * G r)
+    ∃ Ls : ℝ, 0 < Ls ∧ ∃ hMs : Ms.PosDef,
+      (∃ i, hMs.isHermitian.eigenvalues i = Ls) ∧
+      (∀ i, 5 / 6 * k * Ls ≤ hMs.isHermitian.eigenvalues i ∧ hMs.isHermitian.eigenvalues i ≤ Ls) ∧
+      min (1 + 3 * k) (11 / 6 * (1 + k)) * Ls ≤ Ms.trace.re := by
+  dsimp only
+  let M := G r * X * G r
+  let M0 := G r * lift (reduce r X) * G r
+  let Ms := (1 - s) • M0 + s • M
+  have hMlo : (k * L : ℝ) • (1 : Mat) ≤ M :=
+    (Matrix.PosSemidef.smul_one_le_of_eigenvalues_iff hM _).mp hlow
+  have hMhi : M ≤ L • (1 : Mat) :=
+    (Matrix.PosSemidef.le_smul_one_of_eigenvalues_iff hM _).mp hup
+  obtain ⟨L0, hL0, hM0, _, hM0lo, hM0hi, hM0tr⟩ :=
+    conditioned_endpoint_of_ratio hr hhi X hL hk hMlo hMhi
+  have hMtr : (1 + 3 * k) * L ≤ M.trace.re := original_trace_bound hM hlow hmax
+  have hMlo' : (5 / 6 * k * L : ℝ) • (1 : Mat) ≤ M :=
+    (Matrix.PosSemidef.smul_one_le_of_eigenvalues_iff hM _).mp
+      (fun i => by nlinarith only [hlow i, mul_nonneg hk.le hL.le])
+  let K := (1 - s) * L0 + s * L
+  have hK : 0 < K := by
+    dsimp [K]
+    rcases eq_or_lt_of_le hs' with h | h
+    · subst s
+      simpa using hL
+    · exact add_pos_of_pos_of_nonneg (mul_pos (sub_pos.mpr h) hL0)
+        (mul_nonneg hs hL.le)
+  have hs0 : 0 ≤ 1 - s := sub_nonneg.mpr hs'
+  have hlowS : (5 / 6 * k * K : ℝ) • (1 : Mat) ≤ Ms := by
+    have h := add_le_add (smul_le_smul_of_nonneg_left hM0lo hs0)
+      (smul_le_smul_of_nonneg_left hMlo' hs)
+    have hcoeff : (1 - s) * (5 / 6 * k * L0) + s * (5 / 6 * k * L) = 5 / 6 * k * K := by
+      dsimp [K]
+      ring
+    simpa only [smul_smul, ← add_smul, hcoeff, Ms, M, M0] using h
+  have hupS : Ms ≤ K • (1 : Mat) := by
+    have h := add_le_add (smul_le_smul_of_nonneg_left hM0hi hs0)
+      (smul_le_smul_of_nonneg_left hMhi hs)
+    simpa only [smul_smul, ← add_smul, K, Ms, M, M0] using h
+  let c := min (1 + 3 * k) (11 / 6 * (1 + k))
+  have hc : 0 < c := lt_min (by positivity) (by positivity)
+  have htrace : c * K ≤ Ms.trace.re := by
+    have h0 : c * L0 ≤ M0.trace.re :=
+      (mul_le_mul_of_nonneg_right (min_le_right _ _) hL0.le).trans hM0tr
+    have h1 : c * L ≤ M.trace.re :=
+      (mul_le_mul_of_nonneg_right (min_le_left _ _) hL.le).trans hMtr
+    have a := mul_le_mul_of_nonneg_left h0 hs0
+    have b := mul_le_mul_of_nonneg_left h1 hs
+    have heq : Ms.trace.re = (1 - s) * M0.trace.re + s * M.trace.re := by
+      simp [Ms, Matrix.trace_add, Matrix.trace_smul, Complex.real_smul]
+    rw [heq]
+    dsimp [K]
+    nlinarith only [a, b]
+  have hMs : Ms.IsHermitian := (Matrix.LE.le.posSemidef
+    (le_trans (smul_nonneg (by positivity : 0 ≤ (5 / 6 * k * K : ℝ))
+      (by simp : (0 : Mat) ≤ 1)) hlowS)).isHermitian
+  obtain ⟨i, hi⟩ := max_eigenvalue hMs
+  let Ls := hMs.eigenvalues i
+  have hLsK : Ls ≤ K :=
+    (Matrix.PosSemidef.le_smul_one_of_eigenvalues_iff hMs _).mpr hupS i
+  have hloS (j : Occupation) : 5 / 6 * k * K ≤ hMs.eigenvalues j :=
+    (Matrix.PosSemidef.smul_one_le_of_eigenvalues_iff hMs _).mpr hlowS j
+  have hLs : 0 < Ls := lt_of_lt_of_le (by positivity) (hloS i)
+  have hMspos : Ms.PosDef := hMs.posDef_iff_eigenvalues_pos.mpr
+    (fun j => lt_of_lt_of_le (by positivity) (hloS j))
+  exact ⟨Ls, hLs, hMspos, ⟨i, rfl⟩,
+    fun j => ⟨(mul_le_mul_of_nonneg_left hLsK (by positivity)).trans (hloS j), hi j⟩,
+    (mul_le_mul_of_nonneg_left hLsK hc.le).trans htrace⟩
+
+/-- For an input spectral ratio of at least two-thirds, every segment
+eigenvalue is at least `5/9` of its attained maximum and the trace is at
+least three times that maximum. -/
+theorem conditioning_segment_bounds {r L s : ℝ} (hr : 1 ≤ r) (hhi : r ≤ 6 / 5)
     (X : Mat) (hL : 0 < L) (hs : 0 ≤ s) (hs' : s ≤ 1)
     (hM : (G r * X * G r).IsHermitian)
     (hlow : ∀ i, 2 / 3 * L ≤ hM.eigenvalues i)
@@ -323,67 +421,37 @@ theorem conditioning_segment_bounds {r L s : ℝ} (hr : 1 ≤ r) (hhi : r ≤ 6/
       (∃ i, hMs.isHermitian.eigenvalues i = Ls) ∧
       (∀ i, 5 / 9 * Ls ≤ hMs.isHermitian.eigenvalues i ∧ hMs.isHermitian.eigenvalues i ≤ Ls) ∧
       3 * Ls ≤ Ms.trace.re := by
-  dsimp only
-  let M := G r * X * G r
-  let M0 := G r * lift (reduce r X) * G r
-  let Ms := (1 - s) • M0 + s • M
-  have hMlo : (2 / 3 * L : ℝ) • (1 : Mat) ≤ M :=
-    (Matrix.PosSemidef.smul_one_le_of_eigenvalues_iff hM _).mp hlow
-  have hMhi : M ≤ L • (1 : Mat) :=
-    (Matrix.PosSemidef.le_smul_one_of_eigenvalues_iff hM _).mp hup
-  obtain ⟨L0, hL0, hM0, _, hM0lo, hM0hi, hM0tr⟩ :=
-    conditioned_endpoint hr hhi X hL hMlo hMhi
-  have hMtr : 3 * L ≤ M.trace.re := original_trace_bound hM hlow hmax
-  have hMlo' : (5 / 9 * L : ℝ) • (1 : Mat) ≤ M :=
-    (Matrix.PosSemidef.smul_one_le_of_eigenvalues_iff hM _).mp
-      (fun i => by linarith [hlow i])
-  let K := (1 - s) * L0 + s * L
-  have hK : 0 < K := by
-    dsimp [K]
-    rcases eq_or_lt_of_le hs' with h | h
-    · subst s
-      simpa using hL
-    · exact add_pos_of_pos_of_nonneg (mul_pos (sub_pos.mpr h) hL0)
-        (mul_nonneg hs hL.le)
-  have hs0 : 0 ≤ 1 - s := sub_nonneg.mpr hs'
-  have hlowS : (5 / 9 * K : ℝ) • (1 : Mat) ≤ Ms := by
-    have h := add_le_add (smul_le_smul_of_nonneg_left hM0lo hs0)
-      (smul_le_smul_of_nonneg_left hMlo' hs)
-    have hcoeff : (1 - s) * (5 / 9 * L0) + s * (5 / 9 * L) = 5 / 9 * K := by
-      dsimp [K]
-      ring
-    simpa only [smul_smul, ← add_smul, hcoeff, Ms, M, M0] using h
-  have hupS : Ms ≤ K • (1 : Mat) := by
-    have h := add_le_add (smul_le_smul_of_nonneg_left hM0hi hs0)
-      (smul_le_smul_of_nonneg_left hMhi hs)
-    simpa only [smul_smul, ← add_smul, K, Ms, M, M0] using h
-  have htrace : 3 * K ≤ Ms.trace.re := by
-    have h0 : 3 * L0 ≤ M0.trace.re := by dsimp [M0]; linarith
-    have a := mul_le_mul_of_nonneg_left h0 hs0
-    have b := mul_le_mul_of_nonneg_left hMtr hs
-    have heq : Ms.trace.re = (1 - s) * M0.trace.re + s * M.trace.re := by
-      simp [Ms, Matrix.trace_add, Matrix.trace_smul, Complex.real_smul]
-    rw [heq]
-    dsimp [K]
-    linarith only [a, b]
-  have hMs : Ms.IsHermitian := (Matrix.LE.le.posSemidef
-    (le_trans (smul_nonneg (by positivity : 0 ≤ (5 / 9 * K : ℝ))
-      (by simp : (0 : Mat) ≤ 1)) hlowS)).isHermitian
-  obtain ⟨i, hi⟩ := max_eigenvalue hMs
-  let Ls := hMs.eigenvalues i
-  have hLsK : Ls ≤ K :=
-    (Matrix.PosSemidef.le_smul_one_of_eigenvalues_iff hMs _).mpr hupS i
-  have hloS (j : Occupation) : 5 / 9 * K ≤ hMs.eigenvalues j :=
-    (Matrix.PosSemidef.smul_one_le_of_eigenvalues_iff hMs _).mpr hlowS j
-  have hLs : 0 < Ls := lt_of_lt_of_le (by positivity) (hloS i)
-  have hMspos : Ms.PosDef := hMs.posDef_iff_eigenvalues_pos.mpr
-    (fun j => lt_of_lt_of_le (by positivity) (hloS j))
-  exact ⟨Ls, hLs, hMspos, ⟨i, rfl⟩, fun j => ⟨by linarith [hloS j], hi j⟩,
-    by linarith⟩
+  simpa only [show (5 / 6 : ℝ) * (2 / 3) = 5 / 9 by norm_num,
+    show min (1 + 3 * (2 / 3 : ℝ)) (11 / 6 * (1 + 2 / 3)) = 3 by norm_num [min_def]] using
+    conditioning_segment_bounds_of_ratio hr hhi X hL (k := 2 / 3)
+      (by norm_num) hs hs' hM hlow hup hmax
+
+/-- For an input spectral ratio of at least `63/100`, the segment satisfies
+the wider curvature bounds `21/40` and `289/100` relative to its attained
+maximal eigenvalue. -/
+theorem conditioning_segment_bounds_wider {r L s : ℝ} (hr : 1 ≤ r) (hhi : r ≤ 6 / 5)
+    (X : Mat) (hL : 0 < L) (hs : 0 ≤ s) (hs' : s ≤ 1)
+    (hM : (G r * X * G r).IsHermitian)
+    (hlow : ∀ i, 63 / 100 * L ≤ hM.eigenvalues i)
+    (hup : ∀ i, hM.eigenvalues i ≤ L)
+    (hmax : ∃ i, hM.eigenvalues i = L) :
+    let Ms := (1 - s) • (G r * lift (reduce r X) * G r) + s • (G r * X * G r)
+    ∃ Ls : ℝ, 0 < Ls ∧ ∃ hMs : Ms.PosDef,
+      (∃ i, hMs.isHermitian.eigenvalues i = Ls) ∧
+      (∀ i, 21 / 40 * Ls ≤ hMs.isHermitian.eigenvalues i ∧ hMs.isHermitian.eigenvalues i ≤ Ls) ∧
+      289 / 100 * Ls ≤ Ms.trace.re := by
+  simpa only [show (5 / 6 : ℝ) * (63 / 100) = 21 / 40 by norm_num,
+    show min (1 + 3 * (63 / 100 : ℝ)) (11 / 6 * (1 + 63 / 100)) = 289 / 100 by
+      norm_num [min_def]] using
+    conditioning_segment_bounds_of_ratio hr hhi X hL (k := 63 / 100)
+      (by norm_num) hs hs' hM hlow hup hmax
 
 #print axioms conditioned_product
 #print axioms weightedTrace_bounds
+#print axioms conditioned_endpoint_of_ratio
 #print axioms conditioned_endpoint
+#print axioms conditioning_segment_bounds_of_ratio
 #print axioms conditioning_segment_bounds
+#print axioms conditioning_segment_bounds_wider
 
 end D5.S3.Quantum.Semigroups.WuCubicConditioningSegment

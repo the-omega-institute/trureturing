@@ -5,7 +5,7 @@ import D5.S3.Quantum.Semigroups.WuCubicTransverseCentered
 import D5.S3.Quantum.Semigroups.WuCubicHessianKantorovich
 
 /-! The literal Wu cubic deficit on the region of positive embedded spectrum
-with minimum at least two thirds of the maximum. -/
+with minimum at least `63/100` of the maximum. -/
 
 compile_only_with_mathlib
 
@@ -23,11 +23,12 @@ open WuCubicOperatorBridge (Mat G GInv)
 open WuCubicOperatorNormalization (operatorDeficit operatorDeficit_scalar)
 open WuCubicConditioningRotation (ModeRotation rotate exists_conditioning_rotation)
 open WuCubicHotInnerPartialTrace (lift reduce)
-open WuCubicConditioningSegment (conditioning_segment_bounds)
-open WuCubicConditioningComparison (operatorDeficit_conditioning_lt)
+open WuCubicConditioningSegment (conditioning_segment_bounds_of_ratio)
+open WuCubicConditioningComparison (operatorDeficit_conditioning_lt_of_ratio)
 open WuCubicOneModeEquality (operatorDeficit_lift_nonneg operatorDeficit_lift_eq_zero_iff)
-open WuCubicHessianKantorovich (wu_relative_mixed_generator)
-open WuCubicTransverseCentered (operatorDeficit_centered_pos_normalized)
+open WuCubicHessianKantorovich (wu_relative_mixed_generator wu_relative_mixed_generator_wider)
+open WuCubicTransverseCentered
+  (operatorDeficit_centered_pos_normalized operatorDeficit_centered_pos_normalized_wider)
 open WuCubicThermalBasis (Index degree coefficient basis_repr)
 open WuCubicAngularCertificate (physicalFrame)
 open private rotate_sandwich rotate_inverse from
@@ -70,19 +71,20 @@ private theorem operatorDeficit_smul {r : ℝ} (hr : 1 ≤ r) (c : ℝ) (X : Mat
 
 section Curvature
 
-variable {r : ℝ} (hr : 1 ≤ r) (hrhi : r ≤ 6 / 5)
+variable {r ratio : ℝ} (hr : 1 ≤ r) (hrhi : r ≤ 6 / 5) (hRatio : 0 < ratio)
   (hcenter : ∀ (M W : Mat) (hM : M.PosDef), W.IsHermitian → W ≠ 0 →
-    (5 / 9 : ℝ) • (1 : Mat) ≤ M → M ≤ 1 → 3 ≤ M.trace.re →
+    (5 / 6 * ratio : ℝ) • (1 : Mat) ≤ M → M ≤ 1 →
+    min (1 + 3 * ratio) (11 / 6 * (1 + ratio)) ≤ M.trace.re →
     (∃ i, hM.isHermitian.eigenvalues i = 1) →
     (∀ k : Index, degree k < 2 → coefficient r (GInv r * W * GInv r) k = 0) →
     let F := fun t : ℝ => operatorDeficit r (GInv r * (M + t • W) * GInv r)
     ∃ δ > 0, ∀ t : ℝ, 0 < t → t < δ → 2 * F 0 < F t + F (-t))
 
-include hr hrhi hcenter
+include hr hrhi hRatio hcenter
 
 private theorem centered_on_conditioning_path {L : ℝ} (Y : Mat) (hY : Y.IsHermitian)
     (hL : 0 < L) (hM : (G r * Y * G r).IsHermitian)
-    (hlow : ∀ i, 2 / 3 * L ≤ hM.eigenvalues i)
+    (hlow : ∀ i, ratio * L ≤ hM.eigenvalues i)
     (hup : ∀ i, hM.eigenvalues i ≤ L) (hmax : ∃ i, hM.eigenvalues i = L)
     (hdegree : ∀ k : Index, degree k < 2 → coefficient r (Y - lift (reduce r Y)) k = 0)
     (hres : Y - lift (reduce r Y) ≠ 0) :
@@ -94,7 +96,7 @@ private theorem centered_on_conditioning_path {L : ℝ} (Y : Mat) (hY : Y.IsHerm
   let H := Y - Y₀
   let P := fun u : ℝ => Y₀ + u • H
   have hpos (u : ℝ) (hu : u ∈ Icc (0 : ℝ) 1) : (G r * P u * G r).PosDef :=
-    conditioning_path_posDef hr hrhi Y hL hM hlow hup hmax u hu
+    conditioning_path_posDef hr hrhi Y hL hRatio hM hlow hup hmax u hu
   have hP₀ : (P 0).PosDef := input_posDef hr (hpos 0 ⟨le_rfl, zero_le_one⟩)
   have hH : H.IsHermitian := hY.sub (by simpa only [P, zero_smul, add_zero] using hP₀.isHermitian)
   have hP (u : ℝ) : G r * P u * G r =
@@ -103,7 +105,7 @@ private theorem centered_on_conditioning_path {L : ℝ} (Y : Mat) (hY : Y.IsHerm
       Matrix.mul_sub, Matrix.sub_mul]
     module
   obtain ⟨A, hA, hMs, hMsmax, hMseig, hMstr⟩ :=
-    conditioning_segment_bounds hr hrhi Y hL hs.1.le hs.2.le hM hlow hup hmax
+    conditioning_segment_bounds_of_ratio hr hrhi Y hL hRatio hs.1.le hs.2.le hM hlow hup hmax
   have hMs' : (G r * P s * G r).PosDef := by
     rw [hP]
     exact hMs
@@ -130,20 +132,20 @@ private theorem centered_on_conditioning_path {L : ℝ} (Y : Mat) (hY : Y.IsHerm
     simp only [RCLike.real_smul_eq_coe_smul (K := ℂ), ← basis_repr (zero_le_one.trans hr),
       map_smul, Finsupp.smul_apply]
     simp only [basis_repr (zero_le_one.trans hr), hz, smul_zero]
-  have hbounds : (5 / 9 : ℝ) • (1 : Mat) ≤ M ∧ M ≤ 1 := by
+  have hbounds : (5 / 6 * ratio : ℝ) • (1 : Mat) ≤ M ∧ M ≤ 1 := by
     rw [show M = A⁻¹ • ((1 - s) • (G r * Y₀ * G r) + s • (G r * Y * G r)) from
       congrArg (A⁻¹ • ·) (hP s)]
     have hlo := (Matrix.PosSemidef.smul_one_le_of_eigenvalues_iff hMs.isHermitian _).mp
       (fun i => (hMseig i).1)
     have hhi := (Matrix.PosSemidef.le_smul_one_of_eigenvalues_iff hMs.isHermitian _).mp
       (fun i => (hMseig i).2)
-    have hcoef : A⁻¹ * (5 / 9 * A) = 5 / 9 := by
+    have hcoef : A⁻¹ * (5 / 6 * ratio * A) = 5 / 6 * ratio := by
       rw [mul_left_comm, hAp, mul_one]
     exact ⟨by simpa only [smul_smul, hcoef] using
       smul_le_smul_of_nonneg_left hlo hAinv.le, by
       simpa only [smul_smul, hAp, one_smul] using
         smul_le_smul_of_nonneg_left hhi hAinv.le⟩
-  have htrace : 3 ≤ M.trace.re := by
+  have htrace : min (1 + 3 * ratio) (11 / 6 * (1 + ratio)) ≤ M.trace.re := by
     have ht := mul_le_mul_of_nonneg_left hMstr hAinv.le
     rw [mul_left_comm, hAp, mul_one] at ht
     simpa only [M, hP, Matrix.trace_smul, Complex.real_smul, Complex.re_ofReal_mul] using ht
@@ -185,7 +187,7 @@ nonnegativity and positive-scalar rigidity for the original complex observable. 
 private theorem operatorDeficit_conditionedRegion_of_centered {L : ℝ} {X : Mat}
     (hX : X.PosSemidef) (hL : 0 < L)
     (hmax : IsGreatest (spectrum ℝ (G r * X * G r)) L)
-    (hlow : ∀ a ∈ spectrum ℝ (G r * X * G r), 2 / 3 * L ≤ a) :
+    (hlow : ∀ a ∈ spectrum ℝ (G r * X * G r), ratio * L ≤ a) :
     0 ≤ operatorDeficit r X ∧
       (operatorDeficit r X = 0 ↔ ∃ a : ℝ, 0 < a ∧ X = (a : ℂ) • (1 : Mat)) := by
   obtain ⟨U, _, hU, _, _, hdegree⟩ := exists_conditioning_rotation hr hX.isHermitian
@@ -200,7 +202,7 @@ private theorem operatorDeficit_conditionedRegion_of_centered {L : ℝ} {X : Mat
   have heig (i : WuCubicOperatorBridge.Occupation) :
       hM.eigenvalues i ∈ spectrum ℝ (G r * X * G r) :=
     hspec ▸ Set.mem_range_self i
-  have hylo (i : WuCubicOperatorBridge.Occupation) : 2 / 3 * L ≤ hM.eigenvalues i :=
+  have hylo (i : WuCubicOperatorBridge.Occupation) : ratio * L ≤ hM.eigenvalues i :=
     hlow _ (heig i)
   have hyhi (i : WuCubicOperatorBridge.Occupation) : hM.eigenvalues i ≤ L :=
     hmax.2 (heig i)
@@ -214,8 +216,9 @@ private theorem operatorDeficit_conditionedRegion_of_centered {L : ℝ} {X : Mat
   have hnonneg := operatorDeficit_lift_nonneg hr hred
   have hcompare (hres : Y - lift (reduce r Y) ≠ 0) :
       operatorDeficit r (lift (reduce r Y)) < operatorDeficit r Y :=
-    operatorDeficit_conditioning_lt hr hrhi Y hL hM hylo hyhi hymax
-      (centered_on_conditioning_path hr hrhi hcenter Y hY.isHermitian hL hM hylo hyhi hymax hdegree)
+    operatorDeficit_conditioning_lt_of_ratio hr hrhi Y hL hRatio hM hylo hyhi hymax
+      (centered_on_conditioning_path hr hrhi hRatio hcenter Y hY.isHermitian hL hM
+        hylo hyhi hymax hdegree)
       hres
   have hdef : operatorDeficit r X = operatorDeficit r Y := (hU.deficit_eq r X).symm
   have hnores : operatorDeficit r X = 0 → Y = lift (reduce r Y) := by
@@ -256,14 +259,40 @@ theorem operatorDeficit_conditionedRegion {r L : ℝ} (hr : 1 ≤ r) (hrhi : r �
     (hlow : ∀ a ∈ spectrum ℝ (G r * X * G r), 2 / 3 * L ≤ a) :
     0 ≤ operatorDeficit r X ∧
       (operatorDeficit r X = 0 ↔ ∃ a : ℝ, 0 < a ∧ X = (a : ℂ) • (1 : Mat)) := by
-  refine operatorDeficit_conditionedRegion_of_centered hr hrhi ?_ hX hL hmax hlow
+  refine operatorDeficit_conditionedRegion_of_centered hr hrhi (ratio := 2 / 3)
+    (by norm_num) ?_ hX hL hmax hlow
   intro M W hM hW hWne hlo hhi htrace htop hdegree
-  exact operatorDeficit_centered_pos_normalized hr hrhi M W hM hW hWne hlo hhi htrace htop
-    (wu_relative_mixed_generator hr hrhi M W hM hW hlo hhi hdegree)
+  have hlo' : (5 / 9 : ℝ) • (1 : Mat) ≤ M := by
+    simpa only [show (5 / 6 : ℝ) * (2 / 3) = 5 / 9 by norm_num] using hlo
+  have htrace' : 3 ≤ M.trace.re := by
+    simpa only [show min (1 + 3 * (2 / 3 : ℝ)) (11 / 6 * (1 + 2 / 3)) = 3 by
+      norm_num [min_def]] using htrace
+  exact operatorDeficit_centered_pos_normalized hr hrhi M W hM hW hWne hlo' hhi htrace' htop
+    (wu_relative_mixed_generator hr hrhi M W hM hW hlo' hhi hdegree)
+
+/-- The literal Wu cubic deficit is nonnegative for an embedded spectral ratio
+of at least `63/100`, with equality exactly at positive scalar observables. -/
+theorem operatorDeficit_conditionedRegion_wider {r L : ℝ} (hr : 1 ≤ r) (hrhi : r ≤ 6 / 5)
+    {X : Mat} (hX : X.PosSemidef) (hL : 0 < L)
+    (hmax : IsGreatest (spectrum ℝ (G r * X * G r)) L)
+    (hlow : ∀ a ∈ spectrum ℝ (G r * X * G r), 63 / 100 * L ≤ a) :
+    0 ≤ operatorDeficit r X ∧
+      (operatorDeficit r X = 0 ↔ ∃ a : ℝ, 0 < a ∧ X = (a : ℂ) • (1 : Mat)) := by
+  refine operatorDeficit_conditionedRegion_of_centered hr hrhi (ratio := 63 / 100)
+    (by norm_num) ?_ hX hL hmax hlow
+  intro M W hM hW hWne hlo hhi htrace htop hdegree
+  have hlo' : (21 / 40 : ℝ) • (1 : Mat) ≤ M := by
+    simpa only [show (5 / 6 : ℝ) * (63 / 100) = 21 / 40 by norm_num] using hlo
+  have htrace' : 289 / 100 ≤ M.trace.re := by
+    simpa only [show min (1 + 3 * (63 / 100 : ℝ)) (11 / 6 * (1 + 63 / 100)) = 289 / 100 by
+      norm_num [min_def]] using htrace
+  exact operatorDeficit_centered_pos_normalized_wider hr hrhi M W hM hW hWne hlo' hhi htrace' htop
+    (wu_relative_mixed_generator_wider hr hrhi M W hM hW hlo' hhi hdegree)
 
 run_cmd do
-  for axiomName in ← Lean.collectAxioms ``operatorDeficit_conditionedRegion do
-    unless #[``propext, ``Classical.choice, ``Quot.sound].contains axiomName do
-      throwError "Unexpected axiom for operatorDeficit_conditionedRegion: {axiomName}"
+  for theoremName in #[``operatorDeficit_conditionedRegion, ``operatorDeficit_conditionedRegion_wider] do
+    for axiomName in ← Lean.collectAxioms theoremName do
+      unless #[``propext, ``Classical.choice, ``Quot.sound].contains axiomName do
+        throwError "Unexpected axiom for {theoremName}: {axiomName}"
 
 end D5.S3.Quantum.Semigroups.WuCubicConditionedRegion

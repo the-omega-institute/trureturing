@@ -19,7 +19,7 @@ namespace D5.S3.Quantum.Semigroups.WuCubicConditioningComparison
 open WuCubicOperatorBridge (Mat Occupation D G GInv generator)
 open WuCubicOperatorNormalization (operatorDeficit)
 open WuCubicHotInnerPartialTrace (Local lift reduce rightGenerator hasDerivAt_operatorDeficit)
-open WuCubicConditioningSegment (conditioning_segment_bounds)
+open WuCubicConditioningSegment (conditioning_segment_bounds_of_ratio)
 open WuCubicCenteredComparison (endpoint_lt_of_centered_pos)
 open WuRepeatedMiddleCubic (alpha)
 open private cubeVariation generator_affine gibbs_entry_pos reduce_apply reduce_lift from
@@ -96,17 +96,19 @@ theorem continuousOn_operatorDeficit_affine (r : ℝ) (Y H : Mat)
 
 section Spectral
 
-variable {r L : ℝ} (hr : 1 ≤ r) (hhi : r ≤ 6 / 5) (X : Mat) (hL : 0 < L)
+variable {r L ratio : ℝ} (hr : 1 ≤ r) (hhi : r ≤ 6 / 5) (X : Mat) (hL : 0 < L)
+  (hRatio : 0 < ratio)
   (hM : (G r * X * G r).IsHermitian)
-  (hlow : ∀ i, 2 / 3 * L ≤ hM.eigenvalues i)
+  (hlow : ∀ i, ratio * L ≤ hM.eigenvalues i)
   (hup : ∀ i, hM.eigenvalues i ≤ L)
   (hmax : ∃ i, hM.eigenvalues i = L)
 
-include hr hhi hL hM hlow hup hmax
+include hr hhi hL hRatio hM hlow hup hmax
 
 private theorem conditioning_path_posDef (s : ℝ) (hs : s ∈ Icc (0 : ℝ) 1) :
     (G r * (lift (reduce r X) + s • (X - lift (reduce r X))) * G r).PosDef := by
-  obtain ⟨_, _, hpos, _⟩ := conditioning_segment_bounds hr hhi X hL hs.1 hs.2 hM hlow hup hmax
+  obtain ⟨_, _, hpos, _⟩ :=
+    conditioning_segment_bounds_of_ratio hr hhi X hL hRatio hs.1 hs.2 hM hlow hup hmax
   have heq : G r * (lift (reduce r X) + s • (X - lift (reduce r X))) * G r =
       (1 - s) • (G r * lift (reduce r X) * G r) + s • (G r * X * G r) := by
     simp only [Matrix.mul_add, Matrix.add_mul, Matrix.mul_smul, Matrix.smul_mul,
@@ -116,11 +118,11 @@ private theorem conditioning_path_posDef (s : ℝ) (hs : s ∈ Icc (0 : ℝ) 1) 
 
 /-- Under the physical segment's spectral hypotheses, the deficit is stationary
 at the Gibbs-conditioned endpoint and continuous on the full closed segment. -/
-theorem conditioning_segment_stationary_continuous :
+theorem conditioning_segment_stationary_continuous_of_ratio :
     let f := fun s : ℝ => operatorDeficit r (lift (reduce r X) + s • (X - lift (reduce r X)))
     HasDerivAt f 0 0 ∧ ContinuousOn f (Icc 0 1) := by
   dsimp only
-  have hpos := conditioning_path_posDef hr hhi X hL hM hlow hup hmax
+  have hpos := conditioning_path_posDef hr hhi X hL hRatio hM hlow hup hmax
   have hend := hpos 1 ⟨zero_le_one, le_rfl⟩
   rw [one_smul, add_sub_cancel] at hend
   have hG : IsUnit (G r) :=
@@ -131,21 +133,53 @@ theorem conditioning_segment_stationary_continuous :
 
 /-- Interior strict centered positivity gives a strict comparison whenever
 the physical observable has a nonzero Gibbs-weighted residual. -/
-theorem operatorDeficit_conditioning_lt
+theorem operatorDeficit_conditioning_lt_of_ratio
     (hcenter : X - lift (reduce r X) ≠ 0 →
       let f := fun s : ℝ => operatorDeficit r (lift (reduce r X) + s • (X - lift (reduce r X)))
       ∀ s ∈ Ioo (0 : ℝ) 1, ∃ δ > 0, ∀ t : ℝ, 0 < t → t < δ →
         2 * f s < f (s + t) + f (s - t))
     (hres : X - lift (reduce r X) ≠ 0) :
     operatorDeficit r (lift (reduce r X)) < operatorDeficit r X := by
-  obtain ⟨hderiv, hcont⟩ := conditioning_segment_stationary_continuous hr hhi X hL hM hlow hup hmax
+  obtain ⟨hderiv, hcont⟩ :=
+    conditioning_segment_stationary_continuous_of_ratio hr hhi X hL hRatio hM hlow hup hmax
   simpa only [zero_smul, add_zero, one_smul, add_sub_cancel] using
     endpoint_lt_of_centered_pos hcont (hcenter hres) hderiv
 
 end Spectral
 
+section TwoThirds
+
+variable {r L : ℝ} (hr : 1 ≤ r) (hhi : r ≤ 6 / 5) (X : Mat) (hL : 0 < L)
+  (hM : (G r * X * G r).IsHermitian)
+  (hlow : ∀ i, 2 / 3 * L ≤ hM.eigenvalues i)
+  (hup : ∀ i, hM.eigenvalues i ≤ L)
+  (hmax : ∃ i, hM.eigenvalues i = L)
+
+include hr hhi hL hM hlow hup hmax
+
+/-- Stationarity and continuity on the two-thirds spectral region. -/
+theorem conditioning_segment_stationary_continuous :
+    let f := fun s : ℝ => operatorDeficit r (lift (reduce r X) + s • (X - lift (reduce r X)))
+    HasDerivAt f 0 0 ∧ ContinuousOn f (Icc 0 1) :=
+  conditioning_segment_stationary_continuous_of_ratio hr hhi X hL (ratio := 2 / 3)
+    (by norm_num) hM hlow hup hmax
+
+/-- Strict conditioning comparison on the two-thirds spectral region. -/
+theorem operatorDeficit_conditioning_lt
+    (hcenter : X - lift (reduce r X) ≠ 0 →
+      let f := fun s : ℝ => operatorDeficit r (lift (reduce r X) + s • (X - lift (reduce r X)))
+      ∀ s ∈ Ioo (0 : ℝ) 1, ∃ δ > 0, ∀ t : ℝ, 0 < t → t < δ →
+        2 * f s < f (s + t) + f (s - t))
+    (hres : X - lift (reduce r X) ≠ 0) :
+    operatorDeficit r (lift (reduce r X)) < operatorDeficit r X :=
+  operatorDeficit_conditioning_lt_of_ratio hr hhi X hL (ratio := 2 / 3)
+    (by norm_num) hM hlow hup hmax hcenter hres
+
+end TwoThirds
+
 run_cmd do
   for theoremName in #[``hasDerivAt_conditioning_deficit, ``continuousOn_operatorDeficit_affine,
+      ``conditioning_segment_stationary_continuous_of_ratio, ``operatorDeficit_conditioning_lt_of_ratio,
       ``conditioning_segment_stationary_continuous, ``operatorDeficit_conditioning_lt] do
     for axiomName in ← Lean.collectAxioms theoremName do
       unless #[``propext, ``Classical.choice, ``Quot.sound].contains axiomName do

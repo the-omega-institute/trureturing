@@ -1043,12 +1043,12 @@ theorem mixedDual_pairing {r : ℝ} (hr : 1 ≤ r) (M H Y : Mat) :
 
 /-- The degree-two contraction proves the mixed-generator estimate once the
 relative Kantorovich moment bound for the physical dual direction is available. -/
-theorem mixed_energy_ge_of_dual_moment {r : ℝ} (hr : 1 ≤ r)
+theorem mixed_energy_ge_of_dual_moment_bound {r C : ℝ} (hr : 1 ≤ r) (hC : 0 ≤ C)
     (M H : Mat) (hM : M.PosSemidef) (hW : (sandwich r H).IsHermitian)
     (hdeg : ∀ k : Index, degree k < 2 → coefficient r H k = 0)
     (hMoment : (vPairing r (mixedDual r M H) (mixedDual r M H)).re *
-      (vPairing r H H).re ≤ ((9 / 8 : ℝ) * (M * (sandwich r H) ^ 2).trace.re) ^ 2) :
-    (15 / 4 : ℝ) * (M * (sandwich r H) ^ 2).trace.re ≤
+      (vPairing r H H).re ≤ (C * (M * (sandwich r H) ^ 2).trace.re) ^ 2) :
+    (6 - 2 * C) * (M * (sandwich r H) ^ 2).trace.re ≤
       ((M * sandwich r H + sandwich r H * M) *
         embeddedGenerator r (sandwich r H)).trace.re := by
   let W := sandwich r H
@@ -1062,8 +1062,8 @@ theorem mixed_energy_ge_of_dual_moment {r : ℝ} (hr : 1 ≤ r)
     exact Finset.sum_nonneg fun k _ => vWeight_nonneg hr U k
   have hc := (vPairing_cauchy hr U Z).trans
     ((mul_le_mul_of_nonneg_left (degree_contraction hr H hdeg) hU).trans hMoment)
-  have habs : |(vPairing r U Z).re| ≤ (9 / 8 : ℝ) * q := by
-    apply (sq_le_sq₀ (abs_nonneg _) (by positivity)).mp
+  have habs : |(vPairing r U Z).re| ≤ C * q := by
+    apply (sq_le_sq₀ (abs_nonneg _) (mul_nonneg hC hq)).mp
     simpa only [sq_abs] using hc
   have hlow := (abs_le.mp habs).1
   have hL : embeddedGenerator r W = sandwich r (generator r H) := by
@@ -1090,7 +1090,21 @@ theorem mixed_energy_ge_of_dual_moment {r : ℝ} (hr : 1 ≤ r)
     mul_sub, mul_smul_comm, Matrix.trace_sub, Complex.sub_re, Matrix.trace_smul,
     show (3 : ℂ) = ((3 : ℝ) : ℂ) by norm_num, smul_eq_mul, Complex.re_ofReal_mul,
     htrace] at hhalf
-  change (15 / 4 : ℝ) * q ≤ ((M * W + W * M) * embeddedGenerator r W).trace.re
+  change (6 - 2 * C) * q ≤ ((M * W + W * M) * embeddedGenerator r W).trace.re
   linarith only [hlow, hhalf]
+
+theorem mixed_energy_ge_of_dual_moment {r : ℝ} (hr : 1 ≤ r)
+    (M H : Mat) (hM : M.PosSemidef) (hW : (sandwich r H).IsHermitian)
+    (hdeg : ∀ k : Index, degree k < 2 → coefficient r H k = 0)
+    (hMoment : (vPairing r (mixedDual r M H) (mixedDual r M H)).re *
+      (vPairing r H H).re ≤ ((9 / 8 : ℝ) * (M * (sandwich r H) ^ 2).trace.re) ^ 2) :
+    (15 / 4 : ℝ) * (M * (sandwich r H) ^ 2).trace.re ≤
+      ((M * sandwich r H + sandwich r H * M) *
+        embeddedGenerator r (sandwich r H)).trace.re := by
+  simpa only [show (6 - 2 * (9 / 8) : ℝ) = 15 / 4 by norm_num] using
+    mixed_energy_ge_of_dual_moment_bound hr (by norm_num : 0 ≤ (9 / 8 : ℝ)) M H hM hW hdeg
+      hMoment
+
+#print axioms mixed_energy_ge_of_dual_moment_bound
 
 end D5.S3.Quantum.Semigroups.WuCubicConditionedHessian
