@@ -149,7 +149,7 @@ public def usesPinnedFunction (n : Name) : Bool :=
   let vector := n.getPrefix == `BitVec &&
     [`abs, `pow, `smod, `replicate, `reverse, `cpop, `cpopNatRec, `ctz, `clz, `clzAuxRec,
      `getLsbD, `getLsb, `getMsbD, `getMsb, `msb, `sdiv, `srem, `smtSDiv, `hash, `ofBoolListLE, `ofBoolListBE].contains method
-  n == `IO.sleep || MacroNative.supported n || digitList n || trailing || monadicSeparator n || syntaxTreeFunction n || pinnedStringFunction n || modelOperation n || ByteFoldNative.supported n || IndexedNative.supported n || SyntaxPositionNative.supported n || bytes || vector || [`Nat.repr, `Nat.reprFast, `Int.repr].contains n || [`BitVec.toHex, `BitVec.instToString].contains n || n == `Nat.bitwise || ((word? n.getPrefix).isSome && (method == `pow || (method == `ofInt && bitsType n.getPrefix == n.getPrefix))) ||
+  [`IO.sleep, `Lean.Name.hash].contains n || MacroNative.supported n || digitList n || trailing || monadicSeparator n || syntaxTreeFunction n || pinnedStringFunction n || modelOperation n || ByteFoldNative.supported n || IndexedNative.supported n || SyntaxPositionNative.supported n || bytes || vector || [`Nat.repr, `Nat.reprFast, `Int.repr].contains n || [`BitVec.toHex, `BitVec.instToString].contains n || n == `Nat.bitwise || ((word? n.getPrefix).isSome && (method == `pow || (method == `ofInt && bitsType n.getPrefix == n.getPrefix))) ||
     (n.getPrefix == `Int && [`negOfNat, `subNatNat, `sign, `toNat, `pow, `fdiv, `fmod, `bdiv, `bmod].contains method)
 
 private def bootstrapStringOp (n : Name) : Bool :=
@@ -175,7 +175,8 @@ public def supported (source : Environment) (owner name : Name) : Bool :=
   let widths := [`toUInt8, `toUInt16, `toUInt32, `toUInt64, `toUSize, `toInt8, `toInt16, `toInt32, `toInt64, `toISize]
   let ops := [`add, `sub, `mul, `div, `mod, `land, `lor, `xor, `complement, `neg,
               `shiftLeft, `shiftRight, `log2, `abs, `toInt, `ofInt, `decLt, `decLe, `decEq, `toNat, `ofNat, `ofNatLT, `ofNat32]
-  let base := owner == `OmegaInit.Prelude && [`System.Platform.getNumBits, `Lean.Name.beq, `mixHash].contains name
+  let base := owner == `OmegaInit.Prelude &&
+    [`System.Platform.getNumBits, `Lean.Name.beq, `mixHash, `Nat.pred, `Char.ofNatAux, `USize.toBitVec].contains name
   let inOwner := [`OmegaInit.Prelude, `OmegaInit.Data.UInt.BasicAux, `OmegaInit.Data.UInt.Basic, `OmegaInit.Data.UInt.Log2,
                   `OmegaInit.Data.SInt.Basic].contains owner
   let intOwner := [`OmegaInit.Data.Int.Basic, `OmegaInit.Data.Int.DivMod.Basic].contains owner
@@ -215,7 +216,7 @@ public def supported (source : Environment) (owner name : Name) : Bool :=
     (owner == `OmegaInit.Data.String.Slice && sliceStringFunction name) ||
     (owner == `OmegaInit.Meta.Defs && (name == `String.toName || metaLiteralFunction name || syntaxTreeFunction name || monadicSeparator name)) || isFloatCall source owner name ||
     (owner == `OmegaInit.System.IO && IONative.supported name) ||
-    (owner == `OmegaInit.Prelude && MacroNative.supported name) ||
+    (owner == `OmegaInit.Prelude && (name == `Quot.liftOn || name == `Lean.Name.hash || MacroNative.supported name)) ||
     (owner == `OmegaInit.Data.ByteArray.Basic && ByteFoldNative.supported name) ||
     ([`OmegaInit.Grind.Ring.CommSolver, `OmegaInit.Data.Nat.Basic, `OmegaInit.Data.Nat.Div.Basic, `OmegaInit.Data.Nat.Lemmas,
     `OmegaInit.Data.RArray, `OmegaInit.Data.Nat.Internal.Linear, `OmegaInit.Data.Nat.Fold, `OmegaInit.Data.Fin.Lemmas].contains owner && IndexedNative.supported name) ||
@@ -326,6 +327,23 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
   if IndexedNative.supported official then return ← IndexedNative.wrapper source strict n (symbol n)
   if SyntaxPositionNative.supported official then return ← SyntaxPositionNative.wrapper source strict n (symbol n)
   let some ci := source.find? official | throw <| IO.userError s!"unknown word primitive {official}"
+  if official == `Quot.liftOn then
+    let some (.defnInfo d) := strict.find? n | throw <| IO.userError "missing strict quotient eliminator"
+    let some (.defnInfo original) := source.find? official | throw <| IO.userError "missing pinned quotient eliminator"
+    -- Quot and its lift are aliases of the kernel primitives in the packaged Prelude.
+    unless Kernel.isDefEqGuarded strict {} d.type original.type &&
+        Kernel.isDefEqGuarded strict {} d.value original.value do
+      throw <| IO.userError "quotient eliminator differs from the pinned definition"
+    let some (.fdecl _ params .tobject (.vdecl res .tobject (.ap f #[.var q]) (.ret (.var out))) _) :=
+        IR.findEnvDecl source official | throw <| IO.userError "unexpected pinned quotient implementation"
+    let some (.extern _ actual .tobject ⟨[.standard `all entry]⟩) := IR.findEnvDecl strict n
+      | throw <| IO.userError "missing strict quotient calling convention"
+    let types := #[IR.IRType.erased, .erased, .erased, .tobject, .tobject, .erased]
+    unless params.map (·.ty) == types && actual.map (·.ty) == types &&
+        params.all (!·.borrow) && actual.all (!·.borrow) && entry == symbol n &&
+        res == out && f == params[4]!.x && q == params[3]!.x do
+      throw <| IO.userError "incompatible quotient eliminator ABI"
+    return s!"\nLEAN_EXPORT lean_obj_res {entry}(lean_obj_arg q, lean_obj_arg f) \{ return lean_apply_1(f, q); }\n"
   if floatArrayIndex official then
     let some target := strict.find? n | throw <| IO.userError s!"missing strict float array index {n}"
     unless target.type == InitKernelPort.translate InitKernelPort.portName ci.type do
@@ -370,6 +388,12 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
     let some fast := source.find? `Nat.reprFast | throw <| IO.userError "missing pinned Nat.reprFast"
     unless fast.type == ci.type do throw <| IO.userError "Nat.reprFast type differs from Nat.repr"
     pure `Nat.reprFast
+  else if official == `Lean.Name.hash then do
+    let impl := `Lean.Name.hash._override
+    let some fast := source.find? impl | throw <| IO.userError "missing pinned name hash"
+    unless (Compiler.getImplementedBy? source official) == some impl && fast.type == ci.type do
+      throw <| IO.userError "unexpected pinned name hash implementation"
+    pure impl
   else pure official
   let some impl := IR.findEnvDecl source compiled | throw <| IO.userError s!"no pinned IR for {official}"
   if debugPrimitive official then
