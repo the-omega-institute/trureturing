@@ -107,7 +107,7 @@ def check_coverage(official):
             direct += 1
         elif witness or strict:
             reductions += 1
-        elif not runtime and not endpoint and not argument and path != "Quot.sound":
+        elif not endpoint and not argument and path != "Quot.sound":
             unresolved.append(site)
     if by_transport:
         raise ValueError("transport path certificate has no definition site")
@@ -131,7 +131,7 @@ def verify_complete(official, product, reductions, unresolved):
         formations = sum(bool(row.get("formationArgument")) or row.get("transportPathType") == "Quot.sound"
                          for row in official["declarations"])
         raise ValueError(f"{len(unresolved)} unresolved public non-axiom definition sites; "
-                         f"{reductions} checked axiom reductions, {runtime} observed runtime conflicts, "
+                         f"{reductions} checked axiom reductions, {runtime} unmatched sites with observed conflicts for pure replacements, "
                          f"{endpoints} official statements with choice-valued equality endpoints, "
                          f"{formations} official statements requiring an axiom to supply a quotient argument. "
                          f"Examples: {examples}. See init-gaps.tsv.")
@@ -315,7 +315,7 @@ if __name__ == "__main__":
     cli = argparse.ArgumentParser(description=__doc__)
     cli.add_argument("product", type=Path, help="audited output from build.py")
     cli.add_argument("--require-complete", action="store_true",
-                     help="require an implementation, checked axiom reduction or observed runtime contradiction for every site")
+                     help="require an implementation or unconditional logical boundary for every site")
     args = cli.parse_args()
     try:
         report(args.product.resolve(), require_complete=args.require_complete)

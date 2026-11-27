@@ -362,7 +362,7 @@ def main():
     parser.add_argument("--exclude", action="append", default=[],
                         help="omit a generated candidate; declarations already in the seed cannot be excluded")
     parser.add_argument("--require-complete", action="store_true",
-                        help="require checked implementations or impossibility evidence at all official sites")
+                        help="require checked implementations or unconditional logical boundaries at all official sites")
     parser.add_argument("-j", type=int, default=4, help="parallel jobs for the full OmegaMath consumer build")
     args = parser.parse_args()
     seed = args.seed.resolve()

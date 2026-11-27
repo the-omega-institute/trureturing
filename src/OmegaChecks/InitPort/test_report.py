@@ -69,7 +69,11 @@ class CoverageTest(unittest.TestCase):
                           logicalConsequenceWitness="address", requiredBehavior="distinguish equal lists")
         observed = site("Init.Util", "ptrAddrUnsafe", runtimeConflictWitness="address", **attributes)
         conditional = site("Init.Util", "ptrEq", **attributes)
-        self.assertEqual(check_coverage(inventory(observed, conditional)), (0, [("Init.Util", "ptrEq")]))
+        self.assertEqual(check_coverage(inventory(observed, conditional)),
+                         (0, [("Init.Util", "ptrAddrUnsafe"), ("Init.Util", "ptrEq")]))
+        with self.assertRaisesRegex(ValueError, "2 unresolved"):
+            data = inventory(observed, conditional)
+            verify_complete(data, Path("product"), *check_coverage(data))
         for mismatch in ({"logicalConsequence": "funext"}, {"logicalConsequenceWitness": "other"},
                          {"requiredBehavior": None}, {"unsafe": False}, {"kind": "axiom"}):
             with self.subTest(mismatch=mismatch), self.assertRaisesRegex(ValueError, "runtime conflict"):
