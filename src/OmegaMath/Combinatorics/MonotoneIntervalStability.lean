@@ -119,12 +119,14 @@ private theorem bound_for_permutation {n : ℕ} (hn : 3 ≤ n)
   have hw : ∀ j, -ε ≤ forms π j (a, b) := by
     intro j
     rcases j with ⟨s, i⟩ | (⟨s, i, j⟩ | ⟨s, p⟩)
-    · cases s <;> simp only [forms, coordinate, LinearMap.coe_mk, AddHom.coe_mk]
-      · linarith [ha i]
-      · linarith [hb i]
+    · cases s
+      · change -ε ≤ a i
+        linarith [ha i]
+      · change -ε ≤ b i
+        linarith [hb i]
     · by_cases hij : i ≤ j
       · cases s <;> simp only [forms, hij, ↓reduceIte, LinearMap.sub_apply, coordinate,
-          LinearMap.coe_mk, AddHom.coe_mk]
+          LinearMap.coe_mk, AddHom.coe_mk, Bool.false_eq_true, Bool.true_eq, ↓reduceIte]
         · linarith [hsa hij]
         · linarith [hsb hij]
       · simp [forms, hij, hε]
@@ -137,7 +139,8 @@ private theorem bound_for_permutation {n : ℕ} (hn : 3 ≤ n)
   intro i
   have hz := exact_cone_difference_zero hn π w' hw' i
   have hd := hdist i
-  simpa [map_sub, hz, difference, coordinate] using hd
+  rw [map_sub, hz, sub_zero] at hd
+  simpa [difference, coordinate] using hd
 
 /-- Full uniform noisy recovery, with a constant chosen before tuples, noise and matching.
 Every actual inclusive interval of at least two entries occurs once in `Occurrence n`. -/
