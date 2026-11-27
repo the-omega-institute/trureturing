@@ -1,6 +1,8 @@
 module
 import all Lean.Compiler.LCNF.ToImpureType
 import all Lean.Compiler.LCNF.MonoTypes
+import OmegaChecks.InitPort.BufferReference
+meta import OmegaChecks.InitPort.BufferReference
 import OmegaChecks.InitPort.Translation
 meta import OmegaChecks.InitPort.Translation
 import OmegaChecks.InitPort.NativeState
@@ -16,6 +18,9 @@ private def readFunctions := #[
   (`IO.FS.Handle.readToEnd, "omega_io_handle_read_to_end", "omega_string_from_lean"),
   (`IO.FS.Handle.readBinToEnd, "omega_io_handle_read_bin_to_end", "from_byte_array"),
   (`IO.FS.Handle.readBinToEndInto, "omega_io_handle_read_bin_into", "from_byte_array")]
+
+private def bufferOperations := OmegaChecks.InitPort.BufferReference.operations.toArray.map fun op =>
+  (OmegaChecks.InitPort.BufferReference.support op, "", "omega_buffer_" ++ op.getString!)
 
 private def reads := readFunctions.map fun (name, symbol, _) => (name, "", symbol)
 
@@ -187,7 +192,7 @@ public unsafe def main (args : List String) : IO Unit := do
   let owner := `OmegaInit.System.IO
   let imports := #[{module := owner, importAll := true : Import}]
   let env ← importModules imports {}
-  let roots := (entries ++ reads).filter fun (n, _, _) => env.contains (`Omega ++ n)
+  let roots := (entries ++ reads ++ bufferOperations).filter fun (n, _, _) => env.contains (InitKernelPort.portName n)
   if roots.isEmpty then return
   let fs := roots.any fun (n, _, _) => n != `IO.getEnv
   let handles := roots.any fun (n, _, _) => `IO.FS.Handle |>.isPrefixOf n
@@ -250,14 +255,29 @@ public unsafe def main (args : List String) : IO Unit := do
       let #[.object 0 _, .object 1 _] := l.fieldInfo | throw <| IO.userError s!"invalid directory entry fields in {ctor}"
       unless l.ctorInfo.cidx == 0 && l.ctorInfo.size == 2 && l.ctorInfo.usize == 0 && l.ctorInfo.ssize == 0 do
         throw <| IO.userError s!"incorrect layout for {ctor}"
-  let ctx ← localEnv env owner (roots.map fun (n, _, _) => `Omega ++ n)
+  let ctx ← localEnv env owner (roots.map fun (n, _, _) => InitKernelPort.portName n)
   let compiled ← compile ctx do
     for (n, _, symbol) in roots do
-      let strict := `Omega ++ n
+      let strict := InitKernelPort.portName n
       modifyEnv fun e => externAttr.ext.addEntry (asyncDecl := strict) e (strict, ⟨[.standard `all symbol]⟩)
       (← compileDeclsRef.get) #[strict] {}
   for (n, upstream, symbol) in roots do
     if readFunctions.any (·.1 == n) then continue
+    if let some op := OmegaChecks.InitPort.BufferReference.operations.find? (fun op => n == OmegaChecks.InitPort.BufferReference.support op) then
+      let strict := InitKernelPort.portName n
+      let some (some ref) := impureTrivialStructureInfoExt.find? compiled `Omega.ST.Ref | throw <| IO.userError "missing strict reference layout"
+      unless ref.numParams == 2 && ref.fieldIdx == 0 do throw <| IO.userError "unexpected strict reference layout"
+      let implicitArgs := #[(IR.IRType.erased, false), (.erased, false)]
+      let action := #[(IR.IRType.tobject, true), (.void, false)]
+      if op == `ST.Prim.Ref.get then
+        verify source op (implicitArgs ++ action) .tobject "lean_st_ref_get"
+        verify compiled strict #[(.tobject, true), (.tobject, false)] .object symbol
+      else
+        verify source `ST.Prim.Ref.take (implicitArgs ++ action) .tobject "lean_st_ref_take"
+        verify source `ST.Prim.Ref.put (implicitArgs ++ #[(.tobject, true), (.tobject, false), (.void, false)]) .tagged "lean_st_ref_put"
+        let args := if op == `ST.Prim.Ref.modifyGet then #[(IR.IRType.erased, false)] else #[]
+        verify compiled strict (args ++ #[(.tobject, false), (.object, false), (.tobject, false)]) .object symbol
+      continue
     if (getters ++ setters).contains n then
       let args := if setters.contains n then #[(IR.IRType.object, false)] else #[]
       verify source n (args ++ #[(.void, false)]) .object upstream
@@ -306,7 +326,7 @@ public unsafe def main (args : List String) : IO Unit := do
   unless ir do writeCode lib owner compiled codeExtensions
   let idx := (env.getModuleIdx? owner).get!
   let existing := (externAttr.ext.getModuleEntries env idx).any fun (name, _) =>
-    !(roots.any fun (n, _, _) => name == `Omega ++ n)
+    !(roots.any fun (n, _, _) => name == InitKernelPort.portName n)
   let nativeOwner := if ir || existing then `StrictPathIO else owner
   let usesPinnedReaders := roots.any fun (n, _, _) => readFunctions.any (·.1 == n)
   emitBridge compiled nativeOwner none file

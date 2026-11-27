@@ -5,6 +5,7 @@ import OmegaChecks.InitPort.NativeQuot
 import OmegaChecks.InitPort.WordFold
 import OmegaChecks.InitPort.WordForIn
 import OmegaChecks.InitPort.ReferenceSwap
+import OmegaChecks.InitPort.BufferReference
 import OmegaChecks.InitPort.LogicalHandle
 import OmegaChecks.InitPort.StateToken
 import OmegaChecks.InitPort.TypeName
@@ -185,6 +186,13 @@ private def compare (reference : Environment) (rename : Name → Name) (src dst 
         dst.isAxiom && dst.isUnsafe do
       throw <| IO.userError s!"invalid compiler type marker {src.name}"
     return #[]
+  if foundation.isSome && OmegaChecks.InitPort.BufferReference.consumers.contains dst.name then
+    let .defnInfo d := src | throw <| IO.userError "expected strict buffer definition"
+    let .defnInfo ref := dst | throw <| IO.userError "expected official buffer definition"
+    let expected ← OmegaChecks.InitPort.BufferReference.consumerBody reference ref
+    requireSame reference src.name "specialized buffer body"
+      (OmegaChecks.InitPort.BufferReference.restore (liftTerm d.value)) (OmegaChecks.InitPort.BufferReference.restore expected)
+    return src.type.getUsedConstants ++ d.value.getUsedConstants
   let mut deps := src.type.getUsedConstants
   match src, dst with
   | .thmInfo _, _ =>
@@ -346,6 +354,24 @@ def checkSites (strict publicStrict reference : Environment) (bindings : Array (
     pending := pending.pop
     unless seen.contains (name, owner) do
       seen := seen.insert (name, owner)
+      if owner == `Init.System.IO then
+        if let some op := OmegaChecks.InitPort.BufferReference.operations.find? (fun op => name == OmegaChecks.InitPort.BufferReference.strictName op) then
+          let models ← OmegaChecks.InitPort.BufferReference.models reference reference
+          let some expected := models.find? (·.name == OmegaChecks.InitPort.BufferReference.support op)
+            | throw <| IO.userError s!"missing pinned buffer specialization {name}"
+          let actual ← lookup strict name
+          let tr := InitKernelPort.translate InitKernelPort.portName
+          unless strict.getModuleIdxFor? name == strict.getModuleIdx? `OmegaInit.System.IO &&
+              !publicStrict.contains name && !actual.isUnsafe && !actual.isPartial && actual.levelParams == expected.levelParams &&
+              actual.type.equal (tr expected.type) && (actual matches .opaqueInfo _) == (expected matches .opaqueInfo _) &&
+              (actual.value? (allowOpaque := true)).any (·.equal (tr (expected.value! (allowOpaque := true)))) do
+            throw <| IO.userError s!"invalid specialized buffer operation {name}"
+          -- The concrete read and update bodies have the same checked strict dependencies as a public definition.
+          for dep in actual.type.getUsedConstants ++ (actual.value! (allowOpaque := true)).getUsedConstants do
+            let mod ← ownerOf strict dep
+            unless mod.getRoot == `OmegaInit do throw <| IO.userError s!"invalid buffer dependency {dep}"
+            pending := pending.push (dep, mod.replacePrefix `OmegaInit `Init)
+          continue
       if let some api := (OmegaChecks.InitPort.LogicalHandle.forToken? name).filter (·.owner == owner) then
         OmegaChecks.InitPort.LogicalHandle.checkToken api strict publicStrict reference (translate (official strict))
         continue

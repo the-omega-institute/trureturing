@@ -230,6 +230,29 @@ LEAN_EXPORT lean_obj_res omega_io_set_access_rights(b_lean_obj_arg path, lean_ob
     return strict_result(result, world, strict_unit);
 }
 
+/* A strict IO.Ref stores its payload unchanged. The two modifiers preserve
+   the pinned take/put critical section across the supplied callback. */
+LEAN_EXPORT lean_obj_res omega_buffer_get(b_lean_obj_arg ref, lean_obj_arg world) {
+    return world_result(0, lean_st_ref_get(ref), world);
+}
+
+LEAN_EXPORT lean_obj_res omega_buffer_modify(lean_obj_arg ref, lean_obj_arg f, lean_obj_arg world) {
+    lean_object *updated = lean_apply_1(f, lean_st_ref_take(ref));
+    lean_object *unit = lean_st_ref_put(ref, updated);
+    lean_dec(ref);
+    return world_result(0, unit, world);
+}
+
+LEAN_EXPORT lean_obj_res omega_buffer_modifyGet(lean_obj_arg ref, lean_obj_arg f, lean_obj_arg world) {
+    lean_object *pair = lean_apply_1(f, lean_st_ref_take(ref));
+    lean_object *out = retain_value(lean_ctor_get(pair, 0));
+    lean_object *updated = retain_value(lean_ctor_get(pair, 1));
+    lean_dec(pair);
+    lean_dec(lean_st_ref_put(ref, updated));
+    lean_dec(ref);
+    return world_result(0, out, world);
+}
+
 #include "stream_io.h"
 
 extern lean_obj_res lean_io_metadata(b_lean_obj_arg);

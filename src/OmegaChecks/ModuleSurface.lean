@@ -3,6 +3,7 @@ public import Lean
 public import OmegaChecks.InitCompiler.RootNames
 import OmegaChecks.InitPort.Translation
 import OmegaChecks.InitPort.WordNative
+import OmegaChecks.InitPort.BufferReference
 import Lean.Elab.ParseImportsFast
 import Lean.Compiler.LCNF.SpecInfo
 import all Lean.Structure
@@ -229,16 +230,19 @@ private def checkElaboration (env full : Environment) (reference? : Option Envir
       | `Omega.String.toList => pure (`OmegaInit.Data.String.Basic, "omega_string_to_list")
       | `Omega.String.ofList => pure (`OmegaInit.Prelude, "omega_string_of_list")
       | _ => do
-        let original := InitKernelPort.originalName n
-        let some ref := reference? | throw <| IO.userError s!"unverified native symbol for {owner}/{n}"
-        unless n == InitKernelPort.portName original && ref.getModuleIdxFor? original == ref.getModuleIdx? (counterpart owner) &&
-            InitPort.WordNative.supported ref owner original do
-          throw <| IO.userError s!"unverified native symbol for {owner}/{n}"
-        InitPort.NativeState.checkNativeNat full
-        discard <| InitPort.WordNative.wrapper ref full n
-        let some (.extern _ _ _ ⟨[.standard `all symbol]⟩) := IR.findEnvDecl full n
-          | throw <| IO.userError s!"missing checked native entry for {owner}/{n}"
-        pure (owner, symbol)
+        if let some op := InitPort.BufferReference.operations.find? (fun op => n == InitPort.BufferReference.strictName op) then
+          pure (`OmegaInit.System.IO, "omega_buffer_" ++ op.getString!)
+        else
+          let original := InitKernelPort.originalName n
+          let some ref := reference? | throw <| IO.userError s!"unverified native symbol for {owner}/{n}"
+          unless n == InitKernelPort.portName original && ref.getModuleIdxFor? original == ref.getModuleIdx? (counterpart owner) &&
+              InitPort.WordNative.supported ref owner original do
+            throw <| IO.userError s!"unverified native symbol for {owner}/{n}"
+          InitPort.NativeState.checkNativeNat full
+          discard <| InitPort.WordNative.wrapper ref full n
+          let some (.extern _ _ _ ⟨[.standard `all symbol]⟩) := IR.findEnvDecl full n
+            | throw <| IO.userError s!"missing checked native entry for {owner}/{n}"
+          pure (owner, symbol)
     unless owner == expectedOwner && env.getModuleIdxFor? n == some idx &&
         data == ⟨[.standard `all symbol]⟩ do throw <| IO.userError s!"invalid native state entry {owner}/{n}"
   for (n, implementation) in Compiler.implementedByAttr.ext.getModuleEntries env idx do

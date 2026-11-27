@@ -6,6 +6,7 @@ import OmegaChecks.InitCompiler.FiniteCollectors
 import OmegaChecks.InitPort.Alternatives
 import OmegaChecks.InitPort.Arithmetic
 import OmegaChecks.InitPort.LogicalHandle
+import OmegaChecks.InitPort.BufferReference
 import OmegaChecks.InitPort.TypeName
 import OmegaChecks.InitPort.Translation
 import OmegaChecks.InitPort.NativeQuot
@@ -72,6 +73,7 @@ structure Context where
   literalProofs : NameMap ConstantInfo
   alternatives : NameMap ConstantInfo
   proofRules : NameMap ConstantInfo
+  bufferModels : Array ConstantInfo
   handles : NameMap OmegaChecks.InitPort.LogicalHandle.Templates
   typeNameTemplates : OmegaChecks.InitPort.TypeName.Templates
   recursionRule : ConstantInfo
@@ -479,6 +481,26 @@ partial def visit (n : Name) : M Bool := do
       | return ← record n (.blocked "kernel rejected type name model")
     modify fun s => {s with env}
     return ← record n .added
+  if OmegaChecks.InitPort.BufferReference.consumers.contains n then
+    let .defnInfo d := ci | return ← record n (.blocked "expected buffer consumer")
+    let body ← OmegaChecks.InitPort.BufferReference.consumerBody c.source d
+    let models := c.bufferModels
+    let mut deps := usedConstants ci.type ++ usedConstants body
+    for model in models do
+      deps := deps ++ usedConstants model.type ++ usedConstants (model.value! (allowOpaque := true))
+    for dep in deps do
+      unless models.any (·.name == dep) || (← visit dep) do return ← record n (.blocked "unavailable buffer dependency" (some dep))
+    let mut env := (← get).env
+    for model in models do
+      if (env.find? (portName model.name)).isSome then continue
+      let .ok decl := translateDecl model model.type (model.value! (allowOpaque := true))
+        | throw <| IO.userError s!"invalid private buffer operation {model.name}"
+      let .ok next ← checkWithRetry env decl c.maxHeartbeats | throw <| IO.userError s!"kernel rejected {model.name}"
+      env := next
+    let .ok decl := translateDecl ci ci.type body | return ← record n (.blocked "invalid buffer consumer")
+    let .ok next ← checkWithRetry env decl c.maxHeartbeats | return ← record n (.blocked "kernel rejected specialized buffer consumer")
+    modify fun state => {state with env := next}
+    return ← record n .added
   if let some api := OmegaChecks.InitPort.LogicalHandle.forDecl? n then
     let .opaqueInfo native := ci | return ← record n (.blocked "missing opaque handle declaration")
     let some handle := c.handles.find? api.pointed | throw <| IO.userError s!"missing handle templates for {api.owner}"
@@ -694,6 +716,7 @@ def writeMonolithic (base : Environment) (final : Kernel.Environment)
 
 def run (strictPath artifacts : System.FilePath) (outPath : String) (exclude : System.FilePath) (modules : List Name) : IO Unit := do
   let recursionRule ← OmegaChecks.InitCompiler.Recursion.loadRule
+  let bufferEnv ← importModules #[{module := `OmegaChecks.InitPort.BufferReference}] {} (level := .private)
   let handleEnv ← importModules #[{module := `OmegaChecks.InitPort.LogicalHandle}] {} (level := .private)
   let mut handles : NameMap OmegaChecks.InitPort.LogicalHandle.Templates := {}
   for api in OmegaChecks.InitPort.LogicalHandle.apis do
@@ -717,6 +740,7 @@ def run (strictPath artifacts : System.FilePath) (outPath : String) (exclude : S
   let imports := allMods.map fun n => {module := n : Import}
   unsafe enableInitializersExecution
   let source ← importModules imports {} (loadExts := true) (level := .private)
+  let bufferModels ← if source.contains `IO.FS.Stream.ofBuffer then OmegaChecks.InitPort.BufferReference.models source bufferEnv else pure #[]
   let vis ← importModules imports {} (level := .exported)
   let mut publicNames : NameSet := {}
   for d in vis.header.moduleData do
@@ -745,7 +769,7 @@ def run (strictPath artifacts : System.FilePath) (outPath : String) (exclude : S
   let excluded := exclusions.foldl (init := ({} : NameMap String)) fun acc (n, r) => acc.insert n.toName r
   let maxHeartbeats := (← IO.getEnv "OMEGA_PORT_HEARTBEATS").bind String.toNat? |>.getD 5000
   let literalProofs ← loadLiteralProofs strictPath
-  let ctx := {source,base,publicNames,excluded,output,maxHeartbeats,literalProofs,alternatives,proofRules,handles,typeNameTemplates,recursionRule : Context}
+  let ctx := {source,base,publicNames,excluded,output,maxHeartbeats,literalProofs,alternatives,proofRules,bufferModels,handles,typeNameTemplates,recursionRule : Context}
   let action : M Unit := do
     for owner in source.header.moduleNames, data in source.header.moduleData do
       if owner.getRoot == `Init then
