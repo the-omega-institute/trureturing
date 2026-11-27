@@ -35,7 +35,7 @@ open P48qNativeCurrentLocality (nativeField_inResidue stripResidue stripResidue_
 open P48qNativeGradingRotation (gradingIndex gradingRotation gradingRotation_coeff
   gradingRotation_nativeField_coeff totalWeight_eq_gradingIndex)
 open P48qNativeMonodromy (currentAlong nativeField_action_coeff nativeField_current)
-open P48qNativeResidueIterate (TwistedBorcherdsAt nativeField_twisted_borcherds)
+open P48qNativeResidueIterate (nativeField_twisted_borcherds)
 open P48qThirdTwistedField (Cartan State fieldCoeff fixedDualBases)
 open P48qTwistedChargeAction (lattice g g_cube g_isometry)
 open P48qTwistedFockIrreducibility (current_charged_coeff_irreducible)
@@ -48,7 +48,7 @@ open private zeta_zpow_eq_iff from
   D5.S3.VertexAlgebra.Lattice.Orbifold.P48qChargedResidueProduct
 open private gram_det_unit from
   D5.S3.VertexAlgebra.Lattice.Orbifold.P48qConformalVectorDecomposition
-open private fixedProjection fixedProjection_fixed lift_sourceLZero from
+open private mem_fixedStates_iff fixedProjection fixedProjection_fixed lift_sourceLZero from
   D5.S3.VertexAlgebra.Lattice.Orbifold.P48qNativeConformalSector
 open private fourier_sum liftProject liftProject_eigen from
   D5.S3.VertexAlgebra.Lattice.Orbifold.P48qNativePairwiseLocality
@@ -73,6 +73,7 @@ private theorem nativeMode_truncation (a : NativeStates) (s : ℤ) (v : State) :
   change s - 3 * (k + 1) < lower
   omega
 
+set_option maxRecDepth 4096 in
 set_option maxHeartbeats 1000000 in
 /-- A vectorwise descent with the first mode index universally quantified.
 The submodule only needs to contain the actual source iterates on the given vector. -/
@@ -93,12 +94,12 @@ private theorem product_mem_of_iterates
   obtain ⟨N, hB⟩ := nativeField_twisted_borcherds a b s t ha hb
   let A := stripResidue (s - 3 * p) (nativeField a)
   let B := stripResidue t (nativeField b)
-  have hA (m : ℤ) (x : State) :
-      A[[m]] x = C (nativeField a) (s - 3 * (p + m + 1)) x := by
+  have hA (m : ℤ) :
+      VertexOperator.ncoeff A m = C (nativeField a) (s - 3 * (p + m + 1)) := by
     simp only [A, VertexOperator.ncoeff_apply, stripResidue_coeff]
     rw [show 3 * (-m - 1) + (s - 3 * p) = s - 3 * (p + m + 1) by omega]
-  have hBm (m : ℤ) (x : State) :
-      B[[m]] x = C (nativeField b) (t - 3 * (m + 1)) x := by
+  have hBm (m : ℤ) :
+      VertexOperator.ncoeff B m = C (nativeField b) (t - 3 * (m + 1)) := by
     simp only [B, VertexOperator.ncoeff_apply, stripResidue_coeff]
     rw [show 3 * (-m - 1) + t = t - 3 * (m + 1) by omega]
   have descend (d : ℕ) :
@@ -113,6 +114,7 @@ private theorem product_mem_of_iterates
       have distance : (d : ℤ) = cutoff - q := by
         rw [← hd]
         exact Int.toNat_of_nonneg (by omega)
+      -- The forward term at j = 0 is the desired product.
       let n : ℤ := k - p
       let first (j : ℕ) : State :=
         (((-1 : ℂ) ^ j) * integerBinomial n j) • product (k - j) (q + j)
@@ -120,10 +122,9 @@ private theorem product_mem_of_iterates
         Ring.choose ((p : ℂ) - (s : ℂ) / 3) j •
           C (nativeField (mu lattice a (n + (j : ℤ)) b))
             (s + t - 3 * (p + q - (j : ℤ) + 1)) v
-      have law := LinearMap.congr_fun
-        ((show TwistedBorcherdsAt nativeField a b s t N from hB) p q n) v
-      change ((residueField 1 n A B).operator)[[q]] v = _ at law
-      rw [(residueField 1 n A B).coefficient] at law
+      have law := congrArg (fun T : Module.End ℂ State => T v) (hB p q n)
+      change (VertexOperator.ncoeff (residueField 1 n A B).operator q) v = _ at law
+      rw [(residueField 1 n A B).coefficient q v] at law
       have reverse_zero : residueRight n q A B v = 0 := by
         unfold residueRight
         apply finsum_eq_zero_of_forall_eq_zero
@@ -133,7 +134,7 @@ private theorem product_mem_of_iterates
         unfold residueLeft
         apply finsum_congr
         intro j
-        have hindex : p + (n - (j : ℤ)) + 1 = k - j + 1 := by
+        have hindex : p + (n - (j : ℤ)) = k - (j : ℤ) := by
           dsimp only [n]
           omega
         simp only [hA, hBm, hindex, first, product]
@@ -180,13 +181,21 @@ theorem mode_product_mem_iterate_span (a b : NativeStates) (s t : ℤ)
       (C (nativeField b) (t - 3 * (q + 1)) v) ∈
         Submodule.span ℂ (Set.range fun index : ℤ × ℤ =>
           C (nativeField (mu lattice a index.1 b)) (s + t - 3 * (index.2 + 1)) v) := by
-  exact product_mem_of_iterates a b s t ha hb v _
-    (fun n m => Submodule.subset_span ⟨(n, m), rfl⟩) k q
+  let read (index : ℤ × ℤ) : State :=
+    C (nativeField (mu lattice a index.1 b)) (s + t - 3 * (index.2 + 1)) v
+  refine product_mem_of_iterates a b s t ha hb v (Submodule.span ℂ (Set.range read)) ?_ k q
+  intro n m
+  exact Submodule.subset_span (Set.mem_range_self (f := read) (n, m))
 
 /-- The cyclic span of the integral fixed-field coefficients on a sector vector. -/
 def fixedModeSpan (r : Fin 3) (v : sector r) : Submodule ℂ (sector r) :=
   Submodule.span ℂ (Set.range fun index : fixedStates × ℤ =>
     C (fixedField r index.1) index.2 v)
+
+private theorem fixedMode_mem_span (r : Fin 3) (v : sector r) (a : fixedStates) (e : ℤ) :
+    C (fixedField r a) e v ∈ fixedModeSpan r v := by
+  apply Submodule.subset_span
+  exact ⟨(a, e), rfl⟩
 
 /-- A pair of native modes of total residue zero has a representative in the
 cyclic span of the actual fixed-field action on the rotation sector. -/
@@ -203,10 +212,10 @@ theorem neutral_mode_product_mem_fixedModeSpan (a b : NativeStates) (s t : ℤ)
   obtain ⟨d, hd⟩ := hneutral
   have hprod := product_mem_of_iterates a b s t ha hb v.val S (by
     intro n m
-    let x : fixedStates := ⟨mu lattice a n b, Module.End.mem_eigenspace_iff.mpr (by
-      simpa only [hζ] using mu_eigen a b s t n ha hb)⟩
+    let x : fixedStates := ⟨mu lattice a n b, (mem_fixedStates_iff _).mpr (by
+      rw [mu_eigen a b s t n ha hb, hζ, one_smul])⟩
     refine Submodule.mem_map.mpr ⟨C (fixedField r x) (d - (m + 1)) v,
-      Submodule.subset_span ⟨(x, d - (m + 1)), rfl⟩, ?_⟩
+      fixedMode_mem_span r v x (d - (m + 1)), ?_⟩
     change (C (fixedField r x) (d - (m + 1)) v).val =
       C (nativeField x.val) (s + t - 3 * (m + 1)) v.val
     rw [fixedField_coeff_val, show 3 * (d - (m + 1)) = s + t - 3 * (m + 1) by omega]) k q
@@ -263,10 +272,14 @@ private def nativeModeSpan (v : State) : Submodule ℂ State :=
   Submodule.span ℂ (Set.range fun index : NativeStates × ℤ =>
     C (nativeField index.1) index.2 v)
 
+private theorem nativeMode_mem_span (v : State) (a : NativeStates) (e : ℤ) :
+    C (nativeField a) e v ∈ nativeModeSpan v := by
+  apply Submodule.subset_span
+  exact ⟨(a, e), rfl⟩
+
 private theorem self_mem_nativeModeSpan (v : State) : v ∈ nativeModeSpan v := by
-  have h : C (nativeField (Finsupp.single (0 : Charge lattice) 1)) 0 v ∈ nativeModeSpan v :=
-    Submodule.subset_span ⟨(Finsupp.single 0 1, 0), rfl⟩
-  simpa only [nativeField_ground, concreteChargedField_zero_coeff, if_pos rfl,
+  have h := nativeMode_mem_span v (Finsupp.single (0 : Charge lattice) 1) 0
+  simpa only [nativeField_ground, concreteChargedField_zero_coeff, ite_true,
     LinearMap.id_apply] using h
 
 private theorem nativeModeSpan_stable (v : State) (a : NativeStates) (e : ℤ)
@@ -275,15 +288,15 @@ private theorem nativeModeSpan_stable (v : State) (a : NativeStates) (e : ℤ)
   induction hw using Submodule.span_induction with
   | mem w hw =>
     obtain ⟨⟨b, f⟩, rfl⟩ := hw
-    rw [← liftProject_residue_coeff a e, ← liftProject_residue_coeff b f]
-    have he : e - 3 * ((-1 : ℤ) + 1) = e := by omega
-    have hf : f - 3 * ((-1 : ℤ) + 1) = f := by omega
-    simpa only [he, hf] using
-      product_mem_of_iterates _ _ e f (liftProject_residue_eigen a e)
-        (liftProject_residue_eigen b f) v (nativeModeSpan v)
-        (fun n m => Submodule.subset_span
-          ⟨(mu lattice (liftProject (residueIndex e) a) n (liftProject (residueIndex f) b),
-            e + f - 3 * (m + 1)), rfl⟩) (-1) (-1)
+    change C (nativeField a) e (C (nativeField b) f v) ∈ nativeModeSpan v
+    let a' := liftProject (residueIndex e) a
+    let b' := liftProject (residueIndex f) b
+    have ha : C (nativeField a') e = C (nativeField a) e := liftProject_residue_coeff a e
+    have hb : C (nativeField b') f = C (nativeField b) f := liftProject_residue_coeff b f
+    have h := product_mem_of_iterates a' b' e f (liftProject_residue_eigen a e)
+      (liftProject_residue_eigen b f) v (nativeModeSpan v)
+      (fun n m => nativeMode_mem_span v (mu lattice a' n b') (e + f - 3 * (m + 1))) (-1) (-1)
+    simpa only [neg_add_cancel, mul_zero, sub_zero, ha, hb] using h
   | zero => rw [map_zero]; exact (nativeModeSpan v).zero_mem
   | add x y _ _ hx hy => rw [map_add]; exact (nativeModeSpan v).add_mem hx hy
   | smul c x _ hx => rw [map_smul]; exact (nativeModeSpan v).smul_mem c hx
@@ -305,6 +318,7 @@ private theorem nativeModeSpan_eq_top (v : State) (hv : v ≠ 0) :
     exact (hv (by simpa only [hbot, Submodule.mem_bot] using hmem)).elim
   · exact htop
 
+set_option maxRecDepth 4096 in
 set_option maxHeartbeats 1000000 in
 private theorem gradingRotation_any_coeff (a : NativeStates) (e : ℤ) :
     gradingRotation * C (nativeField a) e =
@@ -323,13 +337,10 @@ private theorem gradingRotation_any_coeff (a : NativeStates) (e : ℤ) :
     (actualL0_eigen_iff_grade lattice (actualInverse lattice)
       (actualInverse_left lattice gram_det_unit) (actualInverse_right lattice gram_det_unit)
       h x).mpr (gradeProjection_mem lattice h a)
+  have hcomm (u : NativeStates) : L (σ u) = σ (L u) := (lift_sourceLZero u).symm
   have hy : L y = (h : ℂ) • y := by
-    change L (liftProject (residueIndex e) x) = (h : ℂ) • liftProject (residueIndex e) x
-    have hcomm : L (liftProject (residueIndex e) x) = liftProject (residueIndex e) (L x) := by
-      simp only [liftProject, map_add, map_smul, ← lift_sourceLZero]
-    rw [hcomm, hx]
-    simp only [liftProject, map_smul]
-    module
+    dsimp only [y, liftProject]
+    simp only [map_add, map_smul, hcomm, hx, smul_add, smul_smul] <;> ac_rfl
   change gradingRotation * C (nativeField x) e = ζ ^ e • (C (nativeField x) e * gradingRotation)
   rw [← liftProject_residue_coeff x e]
   exact gradingRotation_nativeField_coeff y e (liftProject_residue_eigen x e) e h hy
@@ -352,6 +363,7 @@ private theorem sectorAverage_eq_self (r : Fin 3) (v : sector r) :
   have hthree : v.val + v.val + v.val = (3 : ℂ) • v.val := by module
   rw [hthree, smul_smul, inv_mul_cancel₀ (by norm_num : (3 : ℂ) ≠ 0), one_smul]
 
+set_option maxRecDepth 4096 in
 private theorem sectorAverage_native_coeff (r : Fin 3) (v : sector r)
     (a : NativeStates) (e : ℤ) :
     sectorAverage r (C (nativeField a) e v.val) =
@@ -365,15 +377,17 @@ private theorem sectorAverage_native_coeff (r : Fin 3) (v : sector r)
     have h := LinearMap.congr_fun (gradingRotation_any_coeff b e) v.val
     change gradingRotation (C (nativeField b) e v.val) =
       ζ ^ e • C (nativeField b) e (gradingRotation v.val) at h
-    rw [nativeField_action_coeff, LinearMap.smul_apply]
-    change (ζ ^ r.val)⁻¹ • gradingRotation (C (nativeField b) e v.val) = _
+    rw [nativeField_action_coeff]
+    change (ζ ^ r.val)⁻¹ • gradingRotation (C (nativeField b) e v.val) =
+      ζ ^ e • (C (nativeField b) e v.val)
     rw [h, hv, map_smul, smul_comm (ζ ^ e) (ζ ^ r.val), smul_smul,
       inv_mul_cancel₀ hz, one_smul]
   change (3 : ℂ)⁻¹ • (C (nativeField a) e v.val + R (C (nativeField a) e v.val) +
     R (R (C (nativeField a) e v.val))) = C (nativeField (fixedProjection a)) e v.val
   rw [hR a, hR (σ a)]
   simp only [fixedProjection, map_smul, Pi.smul_apply, LinearMap.smul_apply,
-    map_add, Pi.add_apply, LinearMap.add_apply]
+    map_add, Pi.add_apply, LinearMap.add_apply, LinearMap.id_apply,
+    LinearMap.comp_apply, LinearEquiv.coe_toLinearMap]
 
 private theorem mem_fixedModeSpan_of_nativeModeSpan (r : Fin 3) (v w : sector r)
     (hw : w.val ∈ nativeModeSpan v.val) : w ∈ fixedModeSpan r v := by
@@ -383,17 +397,17 @@ private theorem mem_fixedModeSpan_of_nativeModeSpan (r : Fin 3) (v w : sector r)
     rintro _ ⟨⟨a, e⟩, rfl⟩
     change sectorAverage r (C (nativeField a) e v.val) ∈ S
     rw [sectorAverage_native_coeff]
-    have hf : σ (fixedProjection a) = ζ ^ (0 : ℤ) • fixedProjection a := by
-      simpa only [zpow_zero, one_smul] using fixedProjection_fixed a
+    have hf := fixedProjection_fixed a
     by_cases he : e % 3 = 0
-    · let x : fixedStates := ⟨fixedProjection a, Module.End.mem_eigenspace_iff.mpr (by
-        simpa only [zpow_zero] using hf)⟩
+    · let x : fixedStates := ⟨fixedProjection a, (mem_fixedStates_iff _).mpr hf⟩
       refine Submodule.mem_map.mpr ⟨C (fixedField r x) (e / 3) v,
-        Submodule.subset_span ⟨(x, e / 3), rfl⟩, ?_⟩
+        fixedMode_mem_span r v x (e / 3), ?_⟩
       change (C (fixedField r x) (e / 3) v).val = C (nativeField x.val) e v.val
       rw [fixedField_coeff_val, show 3 * (e / 3) = e by omega]
     · have he' : e % 3 ≠ (0 : ℤ) % 3 := by simpa only [Int.zero_emod] using he
-      rw [nativeField_inResidue _ 0 hf e he', LinearMap.zero_apply]
+      have hzero : σ (fixedProjection a) = ζ ^ (0 : ℤ) • fixedProjection a := by
+        simpa only [zpow_zero, one_smul] using hf
+      rw [nativeField_inResidue _ 0 hzero e he', LinearMap.zero_apply]
       exact S.zero_mem
   have hw' : sectorAverage r w.val ∈ S := hproject hw
   rw [sectorAverage_eq_self] at hw'

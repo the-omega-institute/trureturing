@@ -339,7 +339,8 @@ theorem short_norm_halfFramePairings
     by_cases hji : j = i
     · subst j
       rw [Pi.single_eq_same, hw i, hc]
-    · rw [Pi.single_eq_of_ne' (M := fun _ : Fin 48 => ℤ) hji.symm (3 * c),
+    · have hAhead : i ≠ j := fun he => hji he.symm
+      rw [Pi.single_eq_of_ne' (M := fun _ : Fin 48 => ℤ) hAhead (3 * c),
         hw j, hOff j hji, mul_zero]
   have hFactor : (w i - 1) * (w i + 1) = 0 := calc
     _ = w i ^ 2 - 1 := by ring

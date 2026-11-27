@@ -7,9 +7,9 @@ orbit search has six components.  Four are sign-consistent and produce the
 symmetric orbit matrices.  The two 276-components are inconsistent and are
 excluded.  The matrix `commutantM` is the trace-subtracted z-average generator.
 
-The four component identities and the catalogue-basis isometry checks are
-exposed as exact scoped certificates below.  No group-classification or
-dense-rank argument is used here.
+The four component identities are exposed as exact scoped certificates below.
+P48pFrameLatticeAction proves Gram preservation for the integral catalogue maps.
+No group-classification or dense-rank argument is used here.
 -/
 
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48pFramePositive
@@ -929,30 +929,6 @@ def uCatalogueMap : Matrix (Fin 48) (Fin 48) ℤ :=
 
 def zCatalogueMap : Matrix (Fin 48) (Fin 48) ℤ :=
   catalogueFrameMap Z1 12
-
-set_option maxRecDepth 32768 in
-set_option maxHeartbeats 160000000 in
-theorem tCatalogueMap_isometry :
-    tCatalogueMap * p48pGram * tCatalogueMapᵀ = p48pGram := by
-  apply Matrix.ext
-  intro i j
-  fin_cases i <;> fin_cases j <;> decide +kernel
-
-set_option maxRecDepth 32768 in
-set_option maxHeartbeats 160000000 in
-theorem uCatalogueMap_isometry :
-    uCatalogueMap * p48pGram * uCatalogueMapᵀ = p48pGram := by
-  apply Matrix.ext
-  intro i j
-  fin_cases i <;> fin_cases j <;> decide +kernel
-
-set_option maxRecDepth 32768 in
-set_option maxHeartbeats 160000000 in
-theorem zCatalogueMap_isometry :
-    zCatalogueMap * p48pGram * zCatalogueMapᵀ = p48pGram := by
-  apply Matrix.ext
-  intro i j
-  fin_cases i <;> fin_cases j <;> decide +kernel
 
 private def ratCast : Matrix (Fin 48) (Fin 48) ℤ →+*
     Matrix (Fin 48) (Fin 48) ℚ :=

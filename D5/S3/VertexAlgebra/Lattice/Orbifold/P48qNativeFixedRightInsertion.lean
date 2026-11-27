@@ -105,7 +105,8 @@ theorem nativeSkew_fixedInsertion (s : Fin 3) (u : sector s) (a : fixedStates) (
     have hcoeff (m : ℤ) :
         (A.coeff m).val = (nativeInsertion a.val u.val).coeff (3 * m) :=
       fixedField_coeff_val s a m u
-    rw [skewTerm, show 3 * n - (3 : ℤ) * (j : ℤ) = 3 * (n - (j : ℤ)) by ring,
+    simp only [skewTerm, Nat.cast_ofNat]
+    rw [show 3 * n - (3 : ℤ) * (j : ℤ) = 3 * (n - (j : ℤ)) by ring,
       hphase, ← hcoeff (n - (j : ℤ))]
     change (-1 : ℂ) ^ (n - (j : ℤ)) •
         dividedTranslation nativeTranslation j (A.coeff (n - (j : ℤ))).val =
@@ -121,7 +122,7 @@ theorem nativeSkew_fixedInsertion (s : Fin 3) (u : sector s) (a : fixedStates) (
       change C (nativeField a.val) (k - 3 * (j : ℤ)) u.val = 0
       rw [P48qNativeCurrentLocality.nativeField_inResidue a.val 0 ha _ (by omega),
         LinearMap.zero_apply]
-    rw [hzero, map_zero, smul_zero]
+    simp only [Nat.cast_ofNat, hzero, map_zero, smul_zero]
 
 /-- The actual fixed vacuum gives `exp(z L(-1)) u` in the right argument.
 The negative integral powers vanish, and the constant coefficient is `u`. -/
@@ -143,7 +144,7 @@ theorem rightInsertion_vacuum_coeff (s : Fin 3) (u : sector s) (k : ℤ) :
     simp only [reversalTerm, hA, if_neg hj, map_zero, smul_zero]
   · rw [if_neg hk, finsum_eq_single _ k.toNat]
     · have hj : k - (k.toNat : ℤ) = 0 := by omega
-      simp only [reversalTerm, hj, hA, if_pos rfl, zpow_zero, one_div, dividedTranslation,
+      simp only [reversalTerm, hj, hA, ite_true, zpow_zero, one_div, dividedTranslation,
         LinearMap.smul_apply, T]
     · intro j hj
       have hindex : k - (j : ℤ) ≠ 0 := by omega
@@ -163,6 +164,8 @@ private theorem fixedField_translate_coeff (s : Fin 3) (a : fixedStates) (u : se
       ((k + 1 : ℤ) : ℂ) • C (fixedField s a) (k + 1) u := by
   apply Subtype.ext
   simp only [Submodule.coe_smul, fixedField_coeff_val, conformal_zero_product_val]
+  change C (nativeField (mu lattice a.val (-2) (vacuum lattice))) (3 * k) u.val =
+    ((k + 1 : ℤ) : ℂ) • C (nativeField a.val) (3 * (k + 1)) u.val
   have h := native_vacuum_minus_two_mode a.val (lift_fixed a) (-k - 1)
   rw [show -3 * (-k - 1 + 1) = 3 * k by ring,
     show -3 * (-k - 1) = 3 * (k + 1) by ring,
@@ -189,8 +192,8 @@ private theorem fixedField_translation_commutator (s : Fin 3) (a : fixedStates)
   simp only [signedBinomial_zero_sum, epsilon, zpow_zero, one_smul, Nat.cast_zero,
     Int.cast_zero, Int.toNat_natCast, add_zero, zero_add, sub_zero] at h
   have hsum : (∑ j ∈ Finset.range N, Ring.choose (0 : ℂ) j •
-        (fixedField s (fixedProduct fixedOmega a (j : ℤ)))[[q - (j : ℤ)]] u) =
-      (fixedField s (fixedProduct fixedOmega a 0))[[q]] u := by
+        ((fixedField s (fixedProduct fixedOmega a (j : ℤ)))[[q - (j : ℤ)]]) u) =
+      ((fixedField s (fixedProduct fixedOmega a 0))[[q]]) u := by
     rw [Finset.sum_eq_single 0]
     · simp only [Ring.choose_zero_right, one_smul, Nat.cast_zero, sub_zero]
     · intro j _ hj
@@ -276,7 +279,7 @@ theorem rightInsertion_translation (s : Fin 3) (u : sector s) (a : fixedStates) 
   simp_rw [hterm]
   rw [finsum_add_distrib hs hd, hshift]
   simp_rw [sub_smul]
-  change (∑ᶠ j : ℕ, w j) + (∑ᶠ j : ℕ, c • r j - w j) = c • (∑ᶠ j : ℕ, r j)
+  change (∑ᶠ j : ℕ, w j) + (∑ᶠ j : ℕ, (c • r j - w j)) = c • (∑ᶠ j : ℕ, r j)
   rw [finsum_sub_distrib hc hw, ← smul_finsum' c hr]
   abel
 

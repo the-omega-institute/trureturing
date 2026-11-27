@@ -182,8 +182,11 @@ def carryCocycle {n : ℕ} [NeZero n] (ζ : A) (hζ : orderOf ζ = n) (t : ZMod 
   toFun := carryPhase ζ hζ t
   normalized a b := by
     obtain ⟨h₁, h₂, h₃⟩ := w_normalized t a.toAdd b.toAdd
-    simp only [carryPhase, Multiplicative.toAdd_one, h₁, h₂, h₃,
-      Multiplicative.ofAdd_zero, map_one, and_self]
+    have hzero (x : ZMod n) (hx : x = 0) :
+        cyclicPowerHom ζ hζ (Multiplicative.ofAdd x) = 1 := by
+      subst x
+      exact map_one (cyclicPowerHom ζ hζ)
+    exact ⟨hzero _ h₁, hzero _ h₂, hzero _ h₃⟩
   cocycle a b c d := by
     have h :
         w t a.toAdd b.toAdd c.toAdd +
@@ -191,11 +194,9 @@ def carryCocycle {n : ℕ} [NeZero n] (ζ : A) (hζ : orderOf ζ = n) (t : ZMod 
           w t (a.toAdd + b.toAdd) c.toAdd d.toAdd + w t a.toAdd b.toAdd (c.toAdd + d.toAdd) := by
       apply sub_eq_zero.mp
       convert w_cocycle t a.toAdd b.toAdd c.toAdd d.toAdd using 1 <;> abel
-    have hmul := congrArg
-      (fun x : ZMod n => cyclicPowerHom ζ hζ (Multiplicative.ofAdd x)) h
-    simp only [Multiplicative.ofAdd_add, map_mul] at hmul
     unfold carryPhase
-    simpa only [Multiplicative.toAdd_mul, mul_assoc, mul_left_comm, mul_comm] using hmul
+    simp only [← map_mul]
+    exact congrArg (fun x : ZMod n => cyclicPowerHom ζ hζ (Multiplicative.ofAdd x)) h
 
 /-- A root of the type phase gives a degree-one half-braiding. The component
 at degree `h` has scalar label `root ^ h.toAdd.val`. -/
@@ -217,10 +218,10 @@ def carryGeneratorHalfBraiding {n : ℕ} [NeZero n]
     let a := X.1.as.toAdd
     let b := Y.1.as.toAdd
     let phase := carryPhase ζ hζ t
-    -- Composition in `SingleObj` multiplies the labels in reverse order.
+    -- Right-associated composition in `SingleObj` reverses the scalar factors.
     change root ^ (a + b).val =
-      (phase X.1.as Y.1.as g)⁻¹ * (root ^ b.val * (phase X.1.as g Y.1.as *
-        (root ^ a.val * (phase g X.1.as Y.1.as)⁻¹)))
+      (phase X.1.as Y.1.as g)⁻¹ * root ^ b.val * phase X.1.as g Y.1.as *
+        root ^ a.val * (phase g X.1.as Y.1.as)⁻¹
     have hswap : phase X.1.as g Y.1.as = phase X.1.as Y.1.as g := by
       have hcarry : carry (1 : ZMod n) b = carry b 1 := by
         unfold carry
@@ -231,7 +232,7 @@ def carryGeneratorHalfBraiding {n : ℕ} [NeZero n]
       change cyclicPowerHom ζ hζ (Multiplicative.ofAdd (t * 1 * (carry a b : ZMod n))) =
         (cyclicPowerHom ζ hζ (Multiplicative.ofAdd t)) ^ carry a b
       rw [← map_pow (cyclicPowerHom ζ hζ) (Multiplicative.ofAdd t) (carry a b),
-        ← Multiplicative.ofAdd_nsmul (carry a b) t, nsmul_eq_mul, mul_one, mul_comm t]
+        ← ofAdd_nsmul (carry a b) t, nsmul_eq_mul, mul_one, mul_comm t]
     have hsum : n * carry a b + (a + b).val = a.val + b.val := by
       rw [ZMod.val_add]
       exact Nat.div_add_mod _ _

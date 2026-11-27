@@ -35,8 +35,7 @@ open P48pSyndromeFrame
   (p48pFrameRows p48pGram p48pPairingFrame p48pPairingFrame_eq p48pFrameRows_orthogonal)
 open P48pSymmetricCommutantCertificate
   (signedFrameMatrix tFrameMatrix uFrameMatrix J JRat Z1 catalogueFrameMap
-    tCatalogueMap uCatalogueMap zCatalogueMap
-    tCatalogueMap_isometry uCatalogueMap_isometry zCatalogueMap_isometry)
+    tCatalogueMap uCatalogueMap zCatalogueMap)
 open P48pFrameProjectiveAction
   (SL23 t u frameAction frameAction_t frameAction_u frameAction_injective generators_generate)
 open P48pFrameCubicRank (ARat C rowAction frame_cubic_cube_and_fixedRank16)
@@ -208,6 +207,9 @@ private theorem toRational_smul (n : ℤ) (A : CatalogueMatrix) :
     toRational (n • A) = (n : ℚ) • toRational A :=
   ratCast_smul n A
 
+private theorem toRational_transpose (A : CatalogueMatrix) :
+    toRational (Aᵀ) = (toRational A)ᵀ := rfl
+
 private theorem toRational_injective : Function.Injective toRational :=
   Matrix.map_injective Int.cast_injective
 
@@ -222,6 +224,49 @@ private theorem frame_mul_inverse : toRational F * frameInverse = 1 := by
 
 private theorem inverse_mul_frame : frameInverse * toRational F = 1 :=
   mul_eq_one_comm.mp frame_mul_inverse
+
+private theorem preserves_gram_of_intertwines {ι R : Type*}
+    [Fintype ι] [DecidableEq ι] [CommSemiring R]
+    {frame gram A S inv : Matrix ι ι R} {c : R}
+    (hInv : inv * frame = 1) (hGram : frame * gram * frameᵀ = c • 1)
+    (h : frame * A = S * frame) (hS : S * Sᵀ = 1) :
+    A * gram * Aᵀ = gram := by
+  have hInvT : frameᵀ * invᵀ = 1 := by
+    simpa only [Matrix.transpose_mul, Matrix.transpose_one] using
+      congrArg Matrix.transpose hInv
+  have hGram' : frame * (A * gram * Aᵀ) * frameᵀ = frame * gram * frameᵀ := calc
+    _ = (frame * A) * gram * (frame * A)ᵀ := by
+      simp only [Matrix.transpose_mul, Matrix.mul_assoc]
+    _ = S * (frame * gram * frameᵀ) * Sᵀ := by
+      rw [h]
+      simp only [Matrix.transpose_mul, Matrix.mul_assoc]
+    _ = _ := by rw [hGram, Matrix.mul_smul, Matrix.smul_mul, Matrix.mul_one, hS]
+  calc
+    A * gram * Aᵀ = (inv * frame) * (A * gram * Aᵀ) * (frameᵀ * invᵀ) := by
+      rw [hInv, hInvT, Matrix.one_mul, Matrix.mul_one]
+    _ = inv * (frame * (A * gram * Aᵀ) * frameᵀ) * invᵀ := by
+      simp only [Matrix.mul_assoc]
+    _ = (inv * frame) * gram * (frameᵀ * invᵀ) := by
+      rw [hGram']
+      simp only [Matrix.mul_assoc]
+    _ = gram := by rw [hInv, hInvT, Matrix.one_mul, Matrix.mul_one]
+
+private theorem catalogue_isometry_of_intertwines {A : CatalogueMatrix} {S : RationalMatrix}
+    (h : toRational F * toRational A = S * toRational F) (hS : S * Sᵀ = 1) :
+    A * G * Aᵀ = G := by
+  have hGram : toRational F * toRational G * (toRational F)ᵀ = (12 : ℚ) • 1 := by
+    simpa only [map_mul, toRational_transpose, toRational_smul, Int.cast_ofNat, map_one] using
+      congrArg toRational p48pFrameRows_orthogonal
+  apply toRational_injective
+  simpa only [map_mul, toRational_transpose] using
+    preserves_gram_of_intertwines inverse_mul_frame hGram h hS
+
+private theorem catalogue_isometry_of_integral_intertwines {A S : CatalogueMatrix}
+    (h : F * A = S * F) (hS : S * Sᵀ = 1) :
+    A * G * Aᵀ = G := by
+  apply catalogue_isometry_of_intertwines (S := toRational S)
+  · simpa only [map_mul] using congrArg toRational h
+  · simpa only [map_mul, toRational_transpose, map_one] using congrArg toRational hS
 
 /-- Change of basis from frame coordinates to catalogue coordinates for row actions. -/
 def frameConjugate : RationalMatrix →* RationalMatrix where
@@ -351,6 +396,46 @@ private theorem generator_lifts (g : SL23) (A : CatalogueMatrix)
   apply (eq_frameConjugate_iff _ _).2
   simpa only [map_mul] using congrArg toRational h
 
+private theorem signed_mul_transpose (index : Fin 48 → Fin 48) (sign : Fin 48 → ℤ)
+    (hinj : Function.Injective index) (hsign : ∀ i, sign i * sign i = 1) :
+    signedFrameMatrix index sign * (signedFrameMatrix index sign)ᵀ = 1 := by
+  apply Matrix.ext
+  intro i j
+  rw [signed_mul_apply, Matrix.transpose_apply, Matrix.one_apply]
+  by_cases hij : i = j
+  · subst j
+    simp only [signedFrameMatrix, if_pos rfl, hsign]
+  · have hindex : index j ≠ index i := fun h => hij (hinj h.symm)
+    simp only [signedFrameMatrix, if_neg hij, if_neg hindex, mul_zero]
+
+private theorem tIndex_injective : Function.Injective tIndex := by
+  intro i
+  change ∀ j : Fin 48, tIndex i = tIndex j → i = j
+  fin_cases i <;> decide +kernel
+
+theorem _root_.D5.S3.VertexAlgebra.Lattice.Orbifold.P48pSymmetricCommutantCertificate.tCatalogueMap_isometry :
+    tCatalogueMap * p48pGram * tCatalogueMapᵀ = p48pGram := by
+  apply catalogue_isometry_of_integral_intertwines t_intertwines
+  rw [tFrameMatrix]
+  apply signed_mul_transpose tIndex tSign tIndex_injective
+  intro i
+  fin_cases i <;> decide +kernel
+
+private theorem uIndex_injective : Function.Injective uIndex := by
+  intro i
+  change ∀ j : Fin 48, uIndex i = uIndex j → i = j
+  fin_cases i <;> decide +kernel
+
+theorem _root_.D5.S3.VertexAlgebra.Lattice.Orbifold.P48pSymmetricCommutantCertificate.uCatalogueMap_isometry :
+    uCatalogueMap * p48pGram * uCatalogueMapᵀ = p48pGram := by
+  apply catalogue_isometry_of_integral_intertwines u_intertwines
+  rw [uFrameMatrix]
+  apply signed_mul_transpose uIndex uSign uIndex_injective
+  intro i
+  fin_cases i <;> decide +kernel
+
+open P48pSymmetricCommutantCertificate (tCatalogueMap_isometry uCatalogueMap_isometry)
+
 private theorem all_lift (g : SL23) : rationalAction g ∈ catalogueEmbedding.range := by
   have hclosure : Subgroup.closure ({t, u} : Set SL23) ≤
       catalogueEmbedding.range.comap rationalAction := by
@@ -413,6 +498,35 @@ theorem cubic_frame_eq : C = (1 / 12 : ℚ) • toRational Z1 := by
     (1 / 12 : ℚ) • ((2 : ℚ) • JRat - (6 : ℚ) • 1)
   module
 
+private theorem z_intertwines_rational :
+    toRational F * toRational zCatalogueMap = C * toRational F := by
+  have h : (12 : ℚ) • (toRational F * toRational zCatalogueMap) =
+      toRational Z1 * toRational F := by
+    simpa only [map_mul, toRational_smul, Int.cast_ofNat] using congrArg toRational z_intertwines
+  calc
+    _ = (1 / 12 : ℚ) • ((12 : ℚ) • (toRational F * toRational zCatalogueMap)) := by
+      rw [smul_smul]
+      norm_num
+    _ = C * toRational F := by rw [h, cubic_frame_eq, Matrix.smul_mul]
+
+private theorem cubic_frame_orthogonal : C * Cᵀ = 1 := by
+  have hJ : JRatᵀ = -JRat := by
+    change (toRational J)ᵀ = -toRational J
+    rw [← toRational_transpose, P48pSymmetricCommutantCertificate.J_transpose, map_neg]
+  have hTranspose : Cᵀ = C ^ 2 := by
+    rw [C_sq]
+    change ((1 / 6 : ℚ) • (JRat - (3 : ℚ) • 1))ᵀ =
+      (1 / 6 : ℚ) • (-JRat - (3 : ℚ) • 1)
+    rw [Matrix.transpose_smul, Matrix.transpose_sub, Matrix.transpose_smul,
+      Matrix.transpose_one, hJ]
+  rw [hTranspose, ← pow_succ', C_cube]
+
+theorem _root_.D5.S3.VertexAlgebra.Lattice.Orbifold.P48pSymmetricCommutantCertificate.zCatalogueMap_isometry :
+    zCatalogueMap * p48pGram * zCatalogueMapᵀ = p48pGram :=
+  catalogue_isometry_of_intertwines z_intertwines_rational cubic_frame_orthogonal
+
+open P48pSymmetricCommutantCertificate (zCatalogueMap_isometry)
+
 /-- The cubic generator represented by the integral reconstruction of C. -/
 noncomputable def catalogueCubic : catalogueIsometries :=
   asCatalogueIsometry zCatalogueMap zCatalogueMap_isometry
@@ -423,15 +537,7 @@ theorem catalogueCubic_matrix : isometryMatrix catalogueCubic = zCatalogueMap :=
 theorem catalogueCubic_eq_conjugate :
     toRational (isometryMatrix catalogueCubic) = frameConjugate C := by
   rw [catalogueCubic_matrix]
-  apply (eq_frameConjugate_iff _ _).2
-  have h : (12 : ℚ) • (toRational F * toRational zCatalogueMap) =
-      toRational Z1 * toRational F := by
-    simpa only [map_mul, toRational_smul, Int.cast_ofNat] using congrArg toRational z_intertwines
-  calc
-    _ = (1 / 12 : ℚ) • ((12 : ℚ) • (toRational F * toRational zCatalogueMap)) := by
-      rw [smul_smul]
-      norm_num
-    _ = C * toRational F := by rw [h, cubic_frame_eq, Matrix.smul_mul]
+  exact (eq_frameConjugate_iff _ _).2 z_intertwines_rational
 
 theorem catalogueCubic_cube : catalogueCubic ^ 3 = 1 := by
   apply isometryMatrix_injective
@@ -467,17 +573,13 @@ private theorem signed_commutes_J (index : Fin 48 → Fin 48) (sign : Fin 48 →
 
 private theorem t_commutes_J : Commute tFrameMatrix J := by
   apply signed_commutes_J tIndex tSign
-  · intro i
-    change ∀ j : Fin 48, tIndex i = tIndex j → i = j
-    fin_cases i <;> decide +kernel
+  · exact tIndex_injective
   · intro i
     fin_cases i <;> decide +kernel
 
 private theorem u_commutes_J : Commute uFrameMatrix J := by
   apply signed_commutes_J uIndex uSign
-  · intro i
-    change ∀ j : Fin 48, uIndex i = uIndex j → i = j
-    fin_cases i <;> decide +kernel
+  · exact uIndex_injective
   · intro i
     fin_cases i <;> decide +kernel
 
