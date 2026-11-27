@@ -21,8 +21,8 @@ internal sealed class KeplerSupportTwoDocument : IScribeDocumentDefinition
             Definition("Twins", "Agreement outside a pair",
                 GraphBinders(Vertices("u", "v",
                     IffOf(Call("Twins", V("G"), V("u"), V("v")),
-                        All("w", V("V"), Imp(And(Ne(V("w"), V("u")), Ne(V("w"), V("v"))),
-                            IffOf(Adj(V("w"), V("u")), Adj(V("w"), V("v")))))))),
+                        All("w", V("V"), Imp(Ne(V("w"), V("u")), Imp(Ne(V("w"), V("v")),
+                            IffOf(Adj(V("w"), V("u")), Adj(V("w"), V("v"))))))))),
                 "Adjacency is compared at every vertex outside the two named vertices."),
             Definition("signedPair", "Signed coordinate vector", All("V", V("Type"),
                 UnderInstance(Call("DecidableEq", V("V")), Vertices("u", "v",
@@ -39,18 +39,11 @@ internal sealed class KeplerSupportTwoDocument : IScribeDocumentDefinition
                             Call("ite", Adj(V("u"), V("v")), D(1), D(0))))), withEquality: false),
                 "The degree is cast to the reals. The adjacency term is 1 precisely when the endpoints are adjacent."),
             Definition("classSetoid", "The equivalence relation for the parameter",
-                FiniteGraphParameter(Vertices("u", "v",
-                    IffOf(App(Member(Call("classSetoid", V("G"), Alpha), "r"), V("u"), V("v")),
-                        Call("ite", Eqn(Alpha, new Formula.Fraction(D(1), D(2))),
-                            Eqn(QCall("SimpleGraph", "degree", V("G"), V("u")),
-                                QCall("SimpleGraph", "degree", V("G"), V("v"))),
-                            Call("Twins", V("G"), V("u"), V("v"))))), withEquality: false),
-                "Equality of degrees determines the classes at half, and outside adjacency determines them elsewhere."),
+                ClassSetoidFormula(),
+                "At half the equivalence proof uses reflexivity, symmetry and transitivity of equality of degrees. Away from half it uses the equivalence of outside-adjacency agreement."),
             Definition("classGraph", "The complete graph within each class",
-                SetoidBinders(Vertices("u", "v",
-                    IffOf(QCall("SimpleGraph", "Adj", Call("classGraph", V("s")), V("u"), V("v")),
-                        And(Ne(V("u"), V("v")), App(Member(V("s"), "r"), V("u"), V("v")))))),
-                "The auxiliary graph places an edge between every two distinct vertices in the same class."),
+                ClassGraphFormula(),
+                "Symmetry reverses the inequality and applies symmetry of the setoid relation. A loop contradicts the inequality at its endpoint."),
             Definition("Class", "Vertices in a quotient class",
                 SetoidBinders(All("C", Call("Quotient", V("s")),
                     Eqn(Call("Class", V("s"), V("C")), Subtype("v", V("V"),
@@ -62,7 +55,8 @@ internal sealed class KeplerSupportTwoDocument : IScribeDocumentDefinition
                 "Each finite class contributes the number of its two-element subsets."),
             Definition("IsSignedEigenvector", "Signed eigenvector predicate",
                 SignedEigenvectorFormula(),
-                "The signs identify distinct vertices and the eigen-equation uses a real eigenvalue."),
+                "Remark 4.3 specifies one +1 entry, one −1 entry and zeros elsewhere. The eigen-equation for Bα uses a real eigenvalue.",
+                AssessedProvenance.FromLiterature(Source)),
             Definition("SignedEigenvectors", "Type of qualifying vectors",
                 FiniteGraphParameter(Eqn(Call("SignedEigenvectors", V("G"), Alpha),
                     Subtype("x", VectorType(), Call("IsSignedEigenvector", V("G"), Alpha, V("x"))))),
@@ -72,10 +66,8 @@ internal sealed class KeplerSupportTwoDocument : IScribeDocumentDefinition
                     QCall("SimpleGraph", "edgeSet", ClassGraph())), withEquality: false),
                 "Edges of the class graph are Mathlib unordered pairs."),
             Definition("directedRealization", "Realization of each oriented dart",
-                FiniteGraphParameter(Typed(Call("directedRealization", V("G"), Alpha),
-                    Seq(QCall("SimpleGraph", "Dart", ClassGraph()), Sp, Equiv, Sp,
-                        Call("SignedEigenvectors", V("G"), Alpha)))),
-                "A dart (u,v) maps to the signedPair vector with +1 at u and −1 at v. Those two signs determine the inverse."),
+                DirectedRealizationFormula(),
+                "The proof p(d) uses the dart's distinct endpoints for the signed coordinates and its class-graph edge for the eigen-equation. The +1 and −1 entries recover the ordered endpoints, so f is injective. For surjectivity, the signed coordinates and eigen-equation give an admissible dart with those endpoints. The inverse chooses a preimage using this surjectivity proof, and injectivity identifies it with that dart."),
             Describe.Lean(DescribeId.Create("kepler-graphwise-count"), DeclarationHandle.Create(Owner + ".graphwise_count"),
                 H("Unordered supports and signed eigenvectors"),
                 StatementSource.FromAuthor(Disp(CountFormula())), AssessedProvenance.FromRepo(Source),
@@ -86,9 +78,10 @@ internal sealed class KeplerSupportTwoDocument : IScribeDocumentDefinition
                     Paragraph(Text("The verified output ends with the exact unordered-support class sum and the exact factor-of-two signed-vector count. Theorems 4.1 and 4.2 supply source context. Their correction, the labeled-graph enumeration, union bound, limiting proportion and half-parameter all-graphs statement lie outside this result."))),
                 DescribeRole.Theorem))));
 
-    private static DocumentBlock Definition(string name, string title, Formula formula, string prose) =>
+    private static DocumentBlock Definition(string name, string title, Formula formula, string prose,
+        AssessedProvenance? provenance = null) =>
         Describe.Lean(DescribeId.Create("kepler-" + name.ToLowerInvariant()), DeclarationHandle.Create(Owner + "." + name),
-            H(title), StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromRepo(Source),
+            H(title), StatementSource.FromAuthor(Disp(formula)), provenance ?? AssessedProvenance.FromRepo(Source),
             Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
 
     private static Formula V(string name) => StrataLint.Scribe.FormulaDsl.Id(name);
@@ -135,10 +128,67 @@ internal sealed class KeplerSupportTwoDocument : IScribeDocumentDefinition
     private static Formula ClassSetoid() => Call("classSetoid", V("G"), Alpha);
     private static Formula ClassGraph() => Call("classGraph", ClassSetoid());
 
+    private static Formula Tuple(params Formula[] entries)
+    {
+        var items = new List<Formula> { Langle, Sp };
+        for (int i = 0; i < entries.Length; i++)
+        {
+            if (i > 0)
+                items.AddRange([Comma, Sp]);
+            items.Add(entries[i]);
+        }
+        items.Add(Rangle);
+        return Seq([.. items]);
+    }
+
+    private static Formula ClassSetoidFormula()
+    {
+        Formula r = V("r"), h = V("h"), u = V("u"), v = V("v"), g = V("G");
+        Formula sameDegree = Seq(LambdaLower, Sp, u, Sp, v, Dot, Sp,
+            Eqn(QCall("SimpleGraph", "degree", g, u), QCall("SimpleGraph", "degree", g, v)));
+        return FiniteGraphParameter(new Formula.Aligned([
+            Eqn(r, Call("ite", Eqn(Alpha, new Formula.Fraction(D(1), D(2))),
+                sameDegree, Call("Twins", g))),
+            Typed(h, Call("Equivalence", r)),
+            Eqn(ClassSetoid(), Tuple(r, h)),
+        ]), withEquality: false);
+    }
+
+    private static Formula ClassGraphFormula()
+    {
+        Formula a = V("a"), h = V("h"), k = V("k"), u = V("u"), v = V("v"), s = V("s");
+        return SetoidBinders(new Formula.Aligned([
+            Eqn(a, Seq(LambdaLower, Sp, u, Sp, v, Dot, Sp,
+                And(Ne(u, v), App(Member(s, "r"), u, v)))),
+            Seq(Typed(h, QCall("Std", "Symm", a)), Quad, Sp, Typed(k, QCall("Std", "Irrefl", a))),
+            Eqn(Call("classGraph", s), Tuple(a, h, k)),
+        ]));
+    }
+
+    private static Formula DirectedRealizationFormula()
+    {
+        Formula d = V("d"), x = V("x"), f = V("f"), h = V("h"), p = V("p");
+        Formula darts = V("D"), vectors = V("S");
+        Formula realization = Call("directedRealization", V("G"), Alpha);
+        Formula coordinates = Call("signedPair", Member(d, "fst"), Member(d, "snd"));
+        Formula preimage = App(Member(h, "surjective"), x);
+        return FiniteGraphParameter(new Formula.Aligned([
+            Eqn(darts, QCall("SimpleGraph", "Dart", ClassGraph())),
+            Eqn(vectors, Call("SignedEigenvectors", V("G"), Alpha)),
+            Typed(p, All("d", darts, Call("IsSignedEigenvector", V("G"), Alpha, coordinates))),
+            Eqn(Parenthesized(Typed(f, Seq(darts, Sp, To, Sp, vectors))),
+                Seq(LambdaLower, Sp, Typed(d, darts), Dot, Sp, Tuple(coordinates, App(p, d)))),
+            Typed(h, QCall("Function", "Bijective", f)),
+            Eqn(Parenthesized(Typed(realization, Seq(darts, Sp, Equiv, Sp, vectors))),
+                QCall("Equiv", "ofBijective", f, h)),
+            All("x", vectors, Eqn(App(Member(realization, "invFun"), x), QCall("Classical", "choose", preimage))),
+        ]));
+    }
+
     private static Formula SignedEigenvectorFormula()
     {
         Formula u = V("u"), v = V("v"), w = V("w"), x = V("x");
-        Formula outside = All("w", V("V"), Imp(And(Ne(w, u), Ne(w, v)), Eqn(App(x, w), D(0))));
+        Formula outside = All("w", V("V"), Imp(Ne(w, u), Imp(Ne(w, v), Eqn(App(x, w), D(0)))));
         Formula coordinates = And(Eqn(App(x, u), D(1)), And(Eqn(App(x, v), Seq(Minus, D(1))), outside));
         Formula endpoints = ExistsIn("u", V("V"), ExistsIn("v", V("V"), And(Ne(u, v), coordinates)));
         Formula eigenEquation = ExistsIn("l", Reals(),

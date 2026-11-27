@@ -18,7 +18,7 @@ Kepler's Definition 1.5, printed p. 1 of arXiv:2607.25221v1, defines the matrix 
 
 **Definition 1.2 (Agreement outside a pair).**
 
-$$\forall V \in Type,\; \forall G \in \operatorname{SimpleGraph}\left(V\right),\; \forall u \in V,\; \forall v \in V,\; \operatorname{Twins}\left(G, u, v\right) \Leftrightarrow (\forall w \in V,\; (w \neq u \land w \neq v) \Rightarrow \left(\operatorname{SimpleGraph}.\operatorname{Adj}\left(G, w, u\right) \Leftrightarrow (\operatorname{SimpleGraph}.\operatorname{Adj}\left(G, w, v\right))\right))$$
+$$\forall V \in Type,\; \forall G \in \operatorname{SimpleGraph}\left(V\right),\; \forall u \in V,\; \forall v \in V,\; \operatorname{Twins}\left(G, u, v\right) \Leftrightarrow (\forall w \in V,\; (w \neq u) \Rightarrow \left((w \neq v) \Rightarrow \left(\operatorname{SimpleGraph}.\operatorname{Adj}\left(G, w, u\right) \Leftrightarrow (\operatorname{SimpleGraph}.\operatorname{Adj}\left(G, w, v\right))\right)\right))$$
 
 *Formalization.* `D5/S3/Combinatorics/SpectralGraph/KeplerSupportTwo.Twins` (`✓ std3`).
 
@@ -60,7 +60,7 @@ The degree is cast to the reals. The adjacency term is 1 precisely when the endp
 
 **Definition 1.5 (The equivalence relation for the parameter).**
 
-$$\forall V \in Type,\; \forall [\operatorname{Fintype}\left(V\right)], \forall G \in \operatorname{SimpleGraph}\left(V\right),\; \forall [\operatorname{DecidableRel}\left(G.\operatorname{Adj}\right)], \forall \alpha : \mathbb{R}, \forall u \in V,\; \forall v \in V,\; \operatorname{classSetoid}\left(G, \alpha\right).\operatorname{r}\left(u, v\right) \Leftrightarrow (\operatorname{ite}\left(\alpha = \frac{1}{2}, \operatorname{SimpleGraph}.\operatorname{degree}\left(G, u\right) = \operatorname{SimpleGraph}.\operatorname{degree}\left(G, v\right), \operatorname{Twins}\left(G, u, v\right)\right))$$
+$$\forall V \in Type,\; \forall [\operatorname{Fintype}\left(V\right)], \forall G \in \operatorname{SimpleGraph}\left(V\right),\; \forall [\operatorname{DecidableRel}\left(G.\operatorname{Adj}\right)], \forall \alpha : \mathbb{R}, \begin{aligned}r = \operatorname{ite}\left(\alpha = \frac{1}{2}, \lambda u v. \operatorname{SimpleGraph}.\operatorname{degree}\left(G, u\right) = \operatorname{SimpleGraph}.\operatorname{degree}\left(G, v\right), \operatorname{Twins}\left(G\right)\right)\\h : \operatorname{Equivalence}\left(r\right)\\\operatorname{classSetoid}\left(G, \alpha\right) = \langle r, h\rangle\end{aligned}$$
 
 *Formalization.* `D5/S3/Combinatorics/SpectralGraph/KeplerSupportTwo.classSetoid` (`✓ std3`).
 
@@ -70,11 +70,11 @@ $$\forall V \in Type,\; \forall [\operatorname{Fintype}\left(V\right)], \forall 
 
 *Commentary.*
 
-Equality of degrees determines the classes at half, and outside adjacency determines them elsewhere.
+At half the equivalence proof uses reflexivity, symmetry and transitivity of equality of degrees. Away from half it uses the equivalence of outside-adjacency agreement.
 
 **Definition 1.6 (The complete graph within each class).**
 
-$$\forall V \in Type,\; \forall s \in \operatorname{Setoid}\left(V\right),\; \forall u \in V,\; \forall v \in V,\; \operatorname{SimpleGraph}.\operatorname{Adj}\left(\operatorname{classGraph}\left(s\right), u, v\right) \Leftrightarrow (u \neq v \land s.\operatorname{r}\left(u, v\right))$$
+$$\forall V \in Type,\; \forall s \in \operatorname{Setoid}\left(V\right),\; \begin{aligned}a = \lambda u v. u \neq v \land s.\operatorname{r}\left(u, v\right)\\h : \operatorname{Std}.\operatorname{Symm}\left(a\right)\quad k : \operatorname{Std}.\operatorname{Irrefl}\left(a\right)\\\operatorname{classGraph}\left(s\right) = \langle a, h, k\rangle\end{aligned}$$
 
 *Formalization.* `D5/S3/Combinatorics/SpectralGraph/KeplerSupportTwo.classGraph` (`✓ std3`).
 
@@ -84,7 +84,7 @@ $$\forall V \in Type,\; \forall s \in \operatorname{Setoid}\left(V\right),\; \fo
 
 *Commentary.*
 
-The auxiliary graph places an edge between every two distinct vertices in the same class.
+Symmetry reverses the inequality and applies symmetry of the setoid relation. A loop contradicts the inequality at its endpoint.
 
 **Definition 1.7 (Vertices in a quotient class).**
 
@@ -116,17 +116,15 @@ Each finite class contributes the number of its two-element subsets.
 
 **Definition 1.9 (Signed eigenvector predicate).**
 
-$$\forall V \in Type,\; \forall [\operatorname{Fintype}\left(V\right)], \forall [\operatorname{DecidableEq}\left(V\right)], \forall G \in \operatorname{SimpleGraph}\left(V\right),\; \forall [\operatorname{DecidableRel}\left(G.\operatorname{Adj}\right)], \forall \alpha : \mathbb{R}, \forall x \in V \to \mathbb{R},\; \operatorname{IsSignedEigenvector}\left(G, \alpha, x\right) \Leftrightarrow ((\exists u \in V,\; \exists v \in V,\; u \neq v \land \left(x\left(u\right) = 1 \land \left(x\left(v\right) = -1 \land \left(\forall w \in V,\; (w \neq u \land w \neq v) \Rightarrow x\left(w\right) = 0\right)\right)\right)) \land (\exists l \in \mathbb{R},\; \operatorname{Matrix}.\operatorname{mulVec}\left(\operatorname{bAlpha}\left(G, \alpha\right), x\right) = l \cdot x))$$
+$$\forall V \in Type,\; \forall [\operatorname{Fintype}\left(V\right)], \forall [\operatorname{DecidableEq}\left(V\right)], \forall G \in \operatorname{SimpleGraph}\left(V\right),\; \forall [\operatorname{DecidableRel}\left(G.\operatorname{Adj}\right)], \forall \alpha : \mathbb{R}, \forall x \in V \to \mathbb{R},\; \operatorname{IsSignedEigenvector}\left(G, \alpha, x\right) \Leftrightarrow ((\exists u \in V,\; \exists v \in V,\; u \neq v \land \left(x\left(u\right) = 1 \land \left(x\left(v\right) = -1 \land \left(\forall w \in V,\; (w \neq u) \Rightarrow \left((w \neq v) \Rightarrow x\left(w\right) = 0\right)\right)\right)\right)) \land (\exists l \in \mathbb{R},\; \operatorname{Matrix}.\operatorname{mulVec}\left(\operatorname{bAlpha}\left(G, \alpha\right), x\right) = l \cdot x))$$
 
 *Formalization.* `D5/S3/Combinatorics/SpectralGraph/KeplerSupportTwo.IsSignedEigenvector` (`✓ std3`).
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Garrett Kepler (2026). *Some Spectral Properties of the Bα Matrix of a Graph*. DOI: [10.48550/arXiv.2607.25221](https://doi.org/10.48550/arXiv.2607.25221). URL: <https://arxiv.org/abs/2607.25221v1>.
+*Citation.* Garrett Kepler (2026). *Some Spectral Properties of the Bα Matrix of a Graph*. DOI: [10.48550/arXiv.2607.25221](https://doi.org/10.48550/arXiv.2607.25221). URL: <https://arxiv.org/abs/2607.25221v1>.
 
 *Commentary.*
 
-The signs identify distinct vertices and the eigen-equation uses a real eigenvalue.
+Remark 4.3 specifies one +1 entry, one −1 entry and zeros elsewhere. The eigen-equation for Bα uses a real eigenvalue.
 
 **Definition 1.10 (Type of qualifying vectors).**
 
@@ -158,7 +156,7 @@ Edges of the class graph are Mathlib unordered pairs.
 
 **Definition 1.12 (Realization of each oriented dart).**
 
-$$\forall V \in Type,\; \forall [\operatorname{Fintype}\left(V\right)], \forall [\operatorname{DecidableEq}\left(V\right)], \forall G \in \operatorname{SimpleGraph}\left(V\right),\; \forall [\operatorname{DecidableRel}\left(G.\operatorname{Adj}\right)], \forall \alpha : \mathbb{R}, \operatorname{directedRealization}\left(G, \alpha\right) : \operatorname{SimpleGraph}.\operatorname{Dart}\left(\operatorname{classGraph}\left(\operatorname{classSetoid}\left(G, \alpha\right)\right)\right) \equiv \operatorname{SignedEigenvectors}\left(G, \alpha\right)$$
+$$\forall V \in Type,\; \forall [\operatorname{Fintype}\left(V\right)], \forall [\operatorname{DecidableEq}\left(V\right)], \forall G \in \operatorname{SimpleGraph}\left(V\right),\; \forall [\operatorname{DecidableRel}\left(G.\operatorname{Adj}\right)], \forall \alpha : \mathbb{R}, \begin{aligned}D = \operatorname{SimpleGraph}.\operatorname{Dart}\left(\operatorname{classGraph}\left(\operatorname{classSetoid}\left(G, \alpha\right)\right)\right)\\S = \operatorname{SignedEigenvectors}\left(G, \alpha\right)\\p : \forall d \in D,\; \operatorname{IsSignedEigenvector}\left(G, \alpha, \operatorname{signedPair}\left(d.\operatorname{fst}, d.\operatorname{snd}\right)\right)\\(f : D \to S) = \lambda d : D. \langle \operatorname{signedPair}\left(d.\operatorname{fst}, d.\operatorname{snd}\right), p\left(d\right)\rangle\\h : \operatorname{Function}.\operatorname{Bijective}\left(f\right)\\(\operatorname{directedRealization}\left(G, \alpha\right) : D \equiv S) = \operatorname{Equiv}.\operatorname{ofBijective}\left(f, h\right)\\\forall x \in S,\; \operatorname{directedRealization}\left(G, \alpha\right).\operatorname{invFun}\left(x\right) = \operatorname{Classical}.\operatorname{choose}\left(h.\operatorname{surjective}\left(x\right)\right)\end{aligned}$$
 
 *Formalization.* `D5/S3/Combinatorics/SpectralGraph/KeplerSupportTwo.directedRealization` (`✓ std3`).
 
@@ -168,7 +166,7 @@ $$\forall V \in Type,\; \forall [\operatorname{Fintype}\left(V\right)], \forall 
 
 *Commentary.*
 
-A dart (u,v) maps to the signedPair vector with +1 at u and −1 at v. Those two signs determine the inverse.
+The proof p(d) uses the dart's distinct endpoints for the signed coordinates and its class-graph edge for the eigen-equation. The +1 and −1 entries recover the ordered endpoints, so f is injective. For surjectivity, the signed coordinates and eigen-equation give an admissible dart with those endpoints. The inverse chooses a preimage using this surjectivity proof, and injectivity identifies it with that dart.
 
 **Theorem 1.13 (Unordered supports and signed eigenvectors).**
 
