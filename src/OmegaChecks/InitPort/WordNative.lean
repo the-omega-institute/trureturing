@@ -23,9 +23,11 @@ public def supported (source : Environment) (owner name : Name) : Bool :=
   let widths := [`toUInt8, `toUInt16, `toUInt32, `toUInt64, `toUSize]
   let ops := [`add, `sub, `mul, `div, `mod, `land, `lor, `xor, `complement, `neg,
               `shiftLeft, `shiftRight, `decLt, `decLe, `decEq, `toNat, `ofNat, `ofNatLT, `ofNat32]
-  [`OmegaInit.Prelude, `OmegaInit.Data.UInt.BasicAux, `OmegaInit.Data.UInt.Basic].contains owner &&
-    (((word? name.getPrefix).isSome && (ops ++ widths).contains method) ||
-     (name.getPrefix == `Bool && widths.contains method)) && isExtern source name
+  let base := owner == `OmegaInit.Prelude && [`Nat.div, `Nat.mod, `System.Platform.getNumBits].contains name
+  let inOwner := [`OmegaInit.Prelude, `OmegaInit.Data.UInt.BasicAux, `OmegaInit.Data.UInt.Basic].contains owner
+  let primitive := ((word? name.getPrefix).isSome && (ops ++ widths).contains method) ||
+    (name.getPrefix == `Bool && widths.contains method)
+  (base || (inOwner && primitive)) && isExtern source name
 
 private def symbol (n : Name) := "omega_word_" ++ (n.replacePrefix `Omega .anonymous).toString.replace "." "_"
 
@@ -67,9 +69,14 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
       decls := decls.push ((if b.borrow then "b_lean_obj_arg " else "lean_obj_arg ") ++ arg)
       args := args.push s!"lean_{w}_of_nat({arg})"
       unless b.borrow do cleanup := cleanup ++ s!"  lean_dec({arg});\n"
-    else if dom == `Nat && a.ty == .tobject && b.ty == .tobject && a.borrow == b.borrow then
+    else if dom == `Unit && a.ty == .tagged && b.ty == .tagged then
+      decls := decls.push ("lean_obj_arg " ++ arg)
+      args := args.push arg
+    else if dom == `Nat && a.ty == .tobject && b.ty == .tobject then
       decls := decls.push ((if b.borrow then "b_lean_obj_arg " else "lean_obj_arg ") ++ arg)
       args := args.push arg
+      if b.borrow && !a.borrow then throw <| IO.userError s!"borrowed Nat consumed at {n}"
+      if a.borrow && !b.borrow then cleanup := cleanup ++ s!"  lean_dec({arg});\n"
     else if dom == `Bool && a.ty == .uint8 && b.ty == .uint8 then
       decls := decls.push ("uint8_t " ++ arg)
       args := args.push arg
@@ -80,9 +87,17 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
     layout strict dom
     unless ret == t && result == .tobject do throw <| IO.userError s!"incorrect word result at {n}"
     pure ("lean_obj_res", s!"lean_{w}_to_nat({call})")
+  else if dom == `Subtype && official == `System.Platform.getNumBits then do
+    let some (some field) := impureTrivialStructureInfoExt.find? strict `Omega.Subtype
+      | throw <| IO.userError "missing platform width subtype layout"
+    unless field.fieldIdx == 0 && ret == .tobject && result == .tobject do
+      throw <| IO.userError "invalid platform width result ABI"
+    pure ("lean_obj_res", call)
   else if dom == `Nat && (ret == .tobject || ret == .tagged) && result == .tobject then pure ("lean_obj_res", call)
   else if dom == `Decidable && ret == .uint8 && result == .uint8 then pure ("uint8_t", call)
   else throw <| IO.userError s!"unsupported result of {n}: {dom}/{ret}/{result}"
-  return s!"\nLEAN_EXPORT {output} {adapter}({String.intercalate ", " decls.toList}) \{\n  {output} r = {value};\n{cleanup}  return r;\n}\n"
+  let proto := if official == `System.Platform.getNumBits then
+    "\nextern lean_obj_res lean_system_platform_nbits(lean_obj_arg);\n" else ""
+  return proto ++ s!"\nLEAN_EXPORT {output} {adapter}({String.intercalate ", " decls.toList}) \{\n  {output} r = {value};\n{cleanup}  return r;\n}\n"
 
 end OmegaChecks.InitPort.WordNative

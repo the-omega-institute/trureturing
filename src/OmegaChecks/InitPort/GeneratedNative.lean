@@ -128,6 +128,10 @@ private unsafe def install (source publicSource : Environment) (lib out : System
   let unaryNat := (env.find? `Omega.Nat).any (· matches .inductInfo _)
   let largeWordSizes := [`UInt16.size, `UInt32.size, `UInt64.size, `USize.size]
   for ci in part.constants do
+    if !onlyLayouts && !unaryNat && !oldNative.contains ci.name && !ci.isUnsafe && !ci.isPartial &&
+        OmegaChecks.InitPort.WordNative.supported source owner (originalName ci.name) then
+      words := words.push ci.name
+      continue
     match ci with
     | .inductInfo i =>
       if i.all.head? != some i.name then continue
@@ -146,9 +150,6 @@ private unsafe def install (source publicSource : Environment) (lib out : System
       if onlyLayouts || oldNative.contains d.name || ci.isUnsafe || ci.isPartial then continue
       let upstream := originalName d.name
       if unaryNat && largeWordSizes.contains upstream then continue
-      if !unaryNat && OmegaChecks.InitPort.WordNative.supported source owner upstream then
-        words := words.push d.name
-        continue
       if isExtern source upstream || (getImplementedBy? source upstream).isSome then continue
       candidates := candidates.push d.name
     | _ => continue
