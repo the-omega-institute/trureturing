@@ -119,6 +119,19 @@ class CoverageTest(unittest.TestCase):
             with self.subTest(mismatch=mismatch), self.assertRaisesRegex(ValueError, "statement formation argument"):
                 check_coverage(inventory(row | mismatch) | certificate)
 
+    def test_transport_path_for_an_equivalence_relation_remains_open(self):
+        for carrier in ("Quot", "Quotient"):
+            for recursor in (".rec", ".recOn"):
+                row = site("Init.Core", carrier + recursor, kind="definition", transportPathType=carrier + ".sound")
+                site_key = (row["module"], row["name"])
+                certificate = {"certifiedTransportPaths": [[*site_key, row["transportPathType"]]]}
+                expected = [site_key] if carrier == "Quotient" else []
+                self.assertEqual(check_coverage(inventory(row) | certificate), (0, expected))
+                with self.assertRaisesRegex(ValueError, "uncertified transport path"):
+                    check_coverage(inventory(row))
+                with self.assertRaisesRegex(ValueError, "inconsistent transport path"):
+                    check_coverage(inventory(row | {"kind": "theorem"}) | certificate)
+
     def test_strict_choice_requires_a_checked_target_and_an_unimplemented_site(self):
         row = site("Init.System.ST", "ST.Prim.Ref.get", strictImpliesAxiom="Classical.choice.{1}",
                    strictSelectionWitness="OmegaStrictReference.ST.Prim.Ref.get")

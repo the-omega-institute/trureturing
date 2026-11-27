@@ -118,6 +118,42 @@ public def certifyLiftArgument (official : Environment) (source : ConstantInfo) 
       unless Kernel.isDefEqGuarded env {} expected ty do throwError "wrong reduction of formation premise"
       discard <| replayBoundaryDependencies official env [witness.name, ``firstOfCoherence]
 
+open Lean Meta in
+/-- Read the last argument of the transport in a recursor's coherence premise.
+For recursors taking the quotient point first, use the first representative's class.
+After abstracting the remaining inputs the required path has precisely the pinned
+soundness type, with the original relation or setoid. -/
+public def certifyTransportPath (official : Environment) (source : ConstantInfo) (setoid pointFirst : Bool) : MetaM Unit := do
+  let env ← getEnv
+  let u := Level.param `u
+  let sound := if setoid then ``Quotient.sound else ``Quot.sound
+  let target ← getConstInfo sound
+  let soundType := target.type.instantiateLevelParams target.levelParams [u]
+  let type := source.type.instantiateLevelParams source.levelParams [u, .one]
+  forallTelescope soundType fun soundArgs goal => do
+    let #[α, r, a, b, p] := soundArgs | throwError "unexpected soundness arguments"
+    let q := mkApp3 (mkConst (if setoid then ``Quotient.mk else ``Quot.mk) [u]) α r a
+    let qType ← inferType q
+    let motive := Expr.lam `q qType (mkConst ``Unit) .default
+    let f := Expr.lam `a α (mkConst ``Unit.unit) .default
+    let args := if pointFirst then #[α, r, motive, q, f] else #[α, r, motive, f]
+    let specialize := mkAppN (mkConst source.name [u, .one]) args
+    let inferred ← ofExceptKernelException (Kernel.check env (← getLCtx) specialize)
+    let .forallE _ law _ _ ← instantiateForall type args | throwError "missing coherence premise"
+    unless Kernel.isDefEqGuarded env (← getLCtx) inferred (← instantiateForall type args) do
+      throwError "recursor specialization disagrees with its physical declaration"
+    let some (_, lhs, _) := (← instantiateForall law #[a, b, p]).eq? | throwError "missing coherence equation"
+    unless lhs.isAppOfArity ``Eq.ndrec 6 do throwError "missing transport"
+    let path := lhs.appArg!
+    unless path == mkAppN (mkConst sound [u]) soundArgs do throwError "unexpected path {path}"
+    let lift ← ofExceptKernelException (Kernel.check env (← getLCtx) lhs.appFn!)
+    let .forallE _ required _ _ := (← whnf lift) | throwError "missing path binder"
+    unless Kernel.isDefEqGuarded env (← getLCtx) required goal do throwError "the path has wrong type"
+    let pathType ← mkForallFVars soundArgs required
+    let clean ← replayBoundaryDependencies official env pathType.getUsedConstantsAsSet.toList
+    discard <| ofExceptKernelException (Kernel.check clean {} pathType)
+    unless Kernel.isDefEqGuarded clean {} soundType pathType do throwError "incomplete path type"
+
 end OmegaChecks.InitBoundaries.HeterogeneousQuotient
 
 namespace OmegaChecks.InitBoundaries.QuotientDecision
