@@ -18,7 +18,7 @@ namespace OmegaChecks.InitPort.WordNative
 private def bitsType : Name → Name
   | `Int8 => `UInt8
   | `Int16 => `UInt16
-  | `Int32 => `UInt32
+  | `Char | `Int32 => `UInt32
   | `Int64 => `UInt64
   | `ISize => `USize
   | n => n
@@ -74,6 +74,19 @@ public def usesPinnedFunction (n : Name) : Bool :=
   modelOperation n || ByteFoldNative.supported n || IndexedNative.supported n || SyntaxPositionNative.supported n || bytes || vector || [`Nat.repr, `Nat.reprFast, `Int.repr].contains n || [`BitVec.toHex, `BitVec.instToString].contains n || n == `Nat.bitwise || ((word? n.getPrefix).isSome && (method == `pow || (method == `ofInt && bitsType n.getPrefix == n.getPrefix))) ||
     (n.getPrefix == `Int && [`negOfNat, `subNatNat, `sign, `toNat, `pow, `fdiv, `fmod, `bdiv, `bmod].contains method)
 
+private def bootstrapStringOp (n : Name) : Bool :=
+  (n.getPrefix == `String.Internal && [`length, `append, `posOf, `offsetOfPos, `pushn, `next, `isEmpty,
+    `isPrefixOf, `contains, `get, `capitalize, `atEnd, `trim, `front, `drop, `dropRight, `getUTF8Byte,
+    `ugetUTF8Byte, `any, `nextWhile, `intercalate, `foldl].contains (n.updatePrefix .anonymous)) ||
+    (n.getPrefix == `Substring.Raw.Internal && [`toString, `drop, `front, `takeWhile, `extract, `all, `beq,
+      `isEmpty, `get, `prev].contains (n.updatePrefix .anonymous)) ||
+    [`String.Pos.Raw.Internal.min, `String.Pos.Raw.Internal.sub].contains n
+
+/-- The bootstrap externs implemented in Lean are exported by the pinned string library. -/
+public def usesStringExport (n : Name) : Bool :=
+  bootstrapStringOp n && ![`String.Internal.next, `String.Internal.get, `String.Internal.atEnd,
+    `String.Internal.getUTF8Byte, `String.Internal.ugetUTF8Byte, `String.Internal.length, `String.Internal.append].contains n
+
 public def supported (source : Environment) (owner name : Name) : Bool :=
   let method := name.updatePrefix .anonymous
   let widths := [`toUInt8, `toUInt16, `toUInt32, `toUInt64, `toUSize, `toInt8, `toInt16, `toInt32, `toInt64, `toISize]
@@ -95,14 +108,14 @@ public def supported (source : Environment) (owner name : Name) : Bool :=
   let modular := (owner == `OmegaInit.Data.Nat.Gcd && name == `Nat.gcd) ||
     (owner == `OmegaInit.Data.Nat.Div.Basic && name == `Nat.divExact) ||
     (owner == `OmegaInit.Data.Nat.PowMod && name == `Nat.powMod)
-  let stringOp := owner == `OmegaInit.Data.String.Bootstrap && [`String.Internal.length, `String.Internal.append].contains name
+  let stringOp := owner == `OmegaInit.Data.String.Bootstrap && bootstrapStringOp name
   let textCompare := (owner == `OmegaInit.Data.String.PosRaw && [`String.getUTF8Byte, `String.getUtf8Byte].contains name) ||
     (owner == `OmegaInit.Data.Ord.String && name == `String.compare) ||
     (owner == `OmegaInit.Data.String.Slice && [`String.Slice.hash, `String.Slice.instDecidableLt].contains name) ||
     (owner == `OmegaInit.Data.String.Pattern.Basic && name == `String.Slice.Pattern.Internal.memcmpStr)
   let intPrimitive := intOwner && name.getPrefix == `Int &&
     [`neg, `add, `sub, `mul, `decEq, `decLe, `decLt, `decNonneg, `natAbs, `ediv, `emod, `tdiv, `tmod, `divExact].contains method
-  let primitive := ((word? name.getPrefix).isSome && (ops ++ widths).contains method) ||
+  let primitive := ((word? name.getPrefix).isSome && name.getPrefix != `Char && (ops ++ widths).contains method) ||
     (name.getPrefix == `Bool && widths.contains method)
   isFloatCall source owner name ||
     (owner == `OmegaInit.Data.ByteArray.Basic && ByteFoldNative.supported name) ||
@@ -150,6 +163,17 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
   if IndexedNative.supported official then return ← IndexedNative.wrapper source strict n (symbol n)
   if SyntaxPositionNative.supported official then return ← SyntaxPositionNative.wrapper source strict n (symbol n)
   let some ci := source.find? official | throw <| IO.userError s!"unknown word primitive {official}"
+  if bootstrapStringOp official then
+    let some strictInfo := strict.find? n | throw <| IO.userError s!"missing strict string operation {n}"
+    unless strictInfo.type == InitKernelPort.translate InitKernelPort.portName ci.type do
+      throw <| IO.userError s!"strict string input type differs at {n}"
+    checkStrictString strict
+    if official.getPrefix == `Substring.Raw.Internal then
+      for (env, name, text) in [(source, `Substring.Raw.mk, ImpureType.object), (strict, `Omega.Substring.Raw.mk, ImpureType.tobject)] do
+        let some fields := ctorLayoutExt.find? env name | throw <| IO.userError s!"missing substring record {name}"
+        let #[.object 0 field, .object 1 start, .object 2 stop] := fields.fieldInfo | throw <| IO.userError "invalid substring fields"
+        unless field == text && start == ImpureType.tobject && stop == ImpureType.tobject && fields.ctorInfo.cidx == 0 && fields.ctorInfo.size == 3 && fields.ctorInfo.usize == 0 && fields.ctorInfo.ssize == 0 do
+          throw <| IO.userError "invalid substring record layout"
   let compiled ← if official == `Nat.repr then do
     unless (Compiler.getImplementedBy? source official) == some `Nat.reprFast do throw <| IO.userError "unexpected Nat.repr implementation"
     let some fast := source.find? `Nat.reprFast | throw <| IO.userError "missing pinned Nat.reprFast"
@@ -181,6 +205,30 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
     type := body
     if a.ty == .erased && b.ty == .erased then continue
     let arg := "a" ++ toString i
+    if bootstrapStringOp official && dom.isForall then
+      let arrow := fun (a b : Expr) => Expr.forallE .anonymous a b .default
+      let unary := arrow (mkConst `Char) (mkConst `Bool)
+      let binary := arrow (mkConst `String) (arrow (mkConst `Char) (mkConst `String))
+      let fold := dom == binary && official == `String.Internal.foldl
+      unless (fold || dom == unary) && a.ty == .object && b.ty == .object && !a.borrow do
+        throw <| IO.userError s!"invalid pinned string callback {n}"
+      layout strict `Char
+      IndexedNative.checkDataTypes source strict [`Bool]
+      hasString := true
+      let f := if fold then "omega_string_fold_step" else "omega_string_predicate"
+      decls := decls.push ((if b.borrow then "b_lean_obj_arg " else "lean_obj_arg ") ++ arg)
+      if b.borrow then prepare := prepare ++ s!"  lean_inc({arg});\n"
+      prepare := prepare ++ s!"  lean_object *cb{i} = lean_alloc_closure((void *){f}, {if fold then 3 else 2}, 1);\n  lean_closure_set(cb{i}, 0, {arg});\n"
+      args := args.push s!"cb{i}"
+      continue
+    if official == `String.Internal.intercalate && dom == mkApp (mkConst `List [.zero]) (mkConst `String) then
+      unless a.ty == .tobject && b.ty == .tobject && !a.borrow do throw <| IO.userError "invalid list of strings ABI"
+      IndexedNative.checkDataTypes source strict [`List]
+      decls := decls.push ((if b.borrow then "b_lean_obj_arg " else "lean_obj_arg ") ++ arg)
+      prepare := prepare ++ s!"  lean_object *strings = omega_string_list_to_lean({arg});\n"
+      unless b.borrow do cleanup := cleanup ++ s!"  lean_dec({arg});\n"
+      args := args.push "strings"
+      continue
     let byteSearch := official == `ByteArray.findIdx?.loop || official == `ByteArray.findFinIdx?.loop
     if (official == `Nat.bitwise && i == 0) || (byteSearch && i == 1) then
       let bool := mkConst `Bool
@@ -246,8 +294,11 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
       args := args.push arg
       if b.borrow && !a.borrow then prepare := prepare ++ s!"  lean_inc({arg});\n"
       if a.borrow && !b.borrow then cleanup := cleanup ++ s!"  lean_dec({arg});\n"
-    else if [`Nat, `Fin, `BitVec].contains dom && a.ty == .tobject && b.ty == .tobject then
-      if dom != `Nat then layout strict dom
+    else if [`Nat, `Fin, `BitVec, `String.Pos.Raw].contains dom && a.ty == .tobject && b.ty == .tobject then
+      if dom == `String.Pos.Raw then
+        let some (some field) := impureTrivialStructureInfoExt.find? strict (`Omega ++ dom) | throw <| IO.userError "missing raw position"
+        unless field.fieldIdx == 0 do throw <| IO.userError "invalid raw position layout"
+      else if dom != `Nat then layout strict dom
       decls := decls.push ((if b.borrow then "b_lean_obj_arg " else "lean_obj_arg ") ++ arg)
       args := args.push arg
       if b.borrow && !a.borrow then prepare := prepare ++ s!"  lean_inc({arg});\n"
@@ -303,6 +354,13 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
       args := args.push s!"string{i}"
       -- The byte reader's public C primitive borrows both inputs, also for its deprecated alias.
       if a.borrow || target == "lean_string_get_byte_fast" then cleanup := cleanup ++ s!"  lean_dec(string{i});\n"
+      unless b.borrow do cleanup := cleanup ++ s!"  lean_dec({arg});\n"
+    else if dom == `Substring.Raw && a.ty == .object && b.ty == .object then
+      hasString := true
+      decls := decls.push ((if b.borrow then "b_lean_obj_arg " else "lean_obj_arg ") ++ arg)
+      prepare := prepare ++ s!"  lean_object *slice{i} = omega_convert_substring({arg}, omega_string_to_lean);\n"
+      args := args.push s!"slice{i}"
+      if a.borrow then cleanup := cleanup ++ s!"  lean_dec(slice{i});\n"
       unless b.borrow do cleanup := cleanup ++ s!"  lean_dec({arg});\n"
     else if dom == `Int && a.ty == .tobject && b.ty == .object && a.borrow then
       checkIntLayout strict
@@ -372,6 +430,11 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
     prepare := prepare ++ "  lean_object *closure = lean_alloc_closure((void *)omega_bitvec_to_string, 2, 1);\n"
     prepare := prepare ++ s!"  lean_closure_set(closure, 0, {call});\n"
     pure ("lean_obj_res", "closure")
+  else if dom == `Substring.Raw && ret == .object && result == .object then do
+    hasString := true
+    prepare := prepare ++ s!"  lean_object *native_slice = {call};\n"
+    cleanup := cleanup ++ "  lean_dec(native_slice);\n"
+    pure ("lean_obj_res", "omega_convert_substring(native_slice, omega_string_from_lean)")
   else if [`String, `ByteArray].contains dom then do
     checkStrictString strict
     unless ret == .object && result == .tobject do throw <| IO.userError s!"incorrect string result at {n}"
@@ -396,13 +459,17 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
   else if dom == `BitVec && ret == .tobject && result == .tobject then do
     layout strict dom
     pure ("lean_obj_res", call)
+  else if dom == `String.Pos.Raw && ret == .tobject && result == .tobject then do
+    let some (some field) := impureTrivialStructureInfoExt.find? strict (`Omega ++ dom) | throw <| IO.userError "missing raw position"
+    unless field.fieldIdx == 0 do throw <| IO.userError "invalid raw position layout"
+    pure ("lean_obj_res", call)
   else if dom == `Nat && (ret == .tobject || ret == .tagged) && result == .tobject then pure ("lean_obj_res", call)
   else if dom == `Ordering && ret == .uint8 && result == .uint8 then do
     IndexedNative.checkDataTypes source strict [`Ordering]
     pure ("uint8_t", call)
   else if [`Bool, `Decidable].contains dom && ret == .uint8 && result == .uint8 then pure ("uint8_t", call)
   else throw <| IO.userError s!"unsupported result of {n}: {dom}/{ret}/{result}"
-  let proto ← if usesPinnedFunction official then do
+  let proto ← if usesPinnedFunction official || usesStringExport official then do
     let ctype (t : IR.IRType) : IO String := match t with
       | .uint8 => pure "uint8_t"
       | .uint16 => pure "uint16_t"

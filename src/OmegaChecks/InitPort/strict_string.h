@@ -35,14 +35,49 @@ static lean_obj_res omega_string_from_lean(b_lean_obj_arg s) {
     return omega_bytes_from_data((const unsigned char *)lean_string_cstr(s), lean_string_size(s) - 1);
 }
 
-/* The three physical fields of Slice are the backing string and two byte offsets. */
-static inline lean_obj_res omega_slice_to_lean(b_lean_obj_arg slice) {
-    lean_object *converted = lean_alloc_ctor(0, 3, 0);
-    lean_ctor_set(converted, 0, omega_string_to_lean(lean_ctor_get(slice, 0)));
-    for (unsigned field = 1; field <= 2; ++field) {
-        lean_object *offset = lean_ctor_get(slice, field);
+/* Convert the string field while preserving both byte offsets. The caller owns the new record. */
+static lean_obj_res omega_convert_substring(b_lean_obj_arg slice, lean_obj_res (*convert)(b_lean_obj_arg)) {
+    lean_object *result = lean_alloc_ctor(0, 3, 0);
+    lean_ctor_set(result, 0, convert(lean_ctor_get(slice, 0)));
+    for (unsigned i = 1; i < 3; ++i) {
+        lean_object *offset = lean_ctor_get(slice, i);
         lean_inc(offset);
-        lean_ctor_set(converted, field, offset);
+        lean_ctor_set(result, i, offset);
     }
-    return converted;
+    return result;
+}
+
+static lean_obj_res omega_string_list_to_lean(b_lean_obj_arg strings) {
+    lean_object *head = lean_box(0), *last = NULL;
+    while (!lean_is_scalar(strings)) {
+        lean_object *cell = lean_alloc_ctor(1, 2, 0);
+        lean_ctor_set(cell, 0, omega_string_to_lean(lean_ctor_get(strings, 0)));
+        lean_ctor_set(cell, 1, lean_box(0));
+        if (last) lean_ctor_set(last, 1, cell);
+        else head = cell;
+        last = cell;
+        strings = lean_ctor_get(strings, 1);
+    }
+    return head;
+}
+
+static lean_obj_res omega_string_predicate(lean_obj_arg f, lean_obj_arg c) {
+    uint32_t scalar = lean_unbox_uint32(c);
+    lean_dec(c);
+    return lean_apply_1(f, lean_uint32_to_nat(scalar));
+}
+
+static lean_obj_res omega_string_fold_step(lean_obj_arg f, lean_obj_arg s, lean_obj_arg c) {
+    lean_object *bytes = omega_string_from_lean(s);
+    uint32_t scalar = lean_unbox_uint32(c);
+    lean_dec(s);
+    lean_dec(c);
+    lean_object *updated = lean_apply_2(f, bytes, lean_uint32_to_nat(scalar));
+    lean_object *result = omega_string_to_lean(updated);
+    lean_dec(updated);
+    return result;
+}
+
+static inline lean_obj_res omega_slice_to_lean(b_lean_obj_arg slice) {
+    return omega_convert_substring(slice, omega_string_to_lean);
 }

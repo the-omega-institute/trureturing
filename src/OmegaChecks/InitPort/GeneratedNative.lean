@@ -334,11 +334,12 @@ private unsafe def install (source publicSource : Environment) (lib out : System
       if oldNative.contains n then throw <| IO.userError s!"native symbol collision at {n}"
     let file := modToFilePath out owner "c"
     emitOwner st.env owner part.imports ctx file
-    if words.any (fun n => OmegaChecks.InitPort.WordNative.usesPinnedFunction (originalName n)) then
-      let upstream := owner.replacePrefix `OmegaInit `Init
+    let stringExports := words.any fun n => OmegaChecks.InitPort.WordNative.usesStringExport (originalName n)
+    if stringExports || words.any (fun n => OmegaChecks.InitPort.WordNative.usesPinnedFunction (originalName n)) then
+      let upstream := if stringExports then `Init.Data.String else owner.replacePrefix `OmegaInit `Init
       let init := mkModuleInitializationFunctionName (phases := .runtime) owner st.env.getModulePackage?
       let upstreamInit := mkModuleInitializationFunctionName (phases := .runtime) upstream
-        (source.getModulePackageByIdx? (source.getModuleIdx? upstream).get!)
+        (source.getModuleIdx? upstream >>= source.getModulePackageByIdx?)
       let generated ← IO.FS.readFile file
       let decl := s!"LEAN_EXPORT lean_object* {init}(uint8_t builtin) \{"
       let parts := generated.splitOn decl
