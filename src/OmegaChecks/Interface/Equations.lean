@@ -1,7 +1,6 @@
 module
 
 import Init.Data.List.SplitOn.Basic
-public import OmegaChecks.Interface.Equations.Option
 public import OmegaChecks.Interface.Equations.List
 public import OmegaChecks.Interface.Equations.Logic
 public import OmegaChecks.Interface.Equations.Array

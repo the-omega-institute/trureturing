@@ -1,6 +1,5 @@
 module
 
-public import OmegaChecks.InitPort.Alternatives.Option.Loop
 public import Init.Data.Option.Lemmas
 public import Init.Data.Option.Attach
 public import Init.Data.Option.Monadic
