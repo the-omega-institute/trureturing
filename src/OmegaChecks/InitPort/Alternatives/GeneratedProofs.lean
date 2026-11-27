@@ -28,6 +28,8 @@ import all Init.Data.List.Sort.Impl
 import all Init.Data.BitVec.Lemmas
 import all Init.Data.Array.Attach
 import all Init.Data.Vector.Attach
+import all Init.Data.List.ToArray
+import all Init.Data.List.SplitOn.Basic
 namespace OmegaChecks.InitPort.Alternatives
 
 /-- A course-of-values induction step can reuse the theorem on its original arguments. -/
@@ -460,6 +462,44 @@ public theorem Vector.pmapImpl.eq_1 :
   apply _root_.Vector.pmap_congr_left
   intros
   rfl
+
+
+public theorem Array.eraseIdxIfInBounds.eq_1 :
+    type_of% (private_decl% @_root_.Array.eraseIdxIfInBounds.eq_1) := by
+  intro α xs i
+  obtain ⟨xs⟩ := xs
+  change xs.toArray.eraseIdxIfInBounds i = if h : i < xs.toArray.size then xs.toArray.eraseIdx i h else xs.toArray
+  split
+  next h => rw [_root_.List.eraseIdxIfInBounds_toArray, _root_.List.eraseIdx_toArray]
+  next h => rw [_root_.List.eraseIdxIfInBounds_toArray,
+      _root_.List.eraseIdx_of_length_le (Nat.le_of_not_lt h)]
+
+private theorem splitAcc (p : α → Bool) (xs : List α) (acc : Array α) (out : Array (List α)) :
+    List.splitOnPTR.go p xs acc out = out.toList ++ List.splitOnPPrepend p xs acc.toList.reverse := by
+  induction xs generalizing acc out with
+  | nil =>
+    rw [List.splitOnPTR.go, Array.toListAppend_eq, List.splitOnPPrepend, List.reverse_reverse]
+  | cons x xs ih =>
+    by_cases hit : p x
+    · rw [List.splitOnPTR.go, ite_eq_left hit, List.splitOnPPrepend, ite_eq_left hit, ih,
+        Array.toList_push, List.append_assoc, List.reverse_reverse]
+      rfl
+    · rw [List.splitOnPTR.go, ite_eq_right hit, List.splitOnPPrepend, ite_eq_right hit, ih,
+        Array.toList_push, List.reverse_append]
+      rfl
+
+public theorem List.splitOnPTR.eq_1 :
+    type_of% (private_decl% @_root_.List.splitOnPTR.eq_1) := by
+  intro α p xs
+  rw [← _root_.List.splitOnP_eq_splitOnPTR]
+  exact (splitAcc p xs #[] #[]).symm
+
+public theorem String.Slice.Pos.nextFast.eq_1 :
+    type_of% (private_decl% @_root_.String.Slice.Pos.nextFast.eq_1) := by
+  intro s pos h
+  rw [← _root_.String.Slice.Pos.next_eq_nextFast]
+  simp [_root_.String.Slice.Pos.ext_iff, _root_.String.Pos.Raw.ext_iff, _root_.String.Slice.Pos.get_eq_get_str]
+  omega
 
 
 end OmegaChecks.InitPort.Alternatives
