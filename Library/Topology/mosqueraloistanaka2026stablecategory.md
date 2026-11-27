@@ -39,6 +39,9 @@ strata_touched:
   - D5/S3/Topology/StableCategory/FourPieceCategoricalCover
   - D5/S3/Topology/StableCategory/DimensionFourCategoricalColour
   - D5/S3/Topology/StableCategory/LebesgueStarAssignment
+  - D5/S3/Topology/StableCategory/TetrahedralOneSidedRefinement
+  - D5/S3/Topology/StableCategory/TetrahedralAsymmetricIteration
+  - D5/S3/Topology/StableCategory/ThreePieceCategoricalCover
 license: citation-only
 triage: anchor
 ---
