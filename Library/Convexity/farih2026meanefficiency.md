@@ -24,8 +24,10 @@ minimum and about keeping a two-point extremal law. [Versioned paper](https://ar
 At α = 1, the vector (1, 5/3, 3, 17/3) has variance 2/3 and third moment
 3, above the minimum 25/9. Its exact attained maximum is 11/18. The
 published upper endpoint at this variance is 5/8. Dropping the fourth
-constraint admits a law with value 37/60, so the fourth constraint also lowers
-the attainable maximum relative to the relaxed class. The paper supplies
+constraint admits a feasible law with value 37/60, strictly above the attained
+four-moment maximum 11/18. The Lean result establishes this witness comparison.
+The exact three-moment optimum and its attainment are outside the theorem's
+statement. The paper supplies
 the model and the question. The exact instance is the repository result.
 [Preregistered event](https://github.com/the-omega-institute/trureturing/issues/34960#issuecomment-7227145477) · [Public result](https://github.com/the-omega-institute/trureturing/issues/34960#issuecomment-7227674513)
 

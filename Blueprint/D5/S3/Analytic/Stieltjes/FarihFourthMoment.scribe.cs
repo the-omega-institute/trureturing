@@ -90,7 +90,7 @@ internal sealed class FarihFourthMomentDocument : IScribeDocumentDefinition
             Blocks(Paragraph(Text(explanation))), DescribeRole.Definition);
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "At one prescribed moment vector, a fourth moment strictly lowers the maximum mean efficiency and excludes two-point laws.",
+        "At one prescribed moment vector, a feasible three-moment law has mean efficiency 37/60, above the attained four-moment maximum 11/18. No two-point law satisfies all four moments.",
         H("Farih’s exact fourth-moment maximum"),
         Blocks(
             Definition("farih-raw-moment", "rawMoment", "Raw moment",
@@ -138,7 +138,7 @@ internal sealed class FarihFourthMomentDocument : IScribeDocumentDefinition
                     Paragraph(Text("Write ℳ(ℝ) for all Borel measures on ℝ. The superscript ae and subscript x ∼ μ bind x almost everywhere with respect to μ. The upper bound holds for every feasible μ, and μ₄ attains it. Two-point concentration is impossible for any pair of real points, including a repeated point. Every four-moment feasible law ν lies strictly below the specific relaxed witness μ₃.")),
                     Paragraph(Text("The quartic Q(x) = (x⁴ − 7x³ + 20x² − 32x + 36)/36 has gap Q(x) − (1+x)⁻¹ = x(x−1)²(x−2)²/[36(1+x)]. This identity gives a pointwise majorant on x ≥ 0. All its monomials are integrable on a feasible law. Integrating Q gives 11/18, and the gap vanishes at the three atoms of μ₄.")),
                     Paragraph(Text("Concentration on a pair a,b forces the raw-moment recurrence mₙ₊₂ = (a+b)mₙ₊₁ − ab mₙ. Normalization and the first three moments force a+b = 2 and ab = 1/3, hence m₄ = 49/9. This conflicts with 17/3 for every such pair.")),
-                    Paragraph(Text("Direct integration on μ₃ gives 37/60, exceeding 11/18 by 1/180. In the paper’s earlier bracket, variance 5/3 − 1 = 2/3 gives the upper endpoint U(1,2/3) = 5/8 by Eqs. (13) and (30), a gap of 1/72 from the four-moment maximum. The Lean result carries the strict witness comparison. The general fourth-moment hierarchy, the exact relaxed optimum, and optimizer uniqueness lie outside its statement."))),
+                    Paragraph(Text("Direct integration on μ₃ gives 37/60, exceeding 11/18 by 1/180. In the paper’s earlier bracket, variance 5/3 − 1 = 2/3 gives the upper endpoint U(1,2/3) = 5/8 by Eqs. (13) and (30), a gap of 1/72 from the four-moment maximum. The Lean result carries the strict witness comparison. The general fourth-moment hierarchy, the exact three-moment optimum and its attainment, and optimizer uniqueness lie outside its statement."))),
                 DescribeRole.Theorem,
                 openProblemResolutionClaim: new OpenProblemResolutionClaim(
                     ProblemSlugRef.Create("farih-fourth-moment-mean-efficiency"),

@@ -2,7 +2,7 @@
 
 ## Abstract
 
-At one prescribed moment vector, a fourth moment strictly lowers the maximum mean efficiency and excludes two-point laws.
+At one prescribed moment vector, a feasible three-moment law has mean efficiency 37/60, above the attained four-moment maximum 11/18. No two-point law satisfies all four moments.
 
 **Definition 1.1 (Raw moment).**
 
@@ -134,7 +134,7 @@ The quartic Q(x) = (x⁴ − 7x³ + 20x² − 32x + 36)/36 has gap Q(x) − (1+x
 
 Concentration on a pair a,b forces the raw-moment recurrence mₙ₊₂ = (a+b)mₙ₊₁ − ab mₙ. Normalization and the first three moments force a+b = 2 and ab = 1/3, hence m₄ = 49/9. This conflicts with 17/3 for every such pair.
 
-Direct integration on μ₃ gives 37/60, exceeding 11/18 by 1/180. In the paper’s earlier bracket, variance 5/3 − 1 = 2/3 gives the upper endpoint U(1,2/3) = 5/8 by Eqs. (13) and (30), a gap of 1/72 from the four-moment maximum. The Lean result carries the strict witness comparison. The general fourth-moment hierarchy, the exact relaxed optimum, and optimizer uniqueness lie outside its statement.
+Direct integration on μ₃ gives 37/60, exceeding 11/18 by 1/180. In the paper’s earlier bracket, variance 5/3 − 1 = 2/3 gives the upper endpoint U(1,2/3) = 5/8 by Eqs. (13) and (30), a gap of 1/72 from the four-moment maximum. The Lean result carries the strict witness comparison. The general fourth-moment hierarchy, the exact three-moment optimum and its attainment, and optimizer uniqueness lie outside its statement.
 
 ## References
 
