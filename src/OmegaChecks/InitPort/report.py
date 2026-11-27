@@ -37,6 +37,9 @@ ENVELOPE_CANCELLATION = {
     ("Init.Grind.Ring.Envelope", "Lean.Grind.Ring.OfSemiring.ofSemiring"): "definition",
     ("Init.Grind.Ring.Envelope", "Lean.Grind.CommRing.OfCommSemiring.ofCommSemiring"): "definition",
     ("Init.Grind.Module.Envelope", "Lean.Grind.IntModule.OfNatModule.ofNatModule"): "definition",
+    ("Init.Grind.Module.Envelope", "Lean.Grind.IntModule.OfNatModule.add_zsmul"): "theorem",
+    ("Init.Grind.Module.Envelope", "Lean.Grind.IntModule.OfNatModule.instIsPartialOrderQ"): "theorem",
+    ("Init.Grind.Module.Envelope", "Lean.Grind.IntModule.OfNatModule.instIsLinearOrderQ"): "theorem",
 }
 
 

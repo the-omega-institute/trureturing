@@ -5,7 +5,7 @@ import all Init.Grind.Module.Envelope
 import Init.GrindInstances.Ring.Nat
 
 namespace OmegaChecks.InitBoundaries.EnvelopeCancellation
-open Lean Lean.Grind
+open Lean Lean.Grind Std
 
 private abbrev ringPoint := Ring.OfSemiring.Q.mk (α := Nat) (1, 0)
 private abbrev modulePoint := IntModule.OfNatModule.Q.mk (α := Nat) (1, 0)
@@ -24,12 +24,32 @@ private theorem commRingProjection : type_of% ringLaw :=
 private theorem moduleProjection : type_of% moduleLaw :=
   @AddCommGroup.neg_add_cancel _ (IntModule.OfNatModule.ofNatModule (α := Nat)).toAddCommGroup modulePoint
 
+private abbrev diagonal := IntModule.OfNatModule.Q.mk (α := Nat) (1, 1)
+private abbrev zeroPoint := IntModule.OfNatModule.Q.mk (α := Nat) (0, 0)
+
+/-- Both envelope comparisons on these inputs reduce to the reflexive comparison 1 ≤ 1. -/
+private theorem partialAntisymmetry : diagonal = zeroPoint :=
+  @IsPartialOrder.le_antisymm _ _ (@IntModule.OfNatModule.instIsPartialOrderQ Nat _ _ _ _)
+    diagonal zeroPoint (Nat.le_refl 1) (Nat.le_refl 1)
+
+private theorem linearAntisymmetry : diagonal = zeroPoint :=
+  @IsPartialOrder.le_antisymm _ _ (@IntModule.OfNatModule.instIsLinearOrderQ Nat _ _ _ _).toIsPartialOrder
+    diagonal zeroPoint (Nat.le_refl 1) (Nat.le_refl 1)
+
+private theorem scalarCancellation :
+    IntModule.OfNatModule.add (IntModule.OfNatModule.zsmul 1 modulePoint)
+      (IntModule.OfNatModule.zsmul (-1) modulePoint) = IntModule.OfNatModule.zsmul (1 + -1) modulePoint :=
+  (IntModule.OfNatModule.add_zsmul 1 (-1) modulePoint).symm
+
 private def observations := [
   (`Init.Grind.Ring.Envelope, ``Ring.OfSemiring.neg_add_cancel, ``ringLaw),
   (`Init.Grind.Module.Envelope, ``IntModule.OfNatModule.neg_add_cancel, ``moduleLaw),
   (`Init.Grind.Ring.Envelope, ``Ring.OfSemiring.ofSemiring, ``ringProjection),
   (`Init.Grind.Ring.Envelope, ``CommRing.OfCommSemiring.ofCommSemiring, ``commRingProjection),
-  (`Init.Grind.Module.Envelope, ``IntModule.OfNatModule.ofNatModule, ``moduleProjection)]
+  (`Init.Grind.Module.Envelope, ``IntModule.OfNatModule.ofNatModule, ``moduleProjection),
+  (`Init.Grind.Module.Envelope, ``IntModule.OfNatModule.add_zsmul, ``scalarCancellation),
+  (`Init.Grind.Module.Envelope, ``IntModule.OfNatModule.instIsPartialOrderQ, ``partialAntisymmetry),
+  (`Init.Grind.Module.Envelope, ``IntModule.OfNatModule.instIsLinearOrderQ, ``linearAntisymmetry)]
 
 public def observation? (owner name : Name) : Option Name := do
   let (_, _, observation) ← observations.find? fun (m, n, _) => m == owner && n == name
@@ -47,7 +67,8 @@ public def counterexample (official witnesses : Environment) (source : ConstantI
     | throw <| IO.userError s!"unexpected envelope declaration {source.name}"
   let some (.thmInfo template) := witnesses.find? probe | throw <| IO.userError s!"missing {probe}"
   let call := template.value.replace fun e =>
-    if e.isConstOf ``ringPoint || e.isConstOf ``modulePoint then (witnesses.find? e.constName!).bind ConstantInfo.value?
+    if [``ringPoint, ``modulePoint, ``diagonal, ``zeroPoint].any e.isConstOf then
+      (witnesses.find? e.constName!).bind ConstantInfo.value?
     else none
   unless call.getUsedConstantsAsSet.contains source.name && (official.find? source.name).any (·.type.equal source.type) do
     throw <| IO.userError s!"probe does not use the declared envelope {source.name}"

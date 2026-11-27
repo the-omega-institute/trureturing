@@ -345,7 +345,7 @@ public def certify (official witnesses : Environment) (source : ConstantInfo) (r
   let some proof := witnesses.find? refuter | throw <| IO.userError s!"missing {refuter}"
   let decision := source.name == ``Quotient.decidableEq
   let envelope := refuter == ``refuteEnvelopeCancellation
-  unless (if decision || (envelope && source.name.getString! != "neg_add_cancel") then
+  unless (if envelope then source.isTheorem || (source matches .defnInfo _) else if decision then
       source matches .defnInfo _ else source.isTheorem) && source.numLevelParams == 1 do
     throw <| IO.userError s!"unexpected signature at {source.name}"
   let type := interpret official (source.type.instantiateLevelParams source.levelParams [.one])
