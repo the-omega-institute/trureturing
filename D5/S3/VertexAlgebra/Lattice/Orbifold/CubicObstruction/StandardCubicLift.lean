@@ -1,6 +1,6 @@
-/- GID: D5/S3/VertexAlgebra/Lattice/Orbifold/CubicObstruction/StandardCubicOfProjectedInversion
+/- GID: D5/S3/VertexAlgebra/Lattice/Orbifold/CubicObstruction/StandardCubicLift
    generality: I
-   mirror-B: D5/B/S3/VertexAlgebra/Lattice/Orbifold/CubicObstruction/StandardCubicOfProjectedInversion
+   mirror-B: D5/B/S3/VertexAlgebra/Lattice/Orbifold/CubicObstruction/StandardCubicLift
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
@@ -21,7 +21,7 @@ compile_only_with_mathlib
 
 set_option autoImplicit false
 
-namespace D5.S3.VertexAlgebra.Lattice.Orbifold.CubicObstruction.StandardCubicOfProjectedInversion
+namespace D5.S3.VertexAlgebra.Lattice.Orbifold.CubicObstruction.StandardCubicLift
 
 open LatticeGeneratingFieldLocality LatticeAllStateField
 open DiagonalCharacterConjugacy (PreservesModes ground diagonal conjugate_of_fixed_ground)
@@ -140,4 +140,4 @@ theorem standard_cubic_of_projected_inversion
 
 #print axioms standard_cubic_of_projected_inversion
 
-end D5.S3.VertexAlgebra.Lattice.Orbifold.CubicObstruction.StandardCubicOfProjectedInversion
+end D5.S3.VertexAlgebra.Lattice.Orbifold.CubicObstruction.StandardCubicLift

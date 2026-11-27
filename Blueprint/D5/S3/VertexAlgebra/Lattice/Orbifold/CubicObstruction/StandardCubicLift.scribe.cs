@@ -3,9 +3,9 @@ using static StrataLint.Scribe.DefinitionDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.VertexAlgebra.Lattice.Orbifold.CubicObstruction;
 
-internal sealed class StandardCubicOfProjectedInversionDocument : IScribeDocumentDefinition
+internal sealed class StandardCubicLiftDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S3/VertexAlgebra/Lattice/Orbifold/CubicObstruction/StandardCubicOfProjectedInversion.";
+    private const string Prefix = "D5/S3/VertexAlgebra/Lattice/Orbifold/CubicObstruction/StandardCubicLift.";
     private static readonly LibraryNoteRef Background =
         LibraryNoteRef.Create("D5/L/VertexAlgebra/flm1988monster");
 

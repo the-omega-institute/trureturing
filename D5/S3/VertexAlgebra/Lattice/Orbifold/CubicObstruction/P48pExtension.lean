@@ -9,7 +9,7 @@
 import D5.S3.FiniteGroups.Cyclic.CyclicAssociatorObstruction
 import D5.S3.FiniteGroups.Cyclic.P48pCartanDichotomy
 import D5.S3.VertexAlgebra.Lattice.Automorphisms.ReducibleActionWeightTwo
-import D5.S3.VertexAlgebra.Lattice.Orbifold.CubicObstruction.StandardCubicOfProjectedInversion
+import D5.S3.VertexAlgebra.Lattice.Orbifold.CubicObstruction.StandardCubicLift
 import OmegaBuild.Commands
 
 /-!
@@ -34,7 +34,7 @@ open FiniteGroups.Cyclic.CyclicAssociatorObstruction
 open LatticeActualConformalState (omega)
 open LatticeGeneratingFieldLocality (LatticeData Carrier Charge bilinear)
 open LatticePositiveEnergy (grade)
-open StandardCubicOfProjectedInversion (standard_cubic_of_projected_inversion)
+open StandardCubicLift (standard_cubic_of_projected_inversion)
 
 local notation "SL23" => Matrix.SpecialLinearGroup (Fin 2) (ZMod 23)
 local notation "fixedCartan(" D ", " charge ", " h ")" =>
