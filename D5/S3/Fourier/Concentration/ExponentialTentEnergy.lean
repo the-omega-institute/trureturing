@@ -1,15 +1,16 @@
-import OmegaBuild.Commands
+/- GID: D5/S3/Fourier/Concentration/ExponentialTentEnergy
+   generality: I
+   mirror-B: D5/B/S3/Fourier/Concentration/ExponentialTentEnergy
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: An exponential weight gives an attained minimum and a cubic lower bound for a nonnegative peak. -/
+
 import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
 
-/-!
-Omega original.
+/-! Weighted energy of a nonnegative profile with a prescribed central value and a one-sided slope bound. -/
 
-Lower bounds for the weighted energy of a peak with controlled slope.
--/
-
-compile_only_with_mathlib
-
-namespace Omega.TentEnergy
+namespace D5.S3.Fourier.Concentration.ExponentialTentEnergy
 
 open MeasureTheory Set
 open scoped Interval
@@ -180,4 +181,4 @@ theorem cube_le_exponential_energy (f : ℝ → ℝ) {L : ℝ} (hL : 0 < L)
       _ = _ := by rw [hexp, hm, one_mul]
   simpa only [hnormalize, r] using hs
 
-end Omega.TentEnergy
+end D5.S3.Fourier.Concentration.ExponentialTentEnergy

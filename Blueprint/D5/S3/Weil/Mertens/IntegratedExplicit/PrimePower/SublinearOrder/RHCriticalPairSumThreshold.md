@@ -30,6 +30,7 @@ The Landau estimate supplies the short-band deficit. Annulus decay and the relat
 
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/PrimePower/SublinearOrder/RHCriticalPairSumThreshold.harmonic_zeta_critical_collision_limit_of_threshold`
 - Dependency: [D5/S3/Analytic/Oscillation/MontgomeryWindow](../../../../../Analytic/Oscillation/MontgomeryWindow.md)
+- Dependency: [D5/S3/Fourier/Concentration/ExponentialTentEnergy](../../../../../Fourier/Concentration/ExponentialTentEnergy.md)
 - Dependency: [D5/S3/Weil/Mertens/IntegratedExplicit/PrimePower/SublinearOrder/OmittedSpectrumCutoff](OmittedSpectrumCutoff.md)
 - Dependency: [D5/S3/Weil/Mertens/IntegratedExplicit/PrimePower/SublinearOrder/RHLogarithmicCollisionLimit](RHLogarithmicCollisionLimit.md)
 - Dependency: [D5/S3/Weil/ZetaExplicit/LandauUniformCutoff](../../../../ZetaExplicit/LandauUniformCutoff.md)

@@ -6,7 +6,7 @@
    utility: none
    digest: A positive upper threshold for the pair sum yields the critical harmonic zeta collision limit. -/
 
-import OmegaMath.Analysis.TentEnergy
+import D5.S3.Fourier.Concentration.ExponentialTentEnergy
 import D5.S3.Analytic.Oscillation.MontgomeryWindow
 import D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower.SublinearOrder.OmittedSpectrumCutoff
 import D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower.SublinearOrder.RHLogarithmicCollisionLimit
@@ -104,7 +104,7 @@ private theorem score_cube_le_energy {J : Type*} [Fintype J]
               (mul_le_mul_of_nonneg_right (hg j) (abs_nonneg u))) (hw j)
         _ = _ := by rw [← Finset.sum_mul]; ring
     have hL : 0 < Y * M := mul_pos (by linarith) hM
-    have hpeak := Omega.TentEnergy.cube_le_exponential_energy f hL
+    have hpeak := D5.S3.Fourier.Concentration.ExponentialTentEnergy.cube_le_exponential_energy f hL
       (fun _ => norm_nonneg _) (fun u => by linarith [hshift u]) hi
     have hratio : f 0 / (Y * M) ≤ 1 / Y := by
       apply (div_le_iff₀ hL).2
