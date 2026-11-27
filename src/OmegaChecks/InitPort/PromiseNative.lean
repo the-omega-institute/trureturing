@@ -14,6 +14,8 @@ private def allocation := `Omega.IO.Promise.new
 private def resolution := `Omega.IO.Promise.resolve
 private def allocationSymbol := "omega_io_promise_new"
 private def resolutionSymbol := "omega_io_promise_resolve"
+private def resolved := `Omega.IO.Promise.isResolved
+private def resolvedSymbol := "omega_io_promise_is_resolved"
 
 private def layouts : Array Name :=
   #[trivialStructureInfoExt.name, impureTrivialStructureInfoExt.name, impureTypeExt.name,
@@ -94,10 +96,18 @@ public unsafe def install (lib output : System.FilePath) : IO Unit := do
   verify original `IO.Promise.new #[(.erased, false), (.erased, false), (.void, false)] .tobject "lean_io_promise_new"
   verify original `IO.Promise.resolve #[(.erased, false), (.tobject, false), (.tobject, true), (.void, false)]
     .tagged "lean_io_promise_resolve"
+  let some (.fdecl _ params .uint8 _ _) := IR.findEnvDecl original `IO.Promise.isResolved
+    | throw <| IO.userError "missing native Promise.isResolved"
+  unless params.map (fun p => (p.ty, p.borrow)) == #[(.erased, false), (.tobject, true), (.void, false)] do
+    throw <| IO.userError "unexpected pinned Promise.isResolved signature"
+  let some (.fdecl _ borrowed .uint8 _ _) := IR.findEnvDecl original `IO.Promise.isResolved._redArg
+    | throw <| IO.userError "missing reduced Promise.isResolved"
+  unless borrowed.map (fun p => (p.ty, p.borrow)) == #[(.tobject, true), (.void, false)] do
+    throw <| IO.userError "unexpected borrowing in the runtime poll entry"
   searchPathRef.set [lib]
   let imports := #[{module := owner : Import}]
   let env ← importModules imports {}
-  unless env.contains allocation || env.contains resolution do return
+  unless [allocation, resolution, resolved].any env.contains do return
   let state ← compileLayouts env `Omega.ST.Out
   let some pair := ctorLayoutExt.find? state `Omega.ST.Out.mk | throw <| IO.userError "missing ST.Out layout"
   let #[.object 0 _, .object 1 _] := pair.fieldInfo | throw <| IO.userError "ST.Out must retain value and world"
@@ -107,12 +117,12 @@ public unsafe def install (lib output : System.FilePath) : IO Unit := do
   let env ← importModules imports {}
   let some (.inductInfo prom) := env.find? `Omega.IO.Promise | throw <| IO.userError "missing promise type"
   let mut names := #[prom.name] ++ prom.ctors.toArray
-  for n in #[allocation, resolution] do
+  for n in #[allocation, resolution, resolved] do
     if env.contains n then names := names.push n
   let contextEnv ← localEnv env owner names
   let compiled ← compile contextEnv do
     (← compileDeclsRef.get) #[prom.name] {}
-    for (n, symbol) in #[(allocation, allocationSymbol), (resolution, resolutionSymbol)] do
+    for (n, symbol) in #[ (allocation, allocationSymbol), (resolution, resolutionSymbol), (resolved, resolvedSymbol)] do
       unless (← getEnv).contains n do continue
       modifyEnv fun e => externAttr.ext.addEntry (asyncDecl := n) e (n, ⟨[.standard `all symbol]⟩)
       (← compileDeclsRef.get) #[n] {}
@@ -125,6 +135,8 @@ public unsafe def install (lib output : System.FilePath) : IO Unit := do
   if compiled.contains resolution then
     verify compiled resolution #[(.erased, false), (.tobject, false), (.tobject, true), (.tobject, false)]
       .object resolutionSymbol
+  if compiled.contains resolved then
+    verify compiled resolved #[(.erased, false), (.tobject, false), (.tobject, false)] .object resolvedSymbol
   writeCode lib owner compiled (layouts ++ codeExtensions)
   -- The bridge contains only extern calls and boxed entry points. Its object has no imported initializers.
   let codeEnv := Environment.ofKernelEnv {compiled.toKernelEnv with header.imports := #[], header.isModule := true}

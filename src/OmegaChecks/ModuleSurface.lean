@@ -105,6 +105,7 @@ private def checkElaboration (env : Environment) (owner : Name) (idx : ModuleIdx
     let symbol ← match n with
       | `Omega.IO.Promise.new => pure "omega_io_promise_new"
       | `Omega.IO.Promise.resolve => pure "omega_io_promise_resolve"
+      | `Omega.IO.Promise.isResolved => pure "omega_io_promise_is_resolved"
       | _ => throw <| IO.userError s!"unverified native symbol for {owner}/{n}"
     unless owner == `OmegaInit.System.Promise && env.getModuleIdxFor? n == some idx &&
         data == ⟨[.standard `all symbol]⟩ do throw <| IO.userError s!"invalid promise runtime entry {owner}/{n}"

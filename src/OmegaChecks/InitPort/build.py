@@ -91,7 +91,7 @@ def compile_promise_runtime(stage, product, artifact, inventory):
     with inventory.open() as stream:
         installed = {name for owner, name, _, status, _ in map(json.loads, stream)
                      if owner == "Init.System.Promise" and status in {"added", "existing"}}
-    if {"IO.Promise.new", "IO.Promise.resolve"} <= installed:
+    if {"IO.Promise.new", "IO.Promise.resolve", "IO.Promise.isResolved"} <= installed:
         consumer = stage / "promise-consumer.c"
         run("lean", "-R", HERE, "-c", consumer, HERE / "PromiseConsumer.lean",
             env={**os.environ, "LEAN_PATH": str(artifact)})
