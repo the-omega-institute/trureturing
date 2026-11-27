@@ -90,8 +90,6 @@ public unsafe def main (args : List String) : IO Unit := do
       writeCode lib env.header.moduleNames[idx]! (← compileLayouts env n) layouts
       env ← read
   if env.contains `Omega.String then checkStrictString env else checkNativeNat env
-  for n in [`Decidable, `Omega.String.Pos.Raw, `Omega.Fin, `Omega.BitVec, `Omega.UInt8, `Omega.UInt32, `Omega.UInt64, `Omega.Char,
-  checkNativeNat env
   for n in [`Omega.Inhabited, `Decidable, `Omega.String.Pos.Raw, `Omega.Fin, `Omega.BitVec, `Omega.UInt8, `Omega.UInt32, `Omega.UInt64, `Omega.Char,
             `Omega.Array, `Omega.ByteArray, `Omega.String] do
     if !env.contains n then continue
