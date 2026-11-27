@@ -11,6 +11,7 @@ public import OmegaChecks.InitInventory.TransformerLaws
 public import OmegaChecks.InitInventory.Traversal
 public import OmegaChecks.InitInventory.Collector
 public import OmegaChecks.InitInventory.StringPatterns
+public import OmegaChecks.InitInventory.StringSearchLoops
 
 public section
 
@@ -373,6 +374,15 @@ private def conditionalConsequence? (owner name : Name) : Option (String × Name
     if name == ``Lean.Order.flat_csup then
       return ((``Classical.em).toString, ``OmegaChecks.InitBoundaries.InternalOrder.excludedMiddleOfFlatCSup,
         "On chains of options with bottom none, the result satisfies flat_csup_is_sup")
+  if owner == `Init.Data.String.Pattern.Basic then
+    if name == ``String.Slice.Pattern.ToForwardSearcher.DefaultForwardSearcher.instIteratorLoopIdSearchStep then
+      return ("∀ f : Nat → Bool, Decidable (∃ n, f n = true)",
+        ``OmegaChecks.InitBoundaries.Collector.limitedOmniscienceFromForwardSearchLoop,
+        "The forward search loop agrees with the default on every well-founded callback, including zero-width matches")
+    if name == ``String.Slice.Pattern.ToBackwardSearcher.DefaultBackwardSearcher.instIteratorLoopIdSearchStep then
+      return ("∀ f : Nat → Bool, Decidable (∃ n, f n = true)",
+        ``OmegaChecks.InitBoundaries.Collector.limitedOmniscienceFromBackwardSearchLoop,
+        "The backward search loop agrees with the default on every well-founded callback, including zero-width matches")
   if owner == `Init.Data.String.Lemmas.Pattern.Basic then
     if name == ``String.Slice.Pattern.Model.matchAt? then
       return ((``Classical.em).toString, `OmegaChecks.InitInventory.StringPatterns.excludedMiddleOfForwardResult,
