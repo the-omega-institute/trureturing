@@ -1,1 +1,0 @@
-{"statement_id":"sha256:4d1cccc8f409674a3ac8dd8fda7b5a45db1f4331ff35b4a82ee3a9a050d70b26","declarations":[{"declaration_name_key":"ns(n0,28:norm_realInner_realHeisOp_le)","kind":"theorem","libraries":["Aesop","Batteries","Init","Lean","Mathlib","Std"],"axioms":["Classical.choice","Quot.sound","propext"]}]}

@@ -1,1 +1,0 @@
-{"statement_id":"sha256:e6576b13737f2afbbb1db61485f7c0177c7577a1d195f1459ba3f37eb1b24fcc","declarations":[{"declaration_name_key":"ns(ns(n0,15:IsJointHarmonic),13:howe_argument)","kind":"theorem","libraries":["Aesop","Batteries","Init","Lean","Mathlib","Std"],"axioms":["Classical.choice","Quot.sound","propext"]}]}

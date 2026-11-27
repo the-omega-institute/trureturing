@@ -1,1 +1,0 @@
-{"statement_id":"sha256:c8f566324b065c5c2a0710721ae8b35fceafb5984cd21913b992ad0bca0a9e52","declarations":[{"declaration_name_key":"ns(n0,13:index_pi_univ)","kind":"theorem","libraries":["Batteries","Init","Lean","Mathlib","Std"],"axioms":["Classical.choice","Quot.sound","propext"]}]}
