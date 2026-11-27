@@ -21,7 +21,7 @@ def check_paths(stage, library, path_object, io_object, check_read_into=False):
     shim = test / ("extern" + (sysconfig.get_config_var("SHLIB_SUFFIX") or ".so"))
     run("leanc", "-shared", "-fPIC", "-DLEAN_EXPORTING", "-I", HERE, shim_c, "-o", shim)
     commands = ([native], ["lake", "env", "lean", "--load-dynlib=" + str(shim), "--run",
-                            HERE / "PathIOIRConsumer.lean", library, test])
+                            HERE / "consumers" / "PathIOIRConsumer.lean", library, test])
     env = {**os.environ, "OMEGA_PATH_TEST_VALUE": "héλ界"}
     env.pop("OMEGA_PATH_TEST_ABSENT", None)
     for i, command in enumerate(commands):

@@ -92,7 +92,7 @@ def check_runtime_ir(stage, library, adapter, consumer):
     run("leanc", "-shared", "-fPIC", "-DLEAN_EXPORTING", "-I", HERE, source, "-o", shim)
     run("lean", "-R", STRICT_SOURCES, "-o", check / (consumer + "Consumer.olean"), STRICT_SOURCES / (consumer + "Consumer.lean"),
         env={**os.environ, "LEAN_PATH": str(library)})
-    run("lake", "env", "lean", "--load-dynlib=" + str(shim), "--run", HERE / (consumer + "IRConsumer.lean"),
+    run("lake", "env", "lean", "--load-dynlib=" + str(shim), "--run", HERE / "consumers" / (consumer + "IRConsumer.lean"),
         library, check)
 
 
@@ -325,7 +325,7 @@ def compile_generated(stage, product, graph, seed_ir, owners=None, *, original_s
             run("leanc", "-shared", "-fPIC", "-DLEAN_EXPORTING", "-I", HERE, *string_sources, "-o", shim)
             loader = "--load-dynlib=" + str(shim)
             options = []
-        run("lake", "env", "lean", loader, "--run", HERE / "StringListIRConsumer.lean", library, stage, *options)
+        run("lake", "env", "lean", loader, "--run", HERE / "consumers" / "StringListIRConsumer.lean", library, stage, *options)
     search_owner = "OmegaInit.Data.List.Control"
     if check_list_search and search_owner in objects and literals.is_file():
         dependencies = reachable([search_owner, "OmegaInit.Control.Id"])
