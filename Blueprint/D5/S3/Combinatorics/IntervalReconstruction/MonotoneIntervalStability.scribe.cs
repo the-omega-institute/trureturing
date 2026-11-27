@@ -38,17 +38,18 @@ internal sealed class MonotoneIntervalStabilityDocument : IScribeDocumentDefinit
                     + "nonnegative constant C as the sum of their constants C(π); it dominates "
                     + "every one of them and is chosen before a, b, ε and π. This proves the "
                     + "displayed statement for all n≥3.")),
-                Paragraph(Text("The general homogeneous error-bound proof is due to the Tau Ceti "
-                    + "contributors, TauCeti commit 557dcf0fc5cc930bb3dd80a7f1aff6d8f2288647, "
-                    + "Geometry/Convex/Cone/ErrorBound.lean, under Apache License 2.0. It uses "
-                    + "field-level Tucker alternatives and a pseudo-inverse of a linear map. "
-                    + "The local mathematical declarations are in OmegaMath.Geometry.Convex.Cone.ErrorBound "
-                    + "and OmegaMath.Combinatorics.MonotoneIntervalStability. The source attribution "
-                    + "and complete license are in licenses/TauCeti.md and "
-                    + "docs/reports/TauCeti-Apache-2.0.txt. Exact reconstruction is supplied by "
-                    + "Omega.MonotoneIntervalReconstruction.reconstruct. Hoffman's classical source "
+                Paragraph(Text("Hoffman's homogeneous error bound follows from Tucker's alternative. "
+                    + "A nonnegative linear relation among the defining functionals identifies "
+                    + "the functionals that must vanish on the cone. A linear pseudo-inverse "
+                    + "projects onto their common kernel with displacement controlled by the "
+                    + "inequality residuals. The remaining functionals admit a common strictly "
+                    + "positive direction in that kernel; moving along it by a multiple of ε "
+                    + "satisfies all the inequalities. This produces the required C(π) without "
+                    + "a separation assumption on the interval sums. Hoffman's classical source "
                     + "is On approximate solutions of systems of linear inequalities, Journal of "
-                    + "Research of the National Bureau of Standards 49, 263–265.")),
+                    + "Research of the National Bureau of Standards 49 (1952), 263–265. Tucker's "
+                    + "Dual systems of homogeneous linear relations appears in Linear Inequalities "
+                    + "and Related Systems, Annals of Mathematics Studies 38 (1956).")),
                 Paragraph(Text("All-zero tuples, repeated coordinates, tied sums and zero noise "
                     + "are included. No strictness, separation, integrality, magnitude bound, "
                     + "genericity or compatibility of matched endpoints is assumed. The result "
@@ -76,14 +77,16 @@ internal sealed class MonotoneIntervalStabilityDocument : IScribeDocumentDefinit
         var real = V("Real"); var fin = Call("Fin", n);
         var tuple = new Formula.TypeArrow(fin, real);
         var observations = Call("O", n);
-        return All("n", V("Nat"), Imp(Le(D(3), n),
-            Ex("C", real, And(Le(D(0), c),
-            All("a", tuple, All("b", tuple,
+        var coordinateBound = All("i", fin,
+            Le(Abs(Sub(Call("apply", a, i), Call("apply", b, i))), Mul(c, eps)));
+        var matchingBound = All("p", observations,
+            Le(Abs(Sub(Call("S", a, p), Call("S", b, Call("apply", pi, p)))), eps));
+        var noisyRecovery = All("epsilon", real, Imp(Le(D(0), eps),
+            All("pi", Call("Perm", observations), Imp(matchingBound, coordinateBound))));
+        var tuples = All("a", tuple, All("b", tuple,
             Imp(Call("Nonnegative", a), Imp(Call("Nonnegative", b),
-            Imp(Call("Monotone", a), Imp(Call("Monotone", b),
-            All("epsilon", real, Imp(Le(D(0), eps),
-            All("pi", Call("Perm", observations),
-            Imp(All("p", observations, Le(Abs(Sub(Call("S", a, p), Call("S", b, Call("apply", pi, p)))), eps)),
-                All("i", fin, Le(Abs(Sub(Call("apply", a, i), Call("apply", b, i))), Mul(c, eps))))))))))))))));
+            Imp(Call("Monotone", a), Imp(Call("Monotone", b), noisyRecovery))))));
+        return All("n", V("Nat"), Imp(Le(D(3), n),
+            Ex("C", real, And(Le(D(0), c), tuples))));
     }
 }

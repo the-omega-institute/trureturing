@@ -6,9 +6,13 @@
    utility: none
    digest: Full interval occurrence matchings uniformly control nonnegative nondecreasing real tuples. -/
 
-import OmegaMath.Combinatorics.MonotoneIntervalStability
+module
+
+public import OmegaMath.Combinatorics.MonotoneIntervalStability
 
 /-! Uniform noisy recovery from all inclusive interval occurrences of length at least two. -/
+
+@[expose] public section
 
 namespace D5.S3.Combinatorics.IntervalReconstruction.MonotoneIntervalStability
 

@@ -6,7 +6,7 @@ Authors: The Tau Ceti contributors
 /-
 Source: https://github.com/TauCetiProject/TauCeti/blob/557dcf0fc5cc930bb3dd80a7f1aff6d8f2288647/TauCeti/LinearAlgebra/LinearMap/PseudoInverse.lean
 Modifications: local module imports and Lean 4.35 compatibility; only live field-level prerequisites retained.
-License and applicable notices: docs/reports/TauCeti-Apache-2.0.txt and licenses/TauCeti.md.
+License and applicable notices: docs/reports/licenses/TauCeti-LICENSE.txt and docs/reports/licenses/TauCeti-interval-stability.md.
 -/
 module
 

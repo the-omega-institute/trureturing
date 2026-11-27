@@ -5,7 +5,7 @@ The homogeneous Hoffman error bound and its live prerequisites are adopted from
 commit `557dcf0fc5cc930bb3dd80a7f1aff6d8f2288647`.
 Copyright (c) 2026 The Tau Ceti contributors. All rights reserved.
 The complete Apache License 2.0 is retained in
-[the license text](../docs/reports/TauCeti-Apache-2.0.txt).
+[the license text](TauCeti-LICENSE.txt).
 The immutable source tree has no separate NOTICE file.
 
 | Local source | Upstream source |
