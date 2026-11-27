@@ -32,7 +32,7 @@ private def originalName (n : Name) : Name := Id.run do
 
 /-- A pinned partial definition has a safe opaque face and a separate compiler-only recursion.
 Keep its original fallback in the kernel and translate the executable code on the strict types. -/
-private def formatCode? (source : Environment) (ci : ConstantInfo) : Option DefinitionVal := do
+private def pinnedCode? (source : Environment) (ci : ConstantInfo) : Option DefinitionVal := do
   let .opaqueInfo dst := ci | none
   let sourceName := originalName dst.name
   let owner := source.getModuleIdxFor? sourceName
@@ -40,6 +40,7 @@ private def formatCode? (source : Environment) (ci : ConstantInfo) : Option Defi
   guard (([`Std.Format.be, `Std.Format.spaceUptoLine'].contains userName &&
     owner == source.getModuleIdx? `Init.Data.Format.Basic) ||
     (sourceName == `Lean.Syntax.formatStxAux && owner == source.getModuleIdx? `Init.Data.Format.Syntax) ||
+    (sourceName == `Lean.expandMacros && owner == source.getModuleIdx? `Init.Meta.Defs) ||
     ([`Lean.Syntax.instRepr.repr, `Lean.Name.needsNoEscapeAsciiRest].contains userName &&
       owner == source.getModuleIdx? `Init.Meta.Defs))
   let some (.opaqueInfo src) := source.find? sourceName | none
@@ -53,15 +54,15 @@ private def formatCode? (source : Environment) (ci : ConstantInfo) : Option Defi
   let value := (translate d.value).replace fun e => if e.isConstOf name then some (.const dst.name e.constLevels!) else none
   return {d with name, all := [name], type := dst.type, value, safety := .safe}
 
-private partial def dependencies (env : Environment) (formatCode : NameMap DefinitionVal) (localNames : NameSet) (n : Name) :
+private partial def dependencies (env : Environment) (pinnedCode : NameMap DefinitionVal) (localNames : NameSet) (n : Name) :
     StateM NameSet (Array Name) := do
   if !(localNames.contains n) || (← get).contains n then return #[]
   modify (·.insert n)
   let some ci := env.find? n | return #[]
-  let some body := (formatCode.find? n).map (·.value) <|> ci.value? | return #[]
+  let some body := (pinnedCode.find? n).map (·.value) <|> ci.value? | return #[]
   let mut prior := #[]
   for dep in ci.type.getUsedConstants ++ body.getUsedConstants do
-    prior := prior ++ (← dependencies env formatCode localNames dep)
+    prior := prior ++ (← dependencies env pinnedCode localNames dep)
   return prior.push n
 
 /-- A constructor can contain another inductive from the same owner. Defer its layout
@@ -284,7 +285,7 @@ private def checkCallSignatures : Pass := Pass.mkPerDeclaration `checkCallSignat
       | _ => pure ()
   return decl
 
-private def compileOwner (source : Environment) (formatCode : NameMap DefinitionVal) (groups : Array InductiveVal) (words order : Array Name) : CoreM Unit := do
+private def compileOwner (source : Environment) (pinnedCode : NameMap DefinitionVal) (groups : Array InductiveVal) (words order : Array Name) : CoreM Unit := do
   let strict ← getEnv
   let manager ← PassInstaller.run (← getPassManager)
     (.installBefore .impure `explicitBoxing (fun _ => checkCallSignatures))
@@ -297,12 +298,12 @@ private def compileOwner (source : Environment) (formatCode : NameMap Definition
   compileLayoutsInOrder groups
   OmegaChecks.InitPort.WordNative.install words
   for n in order do
-    if let some code := formatCode.find? n then
+    if let some code := pinnedCode.find? n then
       let before ← Core.saveState
       try
         compileEquation source n code
       catch e =>
-        IO.println s!"cannot compile pinned formatting operation {n}: {← e.toMessageData.toString}"
+        IO.println s!"cannot compile pinned recursive operation {n}: {← e.toMessageData.toString}"
         before.restore
       continue
     if n == `Omega.Lean.RArray.get && (← getImpureSignature? `Omega.Lean.RArray.getImpl).isSome then
@@ -380,7 +381,7 @@ private unsafe def install (source publicSource : Environment) (lib out : System
   let mut groups := #[]
   let mut locals := #[]
   let mut candidates := #[]
-  let mut formatCode : NameMap DefinitionVal := {}
+  let mut pinnedCode : NameMap DefinitionVal := {}
   let mut words := #[]
   -- These eager word cardinalities require 65,536 through 2^64 successor cells
   -- when a detached seed uses a separately defined unary Nat.
@@ -407,9 +408,9 @@ private unsafe def install (source publicSource : Environment) (lib out : System
         locals := locals ++ family
     | .opaqueInfo _ =>
       if !onlyLayouts && !oldNative.contains ci.name then
-        if let some d := formatCode? source ci then
+        if let some d := pinnedCode? source ci then
           candidates := candidates.push ci.name
-          formatCode := formatCode.insert ci.name d
+          pinnedCode := pinnedCode.insert ci.name d
     | .defnInfo d =>
       if onlyLayouts || oldNative.contains d.name || ci.isUnsafe || ci.isPartial then continue
       let upstream := originalName d.name
@@ -420,17 +421,26 @@ private unsafe def install (source publicSource : Environment) (lib out : System
   if onlyLayouts && groups.isEmpty then return
   let localNames := NameSet.ofList candidates.toList
   let order : Array Name := Id.run <|
-    (candidates.foldlM (fun acc n => return acc ++ (← dependencies env formatCode localNames n)) #[]).run' {}
+    (candidates.foldlM (fun acc n => return acc ++ (← dependencies env pinnedCode localNames n)) #[]).run' {}
   let mut context ← localEnv env owner (locals ++ words ++ candidates)
   -- Compiler tags stored under the imported module index need local entries while compiling.
   for n in locals ++ candidates do
+    if owner == `OmegaInit.Meta.Defs then
+      let upstream := originalName n
+      if let some (.defnInfo original) := source.find? upstream then
+        if let some (.defnInfo installed) := env.find? n then
+          let translate := InitKernelPort.translate InitKernelPort.portName
+          if installed.type == translate original.type && installed.value == translate original.value then
+            if let some matcher := Meta.getMatcherInfoCore? source upstream then
+              context := Meta.Match.Extension.addMatcherInfo context n matcher
+            if isSparseCasesOn source upstream then context := markSparseCasesOn context n
     if isAuxRecursor env n then context := markAuxRecursor context n
     if isSparseCasesOn env n then context := markSparseCasesOn context n
     if isNoConfusion env n then context := markNoConfusion context n (getNoConfusionInfo env n)
     if let some proj := env.getProjectionFnInfo? n then
       context := addProjectionFnInfo context n proj.ctorName proj.numParams proj.i proj.fromClass
   let ctx : Core.Context := {fileName := "<generated native Init>", fileMap := default, options := Elab.async.set {} false}
-  let (_, st) ← (compileOwner source formatCode groups words order).toIO ctx {env := context}
+  let (_, st) ← (compileOwner source pinnedCode groups words order).toIO ctx {env := context}
   if onlyLayouts then
     writeCode lib owner st.env layouts
   else
