@@ -9,7 +9,6 @@ namespace Reg.D5.S3.Combinatorics.Graph.AdjacencyProduct.WindmillClassification
 open _root_.D5.S3.Combinatorics.Graph.AdjacencyProduct.WindmillClassification
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
-open scoped Classical
 
 abbrev signature := Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℕ) (fun _ => ℕ)
 
@@ -19,12 +18,13 @@ def actual : Realization signature :=
 def rejected : Realization signature :=
   realize signature (fun _ _ _ => 0) (fun e => nomatch e)
 
+open Classical in
 abbrev arena : Arena where
   signature := signature
   Law R := ∀ (d t : ℕ), 1 ≤ d → 3 ≤ t →
-    (∃ B C : SimpleGraph (Option (Fin d × Fin (t - 1))),
+    ((∃ B C : SimpleGraph (Option (Fin d × Fin (t - 1))),
       B.adjMatrix ℤ * C.adjMatrix ℤ = (windmill d t).adjMatrix ℤ) ↔
-      d = 1 ∧ R.readout () () t = 1
+      d = 1 ∧ R.readout () () t = 1)
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
@@ -39,7 +39,7 @@ def family : Registration arena (type_of% (@result)) where
   variation := ⟨@result, rejected, rejected_law⟩
   sensitivity := Reg.Support.SingleDependentReadout.sensitivity _ _ _ rejected_law
   dependence := by
-    intro _
+    rintro ⟨⟩
     exact ⟨(), 4, 5, by decide⟩
 
 noncomputable def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
