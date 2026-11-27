@@ -12,7 +12,7 @@ internal sealed class ThreeTreeBanachSharpBoundsDocument : IScribeDocumentDefini
         "A polygon invariant bounds Banach gain reconstruction on clique-four chordal graphs. Third powers of paths have supremum reconstruction coefficient four thirds.",
         H("Banach reconstruction on clique-four chordal graphs"),
         Blocks(
-            Paragraph(Text("Let skew(V,g) mean that reversing a gain negates it for every ordered pair of vertices in V. Let flat(G,g,e) mean that the norm of g(i,j) plus g(j,k) minus g(i,k) is at most e on every ordered triangle of G. Write err(g,p,i,j) for the norm of g(i,j) minus the potential difference p(j) minus p(i), with the difference taken as a whole. The predicate fit(G,g,p,e) requires this norm to be at most e on every ordered edge.")),
+            Paragraph(Text("Let skew(V,g) mean that reversing a gain negates it for every ordered pair of vertices in V. Let flat(G,g,e) mean that the norm of g(i,j) plus g(j,k) minus g(i,k) is at most e on every ordered triangle of G. Write err(g,p,i,j) for the norm of g(i,j) minus the entire difference (p(j) minus p(i)). The predicate fit(G,g,p,e) requires this norm to be at most e on every ordered edge.")),
             Entry("clique-four-polygon", "exists_cliqueFour_banach_gain_potential_polygon",
                 "Reconstruction from the invariant polygon", ChordalUpper(),
                 "Use a reverse perfect elimination order. For an ordered parent triangle record the two consecutive residuals and its defect. The middle residual into the next vertex is a fixed linear expression in those two residuals and three defects. Each of the nine signed transitions preserves the thirteen polygon inequalities by nonnegative combinations of pairs of parent inequalities. Six signed possibilities cover every admissible scalar defect quadruple by convex combinations.",
@@ -24,8 +24,9 @@ internal sealed class ThreeTreeBanachSharpBoundsDocument : IScribeDocumentDefini
                 "A causal path potential", PathUpper(),
                 "Integrate along the adjacent edges, then subtract that gradient. Call the remaining gains on lengths two and three a and b. Clamp the indices at the endpoints, and give the new potential the increment at i equal to one third of b at i minus two, minus a at i minus two, plus a at i minus one. The residuals on lengths one, two, and three sum two, three, and four terms respectively, each bounded by the triangle tolerance, and divide by three."),
             Entry("hexagonal-target", "pathHexagon", "The hexagonal plane",
-                Eq(V("Hex"), new Formula.SetBuilder(V("x"), V("x"), Seq(Arrow(Call("Fin", D(3)), Reals), Sp, Land, Sp,
-                    Eq(Add(Add(Call("x", D(0)), Call("x", D(1))), Call("x", D(2))), D(0))))),
+                All("x", Arrow(Call("Fin", D(3)), Reals), new Formula.Logic(
+                    new Formula.Relation(V("x"), FormulaRelationOperator.MemberOf, V("Hex")), FormulaLogicOperator.Iff,
+                    Eq(Add(Add(Call("x", D(0)), Call("x", D(1))), Call("x", D(2))), D(0)))),
                 "The norm is the restriction of the supremum norm on the three coordinates.", DescribeRole.Definition),
             Entry("path-hexagonal-lower", "pathPowerThree_banach_lower_four_thirds",
                 "A finite planar lower bound", PathLower(),
