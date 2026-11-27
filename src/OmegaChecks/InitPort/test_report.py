@@ -103,6 +103,24 @@ class CoverageTest(unittest.TestCase):
             with self.subTest(mismatch=mismatch), self.assertRaisesRegex(ValueError, "equality endpoint"):
                 check_coverage(inventory({**row, **mismatch}) | certificate)
 
+    def test_selector_specification_certificates_must_identify_the_official_site_and_operand(self):
+        def checked(owner, name, selector):
+            row = site(owner, name, equationOperand=selector, operandImpliesAxiom="Classical.choice",
+                       operandReductionWitness="checked", specializedEndpointType="Classical.choice")
+            certificate = {"certifiedChoiceEndpoints": [(owner, name, selector, "checked")]}
+            return check_coverage(inventory(row) | certificate)
+
+        for name, selector in [("Classical.choose_spec", "Classical.choose"), ("Exists.choose_spec", "Exists.choose"),
+                               ("Classical.epsilon_spec", "Classical.epsilon"),
+                               ("Classical.epsilon_spec_aux", "Classical.epsilon")]:
+            self.assertEqual(checked("Init.Classical", name, selector), (0, []))
+            for owner, decl, operand in [("Init.ByCases", name, selector),
+                                         ("Init.Classical", "Unrelated.fake_spec", selector),
+                                         ("Init.Classical", name, "unknownSelector")]:
+                with self.subTest(decl=decl, owner=owner, operand=operand), self.assertRaisesRegex(
+                        ValueError, "inconsistent specialized equality endpoint"):
+                    checked(owner, decl, operand)
+
     def test_quotient_statement_formation_requires_an_independent_argument_certificate(self):
         row = site("Init.Core", "Quot.liftIndepPr1", logicalConsequence="Quot.sound",
                    logicalConsequenceWitness="soundOfLiftArgument", requiredBehavior="supply pair coherence")

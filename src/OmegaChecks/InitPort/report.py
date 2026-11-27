@@ -13,6 +13,16 @@ ROOT = HERE.parents[2]
 STRICT_SOURCES = ROOT / "strict/OmegaChecks/InitPort"
 
 
+# The pinned specification sites use the selector in their predicate, while
+# congruence rules take their names directly from the selected operation.
+SELECTOR_SPECIFICATIONS = {
+    ("Init.Classical", "Classical.choose_spec"): "Classical.choose",
+    ("Init.Classical", "Exists.choose_spec"): "Exists.choose",
+    ("Init.Classical", "Classical.epsilon_spec"): "Classical.epsilon",
+    ("Init.Classical", "Classical.epsilon_spec_aux"): "Classical.epsilon",
+}
+
+
 def check_coverage(official):
     """Count physical sites from the fresh Lean inventory, including repeated names."""
     modules = set(official["modules"])
@@ -51,11 +61,13 @@ def check_coverage(official):
         runtime = row.get("runtimeConflictWitness")
         endpoint = row.get("specializedEndpointType")
         certificate = by_site.pop(site, None)
-        evidence = (row.get("equationOperand"), row.get("operandReductionWitness"))
+        operand = row.get("equationOperand")
+        evidence = (operand, row.get("operandReductionWitness"))
         if bool(endpoint) != bool(certificate) or (endpoint and certificate != evidence):
             raise ValueError(f"uncertified specialized equality endpoint for {owner}/{name}")
         if endpoint and (endpoint != "Classical.choice" or row["kind"] != "theorem" or
-                         not row.get("equationOperand") or
+                         not operand or (name != f"{operand}.congr_simp" and
+                         SELECTOR_SPECIFICATIONS.get(site) != operand) or
                          row.get("operandImpliesAxiom") != endpoint or not row.get("operandReductionWitness") or
                          port or witness or strict or runtime):
             raise ValueError(f"inconsistent specialized equality endpoint for {owner}/{name}")
