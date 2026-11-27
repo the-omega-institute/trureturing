@@ -18,8 +18,8 @@ namespace D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Placemen
 open D5.S3.Combinatorics.Graph.Hypercube (hypercube)
 open BalancedCriticalSpectrum (Q flip flip_apply_same flip_flip IsBalanced)
 open BalancedCubeComponentBoundary (directions exterior_even mem_directions regular_directions)
-open CubicContactDistance (closest_pair_distance_add_five_le)
-open private adjacent_direction_union_card directions_subset_agreement flip_eq_flip_iff hamming_flip_of_ne from
+open CubicContactDistance (closest_pair_distance_add_five_le hamming_flip_of_ne)
+open private adjacent_direction_union_card directions_subset_agreement flip_eq_flip_iff from
   D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Placement.CubicContactDistance
 
 open Classical in

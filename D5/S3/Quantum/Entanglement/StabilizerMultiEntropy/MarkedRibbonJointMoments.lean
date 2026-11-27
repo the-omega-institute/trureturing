@@ -68,7 +68,7 @@ private theorem marked_xor_action_active (A : X→X) (mark : BandFlag E→X)
 
 /-- Actual boundary counts at each state before and after the selected
 forest, with the exact input weights subsequently toggled by XOR. -/
-private theorem physical_chart_counts (G A:X→X) (hG:Function.Involutive G) (hA:Function.Involutive A)
+theorem physical_chart_counts (G A:X→X) (hG:Function.Involutive G) (hA:Function.Involutive A)
     (hAf:∀ x,A x≠x) (mark:BandFlag E→X) (hm:Function.Injective mark)
     (h0:∀ q,A (mark q)=mark (q.1,bandCode false false q.2)) (t τ s:E→Bool)
     (C : SignedMarkedChart G (markedAction A mark t τ)
@@ -335,7 +335,7 @@ def localMark (G A:X→X) (m:BandFlag E→X)
     (q:BandFlag (fibre (edgeComponent G A m) j)) : fibre (component G A m) j :=
   ⟨m (q.1.val,q.2),(comp_mark G A m h0 q.1.val q.2).trans q.1.prop⟩
 
-private theorem localMark_injective (G A:X→X) (m:BandFlag E→X)
+theorem localMark_injective (G A:X→X) (m:BandFlag E→X)
     (hm:Function.Injective m) (h0:∀ q,A (m q)=m (q.1,bandCode false false q.2))
     (j:Components G A m) : Function.Injective (localMark G A m h0 j) := by
   rintro ⟨a,p⟩ ⟨b,q⟩ h
@@ -343,15 +343,15 @@ private theorem localMark_injective (G A:X→X) (m:BandFlag E→X)
   exact Prod.ext (Subtype.ext (congrArg (fun x : BandFlag E=>x.1) h))
     (congrArg (fun x : BandFlag E=>x.2) h)
 
-private theorem localGap_involution (G A:X→X) (m:BandFlag E→X) (hG:Function.Involutive G)
+theorem localGap_involution (G A:X→X) (m:BandFlag E→X) (hG:Function.Involutive G)
     (j:Components G A m) : Function.Involutive (localGap G A m j) :=
   fun x=>Subtype.ext (hG x.val)
 
-private theorem localCap_involution (G A:X→X) (m:BandFlag E→X) (hA:Function.Involutive A)
+theorem localCap_involution (G A:X→X) (m:BandFlag E→X) (hA:Function.Involutive A)
     (j:Components G A m) : Function.Involutive (localCap G A m j) :=
   fun x=>Subtype.ext (hA x.val)
 
-private theorem localCap_mark (G A:X→X) (m:BandFlag E→X)
+theorem localCap_mark (G A:X→X) (m:BandFlag E→X)
     (h0:∀ q,A (m q)=m (q.1,bandCode false false q.2)) (j:Components G A m)
     (q:BandFlag (fibre (edgeComponent G A m) j)) :
     localCap G A m j (localMark G A m h0 j q)=
@@ -413,7 +413,7 @@ private theorem fibre_mark_transport (G A:X→X) (m:BandFlag E→X)
 
 /-- Boundary circles split over actual quotient fibres for every literal
 state, with arbitrary representative ordering and including empty carriers. -/
-private theorem actual_circles_components (G A:X→X) (m:BandFlag E→X)
+theorem actual_circles_components (G A:X→X) (m:BandFlag E→X)
     (hm:Function.Injective m)
     (h0:∀ q,A (m q)=m (q.1,bandCode false false q.2)) (t s:E→Bool) :
     markedCircleCount G A m t s =
@@ -570,7 +570,7 @@ variable {G A m h0 t}
 abbrev chartSpace {j:Components G A m} (C : ChartFibre G A m h0 t j) :=
   SignedLabelSpace C.chart.ports.a C.chart.ports.b C.chart.twist
 
-private theorem exists_fibre_chart (hG:Function.Involutive G) (hGf:∀ x,G x≠x)
+theorem exists_fibre_chart (hG:Function.Involutive G) (hGf:∀ x,G x≠x)
     (hA:Function.Involutive A) (hAf:∀ x,A x≠x) (hm:Function.Injective m)
     (j:Components G A m) : Nonempty (ChartFibre G A m h0 t j) := by
   classical
