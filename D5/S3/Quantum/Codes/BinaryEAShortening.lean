@@ -363,14 +363,12 @@ private lemma local_pairing_nonzero {n : ℕ} {x : Word n} {i : Fin n} (hx : sit
   have h : ∀ a : Symbol, a ≠ 0 → ∃ b : Symbol, (a.1 * b.2 + a.2 * b.1) ≠ 0 := by decide
   exact h (site i x) hx
 
-private lemma triple_surjectivity_obstruction {n : ℕ} (J : Finset (Fin n))
+private lemma triple_projection_surjective {n : ℕ} (J : Finset (Fin n))
     (H U : Submodule F₂ (Word n)) (hU : Module.finrank F₂ U = 6)
-    (horth : ∀ h ∈ H, ∀ u ∈ U, spForm n h u = 0)
     (hzero : ∀ x ∈ U, x ∉ H → (zeroSites J x).card ≤ 2)
     {T : Finset (Fin n)} (hTJ : T ⊆ J) (hT : T.card = 3)
-    (hHinj : Function.Injective ((restrictSites T).domRestrict H))
-    {h : Word n} (hhH : h ∈ H) (hh0 : ∀ i ∉ T, site i h = 0)
-    {j : Fin n} (hj : j ∈ T) (hnz : site j h ≠ 0) : False := by
+    (hHinj : Function.Injective ((restrictSites T).domRestrict H)) :
+    Function.Surjective ((restrictSites T).domRestrict U) := by
   have hui : Function.Injective ((restrictSites T).domRestrict U) := by
     rw [← LinearMap.ker_eq_bot, Submodule.eq_bot_iff]
     intro x hx
@@ -386,7 +384,17 @@ private lemma triple_surjectivity_obstruction {n : ℕ} (J : Finset (Fin n))
     exact Subtype.ext (congrArg (fun y : H => (y : Word n)) h')
   have hdim : Module.finrank F₂ U = Module.finrank F₂ (T → Symbol) := by
     rw [hU, finrank_symbols, hT]
-  have hsurj := (LinearMap.injective_iff_surjective_of_finrank_eq_finrank hdim).mp hui
+  exact (LinearMap.injective_iff_surjective_of_finrank_eq_finrank hdim).mp hui
+
+private lemma triple_surjectivity_obstruction {n : ℕ} (J : Finset (Fin n))
+    (H U : Submodule F₂ (Word n)) (hU : Module.finrank F₂ U = 6)
+    (horth : ∀ h ∈ H, ∀ u ∈ U, spForm n h u = 0)
+    (hzero : ∀ x ∈ U, x ∉ H → (zeroSites J x).card ≤ 2)
+    {T : Finset (Fin n)} (hTJ : T ⊆ J) (hT : T.card = 3)
+    (hHinj : Function.Injective ((restrictSites T).domRestrict H))
+    {h : Word n} (hhH : h ∈ H) (hh0 : ∀ i ∉ T, site i h = 0)
+    {j : Fin n} (hj : j ∈ T) (hnz : site j h ≠ 0) : False := by
+  have hsurj := triple_projection_surjective J H U hU hzero hTJ hT hHinj
   obtain ⟨b, hb⟩ := local_pairing_nonzero hnz
   obtain ⟨u, hu⟩ := hsurj (fun i => if i.val = j then b else 0)
   have hu' (i : Fin n) (hi : i ∈ T) : site i u = if i = j then b else 0 :=
@@ -662,6 +670,135 @@ theorem length_eight_no_rank_two_site
   · intro u hu hnu
     have h := zeroSites_shortened_bound I H U hzeros hu hnu
     omega
+
+private lemma site_ext {n : ℕ} {x : Word n} (hx : ∀ i, site i x = 0) : x = 0 := by
+  exact Prod.ext (funext fun i => congrArg Prod.fst (hx i))
+    (funext fun i => congrArg Prod.snd (hx i))
+
+private lemma radical_support_with_site_ge_four {n : ℕ} (J : Finset (Fin n))
+    (H U : Submodule F₂ (Word n)) (hJ : 3 ≤ J.card)
+    (hH : Module.finrank F₂ H = 2) (hU : Module.finrank F₂ U = 6)
+    (horth : ∀ h ∈ H, ∀ u ∈ U, spForm n h u = 0)
+    (hsupp : ∀ h ∈ H, ∀ i ∉ J, site i h = 0)
+    (hns : ∀ i ∈ J, ¬ Function.Surjective ((site i).domRestrict H))
+    (hzero : ∀ x ∈ U, x ∉ H → (zeroSites J x).card ≤ 2)
+    {h a : Word n} (hh : h ∈ H) (ha : a ∈ H) {i j : Fin n}
+    (hi : i ∈ J) (hj : j ∈ J) (hj0 : site j h ≠ 0)
+    (hja : site j a = 0) (ha0 : site i a ≠ 0) :
+    4 ≤ (insert i (J.filter fun k => site k h ≠ 0)).card := by
+  classical
+  by_contra! hsmall
+  let P := J.filter fun i => site i h ≠ 0
+  have hjP : j ∈ P := Finset.mem_filter.mpr ⟨hj, hj0⟩
+  have hs (k : Fin n) (hk : k ∉ P) : site k h = 0 := by
+    by_cases hkJ : k ∈ J
+    · simpa [P, hkJ] using hk
+    · exact hsupp h hh k hkJ
+  have hjne : (site j).domRestrict H ≠ 0 := by
+    intro he
+    exact hj0 (congrArg (fun f : H →ₗ[F₂] Symbol => f ⟨h, hh⟩) he)
+  obtain ⟨b, _, _, _, hker⟩ := radical_singleton_kernel H j hH hjne (hns j hj)
+  have haR : a ∈ words (shortened {j} H) := mem_words.mpr
+    (mem_shortened.mpr ⟨ha, fun _ hk => (Finset.mem_singleton.mp hk).symm ▸ hja⟩)
+  rw [hker, Finset.mem_insert, Finset.mem_singleton] at haR
+  have hab : a = b := haR.resolve_left (fun he => ha0 (by simp [he]))
+  subst b
+  have hiP : insert i P ⊆ J :=
+    Finset.insert_subset_iff.mpr ⟨hi, Finset.filter_subset _ _⟩
+  change (insert i P).card < 4 at hsmall
+  obtain ⟨T, hPT, hTJ, hT⟩ := Finset.exists_subsuperset_card_eq hiP (by omega) hJ
+  have hjT := hPT (Finset.mem_insert_of_mem hjP)
+  have hiT := hPT (Finset.mem_insert_self _ _)
+  have hHinj : Function.Injective ((restrictSites T).domRestrict H) := by
+    rw [← LinearMap.ker_eq_bot, Submodule.eq_bot_iff]
+    intro y hy
+    change restrictSites T (y : Word n) = 0 at hy
+    have hyR : (y : Word n) ∈ words (shortened {j} H) :=
+      mem_words.mpr (mem_shortened.mpr ⟨y.property, fun k hk => by
+        rw [Finset.mem_singleton.mp hk]
+        exact congrFun hy ⟨j, hjT⟩⟩)
+    rw [hker, Finset.mem_insert, Finset.mem_singleton] at hyR
+    rcases hyR with hy0 | hya
+    · exact Subtype.ext hy0
+    · exact (ha0 (hya ▸ (show site i y = 0 from congrFun hy ⟨i, hiT⟩))).elim
+  exact triple_surjectivity_obstruction J H U hU horth hzero hTJ hT hHinj hh
+    (fun i hi => hs i (fun hiP => hi (hPT (Finset.mem_insert_of_mem hiP)))) hjT hj0
+
+private lemma radical_weight_ge_three {n : ℕ} (J : Finset (Fin n))
+    (H U : Submodule F₂ (Word n)) (hJ : 3 ≤ J.card)
+    (hH : Module.finrank F₂ H = 2) (hU : Module.finrank F₂ U = 6)
+    (horth : ∀ h ∈ H, ∀ u ∈ U, spForm n h u = 0)
+    (hsupp : ∀ h ∈ H, ∀ i ∉ J, site i h = 0)
+    (hns : ∀ i ∈ J, ¬ Function.Surjective ((site i).domRestrict H))
+    (hzero : ∀ x ∈ U, x ∉ H → (zeroSites J x).card ≤ 2)
+    {h : Word n} (hh : h ∈ H) (hn : h ≠ 0) :
+    3 ≤ (J.filter fun i => site i h ≠ 0).card := by
+  classical
+  by_contra! hw
+  let P := J.filter fun i => site i h ≠ 0
+  have hs (i : Fin n) (hi : i ∉ P) : site i h = 0 := by
+    by_cases hj : i ∈ J
+    · simpa [P, hj] using hi
+    · exact hsupp h hh i hj
+  obtain ⟨j, hjP⟩ := Finset.card_pos.mp (show 0 < P.card by
+    by_contra! hP
+    exact hn (site_ext (fun i => hs i (by simp [Finset.card_eq_zero.mp (by omega : P.card = 0)]))))
+  have hj := (Finset.mem_filter.mp hjP).1
+  have hj0 := (Finset.mem_filter.mp hjP).2
+  have hjne : (site j).domRestrict H ≠ 0 := by
+    intro he
+    exact hj0 (congrArg (fun f : H →ₗ[F₂] Symbol => f ⟨h, hh⟩) he)
+  obtain ⟨a, ha, hane, haj, _⟩ := radical_singleton_kernel H j hH hjne (hns j hj)
+  obtain ⟨i, hi⟩ : ∃ i ∈ J, site i a ≠ 0 := by
+    by_contra! hnz
+    exact hane (site_ext fun i => if hi : i ∈ J then hnz i hi else hsupp a ha i hi)
+  have hbig := radical_support_with_site_ge_four J H U hJ hH hU horth hsupp hns hzero
+    hh ha hi.1 hj hj0 haj hi.2
+  have := Finset.card_insert_le i P
+  change P.card < 3 at hw
+  change 4 ≤ (insert i P).card at hbig
+  omega
+
+private def bitPairing (a b : Symbol) : F₂ := a.1 * b.2 + a.2 * b.1
+
+private def dotPair (a b : Symbol) : F₂ := a.1 * b.1 + a.2 * b.2
+
+private def lineAxis (a b : Symbol) : Symbol := if a = 0 then b else a
+
+private def lineComplement (a : Symbol) : Symbol :=
+  if a.1 = 0 then (1, 0) else (0, 1)
+
+private def lineCoordinates (a : Symbol) : Symbol →ₗ[F₂] Symbol where
+  toFun b := (bitPairing b (lineComplement a), bitPairing a b)
+  map_add' b c := by
+    ext <;> simp only [bitPairing, Prod.fst_add, Prod.snd_add] <;> ring
+  map_smul' t b := by
+    apply Prod.ext
+    · change (t * b.1) * _ + (t * b.2) * _ = t * (_ + _)
+      ring
+    · change a.1 * (t * b.2) + a.2 * (t * b.1) = t * (_ + _)
+      ring
+
+private lemma lineCoordinates_good : ∀ a b c : Symbol, a ≠ 0 →
+    (lineCoordinates a b = 0 ↔ b = 0) ∧
+    bitPairing (lineCoordinates a b) (lineCoordinates a c) = bitPairing b c := by decide
+
+private lemma lineCoordinates_radical : ∀ a b p : Symbol, bitPairing a b = 0 →
+    lineCoordinates (if lineAxis a b = 0 then (1, 0) else lineAxis a b)
+      (p.1 • a + p.2 • b) = (dotPair (if a = 0 then 0 else 1, if b = 0 then 0 else 1) p, 0) := by decide
+
+private lemma rank_one_pairing {n : ℕ} {H : Submodule F₂ (Word n)} {i : Fin n}
+    (hr : ¬ Function.Surjective ((site i).domRestrict H)) (a b : H) :
+    bitPairing (site i a) (site i b) = 0 := by
+  by_contra h
+  have hc : ∀ x y : Symbol, bitPairing x y ≠ 0 →
+      ∀ z : Symbol, ∃ p q : F₂, p • x + q • y = z := by decide
+  apply hr
+  intro z
+  obtain ⟨p,q,hpq⟩ := hc _ _ h z
+  refine ⟨p • a + q • b, ?_⟩
+  change site i (p • (a : Word n) + q • (b : Word n)) = z
+  simpa only [map_add, map_smul] using hpq
 
 #print axioms shorten_of_radical_surjective
 #print axioms five_site_gram_zero
