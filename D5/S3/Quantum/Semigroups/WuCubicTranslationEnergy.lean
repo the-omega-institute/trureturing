@@ -62,7 +62,7 @@ private theorem trace_density {r : ℝ} (hr : 1 ≤ r) (A : Mat) :
   have hcoords (k : Index) :
       coefficient r (1 : Mat) k = if (0, 0) = k then 1 else 0 := by
     rw [← basis_repr hr₀, ← direction_zero r, ← basis_apply (hr := hr₀)]
-    exact (basis r hr₀).repr_self_apply k
+    exact (basis r hr₀).repr_self_apply ((0, 0) : Index) k
   have hpair : gibbsPairing r 1 A = (D r * A).trace := by
     rw [gibbsPairing_eq_trace_G hr, Matrix.conjTranspose_one, mul_one, ← pow_add,
       G_pow_six hr]
@@ -143,7 +143,7 @@ theorem cubicEnergy_hasDerivAt_trace {r : ℝ} (hr : 1 ≤ r) (A : Mat) (t : ℝ
   let slope := (9 / 8 : ℝ) * ((base r * sandwich r A + sandwich r A * base r) *
     sandwich r (generator r A)).trace.re
   simpa only [one_mul, add_zero, slope] using
-    (((hasDerivAt_id' t).mul_const slope).add (hasDerivAt_const t (cubicEnergy r A)))
+    (hasDerivAt_mul_const (x := t) slope).add_const (cubicEnergy r A)
 
 
 /-- Diagonal entries of the physical base matrix. -/
@@ -151,7 +151,10 @@ def baseEntry (r : ℝ) (i : Occupation) : ℝ := rootValue r i ^ 2
 
 private theorem base_diagonal (r : ℝ) :
     base r = diagonal (fun i => (baseEntry r i : ℂ)) := by
-  simp only [base, G, Matrix.diagonal_pow, Pi.pow_apply, baseEntry, Complex.ofReal_pow]
+  rw [base, G, Matrix.diagonal_pow]
+  congr 1
+  funext i
+  rw [Pi.pow_apply, baseEntry, Complex.ofReal_pow]
 
 private theorem baseEntry_pos {r : ℝ} (hr : 1 ≤ r) (i : Occupation) :
     0 < baseEntry r i := pow_pos (rootValue_pos hr i) 2
@@ -184,12 +187,12 @@ private theorem gibbsPairing_entries {r : ℝ} (hr : 1 ≤ r) (X Y : Mat) :
     gibbsPairing r X Y = ∑ i : Occupation, ∑ j : Occupation,
       ((rootValue r i ^ 3 * rootValue r j ^ 3 : ℝ) : ℂ) * (conj (X i j) * Y i j) := by
   rw [gibbsPairing_eq_trace_G hr, Matrix.trace_mul_comm]
-  simp only [G, Matrix.diagonal_pow, Pi.pow_apply, Matrix.trace, Matrix.diag_apply]
+  simp only [G, Matrix.diagonal_pow, Matrix.trace, Matrix.diag_apply]
   refine Finset.sum_congr rfl (fun i _ => ?_)
   rw [Matrix.mul_apply]
   refine Finset.sum_congr rfl (fun j _ => ?_)
   simp only [Matrix.mul_diagonal, Matrix.diagonal_mul, Matrix.conjTranspose_apply,
-    Complex.star_def, Complex.ofReal_mul, Complex.ofReal_pow]
+    Complex.star_def, Complex.ofReal_mul, Complex.ofReal_pow, Pi.pow_apply]
   ring
 
 /-- Ratio of ordinary variance to Gibbs-symmetric weight at an entry. -/
@@ -229,7 +232,7 @@ private theorem baseEntry_of_charge {r : ℝ} (hr : 1 ≤ r) (k : Index) (i j : 
     calc
       ((r : ℂ) ^ (3 : ℕ)) ^ charge k = ((r : ℂ) ^ (3 : ℤ)) ^ charge k := by rw [hz]
       _ = ((r : ℂ) ^ charge k) ^ (3 : ℤ) := by
-        rw [← zpow_mul, ← zpow_mul, mul_comm (3 : ℤ)]
+        rw [← _root_.zpow_mul, ← _root_.zpow_mul, mul_comm (3 : ℤ)]
       _ = _ := by rw [hz, Complex.ofReal_pow, Complex.ofReal_zpow]
   rw [hmod, ← Complex.ofReal_pow, ← Complex.ofReal_pow, ← Complex.ofReal_mul] at hpow
   have hreal : rootValue r i ^ 6 = (r ^ charge k) ^ 3 * rootValue r j ^ 6 :=
@@ -337,10 +340,10 @@ theorem vWeight_eq_component {r : ℝ} (hr : 1 ≤ r) (A : Mat) (k : Index) :
     dsimp only [Z]
     rw [← basis_apply (hr := hr₀), map_smul]
     change coefficient r A k * (basis r hr₀).repr (basis r hr₀ k) l = _
-    rw [(basis r hr₀).repr_self_apply l]
+    rw [(basis r hr₀).repr_self_apply k l]
     by_cases h : k = l <;> simp [h]
   rw [← vPairing_self_entries, vPairing_expansion hr, Complex.re_sum, Finset.sum_eq_single k]
-  · simp only [hz, if_pos rfl, conj_mul_self, ← Complex.ofReal_mul, Complex.ofReal_re, vWeight]
+  · simp only [hz, ite_true, conj_mul_self, ← Complex.ofReal_mul, Complex.ofReal_re, vWeight]
   · intro l _ hl
     simp [hz, Ne.symm hl]
   · simp
@@ -395,7 +398,8 @@ theorem cubicEnergy_hasDerivAt_degree {r : ℝ} (hr : 1 ≤ r) (A : Mat)
       coefficient_generator (zero_le_one.trans hr) A k)
   have hU := (sandwich_hermitian r A hA).eq
   have hhalf (z : ℂ) : ((1 / 2 : ℂ) * z).re = (1 / 2 : ℝ) * z.re := by
-    rw [show (1 / 2 : ℂ) = ((1 / 2 : ℝ) : ℂ) by norm_cast, Complex.re_ofReal_mul]
+    rw [show (1 / 2 : ℂ) = ((1 / 2 : ℝ) : ℂ) by
+      norm_num [Complex.ofReal_div, Complex.ofReal_ofNat], Complex.re_ofReal_mul]
   simp only [vPairing, hU, hhalf] at hpair
   have hslope :
       (9 / 8 : ℝ) * ((base r * sandwich r A + sandwich r A * base r) *

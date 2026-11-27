@@ -185,4 +185,37 @@ theorem operatorDeficit_deriv_pos_of_degree_one_le {r t : ℝ} {A : Mat}
     mul_pos (by norm_num) hV
   linarith only [henergy, hcost, hmargin]
 
+open Matrix Set WuCubicAngularCertificate WuCubicConditionedTranslation in
+/-- A uniform normalized margin at spectral ratio `2/3` propagates to the entire
+closed conditioned ray when the degree-one mass is at most `17/25` of the variance.
+The margin is scaled by the cube of the top eigenvalue at entry. -/
+theorem operatorDeficit_gt_boundary_margin_of_degree_one_le {r : ℝ} {A : Mat}
+    (hr₀ : 1049 / 1000 ≤ r) (hr₁ : r ≤ 6 / 5)
+    (hA : A.IsHermitian) (hcenter : (D r * A).trace = 0) (hA0 : A ≠ 0)
+    (hdegree : V₁ r A ≤ (17 / 25 : ℝ) * V r A)
+    (hboundary : ∀ (W : unitary WuCubicDirectedOccupationCap.Mat) (n q : ℝ),
+      (2 / 3 : ℝ) ≤ n → n ≤ q → q ≤ 1 →
+        (1 / 100000 : ℝ) < normalizedDeficit r W (2 / 3) n q) :
+    ∃ τ ell, 0 < τ ∧ 0 < ell ∧ IsGreatest (spectrum ℝ (embedded r A τ)) ell ∧
+      (∀ t, Conditioned (embedded r A t) ↔ τ ≤ t) ∧
+      ∀ t, τ ≤ t → ell ^ 3 * (1 / 100000 : ℝ) < operatorDeficit r (translate A t) := by
+  obtain ⟨_, τ, hτ, _, _, _, _, hcond, W, ell, n, q, hell, hn, hnq, hq, hellMax, _, hscaled, _⟩ :=
+    operatorDeficit_conditioned_entry hr₀ hr₁ hA hcenter hA0
+  have hentry : ell ^ 3 * (1 / 100000 : ℝ) < operatorDeficit r (translate A τ) := by
+    rw [hscaled]
+    exact mul_lt_mul_of_pos_left (hboundary W n q hn hnq hq) (pow_pos hell 3)
+  have hr : 1 ≤ r := (by norm_num : (1 : ℝ) ≤ 1049 / 1000).trans hr₀
+  have hmono : StrictMonoOn (fun t : ℝ => operatorDeficit r (translate A t)) (Ici τ) := by
+    apply strictMonoOn_of_deriv_pos (convex_Ici τ)
+    · intro t ht
+      obtain ⟨_, hd, _⟩ := operatorDeficit_hasDerivAt_conditioned hr₀ hr₁
+        (hτ.trans_le ht) hA hcenter ((hcond t).mpr ht)
+      exact hd.continuousAt.continuousWithinAt
+    · intro t ht
+      have ht' : τ ≤ t := interior_subset ht
+      exact operatorDeficit_deriv_pos_of_degree_one_le hr hr₁ (hτ.trans_le ht')
+        hA hcenter hA0 ((hcond t).mpr ht') hdegree
+  refine ⟨τ, ell, hτ, hell, hellMax, hcond, fun t ht => ?_⟩
+  exact hentry.trans_le (hmono.monotoneOn (mem_Ici.mpr le_rfl) (mem_Ici.mpr ht) ht)
+
 end D5.S3.Quantum.Semigroups.WuCubicMassCancellation
