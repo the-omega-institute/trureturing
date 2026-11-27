@@ -10,6 +10,7 @@ extern uint8_t omega_mixed_or(uint8_t, uint8_t);
 extern uint8_t omega_mixed_and(uint8_t, uint8_t);
 extern lean_obj_res omega_mixed_quotation(uint8_t);
 extern uint8_t omega_mixed_depth(uint8_t);
+extern uint8_t omega_mixed_empty_syntax(uint8_t);
 #endif
 int main(void) {
     lean_object *status = runtime_initialize_GeneratedControlConsumer(1);
@@ -23,6 +24,7 @@ int main(void) {
     if (!quotation) return 6;
     lean_dec(quotation);
     if (!omega_mixed_depth(0)) return 9;
+    if (!omega_mixed_empty_syntax(0)) return 10;
 #endif
     lean_io_mark_end_initialization();
     for (uint8_t x = 0; x <= 1; x++) {

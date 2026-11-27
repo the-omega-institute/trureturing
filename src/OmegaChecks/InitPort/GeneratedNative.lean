@@ -149,7 +149,14 @@ private unsafe def install (source publicSource : Environment) (lib out : System
   let localNames := NameSet.ofList candidates.toList
   let order : Array Name := Id.run <|
     (candidates.foldlM (fun acc n => return acc ++ (← dependencies env localNames n)) #[]).run' {}
-  let context ← localEnv env owner (locals ++ candidates)
+  let mut context ← localEnv env owner (locals ++ candidates)
+  -- Compiler tags stored under the imported module index need local entries while compiling.
+  for n in locals ++ candidates do
+    if isAuxRecursor env n then context := markAuxRecursor context n
+    if isSparseCasesOn env n then context := markSparseCasesOn context n
+    if isNoConfusion env n then context := markNoConfusion context n (getNoConfusionInfo env n)
+    if let some proj := env.getProjectionFnInfo? n then
+      context := addProjectionFnInfo context n proj.ctorName proj.numParams proj.i proj.fromClass
   let ctx : Core.Context := {fileName := "<generated native Init>", fileMap := default, options := Elab.async.set {} false}
   let (_, st) ← (compileOwner source groups order).toIO ctx {env := context}
   if onlyLayouts then

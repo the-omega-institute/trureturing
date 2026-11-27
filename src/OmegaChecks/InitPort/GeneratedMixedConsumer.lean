@@ -16,3 +16,9 @@ public def andResult (a b : Omega.Bool) : Omega.Bool :=
 @[export omega_mixed_depth]
 public def depthPositive (_ : Omega.Bool) : Omega.Bool :=
   Omega.Nat.casesOn (motive := fun _ => Omega.Bool) Omega.Lean.defaultMaxRecDepth .false (fun _ => .true)
+
+@[noinline] private def noChildren (stx : Omega.Lean.Syntax) : Omega.Bool :=
+  Omega.Nat.casesOn (motive := fun _ => Omega.Bool) (Omega.Lean.Syntax.getNumArgs stx) .true (fun _ => .false)
+
+@[export omega_mixed_empty_syntax]
+public def missingHasNoChildren (_ : Omega.Bool) : Omega.Bool := noChildren .missing
