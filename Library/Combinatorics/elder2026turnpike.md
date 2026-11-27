@@ -14,6 +14,20 @@ triage: anchor
 
 # Numerical triangle marginals
 
+## Verified locator
+
+DOI: https://doi.org/10.4230/LIPIcs.WABI.2026.20
+
+URL: https://drops.dagstuhl.de/storage/00lipics/lipics-vol390-wabi2026/html/LIPIcs.WABI.2026.20/LIPIcs.WABI.2026.20.html
+
+The published WABI 2026 article, Section 3.1, Proposition 10, System 11,
+and Section 3.5 with Lemma 13 supply the numerical relation, marginal
+constraints, relaxation, and scalar endpoint-spine comparison described below.
+These locators attest the source model and scalar statement, not the
+repository's fixed-assignment counterexample.
+
+## Source semantics
+
 Section 3.1 defines the ordered relation by exact numerical addition and the
 repeated-label multiplicity guard. Proposition 10 requires row normalization,
 label counts, triangle normalization and the three interval-label marginals.
