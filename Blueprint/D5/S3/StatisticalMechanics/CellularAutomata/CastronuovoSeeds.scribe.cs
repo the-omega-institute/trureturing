@@ -46,7 +46,9 @@ internal sealed class CastronuovoSeedsDocument : IScribeDocumentDefinition
                 + "seed at some legal ring length. StronglyUniversal requires a complete simple finite-background "
                 + "line seed. Here n = 4 and k = 2. The five-ring has length at least four, uses both "
                 + "projections once, and contains all sixteen target letters by time five.",
-                "question_5_9"),
+                "question_5_9",
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("castronuovo-dennunzio-margara-2026-question-5-9"), ResolutionKind.Proved)),
             Node("question-5-6", "A complete unrestricted line seed with no complete simple line seed",
                 Existence("Universal"),
                 "Question 5.6 uses the same existential quantifiers. Universal permits any seed in the "
@@ -54,12 +56,15 @@ internal sealed class CastronuovoSeedsDocument : IScribeDocumentDefinition
                 + "copies of (X,Y,0,0,1) on the inclusive interval [−5,14] starting at −5, with zero "
                 + "elsewhere. All cones [i−t,i+2t] for 0 ≤ i ≤ 4 and 0 ≤ t ≤ 5 lie inside that interval. "
                 + "Periodic extension commutes with the update, so the checked ring letters also occur on this line.",
-                "question_5_6"))));
+                "question_5_6",
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("castronuovo-dennunzio-margara-2026-question-5-6"), ResolutionKind.Proved)))));
 
-    private static DocumentBlock Node(string id, string title, Formula formula, string prose, string declaration) =>
+    private static DocumentBlock Node(string id, string title, Formula formula, string prose, string declaration,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("castronuovo-seeds-" + id), DeclarationHandle.Create(Prefix + declaration),
             H(title), StatementSource.FromAuthor(formula), AssessedProvenance.FromRepo(Source),
-            Blocks(Paragraph(Text(prose))), DescribeRole.Theorem);
+            Blocks(Paragraph(Text(prose))), DescribeRole.Theorem, resolution);
 
     private static Formula Call(string name, params Formula[] arguments) =>
         new Formula.Apply(Seq(Operatorname, Grp(F.Id(name))), [.. arguments]);

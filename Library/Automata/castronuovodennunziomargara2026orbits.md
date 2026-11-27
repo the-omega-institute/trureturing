@@ -24,7 +24,8 @@ triage: anchor
 The versioned preprint is arXiv:2610.34096v1 [nlin.CG], dated October 25, 2026.
 Section 2.2 on printed pp. 8–9 defines the asymmetric update window for even arities.
 Definition 2.4 and Remark 2.5 give the configuration classes and the periodic
-extension of ring dynamics. Definition 2.7 and Proposition 2.8 give the pointwise lifted update.
+extension of ring dynamics. Definition 2.2 gives the pointwise lift. Lemma 2.7
+gives the evaluation identity and Proposition 2.8 gives the product conjugacy.
 Definitions 2.10–2.13 on printed pp. 10–11 give the seed alphabet, seed
 families, word convention and completeness. Proposition 2.14 gives the equivalence
 for unrestricted seeds and the line-to-ring implication for simple seeds.
