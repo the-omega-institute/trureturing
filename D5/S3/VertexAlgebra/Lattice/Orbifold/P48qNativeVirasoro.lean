@@ -1,5 +1,6 @@
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qNativeResidueIterate
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qConformalVectorDecomposition
+import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qNativeConformalZero
 import D5.S3.VertexAlgebra.LatticeActualConformalWard
 import D5.S3.VertexAlgebra.LatticeSugawaraVirasoro
 import D5.S3.VertexAlgebra.LatticeActualVertexAlgebra
@@ -29,6 +30,7 @@ open LatticeActualVertexAlgebra (translation_as_mode)
 open LatticeSugawaraVirasoro (sugawaraMode_virasoro)
 open NativeStandardThirdLift (standardLift standardLift_compatible standardLift_omega)
 open P48qAllJetWickField (NativeStates nativeField nativeField_ground)
+open P48qNativeConformalZero (native_conformal_coeff_neg_six_eq_totalLZero)
 open P48qNativeCurrentLocality (Field stripResidue stripResidue_coeff nativeField_inResidue
   coverDelta coverComm)
 open P48qNativePairwiseLocality (nativeField_pairwise_locality)
@@ -37,6 +39,7 @@ open P48qNativeResidueIterate (nativeField_twisted_borcherds adjustedResidue_twi
 open P48qThirdTwistedField (State)
 open P48qTwistedChargeAction (lattice g g_cube g_isometry)
 open P48qTwistedGeneratorVacuum (concreteChargedField_zero_coeff)
+open P48qTwistedStateEnergy (totalLZero)
 open SignedFieldResidueLocality (residueField residueCoefficient residueLeft residueRight negativeResidue)
 open FieldNormalProduct (dividedDerivative)
 open SignedFieldNormalProductLocality (signedNormalMinusOne)
@@ -45,6 +48,8 @@ open private gram_det_unit from
   D5.S3.VertexAlgebra.Lattice.Orbifold.P48qConformalVectorDecomposition
 open private deltaCoverEnd coverOrder_mono ordinary_residue_mode from
   D5.S3.VertexAlgebra.Lattice.Orbifold.P48qNativeCurrentLocality
+open private cover_mono from
+  D5.S3.VertexAlgebra.Lattice.Orbifold.P48qNativeResidueIterate
 
 noncomputable section
 
@@ -106,6 +111,44 @@ private theorem residue_minus_two_identity_right_mode
     rw [Ring.choose_one_right, VertexOperator.coeff_eq_ncoeff,
       show -(-q - 1 + 1) - 1 = q - 1 by omega, ← Int.cast_smul_eq_zsmul ℂ]
     simp only [sub_add_cancel, Int.cast_neg, LinearMap.smul_apply]
+
+/-- The vacuum minus-two product differentiates the native field at physical
+mode `q - s / 3` for every state of lift eigenvalue `ζ ^ s`. -/
+theorem native_vacuum_minus_two_fractional_mode (a : NativeStates) (s : ℤ)
+    (ha : σ a = ζ ^ s • a) (q : ℤ) :
+    C (nativeField (mu lattice a (-2) vac)) (s - 3 * (q + 1)) =
+      -((q : ℂ) - (s : ℂ) / 3) • C (nativeField a) (s - 3 * q) := by
+  have hv : σ vac = ζ ^ (0 : ℤ) • vac := by
+    simpa only [zpow_zero, one_smul] using (standardLift_compatible lattice g g_cube g_isometry).1
+  obtain ⟨N, hN⟩ := nativeField_twisted_borcherds a vac s 0 ha hv
+  let term (j : ℕ) := Ring.choose (-((s : ℂ) / 3)) j •
+    C (nativeField (mu lattice a (-2 + (j : ℤ)) vac)) (s - 3 * (q - (j : ℤ) + 1))
+  have h := hN 0 q (-2)
+  simp only [Int.cast_zero, zero_sub, add_zero, zero_add] at h
+  rw [show s - 3 * 0 = s by omega] at h
+  change _ = ∑ j ∈ Finset.range ((N : ℤ) - (-2)).toNat, term j at h
+  have hsum :
+      (∑ j ∈ Finset.range 2, term j) =
+        ∑ j ∈ Finset.range ((N : ℤ) - (-2)).toNat, term j := by
+    apply Finset.sum_subset (Finset.range_mono (by omega))
+    intro j _ hj
+    have hj' : 0 ≤ (-2 : ℤ) + (j : ℤ) := by
+      rw [Finset.mem_range, not_lt] at hj
+      omega
+    change term j = 0
+    have hz : mu lattice a (-2 + (j : ℤ)) vac = 0 :=
+      stateField_creativity lattice a _ hj'
+    simp only [term, hz, map_zero, Pi.zero_apply, smul_zero]
+  rw [residue_minus_two_identity_right_mode _ _ vacuum_mode, strip_mode,
+    show s - 3 * (q - 1 + 1) = s - 3 * q by omega, ← hsum] at h
+  have hcreate : mu lattice a (-1) vac = a := stateField_creation lattice a
+  simp only [Finset.sum_range_succ, Finset.sum_range_zero, zero_add, term,
+    Ring.choose_zero_right, Ring.choose_one_right, one_smul, Nat.cast_zero, Nat.cast_one,
+    add_zero, sub_zero, show (-2 : ℤ) + 1 = -1 by decide, hcreate,
+    show s - 3 * (q - 1 + 1) = s - 3 * q by omega] at h
+  rw [eq_sub_of_add_eq h.symm, ← sub_smul]
+  congr 1
+  ring
 
 private theorem vacuum_minus_two_residue_mode (a : NativeStates) (q : ℤ) :
     ((residueField 1 (-2) (stripResidue 0 (nativeField a))
@@ -304,11 +347,81 @@ theorem native_conformal_virasoro (m n : ℤ) :
   rw [hlinear]
   by_cases hmn : m + n = 0 <;> simp [hmn]
 
+set_option maxHeartbeats 2000000 in
+/-- The actual twisted energy operator acts on every physical mode `q - s / 3`
+of a lift eigenstate by the zero-mode Ward identity. -/
+theorem native_LZero_ward (a : NativeStates) (s : ℤ) (ha : σ a = ζ ^ s • a) (q : ℤ) :
+    let B := C (nativeField a) (s - 3 * (q + 1))
+    totalLZero * B - B * totalLZero =
+      C (nativeField (sugawaraMode lattice (actualInverse lattice) 0 a))
+        (s - 3 * (q + 1)) - ((q : ℂ) - (s : ℂ) / 3 + 1) • B := by
+  intro B
+  have hHG := actualInverse_left lattice gram_det_unit
+  have hGH := actualInverse_right lattice gram_det_unit
+  have hΩ : σ Ω = ζ ^ (0 : ℤ) • Ω := by
+    simpa only [zpow_zero, one_smul] using
+      standardLift_omega lattice g g_cube g_isometry (actualInverse lattice) hHG
+  let X := nativeField Ω
+  let Y := nativeField a
+  obtain ⟨K, hK⟩ := nativeField_pairwise_locality Ω a
+  let N := max K 2
+  have hN : coverDelta^[N] (coverComm X Y) = 0 :=
+    cover_mono (le_max_left K 2) hK
+  have h := adjustedResidue_twisted_borcherds 0 s X Y N
+    (fun j => nativeField (mu lattice Ω j a))
+    (nativeField_inResidue Ω 0 hΩ) (nativeField_inResidue a s ha) hN
+    (adjustedResidue_eigenstate_first Ω a 0 s hΩ ha N hN) 1 q 0
+  let term (j : ℕ) := Ring.choose (1 : ℂ) j •
+    C (nativeField (mu lattice Ω (j : ℤ) a)) (s - 3 * (1 + q - (j : ℤ) + 1))
+  simp only [Int.cast_one, Int.cast_zero, zero_div, sub_zero, zero_add, Int.toNat_natCast] at h
+  rw [show (0 : ℤ) - 3 * 1 = -3 by decide] at h
+  change _ = ∑ j ∈ Finset.range N, term j at h
+  have hcomm :
+      ((residueField 1 0 (stripResidue (-3) X) (stripResidue s Y)).operator)[[q]] =
+        C X (-6) * B - B * C X (-6) := by
+    have hr := ordinary_residue_mode (stripResidue (-3) X) (stripResidue s Y) 0 q
+    change ((residueField 1 0 (stripResidue (-3) X) (stripResidue s Y)).operator)[[q]] = _ at hr
+    simpa only [Function.iterate_zero, id_eq, FieldNormalProductLocality.commutator,
+      strip_mode, show (-3 : ℤ) - 3 * (0 + 1) = -6 by decide] using hr
+  have hsum : (∑ j ∈ Finset.range 2, term j) = ∑ j ∈ Finset.range N, term j := by
+    apply Finset.sum_subset (Finset.range_mono (le_max_right K 2))
+    intro j _ hj
+    have hj' : 1 < j := by
+      rw [Finset.mem_range, not_lt] at hj
+      omega
+    have hchoose : Ring.choose (1 : ℂ) j = 0 := by
+      rw [show (1 : ℂ) = ((1 : ℕ) : ℂ) by simp, Ring.choose_natCast,
+        Nat.choose_eq_zero_of_lt hj', Nat.cast_zero]
+    simp only [term, hchoose, zero_smul]
+  have htranslation : mu lattice Ω 0 a = mu lattice a (-2) vac := by
+    rw [omega_product, show (0 : ℤ) - 1 = -1 by decide,
+      sugawaraMode_minus_one_eq_translation lattice (actualInverse lattice) hHG hGH,
+      translation_as_mode]
+    rfl
+  have h0 : term 0 = -((q : ℂ) - (s : ℂ) / 3 + 1) • B := by
+    simp only [term, Ring.choose_zero_right, one_smul, Nat.cast_zero, sub_zero, htranslation]
+    rw [show s - 3 * (1 + q + 1) = s - 3 * ((q + 1) + 1) by omega,
+      native_vacuum_minus_two_fractional_mode a s ha (q + 1),
+      show ((q + 1 : ℤ) : ℂ) - (s : ℂ) / 3 = (q : ℂ) - (s : ℂ) / 3 + 1 by
+        push_cast
+        ring]
+  have h1 : term 1 =
+      C (nativeField (sugawaraMode lattice (actualInverse lattice) 0 a))
+        (s - 3 * (q + 1)) := by
+    simp only [term, Ring.choose_one_right, one_smul, Nat.cast_one, omega_product,
+      sub_self, show s - 3 * (1 + q - 1 + 1) = s - 3 * (q + 1) by omega]
+  rw [← native_conformal_coeff_neg_six_eq_totalLZero, ← hcomm, h, ← hsum]
+  simp only [Finset.sum_range_succ, Finset.sum_range_zero, zero_add, h0, h1]
+  rw [neg_smul, neg_add_eq_sub]
+
+#print axioms native_vacuum_minus_two_fractional_mode
+#print axioms native_LZero_ward
 #print axioms native_vacuum_minus_two_mode
 #print axioms native_conformal_virasoro
 
 run_cmd do
-  for name in [``native_vacuum_minus_two_mode, ``native_conformal_virasoro] do
+  for name in [``native_vacuum_minus_two_fractional_mode, ``native_LZero_ward,
+      ``native_vacuum_minus_two_mode, ``native_conformal_virasoro] do
     let axioms ← Lean.collectAxioms name
     unless axioms.size == 3 && axioms.contains ``propext &&
         axioms.contains ``Classical.choice && axioms.contains ``Quot.sound do
