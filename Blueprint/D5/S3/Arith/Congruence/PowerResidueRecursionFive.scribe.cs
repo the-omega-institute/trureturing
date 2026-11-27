@@ -18,16 +18,20 @@ internal sealed class PowerResidueRecursionFiveDocument : IScribeDocumentDefinit
             AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/ArithSums/oeis2024a374911")),
             Blocks(Paragraph(Text(
                 "The sequence is the power-residue recursion with initial value one. "
-                + "The classifications at one through four force the ordered recursive values "
-                + "to be three and two when the sum is five. Equivalently, the remainder "
-                + "of three to the index is one, and the remainder of two to the index "
-                + "is a positive power of two, in each case modulo the index. "
+                + "For an index with value five, both recursive terms are positive. "
+                + "A left value of one forces the index to be a positive power of two, "
+                + "where the sequence has value three. A right value of one makes the "
+                + "index divide the power of three, hence the index is divisible by three. "
+                + "The left value would then be four, placing the left remainder at three "
+                + "or nine. This would make the power of two divisible by three. "
                 + "For an index greater than one, if a base raised to the index is congruent "
                 + "to one modulo the index, its order modulo the least prime factor divides "
                 + "both the index and that prime minus one. These two numbers are coprime. "
                 + "The base is therefore one modulo the least prime factor. Base two "
-                + "rules out a left recursive value of two. Base three forces the least "
-                + "prime factor to be two."))),
+                + "rules out a left recursive value of two. The only remaining ordered "
+                + "pair is three and two, so value five occurs exactly when the base-two "
+                + "remainder is a positive power of two and the base-three remainder "
+                + "is one. Base three then forces the least prime factor to be two."))),
             DescribeRole.Theorem))));
 
     private static Formula ResultFormula()
