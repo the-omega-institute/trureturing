@@ -1,5 +1,6 @@
 module
 
+public import OmegaChecks.InitPort.ArraySafety
 public import OmegaChecks.InitPort.EffectRun
 public import OmegaChecks.InitPort.Persistent
 public import OmegaChecks.InitPort.ReferencePut
@@ -83,11 +84,12 @@ private def originalOpaque (ci : ConstantInfo) (strict : Bool) : Bool :=
   isExclusive ci strict || isAddress ci strict || isShareCommonObject ci strict
 
 public def isOriginal (ci : ConstantInfo) (strict : Bool) : Bool :=
-  (strict && UnsafeImplementation.isImplementation ci) || DynamicValue.isAlias ci strict || TypeName.isUnsafeConversion ci strict || Persistent.isOriginal ci strict || originalOpaque ci strict || PointerComparison.isOriginal ci strict || ReferencePut.isOriginal ci strict || EffectRun.isOriginal ci strict
+  ArraySafety.isOriginal ci strict || (strict && UnsafeImplementation.isImplementation ci) || DynamicValue.isAlias ci strict || TypeName.isUnsafeConversion ci strict || Persistent.isOriginal ci strict || originalOpaque ci strict || PointerComparison.isOriginal ci strict || ReferencePut.isOriginal ci strict || EffectRun.isOriginal ci strict
 
 /-- Replay the checked library before installing each pinned opaque at its original unsafe boundary. -/
 public def replay (constants : Std.HashMap Name ConstantInfo) : IO Kernel.Environment := do
   let mut base ← DynamicValue.replay (← TypeName.replay (← Persistent.replay constants) constants) constants
+  base ← ArraySafety.replay base constants
   base ← UnsafeImplementation.replay base constants
   let mut checked := base
   for upstream in [`ptrAddrUnsafe, `isExclusiveUnsafe, `ShareCommon.Object.eq, `ShareCommon.Object.hash] do

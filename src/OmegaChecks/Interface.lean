@@ -187,6 +187,9 @@ private def compare (reference : Environment) (rename : Name → Name) (src dst 
       compatibleBinders reference {} 0 (liftTerm src.type) dst.type do
     throw <| IO.userError s!"public binder mismatch for {src.name}"
   requireSame reference src.name "interface type" (liftTerm src.type) dst.type
+  if foundation.isSome && OmegaChecks.InitPort.ArraySafety.names.contains dst.name then
+    unless OmegaChecks.InitPort.ArraySafety.isOriginal src true && OmegaChecks.InitPort.ArraySafety.isOriginal dst false do
+      throw <| IO.userError s!"unsafe array interface mismatch for {src.name}"
   if foundation.isSome && OmegaChecks.InitPort.CompilerMarkers.names.contains src.name then
     unless OmegaChecks.InitPort.CompilerMarkers.valid src && dst.name == src.name &&
         dst.isAxiom && dst.isUnsafe do
@@ -245,16 +248,16 @@ private def compare (reference : Environment) (rename : Name → Name) (src dst 
         throw <| IO.userError "unexpected pinned unsafe address callback"
       OmegaChecks.InitPort.Address.check reference y (mkConst `withPtrAddr (y.levelParams.map Level.param))
       return deps ++ x.value.getUsedConstants
-    if foundation.isSome && x.safety == .safe && y.name == `Array.modifyMUnsafe then
+    if foundation.isSome && y.name == `Array.modifyMUnsafe then
       OmegaChecks.InitPort.ArrayModify.check reference y (liftTerm x.value)
       return deps ++ x.value.getUsedConstants
-    if foundation.isSome && x.safety == .safe && y.name == `Array.anyMUnsafe then
+    if foundation.isSome && y.name == `Array.anyMUnsafe then
       OmegaChecks.InitPort.ArrayWord.check reference y (liftTerm x.value)
       return deps ++ x.value.getUsedConstants
-    if foundation.isSome && x.safety == .safe && OmegaChecks.InitPort.WordFold.supported y.name then
+    if foundation.isSome && OmegaChecks.InitPort.WordFold.supported y.name then
       OmegaChecks.InitPort.WordFold.check reference y (liftTerm x.value)
       return deps ++ x.value.getUsedConstants
-    if foundation.isSome && x.safety == .safe && OmegaChecks.InitPort.WordForIn.supported y.name then
+    if foundation.isSome && OmegaChecks.InitPort.WordForIn.supported y.name then
       OmegaChecks.InitPort.WordForIn.check reference y (liftTerm x.value)
       return deps ++ x.value.getUsedConstants
     if foundation.isSome && x.safety == .unsafe && OmegaChecks.InitPort.SyntaxArray.supported y.name then
@@ -304,7 +307,7 @@ private def compare (reference : Environment) (rename : Name → Name) (src dst 
     if foundation.isSome && !x.isUnsafe && OmegaChecks.InitPort.FloatFraction.supported y.name then
       OmegaChecks.InitPort.FloatFraction.check reference y (liftTerm x.value)
       return deps ++ x.value.getUsedConstants
-    if foundation.isSome && !x.isUnsafe && y.name == `Array.get!InternalBorrowed then
+    if foundation.isSome && y.name == `Array.get!InternalBorrowed then
       OmegaChecks.InitPort.BorrowedIndex.check reference y (liftTerm x.value)
       return deps ++ x.value.getUsedConstants
     compareDefinitionBody
@@ -348,8 +351,7 @@ where
     let original := match src, dst with
       | .defnInfo _, .defnInfo y => some y.value
       | .opaqueInfo x, .opaqueInfo y =>
-        let safeIndex := !x.isUnsafe && [`Array.getInternalBorrowed, `Array.ugetBorrowed].contains y.name
-        if x.isUnsafe == y.isUnsafe || safeIndex then some y.value else none
+        if x.isUnsafe == y.isUnsafe then some y.value else none
       | _, _ => none
     let identical : Bool := original.any (fun target => sameLiterals reference body target ||
       foundation.any (fun pair => sameClosedProofs pair.1 reference rename raw body target))

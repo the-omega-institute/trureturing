@@ -38,21 +38,16 @@ private def usedConstants (e : Expr) : NameSet := Id.run do
       deps := (deps.insert `List.cons).insert `Char.ofNat
   return deps
 
-/-- The pinned definitions of these bounded reads contain only checked indexing.
-Borrowing changes the native reference-count convention, which is absent in the kernel term. -/
-private def boundedBorrowedRead (ci : ConstantInfo) : Bool :=
-  (ci matches .opaqueInfo _) && [`Array.getInternalBorrowed, `Array.ugetBorrowed].contains ci.name
-
 def translateDecl (info : ConstantInfo) (type body : Expr) : Except String Declaration := do
   let rename := portName
   let val (v : ConstantVal) := { v with name := rename v.name, type := translate rename type }
-  if (info.isUnsafe && !boundedBorrowedRead info && !OmegaChecks.InitPort.UnsafeRuntime.isOriginal info false) || info.isPartial then throw "unsafe/partial"
+  if (info.isUnsafe && !OmegaChecks.InitPort.UnsafeRuntime.isOriginal info false) || info.isPartial then throw "unsafe/partial"
   if invalidExpr type || invalidExpr body then throw "open term or unsupported string literal"
   let body := translate rename body
   match info with
   | .defnInfo d => return .defnDecl { d with toConstantVal := val d.toConstantVal, value := body, all := d.all.map rename }
   | .thmInfo d => return .thmDecl { d with toConstantVal := val d.toConstantVal, value := body, all := d.all.map rename }
-  | .opaqueInfo d => return .opaqueDecl { d with toConstantVal := val d.toConstantVal, value := body, all := d.all.map rename, isUnsafe := d.isUnsafe && !boundedBorrowedRead info }
+  | .opaqueInfo d => return .opaqueDecl { d with toConstantVal := val d.toConstantVal, value := body, all := d.all.map rename }
   | _ => throw "unsupported declaration kind"
 
 inductive Outcome
@@ -361,7 +356,10 @@ def checkDecl (env : Kernel.Environment) (decl : Declaration) (budget : Nat) :
     BaseIO (Except Kernel.Exception Kernel.Environment) := do
   let work : BaseIO (Except Kernel.Exception Kernel.Environment) := do
     let initial ← IO.getNumHeartbeats
-    return env.addDeclCore (initial + budget).toUSize 1000 decl none
+    let limit := (initial + budget).toUSize
+    if decl.getNames.any (fun n => OmegaChecks.InitPort.ArraySafety.names.contains (originalName n)) then
+      return OmegaChecks.InitPort.ArraySafety.verify env decl limit
+    return env.addDeclCore limit 1000 decl none
   let task ← work.asTask (prio := .dedicated)
   return task.get
 
@@ -443,6 +441,8 @@ partial def visit (n : Name) : M Bool := do
   if owner.getRoot != `Init then return ← record n (.blocked "outside Init")
   let some ci := c.source.find? n | return ← record n (.blocked "missing official constant")
   let dest := portName n
+  if OmegaChecks.InitPort.ArraySafety.names.contains n && !OmegaChecks.InitPort.ArraySafety.isOriginal ci false then
+    return ← record n (.blocked "unexpected pinned array declaration")
   if let some i := c.base.find? dest then
     if i.isAxiom || i.isUnsafe || i.isPartial || (i matches .quotInfo _) ||
         moduleOf c.base dest != some (owner.replacePrefix `Init `OmegaInit) then
@@ -478,8 +478,8 @@ partial def visit (n : Name) : M Bool := do
     unless Compiler.getImplementedBy? c.source name == some n do
       return ← record n (.blocked "mismatched native implementation" (some name))
     unless ← visit name do return ← record n (.blocked "unavailable logical reference" (some name))
-    let safe := ConstantInfo.defnInfo {native with safety := if dynamicOp.isSome then .unsafe else .safe, value := reference}
-    let .ok decl := translateDecl safe ci.type reference | return ← record n (.blocked "invalid logical reference")
+    let info := if n == `Array.modifyMUnsafe then ci else ConstantInfo.defnInfo {native with safety := if dynamicOp.isSome then .unsafe else .safe, value := reference}
+    let .ok decl := translateDecl info ci.type reference | return ← record n (.blocked "invalid logical reference")
     let .ok env ← checkWithRetry (← get).env (keepImplementationSafety n decl) c.maxHeartbeats
       | return ← record n (.blocked "kernel rejected logical reference")
     modify fun s => {s with env}
@@ -565,21 +565,21 @@ partial def visit (n : Name) : M Bool := do
     return ← record n .added
   if n == `Array.get!InternalBorrowed || n == `Array.anyMUnsafe || OmegaChecks.InitPort.WordFold.supported n ||
       OmegaChecks.InitPort.WordForIn.supported n || OmegaChecks.InitPort.SyntaxArray.supported n then
-    let safe ← match ci with
-      | .defnInfo native => pure (.defnInfo {native with safety := .safe})
-      | .opaqueInfo native => pure (.opaqueInfo {native with isUnsafe := false})
-      | _ => return ← record n (.blocked "missing native array implementation")
+    let info := match ci with
+      | .defnInfo native =>
+        if OmegaChecks.InitPort.SyntaxArray.supported n then .defnInfo {native with safety := .safe} else ci
+      | _ => ci
     let some body := OmegaChecks.InitPort.alternativeBody? c.alternatives ci
       | return ← record n (.blocked "missing safe array implementation")
     for dep in usedConstants ci.type ++ usedConstants body do
       unless ← visit dep do return ← record n (.blocked "unavailable safe array implementation dependency" (some dep))
-    let .ok decl := translateDecl safe ci.type body
+    let .ok decl := translateDecl info ci.type body
       | return ← record n (.blocked "invalid safe array implementation")
     let .ok env ← checkWithRetry (← get).env (keepImplementationSafety n decl) c.maxHeartbeats
       | return ← record n (.blocked "kernel rejected safe array implementation")
     modify fun s => {s with env}
     return ← record n .added
-  if (ci.isUnsafe && !boundedBorrowedRead ci && !OmegaChecks.InitPort.UnsafeRuntime.isOriginal ci false) || ci.isPartial then return ← record n (.blocked "unsafe/partial")
+  if (ci.isUnsafe && !OmegaChecks.InitPort.UnsafeRuntime.isOriginal ci false) || ci.isPartial then return ← record n (.blocked "unsafe/partial")
   if let .inductInfo i := ci then
     let .ok f ← (family c.source i).run | return ← record n (.blocked "malformed family")
     if let some member := f.generated.find? (fun member => c.excluded.contains member) then

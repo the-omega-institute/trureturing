@@ -463,9 +463,9 @@ private unsafe def install (source publicSource : Environment) (lib out : System
                   tr src.type == dst.type && tr src.value == dst.value then
                 candidates := candidates.push ci.name
     | .defnInfo d =>
-      if onlyLayouts || oldNative.contains d.name || (ci.isUnsafe && !OmegaChecks.InitPort.EffectRun.isOriginal ci true &&
-          !OmegaChecks.InitPort.PointerComparison.isOriginal ci true &&
-          !OmegaChecks.InitPort.UnsafeImplementation.isImplementation ci) || ci.isPartial then continue
+      if onlyLayouts || oldNative.contains d.name || ci.isPartial then continue
+      if ci.isUnsafe && !OmegaChecks.InitPort.UnsafeImplementation.isImplementation ci && !OmegaChecks.InitPort.ArraySafety.isOriginal ci true &&
+          !OmegaChecks.InitPort.EffectRun.isOriginal ci true && !OmegaChecks.InitPort.PointerComparison.isOriginal ci true then continue
       let upstream := InitKernelPort.originalName d.name
       if unaryNat && largeWordSizes.contains upstream then continue
       if (isExtern source upstream || (getImplementedBy? source upstream).isSome) && !arrayDefinition upstream then continue
