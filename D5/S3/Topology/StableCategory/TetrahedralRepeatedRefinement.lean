@@ -1,5 +1,5 @@
 /- GID: D5/S3/Topology/StableCategory/TetrahedralRepeatedRefinement
-   generality: G
+   generality: I
    mirror-B: none(waiver:support-for-the-tetrahedral-categorical-cover)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
