@@ -28,7 +28,8 @@ def lean_options(options, prefix=""):
 def build(basis, output, workers, audit_log):
     lean = subprocess.check_output(["lake", "env", "printenv", "LEAN"], cwd=ROOT, text=True).strip()
     sources, graph = import_graph(lean, ("strict/*.lean", "src/*.lean"))
-    graph.update((name, set(deps)) for name, deps in json.loads((basis / "modules.json").read_text()))
+    foundation = dict(json.loads((basis / "modules.json").read_text()))
+    graph.update((name, set(deps)) for name, deps in foundation.items())
     clients = sorted(name for name in sources if root(name) in {"OmegaMath", "OmegaMathlib"})
     if not {"OmegaMath", "OmegaMathlib"}.issubset(clients):
         raise RuntimeError("missing tracked OmegaMath or OmegaMathlib library sources")
@@ -65,6 +66,8 @@ def build(basis, output, workers, audit_log):
         raise RuntimeError("consumer sources changed during compilation")
     subprocess.run([lean, "--stdin"], cwd=ROOT, env=env, check=True, text=True,
                    input="module\nprelude\nimport OmegaMath\n#check Omega.Nat.fib\n")
+    subprocess.run([lean, "--run", Path(__file__).with_name("RootImports.lean"),
+                    output, basis / "lib", *foundation], cwd=ROOT, check=True)
     audit = ROOT / ".lake/build/bin/omegaAudit"
     subprocess.run(["lake", "build", "omegaAudit", "+OmegaChecks.Interface.Equations"], cwd=ROOT, check=True)
     with audit_log.open("w") as log:
