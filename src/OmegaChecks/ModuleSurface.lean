@@ -174,6 +174,8 @@ private def checkElaboration (env : Environment) (owner : Name) (idx : ModuleIdx
       | `Omega.IO.Promise.resolve => pure (`OmegaInit.System.Promise, "omega_io_promise_resolve")
       | `Omega.IO.Promise.isResolved => pure (`OmegaInit.System.Promise, "omega_io_promise_is_resolved")
       | `Omega.Char.ofNat => pure (`OmegaInit.Prelude, "omega_char_of_nat")
+      | `Omega.String.utf8ByteSize => pure (`OmegaInit.Prelude, "omega_string_byte_size")
+      | `Omega.String.toList => pure (`OmegaInit.Data.String.Basic, "omega_string_to_list")
       | `Omega.String.ofList => pure (`OmegaInit.Prelude, "omega_string_of_list")
       | _ => throw <| IO.userError s!"unverified native symbol for {owner}/{n}"
     unless owner == expectedOwner && env.getModuleIdxFor? n == some idx &&

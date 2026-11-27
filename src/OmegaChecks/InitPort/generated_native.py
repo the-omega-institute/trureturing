@@ -117,16 +117,24 @@ def compile_generated(stage, product, graph, seed_ir, owners=None, *, original_s
                 if cached is not None:
                     seed_files[owner] = cached
     modes = {owner: "mixed=" if seed_files[owner].is_file() else "layouts=" for owner in seed_owners}
-    requests = [modes.get(owner, "") + owner for owner in selected]
-    if owners is not None and "OmegaInit.Control.State" in requested and "OmegaInit.Control.Basic" not in requested:
-        requests.insert(0, "layouts=OmegaInit.Control.Basic")
     env = {**os.environ, "LEAN_ABORT_ON_PANIC": "1"}
     callbacks = before_owner or {}
     literals = stage / "literal.c"
-    if "OmegaInit.Prelude" in selected and modes.get("OmegaInit.Prelude") == "mixed=":
-        run("lake", "env", "lean", "--run", HERE / "LiteralNative.lean", library, literals, env=env)
+    if "OmegaInit.Prelude" in selected:
+        run("lake", "env", "lean", "--run", HERE / "LiteralNative.lean", library, literals, "OmegaInit.Prelude", env=env)
         if literals.exists():
             compile_object((literals, product / "native/literal.o"))
+    string_owner = "OmegaInit.Data.String.Basic"
+    strings = stage / "string-list.c"
+    if string_owner in selected:
+        run("lake", "env", "lean", "--run", HERE / "LiteralNative.lean", library, strings, string_owner, env=env)
+        if strings.exists():
+            compile_object((strings, product / "native/string-list.o"))
+            if string_owner not in seed_owners:
+                modes[string_owner] = "mixed="
+    requests = [modes.get(owner, "") + owner for owner in selected]
+    if owners is not None and "OmegaInit.Control.State" in requested and "OmegaInit.Control.Basic" not in requested:
+        requests.insert(0, "layouts=OmegaInit.Control.Basic")
     pending = []
 
     def flush():
@@ -157,7 +165,7 @@ def compile_generated(stage, product, graph, seed_ir, owners=None, *, original_s
         owner = ".".join(relative.with_suffix("").parts)
         obj = (native / "generated" / relative).with_suffix(".o")
         if modes.get(owner) == "mixed=":
-            parts = [seed_files[owner]]
+            parts = [seed_files[owner]] if owner in seed_owners else []
             if adapter := adapters.get(init_suffix(source)):
                 adapter_source, obj = adapter
                 parts.append(adapter_source)
@@ -169,30 +177,63 @@ def compile_generated(stage, product, graph, seed_ir, owners=None, *, original_s
 
     with ThreadPoolExecutor(max_workers=4) as pool:
         objects = dict(pool.map(compile_owner, sorted(sources.rglob("*.c"))))
+
+    def reachable(roots):
+        seen = set()
+        pending = list(roots)
+        while pending:
+            owner = pending.pop()
+            if owner not in seen:
+                seen.add(owner)
+                pending.extend(graph.get(owner, ()))
+        return seen
+
+    if strings.exists() and literals.exists():
+        list_client = stage / "string-list-consumer.c"
+        run("lean", "-R", HERE, "-c", list_client, HERE / "StringListConsumer.lean",
+            env={**os.environ, "LEAN_PATH": str(library)})
+        dependencies = reachable([string_owner])
+        missing = sorted(name for name in dependencies & seed_owners if not seed_files[name].is_file())
+        if missing:
+            # The detached seed carries the rest of these modules as Lean IR only.
+            inputs = [literals, strings]
+            print("Checking the compiled string adapters directly. Seed C unavailable for "
+                  + ", ".join(missing), flush=True)
+        else:
+            inputs = []
+            for owner in sorted(dependencies):
+                obj = objects.get(owner)
+                if obj is None:
+                    suffix = owner.replace(".", "_")
+                    adapter = adapters.get(suffix) or adapters.get("trureturing_" + suffix)
+                    if adapter:
+                        obj = adapter[1]
+                    elif seed_files[owner].is_file():
+                        obj = (stage / "original-native" / Path(*owner.split("."))).with_suffix(".o")
+                        compile_object((seed_files[owner], obj))
+                    else:
+                        raise ValueError(f"missing native string dependency {owner}")
+                inputs.append(obj)
+        application = stage / "check-string-list"
+        run("leanc", "-I", HERE, list_client, HERE / "string_list_consumer.c", *inputs, "-o", application)
+        run(application)
     if not set(CONTROL).issubset(selected):
         return []
 
-    reachable = set()
-    pending = list(CONTROL)
-    while pending:
-        owner = pending.pop()
-        if owner in reachable:
-            continue
-        reachable.add(owner)
-        pending.extend(graph.get(owner, ()))
+    control_deps = reachable(CONTROL)
     sources.mkdir(exist_ok=True, parents=True)
     consumer = sources / "consumer.c"
     run("lean", "-R", HERE, "-o", sources / "GeneratedControlConsumer.olean", "-c", consumer,
         HERE / "GeneratedControlConsumer.lean", env={**os.environ, "LEAN_PATH": str(library)})
-    missing = sorted(owner for owner in reachable & seed_owners if not seed_files[owner].is_file())
+    missing = sorted(owner for owner in control_deps & seed_owners if not seed_files[owner].is_file())
     if missing:
         run("lake", "env", "lean", "--run", HERE / "GeneratedNative.lean", "--check-control", library, sources,
             env=env)
         print("Checked generated control consumers using packaged IR. Seed C files unavailable for "
               + ", ".join(missing), flush=True)
         return None
-    inputs = [obj for owner, obj in objects.items() if owner in reachable]
-    seed_only = sorted((reachable & seed_owners) - objects.keys())
+    inputs = [obj for owner, obj in objects.items() if owner in control_deps]
+    seed_only = sorted((control_deps & seed_owners) - objects.keys())
     for owner in seed_only:
         obj = (stage / "original-native" / Path(*owner.split("."))).with_suffix(".o")
         inputs.append(compile_object((seed_files[owner], obj)))
