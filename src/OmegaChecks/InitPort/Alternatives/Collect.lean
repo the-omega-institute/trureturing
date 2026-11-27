@@ -11,6 +11,7 @@ import Init.Data.Iterators.Lemmas.Basic
 public import Init.Data.Iterators.Lemmas.Combinators.Attach
 import all Init.Data.Iterators.Combinators.Monadic.Attach
 import Init.Data.Iterators.Lemmas.Combinators.Monadic.Attach
+public import Init.Data.Iterators.Lemmas.Combinators.ULift
 public import Init.Data.Iterators.Lemmas.Combinators.Append
 public import Init.Data.Iterators.Lemmas.Combinators.FilterMap
 import all Init.Data.Iterators.Lemmas.Combinators.FilterMap
@@ -671,6 +672,11 @@ public theorem Std.Iter.toList_uLift {α β : Type u} [Iterator α Id β] {it : 
     | yield next out h => exact congrArg (List.cons (ULift.up out)) (ihy h)
     | skip next h => exact ihs h
     | done h => rfl
+
+public theorem Std.Iter.length_uLift : type_of% @_root_.Std.Iter.length_uLift := by
+  intros
+  rw [← _root_.Std.Iter.length_toList_eq_length, ← _root_.Std.Iter.length_toList_eq_length,
+    _root_.Std.Iter.toList_uLift, List.length_map]
 
 private theorem collectAttach {α β : Type w} [Iterator α Id β] [Finite α Id] {P : β → Prop}
     (it : IterM (α := α) Id β) (hP : ∀ out, it.IsPlausibleIndirectOutput out → P out) :
