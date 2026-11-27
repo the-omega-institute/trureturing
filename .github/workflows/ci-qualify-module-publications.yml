@@ -1,0 +1,72 @@
+name: Isolated publication qualification
+
+on:
+  pull_request:
+    branches: [integration-ci-independent-publications-tests]
+
+permissions:
+  contents: read
+
+jobs:
+  produce:
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 30
+    outputs:
+      artifact_id: ${{ steps.transfer.outputs.artifact-id }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          persist-credentials: false
+      - run: make install-tools
+      - run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
+      - name: Build a Lake project and publish independent compiler and report shards locally
+        run: python3 -B .github/scripts/probe-module-publications.py produce "$RUNNER_TEMP/module-registry"
+      - name: Exercise report failure, an advancing compiler, partial promotion and catch-up
+        working-directory: tools/scripts/worktree
+        run: |
+          python3 -B -m unittest -v \
+            test_lean_module_cache.ModuleReleases.test_rolling_report_marker_can_lag_the_compiler_and_restore_only_matching_inputs \
+            test_lean_module_cache.ModuleReleases.test_first_report_publication_migrates_unchanged_zips_after_two_compiler_versions \
+            test_lean_module_remote.VersionedShards.test_independent_report_release_and_promotion \
+            test_lean_module_remote.VersionedShards.test_late_promotion_of_an_unpublished_ancestor_is_superseded \
+            test_lean_module_remote.VersionedShards.test_retries_the_staged_index_after_interrupted_promotion_and_a_new_base \
+            test_lean_module_remote.VersionedShards.test_manifest_readback_failure_blocks_advance
+      - id: transfer
+        uses: actions/upload-artifact@v6
+        with:
+          name: isolated-module-publications-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/module-registry/
+          compression-level: 0
+          if-no-files-found: error
+          retention-days: 3
+
+  consume:
+    needs: produce
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          persist-credentials: false
+      - name: Check out the fixed Truth assembler
+        uses: actions/checkout@v5
+        with:
+          repository: the-omega-institute/trureturing-tools
+          ref: e5870038b3bde098a2790eb3c43576ddfae330b8
+          path: truth-tools
+          sparse-checkout-cone-mode: false
+          sparse-checkout: /.github/scripts/truth_release/report.py
+          persist-credentials: false
+      - run: make install-tools
+      - run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
+      - uses: actions/download-artifact@v8
+        with:
+          artifact-ids: ${{ needs.produce.outputs.artifact_id }}
+          path: ${{ runner.temp }}/module-registry
+          merge-multiple: true
+      - name: Restore a scoped compiler module and assemble a Truth report from the transferred report shard
+        run: |
+          python3 -B .github/scripts/probe-module-publications.py consume "$RUNNER_TEMP/module-registry" \
+            --reader .github/scripts/read-module-reports.py --issuer truth-tools/.github/scripts/truth_release/report.py
+      - name: Check missing and corrupt reports, changed membership and idempotent Truth retries
+        run: python3 -B .github/scripts/test-read-module-reports.py -v
