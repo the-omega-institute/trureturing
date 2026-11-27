@@ -35,11 +35,10 @@ def merge {α : Type u} (fn : α → α → α) : Option α → Option α → Op
 protected def tryCatch {α : Type u} (x : Option α) (handle : Unit → Option α) : Option α :=
   Option.casesOn (motive := fun _ => Option α) x (handle Unit.unit) (fun _ => x)
 
-def isNone {α : Type u} : Option α → Bool :=
-  fun x => Option.casesOn (motive := fun _ => Bool) x Bool.true (fun _ => Bool.false)
-
 def isSome {α : Type u} : Option α → Bool :=
   fun x => Option.casesOn (motive := fun _ => Bool) x Bool.false (fun _ => Bool.true)
+
+@[no_expose] def isNone {α : Type u} : Option α → Bool := fun x => Bool.not (isSome x)
 
 protected def any {α : Type u} (p : α → Bool) : Option α → Bool :=
   fun x => Option.casesOn (motive := fun _ => Bool) x Bool.false p
@@ -95,6 +94,8 @@ theorem isSome_none {α : Type u} :
 
 theorem isSome_some :
     Eq (Option.isSome (Option.some a)) Bool.true := Omega.rfl
+
+attribute [irreducible] isNone
 
 theorem join_none {α : Type u} :
     Eq (Option.join (Option.none : Option (Option α))) Option.none := Omega.rfl

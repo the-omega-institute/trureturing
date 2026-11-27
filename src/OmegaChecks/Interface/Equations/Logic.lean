@@ -2,11 +2,15 @@ module
 
 public import OmegaChecks.InitInventory.Quotient
 public import Init.WFComputable
+public import Init.Data.Option.Basic
 public import Init.Core
 public import Init.Internal.Order.Basic
 import all Init.Internal.Order.Basic
 
 namespace OmegaChecks.Interface.Equations
+
+public theorem Option.isNone {α : Type u} (x : _root_.Option α) :
+    (!x.isSome) = x.isNone := by cases x <;> rfl
 
 open _root_.Lean.Order in
 public theorem Lean.Order.admissible {α : Sort u} [CCPO α] (P : α → Prop) :

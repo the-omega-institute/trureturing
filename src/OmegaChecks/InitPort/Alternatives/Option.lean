@@ -11,6 +11,11 @@ public import Init.Data.Option.List
 namespace OmegaChecks.InitPort.Alternatives
 namespace Option
 
+@[expose] public def isNone {α : Type u} (x : _root_.Option α) : Bool := !x.isSome
+
+public theorem not_comp_isSome {α : Type u} :
+    (! ·) ∘ @_root_.Option.isSome α = @isNone α := rfl
+
 open _root_.Option
 
 public theorem eq_none_iff_forall_some_ne : type_of% @_root_.Option.eq_none_iff_forall_some_ne := by

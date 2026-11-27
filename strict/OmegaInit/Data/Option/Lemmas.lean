@@ -7,9 +7,16 @@ module
 prelude
 public import OmegaInit.Core
 public import OmegaInit.Data.Option.Basic
+import all OmegaInit.Data.Option.Basic
 import OmegaInit.PropLemmas
 
-port_proof Option.all_false by_reflexivity
+namespace Omega.Option
+
+theorem all_false {α : Type u} {o : Option α} : Eq (Option.all (fun _ => Bool.false) o) (Option.isNone o) :=
+  Option.casesOn (motive := fun x => Eq (Option.all (fun _ => Bool.false) x) (Option.isNone x))
+    o Option.isNone_none.symm (fun a => (Option.isNone_some (a := a)).symm)
+
+end Omega.Option
 port_proof Option.all_map
 port_proof Option.merge_none_right
 port_proof Option.any_map
