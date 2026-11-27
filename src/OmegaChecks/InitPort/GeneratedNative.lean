@@ -227,7 +227,7 @@ private def compileOwner (source : Environment) (groups : Array InductiveVal) (w
   compileLayoutsInOrder groups
   OmegaChecks.InitPort.WordNative.install words
   for n in order do
-    if n == `Omega.Lean.RArray.get then
+    if n == `Omega.Lean.RArray.get && (← getImpureSignature? `Omega.Lean.RArray.getImpl).isSome then
       let impl := `Omega.Lean.RArray.getImpl
       let some (.defnInfo d) := strict.find? n | throwError "missing reflected array lookup"
       let value := mkConst impl (d.levelParams.map Level.param)
