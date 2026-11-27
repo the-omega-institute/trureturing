@@ -83,10 +83,17 @@ The utility classification is `none`. The result's axiom closure is
 The Reg mirror models the full law with the Euler-totient family as the
 selected readout. Its bridge uses the original totient, and replacing the
 family by the constant zero violates the altered law at $n=2$, $k=1$.
-The actual family differs at inputs $2$ and $3$. The continuation is
-unknown. [Reg source](../Reg/D5/S3/Arith/Divisors/DimitrovPartFourC1.lean)
+The actual family differs at inputs $2$ and $3$.
 
-The Reg mirror compiles. Current binding validation awaits the scoped audit readout.
+The local compiled binding for `DimitrovPartFourC1.result` is
+`declared_validated` against the current source, with a source-equivalence
+bridge and an unknown continuation.
+[Reg source](../Reg/D5/S3/Arith/Divisors/DimitrovPartFourC1.lean)
+
+The local compiled binding for `DimitrovPartFourC4.result` is also
+`declared_validated`. The four-slot audit for
+`DimitrovPartFourC4.cubic_ratio_bound` is incomplete because the helper has
+no binding. [#35028](https://github.com/the-omega-institute/trureturing/issues/35028)
 
 ## Triage
 

@@ -24,6 +24,7 @@ namespace D5.S3.Arith.Divisors.DimitrovPartFourC4
 open D5.S3.Arith.Divisors.OeisA344695GcdSigmaPsiPrimes
 open D5.S3.Arith.Divisors.DimitrovLowerBoundsC4C5
 
+-- Four-slot registration for `cubic_ratio_bound` is tracked in #35028 (https://github.com/the-omega-institute/trureturing/issues/35028).
 /-- Cubic quotient bound on a positive ratio quadrant; consumed by `result`. -/
 lemma cubic_ratio_bound {x y r : ℝ}
     (hr : 1 ≤ r) (hx : r ≤ x) (hy : r ≤ y) :
