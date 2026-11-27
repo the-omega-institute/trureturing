@@ -1,6 +1,7 @@
 module
 public import Lean
-import Lean.Replay
+import OmegaChecks.InitInventory.Replay
+meta import OmegaChecks.InitInventory.Replay
 import all Lean.Util.CollectAxioms
 public import OmegaChecks.InitInventory.IteratorMapStep
 import all OmegaChecks.InitInventory.IteratorMapStep
@@ -122,8 +123,7 @@ def reductions : List (Name × Name × Name × Name) := [
 Include complete inductive families so that replay can regenerate their primitive rules. -/
 private def replayWitnesses (env : Environment) : IO Unit := do
   let official ← importModules #[{module := `Lean}] {} (level := .private)
-  let mut terms : Std.HashMap Name ConstantInfo := {}
-  let mut todo := (reductions.map fun (_, _, _, witness) => witness) ++
+  let roots := (reductions.map fun (_, _, _, witness) => witness) ++
     ClassicalConsequences.witnesses.map Prod.snd ++
     [``MacroReferences.noQueryRoundTrip, ``MacroReferences.noRoundTrip] ++
     [``DynamicRoundTrip.noRoundTrip, ``FactoryCarriers.noCarrierEmbedding] ++
@@ -213,24 +213,7 @@ private def replayWitnesses (env : Environment) : IO Unit := do
       ``NaturalCancellation.exprNormEq, ``NaturalCancellation.exprNorm, ``NaturalCancellation.polyEq,
       ``NaturalCancellation.polyLe,
       ``OptionalIndex.decidablePropExtOfIsSome, ``TwoWorlds.countermodel]
-  while let n :: more := todo do
-    todo := more
-    if terms.contains n then continue
-    let some ci := (official.find? n).orElse fun _ => env.find? n
-      | throw <| IO.userError s!"missing witness dependency {n}"
-    if let .quotInfo _ := ci then
-      -- Replay regenerates the four native primitives from the kernel quotient declaration.
-      -- Quot.sound is a separate axiom and still fails the following check.
-      unless [`Quot, `Quot.mk, `Quot.ind, `Quot.lift].contains n &&
-          official.getModuleIdxFor? n == official.getModuleIdx? `Init.Prelude do
-        throw <| IO.userError s!"unexpected quotient primitive in a boundary witness: {n}"
-    if ci.isAxiom || ci.isUnsafe || ci.isPartial then
-      throw <| IO.userError s!"forbidden dependency in a boundary witness: {n}"
-    terms := terms.insert n ci
-    todo := ci.getUsedConstantsAsSet.toList ++ todo
-    if let .inductInfo ind := ci then todo := ind.all ++ todo
-    if let .ctorInfo ctor := ci then todo := ctor.induct :: todo
-  discard <| (← mkEmptyEnvironment).toKernelEnv.replay terms
+  discard <| replayBoundaryDependencies official env roots
 
 /-- Abstract just the proof argument of the pinned right-hand `Option.get`.
 A port may provide any such proof with the stated equality. -/

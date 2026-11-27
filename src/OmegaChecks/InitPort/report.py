@@ -37,6 +37,12 @@ def check_coverage(official):
                 strict != "OmegaStrictReference." + name or axiom or port or witness)):
             raise ValueError(f"inconsistent strict choice reduction for {owner}/{name}")
         runtime = row.get("runtimeConflictWitness")
+        endpoint = row.get("specializedEndpointType")
+        if endpoint and (endpoint != "Classical.choice" or row["kind"] != "theorem" or
+                         name != str(row.get("equationOperand")) + ".congr_simp" or
+                         row.get("operandImpliesAxiom") != endpoint or not row.get("operandReductionWitness") or
+                         port or witness or strict or runtime):
+            raise ValueError(f"inconsistent specialized equality endpoint for {owner}/{name}")
         if runtime and (axiom or witness or not row.get("unsafe") or
                         row.get("logicalConsequence") != "False" or
                         row.get("logicalConsequenceWitness") != runtime or not row.get("requiredBehavior")):
@@ -49,7 +55,7 @@ def check_coverage(official):
             direct += 1
         elif witness or strict:
             reductions += 1
-        elif not runtime:
+        elif not runtime and not endpoint:
             unresolved.append(site)
     summary = official["summary"]
     if (not sites or not modules or len(sites) != summary["declarations"] or
@@ -62,8 +68,10 @@ def verify_complete(official, product, reductions, unresolved):
     if unresolved:
         examples = ", ".join(f"{owner}/{name}" for owner, name in unresolved[:3])
         runtime = sum(bool(row.get("runtimeConflictWitness")) for row in official["declarations"])
+        endpoints = sum(bool(row.get("specializedEndpointType")) for row in official["declarations"])
         raise ValueError(f"{len(unresolved)} unresolved public non-axiom definition sites; "
-                         f"{reductions} checked axiom reductions, {runtime} observed runtime conflicts. "
+                         f"{reductions} checked axiom reductions, {runtime} observed runtime conflicts, "
+                         f"{endpoints} official statements with choice-valued equality endpoints. "
                          f"Examples: {examples}. See init-gaps.tsv.")
     missing_native = [(row["module"], row["name"]) for row in official["declarations"]
                       if row["matchingNameAndModule"] and row.get("strictNativeSignature") is False]
@@ -144,7 +152,8 @@ def report(product, require_complete=False):
                              "logicalConsequence", "logicalConsequenceWitness", "requiredBehavior", "abstractedDependency",
                              "runtimeConflictWitness", "equationOperand", "operandImpliesAxiom", "operandReductionWitness",
                              "unchangedTypeAxioms", "unsafePackedObservation", "strictImpliesAxiom", "strictSelectionWitness",
-                             "unconditionalLogicalConsequence", "unconditionalLogicalConsequenceWitness"])
+                             "unconditionalLogicalConsequence", "unconditionalLogicalConsequenceWitness",
+                             "specializedEndpointType"])
             for row in official["declarations"]:
                 if row["matchingNameAndModule"] or row["kind"] == "axiom":
                     continue
@@ -181,7 +190,8 @@ def report(product, require_complete=False):
                                  row.get("equationOperand"), row.get("operandImpliesAxiom"), row.get("operandReductionWitness"),
                                  ",".join(row.get("unchangedTypeAxioms", [])), row.get("unsafePackedObservation"),
                                  row.get("strictImpliesAxiom"), row.get("strictSelectionWitness"),
-                                 row.get("unconditionalLogicalConsequence"), row.get("unconditionalLogicalConsequenceWitness")])
+                                 row.get("unconditionalLogicalConsequence"), row.get("unconditionalLogicalConsequenceWitness"),
+                                 row.get("specializedEndpointType")])
         reductions = stage / "init-public-reductions.tsv"
         with reductions.open("w", newline="") as f:
             writer = csv.writer(f, delimiter="\t", lineterminator="\n")

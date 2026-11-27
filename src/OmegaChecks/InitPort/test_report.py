@@ -87,6 +87,16 @@ class CoverageTest(unittest.TestCase):
                         operandImpliesAxiom="Classical.choice", operandReductionWitness="fromChoice")
         self.assertEqual(check_coverage(inventory(equation)), (0, [("Init.While", "Classical.choice.congr_simp")]))
 
+    def test_unrepresentable_statement_requires_choice_from_its_specialized_endpoints(self):
+        row = site("Init.While", "Classical.choice.congr_simp", equationOperand="Classical.choice",
+                   operandImpliesAxiom="Classical.choice", operandReductionWitness="fromChoice",
+                   specializedEndpointType="Classical.choice")
+        self.assertEqual(check_coverage(inventory(row)), (0, []))
+        for mismatch in ({"kind": "definition"}, {"equationOperand": "other"}, {"operandReductionWitness": None},
+                         {"specializedEndpointType": "propext"}, {"matchingNameAndModule": True}):
+            with self.subTest(mismatch=mismatch), self.assertRaisesRegex(ValueError, "equality endpoint"):
+                check_coverage(inventory({**row, **mismatch}))
+
     def test_strict_choice_requires_a_checked_target_and_an_unimplemented_site(self):
         row = site("Init.System.ST", "ST.Prim.Ref.get", strictImpliesAxiom="Classical.choice.{1}",
                    strictSelectionWitness="OmegaStrictReference.ST.Prim.Ref.get")

@@ -5,6 +5,7 @@ meta import OmegaChecks.InitCompiler.RootNames
 import Lean.Compiler.LCNF.PhaseExt
 import OmegaChecks.InitInventory.Conditional
 meta import OmegaChecks.InitInventory.Conditional
+meta import OmegaChecks.InitInventory.ChoiceOperands
 meta import OmegaChecks.InitInventory.OrderedAlgebra
 meta import OmegaChecks.InitInventory.Order
 meta import OmegaChecks.InitInventory.Logic
@@ -545,7 +546,7 @@ private def checkedTypeAxioms (official : Environment) (info : ConstantInfo)
     | .ok _ => throwError "the unchanged type of {info.name} checked without {name}"
   return direct
 
-private def inventory (lib : System.FilePath) (visible strict full : Environment) (modules : Array Name)
+private def inventory (lib : System.FilePath) (visible strict full witnesses : Environment) (modules : Array Name)
     (gaps : Option IO.FS.Handle) (observedRuntime observedPacked : List String) : CoreM Json := do
   let official ← getEnv
   let reductions := reductionPaths visible strict full
@@ -570,7 +571,7 @@ private def inventory (lib : System.FilePath) (visible strict full : Environment
   let mut nativeByModule := #[]
   let mut allNative := #[]
   if let some file := gaps then
-    file.putStrLn "module\tdeclaration\tkind\tunsafe\tpartial\tupstreamAxioms\timpliesAxiom\treductionWitness\tlogicalConsequence\tlogicalConsequenceWitness\trequiredBehavior\tabstractedDependency\truntimeConflictWitness\tequationOperand\toperandImpliesAxiom\toperandReductionWitness\tunchangedTypeAxioms\tunsafePackedObservation\tunconditionalLogicalConsequence\tunconditionalLogicalConsequenceWitness"
+    file.putStrLn "module\tdeclaration\tkind\tunsafe\tpartial\tupstreamAxioms\timpliesAxiom\treductionWitness\tlogicalConsequence\tlogicalConsequenceWitness\trequiredBehavior\tabstractedDependency\truntimeConflictWitness\tequationOperand\toperandImpliesAxiom\toperandReductionWitness\tunchangedTypeAxioms\tunsafePackedObservation\tspecializedEndpointType\tunconditionalLogicalConsequence\tunconditionalLogicalConsequenceWitness"
   for owner in modules do
     let some idx := visible.getModuleIdx? owner | throwError "missing official module {owner}"
     let publicNames := visible.header.moduleData[idx]!.constNames.filter publicName
@@ -597,6 +598,14 @@ private def inventory (lib : System.FilePath) (visible strict full : Environment
         | throwError "missing official axiom closure for {owner}/{name}"
       let typeAxioms ← checkedTypeAxioms official info axioms
       let operand := OmegaChecks.InitBoundaries.ChoiceOperands.operand? owner info
+      let endpointType : Option String ← match operand with
+        | some op => do
+          if name.getPrefix != op.name then pure none
+          else
+            let certify := OmegaChecks.InitBoundaries.ChoiceOperands.checkCongruenceEndpoints official info op
+            (Meta.MetaM.run' certify).toIO' {fileName := "<official equality endpoints>", fileMap := default} {env := witnesses}
+            pure (some "Classical.choice")
+        | none => pure none
       let conditional := OmegaChecks.InitInventory.conditionalConsequence? owner name
       let direct := (logicalConsequence? owner name).map (fun (target, witness) => (target.toString, witness))
       let consequence := conditional.map (fun (target, witness, _) => (target, witness)) <|> direct
@@ -628,7 +637,7 @@ private def inventory (lib : System.FilePath) (visible strict full : Environment
             (consequence.map Prod.fst).getD "", (consequence.map (·.2.toString)).getD "", behavior.getD "",
             selector.getD "", runtimeConflict.getD "", (operand.map (·.name.toString)).getD "",
             (operand.map fun _ => (``Classical.choice).toString).getD "", (operand.map (·.witness.toString)).getD "",
-            String.intercalate "," (typeAxioms.toList.map Name.toString), packedObservation.getD "",
+            String.intercalate "," (typeAxioms.toList.map Name.toString), packedObservation.getD "", endpointType.getD "",
             (additional.map Prod.fst).getD "", (additional.map (·.2.toString)).getD ""]
       if info.isAxiom then
         directAxioms := directAxioms + 1
@@ -661,6 +670,7 @@ private def inventory (lib : System.FilePath) (visible strict full : Environment
         | some op => row.mergeObj <| Json.mkObj [("equationOperand", toJson op.name.toString),
             ("operandImpliesAxiom", toJson (``Classical.choice).toString), ("operandReductionWitness", toJson op.witness.toString)]
         | none => row
+      let row := if let some target := endpointType then row.setObjVal! "specializedEndpointType" (toJson target) else row
       let row := match packedObservation with
         | some observation => row.setObjVal! "unsafePackedObservation" (toJson observation)
         | none => row
@@ -697,6 +707,8 @@ def main (args : List String) : IO Unit := do
       pure (some (← IO.FS.Handle.mk path .write))
     | _ => throw <| IO.userError "expected at most one gaps TSV file"
   let sysroot ← findSysroot
+  initSearchPath sysroot
+  let witnesses ← importModules #[{module := `OmegaChecks.InitInventory.ChoiceOperands}] {} (level := .private)
   let lib ← getLibDir sysroot
   searchPathRef.set [lib]
   let modules ← installedModules lib `Init
@@ -727,6 +739,6 @@ def main (args : List String) : IO Unit := do
     | "true" => pure ("isExclusiveUnsafe" :: pointers ++ effects)
     | "false" => pure (pointers ++ effects)
     | other => throw <| IO.userError s!"unexpected native exclusivity observation: {other}"
-  let result ← (inventory lib visible strict full modules gaps observedRuntime packed).toIO' {fileName := "<Init inventory>", fileMap := default} {env := official}
+  let result ← (inventory lib visible strict full witnesses modules gaps observedRuntime packed).toIO' {fileName := "<Init inventory>", fileMap := default} {env := official}
   IO.FS.writeFile outputPath (result.compress ++ "\n")
   IO.println (← IO.ofExcept (result.getObjVal? "summary")).compress

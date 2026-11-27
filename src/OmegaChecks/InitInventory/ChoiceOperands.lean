@@ -1,5 +1,7 @@
 module
 public import Lean
+import OmegaChecks.InitInventory.Replay
+meta import OmegaChecks.InitInventory.Replay
 import all Init.Classical
 import all Init.WFExtrinsicFix
 import all Init.While
@@ -74,7 +76,7 @@ private def check (env : Environment) (owner : Name) (source : ConstantInfo) (op
 open Meta in
 /-- Specialize a congruence using the arguments of the existing reduction. Under an arbitrary
 implementation of its operator, each of the two resulting endpoints is a complete choice function. -/
-private def checkCongruenceEndpoints (source : ConstantInfo) (operand : Operand) : MetaM Unit := do
+public def checkCongruenceEndpoints (official : Environment) (source : ConstantInfo) (operand : Operand) : MetaM Unit := do
   let u := Level.param `u
   let sourceLevels := source.levelParams.map fun param =>
     if operand.levels.getLast? == some (.param param) then u else Level.one
@@ -104,10 +106,32 @@ private def checkCongruenceEndpoints (source : ConstantInfo) (operand : Operand)
           discard <| observing? arg.mvarId!.refl
       let args ← args.mapM instantiateMVars
       if args.any (·.hasMVar) then throwError "unresolved arguments for {source.name}: {args}"
+      -- The arguments used to expose choice must be available to a zero-axiom caller,
+      -- even if the selector and the proposed congruence have yet to be implemented.
+      let recipes ← args.mapM (mkLambdaFVars params ·)
+      let mut roots := choiceType.getUsedConstantsAsSet.toList
+      for recipe in recipes do
+        if recipe.hasFVar then throwError "specialization of {source.name} depends on its selector"
+        roots := recipe.getUsedConstantsAsSet.toList ++ roots
+      let clean ← replayBoundaryDependencies official env roots
+      for recipe in recipes do
+        discard <| Lean.ofExceptKernelException (Kernel.check clean {} recipe)
       -- Check the whole specialization, including the argument types and equality hypotheses.
       withLocalDeclD `law siteType fun law => do
         let app ← mkLambdaFVars (#[port] ++ params ++ #[law]) (mkAppN law args)
         discard <| Lean.ofExceptKernelException (Kernel.check env {} app)
+      -- Read both values from the specialized *official statement*. Neither value
+      -- may use the proof of that statement or any parameter beyond α and its inhabitance.
+      let declared := source.type.instantiateLevelParams source.levelParams sourceLevels
+      withLocalDeclD `congruence declared fun law => do
+        let app := mkAppN law args
+        let some (_, left, right) := (← inferType app).eq? | throwError "expected an official equality"
+        for endpoint in #[left, right] do
+          let selected ← mkLambdaFVars params endpoint
+          if selected.hasFVar then throwError "open equality endpoint at {source.name}"
+          let actual ← Lean.ofExceptKernelException (Kernel.check env {} selected)
+          unless Kernel.isDefEqGuarded env {} actual choiceType do
+            throwError "official endpoint at {source.name} has type {actual}"
       let expected ← mkForallFVars #[port] choiceType (usedOnly := false)
       for endpoint in #[lhs, rhs] do
         let abstracted ← mkLambdaFVars (#[port] ++ params) (← instantiateMVars endpoint)
@@ -117,6 +141,7 @@ private def checkCongruenceEndpoints (source : ConstantInfo) (operand : Operand)
 
 run_cmd
   let env ← getEnv
+  let pinned ← importModules #[{module := `Lean}] {} (level := .private)
   for (owner, data) in env.header.moduleNames.zip env.header.moduleData do
     unless owner.getRoot == `Init do continue
     for source in data.constants do
@@ -124,6 +149,6 @@ run_cmd
         if let some operand := operand? owner source then
           if let .error msg := check env owner source operand then throwError "{msg}"
           if source.name.getPrefix == operand.name then
-            Elab.Command.liftCoreM <| Meta.MetaM.run' (checkCongruenceEndpoints source operand)
+            Elab.Command.liftCoreM <| Meta.MetaM.run' (checkCongruenceEndpoints pinned source operand)
 
 end OmegaChecks.InitBoundaries.ChoiceOperands
