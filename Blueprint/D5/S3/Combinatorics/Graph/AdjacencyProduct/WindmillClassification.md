@@ -26,8 +26,6 @@ $$\forall d,t \in \mathbb{N}, 1 \leq d \land 3 \leq t \implies ((\exists B,C : \
 
 *Acknowledgement.* Saieed Akbari, Mohamad Parsa Elahimanesh and Bobby Miraftab (2025). *On Prime Matrix Product Factorizations*. DOI: [10.48550/arXiv.2512.24864](https://doi.org/10.48550/arXiv.2512.24864). URL: <https://arxiv.org/html/2512.24864v1#S5.I1.i1>.
 
-*Acknowledgement.* Farzad Maghsoudi, Babak Miraftab and Sho Suda (2023). *On Matrix Product Factorization of Graphs*. DOI: [10.48550/arXiv.2312.08615](https://doi.org/10.48550/arXiv.2312.08615). URL: <https://arxiv.org/html/2312.08615v1#S1.Thmthm2>.
-
 *Commentary.*
 
 The quantifier ranges over all pairs of simple undirected graphs on the windmill's labelled vertex set. The notation A(G) denotes the integer adjacency matrix of G, and juxtaposition denotes ordinary matrix multiplication.

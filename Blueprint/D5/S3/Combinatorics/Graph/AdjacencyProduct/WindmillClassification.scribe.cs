@@ -8,9 +8,7 @@ internal sealed class WindmillClassificationDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/Graph/AdjacencyProduct/WindmillClassification.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/AdjacencyProduct/akbari2025primematrixproduct");
-    private static readonly LibraryNoteRef CompleteGraphCriterion =
-        LibraryNoteRef.Create("D5/L/AdjacencyProduct/maghsoudi2023matrixproduct");
+        LibraryNoteRef.Create("D5/L/Combinatorics/akbari2025primematrixproduct");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "A windmill admits an ordinary product of two simple graph adjacency matrices over the integers exactly when it has one blade and its blade order is one modulo four.",
@@ -23,7 +21,7 @@ internal sealed class WindmillClassificationDocument : IScribeDocumentDefinition
                 DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("windmill-classification"), DeclarationHandle.Create(Prefix + "result"),
                 H("Which windmills factor"), StatementSource.FromAuthor(Classification()),
-                AssessedProvenance.FromRepo(Source, CompleteGraphCriterion),
+                AssessedProvenance.FromRepo(Source),
                 Blocks(
                     Paragraph(Text("The quantifier ranges over all pairs of simple undirected graphs on the windmill's labelled vertex set. The notation A(G) denotes the integer adjacency matrix of G, and juxtaposition denotes ordinary matrix multiplication.")),
                     Paragraph(Text("Symmetry reverses the product and makes both factors commute with the windmill adjacency matrix. The product at a blade vertex and the hub supplies a non-hub intermediate neighbor. Commutation at that entry then forces each factor to join the hub to every blade. Distinct blades would therefore give a positive product entry at a nonedge.")),

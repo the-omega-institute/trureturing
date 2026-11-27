@@ -14,6 +14,8 @@ url: https://arxiv.org/html/2512.24864v1#S5.I1.i1
 
 Akbari, Elahimanesh and Miraftab ask in Section 5, item 1 of *On Prime Matrix Product Factorizations* to determine all pairs $(d,t)$ for which the windmill $W_{d,t}$ admits a factorization. Here $d\ge1$, $t\ge3$, and the hub is the common vertex of the $d$ copies of $K_t$. [Published question](https://arxiv.org/html/2512.24864v1#S5.I1.i1)
 
+> We ask to determine all pairs $(d,t)$ for which $W_{d,t}$ admits a factorization.
+
 ### Statement echo
 
 The windmill admits a factorization if and only if $d=1$ and $t\equiv1\pmod4$.
