@@ -7,7 +7,6 @@
 
 import Mathlib.Data.Fintype.Basic
 import Mathlib.Data.Fintype.Sigma
-import Mathlib.Data.Rat.Cast.Order
 import Mathlib.Tactic.DeriveFintype
 import Mathlib.Tactic.FinCases
 import Mathlib.Tactic.NormNum
