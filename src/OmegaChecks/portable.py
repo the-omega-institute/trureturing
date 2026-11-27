@@ -78,7 +78,7 @@ def closure(graph, roots):
         if name not in seen:
             seen.add(name)
             pending.extend(dep for dep in graph[name] if dep in graph)
-    return list(TopologicalSorter({n: graph[n] & seen for n in sorted(seen)}).static_order())
+    return list(TopologicalSorter({n: sorted(graph[n] & seen) for n in sorted(seen)}).static_order())
 
 
 def backend_plan(official_path, names, environment=None, *, prepared=False):
