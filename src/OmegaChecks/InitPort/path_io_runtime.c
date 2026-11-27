@@ -245,4 +245,15 @@ LEAN_EXPORT lean_obj_res omega_io_metadata(b_lean_obj_arg path, lean_obj_arg wor
 LEAN_EXPORT lean_obj_res omega_io_symlink_metadata(b_lean_obj_arg path, lean_obj_arg world) {
     return unary_path(lean_io_symlink_metadata, path, world, strict_metadata);
 }
+
+extern lean_obj_res lean_io_exit(uint8_t);
+extern lean_obj_res lean_io_force_exit(uint8_t);
+
+LEAN_EXPORT lean_obj_res omega_io_exit(lean_obj_arg code, lean_obj_arg world) {
+    return strict_result(lean_io_exit(lean_uint8_of_nat(code)), world, retain_value);
+}
+
+LEAN_EXPORT lean_obj_res omega_io_force_exit(lean_obj_arg code, lean_obj_arg world) {
+    return strict_result(lean_io_force_exit(lean_uint8_of_nat(code)), world, retain_value);
+}
 #endif

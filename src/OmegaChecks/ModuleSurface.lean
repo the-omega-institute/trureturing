@@ -128,6 +128,8 @@ private def checkElaboration (env full : Environment) (reference? : Option Envir
       | `Omega.IO.FS.Handle.readToEnd => pure (`OmegaInit.System.IO, "omega_io_handle_read_to_end")
       | `Omega.IO.FS.Handle.readBinToEnd => pure (`OmegaInit.System.IO, "omega_io_handle_read_bin_to_end")
       | `Omega.IO.FS.Handle.readBinToEndInto => pure (`OmegaInit.System.IO, "omega_io_handle_read_bin_into")
+      | `Omega.IO.Process.exit => pure (`OmegaInit.System.IO, "omega_io_exit")
+      | `Omega.IO.Process.forceExit => pure (`OmegaInit.System.IO, "omega_io_force_exit")
       | `Omega.IO.getRandomBytes => pure (`OmegaInit.System.IO, "omega_io_random_bytes")
       | `Omega.IO.Prim.setAccessRights => pure (`OmegaInit.System.IO, "omega_io_set_access_rights")
       | `Omega.IO.FS.Handle.mk => pure (`OmegaInit.System.IO, "omega_io_handle_mk")

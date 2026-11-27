@@ -48,6 +48,8 @@ private def readWrapper (source strict : Environment) (n : Name) (symbol decoder
 private def entries := #[
   (`System.FilePath.metadata, "lean_io_metadata", "omega_io_metadata"),
   (`System.FilePath.symlinkMetadata, "lean_io_symlink_metadata", "omega_io_symlink_metadata"),
+  (`IO.Process.exit, "lean_io_exit", "omega_io_exit"),
+  (`IO.Process.forceExit, "lean_io_force_exit", "omega_io_force_exit"),
   (`IO.getRandomBytes, "lean_io_get_random_bytes", "omega_io_random_bytes"),
   (`IO.Prim.setAccessRights, "lean_chmod", "omega_io_set_access_rights"),
   (`IO.getEnv, "lean_io_getenv", "omega_io_get_env"),
@@ -197,6 +199,10 @@ public unsafe def main (args : List String) : IO Unit := do
       (← compileDeclsRef.get) #[strict] {}
   for (n, upstream, symbol) in roots do
     if readFunctions.any (·.1 == n) then continue
+    if [`IO.Process.exit, `IO.Process.forceExit].contains n then
+      verify source n #[(.erased, false), (.uint8, false), (.void, false)] .object upstream
+      verify compiled (`Omega ++ n) #[(.erased, false), (.tobject, false), (.tobject, false)] .object symbol
+      continue
     if n == `IO.getRandomBytes then
       verify source n #[(.usize, false), (.void, false)] .object upstream
       verify compiled (`Omega ++ n) #[(.tobject, false), (.tobject, false)] .object symbol
