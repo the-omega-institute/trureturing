@@ -83,7 +83,7 @@ def integralAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source integralArena ⟨integralFamily⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some actual
+  readout := some (realize signature (fun _ _ value bound => value < bound) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -93,7 +93,8 @@ def integralAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := (List.replicate 18 "body" ++ ["fn", "fn"]).toArray
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body",
+        "body", "body", "body", "body", "body", "body", "body", "body", "fn", "fn"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none
@@ -147,7 +148,7 @@ def differenceAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source differenceArena ⟨differenceFamily⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some actual
+  readout := some (realize signature (fun _ _ value bound => value < bound) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -157,7 +158,8 @@ def differenceAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := (List.replicate 19 "body" ++ ["fn", "fn"]).toArray
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body",
+        "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "fn"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none

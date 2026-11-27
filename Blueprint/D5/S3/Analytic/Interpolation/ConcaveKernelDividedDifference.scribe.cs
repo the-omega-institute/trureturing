@@ -6,7 +6,7 @@ internal sealed class ConcaveKernelDividedDifferenceDocument : IScribeDocumentDe
 {
     private const string Module = "D5/S3/Analytic/Interpolation/ConcaveKernelDividedDifference";
     private const string Digest =
-        "A concave kernel compares the positive and negative parts of a second divided difference.";
+        "Concave-kernel sign comparison for a second divided difference.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
         GeneralHeader(Module, Digest, "evidence-not-specified-by-formal-manifest"),
@@ -61,5 +61,5 @@ internal sealed class ConcaveKernelDividedDifferenceDocument : IScribeDocumentDe
                         + "variable. The sign comparison applies when the third node reaches "
                         + "the end of the certified negative interval. The spectral data and "
                         + "the lower and upper bounds for the integrals enter as hypotheses."))),
-                DescribeRole.Theorem)))));
+                DescribeRole.Theorem))));
 }

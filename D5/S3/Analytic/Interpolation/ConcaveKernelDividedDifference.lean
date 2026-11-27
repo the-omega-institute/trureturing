@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: A concave kernel compares the positive and negative parts of a second divided difference. -/
+   digest: Concave-kernel sign comparison for a second divided difference. -/
 
 import Mathlib.Analysis.Convex.Function
 import Mathlib.MeasureTheory.Integral.IntervalIntegral.IntegrationByParts
@@ -14,6 +14,9 @@ import Mathlib.Tactic.LinearCombination
 import Mathlib.Tactic.Ring
 
 import OmegaBuild.Commands
+
+/-! A bound on the positive part of a second derivative determines the sign of its
+second divided difference when the concave tent kernel preserves enough negative mass. -/
 
 compile_only_with_mathlib
 
@@ -130,7 +133,8 @@ theorem integral_mul_concave_neg_of_lobe_bound
       -(k p * ∫ t in b..c, -h t * ((c - t) / (c - a))) := by
     rw [← intervalIntegral.integral_const_mul, ← intervalIntegral.integral_neg]
     apply intervalIntegral.integral_mono_on_of_le_Ioo hbc.le
-      (hint hlb.le hbc.le hcr) ((hweighted_cont.intervalIntegrable_of_Icc (μ := volume) hbc.le).const_mul _).neg
+      (hint hlb.le hbc.le hcr)
+      ((hweighted_cont.intervalIntegrable_of_Icc (μ := volume) hbc.le).const_mul _).neg
     intro t ht
     have ht' : t ∈ Ioo left right := ⟨hlb.trans ht.1, ht.2.trans_le hcr⟩
     have hnt := hh_neg t ⟨ht', fun h => ht.1.not_ge (h : t ∈ Icc a b).2⟩
