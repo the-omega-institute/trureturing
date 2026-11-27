@@ -42,7 +42,7 @@ lemma chebotarev {K : Type} [Field K] [NumberField K] [Algebra K Ω] {W : Set Ga
   obtain ⟨⟨χ, c⟩, a, ha⟩ := exists_ker_eq_of_isCyclic ⟨_, H.subgroupOf_isOpen _ U.2⟩
     ((quotientInfEquivProdNormalQuotient ..).isCyclic.1 (isCyclic_of_surjective _ (mk'_surjective
     _))), artinMap_surjective H ⟦⟨_, mem_sup_left (mem_zpowers _)⟩⟧
-  have ⟨w, ⟨p, e⟩, r, s⟩ := (((second_inequality _ (continuous_iff_isOpen_ker.1 continuous_artinMap
+  obtain ⟨w, ⟨p, e⟩, r, s⟩ := (((second_inequality _ (continuous_iff_isOpen_ker.1 continuous_artinMap
     χ) (by simp_all [artinMap_principalIdele]) abelianLift_artinMap_adeleNorm).2.2
     a⁻¹).and_eventually (tendsto_place_comap_cofinite (algebraMap K _)
     ((finite_ramified U.2).and hS.compl_mem_cofinite))).exists
