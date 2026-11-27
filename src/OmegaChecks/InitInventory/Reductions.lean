@@ -18,6 +18,9 @@ meta import OmegaChecks.InitInventory.StateFactory
 public import OmegaChecks.InitInventory.ReferenceSelection
 import all OmegaChecks.InitInventory.ReferenceSelection
 meta import OmegaChecks.InitInventory.ReferenceSelection
+public import OmegaChecks.InitInventory.ReferenceRoundTrip
+import all OmegaChecks.InitInventory.ReferenceRoundTrip
+meta import OmegaChecks.InitInventory.ReferenceRoundTrip
 public import OmegaChecks.InitInventory.EffectObservations
 import all OmegaChecks.InitInventory.EffectObservations
 meta import OmegaChecks.InitInventory.EffectObservations
@@ -107,6 +110,7 @@ private def replayWitnesses (env : Environment) : IO Unit := do
     [``DynamicRoundTrip.noRoundTrip, ``FactoryCarriers.noCarrierEmbedding] ++
     [``PropositionalChoice.ofChoice, ``PropositionalChoice.ofSkolem, ``PropositionalChoice.ofProducts] ++
     ReferenceSelection.witnesses.map (fun row => row.2.2) ++
+    [``ReferenceRoundTrip.alloc, ``ReferenceRoundTrip.primAlloc, ``ReferenceRoundTrip.set, ``ReferenceRoundTrip.primSet] ++
     BooleanReflection.witnesses.map (fun row => row.2.2) ++
     IntegerCancellation.witnesses.map (fun row => row.2.2) ++
     WeakRingOrder.witnesses.map (fun row => row.2.2) ++
