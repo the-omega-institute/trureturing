@@ -43,6 +43,16 @@ public def main (args : List String) : IO Unit := do
         official.getModuleIdxFor? name == official.getModuleIdx? owner &&
         ci.levelParams.isEmpty && Kernel.isDefEqGuarded official {} input ci.type do
       throw <| IO.userError s!"incorrect official argument of {witness}"
+    if [`ST.Prim.Ref.take, `ST.Ref.take, `ST.Prim.Ref.modifyGetUnsafe].contains name then
+      let some original := ci.value? (allowOpaque := true) | throw <| IO.userError s!"missing body of {name}"
+      let some (.opaqueInfo take) := official.find? `ST.Prim.Ref.take | throw <| IO.userError "missing pinned take"
+      unless take.isUnsafe && getExternNameFor official `c take.name == some "lean_st_ref_take" do
+        throw <| IO.userError "unexpected pinned reference take"
+      -- Open the private logical implementation of the primitive, keeping the put opaque.
+      let readBody := (read.instantiate1 original).replace fun t => if t.isConstOf take.name then some take.value else none
+      let selected := mkApp3 generic (mkConst `Void.mk) (mkConst `ST.Prim.mkRef) readBody
+      unless Kernel.isDefEqGuarded official {} selected (mkConst `Classical.choice [.succ .zero]) do
+        throw <| IO.userError s!"the logical implementation of {name} differs from the pinned choice"
     let type := translate portName ci.type
     let argument := translate portName read
     if (type.getUsedConstants ++ argument.getUsedConstants).any (!env.contains ·) then continue
