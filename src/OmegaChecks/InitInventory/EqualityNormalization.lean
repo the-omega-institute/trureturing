@@ -199,7 +199,42 @@ theorem decidablePropExtOfReflection (rule : type_of% @decide_eq_true_eq)
     | isFalse hn => exact (decide_eq_false (fun hq => hn (equiv.mpr hq))).symm
   exact (rule (p := p)).symm.trans ((congrArg (fun b : Bool => b = true) agree).trans (rule (p := q)))
 
+/-- Swapping distinct Boolean constructors preserves the proposition expressing their equality. -/
+def Swapped : Prop := (true = false) = (false = true)
+
+theorem ofEqSelf (rule : type_of% @eq_self.{1}) : TrueBit := @rule Bool true
+
+theorem ofBooleanDecision (rule : type_of% @Lean.Sym.Bool.eq_eq_true) : TrueBit :=
+  rule true true rfl
+
+theorem ofNegativeDecision (rule : type_of% @Lean.Sym.Bool.eq_eq_false) : FalseBit :=
+  rule false true rfl
+
+theorem swappedOfFalseLeft (rule : type_of% @Bool.false_eq) : Swapped := (rule true).symm
+
+theorem swappedOfTrueLeft (rule : type_of% @Bool.true_eq) : Swapped := rule false
+
+/-- The only non-reflexive branch of either swapping rule is the same closed equation. -/
+theorem swappingRules : Swapped ↔ (type_of% @Bool.false_eq) ∧ (type_of% @Bool.true_eq) := by
+  constructor
+  · intro swap
+    exact ⟨fun | false => rfl | true => swap.symm, fun | false => swap | true => rfl⟩
+  · exact fun rules => swappedOfTrueLeft rules.2
+
+run_cmd
+  let env ← getEnv
+  for name in [``TrueBit, ``FalseBit, ``Swapped] do
+    let some (.defnInfo closed) := env.find? name | throwError "missing Boolean equation {name}"
+    let some (_, lhs, rhs) := closed.value.eq? | throwError "{name} must be an equality"
+    if Kernel.isDefEqGuarded env {} lhs rhs then
+      throwError "the closed propositions in {name} must be definitionally distinct"
+
 def witnesses : List (Name × (Name × Name)) := [
+  (``eq_self, ``TrueBit, ``ofEqSelf),
+  (``Lean.Sym.Bool.eq_eq_true, ``TrueBit, ``ofBooleanDecision),
+  (``Lean.Sym.Bool.eq_eq_false, ``FalseBit, ``ofNegativeDecision),
+  (``Bool.false_eq, ``Swapped, ``swappedOfFalseLeft),
+  (``Bool.true_eq, ``Swapped, ``swappedOfTrueLeft),
   (``Lean.Sym.Int8.lt_eq_true, ``TrueBit, ``int8LTTrue),
   (``Lean.Sym.Int8.lt_eq_false, ``FalseBit, ``int8LTFalse),
   (``Lean.Sym.Int8.le_eq_true, ``TrueBit, ``int8LETrue),

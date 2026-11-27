@@ -470,7 +470,7 @@ private def logicalConsequence? (owner name : Name) : Option (Name × Name) := d
   if owner == `Init.Grind.Ordered.Field || owner == `Init.Grind.Ordered.Ring then
     if let some reduction := OmegaChecks.InitBoundaries.WeakRingOrder.witnesses.lookup name then
       return reduction
-  if owner == `Init.SimpLemmas || owner == `Init.Sym.Lemmas then
+  if owner == `Init.SimpLemmas || owner == `Init.Sym.Lemmas || owner == `Init.Data.Bool then
     if let some reduction := OmegaChecks.InitBoundaries.BooleanReflection.witnesses.lookup name then
       return reduction
   if owner == `Init.Classical then
