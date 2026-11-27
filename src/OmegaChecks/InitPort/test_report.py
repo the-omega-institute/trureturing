@@ -181,7 +181,7 @@ class CoverageTest(unittest.TestCase):
             with self.subTest(mismatch=mismatch), self.assertRaisesRegex(ValueError, "statement formation argument"):
                 check_coverage(inventory(row | mismatch) | certificate)
 
-    def test_transport_path_for_an_equivalence_relation_remains_open(self):
+    def test_setoid_transport_path_requires_its_representative_counterexample(self):
         for carrier in ("Quot", "Quotient"):
             for recursor in (".rec", ".recOn"):
                 row = site("Init.Core", carrier + recursor, kind="definition", transportPathType=carrier + ".sound")
@@ -193,6 +193,31 @@ class CoverageTest(unittest.TestCase):
                     check_coverage(inventory(row))
                 with self.assertRaisesRegex(ValueError, "inconsistent transport path"):
                     check_coverage(inventory(row | {"kind": "theorem"}) | certificate)
+
+    def test_representative_quotient_models_are_bound_to_the_statement_or_certified_path(self):
+        for name, target, suffix in [("Quotient.sound", "Quotient.sound", "refuteSound"),
+                                     ("instSubsingletonSquash", "instSubsingletonSquash", "refuteSquash"),
+                                     ("Quotient.rec", "Quotient.sound", "refuteSound"),
+                                     ("Quotient.recOn", "Quotient.sound", "refuteSound")]:
+            key = ["Init.Core", name]
+            proof = "OmegaChecks.InitBoundaries.RepresentativeQuotient." + suffix
+            row = site(*key, representativeRefuter=proof)
+            certificates = {"certifiedRepresentativeRefutations": [[*key, target, proof]]}
+            if name != target:
+                row.update(kind="definition", transportPathType=target)
+                certificates["certifiedTransportPaths"] = [[*key, target]]
+            with self.subTest(name=name):
+                self.assertEqual(check_coverage(inventory(row) | certificates), (0, []))
+                with self.assertRaisesRegex(ValueError, "uncertified representative"):
+                    check_coverage(inventory(row) | (certificates | {"certifiedRepresentativeRefutations": []}))
+                with self.assertRaisesRegex(ValueError, "inconsistent representative"):
+                    check_coverage(inventory(row) | (certificates |
+                        {"certifiedRepresentativeRefutations": [[*key, "Quot.sound", proof]]}))
+                with self.assertRaisesRegex(ValueError, "inconsistent representative"):
+                    check_coverage(inventory(row | {"unsafe": True}) | certificates)
+                if name != target:
+                    with self.assertRaisesRegex(ValueError, "uncertified transport path"):
+                        check_coverage(inventory(row) | (certificates | {"certifiedTransportPaths": []}))
 
     def test_strict_choice_requires_a_checked_target_and_an_unimplemented_site(self):
         row = site("Init.System.ST", "ST.Prim.Ref.get", strictImpliesAxiom="Classical.choice.{1}",

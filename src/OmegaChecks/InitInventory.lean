@@ -601,6 +601,7 @@ private def inventory (lib : System.FilePath) (visible strict full witnesses : E
   let mut certifiedEndpoints : Array (Array String) := #[]
   let mut certifiedFormationArguments : Array (Array String) := #[]
   let mut certifiedTransportPaths : Array (Array String) := #[]
+  let mut certifiedRepresentativeRefutations : Array (Array String) := #[]
   let mut certifiedSites := 0
   let mut matchedUnique : NameSet := {}
   let mut axiomUnique : NameSet := {}
@@ -612,7 +613,7 @@ private def inventory (lib : System.FilePath) (visible strict full witnesses : E
   let mut nativeByModule := #[]
   let mut allNative := #[]
   if let some file := gaps then
-    file.putStrLn "module\tdeclaration\tkind\tunsafe\tpartial\tupstreamAxioms\timpliesAxiom\treductionWitness\tlogicalConsequence\tlogicalConsequenceWitness\trequiredBehavior\tabstractedDependency\truntimeConflictWitness\tequationOperand\toperandImpliesAxiom\toperandReductionWitness\tunchangedTypeAxioms\tunsafePackedObservation\tspecializedEndpointType\tunconditionalLogicalConsequence\tunconditionalLogicalConsequenceWitness\tstrictConstructorIff\tformationArgument\ttransportPathType"
+    file.putStrLn "module\tdeclaration\tkind\tunsafe\tpartial\tupstreamAxioms\timpliesAxiom\treductionWitness\tlogicalConsequence\tlogicalConsequenceWitness\trequiredBehavior\tabstractedDependency\truntimeConflictWitness\tequationOperand\toperandImpliesAxiom\toperandReductionWitness\tunchangedTypeAxioms\tunsafePackedObservation\tspecializedEndpointType\tunconditionalLogicalConsequence\tunconditionalLogicalConsequenceWitness\tstrictConstructorIff\tformationArgument\ttransportPathType\trepresentativeRefuter"
   for owner in modules do
     let some idx := visible.getModuleIdx? owner | throwError "missing official module {owner}"
     let publicNames := visible.header.moduleData[idx]!.constNames.filter publicName
@@ -661,6 +662,14 @@ private def inventory (lib : System.FilePath) (visible strict full witnesses : E
         certifiedTransportPaths := certifiedTransportPaths.push #[owner.toString, name.toString, path.toString]
         pure (some path.toString)
       else pure none
+      let refutedStatement := if transportPath == some "Quotient.sound" then ``Quotient.sound else name
+      let refuter := OmegaChecks.InitBoundaries.RepresentativeQuotient.refuter? owner refutedStatement
+      if let some proof := refuter then
+        let some statement := localDecls.find? refutedStatement
+          | throwError "missing definition site for {refutedStatement}"
+        OmegaChecks.InitBoundaries.RepresentativeQuotient.certify official witnesses statement proof
+        certifiedRepresentativeRefutations := certifiedRepresentativeRefutations.push
+          #[owner.toString, name.toString, refutedStatement.toString, proof.toString]
       let formationArgument ← if owner == `Init.Core && name == ``Quot.liftIndepPr1 then do
         let certify := OmegaChecks.InitBoundaries.HeterogeneousQuotient.certifyLiftArgument official info
         (Meta.MetaM.run' certify).toIO' {fileName := "<official quotient lift argument>", fileMap := default} {env := witnesses}
@@ -731,7 +740,7 @@ private def inventory (lib : System.FilePath) (visible strict full witnesses : E
             (operand.map fun _ => (``Classical.choice).toString).getD "", (operand.map (·.witness.toString)).getD "",
             String.intercalate "," (typeAxioms.toList.map Name.toString), packedObservation.getD "", endpointType.getD "",
             (additional.map Prod.fst).getD "", (additional.map (·.2.toString)).getD "", if constructorIff then "true" else "",
-            formationArgument.getD "", transportPath.getD ""]
+            formationArgument.getD "", transportPath.getD "", (refuter.map Name.toString).getD ""]
       if info.isAxiom then
         directAxioms := directAxioms + 1
         axiomUnique := axiomUnique.insert name
@@ -754,6 +763,7 @@ private def inventory (lib : System.FilePath) (visible strict full witnesses : E
         moduleNative := moduleNative.push ⟨matched, hasSig⟩
         pure (row.setObjVal! "strictNativeSignature" (toJson hasSig))
       else pure row
+      let row := if let some proof := refuter then row.setObjVal! "representativeRefuter" (toJson proof.toString) else row
       let row := if let some path := transportPath then row.setObjVal! "transportPathType" (toJson path) else row
       let row := if let some argument := formationArgument then row.setObjVal! "formationArgument" (toJson argument) else row
       let row := if constructorIff then row.setObjVal! "strictConstructorIff" (toJson true) else row
@@ -797,6 +807,7 @@ private def inventory (lib : System.FilePath) (visible strict full witnesses : E
     ("withAxioms",toJson withAxiomsUnique.size), ("matchingNameAndModule",toJson matchedUnique.size)]
   return Json.mkObj [("schemaVersion", toJson 4), ("uniqueNames", unique), ("leanVersion", toJson Lean.versionString), ("leanCommit", toJson Lean.githash),
     ("nativeByModule", Json.mkObj nativeByModule.toList), ("certifiedChoiceEndpoints", toJson certifiedEndpoints),
+    ("certifiedRepresentativeRefutations", toJson certifiedRepresentativeRefutations),
     ("certifiedFormationArguments", toJson certifiedFormationArguments), ("certifiedTransportPaths", toJson certifiedTransportPaths),
     ("modules", toJson (modules.map Name.toString)), ("summary", summary), ("declarations", .arr rows)]
 

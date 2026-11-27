@@ -49,6 +49,10 @@ def check_coverage(official):
     by_transport = {(owner, name): path for owner, name, path in paths}
     if len(paths) != len(by_transport):
         raise ValueError("repeated transport path certificate")
+    models = official.get("certifiedRepresentativeRefutations", [])
+    by_refutation = {(owner, name): (target, proof) for owner, name, target, proof in models}
+    if len(models) != len(by_refutation):
+        raise ValueError("repeated representative quotient counterexample")
     sites = set()
     direct = 0
     matched = 0
@@ -100,6 +104,18 @@ def check_coverage(official):
                     name not in (carrier + ".rec", carrier + ".recOn") or path != carrier + ".sound" or
                     row["kind"] != "definition" or port or witness or strict or runtime or endpoint or argument):
                 raise ValueError(f"inconsistent transport path for {owner}/{name}")
+        refuter = row.get("representativeRefuter")
+        certified_model = by_refutation.pop(site, None)
+        if bool(refuter) != bool(certified_model):
+            raise ValueError(f"uncertified representative quotient counterexample for {owner}/{name}")
+        if refuter:
+            target = path or name
+            suffix = {"Quotient.sound": "refuteSound", "instSubsingletonSquash": "refuteSquash"}.get(target)
+            if (owner != "Init.Core" or not suffix or certified_model != (target, refuter) or
+                    refuter != "OmegaChecks.InitBoundaries.RepresentativeQuotient." + suffix or
+                    (path and path != "Quotient.sound") or (not path and row["kind"] != "theorem") or
+                    row.get("unsafe") or row.get("partial") or port or witness or strict or runtime or endpoint or argument):
+                raise ValueError(f"inconsistent representative quotient counterexample for {owner}/{name}")
         if runtime and (axiom or witness or not row.get("unsafe") or
                         row.get("logicalConsequence") != "False" or
                         row.get("logicalConsequenceWitness") != runtime or not row.get("requiredBehavior")):
@@ -130,8 +146,10 @@ def check_coverage(official):
             # These Lean reductions take a value usable by safe code. The kernel
             # prohibits supplying an unsafe implementation to such a witness.
             reductions += 1
-        elif not endpoint and not argument and path != "Quot.sound":
+        elif not endpoint and not argument and not refuter and path != "Quot.sound":
             unresolved.append(site)
+    if by_refutation:
+        raise ValueError("representative quotient counterexample has no definition site")
     if by_transport:
         raise ValueError("transport path certificate has no definition site")
     if by_argument:
@@ -151,12 +169,14 @@ def verify_complete(official, product, reductions, unresolved):
         runtime = sum(bool(row.get("runtimeConflictWitness")) and not row["matchingNameAndModule"]
                       for row in official["declarations"])
         endpoints = sum(bool(row.get("specializedEndpointType")) for row in official["declarations"])
+        models = sum(bool(row.get("representativeRefuter")) for row in official["declarations"])
         formations = sum(bool(row.get("formationArgument")) or row.get("transportPathType") == "Quot.sound"
                          for row in official["declarations"])
         raise ValueError(f"{len(unresolved)} unresolved public non-axiom definition sites; "
                          f"{reductions} checked axiom reductions, {runtime} unmatched sites with observed conflicts for pure replacements, "
                          f"{endpoints} official statements with choice-valued equality endpoints, "
-                         f"{formations} official statements requiring an axiom to supply a quotient argument. "
+                         f"{formations} official statements requiring an axiom to supply a quotient argument, "
+                         f"{models} statements or required paths refuted in the representative quotient model. "
                          f"Examples: {examples}. See init-gaps.tsv.")
     missing_native = [(row["module"], row["name"]) for row in official["declarations"]
                       if row["matchingNameAndModule"] and row.get("strictNativeSignature") is False]
@@ -275,7 +295,8 @@ def report(product, require_complete=False):
                              "unchangedTypeAxioms", "unsafePackedObservation", "strictImpliesAxiom", "strictSelectionWitness",
                              "unconditionalLogicalConsequence", "unconditionalLogicalConsequenceWitness",
                              "specializedEndpointType", "strictConstructorIff", "formationArgument", "transportPathType",
-                             "strictLogicalConsequence", "strictLogicalConsequenceWitness", "strictEquivalenceWitness"])
+                             "strictLogicalConsequence", "strictLogicalConsequenceWitness", "strictEquivalenceWitness",
+                             "representativeRefuter"])
             for row in official["declarations"]:
                 if row["matchingNameAndModule"] or row["kind"] == "axiom":
                     continue
@@ -316,7 +337,7 @@ def report(product, require_complete=False):
                                  row.get("specializedEndpointType"), "true" if row.get("strictConstructorIff") else "",
                                  row.get("formationArgument"), row.get("transportPathType"),
                                  row.get("strictLogicalConsequence"), row.get("strictLogicalConsequenceWitness"),
-                                 row.get("strictEquivalenceWitness")])
+                                 row.get("strictEquivalenceWitness"), row.get("representativeRefuter")])
         reductions = stage / "init-public-reductions.tsv"
         with reductions.open("w", newline="") as f:
             writer = csv.writer(f, delimiter="\t", lineterminator="\n")

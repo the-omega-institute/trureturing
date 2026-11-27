@@ -244,3 +244,105 @@ public theorem officialPositive : @decide (point false = point true)
     (@Quotient.decidableEq Bool (Setoid.trivial Bool) (fun _ _ => isTrue trivial) _ _) = true := rfl
 
 end OmegaChecks.InitBoundaries.QuotientDecision
+
+namespace OmegaChecks.InitBoundaries.RepresentativeQuotient
+
+/-! A model of the four quotient primitives of the axiom-free kernel. Each quotient is
+interpreted by its representative type. Induction and lifting compute at a class
+by ordinary function application, including for relations that identify distinct
+representatives. Specializing the translated soundness or squash statement to
+the indiscrete setoid on Bool would therefore identify its two constructors. -/
+
+@[expose] public def carrier {α : Sort u} (_r : α → α → Prop) := α
+@[expose] public def point {α : Sort u} (r : α → α → Prop) (a : α) : carrier r := a
+
+set_option linter.defProp false in
+@[expose] public def induction {α : Sort u} {r : α → α → Prop} {motive : carrier r → Prop}
+    (step : ∀ a, motive (point r a)) (q : carrier r) : motive q := step q
+
+@[expose] public def lift {α : Sort u} {r : α → α → Prop} {β : Sort v}
+    (f : α → β) (_h : ∀ a b, r a b → f a = f b) (q : carrier r) : β := f q
+
+public theorem induction_mk {α : Sort u} {r : α → α → Prop} {p : carrier r → Prop}
+    (f : ∀ a, p (point r a)) (a : α) : induction f (point r a) = f a := rfl
+
+public theorem lift_mk {α : Sort u} {r : α → α → Prop} {β : Sort v}
+    (f : α → β) (h : ∀ a b, r a b → f a = f b) (a : α) : lift f h (point r a) = f a := rfl
+
+public theorem refuteSound
+    (law : ∀ {α : Type} {s : Setoid α} {a b : α}, s.r a b → a = b) : False :=
+  Bool.noConfusion (@law Bool (Setoid.trivial Bool) false true trivial)
+
+public theorem refuteSquash (law : ∀ {α : Type}, Subsingleton α) : False :=
+  Bool.noConfusion ((@law Bool).allEq false true)
+
+open Lean
+
+private def primitives : List (Name × Name) :=
+  [(``Quot, ``carrier), (``Quot.mk, ``point), (``Quot.ind, ``induction), (``Quot.lift, ``lift)]
+
+private def interpret (official : Environment) (type : Expr) : Expr := Id.run do
+  let mut e := type
+  -- Unfold in dependency order, directly from the pin. All remaining constants
+  -- of these two statements are shared with the quotient-free kernel.
+  for name in [``Squash, ``Quotient.mk, ``Quotient] do
+    e := e.replace fun t => do
+      let .const n levels := t | none
+      guard (n == name)
+      let ci ← official.find? name
+      return ci.instantiateValueLevelParams! levels
+  return e.replace fun t => do
+    let .const n levels := t | none
+    let (_, target) ← primitives.find? (·.1 == n)
+    return mkConst target levels
+
+/-- Normalize the interpreted eliminator at a symbolic representative. Compare its branch
+and argument separately, since weak head reduction does not reduce arguments. -/
+private def checkComputation (env : Environment) (elim : ConstantInfo) : Meta.MetaM Unit := do
+  let levels := elim.levelParams.map Level.param
+  Meta.forallTelescope elim.type fun xs _ => do
+    let u := levels.head!
+    Meta.withLocalDeclD `a xs[0]! fun a => do
+      let mk := mkAppN (mkConst ``point [u]) #[xs[0]!, xs[1]!, a]
+      let call := mkAppN (mkConst elim.name levels) (xs.pop.push mk)
+      let ctx ← getLCtx
+      let reduced ← ofExceptKernelException (Kernel.whnf env ctx call)
+      unless reduced.isApp && reduced.appFn!.equal xs[3]! do
+        throwError "representative computation for {elim.name} did not return its branch"
+      let arg ← ofExceptKernelException (Kernel.whnf env ctx reduced.appArg!)
+      unless arg.equal a do throwError "wrong representative in the branch of {elim.name}"
+
+public def refuter? (owner name : Name) : Option Name := do
+  guard (owner == `Init.Core)
+  if name == ``Quotient.sound then some ``refuteSound
+  else if name == ``instSubsingletonSquash then some ``refuteSquash
+  else none
+
+/-- Check the interpreted primitive signatures and the Bool counterexample against
+the physical statement of the selected declaration. Replay every term of this
+argument in an environment that does not contain the quotient primitives. -/
+public def certify (official witnesses : Environment) (source : ConstantInfo) (refuter : Name) : IO Unit := do
+  let some proof := witnesses.find? refuter | throw <| IO.userError s!"missing {refuter}"
+  unless source.isTheorem && source.numLevelParams == 1 do
+    throw <| IO.userError s!"unexpected signature at {source.name}"
+  let type := interpret official (source.type.instantiateLevelParams source.levelParams [.one])
+  let clean ← replayBoundaryDependencies official witnesses (refuter :: ``lift_mk :: ``induction_mk ::
+    primitives.map Prod.snd ++ type.getUsedConstantsAsSet.toList)
+  if primitives.any fun p => clean.contains p.1 then
+    throw <| IO.userError "representative interpretation still depends on native quotients"
+  for (original, replacement) in primitives do
+    let some (.quotInfo prim) := official.find? original | throw <| IO.userError s!"missing primitive {original}"
+    let some dst := clean.find? replacement | throw <| IO.userError s!"missing {replacement}"
+    let signature := interpret official (prim.type.instantiateLevelParams prim.levelParams (dst.levelParams.map Level.param))
+    unless Kernel.isDefEqGuarded clean {} dst.type signature do
+      throw <| IO.userError s!"invalid interpretation of {original}"
+    if original == ``Quot.ind || original == ``Quot.lift then
+      (Meta.MetaM.run' (checkComputation clean dst)).toIO'
+        {fileName := "<quotient representative computation>", fileMap := default} {env := clean}
+  let expected := Expr.forallE .anonymous type (mkConst ``False) .default
+  if let .error _ := Kernel.check clean {} expected then
+    throw <| IO.userError s!"ill-formed counterexample for {source.name}"
+  unless Kernel.isDefEqGuarded clean {} proof.type expected do
+    throw <| IO.userError s!"counterexample has the wrong domain for {source.name}"
+
+end OmegaChecks.InitBoundaries.RepresentativeQuotient
