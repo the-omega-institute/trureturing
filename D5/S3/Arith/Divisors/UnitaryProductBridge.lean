@@ -37,7 +37,7 @@ private theorem prime_power_product_support (N : ℕ) (hn : N ≠ 0)
       Nat.primeFactors_prime_pow hexp hprime, ih hF']
     simp
 
-private theorem prime_power_product_unitary (N : ℕ) (hn : N ≠ 0)
+theorem prime_power_product_unitary (N : ℕ) (hn : N ≠ 0)
     (F : Finset ℕ) (hF : F ⊆ N.primeFactors) :
     (∏ p ∈ F, p ^ N.factorization p) ∈
       N.divisors.filter (fun d => Nat.Coprime d (N / d)) := by

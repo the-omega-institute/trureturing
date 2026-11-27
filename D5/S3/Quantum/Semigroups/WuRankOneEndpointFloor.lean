@@ -24,7 +24,7 @@ abbrev Qubit := Matrix Bit Bit ℂ
 abbrev TwoMode := Matrix Mode Mode ℂ
 
 def lambda : ℝ := Real.sqrt (2 / 3)
-private theorem lambda_sq : lambda ^ 2 = 2 / 3 :=
+theorem lambda_sq : lambda ^ 2 = 2 / 3 :=
   Real.sq_sqrt (by norm_num)
 
 def Λ (X : Qubit) : Qubit := fun i j =>

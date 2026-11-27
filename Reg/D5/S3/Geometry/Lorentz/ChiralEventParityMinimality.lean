@@ -2,7 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Geometry.Lorentz.ChiralEventParityMinimality
 import Reg.Support.DependentFamily
 
-/-! Source-bound audit of simultaneous zeros at chiral events. -/
+/-! Source-bound audits of simultaneous zeros at chiral events and of zeros of odd maps from the
+two-sphere to the plane. -/
 
 namespace Reg.D5.S3.Geometry.Lorentz.ChiralEventParityMinimality
 
@@ -100,6 +101,94 @@ def registration :
       path := #["body", "body", "body", "body", "body", "body", "arg", "body",
         "arg", "arg", "fn", "arg", "fn", "arg"]
       stateBinder := 6
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+/-! The value of the planar map at a point of the unit sphere, in `planar_odd_map_zero`. -/
+namespace PlanarZero
+
+abbrev signature : Signature where
+  Params := EuclideanSpace ℝ (Fin 3) → ℂ
+  State _ := EuclideanSpace ℝ (Fin 3)
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℂ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature :=
+  realize signature (fun _ f v => f v) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => 1) (fun e => nomatch e)
+
+/-- Retain the complete map, continuity and oddness telescope of `planar_odd_map_zero`. -/
+abbrev arena : Arena where
+  signature := signature
+  Law r := ∀ f : EuclideanSpace ℝ (Fin 3) → ℂ,
+    ContinuousOn f (Metric.sphere (0 : EuclideanSpace ℝ (Fin 3)) 1) →
+    (∀ v ∈ Metric.sphere (0 : EuclideanSpace ℝ (Fin 3)) 1, f (-v) = -f v) →
+    ∃ v ∈ Metric.sphere (0 : EuclideanSpace ℝ (Fin 3)) 1, r.readout () f v = 0
+
+/-- The zero map is continuous and odd, but the constant reading one never vanishes. -/
+theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  obtain ⟨_, _, h1⟩ := h (fun _ => 0) continuousOn_const (fun _ _ => neg_zero.symm)
+  exact one_ne_zero h1
+
+theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨fun v => ((‖v‖ : ℝ) : ℂ), 0, EuclideanSpace.single 0 1, ?_⟩
+  change ((‖(0 : EuclideanSpace ℝ (Fin 3))‖ : ℝ) : ℂ) ≠
+    ((‖EuclideanSpace.single (0 : Fin 3) (1 : ℝ)‖ : ℝ) : ℂ)
+  simp [EuclideanSpace.single, PiLp.norm_single]
+
+def source_registration : Registration arena (type_of% @planar_odd_map_zero) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@planar_odd_map_zero, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      exact ⟨rejected, fun j hj => (hj (Subsingleton.elim j i)).elim, rfl, rejected_law⟩
+    · intro e
+      exact nomatch e
+  dependence := dependence
+
+end PlanarZero
+
+def planar_odd_map_zero_registration :
+    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@planar_odd_map_zero) (Realization PlanarZero.signature) Unit Unit := {
+  unitName := `Reg.D5.S3.Geometry.Lorentz.ChiralEventParityMinimality.planar_odd_map_zero_unit
+  realizationName :=
+    `Reg.D5.S3.Geometry.Lorentz.ChiralEventParityMinimality.PlanarZero.source_registration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨PlanarZero.arena⟩
+  objectArena := .source ⟨PlanarZero.arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source PlanarZero.arena ⟨PlanarZero.source_registration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize PlanarZero.signature (fun _ f v => f v) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Geometry.Lorentz.ChiralEventParityMinimality
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "body", "arg", "body", "arg", "fn", "arg"]
+      stateBinder := 3
       functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }

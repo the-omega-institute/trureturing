@@ -28,16 +28,16 @@ termination_by (n, k)
 decreasing_by
   all_goals omega
 
-private theorem T_one (n : ℕ) : T n 1 = 1 := by
+theorem T_one (n : ℕ) : T n 1 = 1 := by
   rw [T]
   simp
 
-private theorem T_odd (m k : ℕ) (hk : 2 ≤ k) :
+theorem T_odd (m k : ℕ) (hk : 2 ≤ k) :
     T (2 * m + 1) k = (k : ℚ) * T m k + T m (k - 1) := by
   rw [T]
   simp [show k ≠ 0 by omega, show k ≠ 1 by omega, Nat.add_div]
 
-private theorem T_even (m k : ℕ) (hm : 0 < m) (hk : 2 ≤ k) :
+theorem T_even (m k : ℕ) (hm : 0 < m) (hk : 2 ≤ k) :
     T (2 * m) k = (k : ℚ) * T m k + T m (k - 1) -
       (T (2 * m) (k - 1) + T m (k - 1)) / ((k : ℚ) - 1) := by
   rw [T]

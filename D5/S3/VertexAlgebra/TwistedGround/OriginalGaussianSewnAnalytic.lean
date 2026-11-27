@@ -115,7 +115,7 @@ private lemma power_coefficient_differentiableOn {I : Type*} [Fintype I] [Decida
     simp only [quadratic, coeff_smul, coeff_sum, smul_eq_mul]
     fun_prop
 
-private lemma affine_coefficient_differentiableOn {I : Type*} [Fintype I] [DecidableEq I]
+lemma affine_coefficient_differentiableOn {I : Type*} [Fintype I] [DecidableEq I]
     {A : ℂ → Matrix I I ℂ} {mu : ℂ → I → ℂ} {s : Set ℂ}
     (hA : ∀ i j, DifferentiableOn ℂ (fun z => A z i j) s)
     (hm : ∀ i, DifferentiableOn ℂ (fun z => mu z i) s) (d : I →₀ ℕ) :

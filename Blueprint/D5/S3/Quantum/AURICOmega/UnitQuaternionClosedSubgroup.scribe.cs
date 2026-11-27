@@ -12,6 +12,13 @@ internal sealed class UnitQuaternionClosedSubgroupDocument : IScribeDocumentDefi
         "A closed, noncommutative subgroup of the unit quaternions in which any two elements are joined, for every positive tolerance, by a chain of elements of the subgroup with consecutive readings of the quaternion comparison model within that tolerance of one, is the whole group.",
         H("Closed chain-connected subgroups of the unit quaternions"),
         Blocks(
+            Node("mem-unitary", "mem_unitary_of_normSq", "A quaternion of squared norm one is a unit quaternion",
+                StatementSource.FromAuthor(MemUnitaryFormula()), DescribeRole.Lemma,
+                "Here normSq(u) is the squared norm u * star u, the sum of the squares of the four components of u, regarded as a real number. "
+                    + "Both star u * u and u * star u equal normSq(u), which is 1, so u is a unitary element of the real quaternion algebra."),
+            Node("sq-add-sq", "sq_add_sq_coe_unitary", "The components of a unit quaternion have squares summing to one",
+                StatementSource.FromAuthor(SqAddSqFormula()), DescribeRole.Lemma,
+                "A unit quaternion u has norm one, so its squared norm u * star u is 1; and the squared norm of a quaternion is the sum of the squares of its real part and its three imaginary components re, imI, imJ and imK."),
             Node("eq-top", "eq_top_of_isClosed_of_chainConnected",
                 "A closed, chain-connected, noncommutative subgroup is the whole group",
                 StatementSource.FromAuthor(EqTopFormula()), DescribeRole.Theorem,
@@ -50,6 +57,8 @@ internal sealed class UnitQuaternionClosedSubgroupDocument : IScribeDocumentDefi
     private static Formula Logic(Formula x, FormulaLogicOperator op, Formula y) => new Formula.Logic(x, op, y);
     private static Formula Implies(Formula x, Formula y) => Logic(x, FormulaLogicOperator.Implies, y);
     private static Formula And(Formula x, Formula y) => Logic(x, FormulaLogicOperator.And, y);
+    private static Formula Add(Formula x, Formula y) => new Formula.Binary(x, FormulaBinaryOperator.Add, y);
+    private static Formula Square(Formula x) => new Formula.Power(x, D(2));
     private static Formula Mul(Formula x, Formula y) => new Formula.Binary(x, FormulaBinaryOperator.Multiply, y);
     private static Formula Sub(Formula x, Formula y) => new Formula.Binary(x, FormulaBinaryOperator.Subtract, y);
     private static Formula ForAll(string name, Formula domain, Formula body) =>
@@ -67,6 +76,21 @@ internal sealed class UnitQuaternionClosedSubgroupDocument : IScribeDocumentDefi
     private static Formula Model => Seq(Operatorname, Grp(F.Id("quaternionModel")));
     private static Formula Top => Seq(Operatorname, Grp(F.Id("top")));
     private static Formula Kappa(Formula x, Formula y) => Call("kappa", Model, x, y);
+
+    private static Formula MemUnitaryFormula()
+    {
+        Formula u = F.Id("u");
+        return Disp(ForAll("u", Quaternions, Implies(Equal(Call("normSq", u), D(1)),
+            Rel(u, FormulaRelationOperator.MemberOf, Units))));
+    }
+
+    private static Formula SqAddSqFormula()
+    {
+        Formula u = F.Id("u");
+        return Disp(ForAll("u", Units, Equal(
+            Add(Add(Add(Square(Call("re", u)), Square(Call("imI", u))), Square(Call("imJ", u))), Square(Call("imK", u))),
+            D(1))));
+    }
 
     private static Formula EqTopFormula()
     {

@@ -188,7 +188,23 @@ $$\forall (v: \operatorname{EuclideanSpace}\left(\mathbb{R}, \operatorname{Fin}\
 
 For v on the unit sphere, write s, t and d for its three real coordinates and aa and bb for the indicated positive square roots. The first two momenta are fixed; the final two encode the sphere coordinates in their energies, transverse lengths and opposite longitudinal coordinates. The formula is defined on all of Euclidean three-space; its collision membership and chirality are used on the unit sphere.
 
-**Theorem 1.16 (A common zero on a chiral event).**
+**Lemma 1.16 (An odd map from the two-sphere to the plane has a zero).**
+
+$$\forall (f: (\operatorname{EuclideanSpace}\left(\mathbb{R}, \operatorname{Fin}\left(3\right)\right)) \to (\mathbb{C})), ((\operatorname{ContinuousOn}\left(f, \operatorname{Metric.sphere}\left(0, 1\right)\right)) \Rightarrow ((\forall (v: \operatorname{EuclideanSpace}\left(\mathbb{R}, \operatorname{Fin}\left(3\right)\right)), ((v \in \operatorname{Metric.sphere}\left(0, 1\right)) \Rightarrow (f\left(-(v)\right) = -(f\left(v\right))))) \Rightarrow (\exists (v: \operatorname{EuclideanSpace}\left(\mathbb{R}, \operatorname{Fin}\left(3\right)\right)), ((v \in \operatorname{Metric.sphere}\left(0, 1\right)) \land (f\left(v\right) = 0)))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/Lorentz/ChiralEventParityMinimality.planar_odd_map_zero` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Karol Borsuk (1933). *Drei Sätze über die n-dimensionale euklidische Sphäre*. DOI: [10.4064/fm-20-1-177-190](https://doi.org/10.4064/fm-20-1-177-190). URL: <https://matwbn.icm.edu.pl/ksiazki/fm/fm20/fm20117.pdf>.
+
+*Commentary.*
+
+A complex-valued function on Euclidean three-space that is continuous on the unit sphere and odd there, f(-v) = -f(v), vanishes at some point of the unit sphere. This is the case n = 2 of Borsuk's Satz II: a continuous map of the two-sphere into the plane takes equal values at some pair of antipodal points p and -p, and for an odd map f(p) = f(-p) = -f(p) gives f(p) = 0.
+
+The proof is by contradiction. Suppose f has no zero on the sphere. The map sending a point z of the closed unit disk of the complex plane to (re z, im z, sqrt(1 - |z|^2)) is continuous and lands in the closed upper hemisphere of the unit sphere, and it sends -z to the antipode of the image of z when |z| = 1. Composing f with it and dividing by the modulus gives a continuous map g from the disk to the unit circle. The disk is contractible and locally path connected, so g lifts through the covering t -> exp(i t) of the circle by the reals to a continuous real function F on the disk. Let l be the restriction of F to the boundary circle. Oddness of f gives g(-z) = -g(z) for |z| = 1, so delta(z) = l(-z) - l(z) is a continuous function on the circle whose exponential is -1, hence it takes values in the discrete set of odd multiples of pi and is constant, the circle being connected. But delta(-1) = l(1) - l(-1) = -delta(1), so the constant value is 0, whose exponential is 1, not -1. This contradiction proves the existence of a zero.
+
+**Theorem 1.17 (A common zero on a chiral event).**
 
 $$\forall (om: \operatorname{Set}\left(\operatorname{D5.S3.Geometry.Lorentz.ChiralEventParityMinimality.event}\right)), ((om \in \left\{\operatorname{D5.S3.Geometry.Lorentz.ChiralEventParityMinimality.allEvents}, \operatorname{D5.S3.Geometry.Lorentz.ChiralEventParityMinimality.collisionEvents}\right\}) \Rightarrow (\forall (f_{1}: (\operatorname{D5.S3.Geometry.Lorentz.ChiralEventParityMinimality.event}) \to (\mathbb{R})), (\forall (f_{2}: (\operatorname{D5.S3.Geometry.Lorentz.ChiralEventParityMinimality.event}) \to (\mathbb{R})), ((\operatorname{D5.S3.Geometry.Lorentz.ChiralEventParityMinimality.admissible}\left(om, f_{1}\right)) \Rightarrow ((\operatorname{D5.S3.Geometry.Lorentz.ChiralEventParityMinimality.admissible}\left(om, f_{2}\right)) \Rightarrow (\exists (x: \operatorname{D5.S3.Geometry.Lorentz.ChiralEventParityMinimality.event}), ((x \in om) \land ((\operatorname{D5.S3.Geometry.Lorentz.ChiralEventParityMinimality.chiral}\left(x\right)) \land ((\left(f_{1}\right)\left(x\right) = 0) \land (\left(f_{2}\right)\left(x\right) = 0))))))))))$$
 
@@ -237,6 +253,7 @@ For om equal to allEvents, use the inclusion of collisionEvents into allEvents. 
 - Truth anchor: `D5/S3/Geometry/Lorentz/ChiralEventParityMinimality.minkowski`
 - Truth anchor: `D5/S3/Geometry/Lorentz/ChiralEventParityMinimality.parity`
 - Truth anchor: `D5/S3/Geometry/Lorentz/ChiralEventParityMinimality.parityVector`
+- Truth anchor: `D5/S3/Geometry/Lorentz/ChiralEventParityMinimality.planar_odd_map_zero`
 - Truth anchor: `D5/S3/Geometry/Lorentz/ChiralEventParityMinimality.properOrthochronous`
 - Truth anchor: `D5/S3/Geometry/Lorentz/ChiralEventParityMinimality.result`
 - Truth anchor: `D5/S3/Geometry/Lorentz/ChiralEventParityMinimality.rotation`

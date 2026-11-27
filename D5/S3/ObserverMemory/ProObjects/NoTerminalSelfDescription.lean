@@ -9,15 +9,16 @@ import D5.S0.Diagonal.Naturality.RelativeDiagonalEscape
 import D5.S3.ObserverMemory.ProObjects.ConceptAnchorHomAsymmetry
 
 /- Library-search audit trail (2026-08-23):
-   * Exact repository hit `relative_diagonal_escape` proves that the twisted
-     self-evaluation concept lies outside the stage listing's range. It is
-     imported and applied directly below.
+   * The strict diagonal escape theorem proves the range exclusion after
+     transport of equality and the range witness.
    * Canonical repository hits `presentedObject` and `constantObject` encode
      the source's terminal faithful-stage clause and are imported without forks.
    * Pinned Mathlib hit `Function.exists_fixed_point_of_surjective` is related,
      while `Function.cantor_surjective` is the set-valued specialization; the
      repository theorem is the exact explicit-witness match.
    * Exact atom-id search outside the digestion ledger and source documentation missed. -/
+
+/-! A twisted self-evaluation concept escapes a terminal stage listing. -/
 
 namespace D5.S3.ObserverMemory.ProObjects.NoTerminalSelfDescription
 
@@ -38,7 +39,16 @@ theorem no_terminal_self_description
     (enumeration : stages.obj i -> stages.obj i -> Y)
     (twist : Y -> Y) (fixedPointFree : forall y, twist y ≠ y) :
     (fun x => twist (enumeration x x)) ∉ Set.range enumeration := by
-  exact relative_diagonal_escape enumeration twist fixedPointFree
+  intro hRange
+  obtain ⟨row, equal⟩ := hRange
+  have strictFixedPointFree (value : Y) : Omega.Not (Omega.Eq (twist value) value) :=
+    fun h =>
+      (fixedPointFree value
+        (Omega.Eq.rec (motive := fun endpoint _ => twist value = endpoint) rfl h)).elim
+  have strictEqual : Omega.Eq (enumeration row) (fun x => twist (enumeration x x)) :=
+    equal ▸ Omega.rfl
+  exact (relative_diagonal_escape enumeration twist strictFixedPointFree
+    (Omega.Exists.intro row strictEqual)).elim
 
 #print axioms no_terminal_self_description
 

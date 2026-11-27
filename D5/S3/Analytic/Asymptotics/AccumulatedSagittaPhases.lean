@@ -35,7 +35,7 @@ def accumulatedSagitta (σ T α : ℝ) (N : ℕ) : ℝ :=
 private lemma versine_le (x : ℝ) : 1 - Real.cos x ≤ x ^ 2 / 2 := by
   linarith [Real.one_sub_sq_div_two_le_cos (x := x)]
 
-private lemma versine_ge (x : ℝ) : x ^ 2 / 2 - x ^ 4 / 24 ≤ 1 - Real.cos x := by
+lemma versine_ge (x : ℝ) : x ^ 2 / 2 - x ^ 4 / 24 ≤ 1 - Real.cos x := by
   have hhalf : Real.sin (x / 2) ^ 2 = 1 / 2 - Real.cos x / 2 := by
     have h := Real.sin_sq_eq_half_sub (x / 2)
     rwa [mul_div_cancel₀ x (two_ne_zero)] at h

@@ -103,7 +103,8 @@ theorem dist_eq {F : Set (Finset V)} (hF : IsLowerSet F)
   obtain ⟨q, hq⟩ := hc.exists_walk_length_eq_dist A B
   exact hq ▸ walk_lower_bound q
 
-private theorem card_symmDiff_eq (S T : Finset V) :
+/-- The symmetric difference removes the intersection twice from the combined cardinality. -/
+theorem card_symmDiff_eq (S T : Finset V) :
     (S ∆ T).card + 2 * (S ∩ T).card = S.card + T.card := by
   have h1 := Finset.card_sdiff_add_card_inter S T
   have h2 := Finset.card_sdiff_add_card_inter T S

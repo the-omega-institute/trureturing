@@ -52,7 +52,7 @@ theorem matrix_sq_of_adj {n : ℕ} {x y : Q n}
   nlinarith [sq_abs (huangMatrix n x y)]
 
 /-- Count actual selected neighbors using the induced graph, with no subtype transport. -/
-private theorem selected_neighbor_card {n : ℕ} {U : Finset (Q n)}
+theorem selected_neighbor_card {n : ℕ} {U : Finset (Q n)}
     {x : Q n} (hx : x ∈ U) :
     ((hypercube n).neighborFinset x ∩ U).card =
       ((hypercube n).induce (U : Set (Q n))).degree ⟨x, hx⟩ := by

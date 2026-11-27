@@ -7,6 +7,7 @@ doi: 10.26421/QIC7.1-2-6
 claim: A finite CPTP map with a CPTP left inverse has a unitary/isometric fixed-ancilla normal form.
 strata_touched:
   - D5/S3/Quantum/Recovery/OrthogonalSyndromeDecoding
+  - D5/S3/Quantum/Recovery/LocalCompression/QutritPure
 license: citation-only
 triage: anchor
 ---
@@ -26,3 +27,14 @@ The candidate Lean module proves a finite matrix decoding identity for supplied 
   and Computation publisher record titled above.
 - Preprint: https://arxiv.org/abs/quant-ph/0605041 . The citation uses Theorem
   2.1 for the finite reversible-channel normal form, not for a smooth extension.
+
+## Relation to approximate local compression
+
+Theorem 2.1 characterizes channels that admit exact reversal. Let E be the
+CPTP encoder and D the CPTP decoder. If the reverse composition E ∘ D has
+entanglement fidelity one on a faithful memory input such as I₂/2, it fixes
+the input's pure purification. Full Schmidt rank then forces E ∘ D to be the
+identity channel on the memory, so E is a CPTP left inverse of D. The qutrit
+trace-distance increment bounds every channel with output in a prescribed plane
+by a Choi-state effect.
+[Primary text, Theorem 2.1](https://arxiv.org/abs/quant-ph/0605041)

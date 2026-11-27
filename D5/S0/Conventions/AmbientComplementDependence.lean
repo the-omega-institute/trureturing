@@ -5,56 +5,47 @@
    anchors: []
    digest: Make subtraction complement determine and depend on its ambient total. -/
 
-/- Library-search audit trail (2026-08-22):
-   * The repository family source of truth is
-     `D5.S0.Conventions.ComplementEncoding.complement`; it is imported and used directly.
-   * The exact repository theorem `ComplementEncoding.complement_encoding` recovers the ambient
-     total from the whole complement operation and is applied directly below.
-   * Pinned Mathlib and repository searches found no `OrderUnit` or `IsOrderUnit` predicate.
-     The cancellation lemma `sub_left_inj` handles dependence at a fixed argument. -/
-
-import D5.S0.Conventions.ComplementEncoding
-import Mathlib.Algebra.Group.Int.Defs
+module
+prelude
+public import OmegaInit.Data.Int
+public import OmegaMath.Topology.SimplicialCoboundary
 
 namespace D5.S0.Conventions.AmbientComplementDependence
 
-set_option autoImplicit false
-set_option relaxedAutoImplicit false
+open Omega
 
 /-- A subtraction complement has no ambient-free value or operation: equality at any fixed
 argument, and equality of the whole operations, are each equivalent to equality of their
 explicitly supplied ambient totals. -/
-theorem absolute_complement_requires_ambient_total
-    {G : Type*} [AddCommGroup G] (u v e : G) :
-    (D5.S0.Conventions.ComplementEncoding.complement u e =
-        D5.S0.Conventions.ComplementEncoding.complement v e ↔ u = v) ∧
-      (((fun x : G => D5.S0.Conventions.ComplementEncoding.complement u x) =
-          fun x : G => D5.S0.Conventions.ComplementEncoding.complement v x) ↔ u = v) := by
-  constructor
-  · simp only [D5.S0.Conventions.ComplementEncoding.complement, sub_left_inj]
-  · constructor
-    · intro h
-      have hvu : v = u :=
-        (D5.S0.Conventions.ComplementEncoding.complement_encoding u e).2.2.2 v (by
-          simpa only [D5.S0.Conventions.ComplementEncoding.complement] using h.symm)
-      exact hvu.symm
-    · rintro rfl
-      rfl
+public theorem absolute_complement_requires_ambient_total
+    {A : Type u} (group : AddCommGroup A) (laws : group.Laws) (u v e : A) :
+    And (Iff (Eq (group.sub u e) (group.sub v e)) (Eq u v))
+      (Iff (Eq (group.sub u) (group.sub v)) (Eq u v)) :=
+  have recover (h : Eq (group.sub u e) (group.sub v e)) : Eq u v :=
+    (group.sub_add_cancel laws u e).symm.trans
+      ((congrArg (fun value => group.add value e) h).trans (group.sub_add_cancel laws v e))
+  And.intro
+    (Iff.intro recover (congrArg fun total => group.sub total e))
+    (Iff.intro (fun h => recover (congrArg (fun operation : A → A => operation e) h))
+      (congrArg group.sub))
 
 /- Integer totals witness that changing the ambient total changes both outputs and operations. -/
 example :
-    D5.S0.Conventions.ComplementEncoding.complement (1 : ℤ) 0 ≠
-        D5.S0.Conventions.ComplementEncoding.complement 2 0 ∧
-      (fun x : ℤ => D5.S0.Conventions.ComplementEncoding.complement 1 x) ≠
-        fun x : ℤ => D5.S0.Conventions.ComplementEncoding.complement 2 x := by
-  constructor
-  · decide
-  · intro h
-    have h0 := congrFun h 0
-    exact (by decide :
-      D5.S0.Conventions.ComplementEncoding.complement (1 : ℤ) 0 ≠
-        D5.S0.Conventions.ComplementEncoding.complement 2 0) h0
-
-#print axioms absolute_complement_requires_ambient_total
+    let group := AddCommGroup.ofOperations (Int.ofNat Nat.zero) Int.add Int.neg
+    let one := Int.ofNat Nat.zero.succ
+    let two := Int.ofNat Nat.zero.succ.succ
+    And (Not (Eq (group.sub one group.zero) (group.sub two group.zero)))
+      (Not (Eq (group.sub one) (group.sub two))) :=
+  let group := AddCommGroup.ofOperations (Int.ofNat Nat.zero) Int.add Int.neg
+  let one := Int.ofNat Nat.zero.succ
+  let two := Int.ofNat Nat.zero.succ.succ
+  have distinct : Not (Eq (group.sub one group.zero) (group.sub two group.zero)) :=
+    fun h =>
+      have h' : Eq one two :=
+        (Int.add_zero one).symm.trans (h.trans (Int.add_zero two))
+      Eq.subst (motive := Nat.rec (motive := fun _ => Prop) True (fun _ _ => False))
+        (Nat.succ.inj (congrArg Int.natAbs h')) True.intro
+  And.intro distinct
+    (fun h => distinct (congrArg (fun operation : Int → Int => operation group.zero) h))
 
 end D5.S0.Conventions.AmbientComplementDependence

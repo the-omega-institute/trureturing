@@ -20,12 +20,9 @@ namespace D5.S3.Combinatorics.Circle.ThreeNegativeMinimumTwoJointLift
 open SourceWidth PeriodicShortening RunFirstEarTransport
 open scoped BigOperators
 
-open private ThreeBitSource.mask_labels ThreeBitSource.mask_labels_bound
-  ThreeBitSource.mask_labels_disjoint ThreeBitSource.mask_labels_sum
-  ThreeBitSource.labelled_permutation
+open private ThreeBitSource.mask_labels_disjoint
   from D5.S3.Combinatorics.Circle.ThreeBitSource
-open private ThreeNegativeEqualOuterJointLift.label ThreeNegativeEqualOuterJointLift.lift_order
-  ThreeNegativeEqualOuterJointLift.marked_word ThreeNegativeEqualOuterJointLift.schedule_from_tail
+open private ThreeNegativeEqualOuterJointLift.schedule_from_tail
   from D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
 
 open private Mask Mask.u Mask.v Mask.w Negative Negative.alpha Negative.beta Negative.gamma
@@ -40,7 +37,7 @@ open private a_two_far c_two_far_s c_two_far_r b_two_diagonal b_two_tall b_two_n
   a_two_ordered_small a_two_ordered
   from D5.S3.Combinatorics.Circle.ThreeNegativeMinimumTwoFloors
 
-private theorem paired_chains (a b c : ℕ) (ha : 2 ≤ a) (hb : 2 ≤ b) (hc : 2 ≤ c) :
+theorem paired_chains (a b c : ℕ) (ha : 2 ≤ a) (hb : 2 ≤ b) (hc : 2 ≤ c) :
     let r : ℤ := 2 ^ a
     let s : ℤ := 2 ^ b
     let t : ℤ := 2 ^ c

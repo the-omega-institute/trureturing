@@ -1,0 +1,1 @@
+{"statement_id":"sha256:8b6d46f651994b5cfc1b89aefd628c2d2b659b36f850f00b6f8c399a2eaddb86","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),13:Combinatorics),5:Graph),17:HypercubeCritical),17:ComponentBoundary),19:Q9ConnectorResidual),21:residual_at_connector)","kind":"theorem","libraries":["Archive","Batteries","Init","Lean","Mathlib"]}]}

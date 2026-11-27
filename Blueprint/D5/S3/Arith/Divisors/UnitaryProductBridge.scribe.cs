@@ -15,6 +15,12 @@ internal sealed class UnitaryProductBridgeDocument : IScribeDocumentDefinition
                 + "and let S(N) sum its positive squarefree divisors. Both sums include one. "
                 + "Write rad(N) for the product of distinct prime divisors and m=N/rad(N). "
                 + "All quotients below have positive denominators and are exact rationals.")),
+            Node("prime_power_product_unitary", "Unitary products of complete prime powers",
+                "For every nonzero natural N and every finite subset F of its prime "
+                + "support, the product of p^v_p(N) over p in F is a divisor of N "
+                + "coprime to its complementary quotient. Thus complete prime-power "
+                + "selection yields an actual unitary divisor; if N is squarefree, "
+                + "the selected product is simply the product of the primes in F."),
             Node("unitarySum_eq_product", "Complete prime-power choices",
                 "For every nonzero natural N, U(N) is the product of p^v_p(N)+1 over "
                 + "the distinct prime divisors p of N. A subset of prime support chooses "

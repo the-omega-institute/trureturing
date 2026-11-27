@@ -109,7 +109,7 @@ private lemma normSq_cs {a : ℍ[ℝ]} (ha : a * a = -1) (t : ℝ) : Quaternion.
   linear_combination Real.sin t ^ 2 * h1 + Real.sin_sq_add_cos_sq t
 
 /-- A quaternion of norm square one is unitary. -/
-private lemma mem_unitary_of_normSq {u : ℍ[ℝ]} (h : Quaternion.normSq u = 1) :
+lemma mem_unitary_of_normSq {u : ℍ[ℝ]} (h : Quaternion.normSq u = 1) :
     u ∈ unitary ℍ[ℝ] := by
   have h' : ((Quaternion.normSq u : ℝ) : ℍ[ℝ]) = 1 := by rw [h, Quaternion.coe_one]
   exact Unitary.mem_iff.mpr ⟨(Quaternion.star_mul_self u).trans h',
@@ -327,7 +327,7 @@ private lemma imI_mul_i_mul_star (G : ℍ[ℝ]) :
   ring
 
 /-- The coordinates of a unit quaternion have squares summing to one. -/
-private lemma sq_add_sq_coe_unitary (u : unitary ℍ[ℝ]) :
+lemma sq_add_sq_coe_unitary (u : unitary ℍ[ℝ]) :
     (u : ℍ[ℝ]).re ^ 2 + (u : ℍ[ℝ]).imI ^ 2 + (u : ℍ[ℝ]).imJ ^ 2 + (u : ℍ[ℝ]).imK ^ 2 = 1 := by
   have h : Quaternion.normSq (u : ℍ[ℝ]) = 1 := by
     rw [Quaternion.normSq_eq_norm_mul_self, CStarRing.norm_coe_unitary, one_mul]

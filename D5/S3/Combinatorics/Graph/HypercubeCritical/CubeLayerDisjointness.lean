@@ -25,7 +25,8 @@ open SimpleGraph
 open scoped Classical
 open D5.S3.Combinatorics.Graph.Hypercube
 open BalancedCriticalSpectrum (Q flip flip_flip flip_adj)
-open private adjacent_exists_flip flip_comm from
+open BalancedCubeGirth (flip_comm)
+open private adjacent_exists_flip from
   D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeGirth
 open private three_walk_endpoint_injective one_three_cross_impossible from
   D5.S3.Combinatorics.Graph.HypercubeCritical.GirthSliceCounting

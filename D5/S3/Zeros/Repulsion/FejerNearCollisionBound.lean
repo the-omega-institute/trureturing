@@ -377,12 +377,14 @@ theorem fejer_local_lower_bound {M : ℕ} (hM : 1 ≤ M) {t : ℝ}
       _ ≤ (1 / (M : ℝ)) * ‖exponentialSum M t‖ ^ 2 :=
         mul_le_mul_of_nonneg_left hsquare (by positivity)
 
-private theorem fejer_nonnegative {M : ℕ} (hM : 1 ≤ M) (t : ℝ) :
+/-- The Fejér kernel is nonnegative at every real argument. -/
+theorem fejer_nonnegative {M : ℕ} (hM : 1 ≤ M) (t : ℝ) :
     0 ≤ fejerKernel M t := by
   rw [fejer_square hM]
   exact mul_nonneg (by positivity) (Complex.normSq_nonneg _)
 
-private theorem fejer_zero {M : ℕ} (hM : 1 ≤ M) :
+/-- The Fejér kernel at zero equals its length. -/
+theorem fejer_zero {M : ℕ} (hM : 1 ≤ M) :
     fejerKernel M 0 = (M : ℝ) := by
   rw [fejer_square hM]
   change (1 / (M : ℝ)) * Complex.normSq (exponentialSum M 0) = (M : ℝ)

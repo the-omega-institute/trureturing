@@ -48,7 +48,7 @@ private def dCoeff (t : ℝ) : ℝ := (1 - t) ^ 2 / 4
 private def kPlus (t x : ℝ) : ℝ := (1 - t ^ 2) * (1 - t * (2 * x - 1)) / 8
 private def kMinus (t x : ℝ) : ℝ := (1 - t ^ 2) * (1 + t * (2 * x - 1)) / 8
 
-private def sparse4 (a b d e u v w f g : ℝ) : Matrix (Fin 4) (Fin 4) ℝ :=
+def sparse4 (a b d e u v w f g : ℝ) : Matrix (Fin 4) (Fin 4) ℝ :=
   !![a, u, v, w; u, b, f, 0; v, f, d, g; w, 0, g, e]
 
 /-- The real chiral block, in the basis of equation (12). -/
@@ -143,7 +143,7 @@ def shiftedDetPolynomial {n : Type*} [Fintype n] [DecidableEq n]
     (M : Matrix n n ℝ) : Polynomial ℝ :=
   (-M).charpoly
 
-private theorem eval_shiftedDetPolynomial {n : Type*} [Fintype n] [DecidableEq n]
+theorem eval_shiftedDetPolynomial {n : Type*} [Fintype n] [DecidableEq n]
     (M : Matrix n n ℝ) (s : ℝ) :
     (shiftedDetPolynomial M).eval s = (Matrix.scalar n s + M).det := by
   rw [shiftedDetPolynomial, Matrix.eval_charpoly, sub_neg_eq_add]
@@ -193,7 +193,7 @@ private def chiralBase (t : ℝ) : Polynomial ℝ :=
     + C ((1 - t) ^ 3 * (1 + t) ^ 2 * (1 + t ^ 2) / 128) * X
     + C ((1 - t) ^ 6 * (1 + t) ^ 4 / 4096)
 
-private theorem chiral_base_eval (s t : ℝ) :
+theorem chiral_base_eval (s t : ℝ) :
     (chiralBase t).eval s =
       s ^ 4 + (1 + t ^ 2) / 2 * s ^ 3
         + (1 - t) * (t ^ 4 - 2 * t ^ 3 + 4 * t ^ 2 + 2 * t + 3) / 32 * s ^ 2
@@ -201,7 +201,7 @@ private theorem chiral_base_eval (s t : ℝ) :
         + (1 - t) ^ 6 * (1 + t) ^ 4 / 4096 := by
   simp [chiralBase]
 
-private theorem chiral_comparator_det_polynomial (lam : ℝ) :
+theorem chiral_comparator_det_polynomial (lam : ℝ) :
     shiftedDetPolynomial (chiralComparator lam) = chiralBase (lam ^ 2) := by
   apply Polynomial.funext
   intro s
@@ -247,7 +247,7 @@ theorem chiral_det_polynomial_difference {lam c p q : ℝ} (hn : c ^ 2 + p ^ 2 +
   rw [chiral_det_polynomial_difference_raw hn,
     rawBracket_eq_homogeneous (lam ^ 2) _ _ _ (invariants_sum hn), delta4]
 
-private def complementBase (s t : ℝ) : ℝ :=
+def complementBase (s t : ℝ) : ℝ :=
   s ^ 2 + (1 - t ^ 2) / 4 * s + (1 - t ^ 2) ^ 2 / 64 * (1 - t)
 
 private theorem complement_det_expand (s lam c q : ℝ) :
@@ -268,11 +268,11 @@ private theorem complement_det_normalized (s : ℝ) {lam c p q : ℝ}
   unfold complementBase complementDelta
   ring
 
-private theorem comparator_norm : comparatorAmplitude ^ 2 + (0 : ℝ) ^ 2 +
+theorem comparator_norm : comparatorAmplitude ^ 2 + (0 : ℝ) ^ 2 +
     comparatorAmplitude ^ 2 = 1 := by
   norm_num [sq_comparatorAmplitude]
 
-private theorem complement_comparator_det (s lam : ℝ) :
+theorem complement_comparator_det (s lam : ℝ) :
     (Matrix.scalar (Fin 2) s + complementComparator lam).det = complementBase s (lam ^ 2) := by
   rw [complementComparator, complement_det_normalized s comparator_norm]
   norm_num [complementDelta, invariantX, invariantZ, sq_comparatorAmplitude]

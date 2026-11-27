@@ -127,4 +127,11 @@ theorem gramRankLE_iff_hasFeatureRank {M : Type*} (C : TernaryComparison M) (r :
     rw [hG, Matrix.gram_eq_conjTranspose_mul (EuclideanSpace.basisFun (Fin r) ℝ)]
     exact (Matrix.rank_mul_le_right _ _).trans (Matrix.rank_le_height _)
 
+/-- Feature rank is monotone: a feature map into Euclidean `r`-space gives one into Euclidean
+`s`-space for every `s ≥ r`. -/
+theorem hasFeatureRank_mono {M : Type*} {C : TernaryComparison M} {r s : ℕ} (hrs : r ≤ s)
+    (h : C.HasFeatureRank r) : C.HasFeatureRank s := by
+  rw [← gramRankLE_iff_hasFeatureRank] at h ⊢
+  exact fun n x => (h n x).trans hrs
+
 end D5.S3.Quantum.AURICOmega.GramRankFeatureMap

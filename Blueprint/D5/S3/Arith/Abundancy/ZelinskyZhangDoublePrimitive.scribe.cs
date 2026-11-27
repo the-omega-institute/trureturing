@@ -22,6 +22,47 @@ internal sealed class ZelinskyZhangDoublePrimitiveDocument : IScribeDocumentDefi
                     + "than 2d for each positive divisor d less than n. The predicate "
                     + "uses the existing definition of deficiency."))),
                 DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("rough-primitive-lower-bound"),
+                DeclarationHandle.Create(Prefix + "rough_primitive_lower_bound"),
+                H("A uniform eventual exponent of 79/80"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
+                Blocks(
+                    Paragraph(Text("For every finite set M of primes there is a natural "
+                        + "threshold X0 such that, for every natural X at least X0, at "
+                        + "least X^(79/80) positive integers n at most X are odd, "
+                        + "squarefree, primitive non-deficient, and divisible by no "
+                        + "prime in M. The finite set may be empty. Primitive "
+                        + "non-deficiency means that sigma(n) is at least 2n and "
+                        + "sigma(d) is strictly less than 2d for every positive "
+                        + "proper divisor d of n.")),
+                    Paragraph(Text("Write h(m)=sigma(m)/m and alpha=h(m)/(2-h(m)) "
+                        + "for a deficient squarefree core. A finite prime product "
+                        + "first crossing h=2 gives an initial deficient core. "
+                        + "Adjoining primes between 2alpha and 3alpha increases "
+                        + "alpha by a fixed multiplicative factor while retaining "
+                        + "deficiency. Thus alpha can reach a prescribed "
+                        + "exponential scale with log(m) bounded by a constant "
+                        + "times the square of that scale's logarithm.")),
+                    Paragraph(Text("Choose k distinct primes in the interval "
+                        + "((k-1)(alpha+1),k*alpha]. Their product times the core "
+                        + "is abundant by the strict Bernoulli inequality. Removing "
+                        + "any selected prime leaves a deficient integer, by the "
+                        + "exponential bound for a product of 1+1/p. Removing a "
+                        + "core prime gives an even smaller abundancy ratio. "
+                        + "Divisibility monotonicity then proves primitivity.")),
+                    Paragraph(Text("The quantitative prime number theorem supplies "
+                        + "at least alpha/(4*log(k*alpha)) primes in this interval "
+                        + "at the selected scales. Unique factorization makes "
+                        + "distinct k-element prime subsets produce distinct "
+                        + "integers. A binomial lower bound and a square-root "
+                        + "logarithmic parameter choice give the stated exponent.")),
+                    Paragraph(Text("For a core cost C, put D=1000*(abs(C)+1), "
+                        + "a=99*D/100 and t=sqrt(log(X)/D). The inequalities "
+                        + "C+a<D and 79*D/80<a leave positive margins for both "
+                        + "the size budget and the binomial count. Thus the "
+                        + "constructed integers lie below X and their number "
+                        + "is at least X^(79/80)."))),
+                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("result"),
                 DeclarationHandle.Create(Prefix + "result"),
                 H("Infinitely many integers with both primitivities"),

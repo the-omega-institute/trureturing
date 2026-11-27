@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics;
 internal sealed class ArcherCyclicTetranacciSuccessorDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/ArcherCyclicTetranacciSuccessor.";
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Combinatorics/archer2024pattern");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/PermutationPatterns/archer2024pattern");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The successor permutation of an inserted word has an explicit low prefix and relabeled suffix.",

@@ -8,7 +8,8 @@ import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
 /-! # Source registration for the rank of a character kernel
 
 The readout is the dimension of the span of the sections, as a function of the weight family.
-The two theorems after the registration show that irreducibility and pairwise inequivalence
+For the nondegeneracy of the weighted trace pairing it is the family in the conclusion.
+The two theorems after the registrations show that irreducibility and pairwise inequivalence
 cannot be dropped from the rank formula. -/
 
 namespace Reg.D5.S3.FiniteGroups.GroupAlgebra.CharacterKernelRank
@@ -204,6 +205,113 @@ def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
       path := #["body", "body", "body", "body", "body", "body", "body", "body",
         "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg"]
       stateBinder := 14
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+/-! ## The weighted trace pairing -/
+
+set_option linter.checkUnivs false in
+/-- The scalar field, index type, spaces and dictionaries of `eq_zero_of_tracePairing`. -/
+abbrev EndParams := Σ k : Type uk, Σ _ : Field k, Σ ι : Type uι, Σ W : ι → Type uW,
+  Σ _ : (∀ i, AddCommGroup (W i)), ∀ i, Module k (W i)
+
+/-- The product of the endomorphism algebras of the test line has `1 ≠ 0`. -/
+private theorem test_one_ne_zero :
+    (1 : ∀ i : testI.{uι}, Module.End testK.{uk} (testW.{uι, uW} i)) ≠ 0 := by
+  intro h
+  have h1 := congrArg (fun f : (∀ i : testI.{uι}, Module.End testK.{uk} (testW.{uι, uW} i)) =>
+    (f PUnit.unit (⟨1⟩ : ULift.{uW} K0)).down) h
+  simp at h1
+
+private abbrev testEndParams : EndParams.{uk, uι, uW} :=
+  ⟨testK, inferInstance, testI, testW, inferInstance, inferInstance⟩
+
+/-! ### `eq_zero_of_tracePairing`: the operator family paired against every family -/
+namespace Pairing
+
+set_option linter.checkUnivs false in
+abbrev signature : Signature where
+  Params := EndParams.{uk, uι, uW}
+  State p := letI := p.2.1; letI := p.2.2.2.2.1; letI := p.2.2.2.2.2
+    ∀ i, Module.End p.1 (p.2.2.2.1 i)
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ p := letI := p.2.1; letI := p.2.2.2.2.1; letI := p.2.2.2.2.2
+    ∀ i, Module.End p.1 (p.2.2.2.1 i)
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature.{uk, uι, uW} :=
+  realize signature (fun _ _ s => s) (fun e => nomatch e)
+
+def rejected : Realization signature.{uk, uι, uW} :=
+  realize signature (fun _ p _ => letI := p.2.1; letI := p.2.2.2.2.1; letI := p.2.2.2.2.2
+    (1 : ∀ i, Module.End p.1 (p.2.2.2.1 i))) (fun e => nomatch e)
+
+set_option linter.checkUnivs false in
+/-- The complete original telescope is retained; only the family in the conclusion varies. -/
+abbrev arena : Arena where
+  signature := signature.{uk, uι, uW}
+  Law R := ∀ {k : Type uk} [fk : Field k] {ι : Type uι} [Fintype ι] {W : ι → Type uW}
+    [aW : ∀ i, AddCommGroup (W i)] [mW : ∀ i, Module k (W i)] [∀ i, FiniteDimensional k (W i)]
+    (c : ι → k) (_hc : ∀ i, c i ≠ 0) (A : ∀ i, Module.End k (W i))
+    (_h : ∀ B, tracePairing c B A = 0), R.readout () ⟨k, fk, ι, W, aW, mW⟩ A = 0
+
+/-- The zero family pairs to zero with every family, but the identity family is not zero. -/
+theorem rejected_law : ¬ arena.{uk, uι, uW}.Law rejected := by
+  intro h
+  exact test_one_ne_zero (h (k := testK.{uk}) (ι := testI.{uι}) (W := testW.{uι, uW})
+    (fun _ => 1) (fun _ => one_ne_zero) 0 (fun B => map_zero _))
+
+theorem dependence : ObservationalDependence signature.{uk, uι, uW} actual := by
+  intro i
+  exact ⟨testEndParams, 1, 0, test_one_ne_zero⟩
+
+/-- The exact statement of the source theorem. -/
+abbrev sourceStatement : Prop := type_of% @eq_zero_of_tracePairing.{uk, uι, uW}
+
+def source : Registration arena.{uk, uι, uW} sourceStatement.{uk, uι, uW} where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@eq_zero_of_tracePairing.{uk, uι, uW}, rejected, rejected_law⟩
+  sensitivity := ⟨fun i => ⟨rejected, fun j hj => (hj (Subsingleton.elim j i)).elim,
+    rfl, rejected_law⟩, fun e => nomatch e⟩
+  dependence := dependence
+
+end Pairing
+
+def eq_zero_of_tracePairing_registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+    (@eq_zero_of_tracePairing.{uk, uι, uW})
+    (Realization Pairing.signature.{uk, uι, uW}) Unit Unit := {
+  unitName := `Reg.D5.S3.FiniteGroups.GroupAlgebra.CharacterKernelRank.eq_zero_of_tracePairing_unit
+  realizationName := `Reg.D5.S3.FiniteGroups.GroupAlgebra.CharacterKernelRank.Pairing.source
+  realizationSource := none
+  generated := false
+  arena := .source ⟨Pairing.arena⟩
+  objectArena := .source ⟨Pairing.arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source Pairing.arena ⟨Pairing.source⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize Pairing.signature (fun _ _ s => s) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.FiniteGroups.GroupAlgebra.CharacterKernelRank
+    definition := none
+    coordinates := #[0, 2, 4]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body",
+        "body", "body", "fn", "arg"]
+      stateBinder := 10
       functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }

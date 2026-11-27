@@ -50,7 +50,7 @@ private lemma four_primitive : fourCharacter.IsPrimitive := by
   · exact (hnot (by rw [h])).elim
   · exact h
 
-private lemma conductor_mul_coprime {N : ℕ} [NeZero N]
+lemma conductor_mul_coprime {N : ℕ} [NeZero N]
     (α β : DirichletCharacter ℂ N) (hc : α.conductor.Coprime β.conductor) :
     (α * β).conductor = α.conductor * β.conductor := by
   have ha := conductor_mul_dvd_lcm_conductor (α * β) β⁻¹

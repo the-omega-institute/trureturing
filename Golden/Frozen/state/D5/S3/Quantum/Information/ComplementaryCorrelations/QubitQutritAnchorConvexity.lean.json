@@ -1,0 +1,1 @@
+{"statement_id":"sha256:1c673ab38bce7628fc5af03fc9683d9f45c0c9c43866f9a00ebc60759662adfc","declarations":[{"declaration_name_key":"ns(ns(n0,17:AnchorMeasurement),29:qubit_qutrit_anchor_convexity)","kind":"theorem","libraries":["Aesop","Batteries","Init","Lean","Mathlib","Std"]}]}

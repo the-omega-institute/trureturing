@@ -1,0 +1,24 @@
+name: Recover a Lean compile layer
+description: Download a layer from this run and validate it against the checked-out source
+inputs:
+  stage:
+    description: common or the zero-based worker number
+    required: true
+runs:
+  using: composite
+  steps:
+    - uses: actions/download-artifact@v8
+      with:
+        name: lean-compile-${{ github.run_id }}-${{ inputs.stage }}
+        path: ${{ runner.temp }}/lean-compile
+        digest-mismatch: error
+    - shell: bash
+      env:
+        STAGE: ${{ inputs.stage }}
+      run: |
+        directory="$RUNNER_TEMP/lean-compile"
+        read -ra targets <<< "${LEAN_LAYER_TARGETS:-}"
+        args=()
+        if [[ ${#targets[@]} -gt 0 ]]; then args=(--target "${targets[@]}"); fi
+        python3 tools/scripts/worktree/lean_compile_layers.py recover --stage "$STAGE" --artifacts "$directory" "${args[@]}"
+        rm -- "$directory/$STAGE.tar.gz"

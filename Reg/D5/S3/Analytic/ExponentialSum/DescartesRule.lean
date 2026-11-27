@@ -89,7 +89,7 @@ def zeroAudit : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _,
     coordinates := #[]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "arg"]
-      stateBinder := 1
+      stateBinder := 0
       functionOperand := false
       stateOperand := some #["arg"]
       booleanPredicate := false }] }
@@ -98,6 +98,104 @@ def zeroAudit : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _,
   options := #[]
 
 #print axioms zeroAudit
+
+private def stationaryCoefficients (i : Fin 3) : ℝ := if i = 1 then -2 else 1
+
+private def stationaryExponents (i : Fin 3) : ℝ := -(i.val : ℝ)
+
+private theorem stationaryExponents_strictAnti : StrictAnti stationaryExponents := by
+  intro i j hij
+  exact neg_lt_neg (Nat.cast_lt.mpr hij)
+
+private theorem stationarySum_zero :
+    exponentialSum stationaryCoefficients stationaryExponents 0 = 0 := by
+  norm_num [exponentialSum, stationaryCoefficients, Fin.sum_univ_three]
+
+private theorem stationarySum_deriv :
+    deriv (exponentialSum stationaryCoefficients stationaryExponents) 0 = 0 := by
+  have hd : HasDerivAt (exponentialSum stationaryCoefficients stationaryExponents)
+      (∑ i, stationaryCoefficients i * stationaryExponents i) (0 : ℝ) := by
+    unfold exponentialSum
+    apply HasDerivAt.fun_sum
+    intro i _
+    simpa only [id_eq, mul_zero, Real.exp_zero, mul_one, one_mul] using
+      (((hasDerivAt_id (0 : ℝ)).const_mul (stationaryExponents i)).exp.const_mul
+        (stationaryCoefficients i))
+  rw [hd.deriv]
+  norm_num [stationaryCoefficients, stationaryExponents, Fin.sum_univ_three]
+
+private theorem stationaryVariations : (List.ofFn stationaryCoefficients).signVariations = 2 := by
+  norm_num [List.ofFn_succ, stationaryCoefficients, List.signVariations, sign_apply]
+  rw [List.destutter_cons_cons, if_pos (by decide), ← List.destutter_cons']
+  simp
+
+abbrev stationaryArena : Arena where
+  signature := variationSignature
+  Law R := ∀ {N : ℕ} (a μ : Fin N → ℝ) (hμ : StrictAnti μ)
+    (ha : ∃ i, a i ≠ 0) (Z : Finset ℝ) {z : ℝ} (hz : z ∈ Z)
+    (hZ : ∀ t ∈ Z, exponentialSum a μ t = 0) (hd : deriv (exponentialSum a μ) z = 0),
+    Z.card + 1 ≤ R.readout () () (List.ofFn a)
+
+private theorem stationaryArenaRejected : ¬ stationaryArena.Law variationRejected := by
+  intro h
+  have hb := @h 3 stationaryCoefficients stationaryExponents stationaryExponents_strictAnti
+    ⟨0, by norm_num [stationaryCoefficients]⟩ {0} 0 (by simp)
+    (by
+      intro t ht
+      have ht0 : t = 0 := by simpa using ht
+      subst t
+      exact stationarySum_zero) stationarySum_deriv
+  norm_num [variationRejected, realize] at hb
+
+def stationaryArenaSource : Registration stationaryArena (type_of% @zero_bound_with_stationary_root) where
+  actual := variationActual
+  bridge := Iff.rfl
+  variation := ⟨zero_bound_with_stationary_root, variationRejected, stationaryArenaRejected⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    stationaryArena.Law variationActual variationRejected stationaryArenaRejected
+  dependence := by
+    intro i
+    refine ⟨(), [], List.ofFn stationaryCoefficients, ?_⟩
+    change ([] : List ℝ).signVariations ≠ (List.ofFn stationaryCoefficients).signVariations
+    rw [stationaryVariations]
+    decide
+
+def stationaryAudit :
+    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+    (@zero_bound_with_stationary_root) (Realization variationSignature) Unit Unit where
+  unitName := `Reg.D5.S3.Analytic.ExponentialSum.DescartesRule.stationaryAuditUnit
+  realizationName := `Reg.D5.S3.Analytic.ExponentialSum.DescartesRule.stationaryArenaSource
+  realizationSource := none
+  generated := false
+  arena := .source ⟨stationaryArena⟩
+  objectArena := .source ⟨stationaryArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source stationaryArena ⟨stationaryArenaSource⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize variationSignature (fun _ _ a => a.signVariations)
+    (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Analytic.ExponentialSum.DescartesRule
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body",
+        "body", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms stationaryAudit
 
 abbrev crossingArena : Arena where
   signature := variationSignature
@@ -152,7 +250,7 @@ def crossingAudit : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0
     coordinates := #[]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "arg"]
-      stateBinder := 1
+      stateBinder := 0
       functionOperand := false
       stateOperand := some #["arg"]
       booleanPredicate := false }] }
@@ -231,7 +329,7 @@ def signAudit : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _,
     coordinates := #[]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg"]
-      stateBinder := 8
+      stateBinder := 0
       functionOperand := false
       stateOperand := some #["arg"]
       booleanPredicate := false }] }

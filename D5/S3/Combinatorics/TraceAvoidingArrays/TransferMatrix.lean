@@ -65,7 +65,7 @@ private theorem card_subtype_sum {A : Type*} [Fintype A] (p : A → Prop) :
  push_cast
  rfl
 
-private noncomputable def cont (P : R → R → Prop) (Q : R → R → R → Prop)
+noncomputable def cont (P : R → R → Prop) (Q : R → R → R → Prop)
     (n : ℕ) (a b : R) : ℤ := by
  classical
  exact (Nat.card {cs : Fin n → R // tailGood P Q a b (List.ofFn cs)} : ℤ)
@@ -88,7 +88,7 @@ private theorem cont_succ (P : R → R → Prop) (Q : R → R → R → Prop) (n
  · simp only [ite_and]
    rcases not_and_or.mp h with h | h <;> simp [h]
 
-private theorem cont_matrix (P : R → R → Prop) (Q : R → R → R → Prop)
+theorem cont_matrix (P : R → R → Prop) (Q : R → R → R → Prop)
     (cl : R → R → S) (T : Matrix S S ℤ)
     (hT : ∀ a b, P a b → ∀ s,
       (∑ c : R, if P b c ∧ Q a b c ∧ cl b c = s then (1:ℤ) else 0) = T (cl a b) s)

@@ -25,7 +25,9 @@ Before resuming an unsettled unit, reconcile its preregistration and comments wi
 
 Determine whether a unit has ended from its terminal or owning route's settlement evidence, not merely the issue's open/closed flag. An ended unit, including an invalid or unresolved terminal, is not resumed or solved again and receives no second terminal or altered prediction. If the result is settled but its required reporting is incomplete, finish only that reporting without duplicating an existing terminal. Continuing an ended question requires a fresh preregistration citing the old result and preserving its conclusion and boundaries.
 
-Reuse prior results first. Search repository declarations, including private ones, then pinned Mathlib, then admissible third-party Lean libraries in the order of §3.1; check literature and in-flight work for duplicates and stronger results. Compare statements, assumptions, quantifiers and actual consumers, not just names or import counts. Do not assign implementation for an already solved target or create a wrapper to count it as new work.
+For an existing formalization migrating to strict Omega mathematics, use the [migration skill](../omega-math-migration/SKILL.md) to update the original owner and verify its dependencies. Keep consumer references on the consumer side.
+
+Reuse prior results first. Search existing D5 declarations (including private ones) and prefer OmegaMath for reusable constructive mathematics. Check pinned Mathlib next, then admissible third-party Lean libraries in the order of §3.1; check literature and in-flight work for duplicates and stronger results. Compare statements, assumptions, quantifiers and actual consumers, not just names or import counts. Do not assign implementation for an already solved target or create a wrapper to count it as new work.
 
 ## 2. Generate and screen candidates
 
@@ -34,6 +36,8 @@ Candidates can come from a shared proof mechanism awaiting generalization, a bri
 For sharpness/boundary sources that need declaration-level users, use `make -s -C tools compiled-dependencies` with the fixed revision and explicit finite module domain described in `tools/scripts/agent/research_readouts/README.md`. The entry acquires compiler artifacts through the existing make/cache doors and separates type/constructor, raw proof/definition value and module-import edges, including forward/reverse paths and completeness. Keep its domain and acquisition status with the reading; missing/incomplete data is unmeasured, never an exact zero. Private/internal intermediates carry paths without adding public users. Raw value occurrence only screens sources: it is not the reduced live-path test of §3.2, indispensability, an escape witness or research value. A finite query does not establish a whole-D5 ordering.
 
 For each serious candidate, identify its source, fully quantified statement, relation to existing work, the specific statements affected by a yes/no answer, intended consumers, missing inference or realization bridge, estimated cost and appropriate route. These are working inputs, not a new question-card schema or ledger. External candidates additionally need the verbatim published named question, tier and scoped literature readings required by §3.6. Internal candidates, including descendants of external settlements, cannot use `open-problem-resolution` merely because they have been written as a question or placed in a dossier.
+
+Plan a strict port under `strict/OmegaMathlib/` when the research needs the checked counterpart of a Mathlib result. Keep reusable project mathematics in `src/OmegaMath/`. Consumers normally use the common interface on both backends. A consumer that needs the full official API can import `OmegaBuild.Commands`, declare `compile_only_with_mathlib` after its imports and use Mathlib directly. Its importers inherit that choice. [Backend examples and checks](../../src/README.md#选择编译后端)
 
 Use this research selection policy:
 

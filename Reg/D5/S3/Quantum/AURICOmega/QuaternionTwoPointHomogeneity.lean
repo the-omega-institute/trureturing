@@ -2,7 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.AURICOmega.QuaternionTwoPointHomogeneity
 import Reg.Support.DependentFamily
 
-/-! Source-bound audits of the left-right translation theorems for unit quaternions. -/
+/-! Source-bound audits of the left-right translation theorems for unit quaternions and of the
+intertwining of unit quaternions with equal real parts. -/
 
 namespace Reg.D5.S3.Quantum.AURICOmega.QuaternionTwoPointHomogeneity
 
@@ -131,6 +132,62 @@ def source_registration : Registration arena (type_of% @exists_mul_mul_eq_of_kap
 
 end Translation
 
+/-! Left multiplication by the intertwining witness, for `exists_unitary_mul_eq_mul`. -/
+namespace Intertwining
+
+abbrev signature : Signature where
+  Params := unitary ℍ[ℝ]
+  State _ := unitary ℍ[ℝ]
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := unitary ℍ[ℝ]
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature :=
+  realize signature (fun _ c s => c * s) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ c _ => -c) (fun e => nomatch e)
+
+/-- Retain the complete argument telescope of `exists_unitary_mul_eq_mul`. -/
+abbrev arena : Arena where
+  signature := signature
+  Law r := ∀ a a' : unitary ℍ[ℝ], (a : ℍ[ℝ]).re = (a' : ℍ[ℝ]).re →
+    ∃ c : unitary ℍ[ℝ], r.readout () c a = a' * c
+
+/-- For `a = a' = 1` the rejected law asks for a unit quaternion `c` with `-c = c`. -/
+theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  obtain ⟨c, hc⟩ := h 1 1 rfl
+  have hc' : -c = c := by
+    change -c = 1 * c at hc
+    rwa [one_mul] at hc
+  have h1 := congrArg (fun z : unitary ℍ[ℝ] => z * c⁻¹) hc'
+  simp only [neg_mul, mul_inv_cancel] at h1
+  exact neg_one_ne_one h1
+
+theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨1, 1, -1, fun h => neg_one_ne_one ?_⟩
+  have h' : (1 : unitary ℍ[ℝ]) * 1 = 1 * -1 := h
+  simpa only [mul_one, one_mul] using h'.symm
+
+def source_registration : Registration arena (type_of% @exists_unitary_mul_eq_mul) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@exists_unitary_mul_eq_mul, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      exact ⟨rejected, fun j hj => (hj (Subsingleton.elim j i)).elim, rfl, rejected_law⟩
+    · intro e
+      exact nomatch e
+  dependence := dependence
+
+end Intertwining
+
 def kappa_mul_mul_registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
       (@kappa_mul_mul) (Realization Reading.signature) Unit Unit := {
@@ -194,6 +251,40 @@ def exists_mul_mul_eq_of_kappa_eq_registration :
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["fn", "arg", "arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+def exists_unitary_mul_eq_mul_registration :
+    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@exists_unitary_mul_eq_mul) (Realization Intertwining.signature) Unit Unit := {
+  unitName := `Reg.D5.S3.Quantum.AURICOmega.QuaternionTwoPointHomogeneity.exists_unitary_mul_eq_mul_unit
+  realizationName := `Reg.D5.S3.Quantum.AURICOmega.QuaternionTwoPointHomogeneity.Intertwining.source_registration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨Intertwining.arena⟩
+  objectArena := .source ⟨Intertwining.arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source Intertwining.arena ⟨Intertwining.source_registration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize Intertwining.signature
+    (fun _ c s => c * s) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.AURICOmega.QuaternionTwoPointHomogeneity
+    definition := none
+    coordinates := #[3]
+    readouts := #[{
+      path := #["body", "body", "body", "arg", "body", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["arg"]
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none

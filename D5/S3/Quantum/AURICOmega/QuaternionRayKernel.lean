@@ -49,7 +49,7 @@ private lemma normSq_coe_unitary (x : unitary ℍ[ℝ]) : Quaternion.normSq (x :
   rw [Quaternion.normSq_eq_norm_mul_self, CStarRing.norm_coe_unitary, one_mul]
 
 /-- The two-term reading is `⟪x, y⟫ ^ 2 + ⟪x, y * i⟫ ^ 2`. -/
-private lemma rayKernel_eq_inner (x y : unitary ℍ[ℝ]) :
+lemma rayKernel_eq_inner (x y : unitary ℍ[ℝ]) :
     rayKernel x y = ⟪(x : ℍ[ℝ]), (y : ℍ[ℝ])⟫_ℝ ^ 2 +
       ⟪(x : ℍ[ℝ]), (y : ℍ[ℝ]) * (unitI : ℍ[ℝ])⟫_ℝ ^ 2 := by
   change (2 * ((1 + ⟪(x : ℍ[ℝ]), (y : ℍ[ℝ])⟫_ℝ) / 2) - 1) ^ 2 +

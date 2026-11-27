@@ -1,0 +1,56 @@
+# The original four-point sewn Taylor coefficient
+
+## Abstract
+
+Taylor coefficients of the original four-point sewn charge sums
+
+**Definition 1.1 (Finite occupation projection).**
+
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMChargeNormal.projectOccupations`
+
+*Formalization.* `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMChargeNormal.projectOccupations` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For fixed lattice datum, weights and Laurent index, project occupation values using the finite lowering sums, signed factorial weights and the two Laurent selectors on the four oscillator inputs.
+
+**Lemma 1.2 (The disk nome in the sewing coordinate).**
+
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMChargeNormal.nome_square_source`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMChargeNormal.nome_square_source` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For z in the complex unit disk, the disk nome at z² is z² times the exponential of twice the source constant at z, divided by 16.
+
+**Theorem 1.3 (The actual fourM scalar).**
+
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMChargeNormal.fourM_scalar_sewnTaylor`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMChargeNormal.fourM_scalar_sewnTaylor` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Let D be a rank-24 lattice datum with positive definite real Gram matrix and unit Gram determinant. Take H, K, E in ℕ and t in ℤ. Let u = P ⊗ x and v = Q ⊗ y belong to the actual minus-one parity space and satisfy L₀u = Hu and L₀v = Kv. Here P, Q, R, S are oscillator polynomials and x, y, z, d are actual ground vectors.
+
+The scalar fourMScalar at modes H + K − E − 1 and t on u, v, R ⊗ z, S ⊗ d is the sum over a in ModTwoCharge D of ((−1)^E · cosetSewnTaylor(D,H,K,E,t,P,Q,R,S,a)) · groundForm(D,y,Cₐx) · groundForm(D,d,Cₐz). The operator Cₐ is chargeOperator for the actual ground representation, and each ground form uses the given unit determinant.
+
+For each fixed occupation, cosetSewnTaylor uses the ordinary Taylor coefficient of order 2E at zero of the sewn sum restricted to charge class a. The term at charge q has both charge scalars, for q and −q, the sewing variable to power 2·chargeEnergy(D,q), and the fixed-occupation sewn Gaussian. The finite projection includes both original lowerings with their factorials and sign, the four occupation factorials, and both Laurent selectors. The outer sign (−1)^E accounts for the negative square coordinate.
+
+## References
+
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMChargeNormal.fourM_scalar_sewnTaylor`
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMChargeNormal.nome_square_source`
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMChargeNormal.projectOccupations`
+- Dependency: [D5/S3/Analytic/OriginalHalfBinomialNome](../../../Analytic/OriginalHalfBinomialNome.md)
+- Dependency: [D5/S3/VertexAlgebra/Sewing/CanonicalFullChargeLoop](../../Sewing/CanonicalFullChargeLoop.md)
+- Dependency: [D5/S3/VertexAlgebra/TwistedGround/FiniteSqueezedVacuum](../FiniteSqueezedVacuum.md)
+- Dependency: [D5/S3/VertexAlgebra/TwistedGround/OriginalFourMEnergyCoefficient](../OriginalFourMEnergyCoefficient.md)
+- Dependency: [D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalRadial](../OriginalGaussianExternalRadial.md)

@@ -25,8 +25,7 @@ open private native_masses
   from D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSecondMaximum.Native
 open private inserted_perm from D5.S3.Combinatorics.Circle.FourNegative.EqualFirstThree.Physical
 open private four_strip from D5.S3.Combinatorics.Circle.FourNegative.AscendingD2.Schedule
-open private label lift_order marked_word
-  from D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
+open ThreeNegativeEqualOuterJointLift (label lift_order marked_word)
 
 set_option maxHeartbeats 2400000 in
 private theorem ascending_joint_construction (a b c d : ℕ)

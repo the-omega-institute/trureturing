@@ -18,7 +18,19 @@ $$\begin{aligned}\operatorname{first}\left(\operatorname{pair}\left(0\right)\rig
 
 Source index n>=1 corresponds to stage n-1: u(n,X)=first(pair(n-1)) and v(n,X)=second(pair(n-1)). Thus u(1,X)=v(1,X)=1, and for every n>=2 the source laws are u(n,X)=u(n-1,X)+X*v(n-1,X) and v(n,X)=u(n-1,X)+v(n-1,X)+1. These are the laws in A208509 revision 28 and its companion A208508 revision 10.
 
-**Theorem 1.2 (Werner's binomial coefficient formula).**
+**Theorem 1.2 (Both coefficient families of the pair).**
+
+Lean statement: `D5/S1/Recurrence/Invariants/AffinePolynomialPairBinomialCoefficients.pair_coeff`
+
+*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Invariants/AffinePolynomialPairBinomialCoefficients.pair_coeff` (`✓ std3`). ∎
+
+*Citation.* Haobo Ma; Wenlin Zhang (2026). *Extensions of Knuth's coefficient families (1993), with corrected OEIS links: Werner's conjecture in OEIS A208509, Formula, revision 28*. DOI: [10.5281/zenodo.24211281](https://doi.org/10.5281/zenodo.24211281). URL: <https://zenodo.org/records/24211281>.
+
+*Commentary.*
+
+For every stage m and every k, the coefficient of X^k in first(pair(m)) is C(m, 2k) + C(m + 1, 2k) minus one exactly when k = 0, and the coefficient of X^k in second(pair(m)) is C(m, 2k + 1) + C(m + 1, 2k + 1). Simultaneous induction on m with Pascal's identity proves both; the constant-term corrections cancel in the second recurrence. This is Theorem 1 of H. Ma and W. Zhang's note on A208509 (DOI 10.5281/zenodo.24211281), written at stage m = n − 1.
+
+**Theorem 1.3 (Werner's binomial coefficient formula).**
 
 $$\forall n \in Nat, 1 \le n \Rightarrow \forall k \in Nat, \operatorname{coeff}\left(\operatorname{second}\left(\operatorname{pair}\left(\operatorname{natSub}\left(n, 1\right)\right)\right), k\right) = \operatorname{intCast}\left(\operatorname{binomial}\left(\operatorname{natSub}\left(n, 1\right), 2 \cdot k + 1\right)\right) + \operatorname{intCast}\left(\operatorname{binomial}\left(n, 2 \cdot k + 1\right)\right)$$
 
@@ -37,4 +49,5 @@ The coefficient of X^k in the actual second polynomial equals the two displayed 
 ## References
 
 - Truth anchor: `D5/S1/Recurrence/Invariants/AffinePolynomialPairBinomialCoefficients.pair`
+- Truth anchor: `D5/S1/Recurrence/Invariants/AffinePolynomialPairBinomialCoefficients.pair_coeff`
 - Truth anchor: `D5/S1/Recurrence/Invariants/AffinePolynomialPairBinomialCoefficients.werner_a208509`

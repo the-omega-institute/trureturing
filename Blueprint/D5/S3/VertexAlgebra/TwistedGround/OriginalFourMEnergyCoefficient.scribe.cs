@@ -8,6 +8,12 @@ internal sealed class OriginalFourMEnergyCoefficientDocument : IScribeDocumentDe
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "OriginalFourMEnergyCoefficient", H("Original fourM total-energy coefficient"), Blocks(
+            Describe.Lean(DescribeId.Create("chargescalar-pair"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/TwistedGround/OriginalFourMEnergyCoefficient.chargeScalar_pair"),
+                H("Product of opposite charge scalars"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For each lattice datum and charge q, the product of the scalars for q and −q is 16 to the negative charge energy of q."))),
+                DescribeRole.Theorem),
             Paragraph(Text("At total energy E, the source mode is H+K-E-1. Each integral charge q in the specified mod-two coset contributes at charge energy m = (q,q)/2 and oscillator energy E-m. Its charge factor is 16 raised to the power -m. The formal shift by m multiplies the even ordinary sewn coefficients by the m-th power of the square coordinate. The coefficient of index 2(E-m) already contains its ordinary Taylor normalization.")),
             Paragraph(Text("The finite two-index left lowering retains both lowering factorials. Expanding the four external polynomials gives four independent occupation factorials and the two original Laurent selectors. The left sign is the product of the lowering sign with the degree sign from substituting the negative square coordinate.")),
             N("oscillatorKernel_reflected", "Reflection at the original left Laurent mode",

@@ -186,7 +186,7 @@ private theorem d_period (k : ℕ) : Function.Periodic (dNat k) (2 ^ k) := by
 
 private theorem d_add (k n : ℕ) : dNat k (n + 2 ^ k) = dNat k n := d_period k n
 
-private theorem sum_blocks {A : Type*} [AddCommMonoid A] (f : ℕ → A) (q m : ℕ) :
+theorem sum_blocks {A : Type*} [AddCommMonoid A] (f : ℕ → A) (q m : ℕ) :
     (∑ n ∈ range (q * m), f n) = ∑ j ∈ range q, ∑ i ∈ range m, f (j * m + i) := by
   induction q with
   | zero => simp

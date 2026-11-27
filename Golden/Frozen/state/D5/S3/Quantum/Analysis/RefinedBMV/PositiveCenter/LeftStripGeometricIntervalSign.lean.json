@@ -1,0 +1,1 @@
+{"statement_id":"sha256:9dae75b800906245f90657b4bcf030601851209cbb20a92652de76434292cc3a","declarations":[{"declaration_name_key":"ns(ns(ns(n0,10:RefinedBMV),14:PositiveCenter),52:leftStrip_logKernel_mixed_lt_gap_one_to_three_halves)","kind":"theorem","libraries":["Aesop","Batteries","Init","Lean","Mathlib","Std"]}]}

@@ -5,27 +5,27 @@
    anchors: []
    digest: The defining recursion of marker-history splicing, with a two-marker witness. -/
 
-import D5.S0.History.HistoryCarrier
+module
+prelude
+public import OmegaMath.Data.SnocList.Append
 
 namespace D5.S0.History
 
-/-- Splicing is fixed by its recursion on the second argument: the empty history acts as
-the right unit, and prefixing a marker there prefixes the same marker on the result.
-`splice` is defined through the free-monoid product, so these equations are what pin it
-to the intended recursion rather than to an unexplained library alias. -/
-theorem splice_recursion_equations :
-    (∀ h : MarkerHistory, splice h 1 = h) ∧
-      (∀ (ε : Marker) (h g : MarkerHistory),
-        splice h (FreeMonoid.of ε * g) = FreeMonoid.of ε * splice h g) := by
-  refine ⟨fun h => ?_, fun ε h g => ?_⟩
-  · simp [splice]
-  · simp [splice, mul_assoc]
+open Omega
 
--- Non-vacuity witness: splicing two one-marker histories yields the expected two-marker
--- history, with the second argument's marker in front.
+/-- With histories read from the last inserted marker back to the first,
+splicing places the second history before the first in the displayed word. -/
+public theorem splice_recursion_equations {Marker : Type u} :
+    And (∀ h : SnocList Marker, Eq (h.append .empty) h)
+      (∀ (marker : Marker) (h g : SnocList Marker),
+        Eq (h.append (g.pushBack marker)) ((h.append g).pushBack marker)) :=
+  And.intro (fun _ => rfl) (fun _ _ _ => rfl)
+
+/-- Reading the last inserted marker first puts `true` before `false`. -/
 example :
-    splice (FreeMonoid.of Marker.E₀) (FreeMonoid.of Marker.E₁)
-      = FreeMonoid.of Marker.E₁ * FreeMonoid.of Marker.E₀ := by
-  rfl
+    Eq (((SnocList.empty : SnocList Bool).pushBack .false).append
+      ((SnocList.empty : SnocList Bool).pushBack .true))
+      (((SnocList.empty : SnocList Bool).pushBack .false).pushBack .true) :=
+  Omega.rfl
 
 end D5.S0.History

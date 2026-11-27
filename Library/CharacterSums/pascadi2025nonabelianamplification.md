@@ -26,6 +26,9 @@ strata_touched:
   - D5/S3/Arith/CharacterSums/PascadiRankFourFactor
   - D5/S3/Arith/CharacterSums/PascadiRankFourBadDegreeAverage
   - D5/S3/Arith/CharacterSums/PascadiMixedQuotientFourier
+  - D5/S3/Arith/CharacterSums/PascadiTransverseCriticalPhase
+  - D5/S3/Arith/CharacterSums/PascadiPrimeSquareHyperbola
+  - D5/S3/Arith/CharacterSums/PascadiPrimeCubePairRigidity
   - D5/S3/Arith/CharacterSums/PascadiTorusConductor
   - D5/S3/Arith/CharacterSums/PascadiAffineVariance
 license: source-reference
@@ -542,3 +545,41 @@ Lean 4.35 scoped report verifies 45 declarations using
 instance, weighted arithmetic estimate, and enlarged counting ranges
 are ordinary mathematics. Source-bound four-slot registration for the
 three Fourier theorems remains open.
+
+The repository's `PascadiTransverseCriticalPhase` module proves the exact
+signed radical identity for the transverse unit chart over `ZMod(p^2)`.
+For each nonzero root residue it constructs the unique lift in each pair
+of upper digits. Summing the additive character over those two digits
+gives zero unless both stationary equations hold modulo `p`. In the
+stationary case it gives `p^2` times the character at the base root.
+This is an exact local phase identity for the ordinary analysis of
+Conjecture 6.1. Estimating the weighted correlations between distinct
+stationary phases in the short frequency box remains open.
+
+The repository's `PascadiPrimeSquareHyperbola` module proves a finite
+divisor bound for the actual translated integer box over a modulus with
+a unit multiplier and target. Clearing the shifted product gives a
+unique bounded integer level. Each level has a nonzero integer product
+congruent to the unit multiplier squared times the original target.
+Projection to the first integer factor is injective into its signed
+divisors. For the cubic word modulo $p^2$, the two pair-sum conditions
+force the target $1+d z^2$ to be a unit in the factorization
+$(d z x_1-1)(d z x_2-1)=1+d z^2$.
+
+The approximation step is the method of Cilleruelo and Garaev,
+Theorem 1 and §2. The prime-square application chooses the positive
+approximation multiplier strictly below $p$, and the level products
+remain nonzero. The asymptotic estimate for the weighted positive
+middle-word count also uses the reduced slope lattice and tail bounds.
+The full fixed-coefficient count beyond the endpoint still requires
+control of the remaining singleton carry fibers.
+<https://arxiv.org/html/1007.1526v2#S2>
+
+The repository's `PascadiPrimeCubePairRigidity` module derives a
+difference quartic modulo $p^2$ from the two exact words modulo $p^3$
+and the full slope congruences. For fixed coefficient and displacement
+data, a simple lower root and a specified nonzero slope-step residue
+determine at most one midpoint modulo $p^2$ when the reduced difference
+sum is nonzero. On unit coordinates this determines the literal pair
+in first-coordinate intervals of width less than $p^2$ and
+second-coordinate intervals of width less than $p^3$.

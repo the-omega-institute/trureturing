@@ -6,8 +6,12 @@
    utility: none
    digest: TauCeti port: Topological pairs, their maps and homotopies; sphere-homology support. -/
 
-import Mathlib.Topology.Category.TopCat.Limits.Products
-import Mathlib.Topology.Category.TopPair
+module
+
+public import Mathlib.Topology.Category.TopCat.Limits.Products
+public import Mathlib.Topology.Category.TopPair
+
+set_option backward.privateInPublic true
 
 /-!
 This file is a source port adapted from TauCetiProject/TauCeti at immutable
@@ -19,6 +23,8 @@ Tau Ceti copyright and Apache-2.0 terms are retained in
 when this repository's own pinned Mathlib provides an equivalent declaration
 at the full telescope and all live consumers compile with direct replacement.
 -/
+
+@[expose] public section
 
 /-
 Copyright (c) 2026 The Tau Ceti contributors. All rights reserved.

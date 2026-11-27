@@ -369,7 +369,7 @@ private theorem threshold_expansion (s : Finset ℝ) (hs : ∀ r ∈ s, 0 ≤ r)
         subst x
         simp
 
-private theorem weighted_threshold {α β : Type*} [Fintype α] [Fintype β]
+theorem weighted_threshold {α β : Type*} [Fintype α] [Fintype β]
     (a p : α → ℝ) (w q : β → ℝ) (ha : ∀ i, 0 ≤ a i) (hw : ∀ j, 0 ≤ w j)
     (h : ∀ r : ℝ, (∑ i, if r ≤ a i then p i else 0) ≤
       ∑ j, if r ≤ w j then q j else 0) :
@@ -457,7 +457,7 @@ private theorem weighted_minors_all_tuples (x y z : ι → ℝ) (hz : ∑ k, z k
 
 variable [LinearOrder ι]
 
-private theorem pair_ordering (f : ι → ι → ℝ)
+theorem pair_ordering (f : ι → ι → ℝ)
     (hs : ∀ i j, f j i = f i j) (hz : ∀ i, f i i = 0) :
     (∑ i, ∑ j, f i j) = 2 * (∑ i, ∑ j, if i < j then f i j else 0) := by
   have hp (i j : ι) : f i j = (if i < j then f i j else 0) +
@@ -477,7 +477,7 @@ private theorem pair_ordering (f : ι → ι → ℝ)
         _ = _ := by simp only [Finset.sum_add_distrib]
     _ = _ := by rw [Finset.sum_comm (f := fun i j => if j < i then f j i else 0)]; ring
 
-private theorem triple_ordering (f : ι → ι → ι → ℝ)
+theorem triple_ordering (f : ι → ι → ι → ℝ)
     (hs : ∀ i j k, f j i k = f i j k)
     (hc : ∀ i j k, f k i j = f i j k)
     (hz : ∀ i k, f i i k = 0) :

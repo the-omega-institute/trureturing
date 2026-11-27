@@ -6,6 +6,7 @@
    utility: none
    digest: Actual original matrix-group velocities and the complete first-order relation. -/
 
+import D5.S3.Quantum.Algebra.Comparison.LineReflectionGeneration
 import D5.S3.Quantum.Algebra.OriginalCompactActionMetric
 import D5.S3.Quantum.Algebra.RankOneInvariantMetric
 import Mathlib.Analysis.Calculus.InverseFunctionTheorem.FDeriv
@@ -784,50 +785,15 @@ private theorem basis_halfturn_exponential (B : InnerProductSpace.Core ℝ W) (b
 private theorem halfturns_generate (H : Subgroup (W ≃ₗ[ℝ] W))
     (hhalf : ∀ v : W, v ≠ 0 → (ℝ ∙ v).reflection.toLinearEquiv ∈ H)
     (e : W ≃ₗᵢ[ℝ] W) (he : LinearMap.det e.toLinearMap = 1) : e.toLinearEquiv ∈ H := by
-  classical
-  let R (v : W) := (ℝ ∙ v)ᗮ.reflection
-  have hword (l : List W) : ∃ a : W ≃ₗ[ℝ] W, a ∈ H ∧
-      (l.map R).prod.toLinearMap = LinearMap.det (l.map R).prod.toLinearMap • a.toLinearMap := by
-    induction l with
-    | nil =>
-      refine ⟨1,H.one_mem,?_⟩
-      change (1 : W →ₗ[ℝ] W) = LinearMap.det (1 : W →ₗ[ℝ] W) • (1 : W →ₗ[ℝ] W)
-      simp
-    | cons v l ih =>
-      obtain ⟨a,ha,hea⟩ := ih
-      by_cases hv : v = 0
-      · have hz : R v = 1 := by
-          subst v
-          ext w
-          apply Submodule.reflection_mem_subspace_eq_self
-          simp
-        simpa [hz] using ⟨a,ha,hea⟩
-      · let t := (ℝ ∙ v).reflection.toLinearEquiv
-        have ht : t ∈ H := hhalf v hv
-        have hd : LinearMap.det (R v).toLinearMap = -1 := by
-          change LinearMap.det (ℝ ∙ v)ᗮ.reflection.toLinearMap = -1
-          rw [Submodule.det_reflection, Submodule.orthogonal_orthogonal, finrank_span_singleton hv]
-          norm_num
-        have hR : (R v).toLinearMap = -t.toLinearMap := by
-          ext w
-          exact Submodule.reflection_orthogonal_apply (ℝ ∙ v) w
-        refine ⟨t*a,H.mul_mem ht ha,?_⟩
-        change (R v).toLinearMap * (l.map R).prod.toLinearMap =
-          LinearMap.det ((R v).toLinearMap * (l.map R).prod.toLinearMap) •
-            (t.toLinearMap * a.toLinearMap)
-        rw [map_mul, hd]
-        conv_lhs => rw [hea, hR]
-        simp only [mul_smul_comm, neg_mul, smul_neg, neg_smul, one_mul]
-  obtain ⟨l,_hl,hel⟩ := e.reflections_generate_dim
-  obtain ⟨a,ha,hea⟩ := hword l
-  have hel' : (l.map R).prod = e := hel.symm
-  have hmap : e.toLinearMap = a.toLinearMap := by
-    rw [hel', he, one_smul] at hea
-    exact hea
-  have hae : e.toLinearEquiv = a := by
-    ext w
-    exact LinearMap.congr_fun hmap w
-  exact hae ▸ ha
+  let φ : (W ≃ₗᵢ[ℝ] W) →* (W ≃ₗ[ℝ] W) :=
+    { toFun := LinearIsometryEquiv.toLinearEquiv, map_one' := rfl, map_mul' := fun _ _ => rfl }
+  have hle : Subgroup.closure {ρ : W ≃ₗᵢ[ℝ] W | ∃ v : W, v ≠ 0 ∧ ρ = (ℝ ∙ v).reflection} ≤
+      H.comap φ := by
+    rw [Subgroup.closure_le]
+    rintro ρ ⟨v, hv, rfl⟩
+    exact hhalf v hv
+  exact hle ((Comparison.LineReflectionGeneration.mem_closure_lineReflections_iff e).mpr
+    (Or.inr he))
 
 private def originalUnitHom : (W ≃ₗ[ℝ] W) →* (W →L[ℝ] W)ˣ where
   toFun e := e.toContinuousLinearEquiv.toUnit

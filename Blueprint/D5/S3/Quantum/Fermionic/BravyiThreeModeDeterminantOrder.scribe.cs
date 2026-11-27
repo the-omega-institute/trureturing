@@ -12,7 +12,8 @@ internal sealed class BravyiThreeModeDeterminantOrderDocument : IScribeDocumentD
         Digest, H("Shifted determinants of the three-mode Bravyi blocks"), Blocks(
             Paragraph(Text("Bravyi studies the isotropic three-mode channel in Classical capacity of fermionic product channels "
                 + "(arXiv:quant-ph/0507282, Section V.B). The chiral and complementary real blocks have sizes four and two. "
-                + "Each comparator takes the first and third amplitudes to be the positive square root of one half and the second to be zero.")),
+                + "Both comparator blocks use the first and third amplitudes equal to the positive square root of one half and the second equal to zero. "
+                + "The normalization of this spinor and the exact comparator determinant formulas also supply the physical entropy comparison.")),
             Entry("chiral_det_polynomial_difference", "The three chiral coefficient differences",
                 PolynomialDifference(ChiralDifference()),
                 "The Laplace expansion depends on the squares of the amplitudes. Eliminating the third square by normalization "

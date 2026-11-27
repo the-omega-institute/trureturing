@@ -18,6 +18,12 @@ internal sealed class OriginalHalfBinomialPfaffNomeDocument : IScribeDocumentDef
         "Exact Pfaff jumps of the original complementary ratio and its signed charge nome.",
         H("Pfaff Jumps and the Negative Real Nome"),
         Blocks(
+            Describe.Lean(DescribeId.Create("tau-analyticat"),
+                DeclarationHandle.Create("D5/S3/Analytic/OriginalHalfBinomialPfaffNome.tau_analyticAt"),
+                H("Analyticity of the complementary ratio"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("At each point of the double slit, the complementary Euler period ratio is complex analytic."))),
+                DescribeRole.Lemma),
             Paragraph(Text(
                 "With r = k² the supplier's normalized period is P(r) = 2K(k)/π. "
                 + "DLMF 19.7.2a and 19.7.3b give the two jump identities by taking the period ratio. "

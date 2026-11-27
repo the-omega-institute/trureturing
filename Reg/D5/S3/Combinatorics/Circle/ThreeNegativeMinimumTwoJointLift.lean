@@ -175,4 +175,138 @@ def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
 
 end
 
+namespace PairedChains
+
+noncomputable section
+
+abbrev signature : Signature where
+  Params := Params
+  State _ := ℕ
+  Role := Bool
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℤ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature :=
+  realize signature (fun side p => match side with
+    | false => fun i => centered (modulus (p.1 + p.2.1 + p.2.2))
+        ((2 : ℤ) ^ i * (1 + (2 : ℤ) ^ p.1 + (2 : ℤ) ^ p.1 * (2 : ℤ) ^ p.2.1))
+    | true => fun i => centered (modulus (p.1 + p.2.1 + p.2.2 + 1))
+        ((2 : ℤ) ^ i * (2 * (1 + (2 : ℤ) ^ p.1 + (2 : ℤ) ^ p.1 * (2 : ℤ) ^ p.2.1))))
+    (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+
+def deleted (side : Bool) : Realization signature :=
+  realize signature
+    (fun j p i => if j = side then rejected.readout j p i else actual.readout j p i)
+    (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ (a b c : ℕ) (_ha : 2 ≤ a) (_hb : 2 ≤ b) (_hc : 2 ≤ c),
+    let r : ℤ := 2 ^ a
+    let s : ℤ := 2 ^ b
+    let t : ℤ := 2 ^ c
+    let k := a + b + c
+    let N := modulus k
+    let v := 1 + r + r * s
+    let B := 1 + t + t * r
+    let L := 1 + s + s * t
+    let f := R.readout false ⟨a, b, c⟩
+    let g := R.readout true ⟨a, b, c⟩
+    (1 ≤ v ∧ v < N) ∧ (1 ≤ B ∧ B < N) ∧ (1 ≤ L ∧ L < N) ∧
+      (∀ i < c - 1, f i = (2 : ℤ) ^ i * v ∧ g i = (2 : ℤ) ^ i * (2 * v)) ∧
+      (∀ i < b - 1, f (c + i) = (2 : ℤ) ^ i * B ∧
+        g (c + i) = (2 : ℤ) ^ i * (2 * B - 1)) ∧
+      (∀ i < a - 1, f (c + b + i) = (2 : ℤ) ^ i * L ∧
+        g (c + b + i) = (2 : ℤ) ^ i * (2 * L - s - 1)) ∧
+      f (c - 1) = -(N - B) / 2 ∧ f (c + b - 1) = -(N - L) / 2 ∧
+      f (k - 1) = -(N - v) / 2 ∧
+      g (c - 1) = -((2 * N + 1) - (2 * B - 1)) / 2 ∧
+      g (c + b - 1) = -((2 * N + 1) - (2 * L - s - 1)) / 2 ∧
+      g (k - 1) = -((2 * N + 1) - v) / 2 ∧ g k = v
+
+private theorem actual_law : arena.Law actual := by
+  intro a b c ha hb hc
+  exact paired_chains a b c ha hb hc
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have h0 := h 2 2 2 (by decide) (by decide) (by decide)
+  norm_num [rejected, realize, modulus] at h0
+
+private theorem deleted_law (side : Bool) : ¬ arena.Law (deleted side) := by
+  intro h
+  have h0 := h 2 2 2 (by decide) (by decide) (by decide)
+  cases side <;> norm_num [deleted, rejected, realize, modulus] at h0
+
+private theorem actual_dependence : ObservationalDependence signature actual := by
+  intro side
+  refine ⟨⟨2, 2, 2⟩, 0, 1, ?_⟩
+  cases side <;> norm_num [actual, realize, centered, modulus]
+
+def source_registration : Registration arena (type_of% (@paired_chains)) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨actual_law, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro side
+      refine ⟨deleted side, ?_, rfl, deleted_law side⟩
+      intro j hj
+      simp [deleted, realize, hj]
+    · intro e
+      exact nomatch e
+  dependence := actual_dependence
+
+def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+    (@_root_.D5.S3.Combinatorics.Circle.ThreeNegativeMinimumTwoJointLift.paired_chains)
+    (type_of% (realize signature actual.readout actual.anchor))
+    Nat Unit := {
+  unitName := `D5.S3.Combinatorics.Circle.ThreeNegativeMinimumTwoJointLift.paired_chains.__information_unit
+  realizationName := `Reg.D5.S3.Combinatorics.Circle.ThreeNegativeMinimumTwoJointLift.PairedChains.source_registration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨source_registration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature actual.readout actual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Combinatorics.Circle.ThreeNegativeMinimumTwoJointLift
+    definition := none
+    coordinates := #[0, 1, 2]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "value"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }, {
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "value"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+#print axioms source_registration
+#print axioms audit
+
+end
+
+end PairedChains
+
 end Reg.D5.S3.Combinatorics.Circle.ThreeNegativeMinimumTwoJointLift

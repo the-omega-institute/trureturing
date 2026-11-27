@@ -24,10 +24,9 @@ internal sealed class AmbientComplementDependenceDocument : IScribeDocumentDefin
                             + "fixed argument e, two complement values agree exactly when their "
                             + "ambient totals agree.")),
                     Paragraph(Text(
-                        "The same equivalence holds for the whole complement operations. The "
-                            + "reverse direction applies the frozen complement-encoding theorem, "
-                            + "which recovers the ambient total by evaluating the operation at "
-                            + "zero.")),
+                        "Adding the fixed argument to the complement recovers its ambient total. "
+                            + "Equality of the whole operations gives equality at that argument, "
+                            + "so the same cancellation gives the equality of totals.")),
                     Paragraph(Text(
                         "Thus the formal operation always carries an explicit total parameter; "
                             + "there is no additional untyped complement term in this statement."))),

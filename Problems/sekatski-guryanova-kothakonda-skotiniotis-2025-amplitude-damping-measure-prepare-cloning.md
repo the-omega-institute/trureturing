@@ -268,7 +268,7 @@ unknown dilation or fidelity gap/rate are included. Retaining and
 normalizing only successful outcomes would change the probability
 contract; failures here remain part of the deterministic mixture.
 The native same-source state task in
-[VIII, §§248–250](../docs/develop/theory/FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_VIII.md)
+[VIII, §§248–250](https://github.com/the-omega-institute/trureturing-source-theories/blob/dev/docs/develop/theory/FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_VIII.md)
 has no supplied callable-channel interface. This application grants it
 no queries, state-to-channel conversion or resources and settles neither
 its uniform conditional error nor its polynomial original success

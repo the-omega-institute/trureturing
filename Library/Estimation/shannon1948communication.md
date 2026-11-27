@@ -13,6 +13,8 @@ triage: anchor
 
 # Finite entropy and the meaning of relative entropy in the reprint
 
+## Verified locator
+
 The primary text is the [corrected reprint](https://people.math.harvard.edu/~ctm/home/text/others/shannon/entropy/entropy.pdf)
 of *A Mathematical Theory of Communication*, Bell System Technical Journal
 27, 379–423 and 623–656. Its introductory discussion of logarithm bases
@@ -26,6 +28,8 @@ $$
 The equality condition in the second relation is independence. Zero-mass
 conditional events are excluded from division; their weighted entropy
 contribution is zero, using the continuous convention $0\log 0=0$.
+
+## Normalized entropy and finite-record applications
 
 Section 7, printed p. 14, calls the ratio of a source's entropy to its
 maximum possible entropy on the same alphabet its “relative entropy.”

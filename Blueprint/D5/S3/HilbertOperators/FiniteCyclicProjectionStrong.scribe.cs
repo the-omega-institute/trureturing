@@ -17,6 +17,16 @@ internal sealed class FiniteCyclicProjectionStrongDocument : IScribeDocumentDefi
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(
                     Paragraph(Text("For a finite ordered list Us of closed k-linear subspaces of H, Cycle(Us) is a bounded k-linear endomorphism. Cycle([]) is the identity. For a head U and tail Vs, Cycle(U::Vs) is Cycle(Vs) composed with the actual orthogonal projection P(U). Thus the first listed projection acts first, and the last listed projection acts last. The order is part of the list and remains fixed throughout iteration."))),
                 DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("finite-cyclic-projection-norm-bound"),
+                DeclarationHandle.Create(Prefix + "norm_cycle_le"), H("Nonexpansive cycle"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(
+                    Paragraph(Text("For every finite list Us and z in H, the norm of Cycle(Us)z is at most the norm of z. Induction composes the actual projection norm bounds. This estimate also supplies the member residual energy proof for cyclic rates."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("finite-cyclic-projection-fixed-locus"),
+                DeclarationHandle.Create(Prefix + "cycle_fixed_iff"), H("Exact common fixed locus"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(
+                    Paragraph(Text("Cycle(Us)z=z if and only if z belongs to every member of Us. Equality in the projection norm bound gives the first membership, and induction gives the remaining memberships. This identifies the common projection as a fixed vector in the cyclic-rate energy proof."))),
+                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("finite-cyclic-projection-strong-convergence"),
                 DeclarationHandle.Create(Prefix + "tendsto_cycle_pow"),
                 H("Convergence to the common intersection"), StatementSource.FromAuthor(Disp(EndpointFormula())),

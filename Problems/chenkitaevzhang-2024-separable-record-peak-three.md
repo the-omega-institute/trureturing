@@ -112,7 +112,7 @@ global weak maximum at three for every $n\ge5$.
 ## Route
 
 The source linkage is the existing
-[`SEPARABLE_SIGNED_RECORD_WEIGHTS`](../docs/develop/theory/SEPARABLE_SIGNED_RECORD_WEIGHTS.md)
+[`SEPARABLE_SIGNED_RECORD_WEIGHTS`](https://github.com/the-omega-institute/trureturing-source-theories/blob/dev/docs/develop/theory/SEPARABLE_SIGNED_RECORD_WEIGHTS.md)
 theory, especially its actual weighted quadratic and Section 8 coefficient
 and kernel identities. The Lean proof constructs the actual quadratic,
 normalizes it using the Catalan/Motzkin series, proves the exact binomial

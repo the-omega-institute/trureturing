@@ -9,6 +9,19 @@ internal sealed class ZeroFreeStripMertensEnvelopeDocument : IScribeDocumentDefi
         H("The critical arithmetic envelope from the complete zero strip"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("actual-terminal-defect-exp-bound"),
+                DeclarationHandle.Create("D5/S3/Arith/Robin/Analytic/ZeroFreeStripMertensEnvelope.actual_terminal_defect_exp_bound"),
+                H("The terminal defect in logarithmic coordinates"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Let 0<α≤1/2 and assume that every actual nontrivial zero "
+                    + "has real part at most 1-α. There is a real C≥0 such that for every real "
+                    + "y≥1 the absolute value of Q(exp(y))-a(exp(y))Jpsi(exp(y)) is at most "
+                    + "C exp(-αy)/y. Here a(exp(y))=y²/(1+y). Subtract the leading term "
+                    + "Q(exp(y))/y from Jpsi(exp(y)). The residual is bounded by a constant "
+                    + "times exp(-αy)/y². Multiplication by a(exp(y))≤y leaves the inverse "
+                    + "factor 1/y, and the remaining Q term carries a factor 1/(1+y)."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("actual-b-critical-strip-envelope"),
                 DeclarationHandle.Create("D5/S3/Arith/Robin/Analytic/ZeroFreeStripMertensEnvelope.actual_B_critical_strip_envelope"),
                 H("The full-strip power and logarithm estimate"),
@@ -91,6 +104,28 @@ internal sealed class ZeroFreeStripMertensEnvelopeDocument : IScribeDocumentDefi
                         + "Leo Goldmakher, A quick proof of Mertens' theorem; the supplying notice and "
                         + "license are preserved at Library/notes/pntplus2026mertens.md. "
                         + "No literature-priority claim is made."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("actual-b-critical-strip-signed-asymptotic"),
+                DeclarationHandle.Create("D5/S3/Arith/Robin/Analytic/ZeroFreeStripMertensEnvelope.actual_B_critical_strip_signed_asymptotic"),
+                H("Signed arithmetic asymptotic at the critical strip exponent"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text(
+                        "Let 0<α<1/2 and assume every actual nontrivial zero ρ has Re(ρ)≤1−α. "
+                        + "As real y tends to +∞, exp(αy) y B(exp(y)) + exp(−(1−α)y) Re(actualH(y)) "
+                        + "tends to zero. Here actualH is the complete integrated zero series over "
+                        + "actual occurrences, with analytic multiplicities. The leading term for "
+                        + "the normalized B has the negative sign.")),
+                    Paragraph(Text(
+                        "The transport identity with R(y)=1/y+1/y² and the decreasing W kernel "
+                        + "bounds Jpsi(exp(y))−Q(exp(y))/y in absolute value by "
+                        + "(C+3C/α) exp(−αy)/y² for large y. The primitive-tail identity "
+                        + "Q(exp(y))=−U(exp(y))/exp(y) and the integrated explicit formula replace "
+                        + "U(exp(y)) by Re(actualH(y)) up to a bounded error. "
+                        + "The prime-power tail S and the finite cancellation vanish after scaling "
+                        + "because α<1/2. For the nonlinear remainder, the Chebyshev rate with "
+                        + "δ=3α/4 gives a bound with decay exponent 2δ>α."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("theta-power-bound"),

@@ -6,11 +6,16 @@
    utility: none
    digest: Actual type-A matrix and quotient mathematics for uniform ordered products. -/
 
-import D5.S3.FiniteGroups.NikolovSegal.TypeA.Unitriangular.SLnUnitriangular
-import Mathlib.Algebra.BigOperators.Intervals
+module
+
+public import D5.S3.FiniteGroups.NikolovSegal.TypeA.Unitriangular.SLnUnitriangular
+public import Mathlib.Algebra.BigOperators.Intervals
+public import Mathlib.Data.Fintype.BigOperators
 
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
+
+@[expose] public section
 
 /-! An actual entry-coordinate bijection for the accepted full upper
 unitriangular subgroup, over every field and rank. -/

@@ -28,28 +28,31 @@ open BalancedCriticalSpectrum (Q flip IsBalanced switchingVector)
 open private huangMatrix from D5.S3.Combinatorics.Graph.HypercubeSubQuorum
 open private matrix_support from
   D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCriticalSpectrum
-open private flip_comm adjacent_exists_flip from
+open BalancedCubeGirth (flip_comm)
+open SupportedEigenSaturation (selected_neighbor_card)
+open private adjacent_exists_flip from
   D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeGirth
-open private selected_neighbor_card from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.SupportedEigenSaturation
 
 open Classical in
 def directions {n : Nat} (C : Finset (Q n)) (x : Q n) : Finset (Fin n) :=
   Finset.univ.filter fun i => BalancedCriticalSpectrum.flip x i ∈ C
 
-@[simp] private theorem mem_directions {n : Nat} (C : Finset (Q n)) (x : Q n)
+@[simp] theorem mem_directions {n : Nat} (C : Finset (Q n)) (x : Q n)
     (i : Fin n) : i ∈ directions C x ↔ flip x i ∈ C := by
   simp [directions]
 
 open Classical in
-private theorem flip_injective {n : Nat} (x : Q n) : Function.Injective (flip x) := by
+theorem flip_injective {n : Nat} (x : Q n) : Function.Injective (flip x) := by
   intro i j he
   by_contra hij
   have h := congrFun he i
   cases hxi : x i <;> simp [BalancedCriticalSpectrum.flip, hij, hxi] at h
 
+-- Keep the short-name lookup used by existing `open private ... from` callers.
+private alias Legacy.flip_injective := flip_injective
+
 open Classical in
-private theorem directions_card {n : Nat} (C : Finset (Q n)) (x : Q n) :
+theorem directions_card {n : Nat} (C : Finset (Q n)) (x : Q n) :
     (directions C x).card = (C.filter fun y => (hypercube n).Adj x y).card := by
   apply Finset.card_bij (fun i _ => flip x i)
   · intro i hi
@@ -138,7 +141,7 @@ private theorem flip_cancel_middle {n : Nat} (v : Q n) (i j : Fin n) :
   rw [flip_comm (flip v i) j i, BalancedCriticalSpectrum.flip_flip]
 
 open Classical in
-private theorem flip_three_swap {n : Nat} (v : Q n) (i t j : Fin n) :
+theorem flip_three_swap {n : Nat} (v : Q n) (i t j : Fin n) :
     flip (flip (flip v i) t) j = flip (flip (flip v j) t) i := by
   rw [flip_comm (flip v i) t j, flip_comm v i j, flip_comm (flip v j) i t]
 

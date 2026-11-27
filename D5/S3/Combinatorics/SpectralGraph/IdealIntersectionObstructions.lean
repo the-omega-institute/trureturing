@@ -702,7 +702,7 @@ private lemma threshold_complement_low_eigenpair [Nontrivial ι]
       simpa only [one_smul] using trial_not_eigenvector k hk d i j hid hjd hij x y z hz))
   exact he
 
-private lemma one_sub_sum_mul_prod_le_one (s : Finset ι) (x : ι → ℝ)
+lemma one_sub_sum_mul_prod_le_one (s : Finset ι) (x : ι → ℝ)
     (hx : ∀ i ∈ s, 0 ≤ x i) :
     (1-∑ i ∈ s, x i)*(∏ i ∈ s, (1+x i)) ≤ 1 := by
   induction s using Finset.induction_on with

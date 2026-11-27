@@ -122,10 +122,23 @@ Lean statement: `D5/S3/Arith/Robin/PriceRecord/ActualRecordAllLogBudgetRemainder
 
 Complete statement: theorem prefix_budget_integer {n Q : ℕ} (hQ : 2 ≤ Q) (hsupport : ∀ p : ℕ, p.Prime → 2 ≤ n.factorization p → p ≤ Q) : let k := higherCore n * prefixInteger Q 2 ≤ k ∧ k.primeFactors = Nat.primesLE Q ∧ log (k : ℝ) = log (higherCore n : ℝ) + Chebyshev.theta (Q : ℝ) ∧ ∀ p : ℕ, p.Prime → ∀ j : ℕ, 2 ≤ j → (j ≤ k.factorization p ↔ j ≤ n.factorization p)
 
+**Theorem 1.10 (Integer samples from first theta crossings).**
+
+Lean statement: `D5/S3/Arith/Robin/PriceRecord/ActualRecordAllLogBudgetRemainder.exists_actual_theta_crossing_sampler`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/PriceRecord/ActualRecordAllLogBudgetRemainder.exists_actual_theta_crossing_sampler` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The first natural index with theta above x has an overshoot of at most log of the index. The ratio of the index to x tends to one, and the difference of the logarithms tends to zero.
+
 ## References
 
 - Truth anchor: `D5/S3/Arith/Robin/PriceRecord/ActualRecordAllLogBudgetRemainder.actual_record_all_real_log_residual`
 - Truth anchor: `D5/S3/Arith/Robin/PriceRecord/ActualRecordAllLogBudgetRemainder.canonical_budget_eventually`
+- Truth anchor: `D5/S3/Arith/Robin/PriceRecord/ActualRecordAllLogBudgetRemainder.exists_actual_theta_crossing_sampler`
 - Truth anchor: `D5/S3/Arith/Robin/PriceRecord/ActualRecordAllLogBudgetRemainder.higher_core_log`
 - Truth anchor: `D5/S3/Arith/Robin/PriceRecord/ActualRecordAllLogBudgetRemainder.higher_core_pos`
 - Truth anchor: `D5/S3/Arith/Robin/PriceRecord/ActualRecordAllLogBudgetRemainder.log_shell`
