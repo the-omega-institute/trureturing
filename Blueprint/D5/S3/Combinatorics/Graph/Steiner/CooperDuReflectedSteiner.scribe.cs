@@ -57,7 +57,10 @@ internal sealed class CooperDuReflectedSteinerDocument : IScribeDocumentDefiniti
                         "Apply star_negative at k = 4. The star on Fin 48 satisfies the size and tree hypotheses of claim, which would make the supplied eigenvalue strictly positive. The witness has a strictly negative eigenvalue, giving ¬ claim.")),
                     Paragraph(Text(
                         "At every even order k ≥ 4, multilinearity in the first slot expresses the diagonal value at the star witness as the sum of each coordinate times its first-slot row. The row equations give lam times the sum of the kth powers of the coordinates, which is negative because x is nonzero and lam < 0. The symmetric polarization has the same diagonal polynomial, and scaling the witness so its kth powers sum to one preserves the sign. The polynomial therefore attains a negative minimum on that compact constraint set. The constraint gradient is nonzero there. By symmetry the polynomial gradient is k times the row contraction, so the Lagrange multiplier equation gives an H-eigenpair. Contracting with the minimizing vector identifies its eigenvalue with the negative minimum. Proposition 4.5 gives diagonal positivity for the quartic sum C₁ + C₃."))),
-                DescribeRole.Theorem)),
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("cooper-du-2025-reflected-steiner-h-eigenvalue-positivity"),
+                    ResolutionKind.Refuted))),
         []));
 
     private static DocumentBlock Definition(string name, string title, Formula formula, string prose,

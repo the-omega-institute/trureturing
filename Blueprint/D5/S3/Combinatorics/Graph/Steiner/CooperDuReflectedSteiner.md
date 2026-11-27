@@ -106,6 +106,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Steiner/CooperDuReflectedSteiner.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/cooper-du-2025-reflected-steiner-h-eigenvalue-positivity` (refuted) by `D5/S3/Combinatorics/Graph/Steiner/CooperDuReflectedSteiner.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"cooper-du-2025-reflected-steiner-h-eigenvalue-positivity","declaration_gid":"D5/S3/Combinatorics/Graph/Steiner/CooperDuReflectedSteiner.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Joshua Cooper; Zhibin Du (2025). *Determinants of Steiner Distance Hypermatrices*. DOI: [10.48550/arXiv.2505.10501](https://doi.org/10.48550/arXiv.2505.10501). URL: <https://arxiv.org/abs/2505.10501v1>.
