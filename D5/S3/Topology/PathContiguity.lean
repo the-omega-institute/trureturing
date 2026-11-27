@@ -9,6 +9,7 @@
 module
 
 public import D5.S3.Topology.BarycentricBaseRigidity
+public import Mathlib.Combinatorics.SimpleGraph.Basic
 public import Mathlib.Data.Set.Function
 import Mathlib.Algebra.Order.BigOperators.Group.Finset
 import Mathlib.Data.Finset.Max
