@@ -11,7 +11,7 @@ import OmegaInit.Data.Nat.Lemmas
 
 @[expose] public section
 
-attribute [local semireducible] Omega.Nat.add Omega.Nat.mul Omega.Int.subNatNat
+attribute [local semireducible] Omega.Int.subNatNat
 
 namespace Omega.Int
 

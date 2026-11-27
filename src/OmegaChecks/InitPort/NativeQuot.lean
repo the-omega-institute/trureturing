@@ -1,5 +1,6 @@
 module
 public import Lean
+public import OmegaChecks.InitCompiler.NaturalBootstrap
 public import OmegaChecks.InitCompiler.CompilerMarkers
 
 open Lean
@@ -23,13 +24,6 @@ private def interfaceType (ci : ConstantInfo) : Expr :=
     | .const n ls => some (.const (`Omega ++ n) ls)
     | _ => none
 
-/-- The elaborator consumes literal root names while compiling patterns. Alias them to the
-strict types so that source programs can also name and reduce the same products and units. -/
-private def matcherAlias (ci : ConstantInfo) : ConstantInfo :=
-  .defnInfo {
-    name := ci.name, all := [ci.name], levelParams := ci.levelParams, type := interfaceType ci,
-    value := mkConst (`Omega ++ ci.name) (ci.levelParams.map Level.param), hints := .abbrev, safety := .safe}
-
 private def officialSupport : IO (Array ConstantInfo) := do
   let lib ← getLibDir (← findSysroot)
   let path := modToFilePath lib `Init.Prelude "olean"
@@ -39,7 +33,7 @@ private def officialSupport : IO (Array ConstantInfo) := do
     let data := if equalitySupport.contains n then dataByLevel[2]! else dataByLevel[0]!
     let some ci := data.constants.find? (·.name == n)
       | throw <| IO.userError s!"missing pinned kernel declaration {n}"
-    return if matcherNames.contains n then matcherAlias ci else ci
+    return ci
 
 /-- Inspect the normal form itself. Proof irrelevance alone would also prove a
 propositional equality between the induction result and its constructor branch. -/
@@ -56,7 +50,8 @@ private def checkReduction (env : Environment) (ci : ConstantInfo) : IO Unit := 
 
 /-- Replay regenerates quotient primitives from their fixed names. Check the serialized
 types, kinds and owners too, including every physical copy before replay. -/
-public def checkSupport (env : Environment) : IO Unit := do
+public def checkSupport (env : Environment) (level := OLeanLevel.private) : IO Unit := do
+  InitCompiler.checkNaturalBasis env level
   CompilerMarkers.check env
   let mut found := #[]
   for owner in env.header.moduleNames, data in env.header.moduleData do

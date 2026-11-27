@@ -13,6 +13,7 @@ noncomputable section
 
 namespace Omega
 
+set_option genCtorIdx false in
 inductive Ordering where
   | lt
   | «eq»

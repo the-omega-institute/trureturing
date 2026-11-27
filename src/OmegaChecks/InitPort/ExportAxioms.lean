@@ -1,6 +1,7 @@
 module
 import Lean
 import Lean.Replay
+import all OmegaChecks.InitCompiler.NaturalBootstrap
 import all OmegaChecks.InitCompiler.CompilerMarkers
 import all OmegaChecks.InitPort.NativeQuot
 import all Lean.Util.CollectAxioms
@@ -101,7 +102,7 @@ Read the persisted exported module level and ask the same API as `#print axioms`
 private def checkPublic (imports : Array Import) : IO Unit := do
   unsafe enableInitializersExecution
   let env ← importModules imports {} (loadExts := true) (level := .exported)
-  OmegaChecks.InitPort.NativeQuot.checkSupport env
+  OmegaChecks.InitPort.NativeQuot.checkSupport env .exported
   checkCountEquations env
   let check : CoreM Nat := do
     for mod in env.header.modules, data in env.header.moduleData, i in [:env.header.modules.size] do

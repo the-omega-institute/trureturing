@@ -17,6 +17,9 @@ set_option linter.unusedVariables.funArgs false in
 @[reducible] def semiOutParam (α : Sort u) : Sort u := α
 
 port_compiler_markers
+port_kernel_naturals
+
+set_option genCtorIdx false
 
 port_inductive Option
 port_inductive List
@@ -28,8 +31,6 @@ port_definition PProd.fst
 port_definition PProd.snd
 
 namespace Omega
-
-export _root_ (optParam outParam semiOutParam)
 
 /-- Equality and its eliminator are available in the strict environment. -/
 inductive Eq {α : Sort u} : α → α → Prop where
@@ -58,7 +59,6 @@ inductive False : Prop
 
 end Omega
 
-port_definition False.casesOn
 
 namespace Omega
 
@@ -76,9 +76,6 @@ inductive Or (a b : Prop) : Prop where
   | inl (h : a) : Or a b
   | inr (h : b) : Or a b
 
-abbrev Or.casesOn {a b : Prop} {motive : Or a b → Prop} (t : Or a b)
-    (inl : ∀ h, motive (Or.inl h)) (inr : ∀ h, motive (Or.inr h)) : motive t :=
-  Or.rec (motive := motive) inl inr t
 
 theorem Or.elim {a b c : Prop} (h : Or a b) (left : a → c) (right : b → c) : c :=
   Or.rec (motive := fun _ => c) left right h
@@ -87,24 +84,6 @@ inductive Bool where
   | false
   | true
 
-inductive Nat where
-  | zero
-  | succ (n : Nat)
-
-end Omega
-
-port_definition Nat.casesOn
-
-namespace Omega
-namespace Nat
-
-@[no_expose] def pred : Nat → Nat :=
-  fun n => Nat.casesOn (motive := fun _ => Nat) n zero (fun k => k)
-
-@[no_expose] protected def sub : Nat → Nat → Nat :=
-  fun a => Nat.rec a (fun _ r => pred r)
-
-end Nat
 end Omega
 
 port_inductive Nat.le
@@ -149,17 +128,6 @@ theorem succ_sub_succ_eq_sub (n m : Nat) : Eq (Nat.sub (succ n) (succ m)) (Nat.s
   Nat.rec (motive := fun i => Eq (pred (Nat.sub (succ n) i)) (Nat.sub n i))
     rfl (fun _ h => congrArg pred h) m
 
-@[no_expose] protected def add : Nat → Nat → Nat :=
-  fun a b => Nat.rec a (fun _ r => succ r) b
-
-@[no_expose] protected def mul : Nat → Nat → Nat :=
-  fun a => Nat.rec zero (fun _ r => Nat.add r a)
-
-@[no_expose] protected def pow (m : Nat) : Nat → Nat :=
-  Nat.rec (succ zero) (fun _ p => Nat.mul p m)
-
-attribute [irreducible] Nat.add Nat.mul Nat.sub Nat.pred Nat.pow
-
 end Nat
 
 set_option bootstrap.inductiveCheckResultingUniverse false in
@@ -192,7 +160,6 @@ def Function.const {α : Sort u} (β : Sort v) (a : α) : β → α := fun _ => 
 
 end Omega
 
-port_definition Eq.casesOn
 
 namespace Omega
 
@@ -236,9 +203,6 @@ theorem Or.neg_resolve_right (h : Or a (Not b)) (nb : b) : a := h.elim id (absur
 class inductive Nonempty (α : Sort u) : Prop where
   | intro (val : α) : Nonempty α
 
-abbrev Nonempty.casesOn {α : Sort u} {motive : (t : Nonempty α) → Prop}
-    (t : Nonempty α) (intro : ∀ val, motive (Nonempty.intro val)) : motive t :=
-  Nonempty.rec intro t
 
 protected theorem Nonempty.elim {α : Sort u} {p : Prop} (h₁ : Nonempty α) (h₂ : α → p) : p :=
   Nonempty.rec (motive := fun _ => p) h₂ h₁
@@ -259,19 +223,13 @@ abbrev «inferInstanceAs» (α : Sort u) [i : α] : α := i
 set_option linter.unusedVariables.funArgs false in
 @[reducible] def namedPattern {α : Sort u} (x a : α) (h : Eq x a) : α := a
 
-abbrev PUnit.casesOn.{v,u} {motive : (t : PUnit.{u}) → Sort v} (t : PUnit)
-    (unit : motive PUnit.unit) : motive t := PUnit.rec unit t
 
 end Omega
 
-port_definition Empty.casesOn with_native_code
 
 namespace Omega
 
-abbrev PEmpty.casesOn.{v,u} (motive : (t : PEmpty.{u}) → Sort v) (t : PEmpty) : motive t :=
-  PEmpty.rec motive t
 
-abbrev HEq.casesOn.{v,u} := @HEq.recOn.{v,u}
 
 set_option linter.unusedVariables.funArgs false in
 protected abbrev Empty.noConfusionType (P : Sort u) (t t' : Empty) : Sort u :=
@@ -295,7 +253,6 @@ open Bool (false true)
 
 end Omega
 
-port_definition Bool.casesOn
 
 namespace Omega
 
@@ -508,10 +465,6 @@ port_structural_code List.concat on_arg 2
 
 port_definition List.flatMap
 
-port_inductive OfNat
-port_definition OfNat.ofNat
-port_definition instOfNatNat
-
 port_inductive LE
 port_definition LE.le
 port_inductive LT
@@ -585,16 +538,12 @@ end
 end
 
 -- Lean's pattern elaborator uses these root names for patterns, cases and argument-free branches.
-public abbrev PProd.mk.{u,v} := @Omega.PProd.mk.{u,v}
-public abbrev Unit := Omega.Unit
-public abbrev Unit.unit := Omega.Unit.unit
 
-port_native_records Add, Mul, Div, Mod, Pow, NatPow, HomogeneousPow, SMul
-port_native_records HAdd, HMul, HDiv, HMod, HPow, HSMul
+port_native_records Mul, Div, Mod, Pow, NatPow, HomogeneousPow, SMul
+port_native_records HMul, HDiv, HMod, HPow, HSMul
 port_native_records OrElse, AndThen, AndOp, XorOp, OrOp, Complement, ShiftLeft, ShiftRight
 port_native_records HOrElse, HAndThen, HAnd, HXor, HOr, HShiftLeft, HShiftRight
 
-port_definition instHAdd with_native_code
 port_definition instHMul with_native_code
 port_definition instHDiv with_native_code
 port_definition instHMod with_native_code
@@ -744,13 +693,8 @@ port_structural_code List.foldl on_arg 5
 port_definition List.lengthTRAux.match_1 with_native_code
 port_structural_code List.lengthTRAux on_arg 2
 port_definition Nat.add.match_1 with_native_code
-port_structural_code Nat.add on_arg 2
 port_definition Nat.mul.match_1 with_native_code
-port_structural_code Nat.mul on_arg 2
 port_definition Nat.pow.match_1 with_native_code
-port_structural_code Nat.pow on_arg 2
-port_structural_code Nat.sub on_arg 2
-port_definition instAddNat with_native_code
 port_structural_code List.length on_arg 2
 
 port_definition instMulNat with_native_code
@@ -761,7 +705,7 @@ port_definition instMinNat with_native_code
 port_definition Decidable.falseTrueCases with_native_code
 namespace Omega
 
-attribute [local semireducible] Nat.beq Nat.pred
+attribute [local semireducible] Nat.beq
 
 public theorem Nat.decEq._proof_1 (n m : Nat) : Bool.Reflects (Nat.beq n m) (Eq n m) :=
   have separate (k : Nat) (h : Eq Nat.zero (Nat.succ k)) : False :=

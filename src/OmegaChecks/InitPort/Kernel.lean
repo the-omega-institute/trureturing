@@ -34,21 +34,10 @@ def portName (n : Name) : Name :=
     else `Omega ++ n
   else `Omega ++ n
 
-/-- Binary expansion avoids allocating a unary term for a huge numeral. -/
-partial def natTerm (n : Nat) : Expr :=
-  if n < 32 then
-    n.fold (init := mkConst `Omega.Nat.zero) (fun _ _ x => mkApp (mkConst `Omega.Nat.succ) x)
-  else
-    let x := mkBVar 0
-    let two := mkApp (mkConst `Omega.Nat.succ) (mkApp (mkConst `Omega.Nat.succ) (mkConst `Omega.Nat.zero))
-    let twice := mkApp2 (mkConst `Omega.Nat.mul) x two
-    .letE `half (mkConst `Omega.Nat) (natTerm (n / 2))
-      (if n % 2 == 0 then twice else mkApp (mkConst `Omega.Nat.succ) twice) false
-
 private def stringTerm (s : String) : Expr :=
   let char := mkConst `Omega.Char
   let chars := s.toList.foldr (init := mkApp (mkConst `Omega.List.nil [.zero]) char) fun ch tail =>
-    mkApp3 (mkConst `Omega.List.cons [.zero]) char (mkApp (mkConst `Omega.Char.ofNat) (natTerm ch.toNat)) tail
+    mkApp3 (mkConst `Omega.List.cons [.zero]) char (mkApp (mkConst `Omega.Char.ofNat) (mkRawNatLit ch.toNat)) tail
   mkApp (mkConst `Omega.String.ofList) chars
 
 /-- Replace recursively inside projection subjects, preserving binder syntax and universe levels. -/
@@ -56,7 +45,6 @@ partial def translate (rename : Name → Name) (e : Expr) : Expr :=
   e.replace fun
     | .const n ls => some (.const (rename n) ls)
     | .proj owner field target => some (.proj (rename owner) field (translate rename target))
-    | .lit (.natVal n) => some (natTerm n)
     | .lit (.strVal s) => some (stringTerm s)
     | _ => none
 
@@ -151,17 +139,17 @@ private def inlineLiteralProofs (proofs : NameMap ConstantInfo) (e : Expr) : Exp
 
 /-- Build small bounds using the constructors of the indexed Nat.le family. -/
 private def smallLe (a b : Nat) : Expr := Id.run do
-  let left := natTerm a
+  let left := mkRawNatLit a
   let mut proof := mkApp (mkConst `Omega.Nat.le.refl) left
   for i in [a:b] do
-    proof := mkApp3 (mkConst `Omega.Nat.le.step) left (natTerm i) proof
+    proof := mkApp3 (mkConst `Omega.Nat.le.step) left (mkRawNatLit i) proof
   return proof
 
 private partial def binaryLt (a b : Nat) : Expr := Id.run do
   if b < 32 then return smallLe (a + 1) b
-  let x := natTerm (a / 2)
-  let y := natTerm (b / 2)
-  let succ := mkApp (mkConst `Omega.Nat.succ)
+  let x := mkRawNatLit (a / 2)
+  let y := mkRawNatLit (b / 2)
+  let succ := mkApp (mkConst `Nat.succ)
   let double := mkApp (mkConst `OmegaLiteralProofs.double)
   if a / 2 == b / 2 then return mkApp (mkConst `Omega.Nat.lt_succ_self) (double x)
   let rule := if a % 2 == 0 then `OmegaLiteralProofs.digitBounds else `OmegaLiteralProofs.bounds
@@ -294,11 +282,11 @@ private def comparisonProofs (source : Environment) (proofs : NameMap ConstantIn
         2 ^ x.log2 == x && 2 ^ y.log2 == y then
       return some <| mkApp asProof <| mkApp5 (mkConst `Nat.pow_le_pow_right) (mkRawNatLit 2)
         (original (smallLe 1 2)) (mkRawNatLit x.log2) (mkRawNatLit y.log2) (original (smallLe x.log2 y.log2))
-    let cert := if x == y then mkApp (mkConst `Omega.Nat.le_refl) (natTerm x)
+    let cert := if x == y then mkApp (mkConst `Omega.Nat.le_refl) (mkRawNatLit x)
       else if strict then binaryLt x y
-      else mkApp5 (mkConst `Omega.Nat.le_trans) (natTerm x) (mkApp (mkConst `Omega.Nat.succ) (natTerm x))
-        (natTerm y) (mkApp (mkConst `Omega.Nat.le_succ) (natTerm x)) (binaryLt x y)
-    let cert := if word then mkApp5 (mkConst `Omega.UInt32.ofNatLT_lt_of_lt) (natTerm x) (natTerm y)
+      else mkApp5 (mkConst `Omega.Nat.le_trans) (mkRawNatLit x) (mkApp (mkConst `Nat.succ) (mkRawNatLit x))
+        (mkRawNatLit y) (mkApp (mkConst `Omega.Nat.le_succ) (mkRawNatLit x)) (binaryLt x y)
+    let cert := if word then mkApp5 (mkConst `Omega.UInt32.ofNatLT_lt_of_lt) (mkRawNatLit x) (mkRawNatLit y)
         (binaryLt x (2 ^ 32)) (binaryLt y (2 ^ 32)) cert
       else cert
     let cert := inlineLiteralProofs proofs cert
@@ -416,13 +404,13 @@ private partial def equationCases? (type : Expr) (fuel := 2) (depth := 0) : Opti
   let x := fresh `x
   let motive := Expr.lam n dom body .default
   let after := fun y f => equationCases? (body.instantiate1 y) f (depth + 1)
-  if fuel > 0 && dom.isConstOf `Omega.Nat then
-    let zero ← after (mkConst `Omega.Nat.zero) (fuel - 1)
+  if fuel > 0 && dom.isConstOf `Nat then
+    let zero ← after (mkConst `Nat.zero) (fuel - 1)
     let k := fresh `k
-    let step ← after (mkApp (mkConst `Omega.Nat.succ) k) (fuel - 1)
+    let step ← after (mkApp (mkConst `Nat.succ) k) (fuel - 1)
     let ihType := body.instantiate1 k
     let succ := lam k `k dom (.lam `ih ihType step .default) .default
-    return lam x n dom (mkApp4 (mkConst `Omega.Nat.rec [.zero]) motive zero succ x) bi
+    return lam x n dom (mkApp4 (mkConst `Nat.rec [.zero]) motive zero succ x) bi
   if let .app (.const `Omega.List [u]) α := dom then
     if fuel > 0 then
       let nil ← after (mkApp (mkConst `Omega.List.nil [u]) α) (fuel - 1)

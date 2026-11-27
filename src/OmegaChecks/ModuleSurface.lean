@@ -104,6 +104,11 @@ private def checkSpecializations (env : Environment) (owner : Name) : IO Unit :=
 private def checkElaboration (env : Environment) (owner : Name) (idx : ModuleIdx) : IO Unit := do
   for (n, data) in externAttr.ext.getModuleEntries env idx do
     let (expectedOwner, symbol) ← match n with
+      | `Nat.add => pure (`OmegaInit.Prelude, "lean_nat_add")
+      | `Nat.sub => pure (`OmegaInit.Prelude, "lean_nat_sub")
+      | `Nat.mul => pure (`OmegaInit.Prelude, "lean_nat_mul")
+      | `Nat.pow => pure (`OmegaInit.Prelude, "lean_nat_pow")
+      | `Nat.decEq => pure (`OmegaInit.Prelude, "lean_nat_dec_eq")
       | `Omega.ST.Prim.Ref.swap => pure (`OmegaInit.System.ST, "omega_st_ref_swap")
       | `Omega.ST.Prim.Ref.set => pure (`OmegaInit.System.ST, "omega_st_ref_set")
       | `Omega.ST.Prim.Ref.ptrEq => pure (`OmegaInit.System.ST, "omega_st_ref_ptr_eq")
@@ -201,7 +206,7 @@ private def checkInstances (env reference : Environment) (owner : Name) (idx : M
     let (scope, v) := load e
     let some name := v.globalName? | throw <| IO.userError s!"unnamed public instance in {owner}"
     let .const n us := v.val | throw <| IO.userError s!"invalid public instance term in {owner}"
-    unless name == n && name.getRoot == `Omega && env.contains name && reference.contains (rename name) do
+    unless name == n && (name.getRoot == `Omega || OmegaChecks.InitCompiler.RootNames.isPrimitive owner name) && env.contains name && reference.contains (rename name) do
       throw <| IO.userError s!"no elaboration correspondence for public instance {name} in {owner}"
     -- Preserve the relative order of registered candidates, including priority ties.
     let mut found := false

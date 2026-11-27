@@ -3,6 +3,7 @@ import Lean.Compiler.LCNF.PhaseExt
 import Lean.Compiler.LCNF.PublicDeclsExt
 import Lean.Compiler.IR.CompilerM
 import OmegaChecks.InitCompiler.RootNames
+import OmegaChecks.InitCompiler.NaturalBootstrap
 import OmegaChecks.InitCompiler.Layout
 import OmegaChecks.InitCompiler.Proofs
 import OmegaChecks.InitCompiler.CompilerMarkers
@@ -11,6 +12,9 @@ import OmegaChecks.InitCompiler.CompilerMarkers
 
 open Lean Parser Elab Command
 namespace OmegaChecks.InitCompiler
+
+@[command_parser, builtin_command_parser] def physicalNaturals := leading_parser "port_kernel_naturals"
+@[builtin_command_elab physicalNaturals] def elabPhysicalNaturals : CommandElab := fun _ => installNaturalBootstrap
 
 private def omegaName (n : Name) := if RootNames.usesRoot n then n else `Omega ++ n
 
@@ -219,7 +223,7 @@ private def checkFinEquations (fn body : Expr) (args : Array Expr) (index : Expr
   let some (.inductInfo fin) := env.find? `Omega.Fin | return false
   unless fin.ctors == [`Omega.Fin.mk] do return false
   let ctor := mkApp (mkConst `Omega.Fin.mk) ty.getAppArgs[0]!
-  forallConstructors (mkConst `Omega.Nat) fun val => do
+  forallConstructors (mkConst `Nat) fun val => do
     let partialCtor := mkApp ctor val
     Meta.forallTelescope (← Meta.inferType partialCtor) fun proofs _ => do
       let #[h] := proofs | return false
