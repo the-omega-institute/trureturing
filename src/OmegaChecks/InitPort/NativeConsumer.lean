@@ -103,11 +103,16 @@ public def arraySecond (x y : Omega.Bool) : Omega.Bool :=
 private def one := Omega.Nat.succ Omega.Nat.zero
 private def two := Omega.Nat.succ one
 
+private def asWordBits {w : Omega.Nat} (hw : Omega.Nat.le one w) (x : Omega.Bool) : Omega.BitVec w :=
+  let upper : Omega.Nat.le two (Omega.Nat.pow two w) :=
+    Omega.Eq.subst (motive := fun bound => Omega.Nat.le bound (Omega.Nat.pow two w))
+      (Omega.Nat.pow_one two) (Omega.Nat.pow_le_pow_right Omega.Nat.zero_lt_two hw)
+  Omega.Bool.casesOn (motive := fun _ => Omega.BitVec w) x
+    (Omega.BitVec.ofNatLT .zero (Omega.Nat.two_pow_pos w))
+    (Omega.BitVec.ofNatLT one upper)
+
 private def asBit (x : Omega.Bool) : Omega.BitVec one :=
-  let within := fun {n} (h : Omega.Nat.lt n two) => Omega.Eq.subst (motive := fun bound => Omega.Nat.lt n bound) (Omega.Nat.pow_one two).symm h
-  Omega.Bool.casesOn (motive := fun _ => Omega.BitVec one) x
-    (Omega.BitVec.ofNatLT .zero (within (Omega.Nat.succ_le_succ (Omega.Nat.zero_le one))))
-    (Omega.BitVec.ofNatLT one (within (Omega.Nat.le_refl two)))
+  asWordBits (Omega.Nat.le_refl one) x
 
 public def bitEqual (x y : Omega.Bool) : Omega.Bool :=
   @Omega.Decidable.decide _ (Omega.BitVec.decEq (asBit x) (asBit y))
@@ -118,6 +123,24 @@ public def boundedLess (x y : Omega.Bool) : Omega.Bool :=
 public def bitConjunction (x y : Omega.Bool) : Omega.Bool :=
   let both := Omega.strictAnd x y
   @Omega.Decidable.decide _ (Omega.Nat.decEq (asBit both).toNat (.succ .zero))
+
+public def word8Less (x y : Omega.Bool) : Omega.Bool :=
+  let mk := fun b => Omega.UInt8.ofBitVec (asWordBits (Omega.Nat.succ_le_succ (Omega.Nat.zero_le _)) b)
+  @Omega.Decidable.decide _ (Omega.UInt8.decLt (mk x) (mk y))
+
+public def word16Equal (x y : Omega.Bool) : Omega.Bool :=
+  let mk := fun b => Omega.UInt16.ofBitVec (asWordBits (Omega.Nat.succ_le_succ (Omega.Nat.zero_le _)) b)
+  @Omega.Decidable.decide _ (Omega.UInt16.decEq (mk x) (mk y))
+
+public def word32Le (x y : Omega.Bool) : Omega.Bool :=
+  let mk := fun b => Omega.UInt32.ofBitVec (asWordBits
+    (Omega.Nat.le_add_right_of_le (Omega.Nat.succ_le_succ (Omega.Nat.zero_le _))) b)
+  @Omega.Decidable.decide _ (Omega.UInt32.decLe (mk x) (mk y))
+
+public def word64Equal (x y : Omega.Bool) : Omega.Bool :=
+  let mk := fun b => Omega.UInt64.ofBitVec (asWordBits
+    (Omega.Nat.le_add_right_of_le (Omega.Nat.le_add_right_of_le (Omega.Nat.succ_le_succ (Omega.Nat.zero_le _)))) b)
+  @Omega.Decidable.decide _ (Omega.UInt64.decEq (mk x) (mk y))
 
 public def disjunction (x y : Omega.Bool) : Omega.Bool := Omega.strictOr x y
 public def conjunction (x y : Omega.Bool) : Omega.Bool := Omega.strictAnd x y
@@ -148,7 +171,9 @@ unsafe def main (args : List String) : IO Unit := do
       (`controlResult, or), (`optionEqual, BEq.beq), (`someValue, and), (`attachedValue, and), (`liftedNumeral, or), (`lastElement, second),
       (`arithmetic, first), (`listDisjunction, or), (`naturalEqual, BEq.beq),
       (`naturalLe, fun x y => !x || y), (`arraySecond, second), (`bitEqual, BEq.beq),
-      (`boundedLess, fun x y => !x && y), (`bitConjunction, and), (`disjunction, or), (`conjunction, and)]
+      (`boundedLess, fun x y => !x && y), (`bitConjunction, and), (`word8Less, fun x y => !x && y),
+      (`word16Equal, BEq.beq), (`word32Le, fun x y => !x || y), (`word64Equal, BEq.beq),
+      (`disjunction, or), (`conjunction, and)]
     for (name, expected) in checks do
       let some ci := env.find? name | throw <| IO.userError s!"missing {name}"
       unless Kernel.isDefEqGuarded env {} ci.type arity do throw <| IO.userError s!"invalid type of {name}"

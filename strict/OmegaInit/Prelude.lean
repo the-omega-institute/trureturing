@@ -849,3 +849,50 @@ port_definition BitVec.noConfusion
 port_proof BitVec.decEq._proof_1
 port_definition BitVec.decEq with_native_code
 port_definition instDecidableEqBitVec with_native_code
+
+port_native_records UInt8
+port_definition UInt8.decEq.match_1
+port_definition UInt8.noConfusionType
+port_definition UInt8.noConfusion
+port_proof UInt8.decEq._proof_1
+port_definition UInt8.decEq with_native_code
+port_definition instDecidableEqUInt8 with_native_code
+port_definition UInt8.lt
+port_definition UInt8.le
+port_definition instLTUInt8 with_native_code
+port_proof UInt8.decLt._proof_1
+port_definition UInt8.decLt with_native_code
+port_definition instLEUInt8 with_native_code
+port_proof UInt8.decLe._proof_1
+port_definition UInt8.decLe with_native_code
+
+port_native_records UInt16
+port_definition UInt16.decEq.match_1
+port_definition UInt16.noConfusionType
+port_definition UInt16.noConfusion
+port_proof UInt16.decEq._proof_1
+port_definition UInt16.decEq with_native_code
+port_definition instDecidableEqUInt16 with_native_code
+
+port_native_records UInt32
+port_definition UInt32.decEq.match_1
+port_definition UInt32.noConfusionType
+port_definition UInt32.noConfusion
+port_proof UInt32.decEq._proof_1
+port_definition UInt32.decEq with_native_code
+port_definition instDecidableEqUInt32 with_native_code
+port_definition UInt32.toNat with_native_code
+port_definition instLTUInt32 with_native_code
+port_proof UInt32.decLt._proof_1
+port_definition UInt32.decLt with_native_code
+port_definition instLEUInt32 with_native_code
+port_proof UInt32.decLe._proof_1
+port_definition UInt32.decLe with_native_code
+
+port_native_records UInt64
+port_definition UInt64.decEq.match_1
+port_definition UInt64.noConfusionType
+port_definition UInt64.noConfusion
+port_proof UInt64.decEq._proof_1
+port_definition UInt64.decEq with_native_code
+port_definition instDecidableEqUInt64 with_native_code
