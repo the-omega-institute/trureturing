@@ -2,6 +2,7 @@ import D5.S3.Quantum.Semigroups.WuCubicConditioningComparison
 import D5.S3.Quantum.Semigroups.WuCubicConditioningRotation
 import D5.S3.Quantum.Semigroups.WuCubicOneModeEquality
 import D5.S3.Quantum.Semigroups.WuCubicTransverseCentered
+import D5.S3.Quantum.Semigroups.WuCubicHessianKantorovich
 
 /-! The literal Wu cubic deficit on the region of positive embedded spectrum
 with minimum at least two thirds of the maximum. -/
@@ -25,7 +26,7 @@ open WuCubicHotInnerPartialTrace (lift reduce)
 open WuCubicConditioningSegment (conditioning_segment_bounds)
 open WuCubicConditioningComparison (operatorDeficit_conditioning_lt)
 open WuCubicOneModeEquality (operatorDeficit_lift_nonneg operatorDeficit_lift_eq_zero_iff)
-open WuCubicConditionedHessian (embeddedGenerator)
+open WuCubicHessianKantorovich (wu_relative_mixed_generator)
 open WuCubicTransverseCentered (operatorDeficit_centered_pos_normalized)
 open WuCubicThermalBasis (Index degree coefficient basis_repr)
 open WuCubicAngularCertificate (physicalFrame)
@@ -247,14 +248,9 @@ private theorem operatorDeficit_conditionedRegion_of_centered {L : ℝ} {X : Mat
 
 end Curvature
 
-/-- In the positive, two-thirds spectral region, the mixed-generator estimate
-gives the literal Wu cubic inequality and characterizes positive-scalar equality. -/
-theorem operatorDeficit_conditionedRegion_of_mixed {r L : ℝ} (hr : 1 ≤ r) (hrhi : r ≤ 6 / 5)
-    (hmixed : ∀ (M W : Mat), M.PosDef → W.IsHermitian →
-      (5 / 9 : ℝ) • (1 : Mat) ≤ M → M ≤ 1 →
-      (∀ k : Index, degree k < 2 → coefficient r (GInv r * W * GInv r) k = 0) →
-      (15 / 4 : ℝ) * (M * W ^ 2).trace.re ≤
-        ((M * W + W * M) * embeddedGenerator r W).trace.re)
+/-- The literal Wu cubic deficit is nonnegative in the positive, two-thirds
+spectral region, with equality exactly at positive scalar observables. -/
+theorem operatorDeficit_conditionedRegion {r L : ℝ} (hr : 1 ≤ r) (hrhi : r ≤ 6 / 5)
     {X : Mat} (hX : X.PosSemidef) (hL : 0 < L)
     (hmax : IsGreatest (spectrum ℝ (G r * X * G r)) L)
     (hlow : ∀ a ∈ spectrum ℝ (G r * X * G r), 2 / 3 * L ≤ a) :
@@ -263,11 +259,11 @@ theorem operatorDeficit_conditionedRegion_of_mixed {r L : ℝ} (hr : 1 ≤ r) (h
   refine operatorDeficit_conditionedRegion_of_centered hr hrhi ?_ hX hL hmax hlow
   intro M W hM hW hWne hlo hhi htrace htop hdegree
   exact operatorDeficit_centered_pos_normalized hr hrhi M W hM hW hWne hlo hhi htrace htop
-    (hmixed M W hM hW hlo hhi hdegree)
+    (wu_relative_mixed_generator hr hrhi M W hM hW hlo hhi hdegree)
 
 run_cmd do
-  for axiomName in ← Lean.collectAxioms ``operatorDeficit_conditionedRegion_of_mixed do
+  for axiomName in ← Lean.collectAxioms ``operatorDeficit_conditionedRegion do
     unless #[``propext, ``Classical.choice, ``Quot.sound].contains axiomName do
-      throwError "Unexpected axiom for operatorDeficit_conditionedRegion_of_mixed: {axiomName}"
+      throwError "Unexpected axiom for operatorDeficit_conditionedRegion: {axiomName}"
 
 end D5.S3.Quantum.Semigroups.WuCubicConditionedRegion

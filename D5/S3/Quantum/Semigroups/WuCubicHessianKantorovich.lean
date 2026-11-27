@@ -1,13 +1,7 @@
-import D5.S3.Quantum.Semigroups.WuCubicConditionedHessian
-import Mathlib.Analysis.InnerProductSpace.PiL2
-import Mathlib.Analysis.Matrix.Order
+import D5.S3.Quantum.Semigroups.WuCubicRelativeAnticommutator
 
-/-! The relative mixed-generator estimate for the conditioned two-CAR Wu cubic Hessian.
-
-The finite-dimensional part is written in spectral coordinates of
-`S_B⁻¹ᐟ² S_M S_B⁻¹ᐟ²`.  The Wu-facing statement keeps the exact centered-generator
-contraction as an input, while the Kantorovich and trace steps are proved here.
--/
+/-! The Kantorovich moment estimate for the mixed-generator term of the conditioned
+two-CAR Wu cubic Hessian. -/
 
 compile_only_with_mathlib
 
@@ -16,31 +10,19 @@ set_option relaxedAutoImplicit false
 
 noncomputable section
 
-open Matrix Set
-open scoped BigOperators ComplexOrder ComplexConjugate MatrixOrder
+open Matrix
+open scoped BigOperators ComplexConjugate ComplexOrder MatrixOrder
 
 namespace D5.S3.Quantum.Semigroups.WuCubicHessianKantorovich
 
-open WuCubicOperatorBridge (Mat Occupation G GInv generator)
+open WuCubicOperatorBridge (Mat G GInv generator)
 open WuCubicThermalBasis (Index degree coefficient)
-open D5.S3.Quantum.Semigroups.WuCubicConditionedHessian (degree_contraction)
-
-abbrev Entry := Occupation × Occupation
-
-/- The two positive symmetrizers on the Hilbert space of matrices. -/
-def S_M (M : Mat) (X : Mat) : Mat := ((1 / 2 : ℂ) • (M * X + X * M))
-
-def S_B (B : Mat) (X : Mat) : Mat := ((1 / 2 : ℂ) • (B * X + X * B))
-
-def vec (X : Mat) : Entry → ℂ := fun e => X e.1 e.2
-
-theorem S_B_vec (b : Occupation → ℝ) (X : Mat) (e : Entry) :
-    vec (S_B (diagonal (fun i => (b i : ℂ))) X) e =
-      ((b e.1 + b e.2) / 2 : ℂ) * vec X e := by
-  obtain ⟨i,j⟩ := e
-  simp [S_B, vec, Matrix.smul_apply, Matrix.add_apply, Matrix.mul_apply,
-    Matrix.diagonal_apply, Complex.ofReal_add, Complex.ofReal_mul, smul_eq_mul]
-  ring
+open WuCubicTranslationEnergy (baseEntry sandwich)
+open WuCubicConditionedHessian (embeddedGenerator mixedDual mixed_energy_ge_of_dual_moment)
+open WuCubicRelativeAnticommutator (Entry Operator physicalRelative physicalWeight_bounds
+  physicalRelative_normalized weightedVec weightedVec_sandwich_pairing
+  physicalRelative_mixedDual_mulVec physicalRelative_quadratic)
+open private G_mul_GInv GInv_mul_G from D5.S3.Quantum.Semigroups.WuCubicOperatorBridge
 
 private theorem finite_kantorovich_sq {ι : Type*} [Fintype ι]
     (p z : ι → ℝ) (hp : ∀ i, 1 ≤ p i ∧ p i ≤ 324 / 125)
@@ -101,137 +83,115 @@ theorem kantorovich_324 {ι : Type*} [Fintype ι]
   apply finite_kantorovich_sq p (fun i => Complex.normSq (u i)) hp
   exact fun i => Complex.normSq_nonneg _
 
-theorem relative_trace_from_spectral_data {ι : Type*} [Fintype ι]
-    (p : ι → ℝ) (u v : EuclideanSpace ℂ ι) (cross q uNorm pUNorm vNorm : ℝ)
-    (hp : ∀ i, 1 ≤ p i ∧ p i ≤ 324 / 125)
-    (hcross : cross = (∑ i, (conj ((p i : ℂ) * u i)) * v i).re)
-    (hq : q = ∑ i, p i * Complex.normSq (u i))
-    (hu : uNorm = ∑ i, Complex.normSq (u i))
-    (hpu : pUNorm = ∑ i, (p i) ^ 2 * Complex.normSq (u i))
-    (hv : vNorm = ∑ i, Complex.normSq (v i))
-    (hcontract : vNorm ≤ uNorm) :
-    3 * q + cross ≥ (15 / 8 : ℝ) * q := by
-  have hu0 : 0 ≤ uNorm := by rw [hu]; exact Finset.sum_nonneg (fun i _ => Complex.normSq_nonneg _)
-  have hv0 : 0 ≤ vNorm := by rw [hv]; exact Finset.sum_nonneg (fun i _ => Complex.normSq_nonneg _)
-  have hq0 : 0 ≤ q := by
-    rw [hq]
-    exact Finset.sum_nonneg (fun i _ =>
-      mul_nonneg (by linarith [(hp i).1]) (Complex.normSq_nonneg _))
-  have hkant := kantorovich_324 p u hp
-  rw [← hq, ← hu, ← hpu] at hkant
-  have hcs : cross ^ 2 ≤ pUNorm * vNorm := by
-    rw [hcross]
-    let pu : EuclideanSpace ℂ ι :=
-      WithLp.toLp 2 (fun i => (p i : ℂ) * u i)
-    have h := norm_inner_le_norm (𝕜 := ℂ) pu v
-    have hinner : inner ℂ pu v =
-        ∑ i, conj ((p i : ℂ) * u i) * v i := by
-      simp [PiLp.inner_apply]
-      apply Finset.sum_congr rfl
-      intro i _
-      dsimp [pu]
-      rw [map_mul]
-      simp only [Complex.star_def, Complex.conj_ofReal]
-      ring
-    have hsum : ‖pu‖ ^ 2 = pUNorm := by
-      rw [EuclideanSpace.norm_sq_eq]
-      rw [hpu]
-      apply Finset.sum_congr rfl
-      intro i _
-      dsimp [pu]
-      change ‖(p i : ℂ) * u i‖ ^ 2 = _
-      rw [← Complex.normSq_eq_norm_sq]
-      rw [Complex.normSq_mul, Complex.normSq_ofReal]
-      ring
-    have hsumv : ‖v‖ ^ 2 = vNorm := by
-      rw [EuclideanSpace.norm_sq_eq]
-      simpa only [Complex.normSq_eq_norm_sq] using hv.symm
-    rw [hinner] at h
-    have habs : |(∑ i, conj ((p i : ℂ) * u i) * v i).re| ≤ ‖pu‖ * ‖v‖ :=
-      (Complex.abs_re_le_norm _).trans h
-    have hprod : cross ^ 2 ≤ (‖pu‖ * ‖v‖) ^ 2 := by
-      rw [hcross]
-      rw [← sq_abs]
-      exact (sq_le_sq₀ (abs_nonneg _)
-        (mul_nonneg (norm_nonneg _) (norm_nonneg _))).mpr habs
-    calc
-      cross ^ 2 ≤ (‖pu‖ * ‖v‖) ^ 2 := hprod
-      _ = ‖pu‖ ^ 2 * ‖v‖ ^ 2 := by ring
-      _ = pUNorm * vNorm := by rw [hsum, hsumv]
-  have hcv : pUNorm * vNorm ≤ pUNorm * uNorm := by
-    have hpUNonneg : 0 ≤ pUNorm := by
-      rw [hpu]
-      exact Finset.sum_nonneg (fun i _ =>
-        mul_nonneg (sq_nonneg _) (Complex.normSq_nonneg _))
-    exact mul_le_mul_of_nonneg_left hcontract hpUNonneg
-  have hbound : cross ^ 2 ≤ (81 / 64 : ℝ) * q ^ 2 := by
-    have htrans := hcs.trans hcv
-    calc
-      cross ^ 2 ≤ pUNorm * uNorm := htrans
-      _ ≤ (81 / 64 : ℝ) * q ^ 2 := by nlinarith only [hkant]
-  nlinarith only [hbound, hq0, sq_nonneg (cross + (9 / 8 : ℝ) * q)]
+private theorem weighted_dotProduct_re (x : Entry → ℂ) (a b : Entry → ℝ) :
+    (star (fun i => (a i : ℂ) * x i) ⬝ᵥ (fun i => (b i : ℂ) * x i)).re =
+      ∑ i, a i * b i * Complex.normSq (x i) := by
+  rw [dotProduct, Complex.re_sum]
+  apply Finset.sum_congr rfl
+  intro i _
+  change (star ((a i : ℂ) * x i) * ((b i : ℂ) * x i)).re = _
+  simp only [Complex.star_def, map_mul, Complex.conj_ofReal]
+  rw [show (a i : ℂ) * conj (x i) * ((b i : ℂ) * x i) =
+      ((a i : ℂ) * (b i : ℂ)) * (x i * conj (x i)) by ring,
+    Complex.mul_conj, ← Complex.ofReal_mul, ← Complex.ofReal_mul, Complex.ofReal_re]
 
-/- The concrete trace operators used by the Wu application. -/
-def centeredEmbeddedGenerator (r : ℝ) (W : Mat) : Mat :=
-  G r * generator r (GInv r * W * GInv r) * G r - (3 : ℂ) • W
+/-- Kantorovich's squared norm bound in the actual entry space. The eigenvalues are
+normalized by a positive lower endpoint of the relative operator. -/
+private theorem relative_moment (P : Operator) (hP : P.IsHermitian) (u : Entry → ℂ)
+    {a : ℝ} (ha : 0 < a)
+    (hp : ∀ i, 1 ≤ hP.eigenvalues i / a ∧ hP.eigenvalues i / a ≤ 324 / 125) :
+    (star (P *ᵥ u) ⬝ᵥ (P *ᵥ u)).re * (star u ⬝ᵥ u).re ≤
+      ((9 / 8 : ℝ) * (star (P *ᵥ u) ⬝ᵥ u).re) ^ 2 := by
+  let p := fun i => hP.eigenvalues i / a
+  have he (i : Entry) : hP.eigenvalues i = a * p i := by
+    dsimp [p]
+    field_simp [ha.ne']
+  let V : Operator := hP.eigenvectorUnitary
+  let w := Vᴴ *ᵥ u
+  have hVrows : V * Vᴴ = 1 := Unitary.coe_mul_star_self hP.eigenvectorUnitary
+  have hdot (x y : Entry → ℂ) :
+      star (Vᴴ *ᵥ x) ⬝ᵥ (Vᴴ *ᵥ y) = star x ⬝ᵥ y := by
+    rw [Matrix.star_mulVec, Matrix.conjTranspose_conjTranspose, ← Matrix.dotProduct_mulVec,
+      Matrix.mulVec_mulVec, hVrows, Matrix.one_mulVec]
+  have hD : Vᴴ * P * V = diagonal (fun i => (hP.eigenvalues i : ℂ)) := by
+    dsimp [V]
+    simpa only [Unitary.conjStarAlgAut_star_apply, Unitary.coe_star,
+      Matrix.star_eq_conjTranspose, Function.comp_def, RCLike.ofReal_eq_complex_ofReal] using
+      hP.conjStarAlgAut_star_eigenvectorUnitary
+  have hDP : Vᴴ * P = diagonal (fun i => (hP.eigenvalues i : ℂ)) * Vᴴ := by
+    simpa only [Matrix.mul_assoc, hVrows, Matrix.mul_one] using congrArg (· * Vᴴ) hD
+  have hPu : Vᴴ *ᵥ (P *ᵥ u) = fun i => (hP.eigenvalues i : ℂ) * w i := by
+    rw [Matrix.mulVec_mulVec, hDP, ← Matrix.mulVec_mulVec]
+    funext i
+    exact Matrix.mulVec_diagonal _ _ i
+  have hu : (star u ⬝ᵥ u).re = ∑ i, Complex.normSq (w i) := by
+    rw [← hdot u u]
+    simpa only [Complex.ofReal_one, one_mul] using weighted_dotProduct_re w (fun _ => 1) (fun _ => 1)
+  have hPnorm : (star (P *ᵥ u) ⬝ᵥ (P *ᵥ u)).re =
+      a ^ 2 * ∑ i, p i ^ 2 * Complex.normSq (w i) := by
+    rw [← hdot (P *ᵥ u) (P *ᵥ u), hPu, weighted_dotProduct_re, Finset.mul_sum]
+    apply Finset.sum_congr rfl
+    intro i _
+    rw [he i]
+    ring
+  have hQ : (star (P *ᵥ u) ⬝ᵥ u).re =
+      a * ∑ i, p i * Complex.normSq (w i) := by
+    rw [← hdot (P *ᵥ u) u, hPu]
+    change (star (fun i => (hP.eigenvalues i : ℂ) * w i) ⬝ᵥ w).re = _
+    have heq := weighted_dotProduct_re w hP.eigenvalues (fun _ => 1)
+    simp only [Complex.ofReal_one, one_mul, mul_one] at heq
+    rw [heq, Finset.mul_sum]
+    apply Finset.sum_congr rfl
+    intro i _
+    rw [he i]
+    ring
+  have hm := mul_le_mul_of_nonneg_left (kantorovich_324 p w hp) (sq_nonneg a)
+  rw [hPnorm, hu, hQ]
+  nlinarith only [hm]
 
-def mixedTrace (M W E : Mat) : ℝ :=
-  (S_M M W * E).trace.re
-
-structure WuSpectralCertificate (r : ℝ) (M W : Mat) where
-  p : Fin 16 → ℝ
-  u : EuclideanSpace ℂ (Fin 16)
-  v : EuclideanSpace ℂ (Fin 16)
-  cross : ℝ
-  q : ℝ
-  uNorm : ℝ
-  pUNorm : ℝ
-  vNorm : ℝ
-  p_range : ∀ i, 1 ≤ p i ∧ p i ≤ 324 / 125
-  cross_eq : cross = (∑ i, (conj ((p i : ℂ) * u i)) * v i).re
-  q_eq : q = ∑ i, p i * Complex.normSq (u i)
-  u_norm_eq : uNorm = ∑ i, Complex.normSq (u i)
-  pu_norm_eq : pUNorm = ∑ i, (p i) ^ 2 * Complex.normSq (u i)
-  v_norm_eq : vNorm = ∑ i, Complex.normSq (v i)
-  cross_trace_eq : cross = mixedTrace M W (centeredEmbeddedGenerator r W)
-  q_trace_eq : q = (M * W ^ 2).trace.re
-  contraction : vNorm ≤ uNorm
-
-theorem wu_relative_mixed_generator
-    {r : ℝ} (hr : 1 ≤ r) (hhi : r ≤ 6 / 5) (M W : Mat)
-    (hM : M.PosDef) (hW : W.IsHermitian)
+/-- The mixed-generator term used by `physical_curvature_ge`, for the actual
+two-CAR generator and a Hermitian embedded direction of degrees at least two. -/
+theorem wu_relative_mixed_generator {r : ℝ} (hr : 1 ≤ r) (hhi : r ≤ 6 / 5)
+    (M W : Mat) (hM : M.PosDef) (hW : W.IsHermitian)
     (hlo : ((5 / 9 : ℝ) : ℂ) • (1 : Mat) ≤ M) (hMhi : M ≤ 1)
-    (hdegree : ∀ k : WuCubicThermalBasis.Index, degree k < 2 →
-      coefficient r (GInv r * W * GInv r) k = 0)
-    (cert : WuSpectralCertificate r M W) :
+    (hdegree : ∀ k : Index, degree k < 2 → coefficient r (GInv r * W * GInv r) k = 0) :
     (15 / 4 : ℝ) * (M * W ^ 2).trace.re ≤
       ((M * W + W * M) * (G r * generator r (GInv r * W * GInv r) * G r)).trace.re := by
-  have hcontract : cert.vNorm ≤ cert.uNorm := cert.contraction
-  have hrel := relative_trace_from_spectral_data cert.p cert.u cert.v cert.cross cert.q
-    cert.uNorm cert.pUNorm cert.vNorm cert.p_range cert.cross_eq cert.q_eq
-    cert.u_norm_eq cert.pu_norm_eq cert.v_norm_eq hcontract
-  have hcross : cert.cross =
-      (S_M M W * centeredEmbeddedGenerator r W).trace.re := cert.cross_trace_eq
-  have hq : cert.q = (M * W ^ 2).trace.re := cert.q_trace_eq
-  have hmix : ((M * W + W * M) *
-      (G r * generator r (GInv r * W * GInv r) * G r)).trace.re =
-      2 * (3 * cert.q + cert.cross) := by
-    rw [centeredEmbeddedGenerator] at hcross
-    change cert.cross =
-      (((1 / 2 : ℂ) • (M * W + W * M)) *
-        (G r * generator r (GInv r * W * GInv r) * G r - (3 : ℂ) • W)).trace.re at hcross
-    rw [mul_sub, Matrix.trace_sub, Complex.sub_re, Matrix.trace_smul,
-      smul_eq_mul, Complex.re_ofReal_mul] at hcross
-    have hq' := hq
-    rw [Matrix.trace_mul, Matrix.trace_add, Complex.add_re,
-      Matrix.trace_mul_comm (W ^ 2) M] at hq'
-    nlinarith only [hcross, hq']
-  rw [hmix]
-  rw [hq] at hrel
-  linarith
+  classical
+  let H := GInv r * W * GInv r
+  have hWs : sandwich r H = W := by
+    calc
+      sandwich r H = (G r * GInv r) * W * (GInv r * G r) := by
+        dsimp only [H, sandwich]
+        noncomm_ring
+      _ = W := by rw [G_mul_GInv hr, GInv_mul_G hr, one_mul, mul_one]
+  have hWH : (sandwich r H).IsHermitian := hWs.symm ▸ hW
+  obtain ⟨hP, heLo, heRatio⟩ := physicalRelative_normalized hr hhi M (5 / 9)
+    (by norm_num) hlo hMhi
+  obtain ⟨j, _, hj⟩ := Finset.exists_min_image Finset.univ hP.eigenvalues Finset.univ_nonempty
+  have ha : 0 < hP.eigenvalues j := by
+    have hr0 : 0 < r := zero_lt_one.trans_le hr
+    have hb := (physicalWeight_bounds hr).1
+    exact (div_pos (by norm_num) (by positivity)).trans_le (heLo j)
+  have hp (i : Entry) :
+      1 ≤ hP.eigenvalues i / hP.eigenvalues j ∧
+        hP.eigenvalues i / hP.eigenvalues j ≤ 324 / 125 := by
+    refine ⟨(le_div_iff₀ ha).mpr (by simpa using hj i (Finset.mem_univ i)), ?_⟩
+    exact (heRatio i j).trans (by norm_num)
+  let u := weightedVec (baseEntry r) (sandwich r H)
+  have hm := relative_moment (physicalRelative r M) hP u ha hp
+  have hdual : physicalRelative r M *ᵥ u =
+      weightedVec (baseEntry r) (sandwich r (mixedDual r M H)) :=
+    physicalRelative_mixedDual_mulVec hr M H hM.isHermitian hWH
+  rw [show (star (physicalRelative r M *ᵥ u) ⬝ᵥ u).re =
+      (M * (sandwich r H) ^ 2).trace.re from
+    congrArg Complex.re (physicalRelative_quadratic hr M H hM.isHermitian hWH),
+    hdual, weightedVec_sandwich_pairing hr, show u = weightedVec (baseEntry r) (sandwich r H)
+      by rfl, weightedVec_sandwich_pairing hr] at hm
+  simpa only [hWs, embeddedGenerator] using
+    mixed_energy_ge_of_dual_moment hr M H hM.posSemidef hWH hdegree hm
 
 #print axioms kantorovich_324
-#print axioms relative_trace_from_spectral_data
 #print axioms wu_relative_mixed_generator
 
 end D5.S3.Quantum.Semigroups.WuCubicHessianKantorovich

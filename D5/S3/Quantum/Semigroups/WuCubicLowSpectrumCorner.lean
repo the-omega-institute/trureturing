@@ -2,9 +2,9 @@ import D5.S3.Quantum.Semigroups.WuCubicBoundaryCorner
 import D5.S3.Quantum.Semigroups.WuCubicSharpAngularSlice
 import OmegaBuild.Commands
 
-compile_only_with_mathlib
-
 /-! A finite rational corner enclosure for the low-spectrum Wu cubic cut. -/
+
+compile_only_with_mathlib
 
 set_option autoImplicit false
 
@@ -24,15 +24,45 @@ open WuRepeatedMiddleCubic (alpha)
 open private gamma h gibbsLow gibbsHigh cutA cutB c e bias from
   D5.S3.Quantum.Semigroups.WuRepeatedMiddleCubic
 open private totalAt from D5.S3.Quantum.Semigroups.WuCubicSignedTransfer
-open private logLower logUpper logRatioLower logRatioUpper logRatio_bounds min_div_le
-  logLower_le le_logUpper logSeries logCoordinate gibbsArgument thermalBase thermalFactor from
-  D5.S3.Quantum.Semigroups.WuCubicBoundaryCorner
+open private logUpper logRatioLower logRatioUpper logRatio_bounds min_div_le le_logUpper
+  logSeries logCoordinate logCoordinate_mem logCoordinate_ratio gibbsArgument thermalBase
+  thermalFactor from D5.S3.Quantum.Semigroups.WuCubicBoundaryCorner
 open private crossCoeff directedCoeff from D5.S3.Quantum.Semigroups.WuCubicAngularCertificate
+
+private def logLower (x : ℝ) : ℝ :=
+  let z := logCoordinate x
+  2 * (logSeries 8 z + z ^ 17 / (1 - z ^ 2))
+
+private theorem logLower_le {x : ℝ} (hx : 0 < x) (hx1 : x ≤ 1) :
+    logLower x ≤ Real.log x := by
+  have hz : logCoordinate x ≤ 0 :=
+    div_nonpos_of_nonpos_of_nonneg (sub_nonpos.mpr hx1) (by positivity)
+  have htail := (abs_le.mp (Real.sum_range_sub_log_div_le (logCoordinate_mem hx) 8)).1
+  rw [logCoordinate_ratio hx, abs_of_nonpos hz,
+    show (-logCoordinate x) ^ 17 = -(logCoordinate x ^ 17) by ring,
+    neg_div, neg_neg] at htail
+  unfold logLower logSeries
+  dsimp only
+  linarith only [htail]
+
+-- Apply the log bracket to the level itself to keep the atanh coordinate small.
+private def massLogUpper (x : ℝ) : ℝ := 3 * (x ^ 3 * logUpper x)
+
+private theorem le_massLogUpper {x : ℝ} (hx : 0 ≤ x) (hx1 : x ≤ 1) :
+    x ^ 3 * Real.log (x ^ 3) ≤ massLogUpper x := by
+  rcases hx.eq_or_lt with rfl | hx
+  · simp [massLogUpper]
+  · have hmul := mul_le_mul_of_nonneg_left (le_logUpper hx hx1)
+      (pow_nonneg hx.le 3)
+    rw [Real.log_pow]
+    push_cast
+    unfold massLogUpper
+    linarith only [hmul]
 
 private def entropyLower (r m n q : ℝ) : ℝ :=
   let T := totalAt m n q
   T * (logLower (gibbsArgument r) + logLower (T / 4)) -
-    m ^ 3 * logUpper (m ^ 3) - n ^ 3 * logUpper (n ^ 3) - q ^ 3 * logUpper (q ^ 3)
+    massLogUpper m - massLogUpper n - massLogUpper q
 
 /-- At zero mass the corresponding entropy term vanishes. At tracial
 temperature the coefficient of the entropy is exactly one half. -/
@@ -41,12 +71,6 @@ def thermalCenterLower (r m n q : ℝ) : ℝ :=
   thermalBase r (totalAt m n q) +
     if r = 1 then S / 2
     else thermalFactor r * min (S / logRatioLower r) (S / logRatioUpper r)
-
-private theorem mul_logUpper {x : ℝ} (hx : 0 ≤ x) (hx1 : x ≤ 1) :
-    x * Real.log x ≤ x * logUpper x := by
-  rcases hx.eq_or_lt with rfl | hx
-  · simp
-  · exact mul_le_mul_of_nonneg_left (le_logUpper hx hx1) hx.le
 
 /-- The rational thermal enclosure applies to every ordered spectrum in
 `[0,1]`, including a zero lowest level. -/
@@ -60,12 +84,11 @@ theorem thermalCenterLower_le {r m n q : ℝ} (hr : 1 ≤ r)
   have hT : 0 < T := by unfold T totalAt; positivity
   have cube_le_one {x : ℝ} (hx : 0 ≤ x) (hx1 : x ≤ 1) : x ^ 3 ≤ 1 := by
     simpa only [one_pow] using pow_le_pow_left₀ hx hx1 3
-  have hm3 := cube_le_one hm (hmn.trans (hnq.trans hq1))
-  have hn3 := cube_le_one hn (hnq.trans hq1)
-  have hq3 := cube_le_one hq hq1
+  have hn1 := hnq.trans hq1
+  have hm1 := hmn.trans hn1
   have hT4 : T / 4 ≤ 1 := by
     unfold T totalAt
-    linarith only [hm3, hn3, hq3]
+    linarith only [cube_le_one hm hm1, cube_le_one hn hn1, cube_le_one hq hq1]
   have hg : 0 < gibbsArgument r := by unfold gibbsArgument gibbsHigh gibbsLow; positivity
   have hg1 : gibbsArgument r ≤ 1 := by
     have hd : 0 < 1 + r ^ 3 := by positivity
@@ -83,18 +106,17 @@ theorem thermalCenterLower_le {r m n q : ℝ} (hr : 1 ≤ r)
         (sub_le_sub
           (mul_le_mul_of_nonneg_left
             (add_le_add (logLower_le hg hg1) (logLower_le (by positivity) hT4)) hT.le)
-          (mul_logUpper (by positivity) hm3))
-        (mul_logUpper (by positivity) hn3))
-      (mul_logUpper (by positivity) hq3)
+          (le_massLogUpper hm hm1))
+        (le_massLogUpper hn hn1))
+      (le_massLogUpper hq hq1)
   have hcenter : thermalCenter r m n q = thermalBase r T + alpha r * S := by
     unfold thermalCenter h thermalBase S gibbsArgument
-    change _ = _ * T + _
     ring
   rw [hcenter, thermalCenterLower]
   by_cases hr1 : r = 1
-  · rw [if_pos hr1, alpha, if_pos hr1]
+  · rw [ite_eq_left hr1, alpha, ite_eq_left hr1]
     linarith only [hS]
-  · rw [if_neg hr1]
+  · rw [ite_eq_right hr1]
     have hr' := lt_of_le_of_ne hr (Ne.symm hr1)
     obtain ⟨hlo, hdlo, hdhi⟩ := logRatio_bounds hr'
     have hfactor : 0 ≤ thermalFactor r := by
@@ -103,10 +125,10 @@ theorem thermalCenterLower_le {r m n q : ℝ} (hr : 1 ≤ r)
         simpa only [one_pow] using pow_le_pow_left₀ zero_le_one hr 2)
       positivity
     have halpha : alpha r = thermalFactor r / Real.log r := by
-      simp only [alpha, if_neg hr1, thermalFactor, div_div]
+      simp only [alpha, ite_eq_right hr1, thermalFactor, div_div]
     rw [halpha, show thermalFactor r / Real.log r * S =
       thermalFactor r * (S / Real.log r) by ring]
-    exact add_le_add_left (mul_le_mul_of_nonneg_left (min_div_le hS hlo hdlo hdhi) hfactor) _
+    exact add_le_add_right (mul_le_mul_of_nonneg_left (min_div_le hS hlo hdlo hdhi) hfactor) _
 
 /-- At a rational corner, the thermal bracket, clipped imbalance minimum and
 square minimum use only finite rational arithmetic. The weights `L` and `R`
@@ -143,7 +165,7 @@ theorem cornerLower_le_normalizedDeficit {r m n q L R μ₀ μ₂ : ℝ} (U : un
   have hcuts := sharp_slice_min_le_normalizedDeficit U hr hm hmn hnq hq1 le_rfl
     (by norm_num) hv hL hR hμ₀ hμ₂
   unfold cornerLower
-  refine (add_le_add_right (thermalCenterLower_le hr hm hmn hnq hq1) _).trans ?_
+  refine (add_le_add_left (thermalCenterLower_le hr hm hmn hnq hq1) _).trans ?_
   simpa only [zero_pow (by decide : (2 : ℕ) ≠ 0), mul_zero, zero_div, add_zero, one_mul]
     using hcuts
 
@@ -165,12 +187,12 @@ theorem shellCorner_normalizedDeficit (U : unitary Mat) :
       (0 : ℝ) ∈ Set.Icc 0 (cutBias r m n q 2) := by
     norm_num [r, m, n, q, cutBias, cutB, bias, e, gamma]
   have hmargin : (7 / 1000 : ℝ) ≤ cornerLower r m n q L R 0 0 := by
-    norm_num [r, m, n, q, L, R, cornerLower, thermalCenterLower, entropyLower, thermalBase,
-      thermalFactor, gibbsArgument, gibbsLow, gibbsHigh, totalAt, logLower, logUpper,
+    norm_num [r, m, n, q, L, R, cornerLower, thermalCenterLower, entropyLower, massLogUpper,
+      thermalBase, thermalFactor, gibbsArgument, gibbsLow, gibbsHigh, totalAt, logLower, logUpper,
       logRatioLower, logRatioUpper, logSeries, logCoordinate, Finset.sum_range_succ,
       cutEnergy, cutBias, cutA, cutB, lowerCoeff, upperCoeff, longCoeff, crossCoeff,
       directedCoeff, c, e, bias, gamma, imbalanceSliceMin, squareSliceMin, squareBoundaryMin,
-      squareEdgeMin, min_def, abs_def]
+      squareEdgeMin, min_def]
   exact hmargin.trans (cornerLower_le_normalizedDeficit U (by norm_num [r]) (by norm_num [m])
     (by norm_num [m, n]) (by norm_num [n, q]) (by norm_num [q]) hL hR hcharges.1 hcharges.2)
 

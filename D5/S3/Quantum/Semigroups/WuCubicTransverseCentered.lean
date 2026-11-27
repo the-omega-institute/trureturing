@@ -305,9 +305,7 @@ private theorem operatorDeficit_embedded_scale {r : ℝ} (hr : 1 ≤ r)
         fun i => ((c * (ell * levelsAt m n q i) : ℝ) : ℂ) :=
       funext fun i => congrArg Complex.ofReal (mul_assoc c ell (levelsAt m n q i))
     rw [recover_embedded hr, he, scaled_diagonal, ← hframe]
-    congr 1
-    ext i j
-    exact Complex.real_smul
+    rfl
   rw [operatorDeficit_eq_scaled hr _ U (c * ell) m n q hscaled, hdef, mul_pow, mul_assoc]
 
 /-- The local symmetric difference at arbitrary positive maximal eigenvalue

@@ -1,3 +1,11 @@
+/- GID: D5/S3/Quantum/Semigroups/WuCubicThermalOrthogonality
+   generality: I
+   mirror-B: D5/B/S3/Quantum/Semigroups/WuCubicThermalOrthogonality
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Gibbs square-root trace pairing and exact orthogonality of the Wu thermal directions. -/
+
 import D5.S3.Quantum.Semigroups.WuCubicThermalBasis
 
 /-! The Gibbs-symmetric Gram matrix of the physical two-mode Wu basis. -/
