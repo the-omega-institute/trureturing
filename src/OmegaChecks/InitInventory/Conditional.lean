@@ -12,6 +12,12 @@ namespace OmegaChecks.InitInventory
 /-- The conclusion uses the indicated semantic agreement in addition to the public type. -/
 public def conditionalConsequence? (owner name : Name) : Option (String × Name × String) := do
   if owner == `Init.Data.Order.Lemmas || owner == `Init.Data.Order.LemmasExtra then
+    if name == ``Classical.Order.instLawfulOrderBEq then
+      return ("∀ P : Prop, Decidable P", ``OmegaChecks.InitBoundaries.ClassicalOrderDecisions.fromLawfulBEq,
+        "The translated equality constructor and its public lawful instance use the same BEq operation")
+    if name == ``Classical.Order.instLawfulOrderOrd then
+      return ("∀ P : Prop, Decidable P", ``OmegaChecks.InitBoundaries.ClassicalOrderDecisions.fromLawfulOrd,
+        "The translated comparison constructor and the isLE_compare field of its public lawful instance use the same Ord operation")
     let observation := match owner, name with
       | `Init.Data.Order.Lemmas, ``Classical.Order.instBEq =>
         some (``OmegaChecks.InitBoundaries.ClassicalOrderDecisions.fromBEq, "beq true false is true")

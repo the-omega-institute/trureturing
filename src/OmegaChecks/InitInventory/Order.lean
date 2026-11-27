@@ -47,6 +47,42 @@ def fromOrd (make : type_of% @Classical.Order.instOrd.{0})
   | eq => exact isTrue (reflects.mp rfl)
   | lt | gt => exact isFalse fun hp => Ordering.noConfusion (reflects.mpr hp)
 
+/-- The law takes exactly the proposed equality operation as its instance. -/
+@[expose] def BEqLaw (make : type_of% @Classical.Order.instBEq.{0}) : Prop :=
+  ∀ {α : Type} [le : LE α], @Std.LawfulOrderBEq α (@make α le) le
+
+example : BEqLaw (@Classical.Order.instBEq.{0}) := @Classical.Order.instLawfulOrderBEq.{0}
+
+def fromLawfulBEq (make : type_of% @Classical.Order.instBEq.{0}) (law : BEqLaw (@make))
+    (p : Prop) : Decidable p :=
+  fromBEq (@make) (fun q =>
+    ((@law Bool (testOrder q)).beq_iff_le_and_ge true false).trans
+      ⟨And.left, fun h => ⟨h, h⟩⟩) p
+
+/-- The forward comparison is arbitrary, while the reverse comparison makes the
+relation total as required by the official ternary comparison law. -/
+@[instance_reducible] private def totalTestOrder (p : Prop) : LE Bool where
+  le a b := Bool.rec True (Bool.rec p True b) a
+
+private theorem totalTestOrder_total (p : Prop) :
+    @Std.Total Bool (@LE.le Bool (totalTestOrder p)) := by
+  constructor
+  intro a b
+  cases a <;> cases b <;> first | exact Or.inl trivial | exact Or.inr trivial
+
+/-- Only the first lawful comparison field is needed. Its Boolean projection is
+abstracted so the witness also works with the port's implementation of `Ordering.isLE`. -/
+@[expose] def OrdLELaw (isLE : Ordering → Bool) (make : type_of% @Classical.Order.instOrd.{0}) : Prop :=
+  ∀ {α : Type} [le : LE α] [@Std.Total α (@LE.le α le)] (a b : α),
+    isLE ((@make α le).compare a b) = true ↔ a ≤ b
+
+example : OrdLELaw Ordering.isLE (@Classical.Order.instOrd.{0}) :=
+  fun {α} le total => (@Classical.Order.instLawfulOrderOrd α le total).isLE_compare
+
+def fromLawfulOrd (isLE : Ordering → Bool) (make : type_of% @Classical.Order.instOrd.{0})
+    (law : OrdLELaw isLE (@make)) (p : Prop) : Decidable p :=
+  decideWith _ (@law Bool (totalTestOrder p) (totalTestOrder_total p) true false)
+
 private theorem officialMin (p : Prop) :
     (@Classical.Order.instMin Bool (testOrder p)).min true false = true ↔ p := by
   classical
@@ -72,7 +108,7 @@ private theorem officialOrd (p : Prop) :
   by_cases h : p <;> simp [h]
 
 run_cmd
-  for name in [``fromMin, ``fromMax, ``fromBEq, ``fromOrd] do
+  for name in [``fromMin, ``fromMax, ``fromBEq, ``fromOrd, ``fromLawfulBEq, ``fromLawfulOrd] do
     unless (← collectAxioms name).isEmpty do throwError "order observation uses axioms: {name}"
 
 end ClassicalOrderDecisions

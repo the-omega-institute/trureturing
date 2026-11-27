@@ -161,6 +161,7 @@ private def replayWitnesses (env : Environment) : IO Unit := do
      ``HeterogeneousQuotient.firstOfCoherence, ``QuotientDecision.ofSound,
      ``QuotientDecision.exactOfDecidable, ``QuotientDecision.decisionsOnRepresentatives,
      ``QuotientDecision.soundFromAgreement, ``QuotientDecision.funextOfPositiveDecision] ++
+    [``ClassicalOrderDecisions.fromLawfulBEq, ``ClassicalOrderDecisions.fromLawfulOrd] ++
     [``ConstructorNormalization.propextOfDecision, ``ConstructorNormalization.addCancelOfSucc,
      ``ConstructorNormalization.prefixEqualityOfCons] ++
     [``EmbeddingRange.ofExists, ``EmbeddingRange.ofLeftInverse,
