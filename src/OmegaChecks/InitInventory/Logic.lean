@@ -584,6 +584,27 @@ end ClassicalDecisionEquations
 
 namespace ClassicalConsequences
 
+/-- A test for equality with the zero stream whose answer cannot be determined on any finite prefix. -/
+def DiscontinuousZeroTest : Prop :=
+  ∃ test : (Nat → Bool) → Bool,
+    (∀ f, test f = true ↔ f = fun _ => false) ∧
+    ¬ ∃ bound : Nat, ∀ f, (∀ i, i < bound → f i = false) → test f = test (fun _ => false)
+
+theorem ofTypeDecidableEq (classify : type_of% @Classical.typeDecidableEq.{1}) :
+    DiscontinuousZeroTest := by
+  let zero : Nat → Bool := fun _ => false
+  let test (f : Nat → Bool) := @decide (f = zero) (classify (Nat → Bool) f zero)
+  have correct (f : Nat → Bool) : test f = true ↔ f = zero := by
+    letI := classify (Nat → Bool) f zero
+    exact ⟨of_decide_eq_true, decide_eq_true⟩
+  refine ⟨test, correct, ?_⟩
+  intro ⟨bound, same⟩
+  let spike (i : Nat) := decide (i = bound)
+  have off (i : Nat) (hi : i < bound) : spike i = false :=
+    decide_eq_false (Nat.ne_of_lt hi)
+  have eq := (correct spike).mp ((same spike off).trans ((correct zero).mpr rfl))
+  exact Bool.noConfusion ((decide_eq_true (rfl : bound = bound)).symm.trans (congrFun eq bound))
+
 /-- De Morgan's law on a proposition and its negation yields weak excluded middle. -/
 theorem weakMiddleOfDeMorgan (law : type_of% @Classical.not_and_iff_not_or_not) (p : Prop) :
     ¬p ∨ ¬¬p :=

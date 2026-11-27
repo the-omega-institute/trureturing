@@ -483,6 +483,9 @@ private def logicalConsequence? (owner name : Name) : Option (Name × Name) := d
     if let some reduction := OmegaChecks.InitBoundaries.BooleanReflection.witnesses.lookup name then
       return reduction
   if owner == `Init.Classical then
+    if name == ``Classical.typeDecidableEq then
+      return (``OmegaChecks.InitBoundaries.ClassicalConsequences.DiscontinuousZeroTest,
+        ``OmegaChecks.InitBoundaries.ClassicalConsequences.ofTypeDecidableEq)
     if let some witness := OmegaChecks.InitBoundaries.ClassicalConsequences.witnesses.lookup name then
       return (``Classical.em, witness)
   let witness ← match owner, name with
