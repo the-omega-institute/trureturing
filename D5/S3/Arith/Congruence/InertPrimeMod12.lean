@@ -5,7 +5,7 @@
    anchors: []
    digest: Any prime p that is inert in the Eisenstein integers (p ≡ 2 mod 3) and divides (6j)²+1 satisfies p ≡ 5 mod 12. Since p divides a value of the form k²+1, minus one is a square modulo p, forcing p ≡ 1 mod 4; combined with the inert residue p ≡ 2 mod 3 this pins p ≡ 5 mod 12 by the Chinese remainder theorem (the E.48 bad-prime lemma). -/
 
-import Mathlib
+import Mathlib.NumberTheory.LegendreSymbol.Basic
 
 namespace D5.S3.Arith.Congruence.InertPrimeMod12
 
