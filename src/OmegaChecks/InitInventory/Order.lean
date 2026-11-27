@@ -687,6 +687,33 @@ theorem funextOfChainCompletePointwiseOrder
 
 abbrev UniqueChoice := ∀ {α : Sort u} [Subsingleton α], Nonempty α → α
 
+/-- A choice function for all inhabited subsingletons in the selected universe. -/
+abbrev MereUniqueChoice := Nonempty UniqueChoice.{u}
+
+private structure PointedSubsingleton where
+  carrier : Sort u
+  uniq : Subsingleton carrier
+  inh : Nonempty carrier
+
+private theorem selectionOfSection (h : Nonempty ((i : PointedSubsingleton.{u}) → i.carrier)) :
+    MereUniqueChoice.{u} :=
+  h.elim fun f => ⟨fun {α} inst ne => f ⟨α, inst, ne⟩⟩
+
+theorem uniqueSelectionOfCompletePi (order : type_of% @Lean.Order.instCompleteLatticePi.{u+1,u}) :
+    MereUniqueChoice.{u} := by
+  let carriers (i : PointedSubsingleton.{u}) : CompleteLattice i.carrier :=
+    @singletonLattice _ i.uniq i.inh
+  obtain ⟨s, _⟩ := (@order PointedSubsingleton.{u} (·.carrier) carriers).has_sup (fun _ => False)
+  exact selectionOfSection ⟨s⟩
+
+theorem uniqueSelectionOfChainCompletePi (order : type_of% @Lean.Order.instCCPOPi.{u+1,u}) :
+    MereUniqueChoice.{u} := by
+  let carriers (i : PointedSubsingleton.{u}) : CCPO i.carrier :=
+    @singletonCCPO _ i.uniq i.inh
+  let productOrder := @order PointedSubsingleton.{u} (·.carrier) carriers
+  obtain ⟨s, _⟩ := @CCPO.has_csup _ productOrder _ (@chain_empty _ productOrder.toPartialOrder)
+  exact selectionOfSection ⟨s⟩
+
 def uniqueChoiceOfSup (select : type_of% @CompleteLattice.sup.{u}) : UniqueChoice.{u} :=
   fun {α} _ inh => @select α (singletonLattice α inh) (fun _ => False)
 

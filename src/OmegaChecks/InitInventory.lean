@@ -115,6 +115,13 @@ private def logicalConsequence? (owner name : Name) : Option (Name × Name) := d
   if owner == `Init.Internal.Order.MonadTail then
     if let some witness := OmegaChecks.InitBoundaries.InternalOrder.tailDecisionChains.lookup name then
       return (``Classical.em, witness)
+  if owner == `Init.Internal.Order.Basic then
+    if name == ``Lean.Order.instCCPOPi then
+      return (``OmegaChecks.InitBoundaries.InternalOrder.MereUniqueChoice,
+        ``OmegaChecks.InitBoundaries.InternalOrder.uniqueSelectionOfChainCompletePi)
+    if name == ``Lean.Order.instCompleteLatticePi then
+      return (``OmegaChecks.InitBoundaries.InternalOrder.MereUniqueChoice,
+        ``OmegaChecks.InitBoundaries.InternalOrder.uniqueSelectionOfCompletePi)
   if owner == `Init.Grind.Norm && name == ``Lean.Grind.exists_prop then
     return (``OmegaChecks.InitBoundaries.ExistentialConjunction.ClosedEquality,
       ``OmegaChecks.InitBoundaries.ExistentialConjunction.ofRule)
@@ -759,7 +766,7 @@ private def inventory (lib : System.FilePath) (visible strict full : Environment
   let mut nativeByModule := #[]
   let mut allNative := #[]
   if let some file := gaps then
-    file.putStrLn "module\tdeclaration\tkind\tunsafe\tpartial\tupstreamAxioms\timpliesAxiom\treductionWitness\tlogicalConsequence\tlogicalConsequenceWitness\trequiredBehavior\tabstractedDependency\truntimeConflictWitness\tequationOperand\toperandImpliesAxiom\toperandReductionWitness\tunchangedTypeAxioms\tunsafePackedObservation"
+    file.putStrLn "module\tdeclaration\tkind\tunsafe\tpartial\tupstreamAxioms\timpliesAxiom\treductionWitness\tlogicalConsequence\tlogicalConsequenceWitness\trequiredBehavior\tabstractedDependency\truntimeConflictWitness\tequationOperand\toperandImpliesAxiom\toperandReductionWitness\tunchangedTypeAxioms\tunsafePackedObservation\tunconditionalLogicalConsequence\tunconditionalLogicalConsequenceWitness"
   for owner in modules do
     let some idx := visible.getModuleIdx? owner | throwError "missing official module {owner}"
     let publicNames := visible.header.moduleData[idx]!.constNames.filter publicName
@@ -787,9 +794,10 @@ private def inventory (lib : System.FilePath) (visible strict full : Environment
       let typeAxioms ← checkedTypeAxioms official info axioms
       let operand := OmegaChecks.InitBoundaries.ChoiceOperands.operand? owner info
       let conditional := conditionalConsequence? owner name
-      let consequence := (logicalConsequence? owner name).map (fun (target, witness) => (target.toString, witness))
-        <|> conditional.map (fun (target, witness, _) => (target, witness))
+      let direct := (logicalConsequence? owner name).map (fun (target, witness) => (target.toString, witness))
+      let consequence := conditional.map (fun (target, witness, _) => (target, witness)) <|> direct
       let behavior := conditional.map (fun (_, _, premise) => premise)
+      let additional := if conditional.isSome then direct else none
       let runtimeConflict : Option String := do
         guard (info.isUnsafe && observedRuntime.contains name.toString)
         let some ("False", witness, _) := conditional | none
@@ -816,7 +824,8 @@ private def inventory (lib : System.FilePath) (visible strict full : Environment
             (consequence.map Prod.fst).getD "", (consequence.map (·.2.toString)).getD "", behavior.getD "",
             selector.getD "", runtimeConflict.getD "", (operand.map (·.name.toString)).getD "",
             (operand.map fun _ => (``Classical.choice).toString).getD "", (operand.map (·.witness.toString)).getD "",
-            String.intercalate "," (typeAxioms.toList.map Name.toString), packedObservation.getD ""]
+            String.intercalate "," (typeAxioms.toList.map Name.toString), packedObservation.getD "",
+            (additional.map Prod.fst).getD "", (additional.map (·.2.toString)).getD ""]
       if info.isAxiom then
         directAxioms := directAxioms + 1
         axiomUnique := axiomUnique.insert name
@@ -853,6 +862,10 @@ private def inventory (lib : System.FilePath) (visible strict full : Environment
         | none => row
       let row := match runtimeConflict with
         | some witness => row.setObjVal! "runtimeConflictWitness" (toJson witness)
+        | none => row
+      let row := match additional with
+        | some (target, witness) => row.mergeObj <| Json.mkObj [
+            ("unconditionalLogicalConsequence", toJson target), ("unconditionalLogicalConsequenceWitness", toJson witness.toString)]
         | none => row
       rows := rows.push <| match consequence with
         | some (target, witness) => row.mergeObj <| Json.mkObj [

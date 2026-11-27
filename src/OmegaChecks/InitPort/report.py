@@ -136,7 +136,8 @@ def report(product, require_complete=False):
                              "impliesAxiom", "firstDependencyPath", "reason", "reductionWitness",
                              "logicalConsequence", "logicalConsequenceWitness", "requiredBehavior", "abstractedDependency",
                              "runtimeConflictWitness", "equationOperand", "operandImpliesAxiom", "operandReductionWitness",
-                             "unchangedTypeAxioms", "unsafePackedObservation", "strictImpliesAxiom", "strictSelectionWitness"])
+                             "unchangedTypeAxioms", "unsafePackedObservation", "strictImpliesAxiom", "strictSelectionWitness",
+                             "unconditionalLogicalConsequence", "unconditionalLogicalConsequenceWitness"])
             for row in official["declarations"]:
                 if row["matchingNameAndModule"] or row["kind"] == "axiom":
                     continue
@@ -172,7 +173,8 @@ def report(product, require_complete=False):
                                  row.get("requiredBehavior"), row.get("abstractedDependency"), row.get("runtimeConflictWitness"),
                                  row.get("equationOperand"), row.get("operandImpliesAxiom"), row.get("operandReductionWitness"),
                                  ",".join(row.get("unchangedTypeAxioms", [])), row.get("unsafePackedObservation"),
-                                 row.get("strictImpliesAxiom"), row.get("strictSelectionWitness")])
+                                 row.get("strictImpliesAxiom"), row.get("strictSelectionWitness"),
+                                 row.get("unconditionalLogicalConsequence"), row.get("unconditionalLogicalConsequenceWitness")])
         reductions = stage / "init-public-reductions.tsv"
         with reductions.open("w", newline="") as f:
             writer = csv.writer(f, delimiter="\t", lineterminator="\n")
