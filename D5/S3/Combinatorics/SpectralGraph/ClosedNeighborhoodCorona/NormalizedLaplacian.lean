@@ -4,8 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Normalized-Laplacian cospectrality in both closed-neighborhood corona orders.
--/
+   digest: Normalized-Laplacian cospectrality in both closed-neighborhood corona orders. -/
 
 module
 
