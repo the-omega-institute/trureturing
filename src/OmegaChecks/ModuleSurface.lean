@@ -107,6 +107,7 @@ private def checkElaboration (env : Environment) (owner : Name) (idx : ModuleIdx
       | `Omega.ShareCommon.StateFactory.mk => pure (`OmegaInit.ShareCommon, "omega_share_common_factory_mk")
       | `Omega.ShareCommon.State.mk => pure (`OmegaInit.ShareCommon, "l_ShareCommon_mkStateImpl")
       | `Omega.ShareCommon.State.shareCommon => pure (`OmegaInit.ShareCommon, "lean_state_sharecommon")
+      | `Omega.EST.Out.ctorElim => pure (`OmegaInit.System.ST, "omega_est_out_elim")
       | `Omega.Void.mk => pure (`OmegaInit.System.ST, "lean_void_mk")
       | `Omega.ST.Prim.Ref.swap => pure (`OmegaInit.System.ST, "omega_st_ref_swap")
       | `Omega.ST.Prim.Ref.set => pure (`OmegaInit.System.ST, "omega_st_ref_set")

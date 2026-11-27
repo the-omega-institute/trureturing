@@ -1,4 +1,5 @@
 #include <lean/lean.h>
+#include "est_out_elim.h"
 extern uint8_t lean_st_ref_ptr_eq(b_lean_obj_arg, b_lean_obj_arg);
 
 static lean_obj_res state_result(lean_obj_arg value, lean_obj_arg world) {

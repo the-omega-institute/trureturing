@@ -17,10 +17,16 @@ namespace ReferenceNative
 private def owner := `OmegaInit.System.ST
 private def allocation := `Omega.ST.Prim.mkRef
 private def world := `Omega.Void.mk
-private def entries := #[(world, "lean_void_mk"), (allocation, "omega_st_mk_ref"), (`Omega.ST.Prim.Ref.swap, "omega_st_ref_swap"),
+private def elim := `Omega.EST.Out.ctorElim
+private def entries := #[(world, "lean_void_mk"), (elim, "omega_est_out_elim"), (allocation, "omega_st_mk_ref"), (`Omega.ST.Prim.Ref.swap, "omega_st_ref_swap"),
   (`Omega.ST.Prim.Ref.set, "omega_st_ref_set"), (`Omega.ST.Prim.Ref.ptrEq, "omega_st_ref_ptr_eq")]
 private def operations := #[`Omega.ST.pure, `Omega.ST.bind, `Omega.EST.pure, `Omega.EST.bind,
-  `Omega.EST.throw, `Omega.EST.tryCatch, `Omega.runST, `Omega.runEST]
+  `Omega.EST.throw, `Omega.EST.tryCatch, `Omega.runST, `Omega.runEST,
+  `Omega.Void.nonemptyType, `Omega.ST.RefPointed, `Omega.EST.Out.ctorIdx, `Omega.EST.Out.ok.elim,
+  `Omega.EST.Out.error.elim, `Omega.instMonadST, `Omega.instMonadEST, `Omega.instMonadExceptOfEST,
+  `Omega.instInhabitedST, `Omega.instInhabitedEST, `Omega.instSTWorldST, `Omega.instSTWorldEST,
+  `Omega.instSTWorldOfMonadLift, `Omega.instMonadFinallyST, `Omega.instMonadFinallyEST,
+  `Omega.instMonadAttachST, `Omega.instMonadAttachEST, `Omega.instMonadLiftSTEST]
 
 private def lifted := #[`Omega.ST.mkRef, `Omega.ST.Ref.swap, `Omega.ST.Ref.set, `Omega.ST.Ref.ptrEq]
 
@@ -36,11 +42,12 @@ public unsafe def install (lib output : System.FilePath) (interpreter : Bool) : 
   searchPathRef.set [lib]
   let imports := #[{module := owner, importAll := true : Import}]
   let env ← importModules imports {}
-  let externs := entries.filter fun (n, _) => env.contains n && (!interpreter || n == world)
+  let externs := entries.filter fun (n, _) => env.contains n && (!interpreter || n == world || n == elim)
   if externs.isEmpty && !(operations.any env.contains) then return
   if !interpreter then
     if env.contains `Omega.ST.Out then installStateLayout lib env
-    for n in [`Omega.EST.Out, `Omega.Except] do
+    for n in [`Omega.EST.Out, `Omega.Except, `Omega.STWorld, `Omega.MonadFinally, `Omega.MonadAttach,
+        `Omega.MonadExceptOf, `Omega.Monad, `Omega.MonadLift, `Omega.PULift] do
       if env.contains n && (monoTypeExt.find? env n).isNone then
         let idx := (env.getModuleIdxFor? n).get!
         writeCode lib env.header.moduleNames[idx]! (← compileLayouts env n) layouts
@@ -48,10 +55,15 @@ public unsafe def install (lib output : System.FilePath) (interpreter : Bool) : 
   let ref? := if interpreter then none else env.find? `Omega.ST.Ref
   let refNames := if let some (.inductInfo ref) := ref? then #[ref.name] ++ ref.ctors.toArray else #[]
   let wrappers := if interpreter then #[] else (operations ++ lifted).filter env.contains
-  -- The four pinned matchers lower the ST/EST return and exception cases.
-  let matchers := #[`Omega.ST.bind.match_1, `Omega.EST.bind.match_1, `Omega.runST.match_1, `Omega.runEST.match_1]
-    |>.map (mkPrivateNameCore owner) |>.filter fun n =>
-      wrappers.any fun w => ((env.find? w).bind (·.value?)).any (fun e => e.getUsedConstants.contains n)
+  -- Some translated matchers have a private lexical name, while others are public.
+  let matchers := wrappers.foldl (init := #[]) fun ns w => Id.run do
+    let some value := (env.find? w).bind (·.value?) | return ns
+    let mut ns := ns
+    for n in value.getUsedConstants do
+      let .str _ suffix := privateToUserName? n |>.getD n | continue
+      if suffix.startsWith "match_" && env.getModuleIdxFor? n == env.getModuleIdx? owner && !ns.contains n then
+        ns := ns.push n
+    return ns
   let names := externs.map Prod.fst ++ matchers ++ wrappers
   let ctx ← localEnv env owner (refNames ++ names)
   let compiled ← compile ctx do
@@ -67,8 +79,23 @@ public unsafe def install (lib output : System.FilePath) (interpreter : Bool) : 
       | throw <| IO.userError "expected an unboxed reference handle"
     unless layout.numParams == 2 && layout.fieldIdx == 0 && ref.ctors == [layout.ctorName] do
       throw <| IO.userError "unexpected strict reference layout"
+  for n in wrappers do
+    unless (IR.findEnvDecl compiled n).isSome do throw <| IO.userError s!"missing strict executable {n}"
+  if externs.any (·.1 == elim) then
+    for (n, tag) in [(`Omega.EST.Out.ok, 0), (`Omega.EST.Out.error, 1)] do
+      let some layout := ctorLayoutExt.find? compiled n | throw <| IO.userError s!"missing constructor layout for {n}"
+      let #[.object 0 _, .object 1 _] := layout.fieldInfo | throw <| IO.userError s!"invalid field order for {n}"
+      unless layout.ctorInfo.cidx == tag && layout.ctorInfo.size == 2 && layout.ctorInfo.usize == 0 &&
+          layout.ctorInfo.ssize == 0 do throw <| IO.userError s!"incorrect strict fields for {n}"
+    let some (some info) := impureTrivialStructureInfoExt.find? compiled `Omega.PULift
+      | throw <| IO.userError "expected an unboxed EST eliminator continuation"
+    unless info.ctorName == `Omega.PULift.up && info.fieldIdx == 0 do throw <| IO.userError "incorrect continuation layout"
   let implicitArgs := #[(IR.IRType.erased, false), (.erased, false)]
   for (n, symbol) in externs do
+    if n == elim then
+      verify compiled n (Array.replicate 4 (.erased, false) ++ #[(.tobject, false), (.object, false),
+        (.erased, false), (.tobject, false)]) .tobject symbol
+      continue
     if n == world then
       verify compiled n #[(.erased, false), (.tobject, false)] .tobject symbol
       continue
@@ -77,7 +104,7 @@ public unsafe def install (lib output : System.FilePath) (interpreter : Bool) : 
       else #[(.tobject, n == `Omega.ST.Prim.Ref.swap), (.tobject, false)]
     verify compiled n (implicitArgs ++ parameters ++ #[(.tobject, false)]) .object symbol
   if interpreter then
-    emitBridge compiled `StrictVoidInterpreter none output
+    emitBridge compiled `StrictVoidInterpreter "src/OmegaChecks/InitPort/est_out_elim.h" output
   else
     writeCode lib owner compiled (layouts ++ codeExtensions ++ #[Lean.privateConstKindsExt.name])
     emitBridge compiled owner "src/OmegaChecks/InitPort/reference_runtime.c" output
