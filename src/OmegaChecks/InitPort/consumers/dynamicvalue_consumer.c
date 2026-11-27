@@ -1,6 +1,6 @@
-#include <stdio.h>
 #include "../strict_name.h"
 
+extern int puts(const char *);
 extern lean_obj_res runtime_initialize_DynamicValueConsumer(uint8_t);
 extern lean_obj_res omega_dynamic_pack_nat(lean_obj_arg, lean_obj_arg);
 extern lean_obj_res omega_dynamic_read_nat(lean_obj_arg, lean_obj_arg);
