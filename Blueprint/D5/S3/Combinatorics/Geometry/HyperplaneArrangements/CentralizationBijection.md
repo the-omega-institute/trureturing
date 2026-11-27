@@ -68,6 +68,10 @@ $$\forall u \in \operatorname{UniverseLevel}\left(\right),\; \forall I \in \oper
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Geometry/HyperplaneArrangements/CentralizationBijection.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/chen-fu-li-wang-2026-centralization-crt-bijection` (proved) by `D5/S3/Combinatorics/Geometry/HyperplaneArrangements/CentralizationBijection.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"chen-fu-li-wang-2026-centralization-crt-bijection","declaration_gid":"D5/S3/Combinatorics/Geometry/HyperplaneArrangements/CentralizationBijection.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Yanru Chen; Houshan Fu; Ang Li; Suijie Wang (2026). *Convolution-type Identity for Characteristic Polynomials of Geometric Semilattices*. DOI: [10.48550/arXiv.2606.00599](https://doi.org/10.48550/arXiv.2606.00599). URL: <https://arxiv.org/abs/2606.00599v1>.
