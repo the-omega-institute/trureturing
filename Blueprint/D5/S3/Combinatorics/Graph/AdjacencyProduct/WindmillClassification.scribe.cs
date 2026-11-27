@@ -8,7 +8,7 @@ internal sealed class WindmillClassificationDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/Graph/AdjacencyProduct/WindmillClassification.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/GraphInvariants/akbari2025primematrixproduct");
+        LibraryNoteRef.Create("D5/L/AdjacencyProduct/akbari2025primematrixproduct");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "A windmill admits an ordinary product of two simple graph adjacency matrices over the integers exactly when it has one blade and its blade order is one modulo four.",
