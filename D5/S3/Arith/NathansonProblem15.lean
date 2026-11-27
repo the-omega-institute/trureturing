@@ -2,15 +2,19 @@ import Mathlib.Algebra.BigOperators.Fin
 import Mathlib.Algebra.Group.Pointwise.Set.BigOperators
 import Mathlib.Algebra.Order.BigOperators.Group.Finset
 import Mathlib.Algebra.Order.Ring.Abs
+import Mathlib.Data.Fin.Basic
+import Mathlib.Data.Finset.Lattice.Fold
 import Mathlib.Data.Int.Basic
+import Mathlib.Logic.Equiv.Fin.Basic
+import Mathlib.Order.Interval.Set.Basic
 import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.Ring
 
 /-!
-  Stage A support for Nathanson's Problem 15.
+  Nathanson's Problem 15 on prescribed intervals in iterated integer sumsets.
 
-  The signed radix lemma is kept independent of the interval construction.  It
-  is the modulo-and-cancellation step used to separate the labelled sums.
+  The signed radix code separates sums with different codes by at least two.
+  Adjacent sums have code zero, whose values are exactly the prescribed points.
 -/
 
 open scoped BigOperators Pointwise
@@ -406,5 +410,128 @@ private theorem adjacent_mem_range {m h : ℕ} (hh : 2 ≤ h)
       ⟨u, v, huv, hz, by simpa [hz] using heval⟩,
     (mem_range_iff_zero_code_sum hh t (x + 1)).mpr
       ⟨u', v', huv', hz', by simpa [hz'] using heval'⟩⟩
+
+private theorem interval_equivalences {q : ℕ} {n : ℤ} (hn : 1 ≤ n)
+    (c : Fin q → ℤ) (S : Set ℤ)
+    (hgap : ∀ i j : Fin q, i < j → c i + n + 2 ≤ c j)
+    (hcover : ∀ i, Set.Icc (c i) (c i + n) ⊆ S)
+    (hpoints : ∀ x : ℤ, x ∈ S → x + 1 ∈ S →
+      (∃ i : Fin q, x ∈ Set.Icc (c i) (c i + n)) ∧
+        (∃ j : Fin q, x + 1 ∈ Set.Icc (c j) (c j + n))) :
+    (∀ x : ℤ, Set.Icc x (x + n) ⊆ S ↔ ∃ i, x = c i) ∧
+      (∀ x : ℤ, Set.Icc x (x + 1) ⊆ S ↔ ∃ i,
+        Set.Icc x (x + 1) ⊆ Set.Icc (c i) (c i + n) ∧
+          Set.Icc (c i) (c i + n) ⊆ S) := by
+  have same_interval {i j : Fin q} {x : ℤ}
+      (hi : x ∈ Set.Icc (c i) (c i + n)) (hj : x + 1 ∈ Set.Icc (c j) (c j + n)) :
+      i = j := by
+    rcases lt_trichotomy i j with hij | hij | hji
+    · have hsep := hgap i j hij
+      have hiUpper := hi.2
+      have hjLower := hj.1
+      omega
+    · exact hij
+    · have hsep := hgap j i hji
+      have hiLower := hi.1
+      have hjUpper := hj.2
+      omega
+  have hadj (x : ℤ) (hx : x ∈ S) (hx' : x + 1 ∈ S) :
+      ∃ i, c i ≤ x ∧ x + 1 ≤ c i + n := by
+    obtain ⟨⟨i, hi⟩, ⟨j, hj⟩⟩ := hpoints x hx hx'
+    rw [← same_interval hi hj] at hj
+    exact ⟨i, hi.1, hj.2⟩
+  constructor
+  · intro x
+    constructor
+    · intro hx
+      obtain ⟨i, hleft, hright⟩ := hadj x
+        (hx (Set.left_mem_Icc.mpr (by omega))) (hx ⟨by omega, by omega⟩)
+      have hbound : x + n ≤ c i + n := by
+        by_contra! hover
+        obtain ⟨j, hjleft, hjright⟩ := hadj (c i + n)
+          (hx ⟨by omega, by omega⟩) (hx ⟨by omega, by omega⟩)
+        have hij : i = j := same_interval
+          (Set.right_mem_Icc.mpr (by omega)) ⟨by omega, hjright⟩
+        subst j
+        omega
+      exact ⟨i, by omega⟩
+    · rintro ⟨i, rfl⟩
+      exact hcover i
+  · intro x
+    have horder : x ≤ x + 1 := by omega
+    constructor
+    · intro hx
+      obtain ⟨i, hleft, hright⟩ :=
+        hadj x (hx (Set.left_mem_Icc.mpr horder)) (hx (Set.right_mem_Icc.mpr horder))
+      exact ⟨i, Set.Icc_subset_Icc hleft hright, hcover i⟩
+    · rintro ⟨i, hi, hcoveri⟩
+      exact hi.trans hcoveri
+
+/-- Both prescribed-interval equivalences hold for a set of at most two generators
+per prescribed point. The sumset uses exactly `h` summands with repetition. -/
+theorem nathanson_problem15 (h q n : ℕ) (N : ℤ)
+    (hh : 2 ≤ h) (hq : 2 ≤ q) (hn : 1 ≤ n)
+    (hN : (n : ℤ) + 2 ≤ N) (c : Fin q → ℤ)
+    (hgap : ∀ i j : Fin q, j.val = i.val + 1 → N ≤ c j - c i) :
+    ∃ A : Finset ℤ,
+      A.card ≤ 2 * q * (n + 1) ∧
+      (∀ x : ℤ, Set.Icc x (x + (n : ℤ)) ⊆ h • (A : Set ℤ) ↔
+        ∃ i : Fin q, x = c i) ∧
+      (∀ x : ℤ, Set.Icc x (x + 1) ⊆ h • (A : Set ℤ) ↔
+        ∃ i : Fin q,
+          Set.Icc x (x + 1) ⊆ Set.Icc (c i) (c i + (n : ℤ)) ∧
+            Set.Icc (c i) (c i + (n : ℤ)) ⊆ h • (A : Set ℤ)) := by
+  have hn' : (1 : ℤ) ≤ n := by exact_mod_cast hn
+  have hgapAll : ∀ i j : Fin q, i < j → c i + (n : ℤ) + 2 ≤ c j := by
+    cases q with
+    | zero => omega
+    | succ k =>
+      let transGap : IsTrans ℤ (fun a b => a + (n : ℤ) + 2 ≤ b) := ⟨by
+        intro a b d hab hbd
+        omega⟩
+      have hsucc (i : Fin k) : c i.castSucc + (n : ℤ) + 2 ≤ c i.succ := by
+        have h := hgap i.castSucc i.succ rfl
+        omega
+      exact (Fin.liftFun_iff_succ (fun a b : ℤ => a + (n : ℤ) + 2 ≤ b) (f := c)).mpr hsucc
+  let t (j : Fin (q * (n + 1))) : ℤ :=
+    c (finProdFinEquiv.symm j).1 + (finProdFinEquiv.symm j).2.val
+  have htarget (x : ℤ) : x ∈ Set.range t ↔
+      ∃ i : Fin q, x ∈ Set.Icc (c i) (c i + (n : ℤ)) := by
+    constructor
+    · rintro ⟨j, rfl⟩
+      let p := finProdFinEquiv.symm j
+      refine ⟨p.1, Set.mem_Icc.mpr ?_⟩
+      have hk := p.2.isLt
+      change c p.1 ≤ c p.1 + (p.2.val : ℤ) ∧
+        c p.1 + (p.2.val : ℤ) ≤ c p.1 + (n : ℤ)
+      omega
+    · rintro ⟨i, hxi⟩
+      obtain ⟨hleft, hright⟩ := Set.mem_Icc.mp hxi
+      let k : Fin (n + 1) := ⟨(x - c i).toNat, by omega⟩
+      refine ⟨finProdFinEquiv (i, k), ?_⟩
+      simp only [t, Equiv.symm_apply_apply, k]
+      omega
+  let U : ℤ := (Finset.univ.sup fun j => (t j).natAbs : ℕ)
+  have hU : 0 ≤ U := Int.natCast_nonneg _
+  have ht (j : Fin (q * (n + 1))) : |t j| ≤ U := by
+    rw [Int.abs_eq_natAbs]
+    exact Int.ofNat_le.mpr (Finset.le_sup (f := fun j => (t j).natAbs) (Finset.mem_univ j))
+  let M : ℤ := 2 * ((h : ℤ) * U) + 2
+  let g := radixGenerators h M t
+  let A := Finset.univ.image g
+  refine ⟨A, ?_, ?_⟩
+  · calc
+      A.card ≤ (Finset.univ : Finset (Fin (q * (n + 1)) ⊕ Fin (q * (n + 1)))).card :=
+        Finset.card_image_le
+      _ = 2 * q * (n + 1) := by
+        simp [Fintype.card_sum, Nat.mul_assoc, two_mul, Nat.add_mul]
+  · have hA : (A : Set ℤ) = Set.range g := by simp [A, Finset.coe_image]
+    rw [hA]
+    refine interval_equivalences hn' c _ hgapAll (fun i x hx => ?_) (fun x hx hx' => ?_)
+    · have hrange := (htarget x).mpr ⟨i, hx⟩
+      obtain ⟨u, v, huv, hzero, hsum⟩ := (mem_range_iff_zero_code_sum hh t x).mp hrange
+      exact (mem_radixGenerators_iff t).mpr ⟨u, v, huv, by simp [hzero, hsum]⟩
+    · obtain ⟨hr, hr'⟩ := adjacent_mem_range hh hU t ht hx hx'
+      exact ⟨(htarget x).mp hr, (htarget (x + 1)).mp hr'⟩
 
 end D5.S3.Arith.NathansonProblem15
