@@ -7,6 +7,7 @@ import OmegaChecks.InitPort.Alternatives
 import OmegaChecks.InitPort.Arithmetic
 import OmegaChecks.InitPort.NativeQuot
 import OmegaChecks.InitPort.Address
+import OmegaChecks.InitPort.WordFold
 
 open Lean
 
@@ -484,8 +485,8 @@ partial def visit (n : Name) : M Bool := do
       | return ← record n (.blocked "kernel rejected logical reference")
     modify fun s => {s with env}
     return ← record n .added
-  if n == `Array.anyMUnsafe then
-    let .defnInfo native := ci | return ← record n (.blocked "missing native array search")
+  if n == `Array.anyMUnsafe || OmegaChecks.InitPort.WordFold.supported n then
+    let .defnInfo native := ci | return ← record n (.blocked "missing native array loop")
     let some body := OmegaChecks.InitPort.alternativeBody? c.alternatives ci
       | return ← record n (.blocked "missing bounded word loop")
     for dep in usedConstants ci.type ++ usedConstants body do

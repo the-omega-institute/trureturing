@@ -1,5 +1,6 @@
 module
 
+public import OmegaChecks.InitPort.WordFold
 public import OmegaChecks.InitPort.ArrayWord
 public import Init.Data.RArray
 public import Init.Data.Array.DecidableEq
