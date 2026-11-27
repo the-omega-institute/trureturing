@@ -65,6 +65,7 @@ private def entries := #[
   (`IO.FS.rename, "lean_io_rename", "omega_io_rename"),
   (`IO.FS.hardLink, "lean_io_hard_link", "omega_io_hard_link"),
   (`IO.FS.realPath, "lean_io_realpath", "omega_io_real_path"),
+  (`IO.FS.createTempFile, "lean_io_create_tempfile", "omega_io_create_temp_file"),
   (`IO.FS.createTempDir, "lean_io_create_tempdir", "omega_io_create_temp_dir"),
   (`IO.appPath, "lean_io_app_path", "omega_io_app_path"), (`IO.currentDir, "lean_io_current_dir", "omega_io_current_dir"),
   (`IO.Process.getCurrentDir, "lean_io_process_get_current_dir", "omega_io_process_get_current_dir"),
@@ -189,6 +190,7 @@ public unsafe def main (args : List String) : IO Unit := do
     for n in dicts ++ [`Omega.Option, `Omega.List, `Omega.ST.Out] ++ (if fs then [`Omega.EST.Out, `Omega.IO.Error] else []) ++
         (if metadata then [`Omega.IO.FS.SystemTime, `Omega.IO.FS.Metadata, `Omega.IO.FS.FileType, `Omega.Int] else []) ++
         (if processes then [`Omega.IO.Process.SpawnArgs, `Omega.IO.Process.StdioConfig, `Omega.IO.Process.Child, `Omega.IO.Process.Stdio, `Omega.Prod] else []) ++
+        (if roots.any (fun (n, _, _) => n == `IO.FS.createTempFile) then [`Omega.Prod] else []) ++
         (if readDir then [`Omega.IO.FS.DirEntry] else []) ++ (if handles then [`Omega.IO.FS.Mode] else []) do
       let env ← importModules imports {}
       if (monoTypeExt.find? env n).isSome then continue
@@ -209,6 +211,11 @@ public unsafe def main (args : List String) : IO Unit := do
       let .object j _ := f | throw <| IO.userError s!"expected boxed {n} field"
       unless i == j do throw <| IO.userError s!"unexpected {n} field position"
   if processes then checkProcesses source env
+  if roots.any (fun (n, _, _) => n == `IO.FS.createTempFile) then
+    for (e, pair) in [(source, `Prod.mk), (env, `Omega.Prod.mk)] do
+      let some l := ctorLayoutExt.find? e pair | throw <| IO.userError s!"missing temporary file pair {pair}"
+      unless l.ctorInfo.cidx == 0 && l.ctorInfo.size == 2 && l.ctorInfo.usize == 0 && l.ctorInfo.ssize == 0 &&
+          (l.fieldInfo matches #[.object 0 _, .object 1 _]) do throw <| IO.userError s!"unexpected temporary file pair {pair}"
   if metadata then checkMetadata source env
   if handles then
     for (n, tag) in [(`read, 0), (`write, 1), (`writeNew, 2), (`readWrite, 3), (`append, 4)] do
@@ -264,7 +271,7 @@ public unsafe def main (args : List String) : IO Unit := do
       verify compiled (`Omega ++ n) (#[((.tobject : IR.IRType), true)] ++ strict ++ #[(.tobject, false)]) .object symbol
       continue
     let count := if [`IO.FS.rename, `IO.FS.hardLink].contains n then 2
-      else if [`IO.FS.createTempDir, `IO.appPath, `IO.currentDir, `IO.Process.getCurrentDir].contains n then 0 else 1
+      else if [`IO.FS.createTempFile, `IO.FS.createTempDir, `IO.appPath, `IO.currentDir, `IO.Process.getCurrentDir].contains n then 0 else 1
     let borrow := n != `IO.FS.realPath
     verify source n (Array.replicate count (.object, borrow) ++ #[(.void, false)])
       (if n == `IO.getEnv then .tobject else .object) upstream

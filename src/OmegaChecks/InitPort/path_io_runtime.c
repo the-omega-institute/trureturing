@@ -143,6 +143,19 @@ static lean_obj_res retain_value(b_lean_obj_arg value) {
     return value;
 }
 
+extern lean_obj_res lean_io_create_tempfile(void);
+
+static lean_obj_res strict_temp_file(b_lean_obj_arg pair) {
+    lean_object *out = lean_alloc_ctor(0, 2, 0);
+    lean_ctor_set(out, 0, retain_value(lean_ctor_get(pair, 0)));
+    lean_ctor_set(out, 1, omega_string_from_lean(lean_ctor_get(pair, 1)));
+    return out;
+}
+
+LEAN_EXPORT lean_obj_res omega_io_create_temp_file(lean_obj_arg world) {
+    return strict_result(lean_io_create_tempfile(), world, strict_temp_file);
+}
+
 LEAN_EXPORT lean_obj_res omega_io_handle_mk(b_lean_obj_arg path, uint8_t mode, lean_obj_arg world) {
     lean_object *p = omega_string_to_lean(path);
     lean_object *r = lean_io_prim_handle_mk(p, mode);

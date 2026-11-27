@@ -113,6 +113,7 @@ private def checkElaboration (env full : Environment) (reference? : Option Envir
       | `Omega.EST.Out.ctorElim => pure (`OmegaInit.System.ST, "omega_est_out_elim")
       | `Omega.IO.FS.hardLink => pure (`OmegaInit.System.IO, "omega_io_hard_link")
       | `Omega.IO.FS.realPath => pure (`OmegaInit.System.IO, "omega_io_real_path")
+      | `Omega.IO.FS.createTempFile => pure (`OmegaInit.System.IO, "omega_io_create_temp_file")
       | `Omega.IO.FS.createTempDir => pure (`OmegaInit.System.IO, "omega_io_create_temp_dir")
       | `Omega.IO.appPath => pure (`OmegaInit.System.IO, "omega_io_app_path")
       | `Omega.IO.currentDir => pure (`OmegaInit.System.IO, "omega_io_current_dir")
