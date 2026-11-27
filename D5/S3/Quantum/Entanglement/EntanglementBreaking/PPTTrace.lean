@@ -22,11 +22,44 @@ open D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf
 open D5.S3.Quantum.Dynamics.KickedIsingNegativityRefutation (partialTranspose)
 open D5.S3.Quantum.Matrix.PartialTransposeTrace (partial_transpose_trace_duality)
 
+private theorem right_amplification_eq_swap {a b k : ℕ}
+    (Φ : MatrixMap (Fin a) (Fin b) ℂ) (X : Matrix (Fin a × Fin k) (Fin a × Fin k) ℂ) :
+    MatrixMap.kron Φ (MatrixMap.id (Fin k) ℂ) X =
+      (amplify k Φ (X.submatrix Prod.swap Prod.swap)).submatrix Prod.swap Prod.swap := by
+  ext ⟨u, p⟩ ⟨v, q⟩
+  rw [MatrixMap.kron_def]
+  change _ = amplify k Φ (X.submatrix Prod.swap Prod.swap) (p, u) (q, v)
+  rw [amplify_apply]
+  simp [MatrixMap.id, Matrix.single, ite_and, inputChoi, MatrixMap.choi_matrix]
+
+private theorem completelyPositive_iff_left_amplifications {a b : ℕ}
+    (Φ : MatrixMap (Fin a) (Fin b) ℂ) :
+    Φ.IsCompletelyPositive ↔ ∀ k : ℕ, 0 < k → (amplify k Φ).IsPositive := by
+  constructor
+  · intro h k _ X hX
+    have hY := h k (hX.submatrix Prod.swap)
+    change (MatrixMap.kron Φ (MatrixMap.id (Fin k) ℂ)
+      (X.submatrix Prod.swap Prod.swap)).PosSemidef at hY
+    rw [right_amplification_eq_swap] at hY
+    simpa using hY.submatrix Prod.swap
+  · intro h k X hX
+    change (MatrixMap.kron Φ (MatrixMap.id (Fin k) ℂ) X).PosSemidef
+    rw [right_amplification_eq_swap]
+    by_cases hk : 0 < k
+    · exact (h k hk (hX.submatrix Prod.swap)).submatrix Prod.swap
+    · have hk0 : k = 0 := by omega
+      subst k
+      exact (Subsingleton.elim _ (0 : Matrix (Fin b × Fin 0) (Fin b × Fin 0) ℂ)).symm ▸
+        PosSemidef.zero
+
 /-- Decomposability as a sum of a completely positive and a completely copositive map. -/
 def IsDecomposable {a b : ℕ} (Φ : MatrixMap (Fin a) (Fin b) ℂ) : Prop :=
-  ∃ P Q : MatrixMap (Fin a) (Fin b) ℂ, P.IsCompletelyPositive ∧
-    ((Matrix.transposeLinearEquiv (Fin b) (Fin b) ℂ ℂ).toLinearMap.comp Q
-      : MatrixMap (Fin a) (Fin b) ℂ).IsCompletelyPositive ∧ Φ = P + Q
+  ∃ P Q : MatrixMap (Fin a) (Fin b) ℂ,
+    (∀ k : ℕ, 0 < k → (amplify k P).IsPositive) ∧
+    (∀ k : ℕ, 0 < k →
+      (amplify k ((Matrix.transposeLinearEquiv (Fin b) (Fin b) ℂ ℂ).toLinearMap.comp Q)
+        ).IsPositive) ∧
+    Φ = P + Q
 
 theorem inputChoi_decomposition {a b : ℕ} {Φ : MatrixMap (Fin a) (Fin b) ℂ}
     (hΦ : IsDecomposable Φ) :
@@ -40,8 +73,10 @@ theorem inputChoi_decomposition {a b : ℕ} {Φ : MatrixMap (Fin a) (Fin b) ℂ}
   have hΦ' : Φ = P + T.comp (T.comp Q) := by rw [hinvolution, hΦ]
   rw [hΦ']
   refine ⟨inputChoi P, inputChoi (T.comp Q),
-    ((MatrixMap.choi_PSD_iff_CP_map P).mp hP).submatrix Prod.swap,
-    ((MatrixMap.choi_PSD_iff_CP_map (T.comp Q)).mp hQ).submatrix Prod.swap, ?_⟩
+    ((MatrixMap.choi_PSD_iff_CP_map P).mp
+      ((completelyPositive_iff_left_amplifications P).mpr hP)).submatrix Prod.swap,
+    ((MatrixMap.choi_PSD_iff_CP_map (T.comp Q)).mp
+      ((completelyPositive_iff_left_amplifications (T.comp Q)).mpr hQ)).submatrix Prod.swap, ?_⟩
   ext ⟨i, u⟩ ⟨j, v⟩
   rfl
 
