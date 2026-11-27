@@ -24,6 +24,7 @@ terminal: proof_shape=bind-only; consumers=HardinA229583Strip.finite_certificate
 W: proof_shape=bind-only; consumers=HardinA229583Strip.finite_certificate
 -/
 
+import Mathlib.Data.Fin.VecNotation
 import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
 
 open scoped BigOperators

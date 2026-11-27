@@ -6,6 +6,7 @@
    utility: none
    digest: Transport of the signed residual through the width-six transfer. -/
 
+import Mathlib.Data.Fin.VecNotation
 import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
 
 open scoped BigOperators

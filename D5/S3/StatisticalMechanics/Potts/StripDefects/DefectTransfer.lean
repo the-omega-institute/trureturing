@@ -35,7 +35,6 @@ import Mathlib.LinearAlgebra.Matrix.Action
 import Mathlib.Logic.Equiv.Prod
 import Mathlib.Data.Fintype.Pi
 import Mathlib.Data.List.OfFn
-import Mathlib.Tactic
 
 /-! Additive defect budgets and finite boundary transfers. -/
 
@@ -118,7 +117,7 @@ private theorem continuation_count (n : ℕ) (p : B) (d : ℕ) :
       Fintype.sum_prod_type]
     change (∑ r : Row q k, ∑ f : Fin n → Row q k,
       if projectedCost H P C p (List.ofFn (Fin.cons r f)) = d then (1 : ℤ) else 0) = _
-    simp only [List.ofFn_succ, Fin.cons_zero, Fin.tail_cons, projectedCost]
+    simp only [List.ofFn_succ, Fin.cons_zero, projectedCost]
     rw [continuation]
     apply Finset.sum_congr rfl
     intro r _
@@ -149,7 +148,7 @@ private theorem counting_bridge
     Fintype.sum_prod_type]
   change (∑ r : Row q k, ∑ f : Fin n → Row q k,
     if defects H V (List.ofFn (Fin.cons r f)) = D then (1 : ℤ) else 0) = _
-  simp only [List.ofFn_succ, Fin.cons_zero, Fin.tail_cons, defects, cost_eq H V P C edge]
+  simp only [List.ofFn_succ, Fin.cons_zero, defects, cost_eq H V P C edge]
   apply Finset.sum_congr rfl
   intro r _
   by_cases h : bondDefects H r r ≤ D
