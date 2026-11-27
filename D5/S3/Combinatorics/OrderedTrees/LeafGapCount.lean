@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/OrderedTrees/LeafGapCount
    mirror-E: none(waiver:ordered-tree-leaf-pruning)
-   anchors: [D5/S3/Combinatorics/OrderedTrees/LeafPruning]
+   anchors: [mathlib/module/Mathlib.Data.Sym.NatCard]
    utility: none
    digest: Ordered leaf-gap compositions give a finite binomial sum for every actual tree count. -/
 

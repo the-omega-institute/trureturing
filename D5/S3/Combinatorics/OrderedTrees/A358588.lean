@@ -2,7 +2,7 @@
    generality: I
    mirror-B: D5/B/S3/Combinatorics/OrderedTrees/A358588
    mirror-E: none(waiver:ordered-tree-leaf-pruning)
-   anchors: [D5/S3/Combinatorics/OrderedTrees/LeafGapCount]
+   anchors: [mathlib/module/Mathlib.RingTheory.PowerSeries.WellKnown]
    utility: none
    digest: The actual ordered tree counts satisfy Wu’s generating function and signed recurrence. -/
 
