@@ -1,4 +1,5 @@
 import Mathlib.Algebra.BigOperators.Fin
+import Mathlib.Algebra.Group.Pointwise.Set.BigOperators
 import Mathlib.Algebra.Order.BigOperators.Group.Finset
 import Mathlib.Data.Int.Basic
 import Mathlib.Tactic.Linarith
@@ -11,7 +12,7 @@ import Mathlib.Tactic.Ring
   is the modulo-and-cancellation step used to separate the labelled sums.
 -/
 
-open scoped BigOperators
+open scoped BigOperators Pointwise
 
 namespace D5.S3.Arith.NathansonProblem15
 
@@ -237,5 +238,53 @@ theorem radixCode_eq_zero_iff {m h : ℕ} (hh : 2 ≤ h) {u v : Fin m → ℕ}
     simpa [radixCode] using hc
   · intro hd
     simp [radixCode, hd]
+
+private theorem mem_nsmul_range_iff_counts {ι : Type*} [Fintype ι] [DecidableEq ι]
+    (g : ι → ℤ) {h : ℕ} {z : ℤ} :
+    z ∈ h • Set.range g ↔
+      ∃ c : ι → ℕ, (∑ i, c i) = h ∧ (∑ i, c i • g i) = z := by
+  have eval (s : Multiset ι) : (s.map g).sum = ∑ i, s.count i • g i := by
+    rw [Finset.sum_multiset_map_count]
+    apply Finset.sum_subset (Finset.subset_univ _)
+    intro i _ hi
+    rw [Multiset.count_eq_zero_of_notMem (mt Multiset.mem_toFinset.mpr hi), zero_nsmul]
+  constructor
+  · intro hz
+    obtain ⟨f, hf, hsum⟩ := Set.mem_nsmul_iff_sum.mp hz
+    choose w hw using hf
+    let s : Multiset ι := (Finset.univ : Finset (Fin h)).val.map w
+    have hcard : s.card = h := by
+      simp [s, ← Finset.card_def]
+    refine ⟨s.count, ?_, ?_⟩
+    · exact (Multiset.sum_count_eq_card (s := Finset.univ)
+        (fun i _ => Finset.mem_univ i)).trans hcard
+    · rw [← eval]
+      simpa only [s, Multiset.map_map, Function.comp_def, hw, ← Finset.sum_eq_multiset_sum]
+        using hsum
+  · rintro ⟨c, hc, hsum⟩
+    let s : Multiset ι := ∑ i, Multiset.replicate (c i) i
+    have hcard : s.card = h := by simpa only [s, Multiset.card_sum, Multiset.card_replicate] using hc
+    have hcount (i : ι) : s.count i = c i := by
+      simp [s, Multiset.count_sum', Multiset.count_replicate, eq_comm]
+    have hm := Set.multiset_sum_mem_multiset_sum s (fun _ => Set.range g) g
+      (fun i _ => ⟨i, rfl⟩)
+    simpa only [eval, hcount, hsum, Multiset.map_const', Multiset.sum_replicate, hcard] using hm
+
+/-- Membership in the iterated sum of two labelled families is equivalent to a budgeted
+sum of their multiplicities. Labels may have equal values. -/
+theorem mem_labelled_sum_iff {m h : ℕ} {z : ℤ} (a b : Fin m → ℤ) :
+    z ∈ h • Set.range (Sum.elim a b) ↔
+      ∃ u v : Fin m → ℕ, (∑ i, (u i + v i)) = h ∧
+        (∑ i, ((u i : ℤ) * a i + (v i : ℤ) * b i)) = z := by
+  rw [mem_nsmul_range_iff_counts]
+  constructor
+  · rintro ⟨c, hc, hs⟩
+    refine ⟨c ∘ Sum.inl, c ∘ Sum.inr, ?_, ?_⟩
+    · simpa [Fintype.sum_sum_type, Finset.sum_add_distrib, Function.comp_def] using hc
+    · simpa [Fintype.sum_sum_type, Finset.sum_add_distrib, Function.comp_def, nsmul_eq_mul] using hs
+  · rintro ⟨u, v, hc, hs⟩
+    refine ⟨Sum.elim u v, ?_, ?_⟩
+    · simpa [Fintype.sum_sum_type, Finset.sum_add_distrib] using hc
+    · simpa [Fintype.sum_sum_type, Finset.sum_add_distrib, nsmul_eq_mul] using hs
 
 end D5.S3.Arith.NathansonProblem15
