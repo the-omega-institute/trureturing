@@ -10,11 +10,11 @@ Lean statement: `D5/S3/Combinatorics/SpectralGraph/ClosedNeighborhoodCorona/Bloc
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/ClosedNeighborhoodCorona/Blocks.adjMatrix_corona` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* Bishal Sonar; Ravi Srivastava (2024). *On the spectrum of closed neighbourhood corona product of graph and its application*. DOI: [10.48550/arXiv.2407.05653](https://doi.org/10.48550/arXiv.2407.05653). URL: <https://arxiv.org/abs/2407.05653v2>.
 
 *Commentary.*
 
-The base block is the base adjacency matrix. The cross block repeats each column of the base adjacency plus the identity for all vertices in the indexed copy. The opposite cross block is its transpose. The copy block is the Kronecker product of the base identity and the attached adjacency matrix.
+The base block is the base adjacency matrix. The cross block repeats each column of the base adjacency plus the identity for all vertices in the indexed copy. The opposite cross block is its transpose. The copy block is the Kronecker product of the base identity and the attached adjacency matrix. Sonar and Srivastava display the identity in §3.1 with the copy coordinates ordered as (attached vertex, base vertex). Swapping those coordinates for rows and columns gives the arrangement here. Lean proves the identity directly over a semiring from the corona adjacency relation.
 
 **Theorem 1.2 (Degree of a base vertex).**
 

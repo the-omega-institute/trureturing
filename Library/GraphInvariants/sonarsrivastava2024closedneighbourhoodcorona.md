@@ -3,6 +3,7 @@ bibkey: sonarsrivastava2024closedneighbourhoodcorona
 authors: Bishal Sonar; Ravi Srivastava
 year: 2024
 title: On the spectrum of closed neighbourhood corona product of graph and its application
+doi: 10.48550/arXiv.2407.05653
 url: https://arxiv.org/abs/2407.05653v2
 claim: "Section 3.1 displays the adjacency blocks of the closed-neighborhood corona in attached-vertex-first copy order."
 strata_touched:
