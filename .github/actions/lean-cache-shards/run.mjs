@@ -436,7 +436,10 @@ async function runModuleCache() {
     if (!Number.isSafeInteger(capacity) || capacity < 1 || capacity >= 2048) {
       throw new Error('shard_mib must be between 1 and 2047');
     }
-    args = ['plan', '--kind', kind || 'compiler', '--capacity', String(capacity * 1024 ** 2), '--output', plan, '--legacy-checkpoints', '--prepare-release'];
+    const publicationKind = kind || 'compiler';
+    args = ['plan', '--kind', publicationKind, '--capacity', String(capacity * 1024 ** 2),
+      '--output', plan, '--prepare-release'];
+    if (publicationKind === 'compiler') args.push('--compiler-dag', '--legacy-checkpoints');
   } else {
     requirePublisher(kind || 'compiler');
     if (operation === 'module-worker') {
