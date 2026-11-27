@@ -92,7 +92,12 @@ private def sliceStringFunction (n : Name) : Bool :=
   n == `String.Slice.lines.lineMap || (n.getPrefix == `String.Slice &&
     [`trimAsciiStart, `trimAsciiEnd, `trimAscii, `intercalate, `isInt, `toInt?, `toInt!, `toName].contains (n.updatePrefix .anonymous))
 
-private def pinnedStringFunction (n : Name) : Bool := defsStringFunction n || basicStringFunction n || decodeStringFunction n || sliceStringFunction n || n == `String.toName
+private def metaLiteralFunction (n : Name) : Bool :=
+  n == `Substring.Raw.toName || (n.getPrefix == `Lean.Syntax &&
+    [`decodeNatLitVal?, `decodeScientificLitVal?, `decodeNameLit, `decodeStrLit, `decodeStrLitAux,
+     `decodeRawStrLitAux, `splitNameLit].contains (n.updatePrefix .anonymous))
+
+private def pinnedStringFunction (n : Name) : Bool := defsStringFunction n || basicStringFunction n || decodeStringFunction n || sliceStringFunction n || metaLiteralFunction n || n == `String.toName
 
 private def debugPrimitive (n : Name) : Bool := [`dbgTrace, `dbgTraceIfShared, `dbgSleep, `dbgStackTrace].contains n
 
@@ -165,7 +170,7 @@ public def supported (source : Environment) (owner name : Name) : Bool :=
     (owner == `OmegaInit.Data.String.Basic && basicStringFunction name) ||
     (owner == `OmegaInit.Data.String.Decode && decodeStringFunction name) ||
     (owner == `OmegaInit.Data.String.Slice && sliceStringFunction name) ||
-    (owner == `OmegaInit.Meta.Defs && name == `String.toName) || isFloatCall source owner name ||
+    (owner == `OmegaInit.Meta.Defs && (name == `String.toName || metaLiteralFunction name)) || isFloatCall source owner name ||
     (owner == `OmegaInit.Data.ByteArray.Basic && ByteFoldNative.supported name) ||
     ([`OmegaInit.Grind.Ring.CommSolver, `OmegaInit.Data.Nat.Basic, `OmegaInit.Data.Nat.Div.Basic, `OmegaInit.Data.Nat.Lemmas,
     `OmegaInit.Data.RArray, `OmegaInit.Data.Nat.Internal.Linear, `OmegaInit.Data.Nat.Fold, `OmegaInit.Data.Fin.Lemmas].contains owner && IndexedNative.supported name) ||
@@ -241,7 +246,7 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
     unless strictInfo.type == InitKernelPort.translate InitKernelPort.portName ci.type do
       throw <| IO.userError s!"strict string input type differs at {n}"
     checkStrictString strict
-    if official.getPrefix == `Substring.Raw.Internal then
+    if official.getPrefix == `Substring.Raw.Internal || [`Substring.Raw.toName, `Lean.Syntax.splitNameLit].contains official then
       for (env, name, text) in [(source, `Substring.Raw.mk, ImpureType.object), (strict, `Omega.Substring.Raw.mk, ImpureType.tobject)] do
         let some fields := ctorLayoutExt.find? env name | throw <| IO.userError s!"missing substring record {name}"
         let #[.object 0 field, .object 1 start, .object 2 stop] := fields.fieldInfo | throw <| IO.userError "invalid substring fields"
@@ -609,6 +614,29 @@ public def wrapper (source strict : Environment) (n : Name) : IO String := do
     checkIntLayout strict
     IndexedNative.checkDataTypes source strict [`Option]
     pure ("lean_obj_res", s!"omega_optional_from_lean({call}, omega_int_from_lean)")
+  else if metaLiteralFunction official && dom == `Option && ret == .tobject && result == .tobject then do
+    IndexedNative.checkDataTypes source strict [`Option]
+    let payload := type.getArg! 0
+    if payload == mkConst `String then
+      pure ("lean_obj_res", s!"omega_optional_from_lean({call}, omega_string_from_lean)")
+    else if payload == mkConst `Lean.Name then
+      checkNameLayout source strict
+      hasName := true
+      pure ("lean_obj_res", s!"omega_optional_from_lean({call}, omega_name_from_lean)")
+    else if payload == mkConst `Nat then pure ("lean_obj_res", call)
+    else
+      let pair := fun a b => mkApp2 (mkConst `Prod [.zero, .zero]) a b
+      unless payload == pair (mkConst `Nat) (pair (mkConst `Bool) (mkConst `Nat)) do
+        throw <| IO.userError s!"unexpected literal payload at {n}"
+      IndexedNative.checkDataTypes source strict [`Prod, `Bool]
+      pure ("lean_obj_res", call)
+  else if official == `Lean.Syntax.splitNameLit then do
+    unless type == mkApp (mkConst `List [.zero]) (mkConst `Substring.Raw) && ret == .tobject && result == .tobject do
+      throw <| IO.userError "incorrect raw name component ABI"
+    IndexedNative.checkDataTypes source strict [`List]
+    prepare := prepare ++ s!"  lean_object *components = {call};\n"
+    cleanup := cleanup ++ "  lean_dec(components);\n"
+    pure ("lean_obj_res", "omega_map_list(components, omega_substring_from_lean)")
   else if dom == `Option && basicStringFunction official then do
     let pos := type.getArg! 0 |>.getAppFn.constName
     unless [`String.Pos, `String.Slice.Pos].contains pos && ret == .tobject && result == .tobject do

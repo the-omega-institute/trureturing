@@ -116,6 +116,10 @@ static lean_obj_res omega_string_fold_step(lean_obj_arg f, lean_obj_arg s, lean_
     return result;
 }
 
+static inline lean_obj_res omega_substring_from_lean(b_lean_obj_arg slice) {
+    return omega_convert_substring(slice, omega_string_from_lean);
+}
+
 static inline lean_obj_res omega_slice_to_lean(b_lean_obj_arg slice) {
     return omega_convert_substring(slice, omega_string_to_lean);
 }
