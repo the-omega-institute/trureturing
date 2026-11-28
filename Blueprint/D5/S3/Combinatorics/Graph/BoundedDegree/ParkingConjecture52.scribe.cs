@@ -8,7 +8,7 @@ internal sealed class ParkingConjecture52Document : IScribeDocumentDefinition
 {
     private const string Module = "D5/S3/Combinatorics/Graph/BoundedDegree/ParkingConjecture52.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Combinatorics/higuitadiazlopezroldancorrea2026parking");
+        LibraryNoteRef.Create("D5/L/Certificates/higuitadiazlopezroldancorrea2026parking");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "A fifteen-vertex tree of maximum degree three reverses the proposed lower-tail inequality at six parked vertices.",
