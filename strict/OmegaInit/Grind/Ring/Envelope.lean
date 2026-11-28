@@ -19,7 +19,9 @@ for add, sub, mul and neg require identifying the classes of (1, 1) and (0, 0).
 OmegaChecks.InitBoundaries.EnvelopeCancellation checks these obligations.
 The public types of instIsPreorderQ and instOrderedAddQ fix the unrestricted quotient
 comparison. Its representative coherence is equivalent to propext at universe zero
-by propextFromRingLift and ringLiftFromPropext in OmegaChecks.InitBoundaries.EnvelopeOrder. -/
+by propextFromRingLift and ringLiftFromPropext in OmegaChecks.InitBoundaries.EnvelopeOrder.
+With propext, ringOrderFromPropext reconstructs the full pinned LE instance on the
+quotient. The bare LE type also admits the constant-false comparison. -/
 
 /- The official types of toQ_natCast, toQ_pow, instNoNatZeroDivisorsQOfAddRightCancel
 and instIsCharPQOfAddRightCancel use the semiring projection of ofSemiring. Its

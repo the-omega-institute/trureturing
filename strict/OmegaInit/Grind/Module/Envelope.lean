@@ -72,7 +72,9 @@ public theorem toQ_smul (n : Nat) (a : α) :
 /- The public quotient comparisons retain the full representative coherence.
 At universe zero it implies propositional extensionality by
 OmegaChecks.InitBoundaries.EnvelopeOrder.propextFromModuleLift.
-Conversely moduleLiftFromPropext derives that coherence at every universe.
+Conversely moduleLiftFromPropext derives that coherence at every universe, and
+moduleOrderFromPropext reconstructs the entire pinned LE instance with its binary
+quotient lift. The bare LE type also admits the constant-false comparison.
 The public types of instIsPreorderQ and instOrderedAddQ also fix that comparison
 at arbitrary quotient inputs. -/
 /- The lifts nsmul, zsmul, add, sub and neg require related pairs to have equal
