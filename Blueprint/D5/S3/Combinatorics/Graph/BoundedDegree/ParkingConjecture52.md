@@ -6,7 +6,7 @@ A fifteen-vertex tree of maximum degree three reverses the proposed lower-tail i
 
 **Definition 1.1 (Removing the chosen vertex and its neighbors).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/BoundedDegree/ParkingConjecture52.after`
+$$\operatorname{after}\left(G, s, v\right) = \operatorname{Finset.filter}\left((\lambda w \mapsto \neg \left(v = w \lor \operatorname{SimpleGraph.Adj}\left(G, v, w\right)\right)), s\right)$$
 
 *Formalization.* `D5/S3/Combinatorics/Graph/BoundedDegree/ParkingConjecture52.after` (`✓ std3`).
 
@@ -18,7 +18,7 @@ The available vertices after choosing v are the elements w of the current set wi
 
 **Definition 1.2 (The sequential occupancy CDF).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/BoundedDegree/ParkingConjecture52.seq`
+$$\begin{aligned}\operatorname{seq}\left(G, k, \emptyset\right)&= 1\\\operatorname{seq}\left(G, 0, s\right)&= 0\quad(s \neq \emptyset)\\\operatorname{seq}\left(G, k + 1, s\right)&= \frac{\sum_{v \in s} \operatorname{seq}\left(G, k, \operatorname{after}\left(G, s, v\right)\right)}{(\operatorname{Finset.card}\left(s\right): \mathbb{Q})}\quad(s \neq \emptyset)\end{aligned}$$
 
 *Formalization.* `D5/S3/Combinatorics/Graph/BoundedDegree/ParkingConjecture52.seq` (`✓ std3`).
 
@@ -30,7 +30,7 @@ With an empty available set the probability of at most k further choices is one 
 
 **Definition 1.3 (Jammed configurations).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/BoundedDegree/ParkingConjecture52.jammed`
+$$\operatorname{jammed}\left(G, s\right) \Leftrightarrow \operatorname{Maximal}\left(\operatorname{SimpleGraph.IsIndepSet}\left(G\right), (s: \operatorname{Set}\left(V\right))\right)$$
 
 *Formalization.* `D5/S3/Combinatorics/Graph/BoundedDegree/ParkingConjecture52.jammed` (`✓ std3`).
 
@@ -42,7 +42,7 @@ A finite vertex subset is jammed when its underlying set is inclusion-maximal am
 
 **Definition 1.4 (The static occupancy CDF).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/BoundedDegree/ParkingConjecture52.static`
+$$\begin{aligned}m&= \operatorname{Finset.filter}\left((\lambda s \mapsto \operatorname{jammed}\left(G, s\right)), \operatorname{Finset.powerset}\left((\operatorname{Finset.univ}: \operatorname{Finset}\left(V\right))\right)\right)\\\operatorname{static}\left(G, k\right)&= \frac{(\operatorname{Finset.card}\left(\operatorname{Finset.filter}\left((\lambda s \mapsto \operatorname{Finset.card}\left(s\right) \le k), m\right)\right): \mathbb{Q})}{(\operatorname{Finset.card}\left(m\right): \mathbb{Q})}\end{aligned}$$
 
 *Formalization.* `D5/S3/Combinatorics/Graph/BoundedDegree/ParkingConjecture52.static` (`✓ std3`).
 
@@ -62,7 +62,7 @@ $$\forall V \in Type,\; [\operatorname{Fintype}\left(V\right)] [\operatorname{De
 
 *Commentary.*
 
-Definition 2.1 compares the probabilities of occupancy at most k for every integer k. Both occupancies are nonnegative, so natural cutoffs suffice. Conjecture 5.2 quantifies over every finite simple graph with maximum degree at most three.
+Definition 2.1 compares the probabilities of occupancy at most k for every nonnegative integer k, represented here by a natural number. Conjecture 5.2 quantifies over every finite simple graph with maximum degree at most three.
 
 **Theorem 1.6 (Refutation of Conjecture 5.2).**
 
