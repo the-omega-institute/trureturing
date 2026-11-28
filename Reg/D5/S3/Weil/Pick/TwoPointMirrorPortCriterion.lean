@@ -48,7 +48,7 @@ def arena : Arena where
   signature := signature.{u}
   Law R := ∀ {Port : Type u} [fp : Fintype Port] [dp : DecidableEq Port]
     (mu : ℂ) (C : Matrix Port Port ℂ) (z : Fin 2 → ℂ)
-    (_ : mu ≠ star mu) (_ : z 0 ≠ z 1) (_ : ∀ i, 0 < (z i).im)
+    (_ : mu ≠ star mu) (_ : z 0 ≠ z 1) (_ : ∀ i j, z i - star (z j) ≠ 0)
     (_ : ∀ i, mu - z i ≠ 0 ∧ star mu - z i ≠ 0),
       (R.readout () ⟨Port, fp, dp, mu, z⟩ C).PosSemidef ↔ C = 0
 
@@ -60,8 +60,8 @@ private theorem pole_nonreal : Complex.I ≠ star Complex.I := by
 private theorem samples_distinct : samples 0 ≠ samples 1 := by
   norm_num [samples, Complex.ext_iff]
 
-private theorem samples_upper (i : Fin 2) : 0 < (samples i).im := by
-  fin_cases i <;> norm_num [samples]
+private theorem samples_cross (i j : Fin 2) : samples i - star (samples j) ≠ 0 := by
+  fin_cases i <;> fin_cases j <;> norm_num [samples, Complex.ext_iff]
 
 private theorem samples_regular (i : Fin 2) :
     Complex.I - samples i ≠ 0 ∧ star Complex.I - samples i ≠ 0 := by
@@ -70,7 +70,7 @@ private theorem samples_regular (i : Fin 2) :
 private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
   have hh := h (Port := ULift.{u} Unit) Complex.I 1 samples
-    pole_nonreal samples_distinct samples_upper samples_regular
+    pole_nonreal samples_distinct samples_cross samples_regular
   change (0 : Matrix (ULift.{u} Unit ⊕ ULift.{u} Unit)
     (ULift.{u} Unit ⊕ ULift.{u} Unit) ℂ).PosSemidef ↔
       (1 : Matrix (ULift.{u} Unit) (ULift.{u} Unit) ℂ) = 0 at hh
@@ -93,7 +93,7 @@ private theorem dependence : ObservationalDependence signature.{u} actual := by
     exact Matrix.PosSemidef.zero
   exact one_ne_zero ((two_point_mirror_posSemidef_iff Complex.I
     (1 : Matrix p.Port p.Port ℂ) samples pole_nonreal samples_distinct
-    samples_upper samples_regular).mp hp)
+    samples_cross samples_regular).mp hp)
 
 def source : Registration arena.{u} (type_of% @two_point_mirror_posSemidef_iff.{u}) where
   actual := actual
@@ -154,7 +154,7 @@ def arena : Arena where
   signature := signature.{u}
   Law R := ∀ {Port : Type u} [fp : Fintype Port] [dp : DecidableEq Port]
     (mu : ℂ) (C : Matrix Port Port ℂ) (z : Fin 2 → ℂ)
-    (_ : mu ≠ star mu) (_ : z 0 ≠ z 1) (_ : ∀ i, 0 < (z i).im)
+    (_ : mu ≠ star mu) (_ : z 0 ≠ z 1) (_ : ∀ i j, z i - star (z j) ≠ 0)
     (_ : ∀ i, mu - z i ≠ 0 ∧ star mu - z i ≠ 0),
       R.readout () ⟨Port, fp, dp, mu, z⟩ C =
           mirrorCauchyFeature mu z *
@@ -165,10 +165,10 @@ def arena : Arena where
 private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
   have hh := h (Port := ULift.{u} Unit) Complex.I 1 samples
-    pole_nonreal samples_distinct samples_upper samples_regular
+    pole_nonreal samples_distinct samples_cross samples_regular
   have hf := (two_point_mirror_congruence Complex.I
     (1 : Matrix (ULift.{u} Unit) (ULift.{u} Unit) ℂ) samples pole_nonreal
-    samples_distinct samples_upper samples_regular).1
+    samples_distinct samples_cross samples_regular).1
   have hz : mirrorNevanlinnaGram Complex.I
       (1 : Matrix (ULift.{u} Unit) (ULift.{u} Unit) ℂ) samples = 0 :=
     hf.trans hh.1.symm
@@ -178,7 +178,7 @@ private theorem rejected_law : ¬ arena.{u}.Law rejected := by
     exact Matrix.PosSemidef.zero
   exact one_ne_zero ((two_point_mirror_posSemidef_iff Complex.I
     (1 : Matrix (ULift.{u} Unit) (ULift.{u} Unit) ℂ) samples pole_nonreal
-    samples_distinct samples_upper samples_regular).mp hp)
+    samples_distinct samples_cross samples_regular).mp hp)
 
 def source : Registration arena.{u} (type_of% @two_point_mirror_congruence.{u}) where
   actual := actual
@@ -239,7 +239,7 @@ def arena : Arena where
   signature := signature.{u}
   Law R := ∀ {Port : Type u} [fp : Fintype Port] [dp : DecidableEq Port]
     (mu : ℂ) (C : Matrix Port Port ℂ) (z : Fin 2 → ℂ)
-    (_ : mu ≠ star mu) (_ : z 0 ≠ z 1) (_ : ∀ i, 0 < (z i).im)
+    (_ : mu ≠ star mu) (_ : z 0 ≠ z 1) (_ : ∀ i j, z i - star (z j) ≠ 0)
     (_ : ∀ i, mu - z i ≠ 0 ∧ star mu - z i ≠ 0),
       let G := R.readout () ⟨Port, fp, dp, mu, z⟩ C
       C ≠ 0 ↔ ∃ p q : Port ⊕ Port, p ≠ q ∧
@@ -248,7 +248,7 @@ def arena : Arena where
 private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
   obtain ⟨p, q, _, hneg⟩ := (h (Port := ULift.{u} Unit) Complex.I 1 samples
-    pole_nonreal samples_distinct samples_upper samples_regular).mp one_ne_zero
+    pole_nonreal samples_distinct samples_cross samples_regular).mp one_ne_zero
   change ((0 : ℂ) * 0 - 0 * 0).re < 0 at hneg
   norm_num at hneg
 

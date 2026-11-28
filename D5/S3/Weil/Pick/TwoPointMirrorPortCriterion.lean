@@ -4,14 +4,14 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Every nonzero mirror-resolvent residue has a negative two-coordinate principal minor at any two regular upper samples. -/
+   digest: Every nonzero mirror-resolvent residue has a negative two-coordinate principal minor at any two distinct regular samples with nonzero cross denominators. -/
 
 import OmegaBuild.Commands
 import D5.S3.SpectralTopology.FiniteSpectralLocalizer
 import Mathlib.Analysis.Matrix.PosDef
 import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
 import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.Linarith
+import Mathlib.Tactic.LinearCombination
 import Mathlib.Tactic.Ring
 import Mathlib.Tactic.Push
 
@@ -22,7 +22,7 @@ compile_only_with_mathlib
 
 For a nonreal pole `mu`, an arbitrary matrix residue `C` gives the reflected
 transfer `C / (mu - z) + Cᴴ / (star mu - z)`. Its Nevanlinna Gram at two
-distinct regular upper-half-plane locations is an invertible congruence of
+distinct regular locations with nonzero cross denominators is an invertible congruence of
 the existing zero-scale spectral localizer of `C`.
 
 Consequently the Gram is positive semidefinite exactly when `C = 0`.
@@ -93,7 +93,7 @@ private theorem nevanlinnaBlock_eq_factored
     simpa using star_ne_zero.mpr hw.1
   ext i j
   simp [mirrorNevanlinnaBlock, mirrorResolvent, factoredBlock,
-    Matrix.conjTranspose_smul]
+    Matrix.conjTranspose_smul, smul_eq_mul]
   field_simp [hz.1, hz.2, hw', hw'', hcross]
   <;> ring
 
@@ -152,13 +152,13 @@ private theorem localizer_posSemidef_iff (C : Matrix Port Port ℂ) :
     simpa using (Matrix.PosSemidef.zero :
       (0 : Matrix (Port ⊕ Port) (Port ⊕ Port) ℂ).PosSemidef)
 
-/-- Two distinct regular upper samples give a certified invertible congruence
+/-- Two distinct regular samples with nonzero cross denominators give a certified invertible congruence
 with the zero-scale chiral spectral localizer, without any rank assumption on
 the matrix residue. -/
 theorem two_point_mirror_congruence
     (mu : ℂ) (C : Matrix Port Port ℂ) (z : Fin 2 → ℂ)
     (hmu : mu ≠ star mu) (hdistinct : z 0 ≠ z 1)
-    (hupper : ∀ i, 0 < (z i).im)
+    (hcross : ∀ i j, z i - star (z j) ≠ 0)
     (hregular : ∀ i, mu - z i ≠ 0 ∧ star mu - z i ≠ 0) :
     mirrorNevanlinnaGram mu C z =
         mirrorCauchyFeature mu z *
@@ -166,11 +166,6 @@ theorem two_point_mirror_congruence
             (mirrorCauchyFeature mu z)ᴴ ∧
       IsUnit (mirrorCauchyFeature (Port := Port) mu z) := by
   refine ⟨?_, cauchyFeature_isUnit mu z hmu hdistinct hregular⟩
-  have hcross (i j : Fin 2) : z i - star (z j) ≠ 0 := by
-    intro h
-    have him := congrArg Complex.im h
-    simp at him
-    linarith [hupper i, hupper j]
   simp only [mirrorNevanlinnaGram, nevanlinnaBlock_eq_factored mu C _ _
     (hregular _) (hregular _) (hcross _ _)]
   simp [mirrorCauchyFeature, finiteSpectralLocalizer, spectralShift,
@@ -183,11 +178,11 @@ the mirror pair has zero cross residue. One admissible pair already suffices. -/
 theorem two_point_mirror_posSemidef_iff
     (mu : ℂ) (C : Matrix Port Port ℂ) (z : Fin 2 → ℂ)
     (hmu : mu ≠ star mu) (hdistinct : z 0 ≠ z 1)
-    (hupper : ∀ i, 0 < (z i).im)
+    (hcross : ∀ i j, z i - star (z j) ≠ 0)
     (hregular : ∀ i, mu - z i ≠ 0 ∧ star mu - z i ≠ 0) :
     (mirrorNevanlinnaGram mu C z).PosSemidef ↔ C = 0 := by
   obtain ⟨hfactor, hunit⟩ :=
-    two_point_mirror_congruence mu C z hmu hdistinct hupper hregular
+    two_point_mirror_congruence mu C z hmu hdistinct hcross hregular
   rw [hfactor]
   exact hunit.posSemidef_star_right_conjugate_iff.trans (localizer_posSemidef_iff C)
 
@@ -210,24 +205,19 @@ private theorem cauchyDeterminant_ne_zero (mu : ℂ) (z : Fin 2 → ℂ)
 
 private theorem diagonal_port_minor (mu : ℂ) (C : Matrix Port Port ℂ)
     (z : Fin 2 → ℂ) (i : Port)
-    (hupper : ∀ j, 0 < (z j).im)
+    (hcross : ∀ j k, z j - star (z k) ≠ 0)
     (hregular : ∀ j, mu - z j ≠ 0 ∧ star mu - z j ≠ 0) :
     let G := mirrorNevanlinnaGram mu C z
     G (Sum.inl i) (Sum.inl i) * G (Sum.inr i) (Sum.inr i) -
         G (Sum.inl i) (Sum.inr i) * G (Sum.inr i) (Sum.inl i) =
       -(star (C i i) * C i i) *
         (star (cauchyDeterminant mu z) * cauchyDeterminant mu z) := by
-  have hcross (j k : Fin 2) : z j - star (z k) ≠ 0 := by
-    intro h
-    have him := congrArg Complex.im h
-    simp at him
-    linarith [hupper j, hupper k]
   have hblock (j k : Fin 2) := nevanlinnaBlock_eq_factored mu C (z j) (z k)
     (hregular j) (hregular k) (hcross j k)
   simp only [mirrorNevanlinnaGram, fromBlocks_apply₁₁, fromBlocks_apply₂₂,
     fromBlocks_apply₁₂, fromBlocks_apply₂₁]
   simp_rw [hblock]
-  simp [factoredBlock, cauchyDeterminant, star_mul, star_sub]
+  simp [factoredBlock, cauchyDeterminant, star_mul, star_sub, smul_eq_mul]
   <;> ring
 
 /-- Nonzero residues are exactly those detected by a negative principal minor
@@ -235,7 +225,7 @@ involving two sample-port coordinates, independently of the number of ports. -/
 theorem two_point_mirror_negative_principal_minor
     (mu : ℂ) (C : Matrix Port Port ℂ) (z : Fin 2 → ℂ)
     (hmu : mu ≠ star mu) (hdistinct : z 0 ≠ z 1)
-    (hupper : ∀ i, 0 < (z i).im)
+    (hcross : ∀ i j, z i - star (z j) ≠ 0)
     (hregular : ∀ i, mu - z i ≠ 0 ∧ star mu - z i ≠ 0) :
     let G := mirrorNevanlinnaGram mu C z
     C ≠ 0 ↔ ∃ p q : Port ⊕ Port, p ≠ q ∧
@@ -253,7 +243,7 @@ theorem two_point_mirror_negative_principal_minor
       have hG : G ≠ 0 := by
         intro hz
         apply hC
-        apply (two_point_mirror_posSemidef_iff mu C z hmu hdistinct hupper hregular).mp
+        apply (two_point_mirror_posSemidef_iff mu C z hmu hdistinct hcross hregular).mp
         change G.PosSemidef
         rw [hz]
         exact Matrix.PosSemidef.zero
@@ -264,7 +254,7 @@ theorem two_point_mirror_negative_principal_minor
       obtain ⟨p, q, hpq⟩ := hex
       have hHerm : G.IsHermitian := by
         change (mirrorNevanlinnaGram mu C z).IsHermitian
-        rw [(two_point_mirror_congruence mu C z hmu hdistinct hupper hregular).1]
+        rw [(two_point_mirror_congruence mu C z hmu hdistinct hcross hregular).1]
         exact Matrix.isHermitian_mul_mul_conjTranspose _
           (finite_spectral_localizer_zero_scale_isHermitian _ _ _ _)
       refine ⟨p, q, ?_, ?_⟩
@@ -280,7 +270,7 @@ theorem two_point_mirror_negative_principal_minor
         (mirrorNevanlinnaGram mu C z) (Sum.inr i) (Sum.inr i) -
         (mirrorNevanlinnaGram mu C z) (Sum.inl i) (Sum.inr i) *
         (mirrorNevanlinnaGram mu C z) (Sum.inr i) (Sum.inl i)).re < 0
-      rw [diagonal_port_minor mu C z i hupper hregular]
+      rw [diagonal_port_minor mu C z i hcross hregular]
       have hc := Complex.normSq_pos.mpr hi
       have hd := Complex.normSq_pos.mpr (cauchyDeterminant_ne_zero mu z hmu hdistinct hregular)
       simpa [Complex.star_def, mul_comm, Complex.mul_conj] using

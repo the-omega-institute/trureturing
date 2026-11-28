@@ -14,7 +14,7 @@ internal sealed class TwoPointMirrorPortCriterionDocument : IScribeDocumentDefin
                 "Let mu be nonreal and let C be an arbitrary complex square matrix on a finite port space. " +
                 "The transfer is C divided by mu minus z, plus the adjoint of C divided by the conjugate of mu minus z. " +
                 "Its Nevanlinna blocks are the difference of the transfer at z and its adjoint at w, divided by z minus the conjugate of w. " +
-                "Choose two distinct locations in the open upper half-plane, neither equal to either nominal pole. " +
+                "Choose two distinct complex locations, neither equal to either nominal pole, with every location different from the conjugate of each location. Any two distinct regular locations in the open upper half-plane satisfy these conditions. " +
                 "The full two-location Gram retains all ports at each location; no invertibility or rank condition is imposed on C.")),
             Describe.Lean(
                 DescribeId.Create("two-point-mirror-invertible-congruence"),
@@ -34,7 +34,7 @@ internal sealed class TwoPointMirrorPortCriterionDocument : IScribeDocumentDefin
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "Under the same pole, distinctness, upper-half-plane and regularity assumptions, the full Gram is positive semidefinite if and only if C is zero. " +
+                    "Under the same pole, distinctness, cross-denominator and regularity assumptions, the full Gram is positive semidefinite if and only if C is zero. " +
                     "Invertible congruence transfers positivity to the localizer. Its trace is zero, so positive semidefiniteness forces the entire localizer, and hence C, to vanish. " +
                     "For bilateral ports the residue is the adjoint of the minus port times the plus port; separate nonvanishing of the two maps does not ensure a nonzero cross residue. " +
                     "When the two port maps are equal to G, the residue is the Hilbert Gram formed by the adjoint of G times G. " +
