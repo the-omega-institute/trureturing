@@ -5,7 +5,6 @@
    anchors: [mathlib/module/Mathlib.Logic.Relation]
    digest: Strongly commuting confluent relations have a confluent union. -/
 
-import Mathlib
 import D5.S0.Rewriting.ChurchRosser
 
 namespace D5.S0.Rewriting.HindleyRosen

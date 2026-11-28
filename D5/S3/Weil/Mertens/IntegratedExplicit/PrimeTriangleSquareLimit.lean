@@ -8,6 +8,7 @@
 
 import D5.S3.Weil.Mertens.IntegratedExplicit.PrimeTrianglePowerTail
 import D5.S3.Arith.Robin.PriceRecord.UniformThetaShellError
+import D5.S3.Weil.Mertens.IntegratedExplicit.RobinActualWeightedBound
 import Mathlib.NumberTheory.AbelSummation
 import Mathlib.Topology.EMetricSpace.BoundedVariation
 import Mathlib.Tactic
@@ -630,5 +631,95 @@ theorem normalized_mangoldtHinge_sub_primeTriangle_tendsto :
   apply hsum.congr'
   filter_upwards [eventually_ge_atTop (1 : ℝ)] with x hx
   rw [mangoldtHingeSum_sub_primeTriangleSum hx, add_div]
+
+open D5.S3.Arith.Robin.CompleteMertensPeak (U)
+open D5.S3.Weil.Mertens.IntegratedExplicit.PrimeQuarterTriangle (hinge)
+open D5.S3.Weil.Mertens.IntegratedExplicit.RobinWeightedZeroLaplace (firstLiMass_lt_twentieth)
+
+open private hinge_mangoldtRamp_eq from
+  D5.S3.Weil.Mertens.IntegratedExplicit.PrimeQuarterTriangle
+
+private theorem eventually_abs_ramp_le_twentieth (hRH : RiemannHypothesis) :
+    ∀ᶠ x : ℝ in atTop, |U x| ≤ Real.sqrt x / 20 := by
+  have hmass := firstLiMass_lt_twentieth
+  have he := Real.tendsto_log_atTop.eventually
+    ((RHSharpActualEnvelope.actual_G_control hRH).1 _ (sub_pos.mpr hmass))
+  filter_upwards [he, eventually_gt_atTop (0 : ℝ)] with x h hx
+  change |Real.exp (-Real.log x / 2) * U (Real.exp (Real.log x))| <
+    _ + (1 / 20 - _) at h
+  have hinv : Real.exp (-Real.log x / 2) = (Real.sqrt x)⁻¹ := by
+    rw [Real.sqrt_eq_rpow, Real.rpow_def_of_pos hx, ← Real.exp_neg]
+    congr 1
+    ring
+  rw [add_sub_cancel _ _, Real.exp_log hx, hinv, abs_mul,
+    abs_of_pos (inv_pos.mpr (Real.sqrt_pos.mpr hx)), ← div_eq_inv_mul] at h
+  have h' := (div_lt_iff₀ (Real.sqrt_pos.mpr hx)).mp h
+  linarith only [h']
+
+/-- Under RH, the shift from prime squares gives a two-sided approximation
+for the ordinary prime triangle with a fixed square-root error. -/
+theorem eventually_abs_primeTriangle_centered_le (hRH : RiemannHypothesis) :
+    ∀ᶠ x : ℝ in atTop,
+      |primeTriangleSum x - 2 * x * Real.log 2 +
+        (6 * Real.sqrt 2 - 8) * Real.sqrt x| ≤ 29 / 70 * Real.sqrt x := by
+  let c : ℝ := 6 * Real.sqrt 2 - 8
+  have hramp := eventually_abs_ramp_le_twentieth hRH
+  have h2 := ((tendsto_const_mul_atTop_of_pos (by norm_num : (0 : ℝ) < 2)).mpr
+    tendsto_id).eventually hramp
+  have h4 := ((tendsto_const_mul_atTop_of_pos (by norm_num : (0 : ℝ) < 4)).mpr
+    tendsto_id).eventually hramp
+  have hc := (Metric.tendsto_nhds.mp normalized_mangoldtHinge_sub_primeTriangle_tendsto)
+    (1 / 500) (by norm_num)
+  filter_upwards [hramp, h2, h4, hc, eventually_gt_atTop (0 : ℝ)] with x ha hb hd he hx
+  change |U (2 * x)| ≤ Real.sqrt (2 * x) / 20 at hb
+  change |U (4 * x)| ≤ Real.sqrt (4 * x) / 20 at hd
+  change dist ((mangoldtHingeSum x - primeTriangleSum x) / Real.sqrt x) c < 1 / 500 at he
+  have hs : 0 < Real.sqrt x := Real.sqrt_pos.mpr hx
+  rw [Real.sqrt_mul (by norm_num : (0 : ℝ) ≤ 2)] at hb
+  rw [Real.sqrt_mul (by norm_num : (0 : ℝ) ≤ 4),
+    show Real.sqrt 4 = (2 : ℝ) by norm_num] at hd
+  have hs2 : Real.sqrt 2 < (99 / 70 : ℝ) := by
+    apply (sq_lt_sq₀ (Real.sqrt_nonneg _) (by norm_num)).mp
+    rw [sqrt_two_sq]
+    norm_num
+  have hhinge : |hinge U x| ≤ (577 / 1400 : ℝ) * Real.sqrt x := by
+    rw [hinge]
+    rw [abs_le] at ha hb hd ⊢
+    have hm := mul_le_mul_of_nonneg_right hs2.le hs.le
+    constructor <;> linarith only [ha.1, ha.2, hb.1, hb.2, hd.1, hd.2, hm]
+  have heq : (mangoldtHingeSum x - primeTriangleSum x) / Real.sqrt x - c =
+      (mangoldtHingeSum x - primeTriangleSum x - c * Real.sqrt x) / Real.sqrt x := by
+    field_simp [hs.ne']
+  rw [Real.dist_eq, heq, abs_div, abs_of_pos hs] at he
+  have hcorr := (div_lt_iff₀ hs).mp he
+  rw [hinge_mangoldtRamp_eq hx] at hhinge
+  change |primeTriangleSum x - 2 * x * Real.log 2 + c * Real.sqrt x| ≤ _
+  have hid : primeTriangleSum x - 2 * x * Real.log 2 + c * Real.sqrt x =
+      (mangoldtHingeSum x - 2 * x * Real.log 2) -
+        (mangoldtHingeSum x - primeTriangleSum x - c * Real.sqrt x) := by ring
+  rw [hid]
+  exact (abs_sub _ _).trans (by linarith only [hhinge, hcorr, hs])
+
+/-- A fixed eventual allowance of nine tenths of the square-root scale on
+the prime triangle along the quarter grid is equivalent to RH. -/
+theorem rh_iff_eventual_prime_triangle_nine_tenths :
+    RiemannHypothesis ↔ ∀ᶠ k : ℕ in atTop,
+      2 * ((k : ℝ) / 4) * Real.log 2 - (9 / 10) * Real.sqrt ((k : ℝ) / 4) ≤
+        primeTriangleSum ((k : ℝ) / 4) := by
+  constructor
+  · intro hRH
+    have hgrid : Tendsto (fun k : ℕ => (k : ℝ) / 4) atTop atTop :=
+      Tendsto.atTop_div_const (by norm_num) tendsto_natCast_atTop_atTop
+    have hs2 : Real.sqrt 2 < (99 / 70 : ℝ) := by
+      apply (sq_lt_sq₀ (Real.sqrt_nonneg _) (by norm_num)).mp
+      rw [sqrt_two_sq]
+      norm_num
+    filter_upwards [hgrid.eventually (eventually_abs_primeTriangle_centered_le hRH)] with k hk
+    have hs := Real.sqrt_nonneg ((k : ℝ) / 4)
+    have hcoeff := mul_le_mul_of_nonneg_right hs2.le hs
+    linarith only [(abs_le.mp hk).1, hcoeff]
+  · intro h
+    exact PrimeQuarterTriangle.rh_iff_eventual_prime_triangle_lower.mpr
+      ⟨9 / 10, by norm_num, h⟩
 
 end D5.S3.Weil.Mertens.IntegratedExplicit.PrimeTriangleSquareLimit
