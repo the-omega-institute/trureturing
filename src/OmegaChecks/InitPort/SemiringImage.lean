@@ -5,12 +5,29 @@ public import Init.Grind.Ring.CommSemiringAdapter
 from `Lean.Grind.Ring.OfSemiring.ofSemiring`. The strict interpreter evaluates in the base
 semiring and embeds the result. Its public theorems expose the addition, multiplication,
 power and all nine expression cases. The pinned interpreter recurses in the quotient ring.
-Their whole bodies differ under kernel conversion. Ordinary strict imports use the named
-equations for these computations. The standalone ring instance is unavailable. -/
+The pinned `eq_4` and `eq_5` use quotient addition and multiplication. Their lift
+coherence implies function extensionality (`funextFromAddRespect`, `funextFromMulRespect`).
+The pinned `eq_6` uses quotient power, whose successor branch multiplies. The pinned
+`eq_def` includes all three operations. The following reductions exhibit arbitrary
+quotient inputs to the pinned recursive step. The public computation equations apply
+to expression denotations. The standalone ring instance is unavailable. -/
 open Lean.Grind Lean.Grind.CommRing
 namespace OmegaChecks.InitPort.SemiringImage
 
 variable {α : Type u} [Semiring α] (ctx : Context α)
+
+private abbrev leaf := Expr.natCast 0
+
+example (x y : Ring.OfSemiring.Q α) :
+    Expr.denoteSAsRing._f ctx (.add leaf leaf) ⟨⟨x, PUnit.unit⟩, ⟨y, PUnit.unit⟩⟩ =
+      Ring.OfSemiring.add x y := rfl
+
+example (x y : Ring.OfSemiring.Q α) :
+    Expr.denoteSAsRing._f ctx (.mul leaf leaf) ⟨⟨x, PUnit.unit⟩, ⟨y, PUnit.unit⟩⟩ =
+      Ring.OfSemiring.mul x y := rfl
+
+example (x : Ring.OfSemiring.Q α) (n : Nat) :
+    Expr.denoteSAsRing._f ctx (.pow leaf n) ⟨x, PUnit.unit⟩ = Ring.OfSemiring.npow x n := rfl
 
 @[expose] public def addReference (a b : Expr) :=
   Ring.OfSemiring.add (a.denoteSAsRing ctx) (b.denoteSAsRing ctx)
