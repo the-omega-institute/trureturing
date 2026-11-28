@@ -7,8 +7,20 @@ public import Init.PropLemmas
 public import Init.Sym.Lemmas
 public import Init.Data.Sum.Lemmas
 public import Init.Data.Erased
+import all Init.System.Promise
+import all Init.ShareCommon
 
 namespace OmegaChecks.InitPort.Alternatives
+
+public theorem IO.Option.getOrBlock!._proof_1 :
+    type_of% (private_decl% @_root_.IO.Option.getOrBlock!._proof_1) := by
+  rintro α ⟨fallback⟩
+  exact ⟨fun opt => opt.getD fallback⟩
+
+public theorem ShareCommon.StateFactory.mk._proof_1 :
+    type_of% (private_decl% @_root_.ShareCommon.StateFactory.mk._proof_1) := by
+  obtain ⟨factory⟩ := _root_.ShareCommon.StateFactoryPointed.property
+  exact ⟨fun _ => factory⟩
 
 /-- The argument of a thunk has a unique constructor, so applying it at unit reconstructs the thunk. -/
 public theorem Thunk.ext : type_of% @_root_.Thunk.ext := by

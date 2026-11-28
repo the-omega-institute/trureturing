@@ -2,6 +2,7 @@ module
 public import Init.Data.Range.Polymorphic.Nat
 public import Init.Data.Range.Polymorphic.Int
 public import Init.Data.Range.Polymorphic.Fin
+import all Init.Data.Range.Polymorphic.Fin
 public import Init.Data.Range.Polymorphic.UInt
 import all Init.Data.Range.Polymorphic.Internal.SignedBitVec
 import all Init.Data.Range.Polymorphic.SInt
@@ -238,6 +239,33 @@ public theorem Fin.instLawfulHasSize_2 {n : Nat} : Rxi.LawfulHasSize (Fin n) whe
     change n - a.val = n - b.val + 1
     have below := b.isLt
     omega
+
+public theorem Fin.instLawfulUpwardEnumerableLE._proof_6 :
+    type_of% (private_decl% @_root_.Fin.instLawfulUpwardEnumerableLE._proof_6) := by
+  intro n x y le
+  have dist := Nat.add_sub_of_le le
+  exact ⟨dist.symm ▸ y.isLt, dist⟩
+
+public theorem Fin.instLawfulUpwardEnumerableLE._proof_7 :
+    type_of% (private_decl% @_root_.Fin.instLawfulUpwardEnumerableLE._proof_7) := by
+  rintro n x y ⟨k, _, distance⟩
+  exact distance ▸ Nat.le_add_right x.val k
+
+public theorem Fin.instLawfulUpwardEnumerable._proof_3 :
+    type_of% (private_decl% @_root_.Fin.instLawfulUpwardEnumerable._proof_3) :=
+  fun {_} => Fin.instLawfulUpwardEnumerable.ne_of_lt
+
+public theorem Fin.instLawfulUpwardEnumerable._proof_7 :
+    type_of% (private_decl% @_root_.Fin.instLawfulUpwardEnumerable._proof_7) :=
+  fun {_} => Fin.instLawfulUpwardEnumerable.succMany?_add_one
+
+public theorem Fin.instLawfulHasSize_2._proof_2 :
+    type_of% (private_decl% @_root_.Fin.instLawfulHasSize_2._proof_2) :=
+  fun {_} => Fin.instLawfulHasSize_2.size_eq_one_of_succ?_eq_none
+
+public theorem Fin.instLawfulHasSize_2._proof_3 :
+    type_of% (private_decl% @_root_.Fin.instLawfulHasSize_2._proof_3) :=
+  fun {_} => Fin.instLawfulHasSize_2.size_eq_succ_of_succ?_eq_some
 
 private theorem bitNextValue {w : Nat} (x : BitVec w) :
     (x + 1).toNat = (x.toNat + 1) % 2^w := by

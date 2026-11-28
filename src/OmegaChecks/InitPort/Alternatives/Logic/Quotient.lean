@@ -33,4 +33,10 @@ private def quotientHRec {α : Sort u} {r : α → α → Prop} {motive : Quot r
 
 public def Quot.hrecOn : type_of% @_root_.Quot.hrecOn := @quotientHRec
 
+public theorem Quotient.recOnSubsingleton₂._proof_1 :
+    type_of% @_root_.Quotient.recOnSubsingleton₂._proof_1 := by
+  intro α β s₁ s₂ motive fibers q a
+  exact _root_.Quotient.ind (motive := fun b => Subsingleton (motive (Quotient.mk s₁ a) b))
+    (fibers a) q
+
 end OmegaChecks.InitPort.Alternatives

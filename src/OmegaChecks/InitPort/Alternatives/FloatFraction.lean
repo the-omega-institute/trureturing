@@ -2,6 +2,8 @@ module
 import all OmegaChecks.InitPort.Alternatives.Float
 public import Init.Data.Float.Float
 public import Init.Data.Float.Float32
+import all Init.Data.Float.Float
+import all Init.Data.Float.Float32
 
 namespace OmegaChecks.InitPort.Alternatives
 open _root_.Float.Model
@@ -28,5 +30,11 @@ public def Float.frExp (x : _root_.Float) : _root_.Float × Int :=
 
 public def Float32.frExp (x : _root_.Float32) : _root_.Float32 × Int :=
   splitFraction 23 fraction32 x x.toModel.unpack
+
+public theorem Float.frExp._proof_1 :
+    type_of% (private_decl% @_root_.Float.frExp._proof_1) := ⟨Float.frExp⟩
+
+public theorem Float32.frExp._proof_1 :
+    type_of% (private_decl% @_root_.Float32.frExp._proof_1) := ⟨Float32.frExp⟩
 
 end OmegaChecks.InitPort.Alternatives
