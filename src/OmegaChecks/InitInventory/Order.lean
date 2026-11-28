@@ -803,7 +803,7 @@ theorem smallChainSelections :
 
 example : ChainLaw (@flat_csup.{1}) = type_of% @flat_csup_is_sup.{1} := rfl
 
-/-- With a certified upper bound for each chain, agreement with that bound is
+/-- With a certified least upper bound for each chain, agreement with that bound is
 equivalent to the supremum law for the proposed selector. -/
 theorem eqIffChainLaw (pick : type_of% @flat_csup.{u+1})
     (bound : ∀ {α : Type u} {b : α} (c : FlatOrder b → Prop), chain c → FlatOrder b)

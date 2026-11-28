@@ -73,7 +73,8 @@ Its relation to the pinned predicate is officialIff. Reconstructing the
 unrestricted selector and the original family is open. -/
 
 /- The public flat_csup_eq and flat_csup_is_sup use flat_csup. Its specified
-behavior selects a nonbottom point even when the predicate is not a chain.
+behavior selects a nonbottom point whenever the predicate has one, including
+predicates that are not chains.
 InternalOrder.choiceFromFlatPresence recovers Classical.choice from that behavior.
 On chains, FlatSelection.smallChainSelections characterizes the small-universe
 supremum law, and eqIffChainLaw characterizes agreement with a certified supremum. -/
