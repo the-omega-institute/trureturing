@@ -116,3 +116,11 @@ export _root_.Nat (add_eq_max_iff add_eq_min_iff add_eq_zero add_lt_iff_lt_sub_r
   pred_eq_succ_iff sub_eq_of_eq_add' sub_lt_iff_lt_add sub_lt_iff_lt_add' sub_max_sub_left
   sub_min_sub_left)
 end Omega.Nat
+
+namespace Omega.Nat
+export _root_.Nat (add_eq_one_iff add_eq_three_iff add_eq_two_iff add_mod_eq_ite add_sub_sub_cancel
+  div_lt_div_left le_or_le_of_add_eq_add_pred le_pow lt_iff_lt_of_mul_eq_mul mod_two_bne_one
+  not_dvd_iff_lt_mul_succ not_dvd_of_lt_of_lt_mul_succ one_lt_iff_ne_zero_and_ne_one
+  pow_lt_pow_iff_pow_mul_le_pow self_sub_mod sub_add_sub_cancel sub_lt_sub_iff_right
+  sub_sub_sub_cancel_right)
+end Omega.Nat

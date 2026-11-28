@@ -41,3 +41,7 @@ end Omega.Nat
 namespace Omega.Nat
 export _root_.Nat (eq_zero_of_le_zero le_of_not_lt)
 end Omega.Nat
+
+namespace Omega.Nat
+export _root_.Nat (add_lt_add)
+end Omega.Nat
