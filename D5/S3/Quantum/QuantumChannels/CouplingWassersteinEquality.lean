@@ -1,3 +1,4 @@
+import D5.S3.Quantum.GleasonComplexRepresentation
 import D5.S3.Quantum.QuantumChannels.CouplingWassersteinTriangleRefutation
 import D5.S3.Quantum.Foundation.TrigonometricMomentGap
 import D5.S3.Quantum.Foundation.FiniteHermitianTraceDuality
@@ -11,7 +12,6 @@ Preregistration: https://github.com/the-omega-institute/trureturing/issues/35123
 
 set_option autoImplicit false
 set_option Elab.async false
-set_option maxHeartbeats 250000
 
 noncomputable section
 
@@ -137,7 +137,8 @@ private theorem swapped_difference (u v : Fin n → ℂ) {a b t : ℝ}
       (t : ℂ) • (rankOneDensity u - rankOneDensity v) := by
   have h : (a : ℂ) ^ 2 - (b : ℂ) ^ 2 = (t : ℂ) := by exact_mod_cast ht
   ext i j
-  simp only [rankOneDensity, Matrix.sub_apply, Matrix.smul_apply, vecMulVec_apply, Pi.star_apply, Pi.add_apply,
+  simp only [rankOneDensity, Matrix.sub_apply, Matrix.smul_apply, vecMulVec_apply,
+    Pi.star_apply, Pi.add_apply,
     Pi.smul_apply, smul_eq_mul, star_add, star_mul, Complex.star_def, Complex.conj_ofReal]
   linear_combination (u i * (starRingEnd ℂ) (u j) - v i * (starRingEnd ℂ) (v j)) * h
 
@@ -299,7 +300,6 @@ theorem fixed_pair_equality (x y : UnitVector n)
       rw [hA']
       exact (spectral_pairing H hminus hplus u' v' ht).2.mpr ⟨hu', hv'⟩
 
-
 private theorem ground_eq_zero_of_density_eq (x y : UnitVector n)
     (h : rankOneDensity x.val = rankOneDensity y.val) : ground x y = 0 := by
   have hy : rankOneDensity y.val *ᵥ y.val = y.val := by
@@ -363,7 +363,8 @@ theorem countable_plan_slack {ρ σ : Matrix (Fin n) (Fin n) ℂ} (Q : Plan ρ �
         pairing H (rankOneDensity (Q.source j).val - rankOneDensity (Q.target j).val))
     (∀ j, 0 ≤ slack j) ∧ HasSum slack (cost Q - pairing H (ρ - σ)) := by
   dsimp only
-  refine ⟨fun j => mul_nonneg (Q.nonneg j) (sub_nonneg.mpr (atom_pairing_le H hminus hplus _ _)), ?_⟩
+  refine ⟨fun j => mul_nonneg (Q.nonneg j)
+    (sub_nonneg.mpr (atom_pairing_le H hminus hplus _ _)), ?_⟩
   simpa only [mul_sub] using (hasSum_cost Q).sub (hasSum_pairing Q H)
 
 /-- A countable plan attains the fixed test bound exactly when all of its
@@ -421,11 +422,6 @@ theorem traceNorm_le_wasserstein {ρ σ : Matrix (Fin n) (Fin n) ℂ}
   · rintro _ ⟨Q, rfl⟩
     exact traceNorm_le_countable_cost Q hΔ
 
-#print axioms countable_plan_slack
-#print axioms countable_plan_equality
-#print axioms traceNorm_le_countable_cost
-#print axioms traceNorm_le_wasserstein
-
 /-- Countable barycenters are limits of finite convex combinations formed by
 placing the leftover mass on one fixed point. -/
 private theorem countable_barycenter_mem {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
@@ -454,7 +450,8 @@ private theorem countable_barycenter_mem {E : Type*} [NormedAddCommGroup E] [Nor
     (fun j _ => by
       by_cases hj : j < k
       · simpa [w', hj] using hw j
-      · simpa [w', hj, rest] using sub_nonneg.mpr (sum_le_hasSum (Finset.range k) (fun i _ => hw i) hm))
+      · simpa [w', hj, rest] using
+          sub_nonneg.mpr (sum_le_hasSum (Finset.range k) (fun i _ => hw i) hm))
     hmass (fun j _ => by
       by_cases hj : j < k
       · simpa [z', hj] using hz j
@@ -487,8 +484,6 @@ theorem countable_plan_mem_closure {ρ σ : Matrix (Fin n) (Fin n) ℂ} (Q : Pla
       Q.left.prodMk (Q.right.prodMk (hasSum_cost Q))
   exact countable_barycenter_mem isClosed_closure (convex_convexHull ℝ _).closure
     (z 0) (hz 0) z hz Q.weight Q.nonneg Q.mass hp
-
-#print axioms countable_plan_mem_closure
 
 /-- Realize a finite weighted family by extending its weights by zero in the
 original countable plan. The added coordinates use a fixed unit vector. -/
@@ -591,9 +586,6 @@ theorem finite_attainment_of_compact_hull {ρ σ : Matrix (Fin n) (Fin n) ℂ}
     · exact le_csInf ⟨c, Q, hcost⟩ (by rintro _ ⟨P, rfl⟩; exact hle P)
   exact ⟨Q, hfin, hcost.trans hval.symm⟩
 
-#print axioms convexHull_realized_as_plan
-#print axioms finite_attainment_of_compact_hull
-
 local instance : TopologicalSpace (UnitVector n) :=
   inferInstanceAs (TopologicalSpace {v : Fin n → ℂ // ∑ i, Complex.normSq (v i) = 1})
 
@@ -602,7 +594,7 @@ private theorem unitVector_compact : CompactSpace (UnitVector n) := by
   change CompactSpace S
   apply isCompact_iff_compactSpace.mp
   have hc : Continuous fun v : Fin n → ℂ => ∑ i, Complex.normSq (v i) :=
-    continuous_finset_sum _ fun i _ => Complex.continuous_normSq.comp (continuous_apply i)
+    continuous_finsetSum _ fun i _ => Complex.continuous_normSq.comp (continuous_apply i)
   have hclosed : IsClosed S := isClosed_eq hc continuous_const
   have hcompact : IsCompact (Set.pi Set.univ fun _ : Fin n => Metric.closedBall (0 : ℂ) 1) :=
     isCompact_univ_pi fun _ => isCompact_closedBall _ _
@@ -629,13 +621,13 @@ private theorem continuous_pureMoment :
     apply Real.continuous_sqrt.comp
     apply continuous_const.sub
     apply Complex.continuous_normSq.comp
-    exact continuous_finset_sum _ fun i _ =>
+    exact continuous_finsetSum _ fun i _ =>
       (((continuous_apply i).comp continuous_subtype_val).comp continuous_fst).star.mul
         (((continuous_apply i).comp continuous_subtype_val).comp continuous_snd)
   exact (hρ.comp continuous_fst).prodMk ((hρ.comp continuous_snd).prodMk hground)
 
 private theorem pureMoments_compact : IsCompact (pureMoments n) := by
-  haveI : CompactSpace (UnitVector n) := unitVector_compact
+  have : CompactSpace (UnitVector n) := unitVector_compact
   exact isCompact_range continuous_pureMoment
 
 open D5.S3.Quantum.Foundation.TrigonometricMomentGap (compact_hull)
@@ -647,7 +639,59 @@ theorem finite_attainment {ρ σ : Matrix (Fin n) (Fin n) ℂ} (Q₀ : Plan ρ �
   finite_attainment_of_compact_hull Q₀
     (compact_hull pureMoments_compact ⟨_, ⟨(Q₀.source 0, Q₀.target 0), rfl⟩⟩)
 
-#print axioms finite_attainment
+private def spectralVector {A : Matrix (Fin n) (Fin n) ℂ} (hA : A.IsHermitian) (i : Fin n) :
+    UnitVector n :=
+  ⟨(hA.eigenvectorBasis i).ofLp, unit_of_ip (by
+    change (star (hA.eigenvectorBasis i).ofLp ⬝ᵥ (hA.eigenvectorBasis i).ofLp) = 1
+    rw [dotProduct_comm, ← EuclideanSpace.inner_eq_star_dotProduct, inner_self_eq_norm_sq_to_K,
+      hA.eigenvectorBasis.orthonormal.norm_eq_one i]
+    norm_num)⟩
+
+/-- Spectral decompositions of both marginals yield an admissible product plan. -/
+theorem plan_nonempty_of_density (hn : 0 < n) {ρ σ : Matrix (Fin n) (Fin n) ℂ}
+    (hρ : ρ.PosSemidef) (hρtr : ρ.trace = 1)
+    (hσ : σ.PosSemidef) (hσtr : σ.trace = 1) : Nonempty (Plan ρ σ) := by
+  let r := hρ.isHermitian.eigenvalues
+  let s := hσ.isHermitian.eigenvalues
+  let w (ij : Fin n × Fin n) := r ij.1 * s ij.2
+  let x (ij : Fin n × Fin n) := spectralVector hρ.isHermitian ij.1
+  let y (ij : Fin n × Fin n) := spectralVector hσ.isHermitian ij.2
+  have hr : ∑ i, r i = 1 := by
+    have h := hρ.isHermitian.trace_eq_sum_eigenvalues
+    rw [hρtr] at h
+    simpa [Complex.re_sum, r, s] using (congrArg Complex.re h).symm
+  have hs : ∑ i, s i = 1 := by
+    have h := hσ.isHermitian.trace_eq_sum_eigenvalues
+    rw [hσtr] at h
+    simpa [Complex.re_sum, r, s] using (congrArg Complex.re h).symm
+  have hw (ij : Fin n × Fin n) : 0 ≤ w ij :=
+    mul_nonneg (hρ.eigenvalues_nonneg ij.1) (hσ.eigenvalues_nonneg ij.2)
+  have hm : ∑ ij, w ij = 1 := by
+    rw [Fintype.sum_prod_type]
+    simp [w, ← Finset.mul_sum, hs, hr]
+  have hl : ∑ ij, (w ij : ℂ) • rankOneDensity (x ij).val = ρ := by
+    rw [Fintype.sum_prod_type]
+    simp only [w, x, Complex.ofReal_mul, mul_comm (↑(r _) : ℂ), mul_smul,
+      ← Finset.sum_smul, ← Complex.ofReal_sum, hs, Complex.ofReal_one, one_smul]
+    simpa [r, spectralVector, rankOneDensity, Gleason.rankOne, Complex.real_smul] using
+      hρ.isHermitian.eq_sum_eigenvalues_smul_rankOne.symm
+  have hright : ∑ ij, (w ij : ℂ) • rankOneDensity (y ij).val = σ := by
+    rw [Fintype.sum_prod_type_right]
+    simp only [w, y, Complex.ofReal_mul, mul_smul,
+      ← Finset.sum_smul, ← Complex.ofReal_sum, hr, Complex.ofReal_one, one_smul]
+    simpa [s, spectralVector, rankOneDensity, Gleason.rankOne, Complex.real_smul] using
+      hσ.isHermitian.eq_sum_eigenvalues_smul_rankOne.symm
+  obtain ⟨Q, _, _⟩ := finite_realization (spectralVector hρ.isHermitian ⟨0, hn⟩) w hw hm x y
+  exact ⟨hl ▸ hright ▸ Q⟩
+
+/-- The original countable-plan infimum of two finite-dimensional density
+matrices is attained by a finitely supported plan. -/
+theorem finite_attainment_of_density (hn : 0 < n) {ρ σ : Matrix (Fin n) (Fin n) ℂ}
+    (hρ : ρ.PosSemidef) (hρtr : ρ.trace = 1)
+    (hσ : σ.PosSemidef) (hσtr : σ.trace = 1) :
+    ∃ Q : Plan ρ σ, (∃ s : Finset ℕ, ∀ j ∉ s, Q.weight j = 0) ∧ cost Q = wasserstein ρ σ := by
+  obtain ⟨Q⟩ := plan_nonempty_of_density hn hρ hρtr hσ hσtr
+  exact finite_attainment Q
 
 private def phaseX : UnitVector 2 :=
   ⟨![4 / 5, (3 / 5) * Complex.I], by
@@ -688,8 +732,5 @@ theorem phase_diagnostic :
       Complex.mul_im, Real.sqrt_div]
   · norm_num [ground, phaseX, oppositeY, phaseY, Fin.sum_univ_two,
       Complex.normSq_apply, Complex.star_def, Complex.conj_ofNat, Complex.mul_re, Complex.mul_im]
-
-#print axioms fixed_pair_equality
-#print axioms phase_diagnostic
 
 end D5.S3.Quantum.QuantumChannels.CouplingWassersteinEquality
