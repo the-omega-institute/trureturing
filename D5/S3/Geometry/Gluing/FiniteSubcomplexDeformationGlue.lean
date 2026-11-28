@@ -1,3 +1,11 @@
+/- GID: D5/S3/Geometry/Gluing/FiniteSubcomplexDeformationGlue
+   generality: G
+   mirror-B: none(waiver:consumed-by-weak-category-one-reduction)
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: A relative deformation extends across a finite subcomplex union. -/
+
 import D5.S3.Geometry.Gluing.RelativeDeformationRetract
 import Mathlib.Topology.Homotopy.Contractible
 import Mathlib.Topology.Piecewise

@@ -1,3 +1,11 @@
+/- GID: D5/S3/Topology/StableCategory/WeaklyContractibleFactor
+   generality: G
+   mirror-B: D5/B/S3/Topology/StableCategory/WeaklyContractibleFactor
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Nullhomotopic finite order maps factor through contractible order complexes. -/
+
 import Batteries.Tactic.OpenPrivate
 import D5.S3.Geometry.Gluing.FiniteSubcomplexDeformationGlue
 import D5.S3.Geometry.Gluing.MappedRealization

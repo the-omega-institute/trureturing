@@ -1,3 +1,11 @@
+/- GID: D5/S3/Topology/StableCategory/TwoRowFenceCylinder
+   generality: G
+   mirror-B: none(waiver:consumed-by-weak-category-one-reduction)
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: A finite fence extends to a contractible cylinder with a lower initial row. -/
+
 import Mathlib.Basic.Finite.Sum
 import Mathlib.Data.Fintype.WithTopBot
 import Mathlib.Logic.Relation

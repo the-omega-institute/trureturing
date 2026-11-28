@@ -1,3 +1,11 @@
+/- GID: D5/S3/Topology/StableCategory/LocalFactorsSubdivision
+   generality: G
+   mirror-B: none(waiver:consumed-by-weak-category-one-reduction)
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Exact local factorizations transport together through iterated subdivision. -/
+
 import Batteries.Tactic.OpenPrivate
 import D5.S3.Topology.StableCategory.LowerCoverSubdivision
 import D5.S3.Topology.StableCategory.CategoricalCoverFactorization

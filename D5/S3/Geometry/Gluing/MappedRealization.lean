@@ -1,3 +1,11 @@
+/- GID: D5/S3/Geometry/Gluing/MappedRealization
+   generality: G
+   mirror-B: none(waiver:consumed-by-weak-category-one-reduction)
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: An embedding of simplicial vertices gives a realization homeomorphism onto the image. -/
+
 import D5.S3.Geometry.FiniteSimplicialJoin
 import Mathlib.LinearAlgebra.Finsupp.Pi
 import Mathlib.Analysis.Convex.Hull

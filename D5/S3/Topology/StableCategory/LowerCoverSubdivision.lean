@@ -1,3 +1,11 @@
+/- GID: D5/S3/Topology/StableCategory/LowerCoverSubdivision
+   generality: G
+   mirror-B: none(waiver:consumed-by-weak-category-one-reduction)
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Categorical lower covers persist at every later ordinary subdivision depth. -/
+
 import Batteries.Tactic.OpenPrivate
 import D5.S3.Topology.StableCategory.OrderComplexNullhomotopy
 import D5.S3.Topology.StableCategory.ProductStableLower

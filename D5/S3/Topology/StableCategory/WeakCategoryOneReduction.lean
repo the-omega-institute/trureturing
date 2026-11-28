@@ -1,3 +1,11 @@
+/- GID: D5/S3/Topology/StableCategory/WeakCategoryOneReduction
+   generality: G
+   mirror-B: D5/B/S3/Topology/StableCategory/WeakCategoryOneReduction
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Stable categorical bounds reduce to contractible order complexes. -/
+
 import Batteries.Tactic.OpenPrivate
 import D5.S3.Topology.StableCategory.FaceInclusionNullhomotopy
 import D5.S3.Topology.StableCategory.LocalFactorsSubdivision

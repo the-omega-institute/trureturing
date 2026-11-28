@@ -1,3 +1,11 @@
+/- GID: D5/S3/Topology/StableCategory/OrderComplexCylinderUnion
+   generality: G
+   mirror-B: none(waiver:consumed-by-weak-category-one-reduction)
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Lower amalgamations give exact unions of order complexes. -/
+
 import D5.S3.Topology.StableCategory.OrderComplexNullhomotopy
 import D5.S3.Topology.StableCategory.PosetMappingCylinderGlue
 

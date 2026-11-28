@@ -1,6 +1,6 @@
 /- GID: D5/S3/Topology/StableCategory/RealizedOrderMapHomotopy
-   generality: I
-   mirror-B: D5/B/S3/Topology/StableCategory/RealizedOrderMapHomotopy
+   generality: G
+   mirror-B: none(waiver:consumed-by-weak-category-one-reduction)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none

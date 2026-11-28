@@ -1,3 +1,11 @@
+/- GID: D5/S3/Topology/StableCategory/PosetMappingCylinderGlue
+   generality: G
+   mirror-B: none(waiver:consumed-by-weak-category-one-reduction)
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Finite order maps glue along their common lower row in a mapping cylinder. -/
+
 import Mathlib.Data.Fintype.Sum
 import Mathlib.Order.Preorder.Chain
 import Mathlib.Order.UpperLower.Basic
