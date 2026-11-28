@@ -25,7 +25,7 @@ internal sealed class GangulyRecoveryDocument : IScribeDocumentDefinition
                 StatementSource.FromAuthor(Disp(new Formula.Not(new Formula.Symbol(FormulaIdentifier.Create("claim"))))),
                 AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text(
-                    "The universal inclusion is false. For the seven-vertex graph the circuit family is a quantum access structure and contains {2, 5, 6} at dealer 4. The encoding is the isometry into the shortened code established by the witness correspondence with Proposition 8. The two logical pure inputs have the same retained matrix. A completely positive trace-preserving recovery map would have to map that one matrix to both distinct inputs. This establishes a failure at seven vertices. The smaller-size assertion in the quoted question is attributed to Table I."))),
+                    "The universal inclusion is false. For the seven-vertex graph the circuit family is a quantum access structure and contains {2, 5, 6} at dealer 4. The encoding is the isometry into the shortened code established by the witness correspondence with Proposition 8. The two distinct logical pure inputs have the same retained matrix. Any recovery function of that matrix, including a completely positive trace-preserving map, would have to return both inputs from the same matrix. This establishes a failure at seven vertices. The smaller-size assertion in the quoted question is attributed to Table I."))),
                 DescribeRole.Theorem,
                 openProblemResolutionClaim: new OpenProblemResolutionClaim(
                     ProblemSlugRef.Create("ganguly-2026-circuit-access-recovery-inclusion"),

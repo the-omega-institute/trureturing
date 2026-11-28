@@ -30,7 +30,9 @@ The source states the question and records inclusion for qualifying simple graph
 
 Use the simple graph on vertices 0 through 6 with edges 01, 02, 04, 06, 12, 13, 16, 23, 25, 45, 46 and 56. Take dealer 4 and retained players A = {2, 5, 6}. The circuit relation with its single one at vertex 5 gives the circuit {2, 4, 5*, 6}, so A is authorized. The ten minimal supports used by the access proof are 026, 036, 056, 236, 256, 356, 0123, 0125, 0135 and 1235, and every pair intersects.
 
-The dealer slices are normalized by the factor 1/sqrt(128). The integer Gram sum is 64 on equal dealer labels and zero on distinct labels, so the slices are an isometry. For every retained pair of configurations, the mixed signed sum over the three discarded vertices is zero. Consequently the two distinct logical X eigenstate projectors have the same reduced matrix on A. Any function of that retained matrix, including the function induced by a CPTP recovery map, would have to return two distinct matrices from one input.
+The unnormalized dealer columns have Gram matrix 64 I. Multiplying each column by 1/8 gives the isometric encoding. The full seven-qubit graph state has amplitude factor 1/sqrt(128), and Proposition 8(3) extracts the encoding columns by multiplying each dealer slice by sqrt(2).
+
+For every retained pair of configurations, the mixed signed sum over the three discarded vertices is zero. Consequently the two distinct logical X eigenstate projectors have the same reduced matrix on A. Any function of that retained matrix, including the function induced by a CPTP recovery map, would have to return two distinct matrices from one input.
 
 ## Falsifier
 
@@ -52,7 +54,7 @@ The named question is refuted by the frozen `Recovery.result` declaration. The u
 
 The seven-vertex simple graph has a pairwise intersecting circuit family and an authorized set whose reduced encoding identifies two distinct logical inputs. The source's operational recovery implication therefore fails at seven vertices. The checked minimum-size boundary remains contextual evidence. The paper's six-vertex inclusion table and the supplied enumeration are outside the Lean result.
 
-The witness does not settle narrower questions about loopless subclasses beyond the displayed graph, alternate encodings, the minimum-size claim as a standalone theorem, or any question using stronger recovery hypotheses. The source's other results retain their stated hypotheses.
+For this encoding and retained set, the collision rules out every recovery function of the retained matrix. Stronger conditions on the graph or the circuit-access antecedent that exclude this witness, alternate encodings, and the minimum-size claim as a standalone theorem are outside the scope of the result. The source's other results retain their stated hypotheses.
 
 ## ASSUMED-UNVERIFIED
 

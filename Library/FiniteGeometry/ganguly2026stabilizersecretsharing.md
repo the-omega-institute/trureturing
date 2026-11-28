@@ -14,6 +14,8 @@ triage: anchor
 
 # Circuit access and recovery for simple graph states
 
+## Verified locator
+
 Section VI, Problem 2, appears on printed page 22 of arXiv:2611.27300v2.
 Section II.E gives the graph representation by the row space of the block
 matrix with identity and adjacency blocks. Definition 3 and Proposition 4
@@ -24,3 +26,5 @@ codespace for the shortened lift and obtains the encoding by multiplying
 the dealer's computational-basis slices by the square root of the field
 size. Theorem 9 on page 15 gives the independent recovery criterion in
 terms of the dealer image.
+
+[DOI 10.48550/arXiv.2611.27300](https://doi.org/10.48550/arXiv.2611.27300) · [arXiv version 2](https://arxiv.org/abs/2611.27300v2)
