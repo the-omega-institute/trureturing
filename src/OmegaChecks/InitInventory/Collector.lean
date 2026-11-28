@@ -187,6 +187,90 @@ theorem noContinuousSignalDecider
     | true => exact False.elim ((Nat.ne_of_lt lt) (Nat.eq_of_beq_eq_true eq))
   exact (same spike agree).symm.trans yes
 
+/-- A state either returns a length or requests one Boolean from the input stream. -/
+abbrev QueryStep (σ : Type u) := σ → Sum Nat (Nat × (Bool → σ))
+
+inductive Returns {σ : Type u} (step : QueryStep σ) (stream : Nat → Bool) : σ → Nat → Prop where
+  | stop {s n} : step s = .inl n → Returns step stream s n
+  | ask {s n i next} : step s = .inr (i, next) →
+      Returns step stream (next (stream i)) n → Returns step stream s n
+
+private theorem returnOnPrefix {σ : Type u} {step : QueryStep σ} {s : σ} {n : Nat}
+    (done : Returns step (fun _ => false) s n) :
+    ∃ bound, ∀ stream : Nat → Bool, (∀ i, i < bound → stream i = false) → Returns step stream s n := by
+  induction done with
+  | stop h => exact ⟨0, fun _ _ => .stop h⟩
+  | @ask s n i next h _ ih =>
+    obtain ⟨b, same⟩ := ih
+    refine ⟨b + (i+1), fun f agree => .ask h ?_⟩
+    rw [agree i (Nat.lt_of_lt_of_le (Nat.lt_succ_self i) (Nat.le_add_left ..))]
+    exact same _ (fun j lt => agree j (Nat.lt_of_lt_of_le lt (Nat.le_add_right ..)))
+
+/-- Any terminating run on the all-false stream also returns its claimed length on
+a stream whose first true bit occurs strictly later. The bound depends on this run. -/
+private theorem lateSignalOfReturn {σ : Type u} {step : QueryStep σ} {s : σ} {n : Nat}
+    (done : Returns step (fun _ => false) s n) :
+    ∃ k, n < k ∧ Returns step (fun i => Nat.ble k i) s n := by
+  obtain ⟨b, same⟩ := returnOnPrefix done
+  let k := b + (n+1)
+  refine ⟨k, Nat.lt_of_lt_of_le (Nat.lt_succ_self n) (Nat.le_add_left ..), same _ ?_⟩
+  intro i lt
+  have notLE := Nat.not_le_of_gt (Nat.lt_of_lt_of_le lt (Nat.le_add_right b (n+1)))
+  cases eq : Nat.ble k i with
+  | false => rfl
+  | true => exact (notLE (Nat.le_of_ble_eq_true eq)).elim
+
+/-- A partial oracle machine can agree on every threshold stream or terminate on the
+zero stream. Requiring both contradicts the finite length observed on a later threshold. -/
+theorem noTerminatingThresholdCounter {σ : Type u} (step : QueryStep σ) (s : σ)
+    (correct : ∀ k n, Returns step (Nat.ble k) s n → n = k) :
+    ∀ n, ¬ Returns step (fun _ => false) s n := by
+  intro n done
+  obtain ⟨k, lt, repeated⟩ := lateSignalOfReturn done
+  exact Nat.ne_of_lt lt (correct k n repeated)
+
+run_cmd
+  unless (← collectAxioms ``noTerminatingThresholdCounter).isEmpty do
+    throwError "the finite-query obstruction depends on axioms"
+
+/-- Length returned by the pinned collector on the iterator that first sees true at k. -/
+noncomputable def thresholdOutputLength (k : Nat) : Nat :=
+  letI := searchIterator (Nat.ble k)
+  (search 0).toList.length
+
+private theorem thresholdLength (k : Nat) : thresholdOutputLength k = k := by
+  letI := searchIterator (Nat.ble k)
+  have sticky (i : Nat) (h : k.ble i = true) : k.ble (i+1) = true :=
+    Nat.ble_eq_true_of_le (Nat.le.step (Nat.le_of_ble_eq_true h))
+  letI := searchFinite (f := Nat.ble k) sticky (Nat.ble_self_eq_true k)
+  have counts (d i : Nat) (eq : i + d = k) : (search i).toList.length = d := by
+    induction d generalizing i with
+    | zero =>
+      rw [Iter.toList_eq_match_step, searchStep (Nat.ble k)]
+      have e : i = k := eq
+      subst i
+      rw [Nat.ble_self_eq_true]
+      rfl
+    | succ d ih =>
+      have lt : i < k := by omega
+      have miss : k.ble i = false := by
+        cases h : k.ble i with
+        | false => rfl
+        | true => exact (Nat.not_le_of_gt lt (Nat.le_of_ble_eq_true h)).elim
+      rw [Iter.toList_eq_match_step, searchStep (Nat.ble k), miss]
+      change (search (i+1)).toList.length + 1 = d + 1
+      exact congrArg Nat.succ (ih (i+1) (by omega))
+  exact counts k 0 (Nat.zero_add k)
+
+/-- A program that agrees with the pinned collector on its terminating threshold streams
+cannot return a list length on the all-false stream. Its queries may be adaptive and
+may revisit any index. There is no bound on the number of queries shared by all runs. -/
+theorem noTerminatingCollectorOnZero {σ : Type u} (step : QueryStep σ) (s : σ)
+    (correct : ∀ k n, Returns step (Nat.ble k) s n → n = thresholdOutputLength k) :
+    ∀ n, ¬ Returns step (fun _ => false) s n := by
+  exact noTerminatingThresholdCounter step s fun k n repeated =>
+    (correct k n repeated).trans (thresholdLength k)
+
 private def limitedOmniscienceFromLength
     (measure : ∀ {α β : Type} [Iterator α Id β], Iter (α := α) β → Nat)
     (correct : ∀ {α β : Type} [Iterator α Id β] [Finite α Id] (it : Iter (α := α) β),
