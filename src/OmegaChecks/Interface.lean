@@ -27,7 +27,8 @@ open Lean
 namespace OmegaChecks.Interface
 
 private def official (strict : Environment) (n : Name) : Name := Id.run do
-  if n == OmegaChecks.InitPort.LawfulLoop.strictHelper then return ``OmegaChecks.InitPort.LawfulLoop.reference
+  if let some rule := OmegaChecks.InitPort.LawfulLoop.rules.find? (fun r => InitKernelPort.portName r.helper == n) then
+    return rule.reference
   if let some rule := OmegaChecks.InitPort.PatternMatch.rules.find? (fun r => InitKernelPort.portName r.helper == n) then
     return rule.reference
   if let some user := privateToUserName? n then
@@ -418,8 +419,9 @@ def checkSites (strict publicStrict reference : Environment) (bindings : Array (
       if let some api := (OmegaChecks.InitPort.LogicalHandle.forToken? name).filter (·.owner == owner) then
         OmegaChecks.InitPort.LogicalHandle.checkToken api strict publicStrict reference (translate (official strict))
         continue
-      let deps ← if name == OmegaChecks.InitPort.LawfulLoop.strictHelper && owner == OmegaChecks.InitPort.LawfulLoop.owner then
-        OmegaChecks.InitPort.LawfulLoop.check strict reference (translate (official strict))
+      let deps ← if let some rule := OmegaChecks.InitPort.LawfulLoop.rules.find? (fun r =>
+          owner == r.owner && InitKernelPort.portName r.helper == name) then
+        OmegaChecks.InitPort.checkCertifiedFunction strict reference (translate (official strict)) owner name rule.reference rule.agreement
       else if let some rule := OmegaChecks.InitPort.PatternMatch.rules.find? (fun r =>
           owner == OmegaChecks.InitPort.PatternMatch.owner && InitKernelPort.portName r.helper == name) then
         OmegaChecks.InitPort.checkCertifiedFunction strict reference (translate (official strict)) owner name rule.reference rule.agreement

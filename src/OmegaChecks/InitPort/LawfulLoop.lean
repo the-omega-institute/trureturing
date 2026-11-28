@@ -1,5 +1,5 @@
 module
-public import OmegaChecks.InitPort.CertifiedFunction
+public import OmegaChecks.InitPort.RangeFix
 public import Init.Data.Iterators.Consumers.Monadic.Loop
 import all Init.Data.Iterators.Consumers.Monadic.Loop
 import all Init.WFExtrinsicFix
@@ -49,8 +49,18 @@ public theorem agreement.{w,w',x,x'} : @reference.{w,w',x,x'} = @implementation.
 
 public def owner := `Init.Data.Iterators.Consumers.Monadic.Loop
 public def helper := mkPrivateNameCore owner `Std.IterM.DefaultConsumers.forInWithWF
-public def strictHelper := mkPrivateNameCore (owner.replacePrefix `Init `OmegaInit)
-  `Omega.Std.IterM.DefaultConsumers.forInWithWF
+public structure Rule where
+  owner : Name
+  helper : Name
+  trigger : Name
+  reference : Name
+  implementation : Name
+  agreement : Name
+
+public def rules : List Rule := [
+  ⟨owner, helper, ``IteratorLoop.defaultImplementation, ``reference, ``implementation, ``agreement⟩,
+  ⟨RangeFix.owner, RangeFix.helper, ``Rxc.Iterator.instIteratorLoop.loop, ``RangeFix.reference,
+    ``RangeFix.implementation, ``RangeFix.agreement⟩]
 
 private def project (α m β iter n monad lift γ pl wf it init f : Expr) : MetaM Expr := do
   let predicate ← Meta.mkAppOptM ``IterM.IsPlausibleIndirectOutput #[α, β, m, iter, it]
@@ -97,16 +107,16 @@ public def specialize? (sub : Expr) : MetaM (Option Expr) := do
   let some wf ← termination? α m β iter γ pl | return none
   return some (← project α m β iter n monad lift γ pl wf it init f)
 
-/-- Only the reference environment receives this transparent alias of the pinned projection. -/
-public def addReference (source templates : Environment) : IO Environment := do
-  unless source.contains ``IteratorLoop.defaultImplementation do return source
-  let some (.defnInfo ref) := templates.find? ``reference | throw <| IO.userError "missing loop reference"
-  let decl := Declaration.defnDecl {ref with name := helper, all := [helper]}
-  match source.addDeclCore 0 1000 decl none with
-  | .ok out => return out
-  | .error e => throw <| IO.userError (← e.toMessageData {} |>.toString)
-
-public def check (strict standard : Environment) (translateTerm : Expr → Expr) : IO (Array Name) :=
-  checkCertifiedFunction strict standard translateTerm owner strictHelper ``reference ``agreement
+/-- The reference environment uses transparent aliases of the pinned operations. -/
+public def addReferences (source templates : Environment) : IO Environment := do
+  let mut env := source
+  for rule in rules do
+    unless source.contains rule.trigger do continue
+    let some (.defnInfo ref) := templates.find? rule.reference | throw <| IO.userError s!"missing {rule.reference}"
+    let decl := Declaration.defnDecl {ref with name := rule.helper, all := [rule.helper]}
+    match env.addDeclCore 0 1000 decl none with
+    | .ok out => env := out
+    | .error e => throw <| IO.userError (← e.toMessageData {} |>.toString)
+  return env
 
 end OmegaChecks.InitPort.LawfulLoop

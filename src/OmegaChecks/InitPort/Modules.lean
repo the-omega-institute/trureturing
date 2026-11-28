@@ -206,9 +206,9 @@ unsafe def main (args : List String) : IO Unit := do
   let mut reverseNames : Std.HashMap Name Name := {}
   for (n, _) in source.constants.toList do reverseNames := reverseNames.insert (renamed n) n
   let tokens := OmegaChecks.InitPort.LogicalHandle.apis.map (fun api => (api.tokenName, api.owner))
-  let loopHelper := (OmegaChecks.InitPort.LawfulLoop.helper, OmegaChecks.InitPort.LawfulLoop.owner)
+  let loopHelpers := OmegaChecks.InitPort.LawfulLoop.rules.map fun rule => (rule.helper, rule.owner)
   let matchHelpers := OmegaChecks.InitPort.PatternMatch.rules.map (fun rule => (rule.helper, OmegaChecks.InitPort.PatternMatch.owner))
-  let exposedHelpers := loopHelper :: matchHelpers
+  let exposedHelpers := loopHelpers ++ matchHelpers
   let localHelpers := exposedHelpers ++ tokens ++ OmegaChecks.InitPort.ReferenceSpecialization.supportOwners
   let mut groups : NameMap (Array (Name × ConstantInfo)) := {}
   let mut generatedOwners : NameMap Name := {}

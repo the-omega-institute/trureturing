@@ -22,7 +22,7 @@ open Lean
 namespace InitKernelPort
 
 def moduleOf (env : Environment) (n : Name) : Option Name := do
-  if n == OmegaChecks.InitPort.LawfulLoop.helper then return OmegaChecks.InitPort.LawfulLoop.owner
+  if let some rule := OmegaChecks.InitPort.LawfulLoop.rules.find? (·.helper == n) then return rule.owner
   if OmegaChecks.InitPort.PatternMatch.rules.any (·.helper == n) then return OmegaChecks.InitPort.PatternMatch.owner
   let i ← env.getModuleIdxFor? n
   return env.header.moduleNames[i]!
@@ -771,11 +771,15 @@ def run (strictPath artifacts : System.FilePath) (outPath : String) (exclude : S
     handles := handles.insert api.pointed (← OmegaChecks.InitPort.LogicalHandle.templates api handleEnv)
   let typeNameTemplates ← OmegaChecks.InitPort.TypeName.templates (← importModules #[{module := `OmegaChecks.InitPort.TypeName}] {} (level := .private))
   let loopTemplates ← importModules #[{module := `OmegaChecks.InitPort.LawfulLoop}] {} (level := .private)
-  let some (.defnInfo loop) := loopTemplates.find? ``OmegaChecks.InitPort.LawfulLoop.implementation | throw <| IO.userError "missing loop implementation"
-  let inlineLocal := fun n => loopTemplates.getModuleIdxFor? n == loopTemplates.getModuleIdx? `OmegaChecks.InitPort.LawfulLoop
-  let loopBody ← (Meta.deltaExpand loop.value inlineLocal (allowOpaque := true)).toIO'
-    {fileName := "<well-founded iterator>", fileMap := default} {env := loopTemplates}
-  let mut alternatives := (← OmegaChecks.InitPort.loadAlternatives).insert OmegaChecks.InitPort.LawfulLoop.helper (.defnInfo {loop with value := loopBody})
+  let mut alternatives ← OmegaChecks.InitPort.loadAlternatives
+  let inlineLoop := fun n => (loopTemplates.getModuleIdxFor? n).any fun idx =>
+    loopTemplates.header.moduleNames[idx]! ∈ [`OmegaChecks.InitPort.LawfulLoop,
+      `OmegaChecks.InitPort.RangeFix, `OmegaChecks.InitPort.Alternatives.RangeLoop]
+  for rule in OmegaChecks.InitPort.LawfulLoop.rules do
+    let some (.defnInfo impl) := loopTemplates.find? rule.implementation | throw <| IO.userError s!"missing {rule.implementation}"
+    let body ← (Meta.deltaExpand impl.value inlineLoop (allowOpaque := true)).toIO'
+      {fileName := "<well-founded iterator>", fileMap := default} {env := loopTemplates}
+    alternatives := alternatives.insert rule.helper (.defnInfo {impl with value := body})
   let patternTemplates ← importModules #[{module := `OmegaChecks.InitPort.PatternMatch}] {} (level := .private)
   for rule in OmegaChecks.InitPort.PatternMatch.rules do
     let some impl := patternTemplates.find? rule.implementation | throw <| IO.userError s!"missing {rule.implementation}"
@@ -801,7 +805,7 @@ def run (strictPath artifacts : System.FilePath) (outPath : String) (exclude : S
     unless OmegaChecks.InitPort.EffectRun.isOriginal (.defnInfo runner) false do
       throw <| IO.userError "unexpected pinned unsafeBaseIO"
     alternatives := alternatives.insert runner.name (.defnInfo {runner with value := OmegaChecks.InitPort.EffectRun.withInitialWorld runner.value})
-  let source ← OmegaChecks.InitPort.LawfulLoop.addReference source loopTemplates
+  let source ← OmegaChecks.InitPort.LawfulLoop.addReferences source loopTemplates
   let source ← OmegaChecks.InitPort.PatternMatch.addReferences source patternTemplates
   let mut referenceModels := {}
   for (consumer, owner) in [(`IO.FS.Stream.ofBuffer, `Init.System.IO), (`StateRefT'.run, `Init.Control.StateRef),

@@ -57,10 +57,13 @@ public def finiteCollectors (env : Environment) (input : Expr) (withinImplementa
   let hasLoop := env.contains InitPort.LawfulLoop.helper &&
     (!aliases.isEmpty || used.contains ``Std.IteratorLoop.defaultImplementation ||
       used.contains ``Std.IterM.DefaultConsumers.forIn')
+  let hasRange := env.contains InitPort.RangeFix.helper && used.contains ``WellFounded.extrinsicFix₃
   let patterns := InitPort.PatternMatch.rules.filter fun rule => used.contains rule.original && env.contains rule.helper
   let hasStringFold := used.any stringFolds.contains
-  unless hasLoop || hasStringFold || !patterns.isEmpty || used.any (fun n => (consumerArity? n).isSome) do return input
+  unless hasLoop || hasRange || hasStringFold || !patterns.isEmpty || used.any (fun n => (consumerArity? n).isSome) do return input
   let rewrite : MetaM Expr := Meta.transform input (pre := fun sub => do
+    if hasRange then
+      if let some call ← InitPort.RangeFix.specialize? sub then return .done call
     if hasLoop then
       if let some call ← InitPort.LawfulLoop.specialize? sub then return .done call
     let some head := sub.getAppFn.constName? | return .continue
