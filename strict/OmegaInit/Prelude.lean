@@ -402,11 +402,8 @@ port_inductive HAppend
 port_definition HAppend.hAppend
 port_definition instHAppendOfAppend
 
-port_inductive Sub
-port_definition Sub.sub
-port_inductive HSub
-port_definition HSub.hSub
-port_definition instHSub
+port_native_records Sub, HSub
+port_definition instHSub with_native_code
 port_definition instSubNat
 
 end
@@ -415,6 +412,7 @@ end
 -- Lean's pattern elaborator uses these root names for patterns, cases and argument-free branches.
 
 port_native_records Neg, Dvd
+port_native_records Zero, One
 port_native_records Mul, Div, Mod, Pow, NatPow, HomogeneousPow, SMul
 port_native_records HMul, HDiv, HMod, HPow, HSMul
 port_native_records OrElse, AndThen, AndOp, XorOp, OrOp, Complement, ShiftLeft, ShiftRight
@@ -914,7 +912,6 @@ port_definition Lean.Name.mkStr1 with_native_code
 port_definition Lean.SyntaxNodeKind
 port_inductive Lean.ParserDescr
 
-port_native_records Zero
 port_proof Nat.lt_of_le_of_lt
 port_proof Nat.pred_le_pred
 port_proof Nat.succ_pos
