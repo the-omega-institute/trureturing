@@ -1,5 +1,6 @@
 import OmegaBuild.Commands
 import Mathlib.Algebra.Algebra.Operations
+import Mathlib.Algebra.Polynomial.Roots
 import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
 import Mathlib.Data.Matrix.Basis
 import Mathlib.LinearAlgebra.Matrix.Rank
@@ -1386,6 +1387,92 @@ theorem rank_le_one_common_kernel_or_left_kernel (L : Submodule K Mat)
       have hcancel := congrArg (fun w => (↑P⁻¹ : Mat) *ᵥ w) hkill
       simpa only [he, Matrix.mulVec_mulVec, ← mul_assoc, Units.inv_mul, one_mul,
         Matrix.mulVec_zero] using hcancel
+
+/-- An all-singular size-three subspace with a positive full power contains a rank-two matrix. -/
+theorem exists_rank_two_of_eventually_full_of_det_eq_zero (L : Submodule K Mat)
+    (hfull : ∃ m : ℕ, 0 < m ∧ L ^ m = ⊤) (hsing : ∀ A ∈ L, A.det = 0) :
+    ∃ A ∈ L, A.rank = 2 := by
+  by_contra h
+  apply exclude_rank_one_branch L hfull
+  apply rank_le_one_common_kernel_or_left_kernel L
+  intro A hA
+  have htwo : A.rank ≠ 2 := fun hr => h ⟨A, hA, hr⟩
+  have hthree : A.rank ≠ 3 := by
+    intro hr
+    have hsurj : Function.Surjective A.mulVec :=
+      Matrix.mulVec_surjective_iff_rank_eq_card.mpr (by simpa using hr)
+    have hunit := Matrix.mulVec_surjective_iff_isUnit.mp hsurj
+    have hdet := (Matrix.isUnit_iff_isUnit_det A).mp hunit
+    exact hdet.ne_zero (hsing A hA)
+  have hwidth := A.rank_le_width
+  omega
+
+/-- Normalizing a rank-two pivot in an all-singular space over an infinite field gives
+the bottom-right, quadratic, and cubic constraints for every normalized member. -/
+theorem rank_two_pencil_constraints [Infinite K] (L : Submodule K Mat)
+    (hsing : ∀ B ∈ L, B.det = 0) {A : Mat} (hA : A ∈ L) (hrank : A.rank = 2) :
+    ∃ P Q : Matˣ, (P : Mat) * A * (Q : Mat) =
+        Matrix.diagonal (fun i : Fin 3 => if i.val < 2 then 1 else 0) ∧
+      ∀ B ∈ L,
+        let M := (P : Mat) * B * (Q : Mat)
+        let U : Matrix (Fin 2) (Fin 2) K := M.submatrix Fin.castSucc Fin.castSucc
+        let u : Fin 2 → K := fun i => M i.castSucc 2
+        let v : Fin 2 → K := fun j => M 2 j.castSucc
+        M 2 2 = 0 ∧ v ⬝ᵥ u = 0 ∧ v ⬝ᵥ (U *ᵥ u) = 0 := by
+  obtain ⟨P, Q, hPQ⟩ := exists_diagonal_rank_normal_form A
+  let D : Mat := Matrix.diagonal (fun i : Fin 3 => if i.val < 2 then 1 else 0)
+  let e := (P.mulLeftLinearEquiv K Mat).trans (Q.mulRightLinearEquiv K)
+  have hD : e A = D := by
+    change (P : Mat) * A * (Q : Mat) = D
+    simpa only [D, hrank] using hPQ
+  refine ⟨P, Q, hD, ?_⟩
+  intro B hB M U u v
+  have heB : e B = M := rfl
+  have hdet (t : K) : (D + t • M).det = 0 := by
+    rw [← hD, ← heB, ← map_smul, ← map_add]
+    change ((P : Mat) * (A + t • B) * (Q : Mat)).det = 0
+    simp [Matrix.det_mul, hsing _ (L.add_mem hA (L.smul_mem t hB))]
+  let d := M 2 2
+  let traceU := M 0 0 + M 1 1
+  let detU := M 0 0 * M 1 1 - M 0 1 * M 1 0
+  let vu := M 2 0 * M 0 2 + M 2 1 * M 1 2
+  let vUu := M 2 0 * (M 0 0 * M 0 2 + M 0 1 * M 1 2) +
+    M 2 1 * (M 1 0 * M 0 2 + M 1 1 * M 1 2)
+  let p := Polynomial.C d * Polynomial.X + Polynomial.C (d * traceU - vu) * Polynomial.X ^ 2 +
+    Polynomial.C (d * detU - traceU * vu + vUu) * Polynomial.X ^ 3
+  have hp : p = 0 := by
+    apply Polynomial.zero_of_eval_zero
+    intro t
+    calc
+      p.eval t = (D + t • M).det := by
+        rw [Matrix.det_fin_three]
+        simp only [p, Polynomial.eval_add, Polynomial.eval_C_mul, Polynomial.eval_X,
+          Polynomial.eval_X_pow, Matrix.add_apply, Matrix.smul_apply, smul_eq_mul]
+        norm_num [D, Matrix.diagonal_apply, d, traceU, detU, vu, vUu]
+        ring
+      _ = 0 := hdet t
+  have hd : d = 0 := by
+    have h : p.coeff 1 = 0 := by rw [hp, Polynomial.coeff_zero]
+    norm_num only [p, Polynomial.coeff_add, Polynomial.coeff_C_mul_X,
+      Polynomial.coeff_C_mul_X_pow, if_true, if_false, add_zero] at h
+    exact h
+  have hvu : vu = 0 := by
+    have h : p.coeff 2 = 0 := by rw [hp, Polynomial.coeff_zero]
+    norm_num only [p, Polynomial.coeff_add, Polynomial.coeff_C_mul_X,
+      Polynomial.coeff_C_mul_X_pow, if_true, if_false, add_zero, zero_add, hd, zero_mul,
+      zero_sub] at h
+    exact neg_eq_zero.mp h
+  have hvUu : vUu = 0 := by
+    have h : p.coeff 3 = 0 := by rw [hp, Polynomial.coeff_zero]
+    norm_num only [p, Polynomial.coeff_add, Polynomial.coeff_C_mul_X,
+      Polynomial.coeff_C_mul_X_pow, if_true, if_false, zero_add, hd, hvu, zero_mul,
+      mul_zero, sub_zero] at h
+    exact h
+  refine ⟨hd, ?_, ?_⟩
+  · rw [dotProduct, Fin.sum_univ_two]
+    exact hvu
+  · simp only [Matrix.mulVec, dotProduct, Fin.sum_univ_two]
+    exact hvUu
 
 end SizeThree
 end OmegaMath.HomogeneousWordPowers
