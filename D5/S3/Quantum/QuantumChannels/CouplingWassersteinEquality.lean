@@ -300,6 +300,132 @@ theorem fixed_pair_equality (x y : UnitVector n)
       exact (spectral_pairing H hminus hplus u' v' ht).2.mpr ⟨hu', hv'⟩
 
 
+private theorem ground_eq_zero_of_density_eq (x y : UnitVector n)
+    (h : rankOneDensity x.val = rankOneDensity y.val) : ground x y = 0 := by
+  have hy : rankOneDensity y.val *ᵥ y.val = y.val := by
+    rw [rankOneDensity, vecMulVec_mulVec, op_smul_eq_smul]
+    change ip y.val y.val • y.val = y.val
+    rw [ip_self, one_smul]
+  have hx : ip x.val y.val • x.val = y.val := by
+    rw [← h, rankOneDensity, vecMulVec_mulVec, op_smul_eq_smul] at hy
+    exact hy
+  have hh : ip (ip x.val y.val • x.val) (ip x.val y.val • x.val) = 1 :=
+    (congrArg₂ ip hx hx).trans (ip_self y)
+  rw [smul_ip, ip_smul, ip_self, mul_one] at hh
+  have hh' : (Complex.normSq (ip x.val y.val) : ℂ) = 1 := by
+    simpa only [Complex.star_def, Complex.normSq_eq_conj_mul_self] using hh
+  have hs : Complex.normSq (ip x.val y.val) = 1 := by exact_mod_cast hh'
+  change Real.sqrt (1 - Complex.normSq (ip x.val y.val)) = 0
+  simp [hs]
+
+private theorem atom_pairing_le (H : Matrix (Fin n) (Fin n) ℂ)
+    (hminus : (1 - H).PosSemidef) (hplus : (1 + H).PosSemidef) (x y : UnitVector n) :
+    pairing H (rankOneDensity x.val - rankOneDensity y.val) ≤ ground x y := by
+  by_cases h : rankOneDensity x.val = rankOneDensity y.val
+  · simpa [h, pairing] using ground_nonneg x y
+  · exact (fixed_pair_equality x y h H hminus hplus).2.2.1
+
+private theorem hasSum_cost {ρ σ : Matrix (Fin n) (Fin n) ℂ} (Q : Plan ρ σ) :
+    HasSum (fun j => Q.weight j * ground (Q.source j) (Q.target j)) (cost Q) := by
+  apply Summable.hasSum
+  exact Summable.of_nonneg_of_le
+    (fun j => mul_nonneg (Q.nonneg j) (ground_nonneg _ _))
+    (fun j => mul_le_of_le_one_right (Q.nonneg j) (ground_le_one _ _)) Q.mass.summable
+
+private def pairingMap (H : Matrix (Fin n) (Fin n) ℂ) :
+    Matrix (Fin n) (Fin n) ℂ →L[ℝ] ℝ where
+  toFun := pairing H
+  map_add' A B := by simp [pairing, mul_add, trace_add, add_div]
+  map_smul' r A := by
+    simp [pairing, trace_smul, Complex.real_smul, mul_div_assoc]
+  cont := by unfold pairing trace; fun_prop
+
+private theorem hasSum_pairing {ρ σ : Matrix (Fin n) (Fin n) ℂ}
+    (Q : Plan ρ σ) (H : Matrix (Fin n) (Fin n) ℂ) :
+    HasSum (fun j => Q.weight j *
+      pairing H (rankOneDensity (Q.source j).val - rankOneDensity (Q.target j).val))
+      (pairing H (ρ - σ)) := by
+  have h := (Q.left.sub Q.right).mapL (pairingMap H)
+  change HasSum _ (pairing H (ρ - σ)) at h
+  convert h using 1
+  funext j
+  rw [← smul_sub]
+  change _ = pairing H _
+  simp [pairing, trace_smul, mul_div_assoc]
+
+/-- For an arbitrary countable plan the weighted atom slacks are nonnegative
+and sum to its cost minus the marginal pairing. -/
+theorem countable_plan_slack {ρ σ : Matrix (Fin n) (Fin n) ℂ} (Q : Plan ρ σ)
+    (H : Matrix (Fin n) (Fin n) ℂ) (hminus : (1 - H).PosSemidef)
+    (hplus : (1 + H).PosSemidef) :
+    let slack := fun j => Q.weight j *
+      (ground (Q.source j) (Q.target j) -
+        pairing H (rankOneDensity (Q.source j).val - rankOneDensity (Q.target j).val))
+    (∀ j, 0 ≤ slack j) ∧ HasSum slack (cost Q - pairing H (ρ - σ)) := by
+  dsimp only
+  refine ⟨fun j => mul_nonneg (Q.nonneg j) (sub_nonneg.mpr (atom_pairing_le H hminus hplus _ _)), ?_⟩
+  simpa only [mul_sub] using (hasSum_cost Q).sub (hasSum_pairing Q H)
+
+/-- A countable plan attains the fixed test bound exactly when all of its
+positive-weight atoms attain their individual bounds. -/
+theorem countable_plan_equality {ρ σ : Matrix (Fin n) (Fin n) ℂ} (Q : Plan ρ σ)
+    (H : Matrix (Fin n) (Fin n) ℂ) (hminus : (1 - H).PosSemidef)
+    (hplus : (1 + H).PosSemidef) :
+    cost Q = pairing H (ρ - σ) ↔
+      ∀ j, 0 < Q.weight j →
+        pairing H (rankOneDensity (Q.source j).val - rankOneDensity (Q.target j).val) =
+          ground (Q.source j) (Q.target j) := by
+  obtain ⟨hpos, hsum⟩ := countable_plan_slack Q H hminus hplus
+  constructor
+  · intro h j hj
+    rw [h, sub_self] at hsum
+    have hz := le_antisymm (le_hasSum hsum j (fun i _ => hpos i)) (hpos j)
+    exact (sub_eq_zero.mp ((mul_eq_zero.mp hz).resolve_left hj.ne')).symm
+  · intro h
+    have he : ∀ j, Q.weight j *
+        (ground (Q.source j) (Q.target j) -
+          pairing H (rankOneDensity (Q.source j).val - rankOneDensity (Q.target j).val)) = 0 := by
+      intro j
+      rcases (Q.nonneg j).eq_or_lt with hj | hj
+      · simp [← hj]
+      · rw [h j hj, sub_self, mul_zero]
+    simp only [he] at hsum
+    exact sub_eq_zero.mp (hsum.unique hasSum_zero)
+
+open D5.S3.Quantum.Foundation.FiniteTraceDistance (traceNorm)
+open D5.S3.Quantum.Foundation.FiniteHermitianTraceDuality (exists_hermitian_traceNorm_test)
+
+open scoped Matrix.Norms.L2Operator MatrixOrder in
+/-- The trace-norm lower bound holds for every admissible countable plan. -/
+theorem traceNorm_le_countable_cost {ρ σ : Matrix (Fin n) (Fin n) ℂ}
+    (Q : Plan ρ σ) (hΔ : (ρ - σ).IsHermitian) :
+    traceNorm (ρ - σ) / 2 ≤ cost Q := by
+  obtain ⟨H, hH, hnorm, htrace⟩ := exists_hermitian_traceNorm_test (ρ - σ) hΔ
+  have hu : H ≤ 1 := hH.isSelfAdjoint.le_algebraMap_norm_self H |>.trans (by
+    simpa using (algebraMap_mono (Matrix (Fin n) (Fin n) ℂ) hnorm))
+  have hl : -H ≤ 1 := hH.neg.isSelfAdjoint.le_algebraMap_norm_self (-H) |>.trans (by
+    simpa using (algebraMap_mono (Matrix (Fin n) (Fin n) ℂ) hnorm))
+  have hs := countable_plan_slack Q H (sub_nonneg.mpr hu).posSemidef
+    (by simpa [sub_neg_eq_add] using (sub_nonneg.mpr hl).posSemidef)
+  have hn := hs.2.tsum_eq ▸ tsum_nonneg hs.1
+  rw [sub_nonneg] at hn
+  simpa [pairing, htrace] using hn
+
+/-- The same lower bound passes to the original infimum whenever its cost set is inhabited. -/
+theorem traceNorm_le_wasserstein {ρ σ : Matrix (Fin n) (Fin n) ℂ}
+    (hplan : Nonempty (Plan ρ σ)) (hΔ : (ρ - σ).IsHermitian) :
+    traceNorm (ρ - σ) / 2 ≤ wasserstein ρ σ := by
+  apply le_csInf
+  · obtain ⟨Q⟩ := hplan
+    exact ⟨cost Q, Q, rfl⟩
+  · rintro _ ⟨Q, rfl⟩
+    exact traceNorm_le_countable_cost Q hΔ
+
+#print axioms countable_plan_slack
+#print axioms countable_plan_equality
+#print axioms traceNorm_le_countable_cost
+#print axioms traceNorm_le_wasserstein
+
 private def phaseX : UnitVector 2 :=
   ⟨![4 / 5, (3 / 5) * Complex.I], by
     norm_num [Fin.sum_univ_two, Complex.normSq_apply, Complex.mul_re, Complex.mul_im]⟩
