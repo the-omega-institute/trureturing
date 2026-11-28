@@ -9,6 +9,7 @@ claim: Section 7 asks whether the replica invariant E_n^(q) is positive on all n
 strata_touched:
   - D5/S3/Quantum/Information/MultiEntropyPositivityRefutation
   - D5/S3/Quantum/Information/MultiEntropy/CQReplicaCoarseGraining
+  - D5/S3/Quantum/Information/MultiEntropy/TripartiteReplicaCoarseGraining
 license: citation-only
 triage: anchor
 ---
@@ -59,3 +60,33 @@ all-state result at $n=2$ and the continuum vacuum result in §2.3.
 
 [Gadde et al., §1.2](https://arxiv.org/html/2308.16247v1#S1.SS2) ·
 [Tasuki, §2.3](https://arxiv.org/html/2611.34715v1#S2.SS3)
+
+## Finite tripartite coarse graining
+
+For every integer $n\ge2$ and all finite local spaces, the modulus of the
+original tripartite replica moment is bounded by the $n$th power of the
+bipartite replica moment for each of the three mergers in Eq. (1.13).
+The inequality is homogeneous in the pure-state amplitudes. The entropy
+inequality uses the real logarithm when the tripartite moment is positive.
+
+Contracting the unshifted party gives a row transfer $R$ with
+$E_n^{(3)}=\operatorname{Tr}(R^n)$. In the entry convention used here,
+$R=V^\dagger P V$, where $P$ cycles the first-party strings and
+$V^\dagger V=\rho_B^{\otimes n}$. Rectangular trace cyclicity and
+Schatten Hölder bound the trace by
+$(\operatorname{Tr}\rho_B^n)^n$. Transposition and a shear of the
+replica grid give the two remaining mergers.
+
+The original paper treats special states. Tasuki §2.3 describes the
+all-state result at $n=2$ and proves bounds in a continuum vacuum
+setting. The matrix estimate uses standard trace inequalities. The
+compression estimate also follows from the positive-map results of
+Bourin and Lee (Proposition 1.2) and Watrous (Theorem 1). The application
+here establishes the absolute bound for the original finite replica
+contraction at all integer orders and arbitrary finite local dimensions.
+Priority beyond the reviewed sources remains undetermined.
+
+[Gadde et al., Eq. (1.13)](https://arxiv.org/html/2308.16247v1#S1.E13) ·
+[Tasuki, §2.3](https://arxiv.org/html/2611.34715v1#S2.SS3) ·
+[Bourin and Lee](https://arxiv.org/abs/1911.10573v1) ·
+[Watrous](https://arxiv.org/abs/quant-ph/0411077v1)
