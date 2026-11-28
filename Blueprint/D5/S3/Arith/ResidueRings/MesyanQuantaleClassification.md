@@ -10,11 +10,15 @@ $$\forall (R: Type), [NonUnitalRing R], (\exists (E: AddSubmonoid R), \forall (M
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/ResidueRings/MesyanQuantaleClassification.product_unit_iff` (`✓ std3`). ∎
 
+*Resolves.* `Problems/mesyan-2026-question-36-ring-classification` (proved) by `D5/S3/Arith/ResidueRings/MesyanQuantaleClassification.product_unit_iff`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"mesyan-2026-question-36-ring-classification","declaration_gid":"D5/S3/Arith/ResidueRings/MesyanQuantaleClassification.product_unit_iff","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Commentary.*
 
-Let R be an associative ring with no assumed identity or commutativity. In Definition 4 of Mesyan's Quantales Arising From Rings (arXiv:2611.31109v1), the product of two additive submonoids consists of sums of a positive finite number of ordered pairwise products. This is Mathlib's additive-submonoid multiplication. It contains zero through the one-term sum of the product of two zeros.
+Let R be an associative ring with no assumed identity or commutativity. In Definition 4, the product of two additive submonoids consists of sums of a positive finite number of ordered pairwise products. This is Mathlib's additive-submonoid multiplication. It contains zero through the one-term sum of the product of two zeros. The shared reference for Definition 4 and Question 36 is `D5/L/Arith/mesyan2026quantales`.
 
 The quantale has a two-sided identity precisely if R has a two-sided multiplicative identity or its additive group is torsion and each prime-primary component has a two-sided identity belonging to that component. The component for p consists of elements killed by some natural power of p, with inherited ring operations. The dot after a prime power denotes repeated addition. Zero serves as the identity in a zero component and in the zero ring. The formula uses positive additive order for torsion since infinite additive order is represented by zero. The classification concerns the ring case of Question 36.
 

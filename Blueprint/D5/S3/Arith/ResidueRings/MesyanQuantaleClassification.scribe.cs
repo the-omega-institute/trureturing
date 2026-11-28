@@ -17,10 +17,11 @@ internal sealed class MesyanQuantaleClassificationDocument : IScribeDocumentDefi
             AssessedProvenance.FromRepo(),
             Blocks(
                 Paragraph(Text("Let R be an associative ring with no assumed identity or commutativity. "
-                    + "In Definition 4 of Mesyan's Quantales Arising From Rings (arXiv:2611.31109v1), "
-                    + "the product of two additive submonoids consists of sums of a positive finite number "
+                    + "In Definition 4, the product of two additive submonoids consists of sums of a positive finite number "
                     + "of ordered pairwise products. This is Mathlib's additive-submonoid multiplication. "
-                    + "It contains zero through the one-term sum of the product of two zeros.")),
+                    + "It contains zero through the one-term sum of the product of two zeros. "
+                    + "The shared reference for Definition 4 and Question 36 is "),
+                    Ref("D5/L/Arith/mesyan2026quantales"), Text(".")),
                 Paragraph(Text("The quantale has a two-sided identity precisely if R has a two-sided "
                     + "multiplicative identity or its additive group is torsion and each prime-primary component "
                     + "has a two-sided identity belonging to that component. The component for p consists of "
@@ -43,7 +44,10 @@ internal sealed class MesyanQuantaleClassificationDocument : IScribeDocumentDefi
                     + "a natural multiple on every argument. The additive submonoid of multipliers whose "
                     + "left and right actions agree with a natural multiple on each argument is then a "
                     + "two-sided quantale unit."))),
-            DescribeRole.Theorem))));
+            DescribeRole.Theorem,
+            new OpenProblemResolutionClaim(
+                ProblemSlugRef.Create("mesyan-2026-question-36-ring-classification"),
+                ResolutionKind.Proved)))));
 
     private static Formula Parens(Formula body) => Seq(Open, body, Close);
 
