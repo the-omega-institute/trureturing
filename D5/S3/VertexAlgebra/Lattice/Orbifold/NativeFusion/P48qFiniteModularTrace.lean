@@ -311,9 +311,16 @@ theorem p48q_fixed_quadratics_of_finite_modular_trace
 
 /-- The electric coset stabilizer has at least two fixed states in the actual
 weight-two lattice representation. Its fixed dimension equals the weighted
-electric contribution and bounds the extension's weight-two dimension from below. -/
+electric contribution and bounds the extension's weight-two dimension from below.
+
+For a concrete VOA application, `embed` identifies the untwisted multiplicity
+modules paired with `R e` among the full modular labels. Their extension
+multiplicities and weight-two dimensions must give `b (embed e)` and `d e` in
+the character and dimension identities. The modular trace data must realize the
+full label system, and each occupied cubic label must supply a conformal branch
+inclusion into the extension with its actual `L_W`. -/
 theorem p48q_extension_weight_two_of_finite_modular_trace
-    {G A I : Type*} [Group G] [Finite G] [Fintype I]
+    {G A I E : Type*} [Group G] [Finite G] [Fintype I] [Fintype E]
     [CommRing A] [Nontrivial A] [Algebra ℂ A] [Module.Finite ℂ A] [Algebra.Etale ℂ A]
     (ρ : G →* (A ≃ₐ[ℂ] A))
     (hfixed : ∀ a : A, (∀ g : G, ρ g a = a) → ∃ z : ℂ, a = algebraMap ℂ A z)
@@ -338,23 +345,23 @@ theorem p48q_extension_weight_two_of_finite_modular_trace
     (hRealizeCubic : ∀ g, orderOf g = 3 → ∀ i ∈ twisted g, 0 < b i →
       Nonempty (CubicSectorRealization.{w, x} (U g) L_W))
     [FiniteDimensional ℂ (L_W.eigenspace (2 : ℂ))]
-    (R : I → FDRep ℂ G) [∀ i, Simple (R i)]
-    (hDistinct : Pairwise fun i j => ¬ Nonempty (R i ≅ R j))
+    (embed : E ↪ I) (R : E → FDRep ℂ G) [∀ e, Simple (R e)]
+    (hDistinct : Pairwise fun e f => ¬ Nonempty (R e ≅ R f))
     (hElectricCharacter : ∀ g : G,
-      LinearMap.trace ℂ A (ρ g).toLinearMap = ∑ i, (b i : ℂ) * (R i).character g)
-    (d : I → ℕ)
+      LinearMap.trace ℂ A (ρ g).toLinearMap = ∑ e, (b (embed e) : ℂ) * (R e).character g)
+    (d : E → ℕ)
     (hWeightedGrade : ∀ g : G,
       LinearMap.trace ℂ _ (p48qWeightTwoRepresentation U hMode hOmega g) =
-        ∑ i, (d i : ℂ) * (R i).character g)
+        ∑ e, (d e : ℂ) * (R e).character g)
     (extra : ℕ)
     (hExtensionWeightTwo : Module.finrank ℂ (L_W.eigenspace (2 : ℂ)) =
-      (∑ i, b i * d i) + extra) :
+      (∑ e, b (embed e) * d e) + extra) :
     ∃ K : Subgroup G,
       (∀ g : G,
         LinearMap.trace ℂ A (ρ g).toLinearMap = ({q : G ⧸ K | g • q = q}.ncard : ℂ)) ∧
       let fixed := Representation.invariants
         ((p48qWeightTwoRepresentation U hMode hOmega).comp K.subtype)
-      2 ≤ Module.finrank ℂ fixed ∧ Module.finrank ℂ fixed = (∑ i, b i * d i) ∧
+      2 ≤ Module.finrank ℂ fixed ∧ Module.finrank ℂ fixed = (∑ e, b (embed e) * d e) ∧
         Module.finrank ℂ fixed ≤ Module.finrank ℂ (L_W.eigenspace (2 : ℂ)) ∧
         2 ≤ Module.finrank ℂ (L_W.eigenspace (2 : ℂ)) := by
   obtain ⟨K, hCoset, q, hGrade, hFixed, hIndependent⟩ :=
@@ -369,13 +376,14 @@ theorem p48q_extension_weight_two_of_finite_modular_trace
     LinearIndependent.of_comp ((grade lattice 2).subtype.comp fixed.subtype) hIndependent
   have hTwo : 2 ≤ Module.finrank ℂ fixed := by
     simpa only [Fintype.card_fin] using hFixedIndependent.fintype_card_le_finrank
-  have hMultiplicity (i : I) :
-      b i = Module.finrank ℂ (Representation.invariants ((R i).ρ.comp K.subtype)) :=
-    electric_multiplicity_eq_finrank_invariants K ρ R hDistinct b hCoset hElectricCharacter i
-  have hComparison : Module.finrank ℂ fixed = (∑ i, b i * d i) ∧
+  have hMultiplicity (e : E) :
+      b (embed e) = Module.finrank ℂ (Representation.invariants ((R e).ρ.comp K.subtype)) :=
+    electric_multiplicity_eq_finrank_invariants K ρ R hDistinct (b ∘ embed) hCoset
+      hElectricCharacter e
+  have hComparison : Module.finrank ℂ fixed = (∑ e, b (embed e) * d e) ∧
       Module.finrank ℂ fixed ≤ Module.finrank ℂ (L_W.eigenspace (2 : ℂ)) :=
-    fixed_grade_finrank_le_of_electric_multiplicities K R (FDRep.of V₂) b d hMultiplicity
-      hWeightedGrade extra hExtensionWeightTwo
+    fixed_grade_finrank_le_of_electric_multiplicities K R (FDRep.of V₂) (b ∘ embed) d
+      hMultiplicity hWeightedGrade extra hExtensionWeightTwo
   exact ⟨K, hCoset, hTwo, hComparison.1, hComparison.2, hTwo.trans hComparison.2⟩
 
 #print axioms exists_coset_trace_and_positive_twisted_multiplicity
