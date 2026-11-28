@@ -13,7 +13,7 @@ open BalancedCriticalSpectrum (Q flip)
 open BalancedCubeComponentBoundary (directions mem_directions)
 open Q9IsotropicHuang (parity)
 open Q9MinimumDistanceOperator (minimumDisplacements)
-open private differingAxes differingAxes_foldl_flip mem_minimumDisplacements from
+open private differingAxes differingAxes_foldl_flip mem_minimumDisplacements parity_flip from
   D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Placement.Q9MinimumDistanceOperator
 
 /-- The fibre of a midpoint obtained by freezing all coordinates outside `A`. -/
@@ -168,7 +168,101 @@ theorem mixed_five_axis_fibre_capacity {C D : Finset (Q 9)} (b : Bool) (z : Q 9)
   rw [hcard L (fun x hx => (hmem hx).2.1), hcard R (fun x hx => (hmem hx).2.1)] at hbound
   exact hbound.2.2.1
 
+open Classical in
+/-- A forbidden pair of flips gives a packing inequality between adjacent
+fibres on the chosen parity. One flip moves between the fibres and the other
+corrects the parity. -/
+theorem adjacent_fibre_capacity {C D : Finset (Q 9)} (b : Bool) (z : Q 9)
+    (e : Fin 5 ↪ Fin 9) {i j : Fin 9} (hi : i ∉ univ.map e) (hj : j ∈ univ.map e)
+    (hmask : ({i, j} : Finset (Fin 9)) ∉ minimumDisplacements C D b 2) :
+    let A := univ.map e
+    let L := (restrictToFibre C A z).filter (fun x => parity x = b)
+    let R := (restrictToFibre D A (flip z i)).filter (fun x => parity x = b)
+    L.card + R.card ≤ 16 := by
+  intro A L R
+  have hij : i ≠ j := fun h => hi (h.symm ▸ hj)
+  let T := restrictToFibre univ A (flip z i)
+  let F := T.filter (fun x => parity x = b)
+  let tau := fun x : Q 9 => flip (flip x i) j
+  have hinj : Function.Injective tau := by
+    intro x y he
+    have h := congrArg (fun z : Q 9 => flip (flip z j) i) he
+    simpa [tau] using h
+  have hL : L.image tau ⊆ F := by
+    intro y hy
+    obtain ⟨x, hx, rfl⟩ := mem_image.mp hy
+    obtain ⟨hx, hp⟩ := mem_filter.mp hx
+    have hf := (mem_filter.mp hx).2
+    refine mem_filter.mpr ⟨mem_filter.mpr ⟨mem_univ _, ?_⟩, ?_⟩
+    · intro k hk
+      have hkn : k ≠ j := fun h => hk (h.symm ▸ hj)
+      by_cases hki : k = i
+      · subst k
+        simp [tau, BalancedCriticalSpectrum.flip, hkn, hf i hi]
+      · simp [tau, BalancedCriticalSpectrum.flip, hkn, hki, hf k hk]
+    · simp only [tau, parity_flip, Bool.not_not, hp]
+  have hR : R ⊆ F := by
+    intro x hx
+    obtain ⟨hx, hp⟩ := mem_filter.mp hx
+    exact mem_filter.mpr ⟨mem_filter.mpr ⟨mem_univ _, (mem_filter.mp hx).2⟩, hp⟩
+  have hdisj : Disjoint (L.image tau) R := disjoint_left.mpr (by
+    intro y hyL hyR
+    obtain ⟨x, hx, rfl⟩ := mem_image.mp hyL
+    obtain ⟨hx, hp⟩ := mem_filter.mp hx
+    have hxC := (mem_filter.mp hx).1
+    have hyD := (mem_filter.mp (mem_filter.mp hyR).1).1
+    have hd := diff_pair x hij
+    have hdist : hammingDist x (tau x) = 2 := by
+      change (differingAxes x (tau x)).card = 2
+      rw [show differingAxes x (tau x) = {i, j} from hd, card_pair hij]
+    exact hmask (mem_minimumDisplacements.mpr ⟨x, hxC, tau x, hyD, hp, hdist, hd⟩))
+  have hpacked : L.card + R.card ≤ F.card := by
+    rw [← card_image_of_injective L hinj, ← card_union_of_disjoint hdisj]
+    exact card_le_card (union_subset hL hR)
+  have hT : T.card ≤ 32 := by
+    let project := fun x : Q 9 => fun k : Fin 5 => x (e k)
+    have hc : (T.image project).card = T.card := by
+      apply card_image_of_injOn
+      intro x hx y hy hxy
+      have hxF := (mem_filter.mp hx).2
+      have hyF := (mem_filter.mp hy).2
+      funext k
+      by_cases hk : k ∈ A
+      · obtain ⟨a, _, rfl⟩ := mem_map.mp hk
+        exact congrFun hxy a
+      · exact (hxF k hk).trans (hyF k hk).symm
+    rw [← hc]
+    exact (card_le_univ _).trans (by decide)
+  let G := T.filter (fun x => parity x ≠ b)
+  have hFG : F.card = G.card := by
+    apply card_bij' (fun x _ => flip x j) (fun x _ => flip x j)
+    · intro x hx
+      obtain ⟨hx, hp⟩ := mem_filter.mp hx
+      have hf := (mem_filter.mp hx).2
+      refine mem_filter.mpr ⟨mem_filter.mpr ⟨mem_univ _, ?_⟩, ?_⟩
+      · intro k hk
+        have hkn : k ≠ j := fun h => hk (h.symm ▸ hj)
+        simp [BalancedCriticalSpectrum.flip, hkn, hf k hk]
+      · rw [parity_flip, hp]
+        cases b <;> decide
+    · intro x hx
+      obtain ⟨hx, hp⟩ := mem_filter.mp hx
+      have hf := (mem_filter.mp hx).2
+      refine mem_filter.mpr ⟨mem_filter.mpr ⟨mem_univ _, ?_⟩, ?_⟩
+      · intro k hk
+        have hkn : k ≠ j := fun h => hk (h.symm ▸ hj)
+        simp [BalancedCriticalSpectrum.flip, hkn, hf k hk]
+      · exact (parity_flip x j).trans (Bool.not_eq_iff.mpr hp)
+    · intro x _
+      exact BalancedCriticalSpectrum.flip_flip x j
+    · intro x _
+      exact BalancedCriticalSpectrum.flip_flip x j
+  have hsum : F.card + G.card = T.card :=
+    card_filter_add_card_filter_not (s := T) (fun x => parity x = b)
+  omega
+
 #print axioms shared_midpoint_neighbors_preserved
 #print axioms mixed_five_axis_fibre_capacity
+#print axioms adjacent_fibre_capacity
 
 end D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Placement.Q9InactiveContactFibre

@@ -46,6 +46,13 @@ internal sealed class Q9SaturatedContactCellsDocument : IScribeDocumentDefinitio
                 Blocks(Paragraph(Text("For a contact in directions i and j, generate a translation subgroup with the contact neighbours of i other than j. The indicator of each orbit is an invariant multiplier. The signed contact sum on that orbit vanishes separately on either parity."))),
                 DescribeRole.Theorem),
             Describe.Lean(
+                DescribeId.Create("q9-endpoint-contact-fibre-card-even"),
+                DeclarationHandle.Create(Placement + "Q9SaturatedContactCells.signed_overlap_endpoint_fibre_card_even"),
+                H("Each contact-neighbour orbit contains an even number of contacts"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Each actual contact contributes either one or minus one to the orbit sum. Cancellation forces these two counts to agree separately on each parity and each orbit. The resulting evenness constraint involves only occupancies."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("q9-saturated-contact-cell-card-even"),
                 DeclarationHandle.Create(Placement + "Q9SaturatedContactCells.signed_overlap_cell_card_even"),
                 H("Each fixed two-bit cell has an even number of contacts"),
