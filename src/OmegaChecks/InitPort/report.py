@@ -727,7 +727,7 @@ def check_strict_equivalences(product, stage):
     if (lib / "OmegaInit/Control/Lawful/MonadAttach/Lemmas.olean").is_file():
         owners.append("Init.Control.Lawful.MonadAttach.Lemmas")
     for owner in ("Init.Grind.Order", "Init.Grind.Ordered.Linarith", "Init.Grind.Ring.CommSolver",
-                  "Init.Data.Sum.Lemmas", "Init.Data.Vector.Count"):
+                  "Init.Data.Sum.Lemmas", "Init.Data.Vector.Count", "Init.Data.Fin.Lemmas"):
         if (lib / Path(*("Omega" + owner).split("."))).with_suffix(".olean").is_file():
             owners.append(owner)
     if not owners:
