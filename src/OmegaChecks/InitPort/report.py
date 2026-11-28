@@ -109,10 +109,25 @@ def order_certificates(product):
 
 
 CHOICE_TYPE_OPERANDS = {
+    ("Init.Grind.Injective", "Lean.Grind.leftInv_eq"):
+        ("Lean.Grind.leftInv", "OmegaChecks.InitBoundaries.choiceFromLeftInv"),
+    ("Init.Control.Lawful.MonadAttach.Lemmas", "WeaklyLawfulMonadAttach.bind_attach_of_nonempty"):
+        ("Classical.ofNonempty", "OmegaChecks.InitBoundaries.choiceFromOfNonempty"),
     ("Init.Classical", "Classical.epsilon_singleton"): ("Classical.epsilon", "OmegaChecks.InitBoundaries.choiceFromEpsilon"),
     ("Init.Data.Range.Polymorphic.RangeIterator", "Std.Rxc.Iterator.instIteratorLoop.loop.eq_1"):
         ("WellFounded.extrinsicFix₃", "OmegaChecks.InitBoundaries.choiceFromFix₃"),
 }
+
+for owner, equation, arity in (
+    ("Init.Data.Iterators.Consumers.Access", "Std.Iter.atIdxSlow?.eq_1", "₂"),
+    ("Init.Data.Iterators.Lemmas.Consumers.Monadic.Collect", "Std.IterM.toListRev.go.eq_1", "₂"),
+    ("Init.Data.Iterators.Lemmas.Consumers.Monadic.Collect", "Std.IterM.toArray.go.eq_1", "₂"),
+    ("Init.Data.Iterators.Lemmas.Consumers.Monadic.Loop", "Std.IterM.DefaultConsumers.forIn'.eq_1", "₃"),
+    ("Init.Data.Range.Polymorphic.RangeIterator", "Std.Rxo.Iterator.instIteratorLoop.loop.eq_1", "₃"),
+    ("Init.Data.Range.Polymorphic.RangeIterator", "Std.Rxi.Iterator.instIteratorLoop.loop.eq_1", "₃"),
+):
+    CHOICE_TYPE_OPERANDS[owner, equation] = (
+        "WellFounded.extrinsicFix" + arity, "OmegaChecks.InitBoundaries.choiceFromFix" + arity)
 
 
 def choice_type_dependencies(certificates):
@@ -408,12 +423,16 @@ def check_coverage(official):
                     not gap.endswith("A definitionally equal reformulation checks in the public kernels.")):
                 raise ValueError(f"inconsistent pinned order type dependency for {site}")
         choice_operand = choice_operands.pop(site, None)
-        if choice_operand != row.get("originalTypeChoiceDependency") or (choice_operand and (
-                not port or row["kind"] != "theorem" or row.get("originalTypeChecked") is not False or
-                row.get("originalTypeGap") != f"missing type dependencies: Omega.{choice_operand}" or
-                any(row.get(flag) is not False for flag in ("unsafe", "partial", "strictUnsafe", "strictPartial")) or
-                private_type or orders)):
+        if choice_operand != row.get("originalTypeChoiceDependency"):
             raise ValueError(f"uncertified choice operand of the pinned type for {site}")
+        if choice_operand:
+            expected_gap = f"missing type dependencies: Omega.{choice_operand}" if port else None
+            expected_safety = False if port else None
+            if (row["kind"] != "theorem" or row.get("originalTypeChecked") is not False or
+                    row.get("originalTypeGap") != expected_gap or row["unsafe"] or row["partial"] or
+                    any(row.get(flag) is not expected_safety for flag in ("strictUnsafe", "strictPartial")) or
+                    private_type or orders):
+                raise ValueError(f"uncertified choice operand of the pinned type for {site}")
         embedding = site in embeddings
         if row.get("originalTypeEnvelopeInstance") != (ENVELOPE_INSTANCE if embedding else None) or (embedding and (
                 not port or row["kind"] != "theorem" or row.get("originalTypeChecked") is not False or
@@ -487,7 +506,7 @@ def check_coverage(official):
             # These Lean reductions take a value usable by safe code. The kernel
             # prohibits supplying an unsafe implementation to such a witness.
             reductions += 1
-        elif not endpoint and not argument and not refuter and not order_formation and not ring_formation and path != "Quot.sound":
+        elif not choice_operand and not endpoint and not argument and not refuter and not order_formation and not ring_formation and path != "Quot.sound":
             unresolved.append(site)
     if not ring_formations <= sites:
         raise ValueError("ring formation certificate has no declaration")
