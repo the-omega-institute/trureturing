@@ -170,7 +170,7 @@ private def instanceEntries (source : Environment) (idx : ModuleIdx) (available 
 
 /-- Definitions with pointwise computation equations checked by the interface audit. -/
 private def sealedImplementation (n : Name) : Bool :=
-  [`Fin.natAdd, `Option.isNone, `Array.modifyMUnsafe, `Lean.Grind.CommRing.Expr.denoteSAsRing,
+  [`Fin.natAdd, `Option.isNone, `Array.modifyMUnsafe,
     `Quot.hrecOn, `ByteArray.fastAppend, `String.utf8EncodeCharFast, `Char.succ?, `Std.Iter.Total.atIdxSlow?, `Std.IterM.Total.toArray, `Std.IterM.Total.toListRev, `Std.Iterators.Types.Take.Rel,
     `instSliceSizeListSliceData, `List.instAppendListSlice,
     `List.instToStringListSlice, `instIteratorLoopSubarrayIteratorIdOfMonad,

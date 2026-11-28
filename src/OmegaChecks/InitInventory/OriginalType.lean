@@ -101,11 +101,14 @@ private def checkedOrderFields (visible strict : Environment) (owner : Name)
 
 /-- Both public kernels must reduce the complete computational equation to the
 same application of its left endpoint, including every original binder. -/
-private def checkedLoopEquation (visible strict : Environment) (owner : Name)
+private def checkedPublicEquation (visible strict : Environment) (owner : Name)
     (source : ConstantInfo) (pinned target : Expr) : Bool := Id.run do
   unless (owner, source.name) ∈ [
       (`Init.Data.String.Lemmas.Iterate, `String.Slice.forIn_eq_forIn_chars),
-      (`Init.Data.Range.Polymorphic.RangeIterator, `Std.Rxc.Iterator.instIteratorLoop.loop.eq_1)] &&
+      (`Init.Data.Range.Polymorphic.RangeIterator, `Std.Rxc.Iterator.instIteratorLoop.loop.eq_1),
+      (`Init.Grind.Ring.CommSemiringAdapter, `Lean.Grind.CommRing.Expr.denoteSAsRing.eq_4),
+      (`Init.Grind.Ring.CommSemiringAdapter, `Lean.Grind.CommRing.Expr.denoteSAsRing.eq_5),
+      (`Init.Grind.Ring.CommSemiringAdapter, `Lean.Grind.CommRing.Expr.denoteSAsRing.eq_6)] &&
       source.isTheorem && visible.getModuleIdxFor? source.name == visible.getModuleIdx? owner &&
       (visible.find? source.name).any (fun ci => ci.type.equal source.type) do return false
   let eq := pinned.getForallBody
@@ -235,7 +238,7 @@ public def originalTypeGap? (official visible strict : Environment) (owner : Nam
   unless missing.isEmpty do
     if checkedFinBound official strict owner source.name pinned target.type ||
         checkedEnvelopePowZero visible strict owner source pinned target.type ||
-        checkedLoopEquation visible strict owner source pinned target.type ||
+        checkedPublicEquation visible strict owner source pinned target.type ||
         checkedOrderFields visible strict owner source pinned target.type missing ||
         EnvelopePublicTypes.checked visible strict owner source pinned target.type then return none
     match ← checkFiniteConsumer official visible strict owner source pinned target.type missing with
