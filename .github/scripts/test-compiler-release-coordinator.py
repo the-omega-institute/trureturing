@@ -117,6 +117,25 @@ class ScheduleTests(unittest.TestCase):
         self.assertEqual(github.submitted, [("units", [key(0), key(1)]), ("units", [key(1)]),
                                             ("units", [key(2)]), ("shards", [0])])
 
+    def test_evicted_parent_is_scheduled_again_before_the_child_retry(self):
+        plan, pending = example([[], [0]], [[0, 1]])
+        github = Actions(plan)
+        runs = github.runs
+
+        def evict_parent(*args, **kwargs):
+            rows = runs(*args, **kwargs)
+            for row in rows:
+                if row["id"] == 1001:
+                    row["conclusion"] = "failure"
+            return rows
+
+        github.runs = evict_parent
+        schedule = controller.Schedule(plan, pending, {key(0): receipt(plan, key(0))})
+        with patch.object(controller.time, "sleep"), contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.StringIO()):
+            controller.coordinate(github, schedule, None, 1, 1, lambda phase: ({}, None))
+        self.assertEqual(github.submitted, [("units", [key(1)]), ("units", [key(0)]),
+                                            ("units", [key(1)]), ("shards", [0])])
+
     def test_failed_physical_worker_can_have_completed_the_release_artifact(self):
         plan, pending = example([], [[]])
         github = Actions(plan)
