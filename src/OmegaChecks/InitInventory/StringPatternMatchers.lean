@@ -80,6 +80,39 @@ public theorem backwardPinned {ρ : Type} (pat : ρ) [PatternModel pat] [Decidab
     {s : String.Slice} (b : s.Pos) : (backwardOfDecidable pat b).val = revMatchAt? pat b :=
   Option.ext fun q => ((backwardOfDecidable pat b).property q).trans revMatchAt?_eq_some_iff.symm
 
+/-- A selector constrained only on failure may return the queried position on success. -/
+private def failureResult {α : Type} (fallback : α) (p : Prop) [Decidable (¬ p)] : Option α :=
+  if ¬ p then none else some fallback
+
+private theorem failureResult_eq_none {α : Type} (fallback : α) (p : Prop) [Decidable (¬ p)] :
+    failureResult fallback p = none ↔ ¬ p := by
+  unfold failureResult
+  split
+  next h => exact ⟨fun _ => h, fun _ => rfl⟩
+  next h => exact ⟨(fun e => nomatch e), fun n => (h n).elim⟩
+
+public theorem forwardFailureIff :
+    (∃ find : type_of% @matchAt?,
+      ∀ {ρ : Type} {pat : ρ} [PatternModel pat] {s : String.Slice} {a : s.Pos},
+        find pat a = none ↔ ¬ MatchesAt pat a) ↔ Nonempty ((P : Prop) → Decidable (¬ P)) := by
+  constructor
+  · rintro ⟨find, correct⟩
+    exact ⟨decidableNegOfForwardFailure find correct⟩
+  · rintro ⟨d⟩
+    exact ⟨fun pat _ _ a => @failureResult _ a (MatchesAt pat a) (d _),
+      fun {ρ pat _ s a} => @failureResult_eq_none _ a (MatchesAt pat a) (d _)⟩
+
+public theorem backwardFailureIff :
+    (∃ find : type_of% @revMatchAt?,
+      ∀ {ρ : Type} {pat : ρ} [PatternModel pat] {s : String.Slice} {b : s.Pos},
+        find pat b = none ↔ ¬ RevMatchesAt pat b) ↔ Nonempty ((P : Prop) → Decidable (¬ P)) := by
+  constructor
+  · rintro ⟨find, correct⟩
+    exact ⟨decidableNegOfBackwardFailure find correct⟩
+  · rintro ⟨d⟩
+    exact ⟨fun pat _ _ b => @failureResult _ b (RevMatchesAt pat b) (d _),
+      fun {ρ pat _ s b} => @failureResult_eq_none _ b (RevMatchesAt pat b) (d _)⟩
+
 public theorem forwardLongestIff :
     (type_of% @IsMatch.exists_isLongestMatch) ↔ (∀ P : Prop, P ∨ ¬ P) := by
   refine ⟨excludedMiddleOfLongest, ?_⟩
