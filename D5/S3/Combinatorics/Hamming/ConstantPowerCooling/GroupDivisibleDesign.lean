@@ -32,7 +32,7 @@ def IsSupportFamily {V I : Type*} [DecidableEq V]
   (∀ i (D : Finset V), D.card = t → ∃ A ∈ P i, Disjoint D A) ∧
   (∀ ⦃i j : I⦄, i ≠ j → ∀ A ∈ P i, ∀ B ∈ P j, (A ∩ B).card ≤ 1)
 
-private theorem design_blocks_inter_le_one {V : Type*} [DecidableEq V] {k g : ℕ}
+theorem design_blocks_inter_le_one {V : Type*} [DecidableEq V] {k g : ℕ}
     (G : GroupDivisibleDesign V k g) :
     ∀ ⦃A B : Finset V⦄, A ∈ G.blocks → B ∈ G.blocks → A ≠ B → (A ∩ B).card ≤ 1 := by
   intro A B hA hB hne
@@ -43,7 +43,7 @@ private theorem design_blocks_inter_le_one {V : Type*} [DecidableEq V] {k g : �
   obtain ⟨C, _, hC⟩ := G.cross_group (G.within_group A hA huA hvA huv)
   exact hne ((hC A ⟨hA, huA, hvA⟩).trans (hC B ⟨hB, huB, hvB⟩).symm)
 
-private theorem design_block_count {V : Type*} [Fintype V] [DecidableEq V]
+theorem design_block_count {V : Type*} [Fintype V] [DecidableEq V]
     {k g : ℕ} (G : GroupDivisibleDesign V k g) (hk : 2 ≤ k) :
     G.blocks.card = Fintype.card V * (Fintype.card V - g) / (k * (k - 1)) := by
   classical

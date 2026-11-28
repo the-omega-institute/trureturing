@@ -339,16 +339,6 @@ private theorem enum_group (G : GDD) :
     exact eq.symm.injective.eq_iff
   exact (hpart (e i) (e j)).symm.trans (hrel.trans hfirst)
 
-private theorem blocks_inter_le_one (G : GDD) :
-    ∀ ⦃A B : Finset V⦄, A ∈ G.blocks → B ∈ G.blocks → A ≠ B → (A ∩ B).card ≤ 1 := by
-  intro A B hA hB hne
-  by_contra! hcard
-  obtain ⟨u, hu, v, hv, huv⟩ := Finset.one_lt_card.mp hcard
-  obtain ⟨huA, huB⟩ := Finset.mem_inter.mp hu
-  obtain ⟨hvA, hvB⟩ := Finset.mem_inter.mp hv
-  obtain ⟨C, _, hCU⟩ := G.cross_group (G.within_group A hA huA hvA huv)
-  exact hne ((hCU A ⟨hA, huA, hvA⟩).trans (hCU B ⟨hB, huB, hvB⟩).symm)
-
 private theorem packed_neighbors_card (G : GDD) (v : V) :
     ((packedGraph G.blocks id).neighborSet v).ncard = 56 := by
   let H := packedGraph G.blocks id
@@ -374,15 +364,9 @@ private theorem point_block_count (G : GDD) (v : V) :
   let H := packedGraph G.blocks id
   let : Fintype (H.neighborSet v) := Fintype.ofFinite _
   have hpack := packedGraph_degree G.blocks id 8 G.block_card
-    (blocks_inter_le_one G) v
+    (CPECCBridge.design_blocks_inter_le_one G) v
   rw [← SimpleGraph.ncard_neighborSet, packed_neighbors_card G v] at hpack
   change 56 = 7 * (G.blocks.filter (fun B => v ∈ B)).card at hpack
-  omega
-
-private theorem block_count (G : GDD) : G.blocks.card = 58 := by
-  have hsum := incidence_sum G.blocks id 8 G.block_card
-  simp only [id_eq, point_block_count, Finset.sum_const, Finset.card_univ,
-    Fintype.card_fin, nsmul_eq_mul, Nat.cast_id] at hsum
   omega
 
 private theorem incidence_count (G : GDD) (u v : V) :
@@ -479,7 +463,8 @@ theorem no_group_divisible_design :
   rintro ⟨G⟩
   obtain ⟨eV, heV⟩ := enum_group G
   have hBcard : Fintype.card (DesignBlock G) = 58 := by
-    rw [Fintype.card_coe, block_count G]
+    rw [Fintype.card_coe]
+    simpa using CPECCBridge.design_block_count G (by decide)
   let idxFin : GramIndex ≃ Fin 58 := Fintype.equivFin GramIndex
   let eB : GramIndex ≃ DesignBlock G := idxFin.trans (Fintype.equivFinOfCardEq hBcard).symm
   let A : Matrix GramIndex GramIndex ℤ := incidenceMatrix G eV eB
