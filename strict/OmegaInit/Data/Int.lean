@@ -6,4 +6,5 @@ module
 prelude
 public import OmegaInit.Data.Int.DivMod
 public import OmegaInit.Data.Int.Order
+public import OmegaInit.Data.Int.OfNat
 public import OmegaInit.Data.Int.Lemmas

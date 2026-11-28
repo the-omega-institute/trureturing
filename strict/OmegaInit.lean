@@ -25,6 +25,7 @@ public import OmegaInit.Data.Function
 public import OmegaInit.Data.Int
 public import OmegaInit.Data.Int.Lemmas
 public import OmegaInit.Data.Int.Order
+public import OmegaInit.Data.Int.OfNat
 public import OmegaInit.Data.List.Attach
 public import OmegaInit.Data.List.Basic
 public import OmegaInit.Data.List.Erase
