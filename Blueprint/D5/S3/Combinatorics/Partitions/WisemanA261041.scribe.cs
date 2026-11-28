@@ -59,13 +59,16 @@ internal sealed class WisemanA261041Document : IScribeDocumentDefinition
             Node("result", "result", "The counting identity", DescribeRole.Theorem,
                 All("n", Nat(), Infix(Card(Call("Left", V("n"))), Eq, Card(Call("Right", V("n"))))),
                 "Taking natural cardinalities gives equality for every natural n. At zero the empty partial partition corresponds to the one-block partition of the singleton interval.",
-                AssessedProvenance.FromRepo(Source)))));
+                AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("wiseman-a261041"), ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string id, string declaration, string title, DescribeRole role,
-        Formula formula, string prose, AssessedProvenance? provenance = null) => Describe.Lean(
+        Formula formula, string prose, AssessedProvenance? provenance = null,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
         DescribeId.Create("a261041-" + id), DeclarationHandle.Create(Prefix + declaration),
         H(title), StatementSource.FromAuthor(Disp(formula)),
-        provenance ?? AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), role);
+        provenance ?? AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula V(string name) => F.Id(name);
     private static Formula Nat() => Seq(Mathbb, Grp(V("N")));
