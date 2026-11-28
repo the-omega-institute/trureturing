@@ -2,6 +2,7 @@ import D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Placement.Q
 import D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Placement.Q9FiveAxisFibreCapacity
 import D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Placement.Q9TightDistanceTwoCenter
 import D5.S3.Combinatorics.Graph.HypercubeCritical.HuangUnitSupportGap
+import D5.S3.Combinatorics.Graph.HypercubeCritical.SignedMidpointLink
 
 /-! A shared midpoint keeps both contact rows inside one inactive-coordinate fibre. -/
 
@@ -11,7 +12,7 @@ namespace D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Placemen
 
 open Finset
 open BalancedCriticalSpectrum (Q flip)
-open BalancedCubeComponentBoundary (directions mem_directions)
+open BalancedCubeComponentBoundary (directions mem_directions flip_injective)
 open Q9IsotropicHuang (parity)
 open Q9MinimumDistanceOperator (minimumDisplacements)
 open private differingAxes differingAxes_foldl_flip mem_minimumDisplacements parity_flip from
@@ -101,16 +102,37 @@ open private even_diff_of_parity_eq from
   D5.S3.Combinatorics.Graph.HypercubeCritical.HuangUnitSupportGap
 
 open Classical in
-/-- A five-axis fibre containing no realized distance-two contact mask has room
-for at most six selected vertices of a fixed parity if both components occur. -/
-theorem mixed_five_axis_fibre_capacity {C D : Finset (Q 9)} (b : Bool) (z : Q 9)
+private theorem five_axis_cross_distance {C D : Finset (Q 9)} (b : Bool) (z : Q 9)
+    (A : Finset (Fin 9)) (hA : A.card = 5)
+    (hsep : ∀ x ∈ C, ∀ y ∈ D, 2 ≤ hammingDist x y)
+    (hmask : ∀ T ∈ minimumDisplacements C D b 2, ¬ T ⊆ A)
+    {x y : Q 9} (hx : x ∈ C) (hy : y ∈ D) (hxb : parity x = b) (hyb : parity y = b)
+    (hxz : sameFibre A z x) (hyz : sameFibre A z y) :
+    hammingDist x y = 4 := by
+  have hdiff : differingAxes x y ⊆ A := by
+    intro j hj
+    by_contra hn
+    exact (mem_filter.mp hj).2 ((hxz j hn).trans (hyz j hn).symm)
+  have hle : hammingDist x y ≤ 5 := (card_le_card hdiff).trans_eq hA
+  have hge := hsep x hx y hy
+  have heven : hammingDist x y % 2 = 0 :=
+    Nat.mod_eq_zero_of_dvd (even_diff_of_parity_eq x y (hxb.trans hyb.symm)).two_dvd
+  have hne : hammingDist x y ≠ 2 := by
+    intro he
+    exact hmask _ (mem_minimumDisplacements.mpr ⟨x, hx, y, hy, hxb, he, rfl⟩) hdiff
+  omega
+
+open Classical in
+private theorem mixed_five_axis_fibre_shape {C D : Finset (Q 9)} (b : Bool) (z : Q 9)
     (e : Fin 5 ↪ Fin 9)
     (hsep : ∀ x ∈ C, ∀ y ∈ D, 2 ≤ hammingDist x y)
     (hmask : ∀ T ∈ minimumDisplacements C D b 2, ¬ T ⊆ univ.map e) :
     let A := univ.map e
     let L := (restrictToFibre C A z).filter (fun x => parity x = b)
     let R := (restrictToFibre D A z).filter (fun x => parity x = b)
-    L.Nonempty → R.Nonempty → L.card + R.card ≤ 6 := by
+    L.Nonempty → R.Nonempty →
+      L.card ≤ 5 ∧ R.card ≤ 5 ∧ L.card + R.card ≤ 6 ∧
+        (1 < L.card → R.card ≤ 2) ∧ (1 < R.card → L.card ≤ 2) := by
   intro A L R hL hR
   let project (x : Q 9) : Fin 5 → Bool := fun i => x (e i)
   have hmem {S : Finset (Q 9)} {x : Q 9}
@@ -150,26 +172,173 @@ theorem mixed_five_axis_fibre_capacity {C D : Finset (Q 9)} (b : Bool) (z : Q 9)
     obtain ⟨hxC, hxA, hxb⟩ := hmem hx
     obtain ⟨hyD, hyA, hyb⟩ := hmem hy
     rw [hdist hxA hyA]
-    have hle : hammingDist x y ≤ 5 := by
-      rw [← hdist hxA hyA]
-      simpa using (hammingDist_le_card_fintype
-        (x := project x) (y := project y))
-    have hge := hsep x hxC y hyD
-    have heven : hammingDist x y % 2 = 0 :=
-      Nat.mod_eq_zero_of_dvd (even_diff_of_parity_eq x y (hxb.trans hyb.symm)).two_dvd
-    have hne : hammingDist x y ≠ 2 := by
-      intro he
-      have hm : differingAxes x y ∈ minimumDisplacements C D b 2 :=
-        mem_minimumDisplacements.mpr ⟨x, hxC, y, hyD, hxb, he, rfl⟩
-      apply hmask _ hm
-      intro j hj
-      by_contra hn
-      exact (mem_filter.mp hj).2 ((hxA j hn).trans (hyA j hn).symm)
-    omega
+    exact five_axis_cross_distance b z A (by simp [A]) hsep hmask hxC hyD hxb hyb hxA hyA
   have hbound := Q9FiveAxisFibreCapacity.cross_distance_four_card_bound
     (L.image project) (R.image project) (hL.image _) (hR.image _) hcross
   rw [hcard L (fun x hx => (hmem hx).2.1), hcard R (fun x hx => (hmem hx).2.1)] at hbound
-  exact hbound.2.2.1
+  exact hbound
+
+open Classical in
+/-- A five-axis fibre containing no realized distance-two contact mask has room
+for at most six selected vertices of a fixed parity if both components occur. -/
+theorem mixed_five_axis_fibre_capacity {C D : Finset (Q 9)} (b : Bool) (z : Q 9)
+    (e : Fin 5 ↪ Fin 9)
+    (hsep : ∀ x ∈ C, ∀ y ∈ D, 2 ≤ hammingDist x y)
+    (hmask : ∀ T ∈ minimumDisplacements C D b 2, ¬ T ⊆ univ.map e) :
+    let A := univ.map e
+    let L := (restrictToFibre C A z).filter (fun x => parity x = b)
+    let R := (restrictToFibre D A z).filter (fun x => parity x = b)
+    L.Nonempty → R.Nonempty → L.card + R.card ≤ 6 := by
+  intro A L R hL hR
+  exact (mixed_five_axis_fibre_shape b z e hsep hmask hL hR).2.2.1
+
+/-- Edges in the free directions, counted once from their selected parity endpoints. -/
+def freeEdges (S L : Finset (Q 9)) (A : Finset (Fin 9)) : Finset (Q 9 × Fin 9) :=
+  (L.product A).filter (fun p => BalancedCriticalSpectrum.flip p.1 p.2 ∈ S)
+
+open scoped BigOperators in
+private theorem freeEdges_le_degree_sum {S L : Finset (Q 9)} {A : Finset (Fin 9)}
+    (hdegree : ∀ x ∈ L, (directions S x).card ≤ 3) :
+    (freeEdges S L A).card ≤ 3 * L.card := by
+  classical
+  have hmap (p : Q 9 × Fin 9) (hp : p ∈ freeEdges S L A) : p.1 ∈ L :=
+    (mem_product.mp (mem_filter.mp hp).1).1
+  rw [card_eq_sum_card_fiberwise (f := Prod.fst) (t := L) hmap]
+  calc
+    _ ≤ ∑ x ∈ L, 3 := by
+      apply sum_le_sum
+      intro x hx
+      let E := (freeEdges S L A).filter fun p => p.1 = x
+      have hcard : (E.image Prod.snd).card = E.card := by
+        apply card_image_of_injOn
+        intro p hp q hq he
+        exact Prod.ext ((mem_filter.mp hp).2.trans (mem_filter.mp hq).2.symm) he
+      rw [← hcard]
+      apply (card_le_card ?_).trans (hdegree x hx)
+      intro i hi
+      obtain ⟨p, hp, rfl⟩ := mem_image.mp hi
+      have hp' := mem_filter.mp hp
+      exact (mem_directions _ _ _).mpr (hp'.2 ▸ (mem_filter.mp hp'.1).2)
+    _ = _ := by simp [Nat.mul_comm]
+
+open Classical in
+private theorem freeEdges_le_of_five_near_antipodes {S L : Finset (Q 9)}
+    (A : Finset (Fin 9)) (hA : A.card = 5) (x z : Q 9) (hx : sameFibre A z x)
+    (hL : L.card = 5) (hsubset : L ⊆ S)
+    (hcross : ∀ y ∈ L, sameFibre A z y ∧ hammingDist x y = 4)
+    (hdegree : ∀ y ∈ S, (directions S y).card ≤ 3)
+    (hbal : BalancedCriticalSpectrum.IsBalanced S) : (freeEdges S L A).card ≤ 12 := by
+  let t : Q 9 := fun j => if j ∈ A then !x j else x j
+  have hsub : L ⊆ A.image (BalancedCriticalSpectrum.flip t) := by
+    intro y hy
+    obtain ⟨hyf, hyd⟩ := hcross y hy
+    have hdiff : A.filter (fun j => x j ≠ y j) = differingAxes x y := by
+      ext j
+      simp only [differingAxes, mem_filter, mem_univ, true_and, and_iff_right_iff_imp]
+      intro hn
+      by_contra hj
+      exact hn ((hx j hj).trans (hyf j hj).symm)
+    have hcount := card_filter_add_card_filter_not (s := A) (fun j => x j = y j)
+    rw [hdiff, show (differingAxes x y).card = 4 from hyd, hA] at hcount
+    obtain ⟨i, hi⟩ := card_eq_one.mp (show (A.filter (fun j => x j = y j)).card = 1 by omega)
+    have hix : i ∈ A.filter (fun j => x j = y j) := by simp [hi]
+    obtain ⟨hia, hie⟩ := mem_filter.mp hix
+    refine mem_image.mpr ⟨i, hia, ?_⟩
+    funext j
+    by_cases hj : j = i
+    · subst j
+      simpa [t, hia] using hie
+    · by_cases hja : j ∈ A
+      · have hxy : x j ≠ y j := by
+          intro h
+          exact hj (mem_singleton.mp (hi ▸ mem_filter.mpr ⟨hja, h⟩))
+        simpa [BalancedCriticalSpectrum.flip, t, hj, hja] using
+          (Bool.eq_not_of_ne (Ne.symm hxy)).symm
+      · simpa [BalancedCriticalSpectrum.flip, t, hj, hja] using
+          (hx j hja).trans (hyf j hja).symm
+  have himage : L = A.image (BalancedCriticalSpectrum.flip t) := by
+    apply eq_of_subset_of_card_le hsub
+    rw [card_image_of_injective _ (flip_injective t), hL, hA]
+  have hselect (i : Fin 9) (hi : i ∈ A) : flip t i ∈ S :=
+    hsubset (himage ▸ mem_image_of_mem (BalancedCriticalSpectrum.flip t) hi)
+  have hcenter : t ∉ S := by
+    intro ht
+    have hd := hdegree t ht
+    have hc := card_le_card (s := A) (t := directions S t)
+      (fun i hi => (mem_directions _ _ _).mpr (hselect i hi))
+    omega
+  let links := (A.product A).filter (fun p => p.1 ≠ p.2 ∧ flip (flip t p.1) p.2 ∈ S)
+  let edge (p : Fin 9 × Fin 9) : Q 9 × Fin 9 := (flip t p.1, p.2)
+  have hpack : freeEdges S L A ⊆ links.image edge := by
+    rintro ⟨y, j⟩ h
+    obtain ⟨hprod, hcorner⟩ := mem_filter.mp h
+    obtain ⟨hy, hj⟩ := mem_product.mp hprod
+    rw [himage] at hy
+    obtain ⟨i, hi, rfl⟩ := mem_image.mp hy
+    have hij : i ≠ j := by
+      intro he
+      subst j
+      exact hcenter (by simpa using hcorner)
+    exact mem_image.mpr ⟨(i, j), mem_filter.mpr ⟨mem_product.mpr ⟨hi, hj⟩, hij, hcorner⟩, rfl⟩
+  obtain ⟨sigma, hs⟩ := hbal
+  have hbound := SignedMidpointLink.double_card_links_le_square hs t A hselect
+  rw [hA] at hbound
+  have hcard := (card_le_card hpack).trans card_image_le
+  change 2 * links.card ≤ 5 ^ 2 at hbound
+  omega
+
+open Classical in
+/-- A mixed five-axis fibre of two separated balanced subcubic components
+contains at most fifteen free edges counted from the chosen parity. -/
+theorem mixed_five_axis_fibre_edge_capacity {C D : Finset (Q 9)} (b : Bool) (z : Q 9)
+    (e : Fin 5 ↪ Fin 9) (hsep : ∀ x ∈ C, ∀ y ∈ D, 2 ≤ hammingDist x y)
+    (hmask : ∀ T ∈ minimumDisplacements C D b 2, ¬ T ⊆ univ.map e)
+    (hc : BalancedCriticalSpectrum.IsBalanced C) (hd : BalancedCriticalSpectrum.IsBalanced D)
+    (hc3 : ∀ x ∈ C, (directions C x).card ≤ 3) (hd3 : ∀ x ∈ D, (directions D x).card ≤ 3) :
+    let A := univ.map e
+    let L := (restrictToFibre C A z).filter (fun x => parity x = b)
+    let R := (restrictToFibre D A z).filter (fun x => parity x = b)
+    L.Nonempty → R.Nonempty → (freeEdges C L A).card + (freeEdges D R A).card ≤ 15 := by
+  intro A L R hL hR
+  have hA : A.card = 5 := by simp [A]
+  have hmem {S : Finset (Q 9)} {x : Q 9}
+      (h : x ∈ (restrictToFibre S A z).filter (fun x => parity x = b)) :
+      x ∈ S ∧ sameFibre A z x ∧ parity x = b := by
+    obtain ⟨hx, hp⟩ := mem_filter.mp h
+    obtain ⟨hs, hf⟩ := mem_filter.mp hx
+    exact ⟨hs, hf, hp⟩
+  have hCL : L ⊆ C := fun _ hx => (hmem hx).1
+  have hDR : R ⊆ D := fun _ hx => (hmem hx).1
+  have hLc := freeEdges_le_degree_sum (A := A) (fun x hx => hc3 x (hCL hx))
+  have hRc := freeEdges_le_degree_sum (A := A) (fun x hx => hd3 x (hDR hx))
+  have shape := mixed_five_axis_fibre_shape b z e hsep hmask hL hR
+  change L.card ≤ 5 ∧ R.card ≤ 5 ∧ L.card + R.card ≤ 6 ∧
+    (1 < L.card → R.card ≤ 2) ∧ (1 < R.card → L.card ≤ 2) at shape
+  obtain ⟨hleft, hright, hsum, hlr, hrl⟩ := shape
+  by_cases hsmall : L.card + R.card ≤ 5
+  · omega
+  have hcross (x : Q 9) (hx : x ∈ L) (y : Q 9) (hy : y ∈ R) : hammingDist x y = 4 :=
+    five_axis_cross_distance b z A hA hsep hmask
+      (hmem hx).1 (hmem hy).1 (hmem hx).2.2 (hmem hy).2.2 (hmem hx).2.1 (hmem hy).2.1
+  by_cases hl : L.card = 1
+  · obtain ⟨x, hx⟩ := hL
+    have hr : R.card = 5 := by omega
+    have he := freeEdges_le_of_five_near_antipodes A hA x z (hmem hx).2.1 hr hDR
+      (fun y hy => ⟨(hmem hy).2.1, hcross x hx y hy⟩) hd3 hd
+    omega
+  · obtain ⟨y, hy⟩ := hR
+    have hl5 : L.card = 5 := by
+      have : 0 < L.card := card_pos.mpr hL
+      have := hlr (by omega)
+      have : 0 < R.card := card_pos.mpr ⟨y, hy⟩
+      by_contra! h
+      have := hrl (by omega)
+      omega
+    have hr1 : R.card = 1 := by omega
+    have he := freeEdges_le_of_five_near_antipodes A hA y z (hmem hy).2.1 hl5 hCL
+      (fun x hx => ⟨(hmem hx).2.1, (hammingDist_comm y x).trans (hcross x hx y hy)⟩)
+      hc3 hc
+    omega
 
 open Classical in
 /-- The union of the images under all forbidden parity corrections packs
@@ -497,6 +666,7 @@ theorem five_axis_fibre_counts {C D : Finset (Q 9)} (b : Bool)
 
 #print axioms shared_midpoint_neighbors_preserved
 #print axioms mixed_five_axis_fibre_capacity
+#print axioms mixed_five_axis_fibre_edge_capacity
 #print axioms adjacent_fibre_capacity
 #print axioms adjacent_fibre_two_holes
 #print axioms five_axis_fibre_counts

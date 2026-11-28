@@ -27,6 +27,15 @@ internal sealed class Q9InactiveContactFibreDocument : IScribeDocumentDefinition
                 Blocks(
                     Paragraph(Text("A mixed fibre holds at most six points on the chosen parity. An occupied pure fibre adjacent to a mixed fibre has at least two holes because a point of the opposite component forbids two distinct positions.")),
                     Paragraph(Text("With twelve mixed fibres, each of the four remaining patterns has a mixed neighbour. The capacity is at most 12 times 6 plus 4 times 14, which is 128. With eleven mixed fibres, at most one of the other five patterns has all four neighbours among those five. Four occupied pure fibres can then contribute at most 16 plus 3 times 14, which again falls short of 129 after adding the mixed capacity."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("q9-mixed-fibre-edge-capacity"),
+                DeclarationHandle.Create(Fibre + "mixed_five_axis_fibre_edge_capacity"),
+                H("A mixed fibre contributes at most fifteen edges in the free directions"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("A fibre with at most five occupied points on the chosen parity contributes at most fifteen edges by the degree bound. At occupancy six, the two components contribute one and five points. The five points are the free-coordinate neighbours of the singleton's antipode.")),
+                    Paragraph(Text("The antipode has five selected neighbours and is excluded by the degree bound. Each remaining edge from those five points comes from a selected double flip of the antipode. Signed flip anticommutation puts the two corresponding directions in opposite sign classes. Among five directions there are at most twelve ordered pairs across those classes, and the singleton contributes at most three more edges."))),
                 DescribeRole.Theorem)),
         []));
 }
