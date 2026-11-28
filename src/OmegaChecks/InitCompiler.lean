@@ -149,31 +149,45 @@ private def officialDeclaration (stx : Syntax) : CommandElabM (Environment × Co
       | _ => throwError "this proof needs a constructive implementation"
     if isProtected src info.name then modifyEnv (addProtected · target.name)
 
-/-- Replay a named constructive proof of the pinned interface in the isolated source seed. -/
+/-- Use a checked constructive implementation of an official theorem or definition. -/
 @[command_parser, builtin_command_parser] def portAlternativeProof := leading_parser
-  "port_alternative_proof " >> ident >> " from " >> ident
+  ("port_alternative_proof " <|> "port_alternative_definition ") >> ident >> " from " >> ident
 
 @[builtin_command_elab portAlternativeProof] def elabPortAlternativeProof : CommandElab := fun stx => do
   let (src, info) ← officialDeclaration stx[1]
   let scope := `OmegaChecks.InitPort.Alternatives
   let owner := stx[3].getId
-  unless scope.isPrefixOf owner && info.isTheorem do throwError "expected a constructive proof module"
+  let isProof := stx[0].getAtomVal == "port_alternative_proof"
+  unless scope.isPrefixOf owner && info.isTheorem == isProof do throwError "unexpected alternative kind or module"
   let model ← importModules #[{module := owner}] {} (level := .private)
   let name := scope ++ info.name
-  let some (.thmInfo proof) := model.find? name | throwError "missing constructive proof {name}"
-  unless model.getModuleIdxFor? name == model.getModuleIdx? owner do throwError "unexpected proof owner"
-  let localProof := fun n => isPrivateName n && (model.getModuleIdxFor? n).any fun i =>
+  let some alt := model.find? name | throwError "missing constructive implementation {name}"
+  unless alt.isTheorem == isProof && !alt.isUnsafe && !alt.isPartial &&
+      model.getModuleIdxFor? name == model.getModuleIdx? owner do throwError "unexpected implementation {name}"
+  let value ← match alt with
+    | .thmInfo th => pure th.value
+    | .defnInfo d => pure d.value
+    | _ => throwError "expected a definition or theorem body for {name}"
+  let localHelper := fun n => isPrivateName n && (model.getModuleIdxFor? n).any fun i =>
     scope.isPrefixOf model.header.moduleNames[i]!
-  let body ← (Meta.deltaExpand proof.value localProof (allowOpaque := true)).toIO'
-    {fileName := "<constructive proof>", fileMap := default} {env := model}
-  let params := (collectLevelParams {} proof.type).params.toList
+  let body ← (Meta.deltaExpand value localHelper (allowOpaque := true)).toIO'
+    {fileName := "<constructive implementation>", fileMap := default} {env := model}
+  let params := (collectLevelParams {} alt.type).params.toList
   let levels := (collectLevelParams {} info.type).params.toList.map Level.param
   unless params.length == levels.length do throwError "different universe binders"
-  liftCoreM <| withExporting do
+  liftCoreM do
     let type ← ofExcept (translateProofTerm src info.type)
     let value ← ofExcept (translateProofTerm src (body.instantiateLevelParams params levels))
     let target := omegaName info.name
-    Lean.addDecl (.thmDecl {info.toConstantVal with name := target, type, value, all := [target]})
+    if isProof then
+      withExporting <| Lean.addDecl (.thmDecl {info.toConstantVal with name := target, type, value, all := [target]})
+    else
+      let .defnInfo original := info | throwError "expected a safe definition"
+      withoutExporting <| Lean.addDecl (.defnDecl {original with name := target, type, value, all := [target]})
+      setReducibilityStatus target .irreducible
+      withExporting <| withOptions (fun o => Elab.async.set o false) do
+        Lean.compileDecls #[target] (logErrors := true)
+    if isProtected src info.name then modifyEnv (addProtected · target)
 
 @[command_parser, builtin_command_parser] def portCompilerMarkers := leading_parser "port_compiler_markers"
 

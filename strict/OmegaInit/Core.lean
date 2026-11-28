@@ -552,6 +552,8 @@ port_definition Quotient.liftOn₂ with_native_code
 port_proof Quotient.ind₂
 port_proof Quotient.inductionOn₂
 port_proof Quotient.inductionOn₃
+port_alternative_definition Quot.hrecOn from OmegaChecks.InitPort.Alternatives.Logic.Quotient
+port_definition Quotient.hrecOn with_native_code
 port_definition instTransIff with_native_code
 port_definition noConfusionTypeEnum
 port_proof noConfusionEnum._proof_1

@@ -110,7 +110,7 @@ public def installNaturalBootstrap : CommandElabM Unit := do
       modifyEnv fun e => externAttr.ext.addEntry (asyncDecl := n) e (n, attr)
       Lean.compileDecls #[n] (logErrors := true)
 
-    for n in #[`id, `Unit.unit, `Decidable.decide, `dite, `PULift.down, `PProd.fst, `PProd.snd, `cond.match_1, `cond, `OfNat.ofNat, `instOfNatNat, `Add.add, `HAdd.hAdd, `instAddNat, `instHAdd] do
+    for n in #[`id, `cast, `Unit.unit, `Decidable.decide, `dite, `PULift.down, `PProd.fst, `PProd.snd, `cond.match_1, `cond, `OfNat.ofNat, `instOfNatNat, `Add.add, `HAdd.hAdd, `instAddNat, `instHAdd] do
       Lean.compileDecls #[n] (logErrors := true)
 
   for name in RootNames.binderAnnotations ++ RootNames.natPrimitives do

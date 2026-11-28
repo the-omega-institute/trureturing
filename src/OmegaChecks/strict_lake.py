@@ -57,7 +57,8 @@ def foundation_config(source_dir, build_dir, label):
         omega_init = next(lib for lib in libraries if lib["name"] == "OmegaInit")
         # Build the shared library once before independent module facets load it.
         omega_init["needs"] = ["OmegaChecks.InitCompiler:shared", "+OmegaChecks.InitPort.Alternatives.Array:olean",
-                               "+OmegaChecks.InitPort.Alternatives.MonadicLists:olean"]
+                               "+OmegaChecks.InitPort.Alternatives.MonadicLists:olean",
+                               "+OmegaChecks.InitPort.Alternatives.Logic.Quotient:olean"]
         omega_init["plugins"] = ["OmegaChecks.InitCompiler:shared"]
         source = source.replace('name = "OmegaInit"\n', 'name = "OmegaInit"\n'
                                 'needs = ' + json.dumps(omega_init["needs"]) + '\n' +
