@@ -49,6 +49,8 @@ strata_touched:
   - D5/S3/Topology/StableCategory/ShellingExactExtension
   - D5/S3/Topology/StableCategory/ProductRigidCores
   - D5/S3/Topology/StableCategory/ProductStableCover
+  - D5/S3/Topology/StableCategory/ProductStableLower
+  - D5/S3/Topology/StableCategory/DisjointCoverObstruction
 license: citation-only
 triage: anchor
 ---
@@ -1254,12 +1256,31 @@ by deleting the three up-beat boundary edges in each factor. Six
 pointwise comparisons contract each colour in the product order.
 Pullback along the beat retraction and the ordinary subdivision cover
 theorem give two categorical lower sets after two subdivisions.
-The stable category is two. The subdivided product retracts onto a coordinate slice,
-and the factor is strongly minimal before
-subdivision. Strong collapsibility is reflected by ordinary
-barycentric subdivision by Barmak and Minian, Theorem 4.15.
+Lean proves that two is the minimum over all ordinary subdivision depths.
+The subdivided product retracts onto a coordinate slice. A contraction of that
+slice would give a contiguity chain on its order complex by choosing vertices
+in the images of singleton faces. The chain would fix two distinct original
+vertices of the subdivided boundary, which rules out a constant endpoint.
+Barmak and Minian's strong-collapse reflection theorem gives a second proof
+of the lower bound.
 This determines ((\operatorname{cat}_w,\operatorname{cat}_s,
 \operatorname{cat})(X)=(1,2,3)) for this product. The general inequality
 in Question 6.3 remains open.
 [Question 6.3](https://arxiv.org/html/2609.39615v1#S6) ·
 [Strong homotopy types, nerves and collapses](https://arxiv.org/abs/0907.2954)
+
+## A categorical cover transport obstruction at every ordinary depth
+
+In a four-dimensional complex obtained by adding one simplex and its free
+tetrahedral facet, the retained first subdivision has a disjoint vertex
+partition into two induced categorical regions. Either assignment of the new
+chamber barycentre forces a six-edge cycle in the chosen region. A retraction
+projects that cycle to a subdivided two-dimensional complex in which two
+original cycle vertices stay fixed throughout every contiguity chain.
+
+The same witness subdivides through every later ordinary depth. For either
+colour, any full region containing its retained part and all exterior vertices
+contains that subdivided witness. Thus any full categorical two-cover
+containing the inherited regions must distribute the exterior between its
+pieces. The arbitrary contractible four-complex case of Question 6.3 remains
+open. [Question 6.3](https://arxiv.org/html/2609.39615v1#S6)
