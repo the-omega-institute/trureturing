@@ -77,11 +77,14 @@ module
 
 public import Mathlib.Analysis.Normed.Field.Approximation
 public import Mathlib.Analysis.CStarAlgebra.PositiveLinearMap
+public import Mathlib.Analysis.CStarAlgebra.ContinuousFunctionalCalculus.Order
 public import Mathlib.LinearAlgebra.Eigenspace.Triangularizable
 public import Mathlib.Topology.Algebra.MvPolynomial
 public import Mathlib.LinearAlgebra.Matrix.Charpoly.Univ
 public import D5.S3.Quantum.QuantumChannels.TomiyamaDiagonalKPositivity
 public import D5.S3.Weil.ZetaLinear.RankTrace
+
+/-! # Transition traces of two-positive maps -/
 
 @[expose] public section
 set_option backward.isDefEq.respectTransparency false

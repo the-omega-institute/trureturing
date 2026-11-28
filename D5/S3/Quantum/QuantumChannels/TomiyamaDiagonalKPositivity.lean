@@ -63,6 +63,8 @@ public import D5.S3.Quantum.Foundation.FiniteKrausChannel
 public import Mathlib.Algebra.Order.Chebyshev
 public import Mathlib.Analysis.SpecialFunctions.Complex.CircleAddChar
 
+/-! # Positivity region of diagonal quantum maps -/
+
 @[expose] public section
 
 set_option autoImplicit false

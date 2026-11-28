@@ -25,8 +25,6 @@ public import D5.S3.Weil.ZetaLinear.PosIndex
 public import Mathlib.Analysis.Convex.Birkhoff
 public import Mathlib.Algebra.Order.Rearrangement
 
-@[expose] public section
-
 /-!
 # Von Neumann's trace inequality
 
@@ -51,6 +49,8 @@ inequality** (`Monovary.sum_mul_comp_perm_le_sum_mul`), since both `a` and
 `b` are antitone (hence monovary). Averaging over `σ` with weights `w_σ`
 gives the result.
 -/
+
+@[expose] public section
 
 noncomputable section
 

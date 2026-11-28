@@ -71,6 +71,9 @@ module
 
 public import D5.S3.Quantum.ChannelFixedState
 public import D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace
+public import Mathlib.LinearAlgebra.Matrix.Charpoly.Eigs
+
+/-! # Eigenvalue bounds for trace-preserving maps -/
 
 @[expose] public section
 set_option backward.isDefEq.respectTransparency false

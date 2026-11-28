@@ -34,6 +34,8 @@ public import Mathlib.Dynamics.BirkhoffSum.NormedSpace
 public import Mathlib.Tactic.Linarith
 public import Mathlib.Tactic.Positivity
 
+/-! # Fixed density states of finite quantum channels -/
+
 @[expose] public section
 
 namespace D5.S3.Quantum.ChannelFixedState

@@ -24,8 +24,6 @@ module
 
 public import Mathlib.Analysis.Matrix.PosDef
 
-@[expose] public section
-
 /-!
 # Positive index of a Hermitian matrix
 
@@ -38,6 +36,8 @@ This file defines `posIndex` via the eigenvalue count, together with the
 real-valued trace `rtrace` and squared Frobenius norm `frobSq` needed for
 the rank–trace inequality (paper §3, `lem:ranktrace`).
 -/
+
+@[expose] public section
 
 noncomputable section
 

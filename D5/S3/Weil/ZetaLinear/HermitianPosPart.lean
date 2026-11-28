@@ -23,8 +23,6 @@ module
 
 public import D5.S3.Weil.ZetaLinear.PosIndex
 
-@[expose] public section
-
 /-!
 # Positive and negative parts of a Hermitian matrix
 
@@ -38,6 +36,8 @@ This is equivalent to the CFC `Q⁺`/`Q⁻` via `Matrix.IsHermitian.cfc_eq`, but
 the direct spectral construction keeps the eigenvalue bookkeeping explicit,
 which is what the rank–trace proof needs.
 -/
+
+@[expose] public section
 
 noncomputable section
 
