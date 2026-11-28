@@ -324,7 +324,7 @@ class CoverageTest(unittest.TestCase):
         ring = scope + "ofSemiring"
         refuter = "OmegaChecks.InitBoundaries.RepresentativeQuotient.refuteEnvelopeCancellation"
         names = [scope + name for name in ("toQ_natCast", "toQ_pow", "instNoNatZeroDivisorsQOfAddRightCancel",
-                                            "instIsCharPQOfAddRightCancel")]
+                                            "instIsCharPQOfAddRightCancel", "instOrderedRingQOfLawfulOrderLTOfExistsAddOfLT")]
         rows = [site(owner, name) for name in names]
         operation = site(owner, ring, kind="definition", representativeRefuter=refuter)
         data = inventory(*rows, operation)
@@ -409,12 +409,13 @@ class CoverageTest(unittest.TestCase):
         proof = "OmegaChecks.InitBoundaries.RepresentativeQuotient.refuteEnvelopeCancellation"
         operation = site(envelope, instance, kind="definition", representativeRefuter=proof)
         rows = [site(owner, scope + n, strictUnsafe=None, strictPartial=None) for n in ("add_congr", "smul_congr")]
+        rows.append(site(envelope, scope + "instNoNatZeroDivisorsQOfAddRightCancel", strictUnsafe=None, strictPartial=None))
         data = inventory(operation, *rows)
         data["certifiedRepresentativeRefutations"] = [[envelope, instance, instance, proof]]
-        self.assertEqual(check_coverage(data)[1], [(owner, row["name"]) for row in rows])
+        self.assertEqual(check_coverage(data)[1], [(row["module"], row["name"]) for row in rows])
         for row in rows:
             row["originalTypeEnvelopeInstance"] = instance
-        certs = [[owner, row["name"], instance, proof] for row in rows]
+        certs = [[row["module"], row["name"], instance, proof] for row in rows]
         data["certifiedEnvelopeTypeDependencies"] = certs
         self.assertEqual(check_coverage(data), (0, []))
         for bad in ([envelope, *certs[0][1:]], [owner, scope + "of_eq", instance, proof]):

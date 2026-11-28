@@ -1,10 +1,10 @@
 module
 import all OmegaChecks.InitInventory.Reductions
 import OmegaChecks.InitInventory.EnvelopePublicTypes
-import OmegaChecks.InitPort.StrictReplay
+import OmegaChecks.InitPort.EnvelopeNaturalPremises
 meta import OmegaChecks.InitInventory.Reductions
 meta import OmegaChecks.InitInventory.EnvelopePublicTypes
-meta import OmegaChecks.InitPort.StrictReplay
+meta import OmegaChecks.InitPort.EnvelopeNaturalPremises
 
 open Lean Meta InitKernelPort OmegaChecks.InitPort OmegaChecks.InitBoundaries
 
@@ -18,14 +18,21 @@ private def checkOccurrence (source operation : ConstantInfo) : MetaM Unit := do
   let env ← getEnv
   let levels := source.levelParams.map Level.param
   forallTelescope source.type fun _ conclusion => do
-    let some (_, _, right) := conclusion.eq? | throwError "expected an embedding equation"
-    let index ← if source.name == instanceName.getPrefix.str "add_congr" ||
+    let index ← if source.name == instanceName.getPrefix.str "instNoNatZeroDivisorsQOfAddRightCancel" then do
+      unless conclusion.isAppOfArity ``Grind.NoNatZeroDivisors 2 do throwError "expected the scalar cancellation class"
+      let index := conclusion.appArg!
+      unless index.isAppOfArity ``Grind.IntModule.toNatModule 2 && index.appArg!.isAppOfArity instanceName 2 do
+        throwError "expected the natural module projection of the canonical integer module"
+      pure index
+    else do
+      let some (_, _, right) := conclusion.eq? | throwError "expected an embedding equation"
+      if source.name == instanceName.getPrefix.str "add_congr" ||
         source.name == instanceName.getPrefix.str "smul_congr" then do
-      let op := if source.name.getString! == "add_congr" then ``HAdd.hAdd else ``HSMul.hSMul
-      unless right.isAppOfArity op 6 && right.getAppArgs[4]!.isFVar && right.appArg!.isFVar do
-        throwError "expected the quotient operation at the arbitrary arguments"
-      pure right.getAppArgs[3]!
-    else pure right
+        let op := if source.name.getString! == "add_congr" then ``HAdd.hAdd else ``HSMul.hSMul
+        unless right.isAppOfArity op 6 && right.getAppArgs[4]!.isFVar && right.appArg!.isFVar do
+          throwError "expected the quotient operation at the arbitrary arguments"
+        pure right.getAppArgs[3]!
+      else pure right
     let some use := index.find? (fun e => e.isAppOfArity instanceName 2)
       | throwError "missing module instance at the right endpoint"
     let args := use.getAppArgs
@@ -61,6 +68,33 @@ private def congruences (lib : System.FilePath) (systemPath : SearchPath) (opera
       throw <| IO.userError s!"invalid quotient arithmetic endpoint {n}"
     ((checkOccurrence src operation).run').toIO' {fileName := "<module congruence>", fileMap := default} {env := visible}
     IO.println (toJson #[congruenceOwner.toString, n.toString, instanceName.toString, refuter.toString]).compress
+
+private def scalarCancellation (lib : System.FilePath) (original visible evidence strict : Environment)
+    (operation : ConstantInfo) (refuter : Name) : IO Unit := do
+  let n := instanceName.getPrefix.str "instNoNatZeroDivisorsQOfAddRightCancel"
+  let natRing := `OmegaInit.GrindInstances.Ring.Nat
+  if strict.contains (portName n) || !(← (modToFilePath lib natRing "olean").pathExists) then return
+  let full ← importModules #[{module := owner.replacePrefix `Init `OmegaInit, importAll := true},
+    {module := natRing, importAll := true}, {module := `OmegaInit.GrindInstances.Nat, importAll := true}] {}
+  let some src := original.find? n | throw <| IO.userError s!"missing {n}"
+  let translated := translate portName src.type
+  unless src.isTheorem && !src.isUnsafe && !src.isPartial && src.numLevelParams == 1 &&
+      (visible.find? n).any (·.type.equal src.type) && visible.getModuleIdxFor? n == visible.getModuleIdx? owner &&
+      (Kernel.check visible {} src.type).isOk && typeNeedsConstant visible src.type instanceName &&
+      translated.getUsedConstants.filter (!strict.contains ·) == #[portName instanceName] &&
+      !full.contains (portName instanceName) && !(Kernel.check strict {} translated).isOk do
+    throw <| IO.userError s!"invalid scalar cancellation type {n}"
+  ((checkOccurrence src operation).run').toIO' {fileName := "<module class index>", fileMap := default} {env := visible}
+  let some observation := EnvelopeCancellation.observation? owner instanceName | throw <| IO.userError "missing module test"
+  let some (.thmInfo proof) := evidence.find? observation | throw <| IO.userError "missing module cancellation proof"
+  let some sample := proof.value.find? (·.isAppOfArity instanceName 2) | throw <| IO.userError "missing module in test"
+  let canonical := mkApp2 (mkConst instanceName [.zero]) (mkConst ``Nat) EnvelopeNaturalPremises.natModule
+  unless Kernel.isDefEqGuarded evidence {} sample canonical do throw <| IO.userError "different natural module in test"
+  let ty ← ((EnvelopeNaturalPremises.specialize full src).run').toIO'
+    {fileName := "<scalar cancellation premises>", fileMap := default} {env := original}
+  let some use := ty.appArg!.find? (·.isAppOfArity instanceName 2) | throw <| IO.userError "missing module at Nat"
+  unless Kernel.isDefEqGuarded original {} use canonical do throw <| IO.userError "different module in the class index"
+  IO.println (toJson #[owner.toString, n.toString, instanceName.toString, refuter.toString]).compress
 
 /-- These comparisons retain a universal relation-respect argument even after public reduction.
 Its type is equivalent at universe zero to propositional extensionality. -/
@@ -113,7 +147,7 @@ public unsafe def main (args : List String) : IO Unit := do
   let evidence ← importModules #[{module := `OmegaChecks.InitInventory.Reductions, importAll := true}] {}
   let visible ← importModules #[{module := owner}] {} (level := .exported)
   let original ← importModules #[{module := owner, importAll := true},
-    {module := `Init.GrindInstances.Ring.Nat, importAll := true}] {}
+    {module := `Init.GrindInstances.Ring.Nat, importAll := true}, {module := `Init.GrindInstances.Nat, importAll := true}] {}
   let targetOwner := owner.replacePrefix `Init `OmegaInit
   let systemPath ← searchPathRef.get
   searchPathRef.set [lib]
@@ -147,4 +181,5 @@ public unsafe def main (args : List String) : IO Unit := do
   let _ ← replayStrict full.toKernelEnv roots
   for root in roots do
     IO.println (toJson #[owner.toString, (originalName root).toString, instanceName.toString, refuter.toString]).compress
+  scalarCancellation lib original visible evidence strict operation refuter
   congruences lib systemPath operation refuter

@@ -1,8 +1,8 @@
 module
 import all OmegaChecks.InitInventory.Reductions
-import OmegaChecks.InitPort.StrictReplay
+import OmegaChecks.InitPort.EnvelopeNaturalPremises
 meta import OmegaChecks.InitInventory.Reductions
-meta import OmegaChecks.InitPort.StrictReplay
+meta import OmegaChecks.InitPort.EnvelopeNaturalPremises
 
 open Lean Meta InitKernelPort OmegaChecks.InitPort OmegaChecks.InitBoundaries
 open Lean.Grind
@@ -12,6 +12,12 @@ private def operation := ``Ring.OfSemiring.ofSemiring
 
 /-- The selected class index, equality carrier or powered endpoint contains the whole ring instance. -/
 private def endpoint (name : Name) (conclusion : Expr) : MetaM Expr := do
+  if name == ``Ring.OfSemiring.instOrderedRingQOfLawfulOrderLTOfExistsAddOfLT then
+    unless conclusion.isAppOfArity ``OrderedRing 5 do throwError "wrong ordered ring class"
+    let index := conclusion.getAppArgs[1]!
+    unless index.isAppOfArity ``Ring.toSemiring 2 && index.appArg!.isAppOfArity operation 2 do
+      throwError "expected the semiring projection of the canonical quotient ring"
+    return index
   if name == ``Ring.OfSemiring.instNoNatZeroDivisorsQOfAddRightCancel then
     unless conclusion.isAppOfArity ``NoNatZeroDivisors 2 do throwError "wrong scalar cancellation class"
     return conclusion.appArg!
@@ -46,35 +52,12 @@ private def checkInstance (source : ConstantInfo) : MetaM Unit := do
     unless !whole.hasFVar && Kernel.isDefEqGuarded env {} whole (mkConst operation levels) &&
         Kernel.isDefEqGuarded env {} type expected do throwError "incomplete ring in quotient index"
 
-private def natSemiring :=
-  mkApp2 (mkConst ``CommSemiring.toSemiring [.zero]) (mkConst ``Nat) (mkConst ``instCommSemiringNat)
-
-/-- Instantiate every premise at the same characteristic-zero natural semiring as the cancellation test. -/
 private def checkNat (strict : Environment) (source : ConstantInfo) : MetaM Unit := do
   let env ← getEnv
-  let mut applied := mkConst source.name [.zero]
-  let mut ty := source.type.instantiateLevelParams source.levelParams [.zero]
-  while let .forallE _ domain body bi := ty do
-    let arg ← if domain == .sort (.succ .zero) then pure (mkConst ``Nat)
-      else if bi == .instImplicit then
-        match domain.getAppFn.constName! with
-        | ``Semiring => pure natSemiring
-        | ``AddRightCancel => pure (mkConst ``instAddRightCancelNat)
-        | ``NoNatZeroDivisors => pure (mkConst ``instNoNatZeroDivisorsNat)
-        | ``IsCharP => pure (mkConst ``instIsCharPNatOfNat)
-        | cls => throwError "unexpected natural class {cls}"
-      else if domain.isConstOf ``Nat then pure (mkRawNatLit 0)
-      else throwError "unexpected natural specialization of {source.name}"
-    let actual ← ofExceptKernelException (Kernel.check strict {} (translate portName arg))
-    unless Kernel.isDefEqGuarded strict {} actual (translate portName domain) do
-      throwError "natural witness has a different strict type for {source.name}"
-    applied := mkApp applied arg
-    ty := body.instantiate1 arg
-  let actual ← ofExceptKernelException (Kernel.check env {} applied)
-  unless Kernel.isDefEqGuarded env {} actual ty do throwError "failed to instantiate every premise"
+  let ty ← EnvelopeNaturalPremises.specialize strict source
   let some use := (← endpoint source.name ty).find? (·.isAppOfArity operation 2)
     | throwError "missing ring in natural specialization"
-  unless Kernel.isDefEqGuarded env {} use (mkApp2 (mkConst operation [.zero]) (mkConst ``Nat) natSemiring) do
+  unless Kernel.isDefEqGuarded env {} use (mkApp2 (mkConst operation [.zero]) (mkConst ``Nat) EnvelopeNaturalPremises.semiring) do
     throwError "specialized ring does not use the natural semiring"
 
 public def main (args : List String) : IO Unit := do
@@ -93,7 +76,7 @@ public def main (args : List String) : IO Unit := do
   let some sample := EnvelopeCancellation.observation? owner operation | throw <| IO.userError "missing cancellation test"
   let some (.thmInfo proof) := evidence.find? sample | throw <| IO.userError s!"missing test {sample}"
   let some ring := proof.value.find? (·.isAppOfArity operation 2) | throw <| IO.userError "test does not use the ring"
-  unless Kernel.isDefEqGuarded evidence {} ring (mkApp2 (mkConst operation [.zero]) (mkConst ``Nat) natSemiring) do
+  unless Kernel.isDefEqGuarded evidence {} ring (mkApp2 (mkConst operation [.zero]) (mkConst ``Nat) EnvelopeNaturalPremises.semiring) do
     throw <| IO.userError "cancellation test and class premises use different natural semirings"
   searchPathRef.set [lib]
   let strict ← importModules #[{module := target}] {} (level := .exported)
@@ -108,15 +91,20 @@ public def main (args : List String) : IO Unit := do
   let kernel ← restoreEvidence evidence full.toKernelEnv cast
   let _ ← replayStrict kernel ((witnesses.map portName).push (portName cast))
   for name in [``Ring.OfSemiring.toQ_natCast, ``Ring.OfSemiring.toQ_pow,
-      ``Ring.OfSemiring.instNoNatZeroDivisorsQOfAddRightCancel, ``Ring.OfSemiring.instIsCharPQOfAddRightCancel] do
+      ``Ring.OfSemiring.instNoNatZeroDivisorsQOfAddRightCancel, ``Ring.OfSemiring.instIsCharPQOfAddRightCancel,
+      ``Ring.OfSemiring.instOrderedRingQOfLawfulOrderLTOfExistsAddOfLT] do
     if strict.contains (portName name) then continue
     let some src := official.find? name | throw <| IO.userError s!"missing {name}"
     let expected := translate portName src.type
+    let missing := expected.getUsedConstants.filter (!strict.contains ·)
+    let required := #[operation, ``Ring.OfSemiring.instLEQOfOrderedAdd, ``Ring.OfSemiring.instLTQOfOrderedAdd,
+      ``Ring.OfSemiring.instIsPreorderQ].map portName
+    let ordered := name == ``Ring.OfSemiring.instOrderedRingQOfLawfulOrderLTOfExistsAddOfLT
     unless src.isTheorem && !src.isUnsafe && !src.isPartial && src.numLevelParams == 1 &&
         (visible.find? name).any (·.type.equal src.type) &&
         visible.getModuleIdxFor? name == visible.getModuleIdx? owner &&
         (Kernel.check visible {} src.type).isOk && typeNeedsConstant visible src.type operation &&
-        expected.getUsedConstants.filter (!strict.contains ·) == #[portName operation] &&
+        missing.contains (portName operation) && missing.all (if ordered then required.contains else (· == portName operation)) &&
         !(Kernel.check strict {} expected).isOk do throw <| IO.userError s!"invalid type formation for {name}"
     ((checkInstance src).run').toIO' {fileName := "<ring index>", fileMap := default} {env := visible}
     ((checkNat full src).run').toIO' {fileName := "<natural semiring>", fileMap := default} {env := official}

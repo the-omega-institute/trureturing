@@ -29,4 +29,8 @@ specified arithmetic on Nat representatives forces the classes of (1, 1) and (0,
 to agree. Both class premises hold over the same Nat, with characteristic zero.
 The natural-cast equality is in the second envelope. EnvelopeCancellation.nestedNatCast
 constructs it for any semiring on the first envelope whose casts have the specified
-values. RingInstanceFormation checks all four occurrences of the pinned instance. -/
+values. RingInstanceFormation checks these occurrences of the pinned instance. -/
+
+/- instOrderedRingQOfLawfulOrderLTOfExistsAddOfLT selects ofSemiring in its semiring index.
+Nat realizes the strict order, preorder, ordered ring and additive existence premises together.
+The selected quotient ring requires the pinned cancellation law on the representative (1,0). -/
