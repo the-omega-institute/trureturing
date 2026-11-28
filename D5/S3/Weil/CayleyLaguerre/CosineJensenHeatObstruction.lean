@@ -4,11 +4,13 @@
    mirror-E: none(waiver:analytic-family-counterexample)
    anchors: []
    utility: none
-   digest: Positive-degree positive Jensen shifts can all be hyperbolic along a heat flow with nonreal zeros. -/
+   digest: Positive-degree shifted Jensen tests need not detect nonreal heat-flow zeros. -/
 
 import OmegaMath.Analysis.ConjugatePowerZeros
 import D5.S3.Zeros.Jensen.JensenPolynomialObstruction
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Deriv
+
+/-! Full Taylor Jensen rows of the cosine backward heat family. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -36,7 +38,8 @@ private theorem phase_even (m : ℕ) : (Complex.I ^ (2 * m)).re = (-1 : ℝ) ^ m
 private theorem phase_odd (m : ℕ) : (Complex.I ^ (2 * m + 1)).re = 0 := by
   have hp : (-1 : ℂ) ^ m = (((-1 : ℝ) ^ m : ℝ) : ℂ) := by norm_cast
   rw [pow_add, pow_mul, Complex.I_sq, hp]
-  simp [Complex.mul_re]
+  simp only [pow_one, Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im,
+    Complex.I_re, Complex.I_im, mul_zero, zero_mul, sub_self]
 
 private theorem cosine_derivative_zero (k : ℕ) :
     iteratedDeriv k Real.cos 0 = (Complex.I ^ k).re := by
@@ -68,9 +71,10 @@ private theorem jensen_cosine_eval (c t : ℝ) (d n : ℕ) (hn : 0 < n) (z : ℂ
       (Real.exp t : ℂ) *
         (Complex.I ^ n * (1 + Complex.I * z) ^ d +
           (-Complex.I) ^ n * (1 - Complex.I * z) ^ d) := by
-  have hc (k : ℕ) : (cosineHeatJet c t (n + k) : ℂ) =
+  have hc (k : ℕ) : (algebraMap ℝ ℂ) (cosineHeatJet c t (n + k)) =
       (Real.exp t : ℂ) *
         (Complex.I ^ (n + k) + (-Complex.I) ^ (n + k)) / 2 := by
+    change (cosineHeatJet c t (n + k) : ℂ) = _
     rw [positive_jet c t (n + k) (by omega), Complex.ofReal_mul,
       Complex.re_eq_add_conj]
     simp only [map_pow, Complex.conj_I]
@@ -122,7 +126,11 @@ private theorem positive_shift_classification (c t : ℝ) (d n : ℕ) (hn : 0 < 
   · have hp : cosineHeatJet c t n = 0 := by
       rcases ho with ⟨m, hm⟩
       rw [positive_jet c t n hn, show n = 2 * m + 1 by omega, phase_odd, mul_zero]
-    refine iff_of_false ?_ ho.not_even
+    have hne : ¬ Even n := by
+      rintro ⟨j, hj⟩
+      rcases ho with ⟨m, hm⟩
+      omega
+    refine iff_of_false ?_ hne
     intro h
     have hh := h Complex.I (by simp [jensenPolynomial, hp])
     norm_num at hh
@@ -162,7 +170,7 @@ theorem positive_shift_heat_counterexample (t y : ℝ) (hy : y ≠ 0) :
   refine ⟨cosine_heat_equation _, positive_shift_classification _, ?_, ?_⟩
   · simp [cosineHeat, Complex.cos_add_mul_I, ← Complex.ofReal_cos,
       ← Complex.ofReal_sin, ← Complex.ofReal_cosh, Real.cos_pi, Real.sin_pi,
-      ← Complex.ofReal_exp] <;> ring
+      ← Complex.ofReal_exp]
   · simpa using hy
 
 #print axioms positive_shift_heat_counterexample

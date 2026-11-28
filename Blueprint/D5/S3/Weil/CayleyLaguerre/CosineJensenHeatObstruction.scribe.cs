@@ -45,7 +45,7 @@ internal sealed class CosineJensenHeatObstructionDocument : IScribeDocumentDefin
             Describe.Lean(
                 DescribeId.Create("positive-shift-heat-counterexample"),
                 DeclarationHandle.Create(Prefix + "positive_shift_heat_counterexample"),
-                H("All positive shifts coexist with a nonreal source zero"),
+                H("Positive-degree rows at positive shifts coexist with a nonreal source zero"),
                 StatementSource.FromAuthor(CounterexampleFormula()),
                 AssessedProvenance.FromRepo(),
                 Blocks(
