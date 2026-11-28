@@ -178,11 +178,10 @@ private def sealedImplementation (n : Name) : Bool :=
     `String.Slice.ByteIterator.instIteratorLoopUInt8OfMonad,
     `String.Slice.Pattern.ForwardSliceSearcher.instIteratorLoopIdSearchStep,
     `String.Slice.PosIterator.instIteratorLoopSubtypePosNeEndPosOfMonad,
-    `Std.Rxc.Iterator.instIteratorLoop.loop, `Std.Rxo.Iterator.instIteratorLoop,
+    `Std.Rxo.Iterator.instIteratorLoop,
     `List.appendTR, `List.lengthTR, `List.mapTR, `List.filterTR, `List.filterMapTR, `List.replicateTR, `List.leftpadTR, `List.range'TR, `List.intersperseTR,
     `Array.instDecidableEq, `Lean.RArray.getImpl,
     `String.Slice.RevByteIterator.instIteratorLoopUInt8OfMonad,
-    `String.Slice.RevByteIterator.instForInCharOfMonad,
     `String.Slice.RevPosIterator.instIteratorLoopSubtypePosNeEndPosOfMonad].contains n
 
 /-- Inline a later proof dependency locally, so module cycles do not discard checked

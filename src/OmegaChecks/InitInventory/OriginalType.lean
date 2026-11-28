@@ -99,6 +99,24 @@ private def checkedOrderFields (visible strict : Environment) (owner : Name)
     (Kernel.check visible {} reduced).isOk && Kernel.isDefEqGuarded visible {} pinned reduced &&
     (Kernel.check strict {} translated).isOk && Kernel.isDefEqGuarded strict {} translated target
 
+/-- Both public kernels must reduce the complete computational equation to the
+same application of its left endpoint, including every original binder. -/
+private def checkedLoopEquation (visible strict : Environment) (owner : Name)
+    (source : ConstantInfo) (pinned target : Expr) : Bool := Id.run do
+  unless (owner, source.name) ∈ [
+      (`Init.Data.String.Lemmas.Iterate, `String.Slice.forIn_eq_forIn_chars),
+      (`Init.Data.Range.Polymorphic.RangeIterator, `Std.Rxc.Iterator.instIteratorLoop.loop.eq_1)] &&
+      source.isTheorem && visible.getModuleIdxFor? source.name == visible.getModuleIdx? owner &&
+      (visible.find? source.name).any (fun ci => ci.type.equal source.type) do return false
+  let eq := pinned.getForallBody
+  unless eq.isAppOfArity `Eq 3 do return false
+  let lhs := eq.getAppArgs[1]!
+  let shared := pinned.replace fun e => if e.equal eq then some (mkApp eq.appFn! lhs) else none
+  let translated := InitKernelPort.translate InitKernelPort.portName shared
+  return (Kernel.check visible {} pinned).isOk && (Kernel.check visible {} shared).isOk &&
+    Kernel.isDefEqGuarded visible {} pinned shared && (Kernel.check strict {} translated).isOk &&
+    (Kernel.check strict {} target).isOk && Kernel.isDefEqGuarded strict {} translated target
+
 /-- The kernel names a recursor's minor premises after its constructors. Translate those
 binder labels alongside the constructor constants when comparing serialized public types. -/
 private def recursorBinders (rules : List RecursorRule) : Expr → Expr
@@ -217,6 +235,7 @@ public def originalTypeGap? (official visible strict : Environment) (owner : Nam
   unless missing.isEmpty do
     if checkedFinBound official strict owner source.name pinned target.type ||
         checkedEnvelopePowZero visible strict owner source pinned target.type ||
+        checkedLoopEquation visible strict owner source pinned target.type ||
         checkedOrderFields visible strict owner source pinned target.type missing ||
         EnvelopePublicTypes.checked visible strict owner source pinned target.type then return none
     match ← checkFiniteConsumer official visible strict owner source pinned target.type missing with
