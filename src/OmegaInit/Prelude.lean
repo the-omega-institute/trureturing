@@ -342,3 +342,13 @@ end Omega.ULift
 namespace Omega.XorOp
 export _root_.XorOp (casesOn mk rec recOn xor)
 end Omega.XorOp
+
+namespace Omega
+export _root_ (Neg Dvd)
+end Omega
+namespace Omega.Neg
+export _root_.Neg (mk rec casesOn recOn neg)
+end Omega.Neg
+namespace Omega.Dvd
+export _root_.Dvd (mk rec casesOn recOn dvd)
+end Omega.Dvd

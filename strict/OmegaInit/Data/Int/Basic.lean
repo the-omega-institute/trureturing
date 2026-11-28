@@ -5,6 +5,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 module
 prelude
 public import OmegaInit.Data.Nat.Basic
+public import OmegaInit.Data.Cast
 
 noncomputable section
 
@@ -68,3 +69,24 @@ protected def le (a b : Int) : Prop := NonNeg (b.sub a)
 protected def lt (a b : Int) : Prop := (a.add (ofNat (Nat.succ Nat.zero))).le b
 
 end Omega.Int
+
+port_definition instOfNat with_native_code
+port_definition instNatCastInt with_native_code
+port_definition Int.instNegInt
+port_definition Int.instAdd
+port_definition Int.instSub
+port_definition Int.instMul
+port_definition Int.instLEInt
+port_definition Int.instLTInt
+port_definition Int.instDvd
+port_definition Int.neg.match_1 with_native_code
+port_proof Int.decNonneg._proof_1
+port_definition Int.decNonneg
+port_definition Int.decLe
+port_definition Int.decLt
+
+attribute [instance] Omega.instOfNat Omega.instNatCastInt Omega.Int.instNegInt
+attribute [instance] Omega.Int.instAdd Omega.Int.instSub Omega.Int.instMul
+attribute [instance] Omega.Int.instLEInt Omega.Int.instLTInt Omega.Int.instDvd
+
+attribute [instance] Omega.Int.decLe Omega.Int.decLt
