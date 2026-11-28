@@ -29,9 +29,9 @@ internal sealed class ChiSquareBilinearFusionDocument : IScribeDocumentDefinitio
             Call("RowStochastic", q), Sp, Rightarrow, Sp,
             Capacity(Call("star", p, q)), Le, Sp,
             Capacity(p), Plus, Capacity(q), Plus,
-            D(32), Sp, Call("card", i), Sp, Capacity(p), Sp, Capacity(q));
-        var tables = All("P", Seq(i, To, y, To, real),
-            All("Q", Seq(i, To, z, To, real), estimate));
+            new Formula.Number(32), Sp, Call("card", i), Sp, Capacity(p), Sp, Capacity(q));
+        var tables = All("P", Seq(i, Sp, To, Sp, y, Sp, To, Sp, real),
+            All("Q", Seq(i, Sp, To, Sp, z, Sp, To, Sp, real), estimate));
         var statement = All("I", type, All("Y", type, All("Z", type, Seq(
             OpenBracket, Call("Fintype", i), CloseBracket, Sp,
             OpenBracket, Call("Nonempty", i), CloseBracket, Sp,
