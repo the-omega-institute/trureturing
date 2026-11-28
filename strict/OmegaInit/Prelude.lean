@@ -604,6 +604,8 @@ port_definition instLTFin with_native_code
 port_definition instLEFin with_native_code
 port_definition Fin.decLt with_native_code
 port_definition Fin.decLe with_native_code
+attribute [coe] Omega.Fin.val
+
 port_native_records BitVec
 port_definition BitVec.toNat with_native_code
 port_definition BitVec.ofNatLT with_native_code

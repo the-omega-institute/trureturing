@@ -20,3 +20,8 @@ port_definition instCoeHTCTNatOfNatCast with_native_code
 attribute [instance] Omega.instNatCastNat Omega.instCoeTailNatOfNatCast Omega.instCoeHTCTNatOfNatCast
 attribute [coe] Omega.Nat.cast
 attribute [match_pattern] Omega.Nat.cast
+
+public section
+namespace Nat
+export _root_.Omega.Nat (cast)
+end Nat

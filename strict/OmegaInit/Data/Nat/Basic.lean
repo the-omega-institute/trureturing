@@ -547,5 +547,5 @@ port_proof Nat.le_of_not_gt
 
 public section
 namespace Nat
-export _root_.Omega.Nat (casesAuxOn ge_of_not_lt le_of_not_gt not_le_of_gt not_lt_of_ge recAux)
+export _root_.Omega.Nat (casesAuxOn ge_of_not_lt instMax le_of_not_gt max max_def min min_def not_le_of_gt not_lt_of_ge recAux)
 end Nat
