@@ -70,6 +70,29 @@ private theorem finiteIff {α : Type u} (r : α → α → Prop) :
   | isFalse nw => exact .isFalse (fun fin => nw fin.wf)
 
 
+/-- A one-state relation with an edge exactly when `P` holds is well-founded
+exactly when that edge is absent. -/
+private theorem singletonWellFounded (P : Prop) :
+    WellFounded (fun _ _ : PUnit.{u+1} => P) ↔ ¬P := by
+  constructor
+  · intro wf hp
+    exact wf.induction (C := fun _ => False) PUnit.unit (fun x ih => ih x hp)
+  · intro absent
+    exact ⟨fun _ => .intro _ (fun _ edge => (absent edge).elim)⟩
+
+/-- Even the finiteness decisions on productive, one-state iterators decide the
+negation of every proposition, at the independent universes of the pinned equation. -/
+public def decideNegation (dec : FiniteDecision.{u,v}) (P : Prop) : Decidable (¬P) :=
+  match decideRelation @dec PUnit.{u+1} (fun _ _ => P) with
+  | .isTrue wf => .isTrue ((singletonWellFounded P).mp wf)
+  | .isFalse no => .isFalse (fun absent => no ((singletonWellFounded P).mpr absent))
+
+public theorem weakExcludedMiddle (dec : FiniteDecision.{u,v}) (P : Prop) : ¬P ∨ ¬¬P :=
+  match decideNegation @dec P with
+  | .isTrue absent => .inl absent
+  | .isFalse possible => .inr possible
+
+
 open Lean Meta Elab.Command in
 run_cmd
   let env ← getEnv
@@ -89,6 +112,6 @@ run_cmd
       unless Kernel.isDefEqGuarded env {} actual (mkConst ``FiniteDecision levels) do
         throwError "Take finiteness decision differs from the bidirectional reduction"
   let official ← importModules #[{module := `Lean}] {} (level := .private)
-  discard <| replayBoundaryDependencies official env [``decideRelation, ``decideFinite]
+  discard <| replayBoundaryDependencies official env [``decideRelation, ``decideFinite, ``weakExcludedMiddle]
 
 end OmegaChecks.InitBoundaries.TakeFiniteness
