@@ -25,11 +25,10 @@
      10.1017/9781316848142). No specific theorem number was verified or attributed.
 -/
 
-module
-
-public import Mathlib
-
-@[expose] public section
+import Mathlib.Analysis.Matrix.Order
+import Mathlib.Analysis.Normed.Module.FiniteDimension
+import Mathlib.Dynamics.BirkhoffSum.NormedSpace
+import Mathlib.Tactic
 
 namespace D5.S3.Quantum.ChannelFixedState
 
