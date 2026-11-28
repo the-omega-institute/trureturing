@@ -562,6 +562,9 @@ private theorem recoverFinIndex {n : Nat} (o : Option (Fin n)) (indices : Option
   subst indices
   cases o <;> rfl
 
+-- In the pinned list and array statements, the proof argument to Fin.mk
+-- uses propext. The constructive bound below gives the same whole proposition
+-- by proof irrelevance in the public kernels.
 public theorem List.findFinIdx?_eq_pmap_findIdx? {α : Type u} {xs : List α} {p : α → Bool} :
     xs.findFinIdx? p = (xs.findIdx? p).pmap
       (fun i hit => ⟨i, (_root_.List.findIdx?_eq_some_iff_findIdx_eq.mp hit).1⟩) (fun _ h => h) := by
