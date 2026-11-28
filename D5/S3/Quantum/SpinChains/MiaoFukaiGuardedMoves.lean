@@ -309,12 +309,14 @@ def F {L : ℕ} (j : Fin L) : Op L := by
 
 def S {L : ℕ} (j : Fin L) : Op L := A j + F j
 
-def T {L : ℕ} (j : Fin L) : Op L := (P (prev j) - P (next j)) ^ 2 * S j
+def C {L : ℕ} (j : Fin L) : Op L := (P (prev j) - P (next j)) ^ 2
+
+def T {L : ℕ} (j : Fin L) : Op L := C j * S j
 
 private theorem T_apply {L : ℕ} (j : Fin L) (y x : Config L) :
     T j y x = ((p y (prev j) : ℂ) - (p y (next j) : ℂ)) ^ 2 * S j y x := by
   classical
-  simp only [T, P, Matrix.diagonal_sub, Matrix.diagonal_pow, Matrix.diagonal_mul,
+  simp only [T, C, P, Matrix.diagonal_sub, Matrix.diagonal_pow, Matrix.diagonal_mul,
     Pi.pow_apply]
 
 private theorem S_symm {L : ℕ} (hL : 5 ≤ L) (j : Fin L) (x y : Config L) :
@@ -434,6 +436,210 @@ theorem charge_eigenvalue {L : ℕ} (x : Config L) :
   · subst y
     simp
   · simp [Pi.single_eq_of_ne he]
+
+def E {L : ℕ} (j : Fin L) : Op L := by
+  classical
+  exact Matrix.diagonal fun x => (bit (x.val j = .e) : ℂ)
+
+def Nminus {L : ℕ} (j : Fin L) : Op L := by
+  classical
+  exact Matrix.diagonal fun x => (bit (x.val j = .minus) : ℂ)
+
+def Ue {L : ℕ} (j : Fin L) : Op L := (E (prev (prev j)) - E (next (next j))) ^ 2
+
+def Um {L : ℕ} (j : Fin L) : Op L := (Nminus (prev j) - Nminus (next j)) ^ 2
+
+def DA {L : ℕ} (j : Fin L) : Op L := E (prev j) * (1 - Nminus j) * E (next j)
+
+def DF {L : ℕ} (j : Fin L) : Op L := (1 - E (prev j)) * (1 - E (next j))
+
+private def control {L : ℕ} (j : Fin L) (x : Config L) : ℂ :=
+  ((p x (prev j) : ℂ) - (p x (next j) : ℂ)) ^ 2
+
+private theorem C_eq {L : ℕ} (j : Fin L) :
+    C j = Matrix.diagonal (control j) := by
+  classical
+  simp only [C, P, Matrix.diagonal_sub, Matrix.diagonal_pow, Pi.pow_apply]
+  rfl
+
+private theorem p_le_one {L : ℕ} (x : Config L) (j : Fin L) : p x j ≤ 1 := by
+  by_cases hm : x.val j = .minus
+  · have he : x.val j ≠ .e := by simp [hm]
+    have hl : x.val (prev j) = .e := by
+      have hb := x.property (prev j)
+      rw [next_prev] at hb
+      exact hb.resolve_right he
+    have hr := (x.property j).resolve_left he
+    simp [p, pTriple, bit, hm, hl, hr]
+  · simp only [p, pTriple, bit, if_neg hm, zero_add]
+    split <;> omega
+
+private theorem control_bit {L : ℕ} (j : Fin L) (x : Config L) :
+    control j x = 0 ∨ control j x = 1 := by
+  have hl := p_le_one x (prev j)
+  have hr := p_le_one x (next j)
+  rcases (show p x (prev j) = 0 ∨ p x (prev j) = 1 by omega) with h0 | h1 <;>
+    rcases (show p x (next j) = 0 ∨ p x (next j) = 1 by omega) with h2 | h3 <;>
+    simp [control, *, zero_sub, neg_sq]
+
+private theorem control_invariant {L : ℕ} {j : Fin L} {x y : Config L}
+    (hl : p y (prev j) + p x (prev j) = 1)
+    (hr : p y (next j) + p x (next j) = 1) : control j y = control j x := by
+  have hl' : (p y (prev j) : ℂ) + (p x (prev j) : ℂ) = 1 := by
+    exact_mod_cast hl
+  have hr' : (p y (next j) : ℂ) + (p x (next j) : ℂ) = 1 := by
+    exact_mod_cast hr
+  unfold control
+  rw [← neg_sq ((p x (prev j) : ℂ) - (p x (next j) : ℂ)) 2]
+  congr 1
+  rw [neg_sub]
+  exact (sub_eq_sub_iff_add_eq_add).mpr (hl'.trans hr'.symm)
+
+private theorem center_flanks_disjoint {L : ℕ} {j : Fin L} {x : Word L}
+    (ha : centerAllowed j x) (hf : flanksAllowed j x) : False :=
+  hf.1 ha.1
+
+private theorem C_comm_S {L : ℕ} (hL : 5 ≤ L) (j : Fin L) :
+    S j * C j = C j * S j := by
+  classical
+  ext y x
+  rw [C_eq, Matrix.mul_diagonal, Matrix.diagonal_mul, mul_comm (S j y x)]
+  by_cases ha : centerAllowed j x.val ∧ y.val = centerMove j x.val
+  · obtain ⟨hl, hr⟩ := center_flip_p hL ha.1 ha.2
+    rw [control_invariant hl hr]
+  by_cases hf : flanksAllowed j x.val ∧ y.val = flankMove j x.val
+  · obtain ⟨hl, hr⟩ := flank_flip_p hf.1 hf.2
+    rw [control_invariant hl hr]
+  simp [S, A, F, ha, hf]
+
+/-- The control commutes with the unextended move and removes no further factor on squaring. -/
+theorem controlled_square {L : ℕ} (hL : 5 ≤ L) (j : Fin L) :
+    T j ^ 2 = C j * S j ^ 2 := by
+  classical
+  have hC : C j * C j = C j := by
+    rw [C_eq, Matrix.diagonal_mul_diagonal]
+    congr 1
+    funext x
+    rcases control_bit j x with h | h <;> simp [h]
+  rw [T, pow_two, pow_two, mul_assoc, ← mul_assoc (S j), C_comm_S hL,
+    mul_assoc (C j), ← mul_assoc (C j), hC]
+
+private theorem guarded_sq {L : ℕ} (M : Op L) (g : Word L → Prop) (f : Word L → Word L)
+    (hm : ∀ y x, M y x = if h : g x.val ∧ y.val = f x.val then 1 else 0)
+    (hmove : ∀ x : Config L, g x.val → Blockade (f x.val) ∧ g (f x.val) ∧ f (f x.val) = x.val) :
+    M ^ 2 = Matrix.diagonal (fun x => if h : g x.val then 1 else 0) := by
+  classical
+  ext y x
+  rw [pow_two, Matrix.mul_apply]
+  by_cases hg : g x.val
+  · obtain ⟨hB, hguard, hinv⟩ := hmove x hg
+    let z : Config L := ⟨f x.val, hB⟩
+    rw [Finset.sum_eq_single z]
+    · rw [hm y z, hm z x]
+      have hz : z.val = f x.val := rfl
+      simp [hg, hz, hguard, hinv, Matrix.diagonal_apply, Subtype.ext_iff]
+    · intro w _ hw
+      have hne : w.val ≠ f x.val := fun h => hw (Subtype.ext h)
+      simp [hm w x, hne]
+    · simp
+  · have hz : ∀ w : Config L, M w x = 0 := by intro w; simp [hm, hg]
+    by_cases hy : y = x <;> simp [Matrix.diagonal_apply, hy, hg, hz]
+
+private theorem DA_eq {L : ℕ} (j : Fin L) :
+    DA j = Matrix.diagonal (fun x : Config L => if h : centerAllowed j x.val then 1 else 0) := by
+  classical
+  simp only [DA, E, Nminus, ← Matrix.diagonal_one, Matrix.diagonal_sub,
+    Matrix.diagonal_mul_diagonal]
+  congr 1
+  funext x
+  by_cases hl : x.val (prev j) = .e <;> by_cases hc : x.val j = .minus <;>
+    by_cases hr : x.val (next j) = .e <;> simp [centerAllowed, bit, hl, hc, hr]
+
+private theorem DF_eq {L : ℕ} (j : Fin L) :
+    DF j = Matrix.diagonal (fun x : Config L => if h : flanksAllowed j x.val then 1 else 0) := by
+  classical
+  simp only [DF, E, ← Matrix.diagonal_one, Matrix.diagonal_sub, Matrix.diagonal_mul_diagonal]
+  congr 1
+  funext x
+  by_cases hl : x.val (prev j) = .e <;> by_cases hr : x.val (next j) = .e <;>
+    simp [flanksAllowed, bit, hl, hr]
+
+private theorem mixed_zero {L : ℕ} (hL : 5 ≤ L) (j : Fin L) :
+    A j * F j = 0 ∧ F j * A j = 0 := by
+  classical
+  constructor <;> ext y x <;> rw [Matrix.mul_apply, Matrix.zero_apply] <;>
+    apply Finset.sum_eq_zero <;> intro z _
+  · by_cases h : flanksAllowed j x.val ∧ z.val = flankMove j x.val
+    · have hg : flanksAllowed j z.val := h.2 ▸ flanks_allowed j x.val h.1
+      have ha : ¬centerAllowed j z.val := fun ha => center_flanks_disjoint ha hg
+      simp [A, ha]
+    · simp [F, h]
+  · by_cases h : centerAllowed j x.val ∧ z.val = centerMove j x.val
+    · have hg : centerAllowed j z.val := h.2 ▸ (center_allowed hL j x.val).mpr h.1
+      have hf : ¬flanksAllowed j z.val := center_flanks_disjoint hg
+      simp [F, hf]
+    · simp [A, h]
+
+private theorem center_control_value {L : ℕ} {j : Fin L} {x : Config L}
+    (h : centerAllowed j x.val) :
+    control j x = ((bit (x.val (prev (prev j)) = .e) : ℂ) -
+      (bit (x.val (next (next j)) = .e) : ℂ)) ^ 2 := by
+  obtain ⟨hl, hc, hr⟩ := h
+  simp only [control, p, next_prev, prev_next, hl, hr]
+  cases hleft : x.val (prev (prev j)) <;> cases hcenter : x.val j <;>
+    cases hright : x.val (next (next j)) <;>
+    simp_all [pTriple, bit, zero_sub, neg_sq]
+
+private theorem flank_control_value {L : ℕ} {j : Fin L} {x : Config L}
+    (h : flanksAllowed j x.val) :
+    control j x = ((bit (x.val (prev j) = .minus) : ℂ) -
+      (bit (x.val (next j) = .minus) : ℂ)) ^ 2 := by
+  have hl : x.val (prev (prev j)) = .e := by
+    have hb := x.property (prev (prev j))
+    rw [next_prev] at hb
+    exact hb.resolve_right h.1
+  have hc := (x.property j).resolve_right h.2
+  have hr := (x.property (next j)).resolve_left h.2
+  simp [control, p, pTriple, bit, hl, hc, hr]
+
+private theorem split_control {L : ℕ} (hL : 5 ≤ L) (j : Fin L) :
+    C j * A j = Ue j * A j ∧ C j * F j = Um j * F j := by
+  classical
+  constructor <;> ext y x <;> rw [C_eq, Matrix.diagonal_mul]
+  · simp only [Ue, E, Matrix.diagonal_sub, Matrix.diagonal_pow, Matrix.diagonal_mul, Pi.pow_apply]
+    by_cases h : centerAllowed j x.val ∧ y.val = centerMove j x.val
+    · have hy : centerAllowed j y.val := h.2 ▸ (center_allowed hL j x.val).mpr h.1
+      rw [center_control_value hy]
+    · simp [A, h]
+  · simp only [Um, Nminus, Matrix.diagonal_sub, Matrix.diagonal_pow, Matrix.diagonal_mul, Pi.pow_apply]
+    by_cases h : flanksAllowed j x.val ∧ y.val = flankMove j x.val
+    · have hy : flanksAllowed j y.val := h.2 ▸ flanks_allowed j x.val h.1
+      rw [flank_control_value hy]
+    · simp [F, h]
+
+/-- The two five-rung controls and the two diagonal terms in Eq. (71)
+give the linear and quadratic parts of the plus-sign density. -/
+theorem ladder_density_parts {L : ℕ} (hL : 5 ≤ L) (j : Fin L) :
+    T j = Ue j * A j + Um j * F j ∧
+      T j ^ 2 = Ue j * DA j + Um j * DF j := by
+  obtain ⟨ha, hf⟩ := split_control hL j
+  obtain ⟨haf, hfa⟩ := mixed_zero hL j
+  have hA : A j ^ 2 = DA j := by
+    rw [DA_eq]
+    exact guarded_sq (A j) (centerAllowed j) (centerMove j) (fun _ _ => rfl)
+      (guarded_moves hL j).1
+  have hF : F j ^ 2 = DF j := by
+    rw [DF_eq]
+    exact guarded_sq (F j) (flanksAllowed j) (flankMove j) (fun _ _ => rfl)
+      (guarded_moves hL j).2
+  constructor
+  · rw [T, S, mul_add, ha, hf]
+  have hs : S j ^ 2 = A j ^ 2 + F j ^ 2 := by
+    rw [S, pow_two, add_mul, mul_add, mul_add, haf, hfa, add_zero, zero_add,
+      ← pow_two, ← pow_two]
+  rw [controlled_square hL, hs, mul_add, pow_two (A j), pow_two (F j),
+    ← mul_assoc, ← mul_assoc, ha, hf, mul_assoc, mul_assoc,
+    ← pow_two, ← pow_two, hA, hF]
 
 end
 
