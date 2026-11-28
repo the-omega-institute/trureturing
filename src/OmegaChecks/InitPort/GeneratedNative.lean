@@ -350,6 +350,9 @@ private def compileOwner (source : Environment) (partialCode : NameMap Definitio
         if (← getImpureSignature? n).isSome then continue
       catch _ => pure ()
       before.restore
+    if n == `Omega.Lean.Grind.CommRing.Expr.denoteSAsRing then
+      compileFix source strict n `Omega.Lean.Grind.CommRing.Expr.denoteAsRing_eq
+      continue
     if n == `Omega.WellFounded.fix || n == `Omega.WellFounded.fixF then
       compileFix source strict n (n.appendAfter "_eq")
       continue
