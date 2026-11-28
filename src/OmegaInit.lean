@@ -13,6 +13,7 @@ public import OmegaInit.Data.Array.Lemmas
 public import OmegaInit.Data.Bool
 public import OmegaInit.Data.Dyadic.Basic
 public import OmegaInit.Data.Erased
+public import OmegaInit.Data.Fin.Basic
 public import OmegaInit.Data.Float.Model.Unpacked.Sign
 public import OmegaInit.Data.Format.Basic
 public import OmegaInit.Data.Function
