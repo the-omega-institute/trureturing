@@ -190,7 +190,7 @@ import OmegaMath
 
 对于已移植的名称，`import OmegaMath` 和 `import OmegaInit` 遵循官方 `import Init` 的可见范围。官方需要单独导入的定理，使用对应的 `OmegaInit` 模块。例如，`Omega.Std.Iter.inductSteps` 需要 `import OmegaInit.Data.Iterators.Lemmas.Basic`。[入口核验](OmegaChecks/InitPort/RootImports.lean)
 
-`originalTypesChecked` 统计在严格公开环境中核对过官方原类型的声明位置。清点器按普通名称翻译类型，保留宇宙参数，并检查与生成声明的定义等价。`matchingNameAndModule` 统计同名同模块的位置，其中也包括只完成特化的接口。输出目录中的 `init-gaps.tsv` 按官方模块和名称列出剩余非公理声明、此次尝试遇到的依赖和原因。已生成的声明如保留特化类型，`originalTypeGap` 说明原类型核验遇到的缺口。`init-inventory.json` 列出全部公开声明。`audit.txt` 和 `omegamath-audit.txt` 分别保存基础库与 OmegaMath 导入闭包的内核审计。`init-public-reductions.tsv` 逐项列出普通导入时，到严格库封装实现的定义体依赖路径，以及该接口在官方环境中的计算机制。例如，公开导入 `OmegaInit.Data.Nat.Div.Basic` 后可应用 `Omega.Nat.div_zero`。直接展开严格除法实现的用法见 [生成说明](OmegaChecks/InitPort/README.md)。批量生成器只复制源码库已有的原生编译数据。可单独导入的官方模块保留对应的 `OmegaInit.*` 模块路径。
+`originalTypesChecked` 统计在严格公开环境中核对过官方原类型的声明位置。清点器按普通名称翻译完整的官方类型，保留宇宙参数，先在严格公开环境中检查该类型，再核对它与导出声明的定义等价。只有改写后的表述可以使用时，缺口表记录缺少的依赖及已核验的改写。`matchingNameAndModule` 统计同名同模块的位置，其中也包括只完成特化的接口。输出目录中的 `init-gaps.tsv` 按官方模块和名称列出剩余非公理声明、此次尝试遇到的依赖和原因。已生成的声明如保留特化类型，`originalTypeGap` 说明原类型核验遇到的缺口。`init-inventory.json` 列出全部公开声明。`audit.txt` 和 `omegamath-audit.txt` 分别保存基础库与 OmegaMath 导入闭包的内核审计。`init-public-reductions.tsv` 逐项列出普通导入时，到严格库封装实现的定义体依赖路径，以及该接口在官方环境中的计算机制。例如，公开导入 `OmegaInit.Data.Nat.Div.Basic` 后可应用 `Omega.Nat.div_zero`。直接展开严格除法实现的用法见 [生成说明](OmegaChecks/InitPort/README.md)。批量生成器只复制源码库已有的原生编译数据。可单独导入的官方模块保留对应的 `OmegaInit.*` 模块路径。
 
 `Ring.OfSemiring.pow_zero` 的官方原类型含 `npow a 0`。普通导入官方模块即可将它归约为 `natCast 1`。清点器核对这一处归约，再在严格公开环境核对完整类型。严格库可以按原参数调用该定理；直接书写含 `npow` 的表达式仍需要移植幂运算。
 

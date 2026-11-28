@@ -99,14 +99,6 @@ private def checkedOrderFields (visible strict : Environment) (owner : Name)
     (Kernel.check visible {} reduced).isOk && Kernel.isDefEqGuarded visible {} pinned reduced &&
     (Kernel.check strict {} translated).isOk && Kernel.isDefEqGuarded strict {} translated target
 
-/-- The kernel names a recursor's minor premises after its constructors. Translate those
-binder labels alongside the constructor constants when comparing serialized public types. -/
-private def recursorBinders (rules : List RecursorRule) : Expr → Expr
-  | .forallE label type body bi =>
-    let label := if rules.any (·.ctor == label) then InitKernelPort.portName label else label
-    .forallE label type (recursorBinders rules body) bi
-  | body => body
-
 private inductive FiniteConsumerType where
   | notApplicable
   | checked
@@ -203,36 +195,34 @@ private def patternSkipGap? (official visible strict : Environment) (owner : Nam
     s!"The full type using {operation} and its resolved {patternClass} instance checks in both environments. " ++
     "It converts to the strict signature. The exported upstream signature fails this conversion."
 
-/-- Check the pinned type in the strict public environment with the original universe
-binders. A Fin bound proof may be replaced only after checking proof irrelevance. -/
+/-- Form the complete pinned type in the strict public environment before comparing it
+with the export. Checked reformulations explain which parts of an open interface work. -/
 public def originalTypeGap? (official visible strict : Environment) (owner : Name)
     (source target : ConstantInfo) : IO (Option String) := do
   if source.numLevelParams != target.numLevelParams then return some "universe parameter count"
   let pinned := source.type.instantiateLevelParams source.levelParams (target.levelParams.map Level.param)
   let expected := InitKernelPort.translate InitKernelPort.portName pinned
-  if expected.equal target.type then return none
-  if let .recInfo recursor := source then
-    if (recursorBinders recursor.rules expected).equal target.type then return none
+  if (Kernel.check strict {} expected).isOk &&
+      (expected.equal target.type || Kernel.isDefEqGuarded strict {} expected target.type) then return none
   let missing := (expected.getUsedConstants.filter (fun n => !strict.contains n)).qsort Name.lt
   unless missing.isEmpty do
+    let gap := "missing type dependencies: " ++ String.intercalate ", " (missing.toList.map Name.toString)
     if checkedFinBound official strict owner source.name pinned target.type ||
         checkedEnvelopePowZero visible strict owner source pinned target.type ||
         checkedOrderFields visible strict owner source pinned target.type missing ||
-        EnvelopePublicTypes.checked visible strict owner source pinned target.type then return none
+        EnvelopePublicTypes.checked visible strict owner source pinned target.type then
+      return some (gap ++ ". A definitionally equal reformulation checks in the public kernels.")
     match ← checkFiniteConsumer official visible strict owner source pinned target.type missing with
-    | .checked => return none
+    | .checked => return some (gap ++ ". The finite-iterator reformulation checks in both public kernels.")
     | .gap reason => return some reason
     | .notApplicable => pure ()
     if let some gap := finiteSearchLoopGap? visible strict owner source pinned target.type missing then
       return some gap
     if let some gap ← patternSkipGap? official visible strict owner source pinned target.type missing then
       return some gap
-    let gap := "missing type dependencies: " ++ String.intercalate ", " (missing.toList.map Name.toString)
     if let some detail := EnvelopePublicTypes.reductionGap? official visible strict owner source pinned target.type then
       return some (gap ++ ". " ++ detail)
     return some gap
-  if (Kernel.check strict {} expected).isOk && Kernel.isDefEqGuarded strict {} expected target.type then
-    return none
   return some "pinned type does not check or convert to the exported type"
 
 end OmegaChecks.InitInventory

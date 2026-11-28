@@ -929,7 +929,7 @@ private def inventory (lib strictDir : System.FilePath) (visible strict full wit
     ("native", nativeSummary allNative)]
   let unique := Json.mkObj [("declarations",toJson names.size), ("directAxioms",toJson axiomUnique.size),
     ("withAxioms",toJson withAxiomsUnique.size), ("matchingNameAndModule",toJson matchedUnique.size)]
-  return Json.mkObj [("schemaVersion", toJson 5), ("uniqueNames", unique), ("leanVersion", toJson Lean.versionString), ("leanCommit", toJson Lean.githash),
+  return Json.mkObj [("schemaVersion", toJson 6), ("uniqueNames", unique), ("leanVersion", toJson Lean.versionString), ("leanCommit", toJson Lean.githash),
     ("nativeByModule", Json.mkObj nativeByModule.toList), ("certifiedChoiceEndpoints", toJson certifiedEndpoints),
     ("certifiedRepresentativeRefutations", toJson certifiedRepresentativeRefutations),
     ("certifiedFormationArguments", toJson certifiedFormationArguments), ("certifiedTransportPaths", toJson certifiedTransportPaths),
