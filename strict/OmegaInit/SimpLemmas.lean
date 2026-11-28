@@ -82,3 +82,6 @@ end Eq
 port_proof ite_self
 
 port_proof dite_congr
+
+port_private_declaration or_false.match_1_1
+port_private_declaration false_or.match_1_1

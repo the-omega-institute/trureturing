@@ -645,7 +645,6 @@ port_proof Nat.decidableBallLT._proof_8 by_constructive_casts
 port_definition Nat.decidableBallLT._f by_constructive_casts
 port_definition Nat.decidableBallLT by_constructive_casts
 port_definition Nat.decidableBallLE by_constructive_casts
-attribute [instance] Omega.Nat.decidableBallLT Omega.Nat.decidableBallLE
 port_proof Nat.div_div_self by_constructive_casts
 port_proof Nat.div_eq_iff_eq_mul_right by_constructive_casts
 port_proof Nat.div_eq_iff_eq_mul_left by_constructive_casts
@@ -719,4 +718,78 @@ export _root_.Omega.Nat (add_le_of_le_sub' add_lt_of_lt_sub' decidableBallLE dec
   pow_lt_pow_iff_left pow_pred_lt_pow pow_self_mul_pow_self_le sub_add_eq_max sub_eq_zero_iff_le
   sub_le_iff_le_add sub_le_iff_le_add' sub_le_sub_iff_left sub_one_lt_of_le sub_one_sub_lt
   sub_pos_iff_lt two_pow_pred_lt_two_pow two_pow_pred_mod_two_pow)
+end Nat
+
+port_proof Nat.decidableExistsFin._proof_1 by_constructive_casts
+port_proof Nat.decidableExistsLT._proof_10 by_constructive_casts
+port_proof Nat.decidableExistsLT._proof_5 by_constructive_casts
+port_definition Nat.decidableExistsLT._f by_constructive_casts
+port_definition Nat.decidableExistsLT by_constructive_casts
+port_definition Nat.decidableExistsFin by_constructive_casts
+port_proof Nat.decidableExistsLE._proof_1 by_constructive_casts
+port_definition Nat.decidableExistsLE by_constructive_casts
+port_proof Nat.decidableForallFin._proof_1 by_constructive_casts
+port_definition Nat.decidableForallFin by_constructive_casts
+attribute [instance] Omega.Nat.decidableBallLT Omega.Nat.decidableForallFin Omega.Nat.decidableBallLE
+  Omega.Nat.decidableExistsLT Omega.Nat.decidableExistsLE Omega.Nat.decidableExistsFin
+port_proof Nat.div_eq_self by_constructive_casts
+port_private_declaration Nat.zero_pow.match_1_1
+port_proof Nat.zero_pow by_constructive_casts
+port_alternative_proof Nat.div_pow from OmegaChecks.InitPort.Alternatives.NatOrder
+port_proof Nat.div_pow_of_pos by_constructive_casts
+port_alternative_proof Nat.pow_eq_zero from OmegaChecks.InitPort.Alternatives.NatOrder
+namespace Omega.Nat
+public protected theorem pow_lt_pow_iff_right {a n m : Nat} (h : Nat.lt (Nat.succ Nat.zero) a) :
+    Iff (Nat.lt (Nat.pow a n) (Nat.pow a m)) (Nat.lt n m) :=
+  Iff.intro (fun lt => Nat.lt_of_not_ge (fun rev => Nat.not_le_of_lt lt (Nat.pow_le_pow_of_le h rev)))
+    (Nat.pow_lt_pow_of_lt h)
+end Omega.Nat
+namespace Omega.Nat
+public theorem log2_two_pow {n : Nat} : Eq (Nat.log2 (Nat.pow (Nat.succ (Nat.succ Nat.zero)) n)) n :=
+  (Nat.log2_eq_iff (Nat.ne_of_gt (Nat.pow_pos (Nat.succ_pos _)))).mpr
+    (And.intro (Nat.le_refl _) (Nat.pow_lt_pow_of_lt Nat.one_lt_two (Nat.lt_succ_self n)))
+end Omega.Nat
+port_proof Nat.lt_of_pow_dvd_right by_constructive_casts
+port_proof Nat.mul_div_lt_iff_not_dvd by_constructive_casts
+port_proof Nat.pos_of_mul_pos_left by_constructive_casts
+port_proof Nat.mul_pos_iff_of_pos_left by_constructive_casts
+port_proof Nat.pos_of_mul_pos_right by_constructive_casts
+port_proof Nat.mul_pos_iff_of_pos_right by_constructive_casts
+port_alternative_proof Nat.mul_sub_mod from OmegaChecks.InitPort.Alternatives.NatOrder
+port_proof Nat.one_lt_mul_iff by_constructive_casts
+namespace Omega.Nat
+public protected theorem pow_le_pow_iff_right {a n m : Nat} (h : Nat.lt (Nat.succ Nat.zero) a) :
+    Iff (Nat.le (Nat.pow a n) (Nat.pow a m)) (Nat.le n m) :=
+  Iff.intro (fun le => Nat.le_of_not_gt (fun rev => Nat.not_lt_of_ge le (Nat.pow_lt_pow_of_lt h rev)))
+    (Nat.pow_le_pow_of_le h)
+end Omega.Nat
+port_private_declaration Nat.pow_dvd_pow_iff_pow_le_pow.match_1_1
+port_proof Nat.pow_dvd_pow_iff_pow_le_pow by_constructive_casts
+port_proof Nat.pow_dvd_pow_iff_le_right by_constructive_casts
+port_proof Nat.pow_dvd_pow_iff_le_right' by_constructive_casts
+port_proof Nat.pow_eq_one by_constructive_casts
+port_alternative_proof Nat.pow_right_inj from OmegaChecks.InitPort.Alternatives.NatOrder
+port_proof Nat.pow_eq_self_iff by_constructive_casts
+port_proof Nat.pow_le_pow_iff_left by_constructive_casts
+port_proof Nat.pow_lt_pow_right by_constructive_casts
+namespace Omega.Nat
+public protected theorem pow_pos_iff {a n : Nat} :
+    Iff (Nat.lt Nat.zero (Nat.pow a n)) (Or (Nat.lt Nat.zero a) (Eq n Nat.zero)) :=
+  Iff.intro (fun hp => (Nat.eq_zero_or_pos a).elim
+    (fun az => Or.inr ((Nat.eq_zero_or_pos n).elim (fun nz => nz) (fun np => False.elim
+      (Nat.ne_of_gt hp (Nat.pow_eq_zero.mpr (And.intro az (Nat.ne_of_gt np))))))) Or.inl)
+    (fun h => h.elim Nat.pow_pos (fun nz => Eq.subst (motive := fun k => Nat.lt Nat.zero (Nat.pow a k))
+      nz.symm Nat.zero_lt_one))
+end Omega.Nat
+port_proof Nat.pow_self_pos by_constructive_casts
+port_private_declaration Nat.succ_mod_succ_eq_zero_iff._simp_1_4
+port_proof Nat.succ_mod_succ_eq_zero_iff by_constructive_casts
+
+namespace Nat
+export _root_.Omega.Nat (decidableExistsFin decidableExistsLE decidableExistsLT decidableForallFin
+  div_eq_self div_pow div_pow_of_pos log2_two_pow lt_of_pow_dvd_right mul_div_lt_iff_not_dvd
+  mul_pos_iff_of_pos_left mul_pos_iff_of_pos_right mul_sub_mod one_lt_mul_iff pos_of_mul_pos_left
+  pos_of_mul_pos_right pow_dvd_pow_iff_le_right pow_dvd_pow_iff_le_right' pow_dvd_pow_iff_pow_le_pow
+  pow_eq_one pow_eq_self_iff pow_eq_zero pow_le_pow_iff_left pow_le_pow_iff_right pow_lt_pow_iff_right
+  pow_lt_pow_right pow_pos_iff pow_right_inj pow_self_pos succ_mod_succ_eq_zero_iff zero_pow)
 end Nat

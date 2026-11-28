@@ -96,3 +96,12 @@ export _root_.Nat (add_le_of_le_sub' add_lt_of_lt_sub' decidableBallLE decidable
   sub_le_iff_le_add sub_le_iff_le_add' sub_le_sub_iff_left sub_one_lt_of_le sub_one_sub_lt
   sub_pos_iff_lt two_pow_pred_lt_two_pow two_pow_pred_mod_two_pow)
 end Omega.Nat
+
+namespace Omega.Nat
+export _root_.Nat (decidableExistsFin decidableExistsLE decidableExistsLT decidableForallFin
+  div_eq_self div_pow div_pow_of_pos log2_two_pow lt_of_pow_dvd_right mul_div_lt_iff_not_dvd
+  mul_pos_iff_of_pos_left mul_pos_iff_of_pos_right mul_sub_mod one_lt_mul_iff pos_of_mul_pos_left
+  pos_of_mul_pos_right pow_dvd_pow_iff_le_right pow_dvd_pow_iff_le_right' pow_dvd_pow_iff_pow_le_pow
+  pow_eq_one pow_eq_self_iff pow_eq_zero pow_le_pow_iff_left pow_le_pow_iff_right pow_lt_pow_iff_right
+  pow_lt_pow_right pow_pos_iff pow_right_inj pow_self_pos succ_mod_succ_eq_zero_iff zero_pow)
+end Omega.Nat

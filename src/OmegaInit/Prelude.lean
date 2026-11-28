@@ -357,3 +357,11 @@ end Omega.Zero
 namespace Omega.Option.some
 export _root_.Option.some (noConfusion)
 end Omega.Option.some
+
+namespace Omega
+export _root_ (DecidablePred decide_eq_true instNonemptyOfInhabited of_decide_eq_false)
+end Omega
+
+namespace Omega.Nat
+export _root_.Nat (lt_of_le_of_ne)
+end Omega.Nat
