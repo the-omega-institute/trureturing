@@ -218,9 +218,14 @@ def envelope_order_formations(checks):
         expected_construction = [witness + model.lower() + "OrderFromPropext"] if name == order else []
         names = ({scope + ".of_le", scope + ".of_not_le"} if owner == MODULE_CONGRUENCES else
                  {order, scope + ".instIsPreorderQ", scope + ".instOrderedAddQ"})
+        expected_witnesses = (witness + "propextFrom" + model + "Lift", witness + model.lower() + "LiftFromPropext")
+        if owner == MODULE_ENVELOPE and name == scope + ".instIsLinearPreorderQ":
+            names.add(name)
+            linear = "OmegaChecks.InitBoundaries.LinearEnvelopeOrder."
+            expected_witnesses = linear + "propextFromLinearLift", linear + "linearLiftFromPropext"
         if (site in sites or name not in names or
                 construction != expected_construction or order != scope + ".instLEQOfOrderedAdd" or coherence != order + "." + suffix or
-                forward != witness + "propextFrom" + model + "Lift" or reverse != witness + model.lower() + "LiftFromPropext"):
+                (forward, reverse) != expected_witnesses):
             raise ValueError(f"invalid quotient order formation dependency for {site}")
         sites[site] = order
     return sites
@@ -762,7 +767,8 @@ def report(product, require_complete=False):
     with tempfile.TemporaryDirectory(dir=product) as work:
         stage = Path(work)
         inventory = stage / "init-inventory.json"
-        subprocess.run(["lake", "build", "+OmegaChecks.InitInventory", "+OmegaChecks.InitPort.Translation",
+        subprocess.run(["lake", "build", "+OmegaChecks.InitInventory", "+OmegaChecks.InitInventory.LinearEnvelopeOrder",
+                        "+OmegaChecks.InitPort.Translation",
                         "+OmegaChecks.InitPort.StrictReplay", "+OmegaChecks.InitPort.PublicTypeClient", "+OmegaChecks.InitPort.SemiringImage",
                         "+OmegaChecks.InitPort.Alternatives.InternalOrder"], cwd=ROOT, check=True)
         subprocess.run(["lake", "env", "lean", "--run", HERE.parent / "InitInventory.lean", product / "lib", inventory],

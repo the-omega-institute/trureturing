@@ -253,6 +253,23 @@ class CoverageTest(unittest.TestCase):
             with self.subTest(certificate=bad), self.assertRaisesRegex(ValueError, "quotient order formation"):
                 check_coverage(data | {"certifiedEnvelopeOrderFormations": [bad]})
 
+    def test_linear_quotient_order_checks_the_restricted_witnesses(self):
+        owner = "Init.Grind.Module.Envelope"
+        scope = "Lean.Grind.IntModule.OfNatModule."
+        name, order = scope + "instIsLinearPreorderQ", scope + "instLEQOfOrderedAdd"
+        row = site(owner, name, quotientOrderFormation=order)
+        data = inventory(row)
+        linear = "OmegaChecks.InitBoundaries.LinearEnvelopeOrder."
+        cert = [owner, name, order, order + "._proof_3", linear + "propextFromLinearLift",
+                linear + "linearLiftFromPropext"]
+        data["certifiedEnvelopeOrderFormations"] = [cert]
+        self.assertEqual(check_coverage(data), (0, []))
+        generic = "OmegaChecks.InitBoundaries.EnvelopeOrder."
+        for bad in (cert[:4] + [generic + "propextFromModuleLift", cert[-1]],
+                    cert[:-1] + [generic + "moduleLiftFromPropext"]):
+            with self.subTest(certificate=bad), self.assertRaisesRegex(ValueError, "quotient order formation"):
+                check_coverage(data | {"certifiedEnvelopeOrderFormations": [bad]})
+
     def test_semiring_equation_requires_the_corresponding_image_computation(self):
         owner = "Init.Grind.Ring.CommSemiringAdapter"
         name = "Lean.Grind.CommRing.Expr.denoteSAsRing.eq_4"

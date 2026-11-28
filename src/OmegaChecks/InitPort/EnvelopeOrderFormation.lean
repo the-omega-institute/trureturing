@@ -1,6 +1,7 @@
 module
 import Lean
 import OmegaChecks.InitInventory.EnvelopeOrder
+import OmegaChecks.InitInventory.LinearEnvelopeOrder
 import OmegaChecks.InitPort.StrictReplay
 meta import OmegaChecks.InitInventory.EnvelopeOrder
 meta import OmegaChecks.InitPort.StrictReplay
@@ -19,10 +20,9 @@ private def recover (use : Expr) (name : Name) : MetaM Unit := do
       Kernel.isDefEqGuarded env {} actual (← inferType pin) do throwError "incomplete occurrence of {name}"
 
 /-- Read the comparison on two fresh quotient variables before either has been replaced by a representative. -/
-private def checkLift (use : Expr) (order coherence : Name) : MetaM Unit := do
+private def liftProof (use : Expr) (order coherence : Name) : MetaM Expr := do
   let env ← getEnv
   unless use.getAppFn.isConstOf order do throwError "the class has a different order index"
-  recover use order
   let instanceBody ← ofExceptKernelException (Kernel.whnf env (← getLCtx) use)
   unless instanceBody.isAppOfArity ``LE.mk 2 do throwError "unexpected order representation"
   lambdaTelescope instanceBody.appArg! fun xs body => do
@@ -34,7 +34,24 @@ private def checkLift (use : Expr) (order coherence : Name) : MetaM Unit := do
       args[3]! == xs[0]! && args[4]! == xs[1]!
     unless primitive || binary do throwError "comparison must retain arbitrary quotient inputs"
     let some proof := reduced.find? (·.getAppFn.isConstOf coherence) | throwError "missing {coherence}"
-    recover proof coherence
+    unless proof.getAppArgs == use.getAppArgs do throwError "coherence uses different order parameters"
+    return proof
+
+private def checkLift (use : Expr) (order coherence : Name) : MetaM Unit := do
+  let proof ← liftProof use order coherence
+  recover use order
+  recover proof coherence
+
+/-- Abstract only the coherence demanded for linear preorders. -/
+private def linearCoherence (source : ConstantInfo) (order coherence : Name) : MetaM Expr := do
+  forallTelescope (source.type.instantiateLevelParams source.levelParams [.zero]) fun xs conclusion => do
+    unless xs.size == 5 && conclusion.isAppOfArity ``Std.IsLinearPreorder 2 do throwError "unexpected linear preorder"
+    let use := conclusion.appArg!
+    let projected := mkApp3 (mkConst ``Std.IsLinearPreorder.toIsPreorder [.zero]) xs[0]! xs[2]! xs[3]!
+    unless use.getAppArgs == #[xs[0]!, xs[1]!, xs[2]!, projected, xs[4]!] do
+      throwError "quotient order does not project from the assumed linear preorder"
+    let proof ← liftProof use order coherence
+    mkForallFVars xs (← inferType proof)
 
 /-- The pinned class types retain the comparison at arbitrary quotient inputs. -/
 private def certify (source : ConstantInfo) (order coherence : Name) : MetaM Unit := do
@@ -113,7 +130,7 @@ private def checkOrder (source : ConstantInfo) (coherence : Name) : MetaM Unit :
 public def main (args : List String) : IO Unit := do
   let [lib] := args | throw <| IO.userError "expected a strict library"
   initSearchPath (← findSysroot)
-  let evidence ← importModules #[{module := `OmegaChecks.InitInventory.EnvelopeOrder, importAll := true}] {}
+  let evidence ← importModules #[{module := `OmegaChecks.InitInventory.LinearEnvelopeOrder, importAll := true}] {}
   let systemPath ← searchPathRef.get
   for (owner, envelope, suffix, forward, reverse, build) in [
       (`Init.Grind.Module.Envelope, `Lean.Grind.IntModule.OfNatModule, "_proof_3",
@@ -171,5 +188,30 @@ public def main (args : List String) : IO Unit := do
         {env := visible}
       IO.println (toJson #[owner.toString, name.toString, order.toString, coherence.toString,
         forward.toString, reverse.toString]).compress
-    if owner == `Init.Grind.Module.Envelope then
-      checkImplications lib systemPath order coherence forward reverse
+    if owner != `Init.Grind.Module.Envelope then continue
+    checkImplications lib systemPath order coherence forward reverse
+    let name := envelope.str "instIsLinearPreorderQ"
+    let natRing := `OmegaInit.GrindInstances.Ring.Nat
+    if strict.contains (portName name) || !(← (modToFilePath lib natRing "olean").pathExists) then continue
+    let some src := pinned.find? name | throw <| IO.userError s!"missing {name}"
+    let translated := translate portName src.type
+    unless src.isTheorem && !src.isUnsafe && !src.isPartial && src.numLevelParams == 1 &&
+        (visible.find? name).any (·.type.equal src.type) && visible.getModuleIdxFor? name == visible.getModuleIdx? owner &&
+        (Kernel.check visible {} src.type).isOk && typeNeedsConstant visible src.type order &&
+        translated.getUsedConstants.filter (!strict.contains ·) == #[portName order] &&
+        !(Kernel.check strict {} translated).isOk do throw <| IO.userError s!"invalid order index in {name}"
+    let needed ← ((linearCoherence src order coherence).run').toIO'
+      {fileName := "<linear preorder coherence>", fileMap := default} {env := visible}
+    let fwd := ``OmegaChecks.InitBoundaries.LinearEnvelopeOrder.propextFromLinearLift
+    let rev := ``OmegaChecks.InitBoundaries.LinearEnvelopeOrder.linearLiftFromPropext
+    for (witness, ty) in [(mkConst fwd, .forallE .anonymous needed ext.type .default),
+        (mkConst rev [.zero], .forallE .anonymous ext.type needed .default)] do
+      let .ok actual := Kernel.check evidence {} witness | throw <| IO.userError "invalid restricted-order witness"
+      unless Kernel.isDefEqGuarded evidence {} actual ty do throw <| IO.userError "wrong restricted-order witness"
+    searchPathRef.set [lib]
+    let full ← importModules #[{module := targetOwner, importAll := true}, {module := natRing, importAll := true},
+      {module := `OmegaInit.Data.Nat.Lemmas, importAll := true}] {}
+    let kernel ← restoreEvidence evidence full.toKernelEnv fwd
+    let kernel ← restoreEvidence evidence kernel rev
+    let _ ← replayStrict kernel #[portName fwd, portName rev]
+    IO.println (toJson #[owner.toString, name.toString, order.toString, coherence.toString, fwd.toString, rev.toString]).compress
