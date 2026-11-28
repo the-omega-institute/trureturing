@@ -52,6 +52,11 @@ private partial def translateTerm (env : Environment) (visiting : NameSet) (term
 public def translateProofTerm (env : Environment) (term : Expr) : Except String Expr :=
   (translateTerm env {} term).run' {}
 
+/-- Translate a recursive equation with self-calls bound to its checked strict definition. -/
+public def translateRecursiveBody (env : Environment) (recFn : DefinitionVal) (target : Name) : Except String Expr :=
+  let self := mkConst target (recFn.levelParams.map Level.param)
+  (translateTerm env {} recFn.value).run' (({} : Helpers).insert recFn.name (recFn.levelParams, self))
+
 private def castProof (back : Bool) (p q eq input : Expr) : Expr :=
   mkApp4 (mkConst (if back then `Eq.mpr else `Eq.mp) [.zero]) p q eq input
 

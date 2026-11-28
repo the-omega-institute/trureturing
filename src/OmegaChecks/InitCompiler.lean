@@ -259,28 +259,43 @@ before the root PUnit used by Lean's ordinary structure elaborator is available.
       elabCommand (← `(command| port_definition $elim:ident with_native_code))
 
 @[command_parser, builtin_command_parser] def portStructuralCode := leading_parser
-  "port_structural_code " >> ident >> " on_arg " >> numLit
+  "port_structural_code " >> optional "private " >> ident >> " on_arg " >> numLit
 
 open Compiler.LCNF in
 @[builtin_command_elab portStructuralCode] def elabPortStructuralCode : CommandElab := fun stx => do
-  let (src, info) ← officialDeclaration stx[1]
-  let name := omegaName info.name
+  let (src, info, name) ← if stx[1].isNone then do
+    let (src, info) ← officialDeclaration stx[2]
+    pure (src, info, omegaName info.name)
+  else do
+    let owner ← getMainModule
+    unless owner.getRoot == `OmegaInit do throwError "expected an OmegaInit module"
+    let pinned := owner.replacePrefix `OmegaInit `Init
+    let src ← officialEnvironment pinned
+    let helper := stx[2].getId
+    let some (.defnInfo d) := src.find? (mkPrivateNameCore pinned helper)
+      | throwErrorAt stx[2] "missing private upstream definition"
+    unless d.safety == .safe do throwErrorAt stx[2] "expected a total private definition"
+    let name := mkPrivateNameCore owner (omegaName helper)
+    liftCoreM <| withoutExporting do
+      let type ← ofExcept (translateProofTerm src d.type)
+      let value ← ofExcept (translateProofTerm src d.value)
+      Lean.addDecl (.defnDecl {d with name, type, value, all := [name]})
+    pure (src, .defnInfo d, name)
   let equationName := Compiler.mkUnsafeRecName info.name
   let some (.defnInfo recFn) := src.find? equationName | throwError "missing recursive equations"
   unless recFn.safety == .partial && recFn.all == [equationName] do throwError "expected a single recursive definition"
-  liftCoreM <| withExporting do
-    let value ← ofExcept (translateProofTerm src recFn.value)
-    for dep in value.getUsedConstants do
-      unless dep == omegaName equationName || (← getEnv).contains dep do throwError "missing equation dependency {dep}"
-    let body := value.replace fun e => if e.isConstOf (omegaName equationName) then some (.const name e.constLevels!) else none
+  liftCoreM <| withExporting (isExporting := !isPrivateName name) do
+    let body ← ofExcept (translateRecursiveBody src recFn name)
+    for dep in body.getUsedConstants do
+      unless (← getEnv).contains dep do throwError "missing equation dependency {dep}"
     let tmp := {recFn with
-      name := omegaName equationName
-      all := [omegaName equationName]
+      name := Compiler.mkUnsafeRecName name
+      all := [Compiler.mkUnsafeRecName name]
       safety := .safe
       type := ← ofExcept (translateProofTerm src recFn.type)
       value := body}
-    let some pos := stx[3].isNatLit? | throwErrorAt stx[3] "expected a structural argument position"
-    if pos == 0 then throwErrorAt stx[3] "argument positions start at one"
+    let some pos := stx[4].isNatLit? | throwErrorAt stx[4] "expected a structural argument position"
+    if pos == 0 then throwErrorAt stx[4] "argument positions start at one"
     Meta.MetaM.run' <| checkConstructorEquations name tmp.levelParams tmp.type body (pos - 1)
     -- Lean uses this reserved name for executable recursive equations. The safe one-step
     -- definition can call the already checked total function. Its environment is disposable.
