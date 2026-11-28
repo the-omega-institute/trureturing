@@ -37,7 +37,10 @@ internal sealed class ParkingConjecture52Document : IScribeDocumentDefinition
                     "Exactly one of the 55 sets has size at most six. " +
                     "Conditioning on the first choice and evaluating the residual-set recurrence gives sequential CDF 64/3375. " +
                     "The static CDF is 1/55. The sequential CDF exceeds it by 29/37125."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("higuita-diaz-lopez-roldan-correa-2026-parking-conjecture-52"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Definition(string name, string title, Formula formula, string prose) =>
         Describe.Lean(DescribeId.Create(name), DeclarationHandle.Create(Module + name), H(title),
