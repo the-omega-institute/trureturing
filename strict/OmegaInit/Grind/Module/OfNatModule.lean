@@ -10,7 +10,7 @@ public import OmegaInit.Grind.Module.Envelope
 namespace Omega.Lean.Grind.IntModule.OfNatModule
 
 public theorem of_eq {α} [NatModule α] {a b : α} {a' b' : Q α}
-    (h₁ : Eq (toQ a) a') (h₂ : Eq (toQ b) b') (h : Eq a b) : Eq a' b' :=
+    (h₁ : Eq (toQ a) a') (h₂ : Eq (toQ b) b') : Eq a b → Eq a' b' := fun h =>
   h₁.symm.trans ((congrArg toQ h).trans h₂)
 
 /- The conclusion of of_le compares a' and b' using instLEQOfOrderedAdd.
