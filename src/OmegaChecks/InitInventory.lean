@@ -160,7 +160,7 @@ private def logicalConsequence? (owner name : Name) : Option (Name × Name) := d
     | `Init.Classical, ``Classical.skolem => return (result, ``OmegaChecks.InitBoundaries.PropositionalChoice.ofSkolem)
     | `Init.Prelude, ``Pi.instNonempty => return (result, ``OmegaChecks.InitBoundaries.PropositionalChoice.ofProducts)
     | _, _ => pure ()
-  if owner == `Init.Data.Range.Polymorphic.NatLemmas then
+  if owner == `Init.Data.Range.Polymorphic.NatLemmas || owner == `Init.Data.Range.Polymorphic.IntLemmas then
     if let some result := OmegaChecks.InitBoundaries.RangeIndex.equivalences.lookup name then return result
   if owner == `Init.System.ST || owner == `Init.Control.StateRef || owner == `Init.System.Promise then
     if let some (_, _, witness) := OmegaChecks.InitBoundaries.ReferenceSelection.witnesses.find?

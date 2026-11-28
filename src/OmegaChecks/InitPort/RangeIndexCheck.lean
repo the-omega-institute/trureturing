@@ -10,16 +10,26 @@ open Lean InitKernelPort OmegaChecks.InitBoundaries
 
 /-- Use the strict range implementations when replaying the equivalence proofs. -/
 public def main (args : List String) : IO Unit := do
-  let [lib, output] := args | throw <| IO.userError "expected strict library and JSON output"
-  let sourceOwner := `Init.Data.Range.Polymorphic.NatLemmas
+  let lib :: output :: owners := args | throw <| IO.userError "expected strict library, JSON output and owners"
+  let owners := if owners.isEmpty then [`Init.Data.Range.Polymorphic.NatLemmas] else owners.map String.toName
   let evidenceModule := `OmegaChecks.InitInventory.RangeIndex
   let source ← importModules #[{module := evidenceModule}] {} (level := .private)
   searchPathRef.set [lib]
-  let strict ← importModules #[{module := sourceOwner.replacePrefix `Init `OmegaInit}] {} (level := .private)
+  let strict ← importModules (owners.toArray.map fun owner => {module := owner.replacePrefix `Init `OmegaInit}) {} (level := .private)
   let mut kernel := strict.toKernelEnv
   let evidenceDecls := source.header.moduleData[(source.getModuleIdx? evidenceModule).get!]!.constants
   let includes (n : Name) := source.getModuleIdxFor? n == source.getModuleIdx? evidenceModule
-  let mut pending := evidenceDecls.toList.filter (fun ci => ci.name != `OmegaChecks.InitBoundaries.RangeIndex.equivalences)
+  let entries := RangeIndex.equivalences.filter fun (name, _, _) =>
+    owners.any fun owner => source.getModuleIdxFor? name == source.getModuleIdx? owner
+  let mut needed : NameSet := {}
+  let mut work := entries.map fun (_, _, witness) => witness
+  while let name :: rest := work do
+    work := rest
+    unless needed.contains name do
+      needed := needed.insert name
+      let some ci := source.find? name | throw <| IO.userError s!"missing evidence {name}"
+      work := (ci.getUsedConstantsAsSet.toList.filter includes) ++ work
+  let mut pending := evidenceDecls.toList.filter (fun ci => needed.contains ci.name)
   while !pending.isEmpty do
     let mut rest := []
     for proof in pending do
@@ -41,11 +51,13 @@ public def main (args : List String) : IO Unit := do
     pending := rest
   let mut rows := #[]
   let mut roots := #[]
-  for (name, condition, witness) in RangeIndex.equivalences do
+  for (name, condition, witness) in entries do
+    let some ownerIdx := source.getModuleIdxFor? name | throw <| IO.userError s!"missing owner {name}"
+    let sourceOwner := source.header.moduleNames[ownerIdx]!
     let some src := source.find? name | throw <| IO.userError s!"missing official {name}"
     let some proof := kernel.find? (portName witness) | throw <| IO.userError s!"missing {witness}"
     let expected := mkApp2 (mkConst `Omega.Iff) (translate portName src.type) (mkConst (portName condition))
-    unless src.levelParams.isEmpty && proof.levelParams.isEmpty && source.getModuleIdxFor? name == source.getModuleIdx? sourceOwner && proof.type == expected do
+    unless src.levelParams.isEmpty && proof.levelParams.isEmpty && proof.type == expected do
       throw <| IO.userError s!"incorrect complete equivalence {name}"
     rows := rows.push #[sourceOwner.toString, name.toString, condition.toString, (portName witness).toString]
     roots := roots.push (portName witness)

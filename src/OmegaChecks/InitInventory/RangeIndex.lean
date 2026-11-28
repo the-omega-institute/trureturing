@@ -1,8 +1,9 @@
 module
 public import Init.Data.Range.Polymorphic.NatLemmas
+public import Init.Data.Range.Polymorphic.IntLemmas
 public import Lean
 
-/-! Exact arithmetic conditions for Boolean lookup flags over each natural-number range. -/
+/-! Exact arithmetic conditions for Boolean lookup flags over natural-number and integer ranges. -/
 
 public section
 namespace OmegaChecks.InitBoundaries.RangeIndex
@@ -212,6 +213,94 @@ theorem noneArrayRic : (type_of% @Nat.isNone_getElem?_toArray_ric_eq) ↔ LTRefl
   · intro r n i
     exact (miss Nat.getElem?_toArray_ric_eq_none_iff).mpr (r n i)
 
+private theorem allLengths {length : Int → Int → Nat} {test : Int → Int → Nat → Prop}
+    {normal : Nat → Nat → Prop} (lengths : ∀ n, ∃ a b, length a b = n)
+    (rule : ∀ a b i, test a b i ↔ normal (length a b) i) :
+    (∀ {a b i}, test a b i) ↔ (∀ n i, normal n i) := by
+  constructor
+  · intro h n i
+    obtain ⟨a, b, size⟩ := lengths n
+    cases size
+    exact (rule a b i).mp h
+  · intro h a b i
+    exact (rule a b i).mpr (h _ i)
+
+private theorem lengthsHalfOpen (n : Nat) : ∃ a b : Int, (b - a).toNat = n :=
+  ⟨0, n, congrArg Int.toNat (Int.sub_zero _)⟩
+
+private theorem lengthsClosed (n : Nat) : ∃ a b : Int, (b + 1 - a).toNat = n :=
+  ⟨1, n, congrArg Int.toNat (Int.add_sub_cancel _ _)⟩
+
+private theorem lengthsOpen (n : Nat) : ∃ a b : Int, (b - (a + 1)).toNat = n :=
+  ⟨-1, n, congrArg Int.toNat (Int.sub_zero _)⟩
+
+private theorem allIndexLT : (∀ n i, NormalLT i n) ↔ LTReflection :=
+  ⟨fun r i n => r n i, fun r n i => r i n⟩
+
+theorem intSomeListRco : (type_of% @Int.isSome_getElem?_toList_rco_eq) ↔ LTReflection :=
+  (allLengths lengthsHalfOpen fun a b i =>
+    hit (Int.getElem?_toList_rco (m := a) (n := b) (i := i))).trans allIndexLT
+
+theorem intSomeListRoc : (type_of% @Int.isSome_getElem?_toList_roc_eq) ↔ LTReflection :=
+  (allLengths lengthsHalfOpen fun a b i =>
+    hit (Int.getElem?_toList_roc (m := a) (n := b) (i := i))).trans allIndexLT
+
+theorem intSomeListRcc : (type_of% @Int.isSome_getElem?_toList_rcc_eq) ↔ LTReflection :=
+  (allLengths lengthsClosed fun a b i =>
+    hit (Int.getElem?_toList_rcc (m := a) (n := b) (i := i))).trans allIndexLT
+
+theorem intSomeListRoo : (type_of% @Int.isSome_getElem?_toList_roo_eq) ↔ LTReflection :=
+  (allLengths lengthsOpen fun a b i =>
+    hit (Int.getElem?_toList_roo (m := a) (n := b) (i := i))).trans allIndexLT
+
+theorem intNoneListRco : (type_of% @Int.isNone_getElem?_toList_rco_eq) ↔ LEReflection :=
+  (allLengths lengthsHalfOpen fun a b i =>
+    miss (Int.getElem?_toList_rco_eq_none_iff (m := a) (n := b) (i := i)))
+
+theorem intNoneListRoc : (type_of% @Int.isNone_getElem?_toList_roc_eq) ↔ LEReflection :=
+  (allLengths lengthsHalfOpen fun a b i =>
+    miss (Int.getElem?_toList_roc_eq_none_iff (m := a) (n := b) (i := i)))
+
+theorem intNoneListRcc : (type_of% @Int.isNone_getElem?_toList_rcc_eq) ↔ LEReflection :=
+  (allLengths lengthsClosed fun a b i =>
+    miss (Int.getElem?_toList_rcc_eq_none_iff (m := a) (n := b) (i := i)))
+
+theorem intNoneListRoo : (type_of% @Int.isNone_getElem?_toList_roo_eq) ↔ LEReflection :=
+  (allLengths lengthsOpen fun a b i =>
+    miss (Int.getElem?_toList_roo_eq_none_iff (m := a) (n := b) (i := i)))
+
+theorem intSomeArrayRco : (type_of% @Int.isSome_getElem?_toArray_rco_eq) ↔ LTReflection :=
+  (allLengths lengthsHalfOpen fun a b i =>
+    hit (Int.getElem?_toArray_rco (m := a) (n := b) (i := i))).trans allIndexLT
+
+theorem intSomeArrayRoc : (type_of% @Int.isSome_getElem?_toArray_roc_eq) ↔ LTReflection :=
+  (allLengths lengthsHalfOpen fun a b i =>
+    hit (Int.getElem?_toArray_roc (m := a) (n := b) (i := i))).trans allIndexLT
+
+theorem intSomeArrayRcc : (type_of% @Int.isSome_getElem?_toArray_rcc_eq) ↔ LTReflection :=
+  (allLengths lengthsClosed fun a b i =>
+    hit (Int.getElem?_toArray_rcc (m := a) (n := b) (i := i))).trans allIndexLT
+
+theorem intSomeArrayRoo : (type_of% @Int.isSome_getElem?_toArray_roo_eq) ↔ LTReflection :=
+  (allLengths lengthsOpen fun a b i =>
+    hit (Int.getElem?_toArray_roo (m := a) (n := b) (i := i))).trans allIndexLT
+
+theorem intNoneArrayRco : (type_of% @Int.isNone_getElem?_toArray_rco_eq) ↔ LEReflection :=
+  (allLengths lengthsHalfOpen fun a b i =>
+    miss (Int.getElem?_toArray_rco_eq_none_iff (m := a) (n := b) (i := i)))
+
+theorem intNoneArrayRoc : (type_of% @Int.isNone_getElem?_toArray_roc_eq) ↔ LEReflection :=
+  (allLengths lengthsHalfOpen fun a b i =>
+    miss (Int.getElem?_toArray_roc_eq_none_iff (m := a) (n := b) (i := i)))
+
+theorem intNoneArrayRcc : (type_of% @Int.isNone_getElem?_toArray_rcc_eq) ↔ LEReflection :=
+  (allLengths lengthsClosed fun a b i =>
+    miss (Int.getElem?_toArray_rcc_eq_none_iff (m := a) (n := b) (i := i)))
+
+theorem intNoneArrayRoo : (type_of% @Int.isNone_getElem?_toArray_roo_eq) ↔ LEReflection :=
+  (allLengths lengthsOpen fun a b i =>
+    miss (Int.getElem?_toArray_roo_eq_none_iff (m := a) (n := b) (i := i)))
+
 open Lean in
 def equivalences : List (Name × Name × Name) := [
   (``Nat.isSome_getElem?_toList_rco_eq, ``LTReflection, ``someListRco),
@@ -237,6 +326,22 @@ def equivalences : List (Name × Name × Name) := [
   (``Nat.isNone_getElem?_toArray_roo_eq, ``LEPositiveRight, ``noneArrayRoo),
   (``Nat.isNone_getElem?_toArray_rcc_eq, ``LTReflection, ``noneArrayRcc),
   (``Nat.isNone_getElem?_toArray_rio_eq, ``LEReflection, ``noneArrayRio),
-  (``Nat.isNone_getElem?_toArray_ric_eq, ``LTReflection, ``noneArrayRic)]
+  (``Nat.isNone_getElem?_toArray_ric_eq, ``LTReflection, ``noneArrayRic),
+  (``Int.isSome_getElem?_toList_rco_eq, ``LTReflection, ``intSomeListRco),
+  (``Int.isSome_getElem?_toList_roc_eq, ``LTReflection, ``intSomeListRoc),
+  (``Int.isSome_getElem?_toList_rcc_eq, ``LTReflection, ``intSomeListRcc),
+  (``Int.isSome_getElem?_toList_roo_eq, ``LTReflection, ``intSomeListRoo),
+  (``Int.isNone_getElem?_toList_rco_eq, ``LEReflection, ``intNoneListRco),
+  (``Int.isNone_getElem?_toList_roc_eq, ``LEReflection, ``intNoneListRoc),
+  (``Int.isNone_getElem?_toList_rcc_eq, ``LEReflection, ``intNoneListRcc),
+  (``Int.isNone_getElem?_toList_roo_eq, ``LEReflection, ``intNoneListRoo),
+  (``Int.isSome_getElem?_toArray_rco_eq, ``LTReflection, ``intSomeArrayRco),
+  (``Int.isSome_getElem?_toArray_roc_eq, ``LTReflection, ``intSomeArrayRoc),
+  (``Int.isSome_getElem?_toArray_rcc_eq, ``LTReflection, ``intSomeArrayRcc),
+  (``Int.isSome_getElem?_toArray_roo_eq, ``LTReflection, ``intSomeArrayRoo),
+  (``Int.isNone_getElem?_toArray_rco_eq, ``LEReflection, ``intNoneArrayRco),
+  (``Int.isNone_getElem?_toArray_roc_eq, ``LEReflection, ``intNoneArrayRoc),
+  (``Int.isNone_getElem?_toArray_rcc_eq, ``LEReflection, ``intNoneArrayRcc),
+  (``Int.isNone_getElem?_toArray_roo_eq, ``LEReflection, ``intNoneArrayRoo)]
 
 end OmegaChecks.InitBoundaries.RangeIndex

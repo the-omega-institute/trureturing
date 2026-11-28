@@ -290,10 +290,13 @@ def check_strict_longest_matches(product, stage):
 
 def check_strict_range_equivalences(product, stage):
     lib = product / "lib"
-    if not (lib / "OmegaInit/Data/Range/Polymorphic/NatLemmas.olean").is_file():
+    owners = [f"Init.Data.Range.Polymorphic.{kind}Lemmas" for kind in ("Nat", "Int")
+              if (lib / f"OmegaInit/Data/Range/Polymorphic/{kind}Lemmas.olean").is_file()]
+    if not owners:
         return {}
     output = stage / "strict-range-index.json"
-    subprocess.run(["lake", "env", "lean", "--run", HERE / "RangeIndexCheck.lean", lib, output], cwd=ROOT, check=True)
+    subprocess.run(["lake", "env", "lean", "--run", HERE / "RangeIndexCheck.lean", lib, output, *owners],
+                   cwd=ROOT, check=True)
     return {(owner, name): (condition, proof) for owner, name, condition, proof in json.loads(output.read_text())}
 
 
