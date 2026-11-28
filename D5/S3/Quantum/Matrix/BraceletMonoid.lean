@@ -1,6 +1,4 @@
 import D5.S3.Quantum.Matrix.CirculantBraceletNonUnistochastic
-import Mathlib.Analysis.Complex.Trigonometric
-import Mathlib.Analysis.Normed.Lp.PiLp
 
 /-!
 # Closure of bracelet matrices
@@ -12,12 +10,12 @@ input pair and a Euclidean norm of weighted inner-product and minor coordinates.
 
 noncomputable section
 
-namespace D5.S3.Quantum.Matrix.BraceletMonoid
-
 open Finset Matrix Complex
-open scoped BigOperators Real
+open scoped BigOperators ComplexConjugate Real
 
-open CirculantBraceletNonUnistochastic (IsBracelet)
+open D5.S3.Quantum.Matrix.CirculantBraceletNonUnistochastic (IsBracelet)
+
+namespace D5.S3.Quantum.Matrix.BraceletMonoid
 
 private lemma pivot_iff {ι : Type*} [Fintype ι] [Nonempty ι] [DecidableEq ι]
     (len : ι → ℝ) :
@@ -47,8 +45,8 @@ private lemma weighted_lagrange {ι : Type*} [Fintype ι]
       sub_re, sub_im, conj_re, conj_im, ofReal_re, ofReal_im]
     ring
   have hz : ‖∑ i, z i‖ ^ 2 = ∑ i, ∑ j, c i j := by
-    simp only [Complex.sq_norm, normSq_apply, map_sum, ← reCLM_apply, ← imCLM_apply]
-    simp only [c, map_sum, sum_add_distrib, sum_mul, mul_sum]
+    simp only [Complex.sq_norm, normSq_apply, ← reCLM_apply, ← imCLM_apply, map_sum]
+    simp only [reCLM_apply, imCLM_apply, c, sum_add_distrib, sum_mul, mul_sum, mul_comm]
   have hab : (∑ i, a i) * (∑ j, b j) = ∑ i, ∑ j, a i * b j := by
     rw [sum_mul]
     simp only [mul_sum]
@@ -57,16 +55,19 @@ private lemma weighted_lagrange {ι : Type*} [Fintype ι]
   have htotal := sum_congr (rfl : (univ : Finset ι) = univ) fun i _ =>
     sum_congr (rfl : (univ : Finset ι) = univ) fun j _ => hpoint i j
   simp only [sum_add_distrib, ← mul_sum] at htotal
-  rw [hba] at htotal
+  have hab' : (∑ i, a i * (∑ j, b j)) = ∑ i, ∑ j, a i * b j := by
+    simp only [mul_sum]
+  rw [hba, hab'] at htotal
   change ‖∑ i, z i‖ ^ 2 + (∑ ij : ι × ι, m ij.1 ij.2) / 2 =
     (∑ i, a i) * (∑ j, b j)
   rw [hz, Fintype.sum_prod_type, hab]
   linarith only [htotal]
 
-private lemma signed_sum {ι : Type*} [DecidableEq ι] (s : Finset ι)
+private lemma signed_sum {ι : Type*} (s : Finset ι)
     (len : ι → ℝ) (L : ℝ) (hL : 0 ≤ L)
     (h0 : ∀ i, 0 ≤ len i) (hmax : ∀ i, len i ≤ L) :
     ∃ neg : ι → Bool, |∑ i ∈ s, if neg i then -len i else len i| ≤ L := by
+  classical
   induction s using Finset.induction_on with
   | empty => exact ⟨fun _ => false, by simpa using hL⟩
   | @insert i s hi ih =>
@@ -81,16 +82,15 @@ private lemma signed_sum {ι : Type*} [DecidableEq ι] (s : Finset ι)
         rw [Function.update_of_ne (ne_of_mem_of_not_mem hj hi)]
     rw [htail, abs_le]
     by_cases h : 0 ≤ a
-    · simp only [h, decide_true, if_true]
+    · simp only [h, decide_true, ite_true]
       constructor <;> linarith [h0 i, hmax i, ha.2]
-    · simp only [h, decide_false, Bool.false_eq_true, if_false]
+    · simp only [h, decide_false, Bool.false_eq_true, ite_false]
       constructor <;> linarith [h0 i, hmax i, ha.1]
 
-private lemma polygon {ι : Type*} [Fintype ι] (len : ι → ℝ)
+private lemma polygon {ι : Type*} [Fintype ι] [DecidableEq ι] (len : ι → ℝ)
     (h0 : ∀ i, 0 ≤ len i)
     (hp : ∀ i, len i ≤ ∑ j ∈ univ.erase i, len j) :
     ∃ w : ι → ℂ, (∀ i, ‖w i‖ = len i) ∧ ∑ i, w i = 0 := by
-  classical
   cases isEmpty_or_nonempty ι with
   | inl h => exact ⟨fun _ => 0, fun i => isEmptyElim i, by simp⟩
   | inr h =>
@@ -102,7 +102,8 @@ private lemma polygon {ι : Type*} [Fintype ι] (len : ι → ℝ)
     let w (u : ℝ) (i : ι) : ℂ :=
       (len i : ℂ) * Complex.exp (((u * θ i : ℝ) : ℂ) * I)
     have hw (u : ℝ) (i : ι) : ‖w u i‖ = len i := by
-      rw [w, norm_mul, norm_exp_ofReal_mul_I, mul_one, Complex.norm_real, Real.norm_eq_abs,
+      dsimp only [w]
+      rw [norm_mul, norm_exp_ofReal_mul_I, mul_one, Complex.norm_real, Real.norm_eq_abs,
         abs_of_nonneg (h0 i)]
     let f (u : ℝ) := ‖∑ i ∈ s, w u i‖
     have hcontinuous : Continuous f := by
@@ -129,7 +130,8 @@ private lemma polygon {ι : Type*} [Fintype ι] (len : ι → ℝ)
       by_cases he : i = r
       · subst i
         simpa only [v, Function.update_self, norm_neg] using hu
-      · rw [v, Function.update_of_ne he, hw]
+      · dsimp only [v]
+        rw [Function.update_of_ne he, hw]
     · rw [← sum_erase_add univ v (mem_univ r)]
       change (∑ i ∈ s, v i) + Function.update (w u) r (-S) r = 0
       rw [hvsum, Function.update_self, add_neg_cancel]
@@ -145,20 +147,21 @@ private lemma amplitudes {ι : Type*} [Fintype ι] [DecidableEq ι]
   have hunit (i : ι) : ‖u i‖ = 1 := by
     by_cases h : len i = 0
     · simp [u, h]
-    · simp [u, h, norm_div, hw, Complex.norm_real, Real.norm_eq_abs,
+    · simp [u, h, hw, Complex.norm_real, Real.norm_eq_abs,
         abs_of_nonneg (show 0 ≤ len i from Real.sqrt_nonneg _)]
   have hphase (i : ι) : (len i : ℂ) * u i = w i := by
     by_cases h : len i = 0
     · have : w i = 0 := norm_eq_zero.mp ((hw i).trans h)
       simp [h, this]
-    · rw [u, if_neg h, mul_div_cancel₀]
+    · dsimp only [u]
+      rw [ite_eq_right h, mul_div_cancel₀]
       exact_mod_cast h
   refine ⟨fun i => (√(p i) : ℂ), fun i => (√(q i) : ℂ) * u i, ?_, ?_, ?_⟩
   · intro i
     simp [Complex.norm_real, Real.norm_eq_abs, abs_of_nonneg (Real.sqrt_nonneg _),
       Real.sq_sqrt (hp i)]
   · intro i
-    simp [norm_mul, hunit, Complex.norm_real, Real.norm_eq_abs,
+    simp [hunit, Complex.norm_real, Real.norm_eq_abs,
       abs_of_nonneg (Real.sqrt_nonneg _), Real.sq_sqrt (hq i)]
   · calc
       (∑ i, conj (√(p i) : ℂ) * ((√(q i) : ℂ) * u i)) =
@@ -180,27 +183,30 @@ private lemma column_preservation {ι κ : Type*} [Fintype ι] [Fintype κ]
   obtain ⟨x, y, hx, hy, hxy⟩ := amplitudes p q hp hq hpair
   let z (r : ι) : ℂ := ∑ i, (T r i : ℂ) * (conj (x i) * y i)
   let minor (ij : κ × κ) : ℂ := x ij.1 * y ij.2 - x ij.2 * y ij.1
+  -- Both orders of each distinct pair occur, so each square has weight one half.
   let scale (ij : κ × κ) : ℝ := √(1 / 2 : ℝ) * ‖minor ij‖
   let coord (r : ι) : Option (κ × κ) → ℝ
     | none => ‖z r‖
     | some ij => √(T r ij.1 * T r ij.2) * scale ij
-  let v (r : ι) : PiLp 2 (fun _ : Option (κ × κ) => ℝ) := WithLp.toLp 2 (coord r)
+  let v (r : ι) : EuclideanSpace ℝ (Option (κ × κ)) := WithLp.toLp 2 (coord r)
   have hnorm (r : ι) : ‖v r‖ = √((T.mulVec p) r * (T.mulVec q) r) := by
     have hnonneg : 0 ≤ (T.mulVec p) r * (T.mulVec q) r := by
       exact mul_nonneg (sum_nonneg fun i _ => mul_nonneg (hT r i) (hp i))
         (sum_nonneg fun i _ => mul_nonneg (hT r i) (hq i))
     apply (sq_eq_sq₀ (norm_nonneg _) (Real.sqrt_nonneg _)).mp
     rw [Real.sq_sqrt hnonneg, PiLp.norm_sq_eq_of_L2, Fintype.sum_option]
-    simp only [v, PiLp.toLp_apply, coord, Real.norm_eq_abs, sq_abs]
+    simp only [v, coord, Real.norm_eq_abs, sq_abs]
     have hminor (ij : κ × κ) :
         (√(T r ij.1 * T r ij.2) * scale ij) ^ 2 =
           (T r ij.1 * T r ij.2 * ‖minor ij‖ ^ 2) / 2 := by
-      rw [scale, mul_pow, Real.sq_sqrt (mul_nonneg (hT r _) (hT r _)),
+      dsimp only [scale]
+      rw [mul_pow, Real.sq_sqrt (mul_nonneg (hT r _) (hT r _)),
         mul_pow, Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 1 / 2)]
       ring
     simp_rw [hminor, ← sum_div]
     simpa only [z, minor, mulVec, dotProduct, hx, hy, add_comm] using
       weighted_lagrange (T r) x y
+  -- Unit column sums recover the orthogonality of the input amplitudes.
   have hz : ∑ s, z s = 0 := by
     simp only [z]
     rw [sum_comm]
@@ -211,7 +217,9 @@ private lemma column_preservation {ι κ : Type*} [Fintype ι] [Fintype κ]
     cases j with
     | none =>
       have hcancel := sum_erase_add univ z (mem_univ r)
-      rw [hz, ← eq_neg_of_add_eq_zero_right hcancel, norm_neg]
+      rw [hz] at hcancel
+      change ‖z r‖ ≤ ∑ s ∈ univ.erase r, ‖z s‖
+      rw [eq_neg_of_add_eq_zero_right hcancel, norm_neg]
       exact norm_sum_le _ _
     | some ij =>
       change √(T r ij.1 * T r ij.2) * scale ij ≤
@@ -226,13 +234,12 @@ private lemma column_preservation {ι κ : Type*} [Fintype ι] [Fintype κ]
     √((T.mulVec p) r * (T.mulVec q) r) = ‖v r‖ := (hnorm r).symm
     _ ≤ ‖∑ s ∈ univ.erase r, v s‖ := by
       simp only [PiLp.norm_eq_of_L2, Real.norm_eq_abs, sq_abs]
-      apply Real.sqrt_le_sqrt
-      apply sum_le_sum
-      intro j _
-      have hj : (∑ s ∈ univ.erase r, v s) j = ∑ s ∈ univ.erase r, coord s j :=
-        map_sum (PiLp.projₗ 2 (fun _ : Option (κ × κ) => ℝ) j) _ _
-      rw [hj]
-      exact pow_le_pow_left₀ (h0 j) (hcoord j) 2
+      exact Real.sqrt_le_sqrt (sum_le_sum fun j _ => by
+        have hj : (∑ s ∈ univ.erase r, v s) j = ∑ s ∈ univ.erase r, coord s j :=
+          map_sum (EuclideanSpace.projₗ (𝕜 := ℝ) j) _ _
+        change coord r j ^ 2 ≤ ((∑ s ∈ univ.erase r, v s) j) ^ 2
+        rw [hj]
+        exact pow_le_pow_left₀ (h0 j) (hcoord j) 2)
     _ ≤ ∑ s ∈ univ.erase r, ‖v s‖ := norm_sum_le _ _
     _ = ∑ s ∈ univ.erase r, √((T.mulVec p) s * (T.mulVec q) s) := by simp only [hnorm]
 
@@ -240,7 +247,7 @@ private lemma columns_mul {d : ℕ} {A B : Matrix (Fin d) (Fin d) ℝ}
     (hA : IsBracelet A) (hB : IsBracelet B) (k l : Fin d) (hkl : k ≠ l) :
     2 * (⨆ r, √((A * B) r k * (A * B) r l)) ≤
       ∑ r, √((A * B) r k * (A * B) r l) := by
-  letI : Nonempty (Fin d) := ⟨k⟩
+  let : Nonempty (Fin d) := ⟨k⟩
   apply (pivot_iff _).mp
   exact column_preservation A (fun i => B i k) (fun i => B i l)
     (fun _ _ => nonneg_of_mem_doublyStochastic hA.1)
@@ -254,30 +261,33 @@ private lemma bracelet_transpose {d : ℕ} {A : Matrix (Fin d) (Fin d) ℝ}
     (hA : IsBracelet A) : IsBracelet A.transpose :=
   ⟨transpose_mem_doublyStochastic_iff.mpr hA.1, hA.2.2, hA.2.1⟩
 
+private lemma columns_one {d : ℕ} (k l : Fin d) (hkl : k ≠ l) :
+    2 * (⨆ r, √((1 : Matrix (Fin d) (Fin d) ℝ) r k *
+      (1 : Matrix (Fin d) (Fin d) ℝ) r l)) ≤
+      ∑ r, √((1 : Matrix (Fin d) (Fin d) ℝ) r k *
+        (1 : Matrix (Fin d) (Fin d) ℝ) r l) := by
+  let : Nonempty (Fin d) := ⟨k⟩
+  have hzero (r : Fin d) : (1 : Matrix (Fin d) (Fin d) ℝ) r k *
+      (1 : Matrix (Fin d) (Fin d) ℝ) r l = 0 := by
+    by_cases hr : r = k
+    · subst r
+      simp [hkl]
+    · simp [Matrix.one_apply, hr]
+  simp [hzero]
+
 /-- The identity and ordinary products of bracelet matrices are bracelet in every dimension. -/
 theorem bracelet_monoid (d : ℕ) :
     IsBracelet (1 : Matrix (Fin d) (Fin d) ℝ) ∧
       ∀ A B : Matrix (Fin d) (Fin d) ℝ, IsBracelet A → IsBracelet B → IsBracelet (A * B) := by
   constructor
   · refine ⟨(doublyStochastic ℝ (Fin d)).one_mem, ?_, ?_⟩
+    · exact columns_one
     · intro k l hkl
-      letI : Nonempty (Fin d) := ⟨k⟩
-      have hzero (r : Fin d) : (1 : Matrix (Fin d) (Fin d) ℝ) r k *
-          (1 : Matrix (Fin d) (Fin d) ℝ) r l = 0 := by
-        by_cases hr : r = k
-        · subst r
-          simp [Matrix.one_apply, hkl]
-        · simp [Matrix.one_apply, hr]
-      simp [hzero]
-    · intro k l hkl
-      letI : Nonempty (Fin d) := ⟨k⟩
-      have hzero (r : Fin d) : (1 : Matrix (Fin d) (Fin d) ℝ) k r *
-          (1 : Matrix (Fin d) (Fin d) ℝ) l r = 0 := by
-        by_cases hr : k = r
-        · subst r
-          simp [Matrix.one_apply, hkl.symm]
-        · simp [Matrix.one_apply, hr]
-      simp [hzero]
+      have h := columns_one k l hkl
+      have htranspose : (1 : Matrix (Fin d) (Fin d) ℝ).transpose = 1 :=
+        Matrix.transpose_one
+      rw [← htranspose] at h
+      exact h
   · intro A B hA hB
     refine ⟨(doublyStochastic ℝ (Fin d)).mul_mem hA.1 hB.1, columns_mul hA hB, ?_⟩
     intro k l hkl
