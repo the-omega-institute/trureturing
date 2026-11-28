@@ -564,6 +564,19 @@ def check_coverage(official):
     return reductions, unresolved
 
 
+def coverage_totals(official, unresolved):
+    """Partition non-axiom definition sites after check_coverage validates their certificates."""
+    callable_sites = sum(
+        any((row["originalTypeChecked"], row.get("importAllOriginalTypeChecked"),
+             row.get("finBoundProofReplacementChecked"), row.get("pointwiseOrderTypeChecked"),
+             row.get("finiteConsumerTypeChecked"), row.get("publicProjectionTypeChecked"),
+             row.get("semiringImageEquation")))
+        for row in official["declarations"] if row["kind"] != "axiom")
+    non_axioms = official["summary"]["declarations"] - official["summary"]["directAxioms"]
+    return {"publicNonAxioms": non_axioms, "callableAtOriginalType": callable_sites,
+            "certifiedExceptions": non_axioms - callable_sites - len(unresolved), "unresolved": len(unresolved)}
+
+
 def verify_complete(official, product, reductions, unresolved):
     if unresolved:
         examples = ", ".join(f"{owner}/{name}" for owner, name in unresolved[:3])
@@ -853,6 +866,7 @@ def report(product, require_complete=False):
         if pending:
             raise ValueError(f"missing official definition sites for strict consequences: {sorted(pending)}")
         reduction_count, unresolved = check_coverage(official)
+        official["summary"]["coverage"] = coverage_totals(official, unresolved)
         inventory.write_text(json.dumps(official, ensure_ascii=False, separators=(",", ":")) + "\n")
         with (product / "interface-rejections.jsonl").open() as f:
             rejected = dict(map(json.loads, f))
@@ -944,6 +958,7 @@ def report(product, require_complete=False):
         reductions.replace(product / reductions.name)
         inventory.replace(product / inventory.name)
         output.replace(product / output.name)
+    print(json.dumps(official["summary"]["coverage"]))
     if require_complete:
         verify_complete(official, product, reduction_count, unresolved)
 
