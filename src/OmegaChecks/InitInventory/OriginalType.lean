@@ -124,6 +124,39 @@ private def checkedFiniteConsumer (official visible strict : Environment) (owner
     (Kernel.check visible {} specialized).isOk && Kernel.isDefEqGuarded visible {} pinned specialized &&
     (Kernel.check strict {} expected).isOk && Kernel.isDefEqGuarded strict {} expected target
 
+/-- Compare the concrete forward or backward skip call with the model call wherever it
+occurs in the full signature. The character and predicate instances and the pattern
+available to a generic position are resolved under the declaration's binders. -/
+private def patternSkipGap? (official visible strict : Environment) (owner : Name)
+    (source : ConstantInfo) (pinned target : Expr) (missing : Array Name) : IO (Option String) := do
+  unless [`Init.Data.String.Lemmas.Pattern.Char, `Init.Data.String.Lemmas.Pattern.Pred,
+      `Init.Data.String.Lemmas.Pattern.TakeDrop.Basic].contains owner do return none
+  let #[absent] := missing | return none
+  let model := InitKernelPort.originalName absent
+  let (operation, patternClass) ← match model with
+    | `String.Slice.Pattern.Model.matchAt? => pure (`String.Slice.Pos.skip?, `String.Slice.Pattern.ForwardPattern)
+    | `String.Slice.Pattern.Model.revMatchAt? => pure (`String.Slice.Pos.revSkip?, `String.Slice.Pattern.BackwardPattern)
+    | _ => return none
+  let some publicModel := visible.find? model | return none
+  unless source.isTheorem && visible.getModuleIdxFor? source.name == visible.getModuleIdx? owner &&
+      (visible.find? source.name).any (fun entry => entry.type.equal source.type) &&
+      (publicModel.value? (allowOpaque := true)).isNone do return none
+  let specialize := Meta.transform pinned (pre := fun e => do
+    unless e.isAppOfArity model 5 do return .continue
+    let #[carrier, pat, _, slice, pos] := e.getAppArgs | return .continue
+    let inst ← Meta.synthInstance (mkApp2 (mkConst patternClass) carrier pat)
+    return .done (mkAppN (mkConst operation) #[carrier, slice, pos, pat, inst]))
+  let .ok concrete ← (specialize.run' |>.toIO' {fileName := "<pattern skip>", fileMap := default}
+    {env := official}).toBaseIO | return none
+  let translated := InitKernelPort.translate InitKernelPort.portName concrete
+  unless !concrete.hasMVar && !concrete.getUsedConstants.contains model &&
+      (Kernel.check visible {} pinned).isOk && (Kernel.check visible {} concrete).isOk &&
+      (Kernel.check strict {} translated).isOk && Kernel.isDefEqGuarded strict {} translated target &&
+      !Kernel.isDefEqGuarded visible {} pinned concrete do return none
+  return some <| s!"missing type dependencies: {absent}. The exported upstream model has no visible body. " ++
+    s!"The full type using {operation} and its resolved {patternClass} instance checks in both environments. " ++
+    "It converts to the strict signature. The exported upstream signature fails this conversion."
+
 /-- Check the pinned type in the strict public environment with the original universe
 binders. A Fin bound proof may be replaced only after checking proof irrelevance. -/
 public def originalTypeGap? (official visible strict : Environment) (owner : Name)
@@ -141,6 +174,8 @@ public def originalTypeGap? (official visible strict : Environment) (owner : Nam
         checkedOrderFields visible strict owner source pinned target.type missing ||
         EnvelopePublicTypes.checked visible strict owner source pinned target.type then return none
     if ← checkedFiniteConsumer official visible strict owner source pinned target.type missing then return none
+    if let some gap ← patternSkipGap? official visible strict owner source pinned target.type missing then
+      return some gap
     return some ("missing type dependencies: " ++ String.intercalate ", " (missing.toList.map Name.toString))
   if (Kernel.check strict {} expected).isOk && Kernel.isDefEqGuarded strict {} expected target.type then
     return none
