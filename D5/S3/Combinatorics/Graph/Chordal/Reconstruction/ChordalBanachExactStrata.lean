@@ -43,7 +43,7 @@ import OmegaMath.Combinatorics.Graph.L1TetrahedronRadius
 import OmegaMath.Combinatorics.Graph.ChordalPathNine
 import OmegaMath.Combinatorics.Graph.StackedThreeTreeGraph
 import OmegaMath.Combinatorics.Graph.GroupCliqueMetricStrata
-import OmegaMath.Combinatorics.Graph.PureThreeTreeBanach
+import OmegaMath.Combinatorics.Graph.PureThreeTreeReverse
 import OmegaMath.Combinatorics.Graph.BinaryStaircaseGraph
 import D5.S3.Combinatorics.Graph.Chordal.Dirac
 
@@ -862,7 +862,6 @@ end Omega.RollingCliques.SpanOne
 
 namespace SimpleGraph.BanachPathPower
 open Finset
-
 /-- An explicit four-point configuration in real three-dimensional `L¹` gives the
 finite lower bound on the fourth power of the 104-vertex path. -/
 theorem path104_l1_three_lower {C : ℝ}
@@ -903,18 +902,21 @@ theorem Build.total_order_curvature_stratum {n : ℕ} (b : Build n) :
 end StackedTriangleCurvature
 
 namespace Omega.PureThreeTree
-/-- The infimal uniform Banach budget on the replicated family equals the
-infimal uniform ancestral budget on the single-copy family. Each side is
-expressed by feasibility at all strictly larger error budgets. -/
-theorem banach_causal_limit (R : ℝ) (hR : 0 ≤ R) :
-    (∀ n k : ℕ, ∀ ε : ℝ, 0 < ε → BanachFeasible.{0} n k (R + ε)) ↔
+/-- The infimal uniform Banach budget across all finite 3-tree stacking
+presentations equals the infimal uniform ancestral budget on the single-copy
+family, expressed by feasibility at every positive relaxation. -/
+theorem banach_causal_limit_for_build (R : ℝ) (hR : 0 ≤ R) :
+    (∀ (m : ℕ) (b : StackedTriangleCurvature.Build m) (ε : ℝ),
+      0 < ε → BuildBanachFeasible.{0} b (R + ε)) ↔
       (∀ n : ℕ, ∀ ε : ℝ, 0 < ε → CausalFeasible n (R + ε)) := by
   rw [← causal_offline_limit R hR]
   constructor
   · intro h n k ε hε
-    exact banach_offline_relaxed (h n k (ε / 2) (by positivity)) (by linarith)
-  · intro h n k ε hε
-    exact offline_implies_banach (h n k ε hε)
+    exact banach_offline_relaxed
+      (banach_of_stackings (fun m b => h m b (ε / 2) (by positivity))) (by linarith)
+  · intro h m b ε hε E _ _ _ g hg ht
+    exact banach_of_build b le_rfl le_rfl
+      (offline_implies_banach (h m m ε hε)) g hg ht
 
 /-- Every universal Banach budget on the replicated family controls the
 single-copy ancestral budget at the sharp copy factor and every positive relaxation. -/
@@ -923,6 +925,16 @@ theorem banach_to_causal {R ε : ℝ} (hR : 0 ≤ R) (hε : 0 < ε) (hk : 0 < k)
     CausalFeasible n ((R + ε) + 2 * (R + ε) / (k : ℝ)) :=
   offline_to_causal (by linarith) hk (banach_offline_relaxed h (by linarith))
 
+/-- The ancestral budget transfers to every finite three-tree stacking with that many insertions. -/
+theorem banach_of_causal_for_build {m : ℕ} (b : StackedTriangleCurvature.Build m) {R : ℝ}
+    (h : CausalFeasible m R) {E : Type*}
+    [NormedAddCommGroup E] [NormedSpace ℝ E] [CompleteSpace E]
+    (g : StackedTriangleCurvature.Vertex m → StackedTriangleCurvature.Vertex m → E)
+    (hg : ∀ x y, g y x = -g x y)
+    (ht : ∀ x y z, b.graph.Adj x y → b.graph.Adj y z → b.graph.Adj x z →
+      ‖g x y + g y z - g x z‖ ≤ 1) :
+    ∃ p : StackedTriangleCurvature.Vertex m → E, ∀ x y, b.graph.Adj x y → ‖g x y - (p y - p x)‖ ≤ R :=
+  banach_of_build b le_rfl le_rfl (offline_implies_banach (causal_to_offline (k := m) h)) g hg ht
 end Omega.PureThreeTree
 
 namespace FiveLaneRouting.BinaryStaircase

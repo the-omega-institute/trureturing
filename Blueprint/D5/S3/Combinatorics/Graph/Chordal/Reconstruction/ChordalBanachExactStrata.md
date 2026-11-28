@@ -394,17 +394,17 @@ Each tetrahedron adds three face curvatures summing to its parent curvature. On 
 
 **Theorem 1.29 (Causal and offline 3-tree thresholds).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.banach_causal_limit`
+Lean statement: `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.banach_causal_limit_for_build`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.banach_causal_limit` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.banach_causal_limit_for_build` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
 *Commentary.*
 
-The infimal uniform Banach error on the replicated pure 3-tree families equals the infimal error of ancestral rules on the single-copy histories. Both thresholds quantify over all finite depths, with feasibility at every positive relaxation.
+The infimal uniform Banach error on all finite 3-tree stackings equals the infimal error of ancestral rules on the single-copy histories. Both thresholds quantify over all finite depths, with feasibility at every positive relaxation.
 
-Average an offline rule over copy changes. The difference between two spine retractions loses a factor for each prescribed copy choice. Summing those errors gives a correction that vanishes as the copy count grows. Copying ancestral rules back to the replicated graph gives the reverse implication.
+Average an offline rule over copy changes. The difference between two spine retractions loses a factor for each prescribed copy choice. Summing those errors gives a correction that vanishes as the copy count grows. Each replicated history graph has a stacking presentation. Copying ancestral rules to replicated graphs and retracting to arbitrary stackings gives the reverse implication.
 
 **Theorem 1.30 (A sharp finite-copy localization factor).**
 
@@ -434,7 +434,21 @@ In the weighted five-lane binary staircase with three branching levels, the opti
 
 The eight balanced terminal demands parametrize the lane flows. Projecting the old and new triangle coordinates onto pair routings gives independent capacity bounds at every cap and slab side. Unrestricted five-label routings need total capacity ten thirds. Linear routings need four by the trace of the divergence identity. Triangle strips lift both optimal pair envelopes and give the two graph costs.
 
-**Theorem 1.32 (Banach reconstruction on span-one rolling clique graphs).**
+**Theorem 1.32 (Causal reconstruction for arbitrary finite stackings).**
+
+Lean statement: `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.banach_of_causal_for_build`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.banach_of_causal_for_build` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+An ancestral rule of error R at depth m gives Banach reconstruction with error R for every finite three-tree built by m triangle attachments.
+
+Assign each new vertex a fresh copy index and a history whose retained vertices are its attaching triangle. The induced image is closed under history prefixes. Its simplicial retraction preserves triangle defects when the gains are pulled back, so the copied causal rule gives a fit on the original stacking.
+
+**Theorem 1.33 (Banach reconstruction on span-one rolling clique graphs).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.exists_potential`
 
@@ -448,7 +462,7 @@ For M at least two and arbitrary depth and copy count, skew gains on the span-on
 
 Every cross-block edge links an older block to its immediate child. Average all M squared retained labels in that parent. Internal edges have residual at most one defect, and on each cross-block edge one summand vanishes.
 
-**Theorem 1.33 (Exact span-one rolling L1 coefficient at even widths).**
+**Theorem 1.34 (Exact span-one rolling L1 coefficient at even widths).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.uniform_l1_exact`
 
@@ -464,7 +478,8 @@ Use the full spine with M squared retained labels and the balanced-cut family on
 
 ## References
 
-- Truth anchor: `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.banach_causal_limit`
+- Truth anchor: `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.banach_causal_limit_for_build`
+- Truth anchor: `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.banach_of_causal_for_build`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.banach_to_causal`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.cliqueTree_banach_two`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.cliqueTree_height_banach_gain_potential`
