@@ -1,6 +1,7 @@
 module
 public import Lean
 import OmegaChecks.InitPort.Translation
+import OmegaChecks.InitCompiler.FiniteCollectors
 import OmegaChecks.InitInventory.EnvelopePublicTypes
 
 open Lean
@@ -105,10 +106,27 @@ private def recursorBinders (rules : List RecursorRule) : Expr → Expr
     .forallE label type (recursorBinders rules body) bi
   | body => body
 
+/-- At a finite use, the official total consumer projects the iterator out of its
+wrapper. Elaborate the finite instance at the use in the pinned statement, then
+check the complete statement in both ordinary export environments. -/
+private def checkedFiniteConsumer (official visible strict : Environment) (owner : Name)
+    (source : ConstantInfo) (pinned target : Expr) (missing : Array Name) : IO Bool := do
+  let consumers := [``Std.Iter.toList, ``Std.Iter.toListRev, ``Std.Iter.toArray, ``Std.Iter.atIdxSlow?,
+    ``Std.IterM.toList, ``Std.IterM.toListRev, ``Std.IterM.toArray,
+    ``Std.Slice.toList, ``Std.Slice.toListRev, ``Std.Slice.toArray]
+  unless source.isTheorem && missing.all (fun n => consumers.contains (InitKernelPort.originalName n)) &&
+      visible.getModuleIdxFor? source.name == visible.getModuleIdx? owner &&
+      (visible.find? source.name).any (fun entry => entry.type.equal source.type) do return false
+  let specialized ← OmegaChecks.InitCompiler.finiteCollectors official pinned
+  let expected := InitKernelPort.translate InitKernelPort.portName specialized
+  return !specialized.equal pinned && (Kernel.check visible {} pinned).isOk &&
+    (Kernel.check visible {} specialized).isOk && Kernel.isDefEqGuarded visible {} pinned specialized &&
+    (Kernel.check strict {} expected).isOk && Kernel.isDefEqGuarded strict {} expected target
+
 /-- Check the pinned type in the strict public environment with the original universe
 binders. A Fin bound proof may be replaced only after checking proof irrelevance. -/
 public def originalTypeGap? (official visible strict : Environment) (owner : Name)
-    (source target : ConstantInfo) : Option String := Id.run do
+    (source target : ConstantInfo) : IO (Option String) := do
   if source.numLevelParams != target.numLevelParams then return some "universe parameter count"
   let pinned := source.type.instantiateLevelParams source.levelParams (target.levelParams.map Level.param)
   let expected := InitKernelPort.translate InitKernelPort.portName pinned
@@ -121,6 +139,7 @@ public def originalTypeGap? (official visible strict : Environment) (owner : Nam
         checkedEnvelopePowZero visible strict owner source pinned target.type ||
         checkedOrderFields visible strict owner source pinned target.type missing ||
         EnvelopePublicTypes.checked visible strict owner source pinned target.type then return none
+    if ← checkedFiniteConsumer official visible strict owner source pinned target.type missing then return none
     return some ("missing type dependencies: " ++ String.intercalate ", " (missing.toList.map Name.toString))
   if (Kernel.check strict {} expected).isOk && Kernel.isDefEqGuarded strict {} expected target.type then
     return none

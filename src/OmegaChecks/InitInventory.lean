@@ -809,7 +809,9 @@ private def inventory (lib strictDir : System.FilePath) (visible strict full wit
           throwError "invalid public, private or native effect runner {strictName}"
         if name == `unsafeBaseIO then OmegaChecks.InitPort.EffectRun.checkWorld full.toKernelEnv
       let strictOwner := if matched then some expected else none
-      let typeGap := publicInfo.bind (OmegaChecks.InitInventory.originalTypeGap? official visible strict owner info)
+      let typeGap ← match publicInfo with
+        | some dst => OmegaChecks.InitInventory.originalTypeGap? official visible strict owner info dst
+        | none => pure none
       if matched && typeGap.isNone then originalTypes := originalTypes + 1
       if matched then
         matchingNames := matchingNames + 1

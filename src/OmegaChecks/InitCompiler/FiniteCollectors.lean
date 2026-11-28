@@ -34,18 +34,19 @@ private def consumerArity? (head : Name) : Option Nat :=
 private def specializeCollector (e : Expr) : MetaM (Option Expr) := do
   let some head := e.getAppFn.constName? | return none
   let args := e.getAppArgs
+  -- The public kernel reduces the wrapper projection on the constructor.
   if head == ``Std.Iter.atIdxSlow? && args.size == 5 then
-    let it ← mkAppOptM ``Std.Iter.ensureTermination #[args[0]!, args[1]!, args[4]!]
+    let it ← mkAppOptM ``Std.Iter.Total.mk #[args[0]!, args[1]!, args[4]!]
     return some (← mkAppOptM ``Std.Iter.Total.atIdxSlow? #[args[0]!, args[1]!, args[2]!, none, args[3]!, it])
   if pureCollectors.contains head && args.size == 4 then
-    let it ← mkAppOptM ``Std.Iter.ensureTermination #[args[0]!, args[1]!, args[3]!]
+    let it ← mkAppOptM ``Std.Iter.Total.mk #[args[0]!, args[1]!, args[3]!]
     let method := head.replacePrefix ``Std.Iter ``Std.Iter.Total
     return some (← mkAppOptM method #[args[0]!, args[1]!, args[2]!, none, it])
   if monadicCollectors.contains head && args.size == 6 then
     -- The list consumers place the monad instance before the element type.
     let (m, β, monad) := if head == ``Std.IterM.toArray then (args[2]!, args[1]!, args[3]!)
       else (args[1]!, args[3]!, args[2]!)
-    let it ← mkAppOptM ``Std.IterM.ensureTermination #[args[0]!, β, m, args[5]!]
+    let it ← mkAppOptM ``Std.IterM.Total.mk #[args[0]!, m, β, args[5]!]
     let method := head.replacePrefix ``Std.IterM ``Std.IterM.Total
     return some (← mkAppOptM method #[args[0]!, m, β, monad, args[4]!, none, it])
   return none
