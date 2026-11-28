@@ -44,6 +44,8 @@ strata_touched:
   - D5/S3/Topology/StableCategory/ThreePieceCategoricalCover
   - D5/S3/Topology/StableCategory/DepthZeroElementaryExpansion
   - D5/S3/Topology/StableCategory/ExactCategoricalExtension
+  - D5/S3/Topology/StableCategory/MixedSimplexChart
+  - D5/S3/Topology/StableCategory/MixedSimplexAttachment
 license: citation-only
 triage: anchor
 ---
@@ -1192,3 +1194,21 @@ prescribed old pieces, one further ordinary subdivision gives the
 prescribed intersections without increasing the number of pieces.
 The proofs intersect each retained face with a vertex set and compare
 this order map with inclusion by a finite contiguity chain.
+
+
+## Two categorical pieces across a mixed simplex attachment
+
+Let the retained complex have two prescribed categorical pieces.
+Choose a vertex of the attaching simplex and two disjoint nonempty
+blocks of its other vertices. In each piece the faces inside the
+simplex restrict to the corresponding horn, and each exterior face
+uses only the chosen vertex and its own block among the simplex
+vertices. The second subdivision has two full categorical regions
+containing the prescribed pieces. A forbidden image in the chart
+for one block requires a nonempty original face in that block.
+Both exclusions cannot occur along a single face chain, since the
+two blocks are disjoint. The retained region of each chart retracts
+to the horn by adjoining the chosen singleton and deleting the top
+face where needed. The comparisons fix the subdivided horn and
+extend over the old piece. The full-cover extension theorem gives
+exactly the prescribed old intersections at depth three.
