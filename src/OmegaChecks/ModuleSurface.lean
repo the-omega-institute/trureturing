@@ -77,6 +77,8 @@ private def checkUmbrella (env : Environment) (port : Name) (idx : ModuleIdx) : 
       throw <| IO.userError s!"unmatched {port} umbrella import {dep.module}"
   unless (aliasExtension.getModuleEntries env idx).isEmpty do
     throw <| IO.userError s!"unmatched export alias in the {port} umbrella"
+  unless (Meta.coeExt.ext.getModuleEntries env idx).isEmpty do
+    throw <| IO.userError s!"unmatched coe registration in the {port} umbrella"
   unless (Meta.coeDeclAttr.ext.getModuleEntries env idx).isEmpty do
     throw <| IO.userError s!"unmatched coe_decl registration in the {port} umbrella"
   unless (classExtension.getModuleEntries env idx).isEmpty do
@@ -88,7 +90,7 @@ private def supportedExtension (name : Name) : Bool :=
   [-- Compiled interface registrations checked by the port and kernel-interface audits.
    externAttr.ext.name, aliasExtension.name, classExtension.name, Meta.instanceExtension.ext.name, Meta.defaultInstanceExtension.name,
    Meta.simpExtension.ext.name, auxRecExt.name, noConfusionExt.name, privateToUserName sparseCasesOnExt.name, Meta.completionBlackListExt.name,
-   protectedExt.name, Meta.coeDeclAttr.ext.name, matchPatternAttr.ext.name, Elab.Term.elabAsElim.ext.name, neverExtractAttr.ext.name, reducibilityCoreExt.name,
+   protectedExt.name, Meta.coeDeclAttr.ext.name, Meta.coeExt.ext.name, matchPatternAttr.ext.name, Elab.Term.elabAsElim.ext.name, neverExtractAttr.ext.name, reducibilityCoreExt.name,
    privateToUserName structureExt.name, projectionFnInfoExt.name, Meta.Match.Extension.extension.name,
    -- Module provenance, compiled representation and kernel bookkeeping in the pinned toolchain.
    `Lean.namespacesExt, `Lean.noncomputableExt, `Lean.Compiler.inlineAttrs, `Lean.exportedAxiomsExt,
@@ -438,6 +440,23 @@ private def checkStructures (port ref : Environment) (owner : Name) (idx : Modul
 
 private abbrev ClassParameters := Array Nat × Array Nat
 
+/-- Compare the coercion target, its argument position and its notation kind in the
+module that registered the delaborator. Scoped entries retain their namespace. -/
+private def checkCoeFunctions (strict reference : Environment) (owner : Name) (idx : ModuleIdx) : IO Unit := do
+  let ext := Meta.coeExt.ext
+  let some upstream := reference.getModuleIdx? (counterpart owner)
+    | throw <| IO.userError s!"missing coercion registration owner for {owner}"
+  let fields := fun (rename : Name → Name) (entry : ScopedEnvExtension.Entry (Name × Meta.CoeFnInfo)) =>
+    let (scope, n, info) := match entry with
+      | .global (n, info) => (none, n, info)
+      | .scoped scope (n, info) => (some (rename scope), n, info)
+    (rename n, scope, info.numArgs, info.coercee, info.type)
+  let expected := ((ext.getModuleEntries reference upstream).map (fields InitKernelPort.portName)).filter
+    (fun entry => strict.contains entry.1)
+  let actual := (ext.getModuleEntries strict idx).map (fields id)
+  unless actual == expected do
+    throw <| IO.userError s!"coe registrations differ from {counterpart owner} in {owner}: expected {repr expected}, found {repr actual}"
+
 private def checkInstances (env reference : Environment) (owner : Name) (idx : ModuleIdx) : IO Unit := do
   let installed := Meta.instanceExtension.ext.getModuleEntries env idx
   let defaults := Meta.defaultInstanceExtension.getModuleEntries env idx
@@ -570,6 +589,7 @@ def check (strict : Environment) (full? : Option Environment := none) : IO (Arra
       let data := strict.header.moduleData[idx]!
       checkStructures strict reference owner idx
       checkInstances strict reference owner idx
+      checkCoeFunctions strict reference owner idx
       let coercions := Meta.coeDeclAttr.ext
       let upstreamOwner := counterpart owner
       let expected := (reference.getModuleIdx? upstreamOwner).map fun i =>
