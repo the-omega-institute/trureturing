@@ -8,6 +8,7 @@
 
 import D5.S3.Arith.FibonacciAtomic.Observer.NativeSerialMachine
 import Mathlib.Computability.Partrec
+import Mathlib.Computability.PartrecCode
 import Mathlib.Computability.Primrec.List
 
 set_option autoImplicit false
