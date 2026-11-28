@@ -38,6 +38,10 @@ $$\neg \mathit{claim}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/GangulyCircuitAccess/Recovery.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/ganguly-2026-circuit-access-recovery-inclusion` (refuted) by `D5/S3/Quantum/Information/GangulyCircuitAccess/Recovery.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"ganguly-2026-circuit-access-recovery-inclusion","declaration_gid":"D5/S3/Quantum/Information/GangulyCircuitAccess/Recovery.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Sayantan Ganguly (2026). *Symplectic Matroids, Stabilizer Codes, and Quantum Secret-Sharing*. DOI: [10.48550/arXiv.2611.27300](https://doi.org/10.48550/arXiv.2611.27300). URL: <https://arxiv.org/abs/2611.27300v2>.
