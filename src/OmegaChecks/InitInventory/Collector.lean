@@ -271,6 +271,31 @@ theorem noTerminatingCollectorOnZero {σ : Type u} (step : QueryStep σ) (s : σ
   exact noTerminatingThresholdCounter step s fun k n repeated =>
     (correct k n repeated).trans (thresholdLength k)
 
+/-- Observable result of a length operation on the iterator that stops at the first signal. -/
+def searchOutputLength
+    (measure : ∀ {α β : Type} [Iterator α Id β], Iter (α := α) β → Nat)
+    (f : Nat → Bool) : Nat :=
+  @measure Nat Unit (searchIterator f) (search 0)
+
+/-- On any sticky signal with a hit, the returned length is a fuel at which the signal holds. -/
+theorem signalAtSearchOutputLength
+    (measure : ∀ {α β : Type} [Iterator α Id β], Iter (α := α) β → Nat)
+    (correct : ∀ {α β : Type} [Iterator α Id β] [Finite α Id] (it : Iter (α := α) β),
+      measure it = it.toList.length) (g : Nat → Bool)
+    (sticky : ∀ i, g i = true → g (i+1) = true) {n : Nat} (hit : g n = true) :
+    g (searchOutputLength (@measure) g) = true := by
+  letI := searchIterator g
+  letI := searchFinite sticky hit
+  let len := fun k => measure (search k)
+  have unroll (k : Nat) : len k = (match g k with | true => 0 | false => (len (k+1)).succ) := by
+    unfold len
+    rw [correct (search k), Iter.toList_eq_match_step, searchStep]
+    cases e : g k with
+    | true => rfl
+    | false => exact congrArg Nat.succ (correct (search (k+1))).symm
+  change g (len 0) = true
+  simpa only [Nat.zero_add] using length_hits sticky hit len unroll 0
+
 private def limitedOmniscienceFromLength
     (measure : ∀ {α β : Type} [Iterator α Id β], Iter (α := α) β → Nat)
     (correct : ∀ {α β : Type} [Iterator α Id β] [Finite α Id] (it : Iter (α := α) β),
@@ -283,15 +308,8 @@ private def limitedOmniscienceFromLength
   | false =>
     refine isFalse fun ⟨n, hit⟩ => ?_
     have gHit := seen_of_hit f n hit
-    letI := searchFinite (seenSticky f) gHit
-    have unroll (k : Nat) : len k = (match g k with | true => 0 | false => (len (k+1)).succ) := by
-      unfold len
-      rw [correct (search k), Iter.toList_eq_match_step, searchStep]
-      cases e : g k with
-      | true => rfl
-      | false => exact congrArg Nat.succ (correct (search (k+1))).symm
-    have result := length_hits (seenSticky f) gHit len unroll 0
-    exact Bool.noConfusion (h.symm.trans (by simpa only [Nat.zero_add] using result))
+    exact Bool.noConfusion (h.symm.trans
+      (signalAtSearchOutputLength (@measure) correct g (seenSticky f) gHit))
 
 /-- Agreement with the official collector on finite iterators gives the limited principle
 of omniscience for arbitrary Boolean streams. On streams of bounded machine evaluations,
