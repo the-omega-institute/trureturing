@@ -3,7 +3,7 @@
    mirror-B: none(waiver:no-B-plane-mirror-for-source-module)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   utility: kind=checker; basis=consumer=D5/S3/VertexAlgebra/Lattice/Orbifold/ThirdEigenspacePairingDraft.p48q_moving_finrank; instance=D5/S3/VertexAlgebra/Lattice/Orbifold/P48qFixedRankCertificateDraft.nebeOrderThree; result=D5/S3/VertexAlgebra/Lattice/Orbifold/P48qFixedRankCertificateDraft.nebeOrderThree_cube
+   utility: kind=checker; basis=consumer=D5/S3/VertexAlgebra/Lattice/Orbifold/P48qTwistedChargeAction.g_cube; instance=D5/S3/VertexAlgebra/Lattice/Orbifold/P48qFixedRankCertificateDraft.nebeOrderThree; result=D5/S3/VertexAlgebra/Lattice/Orbifold/P48qFixedRankCertificateDraft.nebeOrderThree_cube
    digest: Exact cube and trace checks for the Nebe matrix and their fixed-rank consequence. -/
 
 module

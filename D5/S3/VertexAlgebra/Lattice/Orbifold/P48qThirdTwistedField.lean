@@ -7,7 +7,7 @@
    digest: The P48q charged field on oscillator polynomials and shifted momenta. -/
 
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qTwistedChargeAction
-import D5.S3.VertexAlgebra.Lattice.Orbifold.ThirdEigenspacePairingDraft
+import D5.S3.VertexAlgebra.Lattice.Orbifold.ThirdEigenspacePairing
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qNativeContraction
 import Mathlib.Algebra.MvPolynomial.PDeriv
 import Mathlib.Algebra.Polynomial.BigOperators
