@@ -24,6 +24,10 @@ $$\neg (\forall (R : Type) [NonUnitalSemiring R] [Nontrivial R] [NoZeroDivisors 
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/ResidueRings/MesyanDomainCommutativity.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/mesyan-2026-question-34-domain-commutativity` (refuted) by `D5/S3/Arith/ResidueRings/MesyanDomainCommutativity.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"mesyan-2026-question-34-domain-commutativity","declaration_gid":"D5/S3/Arith/ResidueRings/MesyanDomainCommutativity.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Zachary Mesyan (2026). *Quantales Arising From Rings*. DOI: [10.48550/arXiv.2611.31109](https://doi.org/10.48550/arXiv.2611.31109). URL: <https://arxiv.org/abs/2611.31109v1>.

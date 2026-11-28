@@ -52,7 +52,10 @@ internal sealed class MesyanDomainCommutativityDocument : IScribeDocumentDefinit
                         + "For any additive submonoids A and B, every generator of A times B "
                         + "is the double of a generator of B times A. Closure under addition gives "
                         + "one containment, and exchanging A and B gives the other."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("mesyan-2026-question-34-domain-commutativity"),
+                    ResolutionKind.Refuted)))));
 
     private static Formula Parenthesized(Formula body) => Seq(Open, body, Close);
 
