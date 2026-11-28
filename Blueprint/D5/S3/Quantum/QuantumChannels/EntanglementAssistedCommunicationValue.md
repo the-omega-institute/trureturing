@@ -90,7 +90,21 @@ $$(\operatorname{claim}) \Leftrightarrow (\forall (a: \mathbb{N}), (\forall (b: 
 
 For every pair of positive finite dimensions a and b and every channel from a by a matrices to b by b matrices, cv*(N) ≤ b cv(N). This is the conjecture stated in the source, with b the output dimension.
 
-**Theorem 1.8 (Shared entanglement gives at most an output-dimension advantage).**
+**Theorem 1.8 (The Choi tensor trace pairing).**
+
+$$\forall (a: \mathbb{N}), (\forall (b: \mathbb{N}), (\forall (N: \operatorname{MatrixMap}\left(\operatorname{Fin}\left(a\right), \operatorname{Fin}\left(b\right), \mathbb{C}\right)), (\forall (Q: \operatorname{Matrix}\left(\operatorname{Fin}\left(b\right), \operatorname{Fin}\left(b\right), \mathbb{C}\right)), (\forall (P: \operatorname{Matrix}\left(\operatorname{Fin}\left(a\right), \operatorname{Fin}\left(a\right), \mathbb{C}\right)), (\operatorname{trace}\left((\lambda (p: (\operatorname{Fin}\left(b\right)\times\operatorname{Fin}\left(a\right))) (q: (\operatorname{Fin}\left(b\right)\times\operatorname{Fin}\left(a\right))), N\left(\operatorname{Matrix}.\operatorname{single}\left(p.2, q.2, 1\right)\right)\left(p.1, q.1\right)) \cdot \operatorname{kronecker}\left(Q, P\right)\right) = \operatorname{trace}\left(Q \cdot N\left(\operatorname{transpose}\left(P\right)\right)\right))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/QuantumChannels/EntanglementAssistedCommunicationValue.choi_tensor_pair` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Eric Chitambar; Ian George; Brian Doolittle; Marius Junge (2023). *The Communication Value of a Quantum Channel*. DOI: [10.1109/TIT.2022.3218540](https://doi.org/10.1109/TIT.2022.3218540). URL: <https://arxiv.org/abs/2109.11144v1>.
+
+*Commentary.*
+
+For every pair of finite coordinate dimensions, the output-first Choi matrix pairs with Q ⊗ P as the output matrix Q pairs with N applied to the transpose of P. The identity holds for every complex linear map N and arbitrary complex matrices P and Q.
+
+**Theorem 1.9 (Shared entanglement gives at most an output-dimension advantage).**
 
 $$\operatorname{claim}$$
 
@@ -117,6 +131,7 @@ Every output state is a density matrix, so each output's largest probability is 
 ## References
 
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/EntanglementAssistedCommunicationValue.IsChannel`
+- Truth anchor: `D5/S3/Quantum/QuantumChannels/EntanglementAssistedCommunicationValue.choi_tensor_pair`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/EntanglementAssistedCommunicationValue.claim`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/EntanglementAssistedCommunicationValue.classicalCV`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/EntanglementAssistedCommunicationValue.commValue`
@@ -124,6 +139,10 @@ Every output state is a density matrix, so each output's largest probability is 
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/EntanglementAssistedCommunicationValue.eaCommValue`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/EntanglementAssistedCommunicationValue.eaCommValues`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/EntanglementAssistedCommunicationValue.result`
+- Dependency: [D5/S3/Quantum/Entanglement/AbsoluteSeparability/ContractionBlocks](../Entanglement/AbsoluteSeparability/ContractionBlocks.md)
 - Dependency: [D5/S3/Quantum/Entanglement/AbsoluteSeparability/LowRankRaysAverages](../Entanglement/AbsoluteSeparability/LowRankRaysAverages.md)
+- Dependency: [D5/S3/Quantum/Foundation/FiniteKrausChannel](../Foundation/FiniteKrausChannel.md)
 - Dependency: [D5/S3/Quantum/Foundation/FiniteKrausRepresentation](../Foundation/FiniteKrausRepresentation.md)
+- Dependency: [D5/S3/Quantum/Information/PartialTraceMutualInformation](../Information/PartialTraceMutualInformation.md)
 - Dependency: [D5/S3/Quantum/QuantumChannels/PositiveFilterTransposeRefutation](PositiveFilterTransposeRefutation.md)
+- Dependency: [D5/S3/Resource/CompositeCones](../../Resource/CompositeCones.md)
