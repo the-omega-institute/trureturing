@@ -20,6 +20,7 @@ namespace Omega
 end Omega
 
 port_prop_record Iff
+port_prop_record Std.Associative
 port_prop_record Std.Commutative
 port_prop_record Subsingleton
 port_proof Subsingleton.elim

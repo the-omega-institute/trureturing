@@ -107,8 +107,11 @@ namespace Omega.Sigma
 export _root_.Sigma (casesOn fst mk noConfusion noConfusionType rec recOn snd)
 end Omega.Sigma
 namespace Omega.Std
-export _root_.Std (Commutative)
+export _root_.Std (Associative Commutative)
 end Omega.Std
+namespace Omega.Std.Associative
+export _root_.Std.Associative (assoc casesOn mk rec recOn)
+end Omega.Std.Associative
 namespace Omega.Std.Commutative
 export _root_.Std.Commutative (casesOn comm mk rec recOn)
 end Omega.Std.Commutative
