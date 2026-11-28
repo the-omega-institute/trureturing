@@ -85,10 +85,16 @@ public def main (args : List String) : IO Unit := do
   let visible ← importModules #[{module := owner}] {} (level := .exported)
   let official ← importModules #[{module := owner, importAll := true}, {module := `Init.GrindInstances.Nat, importAll := true},
     {module := `Init.GrindInstances.Ring.Nat, importAll := true}] {} (level := .private)
-  let evidence ← importModules #[{module := `OmegaChecks.InitInventory.Reductions, importAll := true}] {}
+  let evidence ← importModules #[{module := `OmegaChecks.InitInventory.Reductions, importAll := true},
+    {module := `OmegaChecks.InitInventory.EnvelopeCancellation, importAll := true}] {} (level := .private)
   let some op := official.find? operation | throw <| IO.userError "missing canonical ring"
   let refuter := ``RepresentativeQuotient.refuteEnvelopeCancellation
   RepresentativeQuotient.certify official evidence op refuter
+  let some sample := EnvelopeCancellation.observation? owner operation | throw <| IO.userError "missing cancellation test"
+  let some (.thmInfo proof) := evidence.find? sample | throw <| IO.userError s!"missing test {sample}"
+  let some ring := proof.value.find? (·.isAppOfArity operation 2) | throw <| IO.userError "test does not use the ring"
+  unless Kernel.isDefEqGuarded evidence {} ring (mkApp2 (mkConst operation [.zero]) (mkConst ``Nat) natSemiring) do
+    throw <| IO.userError "cancellation test and class premises use different natural semirings"
   searchPathRef.set [lib]
   let strict ← importModules #[{module := target}] {} (level := .exported)
   if !strict.contains (portName ``Ring.OfSemiring.Q) || strict.contains (portName operation) then return
@@ -106,7 +112,8 @@ public def main (args : List String) : IO Unit := do
     if strict.contains (portName name) then continue
     let some src := official.find? name | throw <| IO.userError s!"missing {name}"
     let expected := translate portName src.type
-    unless src.isTheorem && !src.isUnsafe && !src.isPartial && src.numLevelParams == 1 && (visible.find? name).any (·.type.equal src.type) &&
+    unless src.isTheorem && !src.isUnsafe && !src.isPartial && src.numLevelParams == 1 &&
+        (visible.find? name).any (·.type.equal src.type) &&
         visible.getModuleIdxFor? name == visible.getModuleIdx? owner &&
         (Kernel.check visible {} src.type).isOk && typeNeedsConstant visible src.type operation &&
         expected.getUsedConstants.filter (!strict.contains ·) == #[portName operation] &&
