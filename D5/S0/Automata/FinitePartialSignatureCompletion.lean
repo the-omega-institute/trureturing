@@ -6,7 +6,11 @@
    utility: none
    digest: Deduplicated full signatures together with fresh output-only and return-only requirements admit a completion with exactly the number of full pairs plus the maximum of the two residual projection counts, and every injective completion has at least that many states. -/
 
-import Mathlib
+import Mathlib.Data.Fintype.EquivFin
+import Mathlib.Data.Fintype.Prod
+import Mathlib.Data.Fintype.Sum
+import Mathlib.Data.Finset.Image
+import Mathlib.Data.Finset.SDiff
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false

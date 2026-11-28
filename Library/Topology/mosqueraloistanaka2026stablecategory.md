@@ -54,6 +54,7 @@ strata_touched:
   - D5/S3/Topology/StableCategory/HalesJewettCategoricalCover
   - D5/S3/Topology/StableCategory/SevenTrianglePowerCovers
   - D5/S3/Topology/StableCategory/UnrestrictedFactorPowers
+  - D5/S3/Topology/StableCategory/ShellingColourCriterion
 license: citation-only
 triage: anchor
 ---
@@ -1327,3 +1328,23 @@ the first ordinary subdivision. The rank-aligned Hales–Jewett theorem
 therefore gives unbounded one-step categorical cover size for the
 powers of any finite poset whose first subdivision has no
 one-piece categorical lower cover.
+
+
+## Two colours on the restriction faces of a shelling
+
+In a finite connected complex, suppose a shelling admits a fixed vertex
+two-colouring for which every nonsingleton restriction face uses both
+colours. Then the first subdivision of the face poset has a categorical
+lower cover by two sets. For a weakly contractible realization this gives
+the bound in Question 6.3 under the colouring hypothesis.
+
+A shelling step introduces precisely the faces of the new chamber
+containing its restriction face. A restriction face using both colours
+introduces no monochromatic faces. A singleton restriction face
+introduces a new vertex. Its monochromatic simplex can fold into the old
+region when it has an old vertex of the same colour. Otherwise its
+isolated vertex contracts along the ambient one-skeleton. Thus the
+inclusions of the two induced colour complexes contract by contiguity
+throughout the shelling in a fixed final ambient complex. The colour
+partition yields the two lower sets at a common subdivision depth.
+[Question 6.3](https://arxiv.org/html/2609.39615v1#S6)
