@@ -5,7 +5,10 @@
    anchors: []
    digest: The alignment matrix K = [[1,-2],[2,-1]] squares to -3·I. On the alignment hyperplane V = {X : tr(X K) = 0} the generalized-flow identity β K β = (det β)·K holds for every β in V, and V is closed under the sandwich β,γ ↦ β γ β. The flow identity uses the hyperplane constraint entrywise; closure follows by trace cyclicity. -/
 
-import Mathlib
+import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
+import Mathlib.LinearAlgebra.Matrix.Trace
+import Mathlib.Tactic.FinCases
+import Mathlib.Tactic.LinearCombination
 
 open Matrix
 

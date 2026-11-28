@@ -43,6 +43,9 @@ strata_touched:
   - D5/S3/Topology/StableCategory/TetrahedralAsymmetricIteration
   - D5/S3/Topology/StableCategory/ThreePieceCategoricalCover
   - D5/S3/Topology/StableCategory/DepthZeroElementaryExpansion
+  - D5/S3/Topology/StableCategory/ExactCategoricalExtension
+  - D5/S3/Topology/StableCategory/MixedSimplexChart
+  - D5/S3/Topology/StableCategory/MixedSimplexAttachment
 license: citation-only
 triage: anchor
 ---
@@ -1176,3 +1179,36 @@ depth. Linked curves in the old trace can become nullhomologous in
 the new colour, preventing any endpoint map that fixes the old
 trace. It remains open whether a different colouring or a
 contraction that moves the old trace gives a general transfer.
+
+
+## Exact intersections across an attachment
+
+Suppose the retained subcomplex is full and has a prescribed two-piece
+cover. One further ordinary subdivision gives an exact categorical
+extension when the attachment and one old piece are categorical
+together. When the attachment and both old pieces are individually
+categorical, there is an exact extension with three pieces, with the
+third disjoint from the retained subdivision. More generally, if a
+categorical cover by full subcomplexes contains the corresponding
+prescribed old pieces, one further ordinary subdivision gives the
+prescribed intersections without increasing the number of pieces.
+The proofs intersect each retained face with a vertex set and compare
+this order map with inclusion by a finite contiguity chain.
+
+
+## Two categorical pieces across a mixed simplex attachment
+
+Let the retained complex have two prescribed categorical pieces.
+Choose a vertex of the attaching simplex and two disjoint nonempty
+blocks of its other vertices. In each piece the faces inside the
+simplex restrict to the corresponding horn, and each exterior face
+uses only the chosen vertex and its own block among the simplex
+vertices. The second subdivision has two full categorical regions
+containing the prescribed pieces. A forbidden image in the chart
+for one block requires a nonempty original face in that block.
+Both exclusions cannot occur along a single face chain, since the
+two blocks are disjoint. The retained region of each chart retracts
+to the horn by adjoining the chosen singleton and deleting the top
+face where needed. The comparisons fix the subdivided horn and
+extend over the old piece. The full-cover extension theorem gives
+exactly the prescribed old intersections at depth three.
