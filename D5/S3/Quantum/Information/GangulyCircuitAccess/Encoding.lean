@@ -8,7 +8,7 @@
 
 import D5.S3.Quantum.Information.GangulyCircuitAccess.Combinatorial
 import Mathlib.Analysis.Real.Sqrt
-import Mathlib.Data.Complex.Basic
+import Mathlib.Basic.Complex.Basic
 import Mathlib.LinearAlgebra.Matrix.ConjTranspose
 import Mathlib.LinearAlgebra.Matrix.Trace
 import Mathlib.Tactic.FinCases
@@ -52,7 +52,8 @@ private noncomputable abbrev witnessEncoding :=
 private theorem witnessEncoding_apply (p : WitnessRow) (s : Fin 2) :
     witnessEncoding p s = (witnessSign p s : ℂ) * (8 : ℂ)⁻¹ := by
   have h : Real.sqrt (2 ^ (7 - 1 : ℕ) : ℝ) = 8 := by
-    convert Real.sqrt_mul_self (show (0 : ℝ) ≤ 8 by norm_num) using 1 <;> norm_num
+    convert Real.sqrt_mul_self (show (0 : ℝ) ≤ 8 by norm_num) using 1
+    norm_num
   change (witnessSign p s : ℂ) / ((Real.sqrt (2 ^ (7 - 1 : ℕ)) : ℝ) : ℂ) = _
   rw [h, Complex.ofReal_ofNat, div_eq_mul_inv]
 
@@ -77,7 +78,8 @@ theorem witness_encoding_isometry :
   rw [show (∑ i : WitnessRow, star (witnessEncoding i s) * witnessEncoding i t) =
       ∑ i : WitnessRow, witnessEncoding i t * star (witnessEncoding i s) from
     Finset.sum_congr rfl (fun _ _ => mul_comm _ _)]
-  rw [witness_product_sum id id t s, witness_signed_gram]
+  have hSum := witness_product_sum (fun i : WitnessRow => i) (fun i : WitnessRow => i) t s
+  rw [hSum, witness_signed_gram]
   by_cases h : s = t
   · subst t
     norm_num [Matrix.one_apply]
@@ -131,6 +133,7 @@ theorem logical_x_pure (negative : Bool) :
     ∃ v : Fin 2 → ℂ, (∑ i, v i * star (v i)) = 1 ∧
       logicalDensity (if negative then -1 else 1) = Matrix.vecMulVec v (star v) := by
   refine ⟨logicalVector negative, ?_, (logical_outer negative).symm⟩
+  change logicalVector negative ⬝ᵥ star (logicalVector negative) = 1
   rw [← Matrix.trace_vecMulVec, logical_outer]
   norm_num [Matrix.trace, Matrix.diag_apply, logicalDensity, Fin.sum_univ_two]
 
@@ -144,7 +147,8 @@ private theorem encoded_difference (p q : WitnessRow) :
       (witnessEncoding * logicalDensity (-1) * witnessEncodingᴴ) p q =
       witnessEncoding p 0 * star (witnessEncoding q 1) +
         witnessEncoding p 1 * star (witnessEncoding q 0) := by
-  simp [Matrix.mul_apply, Fin.sum_univ_two, Matrix.conjTranspose_apply, logicalDensity] <;> ring
+  simp [Matrix.mul_apply, Fin.sum_univ_two, Matrix.conjTranspose_apply, logicalDensity]
+  ring
 
 /-- The two logical `X` eigenstates give equal reduced density matrices on `{2,5,6}`. -/
 theorem witness_reduced_density_eq :
