@@ -21,7 +21,7 @@ whether there are coefficients $c_0,\ldots,c_k\in K$ and bits
 $\varepsilon_0,\ldots,\varepsilon_k\in\mathrm{Bool}$, all fixed independently of $n$,
 such that the following holds for every natural $n$, including zero. The function
 $\mathrm{bit}$ decodes a Boolean value as zero for false and one for true.
-$\mathrm{IntCast}_K$ denotes the canonical integer-to-$K$ cast.
+$\mathrm{IntCast}_K$ denotes the canonical cast from the integers into $K$.
 
 $$
 \mathrm{IntCast}_K(G_{t,kn})
