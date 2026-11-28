@@ -46,6 +46,15 @@ strata_touched:
   - D5/S3/Topology/StableCategory/ExactCategoricalExtension
   - D5/S3/Topology/StableCategory/MixedSimplexChart
   - D5/S3/Topology/StableCategory/MixedSimplexAttachment
+  - D5/S3/Topology/StableCategory/ShellingExactExtension
+  - D5/S3/Topology/StableCategory/ProductRigidCores
+  - D5/S3/Topology/StableCategory/ProductStableCover
+  - D5/S3/Topology/StableCategory/ProductStableLower
+  - D5/S3/Topology/StableCategory/DisjointCoverObstruction
+  - D5/S3/Topology/StableCategory/HalesJewettCategoricalCover
+  - D5/S3/Topology/StableCategory/SevenTrianglePowerCovers
+  - D5/S3/Topology/StableCategory/UnrestrictedFactorPowers
+  - D5/S3/Topology/StableCategory/ShellingColourCriterion
 license: citation-only
 triage: anchor
 ---
@@ -1212,3 +1221,130 @@ to the horn by adjoining the chosen singleton and deleting the top
 face where needed. The comparisons fix the subdivided horn and
 extend over the old piece. The full-cover extension theorem gives
 exactly the prescribed old intersections at depth three.
+
+
+## Exact extension across a shelling step
+
+Suppose the retained triangulation already has a categorical
+two-cover and one simplex is attached along a union of its facets.
+The cover extends with both exact old intersections after three
+ordinary barycentric subdivisions in the same ambient. At the second
+subdivision the two induced regions need only cover vertices. In
+the mixed case, use the face formed by the omitted vertices of the
+facets in the second old piece. The first region can insert this
+anchor into its new chains even if it lies in both prescribed pieces.
+The second region cuts its chains by the second old piece. In the
+monochromatic case connectedness suffices to move the constants for
+the disjoint new and old components to a common vertex. A last
+ordinary subdivision covers the remaining mixed flags and preserves
+the prescribed intersections.
+
+## Weak, stable, and ordinary category of a four-dimensional product
+
+Let (P) have facets `012, 015, 023, 035, 145, 234, 345` and let
+(X=F(P)\times F(P)), where (F(P)) is the poset of nonempty faces.
+The realization is a PL four-ball since (P) is the boundary of an
+octahedron with the relative interior of the face `124` removed.
+Thus the weak category is one.
+
+Lean gives ordinary category three. Deleting one boundary edge and its
+unique triangle gives each of three categorical lower sets in the factor.
+Every face is retained in at least two sets, so three corresponding
+rectangles cover the product. With only two colours, the nine pairs of
+exceptional triangles force a whole boundary cycle in a coordinate
+slice of one colour. The three original vertices of that cycle remain
+fixed under every step of a comparable order-map fence.
+
+Lean also verifies a partition of the 484-point product core, obtained
+by deleting the three up-beat boundary edges in each factor. Six
+pointwise comparisons contract each colour in the product order.
+Pullback along the beat retraction and the ordinary subdivision cover
+theorem give two categorical lower sets after two subdivisions.
+Lean proves that two is the minimum over all ordinary subdivision depths.
+The subdivided product retracts onto a coordinate slice. A contraction of that
+slice would give a contiguity chain on its order complex by choosing vertices
+in the images of singleton faces. The chain would fix two distinct original
+vertices of the subdivided boundary, which rules out a constant endpoint.
+Barmak and Minian's strong-collapse reflection theorem gives a second proof
+of the lower bound.
+This determines ((\operatorname{cat}_w,\operatorname{cat}_s,
+\operatorname{cat})(X)=(1,2,3)) for this product. The general inequality
+in Question 6.3 remains open.
+[Question 6.3](https://arxiv.org/html/2609.39615v1#S6) ·
+[Strong homotopy types, nerves and collapses](https://arxiv.org/abs/0907.2954)
+
+## A categorical cover transport obstruction at every ordinary depth
+
+In a four-dimensional complex obtained by adding one simplex and its free
+tetrahedral facet, the retained first subdivision has a disjoint vertex
+partition into two induced categorical regions. Either assignment of the new
+chamber barycentre forces a six-edge cycle in the chosen region. A retraction
+projects that cycle to a subdivided two-dimensional complex in which two
+original cycle vertices stay fixed throughout every contiguity chain.
+
+The same witness subdivides through every later ordinary depth. For either
+colour, any full region containing its retained part and all exterior vertices
+contains that subdivided witness. Thus any full categorical two-cover
+containing the inherited regions must distribute the exterior between its
+pieces. The arbitrary contractible four-complex case of Question 6.3 remains
+open. [Question 6.3](https://arxiv.org/html/2609.39615v1#S6)
+
+## Unbounded categorical cover size after one subdivision of powers
+
+A finite poset with a monotone rank and a finite alphabet of full-rank
+chains admits a rank-aligned chain for each word of letters. Assume each
+letter is a section of the rank and every nonempty chain of the factor
+fits in a letter. If the factor's first subdivision has no one-piece
+categorical lower cover, then for every (k) the first ordinary subdivision
+of some finite power needs more than (k) categorical lower sets.
+
+Colour each rank-aligned chain by a lower set containing it. A
+Hales–Jewett line fixes some of the coordinates and varies the rest
+together. At each fixed coordinate use the chain element of the given
+rank, and at each variable coordinate use the element of the factor.
+The resulting order embedding puts every chain of the factor into the
+same lower set. Projection at a variable coordinate splits that
+embedding, so a contraction of that set would contract the subdivided
+factor.
+
+For the seven-triangle disk, rank is face cardinality minus one.
+Every chain extends to a vertex–edge–triangle flag, and the persistent
+boundary obstruction excludes a one-piece cover. The Lean theorem
+applies to finite powers of this one factor. All these powers have weak
+category one by realization of products. The stable category also
+allows further subdivisions, and the proof gives an obstruction at
+one fixed depth.
+
+The rank hypothesis can be removed from the conclusion about finite
+powers. For a finite poset (X), take the number of points in the
+principal ideal of each point as its section rank. In the enlarged
+poset of pairs (x,i), require (x≤y) and a strictly increasing rank
+for different first coordinates. All finite chains can be completed
+through the missing ranks by repeating a first coordinate. The section
+and projection split, and raising a rank to its maximum with the
+section rank compares both the identity and the section–projection
+composite to one order map. These comparisons survive products and
+the first ordinary subdivision. The rank-aligned Hales–Jewett theorem
+therefore gives unbounded one-step categorical cover size for the
+powers of any finite poset whose first subdivision has no
+one-piece categorical lower cover.
+
+
+## Two colours on the restriction faces of a shelling
+
+In a finite connected complex, suppose a shelling admits a fixed vertex
+two-colouring for which every nonsingleton restriction face uses both
+colours. Then the first subdivision of the face poset has a categorical
+lower cover by two sets. For a weakly contractible realization this gives
+the bound in Question 6.3 under the colouring hypothesis.
+
+A shelling step introduces precisely the faces of the new chamber
+containing its restriction face. A restriction face using both colours
+introduces no monochromatic faces. A singleton restriction face
+introduces a new vertex. Its monochromatic simplex can fold into the old
+region when it has an old vertex of the same colour. Otherwise its
+isolated vertex contracts along the ambient one-skeleton. Thus the
+inclusions of the two induced colour complexes contract by contiguity
+throughout the shelling in a fixed final ambient complex. The colour
+partition yields the two lower sets at a common subdivision depth.
+[Question 6.3](https://arxiv.org/html/2609.39615v1#S6)

@@ -21,5 +21,19 @@ internal sealed class PrimeTriangleSquareLimitDocument : IScribeDocumentDefiniti
                     + "of two minus eight. Exact prime-power decomposition isolates the "
                     + "squares. Abel summation and the prime number theorem give their "
                     + "limit. The contribution of higher powers vanishes at this scale."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("prime-triangle-fixed-rh-criterion"),
+                DeclarationHandle.Create(
+                    "D5/S3/Weil/Mertens/IntegratedExplicit/PrimeTriangleSquareLimit.rh_iff_eventual_prime_triangle_nine_tenths"),
+                H("A fixed square-root allowance equivalent to RH"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "On the quarter grid, RH is equivalent to the eventual lower bound "
+                    + "2 x log(2) minus nine tenths of the square root of x "
+                    + "for the ordinary prime triangle. The square contribution gives "
+                    + "the deterministic shift. The actual zero sum controls the remaining "
+                    + "centered error under RH."))),
                 DescribeRole.Theorem))));
 }
