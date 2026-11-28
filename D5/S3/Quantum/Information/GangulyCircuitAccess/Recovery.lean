@@ -6,7 +6,7 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Information/GangulyCircuitAccess/Recovery.claim; result=D5/S3/Quantum/Information/GangulyCircuitAccess/Recovery.result; claim=D5/S3/Quantum/Information/GangulyCircuitAccess/Recovery.claim
    digest: A circuit-authorized player set lacks a recovery channel for the dealer-slice encoding. -/
 
-import D5.S3.Quantum.Information.GangulyCircuitAccess.Encoding
+import D5.S3.Quantum.Information.GangulyCircuitAccess.DealerCode
 import D5.S3.Quantum.Foundation.FiniteStateChannel
 
 /-! A single recovery channel cannot recover two distinct logical states from
@@ -33,18 +33,34 @@ def claim : Prop :=
     quantumAccess (G.adjMatrix (ZMod 2)) d →
     ∀ A, circuitAuthorized (G.adjMatrix (ZMod 2)) d A → reconstructs G d A
 
+/-- Even an arbitrary function of the retained matrix cannot recover both inputs. -/
+theorem witness_no_common_recovery :
+    ¬ ∃ R : Matrix (Config witnessPlayers) (Config witnessPlayers) ℂ → Matrix (Fin 2) (Fin 2) ℂ,
+      R (reducedEncoding witnessGraph witnessDealer witnessPlayers (logicalDensity 1)) =
+        logicalDensity 1 ∧
+      R (reducedEncoding witnessGraph witnessDealer witnessPlayers (logicalDensity (-1))) =
+        logicalDensity (-1) := by
+  rintro ⟨R, hPlus, hMinus⟩
+  apply logical_x_distinct
+  exact hPlus.symm.trans ((congrArg R witness_reduced_density_eq).trans hMinus)
+
 private theorem witness_no_recovery :
     ¬ reconstructs witnessGraph witnessDealer witnessPlayers := by
   rintro ⟨R, hR⟩
-  apply logical_x_distinct
-  apply CStarMatrix.ofMatrix.injective
-  rw [← hR (logicalDensity 1), ← hR (logicalDensity (-1)), witness_reduced_density_eq]
+  apply witness_no_common_recovery
+  refine ⟨fun ρ => CStarMatrix.ofMatrix.symm (R.toCompletelyPositiveMap (CStarMatrix.ofMatrix ρ)),
+    ?_, ?_⟩
+  · rw [hR]
+    exact CStarMatrix.ofMatrix.symm_apply_apply _
+  · rw [hR]
+    exact CStarMatrix.ofMatrix.symm_apply_apply _
 
 theorem result : ¬ claim := by
   intro h
   exact witness_no_recovery
     (h 7 witnessGraph witnessDealer witness_quantum_access witnessPlayers witness_authorized)
 
+#print axioms witness_no_common_recovery
 #print axioms result
 
 end D5.S3.Quantum.Information.GangulyCircuitAccess
