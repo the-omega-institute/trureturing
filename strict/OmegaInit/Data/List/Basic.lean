@@ -239,6 +239,7 @@ port_proof List.foldl_nil by_reflexivity
 port_proof List.foldl_cons by_reflexivity
 
 port_inductive List.Mem
+port_definition List.instMembership with_native_code
 
 namespace Omega.List
 
@@ -258,6 +259,8 @@ port_inductive List.Perm
 namespace Omega.List
 instance instAppend {α : Type u} : Append (List α) := Append.mk List.append
 end Omega.List
+
+attribute [instance] Omega.List.instMembership
 
 port_proof List.append_eq by_reflexivity
 port_proof List.flatten_cons by_reflexivity
