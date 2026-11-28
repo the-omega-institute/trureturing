@@ -28,6 +28,10 @@ $$\begin{aligned}\forall V: Type, [\operatorname{Fintype}\left(V\right)], \foral
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/CellularAutomata/RiskCAEndpoint.paper_noninjective` (`✓ std3`). ∎
 
+*Resolves.* `Problems/arias-noguerales-2026-riskca-complete-board-endpoint` (proved) by `D5/S3/StatisticalMechanics/CellularAutomata/RiskCAEndpoint.paper_noninjective`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"arias-noguerales-2026-riskca-complete-board-endpoint","declaration_gid":"D5/S3/StatisticalMechanics/CellularAutomata/RiskCAEndpoint.paper_noninjective","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* María Teresa Arias Noguerales (2026). *Territorial Conflict as a Cellular Automaton: Frozen Domains and Active Fronts in a Risk-Derived Local Rule*. DOI: [10.48550/arXiv.2611.34784](https://doi.org/10.48550/arXiv.2611.34784). URL: <https://arxiv.org/abs/2611.34784v1>.

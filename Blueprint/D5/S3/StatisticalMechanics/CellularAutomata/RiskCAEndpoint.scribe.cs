@@ -31,7 +31,10 @@ internal sealed class RiskCAEndpointDocument : IScribeDocumentDefinition
                 StatementSource.FromAuthor(Collision(fixedImage: false)), AssessedProvenance.FromRepo(Source),
                 Blocks(
                     Paragraph(Text("For 1 < ρ < 2 the fixed-image collision gives two distinct configurations with equal images. This settles the complete-board branch registered for Proposition 2. The branch for connected incomplete boards with fortification disabled remains open in this formalization."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("arias-noguerales-2026-riskca-complete-board-endpoint"),
+                    ResolutionKind.Proved)))));
 
     private static Formula Collision(bool fixedImage)
     {
