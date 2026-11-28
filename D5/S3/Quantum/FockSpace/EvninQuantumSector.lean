@@ -1,5 +1,5 @@
 /- GID: D5/S3/Quantum/FockSpace/EvninQuantumSector
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Quantum/FockSpace/EvninQuantumSector
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
