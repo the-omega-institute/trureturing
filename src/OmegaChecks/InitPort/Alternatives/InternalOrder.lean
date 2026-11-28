@@ -17,6 +17,18 @@ open _root_.Lean.Order
 
 namespace OmegaChecks.InitPort.Alternatives.Lean.Order
 
+/-- The implication order has suprema by existential introduction and elimination. -/
+public theorem ImplicationOrder.instCompleteLattice._proof_1 (c : ImplicationOrder → Prop) :
+    ∃ s : ImplicationOrder, ∀ x : ImplicationOrder, (s → x) ↔ ∀ y, c y → y → x :=
+  ⟨∃ y, c y ∧ y, fun _ => ⟨fun h y hy proof => h ⟨y, hy, proof⟩,
+    fun h ⟨y, hy, proof⟩ => h y hy proof⟩⟩
+
+/-- Reverse implication has the corresponding supremum given by a universal quantifier. -/
+public theorem ReverseImplicationOrder.instCompleteLattice._proof_1 (c : ReverseImplicationOrder → Prop) :
+    ∃ s : ReverseImplicationOrder, ∀ x : ReverseImplicationOrder, (x → s) ↔ ∀ y, c y → x → y :=
+  ⟨∀ y, c y → y, fun _ => ⟨fun h y hy proof => h proof y hy,
+    fun h proof y hy => h y hy proof⟩⟩
+
 private theorem productSupremum {α : Sort u} {β : Sort v} [PartialOrder α] [PartialOrder β]
     {c : α ×' β → Prop} {a : α} {b : β}
     (ha : is_sup (fun i => ∃ j, c ⟨i, j⟩) a) (hb : is_sup (fun j => ∃ i, c ⟨i, j⟩) b) :
