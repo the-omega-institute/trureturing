@@ -405,6 +405,18 @@ private def logicalConsequence? (owner name : Name) : Option (Name × Name) := d
     return (``OmegaChecks.InitBoundaries.RefutedPropExt, ``OmegaChecks.InitBoundaries.refutedPropExtOfEqFalseRule)
   | `Init.Grind.Norm, ``Lean.Grind.ite_true_false =>
     return (``OmegaChecks.InitBoundaries.OptionalIndex.DecidablePropExt, ``OmegaChecks.InitBoundaries.OptionalIndex.decidablePropExtOfIte)
+  | `Init.Data.List.Basic, ``List.replicate_eq_replicateTR =>
+    return (``OmegaChecks.InitBoundaries.PublicAlgorithmEquations.ReplicateAccumulator,
+      ``OmegaChecks.InitBoundaries.PublicAlgorithmEquations.ofReplicate)
+  | `Init.Data.List.Basic, ``List.map_eq_mapTR =>
+    return (``OmegaChecks.InitBoundaries.PublicAlgorithmEquations.MapAfterPrefix,
+      ``OmegaChecks.InitBoundaries.PublicAlgorithmEquations.ofMap)
+  | `Init.Data.List.Basic, ``List.append_eq_appendTR =>
+    return (``OmegaChecks.InitBoundaries.PublicAlgorithmEquations.AppendChunks,
+      ``OmegaChecks.InitBoundaries.PublicAlgorithmEquations.ofAppend)
+  | `Init.Data.ByteArray.Basic, ``ByteArray.append_eq_fastAppend =>
+    return (``OmegaChecks.InitBoundaries.PublicAlgorithmEquations.ByteCopyChunks,
+      ``OmegaChecks.InitBoundaries.PublicAlgorithmEquations.ofByteCopy)
   | `Init.Data.List.Basic, ``List.length_eq_lengthTR =>
     return (``OmegaChecks.InitBoundaries.PublicAlgorithmEquations.PrefixLength,
       ``OmegaChecks.InitBoundaries.PublicAlgorithmEquations.ofLength)

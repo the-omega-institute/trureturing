@@ -163,7 +163,9 @@ private def replayWitnesses (env : Environment) : IO Unit := do
     [``MonadicTraversal.IndexedMap.singleton, ``MonadicTraversal.IndexedMap.fromList, ``MonadicTraversal.IndexedMap.fromArray] ++
     [``MonadicTraversal.SingletonSearch.boolOfSingleton, ``MonadicTraversal.SingletonSearch.optionOfSingleton] ++
     MonadicCollectionEquations.comparisons.map (fun row => row.2.2) ++
-    [``PublicAlgorithmEquations.ofLength, ``PublicAlgorithmEquations.ofClassifier] ++
+    [``PublicAlgorithmEquations.ofLength, ``PublicAlgorithmEquations.ofClassifier,
+     ``PublicAlgorithmEquations.ofReplicate, ``PublicAlgorithmEquations.ofMap,
+     ``PublicAlgorithmEquations.ofAppend, ``PublicAlgorithmEquations.ofByteCopy] ++
     [``MonadicTraversal.fromListFoldl, ``MonadicTraversal.fromListFoldr, ``ArrayLoopCongruence.listForInCongr] ++
     [``funextFromFunextIff, ``PostconditionIdentity.rightIdentity, ``PostconditionIdentity.leftIdentity, ``PostconditionIdentity.ofMonad] ++
     [``IteratorStepLift.funextOfMap, ``IteratorStepLift.funextOfMapM,

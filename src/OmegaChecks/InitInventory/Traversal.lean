@@ -577,6 +577,88 @@ theorem ofClassifier : (type_of% @Option.not_comp_isSome.{u}) ↔ BindClassifier
   · intro law α
     exact congrArg (fun fusion => fun o : Option α => fusion id (some o)) (law (Option α) α)
 
+private theorem addShift (k : Nat) :
+    (fun n => (n+1)+k) = (fun n => n+(k+1)) := by
+  induction k with
+  | zero => rfl
+  | succ k ih => exact congrArg (fun g => fun n => Nat.succ (g n)) ih
+
+/-- Move a fixed number of copies from the replication count to the initial accumulator. -/
+def ReplicateAccumulator := ∀ k : Nat,
+  (fun (α : Type u) (n : Nat) (a : α) => List.replicateTR.loop a n (List.replicate k a)) =
+  (fun _ n a => List.replicate (n+k) a)
+
+theorem ofReplicate : (type_of% @List.replicate_eq_replicateTR.{u}) ↔ ReplicateAccumulator.{u} := by
+  constructor
+  · intro law k
+    induction k with
+    | zero => exact congrArg (fun g => fun (α : Type u) n (a : α) => @g α n a) law.symm
+    | succ k ih =>
+      have shift := congrArg (fun g => fun (α : Type u) n (a : α) => g α (n+1) a) ih
+      exact shift.trans (congrArg (fun g => fun (α : Type u) n (a : α) => List.replicate (g n) a) (addShift k))
+  · intro law
+    exact congrArg (fun g => fun {α : Type u} n (a : α) => g α n a) (law 0).symm
+
+/-- Concatenate any sequence of chunks onto a suffix using the reverse-accumulator algorithm. -/
+def AppendChunks :=
+  (fun (α : Type u) (chunks : List (List α)) (tail : List α) => chunks.foldr List.append tail) =
+  (fun _ chunks tail => chunks.foldr (fun xs acc => List.reverseAux (List.reverseAux xs []) acc) tail)
+
+theorem ofAppend : (type_of% @List.append_eq_appendTR.{u}) ↔ AppendChunks.{u} := by
+  constructor
+  · intro law
+    exact congrArg (fun g => fun (α : Type u) (chunks : List (List α)) tail =>
+      chunks.foldr (@g α) tail) law
+  · intro law
+    exact congrArg (fun g => fun {α : Type u} (xs ys : List α) => g α [xs] ys) law
+
+private def prefixAccumulator {α : Type u} {β : Type v} :
+    (k : Nat) → (Fin k → α) → (α → β) → List β → List β
+  | 0, _, _, acc => acc
+  | k+1, p, f, acc => prefixAccumulator k (fun i => p i.succ) f (f (p ⟨0, Nat.zero_lt_succ _⟩) :: acc)
+
+private theorem runPrefix (k : Nat) :
+    (fun (α : Type u) (β : Type v) (f : α → β) (p : Fin k → α) (xs : List α) (acc : List β) =>
+      List.mapTR.loop f (prepend k p xs) acc) =
+    (fun _ _ f p xs acc => List.mapTR.loop f xs (prefixAccumulator k p f acc)) := by
+  induction k with
+  | zero => rfl
+  | succ k ih =>
+    exact congrArg (fun g => fun (α : Type u) (β : Type v) (f : α → β) (p : Fin (k+1) → α) xs acc =>
+      g α β f (fun i => p i.succ) xs (f (p ⟨0, Nat.zero_lt_succ _⟩) :: acc)) ih
+
+/-- Resume the map loop after consuming a prefix of arbitrary elements. -/
+def MapAfterPrefix := ∀ k : Nat,
+  (fun (α : Type u) (β : Type v) (f : α → β) (p : Fin k → α) xs =>
+    List.map f (prepend k p xs)) =
+  (fun _ _ f p xs => List.mapTR.loop f xs (prefixAccumulator k p f []))
+
+theorem ofMap : (type_of% @List.map_eq_mapTR.{u,v}) ↔ MapAfterPrefix.{v,u} := by
+  constructor
+  · intro law k
+    have mapped := congrArg (fun g => fun (α : Type v) (β : Type u) (f : α → β) (p : Fin k → α) xs =>
+      @g α β f (prepend k p xs)) law
+    exact mapped.trans (congrArg (fun g => fun (α : Type v) (β : Type u) (f : α → β) (p : Fin k → α) xs =>
+      g α β f p xs []) (runPrefix k))
+  · intro law
+    exact congrArg (fun g => fun {α : Type v} {β : Type u} (f : α → β) xs => g α β f Fin.elim0 xs) (law 0)
+
+/-- Append arbitrary byte chunks to an initial buffer, taking the three array slices of the pinned copy. -/
+def ByteCopyChunks :=
+  (fun (initial : Array UInt8) (chunks : List (Array UInt8)) =>
+    chunks.foldl (fun acc src => Array.mk (acc.toList ++ src.toList)) initial) =
+  (fun initial chunks => chunks.foldl (fun acc src =>
+    acc.extract 0 acc.size ++ src.extract 0 (0 + src.size) ++
+      acc.extract (acc.size + min src.size (src.size - 0)) acc.size) initial)
+
+theorem ofByteCopy : (type_of% @ByteArray.append_eq_fastAppend) ↔ ByteCopyChunks := by
+  constructor
+  · intro law
+    exact congrArg (fun g => fun (initial : Array UInt8) (chunks : List (Array UInt8)) =>
+      chunks.foldl (fun a b => (g (ByteArray.mk a) (ByteArray.mk b)).data) initial) law
+  · intro law
+    exact congrArg (fun g => fun (a b : ByteArray) => ByteArray.mk (g a.data [b.data])) law
+
 end PublicAlgorithmEquations
 
 namespace MonadicCollectionEquations
