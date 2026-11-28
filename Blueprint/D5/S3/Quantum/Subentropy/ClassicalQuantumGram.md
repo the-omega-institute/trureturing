@@ -20,7 +20,21 @@ Lean statement: `D5/S3/Quantum/Subentropy/ClassicalQuantumGram.blockPinch`
 
 The map retains a matrix entry precisely when its two classical labels agree.
 
-**Definition 1.2 (Rectangular row of square roots).**
+**Definition 1.2 (Weighted component square root).**
+
+Lean statement: `D5/S3/Quantum/Subentropy/ClassicalQuantumGram.weightedRoot`
+
+*Formalization.* `D5/S3/Quantum/Subentropy/ClassicalQuantumGram.weightedRoot` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Nilanjana Datta, Tony Dorlas, Richard Jozsa, Fabio Benatti (2014). *Properties of subentropy*. DOI: [10.1063/1.4882935](https://doi.org/10.1063/1.4882935). URL: <https://arxiv.org/abs/1310.1312>.
+
+*Commentary.*
+
+For each label x, this is CFC.sqrt(p_x rho_x), represented as an ordinary complex matrix. The ensemble applications use nonnegative weights. The rectangular row matrix uses these component square roots as its column blocks.
+
+**Definition 1.3 (Rectangular row of square roots).**
 
 Lean statement: `D5/S3/Quantum/Subentropy/ClassicalQuantumGram.cqRowSqrt`
 
@@ -34,7 +48,7 @@ Lean statement: `D5/S3/Quantum/Subentropy/ClassicalQuantumGram.cqRowSqrt`
 
 The row block indexed by x is the positive square root of p_x rho_x.
 
-**Theorem 1.3 (Row Gram product is the mixture).**
+**Theorem 1.4 (Row Gram product is the mixture).**
 
 Lean statement: `D5/S3/Quantum/Subentropy/ClassicalQuantumGram.row_mul_adjoint`
 
@@ -48,7 +62,7 @@ Lean statement: `D5/S3/Quantum/Subentropy/ClassicalQuantumGram.row_mul_adjoint`
 
 For nonnegative ensemble weights, cqRowSqrt times its adjoint equals the sum of the weighted density matrices. Normalization of the weights is not required. This identity supplies both the conditional pinching-gap identification and the labelled POVM decomposition.
 
-**Definition 1.4 (Canonical conditional subentropy).**
+**Definition 1.5 (Canonical conditional subentropy).**
 
 Lean statement: `D5/S3/Quantum/Subentropy/ClassicalQuantumGram.conditionalSubentropy`
 
@@ -62,7 +76,7 @@ Lean statement: `D5/S3/Quantum/Subentropy/ClassicalQuantumGram.conditionalSubent
 
 Conditional subentropy is subentropy(recordState) minus subentropy(mixtureState).
 
-**Theorem 1.5 (Conditional subentropy is a Gram pinching gap).**
+**Theorem 1.6 (Conditional subentropy is a Gram pinching gap).**
 
 Lean statement: `D5/S3/Quantum/Subentropy/ClassicalQuantumGram.cq_conditional_eq_pinchingGap`
 
@@ -76,7 +90,7 @@ Lean statement: `D5/S3/Quantum/Subentropy/ClassicalQuantumGram.cq_conditional_eq
 
 For the canonical recordState and mixtureState, conditional subentropy equals the block-pinching gap of V*V, where V=cqRowSqrt. The two rectangular Gram products have equal determinant-integral subentropy. The positive square-root identities identify the pinched Gram matrix with the record state and the row Gram matrix with the mixture state, including zero ensemble weights and singular fragments.
 
-**Theorem 1.6 (Pure-state block gap and labelled upper bound).**
+**Theorem 1.7 (Pure-state block gap and labelled upper bound).**
 
 Lean statement: `D5/S3/Quantum/Subentropy/ClassicalQuantumGram.pure_block_pinching`
 
@@ -98,6 +112,7 @@ For every normalized vector v on the label-fragment product, the pinching gap eq
 - Truth anchor: `D5/S3/Quantum/Subentropy/ClassicalQuantumGram.cq_conditional_eq_pinchingGap`
 - Truth anchor: `D5/S3/Quantum/Subentropy/ClassicalQuantumGram.pure_block_pinching`
 - Truth anchor: `D5/S3/Quantum/Subentropy/ClassicalQuantumGram.row_mul_adjoint`
+- Truth anchor: `D5/S3/Quantum/Subentropy/ClassicalQuantumGram.weightedRoot`
 - Dependency: [D5/S3/Quantum/Information/OrthogonalRecordEntropy](../Information/OrthogonalRecordEntropy.md)
 - Dependency: [D5/S3/Quantum/Subentropy/Basic](Basic.md)
 - Dependency: [D5/S3/Quantum/Subentropy/DensityKernel](DensityKernel.md)
