@@ -65,7 +65,7 @@ Appendix H supplies the research anchor:
 
 The project's bilinear fusion theorem considers arbitrary finite row-stochastic
 channels, without permutation symmetry, and controls the excess by
-`16q C₂(P)C₂(Q)`. Its proof uses likelihood calibration and a corrected rational
+`14q C₂(P)C₂(Q)`. Its proof uses likelihood calibration and a corrected rational
 remainder. This statement is not attributed to Lemma 20, which supplies the
 research context; no literature novelty or coefficient optimality is asserted.
 

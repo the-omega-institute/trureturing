@@ -31,7 +31,7 @@ theorem corrected_ratio_bilinear_bound
     (hnum : 1 / 2 ≤ 1 + c →
       (H + 1) * (1 + c) = 1 + S + 4 * c + 2 * d + 2 * e + f)
     (hglobal : H ≤ n * (1 + c) - 1) :
-    H ≤ S + ((3 - S) * c + 2 * d + 2 * e) + 16 * n * V := by
+    H ≤ S + ((3 - S) * c + 2 * d + 2 * e) + 14 * n * V := by
   let L : ℝ := (3 - S) * c + 2 * d + 2 * e
   let k : ℝ := n * V
   have hn0 : 0 ≤ n := by linarith only [hn]
@@ -87,12 +87,12 @@ theorem corrected_ratio_bilinear_bound
             (1 + S + L) * (1 + c) := by rw [hnum hden]
         _ = f - L * c := by dsimp only [L]; ring
     have hfloor := mul_nonneg hk0 (sub_nonneg.mpr hden)
-    have hmul : (H - S - L) * (1 + c) ≤ (16 * k) * (1 + c) := by
+    have hmul : (H - S - L) * (1 + c) ≤ (14 * k) * (1 + c) := by
       rw [hid]
       nlinarith only [hrem, hfloor, hk0]
-    have hlocal : H - S - L ≤ 16 * k := by
+    have hlocal : H - S - L ≤ 14 * k := by
       by_contra hnot
-      have hdiff : 0 < H - S - L - 16 * k := by linarith only [hnot]
+      have hdiff : 0 < H - S - L - 14 * k := by linarith only [hnot]
       have hp := mul_pos hdiff hpos
       nlinarith only [hp, hmul]
     dsimp only [L, k] at hlocal
@@ -104,45 +104,56 @@ theorem corrected_ratio_bilinear_bound
     have htV : t ≤ 2 * V := by
       have hp := mul_nonneg ht0 (show 0 ≤ t - 1 / 2 by linarith only [ht_half])
       nlinarith only [hp, ht]
-    have hVquarter : 1 / 4 ≤ V := by
-      have hp := mul_nonneg
-        (show 0 ≤ t - 1 / 2 by linarith only [ht_half])
-        (show 0 ≤ t + 1 / 2 by linarith only [ht_half])
-      nlinarith only [hp, ht]
-    have hcoef : |3 - S| ≤ 3 * n := by
-      rw [abs_le]
-      constructor <;> linarith only [hS0, hSn, hn]
-    have hprod : |3 - S| * |c| ≤ (3 * n) * t :=
-      mul_le_mul hcoef hc (abs_nonneg c) (by linarith only [hn])
-    have hLbase : |L| ≤ (3 * n) * t + 2 * (n * t) + 2 * (n * t) := by
+    let z : ℝ := -c
+    have hcn : c < 0 := by linarith only [hsmall]
+    have hz_half : 1 / 2 < z := by
+      dsimp only [z]
+      linarith only [hsmall]
+    have hz_abs : |c| = z := by
+      rw [abs_of_neg hcn]
+    have hzt : z ≤ t := by
       calc
-        |L| ≤ |(3 - S) * c + 2 * d| + |2 * e| := by
-          simpa only [L] using abs_add_le ((3 - S) * c + 2 * d) (2 * e)
-        _ ≤ (|(3 - S) * c| + |2 * d|) + |2 * e| :=
-          add_le_add (abs_add_le ((3 - S) * c) (2 * d)) (le_refl |2 * e|)
-        _ = |3 - S| * |c| + 2 * |d| + 2 * |e| := by norm_num [abs_mul]
-        _ ≤ (3 * n) * t + 2 * (n * t) + 2 * (n * t) :=
-          add_le_add (add_le_add hprod
-            (mul_le_mul_of_nonneg_left hd (by norm_num)))
-            (mul_le_mul_of_nonneg_left he (by norm_num))
-    have hL7 : |L| ≤ 7 * n * t := by nlinarith only [hLbase]
-    have hL14 : |L| ≤ 14 * k := by
+        z = |c| := hz_abs.symm
+        _ ≤ t := hc
+    have hd_lo : -(n * t) ≤ d := by
+      have hneg := neg_le_neg hd
+      have habs := neg_le_abs d
+      linarith only [hneg, habs]
+    have he_lo : -(n * t) ≤ e := by
+      have hneg := neg_le_neg he
+      have habs := neg_le_abs e
+      linarith only [hneg, habs]
+    have hbase : H - S - L ≤
+        n - 1 + (3 - n) * z - S * (1 + z) + 4 * n * t := by
+      dsimp only [L, z]
+      nlinarith only [hglobal, hd_lo, he_lo]
+    have hprod : 0 ≤ (n - 1) * (3 * z - 1) := by
+      exact mul_nonneg (by linarith only [hn]) (by linarith only [hz_half])
+    have hSz : 0 ≤ S * (1 + z) := by
+      exact mul_nonneg hS0 (by linarith only [hz_half])
+    have hmid : n - 1 + (3 - n) * z - S * (1 + z) ≤ 2 * n * z := by
+      nlinarith only [hprod, hSz]
+    have hzt_mul : 2 * n * z ≤ 2 * n * t := by
+      exact mul_le_mul_of_nonneg_left hzt (by nlinarith only [hn])
+    have h6 : 2 * n * z + 4 * n * t ≤ 6 * n * t := by
+      nlinarith only [hzt_mul]
+    have h12 : 6 * n * t ≤ 12 * n * V := by
       calc
-        |L| ≤ 7 * n * t := hL7
-        _ ≤ (7 * n) * (2 * V) :=
-          mul_le_mul_of_nonneg_left htV (mul_nonneg (by norm_num) hn0)
-        _ = 14 * k := by dsimp only [k]; ring
-    have hHhalf : H ≤ n / 2 := by
-      have hp := mul_le_mul_of_nonneg_left
-        (le_of_lt hsmall) hn0
-      nlinarith only [hglobal, hp]
-    have hhalf2 : n / 2 ≤ 2 * k := by
-      have hp := mul_le_mul_of_nonneg_left hVquarter hn0
+        6 * n * t ≤ (6 * n) * (2 * V) :=
+          mul_le_mul_of_nonneg_left htV (by nlinarith only [hn])
+        _ = 12 * n * V := by ring
+    have h14 : 12 * n * V ≤ 14 * k := by
       dsimp only [k]
-      nlinarith only [hp]
-    have hLneg := neg_le_abs L
-    have hfinal : H ≤ S + L + 16 * k := by
-      nlinarith only [hHhalf, hhalf2, hL14, hLneg, hS0, hk0]
+      nlinarith only [hk0]
+    have hbad : H - S - L ≤ 14 * k := by
+      calc
+        H - S - L ≤ n - 1 + (3 - n) * z - S * (1 + z) + 4 * n * t := hbase
+        _ ≤ 2 * n * z + 4 * n * t := by linarith only [hmid]
+        _ ≤ 6 * n * t := h6
+        _ ≤ 12 * n * V := h12
+        _ ≤ 14 * k := h14
+    have hfinal : H ≤ S + L + 14 * k := by
+      nlinarith only [hbad]
     simpa only [L, k, mul_assoc] using hfinal
 
 end Omega.InformationTheory.PottsFusion

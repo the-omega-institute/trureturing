@@ -75,7 +75,7 @@ private theorem centered_pair_bound (a b : I → ℝ)
           inputMean (fun i => a i * b i) +
         2 * inputMean (fun i => a i ^ 2 * b i) +
         2 * inputMean (fun i => a i * b i ^ 2)) +
-      16 * (Fintype.card I : ℝ) * inputMean (fun i => a i ^ 2) *
+      14 * (Fintype.card I : ℝ) * inputMean (fun i => a i ^ 2) *
         inputMean (fun i => b i ^ 2) := by
   classical
   let n : ℝ := Fintype.card I
@@ -219,9 +219,9 @@ private theorem weighted_pair_average
     (w : Y → ℝ) (v : Z → ℝ) (A : Y → ℝ) (B : Z → ℝ)
     (hw : ∑ y, w y = 1) (hv : ∑ z, v z = 1) :
     (∑ yz : Y × Z, w yz.1 * v yz.2 *
-      (A yz.1 + B yz.2 + 16 * (Fintype.card I : ℝ) * A yz.1 * B yz.2)) =
+      (A yz.1 + B yz.2 + 14 * (Fintype.card I : ℝ) * A yz.1 * B yz.2)) =
       (∑ y, w y * A y) + (∑ z, v z * B z) +
-      16 * (Fintype.card I : ℝ) * (∑ y, w y * A y) * (∑ z, v z * B z) := by
+      14 * (Fintype.card I : ℝ) * (∑ y, w y * A y) * (∑ z, v z * B z) := by
   rw [Fintype.sum_prod_type]
   simp only [mul_add, Finset.sum_add_distrib]
   have h1 : (∑ y, ∑ z, w y * v z * A y) = ∑ y, w y * A y := by
@@ -244,10 +244,10 @@ private theorem weighted_pair_average
         intro z _
         ring
       _ = ∑ z, v z * B z := by rw [hw, one_mul]
-  have h3 : (∑ y, ∑ z, w y * v z * (16 * (Fintype.card I : ℝ) * A y * B z)) =
-      16 * (Fintype.card I : ℝ) * (∑ y, w y * A y) * (∑ z, v z * B z) := by
+  have h3 : (∑ y, ∑ z, w y * v z * (14 * (Fintype.card I : ℝ) * A y * B z)) =
+      14 * (Fintype.card I : ℝ) * (∑ y, w y * A y) * (∑ z, v z * B z) := by
     calc
-      _ = 16 * (Fintype.card I : ℝ) *
+      _ = 14 * (Fintype.card I : ℝ) *
           ((∑ y, w y * A y) * (∑ z, v z * B z)) := by
         rw [Finset.sum_mul_sum, Finset.mul_sum]
         apply Finset.sum_congr rfl
@@ -269,7 +269,7 @@ theorem calibratedFusion_bilinear_bound
     (hxc : ∀ i, ∑ y, w y * x y i = 1)
     (hrc : ∀ i, ∑ z, v z * r z i = 1) :
     calibratedFusion w x v r ≤ calibratedCapacity w x + calibratedCapacity v r +
-      (16 * (Fintype.card I : ℝ)) * calibratedCapacity w x * calibratedCapacity v r := by
+      (14 * (Fintype.card I : ℝ)) * calibratedCapacity w x * calibratedCapacity v r := by
   have hw : ∑ y, w y = 1 := by
     simpa only [hxm, mul_one, hxc, inputMean_const] using weighted_sum_inputMean w x
   have hv : ∑ z, v z = 1 := by
@@ -307,7 +307,7 @@ theorem calibratedFusion_bilinear_bound
   have hp (yz : Y × Z) :
       inputMean (fun i => x yz.1 i ^ 2 * r yz.2 i ^ 2) /
         inputMean (fun i => x yz.1 i * r yz.2 i) - 1 ≤
-        A yz.1 + B yz.2 + C yz + 16 * (Fintype.card I : ℝ) * A yz.1 * B yz.2 := by
+        A yz.1 + B yz.2 + C yz + 14 * (Fintype.card I : ℝ) * A yz.1 * B yz.2 := by
     have hh := centered_pair_bound (a yz.1) (b yz.2)
       (hxa yz.1).1 (hrb yz.2).1 (hxa yz.1).2.2.2.2 (hrb yz.2).2.2.2.2
       (hxa yz.1).2.2.2.1 (hrb yz.2).2.2.2.1
@@ -320,7 +320,7 @@ theorem calibratedFusion_bilinear_bound
       (inputMean (fun i => x yz.1 i ^ 2 * r yz.2 i ^ 2) /
         inputMean (fun i => x yz.1 i * r yz.2 i) - 1)) ≤
       ∑ yz : Y × Z, w yz.1 * v yz.2 *
-        (A yz.1 + B yz.2 + C yz + 16 * (Fintype.card I : ℝ) * A yz.1 * B yz.2) := by
+        (A yz.1 + B yz.2 + C yz + 14 * (Fintype.card I : ℝ) * A yz.1 * B yz.2) := by
     apply Finset.sum_le_sum
     intro yz _
     exact mul_le_mul_of_nonneg_left (hp yz) (mul_nonneg (hw0 _) (hv0 _))
@@ -333,12 +333,12 @@ theorem calibratedFusion_bilinear_bound
     rw [hweights]
     rfl
   have hright : (∑ yz : Y × Z, w yz.1 * v yz.2 *
-        (A yz.1 + B yz.2 + C yz + 16 * (Fintype.card I : ℝ) * A yz.1 * B yz.2)) =
+        (A yz.1 + B yz.2 + C yz + 14 * (Fintype.card I : ℝ) * A yz.1 * B yz.2)) =
       calibratedCapacity w x + calibratedCapacity v r +
-        (16 * (Fintype.card I : ℝ)) * calibratedCapacity w x * calibratedCapacity v r := by
+        (14 * (Fintype.card I : ℝ)) * calibratedCapacity w x * calibratedCapacity v r := by
     calc
       _ = (∑ yz : Y × Z, w yz.1 * v yz.2 *
-          (A yz.1 + B yz.2 + 16 * (Fintype.card I : ℝ) * A yz.1 * B yz.2)) +
+          (A yz.1 + B yz.2 + 14 * (Fintype.card I : ℝ) * A yz.1 * B yz.2)) +
           ∑ yz : Y × Z, w yz.1 * v yz.2 * C yz := by
         rw [← Finset.sum_add_distrib]
         apply Finset.sum_congr rfl

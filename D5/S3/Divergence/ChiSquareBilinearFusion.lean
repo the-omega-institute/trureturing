@@ -30,7 +30,7 @@ theorem bilinear_fusion_bound
     (hP0 : ∀ i y, 0 ≤ P i y) (hQ0 : ∀ i z, 0 ≤ Q i z)
     (hP1 : ∀ i, ∑ y, P i y = 1) (hQ1 : ∀ i, ∑ z, Q i z = 1) :
     channelCapacity (rawProduct P Q) ≤ channelCapacity P + channelCapacity Q +
-      (16 * (Fintype.card I : ℝ)) * channelCapacity P * channelCapacity Q := by
+      (14 * (Fintype.card I : ℝ)) * channelCapacity P * channelCapacity Q := by
   rw [raw_product_capacity_eq_calibratedFusion P Q hP0 hQ0,
     raw_capacity_eq_calibratedCapacity P hP0 hP1,
     raw_capacity_eq_calibratedCapacity Q hQ0 hQ1]
