@@ -42,6 +42,7 @@ strata_touched:
   - D5/S3/Topology/StableCategory/TetrahedralOneSidedRefinement
   - D5/S3/Topology/StableCategory/TetrahedralAsymmetricIteration
   - D5/S3/Topology/StableCategory/ThreePieceCategoricalCover
+  - D5/S3/Topology/StableCategory/DepthZeroElementaryExpansion
 license: citation-only
 triage: anchor
 ---
@@ -1152,3 +1153,26 @@ retract. The retracts persist under common subdivision, so every
 pairwise union remains noncategorical. This ball has another
 two-piece cover obtained by redistributing parts of the original
 three pieces.
+
+
+## Categorical covers across one elementary expansion
+
+Suppose the retained complex has a categorical two-cover on its
+given triangulation and the expanded complex is connected. The Lean
+theorem gives a categorical lower cover of size two for the face
+poset after two ordinary barycentric subdivisions of the expanded
+complex. For a mixed attachment, take the vertices omitted by the
+old attaching facets assigned to the second piece. They form a
+face in the first piece and belong to every old attaching face
+exclusive to it. This face supplies the contiguity comparison for
+the two new face vertices. A monochromatic attachment leaves a
+separate categorical edge in the opposite first-subdivision region.
+
+The corresponding transport of an arbitrary inherited cover
+on a positive-depth subdivision is known here for a triangular
+expansion by a paper argument with rooted trees and the planar dual.
+In dimension four the same colouring rule can fail at every common
+depth. Linked curves in the old trace can become nullhomologous in
+the new colour, preventing any endpoint map that fixes the old
+trace. It remains open whether a different colouring or a
+contraction that moves the old trace gives a general transfer.
