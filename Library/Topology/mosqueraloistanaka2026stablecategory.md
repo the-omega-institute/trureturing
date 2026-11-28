@@ -1667,3 +1667,32 @@ noncontractible under subdivision. It constrains the overlap of the
 regional homotopies in Question 6.3.
 [Question 6.3](https://arxiv.org/html/2609.39615v1#S6.Thmtheorem3) ·
 [Strong homotopy types, nerves and collapses](https://arxiv.org/abs/0907.2954)
+
+## Sharp relative covering numbers for a simplex expansion
+
+For a \(d\)-simplex with \(d\geq 2\), consider its horn obtained by
+removing the top simplex and the opposite facet. A relative piece
+contains the entire subdivided horn and contracts into it through
+order maps that fix it throughout. Lean proves that the order model
+adjoining a greatest element to the horn needs exactly \(d\) such
+pieces at the first chain subdivision. There is one piece per facet.
+Lean also constructs two relative pieces after the second subdivision
+for arbitrary simultaneous attachments of maximal elements with
+strict predecessors.
+
+For the literal simplex expansion, deleting the free facet is an
+order retraction which replaces it by the top simplex. It fixes the
+horn and compares with the identity. Subdivision lifts the comparison
+relative to the horn, so relative covers transfer both ways. A
+single piece is impossible at every depth. Partition the vertices of
+the missing facet into two nonempty faces. In the first subdivision
+their distance is two through the missing facet, and in the horn it
+exceeds two because there is no common comparable face. Ordinary
+subdivision doubles both distances. A relative retraction would fix
+the two faces and would have to increase their distance. The depth-zero
+cover is impossible for the same reason, because any lower set
+containing the greatest element is the whole poset. This paper
+argument yields an exact sequence of relative covering numbers:
+no finite cover at depth zero, \(d\) at depth one, and two at every
+later depth.
+[Question 6.3](https://arxiv.org/html/2609.39615v1#S6.Thmtheorem3)

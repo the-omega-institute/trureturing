@@ -63,6 +63,16 @@ internal sealed class EntanglementAssistedCommunicationValueDocument : IScribeDo
                     + "a by a matrices to b by b matrices, cv*(N) ≤ b cv(N). This is the conjecture "
                     + "stated in the source, with b the output dimension."),
             Describe.Lean(
+                DescribeId.Create("cgdj-choi-tensor-pair"),
+                DeclarationHandle.Create(Prefix + "choi_tensor_pair"),
+                H("The Choi tensor trace pairing"),
+                StatementSource.FromAuthor(Disp(ChoiTensorPairFormula())),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text(
+                    "For every pair of finite coordinate dimensions, the output-first Choi matrix "
+                        + "pairs with Q ⊗ P as the output matrix Q pairs with N applied to the transpose of P. "
+                        + "The identity holds for every complex linear map N and arbitrary complex matrices P and Q.")))),
+            Describe.Lean(
                 DescribeId.Create("cgdj-communication-value-result"),
                 DeclarationHandle.Create(Prefix + "result"),
                 H("Shared entanglement gives at most an output-dimension advantage"),
@@ -168,6 +178,29 @@ internal sealed class EntanglementAssistedCommunicationValueDocument : IScribeDo
     {
         var a = F.Id("a"); var b = F.Id("b"); var channel = F.Id("N");
         return All(a, Naturals(), All(b, Naturals(), All(channel, Maps(a, b), body)));
+    }
+
+    private static Formula OwnerChoi(Formula n, Formula a, Formula b)
+    {
+        var p = F.Id("p"); var q = F.Id("q");
+        var pInput = Seq(p, Dot, D(2)); var qInput = Seq(q, Dot, D(2));
+        var pOutput = Seq(p, Dot, D(1)); var qOutput = Seq(q, Dot, D(1));
+        var single = At(Seq(Operatorname, Grp(F.Id("Matrix")), Dot,
+            Operatorname, Grp(F.Id("single"))), pInput, qInput, D(1));
+        var entry = At(At(n, single), pOutput, qOutput);
+        var index = Product(FinOf(b), FinOf(a));
+        return Parenthesized(Seq(LambdaLower, Sp, Typed(p, index), Sp, Typed(q, index),
+            Comma, Sp, entry));
+    }
+
+    private static Formula ChoiTensorPairFormula()
+    {
+        var a = F.Id("a"); var b = F.Id("b"); var n = F.Id("N");
+        var q = F.Id("Q"); var p = F.Id("P");
+        return All(a, Naturals(), All(b, Naturals(), All(n, Maps(a, b),
+            All(q, Matrices(b), All(p, Matrices(a), Equal(
+                Call("trace", Mul(OwnerChoi(n, a, b), Call("kronecker", q, p))),
+                Call("trace", Mul(q, At(n, Call("transpose", p))))))))));
     }
 
     private static Formula ChannelFormula()
