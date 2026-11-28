@@ -124,3 +124,7 @@ telescopes. [Issue #35136](https://github.com/the-omega-institute/trureturing/is
 - `CPECCBridge.support_distance_of_inter_le_one`
 - `CPECCBridge.shadows_edge_disjoint_of_distance`
 - `CPECCBridge.nonclique_shadow_edge_lower_of_ambient_deletion`
+
+The length-58 source mirror validates the audit for `support_optimum`.
+The source binding for `no_group_divisible_design` remains open.
+[Audit issue #35136](https://github.com/the-omega-institute/trureturing/issues/35136#issuecomment-7235364329)

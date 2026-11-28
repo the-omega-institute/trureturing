@@ -1,5 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Hamming.ConstantPowerCooling;
 
@@ -51,13 +52,14 @@ internal sealed class ExactLength58Document : IScribeDocumentDefinition
 
     private static Formula OptimumStatement()
     {
-        Formula m = Id("m");
-        Formula p = Id("P");
+        Formula m = F.Id("m");
+        Formula p = F.Id("P");
         Formula familyType = new Formula.TypeArrow(
             Call("Fin", m), Call("Finset", Call("Finset", Call("Fin", D(5, 8)))));
         Formula family = new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create("P"),
             familyType, Call("IsSupportFamily", p, D(6), D(2)));
-        Formula attained = new Formula.SetBuilder(family, m, Seq(Mathbb, Grp(Id("N"))));
+        Formula attained = Seq(OpenBrace, m, Colon, Sp, Mathbb, Grp(F.Id("N")),
+            Sp, Bar, Sp, family, CloseBrace);
         return Disp(Call("IsGreatest", attained, D(5, 7)));
     }
 
