@@ -52,7 +52,9 @@ public import OmegaInit.Grind.Norm
 public import OmegaInit.Grind.Order
 public import OmegaInit.Grind.PP
 public import OmegaInit.Grind.Ring.CommSolver
+public import OmegaInit.Grind.Ring.Envelope
 public import OmegaInit.Grind.Util
+public import OmegaInit.Internal.Order.Basic
 public import OmegaInit.LetFun
 public import OmegaInit.Meta.Defs
 public import OmegaInit.MetaTypes

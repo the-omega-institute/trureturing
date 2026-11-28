@@ -647,3 +647,6 @@ public section
 namespace Decidable
 export _root_.Omega.Decidable (byCases em)
 end Decidable
+
+port_proof instSubsingletonPUnit
+attribute [instance] Omega.instSubsingletonPUnit
