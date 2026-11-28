@@ -137,3 +137,6 @@ end Omega.Thunk
 namespace Omega.imp
 export _root_.imp (swap)
 end Omega.imp
+namespace Omega.Option.some
+export _root_.Option.some (inj)
+end Omega.Option.some

@@ -354,3 +354,6 @@ end Omega.XorOp
 namespace Omega.Zero
 export _root_.Zero (casesOn mk rec recOn zero)
 end Omega.Zero
+namespace Omega.Option.some
+export _root_.Option.some (noConfusion)
+end Omega.Option.some
