@@ -4,9 +4,10 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: The native P48q cubic rotation has a nonzero fixed branch for every cubic scalar normalization. -/
+   digest: Cubic covariant rotations of P48q have a nonzero fixed branch. -/
 
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qNativeGradingRotation
+import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qNativeModeProductSpan
 import OmegaBuild.Commands
 
 /-! The exact fixed-vector spectrum of scalar normalizations of the native
@@ -20,9 +21,16 @@ namespace D5.S3.VertexAlgebra.Lattice.Orbifold.P48qNativeCyclicInvariantSpectrum
 
 open P48qFullEnergySpectrum (totalLZero_exact_eigenvalues)
 open P48qNativeGradingRotation (gradingIndex gradingRotation gradingRotation_coeff
-  totalWeight_eq_gradingIndex)
+  gradingRotation_cube totalWeight_eq_gradingIndex)
 open P48qThirdTwistedField (State)
-open P48qTwistedStateEnergy (totalLZero totalLZero_coeff)
+open P48qTwistedStateEnergy (totalLZero totalLZero_coeff totalLZero_ground_eigenspace
+  totalLZero_vacuum vacuum vacuum_ne_zero)
+open private nativeModeSpan nativeModeSpan_eq_top gradingRotation_any_coeff from
+  D5.S3.VertexAlgebra.Lattice.Orbifold.P48qNativeModeProductSpan
+open P48qNativeConformalZero (native_conformal_coeff_neg_six_eq_totalLZero)
+open LatticeActualConformalState (omega)
+open HalfFockSpectralFiberSource (actualInverse)
+open P48qTwistedChargeAction (lattice g g_cube g_isometry)
 
 local notation "ζ" => (ThirdTwistedChargeCocycle.zeta : ℂ)
 
@@ -75,11 +83,78 @@ theorem exists_nonzero_fixed_eigenvector (c : ℂ) (hc : c ^ (3 : ℕ) = 1) :
     exact mul_inv_cancel₀ (fun hzero => by simp [hzero] at hc)
   exact ⟨n, hn, hphase, (nonzero_fixed_eigenvector_iff c _).mpr ⟨n, rfl, hphase⟩⟩
 
+/-- A cubic field-covariant endomorphism is a scalar grading rotation and has a
+nonzero fixed energy eigenvector. -/
+theorem field_covariant_order_three_classification (R : Module.End ℂ State)
+    (hcov : ∀ (a : P48qAllJetWickField.NativeStates) (e : ℤ),
+      R * HVertexOperator.coeff (P48qAllJetWickField.nativeField a) e =
+        ζ ^ e • (HVertexOperator.coeff (P48qAllJetWickField.nativeField a) e * R))
+    (horder : R ^ (3 : ℕ) = 1) :
+    ∃ c : ℂ, R = c • gradingRotation ∧ c ^ (3 : ℕ) = 1 ∧
+      ∃ n : ℕ, n < 3 ∧ ∃ v : State, v ≠ 0 ∧
+        totalLZero v = (16 / 9 + (n : ℂ) / 3) • v ∧ R v = v := by
+  have hzeta : ζ ^ (-6 : ℤ) = 1 := by
+    have hζ : IsPrimitiveRoot ζ 3 :=
+      IsPrimitiveRoot.coe_units_iff.mpr ThirdTwistedChargeCocycle.zeta_primitive
+    exact (hζ.zpow_eq_one_iff_dvd (-6)).mpr (by decide)
+  have hcomm : R * totalLZero = totalLZero * R := by
+    have hzero := hcov (omega lattice (actualInverse lattice)) (-6)
+    rw [native_conformal_coeff_neg_six_eq_totalLZero, hzeta, one_smul] at hzero
+    exact hzero
+  have hground : totalLZero (R vacuum) = (16 / 9 : ℂ) • R vacuum := by
+    have hvalue := congrArg (fun T : Module.End ℂ State => T vacuum) hcomm
+    rw [Module.End.mul_apply, Module.End.mul_apply, totalLZero_vacuum, map_smul] at hvalue
+    exact hvalue.symm
+  have hmem : R vacuum ∈ totalLZero.eigenspace (16 / 9 : ℂ) :=
+    Module.End.mem_eigenspace_iff.mpr hground
+  rw [totalLZero_ground_eigenspace] at hmem
+  obtain ⟨c, hc⟩ := Submodule.mem_span_singleton.mp hmem
+  have hrotvac : gradingRotation vacuum = vacuum := by
+    have henergy : totalLZero vacuum = (16 / 9 + (↑(0 : ℕ) : ℂ) / 3) • vacuum := by
+      simpa using totalLZero_vacuum
+    exact (gradingRotation_eigenvector vacuum 0 henergy).trans (by rw [pow_zero, one_smul])
+  have hker : nativeModeSpan vacuum ≤ LinearMap.ker (R - c • gradingRotation) := by
+    apply Submodule.span_le.mpr
+    rintro _ ⟨⟨a, e⟩, rfl⟩
+    apply LinearMap.mem_ker.mpr
+    have hR := LinearMap.congr_fun (hcov a e) vacuum
+    change R (HVertexOperator.coeff (P48qAllJetWickField.nativeField a) e vacuum) =
+      ζ ^ e • HVertexOperator.coeff (P48qAllJetWickField.nativeField a) e (R vacuum) at hR
+    rw [← hc, map_smul] at hR
+    have hG := LinearMap.congr_fun (gradingRotation_any_coeff a e) vacuum
+    change gradingRotation (HVertexOperator.coeff
+      (P48qAllJetWickField.nativeField a) e vacuum) =
+      ζ ^ e • HVertexOperator.coeff (P48qAllJetWickField.nativeField a) e
+        (gradingRotation vacuum) at hG
+    rw [hrotvac] at hG
+    change R (HVertexOperator.coeff (P48qAllJetWickField.nativeField a) e vacuum) -
+      (c • gradingRotation) (HVertexOperator.coeff
+        (P48qAllJetWickField.nativeField a) e vacuum) = 0
+    rw [LinearMap.smul_apply, hR, hG]
+    module
+  have heq : R - c • gradingRotation = 0 := by
+    apply LinearMap.ext
+    intro v
+    have hv : v ∈ nativeModeSpan vacuum := by
+      rw [nativeModeSpan_eq_top vacuum vacuum_ne_zero]
+      exact Submodule.mem_top
+    exact LinearMap.mem_ker.mp (hker hv)
+  have hR : R = c • gradingRotation := sub_eq_zero.mp heq
+  have hpow : (c • gradingRotation) ^ (3 : ℕ) = 1 := by simpa [hR] using horder
+  rw [smul_pow, gradingRotation_cube] at hpow
+  have hcub : c ^ (3 : ℕ) = 1 := by
+    apply smul_left_injective ℂ vacuum_ne_zero
+    simpa using congrArg (fun T : Module.End ℂ State => T vacuum) hpow
+  obtain ⟨n, hn, _hphase, v, hv, henergy, hfixed⟩ :=
+    exists_nonzero_fixed_eigenvector c hcub
+  exact ⟨c, hR, hcub, n, hn, v, hv, henergy, by simpa [hR] using hfixed⟩
+
 #print axioms nonzero_fixed_eigenvector_iff
 #print axioms exists_nonzero_fixed_eigenvector
 
 run_cmd do
-  for name in [``nonzero_fixed_eigenvector_iff, ``exists_nonzero_fixed_eigenvector] do
+  for name in [``nonzero_fixed_eigenvector_iff, ``exists_nonzero_fixed_eigenvector,
+      ``field_covariant_order_three_classification] do
     let axioms ← Lean.collectAxioms name
     unless axioms.all (fun ax => [``propext, ``Classical.choice, ``Quot.sound].contains ax) do
       throwError "Unexpected axiom closure for {name}: {axioms}"
