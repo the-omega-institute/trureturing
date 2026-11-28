@@ -14,6 +14,10 @@ namespace OmegaChecks.InitInventory
 
 /-- The conclusion uses the indicated semantic agreement in addition to the public type. -/
 public def conditionalConsequence? (owner name : Name) : Option (String × Name × String) := do
+  if owner == `Init.Data.Iterators.Combinators.Monadic.Take && name == `Std.Iterators.Types.Take.Rel.eq_1 then
+    return ("∀ f : Nat → Bool, Decidable (∃ n, f n = true)",
+      ``OmegaChecks.InitBoundaries.Collector.limitedOmniscienceFromTakeDecision,
+      "The right side of the unfolding equation supplies a finiteness decision for every productive iterator")
   if owner == `Init.Data.Range.Polymorphic.RangeIterator && [``Std.Rxc.Iterator.instLawfulIteratorLoop,
       ``Std.Rxo.Iterator.instLawfulIteratorLoop, ``Std.Rxi.Iterator.instLawfulIteratorLoop].contains name then
     return ((``funext).toString, ``OmegaChecks.InitBoundaries.RangeLoopLift.funextFromTwoSteps,

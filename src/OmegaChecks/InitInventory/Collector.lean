@@ -2,6 +2,7 @@ module
 public import Lean
 import Lean.Replay
 import all Lean.Util.CollectAxioms
+import all Init.Data.Iterators.Combinators.Monadic.Take
 import all Init.Data.Iterators.Basic
 import all Init.Data.Iterators.Consumers.Monadic.Loop
 import all Init.Data.Slice.Operations
@@ -24,7 +25,9 @@ private def next (f : Nat → Bool) (it : IterM (α := Nat) Id Unit) : IterStep 
 
 @[instance_reducible] private def searchIterator (f : Nat → Bool) : Iterator Nat Id Unit where
   IsPlausibleStep it s := s = next f it
-  step it := pure (.deflate ⟨next f it, rfl⟩)
+  step it :=
+    let value : {s // s = next f it} := ⟨next f it, rfl⟩
+    pure (cast (congrFun (Std.Internal.idOpaque (α := Type)).property.symm _) value)
 
 private def search (k : Nat) : Iter (α := Nat) Unit := ⟨k⟩
 
@@ -53,8 +56,7 @@ private theorem searchFinite {f : Nat → Bool} (sticky : ∀ i, f i = true → 
     rw [e] at dest
     cases Option.some.inj dest
     have lt : it.internalState < n := Nat.lt_of_not_ge fun ge => Bool.noConfusion (e.symm.trans (signal_after sticky hit ge))
-    change n - (it.internalState + 1) < n - it.internalState
-    omega
+    exact Nat.pred_lt fun zero => (Nat.not_le_of_lt lt) (Nat.le_of_sub_eq_zero zero)
 
 private theorem searchStep (f : Nat → Bool) (k : Nat) :
     letI := searchIterator f
@@ -108,6 +110,62 @@ private theorem hit_of_seen (f : Nat → Bool) (n : Nat) (h : seen f n = true) :
     cases eq : f (n+1) with
     | true => exact ⟨n+1, eq⟩
     | false => exact ih (by simpa only [seen, eq, Bool.or_false] using h)
+
+private theorem searchProductive (f : Nat → Bool) : letI := searchIterator f; Productive Nat Id := by
+  letI := searchIterator f
+  constructor
+  refine ⟨fun it => Acc.intro _ fun it' step => False.elim ?_⟩
+  change IterStep.skip it' = next f it at step
+  unfold next at step
+  cases h : f it.internalState <;> rw [h] at step <;> cases step
+
+private theorem hitOfSearchFinite (f : Nat → Bool) (finite : letI := searchIterator f; Finite Nat Id) :
+    ∃ k, f k = true := by
+  letI := searchIterator f
+  have reaches (it : IterM (α := Nat) Id Unit) : ∃ k, f k = true := by
+    induction it using finite.wf.induction with
+    | h it recur =>
+      cases h : f it.internalState with
+      | true => exact ⟨_, h⟩
+      | false =>
+        apply recur ⟨it.internalState + 1⟩
+        apply IterM.isPlausibleSuccessorOf_of_yield (out := ())
+        change _ = next f it
+        unfold next
+        rw [h]
+  exact reaches ⟨0⟩
+
+/-- Deciding the finiteness test of the Take.Rel unfolding on productive, yield-only
+search iterators decides whether any element of an arbitrary Boolean stream is true. -/
+def limitedOmniscienceFromTakeDecision
+    (classify : ∀ [Iterator Nat Id Unit] [Productive Nat Id], Decidable (Finite Nat Id))
+    (f : Nat → Bool) : Decidable (∃ n, f n = true) := by
+  letI := searchIterator (seen f)
+  letI := searchProductive (seen f)
+  cases classify with
+  | isTrue hf =>
+    exact isTrue ((hitOfSearchFinite (seen f) hf).elim fun n hit => hit_of_seen f n hit)
+  | isFalse hn =>
+    exact isFalse fun ⟨n, hit⟩ => hn (searchFinite (seenSticky f) (seen_of_hit f n hit))
+
+open Lean Meta Elab.Command in
+run_cmd
+  liftTermElabM do
+    let pinned ← getConstInfo `Std.Iterators.Types.Take.Rel.eq_1
+    let rule := mkConst pinned.name (pinned.levelParams.map fun _ => 0)
+    let specialized := mkApp3 rule (mkConst ``Nat) (mkConst ``Unit) (mkConst ``Id [0])
+    let .forallE _ monad _ _ ← whnf (← inferType specialized) | throwError "expected Monad Id"
+    forallTelescope (← inferType (mkApp specialized (← synthInstance monad))) fun args conclusion => do
+      let some (_, _, rhs) := conclusion.eq? | throwError "expected the Take.Rel unfolding equation"
+      unless rhs.isAppOfArity ``dite 5 do throwError "expected the finiteness-dependent branches"
+      let decider := rhs.getAppArgs[2]!
+      unless decider.isAppOfArity ``Classical.propDecidable 1 do throwError "unexpected finiteness decision"
+      let required ← mkForallFVars args (← inferType decider)
+      let reduction ← getConstInfo ``limitedOmniscienceFromTakeDecision
+      unless Kernel.isDefEqGuarded (← getEnv) {} required reduction.type.bindingDomain! do
+        throwError "the decision in Take.Rel.eq_1 differs from the input to the stream reduction"
+    unless (← collectAxioms ``limitedOmniscienceFromTakeDecision).isEmpty do
+      throwError "the stream decision reduction depends on axioms"
 
 /-- A decider for all Boolean streams cannot examine a bounded prefix at the all-false stream. -/
 theorem noContinuousSignalDecider
