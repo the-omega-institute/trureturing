@@ -38,7 +38,7 @@ private theorem inner_coordinates (x y : EuclideanSpace ℝ (Fin 3)) : ⟪x, y�
 
 private def sphericalDot (t : ℝ) : ℝ := Real.cos t / (1 - Real.cos t)
 
-/-- Three points with the same pairwise dot product on the unit sphere. -/
+/-- For angles in (π/3, π), three unit vectors with the same pairwise dot product. -/
 def sphericalVertices (t : ℝ) (i : Fin 3) : EuclideanSpace ℝ (Fin 3) :=
   let r := sphericalDot t
   let a := Real.sqrt (1 - r)
