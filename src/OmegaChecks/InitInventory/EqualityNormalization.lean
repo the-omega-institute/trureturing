@@ -439,6 +439,53 @@ theorem ofList (rule : type_of% @List.isEqv_eq.{u}) : ListEquality.{u} := by
   intro α β _ _ _ _ a b c d h
   exact coherent (@rule α _ _ a b) (@rule β _ _ c d) h
 
+theorem listComparisonIff {α : Type u} [BEq α] [LawfulBEq α] (xs ys : List α) :
+    xs.isEqv ys (· == ·) = true ↔ xs = ys := by
+  induction xs generalizing ys with
+  | nil =>
+    cases ys with
+    | nil => exact ⟨fun _ => rfl, fun _ => rfl⟩
+    | cons => exact ⟨(fun h => nomatch h), (fun h => nomatch h)⟩
+  | cons a xs ih =>
+    cases ys with
+    | nil => exact ⟨(fun h => nomatch h), (fun h => nomatch h)⟩
+    | cons b ys =>
+      constructor
+      · intro h
+        change ((a == b) && xs.isEqv ys (· == ·)) = true at h
+        cases hb : a == b with
+        | false => rw [hb] at h; cases h
+        | true =>
+          cases eq_of_beq hb
+          exact congrArg (a :: ·) ((ih ys).mp (by rw [hb] at h; exact h))
+      · intro h
+        cases h
+        change ((a == a) && xs.isEqv xs (· == ·)) = true
+        rw [beq_self_eq_true]
+        exact (ih xs).mpr rfl
+
+/-- Equality normalization across list element types, together with the true and false
+comparisons of empty and singleton lists over the one-element type. -/
+def ListComparisonNormalization : Prop :=
+  ListEquality.{u} ∧
+    (true = true) = (([] : List PUnit.{u+1}) = []) ∧
+    (false = true) = (([] : List PUnit.{u+1}) = [PUnit.unit])
+
+theorem listComparisonNormalizationIff :
+    (type_of% @List.isEqv_eq.{u}) ↔ ListComparisonNormalization.{u} := by
+  constructor
+  · intro rule
+    exact ⟨ofList rule, @rule PUnit _ _ [] [], @rule PUnit _ _ [] [.unit]⟩
+  · rintro ⟨normalize, pos, neg⟩ α _ _ xs ys
+    have iff := listComparisonIff xs ys
+    cases tested : xs.isEqv ys (· == ·) with
+    | true =>
+      have same := iff.mp tested
+      exact pos.trans (normalize ([] : List PUnit) [] xs ys ⟨fun _ => same, fun _ => rfl⟩)
+    | false =>
+      have different : xs ≠ ys := fun h => Bool.noConfusion (tested.symm.trans (iff.mpr h))
+      exact neg.trans (normalize ([] : List PUnit) [.unit] xs ys
+        ⟨(fun h => nomatch h), fun h => False.elim (different h)⟩)
 /-- The two compared pairs of arrays may have different element types. -/
 def ArrayEquality : Prop := ∀ {α β : Type u} [BEq α] [LawfulBEq α] [BEq β] [LawfulBEq β]
     (a b : Array α) (c d : Array β), (a = b ↔ c = d) → (a = b) = (c = d)
@@ -491,7 +538,7 @@ example : (type_of% @Array.isNone_idxOf?.{u}) =
 def witnesses : List (Name × Name × Name) := [
   (``List.append_cancel_left_eq, ``CommonHead, ``leftIff),
   (``List.append_cancel_right_eq, ``CommonLast, ``rightIff),
-  (``List.isEqv_eq, ``ListEquality, ``ofList),
+  (``List.isEqv_eq, ``ListComparisonNormalization, ``listComparisonNormalizationIff),
   (``Array.isEqv_eq, ``ArrayEquality, ``ofArray),
   (``Vector.isEqv_eq, ``VectorEquality, ``ofVector),
   (``List.isNone_idxOf?, ``ListAbsence, ``ofListSearch),
