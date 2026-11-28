@@ -123,3 +123,11 @@ end Omega.Array
 
 port_proof Array.map_singleton by_reflexivity
 port_proof Array.map_id' using Omega.Array.map_id
+
+
+/- Open monadic searches. Array.findSomeRevM?_eq_findSomeM?_reverse is equivalent to
+List.findSomeM?_toArray. Array.findRevM?_eq_findM?_reverse is equivalent to
+List.findM?_toArray given List.findRevM?_toArray. That premise is equivalent to
+List.findM?_eq_findSomeM?, which changes the Boolean branch into a search for
+a tagged option. ReverseSearch.optionIff, boolIff and predicateIff prove these
+relations using the ported reverse search and the involution on lists. -/
