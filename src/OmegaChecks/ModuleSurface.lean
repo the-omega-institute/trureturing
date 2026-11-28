@@ -331,6 +331,13 @@ private def checkElaboration (env full : Environment) (reference? : Option Envir
     unless owner == expectedOwner && env.getModuleIdxFor? n == some idx &&
         data == ⟨[.standard `all symbol]⟩ do throw <| IO.userError s!"invalid native state entry {owner}/{n}"
   for (n, implementation) in Compiler.implementedByAttr.ext.getModuleEntries env idx do
+    if n == `Omega.Nat.modCore then
+      unless owner == `OmegaInit.Prelude && implementation == `Nat.mod &&
+          full.getModuleIdxFor? n == some idx && full.getModuleIdxFor? implementation == some idx do
+        throw <| IO.userError "invalid modulo implementation"
+      InitPort.NativeState.checkNativeNat full
+      InitPort.NativeState.verify full implementation #[(.tobject, true), (.tobject, true)] .tobject "lean_nat_mod"
+      continue
     if n == `Omega.Nat.modCore.go then
       let some pinned := reference? | throw <| IO.userError "missing pinned modulo definition"
       let some (.defnInfo impl) := full.find? implementation | throw <| IO.userError "missing modulo implementation"

@@ -273,47 +273,13 @@ theorem ble_eq_true_of_le {n m : Nat} (h : Nat.le n m) : Eq (Nat.ble n m) Bool.t
       (fun _ previous n => Bool.rec zero (succ (previous (Nat.sub n (succ d)))) (Nat.ble (succ d) n))
       (succ x) x) y
 
-@[extern "lean_nat_mod", no_expose] protected def _root_.Nat.mod : @& Nat → @& Nat → Nat :=
-  fun x y => Nat.rec zero (fun k _ =>
-    Nat.rec (succ k) (fun d _ =>
-      Nat.rec (motive := fun _ => Nat → Nat) (fun _ => zero)
-        (fun _ previous n => Bool.rec n (previous (Nat.sub n (succ d))) (Nat.ble (succ d) n))
-        (succ (succ k)) (succ k)) y) x
-
-export _root_.Nat (div mod)
-
-private theorem lt_of_ble_false (a : Nat) : ∀ b, Eq (Nat.ble b a) Bool.false → Nat.lt a b :=
-  Nat.rec (motive := fun a => ∀ b, Eq (Nat.ble b a) Bool.false → Nat.lt a b)
-    (fun b => Nat.rec (motive := fun b => Eq (Nat.ble b zero) Bool.false → Nat.lt zero b)
-      (fun h => False.elim (Bool.ne_false_of_eq_true Omega.rfl h))
-      (fun k _ _ => Nat.succ_le_succ (Nat.zero_le k)) b)
-    (fun a smaller b => Nat.rec (motive := fun b => Eq (Nat.ble b (succ a)) Bool.false → Nat.lt (succ a) b)
-      (fun h => False.elim (Bool.ne_false_of_eq_true Omega.rfl h))
-      (fun k _ h => Nat.succ_le_succ (smaller k h)) b) a
+export _root_.Nat (div)
 
 private def remainder (d fuel n : Nat) : Nat :=
   Nat.rec (motive := fun _ => Nat → Nat) (fun _ => zero)
     (fun _ previous n => Bool.rec n (previous (Nat.sub n (succ d))) (Nat.ble (succ d) n)) fuel n
 
-private theorem remainder_lt (d fuel : Nat) : ∀ x, Nat.lt (remainder d fuel x) (succ d) :=
-  Nat.rec (motive := fun fuel => ∀ x, Nat.lt (remainder d fuel x) (succ d))
-    (fun _ => Nat.succ_le_succ (Nat.zero_le d))
-    (fun fuel smaller x =>
-      let next := remainder d fuel (Nat.sub x (succ d))
-      let branch : ∀ bit : Bool, Eq (Nat.ble (succ d) x) bit →
-          Nat.lt (@Bool.rec (fun _ => Nat) x next bit) (succ d) :=
-        Bool.rec (motive := fun bit => Eq (Nat.ble (succ d) x) bit → Nat.lt (@Bool.rec (fun _ => Nat) x next bit) (succ d))
-          (lt_of_ble_false x (succ d)) (fun _ => smaller _)
-      branch (Nat.ble (succ d) x) Omega.rfl) fuel
-
-theorem mod_lt (x : Nat) {y : Nat} (hy : Nat.lt zero y) : Nat.lt (Nat.mod x y) y :=
-  (Nat.rec (motive := fun x => ∀ y, Nat.lt zero y → Nat.lt (Nat.mod x y) y)
-    (fun _ h => h)
-    (fun k _ y => Nat.rec (motive := fun y => Nat.lt zero y → Nat.lt (Nat.mod (succ k) y) y)
-      (fun h => False.elim (Nat.not_succ_le_zero zero h))
-      (fun d _ _ => remainder_lt d (succ (succ k)) (succ k)) y) x) y hy
-
-attribute [irreducible] Nat.div Nat.mod
+attribute [irreducible] Nat.div
 
 end Omega.Nat
 
@@ -786,12 +752,18 @@ port_definition Nat.modCore.go
 
 namespace Omega.Nat
 
+@[expose, irreducible] public protected noncomputable def modCore (x y : @& Nat) : Nat :=
+  dite (LT.lt zero y) (fun hy => Nat.modCore.go y hy (succ x) x (Nat.lt_succ_self x)) (fun _ => x)
+
+@[extern "lean_nat_mod", expose] public protected def _root_.Nat.mod : @& Nat → @& Nat → Nat := fun x y =>
+  Nat.casesOn x zero (fun k => ite (LE.le y (succ k)) (Nat.modCore (succ k) y) (succ k))
+
+export _root_.Nat (mod)
+
 private def modCoreGoImpl (y : Nat) (_ : LT.lt 0 y) (fuel x : Nat) (_ : LT.lt x fuel) : Nat := Nat.mod x y
 
 attribute [implemented_by modCoreGoImpl] Nat.modCore.go
-
-@[expose, irreducible] public protected def modCore (x y : @& Nat) : Nat :=
-  dite (LT.lt zero y) (fun hy => Nat.modCore.go y hy (succ x) x (Nat.lt_succ_self x)) (fun _ => x)
+attribute [implemented_by _root_.Nat.mod] Nat.modCore
 
 end Omega.Nat
 
@@ -805,6 +777,21 @@ port_proof Nat.lt_of_not_le
 port_proof Nat.not_lt_zero
 port_proof Nat.modCoreGo_lt
 port_proof Nat.modCore_lt
+
+namespace Omega.Nat
+
+public theorem mod_lt (x : Nat) {y : Nat} (hy : Nat.lt zero y) : Nat.lt (Nat.mod x y) y :=
+  Nat.casesOn (motive := fun n => Nat.lt (Nat.mod n y) y) x hy (fun k =>
+    let dec := Nat.decLe y (succ k)
+    let check : (d : Decidable (LE.le y (succ k))) →
+        Nat.lt (@ite Nat (LE.le y (succ k)) d (Nat.modCore (succ k) y) (succ k)) y :=
+      fun d => Decidable.casesOn d fun p =>
+        Bool.casesOn (motive := fun bit => (h : Bool.Reflects bit (LE.le y (succ k))) →
+            Nat.lt (@ite Nat (LE.le y (succ k)) (Decidable.intro bit h) (Nat.modCore (succ k) y) (succ k)) y)
+          p (fun h => Nat.lt_of_not_le h) (fun _ => Nat.modCore_lt hy)
+    check dec)
+
+end Omega.Nat
 
 public section
 namespace Bool

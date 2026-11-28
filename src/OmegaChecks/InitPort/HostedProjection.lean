@@ -171,21 +171,20 @@ private def project (source output : System.FilePath) (env pinned : Environment)
       let expose := moved.contains `Nat.xor && [`Nat.xor, `Omega.Nat.bitwise].contains n
       let status := if expose then .semireducible else status
       metadata := reducibilityCoreExt.addEntry (asyncDecl := renamed n) metadata (renamed n, status)
-    let replaced := #[aliasExtension.name, protectedExt.name, reducibilityCoreExt.name]
-    let mut entries := data.entries.filter fun e => !replaced.contains e.1
+    let native := Compiler.implementedByAttr.ext
+    for (decl, impl) in native.getModuleEntries env idx (level := level) do
+      metadata := native.addEntry (asyncDecl := decl) metadata (decl, impl)
+    let replaced := #[aliasExtension.name, protectedExt.name, reducibilityCoreExt.name, native.name]
     let mut redirects := #[]
     for n in data.constNames do
       if moved.contains n && (env.find? n).any (· matches .defnInfo _) then
-        metadata := Compiler.implementedByAttr.ext.addEntry (asyncDecl := `Omega ++ n) metadata (`Omega ++ n, n)
+        metadata := native.addEntry (asyncDecl := `Omega ++ n) metadata (`Omega ++ n, n)
         redirects := redirects.push (`Omega ++ n)
-    -- Keep every pre-existing compiler entry and add the same native calls used by the isolated library.
-    -- The input entries are already restricted to this visibility level.
+    -- Parametric attributes use binary search on import. Export the redirections
+    -- together with the original entries so Lean sorts the entire table.
     let dataMeta ← mkModuleData metadata .private
-    entries := entries ++ dataMeta.entries.filter (fun e => replaced.contains e.1 && !e.2.isEmpty)
-    for (ext, more) in dataMeta.entries do
-      if ext == Compiler.implementedByAttr.ext.name && !more.isEmpty then
-        let earlier := (entries.find? (·.1 == ext)).map Prod.snd |>.getD #[]
-        entries := (entries.filter (·.1 != ext)).push (ext, earlier ++ more)
+    let entries := data.entries.filter (fun e => !replaced.contains e.1) ++
+      dataMeta.entries.filter (fun e => replaced.contains e.1 && !e.2.isEmpty)
     let imports := if shared.isEmpty && redirects.isEmpty then data.imports else data.imports.push {module := original}
     let result := { data with
       constants

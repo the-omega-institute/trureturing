@@ -596,6 +596,14 @@ def check_generated_init():
             roots.update(name.removeprefix("Omega") for name in dependencies if root(name) == "OmegaInit")
         run(sys.executable, "-B", SRC / "OmegaChecks/InitPort/build.py", product, *sorted(roots))
         environment = {**ENV, "LEAN_PATH": str(product / "lib")}
+        hosted = {**ENV, "LEAN_PATH": str(product / "hosted")}
+        subprocess.run([ENV["LEAN"], "--stdin"], cwd=ROOT, env=hosted, text=True, check=True,
+                       input="""import OmegaInit.Prelude
+example (n : Nat) : Omega.Nat.mod 0 n = 0 := rfl
+example (n : Nat) : Omega.Nat.mod 3 (n + 4) = 3 := rfl
+#guard Omega.Nat.mod 17 5 == 2
+#guard Omega.Nat.modCore 17 5 == 2
+""")
         clients = Path(directory) / "clients"
         clients.mkdir()
         sources = {source.stem: source for source in consumers.values()}

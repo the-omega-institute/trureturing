@@ -13,7 +13,7 @@ noncomputable section
 
 namespace Omega.Nat
 
-attribute [local semireducible] Nat.bitwise Nat.div Nat.mod
+attribute [local semireducible] Nat.bitwise Nat.div
 
 private def steps (f : Bool → Bool → Bool) : Nat → Nat → Nat → Nat :=
   Nat.rec (motive := fun _ => Nat → Nat → Nat) (fun _ _ => Nat.zero)

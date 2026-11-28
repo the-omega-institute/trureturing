@@ -27,8 +27,6 @@ bounds the number of calls, including the final zero case. -/
 
 export _root_.Nat (gcd)
 
-attribute [local semireducible] Nat.mod
-
 theorem gcd_zero_right (n : Nat) : Eq (gcd n zero) n :=
   Nat.rec (motive := fun m => Eq (gcd m zero) m) Omega.rfl (fun _ _ => Omega.rfl) n
 

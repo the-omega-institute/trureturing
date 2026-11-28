@@ -11,7 +11,7 @@ import all OmegaInit.Prelude
 public section
 namespace Omega.Nat
 
-attribute [local semireducible] Nat.mod Nat.div Nat.modCore
+attribute [local semireducible] Nat.div Nat.modCore
 
 theorem mod_zero (a : Nat) : Eq (Nat.mod a zero) a :=
   Nat.rec (motive := fun k => Eq (Nat.mod k zero) k) Omega.rfl (fun _ _ => Omega.rfl) a
@@ -117,6 +117,40 @@ private theorem division_decomposition (d fuel : Nat) : ∀ n, Nat.lt n fuel →
           (congrArg (Nat.add r) (mul_succ k q)).trans ((Nat.add_assoc r (Nat.mul k q) k).symm.trans
             ((congrArg (fun x => Nat.add x k) previous).trans (Nat.sub_add_cancel fits)))) Omega.rfl) fuel
 
+private theorem remainder_branch {p : Prop} (dec : Decidable p) (step : p → Nat)
+    (n r : Nat) (same : ∀ h, Eq (step h) r) :
+    Eq (@dite Nat p dec step (fun _ => n)) (Bool.rec (motive := fun _ => Nat) n r (@Decidable.decide p dec)) :=
+  Decidable.rec (motive := fun d => Eq (@dite Nat p d step (fun _ => n))
+    (Bool.rec (motive := fun _ => Nat) n r (@Decidable.decide p d))) (fun bit =>
+      Bool.casesOn (motive := fun b => ∀ proof : Bool.Reflects b p,
+        Eq (@dite Nat p (Decidable.intro b proof) step (fun _ => n)) (Bool.rec (motive := fun _ => Nat) n r b)) bit
+        (fun _ => Omega.rfl) same) dec
+
+private theorem modCoreGo_remainder (d fuel : Nat) (positive : Nat.lt zero (succ d)) :
+    ∀ n (bound : Nat.lt n fuel), Eq (Nat.modCore.go (succ d) positive fuel n bound) (remainder d fuel n) :=
+  Nat.rec (motive := fun fuel => ∀ n (bound : Nat.lt n fuel),
+      Eq (Nat.modCore.go (succ d) positive fuel n bound) (remainder d fuel n))
+    (fun n bound => False.elim (not_succ_le_zero n bound))
+    (fun fuel ih n bound =>
+      let k := succ d
+      let rest := Nat.sub n k
+      remainder_branch (Nat.decLe k n)
+        (fun fit => Nat.modCore.go k positive fuel rest (Nat.div_rec_fuel_lemma positive fit bound))
+        n (remainder d fuel rest) (fun fit => ih rest (Nat.div_rec_fuel_lemma positive fit bound))) fuel
+
+private theorem succ_mod_remainder (x d : Nat) :
+    Eq (Nat.mod (succ x) (succ d)) (remainder d (succ (succ x)) (succ x)) :=
+  let n := succ x
+  let k := succ d
+  let next := remainder d n (Nat.sub n k)
+  Bool.casesOn (motive := fun bit => Eq (Nat.ble k n) bit →
+    Eq (Nat.mod n k) (@Bool.rec (fun _ => Nat) n next bit))
+    (Nat.ble k n)
+    (fun e => ite_eq_right (fun h => Bool.ne_false_of_eq_true (ble_eq_true_of_le h) e))
+    (fun e => (ite_eq_left (le_of_ble_eq_true e)).trans
+      ((modCoreGo_remainder d (succ n) (succ_le_succ (zero_le d)) n (Nat.le_refl (succ n))).trans
+        (congrArg (fun bit => @Bool.rec (fun _ => Nat) n next bit) e))) Omega.rfl
+
 theorem mod_add_div (m k : Nat) : Eq (Nat.add (Nat.mod m k) (Nat.mul k (Nat.div m k))) m :=
   Nat.casesOn (motive := fun m => Eq (Nat.add (Nat.mod m k) (Nat.mul k (Nat.div m k))) m) m
     ((congrArg (fun q => Nat.add zero (Nat.mul k q)) (Nat.zero_div k)).trans
@@ -124,7 +158,9 @@ theorem mod_add_div (m k : Nat) : Eq (Nat.add (Nat.mod m k) (Nat.mul k (Nat.div 
     (fun x => Nat.casesOn (motive := fun k =>
       Eq (Nat.add (Nat.mod (succ x) k) (Nat.mul k (Nat.div (succ x) k))) (succ x)) k
       ((congrArg (Nat.add (succ x)) (Nat.mul_zero zero)).trans (Nat.add_zero (succ x)))
-      (fun d => division_decomposition d (succ (succ x)) (succ x) (Nat.le_refl (succ (succ x)))))
+      (fun d => (congrArg (fun r => Nat.add r (Nat.mul (succ d) (Nat.div (succ x) (succ d))))
+        (succ_mod_remainder x d)).trans
+        (division_decomposition d (succ (succ x)) (succ x) (Nat.le_refl (succ (succ x))))))
 
 protected theorem div_one (n : Nat) : Eq (Nat.div n (succ zero)) n :=
   let q := Nat.div n (succ zero)
@@ -165,27 +201,6 @@ private theorem mod_step (d n : Nat) : Eq (Nat.mod n (succ d))
            (Bool.rec (motive := fun _ => Nat) n (Nat.mod rest k) bit))
       (Nat.ble k n) (fun _ => Omega.rfl)
       (fun e => remainder_correct d n rest (sub_lt_fuel (le_of_ble_eq_true e) (Nat.le_refl (succ n)))) Omega.rfl)
-
-private theorem remainder_branch {p : Prop} (dec : Decidable p) (step : p → Nat)
-    (n r : Nat) (same : ∀ h, Eq (step h) r) :
-    Eq (@dite Nat p dec step (fun _ => n)) (Bool.rec (motive := fun _ => Nat) n r (@Decidable.decide p dec)) :=
-  Decidable.rec (motive := fun d => Eq (@dite Nat p d step (fun _ => n))
-    (Bool.rec (motive := fun _ => Nat) n r (@Decidable.decide p d))) (fun bit =>
-      Bool.casesOn (motive := fun b => ∀ proof : Bool.Reflects b p,
-        Eq (@dite Nat p (Decidable.intro b proof) step (fun _ => n)) (Bool.rec (motive := fun _ => Nat) n r b)) bit
-        (fun _ => Omega.rfl) same) dec
-
-private theorem modCoreGo_remainder (d fuel : Nat) (positive : Nat.lt zero (succ d)) :
-    ∀ n (bound : Nat.lt n fuel), Eq (Nat.modCore.go (succ d) positive fuel n bound) (remainder d fuel n) :=
-  Nat.rec (motive := fun fuel => ∀ n (bound : Nat.lt n fuel),
-      Eq (Nat.modCore.go (succ d) positive fuel n bound) (remainder d fuel n))
-    (fun n bound => False.elim (not_succ_le_zero n bound))
-    (fun fuel ih n bound =>
-      let k := succ d
-      let rest := Nat.sub n k
-      remainder_branch (Nat.decLe k n)
-        (fun fit => Nat.modCore.go k positive fuel rest (Nat.div_rec_fuel_lemma positive fit bound))
-        n (remainder d fuel rest) (fun fit => ih rest (Nat.div_rec_fuel_lemma positive fit bound))) fuel
 
 private theorem modCoreGo_correct (y : Nat) (positive : Nat.lt zero y) (fuel n : Nat) (bound : Nat.lt n fuel) :
     Eq (Nat.modCore.go y positive fuel n bound) (modCoreGoImpl y positive fuel n bound) :=

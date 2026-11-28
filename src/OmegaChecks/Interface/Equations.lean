@@ -178,34 +178,10 @@ public theorem Nat.div (x y : Nat) :
   | zero => exact (Nat.div_zero x).symm
   | succ d => exact divisionSteps_eq d _ x (Nat.lt_succ_self x)
 
-@[expose] public noncomputable def remainderSteps (d : Nat) : Nat → Nat → Nat :=
-  Nat.rec (motive := fun _ => Nat → Nat) (fun _ => 0)
-    (fun _ previous x => Bool.rec x (previous (x - d.succ)) (_root_.Nat.ble d.succ x))
-
-private theorem remainderSteps_eq (d fuel x : Nat) (h : x < fuel) :
-    remainderSteps d fuel x = x % d.succ := by
-  induction fuel generalizing x with
-  | zero => exact False.elim ((Nat.not_lt_zero x) h)
-  | succ fuel ih =>
-    change Bool.rec x (remainderSteps d fuel (x - d.succ)) (_root_.Nat.ble d.succ x) = x % d.succ
-    rw [Nat.mod_eq_ite x d.succ]
-    by_cases le : d.succ ≤ x
-    · rw [Nat.ble_eq_true_of_le le, ite_eq_left ⟨Nat.succ_pos _, le⟩]
-      have smaller := Nat.sub_lt_of_pos_le (Nat.succ_pos d) le
-      exact ih _ (Nat.lt_of_lt_of_le smaller (Nat.le_of_lt_succ h))
-    · have hb : _root_.Nat.ble d.succ x = false :=
-        Bool.eq_false_of_ne_true (fun ht => le (Nat.le_of_ble_eq_true ht))
-      rw [hb, ite_eq_right (fun both => le both.2)]
-
 public theorem Nat.mod (x y : Nat) :
-    Nat.rec 0 (fun k _ => Nat.rec k.succ
-      (fun d _ => remainderSteps d k.succ.succ k.succ) y) x = _root_.Nat.mod x y := by
-  cases x with
-  | zero => rfl
-  | succ k =>
-    cases y with
-    | zero => exact (Nat.mod_zero k.succ).symm
-    | succ d => exact remainderSteps_eq d _ _ (Nat.lt_succ_self k.succ)
+    Nat.casesOn x 0 (fun k => if y ≤ k.succ then _root_.Nat.modCore k.succ y else k.succ) =
+      _root_.Nat.mod x y := by
+  cases x <;> rfl
 
 public theorem Nat.modCore (x y : Nat) : _root_.Nat.mod x y = _root_.Nat.modCore x y :=
   (_root_.Nat.modCore_eq_mod x y).symm
