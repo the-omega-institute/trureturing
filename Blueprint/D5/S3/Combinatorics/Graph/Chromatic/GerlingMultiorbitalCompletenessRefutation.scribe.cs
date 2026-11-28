@@ -10,15 +10,16 @@ internal sealed class GerlingMultiorbitalCompletenessRefutationDocument : IScrib
         LibraryNoteRef.Create("D5/L/Combinatorics/gerling2026multiorbital");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Two faithful cyclic actions on six vertices share a multiorbital polynomial.",
-        H("Failure of completeness for graph actions"),
+        "Two connected finite graphs with faithful C2 actions share a multiorbital polynomial despite being nonisomorphic.",
+        H("Failure of completeness for connected graphs with faithful C2 actions"),
         Blocks(
             Describe.Lean(DescribeId.Create("claim"), DeclarationHandle.Create(Owner + ".claim"),
-                H("The complete-invariant assertion"), StatementSource.FromAuthor(F.Disp(Completeness())),
-                AssessedProvenance.FromLiterature(Source),
-                Blocks(Paragraph(Text("For a finite group G and natural numbers n and m, actions A and B "
+                H("Restricted completeness assertion"), StatementSource.FromAuthor(F.Disp(Completeness())),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("Fix the cyclic group of order two, represented by Multiplicative (ZMod 2). "
+                    + "For natural numbers n and m, actions A and B "
                     + "have vertex sets Fin n and Fin m and preserve adjacency. Each input graph is finite, "
-                    + "undirected and simple. The predicate Faithful means that "
+                    + "undirected and simple. Connected means that the underlying graph is connected. The predicate Faithful means that "
                     + "the homomorphism into its vertex permutation group is injective. ActionIso requires "
                     + "a graph isomorphism that intertwines the actions of each element of G. The antecedent "
                     + "uses equality in the rational polynomial ring in x and y.")),
@@ -29,13 +30,15 @@ internal sealed class GerlingMultiorbitalCompletenessRefutationDocument : IScrib
                     + "the fixed-coloring counts over its elements, and sum the averages over all subgroups."))),
                 DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("result"), DeclarationHandle.Create(Owner + ".result"),
-                H("The assertion is false"), StatementSource.FromAuthor(F.Disp(new Formula.Not(F.Id("claim")))),
+                H("A connected faithful C2 collision"), StatementSource.FromAuthor(F.Disp(new Formula.Not(F.Id("claim")))),
                 AssessedProvenance.FromRepo(Source),
                 Blocks(
                     Paragraph(Text("On vertices 0 through 5 use edges 03, 13, 04, 14, 23, 24, 25, 34 "
                         + "for the first graph and 02, 12, 05, 15, 23, 24, 25, 34 for the second. "
                         + "The generator of the group of order two acts by swapping 0 and 1 and fixing "
-                        + "the other four vertices. Both graphs are connected. Vertex 2 in the second graph "
+                        + "the other four vertices. In the first graph, vertex 2 reaches 0 and 1 through 3 "
+                        + "and is adjacent to 3, 4 and 5. In the second graph, vertex 2 is adjacent to every "
+                        + "other vertex. Both graphs are connected. Vertex 2 in the second graph "
                         + "has degree five. The degree multisets are (1,2,2,3,4,4) and (2,2,2,2,3,5), "
                         + "which rules out a graph isomorphism.")),
                     Paragraph(Text("Label the orbit of 0 and 1 by 0, and label original vertices 2 through 5 "
@@ -59,7 +62,7 @@ internal sealed class GerlingMultiorbitalCompletenessRefutationDocument : IScrib
 
     private static Formula Completeness()
     {
-        var g = F.Id("G");
+        var g = Call("Multiplicative", Call("ZMod", F.D(2)));
         var n = F.Id("n");
         var m = F.Id("m");
         var a = F.Id("A");
@@ -67,11 +70,11 @@ internal sealed class GerlingMultiorbitalCompletenessRefutationDocument : IScrib
         var naturals = F.Seq(F.Mathbb, F.Grp(F.Id("N")));
         var equal = Equal(Call("multiorbital", a), Call("multiorbital", b));
         return new Formula.BindMany(FormulaQuantifier.ForAll,
-            [new(FormulaIdentifier.Create("G"), F.Id("FiniteGroup")),
-             new(FormulaIdentifier.Create("n"), naturals), new(FormulaIdentifier.Create("m"), naturals),
+            [new(FormulaIdentifier.Create("n"), naturals), new(FormulaIdentifier.Create("m"), naturals),
              new(FormulaIdentifier.Create("A"), Call("GraphAction", g, n)),
              new(FormulaIdentifier.Create("B"), Call("GraphAction", g, m))],
-            Implies(Call("Faithful", a), Implies(Call("Faithful", b), Implies(equal, Call("ActionIso", a, b)))));
+            Implies(Call("Connected", a), Implies(Call("Connected", b),
+                Implies(Call("Faithful", a), Implies(Call("Faithful", b), Implies(equal, Call("ActionIso", a, b)))))));
     }
 
     private static Formula Implies(Formula a, Formula b) =>

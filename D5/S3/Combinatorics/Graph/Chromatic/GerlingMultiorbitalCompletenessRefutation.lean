@@ -2,9 +2,9 @@
    generality: I
    mirror-B: D5/B/S3/Combinatorics/Graph/Chromatic/GerlingMultiorbitalCompletenessRefutation
    mirror-E: none(waiver:kernel-checked-refutation)
-   anchors: [mathlib/module/Mathlib.Algebra.BigOperators.Ring.Finset, mathlib/module/Mathlib.Algebra.Polynomial.Roots]
+   anchors: [mathlib/module/Mathlib.Algebra.BigOperators.Ring.Finset, mathlib/module/Mathlib.Algebra.Polynomial.Roots, mathlib/module/Mathlib.GroupTheory.SpecificGroups.Cyclic.Subgroup]
    utility: kind=bounded-enumeration; basis=refutes=gid:D5/S3/Combinatorics/Graph/Chromatic/GerlingMultiorbitalCompletenessRefutation.claim; result=D5/S3/Combinatorics/Graph/Chromatic/GerlingMultiorbitalCompletenessRefutation.result; claim=D5/S3/Combinatorics/Graph/Chromatic/GerlingMultiorbitalCompletenessRefutation.claim
-   digest: Two faithful cyclic actions on six vertices share a multiorbital polynomial. -/
+   digest: Two connected finite graphs with faithful C2 actions share a multiorbital polynomial despite being nonisomorphic. -/
 
 import OmegaBuild.Commands
 import Mathlib.Combinatorics.SimpleGraph.Connectivity.Connected
@@ -13,11 +13,12 @@ import Mathlib.Algebra.Polynomial.Roots
 import Mathlib.Data.Fintype.BigOperators
 import Mathlib.Data.ZMod.Basic
 import Mathlib.Algebra.BigOperators.Ring.Finset
+import Mathlib.GroupTheory.SpecificGroups.Cyclic.Subgroup
 import Mathlib.Tactic.FinCases
 import Mathlib.Tactic.Push
 import Mathlib.Tactic.Ring
 
-/-! Gerling's completeness question for multiorbital bivariate chromatic polynomials. -/
+/-! Failure of multiorbital completeness on connected graphs with faithful actions of C2. -/
 
 compile_only_with_mathlib
 
@@ -365,9 +366,12 @@ noncomputable def multiorbital {G : Type} [Group G] [Fintype G] {n : ℕ}
   exact ∑ H : Subgroup G, Polynomial.C (Polynomial.C ((Nat.card H : ℚ)⁻¹)) *
     ∑ g ∈ univ.filter (· ∈ H), cyclePolynomial A.edges (A.action g)
 
-/-- The universal completeness assertion for faithful actions of the same finite group. -/
+/-- Completeness restricted to connected graphs carrying faithful actions of the cyclic group
+of order two. -/
 def claim : Prop :=
-  ∀ (G : Type) [Group G] [Fintype G] (n m : ℕ) (A : GraphAction G n) (B : GraphAction G m),
+  ∀ (n m : ℕ) (A : GraphAction (Multiplicative (ZMod 2)) n)
+      (B : GraphAction (Multiplicative (ZMod 2)) m),
+    (graph A.edges).Connected → (graph B.edges).Connected →
     Function.Injective A.action → Function.Injective B.action →
     multiorbital A = multiorbital B → ActionIso A B
 
@@ -561,22 +565,12 @@ private theorem multiorbital_c2 {n x y : ℕ} (A : GraphAction C2 n) (hxy : y �
     simp [evaluate]
   simp only [eval_scalar]
   letI : Fintype (Subgroup C2) := Fintype.ofInjective SetLike.coe SetLike.coe_injective
+  have hc : Nat.card C2 = 2 := by rw [Nat.card_eq_fintype_card]; decide
+  letI : Fact (Nat.card C2).Prime := ⟨by rw [hc]; exact Nat.prime_two⟩
   have subgroups : (univ : Finset (Subgroup C2)) = {⊥, ⊤} := by
     ext H
     simp only [mem_univ, mem_insert, mem_singleton, true_iff]
-    by_cases hg : generator ∈ H
-    · right
-      apply top_unique
-      intro g _
-      rcases c2_elements g with rfl | rfl
-      · exact H.one_mem
-      · exact hg
-    · left
-      apply bot_unique
-      intro g hg'
-      rcases c2_elements g with rfl | rfl
-      · exact Subgroup.one_mem _
-      · exact (hg hg').elim
+    exact H.eq_bot_or_eq_top_of_prime_card
   have distinctSubgroups : (⊥ : Subgroup C2) ≠ ⊤ := by
     intro he
     have hg : generator ∈ (⊤ : Subgroup C2) := Subgroup.mem_top _
@@ -591,7 +585,6 @@ private theorem multiorbital_c2 {n x y : ℕ} (A : GraphAction C2 n) (hxy : y �
   have filterBot : (univ : Finset C2).filter (· ∈ (⊥ : Subgroup C2)) = {1} := by ext g; simp
   rw [subgroups, sum_pair distinctSubgroups, filterBot, filterTop, sum_singleton,
     allElements, sum_pair distinctElements, map_one, fixed_count_one]
-  have hc : Nat.card C2 = 2 := by rw [Nat.card_eq_fintype_card]; decide
   simp only [Subgroup.card_bot, Subgroup.card_top, hc, Nat.cast_one, Nat.cast_ofNat,
     inv_one, one_mul]
   ring
@@ -660,19 +653,12 @@ private theorem nonisomorphic : ¬ Nonempty (graph edgesA ≃g graph edgesB) := 
   rw [show degree edgesA = degree edgesB ∘ e.toEquiv from funext h,
     ← Multiset.map_map, Multiset.map_univ_val_equiv]
 
-private theorem counterexample :
-    (graph actionA.edges).Connected ∧ (graph actionB.edges).Connected ∧
-    Function.Injective actionA.action ∧ Function.Injective actionB.action ∧
-    multiorbital actionA = multiorbital actionB ∧
-    ¬ Nonempty (graph actionA.edges ≃g graph actionB.edges) :=
-  ⟨connectedA, connectedB, representation_faithful, representation_faithful,
-    evaluate_ext same_multiorbital, nonisomorphic⟩
-
-/-- Equal multiorbital invariants do not force isomorphic graph actions. -/
+/-- Equal multiorbital invariants do not force isomorphic graph actions even for
+connected graphs and faithful actions of the cyclic group of order two. -/
 theorem result : ¬ claim := by
   intro complete
-  obtain ⟨_, _, faithfulA, faithfulB, equal, different⟩ := counterexample
-  obtain ⟨e, _⟩ := complete C2 6 6 actionA actionB faithfulA faithfulB equal
-  exact different ⟨e⟩
+  obtain ⟨e, _⟩ := complete 6 6 actionA actionB connectedA connectedB
+    representation_faithful representation_faithful (evaluate_ext same_multiorbital)
+  exact nonisomorphic ⟨e⟩
 
 end D5.S3.Combinatorics.Graph.Chromatic.GerlingMultiorbitalCompletenessRefutation

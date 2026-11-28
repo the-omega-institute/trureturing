@@ -27,8 +27,9 @@ polynomials over all subgroups of the acting group.
 
 The conclusion asks whether there are nonisomorphic graph actions
 on the same finite acting group with identical multiorbital
-polynomials. A pair with nonisomorphic underlying connected graphs
-and faithful actions of the group of order two suffices.
+polynomials. The formalized collision concerns the restriction to
+connected graphs carrying faithful actions of the cyclic group of
+order two, with polynomial equality and no action isomorphism.
 
 The separate implication question asks whether multiorbital equality
 implies orbital equality. The counterexample to completeness has equal
@@ -37,10 +38,12 @@ orbital polynomials as well. [Issue #24209](https://github.com/the-omega-institu
 ## Literature scope
 
 Dohmen, Pönitz and Tittmann exhibit bivariate chromatic collisions in
-Section 6, Figure 6. For the trivial acting group the multiorbital
+Section 6, page 81, Figure 6. For the faithful trivial acting group the multiorbital
 invariant is the bivariate chromatic polynomial, so those collisions
-also refute unrestricted completeness. The connected, faithful
-order-two collision has a nonidentity quotient contribution.
+already refute unrestricted completeness, as observed in issue #21295.
+The connected, faithful order-two collision has equal bivariate
+polynomials both for the original graphs and for their nonidentity
+cycle quotients. Priority for this restricted statement remains unverified.
 [Dohmen, Pönitz and Tittmann (2003)](https://doi.org/10.46298/dmtcs.335) ·
 [Issue #21295](https://github.com/the-omega-institute/trureturing/issues/21295#issuecomment-6391235009) ·
 [Issue #35029](https://github.com/the-omega-institute/trureturing/issues/35029)
