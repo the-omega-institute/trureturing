@@ -33,6 +33,8 @@ meta import OmegaChecks.InitInventory.Reductions
 import Lean.Replay
 import all Lean.Util.CollectAxioms
 import all Lean.Environment
+meta import OmegaChecks.InitInventory.FinAddition
+public import OmegaChecks.InitInventory.FinAddition
 meta import OmegaChecks.InitInventory.RangeIndex
 public import OmegaChecks.InitInventory.ConstraintReflection
 public import OmegaChecks.InitInventory.RangeIndex
@@ -168,6 +170,9 @@ private def logicalConsequence? (owner name : Name) : Option (Name × Name) := d
   if owner == `Init.Omega.Constraint && name == ``Lean.Omega.Constraint.combine_sat then
     return (``OmegaChecks.InitBoundaries.ConstraintReflection.AndReflection,
       ``OmegaChecks.InitBoundaries.ConstraintReflection.equivalence)
+  if owner == `Init.Data.Fin.Lemmas && name == ``Fin.natAdd_zero then
+    return (``OmegaChecks.InitBoundaries.FinAddition.BoundedZeroAddition,
+      ``OmegaChecks.InitBoundaries.FinAddition.equivalence)
   if owner == `Init.Data.Vector.Count then
     if let some result := OmegaChecks.InitBoundaries.VectorCount.equivalences.lookup name then return result
   if owner == `Init.Data.Range.Polymorphic.NatLemmas || owner == `Init.Data.Range.Polymorphic.IntLemmas then
