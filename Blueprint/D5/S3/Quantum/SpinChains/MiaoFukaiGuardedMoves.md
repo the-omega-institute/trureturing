@@ -8,7 +8,7 @@ Labelled words of length L use the empty rung and the symmetric and antisymmetri
 
 The diagonal entry of P at site j is the indicator of a minus at j plus the squared difference of the two flanking empty indicators. The unextended charge adds these indicators over the cycle as in Eq. (45). The centre move A interchanges empty and plus at j with both flanks empty. The flank move F interchanges both occupied signs about an empty centre. Both moves use unit matrix entries. Their sum is the unextended generator S of Eq. (70). The controlled generator T is C times S, where C is the square of the difference of the two flanking projectors.
 
-Jammed means that at every site with projector value zero, the two flanking projector values agree. The diagonal control then kills the row of a jammed word at that site. A site of projector value one has no move. The guarded involutions complement the flanking projector bits for each move, so the same condition kills the column as well. A nonzero controlled move must exchange the two flanking bits and preserve every other projector bit.
+Jammed means that at every site with projector value zero, both flanking projector values equal one. The diagonal control then kills the row of a jammed word at that site. A site of projector value one has no move. The guarded involutions complement the flanking projector bits for each move, so the same condition kills the column as well. A nonzero controlled move must exchange the two flanking bits and preserve every other projector bit.
 
 **Theorem 1.1 (Periodic successor index).**
 
