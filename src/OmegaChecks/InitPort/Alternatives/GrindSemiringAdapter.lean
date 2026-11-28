@@ -22,16 +22,26 @@ namespace OmegaChecks.InitPort.Alternatives
 /-- Every result of the semiring interpreter already lies in the image of the embedding. -/
 @[expose] public def Lean.Grind.CommRing.Expr.denoteSAsRing {α : Type u} [Semiring α] (ctx : Context α)
     (e : Expr) : Ring.OfSemiring.Q α :=
-  Ring.OfSemiring.toQ (e.denoteS ctx)
+  _root_.Lean.Grind.CommRing.Expr.denoteS.match_1 (fun _ => Ring.OfSemiring.Q α) e
+    (fun k => Ring.OfSemiring.toQ (OfNat.ofNat (α := α) k.natAbs))
+    (fun k => Ring.OfSemiring.toQ (OfNat.ofNat (α := α) k))
+    (fun v => Ring.OfSemiring.toQ (v.denote ctx))
+    (fun a b => Ring.OfSemiring.toQ (a.denoteS ctx + b.denoteS ctx))
+    (fun a b => Ring.OfSemiring.toQ (a.denoteS ctx * b.denoteS ctx))
+    (fun a k => Ring.OfSemiring.toQ (a.denoteS ctx ^ k))
+    (fun _ _ => Ring.OfSemiring.toQ (0 : α))
+    (fun _ => Ring.OfSemiring.toQ (0 : α))
+    (fun _ => Ring.OfSemiring.toQ (0 : α))
 
 public theorem Lean.Grind.CommRing.Expr.denoteAsRing_eq {α : Type u} [Semiring α] (ctx : Context α)
-    (e : Expr) : Lean.Grind.CommRing.Expr.denoteSAsRing ctx e = Ring.OfSemiring.toQ (e.denoteS ctx) :=
-  rfl
+    (e : Expr) : Lean.Grind.CommRing.Expr.denoteSAsRing ctx e = Ring.OfSemiring.toQ (e.denoteS ctx) := by
+  cases e <;> rfl
 
 public theorem Lean.Grind.Ring.OfSemiring.of_eq {α : Type u} [Semiring α] (ctx : Context α)
     (lhs rhs : Expr) (h : lhs.denoteS ctx = rhs.denoteS ctx) :
     Lean.Grind.CommRing.Expr.denoteSAsRing ctx lhs = Lean.Grind.CommRing.Expr.denoteSAsRing ctx rhs :=
-  congrArg Ring.OfSemiring.toQ h
+  (Lean.Grind.CommRing.Expr.denoteAsRing_eq ctx lhs).trans <|
+    (congrArg Ring.OfSemiring.toQ h).trans (Lean.Grind.CommRing.Expr.denoteAsRing_eq ctx rhs).symm
 
 section
 open Std

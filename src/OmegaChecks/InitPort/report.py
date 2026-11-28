@@ -202,6 +202,23 @@ def specified_choice_sites(checks, rows):
     return sites
 
 
+SEMIRING_IMAGE_OWNER = "Init.Grind.Ring.CommSemiringAdapter"
+SEMIRING_IMAGE_PREFIX = "Lean.Grind.CommRing.Expr.denoteSAsRing."
+SEMIRING_IMAGE_RULES = {"eq_4": "addImage", "eq_5": "mulImage", "eq_6": "powImage", "eq_def": "casesEq"}
+
+
+def semiring_image_sites(checks):
+    sites = {}
+    for owner, name, witness in checks:
+        site = owner, name
+        suffix = name.removeprefix(SEMIRING_IMAGE_PREFIX)
+        if (site in sites or owner != SEMIRING_IMAGE_OWNER or not name.startswith(SEMIRING_IMAGE_PREFIX) or
+                suffix not in SEMIRING_IMAGE_RULES or witness != "OmegaChecks.InitPort.SemiringImage." + SEMIRING_IMAGE_RULES[suffix]):
+            raise ValueError(f"invalid semiring computation certificate for {site}")
+        sites[site] = witness
+    return sites
+
+
 def envelope_type_dependencies(checks):
     return envelope_instance_sites(checks, MODULE_ENVELOPE, EMBEDDINGS, ENVELOPE_INSTANCE)
 
@@ -294,6 +311,7 @@ def check_coverage(official):
     embeddings = envelope_type_dependencies(official.get("certifiedEnvelopeTypeDependencies", []))
     if embeddings and by_refutation.get((MODULE_ENVELOPE, ENVELOPE_INSTANCE)) != (ENVELOPE_INSTANCE, ENVELOPE_REFUTER):
         raise ValueError("module embedding certificates lack the counterexample for their instance")
+    image_sites = semiring_image_sites(official.get("certifiedSemiringEquations", []))
     specified = specified_choice_sites(official.get("certifiedSpecifiedChoice", []), official["declarations"])
     comparison_formations = envelope_order_formations(official.get("certifiedEnvelopeOrderFormations", []))
     ring_formations = ring_instance_sites(official.get("certifiedRingInstanceFormations", []))
@@ -462,6 +480,12 @@ def check_coverage(official):
                     any(row.get(flag) is not expected_safety for flag in ("strictUnsafe", "strictPartial")) or
                     private_type or orders):
                 raise ValueError(f"uncertified choice operand of the pinned type for {site}")
+        image = image_sites.get(site)
+        if row.get("semiringImageEquation") != image or (image and (
+                not port or row["kind"] != "theorem" or row.get("originalTypeChecked") is not False or
+                (row.get("originalTypeGap") or "").partition(". ")[0] != "missing type dependencies: Omega." + RING_INSTANCE or
+                any(row.get(flag) is not False for flag in ("unsafe", "partial", "strictUnsafe", "strictPartial")))):
+            raise ValueError(f"uncertified semiring computation for {site}")
         selection = specified.pop(site, None)
         if (row.get("specifiedChoiceOperand"), row.get("specifiedChoiceObservation")) != (selection or (None, None)) or (
                 selection and (port or row["kind"] != "theorem" or row["unsafe"] or row["partial"] or
@@ -530,7 +554,7 @@ def check_coverage(official):
                 if row.get("originalTypeChecked") is True and row.get("originalTypeGap") is None:
                     original_types += 1
                 elif row.get("originalTypeChecked") is False and row.get("originalTypeGap"):
-                    if not any((private_type, choice_operand, equivalent, pointwise, finite, projected, embedding, envelope_comparison)):
+                    if not any((private_type, choice_operand, equivalent, pointwise, finite, projected, embedding, envelope_comparison, image)):
                         unresolved.append(site)
                 else:
                     raise ValueError(f"inconsistent original type check for {owner}/{name}")
@@ -542,6 +566,8 @@ def check_coverage(official):
             reductions += 1
         elif not selection and not choice_operand and not endpoint and not argument and not refuter and not order_formation and not ring_formation and path != "Quot.sound":
             unresolved.append(site)
+    if not image_sites.keys() <= sites:
+        raise ValueError("semiring computation certificate has no declaration")
     if specified:
         raise ValueError("specified selector certificate has no declaration")
     if not ring_formations <= sites:
@@ -628,6 +654,10 @@ def verify_complete(official, product, reductions, unresolved):
     formations = official.get("certifiedEnvelopeOrderFormations", [])
     if formations and envelope_formation_certificates(product) != formations:
         raise ValueError("live quotient order formation certificates differ from inventory")
+    image_checks = official.get("certifiedSemiringEquations", [])
+    if image_checks and envelope_formation_certificates(product, "SemiringEquationsCheck.lean") != image_checks:
+        raise ValueError("live semiring computation certificates differ from inventory")
+    blocked = blocked | semiring_image_sites(image_checks).keys()
     specified = official.get("certifiedSpecifiedChoice", [])
     if specified and envelope_formation_certificates(product, "SpecifiedChoiceCheck.lean") != specified:
         raise ValueError("live specified selector certificates differ from inventory")
@@ -768,7 +798,7 @@ def report(product, require_complete=False):
         stage = Path(work)
         inventory = stage / "init-inventory.json"
         subprocess.run(["lake", "build", "+OmegaChecks.InitInventory", "+OmegaChecks.InitPort.Translation",
-                        "+OmegaChecks.InitPort.StrictReplay", "+OmegaChecks.InitPort.PublicTypeClient",
+                        "+OmegaChecks.InitPort.StrictReplay", "+OmegaChecks.InitPort.PublicTypeClient", "+OmegaChecks.InitPort.SemiringImage",
                         "+OmegaChecks.InitPort.Alternatives.InternalOrder"], cwd=ROOT, check=True)
         subprocess.run(["lake", "env", "lean", "--run", HERE.parent / "InitInventory.lean", product / "lib", inventory],
                        cwd=ROOT, check=True)
@@ -795,6 +825,9 @@ def report(product, require_complete=False):
         order_formations = envelope_formation_certificates(product)
         official["certifiedEnvelopeOrderFormations"] = order_formations
         comparison_formations = envelope_order_formations(order_formations)
+        image_checks = envelope_formation_certificates(product, "SemiringEquationsCheck.lean")
+        official["certifiedSemiringEquations"] = image_checks
+        image_sites = semiring_image_sites(image_checks)
         specified_checks = envelope_formation_certificates(product, "SpecifiedChoiceCheck.lean")
         official["certifiedSpecifiedChoice"] = specified_checks
         specified = specified_choice_sites(specified_checks, official["declarations"])
@@ -851,6 +884,8 @@ def report(product, require_complete=False):
                 row["originalTypeChoiceDependency"] = choice_operands[site]
             if site in comparison_formations:
                 row["quotientOrderFormation"] = comparison_formations[site]
+            if site in image_sites:
+                row["semiringImageEquation"] = image_sites[site]
             if site in specified:
                 row["specifiedChoiceOperand"], row["specifiedChoiceObservation"] = specified[site]
             if site in ring_formations:
@@ -901,7 +936,7 @@ def report(product, require_complete=False):
                              "representativeRefuter", "refinedQuotientConsequence", "originalTypeGap",
                              "importAllOriginalTypeChecked", "originalTypeOrderDependencies", "originalTypeChoiceDependency", "finBoundProofReplacementChecked",
                              "pointwiseOrderTypeChecked", "finiteConsumerTypeChecked", "publicProjectionTypeChecked", "moduleBodyStrictImport", "originalTypeEnvelopeInstance", "originalTypeEnvelopeOrderInstance", "quotientOrderFormation", "quotientRingFormation",
-                             "specifiedChoiceOperand", "specifiedChoiceObservation"])
+                             "specifiedChoiceOperand", "specifiedChoiceObservation", "semiringImageEquation"])
             for row in official["declarations"]:
                 if row["originalTypeChecked"] or row["kind"] == "axiom":
                     continue
@@ -954,7 +989,7 @@ def report(product, require_complete=False):
                                  "true" if row.get("finiteConsumerTypeChecked") else "",
                                  "true" if row.get("publicProjectionTypeChecked") else "", row.get("moduleBodyStrictImport"), row.get("originalTypeEnvelopeInstance"),
                                  row.get("originalTypeEnvelopeOrderInstance"), row.get("quotientOrderFormation"), row.get("quotientRingFormation"),
-                                 row.get("specifiedChoiceOperand"), row.get("specifiedChoiceObservation")])
+                                 row.get("specifiedChoiceOperand"), row.get("specifiedChoiceObservation"), row.get("semiringImageEquation")])
         reductions = stage / "init-public-reductions.tsv"
         with reductions.open("w", newline="") as f:
             writer = csv.writer(f, delimiter="\t", lineterminator="\n")

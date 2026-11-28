@@ -218,6 +218,27 @@ class CoverageTest(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "live quotient order formation"):
                 verify_complete(data, Path("product"), *check_coverage(data))
 
+    def test_semiring_equation_requires_the_corresponding_image_computation(self):
+        owner = "Init.Grind.Ring.CommSemiringAdapter"
+        name = "Lean.Grind.CommRing.Expr.denoteSAsRing.eq_4"
+        proof = "OmegaChecks.InitPort.SemiringImage.addImage"
+        row = site(owner, name, matchingNameAndModule=True, strictModule="Omega" + owner,
+                   originalTypeChecked=False, originalTypeGap="missing type dependencies: Omega.Lean.Grind.Ring.OfSemiring.ofSemiring")
+        data = inventory(row)
+        data["schemaVersion"] = 6
+        data["summary"]["originalTypesChecked"] = 0
+        self.assertEqual(check_coverage(data), (0, [(owner, name)]))
+        row["semiringImageEquation"] = proof
+        cert = [owner, name, proof]
+        data["certifiedSemiringEquations"] = [cert]
+        self.assertEqual(check_coverage(data), (0, []))
+        for bad in ([], [cert, cert], [[owner, name, "OmegaChecks.InitPort.SemiringImage.mulImage"]]):
+            with self.subTest(bad=bad), self.assertRaisesRegex(ValueError, "semiring computation"):
+                check_coverage(data | {"certifiedSemiringEquations": bad})
+        with patch("report.envelope_formation_certificates", return_value=[]), self.assertRaisesRegex(
+                ValueError, "live semiring computation"):
+            verify_complete(data, Path("product"), *check_coverage(data))
+
     def test_specified_choice_requires_the_observation_of_the_same_operand(self):
         owner, op, law, proof = ("Init.Data.Option.Lemmas", "Option.choice", "Option.isSome_choice",
                                  "OmegaChecks.InitBoundaries.OptionSelector.fromSome")
