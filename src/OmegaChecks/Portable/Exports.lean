@@ -1,11 +1,15 @@
+module
 import Lean
+import all Lean.Namespace
+meta import OmegaChecks.InitCompiler.RootNames
 import OmegaChecks.InitCompiler.RootNames
+meta import OmegaChecks.InitPort.NativeQuot
 import OmegaChecks.InitPort.NativeQuot
 
 open Lean
 
 /-- Enumerate the public names of the strict basis for its standard namespace aliases. -/
-def main (args : List String) : IO Unit := do
+public def main (args : List String) : IO Unit := do
   let path :: referencePath :: modules := args | throw <| IO.userError "expected strict and official paths and module names"
   searchPathRef.set (System.SearchPath.parse path)
   let env ← importModules (modules.toArray.map fun module => {module := module.toName}) {} (level := .exported)
@@ -28,6 +32,11 @@ def main (args : List String) : IO Unit := do
     let some idx := env.getModuleIdx? owner | throw <| IO.userError s!"missing module {owner}"
     let aliases := (aliasExtension.getModuleEntries env idx).filterMap fun (alias, _) =>
       if alias.getRoot == `Omega then some alias else none
+    let counterpart := owner.replacePrefix owner.getRoot (if owner.getRoot == `OmegaInit then `Init else `Mathlib)
+    let ownScopes := (reference.getModuleIdx? counterpart).map (Lean.namespacesExt.getModuleEntries reference)
+      |>.getD #[]
+    let mut opened : NameSet := {}
+    let mut generated : Array Name := #[]
     for name in data.constNames ++ aliases do
       if isPrivateName name || name.isInternal then continue
       if name.getRoot != `Omega then
@@ -45,8 +54,20 @@ def main (args : List String) : IO Unit := do
       -- Generated lemmas such as id.eq_1 can have a declaration as prefix
       -- without that prefix being an exportable namespace in its owning module.
       if (reference.find? original).any (fun info => !info.isInductive) || !reference.isNamespace original then
-        rows := rows.push #[owner.toString, "Omega", "_root_", identifier upstream]
+        generated := generated.push upstream
       else
+        opened := opened.insert original
         let namespaceName := if original.isAnonymous then "_root_" else identifier (`_root_ ++ original)
         rows := rows.push #[owner.toString, identifier parent, namespaceName, identifier (.str .anonymous leaf)]
+    -- An export with a qualified name registers only its enclosing namespace.
+    -- Preserve fresh upstream namespaces even when all their exported members are matchers.
+    for upstream in generated do
+      let mut scope := upstream.getPrefix
+      while !scope.isAnonymous && (!ownScopes.contains scope || reference.contains scope) do
+        scope := scope.getPrefix
+      if scope.isAnonymous || opened.toList.any (scope.isPrefixOf ·) then
+        rows := rows.push #[owner.toString, "Omega", "_root_", identifier upstream]
+      else
+        rows := rows.push #[owner.toString, identifier (`Omega ++ scope), identifier (`_root_ ++ scope),
+          identifier (upstream.replacePrefix scope .anonymous)]
   IO.println (Json.mkObj [("imports", toJson publicImports), ("names", toJson rows), ("seals", toJson seals)]).compress
