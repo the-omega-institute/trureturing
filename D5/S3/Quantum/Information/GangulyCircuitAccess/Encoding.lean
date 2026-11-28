@@ -4,12 +4,15 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Two distinct logical pure states have the same reduction on the circuit-authorized witness set. -/
+   digest: Two distinct logical pure states have the same circuit-authorized reduction. -/
 
 import D5.S3.Quantum.Information.GangulyCircuitAccess.Combinatorial
 import Mathlib.Analysis.Real.Sqrt
-import Mathlib.LinearAlgebra.Matrix.PosDef
+import Mathlib.Data.Complex.Basic
+import Mathlib.LinearAlgebra.Matrix.ConjTranspose
+import Mathlib.LinearAlgebra.Matrix.Trace
 import Mathlib.Tactic.FinCases
+import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.Ring
 
 /-! The normalized computational-basis slices of the graph state give an encoding on
@@ -20,7 +23,7 @@ set_option relaxedAutoImplicit false
 
 namespace D5.S3.Quantum.Information.GangulyCircuitAccess
 
-open scoped BigOperators ComplexOrder Matrix
+open scoped BigOperators Matrix
 
 /-- The dealer slices of the graph-state amplitude, with the discarded players
 indexed by the first factor and the retained players by the second. -/
