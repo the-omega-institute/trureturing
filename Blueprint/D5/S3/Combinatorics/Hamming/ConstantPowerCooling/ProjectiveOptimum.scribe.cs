@@ -25,7 +25,9 @@ internal sealed class ProjectiveOptimumDocument : IScribeDocumentDefinition
                     + "subsets as one information class. Two deletions leave at least q − 1 points on each line. "
                     + "Distinct lines meet in at most one point. The q(q + 1) + 1 points embed into the coordinate "
                     + "set with one unused coordinate, giving n − 1 classes.")),
-                Paragraph(Text("The finite leave bound gives at most n classes. The residue-two equality criterion "
+                Paragraph(Text("The finite leave bound and the residue-two design criterion both require t + 3 < w. "
+                    + "With t = 2 and w = q − 1, this becomes 5 < q − 1, equivalently q ≥ 7. "
+                    + "The finite leave bound gives at most n classes. The residue-two equality criterion "
                     + "would give a design with m two-point groups if n were attained. With k = q + 1, the design "
                     + "has n blocks and each point lies in k blocks. Its square integer incidence matrix A has "
                     + "Gram matrix kI + J − P, where J is all ones and P indicates pairs of indices in the same "
