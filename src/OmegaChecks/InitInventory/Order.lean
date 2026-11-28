@@ -710,6 +710,99 @@ def uniqueChoiceOfChainSup (select : type_of% @CCPO.csup.{u}) : UniqueChoice.{u}
   letI : CCPO α := singletonCCPO α inh
   exact select (chain_empty α)
 
+namespace FlatSelection
+
+/-- A pointed flat chain of optional values selects the unique inhabitant without
+requiring a supremum law on the predicates that are not chains. -/
+private def selectSubsingleton (pick : type_of% @flat_csup.{u+1})
+    (valid : ∀ {α : Type u} (c : Option α → Prop), chain c → is_sup c (@pick (Option α) none c))
+    {β : Type u} [Subsingleton β] (h : Nonempty β) : β := by
+  let c : Option β → Prop := fun x => ∃ b, x = some b
+  have ordered : chain c := by
+    rintro _ _ ⟨b, rfl⟩ ⟨d, rfl⟩
+    cases Subsingleton.elim b d
+    exact Or.inl PartialOrder.rel_refl
+  let top := @pick (Option β) none c
+  have hup := valid c ordered
+  cases ht : top.inner with
+  | some b => exact b
+  | none =>
+    exact False.elim <| h.elim fun b => by
+      have eq : top = (none : Option β) := ht
+      rw [show @pick (Option β) none c = (none : Option β) from eq] at hup
+      have rel := (hup none).mp PartialOrder.rel_refl (some b) ⟨b, rfl⟩
+      change FlatOrder.rel (b := (none : Option β)) (some b) none at rel
+      cases rel
+
+private def decideProp (pick : type_of% @flat_csup.{1})
+    (valid : ∀ {α : Type} (c : Option α → Prop), chain c → is_sup c (@pick (Option α) none c))
+    (P : Prop) : Decidable P := by
+  apply selectSubsingleton (@pick) valid
+  cases excludedMiddleOfFlatCSup (@pick) valid P with
+  | inl h => exact ⟨.isTrue h⟩
+  | inr h => exact ⟨.isFalse h⟩
+
+private theorem eqOfNonbottom {α : Type u} {b : α} {x y : FlatOrder b} (h : x ⊑ y)
+    (hx : x ≠ b) : x = y := by
+  cases h with
+  | bot => exact (hx rfl).elim
+  | refl => rfl
+
+private def chooseSup (D : ∀ P : Prop, Decidable P) (choose : UniqueChoice.{u+1})
+    {α : Type u} {b : α} (c : FlatOrder b → Prop) (hc : chain c) :
+    {top : FlatOrder b // is_sup c top} := by
+  let bottom := FlatOrder.mk b b
+  cases D (∃ x, c x ∧ x ≠ bottom) with
+  | isTrue h =>
+    letI : Subsingleton {x // c x ∧ x ≠ bottom} := ⟨fun x y => by
+      apply Subtype.ext
+      cases hc x y x.property.1 y.property.1 with
+      | inl le => exact eqOfNonbottom le x.property.2
+      | inr le => exact (eqOfNonbottom le y.property.2).symm⟩
+    let top := choose (α := {x // c x ∧ x ≠ bottom}) (h.elim fun x hx => ⟨⟨x, hx⟩⟩)
+    refine ⟨top.val, fun x => ⟨?_, fun h => h top.val top.property.1⟩⟩
+    intro hle y hy
+    cases hc y top hy top.property.1 with
+    | inl le => exact PartialOrder.rel_trans le hle
+    | inr le => exact (eqOfNonbottom le top.property.2) ▸ hle
+  | isFalse hn =>
+    refine ⟨bottom, fun x => ⟨?_, fun _ => FlatOrder.rel.bot⟩⟩
+    intro _ y hy
+    cases D (y = bottom) with
+    | isTrue e => cases e; exact FlatOrder.rel.bot
+    | isFalse ne => exact (hn ⟨y, hy, ne⟩).elim
+
+abbrev ChainLaw (pick : type_of% @flat_csup.{u+1}) : Prop :=
+  ∀ {α : Type u} {b : α} (c : FlatOrder b → Prop) (_ : chain c), is_sup c (@pick α b c)
+
+private def picker (D : ∀ P : Prop, Decidable P) (choose : UniqueChoice.{u+1}) : type_of% @flat_csup.{u+1} :=
+  fun {_ b} c => match D (chain c) with
+  | .isTrue hc => (chooseSup D (@choose) c hc).1
+  | .isFalse _ => FlatOrder.mk b b
+
+private theorem pickerLaw (D : ∀ P : Prop, Decidable P) (choose : UniqueChoice.{u+1}) : ChainLaw (@picker D (@choose)) := by
+  intro α b c hc
+  unfold picker
+  cases h : D (chain c) with
+  | isTrue yes => exact (chooseSup D (@choose) c yes).property
+  | isFalse no => exact (no hc).elim
+
+/-- Choosing suprema on the chains of small flat orders is equivalent to having
+a proposition decider and a selector on inhabited subsingletons. -/
+theorem smallChainSelections :
+    (∃ pick : type_of% @flat_csup.{1}, ChainLaw (@pick)) ↔
+      Nonempty (∀ P : Prop, Decidable P) ∧ Nonempty UniqueChoice.{1} := by
+  constructor
+  · rintro ⟨pick, law⟩
+    have valid {α : Type} (c : Option α → Prop) (h : chain c) := law (b := (none : Option α)) c h
+    exact ⟨⟨decideProp (@pick) (@valid)⟩, ⟨@selectSubsingleton (@pick) (@valid)⟩⟩
+  · rintro ⟨⟨D⟩, ⟨choose⟩⟩
+    exact ⟨@picker D (@choose), pickerLaw D (@choose)⟩
+
+example : ChainLaw (@flat_csup.{1}) = type_of% @flat_csup_is_sup.{1} := rfl
+
+end FlatSelection
+
 /-- Least upper bounds form a subsingleton by antisymmetry. An existence proof
 therefore suffices for the selector on subsingletons. -/
 private def selectSupremum (pick : UniqueChoice.{max 1 u}) {α : Sort u} [PartialOrder α]

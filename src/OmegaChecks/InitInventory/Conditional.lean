@@ -308,6 +308,10 @@ public def conditionalConsequence? (owner name : Name) : Option (String × Name 
     if let some witness := OmegaChecks.InitBoundaries.InternalOrder.implicationOrders.lookup name then
       return ((``propext).toString, witness,
         "Every pair related by the pinned instance's rel field is also related by the replacement")
+    if name == ``Lean.Order.flat_csup_is_sup then
+      return ("Nonempty (∀ P : Prop, Decidable P) ∧ Nonempty InternalOrder.UniqueChoice.{1}",
+        ``OmegaChecks.InitBoundaries.InternalOrder.FlatSelection.smallChainSelections,
+        "At the small universe, a selector satisfying the pinned supremum law on every flat chain exists exactly when both selections exist")
     if name == ``Lean.Order.flat_csup then
       return ((``Classical.choice).toString, ``OmegaChecks.InitBoundaries.InternalOrder.choiceFromFlatPresence,
         "For nonempty α and the universal predicate on Option α with bottom none, the result has tag some, as in the pinned definition")
