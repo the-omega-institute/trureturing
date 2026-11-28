@@ -36,6 +36,7 @@ public import OmegaInit.Data.List.Perm
 public import OmegaInit.Data.List.Scan
 public import OmegaInit.Data.Nat
 public import OmegaInit.Data.Option.Attach
+public import OmegaInit.Data.Iterators.Lemmas.Combinators.Monadic.FilterMap
 public import OmegaInit.Data.Option.Basic
 public import OmegaInit.Data.Option.Lemmas
 public import OmegaInit.Data.Option.Monadic
