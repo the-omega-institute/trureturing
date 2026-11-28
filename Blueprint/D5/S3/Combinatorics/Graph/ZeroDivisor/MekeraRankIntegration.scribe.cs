@@ -7,7 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.ZeroDivisor;
 internal sealed class MekeraRankIntegrationDocument : IScribeDocumentDefinition
 {
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Certificates/mekerasomeryesil2026annihilatordigraphs");
+        LibraryNoteRef.Create("D5/L/Certificates/mekerasomeryesil2026matrixarcranks");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Block ranks characterize ordered arcs in full matrix rings over fields.",
@@ -39,10 +39,7 @@ internal sealed class MekeraRankIntegrationDocument : IScribeDocumentDefinition
                         + "even over the binary field. Rank–nullity converts the resulting strict "
                         + "kernel inclusions into the two right-witness inequalities. Transposing "
                         + "and exchanging the endpoints gives the left-witness inequalities."))),
-                DescribeRole.Theorem,
-                new OpenProblemResolutionClaim(
-                    ProblemSlugRef.Create("mekera-somer-yesil-matrix-arc-ranks"),
-                    ResolutionKind.Proved)))));
+                DescribeRole.Theorem))));
 
     private static Formula Call(string name, params Formula[] arguments) =>
         new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. arguments]);

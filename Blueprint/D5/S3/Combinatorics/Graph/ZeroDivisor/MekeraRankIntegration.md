@@ -10,13 +10,9 @@ $$\forall (F: \operatorname{Type}) [\operatorname{Field}\left(F\right)], \forall
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/ZeroDivisor/MekeraRankIntegration.arc_iff_rank` (`✓ std3`). ∎
 
-*Resolves.* `Problems/mekera-somer-yesil-matrix-arc-ranks` (proved) by `D5/S3/Combinatorics/Graph/ZeroDivisor/MekeraRankIntegration.arc_iff_rank`.
-
-<!-- scribe-open-problem-resolution-v1 {"problem_slug":"mekera-somer-yesil-matrix-arc-ranks","declaration_gid":"D5/S3/Combinatorics/Graph/ZeroDivisor/MekeraRankIntegration.arc_iff_rank","resolution_kind":"proved"} -->
-
 *Source.* Repository-derived.
 
-*Acknowledgement.* Rasie Mekera, Defne Somer, and Didem Yeşil (2026). *Annihilator Digraphs and Extended Zero-Divisor Digraphs of Semigroups and Rings*. DOI: [10.48550/arXiv.2608.09243](https://doi.org/10.48550/arXiv.2608.09243). URL: <https://arxiv.org/html/2608.09243v2#S7.p2.1>.
+*Acknowledgement.* Rasie Mekera, Defne Somer, and Didem Yeşil (2026). *Annihilator Digraphs and Extended Zero-Divisor Digraphs of Semigroups and Rings*. URL: <https://arxiv.org/html/2608.09243v2#S7.p2.1>.
 
 *Commentary.*
 
