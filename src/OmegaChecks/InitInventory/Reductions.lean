@@ -71,6 +71,7 @@ meta import OmegaChecks.InitInventory.Logic
 public import OmegaChecks.InitInventory.OrderedAlgebra
 import all OmegaChecks.InitInventory.OrderedAlgebra
 meta import OmegaChecks.InitInventory.OrderedAlgebra
+import all OmegaChecks.InitInventory.KripkeModels
 public import OmegaChecks.InitInventory.Order
 import all OmegaChecks.InitInventory.Order
 meta import OmegaChecks.InitInventory.Order
