@@ -502,6 +502,29 @@ port_definition instDecidableIff.match_1 with_native_code
 port_proof instDecidableIff._proof_1
 port_definition instDecidableIff with_native_code
 
+port_native_records Thunk
+port_definition Thunk.pure with_native_code
+port_definition Thunk.get with_native_code
+port_definition Thunk.fnImpl with_native_code
+port_proof Thunk.fn_eq_fnImpl
+port_thunk_field_code
+port_definition Thunk.map with_native_code
+port_definition Thunk.bind with_native_code
+port_definition instInhabitedThunk with_native_code
+attribute [instance] Omega.instInhabitedThunk
+
+namespace Omega
+export _root_ (Thunk)
+end Omega
+
+namespace Omega.Thunk
+export _root_.Thunk (mk get fn pure rec recOn casesOn)
+end Omega.Thunk
+
+namespace Thunk
+export _root_.Omega.Thunk (fnImpl fn_eq_fnImpl map bind)
+end Thunk
+
 port_native_records Sigma
 port_definition instDecidableEqSigma.match_5 with_native_code
 port_definition instDecidableEqSigma.match_3 with_native_code

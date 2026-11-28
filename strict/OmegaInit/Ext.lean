@@ -17,3 +17,10 @@ end PUnit
 namespace Unit
 export _root_.Omega.Unit (ext)
 end Unit
+
+port_alternative_proof Thunk.ext from OmegaChecks.InitPort.Alternatives.Logic
+port_proof Thunk.ext_iff
+
+namespace Thunk
+export _root_.Omega.Thunk (ext ext_iff)
+end Thunk

@@ -199,9 +199,12 @@ private def officialDeclaration (stx : Syntax) : CommandElabM (Environment × Co
       | throwError "kernel rejected native compiler marker {name}"
     setEnv checked
 
-/-- The strict seed keeps ByteArray.data in field zero and owns capacity and linearity. -/
-private def installByteExtern (src : Environment) (name : Name) : CoreM Unit := do
+/-- Use the checked runtime symbols for the strict byte layout and native memoized thunks. -/
+private def installRuntimeExtern (src : Environment) (name : Name) : CoreM Unit := do
   let spec : Option (String × String × Array (IR.IRType × Bool) × IR.IRType) := match name with
+    | `Thunk.mk => some ("lean_mk_thunk", "lean_mk_thunk", #[(.erased, false), (.tobject, false)], .object)
+    | `Thunk.pure => some ("lean_thunk_pure", "lean_thunk_pure", #[(.erased, false), (.tobject, false)], .object)
+    | `Thunk.get => some ("lean_thunk_get_own", "lean_thunk_get_own", #[(.erased, false), (.object, true)], .tobject)
     | `ByteArray.mk => some ("lean_byte_array_mk", "omega_byte_array_mk", #[(.object, false)], .object)
     | `ByteArray.emptyWithCapacity => some ("lean_mk_empty_byte_array", "omega_byte_array_empty", #[(.tobject, true)], .object)
     | `ByteArray.push => some ("lean_byte_array_push", "omega_byte_array_push", #[(.object, false), (.uint8, false)], .object)
@@ -228,14 +231,17 @@ private def installByteExtern (src : Environment) (name : Name) : CoreM Unit := 
     let constructorElim := defn.name == defn.name.getPrefix ++ `elim &&
       ((src.find? defn.name.getPrefix) matches some (.ctorInfo _))
     if isSparseCasesOn src defn.name && !constructorElim then modifyEnv (markSparseCasesOn · name)
-    installByteExtern src defn.name
+    installRuntimeExtern src defn.name
     -- Unfold before compiling arguments, so untaken branches of the pinned ite stay lazy.
     if Compiler.hasMacroInlineAttribute src defn.name then
       setEnv (← ofExcept (Compiler.setInlineAttribute (← getEnv) name .macroInline))
     -- When code generation is optional, the compiler records unsupported definitions as
     -- noncomputable. Explicit native callers require a successful compilation.
-    withOptions (fun opts => Elab.async.set opts false) do
-      Lean.compileDecls #[name] (logErrors := !stx[2].isNone)
+    -- The builtin thunk layout calls the named field when lowering a raw projection.
+    -- Compile the field after the pinned getter implementation is available.
+    unless defn.name == `Thunk.fn do
+      withOptions (fun opts => Elab.async.set opts false) do
+        Lean.compileDecls #[name] (logErrors := !stx[2].isNone)
     -- Constructor eliminators have callable upstream code. The sparse tag makes the
     -- compiler inline calls and skip emitting the standalone entry.
     if constructorElim && isSparseCasesOn src defn.name then
@@ -243,6 +249,24 @@ private def installByteExtern (src : Environment) (name : Name) : CoreM Unit := 
       modifyEnv (markSparseCasesOn · name)
     setReducibilityStatus name (getReducibilityStatusCore src defn.name)
     if isProtected src defn.name then modifyEnv (addProtected · name)
+
+/-- Emit the builtin field entry using its kernel-checked forcing operation. -/
+@[command_parser, builtin_command_parser] def portThunkField := leading_parser "port_thunk_field_code"
+@[builtin_command_elab portThunkField] def elabPortThunkField : CommandElab := fun _ => do
+  unless (← getMainModule) == `OmegaInit.Core do throwError "expected OmegaInit.Core"
+  liftCoreM <| withExporting do
+    let env ← getEnv
+    let .defnInfo field ← getConstInfo `Thunk.fn | throwError "expected the thunk field"
+    let .defnInfo impl ← getConstInfo `Omega.Thunk.fnImpl | throwError "expected the thunk getter"
+    let value := impl.value.instantiateLevelParams impl.levelParams (field.levelParams.map Level.param)
+    unless Kernel.isDefEqGuarded env {} field.value value do throwError "incorrect thunk field implementation"
+    let tmp := Compiler.mkUnsafeRecName field.name
+    let compiled ← withoutModifyingEnv do
+      Lean.addDecl (.defnDecl {field with name := tmp, all := [tmp], value}) (forceExpose := true)
+      withOptions (fun o => (Elab.async.set o false).setBool `compiler.postponeCompile false) do
+        Lean.compileDecls #[field.name] (logErrors := true)
+      return ← getEnv
+    installCompiledCode compiled field.name
 
 @[command_parser, builtin_command_parser] def portInductive := leading_parser "port_inductive " >> ident
 
@@ -258,9 +282,10 @@ private def installByteExtern (src : Environment) (name : Name) : CoreM Unit := 
       if isProtected src (exported.replacePrefix `Omega .anonymous) then
         modifyEnv (addProtected · exported)
     compilerLayouts (types.toArray.map (·.name)) ctors
-    if name == `ByteArray then
-      installByteExtern src `ByteArray.mk
-      Lean.compileDecls #[`Omega.ByteArray.mk] (logErrors := true)
+    if name == `ByteArray || name == `Thunk then
+      let ctor := name ++ `mk
+      installRuntimeExtern src ctor
+      Lean.compileDecls #[omegaName ctor] (logErrors := true)
     for typ in types do
       Meta.MetaM.run' <| mkCasesOn typ.name
       Meta.MetaM.run' <| mkRecOn typ.name
@@ -306,14 +331,6 @@ before the root PUnit used by Lean's ordinary structure elaborator is available.
     let mut fields := #[]
     for field in record.fieldNames do
       let some projection := getFieldInfo? src ci.name field | throwErrorAt id "missing projection {field}"
-      let name := mkIdentFrom id projection.projFn
-      if (src.find? projection.projFn).any (·.isTheorem) then
-        elabCommand (← `(command| port_proof $name:ident))
-      else
-        elabCommand (← `(command| port_definition $name:ident with_native_code))
-      let some info := src.getProjectionFnInfo? projection.projFn | throwErrorAt id "missing projection info {field}"
-      modifyEnv fun env => addProjectionFnInfo env (omegaName projection.projFn) (omegaName info.ctorName)
-        info.numParams info.i info.fromClass
       fields := fields.push {projection with
         projFn := omegaName projection.projFn
         subobject? := projection.subobject?.map omegaName}
@@ -321,6 +338,16 @@ before the root PUnit used by Lean's ordinary structure elaborator is available.
       {parent with structName := omegaName parent.structName, projFn := omegaName parent.projFn}
     modifyEnv fun env => registerStructure env {structName := omegaName ci.name, fields}
     setStructureParents (omegaName ci.name) parents
+    for projection in fields do
+      let sourceName := projection.projFn.replacePrefix `Omega .anonymous
+      let name := mkIdentFrom id sourceName
+      if (src.find? sourceName).any (·.isTheorem) then
+        elabCommand (← `(command| port_proof $name:ident))
+      else
+        elabCommand (← `(command| port_definition $name:ident with_native_code))
+      let some info := src.getProjectionFnInfo? sourceName | throwErrorAt id "missing projection info {sourceName}"
+      modifyEnv fun env => addProjectionFnInfo env (omegaName sourceName) (omegaName info.ctorName)
+        info.numParams info.i info.fromClass
     for field in getStructureFieldsFlattened src ci.name false do
       if let some defaultFn := getEffectiveDefaultFnForField? src ci.name field then
         unless (← getEnv).contains (omegaName defaultFn) do
