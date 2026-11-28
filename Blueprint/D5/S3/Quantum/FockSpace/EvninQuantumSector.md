@@ -6,7 +6,7 @@ Evnin's normally ordered resonant Hamiltonian has greatest real spectral value (
 
 **Definition 1.1 (Ambient modes).**
 
-$$\operatorname{Mode}\left(L\right) = \operatorname{Fin}\left(L + 1\right)$$
+$$\forall (L: \mathbb{N}), \operatorname{Mode}\left(L\right) = \operatorname{Fin}\left(L + 1\right)$$
 
 *Formalization.* `D5/S3/Quantum/FockSpace/EvninQuantumSector.Mode` (`✓ std3`).
 
@@ -20,7 +20,7 @@ The natural number L is the largest ambient mode label. A value of Fin(L + 1) ha
 
 **Definition 1.2 (Fixed particle number and momentum).**
 
-$$\operatorname{Sector}\left(L, N, M\right) = \{eta: \operatorname{Mode}\left(L\right) \to \mathbb{N} | \sum_{i \in \operatorname{Mode}\left(L\right)} eta\left(i\right) = N \land (\sum_{i \in \operatorname{Mode}\left(L\right)} i \cdot eta\left(i\right) = M)\}$$
+$$\forall (L: \mathbb{N})(N: \mathbb{N})(M: \mathbb{N}), \operatorname{Sector}\left(L, N, M\right) = \{eta: \operatorname{Mode}\left(L\right) \to \mathbb{N} \mid \sum_{i \in \operatorname{Mode}\left(L\right)} eta\left(i\right) = N \land (\sum_{i \in \operatorname{Mode}\left(L\right)} \operatorname{val}\left(i\right) \cdot eta\left(i\right) = M)\}$$
 
 *Formalization.* `D5/S3/Quantum/FockSpace/EvninQuantumSector.Sector` (`✓ std3`).
 
@@ -34,7 +34,7 @@ The sector is a subtype of occupation functions on Mode(L). The first sum fixes 
 
 **Definition 1.3 (Finite occupation sectors).**
 
-$$\operatorname{instFintypeSector}\left(L, N, M\right) : \operatorname{Fintype}\left(\operatorname{Sector}\left(L, N, M\right)\right)$$
+$$\forall (L: \mathbb{N})(N: \mathbb{N})(M: \mathbb{N}), (\operatorname{instFintypeSector}\left(L, N, M\right): \operatorname{Fintype}\left(\operatorname{Sector}\left(L, N, M\right)\right))$$
 
 *Formalization.* `D5/S3/Quantum/FockSpace/EvninQuantumSector.instFintypeSector` (`✓ std3`).
 
@@ -48,7 +48,7 @@ The Fintype instance uses Fintype.ofInjective on the map that sends each occupat
 
 **Definition 1.4 (Decidable sector equality).**
 
-$$\operatorname{instDecidableEqSector}\left(L, N, M\right) : \operatorname{DecidableEq}\left(\operatorname{Sector}\left(L, N, M\right)\right)$$
+$$\forall (L: \mathbb{N})(N: \mathbb{N})(M: \mathbb{N}), (\operatorname{instDecidableEqSector}\left(L, N, M\right): \operatorname{DecidableEq}\left(\operatorname{Sector}\left(L, N, M\right)\right))$$
 
 *Formalization.* `D5/S3/Quantum/FockSpace/EvninQuantumSector.instDecidableEqSector` (`✓ std3`).
 
@@ -62,7 +62,7 @@ The equality instance is Classical.decEq on Sector(L, N, M).
 
 **Definition 1.5 (Raney coefficients).**
 
-$$\operatorname{raney}\left(s, r, j\right) = \frac{r \cdot \Gamma\left(s \cdot j + r\right)}{\Gamma\left(\left(s - 1\right) \cdot j + r + 1\right) \cdot \Gamma\left(j + 1\right)}$$
+$$\forall (s: \mathbb{R})(r: \mathbb{R})(j: \mathbb{N}), \operatorname{raney}\left(s, r, j\right) = \frac{r \cdot \Gamma\left(s \cdot \left(\operatorname{cast}_{\mathbb{R}}\right)\left(j\right) + r\right)}{\Gamma\left(\left(s - 1\right) \cdot \left(\operatorname{cast}_{\mathbb{R}}\right)\left(j\right) + r + 1\right) \cdot \Gamma\left(\left(\operatorname{cast}_{\mathbb{R}}\right)\left(j\right) + 1\right)}$$
 
 *Formalization.* `D5/S3/Quantum/FockSpace/EvninQuantumSector.raney` (`✓ std3`).
 
@@ -76,7 +76,7 @@ Equation (31) gives this Gamma quotient with real parameters s and r and natural
 
 **Definition 1.6 (Energy of the attaining state).**
 
-$$\operatorname{energy}\left(s, N, M\right) = \frac{\left((N: \mathbb{R}) - 1\right) \cdot \left((N: \mathbb{R}) + 2 \cdot s \cdot (M: \mathbb{R})\right)}{2}$$
+$$\forall (s: \mathbb{R})(N: \mathbb{N})(M: \mathbb{N}), \operatorname{energy}\left(s, N, M\right) = \frac{\left(\left(\operatorname{cast}_{\mathbb{R}}\right)\left(N\right) - 1\right) \cdot \left(\left(\operatorname{cast}_{\mathbb{R}}\right)\left(N\right) + 2 \cdot s \cdot \left(\operatorname{cast}_{\mathbb{R}}\right)\left(M\right)\right)}{2}$$
 
 *Formalization.* `D5/S3/Quantum/FockSpace/EvninQuantumSector.energy` (`✓ std3`).
 
@@ -90,7 +90,7 @@ Both N and M are cast from natural numbers to real numbers before the arithmetic
 
 **Definition 1.7 (Factorial occupation vector).**
 
-$$\operatorname{occupationVector}\left(A, eta\right) = (\prod_{i \in \operatorname{Mode}\left(L\right)} \frac{\sqrt{A\left(i\right)}^{eta\left(i\right)}}{\sqrt{(eta\left(i\right))!}}: \mathbb{C})$$
+$$\forall (L: \mathbb{N})(N: \mathbb{N})(M: \mathbb{N})(A: \mathbb{N} \to \mathbb{R})(eta: \operatorname{Sector}\left(L, N, M\right)), \operatorname{occupationVector}\left(A, eta\right) = \operatorname{Complex.ofReal}\left(\prod_{i \in \operatorname{Mode}\left(L\right)} \frac{\sqrt{A\left(\operatorname{val}\left(i\right)\right)}^{\operatorname{val}\left(eta\right)\left(i\right)}}{\sqrt{\left(\operatorname{cast}_{\mathbb{R}}\right)\left((\operatorname{val}\left(eta\right)\left(i\right))!\right)}}\right)$$
 
 *Formalization.* `D5/S3/Quantum/FockSpace/EvninQuantumSector.occupationVector` (`✓ std3`).
 
@@ -100,11 +100,11 @@ $$\operatorname{occupationVector}\left(A, eta\right) = (\prod_{i \in \operatorna
 
 *Commentary.*
 
-For real mode weights A, each coordinate is computed in the reals and cast to the complex numbers. In the theorem, A(i) is raney(s, 1, i) and the vector is indexed by Sector(M, N, M).
+For real mode weights A, each coordinate is computed in the reals and cast to the complex numbers. In the theorem, A(t) is raney(s, 1, t) for each natural label t, and the vector is indexed by Sector(M, N, M).
 
 **Definition 1.8 (Normally ordered Hamiltonian).**
 
-$$\begin{aligned}A_{j} = \operatorname{raney}\left(s, 1, j\right),\quad c_{j} = \frac{1 + \frac{j \cdot \left(s - 1\right)}{2}}{A_{j}}\\w_{j,k} = \sqrt{A_{k} \cdot A_{j - k}}\\\operatorname{hamiltonian}\left(s, N, M\right) = \sum_{j \in \operatorname{Mode}\left(M\right)} \frac{c_{j}}{2} \cdot \sum_{k \in \operatorname{Fin}\left(j + 1\right)} \sum_{l \in \operatorname{Fin}\left(j + 1\right)} w_{j,k} \cdot w_{j,l} \cdot \left(B_{j,k}\right)^{*} \cdot B_{j,l}\quad\operatorname{if} 2 \le N\\\operatorname{hamiltonian}\left(s, N, M\right) = 0\quad\operatorname{if} N < 2\end{aligned}$$
+$$\begin{aligned}&\forall (s: \mathbb{R})(N: \mathbb{N})(M: \mathbb{N}), \operatorname{let}\\&\quad A := \lambda (t: \mathbb{N}) \mapsto \operatorname{raney}\left(s, 1, t\right),\\&\quad c := \lambda (t: \mathbb{N}) \mapsto \frac{1 + \frac{\left(\operatorname{cast}_{\mathbb{R}}\right)\left(t\right) \cdot \left(s - 1\right)}{2}}{A\left(t\right)},\\&\quad w := \lambda (j: \operatorname{Mode}\left(M\right))(k: \operatorname{Fin}\left(\operatorname{val}\left(j\right) + 1\right)) \mapsto \sqrt{A\left(\operatorname{val}\left(k\right)\right) \cdot A\left((\operatorname{val}\left(j\right) - \operatorname{val}\left(k\right))_{\mathbb{N}}\right)} \operatorname{in}\\&\quad\operatorname{hamiltonian}\left(s, N, M\right) = \operatorname{if} 2 \le N \operatorname{then}\\&\qquad\operatorname{let} B := \lambda (j: \operatorname{Mode}\left(M\right))(k: \operatorname{Fin}\left(\operatorname{val}\left(j\right) + 1\right)) \mapsto \operatorname{let} u := \langle\operatorname{val}\left(k\right)\rangle_{\operatorname{Mode}\left(M\right)},\quad v := \langle(\operatorname{val}\left(j\right) - \operatorname{val}\left(k\right))_{\mathbb{N}}\rangle_{\operatorname{Mode}\left(M\right)} \operatorname{in}\\&\qquad\lambda (\zeta: \operatorname{Sector}\left(M, (N - 2)_{\mathbb{N}}, (M - \operatorname{val}\left(j\right))_{\mathbb{N}}\right))(eta: \operatorname{Sector}\left(M, N, M\right)) \mapsto \operatorname{if} (\forall (i: \operatorname{Mode}\left(M\right)), \operatorname{val}\left(eta\right)\left(i\right) = \operatorname{val}\left(\zeta\right)\left(i\right) + [i = u]_{\mathbb{N}} + [i = v]_{\mathbb{N}})\\&\qquad\quad\operatorname{then} \operatorname{Complex.ofReal}\left(\sqrt{\left(\operatorname{cast}_{\mathbb{R}}\right)\left(\operatorname{val}\left(eta\right)\left(u\right)\right) \cdot \left(\left(\operatorname{cast}_{\mathbb{R}}\right)\left(\operatorname{val}\left(eta\right)\left(v\right)\right) - [u = v]_{\mathbb{R}}\right)}\right)\quad\operatorname{else} 0\\&\qquad\operatorname{in} \sum_{j \in \operatorname{Mode}\left(M\right)} \operatorname{smul}\left(\frac{c\left(\operatorname{val}\left(j\right)\right)}{2}, \sum_{k \in \operatorname{Fin}\left(\operatorname{val}\left(j\right) + 1\right)} \sum_{l \in \operatorname{Fin}\left(\operatorname{val}\left(j\right) + 1\right)} \operatorname{smul}\left(w\left(j, k\right) \cdot w\left(j, l\right), B\left(j, k\right)^{*} \cdot B\left(j, l\right)\right)\right)\\&\quad\operatorname{else} 0\end{aligned}$$
 
 *Formalization.* `D5/S3/Quantum/FockSpace/EvninQuantumSector.hamiltonian` (`✓ std3`).
 
@@ -114,11 +114,11 @@ $$\begin{aligned}A_{j} = \operatorname{raney}\left(s, 1, j\right),\quad c_{j} = 
 
 *Commentary.*
 
-For N at least two, B with indices j and k is the ordered annihilator for modes k and j − k. Its columns are indexed by Sector(M, N, M), and its rows by Sector(M, N − 2, M − j). The entry at row ζ and column η vanishes unless η is obtained by adding both particles to ζ. In that case the entry is the real square root of η(k) times η(j − k) for distinct modes, with the entire product under the root. For equal modes the radicand is η(k)(η(k) − 1). Both orders of a distinct-mode pair occur in the ordered sums from Eqs. (19) and (30).
+For N at least two, B is the ordered pair annihilation matrix. Angle brackets denote the element of Mode(M) with the indicated natural label. The bracketed equalities in the entry formula are indicators, with value one when true and zero otherwise. The adjoint is conjugate transpose, and smul is the real scalar action on complex matrices. Both orders of a distinct-mode pair occur in the sums from Eqs. (19) and (30).
 
 **Definition 1.9 (Proposition on the top spectral value).**
 
-$$claim \Leftrightarrow (\forall s \in \mathbb{R},\; (1 \le s) \Rightarrow (\forall N \in \mathbb{N},\; \forall M \in \mathbb{N},\; (\operatorname{Nonempty}\left(\operatorname{Sector}\left(M, N, M\right)\right)) \Rightarrow (\operatorname{IsHermitian}\left(\operatorname{hamiltonian}\left(s, N, M\right)\right) \land (\operatorname{IsGreatest}\left(\operatorname{spectrum}\left(\mathbb{R}, \operatorname{hamiltonian}\left(s, N, M\right)\right), \operatorname{energy}\left(s, N, M\right)\right) \land (\operatorname{occupationVector}\left(\operatorname{raney}\left(s, 1\right)\right) \ne 0 \land (\operatorname{mulVec}\left(\operatorname{hamiltonian}\left(s, N, M\right), \operatorname{occupationVector}\left(\operatorname{raney}\left(s, 1\right)\right)\right) = \operatorname{smul}\left(\operatorname{energy}\left(s, N, M\right), \operatorname{occupationVector}\left(\operatorname{raney}\left(s, 1\right)\right)\right)))))))$$
+$$claim \Leftrightarrow (\forall (s: \mathbb{R}), (1 \le s) \Rightarrow (\forall (N: \mathbb{N})(M: \mathbb{N})[\operatorname{Nonempty}\left(\operatorname{Sector}\left(M, N, M\right)\right)], \operatorname{IsHermitian}\left(\operatorname{hamiltonian}\left(s, N, M\right)\right) \land (\operatorname{IsGreatest}\left(\operatorname{spectrum}\left(\mathbb{R}, \operatorname{hamiltonian}\left(s, N, M\right)\right), \operatorname{energy}\left(s, N, M\right)\right) \land ((\operatorname{occupationVector}\left(\operatorname{raney}\left(s, 1\right)\right): \operatorname{Sector}\left(M, N, M\right) \to \mathbb{C}) \ne 0 \land (\operatorname{mulVec}\left(\operatorname{hamiltonian}\left(s, N, M\right), (\operatorname{occupationVector}\left(\operatorname{raney}\left(s, 1\right)\right): \operatorname{Sector}\left(M, N, M\right) \to \mathbb{C})\right) = \operatorname{smul}\left(\operatorname{energy}\left(s, N, M\right), (\operatorname{occupationVector}\left(\operatorname{raney}\left(s, 1\right)\right): \operatorname{Sector}\left(M, N, M\right) \to \mathbb{C})\right))))))$$
 
 *Formalization.* `D5/S3/Quantum/FockSpace/EvninQuantumSector.claim` (`✓ std3`).
 
@@ -128,11 +128,11 @@ $$claim \Leftrightarrow (\forall s \in \mathbb{R},\; (1 \le s) \Rightarrow (\for
 
 *Commentary.*
 
-Write s for σ. The assertion ranges over nonempty sectors, including the one-particle sectors and the vacuum of zero momentum. The displayed occupation vector uses the implicit sector indices (M, N, M). Greatest means that the energy belongs to the real spectrum and is an upper bound for it.
+Write s for σ. The assertion ranges over nonempty sectors, including the one-particle sectors and the vacuum of zero momentum. Greatest means that the energy belongs to the real spectrum and is an upper bound for it.
 
 **Theorem 1.10 (Spectral bound and attainment).**
 
-$$\forall s \in \mathbb{R},\; (1 \le s) \Rightarrow (\forall N \in \mathbb{N},\; \forall M \in \mathbb{N},\; (\operatorname{Nonempty}\left(\operatorname{Sector}\left(M, N, M\right)\right)) \Rightarrow (\operatorname{IsHermitian}\left(\operatorname{hamiltonian}\left(s, N, M\right)\right) \land (\operatorname{IsGreatest}\left(\operatorname{spectrum}\left(\mathbb{R}, \operatorname{hamiltonian}\left(s, N, M\right)\right), \operatorname{energy}\left(s, N, M\right)\right) \land (\operatorname{occupationVector}\left(\operatorname{raney}\left(s, 1\right)\right) \ne 0 \land (\operatorname{mulVec}\left(\operatorname{hamiltonian}\left(s, N, M\right), \operatorname{occupationVector}\left(\operatorname{raney}\left(s, 1\right)\right)\right) = \operatorname{smul}\left(\operatorname{energy}\left(s, N, M\right), \operatorname{occupationVector}\left(\operatorname{raney}\left(s, 1\right)\right)\right))))))$$
+$$\forall (s: \mathbb{R}), (1 \le s) \Rightarrow (\forall (N: \mathbb{N})(M: \mathbb{N})[\operatorname{Nonempty}\left(\operatorname{Sector}\left(M, N, M\right)\right)], \operatorname{IsHermitian}\left(\operatorname{hamiltonian}\left(s, N, M\right)\right) \land (\operatorname{IsGreatest}\left(\operatorname{spectrum}\left(\mathbb{R}, \operatorname{hamiltonian}\left(s, N, M\right)\right), \operatorname{energy}\left(s, N, M\right)\right) \land ((\operatorname{occupationVector}\left(\operatorname{raney}\left(s, 1\right)\right): \operatorname{Sector}\left(M, N, M\right) \to \mathbb{C}) \ne 0 \land (\operatorname{mulVec}\left(\operatorname{hamiltonian}\left(s, N, M\right), (\operatorname{occupationVector}\left(\operatorname{raney}\left(s, 1\right)\right): \operatorname{Sector}\left(M, N, M\right) \to \mathbb{C})\right) = \operatorname{smul}\left(\operatorname{energy}\left(s, N, M\right), (\operatorname{occupationVector}\left(\operatorname{raney}\left(s, 1\right)\right): \operatorname{Sector}\left(M, N, M\right) \to \mathbb{C})\right)))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/FockSpace/EvninQuantumSector.top_finite_sector_eigenvalue` (`✓ std3`). ∎
 

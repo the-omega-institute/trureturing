@@ -37,14 +37,14 @@ internal sealed class EvninQuantumSectorDocument : IScribeDocumentDefinition
                 "Both N and M are cast from natural numbers to real numbers before the arithmetic of Eq. (33)."),
             Definition("vector", "occupationVector", "Factorial occupation vector", VectorBody(),
                 "For real mode weights A, each coordinate is computed in the reals and cast to the complex "
-                + "numbers. In the theorem, A(i) is raney(s, 1, i) and the vector is indexed by Sector(M, N, M)."),
+                + "numbers. In the theorem, A(t) is raney(s, 1, t) for each natural label t, and the vector "
+                + "is indexed by Sector(M, N, M)."),
             Definition("hamiltonian", "hamiltonian", "Normally ordered Hamiltonian", HamiltonianBody(),
-                "For N at least two, B with indices j and k is the ordered annihilator for modes k and j − k. "
-                + "Its columns are indexed by Sector(M, N, M), and its rows by Sector(M, N − 2, M − j). "
-                + "The entry at row ζ and column η vanishes unless η is obtained by adding both particles to ζ. "
-                + "In that case the entry is the real square root of η(k) times η(j − k) for distinct modes, "
-                + "with the entire product under the root. For equal modes the radicand is η(k)(η(k) − 1). "
-                + "Both orders of a distinct-mode pair occur in the ordered sums from Eqs. (19) and (30)."),
+                "For N at least two, B is the ordered pair annihilation matrix. Angle brackets denote "
+                + "the element of Mode(M) with the indicated natural label. The bracketed equalities "
+                + "in the entry formula are indicators, with value one when true and zero otherwise. "
+                + "The adjoint is conjugate transpose, and smul is the real scalar action on complex matrices. "
+                + "Both orders of a distinct-mode pair occur in the sums from Eqs. (19) and (30)."),
             Describe.Lean(
                 DescribeId.Create("evnin-quantum-sector-claim"), DeclarationHandle.Create(Module + ".claim"),
                 H("Proposition on the top spectral value"),
@@ -54,8 +54,7 @@ internal sealed class EvninQuantumSectorDocument : IScribeDocumentDefinition
                 Blocks(
                     Paragraph(Text(
                         "Write s for σ. The assertion ranges over nonempty sectors, including the one-particle "
-                        + "sectors and the vacuum of zero momentum. The displayed occupation vector uses "
-                        + "the implicit sector indices (M, N, M). Greatest means that the energy belongs to "
+                        + "sectors and the vacuum of zero momentum. Greatest means that the energy belongs to "
                         + "the real spectrum and is an upper bound for it."))),
                 DescribeRole.Definition),
             Describe.Lean(
@@ -97,15 +96,16 @@ internal sealed class EvninQuantumSectorDocument : IScribeDocumentDefinition
 
     private static Formula SectorInstance(string declaration, string type)
     {
-        Formula cutoff = F.Id("L"), particles = F.Id("N"), momentum = F.Id("M");
-        return Seq(Call(declaration, cutoff, particles, momentum), Sp, Colon, Sp,
-            Call(type, Call("Sector", cutoff, particles, momentum)));
+        Formula l = F.Id("L"), n = F.Id("N"), m = F.Id("M");
+        return Quantify(Typed(Call(declaration, l, n, m), Call(type, Call("Sector", l, n, m))),
+            Typed(l, Naturals()), Typed(n, Naturals()), Typed(m, Naturals()));
     }
 
     private static Formula ModeBody()
     {
         Formula cutoff = F.Id("L");
-        return Equal(Call("Mode", cutoff), Call("Fin", Add(cutoff, D(1))));
+        return Quantify(Equal(Call("Mode", cutoff), Call("Fin", Add(cutoff, D(1)))),
+            Typed(cutoff, Naturals()));
     }
 
     private static Formula SectorBody()
@@ -115,60 +115,89 @@ internal sealed class EvninQuantumSectorDocument : IScribeDocumentDefinition
         Formula occupation = new Formula.Apply(eta, [mode]);
         Formula domain = new Formula.TypeArrow(modes, Naturals());
         Formula count = Equal(Indexed(Sum, mode, modes, occupation), particles);
-        Formula weight = Equal(Indexed(Sum, mode, modes, Mul(mode, occupation)), momentum);
-        return Equal(Call("Sector", cutoff, particles, momentum),
-            Seq(OpenBrace, eta, Colon, Sp, domain, Sp, Bar, Sp, And(count, weight), CloseBrace));
+        Formula weight = Equal(Indexed(Sum, mode, modes, Mul(Call("val", mode), occupation)), momentum);
+        Formula subtype = Seq(OpenBrace, eta, Colon, Sp, domain, Sp, Mid, Sp, And(count, weight), CloseBrace);
+        return Quantify(Equal(Call("Sector", cutoff, particles, momentum), subtype),
+            Typed(cutoff, Naturals()), Typed(particles, Naturals()), Typed(momentum, Naturals()));
     }
 
     private static Formula RaneyBody()
     {
         Formula s = F.Id("s"), r = F.Id("r"), j = F.Id("j");
-        Formula numerator = Mul(r, new Formula.Apply(Gamma, [Add(Mul(s, j), r)]));
-        Formula first = new Formula.Apply(Gamma, [Add(Add(Mul(Sub(s, D(1)), j), r), D(1))]);
-        Formula second = new Formula.Apply(Gamma, [Add(j, D(1))]);
-        return Equal(Call("raney", s, r, j), new Formula.Fraction(numerator, Mul(first, second)));
+        Formula index = RealCast(j);
+        Formula numerator = Mul(r, new Formula.Apply(Gamma, [Add(Mul(s, index), r)]));
+        Formula first = new Formula.Apply(Gamma, [Add(Add(Mul(Sub(s, D(1)), index), r), D(1))]);
+        Formula second = new Formula.Apply(Gamma, [Add(index, D(1))]);
+        return Quantify(Equal(Call("raney", s, r, j), new Formula.Fraction(numerator, Mul(first, second))),
+            Typed(s, Reals()), Typed(r, Reals()), Typed(j, Naturals()));
     }
 
     private static Formula EnergyBody()
     {
         Formula s = F.Id("s"), n = F.Id("N"), m = F.Id("M");
-        Formula particles = Typed(n, Reals()), momentum = Typed(m, Reals());
-        return Equal(Call("energy", s, n, m), new Formula.Fraction(
-            Mul(Sub(particles, D(1)), Add(particles, Mul(Mul(D(2), s), momentum))), D(2)));
+        Formula particles = RealCast(n), momentum = RealCast(m);
+        Formula value = new Formula.Fraction(
+            Mul(Sub(particles, D(1)), Add(particles, Mul(Mul(D(2), s), momentum))), D(2));
+        return Quantify(Equal(Call("energy", s, n, m), value),
+            Typed(s, Reals()), Typed(n, Naturals()), Typed(m, Naturals()));
     }
 
     private static Formula VectorBody()
     {
+        Formula l = F.Id("L"), n = F.Id("N"), m = F.Id("M");
         Formula a = F.Id("A"), i = F.Id("i"), eta = F.Id("eta");
-        Formula occupation = new Formula.Apply(eta, [i]);
-        Formula weight = new Formula.Apply(a, [i]);
+        Formula occupation = Occupation(eta, i);
+        Formula weight = new Formula.Apply(a, [Call("val", i)]);
         Formula factorial = Seq(Parenthesized(occupation), Bang);
-        Formula amplitude = new Formula.Fraction(new Formula.Power(Root(weight), occupation), Root(factorial));
-        Formula product = Indexed(Prod, i, Call("Mode", F.Id("L")), amplitude);
-        return Equal(Call("occupationVector", a, eta), Typed(product, Seq(Mathbb, Grp(F.Id("C")))));
+        Formula amplitude = new Formula.Fraction(new Formula.Power(Root(weight), occupation), Root(RealCast(factorial)));
+        Formula product = Indexed(Prod, i, Call("Mode", l), amplitude);
+        return Quantify(Equal(Call("occupationVector", a, eta), OfReal(product)),
+            Typed(l, Naturals()), Typed(n, Naturals()), Typed(m, Naturals()),
+            Typed(a, new Formula.TypeArrow(Naturals(), Reals())), Typed(eta, Call("Sector", l, n, m)));
     }
 
     private static Formula HamiltonianBody()
     {
         Formula s = F.Id("s"), n = F.Id("N"), m = F.Id("M");
-        Formula j = F.Id("j"), k = F.Id("k"), l = F.Id("l");
+        Formula t = F.Id("t"), j = F.Id("j"), k = F.Id("k"), l = F.Id("l");
         Formula a = F.Id("A"), c = F.Id("c"), w = F.Id("w"), b = F.Id("B");
-        Formula aj = new Formula.Subscript(a, j), cj = new Formula.Subscript(c, j);
-        Formula wjk = new Formula.Subscript(w, Seq(j, Comma, k));
-        Formula wjl = new Formula.Subscript(w, Seq(j, Comma, l));
-        Formula bjk = new Formula.Subscript(b, Seq(j, Comma, k));
-        Formula bjl = new Formula.Subscript(b, Seq(j, Comma, l));
-        Formula adjoint = new Formula.Power(bjk, Star);
-        Formula pairs = Call("Fin", Add(j, D(1)));
-        Formula block = Indexed(Sum, k, pairs, Indexed(Sum, l, pairs, Mul(Mul(wjk, wjl), Mul(adjoint, bjl))));
-        Formula ordered = Indexed(Sum, j, Call("Mode", m), Mul(new Formula.Fraction(cj, D(2)), block));
-        Formula h = Call("hamiltonian", s, n, m);
+        Formula jVal = Call("val", j), kVal = Call("val", k);
+        Formula difference = NatSub(jVal, kVal);
+        Formula modes = Call("Mode", m), pairs = Call("Fin", Add(jVal, D(1)));
+        Formula jBinder = Typed(j, modes), kBinder = Typed(k, pairs);
+        Formula coefficient = new Formula.Fraction(
+            Add(D(1), new Formula.Fraction(Mul(RealCast(t), Sub(s, D(1))), D(2))),
+            new Formula.Apply(a, [t]));
+        Formula weight = Root(Mul(new Formula.Apply(a, [kVal]), new Formula.Apply(a, [difference])));
+
+        Formula wjk = new Formula.Apply(w, [j, k]), wjl = new Formula.Apply(w, [j, l]);
+        Formula bjk = new Formula.Apply(b, [j, k]), bjl = new Formula.Apply(b, [j, l]);
+        Formula block = Indexed(Sum, k, pairs, Indexed(Sum, l, pairs,
+            Call("smul", Mul(wjk, wjl), Mul(new Formula.Power(bjk, Star), bjl))));
+        Formula ordered = Indexed(Sum, j, modes,
+            Call("smul", new Formula.Fraction(new Formula.Apply(c, [jVal]), D(2)), block));
+        Formula upper = Call("Sector", m, n, m), lower = Call("Sector", m, NatSub(n, D(2)), NatSub(m, jVal));
+        Formula u = F.Id("u"), v = F.Id("v"), eta = F.Id("eta"), zeta = Zeta, i = F.Id("i");
+        Formula matching = Quantify(Equal(Occupation(eta, i),
+            Add(Occupation(zeta, i), Add(Indicator(Equal(i, u), Naturals()), Indicator(Equal(i, v), Naturals())))),
+            Typed(i, modes));
+        Formula count = Mul(RealCast(Occupation(eta, u)),
+            Sub(RealCast(Occupation(eta, v)), Indicator(Equal(u, v), Reals())));
         return new Formula.Aligned([
-            Seq(Equal(aj, Call("raney", s, D(1), j)), Comma, Quad, Sp,
-                Equal(cj, new Formula.Fraction(Add(D(1), new Formula.Fraction(Mul(j, Sub(s, D(1))), D(2))), aj))),
-            Equal(wjk, Root(Mul(new Formula.Subscript(a, k), new Formula.Subscript(a, Sub(j, k))))),
-            Seq(Equal(h, ordered), Quad, If(new Formula.Relation(D(2), FormulaRelationOperator.LessThanOrEqual, n))),
-            Seq(Equal(h, D(0)), Quad, If(new Formula.Relation(n, FormulaRelationOperator.LessThan, D(2))))]);
+            Seq(Amp, Quantify(Word("let"),
+                Typed(s, Reals()), Typed(n, Naturals()), Typed(m, Naturals()))),
+            Seq(Amp, Quad, Sp, Assign(a, LambdaOf(Call("raney", s, D(1), t), Typed(t, Naturals()))), Comma),
+            Seq(Amp, Quad, Sp, Assign(c, LambdaOf(coefficient, Typed(t, Naturals()))), Comma),
+            Seq(Amp, Quad, Sp, Assign(w, LambdaOf(weight, jBinder, kBinder)), Sp, Word("in")),
+            Seq(Amp, Quad, Call("hamiltonian", s, n, m), Sp, Eq, Sp,
+                Word("if"), Sp, new Formula.Relation(D(2), FormulaRelationOperator.LessThanOrEqual, n), Sp, Word("then")),
+            Seq(Amp, Qquad, Word("let"), Sp, Assign(b, LambdaOf(Word("let"), jBinder, kBinder)), Sp,
+                Assign(u, ModeAt(kVal, modes)), Comma, Quad, Sp, Assign(v, ModeAt(difference, modes)), Sp, Word("in")),
+            Seq(Amp, Qquad, LambdaOf(Seq(Word("if"), Sp, Parenthesized(matching)),
+                Typed(zeta, lower), Typed(eta, upper))),
+            Seq(Amp, Qquad, Quad, Word("then"), Sp, OfReal(Root(count)), Quad, Word("else"), Sp, D(0)),
+            Seq(Amp, Qquad, Word("in"), Sp, ordered),
+            Seq(Amp, Quad, Word("else"), Sp, D(0))]);
     }
 
     private static Formula ClaimBody()
@@ -176,31 +205,43 @@ internal sealed class EvninQuantumSectorDocument : IScribeDocumentDefinition
         Formula sigma = F.Id("s"), n = F.Id("N"), m = F.Id("M");
         Formula sector = Call("Sector", m, n, m);
         Formula h = Call("hamiltonian", sigma, n, m);
-        Formula vector = Call("occupationVector", Call("raney", sigma, D(1)));
+        Formula vector = Typed(Call("occupationVector", Call("raney", sigma, D(1))),
+            new Formula.TypeArrow(sector, Seq(Mathbb, Grp(F.Id("C")))));
         Formula energy = Call("energy", sigma, n, m);
         Formula conclusion = And(Call("IsHermitian", h), And(
             Call("IsGreatest", Call("spectrum", Reals(), h), energy),
             And(new Formula.Relation(vector, FormulaRelationOperator.NotEqual, D(0)),
                 new Formula.Relation(Call("mulVec", h, vector), FormulaRelationOperator.Equal,
                     Call("smul", energy, vector)))));
-        return All("s", Reals(), Implies(
-            new Formula.Relation(D(1), FormulaRelationOperator.LessThanOrEqual, sigma),
-            All("N", Naturals(), All("M", Naturals(), Implies(Call("Nonempty", sector), conclusion)))));
+        Formula instance = Seq(OpenBracket, Call("Nonempty", sector), CloseBracket);
+        return Quantify(Implies(new Formula.Relation(D(1), FormulaRelationOperator.LessThanOrEqual, sigma),
+            Quantify(conclusion, Typed(n, Naturals()), Typed(m, Naturals()), instance)), Typed(sigma, Reals()));
     }
 
     private static Formula Call(string name, params Formula[] arguments) =>
-        new Formula.Apply(Seq(Operatorname, Grp(F.Id(name))), [.. arguments]);
+        new Formula.Apply(Word(name), [.. arguments]);
+    private static Formula Word(string name) => Seq(Operatorname, Grp(F.Id(name)));
     private static Formula Indexed(Formula op, Formula index, Formula domain, Formula body) =>
         Seq(op, Underscore, Grp(new Formula.Relation(index, FormulaRelationOperator.MemberOf, domain)), Sp, body);
-    private static Formula If(Formula test) => Seq(Operatorname, Grp(F.Id("if")), Sp, test);
+    private static Formula Assign(Formula lhs, Formula rhs) => Seq(lhs, Sp, Colon, Eq, Sp, rhs);
+    private static Formula LambdaOf(Formula body, params Formula[] binders) =>
+        Seq(LambdaLower, Sp, Seq(binders), Sp, Mapsto, Sp, body);
+    private static Formula ModeAt(Formula label, Formula modes) => new Formula.Subscript(Seq(Langle, label, Rangle), modes);
+    private static Formula Indicator(Formula condition, Formula type) =>
+        new Formula.Subscript(Seq(OpenBracket, condition, CloseBracket), type);
+    private static Formula Occupation(Formula state, Formula mode) => new Formula.Apply(Call("val", state), [mode]);
+    private static Formula NatSub(Formula x, Formula y) => new Formula.Subscript(Parenthesized(Sub(x, y)), Naturals());
+    private static Formula RealCast(Formula value) => new Formula.Apply(new Formula.Subscript(Word("cast"), Reals()), [value]);
+    private static Formula OfReal(Formula value) =>
+        new Formula.Apply(Seq(Operatorname, Grp(F.Id("Complex"), Dot, F.Id("ofReal"))), [value]);
     private static Formula Root(Formula value) => Seq(Sqrt, Grp(value));
     private static Formula Equal(Formula lhs, Formula rhs) => new Formula.Relation(lhs, FormulaRelationOperator.Equal, rhs);
     private static Formula Reals() => Seq(Mathbb, Grp(F.Id("R")));
     private static Formula Naturals() => Seq(Mathbb, Grp(F.Id("N")));
     private static Formula Typed(Formula value, Formula type) => Parenthesized(Seq(value, Colon, Sp, type));
     private static Formula Parenthesized(Formula x) => Seq(Open, x, Close);
-    private static Formula All(string name, Formula type, Formula body) =>
-        new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), type, body);
+    private static Formula Quantify(Formula body, params Formula[] binders) =>
+        Seq(Forall, Sp, Seq(binders), Comma, Sp, body);
     private static Formula And(Formula x, Formula y) =>
         new Formula.Logic(x, FormulaLogicOperator.And, Parenthesized(y));
     private static Formula Implies(Formula x, Formula y) =>
