@@ -69,7 +69,7 @@ public def liftOperation? (owner name : Name) : Option Name := do
     | `Init.Grind.Ring.Envelope => some [``Ring.OfSemiring.add, ``Ring.OfSemiring.sub,
         ``Ring.OfSemiring.mul, ``Ring.OfSemiring.neg]
     | `Init.Grind.Module.Envelope => some [``IntModule.OfNatModule.add, ``IntModule.OfNatModule.sub,
-        ``IntModule.OfNatModule.neg]
+        ``IntModule.OfNatModule.neg, ``IntModule.OfNatModule.nsmul, ``IntModule.OfNatModule.zsmul]
     | _ => none
   let n := privateToUserName name
   ops.find? fun op => n == op || n == op.str "eq_1"
@@ -86,7 +86,12 @@ private def liftEquationClaim (official witnesses : Environment) (owner op : Nam
   let equationName := if ring then op.str "eq_1" else mkPrivateNameCore owner (op.str "eq_1")
   let some (.thmInfo equation) := official.find? equationName | throw <| IO.userError s!"missing {equationName}"
   unless source.name == op || source.name == equationName do throw <| IO.userError s!"wrong site {source.name}"
-  let unary := op.getString! == "neg"
+  -- At scalar one both lifted actions return the class of the input representative.
+  let scalar := if op == ``IntModule.OfNatModule.nsmul then #[mkRawNatLit 1]
+    else if op == ``IntModule.OfNatModule.zsmul then #[mkApp (mkConst ``Int.ofNat) (mkRawNatLit 1)]
+    else #[]
+  let params := #[mkConst ``Nat, inst] ++ scalar
+  let unary := !scalar.isEmpty || op.getString! == "neg"
   let lift := if unary then ``Quot.liftOn else if ring then ``Ring.OfSemiring.Q.liftOn₂ else ``IntModule.OfNatModule.Q.liftOn₂
   -- Multiplication fixes (1,0), its unit representative. Addition and subtraction fix (0,0).
   let fixed := if op == ``Ring.OfSemiring.mul then 1 else 0
@@ -97,13 +102,14 @@ private def liftEquationClaim (official witnesses : Environment) (owner op : Nam
   for arg in args do
     if let .error _ := Kernel.check clean {} arg then throw <| IO.userError "invalid coherence test input"
   let test := do
-    let type := (equation.type.instantiateLevelParams equation.levelParams [0]).bindingBody!.instantiate1 (mkConst ``Nat)
-    Meta.forallTelescope (type.bindingBody!.instantiate1 inst) fun qs conclusion => do
+    let equationType := equation.type.instantiateLevelParams equation.levelParams [0]
+    let rest := params.foldl (fun (t : Expr) arg => t.bindingBody!.instantiate1 arg) equationType
+    Meta.forallTelescope rest fun qs conclusion => do
       let some (_, lhs, rhs) := conclusion.eq? | throwError "expected an unfolding equality"
-      unless qs.size == (if unary then 1 else 2) && lhs == mkAppN (mkApp2 (mkConst op [0]) (mkConst ``Nat) inst) qs &&
+      unless qs.size == (if unary then 1 else 2) && lhs == mkAppN (mkConst op [0]) (params ++ qs) &&
           rhs.getAppFn.isConstOf lift do
         throwError "unexpected unfolding equation for {source.name}"
-      let body := (impl.value.instantiateLevelParams impl.levelParams [0]).beta (#[mkConst ``Nat, inst] ++ qs)
+      let body := (impl.value.instantiateLevelParams impl.levelParams [0]).beta (params ++ qs)
       unless body.getAppFn.isConstOf lift && Kernel.isDefEqGuarded official (← getLCtx) body rhs do
         throwError "pinned body and unfolding equation disagree for {op}"
       let .forallE _ required _ _ ← Meta.whnf (← Meta.inferType rhs.appFn!) | throwError "missing coherence argument"
