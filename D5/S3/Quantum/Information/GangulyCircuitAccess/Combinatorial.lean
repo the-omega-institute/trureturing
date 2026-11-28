@@ -213,11 +213,13 @@ def fullConfig {n : ℕ} (d : Fin n) (A : Finset (Fin n))
 
 open scoped BigOperators
 
+/-- The ordered quadratic graph phase. -/
+def graphPhase {n : ℕ} (M : Matrix (Fin n) (Fin n) (ZMod 2)) (t : Bits n) : ZMod 2 :=
+  ∑ i, ∑ j with i < j, M i j * t i * t j
+
 /-- The integer sign of the ordered quadratic graph phase. -/
-def signedGraphEntry {n : ℕ} (M : Matrix (Fin n) (Fin n) (ZMod 2))
-    (t : Bits n) : ℤ :=
-  let phase : ZMod 2 := ∑ i, ∑ j with i < j, M i j * t i * t j
-  (-1) ^ phase.val
+def signedGraphEntry {n : ℕ} (M : Matrix (Fin n) (Fin n) (ZMod 2)) (t : Bits n) : ℤ :=
+  (-1) ^ (graphPhase M t).val
 
 set_option maxRecDepth 8192 in
 set_option maxHeartbeats 4000000 in
