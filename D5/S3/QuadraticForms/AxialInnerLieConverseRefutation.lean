@@ -96,6 +96,7 @@ private theorem mem_eig (a x : B n) (t : ℚ) :
     x ∈ eig left a t ↔ product a x = t • x :=
   Module.End.mem_eigenspace_iff
 
+omit [DecidableEq n] in
 private theorem spin_coords (s : n → ℚ) (x : B n) (t : ℚ) :
     x ∈ eig left (spinAxis s) t ↔
       (1 / 2 : ℚ) * (x.1.1 + s ⬝ᵥ x.1.2) = t * x.1.1 ∧
@@ -160,6 +161,7 @@ private theorem spin_half (s : n → ℚ) (hs : s ⬝ᵥ s = 1) (x : B n) :
   · rintro ⟨ha, hv, hz⟩
     simp [ha, hv, hz]
 
+omit [DecidableEq n] in
 private theorem z_eig (x : B n) (t : ℚ) :
     x ∈ eig left (z : B n) t ↔ t • x.1 = 0 ∧ x.2 = t * x.2 := by
   rw [mem_eig]
@@ -493,6 +495,7 @@ private theorem chosen_generates [Nonempty n] : Generates left (chosen : Set (B 
   rw [← chosen_spans]
   exact Submodule.span_le.mpr hS
 
+omit [DecidableEq n] in
 private theorem scalar_ideal :
     let I : Submodule ℚ (B n) := ℚ ∙ z
     (∀ a x, x ∈ I → left a x ∈ I) ∧ I ≠ ⊥ ∧ I ≠ ⊤ := by
