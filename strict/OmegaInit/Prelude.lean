@@ -364,6 +364,15 @@ theorem instDecidableAnd._proof_1 {p q : Prop} [dp : Decidable p] [dq : Decidabl
 instance instDecidableAnd {p q : Prop} [dp : Decidable p] [dq : Decidable q] : Decidable (And p q) :=
   Decidable.intro (Bool.and (@Decidable.decide p dp) (@Decidable.decide q dq)) instDecidableAnd._proof_1
 
+end Omega
+
+port_definition instDecidableOr.match_3 with_native_code
+port_definition instDecidableOr.match_1 with_native_code
+port_proof instDecidableOr._proof_1
+port_definition instDecidableOr with_native_code
+attribute [instance] Omega.instDecidableOr
+
+namespace Omega
 attribute [instance] _root_.instOfNatNat _root_.instHAdd _root_.instAddNat
 
 instance instLENat : LE Nat := LE.mk Nat.le
@@ -732,9 +741,6 @@ port_definition Prod.noConfusionType
 port_definition Prod.noConfusion
 port_definition Subtype.noConfusionType
 port_definition Subtype.noConfusion
-port_definition instDecidableOr.match_3 with_native_code
-port_definition instDecidableOr.match_1 with_native_code
-port_proof instDecidableOr._proof_1
 
 port_native_records Trans
 
@@ -839,3 +845,40 @@ end Nat
 namespace Nat.brecOn
 export _root_.Omega.Nat.brecOn (eq)
 end Nat.brecOn
+
+port_definition Nat.isValidChar
+port_definition UInt32.isValidChar
+port_native_records Char, String.Pos.Raw
+port_definition Char.ctorIdx
+port_definition Char.noConfusionType
+port_definition Char.noConfusion
+port_definition Char.mk.noConfusion
+port_definition String.Pos.Raw.ctorIdx
+port_definition String.Pos.Raw.noConfusionType
+port_definition String.Pos.Raw.noConfusion
+port_definition String.Pos.Raw.mk.noConfusion
+port_proof Char.ext
+port_proof Char.val_eq_of_eq
+port_proof Char.ne_of_val_ne
+port_proof Char.val_ne_of_ne
+port_definition instDecidableEqChar.match_1
+port_proof instDecidableEqChar._proof_1
+port_definition instDecidableEqChar with_native_code
+attribute [instance] Omega.instDecidableEqChar
+
+namespace Nat
+export _root_.Omega.Nat (isValidChar)
+end Nat
+
+port_definition UInt32.size
+port_definition UInt32.ofNatLT with_native_code
+port_proof Char.ofNatAux._private_1
+port_definition Char.ofNatAux with_native_code
+port_proof Char.ofNat._proof_1
+port_proof Char.ofNat._proof_2
+port_definition Char.ofNat with_native_code
+port_proof Char.utf8Size._proof_1
+port_proof Char.utf8Size._proof_2
+port_proof Char.utf8Size._proof_3
+port_definition Char.utf8Size with_native_code
+attribute [match_pattern] Omega.Char.ofNat
