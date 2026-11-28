@@ -286,7 +286,7 @@ noncomputable instance jamSectorFintype (L q : ℕ) : Fintype (JamSector L q) :=
   unfold JamSector
   infer_instance
 
-def jamEmbedding {L : ℕ} (hL : 12 ≤ L) :
+@[expose] def jamEmbedding {L : ℕ} (hL : 12 ≤ L) :
     (Fin (blocks L) → Bool) ↪ JamSector L (targetCharge L) where
   toFun b := ⟨tiledConfig hL b, by
     have h := tiled_charge_add hL b
