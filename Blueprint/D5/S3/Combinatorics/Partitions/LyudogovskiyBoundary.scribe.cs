@@ -37,7 +37,9 @@ internal sealed class LyudogovskiyBoundaryDocument : IScribeDocumentDefinition
                         Paragraph(Text("Problem 6.3 in the source asks when consecutive exact layers first share a transfer edge. Adj(graph(n), p, q) is literal unit-transfer adjacency between native partitions of n. IsLeast includes attainment and comparison with every positive admissible size. The higher-layer threshold formula identifies the displayed size with the threshold of layer r+1.")),
                         Paragraph(Text("Delete the last singleton from the top-row extension of the staircase of rank r+1. The common diagram has r+1 selected addable corners. Their insertions give a clique of size r+1. One endpoint is a first-occurrence partition in layer r+1. The other lacks a required staircase cell, and the clique lower bound and the maximum upper bound give dimension exactly r.")),
                         Paragraph(Text("For r=0 the set is empty. Each edge forms a clique of size two, so both endpoints have local dimension at least one. The source defines its boundary threshold only when the defining set is nonempty."))),
-                    DescribeRole.Theorem))));
+                    DescribeRole.Theorem,
+                    new OpenProblemResolutionClaim(
+                        ProblemSlugRef.Create("lyudogovskiy-2026-boundary-threshold"), ResolutionKind.Proved)))));
     }
 
     private static Formula Call(string name, params Formula[] args) =>

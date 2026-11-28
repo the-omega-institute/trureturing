@@ -12,7 +12,7 @@ $$\forall n \in Nat,\; \forall s \in \operatorname{Finset}\left(\operatorname{Pa
 
 *Formalization.* `D5/S3/Combinatorics/Partitions/LyudogovskiySimplex.cliques` (`✓ std3`).
 
-*Citation.* Fedor B. Lyudogovskiy (2026). *Simplex Stratification and Phase Boundaries in the Partition Graph*. URL: <https://arxiv.org/html/2603.23228v1>.
+*Citation.* Fedor B. Lyudogovskiy (2026). *Simplex Stratification and Phase Boundaries in the Partition Graph*. DOI: [10.48550/arXiv.2603.23228](https://doi.org/10.48550/arXiv.2603.23228). URL: <https://arxiv.org/html/2603.23228v1>.
 
 *Commentary.*
 
@@ -24,7 +24,7 @@ $$\forall n \in Nat,\; \forall p \in \operatorname{Partition}\left(n\right),\; \
 
 *Formalization.* `D5/S3/Combinatorics/Partitions/LyudogovskiySimplex.localDimension` (`✓ std3`).
 
-*Citation.* Fedor B. Lyudogovskiy (2026). *Simplex Stratification and Phase Boundaries in the Partition Graph*. URL: <https://arxiv.org/html/2603.23228v1>.
+*Citation.* Fedor B. Lyudogovskiy (2026). *Simplex Stratification and Phase Boundaries in the Partition Graph*. DOI: [10.48550/arXiv.2603.23228](https://doi.org/10.48550/arXiv.2603.23228). URL: <https://arxiv.org/html/2603.23228v1>.
 
 *Commentary.*
 
@@ -36,7 +36,7 @@ $$\forall r \in Nat,\; \forall n \in Nat,\; \forall p \in \operatorname{Partitio
 
 *Formalization.* `D5/S3/Combinatorics/Partitions/LyudogovskiySimplex.layer` (`✓ std3`).
 
-*Citation.* Fedor B. Lyudogovskiy (2026). *Simplex Stratification and Phase Boundaries in the Partition Graph*. URL: <https://arxiv.org/html/2603.23228v1>.
+*Citation.* Fedor B. Lyudogovskiy (2026). *Simplex Stratification and Phase Boundaries in the Partition Graph*. DOI: [10.48550/arXiv.2603.23228](https://doi.org/10.48550/arXiv.2603.23228). URL: <https://arxiv.org/html/2603.23228v1>.
 
 *Commentary.*
 
@@ -48,7 +48,7 @@ $$\forall n \in Nat,\; \operatorname{maxDimension}\left(n\right) = \operatorname
 
 *Formalization.* `D5/S3/Combinatorics/Partitions/LyudogovskiySimplex.maxDimension` (`✓ std3`).
 
-*Citation.* Fedor B. Lyudogovskiy (2026). *Simplex Stratification and Phase Boundaries in the Partition Graph*. URL: <https://arxiv.org/html/2603.23228v1>.
+*Citation.* Fedor B. Lyudogovskiy (2026). *Simplex Stratification and Phase Boundaries in the Partition Graph*. DOI: [10.48550/arXiv.2603.23228](https://doi.org/10.48550/arXiv.2603.23228). URL: <https://arxiv.org/html/2603.23228v1>.
 
 *Commentary.*
 
@@ -60,7 +60,7 @@ $$\forall r \in Nat,\; \operatorname{threshold}\left(r\right) = \operatorname{sI
 
 *Formalization.* `D5/S3/Combinatorics/Partitions/LyudogovskiySimplex.threshold` (`✓ std3`).
 
-*Citation.* Fedor B. Lyudogovskiy (2026). *Simplex Stratification and Phase Boundaries in the Partition Graph*. URL: <https://arxiv.org/html/2603.23228v1>.
+*Citation.* Fedor B. Lyudogovskiy (2026). *Simplex Stratification and Phase Boundaries in the Partition Graph*. DOI: [10.48550/arXiv.2603.23228](https://doi.org/10.48550/arXiv.2603.23228). URL: <https://arxiv.org/html/2603.23228v1>.
 
 *Commentary.*
 
@@ -72,7 +72,7 @@ $$\forall r \in Nat,\; \operatorname{triangular}\left(r\right) = \operatorname{n
 
 *Formalization.* `D5/S3/Combinatorics/Partitions/LyudogovskiySimplex.triangular` (`✓ std3`).
 
-*Citation.* Fedor B. Lyudogovskiy (2026). *Simplex Stratification and Phase Boundaries in the Partition Graph*. URL: <https://arxiv.org/html/2603.23228v1>.
+*Citation.* Fedor B. Lyudogovskiy (2026). *Simplex Stratification and Phase Boundaries in the Partition Graph*. DOI: [10.48550/arXiv.2603.23228](https://doi.org/10.48550/arXiv.2603.23228). URL: <https://arxiv.org/html/2603.23228v1>.
 
 *Commentary.*
 
@@ -84,7 +84,7 @@ $$\forall r \in Nat,\; \forall i \in Nat,\; \forall j \in Nat,\; \operatorname{p
 
 *Formalization.* `D5/S3/Combinatorics/Partitions/LyudogovskiySimplex.staircase` (`✓ std3`).
 
-*Citation.* Fedor B. Lyudogovskiy (2026). *Simplex Stratification and Phase Boundaries in the Partition Graph*. URL: <https://arxiv.org/html/2603.23228v1>.
+*Citation.* Fedor B. Lyudogovskiy (2026). *Simplex Stratification and Phase Boundaries in the Partition Graph*. DOI: [10.48550/arXiv.2603.23228](https://doi.org/10.48550/arXiv.2603.23228). URL: <https://arxiv.org/html/2603.23228v1>.
 
 *Commentary.*
 
@@ -144,7 +144,7 @@ $$\forall r \in Nat,\; \forall n \in Nat,\; \forall p \in \operatorname{Partitio
 
 *Formalization.* `D5/S3/Combinatorics/Partitions/LyudogovskiySimplex.firstFamily` (`✓ std3`).
 
-*Citation.* Fedor B. Lyudogovskiy (2026). *Simplex Stratification and Phase Boundaries in the Partition Graph*. URL: <https://arxiv.org/html/2603.23228v1>.
+*Citation.* Fedor B. Lyudogovskiy (2026). *Simplex Stratification and Phase Boundaries in the Partition Graph*. DOI: [10.48550/arXiv.2603.23228](https://doi.org/10.48550/arXiv.2603.23228). URL: <https://arxiv.org/html/2603.23228v1>.
 
 *Commentary.*
 
@@ -156,7 +156,7 @@ $$\operatorname{ThresholdClaim}\left(\right) \Leftrightarrow \left(\left(\forall
 
 *Formalization.* `D5/S3/Combinatorics/Partitions/LyudogovskiySimplex.ThresholdClaim` (`✓ std3`).
 
-*Citation.* Fedor B. Lyudogovskiy (2026). *Simplex Stratification and Phase Boundaries in the Partition Graph*. URL: <https://arxiv.org/html/2603.23228v1>.
+*Citation.* Fedor B. Lyudogovskiy (2026). *Simplex Stratification and Phase Boundaries in the Partition Graph*. DOI: [10.48550/arXiv.2603.23228](https://doi.org/10.48550/arXiv.2603.23228). URL: <https://arxiv.org/html/2603.23228v1>.
 
 *Commentary.*
 
@@ -168,7 +168,7 @@ $$\operatorname{FirstOccurrenceClaim}\left(\right) \Leftrightarrow \left(\forall
 
 *Formalization.* `D5/S3/Combinatorics/Partitions/LyudogovskiySimplex.FirstOccurrenceClaim` (`✓ std3`).
 
-*Citation.* Fedor B. Lyudogovskiy (2026). *Simplex Stratification and Phase Boundaries in the Partition Graph*. URL: <https://arxiv.org/html/2603.23228v1>.
+*Citation.* Fedor B. Lyudogovskiy (2026). *Simplex Stratification and Phase Boundaries in the Partition Graph*. DOI: [10.48550/arXiv.2603.23228](https://doi.org/10.48550/arXiv.2603.23228). URL: <https://arxiv.org/html/2603.23228v1>.
 
 *Commentary.*
 
@@ -186,7 +186,7 @@ $$\left(\forall r \in Nat,\; \operatorname{threshold}\left(r\right) = \operatorn
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Fedor B. Lyudogovskiy (2026). *Simplex Stratification and Phase Boundaries in the Partition Graph*. URL: <https://arxiv.org/html/2603.23228v1>.
+*Acknowledgement.* Fedor B. Lyudogovskiy (2026). *Simplex Stratification and Phase Boundaries in the Partition Graph*. DOI: [10.48550/arXiv.2603.23228](https://doi.org/10.48550/arXiv.2603.23228). URL: <https://arxiv.org/html/2603.23228v1>.
 
 *Commentary.*
 
@@ -204,7 +204,7 @@ $$\forall r \in Nat,\; 2 \le r \Rightarrow \left(\operatorname{layer}\left(r, \o
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Fedor B. Lyudogovskiy (2026). *Simplex Stratification and Phase Boundaries in the Partition Graph*. URL: <https://arxiv.org/html/2603.23228v1>.
+*Acknowledgement.* Fedor B. Lyudogovskiy (2026). *Simplex Stratification and Phase Boundaries in the Partition Graph*. DOI: [10.48550/arXiv.2603.23228](https://doi.org/10.48550/arXiv.2603.23228). URL: <https://arxiv.org/html/2603.23228v1>.
 
 *Commentary.*
 

@@ -10,6 +10,10 @@ $$\left(\forall n \in \mathbb{N},\; 0 < n \Rightarrow \left(\forall p \in \opera
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Partitions/LyudogovskiyDimensionJump.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/lyudogovskiy-2026-dimension-jump` (proved) by `D5/S3/Combinatorics/Partitions/LyudogovskiyDimensionJump.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"lyudogovskiy-2026-dimension-jump","declaration_gid":"D5/S3/Combinatorics/Partitions/LyudogovskiyDimensionJump.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Fedor B. Lyudogovskiy (2026). *Simplex Layers and Phase Boundaries in the Partition Graph*. DOI: [10.48550/arXiv.2603.29988](https://doi.org/10.48550/arXiv.2603.29988). URL: <https://arxiv.org/abs/2603.29988v1>.
