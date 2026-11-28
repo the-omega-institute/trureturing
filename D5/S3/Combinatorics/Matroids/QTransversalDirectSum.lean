@@ -6,10 +6,20 @@
    utility: none
    digest: The concatenated presentation gives the rank of the direct sum of q-transversal q-matroids. -/
 
+/- admission_basis: open-problem-resolution (#35130; Proved)
+   fulcher_conjecture_4_8: proof_shape: content.
+   escape_witness: joint_preimage gives T ≤ W with T.map p ≤ A, T.map q ≤ B, and
+     codim_W T ≤ codim_(W.map p) A + codim_(W.map q) B. The forward inequality
+     applies the bound to the minimizing subspaces A and B of the two projections.
+   Frozen source rank: QTransversalRepresentability.qTransversalRank
+     [sha256:96ee97a8c5f3cfa595a88de42ddd2cc4013068d09da2a71d5894718a9f826f32].
+   The joint dimension estimate uses the quotient calculation from LinearRado.
+-/
+
 import D5.S3.Combinatorics.Matroids.QTransversalRepresentability
 
 /-!
-Fulcher, *Cyclic Flats of a q-Matroid*, arXiv:2603.13550v1, Conjecture 4.8:
+Fulcher, *A cyclic flat embedding theorem for transversal q-matroids*, arXiv:2603.13550v1, Conjecture 4.8:
 https://arxiv.org/html/2603.13550v1#S4.Thmtheorem8.
 The direct sum uses Definition 2.7 and the presentations use Definition 2.12.
 -/
