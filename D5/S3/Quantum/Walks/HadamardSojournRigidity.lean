@@ -109,7 +109,7 @@ private lemma rotation_amplitudes_eight (c s : ℝ) :
       amplitude (rotation c s) 8 6) = threeAmplitudes c s := by
   refine Prod.ext ?_ (Prod.ext ?_ ?_) <;>
     dsimp only <;>
-    
+
     ext i j <;>
     fin_cases i <;> fin_cases j <;>
     simp only [amplitude, list_sum_apply, List.map_map] <;>
