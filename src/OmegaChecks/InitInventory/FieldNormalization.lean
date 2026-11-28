@@ -1,5 +1,7 @@
 module
 public import Init.Grind.FieldNormNum
+public import OmegaChecks.InitInventory.KripkeModels
+import all OmegaChecks.InitInventory.KripkeModels
 import Init.GrindInstances
 public import Lean
 import all Lean.Util.CollectAxioms
@@ -15,6 +17,12 @@ The reductions use propositional extensionality and quotient soundness. Division
 and integer powers expose the rational operation and the single value it must take
 so that the reduction itself does not import the choice dependencies of those
 official operations.
+
+The finite two-world interpretation checks the same residue operations directly.
+Its root uses equality modulo eight and its leaf uses equality of parities.
+It computes failures of the inverse product, inverse negation, zero product, zero
+power and nested division formulas at the root. Each finite-stage witness has an
+empty axiom closure.
 -/
 
 open Lean.Grind
@@ -22,7 +30,8 @@ attribute [local instance] Semiring.natCast Ring.intCast
 namespace OmegaChecks.InitBoundaries.FieldNormalization
 
 private abbrev R := Fin 8
-private def parity (x : R) := x.val % 2
+
+@[expose] public def parity (x : Fin 8) := x.val % 2
 
 private def rel (P : Prop) (x y : R) := x = y ∨ P ∧ parity x = parity y
 
@@ -53,7 +62,8 @@ private def addQ (P : Prop) := liftBinary P (· + ·) (by decide) (by decide)
 private def mulQ (P : Prop) := liftBinary P (· * ·) (by decide) (by decide)
 private def negQ (P : Prop) := liftUnary P (- ·) (by decide)
 
-private def valInv (x : R) : R := if x = 2 then 4 else if x = 4 then 2 else x
+@[expose] public def valInv (x : Fin 8) : Fin 8 :=
+  if x.val = 2 then ⟨4, by decide⟩ else if x.val = 4 then ⟨2, by decide⟩ else x
 private def invQ (P : Prop) := liftUnary P valInv (by decide)
 
 private def powQ (P : Prop) (x : Q P) : Nat → Q P
@@ -247,5 +257,120 @@ run_cmd
     let axioms ← Lean.collectAxioms witness
     unless axioms.all (#[`propext, `Quot.sound].contains ·) do
       throwError "field normalization reduction {witness} uses extra axioms: {axioms}"
+
+open TwoWorlds
+namespace FiniteStages
+public section
+
+local notation "r0" => (⟨0, by decide⟩ : Fin 8)
+local notation "r1" => (⟨1, by decide⟩ : Fin 8)
+local notation "r2" => (⟨2, by decide⟩ : Fin 8)
+local notation "r4" => (⟨4, by decide⟩ : Fin 8)
+
+/-- At the root values are residues modulo eight. The leaf identifies residues of equal parity. -/
+@[expose] def equalAt (x y : Fin 8) : Bool → Prop
+  | false => x = y
+  | true => parity x = parity y
+
+theorem rootApart (a b : Fin 8) : neg (equalAt a b) false ↔ parity a ≠ parity b := by
+  constructor
+  · intro h
+    exact h true (fun _ => rfl)
+  · intro h w _ eq
+    cases w with
+    | false => exact h (congrArg parity eq)
+    | true => exact h eq
+
+theorem persists {w w' : Bool} (h : w ≤ w') (a b : Fin 8) : equalAt a b w → equalAt a b w' := by
+  cases w <;> cases w'
+  · exact id
+  · exact congrArg parity
+  · exact False.elim (Bool.noConfusion (h rfl))
+  · exact id
+
+/-- Addition, multiplication and negation satisfy the commutative ring equations at the root.
+Persistence sends each equation to the leaf. -/
+theorem ringLaws :
+    (∀ a b c : Fin 8, (a + b) + c = a + (b + c) ∧ (a * b) * c = a * (b * c) ∧
+      a * (b + c) = a * b + a * c) ∧
+    (∀ a b : Fin 8, a + b = b + a ∧ a * b = b * a) ∧
+    (∀ a : Fin 8, a + r0 = a ∧ a * r1 = a ∧ -a + a = r0) := by decide
+
+/-- The projection to parity preserves each nontrivial operation of the residue field. -/
+theorem operations :
+    (∀ a b c d : Fin 8, parity a = parity b → parity c = parity d →
+      parity (a + c) = parity (b + d) ∧ parity (a * c) = parity (b * d)) ∧
+    (∀ a b : Fin 8, parity a = parity b → parity (-a) = parity (-b) ∧
+      parity (valInv a) = parity (valInv b)) := by decide
+
+/-- The inverse field axiom uses persistent inequality at the current world. -/
+theorem cancel : ∀ (a : Fin 8) (w : Bool),
+    neg (equalAt a r0) w → equalAt (a * valInv a) r1 w := by
+  intro a w h
+  cases w with
+  | false =>
+    exact (by decide : ∀ a : Fin 8, parity a ≠ parity r0 → a * valInv a = r1) a ((rootApart a r0).mp h)
+  | true =>
+    exact (by decide : ∀ a : Fin 8, parity a ≠ parity r0 → parity (a * valInv a) = parity r1) a
+      (h true (fun x => x))
+
+theorem inverseLaws : valInv r0 = r0 ∧
+    (∀ a : Fin 8, valInv (valInv a) = a) ∧ neg (equalAt r0 r1) false := by
+  exact ⟨rfl, by decide, (rootApart r0 r1).mpr (by decide)⟩
+
+@[expose] def natPower (a : Fin 8) : Nat → Fin 8
+  | 0 => r1
+  | n + 1 => natPower a n * a
+
+@[expose] def intPower (a : Fin 8) : Int → Fin 8
+  | .ofNat n => natPower a n
+  | .negSucc n => valInv (natPower a (n + 1))
+
+theorem powerLaws (a : Fin 8) :
+    intPower a 0 = r1 ∧ (∀ n : Nat, intPower a (n + 1 : Int) = intPower a (n : Int) * a) ∧
+    ∀ n : Int, intPower a (-n) = valInv (intPower a n) := by
+  refine ⟨rfl, fun _ => rfl, ?_⟩
+  intro n
+  cases n with
+  | ofNat n => cases n <;> rfl
+  | negSucc n => exact (inverseLaws.2.1 _).symm
+
+theorem powerRespectsParity {a b : Fin 8} (h : parity a = parity b) (n : Int) :
+    parity (intPower a n) = parity (intPower b n) := by
+  have natLaw (k : Nat) : parity (natPower a k) = parity (natPower b k) := by
+    induction k with
+    | zero => rfl
+    | succ _ ih => exact (operations.1 _ _ _ _ ih h).2
+  cases n with
+  | ofNat n => exact natLaw n
+  | negSucc n => exact (operations.2 _ _ (natLaw (n + 1))).2
+
+/-- Root counterexamples to `Field.inv_mul`, `Field.inv_neg` and `Field.of_mul_eq_zero`. -/
+theorem counterexamples :
+    ¬equalAt (valInv (r2 * r2)) (valInv r2 * valInv r2) false ∧
+    ¬equalAt (valInv (-r2)) (-valInv r2) false ∧
+    equalAt (r2 * r4) r0 false ∧ ¬(equalAt r2 r0 false ∨ equalAt r4 r0 false) := by
+  unfold equalAt
+  decide
+
+/-- The interpreted division is multiplication by the interpreted inverse. -/
+@[expose] def divideAt (a b : Fin 8) := a * valInv b
+
+/-- Root counterexamples to `Field.of_pow_eq_zero`, `Field.div_div_left` and `Field.div_div_right`. -/
+theorem powerAndDivisionCounterexamples :
+    equalAt (natPower r2 3) r0 false ∧ ¬equalAt r2 r0 false ∧
+    ¬equalAt (divideAt (divideAt r1 r2) r2) (divideAt r1 (r2 * r2)) false ∧
+    ¬equalAt (divideAt r1 (divideAt r2 r4)) (divideAt (r1 * r4) r2) false := by
+  unfold equalAt
+  decide
+
+run_cmd
+  for witness in #[``rootApart, ``persists, ``ringLaws, ``operations, ``cancel, ``inverseLaws,
+      ``powerLaws, ``powerRespectsParity, ``counterexamples, ``powerAndDivisionCounterexamples] do
+    unless (← Lean.collectAxioms witness).isEmpty do
+      throwError "finite residue model {witness} uses an axiom"
+
+end
+end FiniteStages
 
 end OmegaChecks.InitBoundaries.FieldNormalization
