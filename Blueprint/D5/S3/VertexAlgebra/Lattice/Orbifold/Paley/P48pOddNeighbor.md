@@ -6,9 +6,9 @@ Half-frame pairings identify the catalogue odd neighbor by a ternary syndrome.
 
 **Theorem 1.1 (The odd neighbor is characterized by its pairing coordinates).**
 
-Lean statement: `D5/S3/VertexAlgebra/Lattice/Orbifold/P48pOddNeighbor.mem_oddNeighbor_iff_ternary`
+Lean statement: `D5/S3/VertexAlgebra/Lattice/Orbifold/Paley/P48pOddNeighbor.mem_oddNeighbor_iff_ternary`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Lattice/Orbifold/P48pOddNeighbor.mem_oddNeighbor_iff_ternary` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Lattice/Orbifold/Paley/P48pOddNeighbor.mem_oddNeighbor_iff_ternary` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -18,5 +18,5 @@ A rational catalogue row belongs to the odd neighbor exactly when its half-frame
 
 ## References
 
-- Truth anchor: `D5/S3/VertexAlgebra/Lattice/Orbifold/P48pOddNeighbor.mem_oddNeighbor_iff_ternary`
-- Dependency: [D5/S3/VertexAlgebra/Lattice/Orbifold/P48pSyndromeFrame](P48pSyndromeFrame.md)
+- Truth anchor: `D5/S3/VertexAlgebra/Lattice/Orbifold/Paley/P48pOddNeighbor.mem_oddNeighbor_iff_ternary`
+- Dependency: [D5/S3/VertexAlgebra/Lattice/Orbifold/Paley/P48pSyndromeFrame](P48pSyndromeFrame.md)

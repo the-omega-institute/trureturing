@@ -6,9 +6,9 @@ A ternary small-support bound implies squared-norm-four exclusion in the catalog
 
 **Theorem 1.1 (Small-support exclusion suffices for the odd neighbor).**
 
-Lean statement: `D5/S3/VertexAlgebra/Lattice/Orbifold/P48pPaleyNormFour.norm_ne_four_of_paley_small_support`
+Lean statement: `D5/S3/VertexAlgebra/Lattice/Orbifold/Paley/P48pPaleyNormFour.norm_ne_four_of_paley_small_support`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Lattice/Orbifold/P48pPaleyNormFour.norm_ne_four_of_paley_small_support` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Lattice/Orbifold/Paley/P48pPaleyNormFour.norm_ne_four_of_paley_small_support` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -18,5 +18,5 @@ Squared norm four would give a Paley graph pair with a nonzero input of Hamming 
 
 ## References
 
-- Truth anchor: `D5/S3/VertexAlgebra/Lattice/Orbifold/P48pPaleyNormFour.norm_ne_four_of_paley_small_support`
-- Dependency: [D5/S3/VertexAlgebra/Lattice/Orbifold/P48pTernaryPaleyGraph](P48pTernaryPaleyGraph.md)
+- Truth anchor: `D5/S3/VertexAlgebra/Lattice/Orbifold/Paley/P48pPaleyNormFour.norm_ne_four_of_paley_small_support`
+- Dependency: [D5/S3/VertexAlgebra/Lattice/Orbifold/Paley/P48pTernaryPaleyGraph](P48pTernaryPaleyGraph.md)

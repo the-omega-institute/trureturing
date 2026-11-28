@@ -6,9 +6,9 @@ Projective permutations take any three occupied directions to the Paley anchors.
 
 **Theorem 1.1 (Three directions can be moved to infinity, zero and one).**
 
-Lean statement: `D5/S3/VertexAlgebra/Lattice/Orbifold/P48pPaleyTripleNormalization.exists_paleyPerm_image_triple`
+Lean statement: `D5/S3/VertexAlgebra/Lattice/Orbifold/Paley/P48pPaleyTripleNormalization.exists_paleyPerm_image_triple`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Lattice/Orbifold/P48pPaleyTripleNormalization.exists_paleyPerm_image_triple` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Lattice/Orbifold/Paley/P48pPaleyTripleNormalization.exists_paleyPerm_image_triple` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -18,5 +18,5 @@ For any three-element subset of the 24 Paley indices, some determinant-one matri
 
 ## References
 
-- Truth anchor: `D5/S3/VertexAlgebra/Lattice/Orbifold/P48pPaleyTripleNormalization.exists_paleyPerm_image_triple`
-- Dependency: [D5/S3/VertexAlgebra/Lattice/Orbifold/P48pPaleyAction](P48pPaleyAction.md)
+- Truth anchor: `D5/S3/VertexAlgebra/Lattice/Orbifold/Paley/P48pPaleyTripleNormalization.exists_paleyPerm_image_triple`
+- Dependency: [D5/S3/VertexAlgebra/Lattice/Orbifold/Paley/P48pPaleyAction](P48pPaleyAction.md)

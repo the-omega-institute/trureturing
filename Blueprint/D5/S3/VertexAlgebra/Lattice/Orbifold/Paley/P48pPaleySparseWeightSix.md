@@ -6,9 +6,9 @@ The ternary Paley certificate excludes squared norm four in the odd neighbor of 
 
 **Theorem 1.1 (The catalogue odd neighbor has no vector of squared norm four).**
 
-Lean statement: `D5/S3/VertexAlgebra/Lattice/Orbifold/P48pPaleySparseWeightSix.norm_ne_four`
+Lean statement: `D5/S3/VertexAlgebra/Lattice/Orbifold/Paley/P48pPaleySparseWeightSix.norm_ne_four`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Lattice/Orbifold/P48pPaleySparseWeightSix.norm_ne_four` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Lattice/Orbifold/Paley/P48pPaleySparseWeightSix.norm_ne_four` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -24,9 +24,9 @@ The existence of an extremal vertex operator algebra of central charge 48 remain
 
 **Theorem 1.2 (Every anchored weight-six input has total weight above twelve).**
 
-Lean statement: `D5/S3/VertexAlgebra/Lattice/Orbifold/P48pPaleySparseWeightSix.anchored_weight_six_sparse`
+Lean statement: `D5/S3/VertexAlgebra/Lattice/Orbifold/Paley/P48pPaleySparseWeightSix.anchored_weight_six_sparse`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Lattice/Orbifold/P48pPaleySparseWeightSix.anchored_weight_six_sparse` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Lattice/Orbifold/Paley/P48pPaleySparseWeightSix.anchored_weight_six_sparse` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -38,6 +38,6 @@ The kernel checks the branches by anchor sign pair, first chosen slope and its s
 
 ## References
 
-- Truth anchor: `D5/S3/VertexAlgebra/Lattice/Orbifold/P48pPaleySparseWeightSix.anchored_weight_six_sparse`
-- Truth anchor: `D5/S3/VertexAlgebra/Lattice/Orbifold/P48pPaleySparseWeightSix.norm_ne_four`
-- Dependency: [D5/S3/VertexAlgebra/Lattice/Orbifold/P48pPaleySparseCheck](P48pPaleySparseCheck.md)
+- Truth anchor: `D5/S3/VertexAlgebra/Lattice/Orbifold/Paley/P48pPaleySparseWeightSix.anchored_weight_six_sparse`
+- Truth anchor: `D5/S3/VertexAlgebra/Lattice/Orbifold/Paley/P48pPaleySparseWeightSix.norm_ne_four`
+- Dependency: [D5/S3/VertexAlgebra/Lattice/Orbifold/Paley/P48pPaleySparseCheck](P48pPaleySparseCheck.md)

@@ -6,9 +6,9 @@ A short ternary syndrome criterion excludes squared norm two.
 
 **Theorem 1.1 (Short-syndrome injectivity excludes squared norm two).**
 
-Lean statement: `D5/S3/VertexAlgebra/Lattice/Orbifold/NormTwoTernarySyndrome.bilinear_ne_two_of_short_syndrome_injective`
+Lean statement: `D5/S3/VertexAlgebra/Lattice/Orbifold/Paley/NormTwoTernarySyndrome.bilinear_ne_two_of_short_syndrome_injective`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Lattice/Orbifold/NormTwoTernarySyndrome.bilinear_ne_two_of_short_syndrome_injective` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Lattice/Orbifold/Paley/NormTwoTernarySyndrome.bilinear_ne_two_of_short_syndrome_injective` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -18,5 +18,5 @@ For an integral pairing matrix whose row Gram matrix is twelve times the lattice
 
 ## References
 
-- Truth anchor: `D5/S3/VertexAlgebra/Lattice/Orbifold/NormTwoTernarySyndrome.bilinear_ne_two_of_short_syndrome_injective`
-- Dependency: [D5/S3/VertexAlgebra/LatticeGeneratingFieldLocality](../../LatticeGeneratingFieldLocality.md)
+- Truth anchor: `D5/S3/VertexAlgebra/Lattice/Orbifold/Paley/NormTwoTernarySyndrome.bilinear_ne_two_of_short_syndrome_injective`
+- Dependency: [D5/S3/VertexAlgebra/LatticeGeneratingFieldLocality](../../../LatticeGeneratingFieldLocality.md)

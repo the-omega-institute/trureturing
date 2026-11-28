@@ -6,9 +6,9 @@ The ternary syndrome kernel in the signed charts is the graph of the Paley matri
 
 **Theorem 1.1 (The signed halves characterize the kernel).**
 
-Lean statement: `D5/S3/VertexAlgebra/Lattice/Orbifold/P48pTernaryPaleyGraph.frameSyndrome_eq_zero_iff_signedChart_graph`
+Lean statement: `D5/S3/VertexAlgebra/Lattice/Orbifold/Paley/P48pTernaryPaleyGraph.frameSyndrome_eq_zero_iff_signedChart_graph`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Lattice/Orbifold/P48pTernaryPaleyGraph.frameSyndrome_eq_zero_iff_signedChart_graph` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Lattice/Orbifold/Paley/P48pTernaryPaleyGraph.frameSyndrome_eq_zero_iff_signedChart_graph` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -18,6 +18,6 @@ A ternary row has zero frame syndrome exactly when its second signed chart half 
 
 ## References
 
-- Truth anchor: `D5/S3/VertexAlgebra/Lattice/Orbifold/P48pTernaryPaleyGraph.frameSyndrome_eq_zero_iff_signedChart_graph`
-- Dependency: [D5/S3/VertexAlgebra/Lattice/Orbifold/P48pFrameProjectiveAction](P48pFrameProjectiveAction.md)
-- Dependency: [D5/S3/VertexAlgebra/Lattice/Orbifold/P48pOddNeighbor](P48pOddNeighbor.md)
+- Truth anchor: `D5/S3/VertexAlgebra/Lattice/Orbifold/Paley/P48pTernaryPaleyGraph.frameSyndrome_eq_zero_iff_signedChart_graph`
+- Dependency: [D5/S3/VertexAlgebra/Lattice/Orbifold/Paley/P48pFrameProjectiveAction](P48pFrameProjectiveAction.md)
+- Dependency: [D5/S3/VertexAlgebra/Lattice/Orbifold/Paley/P48pOddNeighbor](P48pOddNeighbor.md)

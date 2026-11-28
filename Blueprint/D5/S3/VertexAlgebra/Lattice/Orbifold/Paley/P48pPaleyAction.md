@@ -6,9 +6,9 @@ The signed projective action preserves the total Hamming weight of a ternary Pal
 
 **Theorem 1.1 (Projective moves preserve total graph weight).**
 
-Lean statement: `D5/S3/VertexAlgebra/Lattice/Orbifold/P48pPaleyAction.paleyRowAction_graph_weight`
+Lean statement: `D5/S3/VertexAlgebra/Lattice/Orbifold/Paley/P48pPaleyAction.paleyRowAction_graph_weight`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Lattice/Orbifold/P48pPaleyAction.paleyRowAction_graph_weight` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Lattice/Orbifold/Paley/P48pPaleyAction.paleyRowAction_graph_weight` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -18,5 +18,5 @@ The signed row action commutes with right multiplication by the Paley matrix. Ea
 
 ## References
 
-- Truth anchor: `D5/S3/VertexAlgebra/Lattice/Orbifold/P48pPaleyAction.paleyRowAction_graph_weight`
-- Dependency: [D5/S3/VertexAlgebra/Lattice/Orbifold/P48pTernaryPaleyGraph](P48pTernaryPaleyGraph.md)
+- Truth anchor: `D5/S3/VertexAlgebra/Lattice/Orbifold/Paley/P48pPaleyAction.paleyRowAction_graph_weight`
+- Dependency: [D5/S3/VertexAlgebra/Lattice/Orbifold/Paley/P48pTernaryPaleyGraph](P48pTernaryPaleyGraph.md)

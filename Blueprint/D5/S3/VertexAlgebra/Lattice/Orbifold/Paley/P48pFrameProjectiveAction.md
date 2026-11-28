@@ -6,9 +6,9 @@ A normalized representative determines each projective direction over the field 
 
 **Theorem 1.1 (A nonzero row has a unique direction and scale).**
 
-Lean statement: `D5/S3/VertexAlgebra/Lattice/Orbifold/P48pFrameProjectiveAction.existsUnique_normalizedRow`
+Lean statement: `D5/S3/VertexAlgebra/Lattice/Orbifold/Paley/P48pFrameProjectiveAction.existsUnique_normalizedRow`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Lattice/Orbifold/P48pFrameProjectiveAction.existsUnique_normalizedRow` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Lattice/Orbifold/Paley/P48pFrameProjectiveAction.existsUnique_normalizedRow` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -18,4 +18,4 @@ Every nonzero two-coordinate row over the field of 23 elements is a unique nonze
 
 ## References
 
-- Truth anchor: `D5/S3/VertexAlgebra/Lattice/Orbifold/P48pFrameProjectiveAction.existsUnique_normalizedRow`
+- Truth anchor: `D5/S3/VertexAlgebra/Lattice/Orbifold/Paley/P48pFrameProjectiveAction.existsUnique_normalizedRow`

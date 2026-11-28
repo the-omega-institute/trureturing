@@ -6,9 +6,9 @@ Every nonzero Paley input can be anchored with both graph weights preserved.
 
 **Theorem 1.1 (Projective moves and a global sign give an anchored row).**
 
-Lean statement: `D5/S3/VertexAlgebra/Lattice/Orbifold/P48pPaleySparseReduction.exists_anchored_paleyRow`
+Lean statement: `D5/S3/VertexAlgebra/Lattice/Orbifold/Paley/P48pPaleySparseReduction.exists_anchored_paleyRow`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Lattice/Orbifold/P48pPaleySparseReduction.exists_anchored_paleyRow` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Lattice/Orbifold/Paley/P48pPaleySparseReduction.exists_anchored_paleyRow` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -18,5 +18,5 @@ A projective move followed by an optional global sign fixes the infinity coeffic
 
 ## References
 
-- Truth anchor: `D5/S3/VertexAlgebra/Lattice/Orbifold/P48pPaleySparseReduction.exists_anchored_paleyRow`
-- Dependency: [D5/S3/VertexAlgebra/Lattice/Orbifold/P48pPaleyTripleNormalization](P48pPaleyTripleNormalization.md)
+- Truth anchor: `D5/S3/VertexAlgebra/Lattice/Orbifold/Paley/P48pPaleySparseReduction.exists_anchored_paleyRow`
+- Dependency: [D5/S3/VertexAlgebra/Lattice/Orbifold/Paley/P48pPaleyTripleNormalization](P48pPaleyTripleNormalization.md)
