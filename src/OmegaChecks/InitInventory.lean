@@ -1,5 +1,6 @@
 module
 public import Lean
+import OmegaChecks.InitPort.Translation
 import OmegaChecks.InitInventory.UnsafeCast
 meta import OmegaChecks.InitInventory.UnsafeCast
 import OmegaChecks.InitCompiler.RootNames
@@ -600,6 +601,20 @@ private def checkedTypeAxioms (official : Environment) (info : ConstantInfo)
     | .ok _ => throwError "the unchanged type of {info.name} checked without {name}"
   return direct
 
+/-- Check the pinned type in the strict public environment using only the ordinary name
+translation. The comparison uses each defining site's actual universe binders. -/
+private def originalTypeGap? (strict : Environment) (source target : ConstantInfo) : Option String := Id.run do
+  if source.numLevelParams != target.numLevelParams then return some "universe parameter count"
+  let expected := InitKernelPort.translate InitKernelPort.portName
+    (source.type.instantiateLevelParams source.levelParams (target.levelParams.map Level.param))
+  if expected.equal target.type then return none
+  let missing := (expected.getUsedConstants.filter (fun n => !strict.contains n)).qsort Name.lt
+  unless missing.isEmpty do
+    return some ("missing type dependencies: " ++ String.intercalate ", " (missing.toList.map Name.toString))
+  if (Kernel.check strict {} expected).isOk && Kernel.isDefEqGuarded strict {} expected target.type then
+    return none
+  return some "pinned type does not check or convert to the exported type"
+
 private def inventory (lib strictDir : System.FilePath) (visible strict full witnesses : Environment) (modules : Array Name)
     (gaps : Option IO.FS.Handle) (observedRuntime observedPacked : List String) : CoreM Json := do
   let official ← getEnv
@@ -624,12 +639,13 @@ private def inventory (lib strictDir : System.FilePath) (visible strict full wit
   let mut withAxiomsUnique : NameSet := {}
   let mut rows := #[]
   let mut matchingNames := 0
+  let mut originalTypes := 0
   let mut directAxioms := 0
   let mut withAxioms := 0
   let mut nativeByModule := #[]
   let mut allNative := #[]
   if let some file := gaps then
-    file.putStrLn "module\tdeclaration\tkind\tunsafe\tpartial\tupstreamAxioms\timpliesAxiom\treductionWitness\tlogicalConsequence\tlogicalConsequenceWitness\trequiredBehavior\tabstractedDependency\truntimeConflictWitness\tequationOperand\toperandImpliesAxiom\toperandReductionWitness\tunchangedTypeAxioms\tunsafePackedObservation\tspecializedEndpointType\tunconditionalLogicalConsequence\tunconditionalLogicalConsequenceWitness\tstrictConstructorIff\tformationArgument\ttransportPathType\trepresentativeRefuter\trefinedQuotientConsequence"
+    file.putStrLn "module\tdeclaration\tkind\tunsafe\tpartial\tupstreamAxioms\timpliesAxiom\treductionWitness\tlogicalConsequence\tlogicalConsequenceWitness\trequiredBehavior\tabstractedDependency\truntimeConflictWitness\tequationOperand\toperandImpliesAxiom\toperandReductionWitness\tunchangedTypeAxioms\tunsafePackedObservation\tspecializedEndpointType\tunconditionalLogicalConsequence\tunconditionalLogicalConsequenceWitness\tstrictConstructorIff\tformationArgument\ttransportPathType\trepresentativeRefuter\trefinedQuotientConsequence\toriginalTypeGap"
   for owner in modules do
     let some idx := visible.getModuleIdx? owner | throwError "missing official module {owner}"
     let publicNames := visible.header.moduleData[idx]!.constNames.filter publicName
@@ -779,10 +795,12 @@ private def inventory (lib strictDir : System.FilePath) (visible strict full wit
           throwError "invalid public, private or native effect runner {strictName}"
         if name == `unsafeBaseIO then OmegaChecks.InitPort.EffectRun.checkWorld full.toKernelEnv
       let strictOwner := if matched then some expected else none
+      let typeGap := strictInfo.bind (originalTypeGap? strict info)
+      if matched && typeGap.isNone then originalTypes := originalTypes + 1
       if matched then
         matchingNames := matchingNames + 1
         matchedUnique := matchedUnique.insert name
-      if !matched && !info.isAxiom then
+      if (!matched || typeGap.isSome) && !info.isAxiom then
         if let some file := gaps then
           file.putStrLn <| String.intercalate "\t" [owner.toString, name.toString,
             declarationKind info, toString info.isUnsafe, toString info.isPartial,
@@ -794,7 +812,8 @@ private def inventory (lib strictDir : System.FilePath) (visible strict full wit
             String.intercalate "," (typeAxioms.toList.map Name.toString), packedObservation.getD "", endpointType.getD "",
             (additional.map Prod.fst).getD "", (additional.map (·.2.toString)).getD "", if constructorIff then "true" else "",
             formationArgument.getD "", transportPath.getD "", (refuter.map Name.toString).getD "",
-            if refinedModel then "The pinned operations in the refined interpretation imply Not (type of Quot.sound.{1})" else ""]
+            if refinedModel then "The pinned operations in the refined interpretation imply Not (type of Quot.sound.{1})" else "",
+            typeGap.getD ""]
       if info.isAxiom then
         directAxioms := directAxioms + 1
         axiomUnique := axiomUnique.insert name
@@ -806,6 +825,7 @@ private def inventory (lib strictDir : System.FilePath) (visible strict full wit
         ("name", toJson name.toString), ("module", toJson owner.toString),
         ("kind", toJson (declarationKind info)), ("unsafe", toJson info.isUnsafe), ("partial", toJson info.isPartial),
         ("matchingNameAndModule", toJson matched),
+        ("originalTypeChecked", toJson (matched && typeGap.isNone)), ("originalTypeGap", toJson typeGap),
         ("strictUnsafe", toJson (strictInfo.map (·.isUnsafe))), ("strictPartial", toJson (strictInfo.map (·.isPartial))),
         ("publicReductionBoundary", toJson ((reduction.map Prod.fst).getD []).toArray),
         ("officialReductionMechanism", toJson (reduction.map Prod.snd)),
@@ -862,10 +882,11 @@ private def inventory (lib strictDir : System.FilePath) (visible strict full wit
   unless certifiedSites == boundaries.size do throwError "missing registered public definition site"
   let summary := Json.mkObj [("declarations", toJson rows.size), ("directAxioms", toJson directAxioms),
     ("withAxioms", toJson withAxioms), ("matchingNameAndModule", toJson matchingNames),
+    ("originalTypesChecked", toJson originalTypes),
     ("native", nativeSummary allNative)]
   let unique := Json.mkObj [("declarations",toJson names.size), ("directAxioms",toJson axiomUnique.size),
     ("withAxioms",toJson withAxiomsUnique.size), ("matchingNameAndModule",toJson matchedUnique.size)]
-  return Json.mkObj [("schemaVersion", toJson 4), ("uniqueNames", unique), ("leanVersion", toJson Lean.versionString), ("leanCommit", toJson Lean.githash),
+  return Json.mkObj [("schemaVersion", toJson 5), ("uniqueNames", unique), ("leanVersion", toJson Lean.versionString), ("leanCommit", toJson Lean.githash),
     ("nativeByModule", Json.mkObj nativeByModule.toList), ("certifiedChoiceEndpoints", toJson certifiedEndpoints),
     ("certifiedRepresentativeRefutations", toJson certifiedRepresentativeRefutations),
     ("certifiedFormationArguments", toJson certifiedFormationArguments), ("certifiedTransportPaths", toJson certifiedTransportPaths),

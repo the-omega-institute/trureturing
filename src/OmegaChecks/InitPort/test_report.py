@@ -7,7 +7,7 @@ from report import check_coverage, verify_complete
 
 
 def site(owner, name, **attributes):
-    return {"module": owner, "name": name, "kind": "theorem", "matchingNameAndModule": False,
+    return {"originalTypeChecked": attributes.get("matchingNameAndModule", False), "module": owner, "name": name, "kind": "theorem", "matchingNameAndModule": False,
             "unsafe": False, "partial": False, "strictUnsafe": False, "strictPartial": False,
             "strictModule": None, "impliesAxiom": None, "reductionWitness": None, **attributes}
 
@@ -104,6 +104,17 @@ class CoverageTest(unittest.TestCase):
                          {"requiredBehavior": None}, {"unsafe": False}, {"kind": "axiom"}):
             with self.subTest(mismatch=mismatch), self.assertRaisesRegex(ValueError, "runtime conflict"):
                 check_coverage(inventory({**observed, **mismatch}))
+
+    def test_verified_specialization_still_requires_the_original_type(self):
+        row = site("Init.Data.Erased", "Erased.out_mk", matchingNameAndModule=True,
+                   strictModule="OmegaInit.Data.Erased", originalTypeChecked=False,
+                   originalTypeGap="missing type dependencies: Omega.Erased.out")
+        data = inventory(row)
+        data["schemaVersion"] = 5
+        data["summary"]["originalTypesChecked"] = 0
+        self.assertEqual(check_coverage(data), (0, [(row["module"], row["name"])]))
+        with self.assertRaisesRegex(ValueError, "1 unresolved"):
+            verify_complete(data, Path("product"), *check_coverage(data))
 
     def test_strict_excluded_middle_is_a_logical_consequence(self):
         row = site("Init.Data.String.Lemmas.Pattern.Basic", "String.Slice.Pattern.Model.IsMatch.exists_isLongestMatch",

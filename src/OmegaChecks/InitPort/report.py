@@ -72,6 +72,7 @@ def check_coverage(official):
     sites = set()
     direct = 0
     matched = 0
+    original_types = 0
     reductions = 0
     unresolved = []
     for row in official["declarations"]:
@@ -191,6 +192,13 @@ def check_coverage(official):
             if axiom or witness or (runtime and not (unsafe_runtime or effect or comparison or pointer_hash)) or row["strictModule"] != "Omega" + owner:
                 raise ValueError(f"inconsistent strict match for {owner}/{name}")
             matched += 1
+            if official.get("schemaVersion", 0) >= 5:
+                if row.get("originalTypeChecked") is True and row.get("originalTypeGap") is None:
+                    original_types += 1
+                elif row.get("originalTypeChecked") is False and row.get("originalTypeGap"):
+                    unresolved.append(site)
+                else:
+                    raise ValueError(f"inconsistent original type check for {owner}/{name}")
         elif axiom:
             direct += 1
         elif (witness or strict) and not row.get("unsafe"):
@@ -211,6 +219,8 @@ def check_coverage(official):
     if (not sites or not modules or len(sites) != summary["declarations"] or
             matched != summary["matchingNameAndModule"] or direct != summary["directAxioms"]):
         raise ValueError("official inventory counts do not agree with its definition sites")
+    if official.get("schemaVersion", 0) >= 5 and summary.get("originalTypesChecked") != original_types:
+        raise ValueError("original type count does not agree with the checked sites")
     return reductions, unresolved
 
 
@@ -229,6 +239,9 @@ def verify_complete(official, product, reductions, unresolved):
                          f"{formations} official statements requiring an axiom to supply a quotient argument, "
                          f"{models} statements, required paths or computations refuted in the representative quotient model. "
                          f"Examples: {examples}. See init-gaps.tsv.")
+    if any(row["matchingNameAndModule"] and row.get("originalTypeChecked") is not True
+           for row in official["declarations"]):
+        raise ValueError("matched declarations require a fresh strict check of each original type")
     missing_native = [(row["module"], row["name"]) for row in official["declarations"]
                       if row["matchingNameAndModule"] and row.get("strictNativeSignature") is False]
     if missing_native:
@@ -377,9 +390,9 @@ def report(product, require_complete=False):
                              "unconditionalLogicalConsequence", "unconditionalLogicalConsequenceWitness",
                              "specializedEndpointType", "strictConstructorIff", "formationArgument", "transportPathType",
                              "strictLogicalConsequence", "strictLogicalConsequenceWitness", "strictEquivalenceWitness",
-                             "representativeRefuter", "refinedQuotientConsequence"])
+                             "representativeRefuter", "refinedQuotientConsequence", "originalTypeGap"])
             for row in official["declarations"]:
-                if row["matchingNameAndModule"] or row["kind"] == "axiom":
+                if row["originalTypeChecked"] or row["kind"] == "axiom":
                     continue
                 name = row["name"]
                 path = [name]
@@ -406,6 +419,8 @@ def report(product, require_complete=False):
                               + ", ".join(sorted(conflicts[path[-1]])))
                 if dep in path:
                     reason = f"dependency cycle through {dep}"
+                if row["matchingNameAndModule"]:
+                    reason = row["originalTypeGap"]
                 writer.writerow([row["module"], name, row["kind"], str(row["unsafe"]).lower(),
                                  str(row["partial"]).lower(), ",".join(row["axioms"]), row["impliesAxiom"],
                                  " -> ".join(path), " ".join(reason.splitlines()), row["reductionWitness"],
@@ -419,7 +434,7 @@ def report(product, require_complete=False):
                                  row.get("formationArgument"), row.get("transportPathType"),
                                  row.get("strictLogicalConsequence"), row.get("strictLogicalConsequenceWitness"),
                                  row.get("strictEquivalenceWitness"), row.get("representativeRefuter"),
-                                 row.get("refinedQuotientConsequence")])
+                                 row.get("refinedQuotientConsequence"), row.get("originalTypeGap")])
         reductions = stage / "init-public-reductions.tsv"
         with reductions.open("w", newline="") as f:
             writer = csv.writer(f, delimiter="\t", lineterminator="\n")
