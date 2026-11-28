@@ -152,6 +152,33 @@ class CoverageTest(unittest.TestCase):
             with self.subTest(checks=checks), self.assertRaisesRegex(ValueError, "import all original type"):
                 check_coverage(audited([rows[0]], checks))
 
+    def test_implication_order_requires_the_pinned_comparison_and_exact_type_dependency(self):
+        owner = "Init.Internal.Order.Basic"
+        name = "Lean.Order.coind_not"
+        dep = "Lean.Order.ImplicationOrder.instOrder"
+        proof = "OmegaChecks.InitBoundaries.InternalOrder.propextOfImplicationOrder"
+        checked = [[owner, name, dep, proof]]
+        raw_gap = f"missing type dependencies: Omega.{dep}. A definitionally equal reformulation checks in the public kernels."
+        row = site(owner, name, matchingNameAndModule=True, strictModule="Omega" + owner,
+                   originalTypeChecked=False, originalTypeGap=raw_gap)
+        data = inventory(row)
+        data["schemaVersion"] = 6
+        data["summary"]["originalTypesChecked"] = 0
+        self.assertEqual(check_coverage(data), (0, [(owner, name)]))
+        row["originalTypeOrderDependencies"] = {dep: proof}
+        data["certifiedOrderTypeDependencies"] = checked
+        self.assertEqual(check_coverage(data), (0, []))
+        with patch("report.order_certificates", return_value=[]), self.assertRaisesRegex(ValueError, "live implication"):
+            verify_complete(data, Path("product"), *check_coverage(data))
+        for bad in ([], checked + checked, [[owner, name, dep, "weakRelation"]],
+                    [[owner, "another", dep, proof]], [["Init.Core", name, dep, proof]]):
+            with self.subTest(bad=bad), self.assertRaisesRegex(ValueError, "order"):
+                check_coverage(data | {"certifiedOrderTypeDependencies": bad})
+        for change in ({"originalTypeGap": "missing type dependencies: Other"}, {"kind": "definition"},
+                       {"matchingNameAndModule": False}, {"strictUnsafe": True}):
+            with self.subTest(change=change), self.assertRaisesRegex(ValueError, "order type dependency"):
+                check_coverage(data | {"declarations": [row | change]})
+
     def test_strict_excluded_middle_is_a_logical_consequence(self):
         row = site("Init.Data.String.Lemmas.Pattern.Basic", "String.Slice.Pattern.Model.IsMatch.exists_isLongestMatch",
                    logicalConsequence="Classical.em", strictLogicalConsequence="Classical.em",

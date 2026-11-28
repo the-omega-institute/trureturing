@@ -60,6 +60,32 @@ PROMISE_TOKENS = ("_private.Init.System.Promise.0.IO.PromisePointed",
                   "_private.OmegaInit.System.Promise.0.Omega.IO.PromisePointed")
 
 
+ORDER_OWNER = "Init.Internal.Order.Basic"
+ORDER_PROOFS = {
+    "Lean.Order.ImplicationOrder.instOrder": "OmegaChecks.InitBoundaries.InternalOrder.propextOfImplicationOrder",
+    "Lean.Order.ReverseImplicationOrder.instOrder": "OmegaChecks.InitBoundaries.InternalOrder.propextOfReverseImplicationOrder",
+}
+
+
+def order_dependencies(certificates):
+    dependencies = defaultdict(dict)
+    for owner, name, dep, proof in certificates:
+        site = (owner, name)
+        if owner != ORDER_OWNER or ORDER_PROOFS.get(dep) != proof or dep in dependencies[site]:
+            raise ValueError(f"invalid pinned implication order certificate for {site}")
+        dependencies[site][dep] = proof
+    return dependencies
+
+
+def order_certificates(product):
+    library = product / "lib"
+    if not (library / "OmegaInit/Internal/Order/Basic.olean").is_file():
+        return []
+    result = subprocess.run(["lake", "env", "lean", "--run", HERE / "ImplicationOrderCheck.lean", library],
+                            cwd=ROOT, stdout=subprocess.PIPE, text=True, check=True)
+    return [json.loads(line) for line in result.stdout.splitlines()]
+
+
 def check_coverage(official):
     """Count physical sites from the fresh Lean inventory, including repeated names."""
     modules = set(official["modules"])
@@ -83,6 +109,7 @@ def check_coverage(official):
     private_types = {(owner, name): (hidden, strict_hidden) for owner, name, hidden, strict_hidden in certificates}
     if len(private_types) != len(certificates):
         raise ValueError("repeated import all original type certificate")
+    blocked_orders = order_dependencies(official.get("certifiedOrderTypeDependencies", []))
     sites = set()
     direct = 0
     matched = 0
@@ -210,6 +237,17 @@ def check_coverage(official):
                  row.get("originalTypeGap") != f"missing type dependencies: {PROMISE_TOKENS[1]}" or
                  any(row.get(flag) is not False for flag in ("unsafe", "partial", "strictUnsafe", "strictPartial")))):
             raise ValueError(f"uncertified import all original type for {owner}/{name}")
+        orders = blocked_orders.pop(site, {})
+        if orders != row.get("originalTypeOrderDependencies", {}):
+            raise ValueError(f"uncertified pinned order type dependency for {site}")
+        if orders:
+            gap = row.get("originalTypeGap") or ""
+            missing = gap.partition(". ")[0].removeprefix("missing type dependencies: ").split(", ")
+            if (not port or row["kind"] != "theorem" or row.get("originalTypeChecked") is not False or
+                    any(row.get(flag) is not False for flag in ("unsafe", "partial", "strictUnsafe", "strictPartial")) or
+                    private_type or any("Omega." + dep not in missing for dep in orders) or
+                    not gap.endswith("A definitionally equal reformulation checks in the public kernels.")):
+                raise ValueError(f"inconsistent pinned order type dependency for {site}")
         if port:
             if axiom or witness or (runtime and not (unsafe_runtime or effect or comparison or pointer_hash)) or row["strictModule"] != "Omega" + owner:
                 raise ValueError(f"inconsistent strict match for {owner}/{name}")
@@ -218,7 +256,7 @@ def check_coverage(official):
                 if row.get("originalTypeChecked") is True and row.get("originalTypeGap") is None:
                     original_types += 1
                 elif row.get("originalTypeChecked") is False and row.get("originalTypeGap"):
-                    if not private_type:
+                    if not private_type and not orders:
                         unresolved.append(site)
                 else:
                     raise ValueError(f"inconsistent original type check for {owner}/{name}")
@@ -230,6 +268,8 @@ def check_coverage(official):
             reductions += 1
         elif not endpoint and not argument and not refuter and path != "Quot.sound":
             unresolved.append(site)
+    if blocked_orders:
+        raise ValueError("pinned order certificate has no definition site")
     if private_types:
         raise ValueError("import all original type certificate has no definition site")
     if by_refutation:
@@ -266,8 +306,13 @@ def verify_complete(official, product, reductions, unresolved):
                          f"{formations} statements requiring an excluded axiom to form a faithful argument or endpoint, "
                          f"{models} statements, required paths or computations refuted in the representative quotient model. "
                          f"Examples: {examples}. See init-gaps.tsv.")
+    order_checks = official.get("certifiedOrderTypeDependencies", [])
+    if order_checks and order_certificates(product) != order_checks:
+        raise ValueError("live implication order certificates differ from inventory")
+    blocked = order_dependencies(order_checks)
     certified = {(owner, name) for owner, name, _, _ in official.get("certifiedImportAllOriginalTypes", [])}
     if any(row["matchingNameAndModule"] and row.get("originalTypeChecked") is not True and
+           (row["module"], row["name"]) not in blocked and
            (row.get("importAllOriginalTypeChecked") is not True or (row["module"], row["name"]) not in certified)
            for row in official["declarations"]):
         raise ValueError("matched declarations require a fresh strict check of each original type")
@@ -394,6 +439,9 @@ def report(product, require_complete=False):
         official["certifiedImportAllOriginalTypes"] = promise_checks
         official["summary"]["importAllOriginalTypesChecked"] = len(promise_checks)
         promise_sites = {(owner, name) for owner, name, _, _ in promise_checks}
+        order_checks = order_certificates(product)
+        official["certifiedOrderTypeDependencies"] = order_checks
+        orders = order_dependencies(order_checks)
         strict_choices = check_strict_reference_choices(product, stage, attempts)
         strict_matches = check_strict_longest_matches(product, stage)
         strict_folds = check_strict_fin_folds(product, stage)
@@ -407,6 +455,8 @@ def report(product, require_complete=False):
         pending.update({site: (*result, "strictEquivalenceWitness") for site, result in strict_equivalences.items()})
         for row in official["declarations"]:
             site = (row["module"], row["name"])
+            if site in orders:
+                row["originalTypeOrderDependencies"] = orders[site]
             if site in promise_sites:
                 row["importAllOriginalTypeChecked"] = True
             witness = strict_choices.get(site)
@@ -445,7 +495,7 @@ def report(product, require_complete=False):
                              "specializedEndpointType", "strictConstructorIff", "formationArgument", "transportPathType", "pinnedLiftCoherenceRefuter",
                              "strictLogicalConsequence", "strictLogicalConsequenceWitness", "strictEquivalenceWitness",
                              "representativeRefuter", "refinedQuotientConsequence", "originalTypeGap",
-                             "importAllOriginalTypeChecked"])
+                             "importAllOriginalTypeChecked", "originalTypeOrderDependencies"])
             for row in official["declarations"]:
                 if row["originalTypeChecked"] or row["kind"] == "axiom":
                     continue
@@ -490,7 +540,8 @@ def report(product, require_complete=False):
                                  row.get("strictLogicalConsequence"), row.get("strictLogicalConsequenceWitness"),
                                  row.get("strictEquivalenceWitness"), row.get("representativeRefuter"),
                                  row.get("refinedQuotientConsequence"), row.get("originalTypeGap"),
-                                 "true" if row.get("importAllOriginalTypeChecked") else ""])
+                                 "true" if row.get("importAllOriginalTypeChecked") else "",
+                                 json.dumps(row["originalTypeOrderDependencies"], sort_keys=True) if row.get("originalTypeOrderDependencies") else ""])
         reductions = stage / "init-public-reductions.tsv"
         with reductions.open("w", newline="") as f:
             writer = csv.writer(f, delimiter="\t", lineterminator="\n")
