@@ -42,8 +42,13 @@ internal sealed class PrintedConjectureDocument : IScribeDocumentDefinition
                         + "unitary. The inclusion from real matrices to complex matrices "
                         + "preserves ordered products and trace, so every trace word is real. "
                         + "The window at dimension two has length three, and every word "
-                        + "in that window therefore has zero imaginary trace."))),
-                DescribeRole.Theorem))));
+                        + "in that window therefore has zero imaginary trace. The counterexample "
+                        + "falsifies the direction from a common real basis to a nonreal trace "
+                        + "word in the printed biconditional."))),
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("guo-pan-wang-du-2026-set-imaginarity-conjecture-1"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Definition(string id, string name, string title, string prose) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + name), H(title),

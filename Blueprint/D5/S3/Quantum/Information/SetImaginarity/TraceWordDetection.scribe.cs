@@ -24,8 +24,10 @@ internal sealed class TraceWordDetectionDocument : IScribeDocumentDefinition
                         + "by the disjoint union of two copies of Fin 2. It says that if every "
                         + "ordered trace word has imaginary part zero, for every natural length "
                         + "and every choice of letters, then one unitary makes all four states "
-                        + "entrywise real. This sufficiency condition is implied by the detection "
-                        + "direction suggested in the introduction and Appendix C."))),
+                        + "entrywise real. The introduction and Appendix C suggest a detection "
+                        + "criterion whose sufficiency direction uses only the bounded window. "
+                        + "Replacing that premise by reality of all trace words gives the "
+                        + "separate implication tested here."))),
                 DescribeRole.Definition),
             Describe.Lean(
                 DescribeId.Create("all-word-refutation"), DeclarationHandle.Create(Prefix + "result"),
@@ -59,8 +61,11 @@ internal sealed class TraceWordDetectionDocument : IScribeDocumentDefinition
                             + "Thus C is a scalar multiple of Q, which is skew-symmetric. "
                             + "Symmetry then forces C to vanish, contradicting unitarity.")),
                     Paragraph(Text(
-                        "In particular all words in the dimension-four window from three to "
-                            + "ten have real trace. Any restriction to words with distinct "
-                            + "letters also retains this counterexample."))),
+                        "All words in the dimension-four window from three to ten have real "
+                            + "trace, so the same family refutes the inferred bounded "
+                            + "sufficiency direction. Any restriction to words with distinct "
+                            + "letters also retains this counterexample. The earlier work of "
+                            + "Miyazaki and Matsumoto on antiunitary symmetries is related "
+                            + "literature."))),
                 DescribeRole.Theorem))));
 }

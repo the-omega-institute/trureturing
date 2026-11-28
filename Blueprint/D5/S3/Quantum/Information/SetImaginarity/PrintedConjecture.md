@@ -46,13 +46,17 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/SetImaginarity/PrintedConjecture.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/guo-pan-wang-du-2026-set-imaginarity-conjecture-1` (refuted) by `D5/S3/Quantum/Information/SetImaginarity/PrintedConjecture.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"guo-pan-wang-du-2026-set-imaginarity-conjecture-1","declaration_gid":"D5/S3/Quantum/Information/SetImaginarity/PrintedConjecture.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Yu Guo, Jiabo Pan, Yuqin Wang, Shuanping Du (2026). *Measure of set imaginarity*. DOI: [10.1103/1yc6-lzfk](https://doi.org/10.1103/1yc6-lzfk). URL: <https://arxiv.org/abs/2608.28985v1>.
 
 *Commentary.*
 
-Use the diagonal states with diagonal entries (3/4, 1/4), (1/4, 3/4) and (1/2, 1/2). Their first entries distinguish them, and their diagonals are positive and sum to one. The identity is a common unitary. The inclusion from real matrices to complex matrices preserves ordered products and trace, so every trace word is real. The window at dimension two has length three, and every word in that window therefore has zero imaginary trace.
+Use the diagonal states with diagonal entries (3/4, 1/4), (1/4, 3/4) and (1/2, 1/2). Their first entries distinguish them, and their diagonals are positive and sum to one. The identity is a common unitary. The inclusion from real matrices to complex matrices preserves ordered products and trace, so every trace word is real. The window at dimension two has length three, and every word in that window therefore has zero imaginary trace. The counterexample falsifies the direction from a common real basis to a nonreal trace word in the printed biconditional.
 
 ## References
 

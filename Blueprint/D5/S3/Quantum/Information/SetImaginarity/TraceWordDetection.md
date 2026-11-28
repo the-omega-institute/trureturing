@@ -16,7 +16,7 @@ Lean statement: `D5/S3/Quantum/Information/SetImaginarity/TraceWordDetection.cla
 
 *Commentary.*
 
-The assertion quantifies over every injective family of four positive semidefinite trace-one complex matrices, with rows and columns indexed by the disjoint union of two copies of Fin 2. It says that if every ordered trace word has imaginary part zero, for every natural length and every choice of letters, then one unitary makes all four states entrywise real. This sufficiency condition is implied by the detection direction suggested in the introduction and Appendix C.
+The assertion quantifies over every injective family of four positive semidefinite trace-one complex matrices, with rows and columns indexed by the disjoint union of two copies of Fin 2. It says that if every ordered trace word has imaginary part zero, for every natural length and every choice of letters, then one unitary makes all four states entrywise real. The introduction and Appendix C suggest a detection criterion whose sufficiency direction uses only the bounded window. Replacing that premise by reality of all trace words gives the separate implication tested here.
 
 **Theorem 1.2 (Four positive definite states refute sufficiency).**
 
@@ -36,7 +36,7 @@ Let J have rows (0, 1) and (-1, 0), and let Q be block diagonal with two copies 
 
 If a unitary U made all four states real, the product of its adjoint with its entrywise conjugate would be a symmetric unitary C intertwining all four generators with their conjugates. The first generator forces both off-diagonal blocks of C to vanish. The second forces the diagonal blocks to be equal. The third and fourth force their common block to anticommute with X and Z. Anticommutation with Z gives zero diagonal entries, and anticommutation with X gives opposite off-diagonal entries. Thus C is a scalar multiple of Q, which is skew-symmetric. Symmetry then forces C to vanish, contradicting unitarity.
 
-In particular all words in the dimension-four window from three to ten have real trace. Any restriction to words with distinct letters also retains this counterexample.
+All words in the dimension-four window from three to ten have real trace, so the same family refutes the inferred bounded sufficiency direction. Any restriction to words with distinct letters also retains this counterexample. The earlier work of Miyazaki and Matsumoto on antiunitary symmetries is related literature.
 
 ## References
 
