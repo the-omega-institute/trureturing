@@ -7,18 +7,23 @@
    digest: Continuous word-ball tents obstruct uniform invariance for infinite finitely generated actions. -/
 
 
-import Mathlib.GroupTheory.Finiteness
-import Mathlib.GroupTheory.Generators
-import Mathlib.GroupTheory.GroupAction.Basic
-import Mathlib.GroupTheory.GroupAction.Quotient
-import Mathlib.GroupTheory.Index
-import Mathlib.Topology.MetricSpace.Defs
-import Mathlib.Topology.UrysohnsLemma
-import Mathlib.Topology.ContinuousMap.Compact
-import Mathlib.Topology.Order.Lattice
-import Mathlib.Tactic.Linarith
-import OmegaMath.Combinatorics.Graph.GroupWordMetric
-import OmegaBuild.Commands
+module
+
+public import Mathlib.GroupTheory.Finiteness
+public import Mathlib.Algebra.Group.Subgroup.Lattice
+public import Mathlib.GroupTheory.Generators
+public import Mathlib.GroupTheory.GroupAction.Basic
+public import Mathlib.GroupTheory.GroupAction.Quotient
+public import Mathlib.GroupTheory.Index
+public import Mathlib.Topology.MetricSpace.Defs
+public import Mathlib.Topology.UrysohnsLemma
+public import Mathlib.Topology.ContinuousMap.Compact
+public import Mathlib.Topology.Order.Lattice
+public import Mathlib.Tactic.Linarith
+public import OmegaMath.Combinatorics.Graph.GroupWordMetric
+public import OmegaBuild.Commands
+
+@[expose] public section
 
 /-! Word-ball constructions for continuous actions on compact metric spaces. -/
 
@@ -194,7 +199,7 @@ private theorem generates_of_closure (S : Finset G)
     inv_mem' := by
       rintro a ⟨n, hn⟩
       exact ⟨n, hn.inv hsym⟩ }
-  have hle : Subgroup.closure (S : Set G) ≤ H := Subgroup.closure_le.mpr
+  have hle : Subgroup.closure (S : Set G) ≤ H := (Subgroup.closure_le H).mpr
     (fun s hs => ⟨1, GroupWordMetric.Fits.of_mem hs⟩)
   intro g
   exact hle (hS ▸ Subgroup.mem_top g)

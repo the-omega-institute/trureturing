@@ -1,7 +1,11 @@
-import OmegaBuild.Commands
-import Mathlib.Algebra.Group.Pointwise.Set.Basic
-import Mathlib.Topology.MetricSpace.IsometricSMul
-import Mathlib.Tactic.Group
+module
+
+public import OmegaBuild.Commands
+public import Mathlib.Algebra.Group.Pointwise.Set.Basic
+public import Mathlib.Topology.MetricSpace.IsometricSMul
+public import Mathlib.Tactic.Group
+
+@[expose] public section
 
 compile_only_with_mathlib
 
