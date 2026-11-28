@@ -74,7 +74,7 @@ set_option maxHeartbeats 1000000 in
 -- The kernel evaluates the finite family of local support pairs.
 /-- All subcubic candidates without a square or hexagon that exceed the
 four- or five-hole edge limit contain the same eight-cycle word. -/
-theorem local_excess_cycles : checked 4 14 = true ∧ checked 5 19 = true := by
+theorem local_excess_cycles : checked 4 14 = true ∧ checked 5 18 = true := by
   constructor <;> decide +kernel
 
 private theorem excess_word {h limit : Nat} (hc : checked h limit = true)
@@ -138,7 +138,7 @@ private theorem signed_word_impossible {n : Nat} {S : Finset (Q n)} (P R : List 
 /-- A coordinate representation of a balanced support excludes the finite
 excess-edge configurations at four and five holes. -/
 theorem no_mapped_excess {n : Nat} {S : Finset (Q n)} {h limit : Nat}
-    (hcase : (h = 4 ∧ limit = 14) ∨ (h = 5 ∧ limit = 19))
+    (hcase : (h = 4 ∧ 14 ≤ limit) ∨ (h = 5 ∧ 18 ≤ limit))
     (extra R : List Nat) (hextra : List.Sublist extra (even.filter (fun x => x != 0 && x != 24)))
     (hsize : extra.length = h - 2) (hR : List.Sublist R (eligible (selectedEven extra)))
     (point : Nat → Q n) (axis : Nat → Fin n)
@@ -150,14 +150,17 @@ theorem no_mapped_excess {n : Nat} {S : Finset (Q n)} {h limit : Nat}
     (hfour : forbiddenFour (R.map (neighbors (selectedEven extra))) = false)
     (hsix : forbiddenSix (R.map (neighbors (selectedEven extra))) = false) :
     (R.map (fun x => (neighbors (selectedEven extra) x).length)).sum ≤ limit := by
+  let floor := if h = 4 then 14 else 18
+  have hle : floor ≤ limit := by
+    rcases hcase with ⟨rfl, h⟩ | ⟨rfl, h⟩ <;> simpa [floor] using h
   by_contra! hlarge
-  have hsurvives : survives (selectedEven extra) R limit = true := by
+  have hsurvives : survives (selectedEven extra) R floor = true := by
     simp only [survives, hdegree, hfour, hsix, Bool.not_false, Bool.and_true]
     apply decide_eq_true
     rw [List.map_map]
-    exact hlarge
-  have hc : checked h limit = true := by
-    rcases hcase with ⟨rfl, rfl⟩ | ⟨rfl, rfl⟩
+    exact hle.trans_lt hlarge
+  have hc : checked h floor = true := by
+    rcases hcase with ⟨rfl, _⟩ | ⟨rfl, _⟩
     · exact local_excess_cycles.1
     · exact local_excess_cycles.2
   exact signed_word_impossible (selectedEven extra) R point axis hinj hpoint hflip hbal
@@ -642,7 +645,9 @@ private theorem normalized_local_capacity (S : Finset (Q 9)) (e : Fin 5 ↪ Fin 
     let A := univ.map e
     let L := (restrictToFibre S A z).filter (fun v => parity v = parity z)
     let H := (restrictToFibre univ A z).filter (fun v => parity v = parity z ∧ v ∉ S)
-    H.card = 4 ∨ H.card = 5 → (freeEdges S L A).card + 6 ≤ 5 * H.card := by
+    H.card = 4 ∨ H.card = 5 →
+      (freeEdges S L A).card + 6 ≤ 5 * H.card ∧
+        (H.card = 5 → (freeEdges S L A).card ≤ 18) := by
   intro A L H hcase
   let point := wordPoint e z
   let extra := (even.filter (fun x => x != 0 && x != 24)).filter
@@ -734,16 +739,21 @@ private theorem normalized_local_capacity (S : Finset (Q 9)) (e : Fin 5 ↪ Fin 
     change e (axisIndex (2 ^ i.val)) = e (axisIndex (2 ^ j.val)) at h
     rw [axisIndex_pow, axisIndex_pow] at h
     rw [e.injective h]
-  let limit := 5 * H.card - 6
-  have hlimit : (H.card = 4 ∧ limit = 14) ∨ (H.card = 5 ∧ limit = 19) := by
-    dsimp [limit]
-    omega
+  let limit := if H.card = 4 then 14 else 18
+  have hlimit : (H.card = 4 ∧ 14 ≤ limit) ∨ (H.card = 5 ∧ 18 ≤ limit) := by
+    rcases hcase with h | h
+    · exact Or.inl ⟨h, by simp [limit, h]⟩
+    · exact Or.inr ⟨h, by simp [limit, h]⟩
   have hbound := no_mapped_excess hlimit extra R List.filter_sublist hextra hRsub point
     (e ∘ axisIndex) hinj hpoint (wordPoint_xor_axis e z) hbal hdegP hcycle.1 hcycle.2
   change (R.map (fun x => (neighbors P x).length)).sum ≤ limit at hbound
   rw [word_edge_equiv_count S e z P R hRnodup hP hR]
-  dsimp [limit] at hbound
-  omega
+  by_cases h : H.card = 4
+  · simp [limit, h] at hbound
+    constructor <;> omega
+  · have hfive : H.card = 5 := hcase.resolve_left h
+    simp [limit, h, hfive] at hbound
+    constructor <;> omega
 
 open Classical in
 private theorem reindex_last_two_axes (e : Fin 5 ↪ Fin 9) {j k : Fin 9}
@@ -801,7 +811,9 @@ theorem adjacent_fibre_four_five_hole_capacity {C D : Finset (Q 9)} (b : Bool) {
     let A := univ.map e
     let L := (restrictToFibre D A y).filter (fun v => parity v = b)
     let H := (restrictToFibre univ A y).filter (fun v => parity v = b ∧ v ∉ D)
-    H.card = 4 ∨ H.card = 5 → (freeEdges D L A).card + 6 ≤ 5 * H.card := by
+    H.card = 4 ∨ H.card = 5 →
+      (freeEdges D L A).card + 6 ≤ 5 * H.card ∧
+        (H.card = 5 → (freeEdges D L A).card ≤ 18) := by
   intro y A L H hcase
   have hne (l : Fin 9) (hl : l ∈ A) : i ≠ l := fun he => hi (he.symm ▸ hl)
   obtain ⟨hyD, hypar, hjD, hkD⟩ :=

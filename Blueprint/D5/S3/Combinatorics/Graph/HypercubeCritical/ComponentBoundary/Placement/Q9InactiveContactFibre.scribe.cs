@@ -88,7 +88,7 @@ internal sealed class Q9InactiveContactFibreDocument : IScribeDocumentDefinition
                 H("An eight-cycle rules out the local four- and five-hole excesses"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(
-                    Paragraph(Text("In the five-bit representation, place the forbidden odd vertex at word eight and its two forced even holes at words zero and twenty-four. Enumerate the remaining holes and the opposite vertices with positive free degree at most three. After removing squares and hexagons, every support exceeding fourteen edges at four holes or nineteen edges at five holes contains the two four-step paths of the same eight-cycle type.")),
+                    Paragraph(Text("In the five-bit representation, place the forbidden odd vertex at word eight and its two forced even holes at words zero and twenty-four. Enumerate the remaining holes and the opposite vertices with positive free degree at most three. After removing squares and hexagons, every support exceeding fourteen edges at four holes or eighteen edges at five holes contains the two four-step paths of the same eight-cycle type.")),
                     Paragraph(Text("A representation respecting coordinate flips carries those two paths into the selected support. Their flip words have the same endpoint. Anticommuting the signed flip operators puts their products in opposite signs, contradicting balance."))),
                 DescribeRole.Theorem),
             Describe.Lean(

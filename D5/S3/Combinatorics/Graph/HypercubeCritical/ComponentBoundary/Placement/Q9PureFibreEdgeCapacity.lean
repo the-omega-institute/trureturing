@@ -602,8 +602,8 @@ theorem adjacent_fibre_hole_edge_capacity {C D : Finset (Q 9)} (b : Bool) {x : Q
   · exact adjacent_fibre_small_hole_edge_capacity b hx hp hsep A (by simp [A])
       hi hj hk hjk hmj hmk hdeg hs
   by_cases hm : H.card = 4 ∨ H.card = 5
-  · exact Q9FiveAxisExcessCycles.adjacent_fibre_four_five_hole_capacity
-      b hx hp hsep e hi hj hk hjk hmj hmk hbal hdeg hm
+  · exact (Q9FiveAxisExcessCycles.adjacent_fibre_four_five_hole_capacity
+      b hx hp hsep e hi hj hk hjk hmj hmk hbal hdeg hm).1
   by_cases h6 : H.card = 6
   · have hb := (five_axis_hole_linear_bound D e hi y b hbal hdeg).2 h6
     change (freeEdges D L A).card ≤ 22 at hb
