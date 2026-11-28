@@ -58,23 +58,9 @@ Lean statement: `D5/S3/Quantum/Information/GangulyCircuitAccess/Encoding.logical
 
 *Commentary.*
 
-The logical matrix has both diagonal entries 1/2 and both off-diagonal entries sign/2 for a complex sign. The pure-state assertion below concerns the two real signs +1 and −1.
+The logical matrix has both diagonal entries 1/2 and both off-diagonal entries sign/2 for a complex sign. At the two signs +1 and −1, these matrices are the outer products of the unit vectors (|0⟩ + |1⟩)/√2 and (|0⟩ − |1⟩)/√2.
 
-**Theorem 1.5 (Pure logical inputs).**
-
-Lean statement: `D5/S3/Quantum/Information/GangulyCircuitAccess/Encoding.logical_x_pure`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/GangulyCircuitAccess/Encoding.logical_x_pure` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* Sayantan Ganguly (2026). *Symplectic Matroids, Stabilizer Codes, and Quantum Secret-Sharing*. DOI: [10.48550/arXiv.2611.27300](https://doi.org/10.48550/arXiv.2611.27300). URL: <https://arxiv.org/abs/2611.27300v2>.
-
-*Commentary.*
-
-For each Boolean selecting the negative sign, there is a vector v in the logical two-dimensional complex space with sum of v(i) times its conjugate equal to one, whose outer product equals the selected logical matrix. These are the projectors onto (|0⟩ + |1⟩)/√2 and (|0⟩ − |1⟩)/√2.
-
-**Theorem 1.6 (Distinct logical matrices).**
+**Theorem 1.5 (Distinct logical matrices).**
 
 Lean statement: `D5/S3/Quantum/Information/GangulyCircuitAccess/Encoding.logical_x_distinct`
 
@@ -88,7 +74,7 @@ Lean statement: `D5/S3/Quantum/Information/GangulyCircuitAccess/Encoding.logical
 
 The logical matrices at +1 and −1 differ at entry (0, 1).
 
-**Theorem 1.7 (Exact equality of the retained states).**
+**Theorem 1.6 (Exact equality of the retained states).**
 
 $$\mathit{reducedEncoding}\left(\mathit{witnessGraph}, \mathit{witnessDealer}, \mathit{witnessPlayers}, \mathit{logicalDensity}\left(1\right)\right) = \mathit{reducedEncoding}\left(\mathit{witnessGraph}, \mathit{witnessDealer}, \mathit{witnessPlayers}, \mathit{logicalDensity}\left(-1\right)\right)$$
 
@@ -107,7 +93,6 @@ On the witness graph with dealer 4 and retained set {2, 5, 6}, the two input pro
 - Truth anchor: `D5/S3/Quantum/Information/GangulyCircuitAccess/Encoding.dealerSlices`
 - Truth anchor: `D5/S3/Quantum/Information/GangulyCircuitAccess/Encoding.logicalDensity`
 - Truth anchor: `D5/S3/Quantum/Information/GangulyCircuitAccess/Encoding.logical_x_distinct`
-- Truth anchor: `D5/S3/Quantum/Information/GangulyCircuitAccess/Encoding.logical_x_pure`
 - Truth anchor: `D5/S3/Quantum/Information/GangulyCircuitAccess/Encoding.reducedEncoding`
 - Truth anchor: `D5/S3/Quantum/Information/GangulyCircuitAccess/Encoding.witness_encoding_isometry`
 - Truth anchor: `D5/S3/Quantum/Information/GangulyCircuitAccess/Encoding.witness_reduced_density_eq`

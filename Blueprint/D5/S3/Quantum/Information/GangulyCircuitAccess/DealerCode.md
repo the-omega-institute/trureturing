@@ -96,4 +96,5 @@ The lifted operators compose by addition of their binary labels. A full vector f
 - Truth anchor: `D5/S3/Quantum/Information/GangulyCircuitAccess/DealerCode.witnessGraphState`
 - Truth anchor: `D5/S3/Quantum/Information/GangulyCircuitAccess/DealerCode.witnessShortenedCode`
 - Truth anchor: `D5/S3/Quantum/Information/GangulyCircuitAccess/DealerCode.witness_proposition8`
+- Dependency: [D5/S3/Quantum/Information/GangulyCircuitAccess/Combinatorial](Combinatorial.md)
 - Dependency: [D5/S3/Quantum/Information/GangulyCircuitAccess/Encoding](Encoding.md)

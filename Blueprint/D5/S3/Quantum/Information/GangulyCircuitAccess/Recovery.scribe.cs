@@ -18,12 +18,9 @@ internal sealed class GangulyRecoveryDocument : IScribeDocumentDefinition
             Node("recovery-claim", "claim", "Universal inclusion of circuit access in recovery access",
                 StatementSource.WithoutFormula(), DescribeRole.Definition,
                 "Ganguly, Section VI, Problem 2, p. 22. “For simple graphs Γ, does the condition that Γᶜⁱʳᶜ_{L(Γ),d} is a quantum access structure imply Γᶜⁱʳᶜ_{L(Γ),d} ⊆ Γʳᵉᶜ_d? This holds for at most six vertices (Table I) and fails for graphs with loops (Example 6).” The Lean assertion quantifies over all natural vertex counts, simple graphs on Fin(n) with decidable adjacency, and dealers. Under the quantum access antecedent it requires recovery for every circuit-authorized A using the dealer-slice encoding."),
-            Node("recovery-witness-no-common-recovery", "witness_no_common_recovery", "No function recovers both inputs",
-                StatementSource.WithoutFormula(), DescribeRole.Theorem,
-                "There is no function from retained complex matrices to qubit matrices that sends the retained reduction of the positive logical input to the positive input and the retained reduction of the negative logical input to the negative input. The two arguments of the function coincide and the two demanded values differ."),
             Node("recovery-result", "result", "Refutation of the universal inclusion",
                 StatementSource.FromAuthor(Disp(new Formula.Not(new Formula.Symbol(FormulaIdentifier.Create("claim"))))), DescribeRole.Theorem,
-                "The universal inclusion is false. For the seven-vertex graph the circuit family is a quantum access structure and contains {2, 5, 6} at dealer 4. The encoding is the isometry into the shortened code established by the witness correspondence with Proposition 8. A completely positive trace-preserving recovery map would give a function recovering both logical pure inputs from their common retained matrix."))));
+                "The universal inclusion is false. For the seven-vertex graph the circuit family is a quantum access structure and contains {2, 5, 6} at dealer 4. The encoding is the isometry into the shortened code established by the witness correspondence with Proposition 8. The two logical pure inputs have the same retained matrix. A completely positive trace-preserving recovery map would have to map that one matrix to both distinct inputs. This establishes a failure at seven vertices. The smaller-size assertion in the quoted question is attributed to Table I."))));
 
     private static DocumentBlock Node(string id, string name, string title, StatementSource statement,
         DescribeRole role, string prose) => Describe.Lean(

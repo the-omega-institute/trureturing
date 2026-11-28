@@ -7,20 +7,11 @@
    digest: A seven-vertex circuit-access witness has a proper dealer image. -/
 
 /-
-Admission basis: open-problem-resolution (https://github.com/the-omega-institute/trureturing/issues/35163).
-The concrete circuit and dealer-image certificates below support the seven-vertex
-recovery refutation. The universal settlement is owned by Recovery.result.
-The retained public theorem consumers are quantumAccess_of_generators →
-witness_quantum_access, witness_circuit → witness_authorized,
-witness_signed_cross_zero → Encoding.witness_reduced_density_eq,
-witness_signed_gram → Encoding.witness_encoding_isometry, and
-witness_dealer_surjective → DealerCode.witness_proposition8. The concrete
-witness_dealer_image certificate is retained as an independent witness check.
-Direct frozen dependencies: none. Four-slot escape registration was attempted
-for each retained public theorem. No enrolled template matches these finite
-graph, circuit, dealer-image, or sign-certificate declarations, so the
-unfinished audit is disclosed at the linked issue with the missing
-realization, variation, and sensitivity evidence named there.
+admission_basis: escape-witness. Finite dealer circuits, their intersecting
+player supports, and the sign sums supply the seven-vertex certificates
+for #35163. The proper restricted dealer image is a separate witness check.
+Escape audit unfinished. The preregistration for this witness is at
+https://github.com/the-omega-institute/trureturing/issues/35163.
 -/
 
 import Mathlib.Combinatorics.SimpleGraph.AdjMatrix
@@ -44,42 +35,42 @@ abbrev Bits (n : ℕ) := Fin n → ZMod 2
 
 /-- The coefficients of a binary relation in the columns of [I | M]
 are (Mx, x), with false standing for the unstarred column. -/
-def relationSupport {n : ℕ} (M : Matrix (Fin n) (Fin n) (ZMod 2))
+private def relationSupport {n : ℕ} (M : Matrix (Fin n) (Fin n) (ZMod 2))
     (x : Bits n) : Finset (Fin n × Bool) :=
   Finset.univ.filter fun p => (if p.2 then x p.1 else (M *ᵥ x) p.1) ≠ 0
 
-def admissible {n : ℕ} (C : Finset (Fin n × Bool)) : Prop :=
+private def admissible {n : ℕ} (C : Finset (Fin n × Bool)) : Prop :=
   ∀ i : Fin n, ¬ ((i, false) ∈ C ∧ (i, true) ∈ C)
 
-def isCircuit {n : ℕ} (M : Matrix (Fin n) (Fin n) (ZMod 2)) (x : Bits n) : Prop :=
+private def isCircuit {n : ℕ} (M : Matrix (Fin n) (Fin n) (ZMod 2)) (x : Bits n) : Prop :=
   let C := relationSupport M x
   C.Nonempty ∧ admissible C ∧
     ∀ y : Bits n, (relationSupport M y).Nonempty → ¬ relationSupport M y ⊂ C
 
-instance {n : ℕ} (C : Finset (Fin n × Bool)) : Decidable (admissible C) :=
+private instance {n : ℕ} (C : Finset (Fin n × Bool)) : Decidable (admissible C) :=
   inferInstanceAs (Decidable (∀ i : Fin n, ¬ ((i, false) ∈ C ∧ (i, true) ∈ C)))
 
-instance {n : ℕ} (M : Matrix (Fin n) (Fin n) (ZMod 2)) (x : Bits n) :
+private instance {n : ℕ} (M : Matrix (Fin n) (Fin n) (ZMod 2)) (x : Bits n) :
     Decidable (isCircuit M x) := by
   unfold isCircuit
   infer_instance
 
-def meetsDealer {n : ℕ} (d : Fin n) (C : Finset (Fin n × Bool)) : Prop :=
+private def meetsDealer {n : ℕ} (d : Fin n) (C : Finset (Fin n × Bool)) : Prop :=
   (d, false) ∈ C ∨ (d, true) ∈ C
 
-instance {n : ℕ} (d : Fin n) (C : Finset (Fin n × Bool)) :
+private instance {n : ℕ} (d : Fin n) (C : Finset (Fin n × Bool)) :
     Decidable (meetsDealer d C) := by
   unfold meetsDealer
   infer_instance
 
-def playerSupport {n : ℕ} (d : Fin n) (C : Finset (Fin n × Bool)) : Finset (Fin n) :=
+private def playerSupport {n : ℕ} (d : Fin n) (C : Finset (Fin n × Bool)) : Finset (Fin n) :=
   (C.image Prod.fst).erase d
 
-def dealerCircuit {n : ℕ} (M : Matrix (Fin n) (Fin n) (ZMod 2))
+private def dealerCircuit {n : ℕ} (M : Matrix (Fin n) (Fin n) (ZMod 2))
     (d : Fin n) (x : Bits n) : Prop :=
   isCircuit M x ∧ meetsDealer d (relationSupport M x)
 
-instance {n : ℕ} (M : Matrix (Fin n) (Fin n) (ZMod 2)) (d : Fin n) (x : Bits n) :
+private instance {n : ℕ} (M : Matrix (Fin n) (Fin n) (ZMod 2)) (d : Fin n) (x : Bits n) :
     Decidable (dealerCircuit M d x) := by
   unfold dealerCircuit
   infer_instance
@@ -93,7 +84,7 @@ def quantumAccess {n : ℕ} (M : Matrix (Fin n) (Fin n) (ZMod 2)) (d : Fin n) : 
     ∀ A B, circuitAuthorized M d A → circuitAuthorized M d B → (A ∩ B).Nonempty
 
 /-- Checking the circuit generators suffices for the full access antecedent. -/
-theorem quantumAccess_of_generators {n : ℕ} {M : Matrix (Fin n) (Fin n) (ZMod 2)}
+private theorem quantumAccess_of_generators {n : ℕ} {M : Matrix (Fin n) (Fin n) (ZMod 2)}
     {d : Fin n} (hne : ∃ x, dealerCircuit M d x)
     (hinter : ∀ x y, dealerCircuit M d x → dealerCircuit M d y →
       (playerSupport d (relationSupport M x) ∩ playerSupport d (relationSupport M y)).Nonempty) :
@@ -108,11 +99,11 @@ theorem quantumAccess_of_generators {n : ℕ} {M : Matrix (Fin n) (Fin n) (ZMod 
     obtain ⟨hiX, hiY⟩ := Finset.mem_inter.mp hi
     exact ⟨i, Finset.mem_inter.mpr ⟨hxA hiX, hyB hiY⟩⟩
 
-def supportedAt {n : ℕ} (M : Matrix (Fin n) (Fin n) (ZMod 2))
+private def supportedAt {n : ℕ} (M : Matrix (Fin n) (Fin n) (ZMod 2))
     (d : Fin n) (A : Finset (Fin n)) (x : Bits n) : Prop :=
   ∀ i : Fin n, i ∉ insert d A → x i = 0 ∧ (M *ᵥ x) i = 0
 
-instance {n : ℕ} (M : Matrix (Fin n) (Fin n) (ZMod 2))
+private instance {n : ℕ} (M : Matrix (Fin n) (Fin n) (ZMod 2))
     (d : Fin n) (A : Finset (Fin n)) (x : Bits n) :
     Decidable (supportedAt M d A x) := by
   unfold supportedAt
@@ -123,7 +114,7 @@ def dealerImage {n : ℕ} (M : Matrix (Fin n) (Fin n) (ZMod 2))
     (d : Fin n) (A : Finset (Fin n)) : Set (ZMod 2 × ZMod 2) :=
   {p | ∃ x : Bits n, supportedAt M d A x ∧ p = (x d, (M *ᵥ x) d)}
 
-def witnessEdges : Finset (Fin 7 × Fin 7) :=
+private def witnessEdges : Finset (Fin 7 × Fin 7) :=
   {(0, 1), (0, 2), (0, 4), (0, 6), (1, 2), (1, 3),
     (1, 6), (2, 3), (2, 5), (4, 5), (4, 6), (5, 6)}
 
@@ -140,12 +131,12 @@ abbrev witnessDealer : Fin 7 := 4
 def witnessPlayers : Finset (Fin 7) := {2, 5, 6}
 abbrev witnessMatrix := witnessGraph.adjMatrix (ZMod 2)
 
-def witnessRelation : Bits 7 := fun i => if i = 5 then 1 else 0
+private def witnessRelation : Bits 7 := fun i => if i = 5 then 1 else 0
 
 set_option maxRecDepth 8192 in
 set_option maxHeartbeats 2000000 in
 -- Decide checks minimality against all 128 relation vectors.
-theorem witness_circuit : dealerCircuit witnessMatrix witnessDealer witnessRelation := by
+private theorem witness_circuit : dealerCircuit witnessMatrix witnessDealer witnessRelation := by
   decide +kernel
 
 theorem witness_authorized : circuitAuthorized witnessMatrix witnessDealer witnessPlayers := by

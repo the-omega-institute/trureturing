@@ -7,25 +7,13 @@
    digest: A circuit-authorized player set lacks a recovery channel for the dealer-slice encoding. -/
 
 /-
-Admission basis: open-problem-resolution (https://github.com/the-omega-institute/trureturing/issues/35163).
-reconstructs is consumed by claim, claim is consumed by result,
-witness_no_common_recovery is consumed by the private witness_no_recovery
-step, and witness_no_recovery is consumed by result. The live result path is
-witness_quantum_access → witness_authorized → result's seven-vertex
-instantiation, then witness_reduced_density_eq and logical_x_distinct →
-witness_no_common_recovery → witness_no_recovery. The direct frozen dependency
-is D5/S3/Quantum/Foundation/FiniteStateChannel.QuantumChannel, statement_id
-sha256:b7b2554d55122b11b177ecdf92367d243e4d35ec1e3897c844deba5df1285d05.
-The result is the sole utility settlement and is exempt from four-slot escape
-registration. Four-slot escape registration was attempted for
-witness_no_common_recovery. No enrolled template matches the finite
-function-equality obstruction, so the unfinished audit is disclosed at the
-linked issue with the missing realization, variation, and sensitivity evidence
-named there. The Scribe scope is the seven-vertex refutation. No Problems
-dossier is included in this source checkpoint.
+admission_basis: open-problem-resolution (#35163, Refuted).
+The designated refutation result is exempt from four-slot escape registration.
+https://github.com/the-omega-institute/trureturing/issues/35163
 -/
 
-import D5.S3.Quantum.Information.GangulyCircuitAccess.DealerCode
+import D5.S3.Quantum.Information.GangulyCircuitAccess.Combinatorial
+import D5.S3.Quantum.Information.GangulyCircuitAccess.Encoding
 import D5.S3.Quantum.Foundation.FiniteStateChannel
 
 /-! A single recovery channel cannot recover two distinct logical states from
@@ -53,7 +41,7 @@ def claim : Prop :=
     ∀ A, circuitAuthorized (G.adjMatrix (ZMod 2)) d A → reconstructs G d A
 
 /-- Even an arbitrary function of the retained matrix cannot recover both inputs. -/
-theorem witness_no_common_recovery :
+private theorem witness_no_common_recovery :
     ¬ ∃ R : Matrix (Config witnessPlayers) (Config witnessPlayers) ℂ → Matrix (Fin 2) (Fin 2) ℂ,
       R (reducedEncoding witnessGraph witnessDealer witnessPlayers (logicalDensity 1)) =
         logicalDensity 1 ∧
