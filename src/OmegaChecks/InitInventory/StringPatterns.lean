@@ -192,35 +192,43 @@ public theorem excludedMiddleOfRevMatchAtSome (spec : type_of% @revMatchAt?_eq_s
 /-- Weak excluded middle decides the negation of each proposition. -/
 public def WeakExcludedMiddle : Prop := ∀ P : Prop, ¬ P ∨ ¬ ¬ P
 
-public theorem weakExcludedMiddleOfForwardFailure (find : type_of% @matchAt?)
+public def decidableNegOfForwardFailure (find : type_of% @matchAt?)
     (correct : ∀ {ρ : Type} {pat : ρ} [PatternModel pat] {s : String.Slice} {a : s.Pos},
-      find pat a = none ↔ ¬ MatchesAt pat a) : WeakExcludedMiddle := by
-  intro P
+      find pat a = none ↔ ¬ MatchesAt pat a) (P : Prop) : Decidable (¬ P) := by
   letI : PatternModel () := accepts P
   cases result : find () sample.startPos with
-  | none => exact Or.inl fun yes => correct.mp result ⟨⟨_, matchesWhole P yes⟩⟩
+  | none => exact isTrue fun yes => correct.mp result ⟨⟨_, matchesWhole P yes⟩⟩
   | some q =>
-    right
+    apply isFalse
     intro no
     have absent : ¬ MatchesAt () sample.startPos := by
       rintro ⟨⟨_, hit⟩⟩
       exact no hit.isLongestMatch_sliceFrom.isMatch.matches_copy
     cases result.symm.trans (correct.mpr absent)
 
-public theorem weakExcludedMiddleOfBackwardFailure (find : type_of% @revMatchAt?)
+public theorem weakExcludedMiddleOfForwardFailure (find : type_of% @matchAt?)
+    (correct : ∀ {ρ : Type} {pat : ρ} [PatternModel pat] {s : String.Slice} {a : s.Pos},
+      find pat a = none ↔ ¬ MatchesAt pat a) : WeakExcludedMiddle := fun P =>
+  @Decidable.em (¬ P) (decidableNegOfForwardFailure find correct P)
+
+public def decidableNegOfBackwardFailure (find : type_of% @revMatchAt?)
     (correct : ∀ {ρ : Type} {pat : ρ} [PatternModel pat] {s : String.Slice} {b : s.Pos},
-      find pat b = none ↔ ¬ RevMatchesAt pat b) : WeakExcludedMiddle := by
-  intro P
+      find pat b = none ↔ ¬ RevMatchesAt pat b) (P : Prop) : Decidable (¬ P) := by
   letI : PatternModel () := accepts P
   cases result : find () sample.endPos with
-  | none => exact Or.inl fun yes => correct.mp result ⟨⟨_, revMatchesWhole P yes⟩⟩
+  | none => exact isTrue fun yes => correct.mp result ⟨⟨_, revMatchesWhole P yes⟩⟩
   | some q =>
-    right
+    apply isFalse
     intro no
     have absent : ¬ RevMatchesAt () sample.endPos := by
       rintro ⟨⟨_, hit⟩⟩
       exact no hit.isLongestRevMatch_sliceTo.isRevMatch.matches_copy
     cases result.symm.trans (correct.mpr absent)
+
+public theorem weakExcludedMiddleOfBackwardFailure (find : type_of% @revMatchAt?)
+    (correct : ∀ {ρ : Type} {pat : ρ} [PatternModel pat] {s : String.Slice} {b : s.Pos},
+      find pat b = none ↔ ¬ RevMatchesAt pat b) : WeakExcludedMiddle := fun P =>
+  @Decidable.em (¬ P) (decidableNegOfBackwardFailure find correct P)
 
 public theorem weakExcludedMiddleOfMatchAtNone (spec : type_of% @matchAt?_eq_none_iff) :
     WeakExcludedMiddle := weakExcludedMiddleOfForwardFailure (@matchAt?) spec
