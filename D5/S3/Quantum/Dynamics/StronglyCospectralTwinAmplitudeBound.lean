@@ -1,5 +1,5 @@
 /- GID: D5/S3/Quantum/Dynamics/StronglyCospectralTwinAmplitudeBound
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Quantum/Dynamics/StronglyCospectralTwinAmplitudeBound
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
@@ -8,9 +8,9 @@
 
 /-
 proof_shape: result: content
-escape_witness: the twin difference lies in the full twin eigenspace, which forces half the
-  return mass at the twin eigenvalue. The positive-time orbit criterion and the weighted
-  character chord control the cancellation of the remaining half.
+escape_witness: adjacency_expansion identifies the diagonal of the actual adjacency walk
+  with the sum over full-eigenspace projector weights. The dephased form transports the
+  weighted character chord estimate to every odd relation for that same graph.
 admission_basis: open-problem-resolution (#35281; Proved)
 -/
 
