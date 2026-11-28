@@ -438,6 +438,35 @@ theorem adjacent_fibre_capacity {C D : Finset (Q 9)} (b : Bool) (z : Q 9)
   omega
 
 open Classical in
+/-- A transverse flip of a selected point into the other component's fibre
+forces an absent centre and two absent neighbours when both corrections
+would realize forbidden masks. -/
+theorem adjacent_fibre_missing_centre {C D : Finset (Q 9)} (b : Bool) {x : Q 9}
+    (hx : x ∈ C) (hp : parity x = b)
+    (hsep : ∀ u ∈ C, ∀ v ∈ D, 2 ≤ hammingDist u v)
+    {i j k : Fin 9} (hij : i ≠ j) (hik : i ≠ k)
+    (hmj : ({i, j} : Finset (Fin 9)) ∉ minimumDisplacements C D b 2)
+    (hmk : ({i, k} : Finset (Fin 9)) ∉ minimumDisplacements C D b 2) :
+    let y := flip x i
+    y ∉ D ∧ parity y = !b ∧ flip y j ∉ D ∧ flip y k ∉ D := by
+  intro y
+  have hy : y ∉ D := by
+    intro hy
+    have h := hsep x hx y hy
+    have hdist : hammingDist x y = 1 := BalancedCriticalSpectrum.flip_adj x i
+    omega
+  have hole {l : Fin 9} (hil : i ≠ l)
+      (hm : ({i, l} : Finset (Fin 9)) ∉ minimumDisplacements C D b 2) :
+      flip y l ∉ D := by
+    intro hv
+    have hd := diff_pair x hil
+    have hdist : hammingDist x (flip y l) = 2 := by
+      change (differingAxes x (flip (flip x i) l)).card = 2
+      rw [hd, card_pair hil]
+    exact hm (mem_minimumDisplacements.mpr ⟨x, hx, flip y l, hv, hp, hdist, hd⟩)
+  exact ⟨hy, by rw [parity_flip, hp], hole hij hmj, hole hik hmk⟩
+
+open Classical in
 /-- A selected vertex in one fibre forces two holes for the other component
 in the adjacent fibre when both parity corrections are forbidden. -/
 theorem adjacent_fibre_two_holes {C D : Finset (Q 9)} (b : Bool) (z : Q 9)

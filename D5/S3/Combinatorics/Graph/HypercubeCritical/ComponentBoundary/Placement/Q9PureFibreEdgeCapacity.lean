@@ -112,30 +112,36 @@ theorem small_hole_centers {n : ℕ} (H T : Finset (Finset (Fin n))) (hH : H.car
     simp [he]
 
 open Classical in
-/-- Free edges in a subcubic component with at most three holes on a
-five-axis parity fibre satisfy an upper bound determined by those holes. -/
-theorem few_holes_bound_freeEdges (S : Finset (Q 9)) (A : Finset (Fin 9)) (hA : A.card = 5)
-    (z : Q 9) (b : Bool) (hdeg : ∀ x ∈ S, (directions S x).card ≤ 3) :
+private theorem few_holes_bound_with_missing_centres
+    (S : Finset (Q 9)) (A : Finset (Fin 9)) (hA : A.card = 5)
+    (z : Q 9) (b : Bool) (hdeg : ∀ x ∈ S, (directions S x).card ≤ 3)
+    (B : Finset (Q 9)) (hdis : Disjoint S B)
+    (hB : ∀ y ∈ B, sameFibre A z y ∧ parity y = !b ∧
+      2 ≤ (A.filter (fun i => flip y i ∉ S)).card) :
     let L := (restrictToFibre S A z).filter (fun x => parity x = b)
     let H := (restrictToFibre univ A z).filter (fun x => parity x = b ∧ x ∉ S)
-    H.card ≤ 3 → (freeEdges S L A).card ≤ 6 * (H.card - 1) := by
+    H.card ≤ 3 → (freeEdges S L A).card + 3 * B.card ≤ 6 * (H.card - 1) := by
   intro L H hsmall
   let P := S.filter (fun y => sameFibre A z y ∧ parity y = !b)
   let g := cubeFinsetEquiv 9
-  have hcenters : (P.map g.toEmbedding).card ≤ 2 * ((H.map g.toEmbedding).card - 1) := by
+  have hcenters : ((P ∪ B).map g.toEmbedding).card ≤
+      2 * ((H.map g.toEmbedding).card - 1) := by
     apply small_hole_centers _ _ (by simpa using hsmall)
     intro u hu
     obtain ⟨y, hy, rfl⟩ := mem_map.mp hu
-    obtain ⟨hyS, hyF, hyB⟩ := mem_filter.mp hy
     let K := A.filter (fun i => flip y i ∉ S)
-    have hc : 2 ≤ K.card := by
-      have hsplit := card_filter_add_card_filter_not (s := A) (fun i => flip y i ∈ S)
-      rw [hA] at hsplit
-      have hsub : (A.filter (fun i => flip y i ∈ S)) ⊆ directions S y :=
-        fun i hi => (mem_directions S y i).mpr (mem_filter.mp hi).2
-      have hbound := (card_le_card hsub).trans (hdeg y hyS)
-      change _ + K.card = 5 at hsplit
-      omega
+    obtain ⟨hyF, hyB, hc⟩ : sameFibre A z y ∧ parity y = !b ∧ 2 ≤ K.card := by
+      rcases mem_union.mp hy with hyP | hyB
+      · obtain ⟨hyS, hyF, hyB⟩ := mem_filter.mp hyP
+        refine ⟨hyF, hyB, ?_⟩
+        have hsplit := card_filter_add_card_filter_not (s := A) (fun i => flip y i ∈ S)
+        rw [hA] at hsplit
+        have hsub : (A.filter (fun i => flip y i ∈ S)) ⊆ directions S y :=
+          fun i hi => (mem_directions S y i).mpr (mem_filter.mp hi).2
+        have hbound := (card_le_card hsub).trans (hdeg y hyS)
+        change _ + K.card = 5 at hsplit
+        omega
+      · exact hB y hyB
     obtain ⟨i, j, hi, hj, hij⟩ := one_lt_card_iff.mp hc
     have hhole (k : Fin 9) (hk : k ∈ K) : flip y k ∈ H := by
       obtain ⟨hkA, hkS⟩ := mem_filter.mp hk
@@ -151,7 +157,10 @@ theorem few_holes_bound_freeEdges (S : Finset (Q 9)) (A : Finset (Fin 9)) (hA : 
     exact ⟨g (flip y i), mem_map.mpr ⟨_, hhole i hi, rfl⟩,
       g (flip y j), mem_map.mpr ⟨_, hhole j hj, rfl⟩,
       fun he => hij (flip_injective y (g.injective he)), mem_inter.mpr ⟨hne i, hne j⟩⟩
-  have hP : P.card ≤ 2 * (H.card - 1) := by simpa using hcenters
+  have hPB : Disjoint P B :=
+    disjoint_of_subset_left (filter_subset _ _) hdis
+  have hP : P.card + B.card ≤ 2 * (H.card - 1) := by
+    simpa only [card_map, card_union_of_disjoint hPB] using hcenters
   let rev (p : Q 9 × Fin 9) : Q 9 × Fin 9 := (flip p.1 p.2, p.2)
   have hinj : Function.Injective rev := by
     apply Function.Involutive.injective
@@ -173,6 +182,67 @@ theorem few_holes_bound_freeEdges (S : Finset (Q 9)) (A : Finset (Fin 9)) (hA : 
     (freeEdges_le_degree_sum (fun x hx => hdeg x (mem_filter.mp hx).1))
   rw [card_image_of_injective _ hinj] at he
   omega
+
+open Classical in
+/-- Free edges in a subcubic component with at most three holes on a
+five-axis parity fibre satisfy an upper bound determined by those holes. -/
+theorem few_holes_bound_freeEdges (S : Finset (Q 9)) (A : Finset (Fin 9)) (hA : A.card = 5)
+    (z : Q 9) (b : Bool) (hdeg : ∀ x ∈ S, (directions S x).card ≤ 3) :
+    let L := (restrictToFibre S A z).filter (fun x => parity x = b)
+    let H := (restrictToFibre univ A z).filter (fun x => parity x = b ∧ x ∉ S)
+    H.card ≤ 3 → (freeEdges S L A).card ≤ 6 * (H.card - 1) := by
+  simpa using few_holes_bound_with_missing_centres S A hA z b hdeg ∅ (by simp) (by simp)
+
+open Classical in
+/-- A missing opposite-parity vertex with two missing neighbours consumes one
+of the available centres and lowers the small-hole edge bound by three. -/
+theorem few_holes_bound_freeEdges_of_missing_centre
+    (S : Finset (Q 9)) (A : Finset (Fin 9)) (hA : A.card = 5)
+    (z : Q 9) (b : Bool) (hdeg : ∀ x ∈ S, (directions S x).card ≤ 3)
+    {y : Q 9} (hy : y ∉ S) (hyf : sameFibre A z y) (hyp : parity y = !b)
+    {j k : Fin 9} (hj : j ∈ A) (hk : k ∈ A) (hjk : j ≠ k)
+    (hjS : flip y j ∉ S) (hkS : flip y k ∉ S) :
+    let L := (restrictToFibre S A z).filter (fun x => parity x = b)
+    let H := (restrictToFibre univ A z).filter (fun x => parity x = b ∧ x ∉ S)
+    H.card ≤ 3 → (freeEdges S L A).card + 6 ≤ 5 * H.card := by
+  intro L H hsmall
+  have hp : 2 ≤ (A.filter (fun i => flip y i ∉ S)).card :=
+    one_lt_card_iff.mpr ⟨j, k, mem_filter.mpr ⟨hj, hjS⟩, mem_filter.mpr ⟨hk, hkS⟩, hjk⟩
+  have h := few_holes_bound_with_missing_centres S A hA z b hdeg {y}
+    (by simpa using hy) (by simpa using And.intro hyf (And.intro hyp hp)) hsmall
+  change (freeEdges S L A).card + 3 * ({y} : Finset (Q 9)).card ≤ 6 * (H.card - 1) at h
+  simp only [card_singleton, mul_one] at h
+  have hH {i : Fin 9} (hi : i ∈ A) (hiS : flip y i ∉ S) : flip y i ∈ H := by
+    refine mem_filter.mpr ⟨mem_filter.mpr ⟨mem_univ _, ?_⟩, ?_⟩
+    · intro l hl
+      exact (flip_same_fibre hi l hl).trans (hyf l hl)
+    · exact ⟨by rw [parity_flip, hyp, Bool.not_not], hiS⟩
+  have htwo : 2 ≤ H.card := one_lt_card_iff.mpr
+    ⟨_, _, hH hj hjS, hH hk hkS, fun he => hjk (flip_injective y he)⟩
+  omega
+
+open Classical in
+/-- With at most three holes, a pure side facing the opposite component
+across two forbidden parity corrections contributes at most three edges
+for two holes and nine edges for three holes. -/
+theorem adjacent_fibre_small_hole_edge_capacity {C D : Finset (Q 9)} (b : Bool) {x : Q 9}
+    (hx : x ∈ C) (hp : parity x = b)
+    (hsep : ∀ u ∈ C, ∀ v ∈ D, 2 ≤ hammingDist u v)
+    (A : Finset (Fin 9)) (hA : A.card = 5) {i j k : Fin 9}
+    (hi : i ∉ A) (hj : j ∈ A) (hk : k ∈ A) (hjk : j ≠ k)
+    (hmj : ({i, j} : Finset (Fin 9)) ∉ minimumDisplacements C D b 2)
+    (hmk : ({i, k} : Finset (Fin 9)) ∉ minimumDisplacements C D b 2)
+    (hdeg : ∀ v ∈ D, (directions D v).card ≤ 3) :
+    let y := flip x i
+    let L := (restrictToFibre D A y).filter (fun v => parity v = b)
+    let H := (restrictToFibre univ A y).filter (fun v => parity v = b ∧ v ∉ D)
+    H.card ≤ 3 → (freeEdges D L A).card + 6 ≤ 5 * H.card := by
+  have hne (l : Fin 9) (hl : l ∈ A) : i ≠ l := fun he => hi (he.symm ▸ hl)
+  obtain ⟨hy, hpar, hjD, hkD⟩ :=
+    Q9InactiveContactFibre.adjacent_fibre_missing_centre b hx hp hsep
+      (hne j hj) (hne k hk) hmj hmk
+  exact few_holes_bound_freeEdges_of_missing_centre D A hA (flip x i) b hdeg
+    hy (fun _ _ => rfl) hpar hj hk hjk hjD hkD
 
 open scoped BigOperators in
 /-- Eleven holes spread among pure fibres, with at least four of those fibres
@@ -852,6 +922,7 @@ theorem six_pure_fibre_capacity (P M : Finset (Q 4)) (holes edges : Q 4 → ℕ)
 
 #print axioms mixed_fibre_deficit_capacity
 #print axioms six_pure_fibre_capacity
+#print axioms adjacent_fibre_small_hole_edge_capacity
 #print axioms few_holes_bound_freeEdges
 #print axioms pure_edge_budget
 #print axioms parity_cut_edge_square_le

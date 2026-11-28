@@ -49,6 +49,15 @@ internal sealed class Q9InactiveContactFibreDocument : IScribeDocumentDefinition
                     Paragraph(Text("The resulting capacity of the pure fibres is at most sixty free edges. The mixed fibres contribute at most 150, so the total falls short of 215."))),
                 DescribeRole.Theorem),
             Describe.Lean(
+                DescribeId.Create("q9-adjacent-fibre-small-hole-edge-capacity"),
+                DeclarationHandle.Create(Placement + "Q9PureFibreEdgeCapacity.adjacent_fibre_small_hole_edge_capacity"),
+                H("A missing centre sharpens the two- and three-hole edge bounds"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("Flipping a frozen coordinate sends a selected point of the other component into the fibre. Separation forbids the resulting centre. The two forbidden parity corrections also remove two distinct free neighbours of that centre.")),
+                    Paragraph(Text("Every selected centre across the parity cut needs at least two holes among its five neighbours. The forced missing centre already occupies one position in the count of possible centres. The remaining centres contribute at most three free edges each, giving three edges at two holes and nine at three holes."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("q9-five-axis-hole-energy"),
                 DeclarationHandle.Create(Placement + "Q9PureFibreEdgeCapacity.five_axis_hole_energy"),
                 H("The signed energy bounds free edges by the parity holes"),
