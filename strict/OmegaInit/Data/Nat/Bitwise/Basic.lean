@@ -1,6 +1,7 @@
 module
 prelude
 public import OmegaInit.Core
+import OmegaInit.Data.Nat.Div.Basic
 
 noncomputable section
 

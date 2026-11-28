@@ -106,10 +106,12 @@ private def transportDigits (env : Environment) (moved : NameSet) (certificate :
   work.run'.toIO' {fileName := "<hosted digit computation>", fileMap := default} {env}
 
 /-- Check the pointwise equality even for a selected module that exports no digit theorem. -/
-private def checkDigitComputation (kernel : Environment) (moved : NameSet) (certificate : Expr) : IO Unit := do
+private def checkDigitComputation (source kernel : Environment) (moved : NameSet) (certificate : Expr) : IO Unit := do
   let some (.defnInfo bitwise) := kernel.find? `Omega.Nat.bitwise
     | throw <| IO.userError "missing hosted bitwise"
-  let slow := renameTerm moved bitwise.value
+  let some (.defnInfo original) := source.find? bitwise.name
+    | throw <| IO.userError "missing isolated bitwise"
+  let slow := renameTerm moved original.value
   let work : MetaM (Expr × Expr) := Meta.forallTelescope bitwise.type fun xs _ => do
     let #[f, n, m] := xs | throwError "unexpected bitwise interface"
     let equality := mkApp4 certificate f (mkApp (mkConst `Nat.succ) n) n m
@@ -129,7 +131,11 @@ private def hostedConstant (env : Environment) (moved : NameSet) (certificate : 
   unless moved.contains `Nat.xor do return changed
   if ci.name == `Omega.Nat.bitwise then
     if let some (.defnInfo impl) := env.find? ci.name then
-      return .defnInfo impl
+      let digitMod := mkLambda `x .default (mkConst `Nat) <| mkLambda `y .default (mkConst `Nat) <|
+        mkApp2 (mkConst `Nat.sub) (.bvar 1) (mkApp2 (mkConst `Nat.mul) (.bvar 0)
+          (mkApp2 (mkConst `Nat.div) (.bvar 1) (.bvar 0)))
+      let body := impl.value.replace fun e => if e.isConstOf `Nat.mod then some digitMod else none
+      return .defnInfo {impl with value := body}
   if ci.name == `Nat.xor then
     if let some (.defnInfo impl) := env.find? ci.name then
       return relocate moved (.defnInfo impl)
@@ -220,6 +226,7 @@ def write (source output : System.FilePath) (names : Array Name)
     certificates.getModuleIdx? mod == certificates.getModuleIdxFor? n
   let certificate ← (Meta.deltaExpand same.value localProof (allowOpaque := true)).toIO'
     {fileName := "<hosted bitwise certificate>", fileMap := default} {env := certificates}
+  let certificate := mkApp2 certificate (renameTerm moved (mkConst `Nat.mod)) (mkConst `Omega.Nat.mod_def)
   let operations := moved
   for (n, ci) in env.constants.toList do
     if ci.isTheorem && operations.toArray.any (·.isPrefixOf n) then moved := moved.insert n
@@ -230,7 +237,7 @@ def write (source output : System.FilePath) (names : Array Name)
       terms := terms.insert changed.name changed
   let checked ← pinned.toKernelEnv.replay terms
   if moved.contains `Nat.xor then
-    checkDigitComputation (Environment.ofKernelEnv checked) moved certificate
+    checkDigitComputation env (Environment.ofKernelEnv checked) moved certificate
   -- Each physical proof occurrence has a body, including duplicated public equations.
   for data in env.header.moduleData do
     for ci in data.constants do
