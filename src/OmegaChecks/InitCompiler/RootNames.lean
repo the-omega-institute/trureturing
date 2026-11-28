@@ -5,6 +5,16 @@ open Lean
 
 namespace OmegaChecks.InitCompiler.RootNames
 
+/-- Runtime entry points over two borrowed kernel naturals, returning a natural. -/
+public def natBitwiseExtern? (n : Name) : Option String :=
+  match n with
+  | `Nat.land => some "lean_nat_land"
+  | `Nat.lor => some "lean_nat_lor"
+  | `Nat.xor => some "lean_nat_lxor"
+  | `Nat.shiftLeft => some "lean_nat_shiftl"
+  | `Nat.shiftRight => some "lean_nat_shiftr"
+  | _ => none
+
 /-- The compiler recognizes the primitive task type, constructor, projection and eliminators
 by their root names. These objects remain inductives, constructors and recursors in their owner. -/
 public def taskPrimitives : Array Name :=
