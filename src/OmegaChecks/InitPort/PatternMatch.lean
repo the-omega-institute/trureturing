@@ -1,5 +1,6 @@
 module
 public import OmegaChecks.InitPort.CharacterSplit
+public import OmegaChecks.InitPort.SearcherSplit
 public import OmegaChecks.InitPort.Translation
 public import Init.Data.String.Lemmas.Pattern.TakeDrop.Basic
 
@@ -37,6 +38,7 @@ public structure MatchRule where
 private def owner := `Init.Data.String.Lemmas.Pattern.Basic
 
 private def predOwner := `Init.Data.String.Lemmas.Pattern.Split.Pred
+private def splitOwner := `Init.Data.String.Lemmas.Pattern.Split.Basic
 private def charOwner := `Init.Data.String.Lemmas.Pattern.Split.Char
 
 public def rules : List MatchRule := [
@@ -49,14 +51,25 @@ public def rules : List MatchRule := [
   ⟨predOwner, ``Model.split, mkPrivateNameCore predOwner `String.Slice.splitOnDecidablePred,
     ``CharacterSplit.predReference, ``CharacterSplit.predSplit, ``CharacterSplit.predAgreement⟩,
   ⟨charOwner, ``Model.split, mkPrivateNameCore charOwner `String.Slice.splitOnChar,
-    ``CharacterSplit.charReference, ``CharacterSplit.charSplit, ``CharacterSplit.charAgreement⟩]
+    ``CharacterSplit.charReference, ``CharacterSplit.charSplit, ``CharacterSplit.charAgreement⟩,
+  ⟨splitOwner, ``Model.split, mkPrivateNameCore splitOwner `String.Slice.splitAtEnd,
+    ``SearcherSplit.terminalReference, ``SearcherSplit.terminal, ``SearcherSplit.terminalAgreement⟩,
+  ⟨splitOwner, ``Model.split, mkPrivateNameCore splitOwner `String.Slice.splitFromLawfulSearcher,
+    ``SearcherSplit.searchReference, ``SearcherSplit.search, ``SearcherSplit.searchAgreement⟩]
 
 /-- Only a lawful search operation for the exact pattern model can realize its longest match. -/
 public def specialize? (rule : MatchRule) (sub : Expr) : MetaM (Option Expr) := do
   if rule.original == ``Model.split then
-    let #[_, pat, _, _, s, first, curr, le] := sub.getAppArgs | return none
-    let args : Array (Option Expr) := if rule.reference == ``CharacterSplit.predReference then
-      #[pat, none, s, first, curr, le] else #[pat, s, first, curr, le]
+    let #[ρ, pat, model, strict, s, first, curr, le] := sub.getAppArgs | return none
+    let args : Array (Option Expr) :=
+      if rule.reference == ``SearcherSplit.terminalReference then
+        if curr.getAppFn.isConstOf ``String.Slice.endPos then #[ρ, pat, model, strict, s, first, le] else #[]
+      else if rule.reference == ``SearcherSplit.searchReference then
+        if first.getAppFn.isConstOf ``String.Slice.startPos && curr.getAppFn.isConstOf ``String.Slice.startPos then
+          #[ρ, pat, model, strict, none, none, none, none, none, s, le] else #[]
+      else if rule.reference == ``CharacterSplit.predReference then #[pat, none, s, first, curr, le]
+      else #[pat, s, first, curr, le]
+    if args.isEmpty then return none
     try
       let candidate ← Meta.mkAppOptM rule.helper args
       -- The same pattern type can have a different local model. Match its instance too.
@@ -70,7 +83,7 @@ public def specialize? (rule : MatchRule) (sub : Expr) : MetaM (Option Expr) := 
 public def addReferences (source templates : Environment) : IO Environment := do
   let mut env := source
   for rule in rules do
-    unless source.contains rule.original do continue
+    unless (source.getModuleIdx? rule.owner).isSome && source.contains rule.original do continue
     let some (.defnInfo ref) := templates.find? rule.reference | throw <| IO.userError s!"missing {rule.reference}"
     unless ref.type.getUsedConstants.all source.contains && ref.value.getUsedConstants.all source.contains do continue
     let decl := Declaration.defnDecl {ref with name := rule.helper, all := [rule.helper]}

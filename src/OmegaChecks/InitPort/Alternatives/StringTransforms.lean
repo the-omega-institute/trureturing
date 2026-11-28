@@ -527,3 +527,18 @@ public theorem split_bool_eq_internal._proof_3 :
   exact Nat.le_trans hle _root_.String.Slice.Pos.le_next
 
 end OmegaChecks.InitPort.Alternatives.String.Slice.Pattern.Model
+
+namespace OmegaChecks.InitPort.Alternatives.String.Slice.Pattern
+
+open _root_.String.Slice.Pattern _root_.String.Slice.Pattern.Model
+
+public theorem toList_splitToSubslice_eq_modelSplit {ρ : Type} (pat : ρ)
+    [PatternModel pat] [StrictPatternModel pat] {σ : String.Slice → Type} [ToForwardSearcher pat σ]
+    [∀ s, Std.Iterator (σ s) Id (SearchStep s)] [∀ s, Std.Iterators.Finite (σ s) Id]
+    [LawfulToForwardSearcherModel pat] (s : String.Slice) :
+    (s.splitToSubslice pat).toList =
+      (private_decl% _root_.String.Slice.Pattern.Model.splitFromSteps) s.startPos
+        (ToForwardSearcher.toSearcher pat s).toList :=
+  (private_decl% _root_.String.Slice.Pattern.Model.toList_splitToSubslice_eq_splitFromSteps) s
+
+end OmegaChecks.InitPort.Alternatives.String.Slice.Pattern
