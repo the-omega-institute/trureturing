@@ -249,6 +249,71 @@ run_cmd
 
 end SingletonSearch
 
+namespace ReverseSearch
+
+abbrev PredicateList := type_of% @List.findM?_eq_findSomeM?.{w}
+abbrev ForwardOptionList := type_of% @List.findSomeM?_toArray.{u,v,w}
+abbrev ReverseBoolList := type_of% @List.findRevM?_toArray.{w}
+abbrev ForwardBoolList := type_of% @List.findM?_toArray.{w}
+
+/-- Boolean search on a reversed array is equivalent to tagging the predicate's
+result as an option in list search. Reversal reaches every input list. -/
+theorem predicateIff : ReverseBoolList.{w} ↔ PredicateList.{w} := by
+  constructor
+  · intro reverse m α mon laws p xs
+    let tag (a : α) : m (Option α) := do return if ← p a then some a else none
+    have search := (reverse p xs.reverse).symm.trans (List.findSomeRevM?_toArray tag xs.reverse)
+    exact (congrArg (fun l => List.findM? p l) (List.reverse_reverse xs)).symm.trans
+      (search.trans (congrArg (fun l => List.findSomeM? tag l) (List.reverse_reverse xs)))
+  · intro conversion m α mon laws p xs
+    exact (List.findSomeRevM?_toArray (fun a => do return if ← p a then some a else none) xs).trans
+      conversion.symm
+
+private theorem arrayIff {α : Type u} {γ : Sort v} (backward forward : Array α → γ)
+    (onList : List α → γ) (conversion : ∀ xs : List α, backward xs.toArray = onList xs.reverse) :
+    (∀ arr, backward arr = forward arr.reverse) ↔ ∀ xs : List α, forward xs.toArray = onList xs := by
+  constructor
+  · intro backwardRule xs
+    have search := (backwardRule xs.reverse.toArray).symm.trans (conversion xs.reverse)
+    have arrayEq := (List.reverse_toArray (l := xs.reverse)).trans (congrArg List.toArray (List.reverse_reverse xs))
+    exact (congrArg forward arrayEq).symm.trans (search.trans (congrArg onList (List.reverse_reverse xs)))
+  · intro forwardRule arr
+    cases arr with
+    | mk xs =>
+      exact (conversion xs).trans ((forwardRule xs.reverse).symm.trans
+        (congrArg forward (List.reverse_toArray (l := xs)).symm))
+
+/-- The option-valued array reversal law requires exactly the forward
+array-to-list conversion. The reverse array-to-list conversion is already ported. -/
+theorem optionIff : (type_of% @Array.findSomeRevM?_eq_findSomeM?_reverse.{u,v,w}) ↔
+    ForwardOptionList.{u,v,w} := by
+  constructor
+  · intro reverse m α β mon laws f xs
+    exact (arrayIff (Array.findSomeRevM? f) (Array.findSomeM? f) (List.findSomeM? f)
+      (List.findSomeRevM?_toArray f)).mp (fun _ => reverse) xs
+  · intro forward m α β mon laws f xs
+    exact (arrayIff (Array.findSomeRevM? f) (Array.findSomeM? f) (List.findSomeM? f)
+      (List.findSomeRevM?_toArray f)).mpr (forward f) xs
+
+/-- Given the reverse Boolean conversion, the array reversal law requires
+exactly the forward Boolean conversion. -/
+theorem boolIff (backward : ReverseBoolList.{w}) :
+    (type_of% @Array.findRevM?_eq_findM?_reverse.{w}) ↔ ForwardBoolList.{w} := by
+  constructor
+  · intro reverse m α mon laws f xs
+    exact (arrayIff (Array.findRevM? f) (Array.findM? f) (List.findM? f)
+      (backward f)).mp (fun _ => reverse) xs
+  · intro forward m α mon laws f xs
+    exact (arrayIff (Array.findRevM? f) (Array.findM? f) (List.findM? f)
+      (backward f)).mpr (forward f) xs
+
+abbrev BoolForwardOfBackward := ReverseBoolList.{w} → ForwardBoolList.{w}
+
+theorem boolOfArray (reverse : type_of% @Array.findRevM?_eq_findM?_reverse.{w}) :
+    BoolForwardOfBackward.{w} := fun backward => (boolIff backward).mp reverse
+
+end ReverseSearch
+
 end MonadicTraversal
 
 namespace RangeMap

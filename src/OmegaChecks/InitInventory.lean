@@ -83,6 +83,16 @@ private def logicalConsequence? (owner name : Name) : Option (Name × Name) := d
   if owner == `Init.Data.Array.Monadic then
     if let some result := OmegaChecks.InitBoundaries.MonadicCollectionEquations.comparisons.lookup name then
       return result
+  if owner == `Init.Data.List.ToArray && name == ``List.findRevM?_toArray then
+    return (``OmegaChecks.InitBoundaries.MonadicTraversal.ReverseSearch.PredicateList,
+      ``OmegaChecks.InitBoundaries.MonadicTraversal.ReverseSearch.predicateIff)
+  if owner == `Init.Data.Array.Lemmas then
+    if name == ``Array.findSomeRevM?_eq_findSomeM?_reverse then
+      return (``OmegaChecks.InitBoundaries.MonadicTraversal.ReverseSearch.ForwardOptionList,
+        ``OmegaChecks.InitBoundaries.MonadicTraversal.ReverseSearch.optionIff)
+    if name == ``Array.findRevM?_eq_findM?_reverse then
+      return (``OmegaChecks.InitBoundaries.MonadicTraversal.ReverseSearch.BoolForwardOfBackward,
+        ``OmegaChecks.InitBoundaries.MonadicTraversal.ReverseSearch.boolOfArray)
   if owner == `Init.Data.Array.MapIdx then
     if name == ``List.mapIdxM_toArray then
       return (``OmegaChecks.InitBoundaries.MonadicTraversal.IndexedMap.PairConversion,
