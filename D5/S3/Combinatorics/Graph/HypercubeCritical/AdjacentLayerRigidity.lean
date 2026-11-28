@@ -23,7 +23,7 @@ open BalancedCriticalSpectrum (Q flip IsBalanced)
 open BalancedCubeLowerBound (coordinateSlice)
 open D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeComponentBoundary
   (directions regular_directions exterior_even)
-open private adjacent_exists_flip from D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeGirth
+open BalancedCubeGirth (adjacent_exists_flip)
 open BalancedCubeComponentBoundary (directions_card)
 private abbrev Coord := Fin 9
 private abbrev Face := Finset Coord

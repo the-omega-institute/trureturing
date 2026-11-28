@@ -25,8 +25,7 @@ open Q9TwentyTwoPairedAxes (normalize_paired_paths)
 open Q9TwentyTwoPairedCoverage (normalized_placement_excess_degree)
 open Q9TwentyTwoPairedExtension (no_extension_of_excess_degree)
 open Q9TwentyTwoSingletonLabels (select_subdivision_vertices_of_paths)
-open private adjacent_exists_flip from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeGirth
+open BalancedCubeGirth (adjacent_exists_flip)
 open Q9TwentyTwoPairedMatching (paired_model_labels)
 open Q9TwentyTwoSingletonExclusion (paired_compression)
 open private coordinate_slice_low_independent coordinate_slice_degree_cases balanced_subset
