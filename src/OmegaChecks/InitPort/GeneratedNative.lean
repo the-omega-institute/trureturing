@@ -46,15 +46,25 @@ private def pinnedPartialCode? (source : Environment) (ci : ConstantInfo) : Opti
   let value := (translate d.value).replace fun e => if e.isConstOf name then some (.const dst.name e.constLevels!) else none
   return {d with name, all := [name], type := dst.type, value, safety := .safe}
 
-private partial def dependencies (env : Environment) (partialCode : NameMap DefinitionVal) (localNames : NameSet) (n : Name) :
-    StateM NameSet (Array Name) := do
+private def pinnedRecursion? (source : Environment) (strictName : Name) : Option DefinitionVal := do
+  let recName := Compiler.mkUnsafeRecName (InitKernelPort.originalName strictName)
+  let some (.defnInfo code) := source.find? recName | none
+  guard (code.safety == .partial && code.all == [recName])
+  return code
+
+private partial def dependencies (source env : Environment) (partialCode : NameMap DefinitionVal)
+    (localNames : NameSet) (n : Name) : StateM NameSet (Array Name) := do
   if !(localNames.contains n) || (← get).contains n then return #[]
   modify (·.insert n)
   let some ci := env.find? n | return #[]
   let some body := (partialCode.find? n).map (·.value) <|> ci.value? (allowOpaque := true) | return #[]
   let mut prior := #[]
-  for dep in ci.type.getUsedConstants ++ body.getUsedConstants do
-    prior := prior ++ (← dependencies env partialCode localNames dep)
+  let mut callees := ci.type.getUsedConstants ++ body.getUsedConstants
+  -- The native structural fallback may call a matcher absent from the total kernel body.
+  if let some code := pinnedRecursion? source n then
+    callees := callees ++ (code.value.getUsedConstants.map InitKernelPort.portName)
+  for dep in callees do
+    prior := prior ++ (← dependencies source env partialCode localNames dep)
   return prior.push n
 
 /-- A constructor can contain another inductive from the same owner. Defer its layout
@@ -237,10 +247,8 @@ private def compileCases (source strict : Environment) (d : DefinitionVal) : Cor
 /-- Reuse the pinned executable recursion only after the kernel identifies every constructor
 equation with the checked total function. The temporary declaration is excluded from the product. -/
 private def compilePinnedRecursion (source strict : Environment) (n : Name) : CoreM Bool := do
-  let recName := Compiler.mkUnsafeRecName (InitKernelPort.originalName n)
-  let some (.defnInfo d) := source.find? recName | return false
-  unless d.safety == .partial && d.all == [recName] do return false
-  let name := InitKernelPort.portName recName
+  let some d := pinnedRecursion? source n | return false
+  let name := InitKernelPort.portName d.name
   let raw := InitKernelPort.translate InitKernelPort.portName d.value
   let body := raw.replace fun e => if e.isConstOf name then some (.const n e.constLevels!) else none
   let type := InitKernelPort.translate InitKernelPort.portName d.type
@@ -474,7 +482,7 @@ private unsafe def install (source publicSource : Environment) (lib out : System
   if onlyLayouts && groups.isEmpty then return
   let localNames := NameSet.ofList candidates.toList
   let order : Array Name := Id.run <|
-    (candidates.foldlM (fun acc n => return acc ++ (← dependencies env partialCode localNames n)) #[]).run' {}
+    (candidates.foldlM (fun acc n => return acc ++ (← dependencies source env partialCode localNames n)) #[]).run' {}
   let mut context ← localEnv env owner (locals ++ words ++ candidates)
   -- Compiler tags stored under the imported module index need local entries while compiling.
   for n in locals ++ candidates do
