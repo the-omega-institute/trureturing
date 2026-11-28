@@ -270,7 +270,8 @@ theorem two_point_mirror_negative_principal_minor
     · rintro rfl
       exact hpq (hzero p)
     · rw [hzero p, hzero q, ← hHerm.apply q p]
-      simpa [Complex.mul_conj] using neg_neg_of_pos (Complex.normSq_pos.mpr hpq)
+      simpa [Complex.star_def, Complex.mul_conj] using
+        neg_lt_zero.mpr (Complex.normSq_pos.mpr hpq)
   · push_neg at hdiag
     obtain ⟨i, hi⟩ := hdiag
     refine ⟨Sum.inl i, Sum.inr i, Sum.inl_ne_inr, ?_⟩
@@ -281,7 +282,8 @@ theorem two_point_mirror_negative_principal_minor
     rw [diagonal_port_minor mu C z i hupper hregular]
     have hc := Complex.normSq_pos.mpr hi
     have hd := Complex.normSq_pos.mpr (cauchyDeterminant_ne_zero mu z hmu hdistinct hregular)
-    simpa [Complex.conj_mul] using neg_neg_of_pos (mul_pos hc hd)
+    simpa [Complex.star_def, mul_comm, Complex.mul_conj] using
+      neg_lt_zero.mpr (mul_pos hc hd)
 
 #print axioms two_point_mirror_congruence
 #print axioms two_point_mirror_posSemidef_iff

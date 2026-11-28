@@ -132,13 +132,13 @@ def registration : LeanInformationAudit.Contract.Registration
   sourceSelection := some {
     owner := `D5.S3.Weil.Pick.TwoPointMirrorPortCriterion
     definition := none
-    coordinates := #[0, 1, 2, 3, 5]
+    coordinates := #[0, 3, 5]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body",
         "body", "body", "fn", "arg", "arg"]
-      stateBinder := 4
+      stateBinder := 0
       functionOperand := false
-      stateOperand := none
+      stateOperand := some #["fn", "arg"]
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
@@ -217,13 +217,13 @@ def registration : LeanInformationAudit.Contract.Registration
   sourceSelection := some {
     owner := `D5.S3.Weil.Pick.TwoPointMirrorPortCriterion
     definition := none
-    coordinates := #[0, 1, 2, 3, 5]
+    coordinates := #[0, 3, 5]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body",
         "body", "body", "fn", "arg", "fn", "arg"]
-      stateBinder := 4
+      stateBinder := 0
       functionOperand := false
-      stateOperand := none
+      stateOperand := some #["fn", "arg"]
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
@@ -291,13 +291,13 @@ def registration : LeanInformationAudit.Contract.Registration
   sourceSelection := some {
     owner := `D5.S3.Weil.Pick.TwoPointMirrorPortCriterion
     definition := none
-    coordinates := #[0, 1, 2, 3, 5]
+    coordinates := #[0, 3, 5]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body",
-        "body", "body", "body", "type"]
-      stateBinder := 4
+        "body", "body", "body", "value"]
+      stateBinder := 0
       functionOperand := false
-      stateOperand := none
+      stateOperand := some #["fn", "arg"]
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
