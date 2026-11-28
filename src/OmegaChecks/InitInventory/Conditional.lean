@@ -68,6 +68,17 @@ public def conditionalConsequence? (owner name : Name) : Option (String × Name 
     if let some (proof, result) := observation then
       return ("∀ P : Prop, Decidable P", proof,
         s!"When x ≤ y on Bool is the constant proposition P, {result} exactly when P holds")
+  if owner == `Init.Internal.Order.Basic then
+    if name == ``Lean.Order.admissible_or then
+      return ("∀ P : Prop, ¬P ∨ ¬¬P", ``OmegaChecks.InitBoundaries.InternalOrder.weakExcludedMiddleOfOr,
+        "The strict admissibility predicate closes over every certified chain supremum, and proposition extensionality is supplied explicitly")
+    let flat := match name with
+      | ``Lean.Order.admissible_flatOrder => some ``OmegaChecks.InitBoundaries.InternalOrder.excludedMiddleOfFlat
+      | ``Lean.Order.Option.admissible_eq_some => some ``OmegaChecks.InitBoundaries.InternalOrder.excludedMiddleOfSome
+      | _ => none
+    if let some witness := flat then
+      return ("∀ P : Prop, P ∨ ¬P", witness,
+        "Unfold strict admissibility at the pinned flat partial order, quantifying over every chain supremum without requiring a choice of supremum")
   if owner == `Init.Grind.Ring.Field || owner == `Init.Grind.FieldNormNum then
     let quotient := "The field construction uses propext and Quot.sound"
     let entry := match name with

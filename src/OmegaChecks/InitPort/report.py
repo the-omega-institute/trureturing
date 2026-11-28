@@ -311,7 +311,7 @@ def report(product, require_complete=False):
         stage = Path(work)
         inventory = stage / "init-inventory.json"
         subprocess.run(["lake", "build", "+OmegaChecks.InitInventory", "+OmegaChecks.InitPort.Translation",
-                        "+OmegaChecks.InitPort.StrictReplay"], cwd=ROOT, check=True)
+                        "+OmegaChecks.InitPort.StrictReplay", "+OmegaChecks.InitPort.Alternatives.InternalOrder"], cwd=ROOT, check=True)
         subprocess.run(["lake", "env", "lean", "--run", HERE.parent / "InitInventory.lean", product / "lib", inventory],
                        cwd=ROOT, check=True)
         official = json.loads(inventory.read_text())
@@ -325,6 +325,10 @@ def report(product, require_complete=False):
         strict_matches = check_strict_longest_matches(product, stage)
         strict_folds = check_strict_fin_folds(product, stage)
         strict_ranges = check_strict_range_equivalences(product, stage)
+        admissibility = ("Init.Internal.Order.Basic", "Lean.Order.admissible")
+        if attempts.get(admissibility, (None,))[0] in {"added", "existing"}:
+            subprocess.run(["lake", "env", "lean", "--run", HERE / "AdmissibilityCheck.lean", product / "lib"],
+                           cwd=ROOT, check=True)
         pending = {site: (*result, "strictLogicalConsequenceWitness")
                    for site, result in (strict_matches | strict_folds).items()}
         pending.update({site: (*result, "strictEquivalenceWitness") for site, result in strict_ranges.items()})

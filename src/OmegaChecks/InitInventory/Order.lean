@@ -276,29 +276,32 @@ theorem excludedMiddleOfFlatCCPO (order : type_of% @Lean.Order.FlatOrder.instCCP
 
 /-- In a flat order a chain containing a nonbottom element has that element as its supremum.
 Otherwise excluded middle shows every member is the bottom. Both choices take place in Prop. -/
+private theorem flatSupBottomOrMember (em : ∀ p : Prop, p ∨ ¬p) {α : Sort u} {b : α}
+    (c : FlatOrder b → Prop) (ordered : chain c) :
+    ∃ s, (s = b ∨ c s) ∧ is_sup c s := by
+  cases em (∃ x, c x ∧ x ≠ b) with
+  | inl existsNonbottom =>
+    obtain ⟨s, member, above⟩ := existsNonbottom
+    refine ⟨s, .inr member, fun x => ⟨?_, fun upper => upper s member⟩⟩
+    intro sx y hy
+    cases ordered y s hy member with
+    | inl ys => exact PartialOrder.rel_trans ys sx
+    | inr sy =>
+      change FlatOrder.rel s y at sy
+      cases sy with
+      | bot => exact (above rfl).elim
+      | refl => exact sx
+  | inr allBottom =>
+    refine ⟨b, .inl rfl, fun x => ⟨?_, fun _ => FlatOrder.rel.bot⟩⟩
+    intro _ y hy
+    cases em (y = b) with
+    | inl same => cases same; exact FlatOrder.rel.bot
+    | inr above => exact (allBottom ⟨y, hy, above⟩).elim
+
 @[instance_reducible] def flatCCPOOfEM (em : ∀ p : Prop, p ∨ ¬p) :
     type_of% @FlatOrder.instCCPO.{u} := fun {α b} => {
   toPartialOrder := FlatOrder.instOrder
-  has_csup := by
-    intro c ordered
-    cases em (∃ x, c x ∧ x ≠ b) with
-    | inl existsNonbottom =>
-      obtain ⟨s, member, above⟩ := existsNonbottom
-      refine ⟨s, fun x => ⟨?_, fun upper => upper s member⟩⟩
-      intro sx y hy
-      cases ordered y s hy member with
-      | inl ys => exact PartialOrder.rel_trans ys sx
-      | inr sy =>
-        change FlatOrder.rel s y at sy
-        cases sy with
-        | bot => exact (above rfl).elim
-        | refl => exact sx
-    | inr allBottom =>
-      refine ⟨b, fun x => ⟨?_, fun _ => FlatOrder.rel.bot⟩⟩
-      intro _ y hy
-      cases em (y = b) with
-      | inl same => cases same; exact FlatOrder.rel.bot
-      | inr above => exact (allBottom ⟨y, hy, above⟩).elim }
+  has_csup := fun h => (@flatSupBottomOrMember em α b _ h).imp fun _ h => h.2 }
 
 @[instance_reducible] def optionCCPOOfEM (em : ∀ p : Prop, p ∨ ¬p) :
     type_of% @Lean.Order.instCCPOOption.{u} :=
@@ -315,6 +318,135 @@ example (em : ∀ p : Prop, p ∨ ¬p) {α : Sort u} {b : α} :
 
 example (em : ∀ p : Prop, p ∨ ¬p) {α : Type u} :
     (@optionCCPOOfEM em α).toPartialOrder = Lean.Order.instPartialOrderOption := rfl
+
+abbrev AtSup {α : Sort u} [PartialOrder α] (P : α → Prop) : Prop :=
+  ∀ (c : α → Prop), chain c → (∀ x, c x → P x) → ∀ s, is_sup c s → P s
+
+abbrev BinaryUpperBounds (α : Sort u) [PartialOrder α] :=
+  ∀ (c : α → Prop) (s a b : α), chain c → is_sup c s →
+    (∀ x, c x → x ⊑ a ∨ x ⊑ b) → s ⊑ a ∨ s ⊑ b
+
+private theorem principal {α : Sort u} [PartialOrder α] (a : α) : AtSup (fun x => x ⊑ a) :=
+  fun _ _ h _ hs => (hs a).2 h
+
+/-- A disjunction of admissible predicates is admissible for all predicates exactly
+when the union of any two principal lower sets contains the suprema of its chains. -/
+theorem orIffUpperBounds {α : Sort u} [order : CCPO α] :
+    (∀ (P Q : α → Prop), AtSup P → AtSup Q → AtSup (fun x => P x ∨ Q x)) ↔ BinaryUpperBounds α := by
+  constructor
+  · intro close c s a b hc hs cover
+    exact close _ _ (principal a) (principal b) c hc cover s hs
+  · intro bounds P Q hP hQ c hc together s hs
+    obtain ⟨a, ha⟩ := order.has_csup (chain_conj c P hc)
+    obtain ⟨b, hb⟩ := order.has_csup (chain_conj c Q hc)
+    have inSup := (hs s).mp PartialOrder.rel_refl
+    have left := hP _ (chain_conj c P hc) (fun _ h => h.2) a ha
+    have right := hQ _ (chain_conj c Q hc) (fun _ h => h.2) b hb
+    have cover (x : α) (hx : c x) : x ⊑ a ∨ x ⊑ b := by
+      cases together x hx with
+      | inl px => exact Or.inl ((ha a).mp PartialOrder.rel_refl x ⟨hx, px⟩)
+      | inr qx => exact Or.inr ((hb b).mp PartialOrder.rel_refl x ⟨hx, qx⟩)
+    cases bounds c s a b hc hs cover with
+    | inl le =>
+      have eq := PartialOrder.rel_antisymm le ((ha s).mpr (fun x hx => inSup x hx.1))
+      exact .inl (eq.symm ▸ left)
+    | inr le =>
+      have eq := PartialOrder.rel_antisymm le ((hb s).mpr (fun x hx => inSup x hx.1))
+      exact .inr (eq.symm ▸ right)
+
+/-- Proposition extensionality makes pairs of propositions a complete partial order
+under componentwise implication. A supremum records the two existential projections. -/
+@[instance_reducible] private def propositionPairs (ext : type_of% @propext) : CCPO (Prop × Prop) where
+  rel a b := (a.1 → b.1) ∧ (a.2 → b.2)
+  rel_refl := ⟨id, id⟩
+  rel_trans h k := ⟨fun a => k.1 (h.1 a), fun a => k.2 (h.2 a)⟩
+  rel_antisymm h k := Prod.ext (ext ⟨h.1, k.1⟩) (ext ⟨h.2, k.2⟩)
+  has_csup := by
+    intro c _
+    refine ⟨(∃ a, c a ∧ a.1, ∃ a, c a ∧ a.2), fun b => ⟨?_, ?_⟩⟩
+    · intro h a ha
+      exact ⟨fun x => h.1 ⟨a, ha, x⟩, fun x => h.2 ⟨a, ha, x⟩⟩
+    · intro upper
+      exact ⟨fun ⟨a, ha, x⟩ => (upper a ha).1 x, fun ⟨a, ha, x⟩ => (upper a ha).2 x⟩
+
+abbrev OrClosure := ∀ {α : Sort u} [CCPO α] (P Q : α → Prop),
+  AtSup P → AtSup Q → AtSup (fun x => P x ∨ Q x)
+
+/-- The two conditional axes indexed by p and ¬p form a chain. Its supremum is
+(p, ¬p). Covering it with one of the two principal ideals gives weak excluded middle. -/
+theorem weakExcludedMiddleOfOr (law : OrClosure.{1}) (ext : type_of% @propext)
+    (p : Prop) : ¬p ∨ ¬¬p := by
+  letI : CCPO (Prop × Prop) := propositionPairs ext
+  let a : Prop × Prop := (True, False)
+  let b : Prop × Prop := (False, True)
+  let c (x : Prop × Prop) := (x = a ∧ p) ∨ (x = b ∧ ¬p)
+  have hc : chain c := by
+    intro x y hx hy
+    rcases hx with ⟨rfl, hp⟩ | ⟨rfl, np⟩ <;> rcases hy with ⟨rfl, hq⟩ | ⟨rfl, nq⟩
+    · exact Or.inl PartialOrder.rel_refl
+    · exact (nq hp).elim
+    · exact (np hq).elim
+    · exact Or.inl PartialOrder.rel_refl
+  have hs : is_sup c (p, ¬p) := by
+    intro y
+    constructor
+    · rintro ⟨l, r⟩ x (⟨rfl, hp⟩ | ⟨rfl, np⟩)
+      · exact ⟨fun _ => l hp, False.elim⟩
+      · exact ⟨False.elim, fun _ => r np⟩
+    · intro upper
+      exact ⟨fun hp => (upper a (.inl ⟨rfl, hp⟩)).1 trivial,
+        fun np => (upper b (.inr ⟨rfl, np⟩)).2 trivial⟩
+  have cover : ∀ x, c x → x ⊑ a ∨ x ⊑ b := by
+    rintro _ (⟨rfl, _⟩ | ⟨rfl, _⟩)
+    · exact .inl PartialOrder.rel_refl
+    · exact .inr PartialOrder.rel_refl
+  have bound := orIffUpperBounds.mp (law (α := Prop × Prop)) c _ a b hc hs cover
+  exact bound.elim (fun h => .inr h.2) (fun h => .inl h.1)
+
+private theorem conditionalSup {α : Type u} [PartialOrder α] {z : α}
+    (stable : ∀ y, ¬¬(z ⊑ y) → z ⊑ y)
+    (p : Prop) (nn : ¬¬p) : is_sup (fun b => b = z ∧ p) z :=
+  fun y => ⟨fun le _ ⟨rfl, _⟩ => le, fun upper => stable y fun no => nn fun hp => no (upper z ⟨rfl, hp⟩)⟩
+
+private theorem conditionalChain {α : Type u} [PartialOrder α] (z : α) (p : Prop) :
+    chain (fun b => b = z ∧ p) := by
+  rintro _ _ ⟨rfl, _⟩ ⟨rfl, _⟩
+  exact Or.inl PartialOrder.rel_refl
+
+private theorem someUnitStable (y : Option Unit) : ¬¬(some () ⊑ y) → some () ⊑ y := by
+  cases y with
+  | some u => exact fun _ => PartialOrder.rel_refl
+  | none => intro nn; exact False.elim (nn (fun h => nomatch h))
+
+private theorem decisionOfOption (law : ∀ (P : Prop), AtSup (fun x : Option Unit => x = some () → P))
+    (p : Prop) : p ∨ ¬p := by
+  let d := p ∨ ¬p
+  have nn : ¬¬d := fun no => no (.inr (fun hp => no (.inl hp)))
+  exact law d _ (conditionalChain (some ()) d) (fun _ h _ => h.2) _ (conditionalSup someUnitStable d nn) rfl
+
+/-- These statements use the pinned partial orders after unfolding strict admissibility. -/
+abbrev FlatClosure := ∀ {α : Sort u} {b : α} (P : FlatOrder b → Prop), P b → AtSup P
+abbrev OptionClosure := ∀ {α : Type u} (P : Prop) (y : α), AtSup (fun x : Option α => x = some y → P)
+
+theorem excludedMiddleOfFlat (law : FlatClosure.{1}) (p : Prop) : p ∨ ¬p :=
+  decisionOfOption (fun P => @law (Option Unit) none (fun x => x = some () → P) (fun h => nomatch h)) p
+
+theorem excludedMiddleOfSome (law : OptionClosure.{0}) (p : Prop) : p ∨ ¬p :=
+  decisionOfOption (fun P => law P ()) p
+
+private theorem flatOfEM (em : ∀ p : Prop, p ∨ ¬p) : FlatClosure.{u} := by
+  intro α b P bottom c ordered all s hs
+  obtain ⟨z, hz, least⟩ := flatSupBottomOrMember em c ordered
+  cases is_sup_unique hs least
+  exact hz.elim (fun eq => eq.symm ▸ bottom) (all s)
+
+theorem flatAdmissibleIffEM : FlatClosure.{1} ↔ (∀ p : Prop, p ∨ ¬p) := ⟨excludedMiddleOfFlat, flatOfEM⟩
+theorem someAdmissibleIffEM : OptionClosure.{0} ↔ (∀ p : Prop, p ∨ ¬p) :=
+  ⟨excludedMiddleOfSome, fun em {α} P y => @flatOfEM em (Option α) none (fun x => x = some y → P) (fun h => nomatch h)⟩
+
+run_cmd
+  for name in [``orIffUpperBounds, ``weakExcludedMiddleOfOr, ``flatAdmissibleIffEM, ``someAdmissibleIffEM] do
+    unless (← collectAxioms name).isEmpty do throwError "admissibility reduction uses axioms: {name}"
 
 private theorem excludedMiddleOfStateResult {ε σ : Type} {p : Prop}
     (order : CCPO (EST ε σ (Option (Decidable p)))) : p ∨ ¬p := by
