@@ -67,8 +67,12 @@
    D5.S3.Quantum.QuantumChannels.TracePreservingEigenvalueBound.theorem1_general: proof_shape: content; escape_witness: D5.S3.Quantum.QuantumChannels.TracePreservingEigenvalueBound.theorem1_general; consumer: _private.D5.S3.Quantum.QuantumChannels.ConditionalTwoPositiveSpectralBound.0.D5.S3.Quantum.QuantumChannels.ConditionalTwoPositiveSpectralBound.twoPositive_spectralBound.
    _private.D5.S3.Quantum.QuantumChannels.TracePreservingEigenvalueBound.0.D5.S3.Quantum.QuantumChannels.TracePreservingEigenvalueBound.selfAdjointPart_complex: proof_shape: bind-only; escape_witness: none; consumer: _private.D5.S3.Quantum.QuantumChannels.TracePreservingEigenvalueBound.0.D5.S3.Quantum.QuantumChannels.TracePreservingEigenvalueBound.symmetricPart_symmetric, _private.D5.S3.Quantum.QuantumChannels.TracePreservingEigenvalueBound.0.D5.S3.Quantum.QuantumChannels.TracePreservingEigenvalueBound.symmetricPart_rayleigh_eigen, _private.D5.S3.Quantum.QuantumChannels.TracePreservingEigenvalueBound.0.D5.S3.Quantum.QuantumChannels.TracePreservingEigenvalueBound.weighted_bendixson.
 -/
-import D5.S3.Quantum.ChannelFixedState
-import D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace
+module
+
+public import D5.S3.Quantum.ChannelFixedState
+public import D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace
+
+@[expose] public section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.isDefEq.respectTransparency.types false
 noncomputable section
