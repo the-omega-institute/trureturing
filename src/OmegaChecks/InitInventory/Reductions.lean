@@ -141,6 +141,8 @@ private def replayWitnesses (env : Environment) : IO Unit := do
     [``MacroReferences.noQueryRoundTrip, ``MacroReferences.noRoundTrip] ++
     [``DynamicRoundTrip.noRoundTrip, ``FactoryCarriers.noCarrierEmbedding, ``FactoryCarriers.noGetCast] ++
     [``PropositionalChoice.ofChoice, ``PropositionalChoice.ofSkolem, ``PropositionalChoice.ofProducts,
+      ``PropositionalChoice.choiceIffSkolem, ``PropositionalChoice.choiceIffProducts,
+      ``PropositionalChoice.choiceIntoProp, ``PropositionalChoice.skolemIntoProp, ``PropositionalChoice.productsIntoProp,
      ``OptionSelector.decideFromSingleton, ``OptionSelector.decideFromDefault] ++
     ReferenceSelection.witnesses.map (fun row => row.2.2) ++
     [``ReferenceRoundTrip.alloc, ``ReferenceRoundTrip.primAlloc, ``ReferenceRoundTrip.set, ``ReferenceRoundTrip.primSet,

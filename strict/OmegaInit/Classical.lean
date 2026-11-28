@@ -32,3 +32,9 @@ as proved by OmegaChecks.InitBoundaries.propextFromPropComplete. -/
 /- Classical.epsilon_singleton selects from the predicate y = x. Its strict specialization
 returns x. The pinned type refers directly to Classical.epsilon, whose full type gives
 Classical.choice by applying it to the constantly true predicate. -/
+
+/- Classical.axiomOfChoice and Classical.skolem are equivalent at identical universe
+parameters. For Type-valued fibers they are also equivalent to Pi.instNonempty.
+Their conclusions place the selected function inside Exists or Nonempty. In the
+specialization to Prop-valued fibers all three have zero-axiom terms, checked in
+OmegaChecks.InitBoundaries.PropositionalChoice. Choice for arbitrary fibers is open. -/

@@ -509,6 +509,37 @@ theorem ofChoice (choose : type_of% (@Classical.axiomOfChoice.{u+2,u+1})) : Sele
 theorem ofSkolem (split : type_of% (@Classical.skolem.{u+2,u+1})) : Selection.{u} :=
   ofChoice (@split _ _ _ |>.mp)
 
+/-- Skolemization and relational choice have equivalent full statements at the same universes. -/
+theorem choiceIffSkolem :
+    (type_of% @Classical.axiomOfChoice.{u,v}) ↔ (type_of% @Classical.skolem.{u,v}) :=
+  ⟨fun choice {_ _ _} => ⟨choice, fun ⟨f, hf⟩ x => ⟨f x, hf x⟩⟩,
+   fun skolem {_ _ _} => skolem.mp⟩
+
+/-- A nonempty dependent product supplies a simultaneous family of witnesses by using subtype fibers. -/
+theorem choiceIffProducts :
+    (type_of% @Classical.axiomOfChoice.{u,v+1}) ↔ (type_of% @Pi.instNonempty.{u,v+1}) := by
+  constructor
+  · intro choose α β fibers
+    obtain ⟨f, _⟩ := @choose α β (fun _ _ => True) (fun i => (fibers i).elim fun x => ⟨x, trivial⟩)
+    exact ⟨f⟩
+  · intro product α β r witnesses
+    have fibers (i : α) : Nonempty {y : β i // r i y} :=
+      (witnesses i).elim fun y hy => ⟨⟨y, hy⟩⟩
+    exact (@product α (fun i => {y : β i // r i y}) fibers).elim fun f =>
+      ⟨fun i => (f i).val, fun i => (f i).property⟩
+
+/-- Choice into propositions admits a term uniform in the universe of the index. -/
+theorem choiceIntoProp : type_of% @Classical.axiomOfChoice.{u,0} := by
+  intro α β r witnesses
+  let f (i : α) : β i := (witnesses i).elim fun h _ => h
+  exact ⟨f, fun i => (witnesses i).elim fun _ hy => hy⟩
+
+theorem skolemIntoProp : type_of% @Classical.skolem.{u,0} :=
+  choiceIffSkolem.mp @choiceIntoProp
+
+theorem productsIntoProp : type_of% @Pi.instNonempty.{u,0} :=
+  fun {_ _} fibers => ⟨fun i => (fibers i).elim id⟩
+
 end PropositionalChoice
 
 namespace GrindQuantifiers
