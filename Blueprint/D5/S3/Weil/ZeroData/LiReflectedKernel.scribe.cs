@@ -1,10 +1,46 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Weil.ZeroData;
 
 internal sealed class LiReflectedKernelDocument : IScribeDocumentDefinition
 {
     private const string Owner = "D5/S3/Weil/ZeroData/LiReflectedKernel.";
+    private static Formula Call(string name, params Formula[] args) =>
+        new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. args]);
+    private static Formula All(string name, Formula domain, Formula body) =>
+        new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), domain, body);
+    private static Formula Then(Formula premise, Formula conclusion) =>
+        new Formula.Logic(premise, FormulaLogicOperator.Implies, conclusion);
+    private static Formula AtMost(Formula left, Formula right) =>
+        new Formula.Relation(left, FormulaRelationOperator.LessThanOrEqual, right);
+    private static Formula Norm(Formula value) => Seq(Vert, Sp, value, Vert);
+    private static Formula Nat => Seq(Mathbb, Grp(F.Id("N")));
+    private static Formula Complex => Seq(Mathbb, Grp(F.Id("C")));
+    private static Formula Quarter => new Formula.Fraction(D(1), D(4));
+    private static Formula Kernel => Call("Phi", F.Id("Z"), F.Id("k"), F.Id("z"));
+    private static Formula Weight => new Formula.Fraction(
+        Seq(D(4), Call("m", F.Id("Z"), F.Id("k"))),
+        Seq(D(1), Plus, new Formula.Power(
+            Norm(Call("gamma", F.Id("Z"), F.Id("k"))), D(2))));
+    private static Formula DiskCondition => AtMost(Norm(F.Id("z")), Quarter);
+    private static Formula InDisk(Formula body) => All("z", Complex, Then(DiskCondition, body));
+    private static Formula Statement()
+    {
+        var tail = All("k", Nat, Then(
+            AtMost(D(2), Norm(Call("gamma", F.Id("Z"), F.Id("k")))),
+            InDisk(AtMost(Norm(Kernel), Weight))));
+        var absolute = InDisk(Call("Summable", Seq(F.Id("k"), Mapsto, Sp, Norm(Kernel))));
+        var partial = Seq(Open, F.Id("A"), Mapsto, Sp, Open, F.Id("z"), Mapsto, Sp,
+            Sum, Underscore, Grp(F.Id("k"), InMacro, Sp, F.Id("A")), Sp, Kernel, Close, Close);
+        var total = Seq(Open, F.Id("z"), Mapsto, Sp, Sum, Underscore,
+            Grp(F.Id("k"), InMacro, Sp, Nat), Sp, Kernel, Close);
+        var uniform = Call("TendstoUniformlyOn", partial, total, F.Id("atTop"),
+            Call("closedBall", D(0), Quarter));
+        return All("Z", Call("ZeroData"), new Formula.Logic(tail, FormulaLogicOperator.And,
+            new Formula.Logic(absolute, FormulaLogicOperator.And, uniform)));
+    }
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Reflection gives an inverse-square majorant for the actual Li resolvent kernels.",
@@ -22,7 +58,7 @@ internal sealed class LiReflectedKernelDocument : IScribeDocumentDefinition
                 DescribeId.Create("reflected-li-kernel-uniform-convergence"),
                 DeclarationHandle.Create(Owner + "reflected_li_kernel_uniform_convergence"),
                 H("A fixed disk and a summable tail"),
-                StatementSource.FromLean(),
+                StatementSource.FromAuthor(Disp(Statement())),
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
@@ -47,9 +83,13 @@ internal sealed class LiReflectedKernelDocument : IScribeDocumentDefinition
                             + "Thus the collapsed expression has norm at most 4*|x_k|, "
                             + "giving the stated majorant after multiplication by m_k/2.")),
                     Paragraph(Text(
-                        "The existing actual-zero reciprocal-square weight theorem "
+                        "Here Phi, m and gamma are the kernel, multiplicity and spectral "
+                            + "parameter defined above, with their presentation Z shown explicitly. "
+                            + "A ranges over finite subsets of the natural numbers ordered by "
+                            + "inclusion; atTop is the resulting filter. The closed ball is in C. "
+                            + "The existing actual-zero reciprocal-square weight theorem "
                             + "makes the majorant summable. Only finitely many indices "
-                            + "have |gamma_k|<2. Their terms are retained, and a "
+                            + "have |gamma_k|<=2. Their terms are retained, and a "
                             + "cofinite Weierstrass estimate gives the uniform limit. "
                             + "No Riemann hypothesis or numerical lower bound for zero "
                             + "heights is assumed.")),
