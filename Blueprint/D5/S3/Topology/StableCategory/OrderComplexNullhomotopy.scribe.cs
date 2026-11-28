@@ -1,6 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Topology;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Topology.StableCategory;
 
 internal sealed class OrderComplexNullhomotopyDocument : IScribeDocumentDefinition
 {
