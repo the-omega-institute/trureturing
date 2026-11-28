@@ -29,14 +29,28 @@ The sequence pairs a restriction on adjacent positions in partial partitions wit
 
 The full class on $n+1$ points jointly avoids the consecutive subwords `121` and `212` in the sense of Mansour–Shattuck–Yan. Their reduction ranks the distinct labels by numeric order, so the two patterns distinguish whether the repeated endpoint label is smaller or larger than the middle label. The canonical partition word `12212` avoids `121` and has the forbidden triple `212`. Theorem 3.1 at $y=0$ and the specialization following Theorem 2.9 count single-pattern avoiders separately. Munagi studies successions and separations in full partitions. [Mansour–Shattuck–Yan, §1 and Theorems 2.9 and 3.1](https://doi.org/10.37236/291) · [Munagi](https://doi.org/10.1155/IJMMS.2005.451)
 
-The numerical equality also follows by comparing generating functions. Label the block containing the first point by $0$ and give the other blocks distinct labels from $q\ge1$ available labels. Let $f_n(q)$ count the resulting allowed words of length $n+1$ starting with $0$. When the last two letters are equal, there is one extension with an equal final pair and $q$ with an unequal pair. When they are unequal, there is one extension with an equal pair and $q-1$ with an unequal pair, because repeating the penultimate letter would create a forbidden triple. Start in the equal state by treating the initial $0$ as preceded by another $0$. This leaves the first extension unrestricted. The transition matrix $\begin{pmatrix}1&q\\1&q-1\end{pmatrix}$ gives $f_n=qf_{n-1}+f_{n-2}$ for $n\ge2$, with $f_0=1$ and $f_1=q+1$. Hence
+The numerical equality also follows by comparing generating functions. The MathOverflow question already records the product series
+
+$$
+(1+x)\sum_{k\ge0}\frac{x^k}{\prod_{j=0}^k(1-jx-x^2)}.
+$$
+
+Max Alekseyev's accepted answer derives this series for the partial partitions by inclusion–exclusion. For the full class, label the block containing the first point by $0$ and give the other blocks distinct labels from $q\ge1$ available labels. Let $f_n(q)$ count the resulting allowed words of length $n+1$ starting with $0$. When the last two letters are equal, there is one extension with an equal final pair and $q$ with an unequal pair. When they are unequal, there is one extension with an equal pair and $q-1$ with an unequal pair, because repeating the penultimate letter would create a forbidden triple. Start in the equal state by treating the initial $0$ as preceded by another $0$. This leaves the first extension unrestricted. The transition matrix $\begin{pmatrix}1&q\\1&q-1\end{pmatrix}$ gives $f_n=qf_{n-1}+f_{n-2}$ for $n\ge2$, with $f_0=1$ and $f_1=q+1$. Hence
 
 $$
 \sum_{n\ge0} f_n(q)x^n = \frac{1+x}{1-qx-x^2}
  = \frac{1}{1-x}\sum_{j\ge0}q^j\left(\frac{x}{1-x^2}\right)^j.
 $$
 
-Each partition with $k+1$ blocks contributes the falling factorial $(q)_k$. The linear map $(q)_k\mapsto 1$ removes the labels and takes $q^j$ to the Bell number $B_j$ by the Stirling-number expansion. The resulting ordinary generating function is exactly Max Alekseyev's inclusion–exclusion formula for the partial partitions, including the constant term $1$. This gives a separate proof of the all-$n$ count equality. [Alekseyev's enumeration](https://mathoverflow.net/a/478471)
+For the full class, each partition with $k+1$ blocks contributes the falling factorial $(q)_k$, so its block-refined generating function is the coefficient of $(q)_k$, namely the $k$th forward difference in $q$ at $0$ divided by $k!$. With $\Delta_q g(q)=g(q+1)-g(q)$, a telescoping calculation gives
+
+$$
+\sum_{n\ge0}\frac{\Delta_q^k f_n(0)}{k!}x^n
+=\frac{1}{k!}\Delta_q^k\left.\frac{1+x}{1-qx-x^2}\right|_{q=0}
+=\frac{(1+x)x^k}{\prod_{j=0}^k(1-jx-x^2)}.
+$$
+
+Summing over $k$ recovers the earlier MathOverflow product series for the full class. The direct enumeration therefore supplies the numerical bridge, while the distinct formal contribution remains the kernel-verified reversible scan equivalence. [Generating function for A261041](https://mathoverflow.net/q/478446) · [Alekseyev's enumeration](https://mathoverflow.net/a/478471)
 
 The public proof report describes the swap-scan construction. The Lean development supplies the checked equivalence on literal partitions and the checked cardinality equality. [Public proof report](https://github.com/the-omega-institute/trureturing/issues/34937#issuecomment-7226553589)
 
