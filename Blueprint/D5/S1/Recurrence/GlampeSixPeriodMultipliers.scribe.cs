@@ -7,20 +7,24 @@ namespace StrataLint.Scribe.Blueprint.D5.S1.Recurrence;
 internal sealed class GlampeSixPeriodMultipliersDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S1/Recurrence/GlampeSixPeriodMultipliers.";
+    private static readonly LibraryNoteRef Source =
+        LibraryNoteRef.Create("D5/L/RecurrenceAlgebraic/glampe2026polynomial");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "A scaled six-period recurrence has literal sign-restricted identities exactly for multipliers congruent to one modulo six.",
+        "For integer scales of absolute value at least two, a scaled six-period recurrence admits fixed-sign polynomial identities over any characteristic-zero field exactly for positive multipliers congruent to one modulo six.",
         H("Polynomial Multipliers of a Scaled Six-Period Recurrence"),
         Blocks(
-            Paragraph(Text("Equation (10) of Glampe, Joshi, Malla, Richey and Wright, "
-                + "arXiv:2610.15131v1, asks which multipliers admit a polynomial identity "
-                + "with an optional index-dependent sign on each coefficient.")),
+            Paragraph(Text("The source's equation (10) asks which multipliers admit a polynomial "
+                + "identity with an optional parity sign on each coefficient. The family considered "
+                + "here has G(0)=1, G(1)=0 and (r,s)=(t,-t²) in equation (9). "
+                + "The general classification for equation (9) remains open in this development.")),
             Describe.Lean(DescribeId.Create("glampe-scaled-six-period-sequence"),
                 DeclarationHandle.Create(Prefix + "scaledGibonacci"),
                 H("The scaled sequence"),
                 StatementSource.FromAuthor(Disp(Recurrence())),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For every integer scale t, the integer sequence G has seeds "
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("For every integer scale t, write G(t,n) for scaledGibonacci t n, "
+                    + "the integer sequence with seeds "
                     + "1 and 0. The solution of the order-two recurrence is G(n)=t^n h(n), "
                     + "where h repeats (1,0,-1,-1,0,1). The table has the same seeds and satisfies "
                     + "h(n+2)=h(n+1)-h(n), which gives the formula by recurrence uniqueness."))),
@@ -29,13 +33,14 @@ internal sealed class GlampeSixPeriodMultipliersDocument : IScribeDocumentDefini
                 DeclarationHandle.Create(Prefix + "multipliers_iff"),
                 H("Classification with a fixed sign bit per degree"),
                 StatementSource.FromAuthor(Disp(Classification())),
-                AssessedProvenance.FromRepo(),
+                AssessedProvenance.FromRepo(Source),
                 Blocks(
                     Paragraph(Text("Fix any characteristic-zero field K, an integer t with "
                         + "absolute value at least two, and a positive natural multiplier k. "
-                        + "Each G value in the identity is cast from the integers into K. The "
-                        + "coefficients and bits are fixed for all natural indices, including zero, "
-                        + "and the bound k includes every smaller degree.")),
+                        + "IntCast_K is the canonical integer-to-K cast, and the sign base -1 "
+                        + "is an element of K. Each bit is zero for the false Boolean mask value "
+                        + "and one for true. The coefficients and bits are fixed for all natural "
+                        + "indices, including zero, and the bound k includes every smaller degree.")),
                     Paragraph(Text("At indices 1 and 7, the inputs are both zero and the two signs "
                         + "agree for each bit. The outputs must therefore agree. Since h(7k)=h(k) "
                         + "and the powers of t have distinct values at distinct exponents, h(k)=0. "
@@ -54,9 +59,11 @@ internal sealed class GlampeSixPeriodMultipliersDocument : IScribeDocumentDefini
     private static Formula Naturals => Seq(Mathbb, Grp(F.Id("N")));
     private static Formula Integers => Seq(Mathbb, Grp(F.Id("Z")));
     private static Formula Sub(Formula value, Formula index) => Seq(value, Underscore, Grp(index));
-    private static Formula G(Formula index) => Sub(F.Id("G"), index);
+    private static Formula G(Formula index) => Sub(F.Id("G"), Seq(F.Id("t"), Comma, index));
     private static Formula Par(Formula body) => Seq(Left, Open, body, Right, Close);
     private static Formula Pow(Formula value, Formula exponent) => new Formula.Power(value, exponent);
+    private static Formula CastTo(Formula value, Formula field) =>
+        new Formula.Apply(Sub(Seq(Operatorname, Grp(F.Id("IntCast"))), field), [value]);
 
     private static Formula Recurrence()
     {
@@ -78,12 +85,18 @@ internal sealed class GlampeSixPeriodMultipliersDocument : IScribeDocumentDefini
         var field = F.Id("K");
         var bits = Seq(OpenBrace, D(0), Comma, D(1), CloseBrace);
         var indices = new Formula.Apply(Seq(Operatorname, Grp(F.Id("Fin"))), [Seq(k, Plus, D(1))]);
+        var fieldHypothesis = new Formula.Apply(Seq(Operatorname, Grp(F.Id("Field"))), [field]);
+        var charZeroHypothesis = new Formula.Apply(Seq(Operatorname, Grp(F.Id("CharZero"))), [field]);
+        var signBase = Par(Seq(Minus, D(1), Colon, Sp, field));
         var signedSum = Seq(Sum, Underscore, Grp(i, Eq, D(0)), Caret, Grp(k), Sp,
-            Sub(c, i), Pow(Par(Seq(Minus, D(1))), Seq(n, Sub(Varepsilon, i))), Pow(G(n), i));
-        var identity = Seq(Exists, Sp, c, Sp, InMacro, Sp, Pow(field, Seq(k, Plus, D(1))), Comma, Sp,
+            Sub(c, i), Pow(signBase, Seq(n, Sub(Varepsilon, i))), Pow(CastTo(G(n), field), i));
+        var identity = Seq(Exists, Sp, c, Colon, Sp, indices, Sp, To, Sp, field, Comma, Sp,
             Exists, Sp, Varepsilon, Colon, Sp, indices, Sp, To, Sp, bits, Comma, Sp,
-            Forall, Sp, n, InMacro, Naturals, Comma, Sp, G(Seq(k, n)), Eq, signedSum);
-        return Seq(Forall, Sp, t, InMacro, Integers, Comma, Sp, Forall, Sp, k, InMacro, Naturals,
+            Forall, Sp, n, InMacro, Naturals, Comma, Sp, CastTo(G(Seq(k, n)), field), Eq, signedSum);
+        return Seq(Forall, Sp, field, Colon, Sp, F.Id("Type"), Star, Comma, Sp,
+            OpenBracket, fieldHypothesis, CloseBracket, Sp,
+            OpenBracket, charZeroHypothesis, CloseBracket, Comma, Sp,
+            Forall, Sp, t, InMacro, Integers, Comma, Sp, Forall, Sp, k, InMacro, Naturals,
             Comma, Sp, Par(Seq(D(2), Sp, Leq, Sp, Lvert, Sp, t, Rvert, Sp, Land, Sp, k, Gt, D(0))),
             Sp, Rightarrow, Sp,
             Par(Seq(Par(identity), Sp, Iff, Sp, k, Equiv, D(1), Pmod, Grp(D(6)))));
