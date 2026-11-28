@@ -2,6 +2,7 @@ module
 public import OmegaChecks.InitPort.Alternatives.Logic.Quotient
 import all OmegaChecks.InitPort.Alternatives.Logic.Quotient
 public import OmegaChecks.InitInventory.Replay
+public import OmegaChecks.InitInventory.Order
 import OmegaChecks.InitInventory.EnvelopeCancellation
 
 /-! The two public heterogeneous quotient eliminators have constructively inhabited types.
@@ -201,16 +202,13 @@ public theorem liftToProp : type_of% @Quot.pliftOn.{u,0} := fun {_ _ _} q f _ =>
   obtain ⟨a, e⟩ := Quot.exists_rep q
   exact f a e.symm
 
-/-- Supply an element only when the entire fiber is subsingleton and known to be inhabited. -/
-public abbrev SubsingletonSelection := ∀ {T : Sort v}, Subsingleton T → Nonempty T → T
-
-public def unaryOfSelection (pick : SubsingletonSelection.{v}) : type_of% @Quot.recOnSubsingleton.{u,v} :=
-  fun {_ r F} h q f => pick
+public def unaryOfSelection (pick : InternalOrder.UniqueChoice.{v}) : type_of% @Quot.recOnSubsingleton.{u,v} :=
+  fun {_ r F} h q f => @pick (F q)
     (Quot.ind (β := fun q : Quot r => Subsingleton (F q)) h q)
     (Quot.ind (β := fun q : Quot r => Nonempty (F q)) (fun a => ⟨f a⟩) q)
 
 /-- Exactness makes all outputs obtainable from representatives of this one quotient point equal. -/
-public def setoidLiftOfSelection (pick : SubsingletonSelection.{max 1 v}) (exactRep : type_of% @Quotient.exact.{u}) :
+public def setoidLiftOfSelection (pick : InternalOrder.UniqueChoice.{max 1 v}) (exactRep : type_of% @Quotient.exact.{u}) :
     type_of% @Quotient.pliftOn.{u,v} := fun {β α s} q f coherent => by
   let T := {b : β // ∃ (a : α) (e : q = Quotient.mk s a), f a e = b}
   have inhabited : Nonempty T := by
@@ -220,10 +218,10 @@ public def setoidLiftOfSelection (pick : SubsingletonSelection.{max 1 v}) (exact
     obtain ⟨a, e, hx⟩ := x.property
     obtain ⟨b, d, hy⟩ := y.property
     exact Subtype.ext (hx.symm.trans ((coherent a b e d (exactRep (e.symm.trans d))).trans hy))⟩
-  exact (pick unique inhabited).val
+  exact (@pick T unique inhabited).val
 
 public theorem setoidLiftOfSelection_mk
-    (pick : SubsingletonSelection.{max 1 v}) (exactRep : type_of% @Quotient.exact.{u})
+    (pick : InternalOrder.UniqueChoice.{max 1 v}) (exactRep : type_of% @Quotient.exact.{u})
     {β : Sort v} {α : Sort u} {s : Setoid α} (a : α)
     (f : ∀ b, Quotient.mk s a = Quotient.mk s b → β)
     (coherent : ∀ b c (e : Quotient.mk s a = Quotient.mk s b) (d : Quotient.mk s a = Quotient.mk s c),
