@@ -19,7 +19,7 @@ public import Mathlib.Topology.UrysohnsLemma
 public import Mathlib.Topology.ContinuousMap.Compact
 public import Mathlib.Topology.Order.Lattice
 public import Mathlib.Tactic.Linarith
-public import OmegaMath.Combinatorics.Graph.GroupWordMetric
+public import Mathlib.Geometry.Group.WordMetric
 public import OmegaBuild.Commands
 
 /-! Word-ball constructions for continuous actions on compact Hausdorff spaces. -/
@@ -120,9 +120,6 @@ private def wordBall (S : Finset G) : ℕ → Finset G
   | 0 => {1}
   | n + 1 => wordBall S n ∪ S.biUnion (fun s => (wordBall S n).image (fun g => s * g))
 
-private abbrev Fits (S : Finset G) (n : ℕ) (g : G) : Prop :=
-  GroupWordMetric.Fits (S : Set G) n g
-
 private theorem one_mem_wordBall (S : Finset G) (n : ℕ) : (1 : G) ∈ wordBall S n := by
   induction n with
   | zero => simp [wordBall]
@@ -131,78 +128,65 @@ private theorem one_mem_wordBall (S : Finset G) (n : ℕ) : (1 : G) ∈ wordBall
 private theorem finite_wordBall (S : Finset G) (n : ℕ) : Set.Finite (wordBall S n : Set G) := by
   exact (wordBall S n).finite_toSet
 
-private theorem fits_mem_wordBall {S : Finset G} {n : ℕ} {g : G} :
-    Fits S n g → g ∈ wordBall S n := by
-  rintro ⟨l, hlS, hlen, hprod⟩
-  induction n generalizing l g with
+private theorem generator_wordLength_le (S : Finset G)
+    (hS : Subgroup.closure (S : Set G) = ⊤) {s : G} (hs : s ∈ S) :
+    (Group.Generators.ofSet hS).wordLength s ≤ 1 := by
+  apply (Group.Generators.wordLength_le_iff _ _).mpr
+  exact ⟨[(⟨s, hs⟩, true)], by simp, by simp⟩
+
+private theorem wordProd_mem_wordBall (S : Finset G)
+    (hsym : ∀ s ∈ S, s⁻¹ ∈ S) (hS : Subgroup.closure (S : Set G) = ⊤)
+    {n : ℕ} (l : List (S × Bool)) (hlen : l.length ≤ n) :
+    (Group.Generators.ofSet hS).wordProd l ∈ wordBall S n := by
+  induction n generalizing l with
   | zero =>
       have hl : l = [] := List.length_eq_zero_iff.mp (Nat.eq_zero_of_le_zero hlen)
       subst l
-      simp_all [wordBall]
+      simp [wordBall]
   | succ n ih =>
-      by_cases hnil : l = []
-      · subst l
-        rw [← hprod]
-        exact one_mem_wordBall S (n + 1)
-      · obtain ⟨a, t, rfl⟩ := List.exists_cons_of_ne_nil hnil
-        have ht := ih t (fun b hb => hlS b (by simp [hb])) (by simpa using hlen) rfl
-        have ha : a ∈ S := hlS a (by simp)
-        rw [List.prod_cons] at hprod
-        rw [← hprod]
-        exact Finset.mem_union_right _
-          (Finset.mem_biUnion.mpr ⟨a, ha,
-            Finset.mem_image.mpr ⟨t.prod, ht, rfl⟩⟩)
+      cases l with
+      | nil => simpa using one_mem_wordBall S (n + 1)
+      | cons a t =>
+          obtain ⟨i, b⟩ := a
+          have ht := ih t (by simpa using hlen)
+          have ha : (cond b (i : G) (i : G)⁻¹) ∈ S := by
+            cases b
+            · exact hsym i i.property
+            · exact i.property
+          rw [Group.Generators.wordProd_cons]
+          exact Finset.mem_union_right _
+            (Finset.mem_biUnion.mpr ⟨_, ha,
+              Finset.mem_image.mpr ⟨_, ht, rfl⟩⟩)
 
-private theorem mem_wordBall_fits {S : Finset G} {n : ℕ} {g : G} :
-    g ∈ wordBall S n → Fits S n g := by
+private theorem mem_wordBall_wordLength_le (S : Finset G)
+    (hS : Subgroup.closure (S : Set G) = ⊤) {n : ℕ} {g : G}
+    (hg : g ∈ wordBall S n) : (Group.Generators.ofSet hS).wordLength g ≤ n := by
   induction n generalizing g with
   | zero =>
-      intro hg
       have : g = 1 := by simpa [wordBall] using hg
       subst g
-      exact ⟨[], by simp, by simp, rfl⟩
+      simp
   | succ n ih =>
-      intro hg
       rw [wordBall, Finset.mem_union] at hg
       rcases hg with hg | hg
-      · rcases ih hg with ⟨l, hlS, hlen, hprod⟩
-        exact ⟨l, hlS, hlen.trans (Nat.le_succ n), hprod⟩
-      · rcases Finset.mem_biUnion.mp hg with ⟨a, ha, hg⟩
-        rcases Finset.mem_image.mp hg with ⟨b, hb, rfl⟩
-        rcases ih hb with ⟨l, hlS, hlen, hprod⟩
-        refine ⟨a :: l, ?_, ?_, ?_⟩
-        · intro c hc
-          simp only [List.mem_cons] at hc
-          rcases hc with rfl | hc
-          · exact ha
-          · exact hlS c hc
-        · simp only [List.length_cons]
-          omega
-        · simp only [List.prod_cons]
-          rw [hprod]
-
-private theorem generates_of_closure (S : Finset G)
-    (hsym : ∀ s ∈ S, s⁻¹ ∈ S) (hS : Subgroup.closure (S : Set G) = ⊤) :
-    GroupWordMetric.Generates (S : Set G) := by
-  let H : Subgroup G := {
-    carrier := {g | ∃ n, Fits S n g}
-    one_mem' := ⟨0, GroupWordMetric.Fits.one⟩
-    mul_mem' := by
-      rintro a b ⟨m, hm⟩ ⟨n, hn⟩
-      exact ⟨m + n, hm.mul hn⟩
-    inv_mem' := by
-      rintro a ⟨n, hn⟩
-      exact ⟨n, hn.inv hsym⟩ }
-  have hle : Subgroup.closure (S : Set G) ≤ H := (Subgroup.closure_le H).mpr
-    (fun s hs => ⟨1, GroupWordMetric.Fits.of_mem hs⟩)
-  intro g
-  exact hle (hS ▸ Subgroup.mem_top g)
+      · exact (ih hg).trans (Nat.le_succ n)
+      · obtain ⟨a, ha, hg⟩ := Finset.mem_biUnion.mp hg
+        obtain ⟨b, hb, rfl⟩ := Finset.mem_image.mp hg
+        have hmul := (Group.Generators.ofSet hS).wordLength_mul_le a b
+        have hleft := generator_wordLength_le S hS ha
+        have hright := ih hb
+        omega
 
 private theorem wordBall_length_iff (S : Finset G)
-    (hgen : GroupWordMetric.Generates (S : Set G)) (n : ℕ) (g : G) :
-    g ∈ wordBall S n ↔ GroupWordMetric.length hgen g ≤ n := by
-  rw [GroupWordMetric.length_le_iff]
-  exact ⟨mem_wordBall_fits, fits_mem_wordBall⟩
+    (hsym : ∀ s ∈ S, s⁻¹ ∈ S) (hS : Subgroup.closure (S : Set G) = ⊤)
+    (n : ℕ) (g : G) :
+    g ∈ wordBall S n ↔ (Group.Generators.ofSet hS).wordLength g ≤ n := by
+  constructor
+  · exact mem_wordBall_wordLength_le S hS
+  · intro hg
+    obtain ⟨l, hl, he⟩ := ((Group.Generators.ofSet hS).wordLength_le_iff g).mp hg
+    rw [← he]
+    exact wordProd_mem_wordBall S hsym hS l hl
 
 private def weight (R : ℝ) (n : ℕ) : ℝ := max 0 (1 - (n : ℝ) / R)
 
@@ -252,8 +236,8 @@ theorem exists_continuous_wordBall_tent
         (1 / 2 : ℝ) ≤ ‖u - v‖) := by
   classical
   have hRpos : 0 < (R : ℝ) := by exact_mod_cast (show 0 < R by omega)
-  let hgen := generates_of_closure S hsym hS
-  let L : G → ℕ := GroupWordMetric.length hgen
+  let P : Group.Generators G S := Group.Generators.ofSet hS
+  let L : G → ℕ := P.wordLength
   let B := wordBall S R
   have hB : B.Nonempty := ⟨1, one_mem_wordBall S R⟩
   obtain ⟨x₀, g₀, hfar⟩ := exists_orbit_outside_finset S hS hinf B
@@ -287,14 +271,14 @@ theorem exists_continuous_wordBall_tent
     by_cases hg : g ∈ B
     · exact Finset.le_sup' (fun b => term b x) hg
     · have hlen : R ≤ L g := by
-        have : ¬ L g ≤ R := fun h => hg ((wordBall_length_iff S hgen R g).mpr h)
+        have : ¬ L g ≤ R := fun h => hg ((wordBall_length_iff S hsym hS R g).mpr h)
         omega
       have hw : weight (R : ℝ) (L g) = 0 := weight_zero hRpos (by exact_mod_cast hlen)
       simpa [term, hw] using hu0 x
   have huone : u x₀ = 1 := by
     apply le_antisymm (hu1 _)
     have he : term 1 x₀ = 1 := by
-      simp [term, L, GroupWordMetric.length_one, weight, hφone]
+      simp [term, L, Group.Generators.wordLength_one, weight, hφone]
     rw [← he]
     exact htU 1 x₀
   have huzero : u z = 0 := by
@@ -308,11 +292,12 @@ theorem exists_continuous_wordBall_tent
     apply Finset.sup'_le hB
     intro g hg
     let k := s⁻¹ * g
-    have hls : L s⁻¹ ≤ 1 :=
-      (GroupWordMetric.length_le_iff hgen 1 s⁻¹).mpr
-        (GroupWordMetric.Fits.of_mem (hsym s hs))
+    have hls : L s⁻¹ ≤ 1 := by
+      change P.wordLength s⁻¹ ≤ 1
+      rw [P.wordLength_inv]
+      exact generator_wordLength_le S hS hs
     have hlk : L k ≤ L g + 1 := by
-      have hm := GroupWordMetric.length_mul_le hgen s⁻¹ g
+      have hm := P.wordLength_mul_le s⁻¹ g
       dsimp [k, L] at *
       omega
     have hw := weight_step hRpos hlk

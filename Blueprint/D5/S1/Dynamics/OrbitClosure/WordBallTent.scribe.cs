@@ -93,13 +93,18 @@ internal sealed class WordBallTentDocument : IScribeDocumentDefinition
                         + "Contraposition supplies a single point b and a point z=h acting on b outside the finite orbit ball B_R acting on b. "
                         + "This argument includes infinite orbits directly and finite orbits of unbounded sizes; it does not infer that each orbit is infinite.")),
                     Paragraph(Text("Let B_R consist of products of at most R letters from S. Recursive finite unions and images construct this finite ball; "
-                        + "the checked word representation identifies membership with word length at most R. The identity belongs to B_R even when S is empty. "
+                        + "Use P=Group.Generators.ofSet for the actual subtype S. Mathlib.Geometry.Group.WordMetric supplies its wordLength and wordLength_le_iff, "
+                        + "with signed words in S times Bool. A true letter evaluates to its generator; a false letter evaluates to its inverse. "
+                        + "Inverse closure puts both values in S, so structural induction sends every signed word of length at most R into B_R. "
+                        + "Conversely, the finite-ball recursion, singleton true letters and the upstream multiplication bound give word length at most R for every ball element. "
+                        + "These implications identify the same actual finite ball with the upstream word-length bound. The identity belongs to B_R even when S is empty. "
                         + "For each g in B_R, the point g inverse acting on z differs from b. These form a finite closed set F disjoint from {b}. "
                         + "Compactness and the Hausdorff property make X normal. Urysohn separation gives a continuous phi with values in [0,1], value 1 at b and value 0 on F.")),
                     Paragraph(Text("Write tau(g)=max(0,1-length(g)/R), and define u(y) as the maximum over g in B_R of tau(g) times phi(g inverse acting on y). "
                         + "The finite maximum is continuous and lies in [0,1]. Its identity term gives u(b)=1, and every term vanishes at z. "
                         + "Outside B_R the weight is zero, so the same maximum bounds every transported term indexed by any group element.")),
-                    Paragraph(Text("For s in S, set k=s inverse times g. The length bound length(k) at most length(g)+1 gives tau(g) at most tau(k)+1/R. "
+                    Paragraph(Text("For s in S, a singleton true letter gives length(s) at most 1. The upstream wordLength_inv and wordLength_mul_le bounds then give "
+                        + "length(k) at most length(g)+1 for k=s inverse times g, hence tau(g) at most tau(k)+1/R. "
                         + "The action identity identifies phi(g inverse acting on s acting on y) with phi(k inverse acting on y). "
                         + "Multiplication by a number in [0,1] and the maximum bound give u(s acting on y) at most u(y)+1/R. "
                         + "Apply this also to s inverse and s acting on y for the reverse inequality. No separation between supports or assumption about stabilizers is needed.")),

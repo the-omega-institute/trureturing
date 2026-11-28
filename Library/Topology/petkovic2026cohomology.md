@@ -59,7 +59,12 @@ permits the identity among the generators, and assumes continuity of each
 individual action map. It uses finite
 homomorphism families to find a common orbit escaping the finite word ball,
 and Urysohn separation of one point from the finite set of transported
-endpoints. The maximum and weight estimate then give the same conclusions.
+endpoints. It uses the pinned Mathlib `Group.Generators.wordLength` API in
+`Mathlib.Geometry.Group.WordMetric`. The actual recursive finite ball is
+identified with the upstream length bound: signed words use the subtype of
+S and Boolean signs, inverse closure handles negative letters, and the
+reverse implication uses singleton positive letters and multiplication.
+The maximum and weight estimate then give the same conclusions.
 Its positive natural radius interface includes R = 1; the source states
 compact metric spaces and R at least 2. No metric is assumed in the Lean
 construction. No orbit is assumed infinite, and finite orbits of unbounded
