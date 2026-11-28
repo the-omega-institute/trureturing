@@ -43,7 +43,10 @@ internal sealed class QTransversalDirectSumDocument : IScribeDocumentDefinition
                         + "at most the sum of the projected codimensions. "
                         + "In the other direction, use a minimizer for the concatenated presentation as W "
                         + "and bound each factor rank by the slot count at its full projected space."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("fulcher-2026-transversal-q-matroid-direct-sum"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Definition(string name, string label, string description) =>
         Describe.Lean(DescribeId.Create(name.ToLowerInvariant()),
