@@ -36,6 +36,10 @@ $$\neg \mathrm{claim}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/EntanglementBreaking/DevendraMallickSumeshOpenProblemOne.devendraMallickSumesh_openProblem1_refuted` (`✓ std3`). ∎
 
+*Resolves.* `Problems/devendra-mallick-sumesh-2023-open-problem-1` (refuted) by `D5/S3/Quantum/Entanglement/EntanglementBreaking/DevendraMallickSumeshOpenProblemOne.devendraMallickSumesh_openProblem1_refuted`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"devendra-mallick-sumesh-2023-open-problem-1","declaration_gid":"D5/S3/Quantum/Entanglement/EntanglementBreaking/DevendraMallickSumeshOpenProblemOne.devendraMallickSumesh_openProblem1_refuted","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Repana Devendra, Nirupama Mallick and K. Sumesh (2023). *Mapping cone of k-entanglement breaking maps*. DOI: [10.1007/s11117-022-00956-4](https://doi.org/10.1007/s11117-022-00956-4). URL: <https://arxiv.org/abs/2105.14991v2>.

@@ -27,7 +27,10 @@ internal sealed class DevendraMallickSumeshOpenProblemOneDocument : IScribeDocum
                 H("Refutation of universal decomposability"), StatementSource.FromAuthor(F.Disp(
                     new Formula.Not(new Formula.NamedConstant(FormulaIdentifier.Create("claim"))))),
                 AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text("The square counterexample belongs to the class quantified by the universal assertion and violates its conclusion."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("devendra-mallick-sumesh-2023-open-problem-1"),
+                    ResolutionKind.Refuted)))));
 
     private static Formula PositiveNaturals() => new Formula.NamedConstant(FormulaIdentifier.Create("Npos"));
 
