@@ -231,6 +231,44 @@ public theorem weakExcludedMiddleOfRevMatchAtNone (spec : type_of% @revMatchAt?_
 @[instance_reducible] private def nonemptyWhen (P : Prop) : PatternModel () :=
   ⟨fun t => t ≠ "" ∧ P⟩
 
+/-- A faithful forward result decides any proposition even when matching is restricted to strict models. -/
+public def decidableOfStrictForwardResult
+    (find : ∀ {ρ : Type} (pat : ρ) [PatternModel pat] [StrictPatternModel pat]
+      {s : String.Slice}, s.Pos → Option s.Pos)
+    (correct : ∀ {ρ : Type} {pat : ρ} [PatternModel pat] [StrictPatternModel pat]
+      {s : String.Slice} {a b : s.Pos}, find pat a = some b ↔ IsLongestMatchAt pat a b)
+    (P : Prop) : Decidable P := by
+  letI : PatternModel () := nonemptyWhen P
+  letI : StrictPatternModel () := ⟨fun h => h.1 rfl⟩
+  cases result : find () sample.startPos with
+  | some q => exact isTrue (correct.mp result).isLongestMatch_sliceFrom.isMatch.matches_copy.2
+  | none =>
+    apply isFalse
+    intro yes
+    have hit : IsLongestMatchAt () sample.startPos sample.endPos :=
+      isLongestMatchAt_startPos_iff.mpr ⟨⟨⟨by decide, yes⟩⟩, fun q beyond _ =>
+        Nat.not_lt_of_ge q.isValidForSlice.le_utf8ByteSize beyond⟩
+    cases result.symm.trans (correct.mpr hit)
+
+/-- A faithful reverse result for strict models also decides any proposition. -/
+public def decidableOfStrictBackwardResult
+    (find : ∀ {ρ : Type} (pat : ρ) [PatternModel pat] [StrictPatternModel pat]
+      {s : String.Slice}, s.Pos → Option s.Pos)
+    (correct : ∀ {ρ : Type} {pat : ρ} [PatternModel pat] [StrictPatternModel pat]
+      {s : String.Slice} {a b : s.Pos}, find pat b = some a ↔ IsLongestRevMatchAt pat a b)
+    (P : Prop) : Decidable P := by
+  letI : PatternModel () := nonemptyWhen P
+  letI : StrictPatternModel () := ⟨fun h => h.1 rfl⟩
+  cases result : find () sample.endPos with
+  | some q => exact isTrue (correct.mp result).isLongestRevMatch_sliceTo.isRevMatch.matches_copy.2
+  | none =>
+    apply isFalse
+    intro yes
+    have hit : IsLongestRevMatchAt () sample.startPos sample.endPos :=
+      isLongestRevMatchAt_endPos_iff.mpr ⟨⟨⟨by decide, yes⟩⟩, fun _ before _ =>
+        Nat.not_lt_zero _ before⟩
+    cases result.symm.trans (correct.mpr hit)
+
 /-- On a one-character slice, an arbitrary strict model can encode an undecided proposition.
 The three split equations distinguish a successful match from a completely rejected slice. -/
 public theorem weakExcludedMiddleOfSplit

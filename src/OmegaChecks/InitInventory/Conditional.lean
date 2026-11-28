@@ -305,6 +305,12 @@ public def conditionalConsequence? (owner name : Name) : Option (String × Name 
     if name == ``String.Slice.Pattern.Model.revMatchAt? then
       return ("∀ P : Prop, Decidable P", `OmegaChecks.InitInventory.StringPatterns.decidableOfBackwardResult,
         "The matcher returns some a at b iff IsLongestRevMatchAt pat a b (revMatchAt?_eq_some_iff)")
+    if name == ``String.Slice.Pattern.Model.matchAt?_cast || name == ``String.Slice.Pattern.Model.lt_of_matchAt?_eq_some then
+      return ("∀ P : Prop, Decidable P", ``OmegaChecks.InitInventory.StringPatterns.decidableOfStrictForwardResult,
+        "The matchAt? operand returns some b at a iff IsLongestMatchAt pat a b for every strict model")
+    if name == ``String.Slice.Pattern.Model.revMatchAt?_cast || name == ``String.Slice.Pattern.Model.lt_of_revMatchAt?_eq_some then
+      return ("∀ P : Prop, Decidable P", ``OmegaChecks.InitInventory.StringPatterns.decidableOfStrictBackwardResult,
+        "The revMatchAt? operand returns some a at b iff IsLongestRevMatchAt pat a b for every strict model")
   if owner == `Init.Data.String.Lemmas.Pattern.Split.Basic && name == ``String.Slice.Pattern.Model.split then
     return ("OmegaChecks.InitInventory.StringPatterns.WeakExcludedMiddle",
       `OmegaChecks.InitInventory.StringPatterns.weakExcludedMiddleOfOfficialSplit,
