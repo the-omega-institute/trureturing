@@ -85,28 +85,13 @@ private theorem right_product_iff (E : AddSubmonoid S) :
       obtain ⟨e, he, hfixa⟩ := hfix a
       exact hfixa ▸ AddSubmonoid.mul_mem_mul ha he
 
-private theorem exists_add_inverse_of_pos_nsmul_eq_zero {A : Type*} [AddCommMonoid A]
-    {a : A} {n : ℕ} (hn : 0 < n) (h : n • a = 0) : ∃ b : A, a + b = 0 := by
-  obtain ⟨m, rfl⟩ := Nat.exists_eq_succ_of_ne_zero (Nat.ne_of_gt hn)
-  exact ⟨m • a, by simpa only [AddMonoid.nsmul_succ, add_comm] using h⟩
-
 /-- Natural multiples of an element without an additive inverse are distinct
 when addition is cancellative. -/
 private theorem nsmul_injective_of_no_add_inverse {A : Type*} [AddCommMonoid A] [IsLeftCancelAdd A]
     {a : A} (ha : ¬ ∃ b : A, a + b = 0) : Function.Injective (fun n : ℕ => n • a) := by
-  have eq_of_le {m n : ℕ} (hle : m ≤ n) (hmn : m • a = n • a) : m = n := by
-    obtain ⟨k, rfl⟩ := Nat.exists_eq_add_of_le hle
-    have hsum : m • a + k • a = m • a + 0 := by
-      simpa only [add_nsmul, add_zero] using hmn.symm
-    have hk : k • a = 0 := add_left_cancel hsum
-    have hzero : k = 0 := by
-      by_contra hne
-      exact ha (exists_add_inverse_of_pos_nsmul_eq_zero (Nat.pos_of_ne_zero hne) hk)
-    simp [hzero]
-  intro m n hmn
-  rcases Nat.le_total m n with hle | hle
-  · exact eq_of_le hle hmn
-  · exact (eq_of_le hle hmn.symm).symm
+  let _ : AddLeftCancelMonoid A := { ‹AddCommMonoid A›, ‹IsLeftCancelAdd A› with }
+  exact injective_nsmul_iff_not_isOfFinAddOrder.mpr fun h =>
+    ha (isAddUnit_iff_exists_and_exists.mp h.isAddUnit).1
 
 private theorem fixed_everywhere_of_cyclic_idempotent {A : Type*} [AddCommMonoid A]
     [IsLeftCancelAdd A] (F : A →+ A) (hF : ∀ x : A, ∃ n : ℕ, n • x = F x)
@@ -240,7 +225,7 @@ theorem product_unit_iff_cancellative [IsLeftCancelAdd S] :
   · rintro (hu | ht)
     · exact product_unit_of_multiplicative_identity hu
     · have hall (a : S) : ∃ b : S, a + b = 0 :=
-        exists_add_inverse_of_pos_nsmul_eq_zero (ht.1 a) (addOrderOf_nsmul_eq_zero a)
+        (isAddUnit_iff_exists_and_exists.mp (addOrderOf_pos_iff.mp (ht.1 a)).isAddUnit).1
       exact (@MesyanQuantaleClassification.product_unit_iff
         S (ringOfAdditiveInverses hall)).2 (Or.inr ht)
 
