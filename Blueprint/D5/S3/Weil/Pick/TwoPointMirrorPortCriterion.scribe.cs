@@ -7,7 +7,7 @@ internal sealed class TwoPointMirrorPortCriterionDocument : IScribeDocumentDefin
     private const string Module = "D5/S3/Weil/Pick/TwoPointMirrorPortCriterion.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Two regular upper-half-plane locations detect the cross residue of a finite mirror-resolvent pair.",
+        "Two sample-port coordinates detect every nonzero cross residue of a finite mirror-resolvent pair.",
         H("Two-point mirror port criterion"),
         Blocks(
             Paragraph(Text(
@@ -40,5 +40,18 @@ internal sealed class TwoPointMirrorPortCriterionDocument : IScribeDocumentDefin
                     "When the two port maps are equal to G, the residue is the Hilbert Gram formed by the adjoint of G times G. " +
                     "For the same admissible two locations, positive semidefiniteness is equivalent to G being zero. " +
                     "This criterion includes singular probes and empty finite spaces. It detects visibility of one conjugate pole pair; it does not count all negative squares or identify the finite transfer with a completed-zeta or Weil realization."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("two-coordinate-mirror-negative-principal-minor"),
+                DeclarationHandle.Create(Module + "two_point_mirror_negative_principal_minor"),
+                H("Two coordinates suffice to detect a nonzero residue"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For every nonzero residue C and every admissible pair of locations, there are distinct sample-port coordinates p and q such that the real part of G(p,p)G(q,q) minus G(p,q)G(q,p) is strictly negative. " +
+                    "Thus a two-by-two principal submatrix already detects indefiniteness, regardless of the number of ports. " +
+                    "If a diagonal entry C(i,i) is nonzero, use port i at both locations: the determinant is minus the squared modulus of C(i,i) times the squared modulus of the scalar Cauchy determinant. " +
+                    "If all diagonal entries of C vanish, all diagonal entries of G vanish. The nonzero residue forces G to be nonzero; any nonzero off-diagonal entry then gives a principal determinant equal to minus its squared modulus. " +
+                    "The selected coordinates may use one location or both. This conclusion concerns the finite mirror-resolvent model and supplies no identification with a zeta transfer function."))),
                 DescribeRole.Theorem))));
 }

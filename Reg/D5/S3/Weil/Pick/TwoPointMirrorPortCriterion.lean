@@ -233,4 +233,78 @@ def registration : LeanInformationAudit.Contract.Registration
 
 end Congruence
 
+namespace Sparse
+
+def arena : Arena where
+  signature := signature.{u}
+  Law R := ∀ {Port : Type u} [fp : Fintype Port] [dp : DecidableEq Port]
+    (mu : ℂ) (C : Matrix Port Port ℂ) (z : Fin 2 → ℂ)
+    (_ : mu ≠ star mu) (_ : z 0 ≠ z 1) (_ : ∀ i, 0 < (z i).im)
+    (_ : ∀ i, mu - z i ≠ 0 ∧ star mu - z i ≠ 0) (_ : C ≠ 0),
+      let G := R.readout () ⟨Port, fp, dp, mu, z⟩ C
+      ∃ p q : Port ⊕ Port, p ≠ q ∧
+        (G p p * G q q - G p q * G q p).re < 0
+
+private theorem rejected_law : ¬ arena.{u}.Law rejected := by
+  intro h
+  obtain ⟨p, q, _, hneg⟩ := h (Port := ULift.{u} Unit) Complex.I 1 samples
+    pole_nonreal samples_distinct samples_upper samples_regular one_ne_zero
+  change ((0 : ℂ) * 0 - 0 * 0).re < 0 at hneg
+  norm_num at hneg
+
+def source : Registration arena.{u}
+    (type_of% @two_point_mirror_negative_principal_minor.{u}) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@two_point_mirror_negative_principal_minor, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro role
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro other hne
+      exact (hne (Subsingleton.elim _ _)).elim
+    · intro e
+      exact nomatch e
+  dependence := dependence
+
+def registration : LeanInformationAudit.Contract.Registration
+    (@two_point_mirror_negative_principal_minor.{u})
+    (Realization signature.{u}) Unit Unit where
+  unitName := `Reg.D5.S3.Weil.Pick.TwoPointMirrorPortCriterion.Sparse.unit
+  realizationName := `Reg.D5.S3.Weil.Pick.TwoPointMirrorPortCriterion.Sparse.source
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨source⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature
+    (fun _ p C => @mirrorNevanlinnaGram p.Port p.finitePort p.decidablePort
+      p.pole C p.samples) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Weil.Pick.TwoPointMirrorPortCriterion
+    definition := none
+    coordinates := #[0, 1, 2, 3, 5]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body",
+        "body", "body", "body", "type"]
+      stateBinder := 4
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms registration
+
+end Sparse
+
 end Reg.D5.S3.Weil.Pick.TwoPointMirrorPortCriterion
