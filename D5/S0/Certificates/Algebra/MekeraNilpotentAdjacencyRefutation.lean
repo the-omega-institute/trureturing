@@ -12,9 +12,9 @@ import Mathlib.Data.Matrix.Basis
 import Mathlib.Data.ZMod.Defs
 import D5.S0.Certificates.Algebra.BergmanQuestion15Refutation
 
-compile_only_with_mathlib
-
 /-! A counterexample to nilpotent adjacency in arXiv:2608.09243v2, Section 7. -/
+
+compile_only_with_mathlib
 
 set_option autoImplicit false
 
@@ -98,13 +98,13 @@ private theorem refuteAt : ¬ claimAt.{u} := by
     simpa only [matrixUnit, one_mul] using
       (Matrix.single_mul_single_same (1 : Coeff.{u}) i j k (1 : Coeff.{u}))
   have hAA : A * A = 0 := by
-    simpa only [A, matrixUnit] using
-      (Matrix.single_mul_single_of_ne (1 : Coeff.{u}) (0 : Fin 2) 1 0
-        (l := (1 : Fin 2)) h10 (1 : Coeff.{u}))
+    change Matrix.single (0 : Fin 2) (1 : Fin 2) (1 : Coeff.{u}) *
+      Matrix.single (0 : Fin 2) (1 : Fin 2) (1 : Coeff.{u}) = 0
+    exact Matrix.single_mul_single_of_ne (1 : Coeff.{u}) (0 : Fin 2) 1 0 h10 1
   have hBB : B * B = 0 := by
-    simpa only [B, matrixUnit] using
-      (Matrix.single_mul_single_of_ne (1 : Coeff.{u}) (1 : Fin 2) 0 1
-        (l := (0 : Fin 2)) h01 (1 : Coeff.{u}))
+    change Matrix.single (1 : Fin 2) (0 : Fin 2) (1 : Coeff.{u}) *
+      Matrix.single (1 : Fin 2) (0 : Fin 2) (1 : Coeff.{u}) = 0
+    exact Matrix.single_mul_single_of_ne (1 : Coeff.{u}) (1 : Fin 2) 0 1 h01 1
   have hAB : A * B = matrixUnit.{u} 0 0 := unitMul 0 1 0
   have hBA : B * A = matrixUnit.{u} 1 1 := unitMul 1 0 1
   have hNoncommutative : ¬ (∀ x y : Mat.{u}, x * y = y * x) := by
