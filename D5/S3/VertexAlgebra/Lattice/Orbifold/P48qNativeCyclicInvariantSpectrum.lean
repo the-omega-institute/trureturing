@@ -6,6 +6,7 @@
    utility: none
    digest: Cubic covariant rotations of P48q have a nonzero fixed branch. -/
 
+import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qCubicMonodromy
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qNativeGradingRotation
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qNativeModeProductSpan
 import OmegaBuild.Commands
@@ -83,6 +84,43 @@ theorem exists_nonzero_fixed_eigenvector (c : ℂ) (hc : c ^ (3 : ℕ) = 1) :
     exact mul_inv_cancel₀ (fun hzero => by simp [hzero] at hc)
   exact ⟨n, hn, hphase, (nonzero_fixed_eigenvector_iff c _).mpr ⟨n, rfl, hphase⟩⟩
 
+private theorem eq_smul_gradingRotation_of_field_covariant (R : Module.End ℂ State)
+    (hcov : ∀ (a : P48qAllJetWickField.NativeStates) (e : ℤ),
+      R * HVertexOperator.coeff (P48qAllJetWickField.nativeField a) e =
+        ζ ^ e • (HVertexOperator.coeff (P48qAllJetWickField.nativeField a) e * R))
+    (c : ℂ) (hc : R vacuum = c • vacuum) : R = c • gradingRotation := by
+  have hrotvac : gradingRotation vacuum = vacuum := by
+    have henergy : totalLZero vacuum = (16 / 9 + (↑(0 : ℕ) : ℂ) / 3) • vacuum := by
+      simpa using totalLZero_vacuum
+    exact (gradingRotation_eigenvector vacuum 0 henergy).trans (by rw [pow_zero, one_smul])
+  have hker : nativeModeSpan vacuum ≤ LinearMap.ker (R - c • gradingRotation) := by
+    apply Submodule.span_le.mpr
+    rintro _ ⟨⟨a, e⟩, rfl⟩
+    apply LinearMap.mem_ker.mpr
+    have hR := LinearMap.congr_fun (hcov a e) vacuum
+    change R (HVertexOperator.coeff (P48qAllJetWickField.nativeField a) e vacuum) =
+      ζ ^ e • HVertexOperator.coeff (P48qAllJetWickField.nativeField a) e (R vacuum) at hR
+    rw [hc, map_smul] at hR
+    have hG := LinearMap.congr_fun (gradingRotation_any_coeff a e) vacuum
+    change gradingRotation (HVertexOperator.coeff
+      (P48qAllJetWickField.nativeField a) e vacuum) =
+      ζ ^ e • HVertexOperator.coeff (P48qAllJetWickField.nativeField a) e
+        (gradingRotation vacuum) at hG
+    rw [hrotvac] at hG
+    change R (HVertexOperator.coeff (P48qAllJetWickField.nativeField a) e vacuum) -
+      (c • gradingRotation) (HVertexOperator.coeff
+        (P48qAllJetWickField.nativeField a) e vacuum) = 0
+    rw [LinearMap.smul_apply, hR, hG]
+    module
+  have heq : R - c • gradingRotation = 0 := by
+    apply LinearMap.ext
+    intro v
+    have hv : v ∈ nativeModeSpan vacuum := by
+      rw [nativeModeSpan_eq_top vacuum vacuum_ne_zero]
+      exact Submodule.mem_top
+    exact LinearMap.mem_ker.mp (hker hv)
+  exact sub_eq_zero.mp heq
+
 /-- A cubic field-covariant endomorphism is a scalar grading rotation and has a
 nonzero fixed energy eigenvector. -/
 theorem field_covariant_order_three_classification (R : Module.End ℂ State)
@@ -109,37 +147,8 @@ theorem field_covariant_order_three_classification (R : Module.End ℂ State)
     Module.End.mem_eigenspace_iff.mpr hground
   rw [totalLZero_ground_eigenspace] at hmem
   obtain ⟨c, hc⟩ := Submodule.mem_span_singleton.mp hmem
-  have hrotvac : gradingRotation vacuum = vacuum := by
-    have henergy : totalLZero vacuum = (16 / 9 + (↑(0 : ℕ) : ℂ) / 3) • vacuum := by
-      simpa using totalLZero_vacuum
-    exact (gradingRotation_eigenvector vacuum 0 henergy).trans (by rw [pow_zero, one_smul])
-  have hker : nativeModeSpan vacuum ≤ LinearMap.ker (R - c • gradingRotation) := by
-    apply Submodule.span_le.mpr
-    rintro _ ⟨⟨a, e⟩, rfl⟩
-    apply LinearMap.mem_ker.mpr
-    have hR := LinearMap.congr_fun (hcov a e) vacuum
-    change R (HVertexOperator.coeff (P48qAllJetWickField.nativeField a) e vacuum) =
-      ζ ^ e • HVertexOperator.coeff (P48qAllJetWickField.nativeField a) e (R vacuum) at hR
-    rw [← hc, map_smul] at hR
-    have hG := LinearMap.congr_fun (gradingRotation_any_coeff a e) vacuum
-    change gradingRotation (HVertexOperator.coeff
-      (P48qAllJetWickField.nativeField a) e vacuum) =
-      ζ ^ e • HVertexOperator.coeff (P48qAllJetWickField.nativeField a) e
-        (gradingRotation vacuum) at hG
-    rw [hrotvac] at hG
-    change R (HVertexOperator.coeff (P48qAllJetWickField.nativeField a) e vacuum) -
-      (c • gradingRotation) (HVertexOperator.coeff
-        (P48qAllJetWickField.nativeField a) e vacuum) = 0
-    rw [LinearMap.smul_apply, hR, hG]
-    module
-  have heq : R - c • gradingRotation = 0 := by
-    apply LinearMap.ext
-    intro v
-    have hv : v ∈ nativeModeSpan vacuum := by
-      rw [nativeModeSpan_eq_top vacuum vacuum_ne_zero]
-      exact Submodule.mem_top
-    exact LinearMap.mem_ker.mp (hker hv)
-  have hR : R = c • gradingRotation := sub_eq_zero.mp heq
+  have hR : R = c • gradingRotation :=
+    eq_smul_gradingRotation_of_field_covariant R hcov c hc.symm
   have hpow : (c • gradingRotation) ^ (3 : ℕ) = 1 := by simpa [hR] using horder
   rw [smul_pow, gradingRotation_cube] at hpow
   have hcub : c ^ (3 : ℕ) = 1 := by
@@ -149,12 +158,23 @@ theorem field_covariant_order_three_classification (R : Module.End ℂ State)
     exists_nonzero_fixed_eigenvector c hcub
   exact ⟨c, hR, hcub, n, hn, v, hv, henergy, by simpa [hR] using hfixed⟩
 
+/-- The actual field covariance and the conformal vacuum phase determine the
+unnormalized conformal monodromy. -/
+theorem eq_conformalMonodromy_of_field_covariant (R : Module.End ℂ State)
+    (hcov : ∀ (a : P48qAllJetWickField.NativeStates) (e : ℤ),
+      R * HVertexOperator.coeff (P48qAllJetWickField.nativeField a) e =
+        ζ ^ e • (HVertexOperator.coeff (P48qAllJetWickField.nativeField a) e * R))
+    (hvac : R vacuum = Complex.exp (2 * (Real.pi : ℂ) * Complex.I * (16 / 9)) • vacuum) :
+    R = P48qCubicMonodromy.conformalMonodromy := by
+  unfold P48qCubicMonodromy.conformalMonodromy
+  exact eq_smul_gradingRotation_of_field_covariant R hcov _ hvac
+
 #print axioms nonzero_fixed_eigenvector_iff
 #print axioms exists_nonzero_fixed_eigenvector
 
 run_cmd do
   for name in [``nonzero_fixed_eigenvector_iff, ``exists_nonzero_fixed_eigenvector,
-      ``field_covariant_order_three_classification] do
+      ``field_covariant_order_three_classification, ``eq_conformalMonodromy_of_field_covariant] do
     let axioms ← Lean.collectAxioms name
     unless axioms.all (fun ax => [``propext, ``Classical.choice, ``Quot.sound].contains ax) do
       throwError "Unexpected axiom closure for {name}: {axioms}"
