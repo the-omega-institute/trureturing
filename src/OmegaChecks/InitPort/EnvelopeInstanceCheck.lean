@@ -10,6 +10,7 @@ open Lean Meta InitKernelPort OmegaChecks.InitPort OmegaChecks.InitBoundaries
 
 private def owner := `Init.Grind.Module.Envelope
 private def instanceName := `Lean.Grind.IntModule.OfNatModule.ofNatModule
+private def congruenceOwner := `Init.Grind.Module.OfNatModule
 
 /-- Abstract the arguments at the actual occurrence in the published equation.
 The resulting term must recover the entire polymorphic module instance. -/
@@ -18,7 +19,14 @@ private def checkOccurrence (source operation : ConstantInfo) : MetaM Unit := do
   let levels := source.levelParams.map Level.param
   forallTelescope source.type fun _ conclusion => do
     let some (_, _, right) := conclusion.eq? | throwError "expected an embedding equation"
-    let some use := right.find? (fun e => e.isAppOfArity instanceName 2)
+    let index ← if source.name == instanceName.getPrefix.str "add_congr" ||
+        source.name == instanceName.getPrefix.str "smul_congr" then do
+      let op := if source.name.getString! == "add_congr" then ``HAdd.hAdd else ``HSMul.hSMul
+      unless right.isAppOfArity op 6 && right.getAppArgs[4]!.isFVar && right.appArg!.isFVar do
+        throwError "expected the quotient operation at the arbitrary arguments"
+      pure right.getAppArgs[3]!
+    else pure right
+    let some use := index.find? (fun e => e.isAppOfArity instanceName 2)
       | throwError "missing module instance at the right endpoint"
     let args := use.getAppArgs
     unless args.all Expr.isFVar do throwError "specialized module instance in {source.name}"
@@ -27,6 +35,32 @@ private def checkOccurrence (source operation : ConstantInfo) : MetaM Unit := do
     unless !entire.hasFVar && Kernel.isDefEqGuarded env {} entire (mkConst instanceName levels) &&
         Kernel.isDefEqGuarded env {} type (operation.type.instantiateLevelParams operation.levelParams levels) do
       throwError "{source.name} does not use the complete instance"
+
+/-- A congruence is callable when its original type forms in the exported library.
+For the two missing types inspect the instance in the arithmetic endpoint itself. -/
+private def congruences (lib : System.FilePath) (systemPath : SearchPath) (operation : ConstantInfo)
+    (refuter : Name) : IO Unit := do
+  let target := congruenceOwner.replacePrefix `Init `OmegaInit
+  unless ← (modToFilePath lib target "olean").pathExists do return
+  searchPathRef.set systemPath
+  let visible ← importModules #[{module := congruenceOwner}] {} (level := .exported)
+  let pinned ← importModules #[{module := congruenceOwner, importAll := true}] {}
+  searchPathRef.set [lib]
+  let strict ← importModules #[{module := target}] {} (level := .exported)
+  let full ← importModules #[{module := target, importAll := true}] {}
+  for suffix in ["add_congr", "smul_congr"] do
+    let n := instanceName.getPrefix.str suffix
+    if strict.contains (portName n) then continue
+    let some src := pinned.find? n | throw <| IO.userError s!"missing {n}"
+    let translated := translate portName src.type
+    unless src.isTheorem && !src.isUnsafe && !src.isPartial && src.numLevelParams == 1 &&
+        (visible.find? n).any (·.type.equal src.type) && visible.getModuleIdxFor? n == visible.getModuleIdx? congruenceOwner &&
+        (Kernel.check visible {} src.type).isOk && typeNeedsConstant visible src.type instanceName &&
+        translated.getUsedConstants.filter (!strict.contains ·) == #[portName instanceName] &&
+        !full.contains (portName instanceName) && !(Kernel.check strict {} translated).isOk do
+      throw <| IO.userError s!"invalid quotient arithmetic endpoint {n}"
+    ((checkOccurrence src operation).run').toIO' {fileName := "<module congruence>", fileMap := default} {env := visible}
+    IO.println (toJson #[congruenceOwner.toString, n.toString, instanceName.toString, refuter.toString]).compress
 
 /-- These comparisons retain a universal relation-respect argument even after public reduction.
 Its type is equivalent at universe zero to propositional extensionality. -/
@@ -81,6 +115,7 @@ public unsafe def main (args : List String) : IO Unit := do
   let original ← importModules #[{module := owner, importAll := true},
     {module := `Init.GrindInstances.Ring.Nat, importAll := true}] {}
   let targetOwner := owner.replacePrefix `Init `OmegaInit
+  let systemPath ← searchPathRef.get
   searchPathRef.set [lib]
   let strict ← importModules #[{module := targetOwner}] {} (level := .exported)
   let fullImports : Array Import := #[{module := targetOwner, importAll := true}]
@@ -112,3 +147,4 @@ public unsafe def main (args : List String) : IO Unit := do
   let _ ← replayStrict full.toKernelEnv roots
   for root in roots do
     IO.println (toJson #[owner.toString, (originalName root).toString, instanceName.toString, refuter.toString]).compress
+  congruences lib systemPath operation refuter

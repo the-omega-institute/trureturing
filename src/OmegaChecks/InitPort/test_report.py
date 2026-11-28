@@ -385,6 +385,25 @@ class CoverageTest(unittest.TestCase):
         with patch("report.envelope_type_certificates", return_value=[]), self.assertRaisesRegex(ValueError, "live module embedding"):
             verify_complete(data, Path("product"), *check_coverage(data))
 
+    def test_arithmetic_congruences_require_the_same_refuted_instance(self):
+        envelope, owner = "Init.Grind.Module.Envelope", "Init.Grind.Module.OfNatModule"
+        scope = "Lean.Grind.IntModule.OfNatModule."
+        instance = scope + "ofNatModule"
+        proof = "OmegaChecks.InitBoundaries.RepresentativeQuotient.refuteEnvelopeCancellation"
+        operation = site(envelope, instance, kind="definition", representativeRefuter=proof)
+        rows = [site(owner, scope + n, strictUnsafe=None, strictPartial=None) for n in ("add_congr", "smul_congr")]
+        data = inventory(operation, *rows)
+        data["certifiedRepresentativeRefutations"] = [[envelope, instance, instance, proof]]
+        self.assertEqual(check_coverage(data)[1], [(owner, row["name"]) for row in rows])
+        for row in rows:
+            row["originalTypeEnvelopeInstance"] = instance
+        certs = [[owner, row["name"], instance, proof] for row in rows]
+        data["certifiedEnvelopeTypeDependencies"] = certs
+        self.assertEqual(check_coverage(data), (0, []))
+        for bad in ([envelope, *certs[0][1:]], [owner, scope + "of_eq", instance, proof]):
+            with self.subTest(certificate=bad), self.assertRaisesRegex(ValueError, "envelope instance certificate"):
+                check_coverage(data | {"certifiedEnvelopeTypeDependencies": [bad]})
+
     def test_original_type_requiring_a_polymorphic_choice_operator(self):
         owner, name = "Init.Classical", "Classical.epsilon_singleton"
         dep, proof = "Classical.epsilon", "OmegaChecks.InitBoundaries.choiceFromEpsilon"
