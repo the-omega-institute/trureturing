@@ -1,3 +1,29 @@
+/- GID: D5/S3/Quantum/Matrix/Unistochastic/BraceletMonoid
+   generality: I
+   mirror-B: D5/B/S3/Quantum/Matrix/Unistochastic/BraceletMonoid
+   mirror-E: none(waiver:algebraically-proved)
+   anchors: []
+   utility: none
+   digest: Identity and product closure for bracelet matrices in every finite dimension. -/
+
+/-
+admission_basis: escape-witness
+Source problem: Conjecture 9 (#17593, Tier 3).
+proof_shape: pivot_iff: bind-only; consumer: columns_mul
+proof_shape: weighted_lagrange: bind-only; consumer: column_preservation
+proof_shape: signed_sum: content; consumer: polygon
+proof_shape: polygon: content; consumer: amplitudes
+proof_shape: amplitudes: content; consumer: column_preservation
+proof_shape: column_preservation: content; consumer: columns_mul
+proof_shape: columns_mul: content; consumer: bracelet_monoid
+proof_shape: bracelet_transpose: bind-only; consumer: bracelet_monoid
+proof_shape: columns_one: bind-only; consumer: bracelet_monoid
+proof_shape: bracelet_monoid: content
+escape_witness: column_preservation
+The rectangular step combines the pairwise phase lift, weighted Lagrange
+coordinates, cancellation by column normalization, and Euclidean norm bounds.
+-/
+
 import D5.S3.Quantum.Matrix.CirculantBraceletNonUnistochastic
 
 /-!
@@ -15,7 +41,7 @@ open scoped BigOperators ComplexConjugate Real
 
 open D5.S3.Quantum.Matrix.CirculantBraceletNonUnistochastic (IsBracelet)
 
-namespace D5.S3.Quantum.Matrix.BraceletMonoid
+namespace D5.S3.Quantum.Matrix.Unistochastic.BraceletMonoid
 
 private lemma pivot_iff {ι : Type*} [Fintype ι] [Nonempty ι] [DecidableEq ι]
     (len : ι → ℝ) :
@@ -294,4 +320,4 @@ theorem bracelet_monoid (d : ℕ) :
     simpa only [← Matrix.transpose_mul, Matrix.transpose_apply] using
       columns_mul (bracelet_transpose hB) (bracelet_transpose hA) k l hkl
 
-end D5.S3.Quantum.Matrix.BraceletMonoid
+end D5.S3.Quantum.Matrix.Unistochastic.BraceletMonoid
