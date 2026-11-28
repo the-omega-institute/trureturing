@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.ZeroDivisor;
 
@@ -14,7 +16,7 @@ internal sealed class MekeraRankIntegrationDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("ordered-arc-rank"),
                 DeclarationHandle.Create(
                     "D5/S3/Combinatorics/Graph/ZeroDivisor/MekeraRankIntegration.arc_iff_rank"),
-                H("The ordered arc rank criterion"), StatementSource.FromLean(),
+                H("The ordered arc rank criterion"), StatementSource.FromAuthor(Disp(Statement())),
                 AssessedProvenance.FromRepo(Source),
                 Blocks(
                     Paragraph(Text(
@@ -37,5 +39,45 @@ internal sealed class MekeraRankIntegrationDocument : IScribeDocumentDefinition
                         + "even over the binary field. Rank–nullity converts the resulting strict "
                         + "kernel inclusions into the two right-witness inequalities. Transposing "
                         + "and exchanging the endpoints gives the left-witness inequalities."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("mekera-somer-yesil-matrix-arc-ranks"),
+                    ResolutionKind.Proved)))));
+
+    private static Formula Call(string name, params Formula[] arguments) =>
+        new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. arguments]);
+
+    private static Formula Par(Formula formula) => Seq(Open, formula, Close);
+    private static Formula And(Formula left, Formula right) => Seq(left, Sp, Land, Sp, right);
+    private static Formula Then(Formula premise, Formula conclusion) =>
+        Seq(premise, Sp, To, Sp, conclusion);
+    private static Formula Binder(Formula variable, Formula type) => Seq(variable, Colon, Sp, type);
+    private static Formula All(Formula binder, Formula body) =>
+        Seq(Forall, Sp, binder, Comma, Sp, body);
+    private static Formula Rank(Formula matrix) => Call("rank", matrix);
+    private static Formula Lt(Formula left, Formula right) =>
+        new Formula.Relation(left, FormulaRelationOperator.LessThan, right);
+
+    private static Formula Statement()
+    {
+        var field = F.Id("F");
+        var n = F.Id("n");
+        var a = F.Id("A");
+        var b = F.Id("B");
+        var product = Multiply(a, b);
+        var k = Rank(product);
+        var left = And(Lt(k, Rank(a)), Lt(k, Rank(Call("fromCols", product, b))));
+        var right = And(Lt(k, Rank(b)), Lt(k, Rank(Call("fromRows", product, a))));
+        var criterion = Par(Seq(Call("arc", a, b), Sp, Iff, Sp,
+            Par(Seq(Par(left), Sp, Lor, Sp, Par(right)))));
+        var singularEndpoint = (Formula matrix) =>
+            Par(And(NotEqual(matrix, D(0)), Equal(Call("det", matrix), D(0))));
+        var endpoints = All(Binder(Seq(a, Comma, Sp, b), new Formula.Apply(
+                new Formula.Subscript(F.Id("M"), n), [field])),
+            Then(NotEqual(a, b), Then(singularEndpoint(a), Then(singularEndpoint(b), criterion))));
+        var dimension = All(Binder(n, Seq(Mathbb, Grp(F.Id("N")))),
+            Then(new Formula.Relation(D(2), FormulaRelationOperator.LessThanOrEqual, n), endpoints));
+        return All(Seq(Par(Binder(field, Seq(Operatorname, Grp(F.Id("Type"))))), Sp,
+            OpenBracket, Call("Field", field), CloseBracket), dimension);
+    }
 }

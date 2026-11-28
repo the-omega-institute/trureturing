@@ -63,8 +63,8 @@ private theorem arc_first_second : arc (first : Mat F₂.{u} 2) second := by
     exact one_ne_zero (by simpa [second] using congrFun (congrFun h 1) 1 : (1 : F₂.{u}) = 0)
   have hne : (first : Mat F₂.{u} 2) ≠ second := by
     intro h
-    exact one_ne_zero (by simpa [first, second, Matrix.single_apply_of_row_ne h10] using
-      congrFun (congrFun h 0) 0 : (1 : F₂.{u}) = 0)
+    have hEntry := congrFun (congrFun h 0) 0
+    simp [first, second, Matrix.single_apply_of_row_ne h10] at hEntry
   exact ⟨⟨hA, second, hB, Or.inl hAB⟩, ⟨hB, first, hA, Or.inr hAB⟩, hne,
     Or.inl ⟨1, by simp [hAB], by simpa only [one_mul] using hA,
       by simpa only [one_mul] using hB⟩⟩
@@ -84,7 +84,7 @@ private theorem varies : ObservationalDependence signature.{u} actual := by
   intro h
   exact (h.mp arc_first_second).2.2.1 rfl
 
-private def evidence : Registration arena.{u} (type_of% @arc_iff_rank.{u}) where
+def evidence : Registration arena.{u} (type_of% @arc_iff_rank.{u}) where
   actual := actual
   bridge := Iff.rfl
   variation := ⟨@arc_iff_rank.{u}, rejected, rejected_law⟩
