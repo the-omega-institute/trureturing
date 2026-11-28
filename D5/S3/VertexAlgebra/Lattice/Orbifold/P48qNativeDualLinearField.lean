@@ -189,7 +189,7 @@ theorem dualField_translate_coeff (a : NativeStates) (j : ℤ) :
   have hSum : sumGrades (carrierEnergyDecomposition lattice a) = a :=
     (carrierEnergyDecomposition lattice).symm_apply_apply a
   rw [← sourceLMinusOne_eq_translation]
-  simpa only [LinearMap.comp_apply, LinearMap.smul_apply, hSum]
+  simpa only [LinearMap.comp_apply, LinearMap.smul_apply, hSum, read, LinearMap.proj_apply]
     using LinearMap.congr_fun h (carrierEnergyDecomposition lattice a)
 
 private def liftOnGrade (n : ℤ) : grade lattice n →ₗ[ℂ] grade lattice n :=
