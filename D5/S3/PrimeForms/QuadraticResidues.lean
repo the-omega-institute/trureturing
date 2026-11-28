@@ -5,7 +5,7 @@
    anchors: []
    digest: Squares are zero or one modulo four, so two squares never sum to three modulo four. -/
 
-import Mathlib
+import Mathlib.Tactic.Ring
 
 namespace D5.S3.PrimeForms.QuadraticResidues
 

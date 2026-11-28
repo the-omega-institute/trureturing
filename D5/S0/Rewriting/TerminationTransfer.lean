@@ -5,7 +5,7 @@
    anchors: []
    digest: Quasi-commuting terminating relations have a terminating union. -/
 
-import Mathlib
+import Mathlib.Logic.Relation
 
 namespace TerminationTransfer
 

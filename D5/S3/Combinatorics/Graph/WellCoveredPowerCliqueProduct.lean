@@ -6,6 +6,7 @@
    utility: none
    digest: Clique products preserve well-covered powers and increase diameter, refuting the diameter bound. -/
 
+import OmegaMath.Combinatorics.Graph.GraphDistance
 import Mathlib.Combinatorics.SimpleGraph.Prod
 import Mathlib.Combinatorics.SimpleGraph.Diam
 import Mathlib.Combinatorics.SimpleGraph.Finite
@@ -171,37 +172,8 @@ theorem distance_certificate {V : Type*} [Nonempty V] (G : SimpleGraph V)
     (hz : ∀ u v, m u v = 0 ↔ u = v)
     (he : ∀ u v w, G.Adj u v → m u w ≤ m v w + 1)
     (hd : ∀ u v, m u v ≠ 0 → ∃ w, G.Adj u w ∧ m w v + 1 = m u v) :
-    G.Connected ∧ ∀ u v, G.dist u v = m u v := by
-  have walks : ∀ n u v, m u v = n → ∃ p : G.Walk u v, p.length = n := by
-    intro n
-    induction n with
-    | zero =>
-      intro u v huv
-      have huv' := (hz u v).mp huv
-      subst v
-      exact ⟨.nil, rfl⟩
-    | succ n ih =>
-      intro u v huv
-      obtain ⟨w, huw, hwv⟩ := hd u v (by omega)
-      obtain ⟨p, hp⟩ := ih w v (by omega)
-      exact ⟨p.cons huw, by simp [hp]⟩
-  have conn : G.Connected := by
-    rw [SimpleGraph.connected_iff]
-    exact ⟨fun u v => ⟨(walks (m u v) u v rfl).choose⟩, inferInstance⟩
-  refine ⟨conn, fun u v => ?_⟩
-  have lower : ∀ {a b} (p : G.Walk a b), m a b ≤ p.length := by
-    intro a b p
-    induction p with
-    | nil => simp [(hz _ _).mpr rfl]
-    | @cons a b c hab p ih =>
-      have h := he a b c hab
-      simp only [Walk.length_cons]
-      omega
-  obtain ⟨p, hp⟩ := walks (m u v) u v rfl
-  apply le_antisymm
-  · simpa [hp] using G.dist_le p
-  · obtain ⟨q, hq⟩ := conn.exists_walk_length_eq_dist u v
-    simpa [hq] using lower q
+    G.Connected ∧ ∀ u v, G.dist u v = m u v :=
+  OmegaMath.Combinatorics.Graph.GraphDistance.distance_certificate G m hz he hd
 
 def cycleMetric (n : ℕ) (u v : Fin n) : ℕ :=
   min (Nat.dist u.val v.val) (n - Nat.dist u.val v.val)

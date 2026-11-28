@@ -44,6 +44,11 @@ strata_touched:
   - D5/S3/Topology/StableCategory/ThreePieceCategoricalCover
   - D5/S3/Topology/StableCategory/DepthZeroElementaryExpansion
   - D5/S3/Topology/StableCategory/ExactCategoricalExtension
+  - D5/S3/Topology/StableCategory/MixedSimplexChart
+  - D5/S3/Topology/StableCategory/MixedSimplexAttachment
+  - D5/S3/Topology/StableCategory/ShellingExactExtension
+  - D5/S3/Topology/StableCategory/ProductRigidCores
+  - D5/S3/Topology/StableCategory/ProductStableCover
 license: citation-only
 triage: anchor
 ---
@@ -1192,3 +1197,69 @@ prescribed old pieces, one further ordinary subdivision gives the
 prescribed intersections without increasing the number of pieces.
 The proofs intersect each retained face with a vertex set and compare
 this order map with inclusion by a finite contiguity chain.
+
+
+## Two categorical pieces across a mixed simplex attachment
+
+Let the retained complex have two prescribed categorical pieces.
+Choose a vertex of the attaching simplex and two disjoint nonempty
+blocks of its other vertices. In each piece the faces inside the
+simplex restrict to the corresponding horn, and each exterior face
+uses only the chosen vertex and its own block among the simplex
+vertices. The second subdivision has two full categorical regions
+containing the prescribed pieces. A forbidden image in the chart
+for one block requires a nonempty original face in that block.
+Both exclusions cannot occur along a single face chain, since the
+two blocks are disjoint. The retained region of each chart retracts
+to the horn by adjoining the chosen singleton and deleting the top
+face where needed. The comparisons fix the subdivided horn and
+extend over the old piece. The full-cover extension theorem gives
+exactly the prescribed old intersections at depth three.
+
+
+## Exact extension across a shelling step
+
+Suppose the retained triangulation already has a categorical
+two-cover and one simplex is attached along a union of its facets.
+The cover extends with both exact old intersections after three
+ordinary barycentric subdivisions in the same ambient. At the second
+subdivision the two induced regions need only cover vertices. In
+the mixed case, use the face formed by the omitted vertices of the
+facets in the second old piece. The first region can insert this
+anchor into its new chains even if it lies in both prescribed pieces.
+The second region cuts its chains by the second old piece. In the
+monochromatic case connectedness suffices to move the constants for
+the disjoint new and old components to a common vertex. A last
+ordinary subdivision covers the remaining mixed flags and preserves
+the prescribed intersections.
+
+## Weak, stable, and ordinary category of a four-dimensional product
+
+Let (P) have facets `012, 015, 023, 035, 145, 234, 345` and let
+(X=F(P)\times F(P)), where (F(P)) is the poset of nonempty faces.
+The realization is a PL four-ball since (P) is the boundary of an
+octahedron with the relative interior of the face `124` removed.
+Thus the weak category is one.
+
+Lean gives ordinary category three. Deleting one boundary edge and its
+unique triangle gives each of three categorical lower sets in the factor.
+Every face is retained in at least two sets, so three corresponding
+rectangles cover the product. With only two colours, the nine pairs of
+exceptional triangles force a whole boundary cycle in a coordinate
+slice of one colour. The three original vertices of that cycle remain
+fixed under every step of a comparable order-map fence.
+
+Lean also verifies a partition of the 484-point product core, obtained
+by deleting the three up-beat boundary edges in each factor. Six
+pointwise comparisons contract each colour in the product order.
+Pullback along the beat retraction and the ordinary subdivision cover
+theorem give two categorical lower sets after two subdivisions.
+The stable category is two. The subdivided product retracts onto a coordinate slice,
+and the factor is strongly minimal before
+subdivision. Strong collapsibility is reflected by ordinary
+barycentric subdivision by Barmak and Minian, Theorem 4.15.
+This determines ((\operatorname{cat}_w,\operatorname{cat}_s,
+\operatorname{cat})(X)=(1,2,3)) for this product. The general inequality
+in Question 6.3 remains open.
+[Question 6.3](https://arxiv.org/html/2609.39615v1#S6) ·
+[Strong homotopy types, nerves and collapses](https://arxiv.org/abs/0907.2954)
