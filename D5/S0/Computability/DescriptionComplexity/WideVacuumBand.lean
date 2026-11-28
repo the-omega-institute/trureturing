@@ -5,7 +5,7 @@
    anchors: []
    digest: A finite low-cost cover leaves records with an unbounded spectrum gap. -/
 
-import Mathlib
+import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 import D5.S0.Computability.DescriptionComplexity.LookupProgramUpperBound
 
 open scoped BigOperators

@@ -52,7 +52,19 @@ $$(claim) \Leftrightarrow (\forall (F: Type), [Field\left(F\right)] [Fintype\lef
 
 Section 4.2, page 14: “Conjecture 3. All q-transversal matroids are representable.” The field F is arbitrary and finite, X is an arbitrary finite family of subspaces, and the same G represents the ranks of every U. The field extension K is finite dimensional over F.
 
-**Theorem 1.5 (result).**
+**Theorem 1.5 (Rank as a minimum of Hall bounds).**
+
+$$\forall (F: Type), [Field\left(F\right)] [Fintype\left(F\right)] \forall (m: \mathbb{N}), \forall (k: \mathbb{N}), \forall (X: Fin\left(k\right) \to Submodule\left(F, Fin\left(m\right) \to F\right)), \forall (U: Submodule\left(F, Fin\left(m\right) \to F\right)), qTransversalRank\left(X, U\right) = sInf\left(\operatorname{Set}.\operatorname{range}\left((J: Finset\left(Fin\left(k\right)\right) \mapsto (\operatorname{Module}.\operatorname{finrank}\left(F, U\right) - \operatorname{Module}.\operatorname{finrank}\left(F, inf\left(U, iInf\left((i: Subtype\left((a: Fin\left(k\right) \mapsto a \in J)\right) \mapsto X\left(val\left(i\right)\right))\right)\right)\right)) + (k - \operatorname{Finset}.\operatorname{card}\left(J\right)))\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Matroids/QTransversalRepresentability.presentation_rank_eq_hallMinimum` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For each subset J of the indexed slots, the bound is the codimension in U of their common intersection with U, plus the number of omitted slots. The Hall criterion bounds the dimension of every partial q-transversal by each cost. Restricted annihilator representatives supplied by the deficit form of linear Rado attain the minimum rank.
+
+**Theorem 1.6 (result).**
 
 $$\forall (F: Type), [Field\left(F\right)] [Fintype\left(F\right)] \forall (m: \mathbb{N}), \forall (k: \mathbb{N}), \forall (X: Fin\left(k\right) \to Submodule\left(F, Fin\left(m\right) \to F\right)), \exists (K: Type), [Field\left(K\right)] [Algebra\left(F, K\right)] [FiniteDimensional\left(F, K\right)] \exists (r: \mathbb{N}), \exists (G: Matrix\left(Fin\left(r\right), Fin\left(m\right), K\right)), \forall (U: Submodule\left(F, Fin\left(m\right) \to F\right)), representedRank\left(G, U\right) = qTransversalRank\left(X, U\right)$$
 
@@ -74,6 +86,7 @@ One finite extension preserves a nonzero generic minor for every partial q-trans
 
 - Truth anchor: `D5/S3/Combinatorics/Matroids/QTransversalRepresentability.IsPartialQTransversal`
 - Truth anchor: `D5/S3/Combinatorics/Matroids/QTransversalRepresentability.claim`
+- Truth anchor: `D5/S3/Combinatorics/Matroids/QTransversalRepresentability.presentation_rank_eq_hallMinimum`
 - Truth anchor: `D5/S3/Combinatorics/Matroids/QTransversalRepresentability.qTransversalRank`
 - Truth anchor: `D5/S3/Combinatorics/Matroids/QTransversalRepresentability.representedRank`
 - Truth anchor: `D5/S3/Combinatorics/Matroids/QTransversalRepresentability.result`

@@ -1,0 +1,1 @@
+{"statement_id":"sha256:c73b0c1ff9f86347153c40f5d0135956f8a4c285e31a94d3d93d879d3b3e5762","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),7:Quantum),5:Codes),28:BinaryEAAttainmentRefutation),6:result)","kind":"theorem","libraries":["Aesop","Batteries","Init","Lean","Mathlib","Std"],"axioms":["Classical.choice","Quot.sound","propext"]}]}

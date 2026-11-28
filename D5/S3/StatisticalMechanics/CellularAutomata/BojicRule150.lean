@@ -15,6 +15,11 @@ The factor indexed by `f` is the quotient by `f ^ (2 ^ m)`.
 Reduction to the quotient by `f` identifies the order of the unique odd-order
 factor in the semisimple–unipotent decomposition. The lower bound on the LCM
 comes from a polynomial of degree at most twice the proposed exponent.
+
+Source-bound Reg audits are pending for `project_eq_zero`, `project_X_pow`,
+`local_pow_eq_of_reduce_eq`, `reduce_eq_of_isSemisimplePart`, and
+`semisimple_order_eq_residue_order`. Each needs a typed source binding with
+variation, sensitivity, and dependence evidence. [#35075](https://github.com/the-omega-institute/trureturing/issues/35075)
 -/
 
 set_option autoImplicit false
@@ -49,14 +54,14 @@ private theorem mem_factors {q : ℕ} (hq : 0 < q) {f : P} :
     f ∈ factors q ↔ Irreducible f ∧ f.Monic ∧ f ∣ cycle q := by
   rw [factors, Multiset.mem_toFinset, Polynomial.mem_normalizedFactors_iff (cycle_ne_zero hq)]
 
-@[simp] private theorem project_eq_zero {f p : P} : project f p = 0 ↔ f ∣ p :=
+@[simp] theorem project_eq_zero {f p : P} : project f p = 0 ↔ f ∣ p :=
   Ideal.Quotient.eq_zero_iff_mem.trans Ideal.mem_span_singleton
 
 private theorem mem_nontrivialFactors {q : ℕ} (hq : 0 < q) {f : P} :
     f ∈ nontrivialFactors q ↔ f ≠ X + 1 ∧ Irreducible f ∧ f.Monic ∧ f ∣ cycle q := by
   rw [nontrivialFactors, Finset.mem_erase, mem_factors hq]
 
-private theorem project_X_pow {f : P} {q : ℕ} (hf : f ∣ cycle q) :
+theorem project_X_pow {f : P} {q : ℕ} (hf : f ∣ cycle q) :
     project f X ^ q = 1 := by
   have h := project_eq_zero.mpr hf
   simpa [cycle, map_sub, sub_eq_zero] using h
@@ -255,7 +260,7 @@ def reduce (f : P) (m : ℕ) : Local f m →+* Mod f :=
   Ideal.Quotient.factor_mk _ _
 
 /-- Congruence modulo `f` becomes equality after raising to the thickness. -/
-private theorem local_pow_eq_of_reduce_eq {f : P} {m : ℕ} {x y : Local f m}
+theorem local_pow_eq_of_reduce_eq {f : P} {m : ℕ} {x y : Local f m}
     (h : reduce f m x = reduce f m y) : x ^ (2 ^ m) = y ^ (2 ^ m) := by
   obtain ⟨p, rfl⟩ := Ideal.Quotient.mk_surjective x
   obtain ⟨r, rfl⟩ := Ideal.Quotient.mk_surjective y
@@ -286,13 +291,13 @@ def IsSemisimplePart {f : P} {m : ℕ} (g s : Local f m) : Prop :=
   IsUnit s ∧ Odd (orderOf s) ∧
     ∃ ν : Local f m, reduce f m ν = 0 ∧ IsNilpotent ν ∧ g = s * (1 + ν)
 
-private theorem reduce_eq_of_isSemisimplePart {f : P} {m : ℕ} {g s : Local f m}
+theorem reduce_eq_of_isSemisimplePart {f : P} {m : ℕ} {g s : Local f m}
     (hs : IsSemisimplePart (f := f) (m := m) g s) : reduce f m s = reduce f m g := by
   obtain ⟨_, _, ν, hν, _, hg⟩ := hs
   rw [hg, map_mul, map_add, map_one, hν, add_zero, mul_one]
 
 /-- This applies to any decomposition with the properties in the source's Theorem 8.8. -/
-private theorem semisimple_order_eq_residue_order {f : P} {m : ℕ} {g s : Local f m}
+theorem semisimple_order_eq_residue_order {f : P} {m : ℕ} {g s : Local f m}
     (hs : IsSemisimplePart (f := f) (m := m) g s) :
     orderOf s = orderOf (reduce f m g) :=
   (orderOf_reduce_eq hs.2.1).symm.trans (congrArg orderOf (reduce_eq_of_isSemisimplePart hs))

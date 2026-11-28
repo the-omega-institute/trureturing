@@ -52,13 +52,13 @@ def claim : Prop :=
     IsDensity ρ → IsDensity τ → IsDensity σ →
     wasserstein ρ σ ≤ wasserstein ρ τ + wasserstein τ σ
 
-private theorem ground_bounds {n : ℕ} (u v : UnitVector n) :
+theorem ground_bounds {n : ℕ} (u v : UnitVector n) :
     0 ≤ ground u v ∧ ground u v ≤ 1 := by
   refine ⟨Real.sqrt_nonneg _, ?_⟩
   apply Real.sqrt_le_one.mpr
   linarith [Complex.normSq_nonneg (∑ i, star (u.val i) * v.val i)]
 
-private theorem cost_summable {n : ℕ} {ρ σ : Matrix (Fin n) (Fin n) ℂ}
+theorem cost_summable {n : ℕ} {ρ σ : Matrix (Fin n) (Fin n) ℂ}
     (Q : Plan ρ σ) : Summable (fun j => Q.weight j * ground (Q.source j) (Q.target j)) := by
   apply Summable.of_nonneg_of_le (fun j => mul_nonneg (Q.nonneg j) (ground_bounds _ _).1)
     (fun j => mul_le_of_le_one_right (Q.nonneg j) (ground_bounds _ _).2) Q.mass.summable

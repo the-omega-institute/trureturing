@@ -16,8 +16,7 @@ on:
         required: true
         type: number
 
-permissions: {}
-
+# The coordinator inherits dispatch permission from the protected compiler publisher.
 env:
   STRATALINT_LEAN_CACHE_RELEASE_TIMEOUT_SECONDS: '21600'
 
@@ -57,6 +56,7 @@ jobs:
           STRATALINT_CACHE_WRITES: 'true'
           GH_TOKEN: ${{ github.token }}
           SHARD_MIB: ${{ inputs.shard_mib }}
+          LEAN_COMPILER_WORKERS: ${{ vars.LEAN_COMPILER_WORKERS }}
         uses: ./.github/actions/lean-cache-shards
         with:
           kind: ${{ inputs.kind }}
@@ -70,7 +70,7 @@ jobs:
 
   compile:
     needs: plan
-    if: needs.plan.outputs.has_work == 'true'
+    if: inputs.kind == 'report' && needs.plan.outputs.has_work == 'true'
     permissions:
       contents: write
       actions: read
@@ -80,12 +80,52 @@ jobs:
       source: ${{ inputs.source }}
       matrix: ${{ needs.plan.outputs.matrix }}
 
+  coordinate:
+    needs: plan
+    if: inputs.kind == 'compiler' && needs.plan.outputs.has_work == 'true'
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 360
+    env:
+      GH_TOKEN: ${{ github.token }}
+      STRATALINT_CACHE_WRITES: 'true'
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ inputs.source }}
+          persist-credentials: false
+      - run: python3 .github/scripts/install-tools.py
+      - uses: actions/download-artifact@v8
+        with:
+          name: module-plan-${{ github.run_id }}
+          path: ${{ runner.temp }}
+          digest-mismatch: error
+      - name: Select unfinished compiler work
+        uses: ./.github/actions/lean-cache-shards
+        with:
+          kind: compiler
+          operation: compiler-coordinate-prepare
+      - uses: actions/upload-artifact@v6
+        with:
+          name: compiler-resume-plan-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/compiler-resume/module-plan.json
+          if-no-files-found: error
+      - name: Dispatch ready compiler batches
+        uses: ./.github/actions/lean-cache-shards
+        env:
+          COMPILER_MAX_ACTIVE: ${{ vars.COMPILER_MAX_ACTIVE }}
+          COMPILER_UNITS_PER_BATCH: ${{ vars.COMPILER_UNITS_PER_BATCH }}
+          COMPILER_SHARDS_PER_BATCH: ${{ vars.COMPILER_SHARDS_PER_BATCH }}
+        with:
+          kind: compiler
+          operation: compiler-coordinate
+
   stage:
-    needs: [plan, compile]
+    needs: [plan, compile, coordinate]
     if: >-
       !cancelled() && needs.plan.result == 'success' &&
-      (needs.compile.result == 'success' ||
-       (needs.plan.outputs.has_work == 'false' && needs.compile.result == 'skipped'))
+      ((needs.plan.outputs.has_work == 'false' && needs.compile.result == 'skipped' && needs.coordinate.result == 'skipped') ||
+       (inputs.kind == 'compiler' && needs.coordinate.result == 'success') ||
+       (inputs.kind == 'report' && needs.compile.result == 'success'))
     permissions:
       contents: write
       actions: read

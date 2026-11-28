@@ -48,6 +48,12 @@ theorem transition_counts : ∀ p (d : Fin 2), Valid p d.val →
       (∑ r : Row, if bondDefects between p r + bondDefects horizontal r r ≤ d.val ∧
         cl r (d.val - (bondDefects between p r + bondDefects horizontal r r)) = 3
         then (1 : ℤ) else 0) = T (cl p d.val) 3 := by
+    have budget (a b d : Nat) : a + b ≤ d ↔ a ≤ d ∧ b ≤ d - a := by omega
+    have reorder (p r : Row) :
+        bondDefects between p r + bondDefects horizontal r r =
+          bondDefects horizontal r r + bondDefects between p r :=
+      Nat.add_comm _ _
+    simp only [reorder, budget, ite_and, ← Nat.sub_sub]
     intro p
     generalize h0 : p 0 = c0
     generalize h1 : p 1 = c1

@@ -7,7 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Nonnesting;
 internal sealed class NonnestingFourDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/Nonnesting/NonnestingFour.";
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Combinatorics/elizalde2024pattern");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/PermutationPatterns/elizalde2024pattern");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The four-pattern avoidance class has the asserted rational generating function.",

@@ -33,6 +33,31 @@ strata_touched:
   - D5/S3/Topology/CofaceComparisonObstruction
   - D5/S3/Topology/CofaceTriangleCollapse
   - D5/S3/Topology/RetractionCoordinate
+  - D5/S3/Topology/StableCategory/TetrahedralGraphIteration
+  - D5/S3/Topology/StableCategory/TetrahedralCategoricalCover
+  - D5/S3/Topology/BarycentricRealization
+  - D5/S3/Topology/StableCategory/FourPieceCategoricalCover
+  - D5/S3/Topology/StableCategory/DimensionFourCategoricalColour
+  - D5/S3/Topology/StableCategory/LebesgueStarAssignment
+  - D5/S3/Topology/StableCategory/TetrahedralOneSidedRefinement
+  - D5/S3/Topology/StableCategory/TetrahedralAsymmetricIteration
+  - D5/S3/Topology/StableCategory/ThreePieceCategoricalCover
+  - D5/S3/Topology/StableCategory/DepthZeroElementaryExpansion
+  - D5/S3/Topology/StableCategory/ExactCategoricalExtension
+  - D5/S3/Topology/StableCategory/MixedSimplexChart
+  - D5/S3/Topology/StableCategory/MixedSimplexAttachment
+  - D5/S3/Topology/StableCategory/ShellingExactExtension
+  - D5/S3/Topology/StableCategory/ProductRigidCores
+  - D5/S3/Topology/StableCategory/ProductStableCover
+  - D5/S3/Topology/StableCategory/ProductStableLower
+  - D5/S3/Topology/StableCategory/DisjointCoverObstruction
+  - D5/S3/Topology/StableCategory/HalesJewettCategoricalCover
+  - D5/S3/Topology/StableCategory/SevenTrianglePowerCovers
+  - D5/S3/Topology/StableCategory/UnrestrictedFactorPowers
+  - D5/S3/Topology/StableCategory/ShellingColourCriterion
+  - D5/S3/Topology/StableCategory/ShellingColourObstruction
+  - D5/S3/Topology/StableCategory/CategoricalCoverFactorization
+  - D5/S3/Topology/SimplicialNullhomotopyApproximation
 license: citation-only
 triage: anchor
 ---
@@ -1042,3 +1067,402 @@ source chain with sizes at least three, four, and five. The
 ordinary triangle cone allows only four vertices in a source
 face. The weaker comparison with only containment in the largest
 assigned face remains open.
+
+For a synchronously subdivided coarsening ($f_{s+1}=\operatorname{sd} f_s$),
+there is an obstruction at every depth $s\ge4$ when the comparison is
+required to preserve the full old sides and their endpoints. The source
+and target subdivisions of an old side are paths of equal length, so the
+comparison on that side is the identity. At the singleton flag over an
+edge $A$, maximal-face containment then forces a singleton face of the
+preceding target to equal $A$. The same argument allows either direction
+of comparison between consecutive flags.
+
+## One round of two-colour graph refinement
+
+Suppose that the inclusions of two induced colour regions admit contiguity
+factorizations through properly two-coloured graphs. The join of these
+graphs has a proper four-rank colouring. On each main region the
+tetrahedral heights give a map into four ordinary subdivisions of the
+corresponding graph after only three ambient subdivisions. Each extra
+component contracts through one opposite-colour carrier edge. If the
+ambient one-skeleton is connected, its constant can be moved to the
+image of a chosen vertex of the main parameter graph. The Lean
+construction gives both refined factorizations in the same colouring
+and permits any vertex selector for the final parameter subdivision.
+
+## Weak category one in dimension at most three
+
+Let the order complex of a nonempty finite poset have dimension at
+most three and contractible realization. Some ordinary iterated chain
+poset of the original poset has a categorical lower cover by two
+sets. This is the weak-category-one case of Question 6.3 in that
+range.
+
+Height gives a proper four-rank colouring of every chain. The two
+pairs of ranks induce bipartite graph parameters whose inclusions are
+nullhomotopic by restriction of the contraction. Each refinement adds
+three ambient subdivisions and four parameter subdivisions. After
+enough rounds, the extra parameter subdivisions give fixed-target
+contiguity contractions. The original edge carriers transport them
+to the synchronously subdivided ambient complex. Taking the face
+neighbourhoods that meet the two final colours gives categorical lower
+sets in an ordinary iterated chain poset.
+
+The relative theorem applies to a nonempty subcomplex with a proper
+four-rank colouring and a nullhomotopic realization inclusion in a
+finite ambient complex with connected one-skeleton. It gives two
+subcomplexes covering an ordinary subdivision of the source. Both
+inclusions contract by contiguity in the ambient at that same depth.
+This allows a categorical region of dimension at most three to be
+split while keeping its contractions in a higher-dimensional ambient.
+
+## Four categorical pieces from a star assignment
+
+Suppose a finite complex has dimension at most four and every closed
+vertex star can be assigned to one of two subcomplexes with nullhomotopic
+realization inclusions. The first barycentric subdivision separates
+the mixed-label and five-vertex faces from the remaining faces. Each
+induced region has dimension at most three. On every monochromatic flag,
+the old label set is constant, including at the isolated pure top faces.
+The realization map sends a flag to the weighted average of its face
+barycentres. It identifies every subdivided subcomplex with the original
+one and permits the supplied homotopies to glue on the open fibres of
+the label sets. In a connected ambient, the two relative two-piece covers
+then pull back by the face intersections at a common ordinary subdivision
+depth. The Lean theorem gives four categorical lower sets in the face
+poset at that depth.
+
+For a connected complex of weak category two, the Lean theorem proves
+the star assignment from the categorical open cover. In the original
+coordinate metric each barycentric subdivision shrinks the mesh by at
+most four fifths. Once the mesh is smaller than the Lebesgue number,
+each closed vertex star lies in one categorical open. The proof
+transports the two homotopies to the subcomplexes of faces carried into
+the respective opens. For a finite poset with connected order-complex
+realization and order-complex dimension at most four, this gives four
+categorical lower sets in some ordinary iterated chain poset.
+
+## Three-piece bound for contractible complexes
+
+For a nullhomotopic realization inclusion of a subcomplex of dimension
+at most five, the one-sided tetrahedral refinement gives a paper
+proof of a relative three-piece cover. The lowest two face ranks form
+a bipartite graph. Fold the other ranks to one apex when reading the
+tetrahedral colouring. The graph parameter gains four levels for
+every three ambient levels, and the other parameter retains the
+ambient depth. Its exceptions contract through single graph edges
+and enter the next parameter as isolated vertices. At the terminal
+depth the graph region contracts. The remaining parameter has
+dimension at most three and gives two pieces by the relative theorem.
+Pulling back through the meeting-face maps gives the three-piece
+cover at a single ambient depth. The Lean theorem proves the absolute
+version for every finite simplicial complex of dimension at most five
+with contractible realization. The relative version above remains a
+paper deduction.
+
+In dimension four the two-piece bound for contractible realization
+remains open. A PL four-ball with 19 vertices and 69 maximal simplexes
+admits a three-piece cover with strongly collapsible intersections
+for which each pairwise union contains a domination-free ambient
+retract. The retracts persist under common subdivision, so every
+pairwise union remains noncategorical. This ball has another
+two-piece cover obtained by redistributing parts of the original
+three pieces.
+
+
+## Categorical covers across one elementary expansion
+
+Suppose the retained complex has a categorical two-cover on its
+given triangulation and the expanded complex is connected. The Lean
+theorem gives a categorical lower cover of size two for the face
+poset after two ordinary barycentric subdivisions of the expanded
+complex. For a mixed attachment, take the vertices omitted by the
+old attaching facets assigned to the second piece. They form a
+face in the first piece and belong to every old attaching face
+exclusive to it. This face supplies the contiguity comparison for
+the two new face vertices. A monochromatic attachment leaves a
+separate categorical edge in the opposite first-subdivision region.
+
+The corresponding transport of an arbitrary inherited cover
+on a positive-depth subdivision is known here for a triangular
+expansion by a paper argument with rooted trees and the planar dual.
+In dimension four the same colouring rule can fail at every common
+depth. Linked curves in the old trace can become nullhomologous in
+the new colour, preventing any endpoint map that fixes the old
+trace. It remains open whether a different colouring or a
+contraction that moves the old trace gives a general transfer.
+
+
+## Exact intersections across an attachment
+
+Suppose the retained subcomplex is full and has a prescribed two-piece
+cover. One further ordinary subdivision gives an exact categorical
+extension when the attachment and one old piece are categorical
+together. When the attachment and both old pieces are individually
+categorical, there is an exact extension with three pieces, with the
+third disjoint from the retained subdivision. More generally, if a
+categorical cover by full subcomplexes contains the corresponding
+prescribed old pieces, one further ordinary subdivision gives the
+prescribed intersections without increasing the number of pieces.
+The proofs intersect each retained face with a vertex set and compare
+this order map with inclusion by a finite contiguity chain.
+
+
+## Two categorical pieces across a mixed simplex attachment
+
+Let the retained complex have two prescribed categorical pieces.
+Choose a vertex of the attaching simplex and two disjoint nonempty
+blocks of its other vertices. In each piece the faces inside the
+simplex restrict to the corresponding horn, and each exterior face
+uses only the chosen vertex and its own block among the simplex
+vertices. The second subdivision has two full categorical regions
+containing the prescribed pieces. A forbidden image in the chart
+for one block requires a nonempty original face in that block.
+Both exclusions cannot occur along a single face chain, since the
+two blocks are disjoint. The retained region of each chart retracts
+to the horn by adjoining the chosen singleton and deleting the top
+face where needed. The comparisons fix the subdivided horn and
+extend over the old piece. The full-cover extension theorem gives
+exactly the prescribed old intersections at depth three.
+
+
+## Exact extension across a shelling step
+
+Suppose the retained triangulation already has a categorical
+two-cover and one simplex is attached along a union of its facets.
+The cover extends with both exact old intersections after three
+ordinary barycentric subdivisions in the same ambient. At the second
+subdivision the two induced regions need only cover vertices. In
+the mixed case, use the face formed by the omitted vertices of the
+facets in the second old piece. The first region can insert this
+anchor into its new chains even if it lies in both prescribed pieces.
+The second region cuts its chains by the second old piece. In the
+monochromatic case connectedness suffices to move the constants for
+the disjoint new and old components to a common vertex. A last
+ordinary subdivision covers the remaining mixed flags and preserves
+the prescribed intersections.
+
+## Weak, stable, and ordinary category of a four-dimensional product
+
+Let (P) have facets `012, 015, 023, 035, 145, 234, 345` and let
+(X=F(P)\times F(P)), where (F(P)) is the poset of nonempty faces.
+The realization is a PL four-ball since (P) is the boundary of an
+octahedron with the relative interior of the face `124` removed.
+Thus the weak category is one.
+
+Lean gives ordinary category three. Deleting one boundary edge and its
+unique triangle gives each of three categorical lower sets in the factor.
+Every face is retained in at least two sets, so three corresponding
+rectangles cover the product. With only two colours, the nine pairs of
+exceptional triangles force a whole boundary cycle in a coordinate
+slice of one colour. The three original vertices of that cycle remain
+fixed under every step of a comparable order-map fence.
+
+Lean also verifies a partition of the 484-point product core, obtained
+by deleting the three up-beat boundary edges in each factor. Six
+pointwise comparisons contract each colour in the product order.
+Pullback along the beat retraction and the ordinary subdivision cover
+theorem give two categorical lower sets after two subdivisions.
+Lean proves that two is the minimum over all ordinary subdivision depths.
+The subdivided product retracts onto a coordinate slice. A contraction of that
+slice would give a contiguity chain on its order complex by choosing vertices
+in the images of singleton faces. The chain would fix two distinct original
+vertices of the subdivided boundary, which rules out a constant endpoint.
+Barmak and Minian's strong-collapse reflection theorem gives a second proof
+of the lower bound.
+This determines ((\operatorname{cat}_w,\operatorname{cat}_s,
+\operatorname{cat})(X)=(1,2,3)) for this product. The general inequality
+in Question 6.3 remains open.
+[Question 6.3](https://arxiv.org/html/2609.39615v1#S6) ·
+[Strong homotopy types, nerves and collapses](https://arxiv.org/abs/0907.2954)
+
+## A categorical cover transport obstruction at every ordinary depth
+
+In a four-dimensional complex obtained by adding one simplex and its free
+tetrahedral facet, the retained first subdivision has a disjoint vertex
+partition into two induced categorical regions. Either assignment of the new
+chamber barycentre forces a six-edge cycle in the chosen region. A retraction
+projects that cycle to a subdivided two-dimensional complex in which two
+original cycle vertices stay fixed throughout every contiguity chain.
+
+The same witness subdivides through every later ordinary depth. For either
+colour, any full region containing its retained part and all exterior vertices
+contains that subdivided witness. Thus any full categorical two-cover
+containing the inherited regions must distribute the exterior between its
+pieces. The arbitrary contractible four-complex case of Question 6.3 remains
+open. [Question 6.3](https://arxiv.org/html/2609.39615v1#S6)
+
+## Unbounded categorical cover size after one subdivision of powers
+
+A finite poset with a monotone rank and a finite alphabet of full-rank
+chains admits a rank-aligned chain for each word of letters. Assume each
+letter is a section of the rank and every nonempty chain of the factor
+fits in a letter. If the factor's first subdivision has no one-piece
+categorical lower cover, then for every (k) the first ordinary subdivision
+of some finite power needs more than (k) categorical lower sets.
+
+Colour each rank-aligned chain by a lower set containing it. A
+Hales–Jewett line fixes some of the coordinates and varies the rest
+together. At each fixed coordinate use the chain element of the given
+rank, and at each variable coordinate use the element of the factor.
+The resulting order embedding puts every chain of the factor into the
+same lower set. Projection at a variable coordinate splits that
+embedding, so a contraction of that set would contract the subdivided
+factor.
+
+For the seven-triangle disk, rank is face cardinality minus one.
+Every chain extends to a vertex–edge–triangle flag, and the persistent
+boundary obstruction excludes a one-piece cover. The Lean theorem
+applies to finite powers of this one factor. All these powers have weak
+category one by realization of products. The stable category also
+allows further subdivisions, and the proof gives an obstruction at
+one fixed depth.
+
+The rank hypothesis can be removed from the conclusion about finite
+powers. For a finite poset (X), take the number of points in the
+principal ideal of each point as its section rank. In the enlarged
+poset of pairs (x,i), require (x≤y) and a strictly increasing rank
+for different first coordinates. All finite chains can be completed
+through the missing ranks by repeating a first coordinate. The section
+and projection split, and raising a rank to its maximum with the
+section rank compares both the identity and the section–projection
+composite to one order map. These comparisons survive products and
+the first ordinary subdivision. The rank-aligned Hales–Jewett theorem
+therefore gives unbounded one-step categorical cover size for the
+powers of any finite poset whose first subdivision has no
+one-piece categorical lower cover.
+
+
+## Two colours on the restriction faces of a shelling
+
+In a finite connected complex, suppose a shelling admits a fixed vertex
+two-colouring for which every nonsingleton restriction face uses both
+colours. Then the first subdivision of the face poset has a categorical
+lower cover by two sets. For a weakly contractible realization this gives
+the bound in Question 6.3 under the colouring hypothesis.
+
+A shelling step introduces precisely the faces of the new chamber
+containing its restriction face. A restriction face using both colours
+introduces no monochromatic faces. A singleton restriction face
+introduces a new vertex. Its monochromatic simplex can fold into the old
+region when it has an old vertex of the same colour. Otherwise its
+isolated vertex contracts along the ambient one-skeleton. Thus the
+inclusions of the two induced colour complexes contract by contiguity
+throughout the shelling in a fixed final ambient complex. The colour
+partition yields the two lower sets at a common subdivision depth.
+[Question 6.3](https://arxiv.org/html/2609.39615v1#S6)
+
+## Reduction to weakly contractible finite spaces
+
+Fix a positive integer \(b\). The inequality
+\(\operatorname{cat}_s(X) \le b\operatorname{cat}_w(X)\) for all finite
+nonempty spaces is equivalent to the bound \(\operatorname{cat}_s(X)\le b\)
+for finite weakly contractible spaces. The case \(b=2\) is Question 6.3.
+
+Take a weak categorical open cover with \(a\) members. At one ordinary
+subdivision depth the closed stars are subordinate to those opens, giving
+\(a\) subcomplexes with nullhomotopic inclusions in the subdivided order
+complex. The arbitrary-dimension mesh estimate and this choice of
+subcomplexes are formalized in `LebesgueStarAssignment`.
+
+A nullhomotopic inclusion \(A\hookrightarrow K\) extends continuously over
+the cone on \(A\). Zeeman’s 1964 relative simplicial approximation theorem
+gives a triangulation retaining the given base and a simplicial map to \(K\)
+which extends the inclusion. The cone has contractible realization, so
+its face poset lies in the weak-category-one branch. At any common
+subdivision depth witnessing the \(b\)-bound for these factors, pull back
+their categorical pieces to the original regions and compose their
+contractions with the maps to \(K\). Both maps preserve the given
+inclusion on the base. The order-level assembly is formalized in
+`CategoricalCoverFactorization`, giving \(ab\) categorical lower sets.
+The relative approximation step uses the cited classical theorem.
+[Question 6.3](https://arxiv.org/html/2609.39615v1#S6) ·
+[Relative simplicial approximation](https://doi.org/10.1017/S0305004100037415)
+
+For the universal bound, shellable PL balls of unrestricted dimension
+suffice. Embed a finite complex with contractible realization as a
+subcomplex of the simplex on its vertices. Extend the identity over the
+missing faces in increasing dimension, using relative simplicial
+approximation on each face with its already triangulated boundary fixed.
+This gives a triangulated PL ball which retracts simplicially onto the
+original complex. The retraction survives passage to face posets and
+ordinary subdivision. Every PL ball admits a shellable derived
+subdivision. Equivalently the universal bound may be tested on
+non-evasive complexes. For a complex with contractible realization,
+Adiprasito and Benedetti make its actual product with a cube collapsible,
+and its face poset retracts onto the original face poset. Further ordinary
+subdivisions give a non-evasive complex. These equivalences use the
+classical subdivision and collapse results below. Lean checks the
+open-cover-to-subcomplex step and the order-level assembly described
+above. The universal equivalences use the paper proofs with relative
+approximation and the cited results on subdivision and collapse.
+Question 6.3, the case \(b=2\), remains open.
+[Adiprasito and Benedetti](https://arxiv.org/abs/1202.6606) ·
+[Barmak and Minian](https://arxiv.org/abs/0907.2954)
+
+## An obstruction to mixing all shelling restriction faces
+
+In a facet shelling starting from a simplex, mixing every nonsingleton
+restriction face makes each monochromatic induced graph chordal. A mixed
+restriction introduces no monochromatic face. A singleton restriction can
+add one vertex whose old same-colour neighbours form a clique. In
+particular, a monochromatic induced four-cycle would have to survive back
+to the first simplex, where it would have a diagonal.
+
+The first barycentric subdivision of any complex with a nine-vertex face
+contains an induced complete tripartite graph with three vertices in each
+part. Partition the nine vertices into three triples. In each part use the
+faces consisting of one vertex of that triple together with all vertices in
+earlier triples. Comparability holds exactly across parts. Two parts have
+the same majority colour, producing the monochromatic induced four-cycle.
+The Lean proof uses the restriction-interval hypotheses of
+`ShellingColourCriterion` and proves the obstruction directly. Since
+barycentric subdivision preserves dimension, the obstruction applies at
+every positive iterate in dimension at least eight. For instance it
+applies to every iterate of the first subdivision of the eight-simplex.
+That complex is a cone, so its categorical covering number is one.
+[Question 6.3](https://arxiv.org/html/2609.39615v1#S6) ·
+[Multipartite posets in Boolean lattices](https://arxiv.org/abs/2204.03010)
+
+## Coherent triangulations of a simplex
+
+The universal ratio bound in Question 6.3 can be tested on the face
+posets of coherent triangulations of a simplex. For a finite
+contractible complex, take its first subdivision as a full subcomplex
+of the barycentrically triangulated simplex on its original vertices.
+Extend a contraction by the homotopy extension property to obtain a
+continuous retraction. Near the full subcomplex, adjust it to normalize
+the barycentric coordinates supported on that subcomplex. Relative
+barycentric subdivisions fix the full subcomplex. The total
+off-subcomplex barycentric weight decays on all cells meeting it, and
+ordinary mesh bounds apply on the other cells. Vertex-star labels
+then give a simplicial retraction fixing the retained subcomplex.
+Every relative subdivision is a sequence of stellar subdivisions and
+preserves coherence by lowering the lifted height of each inserted
+vertex sufficiently little. The exact retraction transports a
+categorical cover at the same depth. This is a paper-level reduction.
+[Question 6.3](https://arxiv.org/html/2609.39615v1#S6) ·
+[Relative simplicial approximation](https://doi.org/10.1017/S0305004100037415)
+
+## Fixed-target approximation in arbitrary dimension
+
+A nullhomotopy of the affine realization of a simplicial map gives a
+finite contiguity chain after sufficiently many ordinary subdivisions
+of its source. The same threshold works for every later depth and
+every vertex selector supported in the original carriers. The
+constant can be taken at the same vertex of the target for all these
+choices. In `SimplicialNullhomotopyApproximation`, iterated barycentric
+averaging gives zero coordinates outside the original carrier, and
+the uniform mesh estimate brings an entire source simplex within
+the cylinder's Lebesgue radius.
+
+For the weak-category-one reduction, the target of this approximation
+stays fixed during this construction. A paper-level exact factor can
+then be built with a non-Hausdorff mapping cylinder of the iterated
+maximum map, attached to the finite order homotopy of the refined
+inclusion. The mapping cylinder retains the original source map.
+The simplicial homotopy uses the later fine source at a separate end
+of the mapping cylinder. The finite order homotopy and exact gluing
+are additional steps beyond the approximation formalized here.
+[Question 6.3](https://arxiv.org/html/2609.39615v1#S6) ·
+[Non-Hausdorff mapping cylinders](https://arxiv.org/abs/1005.0538)
