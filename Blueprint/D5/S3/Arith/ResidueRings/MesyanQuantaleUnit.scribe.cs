@@ -18,7 +18,7 @@ internal sealed class MesyanQuantaleUnitDocument : IScribeDocumentDefinition
             Blocks(
                 Paragraph(Text("There is a nonzero associative ring A with no two-sided multiplicative identity "
                     + "and an additive submonoid E that is a two-sided unit for multiplication with every additive "
-                    + "submonoid M of A. The ring structure on the carrier A is denoted by r. In the displayed "
+                    + "submonoid M of A. The ring structure on the carrier A is denoted by s. In the displayed "
                     + "statement, multiplication of submonoids takes all sums of a positive finite number of "
                     + "pairwise products, with the first factor from the left submonoid and the second from the right. "
                     + "The proof identifies this product from Definition 4 with Mathlib's multiplication.")),
@@ -49,15 +49,15 @@ internal sealed class MesyanQuantaleUnitDocument : IScribeDocumentDefinition
         Formula submonoid = F.Id("M");
         Formula submonoidType = Seq(F.Id("AddSubmonoid"), Sp, carrier);
         Formula nonzero = Ex("a", carrier, Seq(a, Sp, Neq, Sp, D(0)));
-        Formula failure = Seq(e, Cdot, a, Sp, Neq, Sp, a, Sp, Lor, Sp,
-            a, Cdot, e, Sp, Neq, Sp, a);
+        Formula failure = Seq(e, Sp, Cdot, Sp, a, Sp, Neq, Sp, a, Sp, Lor, Sp,
+            a, Sp, Cdot, Sp, e, Sp, Neq, Sp, a);
         Formula noIdentity = Seq(Forall, Sp, Open, e, Colon, Sp, carrier, Close, Comma, Sp,
             Ex("a", carrier, failure));
-        Formula laws = Seq(unit, Cdot, submonoid, Sp, Eq, Sp, submonoid, Sp, Land, Sp,
-            submonoid, Cdot, unit, Sp, Eq, Sp, submonoid);
+        Formula laws = Seq(unit, Sp, Cdot, Sp, submonoid, Sp, Eq, Sp, submonoid, Sp, Land, Sp,
+            submonoid, Sp, Cdot, Sp, unit, Sp, Eq, Sp, submonoid);
         Formula hasUnit = Ex("E", submonoidType,
             Seq(Forall, Sp, Open, submonoid, Colon, Sp, submonoidType, Close, Comma, Sp, laws));
-        return Disp(Ex("A", F.Id("Type"), Ex("r", Seq(F.Id("NonUnitalRing"), Sp, carrier),
-            Seq(Parens(nonzero), Sp, Land, Sp, Parens(noIdentity), Sp, Land, Sp, Parens(hasUnit)))));
+        return Disp(Ex("A", F.Id("Type"), Ex("s", Seq(F.Id("NonUnitalRing"), Sp, carrier),
+            Seq(Parens(nonzero), Sp, Land, Sp, Parens(Seq(Parens(noIdentity), Sp, Land, Sp, Parens(hasUnit)))))));
     }
 }

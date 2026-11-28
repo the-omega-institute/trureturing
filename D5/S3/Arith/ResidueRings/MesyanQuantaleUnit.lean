@@ -1,20 +1,17 @@
 /- GID: D5/S3/Arith/ResidueRings/MesyanQuantaleUnit
    generality: I
    mirror-B: D5/B/S3/Arith/ResidueRings/MesyanQuantaleUnit
-   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
    utility: none
    digest: A nonzero ring without an identity has a two-sided unit on its additive submonoids. -/
 
 import Mathlib.Algebra.BigOperators.Fin
-import Mathlib.Algebra.Group.Submonoid.BigOperators
 import Mathlib.Algebra.Ring.Pi
 import Mathlib.Algebra.Ring.Submonoid.Pointwise
 import Mathlib.Data.Nat.ChineseRemainder
-import Mathlib.Data.Nat.PrimeFin
 import Mathlib.Data.ZMod.Basic
 import Mathlib.RingTheory.NonUnitalSubring.Defs
-
 import OmegaBuild.Commands
 
 compile_only_with_mathlib
@@ -56,16 +53,14 @@ private theorem mem_product_iff {A : Type*} [NonUnitalNonAssocSemiring A]
     exact AddSubmonoid.sum_mem _ fun i _ =>
       AddSubmonoid.mul_mem_mul (s i).property (t i).property
 
-private abbrev Coordinates := (p : Nat.Primes) → ZMod (p : ℕ)
-
-private def support (a : Coordinates) : Set Nat.Primes := {p | a p ≠ 0}
+private def support (a : (p : Nat.Primes) → ZMod (p : ℕ)) : Set Nat.Primes := {p | a p ≠ 0}
 
 /-- The direct sum inside the product with coordinatewise ring operations. -/
-private def finiteSupportSubring : NonUnitalSubring Coordinates where
+private def finiteSupportSubring : NonUnitalSubring ((p : Nat.Primes) → ZMod (p : ℕ)) where
   carrier := {a | (support a).Finite}
   zero_mem' := by
-    have h : support (0 : Coordinates) = ∅ := by ext p; simp [support]
-    change (support (0 : Coordinates)).Finite
+    change (support 0).Finite
+    have h : support 0 = ∅ := by ext p; simp [support]
     rw [h]
     exact Set.finite_empty
   add_mem' {a b} ha hb := by
@@ -86,16 +81,14 @@ private def finiteSupportSubring : NonUnitalSubring Coordinates where
     exact ha.subset fun p hp ha0 =>
       hp (show -a p = 0 by rw [ha0, neg_zero])
 
-private abbrev R := ↥finiteSupportSubring
-
 private instance (p : Nat.Primes) : NeZero (p : ℕ) := ⟨p.property.ne_zero⟩
 
 private instance (p : Nat.Primes) : Fact (1 < (p : ℕ)) := ⟨p.property.one_lt⟩
 
-private theorem finite_support (a : R) : (support a.val).Finite := a.property
+private theorem finite_support (a : ↥finiteSupportSubring) : (support a.val).Finite := a.property
 
 /-- The natural CRT representative on the support of the element being multiplied. -/
-private theorem exists_nsmul_eq_mul (r a : R) : ∃ n : ℕ, n • a = r * a := by
+private theorem exists_nsmul_eq_mul (r a : ↥finiteSupportSubring) : ∃ n : ℕ, n • a = r * a := by
   classical
   let s := (finite_support a).toFinset
   let modulus (p : Nat.Primes) := (p : ℕ)
@@ -117,14 +110,14 @@ private theorem exists_nsmul_eq_mul (r a : R) : ∃ n : ℕ, n • a = r * a := 
     rw [ha, smul_zero, mul_zero]
 
 /-- The element with coordinate one on a finite set of primes and zero elsewhere. -/
-private def supportIdempotent (s : Finset Nat.Primes) : R :=
+private def supportIdempotent (s : Finset Nat.Primes) : ↥finiteSupportSubring :=
   ⟨fun p => if p ∈ s then 1 else 0, by
     apply s.finite_toSet.subset
     intro p hp
     by_contra h
     exact hp (ite_eq_right h)⟩
 
-private theorem supportIdempotent_mul (a : R) :
+private theorem supportIdempotent_mul (a : ↥finiteSupportSubring) :
     supportIdempotent (finite_support a).toFinset * a = a := by
   apply Subtype.ext
   funext p
@@ -138,32 +131,35 @@ private theorem supportIdempotent_mul (a : R) :
 private theorem singleton_coordinate (p : Nat.Primes) :
     (supportIdempotent {p}).val p = 1 := by simp [supportIdempotent]
 
-private theorem nonzero : ∃ a : R, a ≠ 0 := by
+private theorem nonzero : ∃ a : ↥finiteSupportSubring, a ≠ 0 := by
   let p : Nat.Primes := ⟨2, Nat.prime_two⟩
   refine ⟨supportIdempotent {p}, fun h => ?_⟩
-  have hcoord := congrArg (fun a : R => a.val p) h
+  have hcoord := congrArg (fun a : ↥finiteSupportSubring => a.val p) h
   change (supportIdempotent {p}).val p = 0 at hcoord
   rw [singleton_coordinate] at hcoord
   exact one_ne_zero hcoord
 
-private theorem no_two_sided_unit : ∀ e : R, ∃ a : R, e * a ≠ a ∨ a * e ≠ a := by
+private theorem no_two_sided_unit :
+    ∀ e : ↥finiteSupportSubring, ∃ a : ↥finiteSupportSubring, e * a ≠ a ∨ a * e ≠ a := by
   intro e
   obtain ⟨p, hp⟩ := (finite_support e).exists_notMem
   have he : e.val p = 0 := not_not.mp hp
   refine ⟨supportIdempotent {p}, Or.inl (fun h => ?_)⟩
-  have hcoord := congrArg (fun a : R => a.val p) h
+  have hcoord := congrArg (fun a : ↥finiteSupportSubring => a.val p) h
   change e.val p * (supportIdempotent {p}).val p = (supportIdempotent {p}).val p at hcoord
   rw [he, singleton_coordinate, zero_mul] at hcoord
   exact zero_ne_one hcoord
 
 /-- Every additive submonoid is preserved by multiplication by every element. -/
-private theorem mul_mem_of_mem (M : AddSubmonoid R) (r a : R) (ha : a ∈ M) : r * a ∈ M := by
+private theorem mul_mem_of_mem (M : AddSubmonoid ↥finiteSupportSubring)
+    (r a : ↥finiteSupportSubring) (ha : a ∈ M) : r * a ∈ M := by
   obtain ⟨n, hn⟩ := exists_nsmul_eq_mul r a
   exact hn ▸ M.nsmul_mem ha n
 
-private theorem top_is_product_unit (M : AddSubmonoid R) :
-    (⊤ : AddSubmonoid R) * M = M ∧ M * (⊤ : AddSubmonoid R) = M := by
-  have hleft : (⊤ : AddSubmonoid R) * M = M := by
+private theorem top_is_product_unit (M : AddSubmonoid ↥finiteSupportSubring) :
+    (⊤ : AddSubmonoid ↥finiteSupportSubring) * M = M ∧
+      M * (⊤ : AddSubmonoid ↥finiteSupportSubring) = M := by
+  have hleft : (⊤ : AddSubmonoid ↥finiteSupportSubring) * M = M := by
     ext x
     rw [mem_product_iff]
     constructor
@@ -181,7 +177,7 @@ theorem question36_exists :
       (∃ a : A, a ≠ 0) ∧
       (∀ e : A, ∃ a : A, e * a ≠ a ∨ a * e ≠ a) ∧
       (∃ E : AddSubmonoid A, ∀ M : AddSubmonoid A, E * M = M ∧ M * E = M) :=
-  ⟨R, inferInstance, nonzero, no_two_sided_unit, ⊤, top_is_product_unit⟩
+  ⟨↥finiteSupportSubring, inferInstance, nonzero, no_two_sided_unit, ⊤, top_is_product_unit⟩
 
 end
 
