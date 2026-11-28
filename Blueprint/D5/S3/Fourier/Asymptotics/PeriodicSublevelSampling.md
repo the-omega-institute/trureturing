@@ -16,7 +16,7 @@ Lean statement: `D5/S3/Fourier/Asymptotics/PeriodicSublevelSampling.tendsto_weig
 
 Let F be a continuous map of the Euclidean plane, periodic under integer translations. Use a closed fundamental square formed by translating the unit square. List all its zeros in a finite list without repetition. They lie in the interior and have invertible Fréchet derivatives Aᵢ. An empty list is allowed.
 
-Let samples be indexed by a filter. In each finite sample take nonnegative weights summing to one, a positive threshold εₙ tending to zero, and a positive integer cutoff Jₙ. For each nonzero integer frequency of maximum coordinate norm at most Jₙ, assume the weighted sum of exp(2πi⟨x,m⟩) has modulus at most cₙ + dₙ‖m‖∞² for nonnegative cₙ and dₙ. Assume cₙ/εₙ², dₙ/εₙ⁴ and 1/(εₙ⁶Jₙ⁴) tend to zero along the same filter.
+Fix an index type and a filter on it. In each finite sample take nonnegative weights summing to one, a positive threshold εₙ tending to zero, and a positive integer cutoff Jₙ. For each nonzero integer frequency of maximum coordinate norm at most Jₙ, assume the weighted sum of exp(2πi⟨x,m⟩) has modulus at most cₙ + dₙ‖m‖∞² for nonnegative cₙ and dₙ. Assume cₙ/εₙ², dₙ/εₙ⁴ and 1/(εₙ⁶Jₙ⁴) tend to zero along the same filter.
 
 Then the sum of weights at points with ‖F(x)‖ < εₙ, divided by εₙ², tends to π times the sum of |det Aᵢ|⁻¹. The derivatives use period-one coordinates.
 

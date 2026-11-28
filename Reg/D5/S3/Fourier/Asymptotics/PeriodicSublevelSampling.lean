@@ -1,6 +1,6 @@
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Fourier.Asymptotics.PeriodicSublevelSampling
-import Reg.Support.SingleDependentReadout
+import Reg.Support.DependentFamily
 
 /-! Source registration for the determinant coefficient of a periodic sublevel. -/
 
@@ -123,8 +123,15 @@ private theorem grid_tail_tendsto :
     field_simp [hn]
   · simp
 
-abbrev signature : Signature :=
-  Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℝ) (fun _ => ℝ)
+abbrev signature : Signature.{uι + 1, 0, 0, 0, 0} where
+  Params := Σ I : Type uι, Fintype I
+  State _ := ℝ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℝ
+  Anchor := Empty
+  finiteAnchor := inferInstance
 
 def actual : Realization signature :=
   realize signature (fun _ _ v => Real.pi * v) (fun e => nomatch e)
@@ -135,7 +142,7 @@ def rejected : Realization signature :=
 abbrev arena : Arena where
   signature := signature
   Law R :=
-    ∀ {ι : Type uι} {α : Type uα} {β : Type uβ} [Fintype ι]
+    ∀ {ι : Type uι} {α : Type uα} {β : Type uβ} [fintype : Fintype ι]
     (l : Filter α) (q : Plane) {F : Plane → Plane} (_hF : Continuous F)
     (_hperiod : ∀ (a : Fin 2 → ℤ) (x : Plane), F (latticeVector a + x) = F x)
     (z : ι → Plane) (_hz : Function.Injective z)
@@ -156,7 +163,8 @@ abbrev arena : Arena where
     (_htail : Tendsto (fun n => 1 / ((ε n) ^ 6 * (J n : ℝ) ^ 4)) l (𝓝 0)),
     Tendsto (fun n =>
       (∑ j ∈ s n, w n j * (if ‖F (p n j)‖ < ε n then 1 else 0)) / (ε n) ^ 2)
-      l (𝓝 (R.readout () () (∑ i, |LinearMap.det ((A i).toLinearEquiv : Plane →ₗ[ℝ] Plane)|⁻¹)))
+      l (𝓝 (R.readout () ⟨ι, fintype⟩
+        (∑ i, |LinearMap.det ((A i).toLinearEquiv : Plane →ₗ[ℝ] Plane)|⁻¹)))
 
 theorem rejected_law : ¬ arena.{uι, uα, uβ}.Law rejected := by
   intro failure
@@ -213,9 +221,9 @@ theorem rejected_law : ¬ arena.{uι, uα, uβ}.Law rejected := by
   have heq : (0 : ℝ) = 1 := tendsto_nhds_unique hgood hbad'
   exact zero_ne_one heq
 
-theorem dependence : ObservationalDependence signature actual := by
+theorem dependence : ObservationalDependence signature.{uι} actual := by
   intro _
-  refine ⟨(), 0, 1, ?_⟩
+  refine ⟨⟨ULift.{uι} (Fin 0), inferInstance⟩, 0, 1, ?_⟩
   change Real.pi * 0 ≠ Real.pi * 1
   simpa only [mul_zero, mul_one] using Real.pi_ne_zero.symm
 
@@ -224,13 +232,22 @@ def source_registration : Registration arena.{uι, uα, uβ}
   actual := actual
   bridge := Iff.rfl
   variation := ⟨tendsto_weighted_sublevel_of_fourier, rejected, rejected_law⟩
-  sensitivity :=
-    Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected rejected_law
+  sensitivity := by
+    constructor
+    · intro role
+      refine ⟨rejected, ?_, ?_, rejected_law⟩
+      · intro other h
+        exact (h (Subsingleton.elim _ _)).elim
+      · funext e
+        exact nomatch e
+    · intro e
+      exact nomatch e
   dependence := dependence
 
 def registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-      (@tendsto_weighted_sublevel_of_fourier.{uι, uα, uβ}) (Realization signature) Unit Unit := {
+      (@tendsto_weighted_sublevel_of_fourier.{uι, uα, uβ})
+      (Realization signature.{uι}) Unit Unit := {
   unitName := `Reg.D5.S3.Fourier.Asymptotics.PeriodicSublevelSampling.unit
   realizationName := `Reg.D5.S3.Fourier.Asymptotics.PeriodicSublevelSampling.source_registration
   realizationSource := none
@@ -250,7 +267,7 @@ def registration :
   sourceSelection := some {
     owner := `D5.S3.Fourier.Asymptotics.PeriodicSublevelSampling
     definition := none
-    coordinates := #[]
+    coordinates := #[0]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body", "body",
         "body", "body", "body", "body", "body", "body", "body", "body", "body",

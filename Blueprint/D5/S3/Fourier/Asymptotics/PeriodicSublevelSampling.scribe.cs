@@ -23,7 +23,7 @@ internal sealed class PeriodicSublevelSamplingDocument : IScribeDocumentDefiniti
                     + "have invertible Fréchet derivatives Aᵢ. "
                     + "An empty list is allowed.")),
                 Paragraph(Text(
-                    "Let samples be indexed by a filter. In each finite sample take nonnegative "
+                    "Fix an index type and a filter on it. In each finite sample take nonnegative "
                     + "weights summing to one, a positive "
                     + "threshold εₙ tending to zero, and a positive integer cutoff Jₙ. For each "
                     + "nonzero integer frequency of maximum coordinate norm at most Jₙ, assume "
