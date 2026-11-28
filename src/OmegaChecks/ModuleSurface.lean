@@ -322,6 +322,19 @@ private def checkElaboration (env full : Environment) (reference? : Option Envir
     unless owner == expectedOwner && env.getModuleIdxFor? n == some idx &&
         data == ⟨[.standard `all symbol]⟩ do throw <| IO.userError s!"invalid native state entry {owner}/{n}"
   for (n, implementation) in Compiler.implementedByAttr.ext.getModuleEntries env idx do
+    if n == `Omega.Nat.modCore.go then
+      let some pinned := reference? | throw <| IO.userError "missing pinned modulo definition"
+      let some (.defnInfo impl) := full.find? implementation | throw <| IO.userError "missing modulo implementation"
+      unless owner == `OmegaInit.Prelude && env.getModuleIdxFor? n == some idx &&
+          implementation == mkPrivateNameCore owner `Omega.Nat.modCoreGoImpl &&
+          full.getModuleIdxFor? implementation == full.getModuleIdx? owner &&
+          InitKernelPort.exactDefinition pinned env.toKernelEnv `Nat.modCore.go &&
+          impl.value.getNumHeadLambdas == 5 &&
+          impl.value.getLambdaBody == mkApp2 (mkConst `Nat.mod) (mkBVar 1) (mkBVar 4) do
+        throw <| IO.userError "invalid modulo implementation for the pinned recurrence"
+      InitPort.NativeState.checkNativeNat full
+      InitPort.NativeState.verify full `Nat.mod #[(.tobject, true), (.tobject, true)] .tobject "lean_nat_mod"
+      continue
     let original := InitKernelPort.originalName n
     let expected := if original == `TypeName.typeName then some (mkPrivateNameCore `Init.Dynamic `TypeName.typeNameImpl)
       else if InitPort.DynamicValue.operations.contains original then some (InitPort.DynamicValue.implementation original)

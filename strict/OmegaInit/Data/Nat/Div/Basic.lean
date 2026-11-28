@@ -166,7 +166,38 @@ private theorem mod_step (d n : Nat) : Eq (Nat.mod n (succ d))
       (Nat.ble k n) (fun _ => Omega.rfl)
       (fun e => remainder_correct d n rest (sub_lt_fuel (le_of_ble_eq_true e) (Nat.le_refl (succ n)))) Omega.rfl)
 
-protected theorem modCore_eq_mod (n m : Nat) : Eq (Nat.modCore n m) (Nat.mod n m) := Omega.rfl
+private theorem remainder_branch {p : Prop} (dec : Decidable p) (step : p → Nat)
+    (n r : Nat) (same : ∀ h, Eq (step h) r) :
+    Eq (@dite Nat p dec step (fun _ => n)) (Bool.rec (motive := fun _ => Nat) n r (@Decidable.decide p dec)) :=
+  Decidable.rec (motive := fun d => Eq (@dite Nat p d step (fun _ => n))
+    (Bool.rec (motive := fun _ => Nat) n r (@Decidable.decide p d))) (fun bit =>
+      Bool.casesOn (motive := fun b => ∀ proof : Bool.Reflects b p,
+        Eq (@dite Nat p (Decidable.intro b proof) step (fun _ => n)) (Bool.rec (motive := fun _ => Nat) n r b)) bit
+        (fun _ => Omega.rfl) same) dec
+
+private theorem modCoreGo_remainder (d fuel : Nat) (positive : Nat.lt zero (succ d)) :
+    ∀ n (bound : Nat.lt n fuel), Eq (Nat.modCore.go (succ d) positive fuel n bound) (remainder d fuel n) :=
+  Nat.rec (motive := fun fuel => ∀ n (bound : Nat.lt n fuel),
+      Eq (Nat.modCore.go (succ d) positive fuel n bound) (remainder d fuel n))
+    (fun n bound => False.elim (not_succ_le_zero n bound))
+    (fun fuel ih n bound =>
+      let k := succ d
+      let rest := Nat.sub n k
+      remainder_branch (Nat.decLe k n)
+        (fun fit => Nat.modCore.go k positive fuel rest (Nat.div_rec_fuel_lemma positive fit bound))
+        n (remainder d fuel rest) (fun fit => ih rest (Nat.div_rec_fuel_lemma positive fit bound))) fuel
+
+private theorem modCoreGo_correct (y : Nat) (positive : Nat.lt zero y) (fuel n : Nat) (bound : Nat.lt n fuel) :
+    Eq (Nat.modCore.go y positive fuel n bound) (modCoreGoImpl y positive fuel n bound) :=
+  Nat.casesOn (motive := fun y => ∀ positive : Nat.lt zero y,
+      Eq (Nat.modCore.go y positive fuel n bound) (modCoreGoImpl y positive fuel n bound)) y
+    (fun impossible => False.elim (not_succ_le_zero zero impossible))
+    (fun d h => (modCoreGo_remainder d fuel h n bound).trans (remainder_correct d fuel n bound)) positive
+
+protected theorem modCore_eq_mod (n m : Nat) : Eq (Nat.modCore n m) (Nat.mod n m) :=
+  Nat.casesOn (motive := fun k => Eq (Nat.modCore n k) (Nat.mod n k)) m
+    (mod_zero n).symm (fun d =>
+      modCoreGo_correct (succ d) (Nat.succ_le_succ (Nat.zero_le d)) (succ n) n (Nat.le_refl (succ n)))
 
 theorem mod_eq_ite (x y : Nat) : Eq (Nat.mod x y)
     (Omega.ite (And (LT.lt zero y) (LE.le y x)) (Nat.mod (Nat.sub x y) y) x) :=
@@ -184,7 +215,10 @@ theorem mod_eq_ite (x y : Nat) : Eq (Nat.mod x y)
           (fun e => (ite_eq_left (And.intro (succ_le_succ (zero_le d)) (le_of_ble_eq_true e))).symm) Omega.rfl))
 
 protected theorem modCore_eq (x y : Nat) : Eq (Nat.modCore x y)
-    (Omega.ite (And (LT.lt zero y) (LE.le y x)) (Nat.modCore (Nat.sub x y) y) x) := mod_eq_ite x y
+    (Omega.ite (And (LT.lt zero y) (LE.le y x)) (Nat.modCore (Nat.sub x y) y) x) :=
+  (Nat.modCore_eq_mod x y).trans ((mod_eq_ite x y).trans
+    (congrArg (fun r => Omega.ite (And (LT.lt zero y) (LE.le y x)) r x)
+      (Nat.modCore_eq_mod (Nat.sub x y) y).symm))
 
 theorem div_eq_ite (x y : Nat) : Eq (Nat.div x y)
     (Omega.ite (And (LT.lt zero y) (LE.le y x)) (succ (Nat.div (Nat.sub x y) y)) zero) :=

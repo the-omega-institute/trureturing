@@ -313,11 +313,7 @@ theorem mod_lt (x : Nat) {y : Nat} (hy : Nat.lt zero y) : Nat.lt (Nat.mod x y) y
       (fun h => False.elim (Nat.not_succ_le_zero zero h))
       (fun d _ _ => remainder_lt d (succ (succ k)) (succ k)) y) x) y hy
 
-@[no_expose] protected def modCore (x y : Nat) : Nat := Nat.mod x y
-
-theorem modCore_lt {x y : Nat} (hy : Nat.lt zero y) : Nat.lt (Nat.modCore x y) y := mod_lt x hy
-
-attribute [irreducible] Nat.div Nat.mod Nat.modCore
+attribute [irreducible] Nat.div Nat.mod
 
 end Omega.Nat
 
@@ -766,6 +762,43 @@ port_definition instDecidableOr.match_1 with_native_code
 port_proof instDecidableOr._proof_1
 
 port_native_records Trans
+
+port_proof Nat.lt_add_one
+port_proof Nat.lt_succ_self
+port_proof Nat.le_succ
+port_proof Nat.pred_le
+port_proof Nat.sub_le
+port_proof Nat.lt_succ_of_le
+port_proof Nat.sub_lt
+port_proof Nat.lt_of_lt_of_le
+port_proof Nat.div_rec_lemma
+port_proof Nat.le_of_lt_succ
+port_proof Nat.div_rec_fuel_lemma
+port_definition Nat.div.go.match_1
+port_definition Nat.modCore.go._f
+port_definition Nat.modCore.go
+
+namespace Omega.Nat
+
+private def modCoreGoImpl (y : Nat) (_ : LT.lt 0 y) (fuel x : Nat) (_ : LT.lt x fuel) : Nat := Nat.mod x y
+
+attribute [implemented_by modCoreGoImpl] Nat.modCore.go
+
+@[expose, irreducible] public protected def modCore (x y : @& Nat) : Nat :=
+  dite (LT.lt zero y) (fun hy => Nat.modCore.go y hy (succ x) x (Nat.lt_succ_self x)) (fun _ => x)
+
+end Omega.Nat
+
+port_definition GE.ge
+port_definition Nat.eq_or_lt_of_le._f
+port_proof Nat.eq_or_lt_of_le
+port_proof Nat.le_succ_of_le
+port_definition Nat.lt_or_ge._f
+port_proof Nat.lt_or_ge
+port_proof Nat.lt_of_not_le
+port_proof Nat.not_lt_zero
+port_proof Nat.modCoreGo_lt
+port_proof Nat.modCore_lt
 
 public section
 namespace Bool
