@@ -17,8 +17,8 @@ internal sealed class HadamardSojournRigidityDocument : IScribeDocumentDefinitio
     private static readonly Formula Vector = Seq(FinTwo, Sp, To, Sp, C);
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Time-eight rigidity for the positive sojourn law of a two-state quantum walk.",
-        H("Hadamard rigidity at time eight"),
+        "Hadamard rigidity for the positive sojourn law of a two-state quantum walk.",
+        H("Hadamard rigidity of positive sojourn time"),
         Blocks(
             Entry("amplitude", "Coherent return amplitude", AmplitudeFormula(),
                 "The direction labels zero and one select the left and right rows of the coin. "
@@ -38,17 +38,23 @@ internal sealed class HadamardSojournRigidityDocument : IScribeDocumentDefinitio
                     + "to each even count strictly between zero and 4m and zero to every other natural count. "
                     + "Definition 3.1 gives the support and the common mass for positive m.",
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
-            Entry("exactUniform_eight_iff", "The time-eight equivalence", RigidityFormula(),
+            Entry("exactUniform_rigidity", "The time-eight test and all-time uniformity", RigidityFormula(),
                 "Diagonal phases reduce every unitary coin to the real rotation form with nonnegative parameters. "
                     + "A return word takes equally many left and right steps, so the overall phase depends only "
                     + "on its length. The remaining diagonal action preserves the norm of the initial vector. "
                     + "For the real rotation coin, the sum of the Gram matrices at counts two and six minus "
                     + "twice the Gram matrix at count four is 2c⁴s⁶(c²−s²)²(c²+s²) times the identity. "
                     + "The weight at count four must be positive, which excludes either parameter being zero. "
-                    + "Equality of the three weights then forces c = s. Conversely, in the balanced case, "
-                    + "the coherent amplitude is a common nonzero multiple of the matrix with rows (1,1) "
-                    + "and (−1,1) at the three specified counts. It vanishes at every other count. "
-                    + "The three equal positive weights give conditional probability one third each.",
+                    + "Equality of the three weights then forces c = s. For the balanced coin, the path "
+                    + "recurrence has a solution in formal series whose coefficients are polynomials in the "
+                    + "sojourn marker. On each half-line the solution is a power of a two-by-two transfer "
+                    + "matrix. The transfer matrices satisfy the first-return recurrence with the Catalan series. "
+                    + "The equation at the origin determines the return series. Rescaling time by the imaginary "
+                    + "unit and adding gives the even-in-semilength projection. At time 4m the resulting "
+                    + "sojourn polynomial is a nonzero common scalar times the sum of the powers with exponents "
+                    + "2,4,…,4m−2 and the matrix with rows (1,1) and (−1,1). Its Gram matrix is scalar. "
+                    + "Thus each unit initial state gives 2m−1 equal, positive weights and no others. "
+                    + "The all-time condition includes time eight.",
                 DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
 
     private static DocumentBlock Entry(string declaration, string title, Formula formula, string prose,
@@ -100,17 +106,21 @@ internal sealed class HadamardSojournRigidityDocument : IScribeDocumentDefinitio
         var i = Id("i");
         var j = Id("j");
         var phi = Id("phi");
-        return All("U", Coin, All("phi", Vector, Logic(
-            Logic(Eqn(Mul(new Formula.Power(U, Id("H")), U), Num(1)), FormulaLogicOperator.And,
-                Eqn(IndexedSum(Seq(i, Sp, InMacro, Sp, FinTwo), SqNorm(Call("phi", i))), Num(1))),
-            FormulaLogicOperator.Implies,
-            Logic(Call("exactUniform", U, phi, Num(2)), FormulaLogicOperator.Iff,
-                All("i", FinTwo, All("j", FinTwo,
-                    Eqn(Seq(Lvert, Call("U", i, j), Rvert), Frac(Num(1), Seq(Sqrt, Grp(Num(2))))))))));
+        var m = Id("m");
+        var balance = All("i", FinTwo, All("j", FinTwo,
+            Eqn(Seq(Lvert, Sp, Call("U", i, j), Sp, Rvert), Frac(Num(1), Seq(Sqrt, Grp(Num(2)))))));
+        var allTimes = All("m", N, Logic(
+            new Formula.Relation(Num(1), FormulaRelationOperator.LessThanOrEqual, m),
+            FormulaLogicOperator.Implies, Call("exactUniform", U, phi, m)));
+        var hypotheses = Logic(Eqn(Mul(new Formula.Power(U, Id("H")), U), Num(1)), FormulaLogicOperator.And,
+            Eqn(IndexedSum(Seq(i, Sp, InMacro, Sp, FinTwo), SqNorm(Call("phi", i))), Num(1)));
+        return All("U", Coin, All("phi", Vector, Logic(hypotheses, FormulaLogicOperator.Implies,
+            Logic(Logic(Call("exactUniform", U, phi, Num(2)), FormulaLogicOperator.Iff, balance),
+                FormulaLogicOperator.And, Logic(balance, FormulaLogicOperator.Iff, allTimes)))));
     }
 
     private static Formula IndexedSum(Formula index, Formula summand) => Seq(new Formula.Subscript(Sum, index), Sp, summand);
-    private static Formula SqNorm(Formula value) => new Formula.Power(Seq(Lvert, value, Rvert), Num(2));
+    private static Formula SqNorm(Formula value) => new Formula.Power(Seq(Lvert, Sp, value, Sp, Rvert), Num(2));
     private static Formula Frac(Formula a, Formula b) => new Formula.Fraction(a, b);
     private static Formula Mul(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Multiply, b);
     private static Formula Sub(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Subtract, b);

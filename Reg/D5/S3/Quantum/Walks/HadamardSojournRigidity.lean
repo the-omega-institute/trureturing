@@ -2,7 +2,7 @@ import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.SingleDependentReadout
 import D5.S3.Quantum.Walks.HadamardSojournRigidity
 
-/-! The time-eight conditional law as a readout on the coin. -/
+/-! Entry moduli as observations of the direction-basis coin. -/
 
 namespace Reg.D5.S3.Quantum.Walks.HadamardSojournRigidity
 
@@ -19,18 +19,20 @@ private abbrev Coin := Matrix (Fin 2) (Fin 2) ℂ
 private abbrev Vector := Fin 2 → ℂ
 
 abbrev signature :=
-  Reg.Support.SingleDependentReadout.signature Vector (fun _ => Coin) (fun _ => Prop)
+  Reg.Support.SingleDependentReadout.signature (Σ _ : Fin 2, Fin 2) (fun _ => Coin) (fun _ => ℝ)
 
 def actual : Realization signature :=
-  realize signature (fun _ φ U => exactUniform U φ 2) (fun a => nomatch a)
+  realize signature (fun _ ij U => ‖U ij.1 ij.2‖) (fun a => nomatch a)
 
 def rejected : Realization signature :=
-  realize signature (fun _ _ _ => False) (fun a => nomatch a)
+  realize signature (fun _ _ _ => 0) (fun a => nomatch a)
 
 def arena : Arena where
   signature := signature
   Law R := ∀ (U : Coin) (φ : Vector), Uᴴ * U = 1 → (∑ i, Complex.normSq (φ i)) = 1 →
-    (R.readout () φ U ↔ ∀ i j, ‖U i j‖ = 1 / Real.sqrt 2)
+    (exactUniform U φ 2 ↔ ∀ i j, R.readout () ⟨i, j⟩ U = 1 / Real.sqrt 2) ∧
+      ((∀ i j, ‖U i j‖ = 1 / Real.sqrt 2) ↔
+        ∀ m : ℕ, 1 ≤ m → exactUniform U φ m)
 
 private def balancedCoin : Coin :=
   let a := (↑(1 / Real.sqrt 2 : ℝ) : ℂ)
@@ -66,38 +68,33 @@ private def initial : Vector := ![1, 0]
 
 private lemma initial_unit : (∑ i, Complex.normSq (initial i)) = 1 := by simp [initial]
 
-private lemma identity_unbalanced : ¬ ∀ i j : Fin 2, ‖(1 : Coin) i j‖ = 1 / Real.sqrt 2 := by
-  intro h
-  have hpos : 0 < 1 / Real.sqrt 2 := by positivity
-  have hzero : 0 = 1 / Real.sqrt 2 := by simpa using h 0 1
-  exact hpos.ne' hzero.symm
-
 private lemma rejected_fails : ¬ arena.Law rejected := by
   intro h
-  exact (h balancedCoin initial balancedCoin_unitary initial_unit).mpr balancedCoin_balanced
+  have hpos : 0 < 1 / Real.sqrt 2 := by positivity
+  have hunif := (exactUniform_rigidity balancedCoin initial balancedCoin_unitary initial_unit).1.mpr
+    balancedCoin_balanced
+  exact hpos.ne' ((h balancedCoin initial balancedCoin_unitary initial_unit).1.mp hunif 0 1).symm
 
 private lemma dependence : ObservationalDependence signature actual := by
   intro i
   cases i
-  refine ⟨initial, balancedCoin, (1 : Coin), ?_⟩
-  intro eq
-  have h := (exactUniform_eight_iff balancedCoin initial balancedCoin_unitary initial_unit).mpr
-    balancedCoin_balanced
-  have hid : exactUniform (1 : Coin) initial 2 := Eq.mp eq h
-  exact identity_unbalanced
-    ((exactUniform_eight_iff (1 : Coin) initial (by simp) initial_unit).mp hid)
+  refine ⟨⟨0, 1⟩, balancedCoin, (1 : Coin), ?_⟩
+  change ‖balancedCoin 0 1‖ ≠ ‖(1 : Coin) 0 1‖
+  have hpos : 0 < 1 / Real.sqrt 2 := by positivity
+  rw [balancedCoin_balanced]
+  simpa using hpos.ne'
 
-def family : Registration arena (type_of% @exactUniform_eight_iff) where
+def family : Registration arena (type_of% @exactUniform_rigidity) where
   actual := actual
   bridge := Iff.rfl
-  variation := ⟨exactUniform_eight_iff, rejected, rejected_fails⟩
+  variation := ⟨exactUniform_rigidity, rejected, rejected_fails⟩
   sensitivity := Reg.Support.SingleDependentReadout.sensitivity _ _ _ rejected_fails
   dependence := dependence
 
 def registration :
     Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-      (@exactUniform_eight_iff) (Realization signature) Unit Unit where
-  unitName := `D5.S3.Quantum.Walks.HadamardSojournRigidity.exactUniform_eight_iff.__information_unit
+      (@exactUniform_rigidity) (Realization signature) Unit Unit where
+  unitName := `D5.S3.Quantum.Walks.HadamardSojournRigidity.exactUniform_rigidity.__information_unit
   realizationName := `Reg.D5.S3.Quantum.Walks.HadamardSojournRigidity.family
   realizationSource := none
   generated := false
@@ -108,7 +105,7 @@ def registration :
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ φ U => exactUniform U φ 2) (fun a => nomatch a))
+  readout := some (realize signature (fun _ ij U => ‖U ij.1 ij.2‖) (fun a => nomatch a))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -116,12 +113,12 @@ def registration :
   sourceSelection := some {
     owner := `D5.S3.Quantum.Walks.HadamardSojournRigidity
     definition := none
-    coordinates := #[1]
+    coordinates := #[4, 5]
     readouts := #[{
-      path := #["body", "body", "body", "body", "fn", "arg"]
+      path := #["body", "body", "body", "body", "fn", "arg", "arg", "body", "body", "fn", "arg"]
       stateBinder := 0
       functionOperand := false
-      stateOperand := some #["fn", "fn", "arg"]
+      stateOperand := some #["arg", "fn", "fn"]
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
