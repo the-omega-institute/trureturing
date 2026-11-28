@@ -50,7 +50,7 @@ abbrev prev {L : ℕ} (j : Fin L) : Fin L := (finRotate L).symm j
 @[simp] private theorem prev_next {L : ℕ} (j : Fin L) : prev (next j) = j :=
   (finRotate L).symm_apply_apply j
 
-private theorem next_val {L : ℕ} (j : Fin L) :
+theorem next_val {L : ℕ} (j : Fin L) :
     (next j).val = if j.val + 1 < L then j.val + 1 else 0 := by
   cases L with
   | zero => exact Fin.elim0 j
@@ -63,7 +63,7 @@ private theorem next_val {L : ℕ} (j : Fin L) :
     · have hv : j.val < n := Fin.val_lt_last hj
       simp [hj, show j.val + 1 < n + 1 by omega]
 
-private theorem prev_val {L : ℕ} (j : Fin L) :
+theorem prev_val {L : ℕ} (j : Fin L) :
     (prev j).val = if j.val = 0 then L - 1 else j.val - 1 := by
   have h := next_val (prev j)
   rw [next_prev] at h
@@ -121,7 +121,7 @@ private theorem center_involutive {L : ℕ} (j : Fin L) :
   intro w
   funext i
   by_cases h : i = j
-  · cases w i <;> simp [centerMove, h, centerSwap]
+  · cases hwi : w i <;> simp [centerMove, h, hwi, centerSwap]
   · simp [centerMove, h]
 
 private theorem flank_involutive {L : ℕ} (j : Fin L) :
@@ -129,7 +129,7 @@ private theorem flank_involutive {L : ℕ} (j : Fin L) :
   intro w
   funext i
   by_cases h : i = prev j ∨ i = next j
-  · cases w i <;> simp [flankMove, h, signSwap]
+  · cases hwi : w i <;> simp [flankMove, h, hwi, signSwap]
   · simp [flankMove, h]
 
 private theorem prev_ne_center {L : ℕ} (hL : 5 ≤ L) (j : Fin L) : prev j ≠ j := by
@@ -162,7 +162,7 @@ private theorem center_allowed {L : ℕ} (hL : 5 ≤ L) (j : Fin L) (w : Word L)
 private theorem flank_empty {L : ℕ} (j : Fin L) (w : Word L) (i : Fin L) :
     flankMove j w i = .e ↔ w i = .e := by
   by_cases h : i = prev j ∨ i = next j
-  · cases w i <;> simp [flankMove, h, signSwap]
+  · cases hwi : w i <;> simp [flankMove, h, hwi, signSwap]
   · simp [flankMove, h]
 
 private theorem center_blockade {L : ℕ} (hL : 5 ≤ L) (j : Fin L) (x : Config L)
@@ -207,6 +207,57 @@ private theorem p_zero_of_flanks {L : ℕ} {x : Config L} {j : Fin L}
   obtain hc | hr := x.property j
   · simp [p, pTriple, bit, h.1, h.2, hc]
   · exact (h.2 hr).elim
+
+private theorem center_complement (outer c : Rung) (hc : c ≠ .minus) :
+    pTriple outer .e (centerSwap c) + pTriple outer .e c = 1 ∧
+      pTriple (centerSwap c) .e outer + pTriple c .e outer = 1 := by
+  cases outer <;> cases c <;> simp_all [pTriple, bit, centerSwap]
+
+private theorem flank_complement (c : Rung) (hc : c ≠ .e) :
+    pTriple .e (signSwap c) .e + pTriple .e c .e = 1 := by
+  cases c <;> simp_all [pTriple, bit, signSwap]
+
+private theorem center_flip_p {L : ℕ} (hL : 5 ≤ L) {j : Fin L}
+    {x y : Config L} (h : centerAllowed j x.val) (hy : y.val = centerMove j x.val) :
+    p y (prev j) + p x (prev j) = 1 ∧ p y (next j) + p x (next j) = 1 := by
+  have hl : prev (prev j) ≠ j := by
+    have hn := (next_ne_prev hL (prev j)).symm
+    simpa using hn
+  have hr : next (next j) ≠ j := by
+    have hn := next_ne_prev hL (next j)
+    simpa using hn
+  have left := (center_complement (x.val (prev (prev j))) (x.val j) h.2.1).1
+  have right := (center_complement (x.val (next (next j))) (x.val j) h.2.1).2
+  constructor
+  · simpa [p, hy, centerMove, hl, prev_ne_center hL, h.1] using left
+  · simpa [p, hy, centerMove, hr, next_ne_center hL, h.2.2] using right
+
+private theorem flank_flip_p {L : ℕ} {j : Fin L}
+    {x y : Config L} (h : flanksAllowed j x.val) (hy : y.val = flankMove j x.val) :
+    p y (prev j) + p x (prev j) = 1 ∧ p y (next j) + p x (next j) = 1 := by
+  have hl : x.val (prev (prev j)) = .e := by
+    have hb := x.property (prev (prev j))
+    rw [next_prev] at hb
+    exact hb.resolve_right h.1
+  have hc : x.val j = .e := (x.property j).resolve_right h.2
+  have hr : x.val (next (next j)) = .e := (x.property (next j)).resolve_left h.2
+  have yl : y.val (prev (prev j)) = .e := by
+    rw [hy, flank_empty]
+    exact hl
+  have yc : y.val j = .e := by
+    rw [hy, flank_empty]
+    exact hc
+  have yr : y.val (next (next j)) = .e := by
+    rw [hy, flank_empty]
+    exact hr
+  have yprev : y.val (prev j) = signSwap (x.val (prev j)) := by
+    simp [hy, flankMove]
+  have ynext : y.val (next j) = signSwap (x.val (next j)) := by
+    simp [hy, flankMove]
+  constructor
+  · simpa [p, yl, yc, hl, hc, yprev] using flank_complement _ h.1
+  · simpa [p, yc, yr, hc, hr, ynext] using flank_complement _ h.2
+
 
 noncomputable section
 
@@ -255,7 +306,7 @@ private theorem S_symm {L : ℕ} (hL : 5 ≤ L) (j : Fin L) (x y : Config L) :
   rw [if_congr ⟨hA x y, hA y x⟩ rfl rfl, if_congr ⟨hF x y, hF y x⟩ rfl rfl]
 
 /-- A jammed basis word has a zero row for the paper's controlled generator. -/
-theorem jammed_zero_row {L : ℕ} (j : Fin L) {x : Config L} (hx : Jammed x)
+private theorem jammed_zero_row {L : ℕ} (j : Fin L) {x : Config L} (hx : Jammed x)
     (y : Config L) (hL : 5 ≤ L) : T j x y = 0 := by
   rw [T_apply, S_symm hL j y x]
   by_cases hp : p x j = 0
@@ -265,6 +316,36 @@ theorem jammed_zero_row {L : ℕ} (j : Fin L) {x : Config L} (hx : Jammed x)
     have ha : ¬centerAllowed j x.val := fun h => hp (p_zero_of_center h)
     have hf : ¬flanksAllowed j x.val := fun h => hp (p_zero_of_flanks h)
     simp [S, A, F, ha, hf]
+
+/-- A jammed basis word has a zero column and row for Eq. (40). -/
+theorem jammed_zero_entries {L : ℕ} (hL : 5 ≤ L) (j : Fin L)
+    {x : Config L} (hx : Jammed x) (y : Config L) : T j y x = 0 ∧ T j x y = 0 := by
+  classical
+  refine ⟨?_, jammed_zero_row j hx y hL⟩
+  rw [T_apply]
+  by_cases ha : centerAllowed j x.val ∧ y.val = centerMove j x.val
+  · obtain ⟨hl, hr⟩ := hx j (p_zero_of_center ha.1)
+    obtain ⟨al, ar⟩ := center_flip_p hL ha.1 ha.2
+    have he : p y (prev j) = p y (next j) := by omega
+    simp [he]
+  by_cases hf : flanksAllowed j x.val ∧ y.val = flankMove j x.val
+  · obtain ⟨hl, hr⟩ := hx j (p_zero_of_flanks hf.1)
+    obtain ⟨al, ar⟩ := flank_flip_p hf.1 hf.2
+    have he : p y (prev j) = p y (next j) := by omega
+    simp [he]
+  simp [S, A, F, ha, hf]
+
+def ket {L : ℕ} (x : Config L) : Config L → ℂ := by
+  classical
+  exact Pi.single x 1
+
+theorem jammed_kills {L : ℕ} (hL : 5 ≤ L) (j : Fin L)
+    {x : Config L} (hx : Jammed x) : T j *ᵥ ket x = 0 ∧ ket x ᵥ* T j = 0 := by
+  classical
+  unfold ket
+  rw [Matrix.mulVec_single_one, Matrix.single_one_vecMul]
+  exact ⟨funext fun y => (jammed_zero_entries hL j hx y).1,
+    funext fun y => (jammed_zero_entries hL j hx y).2⟩
 
 end
 
