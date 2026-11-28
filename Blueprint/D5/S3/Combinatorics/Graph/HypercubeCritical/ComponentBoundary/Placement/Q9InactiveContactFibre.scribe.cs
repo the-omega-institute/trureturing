@@ -107,7 +107,8 @@ internal sealed class Q9InactiveContactFibreDocument : IScribeDocumentDefinition
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text("The 258 vertices contribute 129 points on the chosen parity and 215 edges in the five free directions. Count each pure fibre against sixteen possible points. Count each mixed fibre against six points and fifteen free edges.")),
-                    Paragraph(Text("Five times the total mixed occupancy deficit plus the mixed edge deficit is at most twelve with five pure fibres and forty-one with six. With five pure fibres, all eleven mixed fibres contain at least five selected points. A four-point mixed fibre would cost at least two points and at least three free edges, exceeding the weighted deficit of twelve."))),
+                    Paragraph(Text("Five times the total mixed occupancy deficit plus the mixed edge deficit is at most twelve with five pure fibres. All eleven mixed fibres contain at least five points on the chosen parity because a four-point fibre would cost two points and three edges.")),
+                    Paragraph(Text("A pure fibre facing an opposite mixed bank of size five has at least eight holes. At eight occupied points the signed energy bound caps its free edges at twenty-one. This improves its exposed edge budget by thirteen. The five-pure budget cannot absorb such an exposure. For six pure fibres the weighted mixed deficits plus thirteen per exposed pure fibre are at most forty-one."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("q9-six-pure-capacity"),
