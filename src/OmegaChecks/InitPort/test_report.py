@@ -188,6 +188,29 @@ class CoverageTest(unittest.TestCase):
             with self.subTest(change=change), self.assertRaisesRegex(ValueError, "order type dependency"):
                 check_coverage(data | {"declarations": [row | change]})
 
+    def test_module_embedding_requires_the_model_refutation_of_its_pinned_instance(self):
+        owner = "Init.Grind.Module.Envelope"
+        prefix = "Lean.Grind.IntModule.OfNatModule."
+        instance = prefix + "ofNatModule"
+        proof = "OmegaChecks.InitBoundaries.RepresentativeQuotient.refuteEnvelopeCancellation"
+        name = prefix + "toQ_smul"
+        embedding = site(owner, name, matchingNameAndModule=True, strictModule="Omega" + owner,
+                         originalTypeChecked=False, originalTypeGap="missing type dependencies: Omega." + instance)
+        operation = site(owner, instance, kind="definition", representativeRefuter=proof)
+        data = inventory(embedding, operation)
+        data.update(schemaVersion=6, certifiedRepresentativeRefutations=[[owner, instance, instance, proof]])
+        data["summary"]["originalTypesChecked"] = 0
+        self.assertEqual(check_coverage(data), (0, [(owner, name)]))
+        embedding["originalTypeEnvelopeInstance"] = instance
+        data["certifiedEnvelopeTypeDependencies"] = [[owner, name, instance, proof]]
+        self.assertEqual(check_coverage(data), (0, []))
+        with self.assertRaisesRegex(ValueError, "lack the counterexample"):
+            check_coverage(data | {"certifiedRepresentativeRefutations": []})
+        with self.assertRaisesRegex(ValueError, "uncertified module instance"):
+            check_coverage(data | {"declarations": [embedding | {"originalTypeGap": "different"}, operation]})
+        with patch("report.envelope_type_certificates", return_value=[]), self.assertRaisesRegex(ValueError, "live module embedding"):
+            verify_complete(data, Path("product"), *check_coverage(data))
+
     def test_original_type_requiring_a_polymorphic_choice_operator(self):
         owner, name = "Init.Classical", "Classical.epsilon_singleton"
         dep, proof = "Classical.epsilon", "OmegaChecks.InitBoundaries.choiceFromEpsilon"

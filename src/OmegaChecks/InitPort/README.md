@@ -96,6 +96,8 @@ python3 src/OmegaChecks/InitPort/report.py .lake/init-port-all --require-complet
 
 `originalTypeOrderDependencies` 记录原类型中直接使用正向或反向蕴涵偏序实例的公开定理。核验器在官方环境删除该实例并检查原类型确实报告缺少这一个常量。对任意候选偏序，若它接受钉版实例在任意两个命题间的比较，偏序反对称性即推出 `propext`。归约在严格库上从空内核重放。定理使用比较关系投影后的完整表述仍在两侧公共内核核验，原类型所需的实例列入有证明的例外。[检查实现](ImplicationOrderCheck.lean)
 
+整数模包络的 `toQ_add`、`toQ_smul` 和 `toQ_zero` 在等式右端从 `ofNatModule` 取运算。按官方原型抽象该处的载体和实例参数，可恢复完整的整数模实例。把载体取为自然数，其加法消去律在代表元商模型中要求 `(1, 1) = (0, 0)`，取第一投影即得矛盾。严格库中的代表元等式可单独使用，原型的限制记在 `originalTypeEnvelopeInstance`。[实例使用和反例核验](EnvelopeInstanceCheck.lean)
+
 `Classical.epsilon_singleton` 的官方类型使用 `Classical.epsilon`，闭区间迭代方程 `Std.Rxc.Iterator.instIteratorLoop.loop.eq_1` 的右端使用 `WellFounded.extrinsicFix₃`。分别从公开内核移除相应算子后，原式在类型检查时报告缺少该常量。给出任一算子的完整多态类型即可构造 `Classical.choice`，两个归约均在严格后端从空内核重放。盘点用 `originalTypeChoiceDependency` 标明两处原型缺口，保留严格后端已有的特化。[核验实现](ChoiceTypeDependencyCheck.lean)
 
 `List.findFinIdx?_eq_pmap_findIdx?` 和 `Array.findFinIdx?_eq_pmap_findIdx?` 的原文在构造 `Fin` 的下标界证明中使用 `propext`。把这一证明换成从已找到下标取得的界，整个命题在官方公开内核中与原文定义等价，在严格公开内核中与导出的定理类型定义等价。两侧普通导入均可直接使用定理证明相同的完整命题；把结论改成总是返回 `none` 时，两侧都拒绝。严格内核从空环境重放这两条定理。`finBoundProofReplacementChecked` 单独计录这种已移植的完整命题。[双端核验](FinBoundCheck.lean)
