@@ -12,10 +12,14 @@ public import Mathlib.Basic.Complex.Basic
 public import Mathlib.GroupTheory.GroupAction.Basic
 public import Mathlib.LinearAlgebra.Dimension.Constructions
 public import Mathlib.LinearAlgebra.FiniteDimensional.Basic
+public import Mathlib.LinearAlgebra.Trace
+public import Mathlib.RingTheory.Etale.Basic
 import Mathlib.Algebra.BigOperators.Ring.Finset
+import Mathlib.Algebra.DirectSum.LinearMap
 import Mathlib.Algebra.Order.BigOperators.Group.Finset
 import Mathlib.GroupTheory.GroupAction.Quotient
 import Mathlib.LinearAlgebra.Pi
+import Mathlib.RingTheory.Etale.Field
 import OmegaBuild.Commands
 
 /-!
@@ -42,6 +46,36 @@ open scoped BigOperators
 variable {K B : Type*} [Group K] [AddCommGroup B] [Module ℂ B]
 variable {grade : K → Submodule ℂ B} {μ : B →ₗ[ℂ] B →ₗ[ℂ] B} {e : B}
 variable {α : K → K → K → ℂˣ}
+
+/-- The ordinary trace of left multiplication pairs a nonzero homogeneous vector
+with a vector of inverse degree. This is the regular-trace version of the
+degree argument in Davydov–Simmons, [Proposition 2.9](https://arxiv.org/html/1603.04650#S2.Thmtheo9). -/
+theorem exists_inverse_degree_of_nondegenerate_regular_trace [DecidableEq K] [FiniteDimensional ℂ B]
+    (decomposition : DirectSum.IsInternal grade)
+    (mul_mem : ∀ {g h : K} {a b : B}, a ∈ grade g → b ∈ grade h → μ a b ∈ grade (g * h))
+    (trace_pairing : ∀ a : B, a ≠ 0 → ∃ b : B, LinearMap.trace ℂ B (μ (μ a b)) ≠ 0)
+    {g : K} {a : B} (ha : a ∈ grade g) (ha₀ : a ≠ 0) :
+    ∃ b ∈ grade g⁻¹, LinearMap.trace ℂ B (μ (μ a b)) ≠ 0 := by
+  classical
+  have trace_zero {d : K} {c : B} (hc : c ∈ grade d) (hd : d ≠ 1) :
+      LinearMap.trace ℂ B (μ c) = 0 :=
+    LinearMap.trace_eq_zero_of_mapsTo_ne decomposition (d * ·)
+      (fun h => mul_ne_right.mpr hd) (fun _ _ hv => mul_mem hc hv)
+  obtain ⟨y, hy⟩ := trace_pairing a ha₀
+  obtain ⟨parts, hparts⟩ := decomposition.surjective y
+  change DirectSum.coeLinearMap grade parts = y at hparts
+  rw [DirectSum.coeLinearMap_eq_dfinsuppSum] at hparts
+  change (∑ h ∈ parts.support, (parts h : B)) = y at hparts
+  let tr : B →ₗ[ℂ] ℂ := (LinearMap.trace ℂ B).comp (μ.comp (μ a))
+  change tr y ≠ 0 at hy
+  rw [← hparts, map_sum, Finset.sum_eq_single g⁻¹] at hy
+  · exact ⟨parts g⁻¹, (parts g⁻¹).property, hy⟩
+  · intro h _ hne
+    have hd : g * h ≠ 1 := fun heq => hne (mul_left_cancel (heq.trans (mul_inv_cancel g).symm))
+    exact trace_zero (mul_mem ha (parts h).property) hd
+  · intro h
+    rw [DFinsupp.notMem_support_iff.mp h]
+    exact tr.map_zero
 
 section Multiplication
 
@@ -147,6 +181,63 @@ private theorem neutral_mul_assoc {g h : K} {p a b : B}
     (hp : p ∈ grade 1) (ha : a ∈ grade g) (hb : b ∈ grade h) :
     μ (μ p a) b = μ p (μ a b) := by
   simpa only [normalized 1 g h (Or.inl rfl), Units.val_one, one_smul] using twisted_assoc hp ha hb
+
+include mul_mem twisted_assoc normalized in
+/-- The commutative neutral algebra, identified with degree one with its induced
+multiplication and unit, is finite étale if the ordinary trace pairing on `B`
+is left nondegenerate. -/
+theorem neutral_finite_etale_of_nondegenerate_regular_trace
+    [DecidableEq K] [FiniteDimensional ℂ B] {A : Type*} [CommRing A] [Algebra ℂ A]
+    (decomposition : DirectSum.IsInternal grade)
+    (trace_pairing : ∀ a : B, a ≠ 0 → ∃ b : B, LinearMap.trace ℂ B (μ (μ a b)) ≠ 0)
+    (neutral : A ≃ₗ[ℂ] grade 1)
+    (neutral_mul : ∀ a b : A, (neutral (a * b) : B) = μ (neutral a : B) (neutral b : B))
+    (neutral_one : ∀ b : B, μ (neutral 1 : B) b = b) :
+    Module.Finite ℂ A ∧ Algebra.Etale ℂ A := by
+  let leftMul : A →*₀ Module.End ℂ B :=
+    { toFun := fun a => μ (neutral a : B)
+      map_zero' := by simp
+      map_one' := LinearMap.ext neutral_one
+      map_mul' := fun a b => by
+        let f : Module.End ℂ B := μ (neutral (a * b) : B)
+        let q : Module.End ℂ B := μ (neutral a : B) * μ (neutral b : B)
+        have h : f.comp (DirectSum.coeLinearMap grade) = q.comp (DirectSum.coeLinearMap grade) := by
+          apply DirectSum.linearMap_ext
+          intro g
+          apply LinearMap.ext
+          intro v
+          simp only [LinearMap.comp_apply, DirectSum.coeLinearMap_lof]
+          change μ (neutral (a * b) : B) (v : B) = μ (neutral a : B) (μ (neutral b : B) v)
+          rw [neutral_mul]
+          exact neutral_mul_assoc twisted_assoc normalized (neutral a).property
+            (neutral b).property v.property
+        apply LinearMap.ext
+        intro v
+        obtain ⟨w, rfl⟩ := decomposition.surjective v
+        exact LinearMap.congr_fun h w }
+  let finite : Module.Finite ℂ A := Module.Finite.of_surjective neutral.symm.toLinearMap
+    neutral.symm.surjective
+  let reduced : IsReduced A := ⟨fun a ha => by
+    by_contra ha₀
+    have hne : (neutral a : B) ≠ 0 := by
+      intro hzero
+      apply ha₀
+      exact neutral.injective (by simpa using (Subtype.ext hzero : neutral a = 0))
+    obtain ⟨b, hb, htrace⟩ :=
+      exists_inverse_degree_of_nondegenerate_regular_trace decomposition mul_mem trace_pairing
+        (neutral a).property hne
+    obtain ⟨c, hc⟩ := neutral.surjective ⟨b, by simpa only [inv_one] using hb⟩
+    have hbc : (neutral c : B) = b := congrArg Subtype.val hc
+    have hnil := ((Commute.all a c).isNilpotent_mul_right ha).map leftMul
+    have hz := (LinearMap.isNilpotent_trace_of_isNilpotent hnil).eq_zero
+    change LinearMap.trace ℂ B (μ (neutral (a * c) : B)) = 0 at hz
+    rw [neutral_mul, hbc] at hz
+    exact htrace hz⟩
+  have : IsArtinianRing A := .of_finite ℂ A
+  let (m : MaximalSpectrum A) : Field (A ⧸ m.asIdeal) := Ideal.Quotient.field m.asIdeal
+  exact ⟨finite, (Algebra.Etale.iff_exists_algEquiv_prod ℂ A).mpr
+    ⟨MaximalSpectrum A, inferInstance, _, _, _,
+      (IsArtinianRing.equivPi A).restrictScalars ℂ, fun _ => ⟨inferInstance, inferInstance⟩⟩⟩
 
 include pairing twisted_assoc normalized in
 /-- A neutral idempotent with a one-dimensional neutral range has at most a line
@@ -319,13 +410,13 @@ section NeutralCoordinates
 variable {X : Type*} [Fintype K] [DecidableEq K] [Fintype X] [DecidableEq X] [Nonempty X]
     [MulAction K X] [MulAction.IsPretransitive K X]
 
-/-- For neutral coordinates of a twisted graded algebra, the occupied corners
-of each degree are exactly the coordinates fixed by that degree. -/
+/-- For a twisted graded algebra with nondegenerate regular trace, the occupied
+corners of each degree are exactly the neutral coordinates fixed by that degree. -/
 theorem finrank_grade_eq_card_fixedBy_of_multiplication
     (decomposition : DirectSum.IsInternal grade)
     (dimension : Module.finrank ℂ B = Fintype.card K)
     (mul_mem : ∀ {g h : K} {a b : B}, a ∈ grade g → b ∈ grade h → μ a b ∈ grade (g * h))
-    (pairing : ∀ {g : K} {a : B}, a ∈ grade g → a ≠ 0 → ∃ b ∈ grade g⁻¹, μ a b ≠ 0)
+    (trace_pairing : ∀ a : B, a ≠ 0 → ∃ b : B, LinearMap.trace ℂ B (μ (μ a b)) ≠ 0)
     (twisted_assoc : ∀ {g h k : K} {a b c : B}, a ∈ grade g → b ∈ grade h → c ∈ grade k →
       (α g h k : ℂ) • μ (μ a b) c = μ a (μ b c))
     (normalized : ∀ g h k : K, g = 1 ∨ h = 1 ∨ k = 1 → α g h k = 1)
@@ -340,6 +431,15 @@ theorem finrank_grade_eq_card_fixedBy_of_multiplication
     Module.finrank ℂ (grade g) = Nat.card (MulAction.fixedBy X g) ∧
       ∀ x : X, Module.finrank ℂ (LinearMap.range (neutralProjection μ mul_mem (neutral_mem x) g)) =
         (if g • x = x then 1 else 0) := by
+  let : FiniteDimensional ℂ B := Module.finite_of_finrank_pos (by
+    rw [dimension]
+    exact Fintype.card_pos)
+  have pairing {h : K} {a : B} (ha : a ∈ grade h) (ha₀ : a ≠ 0) :
+      ∃ b ∈ grade h⁻¹, μ a b ≠ 0 := by
+    obtain ⟨b, hb, htrace⟩ :=
+      exists_inverse_degree_of_nondegenerate_regular_trace decomposition mul_mem trace_pairing
+        ha ha₀
+    exact ⟨b, hb, fun hab => htrace (by rw [hab, map_zero, map_zero])⟩
   let P (h : K) (x : X) := neutralProjection μ mul_mem (neutral_mem x) h
   have sum_mul (b : B) : (∑ x : X, μ (p x) b) = b := by
     simpa only [map_sum, LinearMap.sum_apply, left_unit] using
@@ -368,6 +468,8 @@ theorem finrank_grade_eq_card_fixedBy_of_multiplication
 
 end NeutralCoordinates
 
+#print axioms exists_inverse_degree_of_nondegenerate_regular_trace
+#print axioms neutral_finite_etale_of_nondegenerate_regular_trace
 #print axioms grade_eq_span_singleton
 #print axioms homogeneous_mul_ne_zero
 #print axioms finrank_grade_eq_one
