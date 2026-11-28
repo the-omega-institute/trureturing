@@ -2,6 +2,7 @@ import json
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 from build import cyclic_declarations, snapshot_seed
 
@@ -27,6 +28,31 @@ class SeedSnapshotTest(unittest.TestCase):
                 deleted = "OmegaInit/Deleted" + part
                 self.assertFalse((root / "local" / deleted).exists())
                 self.assertEqual((root / "detached" / deleted).read_text(), "OmegaInit/Deleted")
+
+
+    def test_native_snapshot_survives_rebuild_and_matches_detached_artifacts(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            installed = root / "installed/lib/lean"
+            detached = root / "detached/lib/lean"
+            source = root / "installed/ir/OmegaInit.c"
+            source.parent.mkdir(parents=True)
+            source.write_text("first implementation")
+            for lib in [installed, detached]:
+                lib.mkdir(parents=True)
+                for part in [".olean", ".olean.server", ".olean.private", ".ir", ".ir.sig"]:
+                    (lib / ("OmegaInit" + part)).write_text("first version")
+            with patch("build.DEFAULT_SEED", installed):
+                snapshot_seed(installed, root / "first", native=root / "first-c")
+                snapshot_seed(detached, root / "cached", native=root / "cached-c")
+                source.write_text("second implementation")
+                (installed / "OmegaInit.ir").write_text("second version")
+                snapshot_seed(detached, root / "unmatched", native=root / "unmatched-c")
+                snapshot_seed(installed, root / "second", native=root / "second-c")
+            self.assertEqual((root / "first-c/OmegaInit.c").read_text(), "first implementation")
+            self.assertEqual((root / "cached-c/OmegaInit.c").read_text(), "first implementation")
+            self.assertFalse((root / "unmatched-c/OmegaInit.c").exists())
+            self.assertEqual((root / "second-c/OmegaInit.c").read_text(), "second implementation")
 
 
 class ModuleDependenciesTest(unittest.TestCase):

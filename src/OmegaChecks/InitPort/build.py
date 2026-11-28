@@ -1,6 +1,7 @@
 """Generate independent, audited kernel modules from the installed Lean Init."""
 import argparse
 from collections import Counter, defaultdict
+from filecmp import cmp
 from graphlib import CycleError, TopologicalSorter
 from path_io_test import check_paths
 from generated_native import check_runtime_ir, compile_generated
@@ -31,20 +32,45 @@ def all_modules():
                             for p in (lib / "Init").rglob("*.olean"))]
 
 
-def snapshot_seed(installed, seed, sources=None):
+def snapshot_seed(installed, seed, sources=None, native=None):
     parts = (".olean", ".olean.server", ".olean.private", ".ir", ".ir.sig")
     if sources is None:
-        files = [*installed.glob("OmegaInit.*"), *(installed / "OmegaInit").rglob("*")]
+        modules = [Path("OmegaInit.olean"), *(p.relative_to(installed)
+                   for p in (installed / "OmegaInit").rglob("*.olean"))]
     else:
         # Lake keeps artifacts of removed modules in its build directory.
-        modules = [sources / "OmegaInit.lean", *(sources / "OmegaInit").rglob("*.lean")]
-        files = [installed / module.relative_to(sources).with_suffix(part)
-                 for module in modules for part in parts]
-    for file in files:
-        if file.is_file() and file.name.endswith(parts):
-            dest = seed / file.relative_to(installed)
-            dest.parent.mkdir(parents=True, exist_ok=True)
-            shutil.copyfile(file, dest)
+        modules = [Path("OmegaInit.olean"), *(p.relative_to(sources).with_suffix(".olean")
+                   for p in (sources / "OmegaInit").rglob("*.lean"))]
+    for module in modules:
+        if not (installed / module).is_file():
+            continue
+        copied = []
+        for suffix in parts:
+            source = (installed / module).with_suffix(suffix)
+            if source.is_file():
+                dest = (seed / module).with_suffix(suffix)
+                dest.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copyfile(source, dest)
+                copied.append((source, dest))
+        if native is None:
+            continue
+        relative_c = module.with_suffix(".c")
+        c = installed.parents[1] / "ir" / relative_c
+        if not c.is_file():
+            # Detached bundles can borrow the local C only for a byte-identical module.
+            c = DEFAULT_SEED.parents[1] / "ir" / relative_c
+            if not c.is_file() or len(copied) != len(parts):
+                continue
+            cached = [(DEFAULT_SEED / dest.relative_to(seed), dest) for _, dest in copied]
+            if not all(path.is_file() and cmp(path, dest, shallow=False) for path, dest in cached):
+                continue
+            copied = cached
+        dest = native / relative_c
+        dest.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(c, dest)
+        # The directory may be rebuilt while a module is being collected.
+        if not all(cmp(path, snapshot, shallow=False) for path, snapshot in [*copied, (c, dest)]):
+            raise ValueError(f"seed changed while collecting {module}")
 
 
 def cyclic_declarations(path):
@@ -181,7 +207,7 @@ def compile_type_name(stage, product, artifact, inventory):
 
 
 
-def generate(stage, product, seed, roots, excluded, original_seed):
+def generate(stage, product, seed, roots, excluded):
     transfer = stage / "transfer"
     artifact = product / "lib"
     inventory = product / "inventory.jsonl"
@@ -317,8 +343,8 @@ def generate(stage, product, seed, roots, excluded, original_seed):
     }
     mixed_interfaces = {"Init.Prelude": {"Lean.Macro.instMonadQuotationMacroM", "Lean.Syntax",
                                           "Lean.Syntax.getNumArgs", "Lean.defaultMaxRecDepth"}}
-    compile_generated(stage, product, graph, original_seed.parents[1] / "ir",
-                      original_seed=original_seed, before_owner={"OmegaInit.ShareCommon": install_sharing},
+    compile_generated(stage, product, graph, stage / "seed-native",
+                      before_owner={"OmegaInit.ShareCommon": install_sharing},
                       check_sharing=check_sharing,
                       check_syntax_array=has_interfaces(inventory, {"Init.Prelude": {"Lean.TSyntaxArray.mkImpl", "Lean.TSyntaxArray.rawImpl"}}),
                       check_array_map=has_interfaces(inventory, {"Init.Data.Array.Basic": {"Array.mapMUnsafe", "Array.mapFinIdxMUnsafe"}}),
@@ -421,10 +447,10 @@ def main():
     target.parent.mkdir(parents=True, exist_ok=True)
     with tempfile.TemporaryDirectory(dir=target.parent, prefix=".init-port-") as work:
         stage = Path(work)
-        snapshot_seed(seed, stage / "seed", ROOT / "strict" if args.seed is None else None)
+        snapshot_seed(seed, stage / "seed", ROOT / "strict" if args.seed is None else None, stage / "seed-native")
         product = stage / "product"
         product.mkdir()
-        generate(stage, product, stage / "seed", roots, args.exclude, seed)
+        generate(stage, product, stage / "seed", roots, args.exclude)
         if not args.modules:
             report(product, require_complete=args.require_complete)
             omegamath.build(product, product / "lib", args.j, product / "omegamath-audit.txt")
