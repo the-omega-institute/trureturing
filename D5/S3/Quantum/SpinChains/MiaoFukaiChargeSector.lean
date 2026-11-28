@@ -123,7 +123,7 @@ private theorem cells_length {L : ℕ} (hL : 12 ≤ L) (b : Fin (blocks L) → B
   omega
 
 private theorem cells_chain {L : ℕ} (b : Fin (blocks L) → Bool) :
-    (cells b).head? = some .occupied ∧ (cells b ++ [.occupied]).IsChain Edge := by
+    (cells b).head? = some Cell.occupied ∧ (cells b ++ [Cell.occupied]).IsChain Edge := by
   have ht : residue L < 5 := Nat.mod_lt _ (by decide)
   have hchain (t : ℕ) (h : t < 5) (d : Bool) :
       (tail t ++ pad d).head? = some Cell.occupied ∧
@@ -132,10 +132,13 @@ private theorem cells_chain {L : ℕ} (b : Fin (blocks L) → Bool) :
       simp [tail, pad, tileA, tileB, List.isChain_cons, Edge]
   have h := hchain _ ht (padWithSingles L)
   have hend : ((tail (residue L) ++ pad (padWithSingles L)) ++ [Cell.occupied]).head? =
-      some Cell.occupied := by simp [List.head?_append, h.1]
+      some Cell.occupied := by rw [List.head?_append, h.1, Option.some_or]
   have hj := prefix_join b _ hend h.2
   refine ⟨?_, by simpa only [cells, List.append_assoc] using hj.2⟩
-  simpa only [cells, List.head?_append, h.1, Option.some_or] using hj.1
+  rw [cells, List.head?_append, h.1]
+  have hhead := hj.1
+  rw [List.head?_append, hend] at hhead
+  exact hhead
 
 private theorem cells_marks {L : ℕ} (b : Fin (blocks L) → Bool) :
     ((cells b).map Cell.mark).sum = deficit L := by
@@ -150,7 +153,8 @@ private theorem cells_marks {L : ℕ} (b : Fin (blocks L) → Bool) :
     interval_cases t <;> rfl
   have hp (d : Bool) : ((pad d).map Cell.mark).sum = if d then 3 else 0 := by
     cases d <;> rfl
-  simp [cells, deficit, hprefix, ht _ (Nat.mod_lt _ (by decide : 0 < 5)), hp, Nat.add_assoc]
+  have htail := ht (residue L) (Nat.mod_lt _ (by decide))
+  simp only [cells, deficit, List.map_append, List.sum_append, hprefix, htail, hp, Nat.add_assoc]
 
 private theorem prefix_decode {m : ℕ} (b : Fin m → Bool) (i : Fin m) :
     ((blockCells b).getD (5 * i.val + 2) .occupied).rung =
@@ -159,8 +163,8 @@ private theorem prefix_decode {m : ℕ} (b : Fin m → Bool) (i : Fin m) :
   | zero => exact Fin.elim0 i
   | succ m ih =>
     refine Fin.cases ?_ (fun j => ?_) i
-    · rw [blockCells, List.getD_append _ _ _ _ (by rw [block_length]; decide)]
-      cases h : b 0 <;> simp [block, h, tileA, tileB, Cell.rung, List.getD]
+    · rw [blockCells, List.getD_append _ _ _ _ (by simp [block_length])]
+      cases h : b 0 <;> simp [block, tileA, tileB, Cell.rung, List.getD]
     · rw [blockCells, List.getD_append_right _ _ _ _ (by
         rw [block_length]
         have h := j.isLt
@@ -181,7 +185,7 @@ private theorem cells_edge {L : ℕ} (hL : 12 ≤ L) (b : Fin (blocks L) → Boo
   obtain ⟨hfirst, hchain⟩ := cells_chain b
   have hlen := cells_length hL b
   have hj := j.isLt
-  have hstep := List.isChain_iff_getElem.mp hchain j.val (by simp [hlen]; omega)
+  have hstep := List.isChain_iff_getElem.mp hchain j.val (by simp [hlen])
   have hget (k : ℕ) (hk : k < L) :
       (cells b ++ [.occupied])[k]'(by simp [hlen]; omega) =
         (cells b).getD k .occupied := by
@@ -198,7 +202,7 @@ private theorem cells_edge {L : ℕ} (hL : 12 ≤ L) (b : Fin (blocks L) → Boo
       rw [List.head?_eq_getElem?] at hfirst
       rw [List.getD_eq_getElem?_getD, hfirst, Option.getD_some]
     rw [hzero]
-    have hlast : ((cells b ++ [.occupied])[j.val + 1]'(by simp [hlen]; omega)) =
+    have hlast : ((cells b ++ [.occupied])[j.val + 1]'(by simp [hlen])) =
         Cell.occupied := by
       rw [List.getElem_append_right (by rw [hlen, hend])]
       simp [hlen, hend]
