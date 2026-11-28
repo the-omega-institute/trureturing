@@ -1,8 +1,8 @@
 /- GID: D5/S3/Combinatorics/SpectralGraph/MixedPowerExtrema
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Combinatorics/SpectralGraph/MixedPowerExtrema
    mirror-E: none(waiver:external-open-problem-resolution)
-   anchors: [gid:D5/S3/Combinatorics/Graph/ZeroForcing/GridPowerZeroForcingRefutation.graphPower, gid:D5/S3/Combinatorics/Graph/LinearForests/TreePathCuts.path_of_degree_le_two]
+   anchors: []
    utility: none
    digest: A path power minimizes the mixed largest eigenvalue and complete powers maximize it. -/
 

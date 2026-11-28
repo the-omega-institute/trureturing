@@ -1,8 +1,8 @@
 /- GID: D5/S3/Combinatorics/SpectralGraph/MixedPowerGraft
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Combinatorics/SpectralGraph/MixedPowerGraft
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [gid:D5/S3/Combinatorics/Graph/ZeroForcing/GridPowerZeroForcingRefutation.graphPower]
+   anchors: []
    utility: none
    digest: Moving a pendant tip toward the longer arm decreases the mixed largest eigenvalue of the power. -/
 
