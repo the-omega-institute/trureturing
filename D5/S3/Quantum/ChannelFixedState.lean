@@ -25,10 +25,12 @@
      10.1017/9781316848142). No specific theorem number was verified or attributed.
 -/
 
+import Mathlib.Analysis.CStarAlgebra.ContinuousFunctionalCalculus.Order
 import Mathlib.Analysis.Matrix.Order
 import Mathlib.Analysis.Normed.Module.FiniteDimension
 import Mathlib.Dynamics.BirkhoffSum.NormedSpace
-import Mathlib.Tactic
+import Mathlib.Tactic.Linarith
+import Mathlib.Tactic.Positivity
 
 namespace D5.S3.Quantum.ChannelFixedState
 
