@@ -56,7 +56,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachE
 
 *Commentary.*
 
-Let a finite chordal graph have every clique of size at most four. Gains are inverted upon reversal in a group whose pseudometric is invariant under left and right multiplication. If every triangle defect is at most epsilon, the edge errors of one potential are at most twice epsilon.
+Let a finite chordal graph have every clique of size at most four. Gains are inverted upon reversal in a group whose pseudometric is invariant under left and right multiplication. For nonnegative epsilon, if every triangle defect is at most epsilon, the edge errors of one potential are at most twice epsilon.
 
 In reverse simplicial elimination, record a two-factor residual on each edge and an ordering of each triangle with two controlled comparisons. The insertion rule supplies all three new triangle orderings and preserves the earlier ones.
 
@@ -138,7 +138,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachE
 
 *Commentary.*
 
-Let the adjacent bags of a clique tree meet in at least one and at most q vertices, where q is at least two. If the tree has a root at distance at most h from every bag, every skew Banach gain assignment of defect at most epsilon admits a potential with residual at most epsilon times q minus one minus the product of q minus two and the h-th power of the ratio of q minus one to q.
+Let the graph and the clique-tree bag index set be finite. Suppose adjacent bags meet in at least one and at most q vertices, where q is at least two. If the tree has a root at distance at most h from every bag, every skew Banach gain assignment of defect at most nonnegative epsilon admits a potential with residual at most epsilon times q minus one minus the product of q minus two and the h-th power of the ratio of q minus one to q.
 
 Distances through the root bound the clique-tree diameter by twice h. The center-extension recurrence begins at one and applies the separator averaging update. Solving this recurrence gives q minus one minus the product of q minus two and the h-th power of the ratio of q minus one to q.
 
@@ -406,7 +406,7 @@ The infimal uniform Banach error on all finite 3-tree stackings equals the infim
 
 Average an offline rule over copy changes. The difference between two spine retractions loses a factor for each prescribed copy choice. Summing those errors gives a correction that vanishes as the copy count grows. Each replicated history graph has a stacking presentation. Copying ancestral rules to replicated graphs and retracting to arbitrary stackings gives the reverse implication.
 
-**Theorem 1.30 (A sharp finite-copy localization factor).**
+**Theorem 1.30 (A depth-independent finite-copy localization factor).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.banach_to_causal`
 

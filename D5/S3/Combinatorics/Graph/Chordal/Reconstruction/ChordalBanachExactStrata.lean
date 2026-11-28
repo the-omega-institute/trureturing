@@ -919,7 +919,7 @@ theorem banach_causal_limit_for_build (R : ℝ) (hR : 0 ≤ R) :
       (offline_implies_banach (h m m ε hε)) g hg ht
 
 /-- Every universal Banach budget on the replicated family controls the
-single-copy ancestral budget at the sharp copy factor and every positive relaxation. -/
+single-copy ancestral budget at the stated copy factor and every positive relaxation. -/
 theorem banach_to_causal {R ε : ℝ} (hR : 0 ≤ R) (hε : 0 < ε) (hk : 0 < k)
     (h : BanachFeasible.{0} n k R) :
     CausalFeasible n ((R + ε) + 2 * (R + ε) / (k : ℝ)) :=

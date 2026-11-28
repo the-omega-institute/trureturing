@@ -191,7 +191,7 @@ theorem causal_offline_limit (R : ℝ) (hR : 0 ≤ R) :
   · intro h n k ε hε
     exact causal_to_offline (k := k) (h n ε hε)
 
-/-- Failure of the causal bound on the single-copy tree at the sharp rescaled
+/-- Failure of the causal bound on the single-copy tree at the rescaled
 budget yields a concrete finite-dimensional Banach obstruction on its replicated tree. -/
 theorem banach_obstruction_of_causal {R : ℝ} (hR : 0 ≤ R) (hk : 0 < k)
     (h : ¬CausalFeasible n (R + 2 * R / (k : ℝ))) :

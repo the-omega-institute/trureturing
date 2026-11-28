@@ -317,7 +317,7 @@ private theorem edgePart_norm (c : Chains V) : dualNorm B (edgePart c) ≤ dualN
 
 /-- An offline rooted chain family of error at most R has an ancestral
 localization with error at most R + 2R/k, where the number of copies is k+1. -/
-theorem sharp_localization (p : V → Chains V) (hp : ∀ v, Supported (graph n k) (p v))
+theorem localize_with_copy_bound (p : V → Chains V) (hp : ∀ v, Supported (graph n k) (p v))
     (hb : ∀ v, boundary (p v) = Pi.single v 1 - Pi.single o 1) (R : ℝ)
     (hR : 0 ≤ R) (hk : 0 < k)
     (hr : ∀ u v, (graph n k).Adj u v → dualNorm B (orientedEdge u v + p u - p v) ≤ R) :
@@ -395,7 +395,7 @@ theorem offline_to_causal {R : ℝ} (hR : 0 ≤ R) (hk : 0 < k)
     (h : OfflineFeasible n k R) : CausalFeasible n (R + 2 * R / (k : ℝ)) := by
   classical
   obtain ⟨p,hp,hb,hr⟩ := h
-  obtain ⟨q,hqb,hqs,hqr⟩ := sharp_localization p hp hb R hR hk hr
+  obtain ⟨q,hqb,hqs,hqr⟩ := localize_with_copy_bound p hp hb R hR hk hr
   let f : V → Vertex n 0 := forget
   let s : Vertex n 0 → V := selectCopy
   refine ⟨fun v => pushChain f (q (s v)), ?_, ?_, ?_⟩
