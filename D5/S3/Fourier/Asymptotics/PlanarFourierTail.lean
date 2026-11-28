@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: A sixth-power decay estimate bounds the absolute tail over the planar integer frequency lattice. -/
+   digest: Sixth-power decay bounds the absolute tail of planar integer frequencies. -/
 
 import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 import Mathlib.Algebra.Order.BigOperators.Group.LocallyFinite
@@ -14,6 +14,8 @@ import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.Positivity
 import Mathlib.Tactic.Ring
 import OmegaBuild.Commands
+
+/-! Absolute Fourier tails from counting square lattice shells. -/
 
 compile_only_with_mathlib
 
