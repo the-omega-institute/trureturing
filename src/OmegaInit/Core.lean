@@ -5,6 +5,7 @@ public import OmegaInit.Prelude
 /-! Namespace aliases to the pinned public interface. -/
 public section
 namespace Omega
+export _root_ (Subrelation)
 export _root_ (Decidable.byCases.match_1 DoResultBC DoResultBC.break.elim DoResultBC.continue.elim DoResultPR DoResultPR.pure.elim DoResultPR.return.elim DoResultPRBC DoResultPRBC.break.elim DoResultPRBC.continue.elim DoResultPRBC.pure.elim DoResultPRBC.return.elim DoResultSBC DoResultSBC.break.elim DoResultSBC.continue.elim DoResultSBC.pureReturn.elim Equivalence Exists ForIn ForIn' ForInStep ForInStep.done.elim ForInStep.yield.elim HasEquiv Iff InvImage LawfulBEq Nat.succ.inj Ne Ne.intro Ne.irrefl Ne.symm NonScalar Not.elim Not.imp Not.intro PNonScalar PSigma PSum PSum.inl.elim PSum.inr.elim Quot.exists_rep Quot.hrecOn Quot.indBeta Quot.indep Quot.inductionOn Quot.liftBeta Quotient Quotient.exists_rep Quotient.hrecOn Quotient.ind Quotient.inductionOn Quotient.inductionOn₂ Quotient.inductionOn₃ Quotient.ind₂ Quotient.lift Quotient.liftOn Quotient.liftOn₂ Quotient.lift₂ Quotient.mk Quotient.mk' ReflBEq Setoid Sigma Squash Squash.ind Squash.lift Squash.mk Subsingleton Subtype.instDecidableEq.match_1 Sum Sum.inl.elim Sum.inl.noConfusion Sum.inr.elim Sum.inr.noConfusion Thunk and_comm apply_eqRec bne cast_eq cast_heq decidable_of_decidable_of_eq decidable_of_decidable_of_iff decidable_of_decidable_of_iff.match_1 dite_eq_left dite_eq_right eagerReduce eqRec_heq eqRec_heq_iff eq_comm eq_self_iff_true equivalence_true false_iff_true false_imp_iff false_ne_true false_of_ne false_of_true_eq_false false_of_true_iff_false flip flip.eq_1 flip_flip heq_comm heq_eqRec_iff heq_of_eqRec_eq heq_of_eq_of_heq heq_of_heq_of_eq heq_self_iff_true id.eq_1 id_def if_neg if_pos iff_comm iff_def iff_def' iff_false_intro iff_false_left iff_false_right iff_iff_implies_and_implies iff_not_self iff_of_eq iff_of_false iff_of_true iff_true_intro iff_true_left iff_true_right imp_congr imp_congr_ctx imp_congr_left imp_congr_right imp_false imp_iff_not imp_iff_right imp_imp_imp imp_intro imp_not_comm imp_not_self imp_self imp_true_iff inline inline.eq_1 instBEqOption instBEqOption.beq instBEqProd instDecidableDite instDecidableEqEmpty instDecidableEqOfLawfulBEq instDecidableEqOfLawfulBEq.match_1 instDecidableEqPEmpty instDecidableEqPSigma instDecidableEqPSigma.match_1 instDecidableEqPSigma.match_3 instDecidableEqPSigma.match_5 instDecidableEqPUnit instDecidableEqProd instDecidableEqProd.match_1 instDecidableEqProd.match_3 instDecidableEqSigma instDecidableEqSigma.match_1 instDecidableEqSigma.match_3 instDecidableEqSigma.match_5 instDecidableEqSum instDecidableEqSum.decEq instDecidableEqSum.decEq.match_1 instDecidableFalse instDecidableIff instDecidableIff.match_1 instDecidableTrue instHasEquivOfSetoid instInhabitedForInStep instInhabitedForInStep.default instInhabitedMProd instInhabitedNonScalar instInhabitedNonScalar.default instInhabitedPNonScalar instInhabitedPNonScalar.default instInhabitedPProd instInhabitedPUnit instInhabitedProd instInhabitedProp instInhabitedThunk instInhabitedTrue instInhabitedTrue.default instSubsingletonPUnit instTransIff iteInduction ite_eq_left ite_eq_right mt ne_comm ne_false_of_self ne_self_iff_false ne_true_of_not neq_of_not_iff noConfusionEnum noConfusionTypeEnum not_congr not_eq_of_beq_eq_false not_false not_false_iff not_iff_false_intro not_not_intro not_not_not not_not_of_not_imp not_of_iff_false not_of_not_imp not_true of_iff_true optParam_eq or_comm proof_irrel strictAnd strictOr toBoolUsing trivial true_eq_false_of_false true_iff_false true_imp_iff true_ne_false type_eq_of_heq)
 end Omega
 namespace Omega.And
@@ -124,6 +125,12 @@ end Omega.Subtype
 namespace Omega.Sum
 export _root_.Sum (casesOn ctorElim ctorElimType ctorIdx inhabitedLeft inhabitedRight inl inr noConfusion noConfusionType nonemptyLeft nonemptyRight rec recOn)
 end Omega.Sum
+namespace Omega.Sum.inl
+export _root_.Sum.inl (inj)
+end Omega.Sum.inl
+namespace Omega.Sum.inr
+export _root_.Sum.inr (inj)
+end Omega.Sum.inr
 namespace Omega.Thunk
 export _root_.Thunk (bind casesOn fn fnImpl fn_eq_fnImpl get map mk pure rec recOn)
 end Omega.Thunk

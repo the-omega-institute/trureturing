@@ -652,3 +652,7 @@ end Decidable
 
 port_proof instSubsingletonPUnit
 attribute [instance] Omega.instSubsingletonPUnit
+
+port_definition Subrelation
+port_proof Sum.inl.inj
+port_proof Sum.inr.inj

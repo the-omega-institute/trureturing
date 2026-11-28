@@ -6,6 +6,7 @@ Authors: Mario Carneiro, Yury G. Kudryashov
 module
 prelude
 public import OmegaInit.Data.Sum.Basic
+public import OmegaInit.WF
 
 port_proof Sum.bnot_isLeft
 port_proof Sum.bnot_isRight
@@ -32,3 +33,21 @@ port_proof Sum.isLeft.eq_1 by_reflexivity
 port_proof Sum.isLeft.eq_2 by_reflexivity
 port_proof Sum.isRight.eq_1 by_reflexivity
 port_proof Sum.isRight.eq_2 by_reflexivity
+
+port_proof Sum.LiftRel.mono
+port_proof Sum.LiftRel.mono_left
+port_proof Sum.LiftRel.mono_right
+port_proof Sum.LiftRel.swap
+port_proof Sum.liftRel_swap_iff
+port_proof Sum.LiftRel.lex
+port_proof Sum.liftRel_subrelation_lex
+port_proof Sum.Lex.mono
+port_proof Sum.Lex.mono_left
+port_proof Sum.Lex.mono_right
+port_proof Sum.lex_acc_inl
+port_proof Sum.lex_acc_inr
+port_proof Sum.lex_wf
+port_proof Sum.inl_ne_inr
+port_proof Sum.inr_ne_inl
+port_proof Sum.inl.inj_iff
+port_proof Sum.inr.inj_iff

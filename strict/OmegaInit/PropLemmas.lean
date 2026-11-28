@@ -562,3 +562,6 @@ port_proof forall_const
 port_proof ne_of_apply_ne
 port_proof nonempty_prop
 port_proof Exists.nonempty
+
+port_definition decidable_of_iff with_native_code
+port_definition decidable_of_iff' with_native_code
