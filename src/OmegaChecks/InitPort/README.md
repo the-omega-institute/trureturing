@@ -56,7 +56,7 @@ example (a : α) (b : β) : Omega.Eq (Prod.fst (Prod.mk a b)) a := Omega.rfl
 
 `Omega.Array.anyMUnsafe` 按官方机器字索引循环执行。自然数区间长度给出递归上界。每一步仍比较机器字，耗尽区间时两端必然相等，读取位置也在原数组内。即使数组长度达到 `USize.size`，这两个结论仍然成立。例如从零开始搜索恰有 `USize.size` 个元素的整个数组时，转换后的终点为零，循环立即返回 `false`。校验器把官方入口和递归分支逐一与全输入证明核对。[循环及证明](ArrayWord.lean) · [官方数组循环](https://github.com/leanprover/lean4/blob/v4.35.0/src/Init/Data/Array/Basic.lean#L936)
 
-公开覆盖清单按官方定义模块和声明名逐项列出，重复生成的名字在各自模块有独立记录。
+公开覆盖清单按官方定义模块和声明名逐项列出，重复生成的名字在各自模块有独立记录。运行报告后，`summary.coverage` 将公开非公理声明总数 `publicNonAxioms` 分为三项。`callableAtOriginalType` 统计在官方导入条件下可以按原类型调用的声明，包括两端内核确认类型定义相等的情形。`certifiedExceptions` 统计已核验证据并在源码中说明的例外，`unresolved` 统计其余待解决的声明。
 `init-inventory.json` 的 `summary` 按模块与名字的组合计数，`uniqueNames` 按名字去重。
 对官方提供原生签名、有定义体且安全、全定义的公开声明，`strictNativeSignature` 记录严格库是否在同一模块打包了对应的 LCNF 签名。`nativeByModule` 和 `summary.native` 分别按模块和全库汇总官方签名数、已匹配声明数和严格库签名数。实际运行结果由编译后的消费用例验证。
 全量构建也编译可单独导入的 OmegaMath 和 OmegaMathlib 源文件，一同审计它们的传递依赖。
