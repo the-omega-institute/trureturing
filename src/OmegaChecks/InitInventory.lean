@@ -3,6 +3,7 @@ public import Lean
 import OmegaChecks.InitPort.Translation
 import OmegaChecks.InitInventory.EnvelopeCancellation
 import OmegaChecks.InitInventory.PublicReduction
+meta import OmegaChecks.InitInventory.PublicReduction
 import OmegaChecks.InitInventory.UnsafeCast
 meta import OmegaChecks.InitInventory.UnsafeCast
 import OmegaChecks.InitCompiler.RootNames
