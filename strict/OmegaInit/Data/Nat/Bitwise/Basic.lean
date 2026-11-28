@@ -33,8 +33,9 @@ port_definition Nat.land
 port_definition Nat.lor
 namespace Nat
 /-- The kernel evaluates numerals at this literal name. Symbolic calls retain the pinned bitwise definition. -/
-@[no_expose] def xor : @& Nat → @& Nat → Nat :=
+@[extern "lean_nat_lxor", no_expose] def xor : @& Nat → @& Nat → Nat :=
   Omega.Nat.bitwise (@Omega.bne Bool (@Omega.instBEqOfDecidableEq Bool Omega.instDecidableEqBool))
+attribute [irreducible] xor
 end Nat
 
 port_definition Nat.shiftLeft.match_1
