@@ -31,4 +31,8 @@ slice decides whether an arbitrary Boolean stream ever returns true, as shown
 in OmegaChecks.InitBoundaries.Collector. In the adaptive query model, a terminating
 run on an all-false stream would return the same length on an iterator that
 stops strictly later. noTerminatingThresholdCounter proves the obstruction and
-noTerminatingCollectorOnZero checks the lengths against the official collector. -/
+noTerminatingCollectorOnZero checks the lengths against the official collector.
+For arbitrary slices whose iterator represents a partial recursive program,
+not_computable_slice_output_length proves that even a total output length
+agreeing on every finite slice cannot be computable as a function of the program.
+ListSlice and Subarray both supply finite iterators for their concrete elements. -/

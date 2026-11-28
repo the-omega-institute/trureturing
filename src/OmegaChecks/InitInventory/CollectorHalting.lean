@@ -2,6 +2,8 @@ module
 
 public import Mathlib.Computability.Halting
 public import OmegaChecks.InitInventory.Collector
+import all Init.Data.Slice.Operations
+import all Init.Data.Iterators.ToIterator
 
 /-! Computability boundary for the official iterator interface, in pinned Mathlib. -/
 
@@ -66,5 +68,25 @@ theorem not_computable_search_output_length
         (fun fuel => (Code.evaln fuel c input).isSome) (fun i before => ?_) (n := k) hit
       obtain ⟨value, h⟩ := Option.isSome_iff_exists.mp before
       exact Option.isSome_iff_exists.mpr ⟨value, Code.evaln_mono (Nat.le_succ i) h⟩
+
+/-- Use the iterator itself as the representation of a slice, with its original step function. -/
+def iteratorSliceLength
+    (measure : ∀ {γ α β : Type} [ToIterator (Slice γ) Id α β] [Iterator α Id β], Slice γ → Nat)
+    {α β : Type} [Iterator α Id β] (it : Iter (α := α) β) : Nat :=
+  letI := ToIterator.of (γ := Slice (Iter (α := α) β)) α (fun s => s.internalRepresentation)
+  measure (Slice.mk it)
+
+/-- A total slice observation that gives the pinned list length on all finite slices
+has a noncomputable output length on the bounded simulations of partial recursive codes. -/
+theorem not_computable_slice_output_length
+    (measure : ∀ {γ α β : Type} [ToIterator (Slice γ) Id α β] [Iterator α Id β], Slice γ → Nat)
+    (correct : ∀ {γ α β : Type} [ToIterator (Slice γ) Id α β] [Iterator α Id β] [Finite α Id]
+      (s : Slice γ), measure s = s.toList.length) (input : Nat) :
+    ¬ Computable (fun c : Code =>
+      searchOutputLength (@iteratorSliceLength @measure) (fun fuel => (Code.evaln fuel c input).isSome)) := by
+  apply not_computable_search_output_length
+  intro α β iter fin it
+  let _ := ToIterator.of (γ := Slice (Iter (α := α) β)) α (fun s => s.internalRepresentation)
+  exact correct (Slice.mk it)
 
 end OmegaChecks.InitBoundaries.Collector
