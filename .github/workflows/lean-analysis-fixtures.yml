@@ -144,3 +144,26 @@ jobs:
           name: lean-analysis-fixtures
           path: ${{ runner.temp }}/lean-analysis-fixtures/
           if-no-files-found: error
+
+  stable-linux:
+    name: Verify published OmegaMath on Linux arm64
+    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/feature/omegamath-stable-linux-consumer'
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - uses: leanprover/lean-action@ba3fdfe5c4476c925da13bf11a005ddb47e47aee
+        with:
+          auto-config: 'false'
+          use-github-cache: 'false'
+          use-mathlib-cache: 'false'
+      - name: Verify the release and build the actual D5 consumer
+        env:
+          MATHLIB_NO_CACHE_ON_UPDATE: '1'
+        run: |
+          make verify-omegamath-release
+          lake --no-cache build +D5.S0.Computability.GuardedWall
+          lake --no-cache --no-build build +D5.S0.Computability.GuardedWall

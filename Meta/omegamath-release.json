@@ -7,6 +7,6 @@
   "ci_run": 46160914708,
   "repository": "the-omega-institute/omegamath",
   "source": "b3556e3c80f0d13ca66f812e578f5541ae0e36cb",
-  "tag": "v0.1.0-rc.1",
+  "tag": "v0.1.0",
   "toolchain": "leanprover/lean4:v4.35.0"
 }
