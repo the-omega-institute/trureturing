@@ -9,7 +9,7 @@ internal sealed class BraceletMonoidDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Quantum/Matrix/Unistochastic/BraceletMonoid.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/QuantumBounds/rajchelkorzekwapuchalazyczkowski2021birkhoff");
+        LibraryNoteRef.Create("D5/L/Convexity/rajchelkorzekwapuchalazyczkowski2021monoid");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Bracelet matrices contain the identity and are closed under ordinary multiplication in every finite dimension.",

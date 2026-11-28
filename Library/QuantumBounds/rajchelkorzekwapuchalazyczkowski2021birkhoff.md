@@ -5,11 +5,10 @@ year: 2021
 title: "Algebraic and geometric structures inside the Birkhoff polytope"
 doi: 10.1063/5.0046581
 url: https://arxiv.org/abs/2101.11288
-claim: "Section V asks whether the bracelet condition suffices for unistochasticity of circulant matrices for d > 4; Definition 7 gives the bracelet inequalities and Theorem 17 settles d = 4. Definition 6 defines doubly circulant unistochastic matrices; Conjecture 9 asserts that bracelet matrices form a monoid; Conjecture 19 asserts circulant unitary lifts for every d."
+claim: "Section V asks whether the bracelet condition suffices for unistochasticity of circulant matrices for d > 4; Definition 7 gives the bracelet inequalities and Theorem 17 settles d = 4. Definition 6 defines doubly circulant unistochastic matrices; Conjecture 19 asserts circulant unitary lifts for every d."
 strata_touched:
   - D5/S3/Quantum/Matrix/CirculantBraceletNonUnistochastic
   - D5/S3/Quantum/Matrix/CirculantUnitaryLiftRefutation
-  - D5/S3/Quantum/Matrix/Unistochastic/BraceletMonoid
 license: citation-only
 triage: anchor
 ---
@@ -38,10 +37,8 @@ Section IV, Conjecture 19, page 11: “The sets Cd ∩ Ud and Cd² coincide for 
 
 Section V, page 13: “Another observation that holds for d ≤ 4, and should be further investigated for d > 4, is whether the bracelet condition is sufficient for unistochasticity if we restrict the analysis to the set of circulant matrices.”
 
-Section III.A, page 5, states Conjecture 9: “The set of bracelet matrices $L_d$ forms a monoid, i.e., it is closed under matrix multiplication and contains the identity matrix $I_d$.” The assertion concerns the full finite-dimensional bracelet predicate, without a circulant restriction.
-
 ## Mathematical scope
 
 Matrices use zero-based indices in Fin d. Matrix.circulant has entries v(i−j), giving the same class as Definition 5. Unistochasticity uses RHLinalg.normSqMatrix of a complex unitary matrix. The bracelet predicate includes bistochasticity and both inequalities for distinct pairs; finite indexed suprema represent the displayed maxima.
 
-The repository contains a d = 12 bracelet-sufficiency refutation, a d = 10 refutation of Conjecture 19, and a kernel-checked all-finite-dimensional closure theorem for Conjecture 9. The source's d ≤ 4 statements remain intact.
+The repository contains a d = 12 bracelet-sufficiency refutation and a d = 10 refutation of Conjecture 19. The source's d ≤ 4 statements remain intact. The same paper's monoid conjecture has a [Conjecture 9 reading note](../Convexity/rajchelkorzekwapuchalazyczkowski2021monoid.md).

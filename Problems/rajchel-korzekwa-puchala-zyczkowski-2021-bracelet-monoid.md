@@ -1,8 +1,8 @@
 ---
 slug: rajchel-korzekwa-puchala-zyczkowski-2021-bracelet-monoid
-bibkey: rajchelkorzekwapuchalazyczkowski2021birkhoff
-doi: 10.1063/5.0046581
-url: https://arxiv.org/abs/2101.11288
+bibkey: rajchelkorzekwapuchalazyczkowski2021monoid
+doi: null
+url: "https://arxiv.org/html/2101.11288v1#Thmtheorem9"
 triage: theorem
 motivation_gids:
   - D5/S3/Quantum/Matrix/CirculantBraceletNonUnistochastic.IsBracelet
@@ -12,7 +12,7 @@ motivation_gids:
 
 ## Problem
 
-G. Rajchel-Mieldzioć, K. Korzekwa, Z. Puchała and K. Życzkowski, *Algebraic and geometric structures inside the Birkhoff polytope*, arXiv:2101.11288, J. Math. Phys. 63, 012202, DOI 10.1063/5.0046581, Section III.A, states:
+Section III.A of *Algebraic and geometric structures inside the Birkhoff polytope* states the conjecture in arXiv v1. [Conjecture 9](https://arxiv.org/html/2101.11288v1#Thmtheorem9)
 
 > Conjecture 9. The set of bracelet matrices $L_d$ forms a monoid, i.e., it is closed under matrix multiplication and contains the identity matrix $I_d$.
 
