@@ -109,6 +109,10 @@ def order_certificates(product):
 
 
 CHOICE_TYPE_OPERANDS = {
+    ("Init.Internal.Order.While", "repeatM.Internal.eq_of_monadTail"):
+        ("repeatM", "OmegaChecks.InitBoundaries.choiceFromRepeatM"),
+    ("Init.Internal.Order.While", "Lean.Loop.forIn_eq_of_monadTail"):
+        ("Lean.Loop.forIn", "OmegaChecks.InitBoundaries.WhileChoice.choiceFromLoop"),
     ("Init.Grind.Injective", "Lean.Grind.leftInv_eq"):
         ("Lean.Grind.leftInv", "OmegaChecks.InitBoundaries.choiceFromLeftInv"),
     ("Init.Control.Lawful.MonadAttach.Lemmas", "WeaklyLawfulMonadAttach.bind_attach_of_nonempty"):
