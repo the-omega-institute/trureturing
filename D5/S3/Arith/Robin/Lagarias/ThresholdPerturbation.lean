@@ -1,7 +1,7 @@
 /- GID: D5/S3/Arith/Robin/Lagarias/ThresholdPerturbation
    generality: I
    mirror-B: D5/B/S3/Arith/Robin/Lagarias/ThresholdPerturbation
-   mirror-E: none(waiver:lagarias-threshold-perturbation)
+   mirror-E: none(waiver:algebraically-proved)
    anchors: []
    utility: none
    digest: The sharp Lagarias threshold perturbation preserves the Robin margin endpoint. -/
@@ -104,7 +104,8 @@ private lemma gap_bounds (n : ℕ) (hn : 1 < Real.log (n : ℝ)) :
     field_simp [hx.ne', hH.ne']
     ring
   have hulo : E * x * q ≤ E * a := by
-    have hh := mul_le_mul_of_nonneg_left hqup (mul_pos (Real.exp_pos _) hx).le
+    have hh := mul_le_mul_of_nonneg_left hqup
+      (mul_pos (Real.exp_pos Real.eulerMascheroniConstant) hx).le
     have heq : E * x * (H / x - 1) = E * a := by
       dsimp [a]
       field_simp [hx.ne']
@@ -116,13 +117,15 @@ private lemma gap_bounds (n : ℕ) (hn : 1 < Real.log (n : ℝ)) :
       (mul_le_mul_of_nonneg_left hHup hx.le) hN.le
     have hh' := mul_le_mul_of_nonneg_left
       (mul_le_mul hbup hlogHup hlogH (by positivity : 0 ≤ E / N)) hx.le
+    simp only [div_eq_mul_inv] at hh hh' ⊢
     nlinarith only [hh, hh']
   change E * a / (1 + a / x) ≤ x * gap n ∧
     x * gap n ≤ E * a + (1 + E) * ((x ^ 2 + x) / N)
   rw [hid]
   constructor
   · rw [hloeq]
-    have hh := mul_le_mul_of_nonneg_left hqlo (mul_pos (Real.exp_pos _) hx).le
+    have hh := mul_le_mul_of_nonneg_left hqlo
+      (mul_pos (Real.exp_pos Real.eulerMascheroniConstant) hx).le
     have hr : 0 ≤ x * H / N := by positivity
     have hr' : 0 ≤ x * b * Real.log H := by positivity
     linarith
