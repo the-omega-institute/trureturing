@@ -29,13 +29,13 @@ def cosineHeatJet (c t : ℝ) (k : ℕ) : ℝ :=
 
 private theorem phase_even (m : ℕ) : (Complex.I ^ (2 * m)).re = (-1 : ℝ) ^ m := by
   have hp : Complex.I ^ (2 * m) = (((-1 : ℝ) ^ m : ℝ) : ℂ) := by
-    rw [show 2 * m = m * 2 by omega, pow_mul, Complex.I_sq]
+    rw [pow_mul, Complex.I_sq]
     norm_cast
   rw [hp, Complex.ofReal_re]
 
 private theorem phase_odd (m : ℕ) : (Complex.I ^ (2 * m + 1)).re = 0 := by
   have hp : (-1 : ℂ) ^ m = (((-1 : ℝ) ^ m : ℝ) : ℂ) := by norm_cast
-  rw [pow_add, show 2 * m = m * 2 by omega, pow_mul, Complex.I_sq, hp]
+  rw [pow_add, pow_mul, Complex.I_sq, hp]
   simp [Complex.mul_re]
 
 private theorem cosine_derivative_zero (k : ℕ) :
