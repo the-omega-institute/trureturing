@@ -724,7 +724,10 @@ private def inventory (lib strictDir : System.FilePath) (visible strict full wit
       if endpointType.isSome then
         if let some op := operand then
           certifiedEndpoints := certifiedEndpoints.push #[owner.toString, name.toString, op.name.toString, op.witness.toString]
-      let conditional := OmegaChecks.InitInventory.conditionalConsequence? owner name
+      let fixFormation := operand.filter (OmegaChecks.InitBoundaries.ChoiceOperands.isFixFormation owner info)
+      let conditional := fixFormation.map (fun op => ((``Classical.choice).toString, op.witness,
+        "The pinned type forms the complete unrestricted fixed-point operator before using the termination premise")) <|>
+        OmegaChecks.InitInventory.conditionalConsequence? owner name
       let transportPath ← if owner == `Init.Core && [``Quot.rec, ``Quot.recOn, ``Quotient.rec, ``Quotient.recOn].contains name then do
         let setoid := name.getPrefix == ``Quotient
         let pointFirst := [``Quot.recOn, ``Quotient.recOn].contains name
@@ -764,6 +767,12 @@ private def inventory (lib strictDir : System.FilePath) (visible strict full wit
           (``Lean.Loop.forIn).toString, (``Classical.choice).toString,
           (``OmegaChecks.InitBoundaries.WhileChoice.choiceFromLoop).toString]
         pure (some (``Lean.Loop.forIn).toString)
+      else if let some op := fixFormation then do
+        let certify := OmegaChecks.InitBoundaries.ChoiceOperands.checkFixFormation visible info op
+        (Meta.MetaM.run' certify).toIO' {fileName := "<fixed-point endpoint>", fileMap := default} {env := witnesses}
+        certifiedFormationArguments := certifiedFormationArguments.push #[owner.toString, name.toString,
+          op.name.toString, (``Classical.choice).toString, op.witness.toString]
+        pure (some op.name.toString)
       else pure none
       let direct := (logicalConsequence? owner name).map (fun (target, witness) => (target.toString, witness))
       let consequence := conditional.map (fun (target, witness, _) => (target, witness)) <|> direct

@@ -84,6 +84,8 @@ python3 src/OmegaChecks/InitPort/report.py .lake/init-port-all --require-complet
 
 `formationArgument` 标出原陈述中须提供证明的实参。`Quot.liftIndepPr1` 的等式左端投影自 `Quot.lift`。盘点程序用常值单位类型特化其官方接口，从部分应用读出 `Quot.indepCoherent` 所在参数的类型，并以空内核重放对应见证。能统一提供该参数就能推出 `Quot.sound`。给定所需的一致性证明后，第一投影等式本身可由商归纳证明。
 
+在 `Init.WFExtrinsicFix` 中，良基或可达证明是应用相应方程的前提。在标出 `formationArgument` 的方程中，左端没有使用该证明。按钉版原类型抽象左端的其余参数，所得闭函数与完整的无终止前提的 `extrinsicFix` 或 `partialExtrinsicFix` 定义相等。把它传给相应元数的零公理归约，得到 `Classical.choice` 的完整类型。[端点与归约核对](../InitInventory/ChoiceOperands.lean)
+
 `transportPathType` 记录四个商递归器的一致性前提中，`Eq.ndrec` 所需的路径类型。用单位类型作为纤维，并取第一代表元的商类作预先给定的商点后，`Quot.rec` 和 `Quot.recOn` 的路径须对任意关系给出 `Quot.sound`。在 `Quotient.rec` 和 `Quotient.recOn` 中，路径只涉及等价关系，其类型为 `Quotient.sound`，这两个接口保留在未移植清单中。
 
 公开定义点全部结清时，验收命令还逐模块复查实际公开公理记录，从空内核重放整个严格 Init，并以 `omegaAudit` 核验官方名称、定义模块、类型及计算接口。

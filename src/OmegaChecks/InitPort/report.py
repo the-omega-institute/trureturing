@@ -27,6 +27,21 @@ FORMATION_TARGETS = {
     ("Init.Internal.Order.While", "Lean.Loop.forIn.eq_1"): ("Lean.Loop.forIn", "Classical.choice"),
 }
 
+FIX_FORMATIONS = {}
+for arity in ("", "₂", "₃"):
+    for base in ("extrinsicFix", "partialExtrinsicFix"):
+        operator = "WellFounded." + base + arity
+        suffixes = ["_eq_fix", "_eq_apply"]
+        if base == "partialExtrinsicFix":
+            suffixes.append("_eq_apply_of_acc")
+            if arity:
+                suffixes.append("_eq_partialExtrinsicFix")
+        for suffix in suffixes:
+            site = ("Init.WFExtrinsicFix", operator + suffix)
+            FIX_FORMATIONS[site] = (operator, "OmegaChecks.InitBoundaries.choiceFromFix" + arity)
+            FORMATION_TARGETS[site] = (operator, "Classical.choice")
+
+
 UNSAFE_OBSERVERS = {
     ("Init.Util", "ptrAddrUnsafe"): "lean_ptr_addr",
     ("Init.Util", "isExclusiveUnsafe"): "lean_is_exclusive_obj",
@@ -170,6 +185,11 @@ def check_coverage(official):
                          row["kind"] != "theorem" or row.get("unsafe") or row.get("partial") or
                          not row.get("requiredBehavior") or port or witness or strict or runtime or endpoint):
             raise ValueError(f"inconsistent statement formation argument for {owner}/{name}")
+        if argument and site in FIX_FORMATIONS and (
+                (argument, row.get("logicalConsequenceWitness")) != FIX_FORMATIONS[site] or
+                (operand, row.get("operandReductionWitness")) != FIX_FORMATIONS[site] or
+                row.get("operandImpliesAxiom") != "Classical.choice"):
+            raise ValueError(f"incorrect unrestricted fixed-point formation argument for {owner}/{name}")
         path = row.get("transportPathType")
         if path != by_transport.pop(site, None):
             raise ValueError(f"uncertified transport path for {owner}/{name}")

@@ -92,6 +92,41 @@ private def check (env : Environment) (owner : Name) (source : ConstantInfo) (op
   unless proof.type.instantiateLevelParams proof.levelParams proofLevels == expected do
     throw s!"incorrect choice witness type for {owner}/{source.name}"
 
+public def isFixFormation (owner : Name) (source : ConstantInfo) (operand : Operand) : Bool :=
+  owner == `Init.WFExtrinsicFix && (fixWitness? operand.name).isSome &&
+    ["_eq_apply", "_eq_fix", "_eq_apply_of_acc", "_eq_partialExtrinsicFix"].any
+      (source.name == operand.name.appendAfter ·)
+
+open Meta in
+/-- Abstract only the arguments actually occurring at the left endpoint. The
+equation has an accessibility or well-foundedness premise, and the endpoint
+is the entire unrestricted operator independently of that premise. -/
+public def checkFixFormation (visible : Environment) (source : ConstantInfo) (op : Operand) : MetaM Unit := do
+  let env ← getEnv
+  unless isFixFormation `Init.WFExtrinsicFix source op && source.isTheorem &&
+      visible.getModuleIdxFor? source.name == visible.getModuleIdx? `Init.WFExtrinsicFix &&
+      (visible.find? source.name).any (fun ci => ci.type.equal source.type) do
+    throwError "unexpected public fixed-point equation {source.name}"
+  let entry ← getConstInfo op.name
+  let choice ← getConstInfo ``Classical.choice
+  forallTelescope source.type fun xs conclusion => do
+    let some (_, lhs, _) := conclusion.eq? | throwError "expected an equality at {source.name}"
+    let args := lhs.getAppArgs
+    let omitted := xs.filter (!args.contains ·)
+    let #[premise] := omitted | throwError "expected one omitted premise at {source.name}"
+    let required := (← inferType premise).getAppFn
+    unless (required.isConstOf ``Acc || required.isConstOf ``WellFounded) &&
+        lhs.getAppFn == mkConst op.name op.levels && args == xs.filter (· != premise) do
+      throwError "the endpoint at {source.name} depends on the termination premise or specializes its operator"
+    let endpoint ← mkLambdaFVars args lhs
+    let actual ← Lean.ofExceptKernelException (Kernel.check visible {} endpoint)
+    let result := mkApp (mkConst op.witness op.levels) endpoint
+    let selected ← Lean.ofExceptKernelException (Kernel.check env {} result)
+    unless !endpoint.hasFVar && Kernel.isDefEqGuarded visible {} endpoint lhs.getAppFn &&
+        Kernel.isDefEqGuarded visible {} actual (entry.type.instantiateLevelParams entry.levelParams op.levels) &&
+        Kernel.isDefEqGuarded env {} selected (choice.type.instantiateLevelParams choice.levelParams [op.levels.getLast!]) do
+      throwError "the complete endpoint at {source.name} does not yield the pinned choice type"
+
 open Meta in
 /-- Specialize a congruence using the arguments of the existing reduction. Under an arbitrary
 implementation of its operator, each of the two resulting endpoints is a complete choice function. -/
@@ -252,6 +287,8 @@ run_cmd
       unless isPrivateName source.name || source.name.isInternalOrNum || source.name.hasMacroScopes do
         if let some operand := operand? owner source then
           if let .error msg := check env owner source operand then throwError "{msg}"
+          if isFixFormation owner source operand then
+            Elab.Command.liftCoreM <| Meta.MetaM.run' (checkFixFormation env source operand)
           if source.name.getPrefix == operand.name then
             unless congruenceSites.contains (owner, source.name) do
               throwError "unrecorded choice-valued congruence in {owner}: {source.name}"

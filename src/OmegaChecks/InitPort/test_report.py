@@ -271,6 +271,24 @@ class CoverageTest(unittest.TestCase):
             with self.subTest(mismatch=mismatch), self.assertRaisesRegex(ValueError, "statement formation argument"):
                 check_coverage(inventory(row | mismatch) | certificate)
 
+    def test_fixed_point_equations_require_the_unrestricted_operator_as_an_endpoint(self):
+        owner = "Init.WFExtrinsicFix"
+        op = "WellFounded.partialExtrinsicFix₂"
+        name = op + "_eq_apply_of_acc"
+        proof = "OmegaChecks.InitBoundaries.choiceFromFix₂"
+        row = site(owner, name, equationOperand=op, operandReductionWitness=proof,
+                   operandImpliesAxiom="Classical.choice")
+        self.assertEqual(check_coverage(inventory(row)), (0, [(owner, name)]))
+        row.update(formationArgument=op, logicalConsequence="Classical.choice", logicalConsequenceWitness=proof,
+                   requiredBehavior="the actual left endpoint recovers the operator independently of accessibility")
+        cert = [[owner, name, op, "Classical.choice", proof]]
+        data = inventory(row) | {"certifiedFormationArguments": cert}
+        self.assertEqual(check_coverage(data), (0, []))
+        for bad in ({"equationOperand": "WellFounded.fix"}, {"operandReductionWitness": "other"},
+                    {"operandImpliesAxiom": "funext"}, {"requiredBehavior": None}):
+            with self.subTest(bad=bad), self.assertRaisesRegex(ValueError, "formation argument"):
+                check_coverage(data | {"declarations": [row | bad]})
+
     def test_loop_unfolding_requires_the_complete_endpoint_and_its_behavior(self):
         owner = "Init.Internal.Order.While"
         name = "Lean.Loop.forIn.eq_1"
