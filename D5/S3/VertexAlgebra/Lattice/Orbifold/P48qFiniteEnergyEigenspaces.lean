@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Finite-dimensional eigenspaces for every weight of the actual P48q twisted energy operator. -/
+   digest: Every P48q twisted energy eigenspace is finite-dimensional. -/
 
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qTwistedStateEnergy
 import D5.S3.VertexAlgebra.LatticeChargeCoercivity

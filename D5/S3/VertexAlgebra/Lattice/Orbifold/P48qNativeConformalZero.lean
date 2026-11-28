@@ -13,6 +13,7 @@ import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qMovingCurrentZero
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qTwistedStateEnergy
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qConcreteNeutralConformalMode
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qNativeMonodromy
+import D5.S3.VertexAlgebra.Lattice.Automorphisms.ConformalGroundTransport
 
 /-!
 The actual P48q lattice conformal state has coefficient `totalLZero`
@@ -237,7 +238,7 @@ theorem native_conformal_coeff_neg_six_eq_totalLZero :
 
 end NativeField
 
-end D5.S3.VertexAlgebra.Lattice.Orbifold.P48qNativeConformalZero
+#print axioms native_conformal_zero_eq_totalLZero
+#print axioms native_conformal_ground_spectrum
 
-#print axioms D5.S3.VertexAlgebra.Lattice.Orbifold.P48qNativeConformalZero.native_conformal_zero_eq_totalLZero
-#print axioms D5.S3.VertexAlgebra.Lattice.Orbifold.P48qNativeConformalZero.native_conformal_ground_spectrum
+end D5.S3.VertexAlgebra.Lattice.Orbifold.P48qNativeConformalZero
