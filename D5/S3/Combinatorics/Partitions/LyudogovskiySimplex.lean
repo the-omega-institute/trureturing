@@ -50,7 +50,7 @@ def staircase (r : ℕ) : YoungDiagram where
     · exact Finset.mem_range.mpr (lt_of_le_of_lt hxy.2 (Finset.mem_range.mp hij.2))
     · exact lt_of_le_of_lt (Nat.add_le_add hxy.1 hxy.2) hy'.2
 
-private theorem mem_staircase (r : ℕ) (c : ℕ × ℕ) :
+theorem mem_staircase (r : ℕ) (c : ℕ × ℕ) :
     c ∈ staircase r ↔ c.1 + c.2 < r := by
   rcases c with ⟨i,j⟩
   change (i,j) ∈ ((Finset.range r).product (Finset.range r)).filter
@@ -94,7 +94,7 @@ private theorem clique_difference {n : ℕ} (hn : 0 < n)
     rw [YoungDiagram.card_ofPartition, ht]
     omega
 
-private theorem clique_star_or_top {n : ℕ} (hn : 0 < n)
+theorem clique_star_or_top {n : ℕ} (hn : 0 < n)
     (C : Finset (Nat.Partition n))
     (hC : (graph n).IsClique (C : Set (Nat.Partition n))) (hcard : 2 ≤ C.card) :
     (∃ X : YoungDiagram, X.card = n - 1 ∧
@@ -254,7 +254,7 @@ private theorem maximal_antichain_staircase (d : YoungDiagram) (A : Finset (ℕ 
   apply d.isLowerSet (show x ≤ c i from ?_) (hmem (c i) (hc i))
   constructor <;> dsimp [i] at * <;> omega
 
-private theorem single_extension_cells {X d : YoungDiagram} {c : ℕ × ℕ}
+theorem single_extension_cells {X d : YoungDiagram} {c : ℕ × ℕ}
     (hsub : X ≤ d) (hdiff : d.cells \ X.cells = {c}) : d.cells = insert c X.cells := by
   ext x
   constructor
@@ -318,7 +318,7 @@ private theorem star_contains_staircase {n : ℕ} (hn : 0 < n)
     exact hbelow p x hx hne
   simpa only [hAcard] using antichain_staircase X A hanti hb
 
-private theorem single_removal_cells {U d : YoungDiagram} {c : ℕ × ℕ}
+theorem single_removal_cells {U d : YoungDiagram} {c : ℕ × ℕ}
     (hsub : d ≤ U) (hdiff : U.cells \ d.cells = {c}) : d.cells = U.cells.erase c := by
   ext x
   constructor
@@ -471,7 +471,7 @@ private theorem maximum_bound {n : ℕ} (hn : 0 < n) :
   rw [hp]
   exact local_bound hn p
 
-private def expandedStaircase (r e : ℕ) : YoungDiagram where
+def expandedStaircase (r e : ℕ) : YoungDiagram where
   cells := (staircase r).cells ∪ ({0} ×ˢ Finset.range (r + e))
   isLowerSet := by
     rintro ⟨i,j⟩ ⟨a,b⟩ hxy hy
@@ -491,7 +491,7 @@ private def expandedStaircase (r e : ℕ) : YoungDiagram where
         have := Finset.mem_range.mp hylen
         omega
 
-private theorem expanded_card (r e : ℕ) : (expandedStaircase r e).card = triangular r + e := by
+theorem expanded_card (r e : ℕ) : (expandedStaircase r e).card = triangular r + e := by
   have hi : (staircase r).cells ∩ ({0} ×ˢ Finset.range (r + e)) =
       {0} ×ˢ Finset.range r := by
     ext ⟨i,j⟩
@@ -617,7 +617,7 @@ private theorem exists_clique (r e : ℕ) :
   rw [Finset.card_image_of_injective _ (cornerPartition_injective r e)]
   simp
 
-private theorem clique_le_local {n : ℕ} (C : Finset (Nat.Partition n))
+theorem clique_le_local {n : ℕ} (C : Finset (Nat.Partition n))
     (hC : (graph n).IsClique (C : Set _)) (p : Nat.Partition n) (hp : p ∈ C) :
     C.card - 1 ≤ localDimension p := by
   classical
@@ -625,7 +625,7 @@ private theorem clique_le_local {n : ℕ} (C : Finset (Nat.Partition n))
   exact Finset.le_sup (f := fun s : Finset (Nat.Partition n) => s.card - 1)
     (by simp [cliques, hC, hp])
 
-private theorem local_le_maximum {n : ℕ} (p : Nat.Partition n) :
+theorem local_le_maximum {n : ℕ} (p : Nat.Partition n) :
     localDimension p ≤ maxDimension n := Finset.le_sup (Finset.mem_univ p)
 
 private theorem lower_maximum (n r : ℕ) (hr : triangular r + 1 ≤ n) :
@@ -654,7 +654,7 @@ private theorem maximum_formula (n : ℕ) (hn : 0 < n) : maxDimension n =
     intro r hr
     exact lower_maximum n r (Finset.mem_filter.mp hr).2
 
-private theorem maximum_at_threshold (r : ℕ) : maxDimension (triangular r + 1) = r := by
+theorem maximum_at_threshold (r : ℕ) : maxDimension (triangular r + 1) = r := by
   have hlo := lower_maximum (triangular r + 1) r le_rfl
   have hhi := maximum_bound (by omega : 0 < triangular r + 1)
   apply le_antisymm _ hlo
