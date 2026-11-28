@@ -648,10 +648,14 @@ private theorem gamma_asc (x : ℝ) (hx : 0 < x) (n : ℕ) :
     simp only [Complex.ofReal_re, Complex.neg_re, Complex.natCast_re] at h
     have hk : (0 : ℝ) ≤ k := Nat.cast_nonneg k
     linarith
+  have heval : (ascPochhammer ℂ n).eval (x : ℂ) =
+      Complex.ofReal ((ascPochhammer ℝ n).eval x) := by
+    change (ascPochhammer ℂ n).eval (Complex.ofRealHom x) =
+      Complex.ofRealHom ((ascPochhammer ℝ n).eval x)
+    rw [ascPochhammer_eval₂ Complex.ofRealHom, Polynomial.eval₂_at_apply]
   have hshift := Complex.Gamma_add_nat_div_Gamma_eq (n := n) (x : ℂ) hpole
   rw [← Complex.ofReal_natCast, ← Complex.ofReal_add, Complex.Gamma_ofReal,
-    Complex.Gamma_ofReal, Polynomial.ascPochhammer_eval₂ Complex.ofRealHom,
-    Polynomial.eval₂_at_apply, ← Complex.ofReal_div] at hshift
+    Complex.Gamma_ofReal, heval, ← Complex.ofReal_div] at hshift
   exact ((div_eq_iff (Real.Gamma_pos_of_pos hx).ne').mp
     (Complex.ofReal_injective hshift)).trans (mul_comm _ _)
 

@@ -216,13 +216,13 @@ internal sealed class EvninQuantumSectorDocument : IScribeDocumentDefinition
             Quantify(Word("let"), Typed(n, Naturals()), Typed(m, Naturals()), instance)), Typed(sigma, Reals()));
         return new Formula.Aligned([
             includeClaimName ? Seq(F.Id("claim"), Sp, Iff, Amp, Sp, binders) : Seq(Amp, binders),
-            Seq(Amp, Quad, Assign(h, Call("hamiltonian", sigma, n, m)), Comma, Quad,
+            Seq(Amp, Quad, Sp, Assign(h, Call("hamiltonian", sigma, n, m)), Comma, Quad, Sp,
                 Assign(e, Call("energy", sigma, n, m)), Comma),
             Seq(Amp, Quad, Assign(Typed(v, vectorType), Call("occupationVector", Call("raney", sigma, D(1)))),
                 Sp, Word("in")),
             Seq(Amp, Quad, Call("IsHermitian", h), Sp, Land),
             Seq(Amp, Quad, Call("IsGreatest", Call("spectrum", Reals(), h), e), Sp, Land),
-            Seq(Amp, Quad, new Formula.Relation(v, FormulaRelationOperator.NotEqual, D(0)), Sp, Land),
+            Seq(Amp, Quad, Sp, new Formula.Relation(v, FormulaRelationOperator.NotEqual, D(0)), Sp, Land),
             Seq(Amp, Quad, Equal(Call("mulVec", h, v), Call("smul", e, v)))]);
     }
 
@@ -250,6 +250,8 @@ internal sealed class EvninQuantumSectorDocument : IScribeDocumentDefinition
     private static Formula Parenthesized(Formula x) => Seq(Open, x, Close);
     private static Formula Quantify(Formula body, params Formula[] binders) =>
         Seq(Forall, Sp, Seq(binders), Comma, Sp, body);
+    private static Formula And(Formula x, Formula y) =>
+        new Formula.Logic(x, FormulaLogicOperator.And, Parenthesized(y));
     private static Formula Add(Formula x, Formula y) => new Formula.Binary(x, FormulaBinaryOperator.Add, y);
     private static Formula Sub(Formula x, Formula y) => new Formula.Binary(x, FormulaBinaryOperator.Subtract, y);
     private static Formula Mul(Formula x, Formula y) => new Formula.Binary(x, FormulaBinaryOperator.Multiply, y);
