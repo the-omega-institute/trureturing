@@ -935,10 +935,10 @@ theorem five_le_finrank_cube_of_first_return
   have hdim := (Submodule.finrank_lt_finrank_of_lt hlt).trans_le (Submodule.finrank_mono hW'L)
   omega
 
-/-- A zero first return and nonzero second return give five independent
+/-- A zero first return and nonzero second return give six independent
 matrices in the exact fourth power, provided the characteristic-polynomial
 coefficients do not both vanish. -/
-theorem five_le_finrank_four_of_second_return
+theorem six_le_finrank_four_of_second_return
     (L : Submodule K Mat) (A : Matˣ) (u v : Fin 3 → K)
     (hL : L = Submodule.span K ({(A : Mat), Matrix.vecMulVec u v} : Set Mat))
     (hfull : ∃ m : ℕ, 0 < m ∧ L ^ m = ⊤)
@@ -946,7 +946,7 @@ theorem five_le_finrank_four_of_second_return
     (h2 : v ⬝ᵥ ((A : Mat) ^ 2 *ᵥ u) ≠ 0)
     {x y : K} (hrel : (A : Mat) ^ 3 = x • (A : Mat) ^ 2 + y • (A : Mat) +
       (A : Mat).det • (1 : Mat)) (hxy : x ≠ 0 ∨ y ≠ 0) :
-    5 ≤ Module.finrank K ↥(L ^ 4) := by
+    6 ≤ Module.finrank K ↥(L ^ 4) := by
   classical
   let P : Mat := A
   let B := Matrix.vecMulVec u v
@@ -1135,9 +1135,103 @@ theorem five_le_finrank_four_of_second_return
     apply Submodule.span_le.2
     rintro _ ⟨i, rfl⟩
     exact hqmem i
-  have hdim := Submodule.finrank_mono hWL
-  rw [hdimW] at hdim
-  exact hdim
+  have hrelP : P ^ 3 = x • P ^ 2 + y • P + P.det • (1 : Mat) := hrel
+  let d := x ^ 2 + y
+  let f := x * y + P.det
+  have hfour : P ^ 4 = d • P ^ 2 + f • P + (x * P.det) • (1 : Mat) := by
+    calc
+      P ^ 4 = P ^ 3 * P := by rw [← pow_succ]
+      _ = (x • P ^ 2 + y • P + P.det • (1 : Mat)) * P := by
+        exact congrArg (· * P) hrelP
+      _ = x • P ^ 3 + y • P ^ 2 + P.det • P := by
+        simp only [add_mul, smul_mul_assoc, one_mul]
+        rw [← pow_succ P 2, ← pow_two P]
+      _ = _ := by
+        rw [hrelP]
+        simp only [smul_add, smul_smul, d, f, pow_two, add_smul]
+        abel
+  have hcoord (i : Fin 3) : (↑U⁻¹ : Mat) *ᵥ w i = Pi.single i 1 := by
+    rw [← hcol, ← Matrix.mulVec_single_one, Matrix.mulVec_mulVec, Units.inv_mul, Matrix.one_mulVec]
+  have hcoord_mul (X : Mat) (a : Fin 3 → K) :
+      (↑U⁻¹ : Mat) *ᵥ (X *ᵥ a) = e.symm X *ᵥ ((V : Mat) *ᵥ a) := by
+    have he : (U : Mat) * e.symm X * (V : Mat) = X := e.apply_symm_apply X
+    conv_lhs => rw [← he]
+    simp only [Matrix.mulVec_mulVec, ← mul_assoc, Units.inv_mul, one_mul]
+  let t := v ⬝ᵥ w 2
+  have hVentry (i j : Fin 3) : ((V : Mat) *ᵥ w j) i =
+      v ⬝ᵥ (P ^ ((i : ℕ) + (j : ℕ)) *ᵥ u) := by
+    change (V : Mat).row i ⬝ᵥ w j = _
+    rw [hrow]
+    simp only [r, w, ← Matrix.dotProduct_mulVec, Matrix.mulVec_mulVec, ← pow_add]
+  have h1P : v ⬝ᵥ (P *ᵥ u) = 0 := h1
+  have h3P : v ⬝ᵥ (P ^ 3 *ᵥ u) = x * t := by
+    rw [hrelP]
+    simp [Matrix.add_mulVec, Matrix.smul_mulVec, dotProduct_add, dotProduct_smul, h0, h1P, t, w]
+  have hV0 : (V : Mat) *ᵥ w 0 = Pi.single 2 t := by
+    funext i
+    fin_cases i
+    · simpa [Pi.single_apply] using hVentry 0 0 |>.trans (by simpa using h0)
+    · simpa [Pi.single_apply] using hVentry 1 0 |>.trans (by simpa using h1P)
+    · exact (hVentry 2 0).trans (by simp [Pi.single_apply, t, w])
+  have hV1 : (V : Mat) *ᵥ w 1 - x • ((V : Mat) *ᵥ w 0) = Pi.single 1 t := by
+    funext i
+    change ((V : Mat) *ᵥ w 1) i - x * (((V : Mat) *ᵥ w 0) i) = _
+    rw [hVentry, hV0]
+    fin_cases i
+    · change v ⬝ᵥ (P ^ 1 *ᵥ u) - x * (Pi.single 2 t : Fin 3 → K) 0 = _
+      simp [h1P, Pi.single_apply]
+    · change t - x * (Pi.single 2 t : Fin 3 → K) 1 = _
+      simp [Pi.single_apply]
+    · change (v ⬝ᵥ (P ^ 3 *ᵥ u)) - x * (Pi.single 2 t : Fin 3 → K) 2 = _
+      simp [h3P, Pi.single_apply]
+  have hw01 : P *ᵥ w 0 = w 1 := by simp [w]
+  have hw02 : P ^ 2 *ᵥ w 0 = w 2 := by simp [w]
+  have hw12 : P *ᵥ w 1 = w 2 := by simp [w, pow_two, Matrix.mulVec_mulVec]
+  have hnot : P ^ 4 ∉ W := by
+    intro hmem
+    have hdiag (i : Fin 3) (hi : i ≠ 0) {X : Mat} (hX : X ∈ W) : e.symm X i i = 0 := by
+      induction hX using Submodule.span_induction with
+      | mem X hX =>
+          obtain ⟨j, rfl⟩ := hX
+          have h := congrFun₂ (congrFun hqrepr j) i i
+          rw [h]
+          fin_cases j <;> fin_cases i <;>
+            simp [Matrix.stdBasis, Matrix.single_apply, Pi.single_apply] at hi ⊢
+      | zero => simp
+      | add X Y _ _ hX hY => simp [hX, hY]
+      | smul a X _ hX => simp [hX]
+    have hd0 := congrFun (hcoord_mul (P ^ 4) (w 0)) 2
+    simp only [hV0, Matrix.mulVec_single, op_smul_eq_smul, Pi.smul_apply, smul_eq_mul,
+      Matrix.col_apply, hdiag 2 (by decide) hmem, mul_zero] at hd0
+    have hd : d = 0 := by
+      simp only [hfour, Matrix.add_mulVec, Matrix.smul_mulVec, Matrix.one_mulVec,
+        hw02, hw01, Matrix.mulVec_add, Matrix.mulVec_smul, hcoord] at hd0
+      simpa [Pi.single_apply] using hd0
+    have htest : ((↑U⁻¹ : Mat) *ᵥ (P ^ 4 *ᵥ w 1) -
+        x • ((↑U⁻¹ : Mat) *ᵥ (P ^ 4 *ᵥ w 0))) 1 = 0 := by
+      rw [hcoord_mul, hcoord_mul, ← Matrix.mulVec_smul, ← Matrix.mulVec_sub, hV1,
+        Matrix.mulVec_single]
+      simp only [op_smul_eq_smul, Pi.smul_apply, smul_eq_mul, Matrix.col_apply,
+        hdiag 1 (by decide) hmem, mul_zero]
+    have hcoeff : x * P.det - x * f = 0 := by
+      simp only [hfour, hd, zero_smul, zero_add, Matrix.add_mulVec, Matrix.smul_mulVec,
+        Matrix.one_mulVec, hw12, hw01, Matrix.mulVec_add, Matrix.mulVec_smul, hcoord] at htest
+      simpa [Pi.single_apply] using htest
+    have hd' : x ^ 2 + y = 0 := hd
+    have hy : y = 0 := by
+      dsimp [f] at hcoeff
+      have : y ^ 2 = 0 := by linear_combination y * hd' + hcoeff
+      by_contra hy
+      exact (pow_ne_zero 2 hy) this
+    have hx : x = 0 := by
+      rw [hy, add_zero] at hd'
+      by_contra hx
+      exact (pow_ne_zero 2 hx) hd'
+    exact hxy.elim (· hx) (· hy)
+  have hlt : W < L ^ 4 := lt_of_le_not_ge hWL
+    (fun h => hnot (h (Submodule.pow_mem_pow L hP 4)))
+  have hdim := Submodule.finrank_lt_finrank_of_lt hlt
+  omega
 
 /-- In the invertible-generator case, a proper seventh power requires the
 second return to be the unique nonzero return of order one or two. -/
@@ -1155,6 +1249,120 @@ theorem second_rank_one_return_of_pow_seven_ne_top
   have hdim := five_le_finrank_cube_of_first_return L A u v hL hfull h0 h1 h2
   exact hseven (pow_eq_top_of_finrank_add_le L A hA hfull (j := 3) (t := 4) (by decide)
     (by rw [finrank_matrix_three]; omega))
+
+/-- When the cube of the invertible generator is scalar and the first two
+pairings vanish, each exact power sends the starting vector into a single
+line of its cyclic orbit. In particular every exact power is proper. -/
+theorem pow_ne_top_of_periodic_second_return
+    (L : Submodule K Mat) (A : Matˣ) (u v : Fin 3 → K)
+    (hL : L = Submodule.span K ({(A : Mat), Matrix.vecMulVec u v} : Set Mat))
+    (h0 : v ⬝ᵥ u = 0) (h1 : v ⬝ᵥ ((A : Mat) *ᵥ u) = 0)
+    (h2 : v ⬝ᵥ ((A : Mat) ^ 2 *ᵥ u) ≠ 0)
+    (hcube : (A : Mat) ^ 3 = (A : Mat).det • (1 : Mat)) (n : ℕ) :
+    L ^ n ≠ ⊤ := by
+  classical
+  let P : Mat := A
+  let B := Matrix.vecMulVec u v
+  let w (k : ℕ) := P ^ k *ᵥ u
+  let W (k : ℕ) := Submodule.span K ({w k} : Set (Fin 3 → K))
+  have hu : u ≠ 0 := by
+    rintro rfl
+    simp at h2
+  have hz : P.det ≠ 0 := (Matrix.isUnit_iff_isUnit_det P).mp A.isUnit |>.ne_zero
+  have hw0 : w 0 = u := by simp [w]
+  have hperiod (k : ℕ) : w (k + 3) = P.det • w k := by
+    have hP : P ^ 3 = P.det • (1 : Mat) := hcube
+    simp only [w, Nat.add_comm k 3, pow_add, hP, smul_mul_assoc, one_mul, Matrix.smul_mulVec]
+  have hadvance : ∀ k : ℕ, ∃ c : K, B *ᵥ w k = c • w (k + 1) := by
+    intro k
+    induction k using Nat.strong_induction_on with
+    | h k ih =>
+        by_cases hk : k < 3
+        · interval_cases k
+          · exact ⟨0, by simp [B, hw0, Matrix.vecMulVec_mulVec, h0]⟩
+          · refine ⟨0, ?_⟩
+            change Matrix.vecMulVec u v *ᵥ (P ^ 1 *ᵥ u) = _
+            rw [Matrix.vecMulVec_mulVec, pow_one, h1]
+            simp
+          · refine ⟨(v ⬝ᵥ w 2) / P.det, ?_⟩
+            rw [show 2 + 1 = 0 + 3 by decide, hperiod, hw0, smul_smul, div_mul_cancel₀ _ hz]
+            change Matrix.vecMulVec u v *ᵥ w 2 = _
+            rw [Matrix.vecMulVec_mulVec, op_smul_eq_smul]
+        · obtain ⟨c, hc⟩ := ih (k - 3) (by omega)
+          refine ⟨c, ?_⟩
+          rw [show k = (k - 3) + 3 by omega, hperiod, Matrix.mulVec_smul, hc,
+            show k - 3 + 3 + 1 = (k - 3 + 1) + 3 by omega, hperiod,
+            smul_comm P.det c]
+  have hstep (k : ℕ) {X : Mat} (hX : X ∈ L) {x : Fin 3 → K} (hx : x ∈ W k) :
+      X *ᵥ x ∈ W (k + 1) := by
+    obtain ⟨a, rfl⟩ := Submodule.mem_span_singleton.1 hx
+    rw [Matrix.mulVec_smul]
+    apply (W (k + 1)).smul_mem
+    rw [hL] at hX
+    induction hX using Submodule.span_induction with
+    | mem X hX =>
+        rcases Set.mem_insert_iff.1 hX with rfl | hX
+        · have hP : P *ᵥ w k = w (k + 1) := by
+            simp only [w, pow_succ', Matrix.mulVec_mulVec]
+          exact hP ▸ Submodule.mem_span_singleton_self _
+        · obtain rfl := Set.mem_singleton_iff.1 hX
+          obtain ⟨c, hc⟩ := hadvance k
+          exact Submodule.mem_span_singleton.2 ⟨c, hc.symm⟩
+    | zero => simp
+    | add X Y _ _ hX hY => simpa only [Matrix.add_mulVec] using (W (k + 1)).add_mem hX hY
+    | smul c X _ hX => simpa only [Matrix.smul_mulVec] using (W (k + 1)).smul_mem c hX
+  have hwords (k : ℕ) : ∀ X ∈ L ^ k, X *ᵥ u ∈ W k := by
+    induction k with
+    | zero =>
+        rw [pow_zero, Submodule.one_eq_span]
+        intro X hX
+        obtain ⟨c, rfl⟩ := Submodule.mem_span_singleton.1 hX
+        rw [Matrix.smul_mulVec, Matrix.one_mulVec, ← hw0]
+        exact (W 0).smul_mem c (Submodule.mem_span_singleton_self _)
+    | succ k ih =>
+        rw [pow_succ']
+        intro X hX
+        refine Submodule.mul_induction_on hX ?_ ?_
+        · intro Y hY Z hZ
+          rw [← Matrix.mulVec_mulVec]
+          exact hstep k hY (ih Z hZ)
+        · intro Y Z hY hZ
+          simpa only [Matrix.add_mulVec] using (W (k + 1)).add_mem hY hZ
+  intro htop
+  obtain ⟨i, hi⟩ : ∃ i, u i ≠ 0 := by
+    by_contra! h
+    exact hu (funext h)
+  have hW : W n = ⊤ := by
+    apply top_unique
+    intro x _
+    let X := Matrix.vecMulVec x (Pi.single i (u i)⁻¹)
+    have hX : X ∈ L ^ n := htop.symm ▸ Submodule.mem_top
+    have hx := hwords n X hX
+    simpa [X, Matrix.vecMulVec_mulVec, single_dotProduct, inv_mul_cancel₀ hi] using hx
+  have hdim : Module.finrank K (W n) ≤ 1 :=
+    finrank_span_le_card ({w n} : Set (Fin 3 → K))
+  rw [hW, finrank_top, Module.finrank_fintype_fun_eq_card, Fintype.card_fin] at hdim
+  omega
+
+/-- An eventually full size-three matrix space containing an invertible matrix
+has full seventh power. -/
+theorem invertible_pow_seven_eq_top
+    (L : Submodule K Mat) (A : Matˣ) (hA : (A : Mat) ∈ L)
+    (hfull : ∃ m : ℕ, 0 < m ∧ L ^ m = ⊤) : L ^ 7 = ⊤ := by
+  by_contra hseven
+  obtain ⟨u, v, hL, _, h0, h1, h2⟩ :=
+    second_rank_one_return_of_pow_seven_ne_top L A hA hfull hseven
+  obtain ⟨x, y, hrel⟩ := third_power_eq (A : Mat)
+  by_cases hxy : x ≠ 0 ∨ y ≠ 0
+  · have hdim := six_le_finrank_four_of_second_return L A u v hL hfull h0 h1 h2 hrel hxy
+    exact hseven (pow_eq_top_of_finrank_add_le L A hA hfull (j := 4) (t := 3) (by decide)
+      (by rw [finrank_matrix_three]; omega))
+  · have hx : x = 0 := by by_contra hx; exact hxy (Or.inl hx)
+    have hy : y = 0 := by by_contra hy; exact hxy (Or.inr hy)
+    have hcube : (A : Mat) ^ 3 = (A : Mat).det • (1 : Mat) := by
+      simpa [hx, hy] using hrel
+    obtain ⟨m, _, hm⟩ := hfull
+    exact pow_ne_top_of_periodic_second_return L A u v hL h0 h1 h2 hcube m hm
 
 private theorem no_common_kernel_of_positive_full (L : Submodule K Mat)
     (hfull : ∃ m : ℕ, 0 < m ∧ L ^ m = ⊤) :
