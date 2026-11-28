@@ -83,8 +83,7 @@ port_definition Int.decNonneg
 port_definition Int.decLe
 port_definition Int.decLt
 
-attribute [instance] Omega.instOfNat Omega.instNatCastInt Omega.Int.instNegInt
-attribute [instance] Omega.Int.instAdd Omega.Int.instSub Omega.Int.instMul
-attribute [instance] Omega.Int.instLEInt Omega.Int.instLTInt Omega.Int.instDvd
-
-attribute [instance] Omega.Int.decLe Omega.Int.decLt
+attribute [instance] Omega.instNatCastInt Omega.instOfNat
+attribute [instance, default_instance 500] Omega.Int.instNegInt
+attribute [instance] Omega.Int.instAdd Omega.Int.instMul Omega.Int.instSub
+attribute [instance] Omega.Int.instLEInt Omega.Int.instLTInt Omega.Int.decLe Omega.Int.decLt Omega.Int.instDvd
