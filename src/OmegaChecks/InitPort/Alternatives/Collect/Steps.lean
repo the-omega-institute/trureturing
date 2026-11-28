@@ -44,45 +44,36 @@ public theorem Std.Iterators.Types.Take.rel_of_zero_of_inner {α : Type w} {m : 
   have hf := it.internalState.finite.resolve_left (fun hp => Nat.not_lt_zero _ (h ▸ hp))
   exact Or.inr ⟨h'.trans h.symm, Or.inr ⟨hf, h''⟩⟩
 
-public theorem Std.Iterators.Types.Take.instFinite {α : Type u} {m : Type u → Type v} {β : Type u}
-    [Monad m] [Iterator α m β] [Productive α m] : Finite (Take α m) m := by
-  let T := IterM (α := Take α m) m β
-  let R := IterM.IsPlausibleSuccessorOf (α := Take α m) (m := m)
-  have finiteInner (hf : Finite α m) (inner : IterM (α := α) m β) :
-      ∀ (n : Nat) (h : 0 < n ∨ Finite α m), Acc R (⟨n, inner, h⟩ : T) := by
-    induction inner using hf.wf.induction with
-    | h it ih =>
-      intro n h
+/-- At equal countdowns, use skip induction until an edge supplies finiteness of the inner iterator. -/
+public theorem Std.Iterators.Types.Take.instFinitenessRelation._proof_1 {α : Type u} {m : Type u → Type v}
+    {β : Type u} [Monad m] [Iterator α m β] [Productive α m] :
+    WellFounded (Std.Iterators.Types.Take.Rel (α := α) (β := β) m) := by
+  let Inner := IterM (α := α) m β
+  let skipRel := fun (a b : Inner) => a.finitelyManySkips.Rel b.finitelyManySkips
+  let stepRel := fun (a b : Inner) => a.finitelyManySteps!.Rel b.finitelyManySteps!
+  let innerRel := fun (a b : Inner) => skipRel a b ∨ Finite α m ∧ stepRel a b
+  have accFinite (hf : Finite α m) : WellFounded innerRel :=
+    Subrelation.wf (r := stepRel) (fun {_ _} h => h.elim (fun hs => .of_productive hs) (·.2))
+      (InvImage.wf (fun t : Inner => t.finitelyManySteps) WellFoundedRelation.wf)
+  have skips : WellFounded skipRel := InvImage.wf (fun t : Inner => t.finitelyManySkips) WellFoundedRelation.wf
+  have combined : WellFounded innerRel := by
+    constructor
+    intro a
+    induction a using skips.induction with
+    | h a ih =>
       constructor
-      rintro _ ⟨_, heq, hs⟩
-      cases hs with
-      | yield hy _ => cases heq; exact ih _ (IterM.isPlausibleSuccessorOf_of_yield hy) _ _
-      | skip hs _ => cases heq; exact ih _ (IterM.isPlausibleSuccessorOf_of_skip hs) _ _
-      | done _ => cases heq
-      | depleted _ => cases heq
-  have positive (n : Nat) : ∀ (hp : 0 < n) (inner : IterM (α := α) m β),
-      Acc R (⟨n, inner, Or.inl hp⟩ : T) := by
-    induction n using Nat.strongRecOn with
-    | ind n smaller =>
-      intro hp inner
-      induction inner using (Productive.wf (α := α) (m := m) (β := β)).induction with
-      | h it fewerSkips =>
-        constructor
-        rintro _ ⟨_, heq, hs⟩
-        cases hs with
-        | yield _ hne =>
-          cases heq
-          change n ≠ 1 at hne
-          apply smaller (n - 1) (Nat.sub_lt hp (by decide))
-          exact Nat.sub_pos_of_lt (Nat.lt_of_le_of_ne hp (Ne.symm hne))
-        | skip hs _ => cases heq; exact fewerSkips _ hs
-        | done _ => cases heq
-        | depleted _ => cases heq
-  refine ⟨⟨?_⟩⟩
-  rintro ⟨n, inner, h⟩
-  cases h with
-  | inl hp => exact positive n hp inner
-  | inr hf => exact finiteInner hf inner n (Or.inr hf)
+      intro b edge
+      exact edge.elim (ih b) (fun h => (accFinite h.1).apply b)
+  let rank := fun t : IterM (α := Take α m) m β => (t.internalState.countdown, t.internalState.inner)
+  refine Subrelation.wf (r := InvImage (Prod.Lex Nat.lt innerRel) rank) ?_
+    (InvImage.wf _ (Prod.lex Nat.lt_wfRel ⟨innerRel, combined⟩).wf)
+  intro a b e
+  rcases e with dec | ⟨eqCount, inner⟩
+  · exact Prod.Lex.left _ _ dec
+  · rcases a with ⟨⟨ac, ai, af⟩⟩
+    rcases b with ⟨⟨bc, bi, bf⟩⟩
+    cases eqCount
+    exact Prod.Lex.right _ inner
 
 public theorem Std.IterM.step_take : type_of% @_root_.Std.IterM.step_take := by
   intro α m β mon inst n it
