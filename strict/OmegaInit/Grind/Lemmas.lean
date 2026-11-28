@@ -75,13 +75,16 @@ theorem false_of_not_eq_self {a : Prop} (h : Eq (Not a) a) : False :=
   let neg : Not a := fun ha => (Eq.mpr h ha) ha
   neg (Eq.mp h neg)
 
-theorem decide_eq_true {p : Prop} {d : Decidable p} (h : Eq p True) :
+private theorem decideTrue {p : Prop} {d : Decidable p} (h : Eq p True) :
     Eq (@Decidable.decide p d) Bool.true :=
   Decidable.falseTrueCases (motive := fun d => Eq (@Decidable.decide p d) Bool.true)
     (fun neg => False.elim (neg (of_eq_true h))) (fun _ => Omega.rfl) d
 
-theorem decide_eq_false {p : Prop} {d : Decidable p} (h : Eq p False) :
+private theorem decideFalse {p : Prop} {d : Decidable p} (h : Eq p False) :
     Eq (@Decidable.decide p d) Bool.false := @Omega.decide_eq_false p d (of_eq_false h)
 
 end
 end Omega.Lean.Grind
+
+port_proof Lean.Grind.decide_eq_true using Omega.Lean.Grind.decideTrue
+port_proof Lean.Grind.decide_eq_false using Omega.Lean.Grind.decideFalse
