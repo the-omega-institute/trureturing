@@ -208,6 +208,29 @@ private theorem p_zero_of_flanks {L : ℕ} {x : Config L} {j : Fin L}
   · simp [p, pTriple, bit, h.1, h.2, hc]
   · exact (h.2 hr).elim
 
+private theorem center_swap_minus (r : Rung) :
+    centerSwap r = .minus ↔ r = .minus := by
+  cases r <;> decide
+
+private theorem center_keeps_p_away {L : ℕ} {j k : Fin L}
+    {x y : Config L} (hy : y.val = centerMove j x.val)
+    (hl : k ≠ prev j) (hr : k ≠ next j) : p y k = p x k := by
+  have hprev : prev k ≠ j := by
+    intro he
+    exact hr (by simpa using congrArg next he)
+  have hnext : next k ≠ j := by
+    intro he
+    exact hl (by simpa using congrArg prev he)
+  by_cases he : k = j
+  · simp [p, pTriple, hy, centerMove, he, hprev, hnext, center_swap_minus]
+  · simp [p, hy, centerMove, he, hprev, hnext]
+
+private theorem flank_keeps_p_away {L : ℕ} {j k : Fin L}
+    {x y : Config L} (hy : y.val = flankMove j x.val)
+    (hl : k ≠ prev j) (hr : k ≠ next j) : p y k = p x k := by
+  simp only [p, pTriple, hy, flank_empty]
+  simp [flankMove, hl, hr]
+
 private theorem center_complement (outer c : Rung) (hc : c ≠ .minus) :
     pTriple outer .e (centerSwap c) + pTriple outer .e c = 1 ∧
       pTriple (centerSwap c) .e outer + pTriple c .e outer = 1 := by
@@ -346,6 +369,64 @@ theorem jammed_kills {L : ℕ} (hL : 5 ≤ L) (j : Fin L)
   rw [Matrix.mulVec_single_one, Matrix.single_one_vecMul]
   exact ⟨funext fun y => (jammed_zero_entries hL j hx y).1,
     funext fun y => (jammed_zero_entries hL j hx y).2⟩
+
+/-- Every nonzero entry of Eq. (40) stays within the unextended charge sector. -/
+theorem charge_of_nonzero_entry {L : ℕ} (hL : 5 ≤ L) (j : Fin L)
+    {x y : Config L} (h : T j y x ≠ 0) : charge y = charge x := by
+  classical
+  have hne : p y (prev j) ≠ p y (next j) := by
+    intro he
+    exact h (by simp [T_apply, he])
+  have hs : S j y x ≠ 0 := by
+    intro he
+    exact h (by simp [T_apply, he])
+  have hm :
+      (p y (prev j) + p x (prev j) = 1 ∧ p y (next j) + p x (next j) = 1) ∧
+      (∀ k, k ≠ prev j → k ≠ next j → p y k = p x k) := by
+    by_cases hl : centerAllowed j x.val ∧ y.val = centerMove j x.val
+    · exact ⟨center_flip_p hL hl.1 hl.2, fun _ => center_keeps_p_away hl.2⟩
+    by_cases hr : flanksAllowed j x.val ∧ y.val = flankMove j x.val
+    · exact ⟨flank_flip_p hr.1 hr.2, fun _ => flank_keeps_p_away hr.2⟩
+    exact (hs (by simp [S, A, F, hl, hr])).elim
+  let rest := ((Finset.univ : Finset (Fin L)).erase (prev j)).erase (next j)
+  have hsum : (∑ k ∈ rest, p y k) = ∑ k ∈ rest, p x k := by
+    apply Finset.sum_congr rfl
+    intro k hk
+    obtain ⟨hr, hk⟩ := Finset.mem_erase.mp hk
+    exact hm.2 k (Finset.mem_erase.mp hk).1 hr
+  have hsplit (z : Config L) :
+      (∑ k ∈ rest, p z k) + p z (next j) + p z (prev j) = charge z := by
+    have hn : next j ∈ (Finset.univ : Finset (Fin L)).erase (prev j) :=
+      Finset.mem_erase.mpr ⟨next_ne_prev hL j, Finset.mem_univ _⟩
+    unfold rest
+    rw [Finset.sum_erase_add _ _ hn, Finset.sum_erase_add _ _ (Finset.mem_univ _)]
+    rfl
+  have hx := hsplit x
+  have hy := hsplit y
+  obtain ⟨hl, hr⟩ := hm.1
+  omega
+
+def NP (L : ℕ) : Op L := ∑ j : Fin L, P j
+
+/-- The unextended charge operator has the summed projector eigenvalue on every basis ket. -/
+theorem charge_eigenvalue {L : ℕ} (x : Config L) :
+    NP L *ᵥ ket x = (charge x : ℂ) • ket x := by
+  classical
+  have hd : NP L = Matrix.diagonal (fun y : Config L => (charge y : ℂ)) := by
+    ext y z
+    rw [NP, Matrix.sum_apply]
+    by_cases he : y = z
+    · subst z
+      simp [P, charge, Nat.cast_sum]
+    · simp [P, Matrix.diagonal_apply_ne _ he, he]
+  rw [hd]
+  unfold ket
+  rw [Matrix.diagonal_mulVec_single, mul_one]
+  funext y
+  by_cases he : y = x
+  · subst y
+    simp
+  · simp [Pi.single_eq_of_ne he]
 
 end
 

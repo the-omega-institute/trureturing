@@ -12,6 +12,7 @@ public import D5.S3.Quantum.SpinChains.MiaoFukaiGuardedMoves
 public import Mathlib.Algebra.Ring.Parity
 import Mathlib.Data.List.Chain
 import Mathlib.Data.List.GetD
+import Mathlib.Data.List.OfFn
 import Mathlib.Tactic.IntervalCases
 
 /-! The explicit A/B tile witness in issue #35234. Splitting a two-empty gap
@@ -19,7 +20,7 @@ into its first and second vacancies permits a single adjacency rule at all joins
 
 @[expose] public section
 
-open scoped BigOperators
+open scoped BigOperators Matrix
 
 namespace D5.S3.Quantum.SpinChains.MiaoFukaiGuardedMoves
 
@@ -297,13 +298,20 @@ theorem jammed_charge_count {L : ℕ} (hL : 12 ≤ L) :
     have hdef : L - targetCharge L = deficit L := by unfold targetCharge; omega
     rw [hdef, Nat.odd_iff]
     by_cases h : (blocks L + tailZeros (residue L)) % 2 = 0
-    · simp [deficit, padWithSingles, h]
-      omega
-    · simp [deficit, padWithSingles, h]
-      omega
+    · simp [deficit, padWithSingles, h] <;> omega
+    · simp [deficit, padWithSingles, h] <;> omega
   constructor
   · simp [Fintype.card_pi_const]
   · simpa only [Fintype.card_pi_const, Fintype.card_bool, Fintype.card_fin] using
       Fintype.card_le_of_injective (jamEmbedding hL) (jamEmbedding hL).injective
+
+/-- Every prescribed word has the common projector charge and zero local row and column. -/
+theorem witness_local_actions {L : ℕ} (hL : 12 ≤ L) (b : Fin (blocks L) → Bool) :
+    NP L *ᵥ ket (tiledConfig hL b) = (targetCharge L : ℂ) • ket (tiledConfig hL b) ∧
+    ∀ j : Fin L, T j *ᵥ ket (tiledConfig hL b) = 0 ∧
+      ket (tiledConfig hL b) ᵥ* T j = 0 := by
+  have hc : charge (tiledConfig hL b) = targetCharge L := (jamEmbedding hL b).property.1
+  refine ⟨?_, fun j => jammed_kills (by omega) j (tiled_jammed hL b)⟩
+  rw [charge_eigenvalue, hc]
 
 end D5.S3.Quantum.SpinChains.MiaoFukaiGuardedMoves
