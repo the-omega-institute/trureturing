@@ -1,3 +1,4 @@
+import D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Placement.Q9FiveAxisExcessCycles
 import D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Placement.Q9InactiveContactFibre
 import D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.HuangThreeColumnIntegrality
 import D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Q9WeightedCutEnergy
@@ -578,6 +579,52 @@ theorem five_axis_hole_linear_bound (S : Finset (Q 9)) (e : Fin 5 ↪ Fin 9)
   have hh : 4 ≤ H.card := by omega
   exact middle_hole_energy_bound ⟨H.card, by omega⟩ ⟨E, by omega⟩ hh hspec'
 
+open Classical in
+/-- An occupied neighbouring fibre of the other component and two forbidden
+parity corrections lower the free-edge budget by six below five times the
+number of holes. -/
+theorem adjacent_fibre_hole_edge_capacity {C D : Finset (Q 9)} (b : Bool) {x : Q 9}
+    (hx : x ∈ C) (hp : parity x = b)
+    (hsep : ∀ u ∈ C, ∀ v ∈ D, 2 ≤ hammingDist u v)
+    (e : Fin 5 ↪ Fin 9) {i j k : Fin 9}
+    (hi : i ∉ univ.map e) (hj : j ∈ univ.map e) (hk : k ∈ univ.map e) (hjk : j ≠ k)
+    (hmj : ({i, j} : Finset (Fin 9)) ∉ minimumDisplacements C D b 2)
+    (hmk : ({i, k} : Finset (Fin 9)) ∉ minimumDisplacements C D b 2)
+    (hbal : BalancedCriticalSpectrum.IsBalanced D)
+    (hdeg : ∀ v ∈ D, (directions D v).card ≤ 3) :
+    let y := flip x i
+    let A := univ.map e
+    let L := (restrictToFibre D A y).filter (fun v => parity v = b)
+    let H := (restrictToFibre univ A y).filter (fun v => parity v = b ∧ v ∉ D)
+    (freeEdges D L A).card + 6 ≤ 5 * H.card := by
+  intro y A L H
+  by_cases hs : H.card ≤ 3
+  · exact adjacent_fibre_small_hole_edge_capacity b hx hp hsep A (by simp [A])
+      hi hj hk hjk hmj hmk hdeg hs
+  by_cases hm : H.card = 4 ∨ H.card = 5
+  · exact Q9FiveAxisExcessCycles.adjacent_fibre_four_five_hole_capacity
+      b hx hp hsep e hi hj hk hjk hmj hmk hbal hdeg hm
+  by_cases h6 : H.card = 6
+  · have hb := (five_axis_hole_linear_bound D e hi y b hbal hdeg).2 h6
+    change (freeEdges D L A).card ≤ 22 at hb
+    omega
+  let F := (restrictToFibre univ A y).filter (fun v => parity v = b)
+  have hF : F.card ≤ 16 := by
+    have hb := Q9InactiveContactFibre.adjacent_fibre_capacity (C := ∅) (D := univ) b
+      x e hi ∅ (empty_subset _) (by simp)
+    simpa [F, A, y] using hb
+  have hL : F.filter (fun v => v ∈ D) = L := by
+    ext v
+    simp [F, L, restrictToFibre, and_comm, and_assoc]
+  have hH : F.filter (fun v => v ∉ D) = H := by
+    ext v
+    simp [F, H, restrictToFibre, and_assoc]
+  have hsplit := card_filter_add_card_filter_not (s := F) (fun v => v ∈ D)
+  rw [hL, hH] at hsplit
+  have he : (freeEdges D L A).card ≤ 3 * L.card :=
+    freeEdges_le_degree_sum (fun v hv => hdeg v (mem_filter.mp (mem_filter.mp hv).1).1)
+  omega
+
 set_option maxHeartbeats 600000 in
 -- The proof elaborates both vertex and edge projections over the four-cube.
 open Classical in
@@ -922,6 +969,7 @@ theorem six_pure_fibre_capacity (P M : Finset (Q 4)) (holes edges : Q 4 → ℕ)
 
 #print axioms mixed_fibre_deficit_capacity
 #print axioms six_pure_fibre_capacity
+#print axioms adjacent_fibre_hole_edge_capacity
 #print axioms adjacent_fibre_small_hole_edge_capacity
 #print axioms few_holes_bound_freeEdges
 #print axioms pure_edge_budget

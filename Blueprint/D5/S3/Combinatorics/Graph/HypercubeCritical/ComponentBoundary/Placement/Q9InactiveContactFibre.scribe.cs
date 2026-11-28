@@ -83,6 +83,15 @@ internal sealed class Q9InactiveContactFibreDocument : IScribeDocumentDefinition
                     Paragraph(Text("A representation respecting coordinate flips carries those two paths into the selected support. Their flip words have the same endpoint. Anticommuting the signed flip operators puts their products in opposite signs, contradicting balance."))),
                 DescribeRole.Theorem),
             Describe.Lean(
+                DescribeId.Create("q9-adjacent-fibre-hole-edge-capacity"),
+                DeclarationHandle.Create(Placement + "Q9PureFibreEdgeCapacity.adjacent_fibre_hole_edge_capacity"),
+                H("A neighbouring component reduces the free-edge capacity by six"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("Translation sends one forced hole to zero, and a coordinate permutation sends the two forbidden corrections to the last two axes. The resulting five-bit representation preserves parity, adjacency and the number of free edges. A square or hexagon in the encoded support would give the same cycle in the balanced component.")),
+                    Paragraph(Text("At four and five holes, the excess configurations contain an eight-cycle whose signed product is negative. The common-neighbour count handles smaller hole counts. The spectral bound at six holes and the degree bound at larger hole counts complete the bound of five times the number of holes minus six."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("q9-six-pure-capacity"),
                 DeclarationHandle.Create(Placement + "Q9PureFibreEdgeCapacity.six_pure_fibre_capacity"),
                 H("The linear edge bounds restrict the six-pure case"),
