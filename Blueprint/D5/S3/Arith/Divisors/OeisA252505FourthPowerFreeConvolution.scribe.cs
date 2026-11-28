@@ -79,6 +79,10 @@ internal sealed class OeisA252505FourthPowerFreeConvolutionDocument : IScribeDoc
                     Eq(Multiply(D(2), Call("b", N)),
                         Add(Cast(Call("tau", Pow(N, D(2))), "Int"), D(1))))),
                 "Swap the two factors. Each off-diagonal orbit has two entries; the unique fixed pair is (n,n). Thus 2b(n)=tau(n^2)+1. This derives the formula from the rational solution definition, including x=y=2n."),
+            Node("signedProductsRange", "Range of the signed and unsigned products",
+                SignedProductsRange(),
+                "The unsigned factor detects residues zero and one modulo four. The signed factor has value one at residue zero and minus one at residue one. All other residues make both factors zero. With every index in the two supported residue classes the unsigned product is one and the signed product is one or minus one.",
+                DescribeRole.Theorem, provenance: AssessedProvenance.FromRepo()),
             Thm("result", "The complete convolution for every positive integer",
                 All("n", Implies(Le(D(1), N), Eq(Call("a", N), Sum(Divisors(N), "d",
                     Multiply(Call("b", Dv), Call("c", App(Q("Nat", "div"), N, Dv))))))),
@@ -94,11 +98,32 @@ internal sealed class OeisA252505FourthPowerFreeConvolutionDocument : IScribeDoc
         OpenProblemResolutionClaim? resolution = null) =>
         Node(name, title, formula, prose, DescribeRole.Theorem, resolution);
     private static DocumentBlock Node(string name, string title, Formula formula, string prose, DescribeRole role,
-        OpenProblemResolutionClaim? resolution = null) =>
+        OpenProblemResolutionClaim? resolution = null, AssessedProvenance? provenance = null) =>
         Describe.Lean(DescribeId.Create("a252505-" + name.ToLowerInvariant().Replace("_", "-")),
             DeclarationHandle.Create(Prefix + name), H(title),
             StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromRepo(Source),
             Blocks(Paragraph(Text(prose))), role, openProblemResolutionClaim: resolution);
+    private static Formula SignedProductsRange()
+    {
+        Formula f = F.Id("f"), s = F.Id("s"), p = F.Id("p");
+        Formula residue = App(Q("Nat", "mod"), App(f, p), D(4));
+        Formula unsigned = If(Le(residue, D(1)), D(1), D(0));
+        Formula signed = If(Eq(residue, D(0)), D(1), If(Eq(residue, D(1)), Seq(Minus, D(1)), D(0)));
+        Formula unsignedProduct = App(Q("Finset", "prod"), s, Fun("p", unsigned));
+        Formula signedProduct = App(Q("Finset", "prod"), s, Fun("p", signed));
+        Formula zeroCase = And(Eq(unsignedProduct, D(0)), Eq(signedProduct, D(0)));
+        Formula unitCase = And(Eq(unsignedProduct, D(1)), Parenthesized(new Formula.Logic(
+            Eq(signedProduct, D(1)), FormulaLogicOperator.Or, Eq(signedProduct, Seq(Minus, D(1))))));
+        Formula cases = new Formula.Logic(Parenthesized(zeroCase), FormulaLogicOperator.Or, Parenthesized(unitCase));
+        return new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create("f"),
+            Call("Finsupp", F.Id("Nat"), F.Id("Nat")), new Formula.Bind(FormulaQuantifier.ForAll,
+                FormulaIdentifier.Create("s"), Call("Finset", F.Id("Nat")), cases));
+    }
+
+    private static Formula If(Formula condition, Formula yes, Formula no) =>
+        Parenthesized(Seq(F.Id("if"), Sp, Parenthesized(condition), Sp, F.Id("then"), Sp, yes,
+            Sp, F.Id("else"), Sp, no));
+
     private static Formula AllFunction(string name, Formula body) => new Formula.Bind(
         FormulaQuantifier.ForAll, FormulaIdentifier.Create(name),
         new Formula.TypeArrow(F.Id("Nat"), F.Id("Int")), body);

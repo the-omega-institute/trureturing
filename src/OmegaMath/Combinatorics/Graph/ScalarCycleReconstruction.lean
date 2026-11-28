@@ -255,7 +255,8 @@ theorem Walk.IsCycle.exists_scalar_gain_obstruction {a : V} {c : G.Walk a a} (hc
 
 namespace ScalarCycleReconstruction
 
-private theorem scalarGain_of_walk (g : V → V → ℝ) {a b : V} (p : G.Walk a b) :
+/-- An additive walk gain is its scalar walk weight. -/
+theorem scalarGain_of_walk (g : V → V → ℝ) {a b : V} (p : G.Walk a b) :
     Multiplicative.toAdd (p.gain (fun v w => Multiplicative.ofAdd (g v w))) = p.scalarWeight g := by
   induction p with
   | nil => rfl

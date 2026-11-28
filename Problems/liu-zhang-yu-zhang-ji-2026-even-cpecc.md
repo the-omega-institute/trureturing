@@ -93,8 +93,40 @@ rank-one update gives determinant $48^{29}(1+58/6)=2^{121}3^{28}$,
 which cannot equal the integer square $\det(A)^2$.
 Lean checks both the design obstruction and the exact support-family
 optimum in [ExactLength58](../D5/S3/Combinatorics/Hamming/ConstantPowerCooling/ExactLength58.lean).
-Other finite parameter choices in the even-deletion question remain open
-in this dossier. [Source, Section 5](https://arxiv.org/html/2611.34386v1#S5)
+
+### Exact optimum for the projective-plane progression
+
+Let $F$ be a finite field of order $q\ge 7$. Set $k=q+1$,
+$n=q(q+1)+2$ and $m=n/2$. If $m$ is odd and $q+1$ is nonsquare, or if
+$m$ is even and $q-1$ is nonsquare, the exact binary support-family optimum
+at $(t,w,e)=(2,q-1,q-3)$ is $n-1$.
+Lean proves attainment and the upper bound on every support family in
+`D5/S3/Combinatorics/Hamming/ConstantPowerCooling/ProjectiveOptimum.support_optimum`.
+[ProjectiveOptimum](../D5/S3/Combinatorics/Hamming/ConstantPowerCooling/ProjectiveOptimum.lean) · [Issue #35239](https://github.com/the-omega-institute/trureturing/issues/35239)
+
+The $n-1$ lines of the projective plane over $F$ give the lower bound by
+taking all weight-$(q-1)$ subsets of each line. The points occupy $n-1$ of
+the $n$ coordinates. Deleting two coordinates leaves at least $q-1$
+points on every line, and two distinct lines meet in at most one point.
+
+The finite leave bound gives at most $n$ classes. Attaining $n$ would
+force a design with $m$ groups of size two and $n$ blocks of size $k$.
+Its square integer incidence matrix has Gram matrix $kI+J-P$. The
+$m$ diagonal blocks of $kI-P$ each have determinant $k(k-2)$, and the
+all-ones update multiplies the determinant by $1+n/(k-2)$. The identity
+$k-2+n=k^2$ gives determinant $k^{m+2}(k-2)^{m-1}$. The factor selected by
+the hypothesis has an odd prime valuation, and the other factor has
+even exponent. This contradicts the square determinant of an integer
+Gram matrix and reduces the bound to $n-1$.
+
+The order-seven case recovers the same optimum as the existing length-58
+result. The theorem applies to even and odd field orders, for example
+$q=9$ gives $n=92$ and even $m=46$ with $q-1=8$ nonsquare, while
+$q=16$ gives $n=274$ and odd $m=137$ with $q+1=17$ nonsquare. For a prime
+$q\ge 7$ with $q\equiv 3\pmod 4$, $m$ is odd and a square $q+1=s^2$
+would factor $q=(s-1)(s+1)$ with both factors greater than one.
+The unrestricted even-$t$ construction question remains open.
+[Source, Section 5](https://arxiv.org/html/2611.34386v1#S5)
 
 ## ASSUMED-UNVERIFIED
 
@@ -128,3 +160,7 @@ telescopes. [Issue #35136](https://github.com/the-omega-institute/trureturing/is
 The length-58 source mirror validates the audit for `support_optimum`.
 The source binding for `no_group_divisible_design` remains open.
 [Audit issue #35136](https://github.com/the-omega-institute/trureturing/issues/35136#issuecomment-7235364329)
+
+Source audits for the two design suppliers made public for the projective
+optimum, `block_support_family` and `even_strict_edge_threshold`, remain open.
+[Audit issue #35136](https://github.com/the-omega-institute/trureturing/issues/35136#issuecomment-7238334309)
