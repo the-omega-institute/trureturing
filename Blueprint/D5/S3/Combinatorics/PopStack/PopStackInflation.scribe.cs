@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.PopStack;
 internal sealed class PopStackInflationDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/PopStack/PopStackInflation.";
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Combinatorics/cioni2025sorting");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/PermutationPatterns/cioni2025sorting");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Inflating the second entry of a simple permutation of size at least four by a permutation block containing 12 produces an occurrence of 2341, provided that second entry is not the minimum.",

@@ -5,8 +5,9 @@ year: 2026
 title: "Lower Bounds on Expressions Depending on the Functions φ(n), ψ(n) and σ(n): Part 4"
 doi: 10.3390/math14213935
 url: https://mdpi-res.com/d_attachment/mathematics/mathematics-14-03935/article_deploy/mathematics-14-03935.pdf
-claim: "Section 4, Conjecture 2 asks for the pairwise 3k numerator over the product 2k denominator for all n ≥ 2 and k ≥ 1."
+claim: "Section 4 states positive-power quotient bounds for all n ≥ 2 and k ≥ 1, including the cubic quotient in Conjecture 1 and the pairwise cubic quotient in Conjecture 2."
 strata_touched:
+  - D5/S3/Arith/Divisors/DimitrovPartFourC1
   - D5/S3/Arith/Divisors/DimitrovPartIVC2
 license: CC-BY-4.0
 triage: anchor
@@ -74,3 +75,35 @@ numerator inequalities and the source's exponent-one theorem do not themselves
 settle this quotient. The inspected Lean supplier at
 `pro20541/dimitrov-conjectures-lean@95809b59deefd8dfad81e398250aedd7e1aea3b3`
 contains reciprocal-product inequalities for Part III, not this complete event.
+
+## Conjecture 1
+
+Section 4, page 13 of the publisher PDF states that for every natural
+$n\geq 2$ and $k\geq 1$,
+
+$$
+\frac{\varphi(n)^{3k}+\psi(n)^{3k}+\sigma(n)^{3k}}
+{\varphi(n)^k\psi(n)^k\sigma(n)^k}
+\geq \frac{2(n+1)^{3k}+(n-1)^{3k}}{(n+1)^{2k}(n-1)^k}.
+$$
+
+The function correspondence above applies. Subtraction and division are
+real. At $k=1$ the right side is
+$(3n^3+3n^2+9n+1)/(n^3+n^2-n-1)$, as in Section 3, Theorem 1, page 2.
+
+The C1 proof applies the original `DimitrovPartFourC4.cubic_ratio_bound`,
+formerly private in the C4 owner, with
+$r=((n+1)/(n-1))^k$, $x=(\psi(n)/\varphi(n))^k$ and
+$y=(\sigma(n)/\varphi(n))^k$. The arithmetic bounds `psi_ge` and
+`sigma_ge_psi` are imported from `DimitrovLowerBoundsC4C5`, whose note
+credits Michael Mazur's pinned Apache-2.0 development. [Supplier attribution and license](dimitrov2026c4c5.md)
+
+The bounded C1 qualification compared Parts III–IV, Sándor–Gryszka III
+(DOI 10.7546/nntdm.2025.31.2.361-369, Theorems 8, 9 and 12), and the
+Mazur donor at `95809b59deefd8dfad81e398250aedd7e1aea3b3`. The inspected
+Sándor–Gryszka results bound sums or pair products, and the donor's
+Part III C1/C3 results concern reciprocal products and Nesbitt quotients.
+No separate published resolution of the full C1 statement was identified in
+that scope. The OpenAlex citing-works query was rate-limited, and Google
+Scholar returned a verification page. Exhaustive coverage and priority
+remain unverified. [C1 preregistration and bounded screen](https://github.com/the-omega-institute/trureturing/issues/35004)

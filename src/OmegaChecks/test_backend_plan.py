@@ -4,6 +4,7 @@ from pathlib import Path
 import subprocess
 import tempfile
 
+from portable import backend_plan
 from strict_lake import ROOT
 
 
@@ -69,6 +70,7 @@ example (a k : Omega.Nat) : Omega.Eq ((a.mul k).mul (a.mul k)) ((a.mul a).mul (k
         report = json.loads(subprocess.check_output([
             ROOT / ".lake/build/bin/omegaBackendPlan", search, "UseFactorial", "UseSquare",
         ], cwd=client, text=True))
+        assert backend_plan(search, ["UseFactorial", "UseSquare"], prepared=True) == report
         assert report["mathlibOnly"] == {"UseFactorial": ["UseFactorial", "FactorialLibrary"]}, report
         assert {"name": "usesChoice", "module": "UseFactorial", "axioms": ["Classical.choice"]} in report["declarations"]
 

@@ -1,0 +1,1 @@
+{"statement_id":"sha256:0586d8079e3ae9ed86ce4ba4653b4fda87dc2535d0838108c37ec9d451021304","declarations":[{"declaration_name_key":"ns(n0,29:isAdmissibleComb_weil_vacElem)","kind":"theorem","libraries":["Aesop","Batteries","Init","Lean","Mathlib","Std"],"axioms":["Classical.choice","Quot.sound","propext"]}]}

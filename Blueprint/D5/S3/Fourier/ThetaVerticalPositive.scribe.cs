@@ -19,6 +19,13 @@ internal sealed class ThetaVerticalPositiveDocument : IScribeDocumentDefinition
     {
         public static DocumentBlock[] Entries() =>
         [
+            Entry("hexTurn", "Integer hexagonal rotation", TurnDefinition(),
+                "The bijection sends (m,n) to (n,−m−n), and its inverse sends " +
+                "(m,n) to (−m−n,m). It has order three.", true),
+            Entry("hex_q_turn", "Preservation of the hexagonal form", TurnInvariant(),
+                "Multiplying Q at the hexagonal point by square root three over two " +
+                "gives m squared plus mn plus n squared. Substituting the integer " +
+                "rotation preserves this polynomial, and hence the original form."),
             Describe.Lean(DescribeId.Create("hexagonal-theta-height-stationary"),
                 DeclarationHandle.Create(
                     "D5/S3/Fourier/ThetaVerticalPositive.hexagonal_height_stationary"),
@@ -108,6 +115,12 @@ internal sealed class ThetaVerticalPositiveDocument : IScribeDocumentDefinition
     private static Formula Mul(Formula a, Formula b) => Multiply(a, b);
     private static Formula NegF(Formula a) => new Formula.Negate(a);
     private static Formula Sq(Formula a) => new Formula.Power(a, D(2));
+    private static Formula TurnDefinition() => All("v", Call("Prod", Z, Z), Equal(
+        Call("hexTurn", V("v")), Call("pair", Call("snd", V("v")),
+            Sub(NegF(Call("fst", V("v"))), Call("snd", V("v"))))));
+    private static Formula TurnInvariant() => All("v", Call("Prod", Z, Z), Equal(
+        Call("Q", Div(D(1), D(2)), C, Call("hexTurn", V("v"))),
+        Call("Q", Div(D(1), D(2)), C, V("v"))));
     private static Formula P => Mul(Pi, V("t"));
     private static Formula C => Div(Call("sqrt", D(3)), D(2));
     private static Formula M => Call("fst", V("v"));

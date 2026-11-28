@@ -25,6 +25,8 @@ private theorem own_rows : ∀ i : Fin 9,
     successors (sources ⟨93+i.val, by omega⟩).1 (sources ⟨93+i.val, by omega⟩).2.val =
       classList (cl (sources ⟨93+i.val, by omega⟩).1
         (sources ⟨93+i.val, by omega⟩).2.val) := by
+  have budget (a b d : Nat) : a + b ≤ d ↔ a ≤ d ∧ b ≤ d - a := by omega
+  simp only [successors, budget, ite_and, ← Nat.sub_sub]
   intro i
   fin_cases i <;> decide +kernel
 set_option maxRecDepth 100000 in

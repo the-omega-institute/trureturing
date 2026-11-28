@@ -6,7 +6,6 @@
    digest: The contraction-face reading lambdaMinus is additive over coprime factors: lambdaMinus (m*n) = lambdaMinus m + lambdaMinus n whenever m, n are coprime, since their prime supports are disjoint. -/
 
 import D5.S1.Deficit.AlmostAdditivity
-import Mathlib
 
 namespace D5.S1.Deficit.LambdaMinusAdditive
 

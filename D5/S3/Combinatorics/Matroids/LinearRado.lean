@@ -55,7 +55,7 @@ private lemma familySum_map {W : Type*} [AddCommGroup W] [Module F W]
     (s.sup (fun i => (E i).map f)) = ((s.sup E)).map f := by
   simp only [Finset.sup_eq_iSup, Submodule.map_iSup]
 
-private lemma quotient_sum_finrank (H S : Submodule F V) :
+lemma quotient_sum_finrank (H S : Submodule F V) :
     finrank F (S.map H.mkQ) + finrank F H = finrank F (S ⊔ H : Submodule F V) := by
   have h := (H.mkQ.domRestrict (S ⊔ H)).finrank_range_add_finrank_ker
   rw [LinearMap.range_domRestrict, Submodule.map_sup, H.mkQ_map_self, sup_bot_eq,
@@ -330,5 +330,48 @@ theorem independent_support_matching {K : Type*} [Field K]
   simpa [M] using hn (ei i)
 
 end
+
+/-- Dimension Hall inequalities with a deficit give representatives of rank at least `r`. -/
+theorem deficit_representatives {F V : Type*} [Field F] [AddCommGroup V] [Module F V]
+    [FiniteDimensional F V] {k r : ℕ} (L : Fin k → Submodule F V) (hr : r ≤ k)
+    (hall : ∀ J : Finset (Fin k), r + J.card ≤ k +
+      finrank F (↥(⨆ i : {i : Fin k // i ∈ J}, L i.1))) :
+    ∃ l : Fin k → V, (∀ i, l i ∈ L i) ∧ r ≤ finrank F (span F (Set.range l)) := by
+  classical
+  let A := Fin (k - r) → F
+  let E : Fin k → Submodule F (V × A) := fun i => (L i).prod ⊤
+  have hA : finrank F A = k - r := Module.finrank_fin_fun F
+  have hE : ∀ J : Finset (Fin k), J.card ≤
+      finrank F (↥(⨆ i : {i : Fin k // i ∈ J}, E i.1)) := by
+    intro J
+    by_cases hJ : J.Nonempty
+    · haveI : Nonempty J := hJ.coe_sort
+      have hsum : (⨆ i : {i : Fin k // i ∈ J}, E i.1) =
+          (⨆ i : {i : Fin k // i ∈ J}, L i.1).prod (⊤ : Submodule F A) := iSup_prod_top _
+      rw [hsum, (Submodule.prodEquiv _ _).finrank_eq, Module.finrank_prod, finrank_top, hA]
+      have hbound := hall J
+      omega
+    · have hzero : J = ∅ := Finset.not_nonempty_iff_eq_empty.mp hJ
+      rw [hzero, Finset.card_empty]
+      exact Nat.zero_le _
+  obtain ⟨e, he, hei⟩ := linear_rado E hE
+  let S := span F (Set.range e)
+  let p := LinearMap.fst F V A
+  let l := p ∘ e
+  refine ⟨l, fun i => (he i).1, ?_⟩
+  have hS : finrank F S = k := by
+    simpa only [Fintype.card_fin] using finrank_span_eq_card hei
+  have hd := (p.domRestrict S).finrank_range_add_finrank_ker
+  rw [LinearMap.range_domRestrict, Submodule.map_span, ← Set.range_comp, hS] at hd
+  have hker : finrank F (p.domRestrict S).ker ≤ k - r := by
+    rw [LinearMap.ker_domRestrict, ← Submodule.finrank_map_subtype_eq S,
+      Submodule.map_comap_subtype]
+    have hp : finrank F p.ker = k - r := by
+      dsimp [p]
+      rw [LinearMap.ker_fst, LinearMap.finrank_range_of_inj LinearMap.inr_injective]
+      exact hA
+    exact (Submodule.finrank_mono inf_le_right).trans_eq hp
+  change r ≤ finrank F (span F (Set.range (p ∘ e)))
+  omega
 
 end D5.S3.Combinatorics.Matroids.LinearRado

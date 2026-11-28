@@ -8,6 +8,7 @@
 
 import D5.S3.ConceptDynamics.Experiment.InfiniteIdentificationFiniteInexactness
 import D5.S3.ConceptDynamics.InformationEscape.RegistrationTemplates
+import Mathlib.Order.CompletePartialOrder
 import Mathlib.Probability.Independence.InfinitePi
 
 
@@ -65,6 +66,7 @@ noncomputable abbrev fairMeasure : Measure Stream := productLaw fairBias
 def aligned (read : Bool → Bool) (k m : Nat) : Set Stream :=
   {x | ∀ r : Fin m, ∃ i : Fin k, read (x (r * k + i)) = false}
 
+attribute [local instance high] CompletePartialOrder.toPartialOrder in
 /-- The complete boundary, with the comparison map on coherent prefixes retained. -/
 def Boundary (read : Bool → Bool) : Prop :=
   (∀ k, 2 ≤ k → IsClosed (bounded read k) ∧ bounded read k ⊂ bounded read (k + 1)) ∧

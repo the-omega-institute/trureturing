@@ -487,24 +487,34 @@ private theorem hbox_formula (f : ℕ →₀ ℕ) :
       rfl
 
 private def Gamma (f : ℕ →₀ ℕ) : ℤ := (P f S+P f R)/2
+/-- The products of the unsigned and signed residue indicators are (0,0), (1,1) or (1,-1). -/
+theorem signedProductsRange (f : ℕ →₀ ℕ) (s : Finset ℕ) :
+    ((∏ p ∈ s, if f p % 4 ≤ 1 then (1 : ℤ) else 0) = 0 ∧
+      (∏ p ∈ s, if f p % 4 = 0 then (1 : ℤ) else if f p % 4 = 1 then -1 else 0) = 0) ∨
+    ((∏ p ∈ s, if f p % 4 ≤ 1 then (1 : ℤ) else 0) = 1 ∧
+      ((∏ p ∈ s, if f p % 4 = 0 then (1 : ℤ) else if f p % 4 = 1 then -1 else 0) = 1 ∨
+        (∏ p ∈ s, if f p % 4 = 0 then (1 : ℤ) else if f p % 4 = 1 then -1 else 0) = -1)) := by
+  classical
+  change
+    ((∏ p ∈ s, S (f p))=0 ∧ (∏ p ∈ s, R (f p))=0) ∨
+    ((∏ p ∈ s, S (f p))=1 ∧ ((∏ p ∈ s, R (f p))=1 ∨ (∏ p ∈ s, R (f p))= -1))
+  induction s using Finset.induction_on with
+  | empty => simp
+  | @insert p s hp ih =>
+    rw [prod_insert hp, prod_insert hp]
+    have hl : (S (f p)=0 ∧ R (f p)=0) ∨ (S (f p)=1 ∧ (R (f p)=1 ∨ R (f p)= -1)) := by
+      unfold S R
+      split_ifs <;> omega
+    rcases hl with ⟨hs,hr⟩ | ⟨hs,hr|hr⟩ <;>
+      rcases ih with ⟨hss,hrr⟩ | ⟨hss,hrr|hrr⟩ <;> simp [hs,hr,hss,hrr]
+
 private theorem gamma_law (f : ℕ →₀ ℕ) :
     2*Gamma f = P f S+P f R ∧ (Gamma f=0 ∨ Gamma f=1) := by
   classical
-  have hi (s : Finset ℕ) :
-      ((∏ p ∈ s, S (f p))=0 ∧ (∏ p ∈ s, R (f p))=0) ∨
-      ((∏ p ∈ s, S (f p))=1 ∧ ((∏ p ∈ s, R (f p))=1 ∨ (∏ p ∈ s, R (f p))= -1)) := by
-    induction s using Finset.induction_on with
-    | empty => simp
-    | @insert p s hp ih =>
-      rw [prod_insert hp, prod_insert hp]
-      have hl : (S (f p)=0 ∧ R (f p)=0) ∨ (S (f p)=1 ∧ (R (f p)=1 ∨ R (f p)= -1)) := by
-        unfold S R
-        split_ifs <;> omega
-      rcases hl with ⟨hs,hr⟩ | ⟨hs,hr|hr⟩ <;>
-        rcases ih with ⟨hss,hrr⟩ | ⟨hss,hrr|hrr⟩ <;> simp [hs,hr,hss,hrr]
-  have hh := hi f.support
+  have hh := signedProductsRange f f.support
   unfold Gamma P
-  rcases hh with ⟨hs,hr⟩ | ⟨hs,hr|hr⟩ <;> simp only [Finsupp.prod] at * <;> rw [hs,hr] <;> norm_num
+  simp only [Finsupp.prod, S, R]
+  rcases hh with ⟨hs, hr⟩ | ⟨hs, hr | hr⟩ <;> rw [hs, hr] <;> norm_num
 
 private theorem hbox_parity (f : ℕ →₀ ℕ) : Hbox f % 2 = Gamma f := by
   have hf := hbox_formula f

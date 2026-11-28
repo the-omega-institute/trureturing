@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.PopStack;
 internal sealed class PopStackParallelDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/PopStack/PopStackParallel.";
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Combinatorics/cioni2025sorting");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/PermutationPatterns/cioni2025sorting");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "For h at least one, P(h) is a simple permutation of the integers from one through 2h and belongs to both D and C.",

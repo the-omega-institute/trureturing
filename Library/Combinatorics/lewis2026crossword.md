@@ -11,6 +11,7 @@ strata_touched:
   - D5/S3/Combinatorics/CrosswordRookCounts
   - D5/S3/Combinatorics/CrosswordPermutationGridRefutation
   - D5/S3/Combinatorics/CrosswordGrid/SkewMergedRook
+  - D5/S3/Combinatorics/CrosswordGrid/LewisWonConjecture317Refutation
 license: citation-only
 triage: anchor
 ---
@@ -35,6 +36,11 @@ The arXiv record shows only v1 (2 September 2026).
   numbers congruent to 3 modulo 4, there exists a permutation w such that |RP(Grid(w))| = r. We therefore conjecture the following.
   Conjecture 3.10. A positive integer r occurs as the rook placement count of a permutation grid if and only if r ≠ 4, r ≠ 12, and
   r ≢ 3 (mod 4)."
+- Locator for Conjecture 3.17, §3.4, printed pp. 20–22 of v1. Page 20 gives Eq. (3.1),
+  `Σ_{k=1}^m (S(m,k) · k^(n−2m) · k!)²`, for equal block sizes with `2m ≤ n`.
+  Page 21 gives the lower real cutoff `x ≥ 1` for `n ≥ 3` by
+  `n = log(x+1)/log(1+1/x) + 2x`. Page 22 asks for a maximizer in the strict
+  interval `(x, x+2)`.
 - Locator: Section 4.2, "Question 4.2. For which positive integers r does there exist a crossword grid which admits exactly r rook
   placements? Can the crossword grids which admit exactly r rook placements be characterized?"
 

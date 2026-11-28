@@ -5,7 +5,7 @@
    anchors: []
    digest: Proves nonnegativity of Real.log (primeRadical n) for every natural n. -/
 
-import Mathlib
+import Mathlib.RingTheory.Radical.NatInt
 import D5.S1.Deficit.AlmostAdditivity
 
 /- Provenance: Native proof over pinned mathlib. -/

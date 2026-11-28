@@ -21,7 +21,8 @@ async function fixture(t) {
   await writeFile(join(bin, 'npm'), `#!/bin/sh
 set -eu
 echo install >> "$(dirname "$0")/installs"
-mkdir -p node_modules/@actions/cache
+mkdir -p node_modules/@actions/cache node_modules/@actions/core
+echo "exports.warning = console.warn; exports.error = console.error;" > node_modules/@actions/core/index.js
 cp -R "$(dirname "$0")/sdk" node_modules/@actions/cache/lib
 `, { mode: 0o755 });
   await writeFile(join(sdk, 'internal/cacheUtils.js'),
@@ -30,7 +31,43 @@ cp -R "$(dirname "$0")/sdk" node_modules/@actions/cache/lib
 const fs = require("node:fs");
 const assert = require("node:assert/strict");
 const wire = 'build/lean-cache/generation/index.json';
+function checkpointStorage(paths, key) {
+  const kind = key.split("-")[2];
+  assert.deepEqual(paths, ["build/lean-cache/shards/compiler-checkpoints/" + kind]);
+  assert.equal(fs.realpathSync(process.env.GITHUB_WORKSPACE), fs.realpathSync("."));
+  return require("node:path").join(process.env.CHECKPOINT_STORE, key);
+}
+function throttleOnce(storage, op) {
+  const marker = storage + "." + op + "-429";
+  if (!fs.existsSync(marker)) return false;
+  fs.unlinkSync(marker);
+  const core = require("@actions/core");
+  core.warning("You've hit a rate limit, your rate limit will reset in 1 seconds");
+  core.warning("Failed request: (429) Too Many Requests: rate limit exceeded");
+  return true;
+}
 exports.restoreCache = async function(paths, key, prefixes, options) {
+  if (key.startsWith("lean-compiler-")) {
+    const storage = checkpointStorage(paths, key);
+    assert.deepEqual(prefixes, []);
+    if (throttleOnce(storage, "get")) return undefined;
+    if (process.env.RESTORE_DIAGNOSTIC) {
+      require("@actions/core")[process.env.RESTORE_DIAGNOSTIC]("cache service failure");
+      return undefined;
+    }
+    if (process.env.THROTTLE_ONCE && !fs.existsSync(storage + ".throttled")) {
+      fs.writeFileSync(storage + ".throttled", "");
+      require("@actions/core").warning("Failed to GetCacheEntryDownloadURL: Rate limited: Failed request: (429) Too Many Requests: rate limit exceeded");
+      return undefined;
+    }
+    if (fs.existsSync(storage + ".reserved")) {
+      fs.renameSync(storage + ".reserved", storage);
+      return undefined;
+    }
+    if (!fs.existsSync(storage)) return undefined;
+    fs.copyFileSync(storage, paths[0]);
+    return key;
+  }
   if (paths[0].startsWith("build/lean-cache/modules/")) {
     const storage = key + "." + paths[0].split("/")[3];
     fs.appendFileSync("requests", "get " + key + "\\n");
@@ -49,6 +86,13 @@ exports.restoreCache = async function(paths, key, prefixes, options) {
   return key;
 };
 exports.saveCache = async function(paths, key) {
+  if (key.startsWith("lean-compiler-")) {
+    const storage = checkpointStorage(paths, key);
+    if (throttleOnce(storage, "put")) return -1;
+    if (fs.existsSync(storage) || fs.existsSync(storage + ".reserved")) return -1;
+    fs.copyFileSync(paths[0], storage, fs.constants.COPYFILE_EXCL);
+    return 1;
+  }
   if (paths[0].startsWith("build/lean-cache/modules/")) {
     fs.appendFileSync("requests", "put " + key + "\\n");
     fs.copyFileSync(paths[0], key + "." + paths[0].split("/")[3], fs.constants.COPYFILE_EXCL);
@@ -120,6 +164,81 @@ test('publisher retries verify existing bytes and conflicting contents fail', as
   assert.equal(conflict.status, 1);
   assert.match(conflict.stderr, /corrupt Actions generation index/);
   assert.equal((await requests()).split('\n').filter(line => line.startsWith('put ')).length, 1);
+});
+
+test('compiler checkpoints cross runners, verify reserved entries and rebuild only on eviction', async t => {
+  const publisher = await fixture(t);
+  const worker = await fixture(t);
+  const storage = join(publisher.root, 'cache');
+  await mkdir(storage);
+  const env = { CHECKPOINT_STORE: storage, GITHUB_EVENT_NAME: 'push' };
+  const invoke = (runner, args, overrides = {}) => spawnSync(process.execPath, [action, ...args], {
+    cwd: runner.root, env: { ...runner.env, ...env, ...overrides }, encoding: 'utf8',
+  });
+  const size = Buffer.byteLength(bytes);
+  const input = join(publisher.root, 'input.json');
+  const output = join(worker.root, 'restored');
+  await writeFile(join(worker.root, 'bin/gh'), `#!/bin/sh
+case "$*" in
+  *actions/caches*ref=refs/heads/dev*key=lean-compiler-*) cat inventory ;;
+  *) exit 2 ;;
+esac
+`, { mode: 0o755 });
+  for (const kind of ['unit', 'catalog']) {
+    const id = kind === 'catalog' ? digest : 'a'.repeat(64);
+    const address = [kind, id, digest, String(size)];
+    const key = ['lean-compiler', kind, 'v1', id, digest, size].join('-');
+    const put = ['compiler-cache-put', ...address, input];
+    const child = { GITHUB_WORKFLOW_REF: 'owner/repo/.github/workflows/ci-lean-generation-compile.yml@refs/heads/dev',
+      GITHUB_EVENT_NAME: 'workflow_dispatch' };
+    const childRead = invoke(worker, ['compiler-cache-get', ...address, output], child);
+    assert.equal(childRead.status, kind === 'unit' ? 4 : 1);
+    assert.equal(invoke(publisher, put, { ...child, GITHUB_REF_PROTECTED: 'false' }).status, 1);
+    const get = ['compiler-cache-get', ...address, output];
+    assert.equal(invoke(publisher, put, { GITHUB_EVENT_NAME: 'pull_request' }).status, 1);
+    if (kind === 'unit') await writeFile(join(storage, key + '.put-429'), '');
+    const stored = invoke(publisher, put);
+    if (kind === 'unit') assert.match(stored.stdout, /throttled compiler checkpoint/);
+    assert.equal(stored.status, 0, stored.stderr);
+    const row = { key, version: 'sdk-version', ref: 'refs/heads/dev' };
+    const inventory = [row, { ...row, ref: 'refs/heads/pr' }, { ...row, version: 'different' },
+      { ...row, key: key + 'x' }, { ...row, key: key.replace(digest, 'bad') }];
+    await writeFile(join(worker.root, 'inventory'), inventory.map(r => JSON.stringify(r)).join('\n'));
+    const listFile = join(worker.root, 'listed.json');
+    const listed = invoke(worker, ['compiler-cache-list', kind, listFile]);
+    assert.equal(listed.status, 0, listed.stderr);
+    assert.deepEqual(JSON.parse(await readFile(listFile)), [{ id, sha256: digest, bytes: size }]);
+    if (kind === 'unit') await writeFile(join(storage, key + '.get-429'), '');
+    const restored = invoke(worker, get);
+    if (kind === 'unit') assert.match(restored.stdout, /throttled compiler checkpoint/);
+    assert.equal(restored.status, 0, restored.stderr);
+    assert.equal(await readFile(output, 'utf8'), bytes);
+    await rm(output);
+    const cacheFile = join(storage, key);
+    if (kind === 'unit') {
+      const throttled = invoke(worker, get, { THROTTLE_ONCE: 'true' });
+      assert.equal(throttled.status, 0, throttled.stderr);
+      assert.match(throttled.stderr, /429.*Too Many Requests/);
+      assert.equal(await readFile(output, 'utf8'), bytes);
+      await rm(output);
+    }
+    await writeFile(cacheFile, 'x'.repeat(size));
+    assert.match(invoke(worker, get).stderr, /checksum or length mismatch/);
+    assert.match(invoke(publisher, put).stderr, /checksum or length mismatch/);
+    await assert.rejects(readFile(output), { code: 'ENOENT' });
+    await rm(cacheFile);
+    assert.equal(invoke(worker, get).status, 4);
+    for (const level of ['warning', 'error']) {
+      const outage = invoke(worker, get, { RESTORE_DIAGNOSTIC: level });
+      assert.equal(outage.status, 1, outage.stderr);
+      assert.match(outage.stderr, /cache service failure/);
+    }
+    await writeFile(cacheFile + '.reserved', bytes);
+    const race = invoke(publisher, put);
+    assert.equal(race.status, 0, race.stderr);
+  }
+  const invalidCatalog = invoke(publisher, ['compiler-cache-put', 'catalog', 'a'.repeat(64), digest, String(size), input]);
+  assert.match(invalidCatalog.stderr, /invalid compiler checkpoint address/);
 });
 
 test('migration pins the newest complete verified owner and checks each streamed payload', async t => {
@@ -469,17 +588,20 @@ import argparse, os
 from pathlib import Path
 parser = argparse.ArgumentParser()
 parser.add_argument("command")
-for option in ["kind", "capacity", "output", "plan", "lane", "version", "targets-file"]:
+for option in ["kind", "capacity", "workers", "output", "plan", "lane", "version", "targets-file"]:
     parser.add_argument("--" + option)
 parser.add_argument("--prepare-release", action="store_true")
 parser.add_argument("--stage-only", action="store_true")
 parser.add_argument("--staged", action="store_true")
 parser.add_argument("--legacy-checkpoints", action="store_true")
+parser.add_argument("--compiler-dag", action="store_true")
 args = parser.parse_args()
 assert os.environ["LEAN_MODULE_ACTIONS_CACHE"] == "1"
 kind = os.environ["INPUT_KIND"]
 if args.command == "plan":
     assert args.kind == kind and args.prepare_release and int(args.capacity) == 32 * 1024**2
+    assert args.compiler_dag == (kind == "compiler")
+    assert args.workers == (os.environ.get("LEAN_COMPILER_WORKERS", "64") if kind == "compiler" else None)
     Path(args.output).write_text(kind)
 elif args.command == "worker":
     assert Path(args.plan).read_text() == kind and args.lane == "2"
@@ -513,6 +635,16 @@ else:
   ]) {
     env.INPUT_KIND = kind;
     env.GITHUB_WORKFLOW_REF = 'owner/repo/.github/workflows/' + workflow + '@refs/heads/dev';
+    if (kind === 'compiler') {
+      delete env.LEAN_COMPILER_WORKERS;
+      const defaultPlan = run(event, 'module-plan');
+      assert.equal(defaultPlan.status, 0, defaultPlan.stderr);
+      for (const invalid of ['0', '257', '8.5', 'unlimited']) {
+        env.LEAN_COMPILER_WORKERS = invalid;
+        assert.match(run(event, 'module-plan').stderr, /between 1 and 256/);
+      }
+      env.LEAN_COMPILER_WORKERS = '256';
+    }
     for (const operation of ['module-plan', 'module-worker', 'module-stage']) {
       const result = run(event, operation);
       assert.equal(result.status, 0, result.stderr);
@@ -542,4 +674,47 @@ else:
   const empty = run('push', 'restore-published');
   assert.equal(empty.status, 0, empty.stderr);
   assert.match(empty.stdout, /No published module cache yet/);
+});
+
+test('a dispatched compiler child builds only its units or final shard lanes', async t => {
+  const { root, env, run } = await fixture(t);
+  const directory = join(root, 'tools/scripts/worktree');
+  await mkdir(directory, { recursive: true });
+  await writeFile(join(directory, 'lean_module_cache.py'), `
+import json, os, sys
+from pathlib import Path
+op, *args = sys.argv[1:]
+assert os.environ["LEAN_MODULE_ACTIONS_CACHE"] == "1"
+assert Path(args[args.index("--plan")+1]).name == "module-plan.json"
+dest = Path(args[args.index("--output")+1])
+with open("commands", "a") as out:
+    print(op, file=out)
+if op == "compiler-receipts":
+    dest.write_text("{}")
+elif op == "compiler-units":
+    assert json.loads(Path(args[args.index("--receipts")+1]).read_text()) == {}
+    keys = json.loads(Path(args[args.index("--assignment")+1]).read_text())
+    dest.write_text(json.dumps(dict.fromkeys(keys, "receipt")))
+elif op == "worker":
+    assert "--receipts" in args and args[args.index("--lane")+1] in ["0", "3"]
+else:
+    raise ValueError(op)
+`);
+  env.GITHUB_WORKFLOW_REF = 'owner/repo/.github/workflows/ci-lean-generation-compile.yml@refs/heads/dev';
+  env.COMPILER_PHASE = 'units';
+  env.COMPILER_ASSIGNMENT = JSON.stringify([digest]);
+  const result = join(root, 'compiler-result/result.json');
+  assert.equal(run('push', 'compiler-assigned').status, 1);
+  const unit = run('workflow_dispatch', 'compiler-assigned');
+  assert.equal(unit.status, 0, unit.stderr);
+  assert.deepEqual(JSON.parse(await readFile(result)), { [digest]: 'receipt' });
+  env.COMPILER_PHASE = 'shards';
+  env.COMPILER_ASSIGNMENT = '[0,3]';
+  const shard = run('workflow_dispatch', 'compiler-assigned');
+  assert.equal(shard.status, 0, shard.stderr);
+  assert.deepEqual(JSON.parse(await readFile(result)), { lanes: [0, 3] });
+  env.COMPILER_ASSIGNMENT = '[3,3]';
+  assert.match(run('workflow_dispatch', 'compiler-assigned').stderr, /invalid compiler assignment/);
+  assert.equal(run('workflow_dispatch', 'module-promote').status, 1);
+  assert.equal(await readFile(join(root, 'commands'), 'utf8'), 'compiler-receipts\ncompiler-units\ncompiler-receipts\nworker\nworker\n');
 });

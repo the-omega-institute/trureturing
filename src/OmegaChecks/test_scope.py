@@ -1,5 +1,8 @@
 """Regression fixtures for affected Omega targets."""
+import os
 from pathlib import Path
+import subprocess
+import sys
 from tempfile import TemporaryDirectory
 import unittest
 from unittest.mock import patch
@@ -22,6 +25,16 @@ class ScopeTests(unittest.TestCase):
         "OmegaChecks.Portable.Common": {"OmegaMathlib.Fib"},
     }
     official = {"OmegaInit.Core": set(), "OmegaMathlib.Fib": {"OmegaInit.Core", "Mathlib.Fib"}}
+
+    def test_dependency_closure_order_is_stable_across_processes(self):
+        program = ("from portable import closure\n"
+                   "graph = {'A': {'B', 'C', 'D'}, 'B': set(), 'C': set(), 'D': set()}\n"
+                   "print(*closure(graph, ['A']))")
+        for seed in ("0", "1", "2"):
+            with self.subTest(seed=seed):
+                order = subprocess.check_output([sys.executable, "-B", "-c", program], text=True,
+                                                cwd=Path(__file__).parent, env={**os.environ, "PYTHONHASHSEED": seed})
+                self.assertEqual(order.split(), ["B", "C", "D", "A"])
 
     def test_port_selects_direct_and_transitive_consumers_and_common(self):
         plan = scope.plan(self.graph, self.official, {"OmegaMathlib.Fib"}, set(), [], [])

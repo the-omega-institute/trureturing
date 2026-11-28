@@ -19,7 +19,11 @@
      the working search endpoint.
 -/
 
-import Mathlib
+import Mathlib.Algebra.Group.Defs
+import Mathlib.Data.Fintype.Perm
+import Mathlib.Topology.MetricSpace.Basic
+import Mathlib.Tactic.FinCases
+import Mathlib.Tactic.NormNum
 
 namespace D5.S0.Naming.ToleranceNonGroup
 
