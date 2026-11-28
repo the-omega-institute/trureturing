@@ -20,13 +20,10 @@ public import Mathlib.Topology.ContinuousMap.Compact
 public import Mathlib.Topology.Order.Lattice
 public import Mathlib.Tactic.Linarith
 public import Mathlib.Geometry.Group.WordMetric
-public import OmegaBuild.Commands
 
 /-! Word-ball constructions for continuous actions on compact Hausdorff spaces. -/
 
 @[expose] public section
-
-compile_only_with_mathlib
 
 open Set Function
 open scoped Pointwise
