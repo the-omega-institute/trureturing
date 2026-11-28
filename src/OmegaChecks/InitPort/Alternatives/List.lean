@@ -562,15 +562,17 @@ private theorem recoverFinIndex {n : Nat} (o : Option (Fin n)) (indices : Option
   subst indices
   cases o <;> rfl
 
-public theorem List.findFinIdx?_eq_pmap_findIdx? : type_of% @_root_.List.findFinIdx?_eq_pmap_findIdx? := by
-  intro α xs p
+public theorem List.findFinIdx?_eq_pmap_findIdx? {α : Type u} {xs : List α} {p : α → Bool} :
+    xs.findFinIdx? p = (xs.findIdx? p).pmap
+      (fun i hit => ⟨i, (_root_.List.findIdx?_eq_some_iff_findIdx_eq.mp hit).1⟩) (fun _ h => h) := by
   exact recoverFinIndex _ _ _root_.List.findIdx?_eq_map_findFinIdx?_val
     (fun _ hit => (List.findIdx?_eq_some_iff_findIdx_eq.mp hit).1)
 
-public theorem Array.findFinIdx?_eq_pmap_findIdx? : type_of% @_root_.Array.findFinIdx?_eq_pmap_findIdx? := by
-  intro α xs p
+public theorem Array.findFinIdx?_eq_pmap_findIdx? {α : Type u} {xs : Array α} {p : α → Bool} :
+    xs.findFinIdx? p = (xs.findIdx? p).pmap
+      (fun i hit => ⟨i, (_root_.Array.findIdx?_eq_some_iff_findIdx_eq.mp hit).1⟩) (fun _ h => h) := by
   exact recoverFinIndex _ _ _root_.Array.findIdx?_eq_map_findFinIdx?_val
-    (fun _ hit => (_root_.Array.findIdx?_eq_some_iff_getElem.mp hit).choose)
+    (fun _ hit => (_root_.Array.findIdx?_eq_some_iff_findIdx_eq.mp hit).1)
 
 public theorem List.findFinIdx?_cons : type_of% @_root_.List.findFinIdx?_cons := by
   intro α p x xs

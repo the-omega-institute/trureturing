@@ -622,7 +622,8 @@ partial def visit (n : Name) : M Bool := do
       let mut blocker := dep
       let mut found := false
       let declared := OmegaChecks.InitPort.alternativeType? c.alternatives ci
-      for candidate in rewritten :: declared.toList do
+      -- Prefer the declared constructive signature to a tactic-generated proof in its indices.
+      for candidate in declared.toList ++ [rewritten] do
         let candidate ← OmegaChecks.InitCompiler.namedLogicalProjections c.source candidate
         if candidate == ci.type || (Kernel.check c.source {} candidate).toOption.isNone ||
             !Kernel.isDefEqGuarded c.source {} ci.type candidate then continue
