@@ -31,10 +31,17 @@ def all_modules():
                             for p in (lib / "Init").rglob("*.olean"))]
 
 
-def snapshot_seed(installed, seed):
-    files = [*installed.glob("OmegaInit.*"), *(installed / "OmegaInit").rglob("*")]
+def snapshot_seed(installed, seed, sources=None):
+    parts = (".olean", ".olean.server", ".olean.private", ".ir", ".ir.sig")
+    if sources is None:
+        files = [*installed.glob("OmegaInit.*"), *(installed / "OmegaInit").rglob("*")]
+    else:
+        # Lake keeps artifacts of removed modules in its build directory.
+        modules = [sources / "OmegaInit.lean", *(sources / "OmegaInit").rglob("*.lean")]
+        files = [installed / module.relative_to(sources).with_suffix(part)
+                 for module in modules for part in parts]
     for file in files:
-        if file.is_file() and file.name.endswith((".olean", ".olean.server", ".olean.private", ".ir", ".ir.sig")):
+        if file.is_file() and file.name.endswith(parts):
             dest = seed / file.relative_to(installed)
             dest.parent.mkdir(parents=True, exist_ok=True)
             shutil.copyfile(file, dest)
@@ -389,7 +396,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("output", type=Path, help="new directory for the audited module tree and inventory")
     parser.add_argument("modules", nargs="*", help="official Init roots (default: every installed Init module)")
-    parser.add_argument("--seed", type=Path, default=DEFAULT_SEED, help="compiled strict OmegaInit seed")
+    parser.add_argument("--seed", type=Path, help="compiled strict OmegaInit seed (default: local strict build)")
     parser.add_argument("--isolated-only", action="store_true",
                         help="publish only the independently replayed library for prelude consumers")
     parser.add_argument("--exclude", action="append", default=[],
@@ -398,7 +405,7 @@ def main():
                         help="require checked implementations or unconditional logical boundaries at all official sites")
     parser.add_argument("-j", type=int, default=4, help="parallel jobs for the full OmegaMath consumer build")
     args = parser.parse_args()
-    seed = args.seed.resolve()
+    seed = (args.seed or DEFAULT_SEED).resolve()
     target = args.output.resolve()
     if args.j < 1:
         parser.error("the job count must be positive")
@@ -414,7 +421,7 @@ def main():
     target.parent.mkdir(parents=True, exist_ok=True)
     with tempfile.TemporaryDirectory(dir=target.parent, prefix=".init-port-") as work:
         stage = Path(work)
-        snapshot_seed(seed, stage / "seed")
+        snapshot_seed(seed, stage / "seed", ROOT / "strict" if args.seed is None else None)
         product = stage / "product"
         product.mkdir()
         generate(stage, product, stage / "seed", roots, args.exclude, seed)
