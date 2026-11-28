@@ -6,20 +6,20 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Combinatorics/Graph/BoundedDegree/ParkingConjecture52.Conjecture52; result=D5/S3/Combinatorics/Graph/BoundedDegree/ParkingConjecture52.not_conjecture52; claim=D5/S3/Combinatorics/Graph/BoundedDegree/ParkingConjecture52.Conjecture52
    digest: The sequential CDF exceeds the static CDF on a tree of maximum degree three. -/
 
-import D5.S3.Combinatorics.Graph.Brooks.ColoringExtension
-import Mathlib.Combinatorics.SimpleGraph.Clique
-import Mathlib.Data.Rat.BigOperators
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+module
 
-set_option autoImplicit false
+public import Mathlib.Combinatorics.SimpleGraph.Clique
+public import Mathlib.Data.Rat.BigOperators
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 
 /-! The discrete parking CDFs and a counterexample to Conjecture 5.2 of
 Higuita-Diaz, López and Roldán-Correa (arXiv:2611.14718v2). -/
 
-namespace Parking
+public section
 
-open private SimpleGraph.Maximal.exists_adj_of_notMem from
-  D5.S3.Combinatorics.Graph.Brooks.ColoringExtension
+set_option autoImplicit false
+
+namespace Parking
 
 variable {V : Type*} [DecidableEq V]
 
@@ -85,21 +85,23 @@ private theorem jammed_iff (G : SimpleGraph V) (s : Finset V) :
     jammed G s ↔
       (∀ v ∈ s, ∀ w ∈ s, ¬G.Adj v w) ∧
       (∀ w : V, ∃ v ∈ s, v = w ∨ G.Adj v w) := by
+  unfold jammed
+  rw [Set.maximal_iff_forall_insert (fun {a b} h hb => h.mono hb)]
   constructor
-  · intro maximal
-    refine ⟨fun v hv w hw hadj => maximal.1 hv hw hadj.ne hadj, fun w => ?_⟩
+  · rintro ⟨hi, extend⟩
+    refine ⟨fun v hv w hw ha => hi hv hw ha.ne ha, fun w => ?_⟩
     by_cases hw : w ∈ s
     · exact ⟨w, hw, Or.inl rfl⟩
-    · obtain ⟨v, hv, ha⟩ :=
-        SimpleGraph.Maximal.exists_adj_of_notMem maximal (show w ∉ (s : Set V) from hw)
-      exact ⟨v, hv, Or.inr ha.symm⟩
+    · by_contra! hmiss
+      apply extend w hw
+      rw [← SimpleGraph.isClique_compl, SimpleGraph.isClique_insert_of_notMem hw]
+      refine ⟨(SimpleGraph.isClique_compl G).2 hi, fun v hv => ?_⟩
+      exact ⟨fun eq => hw (eq.symm ▸ hv), fun ha => (hmiss v hv).2 ha.symm⟩
   · rintro ⟨hi, hd⟩
-    have independent : G.IsIndepSet (s : Set V) :=
-      fun hv hw _ => hi _ hv _ hw
-    refine ⟨independent, fun {t} ht hst x hx => ?_⟩
-    obtain ⟨v, hv, he | ha⟩ := hd x
-    · exact he ▸ hv
-    · exact (ht (hst hv) hx ha.ne ha).elim
+    refine ⟨fun {_} hv {_} hw _ => hi _ hv _ hw, fun w hw ht => ?_⟩
+    obtain ⟨v, hv, he | ha⟩ := hd w
+    · exact hw (he ▸ hv)
+    · exact ht (Set.mem_insert_of_mem _ hv) (Set.mem_insert _ _) ha.ne ha
 
 section Finite
 variable [Fintype V] (G : SimpleGraph V) [DecidableRel G.Adj]
@@ -181,7 +183,8 @@ private def jamList (G : SimpleGraph V) [DecidableRel G.Adj] (vertices picked : 
 private theorem jamList_iff (G : SimpleGraph V) [DecidableRel G.Adj] (vertices picked : List V)
     (cover : ∀ w, w ∈ vertices) :
     jamList G vertices picked = true ↔ jammed G picked.toFinset := by
-  simp only [jamList, Bool.and_eq_true, List.all_eq_true, List.any_eq_true, closed_iff, jammed_iff, List.mem_toFinset]
+  simp only [jamList, Bool.and_eq_true, List.all_eq_true, List.any_eq_true, closed_iff,
+    jammed_iff, List.mem_toFinset]
   simp [cover]
 
 /-- Count sublists by partitioning on whether the head is selected. -/
@@ -217,6 +220,7 @@ private theorem staticCount_list [Fintype V] (G : SimpleGraph V) [DecidableRel G
 
 set_option maxRecDepth 4096 in
 set_option maxHeartbeats 8000000 in
+-- Kernel reduction enumerates all vertex subsets.
 private theorem static_count : staticCount witness (fun _ => True) = 55 := by
   rw [staticCount_list witness _ (List.nodup_finRange 15) List.mem_finRange _ (fun _ => true)
     (by simp)]
@@ -224,6 +228,7 @@ private theorem static_count : staticCount witness (fun _ => True) = 55 := by
 
 set_option maxRecDepth 4096 in
 set_option maxHeartbeats 8000000 in
+-- Kernel reduction enumerates all vertex subsets.
 private theorem static_small_count : staticCount witness (fun s => s.card ≤ 6) = 1 := by
   rw [staticCount_list witness _ (List.nodup_finRange 15) List.mem_finRange _
     (fun s => decide (s.length ≤ 6))
@@ -234,56 +239,111 @@ private theorem static_exact : static witness 6 = (1 / 55 : ℚ) := by
   rw [static_eq, static_small_count, static_count]
   rfl
 
-section SequentialCertificate
-
-set_option maxRecDepth 4096
-set_option maxHeartbeats 8000000
-
 -- Evaluate each possible first choice separately. Each child uses the exact
 -- list recurrence on the available vertices after that choice.
-private theorem seq_after_0 : seqList witness 5 [1, 2, 3, 4, 5, 6, 8, 9, 10, 11, 13, 14] = 0 := by
+set_option maxRecDepth 4096 in
+set_option maxHeartbeats 8000000 in
+-- Reduce the depth-five conditional average for this available set.
+private theorem seq_after_0 : seqList witness 5 [1, 2, 3, 4, 5, 6, 8, 9, 10, 11, 13, 14] = 
+    0 := by
   decide +kernel
 
-private theorem seq_after_1 : seqList witness 5 [0, 2, 3, 4, 5, 6, 7, 9, 10, 11, 13, 14] = 0 := by
+set_option maxRecDepth 4096 in
+set_option maxHeartbeats 8000000 in
+-- Reduce the depth-five conditional average for this available set.
+private theorem seq_after_1 : seqList witness 5 [0, 2, 3, 4, 5, 6, 7, 9, 10, 11, 13, 14] = 
+    0 := by
   decide +kernel
 
-private theorem seq_after_2 : seqList witness 5 [0, 1, 3, 4, 5, 6, 7, 8, 10, 11, 12, 14] = 0 := by
+set_option maxRecDepth 4096 in
+set_option maxHeartbeats 8000000 in
+-- Reduce the depth-five conditional average for this available set.
+private theorem seq_after_2 : seqList witness 5 [0, 1, 3, 4, 5, 6, 7, 8, 10, 11, 12, 14] = 
+    0 := by
   decide +kernel
 
-private theorem seq_after_3 : seqList witness 5 [0, 1, 2, 4, 5, 6, 7, 8, 9, 11, 12, 14] = 0 := by
+set_option maxRecDepth 4096 in
+set_option maxHeartbeats 8000000 in
+-- Reduce the depth-five conditional average for this available set.
+private theorem seq_after_3 : seqList witness 5 [0, 1, 2, 4, 5, 6, 7, 8, 9, 11, 12, 14] = 
+    0 := by
   decide +kernel
 
-private theorem seq_after_4 : seqList witness 5 [0, 1, 2, 3, 5, 6, 7, 8, 9, 10, 12, 13] = 0 := by
+set_option maxRecDepth 4096 in
+set_option maxHeartbeats 8000000 in
+-- Reduce the depth-five conditional average for this available set.
+private theorem seq_after_4 : seqList witness 5 [0, 1, 2, 3, 5, 6, 7, 8, 9, 10, 12, 13] = 
+    0 := by
   decide +kernel
 
-private theorem seq_after_5 : seqList witness 5 [0, 1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 13, 14] = 0 := by
+set_option maxRecDepth 4096 in
+set_option maxHeartbeats 8000000 in
+-- Reduce the depth-five conditional average for this available set.
+private theorem seq_after_5 : seqList witness 5 [0, 1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 13, 14] = 
+    0 := by
   decide +kernel
 
-private theorem seq_after_6 : seqList witness 5 [0, 1, 2, 3, 4, 5, 7, 8, 9, 10, 11, 12, 14] = 0 := by
+set_option maxRecDepth 4096 in
+set_option maxHeartbeats 8000000 in
+-- Reduce the depth-five conditional average for this available set.
+private theorem seq_after_6 : seqList witness 5 [0, 1, 2, 3, 4, 5, 7, 8, 9, 10, 11, 12, 14] = 
+    0 := by
   decide +kernel
 
-private theorem seq_after_7 : seqList witness 5 [1, 2, 3, 4, 5, 6, 8, 9, 10, 11, 12, 13] = 0 := by
+set_option maxRecDepth 4096 in
+set_option maxHeartbeats 8000000 in
+-- Reduce the depth-five conditional average for this available set.
+private theorem seq_after_7 : seqList witness 5 [1, 2, 3, 4, 5, 6, 8, 9, 10, 11, 12, 13] = 
+    0 := by
   decide +kernel
 
-private theorem seq_after_8 : seqList witness 5 [0, 2, 3, 4, 5, 6, 7, 9, 10, 11, 12, 13, 14] = (16 / 675) := by
+set_option maxRecDepth 4096 in
+set_option maxHeartbeats 8000000 in
+-- Reduce the depth-five conditional average for this available set.
+private theorem seq_after_8 : seqList witness 5 [0, 2, 3, 4, 5, 6, 7, 9, 10, 11, 12, 13, 14] = 
+    (16 / 675) := by
   decide +kernel
 
-private theorem seq_after_9 : seqList witness 5 [0, 1, 3, 4, 5, 6, 7, 8, 10, 11, 12, 13] = 0 := by
+set_option maxRecDepth 4096 in
+set_option maxHeartbeats 8000000 in
+-- Reduce the depth-five conditional average for this available set.
+private theorem seq_after_9 : seqList witness 5 [0, 1, 3, 4, 5, 6, 7, 8, 10, 11, 12, 13] = 
+    0 := by
   decide +kernel
 
-private theorem seq_after_10 : seqList witness 5 [0, 1, 2, 4, 5, 6, 7, 8, 9, 11, 12, 13, 14] = (16 / 675) := by
+set_option maxRecDepth 4096 in
+set_option maxHeartbeats 8000000 in
+-- Reduce the depth-five conditional average for this available set.
+private theorem seq_after_10 : seqList witness 5 [0, 1, 2, 4, 5, 6, 7, 8, 9, 11, 12, 13, 14] = 
+    (16 / 675) := by
   decide +kernel
 
-private theorem seq_after_11 : seqList witness 5 [0, 1, 2, 3, 5, 6, 7, 8, 9, 10, 12, 13, 14] = (16 / 675) := by
+set_option maxRecDepth 4096 in
+set_option maxHeartbeats 8000000 in
+-- Reduce the depth-five conditional average for this available set.
+private theorem seq_after_11 : seqList witness 5 [0, 1, 2, 3, 5, 6, 7, 8, 9, 10, 12, 13, 14] = 
+    (16 / 675) := by
   decide +kernel
 
-private theorem seq_after_12 : seqList witness 5 [2, 3, 4, 6, 7, 8, 9, 10, 11, 13, 14] = (16 / 225) := by
+set_option maxRecDepth 4096 in
+set_option maxHeartbeats 8000000 in
+-- Reduce the depth-five conditional average for this available set.
+private theorem seq_after_12 : seqList witness 5 [2, 3, 4, 6, 7, 8, 9, 10, 11, 13, 14] = 
+    (16 / 225) := by
   decide +kernel
 
-private theorem seq_after_13 : seqList witness 5 [0, 1, 4, 5, 7, 8, 9, 10, 11, 12, 14] = (16 / 225) := by
+set_option maxRecDepth 4096 in
+set_option maxHeartbeats 8000000 in
+-- Reduce the depth-five conditional average for this available set.
+private theorem seq_after_13 : seqList witness 5 [0, 1, 4, 5, 7, 8, 9, 10, 11, 12, 14] = 
+    (16 / 225) := by
   decide +kernel
 
-private theorem seq_after_14 : seqList witness 5 [0, 1, 2, 3, 5, 6, 8, 10, 11, 12, 13] = (16 / 225) := by
+set_option maxRecDepth 4096 in
+set_option maxHeartbeats 8000000 in
+-- Reduce the depth-five conditional average for this available set.
+private theorem seq_after_14 : seqList witness 5 [0, 1, 2, 3, 5, 6, 8, 10, 11, 12, 13] = 
+    (16 / 225) := by
   decide +kernel
 
 private theorem seq_full_list : seqList witness 6 [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14] = (64 / 3375) := by
@@ -302,14 +362,13 @@ private theorem seq_full_list : seqList witness 6 [0, 1, 2, 3, 4, 5, 6, 7, 8, 9,
         seqList witness 5 [2, 3, 4, 6, 7, 8, 9, 10, 11, 13, 14],
         seqList witness 5 [0, 1, 4, 5, 7, 8, 9, 10, 11, 12, 14],
         seqList witness 5 [0, 1, 2, 3, 5, 6, 8, 10, 11, 12, 13]].sum / 15) = (64 / 3375)
-  rw [seq_after_0, seq_after_1, seq_after_2, seq_after_3, seq_after_4, seq_after_5, seq_after_6, seq_after_7, seq_after_8, seq_after_9, seq_after_10, seq_after_11, seq_after_12, seq_after_13, seq_after_14]
+  rw [seq_after_0, seq_after_1, seq_after_2, seq_after_3, seq_after_4, seq_after_5,
+    seq_after_6, seq_after_7, seq_after_8, seq_after_9, seq_after_10, seq_after_11, seq_after_12, seq_after_13, seq_after_14]
   decide +kernel
 
 private theorem sequential_exact : seq witness 6 Finset.univ = (64 / 3375 : ℚ) := by
   rw [seq_witness_list]
   exact seq_full_list
-
-end SequentialCertificate
 
 /-- The fifteen-vertex witness violates the CDF inequality at cutoff six. -/
 theorem not_conjecture52 : ¬ Conjecture52 := by
