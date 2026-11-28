@@ -51,10 +51,7 @@ private theorem finite_hom_of_finite_generators (S : Finset G)
   exact congrFun hfg s
 
 private def transportPerm {A B : Type*} (e : A ≃ B) :
-    Equiv.Perm A →* Equiv.Perm B where
-  toFun p := e.symm.trans (p.trans e)
-  map_one' := by ext x; simp
-  map_mul' p q := by ext x; simp
+    Equiv.Perm A →* Equiv.Perm B := e.permCongrHom.toMonoidHom
 
 /-- Uniformly bounded finite orbits force finite image for a finitely generated group. -/
 private theorem finite_image_of_bounded_orbits [MulAction G X]
