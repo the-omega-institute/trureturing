@@ -17,7 +17,13 @@
      another name. The sibling metric file at commit `30cf12c1` likewise contains no such result.
 -/
 
-import D5.S3.TotalVariation.Pinsker
+module
+
+public import D5.S3.TotalVariation.Pinsker
+
+/-! Finite total variation decreases under stochastic channels. -/
+
+@[expose] public section
 
 namespace D5.S3.TotalVariation.DataProcessing
 

@@ -21,7 +21,15 @@
      identities, Gibbs/Pinsker bounds, and Jensen applications, but neither result below.
 -/
 
-import D5.S3.Divergence.ClassicalDPI
+module
+
+public import D5.S3.Divergence.ClassicalDPI
+public import Mathlib.InformationTheory.KullbackLeibler.KLFun
+import Mathlib.Tactic.Linarith
+
+/-! Finite log-sum and joint convexity under discrete absolute continuity. -/
+
+public section
 
 namespace D5.S3.DivergenceSupport.LogSumInequality
 
