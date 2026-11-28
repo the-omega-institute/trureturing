@@ -1,4 +1,10 @@
-/- Lightweight signed frame data shared by the P48p action and certificate. -/
+/- GID: D5/S3/VertexAlgebra/Lattice/Orbifold/Paley/P48pFrameData
+   generality: I
+   mirror-B: none(waiver:internal-proof-component)
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Lightweight signed frame data shared by the P48p action and certificate. -/
 
 import Mathlib.Data.Matrix.Basic
 
