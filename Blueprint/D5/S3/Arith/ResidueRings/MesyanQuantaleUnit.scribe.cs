@@ -24,7 +24,7 @@ internal sealed class MesyanQuantaleUnitDocument : IScribeDocumentDefinition
                 Paragraph(Text("The proof identifies Mathlib's additive-submonoid product with Definition 4 in "
                     + "Mesyan's paper. The product takes all sums of a positive finite number of pairwise products, "
                     + "with the first factor from the left submonoid and the second from the right.")),
-                Paragraph(Text("The top additive submonoid is the whole ring. For any r in the ring and "
+                Paragraph(Text("T denotes the top additive submonoid, which is the whole ring. For any r in the ring and "
                     + "a in M, the Chinese remainder theorem gives one natural number agreeing with the residues "
                     + "of r at all primes in the support of a. Multiplication by r on a therefore agrees with repeated "
                     + "addition, so every product summand lies in M. In the other direction the tuple equal to one "
@@ -42,7 +42,7 @@ internal sealed class MesyanQuantaleUnitDocument : IScribeDocumentDefinition
         Formula carrier = F.Id("R");
         Formula a = F.Id("a");
         Formula e = F.Id("e");
-        Formula unit = F.Id("⊤");
+        Formula unit = F.Id("T");
         Formula submonoid = F.Id("M");
         Formula submonoidType = Seq(F.Id("AddSubmonoid"), Sp, carrier);
         Formula nonzero = Ex("a", carrier, Seq(a, Sp, Neq, Sp, D(0)));
