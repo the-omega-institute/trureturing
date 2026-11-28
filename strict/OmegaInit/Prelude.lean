@@ -20,6 +20,7 @@ port_compiler_markers
 port_kernel_naturals
 init_quot
 port_quotient_interfaces
+port_definition Quot.liftOn with_native_code
 
 set_option genCtorIdx false
 

@@ -485,8 +485,7 @@ port_definition Subtype.instDecidableEq with_native_code
 port_definition Prod.lexLt
 port_proof Prod.lexLtDec._proof_1
 port_definition Prod.lexLtDec with_native_code
-port_inductive Equivalence
-port_inductive Setoid
+port_native_records Equivalence, Setoid
 port_proof equivalence_true
 port_definition Setoid.trivial with_native_code
 port_inductive ReflBEq
@@ -528,8 +527,31 @@ port_definition Decidable.byCases.match_1 with_native_code
 port_definition iteInduction with_native_code
 port_definition instDecidableDite with_native_code
 port_native_records HasEquiv
-port_definition Setoid.r with_native_code
 port_definition instHasEquivOfSetoid with_native_code
+
+port_proof Quot.liftBeta
+port_proof Quot.indBeta
+port_proof Quot.inductionOn
+port_proof Quot.exists_rep
+port_definition Quot.indep
+port_definition Quotient
+port_definition Quotient.mk with_native_code
+port_definition Quotient.mk' with_native_code
+port_definition Quotient.lift with_native_code
+port_proof Quotient.ind
+port_definition Quotient.liftOn with_native_code
+port_proof Quotient.inductionOn
+port_proof Quotient.exists_rep
+port_proof Setoid.refl
+port_proof Setoid.symm
+port_proof Setoid.trans
+port_proof Quotient.lift₂._proof_1
+port_proof Quotient.lift₂._proof_2
+port_definition Quotient.lift₂ with_native_code
+port_definition Quotient.liftOn₂ with_native_code
+port_proof Quotient.ind₂
+port_proof Quotient.inductionOn₂
+port_proof Quotient.inductionOn₃
 port_definition instTransIff with_native_code
 port_definition noConfusionTypeEnum
 port_proof noConfusionEnum._proof_1

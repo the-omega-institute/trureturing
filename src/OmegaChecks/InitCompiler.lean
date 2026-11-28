@@ -286,7 +286,10 @@ before the root PUnit used by Lean's ordinary structure elaborator is available.
     for field in record.fieldNames do
       let some projection := getFieldInfo? src ci.name field | throwErrorAt id "missing projection {field}"
       let name := mkIdentFrom id projection.projFn
-      elabCommand (← `(command| port_definition $name:ident with_native_code))
+      if (src.find? projection.projFn).any (·.isTheorem) then
+        elabCommand (← `(command| port_proof $name:ident))
+      else
+        elabCommand (← `(command| port_definition $name:ident with_native_code))
       let some info := src.getProjectionFnInfo? projection.projFn | throwErrorAt id "missing projection info {field}"
       modifyEnv fun env => addProjectionFnInfo env (omegaName projection.projFn) (omegaName info.ctorName)
         info.numParams info.i info.fromClass
