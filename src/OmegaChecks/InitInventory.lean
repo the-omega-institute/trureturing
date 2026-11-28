@@ -716,6 +716,8 @@ private def inventory (lib strictDir : System.FilePath) (visible strict full wit
         OmegaChecks.InitBoundaries.RepresentativeQuotient.certify official witnesses info proof
         pure (some proof.toString)
       else pure none
+      if owner == `Init.Core && name == ``Quot.pliftOn then
+        OmegaChecks.InitBoundaries.TwoStepQuotient.certify official witnesses
       let refinedModel := OmegaChecks.InitBoundaries.RefinedQuotient.sites.contains (owner, name)
       if refinedModel then
         OmegaChecks.InitBoundaries.RefinedQuotient.certify official witnesses owner info

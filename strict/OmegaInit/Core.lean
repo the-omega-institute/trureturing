@@ -591,6 +591,12 @@ Quotient.recOn require this equality in the type of the branch coherence proof.
 Quotient.decidableEq also returns a positive decision on these two representatives
 with the pinned always-true relation test (RepresentativeQuotient.refutePositiveDecision). -/
 
+/- Quot.pliftOn computes the supplied branch at each representative. In
+TwoStepQuotient.incompatible the path 0 → 1 → 2 gives a quotient interpretation
+preserving both primitive computation rules. Ambient quotient soundness identifies
+the endpoint classes, where the required branch returns false and true. This
+relative obstruction uses a nontransitive relation. The case of Quotient.pliftOn
+for setoids remains open. -/
 port_definition Squash
 port_definition Squash.mk with_native_code
 port_proof Squash.ind
