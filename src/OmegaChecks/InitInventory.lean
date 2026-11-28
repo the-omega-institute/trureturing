@@ -817,6 +817,10 @@ private def inventory (lib strictDir : System.FilePath) (visible strict full wit
       let typeGap ← match publicInfo with
         | some dst => OmegaChecks.InitInventory.originalTypeGap? official visible strict owner info dst
         | none => pure none
+      let typeGap := typeGap.map fun gap =>
+        match OmegaChecks.InitInventory.searchLoopParameter? official visible strict full info with
+        | some detail => gap ++ ". " ++ detail
+        | none => gap
       if matched && typeGap.isNone then originalTypes := originalTypes + 1
       if matched then
         matchingNames := matchingNames + 1

@@ -1,7 +1,11 @@
 module
 public import Init.Data.List.Count
 
-/-! Count elements by induction on a sublist or on the inputs of a traversal. -/
+/-! Count elements by induction on a sublist or on the inputs of a traversal.
+
+The full-function equality `List.countP_eq_length_filter'` is open. The public
+`countP` reduces to `countP.go p xs 0` for a variable list. Its pointwise
+agreement with the length of the filtered list is `List.countP_eq_length_filter`. -/
 namespace OmegaChecks.InitPort.Alternatives
 
 public theorem List.Sublist.countP_le : type_of% @_root_.List.Sublist.countP_le := by

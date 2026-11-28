@@ -608,6 +608,11 @@ end OmegaChecks.InitPort.Alternatives
 
 namespace OmegaChecks.InitPort.Alternatives
 
+/- Open at the public types of the character and predicate search laws. The pinned
+statements pass a default search loop to `contains`, `find?` or `revFind?` at the
+concrete pattern. The strict statements pass a loop using termination of that
+pattern. A normal official import seals both string implementation wrappers
+used below and the extrinsic fixpoint used by the default loop. -/
 public theorem String.contains_char_eq_contains_beq {c : Char} {s : String} :
     String.Internal.containsImpl s c = String.Internal.anyImpl s (fun x => x == c) := by
   change decide (c ∈ s.toList) = s.toList.any (fun x => x == c)

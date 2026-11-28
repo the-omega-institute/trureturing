@@ -1,5 +1,7 @@
 module
+public import Lean
 import all OmegaChecks.InitInventory.Collector
+import OmegaChecks.InitPort.Translation
 import all Init.Data.String.Pattern.Basic
 import all Init.Data.Iterators.Lemmas.Consumers.Monadic.Loop
 
@@ -160,3 +162,43 @@ def limitedOmniscienceFromBackwardSearchLoop
   exact LawfulIteratorLoop.lawful _ _ _ _ _ wf _
 
 end OmegaChecks.InitBoundaries.Collector
+
+namespace OmegaChecks.InitInventory
+open Lean
+
+private def universalRefl? : Expr → Option Expr
+  | .forallE n d b bi => return .lam n d (← universalRefl? b) bi
+  | body => do
+    let (ty, lhs, _) ← body.eq?
+    return mkApp2 (mkConst ``Eq.refl body.getAppFn.constLevels!) ty lhs
+
+/-- Quantify over the original search-loop instance in a concrete string law.
+The application at the pinned loop must recover the complete original statement.
+Form the parameterized statement in both ordinary imports and check reflexivity
+against that statement in each implementation kernel. -/
+public def searchLoopParameter? (official visible strictVisible strict : Environment)
+    (source : ConstantInfo) : Option String := do
+  guard source.isTheorem
+  let forward := ``String.Slice.Pattern.ToForwardSearcher.DefaultForwardSearcher.instIteratorLoopIdSearchStep
+  let backward := ``String.Slice.Pattern.ToBackwardSearcher.DefaultBackwardSearcher.instIteratorLoopIdSearchStep
+  let #[loop] := source.type.getUsedConstants.filter (fun n => n == forward || n == backward) | none
+  guard (!(strictVisible.contains (InitKernelPort.portName loop)))
+  let generic ← visible.find? loop
+  let occurrence ← source.type.find? (·.isConstOf loop)
+  let levels := occurrence.constLevels!
+  guard ((source.type.find? (fun e => e.isConstOf loop && e.constLevels! != levels)).isNone)
+  let param := mkFVar ⟨`searchLoop⟩
+  let body := source.type.replace fun e => if e.isConstOf loop then some param else none
+  let abstracted := body.abstract #[param]
+  guard ((abstracted.instantiate1 (mkConst loop levels)).equal source.type)
+  let ty := Expr.forallE `searchLoop (generic.type.instantiateLevelParams generic.levelParams levels) abstracted .default
+  let translated := InitKernelPort.translate InitKernelPort.portName ty
+  guard ((Kernel.check visible {} ty).isOk && (Kernel.check strictVisible {} translated).isOk)
+  let phrasing := "With the default search loop supplied as an argument, the complete statement is well-typed"
+  if let some term := universalRefl? ty then
+    let checked := fun env term type => (Kernel.check env {} term).toOption.any (Kernel.isDefEqGuarded env {} · type)
+    if checked official term ty && checked strict (InitKernelPort.translate InitKernelPort.portName term) translated then
+      return phrasing ++ " and proved by reflexivity in both implementation kernels"
+  return phrasing
+
+end OmegaChecks.InitInventory
