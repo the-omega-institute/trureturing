@@ -74,28 +74,8 @@ missing official interface in the completeness check. -/
 private def logicalConsequence? (owner name : Name) : Option (Name × Name) := do
   if let some entry := OmegaChecks.InitBoundaries.ContainerEquality.witnesses.lookup name then
     return entry
-  if owner == `Init.Data.List.Monadic then
-    match name with
-    | ``List.zipWithM'_eq_zipWithM =>
-      return (``List.zipWithM_cons_cons, ``OmegaChecks.InitBoundaries.MonadicZip.consOfConversion)
-    | ``List.zipWithM_cons_cons =>
-      return (``List.zipWithM'_eq_zipWithM, ``OmegaChecks.InitBoundaries.MonadicZip.conversionOfCons)
-    | ``List.mapM_cons =>
-      return (``List.mapM'_eq_mapM, ``OmegaChecks.InitBoundaries.MonadicZip.unaryConversionOfCons)
-    | ``List.mapM'_eq_mapM =>
-      return (``List.zipWithM'_eq_mapM_id_zipWith, ``OmegaChecks.InitBoundaries.MonadicZip.ofUnaryTraversal)
-    | ``List.zipWithM'_eq_mapM_id_zipWith =>
-      return (``List.mapM'_eq_mapM, ``OmegaChecks.InitBoundaries.MonadicZip.unaryTraversalOfZip)
-    | _ => pure ()
-  if owner == `Init.Data.List.ToArray then
-    match name with
-    | ``List.zipWithM_toArray =>
-      return (``OmegaChecks.InitBoundaries.MonadicTraversal.IndexedMap.PairConversion,
-        ``OmegaChecks.InitBoundaries.MonadicZip.pairOfArrayConversion)
-    | ``List.zipWithMAux_toArray_zero =>
-      return (``OmegaChecks.InitBoundaries.MonadicZip.PairWithPrefix,
-        ``OmegaChecks.InitBoundaries.MonadicZip.pairOfAccumulatorConversion)
-    | _ => pure ()
+  if let some entry := OmegaChecks.InitBoundaries.MonadicZip.consequence? owner name then
+    return entry
   if owner == `Init.Data.Array.Monadic then
     if let some result := OmegaChecks.InitBoundaries.MonadicCollectionEquations.comparisons.lookup name then
       return result

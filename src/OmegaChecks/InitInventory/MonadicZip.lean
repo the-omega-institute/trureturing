@@ -118,4 +118,23 @@ theorem pairOfAccumulatorConversion (rule : type_of% @List.zipWithMAux_toArray_z
   intro m mon law γ x y acc
   with_unfolding_all exact rule (choose x y) [false,true] [(),()] acc
 
+/-- Exact consequences of the pinned traversal equations, indexed by their defining module. -/
+def consequence? (owner name : Lean.Name) : Option (Lean.Name × Lean.Name) :=
+  match owner, name with
+  | `Init.Data.List.Monadic, ``List.zipWithM'_eq_zipWithM =>
+    some (``List.zipWithM_cons_cons, ``consOfConversion)
+  | `Init.Data.List.Monadic, ``List.zipWithM_cons_cons =>
+    some (``List.zipWithM'_eq_zipWithM, ``conversionOfCons)
+  | `Init.Data.List.Monadic, ``List.mapM_cons =>
+    some (``List.mapM'_eq_mapM, ``unaryConversionOfCons)
+  | `Init.Data.List.Monadic, ``List.mapM'_eq_mapM =>
+    some (``List.zipWithM'_eq_mapM_id_zipWith, ``ofUnaryTraversal)
+  | `Init.Data.List.Monadic, ``List.zipWithM'_eq_mapM_id_zipWith =>
+    some (``List.mapM'_eq_mapM, ``unaryTraversalOfZip)
+  | `Init.Data.List.ToArray, ``List.zipWithM_toArray =>
+    some (``OmegaChecks.InitBoundaries.MonadicTraversal.IndexedMap.PairConversion, ``pairOfArrayConversion)
+  | `Init.Data.List.ToArray, ``List.zipWithMAux_toArray_zero =>
+    some (``PairWithPrefix, ``pairOfAccumulatorConversion)
+  | _, _ => none
+
 end OmegaChecks.InitBoundaries.MonadicZip
