@@ -72,6 +72,33 @@ private theorem matched {b : Bool} (h : b = true) : ((b = true) = True) ↔ True
   cases h
   exact Iff.rfl
 
+/-- A successful lookup transports its reflection equation to the Boolean value true. -/
+theorem successfulBitRead {b : Bool} (value : b = true) (law : (b = true) = True) : TrueBit :=
+  (matched value).mp law
+
+/-- Reading the single set bit compares its truth with a bound-witnessed truth. -/
+def SingleBitBound := (true = true) = (∃ _ : 0 < 1, true = true)
+
+theorem extractSingleBit {out source : Bool} (read : out = true) (original : source = true)
+    (law : (out = true) = (∃ _ : 0 < 1, source = true)) : SingleBitBound := by
+  cases read
+  cases original
+  exact law
+
+example : (type_of% @BitVec.getElem_of_getLsbD_eq_true) ↔ TrueBit := by
+  constructor
+  · intro rule
+    exact successfulBitRead rfl (@rule 1 1#1 0 rfl)
+  · intro tag w x i h
+    exact (matched ((BitVec.getLsbD_eq_getElem (BitVec.lt_of_getLsbD h)).symm.trans h)).mpr tag
+
+example (rule : type_of% @BitVec.getElem_extractLsb'_eq_decide_getElem) : SingleBitBound := by
+  apply extractSingleBit (out := (BitVec.extractLsb' 0 1 1#1)[0]) (source := (1#1)[0])
+  · rw [BitVec.getElem_extractLsb']
+    rfl
+  · rfl
+  · exact @rule 1 0 1 1#1 0 (by decide)
+
 private theorem mismatched {b : Bool} (h : ¬ b = true) : ((b = true) = False) ↔ FalseBit := by
   cases b with
   | false => exact Iff.rfl
@@ -223,7 +250,7 @@ theorem swappingRules : Swapped ↔ (type_of% @Bool.false_eq) ∧ (type_of% @Boo
 
 run_cmd
   let env ← getEnv
-  for name in [``TrueBit, ``FalseBit, ``Swapped] do
+  for name in [``TrueBit, ``FalseBit, ``Swapped, ``SingleBitBound] do
     let some (.defnInfo closed) := env.find? name | throwError "missing Boolean equation {name}"
     let some (_, lhs, rhs) := closed.value.eq? | throwError "{name} must be an equality"
     if Kernel.isDefEqGuarded env {} lhs rhs then

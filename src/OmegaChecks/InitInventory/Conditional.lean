@@ -17,6 +17,13 @@ public def conditionalConsequence? (owner name : Name) : Option (String × Name 
     return ("∀ f : Nat → Bool, Decidable (∃ n, f n = true)",
       ``OmegaChecks.InitBoundaries.Collector.limitedOmniscienceFromOpenRangeLoop,
       "For the natural successor and the comparison g k = false, the identity-monad loop satisfies its official step equation whenever the range is finite")
+  if owner == `Init.Data.BitVec.Lemmas then
+    if name == ``BitVec.getElem_of_getLsbD_eq_true then
+      return ("(true = true) = True", ``OmegaChecks.InitBoundaries.BooleanReflection.successfulBitRead,
+        "Index zero of the one-bit word 1 has successful getLsbD and bounded reads")
+    if name == ``BitVec.getElem_extractLsb'_eq_decide_getElem then
+      return ("(true = true) = (∃ _ : 0 < 1, true = true)", ``OmegaChecks.InitBoundaries.BooleanReflection.extractSingleBit,
+        "Extracting one bit at offset zero from the one-bit word 1 preserves its set bit at index zero")
   if owner == `Init.Data.Option.Lemmas then
     let singletonLaw := match name with
       | ``Option.choice_eq_some => some ``OmegaChecks.InitBoundaries.OptionSelector.decideFromSingleton

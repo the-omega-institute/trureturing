@@ -137,6 +137,7 @@ private def replayWitnesses (env : Environment) : IO Unit := do
      ``ReferenceRoundTrip.modify, ``ReferenceRoundTrip.primModify] ++
     NaturalComparison.equivalences.map (fun row => row.2.2) ++
     BooleanReflection.witnesses.map (fun row => row.2.2) ++
+    [``BooleanReflection.successfulBitRead, ``BooleanReflection.extractSingleBit] ++
     [``GrindNormalization.normalizePositive, ``GrindNormalization.normalizeNegative,
       ``GrindNormalization.normalizePositiveLeft, ``GrindNormalization.normalizePositiveRight,
       ``GrindNormalization.completeIff, ``GrindNormalization.propextOfLookaheadAndNegative,
