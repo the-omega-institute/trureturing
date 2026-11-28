@@ -76,7 +76,9 @@ open private rightMode sourceMode from
 open private dividedConformal_weight gradeProjection_eq_zero gradeProjection_self inversionTerm
   inversionTerm_eq_zero_of_le rightInsertionEval rightInsertionEval_apply from
   D5.S3.VertexAlgebra.Lattice.Orbifold.P48qNativeOppositeVacuum
-open private finsum_range epsilon_add sign_square from
+open private actualGrade_eq_zero_of_lt from
+  D5.S3.VertexAlgebra.Lattice.Orbifold.P48qNativeRestrictedDualField
+open private finsum_range support_subset_range epsilon_add sign_square from
   D5.S3.VertexAlgebra.StateField.BorcherdsPermutations
 
 noncomputable section
@@ -648,6 +650,18 @@ private theorem sectorLowering_eq_zero (s : Fin 3) (h : ℤ) (u : sector s)
 private theorem fixedProduct_zero_left (b : fixedStates) (n : ℤ) : fixedProduct 0 b n = 0 :=
   LinearMap.map_zero₂ (sourceMode n) b
 
+private theorem fixedGrade_eq_zero_of_lt {d : ℤ} (hd : d < 0) (v : fixedGrade d) : v = 0 := by
+  apply Subtype.ext
+  apply (carrierCoeffEquiv lattice).injective
+  apply Finsupp.ext
+  intro x
+  rw [Submodule.coe_zero, map_zero, Finsupp.zero_apply]
+  change (v.val x.1).coeff x.2 = 0
+  apply (mem_grade_iff lattice d v.val).mp v.property.2 x
+  have hx := chargeEnergy_nonneg lattice nebeGram_posDef x.1
+  dsimp only [energy]
+  omega
+
 set_option maxHeartbeats 8000000 in
 -- Comparing both products requires elaborating the reflected mode indices at each cutoff.
 /-- The homogeneous mixed Jacobi identity for the actual opposite evaluation,
@@ -680,17 +694,7 @@ theorem evaluation_mixedJacobi_pairing (s : Fin 3) (e : ℤ) (a : fixedGrade e)
   classical
   by_cases he : 0 ≤ e
   swap
-  · have ha0 : a = 0 := by
-      apply Subtype.ext
-      apply (carrierCoeffEquiv lattice).injective
-      apply Finsupp.ext
-      intro x
-      rw [Submodule.coe_zero, map_zero, Finsupp.zero_apply]
-      change (a.val x.1).coeff x.2 = 0
-      apply (mem_grade_iff lattice e a.val).mp a.property.2 x
-      have hx := chargeEnergy_nonneg lattice nebeGram_posDef x.1
-      dsimp only [energy]
-      omega
+  · have ha0 := fixedGrade_eq_zero_of_lt (lt_of_not_ge he) a
     subst a
     intro A output dual weight
     have hA : A = 0 := map_zero (fixedGradeInclusion e)
@@ -974,6 +978,134 @@ theorem evaluation_mixedJacobi_pairing (s : Fin 3) (e : ℤ) (a : fixedGrade e)
   rw [hPhase, hOutSum, hDualSum]
   ring
 
+private def fixedProductOnGrade {e g d : ℤ} (a : fixedGrade e) (v : fixedGrade g)
+    (m : ℤ) (hd : e + g - m - 1 = d) : fixedGrade d := by
+  let product := fixedProduct (fixedGradeInclusion e a) (fixedGradeInclusion g v) m
+  refine ⟨product.val, product.property, ?_⟩
+  apply (actualL0_eigen_iff_grade lattice (actualInverse lattice)
+    (actualInverse_left lattice gram_det_unit) (actualInverse_right lattice gram_det_unit)
+    d product.val).mp
+  rw [← hd, Int.cast_sub, Int.cast_sub, Int.cast_add, Int.cast_one]
+  exact LatticeActualConformalEnergy.fused_eigenstate_energy lattice (actualInverse lattice)
+    (actualInverse_left lattice gram_det_unit) (actualInverse_right lattice gram_det_unit)
+    a.val v.val (e : ℂ) (g : ℂ) (sourceGrade_weight e a) (sourceGrade_weight g v) m
+
+private def mixedIterateCoeff (s : Fin 3) (e : ℤ) (a : fixedGrade e)
+    (h : ℤ) (u : sector s) (w : ℝ) (f : GradeDual w) (p q r d : ℤ) (j : ℕ) : fixedGrade d :=
+  evaluation s (h + 9 * (e - (r + (j : ℤ)) - 1)) (w : ℂ)
+    (((fixedField s (fixedGradeInclusion e a))[[r + (j : ℤ)]]) u) f
+    (-p - q + 2 * e - 2 * r - 3 - (j : ℤ)) d
+
+private def mixedOutputCoeff (s : Fin 3) (e : ℤ) (a : fixedGrade e)
+    (h : ℤ) (u : sector s) (w : ℝ) (f : GradeDual w) (p q r d : ℤ) (j : ℕ) : fixedGrade d :=
+  let m : ℤ := p + r - (j : ℤ)
+  let g : ℤ := d - e + m + 1
+  fixedProductOnGrade a (evaluation s h (w : ℂ) u f (-q - (j : ℤ) - 1) g) m (by
+    dsimp only [g]
+    omega)
+
+private def mixedDualCoeff (s : Fin 3) (e : ℤ) (a : fixedGrade e)
+    (h : ℤ) (u : sector s) (w : ℝ) (f : GradeDual w) (p q r d : ℤ) (j : ℕ) : fixedGrade d :=
+  let m : ℤ := -(p + (j : ℤ)) - 1
+  let w' := shiftedWeight w e.toNat (3 * m)
+  let g := C (dualField a.val) (3 * m) (DirectSum.lof ℂ ℝ GradeDual w f)
+  evaluation s h (w' : ℂ) u (g w') (-q - r + (j : ℤ) - 1) d
+
+private theorem mixedIterateCoeff_finite (s : Fin 3) (e : ℤ) (a : fixedGrade e)
+    (h : ℤ) (u : sector s) (hu : totalLZero u.val = ((h : ℂ) / 9) • u.val)
+    (w : ℝ) (f : GradeDual w) (p q r d : ℤ) :
+    Function.HasFiniteSupport (mixedIterateCoeff s e a h u w f p q r d) := by
+  let N := ((h + 9 * (e - r - 1) - 16) / 9).toNat + 1
+  apply (Finset.range N).finite_toSet.subset
+  apply support_subset_range
+  intro j hj
+  apply (fixedGradeForm_nondegenerate d).1
+  intro b
+  rw [mixedIterateCoeff, evaluation_pairing]
+  exact invertedCoeff_iterate_cutoff s (fixedGradeInclusion e a) u e h
+    (sourceGrade_weight e a) hu r (w : ℂ) f ⟨b.val, b.property.1⟩ _ j hj
+
+private theorem mixedOutputCoeff_finite (s : Fin 3) (e : ℤ) (a : fixedGrade e)
+    (h : ℤ) (u : sector s) (w : ℝ) (f : GradeDual w) (p q r d : ℤ) :
+    Function.HasFiniteSupport (mixedOutputCoeff s e a h u w f p q r d) := by
+  let N := (d - e + p + r + 1).toNat + 1
+  apply (Finset.range N).finite_toSet.subset
+  apply support_subset_range
+  intro j hj
+  let m : ℤ := p + r - (j : ℤ)
+  let g : ℤ := d - e + m + 1
+  have hg : g < 0 := by
+    dsimp only [N, g, m] at hj ⊢
+    omega
+  let v := evaluation s h (w : ℂ) u f (-q - (j : ℤ) - 1) g
+  have hv := fixedGrade_eq_zero_of_lt hg v
+  apply Subtype.ext
+  change (sourceMode m (fixedGradeInclusion e a) (fixedGradeInclusion g v)).val = 0
+  rw [hv, map_zero, map_zero, Submodule.coe_zero]
+
+private theorem mixedDualCoeff_finite (s : Fin 3) (e : ℤ) (a : fixedGrade e)
+    (h : ℤ) (u : sector s) (w : ℝ) (f : GradeDual w) (p q r d : ℤ) :
+    Function.HasFiniteSupport (mixedDualCoeff s e a h u w f p q r d) := by
+  obtain ⟨N, hN⟩ := exists_nat_gt (w + (e.toNat : ℝ) - (p : ℝ) - 1 - 16 / 9)
+  apply (Finset.range N).finite_toSet.subset
+  apply support_subset_range
+  intro j hj
+  let m : ℤ := -(p + (j : ℤ)) - 1
+  let w' := shiftedWeight w e.toNat (3 * m)
+  have hBelow : w' < 16 / 9 := by
+    have hj' : (N : ℝ) ≤ (j : ℝ) := by exact_mod_cast hj
+    dsimp only [w', shiftedWeight, m]
+    push_cast
+    linarith
+  let f' : GradeDual w' := (C (dualField a.val) (3 * m) (DirectSum.lof ℂ ℝ GradeDual w f)) w'
+  have hf' : f' = 0 := by
+    apply LinearMap.ext
+    intro x
+    rw [actualGrade_eq_zero_of_lt hBelow x, map_zero, LinearMap.zero_apply]
+  apply (fixedGradeForm_nondegenerate d).1
+  intro b
+  change fixedGradeForm d (evaluation s h (w' : ℂ) u f' (-q - r + (j : ℤ) - 1) d) b = 0
+  rw [evaluation_pairing, hf']
+  simp only [invertedCoeff, inversionTerm, LinearMap.zero_apply, Finset.sum_const_zero, mul_zero]
+
+private theorem fixedGradeForm_finsum {d : ℤ} (b : fixedGrade d)
+    (c : ℕ → ℂ) (v : ℕ → fixedGrade d) (hv : Function.HasFiniteSupport v) :
+    (fixedGradeForm d).flip b (∑ᶠ j : ℕ, c j • v j) =
+      ∑ᶠ j : ℕ, c j * (fixedGradeForm d).flip b (v j) := by
+  calc
+    _ = ∑ᶠ j : ℕ, (fixedGradeForm d).flip b (c j • v j) :=
+      map_finsum ((fixedGradeForm d).flip b) (hv.subset (Function.support_smul_subset_right c v))
+    _ = _ := by simp only [map_smul, smul_eq_mul]
+
+/-- The homogeneous mixed Jacobi identity in the actual fixed source grade.
+Each of the three coefficient families has finite support before binomial weighting. -/
+theorem evaluation_mixedJacobi (s : Fin 3) (e : ℤ) (a : fixedGrade e)
+    (h : ℤ) (u : sector s) (hu : totalLZero u.val = ((h : ℂ) / 9) • u.val)
+    (w : ℝ) (f : GradeDual w) (p q r d : ℤ)
+    (hw : (w : ℂ) = (h : ℂ) / 9 + (d : ℂ) + (p : ℂ) + (q : ℂ) -
+      (e : ℂ) + (r : ℂ) + 2) :
+    let iterate := mixedIterateCoeff s e a h u w f p q r d
+    let output := mixedOutputCoeff s e a h u w f p q r d
+    let dual := mixedDualCoeff s e a h u w f p q r d
+    let weight (j : ℕ) := (-1 : ℂ) ^ j * integerBinomial r j
+    Function.HasFiniteSupport iterate ∧ Function.HasFiniteSupport output ∧
+      Function.HasFiniteSupport dual ∧
+      (∑ᶠ j : ℕ, integerBinomial p j • iterate j) =
+        (∑ᶠ j : ℕ, weight j • output j) - epsilon r • (∑ᶠ j : ℕ, weight j • dual j) := by
+  intro iterate output dual weight
+  have hi : Function.HasFiniteSupport iterate := mixedIterateCoeff_finite s e a h u hu w f p q r d
+  have ho : Function.HasFiniteSupport output := mixedOutputCoeff_finite s e a h u w f p q r d
+  have hd : Function.HasFiniteSupport dual := mixedDualCoeff_finite s e a h u w f p q r d
+  refine ⟨hi, ho, hd, sub_eq_zero.mp ?_⟩
+  apply (fixedGradeForm_nondegenerate d).1
+  intro b
+  change (fixedGradeForm d).flip b
+    ((∑ᶠ j : ℕ, integerBinomial p j • iterate j) -
+      ((∑ᶠ j : ℕ, weight j • output j) - epsilon r • (∑ᶠ j : ℕ, weight j • dual j))) = 0
+  rw [map_sub, map_sub, map_smul, smul_eq_mul, fixedGradeForm_finsum b (integerBinomial p) iterate hi,
+    fixedGradeForm_finsum b weight output ho, fixedGradeForm_finsum b weight dual hd]
+  exact sub_eq_zero.mpr (evaluation_mixedJacobi_pairing s e a h u hu w f p q r d b hw)
+
 /-- Translating the twisted input differentiates the opposite evaluation
 with the physical exponents of the coordinate inversion. -/
 theorem evaluation_translation (s : Fin 3) (h : ℤ) (w : ℂ) (u : sector s)
@@ -1028,6 +1160,7 @@ theorem evaluation_ground_ne_zero :
 #print axioms invertedCoeff_iterate_sum_pairing
 #print axioms evaluation_iterate_sum_pairing
 #print axioms evaluation_mixedJacobi_pairing
+#print axioms evaluation_mixedJacobi
 #print axioms evaluation_translation
 #print axioms evaluation_ground_vacuum
 #print axioms evaluation_ground_ne_zero
