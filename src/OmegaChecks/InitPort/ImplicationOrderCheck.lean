@@ -9,17 +9,6 @@ meta import OmegaChecks.InitPort.StrictReplay
 
 open Lean InitKernelPort OmegaChecks.InitPort OmegaChecks.InitBoundaries
 
-/-- The full public signature must form in the pinned kernel. Removing one instance
-must make the kernel name precisely that missing constant. -/
-private def needsInstance (visible : Environment) (type : Expr) (instanceName : Name) : Bool :=
-  let core := visible.toKernelEnv
-  let constants := core.constants
-  let without := Environment.ofKernelEnv {core with constants := {constants with
-    map₁ := constants.map₁.erase instanceName, map₂ := constants.map₂.erase instanceName}}
-  match Kernel.check without {} type with
-  | .error (.unknownConstant _ missing) => missing == instanceName
-  | _ => false
-
 public unsafe def main (args : List String) : IO Unit := do
   let [lib] := args | throw <| IO.userError "expected a strict library"
   initSearchPath (← findSysroot)
@@ -49,7 +38,7 @@ public unsafe def main (args : List String) : IO Unit := do
     let used := rules.filter fun (name, _) => missing.contains (portName name)
     unless !used.isEmpty && OmegaChecks.InitInventory.checkedOrderFields visible strict owner src pinned dst.type missing do continue
     for (name, proof) in used do
-      unless needsInstance visible pinned name do
+      unless typeNeedsConstant visible pinned name do
         throw <| IO.userError s!"could still form {src.name} without the pinned instance {name}"
       certificates := certificates.push #[owner.toString, src.name.toString, name.toString, proof.toString]
   if certificates.isEmpty then return

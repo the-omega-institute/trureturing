@@ -1,10 +1,22 @@
 module
 public import Lean.Replay
+import all Lean.Environment
 public import OmegaChecks.InitPort.Translation
 
 open Lean InitKernelPort
 
 namespace OmegaChecks.InitPort
+
+/-- The full public signature must form in the pinned kernel. Removing one constant
+must make the kernel name precisely that missing constant. -/
+public def typeNeedsConstant (visible : Environment) (type : Expr) (name : Name) : Bool :=
+  let core := visible.toKernelEnv
+  let constants := core.constants
+  let without := Environment.ofKernelEnv {core with constants := {constants with
+    map₁ := constants.map₁.erase name, map₂ := constants.map₂.erase name}}
+  match Kernel.check without {} type with
+  | .error (.unknownConstant _ missing) => missing == name
+  | _ => false
 
 /-- Import the proof helpers from the inventory and use the existing strict declarations for Init. -/
 public partial def restoreEvidence (source : Environment) (kernel : Kernel.Environment)

@@ -96,6 +96,9 @@ python3 src/OmegaChecks/InitPort/report.py .lake/init-port-all --require-complet
 
 `originalTypeOrderDependencies` 记录原类型中直接使用正向或反向蕴涵偏序实例的公开定理。核验器在官方环境删除该实例并检查原类型确实报告缺少这一个常量。对任意候选偏序，若它接受钉版实例在任意两个命题间的比较，偏序反对称性即推出 `propext`。归约在严格库上从空内核重放。定理使用比较关系投影后的完整表述仍在两侧公共内核核验，原类型所需的实例列入有证明的例外。[检查实现](ImplicationOrderCheck.lean)
 
+`Classical.epsilon_singleton` 的官方类型使用 `Classical.epsilon`，闭区间迭代方程 `Std.Rxc.Iterator.instIteratorLoop.loop.eq_1` 的右端使用 `WellFounded.extrinsicFix₃`。分别从公开内核移除相应算子后，原式在类型检查时报告缺少该常量。给出任一算子的完整多态类型即可构造 `Classical.choice`，两个归约均在严格后端从空内核重放。盘点用 `originalTypeChoiceDependency` 标明两处原型缺口，保留严格后端已有的特化。[核验实现](ChoiceTypeDependencyCheck.lean)
+
+
 ### 范围大小与双重否定消除
 
 给定官方原类型的 `Std.Rxc.size_pos_iff_le` 或 `Std.Rxo.size_pos_iff_lt`，都能推出任意命题的双重否定消除，继而推出排中律。令范围的端点都为 `Unit.unit`，把端点比较定义成待证命题 `p`，把大小定义成 1。在 `¬¬p` 下，假设比较失败就得到矛盾，因而满足比较失败时大小为零的类定律。对大小为正应用官方接口即可得到 `p`。清单生成器会从空内核重放这两条归约及双重否定消除推出排中律的证明。[Lean 归约](../InitInventory/Logic.lean) · [官方范围接口](https://github.com/leanprover/lean4/blob/v4.35.0/src/Init/Data/Range/Polymorphic/Basic.lean#L78)

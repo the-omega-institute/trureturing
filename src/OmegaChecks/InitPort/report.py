@@ -103,6 +103,33 @@ def order_certificates(product):
     return [json.loads(line) for line in result.stdout.splitlines()]
 
 
+CHOICE_TYPE_OPERANDS = {
+    ("Init.Classical", "Classical.epsilon_singleton"): ("Classical.epsilon", "OmegaChecks.InitBoundaries.choiceFromEpsilon"),
+    ("Init.Data.Range.Polymorphic.RangeIterator", "Std.Rxc.Iterator.instIteratorLoop.loop.eq_1"):
+        ("WellFounded.extrinsicFix₃", "OmegaChecks.InitBoundaries.choiceFromFix₃"),
+}
+
+
+def choice_type_dependencies(certificates):
+    result = {}
+    for owner, name, operand, witness in certificates:
+        site = owner, name
+        if CHOICE_TYPE_OPERANDS.get(site) != (operand, witness) or site in result:
+            raise ValueError(f"invalid choice operand certificate for {site}")
+        result[site] = operand
+    return result
+
+
+def choice_type_certificates(product):
+    library = product / "lib"
+    if not any((library / ("Omega" + owner.replace(".", "/") + ".olean")).is_file()
+               for owner, _ in CHOICE_TYPE_OPERANDS):
+        return []
+    result = subprocess.run(["lake", "env", "lean", "--run", HERE / "ChoiceTypeDependencyCheck.lean", library],
+                            cwd=ROOT, stdout=subprocess.PIPE, text=True, check=True)
+    return [json.loads(line) for line in result.stdout.splitlines()]
+
+
 def check_coverage(official):
     """Count physical sites from the fresh Lean inventory, including repeated names."""
     modules = set(official["modules"])
@@ -127,6 +154,7 @@ def check_coverage(official):
     if len(private_types) != len(certificates):
         raise ValueError("repeated import all original type certificate")
     blocked_orders = order_dependencies(official.get("certifiedOrderTypeDependencies", []))
+    choice_operands = choice_type_dependencies(official.get("certifiedChoiceTypeDependencies", []))
     sites = set()
     direct = 0
     matched = 0
@@ -270,6 +298,13 @@ def check_coverage(official):
                     private_type or any("Omega." + dep not in missing for dep in orders) or
                     not gap.endswith("A definitionally equal reformulation checks in the public kernels.")):
                 raise ValueError(f"inconsistent pinned order type dependency for {site}")
+        choice_operand = choice_operands.pop(site, None)
+        if choice_operand != row.get("originalTypeChoiceDependency") or (choice_operand and (
+                not port or row["kind"] != "theorem" or row.get("originalTypeChecked") is not False or
+                row.get("originalTypeGap") != f"missing type dependencies: Omega.{choice_operand}" or
+                any(row.get(flag) is not False for flag in ("unsafe", "partial", "strictUnsafe", "strictPartial")) or
+                private_type or orders)):
+            raise ValueError(f"uncertified choice operand of the pinned type for {site}")
         if port:
             if axiom or witness or (runtime and not (unsafe_runtime or effect or comparison or pointer_hash)) or row["strictModule"] != "Omega" + owner:
                 raise ValueError(f"inconsistent strict match for {owner}/{name}")
@@ -278,7 +313,7 @@ def check_coverage(official):
                 if row.get("originalTypeChecked") is True and row.get("originalTypeGap") is None:
                     original_types += 1
                 elif row.get("originalTypeChecked") is False and row.get("originalTypeGap"):
-                    if not private_type and not orders:
+                    if not private_type and not orders and not choice_operand:
                         unresolved.append(site)
                 else:
                     raise ValueError(f"inconsistent original type check for {owner}/{name}")
@@ -290,6 +325,8 @@ def check_coverage(official):
             reductions += 1
         elif not endpoint and not argument and not refuter and path != "Quot.sound":
             unresolved.append(site)
+    if choice_operands:
+        raise ValueError("choice operand certificate has no definition site")
     if blocked_orders:
         raise ValueError("pinned order certificate has no definition site")
     if private_types:
@@ -331,7 +368,10 @@ def verify_complete(official, product, reductions, unresolved):
     order_checks = official.get("certifiedOrderTypeDependencies", [])
     if order_checks and order_certificates(product) != order_checks:
         raise ValueError("live implication order certificates differ from inventory")
-    blocked = order_dependencies(order_checks)
+    choice_checks = official.get("certifiedChoiceTypeDependencies", [])
+    if choice_checks and choice_type_certificates(product) != choice_checks:
+        raise ValueError("live choice operand certificates differ from inventory")
+    blocked = order_dependencies(order_checks).keys() | choice_type_dependencies(choice_checks).keys()
     certified = {(owner, name) for owner, name, _, _ in official.get("certifiedImportAllOriginalTypes", [])}
     if any(row["matchingNameAndModule"] and row.get("originalTypeChecked") is not True and
            (row["module"], row["name"]) not in blocked and
@@ -464,6 +504,9 @@ def report(product, require_complete=False):
         order_checks = order_certificates(product)
         official["certifiedOrderTypeDependencies"] = order_checks
         orders = order_dependencies(order_checks)
+        choice_checks = choice_type_certificates(product)
+        official["certifiedChoiceTypeDependencies"] = choice_checks
+        choice_operands = choice_type_dependencies(choice_checks)
         strict_choices = check_strict_reference_choices(product, stage, attempts)
         strict_matches = check_strict_longest_matches(product, stage)
         strict_folds = check_strict_fin_folds(product, stage)
@@ -477,6 +520,8 @@ def report(product, require_complete=False):
         pending.update({site: (*result, "strictEquivalenceWitness") for site, result in strict_equivalences.items()})
         for row in official["declarations"]:
             site = (row["module"], row["name"])
+            if site in choice_operands:
+                row["originalTypeChoiceDependency"] = choice_operands[site]
             if site in orders:
                 row["originalTypeOrderDependencies"] = orders[site]
             if site in promise_sites:
@@ -517,7 +562,7 @@ def report(product, require_complete=False):
                              "specializedEndpointType", "strictConstructorIff", "formationArgument", "transportPathType", "pinnedLiftCoherenceRefuter",
                              "strictLogicalConsequence", "strictLogicalConsequenceWitness", "strictEquivalenceWitness",
                              "representativeRefuter", "refinedQuotientConsequence", "originalTypeGap",
-                             "importAllOriginalTypeChecked", "originalTypeOrderDependencies"])
+                             "importAllOriginalTypeChecked", "originalTypeOrderDependencies", "originalTypeChoiceDependency"])
             for row in official["declarations"]:
                 if row["originalTypeChecked"] or row["kind"] == "axiom":
                     continue
@@ -563,7 +608,8 @@ def report(product, require_complete=False):
                                  row.get("strictEquivalenceWitness"), row.get("representativeRefuter"),
                                  row.get("refinedQuotientConsequence"), row.get("originalTypeGap"),
                                  "true" if row.get("importAllOriginalTypeChecked") else "",
-                                 json.dumps(row["originalTypeOrderDependencies"], sort_keys=True) if row.get("originalTypeOrderDependencies") else ""])
+                                 json.dumps(row["originalTypeOrderDependencies"], sort_keys=True) if row.get("originalTypeOrderDependencies") else "",
+                                 row.get("originalTypeChoiceDependency")])
         reductions = stage / "init-public-reductions.tsv"
         with reductions.open("w", newline="") as f:
             writer = csv.writer(f, delimiter="\t", lineterminator="\n")

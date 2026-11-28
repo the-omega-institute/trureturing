@@ -179,6 +179,29 @@ class CoverageTest(unittest.TestCase):
             with self.subTest(change=change), self.assertRaisesRegex(ValueError, "order type dependency"):
                 check_coverage(data | {"declarations": [row | change]})
 
+    def test_original_type_requiring_a_polymorphic_choice_operator(self):
+        owner, name = "Init.Classical", "Classical.epsilon_singleton"
+        dep, proof = "Classical.epsilon", "OmegaChecks.InitBoundaries.choiceFromEpsilon"
+        cert = [[owner, name, dep, proof]]
+        row = site(owner, name, matchingNameAndModule=True, strictModule="Omega" + owner,
+                   originalTypeChecked=False, originalTypeGap=f"missing type dependencies: Omega.{dep}")
+        data = inventory(row)
+        data["schemaVersion"] = 6
+        data["summary"]["originalTypesChecked"] = 0
+        self.assertEqual(check_coverage(data), (0, [(owner, name)]))
+        row["originalTypeChoiceDependency"] = dep
+        data["certifiedChoiceTypeDependencies"] = cert
+        self.assertEqual(check_coverage(data), (0, []))
+        with patch("report.choice_type_certificates", return_value=[]), self.assertRaisesRegex(ValueError, "live choice"):
+            verify_complete(data, Path("product"), *check_coverage(data))
+        for invalid in ([], cert + cert, [[owner, name, dep, "wrongProof"]], [[owner, "other", dep, proof]]):
+            with self.subTest(invalid=invalid), self.assertRaisesRegex(ValueError, "choice operand"):
+                check_coverage(data | {"certifiedChoiceTypeDependencies": invalid})
+        for change in ({"kind": "axiom"}, {"strictUnsafe": True}, {"originalTypeGap": "unknown"},
+                       {"originalTypeChecked": True}, {"matchingNameAndModule": False}):
+            with self.subTest(change=change), self.assertRaisesRegex(ValueError, "choice operand"):
+                check_coverage(data | {"declarations": [row | change]})
+
     def test_strict_excluded_middle_is_a_logical_consequence(self):
         row = site("Init.Data.String.Lemmas.Pattern.Basic", "String.Slice.Pattern.Model.IsMatch.exists_isLongestMatch",
                    logicalConsequence="Classical.em", strictLogicalConsequence="Classical.em",

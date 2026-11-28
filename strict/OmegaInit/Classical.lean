@@ -8,3 +8,7 @@ prelude
 public import OmegaInit.Core
 
 port_proof Classical.exists_true_of_nonempty
+
+/- Classical.epsilon_singleton selects from the predicate y = x. Its strict specialization
+returns x. The pinned type refers directly to Classical.epsilon, whose full type gives
+Classical.choice by applying it to the constantly true predicate. -/

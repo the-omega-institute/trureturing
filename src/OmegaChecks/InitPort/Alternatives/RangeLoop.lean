@@ -285,8 +285,9 @@ private theorem closedRangeCongr
 public theorem Std.Rxc.Iterator.instIteratorLoop.loop.congr_simp :
     type_of% (private_decl% @closedRangeCongr) := @closedRangeCongr
 
--- The pinned loop.eq_1 right endpoint names WellFounded.extrinsicFix₃.
--- The finite loop implementation below supplies a different recursion operator.
+-- Std.Rxc.Iterator.instIteratorLoop.loop.eq_1 uses WellFounded.extrinsicFix₃ on
+-- its right. That operator at its full type supplies Classical.choice by recursion
+-- on three unit inputs. The strict loop uses its finite-range termination proof.
 public noncomputable def Std.Rxc.Iterator.instIteratorLoop.loop :
     type_of% @_root_.Std.Rxc.Iterator.instIteratorLoop.loop := by
   intro α enum order dec law compat n mon
