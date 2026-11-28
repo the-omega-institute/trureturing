@@ -21,4 +21,11 @@ OmegaChecks.InitBoundaries.EnvelopeOrder.propextFromModuleLift.
 The converse and the reconstruction of the full comparison are checked by
 moduleLiftFromPropext and moduleOrderFromPropext. -/
 
+/- add_congr uses addition projected from ofNatModule on its two arbitrary
+quotient arguments. smul_congr uses natural scalar multiplication projected
+from the same instance. On natural-number pairs, the specified computations
+and the group's cancellation law identify (1,1) with (0,0) in the quotient.
+The representative model distinguishes those pairs, as checked in
+OmegaChecks.InitBoundaries.RepresentativeQuotient.refuteEnvelopeCancellation. -/
+
 end Omega.Lean.Grind.IntModule.OfNatModule

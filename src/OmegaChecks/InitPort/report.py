@@ -123,6 +123,8 @@ MODULE_ENVELOPE = "Init.Grind.Module.Envelope"
 ENVELOPE_INSTANCE = "Lean.Grind.IntModule.OfNatModule.ofNatModule"
 ENVELOPE_REFUTER = "OmegaChecks.InitBoundaries.RepresentativeQuotient.refuteEnvelopeCancellation"
 EMBEDDINGS = {ENVELOPE_INSTANCE.rsplit(".", 1)[0] + "." + name for name in ("toQ_add", "toQ_smul", "toQ_zero")}
+MODULE_CONGRUENCES = "Init.Grind.Module.OfNatModule"
+EMBEDDING_CONGRUENCES = {ENVELOPE_INSTANCE.rsplit(".", 1)[0] + "." + name for name in ("add_congr", "smul_congr")}
 
 
 RING_ENVELOPE = "Init.Grind.Ring.Envelope"
@@ -161,7 +163,10 @@ def semiring_image_sites(checks):
 
 
 def envelope_type_dependencies(checks):
-    return envelope_instance_sites(checks, MODULE_ENVELOPE, EMBEDDINGS, ENVELOPE_INSTANCE)
+    embeddings = [row for row in checks if row[0] == MODULE_ENVELOPE]
+    congruences = [row for row in checks if row[0] != MODULE_ENVELOPE]
+    return (envelope_instance_sites(embeddings, MODULE_ENVELOPE, EMBEDDINGS, ENVELOPE_INSTANCE) |
+            envelope_instance_sites(congruences, MODULE_CONGRUENCES, EMBEDDING_CONGRUENCES, ENVELOPE_INSTANCE))
 
 
 def ring_instance_sites(checks):
@@ -203,7 +208,7 @@ def envelope_order_formations(checks):
     sites = {}
     witness = "OmegaChecks.InitBoundaries.EnvelopeOrder."
     for owner, name, order, coherence, forward, reverse, *construction in checks:
-        if owner in (MODULE_ENVELOPE, "Init.Grind.Module.OfNatModule"):
+        if owner in (MODULE_ENVELOPE, MODULE_CONGRUENCES):
             scope, suffix, model = MODULE_ENVELOPE_PREFIX, "_proof_3", "Module"
         elif owner == "Init.Grind.Ring.Envelope":
             scope, suffix, model = "Lean.Grind.Ring.OfSemiring", "_proof_1", "Ring"
@@ -211,7 +216,7 @@ def envelope_order_formations(checks):
             raise ValueError(f"invalid quotient order owner {owner}")
         site = (owner, name)
         expected_construction = [witness + model.lower() + "OrderFromPropext"] if name == order else []
-        names = ({scope + ".of_le", scope + ".of_not_le"} if owner == "Init.Grind.Module.OfNatModule" else
+        names = ({scope + ".of_le", scope + ".of_not_le"} if owner == MODULE_CONGRUENCES else
                  {order, scope + ".instIsPreorderQ", scope + ".instOrderedAddQ"})
         if (site in sites or name not in names or
                 construction != expected_construction or order != scope + ".instLEQOfOrderedAdd" or coherence != order + "." + suffix or
@@ -436,10 +441,11 @@ def check_coverage(official):
                                row.get("originalTypeChecked") is not False or row.get("originalTypeGap") is not None)):
             raise ValueError(f"uncertified specified selector in {site}")
         embedding = site in embeddings
+        embedding_gap = ("missing type dependencies: Omega." + ENVELOPE_INSTANCE) if port else ""
         if row.get("originalTypeEnvelopeInstance") != (ENVELOPE_INSTANCE if embedding else None) or (embedding and (
-                not port or row["kind"] != "theorem" or row.get("originalTypeChecked") is not False or
-                (row.get("originalTypeGap") or "").partition(". ")[0] != "missing type dependencies: Omega." + ENVELOPE_INSTANCE or
-                any(row.get(flag) is not False for flag in ("unsafe", "partial", "strictUnsafe", "strictPartial")))):
+                port != (owner == MODULE_ENVELOPE) or row["kind"] != "theorem" or row.get("originalTypeChecked") is not False or
+                (row.get("originalTypeGap") or "").partition(". ")[0] != embedding_gap or row["unsafe"] or row["partial"] or
+                any(row.get(flag) is not (False if port else None) for flag in ("strictUnsafe", "strictPartial")))):
             raise ValueError(f"uncertified module instance in embedding equation {site}")
         order_formation = comparison_formations.get(site)
         if row.get("quotientOrderFormation") != order_formation or (order_formation and (
@@ -509,7 +515,8 @@ def check_coverage(official):
             # These Lean reductions take a value usable by safe code. The kernel
             # prohibits supplying an unsafe implementation to such a witness.
             reductions += 1
-        elif not selection and not choice_operand and not endpoint and not argument and not refuter and not order_formation and not ring_formation and path != "Quot.sound":
+        elif not any((selection, choice_operand, endpoint, argument, refuter, order_formation, ring_formation, embedding,
+                      path == "Quot.sound")):
             unresolved.append(site)
     if not image_sites.keys() <= sites:
         raise ValueError("semiring computation certificate has no declaration")
