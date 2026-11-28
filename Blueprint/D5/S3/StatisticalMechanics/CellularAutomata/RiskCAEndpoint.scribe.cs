@@ -14,7 +14,10 @@ internal sealed class RiskCAEndpointDocument : IScribeDocumentDefinition
         "A collision in the deterministic RiskCA at the highest active threshold.",
         H("Noninjectivity on complete finite boards"),
         Blocks(
-            Paragraph(Text("Use the complete simple graph on V. The carrier S(V,P,M) is the full product over V of P available owner labels and the unit counts 1 through M. Equality is pointwise. The map Φ(π,b,ρ,X) applies the deterministic local step of §3.2 and Appendix B Algorithm 1 to X with priority permutation π, fortification flag b, battle ratio ρ, growth zero and threshold M − 1.")),
+            Paragraph(
+                Text("Use the complete simple graph on V. The carrier S(V,P,M) is the full product over V of P available owner labels and the unit counts 1 through M. Equality is pointwise. The map "),
+                Math(StepAt(F.Id("b"), F.Id("X"))),
+                Text(" applies the deterministic local step of §3.2 and Appendix B Algorithm 1 to X with priority permutation π, fortification flag b, battle ratio ρ, growth zero and threshold M − 1.")),
             Describe.Lean(
                 DescribeId.Create("riskca-highest-active-threshold-fixed-image"),
                 DeclarationHandle.Create(Owner + "paper_collision_fixed_image"),
@@ -43,11 +46,10 @@ internal sealed class RiskCAEndpointDocument : IScribeDocumentDefinition
         Formula nat = Seq(Mathbb, Grp(F.Id("N")));
         Formula real = Seq(Mathbb, Grp(F.Id("R")));
         Formula space = new Formula.Apply(F.Id("S"), [v, p, m]);
-        Formula StepAt(Formula state) => new Formula.Apply(Phi, [Pi, b, Rho, state]);
         Formula ratio = fixedImage ? Seq(D(1), Sp, Leq, Rho) : Seq(D(1), Lt, Rho, Lt, D(2));
         Formula outputs = fixedImage
-            ? Seq(StepAt(x), Eq, y, Sp, Land, Sp, StepAt(y), Eq, y)
-            : Seq(StepAt(x), Eq, StepAt(y));
+            ? Seq(StepAt(b, x), Eq, y, Sp, Land, Sp, StepAt(b, y), Eq, y)
+            : Seq(StepAt(b, x), Eq, StepAt(b, y));
         return Disp(new Formula.Aligned([
             Seq(Binder(Forall, v, F.Id("Type")), OpenBracket, Call("Fintype", v), CloseBracket,
                 Comma, Sp, Binder(Forall, Seq(p, Comma, m), nat),
@@ -58,6 +60,9 @@ internal sealed class RiskCAEndpointDocument : IScribeDocumentDefinition
             Seq(Binder(Exists, Seq(x, Comma, y), space), x, Sp, Neq, Sp, y, Sp, Land, Sp, outputs),
         ]));
     }
+
+    private static Formula StepAt(Formula fortification, Formula state) =>
+        new Formula.Apply(Phi, [Pi, fortification, Rho, state]);
 
     private static Formula Binder(Formula quantifier, Formula variable, Formula type) =>
         Seq(quantifier, Sp, variable, Colon, Sp, type, Comma, Sp);

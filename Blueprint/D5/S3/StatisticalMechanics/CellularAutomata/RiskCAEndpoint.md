@@ -4,7 +4,7 @@
 
 A collision in the deterministic RiskCA at the highest active threshold.
 
-Use the complete simple graph on V. The carrier S(V,P,M) is the full product over V of P available owner labels and the unit counts 1 through M. Equality is pointwise. The map Φ(π,b,ρ,X) applies the deterministic local step of §3.2 and Appendix B Algorithm 1 to X with priority permutation π, fortification flag b, battle ratio ρ, growth zero and threshold M − 1.
+Use the complete simple graph on V. The carrier S(V,P,M) is the full product over V of P available owner labels and the unit counts 1 through M. Equality is pointwise. The map $\phi\left(\pi, b, \rho, X\right)$ applies the deterministic local step of §3.2 and Appendix B Algorithm 1 to X with priority permutation π, fortification flag b, battle ratio ρ, growth zero and threshold M − 1.
 
 **Theorem 1.1 (Two configurations map to the same fixed image).**
 

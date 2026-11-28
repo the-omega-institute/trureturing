@@ -5,7 +5,7 @@ year: 2026
 title: "Territorial Conflict as a Cellular Automaton: Frozen Domains and Active Fronts in a Risk-Derived Local Rule"
 doi: 10.48550/arXiv.2611.34784
 url: https://arxiv.org/abs/2611.34784v1
-claim: "The repository proves noninjectivity of the deterministic synchronous local step on the full legal carrier of every finite complete simple graph with at least two vertices, at least two available owners, capacity M ≥ 3, zero growth, threshold M − 1, every fixed priority permutation, either fortification setting, and real 1 < ρ < 2. The fixed-image collision holds for every real ρ ≥ 1 under the same remaining hypotheses."
+claim: "Proposition 2 leaves injectivity open at the highest active threshold. Take any finite complete simple graph with at least two vertices, P ≥ 2 available owner labels and capacity M = Nmax ≥ 3. Fix any priority permutation and either fortification setting. For any real 1 < ρ < 2, is the synchronous deterministic local step injective at zero growth and threshold θ = M − 1? The carrier is the full product over the vertices of the P owner labels and unit counts 1 through M, with pointwise equality."
 strata_touched:
   - D5/S3/StatisticalMechanics/CellularAutomata/RiskCAEndpoint
 license: citation-only
@@ -25,5 +25,7 @@ Definition 2 gives the carrier on printed p. 3. Section 3.2 on pp. 4–5 and Alg
 ## Complete-board collision
 
 On a complete graph select distinct cells $u,v$. Give $u$ the cap $M$, give every other cell one unit, and assign a common owner to all cells except $v$. The unique request goes from $u$ to $v$. Its accepted force is $M-1$ and the defence is one. For $\rho\ge1$ the attacker wins and $\lceil 1/\rho\rceil=1$, so the winner leaves $M-2$ units at $v$. This image has a common owner, one unit at all other cells, and is fixed. The two inputs differ at $u$. The registered noninjectivity theorem uses the paper's band $1 < \rho < 2$. [Registered statement](https://github.com/the-omega-institute/trureturing/issues/35259)
+
+The repository's stronger fixed-image theorem gives distinct configurations $X,Y$ with $\Phi(X)=Y=\Phi(Y)$ for every real $\rho\ge1$ under the same complete-board, carrier, priority, growth, threshold and fortification hypotheses. [Blueprint](../../Blueprint/D5/S3/StatisticalMechanics/CellularAutomata/RiskCAEndpoint.md)
 
 The indexed update and selected supporting proofs use the author's Lean source. The MIT notice is carried in the Lean module. [Pinned source](https://github.com/MaTeArNog/RiskAutomata/tree/67bb577bd35855cf605e4457ad8795ec0e923991/lean/RiskCA) · [MIT license](https://github.com/MaTeArNog/RiskAutomata/blob/67bb577bd35855cf605e4457ad8795ec0e923991/LICENSE)

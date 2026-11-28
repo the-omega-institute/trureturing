@@ -38,7 +38,7 @@ Any injective instance with the registered parameters would contradict the state
 
 ## Evidence
 
-The official pinned Mathlib backend checks `paper_collision_fixed_image` and `paper_noninjective` with only `propext`, `Classical.choice` and `Quot.sound`. The fixed-image theorem constructs and transports a collision on the indexed board. The noninjectivity theorem applies that result in the registered ratio band and composes the image equalities. The module has no D5 imports. The author's pinned MIT code supplies the indexed update and selected supporting proofs. [Source and license](https://github.com/MaTeArNog/RiskAutomata/tree/67bb577bd35855cf605e4457ad8795ec0e923991/lean/RiskCA) · [Literature and duplicate checks](https://github.com/the-omega-institute/trureturing/issues/35259)
+The official pinned Mathlib backend checks `paper_collision_fixed_image` and `paper_noninjective` with only `propext`, `Classical.choice` and `Quot.sound`. The fixed-image theorem constructs and transports a collision on the indexed board. The noninjectivity theorem applies that result in the registered ratio band and composes the image equalities. The module has no D5 imports. The author's pinned MIT code supplies the indexed update and selected supporting proofs. [Author Lean sources](https://github.com/MaTeArNog/RiskAutomata/tree/67bb577bd35855cf605e4457ad8795ec0e923991/lean/RiskCA) · [MIT license](https://github.com/MaTeArNog/RiskAutomata/blob/67bb577bd35855cf605e4457ad8795ec0e923991/LICENSE) · [Literature and duplicate checks](https://github.com/the-omega-institute/trureturing/issues/35259)
 
 ## Triage
 
