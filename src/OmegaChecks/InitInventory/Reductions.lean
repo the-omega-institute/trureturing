@@ -163,7 +163,8 @@ private def replayWitnesses (env : Environment) : IO Unit := do
     [``IteratorLoopLift.funextOfForIn, ``IteratorLoopLift.funextOfForIn', ``IteratorLoopLift.funextOfFold] ++
     [``PostconditionIdentity.pureImage, ``PostconditionIdentity.imageBind, ``PostconditionIdentity.associatedPredicates] ++
     [``ErasedSelection.ofLeft, ``ErasedSelection.ofRight, ``ErasedSelection.outOfSelection,
-     ``ErasedSelection.recoverOfSelection, ``ErasedSelection.leftIffRight] ++
+     ``ErasedSelection.recoverOfSelection, ``ErasedSelection.leftIffRight, ``ErasedSelection.recoverProp,
+     ``ErasedSelection.outInjIffConstructors, ``ErasedSelection.outInjIffLaw] ++
     [``ChoiceOperands.fromChoice, ``ExistentialConjunction.ofRule] ++
     [``SubsingletonState.ofState, ``SubsingletonState.iffState] ++
     TransformerLaws.OptionIteration.directConsequences.map (fun row => row.2.2) ++
