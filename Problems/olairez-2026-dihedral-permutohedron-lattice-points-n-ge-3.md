@@ -1,5 +1,5 @@
 ---
-slug: olairez-2026-dihedral-permutohedron-lattice-points
+slug: olairez-2026-dihedral-permutohedron-lattice-points-n-ge-3
 bibkey: olairez2026dihedralpermutohedron
 doi: 10.48550/arXiv.2610.28672
 triage: theorem
@@ -7,7 +7,7 @@ motivation_gids:
   - D5/S3/Combinatorics/Geometry/Permutohedra/OlairezCount.latticePointCount_terminalSum
 ---
 
-# Olairez Question 6.1 on lattice points of the dihedral permutohedron
+# Olairez Question 6.1 on lattice points of the dihedral permutohedron for n ≥ 3
 
 ## Problem
 
@@ -17,9 +17,10 @@ asks:
 
 > Can we describe the number of lattice points or the Ehrhart polynomial of the dihedral permutohedron?
 
-For every natural n ≥ 3 and k ≥ 0, let Qₙ be the real convex hull of the
-orbit of (1, 2, …, n)ᵀ under the permutation matrices of Eq. (2).
-Count kQₙ ∩ ℤⁿ using the original integer-coordinate lattice.
+Let Qₙ be the real convex hull of the orbit of (1, 2, …, n)ᵀ under
+the permutation matrices of Eq. (2). The target of this dossier is to
+count kQₙ ∩ ℤⁿ in the original integer-coordinate lattice for every
+natural n ≥ 3 and k ≥ 0.
 [Question 6.1](https://arxiv.org/html/2610.28672v2#S6.Thmquestion1)
 
 ## Motivation
@@ -105,6 +106,11 @@ dilation-dependent source lattice, including even n and odd k.
 source count is 22 by the uniform theorem and the computed recurrence.
 At zero dilation the count is one for every n ≥ 3 since the dilation
 is the singleton at the origin.
+
+**Two labels.** At n = 2, Eq. (2) gives a swap and the identity,
+so Q₂ is the segment from (1, 2) to (2, 1). Its kth dilation has the
+lattice points (j, 3k − j) for integers k ≤ j ≤ 2k. This gives k + 1
+points for each natural k, a calculation unverified in Lean here.
 
 **Open here.** An explicit coefficient formula for the Ehrhart
 polynomial remains open. Question 6.3, the arbitrary-basepoint

@@ -46,7 +46,7 @@ integer-coordinate lattice of its original realization answers the first
 alternative. The count for every integral dilation includes the original
 polytope at dilation one.
 
-**Lattice-point alternative solved (current formal result).** For every natural n ≥ 3 and k ≥ 0,
+**Lattice-point alternative for n ≥ 3.** For every natural n ≥ 3 and k ≥ 0,
 `OlairezCount.latticePointCount_terminalSum` proves finiteness of the
 points of the original dilation kQₙ with integral coordinates and
 equality of their cardinality with the terminal sum of a prefix
@@ -60,6 +60,12 @@ computed recurrence value to give 22 points in the original lattice.
 At zero dilation the singleton origin gives one point for every n ≥ 3.
 An explicit formula for the coefficients of the Ehrhart polynomial
 remains open here.
+
+At the two-label boundary of Eq. (2), the first matrix swaps the labels
+and the second is the identity. Thus Q₂ is the segment from (1, 2) to
+(2, 1), and kQ₂ has the lattice points (j, 3k − j) for integers
+k ≤ j ≤ 2k. This gives k + 1 points for each natural k, a calculation
+unverified in Lean here.
 [Question 6.1](https://arxiv.org/html/2610.28672v2#S6.Thmquestion1)
 
 ## Related classifications

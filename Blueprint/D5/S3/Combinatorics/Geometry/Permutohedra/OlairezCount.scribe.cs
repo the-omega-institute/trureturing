@@ -11,8 +11,8 @@ internal sealed class OlairezCountDocument : IScribeDocumentDefinition
         LibraryNoteRef.Create("D5/L/FiniteGeometry/olairez2026dihedralpermutohedron");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "A prefix recurrence counts the lattice points in every nonnegative integral dilation of the dihedral permutohedron.",
-        H("Lattice points in the dihedral permutohedron"),
+        "For n ≥ 3, a prefix recurrence counts the lattice points in every nonnegative integral dilation of Qₙ.",
+        H("Lattice points in the dihedral permutohedron for n ≥ 3"),
         Blocks(
             Definition("source-points", "SourcePoints", "Integer points of the source dilation",
                 "Let Qₙ be the real convex hull of the orbit of (1, …, n) under the two permutation matrices of Equation (2). Residue zero denotes paper label n. Write Xₙ,ₖ for the integer-coordinate vectors whose real images lie in kQₙ. Question 6.1 of Colin Olairez, arXiv:2610.28672v2, §6, printed p. 21, asks for the number of lattice points or the Ehrhart polynomial. Source locator https://arxiv.org/html/2610.28672v2#S6.Thmquestion1 . Both n and k are natural; the counting theorem assumes n ≥ 3 and includes k = 0."),
@@ -29,14 +29,15 @@ internal sealed class OlairezCountDocument : IScribeDocumentDefinition
             Describe.Lean(
                 DescribeId.Create("olairez-count-dilation"),
                 DeclarationHandle.Create(Module + ".latticePointCount_terminalSum"),
-                H("Finite cardinality in every dilation"),
+                H("Finite cardinality in every dilation for n ≥ 3"),
                 StatementSource.FromAuthor(CountFormula()),
                 AssessedProvenance.FromRepo(Source),
-                Blocks(Paragraph(Text("Every source point corresponds to one terminal prefix of length n, and every such prefix recovers one source point. The sum counts the prefixes with multiplicity across states. Taking k = 1 gives the undilated count, and k = 0 gives the singleton at the origin. This resolves the lattice-point alternative of Question 6.1. An explicit Ehrhart coefficient formula remains open here.")),
+                Blocks(Paragraph(Text("For n ≥ 3, every source point corresponds to one terminal prefix of length n, and every such prefix recovers one source point. The sum counts the prefixes with multiplicity across states. Taking k = 1 gives the undilated count, and k = 0 gives the singleton at the origin. This resolves the lattice-point alternative of Question 6.1 for n ≥ 3. An explicit Ehrhart coefficient formula remains open here.")),
+                    Paragraph(Text("At the two-label boundary of Equation (2), the first matrix swaps the labels and the second is the identity. Thus Q₂ is the segment from (1, 2) to (2, 1). The lattice points of kQ₂ are (j, 3k − j) for integers k ≤ j ≤ 2k, giving k + 1 points. This calculation is unverified in Lean here and lies outside the proved claim.")),
                     Paragraph(Text("On the named input fourOneInput = (4, 1), kernel evaluation counts 22 occurrences passing the terminal filter. An anonymous application of the cardinality theorem and the recurrence identity gives 22 points in the original source lattice."))),
                 DescribeRole.Theorem,
                 new OpenProblemResolutionClaim(
-                    ProblemSlugRef.Create("olairez-2026-dihedral-permutohedron-lattice-points"),
+                    ProblemSlugRef.Create("olairez-2026-dihedral-permutohedron-lattice-points-n-ge-3"),
                     ResolutionKind.Proved)),
             Definition("four-one-input", "fourOneInput", "Four coordinates at unit dilation",
                 "The input pair (4, 1) gives the coordinate count and dilation for the anonymous checker application."))));
