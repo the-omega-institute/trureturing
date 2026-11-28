@@ -61,7 +61,14 @@ private def officialDeclaration (stx : Syntax) : CommandElabM (Environment × Co
   let some info := src.find? name | throwErrorAt stx "missing upstream declaration"
   if name.isInternalOrNum then
     let parent := name.getPrefix
-    unless (src.find? parent).isSome && referencesHelper src parent name [parent] do
+    let structureName := parent.getPrefix
+    let field := parent.replacePrefix structureName .anonymous
+    let fieldDefault := (getStructureInfo? src structureName).isSome &&
+      (getStructureFieldsFlattened src structureName false).contains field &&
+      getEffectiveDefaultFnForField? src structureName field == some name
+    let flatCtor := (getStructureInfo? src structureName).isSome &&
+      mkFlatCtorOfStructCtorName (getStructureCtor src structureName).name == name
+    unless fieldDefault || flatCtor || ((src.find? parent).isSome && referencesHelper src parent name [parent]) do
       throwErrorAt stx "expected an official implementation dependency"
   if info.isAxiom || info.isUnsafe || info.isPartial then throwErrorAt stx "inadmissible declaration"
   return (src, info)
@@ -236,9 +243,29 @@ before the root PUnit used by Lean's ordinary structure elaborator is available.
     let some record := getStructureInfo? src ci.name | throwErrorAt id "expected an official record"
     let type := mkIdentFrom id ci.name
     elabCommand (← `(command| port_inductive $type:ident))
+    let mut fields := #[]
     for field in record.fieldNames do
       let some projection := getFieldInfo? src ci.name field | throwErrorAt id "missing projection {field}"
       let name := mkIdentFrom id projection.projFn
+      elabCommand (← `(command| port_definition $name:ident with_native_code))
+      let some info := src.getProjectionFnInfo? projection.projFn | throwErrorAt id "missing projection info {field}"
+      modifyEnv fun env => addProjectionFnInfo env (omegaName projection.projFn) (omegaName info.ctorName)
+        info.numParams info.i info.fromClass
+      fields := fields.push {projection with
+        projFn := omegaName projection.projFn
+        subobject? := projection.subobject?.map omegaName}
+    let parents := record.parentInfo.map fun parent =>
+      {parent with structName := omegaName parent.structName, projFn := omegaName parent.projFn}
+    modifyEnv fun env => registerStructure env {structName := omegaName ci.name, fields}
+    setStructureParents (omegaName ci.name) parents
+    for field in getStructureFieldsFlattened src ci.name false do
+      if let some defaultFn := getEffectiveDefaultFnForField? src ci.name field then
+        unless (← getEnv).contains (omegaName defaultFn) do
+          let name := mkIdentFrom id defaultFn
+          elabCommand (← `(command| port_definition $name:ident with_native_code))
+    let flatCtor := mkFlatCtorOfStructCtorName (getStructureCtor src ci.name).name
+    if src.contains flatCtor then
+      let name := mkIdentFrom id flatCtor
       elabCommand (← `(command| port_definition $name:ident with_native_code))
 
 /-- Compile the pinned constructor index and typed elimination functions of each inductive. -/
