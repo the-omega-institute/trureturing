@@ -1,6 +1,9 @@
 module
 public import Init.Data.Array.Basic
 public import OmegaInit.Data.List.Basic
+public import OmegaInit.Control.Id
+public import OmegaInit.GetElem
+public import OmegaInit.WF
 
 /-! Namespace aliases to the pinned public interface. -/
 public section
