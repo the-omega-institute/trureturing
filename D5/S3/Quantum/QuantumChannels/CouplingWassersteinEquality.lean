@@ -693,6 +693,48 @@ theorem finite_attainment_of_density (hn : 0 < n) {ρ σ : Matrix (Fin n) (Fin n
   obtain ⟨Q⟩ := plan_nonempty_of_density hn hρ hρtr hσ hσtr
   exact finite_attainment Q
 
+/-- An atom that saturates a fixed test is stationary or has swapped amplitudes
+in its two extremal eigenspaces. -/
+private def SaturatedAtom (H : Matrix (Fin n) (Fin n) ℂ) (x y : UnitVector n) : Prop :=
+  rankOneDensity x.val = rankOneDensity y.val ∨
+    ∃ u v : UnitVector n, ip u.val v.val = 0 ∧ H *ᵥ u.val = u.val ∧ H *ᵥ v.val = -v.val ∧
+      rankOneDensity x.val =
+        rankOneDensity ((upper (ground x y) : ℂ) • u.val + (lower (ground x y) : ℂ) • v.val) ∧
+      rankOneDensity y.val =
+        rankOneDensity ((lower (ground x y) : ℂ) • u.val + (upper (ground x y) : ℂ) • v.val)
+
+private theorem atom_saturates_iff (H : Matrix (Fin n) (Fin n) ℂ)
+    (hminus : (1 - H).PosSemidef) (hplus : (1 + H).PosSemidef) (x y : UnitVector n) :
+    pairing H (rankOneDensity x.val - rankOneDensity y.val) = ground x y ↔
+      SaturatedAtom H x y := by
+  by_cases h : rankOneDensity x.val = rankOneDensity y.val
+  · simp [SaturatedAtom, h, pairing, ground_eq_zero_of_density_eq x y h]
+  · simpa [SaturatedAtom, h] using (fixed_pair_equality x y h H hminus hplus).2.2.2
+
+/-- A fixed test is sharp for the countable-plan infimum precisely when some
+finitely supported plan uses only saturating positive-weight atoms. -/
+theorem wasserstein_eq_pairing_iff {ρ σ : Matrix (Fin n) (Fin n) ℂ}
+    (Q₀ : Plan ρ σ) (H : Matrix (Fin n) (Fin n) ℂ)
+    (hminus : (1 - H).PosSemidef) (hplus : (1 + H).PosSemidef) :
+    wasserstein ρ σ = pairing H (ρ - σ) ↔
+      ∃ Q : Plan ρ σ, (∃ s : Finset ℕ, ∀ j ∉ s, Q.weight j = 0) ∧
+        ∀ j, 0 < Q.weight j → SaturatedAtom H (Q.source j) (Q.target j) := by
+  constructor
+  · intro h
+    obtain ⟨Q, hfin, hc⟩ := finite_attainment Q₀
+    have hat := (countable_plan_equality Q H hminus hplus).mp (hc.trans h)
+    exact ⟨Q, hfin, fun j hj =>
+      (atom_saturates_iff H hminus hplus _ _).mp (hat j hj)⟩
+  · rintro ⟨Q, _, hsat⟩
+    have hc := (countable_plan_equality Q H hminus hplus).mpr (fun j hj =>
+      (atom_saturates_iff H hminus hplus _ _).mpr (hsat j hj))
+    have hl (P : Plan ρ σ) : pairing H (ρ - σ) ≤ cost P := by
+      obtain ⟨hn, hs⟩ := countable_plan_slack P H hminus hplus
+      exact sub_nonneg.mp (hs.tsum_eq ▸ tsum_nonneg hn)
+    exact le_antisymm
+      (csInf_le ⟨_, by rintro _ ⟨P, rfl⟩; exact hl P⟩ ⟨Q, hc⟩)
+      (le_csInf ⟨cost Q, Q, rfl⟩ (by rintro _ ⟨P, rfl⟩; exact hl P))
+
 private def phaseX : UnitVector 2 :=
   ⟨![4 / 5, (3 / 5) * Complex.I], by
     norm_num [Fin.sum_univ_two, Complex.normSq_apply, Complex.mul_re, Complex.mul_im]⟩
