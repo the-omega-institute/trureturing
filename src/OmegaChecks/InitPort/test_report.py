@@ -116,6 +116,42 @@ class CoverageTest(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "1 unresolved"):
             verify_complete(data, Path("product"), *check_coverage(data))
 
+    def test_promise_original_type_requires_the_exact_site_visibility_and_fresh_consumers(self):
+        owner = "Init.System.Promise"
+        hidden = "_private.Init.System.Promise.0.IO.PromisePointed"
+        strict_hidden = "_private.OmegaInit.System.Promise.0.Omega.IO.PromisePointed"
+        rows = [site(owner, f"IO.Promise.{name}", kind="recursor" if name == "rec" else "definition",
+                     matchingNameAndModule=True, strictModule="OmegaInit.System.Promise",
+                     originalTypeChecked=False, originalTypeGap=f"missing type dependencies: {strict_hidden}",
+                     importAllOriginalTypeChecked=True) for name in ("rec", "recOn", "casesOn")]
+        certificates = [[owner, row["name"], hidden, strict_hidden] for row in rows]
+
+        def audited(pinned, checks):
+            data = inventory(*pinned)
+            data["schemaVersion"] = 6
+            data["summary"].update(originalTypesChecked=0, importAllOriginalTypesChecked=len(checks))
+            return data | {"certifiedImportAllOriginalTypes": checks}
+
+        data = audited(rows, certificates)
+        self.assertEqual(check_coverage(data), (0, []))
+        with patch("report.promise_certificates", return_value=certificates) as live, patch("report.subprocess.run"):
+            verify_complete(data, Path("product"), *check_coverage(data))
+            live.assert_called_once_with(Path("product"), data["declarations"])
+        with patch("report.promise_certificates", return_value=[]):
+            with self.assertRaisesRegex(ValueError, "live Promise"):
+                verify_complete(data, Path("product"), *check_coverage(data))
+        before = audited([{k: v for k, v in row.items() if k != "importAllOriginalTypeChecked"} for row in rows], [])
+        self.assertEqual(check_coverage(before), (0, [(owner, row["name"]) for row in rows]))
+        for change in ({"module": "Init.Prelude"}, {"name": "IO.Promise.result!"}, {"kind": "opaque"},
+                       {"originalTypeGap": "missing other token"}, {"originalTypeChecked": True},
+                       {"matchingNameAndModule": False}, {"strictPartial": True}, {"unsafe": True}):
+            row = rows[0] | change
+            with self.subTest(change=change), self.assertRaisesRegex(ValueError, "import all original type"):
+                check_coverage(audited([row], [[row["module"], row["name"], hidden, strict_hidden]]))
+        for checks in ([], [[owner, rows[0]["name"], hidden, "wrong"]], certificates[:1] * 2):
+            with self.subTest(checks=checks), self.assertRaisesRegex(ValueError, "import all original type"):
+                check_coverage(audited([rows[0]], checks))
+
     def test_strict_excluded_middle_is_a_logical_consequence(self):
         row = site("Init.Data.String.Lemmas.Pattern.Basic", "String.Slice.Pattern.Model.IsMatch.exists_isLongestMatch",
                    logicalConsequence="Classical.em", strictLogicalConsequence="Classical.em",

@@ -36,7 +36,7 @@ example (a : α) (b : β) : Omega.Eq (Prod.fst (Prod.mk a b)) a := Omega.rfl
 
 若选定模块闭包包含 `Init.System.Promise`，生成器为已移植的 `Omega.IO.Promise.new`、`resolve`、`isResolved`、`result?` 和 `resultD` 生成原生入口。将消费者编译成 C 后，用 `leanc` 链接输出目录中的 `native/promise.o` 与 `native/promise-result-d.o`。后者的回调由钉版官方 Lean 定义编译。普通消费者可在兑现前取得结果任务。兑现后，字段投影、模式匹配和内核原始投影都读取第一次兑现的值。释放最后一个未兑现句柄后，`result?` 返回 `none`，`resultD` 返回传入的默认值。
 
-`IO.Promise.rec`、`recOn` 和 `casesOn` 的分支参数依赖私有的 `IO.PromisePointed`。钉版官方与严格后端均须用 `import all` 才能在定义中调用这三个消去子。盘点程序在两侧分别检查普通导入的内核诊断、`import all` 下的完整官方类型和实际调用。通过的条目在清单与缺口表中标记为 `importAllOriginalTypeChecked`。普通导入的覆盖数使用 `originalTypesChecked`。[消费者与内核核对](PromiseAccess.lean)
+`IO.Promise.rec`、`recOn` 和 `casesOn` 的分支参数依赖私有的 `IO.PromisePointed`。钉版官方与严格后端均须用 `import all` 才能在定义中调用这三个消去子。盘点程序在两侧分别检查普通导入的内核诊断、`import all` 下的完整官方类型和实际调用。通过的条目在清单与缺口表中标记为 `importAllOriginalTypeChecked`。普通导入的覆盖数使用 `originalTypesChecked`，与官方同样要求 `import all` 的完整类型另计入 `importAllOriginalTypesChecked`。完整性验收逐项核对两类实现，并在最终验收时用待验制品重新运行这三个消去子的消费者。[消费者与内核核对](PromiseAccess.lean)
 
 `native/path_io.o` 支持读取环境变量和当前程序路径、获取与切换进程目录、规范化路径、创建和删除目录与临时目录，以及文件删除、重命名、硬链接和目录枚举。文件句柄使用钉版分配与锁，文本行和任意二进制字节分别按严格库的 `String` 与 `ByteArray` 传递。路径和环境变量按 UTF-8 字节转换。`IO.Error` 的解码由两个库的构造子、字段类型和运行布局生成，保留文件名、系统错误码、说明及世界状态。测试在临时目录中用多字节路径对照官方异常。
 

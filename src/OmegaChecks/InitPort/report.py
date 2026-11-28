@@ -54,6 +54,12 @@ ENVELOPE_COUNTEREXAMPLES = {
 EFFECT_RUNNERS = {("Init.System.IO", name) for name in ("unsafeBaseIO", "unsafeEIO", "unsafeIO")}
 
 
+PROMISE_OWNER = "Init.System.Promise"
+PROMISE_ELIMINATORS = {"IO.Promise.rec": "recursor", "IO.Promise.recOn": "definition", "IO.Promise.casesOn": "definition"}
+PROMISE_TOKENS = ("_private.Init.System.Promise.0.IO.PromisePointed",
+                  "_private.OmegaInit.System.Promise.0.Omega.IO.PromisePointed")
+
+
 def check_coverage(official):
     """Count physical sites from the fresh Lean inventory, including repeated names."""
     modules = set(official["modules"])
@@ -73,6 +79,10 @@ def check_coverage(official):
     by_refutation = {(owner, name): (target, proof) for owner, name, target, proof in models}
     if len(models) != len(by_refutation):
         raise ValueError("repeated representative quotient counterexample")
+    certificates = official.get("certifiedImportAllOriginalTypes", [])
+    private_types = {(owner, name): (hidden, strict_hidden) for owner, name, hidden, strict_hidden in certificates}
+    if len(private_types) != len(certificates):
+        raise ValueError("repeated import all original type certificate")
     sites = set()
     direct = 0
     matched = 0
@@ -192,6 +202,14 @@ def check_coverage(official):
         if effect is not (port and site in EFFECT_RUNNERS) or (effect and
                 (row["kind"] != "definition" or not row.get("unsafe") or not runtime)):
             raise ValueError(f"inconsistent checked effect runner for {owner}/{name}")
+        private_type = row.get("importAllOriginalTypeChecked", False)
+        tokens = private_types.pop(site, None)
+        if private_type is not (tokens is not None) or (private_type and
+                (owner != PROMISE_OWNER or name not in PROMISE_ELIMINATORS or row["kind"] != PROMISE_ELIMINATORS[name] or
+                 not port or row.get("originalTypeChecked") is not False or tokens != PROMISE_TOKENS or
+                 row.get("originalTypeGap") != f"missing type dependencies: {PROMISE_TOKENS[1]}" or
+                 any(row.get(flag) is not False for flag in ("unsafe", "partial", "strictUnsafe", "strictPartial")))):
+            raise ValueError(f"uncertified import all original type for {owner}/{name}")
         if port:
             if axiom or witness or (runtime and not (unsafe_runtime or effect or comparison or pointer_hash)) or row["strictModule"] != "Omega" + owner:
                 raise ValueError(f"inconsistent strict match for {owner}/{name}")
@@ -200,7 +218,8 @@ def check_coverage(official):
                 if row.get("originalTypeChecked") is True and row.get("originalTypeGap") is None:
                     original_types += 1
                 elif row.get("originalTypeChecked") is False and row.get("originalTypeGap"):
-                    unresolved.append(site)
+                    if not private_type:
+                        unresolved.append(site)
                 else:
                     raise ValueError(f"inconsistent original type check for {owner}/{name}")
         elif axiom:
@@ -211,6 +230,8 @@ def check_coverage(official):
             reductions += 1
         elif not endpoint and not argument and not refuter and path != "Quot.sound":
             unresolved.append(site)
+    if private_types:
+        raise ValueError("import all original type certificate has no definition site")
     if by_refutation:
         raise ValueError("representative quotient counterexample has no definition site")
     if by_transport:
@@ -225,6 +246,8 @@ def check_coverage(official):
         raise ValueError("official inventory counts do not agree with its definition sites")
     if official.get("schemaVersion", 0) >= 5 and summary.get("originalTypesChecked") != original_types:
         raise ValueError("original type count does not agree with the checked sites")
+    if summary.get("importAllOriginalTypesChecked", 0) != len(certificates):
+        raise ValueError("import all original type count does not agree with the checked sites")
     return reductions, unresolved
 
 
@@ -243,9 +266,14 @@ def verify_complete(official, product, reductions, unresolved):
                          f"{formations} statements requiring an excluded axiom to form a faithful argument or endpoint, "
                          f"{models} statements, required paths or computations refuted in the representative quotient model. "
                          f"Examples: {examples}. See init-gaps.tsv.")
-    if any(row["matchingNameAndModule"] and row.get("originalTypeChecked") is not True
+    certified = {(owner, name) for owner, name, _, _ in official.get("certifiedImportAllOriginalTypes", [])}
+    if any(row["matchingNameAndModule"] and row.get("originalTypeChecked") is not True and
+           (row.get("importAllOriginalTypeChecked") is not True or (row["module"], row["name"]) not in certified)
            for row in official["declarations"]):
         raise ValueError("matched declarations require a fresh strict check of each original type")
+    if certified:
+        if promise_certificates(product, official["declarations"]) != official["certifiedImportAllOriginalTypes"]:
+            raise ValueError("live Promise import all certificates differ from inventory")
     missing_native = [(row["module"], row["name"]) for row in official["declarations"]
                       if row["matchingNameAndModule"] and row.get("strictNativeSignature") is False]
     if missing_native:
@@ -270,17 +298,18 @@ def verify_complete(official, product, reductions, unresolved):
                     "--exact-roots", lib, *roots, "--", *roots], cwd=ROOT, check=True)
 
 
-def check_promise_eliminators(product, declarations):
-    names = {"IO.Promise.rec", "IO.Promise.recOn", "IO.Promise.casesOn"}
-    rows = [row for row in declarations if row["module"] == "Init.System.Promise" and
-            row["name"] in names and row["matchingNameAndModule"]]
-    if rows:
-        eliminators = [row["name"].rsplit(".", 1)[1] for row in rows]
-        subprocess.run(["lake", "env", "lean", "--run", HERE / "PromiseAccess.lean",
-                        product / "lib", *eliminators], cwd=ROOT, check=True)
-        for row in rows:
-            row["importAllOriginalTypeChecked"] = True
-    return len(rows)
+def promise_certificates(product, declarations):
+    names = [row["name"] for row in declarations if row["module"] == PROMISE_OWNER and
+             row["name"] in PROMISE_ELIMINATORS and row["matchingNameAndModule"]]
+    if not names:
+        return []
+    result = subprocess.run(["lake", "env", "lean", "--run", HERE / "PromiseAccess.lean", product / "lib",
+                             *(name.rsplit(".", 1)[1] for name in names)], cwd=ROOT,
+                            stdout=subprocess.PIPE, text=True, check=True)
+    certificates = [json.loads(line) for line in result.stdout.splitlines()]
+    if certificates != [[PROMISE_OWNER, name, *PROMISE_TOKENS] for name in names]:
+        raise ValueError("incomplete or unexpected Promise import all certificates")
+    return certificates
 
 
 def check_strict_reference_choices(product, stage, attempts):
@@ -361,7 +390,10 @@ def report(product, require_complete=False):
             for owner, name, _, why, dep in map(json.loads, f):
                 attempts[owner, name] = (why, dep)
                 owners[name].append(owner)
-        promise_eliminators = check_promise_eliminators(product, official["declarations"])
+        promise_checks = promise_certificates(product, official["declarations"])
+        official["certifiedImportAllOriginalTypes"] = promise_checks
+        official["summary"]["importAllOriginalTypesChecked"] = len(promise_checks)
+        promise_sites = {(owner, name) for owner, name, _, _ in promise_checks}
         strict_choices = check_strict_reference_choices(product, stage, attempts)
         strict_matches = check_strict_longest_matches(product, stage)
         strict_folds = check_strict_fin_folds(product, stage)
@@ -375,6 +407,8 @@ def report(product, require_complete=False):
         pending.update({site: (*result, "strictEquivalenceWitness") for site, result in strict_equivalences.items()})
         for row in official["declarations"]:
             site = (row["module"], row["name"])
+            if site in promise_sites:
+                row["importAllOriginalTypeChecked"] = True
             witness = strict_choices.get(site)
             if witness:
                 row["strictSelectionWitness"] = witness
@@ -389,8 +423,7 @@ def report(product, require_complete=False):
         if pending:
             raise ValueError(f"missing official definition sites for strict consequences: {sorted(pending)}")
         reduction_count, unresolved = check_coverage(official)
-        if promise_eliminators or strict_choices or strict_matches or strict_equivalences or strict_folds:
-            inventory.write_text(json.dumps(official, ensure_ascii=False, separators=(",", ":")) + "\n")
+        inventory.write_text(json.dumps(official, ensure_ascii=False, separators=(",", ":")) + "\n")
         with (product / "interface-rejections.jsonl").open() as f:
             rejected = dict(map(json.loads, f))
         # Incompatible copies are rejected together. Transfer visits one active

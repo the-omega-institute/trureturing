@@ -59,3 +59,4 @@ def main (args : List String) : IO Unit := do
       throw <| IO.userError s!"unexpected Promise eliminator type or visibility for {name}"
     checkConsumer officialDir upstream `IO.Promise token elim
     checkConsumer library target (portName `IO.Promise) (portName token) elim
+    IO.println (toJson #[upstream.toString, name.toString, token.toString, (portName token).toString]).compress
