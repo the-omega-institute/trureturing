@@ -123,6 +123,7 @@ MODULE_ENVELOPE = "Init.Grind.Module.Envelope"
 ENVELOPE_INSTANCE = "Lean.Grind.IntModule.OfNatModule.ofNatModule"
 ENVELOPE_REFUTER = "OmegaChecks.InitBoundaries.RepresentativeQuotient.refuteEnvelopeCancellation"
 EMBEDDINGS = {ENVELOPE_INSTANCE.rsplit(".", 1)[0] + "." + name for name in ("toQ_add", "toQ_smul", "toQ_zero")}
+MODULE_CANCELLATION = ENVELOPE_INSTANCE.rsplit(".", 1)[0] + ".instNoNatZeroDivisorsQOfAddRightCancel"
 MODULE_CONGRUENCES = "Init.Grind.Module.OfNatModule"
 EMBEDDING_CONGRUENCES = {ENVELOPE_INSTANCE.rsplit(".", 1)[0] + "." + name for name in ("add_congr", "smul_congr")}
 
@@ -131,7 +132,8 @@ RING_ENVELOPE = "Init.Grind.Ring.Envelope"
 RING_PREFIX = "Lean.Grind.Ring.OfSemiring."
 RING_INSTANCE = RING_PREFIX + "ofSemiring"
 RING_INSTANCE_SITES = {RING_PREFIX + name for name in (
-    "toQ_natCast", "toQ_pow", "instNoNatZeroDivisorsQOfAddRightCancel", "instIsCharPQOfAddRightCancel")}
+    "toQ_natCast", "toQ_pow", "instNoNatZeroDivisorsQOfAddRightCancel", "instIsCharPQOfAddRightCancel",
+    "instOrderedRingQOfLawfulOrderLTOfExistsAddOfLT")}
 
 
 def envelope_instance_sites(checks, expected_owner, expected_names, expected_instance):
@@ -165,7 +167,7 @@ def semiring_image_sites(checks):
 def envelope_type_dependencies(checks):
     embeddings = [row for row in checks if row[0] == MODULE_ENVELOPE]
     congruences = [row for row in checks if row[0] != MODULE_ENVELOPE]
-    return (envelope_instance_sites(embeddings, MODULE_ENVELOPE, EMBEDDINGS, ENVELOPE_INSTANCE) |
+    return (envelope_instance_sites(embeddings, MODULE_ENVELOPE, EMBEDDINGS | {MODULE_CANCELLATION}, ENVELOPE_INSTANCE) |
             envelope_instance_sites(congruences, MODULE_CONGRUENCES, EMBEDDING_CONGRUENCES, ENVELOPE_INSTANCE))
 
 
@@ -450,7 +452,7 @@ def check_coverage(official):
         embedding = site in embeddings
         embedding_gap = ("missing type dependencies: Omega." + ENVELOPE_INSTANCE) if port else ""
         if row.get("originalTypeEnvelopeInstance") != (ENVELOPE_INSTANCE if embedding else None) or (embedding and (
-                port != (owner == MODULE_ENVELOPE) or row["kind"] != "theorem" or row.get("originalTypeChecked") is not False or
+                port != (owner == MODULE_ENVELOPE and name != MODULE_CANCELLATION) or row["kind"] != "theorem" or row.get("originalTypeChecked") is not False or
                 (row.get("originalTypeGap") or "").partition(". ")[0] != embedding_gap or row["unsafe"] or row["partial"] or
                 any(row.get(flag) is not (False if port else None) for flag in ("strictUnsafe", "strictPartial")))):
             raise ValueError(f"uncertified module instance in embedding equation {site}")

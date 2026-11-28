@@ -84,6 +84,9 @@ moduleStrictOrderFromPropext reconstructs the pinned definition. -/
 LinearEnvelopeOrder.propextFromLinearLift uses a total relation on Nat whose
 comparisons at (1,0) and (2,1) reduce to any two equivalent propositions.
 Its converse linearLiftFromPropext constructs precisely the restricted coherence. -/
+/- instNoNatZeroDivisorsQOfAddRightCancel fixes the whole ofNatModule instance in the quotient
+class index. Nat realizes its additive cancellation and scalar hypotheses in the zero-axiom kernel.
+The canonical module then requires cancellation at the representative (1,0). -/
 /- The lifts nsmul, zsmul, add, sub and neg require related pairs to have equal
 classes. Their equations and the IntModule and ordered instances depend on
 those lifts. Q.exact and toQ_inj remain open under the zero-axiom requirement. -/
