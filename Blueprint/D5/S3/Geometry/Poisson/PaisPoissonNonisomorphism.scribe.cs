@@ -106,7 +106,9 @@ internal sealed class PaisPoissonNonisomorphismDocument : IScribeDocumentDefinit
                         + "Isomorphisms of the same polynomial Poisson algebra that also preserve "
                         + "this domain are excluded as a special case. The theorem makes no "
                         + "claim about Poisson structures on a separate restricted smooth space."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("gahramanov-mammadov-2026-pais-odd-poisson"), ResolutionKind.Proved, [])))));
 
     private static Formula Nat() => new Formula.NamedConstant(FormulaIdentifier.Create("Nat"));
     private static Formula Real() => new Formula.NamedConstant(FormulaIdentifier.Create("Real"));

@@ -44,6 +44,10 @@ $$\forall n \in \mathrm{Nat},\; \forall m \in \mathrm{Nat},\; \operatorname{Odd}
 
 *Proof.* Machine-checked in Lean as `D5/S3/Geometry/Poisson/PaisPoissonNonisomorphism.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/gahramanov-mammadov-2026-pais-odd-poisson` (proved) by `D5/S3/Geometry/Poisson/PaisPoissonNonisomorphism.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"gahramanov-mammadov-2026-pais-odd-poisson","declaration_gid":"D5/S3/Geometry/Poisson/PaisPoissonNonisomorphism.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Ilmar Gahramanov and Gulmammad Mammadov (2026). *Polynomial integrals and Poisson structures of the Pais-Uhlenbeck oscillator*. URL: <https://arxiv.org/abs/2611.17457v1>.
