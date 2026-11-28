@@ -1,5 +1,6 @@
 module
 public import Lean
+public import Init.Data.Sum.Lemmas
 import Lean.Replay
 import all Lean.Util.CollectAxioms
 import all Init.Grind.Ring.Envelope
@@ -12,6 +13,21 @@ public section
 open Lean
 namespace OmegaChecks.InitBoundaries
 universe u v w z
+
+/-- A dependent function on a sum agrees as a function with the recursor on its two restrictions. -/
+def SumFunctionEta : Prop :=
+  ∀ {α : Type u} {β : Type v} {γ : Sum α β → Sort w} (f : (s : Sum α β) → γ s),
+    f = Sum.rec (fun a => f (.inl a)) (fun b => f (.inr b))
+
+theorem sumEtaOfForall (rule : type_of% @Sum.forall_sum.{u,v,w}) : SumFunctionEta.{u,v,w} := by
+  intro α β γ
+  exact (@rule α β γ (fun f => f = Sum.rec (fun a => f (.inl a)) (fun b => f (.inr b)))).mpr
+    (fun _ _ => rfl)
+
+theorem sumForallIffEta : (type_of% @Sum.forall_sum.{u,v,w}) ↔ SumFunctionEta.{u,v,w} := by
+  refine ⟨sumEtaOfForall, ?_⟩
+  intro eta α β γ p
+  exact ⟨fun all l r => all _, fun branches f => (eta f).symm ▸ branches _ _⟩
 
 theorem funextFromFunextIff (rule : type_of% @funext_iff.{u,v}) : type_of% @funext.{u,v} :=
   fun {_ _ _ _} => rule.mpr

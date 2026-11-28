@@ -112,6 +112,8 @@ private def logicalConsequence? (owner name : Name) : Option (Name × Name) := d
   if owner == `Init.Data.Option.Monadic then
     if let some entry := OmegaChecks.InitBoundaries.TransformerLaws.OptionIteration.directConsequences.lookup name then
       return entry
+  if owner == `Init.Data.Sum.Lemmas && name == ``Sum.forall_sum then
+    return (``OmegaChecks.InitBoundaries.SumFunctionEta, ``OmegaChecks.InitBoundaries.sumEtaOfForall)
   if owner == `Init.WF then
     if name == ``WellFounded.Nat.fix.go_congr then
       return (``OmegaChecks.InitBoundaries.MeasuredRecursion.EmptyDomainExtensionality,

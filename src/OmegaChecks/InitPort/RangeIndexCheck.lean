@@ -25,7 +25,8 @@ public def main (args : List String) : IO Unit := do
   searchPathRef.set [lib]
   let strict ← importModules (owners.toArray.map fun owner => {module := owner.replacePrefix `Init `OmegaInit}) {} (level := .private)
   let mut kernel := strict.toKernelEnv
-  let laws := (``Lean.Omega.Constraint.combine_sat, ``ConstraintReflection.AndReflection,
+  let laws := (``Sum.forall_sum, ``SumFunctionEta, ``sumForallIffEta) ::
+    (``Lean.Omega.Constraint.combine_sat, ``ConstraintReflection.AndReflection,
     ``ConstraintReflection.equivalence) :: (RangeIndex.equivalences ++ TransformerLaws.ReturnImage.equivalences ++
       WeakRingOrder.stabilityEquivalences)
   let entries := laws.filter fun (name, _, _) =>
