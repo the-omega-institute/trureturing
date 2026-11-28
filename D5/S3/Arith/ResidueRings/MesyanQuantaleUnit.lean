@@ -1,10 +1,10 @@
 /- GID: D5/S3/Arith/ResidueRings/MesyanQuantaleUnit
    generality: I
    mirror-B: D5/B/S3/Arith/ResidueRings/MesyanQuantaleUnit
-   mirror-E: none(waiver:external-open-problem-resolution)
+   mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: []
    utility: none
-   digest: A nonzero ring without an identity has a two-sided unit on its additive submonoids. -/
+   digest: The prime-residue direct sum is nonzero, has no ring identity, and has top as its additive-submonoid product identity. -/
 
 import Mathlib.Algebra.BigOperators.Fin
 import Mathlib.Algebra.Ring.Pi
@@ -20,9 +20,10 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
 /-!
-The existence clause of Mesyan, *Quantales Arising From Rings*, Question 36.
-The submonoid multiplication is identified with the positive finite sums
-of pairwise products in Definition 4.
+The direct sum of the prime residue rings is nonzero and has no multiplicative
+identity. Its top additive submonoid is a two-sided identity for the product
+of additive submonoids, identified with the positive finite sums in Definition 4
+of Mesyan, *Quantales Arising From Rings*.
 -/
 
 open scoped BigOperators Pointwise
@@ -56,7 +57,7 @@ private theorem mem_product_iff {A : Type*} [NonUnitalNonAssocSemiring A]
 private def support (a : (p : Nat.Primes) → ZMod (p : ℕ)) : Set Nat.Primes := {p | a p ≠ 0}
 
 /-- The direct sum inside the product with coordinatewise ring operations. -/
-private def finiteSupportSubring : NonUnitalSubring ((p : Nat.Primes) → ZMod (p : ℕ)) where
+def finiteSupportSubring : NonUnitalSubring ((p : Nat.Primes) → ZMod (p : ℕ)) where
   carrier := {a | (support a).Finite}
   zero_mem' := by
     change (support 0).Finite
@@ -171,13 +172,15 @@ private theorem top_is_product_unit (M : AddSubmonoid ↥finiteSupportSubring) :
       simpa only [Fin.sum_univ_one] using supportIdempotent_mul x
   exact ⟨hleft, (AddSubmonoid.mul_comm_of_commute fun a _ b _ => Commute.all a b).trans hleft⟩
 
-/-- The existence clause of Question 36, with the product from Definition 4. -/
-theorem question36_exists :
-    ∃ (A : Type) (_ : NonUnitalRing A),
-      (∃ a : A, a ≠ 0) ∧
-      (∀ e : A, ∃ a : A, e * a ≠ a ∨ a * e ≠ a) ∧
-      (∃ E : AddSubmonoid A, ∀ M : AddSubmonoid A, E * M = M ∧ M * E = M) :=
-  ⟨↥finiteSupportSubring, inferInstance, nonzero, no_two_sided_unit, ⊤, top_is_product_unit⟩
+/-- The prime-residue direct sum is nonzero and has no ring identity, but its top
+additive submonoid is a two-sided identity for the product of submonoids. -/
+theorem finiteSupportSubring_properties :
+    (∃ a : ↥finiteSupportSubring, a ≠ 0) ∧
+    (∀ e : ↥finiteSupportSubring, ∃ a : ↥finiteSupportSubring, e * a ≠ a ∨ a * e ≠ a) ∧
+    (∀ M : AddSubmonoid ↥finiteSupportSubring,
+      (⊤ : AddSubmonoid ↥finiteSupportSubring) * M = M ∧
+        M * (⊤ : AddSubmonoid ↥finiteSupportSubring) = M) :=
+  ⟨nonzero, no_two_sided_unit, top_is_product_unit⟩
 
 end
 

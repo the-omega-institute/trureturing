@@ -21,3 +21,8 @@ triage: anchor
 [Definition 4](https://arxiv.org/html/2611.31109v1#Thmtheorem4) takes all additive
 submonoids of \(R\). It defines \(S\cdot T\) as the set of sums
 \(\sum_{i=1}^{n}s_it_i\) with \(n>0\), \(s_i\in S\), and \(t_i\in T\).
+
+The direct sum of the prime residue rings with coordinatewise operations gives
+an affirmative answer to the existence clause. The entire ring is the two-sided
+identity for the product of its additive submonoids. The classification clause
+is outside the scope of this construction. [Construction in #35254](https://github.com/the-omega-institute/trureturing/issues/35254)

@@ -10,29 +10,26 @@ internal sealed class MesyanQuantaleUnitDocument : IScribeDocumentDefinition
         "A ring without a multiplicative identity whose additive-submonoid quantale is unital.",
         H("A quantale unit from prime residue rings"),
         Blocks(Describe.Lean(
-            DescribeId.Create("mesyan-question-36-existence"),
-            DeclarationHandle.Create("D5/S3/Arith/ResidueRings/MesyanQuantaleUnit.question36_exists"),
-            H("Existence in Mesyan's Question 36"),
-            StatementSource.FromAuthor(ExistenceStatement()),
+            DescribeId.Create("prime-residue-direct-sum-properties"),
+            DeclarationHandle.Create("D5/S3/Arith/ResidueRings/MesyanQuantaleUnit.finiteSupportSubring_properties"),
+            H("Identity laws for the prime-residue direct sum"),
+            StatementSource.FromAuthor(DirectSumStatement()),
             AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Arith/mesyan2026quantales")),
             Blocks(
-                Paragraph(Text("There is a nonzero associative ring A with no two-sided multiplicative identity "
-                    + "and an additive submonoid E that is a two-sided unit for multiplication with every additive "
-                    + "submonoid M of A. The ring structure on the carrier A is denoted by s. In the displayed "
-                    + "statement, multiplication of submonoids takes all sums of a positive finite number of "
-                    + "pairwise products, with the first factor from the left submonoid and the second from the right. "
-                    + "The proof identifies this product from Definition 4 with Mathlib's multiplication.")),
-                Paragraph(Text("Take A to be the ring of finitely supported tuples of residues modulo the primes, "
+                Paragraph(Text("R is the carrier of finiteSupportSubring, the ring of finitely supported tuples "
+                    + "of residues modulo the primes, "
                     + "with coordinatewise operations. The tuple supported at 2 with value one there is nonzero. "
                     + "For each candidate identity e, a prime outside its support gives a singleton-supported tuple "
                     + "on which left multiplication by e vanishes.")),
-                Paragraph(Text("Take E to be the whole ring as an additive submonoid. For any r in the ring and "
+                Paragraph(Text("The proof identifies Mathlib's additive-submonoid product with Definition 4 in "
+                    + "Mesyan's paper. The product takes all sums of a positive finite number of pairwise products, "
+                    + "with the first factor from the left submonoid and the second from the right.")),
+                Paragraph(Text("The top additive submonoid is the whole ring. For any r in the ring and "
                     + "a in M, the Chinese remainder theorem gives one natural number agreeing with the residues "
                     + "of r at all primes in the support of a. Multiplication by r on a therefore agrees with repeated "
                     + "addition, so every product summand lies in M. In the other direction the tuple equal to one "
                     + "on the support of a and zero elsewhere gives a one-term product for a. Commutativity supplies "
-                    + "the right unit law. This settles the existence clause of Question 36. The classification clause "
-                    + "is a separate question."))),
+                    + "the right unit law."))),
             DescribeRole.Theorem))));
 
     private static Formula Ex(string name, Formula type, Formula body) =>
@@ -40,12 +37,12 @@ internal sealed class MesyanQuantaleUnitDocument : IScribeDocumentDefinition
 
     private static Formula Parens(Formula body) => Seq(Open, body, Close);
 
-    private static Formula ExistenceStatement()
+    private static Formula DirectSumStatement()
     {
-        Formula carrier = F.Id("A");
+        Formula carrier = F.Id("R");
         Formula a = F.Id("a");
         Formula e = F.Id("e");
-        Formula unit = F.Id("E");
+        Formula unit = F.Id("⊤");
         Formula submonoid = F.Id("M");
         Formula submonoidType = Seq(F.Id("AddSubmonoid"), Sp, carrier);
         Formula nonzero = Ex("a", carrier, Seq(a, Sp, Neq, Sp, D(0)));
@@ -55,9 +52,7 @@ internal sealed class MesyanQuantaleUnitDocument : IScribeDocumentDefinition
             Ex("a", carrier, failure));
         Formula laws = Seq(unit, Sp, Cdot, Sp, submonoid, Sp, Eq, Sp, submonoid, Sp, Land, Sp,
             submonoid, Sp, Cdot, Sp, unit, Sp, Eq, Sp, submonoid);
-        Formula hasUnit = Ex("E", submonoidType,
-            Seq(Forall, Sp, Open, submonoid, Colon, Sp, submonoidType, Close, Comma, Sp, laws));
-        return Disp(Ex("A", F.Id("Type"), Ex("s", Seq(F.Id("NonUnitalRing"), Sp, carrier),
-            Seq(Parens(nonzero), Sp, Land, Sp, Parens(Seq(Parens(noIdentity), Sp, Land, Sp, Parens(hasUnit)))))));
+        Formula topIsUnit = Seq(Forall, Sp, Open, submonoid, Colon, Sp, submonoidType, Close, Comma, Sp, laws);
+        return Disp(Seq(Parens(nonzero), Sp, Land, Sp, Parens(noIdentity), Sp, Land, Sp, Parens(topIsUnit)));
     }
 }
