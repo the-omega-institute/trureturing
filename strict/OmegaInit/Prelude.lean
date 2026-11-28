@@ -370,8 +370,12 @@ port_proof instDecidableOr._proof_1
 port_definition instDecidableOr with_native_code
 attribute [instance] Omega.instDecidableOr
 
+port_native_records Trans
+port_definition instTransEq with_native_code
+port_definition instTransEq_1 with_native_code
+
 namespace Omega
-attribute [instance] _root_.instOfNatNat _root_.instHAdd _root_.instAddNat
+attribute [instance] _root_.instOfNatNat instTransEq instTransEq_1 _root_.instHAdd _root_.instAddNat
 
 instance instLENat : LE Nat := LE.mk Nat.le
 instance instLTNat : LT Nat := LT.mk Nat.lt
@@ -744,8 +748,6 @@ port_definition Prod.noConfusionType
 port_definition Prod.noConfusion
 port_definition Subtype.noConfusionType
 port_definition Subtype.noConfusion
-
-port_native_records Trans
 
 port_proof Nat.lt_add_one
 port_proof Nat.lt_succ_self

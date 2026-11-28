@@ -12,8 +12,10 @@ port_definition Zero.ofOfNat0 with_native_code
 port_definition One.toOfNat1 with_native_code
 port_definition One.ofOfNat1 with_native_code
 
-attribute [instance 300] Omega.Zero.toOfNat0 Omega.One.toOfNat1
-attribute [instance 200] Omega.Zero.ofOfNat0 Omega.One.ofOfNat1
+attribute [instance 300] Omega.Zero.toOfNat0
+attribute [instance 200] Omega.Zero.ofOfNat0
+attribute [instance 300] Omega.One.toOfNat1
+attribute [instance 200] Omega.One.ofOfNat1
 
 port_definition npowRec.match_1
 port_definition npowRec._f

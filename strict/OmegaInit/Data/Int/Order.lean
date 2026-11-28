@@ -290,3 +290,41 @@ theorem natAbs_eq_natAbs_iff {a b : Int} : Iff (Eq a.natAbs b.natAbs) (Or (Eq a 
     (fun pair => pair.elim (congrArg natAbs) (fun e => (congrArg natAbs e).trans (natAbs_neg b)))
 
 end Omega.Int
+
+port_proof Int.eq_succ_of_zero_lt
+port_proof Int.le_add_of_nonneg_right
+port_proof Int.mul_pos
+port_proof Int.sub_pos_of_lt
+port_proof Int.lt_of_sub_pos
+port_proof Int.mul_lt_mul_of_pos_left
+port_proof Int.lt_add_succ
+port_proof Int.lt.intro
+port_proof Int.lt_iff_le_and_ne
+port_proof Int.lt_iff_le_and_not_ge by_constructive_casts
+port_proof Int.mul_le_mul_of_nonneg_left by_constructive_casts
+port_proof Int.mul_nonpos_of_nonneg_of_nonpos
+port_proof Int.sub_nonneg_of_le
+
+port_proof Int.lt_of_not_ge
+port_proof Int.not_le_of_gt
+port_proof Int.not_le
+port_proof Int.lt_trichotomy
+
+port_proof Int.neg_lt_neg
+port_proof Int.neg_pos_of_neg
+
+port_proof Int.negSucc_lt_zero
+
+namespace Omega.Int
+
+theorem negSucc_not_nonneg (n : Nat) : Iff ((ofNat Nat.zero).le (negSucc n)) False :=
+  Iff.intro (Int.not_le.mpr (negSucc_lt_zero n)) False.elim
+
+end Omega.Int
+
+port_proof Int.natAbs_pos by_constructive_casts
+
+port_proof Int.neg_lt_neg_iff
+port_proof Int.neg_lt_zero_iff by_constructive_casts
+port_proof Int.neg_neg_of_pos
+port_proof Int.sub_lt_self

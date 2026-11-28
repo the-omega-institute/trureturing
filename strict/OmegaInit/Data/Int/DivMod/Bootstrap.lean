@@ -1,0 +1,122 @@
+/-
+Copyright (c) 2016 Jeremy Avigad. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Jeremy Avigad, Mario Carneiro
+-/
+module
+prelude
+public import OmegaInit.Data.Int.DivMod.Basic
+public import OmegaInit.Data.Nat.Div.Basic
+import OmegaInit.Data.Int.Lemmas
+import OmegaInit.Data.Int.Order
+import OmegaInit.Data.Nat.Dvd
+import OmegaInit.PropLemmas
+
+port_private_declaration Int.emod_zero.match_1_1
+port_proof Int.emod_zero
+port_proof Int.natCast_emod
+port_private_declaration Int.emod_add_mul_ediv.aux
+port_private_declaration Int.emod_add_mul_ediv.match_1_1
+port_proof Int.emod_add_mul_ediv
+port_proof Int.mul_ediv_cancel_of_emod_eq_zero
+port_proof Int.dvd_of_emod_eq_zero
+port_private_declaration Int.ofNat_dvd.match_1_7
+port_private_declaration Int.ofNat_dvd.match_1_5
+port_private_declaration Int.ofNat_dvd.match_1_1
+port_private_declaration Int.ofNat_dvd.match_1_3
+port_proof Int.ofNat_dvd
+port_proof Int.emod_def
+port_private_declaration Int.add_mul_ediv_right.match_1_3
+port_private_declaration Int.ediv_neg.match_1_1
+port_proof Int.ediv_neg
+port_private_declaration Int.add_mul_ediv_right.match_1_5
+port_private_declaration Int.add_mul_ediv_right.match_1_1
+port_proof Int.add_mul_ediv_right by_constructive_casts
+port_proof Int.add_mul_emod_self_right
+port_proof Int.zero_emod
+port_proof Int.mul_emod_left
+port_proof Int.emod_self
+port_proof Int.mul_emod_right
+port_proof Int.add_mul_emod_self_left
+port_private_declaration Int.emod_emod_of_dvd.match_1_1
+port_proof Int.emod_emod_of_dvd
+port_proof Int.dvd_mul_right
+port_private_declaration Int.natAbs_dvd_natAbs.match_1_3
+port_private_declaration Int.natAbs_dvd_natAbs.match_1_1
+port_proof Int.natAbs_dvd_natAbs by_constructive_casts
+port_proof Int.ofNat_dvd_left by_constructive_casts
+port_proof Int.emod_add_emod
+port_proof Int.add_emod_emod
+port_proof Int.add_emod
+port_private_declaration Int.dvd_trans.match_1_1
+port_proof Int.dvd_trans
+port_private_declaration Int.zero_ediv.match_1_1
+port_proof Int.zero_ediv by_constructive_casts
+port_private_declaration Int.mul_ediv_assoc.match_1_1
+port_proof Int.mul_ediv_cancel
+port_proof Int.mul_ediv_cancel_left
+port_private_declaration Int.ediv_zero.match_1_1
+port_proof Int.ediv_zero by_constructive_casts
+port_proof Int.mul_ediv_assoc by_constructive_casts
+port_proof Int.mul_ediv_assoc'
+port_private_declaration Int.add_ediv_of_dvd_right.match_1_1
+port_proof Int.add_ediv_of_dvd_right by_constructive_casts
+port_proof Int.add_ediv_of_dvd_left
+port_private_declaration Int.dvd_neg.match_1_1
+port_private_declaration Int.dvd_neg.match_1_3
+port_proof Int.dvd_neg by_constructive_casts
+port_private_declaration Int.neg_ediv_of_dvd.match_1_1
+port_proof Int.neg_ediv_of_dvd by_constructive_casts
+port_proof Int.sub_ediv_of_dvd
+port_private_declaration Int.ediv_nonneg_iff_of_pos.match_1_1
+port_proof Int.div_def
+port_proof Int.ediv_nonneg_iff_of_pos by_constructive_casts
+port_proof Int.dvd_refl
+port_private_declaration Int.zero_dvd.match_1_1
+port_proof Int.zero_dvd
+port_proof Int.mul_ediv_add_emod
+port_proof Int.one_dvd
+port_proof Int.ediv_mul_cancel_of_emod_eq_zero
+port_private_declaration Int.emod_eq_zero_of_dvd.match_1_1
+port_proof Int.emod_eq_zero_of_dvd
+port_proof Int.ediv_mul_cancel
+port_proof Int.mul_add_emod_self_right
+port_private_declaration Int.neg_dvd.match_1_3
+port_private_declaration Int.neg_dvd.match_1_1
+port_proof Int.neg_dvd by_constructive_casts
+port_proof Int.add_mul_ediv_left
+port_private_declaration Int.emod_nonneg.match_1_1
+port_proof Int.emod_nonneg
+port_proof Int.dvd_iff_emod_eq_zero
+port_proof Int.emod_pos_of_not_dvd by_constructive_casts
+port_proof Int.ediv.eq_1
+port_proof Int.bmod_def
+port_proof Int.add_emod_eq_add_emod_right
+port_proof Int.emod_add_cancel_right
+port_proof Int.emod_add_ediv_mul
+port_proof Int.mul_add_emod_self_left
+port_proof Int.emod_emod by_constructive_casts
+port_proof Int.sub_emod
+port_proof Int.ediv.eq_2
+port_proof Int.ediv_mul_self
+port_proof Int.ediv.eq_4
+port_private_declaration Int.ediv.match_1.eq_3
+port_proof Int.bmod_emod by_constructive_casts
+port_private_declaration Int.emod_lt_of_pos.match_1_1
+port_proof Int.emod_lt_of_pos
+port_proof Int.dvd_zero
+port_private_declaration Int.ediv.match_1.eq_5
+port_proof Int.ediv.eq_3
+port_proof Int.mul_emod
+port_proof Int.mul_ediv_self
+port_private_declaration Int.ediv.match_1.eq_4
+port_proof Int.ediv_mul_add_emod
+port_proof Int.dvd_mul_left
+port_proof Int.ediv.eq_5
+port_proof Int.dvd_def
+port_private_declaration Int.ediv.match_1.splitter
+port_proof Int.mul_ediv_self_le
+port_private_declaration Int.ediv.match_1.eq_2
+port_proof Int.lt_mul_ediv_self_add
+port_proof Int.mul_ediv_cancel'
+port_private_declaration Int.ediv.match_1.eq_1

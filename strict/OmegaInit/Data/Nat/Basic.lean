@@ -7,6 +7,7 @@ prelude
 import all OmegaInit.Prelude
 
 public import OmegaInit.Core
+public import OmegaInit.SimpLemmas
 public import OmegaInit.Data.NeZero
 
 @[expose] public section
@@ -17,7 +18,6 @@ port_definition Nat.max with_native_code
 port_proof Nat.min_def by_reflexivity
 port_proof Nat.max_def by_reflexivity
 
-attribute [instance] Omega.Nat.instMax
 
 
 namespace Omega.Nat
@@ -557,7 +557,7 @@ port_proof Nat.add_lt_add_left
 port_proof Nat.add_lt_add_right
 port_proof Nat.eq_zero_or_pos
 port_proof Nat.instNeZeroSucc
-attribute [instance] Omega.Nat.instNeZeroSucc
+attribute [instance] Omega.Nat.instNeZeroSucc Omega.Nat.instMax
 port_proof Nat.le_of_succ_le
 port_proof Nat.le_of_lt
 port_proof Nat.ne_of_lt
@@ -574,4 +574,24 @@ port_proof Nat.sub_lt_right_of_lt_add
 public section
 namespace Nat
 export _root_.Omega.Nat (add_lt_add_left add_lt_add_right eq_zero_or_pos instNeZeroSucc le_of_lt le_of_succ_le lt_of_succ_le ne_of_gt ne_of_lt pos_iff_ne_zero pos_of_neZero pos_of_ne_zero sub_le_sub_right sub_lt_left_of_lt_add sub_lt_right_of_lt_add succ_le_of_lt succ_sub)
+end Nat
+
+port_proof Nat.not_lt
+port_proof Nat.lt_of_succ_lt_succ
+port_private_declaration Nat.sub_ne_zero_of_lt.match_1_1
+port_definition Nat.sub_ne_zero_of_lt._f by_constructive_casts
+port_proof Nat.sub_ne_zero_of_lt
+port_proof Nat.sub_pos_of_lt
+port_private_declaration Nat.sub_eq_zero_of_le.match_1_1
+port_proof Nat.sub_eq_zero_of_le
+port_proof Nat.pred_mul by_constructive_casts
+port_proof Nat.mul_sub_right_distrib by_constructive_casts
+port_private_declaration Nat.sub_le_sub_left.match_1_1
+port_proof Nat.sub_le_sub_left
+port_private_declaration Nat.succ_pred_eq_of_pos.match_1_1
+port_proof Nat.succ_pred_eq_of_pos
+
+public section
+namespace Nat
+export _root_.Omega.Nat (lt_of_succ_lt_succ mul_sub_right_distrib not_lt pred_mul sub_eq_zero_of_le sub_le_sub_left sub_ne_zero_of_lt sub_pos_of_lt succ_pred_eq_of_pos)
 end Nat

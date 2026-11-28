@@ -86,4 +86,18 @@ port_definition Int.decLt
 attribute [instance] Omega.instNatCastInt Omega.instOfNat
 attribute [instance, default_instance 500] Omega.Int.instNegInt
 attribute [instance] Omega.Int.instAdd Omega.Int.instMul Omega.Int.instSub
-attribute [instance] Omega.Int.instLEInt Omega.Int.instLTInt Omega.Int.decLe Omega.Int.decLt Omega.Int.instDvd
+
+port_definition Int.decEq.match_1
+port_proof Int.decEq._proof_5
+port_definition Int.add.match_1
+port_proof Int.decEq._proof_3
+port_proof Int.decEq._proof_2
+port_proof Int.decEq._proof_4
+port_proof Int.decEq._proof_1
+port_proof Int.decEq._proof_6
+port_definition Int.decEq with_native_code
+port_definition Int.instDecidableEq with_native_code
+attribute [instance] Omega.Int.instLEInt Omega.Int.instLTInt Omega.Int.instDecidableEq Omega.Int.decLe Omega.Int.decLt Omega.Int.instDvd
+port_proof Int.ofNat_zero
+port_definition Int.ctorIdx with_native_code
+port_proof Int.ofNat.inj

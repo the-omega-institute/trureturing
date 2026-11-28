@@ -460,3 +460,17 @@ port_proof Int.natCast_zero by_reflexivity
 port_proof Int.natCast_one by_reflexivity
 port_proof Int.natCast_add by_reflexivity
 port_proof Int.natCast_add_one by_reflexivity
+
+port_proof Int.add_neg_cancel_right
+port_proof Int.negSucc_eq
+port_proof Int.sub_sub_self by_constructive_casts
+
+port_proof Int.add_left_comm
+
+port_proof Int.natCast_mul
+
+port_proof Int.neg_inj
+
+port_proof Int.mul_left_comm
+
+port_proof Int.neg_mul_eq_mul_neg
