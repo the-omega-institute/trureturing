@@ -53,14 +53,6 @@ def remainingSupport (u v : Fin n) : Finset ℝ := by
   exact (univ.image hA.eigenvalues).filter
     fun λ => λ ≠ twinEigenvalue G u v ∧ 0 < idempotent G λ u u
 
-private theorem projector_column (u : Fin n) (λ : ℝ) :
-    idempotent G λ *ᵥ Pi.single u 1 =
-      ∑ i with hA.eigenvalues i = λ, hA.eigenvectorBasis i u • ⇑(hA.eigenvectorBasis i) := by
-  classical
-  rw [mulVec_single_one]
-  funext x
-  simp [idempotent, Matrix.sum_apply, vecMulVec_apply, mul_comm]
-
 private theorem basis_expansion (w : Fin n → ℝ) :
     ∑ i, (⇑(hA.eigenvectorBasis i) ⬝ᵥ w) • ⇑(hA.eigenvectorBasis i) = w := by
   have h := congrArg WithLp.ofLp (hA.eigenvectorBasis.sum_repr' (WithLp.toLp 2 w))
@@ -124,7 +116,7 @@ private theorem diagonal_weights_eq (u v : Fin n) (hc : StronglyCospectral G u v
   simp only [Pi.smul_apply, smul_eq_mul] at hu hv
   rw [hu, hsym, hv, ← mul_assoc]
   have hc2 : c * c = 1 := by
-    rcases abs_eq (by norm_num : (0 : ℝ) ≤ 1) |>.mp hc with h | h <;> norm_num [h]
+    rcases (abs_eq (by norm_num : (0 : ℝ) ≤ 1)).mp hc with h | h <;> norm_num [h]
   rw [hc2, one_mul]
 
 private theorem twin_half_projection (u v : Fin n) (huv : u ≠ v)
@@ -195,14 +187,6 @@ private theorem adjacency_expansion (u : Fin n) (t : ℝ) :
       dsimp [b]
       ring
 
-private theorem total_weight (u : Fin n) :
-    ∑ λ ∈ univ.image hA.eigenvalues, idempotent G λ u u = 1 := by
-  classical
-  have h := adjacency_expansion G u 0
-  simp only [neg_zero, hamiltonianPropagator, zero_smul, NormedSpace.exp_zero,
-    Matrix.one_apply_eq, mul_zero, Circle.exp_zero, Circle.coe_one, mul_one] at h
-  exact_mod_cast h.symm
-
 private theorem dephased_expansion (u v : Fin n)
     (hhalf : idempotent G (twinEigenvalue G u v) u u = 1 / 2) (t : ℝ) :
     hamiltonianPropagator (G.adjMatrix ℂ) (-t) u u =
@@ -244,4 +228,140 @@ private theorem dephased_expansion (u v : Fin n)
   ring
 
 -- The result below uses the same remaining support for the spectral series and character.
+
+private theorem remaining_weight (u v : Fin n)
+    (hhalf : idempotent G (twinEigenvalue G u v) u u = 1 / 2) :
+    ∑ λ ∈ remainingSupport G u v, idempotent G λ u u = 1 / 2 := by
+  have h := dephased_expansion G u v hhalf 0
+  simp only [neg_zero, hamiltonianPropagator, zero_smul, NormedSpace.exp_zero,
+    Matrix.one_apply_eq, mul_zero, Circle.exp_zero, Circle.coe_one, mul_one, one_mul] at h
+  have hr := congrArg Complex.re h
+  simp only [Complex.one_re, Complex.add_re, Complex.re_sum, Complex.ofReal_re] at hr
+  rw [show (1 / 2 : ℂ).re = 1 / 2 by norm_num] at hr
+  linarith
+
+private theorem constant_character {J : Type*} [Fintype J] (q : Circle) (k : J → ℤ) :
+    ((∏ j, q ^ k j : Circle) : ℂ) = (q : ℂ) ^ (∑ j, k j) := by
+  have h := congrArg Additive.toMul
+    (map_sum (zmultiplesHom (Additive Circle) (Additive.ofMul q)) k Finset.univ)
+  rw [toMul_sum] at h
+  change q ^ (∑ j, k j) = ∏ j, q ^ k j at h
+  rw [← h, Circle.coe_zpow]
+
+private theorem circle_chord_add_sq (z : Circle) :
+    ‖(z : ℂ) + 1‖ ^ 2 = 2 + 2 * (z : ℂ).re := by
+  have hz := Circle.normSq_coe z
+  rw [Complex.normSq_apply] at hz
+  rw [Complex.sq_norm, Complex.normSq_apply]
+  simp only [Complex.add_re, Complex.add_im, Complex.one_re, Complex.one_im, add_zero]
+  nlinarith only [hz]
+
+/-- Distinct strongly cospectral twins have half their spectral mass at the twin eigenvalue
+and identical return amplitudes. A positive uniform floor on positive times exists exactly
+when the remaining spectral gaps have an odd integer relation. Each such relation yields
+the displayed floor for every real time. -/
+theorem result (u v : Fin n) (huv : u ≠ v)
+    (htwin : ∀ x, x ≠ u → x ≠ v → (G.Adj x u ↔ G.Adj x v))
+    (hc : StronglyCospectral G u v) :
+    let θ := twinEigenvalue G u v
+    let J := ↥(remainingSupport G u v)
+    let a (λ : J) := idempotent G λ u u
+    let γ (λ : J) := (λ : ℝ) - θ
+    let U (t : ℝ) := hamiltonianPropagator (G.adjMatrix ℂ) (-t)
+    let certificate (ℓ : J → ℤ) := (∑ λ, (ℓ λ : ℝ) * γ λ) = 0 ∧ Odd (∑ λ, ℓ λ)
+    let D (ℓ : J → ℤ) := ∑ λ, (ℓ λ : ℝ) ^ 2 / a λ
+    idempotent G θ *ᵥ Pi.single u 1 = (1 / 2 : ℝ) • (Pi.single u 1 - Pi.single v 1) ∧
+    idempotent G θ u u = 1 / 2 ∧ (∀ λ, 0 < a λ) ∧ (∑ λ, a λ) = 1 / 2 ∧
+    (∀ t, U t u u = U t v v) ∧
+    ((∃ C : ℝ, 0 < C ∧ ∀ t : ℝ, 0 < t → C ≤ ‖U t u u‖) ↔ ∃ ℓ, certificate ℓ) ∧
+    ∀ ℓ, certificate ℓ → 0 < D ℓ ∧ ∀ t : ℝ, 2 / D ℓ ≤ ‖U t u u‖ := by
+  classical
+  intro θ J a γ U certificate D
+  have hprojection := twin_half_projection G u v huv htwin hc
+  have hhalf : idempotent G θ u u = 1 / 2 := by
+    have h := congrFun hprojection u
+    rw [mulVec_single_one] at h
+    simpa [θ, Pi.single_apply, huv, huv.symm] using h
+  have ha (λ : J) : 0 < a λ := (mem_filter.mp λ.property).2.2
+  have hsum : ∑ λ, a λ = 1 / 2 := by
+    simpa only [a, J, Finset.sum_coe_sort] using remaining_weight G u v hhalf
+  have heq (t : ℝ) : U t u u = U t v v := by
+    simp only [U, adjacency_expansion, diagonal_weights_eq G u v hc]
+  let F (p : J → Circle) : ℂ := 1 / 2 + ∑ j, (a j : ℂ) * (p j : ℂ)
+  let orbit (t : ℝ) (j : J) : Circle := Circle.exp (γ j * t)
+  have hnorm (t : ℝ) : ‖U t u u‖ = ‖F (orbit t)‖ := by
+    have he : U t u u = (Circle.exp (θ * t) : ℂ) * F (orbit t) := by
+      simpa only [U, θ, F, orbit, γ, a, J, Finset.sum_coe_sort] using
+        dephased_expansion G u v hhalf t
+    rw [he, norm_mul, Circle.norm_coe, one_mul]
+  let q : Circle := Circle.exp Real.pi
+  have hq : (q : ℂ) = -1 := Complex.exp_pi_mul_I
+  have hbound (ℓ : J → ℤ) (hℓ : certificate ℓ) :
+      0 < D ℓ ∧ ∀ t : ℝ, 2 / D ℓ ≤ ‖U t u u‖ := by
+    have hnonzero : ∃ j : J, ℓ j ≠ 0 := by
+      by_contra! hz
+      exact (by simpa [hz] using hℓ.2 : False)
+    obtain ⟨j, hj⟩ := hnonzero
+    have hD : 0 < D ℓ := by
+      exact Finset.sum_pos' (fun i _ => div_nonneg (sq_nonneg _) (ha i).le)
+        ⟨j, mem_univ _, div_pos (sq_pos_of_ne_zero (by exact_mod_cast hj)) (ha j)⟩
+    refine ⟨hD, fun t => ?_⟩
+    have hchar : (∏ j, orbit t j ^ ℓ j) = 1 :=
+      orbit_character univ γ ℓ hℓ.1 t
+    have htarget : ((∏ j : J, q ^ ℓ j : Circle) : ℂ) = -1 := by
+      rw [constant_character, hq, hℓ.2.neg_one_zpow]
+    have hchord := weighted_character_chord univ (univ : Finset Unit) (orbit t)
+      (fun _ => q) a (fun _ => ℓ) (fun _ => 1) (fun i _ => ha i) (fun _ _ => zero_le_one)
+    simp only [Finset.univ_unique, Finset.sum_singleton, one_mul, sq_abs, hchar, Circle.coe_one,
+      htarget, hq, sub_neg_eq_add] at hchord
+    change ‖(1 : ℂ) + 1‖ ^ 2 ≤ D ℓ * ∑ j, a j * ‖(orbit t j : ℂ) + 1‖ ^ 2 at hchord
+    have henergy : ∑ j, a j * ‖(orbit t j : ℂ) + 1‖ ^ 2 = 2 * (F (orbit t)).re := by
+      simp only [circle_chord_add_sq, mul_add, Finset.sum_add_distrib,
+        mul_left_comm (a _) 2, ← Finset.mul_sum, Finset.sum_mul, hsum,
+        F, Complex.add_re, Complex.re_sum, Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im,
+        zero_mul, sub_zero]
+      rw [show (1 / 2 : ℂ).re = 1 / 2 by norm_num]
+      ring
+    rw [henergy, show ‖(1 : ℂ) + 1‖ = 2 by norm_num [show (1 : ℂ) + 1 = 2 by norm_num]] at hchord
+    have hreal : 2 / D ℓ ≤ (F (orbit t)).re := by
+      apply (div_le_iff₀ hD).2
+      nlinarith only [hchord]
+    rw [hnorm]
+    exact hreal.trans (Complex.re_le_norm _)
+  refine ⟨hprojection, hhalf, ha, hsum, heq, ⟨?_, ?_⟩, hbound⟩
+  · rintro ⟨C, hC, hCtime⟩
+    by_contra hnone
+    let target : J → Circle := fun _ => q
+    have hclosure : target ∈ closure (orbit '' Set.Ioi 0) := by
+      rw [((closure_real_phase_orbit γ).2 0).2, (closure_real_phase_orbit γ).1]
+      intro k hk
+      have hev : Even (∑ j, k j) := Int.not_odd_iff_even.mp (fun ho => hnone ⟨k, hk, ho⟩)
+      apply Subtype.ext
+      change ((∏ j : J, q ^ k j : Circle) : ℂ) = (1 : Circle)
+      rw [constant_character, hq, hev.neg_one_zpow, Circle.coe_one]
+    have hcontinuous : Continuous F := by
+      exact continuous_const.add (continuous_finsetSum _ fun j _ =>
+        continuous_const.mul (continuous_subtype_val.comp (continuous_apply j)))
+    have hclosed : IsClosed {p : J → Circle | C ≤ ‖F p‖} :=
+      isClosed_le continuous_const hcontinuous.norm
+    have hcontain : orbit '' Set.Ioi 0 ⊆ {p : J → Circle | C ≤ ‖F p‖} := by
+      rintro _ ⟨t, ht, rfl⟩
+      rw [← hnorm t]
+      exact hCtime t ht
+    have hcq := closure_minimal hcontain hclosed hclosure
+    have hF : F target = 0 := by
+      have hcast := congrArg Complex.ofReal hsum
+      simp only [Complex.ofReal_sum, Complex.ofReal_div, Complex.ofReal_one,
+        Complex.ofReal_ofNat] at hcast
+      simp_rw [F, target, hq, mul_neg_one, Finset.sum_neg_distrib, hcast, add_neg_cancel]
+    change C ≤ ‖F target‖ at hcq
+    rw [hF, norm_zero] at hcq
+    exact hC.not_ge hcq
+  · rintro ⟨ℓ, hℓ⟩
+    obtain ⟨hD, hfloor⟩ := hbound ℓ hℓ
+    exact ⟨2 / D ℓ, div_pos (by norm_num) hD, fun t _ => hfloor t⟩
+
+#print axioms result
+
+end D5.S3.Quantum.Dynamics.StronglyCospectralTwinAmplitudeBound
 
