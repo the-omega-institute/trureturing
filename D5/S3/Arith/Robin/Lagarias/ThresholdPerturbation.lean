@@ -4,11 +4,17 @@
    mirror-E: none(waiver:algebraically-proved)
    anchors: []
    utility: none
-   digest: The sharp Lagarias threshold perturbation preserves the Robin margin endpoint. -/
+   digest: The Lagarias threshold has an exact leading perturbation of the Robin threshold. -/
 
-import D5.S3.Arith.Robin.Analytic.RHSharpAllIntegerMargin
+import OmegaBuild.Commands
 import Mathlib.NumberTheory.Harmonic.EulerMascheroni
 import Mathlib.NumberTheory.Harmonic.Bounds
+import Mathlib.Tactic.FieldSimp
+import Mathlib.Tactic.Linarith
+import Mathlib.Tactic.Positivity
+import Mathlib.Tactic.Ring
+
+compile_only_with_mathlib
 import OmegaBuild.Commands
 
 compile_only_with_mathlib
@@ -30,10 +36,6 @@ def threshold (n : ℕ) : ℝ :=
 
 def gap (n : ℕ) : ℝ :=
   threshold n / n - Real.exp Real.eulerMascheroniConstant * Real.log (Real.log (n : ℝ))
-
-def margin (n : ℕ) : ℝ :=
-  (threshold n / n - (ArithmeticFunction.sigma 1 n : ℝ) / n) *
-    Real.sqrt (Real.log (n : ℝ))
 
 private lemma gap_bounds (n : ℕ) (hn : 1 < Real.log (n : ℝ)) :
     let x := Real.log (n : ℝ)
@@ -161,82 +163,5 @@ theorem threshold_asymptotic :
     exact (gap_bounds n hn).1
   · filter_upwards [hx.eventually_gt_atTop 1] with n hn
     exact (gap_bounds n hn).2
-
-private lemma margin_difference :
-    Tendsto (fun n : ℕ => margin n - Analytic.RHSharpAllIntegerMargin.T n)
-      atTop (𝓝 0) := by
-  have hx : Tendsto (fun n : ℕ => Real.log (n : ℝ)) atTop atTop :=
-    Real.tendsto_log_atTop.comp tendsto_natCast_atTop_atTop
-  have hs := threshold_asymptotic.div_atTop (Real.tendsto_sqrt_atTop.comp hx)
-  apply hs.congr'
-  filter_upwards [hx.eventually_gt_atTop 0] with n hn
-  have hs0 : 0 < Real.sqrt (Real.log (n : ℝ)) := Real.sqrt_pos.mpr hn
-  have hsq := Real.sq_sqrt hn.le
-  calc
-    Real.log (n : ℝ) * gap n / Real.sqrt (Real.log (n : ℝ)) =
-        gap n * Real.sqrt (Real.log (n : ℝ)) := by
-      apply (div_eq_iff₀ hs0.ne').mpr
-      calc
-        Real.log (n : ℝ) * gap n = gap n * Real.log (n : ℝ) := mul_comm _ _
-        _ = gap n * Real.sqrt (Real.log (n : ℝ)) *
-            Real.sqrt (Real.log (n : ℝ)) := by
-          rw [mul_assoc, ← pow_two, hsq]
-    _ = margin n - Analytic.RHSharpAllIntegerMargin.T n := by
-      dsimp [margin, Analytic.RHSharpAllIntegerMargin.T, gap]
-      ring
-
-open D5.S3.Arith.GoldenResourceOptimalInteger (goldenResourceObjective)
-open D5.S3.Arith.Robin.PriceRecord.RHSharpOriginalRecordMargin (K)
-
-/-- The Lagarias margin has the same sharp lower endpoint as the Robin
-margin, attained arbitrarily late at the same original positive-price records. -/
-theorem sharp_lagarias_margin (hRH : RiemannHypothesis) :
-    (∀ ε : ℝ, 0 < ε → ∃ N : ℕ, ∀ n : ℕ, N ≤ n → E * K - ε < margin n) ∧
-    (∀ ε : ℝ, 0 < ε → ∀ N : ℕ, ∃ m : ℕ, ∃ lambda : ℝ,
-      N ≤ m ∧ 0 < lambda ∧ 2 ≤ m ∧
-      (∀ k : ℕ, 0 < k → k < m →
-        goldenResourceObjective lambda k < goldenResourceObjective lambda m) ∧
-      |margin m - E * K| < ε) ∧
-    Filter.liminf margin atTop = E * K := by
-  have hbase := Analytic.RHSharpAllIntegerMargin.all_integer_sharp_margin hRH
-  have hsmall (ε : ℝ) (hε : 0 < ε) :
-      ∀ᶠ n : ℕ in atTop, |margin n - Analytic.RHSharpAllIntegerMargin.T n| < ε := by
-    simpa [Real.dist_eq] using (Metric.tendsto_nhds.mp margin_difference) ε hε
-  have hlo (ε : ℝ) (hε : 0 < ε) :
-      ∀ᶠ n : ℕ in atTop, E * K - ε < margin n := by
-    obtain ⟨N, hN⟩ := hbase.1 (ε / 2) (by positivity)
-    filter_upwards [eventually_ge_atTop N, hsmall (ε / 2) (by positivity)] with n hn he
-    have hb := (hN n hn).2
-    have hd := (abs_lt.mp he).1
-    linarith
-  have hatt (ε : ℝ) (hε : 0 < ε) (N : ℕ) :
-      ∃ m : ℕ, ∃ lambda : ℝ, N ≤ m ∧ 0 < lambda ∧ 2 ≤ m ∧
-      (∀ k : ℕ, 0 < k → k < m →
-        goldenResourceObjective lambda k < goldenResourceObjective lambda m) ∧
-      |margin m - E * K| < ε := by
-    obtain ⟨L, hL⟩ := eventually_atTop.mp (hsmall (ε / 2) (by positivity))
-    obtain ⟨m, lambda, hm, hlambda, hm2, hr, _, ht⟩ :=
-      hbase.2.1 (ε / 2) (by positivity) (max N L)
-    refine ⟨m, lambda, (le_max_left _ _).trans hm, hlambda, hm2, hr, ?_⟩
-    have hd := hL m ((le_max_right _ _).trans hm)
-    have hh := abs_add_le (margin m - Analytic.RHSharpAllIntegerMargin.T m)
-      (Analytic.RHSharpAllIntegerMargin.T m - E * K)
-    rw [sub_add_sub_cancel] at hh
-    linarith
-  refine ⟨(fun ε hε => eventually_atTop.mp (hlo ε hε)), hatt, ?_⟩
-  have hlower (b : ℝ) (hb : b < E * K) : ∀ᶠ n : ℕ in atTop, b ≤ margin n := by
-    filter_upwards [hlo (E * K - b) (sub_pos.mpr hb)] with n hn
-    linarith
-  have hupper (b : ℝ) (hb : E * K < b) : ∃ᶠ n : ℕ in atTop, margin n ≤ b := by
-    rw [frequently_atTop]
-    intro N
-    obtain ⟨n, _, hn, _, _, _, he⟩ := hatt (b - E * K) (sub_pos.mpr hb) N
-    exact ⟨n, hn, by linarith [(abs_lt.mp he).2]⟩
-  have hbounded : IsBoundedUnder (· ≥ ·) atTop margin :=
-    isBoundedUnder_of_eventually_ge (hlower (E * K - 1) (by linarith))
-  have hcobounded : IsCoboundedUnder (· ≥ ·) atTop margin :=
-    IsCoboundedUnder.of_frequently_le (hupper (E * K + 1) (by linarith))
-  exact le_antisymm ((liminf_le_iff' hcobounded hbounded).mpr hupper)
-    ((le_liminf_iff' hcobounded hbounded).mpr hlower)
 
 end D5.S3.Arith.Robin.Lagarias.ThresholdPerturbation
