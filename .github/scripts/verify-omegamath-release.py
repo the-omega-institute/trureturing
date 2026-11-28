@@ -2,6 +2,7 @@
 import hashlib
 import json
 from pathlib import Path
+import re
 import shutil
 import subprocess
 import sys
@@ -21,18 +22,36 @@ def digest(path):
         return 'sha256:' + hashlib.file_digest(archive, 'sha256').hexdigest()
 
 
-def install_archive(package_root, name, expected):
+def release_url(tag, name):
+    return f'https://github.com/{REPOSITORY}/releases/download/{quote(tag, safe="")}/{quote(name)}'
+
+
+def check_published_receipt(receipt):
+    public = dict(receipt)
+    tag = public.pop('tag')
+    if not re.fullmatch(r'v[0-9]+\.[0-9]+\.[0-9]+(?:-rc\.[1-9][0-9]*)?', tag):
+        raise ValueError(f'Invalid OmegaMath release tag: {tag!r}')
+    assets = public['assets']
+    platforms = (r'omegamath-aarch64-[a-z0-9-]*linux[a-z0-9.-]*\.tar\.gz',
+                 r'omegamath-(?:arm64|aarch64)-apple-darwin[a-z0-9.]*\.tar\.gz')
+    if (len(assets) != len(platforms) or
+            not all(sum(bool(re.fullmatch(platform, name)) for name in assets) == 1 for platform in platforms) or
+            not all(re.fullmatch(r'sha256:[a-f0-9]{64}', value) for value in assets.values())):
+        raise ValueError('OmegaMath release must pin one SHA-256 for each supported arm64 platform')
+    with urlopen(release_url(tag, 'omegamath-release.json'), timeout=120) as response:
+        published = json.load(response)
+    if public != published:
+        raise ValueError(f'OmegaMath receipt differs from the published manifest at {tag}')
+
+
+def install_archive(package_root, name, expected, tag):
     lake_dir = package_root / '.lake'
     lake_dir.mkdir(exist_ok=True)
     archive = lake_dir / name
     if not archive.is_file() or digest(archive) != expected:
-        # Lake also resolves the release using an exact tag at the pinned commit.
-        tag = subprocess.check_output(['git', 'describe', '--tags', '--exact-match', 'HEAD'],
-                                      cwd=package_root, text=True).strip()
-        url = f'https://github.com/{REPOSITORY}/releases/download/{quote(tag, safe="")}/{quote(name)}'
         with tempfile.TemporaryDirectory(dir=lake_dir) as staging:
             pending = Path(staging) / name
-            with urlopen(url, timeout=120) as response, pending.open('wb') as output:
+            with urlopen(release_url(tag, name), timeout=120) as response, pending.open('wb') as output:
                 shutil.copyfileobj(response, output)
             actual = digest(pending)
             if actual != expected:
@@ -79,8 +98,9 @@ def verify_release(root):
     ).strip()
     if not name or Path(name).name != name:
         raise ValueError(f'Invalid Lake build archive name: {name!r}')
+    check_published_receipt(receipt)
     expected = receipt['assets'][name]
-    install_archive(package_root, name, expected)
+    install_archive(package_root, name, expected, receipt['tag'])
     print(f'OMEGAMATH_RELEASE {head} {name} {expected}', flush=True)
     subprocess.run(['lake', '--no-cache', '--no-build', 'build',
                     *('@omegamath/' + target for target in PUBLIC_TARGETS)], cwd=root, check=True)
