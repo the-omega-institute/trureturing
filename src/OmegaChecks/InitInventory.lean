@@ -645,6 +645,14 @@ private def checkedFinBound (official strict : Environment) (owner name : Name)
   let expected := translate revised
   guard ((Kernel.check strict {} expected).isOk && Kernel.isDefEqGuarded strict {} expected target))
 
+/-- The kernel names a recursor's minor premises after its constructors. Translate those
+binder labels alongside the constructor constants when comparing serialized public types. -/
+private def recursorBinders (rules : List RecursorRule) : Expr → Expr
+  | .forallE label type body bi =>
+    let label := if rules.any (·.ctor == label) then InitKernelPort.portName label else label
+    .forallE label type (recursorBinders rules body) bi
+  | body => body
+
 /-- Check the pinned type in the strict public environment with the original universe
 binders. A Fin bound proof may be replaced only after checking proof irrelevance. -/
 private def originalTypeGap? (official strict : Environment) (owner : Name)
@@ -653,6 +661,8 @@ private def originalTypeGap? (official strict : Environment) (owner : Name)
   let pinned := source.type.instantiateLevelParams source.levelParams (target.levelParams.map Level.param)
   let expected := InitKernelPort.translate InitKernelPort.portName pinned
   if expected.equal target.type then return none
+  if let .recInfo recursor := source then
+    if (recursorBinders recursor.rules expected).equal target.type then return none
   let missing := (expected.getUsedConstants.filter (fun n => !strict.contains n)).qsort Name.lt
   unless missing.isEmpty do
     if checkedFinBound official strict owner source.name pinned target.type then return none
@@ -707,8 +717,8 @@ private def inventory (lib strictDir : System.FilePath) (visible strict full wit
     let localAxioms := exportedAxiomsExt.getModuleEntries official privateIdx
     let expected := owner.replacePrefix `Init `OmegaInit
     let strictIdx := strict.getModuleIdx? expected
-    let strictNames := strictIdx.map fun i =>
-      NameSet.ofList strict.header.moduleData[i]!.constNames.toList
+    let publicStrict : NameMap ConstantInfo := strictIdx.elim {} fun i =>
+      strict.header.moduleData[i]!.constants.foldl (fun acc ci => acc.insert ci.name ci) {}
     let strictLocal : NameMap ConstantInfo ← match full.getModuleIdx? expected with
       | none => pure {}
       | some i => do
@@ -791,7 +801,8 @@ private def inventory (lib strictDir : System.FilePath) (visible strict full wit
         some (``Option.choice).toString else none
       if boundary.isSome then certifiedSites := certifiedSites + 1
       let strictName := if OmegaChecks.InitCompiler.RootNames.isPrimitive expected name then name else `Omega ++ name
-      let matched := strictNames.any (·.contains strictName)
+      let publicInfo := publicStrict.find? strictName
+      let matched := publicInfo.isSome
       let strictInfo ← if matched then do
         let some dst := strictLocal.find? strictName | throwError "missing strict implementation {expected}/{strictName}"
         pure (some dst)
@@ -841,7 +852,7 @@ private def inventory (lib strictDir : System.FilePath) (visible strict full wit
           throwError "invalid public, private or native effect runner {strictName}"
         if name == `unsafeBaseIO then OmegaChecks.InitPort.EffectRun.checkWorld full.toKernelEnv
       let strictOwner := if matched then some expected else none
-      let typeGap := strictInfo.bind (originalTypeGap? official strict owner info)
+      let typeGap := publicInfo.bind (originalTypeGap? official strict owner info)
       if matched && typeGap.isNone then originalTypes := originalTypes + 1
       if matched then
         matchingNames := matchingNames + 1
