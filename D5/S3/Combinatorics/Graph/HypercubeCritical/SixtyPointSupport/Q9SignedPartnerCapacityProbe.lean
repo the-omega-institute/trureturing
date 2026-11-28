@@ -102,10 +102,8 @@ open private diff_symm from
 open private diff_injective from
   D5.S3.Combinatorics.Graph.HypercubeCritical.CubeTwelveSupport
 open BalancedCubeGirth (flip_comm)
-open private adjacent_exists_flip from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeGirth
-open private flip_injective from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeComponentBoundary
+open BalancedCubeGirth (adjacent_exists_flip)
+open BalancedCubeComponentBoundary (flip_injective)
 open private flip_triangle_commute diff_three_flips from
   D5.S3.Combinatorics.Graph.HypercubeCritical.SixtyPointSupport.Q9FourthLeafSignProbe
 open private hamming_antipode_add hamming_pair_antipode shellWithRoot from

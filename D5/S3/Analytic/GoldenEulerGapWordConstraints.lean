@@ -21,11 +21,6 @@ open D5.S1.Words.Powers
 open D5.S3.Analytic.PrimeZeckendorf.PrimeZeckendorfFrequencyBridge
 open D5.S3.Observer.GoldenPrimeCircle.GoldenEulerStepPhaseLaw
 
-/-- Compatibility name for the phase of the consecutive golden layer gap. -/
-def layerGapPhase
-    (time : ℝ) (prime : Nat.Primes) (layer : ℕ) : ℂ :=
-  primeStepPhase time prime layer
-
 /-- The short member of the deterministic prime-scaled phase alphabet. -/
 def shortStepPhase (time : ℝ) (prime : Nat.Primes) : ℂ :=
   Complex.exp
@@ -39,15 +34,14 @@ def longStepPhase (time : ℝ) (prime : Nat.Primes) : ℂ :=
       (Real.goldenRatio ^ 2 * Real.log (prime : ℝ)) : ℝ) : ℂ) *
       Complex.I)
 
-/-- The current Euler phase law supplies the compatibility bridge used by the
-forbidden-word statements below. -/
+/-- The Euler phase law selects the long or short phase at each layer. -/
 theorem zeckendorf_selects_layer_gap_phase
     (time : ℝ) (prime : Nat.Primes) (layer : ℕ) :
     (2 ∉ wdigits layer →
-      layerGapPhase time prime layer = longStepPhase time prime) ∧
+      primeStepPhase time prime layer = longStepPhase time prime) ∧
     (2 ∈ wdigits layer →
-      layerGapPhase time prime layer = shortStepPhase time prime) := by
-  simpa [layerGapPhase, longStepPhase, shortStepPhase] using
+      primeStepPhase time prime layer = shortStepPhase time prime) := by
+  simpa [longStepPhase, shortStepPhase] using
     zeckendorf_selects_prime_step_phase time prime layer
 
 /-- A true golden-word letter selects the long `phi^2 log p` frequency gap. -/
@@ -114,8 +108,8 @@ theorem two_long_frequencies_force_next_short
 theorem short_phase_forces_next_long
     (time : ℝ) (prime : Nat.Primes) {layer : ℕ}
     (hshort : goldenWord layer = false) :
-    layerGapPhase time prime layer = shortStepPhase time prime ∧
-      layerGapPhase time prime (layer + 1) = longStepPhase time prime := by
+    primeStepPhase time prime layer = shortStepPhase time prime ∧
+      primeStepPhase time prime (layer + 1) = longStepPhase time prime := by
   have hpresent : 2 ∈ wdigits layer := by
     by_contra habsent
     have htrue : goldenWord layer = true :=
@@ -137,7 +131,7 @@ theorem two_long_phases_force_next_short
     (time : ℝ) (prime : Nat.Primes) {layer : ℕ}
     (hfirst : goldenWord layer = true)
     (hsecond : goldenWord (layer + 1) = true) :
-    layerGapPhase time prime (layer + 2) =
+    primeStepPhase time prime (layer + 2) =
       shortStepPhase time prime := by
   have hthird : goldenWord (layer + 2) = false :=
     golden_no_three_true hfirst hsecond

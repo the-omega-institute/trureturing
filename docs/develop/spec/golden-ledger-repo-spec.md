@@ -392,7 +392,7 @@ The exact rows partition remains registered when empty, both before seeding and 
 
 A linked tree is reusable when its current `HEAD` committer age is strictly greater than 14,400 seconds or its native local configuration key `branch.<name>.worktreeStaleHead` equals the full current `HEAD` object ID. A tree whose age is strictly greater than 21,600 seconds is excluded from allocation and eligible for background removal with `git worktree remove --force`; exact four- and six-hour boundaries remain below their respective thresholds. Age is read only from `git show -s --format=%ct HEAD`; reflogs, allocation records, path mtimes, cache reads, process activity, cwd/open files and locks never renew it. A new commit invalidates a stale marker by object-ID inequality. Future timestamps never qualify by age alone; unreadable timestamps are retained.
 
-`make worktree-stale [WORKTREE_PATH=DIR]` is the canonical release entrance; omitting the optional path uses the current tree without changing executable `PATH`. It writes the OID-bound native branch configuration marker and requires only registered-tree identity, branch and main-worktree protection. `make worktree-return` invokes the same release operation and has no PR, merge, remote, join, clean, branch-switch or idle-transition prerequisite. Claim/reuse clears a matching marker for the active branch. Users must make timely meaningful or WIP commits; committed branch refs survive removal and ordinary uncommitted bytes may be discarded by reuse or forced removal.
+`make worktree-stale [WORKTREE_PATH=DIR]` is the canonical release entrance; omitting the optional path uses the current tree without changing executable `PATH`. It writes the OID-bound native branch configuration marker and requires only registered-tree identity, branch and main-worktree protection. Claim/reuse clears a matching marker for the active branch. Users must make timely meaningful or WIP commits; committed branch refs survive removal and ordinary uncommitted bytes may be discarded by reuse or forced removal.
 
 Creation and continuation retain native registration, same-clone identity, source ownership, branch/base ancestry and Lean pin compatibility. Creation only queues a durable clone-local maintenance event; it never performs or waits for global cleanup. Expired linked trees, including expired same-task trees, are excluded from allocation. A host-supervised launchd/systemd user worker removes them under a common-directory exclusive maintenance lock, also used by manual sweeps and named removal. Cross-task allocation requires a compatible clean tree and switches branches in place, preserving ignored caches. Maintenance failures retain queued events and the current result without blocking unrelated fresh creation. Allocation takes the same exclusive lock nonblockingly; a busy maintainer makes default allocation fall back to a fresh destination without waiting. A separate per-destination initialization transaction guard protects fresh registration through setup. Cleanup skips a guarded destination without waiting; the guard ends with the initialization process and is neither task occupancy nor an activity-based retention rule. The worker runs on event delivery and periodically, using an installed source projection in the common directory independent of disposable trees. `make -C tools worktree-maintenance-{install,uninstall,notify,run,status}` owns service setup, event submission, synchronous execution and observation. Unexpired same-branch continuation validates the existing tree and preserves its bytes without an allocation-age wait; allocating a different task through either default selection or explicit DEST applies the age/stale rule. A low-disk gate applies only to new directory creation. No occupancy lock, OS scope, activity probe, holder inspection, allocation ledger, idle branch, capacity quota, disk-pressure eviction, snapshot-before-removal or custom token certificate participates in lifecycle decisions. Git transaction failures and independent Lean/cache/host-artifact guards retain their own owners.
 
@@ -455,7 +455,7 @@ current 在定向 Lean 和 Scribe 检查就绪后运行选中的 Fourier source 
 
 确定性前置失败必须阻止由其成功守护的昂贵后继启动，最终 `required` 仍为失败；前置阻塞与未适用分列。成功前缀不认证余下检查，全部命中义务仍须成功。互无前置依赖的后续工作保留有效并行，不得按历史耗时排序将全部 hosted 作业串行化；YAML 文本顺序不建立执行依赖。本地串行次序与 hosted 依赖边可采用不同宿主布局，但保留共享的选中检查、前置关系和判词语义，不新增计时数据库或调度器。
 
-普通 required CI 只恢复缓存，上传和发布确认由独立 producer 承担。
+普通 required CI 只恢复缓存，发布确认由各自的受保护 Release publisher 承担。
 
 验收在同一受保护 integration 流程中具名覆盖适用的源码输入缺失、非法路径/配置、超文件数及超行数等负例，测量首次有意义的失败反馈时间，并核实受该前置守护的昂贵后继未启动；合法正例须完成全部命中义务并测量成功关键路径。下载/准备与计算分别测量，沿用既有 required checks、保护、预算及稳定计数，不另开验证流程、不弱化守卫或遗漏检查，不以缓存命中或总挂钟单独证明改善。上述为规范要求，不表示实现、部署或 hosted 验收已通过。
 
@@ -519,8 +519,8 @@ source 在 judge cache 恢复后初始化余额；judge 与命中测试的 NuGet
 
 | 入口 / 触发 | 固定源码与读取范围 | 写入范围 | 计算预算 / 平台 job 上限 |
 | --- | --- | --- | --- |
-| PR | 固定 merge candidate，按 `M^1→M` 的路径选取 Lean、Scribe 与测试输入 | project、dependency、elan、judge 和 NuGet 全部只读 | current 与各 unit 默认累计计算 120m，各 job 平台上限 360m |
-| 普通 push 至 dev/integration-* | 固定 `HEAD=event.after`，按核验的事件范围选择 Lean、Scribe、源码 delta 与测试输入 | project、dependency、elan、judge 和 NuGet 全部只读 | current 与各 unit 默认累计计算 120m，各 job 平台上限 360m |
+| PR | 固定 merge candidate，按 `M^1→M` 的路径选取 Lean、Scribe 与测试输入 | 已发布模块分片、dependency、elan、judge 和 NuGet 全部只读 | current 与各 unit 默认累计计算 120m，各 job 平台上限 360m |
+| 普通 push 至 dev/integration-* | 固定 `HEAD=event.after`，按核验的事件范围选择 Lean、Scribe、源码 delta 与测试输入 | 已发布模块分片、dependency、elan、judge 和 NuGet 全部只读 | current 与各 unit 默认累计计算 120m，各 job 平台上限 360m |
 | Cache Release Publish | `dev` push、定时或授权手动触发时固定受保护 dev 源码 | 编译分片、索引及编译引用 | 分片编译和汇总作业各最多 360m |
 | Report Release Publish | 编译发布成功、定时或授权手动触发时固定最新正式编译索引 | 报告分片、索引及报告引用 | 分片报告生成和汇总作业各最多 360m |
 | DAG and truth release | 报告发布成功、定时或手动触发时固定最新正式报告索引 | GHCR 归档及镜像 GitHub Release | 构建最多 360m，发布最多 60m |
@@ -528,7 +528,7 @@ source 在 judge cache 恢复后初始化余额；judge 与命中测试的 NuGet
 
 普通 PR 和 push 的 `check-source` 执行 SL-003 容量检查、SL-015 路径策略和适用的基线诊断。命中定向准入时，`check-current` 和适用的 `check-delta` 共用变更路径与经验证的局部报告。Lean 规则检查选中模块及其依赖闭包，delta 按本次变更执行适用规则，包括测试拓扑及 SL-030/031/032。选中范围没有 Lean 目标时，可以使用零份报告。理论稿件与消化记录在独立理论仓接受该仓的检查。
 
-**状态与决策。** 普通 CI 对每种可用的发布分别固定完整索引。首次发布、单侧缺项或恢复失败时，作业使用已恢复的产物并按需本地准备缺项。普通 PR、push 与其 post-job 对共享 Project、NuGet、judge、elan 与依赖缓存只读。required checks 裁定候选提交。
+**状态与决策。** 普通 CI 对每种可用的发布分别固定完整索引。首次发布、单侧缺项或恢复失败时，作业使用已恢复的产物并按需本地准备缺项。普通 PR、push 与其 post-job 只读使用已发布模块分片以及 NuGet、judge、elan 和依赖缓存。required checks 裁定候选提交。
 
 **版本与存储地址**
 
@@ -637,7 +637,7 @@ recipe(A11)→ `Meta/papergen`(决定论):拉 Blueprint 散文 + **语法生成�
 `ci-current.yml` 的 `detect` 与本地 gate 按 `Meta/ci-units.json` 中唯一 `CI_UNITS` 判定命中单元。
 current、FILEMAP、selftest、编译反证与各测试项目分别运行；
 `required` 合取实际命中单元的成功与未命中单元的跳过。
-普通 PR 和 push 的 current 使用定向 Lean 目标与 Scribe 输入。整库缓存由独立 producer 刷新。
+普通 PR 和 push 的 current 使用定向 Lean 目标与 Scribe 输入。Cache Release Publish 发布编译分片。Report Release Publish 按同源编译索引发布原生报告分片。
 作业、缓存和退出契约见 A22；本节不维护第二份作业清单。
 
 ---
@@ -1000,7 +1000,7 @@ CONTEXT.md(1 页)→ 各地层 `INDEX.md`(CI 从文件头 digest 行聚合)→ �
 | 建 PR | `make pr HEAD=<分支> MESSAGE=<消息文件>`（首行为标题；默认自动合并并等 required CI；`AUTO_MERGE=0` 关闭自动合并；`DRAFT=1` 创建草稿后直接返回；`pr-open` 同义） |
 | 等指定 PR 提交的 CI | `make pr-watch PR=<编号> HEAD_SHA=<40位commit-SHA>` |
 | 预览可回收 worktree | `make -C tools clean-lanes`（加 `FORCE=1` 执行；已登记 linked worktree 的 HEAD committer 时间严格大于 6 小时即选中；不依赖分配时间、合并状态、普通改动、进程活动或锁；未知和未来时间戳保留，删除保留分支引用并报告原生失败） |
-| 交付后无兼容后续工作时归还 worktree 并保留缓存 | `make worktree-stale` 或 `make worktree-return`（及时提交后写入当前 HEAD 的 native stale marker，无 PR、merge、remote、join、clean 或 branch-switch 前置条件；第 6.1 条） |
+| 交付后无兼容后续工作时归还 worktree 并保留缓存 | `make worktree-stale`（及时提交后写入当前 HEAD 的 native stale marker，无 PR、merge、remote、join、clean 或 branch-switch 前置条件；第 6.1 条） |
 | 显式删除指定 worktree | `make worktree-remove NAMES="<目录名>"`（第 6.1 条） |
 | 磁盘可用空间低于 5% 时回收 | `make -C tools clean-all FORCE=1`（AI 可直接执行，第 6.1 条） |
 

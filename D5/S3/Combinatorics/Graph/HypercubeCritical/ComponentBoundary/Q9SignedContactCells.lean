@@ -39,9 +39,8 @@ open private regular_parity_card cube_opposite_card interior_card degree_of_no_e
 open private paritySide from D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeLowerBound
 open private flipSign_cast from
   D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Q9IsotropicHuang
-open private flip_injective from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeComponentBoundary
-open private adjacent_exists_flip from D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeGirth
+open BalancedCubeComponentBoundary (flip_injective)
+open BalancedCubeGirth (adjacent_exists_flip)
 
 private abbrev Vec := Q 9 → ℝ
 open Classical in
