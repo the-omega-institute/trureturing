@@ -6,7 +6,7 @@ A four-qubit cluster state is irreducible in the sense of Definition 1 and has z
 
 **Definition 1.1 (The two universal converse assertions).**
 
-$$claim \iff (\forall D \in \mathbb{N}_{\geq3}, \forall d:[D] \to \mathbb{N}_{>0}, \forall \psi \in \mathcal{H}_{d}, \forall n \in \mathbb{N}_{\geq2}, (\left\lVert \psi \right\rVert^{2} = 1 \land \operatorname{Irred}\left(\psi\right)) \implies (\forall \sigma \in S_{D}, R_{\sigma}^{(n)}(\psi) > 0)) \lor (\forall D \in \mathbb{N}_{\geq3}, \forall d:[D] \to \mathbb{N}_{>0}, \forall \psi \in \mathcal{H}_{d}, \forall n \in \mathbb{N}_{\geq2}, (\left\lVert \psi \right\rVert^{2} = 1 \land \operatorname{Irred}\left(\psi\right)) \implies (R^{(n)}(\psi) > 0))$$
+$$claim \iff (\forall D \in \mathbb{N}_{\geq3}, \forall d:[D] \to \mathbb{N}_{>0}, \forall \psi \in \mathcal{H}_{d}, \forall n \in \mathbb{N}_{\geq2}, (\left\lVert \psi \right\rVert^{2} = 1 \land \mathrm{Irred}\left(\psi\right)) \implies (\forall \sigma \in S_{D}, R_{\sigma}^{(n)}(\psi) > 0)) \lor (\forall D \in \mathbb{N}_{\geq3}, \forall d:[D] \to \mathbb{N}_{>0}, \forall \psi \in \mathcal{H}_{d}, \forall n \in \mathbb{N}_{\geq2}, (\left\lVert \psi \right\rVert^{2} = 1 \land \mathrm{Irred}\left(\psi\right)) \implies (R^{(n)}(\psi) > 0))$$
 
 *Formalization.* `D5/S3/Quantum/Entanglement/MultipartiteMonotones/CarrozzaChevrierLionniConverseRefutation.claim` (`✓ std3`).
 
@@ -22,6 +22,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/MultipartiteMonotones/CarrozzaChevrierLionniConverseRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/carrozza-chevrier-lionni-2026-corollary-seven-converses` (refuted) by `D5/S3/Quantum/Entanglement/MultipartiteMonotones/CarrozzaChevrierLionniConverseRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"carrozza-chevrier-lionni-2026-corollary-seven-converses","declaration_gid":"D5/S3/Quantum/Entanglement/MultipartiteMonotones/CarrozzaChevrierLionniConverseRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Sylvain Carrozza; Johann Chevrier; Luca Lionni (2026). *Detection of genuine multipartite entanglement by means of entanglement monotones*. DOI: [10.48550/arXiv.2611.27660](https://doi.org/10.48550/arXiv.2611.27660). URL: <https://arxiv.org/abs/2611.27660v1>.
@@ -33,7 +37,7 @@ $$\neg claim$$
 Use the four-qubit cluster state C1 of Gour and Wallach, Eq. (3). Its amplitudes are 1/2 on 0000, 0011 and 1100, −1/2 on 1111, and zero elsewhere. The four nonzero terms give squared norm one.
 
 $$
-\left\lVert \psi \right\rVert^{2} = 1 \land \operatorname{Irred}\left(\psi\right) \land (\forall n \in \mathbb{N}_{\geq2}, (\forall \sigma \in S_{4}, R_{\sigma}^{(n)}(\psi) = 0) \land R^{(n)}(\psi) = 0)
+\left\lVert \psi \right\rVert^{2} = 1 \land \mathrm{Irred}\left(\psi\right) \land (\forall n \in \mathbb{N}_{\geq2}, (\forall \sigma \in S_{4}, R_{\sigma}^{(n)}(\psi) = 0) \land R^{(n)}(\psi) = 0)
 $$
 
 The proof takes D = 4, all local dimensions equal to two and n = 2 in each putative universal assertion. The ordered vanishing holds for every permutation, so the same state also defeats strict positivity with an existential choice of order of the colors. The three-qubit restriction in Proposition 8 and the spectral-hypergraph-tensor restriction in Theorem 6 are separate source results.

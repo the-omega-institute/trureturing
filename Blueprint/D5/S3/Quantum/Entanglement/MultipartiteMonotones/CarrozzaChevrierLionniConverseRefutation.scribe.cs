@@ -41,7 +41,10 @@ internal sealed class CarrozzaChevrierLionniConverseRefutationDocument : IScribe
                     new DocumentBlock.DisplayFormula(WitnessFormula()),
                     Paragraph(Text(
                         "The proof takes D = 4, all local dimensions equal to two and n = 2 in each putative universal assertion. The ordered vanishing holds for every permutation, so the same state also defeats strict positivity with an existential choice of order of the colors. The three-qubit restriction in Proposition 8 and the spectral-hypergraph-tensor restriction in Theorem 6 are separate source results."))),
-                DescribeRole.Theorem),
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("carrozza-chevrier-lionni-2026-corollary-seven-converses"),
+                    ResolutionKind.Refuted)),
             Paragraph(Text(
                 "Definition 1 and Eq. (9) correspond to ReducibleTensor in finite orthonormal bases. Each factor has a proper assigned support, with arbitrary positive finite dimensions on it and a normalized coefficient tensor. Outside its support a product unit leg can be compressed to dimension one using the isometry that sends the scalar unit to that leg. The empty support allows a unit scalar. The code uses a list of proper supports. An Eq. (9) family gives such a list by enumerating the proper subsets. Conversely, regroup factors with the same support, multiply their local dimensions and pad absent supports with unit scalar factors. Local reindexing is unitary. The two sets of matrices U and V are the local isometries into common spaces in the cited Definition 2.2 of local-unitary equivalence. Compose one set with the comparison unitary to obtain the exact equality of embedded tensors in ReducibleTensor. Conversely, that equality supplies the same local-unitary equivalence with identity comparison. This permits overlapping supports and arbitrary mixing of the regrouped factor legs within each party.")),
             Paragraph(Text(
@@ -54,7 +57,7 @@ internal sealed class CarrozzaChevrierLionniConverseRefutationDocument : IScribe
 
     private static Formula Paren(Formula value) => Seq(Open, value, Close);
     private static Formula Call(string name, params Formula[] args) =>
-        new Formula.Apply(Seq(Operatorname, Grp(F.Id(name))), [.. args]);
+        new Formula.Apply(Seq(Mathrm, Grp(F.Id(name))), [.. args]);
 
     private static Formula Equal(Formula left, Formula right) =>
         new Formula.Relation(left, FormulaRelationOperator.Equal, right);
