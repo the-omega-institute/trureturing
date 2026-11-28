@@ -29,10 +29,16 @@ Direct frozen dependencies:
 Information-escape registration is paused under CLAUDE.md §3.9.
 -/
 
-import D5.S3.Quantum.Entanglement.AbsolutePPT.UniformSchmidtCorner
-import D5.S3.Quantum.Entanglement.FourQubitResidualSumMonotoneRefutation
-import D5.S3.Quantum.Entanglement.StructuredNegativityCoincidenceRefutation
-import D5.S3.Quantum.Foundation.FiniteTraceDistance
+module
+
+public import D5.S3.Quantum.Entanglement.AbsolutePPT.UniformSchmidtCorner
+public import D5.S3.Quantum.Entanglement.FourQubitResidualSumMonotoneRefutation
+public import D5.S3.Quantum.Entanglement.StructuredNegativityCoincidenceRefutation
+public import D5.S3.Quantum.Foundation.FiniteTraceDistance
+public import Mathlib.Analysis.Normed.Algebra.MatrixExponential
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Arctan
+
+@[expose] public section
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
