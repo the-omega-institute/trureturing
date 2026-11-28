@@ -1,3 +1,4 @@
+import OmegaBuild.Commands
 import Mathlib.Data.ZMod.Basic
 import Mathlib.Algebra.BigOperators.Pi
 import Mathlib.Tactic.Abel
@@ -5,6 +6,8 @@ import Mathlib.Tactic.Linarith
 import Mathlib.Algebra.Order.BigOperators.Group.Finset
 import Mathlib.Algebra.Order.Group.Unbundled.Int
 import Mathlib.Combinatorics.SimpleGraph.Basic
+
+compile_only_with_mathlib
 
 /-! # Lifting short additive gain residuals through a modulus -/
 

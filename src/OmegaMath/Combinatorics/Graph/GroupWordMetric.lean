@@ -1,6 +1,9 @@
+import OmegaBuild.Commands
 import Mathlib.Algebra.Group.Pointwise.Set.Basic
 import Mathlib.Topology.MetricSpace.IsometricSMul
 import Mathlib.Tactic.Group
+
+compile_only_with_mathlib
 
 /-!
 Omega original.

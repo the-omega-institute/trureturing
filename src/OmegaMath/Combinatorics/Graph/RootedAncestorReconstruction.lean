@@ -1,3 +1,4 @@
+import OmegaBuild.Commands
 import Mathlib.Combinatorics.SimpleGraph.Acyclic
 import Mathlib.Analysis.Normed.Module.Basic
 import Mathlib.Analysis.Normed.Group.Real
@@ -8,6 +9,8 @@ import Mathlib.Tactic.Abel
 import Mathlib.Tactic.FieldSimp
 import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.Ring
+
+compile_only_with_mathlib
 
 /-! # Gain reconstruction on bounded ancestor graphs -/
 

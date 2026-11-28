@@ -1,7 +1,10 @@
+import OmegaBuild.Commands
 import D5.S3.Combinatorics.Graph.Chordal.SimplicialAndIntervalPotential
 import OmegaMath.Combinatorics.Graph.ScalarCycleReconstruction
 import Mathlib.Analysis.Normed.Module.HahnBanach
 import Mathlib.Analysis.Normed.Module.RCLike.Real
+
+compile_only_with_mathlib
 
 /-!
 Omega original.

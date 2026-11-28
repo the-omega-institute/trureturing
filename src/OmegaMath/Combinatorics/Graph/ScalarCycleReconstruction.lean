@@ -1,8 +1,11 @@
+import OmegaBuild.Commands
 import Mathlib.Combinatorics.SimpleGraph.Connectivity.Connected
 import Mathlib.Combinatorics.SimpleGraph.Paths
 import Mathlib.Algebra.Order.Archimedean.Real.Basic
 import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.FieldSimp
+
+compile_only_with_mathlib
 
 /-! # Scalar potentials from cycle constraints -/
 

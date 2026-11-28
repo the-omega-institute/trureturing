@@ -1,7 +1,10 @@
+import OmegaBuild.Commands
 import OmegaMath.Combinatorics.Graph.ChordalPath49
 import OmegaMath.Combinatorics.Graph.GroupWordMetric
 import D5.S3.Combinatorics.Graph.Chordal.ChordalBanachLimitTwo
 import Mathlib.Tactic.Abel
+
+compile_only_with_mathlib
 
 /-!
 Omega original.

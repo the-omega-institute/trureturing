@@ -1,7 +1,10 @@
+import OmegaBuild.Commands
 import Mathlib.Data.ZMod.Basic
 import Mathlib.Data.List.Basic
 import Lean.Elab.Tactic.Omega
 import Mathlib.Tactic.Ring
+
+compile_only_with_mathlib
 
 /-!
 Omega original.
@@ -514,18 +517,6 @@ theorem stretched_exact_word_optimum_two {k : ℕ} (hk : 3 ≤ k) :
     exact (exact_word_optimum_two (N := 14) (by omega)).2 ⟨_, hq⟩
 
 
-/-- A unit-feasible prefix at thirteen vertices; the fourteen-vertex cutoff is sharp. -/
-def prefixPotential (i : Fin 13) : H :=
-  [0, 2, 10, 46, 46, 5, 5, 41, 0, 13, 0, 46, 10][i.val]'(by simp)
-
-set_option maxRecDepth 100000 in
-set_option maxHeartbeats 0 in
-theorem p13_unit_feasible : UnitFeasible 13 prefixPotential := by
-  unfold UnitFeasible
-  decide
-
-
-/- The printed closures cover every certificate on the live proof paths. -/
 #print axioms p27_no_unit_potential
 #print axioms exists_edge_not_wordBudget_one
 #print axioms ordered_triangle_defect_mem
@@ -533,6 +524,5 @@ theorem p13_unit_feasible : UnitFeasible 13 prefixPotential := by
 #print axioms stretched_triangle_mem
 #print axioms stretched_exact_word_optimum_two
 #print axioms no_unit_increment_sequence
-#print axioms p13_unit_feasible
 
 end ChordalPath49

@@ -1,3 +1,4 @@
+import OmegaBuild.Commands
 import D5.S3.Combinatorics.Graph.Chordal.EliminationForest
 import Mathlib.Algebra.Group.Pointwise.Set.Basic
 import Mathlib.Tactic.Group
@@ -5,6 +6,8 @@ import Mathlib.Tactic.FinCases
 import Mathlib.Data.Multiset.Filter
 import Mathlib.Data.Multiset.MapFold
 import Mathlib.Data.Fin.VecNotation
+
+compile_only_with_mathlib
 
 /-! # Noncommutative clique-stratum certificates
 

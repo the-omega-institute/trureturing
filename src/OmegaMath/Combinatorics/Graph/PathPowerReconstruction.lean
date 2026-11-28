@@ -1,6 +1,9 @@
+import OmegaBuild.Commands
 import D5.S3.Combinatorics.Graph.Chordal.ChordalBanachLimitTwo
 import Mathlib.Topology.MetricSpace.IsometricSMul
 import Mathlib.Tactic.Group
+
+compile_only_with_mathlib
 
 /-!
 Omega original.

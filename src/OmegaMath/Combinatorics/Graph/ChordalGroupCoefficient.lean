@@ -1,8 +1,11 @@
+import OmegaBuild.Commands
 import D5.S3.Combinatorics.Graph.Chordal.UniformGainPotential
 import OmegaMath.Combinatorics.Graph.ChordalWalkHolonomy
 import Mathlib.Algebra.Order.Floor.Ring
 import OmegaMath.Combinatorics.Graph.GroupWordMetric
 import Mathlib.GroupTheory.FreeGroup.Basic
+
+compile_only_with_mathlib
 
 /-!
 Omega original.

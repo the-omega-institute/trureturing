@@ -1,3 +1,4 @@
+import OmegaBuild.Commands
 import Mathlib.MeasureTheory.Function.LpOrder
 import Mathlib.MeasureTheory.Integral.Bochner.Basic
 import Mathlib.Data.Fin.Tuple.Sort
@@ -8,6 +9,8 @@ import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.Positivity
 import Mathlib.Tactic.Ring
 import Mathlib.Tactic.SplitIfs
+
+compile_only_with_mathlib
 
 /-!
 Omega original.

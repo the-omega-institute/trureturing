@@ -1,3 +1,4 @@
+import OmegaBuild.Commands
 import D5.S3.Combinatorics.Graph.Chordal.Dirac
 import Mathlib.Geometry.Convex.ConvexSpace.CompactSpaceStdSimplex
 import Mathlib.Analysis.Convex.Combination
@@ -9,6 +10,8 @@ import Mathlib.Tactic.FunProp
 import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.Positivity
 import Mathlib.Tactic.Ring
+
+compile_only_with_mathlib
 
 /-!
 Omega original.

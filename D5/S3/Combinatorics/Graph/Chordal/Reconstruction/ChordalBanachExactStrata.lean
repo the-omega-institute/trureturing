@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   utility: none
+   utility: kind=bounded-enumeration; basis=refutes=gid:D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.subtwo_cyclic_path_claim; result=D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.not_subtwo_cyclic_path; claim=D5/S3/Combinatorics/Graph/Chordal/Reconstruction/ChordalBanachExactStrata.subtwo_cyclic_path_claim
    digest: Exact scalar reconstruction, finite abelian reduction, and sharp geometric and group bounds on chordal graphs. -/
 
 import D5.S3.Combinatorics.Graph.Chordal.GainPotential
@@ -22,6 +22,12 @@ import OmegaMath.Combinatorics.Graph.ChordalPath49Metric
 import OmegaMath.Combinatorics.Graph.L1Jung
 import OmegaMath.Combinatorics.Graph.ChordalFanLower
 import OmegaMath.Combinatorics.Graph.ChordalGroupCoefficient
+import D5.S3.Combinatorics.Graph.Chordal.CompleteAndCliqueSumBanach
+import D5.S3.Combinatorics.Graph.Chordal.ChordalBanachLimitTwo
+import OmegaMath.Combinatorics.Graph.PairRetention
+import OmegaMath.Combinatorics.Graph.PathPowerRadius
+import OmegaMath.Combinatorics.Graph.HilbertSimplexRadius
+import OmegaMath.Combinatorics.Graph.L1BalancedRadius
 
 /-! # Chordal reconstruction strata
 
@@ -218,7 +224,6 @@ theorem finite_modulus_decides_abelian_reconstruction [Finite V] [LinearOrder V]
 
 end SimpleGraph.GainReduction
 
-
 namespace SimpleGraph
 
 variable {V E : Type*} [SeminormedAddCommGroup E] [NormedSpace ℝ E]
@@ -236,8 +241,6 @@ theorem IsTree.exists_ancestor_banach_gain_potential {S : SimpleGraph V}
   (RootedAncestors.ofTree hS root).exists_banach_gain_potential hk g ε hε hrev htri
 
 end SimpleGraph
-
-
 
 namespace SimpleGraph
 
@@ -324,8 +327,6 @@ theorem IsChordal.exists_clique_five_group_gain_potential [Finite V] (hG : G.IsC
   exact_mod_cast he
 
 end SimpleGraph
-
-
 
 namespace SimpleGraph
 
@@ -434,7 +435,6 @@ theorem IsChordal.scalar_circumference_exact [Finite V] (hG : G.IsChordal)
 
 end SimpleGraph
 
-
 namespace SimpleGraph
 
 variable {V H : Type*} [Group H] {G : SimpleGraph V}
@@ -521,7 +521,6 @@ theorem IsChordal.exists_hilbert_jung_gain_potential
 
 end SimpleGraph
 
-
 namespace SimpleGraph
 
 private theorem cliqueTreeRadius_closed_form {m : ℕ} (hm : 2 ≤ m) (h : ℕ) :
@@ -582,8 +581,6 @@ theorem cliqueTree_height_banach_gain_potential {V I E : Type*} [Finite V] [Fini
   rwa [show 2 * h / 2 = h by omega, cliqueTreeRadius_closed_form hq] at hh
 
 end SimpleGraph
-
-
 
 namespace SimpleGraph.BanachPathPower
 
@@ -675,8 +672,6 @@ theorem pathPower_group_exact_strata (k : ℕ) (hk : 1 ≤ k) (C : ℝ) :
 
 end SimpleGraph.BanachPathPower
 
-
-
 namespace SimpleGraph
 
 open MeasureTheory
@@ -715,8 +710,6 @@ theorem IsChordal.exists_l1_jung_gain_potential [Finite V] (hG : G.IsChordal)
   exact ⟨p, fun a b hab => he ▸ hp a b hab⟩
 
 end SimpleGraph
-
-
 
 namespace SimpleGraph
 
@@ -778,8 +771,6 @@ theorem pathPower_width_three_cyclic_exact {n : ℕ} (hn : 14 ≤ n) :
 
 end SimpleGraph.BanachPathPower
 
-
-
 namespace SimpleGraph
 
 open MeasureTheory
@@ -810,3 +801,145 @@ theorem l1_clique_four_exact {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω)
 
 end SimpleGraph
 
+namespace SimpleGraph.BanachPathPower
+
+/-- The sub-two feasibility assertion for the normalized cyclic cochain on the
+width-three path with twenty-seven vertices. -/
+def subtwo_cyclic_path_claim : Prop :=
+  letI := ChordalPath49.cayleyMetric
+  ∃ p : Fin 27 → ChordalPath49.M, ∀ a b, (pathPower 27 3).Adj a b →
+    Dist.dist (Multiplicative.ofAdd (ChordalPath49.skew
+      (fun i j => ChordalPath49.forwardGain i (j - i)) a b)) ((p a)⁻¹ * p b) < 2
+
+/-- The cyclic word certificate refutes a sub-two fit on the specified power path. -/
+theorem not_subtwo_cyclic_path : ¬ subtwo_cyclic_path_claim := by
+  let := ChordalPath49.cayleyMetric
+  let f := fun i j : ℕ => ChordalPath49.forwardGain i (j - i)
+  intro h
+  change ∃ p : Fin 27 → ChordalPath49.M, ∀ a b, (pathPower 27 3).Adj a b →
+    Dist.dist (Multiplicative.ofAdd (ChordalPath49.skew f a b)) ((p a)⁻¹ * p b) < 2 at h
+  obtain ⟨p, hp⟩ := h
+  apply (ChordalPath49.exact_word_optimum_two (N := 27) (by decide)).2
+  refine ⟨fun v => Multiplicative.toAdd (p v), fun a b hab hspan => ?_⟩
+  have hadj : (pathPower 27 3).Adj a b := ⟨fun h => (Nat.ne_of_lt hab) (congrArg Fin.val h),
+    by omega, hspan⟩
+  have hfit := hp a b hadj
+  let x := ChordalPath49.skew f a b
+  let y := -Multiplicative.toAdd (p a) + Multiplicative.toAdd (p b)
+  change Dist.dist (Multiplicative.ofAdd x) (Multiplicative.ofAdd y) < 2 at hfit
+  change (GroupWordMetric.length ChordalPath49.letters_generate
+    ((Multiplicative.ofAdd x)⁻¹ * Multiplicative.ofAdd y) : ℝ) < 2 at hfit
+  have hlt : GroupWordMetric.length ChordalPath49.letters_generate
+    ((Multiplicative.ofAdd x)⁻¹ * Multiplicative.ofAdd y) < 2 := by exact_mod_cast hfit
+  have hunit : Dist.dist (Multiplicative.ofAdd x) (Multiplicative.ofAdd y) ≤ (1 : ℝ) := by
+    change (GroupWordMetric.length ChordalPath49.letters_generate _ : ℝ) ≤ 1
+    exact_mod_cast (show GroupWordMetric.length ChordalPath49.letters_generate
+      ((Multiplicative.ofAdd x)⁻¹ * Multiplicative.ofAdd y) ≤ 1 by omega)
+  simpa [x, y, f, ChordalPath49.skew, hab, sub_eq_add_neg, add_comm] using
+    (ChordalPath49.word_iff_distance 1 x y).1 (by simpa using hunit)
+
+end SimpleGraph.BanachPathPower
+
+namespace SimpleGraph.PairRetention
+
+/-- The sharp extension recurrence and an exponential-length cycle give
+the exact reconstruction coefficient of the arbitrary-depth pair-retention family. -/
+theorem family_exact (m n D : ℕ) (hm : 3 ≤ m)
+    (E : Type*) [NormedAddCommGroup E] [NormedSpace ℝ E] [Nontrivial E] (C : ℝ) :
+    Upper (family m n D).graph E C ↔ 1 - 2 / ((m : ℝ) * (n + 1 : ℝ)^D) ≤ C := by
+  have hroot : Upper (⊤ : SimpleGraph (Fin m)) E (1 - 2 / (m : ℝ)) := by
+    intro g hr ht
+    have hc : 2 ≤ Nat.card (Fin m) := by simpa using (show 2 ≤ m by omega)
+    obtain ⟨p, hp⟩ := completeGraph_banach_upper_bound hc g 1 hr
+      (fun a b c hab hbc hac => ht a b c hab hbc hac)
+    have hmR : (m : ℝ) ≠ 0 := by positivity
+    have he : ((m : ℝ) - 2) / m = 1 - 2 / m := by field_simp
+    exact ⟨p, fun a b hab => by
+      simpa [residual, Nat.card_eq_fintype_card, he] using hp a b hab⟩
+  obtain ⟨hupper, g, hr, ht, hlow⟩ := family_matching_bounds m n D hm hroot
+  constructor
+  · intro h
+    obtain ⟨p, hp⟩ := h g hr ht
+    obtain ⟨a, b, hab, hb⟩ := hlow p
+    exact hb.trans (hp a b hab)
+  · intro h g hr ht
+    obtain ⟨p, hp⟩ := hupper g hr ht
+    exact ⟨p, fun a b hab => (hp a b hab).trans h⟩
+
+end SimpleGraph.PairRetention
+
+namespace SimpleGraph.BanachPathPower
+
+/-- Every finite family in the target gives a lower bound on a uniform
+power-path coefficient through its enclosing radius. -/
+theorem powerPath_uniform_ge_doubled_radius {E : Type*} [SeminormedAddCommGroup E]
+    [NormedSpace ℝ E] {k : ℕ} (hk : 0 < k) {C r : ℝ} (hC : 0 ≤ C)
+    (hfit : ∀ n, PairRetention.Upper (pathPower n k) E C)
+    (x : Fin k → E) (hd : ∀ a b, ‖x a - x b‖ ≤ 1)
+    (hr : ∀ y : E, ∃ a, r ≤ ‖(2 : ℝ) • x a - y‖) :
+    r ≤ C := by
+  by_contra! hlt
+  obtain ⟨M, hM⟩ := exists_nat_gt (2 * C / (r - C))
+  have hC' : 0 ≤ 2 * C / (r - C) := by positivity
+  have hMR : 0 < (M : ℝ) := hC'.trans_lt hM
+  have hMp : 0 < M := by exact_mod_cast hMR
+  let a₀ : Fin k := ⟨0, hk⟩
+  let u : Fin k → E := fun a => x a - x a₀
+  have hu (a b : Fin k) : ‖u a - u b‖ ≤ 1 := by
+    dsimp [u]
+    rw [show x a - x a₀ - (x b - x a₀) = x a - x b by abel]
+    exact hd a b
+  obtain ⟨g, hg, ht, hball⟩ := exists_gain_for_doubled_radius hk hMp u 1
+    (fun a => hd a a₀) hu
+  obtain ⟨p, hp⟩ := hfit _ g hg ht
+  obtain ⟨y, hy⟩ := hball p C hC hp
+  obtain ⟨a, ha⟩ := hr (y + (2 : ℝ) • x a₀)
+  have he : (2 : ℝ) • x a - (y + (2 : ℝ) • x a₀) = (2 : ℝ) • u a - y := by
+    dsimp [u]
+    rw [smul_sub]
+    abel
+  rw [he] at ha
+  have hsmall : 2 * C / (M : ℝ) < r - C := by
+    apply (div_lt_iff₀ hMR).2
+    simpa [mul_comm] using (div_lt_iff₀ (sub_pos.mpr hlt)).1 hM
+  linarith [ha.trans (hy a)]
+
+end SimpleGraph.BanachPathPower
+
+namespace SimpleGraph.BanachPathPower
+
+/-- Euclidean targets attain the regular-simplex obstruction in the supremum
+over path lengths at each positive width. -/
+theorem hilbert_powerPath_uniform_lower {k : ℕ} (hk : 0 < k) {C : ℝ} (hC : 0 ≤ C)
+    (hfit : ∀ n, PairRetention.Upper (pathPower n k) (EuclideanSpace ℝ (Fin k)) C) :
+    Real.sqrt (2 - 2 / (k : ℝ)) ≤ C := by
+  obtain ⟨x, hd, hr⟩ := FiniteHilbertJung.exists_diameter_one_simplex k hk
+  exact powerPath_uniform_ge_doubled_radius hk hC hfit x hd hr
+
+end SimpleGraph.BanachPathPower
+
+namespace SimpleGraph.BanachPathPower
+
+/-- At each positive even width, a finite-dimensional real L1 target attains
+the Banach path-power coefficient in the supremum over path lengths. -/
+theorem l1_even_powerPath_exact (m : ℕ) (hm : 0 < m) (C : ℝ) :
+    (0 ≤ C ∧ ∀ n, PairRetention.Upper (pathPower n (2 * m))
+      (PiLp 1 (fun _ : ChordalL1.BalancedCutCoordinate m => ℝ)) C) ↔
+      2 - 2 / (2 * (m : ℝ)) ≤ C := by
+  have hk : 0 < 2 * m := by omega
+  constructor
+  · rintro ⟨hC, hfit⟩
+    obtain ⟨x, hd, hr⟩ := ChordalL1.exists_balanced_l1_family m hm
+    exact powerPath_uniform_ge_doubled_radius hk hC hfit x hd hr
+  · intro hC
+    have hmR : 1 ≤ (m : ℝ) := by exact_mod_cast (show 1 ≤ m from hm)
+    have hbound : (0 : ℝ) ≤ 2 - 2 / (2 * (m : ℝ)) := by
+      have h := (div_le_iff₀ (by positivity : (0 : ℝ) < 2 * m)).2
+        (show (2 : ℝ) ≤ 2 * (2 * (m : ℝ)) by linarith)
+      linarith
+    refine ⟨hbound.trans hC, fun n g hr ht => ?_⟩
+    obtain ⟨p, hp⟩ := pathPower_banach_upper_bound n (2 * m) hk g 1 zero_le_one hr ht
+    refine ⟨p, fun u v huv => (hp u v huv).trans ?_⟩
+    simpa [Nat.cast_mul] using hC
+
+end SimpleGraph.BanachPathPower

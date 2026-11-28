@@ -1,8 +1,11 @@
+import OmegaBuild.Commands
 import D5.S3.Combinatorics.Graph.Chordal.GainPotential
 import Mathlib.Combinatorics.SimpleGraph.Acyclic
 import Mathlib.Topology.MetricSpace.IsometricSMul
 import Mathlib.Tactic.Group
 import Mathlib.Tactic.Linarith
+
+compile_only_with_mathlib
 
 /-!
 Omega original.
