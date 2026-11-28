@@ -204,7 +204,7 @@ private def patternSkipGap? (official visible strict : Environment) (owner : Nam
 /-- Form the complete pinned type in the strict public environment before comparing it
 with the export. Checked reformulations explain which parts of an open interface work. -/
 public def originalTypeGap? (official visible strict : Environment) (owner : Name)
-    (source target : ConstantInfo) : IO (Option String) := do
+    (source target : ConstantInfo) (witnesses? : Option Environment := none) : IO (Option String) := do
   if source.numLevelParams != target.numLevelParams then return some "universe parameter count"
   let pinned := source.type.instantiateLevelParams source.levelParams (target.levelParams.map Level.param)
   let expected := InitKernelPort.translate InitKernelPort.portName pinned
@@ -227,7 +227,11 @@ public def originalTypeGap? (official visible strict : Environment) (owner : Nam
     if let some gap ← patternSkipGap? official visible strict owner source pinned target.type missing then
       return some gap
     if let some detail := EnvelopePublicTypes.reductionGap? official visible strict owner source pinned target.type then
-      return some (gap ++ ". " ++ detail)
+      let message := gap ++ ". " ++ detail
+      if let some witnesses := witnesses? then
+        if let some extra ← EnvelopePublicTypes.orderCoherenceGap? visible strict witnesses owner source then
+          return some (message ++ " " ++ extra)
+      return some message
     return some gap
   return some "pinned type does not check or convert to the exported type"
 

@@ -837,7 +837,7 @@ private def inventory (lib strictDir : System.FilePath) (visible strict full wit
         if name == `unsafeBaseIO then OmegaChecks.InitPort.EffectRun.checkWorld full.toKernelEnv
       let strictOwner := if matched then some expected else none
       let typeGap ← match publicInfo with
-        | some dst => OmegaChecks.InitInventory.originalTypeGap? official visible strict owner info dst
+        | some dst => OmegaChecks.InitInventory.originalTypeGap? official visible strict owner info dst witnesses
         | none => pure none
       let typeGap := typeGap.map fun gap =>
         match OmegaChecks.InitInventory.searchLoopParameter? official visible strict full info with
@@ -953,7 +953,7 @@ def main (args : List String) : IO Unit := do
   let witnesses ← importModules #[
     {module := `OmegaChecks.InitInventory.ChoiceOperands}, {module := `OmegaChecks.InitInventory.Quotient},
     {module := `OmegaChecks.InitInventory.RefinedQuotient}, {module := `OmegaChecks.InitInventory.StateFactory},
-    {module := `OmegaChecks.InitInventory.ByteArrayReads},
+    {module := `OmegaChecks.InitInventory.ByteArrayReads}, {module := `OmegaChecks.InitInventory.EnvelopeOrder},
     {module := `OmegaChecks.InitInventory.FieldNormalization}] {} (level := .private)
   let lib ← getLibDir sysroot
   searchPathRef.set [lib]
