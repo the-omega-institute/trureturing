@@ -24,9 +24,9 @@ internal sealed class PlanarFourierTailDocument : IScribeDocumentDefinition
                         + "radius k greater than J. Suppose the complex coefficient at each selected "
                         + "pair has norm at most K ε²/(1+εk)⁶. Their norms sum to at most 2K/(ε⁴J⁴).")),
                     Paragraph(Text(
-                        "Extend the selected norms by zero. The square of radius k has (2k+1)² "
-                        + "integer points, so its difference with the preceding square has 8k "
-                        + "points. Bounding the coefficient on that shell gives at most "
+                        "Extend the selected norms by zero. Mathlib's Int.card_box and Int.mem_box "
+                        + "identify and count the 8k points on the square shell of radius k. "
+                        + "Bounding the coefficient on that shell gives at most "
                         + "8K/(ε⁴k⁵) in total. The difference of the consecutive inverse fourth "
                         + "powers at k−1 and k dominates 4/k⁵, so its sum telescopes.")),
                     Paragraph(Text(

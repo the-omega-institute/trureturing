@@ -8,7 +8,7 @@
 
 import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 import Mathlib.Algebra.Order.BigOperators.Group.LocallyFinite
-import Mathlib.Data.Int.Interval
+import Mathlib.Order.Interval.Finset.Box
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
 import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.Positivity
@@ -56,33 +56,17 @@ def modeRadius (m : ℤ × ℤ) : ℕ :=
   max m.1.natAbs m.2.natAbs
 
 private def modeBox (n : ℕ) : Finset (ℤ × ℤ) :=
-  (Icc (-(n : ℤ)) n) ×ˢ (Icc (-(n : ℤ)) n)
+  Icc (-n : ℤ × ℤ) n
 
 private theorem mem_modeBox {n : ℕ} {m : ℤ × ℤ} :
     m ∈ modeBox n ↔ modeRadius m ≤ n := by
   have hcoord (z : ℤ) : z ∈ Icc (-(n : ℤ)) n ↔ z.natAbs ≤ n := by
     rw [mem_Icc, ← abs_le, Int.abs_eq_natAbs, Int.ofNat_le]
-  rw [modeBox, mem_product, hcoord, hcoord, modeRadius, max_le_iff]
+  change m ∈ Icc (-(n : ℤ), -(n : ℤ)) ((n : ℤ), (n : ℤ)) ↔ _
+  rw [Icc_prod_def, mem_product, hcoord, hcoord, modeRadius, max_le_iff]
 
 private theorem modeBox_mono : Monotone modeBox :=
   fun _ _ h _ hm => mem_modeBox.mpr ((mem_modeBox.mp hm).trans h)
-
-private theorem card_modeBox (n : ℕ) : (modeBox n).card = (2 * n + 1) ^ 2 := by
-  have hc : (Icc (-(n : ℤ)) n).card = 2 * n + 1 := by
-    rw [Int.card_Icc]
-    omega
-  rw [modeBox, card_product, hc, pow_two]
-
-private theorem card_modeShell (n : ℕ) :
-    (modeBox (n + 1) \ modeBox n).card = 8 * (n + 1) := by
-  rw [card_sdiff_of_subset (modeBox_mono (Nat.le_succ _)), card_modeBox, card_modeBox]
-  have he : (2 * (n + 1) + 1) ^ 2 = (2 * n + 1) ^ 2 + 8 * (n + 1) := by ring
-  rw [he, Nat.add_sub_cancel_left]
-
-private theorem modeRadius_eq_of_mem_shell {n : ℕ} {m : ℤ × ℤ}
-    (hm : m ∈ modeBox (n + 1) \ modeBox n) : modeRadius m = n + 1 := by
-  rw [mem_sdiff, mem_modeBox, mem_modeBox] at hm
-  omega
 
 /-- A scaled sixth-power coefficient bound controls the absolute high-frequency tail. -/
 theorem lattice_fourier_tail (s : Finset (ℤ × ℤ)) (a : ℤ × ℤ → ℂ) (J : ℕ) (ε K : ℝ)
@@ -120,12 +104,14 @@ theorem lattice_fourier_tail (s : Finset (ℤ × ℤ)) (a : ℤ × ℤ → ℂ) 
         (8 * K / ε ^ 4) * (1 / ((J : ℝ) + (k : ℝ) + 1) ^ 5) := by
     let p : ℝ := (J : ℝ) + (k : ℝ) + 1
     have hp : 0 < p := by dsimp [p]; positivity
+    have hshell : b (k + 1) \ b k = (box (J + k + 1) : Finset (ℤ × ℤ)) := by
+      rw [box_succ_eq_sdiff]
+      simp only [b, modeBox, Nat.succ_eq_add_one, Nat.add_assoc]
     have hcard : (b (k + 1) \ b k).card = 8 * (J + k + 1) := by
-      simpa only [b, Nat.add_assoc] using card_modeShell (J + k)
+      rw [hshell, Int.card_box (Nat.succ_ne_zero (J + k))]
     have hbnd (m : ℤ × ℤ) (hm : m ∈ b (k + 1) \ b k) :
         weight m ≤ K / (ε ^ 4 * p ^ 6) := by
-      have hr : modeRadius m = J + k + 1 := modeRadius_eq_of_mem_shell
-        (by simpa only [b, Nat.add_assoc] using hm)
+      have hr : modeRadius m = J + k + 1 := Int.mem_box.mp (hshell ▸ hm)
       have hcast : (modeRadius m : ℝ) = p := by
         rw [hr]
         simp [p]
