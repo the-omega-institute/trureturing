@@ -5,7 +5,11 @@
    anchors: []
    digest: Projected unitary dynamics induces a doubly stochastic transition law. -/
 
-import D5.S3.Weil.ZetaLinear.VonNeumann
+module
+
+public import D5.S3.Weil.ZetaLinear.VonNeumann
+
+@[expose] public section
 
 /-!
 # Projected unitary dynamics

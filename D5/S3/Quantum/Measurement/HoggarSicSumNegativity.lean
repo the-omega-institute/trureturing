@@ -23,10 +23,14 @@ Utility: the result is universal over all density matrices. The finite Gaussian-
   computations certify frame identities and an attaining state; they are not the bound.
 -/
 
-import D5.S3.Quantum.Dynamics.ProjectionProbabilityFlow
-import D5.S3.Weil.ZetaLinear.RankTrace
-import D5.S3.Observer.BornReduction
-import Mathlib.NumberTheory.Zsqrtd.GaussianInt
+module
+
+public import D5.S3.Quantum.Dynamics.ProjectionProbabilityFlow
+public import D5.S3.Weil.ZetaLinear.RankTrace
+public import D5.S3.Observer.BornReduction
+public import Mathlib.NumberTheory.Zsqrtd.GaussianInt
+
+@[expose] public section
 
 open scoped BigOperators ComplexOrder
 open Matrix

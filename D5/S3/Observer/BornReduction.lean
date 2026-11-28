@@ -13,7 +13,11 @@
      `Complex.normSq_eq_norm_sq`; the record-weight interface comes from `Conditioning`.
 -/
 
-import D5.S3.Observer.Conditioning
+module
+
+public import D5.S3.Observer.Conditioning
+
+@[expose] public section
 
 namespace D5.S3.Observer.BornReduction
 
