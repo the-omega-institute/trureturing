@@ -39,4 +39,32 @@ theorem not_computable_collector_halting_test
   exact ⟨fun c => limitedOmniscienceFromCollector @collect correct
     (fun fuel => (Code.evaln fuel c input).isSome), computable⟩
 
+/-- Even the length of the output on a single family of bounded-evaluation iterators
+is not a computable function of the partial recursive program. -/
+theorem not_computable_search_output_length
+    (measure : ∀ {α β : Type} [Iterator α Id β], Iter (α := α) β → Nat)
+    (correct : ∀ {α β : Type} [Iterator α Id β] [Finite α Id] (it : Iter (α := α) β),
+      measure it = it.toList.length) (input : Nat) :
+    ¬ Computable (fun c : Code =>
+      searchOutputLength (@measure) (fun fuel => (Code.evaln fuel c input).isSome)) := by
+  intro computable
+  let bound := fun c : Code =>
+    searchOutputLength (@measure) (fun fuel => (Code.evaln fuel c input).isSome)
+  have test : Computable (fun c : Code => (Code.evaln (bound c) c input).isSome) :=
+    Primrec.option_isSome.to_comp.comp
+      (Code.primrec_evaln.to_comp.comp
+        ((computable.pair Computable.id).pair (Computable.const input)))
+  apply ComputablePred.halting_problem input
+  apply ComputablePred.of_eq (p := fun c : Code => (Code.evaln (bound c) c input).isSome = true)
+  · exact ⟨inferInstance, by simpa using test⟩
+  · intro c
+    constructor
+    · exact fun hit => (boundedSignal_iff_halts c input).mp ⟨_, hit⟩
+    · intro halts
+      obtain ⟨k, hit⟩ := (boundedSignal_iff_halts c input).mpr halts
+      refine signalAtSearchOutputLength (@measure) correct
+        (fun fuel => (Code.evaln fuel c input).isSome) (fun i before => ?_) (n := k) hit
+      obtain ⟨value, h⟩ := Option.isSome_iff_exists.mp before
+      exact Option.isSome_iff_exists.mpr ⟨value, Code.evaln_mono (Nat.le_succ i) h⟩
+
 end OmegaChecks.InitBoundaries.Collector
