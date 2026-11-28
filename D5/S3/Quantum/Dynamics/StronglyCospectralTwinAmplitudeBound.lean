@@ -158,13 +158,14 @@ private theorem adjacency_expansion (u : Fin n) (t : ℝ) :
     simp only [Matrix.mulVec, dotProduct, Complex.ofReal_sum, Complex.ofReal_mul,
       Pi.smul_apply, smul_eq_mul] at hcast ⊢
     convert hcast using 3
-    split <;> simp_all [SimpleGraph.adjMatrix_apply]
+    simp only [SimpleGraph.adjMatrix_apply]
+    split <;> simp_all
   have hphase (i : Fin n) : NormedSpace.exp B *ᵥ b i =
       (Circle.exp ((hA).eigenvalues i * t) : ℂ) • b i := by
     rw [Circle.coe_exp]
     apply exp_mulVec_of_eigenvector
     change ((-t) • hamiltonianGenerator (G.adjMatrix ℂ)) *ᵥ b i = _
-    rw [hamiltonianGenerator, smul_mulVec, smul_mulVec, hb, smul_smul, smul_smul]
+    rw [hamiltonianGenerator, smul_mulVec, smul_mulVec, hb, smul_smul, ← smul_assoc]
     congr 1
     simp only [Complex.real_smul, Complex.ofReal_neg, Complex.ofReal_mul]
     ring
@@ -287,7 +288,7 @@ theorem result (u v : Fin n) (huv : u ≠ v)
   have ha (e : J) : 0 < a e := (mem_filter.mp e.property).2.2
   have hsum : ∑ e, a e = 1 / 2 := by
     change (∑ e : ↥(remainingSupport G u v), idempotent G (e : ℝ) u u) = 1 / 2
-    rw [Finset.sum_coe_sort]
+    rw [Finset.sum_coe_sort (remainingSupport G u v) (fun e => idempotent G e u u)]
     exact remaining_weight G u v hhalf
   have heq (t : ℝ) : U t u u = U t v v := by
     simp only [U, adjacency_expansion, diagonal_weights_eq G u v hc]
