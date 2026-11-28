@@ -270,6 +270,19 @@ def verify_complete(official, product, reductions, unresolved):
                     "--exact-roots", lib, *roots, "--", *roots], cwd=ROOT, check=True)
 
 
+def check_promise_eliminators(product, declarations):
+    names = {"IO.Promise.rec", "IO.Promise.recOn", "IO.Promise.casesOn"}
+    rows = [row for row in declarations if row["module"] == "Init.System.Promise" and
+            row["name"] in names and row["matchingNameAndModule"]]
+    if rows:
+        eliminators = [row["name"].rsplit(".", 1)[1] for row in rows]
+        subprocess.run(["lake", "env", "lean", "--run", HERE / "PromiseAccess.lean",
+                        product / "lib", *eliminators], cwd=ROOT, check=True)
+        for row in rows:
+            row["importAllOriginalTypeChecked"] = True
+    return len(rows)
+
+
 def check_strict_reference_choices(product, stage, attempts):
     owners = ["Init.System.ST", "Init.Control.StateRef", "Init.Internal.Order.Basic", "Init.Internal.Order.MonadTail"]
     promise_ctor = ("Init.System.Promise", "_private.Init.System.Promise.0.IO.Promise.mk")
@@ -348,6 +361,7 @@ def report(product, require_complete=False):
             for owner, name, _, why, dep in map(json.loads, f):
                 attempts[owner, name] = (why, dep)
                 owners[name].append(owner)
+        promise_eliminators = check_promise_eliminators(product, official["declarations"])
         strict_choices = check_strict_reference_choices(product, stage, attempts)
         strict_matches = check_strict_longest_matches(product, stage)
         strict_folds = check_strict_fin_folds(product, stage)
@@ -375,7 +389,7 @@ def report(product, require_complete=False):
         if pending:
             raise ValueError(f"missing official definition sites for strict consequences: {sorted(pending)}")
         reduction_count, unresolved = check_coverage(official)
-        if strict_choices or strict_matches or strict_equivalences or strict_folds:
+        if promise_eliminators or strict_choices or strict_matches or strict_equivalences or strict_folds:
             inventory.write_text(json.dumps(official, ensure_ascii=False, separators=(",", ":")) + "\n")
         with (product / "interface-rejections.jsonl").open() as f:
             rejected = dict(map(json.loads, f))
@@ -397,7 +411,8 @@ def report(product, require_complete=False):
                              "unconditionalLogicalConsequence", "unconditionalLogicalConsequenceWitness",
                              "specializedEndpointType", "strictConstructorIff", "formationArgument", "transportPathType", "pinnedLiftCoherenceRefuter",
                              "strictLogicalConsequence", "strictLogicalConsequenceWitness", "strictEquivalenceWitness",
-                             "representativeRefuter", "refinedQuotientConsequence", "originalTypeGap"])
+                             "representativeRefuter", "refinedQuotientConsequence", "originalTypeGap",
+                             "importAllOriginalTypeChecked"])
             for row in official["declarations"]:
                 if row["originalTypeChecked"] or row["kind"] == "axiom":
                     continue
@@ -441,7 +456,8 @@ def report(product, require_complete=False):
                                  row.get("formationArgument"), row.get("transportPathType"), row.get("pinnedLiftCoherenceRefuter"),
                                  row.get("strictLogicalConsequence"), row.get("strictLogicalConsequenceWitness"),
                                  row.get("strictEquivalenceWitness"), row.get("representativeRefuter"),
-                                 row.get("refinedQuotientConsequence"), row.get("originalTypeGap")])
+                                 row.get("refinedQuotientConsequence"), row.get("originalTypeGap"),
+                                 "true" if row.get("importAllOriginalTypeChecked") else ""])
         reductions = stage / "init-public-reductions.tsv"
         with reductions.open("w", newline="") as f:
             writer = csv.writer(f, delimiter="\t", lineterminator="\n")
