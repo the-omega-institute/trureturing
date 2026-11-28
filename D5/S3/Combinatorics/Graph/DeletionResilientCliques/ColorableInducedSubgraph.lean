@@ -131,15 +131,6 @@ private theorem card_ordersAtRanks_mul {V : Type*} [Fintype V] [DecidableEq V]
       simp_rw [card_filter_equiv (localRank B _)]
       simp [Nat.mul_comm]
 
-/-- Every two ranks are attained by equally many orders for a fixed vertex. -/
-private theorem card_ordersAtRank_eq {V : Type*} [Fintype V] [DecidableEq V]
-    (B : Finset V) (x : B) (i j : Fin B.card) :
-    (ordersAtRanks B x {i}).card = (ordersAtRanks B x {j}).card := by
-  have hpos : 0 < B.card := Finset.card_pos.mpr ⟨x.val, x.property⟩
-  apply Nat.eq_of_mul_eq_mul_right hpos
-  rw [card_ordersAtRanks_mul, card_ordersAtRanks_mul, Finset.card_singleton,
-    Finset.card_singleton]
-
 private theorem exists_card_ge_of_counts {V Ω : Type*} [Fintype V] [Fintype Ω]
     [Nonempty Ω] [DecidableEq V] (X : Ω → Finset V) (weight : V → ℚ)
     (hcount : ∀ v : V, ((Finset.univ.filter fun e => v ∈ X e).card : ℚ) =
