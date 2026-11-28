@@ -1,10 +1,10 @@
 import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
-import D5.S3.Combinatorics.Matroids.QTransversalDirectSum
+import D5.S3.Combinatorics.Matroids.Transversal.QTransversalDirectSum
 
 /-! The concatenated rank as a source observation on the combined subspace. -/
 
-namespace Reg.D5.S3.Combinatorics.Matroids.QTransversalDirectSum
+namespace Reg.D5.S3.Combinatorics.Matroids.Transversal.QTransversalDirectSum
 
 open LeanInformationAudit Module Submodule
 open _root_.D5.S3.Combinatorics.Matroids.QTransversalRepresentability
@@ -120,7 +120,7 @@ def registration :
       (@fulcher_conjecture_4_8) (Realization signature) Unit Unit where
   unitName :=
     `D5.S3.Combinatorics.Matroids.QTransversalRepresentability.fulcher_conjecture_4_8.__information_unit
-  realizationName := `Reg.D5.S3.Combinatorics.Matroids.QTransversalDirectSum.source_registration
+  realizationName := `Reg.D5.S3.Combinatorics.Matroids.Transversal.QTransversalDirectSum.source_registration
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -136,7 +136,7 @@ def registration :
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Combinatorics.Matroids.QTransversalDirectSum
+    owner := `D5.S3.Combinatorics.Matroids.Transversal.QTransversalDirectSum
     definition := none
     coordinates := #[0, 3, 4, 5, 6, 7, 8]
     readouts := #[{
@@ -151,4 +151,4 @@ def registration :
   options := #[]
 
 end
-end Reg.D5.S3.Combinatorics.Matroids.QTransversalDirectSum
+end Reg.D5.S3.Combinatorics.Matroids.Transversal.QTransversalDirectSum

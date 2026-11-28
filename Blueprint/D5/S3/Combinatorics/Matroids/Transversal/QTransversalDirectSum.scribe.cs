@@ -2,11 +2,11 @@ using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Matroids;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Matroids.Transversal;
 
 internal sealed class QTransversalDirectSumDocument : IScribeDocumentDefinition
 {
-    private const string Module = "D5/S3/Combinatorics/Matroids/QTransversalDirectSum";
+    private const string Module = "D5/S3/Combinatorics/Matroids/Transversal/QTransversalDirectSum";
     private static readonly LibraryNoteRef Source =
         LibraryNoteRef.Create("D5/L/FiniteGeometry/fulcher2026cyclicflatembedding");
 
@@ -43,10 +43,7 @@ internal sealed class QTransversalDirectSumDocument : IScribeDocumentDefinition
                         + "at most the sum of the projected codimensions. "
                         + "In the other direction, use a minimizer for the concatenated presentation as W "
                         + "and bound each factor rank by the slot count at its full projected space."))),
-                DescribeRole.Theorem,
-                new OpenProblemResolutionClaim(
-                    ProblemSlugRef.Create("fulcher-2026-transversal-q-matroid-direct-sum"),
-                    ResolutionKind.Proved)))));
+                DescribeRole.Theorem))));
 
     private static DocumentBlock Definition(string name, string label, string description) =>
         Describe.Lean(DescribeId.Create(name.ToLowerInvariant()),

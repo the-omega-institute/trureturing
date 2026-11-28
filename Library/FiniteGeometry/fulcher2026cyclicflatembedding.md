@@ -7,7 +7,7 @@ doi: 10.48550/arXiv.2603.13550
 url: https://arxiv.org/abs/2603.13550v1
 claim: The direct sum of transversal q-matroids has the concatenation of the lifted presentations.
 strata_touched:
-  - D5/S3/Combinatorics/Matroids/QTransversalDirectSum
+  - D5/S3/Combinatorics/Matroids/Transversal/QTransversalDirectSum
 license: citation-only
 triage: anchor
 ---
