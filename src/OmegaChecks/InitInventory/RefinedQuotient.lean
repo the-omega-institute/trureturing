@@ -68,6 +68,11 @@ public def sites := [
   (`Init.Grind.Ring.Envelope, ``Ring.OfSemiring.add),
   (`Init.Grind.Ring.Envelope, ``Ring.OfSemiring.sub),
   (`Init.Grind.Ring.Envelope, ``Ring.OfSemiring.mul),
+  (`Init.Grind.Ring.Envelope, ``Ring.OfSemiring.nsmul),
+  (`Init.Grind.Ring.Envelope, ``Ring.OfSemiring.zsmul),
+  (`Init.Grind.Ring.Envelope, ``Ring.OfSemiring.npow),
+  (`Init.Grind.Module.Envelope, ``IntModule.OfNatModule.nsmul),
+  (`Init.Grind.Module.Envelope, ``IntModule.OfNatModule.zsmul),
   (`Init.Grind.Module.Envelope, ``IntModule.OfNatModule.add),
   (`Init.Grind.Module.Envelope, ``IntModule.OfNatModule.sub)]
 
@@ -116,7 +121,18 @@ public def certify (official witnesses : Environment) (owner : Name) (source : C
     | throw <| IO.userError "missing arithmetic instance"
   let op := mkApp2 (mkConst source.name [0]) (mkConst ``Nat) inst
   let .ok opType := Kernel.check official {} op | throw <| IO.userError "bad arithmetic specialization"
-  let .ok (.forallE _ operand _ _) := Kernel.whnf official {} opType | throw <| IO.userError "expected binary operation"
+  -- Double a representative or square it. Both operations send (1,1) to (2,2).
+  let two := mkRawNatLit 2
+  let pow := source.name == ``Ring.OfSemiring.npow
+  let fixedScalar := match source.name with
+    | ``Ring.OfSemiring.zsmul | ``IntModule.OfNatModule.zsmul => some (mkApp (mkConst ``Int.ofNat) two)
+    | ``Ring.OfSemiring.nsmul | ``IntModule.OfNatModule.nsmul => some two
+    | _ => none
+  let scalarAction := fixedScalar.map (mkApp op)
+  let .ok partialType := scalarAction.elim (.ok opType) (Kernel.check official {})
+    | throw <| IO.userError "bad scalar specialization"
+  let .ok (.forallE _ operand _ _) := Kernel.whnf official {} partialType
+    | throw <| IO.userError "expected an envelope argument"
   let .ok quotient := Kernel.whnf official {} operand | throw <| IO.userError "invalid envelope carrier"
   unless quotient.isAppOfArity ``Quot 2 && Kernel.isDefEqGuarded official {} quotient.appFn!.appArg! natPair do
     throw <| IO.userError "incorrect representative type"
@@ -126,8 +142,15 @@ public def certify (official witnesses : Environment) (owner : Name) (source : C
   unless Kernel.isDefEqGuarded witnesses {} relation canonical do
     throw <| IO.userError "unexpected relation on the pair envelope"
   let mk := mkApp2 (mkConst ``Quot.mk [1]) natPair relation
-  for (input, expected) in [(0, if source.name == ``Ring.OfSemiring.mul then 0 else 1), (1, 2)] do
-    let call := mkApp2 op (mkApp mk (pair input)) (mkApp mk (pair 1))
+  let firstOutput := if pow || fixedScalar.isSome || source.name == ``Ring.OfSemiring.mul then 0 else 1
+  for (input, expected) in [(0, firstOutput), (1, 2)] do
+    let point := mkApp mk (pair input)
+    let call := match scalarAction with
+      | some act => mkApp act point
+      | none => mkApp2 op point (if pow then two else mkApp mk (pair 1))
+    let .ok resultType := Kernel.check official {} call | throw <| IO.userError "invalid arithmetic application"
+    unless Kernel.isDefEqGuarded official {} resultType operand do
+      throw <| IO.userError "arithmetic application has the wrong result type"
     let .ok result := Kernel.whnf official {} call | throw <| IO.userError "invalid envelope application"
     unless result.isAppOfArity ``Quot.mk 3 && Kernel.isDefEqGuarded official {} result.appFn! mk &&
         Kernel.isDefEqGuarded official {} result.appArg! (pair expected) do throw <| IO.userError s!"wrong result at {input}"
