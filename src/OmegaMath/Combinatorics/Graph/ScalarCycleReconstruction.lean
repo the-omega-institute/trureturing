@@ -253,4 +253,3 @@ theorem Walk.IsCycle.exists_scalar_gain_obstruction {a : V} {c : G.Walk a a} (hc
   exact (lt_irrefl _) htotal
 
 end SimpleGraph
-

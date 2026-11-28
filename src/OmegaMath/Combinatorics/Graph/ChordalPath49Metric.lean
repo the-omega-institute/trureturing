@@ -196,4 +196,3 @@ theorem metric_obstruction_from_words {n k : ℕ} (f : ℕ → ℕ → H)
     simpa only [Nat.cast_one, hmul] using hd
 
 end ChordalPath49
-

@@ -151,4 +151,3 @@ theorem right_isometric (gU : Generates U) (hu : ∀ u ∈ U, u⁻¹ ∈ U)
     length_conj gU hn]
 
 end GroupWordMetric
-

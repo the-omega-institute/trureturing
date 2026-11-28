@@ -93,24 +93,7 @@ def ball : Fin 33 → H := ![0, generator 0, generator 1, generator 2, generator
 def Unit (x : H) : Prop := ∃ i : Fin 33, ball i = x
 instance (x : H) : Decidable (Unit x) := inferInstanceAs (Decidable (∃ i : Fin 33, ball i = x))
 
-theorem ball_distinct : ∀ i j : Fin 33, ball i = ball j → i = j := by decide
-
 theorem gain_reverse : ∀ u v : V, gain v u = -gain u v := by decide
-
-theorem gain_on_chords : ∀ i : Fin 11, gain (chord i).1 (chord i).2 = basis i := by decide
-
-theorem tree_gains : gain 0 1 = 0 ∧ gain 0 2 = 0 ∧ gain 0 3 = 0 ∧ gain 0 4 = 0 ∧
-    gain 0 5 = 0 ∧ gain 0 6 = 0 ∧ gain 1 7 = 0 := by decide
-
-theorem increasing_triangles : ∀ a b c : V, a < b → b < c →
-    (graph.Adj a b ∧ graph.Adj b c ∧ graph.Adj a c ↔
-      ∃ t : Fin 16, triangle t = (a,b,c)) := by decide
-
-theorem triangle_defects : ∀ t : Fin 16,
-    gain (triangle t).1 (triangle t).2.1 + gain (triangle t).2.1 (triangle t).2.2 -
-      gain (triangle t).1 (triangle t).2.2 = generator t := by decide
-
-theorem generators_nonzero : ∀ t : Fin 16, generator t ≠ 0 := by decide
 
 /-- Covers all orientations, not just the sixteen increasing ones. -/
 theorem all_triangle_defects_unit : ∀ a b c : V,
@@ -130,10 +113,7 @@ theorem clique_bags :
 
 theorem bag_sizes : ∀ k : Fin 5, (bag k).card = 4 := by decide
 
-theorem bag_antichain : ∀ i j : Fin 5, bag i ⊆ bag j → i = j := by decide
-
-/-- Reverse numerical order eliminates all four leaves before the root clique.
-This finite condition checks the full later-neighbour clique property. -/
+/-- Simpliciality in reverse numerical order. -/
 theorem elimination_cliques : ∀ z x y : V, x.val ≤ z.val → y.val ≤ z.val →
     graph.Adj z x → graph.Adj z y → x ≠ y → graph.Adj x y := by
   -- Numerical order is reversed below: later means smaller vertex label.
@@ -181,13 +161,6 @@ theorem clique_card_le_four (s : Finset V) (hs : graph.IsClique (s : Set V)) :
     s.card ≤ 4 := by
   obtain ⟨k, hk⟩ := clique_bags.1 s (fun u hu v hv hne => hs hu hv hne)
   exact (Finset.card_le_card hk).trans_eq (bag_sizes k)
-
-def orientedEdges : Finset (V × V) :=
-  Finset.univ.filter (fun e => e.1 < e.2 ∧ graph.Adj e.1 e.2)
-
-theorem edge_count : orientedEdges.card = 18 := by decide
-
-theorem group_card : Fintype.card H = 8 ^ 11 := by simp [H]
 
 theorem ball_neg : ∀ i : Fin 33, Unit (-ball i) := by decide
 
@@ -356,7 +329,7 @@ theorem triple_cover : rootPairs.all (fun ab => decide (∀ c : Fin 33,
       (rootPairs.drop 90 |>.take 10) ++ (rootPairs.drop 100 |>.take 10) := rfl
   refine (congrArg (fun xs => xs.all (fun ab => decide (∀ c : Fin 33,
     EdgeUnit 1 ab.1 c → EdgeUnit 4 ab.2 c → (ab.1,ab.2,c) ∈ rootTriples))) blocks).trans ?_
-  simp only [List.all_append, 
+  simp only [List.all_append,
     triple_cover_part_0, triple_cover_part_1, triple_cover_part_2, triple_cover_part_3, triple_cover_part_4, triple_cover_part_5,
     triple_cover_part_6, triple_cover_part_7, triple_cover_part_8, triple_cover_part_9, triple_cover_part_10, Bool.and_self]
 
@@ -499,7 +472,7 @@ theorem no_root_extension : rootTriples.all (fun t => decide (¬
      Leaf 3 8 (ball t.1) (ball t.2.2) ∧
      Leaf 6 9 (ball t.2.1) (ball t.2.2) ∧
      Leaf 7 10 (ball t.2.1 - ball t.1) (ball t.2.2 - ball t.1))))) blocks).trans ?_
-  simp only [List.all_append, 
+  simp only [List.all_append,
     no_root_extension_part_0, no_root_extension_part_1, no_root_extension_part_2, no_root_extension_part_3, no_root_extension_part_4, no_root_extension_part_5,
     no_root_extension_part_6, no_root_extension_part_7, no_root_extension_part_8, no_root_extension_part_9, no_root_extension_part_10, no_root_extension_part_11, no_root_extension_part_12, no_root_extension_part_13, no_root_extension_part_14, no_root_extension_part_15, no_root_extension_part_16, Bool.and_self]
 

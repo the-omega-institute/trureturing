@@ -69,10 +69,6 @@ theorem defect_bound (g : V → V → E) (ε : ℝ) (hε : 0 ≤ ε)
     simpa [diag_zero g hrev, hrev u v] using hε
   convert htri t u v (htu hu) (huv h) (htv hv) using 1
   abel
-theorem star_residual {S : Finset V} (hS : S.Nonempty) (g : V → V → E) (u v : V) :
-    g u v - (mean S (fun t => g t v) - mean S (fun t => g t u)) =
-      mean S (fun t => g u v - (g t v - g t u)) := by
-  rw [mean_sub, const_sub_mean hS]
 noncomputable def bag [Finite V] (S : Set V) : Finset V :=
   S.toFinite.toFinset
 @[simp] theorem mem_bag [Finite V] {x : V} {S : Set V} : x ∈ bag S ↔ x ∈ S := by

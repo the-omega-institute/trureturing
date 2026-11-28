@@ -82,7 +82,13 @@ internal sealed class ChordalBanachExactStrataDocument : IScribeDocumentDefiniti
                 "Assign each fresh vertex a convex combination of the mean separator label and an independently chosen Jung center. At separator sizes three and five the blend balances the bounds on old–new and new–new edges. Empty separators allow a fresh clique potential, and running intersection glues the bag potentials."),
             Result("group-clique-number", "exists_clique_number_group_gain_potential", "A group bound from clique number",
                 "For any finite chordal graph whose cliques have at most k vertices, inverse group gains of triangle defect at most epsilon admit a potential of edge error at most k minus one times epsilon. The subtraction is truncated at zero.",
-                "When the graph has no triangles the gains integrate exactly. The two-factor construction handles clique cutoffs three and four. The universal four-defect bound handles higher cutoffs."))));
+                "When the graph has no triangles the gains integrate exactly. The two-factor construction handles clique cutoffs three and four. The universal four-defect bound handles higher cutoffs."),
+            Result("banach-overlap", "cliqueTree_banach_two", "Banach reconstruction with controlled consecutive separators",
+                "In a finite rooted clique tree, permit root attachments of any size and separators of size at most three. A separator of size four through six may follow one of size at most two. A separator of size four or five may also follow one that shares at most one vertex with it. Then all edge residuals are bounded by twice the triangle defect in any real seminormed vector space.",
+                "Vertices born together have residual at most the triangle defect. After a separator of size at most two the old–new bound is three halves of the defect. Separate weights on inherited and fresh separator vertices preserve these estimates through all allowed attachments."),
+            Result("rolling-span-one", "exists_potential", "Banach reconstruction on span-one rolling clique graphs",
+                "For M at least two and arbitrary depth and copy count, skew gains on the span-one rolling clique graph in any real seminormed vector space have a potential with every edge error at most two minus two over M squared times the triangle defect.",
+                "Every cross-block edge links an older block to its immediate child. Average all M squared retained labels in that parent. Internal edges have residual at most one defect, and on each cross-block edge one summand vanishes."))));
 
     private static DocumentBlock.Describe Result(string id, string declaration, string heading,
         params string[] paragraphs) =>

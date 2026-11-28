@@ -262,4 +262,3 @@ theorem exists_banach_gain_potential {k : ℕ} (hk : 0 < k)
 
 end RootedAncestors
 end SimpleGraph
-

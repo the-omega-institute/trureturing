@@ -36,6 +36,8 @@ import OmegaMath.Combinatorics.Graph.ChordalEightVertexMetric
 import OmegaMath.Combinatorics.Graph.CliqueTreeRadiusForm
 import OmegaMath.Combinatorics.Graph.CliqueTreeGroupSeparator
 import OmegaMath.Combinatorics.Graph.CliqueTreeL1Separator
+import OmegaMath.Combinatorics.Graph.CliqueTreeBanachOverlap
+import OmegaMath.Combinatorics.Graph.RollingSpanOne
 import D5.S3.Combinatorics.Graph.Chordal.Dirac
 
 /-! # Chordal reconstruction strata
@@ -44,7 +46,6 @@ Scalar reconstruction is determined by circumference. A single modular cochain
 decides universal abelian word-budget feasibility. Root-path coherence,
 finite Hilbert centers and noncommutative clique orderings give further bounds.
 -/
-
 namespace SimpleGraph.GainReduction
 
 universe u
@@ -96,7 +97,6 @@ theorem finite_modulus_decides_abelian_reconstruction [Finite V] [LinearOrder V]
   · intro h
     exact h _ (canonical G T) _ (fun v w _ => canonical_rev v w) Set.Subset.rfl
 end SimpleGraph.GainReduction
-
 namespace SimpleGraph
 
 variable {V E : Type*} [SeminormedAddCommGroup E] [NormedSpace ℝ E]
@@ -113,7 +113,6 @@ theorem IsTree.exists_ancestor_banach_gain_potential {S : SimpleGraph V}
       ‖g v w - (p w - p v)‖ ≤ (2 - 2 / (k : ℝ)) * ε :=
   (RootedAncestors.ofTree hS root).exists_banach_gain_potential hk g ε hε hrev htri
 end SimpleGraph
-
 namespace SimpleGraph
 
 open scoped Pointwise
@@ -198,7 +197,6 @@ theorem IsChordal.exists_clique_five_group_gain_potential [Finite V] (hG : G.IsC
   rw [residual_distance] at he
   exact_mod_cast he
 end SimpleGraph
-
 namespace SimpleGraph
 
 variable {V : Type*} {G : SimpleGraph V}
@@ -304,7 +302,6 @@ theorem IsChordal.scalar_circumference_exact [Finite V] (hG : G.IsChordal)
       linarith
   · simpa only [← hcL] using hc.exists_scalar_gain_obstruction
 end SimpleGraph
-
 namespace SimpleGraph
 
 variable {V H : Type*} [Group H] {G : SimpleGraph V}
@@ -350,7 +347,6 @@ theorem IsChordal.exists_radius_approximate_gain_potential [Finite V]
   obtain ⟨φ, hφ⟩ := hG.exists_biinvariant_gain_potential_of_radius hconn o r hrad g hε hrev htri
   exact ⟨φ, fun a b hab => by rw [gain_error_eq_fit]; exact hφ a b hab⟩
 end SimpleGraph
-
 namespace SimpleGraph
 
 universe u v
@@ -388,7 +384,6 @@ theorem IsChordal.exists_hilbert_jung_gain_potential
     exact ⟨c, fun x hx => hc ⟨x, hx⟩⟩
   · exact ⟨0, fun x hx => (hs ⟨x, hx⟩).elim⟩
 end SimpleGraph
-
 namespace SimpleGraph
 
 /-- The separator recurrence gives an exact expression for the upper bound at finite height. -/
@@ -414,7 +409,6 @@ theorem cliqueTree_height_banach_gain_potential {V I E : Type*} [Finite V] [Fini
   have hh := hφ a b hab
   rwa [show 2 * h / 2 = h by omega, cliqueTreeRadius_closed_form hq] at hh
 end SimpleGraph
-
 namespace SimpleGraph.BanachPathPower
 
 /-- Width one is exact. Width two has optimal coefficient one. Every larger width
@@ -453,7 +447,6 @@ theorem pathPower_group_exact_strata (k : ℕ) (hk : 1 ≤ k) (C : ℝ) :
       refine ⟨p, fun a b hab => (hp a b hab).trans ?_⟩
       simpa [B, show k ≠ 1 by omega, show k ≠ 2 by omega] using hC
 end SimpleGraph.BanachPathPower
-
 namespace SimpleGraph
 
 open MeasureTheory
@@ -491,7 +484,6 @@ theorem IsChordal.exists_l1_jung_gain_potential [Finite V] (hG : G.IsChordal)
     ring
   exact ⟨p, fun a b hab => he ▸ hp a b hab⟩
 end SimpleGraph
-
 namespace SimpleGraph
 
 /-- The universal bi-invariant group coefficient of a finite connected chordal graph
@@ -501,7 +493,6 @@ theorem IsChordal.group_coefficient_integral {V : Type*} [Finite V] [LinearOrder
     ∃ k : ℕ, k ≤ 4 ∧ ∀ C : ℝ, GroupCoefficient.Admissible G C ↔ (k : ℝ) ≤ C :=
   GroupCoefficient.integral hG hconn
 end SimpleGraph
-
 namespace SimpleGraph.BanachPathPower
 
 /-- The cyclic abelian witness gives exact error two on any width-three path with
@@ -533,7 +524,6 @@ theorem pathPower_width_three_cyclic_exact {n : ℕ} (hn : 14 ≤ n) :
     (fun s hs => clique_card_le_width_add_one hs) g (ε := 1) (by norm_num) hr htri
   exact ⟨g, hr, htri, ⟨p, by simpa only [mul_one] using hp⟩, hlow⟩
 end SimpleGraph.BanachPathPower
-
 namespace SimpleGraph
 
 open MeasureTheory
@@ -562,7 +552,6 @@ theorem l1_clique_four_exact {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω)
     obtain ⟨p, hp⟩ := hG.exists_l1_jung_gain_potential 1 (by decide) hc g 1 (by norm_num) hr ht
     exact ⟨p, fun a b hab => (by norm_num at hp; exact hp a b hab : ‖g a b - (p b - p a)‖ ≤ 1).trans hC⟩
 end SimpleGraph
-
 namespace SimpleGraph.BanachPathPower
 
 /-- The sub-two feasibility assertion for the normalized cyclic cochain on the
@@ -599,7 +588,6 @@ private theorem no_cyclic_subtwo_fit : ¬ subtwo_cyclic_path_claim := by
   simpa [x, y, f, ChordalPath49.skew, hab, sub_eq_add_neg, add_comm] using
     (ChordalPath49.word_iff_distance 1 x y).1 (by simpa using hunit)
 end SimpleGraph.BanachPathPower
-
 namespace SimpleGraph.PairRetention
 
 /-- The sharp extension recurrence and an exponential-length cycle give
@@ -626,7 +614,6 @@ theorem family_exact (m n D : ℕ) (hm : 3 ≤ m)
     obtain ⟨p, hp⟩ := hupper g hr ht
     exact ⟨p, fun a b hab => (hp a b hab).trans h⟩
 end SimpleGraph.PairRetention
-
 namespace SimpleGraph.BanachPathPower
 
 /-- Every finite family in the target gives a lower bound on a uniform
@@ -663,7 +650,6 @@ theorem powerPath_uniform_ge_doubled_radius {E : Type*} [SeminormedAddCommGroup 
     simpa [mul_comm] using (div_lt_iff₀ (sub_pos.mpr hlt)).1 hM
   linarith [ha.trans (hy a)]
 end SimpleGraph.BanachPathPower
-
 namespace SimpleGraph.BanachPathPower
 
 /-- Euclidean targets attain the regular-simplex obstruction in the supremum
@@ -674,7 +660,6 @@ theorem hilbert_powerPath_uniform_lower {k : ℕ} (hk : 0 < k) {C : ℝ} (hC : 0
   obtain ⟨x, hd, hr⟩ := FiniteHilbertJung.exists_diameter_one_simplex k hk
   exact powerPath_uniform_ge_doubled_radius hk hC hfit x hd hr
 end SimpleGraph.BanachPathPower
-
 namespace SimpleGraph.BanachPathPower
 
 /-- At each positive even width, a finite-dimensional real L1 target attains
@@ -699,7 +684,6 @@ theorem l1_even_powerPath_exact (m : ℕ) (hm : 0 < m) (C : ℝ) :
     refine ⟨p, fun u v huv => (hp u v huv).trans ?_⟩
     simpa [Nat.cast_mul] using hC
 end SimpleGraph.BanachPathPower
-
 namespace SimpleGraph.BanachPathPower
 
 open ChordalEightVertex in
@@ -709,12 +693,12 @@ theorem split_clique_four_group_witness :
     graph.IsChordal ∧ (∀ s : Finset V, graph.IsClique (s : Set V) → s.card ≤ 4) ∧
     (∃ A : Set V, graph.IsClique A ∧ graph.IsIndepSet Aᶜ) ∧
     (∀ u v w, graph.Adj u v → graph.Adj v w → graph.Adj u w →
-      Dist.dist (Multiplicative.ofAdd (gain u v + gain v w))
-        (Multiplicative.ofAdd (gain u w)) ≤ 1) ∧
+      Dist.dist (Multiplicative.ofAdd (ChordalEightVertex.gain u v + ChordalEightVertex.gain v w))
+        (Multiplicative.ofAdd (ChordalEightVertex.gain u w)) ≤ 1) ∧
     (∃ p : V → M, ∀ u v, graph.Adj u v →
-      Dist.dist (Multiplicative.ofAdd (gain u v)) ((p u)⁻¹ * p v) ≤ 2) ∧
+      Dist.dist (Multiplicative.ofAdd (ChordalEightVertex.gain u v)) ((p u)⁻¹ * p v) ≤ 2) ∧
     (∀ p : V → M, ∃ u v, graph.Adj u v ∧
-      2 ≤ Dist.dist (Multiplicative.ofAdd (gain u v)) ((p u)⁻¹ * p v)) := by
+      2 ≤ Dist.dist (Multiplicative.ofAdd (ChordalEightVertex.gain u v)) ((p u)⁻¹ * p v)) := by
   let := cayleyMetric
   let := cayley_left
   let := cayley_right
@@ -723,7 +707,7 @@ theorem split_clique_four_group_witness :
   have hd : graph.IsIndepSet Aᶜ := fun u hu v hv _ =>
     split_partition.2 u v (by exact Nat.le_of_not_lt hu) (by exact Nat.le_of_not_lt hv)
   obtain ⟨p, hp⟩ := (exists_two_approximate_gain_potential_of_split A hc hd
-    (fun u v => Multiplicative.ofAdd (gain u v)) 1 (by norm_num)
+    (fun u v => Multiplicative.ofAdd (ChordalEightVertex.gain u v)) 1 (by norm_num)
     (fun u v _ => congrArg Multiplicative.ofAdd (gain_reverse u v)) triangle_metric).2
   exact ⟨graph_chordal, clique_card_le_four, ⟨A, hc, hd⟩, triangle_metric,
     ⟨p, fun u v huv => by simpa using hp u v huv⟩, exists_metric_residual_ge_two⟩
@@ -733,7 +717,7 @@ open ChordalEightVertex in
 def subtwo_finite_group_claim : Prop :=
   subtwo_cyclic_path_claim ∨ (letI := cayleyMetric
     ∃ p : V → M, ∀ u v, graph.Adj u v →
-      Dist.dist (Multiplicative.ofAdd (gain u v)) ((p u)⁻¹ * p v) < 2)
+      Dist.dist (Multiplicative.ofAdd (ChordalEightVertex.gain u v)) ((p u)⁻¹ * p v) < 2)
 
 /-- Each of the finite abelian cochains obstructs a sub-two fit. -/
 theorem not_subtwo_finite_group : ¬ subtwo_finite_group_claim := by
@@ -778,7 +762,6 @@ theorem l1_uniform_jung_exact (m k : ℕ) (hm : 0 < m) (hmk : 2 * m ≤ k)
     exact ⟨c, fun a ha => (hc a ha).trans (by simpa using h)⟩
 
 end ChordalL1
-
 namespace SimpleGraph.CliqueTreeGroupSeparator
 open Classical
 universe u v w
@@ -841,7 +824,6 @@ theorem cliqueTree_separator_group_potential [Finite V]
       rw [he]; exact hf
   · exact ⟨fun _ => 1, fun x => (hv ⟨x⟩).elim⟩
 end SimpleGraph.CliqueTreeGroupSeparator
-
 namespace SimpleGraph.CliqueTreeL1Separator
 
 open MeasureTheory
@@ -884,7 +866,6 @@ theorem cliqueTree_l1_separator_potential [Finite V] [Finite I]
       (fun h => hK.clique r hn.choose_spec hv h)).trans
         (by simpa using mul_le_mul_of_nonneg_right hR hε)
 end SimpleGraph.CliqueTreeL1Separator
-
 namespace SimpleGraph
 
 variable {V H : Type*} [Group H] [PseudoMetricSpace H]
@@ -914,7 +895,11 @@ theorem IsChordal.exists_clique_number_group_gain_potential [Finite V] (hG : G.I
       have := hk s hcl
       omega
     obtain ⟨p, hp⟩ := hG.exists_gain_potential g hr flat
-    exact ⟨p, fun a b hab => by rw [hp a b hab, dist_self]; positivity⟩
+    refine ⟨p, fun a b hab => ?_⟩
+    rw [hp a b hab]
+    have hz : Dist.dist ((p a)⁻¹ * p b) ((p a)⁻¹ * p b) = 0 := _root_.dist_self _
+    rw [hz]
+    positivity
   · have enlarge {C : ℝ} (hC : C ≤ (↑(k - 1 : ℕ) : ℝ))
         (h : ∃ p : V → H, ∀ a b, G.Adj a b →
           Dist.dist (g a b) ((p a)⁻¹ * p b) ≤ C * ε) :
@@ -928,3 +913,33 @@ theorem IsChordal.exists_clique_number_group_gain_potential [Finite V] (hG : G.I
     · exact enlarge (by exact_mod_cast (show 4 ≤ k - 1 by omega))
         (hG.exists_uniform_approximate_gain_potential g ε hε hr ht)
 end SimpleGraph
+namespace SimpleGraph.CliqueTreeBanachOverlap
+universe u v w
+variable {V : Type u} {I : Type w} {G : SimpleGraph V} {T : SimpleGraph I} {K : I → Set V}
+variable {E : Type v} [SeminormedAddCommGroup E] [NormedSpace ℝ E]
+
+open CliqueTreeL1Separator
+
+/-- Arbitrary finite clique-tree Banach upper bound two under the mixed separator rules. -/
+theorem cliqueTree_banach_two [Finite V] [Finite I] (hK : IsCliqueTree T G K)
+    (r : I) (hsep : ∀ a, a ≠ r → Allowed K r (rootParent hK.isTree r) a)
+    (g : V → V → E) (ε : ℝ) (hε : 0 ≤ ε)
+    (hrev : ∀ i j, g j i = -g i j) (htri : TriangleFlat G g ε) :
+    ∃ φ : V → E, ∀ u v, G.Adj u v → ‖g u v - (φ v - φ u)‖ ≤ 2 * ε := by
+  exact rooted_banach_two hK r (rootParent hK.isTree r)
+    (rooted_layers hK.isTree r).choose_spec.1 (rooted_layers hK.isTree r).choose_spec.2
+    hsep g ε hε hrev htri
+end SimpleGraph.CliqueTreeBanachOverlap
+
+namespace Omega.RollingCliques.SpanOne
+variable {M n k : ℕ} {hM : 2 ≤ M} {E : Type*} [SeminormedAddCommGroup E] [NormedSpace ℝ E]
+
+/-- Reconstruction on span-one rolling clique graphs has coefficient two minus two over M squared. -/
+theorem exists_potential (g : Vertex M n k hM → Vertex M n k hM → E)
+    (ε : ℝ) (hε : 0 ≤ ε) (hrev : ∀ u v, g v u = -g u v)
+    (htri : ∀ u v z, (graph M n k hM).Adj u v → (graph M n k hM).Adj v z →
+      (graph M n k hM).Adj u z → ‖g u v + g v z - g u z‖ ≤ ε) :
+    ∃ φ : Vertex M n k hM → E, ∀ u v, (graph M n k hM).Adj u v →
+      ‖g u v - (φ v - φ u)‖ ≤ (2 - 2 / (M : ℝ)^2) * ε :=
+  ⟨fun v => potential g v.1 v.2, potential_bound g ε hε hrev htri⟩
+end Omega.RollingCliques.SpanOne

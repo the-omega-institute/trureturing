@@ -112,4 +112,3 @@ theorem exists_integral_residuals_of_modular_potential [LinearOrder V]
   exact sub_eq_zero.mp (Int.eq_zero_of_abs_lt_dvd hdvd hbound)
 
 end SimpleGraph.GainReduction
-

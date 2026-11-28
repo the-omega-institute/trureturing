@@ -26,11 +26,7 @@ noncomputable def route (hT : T.IsTree) (r a : I) : T.Walk r a :=
 theorem route_path (hT : T.IsTree) (r a : I) : (route hT r a).IsPath :=
   (hT.existsUnique_path r a).exists.choose_spec
 
-theorem route_prefix (hT : T.IsTree) (r a : I) (j : ℕ) :
-    route hT r ((route hT r a).getVert j) = (route hT r a).take j :=
-  (hT.existsUnique_path r _).unique (route_path hT _ _) ((route_path hT _ _).take j)
-
-/-- Public reproduction of the route-adjacency argument; no private declaration is used. -/
+/-- Adjacent bags extend one another’s root paths by one edge. -/
 theorem route_adj (hT : T.IsTree) (r : I) {a b : I} (h : T.Adj a b) :
     route hT r b = (route hT r a).concat h ∨
       route hT r a = (route hT r b).concat h.symm := by

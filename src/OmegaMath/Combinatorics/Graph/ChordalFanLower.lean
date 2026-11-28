@@ -161,4 +161,3 @@ theorem exists_chordal_clique_three_normed_gain_obstruction
     simpa [g, hx, hF, hFx, Real.norm_eq_abs] using h
 
 end SimpleGraph
-

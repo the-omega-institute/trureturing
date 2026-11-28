@@ -79,7 +79,7 @@ private abbrev evenL1Law (R : Realization sig) : Prop :=
     (0 ≤ C ∧ ∀ n, SimpleGraph.PairRetention.Upper (pathPower n (2 * m))
       (PiLp 1 (fun _ : ChordalL1.BalancedCutCoordinate m => ℝ)) C) ↔ R.readout () () m ≤ C
 
-private def evenL1Actual : Realization sig :=
+private noncomputable def evenL1Actual : Realization sig :=
   realize sig (fun _ _ m => 2 - 2 / (2 * (m : ℝ))) (fun e => nomatch e)
 
 private abbrev evenL1Arena : Arena := ⟨sig, evenL1Law⟩
@@ -95,7 +95,7 @@ private theorem evenL1Dependence : ObservationalDependence sig evenL1Actual := b
   refine ⟨(), 1, 2, ?_⟩
   norm_num [evenL1Actual, realize]
 
-def evenL1Family : Registration evenL1Arena (type_of% (@l1_even_powerPath_exact)) where
+noncomputable def evenL1Family : Registration evenL1Arena (type_of% (@l1_even_powerPath_exact)) where
   actual := evenL1Actual
   bridge := Iff.rfl
   variation := ⟨l1_even_powerPath_exact, rejected, evenL1Rejected⟩

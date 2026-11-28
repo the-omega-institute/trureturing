@@ -220,4 +220,3 @@ theorem integral [Finite V] [LinearOrder V] (hG : G.IsChordal) (hconn : G.Connec
     exact hh.trans hC
 
 end SimpleGraph.GroupCoefficient
-
