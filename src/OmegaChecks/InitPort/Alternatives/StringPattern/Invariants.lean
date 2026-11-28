@@ -32,6 +32,10 @@ public theorem prefixFunction.go._proof_3 :
     type_of% (private_decl% @_root_.String.Slice.Pattern.Model.ForwardSliceSearcher.prefixFunction.go._proof_3) :=
   private_decl% @_root_.String.Slice.Pattern.Model.ForwardSliceSearcher.prefixFunction.go._proof_1
 
+public theorem prefixFunction.go._proof_4 :
+    type_of% (private_decl% @_root_.String.Slice.Pattern.Model.ForwardSliceSearcher.prefixFunction.go._proof_4) :=
+  @prefixFunction.go._proof_1
+
 open _root_.String.Slice.Pattern.Model.ForwardSliceSearcher
 
 public theorem prefixFunction.le_go_iff :
