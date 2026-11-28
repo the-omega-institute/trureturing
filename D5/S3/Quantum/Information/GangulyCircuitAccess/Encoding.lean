@@ -6,6 +6,20 @@
    utility: none
    digest: Two distinct logical pure states have the same circuit-authorized reduction. -/
 
+/-
+Admission basis: open-problem-resolution (https://github.com/the-omega-institute/trureturing/issues/35163).
+The retained public theorem consumers are witness_encoding_isometry →
+DealerCode.witness_proposition8, witness_reduced_density_eq →
+Recovery.witness_no_common_recovery, and logical_x_distinct →
+Recovery.witness_no_common_recovery. logical_x_pure is retained as the
+checked pure-state support for the two operational inputs. Direct frozen
+dependencies: none. Four-slot escape registration was attempted for each
+retained public theorem. No enrolled template matches these finite matrix,
+isometry, or reduction declarations, so the unfinished audit is disclosed at
+the linked issue with the missing realization, variation, and sensitivity
+evidence named there.
+-/
+
 import D5.S3.Quantum.Information.GangulyCircuitAccess.Combinatorial
 import Mathlib.Analysis.Real.Sqrt
 import Mathlib.Basic.Complex.Basic

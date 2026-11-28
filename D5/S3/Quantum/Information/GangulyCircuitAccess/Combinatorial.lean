@@ -3,8 +3,25 @@
    mirror-B: D5/B/S3/Quantum/Information/GangulyCircuitAccess/Combinatorial
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Information/GangulyCircuitAccess/Combinatorial.dealerImageClaim; result=D5/S3/Quantum/Information/GangulyCircuitAccess/Combinatorial.witness_dealer_image_refutation; claim=D5/S3/Quantum/Information/GangulyCircuitAccess/Combinatorial.dealerImageClaim
+   utility: none
    digest: A seven-vertex circuit-access witness has a proper dealer image. -/
+
+/-
+Admission basis: open-problem-resolution (https://github.com/the-omega-institute/trureturing/issues/35163).
+The concrete circuit and dealer-image certificates below support the seven-vertex
+recovery refutation. The universal settlement is owned by Recovery.result.
+The retained public theorem consumers are quantumAccess_of_generators →
+witness_quantum_access, witness_circuit → witness_authorized,
+witness_signed_cross_zero → Encoding.witness_reduced_density_eq,
+witness_signed_gram → Encoding.witness_encoding_isometry, and
+witness_dealer_surjective → DealerCode.witness_proposition8. The concrete
+witness_dealer_image certificate is retained as an independent witness check.
+Direct frozen dependencies: none. Four-slot escape registration was attempted
+for each retained public theorem. No enrolled template matches these finite
+graph, circuit, dealer-image, or sign-certificate declarations, so the
+unfinished audit is disclosed at the linked issue with the missing
+realization, variation, and sensitivity evidence named there.
+-/
 
 import Mathlib.Combinatorics.SimpleGraph.AdjMatrix
 import Mathlib.Data.Fintype.Pi
@@ -74,13 +91,6 @@ def circuitAuthorized {n : ℕ} (M : Matrix (Fin n) (Fin n) (ZMod 2))
 def quantumAccess {n : ℕ} (M : Matrix (Fin n) (Fin n) (ZMod 2)) (d : Fin n) : Prop :=
   (∃ A, circuitAuthorized M d A) ∧
     ∀ A B, circuitAuthorized M d A → circuitAuthorized M d B → (A ∩ B).Nonempty
-
-/-- Supersets on the player set preserve membership. -/
-theorem circuitAuthorized_mono {n : ℕ} {M : Matrix (Fin n) (Fin n) (ZMod 2)}
-    {d : Fin n} {A B : Finset (Fin n)} (hA : circuitAuthorized M d A)
-    (hAB : A ⊆ B) (hB : d ∉ B) : circuitAuthorized M d B := by
-  obtain ⟨_, x, hx, hsub⟩ := hA
-  exact ⟨hB, x, hx, hsub.trans hAB⟩
 
 /-- Checking the circuit generators suffices for the full access antecedent. -/
 theorem quantumAccess_of_generators {n : ℕ} {M : Matrix (Fin n) (Fin n) (ZMod 2)}
@@ -178,26 +188,6 @@ theorem witness_quantum_access : quantumAccess witnessMatrix witnessDealer := by
   obtain ⟨hiS, hiT⟩ := Finset.mem_inter.mp hi
   exact ⟨i, Finset.mem_inter.mpr ⟨hSX hiS, hTY hiT⟩⟩
 
-/-- The universal inclusion in the full-dealer-image family. -/
-def dealerImageClaim : Prop :=
-  ∀ (n : ℕ) (G : SimpleGraph (Fin n)) [DecidableRel G.Adj] (d : Fin n),
-    quantumAccess (G.adjMatrix (ZMod 2)) d →
-    ∀ A, circuitAuthorized (G.adjMatrix (ZMod 2)) d A →
-      dealerImage (G.adjMatrix (ZMod 2)) d A = Set.univ
-
-theorem witness_dealer_image_refutation : ¬ dealerImageClaim := by
-  intro h
-  have hFull := h 7 witnessGraph witnessDealer witness_quantum_access
-    witnessPlayers witness_authorized
-  have hLabel : ((1, 0) : ZMod 2 × ZMod 2) ∈ dealerImage witnessMatrix
-      witnessDealer witnessPlayers := by
-    rw [hFull]
-    exact Set.mem_univ _
-  rw [witness_dealer_image] at hLabel
-  rw [Set.mem_insert_iff, Set.mem_singleton_iff] at hLabel
-  exact (show ¬ (((1, 0) : ZMod 2 × ZMod 2) = (0, 0) ∨
-    ((1, 0) : ZMod 2 × ZMod 2) = (0, 1)) from by decide) hLabel
-
 def discarded {n : ℕ} (d : Fin n) (A : Finset (Fin n)) : Finset (Fin n) :=
   Finset.univ \ insert d A
 
@@ -253,7 +243,6 @@ theorem witness_dealer_surjective :
 #print axioms witness_dealer_image
 #print axioms witness_signed_gram
 #print axioms witness_dealer_surjective
-#print axioms witness_dealer_image_refutation
 #print axioms witness_signed_cross_zero
 
 end D5.S3.Quantum.Information.GangulyCircuitAccess

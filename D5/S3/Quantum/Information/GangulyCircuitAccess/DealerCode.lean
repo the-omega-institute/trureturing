@@ -6,6 +6,18 @@
    utility: none
    digest: The witness dealer slices span the shortened graph stabilizer code. -/
 
+/-
+Admission basis: open-problem-resolution (https://github.com/the-omega-institute/trureturing/issues/35163).
+witness_proposition8 is the checked seven-vertex correspondence with
+Proposition 8(2–3). It consumes the isometry, dealer-surjectivity, and the
+same-delivery graph-state identities. It is an independent source bridge and
+is not a proof-term dependency of Recovery.result. Direct frozen dependencies:
+none. Four-slot escape registration was attempted for this public theorem. No
+enrolled template matches the finite graph-state correspondence, so the
+unfinished audit is disclosed at the linked issue with the missing
+realization, variation, and sensitivity evidence named there.
+-/
+
 import D5.S3.Quantum.Information.GangulyCircuitAccess.Encoding
 import Mathlib.Tactic.LinearCombination
 

@@ -114,7 +114,7 @@ Lean statement: `D5/S3/Quantum/Information/GangulyCircuitAccess/Combinatorial.ci
 
 *Commentary.*
 
-A is circuit-authorized when d is outside A and some dealer circuit has its unsigned player support contained in A. The finite upward closure of the full generator family equals that of its inclusion-minimal members, as in Definition 3 and Lemma 9.
+A is circuit-authorized when d is outside A and some dealer circuit has its unsigned player support contained in A.
 
 **Definition 1.9 (Quantum access antecedent).**
 
@@ -130,21 +130,7 @@ Lean statement: `D5/S3/Quantum/Information/GangulyCircuitAccess/Combinatorial.qu
 
 At least one player set is circuit-authorized, and every two circuit-authorized sets have nonempty intersection, including when the sets are equal. Upward closure is built into circuit authorization.
 
-**Theorem 1.10 (Upward closure on the players).**
-
-Lean statement: `D5/S3/Quantum/Information/GangulyCircuitAccess/Combinatorial.circuitAuthorized_mono`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/GangulyCircuitAccess/Combinatorial.circuitAuthorized_mono` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* Sayantan Ganguly (2026). *Symplectic Matroids, Stabilizer Codes, and Quantum Secret-Sharing*. DOI: [10.48550/arXiv.2611.27300](https://doi.org/10.48550/arXiv.2611.27300). URL: <https://arxiv.org/abs/2611.27300v2>.
-
-*Commentary.*
-
-For any binary matrix M and dealer d, if A is circuit-authorized, A is contained in B and d is outside B, then B is circuit-authorized.
-
-**Theorem 1.11 (Checking access on generators).**
+**Theorem 1.10 (Checking access on generators).**
 
 Lean statement: `D5/S3/Quantum/Information/GangulyCircuitAccess/Combinatorial.quantumAccess_of_generators`
 
@@ -158,7 +144,7 @@ Lean statement: `D5/S3/Quantum/Information/GangulyCircuitAccess/Combinatorial.qu
 
 For any binary matrix M and dealer d, assume a dealer circuit exists and the player supports of every pair of dealer circuits intersect. Then the circuit-induced family satisfies the quantum access antecedent.
 
-**Definition 1.12 (Labels supported on players and dealer).**
+**Definition 1.11 (Labels supported on players and dealer).**
 
 Lean statement: `D5/S3/Quantum/Information/GangulyCircuitAccess/Combinatorial.supportedAt`
 
@@ -172,7 +158,7 @@ Lean statement: `D5/S3/Quantum/Information/GangulyCircuitAccess/Combinatorial.su
 
 The pair (x, Mx) is supported on A together with d when both coordinates vanish at every vertex outside the union.
 
-**Definition 1.13 (Attainable dealer labels).**
+**Definition 1.12 (Attainable dealer labels).**
 
 Lean statement: `D5/S3/Quantum/Information/GangulyCircuitAccess/Combinatorial.dealerImage`
 
@@ -186,7 +172,7 @@ Lean statement: `D5/S3/Quantum/Information/GangulyCircuitAccess/Combinatorial.de
 
 Take the set of pairs (x(d), (Mx)(d)) as x ranges over binary configurations with both label components supported on A together with d.
 
-**Definition 1.14 (Edges of the witness).**
+**Definition 1.13 (Edges of the witness).**
 
 Lean statement: `D5/S3/Quantum/Information/GangulyCircuitAccess/Combinatorial.witnessEdges`
 
@@ -200,7 +186,7 @@ Lean statement: `D5/S3/Quantum/Information/GangulyCircuitAccess/Combinatorial.wi
 
 The unordered edges are 01, 02, 04, 06, 12, 13, 16, 23, 25, 45, 46 and 56. Each edge is stored as its smaller vertex followed by its larger vertex.
 
-**Definition 1.15 (The simple witness graph).**
+**Definition 1.14 (The simple witness graph).**
 
 Lean statement: `D5/S3/Quantum/Information/GangulyCircuitAccess/Combinatorial.witnessGraph`
 
@@ -214,7 +200,7 @@ Lean statement: `D5/S3/Quantum/Information/GangulyCircuitAccess/Combinatorial.wi
 
 The vertex set is Fin(7). Two vertices are adjacent when their ordered pair or its reversal is in the displayed edge set.
 
-**Definition 1.16 (The dealer).**
+**Definition 1.15 (The dealer).**
 
 Lean statement: `D5/S3/Quantum/Information/GangulyCircuitAccess/Combinatorial.witnessDealer`
 
@@ -228,7 +214,7 @@ Lean statement: `D5/S3/Quantum/Information/GangulyCircuitAccess/Combinatorial.wi
 
 The dealer is vertex 4.
 
-**Definition 1.17 (The retained players).**
+**Definition 1.16 (The retained players).**
 
 Lean statement: `D5/S3/Quantum/Information/GangulyCircuitAccess/Combinatorial.witnessPlayers`
 
@@ -242,7 +228,7 @@ Lean statement: `D5/S3/Quantum/Information/GangulyCircuitAccess/Combinatorial.wi
 
 The retained set A consists of vertices 2, 5 and 6.
 
-**Definition 1.18 (Binary adjacency matrix).**
+**Definition 1.17 (Binary adjacency matrix).**
 
 Lean statement: `D5/S3/Quantum/Information/GangulyCircuitAccess/Combinatorial.witnessMatrix`
 
@@ -256,7 +242,7 @@ Lean statement: `D5/S3/Quantum/Information/GangulyCircuitAccess/Combinatorial.wi
 
 The matrix M is the adjacency matrix of the witness graph over ZMod(2).
 
-**Definition 1.19 (The circuit relation vector).**
+**Definition 1.18 (The circuit relation vector).**
 
 Lean statement: `D5/S3/Quantum/Information/GangulyCircuitAccess/Combinatorial.witnessRelation`
 
@@ -270,7 +256,7 @@ Lean statement: `D5/S3/Quantum/Information/GangulyCircuitAccess/Combinatorial.wi
 
 The vector x has value one at vertex 5 and zero at every other vertex.
 
-**Theorem 1.20 (A dealer circuit).**
+**Theorem 1.19 (A dealer circuit).**
 
 Lean statement: `D5/S3/Quantum/Information/GangulyCircuitAccess/Combinatorial.witness_circuit`
 
@@ -284,7 +270,7 @@ Lean statement: `D5/S3/Quantum/Information/GangulyCircuitAccess/Combinatorial.wi
 
 The displayed vector is a dealer circuit for the witness matrix and dealer. Its signed support is {2, 4, 5*, 6}. Minimality is checked against all 128 binary relation vectors.
 
-**Theorem 1.21 (Circuit authorization for the retained players).**
+**Theorem 1.20 (Circuit authorization for the retained players).**
 
 Lean statement: `D5/S3/Quantum/Information/GangulyCircuitAccess/Combinatorial.witness_authorized`
 
@@ -298,7 +284,7 @@ Lean statement: `D5/S3/Quantum/Information/GangulyCircuitAccess/Combinatorial.wi
 
 The witness relation gives a circuit meeting dealer 4 whose other vertices belong to A.
 
-**Theorem 1.22 (A proper dealer image).**
+**Theorem 1.21 (A proper dealer image).**
 
 Lean statement: `D5/S3/Quantum/Information/GangulyCircuitAccess/Combinatorial.witness_dealer_image`
 
@@ -312,7 +298,7 @@ Lean statement: `D5/S3/Quantum/Information/GangulyCircuitAccess/Combinatorial.wi
 
 The image on the retained set is exactly {(0, 0), (0, 1)}. Setting x(0), x(1) and x(3) to zero and requiring the same rows of Mx to vanish leaves x(5) free and forces x(2), x(4) and x(6) to zero.
 
-**Theorem 1.23 (Quantum access for the circuit family).**
+**Theorem 1.22 (Quantum access for the circuit family).**
 
 Lean statement: `D5/S3/Quantum/Information/GangulyCircuitAccess/Combinatorial.witness_quantum_access`
 
@@ -326,35 +312,7 @@ Lean statement: `D5/S3/Quantum/Information/GangulyCircuitAccess/Combinatorial.wi
 
 The witness matrix and dealer satisfy the quantum access antecedent. Every admissible nonempty dealer relation contains one of the ten listed supports 026, 036, 056, 236, 256, 356, 0123, 0125, 0135 and 1235. Each pair of these supports intersects.
 
-**Definition 1.24 (Universal full dealer image under circuit access).**
-
-Lean statement: `D5/S3/Quantum/Information/GangulyCircuitAccess/Combinatorial.dealerImageClaim`
-
-*Formalization.* `D5/S3/Quantum/Information/GangulyCircuitAccess/Combinatorial.dealerImageClaim` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* Sayantan Ganguly (2026). *Symplectic Matroids, Stabilizer Codes, and Quantum Secret-Sharing*. DOI: [10.48550/arXiv.2611.27300](https://doi.org/10.48550/arXiv.2611.27300). URL: <https://arxiv.org/abs/2611.27300v2>.
-
-*Commentary.*
-
-For every finite simple graph with decidable adjacency and every dealer, assume the quantum access antecedent for the binary adjacency matrix. The claim asks that every circuit-authorized set have the full two-coordinate dealer image.
-
-**Theorem 1.25 (Refutation of the full dealer image claim).**
-
-Lean statement: `D5/S3/Quantum/Information/GangulyCircuitAccess/Combinatorial.witness_dealer_image_refutation`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/GangulyCircuitAccess/Combinatorial.witness_dealer_image_refutation` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* Sayantan Ganguly (2026). *Symplectic Matroids, Stabilizer Codes, and Quantum Secret-Sharing*. DOI: [10.48550/arXiv.2611.27300](https://doi.org/10.48550/arXiv.2611.27300). URL: <https://arxiv.org/abs/2611.27300v2>.
-
-*Commentary.*
-
-The universal full dealer image claim is false. The witness image omits (1, 0).
-
-**Definition 1.26 (Discarded players).**
+**Definition 1.23 (Discarded players).**
 
 Lean statement: `D5/S3/Quantum/Information/GangulyCircuitAccess/Combinatorial.discarded`
 
@@ -368,7 +326,7 @@ Lean statement: `D5/S3/Quantum/Information/GangulyCircuitAccess/Combinatorial.di
 
 Remove the dealer and all retained vertices from Fin(n). For the witness the discarded vertices are {0, 1, 3}.
 
-**Definition 1.27 (Configuration on a player register).**
+**Definition 1.24 (Configuration on a player register).**
 
 Lean statement: `D5/S3/Quantum/Information/GangulyCircuitAccess/Combinatorial.Config`
 
@@ -382,7 +340,7 @@ Lean statement: `D5/S3/Quantum/Information/GangulyCircuitAccess/Combinatorial.Co
 
 A configuration on a vertex set assigns an element of Fin(2) to each vertex in that set.
 
-**Definition 1.28 (Joint configuration with dealer).**
+**Definition 1.25 (Joint configuration with dealer).**
 
 Lean statement: `D5/S3/Quantum/Information/GangulyCircuitAccess/Combinatorial.fullConfig`
 
@@ -396,7 +354,7 @@ Lean statement: `D5/S3/Quantum/Information/GangulyCircuitAccess/Combinatorial.fu
 
 For a discarded and retained configuration pair and a dealer bit s, use s at d, the retained coordinate at vertices of A other than d, and the discarded coordinate at every remaining vertex.
 
-**Definition 1.29 (Quadratic graph phase).**
+**Definition 1.26 (Quadratic graph phase).**
 
 Lean statement: `D5/S3/Quantum/Information/GangulyCircuitAccess/Combinatorial.graphPhase`
 
@@ -410,7 +368,7 @@ Lean statement: `D5/S3/Quantum/Information/GangulyCircuitAccess/Combinatorial.gr
 
 For a matrix M and bit string z, sum M(i,j) z(i) z(j) over i < j in ZMod(2).
 
-**Definition 1.30 (Integer graph sign).**
+**Definition 1.27 (Integer graph sign).**
 
 Lean statement: `D5/S3/Quantum/Information/GangulyCircuitAccess/Combinatorial.signedGraphEntry`
 
@@ -424,7 +382,7 @@ Lean statement: `D5/S3/Quantum/Information/GangulyCircuitAccess/Combinatorial.si
 
 Raise minus one to the natural representative zero or one of the quadratic graph phase.
 
-**Theorem 1.31 (Vanishing mixed-column sums).**
+**Theorem 1.28 (Vanishing mixed-column sums).**
 
 Lean statement: `D5/S3/Quantum/Information/GangulyCircuitAccess/Combinatorial.witness_signed_cross_zero`
 
@@ -438,7 +396,7 @@ Lean statement: `D5/S3/Quantum/Information/GangulyCircuitAccess/Combinatorial.wi
 
 For every two retained configurations a and b, sum the product of the integer graph signs at (c,a,0) and (c,b,1) over all discarded configurations c. Each of the 64 sums, with eight terms each, equals zero.
 
-**Theorem 1.32 (The integer Gram matrix).**
+**Theorem 1.29 (The integer Gram matrix).**
 
 Lean statement: `D5/S3/Quantum/Information/GangulyCircuitAccess/Combinatorial.witness_signed_gram`
 
@@ -452,7 +410,7 @@ Lean statement: `D5/S3/Quantum/Information/GangulyCircuitAccess/Combinatorial.wi
 
 For each pair of dealer bits s and t, sum the product of their two signs over all pairs of discarded and retained configurations. The sum is 64 when s = t and zero otherwise.
 
-**Theorem 1.33 (All labels on the dealer before restricting support).**
+**Theorem 1.30 (All labels on the dealer before restricting support).**
 
 Lean statement: `D5/S3/Quantum/Information/GangulyCircuitAccess/Combinatorial.witness_dealer_surjective`
 
@@ -472,10 +430,8 @@ The map from all binary configurations to their dealer pair (x(4), (Mx)(4)) is s
 - Truth anchor: `D5/S3/Quantum/Information/GangulyCircuitAccess/Combinatorial.Config`
 - Truth anchor: `D5/S3/Quantum/Information/GangulyCircuitAccess/Combinatorial.admissible`
 - Truth anchor: `D5/S3/Quantum/Information/GangulyCircuitAccess/Combinatorial.circuitAuthorized`
-- Truth anchor: `D5/S3/Quantum/Information/GangulyCircuitAccess/Combinatorial.circuitAuthorized_mono`
 - Truth anchor: `D5/S3/Quantum/Information/GangulyCircuitAccess/Combinatorial.dealerCircuit`
 - Truth anchor: `D5/S3/Quantum/Information/GangulyCircuitAccess/Combinatorial.dealerImage`
-- Truth anchor: `D5/S3/Quantum/Information/GangulyCircuitAccess/Combinatorial.dealerImageClaim`
 - Truth anchor: `D5/S3/Quantum/Information/GangulyCircuitAccess/Combinatorial.discarded`
 - Truth anchor: `D5/S3/Quantum/Information/GangulyCircuitAccess/Combinatorial.fullConfig`
 - Truth anchor: `D5/S3/Quantum/Information/GangulyCircuitAccess/Combinatorial.graphPhase`
@@ -496,7 +452,6 @@ The map from all binary configurations to their dealer pair (x(4), (Mx)(4)) is s
 - Truth anchor: `D5/S3/Quantum/Information/GangulyCircuitAccess/Combinatorial.witness_authorized`
 - Truth anchor: `D5/S3/Quantum/Information/GangulyCircuitAccess/Combinatorial.witness_circuit`
 - Truth anchor: `D5/S3/Quantum/Information/GangulyCircuitAccess/Combinatorial.witness_dealer_image`
-- Truth anchor: `D5/S3/Quantum/Information/GangulyCircuitAccess/Combinatorial.witness_dealer_image_refutation`
 - Truth anchor: `D5/S3/Quantum/Information/GangulyCircuitAccess/Combinatorial.witness_dealer_surjective`
 - Truth anchor: `D5/S3/Quantum/Information/GangulyCircuitAccess/Combinatorial.witness_quantum_access`
 - Truth anchor: `D5/S3/Quantum/Information/GangulyCircuitAccess/Combinatorial.witness_signed_cross_zero`
