@@ -62,8 +62,8 @@ internal sealed class CouplingWassersteinEqualityDocument : IScribeDocumentDefin
         Node(name, title, prose, DescribeRole.Theorem);
 
     private static DocumentBlock Node(string name, string title, string prose, DescribeRole role) =>
-        Describe.Lean(DescribeId.Create("bsfwone-" + name.ToLowerInvariant()),
-            DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromLean(),
+        Describe.Lean(DescribeId.Create("bsfwone-" + name.ToLowerInvariant().Replace('_', '-')),
+            DeclarationHandle.Create(Prefix + name), H(title), StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), role);
 
     private static Formula Call(string name, params Formula[] args) =>

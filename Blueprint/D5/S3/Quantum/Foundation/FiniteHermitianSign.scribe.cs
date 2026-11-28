@@ -28,7 +28,7 @@ internal sealed class FiniteHermitianSignDocument : IScribeDocumentDefinition
         Node(name, title, prose, DescribeRole.Definition);
 
     private static DocumentBlock Node(string name, string title, string prose, DescribeRole role) =>
-        Describe.Lean(DescribeId.Create("finite-sign-" + name.ToLowerInvariant()),
-            DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromLean(),
+        Describe.Lean(DescribeId.Create("finite-sign-" + name.ToLowerInvariant().Replace('_', '-')),
+            DeclarationHandle.Create(Prefix + name), H(title), StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), role);
 }
