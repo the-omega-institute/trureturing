@@ -23,9 +23,7 @@ port_definition WellFounded.fixF
 port_proof WellFounded.fixF_eq
 port_definition WellFounded.fix
 port_proof WellFounded.fix_eq
-port_inductive WellFoundedRelation
-port_definition WellFoundedRelation.rel
-port_proof WellFoundedRelation.wf
+port_native_records WellFoundedRelation
 port_private_declaration Nat.lt_wfRel.match_1
 port_proof Nat.lt_wfRel._proof_3 by_constructive_casts
 port_definition Nat.lt_wfRel with_native_code

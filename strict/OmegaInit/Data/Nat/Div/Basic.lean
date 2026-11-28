@@ -343,3 +343,9 @@ port_proof Nat.mul_div_cancel_left by_constructive_casts
 namespace Nat
 export _root_.Omega.Nat (div_self mod_self mul_div_cancel_left mul_mod_mul_left)
 end Nat
+
+port_proof Nat.add_mul_mod_self_right by_constructive_casts
+
+namespace Nat
+export _root_.Omega.Nat (add_mul_mod_self_right)
+end Nat

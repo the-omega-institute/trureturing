@@ -657,3 +657,18 @@ port_definition Subrelation
 port_proof Sum.inl.inj
 port_proof Sum.inr.inj
 port_proof Option.some.inj
+
+port_prop_record Std.IdempotentOp
+port_prop_record Std.LeftIdentity
+port_prop_record Std.RightIdentity
+port_native_records Std.LawfulLeftIdentity, Std.LawfulRightIdentity, Std.Identity
+port_proof Std.Identity.toRightIdentity
+port_native_records Std.LawfulIdentity
+
+attribute [instance] Omega.Std.LawfulLeftIdentity.toLeftIdentity
+attribute [instance] Omega.Std.LawfulRightIdentity.toRightIdentity
+attribute [instance] Omega.Std.Identity.toLeftIdentity
+attribute [instance] Omega.Std.Identity.toRightIdentity
+attribute [instance] Omega.Std.LawfulIdentity.toIdentity
+attribute [instance] Omega.Std.LawfulIdentity.toLawfulLeftIdentity
+attribute [instance] Omega.Std.LawfulIdentity.toLawfulRightIdentity
