@@ -31,7 +31,7 @@ UNSAFE_OBSERVERS = {
 }
 
 
-ENVELOPE_CANCELLATION = {
+ENVELOPE_COUNTEREXAMPLES = {
     ("Init.Grind.Ring.Envelope", "Lean.Grind.Ring.OfSemiring.neg_add_cancel"): "theorem",
     ("Init.Grind.Module.Envelope", "Lean.Grind.IntModule.OfNatModule.neg_add_cancel"): "theorem",
     ("Init.Grind.Ring.Envelope", "Lean.Grind.Ring.OfSemiring.ofSemiring"): "definition",
@@ -40,6 +40,10 @@ ENVELOPE_CANCELLATION = {
     ("Init.Grind.Module.Envelope", "Lean.Grind.IntModule.OfNatModule.add_zsmul"): "theorem",
     ("Init.Grind.Module.Envelope", "Lean.Grind.IntModule.OfNatModule.instIsPartialOrderQ"): "theorem",
     ("Init.Grind.Module.Envelope", "Lean.Grind.IntModule.OfNatModule.instIsLinearOrderQ"): "theorem",
+    ("Init.Grind.Ring.Envelope", "Lean.Grind.Ring.OfSemiring.add.eq_1"): "theorem",
+    ("Init.Grind.Ring.Envelope", "Lean.Grind.Ring.OfSemiring.sub.eq_1"): "theorem",
+    ("Init.Grind.Ring.Envelope", "Lean.Grind.Ring.OfSemiring.mul.eq_1"): "theorem",
+    ("Init.Grind.Ring.Envelope", "Lean.Grind.Ring.OfSemiring.neg.eq_1"): "theorem",
 }
 
 
@@ -143,9 +147,9 @@ def check_coverage(official):
             suffix = {"Quotient.sound": "refuteSound", "instSubsingletonSquash": "refuteSquash",
                       "Quotient.decidableEq": "refutePositiveDecision"}.get(target)
             expected_kind = "definition" if path or decision else "theorem"
-            if site in ENVELOPE_CANCELLATION:
+            if site in ENVELOPE_COUNTEREXAMPLES:
                 suffix = "refuteEnvelopeCancellation"
-                expected_kind = ENVELOPE_CANCELLATION[site]
+                expected_kind = ENVELOPE_COUNTEREXAMPLES[site]
             elif owner != "Init.Core":
                 suffix = None
             if (not suffix or certified_model != (target, refuter) or

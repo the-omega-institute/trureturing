@@ -331,7 +331,8 @@ private def checkComputation (env : Environment) (elim : ConstantInfo) : Meta.Me
       unless arg.equal a do throwError "wrong representative in the branch of {elim.name}"
 
 public def refuter? (owner name : Name) : Option Name := do
-  if (EnvelopeCancellation.observation? owner name).isSome then return ``refuteEnvelopeCancellation
+  if (EnvelopeCancellation.observation? owner name).isSome || EnvelopeCancellation.isLiftEquation owner name then
+    return ``refuteEnvelopeCancellation
   guard (owner == `Init.Core)
   if name == ``Quotient.sound then some ``refuteSound
   else if name == ``instSubsingletonSquash then some ``refuteSquash
