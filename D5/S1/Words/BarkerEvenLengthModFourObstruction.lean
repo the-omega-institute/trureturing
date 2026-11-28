@@ -5,7 +5,13 @@
    anchors: []
    digest: Mod-four congruences obstruct even Barker lengths; finite words witness fidelity. -/
 
-import Mathlib
+import Mathlib.Algebra.BigOperators.ModEq
+import Mathlib.Algebra.Order.Group.Unbundled.Int
+import Mathlib.Algebra.Ring.Parity
+import Mathlib.Tactic.IntervalCases
+import Mathlib.Tactic.NormNum.ModEq
+import Mathlib.Tactic.NormNum.Parity
+import Mathlib.Tactic.Ring
 
 open scoped BigOperators
 
