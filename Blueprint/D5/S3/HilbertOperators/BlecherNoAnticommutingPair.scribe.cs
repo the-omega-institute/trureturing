@@ -78,7 +78,7 @@ internal sealed class BlecherNoAnticommutingPairDocument : IScribeDocumentDefini
         Formula closed = ForPair(true, Member(xy, a));
         Formula noncommutative = ForPair(false, Relation(xy, FormulaRelationOperator.NotEqual, yx));
         Formula badPair = ForPair(false, Logic(
-            Relation(xy, FormulaRelationOperator.Equal, Seq(Neg, Sp, Parenthesized(yx))),
+            Relation(xy, FormulaRelationOperator.Equal, new Formula.Negate(Parenthesized(yx))),
             FormulaLogicOperator.And, Relation(xy, FormulaRelationOperator.NotEqual, D(0))));
         Formula entries = Bind(Forall, i, Fin(k), Bind(Forall, j, Fin(k), Member(At(x, i, j), a)));
         Formula transposed = BindLambda(i, Fin(k), BindLambda(j, Fin(k), At(Name("Matrix", "transpose"), At(x, i, j))));
