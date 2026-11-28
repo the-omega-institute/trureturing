@@ -63,3 +63,10 @@ $k$, with $k=1$ giving the square.
 The same matrix-unit identities yield counterexamples over every field in
 each finite dimension at least two. The Lean model uses binary
 coefficients in dimension two.
+
+## ASSUMED-UNVERIFIED
+
+The accessible literature search found no earlier settlement of the
+versioned question under Definition 4.1. Search completeness and worldwide
+priority remain unverified.
+[Search scope and limitations](https://github.com/the-omega-institute/trureturing/issues/35242)

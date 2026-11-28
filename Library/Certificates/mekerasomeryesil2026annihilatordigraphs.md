@@ -14,9 +14,12 @@ triage: anchor
 
 # Nilpotent adjacency in the annihilator digraph
 
+## Verified locator
+
 Rasie Mekera, Defne Somer and Didem Yeşil, *Annihilator Digraphs and Extended
 Zero-Divisor Digraphs of Semigroups and Rings*, arXiv:2608.09243v2 (2026),
-§7, p. 17. [Versioned question](https://arxiv.org/html/2608.09243v2#S7.p2.1)
+§7, p. 17. [DOI](https://doi.org/10.48550/arXiv.2608.09243) ·
+[Versioned question](https://arxiv.org/html/2608.09243v2#S7.p2.1)
 
 The vertex set is the set of nonzero left or right zero divisors. For
 distinct vertices $x,y$, Definition 4.1 asks for either a left annihilator
