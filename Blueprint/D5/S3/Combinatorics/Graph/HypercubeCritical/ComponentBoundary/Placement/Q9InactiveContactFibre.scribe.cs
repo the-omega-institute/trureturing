@@ -63,6 +63,15 @@ internal sealed class Q9InactiveContactFibreDocument : IScribeDocumentDefinition
                 H("A linear free-edge bound in the number of holes"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("Small hole counts use the common-neighbour bound. At four to six holes the energy inequality controls the finite range left by subcubic degree. The degree bound suffices for larger hole counts. In particular the total is at most five times the number of holes plus one, and at six holes it is at most twenty-two."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("q9-five-axis-forbidden-eight"),
+                DeclarationHandle.Create(Placement + "Q9FiveAxisExcessCycles.no_mapped_excess"),
+                H("An eight-cycle rules out the local four- and five-hole excesses"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("In the five-bit representation, place the forbidden odd vertex at word eight and its two forced even holes at words zero and twenty-four. Enumerate the remaining holes and the opposite vertices with positive free degree at most three. After removing squares and hexagons, every support exceeding fourteen edges at four holes or nineteen edges at five holes contains the two four-step paths of the same eight-cycle type.")),
+                    Paragraph(Text("A representation respecting coordinate flips carries those two paths into the selected support. Their flip words have the same endpoint. Anticommuting the signed flip operators puts their products in opposite signs, contradicting balance."))),
                 DescribeRole.Theorem)),
         []));
 }
