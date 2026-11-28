@@ -2,7 +2,6 @@ name = "trureturing"
 version = "0.1.0"
 keywords = ["mathematics", "formalization"]
 defaultTargets = ["Trureturing"]
-testDriver = "omegaAudit"
 
 # Keep canonical Lean compiler processes single-threaded. Lake documents
 # weakLeanArgs as execution-only arguments excluded from build traces; -j1 is
@@ -20,42 +19,12 @@ name = "mathlib"
 scope = "leanprover-community"
 rev = "v4.35.0"
 
+[[require]]
+name = "omegamath"
+git = "https://github.com/the-omega-institute/omegamath"
+rev = "b3556e3c80f0d13ca66f812e578f5541ae0e36cb"
+
 [[lean_lib]]
 name = "Trureturing"
 roots = ["Trureturing", "D5"]
 globs = ["Trureturing", "D5.+"]
-
-[[lean_lib]]
-name = "OmegaInit"
-srcDir = "src"
-
-[[lean_lib]]
-name = "OmegaMathlib"
-srcDir = "src"
-
-[[lean_lib]]
-name = "OmegaMath"
-srcDir = "src"
-
-[[lean_lib]]
-name = "OmegaChecks"
-srcDir = "src"
-
-[[lean_lib]]
-name = "OmegaChecks.InitCompiler"
-srcDir = "src"
-
-[[lean_lib]]
-name = "OmegaBuild"
-srcDir = "src"
-roots = ["OmegaBuild.Commands"]
-
-[[lean_exe]]
-name = "omegaBackendPlan"
-root = "OmegaBuild.Plan"
-srcDir = "src"
-
-[[lean_exe]]
-name = "omegaAudit"
-root = "OmegaChecks.Audit"
-srcDir = "src"
