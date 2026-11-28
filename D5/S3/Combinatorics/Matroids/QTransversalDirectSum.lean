@@ -1,5 +1,5 @@
 /- GID: D5/S3/Combinatorics/Matroids/QTransversalDirectSum
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Combinatorics/Matroids/QTransversalDirectSum
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
