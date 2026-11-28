@@ -3,8 +3,8 @@
    mirror-B: D5/B/S3/Combinatorics/Graph/Chordal/Reconstruction/HilbertCliquePhaseReversal
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   utility: kind=none
-   digest: Hilbert gain bounds at clique numbers four and five, their strict separation from Banach and L1 bounds, and Euclidean reconstruction in dimensions two and three. -/
+   utility: none
+   digest: Hilbert and L1 clique separation and Euclidean chordal reconstruction. -/
 
 import OmegaBuild.Commands
 import OmegaMath.Combinatorics.Graph.HilbertTetrahedronInsertion
@@ -125,7 +125,7 @@ theorem hilbert_cliqueFour_phase_separation :
   have hS : HilbertCliqueUpper 4 (259 / 200) := by
     refine ⟨by norm_num, ?_⟩
     intro n G hG hcl H _ _ g hg ht
-    simpa only [mul_one] using hG.exists_cliqueFour_hilbert_gain_potential
+    simpa only [mul_one, PairRetention.residual] using hG.exists_cliqueFour_hilbert_gain_potential
       hcl g 1 zero_le_one hg ht
   have hb : BddBelow {C | HilbertCliqueUpper 4 C} := ⟨0, fun _ h => h.1⟩
   have hsqrt : Real.sqrt (2 - 2 / (3 : ℝ)) = 2 / Real.sqrt 3 := by
@@ -136,7 +136,8 @@ theorem hilbert_cliqueFour_phase_separation :
     simpa using (Real.sqrt_lt (by norm_num : (0 : ℝ) ≤ 3) (by norm_num : (0 : ℝ) ≤ 2)).2
       (by norm_num : (3 : ℝ) < 2 ^ 2)
   refine ⟨hOne, ?_, csInf_le hb hS, by norm_num, cliqueFour_banach_coefficient_bounds.1⟩
-  apply le_csInf ⟨_, hS⟩
+  unfold hilbertCliqueCoefficient
+  apply le_csInf (show {c | HilbertCliqueUpper 4 c}.Nonempty from ⟨_, hS⟩)
   intro c hc
   rw [← hsqrt]
   apply hilbert_powerPath_uniform_lower (k := 3) (by decide) hc.1
@@ -153,7 +154,7 @@ theorem hilbert_cliqueFive_phase_separation :
   have hS : HilbertCliqueUpper 5 (Real.sqrt (10275 / 4576)) := by
     refine ⟨Real.sqrt_nonneg _, ?_⟩
     intro n G hG hcl H _ _ g hg ht
-    simpa only [mul_one] using hG.exists_cliqueFive_hilbert_gain_potential
+    simpa only [mul_one, PairRetention.residual] using hG.exists_cliqueFive_hilbert_gain_potential
       hcl g 1 zero_le_one hg ht
   have hb : BddBelow {C | HilbertCliqueUpper 5 C} := ⟨0, fun _ h => h.1⟩
   refine ⟨csInf_le hb hS, ?_, by norm_num, ?_⟩

@@ -211,4 +211,3 @@ lemma child_closure {q t k S : ℝ} (hq : 0 ≤ q)
 
 end
 end HilbertTriangleInsertion
-
