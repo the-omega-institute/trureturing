@@ -29,7 +29,7 @@ internal sealed class ChiSquareBilinearFusionDocument : IScribeDocumentDefinitio
             Call("RowStochastic", q), Sp, Rightarrow, Sp,
             Capacity(Call("star", p, q)), Le, Sp,
             Capacity(p), Plus, Capacity(q), Plus,
-            new Formula.Number(14), Sp, Call("card", i), Sp, Capacity(p), Sp, Capacity(q));
+            new Formula.Number(13), Sp, Call("card", i), Sp, Capacity(p), Sp, Capacity(q));
         var tables = All("P", Seq(i, Sp, To, Sp, y, Sp, To, Sp, real),
             All("Q", Seq(i, Sp, To, Sp, z, Sp, To, Sp, real), estimate));
         var statement = All("I", type, All("Y", type, All("Z", type, Seq(
@@ -68,18 +68,18 @@ internal sealed class ChiSquareBilinearFusionDocument : IScribeDocumentDefinitio
                     Paragraph(Text(
                         "For a = x − 1 and b = r − 1, put A = E(a²), B = E(b²), c = E(ab), " +
                         "d = E(a²b), e = E(ab²), and H = E(x²r²)/E(xr) − 1. The rational estimate is " +
-                        "H ≤ A + B + (3 − A − B)c + 2d + 2e + 14nAB. On 1 + c ≥ 1/2 an exact " +
-                        "numerator expansion and Cauchy–Schwarz give a remainder at most 14nAB. On the " +
+                        "H ≤ A + B + (3 − A − B)c + 2d + 2e + 13nAB. On 1 + c ≥ 7/13 an exact " +
+                        "numerator expansion and Cauchy–Schwarz give a remainder at most 13nAB. On the " +
                         "complementary region, set z = −c and t = E|ab|. The zero-inclusive bound " +
-                        "H ≤ n(1+c) − 1 and z ≤ t ≤ 2AB bound the corrected remainder by " +
-                        "2nz + 4nt ≤ 12nAB, including zero overlap.")),
+                        "H ≤ n(1+c) − 1 and z ≤ t ≤ (13/6)AB bound the corrected remainder by " +
+                        "2nz + 4nt ≤ 13nAB, including zero overlap.")),
                     Paragraph(Text(
                         "Averaging over the two output-margin weights cancels the terms c, Ac, Bc, d and e " +
                         "by coordinate calibration. The average of AB factors into the two capacities. " +
                         "These auxiliary product weights do not replace the actual joint output margin, " +
                         "which is m_P(y)m_Q(z)E(x_y r_z). The exact ratio reconstruction gives the stated " +
                         "bound, independent of both output cardinalities. In particular, for n ≥ 2 one " +
-                        "may take the positive coefficient K_n = 14n.")),
+                        "may take the positive coefficient K_n = 13n.")),
                     Paragraph(Text(
                         "This finite-channel estimate is an ingredient for information combining and asymmetric " +
                         "noisy observations. The research anchor is the Gu–Polyanskiy Potts-model question on BP " +

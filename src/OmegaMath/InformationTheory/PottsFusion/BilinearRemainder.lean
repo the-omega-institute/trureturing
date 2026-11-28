@@ -31,7 +31,7 @@ theorem corrected_ratio_bilinear_bound
     (hnum : 1 / 2 ≤ 1 + c →
       (H + 1) * (1 + c) = 1 + S + 4 * c + 2 * d + 2 * e + f)
     (hglobal : H ≤ n * (1 + c) - 1) :
-    H ≤ S + ((3 - S) * c + 2 * d + 2 * e) + 14 * n * V := by
+    H ≤ S + ((3 - S) * c + 2 * d + 2 * e) + 13 * n * V := by
   let L : ℝ := (3 - S) * c + 2 * d + 2 * e
   let k : ℝ := n * V
   have hn0 : 0 ≤ n := by linarith only [hn]
@@ -58,7 +58,7 @@ theorem corrected_ratio_bilinear_bound
         mul_le_mul he hc (abs_nonneg c) (mul_nonneg hn0 ht0)
       _ = n * t ^ 2 := by ring
       _ ≤ n * V := mul_le_mul_of_nonneg_left ht hn0
-  by_cases hden : 1 / 2 ≤ 1 + c
+  by_cases hden : 7 / 13 ≤ 1 + c
   · have hpos : 0 < 1 + c := by linarith only [hden]
     have hSc : S * c ^ 2 ≤ 2 * n * V := by
       calc
@@ -84,29 +84,29 @@ theorem corrected_ratio_bilinear_bound
         (H - S - L) * (1 + c) =
             (H + 1) * (1 + c) - (1 + S + L) * (1 + c) := by ring
         _ = (1 + S + 4 * c + 2 * d + 2 * e + f) -
-            (1 + S + L) * (1 + c) := by rw [hnum hden]
+            (1 + S + L) * (1 + c) := by rw [hnum (by linarith only [hden])]
         _ = f - L * c := by dsimp only [L]; ring
     have hfloor := mul_nonneg hk0 (sub_nonneg.mpr hden)
-    have hmul : (H - S - L) * (1 + c) ≤ (14 * k) * (1 + c) := by
+    have hmul : (H - S - L) * (1 + c) ≤ (13 * k) * (1 + c) := by
       rw [hid]
       nlinarith only [hrem, hfloor, hk0]
-    have hlocal : H - S - L ≤ 14 * k := by
+    have hlocal : H - S - L ≤ 13 * k := by
       by_contra hnot
-      have hdiff : 0 < H - S - L - 14 * k := by linarith only [hnot]
+      have hdiff : 0 < H - S - L - 13 * k := by linarith only [hnot]
       have hp := mul_pos hdiff hpos
       nlinarith only [hp, hmul]
     dsimp only [L, k] at hlocal
     nlinarith only [hlocal]
-  · have hsmall : 1 + c < 1 / 2 := lt_of_not_ge hden
-    have ht_half : 1 / 2 ≤ t := by
+  · have hsmall : 1 + c < 7 / 13 := lt_of_not_ge hden
+    have ht_floor : 6 / 13 ≤ t := by
       have hcneg := neg_le_abs c
       linarith only [hsmall, hcneg, hc]
-    have htV : t ≤ 2 * V := by
-      have hp := mul_nonneg ht0 (show 0 ≤ t - 1 / 2 by linarith only [ht_half])
+    have htV : t ≤ (13 / 6) * V := by
+      have hp := mul_nonneg ht0 (show 0 ≤ t - 6 / 13 by linarith only [ht_floor])
       nlinarith only [hp, ht]
     let z : ℝ := -c
     have hcn : c < 0 := by linarith only [hsmall]
-    have hz_half : 1 / 2 < z := by
+    have hz_floor : 6 / 13 < z := by
       dsimp only [z]
       linarith only [hsmall]
     have hz_abs : |c| = z := by
@@ -128,31 +128,27 @@ theorem corrected_ratio_bilinear_bound
       dsimp only [L, z]
       nlinarith only [hglobal, hd_lo, he_lo]
     have hprod : 0 ≤ (n - 1) * (3 * z - 1) := by
-      exact mul_nonneg (by linarith only [hn]) (by linarith only [hz_half])
+      exact mul_nonneg (by linarith only [hn]) (by linarith only [hz_floor])
     have hSz : 0 ≤ S * (1 + z) := by
-      exact mul_nonneg hS0 (by linarith only [hz_half])
+      exact mul_nonneg hS0 (by linarith only [hz_floor])
     have hmid : n - 1 + (3 - n) * z - S * (1 + z) ≤ 2 * n * z := by
       nlinarith only [hprod, hSz]
     have hzt_mul : 2 * n * z ≤ 2 * n * t := by
       exact mul_le_mul_of_nonneg_left hzt (by nlinarith only [hn])
     have h6 : 2 * n * z + 4 * n * t ≤ 6 * n * t := by
       nlinarith only [hzt_mul]
-    have h12 : 6 * n * t ≤ 12 * n * V := by
+    have h13 : 6 * n * t ≤ 13 * k := by
       calc
-        6 * n * t ≤ (6 * n) * (2 * V) :=
+        6 * n * t ≤ (6 * n) * ((13 / 6) * V) :=
           mul_le_mul_of_nonneg_left htV (by nlinarith only [hn])
-        _ = 12 * n * V := by ring
-    have h14 : 12 * n * V ≤ 14 * k := by
-      dsimp only [k]
-      nlinarith only [hk0]
-    have hbad : H - S - L ≤ 14 * k := by
+        _ = 13 * k := by dsimp only [k]; ring
+    have hbad : H - S - L ≤ 13 * k := by
       calc
         H - S - L ≤ n - 1 + (3 - n) * z - S * (1 + z) + 4 * n * t := hbase
         _ ≤ 2 * n * z + 4 * n * t := by linarith only [hmid]
         _ ≤ 6 * n * t := h6
-        _ ≤ 12 * n * V := h12
-        _ ≤ 14 * k := h14
-    have hfinal : H ≤ S + L + 14 * k := by
+        _ ≤ 13 * k := h13
+    have hfinal : H ≤ S + L + 13 * k := by
       nlinarith only [hbad]
     simpa only [L, k, mul_assoc] using hfinal
 
