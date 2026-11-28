@@ -5,30 +5,31 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Analytic.GoldenTomography;
 internal sealed class FinitePronySecondMomentRangeDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Which second moments can agree with the same mass and mean?",
+        "Which means and second moments can a positive Prony family realize?",
         H("Attainable second moments of positive Prony families"),
         Blocks(Describe.Lean(DescribeId.Create("second-moment-range"),
             DeclarationHandle.Create(
                 "D5/S3/Analytic/GoldenTomography/FinitePronySecondMomentRange.finite_prony_second_moment_range"),
-            H("The second-moment interval and the minimum pole count"),
+            H("The second-moment interval and the minimum node count"),
             StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
             Blocks(
-                Paragraph(Text("Work over a linearly ordered field. Fix a positive mass M "
-                    + "and a mean x strictly between a and b. Consider finite families of "
-                    + "distinct nodes in the open interval with strictly positive weights "
-                    + "and moments of orders zero and one equal to M and M times x. Their "
-                    + "second moments range from M times x squared, inclusive, to M times "
-                    + "the quantity (a + b) x minus a b, exclusive. A realizing family "
+                Paragraph(Text("Over a linearly ordered field, let distinct nodes in the open interval (a, b) "
+                    + "have positive weights of total mass M. Their first moment M times x "
+                    + "forces a < x < b. For each such x, the feasible second moments run "
+                    + "from M times x squared, inclusive, to M times the quantity "
+                    + "(a + b) x minus a b, exclusive. A realizing family "
                     + "has one node if and only if its second moment equals the lower "
                     + "endpoint. Each interior second moment admits a two-node family. "
                     + "The minimum number of nodes realizing the full moment triple "
                     + "is one at the lower endpoint and two in the interior.")),
-                Paragraph(Text("The weighted sum of squared distances from the mean gives "
+                Paragraph(Text("The weighted sums of distances to the left and right endpoints "
+                    + "are M times (x − a) and M times (b − x). Positive mass supplies at "
+                    + "least one node, so these sums are strictly positive. The weighted "
+                    + "sum of squared distances from the mean gives "
                     + "the lower slack. If it vanishes, positivity forces every node to "
                     + "equal the mean. The upper slack is the weighted sum of the products "
                     + "of the two distances from each node to the interval endpoints. "
-                    + "Every summand is positive, and the positive mass implies there is "
-                    + "at least one node.")),
+                    + "Every summand is positive.")),
                 Paragraph(Text("For positive variance v, choose the left distance d halfway "
                     + "between v/(b − x) and x − a. The right distance e "
                     + "is v divided by d. Weights proportional to e and d center the two "

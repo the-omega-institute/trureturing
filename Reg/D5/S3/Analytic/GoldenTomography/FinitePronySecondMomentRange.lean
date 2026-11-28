@@ -33,10 +33,11 @@ private def rejected : Realization signature.{u} :=
 private abbrev arena : Arena.{u+1,u,0,u,0} where
   signature := signature
   Law R := ∀ {K : Type u} [field : Field K] [LinearOrder K] [IsStrictOrderedRing K]
-    {a b M x s : K} (_hM : 0 < M) (_ha : a < x) (_hb : x < b),
+    {a b M x s : K} (_hM : 0 < M),
     (∀ n, HasMoments n a b M x s →
-      M * x ^ 2 ≤ s ∧ s < M * ((a + b) * x - a * b) ∧ (s = M * x ^ 2 ↔ n = 1)) ∧
-    (M * R.readout () ⟨K, field⟩ x ≤ s ∧ s < M * ((a + b) * x - a * b) →
+      a < x ∧ x < b ∧ M * x ^ 2 ≤ s ∧ s < M * ((a + b) * x - a * b) ∧
+        (s = M * x ^ 2 ↔ n = 1)) ∧
+    (a < x ∧ x < b ∧ M * R.readout () ⟨K, field⟩ x ≤ s ∧ s < M * ((a + b) * x - a * b) →
       HasMoments (if s = M * x ^ 2 then 1 else 2) a b M x s)
 
 private instance liftedOrder : IsStrictOrderedRing (ULift.{u} ℚ) :=
@@ -47,15 +48,15 @@ private theorem rejected_law : ¬ arena.{u}.Law rejected.{u} := by
   intro h
   let K := ULift.{u} ℚ
   have hh := h (K := K) (a := -1) (b := 1) (M := 1) (x := 0) (s := -1)
-    (by decide) (by decide) (by decide)
+    (by decide)
   have hlower : (1 : K) * rejected.readout () ⟨K, inferInstance⟩ 0 ≤ -1 := by
     change (1 : K) * (-1) ≤ -1
     simp
   have hupper : (-1 : K) < 1 * ((-1 + 1) * 0 - (-1) * 1) := by
     rw [mul_zero, zero_sub, mul_one, one_mul, neg_neg]
     decide
-  have hrealization := hh.2 ⟨hlower, hupper⟩
-  have impossible := (hh.1 _ hrealization).1
+  have hrealization := hh.2 ⟨by decide, by decide, hlower, hupper⟩
+  have impossible := (hh.1 _ hrealization).2.2.1
   rw [zero_pow (by decide : 2 ≠ 0), mul_zero] at impossible
   exact (by decide : ¬ (0 : K) ≤ -1) impossible
 
@@ -106,7 +107,7 @@ def audit : Contract.Registration.{u+1,0,1,0,0,0,u+1,u,0,u,0,0}
     coordinates := #[0]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body",
-        "body", "body", "body", "body", "arg", "domain", "fn", "arg", "fn", "arg", "arg"]
+        "body", "body", "arg", "domain", "arg", "arg", "fn", "arg", "fn", "arg", "arg"]
       stateBinder := 7
       functionOperand := false
       stateOperand := none
