@@ -46,7 +46,7 @@ private theorem ramp_integral {n : ℕ} (hn : 1 ≤ n) {x : ℝ} (hnx : (n : ℝ
     rw [uIcc_of_le hnx] at ht
     exact ramp_eq_affine (by omega) ht.1
   rw [he, intervalIntegral.integral_const_mul,
-    intervalIntegral.integral_sub (intervalIntegrable_id.div_const _) intervalIntegrable_const,
+    intervalIntegral.integral_sub (intervalIntegral.intervalIntegrable_id.div_const _) intervalIntegrable_const,
     intervalIntegral.integral_div, integral_id, intervalIntegral.integral_const]
   simp only [smul_eq_mul, mul_one]
   field_simp [hn0.ne']

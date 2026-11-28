@@ -25,8 +25,8 @@ internal sealed class SmoothedChebyshevTransferDocument : IScribeDocumentDefinit
                         "Lambda(n)(x-n)^2/(2n) when 1 <= n <= x. A single finite " +
                         "support works throughout the integration interval. The ramp " +
                         "vanishes at its entry point, so integer and prime-power endpoints " +
-                        "require no correction. Integrating t log(t) gives the lower-endpoint " +
-                        "term (3/2 + gamma)/x. At x = 1 both sides equal -1/2.")),
+                        "require no correction. The logarithmic and linear moments together give " +
+                        "the lower-endpoint term (3/2 + gamma)/x. At x = 1 both sides equal -1/2.")),
                     Paragraph(Text(
                         "This identity transfers integrated estimates for U to the " +
                         "smoothed Chebyshev error without a new contour integral. " +

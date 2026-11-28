@@ -46,7 +46,7 @@ def family : Registration arena (type_of% @psi1_div_sub_half_eq_integrated_U) wh
     arena.Law actual rejected rejected_law
   dependence := by
     intro i
-    exact ⟨(), 0, 1, by norm_num [actual, realize]⟩
+    exact ⟨(), 1, 2, by norm_num [actual, realize]⟩
 
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     (@psi1_div_sub_half_eq_integrated_U) (Realization signature) Unit Unit where
