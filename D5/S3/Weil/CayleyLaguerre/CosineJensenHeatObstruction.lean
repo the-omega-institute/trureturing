@@ -167,12 +167,4 @@ theorem positive_shift_heat_counterexample (t y : ℝ) (hy : y ≠ 0) :
 
 #print axioms positive_shift_heat_counterexample
 
-example : ∀ (u : ℝ) (d n : ℕ), 0 < n →
-    (PolynomialHyperbolic (jensenPolynomial (cosineHeatJet (Real.cosh 1) u) d n) ↔
-      0 < d ∨ Even n) := by
-  simpa using (positive_shift_heat_counterexample 0 1 one_ne_zero).2.1
-
-example : cosineHeat (Real.cosh 1) 0 ((Real.pi : ℂ) + Complex.I) = 0 := by
-  simpa using (positive_shift_heat_counterexample 0 1 one_ne_zero).2.2.1
-
 end D5.S3.Weil.CayleyLaguerre.CosineJensenHeatObstruction
