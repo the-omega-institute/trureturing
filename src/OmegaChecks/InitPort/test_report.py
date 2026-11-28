@@ -188,6 +188,29 @@ class CoverageTest(unittest.TestCase):
             with self.subTest(change=change), self.assertRaisesRegex(ValueError, "order type dependency"):
                 check_coverage(data | {"declarations": [row | change]})
 
+    def test_order_class_formation_requires_its_complete_coherence(self):
+        owner = "Init.Grind.Ring.Envelope"
+        scope = "Lean.Grind.Ring.OfSemiring."
+        name = scope + "instIsPreorderQ"
+        order = scope + "instLEQOfOrderedAdd"
+        proofs = "OmegaChecks.InitBoundaries.EnvelopeOrder."
+        cert = [owner, name, order, order + "._proof_1", proofs + "propextFromRingLift", proofs + "ringLiftFromPropext"]
+        row = site(owner, name, originalTypeGap=None)
+        data = inventory(row)
+        self.assertEqual(check_coverage(data), (0, [(owner, name)]))
+        row["quotientOrderFormation"] = order
+        data["certifiedEnvelopeOrderFormations"] = [cert]
+        self.assertEqual(check_coverage(data), (0, []))
+        for index, value in ((1, scope + "instOrderedRingQOfLawfulOrderLTOfExistsAddOfLT"), (3, order + "._proof_3"),
+                             (4, proofs + "propextFromModuleLift"), (5, proofs + "moduleLiftFromPropext")):
+            bad = cert.copy()
+            bad[index] = value
+            with self.subTest(index=index), self.assertRaisesRegex(ValueError, "quotient order formation"):
+                check_coverage(data | {"certifiedEnvelopeOrderFormations": [bad]})
+        with patch("report.envelope_formation_certificates", return_value=[]):
+            with self.assertRaisesRegex(ValueError, "live quotient order formation"):
+                verify_complete(data, Path("product"), *check_coverage(data))
+
     def test_quotient_order_requires_both_implications_and_the_correct_public_comparison(self):
         owner = "Init.Grind.Module.Envelope"
         prefix = "Lean.Grind.IntModule.OfNatModule."
