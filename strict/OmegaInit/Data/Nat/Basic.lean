@@ -609,3 +609,11 @@ public section
 namespace Nat
 export _root_.Omega.Nat (eq_of_mul_eq_mul_left le_of_eq le_of_mul_le_mul_left le_of_not_le mul_sub mul_sub_left_distrib sub_eq_iff_eq_add)
 end Nat
+
+port_proof Nat.succ_ne_self
+port_proof Nat.zero_ne_one
+
+public section
+namespace Nat
+export _root_.Omega.Nat (succ_ne_self zero_ne_one)
+end Nat

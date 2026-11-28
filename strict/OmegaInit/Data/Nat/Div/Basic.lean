@@ -326,3 +326,10 @@ public section
 namespace Nat
 export _root_.Omega.Nat (add_mod_right add_mul_mod_self_left mod_eq_sub_mod mul_div_cancel mul_mod_right zero_mod)
 end Nat
+
+port_proof Nat.mul_mod_left
+
+public section
+namespace Nat
+export _root_.Omega.Nat (mul_mod_left)
+end Nat
