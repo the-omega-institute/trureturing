@@ -216,8 +216,10 @@ def envelope_order_formations(checks):
             raise ValueError(f"invalid quotient order owner {owner}")
         site = (owner, name)
         expected_construction = [witness + model.lower() + "OrderFromPropext"] if name == order else []
-        names = ({scope + ".of_le", scope + ".of_not_le"} if owner == MODULE_CONGRUENCES else
-                 {order, scope + ".instIsPreorderQ", scope + ".instOrderedAddQ"})
+        names = ({scope + suffix for suffix in (".of_le", ".of_not_le", ".of_lt", ".of_not_lt")} if owner == MODULE_CONGRUENCES else
+                 {order, scope + ".instLTQOfOrderedAdd", scope + ".instIsPreorderQ", scope + ".instOrderedAddQ"})
+        if name == scope + ".instLTQOfOrderedAdd":
+            expected_construction = [witness + model.lower() + "StrictOrderFromPropext"]
         expected_witnesses = (witness + "propextFrom" + model + "Lift", witness + model.lower() + "LiftFromPropext")
         if owner == MODULE_ENVELOPE and name == scope + ".instIsLinearPreorderQ":
             names.add(name)

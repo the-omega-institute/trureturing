@@ -22,6 +22,9 @@ comparison. Its representative coherence is equivalent to propext at universe ze
 by propextFromRingLift and ringLiftFromPropext in OmegaChecks.InitBoundaries.EnvelopeOrder.
 With propext, ringOrderFromPropext reconstructs the full pinned LE instance on the
 quotient. The bare LE type also admits the constant-false comparison. -/
+/- instLTQOfOrderedAdd uses that same canonical comparison in both directions,
+at the two arbitrary quotient inputs. With propext, ringStrictOrderFromPropext
+reconstructs the pinned strict comparison and its public reduction. -/
 
 /- The official types of toQ_natCast, toQ_pow, instNoNatZeroDivisorsQOfAddRightCancel
 and instIsCharPQOfAddRightCancel use the semiring projection of ofSemiring. Its
