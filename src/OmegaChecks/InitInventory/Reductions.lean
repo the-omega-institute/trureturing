@@ -182,7 +182,10 @@ private def replayWitnesses (env : Environment) : IO Unit := do
     [``PostconditionIdentity.pureImage, ``PostconditionIdentity.imageBind, ``PostconditionIdentity.associatedPredicates] ++
     [``ErasedSelection.ofLeft, ``ErasedSelection.ofRight, ``ErasedSelection.outOfSelection,
      ``ErasedSelection.recoverOfSelection, ``ErasedSelection.leftIffRight, ``ErasedSelection.recoverProp,
-     ``ErasedSelection.outInjIffConstructors, ``ErasedSelection.outInjIffLaw] ++
+     ``ErasedSelection.outInjIffConstructors, ``ErasedSelection.outInjIffLaw,
+     ``ErasedSelection.selectionOfSubsingletonChoice, ``ErasedSelection.subsingletonChoiceOfOut,
+     ``ErasedSelection.lawsOfSelection, ``ErasedSelection.decideFalseOfBoolOut,
+     ``ErasedSelection.boolOutOfDecideFalse, ``ErasedSelection.recoverBoolOfDecideFalse] ++
     [``ChoiceOperands.fromChoice, ``ExistentialConjunction.ofRule] ++
     [``SubsingletonState.ofState, ``SubsingletonState.iffState] ++
     [``QuotientFibers.unaryOfLift, ``QuotientFibers.unaryOfSetoidLift,
@@ -355,7 +358,39 @@ private def translatedComparisonType (source : ConstantInfo) : MetaM Expr := do
     let proof ← Meta.mkLambdaFVars params application
     Lean.ofExceptKernelException (Kernel.check (← getEnv) {} proof)
 
+/-- Abstract the same public extractor in each physical declaration and check all four
+law types against the single conditional construction before replay. -/
+private def checkErasedLaws : MetaM Unit := do
+  let env ← getEnv
+  let owner := `Init.Data.Erased
+  let pinnedEnv ← importModules #[{module := owner, importAll := true}] {} (level := .private)
+  let some idx := pinnedEnv.getModuleIdx? owner | throwError "missing {owner}"
+  let physical := pinnedEnv.header.moduleData[idx]!.constants
+  let some original := physical.find? (·.name == ``Erased.out) | throwError "missing {owner}/Erased.out"
+  let bundle ← getConstInfo ``ErasedSelection.lawsOfSelection
+  let [u] := bundle.levelParams.map Level.param | throwError "expected a polymorphic extraction law"
+  let selectorType := mkConst ``ErasedSelection.SingletonSelection [u]
+  Meta.withLocalDeclD `pick selectorType fun pick => do
+    let out := mkApp (mkConst ``ErasedSelection.outOfSelection [u]) pick
+    let pinned := mkConst original.name [u]
+    let mut lawTypes := #[]
+    for name in [``Erased.out_mk, ``Erased.mk_out, ``Erased.out_inj, ``Erased.out_inj_iff] do
+      let some law := physical.find? (·.name == name) | throwError "missing {owner}/{name}"
+      let type := law.type.instantiateLevelParams law.levelParams [u]
+      unless law.isTheorem && law.numLevelParams == 1 && (type.find? (· == pinned)).isSome do
+        throwError "missing unrestricted Erased.out in {name}"
+      lawTypes := lawTypes.push (type.replace fun e => if e == pinned then some out else none)
+    let #[left, right, inj, iffLaw] := lawTypes | throwError "expected four Erased.out laws"
+    let andLaw := fun a b => mkApp2 (mkConst ``And) a b
+    let expected ← Meta.mkForallFVars #[pick] (andLaw left (andLaw right (andLaw inj iffLaw)))
+    let outType ← Meta.mkForallFVars #[pick] (original.type.instantiateLevelParams original.levelParams [u])
+    let constructor ← getConstInfo ``ErasedSelection.outOfSelection
+    unless Kernel.isDefEqGuarded env {} bundle.type expected &&
+        Kernel.isDefEqGuarded env {} (constructor.type.instantiateLevelParams constructor.levelParams [u]) outType do
+      throwError "Erased extractor or laws differ from their pinned signatures"
+
 run_cmd
+  Elab.Command.liftCoreM <| Meta.MetaM.run' checkErasedLaws
   let env ← getEnv
   let mut seen := Std.HashSet.emptyWithCapacity
   for (owner, name, axiomName, witness) in reductions do

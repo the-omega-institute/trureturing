@@ -23,6 +23,11 @@ public def conditionalConsequence? (owner name : Name) : Option (String × Name 
     return ((``OmegaChecks.InitBoundaries.ErasedSelection.SingletonSelection).toString,
       ``OmegaChecks.InitBoundaries.ErasedSelection.ofRight,
       "Erasing the extracted value recovers every erased input, as required by the pinned mk_out law")
+  if owner == `Init.Data.Erased && [``Erased.out_inj, ``Erased.out_inj_iff].contains name then
+    let witness := if name == ``Erased.out_inj then ``OmegaChecks.InitBoundaries.ErasedSelection.outInjIffConstructors
+      else ``OmegaChecks.InitBoundaries.ErasedSelection.outInjIffLaw
+    return ((``OmegaChecks.InitBoundaries.ErasedSelection.InjectiveOnConstructors).toString, witness,
+      "For a fixed extractor the full pinned law is equivalent to injectivity on values built with Erased.mk")
   if owner == `Init.Control.Lawful.MonadAttach.Lemmas && name == ``WeaklyLawfulMonadAttach.bind_attach_of_nonempty then
     return ("∀ p : Prop, Decidable p", ``OmegaChecks.InitBoundaries.AttachDecision.decideFromBranch,
       "The right-hand continuation supplies a CanReturn decision for every weakly lawful attachment")

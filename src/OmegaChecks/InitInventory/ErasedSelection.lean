@@ -1,5 +1,6 @@
 module
 public import Init.Data.Erased
+public import OmegaChecks.InitInventory.Order
 
 namespace OmegaChecks.InitBoundaries.ErasedSelection
 universe u
@@ -72,6 +73,58 @@ public theorem outInjIffLaw (out : type_of% @Erased.out.{u}) :
     exact (outInjIffConstructors (@out)).mp (fun {_ _ _} h => law.mpr h)
   · intro inj α e f
     exact ⟨congrArg out, fun h => (outInjIffConstructors (@out)).mpr (@inj) h⟩
+
+/-- The members of an explicitly singleton predicate form a nonempty subsingleton type. -/
+public def selectionOfSubsingletonChoice (pick : InternalOrder.UniqueChoice.{max 1 u}) : SingletonSelection.{u} := by
+  intro α s h
+  letI : Subsingleton {x // s x} := ⟨fun x y => by
+    obtain ⟨a, singleton⟩ := h
+    have hx := (congrFun singleton x.val).mpr x.property
+    have hy := (congrFun singleton y.val).mpr y.property
+    exact Subtype.ext (hx.symm.trans hy)⟩
+  exact pick (h.elim fun a singleton => ⟨⟨a, (congrFun singleton a).mp rfl⟩⟩)
+
+/-- With extensional equality of predicates, even a bare polymorphic extractor selects from
+every nonempty subsingleton. Its values are forced by the carrier in this use. -/
+public def subsingletonChoiceOfOut
+    (predExt : ∀ {α : Sort u} (f g : α → Prop), (∀ x, f x ↔ g x) → f = g)
+    (out : type_of% @Erased.out.{u}) : InternalOrder.UniqueChoice.{u} :=
+  fun {α} _ inhabited => out (α := α) ⟨fun _ => True, inhabited.elim fun a =>
+    ⟨a, predExt (a = ·) (fun _ => True) (fun x => ⟨fun _ => trivial, fun _ => Subsingleton.elim a x⟩)⟩⟩
+
+/-- A single extractor satisfies all four pinned laws at every sort universe. -/
+public theorem lawsOfSelection (pick : SingletonSelection.{u}) :
+    let out := @outOfSelection @pick
+    LeftInverse (@out) ∧ RightInverse (@out) ∧
+      (∀ {α : Sort u} {e f : Erased α}, out e = out f → e = f) ∧
+      (∀ {α : Sort u} {e f : Erased α}, e = f ↔ out e = out f) := by
+  let out := @outOfSelection @pick
+  have left : LeftInverse (@out) := recoverOfSelection @pick
+  have right : RightInverse (@out) := rightOfLeft (@out) left
+  have inj : ∀ {α : Sort u} {e f : Erased α}, out e = out f → e = f :=
+    fun {_ e f} h => (right e).symm.trans ((congrArg Erased.mk h).trans (right f))
+  exact ⟨left, right, @inj, fun {_ _ _} => ⟨congrArg out, inj⟩⟩
+
+/-- At the Boolean carrier a faithful extractor decides whether the erased predicate
+contains false. -/
+public def decideFalseOfBoolOut (out : Erased Bool → Bool) (recover : ∀ b, out (Erased.mk b) = b)
+    (e : Erased Bool) : Decidable (e.val false) := by
+  have member : e.val false ↔ out e = false := by
+    obtain ⟨s, b, eq⟩ := e
+    cases eq
+    exact Iff.of_eq (congrArg (· = false) (recover b).symm)
+  exact if h : out e = false then .isTrue (member.mpr h) else .isFalse fun p => h (member.mp p)
+
+/-- A decision for that one predicate evaluation reconstructs the erased Boolean. -/
+public def boolOutOfDecideFalse (test : (e : Erased Bool) → Decidable (e.val false)) (e : Erased Bool) : Bool :=
+  @ite Bool (e.val false) (test e) false true
+
+public theorem recoverBoolOfDecideFalse (test : (e : Erased Bool) → Decidable (e.val false)) (b : Bool) :
+    boolOutOfDecideFalse test (Erased.mk b) = b := by
+  unfold boolOutOfDecideFalse
+  cases b with
+  | false => exact ite_eq_left rfl
+  | true => exact ite_eq_right Bool.noConfusion
 
 example : LeftInverse (@Erased.out.{u}) := @Erased.out_mk
 example : RightInverse (@Erased.out.{u}) := @Erased.mk_out
