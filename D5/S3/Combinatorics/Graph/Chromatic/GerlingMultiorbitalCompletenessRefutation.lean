@@ -2,13 +2,14 @@
    generality: I
    mirror-B: D5/B/S3/Combinatorics/Graph/Chromatic/GerlingMultiorbitalCompletenessRefutation
    mirror-E: none(waiver:kernel-checked-refutation)
-   anchors: [D5/L/Combinatorics/gerling2026multiorbital]
+   anchors: [mathlib/module/Mathlib.Algebra.BigOperators.Ring.Finset, mathlib/module/Mathlib.Algebra.Polynomial.Roots]
    utility: kind=bounded-enumeration; basis=refutes=gid:D5/S3/Combinatorics/Graph/Chromatic/GerlingMultiorbitalCompletenessRefutation.claim; result=D5/S3/Combinatorics/Graph/Chromatic/GerlingMultiorbitalCompletenessRefutation.result; claim=D5/S3/Combinatorics/Graph/Chromatic/GerlingMultiorbitalCompletenessRefutation.claim
    digest: Two faithful cyclic actions on six vertices share a multiorbital polynomial. -/
 
 import OmegaBuild.Commands
 import Mathlib.Combinatorics.SimpleGraph.Connectivity.Connected
 import Mathlib.Algebra.Group.TypeTags.Finite
+import Mathlib.Algebra.Polynomial.Roots
 import Mathlib.Data.Fintype.BigOperators
 import Mathlib.Data.ZMod.Basic
 import Mathlib.Algebra.BigOperators.Ring.Finset
@@ -272,38 +273,6 @@ private theorem constant_on_cycle {n : ℕ} {C : Type} {g : Equiv.Perm (Fin n)} 
   | symm _ _ _ ih => exact ih.symm
   | trans _ _ _ _ _ ih₁ ih₂ => exact ih₁.trans ih₂
 
-private noncomputable def cycleCount {n : ℕ} (E : Finset (Edge (Fin n))) (g : Equiv.Perm (Fin n))
-    (x y : ℕ) : ℕ :=
-  Nat.card {f : Quotient (cycleSetoid g) → Fin x // Palette y E (f ∘ Quotient.mk _)}
-
-private theorem fixed_count_cycle {n : ℕ} (E : Finset (Edge (Fin n)))
-    (g : Equiv.Perm (Fin n)) (x y : ℕ) : fixedCount E g x y = cycleCount E g x y := by
-  classical
-  let e : {f : Fin n → Fin x // Palette y E f ∧ ∀ v, f (g v) = f v} ≃
-      {f : Quotient (cycleSetoid g) → Fin x // Palette y E (f ∘ Quotient.mk _)} :=
-    { toFun := fun f => ⟨Quotient.lift f.val (fun _ _ => constant_on_cycle f.property.2),
-        f.property.1⟩
-      invFun := fun f => ⟨f.val ∘ Quotient.mk _, f.property,
-        fun v => congrArg f.val (Quotient.sound (Relation.EqvGen.rel v (g v) rfl)).symm⟩
-      left_inv := fun _ => rfl
-      right_inv := fun f => Subtype.ext (funext (fun q => Quotient.inductionOn q (fun _ => rfl))) }
-  rw [fixedCount, ← Fintype.card_subtype, ← Nat.card_eq_fintype_card]
-  exact Nat.card_congr e
-
-/-- Gerling's subgroup sum of bivariate chromatic counts on cyclic orbit quotients. -/
-noncomputable def multiorbital {G : Type} [Group G] [Fintype G] {n : ℕ}
-    (A : GraphAction G n) (x y : ℕ) : ℚ := by
-  classical
-  letI : Fintype (Subgroup G) := Fintype.ofInjective SetLike.coe SetLike.coe_injective
-  exact ∑ H : Subgroup G, (∑ g ∈ univ.filter (· ∈ H),
-    (cycleCount A.edges (A.action g) x y : ℚ)) / Nat.card H
-
-/-- The universal completeness assertion for faithful actions of the same finite group. -/
-noncomputable def claim : Prop :=
-  ∀ (G : Type) [Group G] [Fintype G] (n m : ℕ) (A : GraphAction G n) (B : GraphAction G m),
-    Function.Injective A.action → Function.Injective B.action →
-    (∀ x y : ℕ, y ≤ x → multiorbital A x y = multiorbital B x y) → ActionIso A B
-
 private def quotientEdges {n m : ℕ} (E : Finset (Edge (Fin n))) (q : Fin n → Fin m) :
     Finset (Edge (Fin m)) :=
   E.image (fun e => normalized (q e.1) (q e.2))
@@ -347,6 +316,77 @@ private theorem fixed_count_quotient {n m : ℕ} (E : Finset (Edge (Fin n)))
       right_inv := fun f => Subtype.ext (funext (fun v => congrArg f.val (hs v))) }
   rw [fixedCount, paletteCount, ← Fintype.card_subtype, ← Fintype.card_subtype]
   exact Fintype.card_congr e
+
+/-- A polynomial in x with coefficients in the rational polynomial ring in y. -/
+abbrev Bivariate := Polynomial (Polynomial ℚ)
+
+private noncomputable def evaluate (x y : ℚ) : Bivariate →+* ℚ :=
+  (Polynomial.evalRingHom x).comp (Polynomial.mapRingHom (Polynomial.evalRingHom y))
+
+private noncomputable def bivariate {n : ℕ} (E : Finset (Edge (Fin n))) : Bivariate :=
+  ∑ S ∈ E.powerset, (-1 : Bivariate) ^ S.card * Polynomial.X ^ (subsetExponent S).1 *
+    (Polynomial.C Polynomial.X) ^ (subsetExponent S).2
+
+private theorem evaluate_bivariate {n x y : ℕ} (E : Finset (Edge (Fin n))) (h : y ≤ x) :
+    evaluate x y (bivariate E) = (paletteCount E x y : ℚ) := by
+  have sum_eq := congrArg (Int.castRingHom ℚ) (palette_count_formula E h)
+  simp only [map_sum, map_mul, map_pow, map_neg, map_one, map_natCast] at sum_eq
+  rw [sum_eq]
+  simp only [bivariate, map_sum, map_mul, map_pow, map_neg, map_one, evaluate,
+    RingHom.comp_apply, Polynomial.coe_mapRingHom, Polynomial.coe_evalRingHom,
+    Polynomial.eval_map, Polynomial.eval₂_X, Polynomial.eval₂_C, Polynomial.eval_X]
+
+private noncomputable def cycleLabels {n : ℕ} (g : Equiv.Perm (Fin n)) :
+    Quotient (cycleSetoid g) ≃ Fin (Nat.card (Quotient (cycleSetoid g))) := by
+  letI := Fintype.ofFinite (Quotient (cycleSetoid g))
+  exact Fintype.equivFinOfCardEq (Nat.card_eq_fintype_card).symm
+
+private noncomputable def cyclePolynomial {n : ℕ} (E : Finset (Edge (Fin n)))
+    (g : Equiv.Perm (Fin n)) : Bivariate :=
+  bivariate (quotientEdges E (cycleLabels g ∘ Quotient.mk _))
+
+private theorem evaluate_cyclePolynomial {n x y : ℕ} (E : Finset (Edge (Fin n)))
+    (g : Equiv.Perm (Fin n)) (hxy : y ≤ x) :
+    evaluate x y (cyclePolynomial E g) = (fixedCount E g x y : ℚ) := by
+  have surj : Function.Surjective (cycleLabels g ∘ Quotient.mk _) :=
+    (cycleLabels g).surjective.comp Quotient.mk_surjective
+  have fibers (u v : Fin n) :
+      (cycleLabels g ∘ Quotient.mk _) u = (cycleLabels g ∘ Quotient.mk _) v ↔
+        (cycleSetoid g).r u v :=
+    ⟨fun h => Quotient.exact ((cycleLabels g).injective h),
+     fun h => congrArg (cycleLabels g) (Quotient.sound h)⟩
+  rw [cyclePolynomial, evaluate_bivariate _ hxy, fixed_count_quotient E g _ surj fibers]
+
+/-- Gerling's subgroup sum of bivariate chromatic polynomials on cyclic orbit quotients. -/
+noncomputable def multiorbital {G : Type} [Group G] [Fintype G] {n : ℕ}
+    (A : GraphAction G n) : Bivariate := by
+  classical
+  letI : Fintype (Subgroup G) := Fintype.ofInjective SetLike.coe SetLike.coe_injective
+  exact ∑ H : Subgroup G, Polynomial.C (Polynomial.C ((Nat.card H : ℚ)⁻¹)) *
+    ∑ g ∈ univ.filter (· ∈ H), cyclePolynomial A.edges (A.action g)
+
+/-- The universal completeness assertion for faithful actions of the same finite group. -/
+def claim : Prop :=
+  ∀ (G : Type) [Group G] [Fintype G] (n m : ℕ) (A : GraphAction G n) (B : GraphAction G m),
+    Function.Injective A.action → Function.Injective B.action →
+    multiorbital A = multiorbital B → ActionIso A B
+
+private theorem evaluate_ext {p q : Bivariate}
+    (h : ∀ x y : ℕ, y ≤ x → evaluate x y p = evaluate x y q) : p = q := by
+  have fixedY (y : ℕ) :
+      p.map (Polynomial.evalRingHom (y : ℚ)) = q.map (Polynomial.evalRingHom (y : ℚ)) := by
+    apply Polynomial.eq_of_infinite_eval_eq
+    refine (Set.infinite_range_of_injective (f := fun k : ℕ => ((k + y : ℕ) : ℚ))
+      (fun a b hab => Nat.add_right_cancel (Nat.cast_injective hab))).mono ?_
+    rintro _ ⟨k, rfl⟩
+    exact h (k+y) y (by omega)
+  apply Polynomial.ext
+  intro i
+  apply Polynomial.eq_of_infinite_eval_eq
+  refine (Set.infinite_range_of_injective (f := fun k : ℕ => (k : ℚ)) Nat.cast_injective).mono ?_
+  rintro _ ⟨y, rfl⟩
+  simpa only [Set.mem_setOf_eq, Polynomial.coeff_map, Polynomial.coe_evalRingHom] using
+    congrArg (fun p : Polynomial ℚ => p.coeff i) (fixedY y)
 
 private abbrev C2 := Multiplicative (ZMod 2)
 private def generator : C2 := Multiplicative.ofAdd 1
@@ -511,12 +551,15 @@ private theorem fixed_count_one {n : ℕ} (E : Finset (Edge (Fin n))) (x y : ℕ
 
 private theorem c2_elements : ∀ g : C2, g = 1 ∨ g = generator := by decide
 
-private theorem multiorbital_c2 {n : ℕ} (A : GraphAction C2 n) (x y : ℕ) :
-    multiorbital A x y =
+private theorem multiorbital_c2 {n x y : ℕ} (A : GraphAction C2 n) (hxy : y ≤ x) :
+    evaluate x y (multiorbital A) =
       (3 * (paletteCount A.edges x y : ℚ) + fixedCount A.edges (A.action generator) x y) / 2 := by
   classical
   unfold multiorbital
-  simp_rw [← fixed_count_cycle]
+  simp only [map_sum, map_mul, evaluate_cyclePolynomial _ _ hxy]
+  have eval_scalar (r : ℚ) : evaluate x y (Polynomial.C (Polynomial.C r)) = r := by
+    simp [evaluate]
+  simp only [eval_scalar]
   letI : Fintype (Subgroup C2) := Fintype.ofInjective SetLike.coe SetLike.coe_injective
   have subgroups : (univ : Finset (Subgroup C2)) = {⊥, ⊤} := by
     ext H
@@ -549,12 +592,13 @@ private theorem multiorbital_c2 {n : ℕ} (A : GraphAction C2 n) (x y : ℕ) :
   rw [subgroups, sum_pair distinctSubgroups, filterBot, filterTop, sum_singleton,
     allElements, sum_pair distinctElements, map_one, fixed_count_one]
   have hc : Nat.card C2 = 2 := by rw [Nat.card_eq_fintype_card]; decide
-  simp only [Subgroup.card_bot, Subgroup.card_top, hc, Nat.cast_one, Nat.cast_ofNat, div_one]
+  simp only [Subgroup.card_bot, Subgroup.card_top, hc, Nat.cast_one, Nat.cast_ofNat,
+    inv_one, one_mul]
   ring
 
 private theorem same_multiorbital (x y : ℕ) (hxy : y ≤ x) :
-    multiorbital actionA x y = multiorbital actionB x y := by
-  rw [multiorbital_c2, multiorbital_c2]
+    evaluate x y (multiorbital actionA) = evaluate x y (multiorbital actionB) := by
+  rw [multiorbital_c2 _ hxy, multiorbital_c2 _ hxy]
   change
     (3 * (paletteCount edgesA x y : ℚ) + fixedCount edgesA (representation generator) x y) / 2 =
     (3 * (paletteCount edgesB x y : ℚ) + fixedCount edgesB (representation generator) x y) / 2
@@ -619,10 +663,10 @@ private theorem nonisomorphic : ¬ Nonempty (graph edgesA ≃g graph edgesB) := 
 private theorem counterexample :
     (graph actionA.edges).Connected ∧ (graph actionB.edges).Connected ∧
     Function.Injective actionA.action ∧ Function.Injective actionB.action ∧
-    (∀ x y : ℕ, y ≤ x → multiorbital actionA x y = multiorbital actionB x y) ∧
+    multiorbital actionA = multiorbital actionB ∧
     ¬ Nonempty (graph actionA.edges ≃g graph actionB.edges) :=
   ⟨connectedA, connectedB, representation_faithful, representation_faithful,
-    same_multiorbital, nonisomorphic⟩
+    evaluate_ext same_multiorbital, nonisomorphic⟩
 
 /-- Equal multiorbital invariants do not force isomorphic graph actions. -/
 theorem result : ¬ claim := by

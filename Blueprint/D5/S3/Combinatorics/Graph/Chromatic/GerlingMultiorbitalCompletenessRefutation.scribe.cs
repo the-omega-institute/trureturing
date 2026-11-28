@@ -20,7 +20,8 @@ internal sealed class GerlingMultiorbitalCompletenessRefutationDocument : IScrib
                     + "have vertex sets Fin n and Fin m and preserve adjacency. Each input graph is finite, "
                     + "undirected and simple. The predicate Faithful means that "
                     + "the homomorphism into its vertex permutation group is injective. ActionIso requires "
-                    + "a graph isomorphism that intertwines the actions of each element of G.")),
+                    + "a graph isomorphism that intertwines the actions of each element of G. The antecedent "
+                    + "uses equality in the rational polynomial ring in x and y.")),
                     Paragraph(Text("A palette has x colors and its first y colors are proper. An edge forbids "
                     + "a shared proper color, including when its two endpoints coincide. At each group "
                     + "element, the fixed colorings descend to its cycle quotient. Taking the image of each "
@@ -35,8 +36,8 @@ internal sealed class GerlingMultiorbitalCompletenessRefutationDocument : IScrib
                         + "for the first graph and 02, 12, 05, 15, 23, 24, 25, 34 for the second. "
                         + "The generator of the group of order two acts by swapping 0 and 1 and fixing "
                         + "the other four vertices. Both graphs are connected. Vertex 2 in the second graph "
-                        + "has degree five, while every vertex of the first graph misses at least one "
-                        + "other vertex. This rules out a graph isomorphism.")),
+                        + "has degree five. The degree multisets are (1,2,2,3,4,4) and (2,2,2,2,3,5), "
+                        + "which rules out a graph isomorphism.")),
                     Paragraph(Text("Label the orbit of 0 and 1 by 0, and label original vertices 2 through 5 "
                         + "by 1 through 4. The quotient edge lists are 02, 03, 12, 13, 14, 23 and "
                         + "01, 04, 12, 13, 14, 23. The displayed lists contain no loops.")),
@@ -50,7 +51,10 @@ internal sealed class GerlingMultiorbitalCompletenessRefutationDocument : IScrib
                         + "Both cycle quotients have P5 = x^5 − 6x^3y + 8x^2y + 5xy^2 − 8xy "
                         + "− 4y^2 + 4y. The trivial subgroup contributes P6, and the full group "
                         + "contributes the common orbital polynomial (P6 + P5)/2. The common "
-                        + "multiorbital polynomial is (3P6 + P5)/2 at every admissible palette."))),
+                        + "multiorbital polynomial is (3P6 + P5)/2. All evaluations on admissible "
+                        + "palettes determine a bivariate polynomial: for each natural y the infinitely "
+                        + "many x ≥ y determine its polynomial in x, and the infinitely many y determine "
+                        + "each of its coefficients in x."))),
                 DescribeRole.Theorem))));
 
     private static Formula Completeness()
@@ -60,12 +64,8 @@ internal sealed class GerlingMultiorbitalCompletenessRefutationDocument : IScrib
         var m = F.Id("m");
         var a = F.Id("A");
         var b = F.Id("B");
-        var x = F.Id("x");
-        var y = F.Id("y");
         var naturals = F.Seq(F.Mathbb, F.Grp(F.Id("N")));
-        var equal = new Formula.BindMany(FormulaQuantifier.ForAll,
-            [new(FormulaIdentifier.Create("x"), naturals), new(FormulaIdentifier.Create("y"), naturals)],
-            Implies(F.Seq(y, F.Le, F.Sp, x), Equal(Call("multiorbital", a, x, y), Call("multiorbital", b, x, y))));
+        var equal = Equal(Call("multiorbital", a), Call("multiorbital", b));
         return new Formula.BindMany(FormulaQuantifier.ForAll,
             [new(FormulaIdentifier.Create("G"), F.Id("FiniteGroup")),
              new(FormulaIdentifier.Create("n"), naturals), new(FormulaIdentifier.Create("m"), naturals),
