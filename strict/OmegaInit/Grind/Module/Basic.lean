@@ -146,9 +146,9 @@ end Omega.Lean.Grind.IntModule
 
 namespace Omega.Lean.Grind.NoNatZeroDivisors
 set_option linter.defProp false in
-@[instance_reducible] public def mk' {M : Type u} [IntModule M]
-    (cancel : ∀ (k : Nat) (a : M), Ne k Nat.zero → Eq (SMul.smul k a) Zero.zero → Eq a Zero.zero) :
-    NoNatZeroDivisors M :=
+@[instance_reducible] public def mk' {α : Type u} [IntModule α]
+    (eq_zero_of_mul_eq_zero : ∀ (k : Nat) (a : α), Ne k Nat.zero → Eq (SMul.smul k a) Zero.zero → Eq a Zero.zero) :
+    NoNatZeroDivisors α :=
   NoNatZeroDivisors.mk fun k a b nz hab =>
     let castA := IntModule.zsmul_natCast_eq_nsmul k a
     let castB := IntModule.zsmul_natCast_eq_nsmul k b
@@ -156,10 +156,10 @@ set_option linter.defProp false in
     let subZero := AddCommGroup.sub_eq_zero_iff.mpr eqInt
     let dist := IntModule.zsmul_sub (Int.ofNat k) a b
     let castSub := IntModule.zsmul_natCast_eq_nsmul k (Sub.sub a b)
-    AddCommGroup.sub_eq_zero_iff.mp (cancel k (Sub.sub a b) nz (castSub.symm.trans (dist.trans subZero)))
+    AddCommGroup.sub_eq_zero_iff.mp (eq_zero_of_mul_eq_zero k (Sub.sub a b) nz (castSub.symm.trans (dist.trans subZero)))
 end Omega.Lean.Grind.NoNatZeroDivisors
 namespace Omega.Lean.Grind.NoNatZeroDivisors
-public theorem eq_zero_of_mul_eq_zero {M : Type u} [NatModule M] [NoNatZeroDivisors M] {k : Nat} {a : M}
-    (nonzero : Ne k Nat.zero) (cancel : Eq (SMul.smul k a) Zero.zero) : Eq a Zero.zero :=
+public theorem eq_zero_of_mul_eq_zero {α : Type u} [NatModule α] [NoNatZeroDivisors α] {k : Nat} {a : α}
+    : Ne k Nat.zero → Eq (SMul.smul k a) Zero.zero → Eq a Zero.zero := fun nonzero cancel =>
   no_nat_zero_divisors k a Zero.zero nonzero (cancel.trans (NatModule.nsmul_zero k).symm)
 end Omega.Lean.Grind.NoNatZeroDivisors
