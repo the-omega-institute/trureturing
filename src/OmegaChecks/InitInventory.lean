@@ -377,6 +377,15 @@ private def logicalConsequence? (owner name : Name) : Option (Name × Name) := d
     return (``OmegaChecks.InitBoundaries.InhabitedPropExt, ``OmegaChecks.InitBoundaries.GrindNormalization.normalizePositiveLeft)
   | `Init.Grind.Lemmas, ``Lean.Grind.eq_eq_of_eq_true_right =>
     return (``OmegaChecks.InitBoundaries.InhabitedPropExt, ``OmegaChecks.InitBoundaries.GrindNormalization.normalizePositiveRight)
+  | `Init.Grind.Norm, ``Lean.Grind.flip_bool_eq =>
+    return (``OmegaChecks.InitBoundaries.GrindNormalization.FlippedBooleanEquality,
+      ``OmegaChecks.InitBoundaries.GrindNormalization.booleanFlipOfNormalization)
+  | `Init.Grind.Lemmas, ``Lean.Grind.eq_congr' =>
+    return (``OmegaChecks.InitBoundaries.GrindNormalization.FlippedBooleanEquality,
+      ``OmegaChecks.InitBoundaries.GrindNormalization.booleanFlipOfCrossed)
+  | `Init.Grind.Lemmas, ``Lean.Grind.heq_congr' =>
+    return (``OmegaChecks.InitBoundaries.GrindNormalization.FlippedBooleanEquality,
+      ``OmegaChecks.InitBoundaries.GrindNormalization.booleanFlipOfHeterogeneousCrossed)
   | `Init.Grind.Lemmas, ``Lean.Grind.of_decide_eq_true | `Init.SimpLemmas, ``eq_true_of_decide =>
     return (``OmegaChecks.InitBoundaries.InhabitedPropExt, ``OmegaChecks.InitBoundaries.inhabitedPropExtOfDecision)
   | `Init.Grind.Lemmas, ``Lean.Grind.of_decide_eq_false | `Init.SimpLemmas, ``eq_false_of_decide =>

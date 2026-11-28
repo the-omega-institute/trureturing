@@ -959,6 +959,31 @@ theorem crossedCongruences :
   · intro rule α a₁ b₁ a₂ b₂ h₁ h₂
     exact rule (heq_of_eq h₁) (heq_of_eq h₂)
 
+/-- Equality of the two closed, oppositely oriented Boolean equality propositions. -/
+abbrev FlippedBooleanEquality : Prop := (false = true) = (true = false)
+
+theorem booleanFlipBoundary :
+    (type_of% @Lean.Grind.flip_bool_eq) ↔ FlippedBooleanEquality := by
+  constructor
+  · exact fun flip => flip false true
+  · intro unequal a b
+    cases a <;> cases b
+    · rfl
+    · exact unequal
+    · exact unequal.symm
+    · rfl
+
+theorem booleanFlipOfCrossed
+    (rule : type_of% @Lean.Grind.eq_congr'.{1}) : FlippedBooleanEquality :=
+  @rule Bool false true true false rfl rfl
+
+theorem booleanFlipOfHeterogeneousCrossed
+    (rule : type_of% @Lean.Grind.heq_congr'.{1}) : FlippedBooleanEquality :=
+  booleanFlipOfCrossed (crossedCongruences.mpr rule)
+
+theorem booleanFlipOfNormalization (rule : type_of% @Lean.Grind.flip_bool_eq) :
+    FlippedBooleanEquality := booleanFlipBoundary.mp rule
+
 end GrindNormalization
 
 end OmegaChecks.InitBoundaries
