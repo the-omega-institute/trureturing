@@ -9,6 +9,7 @@
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qCubicOscillatorTrace
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qProjectedDual
 import D5.S3.VertexAlgebra.Lattice.LatticeSectorCharacterWeilCovariance
+import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qNativeConformalZero
 
 /-! The real P48q Gram controls the charge sum. The actual integer-grade trace
 groups the product of this fixed-charge sum and the sixteen-colour occupation
@@ -39,6 +40,14 @@ open private dotOfFn_eq from
 open private gram_integral norm_fixed action_embed from
   D5.S3.VertexAlgebra.Lattice.Orbifold.P48qProjectedDual
 open private eta_S_principal from D5.S3.VertexAlgebra.Characters.LatticeThetaCharacter
+open P48qFiniteEnergyEigenspaces (totalLZeroEigenspaceCoeffEquiv
+  totalLZero_eigenspace_finiteDimensional totalWeight_fiber_finite)
+open P48qNativeConformalZero (native_conformal_coeff_neg_six_eq_totalLZero)
+open P48qThirdTwistedField (State)
+open P48qAllJetWickField (nativeField)
+open P48qTwistedStateEnergy (totalWeight totalLZero)
+open LatticeActualConformalState (omega)
+open HalfFockSpectralFiberSource (actualInverse)
 
 noncomputable section
 
@@ -602,10 +611,65 @@ theorem actual_cubic_twining_character_S (τ : ℂ) (hτ : 0 < τ.im) :
   rw [(actual_cubic_twining_character_eq_theta_div_eta _ hS).2, fixed_charge_theta_S τ hτ,
     harg, eta_S_principal _ hτ3, mul_pow, hroot, mul_div_mul_left _ _ hweight]
 
+/-- The literal native twisted conformal trace coefficient at `L₀` grade
+`16 / 9 + n / 3`, computed from the momentum and occupation weight basis. -/
+noncomputable def nativeTwistedTraceCoeff (n : ℕ) : ℂ :=
+  Module.finrank ℂ
+    (Module.End.eigenspace
+      (HVertexOperator.coeff (nativeField (omega lattice (actualInverse lattice))) (-6))
+      (16 / 9 + (n : ℂ) / 3))
+
+/-- The native coefficient is the cardinality of the exact finite weight fibre. -/
+theorem native_twisted_trace_coeff_eq_weight_fiber_card (n : ℕ) :
+    nativeTwistedTraceCoeff n =
+      (Nat.card {x : P48qTwistedChargeAction.Momentum × P48qTwistedStateEnergy.Occupation //
+        (totalWeight x.1 x.2 : ℂ) = 16 / 9 + (n : ℂ) / 3} : ℂ) := by
+  unfold nativeTwistedTraceCoeff
+  rw [native_conformal_coeff_neg_six_eq_totalLZero]
+  let a : ℂ := 16 / 9 + (n : ℂ) / 3
+  letI : FiniteDimensional ℂ (totalLZero.eigenspace a) :=
+    totalLZero_eigenspace_finiteDimensional a
+  letI : Finite {x : P48qTwistedChargeAction.Momentum ×
+      P48qTwistedStateEnergy.Occupation //
+      (totalWeight x.1 x.2 : ℂ) = a} :=
+    (totalWeight_fiber_finite a).to_subtype
+  letI : Fintype {x : P48qTwistedChargeAction.Momentum ×
+      P48qTwistedStateEnergy.Occupation //
+      (totalWeight x.1 x.2 : ℂ) = a} := Fintype.ofFinite _
+  have hfin : Module.finrank ℂ (totalLZero.eigenspace a) =
+      Nat.card {x : P48qTwistedChargeAction.Momentum ×
+        P48qTwistedStateEnergy.Occupation //
+        (totalWeight x.1 x.2 : ℂ) = a} := by
+    rw [LinearEquiv.finrank_eq (totalLZeroEigenspaceCoeffEquiv a),
+      Module.finrank_finsupp_self]
+    simp only [Nat.card_eq_fintype_card]
+  simpa [a] using congrArg (fun k : ℕ => (k : ℂ)) hfin
+
+/-- The same coefficient is the literal identity trace on the native-field
+eigenspace, so the weight-fibre formula is a finite-grade trace formula. -/
+theorem native_twisted_identity_trace_eq_weight_fiber_card (n : ℕ) :
+    LinearMap.trace ℂ
+        (Module.End.eigenspace
+          (HVertexOperator.coeff (nativeField (omega lattice (actualInverse lattice))) (-6))
+          (16 / 9 + (n : ℂ) / 3)) LinearMap.id =
+      (Nat.card {x : P48qTwistedChargeAction.Momentum × P48qTwistedStateEnergy.Occupation //
+        (totalWeight x.1 x.2 : ℂ) = 16 / 9 + (n : ℂ) / 3} : ℂ) := by
+  let a : ℂ := 16 / 9 + (n : ℂ) / 3
+  letI : FiniteDimensional ℂ
+      (Module.End.eigenspace
+        (HVertexOperator.coeff (nativeField (omega lattice (actualInverse lattice))) (-6)) a) := by
+    rw [native_conformal_coeff_neg_six_eq_totalLZero]
+    exact totalLZero_eigenspace_finiteDimensional a
+  rw [LinearMap.trace_id]
+  simpa [nativeTwistedTraceCoeff, a] using
+    native_twisted_trace_coeff_eq_weight_fiber_card n
+
 run_cmd do
   for name in [``fixed_dual_iff_third_fixed_charge, ``fixed_charge_pairing_even_pos,
       ``actual_cubic_twining_character_eq_theta_div_eta, ``fixed_charge_theta_S,
-      ``actual_cubic_twining_character_S] do
+      ``actual_cubic_twining_character_S,
+      ``native_twisted_trace_coeff_eq_weight_fiber_card,
+      ``native_twisted_identity_trace_eq_weight_fiber_card] do
     let axioms ← Lean.collectAxioms name
     unless axioms.all (fun ax => [``propext, ``Classical.choice, ``Quot.sound].contains ax) do
       throwError "Unexpected axiom closure for {name}: {axioms}"
