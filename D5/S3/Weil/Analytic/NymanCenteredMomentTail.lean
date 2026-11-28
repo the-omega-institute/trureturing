@@ -1,3 +1,11 @@
+/- GID: D5/S3/Weil/Analytic/NymanCenteredMomentTail
+   generality: I
+   mirror-B: D5/B/S3/Weil/Analytic/NymanCenteredMoment
+   mirror-E: none(waiver:nyman-centered-prime-analysis)
+   anchors: []
+   utility: none
+   digest: Cubic logarithmic decay makes the weighted centered prime sum integrable on a tail. -/
+
 import D5.S3.Weil.Analytic.MobiusLogFourth
 import D5.S3.Weil.Analytic.NymanLogCorrectionEnvelope
 import Mathlib.Algebra.BigOperators.Module

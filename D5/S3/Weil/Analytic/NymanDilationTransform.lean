@@ -1,10 +1,10 @@
 /- GID: D5/S3/Weil/Analytic/NymanDilationTransform
    generality: I
-   mirror-B: D5/B/S3/Weil/Analytic/NymanDilationTransform
+   mirror-B: none(waiver:weighted-dilation-factorization-support)
    mirror-E: none(waiver:nyman-centered-prime-analysis)
    anchors: []
    utility: none
-   digest: The Mellin transform of compactly supported weighted dilations factors into a kernel moment and a Dirichlet series. -/
+   digest: Mellin factorization for compactly supported weighted dilations. -/
 
 import Mathlib.Analysis.MellinTransform
 import Mathlib.NumberTheory.LSeries.Basic
