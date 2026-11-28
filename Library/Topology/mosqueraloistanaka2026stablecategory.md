@@ -1696,3 +1696,36 @@ argument yields an exact sequence of relative covering numbers:
 no finite cover at depth zero, \(d\) at depth one, and two at every
 later depth.
 [Question 6.3](https://arxiv.org/html/2609.39615v1#S6.Thmtheorem3)
+
+## Extending two inherited traces across a cone
+
+Suppose the ambient poset is covered by two lower regions. The retained
+region retracts onto the old poset by an order-map fence fixing the old
+points. The other region is a cone face poset, and the retained
+retraction identifies the intersection with the cone base and the
+specified old interface. Each of the two prescribed old lower regions
+then determines a trace on this base. For an adjoined maximum, Lean
+constructs this decomposition at every positive ordinary depth. At
+the next depth, the chains of cone faces containing the apex form
+the next cone. The cone faces other than the apex singleton enlarge
+the retained region after subdivision. Erasing the apex identifies
+the two regions' intersection with the subdivided old interface.
+For an elementary simplex expansion after deletion of its free
+facet, this interface is the subdivided horn.
+
+If the first trace is full, an exterior face that meets its vertex set
+can first be trimmed to those vertices while retaining the apex. It
+then drops the apex to land in the first trace. The other exterior
+faces, including the apex singleton, can be handled by a vertex in the
+second trace that spans every nonempty base face supported entirely
+outside the first trace. These comparisons preserve every old point
+assigned to their respective piece.
+
+Lean converts the resulting point cover into a lower two-cover after
+two ordinary subdivisions. Each piece meets the twice-subdivided old
+region exactly in its twice-subdivided prescribed old region, and the
+relative fence fixes that trace throughout. If the old inclusions are
+categorical, their lifted contractions make the new pieces categorical
+at this same depth. The unconstrained connected mixed-interface
+extension remains open.
+[Question 6.3](https://arxiv.org/html/2609.39615v1#S6.Thmtheorem3)
