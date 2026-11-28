@@ -312,7 +312,7 @@ theorem star_capacity_eq_mixtureFusion
     by_cases hraw : rawOverlap P Q 1 yz.1 yz.2 = 0
     · simp [hraw]
     · field_simp [hraw, input_card_ne]
-    
+
   have hcapacity_raw :
       (P.star Q).capacity =
         ∑ yz : Y × Z, rawRatio P Q 1 yz.1 yz.2 - 1 := by

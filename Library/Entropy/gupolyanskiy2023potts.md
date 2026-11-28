@@ -18,9 +18,17 @@ Y. Gu and Y. Polyanskiy, *Uniqueness of BP fixed point for the Potts model
 and applications to community detection*, Proceedings of the Thirty Sixth
 Annual Conference on Learning Theory, PMLR 195:837–884.
 
+## Verified locator
+
+Primary version: https://arxiv.org/html/2303.14688v2, Definitions 6 and 11,
+Lemma 20, Appendix D.1 equations (137)–(166) and Lemma 35, Appendix D.2
+equation (167), and Appendix H. DOI: 10.48550/arXiv.2303.14688.
+
 [Proceedings](https://proceedings.mlr.press/v195/gu23a.html) ·
 [Version 2](https://arxiv.org/html/2303.14688v2) ·
 [DOI](https://doi.org/10.48550/arXiv.2303.14688).
+
+## Finite-channel statement
 
 The finite-channel setting uses a uniform input on q symbols and nonnegative
 row-stochastic real matrices. Full symmetry is certified by an actual group
