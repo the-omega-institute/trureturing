@@ -1,6 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.VertexAlgebra.Lattice.Orbifold;
+namespace StrataLint.Scribe.Blueprint.D5.S3.VertexAlgebra.Lattice.Orbifold.Paley;
 
 internal sealed class P48pPaleyActionDocument : IScribeDocumentDefinition
 {
@@ -9,7 +9,7 @@ internal sealed class P48pPaleyActionDocument : IScribeDocumentDefinition
         H("The Signed P48p Paley Action"),
         Blocks(Describe.Lean(
             DescribeId.Create("p48p-paley-graph-weight-invariance"),
-            DeclarationHandle.Create("D5/S3/VertexAlgebra/Lattice/Orbifold/P48pPaleyAction.paleyRowAction_graph_weight"),
+            DeclarationHandle.Create("D5/S3/VertexAlgebra/Lattice/Orbifold/Paley/P48pPaleyAction.paleyRowAction_graph_weight"),
             H("Projective moves preserve total graph weight"),
             StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo(),

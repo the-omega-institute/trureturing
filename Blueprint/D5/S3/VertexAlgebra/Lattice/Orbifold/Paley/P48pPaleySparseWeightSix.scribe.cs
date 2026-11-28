@@ -1,10 +1,10 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.VertexAlgebra.Lattice.Orbifold;
+namespace StrataLint.Scribe.Blueprint.D5.S3.VertexAlgebra.Lattice.Orbifold.Paley;
 
 internal sealed class P48pPaleySparseWeightSixDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S3/VertexAlgebra/Lattice/Orbifold/P48pPaleySparseWeightSix.";
+    private const string Prefix = "D5/S3/VertexAlgebra/Lattice/Orbifold/Paley/P48pPaleySparseWeightSix.";
     private static readonly LibraryNoteRef ConwaySloane =
         LibraryNoteRef.Create("D5/L/Geometry/conwaysloane1999spherepackings");
 

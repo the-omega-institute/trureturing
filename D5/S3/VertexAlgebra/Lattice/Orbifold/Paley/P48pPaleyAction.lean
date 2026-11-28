@@ -1,13 +1,13 @@
-/- GID: D5/S3/VertexAlgebra/Lattice/Orbifold/P48pPaleyAction
+/- GID: D5/S3/VertexAlgebra/Lattice/Orbifold/Paley/P48pPaleyAction
    generality: I
-   mirror-B: D5/B/S3/VertexAlgebra/Lattice/Orbifold/P48pPaleyAction
+   mirror-B: D5/B/S3/VertexAlgebra/Lattice/Orbifold/Paley/P48pPaleyAction
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: The signed SL(2,23) row action preserves the P48p Paley graph and its two Hamming weights. -/
 
 import Batteries.Tactic.OpenPrivate
-import D5.S3.VertexAlgebra.Lattice.Orbifold.P48pTernaryPaleyGraph
+import D5.S3.VertexAlgebra.Lattice.Orbifold.Paley.P48pTernaryPaleyGraph
 import OmegaBuild.Commands
 
 /-!
@@ -31,9 +31,9 @@ open P48pFrameProjectiveAction
 open P48pTernaryPaleyGraph (F3 paleyC)
 
 open private projectiveStep_one projectiveStep_mul from
-  D5.S3.VertexAlgebra.Lattice.Orbifold.P48pFrameProjectiveAction
+  D5.S3.VertexAlgebra.Lattice.Orbifold.Paley.P48pFrameProjectiveAction
 open private directionEquiv paleyDirection normalizedRows from
-  D5.S3.VertexAlgebra.Lattice.Orbifold.P48pTernaryPaleyGraph
+  D5.S3.VertexAlgebra.Lattice.Orbifold.Paley.P48pTernaryPaleyGraph
 
 local instance : Fact (Nat.Prime 23) := ⟨by decide⟩
 

@@ -1,6 +1,6 @@
-/- GID: D5/S3/VertexAlgebra/Lattice/Orbifold/NormTwoTernarySyndrome
+/- GID: D5/S3/VertexAlgebra/Lattice/Orbifold/Paley/NormTwoTernarySyndrome
    generality: G
-   mirror-B: D5/B/S3/VertexAlgebra/Lattice/Orbifold/NormTwoTernarySyndrome
+   mirror-B: D5/B/S3/VertexAlgebra/Lattice/Orbifold/Paley/NormTwoTernarySyndrome
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.InformationTheory.Hamming]
    utility: none

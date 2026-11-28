@@ -1,6 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.VertexAlgebra.Lattice.Orbifold;
+namespace StrataLint.Scribe.Blueprint.D5.S3.VertexAlgebra.Lattice.Orbifold.Paley;
 
 internal sealed class P48pTernaryPaleyGraphDocument : IScribeDocumentDefinition
 {
@@ -9,7 +9,7 @@ internal sealed class P48pTernaryPaleyGraphDocument : IScribeDocumentDefinition
         H("The P48p Ternary Paley Graph"),
         Blocks(Describe.Lean(
             DescribeId.Create("p48p-ternary-paley-graph"),
-            DeclarationHandle.Create("D5/S3/VertexAlgebra/Lattice/Orbifold/P48pTernaryPaleyGraph.frameSyndrome_eq_zero_iff_signedChart_graph"),
+            DeclarationHandle.Create("D5/S3/VertexAlgebra/Lattice/Orbifold/Paley/P48pTernaryPaleyGraph.frameSyndrome_eq_zero_iff_signedChart_graph"),
             H("The signed halves characterize the kernel"),
             StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo(),

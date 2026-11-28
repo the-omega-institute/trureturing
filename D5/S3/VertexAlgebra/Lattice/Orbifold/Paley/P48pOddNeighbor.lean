@@ -1,12 +1,12 @@
-/- GID: D5/S3/VertexAlgebra/Lattice/Orbifold/P48pOddNeighbor
+/- GID: D5/S3/VertexAlgebra/Lattice/Orbifold/Paley/P48pOddNeighbor
    generality: I
-   mirror-B: D5/B/S3/VertexAlgebra/Lattice/Orbifold/P48pOddNeighbor
+   mirror-B: D5/B/S3/VertexAlgebra/Lattice/Orbifold/Paley/P48pOddNeighbor
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: The catalogue P48p odd neighbor is the scaled integral preimage of the ternary frame kernel. -/
 
-import D5.S3.VertexAlgebra.Lattice.Orbifold.P48pSyndromeFrame
+import D5.S3.VertexAlgebra.Lattice.Orbifold.Paley.P48pSyndromeFrame
 import Mathlib.Algebra.BigOperators.Group.Finset.Piecewise
 import Mathlib.LinearAlgebra.Matrix.SemiringInverse
 import Mathlib.Tactic.Linarith

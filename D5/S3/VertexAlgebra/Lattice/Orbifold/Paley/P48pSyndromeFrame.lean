@@ -1,13 +1,13 @@
-/- GID: D5/S3/VertexAlgebra/Lattice/Orbifold/P48pSyndromeFrame
+/- GID: D5/S3/VertexAlgebra/Lattice/Orbifold/Paley/P48pSyndromeFrame
    generality: I
-   mirror-B: D5/B/S3/VertexAlgebra/Lattice/Orbifold/P48pSyndromeFrame
+   mirror-B: D5/B/S3/VertexAlgebra/Lattice/Orbifold/Paley/P48pSyndromeFrame
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: The catalogue P48p pairing frame reduces norm-two exclusion to short ternary syndrome injectivity. -/
 
 import Batteries.Tactic.OpenPrivate
-import D5.S3.VertexAlgebra.Lattice.Orbifold.NormTwoTernarySyndrome
+import D5.S3.VertexAlgebra.Lattice.Orbifold.Paley.NormTwoTernarySyndrome
 import D5.S3.VertexAlgebra.Lattice.Orbifold.P48qGramCertificate
 import OmegaBuild.Commands
 

@@ -1,6 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.VertexAlgebra.Lattice.Orbifold;
+namespace StrataLint.Scribe.Blueprint.D5.S3.VertexAlgebra.Lattice.Orbifold.Paley;
 
 internal sealed class P48pPaleyTripleNormalizationDocument : IScribeDocumentDefinition
 {
@@ -9,7 +9,7 @@ internal sealed class P48pPaleyTripleNormalizationDocument : IScribeDocumentDefi
         H("The P48p Paley Seed Triple"),
         Blocks(Describe.Lean(
             DescribeId.Create("p48p-paley-seed-triple"),
-            DeclarationHandle.Create("D5/S3/VertexAlgebra/Lattice/Orbifold/P48pPaleyTripleNormalization.exists_paleyPerm_image_triple"),
+            DeclarationHandle.Create("D5/S3/VertexAlgebra/Lattice/Orbifold/Paley/P48pPaleyTripleNormalization.exists_paleyPerm_image_triple"),
             H("Three directions can be moved to infinity, zero and one"),
             StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo(),

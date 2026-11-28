@@ -1,6 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.VertexAlgebra.Lattice.Orbifold;
+namespace StrataLint.Scribe.Blueprint.D5.S3.VertexAlgebra.Lattice.Orbifold.Paley;
 
 internal sealed class P48pPaleySparseCheckDocument : IScribeDocumentDefinition
 {
@@ -9,7 +9,7 @@ internal sealed class P48pPaleySparseCheckDocument : IScribeDocumentDefinition
         H("The P48p Anchored Paley Checks"),
         Blocks(Describe.Lean(
             DescribeId.Create("p48p-paley-sparse-check-reduction"),
-            DeclarationHandle.Create("D5/S3/VertexAlgebra/Lattice/Orbifold/P48pPaleySparseCheck.paley_small_support_certificate_of_weight_six"),
+            DeclarationHandle.Create("D5/S3/VertexAlgebra/Lattice/Orbifold/Paley/P48pPaleySparseCheck.paley_small_support_certificate_of_weight_six"),
             H("Weight six completes the finite checks"),
             StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo(),

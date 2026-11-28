@@ -1,13 +1,13 @@
-/- GID: D5/S3/VertexAlgebra/Lattice/Orbifold/P48pTernaryPaleyGraph
+/- GID: D5/S3/VertexAlgebra/Lattice/Orbifold/Paley/P48pTernaryPaleyGraph
    generality: I
-   mirror-B: D5/B/S3/VertexAlgebra/Lattice/Orbifold/P48pTernaryPaleyGraph
+   mirror-B: D5/B/S3/VertexAlgebra/Lattice/Orbifold/Paley/P48pTernaryPaleyGraph
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: The actual P48p ternary frame kernel is the graph of its signed Paley conference matrix. -/
 
-import D5.S3.VertexAlgebra.Lattice.Orbifold.P48pOddNeighbor
-import D5.S3.VertexAlgebra.Lattice.Orbifold.P48pFrameProjectiveAction
+import D5.S3.VertexAlgebra.Lattice.Orbifold.Paley.P48pOddNeighbor
+import D5.S3.VertexAlgebra.Lattice.Orbifold.Paley.P48pFrameProjectiveAction
 import OmegaBuild.Commands
 
 /-!

@@ -1,10 +1,10 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.VertexAlgebra.Lattice.Orbifold;
+namespace StrataLint.Scribe.Blueprint.D5.S3.VertexAlgebra.Lattice.Orbifold.Paley;
 
 internal sealed class P48pSyndromeFrameDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S3/VertexAlgebra/Lattice/Orbifold/P48pSyndromeFrame.";
+    private const string Prefix = "D5/S3/VertexAlgebra/Lattice/Orbifold/Paley/P48pSyndromeFrame.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The concrete P48p frame reduces norm-two exclusion to a ternary syndrome check.",

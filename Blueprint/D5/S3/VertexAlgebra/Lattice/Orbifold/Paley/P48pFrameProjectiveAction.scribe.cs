@@ -1,6 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.VertexAlgebra.Lattice.Orbifold;
+namespace StrataLint.Scribe.Blueprint.D5.S3.VertexAlgebra.Lattice.Orbifold.Paley;
 
 internal sealed class P48pFrameProjectiveActionDocument : IScribeDocumentDefinition
 {
@@ -9,7 +9,7 @@ internal sealed class P48pFrameProjectiveActionDocument : IScribeDocumentDefinit
         H("The P48p Projective Directions"),
         Blocks(Describe.Lean(
             DescribeId.Create("p48p-frame-projective-normalization"),
-            DeclarationHandle.Create("D5/S3/VertexAlgebra/Lattice/Orbifold/P48pFrameProjectiveAction.existsUnique_normalizedRow"),
+            DeclarationHandle.Create("D5/S3/VertexAlgebra/Lattice/Orbifold/Paley/P48pFrameProjectiveAction.existsUnique_normalizedRow"),
             H("A nonzero row has a unique direction and scale"),
             StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo(),

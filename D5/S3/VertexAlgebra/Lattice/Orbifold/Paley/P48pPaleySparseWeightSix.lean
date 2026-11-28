@@ -1,13 +1,13 @@
-/- GID: D5/S3/VertexAlgebra/Lattice/Orbifold/P48pPaleySparseWeightSix
+/- GID: D5/S3/VertexAlgebra/Lattice/Orbifold/Paley/P48pPaleySparseWeightSix
    generality: I
-   mirror-B: D5/B/S3/VertexAlgebra/Lattice/Orbifold/P48pPaleySparseWeightSix
+   mirror-B: D5/B/S3/VertexAlgebra/Lattice/Orbifold/Paley/P48pPaleySparseWeightSix
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: The weight-six Paley certificate excludes norm four in the P48p odd neighbor. -/
 
 import Batteries.Tactic.OpenPrivate
-import D5.S3.VertexAlgebra.Lattice.Orbifold.P48pPaleySparseCheck
+import D5.S3.VertexAlgebra.Lattice.Orbifold.Paley.P48pPaleySparseCheck
 import OmegaBuild.Commands
 
 /-!
@@ -34,10 +34,10 @@ open P48pOddNeighbor (RatRow oddNeighbor cataloguePairing)
 open P48pPaleyNormFour (norm_ne_four_of_paley_small_support)
 
 open private paleyCComputable paleyC_eq_computable from
-  D5.S3.VertexAlgebra.Lattice.Orbifold.P48pTernaryPaleyGraph
+  D5.S3.VertexAlgebra.Lattice.Orbifold.Paley.P48pTernaryPaleyGraph
 open private anchorWord exactSignedSubsets freeSlopes freeSlopes_nodup mem_freeSlopes_iff
   signPairs signPair_cases from
-  D5.S3.VertexAlgebra.Lattice.Orbifold.P48pPaleySparseCheck
+  D5.S3.VertexAlgebra.Lattice.Orbifold.Paley.P48pPaleySparseCheck
 
 /-- One character lookup, with the nonzero squares modulo 23 stored as set bits. -/
 private def characterResidue (i j : Fin 24) : ℕ :=

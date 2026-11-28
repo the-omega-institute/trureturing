@@ -1,6 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.VertexAlgebra.Lattice.Orbifold;
+namespace StrataLint.Scribe.Blueprint.D5.S3.VertexAlgebra.Lattice.Orbifold.Paley;
 
 internal sealed class P48pPaleySparseReductionDocument : IScribeDocumentDefinition
 {
@@ -9,7 +9,7 @@ internal sealed class P48pPaleySparseReductionDocument : IScribeDocumentDefiniti
         H("Anchoring P48p Paley Inputs"),
         Blocks(Describe.Lean(
             DescribeId.Create("p48p-paley-support-anchoring"),
-            DeclarationHandle.Create("D5/S3/VertexAlgebra/Lattice/Orbifold/P48pPaleySparseReduction.exists_anchored_paleyRow"),
+            DeclarationHandle.Create("D5/S3/VertexAlgebra/Lattice/Orbifold/Paley/P48pPaleySparseReduction.exists_anchored_paleyRow"),
             H("Projective moves and a global sign give an anchored row"),
             StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo(),

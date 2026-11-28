@@ -1,14 +1,14 @@
-/- GID: D5/S3/VertexAlgebra/Lattice/Orbifold/P48pPaleySparseCheck
+/- GID: D5/S3/VertexAlgebra/Lattice/Orbifold/Paley/P48pPaleySparseCheck
    generality: I
-   mirror-B: D5/B/S3/VertexAlgebra/Lattice/Orbifold/P48pPaleySparseCheck
+   mirror-B: D5/B/S3/VertexAlgebra/Lattice/Orbifold/Paley/P48pPaleySparseCheck
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: Finite anchored Paley rows for the actual P48p ternary graph. -/
 
 import Batteries.Tactic.OpenPrivate
-import D5.S3.VertexAlgebra.Lattice.Orbifold.P48pPaleyNormFour
-import D5.S3.VertexAlgebra.Lattice.Orbifold.P48pPaleySparseReduction
+import D5.S3.VertexAlgebra.Lattice.Orbifold.Paley.P48pPaleyNormFour
+import D5.S3.VertexAlgebra.Lattice.Orbifold.Paley.P48pPaleySparseReduction
 import OmegaBuild.Commands
 
 /-!
@@ -39,7 +39,7 @@ open P48pPaleySparseReduction (rowSupport mem_rowSupport HasAnchoredSupport
   exists_anchored_paleyRow)
 
 open private paleyCComputable paleyC_eq_computable from
-  D5.S3.VertexAlgebra.Lattice.Orbifold.P48pTernaryPaleyGraph
+  D5.S3.VertexAlgebra.Lattice.Orbifold.Paley.P48pTernaryPaleyGraph
 
 abbrev Entry := Fin 24 × F3
 

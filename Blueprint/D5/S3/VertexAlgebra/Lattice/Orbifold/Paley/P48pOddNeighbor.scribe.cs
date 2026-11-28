@@ -1,6 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.VertexAlgebra.Lattice.Orbifold;
+namespace StrataLint.Scribe.Blueprint.D5.S3.VertexAlgebra.Lattice.Orbifold.Paley;
 
 internal sealed class P48pOddNeighborDocument : IScribeDocumentDefinition
 {
@@ -9,7 +9,7 @@ internal sealed class P48pOddNeighborDocument : IScribeDocumentDefinition
         H("The P48p Odd Neighbor"),
         Blocks(Describe.Lean(
             DescribeId.Create("p48p-odd-neighbor-ternary-membership"),
-            DeclarationHandle.Create("D5/S3/VertexAlgebra/Lattice/Orbifold/P48pOddNeighbor.mem_oddNeighbor_iff_ternary"),
+            DeclarationHandle.Create("D5/S3/VertexAlgebra/Lattice/Orbifold/Paley/P48pOddNeighbor.mem_oddNeighbor_iff_ternary"),
             H("The odd neighbor is characterized by its pairing coordinates"),
             StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo(),

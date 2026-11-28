@@ -1,13 +1,13 @@
-/- GID: D5/S3/VertexAlgebra/Lattice/Orbifold/P48pPaleySparseReduction
+/- GID: D5/S3/VertexAlgebra/Lattice/Orbifold/Paley/P48pPaleySparseReduction
    generality: I
-   mirror-B: D5/B/S3/VertexAlgebra/Lattice/Orbifold/P48pPaleySparseReduction
+   mirror-B: D5/B/S3/VertexAlgebra/Lattice/Orbifold/Paley/P48pPaleySparseReduction
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: Signed SL(2,23) moves reduce the Paley weight bound to rows with anchored support. -/
 
 import Batteries.Tactic.OpenPrivate
-import D5.S3.VertexAlgebra.Lattice.Orbifold.P48pPaleyTripleNormalization
+import D5.S3.VertexAlgebra.Lattice.Orbifold.Paley.P48pPaleyTripleNormalization
 import OmegaBuild.Commands
 
 /-!
@@ -33,9 +33,9 @@ open P48pPaleyAction (paleyPerm paleyRowAction paleyRowAction_ne_zero_iff paleyR
 open P48pPaleyTripleNormalization (exists_paleyPerm_image_triple)
 
 open private directionEquiv paleyDirection from
-  D5.S3.VertexAlgebra.Lattice.Orbifold.P48pTernaryPaleyGraph
+  D5.S3.VertexAlgebra.Lattice.Orbifold.Paley.P48pTernaryPaleyGraph
 open private paleyDirection_perm paleyPerm_one paleyPerm_mul from
-  D5.S3.VertexAlgebra.Lattice.Orbifold.P48pPaleyAction
+  D5.S3.VertexAlgebra.Lattice.Orbifold.Paley.P48pPaleyAction
 
 local instance : Fact (Nat.Prime 23) := ⟨by decide⟩
 

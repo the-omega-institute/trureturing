@@ -1,13 +1,13 @@
-/- GID: D5/S3/VertexAlgebra/Lattice/Orbifold/P48pPaleyTripleNormalization
+/- GID: D5/S3/VertexAlgebra/Lattice/Orbifold/Paley/P48pPaleyTripleNormalization
    generality: I
-   mirror-B: D5/B/S3/VertexAlgebra/Lattice/Orbifold/P48pPaleyTripleNormalization
+   mirror-B: D5/B/S3/VertexAlgebra/Lattice/Orbifold/Paley/P48pPaleyTripleNormalization
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: The projective action of SL(2,23) moves every unordered triple to the Paley seed triple. -/
 
 import Batteries.Tactic.OpenPrivate
-import D5.S3.VertexAlgebra.Lattice.Orbifold.P48pPaleyAction
+import D5.S3.VertexAlgebra.Lattice.Orbifold.Paley.P48pPaleyAction
 import OmegaBuild.Commands
 
 /-!
@@ -29,11 +29,11 @@ open P48pFrameProjectiveAction (Direction F23 SL23 Row normalizedRow projectiveS
 open P48pPaleyAction (paleyPerm)
 
 open private normalize_smul from
-  D5.S3.VertexAlgebra.Lattice.Orbifold.P48pFrameProjectiveAction
+  D5.S3.VertexAlgebra.Lattice.Orbifold.Paley.P48pFrameProjectiveAction
 open private directionEquiv from
-  D5.S3.VertexAlgebra.Lattice.Orbifold.P48pTernaryPaleyGraph
+  D5.S3.VertexAlgebra.Lattice.Orbifold.Paley.P48pTernaryPaleyGraph
 open private paleyDirection_perm from
-  D5.S3.VertexAlgebra.Lattice.Orbifold.P48pPaleyAction
+  D5.S3.VertexAlgebra.Lattice.Orbifold.Paley.P48pPaleyAction
 
 local instance : Fact (Nat.Prime 23) := ⟨by decide⟩
 

@@ -1,6 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.VertexAlgebra.Lattice.Orbifold;
+namespace StrataLint.Scribe.Blueprint.D5.S3.VertexAlgebra.Lattice.Orbifold.Paley;
 
 internal sealed class NormTwoTernarySyndromeDocument : IScribeDocumentDefinition
 {
@@ -9,7 +9,7 @@ internal sealed class NormTwoTernarySyndromeDocument : IScribeDocumentDefinition
         H("The Ternary Syndrome Criterion"),
         Blocks(Describe.Lean(
             DescribeId.Create("norm-two-ternary-syndrome-injective"),
-            DeclarationHandle.Create("D5/S3/VertexAlgebra/Lattice/Orbifold/NormTwoTernarySyndrome.bilinear_ne_two_of_short_syndrome_injective"),
+            DeclarationHandle.Create("D5/S3/VertexAlgebra/Lattice/Orbifold/Paley/NormTwoTernarySyndrome.bilinear_ne_two_of_short_syndrome_injective"),
             H("Short-syndrome injectivity excludes squared norm two"),
             StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo(),

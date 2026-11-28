@@ -1,13 +1,13 @@
-/- GID: D5/S3/VertexAlgebra/Lattice/Orbifold/P48pFrameProjectiveAction
+/- GID: D5/S3/VertexAlgebra/Lattice/Orbifold/Paley/P48pFrameProjectiveAction
    generality: I
-   mirror-B: D5/B/S3/VertexAlgebra/Lattice/Orbifold/P48pFrameProjectiveAction
+   mirror-B: D5/B/S3/VertexAlgebra/Lattice/Orbifold/Paley/P48pFrameProjectiveAction
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: The two signed P48p frame generators act as two copies of the quadratic-character projective action of SL(2,23). -/
 
 import Batteries.Tactic.OpenPrivate
-import D5.S3.VertexAlgebra.Lattice.Orbifold.P48pFrameData
+import D5.S3.VertexAlgebra.Lattice.Orbifold.Paley.P48pFrameData
 import Mathlib.Algebra.Group.Subgroup.Ker
 import Mathlib.Data.Fintype.EquivFin
 import Mathlib.Data.Fintype.Option
@@ -35,7 +35,7 @@ namespace D5.S3.VertexAlgebra.Lattice.Orbifold.P48pFrameProjectiveAction
 open scoped Matrix
 open P48pSymmetricCommutantCertificate
 open private tIndex tSign uIndex uSign from
-  D5.S3.VertexAlgebra.Lattice.Orbifold.P48pFrameData
+  D5.S3.VertexAlgebra.Lattice.Orbifold.Paley.P48pFrameData
 
 abbrev F23 := ZMod 23
 abbrev SL23 := Matrix.SpecialLinearGroup (Fin 2) F23

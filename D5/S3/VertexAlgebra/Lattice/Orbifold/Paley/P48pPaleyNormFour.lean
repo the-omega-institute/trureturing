@@ -1,13 +1,13 @@
-/- GID: D5/S3/VertexAlgebra/Lattice/Orbifold/P48pPaleyNormFour
+/- GID: D5/S3/VertexAlgebra/Lattice/Orbifold/Paley/P48pPaleyNormFour
    generality: I
-   mirror-B: D5/B/S3/VertexAlgebra/Lattice/Orbifold/P48pPaleyNormFour
+   mirror-B: D5/B/S3/VertexAlgebra/Lattice/Orbifold/Paley/P48pPaleyNormFour
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: A norm-four vector in the actual P48p odd neighbor forces a short Paley graph pair. -/
 
 import Batteries.Tactic.OpenPrivate
-import D5.S3.VertexAlgebra.Lattice.Orbifold.P48pTernaryPaleyGraph
+import D5.S3.VertexAlgebra.Lattice.Orbifold.Paley.P48pTernaryPaleyGraph
 import OmegaBuild.Commands
 
 compile_only_with_mathlib
@@ -33,7 +33,7 @@ open P48pTernaryPaleyGraph
   (F3 signedChartWord paleyC paleyC_sq frameSyndrome_eq_zero_iff_signedChart_graph)
 
 open private chartIndexEquiv chartIndex chartSign_sq from
-  D5.S3.VertexAlgebra.Lattice.Orbifold.P48pTernaryPaleyGraph
+  D5.S3.VertexAlgebra.Lattice.Orbifold.Paley.P48pTernaryPaleyGraph
 
 private theorem hammingNorm_signedChartWord_add (u : Fin 48 → F3) :
     hammingNorm u = hammingNorm (signedChartWord u 0) + hammingNorm (signedChartWord u 1) := by

@@ -1,6 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.VertexAlgebra.Lattice.Orbifold;
+namespace StrataLint.Scribe.Blueprint.D5.S3.VertexAlgebra.Lattice.Orbifold.Paley;
 
 internal sealed class P48pPaleyNormFourDocument : IScribeDocumentDefinition
 {
@@ -9,7 +9,7 @@ internal sealed class P48pPaleyNormFourDocument : IScribeDocumentDefinition
         H("The P48p Paley Norm-Four Reduction"),
         Blocks(Describe.Lean(
             DescribeId.Create("p48p-paley-norm-four-reduction"),
-            DeclarationHandle.Create("D5/S3/VertexAlgebra/Lattice/Orbifold/P48pPaleyNormFour.norm_ne_four_of_paley_small_support"),
+            DeclarationHandle.Create("D5/S3/VertexAlgebra/Lattice/Orbifold/Paley/P48pPaleyNormFour.norm_ne_four_of_paley_small_support"),
             H("Small-support exclusion suffices for the odd neighbor"),
             StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo(),
