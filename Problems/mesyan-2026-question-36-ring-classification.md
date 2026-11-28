@@ -138,9 +138,17 @@ The equivalence answers the classification clause of Question 36 for all
 associative rings using Definition 4's ordered positive finite sums. The zero
 ring and zero primary components use zero as their identity. The separate
 existence witness realizes the nonzero case with infinitely many nonzero
-primary components and no global identity. General semirings and alternative
-zero conventions remain open here.
+primary components and no global identity.
 [Definition 4](https://arxiv.org/html/2611.31109v1#Thmtheorem4) · [Question 36](https://arxiv.org/html/2611.31109v1#Thmtheorem36) · [Existence witness](https://github.com/the-omega-institute/trureturing/issues/35254#issuecomment-7237620771)
+
+The same classification extends to associative semirings with cancellative
+addition. The cyclic-multiplier criterion characterizes two-sided units of
+the binary additive-submonoid product even without multiplicative
+associativity. For idempotent addition, such a binary unit exists exactly when
+the carrier has a two-sided multiplicative identity. The general structural
+classification for arbitrary noncancellative semirings and alternative zero
+conventions remain open here.
+[Cancellative classification and binary criterion](../Blueprint/D5/S3/Arith/ResidueRings/MesyanCancellative.md) · [Idempotent classification](../Blueprint/D5/S3/Arith/ResidueRings/MesyanIdempotent.md)
 
 ## ASSUMED-UNVERIFIED
 
