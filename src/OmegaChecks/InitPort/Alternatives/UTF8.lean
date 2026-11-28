@@ -787,4 +787,16 @@ public theorem ByteArray.isSome_utf8Decode?Go_eq_validateUTF8Go :
     type_of% @_root_.ByteArray.isSome_utf8Decode?Go_eq_validateUTF8Go :=
   fun {b i acc hi} => validation_agrees b (b.size - i) i hi acc (Nat.le_refl _)
 
+open _root_.ByteArray.utf8DecodeChar? in
+public theorem ByteArray.utf8DecodeChar?.val_assemble₁_le :
+    type_of% (private_decl% @_root_.ByteArray.utf8DecodeChar?.val_assemble₁_le) := by
+  intro w h c he
+  have charEq := Option.some.inj (show some _ = some c from he)
+  cases charEq
+  have bound := (UInt8.lt_iff_toNat_lt).mp (helper₅ h)
+  apply UInt32.le_iff_toNat_le.mpr
+  change w.toUInt32.toNat ≤ 127
+  rw [UInt8.toNat_toUInt32]
+  exact Nat.le_of_lt_succ bound
+
 end OmegaChecks.InitPort.Alternatives

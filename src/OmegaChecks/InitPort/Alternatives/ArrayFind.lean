@@ -1,5 +1,6 @@
 module
 import all Init.Data.Array.Basic
+import all Init.Data.Array.BasicAux
 import all Init.Data.List.Control
 import all Init.Data.Array.BinSearch
 public import Init.Data.Array.Lemmas
@@ -352,5 +353,45 @@ public theorem Array.binInsertM._proof_8 : type_of% (private_decl% @_root_.Array
   cases h : lt (xs[0]'zero) k with
   | true => rfl
   | false => exact (notBefore (congrArg Bool.not h)).elim
+
+private theorem accumulatedSize {as : List α} {bs : Array α} :
+    (as.toArrayAux bs).size = as.length + bs.size := by
+  induction as generalizing bs with
+  | nil => exact (Nat.zero_add bs.size).symm
+  | cons a as ih =>
+    change (as.toArrayAux (bs.push a)).size = (as.length + 1) + bs.size
+    rw [ih, Array.size_push, Nat.succ_add, Nat.add_succ]
+
+public theorem List.size_toArrayAux {as : List α} {bs : Array α} :
+    (as.toArrayAux bs).size = as.length + bs.size := accumulatedSize
+
+public theorem List.of_toArrayAux_eq_toArrayAux :
+    type_of% (private_decl% @_root_.List.of_toArrayAux_eq_toArrayAux) := by
+  intro α as bs cs ds h sizes
+  induction as generalizing bs cs ds with
+  | nil =>
+    cases bs with
+    | nil => exact ⟨rfl, h⟩
+    | cons b bs =>
+      change cs = bs.toArrayAux (ds.push b) at h
+      have sz := congrArg Array.size h
+      rw [accumulatedSize, Array.size_push, sizes] at sz
+      exact (Nat.not_lt_of_ge (Nat.le_of_eq sz.symm)
+        (Nat.lt_of_lt_of_le (Nat.lt_succ_self _) (Nat.le_add_left _ _))).elim
+  | cons a as ih =>
+    cases bs with
+    | nil =>
+      change as.toArrayAux (cs.push a) = ds at h
+      have sz := congrArg Array.size h
+      rw [accumulatedSize, Array.size_push, ← sizes] at sz
+      exact (Nat.not_lt_of_ge (Nat.le_of_eq sz)
+        (Nat.lt_of_lt_of_le (Nat.lt_succ_self _) (Nat.le_add_left _ _))).elim
+    | cons b bs =>
+      have step := ih (bs := bs) (cs := cs.push a) (ds := ds.push b) h
+        (by rw [Array.size_push, Array.size_push, sizes])
+      obtain ⟨tails, pushes⟩ := step
+      obtain ⟨arrays, heads⟩ := Array.of_push_eq_push pushes
+      cases heads
+      exact ⟨congrArg (a :: ·) tails, arrays⟩
 
 end OmegaChecks.InitPort.Alternatives
