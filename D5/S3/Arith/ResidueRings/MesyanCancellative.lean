@@ -10,8 +10,8 @@ import D5.S3.Arith.ResidueRings.MesyanQuantaleClassification
 
 /-!
 For Mesyan's Question 36, we classify the additively cancellative associative
-semirings with a unit on their additive submonoids. For arbitrary associative
-semirings we identify the only candidate and give its elementwise unit criterion.
+semirings with a unit on their additive submonoids. The candidate and its
+elementwise unit criterion also apply to nonassociative semirings.
 -/
 
 set_option autoImplicit false
@@ -21,17 +21,17 @@ open scoped Pointwise
 
 namespace D5.S3.Arith.ResidueRings.MesyanCancellative
 
-variable {S : Type*} [NonUnitalSemiring S]
+variable {S : Type*}
 
 /-- A two-sided identity for the product of all additive submonoids. -/
-private def IsProductUnit (E : AddSubmonoid S) : Prop :=
+private def IsProductUnit [NonUnitalNonAssocSemiring S] (E : AddSubmonoid S) : Prop :=
   ∀ M : AddSubmonoid S, E * M = M ∧ M * E = M
 
 /-- A multiplicative identity on a type with possibly nonunital multiplication. -/
 private def HasMultiplicativeIdentity (S : Type*) [Mul S] : Prop :=
   ∃ u : S, ∀ x : S, u * x = x ∧ x * u = x
 
-private theorem left_product_iff (E : AddSubmonoid S) :
+private theorem left_product_iff [NonUnitalNonAssocSemiring S] (E : AddSubmonoid S) :
     (∀ M : AddSubmonoid S, E * M = M) ↔
       (∀ e ∈ E, ∀ a : S, ∃ n : ℕ, n • a = e * a) ∧
       (∀ a : S, ∃ e ∈ E, e * a = a) := by
@@ -58,7 +58,7 @@ private theorem left_product_iff (E : AddSubmonoid S) :
       obtain ⟨e, he, hfixa⟩ := hfix a
       exact hfixa ▸ AddSubmonoid.mul_mem_mul he ha
 
-private theorem right_product_iff (E : AddSubmonoid S) :
+private theorem right_product_iff [NonUnitalNonAssocSemiring S] (E : AddSubmonoid S) :
     (∀ M : AddSubmonoid S, M * E = M) ↔
       (∀ e ∈ E, ∀ a : S, ∃ n : ℕ, n • a = a * e) ∧
       (∀ a : S, ∃ e ∈ E, a * e = a) := by
@@ -111,7 +111,7 @@ private theorem fixed_everywhere_of_cyclic_idempotent {A : Type*} [AddCommMonoid
     simpa only [hk1, one_nsmul] using hk.symm
   exact add_left_cancel (by simpa only [map_add, hFa] using hfix)
 
-private theorem product_unit_of_multiplicative_identity
+private theorem product_unit_of_multiplicative_identity [NonUnitalSemiring S]
     (h : HasMultiplicativeIdentity S) : ∃ E : AddSubmonoid S, IsProductUnit E := by
   obtain ⟨u, hu⟩ := h
   let E := AddSubmonoid.multiples u
@@ -126,7 +126,8 @@ private theorem product_unit_of_multiplicative_identity
 /-- Equip the original carrier with a nonunital ring by choosing an additive
 inverse for each element. The supplied semiring fields include its natural scalar action. -/
 @[instance_reducible]
-private noncomputable def ringOfAdditiveInverses (h : ∀ a : S, ∃ b : S, a + b = 0) :
+private noncomputable def ringOfAdditiveInverses [NonUnitalSemiring S]
+    (h : ∀ a : S, ∃ b : S, a + b = 0) :
     NonUnitalRing S := by
   letI : Neg S := ⟨fun a => Classical.choose (h a)⟩
   exact { ‹NonUnitalSemiring S› with
@@ -144,7 +145,7 @@ private noncomputable def ringOfAdditiveInverses (h : ∀ a : S, ∃ b : S, a + 
 
 /-- Multipliers preserving each cyclic additive submonoid on both sides.
 The left and right natural multiples may be chosen independently. -/
-def cyclicPreservingMultipliers (S : Type*) [NonUnitalSemiring S] : AddSubmonoid S where
+def cyclicPreservingMultipliers (S : Type*) [NonUnitalNonAssocSemiring S] : AddSubmonoid S where
   carrier := {c | ∀ x : S, c * x ∈ AddSubmonoid.multiples x ∧
     x * c ∈ AddSubmonoid.multiples x}
   zero_mem' := fun x => ⟨by rw [zero_mul]; exact (AddSubmonoid.multiples x).zero_mem,
@@ -156,7 +157,8 @@ def cyclicPreservingMultipliers (S : Type*) [NonUnitalSemiring S] : AddSubmonoid
 /-- The only possible product unit is the submonoid of cyclic-preserving
 multipliers. It is a unit exactly when every element has a local fixer on
 each side from that submonoid. -/
-theorem product_unit_iff_eq_cyclicPreservingMultipliers (E : AddSubmonoid S) :
+theorem product_unit_iff_eq_cyclicPreservingMultipliers [NonUnitalNonAssocSemiring S]
+    (E : AddSubmonoid S) :
     (∀ M : AddSubmonoid S, E * M = M ∧ M * E = M) ↔
       E = cyclicPreservingMultipliers S ∧ ∀ x : S,
         (∃ l ∈ cyclicPreservingMultipliers S, l * x = x) ∧
@@ -176,6 +178,8 @@ theorem product_unit_iff_eq_cyclicPreservingMultipliers (E : AddSubmonoid S) :
   · rintro ⟨rfl, h⟩ M
     exact ⟨(left_product_iff _).2 ⟨fun c hc x => (hc x).1, fun x => (h x).1⟩ M,
       (right_product_iff _).2 ⟨fun c hc x => (hc x).2, fun x => (h x).2⟩ M⟩
+
+variable [NonUnitalSemiring S]
 
 private theorem multiplicative_identity_of_product_unit [IsLeftCancelAdd S]
     {a : S} (ha : ¬ ∃ b : S, a + b = 0) {E : AddSubmonoid S}

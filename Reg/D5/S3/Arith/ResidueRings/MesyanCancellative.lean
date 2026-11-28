@@ -19,7 +19,7 @@ open scoped Pointwise
 universe u
 
 private abbrev Params :=
-  (S : Type u) × (s : NonUnitalSemiring S) × @AddSubmonoid S (letI := s; inferInstance)
+  (S : Type u) × (s : NonUnitalNonAssocSemiring S) × @AddSubmonoid S (letI := s; inferInstance)
 
 private def signature : Signature where
   Params := Params.{u}
@@ -42,7 +42,7 @@ private def erased : Realization signature.{u} :=
 
 private def criterionArena : Arena.{u + 1, u, 0, u, 0} where
   signature := signature
-  Law := fun F => ∀ {S : Type u} [s : NonUnitalSemiring S] (E : AddSubmonoid S),
+  Law := fun F => ∀ {S : Type u} [s : NonUnitalNonAssocSemiring S] (E : AddSubmonoid S),
     (∀ M : AddSubmonoid S, F.readout () ⟨S, s, E⟩ M = M ∧ M * E = M) ↔
       E = cyclicPreservingMultipliers S ∧ ∀ x : S,
         (∃ l ∈ cyclicPreservingMultipliers S, l * x = x) ∧
@@ -52,7 +52,7 @@ private def classificationArena : Arena.{u + 1, u, 0, u, 0} where
   signature := signature
   Law := fun F => ∀ {S : Type u} [s : NonUnitalSemiring S] [IsLeftCancelAdd S],
     (∃ E : AddSubmonoid S, ∀ M : AddSubmonoid S,
-      F.readout () ⟨S, s, E⟩ M = M ∧ M * E = M) ↔
+      F.readout () ⟨S, s.toNonUnitalNonAssocSemiring, E⟩ M = M ∧ M * E = M) ↔
       (∃ u : S, ∀ x : S, u * x = x ∧ x * u = x) ∨
       ((∀ a : S, 0 < addOrderOf a) ∧
         ∀ p : Nat.Primes, ∃ u : S, (∃ j : ℕ, (p : ℕ) ^ j • u = 0) ∧
