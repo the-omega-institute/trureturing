@@ -6,20 +6,19 @@
    utility: none
    digest: Continuous word-ball tents obstruct uniform invariance for infinite finitely generated actions. -/
 
-module
 
-public import Mathlib.GroupTheory.Finiteness
-public import Mathlib.GroupTheory.Generators
-public import Mathlib.GroupTheory.GroupAction.Basic
-public import Mathlib.GroupTheory.GroupAction.Quotient
-public import Mathlib.GroupTheory.Index
-public import Mathlib.Topology.MetricSpace.Defs
-public import Mathlib.Topology.UrysohnsLemma
-public import Mathlib.Topology.ContinuousMap.Compact
-public import Mathlib.Topology.Order.Lattice
-public import Mathlib.Tactic.Linarith
-public import OmegaMath.Combinatorics.Graph.GroupWordMetric
-public import OmegaBuild.Commands
+import Mathlib.GroupTheory.Finiteness
+import Mathlib.GroupTheory.Generators
+import Mathlib.GroupTheory.GroupAction.Basic
+import Mathlib.GroupTheory.GroupAction.Quotient
+import Mathlib.GroupTheory.Index
+import Mathlib.Topology.MetricSpace.Defs
+import Mathlib.Topology.UrysohnsLemma
+import Mathlib.Topology.ContinuousMap.Compact
+import Mathlib.Topology.Order.Lattice
+import Mathlib.Tactic.Linarith
+import OmegaMath.Combinatorics.Graph.GroupWordMetric
+import OmegaBuild.Commands
 
 /-! Word-ball constructions for continuous actions on compact metric spaces. -/
 
@@ -38,7 +37,7 @@ universe u v
 
 variable {G : Type u} {X : Type v} [Group G] [MetricSpace X] [CompactSpace X]
 
-theorem finite_hom_of_finite_generators (S : Finset G)
+private theorem finite_hom_of_finite_generators (S : Finset G)
     (hS : Subgroup.closure (S : Set G) = ⊤)
     {H : Type*} [Group H] [Finite H] : Finite (G →* H) := by
   classical
@@ -113,22 +112,22 @@ private theorem exists_orbit_outside_finset [MulAction G X]
   change Set.Finite ((MulAction.toPermHom G X).range : Set (Equiv.Perm X))
   exact Set.toFinite _
 
-def wordBall (S : Finset G) : ℕ → Finset G
+private def wordBall (S : Finset G) : ℕ → Finset G
   | 0 => {1}
   | n + 1 => wordBall S n ∪ S.biUnion (fun s => (wordBall S n).image (fun g => s * g))
 
-abbrev Fits (S : Finset G) (n : ℕ) (g : G) : Prop :=
+private abbrev Fits (S : Finset G) (n : ℕ) (g : G) : Prop :=
   GroupWordMetric.Fits (S : Set G) n g
 
-theorem one_mem_wordBall (S : Finset G) (n : ℕ) : (1 : G) ∈ wordBall S n := by
+private theorem one_mem_wordBall (S : Finset G) (n : ℕ) : (1 : G) ∈ wordBall S n := by
   induction n with
   | zero => simp [wordBall]
   | succ n ih => exact Finset.mem_union_left _ ih
 
-theorem finite_wordBall (S : Finset G) (n : ℕ) : Set.Finite (wordBall S n : Set G) := by
+private theorem finite_wordBall (S : Finset G) (n : ℕ) : Set.Finite (wordBall S n : Set G) := by
   exact (wordBall S n).finite_toSet
 
-theorem fits_mem_wordBall {S : Finset G} {n : ℕ} {g : G} :
+private theorem fits_mem_wordBall {S : Finset G} {n : ℕ} {g : G} :
     Fits S n g → g ∈ wordBall S n := by
   rintro ⟨l, hlS, hlen, hprod⟩
   induction n generalizing l g with
@@ -155,7 +154,7 @@ theorem fits_mem_wordBall {S : Finset G} {n : ℕ} {g : G} :
           (Finset.mem_biUnion.mpr ⟨a, ha,
             Finset.mem_image.mpr ⟨t.prod, ht, rfl⟩⟩)
 
-theorem mem_wordBall_fits {S : Finset G} {n : ℕ} {g : G} :
+private theorem mem_wordBall_fits {S : Finset G} {n : ℕ} {g : G} :
     g ∈ wordBall S n → Fits S n g := by
   induction n generalizing g with
   | zero =>
