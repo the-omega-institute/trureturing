@@ -403,6 +403,57 @@ private theorem splitMaskedByte (b mask val : UInt8) (w : Nat) (tag : BitVec k) 
     ← Nat.two_pow_add_eq_or_of_lt (Nat.mod_lt _ (Nat.two_pow_pos _)), ← top, Nat.add_comm, Nat.mod_add_div]
 
 open _root_.ByteArray.utf8DecodeChar? in
+private instance : DecidableEq FirstByte := by
+  intro a b
+  cases a <;> cases b <;> first | exact isTrue rfl | exact isFalse (fun h => nomatch h)
+
+/-- Check a property of first-byte tags on every member of the byte type. -/
+private theorem everyByte (p : UInt8 → Prop) [DecidablePred p]
+    (certificate : decide (∀ i : Fin 256, p ⟨⟨i⟩⟩) = true) (b : UInt8) : p b :=
+  of_decide_eq_true certificate b.toBitVec.toFin
+
+section
+open _root_.ByteArray.utf8DecodeChar?
+set_option maxRecDepth 4096
+
+public theorem ByteArray.utf8DecodeChar?.parseFirstByte_eq_oneMore_iff :
+    type_of% (private_decl% @_root_.ByteArray.utf8DecodeChar?.parseFirstByte_eq_oneMore_iff) := by
+  intro b
+  exact everyByte (fun b => parseFirstByte b = .oneMore ↔ b &&& 0xe0 = 0xc0) (by decide) b
+
+public theorem ByteArray.utf8DecodeChar?.parseFirstByte_eq_oneMore_iff_toBitVec :
+    type_of% (private_decl% @_root_.ByteArray.utf8DecodeChar?.parseFirstByte_eq_oneMore_iff_toBitVec) := by
+  intro b
+  exact everyByte (fun b => parseFirstByte b = .oneMore ↔ b.toBitVec.extractLsb' 5 3 = 0b110#3) (by decide) b
+
+public theorem ByteArray.utf8DecodeChar?.parseFirstByte_eq_twoMore_iff :
+    type_of% (private_decl% @_root_.ByteArray.utf8DecodeChar?.parseFirstByte_eq_twoMore_iff) := by
+  intro b
+  exact everyByte (fun b => parseFirstByte b = .twoMore ↔ b &&& 0xf0 = 0xe0) (by decide) b
+
+public theorem ByteArray.utf8DecodeChar?.parseFirstByte_eq_twoMore_iff_toBitVec :
+    type_of% (private_decl% @_root_.ByteArray.utf8DecodeChar?.parseFirstByte_eq_twoMore_iff_toBitVec) := by
+  intro b
+  exact everyByte (fun b => parseFirstByte b = .twoMore ↔ b.toBitVec.extractLsb' 4 4 = 0b1110#4) (by decide) b
+
+public theorem ByteArray.utf8DecodeChar?.parseFirstByte_eq_threeMore_iff :
+    type_of% (private_decl% @_root_.ByteArray.utf8DecodeChar?.parseFirstByte_eq_threeMore_iff) := by
+  intro b
+  exact everyByte (fun b => parseFirstByte b = .threeMore ↔ b &&& 0xf8 = 0xf0) (by decide) b
+
+public theorem ByteArray.utf8DecodeChar?.parseFirstByte_eq_threeMore_iff_toBitVec :
+    type_of% (private_decl% @_root_.ByteArray.utf8DecodeChar?.parseFirstByte_eq_threeMore_iff_toBitVec) := by
+  intro b
+  exact everyByte (fun b => parseFirstByte b = .threeMore ↔ b.toBitVec.extractLsb' 3 5 = 0b11110#5) (by decide) b
+
+public theorem UInt8.isUTF8FirstByte_iff_parseFirstByte_ne_invalid :
+    type_of% (private_decl% @_root_.UInt8.isUTF8FirstByte_iff_parseFirstByte_ne_invalid) := by
+  intro b
+  exact everyByte (fun b => b.IsUTF8FirstByte ↔ parseFirstByte b ≠ .invalid) (by decide) b
+
+end
+
+open _root_.ByteArray.utf8DecodeChar? in
 public theorem ByteArray.utf8DecodeChar?.toBitVec_eq_of_parseFirstByte_eq_done :
     type_of% (private_decl% @_root_.ByteArray.utf8DecodeChar?.toBitVec_eq_of_parseFirstByte_eq_done) := by
   intro b h
