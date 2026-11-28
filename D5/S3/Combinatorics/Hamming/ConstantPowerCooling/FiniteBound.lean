@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Hamming/ConstantPowerCooling/FiniteBound
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S3/Combinatorics/Hamming/ConstantPowerCooling/Shadows, D5/S3/Combinatorics/Hamming/ConstantPowerCooling/CliquePacking]
+   anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Matching]
    utility: none
    digest: Finite upper bound for constant-power error-correcting cooling codes. -/
 

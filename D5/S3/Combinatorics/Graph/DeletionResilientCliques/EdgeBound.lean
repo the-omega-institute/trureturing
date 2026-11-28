@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Graph/DeletionResilientCliques/EdgeBound
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S3/Combinatorics/Graph/DeletionResilientCliques/CriticalVertexCover, D5/S3/Combinatorics/Graph/DeletionResilientCliques/ColorableInducedSubgraph, mathlib/module/Mathlib.Combinatorics.SimpleGraph.DegreeSum, mathlib/module/Mathlib.Combinatorics.SimpleGraph.Sum, mathlib/module/Mathlib.Algebra.Order.BigOperators.Ring.Finset, mathlib/module/Mathlib.Tactic.FieldSimp, mathlib/module/Mathlib.Tactic.Linarith, mathlib/module/Mathlib.Tactic.Positivity, mathlib/module/Mathlib.Tactic.Ring]
+   anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.DegreeSum]
    utility: none
    digest: Edge lower bound for clique-free graphs resilient to deletion. -/
 

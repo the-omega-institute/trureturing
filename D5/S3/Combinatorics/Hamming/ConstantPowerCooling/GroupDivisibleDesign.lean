@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Hamming/ConstantPowerCooling/GroupDivisibleDesign
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S3/Combinatorics/Hamming/ConstantPowerCooling/FiniteBound]
+   anchors: []
    utility: none
    digest: Finite group divisible designs attain the cooling-code leave bound. -/
 

@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Hamming/ConstantPowerCooling/Shadows
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S3/Combinatorics/Graph/DeletionResilientCliques/EdgeBound]
+   anchors: []
    utility: none
    digest: Pair shadows of cooling-code classes and their induced supports. -/
 
