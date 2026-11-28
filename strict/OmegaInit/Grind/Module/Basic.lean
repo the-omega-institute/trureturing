@@ -37,12 +37,13 @@ port_definition Lean.Grind.IntModule.noConfusion
 port_definition Lean.Grind.IntModule.mk.noConfusion
 
 attribute [instance] Omega.Lean.Grind.AddCommMonoid.toZero Omega.Lean.Grind.AddCommMonoid.toAdd
+attribute [instance 100] Omega.Lean.Grind.AddCommMonoid.toZero Omega.Lean.Grind.AddCommMonoid.toAdd
 attribute [instance] Omega.Lean.Grind.AddCommGroup.toAddCommMonoid
 attribute [instance] Omega.Lean.Grind.AddCommGroup.toNeg Omega.Lean.Grind.AddCommGroup.toSub
-attribute [instance] Omega.Lean.Grind.NatModule.toAddCommMonoid Omega.Lean.Grind.IntModule.toAddCommGroup
-attribute [instance 100] Omega.Lean.Grind.AddCommMonoid.toZero Omega.Lean.Grind.AddCommMonoid.toAdd
 attribute [instance 100] Omega.Lean.Grind.AddCommGroup.toAddCommMonoid Omega.Lean.Grind.AddCommGroup.toNeg Omega.Lean.Grind.AddCommGroup.toSub
+attribute [instance] Omega.Lean.Grind.NatModule.toAddCommMonoid
 attribute [instance 100] Omega.Lean.Grind.NatModule.toAddCommMonoid Omega.Lean.Grind.NatModule.nsmul
+attribute [instance] Omega.Lean.Grind.IntModule.toAddCommGroup
 attribute [instance 100] Omega.Lean.Grind.IntModule.toAddCommGroup Omega.Lean.Grind.IntModule.zsmul
 
 port_proof Lean.Grind.IntModule.toNatModule._proof_1
