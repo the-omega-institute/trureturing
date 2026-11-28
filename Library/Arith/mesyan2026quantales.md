@@ -3,16 +3,21 @@ bibkey: mesyan2026quantales
 authors: Zachary Mesyan
 year: 2026
 title: Quantales Arising From Rings
-doi: null
+doi: 10.48550/arXiv.2611.31109
 url: https://arxiv.org/abs/2611.31109v1
 claim: Question 36 asks whether a nonunital (semi)ring can have a unital quantale of additive submonoids and asks for a classification.
-strata_touched:
-  - D5/S3/Arith/ResidueRings/MesyanQuantaleUnit
+strata_touched: []
 license: citation-only
 triage: anchor
 ---
 
 # The unit question for additive-submonoid quantales
+
+## Verified locator
+
+The first arXiv revision is available at https://arxiv.org/abs/2611.31109v1. The registered DOI is https://doi.org/10.48550/arXiv.2611.31109. Definition 4 specifies the product on all additive submonoids. Question 36 asks about its identity.
+
+## Source question
 
 [Question 36](https://arxiv.org/html/2611.31109v1#Thmtheorem36) asks:
 

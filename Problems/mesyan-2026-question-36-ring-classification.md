@@ -1,7 +1,7 @@
 ---
 slug: mesyan-2026-question-36-ring-classification
 bibkey: mesyan2026quantales
-doi: null
+doi: 10.48550/arXiv.2611.31109
 url: https://arxiv.org/abs/2611.31109v1
 triage: theorem
 motivation_gids:
