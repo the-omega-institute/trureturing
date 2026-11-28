@@ -45,8 +45,9 @@ theorem Short.neg {U : Set (I → ℤ)} {k : ℕ} {r : I → ℤ}
   obtain ⟨terms, hterms, hsum⟩ := h
   exact ⟨fun t => -terms t, fun t => hsymm _ (hterms t), by rw [Finset.sum_neg_distrib, hsum]⟩
 
-private theorem short_coordinate_bound {U : Set (I → ℤ)} {k : ℕ} {r : I → ℤ}
-    (h : Short U k r) (hU : ∀ u ∈ U, ∀ i, |u i| ≤ 1) (i : I) : |r i| ≤ k := by
+private theorem short_coordinate_bound {U : Set (I → ℤ)} {k : ℕ} {r : I → ℤ} {B : ℕ}
+    (h : Short U k r) (hU : ∀ u ∈ U, ∀ i, |u i| ≤ B) (i : I) :
+    |r i| ≤ (k : ℤ) * B := by
   obtain ⟨terms, hterms, rfl⟩ := h
   simp only [Finset.sum_apply]
   exact (Finset.abs_sum_le_sum_abs _ _).trans <|
@@ -56,13 +57,13 @@ open Classical in
 /-- An oriented choice of representatives yields skew integral residuals. Their triangle
 sums agree with the original gains because the coordinate discrepancies are too short
 to be nonzero multiples of the modulus. -/
-theorem exists_integral_residuals_of_modular_potential [LinearOrder V]
+theorem exists_integral_residuals_of_bounded_modular_potential [LinearOrder V]
     (g : V → V → I → ℤ) (hrev : ∀ v w, G.Adj v w → g w v = -g v w)
     (U : Set (I → ℤ)) (hsymm : ∀ u ∈ U, -u ∈ U)
-    (hU : ∀ u ∈ U, ∀ i, |u i| ≤ 1)
+    {B : ℕ} (hU : ∀ u ∈ U, ∀ i, |u i| ≤ B)
     (htri : ∀ v w x, G.Adj v w → G.Adj w x → G.Adj v x →
-      ∀ i, |g v w i + g w x i - g v x i| ≤ 1)
-    {k q : ℕ} (hq : 3 * k + 1 < q) (p : V → I → ZMod q)
+      ∀ i, |g v w i + g w x i - g v x i| ≤ B)
+    {k q : ℕ} (hq : (3 * k + 1) * B < q) (p : V → I → ZMod q)
     (hp : ∀ v w, G.Adj v w →
       Short (reduce q '' U) k (reduce q (g v w) - (p w - p v))) :
     ∃ r : V → V → I → ℤ,
@@ -105,10 +106,28 @@ theorem exists_integral_residuals_of_modular_potential [LinearOrder V]
     have h2 := abs_add_le (r v w i + r w x i) (-(r v x i))
     simp only [abs_neg, ← sub_eq_add_neg] at h1 h2
     have h3 := abs_add_le (r v w i) (r w x i)
-    have hq' : (3 : ℤ) * k + 1 < q := by exact_mod_cast hq
+    have hq' : ((3 : ℤ) * k + 1) * B < q := by exact_mod_cast hq
     linarith [short_coordinate_bound (hr v w hvw) hU i,
       short_coordinate_bound (hr w x hwx) hU i, short_coordinate_bound (hr v x hvx) hU i,
       htri v w x hvw hwx hvx i]
   exact sub_eq_zero.mp (Int.eq_zero_of_abs_lt_dvd hdvd hbound)
+
+/-- The lifting bound specialized to unit-coordinate generators and defects. -/
+theorem exists_integral_residuals_of_modular_potential [LinearOrder V]
+    (g : V → V → I → ℤ) (hrev : ∀ v w, G.Adj v w → g w v = -g v w)
+    (U : Set (I → ℤ)) (hsymm : ∀ u ∈ U, -u ∈ U)
+    (hU : ∀ u ∈ U, ∀ i, |u i| ≤ 1)
+    (htri : ∀ v w x, G.Adj v w → G.Adj w x → G.Adj v x →
+      ∀ i, |g v w i + g w x i - g v x i| ≤ 1)
+    {k q : ℕ} (hq : 3 * k + 1 < q) (p : V → I → ZMod q)
+    (hp : ∀ v w, G.Adj v w →
+      Short (reduce q '' U) k (reduce q (g v w) - (p w - p v))) :
+    ∃ r : V → V → I → ℤ,
+      (∀ v w, G.Adj v w → r w v = -r v w) ∧
+      (∀ v w, G.Adj v w → Short U k (r v w)) ∧
+      ∀ v w x, G.Adj v w → G.Adj w x → G.Adj v x →
+        r v w + r w x - r v x = g v w + g w x - g v x :=
+  exists_integral_residuals_of_bounded_modular_potential g hrev U hsymm hU htri
+    (by simpa only [mul_one] using hq) p hp
 
 end SimpleGraph.GainReduction

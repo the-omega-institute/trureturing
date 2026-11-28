@@ -1,4 +1,5 @@
 import OmegaBuild.Commands
+import OmegaMath.Combinatorics.Graph.ChordalWalkHolonomy
 import Mathlib.Combinatorics.SimpleGraph.Connectivity.Connected
 import Mathlib.Combinatorics.SimpleGraph.Paths
 import Mathlib.Algebra.Order.Archimedean.Real.Basic
@@ -251,5 +252,62 @@ theorem Walk.IsCycle.exists_scalar_gain_obstruction {a : V} {c : G.Walk a a} (hc
     field_simp
   rw [hM] at htotal
   exact (lt_irrefl _) htotal
+
+namespace ScalarCycleReconstruction
+
+private theorem scalarGain_of_walk (g : V → V → ℝ) {a b : V} (p : G.Walk a b) :
+    Multiplicative.toAdd (p.gain (fun v w => Multiplicative.ofAdd (g v w))) = p.scalarWeight g := by
+  induction p with
+  | nil => rfl
+  | @cons a b c h p ih =>
+    rw [Walk.gain_cons, Walk.scalarWeight_cons]
+    change g a b + Multiplicative.toAdd (p.gain _) = g a b + p.scalarWeight g
+    rw [ih]
+
+private theorem scalar_triangle_product_abs (g : V → V → ℝ)
+    (hrev : ∀ a b, G.Adj a b → g b a = -g a b)
+    (hdef : ∀ a b c, G.Adj a b → G.Adj b c → G.Adj a c →
+      |g a b + g b c - g a c| ≤ 1)
+    {n : ℕ} {x : Multiplicative ℝ}
+    (h : TriangleProduct G (fun v w => Multiplicative.ofAdd (g v w)) n x) :
+    |Multiplicative.toAdd x| ≤ (n : ℝ) := by
+  induction h with
+  | one => simp
+  | triangle a b c hab hbc hca =>
+    simp only [Nat.cast_one]
+    change |g a b + g b c + g c a| ≤ 1
+    rw [hrev a c hca.symm, ← sub_eq_add_neg]
+    exact hdef a b c hab hbc hca.symm
+  | @mul m n x y _ _ hx hy =>
+    change |Multiplicative.toAdd x + Multiplicative.toAdd y| ≤ ((m + n : ℕ) : ℝ)
+    exact (abs_add_le _ _).trans (by exact_mod_cast add_le_add hx hy)
+  | @conj n x z _ hx =>
+    change |Multiplicative.toAdd z + Multiplicative.toAdd x + -Multiplicative.toAdd z| ≤ _
+    rw [show Multiplicative.toAdd z + Multiplicative.toAdd x + -Multiplicative.toAdd z =
+      Multiplicative.toAdd x by ring]
+    exact hx
+
+theorem scalarWeight_shift (g : V → V → ℝ) (M : ℝ) {a b : V} (p : G.Walk a b) :
+    p.scalarWeight (fun v w => g v w + M) = p.scalarWeight g + (p.length : ℝ) * M := by
+  induction p with
+  | nil => simp
+  | cons _ _ ih =>
+    simp only [Walk.scalarWeight_cons, Walk.length_cons, ih, Nat.cast_add, Nat.cast_one]
+    ring
+
+theorem cycle_abs_weight_le [Finite V] (hG : G.IsChordal)
+    (g : V → V → ℝ) (hrev : ∀ a b, G.Adj a b → g b a = -g a b)
+    (htri : ∀ a b c, G.Adj a b → G.Adj b c → G.Adj a c →
+      |g a b + g b c - g a c| ≤ 1) {a : V} (p : G.Walk a a) (hp : p.IsCycle) :
+    |p.scalarWeight g| ≤ (p.length : ℝ) - 2 := by
+  obtain ⟨n, hn, hprod⟩ := hG.closed_walk_triangle_product
+    (fun a b => Multiplicative.ofAdd (g a b)) (fun a b h => hrev a b h) p
+  have hsum := scalar_triangle_product_abs g hrev htri hprod
+  rw [scalarGain_of_walk] at hsum
+  have hn' : (n : ℝ) ≤ ((p.length - 2 : ℕ) : ℝ) := by exact_mod_cast hn
+  rw [Nat.cast_sub (show 2 ≤ p.length from (by decide : 2 ≤ 3).trans hp.three_le_length)] at hn'
+  exact hsum.trans hn'
+
+end ScalarCycleReconstruction
 
 end SimpleGraph

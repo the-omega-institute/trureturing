@@ -142,11 +142,10 @@ theorem exists_gain_for_doubled_radius {k M : ℕ} (hk : 0 < k) (hM : 0 < M)
         (pathPower (k * (M + 1)) k).Adj a c → ‖g a b + g b c - g a c‖ ≤ D) ∧
       ∀ (p : Fin (k * (M + 1)) → E) (R : ℝ), 0 ≤ R →
         (∀ a b, (pathPower (k * (M + 1)) k).Adj a b → ‖g a b - (p b - p a)‖ ≤ R) →
-        ∃ y : E, ∀ a, ‖(2 : ℝ) • u a - y‖ ≤ R + 2 * R / M := by
+        ∃ y : E, ∀ a, ‖(2 : ℝ) • u a - y‖ ≤ R + 2 * R / M * ((k - 1 : ℕ) : ℝ) / k := by
   let g := periodicGain (n := k * (M + 1)) hk u
   refine ⟨g, gain_skew hk u, gain_triangle hk u h₁ h₂, ?_⟩
   intro p R hR hp
-  let a₀ : Fin k := ⟨0, hk⟩
   let q (a : Fin k) := (M : ℝ)⁻¹ • (p (memberAt a (le_refl M)) -
     p (memberAt a (Nat.zero_le M)))
   have hMR : (0 : ℝ) < M := by exact_mod_cast hM
@@ -214,17 +213,29 @@ theorem exists_gain_for_doubled_radius {k M : ℕ} (hk : 0 < k) (hM : 0 < M)
     rw [div_eq_inv_mul]
     apply mul_le_mul_of_nonneg_left _ (by positivity)
     exact (norm_sub_le _ _).trans (by linarith)
-  refine ⟨q a₀, fun a => ?_⟩
-  have hc : ‖q a - q a₀‖ ≤ 2 * R / M := by
-    by_cases he : a = a₀
-    · subst a
-      simpa only [sub_self, norm_zero] using (by positivity : 0 ≤ 2 * R / (M : ℝ))
+  have hkr : (0 : ℝ) < k := by exact_mod_cast hk
+  let y : E := (k : ℝ)⁻¹ • ∑ b : Fin k, q b
+  refine ⟨y, fun a => ?_⟩
+  have he : q a - y = (k : ℝ)⁻¹ • ∑ b ∈ univ.erase a, (q a - q b) := by
+    have hs : (∑ b ∈ univ.erase a, (q a - q b)) = ∑ b : Fin k, (q a - q b) := by
+      simpa using sum_erase_add (univ : Finset (Fin k)) (fun b => q a - q b) (mem_univ a)
+    rw [hs, sum_sub_distrib, sum_const, card_univ, Fintype.card_fin, ← Nat.cast_smul_eq_nsmul ℝ,
+      smul_sub, smul_smul, inv_mul_cancel₀ hkr.ne', one_smul]
+  have hb (b : Fin k) (hne : b ≠ a) : ‖q a - q b‖ ≤ 2 * R / M := by
+    rcases lt_or_gt_of_ne hne with h | h
     · rw [norm_sub_rev]
-      apply compare
-      change 0 < a.val
-      have ha : a.val ≠ 0 := fun h => he (Fin.ext h)
-      omega
-  rw [show (2 : ℝ) • u a - q a₀ = ((2 : ℝ) • u a - q a) + (q a - q a₀) by abel]
+      exact compare h
+    · exact compare h
+  have hc : ‖q a - y‖ ≤ 2 * R / M * ((k - 1 : ℕ) : ℝ) / k := by
+    rw [he, norm_smul, Real.norm_eq_abs, abs_of_nonneg (by positivity : 0 ≤ (k : ℝ)⁻¹)]
+    calc
+      _ ≤ (k : ℝ)⁻¹ * ∑ b ∈ univ.erase a, ‖q a - q b‖ :=
+        mul_le_mul_of_nonneg_left (norm_sum_le _ _) (by positivity)
+      _ ≤ (k : ℝ)⁻¹ * ∑ b ∈ univ.erase a, (2 * R / M) :=
+        mul_le_mul_of_nonneg_left (sum_le_sum fun b h => hb b (mem_erase.mp h).1) (by positivity)
+      _ = _ := by simp only [sum_const, card_erase_of_mem (mem_univ a), card_univ,
+          Fintype.card_fin, nsmul_eq_mul, div_eq_mul_inv]; ring
+  rw [show (2 : ℝ) • u a - y = ((2 : ℝ) • u a - q a) + (q a - y) by abel]
   exact (norm_add_le _ _).trans (add_le_add (along a) hc)
 
 theorem clique_card_le_width_add_one {n k : ℕ} {s : Finset (Fin n)}
