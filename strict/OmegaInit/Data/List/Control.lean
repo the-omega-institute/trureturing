@@ -32,3 +32,13 @@ port_definition List.zipWithM.loop._f
 port_definition List.zipWithM.loop
 port_structural_code List.zipWithM.loop on_arg 7
 port_definition List.zipWithM with_native_code
+
+port_definition List.findM?._f
+port_definition List.findM?
+port_structural_code List.findM? on_arg 5
+port_definition List.findSomeM?._f
+port_definition List.findSomeM?
+port_structural_code List.findSomeM? on_arg 6
+port_definition List.findSomeM?_cons.match_1 with_native_code
+port_proof List.findSomeM?_nil by_reflexivity
+port_proof List.findSomeM?_cons by_reflexivity

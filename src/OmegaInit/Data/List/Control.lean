@@ -7,8 +7,8 @@ public import OmegaInit.Data.Nat.Bitwise.Basic
 /-! Namespace aliases to the pinned public interface. -/
 public section
 namespace Omega
-export _root_ (List.forM.match_1 List.mapM.loop List.mapM.match_1 List.zipWithM.loop List.zipWithM.match_1)
+export _root_ (List.findSomeM?_cons.match_1 List.forM.match_1 List.mapM.loop List.mapM.match_1 List.zipWithM.loop List.zipWithM.match_1)
 end Omega
 namespace Omega.List
-export _root_.List (forA forM mapA mapM zipWithM)
+export _root_.List (findM? findSomeM? findSomeM?_cons findSomeM?_nil forA forM mapA mapM zipWithM)
 end Omega.List
