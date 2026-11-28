@@ -37,7 +37,7 @@ def rejected : Realization signature.{u} :=
 def arena : Arena.{u + 1, 0, 0, 0, 0} where
   signature := signature
   Law R := ∀ (F : Type u) [Field F] [Finite F],
-    7 ≤ Nat.card F → Odd (Nat.card F) →
+    7 ≤ Nat.card F →
     (let q := Nat.card F
      let n := q * (q + 1) + 2
      let m := n / 2
@@ -75,7 +75,7 @@ private theorem empty_invalid {n s w : ℕ} (hn : 2 ≤ n) (hs : 0 < s) :
 private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
   let F := ULift.{u} (ZMod 7)
-  have hbad := h F (by rw [card_seven]) (by rw [card_seven]; decide)
+  have hbad := h F (by rw [card_seven])
     (by dsimp [F]; rw [card_seven]; exact seven_obstruction)
   obtain ⟨_, hEmpty⟩ := hbad.1
   let n := Nat.card F * (Nat.card F + 1) + 2
@@ -86,7 +86,7 @@ private theorem rejected_law : ¬ arena.{u}.Law rejected := by
 private theorem dependence : ObservationalDependence signature.{u} actual := by
   intro i
   let F := ULift.{u} (ZMod 7)
-  have h := support_optimum F (by rw [card_seven]) (by rw [card_seven]; decide)
+  have h := support_optimum F (by rw [card_seven])
     (by dsimp [F]; rw [card_seven]; exact seven_obstruction)
   obtain ⟨P, hP⟩ := h.1
   refine ⟨⟨F, Nat.card F * (Nat.card F + 1) + 2 - 1⟩, P, fun _ => ∅, ?_⟩
@@ -133,11 +133,11 @@ def registration : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0,
   sourceSelection := some {
     owner := `D5.S3.Combinatorics.Hamming.ConstantPowerCooling.ProjectiveOptimum
     definition := none
-    coordinates := #[0, 8]
+    coordinates := #[0, 7]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body",
+      path := #["body", "body", "body", "body", "body", "body", "body",
         "fn", "arg", "arg", "body", "arg", "body", "fn", "fn", "arg"]
-      stateBinder := 9
+      stateBinder := 8
       functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }

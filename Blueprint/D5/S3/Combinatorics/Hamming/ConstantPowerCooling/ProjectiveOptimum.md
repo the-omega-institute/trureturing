@@ -6,7 +6,7 @@ An exact cooling-code optimum for a family of finite projective planes with one 
 
 **Theorem 1.1 (Exactly n minus one information classes).**
 
-$$\forall (F: Type) [\operatorname{Field}\left(F\right)] [\operatorname{Finite}\left(F\right)],\quad \operatorname{let} q=Nat.card\left(F\right), n=q(q+1)+2, m=n/2,\quad(7 \le q \land \operatorname{Odd}\left(q\right) \land ((\operatorname{Odd}\left(m\right) \land \neg \operatorname{IsSquare}\left(q+1\right)) \lor (\operatorname{Even}\left(m\right) \land \neg \operatorname{IsSquare}\left(q-1\right)))) \implies \operatorname{IsGreatest}\left(\{s: \mathbb{N} | \exists P \in \operatorname{Fin}\left(s\right) \to \operatorname{Finset}\left(\operatorname{Finset}\left(\operatorname{Fin}\left(n\right)\right)\right),\; \operatorname{IsSupportFamily}\left(P, q-1, 2\right)\}, n-1\right)$$
+$$\forall (F: Type) [\operatorname{Field}\left(F\right)] [\operatorname{Finite}\left(F\right)],\quad \operatorname{let} q=Nat.card\left(F\right), n=q(q+1)+2, m=n/2,\quad(7 \le q \land ((\operatorname{Odd}\left(m\right) \land \neg \operatorname{IsSquare}\left(q+1\right)) \lor (\operatorname{Even}\left(m\right) \land \neg \operatorname{IsSquare}\left(q-1\right)))) \implies \operatorname{IsGreatest}\left(\{s: \mathbb{N} | \exists P \in \operatorname{Fin}\left(s\right) \to \operatorname{Finset}\left(\operatorname{Finset}\left(\operatorname{Fin}\left(n\right)\right)\right),\; \operatorname{IsSupportFamily}\left(P, q-1, 2\right)\}, n-1\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Hamming/ConstantPowerCooling/ProjectiveOptimum.support_optimum` (`✓ std3`). ∎
 
@@ -20,7 +20,7 @@ For the binary support model the deletion size is two, the word weight is q − 
 
 The finite leave bound gives at most n classes. The residue-two equality criterion would give a design with m two-point groups if n were attained. With k = q + 1, the design has n blocks and each point lies in k blocks. Its square integer incidence matrix A has Gram matrix kI + J − P, where J is all ones and P indicates pairs of indices in the same group, including on the diagonal. The m two-by-two blocks in kI − P each have determinant k(k − 2). Adding J multiplies the determinant by 1 + n/(k − 2). Since k − 2 + n = k², the result is k to the power m + 2 times (k − 2) to the power m − 1. The odd exponent on the nonsquare factor gives an odd prime valuation, contradicting the square det(A)².
 
-The field of order seven gives the length-58 result. The theorem also covers nonprime field orders satisfying the disjunction. Section 5's unrestricted even-deletion construction question remains open.
+The field of order seven gives the length-58 result. The theorem also covers even and odd finite field orders satisfying the disjunction. Section 5's unrestricted even-deletion construction question remains open.
 
 ## References
 

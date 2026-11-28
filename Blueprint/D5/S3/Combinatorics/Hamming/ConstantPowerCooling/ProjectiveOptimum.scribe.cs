@@ -34,7 +34,7 @@ internal sealed class ProjectiveOptimumDocument : IScribeDocumentDefinition
                     + "is k to the power m + 2 times (k − 2) to the power m − 1. The odd exponent on the nonsquare "
                     + "factor gives an odd prime valuation, contradicting the square det(A)².")),
                 Paragraph(Text("The field of order seven gives the length-58 result. The theorem also covers "
-                    + "nonprime field orders satisfying the disjunction. Section 5's unrestricted even-deletion "
+                    + "even and odd finite field orders satisfying the disjunction. Section 5's unrestricted even-deletion "
                     + "construction question remains open."))),
             DescribeRole.Theorem)),
         []));
@@ -67,7 +67,7 @@ internal sealed class ProjectiveOptimumDocument : IScribeDocumentDefinition
             Operatorname, Grp(F.Id("let")), Sp, q, Eq,
             new Formula.Apply(Seq(F.Id("Nat"), Dot, F.Id("card")), [field]), Comma, Sp,
             n, Eq, size, Comma, Sp, m, Eq, Seq(n, Slash, D(2)), Comma, Quad,
-            Open, D(7), Sp, Le, Sp, q, Sp, Land, Sp, Call("Odd", q), Sp, Land, Sp,
+            Open, D(7), Sp, Le, Sp, q, Sp, Land, Sp,
             Open, oddCase, Sp, Lor, Sp, evenCase, Close, Close, Sp, Implies, Sp, conclusion));
     }
 

@@ -96,7 +96,7 @@ optimum in [ExactLength58](../D5/S3/Combinatorics/Hamming/ConstantPowerCooling/E
 
 ### Exact optimum for the projective-plane progression
 
-Let $F$ be a finite field of odd order $q\ge 7$. Set $k=q+1$,
+Let $F$ be a finite field of order $q\ge 7$. Set $k=q+1$,
 $n=q(q+1)+2$ and $m=n/2$. If $m$ is odd and $q+1$ is nonsquare, or if
 $m$ is even and $q-1$ is nonsquare, the exact binary support-family optimum
 at $(t,w,e)=(2,q-1,q-3)$ is $n-1$.
@@ -120,8 +120,9 @@ even exponent. This contradicts the square determinant of an integer
 Gram matrix and reduces the bound to $n-1$.
 
 The order-seven case recovers the same optimum as the existing length-58
-result. The theorem applies to nonprime field orders as well, for example
-$q=9$ gives $n=92$ and even $m=46$ with $q-1=8$ nonsquare. For a prime
+result. The theorem applies to even and odd field orders, for example
+$q=9$ gives $n=92$ and even $m=46$ with $q-1=8$ nonsquare, while
+$q=16$ gives $n=274$ and odd $m=137$ with $q+1=17$ nonsquare. For a prime
 $q\ge 7$ with $q\equiv 3\pmod 4$, $m$ is odd and a square $q+1=s^2$
 would factor $q=(s-1)(s+1)$ with both factors greater than one.
 The unrestricted even-$t$ construction question remains open.
@@ -159,3 +160,7 @@ telescopes. [Issue #35136](https://github.com/the-omega-institute/trureturing/is
 The length-58 source mirror validates the audit for `support_optimum`.
 The source binding for `no_group_divisible_design` remains open.
 [Audit issue #35136](https://github.com/the-omega-institute/trureturing/issues/35136#issuecomment-7235364329)
+
+Source audits for the two design suppliers made public for the projective
+optimum, `block_support_family` and `even_strict_edge_threshold`, remain open.
+[Audit issue #35136](https://github.com/the-omega-institute/trureturing/issues/35136#issuecomment-7238334309)

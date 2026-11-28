@@ -556,10 +556,10 @@ end ProjectiveConstruction
 
 section Optimum
 
-/-- For every finite field of odd order q ≥ 7, under either stated nonsquare
+/-- For every finite field of order q ≥ 7, under either stated nonsquare
 condition, the support-model optimum at weight q - 1 and deletion size two is n - 1. -/
 theorem support_optimum (F : Type*) [Field F] [Finite F]
-    (hq7 : 7 ≤ Nat.card F) (hqOdd : Odd (Nat.card F))
+    (hq7 : 7 ≤ Nat.card F)
     (h : let q := Nat.card F
          let n := q * (q + 1) + 2
          let m := n / 2
@@ -573,18 +573,12 @@ theorem support_optimum (F : Type*) [Field F] [Finite F]
   let n := q * (q + 1) + 2
   let m := n / 2
   change 7 ≤ q at hq7
-  change Odd q at hqOdd
   change (Odd m ∧ ¬ IsSquare (q + 1)) ∨ (Even m ∧ ¬ IsSquare (q - 1)) at h
   change IsGreatest {s : ℕ | ∃ P : Fin s → Finset (Finset (Fin n)),
     IsSupportFamily P (q - 1) 2} (n - 1)
   have hq : 1 < q := by omega
-  have hn2 : 2 * m = n := by
-    have hkEven : Even (q + 1) := Nat.even_add.mpr (by
-      simp [Nat.not_even_iff_odd.mpr hqOdd])
-    have hnEven : Even n := (Nat.even_mul.mpr (Or.inr hkEven)).add (by decide)
-    obtain ⟨r, hr⟩ := hnEven
-    dsimp only [m]
-    omega
+  have hnEven : Even n := (Nat.even_mul_succ_self q).add (by decide)
+  have hn2 : 2 * m = n := Nat.two_mul_div_two_of_even hnEven
   have hkdef : q + 1 = (q - 1) + 2 := by omega
   have hkN : q + 1 ≤ n := by
     have hle := Nat.mul_le_mul_right (q + 1) (show 1 ≤ q by omega)
