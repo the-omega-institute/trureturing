@@ -3,6 +3,7 @@ bibkey: ariasnoguerales2026riskca
 authors: María Teresa Arias Noguerales
 year: 2026
 title: "Territorial Conflict as a Cellular Automaton: Frozen Domains and Active Fronts in a Risk-Derived Local Rule"
+doi: 10.48550/arXiv.2611.34784
 url: https://arxiv.org/abs/2611.34784v1
 claim: "At zero growth and the highest active threshold, the deterministic local step has a collision on every complete board with at least two cells."
 strata_touched:
