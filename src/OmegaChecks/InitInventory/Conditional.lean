@@ -2,7 +2,7 @@ module
 
 public import OmegaChecks.InitInventory.Reductions
 public import OmegaChecks.InitInventory.TakeFiniteness
-public import OmegaChecks.InitInventory.Collector
+public import OmegaChecks.InitInventory.SliceCollection
 public import OmegaChecks.InitInventory.OpenRangeLoop
 public import OmegaChecks.InitInventory.RangeLoopLift
 public import OmegaChecks.InitInventory.FieldNormalization
@@ -379,10 +379,10 @@ public def conditionalConsequence? (owner name : Name) : Option (String × Name 
         "the official result of the identity-monad reverse collector")
     | `Init.Data.Slice.Operations, ``Std.Slice.toList =>
       some (``OmegaChecks.InitBoundaries.Collector.limitedOmniscienceFromSlice,
-        "the official result of the list of each slice whose underlying iterator is finite")
+        "the official list of each slice with a finite iterator. A Boolean-stream decision suffices by sliceListOfStreamDecision_eq")
     | `Init.Data.Slice.Operations, ``Std.Slice.toArray =>
       some (``OmegaChecks.InitBoundaries.Collector.limitedOmniscienceFromSliceArray,
-        "the official array of each slice whose underlying iterator is finite")
+        "the official array of each slice with a finite iterator. A Boolean-stream decision suffices by sliceArrayOfStreamDecision_eq")
     | `Init.Data.Slice.Operations, ``Std.Slice.toListRev =>
       some (``OmegaChecks.InitBoundaries.Collector.limitedOmniscienceFromSliceReverse,
         "the official reversed list of each slice whose underlying iterator is finite")
